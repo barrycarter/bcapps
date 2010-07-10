@@ -1,7 +1,8 @@
 # Barry Carter's Perl library (carter.barry@gmail.com)
 
 # required libs
-use Digest::SHA1  qw(sha1 sha1_hex sha1_base64);
+use Digest::SHA1 qw(sha1 sha1_hex sha1_base64);
+use Date::Parse;
 
 # HACK: not sure this is right way to do this
 our(%globopts);
