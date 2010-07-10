@@ -6,11 +6,11 @@
  <body>
 <h1>Index of /pub/SL.us008001/DF.an/DC.sflnd/DS.synop</h1>
 <pre><img src="/icons/blank.gif" alt="Icon "> <a href="?C=N;O=D">Name</a>                             <a href="?C=M;O=A">Last modified</a>      <a href="?C=S;O=A">Size</a>  <a href="?C=D;O=A">Description</a><hr><img src="/icons/back.gif" alt="[DIR]"> <a href="/pub/SL.us008001/DF.an/DC.sflnd/">Parent Directory</a>                                      -   
-<img src="/icons/unknown.gif" alt="[   ]"> <a href="ls-l">ls-l</a>                             10-Jul-2010 18:15   21K  
-<img src="/icons/unknown.gif" alt="[   ]"> <a href="ls-lt">ls-lt</a>                            10-Jul-2010 18:15   21K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0000.txt">sn.0000.txt</a>                      09-Jul-2010 19:06   43K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0001.txt">sn.0001.txt</a>                      09-Jul-2010 19:10   18K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0002.txt">sn.0002.txt</a>                      09-Jul-2010 19:16   39K  
+<img src="/icons/unknown.gif" alt="[   ]"> <a href="ls-l">ls-l</a>                             10-Jul-2010 20:25   21K  
+<img src="/icons/unknown.gif" alt="[   ]"> <a href="ls-lt">ls-lt</a>                            10-Jul-2010 20:25   21K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0000.txt">sn.0000.txt</a>                      10-Jul-2010 20:16   52K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0001.txt">sn.0001.txt</a>                      10-Jul-2010 20:20  9.7K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0002.txt">sn.0002.txt</a>                      10-Jul-2010 20:25  9.3K  
 <img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0003.txt">sn.0003.txt</a>                      09-Jul-2010 19:20  2.9K  
 <img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0004.txt">sn.0004.txt</a>                      09-Jul-2010 19:25   13K  
 <img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0005.txt">sn.0005.txt</a>                      09-Jul-2010 19:30  1.3K  
@@ -286,29 +286,29 @@
 <img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0275.txt">sn.0275.txt</a>                      10-Jul-2010 18:06   75K  
 <img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0276.txt">sn.0276.txt</a>                      10-Jul-2010 18:11  123K  
 <img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0277.txt">sn.0277.txt</a>                      10-Jul-2010 18:15  116K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0278.txt">sn.0278.txt</a>                      09-Jul-2010 17:10   22K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0279.txt">sn.0279.txt</a>                      09-Jul-2010 17:16   29K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0280.txt">sn.0280.txt</a>                      09-Jul-2010 17:21   29K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0281.txt">sn.0281.txt</a>                      09-Jul-2010 17:26  7.7K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0282.txt">sn.0282.txt</a>                      09-Jul-2010 17:30  2.2K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0283.txt">sn.0283.txt</a>                      09-Jul-2010 17:36  9.1K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0284.txt">sn.0284.txt</a>                      09-Jul-2010 17:40  3.3K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0285.txt">sn.0285.txt</a>                      09-Jul-2010 17:45  2.1K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0286.txt">sn.0286.txt</a>                      09-Jul-2010 17:50  7.6K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0287.txt">sn.0287.txt</a>                      09-Jul-2010 17:56  6.2K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0288.txt">sn.0288.txt</a>                      09-Jul-2010 18:00   19K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0289.txt">sn.0289.txt</a>                      09-Jul-2010 18:06   63K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0290.txt">sn.0290.txt</a>                      09-Jul-2010 18:10   79K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0291.txt">sn.0291.txt</a>                      09-Jul-2010 18:16  180K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0292.txt">sn.0292.txt</a>                      09-Jul-2010 18:20  130K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0293.txt">sn.0293.txt</a>                      09-Jul-2010 18:25   70K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0294.txt">sn.0294.txt</a>                      09-Jul-2010 18:30   40K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0295.txt">sn.0295.txt</a>                      09-Jul-2010 18:36   80K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0296.txt">sn.0296.txt</a>                      09-Jul-2010 18:40   28K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0297.txt">sn.0297.txt</a>                      09-Jul-2010 18:46   25K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0298.txt">sn.0298.txt</a>                      09-Jul-2010 18:50  6.3K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0299.txt">sn.0299.txt</a>                      09-Jul-2010 18:55   21K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0300.txt">sn.0300.txt</a>                      09-Jul-2010 19:00  8.2K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0278.txt">sn.0278.txt</a>                      10-Jul-2010 18:21  148K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0279.txt">sn.0279.txt</a>                      10-Jul-2010 18:25   71K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0280.txt">sn.0280.txt</a>                      10-Jul-2010 18:30   57K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0281.txt">sn.0281.txt</a>                      10-Jul-2010 18:35   48K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0282.txt">sn.0282.txt</a>                      10-Jul-2010 18:40   40K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0283.txt">sn.0283.txt</a>                      10-Jul-2010 18:46   20K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0284.txt">sn.0284.txt</a>                      10-Jul-2010 18:50  7.9K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0285.txt">sn.0285.txt</a>                      10-Jul-2010 18:56   13K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0286.txt">sn.0286.txt</a>                      10-Jul-2010 19:00  5.8K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0287.txt">sn.0287.txt</a>                      10-Jul-2010 19:06   42K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0288.txt">sn.0288.txt</a>                      10-Jul-2010 19:10   16K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0289.txt">sn.0289.txt</a>                      10-Jul-2010 19:16   36K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0290.txt">sn.0290.txt</a>                      10-Jul-2010 19:20  6.1K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0291.txt">sn.0291.txt</a>                      10-Jul-2010 19:25  5.0K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0292.txt">sn.0292.txt</a>                      10-Jul-2010 19:30  4.2K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0293.txt">sn.0293.txt</a>                      10-Jul-2010 19:35  9.7K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0294.txt">sn.0294.txt</a>                      10-Jul-2010 19:41  3.8K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0295.txt">sn.0295.txt</a>                      10-Jul-2010 19:45  898   
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0296.txt">sn.0296.txt</a>                      10-Jul-2010 19:50  4.0K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0297.txt">sn.0297.txt</a>                      10-Jul-2010 19:55  4.1K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0298.txt">sn.0298.txt</a>                      10-Jul-2010 20:00   11K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0299.txt">sn.0299.txt</a>                      10-Jul-2010 20:06   28K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0300.txt">sn.0300.txt</a>                      10-Jul-2010 20:10   18K  
 <hr></pre>
 <address>Apache Server at weather.noaa.gov Port 80</address>
 </body></html>

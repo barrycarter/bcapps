@@ -9,3 +9,8 @@ db/*.sqlite3
 .DS_Store
 .#*
 [#]*
+# decided against mirroring data files
+data/*
+data/*/*
+data/*/*/*
+

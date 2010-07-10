@@ -49,8 +49,35 @@ for $i (sort keys %urls) {
   dodie(qq%chdir("$globopts{root}/$type/")%);
 
   # download directory of files (cache if in development)
-  cache_command("curl -m 300 -s -o files.txt $i","age=300");
+  cache_command("curl -R -m 300 -s -o files.txt $i","age=300");
 
+  # look at files.txt to see which cycle files we need
+  $list = read_file("files.txt");
+  @cycles = ($list=~m%>(sn\.\d+\.txt.*$)%mg);
+
+  # clean it up a bit
+  map {s/<[^>]*?>//; s/\s+/ /g;} @cycles;
+
+  # TODO: right now, just checking if file exists -- later, much check
+  # timestamp/etc
+  for $j (@cycles) {
+    ($file, $date, $time, $size) = split(/\s+/,$j);
+
+    # if file doesn't exist, push command on list to get it
+    unless (-f $file) {
+      # TODO: can I always rely on ENV{PWD}?
+      push(@commands, "curl -R -m 300 -s -o $globopts{root}/$type/$file $i/$file");
+    }
+  }
 }
+
+debug(@commmands);
+
+# run commands using gnu parallel
+# TODO: maybe not best to use pipe here?
+
+dodie('open(A,"|parallel")');
+print A join("\n",@commands)."\n";
+close(A);
 
 # TODO: run repeatedly (vs cron)

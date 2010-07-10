@@ -6,8 +6,8 @@
  <body>
 <h1>Index of /pub/SL.us008001/DF.an/DC.sflnd/DS.metar</h1>
 <pre><img src="/icons/blank.gif" alt="Icon "> <a href="?C=N;O=D">Name</a>                             <a href="?C=M;O=A">Last modified</a>      <a href="?C=S;O=A">Size</a>  <a href="?C=D;O=A">Description</a><hr><img src="/icons/back.gif" alt="[DIR]"> <a href="/pub/SL.us008001/DF.an/DC.sflnd/">Parent Directory</a>                                      -   
-<img src="/icons/unknown.gif" alt="[   ]"> <a href="ls-l">ls-l</a>                             10-Jul-2010 18:11   51K  
-<img src="/icons/unknown.gif" alt="[   ]"> <a href="ls-lt">ls-lt</a>                            10-Jul-2010 18:11   51K  
+<img src="/icons/unknown.gif" alt="[   ]"> <a href="ls-l">ls-l</a>                             10-Jul-2010 20:25   51K  
+<img src="/icons/unknown.gif" alt="[   ]"> <a href="ls-lt">ls-lt</a>                            10-Jul-2010 20:25   51K  
 <img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0000.txt">sn.0000.txt</a>                      08-Jul-2010 06:41  182K  
 <img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0001.txt">sn.0001.txt</a>                      08-Jul-2010 06:45   77K  
 <img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0002.txt">sn.0002.txt</a>                      08-Jul-2010 06:50   71K  
@@ -720,32 +720,32 @@
 <img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0709.txt">sn.0709.txt</a>                      10-Jul-2010 18:06  229K  
 <img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0710.txt">sn.0710.txt</a>                      10-Jul-2010 18:11  398K  
 <img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0711.txt">sn.0711.txt</a>                      10-Jul-2010 18:15  127K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0712.txt">sn.0712.txt</a>                      08-Jul-2010 03:16  104K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0713.txt">sn.0713.txt</a>                      08-Jul-2010 03:20  119K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0714.txt">sn.0714.txt</a>                      08-Jul-2010 03:25  112K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0715.txt">sn.0715.txt</a>                      08-Jul-2010 03:30  107K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0716.txt">sn.0716.txt</a>                      08-Jul-2010 03:36   96K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0717.txt">sn.0717.txt</a>                      08-Jul-2010 03:40  116K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0718.txt">sn.0718.txt</a>                      08-Jul-2010 03:45  123K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0719.txt">sn.0719.txt</a>                      08-Jul-2010 03:51   57K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0720.txt">sn.0720.txt</a>                      08-Jul-2010 03:55   88K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0721.txt">sn.0721.txt</a>                      08-Jul-2010 04:01  455K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0722.txt">sn.0722.txt</a>                      08-Jul-2010 04:06  140K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0723.txt">sn.0723.txt</a>                      08-Jul-2010 04:11  381K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0724.txt">sn.0724.txt</a>                      08-Jul-2010 04:16   98K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0725.txt">sn.0725.txt</a>                      08-Jul-2010 04:20   91K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0726.txt">sn.0726.txt</a>                      08-Jul-2010 04:27  122K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0727.txt">sn.0727.txt</a>                      08-Jul-2010 04:31  124K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0728.txt">sn.0728.txt</a>                      08-Jul-2010 04:35   76K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0729.txt">sn.0729.txt</a>                      08-Jul-2010 04:41  183K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0730.txt">sn.0730.txt</a>                      08-Jul-2010 04:45   76K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0731.txt">sn.0731.txt</a>                      08-Jul-2010 04:50   58K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0732.txt">sn.0732.txt</a>                      08-Jul-2010 04:55  105K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0733.txt">sn.0733.txt</a>                      08-Jul-2010 05:02  455K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0734.txt">sn.0734.txt</a>                      08-Jul-2010 05:09  173K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0735.txt">sn.0735.txt</a>                      08-Jul-2010 05:21  472K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0736.txt">sn.0736.txt</a>                      08-Jul-2010 05:27  236K  
-<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0737.txt">sn.0737.txt</a>                      08-Jul-2010 05:31  102K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0712.txt">sn.0712.txt</a>                      10-Jul-2010 18:21  157K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0713.txt">sn.0713.txt</a>                      10-Jul-2010 18:25   96K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0714.txt">sn.0714.txt</a>                      10-Jul-2010 18:30  144K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0715.txt">sn.0715.txt</a>                      10-Jul-2010 18:35   70K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0716.txt">sn.0716.txt</a>                      10-Jul-2010 18:40  188K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0717.txt">sn.0717.txt</a>                      10-Jul-2010 18:46   97K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0718.txt">sn.0718.txt</a>                      10-Jul-2010 18:50   56K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0719.txt">sn.0719.txt</a>                      10-Jul-2010 18:55  208K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0720.txt">sn.0720.txt</a>                      10-Jul-2010 19:00  383K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0721.txt">sn.0721.txt</a>                      10-Jul-2010 19:06  211K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0722.txt">sn.0722.txt</a>                      10-Jul-2010 19:10  352K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0723.txt">sn.0723.txt</a>                      10-Jul-2010 19:16  157K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0724.txt">sn.0724.txt</a>                      10-Jul-2010 19:20  141K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0725.txt">sn.0725.txt</a>                      10-Jul-2010 19:25  104K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0726.txt">sn.0726.txt</a>                      10-Jul-2010 19:30   98K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0727.txt">sn.0727.txt</a>                      10-Jul-2010 19:35  109K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0728.txt">sn.0728.txt</a>                      10-Jul-2010 19:41  169K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0729.txt">sn.0729.txt</a>                      10-Jul-2010 19:45   88K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0730.txt">sn.0730.txt</a>                      10-Jul-2010 19:50   60K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0731.txt">sn.0731.txt</a>                      10-Jul-2010 19:55  117K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0732.txt">sn.0732.txt</a>                      10-Jul-2010 20:00  456K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0733.txt">sn.0733.txt</a>                      10-Jul-2010 20:06  202K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0734.txt">sn.0734.txt</a>                      10-Jul-2010 20:10  350K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0735.txt">sn.0735.txt</a>                      10-Jul-2010 20:16  141K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0736.txt">sn.0736.txt</a>                      10-Jul-2010 20:20  128K  
+<img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0737.txt">sn.0737.txt</a>                      10-Jul-2010 20:25  138K  
 <img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0738.txt">sn.0738.txt</a>                      08-Jul-2010 05:35   91K  
 <img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0739.txt">sn.0739.txt</a>                      08-Jul-2010 05:40  133K  
 <img src="/icons/text.gif" alt="[TXT]"> <a href="sn.0740.txt">sn.0740.txt</a>                      08-Jul-2010 05:45  121K  
