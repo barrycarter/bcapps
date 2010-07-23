@@ -1,0 +1,12 @@
+All files are snapshots and are NOT updated
+
+current-temps.txt: "latitude longitude temperature" for several locations
+
+DBUOY: weather data from buoys
+
+METAR: weather data from METAR (airport) stations
+
+SHIPS: weather data from ships
+
+SYNOP: weather data from SYNOP (automated surface) stations
+
