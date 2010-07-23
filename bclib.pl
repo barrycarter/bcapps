@@ -3,6 +3,7 @@
 # required libs
 use Digest::SHA1 qw(sha1 sha1_hex sha1_base64);
 use Date::Parse;
+use POSIX;
 
 # HACK: not sure this is right way to do this
 our(%globopts);
@@ -152,7 +153,7 @@ Try to run Perl code $perlcmd, die if there's an error
 sub dodie {eval($_[0])||die("COMMAND FAILS: $_[0], $!");}
 
 
-=item cache_command2($command, $options)
+=item cache_command($command, $options)
 
 Runs $command and returns stdout, stderr, and exit status. If command
 was run recently, return cached output. $options:
@@ -256,6 +257,18 @@ sub read_file {
   my($suck)=<A>;
   close(A);
   return($suck);
+}
+
+=item trim($str)
+
+Trims leading/trailing spaces from a string
+
+=cut
+
+sub trim {
+    $_[0]=~s/^\s+//isg;
+    $_[0]=~s/\s+$//isg;
+    return($_[0]);
 }
 
 # parse_form = alias for str2hash (but some of my code uses it)

@@ -14,6 +14,11 @@ Summary:
  bc-dns-server.pl: a simple Perl DNS server, template for more
  interesting DNS server
 
+ bc-cheap-bay.pl: finds cheap available items on eBay (one penny, no
+ shipping, no bids, expiring within 4 hours). You MUST have your own
+ eBay API application key for this and you MUST put it in
+ /usr/local/etc/ebay.id. Requires curl and tidy
+
 Notes:
 
  % The data in sample-data is a snapshot. It's not live data + it's
