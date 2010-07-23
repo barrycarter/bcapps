@@ -5,9 +5,20 @@ If any of them grows big enough, I'll create a new github for it.
 
 Barry Carter (carter.barry@gmail.com)
 
+Summary:
+
+ bclib.pl: A library of useful functions
+
+ bc-get-cycle-files.pl: obtain cycle files (weather) from NOAA sites
+
+ bc-dns-server.pl: a simple Perl DNS server, template for more
+ interesting DNS server
+
 Notes:
 
  % The data in sample-data is a snapshot. It's not live data + it's
- not updated. The updated data is NOT mirrored to github.
+ not updated. Live data is NOT mirrored to github.
+
+
 
 

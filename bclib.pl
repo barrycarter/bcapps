@@ -261,6 +261,9 @@ sub read_file {
 # parse_form = alias for str2hash (but some of my code uses it)
 sub parse_form {return str2hash(@_);}
 
+# suck = alias for read_file (I was young and foolish...)
+sub suck {return read_file(@_);}
+
 # automatically call parse_options (don't expect calling prog to do this)
 &parse_options;
 
