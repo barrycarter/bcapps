@@ -1,0 +1,5 @@
+# barrycarter.info nameservers
+ns1.barrycarter.info 216.83.51.167
+ns2.barrycarter.info 178.33.28.119
+
+
