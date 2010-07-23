@@ -4,6 +4,9 @@
 
 use Net::DNS::Nameserver;
 use MIME::Base64;
+
+# TODO: get rid of this hack
+push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
 # background myself
