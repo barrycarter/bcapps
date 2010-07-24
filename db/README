@@ -1,0 +1,71 @@
+stations.db: db-ification of the list of METAR stations at
+http://weather.noaa.gov/data/nsd_cccc.txt, plus their x/y/z
+coordinates from the center of the earth (makes it easier to find
+METAR station closest to a given point)
+
+TODO: storing x/y/z seems redundant-- is there a better way?
+
+TODO: should geonames.db use the x/y/z format too?
+
+geonames.db table description:
+
+altnames: the geonameid and alternate names for that id (including the
+original name). Example:
+
+sqlite> SELECT * FROM altnames WHERE geonameid=4887398;
+
+[...]
+4887398|chi
+4887398|chicago
+4887398|chikago
+4887398|chikhako
+[...]
+4887398|shikago
+4887398|shykaghw
+4887398|sicagum
+4887398|sikago
+4887398|syqgw
+[...]
+
+Note: because of odd unicoding, many of the names in the full result
+look really odd.
+
+geonames: the main table. Example:
+
+sqlite> SELECT * FROM geonames WHERE geonameid=4887398;
+   geonameid = 4887398
+   asciiname = Chicago
+    latitude = 3900705
+   longitude = -4084788
+feature_code = 16
+country_code = 6252001
+ admin4_code = 
+ admin3_code = 
+ admin2_code = 4888671
+ admin1_code = 4896861
+  population = 2841952
+    timezone = 289
+
+The latitude field is round($latitude*8388607/90)
+
+The longitude field is round($longitude*8388607/180)
+
+So, latitude 3900705 is 3900705/8388607*90 or 41.8500294480N
+
+Longitude -4084788 is -4084788/8388607*180 or 87.6500520120W
+
+See bc-geonames2sqlite.pl for the reasoning behind this (8388607 ==
+2^23-1, so latitude and longtiude are both stored in 3-byte-wide ints)
+
+The country/admin codes are the geonameids of the parent admin/country.
+
+The tzones field is a reference into tzones table
+
+The feature_code field would be a reference into the feature_codes
+table, but I forgot to create such a table.
+
+# TODO: create a feature_codes table as above
+
+# TODO: consider using geocentric xyz (3D) coords for points-- makes
+# distance comparisons easier
+
