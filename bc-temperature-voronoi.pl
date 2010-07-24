@@ -31,6 +31,8 @@ system("qvoronoi s o < /tmp/qhull-file.txt > /tmp/qhull-out.txt");
 ($pts, $regions, $x) = split(/\s+/,shift(@regions));
 
 # SVG starts with this
+# NOTE: if you do svg width="100%", imagemagick chokes!
+# TODO: the dimensions have to match my SVG coords, which isn't great
 $svgpre = << "MARK";
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
@@ -87,6 +89,8 @@ for $i ($pts+1..$#regions) {
 
   debug("$regions[$i] -> $pstr");
 
+  # TODO: this map is hideous -- use mercator or project to sphere or something
+  # TODO: add semi-transparent country/state borders
   # TODO: get rid of borders on these polygons
   print B "<polygon points='$pstr' style='fill:$col' />\n";
 
@@ -118,3 +122,9 @@ sub hsv2rgb {
   $b=min($b+1-$sat,1)*$val;
   return sprintf("#%0.2x%0.2x%0.2x",$r*255,$g*255,$b*255);
 }
+
+# TODO: convert to JPG for those who don't have good SVG viewers
+# TODO: create continent specific maps (from same data) like weather.gov
+# TODO: color map smoothly, not via polygons
+# TODO: ignore older data
+# TODO: do this for wind speed, humidity, dew point, etc
