@@ -7,6 +7,7 @@ use POSIX;
 
 # HACK: not sure this is right way to do this
 our(%globopts);
+our(@tmpfiles);
 
 # largest possible path
 $ENV{PATH} = "/sw/bin/:/bin/:/usr/bin/:/usr/local/bin/:/usr/X11R6/bin/:$ENV{HOME}/bin:$ENV{HOME}/PERL";
@@ -297,6 +298,41 @@ sub max {
   my($max) = $_[0];
   for $i (@_) {if ($i>$max) {$max=$i;}}
   return $max;
+}
+
+=item my_tmpfile($prefix="file")
+
+Return a filename in /tmp that is not being used and starts with
+$prefix. Appending $$ to filename avoids race condition when forking.
+
+I dislike the regular tmpfile, so use this instead
+
+=cut
+
+sub my_tmpfile {
+  my($prefix) = @_;
+  unless ($prefix) {$prefix="file";}
+  my($x)=rand();
+  while (-f "/tmp/$prefix$x$$") {$x=rand();}
+  push(@tmpfiles, "/tmp/$prefix$x$$");
+  return("/tmp/$prefix$x$$");
+}
+
+# cleanup files created by my_tmpfile (unless --keeptemp set)
+
+sub END {
+  local $?;
+  if ($globopts{keeptemp}) {return;}
+
+  for $i (@tmpfiles) {
+    debug("DELETING: $i");
+    unlink($i);
+  }
+
+  for $i (@tmpdirs) {
+    debug("RM -R: $i");
+    system("rm -r $i");
+  }
 }
 
 # parse_form = alias for str2hash (but some of my code uses it)

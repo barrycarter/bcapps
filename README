@@ -1,9 +1,9 @@
+Me: Barry Carter (carter.barry@gmail.com)
+
 Instead of keeping all of my miniscule apps in a different github, I'll 
 put them all here for now.
 
 If any of them grows big enough, I'll create a new github for it.
-
-Barry Carter (carter.barry@gmail.com)
 
 Summary:
 
@@ -20,12 +20,12 @@ Summary:
  /usr/local/etc/ebay.id. Requires curl and tidy
 
  bc-temperature-voronoi.pl: creates an SVG map from temperature data
- using qhull/qdelaunay (currently static, hope to make it live)
+ using qhull/qdelaunay/qvoronoi (currently static, hope to make it live)
 
-Notes:
+ bc-geonames2sqlite.pl: converts geonames data to a semi-efficient SQLite3 db
 
- % The data in sample-data is a snapshot. It's not live data + it's
- not updated. Live data is NOT mirrored to github.
+ bc-cityfind.pl: Given a string, attempt to find matching city
+ (placename) in geonames db
 
 Disclaimer:
 
@@ -35,6 +35,10 @@ Disclaimer:
 
  Some of this stuff contains obvious errors. This really is just
  "first cut", "proof of concept", "show and tell" code.
+
+ In other words: no making fun of me, and no judging me on this
+ stuff. If I ever come out of retirement and you hire me, my work
+ isn't normally this crappy.
 
 Captioned:
 
