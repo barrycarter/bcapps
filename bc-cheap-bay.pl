@@ -5,21 +5,19 @@
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
+# defaults for maxprice and hours (to expiration)
+defaults("maxprice=0.01&hours=4");
+
 # TODO: include start/end timestamp generation
 # TODO: compress identical listings
-# TODO: turn this into a webapp, let $maxprice/$hours be arguments, much more
+# TODO: turn this into a webap, much more
 
 # Put your own application id in /usr/local/etc/ebay.id
 $appid = suck("/usr/local/etc/ebay.id");
 $appid=~s/\n//isg;
 
-# settings
-$maxprice = 0.01;
-# item must end less than this many hours in the future
-$hours = 4;
-
 # calculate end time
-$endtime=strftime("%FT%TZ",gmtime(time()+$hours*3600));
+$endtime=strftime("%FT%TZ",gmtime(time()+$globopts{hours}*3600));
 
 # URLs for top-level eBay categories; I found these by hand since I
 # couldn't get GetCategories to work
@@ -66,18 +64,18 @@ map {m%/(\d+)/i.html$%; $_=$1} @urls; # extract category numbers
 @cats = sort {$a <=> $b} @urls; # don't really need this, but I like it
 
 for $i (@cats) {
-  $cmd = "curl -s 'http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=$appid&RESPONSE-DATA-FORMAT=XML&REST-PAYLOAD=true&paginationInput.entriesPerPage=200&itemFilter(0).name=MaxPrice&itemFilter(0).value=$maxprice&itemFilter(0).paramName=Currency&itemFilter(0).paramValue=USD&itemFilter(1).name=FreeShippingOnly&itemFilter(1).value=true&itemFilter(2).name=EndTimeTo&itemFilter(2).value=$endtime&itemFilter(3).name=ListingType&itemFilter(3).value=Auction&categoryId=$i&sortOrder=BidCountFewest' | tidy -q -xml";
+  $cmd = "curl -s 'http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=$appid&RESPONSE-DATA-FORMAT=XML&REST-PAYLOAD=true&paginationInput.entriesPerPage=200&itemFilter(0).name=MaxPrice&itemFilter(0).value=$globopts{maxprice}&itemFilter(0).paramName=Currency&itemFilter(0).paramValue=USD&itemFilter(1).name=FreeShippingOnly&itemFilter(1).value=true&itemFilter(2).name=EndTimeTo&itemFilter(2).value=$endtime&itemFilter(3).name=ListingType&itemFilter(3).value=Auction&categoryId=$i&sortOrder=BidCountFewest' | tidy -q -xml";
   debug("COMMAND: $cmd");
   # expensive to run above, so cache results for 30m
   # need fixed cachefile since endtime changes slightly each time
   # need ignoreerror here due to this curl error:
   # "line 1 column 109182 - Warning: replacing invalid character code 151"
-  $outfile = cache_command($cmd,"age=1800&retfile=1&cachefile=/tmp/ebay-tidy-cat-$i-hours-$hours-maxprice-$maxprice&ignoreerror=1");
+  $outfile = cache_command($cmd,"age=1800&retfile=1&cachefile=/tmp/ebay-tidy-cat-$i-hours-$globopts{hours}-maxprice-$globopts{maxprice}&ignoreerror=1");
   # TODO: check for errors excluding the one above
 }
 
 # look at output
-for $i (glob "/tmp/ebay-tidy-cat-*-hours-$hours-maxprice-$maxprice") {
+for $i (glob "/tmp/ebay-tidy-cat-*-hours-$globopts{hours}-maxprice-$globopts{maxprice}") {
   # ignore err/res files
   if ($i=~/\.(err|res)$/) {next;}
   # find items
@@ -101,6 +99,8 @@ for $i (@items) {
   # ignore stuff w/ bidcounts
   if ($hash{bidcount}) {next;}
 
+  # TODO: print more info here like price + exptime?
+  # TODO: let people sort by whatever field they want
   print "$hash{itemid} $hash{title}\n";
 
 }

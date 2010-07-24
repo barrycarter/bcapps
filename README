@@ -19,11 +19,19 @@ Summary:
  eBay API application key for this and you MUST put it in
  /usr/local/etc/ebay.id. Requires curl and tidy
 
+ bc-temperature-voronoi.pl: creates an SVG map from temperature data
+ using qhull/qdelaunay (currently static, hope to make it live)
+
 Notes:
 
  % The data in sample-data is a snapshot. It's not live data + it's
  not updated. Live data is NOT mirrored to github.
 
+Disclaimer:
 
+ A lot of this stuff is crappy but I'm putting it here with the hopes
+ of improving it (either myself or w/ help). None of this should be
+ considered a finished product, or even beta test software.
 
-
+ Some of this stuff contains obvious errors. This really is just
+ "first cut", "proof of concept", "show and tell" code.

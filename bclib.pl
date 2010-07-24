@@ -271,6 +271,34 @@ sub trim {
     return($_[0]);
 }
 
+=item min(@list)
+
+Returns minimal item of @list
+
+(not part of POSIX standard?!)
+
+=cut
+
+sub min {
+  my($min) = $_[0];
+  for $i (@_) {if ($i<$min) {$min=$i;}}
+  return $min;
+}
+
+=item max(@list)
+
+Returns maximal item of @list
+
+(not part of POSIX standard?!)
+
+=cut
+
+sub max {
+  my($max) = $_[0];
+  for $i (@_) {if ($i>$max) {$max=$i;}}
+  return $max;
+}
+
 # parse_form = alias for str2hash (but some of my code uses it)
 sub parse_form {return str2hash(@_);}
 
