@@ -1,16 +1,17 @@
 #!/bin/perl
 
 # creates digraphs from conquerclub.com XML files
+# --img: create images (which can be VERY large, so not done by default)
 
 # TODO: does NOT include bombards
 
-push(@INC,"/home/barrycarter/PERL/");
+push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
 for $file (@ARGV) {
-  # name outfile
+  # base filename for outfile
   $outfile = $file;
-  $outfile=~s/\.xml/.dot/;
+  $outfile=~s/\.xml//;
 
   # get content
   $all=suck($file);
@@ -54,8 +55,16 @@ for $i (keys %EDGE) {
 }
 
 # and print
-open(A,">$outfile");
+open(A,">$outfile.dot");
 print A "graph x {\n";
 print A join("\n",@dot);
 print A "\n}\n";
 close(A);
+
+if ($globopts{img}) {
+  # the 5 progs that make up graphviz (dot/neato yield best results)
+  for $i ("dot", "neato", "fdp", "twopi", "circo") {
+    # I found these options by trial and error; season to taste
+    system("$i -Gmclimit=5 -Gnslimit=5 -Goverlap=false -Gsplines=true -Nshape=record -Nfontsize=7 -Tpng $outfile.dot > $outfile-$i.png");
+  }
+}
