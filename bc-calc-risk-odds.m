@@ -100,6 +100,14 @@ q[x_,n_,m_] := (q[x,n,m] = 2890/7776*pf[q[x-1,n,m-2]] +
              2611/7776*pf[q[x-1,n-1,m-1]] +
              2275/7776*pf[q[x-1,n-2,m]]) /; m>=2
 
+(* the pointwise limit; really no reason for it to remember values
+since it's not recursive *)
+
+r[n_,m_] := r[n,m] = Module[{x=1}, 
+ While[q[x,n,m] != q[x-1,n,m], x++];
+ q[x,n,m]
+]
+
 (* My Mathematica has problems w/ graphics, so I must do this *)
 showit := Module[{},
 Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
@@ -109,6 +117,11 @@ Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 ListPlot[Table[q[x,11,6],{x,0,20}], AxesOrigin->{0,0}, PlotJoined->True, 
  PlotRange -> All]
 
-Table[q[10,n,m],{n,3,13},{m,1,13}]
+Table[q[10,n,m],{n,3,23},{m,1,23}]
+
+Table[q[x,12,7],{x,1,20}]
+
+Table[r[n,m],{n,4,10},{m,1,10}]
+
 
 ***)
