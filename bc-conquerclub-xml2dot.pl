@@ -45,12 +45,12 @@ for $i (keys %EDGE) {
     # if birectional, note so + remove other direction
     if ($EDGE{$j}{$i}) {
       delete $EDGE{$j}{$i};
-      push(@dot,qq%"$i" -- "$j"%);
+      push(@dot,qq%"$i" -- "$j" [dir="both"]%);
       next;
     }
 
     # otherwise straight arrow
-    push(@dot,qq%"$i" -> "$j"%);
+    push(@dot,qq%"$i" -- "$j" [dir="forward"]%);
   }
 }
 
@@ -65,6 +65,10 @@ if ($globopts{img}) {
   # the 5 progs that make up graphviz (dot/neato yield best results)
   for $i ("dot", "neato", "fdp", "twopi", "circo") {
     # I found these options by trial and error; season to taste
-    system("$i -Gmclimit=5 -Gnslimit=5 -Goverlap=false -Gsplines=true -Nshape=record -Nfontsize=7 -Tpng $outfile.dot > $outfile-$i.png");
+    system("$i -Gratio=compress -Gmclimit=5 -Gnslimit=5 -Goverlap=false -Gsplines=true -Nshape=box -Nfontsize=14 -Earrowsize=1.0 -Tsvg $outfile.dot > $outfile-$i.svg");
+#    system("$i -Gratio=compress -Gmclimit=5 -Gnslimit=5 -Goverlap=false -Gsplines=true -Nshape=box -Nfontsize=14 -Earrowsize=1.0 -Tpng $outfile.dot > $outfile-$i.png");
+    # yes, imagemagick can handle infile=outfile
+    # no, I don't know why this looks way better than -Nfontsize=7
+    system("convert -geometry 50%x50% $outfile-$i.png $outfile-$i.png ");
   }
 }
