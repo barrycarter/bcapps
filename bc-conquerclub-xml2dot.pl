@@ -61,14 +61,9 @@ print A join("\n",@dot);
 print A "\n}\n";
 close(A);
 
-if ($globopts{img}) {
-  # the 5 progs that make up graphviz (dot/neato yield best results)
-  for $i ("dot", "neato", "fdp", "twopi", "circo") {
+# all the graphviz progs: neato and fdp = best graphs, dot = ok, twopi = bad,
+# circo = just plain weird
+for $i ("dot", "neato", "fdp", "twopi", "circo") {
     # I found these options by trial and error; season to taste
-    system("$i -Gratio=compress -Gmclimit=5 -Gnslimit=5 -Goverlap=false -Gsplines=true -Nshape=box -Nfontsize=14 -Earrowsize=1.0 -Tsvg $outfile.dot > $outfile-$i.svg");
-#    system("$i -Gratio=compress -Gmclimit=5 -Gnslimit=5 -Goverlap=false -Gsplines=true -Nshape=box -Nfontsize=14 -Earrowsize=1.0 -Tpng $outfile.dot > $outfile-$i.png");
-    # yes, imagemagick can handle infile=outfile
-    # no, I don't know why this looks way better than -Nfontsize=7
-    system("convert -geometry 50%x50% $outfile-$i.png $outfile-$i.png ");
+    system("$i -Gepsilon=.000000001 -Gmclimit=5 -Gnslimit=5 -Goverlap=false -Gsplines=true -Nshape=box -Nfontsize=14 -Earrowsize=0.5 -Tsvg $outfile.dot > $outfile-$i.svg");
   }
-}
