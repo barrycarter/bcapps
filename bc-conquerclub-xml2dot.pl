@@ -41,7 +41,9 @@ for $file (@ARGV) {
     $x=$1;
     $i=~m%<smally>(.*?)</smally>%;
     $y=$1;
-    push(@nodes, qq%"$name" [pos="$x,-$y!",label="",style=invis]%);
+#    push(@nodes, qq%"$name" [pos="$x,-$y!",label="",style=invis]%);
+    $x/=72; $y/=72;
+    push(@nodes, qq%"$name" [pos="$x,-$y"]%);
 
     # for fly (also record position)
     push(@flypoints, "circle $x,$y,5,255,0,0");
@@ -67,23 +69,47 @@ for $i (keys %EDGE) {
     # if birectional, note so + remove other direction
     if ($EDGE{$j}{$i}) {
       delete $EDGE{$j}{$i};
-      push(@dot,qq%"$i" -- "$j" [dir="both"]%);
+      $rand=rand();
+      push(@dot,qq%"$i" -- "$j" [dir="both",color="$rand,1,1"]%);
       # for mathematica, need both edges
       push(@math,qq%{"$i" -> "$j"}%);
       push(@math,qq%{"$j" -> "$i"}%);
 
+      $edgecount++;
+
+      if ($edgecount%3==1) {
+	push(@flylines,"setstyle 255,0,0,255,255,255,255,255,255")
+      } elsif ($edgecount%3==2) {
+	push(@flylines,"setstyle 0,255,0,255,255,255,255,255,255");
+      } elsif ($edgecount%3==0) {
+	push(@flylines,"setstyle 0,0,255,255,255,255,255,255,255");
+      }
+
+=item COMMENT
       # for fly
-      # TODO: need directionals and bomabards
+     # TODO: need directionals and bomabards
+#      if (rand()<.5) {
+#	push(@flylines,"setstyle 0,0,255,255,255,255,255,255,255,255,255,255,255,255,255");
+	push(@flylines,"setstyle 0,0,255,0,0,0");
+      } else {
+#	push(@flylines,"setstyle 255,0,255,255,255,255,255,255,255,255,255,255,255,255,255");
+	push(@flylines,"setstyle 255,0,255,0,0,0");
+      }
+=cut
+
       push(@flylines,"line $pos{$i},$pos{$j},0,0,255");
       next;
     }
 
+    # TODO: consider node-based coloring
     # otherwise straight arrow (or one dir for mathematica)
-    push(@dot,qq%"$i" -- "$j" [dir="forward"]%);
+    push(@dot,qq%"$i" -- "$j" [dir="forward",color="$rand,1,1"]%);
     push(@math,qq%{"$i" -> "$j"}%);
     push(@flylines,"line $pos{$i},$pos{$j},0,0,255");
   }
 }
+
+push(@flylines,"killstyle");
 
 debug(@fly);
 
@@ -91,8 +117,6 @@ open(A,">$outfile.fly");
 print A "new\nsize 1024,768\nsetpixel 0,0,255,255,255\ntrasparent 255,255,255\n";
 print A join("\n",@flylines,@flypoints,@flytext);
 close(A);
-
-die "TESTING";
 
 # and print
 open(A,">$outfile.dot");
@@ -108,5 +132,4 @@ $edges = join(",\n",@math);
 print A "Graph[{$edges},{$verts}]\n";
 close(A);
 
-# neato -n2 is all we really need (sigh)
-system("neato -n2 -Nshape=box -Earrowsize=0.5 -Tsvg $outfile.dot > $outfile.svg");
+system("neato -Nheight=0.12 -Nwidth=0.65 -Nfixedsize=true -Nshape=box -Nfontsize=8 -Earrowsize=0.33 -Gnslimit=100 -Gmclimit=100 -Gsplines=true -Tpng $outfile.dot > $outfile.png");
