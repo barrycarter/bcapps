@@ -3,6 +3,9 @@
 # creates digraphs from conquerclub.com XML files
 # --img: create images (which can be VERY large, so not done by default)
 
+# Changed 8 Aug 2010 to use same coords as conquerclub does -- this
+# makes the program much duller, but makes the maps better (hopefully)
+
 # TODO: does NOT include bombards
 
 push(@INC,"/usr/local/lib");
@@ -28,13 +31,32 @@ for $file (@ARGV) {
   for $i (@terr) {
     # name
     $i=~m%<name>(.*?)</name>%;
-    $name=$1;
+    $name=unidecode($1);
+
+    # record for mathematica
+    push(@names,qq%{"$name"}%);
+
+    # get default position (small map) and push
+    $i=~m%<smallx>(.*?)</smallx>%;
+    $x=$1;
+    $i=~m%<smally>(.*?)</smally>%;
+    $y=$1;
+    push(@nodes, qq%"$name" [pos="$x,-$y!",label="",style=invis]%);
+
+    # for fly (also record position)
+    push(@flypoints, "circle $x,$y,5,255,0,0");
+    $tx = $x+2;
+    $ty = $y+2;
+    $count++;
+    $nm = substr($name,0,3);
+    push(@flytext, "string 255,0,255,$tx,$ty,small,$nm");
+    $pos{$name} = "$x,$y";
 
     # and borders
     @bor=($i=~m%<border>(.*?)</border>%isg);
 
     # connection map
-    for $j (@bor) {$EDGE{$name}{$j} = 1;}
+    for $j (@bor) {$EDGE{$name}{unidecode($j)} = 1;}
   }
 }
 
@@ -46,24 +68,45 @@ for $i (keys %EDGE) {
     if ($EDGE{$j}{$i}) {
       delete $EDGE{$j}{$i};
       push(@dot,qq%"$i" -- "$j" [dir="both"]%);
+      # for mathematica, need both edges
+      push(@math,qq%{"$i" -> "$j"}%);
+      push(@math,qq%{"$j" -> "$i"}%);
+
+      # for fly
+      # TODO: need directionals and bomabards
+      push(@flylines,"line $pos{$i},$pos{$j},0,0,255");
       next;
     }
 
-    # otherwise straight arrow
+    # otherwise straight arrow (or one dir for mathematica)
     push(@dot,qq%"$i" -- "$j" [dir="forward"]%);
+    push(@math,qq%{"$i" -> "$j"}%);
+    push(@flylines,"line $pos{$i},$pos{$j},0,0,255");
   }
 }
+
+debug(@fly);
+
+open(A,">$outfile.fly");
+print A "new\nsize 1024,768\nsetpixel 0,0,255,255,255\ntrasparent 255,255,255\n";
+print A join("\n",@flylines,@flypoints,@flytext);
+close(A);
+
+die "TESTING";
 
 # and print
 open(A,">$outfile.dot");
 print A "graph x {\n";
-print A join("\n",@dot);
+print A join("\n",@nodes),"\n",join("\n",@dot);
 print A "\n}\n";
 close(A);
 
-# all the graphviz progs: neato and fdp = best graphs, dot = ok, twopi = bad,
-# circo = just plain weird
-for $i ("dot", "neato", "fdp", "twopi", "circo") {
-    # I found these options by trial and error; season to taste
-    system("$i -Gepsilon=.000000001 -Gmclimit=5 -Gnslimit=5 -Goverlap=false -Gsplines=true -Nshape=box -Nfontsize=14 -Earrowsize=0.5 -Tsvg $outfile.dot > $outfile-$i.svg");
-  }
+# mathematica version
+open(A,">$outfile.m");
+$verts = join(",\n",@names);
+$edges = join(",\n",@math);
+print A "Graph[{$edges},{$verts}]\n";
+close(A);
+
+# neato -n2 is all we really need (sigh)
+system("neato -n2 -Nshape=box -Earrowsize=0.5 -Tsvg $outfile.dot > $outfile.svg");
