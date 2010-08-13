@@ -11,6 +11,12 @@
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
+# TODO: prevent nodes from getting too close to each other
+# TODO: choose edge colors better
+# TODO: if two nodes share first 12 chars, find way to differentiate
+# TODO: doesn't work foriegn characters
+
+# TODO: this does NOT work w/ multiple files -- loop doesn't to end!
 for $file (@ARGV) {
   # base filename for outfile
   $outfile = $file;
@@ -41,18 +47,13 @@ for $file (@ARGV) {
     $x=$1;
     $i=~m%<smally>(.*?)</smally>%;
     $y=$1;
-#    push(@nodes, qq%"$name" [pos="$x,-$y!",label="",style=invis]%);
     $x/=72; $y/=72;
-    push(@nodes, qq%"$name" [pos="$x,-$y"]%);
 
-    # for fly (also record position)
-    push(@flypoints, "circle $x,$y,5,255,0,0");
-    $tx = $x+2;
-    $ty = $y+2;
-    $count++;
-    $nm = substr($name,0,3);
-    push(@flytext, "string 255,0,255,$tx,$ty,small,$nm");
-    $pos{$name} = "$x,$y";
+    # if more than 12 chars, truncate
+    $pname = $name;
+    if (length($name)>=12) {$pname=substr($name,0,11)."...";}
+
+    push(@nodes, qq%"$name" [pos="$x,-$y",label="$pname"]%);
 
     # and borders
     @bor=($i=~m%<border>(.*?)</border>%isg);
@@ -65,58 +66,27 @@ for $file (@ARGV) {
 # build up graphviz style graph
 
 for $i (keys %EDGE) {
+  # set color based on point
+  $hue+=1/8;
+  while ($hue>1) {$hue--;}
+  $color="$hue,1,1";
+
   for $j (keys %{$EDGE{$i}}) {
     # if birectional, note so + remove other direction
     if ($EDGE{$j}{$i}) {
       delete $EDGE{$j}{$i};
-      $rand=rand();
-      push(@dot,qq%"$i" -- "$j" [dir="both",color="$rand,1,1"]%);
+      push(@dot,qq%"$i" -- "$j" [dir="both",color="$hue,1,1"]%);
       # for mathematica, need both edges
       push(@math,qq%{"$i" -> "$j"}%);
       push(@math,qq%{"$j" -> "$i"}%);
-
-      $edgecount++;
-
-      if ($edgecount%3==1) {
-	push(@flylines,"setstyle 255,0,0,255,255,255,255,255,255")
-      } elsif ($edgecount%3==2) {
-	push(@flylines,"setstyle 0,255,0,255,255,255,255,255,255");
-      } elsif ($edgecount%3==0) {
-	push(@flylines,"setstyle 0,0,255,255,255,255,255,255,255");
-      }
-
-=item COMMENT
-      # for fly
-     # TODO: need directionals and bomabards
-#      if (rand()<.5) {
-#	push(@flylines,"setstyle 0,0,255,255,255,255,255,255,255,255,255,255,255,255,255");
-	push(@flylines,"setstyle 0,0,255,0,0,0");
-      } else {
-#	push(@flylines,"setstyle 255,0,255,255,255,255,255,255,255,255,255,255,255,255,255");
-	push(@flylines,"setstyle 255,0,255,0,0,0");
-      }
-=cut
-
+    } else {
+      # otherwise straight arrow (or one dir for mathematica)
+      push(@dot,qq%"$i" -- "$j" [dir="forward",color="$hue,1,1"]%);
+      push(@math,qq%{"$i" -> "$j"}%);
       push(@flylines,"line $pos{$i},$pos{$j},0,0,255");
-      next;
     }
-
-    # TODO: consider node-based coloring
-    # otherwise straight arrow (or one dir for mathematica)
-    push(@dot,qq%"$i" -- "$j" [dir="forward",color="$rand,1,1"]%);
-    push(@math,qq%{"$i" -> "$j"}%);
-    push(@flylines,"line $pos{$i},$pos{$j},0,0,255");
   }
 }
-
-push(@flylines,"killstyle");
-
-debug(@fly);
-
-open(A,">$outfile.fly");
-print A "new\nsize 1024,768\nsetpixel 0,0,255,255,255\ntrasparent 255,255,255\n";
-print A join("\n",@flylines,@flypoints,@flytext);
-close(A);
 
 # and print
 open(A,">$outfile.dot");
