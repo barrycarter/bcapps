@@ -1,11 +1,13 @@
 // ==UserScript==
 // @name bc-log-die-rolls.users.js
-// @namespace http://barrycarter.info/
+// @namespace http://conquerclub.barrycarter.info/
 // @description Logs all conquerclub.com die rolls to central server
 // intentionally not putting http below, I want to match files too
 // @include *conquerclub*
 // ==/UserScript==
 
+// only invoke this script when someone hits 'assault'
+document.getElementById('mydice').addEventListener("click", logroll)
 
 // TODO: production include is: http://www.conquerclub.com/game.php?game=*
 
@@ -15,10 +17,10 @@
 
 // v=1 means version=1 but also means I can use '&var=val' below
 
+function logroll() {
 
-// var url = "http://ns1.conquerdata.barrycarter.info/rec.php?v=1";
-
-var url = "http://n0g.info/rec.php?v=1";
+// TODO: change this URL
+var url = "http://ns1.conquerdata.barrycarter.info/rec.php?v=1";
 
 // get the game number
 var gameno = document.evaluate('//input[@type="hidden"][@name="game"]/@value',
@@ -58,3 +60,5 @@ url = url+"&at="+attacker;
 GM_xmlhttpRequest({method: "GET", url: url});
 
 GM_log(url);
+
+}
