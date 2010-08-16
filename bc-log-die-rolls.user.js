@@ -13,45 +13,42 @@
 // test page:
 // http://conquerclub.barrycarter.info/TEST/conquerclub.snapshot.diceroll.html
 
-var attack;
-attack = document.evaluate('//ul', document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+// v=1 means version=1 but also means I can use '&var=val' below
+var url = "http://ns1.conquerdata.barrycarter.info/rec.php?v=1";
 
-GM_log("ALPHA "+attack.snapshotItem(1));
-GM_log(dump(attack.snapshotItem(1).textContent));
-GM_log("BETA");
+// get the game number
+var gameno = document.evaluate('//input[@type="hidden"][@name="game"]/@value',
+ document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
 
-/**
- * Function : dump()
- * Arguments: The data - array,hash(associative array),object
- *    The level - OPTIONAL
- * Returns  : The textual representation of the array.
- * This function was inspired by the print_r function of PHP.
- * This will accept some data as the argument and return a
- * text that will be a more readable version of the
- * array/hash/object that is given.
- * Docs: http://www.openjs.com/scripts/others/dump_function_php_print_r.php
- */
-function dump(arr,level) {
-  var dumped_text = "";
-  if(!level) level = 0;
-  
-  //The padding given at the beginning of the line.
-  var level_padding = "";
-  for(var j=0;j<level+1;j++) level_padding += "    ";
-  
-  if(typeof(arr) == 'object') { //Array/Hashes/Objects 
-    for(var item in arr) {
-      var value = arr[item];
-      
-      if(typeof(value) == 'object') { //If it is an array,
-	dumped_text += level_padding + "'" + item + "' ...\n";
-	dumped_text += dump(value,level+1);
-      } else {
-	dumped_text += level_padding + "'" + item + "' => \"" + value + "\"\n";
-      }
-    }
-  } else { //Stings/Chars/Numbers etc.
-    dumped_text = "===>"+arr+"<===("+typeof(arr)+")";
-  }
-  return dumped_text;
-}
+url = url+"&g="+gameno.snapshotItem(0).value;
+
+// the attackers rolls
+
+var attack = document.evaluate('//ul[@class="attack"]/li',
+ document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+
+for (i=0; i<attack.snapshotLength; i++) {
+ var val = (attack.snapshotItem(i).childNodes)[0].textContent;
+ url=url+"&ad="+val;
+ }
+
+// defender rolls (redundant code, blech!)
+
+var defend = document.evaluate('//ul[@class="defend"]/li',
+ document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+
+for (i=0; i<defend.snapshotLength; i++) {
+ var val = (defend.snapshotItem(i).childNodes)[0].textContent;
+ url=url+"&dd="+val;
+ }
+
+// attacker (country)
+
+var attacker = document.evaluate('//p[@class="attacker"]',
+ document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+
+attacker = (attacker.snapshotItem(0).childNodes)[0].textContent
+
+url = url+"at="+attacker;
+
+GM_log(url);
