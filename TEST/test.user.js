@@ -1,3 +1,6 @@
+// the real version of this file is named test.user.js and it does at least
+// load into GM even if it doesn't work
+
 // generic test greasemonkey script
 
 sel = document.evaluate('//select',
