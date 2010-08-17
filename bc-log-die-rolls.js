@@ -6,8 +6,32 @@
 // @include *conquerclub*
 // ==/UserScript==
 
+// HACK: currently, conquerclub doesn't tell you if someone attacks
+// your territory and fails -- since this script logs real time, it
+// will-- might add feature to not display game rolls until game is
+// ended?
+
+// TODO: how does auto-assault behave?
 // only invoke this script when someone hits 'assault'
-document.getElementById('mydice').addEventListener("click", logroll)
+
+function alrt2() {alert('whee');}
+function alrt(x) {alert(x);}
+
+// test
+sel = document.evaluate('//select',
+ document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+sel = sel.snapshotItem(0);
+
+GM_log(sel);
+
+sel.onchange = function(){alert("foo");}
+
+// find the button
+button = document.evaluate('//input[@type="submit"][@value="Assault"]',
+ document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+
+// and link it to function
+// button.snapshotItem(0).addEventListener("click", function() {alert("whee");})
 
 // TODO: production include is: http://www.conquerclub.com/game.php?game=*
 
