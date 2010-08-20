@@ -3,7 +3,7 @@
 // @namespace http://conquerclub.barrycarter.info/
 // @description Logs all conquerclub.com die rolls to central server
 // intentionally not putting http below, I want to match files too
-// @include *conquerclub*
+// @include *
 // ==/UserScript==
 
 // HACK: currently, conquerclub doesn't tell you if someone attacks
@@ -14,24 +14,14 @@
 // TODO: how does auto-assault behave?
 // only invoke this script when someone hits 'assault'
 
-function alrt2() {alert('whee');}
-function alrt(x) {alert(x);}
-
-// test
-sel = document.evaluate('//select',
- document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
-sel = sel.snapshotItem(0);
-
-GM_log(sel);
-
-sel.onchange = function(){alert("foo");}
+GM_log("script called");
 
 // find the button
 button = document.evaluate('//input[@type="submit"][@value="Assault"]',
  document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
 
 // and link it to function
-// button.snapshotItem(0).addEventListener("click", function() {alert("whee");})
+button.snapshotItem(0).addEventListener("click", logroll, false);
 
 // TODO: production include is: http://www.conquerclub.com/game.php?game=*
 
@@ -42,6 +32,8 @@ button = document.evaluate('//input[@type="submit"][@value="Assault"]',
 // v=1 means version=1 but also means I can use '&var=val' below
 
 function logroll() {
+
+GM_log("logroll called");
 
 // TODO: change this URL
 var url = "http://ns1.conquerdata.barrycarter.info/rec.php?v=1";

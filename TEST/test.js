@@ -16,6 +16,9 @@ sel = sel.snapshotItem(0);
 
 GM_log(sel);
 
-sel.onchange = function(){alert("foo");}
+/// sel.onchange = function(){alert("foo");}
+
+sel.addEventListener("change", function(){alert("foo");}, false);
+
 
 
