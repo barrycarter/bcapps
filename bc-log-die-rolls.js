@@ -31,8 +31,6 @@ button.snapshotItem(0).addEventListener("click", logroll, false);
 
 // v=1 means version=1 but also means I can use '&var=val' below
 
-function logroll() {
-
 GM_log("logroll called");
 
 // TODO: change this URL
@@ -77,4 +75,5 @@ GM_xmlhttpRequest({method: "GET", url: url});
 
 GM_log(url);
 
-}
+document.body.innerHTML += url;
+
