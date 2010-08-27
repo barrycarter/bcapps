@@ -18,6 +18,9 @@ require "bclib.pl";
 
 # TODO: this does NOT work w/ multiple files -- loop doesn't to end!
 for $file (@ARGV) {
+  # should end in xml
+  unless ($file=~/\.xml$/i) {warn "$file doesn't end in .xml";}
+
   # base filename for outfile
   $outfile = $file;
   $outfile=~s/\.xml//;
@@ -73,17 +76,31 @@ for $i (keys %EDGE) {
 
   for $j (keys %{$EDGE{$i}}) {
     # if birectional, note so + remove other direction
+    # TODO: code is getting quite redundant -- there's a better way to do this!
     if ($EDGE{$j}{$i}) {
       delete $EDGE{$j}{$i};
       push(@dot,qq%"$i" -- "$j" [dir="both",color="$hue,1,1"]%);
+
       # for mathematica, need both edges
       push(@math,qq%{"$i" -> "$j"}%);
       push(@math,qq%{"$j" -> "$i"}%);
+
+      # for networkx need both (and no spaces sigh)
+      ($neti, $netj) = ($i,$j);
+      $neti=~s/\s/_/isg;
+      $netj=~s/\s/_/isg;
+      push(@netx,"$neti $netj");
+      push(@netx,"$netj $neti");
+
     } else {
       # otherwise straight arrow (or one dir for mathematica)
       push(@dot,qq%"$i" -- "$j" [dir="forward",color="$hue,1,1"]%);
       push(@math,qq%{"$i" -> "$j"}%);
-      push(@flylines,"line $pos{$i},$pos{$j},0,0,255");
+
+      ($neti, $netj) = ($i,$j);
+      $neti=~s/\s/_/isg;
+      $netj=~s/\s/_/isg;
+      push(@netx,"$net $netj");
     }
   }
 }
@@ -100,6 +117,12 @@ open(A,">$outfile.m");
 $verts = join(",\n",@names);
 $edges = join(",\n",@math);
 print A "Graph[{$edges},{$verts}]\n";
+close(A);
+
+# networkx
+open(A,">$outfile.py");
+print A join("\n",@netx);
+print A "\n";
 close(A);
 
 system("neato -Nheight=0.12 -Nwidth=0.65 -Nfixedsize=true -Nshape=box -Nfontsize=8 -Earrowsize=0.33 -Gnslimit=100 -Gmclimit=100 -Gsplines=true -Tpng $outfile.dot > $outfile.png");
