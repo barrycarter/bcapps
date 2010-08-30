@@ -82,8 +82,9 @@ for $i (keys %EDGE) {
       push(@dot,qq%"$i" -- "$j" [dir="both",color="$hue,1,1"]%);
 
       # for mathematica, need both edges
-      push(@math,qq%{"$i" -> "$j"}%);
-      push(@math,qq%{"$j" -> "$i"}%);
+      # TODO: mathematica code not working -- nodes must be intergers?
+      push(@math,qq%{"$i","$j"}%);
+      push(@math,qq%{"$j","$i"}%);
 
       # for networkx need both (and no spaces sigh)
       ($neti, $netj) = ($i,$j);
@@ -95,7 +96,7 @@ for $i (keys %EDGE) {
     } else {
       # otherwise straight arrow (or one dir for mathematica)
       push(@dot,qq%"$i" -- "$j" [dir="forward",color="$hue,1,1"]%);
-      push(@math,qq%{"$i" -> "$j"}%);
+      push(@math,qq%{"$i","$j"}%);
 
       ($neti, $netj) = ($i,$j);
       $neti=~s/\s/_/isg;
@@ -116,7 +117,7 @@ close(A);
 open(A,">$outfile.m");
 $verts = join(",\n",@names);
 $edges = join(",\n",@math);
-print A "Graph[{$edges},{$verts}]\n";
+print A "{$edges}\n";
 close(A);
 
 # networkx
