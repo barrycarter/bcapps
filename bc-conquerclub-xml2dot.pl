@@ -34,13 +34,18 @@ for $file (@ARGV) {
   while ($all=~s%<continent>(.*?)</continent>%%is) {push(@cont,$1);}
 
   # now all territories (could use loop w/ continent?)
-  while ($all=~s%<territory>(.*?)</territory>%%is) {push(@terr,$1);}
+  while ($all=~s%<territory>(\s*<name>\s*.*?\s*</name>.*?)</territory>%%is) {push(@terr,$1);}
 
   # for each territory, find name and borders and create connection map
   for $i (@terr) {
-    # name
+    debug("TERR: $i");
+
+    # name (remove quotes)
     $i=~m%<name>(.*?)</name>%;
     $name=unidecode($1);
+    debug("NAME: $name");
+    $name=~s/\"//isg;
+    debug("NAME2: $name");
 
     # record for mathematica
     push(@names,qq%{"$name"}%);
@@ -52,7 +57,7 @@ for $file (@ARGV) {
     $y=$1;
     $x/=72; $y/=72;
 
-    # if more than 12 chars, truncate
+    # if more than 12 chars, truncate for printing only
     $pname = $name;
     if (length($name)>=12) {$pname=substr($name,0,11)."...";}
 
@@ -62,7 +67,12 @@ for $file (@ARGV) {
     @bor=($i=~m%<border>(.*?)</border>%isg);
 
     # connection map
-    for $j (@bor) {$EDGE{$name}{unidecode($j)} = 1;}
+    for $j (@bor) {
+      # TODO: hideously ugly repeat code here
+      $jclean = unidecode($j);
+      $jclean=~s/\"//isg;
+      $EDGE{$name}{$jclean} = 1;
+    }
   }
 }
 
@@ -115,9 +125,21 @@ close(A);
 
 # mathematica version
 open(A,">$outfile.m");
-$verts = join(",\n",@names);
+# $verts = join(",\n",@names);
 $edges = join(",\n",@math);
-print A "{$edges}\n";
+
+# TODO: using nodes as temp variable below is probably bad
+print A << "MARK";
+g["$outfile"] = {$edges};
+nodes = DeleteDuplicates\@Flatten[g["$outfile"] /. Rule -> List]
+g["$outfile"] = {$edges};
+Table[numify["$outfile"][nodes[[n]]] = n, {n,1,Length[nodes]}]
+Table[namify["$outfile"][n] = nodes[[n]], {n,1,Length[nodes]}]
+graph["$outfile"] = FromOrderedPairs[g["$outfile"] /. s_String -> numify["$outfile"][s]]
+Clear[nodes]
+MARK
+;
+
 close(A);
 
 # networkx
