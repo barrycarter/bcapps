@@ -4,6 +4,8 @@
 use Digest::SHA1 qw(sha1 sha1_hex sha1_base64);
 use Date::Parse;
 use POSIX;
+use Text::Unidecode;
+use utf8;
 
 # HACK: not sure this is right way to do this
 our(%globopts);
@@ -316,6 +318,112 @@ sub my_tmpfile {
   while (-f "/tmp/$prefix$x$$") {$x=rand();}
   push(@tmpfiles, "/tmp/$prefix$x$$");
   return("/tmp/$prefix$x$$");
+}
+
+=item sqlite3($query,$db)
+
+Run the query $query on the sqlite3 db (file) $db and return results
+in raw format.
+
+=cut
+
+sub sqlite3 {
+  my($query,$db) = @_;
+  my($qfile) = (tmpfile("sqlite"));
+
+  # ugly use of global here
+  $SQL_ERROR = "";
+
+  # if $query doesnt have ;, add it, unless it starts with .
+  unless ($query=~/^\./ || $query=~/\;$/) {$query="$query;";}
+  write_file($query,$qfile);
+  my($cmd) = "sqlite3 -batch -line $db < $qfile";
+  my($out,$err,$res,$fname) = cache_command($cmd,"nocache=1");
+
+  if ($res) {
+    warn("SQLITE3 returns $res: $out/$err, CMD: $cmd");
+    $SQL_ERROR = "$res: $out/$err FROM $cmd";
+    return "";
+  }
+  return $out;
+}
+
+=item sqlite3hashlist($query,$db)
+
+Returns a list of hashes representing the results of $query on $db
+
+=cut
+
+sub sqlite3hashlist {
+  my($query,$db) = @_;
+  my($raw) = sqlite3($query,$db);
+  my($hashref) = {};
+  my(@res) = ();
+  my($count) = 0;
+
+  # KLUDGE: for empty case
+  unless ($raw) {return @res;}
+
+  for $i (split("\n",$raw)) {
+    # standard column=val line
+    if ($i=~/^\s*(.*?)\s+\=\s+(.*)$/) {
+      $$hashref{$1}=$2;
+      next;
+    }
+
+    # blank line between results
+    if (blank($i)) {
+      push(@res,$hashref);
+      $hashref = {};
+      next;
+    }
+
+    # if its not in a format we understand, complain
+    warnlocal("*$i*: not understood, RAW is: *$raw*, QUERY was: *$query*");
+  }
+
+  push(@res,$hashref); # the last one
+  return @res;
+}
+
+=item sqlite3val($query,$db)
+
+For queries that return a single row/column, return that row/column
+
+=cut
+
+sub sqlite3val {
+  my($query,$db) = @_;
+  my(@res) = sqlite3hashlist($query,$db);
+  # TODO: if I were really clever, I could combine the two lines below!
+  my(@temp) = values %{$res[0]};
+  return $temp[0];
+}
+
+=item sqlite3cols($tabname,$db)
+
+Return a hash mapping columns in tabname to their "type"
+
+=cut
+
+sub sqlite3cols {
+  my($tabname,$db) = @_;
+  my($raw) = sqlite3(".schema $tabname",$db);
+  my(%ret);
+
+  unless ($raw=~/create table $tabname \((.*?)\)/is) {
+    warnlocal("Schema return value not understood");
+    return;
+  }
+
+  my($schema) = $1;
+
+  for $i (split(/\,/,$schema)) {
+    $i=~/^\s*(.*?)\s+(.*)$/||warnlocal("BAD SCHEMA LINE: $i");
+    $ret{$1}=$2;
+  }
+  
+  return %ret;
 }
 
 # cleanup files created by my_tmpfile (unless --keeptemp set)
