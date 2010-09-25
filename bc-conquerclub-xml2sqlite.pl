@@ -86,7 +86,7 @@ for $i (@games) {
       next;
     }
 
-    if ($event=~m/^(\d+) was kicked out for missing too many turns$/) {
+    if ($event=~m/^(\d+) was kicked out( for missing too many turns)?$/) {
       $p1 = $playernames[$1-1];
       push(@eventq, qq%INSERT INTO events (game_number, time, p1, action, p2) VALUES
       ("$hash{game_number}", "$time", "$p1", "kicked", "")%);
