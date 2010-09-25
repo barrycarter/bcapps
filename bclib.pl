@@ -1,10 +1,15 @@
 # Barry Carter's Perl library (carter.barry@gmail.com)
 
 # required libs
+# NOTE: Some people believe you should only 'use' things that the lib
+# itself needs, not things that programs calling the lib may
+# need. Personally, I just don't care
 use Digest::SHA1 qw(sha1 sha1_hex sha1_base64);
+use Digest::MD5 qw(md5 md5_hex md5_base64);
 use Date::Parse;
 use POSIX;
 use Text::Unidecode;
+use MIME::Base64;
 use utf8;
 
 # HACK: not sure this is right way to do this
@@ -256,7 +261,7 @@ sub read_file {
   # many ways to do this; below not necessarily optimal
   local(*A,$/);
   undef $/;
-  open(A,$_[0])||warn("Can't open $_[0], $!");
+  open(A,$_[0])||warnlocal("Can't open $_[0], $!");
   my($suck)=<A>;
   close(A);
   return($suck);
@@ -325,11 +330,13 @@ sub my_tmpfile {
 Run the query $query on the sqlite3 db (file) $db and return results
 in raw format.
 
+<h>Modules, who needs 'em!</h>
+
 =cut
 
 sub sqlite3 {
   my($query,$db) = @_;
-  my($qfile) = (tmpfile("sqlite"));
+  my($qfile) = (my_tmpfile("sqlite"));
 
   # ugly use of global here
   $SQL_ERROR = "";
@@ -341,7 +348,7 @@ sub sqlite3 {
   my($out,$err,$res,$fname) = cache_command($cmd,"nocache=1");
 
   if ($res) {
-    warn("SQLITE3 returns $res: $out/$err, CMD: $cmd");
+    warnlocal("SQLITE3 returns $res: $out/$err, CMD: $cmd");
     $SQL_ERROR = "$res: $out/$err FROM $cmd";
     return "";
   }
@@ -360,6 +367,7 @@ sub sqlite3hashlist {
   my($hashref) = {};
   my(@res) = ();
   my($count) = 0;
+  my($cur);
 
   # KLUDGE: for empty case
   unless ($raw) {return @res;}
@@ -367,19 +375,20 @@ sub sqlite3hashlist {
   for $i (split("\n",$raw)) {
     # standard column=val line
     if ($i=~/^\s*(.*?)\s+\=\s+(.*)$/) {
-      $$hashref{$1}=$2;
+      $cur=$1;
+      $$hashref{$cur}=$2;
       next;
     }
 
     # blank line between results
-    if (blank($i)) {
+    if ($i=~/^\s*$/) {
       push(@res,$hashref);
       $hashref = {};
       next;
     }
 
-    # if its not in a format we understand, complain
-    warnlocal("*$i*: not understood, RAW is: *$raw*, QUERY was: *$query*");
+    # continuation line
+    $$hashref{$cur}.=$i;
   }
 
   push(@res,$hashref); # the last one
@@ -424,6 +433,66 @@ sub sqlite3cols {
   }
   
   return %ret;
+}
+
+=item webdie($str)
+
+The die() command doesn't work well for CGI; this is die for CGI scripts
+
+=cut
+
+sub webdie {
+  my($str) = @_;
+  print "<p>ERROR: $str<p>\n";
+  # exiting w/ 0 to avoid confusing lighttpd
+  exit(0);
+}
+
+=item cmdfile()
+
+Return contents and name of first command-line argument to program
+(not argument to function). Complains if program is called sans
+argument
+
+=cut
+
+sub cmdfile {
+    my($f)=$ARGV[0]||die("Usage: $0 [options] <filename>");
+    if ($#ARGV>=1) {
+      die("Usage: $0 [options] <filename>; multiple files ignored, use xargs");
+    }
+    unless (-f $f) {die("NO SUCH FILE: $f");}
+    unless (-r $f) {die("NO READ PERM: $f");}
+    return(read_file($f),$f);
+}
+
+=item tmpdir($prefix="file")
+
+Create and return a directory in /tmp that is not being used and
+starts with $prefix.
+
+NOTE: Appending $$ to filename below avoids race condition when forking.
+
+=cut
+
+sub tmpdir {
+  my($prefix) = @_;
+  unless ($prefix) {$prefix="dir";}
+  my(@lets)=("a".."z","A".."z","0".."9");
+  my(@file);
+  my($file);
+
+  do {
+    for $i (1..16) {
+      my($rand) = rand($#lets);
+      push(@file, $lets[$rand]);
+    }
+    $file = "/tmp/$prefix-".join("",@file)."-$$";
+    } until (!(-f $file));
+
+  mkdir($file);
+  push(@tmpdirs, $file);
+  return($file);
 }
 
 # cleanup files created by my_tmpfile (unless --keeptemp set)
