@@ -459,7 +459,7 @@ argument
 sub cmdfile {
     my($f)=$ARGV[0]||die("Usage: $0 [options] <filename>");
     if ($#ARGV>=1) {
-      die("Usage: $0 [options] <filename>; multiple files ignored, use xargs");
+      die("Usage: $0 [options] <filename>; multiple files ignored, use xargs -n 1");
     }
     unless (-f $f) {die("NO SUCH FILE: $f");}
     unless (-r $f) {die("NO READ PERM: $f");}
