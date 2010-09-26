@@ -11,6 +11,7 @@ use POSIX;
 use Text::Unidecode;
 use MIME::Base64;
 use utf8;
+require JSON;
 
 # HACK: not sure this is right way to do this
 our(%globopts);
