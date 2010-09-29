@@ -2,6 +2,10 @@
 
 # reconstructs as much of conquerclub game as possible given full logs
 
+# was taking a round-by-round approach, but
+# http://userscripts.org/scripts/show/83035 makes me wonder if an
+# action-by-action approach is better
+
 # Note: regions always start w/ 3 troops
 
 push(@INC,"/usr/local/lib");
