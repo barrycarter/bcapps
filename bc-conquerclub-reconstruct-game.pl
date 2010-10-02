@@ -1,6 +1,8 @@
 #!/bin/perl
 
 # reconstructs as much of conquerclub game as possible given full logs
+# --nocomment: don't print comments
+# --maxrounds: only print equations thru this round (testing only)
 
 # was taking a round-by-round approach, but
 # http://userscripts.org/scripts/show/83035 makes me wonder if an
@@ -13,6 +15,9 @@ require "bclib.pl";
 
 # sample test game
 $all = read_file("sample-data/CONQUERCLUB/7460216.html");
+
+# if --maxrounds not set, set it to infinity
+defaults("maxrounds=999999999999999999");
 
 # find end-of-game deployment
 $all=~m/map = (.*?);/is;
@@ -30,11 +35,18 @@ for $i (@countries) {
   $i=$hash{name};
 }
 
+%countries=list2hash(@countries);
+
+# all countries start w/ 3 troops
+# TODO: validate above (ie, is it really true?)
+# could probably combine this w/ loop above, but pointless
+for $j (@countries) {
+  push(@out, qq%troops["$j"][0] == 3%);
+}
+
 # find log section
 $all=~m%<div id="log">(.*?)</div>%s||warn("Can't find log section");
 @log = split(/<br>/,$1);
-
-$round=0; # starting round
 
 # go thru log lines
 for $i (@log) {
@@ -44,6 +56,10 @@ for $i (@log) {
 
   # ignore blank lines
   if ($i=~/^\s*$/) {next;}
+
+  # comment for output
+  $comment = $i;
+  $comment=~s/<([^>]*?)>//isg;
 
   # time
   $i=~s/^(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}) -\s*//;
@@ -57,67 +73,94 @@ for $i (@log) {
     $actor="";
   }
 
+  # TODO: for every country (even those specifically listed) allow for
+  # troop loss due to unsuccessful attacks
+
   # ignore end of player turn (not end of entire turn)
   if ($i=~/^ended the turn$/) {next;}
 
   # information below is repeated in deployment, so can ignore it here
   if ($i=~/^received \d+ troops for \d+ regions$/) {next;}
+  # other stuff we can ignore
+  # TODO: combine this w/ 2 regex above?
+  if ($i=~/(Game has been initialized|eliminated|won the|lost \d+ points|gained \d+ points|Incrementing game to round \d+)/) {next;}
 
-  # specific region received troops
+  # increment round ($prevround is a convenience var only)
+  # <h>Part of a series on how to write confusing code</h>
+  $prevround = $round++;
+
+  warn "TESTING LIMITED ROUND";
+  if ($round>= $globopts{maxrounds}) {next;}
+
+  # push log line as comment
+  # TODO: comment format may change (haven't decided on backend language yet)
+  unless ($globopts{nocomment}) {push(@out, "(* $comment *)");}
+
+  # keep track of which territories are affected by action item
+  %affected=();
+
   if ($i=~/^received (\d+) troops for holding (.*?)$/) {
+    # specific region received troops
     ($ntroop, $terr) = ($1,$2);
-    # this territory got this many troops
-    $delta{$round}{$terr} += $ntroop;
-    next;
-  }
-
-  # troop deployment
-  if ($i=~/deployed (\d+) troops on (.*?)$/) {
+    unless ($countries{$terr}) {$round--; next;}
+    push(@out, qq%troops["$terr"][$round] <= troops["$terr"][$prevround] + $ntroop%);
+    $affected{$terr}=1;
+  } elsif ($i=~/deployed (\d+) troops on (.*?)$/) {
+    # troop deployment
     ($ntroop, $terr) = ($1,$2);
-    # this territory got this many troops
-    $delta{$round}{$terr} += $ntroop;
-    next;
-  }
-
-  # round increment
-  if ($i=~/^Incrementing game to round (\d+)$/) {$round=$1;next;}
-
-  # reinforcement
-  if ($i=~/^reinforced (.*?) with (\d+) troops from (.*?)$/) {
+    push(@out, qq%troops["$terr"][$round] <= troops["$terr"][$prevround] + $ntroop%);
+    $affected{$terr}=1;
+  } elsif ($i=~/^reinforced (.*?) with (\d+) troops from (.*?)$/) {
+    # reinforcement
     ($source, $ntroop, $target) = ($3,$2,$1);
-    $delta{$round}{$source} -= $ntroop;
-    $delta{$round}{$target} += $ntroop;
-    next;
-  }
-
-  # conquest
-  if ($i=~/^assaulted (.*?) from (.*?) and conquered it from \*?(.*?)\*?$/) {
+    push(@out, qq%troops["$target"][$round] <= troops["$target"][$prevround] + $ntroop%);
+    push(@out, qq%troops["$source"][$round] <= troops["$source"][$prevround] - $ntroop%);
+    $affected{$source}=1;
+    $affected{$target}=1;
+  } elsif ($i=~/^assaulted (.*?) from (.*?) and conquered it from \*?(.*?)\*?$/) {
+    # conquest
     ($atkr, $dest, $source, $defn) = ($actor,$1,$2,$3);
+    # attacker lost at least 1 troop
+    push(@out, qq%troops["$atkr"][$round] <= troops["$atkr"][$prevround] - 1%);
+    $affected{$atrk}=1;
     $defn=~s%<span.*?>(.*?)</span>%$1%;
     $owner{$round}{$dest} = $atkr;
     $owner{$round}{$source} = $atkr; # probably redundant
-    $owner{$round-1}{$dest} = $defn; # redundant
+    $owner{$prevround}{$dest} = $defn; # redundant
     # if a territory is conquered delta is probably wrong
     $conquered{$round}{$dest} = 1;
-    next;
+  } else {
+    warnlocal("Unhandled: $i");
   }
 
-  # other stuff we can ignore
-  if ($i=~/(Game has been initialized|eliminated|won the|lost \d+ points|gained \d+ points)/) {next;}
-
-  warnlocal("Unhandled: $i");
+  # now, every other country
+  for $j (@countries) {
+    # this applies to affected countries too
+    push(@out, qq%troops["$j"][$round] >= 1%);
+    if ($affected{$j}) {next;}
+    push(@out, qq%troops["$j"][$round] <= troops["$j"][$prevround]%);
+  }
 }
 
 $player[0]="neutral player"; # special case
 
 # end of game stuff we know
 for $i (0..$#armies) {
+  # TODO: not really efficient to put this in for loop!
+  if ($round > $globopts{maxrounds}) {next;}
   %hash = %{$armies[$i]};
   # TODO: uncomment below!
 #  push(@math, qq%owner["$countries[$i]"][$round] = "$player[$hash{player}]"%);
-  push(@math, qq%troops["$countries[$i]"][$round] == $hash{quantity}%);
+  push(@out, qq%troops["$countries[$i]"][$round] == $hash{quantity}%);
+#  push(@math, qq%troops["$countries[$i]"][$round] == $hash{quantity}%);
 #  debug("$countries[$i] -> $player[$hash{player}], $hash{quantity}");
 }
+
+debug(@out);
+
+write_file("ineq={\n".join(",\n",@out)."\n}\n", "/tmp/math.m");
+
+die "TESTING";
 
 # TODO: actual stuff here
 # reverse sorting by round, last round first
