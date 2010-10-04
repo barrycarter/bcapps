@@ -89,7 +89,6 @@ for $i (@log) {
   # <h>Part of a series on how to write confusing code</h>
   $prevround = $round++;
 
-  warn "TESTING LIMITED ROUND";
   if ($round>= $globopts{maxrounds}) {next;}
 
   # push log line as comment
@@ -120,9 +119,10 @@ for $i (@log) {
   } elsif ($i=~/^assaulted (.*?) from (.*?) and conquered it from \*?(.*?)\*?$/) {
     # conquest
     ($atkr, $dest, $source, $defn) = ($actor,$1,$2,$3);
-    # attacker lost at least 1 troop
-    push(@out, qq%troops["$atkr"][$round] <= troops["$atkr"][$prevround] - 1%);
-    $affected{$atrk}=1;
+    # together, source and target have at most as many troops as source did
+    push(@out, qq%troops["$source"][$round] + troops["$dest"][$round] <= troops["$source"][$prevround]%);
+    $affected{$source}=1;
+    $affected{$dest}=1;
     $defn=~s%<span.*?>(.*?)</span>%$1%;
     $owner{$round}{$dest} = $atkr;
     $owner{$round}{$source} = $atkr; # probably redundant
@@ -159,6 +159,37 @@ for $i (0..$#armies) {
 debug(@out);
 
 write_file("ineq={\n".join(",\n",@out)."\n}\n", "/tmp/math.m");
+
+# TODO: test code to cheat convert Mathematica to Prolog instead of
+# doing it correctly above in the first place
+
+$all = read_file("/tmp/math.m");
+# vars must start w/ cap
+$all=~s/troops/Troops/isg;
+# round numbers
+$all=~s/\[(\d+)\]/_$1/isg;
+# terr names
+$all=~s/\[\"(.*?)\"\]/"_".proclean($1)/iseg;
+# conditionals
+$all=~s/\=\=/\#=/isg;
+$all=~s/>\=/\#>=/isg;
+# <h>Why doesn't Prolog support "#<="? No one knows, and no one cares!</h>
+$all=~s/<\=/\#=</isg;
+# junk
+$all=~s/ineq\=\{\s*//isg;
+$all=~s/\}/./isg;
+# collecting vals
+@vals = ($all=~m%(Troops\S+?_\d+)%img);
+# define the goal
+$goal = "goal([".join(",\n",@vals)."]) :-\n";
+write_file("$goal$all","/tmp/math.pl");
+
+# cleans up territory names to avoid spaces + other odd chars
+sub proclean {
+  my($str) = @_;
+  $str=~s/[^a-z0-9]/_/isg;
+  return $str;
+}
 
 die "TESTING";
 
