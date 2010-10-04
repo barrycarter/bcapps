@@ -145,7 +145,8 @@ CREATE TABLE games (
  fortifications, -- reinforcements, (C)hained, (O)Adjacent or (M)Unlimited
  war_fog, -- Fog of war? (Y/N)
  round INT, -- current round
- time_remaining -- time remaining for current player to make move
+ time_remaining, -- time remaining for current player to make move
+ game_state -- A/F, possibly active/finished
 );
 
 CREATE TABLE players(
@@ -161,7 +162,7 @@ CREATE TABLE events(
  time INT, -- time of event in Unix seconds
  p1, -- affected player
  action, -- what occurred
- p2 -- for eliminated, the eliminated player.. for points, number of points
+ p2, -- for eliminated, the eliminated player.. for points, number of point
 );
 
 CREATE UNIQUE INDEX igame ON games(game_number);
