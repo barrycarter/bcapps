@@ -17,9 +17,9 @@ for $a1 (1..6) {
 	  @d = reverse(sort($d1,$d2));
 
 	  # compare the highest dice (>= below since defender wins ties)
-	  if ($d1 >= $a1) {$aloss++;} else {$dloss++;}
+	  if ($d[0] >= $a[0]) {$aloss++;} else {$dloss++;}
 	  # compare the 2nd highest dice (>= below since defender wins ties)
-	  if ($d2 >= $a2) {$aloss++;} else {$dloss++;}
+	  if ($d[1] >= $a[1]) {$aloss++;} else {$dloss++;}
 	  # print result
 	  print "A: $aloss, D: $dloss\n";
 	}
