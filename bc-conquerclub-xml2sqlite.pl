@@ -146,7 +146,7 @@ CREATE TABLE games (
  war_fog, -- Fog of war? (Y/N)
  round INT, -- current round
  time_remaining, -- time remaining for current player to make move
- game_state -- A/F, possibly active/finished
+ game_state -- (A)ctive, (W)aiting, (F)inished
 );
 
 CREATE TABLE players(
