@@ -23,7 +23,6 @@ MARK
 exit(0);
 }
 
-
 # if *.[md5].[database].db.*, query is already stored in requests.db
 # note: db name must be pure alpha (security measure + I can hide private dbs
 # w/ numbers (not that I should put private dbs inside web root!)
@@ -42,7 +41,38 @@ if ($ENV{HTTP_HOST}=~/(^|\.)([0-9a-f]{32})\.([a-z]+)\.db\./i) {
   $query=~s/\%([A-Fa-f0-9]{2})/pack('C', hex($1))/seg;
 }
 
-# TODO: test if db exists
+# test if db exists
+# TODO: code getting ugly, should cleanup
+unless (-f "$db.db") {
+print << "MARK"
+Content-type: text/html
+
+The database <b>$db</b> doesn't exist, or I've been instructed not to give it
+you, or maybe I'm just depressed and don't want to. Here I am, brain
+the size of a planet...
+
+MARK
+;
+
+  exit(0);
+}
+
+# db yes, md5 sum no
+if ($using_hash && !$query) {
+  print << "MARK";
+Content-type: text/html
+
+Although the database $db exists, I don't have a query that
+corresponds to the URL you typed. Please go to the URL below and try a
+new query.<p>
+
+<a href="http://$db.db.94y.info/">http://$db.db.94y.info/</a>
+
+MARK
+;
+exit(0);
+}
+
 # TODO: chmod db to readonly UNLESS its requests.db
 
 # these characters are permitted, but ignored
@@ -63,7 +93,7 @@ unless ($query=~/^select/i) {
 }
 
 # permitted characters (is this going to end up being everything?)
-if ($query=~/([^a-z0-9_: \(\)\,\*\<\>\"\'\=\.\/\?\|\!\+])/i) {
+if ($query=~/([^a-z0-9_: \(\)\,\*\<\>\"\'\=\.\/\?\|\!\+\-\%])/i) {
   webdie("Query contains illegal character '$1': $query");
 }
 
@@ -73,6 +103,8 @@ unless ($using_hash) {
   $md = md5_hex($query);
   sqlite3("REPLACE INTO requests (query,db,md5) VALUES ('$iquery', '$db', '$md')", "requests.db");
   if ($SQL_ERROR) {webdie("SQL ERROR (requests): $SQL_ERROR");}
+  # keep safe copy
+  system("cp requests.db requests.db.saf");
   print "Location: http://$md.$db.db.$sitename/\n\n";
   exit(0);
 }
