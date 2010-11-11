@@ -21,6 +21,8 @@ boxvalue[p0_, v_, p1_, p2_, t1_, t2_] :=
    cdfmaxlp[x_] = 1-Erf[x/(v*Sqrt[t2-t1]/Sqrt[24*365.2425/Sqrt[2]])];
 
   (* 3 cases: price[t1] < p1, between p1 and p2, or price[t1] > p2 *)
+  (* these are silly global variables I added at the last second + I know
+     this is bad programming practise *)
   upandin = NIntegrate[pdflp[x]*cdfmaxlp[Log[p1]-x],{x,-Infinity,Log[p1]}];
   hitleftedge = NIntegrate[pdflp[x]*1,{x,Log[p1],Log[p2]}];
   downandin = NIntegrate[pdflp[x]*cdfmaxlp[x-Log[p2]],{x,Log[p2],Infinity}];
