@@ -13,4 +13,4 @@ db/*.sqlite3
 data/*
 data/*/*
 data/*/*/*
-
+db/geonames.db
