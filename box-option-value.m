@@ -1,5 +1,3 @@
-(*** NOT WORKING ***)
-
 (* Module/function to compute box option values. Inputs:
  p0 - current price of underlying instrument
  v - volatility of underlying instrument (per year)
@@ -10,9 +8,6 @@
  *)
 
 (* Source: http://math.stackexchange.com/questions/9608/determining-distribution-of-maximum-of-dependent-normal-variables/9740 *)
-
-(* TODO: we can probably combine pt1 <=> p1,p2 cases *)
-(* TODO: many equations below can be simplified *)
 
 boxvalue[p0_, v_, p1_, p2_, t1_, t2_] := 
  Module[{pdflp, cdfmaxlp},
