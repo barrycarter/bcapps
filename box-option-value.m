@@ -5,6 +5,8 @@
  p2 - box price upper limit
  t1 - time to start of option, in hours
  t2 - time to end of option, in hours
+
+ Output: probability of hitting the box
  *)
 
 (* Source: http://math.stackexchange.com/questions/9608/determining-distribution-of-maximum-of-dependent-normal-variables/9740 *)
