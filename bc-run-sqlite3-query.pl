@@ -6,10 +6,8 @@ $sitename = "94y.info";
 chdir("/sites/DB/"); # where all the dbs are
 
 # TODO: allow for just db.domain.com and list available dbs (if appropriate)
-# TODO: allow schema dump
 
 # special case for schema request
-# TODO: combine regex matching for HTTP_HOST
 if ($ENV{HTTP_HOST}=~/(^|\.)schema\.([a-z]+)\.db\./i) {
   $db = $2;
   ($out,$err,$res) = cache_command("echo '.schema' | sqlite3 $db.db");
@@ -93,7 +91,7 @@ unless ($query=~/^select/i) {
 }
 
 # permitted characters (is this going to end up being everything?)
-if ($query=~/([^a-z0-9_: \(\)\,\*\<\>\"\'\=\.\/\?\|\!\+\-\%])/i) {
+if ($query=~/([^a-z0-9_: \(\)\,\*\<\>\"\'\=\.\/\?\|\!\+\-\%\\])/i) {
   webdie("Query contains illegal character '$1': $query");
 }
 
@@ -117,6 +115,7 @@ $tmp = my_tmpfile("dbquery");
 write_file("$query;", $tmp);
 # avoid DOS by limiting cputime
 ($out,$err,$res) = cache_command("ulimit -t 5 && sqlite3 -html -header $db.db < $tmp");
+
 # error?
 if ($res) {webdie("SQLITE ERROR: $err, QUERY: $query");}
 
@@ -134,6 +133,13 @@ NOTE: This page is experimental. Bug reports to
 carter.barry\@gmail.com. Query language is SQLite3.
 
 <p>QUERY: $query<p>
+
+To edit query (or if query above is munged), see textbox at bottom of page<p>
+
+Empty result may indicate error: I'm not sure why my error checking
+code isn't working.<p>
+
+<a href="https://github.com/barrycarter/bcapps/blob/master/bc-run-sqlite3-query.pl">Source code</a>
 
 <p><table border>
 $out
