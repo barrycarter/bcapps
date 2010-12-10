@@ -85,14 +85,14 @@ sub reply_handler {
   # if bcinfo(n), return CNAME to dns(n)
   if ($qname=~/^bcinfo(\d+)\./) {
     @ans = (Net::DNS::RR->new("$qname $ttl1 IN CNAME ns$1.barrycarter.info"));
-    return ("NOERROR", \@ans, \@auth, \@add);
+    return ("NOERROR", \@ans, \@auth, \@add, {aa=>1, ra=>0});
   }
 
   # very special case for ns.barrycarter.info (no number)
   if ($qtype eq "A" && $qname=~/^ns\.barrycarter\.info$/) {
     my(@ns) = randomize(keys %auth);
     @ans = Net::DNS::RR->new("$qname $ttl3 IN A $auth{$ns[0]}");
-    return ("NOERROR", \@ans, \@auth, \@add);
+    return ("NOERROR", \@ans, \@auth, \@add, {aa=>1, ra=>0});
   }
 
   # special case for ns*.barrycarter.info
@@ -105,21 +105,21 @@ sub reply_handler {
       # if not, CNAME it to ns
       @ans = (Net::DNS::RR->new("$qname $ttl1 IN CNAME ns.barrycarter.info"));
     }
-    return ("NOERROR", \@ans, \@auth, \@add);
+    return ("NOERROR", \@ans, \@auth, \@add, {aa => 1, ra =>0});
   }
 
   # case for db.conquerclub.barrycarter.info (keeping on one server
   # since realtime request db mirroring is painful)
   if ($qtype eq "A" && $qname=~/(^|\.)db\./) {
     @ans = (Net::DNS::RR->new("$qname $ttl1 IN CNAME ns1.barrycarter.info"));
-    return ("NOERROR", \@ans, \@auth, \@add);
+    return ("NOERROR", \@ans, \@auth, \@add, {aa=>1, ra=>0});
 }
 
   # default A record
   for $i (randomize(values %auth)) {
     push(@ans, Net::DNS::RR->new("$qname $ttl1 IN A $i"));
   }
-  return ("NOERROR", \@ans, \@auth, \@add);
+  return ("NOERROR", \@ans, \@auth, \@add, {aa=>1, ra=>0});
 }
 
 sub randomize {
