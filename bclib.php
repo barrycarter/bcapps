@@ -100,7 +100,7 @@ function debug($string) {
 
 function run_command($command,$options="") {
   // where to store results
-  $out = tempnam("/tmp","ktj");
+  $out = tempnam("/tmp","bclib");
   // TODO: could I use $out = system() here?
   system("($command) 1> $out 2> $out.err", $res);
   return array(file_get_contents($out), file_get_contents("$out.err"), $res);

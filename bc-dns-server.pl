@@ -49,6 +49,19 @@ do {
 
 } until $ns;
 
+# test DNS is working
+# in theory, we could force specific return value, but this server isn't
+# accurate for external domains anyway, so no point
+$res = system("check_dig -l yahoo.com -H 127.0.0.1");
+debug("RES: $res");
+
+# horrible way to "fix"
+if ($res) {exec($0);}
+
+# fixed IP addresses
+
+# %FIXED = ("hello-mynameisinigomontoya-youkilledmyfather-preparetodie.info" =>
+
 # waits for dns requests in an infinite loop
 $ns->main_loop;
 
@@ -94,6 +107,13 @@ sub reply_handler {
     }
     return ("NOERROR", \@ans, \@auth, \@add);
   }
+
+  # case for db.conquerclub.barrycarter.info (keeping on one server
+  # since realtime request db mirroring is painful)
+  if ($qtype eq "A" && $qname=~/(^|\.)db\./) {
+    @ans = (Net::DNS::RR->new("$qname $ttl1 IN CNAME ns1.barrycarter.info"));
+    return ("NOERROR", \@ans, \@auth, \@add);
+}
 
   # default A record
   for $i (randomize(values %auth)) {
