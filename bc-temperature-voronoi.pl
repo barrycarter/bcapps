@@ -46,6 +46,10 @@ MARK
 # write to file
 open(B,">/tmp/tempmap.svg");
 
+# write in google maps "format"
+# <h>A "fomrat" is an extremely well organized rodent</h>
+open(C,">/tmp/gmaps.txt");
+
 # for now, print the header, nothing more
 print B $svgpre;
 
@@ -54,14 +58,19 @@ for $i ($pts+1..$#regions) {
 
   # TODO: ignoring unbounded regions now, but should fix
   if ($regions[$i]=~/ 0( |$)/) {next;}
-
+      
   # the numbers of the points making up this polygon
   @points=split(/\s+/,$regions[$i]);
   # the first one is dimension (uninteresting)
   shift(@points);
 
   # map the rest to actual point coords
-  map($_=trim($regions[$_]),@points);
+   map($_=trim($regions[$_]),@points);
+
+   unless (@points) {next;}
+
+  # for google maps
+  print C "var myCoords = [\n";
 
   # do any of the points go outside world boundaries?
   # if so, adjust them down
@@ -70,19 +79,50 @@ for $i ($pts+1..$#regions) {
     $y=max(min($y,180),-180);
     $x=max(min($x,90),-90);
     $j="$x $y";
+    # for google maps
+    print C "new google.maps.LatLng($x, $y),\n";
   }
+
+  debug("POINTS",@points);
+
+      # google maps wants the first point repeated (also, close off coords)
+      ($x,$y) = split(/\s+/,$points[0]);
+      debug("XY: $x $y *");
+      print C "new google.maps.LatLng($x, $y)\n];\n";
+
+  # get hue from temp
+  # NOTE: this is my own mapping; not NOAA approved!
+  $hue=5/6-($temp[$index]/100)*5/6;
+  $col=hsv2rgb($hue,1,1);
+
+  # and now the poly itself (and a marker)
+  print C << "MARK";
+
+myPoly = new google.maps.Polygon({
+ paths: myCoords,
+ strokeColor: "$col",
+ strokeOpacity: 0.8,
+ strokeWeight: 1,
+ fillColor: "$col",
+ fillOpacity: 0.8
+});
+
+myPoly.setMap(map);
+
+new google.maps.Marker({
+ position: new google.maps.LatLng($lat[$index],$lon[$index]),
+ map: map, 
+ title:"$temp[$index]F"
+});
+
+MARK
+;
 
   # changing spaces to commas
   map(s/ /,/g,@points);
 
   # this $i corresponds to this entry in points file
   $index = $i-$pts;
-
-  # get hue from temp
-  # NOTE: this is my own mapping; not NOAA approved!
-  $hue=5/6-($temp[$index]/100)*5/6;
-
-  $col=hsv2rgb($hue,1,1);
 
   # convert array to string
   $pstr = join(" ",@points);

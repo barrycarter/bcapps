@@ -496,6 +496,18 @@ sub tmpdir {
   return($file);
 }
 
+=item warnlocal(@msgs)
+
+Localized version of warn() in case I want to overwrite it. Individual
+scripts can further overwrite this. This version just does warn()
+unless --nowarn is set
+
+=cut
+
+sub warnlocal {
+  unless ($globopts{nowarn}) {warn(join("\n",@_));}
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 
 sub END {
