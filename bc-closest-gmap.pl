@@ -16,8 +16,8 @@ $pi = 4*atan(1);
  "Albuquerque" => "35.08 -106.66",
  "Paris" => "48.87 2.33",
  "Barrow" => "71.26826 -156.80627",
- "Wellington" => "-41.2833 174.783333",
- "Rio de Janeiro" => "-22.88  -43.28"
+ "Wellington" => "-41.2833 174.783333"
+# "Rio de Janeiro" => "-22.88  -43.28"
 );
 
 # convert to 3D
@@ -47,6 +47,7 @@ close(A);
 # http://www.qhull.org/html/qh-faq.htm#vsphere
 # TODO: this doesn't tell what two cities we're separating
 @res = `qconvex n < /tmp/qclose.txt`;
+debug(@res);
 
 # TODO: really should be using chdir(tmpdir()) universally
 open(B,">/home/barrycarter/BCINFO/sites/TEST/gmarkclose.txt");
