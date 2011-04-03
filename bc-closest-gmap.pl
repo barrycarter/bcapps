@@ -57,31 +57,62 @@ for $i (2..$#res) {
   # plane equation
   ($x0,$y0,$z0,$c0) = split(/\s+/, $res[$i]);
 
+=item comment
+
+  # normalize (qconvex doesn't do this? hmph!)
+  debug("XYZ: $x0 $y0 $z0");
+  debug($x0*$x0+$y0*$y0+$z0*$z0);
+  $len = sqrt(1.*$x0*$x0+$y0*$y0+$z0*$z0);
+  debug("LEN: $len");
+  $x0/=$len;
+  $y0/=$len;
+  $z0/=$len;
+
+=cut
+
+  # construct a line for each dividing line
+  @line = ();
+
   # for many values of x/y, calculate z (and thus lat/long point)
-  for ($x=-1; $x<=1; $x+=.1) {
-    for ($y=-1; $y<=1; $y+=.1) {
+  # TODO: restore x and y going from -1 to 1
+  for ($x=0; $x<=0; $x+=.1) {
+    for ($y=0; $y<=1; $y+=.1) {
       $z = ($c0-$x0*$x-$y0*$y)/$z0;
       $lon = atan2($y,$x)/$pi*180;
       $lat = asin($z)/$pi*180;
+      debug("$x/$y/$z -> $lat/$lon");
       # TODO: this is NOT the correct way to check for "not a number"
       if ($lat eq "nan" || $lon eq "nan") {next;}
       # google API probably doesn't understand 'e' notation
       if ($lat=~/e/ || $lon=~/e/) {next;}
+      # push this point onto line
+      push(@line, "new google.maps.LatLng($lat, $lon)");
+    }
+  }
 
-      # create marker
-      print B << "MARK";
+  $innerline = join(",\n", @line);
 
-new google.maps.Marker({
- position: new google.maps.LatLng($lat,$lon),
- map: map, 
- title:"TEST"
+  # create the line
+  print B << "MARK";
+
+var line = [
+$innerline
+];
+
+var mapline = new google.maps.Polyline({
+ path: line,
+ strokeColor: "#FF0000",
+ strokeOpacity: 1.0,
+strokeWeight: 2
 });
+
+mapline.setMap(map);
 
 MARK
 ;
-    }
-  }
 }
+
+
 
 
 
