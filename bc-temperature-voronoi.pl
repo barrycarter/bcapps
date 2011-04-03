@@ -48,7 +48,10 @@ open(B,">/tmp/tempmap.svg");
 
 # write in google maps "format"
 # <h>A "fomrat" is an extremely well organized rodent</h>
-open(C,">/tmp/gmaps.txt");
+open(C,">/home/barrycarter/BCINFO/sites/TEST/gmaps.txt");
+
+# <h>unlike a real programming language, JS requires this declaration</h>
+print C "var markers = [];\n";
 
 # for now, print the header, nothing more
 print B $svgpre;
@@ -80,7 +83,7 @@ for $i ($pts+1..$#regions) {
     $x=max(min($x,90),-90);
     $j="$x $y";
     # for google maps
-    print C "new google.maps.LatLng($x, $y),\n";
+    print C "new GLatLng($x, $y),\n";
   }
 
   debug("POINTS",@points);
@@ -88,18 +91,18 @@ for $i ($pts+1..$#regions) {
       # google maps wants the first point repeated (also, close off coords)
       ($x,$y) = split(/\s+/,$points[0]);
       debug("XY: $x $y *");
-      print C "new google.maps.LatLng($x, $y)\n];\n";
+      print C "new GLatLng($x, $y)\n];\n";
 
   # get hue from temp
   # NOTE: this is my own mapping; not NOAA approved!
   $hue=5/6-($temp[$index]/100)*5/6;
   $col=hsv2rgb($hue,1,1);
 
-  # and now the poly itself (and a marker)
+  # and now the poly itself (and push marker to array for MarkerCluster)
   print C << "MARK";
 
-myPoly = new google.maps.Polygon({
- paths: myCoords,
+myPoly = new GPolygon({
+ latlngs: myCoords,
  strokeColor: "$col",
  strokeOpacity: 0.8,
  strokeWeight: 1,
@@ -107,16 +110,16 @@ myPoly = new google.maps.Polygon({
  fillOpacity: 0.8
 });
 
-myPoly.setMap(map);
+map.addOverlay(myPoly);
 
-new google.maps.Marker({
- position: new google.maps.LatLng($lat[$index],$lon[$index]),
- map: map, 
- title:"$temp[$index]F"
-});
+markers.push(new GMarker(
+ new GLatLng($lat[$index] , $lon[$index])
+));
 
 MARK
 ;
+
+# TODO: re-add  title:"$temp[$index]F" above
 
   # changing spaces to commas
   map(s/ /,/g,@points);
