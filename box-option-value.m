@@ -31,3 +31,53 @@ boxvalue[p0_, v_, p1_, p2_, t1_, t2_] :=
 
   upandin+hitleftedge+downandin
 ]
+
+(* returns several useful quantities: 
+
+chance of hit
+value of $1000 hit/miss options [2 quants]
+psuedodelta of hit/miss options [2 quants]
+psuedotheta of hit/miss options [2 quants]
+psuedovega of hit/miss options [2 quants]
+
+*)
+
+quants[p0_, v_, p1_, p2_, t1_, t2_] := 
+ Module[{p, hv, mv, deltah, thetah, vegah, deltahigh, deltalow, thetahigh,
+         thetalow, vegahigh, vegalow, deltam, thetam, vegam},
+ p = boxvalue[p0, v, p1, p2, t1, t2];
+ hv = 1000/p;
+ mv = 1000/(1-p);
+ deltahigh = boxvalue[p0+1/20000, v, p1, p2, t1, t2];
+ deltalow =  boxvalue[p0-1/20000, v, p1, p2, t1, t2];
+ thetahigh = boxvalue[p0, v, p1, p2, t1+1/120, t2+1/120];
+ thetalow =  boxvalue[p0, v, p1, p2, t1-1/120, t2-1/120];
+ vegahigh =  boxvalue[p0, v+1/200, p1, p2, t1, t2];
+ vegalow  =  boxvalue[p0, v-1/200, p1, p2, t1, t2];
+ deltah = 1000/deltahigh - 1000/deltalow;
+ deltam = 1000/(1-deltahigh) - 1000/(1-deltalow);
+ thetah = 1000/thetahigh - 1000/thetalow;
+ thetam = 1000/(1-thetahigh) - 1000/(1-thetalow);
+ vegah = 1000/vegahigh - 1000/vegalow;
+ vegam = 1000/(1-vegahigh) - 1000/(1-vegalow);
+ {p, hv, mv, deltah, deltam, thetah, thetam, vegah, vegam}
+]
+
+(* Binary options:
+ Binary options are a limiting case of box options, but the formulas are 
+ simpler.
+ p0 - current price of underlying instrument
+ v - volatility of underlying instrument (per year)
+ s - strike price of binary option
+ e - time to option expiration, in hours
+
+ Output: probability binary call will be in money
+*)
+
+bincallvalue[p0_, v_, s_, e_] =
+ 1-CDF[NormalDistribution[Log[p0],Sqrt[e/365.2425/24]*v], Log[s]]
+
+
+
+
+

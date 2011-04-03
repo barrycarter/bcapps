@@ -37,14 +37,14 @@ for $i (@games) {
     push(@vals, "\"$val\"");
   }
 
-  $query = "INSERT INTO games (".join(", ",@keys).") VALUES (".join(", ",@vals).");";
+  $query = "INSERT OR IGNORE INTO games (".join(", ",@keys).") VALUES (".join(", ",@vals).");";
 
   # and now the player queries
   for $j (@players) {
     #<h>BAD PLAYER indicates parsing error, not quality of player</h>
     $j=~m%<player state=\"(.*?)\">(.*?)</player>%||warn("BAD PLAYER: $j");
     ($winlose,$player) = ($1,$2);
-    push(@queryp, qq%INSERT INTO players (game_number, player, winlose) VALUES
+    push(@queryp, qq%INSERT OR IGNORE INTO players (game_number, player, winlose) VALUES
 ("$hash{game_number}", "$player", "$winlose")%);
     # I need array below for events table
     push(@playernames, $player);
@@ -61,7 +61,7 @@ for $i (@games) {
     # x eliminates y
     if ($event=~m/^(\d+) eliminated (\d+) from the game$/) {
       ($p1,$p2) = ($playernames[$1-1],$playernames[$2-1]);
-      push(@eventq, qq%INSERT INTO events (game_number, time, p1, action, p2) VALUES
+      push(@eventq, qq%INSERT OR IGNORE INTO events (game_number, time, p1, action, p2) VALUES
      ("$hash{game_number}", "$time", "$p1", "eliminated", "$p2")%);
       next;
     }
@@ -70,7 +70,7 @@ for $i (@games) {
     if ($event=~m/^(\d+) (loses|gains) (\d+) points$/){
       ($p1,$dir,$pts) = ($playernames[$1-1],$2,$3);
       if ($dir eq "loses") {$pts*=-1;}
-      push(@eventq, qq%INSERT INTO events (game_number, time, p1, action, p2) VALUES
+      push(@eventq, qq%INSERT OR IGNORE INTO events (game_number, time, p1, action, p2) VALUES
       ("$hash{game_number}", "$time", "$p1", "points", "$pts")%);
       next;
     }
@@ -80,7 +80,7 @@ for $i (@games) {
       @winners=split(/\s*\,\s*/,$1);
       map($_=$playernames[$_-1],@winners);
       for $k (@winners) {
-	push(@eventq, qq%INSERT INTO events (game_number, time, p1, action, p2) VALUES
+	push(@eventq, qq%INSERT OR IGNORE INTO events (game_number, time, p1, action, p2) VALUES
         ("$hash{game_number}", "$time", "$k", "wins", "")%);
       }
       next;
@@ -88,14 +88,14 @@ for $i (@games) {
 
     if ($event=~m/^(\d+) was kicked out( for missing too many turns)?$/) {
       $p1 = $playernames[$1-1];
-      push(@eventq, qq%INSERT INTO events (game_number, time, p1, action, p2) VALUES
+      push(@eventq, qq%INSERT OR IGNORE INTO events (game_number, time, p1, action, p2) VALUES
       ("$hash{game_number}", "$time", "$p1", "kicked", "")%);
       next;
     }
 
     if ($event=~m/(\d+) held the objective$/) {
       $p1 = $playernames[$1-1];
-      push(@eventq, qq%INSERT INTO events (game_number, time, p1, action, p2) VALUES
+      push(@eventq, qq%INSERT OR IGNORE INTO events (game_number, time, p1, action, p2) VALUES
       ("$hash{game_number}", "$time", "$p1", "objective", "")%);
       next;
     }
