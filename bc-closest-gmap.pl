@@ -55,7 +55,7 @@ open(B,">/home/barrycarter/BCINFO/sites/TEST/gmarkclose.txt");
 # first two lines are dull
 for $i (2..$#res) {
   # plane equation
-  ($x0,$y0,$z0,$c0) = split(/\s+/, $res[$i]);
+  ($a,$b,$c,$d) = split(/\s+/, $res[$i]);
 
 =item comment
 
@@ -73,21 +73,22 @@ for $i (2..$#res) {
   # construct a line for each dividing line
   @line = ();
 
-  # for many values of x/y, calculate z (and thus lat/long point)
-  # TODO: restore x and y going from -1 to 1
-  for ($x=0; $x<=0; $x+=.1) {
-    for ($y=0; $y<=1; $y+=.1) {
-      $z = ($c0-$x0*$x-$y0*$y)/$z0;
-      $lon = atan2($y,$x)/$pi*180;
-      $lat = asin($z)/$pi*180;
-      debug("$x/$y/$z -> $lat/$lon");
-      # TODO: this is NOT the correct way to check for "not a number"
-      if ($lat eq "nan" || $lon eq "nan") {next;}
-      # google API probably doesn't understand 'e' notation
-      if ($lat=~/e/ || $lon=~/e/) {next;}
-      # push this point onto line
-      push(@line, "new google.maps.LatLng($lat, $lon)");
-    }
+  # for each value of z, compute x and y consistent w/ plane and sphere
+  for ($z=-.5; $z<=+.5; $z+=0.01) {
+    # equations courtesy mathematica
+    $x = ($a**2*$d - $a**2*$c*$z - $b*Sqrt(-($a**2*(($d - $c*$z)**2 + $a**2*(-1 + $z**2) + $b**2*(-1 + $z**2)))))/($a*($a**2 + $b**2));
+    $y = ($b*$d - $b*$c*$z + Sqrt(-($a**2*(($d - $c*$z)**2 + $a**2*(-1 + $z**2) + $b**2*(-1 + $z**2)))))/($a**2 + $b**2);
+    debug("FOO: $x $y $z");
+
+    $lon = atan2($y,$x)/$pi*180;
+    $lat = asin($z)/$pi*180;
+    debug("$x/$y/$z -> $lat/$lon");
+    # TODO: this is NOT the correct way to check for "not a number"
+    if ($lat eq "nan" || $lon eq "nan") {next;}
+    # google API probably doesn't understand 'e' notation
+    if ($lat=~/e/ || $lon=~/e/) {next;}
+    # push this point onto line
+    push(@line, "new google.maps.LatLng($lat, $lon)");
   }
 
   $innerline = join(",\n", @line);
@@ -112,9 +113,10 @@ MARK
 ;
 }
 
+# just plain ugly
 
-
-
-
-
-
+sub Sqrt {
+  my($x) = @_;
+  if ($x>0) {return sqrt($x);}
+  return 0;
+}
