@@ -37,6 +37,10 @@ $se = bvoronoi(-90,0,0,180);
 
 # print $nw,$ne,$sw,$se;
 
+debug(unfold(%isborder));
+
+die "TESTING";
+
 for $i (split("\n","$nw\n$ne\n$sw\n$se")) {
   # create google filled box
   my($latmin, $latmax, $lonmin, $lonmax, $closest) = split(/\s+/, $i);
@@ -50,8 +54,6 @@ for $i (split("\n","$nw\n$ne\n$sw\n$se")) {
   $lonmid= ($lonmin + $lonmax)/2;
 
   push(@line, "new google.maps.LatLng($latmid, $lonmid)");
-
-=item comment
 
   # build up the coords
   print A << "MARK";
@@ -78,12 +80,12 @@ myPoly.setMap(map);
 MARK
 ;
 
-=cut
-
 }
 
 
 $innerline = join(",\n", @line);
+
+=item comment
 
 print A << "MARK";
 
@@ -101,15 +103,16 @@ mapline.setMap(map);
 MARK
 ;
 
+=cut
 
 # primary function: given a "square" (on an equiangular map),
 # determine the closest point of 4 vertices; if same, return square
 # and point; otherwise, break square into 4 squares and recurse
 
 sub bvoronoi {
-  # Using %points as global is ugly
+  # Using %points as global is ugly (also %isborder)
   my($latmin, $latmax, $lonmin, $lonmax) = @_;
-  debug("bvoronoi $latmin, $latmax, $lonmin, $lonmax");
+#  debug("bvoronoi $latmin, $latmax, $lonmin, $lonmax");
   my($mindist, $dist, %closest);
 
   # compute distance to each %points for each corner
@@ -142,16 +145,19 @@ sub bvoronoi {
 
   # if we've hit a border point, return it
   my($area) = ($latmax-$latmin)*($lonmax-$lonmin);
-  debug("AREA: $area");
+#  debug("AREA: $area");
 
   if ($area <= $minarea) {
+    # note whose border this is
+    for $i (@keys) {$isborder{$i}{"$latmin $latmax $lonmin $lonmax"}=1;}
+
     return "$latmin $latmax $lonmin $lonmax BORDER";
   }
 
   # split square and recurse
   my($latmid) = ($latmax+$latmin)/2.;
   my($lonmid) = ($lonmax+$lonmin)/2.;
-  debug("AL: $latmid $lonmid");
+#  debug("AL: $latmid $lonmid");
 
   my(@sub) = ();
   push(@sub, bvoronoi($latmin, $latmid, $lonmin, $lonmid));
