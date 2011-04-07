@@ -12,17 +12,23 @@ open(A,">/home/barrycarter/BCINFO/sites/TEST/gvorbin.txt");
 # latitude and longitude of points
 %points = (
  "Albuquerque" => "35.08 -106.66",
- "Paris" => "48.87 2.33"
-# "Barrow" => "71.26826 -156.80627",
-# "Wellington" => "-41.2833 174.783333"
-# "Rio de Janeiro" => "-22.88  -43.28"
+ "Paris" => "48.87 2.33",
+ "Barrow" => "71.26826 -156.80627",
+ "Wellington" => "-41.2833 174.783333",
+ "Rio de Janeiro" => "-22.88  -43.28"
 );
 
 %colors = (
  "Albuquerque" => "#ff0000",
- "Paris" => "#0000ff",
+ "Paris" => "#00ff00",
+ "Barrow" => "#0000ff",
+ "Wellington" => "#ffffff",
+ "Rio de Janeiro" => "#ff00ff",
  "BORDER" => "#000000"
 );
+
+# stop at what gridsize
+$minarea = .01;
 
 $nw = bvoronoi(0,90,-180,0);
 $ne = bvoronoi(0,90,0,180);
@@ -35,6 +41,9 @@ for $i (split("\n","$nw\n$ne\n$sw\n$se")) {
   # create google filled box
   my($latmin, $latmax, $lonmin, $lonmax, $closest) = split(/\s+/, $i);
   debug("ALF: $closest, $colors{$closest}");
+
+  # only show borders
+  unless ($closest eq "BORDER") {next;}
 
   # build up the coords
   print A << "MARK";
@@ -50,8 +59,8 @@ var myCoords = [
 myPoly = new google.maps.Polygon({
  paths: myCoords,
  strokeColor: "$colors{$closest}",
- strokeOpacity: 0.5,
- strokeWeight: 1,
+ strokeOpacity: 1,
+ strokeWeight: 0,
  fillColor: "$colors{$closest}",
  fillOpacity: 0.5
 });
@@ -105,7 +114,7 @@ sub bvoronoi {
   my($area) = ($latmax-$latmin)*($lonmax-$lonmin);
   debug("AREA: $area");
 
-  if ($area <= 1) {
+  if ($area <= $minarea) {
     return "$latmin $latmax $lonmin $lonmax BORDER";
   }
 
