@@ -13,6 +13,10 @@ use MIME::Base64;
 use utf8;
 require JSON;
 
+# HACK: defining constants here is probably bad
+$PI = 4.*atan(1);
+$EARTH_RADIUS = 6371/1.609344; # miles
+
 # HACK: not sure this is right way to do this
 our(%globopts);
 our(@tmpfiles);
@@ -506,6 +510,22 @@ unless --nowarn is set
 
 sub warnlocal {
   unless ($globopts{nowarn}) {warn(join("\n",@_));}
+}
+
+=item gcddist($x,$y,$u,$v)
+
+Great circle distance between latitude/longitude x,y and
+latitude/longitude u,v in miles Source: http://williams.best.vwh.net/avform.htm
+
+=cut
+
+sub gcdist {
+    my(@x)=@_;
+    my($x,$y,$u,$v)=map {$_*=$PI/180} @x;
+    my($c1) = cos($x)*cos($y)*cos($u)*cos($v);
+    my($c2) = cos($x)*sin($y)*cos($u)*sin($v);
+    my($c3) = sin($x)*sin($u);
+    return ($EARTH_RADIUS*acos($c1+$c2+$c3));
 }
 
 # cleanup files created by my_tmpfile (unless --keeptemp set)
