@@ -3,7 +3,11 @@
 # Unusual approach to Voronoi diagram of Earth sphere: cut into 4
 # pieces and compare closest point for 4 vertices
 
+# TODO: this program is long and clumsy and can doubtless be improved
+
 require "bclib.pl";
+
+open(A,">/home/barrycarter/BCINFO/sites/TEST/gvorbin.txt");
 
 # latitude and longitude of points
 %points = (
@@ -14,7 +18,50 @@ require "bclib.pl";
 # "Rio de Janeiro" => "-22.88  -43.28"
 );
 
-debug(bvoronoi(0,90,-180,0));
+%colors = (
+ "Albuquerque" => "#ff0000",
+ "Paris" => "#0000ff",
+ "BORDER" => "#000000"
+);
+
+$nw = bvoronoi(0,90,-180,0);
+$ne = bvoronoi(0,90,0,180);
+$sw = bvoronoi(-90,0,-180,0);
+$se = bvoronoi(-90,0,0,180);
+
+# print $nw,$ne,$sw,$se;
+
+for $i (split("\n","$nw\n$ne\n$sw\n$se")) {
+  # create google filled box
+  my($latmin, $latmax, $lonmin, $lonmax, $closest) = split(/\s+/, $i);
+  debug("ALF: $closest, $colors{$closest}");
+
+  # build up the coords
+  print A << "MARK";
+
+var myCoords = [
+ new google.maps.LatLng($latmin, $lonmin),
+ new google.maps.LatLng($latmin, $lonmax),
+ new google.maps.LatLng($latmax, $lonmax),
+ new google.maps.LatLng($latmax, $lonmin),
+ new google.maps.LatLng($latmin, $lonmin)
+];
+
+myPoly = new google.maps.Polygon({
+ paths: myCoords,
+ strokeColor: "$colors{$closest}",
+ strokeOpacity: 0.5,
+ strokeWeight: 1,
+ fillColor: "$colors{$closest}",
+ fillOpacity: 0.5
+});
+
+myPoly.setMap(map);
+
+MARK
+;
+
+}
 
 # primary function: given a "square" (on an equiangular map),
 # determine the closest point of 4 vertices; if same, return square
@@ -24,7 +71,6 @@ sub bvoronoi {
   # Using %points as global is ugly
   my($latmin, $latmax, $lonmin, $lonmax) = @_;
   debug("bvoronoi $latmin, $latmax, $lonmin, $lonmax");
-  my(%res);
   my($mindist, $dist, %closest);
 
   # compute distance to each %points for each corner
