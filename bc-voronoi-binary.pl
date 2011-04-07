@@ -28,7 +28,7 @@ open(A,">/home/barrycarter/BCINFO/sites/TEST/gvorbin.txt");
 );
 
 # stop at what gridsize
-$minarea = .01;
+$minarea = .5;
 
 $nw = bvoronoi(0,90,-180,0);
 $ne = bvoronoi(0,90,0,180);
@@ -44,6 +44,14 @@ for $i (split("\n","$nw\n$ne\n$sw\n$se")) {
 
   # only show borders
   unless ($closest eq "BORDER") {next;}
+
+  # and create massive polyline
+  $latmid= ($latmin + $latmax)/2;
+  $lonmid= ($lonmin + $lonmax)/2;
+
+  push(@line, "new google.maps.LatLng($latmid, $lonmid)");
+
+=item comment
 
   # build up the coords
   print A << "MARK";
@@ -70,7 +78,29 @@ myPoly.setMap(map);
 MARK
 ;
 
+=cut
+
 }
+
+
+$innerline = join(",\n", @line);
+
+print A << "MARK";
+
+var line = [$innerline];
+
+var mapline = new google.maps.Polyline({
+ path: line,
+ strokeColor: "#000000",
+ strokeOpacity: 1.0,
+strokeWeight: 2
+});
+
+mapline.setMap(map);
+
+MARK
+;
+
 
 # primary function: given a "square" (on an equiangular map),
 # determine the closest point of 4 vertices; if same, return square
