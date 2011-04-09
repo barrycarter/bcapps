@@ -548,6 +548,7 @@ sub hsv2rgb {
     ($hv==4) {$r=6*$hue-4; $g=0; $b=1;} elsif
     ($hv==5) {$r=1; $g=0; $b=6-6*$hue;} else
       {$r=0; $g=0; $b=0;}
+  debug("HSV: $hue -> $r $g $b");
   $r=min($r+1-$sat,1)*$val;
   $g=min($g+1-$sat,1)*$val;
   $b=min($b+1-$sat,1)*$val;
