@@ -5,7 +5,11 @@
 
 # TODO: this program is long and clumsy and can doubtless be improved
 
-require "bclib.pl";
+use POSIX;
+
+# defining constants here is probably bad
+$PI = 4.*atan(1);
+$EARTH_RADIUS = 6371/1.609344; # miles
 
 open(A,">/home/barrycarter/BCINFO/sites/TEST/gvorbin.txt");
 
@@ -31,12 +35,11 @@ open(A,">/home/barrycarter/BCINFO/sites/TEST/gvorbin.txt");
 # stop at what gridsize
 $minarea = .5;
 
+# the four psuedo-corners of the globe
 $nw = bvoronoi(0,90,-180,0);
 $ne = bvoronoi(0,90,0,180);
 $sw = bvoronoi(-90,0,-180,0);
 $se = bvoronoi(-90,0,0,180);
-
-print $nw,$ne,$sw,$se;
 
 for $i (split("\n","$nw\n$ne\n$sw\n$se")) {
   # create google filled box
@@ -126,3 +129,21 @@ sub bvoronoi {
 
   return join("\n", @sub);
 }
+
+=item gcdist($x,$y,$u,$v)
+
+Great circle distance between latitude/longitude x,y and
+latitude/longitude u,v in miles Source: http://williams.best.vwh.net/avform.htm
+
+=cut
+
+sub gcdist {
+    my(@x)=@_;
+    my($x,$y,$u,$v)=map {$_*=$PI/180} @x;
+    my($c1) = cos($x)*cos($y)*cos($u)*cos($v);
+    my($c2) = cos($x)*sin($y)*cos($u)*sin($v);
+    my($c3) = sin($x)*sin($u);
+    return ($EARTH_RADIUS*acos($c1+$c2+$c3));
+}
+
+
