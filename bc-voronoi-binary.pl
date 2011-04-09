@@ -15,15 +15,15 @@ open(A,">/home/barrycarter/BCINFO/sites/TEST/gvorbin.txt");
  "Paris" => "48.87 2.33",
  "Barrow" => "71.26826 -156.80627",
  "Wellington" => "-41.2833 174.783333",
- "Rio de Janeiro" => "-22.88  -43.28"
+ "Rio" => "-22.88  -43.28"
 );
 
 %colors = (
  "Albuquerque" => "#ff0000",
  "Paris" => "#00ff00",
  "Barrow" => "#0000ff",
- "Wellington" => "#ffffff",
- "Rio de Janeiro" => "#ff00ff",
+ "Wellington" => "#ffff00",
+ "Rio" => "#ff00ff",
  "BORDER" => "#000000"
 );
 
@@ -35,11 +35,11 @@ $ne = bvoronoi(0,90,0,180);
 $sw = bvoronoi(-90,0,-180,0);
 $se = bvoronoi(-90,0,0,180);
 
-# print $nw,$ne,$sw,$se;
+print $nw,$ne,$sw,$se;
 
-debug(unfold(%isborder));
+# debug(unfold(%isborder));
 
-die "TESTING";
+# die "TESTING";
 
 for $i (split("\n","$nw\n$ne\n$sw\n$se")) {
   # create google filled box
@@ -47,7 +47,7 @@ for $i (split("\n","$nw\n$ne\n$sw\n$se")) {
   debug("ALF: $closest, $colors{$closest}");
 
   # only show borders
-  unless ($closest eq "BORDER") {next;}
+#  unless ($closest eq "BORDER") {next;}
 
   # and create massive polyline
   $latmid= ($latmin + $latmax)/2;
