@@ -18,6 +18,7 @@ open(A,">/home/barrycarter/BCINFO/sites/TEST/gvorbin.txt");
  "Rio" => "-22.88  -43.28"
 );
 
+# primartish colors
 %colors = (
  "Albuquerque" => "#ff0000",
  "Paris" => "#00ff00",
@@ -37,23 +38,9 @@ $se = bvoronoi(-90,0,0,180);
 
 print $nw,$ne,$sw,$se;
 
-# debug(unfold(%isborder));
-
-# die "TESTING";
-
 for $i (split("\n","$nw\n$ne\n$sw\n$se")) {
   # create google filled box
   my($latmin, $latmax, $lonmin, $lonmax, $closest) = split(/\s+/, $i);
-  debug("ALF: $closest, $colors{$closest}");
-
-  # only show borders
-#  unless ($closest eq "BORDER") {next;}
-
-  # and create massive polyline
-  $latmid= ($latmin + $latmax)/2;
-  $lonmid= ($lonmin + $lonmax)/2;
-
-  push(@line, "new google.maps.LatLng($latmid, $lonmid)");
 
   # build up the coords
   print A << "MARK";
@@ -82,37 +69,13 @@ MARK
 
 }
 
-
-$innerline = join(",\n", @line);
-
-=item comment
-
-print A << "MARK";
-
-var line = [$innerline];
-
-var mapline = new google.maps.Polyline({
- path: line,
- strokeColor: "#000000",
- strokeOpacity: 1.0,
-strokeWeight: 2
-});
-
-mapline.setMap(map);
-
-MARK
-;
-
-=cut
-
-# primary function: given a "square" (on an equiangular map),
+# workhorse function: given a "square" (on an equiangular map),
 # determine the closest point of 4 vertices; if same, return square
 # and point; otherwise, break square into 4 squares and recurse
 
 sub bvoronoi {
-  # Using %points as global is ugly (also %isborder)
+  # Using %points as global is ugly
   my($latmin, $latmax, $lonmin, $lonmax) = @_;
-#  debug("bvoronoi $latmin, $latmax, $lonmin, $lonmax");
   my($mindist, $dist, %closest);
 
   # compute distance to each %points for each corner
@@ -131,7 +94,7 @@ sub bvoronoi {
 	}
       }
       # this point is closest to one vertex of the square
-      # should abort loop if we already have two closest points
+      # TODO: should abort loop if we already have two different closest points
       $closest{$minpoint} = 1;
     }
   }
@@ -139,25 +102,21 @@ sub bvoronoi {
   # if there's just one point closest to all four corners, return it
   my(@keys) = keys %closest;
 
+  # if @keys has length 1, return it
   unless ($#keys) {
     return "$latmin $latmax $lonmin $lonmax $keys[0]";
   }
 
-  # if we've hit a border point, return it
+  # if we've hit a border point, return it (area too small)
   my($area) = ($latmax-$latmin)*($lonmax-$lonmin);
-#  debug("AREA: $area");
 
   if ($area <= $minarea) {
-    # note whose border this is
-    for $i (@keys) {$isborder{$i}{"$latmin $latmax $lonmin $lonmax"}=1;}
-
     return "$latmin $latmax $lonmin $lonmax BORDER";
   }
 
   # split square and recurse
   my($latmid) = ($latmax+$latmin)/2.;
   my($lonmid) = ($lonmax+$lonmin)/2.;
-#  debug("AL: $latmid $lonmid");
 
   my(@sub) = ();
   push(@sub, bvoronoi($latmin, $latmid, $lonmin, $lonmid));
