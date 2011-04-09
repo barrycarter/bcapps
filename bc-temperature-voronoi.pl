@@ -146,26 +146,6 @@ MARK
 print B "</g></svg>\n";
 close(B);
 
-# Converts hue to RGB, my own hack, not necessarily official
-sub hsv2rgb {
-  my($hue,$sat,$val) = @_;
-  $hue=$hue-floor($hue);
-  $hv=floor($hue*6);
-
-  # can't get given/when to work, so...
-  if ($hv==0) {$r=1; $g=6*$hue; $b=0;} elsif
-    ($hv==1) {$r=2-6*$hue; $g=1; $b=0;} elsif
-    ($hv==2) {$r=0; $g=1; $b=6*$hue-2;} elsif
-    ($hv==3) {$r=0; $g=4-6*$hue; $b=1;} elsif
-    ($hv==4) {$r=6*$hue-4; $g=0; $b=1;} elsif
-    ($hv==5) {$r=1; $g=0; $b=6-6*$hue;} else
-      {$r=0; $g=0; $b=0;}
-  $r=min($r+1-$sat,1)*$val;
-  $g=min($g+1-$sat,1)*$val;
-  $b=min($b+1-$sat,1)*$val;
-  return sprintf("#%0.2x%0.2x%0.2x",$r*255,$g*255,$b*255);
-}
-
 # TODO: convert to JPG for those who don't have good SVG viewers
 # TODO: create continent specific maps (from same data) like weather.gov
 # TODO: color map smoothly, not via polygons

@@ -5,35 +5,28 @@
 
 # TODO: this program is long and clumsy and can doubtless be improved
 
-use POSIX;
+require "bclib.pl";
 
-# defining constants here is probably bad
-$PI = 4.*atan(1);
-$EARTH_RADIUS = 6371/1.609344; # miles
+open(A,">/home/barrycarter/BCINFO/sites/TEST/curtemps.txt");
 
-open(A,">/home/barrycarter/BCINFO/sites/TEST/gvorbin.txt");
+# work in my own temporary directory
+chdir(tmpdir());
 
-# latitude and longitude of points
-%points = (
- "Albuquerque" => "35.08 -106.66",
- "Paris" => "48.87 2.33",
- "Barrow" => "71.26826 -156.80627",
- "Wellington" => "-41.2833 174.783333",
- "Rio" => "-22.88  -43.28"
-);
+# pull data from live weather (also available at metar.db.94y.info)
+# (my own copy is local); cp avoids db lock
+system("cp /tmp/metar-live.db .");
+@res = sqlite3hashlist("SELECT -strftime('%s', replace(n.time, '-4-','-04-'))+strftime('%s', 'now') AS age, n.code, n.temperature, s.latitude, s.longitude FROM nowweather n JOIN stations s ON (n.code=s.metar) WHERE age>0 AND age<3600", "metar-live.db");
 
-# primartish colors
-%colors = (
- "Albuquerque" => "#ff0000",
- "Paris" => "#00ff00",
- "Barrow" => "#0000ff",
- "Wellington" => "#ffff00",
- "Rio" => "#ff00ff",
- "BORDER" => "#000000"
-);
+# create points and colors
+for $i (@res) {
+  %hash = %{$i};
+  $points{$hash{code}} = "$hash{latitude} $hash{longitude}";
+  # Not NOAA approved (same as bc-temperature-voronoi.pl, adjusted for Celsius)
+  $colors{$hash{code}} = hsv2rgb((340-9*$hash{temperature})/600,1,1);
+}
 
 # stop at what gridsize
-$minarea = .5;
+$minarea = 0.01;
 
 # the four psuedo-corners of the globe
 $nw = bvoronoi(0,90,-180,0);
@@ -79,6 +72,7 @@ MARK
 sub bvoronoi {
   # Using %points as global is ugly
   my($latmin, $latmax, $lonmin, $lonmax) = @_;
+  debug("bvoronoi($latmin, $latmax, $lonmin, $lonmax)");
   my($mindist, $dist, %closest);
 
   # compute distance to each %points for each corner
@@ -129,21 +123,3 @@ sub bvoronoi {
 
   return join("\n", @sub);
 }
-
-=item gcdist($x,$y,$u,$v)
-
-Great circle distance between latitude/longitude x,y and
-latitude/longitude u,v in miles Source: http://williams.best.vwh.net/avform.htm
-
-=cut
-
-sub gcdist {
-    my(@x)=@_;
-    my($x,$y,$u,$v)=map {$_*=$PI/180} @x;
-    my($c1) = cos($x)*cos($y)*cos($u)*cos($v);
-    my($c2) = cos($x)*sin($y)*cos($u)*sin($v);
-    my($c3) = sin($x)*sin($u);
-    return ($EARTH_RADIUS*acos($c1+$c2+$c3));
-}
-
-
