@@ -540,6 +540,7 @@ opacity: for KML, the opacity in hex format
 
 sub hsv2rgb {
   my($hue,$sat,$val,$options) = @_;
+  my($r,$g,$b);
   my(%opts) = parse_form($options);
   $hue=$hue-floor($hue);
   $hv=floor($hue*6);
