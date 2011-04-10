@@ -11,6 +11,23 @@ chdir(tmpdir());
 system("cp /tmp/metar-live.db .");
 @res = sqlite3hashlist("SELECT -strftime('%s', replace(n.time, '-4-','-04-'))+strftime('%s', 'now') AS age, n.code, n.temperature, s.latitude, s.longitude FROM nowweather n JOIN stations s ON (n.code=s.metar) WHERE age>0 AND age<7200", "metar-live.db");
 
+# style testing
+$fixedstyle = << "MARK";
+<Style id="astyle"> 
+<LineStyle> 
+<color>7f0000ff</color>
+<width>2</width> 
+</LineStyle> 
+<PolyStyle> 
+<color>7f79c63f</color> 
+<colorMode>normal</colorMode> 
+<fill>1</fill> 
+<outline>1</outline> 
+</PolyStyle> 
+</Style> 
+MARK
+;
+
 # create file for qvoronoi (header)
 open(A,">/tmp/qhull-file.txt");
 print A "2\n"; # dimension
@@ -18,19 +35,19 @@ print A $#res+1 . "\n"; # number of points
 
 # create file for qvoronoi (body) and note temp for later use
 for $i (@res) {
-  %hash = %{$i};
-  ($lat[$n], $lon[$n], $temp[$n], $stat[$n]) = 
-    ($hash{latitude}, $hash{longitude}, $hash{temperature}*1.8+32, $hash{code});
-  # skip NZSP Antarctica for now (boo!)
-  # TODO: fix
-  if ($lat[$n]<-85) {next;}
+%hash = %{$i};
+($lat[$n], $lon[$n], $temp[$n], $stat[$n]) = 
+($hash{latitude}, $hash{longitude}, $hash{temperature}*1.8+32, $hash{code});
+# skip NZSP Antarctica for now (boo!) 
+# TODO: fix
+if ($lat[$n]<-85) {next;}
 
-  # convert to Mercator for qhull
-  $mlat = log(tan($PI/4+$lat[$n]/180*$PI/2));
-  $mlon = $lon[$n]/180*$PI;
-  print A "$mlat $mlon\n";
+# convert to Mercator for qhull
+$mlat = log(tan($PI/4+$lat[$n]/180*$PI/2));
+$mlon = $lon[$n]/180*$PI;
+print A "$mlat $mlon\n";
 
-  $n++;
+$n++;
 }
 
 # run qvoronoi
@@ -47,26 +64,43 @@ system("qvoronoi s o < /tmp/qhull-file.txt > /tmp/qhull-out.txt");
 # <h>A "fomrat" is an extremely well organized rodent</h>
 open(C,">/home/barrycarter/BCINFO/sites/TEST/gmaps.txt");
 
+# and KML
+open(B,">/home/barrycarter/BCINFO/sites/TEST/weather.kml");
+print B << "MARK";
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document>
+$fixedstyle
+MARK
+;
+
 # the regions start at $pts+1
 for $i ($pts+1..$#regions) {
 
-  # this is the region for which point
-  $index = $i-$pts;
+# this is the region for which point
+$index = $i-$pts;
 
-  # TODO: ignoring unbounded regions now, but should fix
-  if ($regions[$i]=~/ 0( |$)/) {next;}
-      
-  # the numbers of the points making up this polygon
-  @points=split(/\s+/,$regions[$i]);
-  # the first one is dimension (uninteresting)
-  shift(@points);
+# TODO: ignoring unbounded regions now, but should fix
+if ($regions[$i]=~/ 0( |$)/) {next;}
 
-  # map the rest to actual point coords
-  map($_=trim($regions[$_]),@points);
+# the numbers of the points making up this polygon
+@points=split(/\s+/,$regions[$i]);
+# the first one is dimension (uninteresting)
+shift(@points);
 
-  unless (@points) {next;}
+# map the rest to actual point coords
+map($_=trim($regions[$_]),@points);
 
-  debug("BEFORE: $lat[$index],$lon[$index] ->",@points);
+unless (@points) {next;}
+
+debug("BEFORE: $lat[$index],$lon[$index] ->",@points);
+
+# KML
+  print B "<Placemark>\n";
+  print B "<gx:balloonVisibility>0</gx:balloonVisibility>\n";
+  print B "<styleUrl>#$stat[$index]</styleUrl>\n";
+#  print B "<styleUrl>#astyle</styleUrl>\n";
+  print B "<Polygon><outerBoundaryIs><LinearRing><coordinates>\n";
 
   # for google maps
   print C "var myCoords = [\n";
@@ -108,6 +142,8 @@ for $i ($pts+1..$#regions) {
     debug("LL: $x,$y");
     # for google maps
     print C "new google.maps.LatLng($x, $y),\n";
+    # KML
+    print B "$y,$x\n";
   }
 
   debug("AFTER: $lat[$index],$lon[$index] ->",@points);
@@ -116,6 +152,8 @@ for $i ($pts+1..$#regions) {
   ($x,$y) = split(/\s+/,$points[0]);
   debug("XY: $x $y *");
   print C "new google.maps.LatLng($x, $y)\n];\n";
+  # as does KML?
+  print B "$y,$x\n";
 
   # get hue from temp
   # NOTE: this is my own mapping; not NOAA approved!
@@ -127,15 +165,14 @@ for $i ($pts+1..$#regions) {
 
   $col=hsv2rgb($hue,1,1);
 
+debug("COL: $hue -> $col");
 
-  debug("COL: $hue -> $col");
+debug("Y RANGE: $miny $maxy");
 
-  debug("Y RANGE: $miny $maxy");
+if (abs($miny-$maxy) >=90) {debug("BIG Y RANGE");}
 
-  if (abs($miny-$maxy) >=90) {debug("BIG Y RANGE");}
-
-  # and now the poly itself (and push marker to array for MarkerCluster)
-  print C << "MARK";
+# and now the poly itself (and push marker to array for MarkerCluster)
+print C << "MARK";
 
 myPoly = new google.maps.Polygon({
  paths: myCoords,
@@ -151,6 +188,19 @@ myPoly.setMap(map);
 MARK
 ;
 
+# KML
+print B "</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>\n";
+$kmlcol = hsv2rgb($hue,1,1,"kml=1&opacity=80");
+
+print B << "MARK";
+
+<Style id="$stat[$index]">
+<PolyStyle><color>$kmlcol</color>
+<fill>1</fill><outline>0</outline></PolyStyle></Style>
+
+MARK
+;
+
 =item comment
 
 var marker = new google.maps.Marker({
@@ -161,25 +211,27 @@ var marker = new google.maps.Marker({
 
 =cut
 
-# TODO: re-add  title:"$temp[$index]F" above
+# TODO: re-add title:"$temp[$index]F" above
 
-  # changing spaces to commas
-  map(s/ /,/g,@points);
+# changing spaces to commas
+map(s/ /,/g,@points);
 
-  # convert array to string
-  $pstr = join(" ",@points);
+# convert array to string
+$pstr = join(" ",@points);
 
-  debug("$regions[$i] -> $pstr");
+debug("$regions[$i] -> $pstr");
 
-  # TODO: add semi-transparent country/state borders
-  # TODO: get rid of borders on these polygons
-#  print B "<polygon points='$pstr' style='fill:$col' />\n";
+# TODO: add semi-transparent country/state borders
+# TODO: get rid of borders on these polygons
+# print B "<polygon points='$pstr' style='fill:$col' />\n";
 
-  # TODO: commented out text as it looks bizarre on firefox/opera
-  # TODO: so need to fix that
-#  print B "<text x='$lat[$index]' y='$lon[$index]' style='font-family:Verdana;font-size:0.1'>$temp[$index]</text>\n";
+# TODO: commented out text as it looks bizarre on firefox/opera
+# TODO: so need to fix that
+# print B "<text x='$lat[$index]' y='$lon[$index]' style='font-family:Verdana;font-size:0.1'>$temp[$index]</text>\n";
 
 }
+
+print B "</Document></kml>\n";
 
 # print B "</g></svg>\n";
 # close(B);

@@ -528,15 +528,19 @@ sub gcdist {
     return ($EARTH_RADIUS*acos($c1+$c2+$c3));
 }
 
-=item hsv2rgb($hue,$sat,$val)
+=item hsv2rgb($hue,$sat,$val, $options)
 
 Given hue, saturation, and value of a color, convert to RGB using *my
-own formula* which is not necessarily the "correct" formula.
+own formula* which is not necessarily the "correct" formula. $options:
+
+kml: output in KML format (aabbggrr) not HTML (rrggbb)
+opacity: for KML, the opacity in hex format
 
 =cut
 
 sub hsv2rgb {
-  my($hue,$sat,$val) = @_;
+  my($hue,$sat,$val,$options) = @_;
+  my(%opts) = parse_form($options);
   $hue=$hue-floor($hue);
   $hv=floor($hue*6);
 
@@ -552,7 +556,12 @@ sub hsv2rgb {
   $r=min($r+1-$sat,1)*$val;
   $g=min($g+1-$sat,1)*$val;
   $b=min($b+1-$sat,1)*$val;
-  return sprintf("#%0.2x%0.2x%0.2x",$r*255,$g*255,$b*255);
+
+  if ($opts{kml}) {
+    return sprintf("#$opts{opacity}%0.2x%0.2x%0.2x",$b*255,$g*255,$r*255);
+  } else {
+    return sprintf("#%0.2x%0.2x%0.2x",$r*255,$g*255,$b*255);
+  }
 }
 
 # cleanup files created by my_tmpfile (unless --keeptemp set)
