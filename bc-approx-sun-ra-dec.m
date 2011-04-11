@@ -152,6 +152,8 @@ raguess[x_] = Sum[Abs[2*rafour[n]/(vera25-vera0)]*Cos[2*Pi*n*x/rayear -
 
 ved0 = 3.509652093789344*10^9
 
+(* ved0 - epoch = 1.3006632937893438*10^9 *)
+
 decguess[x_] = 0.37808401703940736 + 0.3810373468678206*
      Cos[0.3074066821871051 - 3.9821243192021897*^-7*x] + 
     23.260776335116*Cos[1.6031468236573432 - 1.9910621596010949*^-7*x] + 
@@ -162,6 +164,8 @@ decguess[x_] = 0.37808401703940736 + 0.3810373468678206*
 
 vera0 = 3.5096520548642015*10^9
 
+(* vera0 - epoch = 1.3006632548642015*10^9 *)
+
 raguess[x_] = -0.12362547330377642 + 0.003653051241507621*
      Cos[1.7184400853442734 - 7.964247794495168*^-7*x] + 
     0.1226898815038194*Cos[0.2853850527151302 - 1.991061948623792*^-7*x] + 
@@ -170,7 +174,10 @@ raguess[x_] = -0.12362547330377642 + 0.003653051241507621*
 
 (* now, write in Perl format *)
 
-raperl = ToLowerCase[StringReplace[ToString[raguess[x], CForm], {"x" -> "$x"}]]
+(* TODO: not working; tailing backslashes really kill Perl *)
+
+raperl = ToLowerCase[
+ StringReplace[ToString[raguess[x], CForm], {{"x" -> "$x"}, {"\\" -> ""}}]]
 decperl=ToLowerCase[StringReplace[ToString[decguess[x], CForm], {"x" -> "$x"}]]
 
 {raperl, decperl} >> /tmp/perldecra.txt

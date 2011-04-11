@@ -8,12 +8,59 @@ require "bclib.pl";
 # (yes, I know I define a similar constant in bclib.pl)
 $EARTH_CIRC = 4.007504e+7;
 
+$now = time();
 $outputfile = "/home/barrycarter/BCINFO/sites/TEST/sunstuff.html";
 system("cp -f gbefore.txt $outputfile");
+
+# directly from mathematica 
+
+sub decl {
+  my($x) = @_;
+
+  # convert to seconds from latest spring equinox
+  $x -= 1.3006632937893438*10**9;
+
+    return (
+0.37808401703940736 +
+0.3810373468678206*cos(0.3074066821871051 - 3.9821243192021897e-7*$x) +
+23.260776335116*cos(1.6031468236573432 - 1.9910621596010949e-7*$x) +
+0.17118769496986821*cos(1.4545723908701285 + 5.973186478803284e-7*$x) +
+0.008146125242501636*cos(2.756482750676952 + 7.964248638404379e-7*$x)
+);
+}
+
+sub ra {
+  my($x) = @_;
+
+  # convert to seconds since latest spring equinox
+  $x -= 1.3006632548642015*10**9;
+  debug("X: $x");
+
+  my($temp) = (
+-0.12362547330377642 + 0.003653051241507621*cos(1.7184400853442734 -
+7.964247794495168e-7*$x) + 0.1226898815038194*cos(0.2853850527151302 -
+1.991061948623792e-7*$x) + 0.16534691830933743*cos(1.502453306625312 +
+3.982123897247584e-7*$x) + 0.005290041878837918*cos(2.7898112178483023 +
+5.973185845871376e-7*$x)
+);
+
+  # need to undo what racorrected2 does
+  debug("TEMP: $temp");
+
+  return 24*$x/3.1556955380130082e+7 + $temp;
+
+}
+
+debug("RA/DEC", ra($now), decl($now));
+
+
+die "TESTING";
+
+
+
 open(A, ">>$outputfile");
 
 # determine solar declination
-$now = time();
 
 # approximations courtesy Mathematica (not sure why constant term is non-0)
 # time since vernal equinox 2011; accurate w/in .005 degree until 2021
