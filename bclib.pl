@@ -565,6 +565,17 @@ sub hsv2rgb {
   }
 }
 
+=item mod($x,$y)
+
+Returns $x modulo $y, neither has to be an integer
+
+=cut
+
+sub mod {
+  my($x,$y) = @_;
+  return $x-$y*floor($x/$y);
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 
 sub END {
