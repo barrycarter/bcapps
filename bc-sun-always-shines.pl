@@ -34,7 +34,6 @@ sub ra {
 
   # convert to seconds since latest spring equinox
   $x -= 1.3006632548642015*10**9;
-  debug("X: $x");
 
   my($temp) = (
 -0.12362547330377642 + 0.003653051241507621*cos(1.7184400853442734 -
@@ -45,52 +44,28 @@ sub ra {
 );
 
   # need to undo what racorrected2 does
-  debug("TEMP: $temp");
-
   return 24*$x/3.1556955380130082e+7 + $temp;
 
 }
 
-debug("RA/DEC", ra($now), decl($now));
-
-
-die "TESTING";
-
-
-
 open(A, ">>$outputfile");
+
+($dec,$ra) = (decl($now), ra($now));
+
+# sidereal time in Greenwich
+$sdm = mod(($now%86400)/3600+12+24*($now - 1.3006632548642015e+9)/3.1556955380130082e+7,24);
+
+# difference to $ra (east of Greenwich)
+$dege = ($ra-$sdm)*15;
 
 # determine solar declination
 
-# approximations courtesy Mathematica (not sure why constant term is non-0)
-# time since vernal equinox 2011; accurate w/in .005 degree until 2021
-$x = $now - 1.3006416937893343e+9;
-$dec = 0.37845200201734086 +
- 0.38116909443611807*cos(0.30502424424664315 - 3.982131644462728e-7*$x) +
- 23.26157394172938*cos(1.6032489688783176 - 1.991065822231364e-7*$x) +
- 0.17123511177389686*cos(1.4545340752802227 + 5.973197466694092e-7*$x) +
- 0.008152035794419562*cos(2.760234392686175 + 7.964263288925456e-7*$x);
-
-# the RA vernal equinox is slightly different (why?!)
-# ra accurate w/in .15 degree until 2021
-
-$y = $now - 1.3006416548643436e+9;
-$ra = -0.12401429788269641 +
-      0.12272033119588897*cos(0.2827810951693645 - 1.9910654343479365e-7*$x) +
-      0.16538008039487773*cos(1.502315236751995 + 3.982130868695873e-7*$x) +
-      24*mod(3.168879058958857e-8*$x, 1);
-
-debug("RADEC: $ra, $dec");
-
-die "TESTING";
-
-($lat, $lon) = (35, -106.5);
+($lat, $lon) = ($dec, $dege);
 
 # finding antipode here is ugly
-$alat = -1*35;
-$alon = (180-106.5);
+$alat = -1*$lat;
+$alon = (180+$dege);
 
-# pretending sun is overhead at ABQ, impossible in real life
 print A << "MARK"
 
 pt = new google.maps.LatLng($lat,$lon);
