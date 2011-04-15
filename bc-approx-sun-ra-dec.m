@@ -182,5 +182,19 @@ decperl=ToLowerCase[StringReplace[ToString[decguess[x], CForm], {"x" -> "$x"}]]
 
 {raperl, decperl} >> /tmp/perldecra.txt
 
+(* and now... the Moon *)
+
+(* find latest time moon crossed equator + also 25y from now *)
+
+moond0 = x /. FindRoot[
+ AstronomicalData["Moon", {"Declination", ToDate[x]}] == 0, {x,mathtoday}]
+
+moond25 = x /. 
+  FindRoot[AstronomicalData["Sun", {"Declination", ToDate[x]}] == 0,
+  {x,mathtoday+365.2425*86400*25}]
+
+moonplot = Plot[AstronomicalData["Moon", {"Declination", ToDate[x+moond0]}],
+ {x,0,moond25-moond0}]
+
 (* TODO: at some point, document my failed attempts as well (why?) *)
 

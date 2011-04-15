@@ -2,7 +2,10 @@
 
 # shows where sun is shining, twilight, etc
 
+# TODO: first and third line below are ugly!
+push(@INC, "/usr/local/lib");
 require "bclib.pl";
+chdir("/usr/local/etc/sun");
 
 # from wolframalpha (in m)
 # (yes, I know I define a similar constant in bclib.pl)
@@ -11,6 +14,8 @@ $EARTH_CIRC = 4.007504e+7;
 $now = time();
 $outputfile = "/home/barrycarter/BCINFO/sites/TEST/sunstuff.html";
 system("cp -f gbefore.txt $outputfile");
+
+open(A, ">>$outputfile");
 
 # directly from mathematica 
 
@@ -47,8 +52,6 @@ sub ra {
   return 24*$x/3.1556955380130082e+7 + $temp;
 
 }
-
-open(A, ">>$outputfile");
 
 ($dec,$ra) = (decl($now), ra($now));
 
@@ -134,3 +137,5 @@ MARK
 close(A);
 
 system("cat gend.txt >> $outputfile");
+
+system("echo Last updated `date` known broken >> $outputfile");
