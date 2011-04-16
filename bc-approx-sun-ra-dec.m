@@ -184,17 +184,50 @@ decperl=ToLowerCase[StringReplace[ToString[decguess[x], CForm], {"x" -> "$x"}]]
 
 (* and now... the Moon *)
 
-(* find latest time moon crossed equator + also 25y from now *)
+(* better approach: compute and approximate xyz coords of moon (from Earth) *)
 
-moond0 = x /. FindRoot[
- AstronomicalData["Moon", {"Declination", ToDate[x]}] == 0, {x,mathtoday}]
+(* caching below for speed *)
 
-moond25 = x /. 
-  FindRoot[AstronomicalData["Sun", {"Declination", ToDate[x]}] == 0,
-  {x,mathtoday+365.2425*86400*25}]
+moonpos[x_] := Module[{ra,dec,dist},
+ ra = AstronomicalData["Moon", {"RightAscension", DateList[x]}]/12*Pi;
+ dec = AstronomicalData["Moon", {"Declination", DateList[x]}]*Degree;
+ dist = AstronomicalData["Moon", {"Distance", DateList[x]}];
+ moonpos[x] = {dist*Cos[ra]*Cos[dec], dist*Sin[ra]*Cos[dec], dist*Sin[dec]}
+]
 
-moonplot = Plot[AstronomicalData["Moon", {"Declination", ToDate[x+moond0]}],
- {x,0,moond25-moond0}]
+(* lunar estimates over 1 year don't work well, so do by year *)
+
+moonprox[year_, pos_] := FunctionInterpolation[moonpos[x][[pos]], 
+ {x, AbsoluteTime[{year,1,1}], AbsoluteTime[{year+1,1,1}]}];
+
+(* and now, calculate a big batch of them *)
+
+t = Table[{year,pos,moonprox[year,pos]}, {year,2011,2021}, {pos,1,3}]
+
+(* table above was saved to file *)
+
+(* ra and dec based on approximations, just to test how close we are *)
+
+(* in reality, Perl will compute based on xyz values *)
+
+radecest[time_] := Module[{pos, x, y, z, ra, dec},
+ (* which entry in table *)
+ pos = ToDate[time][[1]]-2011+1;
+ (* values of xyz at time time *)
+ x = t[[pos,1,3]][time];
+ y = t[[pos,2,3]][time];
+ z = t[[pos,3,3]][time];
+ ra = Mod[(ArcTan[x,y]+2*Pi),2*Pi]/Pi*12;
+ dec =  ArcSin[z/Norm[{x,y,z}]]/Degree;
+ {ra,dec}
+]
+
+(* accuracy testing *)
+
+radiffplot[year_] :=
+Plot[radecest[x][[1]] - 
+ AstronomicalData["Moon", {"RightAscension", DateList[x]}],
+{x, AbsoluteTime[{year,1,1}], AbsoluteTime[{year+1,1,1}]}]
 
 (* TODO: at some point, document my failed attempts as well (why?) *)
 
