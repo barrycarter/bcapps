@@ -3,6 +3,14 @@
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
+# the KML file created here is visible at
+# http://test.barrycarter.info/gmap15.php
+
+# TODO: clickable polygons are REALLY annoying, though probably can't
+# fix them scriptwise
+
+# TODO: use real 3D Voronoi, not Mercator approximation
+
 # work in my own temp dir
 chdir(tmpdir());
 
@@ -77,29 +85,55 @@ MARK
 # the regions start at $pts+1
 for $i ($pts+1..$#regions) {
 
-# this is the region for which point
-$index = $i-$pts;
+  # this is the region for which point
+  $index = $i-$pts;
 
-# TODO: ignoring unbounded regions now, but should fix
-if ($regions[$i]=~/ 0( |$)/) {next;}
+  # TODO: ignoring unbounded regions now, but should fix
+  if ($regions[$i]=~/ 0( |$)/) {next;}
 
-# the numbers of the points making up this polygon
-@points=split(/\s+/,$regions[$i]);
-# the first one is dimension (uninteresting)
-shift(@points);
+  # the numbers of the points making up this polygon
+  @points=split(/\s+/,$regions[$i]);
+  # the first one is dimension (uninteresting)
+  shift(@points);
 
-# map the rest to actual point coords
-map($_=trim($regions[$_]),@points);
+  # map the rest to actual point coords
+  map($_=trim($regions[$_]),@points);
 
-unless (@points) {next;}
+  unless (@points) {next;}
 
-debug("BEFORE: $lat[$index],$lon[$index] ->",@points);
+  debug("BEFORE: $lat[$index],$lon[$index] ->",@points);
 
-# KML
+  # icon box
+  $eps = 1;
+  ($north,$south,$east,$west) = ($lat[$index]+$eps, $lat[$index]-$eps,
+				 $lon[$index]+$eps, $lon[$index]-$eps);
+
+  # icon (KML)
+
+# tessting, only print a few
+
+$count++;
+
+      if ($count<=500) {
+print B << "MARK";
+<GroundOverlay>
+<name>X</name>
+<description>You know, stuff</description>
+<Icon><href>http://test.barrycarter.info/icon.png</href></Icon>
+<LatLonBox>
+ <north>$north</north><south>$south</south>
+ <east>$east</east><west>$west</west>
+ <rotation>-0.1556640799496235</rotation>
+</LatLonBox></GroundOverlay>
+MARK
+;
+}
+
+  # KML
   print B "<Placemark>\n";
   print B "<gx:balloonVisibility>0</gx:balloonVisibility>\n";
   print B "<styleUrl>#$stat[$index]</styleUrl>\n";
-#  print B "<styleUrl>#astyle</styleUrl>\n";
+  #  print B "<styleUrl>#astyle</styleUrl>\n";
   print B "<Polygon><outerBoundaryIs><LinearRing><coordinates>\n";
 
   # for google maps
