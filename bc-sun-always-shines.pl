@@ -13,7 +13,11 @@ $EARTH_CIRC = 4.007504e+7;
 
 $now = time();
 $outputfile = "/home/barrycarter/BCINFO/sites/TEST/sunstuff.html";
-system("cp -f gbefore.txt $outputfile");
+
+# TODO: ugly ugly ugly (should use Perl funcs and also not do "cat >>"
+$ENV{TZ} = "GMT";
+system("echo Last updated: `date` > $outputfile");
+system("/bin/cat gbefore.txt >> $outputfile");
 
 open(A, ">>$outputfile");
 
