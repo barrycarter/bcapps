@@ -224,10 +224,68 @@ radecest[time_] := Module[{pos, x, y, z, ra, dec},
 
 (* accuracy testing *)
 
-radiffplot[year_] :=
+radiffplot[year_] := radiffplot[year] =
 Plot[radecest[x][[1]] - 
  AstronomicalData["Moon", {"RightAscension", DateList[x]}],
 {x, AbsoluteTime[{year,1,1}], AbsoluteTime[{year+1,1,1}]}]
+
+radifftabplot = Table[radiffplot[year], {year,2011,2021}]
+
+(* converting an InterpolationFunction into something more Perl-friendly *)
+
+myfu = t[[3,2,3]];
+
+xvals = Flatten[myfu[[3]]]
+
+Mean[Table[xvals[[i]]-xvals[[i-1]],{i,2,Length[xvals]}]]
+
+yvals = Flatten[myfu[[4,3]]]
+
+Plot[myfu[x],{x,xvals[[1]],xvals[[3]]}]
+
+Plot[D[myfu[x],x],{x,xvals[[1]],xvals[[3]]}]
+
+Plot[D[myfu[time],time] /. time -> x, {x,xvals[[1]],xvals[[2]]}]
+Plot[D[myfu[time],time,time] /. time -> x, {x,xvals[[1]],xvals[[2]]}]
+Plot[D[myfu[time],time,time,time] /. time -> x, {x,xvals[[1]],xvals[[2]]}]
+
+moonprox1[year_, pos_] := FunctionInterpolation[moonpos[x][[pos]], 
+ {x, AbsoluteTime[{year,1,1}], AbsoluteTime[{year+1,1,1}]},
+ InterpolationOrder -> 1];
+
+t1 = Table[{year,pos,moonprox1[year,pos]}, {year,2011,2021}, {pos,1,3}]
+
+
+
+(* what if we do order 1? *)
+
+(* TODO: more accuracy testing *)
+
+(* figuring out Hermite polynomials below *)
+
+h00[t_] = (1+2*t)*(1-t)^2
+h10[t_] = t*(1-t)^2
+h01[t_] = t^2*(3-2*t)
+h11[t_] = t^2*(t-1)
+
+(* general form of approximation *)
+
+p[p0_, m0_, p1_, m1_, t_] = h00[t]*p0 + h10[t]*m0 + h01[t]*p1 + h11[t]*m1
+
+p[p0,m0,p1,m1,0]
+p[p0,m0,p1,m1,1]
+
+p[p0,m0,p1,m1,t]
+
+3rd derv is 6 (m0 + m1 + 2 p0 - 2 p1)
+
+slope0: 10/13 (or 100/169)
+slope1: 30/13 (or 300/169)
+slope2: 70/13 (or 700/169)
+
+woopsie
+
+intervals of 5/6
 
 (* TODO: at some point, document my failed attempts as well (why?) *)
 
