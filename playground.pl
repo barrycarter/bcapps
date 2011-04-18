@@ -9,11 +9,57 @@ require "bclib.pl";
 
 # RPC-XML
 
+# get password
+$pw = read_file("/home/barrycarter/bc-wp-pwd.txt"); chomp($pw);
+
+
+
 # using raw below so i can cache and stuff
 
 $req=<<"MARK";
-<?xml version="1.0"?><methodCall>
-<methodName>system.listMethods</methodName>
+<?xml version="1.0"?>
+<methodCall> 
+<methodName>metaWeblog.newPost</methodName> 
+<params> 
+<param> 
+<value> 
+<string>MyBlog</string> 
+</value> 
+</param> 
+<param> 
+<value>admin</value> 
+</param> 
+<param> 
+<value> 
+<string>$pw</string> 
+</value> 
+</param> 
+<param> 
+<struct> 
+
+<member> 
+<name>description</name> 
+<value>Dr. Quest is missing while on an expedition to find the Yeti. Jonny and his friends head to the Himalayas to find him, but run into another scientist who's determined to bring back the Yeti.
+</value>
+</member> 
+<member> 
+<name>title</name> 
+<value>Expedition To Khumbu</value> 
+</member> 
+<member> 
+<name>dateCreated</name> 
+<value>
+<dateTime.iso8601>20040716T19:20:30</dateTime.iso8601> 
+</value> 
+</member> 
+</struct> 
+</param> 
+<param>
+ <value>
+  <boolean>1</boolean>
+ </value>
+</param> 
+</params> 
 </methodCall>
 MARK
 ;
