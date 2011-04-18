@@ -110,11 +110,12 @@ for $i ($pts+1..$#regions) {
 
   # icon (KML)
 
-# tessting, only print a few
+# tessting, only print a few (leaving 5 for now, because more really
+# slow things down)
 
 $count++;
 
-      if ($count<=500) {
+      if ($count<=5) {
 print B << "MARK";
 <GroundOverlay>
 <name>X</name>
