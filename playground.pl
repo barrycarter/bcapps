@@ -24,29 +24,6 @@ system("curl -o /tmp/rpc2.txt --data-binary \@/tmp/rpc1.txt http://wordpress.bar
 
 die "TESTING";
 
-use RPC::XML;
-use RPC::XML::Parser;
-require RPC::XML::Client;
-
-$cli = RPC::XML::Client->new('http://wordpress.barrycarter.info/xmlrpc.php');
-$resp = $cli->send_request('system.listMethods');
-
-debug(@{$resp->value});
-
-die "TESTING";
-
-
-$req = RPC::XML::request->new('fetch_prime_factors', 
- RPC::XML::int->new(985120528));
-
-debug($req);
-
-$resp = RPC::XML::Parser->new()->parse(STREAM);
-
-debug($resp);
-
-die "TESTING";
-
 # reading Mathematica interpolation files
 
 $all = read_file("sample-data/manytables.txt");
