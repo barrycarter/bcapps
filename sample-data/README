@@ -10,3 +10,6 @@ SHIPS: weather data from ships
 
 SYNOP: weather data from SYNOP (automated surface) stations
 
+manytables.txt: Mathematica functions that interpolate the xyz
+positions of the moon from 2011-2021
+
