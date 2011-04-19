@@ -14,6 +14,8 @@ chdir(tmpdir());
 $pw = read_file("/home/barrycarter/bc-wp-pwd.txt"); chomp($pw);
 # my name <h>(I'm OK with hardcoding this)</h>
 $author = "barrycarter";
+# my wordpress blog
+$wp_blog = "wordpress.barrycarter.info";
 
 # TODO: cheating and hardcoding this, but could get it from any of my stack ids
 $assoc_id = "aa1073f7-7e3b-4d4d-ace5-f2fca853f998";
@@ -84,29 +86,32 @@ for $i (sort keys %myid) {
   # list of questions
   for $j (@questions) {
     %qhash = %{$j};
-    debug($qhash{question_timeline_url}, $qhash{creation_date}, $qhash{title}, $outname);
 
-    post_to_wp("author=$author&password=$pw&subject=$qhash{title}&body=BLAH FOR NOW&timestamp=$qhash{creation_date}&category=STACK&live=0");
+    debug(unfold(%qhash));
+
+    $body = "I posted a question entitled '$qhash{title}' to $outname: 
+<a href='$i/questions/$qhash{question_timeline_url}'>$i/questions/$qhash{question_timeline_url}</a>. Please make all comments/etc on that site, not here.";
+
+    post_to_wp($body, "site=$wp_blog&author=$author&password=$pw&subject=$qhash{title}&timestamp=$qhash{creation_date}&category=STACK&live=0");
   }
 }
 
-# posts to wordpress.barrycarter.info:
+# TODO: turn off comments for these posts
+# TODO: use WP *read* API to confirm no dupes
+# post_to_wp($body, $options)
+# site = site to post to
 # author = post author
 # password = password for posting
 # subject = subject of post
-# body = body of post
 # timestamp = UNIX timestamp of post
 # category = category of post
 # live = whether to make post live instantly (default=no)
 
 sub post_to_wp {
   # this function has no pass-by-position parameters
-  my($options) = @_;
+  my($body, $options) = @_;
   my(%opts) = parse_form($options);
   defaults("live=0");
-
-  # fake title for testing
-  my($title) = strftime("%Y%m%d.%H%M%S", gmtime(time()));
 
   # timestamp (in ISO8601 format)
   my($timestamp) = strftime("%Y%m%dT%H:%M:%S", gmtime($opts{timestamp}));
@@ -133,7 +138,7 @@ my($req) =<< "MARK";
 
 <member>
 <name>description</name> 
-<value>$opts{body}</value>
+<value><string><![CDATA[$body]]></string></value>
 </member> 
 
 <member> 
@@ -158,7 +163,9 @@ MARK
 ;
 
   write_file($req,"request");
-  system("curl -o answer --data-binary \@request http://wordpress.barrycarter.info/xmlrpc.php");
+  # curl sometimes sends 'Expect: 100-continue' which WP doesn't like.
+  # The -H 'Expect:' below that cancels this
+  system("curl -H 'Expect:' -o answer --data-binary \@request http://$opts{site}/xmlrpc.php");
 
   debug($req);
 
