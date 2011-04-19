@@ -12,8 +12,6 @@ require "bclib.pl";
 # get password
 $pw = read_file("/home/barrycarter/bc-wp-pwd.txt"); chomp($pw);
 
-
-
 # using raw below so i can cache and stuff
 
 $req=<<"MARK";

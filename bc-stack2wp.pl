@@ -10,6 +10,9 @@ require "bclib.pl";
 # work in my own directory
 chdir(tmpdir());
 
+# my WP password <h>(sorry, I can't hardcode it!)</h>
+$pw = read_file("/home/barrycarter/bc-wp-pwd.txt"); chomp($pw);
+
 # TODO: cheating and hardcoding this, but could get it from any of my stack ids
 $assoc_id = "aa1073f7-7e3b-4d4d-ace5-f2fca853f998";
 $apikey = "jm3pC2swyEWCN_sm3BhjTQ";
@@ -80,6 +83,78 @@ for $i (sort keys %myid) {
   for $j (@questions) {
     %qhash = %{$j};
     debug($qhash{question_timeline_url}, $qhash{creation_date}, $qhash{title}, $outname);
+
+    post_to_wp("subject=$qhash{title}&body=BLAH FOR NOW&timestamp=$qhash{creation_date}&category=STACK&live=0");
   }
 }
 
+# posts to wordpress.barrycarter.info:
+# subject = subject of post
+# body = body of post
+# timestamp = UNIX timestamp of post
+# category = category of post
+# live = whether to make post live instantly (default=no)
+
+sub post_to_wp {
+  # this function has no pass-by-position parameters
+  my($options) = @_;
+  my(%opts) = parse_form($options);
+  defaults("live=0");
+
+  # fake title for testing
+  my($title) = strftime("%Y%m%d.%H%M%S", gmtime(time()));
+
+my($req) =<< "MARK";
+
+<?xml version="1.0"?>
+<methodCall> 
+<methodName>metaWeblog.newPost</methodName> 
+<params> 
+<param> 
+<value> 
+<string>MyBlog</string> 
+</value> 
+</param> 
+<param> 
+<value>admin</value> 
+</param> 
+<param> 
+<value> 
+<string>$pw</string> 
+</value> 
+</param> 
+<param> 
+<struct> 
+
+<member> 
+<name>description</name> 
+<value>This is a test post. You are best off ignoring it.</value>
+</member> 
+<member> 
+<name>title</name> 
+<value>$title</value> 
+</member> 
+<member> 
+<name>dateCreated</name> 
+<value>
+<dateTime.iso8601>20040716T19:20:30</dateTime.iso8601> 
+</value> 
+</member> 
+</struct> 
+</param> 
+<param>
+ <value>
+  <boolean>1</boolean>
+ </value>
+</param> 
+</params> 
+</methodCall>
+MARK
+;
+
+  write_file($req,"request");
+  system("curl -o answer --data-binary \@request http://wordpress.barrycarter.info/xmlrpc.php");
+
+  debug($req);
+  die "TESTING";
+}
