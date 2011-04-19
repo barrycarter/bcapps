@@ -12,6 +12,8 @@ chdir(tmpdir());
 
 # my WP password <h>(sorry, I can't hardcode it!)</h>
 $pw = read_file("/home/barrycarter/bc-wp-pwd.txt"); chomp($pw);
+# my name <h>(I'm OK with hardcoding this)</h>
+$author = "barrycarter";
 
 # TODO: cheating and hardcoding this, but could get it from any of my stack ids
 $assoc_id = "aa1073f7-7e3b-4d4d-ace5-f2fca853f998";
@@ -84,11 +86,13 @@ for $i (sort keys %myid) {
     %qhash = %{$j};
     debug($qhash{question_timeline_url}, $qhash{creation_date}, $qhash{title}, $outname);
 
-    post_to_wp("subject=$qhash{title}&body=BLAH FOR NOW&timestamp=$qhash{creation_date}&category=STACK&live=0");
+    post_to_wp("author=$author&password=$pw&subject=$qhash{title}&body=BLAH FOR NOW&timestamp=$qhash{creation_date}&category=STACK&live=0");
   }
 }
 
 # posts to wordpress.barrycarter.info:
+# author = post author
+# password = password for posting
 # subject = subject of post
 # body = body of post
 # timestamp = UNIX timestamp of post
@@ -104,51 +108,52 @@ sub post_to_wp {
   # fake title for testing
   my($title) = strftime("%Y%m%d.%H%M%S", gmtime(time()));
 
+  # timestamp (in ISO8601 format)
+  my($timestamp) = strftime("%Y%m%dT%H:%M:%S", gmtime($opts{timestamp}));
+
 my($req) =<< "MARK";
 
 <?xml version="1.0"?>
 <methodCall> 
 <methodName>metaWeblog.newPost</methodName> 
-<params> 
-<param> 
-<value> 
-<string>MyBlog</string> 
-</value> 
-</param> 
-<param> 
-<value>admin</value> 
-</param> 
-<param> 
-<value> 
-<string>$pw</string> 
-</value> 
-</param> 
+<params>
+
+<param><value><string>thisstringappearstobenecessarybutpointlessinthiscase</string></value></param>
+
+<param><value><string>$opts{author}</string></value></param> 
+
+<param><value><string>$opts{password}</string></value></param>
+
 <param> 
 <struct> 
 
-<member> 
-<name>description</name> 
-<value>This is a test post. You are best off ignoring it.</value>
+<member><name>categories</name> 
+<value><array><data><value>Stack</value></data></array></value> 
 </member> 
+
+<member>
+<name>description</name> 
+<value>$opts{body}</value>
+</member> 
+
 <member> 
 <name>title</name> 
-<value>$title</value> 
+<value>$opts{subject}</value> 
 </member> 
+
 <member> 
 <name>dateCreated</name> 
 <value>
-<dateTime.iso8601>20040716T19:20:30</dateTime.iso8601> 
+<dateTime.iso8601>$timestamp</dateTime.iso8601> 
 </value> 
 </member> 
+
 </struct> 
 </param> 
-<param>
- <value>
-  <boolean>1</boolean>
- </value>
-</param> 
-</params> 
-</methodCall>
+
+<param><value><boolean>$live</boolean></value></param> 
+
+</params></methodCall>
 MARK
 ;
 
@@ -156,5 +161,7 @@ MARK
   system("curl -o answer --data-binary \@request http://wordpress.barrycarter.info/xmlrpc.php");
 
   debug($req);
+
+  debug(read_file("answer"));
   die "TESTING";
 }
