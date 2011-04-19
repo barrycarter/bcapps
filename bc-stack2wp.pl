@@ -19,7 +19,6 @@ $wp_blog = "wordpress.barrycarter.info";
 
 # TODO: cheating and hardcoding this, but could get it from any of my stack ids
 $assoc_id = "aa1073f7-7e3b-4d4d-ace5-f2fca853f998";
-$apikey = "jm3pC2swyEWCN_sm3BhjTQ";
 
 # find all stack sites (only need this because /associated below does
 # NOT give URLs, grumble)
@@ -170,5 +169,4 @@ MARK
   debug($req);
 
   debug(read_file("answer"));
-  die "TESTING";
 }
