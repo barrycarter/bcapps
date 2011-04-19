@@ -39,6 +39,7 @@ for $i (@items) {
   %hash = %{$i};
   %hash2 = %{$hash{main_site}};
   $site{$hash2{name}} = $hash2{api_endpoint};
+  $site_url{$hash2{api_endpoint}} = $hash2{site_url};
 }
 
 # find all my ids
@@ -64,6 +65,7 @@ for $i (@items) {
 
 # and now, my questions on all sites
 for $i (sort keys %myid) {
+  debug($i,$site_url{$i});
 
   $url = "$i/1.0/users/$myid{$i}/questions";
   # filename for questions for this site
@@ -86,10 +88,13 @@ for $i (sort keys %myid) {
   for $j (@questions) {
     %qhash = %{$j};
 
-    debug(unfold(%qhash));
+#    debug(unfold(%qhash));
 
-    $body = "I posted a question entitled '$qhash{title}' to $outname: 
-<a href='$i/questions/$qhash{question_timeline_url}'>$i/questions/$qhash{question_timeline_url}</a>. Please make all comments/etc on that site, not here.";
+    # question url
+    $qurl = "$site_url{$i}$qhash{question_timeline_url}";
+
+    $body = "I posted a question entitled '$qhash{title}' to $outname:<p>
+<a href='$qurl'>$qurl</a>.<p> Please make all comments/etc on that site, not here.";
 
     post_to_wp($body, "site=$wp_blog&author=$author&password=$pw&subject=$qhash{title}&timestamp=$qhash{creation_date}&category=STACK&live=0");
   }
@@ -162,6 +167,8 @@ MARK
 ;
 
   write_file($req,"request");
+  debug($req);
+
   # curl sometimes sends 'Expect: 100-continue' which WP doesn't like.
   # The -H 'Expect:' below that cancels this
   system("curl -H 'Expect:' -o answer --data-binary \@request http://$opts{site}/xmlrpc.php");
