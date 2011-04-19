@@ -24,7 +24,7 @@ $assoc_id = "aa1073f7-7e3b-4d4d-ace5-f2fca853f998";
 # NOT give URLs, grumble)
 
 # below won't work when stack grows over 100 sites!
-$fname = cache_command("curl 'http://stackauth.com/1.1/sites?page=1&pagesize=100&key=$apikey'","age=86400&retfile=1");
+$fname = cache_command("curl 'http://stackauth.com/1.1/sites?page=1&pagesize=100'","age=86400&retfile=1");
 
 system("gunzip -fc $fname > json0");
 $sites = read_file("json0");
@@ -43,7 +43,7 @@ for $i (@items) {
 
 # find all my ids
 
-$fname = cache_command("curl 'http://stackauth.com/1.1/users/$assoc_id/associated?key=$apikey'","age=86400&retfile=1");
+$fname = cache_command("curl 'http://stackauth.com/1.1/users/$assoc_id/associated'","age=86400&retfile=1");
 
 # unzip results
 system("gunzip -c $fname > json1");
