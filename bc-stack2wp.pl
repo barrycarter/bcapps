@@ -60,14 +60,26 @@ for $i (@items) {
 for $i (sort keys %myid) {
 
   $url = "$i/1.0/users/$myid{$i}/questions";
-  debug("URL: $url");
-
-  warn "TESTING"; next;
+  # filename for questions for this site
+  $i=~m%http://(.*?)/?$%;
+  $outname = $1;
 
   # my questions
   $fname = cache_command("curl '$url'","age=86400&retfile=1");
+  system("gunzip -c $fname > $outname");
+  $data = read_file($outname);
 
-  debug(read_file($fname));
+  # TODO: not sure why this happens
+  unless ($data) {next;}
 
+  $json = JSON::from_json($data);
+  %jhash = %{$json};
+  @questions = @{$jhash{questions}};
+
+  # list of questions
+  for $j (@questions) {
+    %qhash = %{$j};
+    debug($qhash{question_timeline_url}, $qhash{creation_date}, $qhash{title}, $outname);
+  }
 }
 
