@@ -5,6 +5,11 @@
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
+# if there is one of me already running, exit quietly
+# $0 is imperfect here, in case of path diffs?
+$res = system("pgrep $0");
+unless ($res) {exit();}
+
 # I tend to use up CPU, so renice myself
 system("renice 19 -p $$");
 
@@ -72,6 +77,9 @@ for $i (sort keys %urls) {
 
     # The cycle file I have is stale, so get fresh copy
     push(@commands, "curl -R -m 300 -s -o $globopts{root}/$type/$file $i/$file");
+    # keep track of the file I'm downloading; I'll need it for parse-metar
+    # TODO: need to generalize this for SYNOP/BUOY/etc
+    if ($type eq "METAR") {push(@metar, "$i/$file");}
   }
 }
 
@@ -82,4 +90,9 @@ write_file($commands, "commands");
 # ARGH: new version of parallel defaults to "-j 1"
 ($out, $err, $stat) = cache_command("parallel -j 20 < commands");
 
-# TODO: run repeatedly (vs cron)
+# now, run bc-parse-metar.pl
+# TODO: this can be generalized and xarg'd
+for $i (@metar) {
+  system("bc-parse-metar.pl $globopts{root}/$type/$file");
+}
+

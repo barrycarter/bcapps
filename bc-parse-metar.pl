@@ -7,9 +7,12 @@
 
 # -nosql: dont run SQL commands, just print them out
 
+push(@INC, "/usr/local/lib");
 require "bclib.pl";
-chdir(tmpdir());
 ($all, $arg) = cmdfile();
+
+# do this only after we've got the data (in case user used short path)
+chdir(tmpdir());
 
 # go through each line
 
@@ -23,13 +26,6 @@ for $i (split("\n", $all)) {
 
   # parse METAR
   %ac=parse_metar($i);
-
-  # HACK: ignore old data, but remove key afterwards to avoid db problems
-#  if ($ac{age} > 86400) {next;}
-#  delete($ac{age});
-
-  # if both temp and dp are 0, probably an err
-#  if (!$ac{dewpoint} && !$ac{temperature}) {next;}
 
   # Create SQL query using returned fields/values
   @f=();

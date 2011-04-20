@@ -4,9 +4,10 @@
 
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
+chdir(tmpdir());
 
 # defaults for maxprice and hours (to expiration)
-defaults("maxprice=0.01&hours=4");
+defaults("maxprice=0.99&hours=4");
 
 # TODO: include start/end timestamp generation
 # TODO: compress identical listings
@@ -15,6 +16,43 @@ defaults("maxprice=0.01&hours=4");
 # Put your own application id in /usr/local/etc/ebay.id
 $appid = suck("/usr/local/etc/ebay.id");
 $appid=~s/\n//isg;
+
+# write data to tmp file
+open(A,">ebay.html");
+
+# header (TODO: ugly ugly ugly!)
+print A << "MARK";
+
+<script type="text/javascript" src="/jquery-1.4.3.min.js"></script> 
+<script type="text/javascript" src="/jquery.tablesorter.min.js"></script>
+
+<script type="text/javascript">
+\$(document).ready(function() {\$("#myTable").tablesorter();});
+</script>
+
+This page displays inexpensive (99 cents and under) eBay items that
+have free shipping, no current bidders, and end in less than 4
+hours. In other words, items that you can likely get for a low price.<p>
+
+Clicking on a column header sorts by that column.<p>
+
+A kludgey database version is available at <a href="http://ebay.db.94y.info/">http://ebay.db.94y.info/</a><p>
+
+Here's a <a
+href="http://1dba67f21d23895ff3022d513ed2193b.ebay.db.94y.info/">simple
+query</a> to get you started, and a <a
+href="http://58f147b086ede129c4d0533c8832d653.ebay.db.94y.info/">slightly
+more sophisticated query</a>.<p>
+
+NOTE: this site is minimal + buggy + just for fun.<p>
+
+<table id="myTable" class="tablesorter" border><thead><tr>
+<th>Price</th>
+<th>Ends</th>
+<th>Item</th>
+</tr></thead><tbody>
+MARK
+;
 
 # calculate end time
 $endtime=strftime("%FT%TZ",gmtime(time()+$globopts{hours}*3600));
@@ -60,6 +98,20 @@ $endtime=strftime("%FT%TZ",gmtime(time()+$globopts{hours}*3600));
 "http://antiques.shop.ebay.com/Antiques-/20081/i.html"
 );
 
+# db schema (cut-and-pasted) as a list
+
+$schema = "secondarycategory, shippingservicecost, timeleft,
+starttime, charityid, bidcount, postalcode, location, currentprice,
+listinginfo, categoryid, bestofferenabled, sellingstate, gift,
+autopay, title, sellingstatus, conditiondisplayname, shippingtype,
+conditionid, primarycategory, endtime, gallerypluspictureurl,
+paymentmethod, country, globalid, itemid, shippinginfo,
+convertedcurrentprice, listingtype, viewitemurl, buyitnowavailable,
+subtitle, shiptolocations, categoryname, productid, galleryurl,
+condition , handlingtime, onedayshippingavailable, returnsaccepted,
+expeditedshipping, c";
+@schema = split(/\,\s*/, $schema);
+
 map {m%/(\d+)/i.html$%; $_=$1} @urls; # extract category numbers
 @cats = sort {$a <=> $b} @urls; # don't really need this, but I like it
 
@@ -70,6 +122,7 @@ for $i (@cats) {
   # need fixed cachefile since endtime changes slightly each time
   # need ignoreerror here due to this curl error:
   # "line 1 column 109182 - Warning: replacing invalid character code 151"
+  # <h>It is entirely appropriate that I name my tmp files after cat litter</h>
   $outfile = cache_command($cmd,"age=1800&retfile=1&cachefile=/tmp/ebay-tidy-cat-$i-hours-$globopts{hours}-maxprice-$globopts{maxprice}&ignoreerror=1");
   # TODO: check for errors excluding the one above
 }
@@ -90,7 +143,7 @@ for $i (@items) {
 
   # this isn't 100% but good enough for us
   $j=$i; # just to avoid messing up our loop var
-  while ($j=~s%<([^<>]*?)>([^<>]*?)</\1>%%s) {
+  while ($j=~s%<([^<>\s]+)\s*[^<>]*>([^<>]*?)</\1>%%s) {
     ($key,$val) = ($1,$2);
     $val=~s/\s+/ /isg;
     $hash{lc($key)}=trim($val);
@@ -100,7 +153,35 @@ for $i (@items) {
   if ($hash{bidcount}) {next;}
 
   # TODO: print more info here like price + exptime?
-  # TODO: let people sort by whatever field they want
-  print "$hash{itemid} $hash{title}\n";
+  # TODO: let people sort by whatever field they want (not just JS)
 
+print A << "MARK";
+<tr>
+<td>$hash{convertedcurrentprice}</td>
+<td>$hash{endtime}</td>
+<td>
+<a href="http://cgi.ebay.com/ws/eBayISAPI.dll?ViewItem&item=$hash{itemid}" target="_blank">
+$hash{title}
+</a></td>
+</tr>
+MARK
+;
+
+  # put into db
+  @f=(); @v=();
+  for $j (@schema) {
+    push(@f, $j);
+    push(@v, $hash{$j});
+  }
+
+  debug("F:",@f,"V:",@v);
 }
+
+print A "</tbody></table>\n";
+
+
+close(A);
+
+# copy over to table
+system("mv /sites/EBAY/index.html /sites/EBAY/index.html.old");
+system("mv ebay.html /sites/EBAY/index.html");
