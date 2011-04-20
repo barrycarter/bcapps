@@ -2,19 +2,13 @@
 
 # visit URLs for NOAA cycle files and download new ones
 
+push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
 # I tend to use up CPU, so renice myself
 system("renice 19 -p $$");
 
-# by default, we are in development mode and keep our data files in my
-# home directory (which probably needs to change)
-# TODO: change default root dir below
-# NOTE: this downloads cycle files into my git root, so github will
-# eventually have a history of these; not sure if this is useful, but
-# will do it until they complain
-
-defaults("mode=devel&root=/home/barrycarter/BCGIT/data");
+defaults("mode=devel&root=/usr/local/etc/cycle");
 
 # different options depending on mode
 # THOUGHT: should this be in bclib?
@@ -45,7 +39,7 @@ for $i (sort keys %urls) {
   $i=~m%\.([a-z]{5})/?$%||die("URL: bad format");
   $type=uc($1);
 
-  # these directories musAt already exist
+  # these directories must already exist
   dodie(qq%chdir("$globopts{root}/$type/")%);
 
   # download directory of files (cache if in development)
@@ -58,8 +52,6 @@ for $i (sort keys %urls) {
   # clean it up a bit
   map {s/<[^>]*?>//; s/\s+/ /g;} @cycles;
 
-  # TODO: right now, just checking if file exists -- later, much check
-  # timestamp/etc
   for $j (@cycles) {
     ($file, $date, $time, $size) = split(/\s+/,$j);
 
@@ -84,13 +76,10 @@ for $i (sort keys %urls) {
   }
 }
 
-debug(@commands);
-
 # run commands using gnu parallel
-# TODO: maybe not best to use pipe here?
 
-dodie('open(A,"|parallel")');
-print A join("\n",@commands)."\n";
-close(A);
+$commands = join("\n",@commands);
+write_file($commands, "commands");
+($out, $err, $stat) = cache_command("parallel < commands");
 
 # TODO: run repeatedly (vs cron)
