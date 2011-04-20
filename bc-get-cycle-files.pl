@@ -71,7 +71,6 @@ for $i (sort keys %urls) {
     if (abs($loctime-$remtime) <= 2*3600) {next;}
 
     # The cycle file I have is stale, so get fresh copy
-    # TODO: can I always rely on ENV{PWD}?
     push(@commands, "curl -R -m 300 -s -o $globopts{root}/$type/$file $i/$file");
   }
 }
@@ -80,6 +79,7 @@ for $i (sort keys %urls) {
 
 $commands = join("\n",@commands);
 write_file($commands, "commands");
-($out, $err, $stat) = cache_command("parallel < commands");
+# ARGH: new version of parallel defaults to "-j 1"
+($out, $err, $stat) = cache_command("parallel -j 20 < commands");
 
 # TODO: run repeatedly (vs cron)
