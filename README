@@ -9,6 +9,24 @@ Summary:
 
  bclib.pl: A library of useful functions
 
+ bc-stack2wp.pl: converts my stackoverflow questions to WordPress posts
+
+ playground.pl: constantly changing testbed of functions
+
+ bc-approx-sun-ra-dec.m: Mathematica script that calculates solar
+ position for next 10 years
+
+ bc-sun-always-shines.pl: Uses google maps to display where it's day,
+ night, twilight, etc
+
+ gbefore.txt, gend.txt: used by bc-sun-always-shines.pl
+
+ bc-voronoi-binary.pl: Uses binary search to find true 3-D Voronoi
+ diagram of earth, but is painfully slow
+
+ bc-closest-gmap.pl: tries to use qhull to find true 3-D Voronoi
+ diagram of earth, but doesn't work yet
+
  bc-get-cycle-files.pl: obtain cycle files (weather) from NOAA sites
 
  bc-dns-server.pl: a simple Perl DNS server, template for more
@@ -26,6 +44,9 @@ Summary:
 
  bc-cityfind.pl: Given a string, attempt to find matching city
  (placename) in geonames db
+
+ box-option-value.m: Mathematica computations for value of box and
+ binary options (nadex.com, oanda.com)
 
 Disclaimer:
 

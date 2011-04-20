@@ -3,6 +3,8 @@
 # Attempt to pull my stackexchange questions (not answers) into
 # wordpress.barrycarter.info
 
+# --fake: don't actually post anything
+
 # NOTE: stack API results are gzip compressed
 
 require "bclib.pl";
@@ -77,6 +79,8 @@ for $i (sort keys %myid) {
   system("gunzip -c $fname > $outname");
   $data = read_file($outname);
 
+  debug("DATA: $data");
+
   # TODO: not sure why this happens
   unless ($data) {next;}
 
@@ -94,9 +98,10 @@ for $i (sort keys %myid) {
     $qurl = "$site_url{$i}$qhash{question_timeline_url}";
 
     $body = "I posted a question entitled '$qhash{title}' to $outname:<p>
-<a href='$qurl'>$qurl</a>.<p> Please make all comments/etc on that site, not here.";
+<a href='$qurl'>\n$qurl\n</a><p>Please make all comments/etc on that site, not here.";
 
     post_to_wp($body, "site=$wp_blog&author=$author&password=$pw&subject=$qhash{title}&timestamp=$qhash{creation_date}&category=STACK&live=0");
+
   }
 }
 
@@ -165,6 +170,8 @@ my($req) =<< "MARK";
 </params></methodCall>
 MARK
 ;
+
+  if ($globopts{fake}) {return;}
 
   write_file($req,"request");
   debug($req);
