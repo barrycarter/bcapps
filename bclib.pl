@@ -576,6 +576,19 @@ sub mod {
   return $x-$y*floor($x/$y);
 }
 
+=item urlencode($str)
+
+URL encodes $str
+
+=cut
+
+sub urlencode {
+  my($str) = @_;
+  $str=~s/([^a-zA-Z0-9])/"%".unpack("H2",$1)/iseg;
+  $str=~s/ /\+/isg;
+  return $str;
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 
 sub END {

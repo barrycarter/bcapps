@@ -11,16 +11,24 @@ push(@INC, "/usr/local/lib");
 require "bclib.pl";
 ($all, $arg) = cmdfile();
 
+# temporarily for testing
+defaults("keeptemp=1");
+
 # do this only after we've got the data (in case user used short path)
 chdir(tmpdir());
 
 # go through each line
 
 for $i (split("\n", $all)) {
+  # ignore comments
+  if ($i=~/^\#/) {next;}
 
   # compact multiple spaces + remove leading/trailing
   $i=~s/\s+/ /isg;
   $i = trim($i);
+
+  # remove "METAR" (or "SPECI") at start of line
+  $i=~s/^(METAR|SPECI)\s*//isg;
 
   debug("METAR: $i");
 
@@ -70,7 +78,7 @@ close(B);
 
 unless ($NOSQL) {
   # make a local copy of db to tweak
-  system("cp /sites/DB/metar.db metar-temp.db");
+  system("cp /sites/DB/metar.db metar-temp.db 1> cpout 2>cperr");
   # run the commands on the temp db
   system("sqlite3 metar-temp.db < queries.txt 1>output.txt 2>error.txt");
 

@@ -63,7 +63,6 @@ MARK
 ;
 
 write_file($req,"/tmp/rpc1.txt");
-
 system("curl -o /tmp/rpc2.txt --data-binary \@/tmp/rpc1.txt http://wordpress.barrycarter.info/xmlrpc.php");
 
 die "TESTING";
