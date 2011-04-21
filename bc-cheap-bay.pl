@@ -5,6 +5,7 @@
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 chdir(tmpdir());
+system("pwd");
 
 # defaults for maxprice and hours (to expiration)
 defaults("maxprice=0.99&hours=4");
@@ -98,26 +99,12 @@ $endtime=strftime("%FT%TZ",gmtime(time()+$globopts{hours}*3600));
 "http://antiques.shop.ebay.com/Antiques-/20081/i.html"
 );
 
-# db schema (cut-and-pasted) as a list
-
-$schema = "secondarycategory, shippingservicecost, timeleft,
-starttime, charityid, bidcount, postalcode, location, currentprice,
-listinginfo, categoryid, bestofferenabled, sellingstate, gift,
-autopay, title, sellingstatus, conditiondisplayname, shippingtype,
-conditionid, primarycategory, endtime, gallerypluspictureurl,
-paymentmethod, country, globalid, itemid, shippinginfo,
-convertedcurrentprice, listingtype, viewitemurl, buyitnowavailable,
-subtitle, shiptolocations, categoryname, productid, galleryurl,
-condition , handlingtime, onedayshippingavailable, returnsaccepted,
-expeditedshipping, c";
-@schema = split(/\,\s*/, $schema);
-
 map {m%/(\d+)/i.html$%; $_=$1} @urls; # extract category numbers
 @cats = sort {$a <=> $b} @urls; # don't really need this, but I like it
 
 for $i (@cats) {
   $cmd = "curl -s 'http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=$appid&RESPONSE-DATA-FORMAT=XML&REST-PAYLOAD=true&paginationInput.entriesPerPage=200&itemFilter(0).name=MaxPrice&itemFilter(0).value=$globopts{maxprice}&itemFilter(0).paramName=Currency&itemFilter(0).paramValue=USD&itemFilter(1).name=FreeShippingOnly&itemFilter(1).value=true&itemFilter(2).name=EndTimeTo&itemFilter(2).value=$endtime&itemFilter(3).name=ListingType&itemFilter(3).value=Auction&categoryId=$i&sortOrder=BidCountFewest' | tidy -q -xml";
-  debug("COMMAND: $cmd");
+#  debug("COMMAND: $cmd");
   # expensive to run above, so cache results for 30m
   # need fixed cachefile since endtime changes slightly each time
   # need ignoreerror here due to this curl error:
@@ -132,7 +119,7 @@ for $i (glob "/tmp/ebay-tidy-cat-*-hours-$globopts{hours}-maxprice-$globopts{max
   # ignore err/res files
   if ($i=~/\.(err|res)$/) {next;}
   # find items
-  debug("FILE: $i");
+#  debug("FILE: $i");
   $all=suck($i);
   push(@items,($all=~m%<item>(.*?)</item>%sg));
 }
@@ -146,7 +133,19 @@ for $i (@items) {
   while ($j=~s%<([^<>\s]+)\s*[^<>]*>([^<>]*?)</\1>%%s) {
     ($key,$val) = ($1,$2);
     $val=~s/\s+/ /isg;
-    $hash{lc($key)}=trim($val);
+    $hash{lc($key)}=trim($val);}
+
+  # put into db and sanitize inputs (kinda)
+  @f=(); @v=();
+  for $j (sort keys %hash) {
+    $hash{$j}=~s/\"/&quot;/isg;
+    # NOT: nuking special chars is probably not best strategy
+    # is this sufficient?
+    $hash{$j}=~s/\'//isg;
+    push(@f, $j);
+    push(@v, "'$hash{$j}'");
+    # need a list of all possible keys for schema
+    $iskey{$j}=1;
   }
 
   # ignore stuff w/ bidcounts
@@ -167,20 +166,33 @@ $hash{title}
 MARK
 ;
 
-  # put into db
-  @f=(); @v=();
-  for $j (@schema) {
-    push(@f, $j);
-    push(@v, $hash{$j});
-  }
+  # create db query
+  $f = join(", ",@f);
+  $v = join(", ",@v);
 
-  debug("F:",@f,"V:",@v);
+  $query = "INSERT INTO cheapbay ($f) VALUES ($v)";
+  push(@queries,$query);
 }
 
 print A "</tbody></table>\n";
-
-
 close(A);
+
+# BEGIN AND COMMIT
+unshift(@queries,"BEGIN");
+push(@queries,"COMMIT");
+
+# create cheapbay table
+$fields = join(", ",sort keys %iskey);
+unshift(@queries,"CREATE TABLE cheapbay ($fields)");
+
+# write queries to file and run
+write_file(join(";\n", @queries).";\n", "queryfile");
+($out, $err, $res) = cache_command("sqlite3 ebay.db < queryfile");
+
+# TODO: error checking
+# carefully copy db to live copy
+system("mv /sites/DB/ebay.db /sites/DB/ebay.db.old");
+system("mv ebay.db /sites/DB/ebay.db");
 
 # copy over to table
 system("mv /sites/EBAY/index.html /sites/EBAY/index.html.old");
