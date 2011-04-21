@@ -10,6 +10,7 @@
 push(@INC, "/usr/local/lib");
 require "bclib.pl";
 ($all, $arg) = cmdfile();
+debug("PROCESSING FILE: $arg");
 
 # temporarily for testing
 defaults("keeptemp=1");
@@ -76,11 +77,20 @@ open(B,">queries.txt");
 for $i (@query) {print B "$i;\n";} #sqlite3 insists on this semicolon
 close(B);
 
-unless ($NOSQL) {
+debug("QUERIES",read_file("queries.txt"));
+
+unless ($globopts{nosql}) {
   # make a local copy of db to tweak
   system("cp /sites/DB/metar.db metar-temp.db 1> cpout 2>cperr");
+
+# DEBUG ONLY
+system("cp metar-temp.db metar-before.db");
+
   # run the commands on the temp db
   system("sqlite3 metar-temp.db < queries.txt 1>output.txt 2>error.txt");
+
+# DEBUG ONLY
+system("cp metar-temp.db metar-after.db");
 
   # backup old copy (plus any queries accessing don't get confused)
   system("mv /sites/DB/metar.db /sites/DB/metar-old.db");

@@ -79,6 +79,7 @@ for $i (sort keys %urls) {
     push(@commands, "curl -R -m 300 -s -o $globopts{root}/$type/$file $i/$file");
     # keep track of the file I'm downloading; I'll need it for parse-metar
     # TODO: need to generalize this for SYNOP/BUOY/etc
+    debug("TYPE: $type");
     if ($type eq "METAR") {push(@metar, "$i/$file");}
   }
 }
@@ -90,9 +91,12 @@ write_file($commands, "commands");
 # ARGH: new version of parallel defaults to "-j 1"
 ($out, $err, $stat) = cache_command("parallel -j 20 < commands");
 
+debug("METAR IS",@metar);
+
 # now, run bc-parse-metar.pl
 # TODO: this can be generalized and xarg'd
 for $i (@metar) {
-  system("bc-parse-metar.pl --debug $globopts{root}/$type/$file");
+  debug("RUNNING: parse-metar on $i");
+  system("bc-parse-metar.pl --debug $globopts{root}/$type/$file 1> /tmp/metar-out.txt 2> /tmp/metar-err.txt");
 }
 
