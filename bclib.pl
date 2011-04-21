@@ -348,9 +348,11 @@ sub sqlite3 {
 
   # if $query doesnt have ;, add it, unless it starts with .
   unless ($query=~/^\./ || $query=~/\;$/) {$query="$query;";}
+  debug("WROTE: $query to $qfile");
   write_file($query,$qfile);
   my($cmd) = "sqlite3 -batch -line $db < $qfile";
   my($out,$err,$res,$fname) = cache_command($cmd,"nocache=1");
+  debug("OUT: $out, ERR: $err, RES: $res, FNAME: $fname");
 
   if ($res) {
     warnlocal("SQLITE3 returns $res: $out/$err, CMD: $cmd");

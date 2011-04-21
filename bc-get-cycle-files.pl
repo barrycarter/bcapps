@@ -93,6 +93,6 @@ write_file($commands, "commands");
 # now, run bc-parse-metar.pl
 # TODO: this can be generalized and xarg'd
 for $i (@metar) {
-  system("bc-parse-metar.pl $globopts{root}/$type/$file");
+  system("bc-parse-metar.pl --debug $globopts{root}/$type/$file");
 }
 

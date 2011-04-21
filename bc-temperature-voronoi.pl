@@ -13,11 +13,13 @@ require "bclib.pl";
 
 # work in my own temp dir
 chdir(tmpdir());
+system("pwd");
 
 # pull data from live weather (also available at metar.db.94y.info)
 # (my own copy is local); cp avoids db lock
-system("cp /tmp/metar-live.db .");
-@res = sqlite3hashlist("SELECT -strftime('%s', replace(n.time, '-4-','-04-'))+strftime('%s', 'now') AS age, n.code, n.temperature, s.latitude, s.longitude FROM nowweather n JOIN stations s ON (n.code=s.metar) WHERE age>0 AND age<7200", "metar-live.db");
+system("cp /sites/DB/metar.db .");
+@res = sqlite3hashlist("SELECT -strftime('%s', replace(n.time, '-4-','-04-'))+strftime('%s', 'now') AS age, n.code, n.temperature, s.latitude, s.longitude FROM nowweather n JOIN stations s ON (n.code=s.metar) WHERE age>0 AND age<7200", "metar.db");
+debug("ER: $SQL_ERROR");
 
 # style testing
 $fixedstyle = << "MARK";
@@ -37,7 +39,7 @@ MARK
 ;
 
 # create file for qvoronoi (header)
-open(A,">/tmp/qhull-file.txt");
+open(A,">qhull-file.txt");
 print A "2\n"; # dimension
 print A $#res+1 . "\n"; # number of points
 
@@ -58,11 +60,15 @@ print A "$mlat $mlon\n";
 $n++;
 }
 
+close(A);
+
+debug("FILE:",read_file("qhull-file.txt"));
+
 # run qvoronoi
-system("qvoronoi s o < /tmp/qhull-file.txt > /tmp/qhull-out.txt");
+system("qvoronoi s o < qhull-file.txt > qhull-out.txt");
 
 # @regions includes both polygons (defined as points) and the points themselves
-@regions=split(/\n/,suck("/tmp/qhull-out.txt"));
+@regions=split(/\n/,suck("qhull-out.txt"));
 
 # first two lines give info
 ($di) = shift(@regions);
@@ -70,9 +76,11 @@ system("qvoronoi s o < /tmp/qhull-file.txt > /tmp/qhull-out.txt");
 
 # write in google maps "format"
 # <h>A "fomrat" is an extremely well organized rodent</h>
+# below file is currently unused
 open(C,">/home/barrycarter/BCINFO/sites/TEST/gmaps.txt");
 
 # and KML
+# below file is the one I actually use for gmap15.php
 open(B,">/home/barrycarter/BCINFO/sites/TEST/weather.kml");
 print B << "MARK";
 <?xml version="1.0" encoding="UTF-8"?>
@@ -101,47 +109,17 @@ for $i ($pts+1..$#regions) {
 
   unless (@points) {next;}
 
-  debug("BEFORE: $lat[$index],$lon[$index] ->",@points);
-
-  # icon box
-  $eps = 1;
-  ($north,$south,$east,$west) = ($lat[$index]+$eps, $lat[$index]-$eps,
-				 $lon[$index]+$eps, $lon[$index]-$eps);
-
-  # icon (KML)
-
-# tessting, only print a few (leaving 5 for now, because more really
-# slow things down)
-
-$count++;
-
-      if ($count<=5) {
-print B << "MARK";
-<GroundOverlay>
-<name>X</name>
-<description>You know, stuff</description>
-<Icon><href>http://test.barrycarter.info/icon.png</href></Icon>
-<LatLonBox>
- <north>$north</north><south>$south</south>
- <east>$east</east><west>$west</west>
- <rotation>-0.1556640799496235</rotation>
-</LatLonBox></GroundOverlay>
-MARK
-;
-}
-
   # KML
   print B "<Placemark>\n";
   print B "<gx:balloonVisibility>0</gx:balloonVisibility>\n";
   print B "<styleUrl>#$stat[$index]</styleUrl>\n";
-  #  print B "<styleUrl>#astyle</styleUrl>\n";
   print B "<Polygon><outerBoundaryIs><LinearRing><coordinates>\n";
 
   # for google maps
   print C "var myCoords = [\n";
 
-  # keep track of miny and maxy just in case we have 180 condition
-  ($miny, $maxy) = (180,-180);
+  # TODO: handle "180" condition better (polygon crosses +-180E)
+  # removed nonworking code I had for this: not right approach
 
   # do any of the points go outside world boundaries?
   # if so, adjust them down
@@ -149,28 +127,11 @@ MARK
     ($x,$y) = split(/\s+/,$j);
 
     # TODO: really need to figure out how to handle this better
-#    if ($x<-1*$PI) {$x=-1*$PI;}
-#    if ($x>$PI) {$x=$PI;}
     if ($y<-1*$PI) {$y=-1*$PI;}
     if ($y>$PI) {$y=$PI;}
 
-    # TODO: restore or fix this
-#    $y=max(min($y,$PI),-1*$PI);
-#    $x=max(min($x,$PI/2),-1*$PI/2);
-
-    # out of range nums tend to create problems
-    # TODO: create a function or something for this; easier using "mod"?
-#    while($x < -1*$PI) {$x+=2*$PI;}
-#    while($x > $PI) {$x-=2*$PI;}
-#    while($y < -1*$PI) {$y+=2*$PI;}
-#    while($y > $PI) {$y-=2*$PI;}
-
     # convert back from mercator
     $y = $y/$PI*180;
-
-    # keep track of max/min
-    if ($y<$miny) {$miny=$y;}
-    if ($y>$maxy) {$maxy=$y;}
 
     $x = atan(sinh($x))/$PI*180;
     $j = "$x $y";
@@ -199,12 +160,6 @@ MARK
 #  $hue = floor($hue*4+.5)/4;
 
   $col=hsv2rgb($hue,1,1);
-
-debug("COL: $hue -> $col");
-
-debug("Y RANGE: $miny $maxy");
-
-if (abs($miny-$maxy) >=90) {debug("BIG Y RANGE");}
 
 # and now the poly itself (and push marker to array for MarkerCluster)
 print C << "MARK";
