@@ -80,7 +80,7 @@ for $i (sort keys %urls) {
     # keep track of the file I'm downloading; I'll need it for parse-metar
     # TODO: need to generalize this for SYNOP/BUOY/etc
     debug("TYPE: $type");
-    if ($type eq "METAR") {push(@metar, "$i/$file");}
+    if ($type eq "METAR") {push(@metar, "$globopts{root}/$type/$file");}
   }
 }
 
@@ -97,6 +97,6 @@ debug("METAR IS",@metar);
 # TODO: this can be generalized and xarg'd
 for $i (@metar) {
   debug("RUNNING: parse-metar on $i");
-  system("bc-parse-metar.pl --debug $globopts{root}/$type/$file 1> /tmp/metar-out.txt 2> /tmp/metar-err.txt");
+  system("bc-parse-metar.pl --debug $i 1> /tmp/metar-out.txt 2> /tmp/metar-err.txt");
 }
 

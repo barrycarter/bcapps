@@ -18,11 +18,17 @@ defaults("keeptemp=1");
 # do this only after we've got the data (in case user used short path)
 chdir(tmpdir());
 
+# remove DOS newlines
+$all=~s/\r//isg;
+
+# newlines followed by spaces are one big line
+$all=~s/\n+ +/ /isg;
+
 # go through each line
 
 for $i (split("\n", $all)) {
-  # ignore comments
-  if ($i=~/^\#/) {next;}
+  # ignore comments and empty lines
+  if ($i=~/^\#|^\s*$/) {next;}
 
   # compact multiple spaces + remove leading/trailing
   $i=~s/\s+/ /isg;
@@ -31,10 +37,18 @@ for $i (split("\n", $all)) {
   # remove "METAR" (or "SPECI") at start of line
   $i=~s/^(METAR|SPECI)\s*//isg;
 
-  debug("METAR: $i");
+  debug("LINE: $i");
 
   # parse METAR
   %ac=parse_metar($i);
+
+  if ($ac{ERROR}) {
+    warn("ERROR: $ac{ERROR}");
+    next;
+  }
+
+  # helpful in tracking down errors
+  $ac{comment} = "$arg";
 
   # Create SQL query using returned fields/values
   @f=();
@@ -77,7 +91,7 @@ open(B,">queries.txt");
 for $i (@query) {print B "$i;\n";} #sqlite3 insists on this semicolon
 close(B);
 
-debug("QUERIES",read_file("queries.txt"));
+# debug("QUERIES",read_file("queries.txt"));
 
 unless ($globopts{nosql}) {
   # make a local copy of db to tweak
@@ -123,24 +137,35 @@ sub parse_metar {
 
   # second field is ddhhmm in GMT
   $aa=shift(@b);
-  $aa=~/(\d{2})(\d{2})(\d{2})z/i||warn("BAD TIME: $aa");
-  ($day,$hour,$min)=($1,$2,$3);
+
+  if ($aa=~/(\d{2})(\d{2})(\d{2})z/i) {
+    ($day,$hour,$min)=($1,$2,$3);
+  } else {
+    return ("ERROR" => "INVALID TIME: $aa");
+  }
 
   # need to figure out month and year (only really an issue at month change)
 
   # current time/date (just need month and year)
   my($ignore,$ignore,$ignore,$mday,$mon,$year) = gmtime();
-  # Perl bizzarely counts months 0..11
+  # Perl bizzarely counts months 0..11, and year 0 is 1900
   $mon++;
+  $year+=1900;
 
   # if report date is in future, subtract one month
-  if (str2time("$year-$mon-$day $hour:$min") > time()) {
+  debug("CURRENT TIME: ",time());
+  debug("$year-$mon-$day $hour:$min");
+  debug("REPORT TIME:", str2time("$year-$mon-$day $hour:$min"));
+
+  if (str2time("$year-$mon-$day $hour:$min UTC") > time()) {
     $mon--;
     if ($mon==0) {$year--; $mon=12;}
   }
 
   # we will return time in sqlite3 format
   $b{time} = "$year-$mon-$day $hour:$min";
+  debug("TIME: $b{time}");
+
 
   # for convenience, note age of data (caller can toss old data)
 #  my($time) = str2time($b{time});

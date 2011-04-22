@@ -538,6 +538,8 @@ own formula* which is not necessarily the "correct" formula. $options:
 kml: output in KML format (aabbggrr) not HTML (rrggbb)
 opacity: for KML, the opacity in hex format
 
+format=decimal: return as integers
+
 =cut
 
 sub hsv2rgb {
@@ -562,6 +564,8 @@ sub hsv2rgb {
 
   if ($opts{kml}) {
     return sprintf("#$opts{opacity}%0.2x%0.2x%0.2x",$b*255,$g*255,$r*255);
+  } elsif ($opts{format} eq "decimal") {
+    return sprintf("%0.2d,%0.2d,%0.2d",$r*255,$g*255,$b*255);
   } else {
     return sprintf("#%0.2x%0.2x%0.2x",$r*255,$g*255,$b*255);
   }
