@@ -7,6 +7,37 @@
 
 require "bclib.pl";
 
+$all="{this, {is, some, {deeply, nested}, text}, for, you}";
+
+# $all = read_file("data/sunxyz.txt");
+
+# could try to match newline, but this is easier
+$all=~s/\n/ /isg;
+
+# <h>It vaguely annoys me that Perl doesn't require escaping curly braces</h>
+while ($all=~s/{([^{}]*?)}/handle($1)/seg) {
+  $n++;
+  debug("AFTER RUN $n, ALL IS:",$all);
+}
+
+debug(*$all);
+
+debug("ALL",$all);
+
+debug("ALL",@{$all});
+
+
+sub handle {
+  my($str) = @_;
+  debug("Handling $str");
+  return \{split(/\,\s*/, $str)};
+  debug("L IS:",@l);
+  debug("Returning ". \@l);
+  return \@l;
+}
+
+die "TESTING";
+
 # RPC-XML
 
 # get password

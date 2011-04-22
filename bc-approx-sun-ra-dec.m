@@ -297,3 +297,44 @@ Plot[{altintfuncalc[f3,t] - f3[t]},{t,0,10}]
 
 (* TODO: at some point, document my failed attempts as well (why?) *)
 
+(* lets get sun by approx by year too *)
+
+(* again, caching for speed *)
+
+sunpos[x_] := Module[{ra,dec,dist},
+ ra = AstronomicalData["Sun", {"RightAscension", DateList[x]}]/12*Pi;
+ dec = AstronomicalData["Sun", {"Declination", DateList[x]}]*Degree;
+ dist = AstronomicalData["Sun", {"Distance", DateList[x]}];
+ sunpos[x] = {dist*Cos[ra]*Cos[dec], dist*Sin[ra]*Cos[dec], dist*Sin[dec]}
+]
+
+intsunval[year_, pos_] := intsunval[year,pos] =
+ intsunval[pos] = FunctionInterpolation[sunpos[x][[pos]], 
+ {x, AbsoluteTime[{year,1,1}], AbsoluteTime[{year+1,1,1}]}]
+
+t= Table[{year,pos, intsunval[year,pos]}, {year,2011,2021}, {pos,1,3}]
+
+(* calculates domain of interpolating function *)
+
+Flatten[intsunval[2012,2][[1]]][[1]]
+
+diffsunval[year_, pos_] := diffsunval[year,pos] = 
+Plot[sunpos[x][[pos]] - intsunval[year, pos][x],
+ {x, Flatten[intsunval[year,pos][[1]]][[1]], 
+ Flatten[intsunval[year,pos][[1]]][[2]]},
+ PlotRange -> All]
+
+diffsunval[2011,1]
+
+Table[intsunval[y,p],{y,2011,2021},{p,1,3}]
+
+(* convert interp function for Perl *)
+
+perlify[f] := Module[{}]
+
+Plot[intsunval[1][x] - sunpos[x][[1]], 
+ {x,mathtoday,mathtoday+25*365.2425*86400}, PlotRange -> All]
+
+
+
+
