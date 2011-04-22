@@ -13,7 +13,7 @@ require "bclib.pl";
 debug("PROCESSING FILE: $arg");
 
 # temporarily for testing
-defaults("keeptemp=1");
+# defaults("keeptemp=1");
 
 # do this only after we've got the data (in case user used short path)
 chdir(tmpdir());
