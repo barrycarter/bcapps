@@ -332,9 +332,31 @@ Table[intsunval[y,p],{y,2011,2021},{p,1,3}]
 
 perlify[f] := Module[{}]
 
-Plot[intsunval[1][x] - sunpos[x][[1]], 
- {x,mathtoday,mathtoday+25*365.2425*86400}, PlotRange -> All]
+(* <h>Tip: AbsoluteTime[{2011}] and AbsoluteTime[{2011,1,1}] mean the
+same thing, but the first form is preferable as it annoys more
+people</h> *)
 
+Plot[{intsunval[2011, 1][x] - sunpos[x][[1]]},
+ {x, AbsoluteTime[{2011}], AbsoluteTime[{2012}]},
+ PlotRange -> All, PlotLabel -> "2011 Sun 'x' Position diff"]
+
+diffsunval[year_, pos_] := diffsunval[year,pos] = 
+Plot[sunpos[x][[pos]] - intsunval[year, pos][x],
+ {x, AbsoluteTime[{year}], AbsoluteTime[{year+1}]},
+ PlotRange -> All, PlotLabel -> 
+ "Sun Deltas, Year: "<>ToString[year]<>", Axis: "<>ToString[pos]]
+
+diffsunval[2011,1]
+
+Table[diffsunval[y,p],{y,2011,2021},{p,1,3}]
+
+(* steps required for restore if mathematica session ends *)
+
+t = <<data/sunxyz.txt
+
+t = Flatten[t,1]
+
+Table[intsunval[x[[1]], x[[2]]] = x[[3]], {x, t}]
 
 
 

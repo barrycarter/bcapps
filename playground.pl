@@ -9,6 +9,28 @@ require "bclib.pl";
 
 $all="{this, {is, some, {deeply, nested}, text}, for, you}";
 
+while ($all=~s/\{([^{}]*?)\}/f($1)/seg) {
+  debug("ALL: $all");
+}
+
+sub f {
+  my($x) = @_;
+  return \$x;
+}
+
+debug(*$all);
+
+
+
+# sub f {return \{split(",",$_[0])};}
+
+# debug(unfold(@res));
+
+
+die "TESTING";
+
+$all="{this, {is, some, {deeply, nested}, text}, for, you}";
+
 # $all = read_file("data/sunxyz.txt");
 
 # could try to match newline, but this is easier
