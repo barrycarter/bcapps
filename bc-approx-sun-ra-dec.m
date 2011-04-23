@@ -381,6 +381,11 @@ Table[{
         ImageSize->{800,600}]
 }, {n, 1, Length[moonplots]}]
 
+Table[{
+ Export["data/sunplots-"<>ToString[n]<>".png", t[[n]], 
+        ImageSize->{800,600}]
+}, {n, 1, Length[t]}]
+
 
 
 
