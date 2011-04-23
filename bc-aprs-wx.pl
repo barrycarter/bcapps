@@ -46,9 +46,11 @@ for(;;) {
 
   $time = $1;
 
-  debug($line);
+  # "speaker"
+  $line=~m%^(.*?)>%;
+  $speaker = $1;
 
-  # decimalize (TODO: functionalize this)
+  # decimalize latitude/longitude (TODO: functionalize this)
   $latd = floor($lat/100);
   $latm = $lat - $latd*100;
   $latfinal = $latd+$latm/60;
@@ -59,6 +61,8 @@ for(;;) {
   $lonfinal = $lond+$lonm/60;
   if ($lons eq "W") {$lonfinal*=-1;}
 
+  # figure out Unix time
+
   # xearth fun
   print "$latfinal $lonfinal ${temp}F\n";
 
@@ -66,7 +70,6 @@ for(;;) {
 
 #  print "$time $lat$lats $lon$lons $temp\n";
 
-  debug(join(",",($1,$2,$3,$4,$5,$6,$temp)));
 }
 
 

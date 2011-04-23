@@ -314,6 +314,18 @@ intsunval[year_, pos_] := intsunval[year,pos] =
 
 t= Table[{year,pos, intsunval[year,pos]}, {year,2011,2021}, {pos,1,3}]
 
+intmoonval[year_, pos_] := intmoonval[year,pos] =
+ intmoonval[pos] = FunctionInterpolation[moonpos[x][[pos]], 
+ {x, AbsoluteTime[{year,1,1}], AbsoluteTime[{year+1,1,1}]}]
+
+(* this takes a while to run, so save return values *)
+
+t2= Table[{year,pos, intmoonval[year,pos]} >>> data/moonxyz.txt, 
+          {year,2011,2021}, {pos,1,3}]
+
+t2= Table[{year,pos, intmoonval[year,pos]} >>> data/moonxyz.txt, 
+          {year,2015,2021}, {pos,1,3}]
+
 (* calculates domain of interpolating function *)
 
 Flatten[intsunval[2012,2][[1]]][[1]]
@@ -348,7 +360,21 @@ Plot[sunpos[x][[pos]] - intsunval[year, pos][x],
 
 diffsunval[2011,1]
 
-Table[diffsunval[y,p],{y,2011,2021},{p,1,3}]
+plots = Table[diffsunval[y,p],{y,2011,2021},{p,1,3}]
+
+diffmoonval[year_, pos_] := diffmoonval[year,pos] = 
+Plot[moonpos[x][[pos]] - intmoonval[year, pos][x],
+ {x, AbsoluteTime[{year}], AbsoluteTime[{year+1}]},
+ PlotRange -> All, PlotLabel -> 
+ "Moon Deltas, Year: "<>ToString[year]<>", Axis: "<>ToString[pos]]
+
+diffmoonval[2011,1]
+
+moonplots = Table[diffmoonval[y,p],{y,2011,2014},{p,1,3}]
+
+moonplots >> data/moonplots.txt
+
+(* TODO: would linear interpolation have worked just as well? *)
 
 (* steps required for restore if mathematica session ends *)
 
@@ -358,5 +384,8 @@ t = Flatten[t,1]
 
 Table[intsunval[x[[1]], x[[2]]] = x[[3]], {x, t}]
 
+(* slightly different for moon, stored differently *)
 
+t = ReadList["data/moonxyz.txt"]
 
+Table[intmoonval[x[[1]], x[[2]]] = x[[3]], {x, t}]
