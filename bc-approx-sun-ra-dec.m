@@ -365,7 +365,7 @@ plots = Table[diffsunval[y,p],{y,2011,2021},{p,1,3}]
 diffmoonval[year_, pos_] := diffmoonval[year,pos] = 
 Plot[moonpos[x][[pos]] - intmoonval[year, pos][x],
  {x, AbsoluteTime[{year}], AbsoluteTime[{year+1}]},
- PlotRange -> All, PlotLabel -> 
+ PlotLabel -> 
  "Moon Deltas, Year: "<>ToString[year]<>", Axis: "<>ToString[pos]]
 
 diffmoonval[2011,1]
@@ -373,6 +373,16 @@ diffmoonval[2011,1]
 moonplots = Table[diffmoonval[y,p],{y,2011,2014},{p,1,3}]
 
 moonplots >> data/moonplots.txt
+
+moonplots = Flatten[moonplots,1]
+
+Table[{
+ Export["data/moonplots-"<>ToString[n]<>".png", moonplots[[n]], 
+        ImageSize->{800,600}]
+}, {n, 1, Length[moonplots]}]
+
+
+
 
 (* TODO: would linear interpolation have worked just as well? *)
 

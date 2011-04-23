@@ -7,4 +7,9 @@ y, and z positions, and the approximations
 moonxyz: functions estimating lunar xyz 2011-2014 (Mathematica really
 bogs down when doing this for 2015 up, hmmm)
 
+moonplots.txt: same as sundiffplots.txt but for moon
+
+moonplots*.png: graphs of difference between moon actual + estimated
+positions, in meters (so 30000 means 30km)
+
 
