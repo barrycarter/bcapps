@@ -595,6 +595,23 @@ sub urlencode {
   return $str;
 }
 
+=item hermite($x, \@xvals, \@yvals)
+
+Computes the Hermite interpolation at $x, for the Hermite-style cubic
+spline given by @xvals and @yvals
+
+=cut
+
+sub hermite {
+  my($x,$xvals,$yvals) = @_;
+  my(@xvals) = @{$xvals};
+  my(@yvals) = @{$xvals};
+
+
+
+}
+
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 
 sub END {
