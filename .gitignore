@@ -9,8 +9,9 @@ db/*.sqlite3
 .DS_Store
 .#*
 [#]*
+# 22 Apr 2011: can no longer ignore data/ it's useful
 # decided against mirroring data files
-data/*
-data/*/*
-data/*/*/*
+# data/*
+# data/*/*
+# data/*/*/*
 db/geonames.db
