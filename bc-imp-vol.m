@@ -1,21 +1,62 @@
 (* implied volatility of non-normal <h>abnormal!</h> distributions *)
 
-(******* ARGH! this is all crap since I forgot the value is Exp[Log[s]]-p *********)
-
 (* under Black-Scholes, this is the value of an option whose
-Log[strike] is 1 SD from the current Log[price]; we are combining time
+Log[strike] is s SD's from the current Log[price]; we are combining time
 and volatility into one parameter for the moment [v represents the
 volatility for whatever time period we're using] *)
 
 value[s_] = Integrate[
- PDF[NormalDistribution[0,v]][x]*(x-s), {x,s,+Infinity}, 
- Assumptions -> {Element[v,Reals]}
+ PDF[NormalDistribution[0,v]][x]*(Exp[x]-Exp[s]), {x,s,+Infinity},
+ Assumptions -> {Element[v,Reals], v>0}
 ]
 
-(* If an option with strike s has value x at price p, it's implied
-volatility is a function of current price and current value *)
+(* If an option with strike s SDs out has value x, it's implied
+volatility is: *)
 
-impvol[p_, s_, x_] = Solve[value[s]==x, v]
+impvol[s_, x_] = Solve[value[s]==x, v]
+
+(* no closed form, so numerical *)
+
+frimpvol[s_, x_] := FindRoot[value[s]==x, {v,.5}]
+
+(* suppose underlying follows StudentT w/ nu degrees of freedom *)
+
+stvalue[s_] = Integrate[
+ PDF[StudentTDistribution[nu]][x]*(Exp[x]-Exp[s]), {x,s,+Infinity}
+]
+
+(* no easy closed form, so trying nu=2 *)
+
+stvalue[s_] = Integrate[
+ PDF[StudentTDistribution[2]][x]*(Exp[x]-Exp[s]), {x,s,+Infinity}
+]
+
+stvalue[s_] := NIntegrate[
+ PDF[StudentTDistribution[2]][x]*(Exp[x]-Exp[s]), {x,s,+Infinity}
+]
+
+Integrate[
+ PDF[NormalDistribution[mu,sigma]][x]*Exp[x], {x,-Infinity,+Infinity},
+Assumptions -> {sigma>0}
+]
+
+Integrate[
+ PDF[CauchyDistribution[location,scale]][x]*Exp[x], {x,-Infinity,+Infinity}
+]
+
+Integrate[
+ PDF[StudentTDistribution[nu]][x]*Exp[x], {x,-Infinity,+Infinity}
+]
+
+Integrate[
+ PDF[StudentTDistribution[mu,sigma,nu]][x]*Exp[x], {x,-Infinity,+Infinity}
+]
+
+
+
+
+
+(****** BELOW THIS LINE: IGNORE *******)
 
 (* no closed form, so numerical version below *)
 
