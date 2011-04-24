@@ -1,5 +1,7 @@
 (* implied volatility of non-normal <h>abnormal!</h> distributions *)
 
+(******* ARGH! this is all crap since I forgot the value is Exp[Log[s]]-p *********)
+
 (* under Black-Scholes, this is the value of an option whose
 Log[strike] is 1 SD from the current Log[price]; we are combining time
 and volatility into one parameter for the moment [v represents the
