@@ -7,25 +7,33 @@
 
 require "bclib.pl";
 
-$all="{this, {is, some, {deeply, nested}, text}, for, you}";
+=item hashlist2sqlite
 
-while ($all=~s/\{([^{}]*?)\}/f($1)/seg) {
-  debug("ALL: $all");
+DOC ME!
+
+=cut
+
+sub hashlist2sqlite {
+  my($hashs, $tabname, $outfile) = @_;
+  my(%iskey);
+  my(@queries);
+
+  for $i (@{$hashs}) {
+    my(@keys,@vals) = ();
+    my(%hash) = %{$i};
+    for $j (sort keys %hash) {
+      $iskey{$j} = 1;
+      push(@keys, $j);
+      push(@vals, "\"$hash{$j}\"");
+    }
+
+    push(@queries, "INSERT INTO $tabname (".join(", ",@keys).") VALUES (".join(", ",@vals).");");
+  }
+
+  debug(@queries);
 }
 
-sub f {
-  my($x) = @_;
-  return \$x;
-}
-
-debug(*$all);
-
-
-
-# sub f {return \{split(",",$_[0])};}
-
-# debug(unfold(@res));
-
+exit 1;
 
 die "TESTING";
 
@@ -57,6 +65,31 @@ sub handle {
   debug("Returning ". \@l);
   return \@l;
 }
+
+die "TESTING";
+
+$all="{this, {is, some, {deeply, nested}, text}, for, you}";
+
+while ($all=~s/\{([^{}]*?)\}/f($1)/seg) {
+  debug("ALL: $all");
+}
+
+sub f {
+  my($x) = @_;
+  return \$x;
+}
+
+debug(*$all);
+
+# sub f {return \{split(",",$_[0])};}
+
+# debug(unfold(@res));
+
+
+die "TESTING";
+
+debug(project(1,0,"mercator",1));
+
 
 die "TESTING";
 

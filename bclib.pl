@@ -600,17 +600,48 @@ sub urlencode {
 Computes the Hermite interpolation at $x, for the Hermite-style cubic
 spline given by @xvals and @yvals
 
+NOT YET DONE!
+
 =cut
 
 sub hermite {
   my($x,$xvals,$yvals) = @_;
   my(@xvals) = @{$xvals};
   my(@yvals) = @{$xvals};
-
-
-
 }
 
+=item project($lay, $lox, $proj, $dir)
+
+Projects latitude/longitude $lay/$lox to xy coordinates for the
+projection $proj; if $dir is 1, does the reverse and converts xy
+coordinates to latitude/longitude.
+
+$lax: the latitude or y-coordinate
+$loy: the longitude or x-coordinate
+
+(note the order of the xy coordinates are reversed, so that latitude
+matches y and longitude matches x)
+
+Note: center of map is 0,0; x and y values range from -0.5 to +0.5
+
+NOT YET DONE!
+
+=cut
+
+sub project {
+  my($lay, $lox, $proj, $dir) = @_;
+
+  # this is an ugly way to do this (if/elsif/else)
+
+  # Specifically, google's mercator projection
+  if ($proj=~/^merc/) {
+    if ($dir) {
+      return (atan(sinh($lay)), $lox*360);
+    } else {
+      return (-1*(log(tan($PI/4+$lay/180*$PI/2))/2/$PI), $lox/360);
+    }
+  }
+}
 
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 

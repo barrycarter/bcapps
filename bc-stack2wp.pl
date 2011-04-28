@@ -87,12 +87,12 @@ for $i (sort keys %myid) {
   $json = JSON::from_json($data);
   %jhash = %{$json};
   @questions = @{$jhash{questions}};
+  push(@allquestions, @questions);
 
-  # list of questions
   for $j (@questions) {
     %qhash = %{$j};
 
-#    debug(unfold(%qhash));
+    debug(unfold(%qhash));
 
     # question url
     $qurl = "$site_url{$i}$qhash{question_timeline_url}";
@@ -103,6 +103,39 @@ for $i (sort keys %myid) {
     post_to_wp($body, "site=$wp_blog&author=$author&password=$pw&subject=$qhash{title}&timestamp=$qhash{creation_date}&category=STACK&live=0");
 
   }
+}
+
+
+hashlist2sqlite(\@allquestions, "questions", "/tmp/stack1.db");
+
+sub hashlist2sqlite {
+  my($hashs, $tabname, $outfile) = @_;
+  my(%iskey);
+  my(@queries);
+
+  for $i (@{$hashs}) {
+    my(@keys,@vals) = ();
+    my(%hash) = %{$i};
+    for $j (sort keys %hash) {
+      $iskey{$j} = 1;
+      push(@keys, $j);
+      $hash{$j}=~s/\'/''/isg;
+      push(@vals, "\'$hash{$j}\'");
+    }
+
+    push(@queries, "INSERT INTO $tabname (".join(", ",@keys).") VALUES (".join(", ",@vals).")");
+  }
+
+  debug("QUERIES:", @queries);
+
+  # create table and surround block in BEGIN/COMMIT
+  unshift(@queries, "CREATE TABLE $tabname (".join(", ",sort keys %iskey).")");
+  unshift(@queries, "BEGIN");
+  push(@queries, "COMMIT;");
+
+  my($tmpfile) = my_tmpfile();
+  write_file(join(";\n",@queries), $tmpfile);
+  system("sqlite3 $outfile < $tmpfile");
 }
 
 # TODO: turn off comments for these posts

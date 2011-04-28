@@ -5,6 +5,7 @@
 
 require "bclib.pl";
 
+# could "use Socket" here but this is cooler?
 open(A,"echo 'user READONLY pass -1' | ncat rotate.aprs.net 23 |");
 
 # confirm connection
@@ -74,3 +75,12 @@ for(;;) {
 
 
 # @221533z2950.68N/09529.95W_308
+
+=item schema
+
+database to hold these (latest report from station obsoletes prior report):
+
+CREATE TABLE aprswx (station, lat, lon, temp);
+CREATE UNIQUE INDEX ON aprswx(station);
+
+=cut
