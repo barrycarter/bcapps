@@ -79,20 +79,19 @@ for $i (sort keys %myid) {
   system("gunzip -c $fname > $outname");
   $data = read_file($outname);
 
-  debug("DATA: $data");
+  debug("<data>$data</data>");
 
   # TODO: not sure why this happens
   unless ($data) {next;}
 
   $json = JSON::from_json($data);
   %jhash = %{$json};
+  debug("JASH",unfold(\%jhash));
   @questions = @{$jhash{questions}};
-  push(@allquestions, @questions);
 
   for $j (@questions) {
     %qhash = %{$j};
-
-    debug(unfold(%qhash));
+    debug("QHASH:", unfold($j));
 
     # question url
     $qurl = "$site_url{$i}$qhash{question_timeline_url}";
@@ -102,9 +101,13 @@ for $i (sort keys %myid) {
 
     post_to_wp($body, "site=$wp_blog&author=$author&password=$pw&subject=$qhash{title}&timestamp=$qhash{creation_date}&category=STACK&live=0");
 
+    $qhash{qurl} = $qurl;
+    debug("QHASH REF",unfold(\%qhash));
+    push(@allquestions, \%qhash);
   }
 }
 
+# TODO: accepted_answer_id has vanished somehow
 
 hashlist2sqlite(\@allquestions, "questions", "/tmp/stack1.db");
 
@@ -114,6 +117,7 @@ sub hashlist2sqlite {
   my(@queries);
 
   for $i (@{$hashs}) {
+    debug("I IS: $i",unfold($i));
     my(@keys,@vals) = ();
     my(%hash) = %{$i};
     for $j (sort keys %hash) {
