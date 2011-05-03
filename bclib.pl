@@ -352,7 +352,7 @@ sub sqlite3 {
   write_file($query,$qfile);
   my($cmd) = "sqlite3 -batch -line $db < $qfile";
   my($out,$err,$res,$fname) = cache_command($cmd,"nocache=1");
-  debug("OUT: $out, ERR: $err, RES: $res, FNAME: $fname");
+#  debug("OUT: $out, ERR: $err, RES: $res, FNAME: $fname");
 
   if ($res) {
     warnlocal("SQLITE3 returns $res: $out/$err, CMD: $cmd");

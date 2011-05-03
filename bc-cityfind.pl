@@ -30,7 +30,7 @@ for $i (@ARGV) {
 
 write_file(join("\n",@final),$tmp1);
 
-write_file("
+$query = "
 CREATE TABLE match1 (count INT, orig TEXT, c1 TEXT, c2 TEXT, c3 TEXT, c4 TEXT);
 CREATE INDEX i_c1 ON match1(c1);
 CREATE INDEX i_c2 ON match1(c2);
@@ -42,10 +42,13 @@ CREATE INDEX i_count ON match1(count);
 
 ATTACH DATABASE '/sites/DB/geonames.db' AS geonames;
 
-SELECT m.orig, gn1.geonameid, gn1.asciiname, gn5.asciiname, gn6.asciiname, 
- gn1.population, gn1.latitude/((1<<24)-1.)*180.,
- gn1.longitude/((1<<24)-1.)*360.,
- tz.name
+SELECT m.orig AS cityq, gn1.geonameid, 
+ gn1.asciiname AS city,
+ gn5.asciiname AS state,
+ gn6.asciiname AS country,
+ gn1.population, gn1.latitude/((1<<24)-1.)*180. AS latitude,
+ gn1.longitude/((1<<24)-1.)*360. AS longitude,
+ tz.name AS tz
 FROM match1 m
  JOIN geonames.altnames an1 ON (m.c1 = an1.name)
  JOIN geonames.geonames gn1 ON (an1.geonameid = gn1.geonameid)
@@ -69,26 +72,25 @@ WHERE
  gn4.geonameid IN (0, gn3.admin4_code, gn3.admin3_code, gn3.admin2_code,
                    gn3.admin1_code, gn3.country_code)
 ORDER BY m.count, gn1.population DESC
-;", $tmp2);
+;";
 
-($out,$err,$res) = cache_command("sqlite3 < $tmp2");
+# ($out,$err,$res) = cache_command("sqlite3 < $tmp2");
 
-# choose the first row for each code
-for $i (split("\n",$out)) {
-  $i=~/^(.*?)\t/;
-  $val = $1;
-  if ($hash{$val}) {next;}
-  $hash{$val} = $i;
-}
+@res = sqlite3hashlist($query);
 
-# and now the results
-for $i (@ARGV) {
-  # TODO: improve output format
-  if ($hash{$i}) {
-    print "$i: $hash{$i}\n";
-  } else {
-    print "$i: NOT FOUND\n";
+# print output (but only for first matching query)
+for $i (@res) {
+  %hash = %{$i};
+
+  # ignore dupes
+  if ($seen{$hash{cityq}}) {next;}
+  $seen{$hash{cityq}} = 1;
+
+  print "<response>\n";
+  for $j (sort keys %hash) {
+    print "<$j>$hash{$j}</$j>\n";
   }
+  print "</response>\n";
 }
 
 sub partition {
