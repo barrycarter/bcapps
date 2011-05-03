@@ -9,7 +9,7 @@ require "bclib.pl";
 
 =item hashlist2sqlite
 
-DOC ME!
+DOC ME! (but test me first!)
 
 =cut
 
