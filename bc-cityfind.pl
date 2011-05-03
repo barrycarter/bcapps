@@ -5,7 +5,7 @@
 
 # requires (and is really just a thin wrapper around) the
 # geonames/geonames.db at:
-# http://github.com/barrycarter/bcapps/tree/master/geonames/ 
+# http://geonames.db.94y.info/
 
 # Example: $0 paris santa.fe.new.mexico.united.states chicago.us
 # corpus.christi.tx portugal michigan james.island tx.amarillo us.tx
@@ -13,6 +13,7 @@
 
 # TODO: add elevation and timezone
 
+push(@INC, "/usr/local/lib");
 require "bclib.pl";
 ($tmp1, $tmp2) = (my_tmpfile("cityp"),my_tmpfile("cityq"));
 
@@ -39,7 +40,7 @@ CREATE INDEX i_count ON match1(count);
 .separator \"\\t\"
 .import $tmp1 match1
 
-ATTACH DATABASE 'geonames/geonames.db' AS geonames;
+ATTACH DATABASE '/sites/DB/geonames.db' AS geonames;
 
 SELECT m.orig, gn1.geonameid, gn1.asciiname, gn5.asciiname, gn6.asciiname, 
  gn1.population, gn1.latitude/((1<<24)-1.)*180.,
