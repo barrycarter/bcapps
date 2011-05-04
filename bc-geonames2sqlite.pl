@@ -1,7 +1,7 @@
 #!/bin/perl
 
 # NOTE: if you just want the resulting database:
-# http://github.com/barrycarter/bcapps/tree/master/geonames/
+# http://geonames.db.94y.info
 
 # This script converts the geonames files at:
 # http://download.geonames.org/export/dump/
@@ -39,7 +39,7 @@ open(E,">/var/tmp/featurecodes.out");
 
 # create cheat table for parents
 unless (-f "/var/tmp/admpcl.txt") {
-  system("bzegrep 'ADM|PCL' allCountries.txt.bz2 1> /var/tmp/admpcl.txt");
+  system("bzgrep -e 'ADM|PCL' allCountries.txt.bz2 1> /var/tmp/admpcl.txt");
 }
 
 open(A,"/var/tmp/admpcl.txt");
@@ -264,7 +264,7 @@ CREATE TABLE tzones (
  name TEXT
 );
 .separator "\t"
-.import /var/tmp/ tzones.out tzones
+.import /var/tmp/tzones.out tzones
 
 =cut
 

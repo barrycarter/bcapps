@@ -15,6 +15,7 @@ require JSON;
 
 # HACK: defining constants here is probably bad
 $PI = 4.*atan(1);
+$DEGRAD=$PI/180; # degrees to radians
 $EARTH_RADIUS = 6371/1.609344; # miles
 
 # HACK: not sure this is right way to do this
@@ -352,7 +353,7 @@ sub sqlite3 {
   write_file($query,$qfile);
   my($cmd) = "sqlite3 -batch -line $db < $qfile";
   my($out,$err,$res,$fname) = cache_command($cmd,"nocache=1");
-#  debug("OUT: $out, ERR: $err, RES: $res, FNAME: $fname");
+  debug("OUT: $out, ERR: $err, RES: $res, FNAME: $fname");
 
   if ($res) {
     warnlocal("SQLITE3 returns $res: $out/$err, CMD: $cmd");
@@ -608,6 +609,21 @@ sub hermite {
   my($x,$xvals,$yvals) = @_;
   my(@xvals) = @{$xvals};
   my(@yvals) = @{$xvals};
+}
+
+=item sph2xyz($theta,$phi,$r, $options)
+
+Converts spherical ($theta,$phi,$r) to Cartesian ($x,$y,$z)
+
+ degrees=1: assume theta and phi are in degrees, not radians
+
+=cut
+
+sub sph2xyz {
+  my($th,$ph,$r,$options)=@_;
+  my(%opts) = parse_form($options);
+  if ($opts{degrees}) {$th=$th*$DEGRAD; $ph=$ph*$DEGRAD;}
+  return($r*cos($ph)*cos($th),$r*cos($ph)*sin($th),$r*sin($ph));
 }
 
 =item project($lay, $lox, $proj, $dir)
