@@ -7,10 +7,96 @@
 
 require "bclib.pl";
 
+use PDL::Transform::Cartography;
+        $a = earth_coast();
+        $a = graticule(10,2)->glue(1,$a);
+        $t = t_mercator;
+        $w = pgwin(xs);
+        $w->lines($t->apply($a)->clean_lines());
+
+die "TESTING";
+
+
+# debug(to_mercator(-85,0,"order=xy"));
+
+debug(from_mercator(0,0));
+
+
+sub from_mercator {
+  my($x, $y, $options) = @_;
+  my(%opts) = parse_form($options);
+  return atan(sinh($y)), $x*360-180;
+}
+
+
+=item project($lay, $lox, $proj, $dir)
+
+Projects latitude/longitude $lay/$lox to xy coordinates for the
+projection $proj; if $dir is 1, does the reverse and converts xy
+coordinates to latitude/longitude.
+
+$lax: the latitude or y-coordinate
+$loy: the longitude or x-coordinate
+
+(note the order of the xy coordinates are reversed, so that latitude
+matches y and longitude matches x)
+
+Note: center of map is 0,0; x and y values range from -0.5 to +0.5
+
+NOT YET DONE!
+
+=cut
+
+sub project {
+  my($lay, $lox, $proj, $dir) = @_;
+
+  # this is an ugly way to do this (if/elsif/else)
+
+  # Specifically, google's mercator projection
+  if ($proj=~/^merc/) {
+    if ($dir) {
+      return (atan(sinh($lay)), $lox*360);
+    } else {
+      return (-1*(log(tan($PI/4+$lay/180*$PI/2))/2/$PI), $lox/360);
+    }
+  }
+}
+
+=item to_mercator($lat,$lon)
+
+Converts $lat, $lon (degrees) to google maps' yx Mercator projects
+(top left = 0,0; bottom right = 1,1); can return abs($y)>1 for far
+south/north latitudes. Options:
+
+ order=(xy|yx): return coordinates in xy or yx format (latter is default)
+
+NOTE: return order is yx, not xy
+
+=cut
+
+sub to_mercator {
+  my($lat,$lon, $options) = @_;
+  my(%opts) = parse_form($options);
+
+  my($y) = 1/2-1*(log(tan($PI/4+$lat/180*$PI/2))/2/$PI);
+  if ($opts{order} eq "xy") {
+    return ($lon+180)/360, $y;
+    # else below is actually optional, but omitting it is confusing
+  } else {
+    return $y,($lon+180)/360;
+  }
+}
+
+
+
+
+die "TESTING";
+
 @pts = (35.08, -106.66, 48.87, 2.33, 71.26826, -156.80627, -41.2833,
 174.783333, -22.88, -43.28);
 
-debug(unfold(voronoi(\@pts)));
+debug("ALPHA");
+debug(unfold(voronoi(\@pts,"infinityok=1")));
 
 die "TESTING";
 

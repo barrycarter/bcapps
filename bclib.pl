@@ -705,36 +705,28 @@ sub voronoi {
   return @ret;
 }
 
-=item project($lay, $lox, $proj, $dir)
+=item to_mercator($lat,$lon)
 
-Projects latitude/longitude $lay/$lox to xy coordinates for the
-projection $proj; if $dir is 1, does the reverse and converts xy
-coordinates to latitude/longitude.
+Converts $lat, $lon (degrees) to google maps' yx Mercator projects
+(top left = 0,0; bottom right = 1,1); can return abs($y)>1 for far
+south/north latitudes. Options:
 
-$lax: the latitude or y-coordinate
-$loy: the longitude or x-coordinate
+ order=(xy|yx): return coordinates in xy or yx format (latter is default)
 
-(note the order of the xy coordinates are reversed, so that latitude
-matches y and longitude matches x)
-
-Note: center of map is 0,0; x and y values range from -0.5 to +0.5
-
-NOT YET DONE!
+NOTE: return order is yx, not xy
 
 =cut
 
-sub project {
-  my($lay, $lox, $proj, $dir) = @_;
+sub to_mercator {
+  my($lat,$lon, $options) = @_;
+  my(%opts) = parse_form($options);
 
-  # this is an ugly way to do this (if/elsif/else)
-
-  # Specifically, google's mercator projection
-  if ($proj=~/^merc/) {
-    if ($dir) {
-      return (atan(sinh($lay)), $lox*360);
-    } else {
-      return (-1*(log(tan($PI/4+$lay/180*$PI/2))/2/$PI), $lox/360);
-    }
+  my($y) = 1/2-1*(log(tan($PI/4+$lat/180*$PI/2))/2/$PI);
+  if ($opts{order} eq "xy") {
+    return ($lon+180)/360, $y;
+    # else below is actually optional, but omitting it is confusing
+  } else {
+    return $y,($lon+180)/360;
   }
 }
 
