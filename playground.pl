@@ -7,6 +7,14 @@
 
 require "bclib.pl";
 
+@pts = (35.08, -106.66, 48.87, 2.33, 71.26826, -156.80627, -41.2833,
+174.783333, -22.88, -43.28);
+
+debug(unfold(voronoi(\@pts)));
+
+die "TESTING";
+
+
 =item hashlist2sqlite
 
 DOC ME! (but test me first!)

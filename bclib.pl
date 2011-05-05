@@ -626,6 +626,85 @@ sub sph2xyz {
   return($r*cos($ph)*cos($th),$r*cos($ph)*sin($th),$r*sin($ph));
 }
 
+
+=item voronoi(\@points, $options)
+
+Returns the Voronoi tesselation (in polygons) for a list of 2-D
+points. The list must be passed by reference, and is actually a 1-D
+list where each 2 element pair is treated like a 2-element list.
+
+This subroutine is a thin wrapper around qhull, and just
+subroutine-ifys what I've already done in bc-temperature-voronoi.pl
+
+Options:
+ infinityok: include polygons with points at infinity (not working)
+ infinityclip: include polygons w/ pts at infinity, but remove infinity points
+ default: ignore polygons w/ pts at infinity
+
+=cut
+
+sub voronoi {
+  # TODO: @pts is really a 2-D array, but we pass it as a 1-D array (bad?)
+  my($pts, $options) = @_;
+  my(@pts) = @{$pts};
+  my(%opts) = parse_form($options);
+  my(@ret) = ();
+  # TODO: this dir goes away at end of prog, not end of subroutine (bad?)
+  chdir(tmpdir());
+
+  # put points into input file
+  # TODO: below seems tedious; shorter way to do this?
+  local(*A);
+  open(A,">points");
+  print A "2\n";
+  print A ($#pts+1)/2 ."\n";
+  for ($i=0; $i<=$#pts; $i+=2) {
+    print A "$pts[$i] $pts[$i+1]\n";
+  }
+  close(A);
+
+  system("qvoronoi s o < points > output");
+
+  # break output into lines/polygons
+  my(@regions) = split(/\n/, read_file("output"));
+
+  # number of dimensions
+  my($di) = shift(@regions);
+  # number of points, regions, and something else (#infinite regions?)
+  my($pts, $regions, $x) = split(/\s+/,shift(@regions));
+
+  debug("REGIONS:",@regions);
+
+  # going thru regions (which start at $pts+1; first $pts entries are points)
+  for $i ($pts+1..$#regions) {
+    debug("POLYGON $i",$regions[$i]);
+
+    # TODO: ignoring unbounded regions now, but should fix
+    if ($regions[$i]=~/ 0( |$)/ && !$opts{infinityok}) {next;}
+
+    # the numbers of the points making up this polygon
+    my(@points)=split(/\s+/,$regions[$i]);
+    debug("POINTS",@points);
+    # the first one is dimension (uninteresting)
+    shift(@points);
+
+    # map the rest to actual point coords
+    map($_=trim($regions[$_]),@points);
+
+    # if we somehow have no points, ignore
+    unless (@points) {next;}
+
+    debug("POINTS",@points);
+
+    # add polygon to result list (must use ref here)
+    push(@ret, \@points);
+  }
+
+  debug("RET:",@ret);
+
+  return @ret;
+}
+
 =item project($lay, $lox, $proj, $dir)
 
 Projects latitude/longitude $lay/$lox to xy coordinates for the
