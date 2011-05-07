@@ -7,10 +7,8 @@ require "bclib.pl";
 use Fcntl;
 chdir(tmpdir());
 
-
 warn "TESTING";
 do_update(); # for testing, jump to this
-
 
 # <h>let's do the time zone again</h>
 $ENV{TZ} = "GMT";
@@ -96,6 +94,8 @@ for(;;) {
 }
 
 sub do_update {
+  my($count);
+
   # run queries in transaction
   unshift(@queries, "BEGIN");
 
@@ -114,20 +114,32 @@ sub do_update {
   # voronoi points
   my(@vpoints);
 
+  # keep track of temperature
+  my(%tempr) = ();
+
   for $i (@res) {
     my(%hash) = %{$i};
     push(@vpoints, $hash{lon}, $hash{lat});
+    # TODO: indexing on real numbers is really really bad
+    $tempr{$hash{lon}}{$hash{lat}} = $hash{temp};
   }
 
   # create diagram
   # TODO: for now, using equiangular mapping
   my(@poly) = voronoi(\@vpoints);
 
-  # this will hold just the polygon portion of the KML file
+  # this will hold the style + polygon portion of the KML file
   my(@polys);
 
   # and now KML file
   for $i (@poly) {
+
+    # style for this polygon
+    $count++;
+    push(@poly, '<Style id="$count">');
+    push(@poly, '<PolyStyle><color>$kmlcol</color>');
+    push(@poly, '<fill>1</fill><outline>0</outline></PolyStyle></Style>');
+
     push(@polys, "<Placemark><Polygon><outerBoundaryIs><LinearRing><coordinates>");
     for $j (@{$i}) {
       $j=~s/ /,/isg;
