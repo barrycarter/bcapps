@@ -208,10 +208,10 @@ my($req) =<< "MARK";
 MARK
 ;
 
-  if ($globopts{fake}) {return;}
-
   write_file($req,"request");
   debug($req);
+
+  if ($globopts{fake}) {return;}
 
   # curl sometimes sends 'Expect: 100-continue' which WP doesn't like.
   # The -H 'Expect:' below that cancels this
