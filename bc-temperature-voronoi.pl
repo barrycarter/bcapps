@@ -18,7 +18,7 @@ system("pwd");
 # pull data from live weather (also available at metar.db.94y.info)
 # (my own copy is local); cp avoids db lock
 system("cp /sites/DB/metar.db .");
-@res = sqlite3hashlist("SELECT -strftime('%s', replace(n.time, '-4-','-04-'))+strftime('%s', 'now') AS age, n.code, n.temperature, s.latitude, s.longitude, s.city, s.state, s.country, n.metar FROM nowweather n JOIN stations s ON (n.code=s.metar) WHERE temperature IS NOT NULL AND age>0 AND age<7200", "metar.db");
+@res = sqlite3hashlist("SELECT time, -strftime('%s', replace(n.time, '-4-','-04-'))+strftime('%s', 'now') AS age, n.code, n.temperature, s.latitude, s.longitude, s.city, s.state, s.country, n.metar FROM nowweather n JOIN stations s ON (n.code=s.metar) WHERE temperature IS NOT NULL AND age>0 AND age<7200", "metar.db");
 debug("ER: $SQL_ERROR");
 
 # style testing
@@ -46,9 +46,9 @@ print A $#res+1 . "\n"; # number of points
 # create file for qvoronoi (body) and note temp for later use
 for $i (@res) {
 %hash = %{$i};
-($lat[$n], $lon[$n], $temp[$n], $stat[$n], $city[$n], $country[$n], 
+($time[$n], $lat[$n], $lon[$n], $temp[$n], $stat[$n], $city[$n], $country[$n], 
  $metar[$n], $state[$n]) = 
-($hash{latitude}, $hash{longitude}, $hash{temperature}*1.8+32, $hash{code},
+($hash{time}, $hash{latitude}, $hash{longitude}, $hash{temperature}*1.8+32, $hash{code},
  $hash{city}, $hash{country}, $hash{metar}, $hash{state});
 # skip NZSP Antarctica for now (boo!) 
 # TODO: fix
@@ -116,7 +116,8 @@ for $i ($pts+1..$#regions) {
   print B "<gx:balloonVisibility>0</gx:balloonVisibility>\n";
   print B "<styleUrl>#$stat[$index]</styleUrl>\n";
   print B "<title>TITLE</title>\n";
-  print B "<description>$stat[$index] ($city[$index], $state[$index], $country[$index])\n$metar[$index] ($temp[$index]F)</description>\n";
+#  print B "<description>$stat[$index] ($city[$index], $state[$index], $country[$index])\n$metar[$index] ($temp[$index]F)</description>\n";
+  print B "<description>$stat[$index] ($city[$index], $state[$index], $country[$index]) $temp[$index]F ($time[$index])</description>\n";
   print B "<Polygon><outerBoundaryIs><LinearRing><coordinates>\n";
 
   # for google maps
