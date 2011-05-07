@@ -4,9 +4,16 @@
 # nothing with it</h>
 
 require "bclib.pl";
+use Fcntl;
+
+# <h>let's do the time zone again</h>
+$ENV{TZ} = "GMT";
 
 # could "use Socket" here but this is cooler?
 open(A,"echo 'user READONLY pass -1' | ncat rotate.aprs.net 23 |");
+
+# unblock socket just in case we get disconnected
+fcntl(A,F_SETFL,O_NONBLOCK|O_NDELAY);
 
 # confirm connection
 while (<A>) {
@@ -20,36 +27,50 @@ while (<A>) {
 
 for(;;) {
   $line = <A>;
-#  debug($line);
+
+  # if we've been waiting too long for a line, something's wrong
+  if ((time()-$lastlinetime) > 30) {
+    debug("WAITING!");
+    # TODO: restart process above
+  }
+
+  # if we see a blank line, chill for a bit
+  unless ($line) {sleep 1;}
+
+  $lastlinetime = time();
+
+  debug($line);
+
   # TODO: this is an inaccurate and improper way to find weather data
   # 't' is case sensitive
-  unless ($line=~/t\d{3}/) {next;}
-
-#  debug($line);
-
-  # get temperature
-  $line=~/t(\d{3})/i;
-  $temp = $1;
+  unless (($temp) = ($line=~/t(\d{3})/)) {next;}
+  # strip leading 0s
+  $temp=~s/^0+//isg;
 
   # latitude/longitude
-  unless ($line=~m%([\d\.]{3,})([N|S])/([\d\.]{3,})([E|W])%) {
+  unless (($lat, $lats, $lon, $lons) =
+ ($line=~m%([\d\.]{3,})([N|S])/([\d\.]{3,})([E|W])%)) {
     debug("BAD POS");
     next;
   }
 
-  ($lat, $lats, $lon, $lons) = ($1, $2, $3, $4);
-
   # time
-  unless ($line=~m%(\d{6})z%i) {
+  unless (($da, $ho, $mi)=($line=~m%(\d{2})(\d{2})(\d{2})z%i)) {
     debug("BAD TIME");
     next;
   }
 
-  $time = $1;
+  # convert to Unix
+  # find current month (rest of info is useless)
+  ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = gmtime(time());
+  # and now, mktime
+  $utime = mktime(0, $mi, $ho, $da, $mon, $year);
+
+  # TODO: ignoring corner case: today is 1st of month, report was on
+  # last day of previous month
 
   # "speaker"
-  $line=~m%^(.*?)>%;
-  $speaker = $1;
+  $speaker = ($line=~m%^(.*?)>%);
 
   # decimalize latitude/longitude (TODO: functionalize this)
   $latd = floor($lat/100);
@@ -62,19 +83,19 @@ for(;;) {
   $lonfinal = $lond+$lonm/60;
   if ($lons eq "W") {$lonfinal*=-1;}
 
-  # figure out Unix time
+  print "$speaker $utime $latfinal $lonfinal ${temp}F\n";
 
-  # xearth fun
-  print "$latfinal $lonfinal ${temp}F\n";
-
-  debug("LAT: $latd/$latm/$latsnr, LON: $lond/$lonm/$lonsnr");
-
-#  print "$time $lat$lats $lon$lons $temp\n";
+  # how long has it been since last update (push to db?)
+  if ((time()-$lastupdate) > 60) {do_update();}
 
 }
 
+# TODO: everything
+sub do_update {
+  $lastupdate = time();
+}
 
-# @221533z2950.68N/09529.95W_308
+# Format: "@221533z2950.68N/09529.95W_308"
 
 =item schema
 

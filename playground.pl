@@ -7,6 +7,11 @@
 
 require "bclib.pl";
 
+debug(mktime(0, 1, 2, 3));
+
+
+die "TESTING";
+
 use PDL::Transform::Cartography;
         $a = earth_coast();
         $a = graticule(10,2)->glue(1,$a);
