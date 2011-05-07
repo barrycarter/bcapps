@@ -7,6 +7,11 @@ require "bclib.pl";
 use Fcntl;
 chdir(tmpdir());
 
+
+warn "TESTING";
+do_update(); # for testing, jump to this
+
+
 # <h>let's do the time zone again</h>
 $ENV{TZ} = "GMT";
 
@@ -90,15 +95,63 @@ for(;;) {
 
 }
 
-# TODO: everything
 sub do_update {
   # run queries in transaction
   unshift(@queries, "BEGIN");
+
+  # nuke entries older than an hour
+  my($cull) = time() - 3600;
+  push(@queries, "DELETE FROM aprswx WHERE time < $cull");
   push(@queries, "COMMIT;\n");
   my($query) = join(";\n", @queries);
 
   write_file($query, "queries");
   system("sqlite3 /home/barrycarter/20110507/aprswx.db < queries");
+
+  # now, pull data are create KML file
+  my(@res)=sqlite3hashlist("SELECT lat,lon,temp FROM aprswx", "/home/barrycarter/20110507/aprswx.db");
+
+  # voronoi points
+  my(@vpoints);
+
+  for $i (@res) {
+    my(%hash) = %{$i};
+    push(@vpoints, $hash{lon}, $hash{lat});
+  }
+
+  # create diagram
+  # TODO: for now, using equiangular mapping
+  my(@poly) = voronoi(\@vpoints);
+
+  # this will hold just the polygon portion of the KML file
+  my(@polys);
+
+  # and now KML file
+  for $i (@poly) {
+    push(@polys, "<Placemark><Polygon><outerBoundaryIs><LinearRing><coordinates>");
+    for $j (@{$i}) {
+      $j=~s/ /,/isg;
+      push(@polys, $j);
+    }
+    push(@polys, "</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>");
+  }
+
+  # KML header
+  my($kml) = << "MARK";
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document>
+MARK
+;
+
+  # and the polygons combined
+  my($poly) = join("\n",@polys)."\n";
+  write_file("$kml\n$poly\n</Document></kml>\n", 
+"/home/barrycarter/BCINFO/sites/TEST/aprswx.kml");
+
+#  debug(unfold(@poly));
+  debug(@polys);
+  die "TESTING";
 
   # reset
   @queries = ();

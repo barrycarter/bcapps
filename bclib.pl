@@ -663,6 +663,8 @@ sub voronoi {
   }
   close(A);
 
+  debug("POINTS",read_file("points"));
+
   system("qvoronoi s o < points > output");
 
   # break output into lines/polygons
