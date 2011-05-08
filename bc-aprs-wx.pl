@@ -40,9 +40,7 @@ for(;;) {
 }
 
 sub do_update {
-  my(@vpoints);
-  my(@temp);
-  my(@polys);
+  my(@vpoints, @temp, @stat, @polys, @queries, @mypolys);
 
   # calling this resets $lastupdate
   $lastupdate = time();
@@ -62,7 +60,7 @@ sub do_update {
   system("sqlite3 /home/barrycarter/20110507/aprswx.db < queries");
 
   # now, pull data are create KML file
-  my(@res)=sqlite3hashlist("SELECT lat,lon,temp FROM aprswx", "/home/barrycarter/20110507/aprswx.db");
+  my(@res)=sqlite3hashlist("SELECT station,lat,lon,time,temp FROM aprswx", "/home/barrycarter/20110507/aprswx.db");
 
   unless ($#res>=0) {
     debug("NO RECORDS YET...");
@@ -73,10 +71,7 @@ sub do_update {
     my(%hash) = %{$res[$i]};
     # the voronoi point list
     push(@vpoints, $hash{lon}, $hash{lat});
-    # keep track of temperature
-    $temp[$i] = $hash{temp};
   }
-
 
   # create diagram
   # TODO: for now, using equiangular mapping
@@ -84,9 +79,10 @@ sub do_update {
 
   # create KML for each polygon, first determining color
   for $i (0..$#poly) {
-    my($hue) = 5/6-($temp[$i]/100)*5/6;
+    %hash = %{$res[$i]};
+    my($hue) = 5/6-($hash{temp}/100)*5/6;
     my($col) = hsv2rgb($hue,1,1,"kml=1&opacity=60");
-    push(@mypolys, poly_kml($poly[$i], $col));
+    push(@mypolys, poly_kml($poly[$i], $col, "description=$hash{station} ($hash{temp})"));
   }
 
   # KML header
@@ -112,7 +108,8 @@ MARK
 
 # given a polygon and a color, return KML for it (specific to this script)
 sub poly_kml {
-  my($poly, $col) = @_;
+  my($poly, $col, $options) = @_;
+  my(%opts) = parse_form($options);
   my(@coords);
   # pretend static var
   $static{count}++;
@@ -129,8 +126,8 @@ MARK
   my($polyhead) = << "MARK";
 <Placemark><gx:balloonVisibility>0</gx:balloonVisibility>
 <styleUrl>\#$static{count}</styleUrl>
-<title>TITLE</title>
-<description>BLANK</description>
+<title>$opts{title}</title>
+<description>$opts{description}</description>
 <Polygon><outerBoundaryIs><LinearRing><coordinates>
 MARK
 ;
