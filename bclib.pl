@@ -733,6 +733,49 @@ sub to_mercator {
   }
 }
 
+=item convert_time($secs, $format, $options)
+
+Convert time interval in seconds to years/months/days/etc based on
+$format (documented below, but very strftime-like).
+
+=cut
+
+sub convert_time {
+  my($sec, $format, $options) = @_;
+  my(%secs);
+
+  # requestable components (straight from strftime):
+  # %C = centuries, %Y = years, %m = months, %U = weeks
+  # %d = days, %H = hours, %M = minutes, %S = seconds
+
+  # number of seconds for the above (Gregorian calendar sans leap seconds)
+  # Year = 365.2425 days (so seconds for months/years/centuries looks weird)
+  %secs = ("S" => 1, "M" => 60, "H" => 3600, "d" => 86400, "U" => 604800,
+	   "m" => 2629746, "Y" => 31556952, "C" => 3155695200);
+
+  # figure out what components are requested in $format; we have to
+  # return them biggest-to-smallest, not in the order specified
+  my(@components)=($format=~/%([CYmUdHMS])/g);
+
+  # and sort them
+  @components = sort {$secs{$b} <=> $secs{$a}} @components;
+
+  # and convert
+  for $i (@components) {
+    # compute how many whole $i units in $sec and subtract them off
+    my($units) = floor($sec/$secs{$i});
+    $sec -= $secs{$i}*$units;
+    # and substitute in format
+    $format=~s/%$i/$units/isg;
+  }
+
+  return $format;
+
+}
+
+
+
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 
 sub END {
