@@ -764,9 +764,11 @@ sub convert_time {
   for $i (@components) {
     # compute how many whole $i units in $sec and subtract them off
     my($units) = floor($sec/$secs{$i});
+    debug("SECBEFORE: $sec");
     $sec -= $secs{$i}*$units;
+    debug("UNITS: $units","SECAFTER: $sec");
     # and substitute in format
-    $format=~s/%$i/$units/isg;
+    $format=~s/%$i/$units/g;
   }
 
   return $format;

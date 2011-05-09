@@ -10,24 +10,24 @@ require "bclib.pl";
 # TESTS
 
 # order is irrelevant
-print convert_time(1001, "%M minutes %S seconds")."\n";
-print convert_time(1001, "%S seconds %M minutes")."\n";
+# print convert_time(1001, "%M minutes %S seconds")."\n";
+# print convert_time(1001, "%S seconds %M minutes")."\n";
 
 # just in seconds
-print convert_time(1001, "%S seconds")."\n";
+# print convert_time(1001, "%S seconds")."\n";
 
 # hours and seconds (no minutes)
-print convert_time(3600*7+60*4, "%H hours, %S seconds")."\n";
+# print convert_time(3600*7+60*4, "%H hours, %S seconds")."\n";
 # with minutes, but weird order
-print convert_time(3600*7+60*4, "%M minutes, %H hours, %S seconds")."\n";
+# print convert_time(3600*7+60*4, "%M minutes, %H hours, %S seconds")."\n";
 
 # larger value testing
 # below doesn't agree with calendar because of leap year
-print convert_time(time(), "%Y years, %m months, %d days")."\n";
+# print convert_time(time(), "%Y years, %m months, %d days")."\n";
 print convert_time(time(), "%Y years, %m months, %d days, %H hours, %M minutes, %S seconds")."\n";
-print convert_time(time(), "%U weeks")."\n";
-print convert_time(time(), "%S seconds plus %U weeks")."\n";
-print convert_time(time(), "%S seconds")."\n";
+# print convert_time(time(), "%U weeks")."\n";
+# print convert_time(time(), "%S seconds plus %U weeks")."\n";
+# print convert_time(time(), "%S seconds")."\n";
 
 die "TESTING";
 

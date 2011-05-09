@@ -22,7 +22,11 @@ function timer(sec, format) {
  for (i in matches) {
    j = matches[i].replace('%','');
    var units = Math.floor(sec/secs[j]);
+   print("SECBEFORE:"+sec);
    sec = sec - secs[j]*units;
+   print("UNITS:"+units);
+   print("SIZE:"+secs[j]);
+   print("SECAFTER:"+sec);
    format = format.replace(matches[i], units);
  }
 
@@ -33,13 +37,4 @@ function timer(sec, format) {
 // same tests as perl
 
 d = new Date();
-print(timer(1001,'%M minutes %S seconds'));
-print(timer(1001, '%S seconds %M minutes'));
-print(timer(1001, '%S seconds'));
-print(timer((3600*7)+60*4, '%H hours, %S seconds'));
-print(timer((3600*7)+60*4, '%M minutes, %H hours, %S seconds'));
-print(timer(d.getTime()/1000, '%Y years, %m months, %d days'));
 print(timer(d.getTime()/1000, '%Y years, %m months, %d days, %H hours, %M minutes, %S seconds'));
-print(timer(d.getTime()/1000, '%U weeks'));
-print(timer(d.getTime()/1000, '%S seconds plus %U weeks'));
-print(timer(d.getTime()/1000, '%S seconds'));
