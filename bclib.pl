@@ -699,7 +699,8 @@ sub voronoi {
     debug("POINTS",@points);
 
     # add polygon to result list (must use ref here)
-    push(@ret, \@points);
+    # must use $i to compensate for skipped polygons
+    $ret[$i-$pts] = \@points;
   }
 
   debug("RET:",@ret);

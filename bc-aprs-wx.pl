@@ -3,6 +3,7 @@
 # Obtains weather data from the APRS stream <h>and does absolutely
 # nothing with it</h>
 
+push(@INC,"/usr/local/lib");
 require "bclib.pl";
 use Fcntl;
 chdir(tmpdir());
@@ -29,8 +30,10 @@ for(;;) {
   unless (%hash) {next;}
 
   # query
-  $query = "REPLACE INTO aprswx (station, time, lat, lon, temp) VALUES
- ('$hash{speaker}', '$hash{utime}', '$hash{lat}', '$hash{lon}', '$hash{temp}')";
+  $query = "REPLACE INTO aprswx (station, time, lat, lon, temp, report) VALUES
+ ('$hash{speaker}', '$hash{utime}', '$hash{lat}', '$hash{lon}', '$hash{temp}', '$hash{report}')";
+
+  debug("QUERY: $query");
 
   push(@queries, $query);
 
@@ -40,7 +43,7 @@ for(;;) {
 }
 
 sub do_update {
-  my(@vpoints, @temp, @stat, @polys, @queries, @mypolys);
+  my(@vpoints, @temp, @stat, @polys, @mypolys);
 
   # calling this resets $lastupdate
   $lastupdate = time();
@@ -57,10 +60,13 @@ sub do_update {
   my($query) = join(";\n", @queries);
   write_file($query, "queries");
   debug("QUERIES:",read_file("queries"));
-  system("sqlite3 /home/barrycarter/20110507/aprswx.db < queries");
+  system("sqlite3 /sites/DB/aprswx.db < queries");
+
+  # wipe out queries
+  @queries = ();
 
   # now, pull data are create KML file
-  my(@res)=sqlite3hashlist("SELECT station,lat,lon,time,temp FROM aprswx", "/home/barrycarter/20110507/aprswx.db");
+  my(@res)=sqlite3hashlist("SELECT station,lat,lon,time,temp,report FROM aprswx", "/sites/DB/aprswx.db");
 
   unless ($#res>=0) {
     debug("NO RECORDS YET...");
@@ -75,14 +81,16 @@ sub do_update {
 
   # create diagram
   # TODO: for now, using equiangular mapping
+  debug("VPOINTS",@vpoints);
   my(@poly) = voronoi(\@vpoints);
+  debug("GOT BACK",unfold(@poly));
 
   # create KML for each polygon, first determining color
   for $i (0..$#poly) {
     %hash = %{$res[$i]};
     my($hue) = 5/6-($hash{temp}/100)*5/6;
-    my($col) = hsv2rgb($hue,1,1,"kml=1&opacity=60");
-    push(@mypolys, poly_kml($poly[$i], $col, "description=$hash{station} ($hash{temp})"));
+    my($col) = hsv2rgb($hue,1,1,"kml=1&opacity=80");
+    push(@mypolys, poly_kml($poly[$i], $col, "description=$hash{report} ($hash{temp}, $hash{lat}, $hash{lon})"));
   }
 
   # KML header
@@ -133,6 +141,10 @@ MARK
 ;
 
   my(@poly) = @{$poly};
+
+  # no points? return blank
+  if ($#poly<0) {return;}
+
   map(s/ /,/isg, @poly);
 
   # the coordinates
@@ -182,6 +194,9 @@ sub parse_line {
   unless (($da, $ho, $mi)=($line=~m%(\d{2})(\d{2})(\d{2})z%i)) {return();}
 
   # we now know we have a valid line, so process it
+  $hash{report} = $line;
+  chomp($hash{report});
+  $hash{report}=~s/[^ -~]/_/isg;
 
   # convert time to unix time
   # TODO: ignoring corner case: today is 1st of month, report was on
@@ -215,7 +230,7 @@ sub parse_line {
 
 database to hold these (latest report from station obsoletes prior report):
 
-CREATE TABLE aprswx (station, time, lat, lon, temp);
+CREATE TABLE aprswx (station, time, lat, lon, temp, report);
 CREATE UNIQUE INDEX i1 ON aprswx(station);
 
 =cut

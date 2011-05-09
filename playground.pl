@@ -7,8 +7,12 @@
 
 require "bclib.pl";
 
-debug(mktime(0, 1, 2, 3));
+use Astro::Coord::ECI::Moon;
+my $loc = Astro::Coord::ECI->geodetic (0, 0, 0);
+$moon = Astro::Coord::ECI::Moon->new ();
+@almanac = $moon->almanac($loc, time());
 
+debug(unfold(@almanac));
 
 die "TESTING";
 
