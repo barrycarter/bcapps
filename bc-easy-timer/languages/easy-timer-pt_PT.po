@@ -1,0 +1,192 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Easy Timer 2.5.3\n"
+"Report-Msgid-Bugs-To: http://www.kleor-editions.com/easy-timer\n"
+"POT-Creation-Date: 2010-03-17 17:45+0000\n"
+"PO-Revision-Date: 2011-04-21 02:53+0100\n"
+"Last-Translator: Kleor\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n>1;\n"
+
+msgid "Allows you to easily display a count down/up timer, the time or the current date on your website, and to schedule an automatic content modification."
+msgstr ""
+
+msgid "0 second"
+msgstr "0 segundo"
+
+msgid "1 day"
+msgstr "1 dia"
+
+msgid "1 hour"
+msgstr "1 hora"
+
+msgid "1 minute"
+msgstr "1 minuto"
+
+msgid "1 second"
+msgstr "1 segundo"
+
+msgid "days"
+msgstr "dias"
+
+msgid "hours"
+msgstr "horas"
+
+msgid "minutes"
+msgstr "minutos"
+
+msgid "seconds"
+msgstr "segundos"
+
+msgid "JANUARY"
+msgstr "JANEIRO"
+
+msgid "FEBRUARY"
+msgstr "FEVEREIRO"
+
+msgid "MARCH"
+msgstr "MAR&Ccedil;O"
+
+msgid "APRIL"
+msgstr "ABRIL"
+
+msgid "MAY"
+msgstr "MAIO"
+
+msgid "JUNE"
+msgstr "JUNHO"
+
+msgid "JULY"
+msgstr "JULHO"
+
+msgid "AUGUST"
+msgstr "AGOSTO"
+
+msgid "SEPTEMBER"
+msgstr "SETEMBRO"
+
+msgid "OCTOBER"
+msgstr "OUTUBRO"
+
+msgid "NOVEMBER"
+msgstr "NOVEMBRO"
+
+msgid "DECEMBER"
+msgstr "DEZEMBRO"
+
+msgid "MONDAY"
+msgstr "SEGUNDA-FEIRA"
+
+msgid "TUESDAY"
+msgstr "TER&Ccedil;A-FEIRA"
+
+msgid "WEDNESDAY"
+msgstr "QUARTA-FEIRA"
+
+msgid "THURSDAY"
+msgstr "QUINTA-FEIRA"
+
+msgid "FRIDAY"
+msgstr "SEXTA-FEIRA"
+
+msgid "SATURDAY"
+msgstr "S&Aacute;BADO"
+
+msgid "SUNDAY"
+msgstr "DOMINGO"
+
+msgid "Documentation"
+msgstr ""
+
+msgid "Options"
+msgstr ""
+
+msgid "The <code>[timer]</code> shortcode is equivalent to"
+msgstr ""
+
+msgid "More informations"
+msgstr ""
+
+msgid "The <code>[elapsed-timer]</code> shortcode is equivalent to"
+msgstr ""
+
+msgid "The <code>[remaining-timer]</code> shortcode is equivalent to"
+msgstr ""
+
+msgid "The <code>[total-timer]</code> shortcode is equivalent to"
+msgstr ""
+
+msgid "The <code>[total-elapsed-timer]</code> shortcode is equivalent to"
+msgstr ""
+
+msgid "The <code>[total-remaining-timer]</code> shortcode is equivalent to"
+msgstr ""
+
+msgid "Cookies lifetime (used for relative dates)"
+msgstr ""
+
+msgid "Add JavaScript code"
+msgstr ""
+
+msgid "If you uncheck this box, Easy Timer will never add any JavaScript code to the pages of your website, but your count up/down timers will not refresh."
+msgstr ""
+
+#~ msgid "January"
+#~ msgstr "Janeiro"
+
+#~ msgid "February"
+#~ msgstr "Fevereiro"
+
+#~ msgid "March"
+#~ msgstr "Mar&ccedil;o"
+
+#~ msgid "April"
+#~ msgstr "Abril"
+
+#~ msgid "May"
+#~ msgstr "Poder"
+
+#~ msgid "June"
+#~ msgstr "Junho"
+
+#~ msgid "July"
+#~ msgstr "Julho"
+
+#~ msgid "August"
+#~ msgstr "Agosto"
+
+#~ msgid "September"
+#~ msgstr "Setembro"
+
+#~ msgid "October"
+#~ msgstr "Outubro"
+
+#~ msgid "November"
+#~ msgstr "Novembro"
+
+#~ msgid "December"
+#~ msgstr "Dezembro"
+
+#~ msgid "Monday"
+#~ msgstr "Segunda-feira"
+
+#~ msgid "Tuesday"
+#~ msgstr "Ter&ccedil;a-feira"
+
+#~ msgid "Wednesday"
+#~ msgstr "Quarta-feira"
+
+#~ msgid "Thursday"
+#~ msgstr "Quinta-feira"
+
+#~ msgid "Friday"
+#~ msgstr "Sexta-feira"
+
+#~ msgid "Saturday"
+#~ msgstr "S&aacute;bado"
+
+#~ msgid "Sunday"
+#~ msgstr "Domingo"

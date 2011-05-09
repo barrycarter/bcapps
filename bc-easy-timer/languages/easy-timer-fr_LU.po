@@ -1,0 +1,234 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Easy Timer 2.5.3\n"
+"Report-Msgid-Bugs-To: http://www.kleor-editions.com/easy-timer\n"
+"POT-Creation-Date: 2010-03-17 17:45+0000\n"
+"PO-Revision-Date: 2011-04-21 02:51+0100\n"
+"Last-Translator: Kleor\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n>1;\n"
+
+msgid "Allows you to easily display a count down/up timer, the time or the current date on your website, and to schedule an automatic content modification."
+msgstr "Vous permet d'afficher facilement un compteur de temps restant/passé, l'heure ou la date sur votre site Web, et de programmer une modification automatique de contenu."
+
+msgid "0 second"
+msgstr "0 seconde"
+
+msgid "1 day"
+msgstr "1 jour"
+
+msgid "1 hour"
+msgstr "1 heure"
+
+msgid "1 minute"
+msgstr "1 minute"
+
+msgid "1 second"
+msgstr "1 seconde"
+
+msgid "days"
+msgstr "jours"
+
+msgid "hours"
+msgstr "heures"
+
+msgid "minutes"
+msgstr "minutes"
+
+msgid "seconds"
+msgstr "secondes"
+
+msgid "JANUARY"
+msgstr "JANVIER"
+
+msgid "FEBRUARY"
+msgstr "F&Eacute;VRIER"
+
+msgid "MARCH"
+msgstr "MARS"
+
+msgid "APRIL"
+msgstr "AVRIL"
+
+msgid "MAY"
+msgstr "MAI"
+
+msgid "JUNE"
+msgstr "JUIN"
+
+msgid "JULY"
+msgstr "JUILLET"
+
+msgid "AUGUST"
+msgstr "AO&Ucirc;T"
+
+msgid "SEPTEMBER"
+msgstr "SEPTEMBRE"
+
+msgid "OCTOBER"
+msgstr "OCTOBRE"
+
+msgid "NOVEMBER"
+msgstr "NOVEMBRE"
+
+msgid "DECEMBER"
+msgstr "D&Eacute;CEMBRE"
+
+msgid "MONDAY"
+msgstr "LUNDI"
+
+msgid "TUESDAY"
+msgstr "MARDI"
+
+msgid "WEDNESDAY"
+msgstr "MERCREDI"
+
+msgid "THURSDAY"
+msgstr "JEUDI"
+
+msgid "FRIDAY"
+msgstr "VENDREDI"
+
+msgid "SATURDAY"
+msgstr "SAMEDI"
+
+msgid "SUNDAY"
+msgstr "DIMANCHE"
+
+msgid "Documentation"
+msgstr "Documentation"
+
+msgid "Options"
+msgstr "Options"
+
+msgid "The <code>[timer]</code> shortcode is equivalent to"
+msgstr "Le shortcode <code>[timer]</code> est équivalent à"
+
+msgid "More informations"
+msgstr "Plus d'informations"
+
+msgid "The <code>[elapsed-timer]</code> shortcode is equivalent to"
+msgstr "Le shortcode <code>[elapsed-timer]</code> est équivalent à"
+
+msgid "The <code>[remaining-timer]</code> shortcode is equivalent to"
+msgstr "Le shortcode <code>[remaining-timer]</code> est équivalent à"
+
+msgid "The <code>[total-timer]</code> shortcode is equivalent to"
+msgstr "Le shortcode <code>[total-timer]</code> est équivalent à"
+
+msgid "The <code>[total-elapsed-timer]</code> shortcode is equivalent to"
+msgstr "Le shortcode <code>[total-elapsed-timer]</code> est équivalent à"
+
+msgid "The <code>[total-remaining-timer]</code> shortcode is equivalent to"
+msgstr "Le shortcode <code>[total-remaining-timer]</code> est équivalent à"
+
+msgid "Cookies lifetime (used for relative dates)"
+msgstr "Durée de vie des cookies (utilisée pour les dates relatives)"
+
+msgid "Add JavaScript code"
+msgstr "Ajouter le code JavaScript"
+
+msgid "If you uncheck this box, Easy Timer will never add any JavaScript code to the pages of your website, but your count up/down timers will not refresh."
+msgstr "Si vous décochez cette case, Easy Timer n'ajoutera jamais de code JavaScript aux pages de votre site Web, mais vos compteurs ne se rafraîchiront pas."
+
+#~ msgid "easy-timer/en"
+#~ msgstr "easy-timer"
+
+#~ msgid ""
+#~ "<a href=\"http://www.kleor-editions.com/easy-timer/en\">Documentation</a>"
+#~ msgstr ""
+#~ "<a href=\"http://www.kleor-editions.com/easy-timer\">Documentation</a>"
+
+#~ msgid ""
+#~ "<a href=\"http://www.kleor-editions.com/easy-timer/en/#part4.2\">More "
+#~ "informations</a>"
+#~ msgstr ""
+#~ "<a href=\"http://www.kleor-editions.com/easy-timer/#part4.2\">Plus "
+#~ "d'informations</a>"
+
+#~ msgid ""
+#~ "<a href=\"http://www.kleor-editions.com/easy-timer/en/#part4.4\">More "
+#~ "informations</a>"
+#~ msgstr ""
+#~ "<a href=\"http://www.kleor-editions.com/easy-timer/#part4.4\">Plus "
+#~ "d'informations</a>"
+
+#~ msgid "in English"
+#~ msgstr "en Anglais"
+
+#~ msgid "in French"
+#~ msgstr "en Français"
+
+#~ msgid ""
+#~ "<a href=\"http://www.kleor-editions.com/easy-timer/en/#part7.2\">More "
+#~ "informations</a>"
+#~ msgstr ""
+#~ "<a href=\"http://www.kleor-editions.com/easy-timer/#part7.2\">Plus "
+#~ "d'informations</a>"
+
+#~ msgid ""
+#~ "<a href=\"http://www.kleor-editions.com/easy-timer/en/#part6.2\">More "
+#~ "informations</a>"
+#~ msgstr ""
+#~ "<a href=\"http://www.kleor-editions.com/easy-timer/#part6.2\">Plus "
+#~ "d'informations</a>"
+
+#~ msgid "January"
+#~ msgstr "Janvier"
+
+#~ msgid "February"
+#~ msgstr "F&eacute;vrier"
+
+#~ msgid "March"
+#~ msgstr "Mars"
+
+#~ msgid "April"
+#~ msgstr "Avril"
+
+#~ msgid "May"
+#~ msgstr "Mai"
+
+#~ msgid "June"
+#~ msgstr "Juin"
+
+#~ msgid "July"
+#~ msgstr "Juillet"
+
+#~ msgid "August"
+#~ msgstr "Ao&ucirc;t"
+
+#~ msgid "September"
+#~ msgstr "Septembre"
+
+#~ msgid "October"
+#~ msgstr "Octobre"
+
+#~ msgid "November"
+#~ msgstr "Novembre"
+
+#~ msgid "December"
+#~ msgstr "D&eacute;cembre"
+
+#~ msgid "Monday"
+#~ msgstr "Lundi"
+
+#~ msgid "Tuesday"
+#~ msgstr "Mardi"
+
+#~ msgid "Wednesday"
+#~ msgstr "Mercredi"
+
+#~ msgid "Thursday"
+#~ msgstr "Jeudi"
+
+#~ msgid "Friday"
+#~ msgstr "Vendredi"
+
+#~ msgid "Saturday"
+#~ msgstr "Samedi"
+
+#~ msgid "Sunday"
+#~ msgstr "Dimanche"
