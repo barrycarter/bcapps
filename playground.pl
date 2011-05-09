@@ -7,6 +7,71 @@
 
 require "bclib.pl";
 
+# convert time to years/months/days/etc based on user requested format
+# will convert to JS; ultimately to replace easy-timer.js
+
+sub convert_time {
+  my($sec, $format, $options) = @_;
+  my(%secs);
+
+  # requestable components (straight from strftime):
+  # %C = centuries
+  # %Y = years
+  # %m = months
+  # %U = weeks
+  # %d = days
+  # %H = hours
+  # %M = minutes
+  # %S = seconds
+
+  # number of seconds for the above (Greogrian calendar sans leap seconds)
+  # Year = 365.2425 days (so seconds for months/years/centuries looks weird)
+  %secs = ("S" => 1, "M" => 60, "H" => 3600, "d" => 86400, "U" => 604800,
+	   "m" => 2629746, "Y" => 31556952, "C" => 3155695200);
+
+  # figure out what components are requested in $format; we have to
+  # return them biggest-to-smallest, not in the order specified
+  my(@components)=($format=~/%([CYmUdHMS])/g);
+
+  # and sort them
+  @components = sort {$secs{$b} <=> $secs{$a}} @components;
+
+  # and convert
+  for $i (@components) {
+    # compute how many whole $i units in $sec and subtract them off
+    my($units) = floor($sec/$secs{$i});
+    $sec -= $secs{$i}*$units;
+    # and substitute in format
+    $format=~s/%$i/$units/isg;
+  }
+
+  return $format;
+
+}
+
+# TESTS
+
+# order is irrelevant
+print convert_time(1001, "%M minutes %S seconds")."\n";
+print convert_time(1001, "%S seconds %M minutes")."\n";
+
+# just in seconds
+print convert_time(1001, "%S seconds")."\n";
+
+# hours and seconds (no minutes)
+print convert_time(3600*7+60*4, "%H hours, %S seconds")."\n";
+# with minutes, but weird order
+print convert_time(3600*7+60*4, "%M minutes, %H hours, %S seconds")."\n";
+
+# larger value testing
+# below doesn't agree with calendar because of leap year
+print convert_time(time(), "%Y years, %m months, %d days")."\n";
+print convert_time(time(), "%Y years, %m months, %d days, %H hours, %M minutes, %S seconds")."\n";
+print convert_time(time(), "%U weeks")."\n";
+print convert_time(time(), "%S seconds plus %U weeks")."\n";
+
+die "TESTING";
+
 use Astro::Coord::ECI::Moon;
 my $loc = Astro::Coord::ECI->geodetic (0, 0, 0);
 $moon = Astro::Coord::ECI::Moon->new ();
