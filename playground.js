@@ -22,11 +22,7 @@ function timer(sec, format) {
  for (i in matches) {
    j = matches[i].replace('%','');
    var units = Math.floor(sec/secs[j]);
-   print("SECBEFORE:"+sec);
    sec = sec - secs[j]*units;
-   print("UNITS:"+units);
-   print("SIZE:"+secs[j]);
-   print("SECAFTER:"+sec);
    format = format.replace(matches[i], units);
  }
 

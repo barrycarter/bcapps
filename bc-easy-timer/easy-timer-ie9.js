@@ -1,92 +1,38 @@
 function trim(string) {
 return string.replace(/^\s+/g,'').replace(/\s+$/g,''); } 
 
+function timer(sec, format) {
+  /* hardcoding for now - BC */
+ format = "%Y years, %m months, %d days, %H hours, %M minutes, %S seconds";
+  /* ported from Perl */
+ var secs = {};
+ secs['S'] = 1; 
+ secs['M'] = 60; 
+ secs['H'] = 3600; 
+ secs['d'] = 86400;
+ secs['U'] = 604800;
+ secs['m'] = 2629746;
+ secs['Y'] = 31556952;
+ secs['C'] = 3155695200;
 
-function timer(S, form) {
-var D = Math.floor(S/86400);
-var H = Math.floor(S/3600);
-var M = Math.floor(S/60);
-var h = H - 24*D;
-var m = M - 60*H;
-var s = S - 60*M;
+ function sortme(x,y) {
+   if (secs[x.replace('%','')] > secs[y.replace('%','')]) {return(-1);}
+   return(1);
+ }
 
-var stringD = string0day;
-var stringH = string0hour;
-var stringM = string0minute;
-var stringS = string0second;
-var stringh = string0hour;
-var stringm = string0minute;
-var strings = string0second;
+ var matches = format.match(/%./g);
+ matches.sort(sortme);
 
-if (D == 1) { stringD = string1day; } else if (D > 1) { stringD = stringNdays.replace('[N]', D); }
-if (H == 1) { stringH = string1hour; } else if (H > 1) { stringH = stringNhours.replace('[N]', H); }
-if (M == 1) { stringM = string1minute; } else if (M > 1) { stringM = stringNminutes.replace('[N]', M); }
-if (S == 1) { stringS = string1second; } else if (S > 1) { stringS = stringNseconds.replace('[N]', S); }
-if (h == 1) { stringh = string1hour; } else if (h > 1) { stringh = stringNhours.replace('[N]', h); }
-if (m == 1) { stringm = string1minute; } else if (m > 1) { stringm = stringNminutes.replace('[N]', m); }
-if (s == 1) { strings = string1second; } else if (s > 1) { strings = stringNseconds.replace('[N]', s); }
+ for (i in matches) {
+   j = matches[i].replace('%','');
+   var units = Math.floor(sec/secs[j]);
+   sec = sec - secs[j]*units;
+   format = format.replace(matches[i], units);
+ }
 
-if (S >= 86400) {
-var stringDhms = stringD+stringh+stringm+strings;
-var stringDhm = stringD+stringh+stringm;
-var stringDh = stringD+stringh;
-var stringHms = stringH+stringm+strings;
-var stringHm = stringH+stringm;
-var stringMs = stringM+strings; }
+ return(format);
 
-if ((S >= 3600) && (S < 86400)) {
-var stringDhms = stringH+stringm+strings;
-var stringDhm = stringH+stringm;
-var stringDh = stringH;
-var stringD = stringH;
-var stringHms = stringH+stringm+strings;
-var stringHm = stringH+stringm;
-var stringMs = stringM+strings; }
-
-if ((S >= 60) && (S < 3600)) {
-var stringDhms = stringM+strings;
-var stringDhm = stringM;
-var stringDh = stringM;
-var stringD = stringM;
-var stringHms = stringM+strings;
-var stringHm = stringM;
-var stringH = stringM;
-var stringMs = stringM+strings; }
-
-if (S < 60) {
-var stringDhms = stringS;
-var stringDhm = stringS;
-var stringDh = stringS;
-var stringD = stringS;
-var stringHms = stringS;
-var stringHm = stringS;
-var stringH = stringS;
-var stringMs = stringS;
-var stringM = stringS; }
-
-var stringhms = stringh+stringm+strings;
-var stringhm = stringh+stringm;
-var stringms = stringm+strings;
-
-switch (form) {
-case 'dhms': return trim(stringDhms);
-case 'dhm': return trim(stringDhm);
-case 'dh': return trim(stringDh);
-case 'd': return trim(stringD);
-case 'hms': return trim(stringHms);
-case 'hm': return trim(stringHm);
-case 'h': return trim(stringH);
-case 'ms': return trim(stringMs);
-case 'm': return trim(stringM);
-case 's': return trim(stringS);
-case 'hmsr': return trim(stringhms);
-case 'hmr': return trim(stringhm);
-case 'hr': return trim(stringh);
-case 'msr': return trim(stringms);
-case 'mr': return trim(stringm);
-case 'sr': return trim(strings);
-default: return trim(stringDhms); } }
-
+};
 
 function dhmstimer_decrease(el) {
 var T = Math.round(((new Date()).getTime())/1000);
