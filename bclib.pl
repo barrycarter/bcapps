@@ -775,8 +775,29 @@ sub convert_time {
 
 }
 
+=item forex_quotes()
 
+Obtain current FOREX quotes; return as hash of bid/ask values
 
+<h>Unsolved problem: How to spell FoReX</h>
+
+=cut
+
+sub forex_quotes {
+  my(%hash); # for return values
+  my($out,$err,$res) =  cache_command("curl -A 'Barrys Brow<h>no</h>ser' www.forexpros.com/common/quotes_platform/quotes_platform_data.php | tidy -xml","retry=5&sleep=1&age=30");
+
+  # loop through each parity
+  while ($out=~s%([A-Z]{3})/([A-Z]{3})(.*?</div>)\s*</div>\s*</div>%%s) {
+    my($parity, $data) = ("$1/$2", $3);
+    # prices for parity
+    my(@prices) = ($data=~m%<div class="quotes_platform_16" dir="ltr">(.*?)</div>\s*<div class="quotes_platform_17">(.*?)</div>%isg);
+    $hash{$parity}{bid} = $prices[0] + $prices[1]/10000;
+    $hash{$parity}{ask} = $prices[2] + $prices[3]/10000;
+  }
+
+  return %hash;
+}
 
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 

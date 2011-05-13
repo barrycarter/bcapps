@@ -48,6 +48,11 @@ for $i (@items) {
 
 $fname = cache_command("curl 'http://stackauth.com/1.1/users/$assoc_id/associated'","age=86400&retfile=1");
 
+warn("Using hardcoded file, since API does not return stack overflow id");
+# kludge inside kludge: gunzip won't accept an uncompressed file
+system("gzip -c /home/barrycarter/BCGIT/data/stackcase.txt > stack.gz");
+$fname = "stack.gz";
+
 # unzip results
 system("gunzip -c $fname > json1");
 $json = JSON::from_json(read_file("json1"));
@@ -98,6 +103,12 @@ for $i (sort keys %myid) {
 
     $body = "I posted a question entitled '$qhash{title}' to $outname:<p>
 <a href='$qurl'>\n$qurl\n</a><p>Please make all comments/etc on that site, not here.";
+
+    debug("QURL: $qurl");
+    unless ($qurl=~/overflow/i) {
+      warn "KLUDGE TO GET MY OVERFLOW POSTS UPLOAD";
+      next;
+    }
 
     post_to_wp($body, "site=$wp_blog&author=$author&password=$pw&subject=$qhash{title}&timestamp=$qhash{creation_date}&category=STACK&live=0");
 

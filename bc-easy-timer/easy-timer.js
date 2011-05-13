@@ -3,7 +3,7 @@ return string.replace(/^\s+/g,'').replace(/\s+$/g,''); }
 
 function timer(sec, format) {
   /* hardcoding for now - BC */
- format = "%Y years, %m months, %d days, %H hours, %M minutes, %S seconds";
+ format = "%Y years, %m months, %U weeks, %d days, %H hours, %M minutes, %S seconds";
   /* ported from Perl */
  var secs = {};
  secs['S'] = 1; 

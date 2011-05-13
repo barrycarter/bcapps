@@ -1,0 +1,194 @@
+{
+  "total": 34,
+  "page": 1,
+  "pagesize": 30,
+  "type": "associated_user",
+  "items": [
+    {
+      "user_id": 354134,
+      "site_name": "Stack Overflow",
+      "user_creation_date": 1296508465,
+      "association_id": "aa1073f7-7e3b-4d4d-ace5-f2fca853f998"
+    },
+    {
+      "user_id": 59,
+      "site_name": "Quantitative Finance",
+      "user_creation_date": 1296508465,
+      "association_id": "aa1073f7-7e3b-4d4d-ace5-f2fca853f998"
+    },
+    {
+      "user_id": 503,
+      "site_name": "Code Golf",
+      "user_creation_date": 1297266124,
+      "association_id": "aa1073f7-7e3b-4d4d-ace5-f2fca853f998"
+    },
+    {
+      "user_id": 605,
+      "site_name": "Fitness and Nutrition",
+      "user_creation_date": 1301106684,
+      "association_id": "aa1073f7-7e3b-4d4d-ace5-f2fca853f998"
+    },
+    {
+      "user_id": 639,
+      "site_name": "Board and Card Games",
+      "user_creation_date": 1293139972,
+      "association_id": "aa1073f7-7e3b-4d4d-ace5-f2fca853f998"
+    },
+    {
+      "user_id": 854,
+      "site_name": "Physics",
+      "user_creation_date": 1292452127,
+      "association_id": "aa1073f7-7e3b-4d4d-ace5-f2fca853f998"
+    },
+    {
+      "user_id": 1149,
+      "site_name": "Code Review",
+      "user_creation_date": 1296361850,
+      "association_id": "aa1073f7-7e3b-4d4d-ace5-f2fca853f998"
+    },
+    {
+      "user_id": 1197,
+      "site_name": "Science Fiction and Fantasy",
+      "user_creation_date": 1299979776,
+      "association_id": "aa1073f7-7e3b-4d4d-ace5-f2fca853f998"
+    },
+    {
+      "user_id": 1462,
+      "site_name": "GIS",
+      "user_creation_date": 1292463455,
+      "association_id": "aa1073f7-7e3b-4d4d-ace5-f2fca853f998"
+    },
+    {
+      "user_id": 1566,
+      "site_name": "Statistical Analysis",
+      "user_creation_date": 1286930647,
+      "association_id": "aa1073f7-7e3b-4d4d-ace5-f2fca853f998"
+    },
+    {
+      "user_id": 1707,
+      "site_name": "Android Enthusiasts",
+      "user_creation_date": 1293235404,
+      "association_id": "aa1073f7-7e3b-4d4d-ace5-f2fca853f998"
+    },
+    {
+      "user_id": 1731,
+      "site_name": "Personal Finance and Money",
+      "user_creation_date": 1286737968,
+      "association_id": "aa1073f7-7e3b-4d4d-ace5-f2fca853f998"
+    },
+    {
+      "user_id": 1778,
+      "site_name": "Home Improvement",
+      "user_creation_date": 1297738675,
+      "association_id": "aa1073f7-7e3b-4d4d-ace5-f2fca853f998"
+    },
+    {
+      "user_id": 1854,
+      "site_name": "Theoretical Computer Science",
+      "user_creation_date": 1287598187,
+      "association_id": "aa1073f7-7e3b-4d4d-ace5-f2fca853f998"
+    },
+    {
+      "user_id": 1862,
+      "site_name": "IT Security",
+      "user_creation_date": 1301073206,
+      "association_id": "aa1073f7-7e3b-4d4d-ace5-f2fca853f998"
+    },
+    {
+      "user_id": 2040,
+      "site_name": "Apple",
+      "user_creation_date": 1292454230,
+      "association_id": "aa1073f7-7e3b-4d4d-ace5-f2fca853f998"
+    },
+    {
+      "user_id": 2267,
+      "site_name": "Unix and Linux",
+      "user_creation_date": 1286930869,
+      "association_id": "aa1073f7-7e3b-4d4d-ace5-f2fca853f998"
+    },
+    {
+      "user_id": 2469,
+      "site_name": "Mathematics",
+      "user_creation_date": 1286930606,
+      "association_id": "aa1073f7-7e3b-4d4d-ace5-f2fca853f998"
+    },
+    {
+      "user_id": 2844,
+      "site_name": "Photography",
+      "user_creation_date": 1293478314,
+      "association_id": "aa1073f7-7e3b-4d4d-ace5-f2fca853f998"
+    },
+    {
+      "user_id": 3065,
+      "site_name": "English Language and Usage",
+      "user_creation_date": 1293073399,
+      "association_id": "aa1073f7-7e3b-4d4d-ace5-f2fca853f998"
+    },
+    {
+      "user_id": 3258,
+      "site_name": "Electronics Design",
+      "user_creation_date": 1299376793,
+      "association_id": "aa1073f7-7e3b-4d4d-ace5-f2fca853f998"
+    },
+    {
+      "user_id": 3652,
+      "site_name": "Stack Apps",
+      "user_creation_date": 1286735500,
+      "association_id": "aa1073f7-7e3b-4d4d-ace5-f2fca853f998"
+    },
+    {
+      "user_id": 3903,
+      "site_name": "Cooking",
+      "user_creation_date": 1292796825,
+      "association_id": "aa1073f7-7e3b-4d4d-ace5-f2fca853f998"
+    },
+    {
+      "user_id": 3919,
+      "site_name": "Webmasters",
+      "user_creation_date": 1292458493,
+      "association_id": "aa1073f7-7e3b-4d4d-ace5-f2fca853f998"
+    },
+    {
+      "user_id": 4849,
+      "site_name": "WordPress",
+      "user_creation_date": 1303588323,
+      "association_id": "aa1073f7-7e3b-4d4d-ace5-f2fca853f998"
+    },
+    {
+      "user_id": 5676,
+      "site_name": "Web Applications",
+      "user_creation_date": 1286736587,
+      "association_id": "aa1073f7-7e3b-4d4d-ace5-f2fca853f998"
+    },
+    {
+      "user_id": 5761,
+      "site_name": "Gaming",
+      "user_creation_date": 1293143123,
+      "association_id": "aa1073f7-7e3b-4d4d-ace5-f2fca853f998"
+    },
+    {
+      "user_id": 9191,
+      "site_name": "OnStartups",
+      "user_creation_date": 1301980061,
+      "association_id": "aa1073f7-7e3b-4d4d-ace5-f2fca853f998"
+    },
+    {
+      "user_id": 11553,
+      "site_name": "Ask Ubuntu",
+      "user_creation_date": 1298820253,
+      "association_id": "aa1073f7-7e3b-4d4d-ace5-f2fca853f998"
+    },
+    {
+      "user_id": 11586,
+      "site_name": "Programmers",
+      "user_creation_date": 1293212117,
+      "association_id": "aa1073f7-7e3b-4d4d-ace5-f2fca853f998"
+    },
+    {
+      "user_id": 26015,
+      "site_name": "Area 51",
+      "user_creation_date": 1290451549,
+      "association_id": "aa1073f7-7e3b-4d4d-ace5-f2fca853f998"
+    }
+  ]
+}
