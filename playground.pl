@@ -13,7 +13,7 @@ debug(unfold(nadex_quotes("USD-CAD","nointra=1")));
 
 Obtains NADEX option quotes for $parity, given as "USD-CAD" (for example).
 
-Return values are $hash{"USD-CAD"}{Unix_exp_time}{bid|ask}
+Return values are $hash{"USD-CAD"}{strike}{Unix_exp_time}{bid|ask}
 
 Options:
   nointra=1: Do not obtain intradaily options
@@ -63,10 +63,6 @@ sub nadex_quotes {
  for $i (glob ("/tmp/daily*.txt /tmp/weekly*.txt /tmp/intra*.txt")) {
    my($all) = read_file($i);
 
-   # type of option (daily/weekly/intra)
-   $type = $i;
-   $type=~s/\d.*//;
-
    # option name
    $all=~m%<title>(.*?)</title>%;
    $title = $1;
@@ -79,12 +75,12 @@ sub nadex_quotes {
    # title pieces
    my($par, $strdir, $tim, $dat) = split(/\s/, $title);
    for $j ($tim,$dat) {$j=~s/[\(\)]//isg;}
-   my($strdir)=~s/>//isg;
+   $strdir=~s/>//isg;
 
-  # Unix time
-  $utime = str2time("$dat $tim EDT");
+   # Unix time
+   $utime = str2time("$dat $tim EDT");
 
-   # updated time
+   # last updated time
    while ($all=~s%<span class="updated updateTime left">(.*?)</span>%%g) {
      my($updated)=$1;
    }
@@ -92,10 +88,7 @@ sub nadex_quotes {
    # convert updated to time + calculate minute + price at minute
    my($uptime) = str2time("$updated EDT");
 
-   # expires in how long?
-   $exptime = $utime-$uptime;
-
-  # and value
+   # grab values
    my(@vals)=();
    while ($all=~s%<span class="valueNotFX">(.*?)</span>%%) {
      $val = $1;
@@ -108,11 +101,10 @@ sub nadex_quotes {
    # TODO: not sure skipping no bid/ask is a good idea here
    if ($obid eq "-" || $oask eq "-") {next;}
 
-   $hash{$par}{$utime}{bid} = $obid;
-   $hash{$par}{$utime}{ask} = $oask;
-   $hash{$par}{$utime}{updated} = $uptime;
+   $hash{$par}{$strdir}{$utime}{bid} = $obid;
+   $hash{$par}{$strdir}{$utime}{ask} = $oask;
+   $hash{$par}{$strdir}{$utime}{updated} = $uptime;
  }
-
  return %hash;
 }
 

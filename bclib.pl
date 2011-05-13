@@ -799,6 +799,105 @@ sub forex_quotes {
   return %hash;
 }
 
+=item nadex_quotes($parity, $options)
+
+Obtains NADEX option quotes for $parity, given as "USD-CAD" (for example).
+
+Return values are $hash{"USD-CAD"}{strike}{Unix_exp_time}{bid|ask}
+
+Options:
+  nointra=1: Do not obtain intradaily options
+  cache=t: Cache results for t seconds (default: 15m)
+
+This function REQUIRES a file called "nadex-cookie.txt":
+
+To obtain this cookie (requires Firebug):
+  - Log into nadex.com (bugmenot.com has a demo username/pw)
+  - Turn on Firebug and go to the Net/All panel
+  - On main screen, click on any specific option
+  - In Firebug, look at your first GET request
+  - Copy/paste the cookie into a nadex-cookie.txt file
+  - The cookie will look something like sample-data/nadex-cookie.txt
+  - Do not use Firefox's cookies.sqlite: it doesn't work
+
+TODO: automate cookie obtaining procedure
+
+=cut
+
+sub nadex_quotes {
+ my($parity, $options) = @_;
+ my(%hash); # to hold return values
+ $parity = uc($parity);
+ my($cookie) = read_file("/home/barrycarter/nadex-cookie.txt");
+ chomp($cookie);
+ # putting defaults first lets $options override
+ my(%opts) = parse_form("cache=900&$options");
+
+ # TODO: using /tmp here is ugly, but I don't see a way around it.
+ # I can't use cache-command, since I'm using curl's wildcarding feature
+
+ # commands to obtain daily, weekly, and intra-daily options
+ my($daily_cmd) = "curl -v -L -k -o /tmp/daily#1-#2.txt -v -L -H 'Cookie: $cookie' 'https://demo.nadex.com/dealing/pd/cfd/displaySingleMarket.htm?epic=N{B}.D.$parity.OPT-1-[1-21].IP'";
+ my($weekly_cmd) = "curl -v -L -k -o /tmp/weekly#1-#2.txt -v -L -H 'Cookie: $cookie' 'https://demo.nadex.com/dealing/pd/cfd/displaySingleMarket.htm?epic=N{B}.W.USD-CAD.OPT-1-[1-14].IP'";
+ my($intra_cmd) = "curl -v -L -k -o intra#1-#2-#3.txt -v -L -H 'Cookie: $cookie' 'https://demo.nadex.com/dealing/pd/cfd/displaySingleMarket.htm?epic=N{B}.I.USD-CAD.OPT-[1-8]-[1-3].IP'";
+
+ # and obtain data (since I'm using curl -o, below doesn't actually
+ # return anything, so I ignore the return value)
+
+ cache_command($daily_cmd, "age=$opts{cache}");
+ cache_command($weekly_cmd, "age=$opts{cache}");
+ unless ($opts{nointra}) {cache_command($daily_cmd, "age=$opts{cache}");}
+
+ # parse results
+ # TODO: in theory, could get old intra results here
+ for $i (glob ("/tmp/daily*.txt /tmp/weekly*.txt /tmp/intra*.txt")) {
+   my($all) = read_file($i);
+
+   # option name
+   $all=~m%<title>(.*?)</title>%;
+   $title = $1;
+   $title=~s/\|.*//;
+   $title=~s/>\s+/>/g;
+
+   # skip bad
+   if ($title=~/^sorry/i) {next;}
+
+   # title pieces
+   my($par, $strdir, $tim, $dat) = split(/\s/, $title);
+   for $j ($tim,$dat) {$j=~s/[\(\)]//isg;}
+   $strdir=~s/>//isg;
+
+   # Unix time
+   $utime = str2time("$dat $tim EDT");
+
+   # last updated time
+   while ($all=~s%<span class="updated updateTime left">(.*?)</span>%%g) {
+     my($updated)=$1;
+   }
+
+   # convert updated to time + calculate minute + price at minute
+   my($uptime) = str2time("$updated EDT");
+
+   # grab values
+   my(@vals)=();
+   while ($all=~s%<span class="valueNotFX">(.*?)</span>%%) {
+     $val = $1;
+     $val=~s/<.*?>//isg;
+     push(@vals, $val);
+   }
+
+  ($obid, $oask) = @vals;
+
+   # TODO: not sure skipping no bid/ask is a good idea here
+   if ($obid eq "-" || $oask eq "-") {next;}
+
+   $hash{$par}{$strdir}{$utime}{bid} = $obid;
+   $hash{$par}{$strdir}{$utime}{ask} = $oask;
+   $hash{$par}{$strdir}{$utime}{updated} = $uptime;
+ }
+ return %hash;
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 
 sub END {
