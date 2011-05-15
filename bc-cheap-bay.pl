@@ -13,6 +13,7 @@ defaults("maxprice=0.99&hours=4");
 # TODO: include start/end timestamp generation
 # TODO: compress identical listings
 # TODO: turn this into a webap, much more
+# TODO: ignore reserve auctions
 
 # Put your own application id in /usr/local/etc/ebay.id
 $appid = suck("/usr/local/etc/ebay.id");

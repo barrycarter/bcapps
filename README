@@ -5,6 +5,11 @@ put them all here for now.
 
 If any of them grows big enough, I'll create a new github for it.
 
+NOTE: geonames.db is used by scripts here, but is NOT in this
+repo. Instead, find it at: http://geonames.db.94y.info/ (click "Raw
+SQLite3 db" to download the whole thing in SQLite3 format: it's about
+1.1G)
+
 Summary:
 
  bclib.pl: A library of useful functions
