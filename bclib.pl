@@ -923,17 +923,17 @@ sub nestify {
     $str=~s/\n/ /isg;
     $str=~s/\s+/ /isg;
     $res[++$n] = $str;
+#    debug("$str -> RES$n");
     return "RES$n";
   }
 
   # now turn it into a proper list of lists (of lists...)
-  debug("ALPHA");
   return f2($all);
 
   sub f2 {
     my(@ret);
     my($val) = @_;
-    for $i (split(/\,\s*/,$val)) {
+    for $i (split(/[\,\s)]+\s*/,$val)) {
       if ($i=~/RES(\d+)/) {
 	push(@ret, [f2($res[$1])]);
       } else {

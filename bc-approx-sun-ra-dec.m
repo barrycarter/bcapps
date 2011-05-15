@@ -387,8 +387,6 @@ Table[{
 }, {n, 1, Length[t]}]
 
 
-
-
 (* TODO: would linear interpolation have worked just as well? *)
 
 (* steps required for restore if mathematica session ends *)
@@ -404,3 +402,8 @@ Table[intsunval[x[[1]], x[[2]]] = x[[3]], {x, t}]
 t = ReadList["data/moonxyz.txt"]
 
 Table[intmoonval[x[[1]], x[[2]]] = x[[3]], {x, t}]
+
+(* below is a more minimal way to store this data, more useful to Perl *)
+
+Table[{i[[1]], i[[2]], Flatten[i[[3,3]]], Flatten[i[[3,4,3]]]}, {i,t}]
+
