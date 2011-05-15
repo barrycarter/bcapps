@@ -898,6 +898,52 @@ sub nadex_quotes {
  return %hash;
 }
 
+=item nestify($str)
+
+Given a $str (that looks like contents of data/moonxyz.txt for
+example), return a nested array of contents).
+
+HACK: this is pretty much a kludge function to read Mathematica
+output. There are probably MUCH better ways to do this, but using an
+"inside out" recursive approach has a certain uniqueness.
+
+=cut
+
+sub nestify {
+  my($all) = @_;
+  my($n)=-1;
+  my(@res);
+
+  # convert all {stuff} and [stuff] into list refs
+  while ($all=~s/[\{\[]([^\{\}\[\]]*)[\}\]]/f1($1)/eisg) {}
+
+  # TODO: this conflicts w/ f1 in outer scope, if any; same for f2
+  sub f1 {
+    my($str) = @_;
+    $str=~s/\n/ /isg;
+    $str=~s/\s+/ /isg;
+    $res[++$n] = $str;
+    return "RES$n";
+  }
+
+  # now turn it into a proper list of lists (of lists...)
+  debug("ALPHA");
+  return f2($all);
+
+  sub f2 {
+    my(@ret);
+    my($val) = @_;
+    for $i (split(/\,\s*/,$val)) {
+      if ($i=~/RES(\d+)/) {
+	push(@ret, [f2($res[$1])]);
+      } else {
+	push(@ret, $i);
+      }
+    }
+    return @ret;
+  }
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 
 sub END {
