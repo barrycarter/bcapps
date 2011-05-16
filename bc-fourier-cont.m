@@ -23,14 +23,43 @@ superfourier[data_] :=Module[{pdata, n, f, pos, fr, frpos, freq, phase, coeff},
  Return[coeff[[1]] + coeff[[2]]*Cos[coeff[[3]]*x - coeff[[4]]]]
 ]
 
-(* some tests *)
-rand = {Random[Real,100],Random[Real,100],Random[Real,100],Random[Real,2*Pi]}
-f[x_] = rand[[1]] + rand[[2]]*Cos[rand[[3]]*x/10000 - rand[[4]]]
-data = Table[f[x],{x,1,10000}]
-g[x_] = superfourier[data]
-gxt = Table[g[x],{x,1,10000}]
-ListPlot[{data,gxt}]
-ListPlot[{data-gxt}]
+(* given data and a function that approximates that data, find an even
+better approximation, using superfourier *)
 
+refine[data_, f_] := Module[{t},
+ t = Table[data[[x]]- f[x], {x,1,Length[data]}];
+ f[x] + superfourier[t]
+]
+
+(* tmp isn't mirrored so this data [obtained from
+http://ssd.jpl.nasa.gov/?horizons] isn't available in this repo [but
+will be if I find it more useful] *)
+
+data = ReadList["/home/barrycarter/BCGIT/tmp/moondec.txt"]
+
+(* defining h1 to be 0 is silly, but useful; h2 is effectively
+superfourier on the data *)
+
+(* could loopify below, but not doing so for now *)
+
+h1[x_] = 0
+h2[x_] = refine[data,h1]
+h3[x_] = refine[data,h2]
+h4[x_] = refine[data,h3]
+h5[x_] = refine[data,h4]
+h6[x_] = refine[data,h5]
+h7[x_] = refine[data,h6]
+h8[x_] = refine[data,h7]
+h9[x_] = refine[data,h8]
+h10[x_] = refine[data,h9]
+h11[x_] = refine[data,h10]
+h12[x_] = refine[data,h11]
+h13[x_] = refine[data,h12]
+h14[x_] = refine[data,h13]
+
+
+tab = Table[h14[x],{x,1,Length[data]}]
+
+ListPlot[{data-tab}]
 
 
