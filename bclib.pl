@@ -596,21 +596,6 @@ sub urlencode {
   return $str;
 }
 
-=item hermite($x, \@xvals, \@yvals)
-
-Computes the Hermite interpolation at $x, for the Hermite-style cubic
-spline given by @xvals and @yvals
-
-NOT YET DONE!
-
-=cut
-
-sub hermite {
-  my($x,$xvals,$yvals) = @_;
-  my(@xvals) = @{$xvals};
-  my(@yvals) = @{$xvals};
-}
-
 =item sph2xyz($theta,$phi,$r, $options)
 
 Converts spherical ($theta,$phi,$r) to Cartesian ($x,$y,$z)

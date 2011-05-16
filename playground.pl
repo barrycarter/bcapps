@@ -8,13 +8,65 @@
 require "bclib.pl";
 
 $data = read_file("data/moonxyz.txt");
-$data=~s/interpolatingfunction//isg;
-$data="{$data}";
 @l = nestify($data);
 
-debug(unfold($l[0][0][2][0]));
+# hermite testing
+# <h>No hermits were harmed during these tests</h>
 
-# debug(unfold(@l));
+@xvals = @{$l[0][0][2]};
+@yvals = @{$l[0][0][3]};
+
+# convert mathematica to perl form
+map(s/\*\^/e+/, @xvals);
+map(s/\*\^/e+/, @yvals);
+
+# 3.5107128*^9 is April 2nd at 6am is our test case
+
+debug("ALPHA");
+debug(hermite(3510755800, \@xvals, \@yvals));
+
+# debug("X",@xvals,"Y",@yvals);
+
+=item hermite($x, \@xvals, \@yvals)
+
+Computes the Hermite interpolation at $x, for the Hermite-style cubic
+spline given by @xvals and @yvals
+
+NOT YET DONE!
+
+=cut
+
+sub hermite {
+  debug("HERMITE",@_);
+  my($x,$xvals,$yvals) = @_;
+  my(@xvals) = @{$xvals};
+  my(@yvals) = @{$yvals};
+
+  # compute size of x intervals, assuming they are all the same
+  my($intsize) = ($xvals[-1]-$xvals[0])/$#xvals;
+
+  # what interval is $x in and what's its position in this interval?
+  # interval 0 = the 1st interval
+  my($xintpos) = ($x-$xvals[0])/$intsize;
+  my($xint) = floor($xintpos);
+  my($xpos) = $xintpos - $xint;
+
+  # slope for immediately preceding and following intervals?
+  # NOTE: we do NOT use the slope for this interval itself (strange, but true)
+  my($pslope) = ($yvals[$xint]-$yvals[$xint-1])/$xint;
+  my($fslope) = ($yvals[$xint+2]-$yvals[$xint+1])/$xint;
+
+  debug($xint, $xpos, $yvals[$xint-1], $yvals[$xint], $yvals[$xint+1], $vals[$xint+2]);
+  debug("HERM",h00($xpos), h10($xpos), h01($xpos), h11($xpos), "END");
+  return h00($xpos)*$yvals[$xint] + h10($xpos)*$pslope + h01($xpos)*$yvals[$xint+1] + h11($xpos)*$fslope;
+
+# TODO: defining the Hermite polynomials here is probably silly
+  sub h00 {(1+2*$_[0])*(1-$_[0])**2}
+  sub h10 {$_[0]*(1-$_[0])**2}
+  sub h01 {$_[0]**2*(3-2*$_[0])}
+  sub h11 {$_[0]**2*($_[0]-1)}
+
+}
 
 # TODO: cache like crazy!
 # moonxyz.txt contains 10 arrays
