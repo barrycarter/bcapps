@@ -37,29 +37,19 @@ will be if I find it more useful] *)
 
 data = ReadList["/home/barrycarter/BCGIT/tmp/moondec.txt"]
 
+data = Table[43.2316 + 43.9356*Cos[81.7904*x/1000 - 1.59204], {x,1,1000}]
+
 (* defining h1 to be 0 is silly, but useful; h2 is effectively
 superfourier on the data *)
 
-(* could loopify below, but not doing so for now *)
+h[0] = 0 &
 
-h1[x_] = 0
-h2[x_] = refine[data,h1]
-h3[x_] = refine[data,h2]
-h4[x_] = refine[data,h3]
-h5[x_] = refine[data,h4]
-h6[x_] = refine[data,h5]
-h7[x_] = refine[data,h6]
-h8[x_] = refine[data,h7]
-h9[x_] = refine[data,h8]
-h10[x_] = refine[data,h9]
-h11[x_] = refine[data,h10]
-h12[x_] = refine[data,h11]
-h13[x_] = refine[data,h12]
-h14[x_] = refine[data,h13]
+h[n_] := h[n] = refine[data,h[n-1]]
 
+showit := Module[{}, 
+Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
-tab = Table[h14[x],{x,1,Length[data]}]
+normalized = (data-Mean[data])/Max[Abs[data]]
 
-ListPlot[{data-tab}]
-
+acn = ArcCos[normalized]
 
