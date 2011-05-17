@@ -774,7 +774,7 @@ sub forex_quotes {
 
   # loop through each parity
   while ($out=~s%([A-Z]{3})/([A-Z]{3})(.*?</div>)\s*</div>\s*</div>%%s) {
-    my($parity, $data) = ("$1/$2", $3);
+    my($parity, $data) = ("$1$2", $3);
     # prices for parity
     my(@prices) = ($data=~m%<div class="quotes_platform_16" dir="ltr">(.*?)</div>\s*<div class="quotes_platform_17">(.*?)</div>%isg);
     $hash{$parity}{bid} = $prices[0] + $prices[1]/10000;
@@ -786,9 +786,12 @@ sub forex_quotes {
 
 =item nadex_quotes($parity, $options)
 
+<h>The double use of the word 'options' here (financial instrument vs
+parameters to a subroutine) amuses me</h>
+
 Obtains NADEX option quotes for $parity, given as "USD-CAD" (for example).
 
-Return values are $hash{"USD-CAD"}{strike}{Unix_exp_time}{bid|ask}
+Return values are $hash{"USDCAD"}{strike}{Unix_exp_time}{bid|ask|updated}
 
 Options:
   nointra=1: Do not obtain intradaily options
@@ -818,13 +821,20 @@ sub nadex_quotes {
  # putting defaults first lets $options override
  my(%opts) = parse_form("cache=900&$options");
 
+ # HACK: I'm sometimes logged in w/ my live account and sometimes w/
+ # my demo account, so I never know what nadex-cookie.txt has (I
+ # updated it manually frequently from whicheever account I'm logged
+ # into)
+ $cookie=~/(demo|www)\.nadex\.com/isg;
+ my($prehost) = $1;
+
  # TODO: using /tmp here is ugly, but I don't see a way around it.
  # I can't use cache-command, since I'm using curl's wildcarding feature
 
  # commands to obtain daily, weekly, and intra-daily options
- my($daily_cmd) = "curl -v -L -k -o /tmp/daily#1-#2.txt -v -L -H 'Cookie: $cookie' 'https://demo.nadex.com/dealing/pd/cfd/displaySingleMarket.htm?epic=N{B}.D.$parity.OPT-1-[1-21].IP'";
- my($weekly_cmd) = "curl -v -L -k -o /tmp/weekly#1-#2.txt -v -L -H 'Cookie: $cookie' 'https://demo.nadex.com/dealing/pd/cfd/displaySingleMarket.htm?epic=N{B}.W.USD-CAD.OPT-1-[1-14].IP'";
- my($intra_cmd) = "curl -v -L -k -o intra#1-#2-#3.txt -v -L -H 'Cookie: $cookie' 'https://demo.nadex.com/dealing/pd/cfd/displaySingleMarket.htm?epic=N{B}.I.USD-CAD.OPT-[1-8]-[1-3].IP'";
+ my($daily_cmd) = "curl -v -L -k -o /tmp/daily#1-#2.txt -v -L -H 'Cookie: $cookie' 'https://$prehost.nadex.com/dealing/pd/cfd/displaySingleMarket.htm?epic=N{B}.D.$parity.OPT-1-[1-21].IP'";
+ my($weekly_cmd) = "curl -v -L -k -o /tmp/weekly#1-#2.txt -v -L -H 'Cookie: $cookie' 'https://$prehost.nadex.com/dealing/pd/cfd/displaySingleMarket.htm?epic=N{B}.W.USD-CAD.OPT-1-[1-14].IP'";
+ my($intra_cmd) = "curl -v -L -k -o intra#1-#2-#3.txt -v -L -H 'Cookie: $cookie' 'https://$prehost.nadex.com/dealing/pd/cfd/displaySingleMarket.htm?epic=N{B}.I.USD-CAD.OPT-[1-8]-[1-3].IP'";
 
  # and obtain data (since I'm using curl -o, below doesn't actually
  # return anything, so I ignore the return value)
@@ -847,8 +857,9 @@ sub nadex_quotes {
    # skip bad
    if ($title=~/^sorry/i) {next;}
 
-   # title pieces
+   # title pieces + cleanup
    my($par, $strdir, $tim, $dat) = split(/\s/, $title);
+   $par=~s/\///isg;
    for $j ($tim,$dat) {$j=~s/[\(\)]//isg;}
    $strdir=~s/>//isg;
 
@@ -927,6 +938,74 @@ sub nestify {
     }
     return @ret;
   }
+}
+
+=item forex_quote($parity, $time)
+
+Obtains price of $parity (as "USD/CAD") at or near $time (in Unix seconds)
+
+Requires: free API username/password from
+http://api.efxnow.com/forum/index.php
+
+TODO: confusing name, since it's close to forex_quotes(); however, may
+get rid of forex_quotes() as using efxnox.com's API seems easier
+anyway
+
+# TODO: default time to now?
+
+=cut
+
+sub forex_quote {
+  my($parity, $time) = @_;
+  my($price);
+  
+  # obtain username/password/brand
+  my($username,$password,$brand) = split("\n",read_file("/home/barrycarter/efx-info.txt"));
+
+  # obtain key (needed for any sort of access)
+  my($key) = cache_command("curl 'http://api.efxnow.com/DEMOWebServices2.8/Service.asmx/GetRatesServerAuth?UserID=$username&PWD=$password&Brand=$brand'","age=3600&retry=5");
+
+  # strip XML and spaces
+  $key=~s/<.*?>//isg;
+  $key=~s/\s//isg;
+
+  # Convert Unix time to
+  # http://api.efxnow.com/DEMOWebServices2.8/Service.asmx?op=GetHistoricRatesDataSet
+  # use a 5 minute boundary on each side (TODO: too much? too little?)
+  # NOTE: cheating and using ISO-8601, but EFX accepts that too
+  # TODO: in theory, will get data for nearby times too, but not caching it:
+  # ie: forex_quote($x, $y) and forex_quote($x, $y+1) requires 2 API accesses
+  # EFX uses ET, sigh
+
+  my($tz) = $ENV{TZ};
+  $ENV{TZ} = "EST5EDT";
+  my($st) = strftime("%F\T%H:%M:%S", localtime($time-60));
+  my($en) = strftime("%F\T%H:%M:%S", localtime($time+60));
+  $ENV{TZ} = $tz;
+
+  my($rates) = cache_command("curl 'http://api.efxnow.com/DEMOWebServices2.8/Service.asmx/GetHistoricRatesDataSet?Key=$key&Quote=$parity&StartDateTime=$st&EndDateTime=$en'", "age=86400");
+
+  # TODO: probably better way to keep track of mintime (using "large
+  # value" is bad)
+  my($mintime) = 1e+9;
+
+  # parse
+  while ($rates=~s%<HistoricRates[^>]*?>(.*?)</HistoricRates>%%is) {
+    my($quote) = $1;
+    my(%hash);
+    while ($quote=~s%<(.*?)>(.*?)</\1>%%) {$hash{$1}=$2;}
+
+    # how far away is this quote, time-wise?
+    my($deltat) = abs(str2time($hash{Time}) - $time);
+
+    # if it's the closest so far, record it
+    if ($deltat < $mintime) {
+      $mintime = $deltat;
+      $price = ($hash{Bid}+$hash{Offer})/2;
+    }
+  }
+
+  return $price;
 }
 
 # cleanup files created by my_tmpfile (unless --keeptemp set)
