@@ -7,6 +7,9 @@
 
 require "bclib.pl";
 
+sub jd2unix {return(($_[0]-2440587.5)*86400);}
+sub unix2jd {return(($_[0]/86400+2440587.5));}
+
 $data = read_file("data/moonxyz.txt");
 @l = nestify($data);
 

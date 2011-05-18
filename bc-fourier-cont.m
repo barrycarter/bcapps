@@ -19,7 +19,7 @@ superfourier[data_] :=Module[{pdata, n, f, pos, fr, frpos, freq, phase, coeff},
  frpos = Ordering[-fr, 1][[1]];
  freq = (pos-2 + 2*(frpos - 1)/n);
  phase = Sum[Exp[freq*2*Pi*I*x/n]*pdata[[x]], {x,1,n}];
- coeff =  {Mean[data], 2*Abs[phase]/n, freq*2*Pi/n, Arg[phase]};
+ coeff =  N[{Mean[data], 2*Abs[phase]/n, freq*2*Pi/n, Arg[phase]}];
  Function[x, Evaluate[coeff[[1]] + coeff[[2]]*Cos[coeff[[3]]*x - coeff[[4]]]]]
 ]
 
@@ -57,7 +57,11 @@ ListPlot[data-t[2]]
 ListPlot[data-t[3]]
 (* upto 1.0 deg error below *)
 ListPlot[data-t[5]]
+(* 0.5 below *)
 ListPlot[data-t[7]]
+ListPlot[data-t[11]]
+ListPlot[data-t[15]]
+ListPlot[data-t[25]]
 
 
 showit := Module[{}, 

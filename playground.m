@@ -1,5 +1,85 @@
 (* playground for Mathematica *)
 
+(* if we map ra/dec as theta, r (r= 90+dec), do we have something? 
+(it's at least only 2D *)
+
+dec[t_] = 23*Sin[t*2*Pi/365]
+ra[t_] = t/365*24/24*2*Pi
+
+Plot[{ra[t],dec[t]},{t,0,365}]
+
+x[t_] = (90+dec[t])*Sin[ra[t]]
+y[t_] = (90+dec[t])*Cos[ra[t]]
+
+Plot[x[t],{t,0,365}]
+Plot[y[t],{t,0,365}]
+
+Exit[]
+
+(* if we have lots of data, can we "compress" it in an odd way? *)
+
+showit := Module[{}, 
+Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
+
+data = ReadList["/home/barrycarter/BCGIT/tmp/moon.csv",
+ {Real,Real,Real}, WordSeparators->{","}];
+
+(* trying to do 10 years at a time slow things down a bit, so maybe 1 year *)
+
+data = Take[data, 10000];
+
+(* start with dec *)
+
+moondec = Table[{i[[1]], i[[3]]}, {i,data}];
+
+(* vaguely bad that I'm using data as a parameter, but won't cause
+Mathematica problem *)
+
+(* take each 2^nth piece of data *)
+halfdata[data_, n_] := Take[data, {1,Length[data],2^n}]
+
+(* interpolate it *)
+inthalfdata[data_, n_] := Interpolation[halfdata[data,n]]
+
+(* comparison of new data to old data (y vals) *)
+tabhalfdata[data_, n_] := 
+ Table[Abs[inthalfdata[data,n][data[[i,1]]] - data[[i,2]]], 
+ {i, 1, Length[data]}]
+
+(* and compare *)
+maxdiff[data_, n_] := Max[tabhalfdata[data,n]];
+
+tabhalfdata[Take[moondec,10000],1]
+
+maxdiff[moondec,1]
+
+
+
+
+
+mindata = Table[{i, data[[i]]}, {i,1,Length[data],50}]
+
+mindata = Table[{i, data[[i]]}, {i,1,Length[data],500}]
+
+mindata = Table[{i, data[[i]]}, {i,1,Length[data],5000}]
+
+amindata = Interpolation[mindata]
+amindata = Interpolation[mindata, InterpolationOrder->1]
+amindata = Interpolation[mindata, InterpolationOrder->2]
+amindata = Interpolation[mindata, InterpolationOrder->0]
+amindata = Interpolation[mindata, InterpolationOrder->5]
+amindata = Interpolation[mindata, InterpolationOrder->17]
+
+atab = Table[amindata[x], {x,1,Length[data]}]
+
+ListPlot[data-atab]
+
+Max[Abs[data-atab]]
+
+
+
+Exit[]
+
 mod[x_] := Module[{coeff,a},
  coeff= {1,2,3};
  Function[y, Evaluate[x+coeff[[1]]+y]]
