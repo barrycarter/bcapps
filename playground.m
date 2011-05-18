@@ -1,5 +1,52 @@
 (* playground for Mathematica *)
 
+showit := Module[{}, 
+Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
+
+data = ReadList["/home/barrycarter/BCGIT/tmp/moon.csv", {Real,Real,Real}];
+
+(* convert into bizarro xy coords... theta is x, r is y+90 degrees *)
+
+(* no need to convert declination to degrees, but what the heck; note
+that r is always between "90 degrees" and "270 degrees" *)
+
+xt1 = Table[{i[[1]], (Pi+i[[3]]*Degree)*Cos[i[[2]]*Degree]}, {i,data}];
+yt1 = Table[{i[[1]], (Pi+i[[3]]*Degree)*Sin[i[[2]]*Degree]}, {i,data}];
+
+datareduce[data_, n_] := Module[{halfdata, inthalfdata, tabhalfdata, origdata},
+ halfdata = Take[data, {1,Length[data],2^n}];
+Print["halfdata complete"];
+ inthalfdata = Interpolation[halfdata];
+Print["inthalfdata complete"];
+ tabhalfdata = Table[inthalfdata[data[[i,1]]], {i, 1, Length[data]}];
+Print["tabhalfdata complete"];
+ Return[tabhalfdata];
+]
+
+(* reduce and compare *)
+xred = datareduce[xt1, 5];
+xori = Table[i[[2]], {i,xt1}];
+xdif = Abs[xred-xori];
+Max[xdif]
+
+
+(* trying to recover "2455562.637500000 238.1787871 -23.0649312" to
+confirm process above is reversible [pointless otherwise] *)
+
+{xt1[[34]], yt1[[34]]}
+
+(* <h>One day, in the distant future, mankind will agree on the
+argument ordering for ArcTan w/ 2 vars...</h> *)
+
+ArcTan[xt1[[34,2]], yt1[[34,2]]]
+
+
+
+
+
+
+Exit[]
+
 (* if we map ra/dec as theta, r (r= 90+dec), do we have something? 
 (it's at least only 2D *)
 
@@ -17,12 +64,6 @@ Plot[y[t],{t,0,365}]
 Exit[]
 
 (* if we have lots of data, can we "compress" it in an odd way? *)
-
-showit := Module[{}, 
-Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
-
-data = ReadList["/home/barrycarter/BCGIT/tmp/moon.csv",
- {Real,Real,Real}, WordSeparators->{","}];
 
 (* trying to do 10 years at a time slow things down a bit, so maybe 1 year *)
 
