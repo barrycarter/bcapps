@@ -32,6 +32,20 @@ data = Take[data, 10000];
 
 moondec = Table[{i[[1]], i[[3]]}, {i,data}];
 
+datareduce[data_, n_] := Module[{halfdata, inthalfdata, tabhalfdata, origdata},
+ halfdata = Take[data, {1,Length[data],2^n}];
+Print["halfdata complete"];
+ inthalfdata = Interpolation[halfdata];
+Print["inthalfdata complete"];
+ tabhalfdata = Table[inthalfdata[data[[i,1]]], {i, 1, Length[data]}];
+Print["tabhalfdata complete"];
+ Return[tabhalfdata];
+]
+
+t1 = datareduce[moondec, 1];
+t2 = Table[moondec[[i,2]], {i, 1, Length[data]}];
+t3 = t1-t2;
+
 (* vaguely bad that I'm using data as a parameter, but won't cause
 Mathematica problem *)
 
@@ -41,17 +55,14 @@ halfdata[data_, n_] := Take[data, {1,Length[data],2^n}]
 (* interpolate it *)
 inthalfdata[data_, n_] := Interpolation[halfdata[data,n]]
 
-(* comparison of new data to old data (y vals) *)
+(* new data *)
 tabhalfdata[data_, n_] := 
- Table[Abs[inthalfdata[data,n][data[[i,1]]] - data[[i,2]]], 
- {i, 1, Length[data]}]
+ Table[inthalfdata[data,n][data[[i,1]]], {i, 1, Length[data]}]
 
 (* and compare *)
 maxdiff[data_, n_] := Max[tabhalfdata[data,n]];
 
-tabhalfdata[Take[moondec,10000],1]
-
-maxdiff[moondec,1]
+moondechd = halfdata[moondec,1];
 
 
 
