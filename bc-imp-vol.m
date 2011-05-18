@@ -106,5 +106,3 @@ impvol[p, s, stvalue[s]]
 frimpvol[0, 1, stvalue[1]]
 
 Plot[v /. frimpvol[0, s, stvalue[s]], {s,-5,5}]
-
-

@@ -1,5 +1,14 @@
 (* playground for Mathematica *)
 
+(* table of inverse normal curve for NADEX vols *)
+
+inv[x_] = y /. Solve[CDF[NormalDistribution[0,1]][y]==x,y][[1]]
+
+Flatten[Table[{N[x,4],N[inv[x],10]},{x,0,1,25/10000}]
+ ] >> /home/barrycarter/BCGIT/data/inv-norm-as-list.txt
+
+Exit[]
+
 (* how much worse is linear interpolation for moonpos? *)
 
 t = << /home/barrycarter/BCGIT/sample-data/manytables.txt

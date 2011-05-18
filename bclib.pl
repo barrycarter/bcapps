@@ -810,14 +810,22 @@ To obtain this cookie (requires Firebug):
 
 TODO: automate cookie obtaining procedure
 
+TODO: try to identify bad cookie earlier w/o multiple web accesses first
+
 =cut
 
 sub nadex_quotes {
  my($parity, $options) = @_;
  my(%hash); # to hold return values
  $parity = uc($parity);
+ unless ($parity=~/\-/) {
+   warnlocal("PARITY MUST CONTAIN: -");
+   return;
+ }
+
  my($cookie) = read_file("/home/barrycarter/nadex-cookie.txt");
  chomp($cookie);
+ my($dataq)=0;
  # putting defaults first lets $options override
  my(%opts) = parse_form("cache=900&$options");
 
@@ -827,14 +835,15 @@ sub nadex_quotes {
  # into)
  $cookie=~/(demo|www)\.nadex\.com/isg;
  my($prehost) = $1;
+ debug("PREHOST: $prehost, COOKIE: $cookie");
 
  # TODO: using /tmp here is ugly, but I don't see a way around it.
  # I can't use cache-command, since I'm using curl's wildcarding feature
 
  # commands to obtain daily, weekly, and intra-daily options
  my($daily_cmd) = "curl -v -L -k -o /tmp/daily#1-#2.txt -v -L -H 'Cookie: $cookie' 'https://$prehost.nadex.com/dealing/pd/cfd/displaySingleMarket.htm?epic=N{B}.D.$parity.OPT-1-[1-21].IP'";
- my($weekly_cmd) = "curl -v -L -k -o /tmp/weekly#1-#2.txt -v -L -H 'Cookie: $cookie' 'https://$prehost.nadex.com/dealing/pd/cfd/displaySingleMarket.htm?epic=N{B}.W.USD-CAD.OPT-1-[1-14].IP'";
- my($intra_cmd) = "curl -v -L -k -o intra#1-#2-#3.txt -v -L -H 'Cookie: $cookie' 'https://$prehost.nadex.com/dealing/pd/cfd/displaySingleMarket.htm?epic=N{B}.I.USD-CAD.OPT-[1-8]-[1-3].IP'";
+ my($weekly_cmd) = "curl -v -L -k -o /tmp/weekly#1-#2.txt -v -L -H 'Cookie: $cookie' 'https://$prehost.nadex.com/dealing/pd/cfd/displaySingleMarket.htm?epic=N{B}.W.$parity.OPT-1-[1-14].IP'";
+ my($intra_cmd) = "curl -v -L -k -o intra#1-#2-#3.txt -v -L -H 'Cookie: $cookie' 'https://$prehost.nadex.com/dealing/pd/cfd/displaySingleMarket.htm?epic=N{B}.I.$parity.OPT-[1-8]-[1-3].IP'";
 
  # and obtain data (since I'm using curl -o, below doesn't actually
  # return anything, so I ignore the return value)
@@ -849,13 +858,20 @@ sub nadex_quotes {
    my($all) = read_file($i);
 
    # option name
-   $all=~m%<title>(.*?)</title>%;
+   unless ($all=~m%<title>(.*?)</title>%) {
+     warnlocal("NO DATA IN: $i");
+     next;
+   }
+
    $title = $1;
    $title=~s/\|.*//;
    $title=~s/>\s+/>/g;
 
    # skip bad
    if ($title=~/^sorry/i) {next;}
+
+   # confirm we got at least SOME data
+   $dataq = 1;
 
    # title pieces + cleanup
    my($par, $strdir, $tim, $dat) = split(/\s/, $title);
@@ -864,15 +880,20 @@ sub nadex_quotes {
    $strdir=~s/>//isg;
 
    # Unix time
-   $utime = str2time("$dat $tim EDT");
+   $utime = str2time("$dat $tim EST5EDT");
 
    # last updated time
+   my($updated) = 0;
    while ($all=~s%<span class="updated updateTime left">(.*?)</span>%%g) {
-     my($updated)=$1;
+     $updated=$1;
    }
 
-   # convert updated to time + calculate minute + price at minute
-   my($uptime) = str2time("$updated EDT");
+   # convert updated to time + calculate minute
+   # str2time() defaults to today
+   my($uptime) = str2time("$updated EDT5EST");
+
+   # however, if that's in the future, assume yesterday update
+   if ($uptime > time()) {$uptime-=86400;}
 
    # grab values
    my(@vals)=();
@@ -891,6 +912,13 @@ sub nadex_quotes {
    $hash{$par}{$strdir}{$utime}{ask} = $oask;
    $hash{$par}{$strdir}{$utime}{updated} = $uptime;
  }
+
+ unless ($dataq) {
+   warnlocal("GOT NO DATA: BAD COOKIE? MARKET CLOSED? NETWORK DOWN?");
+   # <h>warnlocal("ELVES ON STRIKE? DEMONS ATTACKING? BAD MOON PHASE?")</h>
+   return;
+ }
+
  return %hash;
 }
 
@@ -979,8 +1007,8 @@ sub forex_quote {
 
   my($tz) = $ENV{TZ};
   $ENV{TZ} = "EST5EDT";
-  my($st) = strftime("%F\T%H:%M:%S", localtime($time-60));
-  my($en) = strftime("%F\T%H:%M:%S", localtime($time+60));
+  my($st) = strftime("%F\T%H:%M:%S", localtime($time-300));
+  my($en) = strftime("%F\T%H:%M:%S", localtime($time+300));
   $ENV{TZ} = $tz;
 
   my($rates) = cache_command("curl 'http://api.efxnow.com/DEMOWebServices2.8/Service.asmx/GetHistoricRatesDataSet?Key=$key&Quote=$parity&StartDateTime=$st&EndDateTime=$en'", "age=86400");
