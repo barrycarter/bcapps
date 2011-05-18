@@ -4,6 +4,8 @@
 
 require "bclib.pl";
 
+# TODO: add theta, delta, vega, etc, based on calculated volt(?)
+
 # HACK: TODO: this only works if underlying prices change slowly: if
 # there's a big change <h>(say USDJPY dropping 300 points in
 # minutes)</h>, this program yields inaccurate results

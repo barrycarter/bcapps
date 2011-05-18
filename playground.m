@@ -1,5 +1,15 @@
 (* playground for Mathematica *)
 
+mod[x_] := Module[{coeff,a},
+ coeff= {1,2,3};
+ Function[y, Evaluate[x+coeff[[1]]+y]]
+]
+
+mod[7]
+
+
+Exit[]
+
 (* table of inverse normal curve for NADEX vols *)
 
 inv[x_] = y /. Solve[CDF[NormalDistribution[0,1]][y]==x,y][[1]]
