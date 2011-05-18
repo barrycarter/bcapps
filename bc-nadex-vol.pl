@@ -15,7 +15,6 @@ require "bclib.pl";
 # uniform way of converting mathematica output to Perl
 # NOTE: I chose NOT to use nestify() here, it would've made things worse?
 $invnor = read_file("data/inv-norm-as-list.txt");
-
 # mathematica precision oddness + other cleanup
 $invnor=~s/\`[\d\.]+//isg;
 # NOTE: yes, I should backslash {} below, but it's cool that I don't have to
@@ -27,12 +26,27 @@ $invnor=~s/\s+/ /isg;
 # Obtain NADEX quotes and FOREX quotes
 %hash = nadex_quotes("USD-CAD");
 
-# debug(unfold(\%hash));
+# NADEX runs on Eastern time
+$ENV{TZ} = "EDT5EST";
 
-# debug(unfold($hash{USDCAD}));
+# Table header
+# expdatetime, strike, bid, ask, bidvol, askvol, pricetime, underatpricetime
+print "<table border>\n<tr>\n";
+print "<th>Expiration</th>\n";
+print "<th>Strike</th>\n";
+print "<th>Bid</th>\n";
+print "<th>Ask</th>\n";
+print "<th>Volt<br>(Bid)</th>\n";
+print "<th>Volt<br>(Ask)</th>\n";
+print "<th>Exp Time<br>(hours)</th>\n";
+print "<th>Pips<br>Away</th>\n";
+print "<th>Last Updated</th>\n";
+print "<th>Underlying<br>Price</th>\n";
+print "<th>Notes</th>\n";
+print "</tr>\n";
 
-for $strike (keys %{$hash{USDCAD}}) {
-  for $exp (keys %{$hash{USDCAD}{$strike}}) {
+for $strike (sort keys %{$hash{USDCAD}}) {
+  for $exp (sort keys %{$hash{USDCAD}{$strike}}) {
     %k = %{$hash{USDCAD}{$strike}{$exp}};
     ($bid, $ask, $updated) = ($k{bid}, $k{ask}, $k{updated});
 
@@ -55,12 +69,37 @@ for $strike (keys %{$hash{USDCAD}}) {
     $bidsdy = $bidsd*sqrt(365.2425*86400/$exptime);
     $asksdy = $asksd*sqrt(365.2425*86400/$exptime);
 
-#    warn("FORCE DEBUG");
-    $globopts{debug}=1;
+    # round and fix sign
+    $bidsdy = sprintf("%0.2f", abs($bidsdy*100));
+    $asksdy = sprintf("%0.2f", abs($asksdy*100));
+
+    # notes
+    $notes="&nbsp;";
+
+    if ($bid<=50 && $ask>=50) {
+      $notes="BID/ASK crosses 50<br>volt meaningless";
+    }
+
+    # printing table here just to have some output; real work is above
+    print "<tr>\n";
+    print strftime("<td>%F<br>%H:%M:%S ET</td>\n", localtime($exp));
+    print "<td>$strike</td>\n";
+    print "<td>$bid</td>\n";
+    print "<td>$ask</td>\n";
+    print "<td>$bidsdy</td>\n";
+    print "<td>$asksdy</td>\n";
+    print sprintf("<td>%0.2f</td>\n", ($exp-$updated)/3600);
+    print sprintf("<td>%d</td>\n", 10000*($strike-$under));
+    print strftime("<td>%F<br>%H:%M:%S ET</td>\n", localtime($updated));
+    print "<td>$under</td>\n";
+    print "<td>$notes</td>\n";
+    print "</tr>\n";
+
     debug("$strike/$exp/$bid/$ask/$updated/$under");
     debug("$logdiff/$exptime/$bidsn/$asksn");
     debug("BIDSD: $bidsd, ASKSK: $asksd");
     debug("FINAL: $bidsdy/$asksdy");
-    $globopts{debug}=0;
   }
 }
+
+print "</table>\n";
