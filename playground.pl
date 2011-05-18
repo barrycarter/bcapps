@@ -7,9 +7,6 @@
 
 require "bclib.pl";
 
-sub jd2unix {return(($_[0]-2440587.5)*86400);}
-sub unix2jd {return(($_[0]/86400+2440587.5));}
-
 $data = read_file("data/moonxyz.txt");
 @l = nestify($data);
 
@@ -29,6 +26,11 @@ debug("ALPHA");
 debug(hermite(3510755800, \@xvals, \@yvals));
 
 # debug("X",@xvals,"Y",@yvals);
+
+die "TESTING";
+
+sub jd2unix {return(($_[0]-2440587.5)*86400);}
+sub unix2jd {return(($_[0]/86400+2440587.5));}
 
 =item hermite($x, \@xvals, \@yvals)
 
@@ -56,14 +58,18 @@ sub hermite {
 
   # slope for immediately preceding and following intervals?
   # NOTE: we do NOT use the slope for this interval itself (strange, but true)
+  # <h>At least, I think it's strange, and I've been assured that it's true</h>
   my($pslope) = ($yvals[$xint]-$yvals[$xint-1])/$xint;
   my($fslope) = ($yvals[$xint+2]-$yvals[$xint+1])/$xint;
 
+  debug("XPOS: $xpos");
   debug($xint, $xpos, $yvals[$xint-1], $yvals[$xint], $yvals[$xint+1], $vals[$xint+2]);
   debug("HERM",h00($xpos), h10($xpos), h01($xpos), h11($xpos), "END");
   return h00($xpos)*$yvals[$xint] + h10($xpos)*$pslope + h01($xpos)*$yvals[$xint+1] + h11($xpos)*$fslope;
 
-# TODO: defining the Hermite polynomials here is probably silly
+  # TODO: defining the Hermite polynomials here is probably silly (and
+  # doesn't have the effect I want: hij are available globally)
+
   sub h00 {(1+2*$_[0])*(1-$_[0])**2}
   sub h10 {$_[0]*(1-$_[0])**2}
   sub h01 {$_[0]**2*(3-2*$_[0])}

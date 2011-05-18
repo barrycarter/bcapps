@@ -407,3 +407,46 @@ Table[intmoonval[x[[1]], x[[2]]] = x[[3]], {x, t}]
 
 Table[{i[[1]], i[[2]], Flatten[i[[3,3]]], Flatten[i[[3,4,3]]]}, {i,t}]
 
+(* As of 18 May 2011, everything above this line is pretty much unused *)
+
+moondata = ReadList["/home/barrycarter/BCGIT/tmp/moon.csv", {Real,Real,Real}];
+sundata = ReadList["/home/barrycarter/BCGIT/tmp/sun.csv", {Real,Real,Real}];
+
+(* convert into bizarro xy coords... theta is x, r is y+90 degrees *)
+(* no need to convert declination to degrees, but what the heck; note
+that r is always between "90 degrees" and "270 degrees" *)
+
+xt1 = Table[{i[[1]], (Pi+i[[3]]*Degree)*Cos[i[[2]]*Degree]}, {i,moondata}];
+yt1 = Table[{i[[1]], (Pi+i[[3]]*Degree)*Sin[i[[2]]*Degree]}, {i,moondata}];
+
+datareduce[data_, n_] := Module[{halfdata, inthalfdata, tabhalfdata, origdata},
+ halfdata = Take[data, {1,Length[data],2^n}];
+ inthalfdata = Interpolation[halfdata, InterpolationOrder -> 3];
+ tabhalfdata = Table[inthalfdata[data[[i,1]]], {i, 1, Length[data]}];
+ Return[tabhalfdata];
+]
+
+(* original ra/dec (doesn't change) *)
+origra = Table[i[[2]], {i,moondata}];
+origdec = Table[i[[3]], {i,moondata}];
+
+(* reduce and compare *)
+xred = datareduce[xt1, 7];
+yred = datareduce[yt1, 7];
+
+(* reconstruct ra and dec *)
+rared=Table[Mod[ArcTan[xred[[i]],yred[[i]]]/Degree,360],
+ {i,1,Length[moondata]}];
+decred=Table[Norm[{xred[[i]],yred[[i]]}]/Degree-180, {i, 1, Length[moondata]}];
+
+Max[Abs[rared-origra]]
+Max[Abs[decred-origdec]]
+
+(* polling lunar data every 6*128 minutes gives .0015 degrees accuracy
+in RA, 0.033 in DEC, so using these values *)
+
+moonrared=Table[{moondata[[i,1]],moondata[[i,2]]},{i,1,Length[moondata],128}]
+moondecred=Table[{moondata[[i,1]],moondata[[i,3]]},{i,1,Length[moondata],128}]
+
+
+

@@ -16,7 +16,7 @@ yt1 = Table[{i[[1]], (Pi+i[[3]]*Degree)*Sin[i[[2]]*Degree]}, {i,data}];
 datareduce[data_, n_] := Module[{halfdata, inthalfdata, tabhalfdata, origdata},
  halfdata = Take[data, {1,Length[data],2^n}];
 Print["halfdata complete"];
- inthalfdata = Interpolation[halfdata];
+ inthalfdata = Interpolation[halfdata, InterpolationOrder -> 3];
 Print["inthalfdata complete"];
  tabhalfdata = Table[inthalfdata[data[[i,1]]], {i, 1, Length[data]}];
 Print["tabhalfdata complete"];
