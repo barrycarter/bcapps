@@ -23,27 +23,22 @@ Print["tabhalfdata complete"];
  Return[tabhalfdata];
 ]
 
+(* original ra/dec (doesn't change) *)
+origra = Table[i[[2]], {i,data}];
+origdec = Table[i[[3]], {i,data}];
+
 (* reduce and compare *)
-xred = datareduce[xt1, 5];
-xori = Table[i[[2]], {i,xt1}];
-xdif = Abs[xred-xori];
-Max[xdif]
+xred = datareduce[xt1, 7];
+yred = datareduce[yt1, 7];
 
+(* reconstruct ra and dec *)
+rared=Table[Mod[ArcTan[xred[[i]],yred[[i]]]/Degree,360],{i, 1, Length[data]}];
+decred=Table[Norm[{xred[[i]],yred[[i]]}]/Degree-180, {i, 1, Length[data]}];
 
-(* trying to recover "2455562.637500000 238.1787871 -23.0649312" to
-confirm process above is reversible [pointless otherwise] *)
+Max[Abs[rared-origra]]
+Max[Abs[decred-origdec]]
 
-{xt1[[34]], yt1[[34]]}
-
-(* <h>One day, in the distant future, mankind will agree on the
-argument ordering for ArcTan w/ 2 vars...</h> *)
-
-ArcTan[xt1[[34,2]], yt1[[34,2]]]
-
-
-
-
-
+(* TODO: Just realized n doesn't have to be a power of 2 *)
 
 Exit[]
 
