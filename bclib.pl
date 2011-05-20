@@ -1036,6 +1036,58 @@ sub forex_quote {
   return $price;
 }
 
+=item hermite($x, \@xvals, \@yvals)
+
+Computes the Hermite interpolation at $x, for the Hermite-style cubic
+spline given by @xvals and @yvals
+
+=cut
+
+sub hermite {
+  my($x,$xvals,$yvals) = @_;
+  my(@xvals) = @{$xvals};
+  my(@yvals) = @{$yvals};
+  my($pslope, $fslope);
+
+  # compute size of x intervals, assuming they are all the same
+  my($intsize) = ($xvals[-1]-$xvals[0])/$#xvals;
+
+  # what interval is $x in and what's its position in this interval?
+  # interval 0 = the 1st interval
+  my($xintpos) = ($x-$xvals[0])/$intsize;
+  my($xint) = floor($xintpos);
+  my($xpos) = $xintpos - $xint;
+
+  # slope for immediately preceding and following intervals?
+  # NOTE: we do NOT use the slope for this interval itself (strange, but true)
+  # unless we are the first/last interval
+  # <h>At least, I think it's strange, and I've been assured that it's true</h>
+
+  # TODO: below isn't correct for $xint==0, but ignoring for now
+  if ($xint>0) {
+    $pslope = ($yvals[$xint]-$yvals[$xint-1])/$intsize;
+  } else {
+    $pslope = ($yvals[$xint+1]-$yvals[$xint])/$intsize;
+  }
+
+  # TODO: below isn't correct for $xint==$#xvals, but ignoring for now
+  if ($xint<$#xvals) {
+    $fslope = ($yvals[$xint+2]-$yvals[$xint+1])/$intsize;
+  } else {
+    $fslope = ($yvals[$xint+1]-$yvals[$xint])/$intsize;
+  }
+
+  return h00($xpos)*$yvals[$xint] + h10($xpos)*$pslope + h01($xpos)*$yvals[$xint+1] + h11($xpos)*$fslope;
+
+  # TODO: defining the Hermite polynomials here is probably silly (and
+  # doesn't have the effect I want: hij are available globally)
+
+  sub h00 {(1+2*$_[0])*(1-$_[0])**2}
+  sub h10 {$_[0]*(1-$_[0])**2}
+  sub h01 {$_[0]**2*(3-2*$_[0])}
+  sub h11 {$_[0]**2*($_[0]-1)}
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 
 sub END {

@@ -3,42 +3,57 @@
 showit := Module[{}, 
 Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
-data = ReadList["/home/barrycarter/BCGIT/tmp/moon.csv", {Real,Real,Real}];
+h00[t_] = (1+2*t)*(1-t)^2
+h10[t_] = t*(1-t)^2
+h01[t_] = t^2*(3-2*t)
+h11[t_] = t^2*(t-1)
 
-(* convert into bizarro xy coords... theta is x, r is y+90 degrees *)
+altintfuncalc[f_, t_] := Module[
+ {xvals, yvals, xint, tisin, tpos, m0, m1, p0, p1},
 
-(* no need to convert declination to degrees, but what the heck; note
-that r is always between "90 degrees" and "270 degrees" *)
+ (* figure out x values *)
+ xvals = Flatten[f[[3]]];
 
-xt1 = Table[{i[[1]], (Pi+i[[3]]*Degree)*Cos[i[[2]]*Degree]}, {i,data}];
-yt1 = Table[{i[[1]], (Pi+i[[3]]*Degree)*Sin[i[[2]]*Degree]}, {i,data}];
+ (* and corresponding y values *)
+ yvals = Flatten[f[[4,3]]];
 
-datareduce[data_, n_] := Module[{halfdata, inthalfdata, tabhalfdata, origdata},
- halfdata = Take[data, {1,Length[data],2^n}];
-Print["halfdata complete"];
- inthalfdata = Interpolation[halfdata, InterpolationOrder -> 3];
-Print["inthalfdata complete"];
- tabhalfdata = Table[inthalfdata[data[[i,1]]], {i, 1, Length[data]}];
-Print["tabhalfdata complete"];
- Return[tabhalfdata];
+ (* HACK: for some reason, t1 is bizarre *)
+ yvals = Flatten[f[[4]]];
+
+ (* and size of each x interval; there are many other ways to do this *)
+ (* <h>almost all of which are better than this?</h> *)
+ xint = (xvals[[-1]]-xvals[[1]])/(Length[xvals]-1);
+
+ (* for efficiency, all vars above this point should be cached *)
+
+ (* which interval is t in?; interval i = x[[i]],x[[i+1]] *)
+ tisin = Min[Max[Ceiling[(t-xvals[[1]])/xint],1],Length[xvals]-1];
+
+Print["TISIN ",tisin];
+Print["XVALS ",xvals];
+Print["YVALS ",yvals];
+
+ (* and the y values for this interval, using Hermite convention *)
+ p0 = yvals[[tisin]];
+ p1 = yvals[[tisin+1]];
+
+ (* what is t's position in this interval? *)
+ tpos = (t-xvals[[tisin]])/xint;
+
+ (* what are the slopes for the intervals immediately before/after this one? *)
+ (* we are assuming interval length of 1, so we do NOT divide by int *)
+ m0 = p0-yvals[[tisin-1]];
+ m1 = yvals[[tisin+2]]-p1;
+
+ (* return the Hermite approximation *)
+ (* <h>Whoever wrote the wp article was thinking of w00t</h> *)
+ h00[tpos]*p0 + h10[tpos]*m0 + h01[tpos]*p1 + h11[tpos]*m1
 ]
 
-(* original ra/dec (doesn't change) *)
-origra = Table[i[[2]], {i,data}];
-origdec = Table[i[[3]], {i,data}];
+t1 = Interpolation[Table[x*x,{x,1,10}]]
 
-(* reduce and compare *)
-xred = datareduce[xt1, 7];
-yred = datareduce[yt1, 7];
+altintfuncalc[t1, 9.5]
 
-(* reconstruct ra and dec *)
-rared=Table[Mod[ArcTan[xred[[i]],yred[[i]]]/Degree,360],{i, 1, Length[data]}];
-decred=Table[Norm[{xred[[i]],yred[[i]]}]/Degree-180, {i, 1, Length[data]}];
-
-Max[Abs[rared-origra]]
-Max[Abs[decred-origdec]]
-
-(* TODO: Just realized n doesn't have to be a power of 2 *)
 
 Exit[]
 

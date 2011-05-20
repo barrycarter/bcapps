@@ -7,8 +7,60 @@
 
 require "bclib.pl";
 
-$data = read_file("data/moonxyz.txt");
+# final hermite testing pre-production
+
+for $i (1..10) {
+  push(@xvals,$i);
+  push(@yvals,$i*$i);
+}
+
+debug(@xvals,@yvals);
+
+for ($i=1; $i<=10; $i+=.01) {
+  print "$i -> ". hermite($i, \@xvals, \@yvals) ."\n";
+}
+
+die "TESTING";
+
+$data = read_file("data/moonfakex.txt");
+$data2 = read_file("data/moonfakey.txt");
 @l = nestify($data);
+@l = @{$l[0]};
+@l2 = nestify($data2);
+@l2 = @{$l2[0]};
+
+for $i (@l) {
+  @j = @{$i};
+  $j[0]=~s/\*\^(\d+)/e+$1/isg;
+  push(@xvals, $j[0]);
+  push(@yvals, $j[1]);
+}
+
+for $i (@l2) {
+  @j = @{$i};
+  $j[0]=~s/\*\^(\d+)/e+$1/isg;
+  push(@xvals2, $j[0]);
+  push(@yvals2, $j[1]);
+}
+
+$now = time();
+$xcoord = hermite($now, \@xvals, \@yvals);
+$ycoord = hermite($now, \@xvals2, \@yvals2);
+
+# computing lunar pos
+$ra = atan2($ycoord,$xcoord)/$PI*180;
+if ($ra<0) {$ra+=360;}
+$dec = (sqrt($xcoord**2+$ycoord**2)-$PI)/$PI*180;
+
+debug("RA/DEC:",$ra,$dec);
+
+# confirmed xcoord is believable, as is y coord
+
+debug("$now/$xcoord/$ycoord");
+
+# debug("X",@xvals,"Y",@yvals);
+
+die "TESTING";
 
 # hermite testing
 # <h>No hermits were harmed during these tests</h>
@@ -37,15 +89,13 @@ sub unix2jd {return(($_[0]/86400+2440587.5));}
 Computes the Hermite interpolation at $x, for the Hermite-style cubic
 spline given by @xvals and @yvals
 
-NOT YET DONE!
-
 =cut
 
 sub hermite {
-  debug("HERMITE",@_);
   my($x,$xvals,$yvals) = @_;
   my(@xvals) = @{$xvals};
   my(@yvals) = @{$yvals};
+  my($pslope, $fslope);
 
   # compute size of x intervals, assuming they are all the same
   my($intsize) = ($xvals[-1]-$xvals[0])/$#xvals;
@@ -58,13 +108,23 @@ sub hermite {
 
   # slope for immediately preceding and following intervals?
   # NOTE: we do NOT use the slope for this interval itself (strange, but true)
+  # unless we are the first/last interval
   # <h>At least, I think it's strange, and I've been assured that it's true</h>
-  my($pslope) = ($yvals[$xint]-$yvals[$xint-1])/$xint;
-  my($fslope) = ($yvals[$xint+2]-$yvals[$xint+1])/$xint;
 
-  debug("XPOS: $xpos");
-  debug($xint, $xpos, $yvals[$xint-1], $yvals[$xint], $yvals[$xint+1], $vals[$xint+2]);
-  debug("HERM",h00($xpos), h10($xpos), h01($xpos), h11($xpos), "END");
+  # TODO: below isn't correct for $xint==0, but ignoring for now
+  if ($xint>0) {
+    $pslope = ($yvals[$xint]-$yvals[$xint-1])/$intsize;
+  } else {
+    $pslope = ($yvals[$xint+1]-$yvals[$xint])/$intsize;
+  }
+
+  # TODO: below isn't correct for $xint==$#xvals, but ignoring for now
+  if ($xint<$#xvals) {
+    $fslope = ($yvals[$xint+2]-$yvals[$xint+1])/$intsize;
+  } else {
+    $fslope = ($yvals[$xint+1]-$yvals[$xint])/$intsize;
+  }
+
   return h00($xpos)*$yvals[$xint] + h10($xpos)*$pslope + h01($xpos)*$yvals[$xint+1] + h11($xpos)*$fslope;
 
   # TODO: defining the Hermite polynomials here is probably silly (and
@@ -74,7 +134,6 @@ sub hermite {
   sub h10 {$_[0]*(1-$_[0])**2}
   sub h01 {$_[0]**2*(3-2*$_[0])}
   sub h11 {$_[0]**2*($_[0]-1)}
-
 }
 
 # TODO: cache like crazy!

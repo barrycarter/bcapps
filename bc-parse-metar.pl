@@ -101,7 +101,7 @@ unless ($globopts{nosql}) {
 system("cp metar-temp.db metar-before.db");
 
   # run the commands on the temp db
-  system("sqlite3 metar-temp.db < queries.txt 1>output.txt 2>error.txt");
+  system("sqlite3 metar-temp.db < queries.txt 1> /tmp/metar-sql.out 2> /tmp/metar-sql.err");
 
 # DEBUG ONLY
 system("cp metar-temp.db metar-after.db");
