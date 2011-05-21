@@ -29,6 +29,9 @@ for(;;) {
 
   unless (%hash) {next;}
 
+  # nuke apostrophes in everything
+  for $i (keys %hash) {$hash{$i}=~s/\'//isg;}
+
   # query
   $query = "REPLACE INTO aprswx (station, time, lat, lon, temp, report) VALUES
  ('$hash{speaker}', '$hash{utime}', '$hash{lat}', '$hash{lon}', '$hash{temp}', '$hash{report}')";
@@ -90,7 +93,7 @@ sub do_update {
     %hash = %{$res[$i]};
     my($hue) = 5/6-($hash{temp}/100)*5/6;
     my($col) = hsv2rgb($hue,1,1,"kml=1&opacity=80");
-    push(@mypolys, poly_kml($poly[$i], $col, "description=$hash{report} ($hash{temp}, $hash{lat}, $hash{lon})"));
+    push(@mypolys, poly_kml($poly[$i], $col, "description=$hash{station} ($hash{temp}, $hash{lat}, $hash{lon})"));
   }
 
   # KML header
@@ -107,7 +110,7 @@ MARK
   my($polystring) = join("\n",@mypolys)."\n";
 
   # write to file
-  write_file("$kmlhead$polystring$kmlfoot", "/home/barrycarter/BCINFO/sites/TEST/aprswx.kml");
+  write_file("$kmlhead$polystring$kmlfoot", "/home/barrycarter/BCINFO/sites/DATA/aprswx.kml");
 
   debug("UPDATED!");
 
@@ -145,6 +148,15 @@ MARK
   # no points? return blank
   if ($#poly<0) {return;}
 
+  # check bounds
+  for $i (@poly) {
+    chomp($i);
+    ($lon,$lat) = split(/\s+/,$i);
+    debug("LON/LAT: $lon/$lat");
+    if (abs($lon)>180) {return;}
+    if (abs($lat)>90) {return;}
+  }
+
   map(s/ /,/isg, @poly);
 
   # the coordinates
@@ -162,13 +174,18 @@ MARK
 # make connection to APRS server, perhaps unsuccessfuly
 sub do_connect {
 
+  # TODO: major hack until http://stackoverflow.com/questions/6074698/ resolved
+  my(@ips) = `host rotate.aprs.net`;
+  $ips[rand($#ip)] =~s/.*has address (.*?)\s*$/$1/;
+  my($ip) = $1;
+
   # TODO: calling this resets lastlinetime, but should it?
   $lastlinetime = time();
 
   debug("(RE)CONNECTING");
   close(A);
   # could "use Socket" here but this is cooler?
-  open(A,"echo 'user READONLY pass -1' | ncat rotate.aprs.net 23 |") || warn("FAIL: Error, $!");
+  open(A,"echo 'user READONLY pass -1' | ncat $ip 23 |") || warn("FAIL: Error, $!");
   # unblock socket just in case we get disconnected
   fcntl(A,F_SETFL,O_NONBLOCK|O_NDELAY);
 }
@@ -206,8 +223,9 @@ sub parse_line {
   # and now, mktime
   $hash{utime} = mktime(0, $mi, $ho, $da, $mon, $year);
 
-  # "speaker" (probably shouldve been station?)
-  ($hash{speaker}) = ($line=~m%^(.*?)>%);
+  # "speaker" (probably shouldve been $hash{station}?)
+  $line=~m%^(.*?)>%;
+  $hash{speaker} = $1;
 
   # decimalize latitude/longitude (TODO: functionalize this)
   my($latd) = floor($lat/100);

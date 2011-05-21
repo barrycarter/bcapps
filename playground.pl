@@ -5,7 +5,82 @@
 
 # chunks are normally separated with 'die "TESTING";'
 
+push(@INC,"/usr/local/lib");
 require "bclib.pl";
+
+%points = (
+ "Albuquerque" => "35.08 -106.66",
+ "Paris" => "48.87 2.33"
+# "Barrow" => "71.26826 -156.80627",
+# "Wellington" => "-41.2833 174.783333"
+# "Rio de Janeiro" => "-22.88  -43.28"
+);
+
+$EARTH_CIRC = 4.007504e+7;
+$r1 = $EARTH_CIRC/2;
+
+# the dividing circle between two points is a circle w/ center on earth
+
+system("cp /usr/local/etc/sun/gbefore.txt /home/barrycarter/BCINFO/sites/TEST/playground.html");
+
+open(A, ">>/home/barrycarter/BCINFO/sites/TEST/playground.html");
+
+for $i (sort keys %points) {
+  for $j (sort keys %points) {
+    if ($i eq $j) {next;}
+
+    # don't double do
+    if ($done{$i}{$j}) {next;}
+    $done{$j}{$i} = 1;
+
+    # vector between cities
+    ($lat1, $lon1) = split(/\s+/, $points{$i});
+    ($lat2, $lon2) = split(/\s+/, $points{$j});
+
+    ($x1, $y1, $z1) = sph2xyz($lon1, $lat1, 1, "degrees=1");
+    ($x2, $y2, $z2) = sph2xyz($lon2, $lat2, 1, "degrees=1");
+    ($x3, $y3, $z3) = ($x1-$x2, $y1-$y2, $z1-$z2);
+
+    # convert back to polar
+    ($theta, $phi) = xyz2sph($x3, $y3, $z3, "degrees=1");
+    debug("$theta, $phi");
+
+  print A << "MARK";
+
+pt = new google.maps.LatLng($phi,$theta);
+
+new google.maps.Circle({
+ center: pt,
+ radius: 10018760,
+ map: map,
+ strokeWeight: 2,
+ fillOpacity: 0.2,
+ fillColor: "#ff0000"
+});
+
+MARK
+;
+  }
+}
+
+system("/bin/cat /usr/local/etc/sun/gend.txt >> /home/barrycarter/BCINFO/sites/TEST/playground.html");
+
+sub xyz2sph {
+  my($x,$y,$z,$options) = @_;
+  my(%opts) = parse_form($options);
+
+  my($phi) = asin($z);
+  my($theta) = atan2($y,$x);
+  my($r) = sqrt($x*$x+$y*$y+$z*$z);
+
+  if ($opts{degrees}) {
+    return $theta*180/$PI, $phi*180/$PI, $r;
+  } else {
+    return $theta, $phi, $r;
+  }
+}
+
+die "TESTING";
 
 # final hermite testing pre-production
 
@@ -84,58 +159,6 @@ die "TESTING";
 sub jd2unix {return(($_[0]-2440587.5)*86400);}
 sub unix2jd {return(($_[0]/86400+2440587.5));}
 
-=item hermite($x, \@xvals, \@yvals)
-
-Computes the Hermite interpolation at $x, for the Hermite-style cubic
-spline given by @xvals and @yvals
-
-=cut
-
-sub hermite {
-  my($x,$xvals,$yvals) = @_;
-  my(@xvals) = @{$xvals};
-  my(@yvals) = @{$yvals};
-  my($pslope, $fslope);
-
-  # compute size of x intervals, assuming they are all the same
-  my($intsize) = ($xvals[-1]-$xvals[0])/$#xvals;
-
-  # what interval is $x in and what's its position in this interval?
-  # interval 0 = the 1st interval
-  my($xintpos) = ($x-$xvals[0])/$intsize;
-  my($xint) = floor($xintpos);
-  my($xpos) = $xintpos - $xint;
-
-  # slope for immediately preceding and following intervals?
-  # NOTE: we do NOT use the slope for this interval itself (strange, but true)
-  # unless we are the first/last interval
-  # <h>At least, I think it's strange, and I've been assured that it's true</h>
-
-  # TODO: below isn't correct for $xint==0, but ignoring for now
-  if ($xint>0) {
-    $pslope = ($yvals[$xint]-$yvals[$xint-1])/$intsize;
-  } else {
-    $pslope = ($yvals[$xint+1]-$yvals[$xint])/$intsize;
-  }
-
-  # TODO: below isn't correct for $xint==$#xvals, but ignoring for now
-  if ($xint<$#xvals) {
-    $fslope = ($yvals[$xint+2]-$yvals[$xint+1])/$intsize;
-  } else {
-    $fslope = ($yvals[$xint+1]-$yvals[$xint])/$intsize;
-  }
-
-  return h00($xpos)*$yvals[$xint] + h10($xpos)*$pslope + h01($xpos)*$yvals[$xint+1] + h11($xpos)*$fslope;
-
-  # TODO: defining the Hermite polynomials here is probably silly (and
-  # doesn't have the effect I want: hij are available globally)
-
-  sub h00 {(1+2*$_[0])*(1-$_[0])**2}
-  sub h10 {$_[0]*(1-$_[0])**2}
-  sub h01 {$_[0]**2*(3-2*$_[0])}
-  sub h11 {$_[0]**2*($_[0]-1)}
-}
-
 # TODO: cache like crazy!
 # moonxyz.txt contains 10 arrays
 
@@ -205,9 +228,9 @@ sub read_mathematica {
 
 die "TESTING";
 
-use Math::MatrixReal;
+# use Math::MatrixReal;
 
-my($a) = Math::MatrixReal->new_random(5, 5);
+# my($a) = Math::MatrixReal->new_random(5, 5);
 
 debug($a);
 
@@ -237,21 +260,21 @@ print convert_time(time(), "%Y years, %m months, %d days, %H hours, %M minutes, 
 
 die "TESTING";
 
-use Astro::Coord::ECI::Moon;
-my $loc = Astro::Coord::ECI->geodetic (0, 0, 0);
-$moon = Astro::Coord::ECI::Moon->new ();
-@almanac = $moon->almanac($loc, time());
+# use Astro::Coord::ECI::Moon;
+# my $loc = Astro::Coord::ECI->geodetic (0, 0, 0);
+# $moon = Astro::Coord::ECI::Moon->new ();
+# @almanac = $moon->almanac($loc, time());
 
 debug(unfold(@almanac));
 
 die "TESTING";
 
-use PDL::Transform::Cartography;
-        $a = earth_coast();
-        $a = graticule(10,2)->glue(1,$a);
-        $t = t_mercator;
-        $w = pgwin(xs);
-        $w->lines($t->apply($a)->clean_lines());
+# use PDL::Transform::Cartography;
+#        $a = earth_coast();
+#        $a = graticule(10,2)->glue(1,$a);
+#        $t = t_mercator;
+#        $w = pgwin(xs);
+#        $w->lines($t->apply($a)->clean_lines());
 
 die "TESTING";
 

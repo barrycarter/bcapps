@@ -81,6 +81,7 @@ MARK
 
 # KML: end of file
 print B "</Document></kml>\n";
+close(B);
 
 # TODO: point to continent specific maps (from same data) like weather.gov
 # TODO: color map smoothly, not via polygons
