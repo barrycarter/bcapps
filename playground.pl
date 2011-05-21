@@ -9,7 +9,7 @@ push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
 $xvals = [1,2,3,4,5,6];
-$yvals = [1,4,9,16,25,36];
+$yvals = [1,8,27,64,125,216];
 
 @yvals=@{$yvals};
 
@@ -19,19 +19,13 @@ for $i (100..600) {
   $x = $i/100;
   $h = hermite($x, $xvals, $yvals);
   debug("A",$yvals[floor($x)],$yvals[floor($x+1)],$yvals[floor($x+2)]);
-  $hp = h00($x-floor($x))*$yvals[floor($x)] + 
-    h01($x-floor($x))*$yvals[floor($x-1)];
+  $hp = h00($x-floor($x))*$yvals[floor($x-1)] + 
+    h01($x-floor($x))*$yvals[floor($x)];
+
+  debug("HP:", $h-$hp);
+  
 #  print $x," ", $h-$hp,"\n";
-  print $x," ", $h-$x*$x,"\n";
-}
-
-die "TESTING";
-
-# NOTE: graphs of the hermite functions look fine, so its got to be
-# the way I'm taking the slope
-
-for $i (0..100) {
-  print h11($i/100)."\n";
+#  print $x," ", $h-$hp,"\n";
 }
 
 die "TESTING";
@@ -39,6 +33,16 @@ die "TESTING";
 for $i (0..60) {
   ($ra,$dec) = position("sun", 1305936000+86400*$i);
   print "$dec\n";
+}
+
+die "TESTING";
+
+
+# NOTE: graphs of the hermite functions look fine, so its got to be
+# the way I'm taking the slope
+
+for $i (0..100) {
+  print h11($i/100)."\n";
 }
 
 die "TESTING";

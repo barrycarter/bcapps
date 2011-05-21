@@ -228,13 +228,236 @@ altintfuncalc[l1, 2.5]
 
 Plot[{h00[t], h01[t], h10[t], h11[t]}, {t,0,1}]
 
-list = {1,4,9,16,25,36}
+(* list = {1,4,9,16,25,36} *)
+
+list = Table[x*x*x,{x,1,6}]
 
 func = Interpolation[list]
 
 Plot[func[x], {x,1,6}]
 
+Plot[func[x]-x*x*x, {x,1,6}]
+
 test1[x_] := func[x] - h00[x-Floor[x]]*list[[Floor[x]]] - 
  h01[x-Floor[x]]*list[[Floor[x+1]]]
 
 Plot[test1[x],{x,1,6}]
+
+Solve[{
+ h10[.25]*m0 + h11[.25]*m1 == 1.54688,
+ h10[.75]*m0 + h11[.75]*m1 == -5.48438
+}, {m0,m1}
+]
+
+(slopes 27 and 48, NOT 28 and 49 as expected)
+
+Solve[{
+ h10[.25]*m0 + h11[.25]*m1 == 0.421875,
+ h10[.75]*m0 + h11[.75]*m1 == -3.23438
+}, {m0,m1}
+]
+
+(slopes 12 and 27, vs 13 and 28 as expected)
+
+Solve[{
+ h10[.25]*m0 + h11[.25]*m1 == test1[2.25],
+ h10[.75]*m0 + h11[.75]*m1 == test1[2.75]
+}, {m0,m1}
+]
+
+slopes 3 and 12; expected 1 and 13
+
+Solve[{
+ h10[.25]*m0 + h11[.25]*m1 == test1[4.25],
+ h10[.75]*m0 + h11[.75]*m1 == test1[4.75]
+}, {m0,m1}
+]
+
+slopes 48 and 75 vs 49 and 76
+
+Solve[{
+ h10[.125]*m0 + h11[.125]*m1 == test1[4.125],
+ h10[.375]*m0 + h11[.375]*m1 == test1[4.375]
+}, {m0,m1}
+]
+
+Solve[{
+ h10[.25]*m0 + h11[.25]*m1 == test1[2.25],
+ h10[.75]*m0 + h11[.75]*m1 == test1[2.75]
+}, {m0,m1}
+]
+
+slopes 5 and 30.5 vs 2.5, 28 my calc [when first number is 22]
+
+making it 200
+
+my slopes: -86.5, 28
+
+theirs: -54.3333 and 60.1667
+
+32.167 higher in both cases
+
+so 22 -> 2.5, 200 -> 32.167
+
+67 higher in another case
+
+Table[list[[i]]-list[[j]], {i,1,Length[list]}, {j,1,Length[list]}]
+
+between 8,27 what does my way give you?
+
+h00[.75]*8 + h01[.75]*27 + h10[.75]*13 + h11[.75]*28
+
+(this is for 2.75)
+
+h00[t]*8 + h01[t]*27 + h10[t]*13 + h11[t]*28
+
+yields: 8 + 13*t + 3*t^2 + 3*t^3
+
+h00[t-2]*8 + h01[t-2]*27 + h10[t-2]*13 + h11[t-2]*28
+
+-30 + 37*t - 15*t^2 + 3*t^3
+
+where as using their #s
+
+h00[t]*8 + h01[t]*27 + h10[t]*12 + h11[t]*27
+
+yields (2+t)^3
+
+
+h00[t]*8 + h01[t]*27 + h10[t]*13 + h11[t]*28 - (t+2)^3
+
+t*(1 - 3*t + 2*t^2) <- hermite polynomial?
+
+left[t_] = t*(1 - 3*t + 2*t^2)
+
+Simplify[left[t] - h00[t]]
+Simplify[left[t] - h01[t]]
+Simplify[left[t] - h10[t]]
+Simplify[left[t] - h11[t]]
+
+h00 is 1 - 3*t^2 + 2*t^3
+
+while leftover is
+
+t - 3*t^2 + 2*t^3
+
+(interesting)
+
+Solve[h00[t]*8 + h01[t]*27 + h10[t]*m0 + h11[t]*m1 - (t+2)^3 == 0, {m0,m1}]
+
+(3^3-1.5^3)/2
+
+Solve[3^3-x^3 == 24,x]
+
+Interpolation[{8,27,64,125}]
+
+Plot[5*h10[t] + 7*h11[t], {t,0,1}]
+
+
+myway[t_] = h00[t]*8 + h01[t]*27 + h10[t]*13 + h11[t]*28
+
+hmmm, why doesn't 28 show up in derv
+
+myway[t_] = h00[t]*27 + h01[t]*8 + h10[t]*28 + h11[t]*13
+
+test1[t_] = h10[t]*28 + h11[t]*13
+
+Plot[D[test1][t], {t,0,1}]
+
+28*(1 - t)^2*t + 13*(-1 + t)*t^2 <- derv of my way
+
+Plot[27*(1 - t)^2*t + 12*(-1 + t)*t^2, {t,0,1}]
+
+Plot[(27*(1 - t)^2*t + 12*(-1 + t)*t^2)-D[test1][t], {t,0,1}]
+
+derv1[t_] = D[test1[t],t]
+
+derv2[t_] = D[derv1[t],t]
+
+dtheir[t_] = D[27*(1 - t)^2*t + 12*(-1 + t)*t^2, t]
+d2their[t_] = D[dtheir[t],t]
+
+(* wow, mathematica lets you do general interpolation! *)
+
+f = Interpolation[{a,b,c,d}]
+
+Solve[{
+ h10[1/4]*m0 + h11[1/4]*m1 == f[2+1/4],
+ h10[3/4]*m0 + h11[3/4]*m1 == f[2+3/4]
+}, {m0,m1}
+]
+
+f = Interpolation[{a,b,c,d,e,f}]
+
+Solve[{
+ h10[1/4]*m0 + h11[1/4]*m1 == f[1/4],
+ h10[3/4]*m0 + h11[3/4]*m1 == f[3/4]
+}, {m0,m1}
+]
+
+Solve[{
+ h10[1/4]*m0 + h11[1/4]*m1 == f[2+1/4],
+ h10[3/4]*m0 + h11[3/4]*m1 == f[2+3/4]
+}, {m0,m1}
+]
+
+Solve[{
+ h10[1/4]*m0 + h11[1/4]*m1 == f[3+1/4],
+ h10[3/4]*m0 + h11[3/4]*m1 == f[3+3/4]
+}, {m0,m1}
+]
+
+
+
+
+Solve[{
+ h10[1/4]*m0 + h11[1/4]*m1 == f[2+1/4],
+ h10[3/4]*m0 + h11[3/4]*m1 == f[2+3/4]
+}, {m0,m1}
+]
+
+Solve[{
+ h10[1/4]*m0 + h11[1/4]*m1 == f[3+1/4],
+ h10[3/4]*m0 + h11[3/4]*m1 == f[3+3/4]
+}, {m0,m1}
+]
+
+f = Interpolation[{
+ {7, y0},
+ {8, y1},
+ {9, y2},
+ {10, y3},
+ {11, y4},
+ {12, y5}
+}]
+
+
+Solve[{
+ h10[1/4]*m0 + h11[1/4]*m1 == f[9+1/4],
+ h10[3/4]*m0 + h11[3/4]*m1 == f[9+3/4]
+}, {m0,m1}
+]
+
+f = Interpolation[{
+ {7, y0},
+ {7.01, y1},
+ {7.02, y2},
+ {7.03, y3},
+ {7.04, y4},
+ {7.05, y5}
+}]
+
+Solve[{
+ h10[1/4]*m0 + h11[1/4]*m1 == f[7.02+1/400],
+ h10[3/4]*m0 + h11[3/4]*m1 == f[7.02+3/400]
+}, {m0,m1}
+]
+
+f = Interpolation[{
+ {7, y0},
+ {8, y1},
+ {15, y2},
+ {22, y3},
+ {115, y4},
+ {116, y5}
+}]

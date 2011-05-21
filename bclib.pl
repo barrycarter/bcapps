@@ -1060,32 +1060,12 @@ sub hermite {
   my($xint) = floor($xintpos);
   my($xpos) = $xintpos - $xint;
 
-  debug("X IS IN: $xint + $xpos; $xvals[$xint] to $xvals[$xint+1]");
-  debug("Y IS IN: $yvals[$xint] to $yvals[$xint+1]");
-
-  # slope for immediately preceding and following intervals?
-  # NOTE: we do NOT use the slope for this interval itself (strange, but true)
-  # unless we are the first/last interval
-  # <h>At least, I think it's strange, and I've been assured that it's true</h>
-
-  # compute slopes ignoring special cases for now
-  $pslope = ($yvals[$xint+1]-$yvals[$xint-1])/2/$intsize;
-  $fslope = ($yvals[$xint+2]-$yvals[$xint])/2/$intsize;
-
-  # special cases for first and last intervals
-  if ($xint==0) {
-    $pslope = ($yvals[$xint+1]-$yvals[$xint])/$intsize;
-    $pslope = 2*$pslope - $fslope;
-  } elsif ($xint==($#xvals-1)) {
-    debug("USING SPECIAL CASE");
-    $fslope = ($yvals[$xint+1]-$yvals[$xint])/$intsize;
-    $fslope = 2*$fslope-$pslope;
-  }
-
-  debug("NEARBY: -2 to +2");
-  for $debug (-3..3) {
-    debug("$debug: $yvals[$xint+$debug]");
-  }
+  # TODO: this doesn't work for 1st/last interval, don't think I care
+  # the insane way Mathematica defines the slopes
+  my($a,$b,$c,$d) = @yvals[$xint-1..$xint+2];
+  debug("ABCD: $a $b $c $d");
+  $pslope = (-2*$a + 35*$b - $d)/6;
+  $fslope = ($a-35*$c+2*$d)/6;
 
   debug("HERM:", h00($xpos), h01($xpos), h10($xpos), h11($xpos));
   debug("SLOPES: $pslope, $fslope");
