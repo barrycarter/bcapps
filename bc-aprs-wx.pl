@@ -21,6 +21,10 @@ for(;;) {
   # read next line, but ignore + sleep if blank
   unless ($line = <A>) {sleep 1; next;}
 
+
+  $globopts{debug}=1;
+  debug("LINE: $line");
+
   # we have a valid line, so update lastlinetime
   $lastlinetime = time();
 
@@ -29,6 +33,9 @@ for(;;) {
 
   unless (%hash) {next;}
 
+  debug("APRSWX!");
+  $globopts{debug}=0;
+
   # nuke apostrophes in everything
   for $i (keys %hash) {$hash{$i}=~s/\'//isg;}
 
@@ -36,7 +43,7 @@ for(;;) {
   $query = "REPLACE INTO aprswx (station, time, lat, lon, temp, report) VALUES
  ('$hash{speaker}', '$hash{utime}', '$hash{lat}', '$hash{lon}', '$hash{temp}', '$hash{report}')";
 
-  debug("QUERY: $query");
+#  debug("QUERY: $query");
 
   push(@queries, $query);
 
@@ -62,7 +69,7 @@ sub do_update {
   push(@queries, "COMMIT;\n");
   my($query) = join(";\n", @queries);
   write_file($query, "queries");
-  debug("QUERIES:",read_file("queries"));
+#  debug("QUERIES:",read_file("queries"));
   system("sqlite3 /sites/DB/aprswx.db < queries");
 
   # wipe out queries
@@ -72,7 +79,7 @@ sub do_update {
   my(@res)=sqlite3hashlist("SELECT station,lat,lon,time,temp,report FROM aprswx", "/sites/DB/aprswx.db");
 
   unless ($#res>=0) {
-    debug("NO RECORDS YET...");
+#    debug("NO RECORDS YET...");
     return;
   }
 
@@ -84,9 +91,9 @@ sub do_update {
 
   # create diagram
   # TODO: for now, using equiangular mapping
-  debug("VPOINTS",@vpoints);
+#  debug("VPOINTS",@vpoints);
   my(@poly) = voronoi(\@vpoints);
-  debug("GOT BACK",unfold(@poly));
+#  debug("GOT BACK",unfold(@poly));
 
   # create KML for each polygon, first determining color
   for $i (0..$#poly) {
@@ -152,7 +159,7 @@ MARK
   for $i (@poly) {
     chomp($i);
     ($lon,$lat) = split(/\s+/,$i);
-    debug("LON/LAT: $lon/$lat");
+#    debug("LON/LAT: $lon/$lat");
     if (abs($lon)>180) {return;}
     if (abs($lat)>90) {return;}
   }
@@ -182,7 +189,7 @@ sub do_connect {
   # TODO: calling this resets lastlinetime, but should it?
   $lastlinetime = time();
 
-  debug("(RE)CONNECTING");
+  debug("(RE)CONNECTING to $ip");
   close(A);
   # could "use Socket" here but this is cooler?
   open(A,"echo 'user READONLY pass -1' | ncat $ip 23 |") || warn("FAIL: Error, $!");

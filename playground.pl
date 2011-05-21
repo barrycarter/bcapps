@@ -8,12 +8,49 @@
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
+$xvals = [1,2,3,4];
+$yvals = [3.391804676434298,3.183960097542073,
+	  2.9043571833527966,2.5667537942969005];
+
+debug(hermite(2.5, $xvals, $yvals));
+
+die "TESTING";
+
+# NOTE: graphs of the hermite functions look fine, so its got to be
+# the way I'm taking the slope
+
+for $i (0..100) {
+  print h11($i/100)."\n";
+}
+
+die "TESTING";
+
+for $i (0..60) {
+  ($ra,$dec) = position("sun", 1305936000+86400*$i);
+  print "$dec\n";
+}
+
+die "TESTING";
+
+for $i (0..100) {
+  print hermite(3+$i/100, $xvals, $yvals);
+  print "\n";
+}
+
+die "TESTING";
+
+# debug(position("moon"));
+
+debug(position("sun", 1305936000));
+
+die "TESTING";
+
 %points = (
  "Albuquerque" => "35.08 -106.66",
- "Paris" => "48.87 2.33"
-# "Barrow" => "71.26826 -156.80627",
-# "Wellington" => "-41.2833 174.783333"
-# "Rio de Janeiro" => "-22.88  -43.28"
+ "Paris" => "48.87 2.33",
+ "Barrow" => "71.26826 -156.80627",
+ "Wellington" => "-41.2833 174.783333",
+ "Rio de Janeiro" => "-22.88  -43.28"
 );
 
 $EARTH_CIRC = 4.007504e+7;
@@ -25,7 +62,10 @@ system("cp /usr/local/etc/sun/gbefore.txt /home/barrycarter/BCINFO/sites/TEST/pl
 
 open(A, ">>/home/barrycarter/BCINFO/sites/TEST/playground.html");
 
+$hue = -1/8;
+
 for $i (sort keys %points) {
+  $hue += 1/8;
   for $j (sort keys %points) {
     if ($i eq $j) {next;}
 
@@ -41,9 +81,14 @@ for $i (sort keys %points) {
     ($x2, $y2, $z2) = sph2xyz($lon2, $lat2, 1, "degrees=1");
     ($x3, $y3, $z3) = ($x1-$x2, $y1-$y2, $z1-$z2);
 
+    debug("$x3 $y3 $z3");
+
     # convert back to polar
     ($theta, $phi) = xyz2sph($x3, $y3, $z3, "degrees=1");
     debug("$theta, $phi");
+
+    # fillcolor
+    $col = hsv2rgb($hue,1,1);
 
   print A << "MARK";
 
@@ -53,8 +98,9 @@ new google.maps.Circle({
  center: pt,
  radius: 10018760,
  map: map,
- strokeWeight: 2,
- fillOpacity: 0.2,
+ strokeWeight: 1,
+ strokeColor: "$col",
+ fillOpacity: 0,
  fillColor: "#ff0000"
 });
 
@@ -69,9 +115,9 @@ sub xyz2sph {
   my($x,$y,$z,$options) = @_;
   my(%opts) = parse_form($options);
 
-  my($phi) = asin($z);
-  my($theta) = atan2($y,$x);
   my($r) = sqrt($x*$x+$y*$y+$z*$z);
+  my($phi) = asin($z/$r);
+  my($theta) = atan2($y,$x);
 
   if ($opts{degrees}) {
     return $theta*180/$PI, $phi*180/$PI, $r;

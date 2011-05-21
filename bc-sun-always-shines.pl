@@ -59,6 +59,8 @@ sub ra {
 
 ($dec,$ra) = (decl($now), ra($now));
 
+debug("$dec/$ra");
+
 # sidereal time in Greenwich
 $sdm = mod(($now%86400)/3600+12+24*($now - 1.3006632548642015e+9)/3.1556955380130082e+7,24);
 

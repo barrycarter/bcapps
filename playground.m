@@ -18,7 +18,8 @@ altintfuncalc[f_, t_] := Module[
  yvals = Flatten[f[[4,3]]];
 
  (* HACK: for some reason, t1 is bizarre *)
- yvals = Flatten[f[[4]]];
+// yvals = Flatten[f[[4]]];
+
 
  (* and size of each x interval; there are many other ways to do this *)
  (* <h>almost all of which are better than this?</h> *)
@@ -202,4 +203,28 @@ Plot[{flatdec[r]-hdec[r]},{r, FromDate[{2011,1,1}], FromDate[{2012,1,1}]},
 
 (* trivial difference, so could've just used linear *)
 
+(* Hermite broken, fixing? *)
+
+l={3.391804676434298,3.183960097542073,2.9043571833527966,2.5667537942969005}
+
+l1=Interpolation[l]
+d1[x_] = D[l1[x],x]
+d2 = D[d1]
+
+Plot[{l1[x],d1[x]}, {x,1,4}]
+Plot[{d1[x]}, {x,1,2}]
+
+Plot[l1[x] - l1[Floor[x]]*h00[x-Floor[x]] -
+     h01[x-Floor[x]]*l1[Ceiling[x]]
+, {x,1,2}]
+
+Plot[l1[x],{x,1,4}]
+
+Plot[D[l1][y], {y,1,2}]
+
+altintfuncalc[l1, 2.5]
+
+(* confirmed that my implementation of hermite above is broken *)
+
+Plot[{h00[t], h01[t], h10[t], h11[t]}, {t,0,1}]
 

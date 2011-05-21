@@ -1058,6 +1058,9 @@ sub hermite {
   my($xint) = floor($xintpos);
   my($xpos) = $xintpos - $xint;
 
+  debug("X IS IN: $xint + $xpos; $xvals[$xint-1] to $xvals[$xint]");
+  debug("Y IS IN: $yvals[$xint-1] to $yvals[$xint]");
+
   # slope for immediately preceding and following intervals?
   # NOTE: we do NOT use the slope for this interval itself (strange, but true)
   # unless we are the first/last interval
@@ -1065,19 +1068,32 @@ sub hermite {
 
   # TODO: below isn't correct for $xint==0, but ignoring for now
   if ($xint>0) {
-    $pslope = ($yvals[$xint]-$yvals[$xint-1])/$intsize;
+    $pslope = ($yvals[$xint-2]-$yvals[$xint-3])/$intsize;
+#    $pslope = ($yvals[$xint-1]-$yvals[$xint-2])/$intsize/2;
   } else {
-    $pslope = ($yvals[$xint+1]-$yvals[$xint])/$intsize;
+    $pslope = ($yvals[$xint+1]-$yvals[$xint]);
   }
 
   # TODO: below isn't correct for $xint==$#xvals, but ignoring for now
   if ($xint<$#xvals) {
-    $fslope = ($yvals[$xint+2]-$yvals[$xint+1])/$intsize;
-  } else {
     $fslope = ($yvals[$xint+1]-$yvals[$xint])/$intsize;
+#    $fslope = ($yvals[$xint+1]-$yvals[$xint-1])/2/$intsize;
+  } else {
+    $fslope = ($yvals[$xint+1]-$yvals[$xint]);
   }
 
-  return h00($xpos)*$yvals[$xint] + h10($xpos)*$pslope + h01($xpos)*$yvals[$xint+1] + h11($xpos)*$fslope;
+  debug("NEARBY: -2 to +2");
+  for $debug (-3..3) {
+    debug("$debug: $yvals[$xint+$debug]");
+  }
+
+  debug("HERM:", h00($xpos), h01($xpos), h10($xpos), h11($xpos));
+  debug("SLOPES: $pslope, $fslope");
+
+  my($ret) = h00($xpos)*$yvals[$xint-1] +
+    h10($xpos)*$pslope + h01($xpos)*$yvals[$xint] + h11($xpos)*$fslope;
+  debug("RET: $ret");
+  return $ret;
 
   # TODO: defining the Hermite polynomials here is probably silly (and
   # doesn't have the effect I want: hij are available globally)
@@ -1086,6 +1102,95 @@ sub hermite {
   sub h10 {$_[0]*(1-$_[0])**2}
   sub h01 {$_[0]**2*(3-2*$_[0])}
   sub h11 {$_[0]**2*($_[0]-1)}
+}
+
+
+=item matrixmult(\@x,\@y)
+
+Multiply matrices (2D arrays) x and y
+
+=cut
+
+sub matrixmult {
+    my($a,$b)=@_;
+    my(@a)=@$a;
+    my(@b)=@$b;
+    my($rows,$cols)=($#a,$#{$b[0]});
+    my($share)=$#b;
+    my(@ans);
+    for $i (0..$rows) {
+	for $j (0..$cols) {
+	    for $k (0..$share) {
+		$ans[$i][$j]+= $a[$i][$k]*$b[$k][$j];
+	    }
+	}
+    }
+    return(@ans);
+}
+
+
+=item postition($object, $t=now, $options)
+
+Determine the position (right ascension and declination) of $object at
+time $t, using Hermite approximation. Requires
+data/{$object}fake[xy].txt and only accurate for the span in that
+file.
+
+Returns answers in degrees, even for RA
+
+TODO: I really need to start creating sub libraries?
+
+=cut
+
+sub position {
+  my($obj, $t) = @_;
+  unless ($t) {$t = time();}
+  my(@data) = (read_file("data/${obj}fakex.txt"), 
+	       read_file("data/${obj}fakey.txt"));
+  my(@nest) = (nestify($data[0]), nestify($data[1]));
+  my(@xvals0) = @{$nest[0]};
+  my(@x2vals0) = @{$nest[1]};
+  my(@yvals, @xvals, @yvals2, @xvals2);
+
+  for $i (@xvals0) {
+    my(@j) = @{$i};
+    $j[0]=~s/\*\^(\d+)/e+$1/isg;
+    push(@xvals, $j[0]);
+    push(@yvals, $j[1]);
+  }
+
+  # TODO: blech! redundant code! (@xvals could be an array of arrays?)
+  for $i (@x2vals0) {
+    my(@j) = @{$i};
+    $j[0]=~s/\*\^(\d+)/e+$1/isg;
+    push(@xvals2, $j[0]);
+    push(@yvals2, $j[1]);
+  }
+
+  # obtain psuedo-xy coordinates
+#  debug("XV2:",@xvals2);
+  my($xcoord) = hermite($t, \@xvals, \@yvals);
+  my($ycoord) = hermite($t, \@xvals2, \@yvals2);
+
+  # computing lunar pos
+  my($ra) = atan2($ycoord,$xcoord)/$PI*180;
+  if ($ra<0) {$ra+=360;}
+  my($dec) = (sqrt($xcoord**2+$ycoord**2)-$PI)/$PI*180;
+
+  return $ra,$dec;
+}
+
+=item gmst($t=now)
+
+Compute the Greenwich Mean Siderial Time at Unix time t
+
+=cut
+
+sub gmst {
+  my($t)=@_;
+  unless ($t) {$t = time();}
+  my($aa)=6.59916+.9856002585*($t-$MILLSEC)/86400/15+($t%86400)/3600;
+  return(24*($aa/24-int($aa/24)));
 }
 
 # cleanup files created by my_tmpfile (unless --keeptemp set)

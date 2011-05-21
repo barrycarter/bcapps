@@ -422,12 +422,12 @@ that r is always between "90 degrees" and "270 degrees" *)
 xt1 = Table[
  {(i[[1]]-2440587.5)*86400, 
  (Pi+i[[3]]*Degree)*Cos[i[[2]]*Degree]}, 
-{i,moondata}];
+{i,sundata}];
 
 yt1 = Table[
  {(i[[1]]-2440587.5)*86400,
  (Pi+i[[3]]*Degree)*Sin[i[[2]]*Degree]},
-{i,moondata}];
+{i,sundata}];
 
 datareduce[data_, n_] := Module[{halfdata, inthalfdata, tabhalfdata, origdata},
  halfdata = Take[data, {1,Length[data],2^n}];
@@ -437,24 +437,43 @@ datareduce[data_, n_] := Module[{halfdata, inthalfdata, tabhalfdata, origdata},
 ]
 
 (* original ra/dec (doesn't change) *)
-origra = Table[i[[2]], {i,moondata}];
-origdec = Table[i[[3]], {i,moondata}];
+origra = Table[i[[2]], {i,sundata}];
+origdec = Table[i[[3]], {i,sundata}];
+
+(* TEST CASE: 1305936000 or 33601 position *)
+
+(* number notes below:
+
+Select[xt1, #[[1]] == 1305936000 &]
+Select[yt1, #[[1]] == 1305936000 &]
+Select[sundata, #[[1]] == 1305936000/86400+2440587.5 &]
+
+
+1.305936`*^9, 1.8879330495375595 = x
+1.305936`*^9, 2.936784526484251 = y
+2.4557025`*^6, 57.2647718`, 20.0352687 = true
+
+(Pi+20.0352687*Degree)*Sin[57.2647718*Degree]
+(Pi+20.0352687*Degree)*Cos[57.2647718*Degree]
+
+
+*)
 
 (* reduce and compare *)
-xred = datareduce[xt1, 7];
-yred = datareduce[yt1, 7];
+xred = datareduce[xt1, 11];
+yred = datareduce[yt1, 11];
 
 (* reconstruct ra and dec *)
 rared=Table[Mod[ArcTan[xred[[i]],yred[[i]]]/Degree,360],
- {i,1,Length[moondata]}];
-decred=Table[Norm[{xred[[i]],yred[[i]]}]/Degree-180, {i, 1, Length[moondata]}];
+ {i,1,Length[sundata]}];
+decred=Table[Norm[{xred[[i]],yred[[i]]}]/Degree-180, {i, 1, Length[sundata]}];
 
 Max[Abs[rared-origra]]
 Max[Abs[decred-origdec]]
 
-(* store every 128th value of bizarre moon xy we created above *)
+(* store every 2048th value of sun moon xy we created above *)
 
-Take[xt1,{1,Length[xt1],128}] >> /home/barrycarter/BCGIT/data/moonfakex.txt
-Take[yt1,{1,Length[xt1],128}] >> /home/barrycarter/BCGIT/data/moonfakey.txt
+Take[xt1,{1,Length[xt1],2048}] >> /home/barrycarter/BCGIT/data/sunfakex.txt
+Take[yt1,{1,Length[xt1],2048}] >> /home/barrycarter/BCGIT/data/sunfakey.txt
 
 
