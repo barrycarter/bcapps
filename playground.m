@@ -228,3 +228,13 @@ altintfuncalc[l1, 2.5]
 
 Plot[{h00[t], h01[t], h10[t], h11[t]}, {t,0,1}]
 
+list = {1,4,9,16,25,36}
+
+func = Interpolation[list]
+
+Plot[func[x], {x,1,6}]
+
+test1[x_] := func[x] - h00[x-Floor[x]]*list[[Floor[x]]] - 
+ h01[x-Floor[x]]*list[[Floor[x+1]]]
+
+Plot[test1[x],{x,1,6}]

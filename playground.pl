@@ -8,11 +8,22 @@
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
-$xvals = [1,2,3,4];
-$yvals = [3.391804676434298,3.183960097542073,
-	  2.9043571833527966,2.5667537942969005];
+$xvals = [1,2,3,4,5,6];
+$yvals = [1,4,9,16,25,36];
+
+@yvals=@{$yvals};
 
 debug(hermite(2.5, $xvals, $yvals));
+
+for $i (100..600) {
+  $x = $i/100;
+  $h = hermite($x, $xvals, $yvals);
+  debug("A",$yvals[floor($x)],$yvals[floor($x+1)],$yvals[floor($x+2)]);
+  $hp = h00($x-floor($x))*$yvals[floor($x)] + 
+    h01($x-floor($x))*$yvals[floor($x-1)];
+#  print $x," ", $h-$hp,"\n";
+  print $x," ", $h-$x*$x,"\n";
+}
 
 die "TESTING";
 

@@ -1049,6 +1049,8 @@ sub hermite {
   my(@yvals) = @{$yvals};
   my($pslope, $fslope);
 
+  debug("X: $x");
+
   # compute size of x intervals, assuming they are all the same
   my($intsize) = ($xvals[-1]-$xvals[0])/$#xvals;
 
@@ -1058,28 +1060,26 @@ sub hermite {
   my($xint) = floor($xintpos);
   my($xpos) = $xintpos - $xint;
 
-  debug("X IS IN: $xint + $xpos; $xvals[$xint-1] to $xvals[$xint]");
-  debug("Y IS IN: $yvals[$xint-1] to $yvals[$xint]");
+  debug("X IS IN: $xint + $xpos; $xvals[$xint] to $xvals[$xint+1]");
+  debug("Y IS IN: $yvals[$xint] to $yvals[$xint+1]");
 
   # slope for immediately preceding and following intervals?
   # NOTE: we do NOT use the slope for this interval itself (strange, but true)
   # unless we are the first/last interval
   # <h>At least, I think it's strange, and I've been assured that it's true</h>
 
-  # TODO: below isn't correct for $xint==0, but ignoring for now
-  if ($xint>0) {
-    $pslope = ($yvals[$xint-2]-$yvals[$xint-3])/$intsize;
-#    $pslope = ($yvals[$xint-1]-$yvals[$xint-2])/$intsize/2;
-  } else {
-    $pslope = ($yvals[$xint+1]-$yvals[$xint]);
-  }
+  # compute slopes ignoring special cases for now
+  $pslope = ($yvals[$xint+1]-$yvals[$xint-1])/2/$intsize;
+  $fslope = ($yvals[$xint+2]-$yvals[$xint])/2/$intsize;
 
-  # TODO: below isn't correct for $xint==$#xvals, but ignoring for now
-  if ($xint<$#xvals) {
+  # special cases for first and last intervals
+  if ($xint==0) {
+    $pslope = ($yvals[$xint+1]-$yvals[$xint])/$intsize;
+    $pslope = 2*$pslope - $fslope;
+  } elsif ($xint==($#xvals-1)) {
+    debug("USING SPECIAL CASE");
     $fslope = ($yvals[$xint+1]-$yvals[$xint])/$intsize;
-#    $fslope = ($yvals[$xint+1]-$yvals[$xint-1])/2/$intsize;
-  } else {
-    $fslope = ($yvals[$xint+1]-$yvals[$xint]);
+    $fslope = 2*$fslope-$pslope;
   }
 
   debug("NEARBY: -2 to +2");
@@ -1090,8 +1090,8 @@ sub hermite {
   debug("HERM:", h00($xpos), h01($xpos), h10($xpos), h11($xpos));
   debug("SLOPES: $pslope, $fslope");
 
-  my($ret) = h00($xpos)*$yvals[$xint-1] +
-    h10($xpos)*$pslope + h01($xpos)*$yvals[$xint] + h11($xpos)*$fslope;
+  my($ret) = h00($xpos)*$yvals[$xint] + h01($xpos)*$yvals[$xint+1] +
+             h10($xpos)*$pslope + h11($xpos)*$fslope;
   debug("RET: $ret");
   return $ret;
 
