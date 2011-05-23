@@ -8,10 +8,58 @@
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
+# RPC-XML
+
+# get password
+$pw = read_file("/home/barrycarter/bc-wp-pwd.txt"); chomp($pw);
+
+# using raw below so i can cache and stuff
+
+$req=<<"MARK";
+<?xml version="1.0"?><methodCall>
+<methodName>wp.getPageList</methodName> 
+<params> 
+<param><value><string>x</string></value></param> 
+<param><value><string>admin</string></value></param> 
+<param><value><string>$pw</string></value></param>
+</params> 
+</methodCall>
+MARK
+;
+
+write_file($req,"/tmp/rpc1.txt");
+system("curl -o /tmp/rpc2.txt --data-binary \@/tmp/rpc1.txt http://wordpress.barrycarter.info/xmlrpc.php");
+
+die "TESTING";
+
 $xvals = [1,2,3,4,5,6];
 $yvals = [1,8,27,64,125,216];
 
+@xvals=@{$xvals};
 @yvals=@{$yvals};
+
+for $i (2..5) {
+
+  # slopes in this, next, prev interv
+  $sf = $yvals[$i+1]-$yvals[$i];
+  $st = $yvals[$i]-$yvals[$i-1];
+  $sp = $yvals[$i-1]-$yvals[$i-2];
+
+  # second derv = average of forward and backward change
+  $sd = ($sf-$sp)/2;
+
+  # if this interval is (-.5,+.5), this is quadratic
+  $x = 0;
+  $test = $sd/2*$x*$x + ($yvals[$i+1]-$yvals[$i])*$x + 
+ (4*$yvals[$i]+4*$yvals[$i+1] - $sd)/8;
+  debug("$x -> $test");
+  
+
+
+}
+
+
+die "TESTING";
 
 debug(hermite(2.5, $xvals, $yvals));
 
@@ -507,66 +555,6 @@ die "TESTING";
 
 debug(project(1,0,"mercator",1));
 
-
-die "TESTING";
-
-# RPC-XML
-
-# get password
-$pw = read_file("/home/barrycarter/bc-wp-pwd.txt"); chomp($pw);
-
-# using raw below so i can cache and stuff
-
-$req=<<"MARK";
-<?xml version="1.0"?>
-<methodCall> 
-<methodName>metaWeblog.newPost</methodName> 
-<params> 
-<param> 
-<value> 
-<string>MyBlog</string> 
-</value> 
-</param> 
-<param> 
-<value>admin</value> 
-</param> 
-<param> 
-<value> 
-<string>$pw</string> 
-</value> 
-</param> 
-<param> 
-<struct> 
-
-<member> 
-<name>description</name> 
-<value>Dr. Quest is missing while on an expedition to find the Yeti. Jonny and his friends head to the Himalayas to find him, but run into another scientist who's determined to bring back the Yeti.
-</value>
-</member> 
-<member> 
-<name>title</name> 
-<value>Expedition To Khumbu</value> 
-</member> 
-<member> 
-<name>dateCreated</name> 
-<value>
-<dateTime.iso8601>20040716T19:20:30</dateTime.iso8601> 
-</value> 
-</member> 
-</struct> 
-</param> 
-<param>
- <value>
-  <boolean>1</boolean>
- </value>
-</param> 
-</params> 
-</methodCall>
-MARK
-;
-
-write_file($req,"/tmp/rpc1.txt");
-system("curl -o /tmp/rpc2.txt --data-binary \@/tmp/rpc1.txt http://wordpress.barrycarter.info/xmlrpc.php");
 
 die "TESTING";
 

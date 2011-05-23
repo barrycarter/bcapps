@@ -461,3 +461,324 @@ f = Interpolation[{
  {115, y4},
  {116, y5}
 }]
+
+cubic[x_] = (Random[]-.5) + (Random[]-.5)*x + (Random[]-.5)*x*x + 
+ (Random[]-.5)*x*x*x
+
+Plot[cubic[x],{x,0,1}]
+
+(* my own spline? (quadratic?) *)
+
+(*
+
+suppose (a5,a6) is the interval of interest
+
+(a5+a6)/2 = constant
+
+(a6-a5)/len = first derv
+
+((a6-a5)/len - (a5-a4)/len + ((a6-a5)/len - (a7-a6)/len))/2
+
+(1,3,3,1)/2
+
+*)
+
+Solve[{a==a1, c/2*1/2*1/2 + b + a == a2}, {a,b}]
+
+Solve[{c/2*1/2*1/2 - b/2 + a == a1,
+       c/2*1/2*1/2 + b/2 + a == a2
+}, {a,b}]
+
+Table[a[i], {i,1,20}]
+
+(* first differences *)
+ad1[i_, f_] = f[i]-f[i-1]
+
+(* second diffs *)
+ad2[i_, f_] = ad1[i,f] - ad1[i-1,f]
+
+(* third diffs *)
+ad3[i_, f_] = ad2[i,f] - ad2[i-1,f]
+
+Table[Sin[i/20], {i,0,100}]
+Table[ad1[i, Sin[#/20] &], {i,0,100}]
+Table[ad2[i, Sin[#/20] &], {i,0,100}]
+Table[ad3[i, Sin[#/20] &], {i,0,100}]
+
+Table[Sin[i/20], {i,0,100}]
+
+bd1[i_, f_] = (f[i+1] - f[i-1])/2
+bd2[i_, f_] = (bd1[i+1, f] - bd1[i-1, f])/2
+bd3[i_, f_] = (bd2[i+1, f] - bd2[i-1, f])/2
+
+f'''[x] == c3
+f''[x] == c3*x + c2 
+ 
+slope[i_] = a[i+1] - a[i]
+
+slope2[i_] = (slope[i+1] - slope[i-1])/2
+
+slope3[i_] = (slope2[i+1] - slope2[i-1])/2
+
+consider [1, 8, 27, 64, 125, 216]
+
+and the interval 27,64 (the 2.5th interval in Perl, i=2 above)
+
+slope = 37
+
+slope2 = 21
+
+slope3 = (-1 + 8 + 2*27 - 2*64 - 125 + 216)/4 = 6
+
+rebuilding
+
+6x + C <- second derv
+
+6x + 21 <- second derv
+
+3*x^2 + 21 x + 37 <- first der
+
+f[x_] = x^3 + 21/2*x*x + 37*x + 91/2
+
+Plot[f[x] - (x+3.5)^3, {x,-.5,.5}]
+
+bad... instead, interval around each point
+
+consider [1, 8, 27, 64, 125, 216]
+
+and 4^3==64
+
+slope[i_] = (f[i+1] - f[i-1])/2
+
+slope2[i_] = (slope[i+1]-slope[i-1])/2
+
+slope3[i_] = (slope2[i+1]-slope2[i-1])/2
+
+so for 64
+
+slope3 = (-1 + 3*27 - 3*125 + 343)/8
+
+slope3 is 6
+
+slope2 is (8 - 2*64 + 216)/4
+
+slope2 is 24
+
+slope1 is 49
+
+constant is 64
+
+g[x_] = 64 + 49*x + 12*x*x + x*x*x
+
+Plot[g[x],{x,-.5,.5}]
+
+Plot[g[x]-(4+x)^3,{x,-.5,.5}]
+
+Table[g[x], {x,-.5,.5,.1}]
+
+now the interval for 27
+
+slope3 = (0 + 3*8 - 3*64 + 216)/8 == 6
+
+slope2 = (1 - 2*27 + 125)/4 == 18
+
+slope = 28
+
+constant = 27
+
+h[x_] = 27 + 28*x + 9*x*x + x*x*x
+
+Plot[h[x],{x,-.5,.5}]
+
+DSolve[{
+ f''[x][-1/2] == a,
+ f'[x][-1/2] == b,
+ f[-1/2] == c,
+ f''''[x] == 0,
+ f[0] ==d},
+f, {a,b,c,d}]
+
+j[x_] = a3*x^3 + a2*x^2 + a1*x + a0
+
+Solve[{
+ j''[-1/2] == c2,
+ j'[-1/2] == c1,
+ j[-1/2] == c0,
+ j[0] == c3
+}, {a0,a1,a2,a3}]
+
+consider {27,64,125}
+
+constantleft = 91/2
+constantright = 189/2
+
+constant average ai, ai-1 and ai+1, ai
+
+slope: left: (a[i]-a[i-2])/2 left (a[i+1] - a[i+1])/2 right
+
+Solve[{
+ j[-1/2] == c0,
+ j[0] == c1,
+ j[1/2] == c2,
+ j'[-1/2] == c3,
+ j'[1/2] == c4
+}, {a0,a1,a2,a3}]
+
+Solve[{
+ j[0] == c1,
+ j'[-1/2] == c4
+ j'[1/2] == c2
+}, {a0,a1,a2,a3}]
+
+Solve[{
+ j[0] == c0,
+ j[-1] == c1,
+ j[1] == c2
+}, {a0,a1,a2,a3}]
+
+j[x_] = a4*x^4 + a3*x^3 + a2*x^2 + a1*x + a0
+
+Solve[{
+ j[-1/2] == c0,
+ j[0] == c1,
+ j[1/2] == c2,
+ j'[-1/2] == c3,
+ j'[1/2] == c4
+}, {a0,a1,a2,a3,a4}]
+
+for [1,8,27,64,125,216], the 27 interval
+
+
+Solve[{
+ j[-1/2] == (8+27)/2,
+ j[0] == 27,
+ j[1/2] == (27+64)/2,
+ j'[-1/2] == 27-8,
+ j'[1/2] == 64-27
+}, {a0,a1,a2,a3,a4}]
+
+test1[x_] = j[x] /. %[[1]]
+
+Plot[test1[x] - (x+3)^3,{x,-.5,.5}]
+
+Plot[test1[x],{x,-.5,.5}]
+
+Solve[{
+ j[-1/2] == (27+64)/2,
+ j[0] == 64,
+ j[1/2] == (64+125)/2,
+ j'[-1/2] == 64-27,
+ j'[1/2] == 125-64
+}, {a0,a1,a2,a3,a4}]
+
+test2[x_] = j[x] /. %[[1]]
+
+Plot[test2[x],{x,-.5,.5}]
+
+Plot[If[x>3.5, test2[x-4], test1[x-3]] - x^3, {x,2.5,4.5}]
+
+j[x_] = a4*x^4 + a3*x^3 + a2*x^2 + a1*x + a0
+
+j[x_] = a3*x^3 + a2*x^2 + a1*x + a0
+
+Solve[{
+ j[-1/2] == (f[-1]+f[0])/2,
+ j[0] == f[0],
+ j[1/2] == (f[0]+f[1])/2,
+ j'[-1/2] == f[0]-f[-1],
+ j'[1/2] == f[1]-f[0]
+}, {a0,a1,a2,a3,a4}]
+
+(* how about 2nd derv matching? *)
+
+Solve[{
+ j''[-1/2] == (f[1]-f[0]) - (f[-1]-f[-2])
+ j[0] == f[0],
+ j''[1/2] == (f[2]-f[1]) - (f[0]-f[-1])
+}, {a0,a1,a2,a3}]
+
+test2[x_] = j[x] /. %[[1]]
+
+Solve[{
+ j''[-1/2] == (f[i+1]-f[i]) - (f[i-1]-f[i-2])
+ j[0] == f[i],
+ j''[1/2] == (f[i+2]-f[i+1]) - (f[i]-f[i-1])
+}, {a0,a1,a2,a3}]
+
+test4[x_,i_] = j[x] /. %[[1]]
+
+D[test4[x,i],x] /. x -> -1/2
+
+D[test4[x,i-1],x] /. x -> 1/2
+
+Solve[(D[test4[x,i],x] /. x -> -1/2) == (D[test4[x,i-1],x] /. x -> 1/2), a1]
+
+pre[x_, i_] = a3*x^3 + a2*x^2 + a1*x + f[i-1]
+me[x_, i_] = b3*x^3 + b2*x^2 + b1*x + f[i]
+post[x_, i_] = c3*x^3 + c2*x^2 + c1*x + f[i+1]
+
+D[pre[x,i],x,x] /. x -> 1/2
+D[me[x,i],x,x] /. x -> -1/2
+
+D[pre[x,i],x] /. x -> 1/2
+D[me[x,i],x] /. x -> -1/2
+
+
+
+Solve[{
+ 2*a2 + 3*a3 == 2*b2 - 3*b3,
+ a1 + a2 + 3/4*a3 == b1 - b2 + 3/4*b3,
+ a1/2 + a2/4 + a3/8 + f[i-1] == -b1/2 + b2/4 - b3/8 + f[i],
+ 2*b2 + 3*b3 == 2*c2 - 3*c3,
+ b1 + b2 + 3/4*b3 == c1 - c2 + 3/4*c3,
+ b1/2 + b2/4 + b3/8 + f[i] == -c1/2 + c2/4 - c3/8 + f[i+1]
+}, {a1,a2,a3,b1,b2,b3,c1,c2,c3}]
+
+
+Solve[{
+ a1 + a2 == b1 - b2,
+ a1/2 + a2/4 + f[i-1] == -b1/2 + b2/4 + f[i],
+ b1 + b2 == c1 - c2,
+ b1/2 + b2/4 + f[i] == -c1/2 + c2/4 + f[i+1]
+}, {a1,a2,a3,b1,b2,b3,c1,c2,c3}]
+
+
+Solve[{
+ 2*a2 + 3*a3 == 2*b2 - 3*b3,
+ a1 + a2 + 3/4*a3 == b1 - b2 + 3/4*b3,
+ a1/2 + a2/4 + a3/8 + f[i-1] == -b1/2 + b2/4 - b3/8 + f[i],
+ 2*b2 + 3*b3 == 2*c2 - 3*c3,
+ b1 + b2 + 3/4*b3 == c1 - c2 + 3/4*c3,
+ b1/2 + b2/4 + b3/8 + f[i] == -c1/2 + c2/4 - c3/8 + f[i+1]
+}, {b1,b2,b3}]
+
+Solve[{
+
+-5 b1 + 4 b2 - 3 b3 - 6 (f[i-1] - f[i]) ==
+97 c1 - 88 c2 + 72 c3 - 6 (f[-1 + i] - 18 f[i] + 17 f[1 + i]),
+
+12 b1 - 11 b2 + 9 b3 + 12 (f[i-1] - f[i]) ==
+-264 c1 + 241 c2 - 198 c3 + 12 (f[-1 + i] - 24 f[i] + 23 f[1 + i]),
+
+-8 b1 + 8 b2 - 7 b3 - 8 (f[i-1] - f[i]) ==
+192 c1 - 176 c2 + 145 c3 - 8 (f[-1 + i] - 26 f[i] + 25 f[1 + i]),
+
+a1 == -5 b1 + 4 b2 - 3 b3 - 6 (f[i-1] - f[i]),
+
+a2 == 12 b1 - 11 b2 + 9 b3 + 12 (f[i-1] - f[i]),
+
+a3 == -8 b1 + 8 b2 - 7 b3 - 8 (f[i-1] - f[i])
+
+}, {a1,a2,a3,b1,b2,b3,c1,c2,c3}]
+
+
+
+
+
+
+
+
+
+
+
+

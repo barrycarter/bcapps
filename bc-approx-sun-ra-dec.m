@@ -431,7 +431,7 @@ yt1 = Table[
 
 datareduce[data_, n_] := Module[{halfdata, inthalfdata, tabhalfdata, origdata},
  halfdata = Take[data, {1,Length[data],2^n}];
- inthalfdata = Interpolation[halfdata, InterpolationOrder -> 3];
+ inthalfdata = Interpolation[halfdata, InterpolationOrder -> 1];
  tabhalfdata = Table[inthalfdata[data[[i,1]]], {i, 1, Length[data]}];
  Return[tabhalfdata];
 ]
@@ -460,15 +460,15 @@ Select[sundata, #[[1]] == 1305936000/86400+2440587.5 &]
 *)
 
 (* reduce and compare *)
-xred = datareduce[xt1, 11];
-yred = datareduce[yt1, 11];
+xred = datareduce[xt1, 7];
+yred = datareduce[yt1, 7];
 
 (* reconstruct ra and dec *)
 rared=Table[Mod[ArcTan[xred[[i]],yred[[i]]]/Degree,360],
  {i,1,Length[sundata]}];
 decred=Table[Norm[{xred[[i]],yred[[i]]}]/Degree-180, {i, 1, Length[sundata]}];
 
-Max[Abs[rared-origra]]
+Max[180-Abs[rared-origra]]-180
 Max[Abs[decred-origdec]]
 
 (* store every 2048th value of sun moon xy we created above *)
