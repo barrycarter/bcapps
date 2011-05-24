@@ -7,6 +7,35 @@
 
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
+use Statistics::Distributions;
+
+# testing for "known" values
+
+greeks_bin(.9779, .9625, (1306526400-1306257199)/365.2425/86400, .1341);
+greeks_bin(.9780, .9725, 74.74/365.2425/24, .1022);
+
+=item greeks_bin($cur, $str, $exp, $vol)
+
+Return the greeks and fair value of a binary option, given $cur, the
+current price of the underlying, $str, the option strike price, $exp,
+the time to expiration in years, and $vol, the volatility (per year)
+
+=cut
+
+# greeks + value of binary option
+sub greeks_bin {
+  my($cur, $str, $exp, $vol) = @_;
+
+  # how many SDs of movement required?
+  my($sd) = log($str/$cur)/($vol*sqrt($exp));
+  my($pr) = Statistics::Distributions::uprob($sd);
+  debug("SD: $sd, PR: $pr");
+
+}
+
+
+
+die "TESTING";
 
 # RPC-XML
 
@@ -17,13 +46,13 @@ $pw = read_file("/home/barrycarter/bc-wp-pwd.txt"); chomp($pw);
 
 $req=<<"MARK";
 <?xml version="1.0"?><methodCall>
-<methodName>mt.getRecentPostTitles</methodName> 
-<params> 
-<param><value><string>x</string></value></param> 
-<param><value><string>admin</string></value></param> 
+<methodName>mt.getRecentPostTitles</methodName>
+<params>
+<param><value><string>x</string></value></param>
+<param><value><string>admin</string></value></param>
 <param><value><string>$pw</string></value></param>
 <param><value>9999999999</value></param>
-</params> 
+</params>
 </methodCall>
 MARK
 ;
@@ -51,10 +80,10 @@ for $i (2..5) {
 
   # if this interval is (-.5,+.5), this is quadratic
   $x = 0;
-  $test = $sd/2*$x*$x + ($yvals[$i+1]-$yvals[$i])*$x + 
+  $test = $sd/2*$x*$x + ($yvals[$i+1]-$yvals[$i])*$x +
  (4*$yvals[$i]+4*$yvals[$i+1] - $sd)/8;
   debug("$x -> $test");
-  
+ 
 
 
 }
@@ -68,11 +97,11 @@ for $i (100..600) {
   $x = $i/100;
   $h = hermite($x, $xvals, $yvals);
   debug("A",$yvals[floor($x)],$yvals[floor($x+1)],$yvals[floor($x+2)]);
-  $hp = h00($x-floor($x))*$yvals[floor($x-1)] + 
+  $hp = h00($x-floor($x))*$yvals[floor($x-1)] +
     h01($x-floor($x))*$yvals[floor($x)];
 
   debug("HP:", $h-$hp);
-  
+
 #  print $x," ", $h-$hp,"\n";
 #  print $x," ", $h-$hp,"\n";
 }
