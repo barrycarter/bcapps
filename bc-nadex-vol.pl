@@ -31,6 +31,9 @@ $invnor=~s/\s+/ /isg;
 # NADEX runs on Eastern time
 $ENV{TZ} = "EDT5EST";
 
+open(A,">/tmp/nadex.m");
+print A "nadex={\n";
+
 # Table header
 # expdatetime, strike, bid, ask, bidvol, askvol, pricetime, underatpricetime
 print "<table border>\n<tr>\n";
@@ -82,6 +85,9 @@ for $strike (sort keys %{$hash{USDCAD}}) {
       $notes="BID/ASK crosses 50<br>volt meaningless";
     }
 
+    # output for Mathematica
+    print A "{$strike, $exp, $bid, $ask, $under, $updated},\n";
+
     # printing table here just to have some output; real work is above
     print "<tr>\n";
     print strftime("<td>%F<br>%H:%M:%S ET</td>\n", localtime($exp));
@@ -105,3 +111,4 @@ for $strike (sort keys %{$hash{USDCAD}}) {
 }
 
 print "</table>\n";
+print A "}\n";

@@ -17,11 +17,12 @@ $pw = read_file("/home/barrycarter/bc-wp-pwd.txt"); chomp($pw);
 
 $req=<<"MARK";
 <?xml version="1.0"?><methodCall>
-<methodName>wp.getPageList</methodName> 
+<methodName>mt.getRecentPostTitles</methodName> 
 <params> 
 <param><value><string>x</string></value></param> 
 <param><value><string>admin</string></value></param> 
 <param><value><string>$pw</string></value></param>
+<param><value>9999999999</value></param>
 </params> 
 </methodCall>
 MARK
