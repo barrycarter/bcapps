@@ -8,6 +8,57 @@ h10[t_] = t*(1-t)^2
 h01[t_] = t^2*(3-2*t)
 h11[t_] = t^2*(t-1)
 
+(* does mathematica really use hermite polynomial cubic splines? HA! *)
+
+tab = Table[a[i], {i,1,100}]
+
+f = Interpolation[tab]
+
+f1[x_] := f[42+x] /. {a[42] -> 0, a[43] ->0, a[44] -> 0, a[41] -> 1}
+t1 = Table[{x,f1[x]}, {x,.01,.99,.01}]
+FindFit[t1, c0 + c1*x + c2*x^2 + c3*x^3, {c0,c1,c2,c3}, x]
+
+f2[x_] := f[42+x] /. {a[41] -> 0, a[43] ->0, a[44] -> 0, a[42] -> 1}
+t2 = Table[{x,f2[x]}, {x,.01,.99,.01}]
+FindFit[t2, c0 + c1*x + c2*x^2 + c3*x^3, {c0,c1,c2,c3}, x]
+
+f3[x_] := f[42+x] /. {a[41] -> 0, a[42] ->0, a[44] -> 0, a[43] -> 1}
+t3 = Table[{x,f3[x]}, {x,.01,.99,.01}]
+FindFit[t3, c0 + c1*x + c2*x^2 + c3*x^3, {c0,c1,c2,c3}, x]
+
+f4[x_] := f[42+x] /. {a[41] -> 0, a[42] ->0, a[43] -> 0, a[44] -> 1}
+t4 = Table[{x,f4[x]}, {x,.01,.99,.01}]
+FindFit[t4, c0 + c1*x + c2*x^2 + c3*x^3, {c0,c1,c2,c3}, x]
+
+(* results:
+
+(x-2)*(x-1)*x/-6 <- coeff of 41
+
+(x-2)*(x-1)*(x+1)/2 <- coeff of 42
+
+x*(x+1)*(x+2)/-2 <- coeff of 43
+
+(x-1)*x*(x+1)/6 <- coeff of 44
+
+*)
+
+Plot[{f[42+x] /. {a[42] -> 0, a[43] ->0, a[44] -> 0, a[41] -> 1}},
+ {x,0,1}]
+
+Plot[{f[42+x] /. {a[41] -> 0, a[43] ->0, a[44] -> 0, a[42] -> 1}},
+ {x,0,1}]
+
+Plot[{f[42+x] /. {a[42] -> 0, a[41] ->0, a[44] -> 0, a[43] -> 1}},
+ {x,0,1}]
+
+Plot[{f[42+x] /. {a[42] -> 0, a[43] ->0, a[41] -> 0, a[44] -> 1}},
+ {x,0,1}]
+
+
+
+
+Exit[]
+
 altintfuncalc[f_, t_] := Module[
  {xvals, yvals, xint, tisin, tpos, m0, m1, p0, p1},
 

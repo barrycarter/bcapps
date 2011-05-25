@@ -11,6 +11,7 @@ use POSIX;
 use Text::Unidecode;
 use MIME::Base64;
 use utf8;
+use Statistics::Distributions qw(uprob udistr);
 require JSON;
 
 # HACK: defining constants here is probably bad
@@ -1171,6 +1172,62 @@ sub gmst {
   unless ($t) {$t = time();}
   my($aa)=6.59916+.9856002585*($t-$MILLSEC)/86400/15+($t%86400)/3600;
   return(24*($aa/24-int($aa/24)));
+}
+
+
+=item greeks_bin($cur, $str, $exp, $vol)
+
+Return the greeks and fair value of a binary option, given $cur, the
+current price of the underlying, $str, the option strike price, $exp,
+the time to expiration in years, and $vol, the volatility (per year).
+
+Returned values (in order):
+  - fair value
+  - delta: per pip
+  - theta: per hour (since this is mostly for NADEX)
+  - vega: per .01 change
+
+=cut
+
+# greeks + value of binary option
+sub greeks_bin {
+  my($cur, $str, $exp, $vol) = @_;
+
+  # nesting subroutines = bad?
+  sub bin_value {
+    my($cur, $str, $exp, $vol) = @_;
+    return uprob(log($str/$cur)/($vol*sqrt($exp)));
+  }
+
+  # things to return: fair value, delta, theta, etc
+  my($val) = bin_value($cur, $str, $exp, $vol);
+  # TODO: this is NOT the correct way to calculate delta, theta, etc
+  my($delta) = bin_value($cur+.0001, $str, $exp, $vol) - $val;
+  my($theta) = bin_value($cur, $str, $exp-1/365.2425/24, $vol) - $val;
+  my($vega) = bin_value($cur, $str, $exp, $vol+.01) - $val;
+
+  return ($val, $delta, $theta, $vega);
+
+}
+
+=item bin_volt($price, $strike, $exp, $under)
+
+Computes the volatility of a binary option, given its current $price,
+the $strike price, the years to expiration $exp, and the price of the
+underlying instrument $under
+
+NOTE: I realize all my valuations are for "call" style options, but
+this is probably OK.
+
+NOTE: will pretty much obsolete nadex-vol.pl (?)
+
+NOTE: see older versions of bc-nadex-vol.pl for formula derivation
+
+=cut
+
+sub bin_volt {
+  my($price, $strike, $exp, $under) = @_;
+  return log($strike/$under)/udistr($price/100)/sqrt($exp);
 }
 
 # cleanup files created by my_tmpfile (unless --keeptemp set)

@@ -7,31 +7,35 @@
 
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
-use Statistics::Distributions;
 
-# testing for "known" values
+bin_volt(13.5, 0.9875, 3/365.2425, .9770);
 
-greeks_bin(.9779, .9625, (1306526400-1306257199)/365.2425/86400, .1341);
-greeks_bin(.9780, .9725, 74.74/365.2425/24, .1022);
+=item bin_volt($price, $strike, $exp, $under)
 
-=item greeks_bin($cur, $str, $exp, $vol)
+Computes the volatility of a binary option, given its current $price,
+the $strike price, the years to expiration $exp, and the price of the
+underlying instrument $under
 
-Return the greeks and fair value of a binary option, given $cur, the
-current price of the underlying, $str, the option strike price, $exp,
-the time to expiration in years, and $vol, the volatility (per year)
+NOTE: I realize all my valuations are for "call" style options, but
+this is probably OK.
+
+NOTE: will pretty much obsolete nadex-vol.pl (?)
+
+TODO: explain the formula below a bit more
 
 =cut
 
-# greeks + value of binary option
-sub greeks_bin {
-  my($cur, $str, $exp, $vol) = @_;
-
-  # how many SDs of movement required?
-  my($sd) = log($str/$cur)/($vol*sqrt($exp));
-  my($pr) = Statistics::Distributions::uprob($sd);
-  debug("SD: $sd, PR: $pr");
-
+sub bin_volt {
+  my($price, $strike, $exp, $under) = @_;
+  return log($strike/$under)/udistr($price/100)/sqrt($exp);
 }
+
+die "TESTING";
+
+# testing for "known" values
+
+debug(greeks_bin(.9779, .9625, (1306526400-1306257199)/365.2425/86400, .1341));
+debug(greeks_bin(.9780, .9725, 74.74/365.2425/24, .1022));
 
 
 

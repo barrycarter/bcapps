@@ -62,9 +62,15 @@ for $strike (sort keys %{$hash{USDCAD}}) {
     $logdiff = log($strike/$under);
     $exptime = $exp - $updated;
 
+    debug("BID: $bid, ASK: $ask");
+
     # bid and ask represent what values of standard normal dist?
     $bidsn = $invnor{$bid/100};
     $asksn = $invnor{$ask/100};
+
+    # TODO: fix this (.50 implies meaningless volatility, but should
+    # note that, not avoid it)
+    if ($bidsn == 0 || $asksn == 0) {next;}
 
     # normalize SD for actual expiration time
     $bidsd = $logdiff/$bidsn;
@@ -85,7 +91,11 @@ for $strike (sort keys %{$hash{USDCAD}}) {
       $notes="BID/ASK crosses 50<br>volt meaningless";
     }
 
-    # output for Mathematica
+    # compute (bid) volatility using new function I created
+    $newvol = bin_volt($bid, $strike, ($exp-$updated)/86400/365.2425, $under);
+    debug("NEWVOL: $newvol");
+
+    # output for Mathematica (doesn't really need all of these, but...)
     print A "{$strike, $exp, $bid, $ask, $under, $updated},\n";
 
     # printing table here just to have some output; real work is above
