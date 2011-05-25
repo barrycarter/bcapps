@@ -8,36 +8,49 @@
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
-bin_volt(13.5, 0.9875, 3/365.2425, .9770);
+$data = read_file("data/moonfakex.txt");
+$data2 = read_file("data/moonfakey.txt");
+@l = nestify($data);
+@l = @{$l[0]};
+@l2 = nestify($data2);
+@l2 = @{$l2[0]};
 
-=item bin_volt($price, $strike, $exp, $under)
-
-Computes the volatility of a binary option, given its current $price,
-the $strike price, the years to expiration $exp, and the price of the
-underlying instrument $under
-
-NOTE: I realize all my valuations are for "call" style options, but
-this is probably OK.
-
-NOTE: will pretty much obsolete nadex-vol.pl (?)
-
-TODO: explain the formula below a bit more
-
-=cut
-
-sub bin_volt {
-  my($price, $strike, $exp, $under) = @_;
-  return log($strike/$under)/udistr($price/100)/sqrt($exp);
+for $i (@l) {
+  @j = @{$i};
+  $j[0]=~s/\*\^(\d+)/e+$1/isg;
+  push(@xvals, $j[0]);
+  push(@yvals, $j[1]);
 }
 
-die "TESTING";
+for $i (@l2) {
+  @j = @{$i};
+  $j[0]=~s/\*\^(\d+)/e+$1/isg;
+  push(@xvals2, $j[0]);
+  push(@yvals2, $j[1]);
+}
 
-# testing for "known" values
+$now = time();
 
-debug(greeks_bin(.9779, .9625, (1306526400-1306257199)/365.2425/86400, .1341));
-debug(greeks_bin(.9780, .9725, 74.74/365.2425/24, .1022));
+for $i (0..24) {
+  $time = 1306281600+$i*3600;
+
+  debug(position("moon",$time));
+
+  next;
 
 
+
+  $xcoord = hermione($time, \@xvals, \@yvals);
+  $ycoord = hermione($time, \@xvals2, \@yvals2);
+
+  $ra = atan2($ycoord,$xcoord)/$PI*180;
+  if ($ra<0) {$ra+=360;}
+
+  # just to match math
+  $dec = (sqrt($xcoord**2+$ycoord**2)-$PI)/$PI*180;
+
+  print "$ra $dec\n";
+}
 
 die "TESTING";
 
@@ -237,46 +250,6 @@ debug(@xvals,@yvals);
 for ($i=1; $i<=10; $i+=.01) {
   print "$i -> ". hermite($i, \@xvals, \@yvals) ."\n";
 }
-
-die "TESTING";
-
-$data = read_file("data/moonfakex.txt");
-$data2 = read_file("data/moonfakey.txt");
-@l = nestify($data);
-@l = @{$l[0]};
-@l2 = nestify($data2);
-@l2 = @{$l2[0]};
-
-for $i (@l) {
-  @j = @{$i};
-  $j[0]=~s/\*\^(\d+)/e+$1/isg;
-  push(@xvals, $j[0]);
-  push(@yvals, $j[1]);
-}
-
-for $i (@l2) {
-  @j = @{$i};
-  $j[0]=~s/\*\^(\d+)/e+$1/isg;
-  push(@xvals2, $j[0]);
-  push(@yvals2, $j[1]);
-}
-
-$now = time();
-$xcoord = hermite($now, \@xvals, \@yvals);
-$ycoord = hermite($now, \@xvals2, \@yvals2);
-
-# computing lunar pos
-$ra = atan2($ycoord,$xcoord)/$PI*180;
-if ($ra<0) {$ra+=360;}
-$dec = (sqrt($xcoord**2+$ycoord**2)-$PI)/$PI*180;
-
-debug("RA/DEC:",$ra,$dec);
-
-# confirmed xcoord is believable, as is y coord
-
-debug("$now/$xcoord/$ycoord");
-
-# debug("X",@xvals,"Y",@yvals);
 
 die "TESTING";
 

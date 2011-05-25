@@ -1037,20 +1037,20 @@ sub forex_quote {
   return $price;
 }
 
-=item hermite($x, \@xvals, \@yvals)
 
-Computes the Hermite interpolation at $x, for the Hermite-style cubic
-spline given by @xvals and @yvals
+=item hermione($x, \@xvals, \@yvals)
+
+Computes the Mathematica interpolation (which I have dubbed the
+"Hermione interpolation") for @xvals -> @yvals at $x
+
+<h>"oh barry, do be careful!"</h>
 
 =cut
 
-sub hermite {
+sub hermione {
   my($x,$xvals,$yvals) = @_;
   my(@xvals) = @{$xvals};
   my(@yvals) = @{$yvals};
-  my($pslope, $fslope);
-
-  debug("X: $x");
 
   # compute size of x intervals, assuming they are all the same
   my($intsize) = ($xvals[-1]-$xvals[0])/$#xvals;
@@ -1061,30 +1061,19 @@ sub hermite {
   my($xint) = floor($xintpos);
   my($xpos) = $xintpos - $xint;
 
-  # TODO: this doesn't work for 1st/last interval, don't think I care
-  # the insane way Mathematica defines the slopes
-  my($a,$b,$c,$d) = @yvals[$xint-1..$xint+2];
-  debug("ABCD: $a $b $c $d");
-  $pslope = (-2*$a + 35*$b - $d)/6;
-  $fslope = ($a-35*$c+2*$d)/6;
+  my($ret) =  hermm1($xpos)*$yvals[$xint-1] +
+              herm0($xpos)*$yvals[$xint] +
+              hermp1($xpos)*$yvals[$xint+1] +
+       	      hermp2($xpos)*$yvals[$xint+2];
 
-  debug("HERM:", h00($xpos), h01($xpos), h10($xpos), h11($xpos));
-  debug("SLOPES: $pslope, $fslope");
-
-  my($ret) = h00($xpos)*$yvals[$xint] + h01($xpos)*$yvals[$xint+1] +
-             h10($xpos)*$pslope + h11($xpos)*$fslope;
-  debug("RET: $ret");
   return $ret;
 
-  # TODO: defining the Hermite polynomials here is probably silly (and
-  # doesn't have the effect I want: hij are available globally)
-
-  sub h00 {(1+2*$_[0])*(1-$_[0])**2}
-  sub h10 {$_[0]*(1-$_[0])**2}
-  sub h01 {$_[0]**2*(3-2*$_[0])}
-  sub h11 {$_[0]**2*($_[0]-1)}
+  # I dub these the Hermione polynomials
+  sub hermm1 {my($x)=@_; ($x-2)*($x-1)*$x/-6;}
+  sub herm0 {my($x)=@_; ($x-2)*($x-1)*($x+1)/2;}
+  sub hermp1 {my($x)=@_; $x*($x+1)*($x-2)/-2;}
+  sub hermp2 {my($x)=@_; ($x-1)*$x*($x+1)/6;}
 }
-
 
 =item matrixmult(\@x,\@y)
 
@@ -1150,12 +1139,12 @@ sub position {
 
   # obtain psuedo-xy coordinates
 #  debug("XV2:",@xvals2);
-  my($xcoord) = hermite($t, \@xvals, \@yvals);
-  my($ycoord) = hermite($t, \@xvals2, \@yvals2);
+  my($xcoord) = hermione($t, \@xvals, \@yvals);
+  my($ycoord) = hermione($t, \@xvals2, \@yvals2);
 
-  # computing lunar pos
-  my($ra) = atan2($ycoord,$xcoord)/$PI*180;
-  if ($ra<0) {$ra+=360;}
+  # computing pos
+  my($ra) = atan2($ycoord,$xcoord)/$PI*24;
+  if ($ra<0) {$ra+=24;}
   my($dec) = (sqrt($xcoord**2+$ycoord**2)-$PI)/$PI*180;
 
   return $ra,$dec;
@@ -1173,7 +1162,6 @@ sub gmst {
   my($aa)=6.59916+.9856002585*($t-$MILLSEC)/86400/15+($t%86400)/3600;
   return(24*($aa/24-int($aa/24)));
 }
-
 
 =item greeks_bin($cur, $str, $exp, $vol)
 

@@ -3,12 +3,21 @@
 showit := Module[{}, 
 Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
-h00[t_] = (1+2*t)*(1-t)^2
-h10[t_] = t*(1-t)^2
-h01[t_] = t^2*(3-2*t)
-h11[t_] = t^2*(t-1)
+tox[ra_, dec_] = (Pi+dec*Degree)*Cos[ra*Degree]
+toy[ra_, dec_] = (Pi+dec*Degree)*Sin[ra*Degree]
 
-(* does mathematica really use hermite polynomial cubic splines? HA! *)
+dec1 = AstronomicalData["Moon", "Declination"]
+ra1 = AstronomicalData["Moon", "RightAscension"]*15
+
+tox[ra1,dec1]
+toy[ra1,dec1]
+
+Table[AstronomicalData["Moon", {"RightAscension", DateList[x]}], 
+ {x, AbsoluteTime[{2011,5,25,19}], AbsoluteTime[{2011,5,26,10}]}]
+
+
+
+Exit[]
 
 tab = Table[a[i], {i,1,100}]
 
@@ -17,18 +26,39 @@ f = Interpolation[tab]
 f1[x_] := f[42+x] /. {a[42] -> 0, a[43] ->0, a[44] -> 0, a[41] -> 1}
 t1 = Table[{x,f1[x]}, {x,.01,.99,.01}]
 FindFit[t1, c0 + c1*x + c2*x^2 + c3*x^3, {c0,c1,c2,c3}, x]
+Factor[Chop[c0 + c1*x + c2*x^2 + c3*x^3 /. %]]
 
 f2[x_] := f[42+x] /. {a[41] -> 0, a[43] ->0, a[44] -> 0, a[42] -> 1}
 t2 = Table[{x,f2[x]}, {x,.01,.99,.01}]
 FindFit[t2, c0 + c1*x + c2*x^2 + c3*x^3, {c0,c1,c2,c3}, x]
+Factor[Chop[c0 + c1*x + c2*x^2 + c3*x^3 /. %]]
 
 f3[x_] := f[42+x] /. {a[41] -> 0, a[42] ->0, a[44] -> 0, a[43] -> 1}
 t3 = Table[{x,f3[x]}, {x,.01,.99,.01}]
 FindFit[t3, c0 + c1*x + c2*x^2 + c3*x^3, {c0,c1,c2,c3}, x]
+Factor[Chop[c0 + c1*x + c2*x^2 + c3*x^3 /. %]]
 
 f4[x_] := f[42+x] /. {a[41] -> 0, a[42] ->0, a[43] -> 0, a[44] -> 1}
 t4 = Table[{x,f4[x]}, {x,.01,.99,.01}]
 FindFit[t4, c0 + c1*x + c2*x^2 + c3*x^3, {c0,c1,c2,c3}, x]
+Factor[Chop[c0 + c1*x + c2*x^2 + c3*x^3 /. %]]
+
+Plot[f1[x]+f2[x]+f3[x]+f4[x], {x,0,1}]
+
+(* below is identically one as expected *)
+Table[f1[x]+f2[x]+f3[x]+f4[x], {x,0,1,.01}]
+
+h1[x_] = (x-2)*(x-1)*x/-6
+h2[x_] = (x-2)*(x-1)*(x+1)/2
+h3[x_] = x*(x+1)*(x-2)/-2
+h4[x_] = (x-1)*x*(x+1)/6
+
+Plot[{h1[x],h2[x],h3[x],h4[x]}, {x,0,1}]
+
+Plot[{h1[x],f1[x]}, {x,0,1}]
+Plot[{h2[x],f2[x]}, {x,0,1}]
+Plot[{h3[x],f3[x]}, {x,0,1}]
+Plot[{h4[x],f4[x]}, {x,0,1}]
 
 (* results:
 
@@ -36,7 +66,7 @@ FindFit[t4, c0 + c1*x + c2*x^2 + c3*x^3, {c0,c1,c2,c3}, x]
 
 (x-2)*(x-1)*(x+1)/2 <- coeff of 42
 
-x*(x+1)*(x+2)/-2 <- coeff of 43
+x*(x+1)*(x-2)/-2 <- coeff of 43
 
 (x-1)*x*(x+1)/6 <- coeff of 44
 
