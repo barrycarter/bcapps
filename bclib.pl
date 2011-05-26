@@ -1143,7 +1143,7 @@ sub position {
   my($ycoord) = hermione($t, \@xvals2, \@yvals2);
 
   # computing pos
-  my($ra) = atan2($ycoord,$xcoord)/$PI*24;
+  my($ra) = atan2($ycoord,$xcoord)/$PI*12;
   if ($ra<0) {$ra+=24;}
   my($dec) = (sqrt($xcoord**2+$ycoord**2)-$PI)/$PI*180;
 

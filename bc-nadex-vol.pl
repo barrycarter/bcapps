@@ -59,6 +59,7 @@ for $strike (sort keys %{$hash{USDCAD}}) {
     my($under) = forex_quote("USD/CAD", $updated);
 
     # logdiff + exptime (seconds)
+    debug("$strike / $under");
     $logdiff = log($strike/$under);
     $exptime = $exp - $updated;
 

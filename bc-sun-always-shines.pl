@@ -5,7 +5,7 @@
 # TODO: first and third line below are ugly!
 push(@INC, "/usr/local/lib");
 require "bclib.pl";
-chdir("/usr/local/etc/sun");
+chdir("/sites/DATA");
 
 # from wolframalpha (in m)
 # (yes, I know I define a similar constant in bclib.pl)
@@ -17,58 +17,19 @@ $outputfile = "/home/barrycarter/BCINFO/sites/TEST/sunstuff.html";
 # TODO: ugly ugly ugly (should use Perl funcs and also not do "cat >>"
 $ENV{TZ} = "GMT";
 system("echo Last updated: `date` > $outputfile");
-system("/bin/cat gbefore.txt >> $outputfile");
+system("/bin/cat /usr/local/etc/sun/gbefore.txt >> $outputfile");
 
 open(A, ">>$outputfile");
 
-# directly from mathematica 
-
-sub decl {
-  my($x) = @_;
-
-  # convert to seconds from latest spring equinox
-  $x -= 1.3006632937893438*10**9;
-
-    return (
-0.37808401703940736 +
-0.3810373468678206*cos(0.3074066821871051 - 3.9821243192021897e-7*$x) +
-23.260776335116*cos(1.6031468236573432 - 1.9910621596010949e-7*$x) +
-0.17118769496986821*cos(1.4545723908701285 + 5.973186478803284e-7*$x) +
-0.008146125242501636*cos(2.756482750676952 + 7.964248638404379e-7*$x)
-);
-}
-
-sub ra {
-  my($x) = @_;
-
-  # convert to seconds since latest spring equinox
-  $x -= 1.3006632548642015*10**9;
-
-  my($temp) = (
--0.12362547330377642 + 0.003653051241507621*cos(1.7184400853442734 -
-7.964247794495168e-7*$x) + 0.1226898815038194*cos(0.2853850527151302 -
-1.991061948623792e-7*$x) + 0.16534691830933743*cos(1.502453306625312 +
-3.982123897247584e-7*$x) + 0.005290041878837918*cos(2.7898112178483023 +
-5.973185845871376e-7*$x)
-);
-
-  # need to undo what racorrected2 does
-  return 24*$x/3.1556955380130082e+7 + $temp;
-
-}
-
-($dec,$ra) = (decl($now), ra($now));
-
-debug("$dec/$ra");
+($ra, $dec) = position("sun", $now);
 
 # sidereal time in Greenwich
-$sdm = mod(($now%86400)/3600+12+24*($now - 1.3006632548642015e+9)/3.1556955380130082e+7,24);
+$sdm = gmst($now);
 
 # difference to $ra (east of Greenwich)
 $dege = ($ra-$sdm)*15;
 
-# determine solar declination
-
+# determine overhead point
 ($lat, $lon) = ($dec, $dege);
 
 # finding antipode here is ugly
@@ -79,6 +40,20 @@ print A << "MARK"
 
 pt = new google.maps.LatLng($lat,$lon);
 ap = new google.maps.LatLng($alat,$alon);
+
+new google.maps.Marker({
+ position: pt,
+ map: map,
+ Icon: "http://test.barrycarter.info/sun.png",
+ title:"Sun"
+});
+
+new google.maps.Marker({
+ position: ap,
+ map: map,
+ Icon: "http://test.barrycarter.info/nemesis.png",
+ title:"Nemesis"
+});
 
 MARK
 ;
@@ -139,9 +114,38 @@ MARK
 ;
 }
 
+# for moon, only one circle, so do it here
+($mra, $mdec) = position("moon", $now);
+$mdege = ($mra-$sdm)*15;
+($mlat, $mlon) = ($mdec, $mdege);
+$mrad = $EARTH_CIRC/4;
+
+print A << "MARK"
+
+mpt = new google.maps.LatLng($mlat,$mlon);
+
+new google.maps.Circle({
+ center: mpt,
+ radius: $mrad,
+ map: map,
+ strokeWeight: 2,
+ strokeColor: "#ffffff",
+ fillOpacity: 0,
+ fillColor: "#ffffff"
+});
+
+new google.maps.Marker({
+ position: mpt,
+ map: map,
+ Icon: "http://test.barrycarter.info/moon.png",
+ title:"Moon"
+});
+
+MARK
+;
 
 close(A);
 
-system("cat gend.txt >> $outputfile");
+system("cat /usr/local/etc/sun/gend.txt >> $outputfile");
 
 system("echo Last updated `date` known broken >> $outputfile");

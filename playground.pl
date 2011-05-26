@@ -31,10 +31,11 @@ for $i (@l2) {
 
 $now = time();
 
-for $i (0..24) {
+for $i (0..48) {
   $time = 1306281600+$i*3600;
 
   debug(position("moon",$time));
+#  debug(position("sun",$time));
 
   next;
 

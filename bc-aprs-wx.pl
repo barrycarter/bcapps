@@ -100,7 +100,7 @@ sub do_update {
     %hash = %{$res[$i]};
     my($hue) = 5/6-($hash{temp}/100)*5/6;
     my($col) = hsv2rgb($hue,1,1,"kml=1&opacity=80");
-    push(@mypolys, poly_kml($poly[$i], $col, "description=$hash{station} ($hash{temp}, $hash{lat}, $hash{lon})"));
+    push(@mypolys, poly_kml($poly[$i], $col, "description=$hash{station} ($hash{temp}, $hash{lat}, $hash{lon})&point=$hash{lon},$hash{lat}"));
   }
 
   # KML header
@@ -142,7 +142,7 @@ MARK
 
   # polygon header
   my($polyhead) = << "MARK";
-<Placemark><gx:balloonVisibility>0</gx:balloonVisibility>
+<Placemark>
 <styleUrl>\#$static{count}</styleUrl>
 <title>$opts{title}</title>
 <description>$opts{description}</description>
@@ -174,6 +174,18 @@ MARK
 </coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 MARK
 ;
+
+=item ignore_for_now
+
+<Placemark>
+<gx:balloonVisibility>0</gx:balloonVisibility>
+<Point>
+<Icon><href>http://test.barrycarter.info/moon.png</href></Icon>
+<coordinates>$opts{point}</coordinates>
+</Point>
+</Placemark>
+
+=cut
 
   return "$style$polyhead$polybody$polyfoot";
 }
