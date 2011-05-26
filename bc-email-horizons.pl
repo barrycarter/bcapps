@@ -7,7 +7,15 @@
 
 require "bclib.pl";
 
+# I can't really use a tmpdir here, since I want to look at these
+# pre-mailing them
+system("mkdir -p /tmp/horizons");
+chdir("/tmp/horizons");
+
 $template = << "MARK";
+From: Barry Carter <carter.barry\@gmail.com>
+To: HORIZONS <horizons\@ssd.jpl.nasa.gov>
+Subject: JOB
 
 !\$\$SOF
 COMMAND= '%OBJECT%'
@@ -37,6 +45,8 @@ QUANTITIES= '1'
 MARK
 ;
 
+open(A,"> /tmp/horizons/runme.sh");
+
 # 10 years, all planets
 
 for $i (2011..2020) {
@@ -51,9 +61,16 @@ for $i (2011..2020) {
     $email=~s/%STARTYEAR%/$i/isg;
     $email=~s/%ENDYEAR%/$i1/isg;
     $email=~s/%OBJECT%/${j}99/isg;
+    write_file($email, "mail.$i.$j");
 
-  debug("I: $i, I1: $i1, J: $j");
+  # and command to actually send it
+  print A "/usr/lib/sendmail -v -fcarter.barry\@gmail.com -t < /tmp/horizons/mail.$i.$j\n";
+  
 
-    debug($email);
 }
 }
+
+close(A);
+
+# below was my (non-ideal) test case
+# system("/usr/lib/sendmail -v -fcarter.barry\@gmail.com -t < mail.2016.7");

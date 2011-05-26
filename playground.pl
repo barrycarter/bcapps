@@ -8,6 +8,31 @@
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
+# RPC-XML
+
+# get password
+$pw = read_file("/home/barrycarter/bc-wp-pwd.txt"); chomp($pw);
+
+# using raw below so i can cache and stuff
+
+$req=<<"MARK";
+<?xml version="1.0"?><methodCall>
+<methodName>mt.getRecentPostTitles</methodName>
+<params>
+<param><value>x</value></param>
+<param><value>admin</value></param>
+<param><value>$pw</value></param>
+<param><value>10</value></param>
+</params>
+</methodCall>
+MARK
+;
+
+write_file($req,"/tmp/rpc1.txt");
+system("curl -o /tmp/rpc2.txt --data-binary \@/tmp/rpc1.txt http://wordpress.barrycarter.info/xmlrpc.php");
+
+die "TESTING";
+
 $data = read_file("data/moonfakex.txt");
 $data2 = read_file("data/moonfakey.txt");
 @l = nestify($data);
@@ -52,31 +77,6 @@ for $i (0..48) {
 
   print "$ra $dec\n";
 }
-
-die "TESTING";
-
-# RPC-XML
-
-# get password
-$pw = read_file("/home/barrycarter/bc-wp-pwd.txt"); chomp($pw);
-
-# using raw below so i can cache and stuff
-
-$req=<<"MARK";
-<?xml version="1.0"?><methodCall>
-<methodName>mt.getRecentPostTitles</methodName>
-<params>
-<param><value><string>x</string></value></param>
-<param><value><string>admin</string></value></param>
-<param><value><string>$pw</string></value></param>
-<param><value>9999999999</value></param>
-</params>
-</methodCall>
-MARK
-;
-
-write_file($req,"/tmp/rpc1.txt");
-system("curl -o /tmp/rpc2.txt --data-binary \@/tmp/rpc1.txt http://wordpress.barrycarter.info/xmlrpc.php");
 
 die "TESTING";
 
