@@ -155,14 +155,20 @@ sub hashlist2sqlite {
 
 # TODO: turn off comments for these posts
 # TODO: use WP *read* API to confirm no dupes
-# post_to_wp($body, $options)
-# site = site to post to
-# author = post author
-# password = password for posting
-# subject = subject of post
-# timestamp = UNIX timestamp of post
-# category = category of post
-# live = whether to make post live instantly (default=no)
+
+=item post_to_wp($body, $options)
+
+Posts $body as a new WordPress post with the following options:
+
+  - site: site to post to
+  -author: post author
+  -password: password for posting
+  -subject: subject of post
+  -timestamp: UNIX timestamp of post
+  -category: category of post
+  -live: whether to make post live instantly (default=no)
+
+=cut
 
 sub post_to_wp {
   # this function has no pass-by-position parameters

@@ -1221,6 +1221,91 @@ sub bin_volt {
   return log($strike/$under)/udistr($price/100)/sqrt($exp);
 }
 
+
+
+=item post_to_wp($body, $options)
+
+Posts $body as a new WordPress post with the following options:
+
+  - site: site to post to
+  - author: post author
+  - password: password for posting
+  - subject: subject/title of post
+  - timestamp: UNIX timestamp of post
+  - category: category of post
+  - live: whether to make post live instantly (default=no)
+
+=cut
+
+sub post_to_wp {
+  # this function has no pass-by-position parameters
+  my($body, $options) = @_;
+  my(%opts) = parse_form($options);
+  defaults("live=0");
+
+  # timestamp (in ISO8601 format)
+  my($timestamp) = strftime("%Y%m%dT%H:%M:%S", gmtime($opts{timestamp}));
+
+my($req) =<< "MARK";
+
+<?xml version="1.0"?>
+<methodCall> 
+<methodName>metaWeblog.newPost</methodName> 
+<params>
+
+<param><value><string>thisstringappearstobenecessarybutpointlessinthiscase</string></value></param>
+
+<param><value><string>$opts{author}</string></value></param> 
+
+<param><value><string>$opts{password}</string></value></param>
+
+<param> 
+<struct> 
+
+<member><name>categories</name> 
+<value><array><data><value>$opts{category}</value></data></array></value> 
+</member> 
+
+<member>
+<name>description</name> 
+<value><string><![CDATA[$body]]></string></value>
+</member> 
+
+<member> 
+<name>title</name> 
+<value>$opts{subject}</value> 
+</member> 
+
+<member> 
+<name>dateCreated</name> 
+<value>
+<dateTime.iso8601>$timestamp</dateTime.iso8601> 
+</value> 
+</member> 
+
+</struct> 
+</param> 
+
+<param><value><boolean>$live</boolean></value></param> 
+
+</params></methodCall>
+MARK
+;
+
+  write_file($req,"/tmp/request");
+  debug($req);
+
+  if ($globopts{fake}) {return;}
+
+  # curl sometimes sends 'Expect: 100-continue' which WP doesn't like.
+  # The -H 'Expect:' below that cancels this
+  system("curl -H 'Expect:' -o /tmp/answer --data-binary \@/tmp/request http://$opts{site}/xmlrpc.php");
+
+  debug($req);
+
+  debug(read_file("/tmp/answer"));
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 
 sub END {
