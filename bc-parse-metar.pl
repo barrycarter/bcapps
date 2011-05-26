@@ -103,6 +103,12 @@ system("cp metar-temp.db metar-before.db");
   # run the commands on the temp db
   system("sqlite3 metar-temp.db < queries.txt 1> /tmp/metar-sql.out 2> /tmp/metar-sql.err");
 
+  # KLUDGE: sometimes the resulting "db" is a 1024-byte garbage file
+  # (real SQLite3 dbs are always bigger?)
+  if (-s "metar-temp.db" < 2048) {
+    die "metar-temp.db ridiculously small";
+  }
+
 # DEBUG ONLY
 system("cp metar-temp.db metar-after.db");
 
@@ -264,3 +270,33 @@ sub parse_metar {
   $b{leftover}=join(" ",@leftover);
   return(%b);
 }
+
+=item schema
+
+Schema for METAR db in case we need to re-create it (also populate
+stations from stations.db):
+
+CREATE TABLE nowweather (cloudcover text, code text, dewpoint double, 
+leftover text, metar text, pressure double, temperature double, time 
+datetime , type text, visibility text, weather text, winddir text, 
+windspeed int, gust int, timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP, comment);
+CREATE TABLE stations(
+  metar TEXT,
+  city TEXT,
+  state TEXT,
+  country TEXT,
+  latitude REAL,
+  longitude REAL,
+  elevation REAL,
+  x REAL,
+  y REAL,
+  z REAL
+);
+CREATE TABLE weather (cloudcover text, code text, dewpoint double, 
+leftover text, metar text, pressure double, temperature double, time 
+datetime , type text, visibility text, weather text, winddir text, 
+windspeed int, gust int, timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP, comment);
+CREATE UNIQUE INDEX i_code ON nowweather(code);
+CREATE UNIQUE INDEX i_codetime ON weather(code,time);
+
+=cut

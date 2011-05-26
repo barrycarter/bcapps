@@ -881,7 +881,10 @@ sub nadex_quotes {
    $strdir=~s/>//isg;
 
    # Unix time
-   $utime = str2time("$dat $tim EST5EDT");
+   # TODO: EST5EDT does NOT work below, but should; this will be
+   # inaccurate once we leave DST
+   $utime = str2time("$dat $tim GMT-4");
+   debug("$utime <- $dat $tim");
 
    # last updated time
    my($updated) = 0;

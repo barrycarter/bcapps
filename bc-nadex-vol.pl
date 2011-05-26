@@ -29,7 +29,8 @@ $invnor=~s/\s+/ /isg;
 %hash = nadex_quotes("USD-CAD");
 
 # NADEX runs on Eastern time
-$ENV{TZ} = "EDT5EST";
+# TODO: this may break when we stop daylight time(?)
+$ENV{TZ} = "EST5EDT";
 
 open(A,">/tmp/nadex.m");
 print A "nadex={\n";
