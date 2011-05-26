@@ -17,19 +17,21 @@ $pw = read_file("/home/barrycarter/bc-wp-pwd.txt"); chomp($pw);
 
 $req=<<"MARK";
 <?xml version="1.0"?><methodCall>
-<methodName>mt.getRecentPostTitles</methodName>
+<methodName>blogger.getRecentPosts</methodName>
 <params>
+<param><value>x</value></param>
 <param><value>x</value></param>
 <param><value>admin</value></param>
 <param><value>$pw</value></param>
-<param><value>10</value></param>
+<param><value><int>10</int></value></param>
 </params>
 </methodCall>
 MARK
 ;
 
 write_file($req,"/tmp/rpc1.txt");
-system("curl -o /tmp/rpc2.txt --data-binary \@/tmp/rpc1.txt http://wordpress.barrycarter.info/xmlrpc.php");
+# system("curl -o /tmp/rpc2.txt --data-binary \@/tmp/rpc1.txt http://wordpress.barrycarter.info/xmlrpc.php");
+system("curl -o /tmp/rpc2.txt --data-binary \@/tmp/rpc1.txt http://joomla.barrycarter.info/xmlrpc/index.php");
 
 die "TESTING";
 
