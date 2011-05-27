@@ -52,7 +52,6 @@ for $i (0..$#tess) {
   # KML
   print B "<Placemark>\n";
   print B "<gx:balloonVisibility>0</gx:balloonVisibility>\n";
-print B "<Icon><href>http://test.barrycarter.info/moon.png</href></Icon>\n";
   print B "<styleUrl>#$hash{code}</styleUrl>\n";
   print B "<title></title>\n";
   print B "<description>$hash{code} ($hash{city}, $hash{state}, $hash{country}) $hash{temperature}F ($hash{time} GMT)</description>\n";
