@@ -828,7 +828,7 @@ sub nadex_quotes {
  chomp($cookie);
  my($dataq)=0;
  # putting defaults first lets $options override
- my(%opts) = parse_form("cache=900&$options");
+ my(%opts) = parse_form("cache=600&$options");
 
  # HACK: I'm sometimes logged in w/ my live account and sometimes w/
  # my demo account, so I never know what nadex-cookie.txt has (I
@@ -1253,7 +1253,7 @@ my($req) =<< "MARK";
 <methodName>metaWeblog.newPost</methodName> 
 <params>
 
-<param><value><string>thisstringappearstobenecessarybutpointlessinthiscase</string></value></param>
+<param><value><string>x</string></value></param>
 
 <param><value><string>$opts{author}</string></value></param> 
 

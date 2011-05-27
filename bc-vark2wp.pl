@@ -70,6 +70,7 @@ close(A);
 
 if ($globopts{json}) {
   for $file (glob("$home/Download/[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]")) {
+
     $all = read_file($file);
     debug("READING: $file");
 
@@ -105,6 +106,9 @@ if ($globopts{json}) {
     # <h>"Take The 0000 Train to Georgia" would be a terrible song</h>
     $date = str2time("$hash{history_title} 1200 GMT");
 
+    # cleanup!
+    $hash{content}=~s/^subject:\s*//isg;
+
     $content = "I asked this question on vark.com:<p><b>$hash{content}</b><p>Please answer here";
 
     if ($link) {
@@ -119,12 +123,10 @@ if ($globopts{json}) {
     }
 
     # cleanup
-    $subject=~s/\"/&quot;//isg;
+    $subject=~s/&quot;/\"/isg;
 
     post_to_wp($content, "site=$wp_blog&author=$author&password=$pw&subject=$subject&timestamp=$date&category=VARK");
-
-    if ($n++ > 100) {die "TESTING";}
-
   }
 }
+
 
