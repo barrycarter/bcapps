@@ -45,11 +45,16 @@ print B << "MARK";
 MARK
 ;
 
-# style for dots (currently a constant)
+# style for dots (currently a constant) and for limiting polygons
 print B << "MARK";
 <Style id="dot"><IconStyle>
 <Icon><href>http://test.barrycarter.info/red7.png</href></Icon>
 </IconStyle></Style>
+
+<Style id="darkdot">
+<PolyStyle><color>#ff000000</color>
+<fill>1</fill><outline>0</outline></PolyStyle></Style>
+
 MARK
 ;
 
@@ -78,6 +83,7 @@ MARK
   # NOTE: this is my own mapping; not NOAA approved!
   $hue=5/6-($hash{temperature}/100)*5/6;
   $kmlcol = hsv2rgb($hue,1,1,"kml=1&opacity=80");
+  $kmlcoldark = hsv2rgb($hue,1,1,"kml=1&opacity=ff");
 
   # KML end of polygon
   print B "</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>\n\n";
@@ -86,6 +92,11 @@ print B << "MARK";
 <Style id="$hash{code}">
 <PolyStyle><color>$kmlcol</color>
 <fill>1</fill><outline>0</outline></PolyStyle></Style>
+
+<Style id="$hash{code}dark">
+<PolyStyle><color>$kmlcoldark</color>
+<fill>1</fill><outline>0</outline></PolyStyle></Style>
+
 MARK
 ;
 
@@ -97,11 +108,9 @@ MARK
   my(@range) = ($hash{longitude}-.01, $hash{longitude}+.01,
                 $hash{latitude}-.01, $hash{latitude}+.01);
 
-=item comment
-
   print B << "MARK";
 <Placemark>
-<styleUrl>#$hash{code}</styleUrl>
+<styleUrl>#$hash{code}dark</styleUrl>
 <description>station $n</description>
 <Polygon><outerBoundaryIs><LinearRing><coordinates>
 $range[0],$range[2]
@@ -111,8 +120,6 @@ $range[0],$range[3]
 </coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 MARK
 ;
-
-=cut
 
 }
 
