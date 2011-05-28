@@ -45,17 +45,28 @@ print B << "MARK";
 MARK
 ;
 
+# style for dots (currently a constant)
+print B << "MARK";
+<Style id="dot"><IconStyle>
+<Icon><href>http://test.barrycarter.info/red7.png</href></Icon>
+</IconStyle></Style>
+MARK
+;
+
 for $i (0..$#tess) {
   # line in @res corresponding to this polygon
   %hash = %{$res[$i]};
 
   # KML
-  print B "<Placemark>\n";
-  print B "<gx:balloonVisibility>0</gx:balloonVisibility>\n";
-  print B "<styleUrl>#$hash{code}</styleUrl>\n";
-  print B "<title></title>\n";
-  print B "<description>$hash{code} ($hash{city}, $hash{state}, $hash{country}) $hash{temperature}F ($hash{time} GMT)</description>\n";
-  print B "<Polygon><outerBoundaryIs><LinearRing><coordinates>\n";
+print B << "MARK";
+<Placemark>
+<styleUrl>#$hash{code}</styleUrl>
+<title></title>
+<description>$hash{code} ($hash{city}, $hash{state}, $hash{country}) 
+ $hash{temperature}F ($hash{time} GMT)</description>
+<Polygon><outerBoundaryIs><LinearRing><coordinates>
+MARK
+;
 
   # the points for this polygon
   for $j (@{$tess[$i]}) {
@@ -75,6 +86,19 @@ print B << "MARK";
 <Style id="$hash{code}">
 <PolyStyle><color>$kmlcol</color>
 <fill>1</fill><outline>0</outline></PolyStyle></Style>
+
+<Placemark>
+<gx:balloonVisibility>0</gx:balloonVisibility>
+<name>X$hash{code}</name>
+<styleUrl>#dot</styleUrl>
+<description>X</description>
+<Point>
+<coordinates>
+$hash{longitude},$hash{latitude}
+</coordinates>
+</Point>
+</Placemark>
+
 MARK
 ;
 }

@@ -21,8 +21,6 @@ for(;;) {
   # read next line, but ignore + sleep if blank
   unless ($line = <A>) {sleep 1; next;}
 
-
-  $globopts{debug}=1;
   debug("LINE: $line");
 
   # we have a valid line, so update lastlinetime
@@ -34,7 +32,6 @@ for(;;) {
   unless (%hash) {next;}
 
   debug("APRSWX!");
-  $globopts{debug}=0;
 
   # nuke apostrophes in everything
   for $i (keys %hash) {$hash{$i}=~s/\'//isg;}
@@ -54,6 +51,7 @@ for(;;) {
 
 sub do_update {
   my(@vpoints, @temp, @stat, @polys, @mypolys);
+  debug("DO_UPDATE called");
 
   # calling this resets $lastupdate
   $lastupdate = time();
@@ -205,8 +203,10 @@ sub do_connect {
   close(A);
   # could "use Socket" here but this is cooler?
   open(A,"echo 'user READONLY pass -1' | ncat -w 10 $ip 23 |") || warn("FAIL: Error, $!");
+  debug("A opened");
   # unblock socket just in case we get disconnected
   fcntl(A,F_SETFL,O_NONBLOCK|O_NDELAY);
+  debug("do_connect() returning");
 }
 
 # parse an APRS line, returning a hash of values, or blank if line is
