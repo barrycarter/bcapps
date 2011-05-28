@@ -61,7 +61,6 @@ for $i (0..$#tess) {
 print B << "MARK";
 <Placemark>
 <styleUrl>#$hash{code}</styleUrl>
-<title></title>
 <description>$hash{code} ($hash{city}, $hash{state}, $hash{country}) 
  $hash{temperature}F ($hash{time} GMT)</description>
 <Polygon><outerBoundaryIs><LinearRing><coordinates>
@@ -69,6 +68,7 @@ MARK
 ;
 
   # the points for this polygon
+  # google handles pointless polygons fine
   for $j (@{$tess[$i]}) {
     $j=~s/ /,/;
     print B "$j\n";
@@ -86,26 +86,44 @@ print B << "MARK";
 <Style id="$hash{code}">
 <PolyStyle><color>$kmlcol</color>
 <fill>1</fill><outline>0</outline></PolyStyle></Style>
-
-<Placemark>
-<gx:balloonVisibility>0</gx:balloonVisibility>
-<name>X$hash{code}</name>
-<styleUrl>#dot</styleUrl>
-<description>X</description>
-<Point>
-<coordinates>
-$hash{longitude},$hash{latitude}
-</coordinates>
-</Point>
-</Placemark>
-
 MARK
 ;
+
+  # google dislikes polygons too close to the poles
+  if (abs($hash{latitude}) > 85) {next;}
+
+  # tiny polygon that effectively acts as an icon
+  # TODO: adjust for mercator projection
+  my(@range) = ($hash{longitude}-.01, $hash{longitude}+.01,
+                $hash{latitude}-.01, $hash{latitude}+.01);
+
+=item comment
+
+  print B << "MARK";
+<Placemark>
+<styleUrl>#$hash{code}</styleUrl>
+<description>station $n</description>
+<Polygon><outerBoundaryIs><LinearRing><coordinates>
+$range[0],$range[2]
+$range[1],$range[2]
+$range[1],$range[3]
+$range[0],$range[3]
+</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
+MARK
+;
+
+=cut
+
 }
 
 # KML: end of file
 print B "</Document></kml>\n";
 close(B);
+
+# ran into google's 3M limit, wow! 
+# http://code.google.com/apis/kml/documentation/mapsSupport.html
+
+system("zip /home/barrycarter/BCINFO/sites/DATA/current-temperatures.kmz /home/barrycarter/BCINFO/sites/DATA/current-temperatures.kml");
 
 # TODO: point to continent specific maps (from same data) like weather.gov
 # TODO: color map smoothly, not via polygons
