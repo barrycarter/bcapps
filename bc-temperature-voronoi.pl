@@ -108,6 +108,8 @@ MARK
   my(@range) = ($hash{longitude}-.01, $hash{longitude}+.01,
                 $hash{latitude}-.01, $hash{latitude}+.01);
 
+=item plan_to_nuke_this
+
   print B << "MARK";
 <Placemark>
 <styleUrl>#$hash{code}dark</styleUrl>
@@ -120,6 +122,8 @@ $range[0],$range[3]
 </coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 MARK
 ;
+
+=cut
 
 }
 

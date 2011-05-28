@@ -1,0 +1,4 @@
+new
+size 32,32
+setpixel 0,0,255,255,255
+setpixel 16,31,256,0,-1
