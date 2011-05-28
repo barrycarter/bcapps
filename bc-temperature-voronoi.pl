@@ -48,12 +48,8 @@ MARK
 # style for dots (currently a constant) and for limiting polygons
 print B << "MARK";
 <Style id="dot"><IconStyle>
-<Icon><href>http://test.barrycarter.info/red7.png</href></Icon>
+<Icon><href>http://test.barrycarter.info/images/hue400.png</href></Icon>
 </IconStyle></Style>
-
-<Style id="darkdot">
-<PolyStyle><color>#ff000000</color>
-<fill>1</fill><outline>0</outline></PolyStyle></Style>
 
 MARK
 ;
@@ -82,6 +78,7 @@ MARK
   # get polygon color/hue from temperature
   # NOTE: this is my own mapping; not NOAA approved!
   $hue=5/6-($hash{temperature}/100)*5/6;
+  $hue768 = sprintf("%0.3d", $hue*768+.5);
   $kmlcol = hsv2rgb($hue,1,1,"kml=1&opacity=80");
   $kmlcoldark = hsv2rgb($hue,1,1,"kml=1&opacity=ff");
 
@@ -93,37 +90,23 @@ print B << "MARK";
 <PolyStyle><color>$kmlcol</color>
 <fill>1</fill><outline>0</outline></PolyStyle></Style>
 
-<Style id="$hash{code}dark">
-<PolyStyle><color>$kmlcoldark</color>
-<fill>1</fill><outline>0</outline></PolyStyle></Style>
+<Style id="dot$hash{code}"><IconStyle>
+<Icon><href>http://test.barrycarter.info/images/hue$hue768.png</href></Icon>
+</IconStyle></Style>
 
-MARK
-;
-
-  # google dislikes polygons too close to the poles
-  if (abs($hash{latitude}) > 85) {next;}
-
-  # tiny polygon that effectively acts as an icon
-  # TODO: adjust for mercator projection
-  my(@range) = ($hash{longitude}-.01, $hash{longitude}+.01,
-                $hash{latitude}-.01, $hash{latitude}+.01);
-
-=item plan_to_nuke_this
-
-  print B << "MARK";
 <Placemark>
-<styleUrl>#$hash{code}dark</styleUrl>
-<description>station $n</description>
-<Polygon><outerBoundaryIs><LinearRing><coordinates>
-$range[0],$range[2]
-$range[1],$range[2]
-$range[1],$range[3]
-$range[0],$range[3]
-</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
+<name>$hash{code}</name>
+<styleUrl>#dot$hash{code}</styleUrl>
+<description>X</description>
+<Point>
+<coordinates>
+$hash{longitude},$hash{latitude}
+</coordinates>
+</Point>
+</Placemark>
+
 MARK
 ;
-
-=cut
 
 }
 
