@@ -33,6 +33,18 @@ MARK
 
   write_file($flystring, "temp.fly");
   system("fly -i temp.fly | convert -transparent white gif:- hue$i.png");
+
+  # and let's generate a 1 pixel file for the hue for no good reason
+  $flystring = << "MARK";
+new
+size 1,1
+setpixel 1,1,$r,$g,$b
+MARK
+;
+
+  write_file($flystring, "temp.fly");
+  system("fly -i temp.fly | convert -transparent white gif:- dot$i.png");
+
 }
 
 
