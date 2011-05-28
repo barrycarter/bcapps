@@ -11,13 +11,42 @@ open(A,"bzcat /home/barrycarter/BCINFO/sites/DATA/planets/mars.csv.bz2|");
 # $n = fraction of observations we want to preserve
 $n = 8;
 
+# store data we want to preserve
+# TODO: ugly to keep whole list when we only need 4 elts at a time?
+
+while (<A>) {
+
+  # skip most data
+  # TODO: in theory we could keep it for later comparison to splined data?
+  chomp($_);
+  if ($count++%$n) {next;}
+
+  # $w = data we don't want
+  my($time, $w, $w, $ra,$dec) = split(/\,\s*/, $_);
+
+  # store data to interpolate later (zval is really like yval2)
+  ($y, $z) = radec2vector($ra,$dec);
+  push(@xvals, $time);
+  push(@yvals, $y);
+  push(@zvals, $z);
+}
+
+close(A);
+
+# now, to compare the approx to the actual values
+
+
+debug("X",@xvals,"Y",@yvals,"Z",@zvals);
+
+
+die "TESTING";
+
+
 @data = ();
 for $i (1..$n) {
   # NOTE: putting my($data) below doesn't work
   $data = <A>;
   chomp($data);
-  # $x = data we don't want
-  my($time, $x, $x, $ra,$dec) = split(/\,\s*/, $data);
   # should really be a list of 2-element lists, but...
   push(@data, $ra, $dec);
 }
