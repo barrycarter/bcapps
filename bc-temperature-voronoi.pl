@@ -78,7 +78,7 @@ MARK
   # get polygon color/hue from temperature
   # NOTE: this is my own mapping; not NOAA approved!
   $hue=5/6-($hash{temperature}/100)*5/6;
-  $hue768 = sprintf("%0.3d", $hue*768+.5);
+  $hue768 = sprintf("%0.3d", int($hue*16+.5)*48);
   $kmlcol = hsv2rgb($hue,1,1,"kml=1&opacity=80");
   $kmlcoldark = hsv2rgb($hue,1,1,"kml=1&opacity=ff");
 
