@@ -16,16 +16,24 @@ $n = 8;
 
 while (<A>) {
 
-  # skip most data
-  # TODO: in theory we could keep it for later comparison to splined data?
   chomp($_);
-  if ($count++%$n) {next;}
-
   # $w = data we don't want
   my($time, $w, $w, $ra,$dec) = split(/\,\s*/, $_);
 
+  # store actual ra and dec
+  ($ra{$time}, $dec{$time}) = ($ra, $dec);
+
+  # skip most data for interpolation
+  if ($count++%$n) {next;}
+
   # store data to interpolate later (zval is really like yval2)
   ($y, $z) = radec2vector($ra,$dec);
+
+  # testing
+  ($tra, $tdec) = vector2radec($y, $z);
+  debug("$ra/$dec -> $tra/$tdec");
+
+
   push(@xvals, $time);
   push(@yvals, $y);
   push(@zvals, $z);
@@ -33,32 +41,25 @@ while (<A>) {
 
 close(A);
 
+die "TESTING";
+
 # now, to compare the approx to the actual values
+for $i (sort {$a <=> $b} keys %ra) {
+  # the interpolations
+  $inty = hermione($i, \@xvals, \@yvals);
+  $intz = hermione($i, \@xvals, \@zvals);
 
+  # convert back to RA/DEC
+  ($ra, $dec) = vector2radec($inty, $intz);
 
-debug("X",@xvals,"Y",@yvals,"Z",@zvals);
+  # compare
+  debug("$i: $ra/$dec vs $ra{$i}, $dec{$i}");
+}
 
 
 die "TESTING";
 
-
-@data = ();
-for $i (1..$n) {
-  # NOTE: putting my($data) below doesn't work
-  $data = <A>;
-  chomp($data);
-  # should really be a list of 2-element lists, but...
-  push(@data, $ra, $dec);
-}
-
-# encode the first/last piece of @data, interpolate the rest
-@first = radec2vector($data[0], $data[1]);
-# <h>last is probably a reserved keyword, but who cares</h>
-@last = radec2vector($data[-2], $data[-1]);
-
-
-
-debug(@first,@last);
+debug("X",@xvals,"Y",@yvals,"Z",@zvals);
 
 # convert radec to the weird format I store it in (vector of length
 # pi/2+dec and angle ra)
@@ -70,3 +71,12 @@ sub radec2vector {
   return ($len*cos($ang), $len*sin($ang));
 }
 
+# reverse of above
+
+sub vector2radec {
+  my($x,$y) = @_;
+  my($ra) = atan2($y,$x)*180/$PI;
+  my($dec) = (sqrt($x*$x+$y*$y)-$PI/2)*180/$PI;
+  if ($ra<0) {$ra+=360;}
+  return ($ra,$dec);
+}
