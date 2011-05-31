@@ -1,10 +1,16 @@
 <div id="test">hello there</div>
 
+<div id="haha">Load stuff remotely</div>
+
 <script type="text/javascript">
 
 function x() {test.style.color = '#ff0000';}
 
 test.style.color = '#ffff00';
+xmlhttp = new XMLHttpRequest();
+res = xmlhttp.open("GET", "2points.txt",true);
+
+alert(xmlhttp.readyState);
 
 setTimeout("x()", 1000);
 
