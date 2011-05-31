@@ -50,7 +50,7 @@ open(A,"> /tmp/horizons/runme.sh");
 # 10 years, all planets
 
 for $i (2011..2020) {
-  for $j (1..9) {
+  for $j (10,301) {
 
     # exclude Earth <h>(I usually know where it is)</h>
     if ($j==3) {next;}
@@ -60,7 +60,7 @@ for $i (2011..2020) {
     $i1 = $i + 1;
     $email=~s/%STARTYEAR%/$i/isg;
     $email=~s/%ENDYEAR%/$i1/isg;
-    $email=~s/%OBJECT%/${j}99/isg;
+    $email=~s/%OBJECT%/${j}/isg;
     write_file($email, "mail.$i.$j");
 
   # and command to actually send it

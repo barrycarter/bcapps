@@ -8,6 +8,25 @@
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
+=item box_option_value($p0, $v, $p1, $p2, $t1, $t2)
+
+Computes the fair value of a box option, given $p0, the current price
+of the underlying, $v, the volatility, $p1-$p2 the price range of the
+box option, and $t1-$t2, the time interval of the box option in years
+
+=cut
+
+sub box_option_value {
+  my($p0, $v, $p1, $p2, $t1, $t2) = @_;
+
+
+}
+
+
+
+
+die "TESTING";
+
 # RPC-XML
 
 # get password

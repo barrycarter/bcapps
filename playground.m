@@ -3,6 +3,61 @@
 showit := Module[{}, 
 Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
+(* box options *)
+
+Integrate[
+PDF[NormalDistribution[0,v1]][x]*(1-CDF[NormalDistribution[0,v2]][a-x]),
+{x,-Infinity,a}
+]
+
+Integrate[
+PDF[NormalDistribution[0,v1]][x]*PDF[NormalDistribution[0,v2]][y],
+{x,-Infinity,a}, {y,a-x,Infinity}, Assumptions -> {v1>0, v2>0}
+]
+
+Plot[PDF[HalfNormalDistribution[1]][x], {x,-10,10}]
+
+testmax[x_] = If[x>0, PDF[HalfNormalDistribution[1]][x], 0]
+
+Plot[testmax[x],{x,-5,5}]
+
+test2[x_] = Integrate[
+ PDF[NormalDistribution[0,1]][y] * testmax[x-y], {y,-Infinity,x}]
+
+Plot[test2[x],{x,-5,5}]
+
+testmax[x_] = If[x>0, PDF[HalfNormalDistribution[1/10]][x], 0]
+
+maxdist[x_, v_] = If[x>0, PDF[HalfNormalDistribution[v]][x], 0]
+
+maxdistv[x_, v1_, v2_] = Integrate[
+ PDF[NormalDistribution[0,v1]][y] * maxdist[x-y, v2], {y,-Infinity,x},
+ Assumptions -> {v1>0, v2>0}]
+
+maxdistv[x,1,2]
+
+(* combining two barrier options?
+
+stays above: upper+lower long wins
+stays below: upper+lower short wins
+inbetween: lower: long wins; upper: short wins
+
+suppose upper long pays 300 w/ 100 bet, profit is:
+suppose lower long pays 200 w/ 100 bet, profit is:
+
+upper is 1.5
+lower is 1.25
+
+*)
+
+profit[p_] = If[p>1.5, 300-100, -100] - If[p>1.25, 200-100, -100]
+
+Plot[profit[p], {p,1,2}]
+
+
+
+Exit[]
+
 tox[ra_, dec_] = (Pi+dec*Degree)*Cos[ra*Degree]
 toy[ra_, dec_] = (Pi+dec*Degree)*Sin[ra*Degree]
 

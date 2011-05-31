@@ -6,10 +6,10 @@
 require "bclib.pl";
 
 # these files not in GIT, see http://data.barrycarter.info/planets/
-open(A,"bzcat /home/barrycarter/BCINFO/sites/DATA/planets/mars.csv.bz2|");
+open(A,"bzcat /home/barrycarter/BCINFO/sites/DATA/planets/moon.csv.bz2|");
 
 # $n = fraction of observations we want to preserve
-$n = 8;
+$n = 10*15;
 $count = -1;
 
 # store data we want to preserve
@@ -87,6 +87,8 @@ for $i ($n..$#times-2*$n) {
   }
 }
 
+debug("FINAL: $maxra/$maxdec");
+
 # convert radec to the weird format I store it in (vector of length
 # pi/2+dec and angle ra)
 
@@ -106,3 +108,28 @@ sub vector2radec {
   if ($ra<0) {$ra+=360;}
   return ($ra,$dec);
 }
+
+=item RESULTS
+
+MERCURY:
+ daily: 0.000247459432500818/0.000139043397140881
+ weekly: 0.385409711937996/0.190355235843001
+
+VENUS:
+ daily: 9.40244528635503e-06/1.21894724784966e-05
+ weekly: 0.0205220785349525/0.0244215836384747
+
+SATURN:
+ weekly: 7.98775800774365e-05/3.480178203219e-05
+ monthly: 0.0133377797627645/0.00762339993226746
+
+MOON:
+ daily: 0.0216295941092142/0.0625815265411127
+ hourly: 1.62663212677217e-07/2.83467034734031e-07
+ 12h: 0.00143659083431658/0.00406598129115565
+ 18h:  0.00703938682514149/0.020151070523486
+ 16h: 0.00447947833418993/0.0126908556469871
+ 15h: 0.00344133104550792/0.00988136583707799
+
+=cut
+

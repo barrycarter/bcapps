@@ -5,9 +5,10 @@ require "bclib.pl";
 
 # the KML file created here is visible at
 # http://wordpress.barrycarter.info/index.php/voronoi-temperature-map/
+# --showpoints: show individual stations (doesn't work well)
 
 # TODO: clickable polygons are REALLY annoying, though probably can't
-# fix them scriptwise
+# fix them scriptwise (suppressInfoWindows?)
 
 # TODO: use real 3D Voronoi, not equiangular approximation
 
@@ -89,7 +90,11 @@ print B << "MARK";
 <Style id="$hash{code}">
 <PolyStyle><color>$kmlcol</color>
 <fill>1</fill><outline>0</outline></PolyStyle></Style>
+MARK
+;
 
+if ($globopts{showpoints}) {
+print B << "MARK";
 <Style id="dot$hash{code}"><IconStyle>
 <Icon><href>http://test.barrycarter.info/images/hue$hue768.png</href></Icon>
 </IconStyle></Style>
@@ -107,6 +112,7 @@ $hash{longitude},$hash{latitude}
 
 MARK
 ;
+}
 
 }
 
