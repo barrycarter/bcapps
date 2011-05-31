@@ -1,6 +1,7 @@
 #!/bin/perl
 
-# Computes implicit volatility of NADEX binary options
+# Computes implicit volatility of NADEX binary options. Options:
+#  -under=x: assume underlying price is x, do not call forex_quote
 
 require "bclib.pl";
 
@@ -57,7 +58,12 @@ for $strike (sort keys %{$hash{USDCAD}}) {
     ($bid, $ask, $updated) = ($k{bid}, $k{ask}, $k{updated});
 
     # obtain FOREX quote when this NADEX quote was last updated
-    my($under) = forex_quote("USD/CAD", $updated);
+    my($under);
+    if ($globopts{under}) {
+      $under = $globopts{under}
+    } else {
+      $under = forex_quote("USD/CAD", $updated);
+    }
 
     # logdiff + exptime (seconds)
     debug("$strike / $under");
