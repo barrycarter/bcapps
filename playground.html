@@ -1,16 +1,17 @@
 <script type="text/javascript">
 
 xmlhttp = new XMLHttpRequest();
-res = xmlhttp.open("GET", "http://www.yahoo.com/",true);
-xmlhttp.onreadystatechange=f()
+xmlhttp.open("GET", "smalltestfile.txt",true);
+xmlhttp.send(null);
 
 function f() {
- alert(xmlhttp.readyState);
- if (xmlhttp.readyState != 4) {return;}
- alert(xmlhttp.responseText);
+ alert('f: '+xmlhttp.readyState+'RES: '+xmlhttp.responseText);
+
+ setTimeout("f()", 5000);
 }
 
-// does the script end here? how do I get it to keep looping?
+f();
+
 
 </script>
 
