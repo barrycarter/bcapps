@@ -1,22 +1,18 @@
 <div id="test">hello there</div>
 
-<div id="haha">Load stuff remotely</div>
-
 <script type="text/javascript">
 
-function x() {test.style.color = '#ff0000'; setTimeout("y()", 1000);}
-function y() {test.style.color = '#ff00ff'; setTimeout("x()", 1000);}
-
-x()
-
-test.style.position = 42;
-
 xmlhttp = new XMLHttpRequest();
-res = xmlhttp.open("GET", "2points.txt",true);
+res = xmlhttp.open("GET", "http://www.yahoo.com/",true);
+xmlhttp.onreadystatechange=f()
 
-alert(xmlhttp.readyState);
+function f() {
+ alert(xmlhttp.readyState);
+ if (xmlhttp.readyState != 4) {return;}
+ alert(xmlhttp.responseText);
+}
 
-setTimeout("x()", 1000);
+// does the script end here? how do I get it to keep looping?
 
 </script>
 
