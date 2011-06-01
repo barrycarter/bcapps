@@ -1,16 +1,21 @@
+<div id="foo">hello</div>
+
 <script type="text/javascript">
 
-xmlhttp = new XMLHttpRequest();
-xmlhttp.open("GET", "smalltestfile.txt",true);
-xmlhttp.send(null);
-
+/*
 function f() {
- alert('f: '+xmlhttp.readyState+'RES: '+xmlhttp.responseText);
-
- setTimeout("f()", 5000);
+ alert(xmlhttp.getReponse);
 }
+*/
 
-f();
+foo.innerHTML = 'goodbye';
+
+/*
+xmlhttp = new XMLHttpRequest();
+xmlhttp.open("GET", "bcs.txt",true);
+xmlhttp.send(null);
+xmlhttp.onreadystatechange = f;
+*/
 
 
 </script>
