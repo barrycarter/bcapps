@@ -36,6 +36,20 @@ maxdistv[x_, v1_, v2_] = Integrate[
 
 maxdistv[x,1,2]
 
+val1[a_, v1_, v2_] := 
+NIntegrate[
+PDF[NormalDistribution[0,v1]][x] * (1-CDF[HalfNormalDistribution[v2]][a-x]),
+{x,-Infinity,a}]
+
+Interpolation[{{a,v1,v2}, val1[a,v1,v2]}
+
+Table[{{a,v1,v2},val1[a,v1,v2]}, {a,1}, {v1,0.1,0.2,.01}, {v2,0.1,0.2,.01}]
+
+val1[1,.1,.1]
+
+FunctionInterpolation[val1[a,v1,v2], {a,0,1}, {v1,0,1}, {v2,0,1}]
+
+
 (* combining two barrier options?
 
 stays above: upper+lower long wins

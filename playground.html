@@ -4,9 +4,13 @@
 
 <script type="text/javascript">
 
-function x() {test.style.color = '#ff0000';}
+function x() {test.style.color = '#ff0000'; setTimeout("y()", 1000);}
+function y() {test.style.color = '#ff00ff'; setTimeout("x()", 1000);}
 
-test.style.color = '#ffff00';
+x()
+
+test.style.position = 42;
+
 xmlhttp = new XMLHttpRequest();
 res = xmlhttp.open("GET", "2points.txt",true);
 
