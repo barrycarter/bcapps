@@ -2,21 +2,23 @@
 
 <script type="text/javascript">
 
-/*
 function f() {
- alert(xmlhttp.getReponse);
+ alert('F CALLED');
+ xmlhttp = new XMLHttpRequest();
+ xmlhttp.open("GET", "/playground.pl",true);
+ xmlhttp.send(null);
+ xmlhttp.onreadystatechange = g;
 }
-*/
 
-foo.innerHTML = 'goodbye';
+function g() {
+ alert('G CALLED: '+xmlhttp.readyState);
+ if (xmlhttp.readyState != 4) {return;}
+ alert('REPLY: '+xmlhttp.responseText);
+ foo.innerHTML = xmlhttp.responseText;
+// f();
+}
 
-/*
-xmlhttp = new XMLHttpRequest();
-xmlhttp.open("GET", "bcs.txt",true);
-xmlhttp.send(null);
-xmlhttp.onreadystatechange = f;
-*/
-
+f();
 
 </script>
 

@@ -5,6 +5,14 @@
 
 # chunks are normally separated with 'die "TESTING";'
 
+print "Content-type: text/html\n\n";
+
+print `date`;
+
+exit(0);
+
+die "TESTING";
+
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
