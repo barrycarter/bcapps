@@ -1,3 +1,7 @@
+<!-- if you saw my vark question, please ignore it; I've now changed this file so the question no longer applies -->
+
+<script type="text/javascript" src="http://lib.barrycarter.info/jquery-1.6.1.min.js"></script>
+
 <div id="foo">hello</div>
 
 <script type="text/javascript">
@@ -11,7 +15,9 @@ function f() {
 
 function g() {
  if (xmlhttp.readyState != 4) {return;}
+ $('#foo').fadeOut();
  foo.innerHTML = xmlhttp.responseText;
+ $('#foo').fadeIn();
  setTimeout("f()", 1000);
 }
 
