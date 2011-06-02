@@ -15,10 +15,10 @@ function f() {
 
 function g() {
  if (xmlhttp.readyState != 4) {return;}
- $('#foo').fadeOut();
- foo.innerHTML = xmlhttp.responseText;
- $('#foo').fadeIn();
- setTimeout("f()", 1000);
+ $('#foo').fadeOut(1000);
+ $('#foo').innerHTML = xmlhttp.responseText;
+ $('#foo').fadeIn(1000);
+ setTimeout("f()", 5000);
 }
 
 f();

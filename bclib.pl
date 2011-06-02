@@ -895,10 +895,14 @@ sub nadex_quotes {
 
    # convert updated to time + calculate minute
    # str2time() defaults to today
+   debug("UPTIME: $updated");
    my($uptime) = str2time("$updated EDT5EST");
 
+   # TODO: below is ugly, there should be better way
    # however, if that's in the future, assume yesterday update
    if ($uptime > time()) {$uptime-=86400;}
+   # if it's too far in the past, add one day
+   if (time() - $uptime > 86400) {$uptime+=86400;}
 
    # grab values
    my(@vals)=();
@@ -1231,30 +1235,47 @@ Posts $body as a new WordPress post with the following options:
   - site: site to post to
   - author: post author
   - password: password for posting
-  - subject: subject/title of post
+  - subject: subject/title of post (if editing, use current subject)
   - timestamp: UNIX timestamp of post
   - category: category of post
   - live: whether to make post live instantly (default=no)
 
+Optional:
+
+  - action: wp.editPage to edit existing page/post
+  - postid: id of page/post (if editing existing)
+  - wp_slug: slug (autoset for new posts)
+
 =cut
 
 sub post_to_wp {
-  # this function has no pass-by-position parameters
   my($body, $options) = @_;
   my(%opts) = parse_form($options);
-  defaults("live=0");
+  my(%defaults) = parse_form("live=0&action=metaWeblog.newPost");
+  for $i (keys %defaults) {
+    $opts{$i} = $defaults{$i} unless (exists $opts{$i});
+  }
 
   # timestamp (in ISO8601 format)
   my($timestamp) = strftime("%Y%m%dT%H:%M:%S", gmtime($opts{timestamp}));
+
+  # if editing, new strings to insert in request
+  my($strs);
+  if ($opts{postid}) {
+    @strs = ("<param><value><string>$opts{postid}</string></value></param>",
+	     "<member><name>wp_slug</name><value><string>$opts{wp_slug}</string></value></member>");
+  }
 
 my($req) =<< "MARK";
 
 <?xml version="1.0"?>
 <methodCall> 
-<methodName>metaWeblog.newPost</methodName> 
+<methodName>$opts{action}</methodName> 
 <params>
 
 <param><value><string>x</string></value></param>
+
+$strs[0]
 
 <param><value><string>$opts{author}</string></value></param> 
 
@@ -1262,6 +1283,8 @@ my($req) =<< "MARK";
 
 <param> 
 <struct> 
+
+$strs[1]
 
 <member><name>categories</name> 
 <value><array><data><value>$opts{category}</value></data></array></value> 

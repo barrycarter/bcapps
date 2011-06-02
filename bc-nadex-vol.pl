@@ -56,6 +56,7 @@ for $strike (sort keys %{$hash{USDCAD}}) {
   for $exp (sort keys %{$hash{USDCAD}{$strike}}) {
     %k = %{$hash{USDCAD}{$strike}{$exp}};
     ($bid, $ask, $updated) = ($k{bid}, $k{ask}, $k{updated});
+    debug("UPDATED: $updated");
 
     # obtain FOREX quote when this NADEX quote was last updated
     my($under);

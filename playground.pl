@@ -5,16 +5,97 @@
 
 # chunks are normally separated with 'die "TESTING";'
 
+require "bclib.pl";
+
+# update existing page attempt
+# info about my blog
+$pw = read_file("/home/barrycarter/bc-wp-pwd.txt"); chomp($pw);
+$author = "barrycarter";
+$wp_blog = "wordpress.barrycarter.info";
+
+post_to_wp(`date`, "action=wp.editPage&site=$wp_blog&author=$author&password=$pw&postid=9410&wp_slug=nadex&live=1");
+
+sub post_to_wp_test {
+  my($body, $options) = @_;
+  my(%opts) = parse_form($options);
+  defaults("live=0");
+
+  # timestamp (in ISO8601 format)
+  my($timestamp) = strftime("%Y%m%dT%H:%M:%S", gmtime($opts{timestamp}));
+
+my($req) =<< "MARK";
+
+<?xml version="1.0"?>
+<methodCall> 
+<methodName>wp.editPage</methodName> 
+<params>
+
+<param><value><string>x</string></value></param>
+
+<param><value><string>9410</string></value></param>
+
+<param><value><string>$opts{author}</string></value></param> 
+
+<param><value><string>$opts{password}</string></value></param>
+
+<param> 
+<struct> 
+
+<member><name>categories</name> 
+<value><array><data><value>$opts{category}</value></data></array></value> 
+</member> 
+
+<member>
+<name>description</name> 
+<value><string><![CDATA[$body]]></string></value>
+</member> 
+
+<member> 
+<name>title</name> 
+<value>$opts{subject}</value> 
+</member> 
+
+<member> 
+<name>dateCreated</name> 
+<value>
+<dateTime.iso8601>$timestamp</dateTime.iso8601> 
+</value> 
+</member> 
+
+</struct> 
+</param> 
+
+<param><value><boolean>$live</boolean></value></param> 
+
+</params></methodCall>
+MARK
+;
+
+  write_file($req,"/tmp/request");
+  debug($req);
+
+  if ($globopts{fake}) {return;}
+
+  # curl sometimes sends 'Expect: 100-continue' which WP doesn't like.
+  # The -H 'Expect:' below that cancels this
+  system("curl -H 'Expect:' -o /tmp/answer --data-binary \@/tmp/request http://$opts{site}/xmlrpc.php");
+
+  debug($req);
+
+  debug(read_file("/tmp/answer"));
+}
+
+die "TESTING";
+
 print "Content-type: text/html\n\n";
 
-print `date`;
+print `fortune`;
 
 exit(0);
 
 die "TESTING";
 
 push(@INC,"/usr/local/lib");
-require "bclib.pl";
 
 =item box_option_value($p0, $v, $p1, $p2, $t1, $t2)
 
