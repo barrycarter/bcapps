@@ -38,19 +38,30 @@ print A "nadex={\n";
 
 # Table header
 # expdatetime, strike, bid, ask, bidvol, askvol, pricetime, underatpricetime
-print "<table border>\n<tr>\n";
-print "<th>Expiration</th>\n";
-print "<th>Strike</th>\n";
-print "<th>Bid</th>\n";
-print "<th>Ask</th>\n";
-print "<th>Volt<br>(Bid)</th>\n";
-print "<th>Volt<br>(Ask)</th>\n";
-print "<th>Exp Time<br>(hours)</th>\n";
-print "<th>Pips<br>Away</th>\n";
-print "<th>Last Updated</th>\n";
-print "<th>Underlying<br>Price</th>\n";
-print "<th>Notes</th>\n";
-print "</tr>\n";
+
+$str = << "MARK";
+
+I know this table looks horrible. Please contact me if you know how to
+fix it. Do not rely on this information. I update this table
+"manually", there are no automated upates. Does not include intraday
+options. Void where prohibited.
+
+<table border><tr>
+<th>Expiration</th>
+<th>Strike</th>
+<th>Bid</th>
+<th>Ask</th>
+<th>Volt<br>(Bid)</th>
+<th>Volt<br>(Ask)</th>
+<th>Exp Time<br>(hours)</th>
+<th>Pips<br>Away</th>
+<th>Last Updated</th>
+<th>Underlying<br>Price</th>
+<th>Notes</th>
+</tr>
+
+MARK
+;
 
 for $strike (sort keys %{$hash{USDCAD}}) {
   for $exp (sort keys %{$hash{USDCAD}{$strike}}) {
@@ -108,19 +119,19 @@ for $strike (sort keys %{$hash{USDCAD}}) {
     print A "{$strike, $exp, $bid, $ask, $under, $updated},\n";
 
     # printing table here just to have some output; real work is above
-    print "<tr>\n";
-    print strftime("<td>%F<br>%H:%M:%S ET</td>\n", localtime($exp));
-    print "<td>$strike</td>\n";
-    print "<td>$bid</td>\n";
-    print "<td>$ask</td>\n";
-    print "<td>$bidsdy</td>\n";
-    print "<td>$asksdy</td>\n";
-    print sprintf("<td>%0.2f</td>\n", ($exp-$updated)/3600);
-    print sprintf("<td>%d</td>\n", 10000*($strike-$under));
-    print strftime("<td>%F<br>%H:%M:%S ET</td>\n", localtime($updated));
-    print "<td>$under</td>\n";
-    print "<td>$notes</td>\n";
-    print "</tr>\n";
+    $str.= "<tr>\n";
+    $str.= strftime("<td>%F<br>%H:%M:%S ET</td>\n", localtime($exp));
+    $str.= "<td>$strike</td>\n";
+    $str.= "<td>$bid</td>\n";
+    $str.= "<td>$ask</td>\n";
+    $str.= "<td>$bidsdy</td>\n";
+    $str.= "<td>$asksdy</td>\n";
+    $str.= sprintf("<td>%0.2f</td>\n", ($exp-$updated)/3600);
+    $str.= sprintf("<td>%d</td>\n", 10000*($strike-$under));
+    $str.= strftime("<td>%F<br>%H:%M:%S ET</td>\n", localtime($updated));
+    $str.= "<td>$under</td>\n";
+    $str.= "<td>$notes</td>\n";
+    $str.= "</tr>\n";
 
     debug("$strike/$exp/$bid/$ask/$updated/$under");
     debug("$logdiff/$exptime/$bidsn/$asksn");
@@ -129,5 +140,20 @@ for $strike (sort keys %{$hash{USDCAD}}) {
   }
 }
 
-print "</table>\n";
+$str.="</table>\n";
+
+# Make current time part of subject
+$subject= strftime("NADEX Implied Volatility(s) (as of %F %H:%M:%S ET)", localtime(time()));
+
+# info about my blog
+# TODO: put this somewhere where any prog can get it, but not in
+# bclib.pl, since other people don't want it
+
+$pw = read_file("/home/barrycarter/bc-wp-pwd.txt"); chomp($pw);
+$author = "barrycarter";
+$wp_blog = "wordpress.barrycarter.info";
+
+# update on blog
+post_to_wp($str, "action=wp.editPage&site=$wp_blog&author=$author&password=$pw&postid=9410&wp_slug=nadex&live=1&subject=$subject");
+
 print A "}\n";

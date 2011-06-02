@@ -1310,7 +1310,7 @@ $strs[1]
 </struct> 
 </param> 
 
-<param><value><boolean>$live</boolean></value></param> 
+<param><value><boolean>$opts{live}</boolean></value></param> 
 
 </params></methodCall>
 MARK
