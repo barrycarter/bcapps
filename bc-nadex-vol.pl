@@ -29,6 +29,8 @@ $invnor=~s/\s+/ /isg;
 # Obtain NADEX quotes and FOREX quotes
 %hash = nadex_quotes("USD-CAD");
 
+unless (%hash) {die "No data, stopping";}
+
 # NADEX runs on Eastern time
 # TODO: this may break when we stop daylight time(?)
 $ENV{TZ} = "EST5EDT";
@@ -139,8 +141,20 @@ for $strike (sort keys %{$hash{USDCAD}}) {
 
 $str.="</table>\n";
 
-# Make current time part of subject
-$subject= strftime("NADEX USDCAD Implied Volatility(s) (%F %H:%M:%S ET)", localtime(time()));
+# attempt to generate good looking table
+# TODO: arguably the most hideous code I've ever written
+
+$str2 = $str;
+$str2=~s/^.*<table/<table/si;
+write_file($str2, "/tmp/nadex-vol.html");
+system("html2ps -s 0.8 /tmp/nadex-vol.html 1> /tmp/nadex-vol.ps");
+system("convert -trim -density 200x200 /tmp/nadex-vol.ps /tmp/nadex-vol.png");
+system("base64 /tmp/nadex-vol.png > /tmp/nadex-vol.b64");
+$b64 = read_file("/tmp/nadex-vol.b64");
+$b64=~s/\s//isg;
+
+# TODO: ugly ugly ugly!
+$str=~s%horrible.%horrible (<a href='data:image/png;base64,$b64'>here's how it should look</a>)%si;
 
 # info about my blog
 # TODO: put this somewhere where any prog can get it, but not in
@@ -150,7 +164,11 @@ $pw = read_file("/home/barrycarter/bc-wp-pwd.txt"); chomp($pw);
 $author = "barrycarter";
 $wp_blog = "wordpress.barrycarter.info";
 
+# Make current time part of subject, and also actual timestamp
+$now = time(); #<h>for all good men to come to the aid of their country</h>
+$subject= strftime("NADEX USDCAD Implied Volatility(s) (%F %H:%M:%S ET)", localtime($now));
+
 # update on blog
-post_to_wp($str, "action=wp.editPage&site=$wp_blog&author=$author&password=$pw&postid=9410&wp_slug=nadex&live=1&subject=$subject");
+post_to_wp($str, "action=wp.editPage&site=$wp_blog&author=$author&password=$pw&postid=9410&wp_slug=nadex&live=1&subject=$subject&timestamp=$now");
 
 print A "}\n";
