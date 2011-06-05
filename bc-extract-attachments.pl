@@ -14,100 +14,31 @@ require "bclib.pl";
 open(A,$file)||die("Can't open $file, $!");
 
 chdir(tmpdir("bc-extract"));
+debug("DIR: $ENV{PWD}");
 
 while (<A>) {
   # handle message we just saw (handle_msg'll ignore empty call on first msg)
   if (/^From /) {
     $num++;
-    handle_msg($msg);
+    handle_attachment($msg);
     $msg=$_;
   } else {
     $msg = "$msg$_";
   }
-
-  if ($num>10) {die "TESTING";}
 }
 
-sub handle_msg {
-  my($msg) = @_;
-  my($fname, $attach);
-
-#  debug("handle_msg($msg)");
-
-  # if message is totally blank, ignore
-  unless ($msg) {
-    warnlocal("message is empty");
-    return;
-  }
-
-  # divide into header/body
-  unless ($msg=~/^(.*?)\n\n(.*)$/s) {
-    warnlocal("message has no header/body");
-    return;
-  }
-
-  my($head,$body)=($1,$2);
-
-  # fix continued lines in head
-  $head=~s/\n\s+/ /sg;
-
-  unless ($head=~/^Content-[tT]ype: (.*?)(;.*)?$/m) {
-    warnlocal("message has no content-type in header");
-    return;
-  }
-
-  ($type,$extra)=($1,$2);
-
-  # cleanup odd spaces
-  $type = trim($type);
-
-  # uninteresting messages
-  if ($type=~m!text/plain!i || $type=~m!text/html!i || $type=~m!multipart/report!i) {
-    debug("message consists only of text or other uninteresting attachments");
-    return;
-  }
-
-  # message contains at most one attachment
-  if ($type eq "application/octet-stream" || $type eq "image/jpeg") {
-    handle_attach($body);
-    return;
-  }
-
-  # types we can handle
-  unless ($type=~m!multipart/(mixed|alternative|related|signed)!i || $type eq "text") {
-    warnlocal("Unknown type: $type");
-    return;
-  }
-
-  # main case below, file contains multiple MIME attachments
-  unless ($extra=~/boundary=\"(.*?)\"/i || $extra=~/boundary=([^\s]+)/i) {
-    warnlocal("message has no MIME boundary");
-    # <h>I need boundaries, man</h>
-    return;
-  }
-
-  my($boundary)=$1;
-  debug("BOUNDARY: $boundary");
-
-  while ($body=~s/\n\-\-\Q$boundary\E(.*?)\n\-\-\Q$boundary\E/\n--$boundary/s) {
-    $attach=$1;
-    handle_attachment($attach);
-  }
-
-  # if the last attachment is incomplete, handle it below
-  unless ($body=~s/^\s*\-\-\Q$boundary\E\n//s) {
-    warnlocal("LEFTOVER: $body");
-    return;
-  }
-
-  handle_attachment($body);
-}
+# last one
+handle_attachment($msg);
 
 sub handle_attachment {
   my($a)=@_;
-  my($fname);
+  my($fname, $ctype, $bound);
+  # need a global to preserve uniqueness
   $attachnum++;
-  # split attachment into head and body pieces
+  debug("ATTACHNUM: $attachnum");
+
+  # split attachment (which might be entire msg) into head and body pieces
+  # this also covers empty case
   unless ($a=~/^(.*?)\n\n(.*)$/s) {
     warnlocal("Can't split attachment into head/body, ignoring");
     return;
@@ -115,18 +46,37 @@ sub handle_attachment {
 
   my($head,$body)=($1,$2);
 
-  unless ($head=~/Content-[Tt]ype: ([^;\n]*)/m) {
+  # if multipart, get content-type and boundary (if not, just get content-type)
+  if ($head=~/Content-[Tt]ype: (.*?); boundary="(.*?)"/m) {
+    ($ctype, $bound) = ($1,$2);
+  } elsif ($head=~/Content-[Tt]ype: (.*?)(\;|$)/m) {
+    $ctype = $1;
+  } else {
     warnlocal("Can't find content-type, ignoring");
     return;
   }
 
-  $ctype=$1;
+  my($ctype)=$1;
 
-  # boring attachment
+  # is this a multipart msg? if so, recurse
+  if ($ctype=~m!multipart/(.*?)!i) {
+    unless ($bound) {
+      warnlocal("Multipart message has no boundary");
+      return;
+    }
+
+    debug("multipart msg, boundary: $bound");
+    while ($body=~s/\n\-\-\Q$bound\E(.*?)\n\-\-\Q$bound\E/\n--$bound/s) {
+      $attach=$1;
+      handle_attachment($attach);
+    }
+    return;
+  }
+
+  # otherwise, regular old attachment
+  # we don't want to extract text/html attachments
   if ($ctype=~m!text/(plain|html)!) {return();}
 
-  debug("CTYPE: $ctype, ATTACH:",$a);
-  # TODO: combine this code w/ code above for JPEG/octetstream (why different?)
   if ($head=~/name=\"(.*?)\"/) {$fname=$1;} else {$fname="";}
   write_file($body, "attach-$attachnum.b64");
   system("base64 -d attach-$attachnum.b64 > attach-$attachnum.dat");

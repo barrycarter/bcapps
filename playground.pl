@@ -7,13 +7,91 @@
 
 require "bclib.pl";
 
+=item xmlrpc($site, $method, \@params, $options)
+
+Runs the XMLRPC $method on $site, using @params as the parameters
+(must be a listref, not a list).
+
+$site is the XMLRPC endpoint (eg, http://wordpress.barrycarter.info/xmlrpc.php)
+
+@params are in the format "value:type" [currently can't pass values
+with colons in them... \: does NOT work as escape <h>though it does
+make a cute emoticon</h>]
+
+$options currently unused
+
+TODO: only supports simple non-struct requests at the moment
+
+=cut
+
+sub xmlrpc {
+  chdir(tmpdir());
+  my($site, $method, $params, $options) = @_;
+  my(@params) = @$params;
+  my($call) = << "MARK";
+<?xml version="1.0"?><methodCall>
+<methodName>$method</methodName><params>
+MARK
+;
+
+  for $i (@params) {
+    if ($i=~/^(.*?):(.*)$/) {
+      $call .= "<param><value><$2>$1</$2></value></param>\n";
+    } else {
+      $call .= "<param><value>$i</value></param>\n";
+    }
+  }
+
+  $call .= "</params></methodCall>";
+  write_file($call, "input.txt");
+
+  # make the call
+  ($out, $err, $res) = cache_command("curl --data-binary \@input.txt http://wordpress.barrycarter.info/xmlrpc.php");
+
+  return $out;
+
+}
+
+
+# RPC-XML
+
+# get password
+$pw = read_file("/home/barrycarter/bc-wp-pwd.txt"); chomp($pw);
+
+debug(xmlrpc("http://wordpress.barrycarter.info/xmlrpc.php", "mt.getRecentPostTitles", ["x", "admin", $pw, 10]));
+
+die "TESTING";
+
+debug(xmlrpc("http://wordpress.barrycarter.info/xmlrpc.php", "blogger.getRecentPosts", ["x", "x", "admin", $pw, 10]));
+
+die "TESTING";
+
+# using raw below so i can cache and stuff
+
+$req=<<"MARK";
+<?xml version="1.0"?><methodCall>
+<methodName>mt.getRecentPostTitles</methodName>
+<params>
+<param><value>x</value></param>
+<param><value>admin</value></param>
+<param><value>$pw</value></param>
+<param><value><int>10</int></value></param>
+</params>
+</methodCall>
+MARK
+;
+
+write_file($req,"/tmp/rpc1.txt");
+system("curl -o /tmp/rpc2.txt --data-binary \@/tmp/rpc1.txt http://wordpress.barrycarter.info/xmlrpc.php");
+# system("curl -o /tmp/rpc2.txt --data-binary \@/tmp/rpc1.txt http://joomla.barrycarter.info/xmlrpc/index.php");
+
+die "TESTING";
+
 # update existing page attempt
 # info about my blog
 $pw = read_file("/home/barrycarter/bc-wp-pwd.txt"); chomp($pw);
 $author = "barrycarter";
 $wp_blog = "wordpress.barrycarter.info";
-
-post_to_wp(`date`, "action=wp.editPage&site=$wp_blog&author=$author&password=$pw&postid=9410&wp_slug=nadex&live=1");
 
 sub post_to_wp_test {
   my($body, $options) = @_;
@@ -113,33 +191,6 @@ sub box_option_value {
 
 
 
-
-die "TESTING";
-
-# RPC-XML
-
-# get password
-$pw = read_file("/home/barrycarter/bc-wp-pwd.txt"); chomp($pw);
-
-# using raw below so i can cache and stuff
-
-$req=<<"MARK";
-<?xml version="1.0"?><methodCall>
-<methodName>blogger.getRecentPosts</methodName>
-<params>
-<param><value>x</value></param>
-<param><value>x</value></param>
-<param><value>admin</value></param>
-<param><value>$pw</value></param>
-<param><value><int>10</int></value></param>
-</params>
-</methodCall>
-MARK
-;
-
-write_file($req,"/tmp/rpc1.txt");
-# system("curl -o /tmp/rpc2.txt --data-binary \@/tmp/rpc1.txt http://wordpress.barrycarter.info/xmlrpc.php");
-system("curl -o /tmp/rpc2.txt --data-binary \@/tmp/rpc1.txt http://joomla.barrycarter.info/xmlrpc/index.php");
 
 die "TESTING";
 

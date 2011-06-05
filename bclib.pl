@@ -485,6 +485,9 @@ NOTE: Appending $$ to filename below avoids race condition when forking.
 =cut
 
 sub tmpdir {
+  # if we already have a tmpdir (perhaps passed as --tmpdir=), use it
+  if ($globopts{tmpdir}) {return $globopts{tmpdir};}
+
   my($prefix) = @_;
   unless ($prefix) {$prefix="dir";}
   my(@lets)=("a".."z","A".."z","0".."9");
@@ -501,6 +504,9 @@ sub tmpdir {
 
   mkdir($file);
   push(@tmpdirs, $file);
+  # only create one tmpdir per program: lets subroutines call tmpdir w/o
+  # fear of cluttering up /tmp
+  $globopts{tmpdir} = $file;
   return($file);
 }
 
@@ -1328,6 +1334,52 @@ MARK
   debug($req);
 
   debug(read_file("/tmp/answer"));
+}
+
+
+=item xmlrpc($site, $method, \@params, $options)
+
+Runs the XMLRPC $method on $site, using @params as the parameters
+(must be a listref, not a list).
+
+$site is the XMLRPC endpoint (eg, http://wordpress.barrycarter.info/xmlrpc.php)
+
+@params are in the format "value:type" [currently can't pass values
+with colons in them... \: does NOT work as escape <h>though it does
+make a cute emoticon</h>]
+
+$options currently unused
+
+TODO: only supports simple non-struct requests at the moment
+
+=cut
+
+sub xmlrpc {
+  chdir(tmpdir());
+  my($site, $method, $params, $options) = @_;
+  my(@params) = @$params;
+  my($call) = << "MARK";
+<?xml version="1.0"?><methodCall>
+<methodName>$method</methodName><params>
+MARK
+;
+
+  for $i (@params) {
+    if ($i=~/^(.*?):(.*)$/) {
+      $call .= "<param><value><$2>$1</$2></value></param>\n";
+    } else {
+      $call .= "<param><value>$i</value></param>\n";
+    }
+  }
+
+  $call .= "</params></methodCall>";
+  write_file($call, "input.txt");
+
+  # make the call
+  ($out, $err, $res) = cache_command("curl --data-binary \@input.txt http://wordpress.barrycarter.info/xmlrpc.php");
+
+  return $out;
+
 }
 
 # cleanup files created by my_tmpfile (unless --keeptemp set)
