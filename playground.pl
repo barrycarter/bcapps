@@ -7,51 +7,9 @@
 
 require "bclib.pl";
 
-=item xmlrpc($site, $method, \@params, $options)
+debug(greeks_bin(.9808+.0045, .9859, 2/24/365.2425, .125));
 
-Runs the XMLRPC $method on $site, using @params as the parameters
-(must be a listref, not a list).
-
-$site is the XMLRPC endpoint (eg, http://wordpress.barrycarter.info/xmlrpc.php)
-
-@params are in the format "value:type" [currently can't pass values
-with colons in them... \: does NOT work as escape <h>though it does
-make a cute emoticon</h>]
-
-$options currently unused
-
-TODO: only supports simple non-struct requests at the moment
-
-=cut
-
-sub xmlrpc {
-  chdir(tmpdir());
-  my($site, $method, $params, $options) = @_;
-  my(@params) = @$params;
-  my($call) = << "MARK";
-<?xml version="1.0"?><methodCall>
-<methodName>$method</methodName><params>
-MARK
-;
-
-  for $i (@params) {
-    if ($i=~/^(.*?):(.*)$/) {
-      $call .= "<param><value><$2>$1</$2></value></param>\n";
-    } else {
-      $call .= "<param><value>$i</value></param>\n";
-    }
-  }
-
-  $call .= "</params></methodCall>";
-  write_file($call, "input.txt");
-
-  # make the call
-  ($out, $err, $res) = cache_command("curl --data-binary \@input.txt http://wordpress.barrycarter.info/xmlrpc.php");
-
-  return $out;
-
-}
-
+die "TESTING";
 
 # RPC-XML
 

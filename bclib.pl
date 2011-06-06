@@ -1382,6 +1382,117 @@ MARK
 
 }
 
+=item findroot(\&f, $x1, $x2, $e, $maxsteps=50)
+
+Find where f [a one-argument function] reaches 0 (to an accuracy of
+$e) between $x1 and $x2. Stop if $maxsteps reached before specified
+accuracy
+
+<h>I wrote this function years ago, so it's not as polished as my
+current coding</h>
+
+=cut
+
+sub findroot {
+    my($f,$x1,$x2,$e,$maxsteps)=@_;
+    if ($maxsteps==0) {$maxsteps=50;}
+    my($le,$ri)=($x1,$x2);
+    my($steps,$mid,$fmid);
+
+    # value of the function at interval edges
+    my($fle,$fri)=(&$f($le),&$f($ri));
+
+    # same sign on both sides of interval?
+    if (signum($fle)==signum($fri)) {
+      warnlocal("INVALID BINARY SEARCH");
+      return();
+    }
+
+    # infinite loop broken by $maxsteps
+    for (;;) {
+	$steps++;
+
+	# find value at midpoint
+	$mid=($le+$ri)/2;
+	$fmid=&$f($mid);
+
+	# close enough? return midpoint
+	if (abs($fmid)<$e) {return($mid);}
+
+	# too many steps?
+	if ($steps>$maxsteps) {
+	  warnlocal("NO ROOT FOUND");
+	  return();
+	}
+
+	# find which side the midpoint matches and continue w/ FOR loop
+	# NOTE: could've used recursion here, though I doubt it'e more efficient
+	if (signum($fle)==signum($fmid)) {
+	    $le=$mid;
+	    $fle=$fmid;
+	} else {
+	    $ri=$mid;
+	    $fri=$fmid;
+	}
+    }
+}
+
+=item findmin (\&f,$a,$d,$e,$maxsteps=50)
+
+A non-calculus technique (the "interval technique") to find the
+minimum of f [a one-argument function] on the interval [$a, $d],
+provided that:
+
+  - f is continuous on [$a,$d]
+  - f has a UNIQUE local minimum in [$a,$d]
+  - f has no local maximum in [$a,$d]
+  - <h>Other conditions I've now forgotten</h>
+
+<h>Like findroot, I wrote this ages ago, so my coding style sucks more
+than normal</h>
+
+=cut
+
+sub findmin {
+    my($f,$a,$d,$e,$maxsteps,$steps,$b,$c)=@_;
+    if ($maxsteps==0) {$maxsteps=50;}
+    
+    for (;;) {
+	$steps++;
+
+	# break interval into 3 pieces, and find function value on those pieces
+	# intervals are [$a,$b], [$b,$c], and [$c,$d]
+	($b,$c)=($a*2/3+$d/3,$a/3+$d*2/3);
+	($fa,$fb,$fc,$fd)=(&$f($a),&$f($b),&$f($c),&$f($d));
+
+	# too many steps?
+	if ($steps>$maxsteps) {
+	  warnlocal("NO MIN FOUND");
+	  return();
+	}
+
+	if ($fc>=$fb && $fd>=$fc) {
+	  # if f($d) > f($c) > f($b), then min can't be in [$c,$d]
+	  debug("OMIT SEGMENT 3");
+	  $d=$c;
+	} elsif ($fb<=$fa && $fc<=$fb) {
+	  # if f($a) > f($b) > f($c), min can't be in [$a,$b]
+	  debug("OMIT SEGMENT 1");
+	  $a=$b;
+	} elsif ($fb<=$fa && $fd>=$fc) {
+	  # if f($b) < f($a) AND f($c) < $f(d), min must be in [$b,$c]
+	  debug("OMIT SEGMENTS 1 and 3");
+	  ($a,$d)=($b,$c);
+	} else {
+	  # impossible, unless intial parameters bad
+	  warn("INVALID MIN SEARCH");
+	  return();
+	}
+
+	if (($d-$a)<$e) {return(($a+$d)/2);}
+    }
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 
 sub END {
