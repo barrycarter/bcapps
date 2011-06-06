@@ -7,6 +7,12 @@
 
 require "bclib.pl";
 
+sub f7 {$_[0]*$_[0]-5;}
+
+debug(findroot(\&f7, 0, 5, .001));
+
+die "TESTING";
+
 debug(greeks_bin(.9808+.0045, .9859, 2/24/365.2425, .125));
 
 die "TESTING";

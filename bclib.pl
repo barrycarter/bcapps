@@ -1403,7 +1403,12 @@ sub findroot {
     my($fle,$fri)=(&$f($le),&$f($ri));
 
     # same sign on both sides of interval?
-    if (signum($fle)==signum($fri)) {
+
+    # TODO: same sign -> product is positive (ugly workaround to
+    # non-imported signum function)
+
+    if ($fle*$fri > 0) {
+      debug("FLE: $fle, FRI: $fri");
       warnlocal("INVALID BINARY SEARCH");
       return();
     }
@@ -1427,7 +1432,8 @@ sub findroot {
 
 	# find which side the midpoint matches and continue w/ FOR loop
 	# NOTE: could've used recursion here, though I doubt it'e more efficient
-	if (signum($fle)==signum($fmid)) {
+	# NOTE: ugly use to check same signedness here, see note above
+	if ($fle*$fmid>0) {
 	    $le=$mid;
 	    $fle=$fmid;
 	} else {
@@ -1439,9 +1445,9 @@ sub findroot {
 
 =item findmin (\&f,$a,$d,$e,$maxsteps=50)
 
-A non-calculus technique (the "interval technique") to find the
-minimum of f [a one-argument function] on the interval [$a, $d],
-provided that:
+A non-calculus technique (the "interval technique", <h>formally known
+as "Caesar's divisa in partes tres" method</h>) to find the minimum of
+f [a one-argument function] on the interval [$a, $d], provided that:
 
   - f is continuous on [$a,$d]
   - f has a UNIQUE local minimum in [$a,$d]
