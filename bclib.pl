@@ -1193,10 +1193,12 @@ Returned values (in order):
 
 # greeks + value of binary option
 sub greeks_bin {
+  debug("GREEKS_BIN",@_,"ENDARG");
   my($cur, $str, $exp, $vol) = @_;
 
   # nesting subroutines = bad?
   sub bin_value {
+    debug("BIN_VALUE",@_,"ENDARG");
     my($cur, $str, $exp, $vol) = @_;
     return uprob(log($str/$cur)/($vol*sqrt($exp)));
   }

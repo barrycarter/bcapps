@@ -2,6 +2,7 @@
 
 # Computes implicit volatility of NADEX binary options. Options:
 #  -under=x: assume underlying price is x, do not call forex_quote
+#  -nopost: don't post results to my blog, just calculate them
 
 require "bclib.pl";
 
@@ -48,8 +49,8 @@ I know this table looks horrible. Please contact me if you know how to fix it. D
 <table border><tr>
 <th>Expiration</th>
 <th>Strike</th>
-<th>Bid</th>
-<th>Ask</th>
+<th>Bid<br>(hover for Greeks)</th>
+<th>Ask<br>(no Greeks yet)</th>
 <th>Volt<br>(Bid)</th>
 <th>Volt<br>(Ask)</th>
 <th>Exp Time<br>(hours)</th>
@@ -112,6 +113,13 @@ for $strike (sort keys %{$hash{USDCAD}}) {
 
     # compute (bid) volatility using new function I created
     $newvol = bin_volt($bid, $strike, ($exp-$updated)/86400/365.2425, $under);
+    # and the greeks (experimental on bid only for now)
+    # $val is obviously redundant and just a  check
+    ($val, $delta, $theta, $vega) = greeks_bin($under, $strike, ($exp-$updated)/86400/365.2425, $newvol);
+    $title = sprintf("DELTA/PIP: %0.4f, THETA/HOUR: %0.4f, VEGA/.01: %0.4f",
+		     $delta*100, $theta*100, $vega*100);
+    debug("GREEKS: $val/$delta/$theta/$vega");
+
     debug("NEWVOL: $newvol");
 
     # output for Mathematica (doesn't really need all of these, but...)
@@ -121,7 +129,7 @@ for $strike (sort keys %{$hash{USDCAD}}) {
     $str.= "<tr>\n";
     $str.= strftime("<td>%F<br>%H:%M:%S ET</td>\n", localtime($exp));
     $str.= "<td>$strike</td>\n";
-    $str.= "<td>$bid</td>\n";
+    $str.= "<td title='$title'>$bid</td>\n";
     $str.= "<td>$ask</td>\n";
     $str.= "<td>$bidsdy</td>\n";
     $str.= "<td>$asksdy</td>\n";
@@ -168,7 +176,9 @@ $wp_blog = "wordpress.barrycarter.info";
 $now = time(); #<h>for all good men to come to the aid of their country</h>
 $subject= strftime("NADEX USDCAD Implied Volatility(s) (%F %H:%M:%S ET)", localtime($now));
 
-# update on blog
-post_to_wp($str, "action=wp.editPage&site=$wp_blog&author=$author&password=$pw&postid=9410&wp_slug=nadex&live=1&subject=$subject&timestamp=$now");
+# update on blog (unless --nopost)
+unless ($globopts{nopost}) {
+  post_to_wp($str, "action=wp.editPage&site=$wp_blog&author=$author&password=$pw&postid=9410&wp_slug=nadex&live=1&subject=$subject&timestamp=$now");
+}
 
 print A "}\n";
