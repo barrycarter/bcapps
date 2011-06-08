@@ -6,7 +6,10 @@
 
 require "bclib.pl";
 
-# TODO: add theta, delta, vega, etc, based on calculated volt(?)
+$now = time(); #<h>for all good men to come to the aid of their country</h>
+
+# TODO: add theta, delta, vega, etc, based on calculated volt(?) [done
+# for bid, now for ask]
 
 # HACK: TODO: this only works if underlying prices change slowly: if
 # there's a big change <h>(say USDJPY dropping 300 points in
@@ -65,6 +68,13 @@ MARK
 
 for $strike (sort keys %{$hash{USDCAD}}) {
   for $exp (sort keys %{$hash{USDCAD}{$strike}}) {
+
+    # already expired?
+    if ($exp < $now) {
+      warnlocal("IGNORING EXPIRED OPTION: $strike/$exp");
+      next;
+    }
+
     %k = %{$hash{USDCAD}{$strike}{$exp}};
     ($bid, $ask, $updated) = ($k{bid}, $k{ask}, $k{updated});
     debug("UPDATED: $updated");
@@ -173,7 +183,6 @@ $author = "barrycarter";
 $wp_blog = "wordpress.barrycarter.info";
 
 # Make current time part of subject, and also actual timestamp
-$now = time(); #<h>for all good men to come to the aid of their country</h>
 $subject= strftime("NADEX USDCAD Implied Volatility(s) (%F %H:%M:%S ET)", localtime($now));
 
 # update on blog (unless --nopost)

@@ -1,0 +1,5 @@
+# Useful one line "scripts"
+
+# follow someone's tweets in real time (19785284 = my twitter id)
+# can separate multiple ids by commas
+curl -u username:password http://stream.twitter.com/1/statuses/filter.json -d "follow=19785284"

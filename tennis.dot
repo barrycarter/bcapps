@@ -1,0 +1,26 @@
+# DOT file for game of tennis
+digraph x {
+
+_0_0 [label="love,love"];
+_15_0 [label="15,love"];
+_30_0 [label="30,love"];
+_40_0 [label="40,love"];
+_60_0 [label="left shutsout right"];
+
+_0_0 [label="love,love"];
+_15_0 [label="15,love"];
+_30_0 [label="30,love"];
+_40_0 [label="40,love"];
+_60_0 [label="left shutsout right"];
+
+_0_0 [label="love,love"];
+_15_0 [label="15,love"];
+_30_0 [label="30,love"];
+_40_0 [label="40,love"];
+_60_0 [label="left shutsout right"];
+
+
+
+
+# [label="right scores";]
+}

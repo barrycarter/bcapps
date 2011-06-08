@@ -1198,8 +1198,11 @@ sub greeks_bin {
 
   # nesting subroutines = bad?
   sub bin_value {
-    debug("BIN_VALUE",@_,"ENDARG");
     my($cur, $str, $exp, $vol) = @_;
+
+    # easy case
+    if ($exp <= 0) {return ($cur>$str?1:0);}
+
     return uprob(log($str/$cur)/($vol*sqrt($exp)));
   }
 
@@ -1207,6 +1210,7 @@ sub greeks_bin {
   my($val) = bin_value($cur, $str, $exp, $vol);
   # TODO: this is NOT the correct way to calculate delta, theta, etc
   my($delta) = bin_value($cur+.0001, $str, $exp, $vol) - $val;
+  # TODO: this could yield a negative expiration time
   my($theta) = bin_value($cur, $str, $exp-1/365.2425/24, $vol) - $val;
   my($vega) = bin_value($cur, $str, $exp, $vol+.01) - $val;
 
