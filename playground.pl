@@ -7,6 +7,24 @@
 
 require "bclib.pl";
 
+
+debug(strftime("%Y%m%d.%H%M%S", gmtime(0)));
+
+die "TESTING";
+
+# does Perl call END on die
+
+
+sub END {
+  debug("$? <- value");
+}
+
+
+exit();
+
+
+
+
 # twitter lib attempt
 
 =item twitter_get_info($sn)

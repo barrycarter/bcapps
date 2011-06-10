@@ -842,6 +842,7 @@ sub nadex_quotes {
  # into)
  $cookie=~/(demo|www)\.nadex\.com/isg;
  my($prehost) = $1;
+ unless ($prehost) {warnlocal("nadex_quotes fails; bad cookie"); return;}
  debug("PREHOST: $prehost, COOKIE: $cookie");
 
  # TODO: using /tmp here is ugly, but I don't see a way around it.
@@ -1235,6 +1236,8 @@ NOTE: see older versions of bc-nadex-vol.pl for formula derivation
 
 sub bin_volt {
   my($price, $strike, $exp, $under) = @_;
+  # can't calculate volatility if price is 50
+  if ($price == 50) {return 0;}
   return log($strike/$under)/udistr($price/100)/sqrt($exp);
 }
 
@@ -1504,6 +1507,18 @@ sub findmin {
 	if (($d-$a)<$e) {return(($a+$d)/2);}
     }
 }
+
+=item stardate($time)
+
+Returns $time in somewhat human (<h>Vulcan, Andorran, Betazoid, etc</h>)
+readable format, yyyymmdd.hhmmss
+
+<h>I've coded this many different ways over the years: I think I
+finally found the right way to do this!</h>
+
+=cut
+
+sub stardate {strftime("%Y%m%d.%H%M%S", gmtime($_[0]));}
 
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 

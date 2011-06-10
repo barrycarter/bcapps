@@ -84,10 +84,12 @@ for $strike (sort keys %{$hash{USDCAD}}) {
     if ($globopts{under}) {
       $under = $globopts{under}
     } else {
+      debug("USD/CAD price at $updated...");
       $under = forex_quote("USD/CAD", $updated);
     }
 
     # logdiff + exptime (seconds)
+    unless ($under) {die "Unable to obtain price for USDCAD";}
     debug("$strike / $under");
     $logdiff = log($strike/$under);
     $exptime = $exp - $updated;
