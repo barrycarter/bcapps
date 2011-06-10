@@ -1,7 +1,5 @@
 #!/bin/perl
 
-warn " NOT READY FOR BC TIME";
-
 # Quickly-but-efficiently backup a file so you can edit it w/o worries
 # -nots: don't assume identical timestamps mean file hasn't changed
 
@@ -37,7 +35,7 @@ for $i (@ARGV) {
   @st = stat($target);
   $targstamp = stardate($st[9]);
 
-  if ($targstamp == $mod && !$NOTS) {
+  if ($targstamp == $mod && !$globopts{nots}) {
     warn("$i $target timestamps match, ignored");
     next;
   }

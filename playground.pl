@@ -7,23 +7,13 @@
 
 require "bclib.pl";
 
-
-debug(strftime("%Y%m%d.%H%M%S", gmtime(0)));
+open(A,"|parallel");
+for $i ("date", "ls", "pwd", "factor 9a") {
+  print A "$i 1> '/tmp/$i.out' 2> '/tmp/$i.err'; echo \$? > '/tmp/$i.res'\n";
+}
+close(A);
 
 die "TESTING";
-
-# does Perl call END on die
-
-
-sub END {
-  debug("$? <- value");
-}
-
-
-exit();
-
-
-
 
 # twitter lib attempt
 

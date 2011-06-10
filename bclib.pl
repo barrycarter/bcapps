@@ -1520,6 +1520,29 @@ finally found the right way to do this!</h>
 
 sub stardate {strftime("%Y%m%d.%H%M%S", gmtime($_[0]));}
 
+=item datestar($str)
+
+Does the opposite of stardate(): given a date in
+yyyymmdd[.][hh][mm][ss] format, return Unix time.
+
+TODO: has to be a much shorter way to do this?
+
+=cut
+
+sub datestar {
+  my($str) = @_;
+  my(@frac);
+  # yyyymmdd must be present
+  $str=~s/^(\d{4})(\d{2})(\d{2})//;
+  my($y,$m,$d) = ($1,$2,$3);
+
+  # hh, mm, ss may be present (along with dots?)
+  while ($str=~s/^\.?(\d{2})//) {push(@frac, $1);}
+  # if any of above missing, use 0s
+  push(@frac,"00","00","00");
+  return str2time("$y-$m-$d $frac[0]:$frac[1]:$frac[2]");
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 
 sub END {
