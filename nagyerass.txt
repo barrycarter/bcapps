@@ -28,4 +28,11 @@ dig -t mx +trace barrycarter.info | egrep 'IN[[:space:]]MX' | cut -f 5 | sort | 
 
 check_http -t 15 -f follow -H cheapbay.barrycarter.info -I 204.12.202.206 -s 'Credit' -u '/' -M 15m
 
-# METAR db has recent data for Albuquerque
+# METAR db has recent data for Albuquerque; URL translates to this query:
+# SELECT DISTINCT code FROM weather WHERE
+# strftime("%s","now")-strftime("%s",timestamp) < 7200 AND code LIKE
+# 'K%B%'
+check_http -t 15 -f follow -H 68672dac91f9baad005e200841aa2fff.metar.db.94y.info -s 'KABQ' -u '/'
+
+# wordpress.barrycarter.info trivial test
+check_http -t 15 -f follow -H wordpress.barrycarter.info -s 'Verbosity' -u '/'

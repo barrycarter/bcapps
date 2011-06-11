@@ -7,6 +7,25 @@
 
 require "bclib.pl";
 
+$tests = read_file("nagyerass.txt");
+
+chdir(tmpdir());
+
+for $i (split(/\n/,$tests)) {
+  # ignore blanks/comments
+  if ($i=~/^\#/ || $i=~/^\s*$/) {next;}
+
+  # wrap 'er up
+  $n++;
+  $test = "($i) 1> $n.out 2> $n.err; echo \$? > $n.res";
+  push(@tests,$test);
+}
+
+write_file(join("\n",@tests), "tests");
+system("parallel < tests > parout.txt");
+
+die "TESTING";
+
 open(A,"|parallel");
 for $i ("date", "ls", "pwd", "factor 9a") {
   print A "$i 1> '/tmp/$i.out' 2> '/tmp/$i.err'; echo \$? > '/tmp/$i.res'\n";
