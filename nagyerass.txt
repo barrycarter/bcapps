@@ -1,0 +1,31 @@
+# Tests to confirm my domains are working properly
+
+# I dub my testing system "nag yer ass"<h>, since it nags yer ass
+# constantly, much like that other snake-oil monitoring system with a
+# similar name</h>
+
+# TODO: I'm almost 100% convinced this is the wrong way to do things;
+# ie, using complex single line pipes instead of short scripts or
+# something
+
+# NOTES: (why don't I use nagios, hmmm?) [enamored w/ parallel?]
+#   - "paste -s -d," pastes multiple lines into a single line
+#   - "sort" insures lines are in canonical order
+#   - hardcoding IP address in multiple places is REALLY ugly
+#   - ability to loop tests across hosts would be nice
+#   - test dependency would be nice
+#   - ability to run only specific tests would be nice
+
+# DNS, A records (returns status 0 if good)
+dig +trace barrycarter.info | egrep 'IN[[:space:]]A' | cut -f 5 | sort | paste -s -d, | fgrep -x 204.12.202.206
+
+# DNS, MX records
+dig -t mx +trace barrycarter.info | egrep 'IN[[:space:]]MX' | cut -f 5 | sort | paste -s -d, | fgrep -x "10 ASPMX2.GOOGLEMAIL.com.,10 ASPMX3.GOOGLEMAIL.com.,10 ASPMX4.GOOGLEMAIL.com.,10 ASPMX5.GOOGLEMAIL.com.,1 ASPMX.L.GOOGLE.com.,5 ALT1.ASPMX.L.GOOGLE.com.,5 ALT2.ASPMX.L.GOOGLE.com."
+
+# cheapbay.barrycarter.info contains 'Credit' (there many 1c listings
+# on ebay for credit card systems [scams!]); also make sure results
+# are at most 15m old
+
+check_http -t 15 -f follow -H cheapbay.barrycarter.info -I 204.12.202.206 -s 'Credit' -u '/' -M 15m
+
+# METAR db has recent data for Albuquerque

@@ -3,6 +3,16 @@
 showit := Module[{}, 
 Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
+(* tennis game at deuce, p change of getting point, q=1-p *)
+
+Simplify[Solve[x == p^2 + 2*p*q*x, x] /. q -> 1-p]
+
+
+
+
+
+
+
 (* box options *)
 
 Integrate[
