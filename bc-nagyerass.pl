@@ -1,6 +1,9 @@
 #!/bin/perl
 
 # A parallel nagios-style monitoring script-like thing
+# TODO: put in retries for some commands
+# TODO: try to fix when something broken?
+# TODO: see notes in nagyerass.txt
 
 require "bclib.pl";
 

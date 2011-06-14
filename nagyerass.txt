@@ -36,3 +36,10 @@ check_http -t 15 -f follow -H 68672dac91f9baad005e200841aa2fff.metar.db.94y.info
 
 # wordpress.barrycarter.info trivial test
 check_http -t 15 -f follow -H wordpress.barrycarter.info -s 'Verbosity' -u '/'
+
+# vonappleknocker.com data (one daily, one hourly)
+# this is TBZ form, so check_http wont really work
+# this isn't "fgrep -x", because sha1sum ends with " -"
+curl http://www.vonappleknocker.com/webstuff/HOURLY/SANL.tbz | sha1sum | fgrep 19be99f4d58aa50709f638655e05ce46cd4f23a1
+curl http://www.vonappleknocker.com/webstuff/DAILY/KMKL.tbz | sha1sum | fgrep 6c45e87b80c7093e22d3aaa5a95c0f80c2c52d98
+
