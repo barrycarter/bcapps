@@ -182,6 +182,7 @@ Get the timestamp for my version of $wiki's $page in yyyymmdd.hhmmss
 sub get_timestamp {
   my($wiki,$page) = @_;
   # TODO: not sure that storing page in SHA1'd filename helps any
+  # NOTE: maybe I did this to avoid clustering too many files in a given dir?
   my($hash) = sha1_hex($page);
   # find file; return 0 if no exist
   $hash = join("/",($wikiroot,uc($wiki),substr($hash,0,2),$hash));

@@ -1,0 +1,113 @@
+<?xml version="1.0"?><api><query><pages><page pageid="1509" ns="0" title="Desert Pines"><revisions><rev timestamp="2010-12-23T15:10:29Z" xml:space="preserve">{{FoCW Header|Desert Pines|Seridia maps}}
+
+[[File:Desert Pines.png|thumb|400px|right|Desert Pines]]
+
+=== Map overview ===
+Desert Pines has luxurious heat and nearly no humidity in the south.  The Evergreen Woods on the northern side of this territory are inhabited by normal forest [[creatures]]: [[Deer]]s, [[Fox]]es, [[Racoon]]s, [[Wolf|Wolves]] and [[Brown Rabbit]]s.  To the south, walled by mountains which are littered with caves, exists the Kamara Desert.  [[Cactus]] and [[Quartz]] are exposed in the heat, but watch out for the [[snakes]] that prefer this climate.
+
+Outside the storage in Kamara Desert are a large caravan and many trade bots.  This is the second largest trade area in EL.  Many fighters test their strength in the PK arenas.  Others just [[harvest]] in [[Crystal Caverns]] or the [[Coal Cave]] or visit the [[alchemy]] [[school]] in the Desert Tropics in the southwest.
+
+=== [[:Category:Desert Pines NPCs|NPCs and Stores]] ===
+* [[File:Ayelle.png|25px]] [[Ayelle]] - Administrator of the Desert Pines [[Alchemy|Alchemical]] [[School|Academy]] at [28,119]
+* [[File:Easton.png|25px]] [[Easton]] - Homeless man in Desert Tropics at [36,28]
+* [[File:Giovanni.png|25px]] [[Giovanni]] - Lost his armour in the PK arenas at [59,223]
+* [[File:Golric.png|25px]] [[Golric]] - Sherrif of Corren [274,273]
+* [[File:Grim.png|25px]] [[Grim]] - Storage - inside a cave near the caravans in Kamara Desert at [166,100]
+* [[File:Harvy.png|25px]] [[Harvy]] - aka &quot;the vile [[Empty Vial|vial]] man&quot; among the caravans in Kamara Desert
+* [[File:Isabella.png|25px]] [[Isabella]] - Environmentalist near the exit to [[File:Southern Kilaran 25px.png]] [[Southern Kilaran]]
+* [[File:Jasper.png|25px]] [[Jasper]] - Tax collector in Corren at [321,311]
+* [[File:Kaya.png|25px]] [[Kaya]] -  Traveling cleric of Aluwen at [269,191]
+* [[File:Kalana.png|25px]] [[Kalana]] - Governor of Corren at [223,351]
+* [[File:LaBelle.png|25px]] [[LaBelle]] - Servant of Elandria in Evergreen Woods
+* [[File:Nevina.png|25px]] [[Nevina]] - Biologist in Evergreen Woods at [48,345]
+* [[File:Romira.png|25px]] [[Romira]] - High priestess of [[Elandria]], the goddess of [[alchemy]], in Evergreen Woods
+* [[File:Roua.png|25px]] [[Roua]] - Tavern in Corren
+* [[File:Stephan.png|25px]] [[Stephan]] - General store in Corren at [330,337]
+
+=== Harvestables ===
+* [[File:Black Rose.png|25px]] [[Black Rose]] - [14,18]
+* [[File:Blue Berries.png|25px]] [[Blue Berries]] - [84,303], [111,345], [173,300], '''[187,329]''' 01:05 (1 ship travel to [[File:Valley of the Dwarves 25px.png]] [[VotD]] storage)
+* [[File:Blue Lupine.png|25px]] [[Blue Lupine]] '''2x''' - [31,80], [66,37], [80,15], '''[289,181]''', [297,171] 00:50 (1 cave door)
+* [[File:Blue Star Flower.png|25px]] [[Blue Star Flower]] - [72,55], [266,216], '''[267,299]''', [302,224], [306,170], [350,265] 00:45 (1 ship travel to [[File:Valley of the Dwarves 25px.png]] [[VotD]] storage)
+* [[File:Cactus.png|25px]] [[Cactus]] - '''outside of storage''', [19,70], [96,99], [151,59], [160,63], [193,167], [205,146], [249,125], [256,100], [277,84], [285,69]
+* [[File:Chrysanthemum.png|25px]] [[Chrysanthemum]] - [199,281], [301,227], [342,249]
+* [[File:Cotton.png|25px]] [[Cotton]] - [246,294] 00:50 (1 ship travel to [[File:Valley of the Dwarves 25px.png]] [[VotD]] storage)
+* [[File:Daffodils.png|25px]] [[Daffodils]] - [300,236], [301,227]
+* [[File:Dandelions.png|25px]] [[Dandelions]] - [318,279], [326,242]
+* [[File:Dung.png|25px]] [[Dung]] [364,255]
+* [[File:Fruits.png|25px]] [[Fruits]] - [128,247] Just outside the 60's arena.
+* [[File:Honey Comb.png|25px]] [[Honey Comb]] - [22,323] 01:00 (1 teleport, 1 ship travel to [[File:Valley of the Dwarves 25px.png]] [[VotD]] storage)
+* [[File:Impatiens.png|25px]] [[Impatiens]] - [20,350], [31,20], [35,359], [58,57], [151,312], [185,278], [191,282], [194,366], [266,216], [267,302], [283,348], [301,227], [305,232], [306,170], [308,159], [359,293]
+* [[File:Lilacs.png|25px]] [[Lilacs]] - [267,302], [283,348], [296,225], [301,227], [366,269]
+* [[File:Nightshade.png|25px]] [[Nightshade]] - '''[263,348]''', [32,360] 00:45 (1 ship travel to [[File:Valley of the Dwarves 25px.png]] [[VotD]] storage)
+* [[File:Red Currents.png|25px]] [[Red Currents]] - [23,321] 01:00 (1 teleport, 1 ship travel to [[File:Valley of the Dwarves 25px.png]] [[VotD]] storage)
+* [[File:Red Rose.png|25px]] [[Red Rose]] - [362,164]
+* [[File:Red Snapdragons.png|25px]] [[Red Snapdragons]] - [283,348]
+* [[File:Rose Quartz.png|25px]] [[Rose Quartz]] '''[331,57]''' 00:55 (1 cave door)
+* [[File:Sunflower.png|25px]] [[Sunflower]] - [296,227]
+* [[File:Vegetables.png|25px]] [[Vegetables]] - [248,300], [357,236], [363,278]
+* [[File:Quartz.png|25px]] [[Quartz]] - [350,43], [359,23], [365,74], '''[331,57]''' 00:55 (1 cave door)
+* [[File:Tiger Lilly.png|25px]] [[Tiger Lilly]] - [69,321], [66,324]
+* [[File:Tulips.png|25px]] [[Tulips]] - [288,356], [265,304]
+* [[File:White Asiatic Lilly.png|25px]] [[White Asiatic Lilly]] - [31,80], [32,360], [35,359], [80,15], [135,321], [201,276], [206,283], [283,348], [322,322], [325,337]
+* [[File:Wood Branches.png|25px]] [[Wood Branches]] - [79,344], [123,320], [136,312], [150,335], [195,336], [185,136], [73,328]
+* [[File:Wood Logs.png|25px]] [[Wood Logs]] - [190,111]
+* [[File:Yellow Rose.png|25px]] [[Yellow Rose]] - [58,57], [73,61], [283,348], [294,342], [354,287]
+
+'''Bold''' denotes closest coordinates to storage
+
+=== Specials ===
+* [[Fire pit]]s - [??,??] (working), [??,??] (working) (one outside of storage and another in Desert Tropics)
+* Teleportals - Two sets: between south Corren and west Evergreen Woods, and between north Kamara Desert and southeast Kamara Desert (coords?)
+* [[Crafting]] [[School]] - [191,279]
+* [[Alchemy]] School - [28,119]
+* Two level-capped no-drop PK arenas [61,235] (capped at a/d 40) and [116,238] (capped at a/d 60)
+
+=== Bots ===
+* [http://el.other-life.com/StoreBots/CrazyGirl/inventory.php CrazyGirl] [301,305] (Inside the house), WDR guild bot
+* [http://bots.el-services.net/Drunken_Duck.php Drunken_Duck] [316,335]
+* Pepa [133,93]
+* Charn [180,104], IRON guild bot
+* Karlin [198,95]
+* Salt [http://mywebpages.comcast.net/kjshelly/tm/ TM] - [346,331], owned by Puntif [TM]
+* Arachnid [http://z10.invisionfree.com/FEW/index.php?act=idx FEW] - [339,256]
+* [http://el.other-life.com/StoreBots/Taliesin/inventory.php Taliesin] [196,102], BARD guild bot
+* Pru [181,118] Bot from SynD
+* [http://el.other-life.com/StoreBots/Bookshop/inventory.php Bookshop] [191,117] Bot from SynD (just across Pru)
+* [http://el.other-life.com/StoreBots/Jeepers/inventory.php Jeepers] [188,107] joe guild bot
+* [http://el.other-life.com/StoreBots/Keceus/inventory.php Keceus] [182,96] =Z= guild bot
+* GirlsName [188,88] LotN guild bot
+
+=== Creatures ===
+* [[File:Brown Rabbit 25px.png]] [[Brown Rabbit]] - [181,301]
+* [[File:Deer 25px.png]] [[Deer]]
+* [[File:Fox 25px.png]] [[Fox]]
+* [[File:Grizzly Bear 25px.png]] [[Grizzly Bear]]
+* [[File:Red Snake 25px.png]] [[Red Snake]]
+* [[File:Wolf 25px.png]] [[Wolf]]
+* [[File:Wood Sprite 25px.png]] [[Wood Sprite]]
+* [[File:Racoon 25px.png]] [[Racoon]]
+
+=== Secret Spots ===
+* [[forum:580|FRR]]
+
+=== Internal Maps ===
+* [[File:Desert Pines 25px.png]] [[Crystal Caverns]] - [45,300], [146,226]
+* [[File:Desert Pines 25px.png]] [[Coal Cave]] - [367,159], [364,93]
+
+=== Exits to ===
+This map has exits to the following maps:
+
+By land:
+* [[File:Portland 25px.png]] [[Portland]]
+* [[File:Southern Kilaran 25px.png]] [[Southern Kilaran]]
+* [[File:Kilaran Field 25px.png]] [[Kilaran Field]]
+* [[File:Tahraji Desert 25px.png]] [[Tahraji Desert]]
+By sea:
+* [[File:Valley of the Dwarves 25px.png]] [[Valley of the Dwarves]]
+* [[File:White Stone 25px.png]] [[White Stone]]
+* [[File:Portland 25px.png]] [[Portland]]
+
+{{Maps/Nav}}
+
+[[Category:Seridia maps]]</rev></revisions></page></pages></query></api>
