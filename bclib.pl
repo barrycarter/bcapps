@@ -1027,7 +1027,10 @@ sub forex_quote {
   my($en) = strftime("%F\T%H:%M:%S", localtime($time+300));
   $ENV{TZ} = $tz;
 
-  my($rates) = cache_command("curl 'http://api.efxnow.com/DEMOWebServices2.8/Service.asmx/GetHistoricRatesDataSet?Key=$key&Quote=$parity&StartDateTime=$st&EndDateTime=$en'", "age=86400");
+  my($url) = "http://api.efxnow.com/DEMOWebServices2.8/Service.asmx/GetHistoricRatesDataSet?Key=$key&Quote=$parity&StartDateTime=$st&EndDateTime=$en";
+  my($rates) = cache_command("curl '$url'", "age=86400");
+
+  debug("URL: $url", "RATES: $rates");
 
   # TODO: probably better way to keep track of mintime (using "large
   # value" is bad)
