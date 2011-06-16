@@ -35,5 +35,18 @@ for $i (split("\n",$all)) {
   }
 
   debug("$name, COORDS:",@coords);
+
+  # x,y on DP map translates to x/384*1024, 1024-y/384*1024
 }
 
+=item info
+
+Info from bloodsucker map:
+
+x=50 -> 133
+x=100 -> 266
+
+y=50 -> 891
+y=350 -> 90
+
+=cut
