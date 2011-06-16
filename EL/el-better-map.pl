@@ -5,8 +5,10 @@
 # Desert Pines = first example
 
 require "bclib.pl";
-
 ($all) = cmdfile();
+chdir(tmpdir());
+
+warn("Setting keeptemp for now"); $globopts{keeptemp} = 1;
 
 for $i (split("\n",$all)) {
   # are we in a new section?
@@ -19,7 +21,7 @@ for $i (split("\n",$all)) {
   }
 
   unless (@coords) {
-    debug("No coords, skipping");
+#    debug("No coords, skipping");
     next;
   }
 
@@ -34,10 +36,32 @@ for $i (split("\n",$all)) {
     $name=~s/\s.*$//;
   }
 
-  debug("$name, COORDS:",@coords);
+#  debug("$name, COORDS:",@coords);
 
   # x,y on DP map translates to x/384*1024, 1024-y/384*1024
+  for $j (@coords) {
+    debug("J: $j");
+    ($mapx, $mapy) = split(/\,/,$j);
+    ($picx, $picy) = (round($mapx/384*1024), round(1024-$mapy/384*1024));
+    debug("$name -> $picx,$picy");
+    push(@pic, "string 255,0,0,$picx,$picy,giant,$name");
+  }
 }
+
+$pic = << "MARK";
+new
+size 1024,1024
+setpixel 0,0,0,0,0
+MARK
+;
+
+# TODO: this is ugly
+$pic .= join("\n",@pic)."\n";
+
+write_file($pic,"pic.fly");
+system("fly -i pic.fly -o pic.gif");
+debug("RESULTS:");
+system("pwd");
 
 =item info
 

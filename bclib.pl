@@ -12,6 +12,7 @@ use Text::Unidecode;
 use MIME::Base64;
 use utf8;
 use Statistics::Distributions qw(uprob udistr);
+use Math::Round;
 require JSON;
 
 # HACK: defining constants here is probably bad
