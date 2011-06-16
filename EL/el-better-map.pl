@@ -11,7 +11,10 @@ chdir(tmpdir());
 warn("Setting keeptemp for now"); $globopts{keeptemp} = 1;
 
 for $i (split("\n",$all)) {
-  # are we in a new section?
+
+  if (++$n > 50) {die "TESTING:";}
+
+  # are we in a new section? (currently unused)
   if (/== (.*?) ==/) {$section = $1; next;}
 
   # does this line have coordinates (maybe more than one)
@@ -33,10 +36,28 @@ for $i (split("\n",$all)) {
     $name = $1;
   } else {
     $name = $i;
+    # get rid of external links and *
+    $name=~s/\[.*?\]//isg;
+    $name=~s/\*//isg;
     $name=~s/\s.*$//;
   }
 
-#  debug("$name, COORDS:",@coords);
+  #  debug("$name, COORDS:",@coords);
+
+  # do I have an image matching this thing?
+
+  # NOTE: images are from el-wiki.net and are not in github, I store them
+  # on my own machine
+  $imagename = $name;
+  $imagename=~s/ /_/isg;
+  @imgs = glob "/usr/local/etc/wiki/EL-WIKI.NET/images/$name.*";
+  if (@imgs) {
+    # create iconic image and add
+    system("convert -geometry 15x15 $imgs[0] $name.gif");
+    debug("IMAGE FOR $imagename EXISTS:",@imgs);
+  } else {
+    debug("NO IMAGE: $name");
+  }
 
   # x,y on DP map translates to x/384*1024, 1024-y/384*1024
   for $j (@coords) {
