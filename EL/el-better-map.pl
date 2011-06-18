@@ -11,8 +11,7 @@ chdir(tmpdir());
 warn("Setting keeptemp for now"); $globopts{keeptemp} = 1;
 
 for $i (split("\n",$all)) {
-
-  if (++$n > 50) {die "TESTING:";}
+  debug("LINE: $i");
 
   # are we in a new section? (currently unused)
   if (/== (.*?) ==/) {$section = $1; next;}
@@ -53,7 +52,7 @@ for $i (split("\n",$all)) {
   @imgs = glob "/usr/local/etc/wiki/EL-WIKI.NET/images/$name.*";
   if (@imgs) {
     # create iconic image and add
-    system("convert -geometry 15x15 $imgs[0] $name.gif");
+#    system("convert -geometry 15x15 $imgs[0] $name.gif");
     debug("IMAGE FOR $imagename EXISTS:",@imgs);
   } else {
     debug("NO IMAGE: $name");
@@ -66,12 +65,14 @@ for $i (split("\n",$all)) {
     ($picx, $picy) = (round($mapx/384*1024), round(1024-$mapy/384*1024));
     debug("$name -> $picx,$picy");
     push(@pic, "string 255,0,0,$picx,$picy,giant,$name");
+    # add to marks file
+    push(@marks, "$mapx $mapy|255,255,0| $name");
   }
 }
 
 $pic = << "MARK";
 new
-size 1024,1024
+size 1280,1024
 setpixel 0,0,0,0,0
 MARK
 ;
@@ -83,6 +84,8 @@ write_file($pic,"pic.fly");
 system("fly -i pic.fly -o pic.gif");
 debug("RESULTS:");
 system("pwd");
+
+write_file(join("\n",@marks)."\n", "marks");
 
 =item info
 

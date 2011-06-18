@@ -1,0 +1,21 @@
+# this file maps maps to lands... er, it converts numbers to lands
+# based on EL's map numbering scheme
+map3 Desert_Pines
+cave1 Crystal_Caves
+cave2 Coal_Caves
+cave3 PK_Cave
+map11 Trasengaard
+map12 Nordcarn
+map13 Southern_Kilaran
+map14f Kilaran_Field
+map15f Tahraji_Desert
+map2 White_Stone
+map5nf Valley_of_the_Dwarves
+map6nf Portland
+map7 Morcraven_Marsh
+map8 Naralik
+map9f Grubani_Peninsula
+startmap Isla_Prima
+
+
+
