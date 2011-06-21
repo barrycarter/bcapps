@@ -39,7 +39,7 @@ unless (%hash) {die "No data, stopping";}
 # TODO: this may break when we stop daylight time(?)
 $ENV{TZ} = "EST5EDT";
 
-open(A,">/tmp/nadex.m");
+open(A,">/tmp/nadex.m.new");
 print A "nadex={\n";
 
 # Table header
@@ -193,3 +193,8 @@ unless ($globopts{nopost}) {
 }
 
 print A "}\n";
+
+close(A);
+
+# this only happens if/when program doesn't die
+system("mv -f /tmp/nadex.m /tmp/nadex.m.old; mv /tmp/nadex.m.new /tmp/nadex.m");

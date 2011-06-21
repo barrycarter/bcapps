@@ -24,3 +24,9 @@ for $i (split(/\n/,$tests)) {
 
 write_file(join("\n",@tests), "tests");
 system("parallel < tests > parout.txt");
+
+for $i (1..$n) {
+  debug("TEST: $tests[$i-1]", "OUT:", read_file("$i.out"), "ERR:",
+	read_file("$i.err"), "RES:",  read_file("$i.res"));
+}
+
