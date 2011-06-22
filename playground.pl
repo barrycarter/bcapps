@@ -7,30 +7,11 @@
 
 require "bclib.pl";
 
-$tests = read_file("nagyerass.txt");
+# TODO: this will NOT catch things that redirect to Desert Pines
 
-chdir(tmpdir());
+$res = cache_command("fgrep -R '[[Desert Pines]] at' /usr/local/etc/wiki/EL-WIKI.NET", "age=3600");
 
-for $i (split(/\n/,$tests)) {
-  # ignore blanks/comments
-  if ($i=~/^\#/ || $i=~/^\s*$/) {next;}
-
-  # wrap 'er up
-  $n++;
-  $test = "($i) 1> $n.out 2> $n.err; echo \$? > $n.res";
-  push(@tests,$test);
-}
-
-write_file(join("\n",@tests), "tests");
-system("parallel < tests > parout.txt");
-
-die "TESTING";
-
-open(A,"|parallel");
-for $i ("date", "ls", "pwd", "factor 9a") {
-  print A "$i 1> '/tmp/$i.out' 2> '/tmp/$i.err'; echo \$? > '/tmp/$i.res'\n";
-}
-close(A);
+debug(read_file($res));
 
 die "TESTING";
 
