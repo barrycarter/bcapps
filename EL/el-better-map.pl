@@ -7,6 +7,9 @@
 
 require "bclib.pl";
 
+$map = "Valley of the Dwarves";
+$markfile = "map5nf.elm.txt";
+
 # if requested, see what NPCs you've spoken with
 # NOTE: assumes NPC in-game name is identical to wiki name, not always true
 # NOTE: this won't work if you have multiple chars
@@ -26,13 +29,13 @@ debug(unfold(%seen));
 
 # find the file where I store Desert Pines wiki page (not super efficient)
 # really hard to match <tab> exactly w/o also matching spaces
-($res) = cache_command("egrep -i '[[:space:]]Desert Pines\$' /usr/local/etc/wiki/EL-WIKI.NET/pageinfo-0.txt", "age=3600");
+($res) = cache_command("egrep -i '[[:space:]]$map\$' /usr/local/etc/wiki/EL-WIKI.NET/pageinfo-0.txt", "age=3600");
 
 # find the exact right one
 for $i (split(/\n/, $res)) {
   $i=~/^(.*?)\s+(.*?)\s+(.*?)$/;
   ($file, $time, $name) = ($1,$2,$3);
-  if ($name eq "Desert Pines") {last;}
+  if ($name eq $map) {last;}
 }
 
 $page = read_file("/usr/local/etc/wiki/EL-WIKI.NET/$file");
@@ -102,6 +105,6 @@ for $i (split("\n",$page)) {
 # (kinda) w/o having to run this program [however, my versions may
 # contain marks specific to me]
 
-write_file(join("\n",@marks)."\n", "/home/barrycarter/BCGIT/EL/map3.elm.txt");
+write_file(join("\n",@marks)."\n", "/home/barrycarter/BCGIT/EL/$markfile");
 
 # NOTE: must change maps for new marks file to load (I have it symlinked)

@@ -1,0 +1,34 @@
+161 153|255,255,255| NPC:Wraith
+26 32|255,255,255| NPC:Ios
+153 104|255,255,255| NPC:Kyra
+66 136|255,255,255| NPC:Lasud
+139 144|255,255,255| NPC:Newbie Storage
+101 120|0,0,0| NPC:Novac
+145 151|255,255,255| NPC:Old man
+66 132|255,255,255| NPC:Reca
+161 139|0,0,0| NPC:Tutorial NPC
+134 70|255,255,255| H:Blue Lupine
+23 145|255,255,255| H:Blue Star Flower
+13 159|255,255,255| H:Chrysanthemum
+146 45|255,255,255| H:Chrysanthemum
+148 143|255,255,255| H:Chrysanthemum
+85 135|255,255,255| H:Impatiens
+20 56|255,255,255| H:Lilacs
+66 53|255,255,255| H:Lilacs
+56 34|255,255,255| H:Lilacs
+61 123|255,255,255| H:Lilacs
+68 35|255,255,255| H:Red Snapdragons
+78 42|255,255,255| H:Red Snapdragons
+40 43|255,255,255| H:Red Snapdragons
+27 177|255,255,255| H:Red Snapdragons
+114 147|255,255,255| H:Red Snapdragons
+90 66|255,255,255| H:Swamp Candles
+58 34|255,255,255| H:Tiger Lilly
+37 35|255,255,255| H:Tiger Lilly
+101 162|255,255,255| H:Tiger Lilly
+116 43|255,255,255| H:Tiger Lilly
+87 167|255,255,255| H:Vegetables
+152 53|255,255,255| H:White Asiatic Lilly
+148 125|255,255,255| H:Wood Branches
+112 146|255,255,255| H:Wood Logs
+163 134|255,255,255| Beaver

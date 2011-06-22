@@ -1,0 +1,56 @@
+76 138|255,255,255| Teleport to Portals Room|Portals Room
+43 124|255,255,255| NPC:Molgor
+86 138|255,255,255| NPC:Michael
+88 124|255,255,255| NPC:Valeria
+33 139|255,255,255| NPC:Lavinia
+33 139|0,0,0| NPC:Jandir
+17 27|255,255,255| NPC:Erokin
+14 28|255,255,255| H:Chrysanthemum
+142 31|255,255,255| H:Dung
+19 33|255,255,255| H:Lilacs
+21 20|255,255,255| H:Lilacs
+28 75|255,255,255| H:Lilacs
+28 46|255,255,255| H:Lilacs
+40 178|255,255,255| H:Lilacs
+50 177|255,255,255| H:Lilacs
+147 30|255,255,255| H:Lilacs
+159 164|255,255,255| H:Lilacs
+44 83|255,255,255| H:Impatiens
+39 78|255,255,255| H:Impatiens
+52 57|255,255,255| H:Impatiens
+39 166|255,255,255| H:Impatiens
+116 118|255,255,255| H:Mugwort
+115 88|255,255,255| H:Mullein
+87 30|255,255,255| H:Poison Ivy
+25 25|255,255,255| H:Poppies
+63 39|255,255,255| H:Poppies
+59 73|255,255,255| H:Red Rose
+148 171|255,255,255| H:Red Rose
+153 53|255,255,255| H:Red Rose
+46 73|255,255,255| H:Red Snapdragons
+63 29|255,255,255| H:Red Snapdragons
+67 25|255,255,255| H:Red Snapdragons
+106 177|255,255,255| H:Red Snapdragons
+132 43|255,255,255| H:Red Snapdragons
+150 30|255,255,255| H:Red Snapdragons
+155 152|255,255,255| H:Red Snapdragons
+85 96|255,255,255| H:Red Snapdragons
+70 48|255,255,255| H:Swamp Candles
+133 70|255,255,255| H:Toadstool
+119 170|255,255,255| H:Tulips
+101 169|255,255,255| H:Tulips
+142 134|255,255,255| H:Valerian
+119 163|255,255,255| H:Vegetables
+131 136|255,255,255| H:Vegetables
+64 80|255,255,255| H:White Asiatic Lilly
+76 14|255,255,255| H:White Asiatic Lilly
+95 161|255,255,255| H:White Asiatic Lilly
+47 104|255,255,255| H:Wood Branches
+117 145|255,255,255| H:Wood Logs
+140 52|255,255,255| H:Wood Logs
+130 181|255,255,255| Firepit
+140 156|255,255,255| Grizzly Bear
+18 21|255,255,255| Gold Mines
+150 90|255,255,255| Abandoned Temple
+71 9|255,255,255| Nordcarn
+159 146|255,255,255| Tarsengaard

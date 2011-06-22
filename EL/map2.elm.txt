@@ -1,0 +1,100 @@
+252 379|255,255,255| NPC:Alhana
+589 151|255,255,255| NPC:Christina
+556 190|255,255,255| NPC:Christopher
+155 145|255,255,255| NPC:Corina
+109 694|255,255,255| NPC:Dan
+589 151|255,255,255| NPC:Diana
+84 687|255,255,255| NPC:Elena
+48 627|255,255,255| NPC:Expila
+120 726|255,255,255| NPC:Forra
+124 130|255,255,255| NPC:Frukas
+160 620|255,255,255| NPC:Gerald
+347 394|255,255,255| NPC:Henrik
+575 136|255,255,255| NPC:Karn
+39 713|255,255,255| NPC:Lord Luxin
+170 102|255,255,255| NPC:Maia
+169 626|255,255,255| NPC:Marcel
+132 643|255,255,255| NPC:Maria
+690 142|255,255,255| NPC:Mesterul Manole
+118 708|255,255,255| NPC:Mira
+576 157|255,255,255| NPC:Myrl
+468 422|255,255,255| NPC:Raven
+124 666|255,255,255| NPC:Regia
+144 141|255,255,255| NPC:Salina
+230 421|255,255,255| NPC:Talon
+199 344|255,255,255| NPC:Tobias
+153 151|255,255,255| NPC:Tombolarul
+693 171|255,255,255| NPC:Trik
+170 460|255,255,255| H:Blue Berries
+270 678|255,255,255| H:Blue Lupine
+378 415|255,255,255| H:Blue Lupine
+418 608|255,255,255| H:Blue Lupine
+729 45|255,255,255| H:Blue Lupine
+632 170|255,255,255| H:Blue Lupine
+56 367|255,255,255| H:Blue Star Flower
+338 433|255,255,255| H:Chrysanthemum
+693 558|255,255,255| H:Chrysanthemum
+605 114|255,255,255| H:Chrysanthemum
+581 174|255,255,255| H:Daffodils
+592 185|255,255,255| H:Daffodils
+139 262|255,255,255| H:Dandelions
+114 51|255,255,255| H:Dandelions
+607 160|255,255,255| H:Dung
+603 152|255,255,255| H:Dung
+386 741|255,255,255| H:Fruits
+103 203|255,255,255| H:Honey Comb
+285 666|255,255,255| H:Honey Comb
+426 384|255,255,255| H:Lilacs
+390 346|255,255,255| H:Lilacs
+331 433|255,255,255| H:Lilacs
+680 165|255,255,255| H:Lilacs
+734 45|255,255,255| H:Lilacs
+109 259|255,255,255| H:Mugwort
+98 171|255,255,255| H:Poison Ivy
+120 204|255,255,255| H:Poison Ivy
+220 534|255,255,255| H:Poison Ivy
+512 526|255,255,255| H:Poison Ivy
+640 388|255,255,255| H:Poison Ivy
+742 368|255,255,255| H:Red Currents
+405 591|255,255,255| H:Red Rose
+429 713|255,255,255| H:Red Snapdragons
+396 390|255,255,255| H:Red Snapdragons
+710 74|255,255,255| H:Red Snapdragons
+605 119|255,255,255| H:Red Snapdragons
+302 445|255,255,255| H:Sunflower
+272 461|255,255,255| H:Sunflower
+98 106|255,255,255| H:Sunflower
+516 347|255,255,255| H:Swamp Candles
+264 348|255,255,255| H:Swamp Candles
+686 166|255,255,255| H:Tiger Lilly
+620 45|255,255,255| H:Tiger Lilly
+589 182|255,255,255| H:Tiger Lilly
+603 186|255,255,255| H:Tiger Lilly
+550 69|255,255,255| H:Tiger Lilly
+236 342|255,255,255| H:Tiger Lilly
+428 392|255,255,255| H:Tiger Lilly
+173 72|255,255,255| H:Toadstool
+233 395|255,255,255| H:Tree Mushroom
+673 432|255,255,255| H:Tree Mushroom
+243 387|255,255,255| H:Vegetables
+338 433|255,255,255| H:White Asiatic Lilly
+428 387|255,255,255| H:White Asiatic Lilly
+427 427|255,255,255| H:White Asiatic Lilly
+745 54|255,255,255| H:White Asiatic Lilly
+603 186|255,255,255| H:White Asiatic Lilly
+339 432|255,255,255| H:White Chanterelle
+660 690|255,255,255| H:White Chanterelle
+603 707|255,255,255| H:White Chanterelle
+498 129|255,255,255| H:Wood Branches
+483 217|255,255,255| H:Wood Branches
+661 118|255,255,255| H:Wood Branches
+441 446|255,255,255| H:Wood Branches
+690 401|255,255,255| H:Wormwood
+161 92|255,255,255| Summoning#Summoning Arenas|Summoners Arena
+564 123|255,255,255| :Category:Manufacturing|Blacksmithing
+705 568|255,255,255| :Category:Alchemy|Alchemy
+426 258|255,255,255| Firepit
+346 751|255,255,255| Diamond Cave
+393 373|255,255,255| Tirnwood Undergrounds
+643 415|255,255,255| Vermor Castle
+107 261|255,255,255| Morcraven Marsh
