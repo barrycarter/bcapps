@@ -40,8 +40,8 @@ $page = read_file("/usr/local/etc/wiki/EL-WIKI.NET/$file");
 for $i (split("\n",$page)) {
   debug("LINE: $i");
 
-  # are we in a new section? (currently unused)
-  if (/== (.*?) ==/) {$section = $1; next;}
+  # are we in a new section?
+  if ($i=~/\=\=\= (.*?) \=\=\=/) {$section = $1; next;}
 
   # does this line have coordinates (maybe more than one)
   @coords = ();
@@ -69,18 +69,32 @@ for $i (split("\n",$page)) {
   }
 
   for $j (@coords) {
+    debug("SECTION: $section");
+    # breakdown marks into categories
+    if ($section=~/npc/i) {
+      $prefix="NPC:";
+    } elsif ($section=~/harvest/i) {
+      $prefix="H:";
+    } else {
+      $prefix="";
+    }
 
     # color code (these color choices aren't final)
     debug("NAME: $name, SEEN: $seen{$name}");
     if ($seen{$name}) {
-      $color="255,255,255";
-    } else {
       $color="0,0,0";
+    } else {
+      $color="255,255,255";
+    }
+
+    unless ($name) {
+      warnlocal("NO NAME IN: $i");
+      next;
     }
 
     # add to marks file
     $j=~s/,/ /isg;
-    push(@marks, "$j|$color| $name");
+    push(@marks, "$j|$color| $prefix$name");
   }
 }
 

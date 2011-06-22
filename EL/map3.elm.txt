@@ -1,137 +1,122 @@
-28 119|255,255,255| Ayelle
-36 28|0,0,0| Easton
-59 223|0,0,0| Giovanni
-274 273|0,0,0| Golric
-166 100|0,0,0| Grim
-195 74|0,0,0| Harvy
-341 38|0,0,0| Isabella
-321 311|0,0,0| Jasper
-269 191|0,0,0| Kaya
-223 351|0,0,0| Kalana
-75 329|0,0,0| LaBelle
-48 345|0,0,0| Nevina
-75 329|0,0,0| Romira
-308 338|0,0,0| Roua
-330 337|0,0,0| Stephan
-14 18|0,0,0| Black Rose
-84 303|0,0,0| Blue Berries
-111 345|0,0,0| Blue Berries
-173 300|0,0,0| Blue Berries
-187 329|0,0,0| Blue Berries
-31 80|0,0,0| Blue Lupine
-66 37|0,0,0| Blue Lupine
-80 15|0,0,0| Blue Lupine
-289 181|0,0,0| Blue Lupine
-297 171|0,0,0| Blue Lupine
-72 55|0,0,0| Blue Star Flower
-266 216|0,0,0| Blue Star Flower
-267 299|0,0,0| Blue Star Flower
-302 224|0,0,0| Blue Star Flower
-306 170|0,0,0| Blue Star Flower
-350 265|0,0,0| Blue Star Flower
-19 70|0,0,0| Cactus
-96 99|0,0,0| Cactus
-151 59|0,0,0| Cactus
-160 63|0,0,0| Cactus
-193 167|0,0,0| Cactus
-205 146|0,0,0| Cactus
-249 125|0,0,0| Cactus
-256 100|0,0,0| Cactus
-277 84|0,0,0| Cactus
-285 69|0,0,0| Cactus
-199 281|0,0,0| Chrysanthemum
-301 227|0,0,0| Chrysanthemum
-342 249|0,0,0| Chrysanthemum
-246 294|0,0,0| Cotton
-300 236|0,0,0| Daffodils
-301 227|0,0,0| Daffodils
-318 279|0,0,0| Dandelions
-326 242|0,0,0| Dandelions
-364 255|0,0,0| Dung
-128 247|0,0,0| Fruits
-22 323|0,0,0| Honey Comb
-20 350|0,0,0| Impatiens
-31 20|0,0,0| Impatiens
-35 359|0,0,0| Impatiens
-58 57|0,0,0| Impatiens
-151 312|0,0,0| Impatiens
-185 278|0,0,0| Impatiens
-191 282|0,0,0| Impatiens
-194 366|0,0,0| Impatiens
-266 216|0,0,0| Impatiens
-267 302|0,0,0| Impatiens
-283 348|0,0,0| Impatiens
-301 227|0,0,0| Impatiens
-305 232|0,0,0| Impatiens
-306 170|0,0,0| Impatiens
-308 159|0,0,0| Impatiens
-359 293|0,0,0| Impatiens
-267 302|0,0,0| Lilacs
-283 348|0,0,0| Lilacs
-296 225|0,0,0| Lilacs
-301 227|0,0,0| Lilacs
-366 269|0,0,0| Lilacs
-263 348|0,0,0| Nightshade
-32 360|0,0,0| Nightshade
-23 321|0,0,0| Red Currents
-362 164|0,0,0| Red Rose
-283 348|0,0,0| Red Snapdragons
-331 57|0,0,0| Rose Quartz
-296 227|0,0,0| Sunflower
-248 300|0,0,0| Vegetables
-357 236|0,0,0| Vegetables
-363 278|0,0,0| Vegetables
-350 43|0,0,0| Quartz
-359 23|0,0,0| Quartz
-365 74|0,0,0| Quartz
-331 57|0,0,0| Quartz
-69 321|0,0,0| Tiger Lilly
-66 324|0,0,0| Tiger Lilly
-288 356|0,0,0| Tulips
-265 304|0,0,0| Tulips
-31 80|0,0,0| White Asiatic Lilly
-32 360|0,0,0| White Asiatic Lilly
-35 359|0,0,0| White Asiatic Lilly
-80 15|0,0,0| White Asiatic Lilly
-135 321|0,0,0| White Asiatic Lilly
-201 276|0,0,0| White Asiatic Lilly
-206 283|0,0,0| White Asiatic Lilly
-283 348|0,0,0| White Asiatic Lilly
-322 322|0,0,0| White Asiatic Lilly
-325 337|0,0,0| White Asiatic Lilly
-79 344|0,0,0| Wood Branches
-123 320|0,0,0| Wood Branches
-136 312|0,0,0| Wood Branches
-150 335|0,0,0| Wood Branches
-195 336|0,0,0| Wood Branches
-185 136|0,0,0| Wood Branches
-73 328|0,0,0| Wood Branches
-190 111|0,0,0| Wood Logs
-58 57|0,0,0| Yellow Rose
-73 61|0,0,0| Yellow Rose
-283 348|0,0,0| Yellow Rose
-294 342|0,0,0| Yellow Rose
-354 287|0,0,0| Yellow Rose
-189 99|0,0,0| Fire pit
-191 279|0,0,0| Crafting
-28 119|0,0,0| Alchemy
-61 235|0,0,0| 
-116 238|0,0,0| 
-301 305|0,0,0| 
-316 335|0,0,0| 
-133 93|0,0,0| 
-180 104|0,0,0| 
-198 95|0,0,0| 
-346 331|0,0,0| 
-339 256|0,0,0| 
-196 102|0,0,0| 
-181 118|0,0,0| 
-191 117|0,0,0| 
-188 107|0,0,0| 
-182 96|0,0,0| 
-188 88|0,0,0| 
-181 301|0,0,0| Brown Rabbit
-45 300|0,0,0| Crystal Caverns
-146 226|0,0,0| Crystal Caverns
-367 159|0,0,0| Coal Cave
-364 93|0,0,0| Coal Cave
+28 119|0,0,0| NPC:Ayelle
+36 28|255,255,255| NPC:Easton
+59 223|255,255,255| NPC:Giovanni
+274 273|255,255,255| NPC:Golric
+166 100|255,255,255| NPC:Grim
+195 74|255,255,255| NPC:Harvy
+341 38|255,255,255| NPC:Isabella
+321 311|255,255,255| NPC:Jasper
+269 191|255,255,255| NPC:Kaya
+223 351|255,255,255| NPC:Kalana
+75 329|255,255,255| NPC:LaBelle
+48 345|255,255,255| NPC:Nevina
+75 329|255,255,255| NPC:Romira
+308 338|255,255,255| NPC:Roua
+330 337|255,255,255| NPC:Stephan
+14 18|255,255,255| H:Black Rose
+84 303|255,255,255| H:Blue Berries
+111 345|255,255,255| H:Blue Berries
+173 300|255,255,255| H:Blue Berries
+187 329|255,255,255| H:Blue Berries
+31 80|255,255,255| H:Blue Lupine
+66 37|255,255,255| H:Blue Lupine
+80 15|255,255,255| H:Blue Lupine
+289 181|255,255,255| H:Blue Lupine
+297 171|255,255,255| H:Blue Lupine
+72 55|255,255,255| H:Blue Star Flower
+266 216|255,255,255| H:Blue Star Flower
+267 299|255,255,255| H:Blue Star Flower
+302 224|255,255,255| H:Blue Star Flower
+306 170|255,255,255| H:Blue Star Flower
+350 265|255,255,255| H:Blue Star Flower
+19 70|255,255,255| H:Cactus
+96 99|255,255,255| H:Cactus
+151 59|255,255,255| H:Cactus
+160 63|255,255,255| H:Cactus
+193 167|255,255,255| H:Cactus
+205 146|255,255,255| H:Cactus
+249 125|255,255,255| H:Cactus
+256 100|255,255,255| H:Cactus
+277 84|255,255,255| H:Cactus
+285 69|255,255,255| H:Cactus
+199 281|255,255,255| H:Chrysanthemum
+301 227|255,255,255| H:Chrysanthemum
+342 249|255,255,255| H:Chrysanthemum
+246 294|255,255,255| H:Cotton
+300 236|255,255,255| H:Daffodils
+301 227|255,255,255| H:Daffodils
+318 279|255,255,255| H:Dandelions
+326 242|255,255,255| H:Dandelions
+364 255|255,255,255| H:Dung
+128 247|255,255,255| H:Fruits
+22 323|255,255,255| H:Honey Comb
+20 350|255,255,255| H:Impatiens
+31 20|255,255,255| H:Impatiens
+35 359|255,255,255| H:Impatiens
+58 57|255,255,255| H:Impatiens
+151 312|255,255,255| H:Impatiens
+185 278|255,255,255| H:Impatiens
+191 282|255,255,255| H:Impatiens
+194 366|255,255,255| H:Impatiens
+266 216|255,255,255| H:Impatiens
+267 302|255,255,255| H:Impatiens
+283 348|255,255,255| H:Impatiens
+301 227|255,255,255| H:Impatiens
+305 232|255,255,255| H:Impatiens
+306 170|255,255,255| H:Impatiens
+308 159|255,255,255| H:Impatiens
+359 293|255,255,255| H:Impatiens
+267 302|255,255,255| H:Lilacs
+283 348|255,255,255| H:Lilacs
+296 225|255,255,255| H:Lilacs
+301 227|255,255,255| H:Lilacs
+366 269|255,255,255| H:Lilacs
+263 348|255,255,255| H:Nightshade
+32 360|255,255,255| H:Nightshade
+23 321|255,255,255| H:Red Currents
+362 164|255,255,255| H:Red Rose
+283 348|255,255,255| H:Red Snapdragons
+331 57|255,255,255| H:Rose Quartz
+296 227|255,255,255| H:Sunflower
+248 300|255,255,255| H:Vegetables
+357 236|255,255,255| H:Vegetables
+363 278|255,255,255| H:Vegetables
+350 43|255,255,255| H:Quartz
+359 23|255,255,255| H:Quartz
+365 74|255,255,255| H:Quartz
+331 57|255,255,255| H:Quartz
+69 321|255,255,255| H:Tiger Lilly
+66 324|255,255,255| H:Tiger Lilly
+288 356|255,255,255| H:Tulips
+265 304|255,255,255| H:Tulips
+31 80|255,255,255| H:White Asiatic Lilly
+32 360|255,255,255| H:White Asiatic Lilly
+35 359|255,255,255| H:White Asiatic Lilly
+80 15|255,255,255| H:White Asiatic Lilly
+135 321|255,255,255| H:White Asiatic Lilly
+201 276|255,255,255| H:White Asiatic Lilly
+206 283|255,255,255| H:White Asiatic Lilly
+283 348|255,255,255| H:White Asiatic Lilly
+322 322|255,255,255| H:White Asiatic Lilly
+325 337|255,255,255| H:White Asiatic Lilly
+79 344|255,255,255| H:Wood Branches
+123 320|255,255,255| H:Wood Branches
+136 312|255,255,255| H:Wood Branches
+150 335|255,255,255| H:Wood Branches
+195 336|255,255,255| H:Wood Branches
+185 136|255,255,255| H:Wood Branches
+73 328|255,255,255| H:Wood Branches
+190 111|255,255,255| H:Wood Logs
+58 57|255,255,255| H:Yellow Rose
+73 61|255,255,255| H:Yellow Rose
+283 348|255,255,255| H:Yellow Rose
+294 342|255,255,255| H:Yellow Rose
+354 287|255,255,255| H:Yellow Rose
+189 99|255,255,255| Fire pit
+191 279|255,255,255| Crafting
+28 119|255,255,255| Alchemy
+181 301|255,255,255| Brown Rabbit
+45 300|255,255,255| Crystal Caverns
+146 226|255,255,255| Crystal Caverns
+367 159|255,255,255| Coal Cave
+364 93|255,255,255| Coal Cave
