@@ -1,16 +1,43 @@
 #!/bin/perl
 
 # Attempts to create better maps for EL using el-wiki.net information
+# --username=username [if given, colors NPCs based on username's logs]
 
 # Desert Pines = first example
 
 require "bclib.pl";
-($all) = cmdfile();
-chdir(tmpdir());
 
-warn("Setting keeptemp for now"); $globopts{keeptemp} = 1;
+# if requested, see what NPCs you've spoken with
+# NOTE: assumes NPC in-game name is identical to wiki name, not always true
+# NOTE: this won't work if you have multiple chars
 
-for $i (split("\n",$all)) {
+if ($globopts{"username"}) {
+  $quest = read_file("$ENV{HOME}/.elc/main/quest_$globopts{username}.log");
+  for $i (split(/\n/, $quest)) {
+    # note that I have seen this NPC (+ how many times)
+    $i=~s/:.*$//;
+    # this appears in chat logs for some reason
+    $i=~s/\x8a//;
+    $seen{$i}++;
+  }
+}
+
+debug(unfold(%seen));
+
+# find the file where I store Desert Pines wiki page (not super efficient)
+# really hard to match <tab> exactly w/o also matching spaces
+($res) = cache_command("egrep -i '[[:space:]]Desert Pines\$' /usr/local/etc/wiki/EL-WIKI.NET/pageinfo-0.txt", "age=3600");
+
+# find the exact right one
+for $i (split(/\n/, $res)) {
+  $i=~/^(.*?)\s+(.*?)\s+(.*?)$/;
+  ($file, $time, $name) = ($1,$2,$3);
+  if ($name eq "Desert Pines") {last;}
+}
+
+$page = read_file("/usr/local/etc/wiki/EL-WIKI.NET/$file");
+
+for $i (split("\n",$page)) {
   debug("LINE: $i");
 
   # are we in a new section? (currently unused)
@@ -41,60 +68,26 @@ for $i (split("\n",$all)) {
     $name=~s/\s.*$//;
   }
 
-  #  debug("$name, COORDS:",@coords);
-
-  # do I have an image matching this thing?
-
-  # NOTE: images are from el-wiki.net and are not in github, I store them
-  # on my own machine
-  $imagename = $name;
-  $imagename=~s/ /_/isg;
-  @imgs = glob "/usr/local/etc/wiki/EL-WIKI.NET/images/$name.*";
-  if (@imgs) {
-    # create iconic image and add
-#    system("convert -geometry 15x15 $imgs[0] $name.gif");
-    debug("IMAGE FOR $imagename EXISTS:",@imgs);
-  } else {
-    debug("NO IMAGE: $name");
-  }
-
-  # x,y on DP map translates to x/384*1024, 1024-y/384*1024
   for $j (@coords) {
-    debug("J: $j");
-    ($mapx, $mapy) = split(/\,/,$j);
-    ($picx, $picy) = (round($mapx/384*1024), round(1024-$mapy/384*1024));
-    debug("$name -> $picx,$picy");
-    push(@pic, "string 255,0,0,$picx,$picy,giant,$name");
+
+    # color code (these color choices aren't final)
+    debug("NAME: $name, SEEN: $seen{$name}");
+    if ($seen{$name}) {
+      $color="255,255,255";
+    } else {
+      $color="0,0,0";
+    }
+
     # add to marks file
-    push(@marks, "$mapx $mapy|255,255,0| $name");
+    $j=~s/,/ /isg;
+    push(@marks, "$j|$color| $name");
   }
 }
 
-$pic = << "MARK";
-new
-size 1280,1024
-setpixel 0,0,0,0,0
-MARK
-;
+# intentionally put this in GIT so people can have updated versions
+# (kinda) w/o having to run this program [however, my versions may
+# contain marks specific to me]
 
-# TODO: this is ugly
-$pic .= join("\n",@pic)."\n";
+write_file(join("\n",@marks)."\n", "/home/barrycarter/BCGIT/EL/map3.elm.txt");
 
-write_file($pic,"pic.fly");
-system("fly -i pic.fly -o pic.gif");
-debug("RESULTS:");
-system("pwd");
-
-write_file(join("\n",@marks)."\n", "marks");
-
-=item info
-
-Info from bloodsucker map:
-
-x=50 -> 133
-x=100 -> 266
-
-y=50 -> 891
-y=350 -> 90
-
-=cut
+# NOTE: must change maps for new marks file to load (I have it symlinked)
