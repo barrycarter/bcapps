@@ -1,7 +1,7 @@
 # this file maps maps to lands... er, it converts numbers to lands
 # based on EL's map numbering scheme
 map3 Desert_Pines
-cave1 Crystal_Caves
+cave1 Crystal_Caverns
 cave2 Coal_Caves
 cave3 PK_Cave
 map11 Trasengaard

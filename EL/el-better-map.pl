@@ -22,7 +22,8 @@ for $i (split(/\n/, $mapping)) {
 # $map = "Isla Prima";
 # $map = "White Stone";
 # $map = "Desert Pines";
-$map = "Morcraven Marsh";
+# $map = "Morcraven Marsh";
+$map = "Crystal Caverns";
 
 $markfile = $markfile{$map};
 
