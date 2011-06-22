@@ -1,0 +1,62 @@
+198 258|255,255,255| NPC:Aleister
+248 151|255,255,255| NPC:Avyia
+191 355|255,255,255| NPC:Brogan
+198 258|255,255,255| NPC:Clark
+150 242|255,255,255| NPC:Darla
+199 106|255,255,255| NPC:Drial
+193 93|255,255,255| NPC:Lenard
+145 253|255,255,255| NPC:Marius
+95 56|255,255,255| NPC:Nyeald
+274 91|255,255,255| NPC:Paul
+229 78|255,255,255| NPC:William
+292 34|255,255,255| H:Blue Berries
+284 127|255,255,255| H:Blue Berries
+327 215|255,255,255| H:Blue Lupine
+210 162|255,255,255| H:Blue Lupine
+209 206|255,255,255| H:Blue Lupine
+132 90|255,255,255| H:Blue Star Flower
+265 92|255,255,255| H:Chrysanthemum
+225 171|255,255,255| H:Chrysanthemum
+176 109|255,255,255| H:Chrysanthemum
+188 91|255,255,255| H:Chrysanthemum
+179 100|255,255,255| H:Fruits
+77 140|255,255,255| H:Honey Comb
+316 121|255,255,255| H:Impatiens
+320 153|255,255,255| H:Impatiens
+300 235|255,255,255| H:Impatiens
+274 88|255,255,255| H:Impatiens
+223 129|255,255,255| H:Impatiens
+187 87|255,255,255| H:Impatiens
+168 235|255,255,255| H:Impatiens
+316 187|255,255,255| H:Lilacs
+310 197|255,255,255| H:Lilacs
+306 152|255,255,255| H:Lilacs
+70 35|255,255,255| H:Mullein
+210 144|255,255,255| H:Mullein
+297 244|255,255,255| H:Red Currents
+201 195|255,255,255| H:Red Currents
+80 16|255,255,255| H:Red Rose
+313 133|255,255,255| H:Red Snapdragons
+305 200|255,255,255| H:Red Snapdragons
+234 167|255,255,255| H:Red Snapdragons
+161 295|255,255,255| H:Rue
+270 105|255,255,255| H:Sunflower
+94 249|255,255,255| H:Sunflower
+270 205|255,255,255| H:Swamp Candles
+265 193|255,255,255| H:Swamp Candles
+259 199|255,255,255| H:Swamp Candles
+255 192|255,255,255| H:Swamp Candles
+244 182|255,255,255| H:Swamp Candles
+295 86|255,255,255| H:Tiger Lilly
+289 104|255,255,255| H:Vegetables
+322 147|255,255,255| H:White Asiatic Lilly
+312 193|255,255,255| H:White Asiatic Lilly
+248 157|255,255,255| H:Wood Branches
+295 239|255,255,255| H:Wood Branches
+277 159|255,255,255| H:Wood Branches
+323 209|255,255,255| H:Wood Logs
+322 196|255,255,255| Fire pit
+93 100|255,255,255| Manufacturing
+265 269|255,255,255| Potion
+281 270|255,255,255| Potion
+312 21|255,255,255| Morcraven Marsh

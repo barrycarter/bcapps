@@ -7,8 +7,28 @@
 
 require "bclib.pl";
 
-$map = "Valley of the Dwarves";
-$markfile = "map5nf.elm.txt";
+# map maps to ... something
+$mapping = read_file("EL/mapmap.txt");
+
+for $i (split(/\n/, $mapping)) {
+  $i=~/^(.*?)\s(.*)$/;
+  ($fname, $land) = ($1, $2);
+  $land=~s/_/ /isg;
+  $markfile{$land} = "$fname.elm.txt";
+}
+
+# $map = "Portland";
+# $map = "Valley of the Dwarves";
+# $map = "Isla Prima";
+# $map = "White Stone";
+# $map = "Desert Pines";
+$map = "Morcraven Marsh";
+
+$markfile = $markfile{$map};
+
+unless ($markfile{$land}) {
+  die "I don't know how to create a marks file for: $land";
+}
 
 # if requested, see what NPCs you've spoken with
 # NOTE: assumes NPC in-game name is identical to wiki name, not always true
