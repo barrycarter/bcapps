@@ -16,7 +16,7 @@ open(A, "tail -1f $ENV{HOME}/.elc/main/srv_log.txt|");
 # used iwatch, but I plan to limit when the sound plays)
 
 while (<A>) {
-  debug("THUNK: $_");
+  unless (/harvest/i) {next;}
   system("mplayer -really-quiet $sound &");
 }
 
