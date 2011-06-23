@@ -10,12 +10,13 @@ require "bclib.pl";
 # locating melody in git so everyone can have it
 $sound = "$ENV{HOME}/BCGIT/EL/cheerful.mp3";
 
-open(A, "tail -1f $ENV{HOME}/.elc/main/chat_log.txt|");
+open(A, "tail -1f $ENV{HOME}/.elc/main/srv_log.txt|");
 
 # Right now, alerts to ANY change in chat_log.txt (so could've just
 # used iwatch, but I plan to limit when the sound plays)
 
 while (<A>) {
+  debug("THUNK: $_");
   system("mplayer -really-quiet $sound &");
 }
 
