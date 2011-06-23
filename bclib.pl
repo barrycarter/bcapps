@@ -1547,6 +1547,22 @@ sub datestar {
   return str2time("$y-$m-$d $frac[0]:$frac[1]:$frac[2]");
 }
 
+=item minus(\@l1, \@l2)
+
+Returns the set-theoretic difference of list l1 and l2, which must be
+passed as pointers
+
+=cut
+
+sub minus {
+  my($x,$y)=@_;
+  my(%z);
+
+  for $i (@$x) {$z{$i}=1;}
+  for $i (@$y) {delete $z{$i};}
+  return keys %z;
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 
 sub END {

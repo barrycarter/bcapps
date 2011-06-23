@@ -2,6 +2,7 @@
 
 # Attempts to create better maps for EL using el-wiki.net information
 # --username=username [if given, colors NPCs based on username's logs]
+# --unlinked: look for references to this map that are not linked to map page
 
 # Desert Pines = first example
 
@@ -17,13 +18,13 @@ for $i (split(/\n/, $mapping)) {
   $markfile{$land} = "$fname.elm.txt";
 }
 
-# $map = "Portland";
+$map = "Portland";
 # $map = "Valley of the Dwarves";
 # $map = "Isla Prima";
 # $map = "White Stone";
 # $map = "Desert Pines";
 # $map = "Morcraven Marsh";
-$map = "Crystal Caverns";
+# $map = "Crystal Caverns";
 
 $markfile = $markfile{$map};
 
@@ -46,6 +47,44 @@ if ($globopts{"username"}) {
   }
 }
 
+# are there other pages that link to this map but aren't on this map page?
+
+if ($globopts{"unlinked"}) {
+  # TODO: the wiki api may have a better way of doing this
+  ($res) = cache_command("fgrep -lR '\[\[$map\]\]' /usr/local/etc/wiki/EL-WIKI.NET", "age=3600");
+  @res = split(/\n/, $res);
+  for $i (@res) {
+    $cont = read_file($i);
+
+    # must be in namespace 0
+    $cont=~/ns="(\d+)"/;
+    if ($1) {next;}
+
+    # determine page title and store title -> page translation
+    $cont=~/title="(.*?)"/;
+    $title = $1;
+    $filename{$title} = $i;
+
+
+    # what categories is this page in? (ie, NPC?)
+    $isnpc = 0;
+    while ($cont=~s/\[\[Category:\s*(.*?)\]\]//) {
+      if ($1=~/npc/i) {$isnpc=1; last;}
+    }
+
+    unless ($isnpc) {next;}
+
+    # do we have coords for this NPC?
+    if ($cont=~/at (\[\d+,\d+\])/isg) {
+      debug("SETTING COORDS for $title");
+      $coords{$title} = $1;
+    }
+
+    # this isn't perfect: determine which npcs are linked to
+    $islinked{$title} = 1;
+  }
+}
+
 debug(unfold(%seen));
 
 # find the file where I store Desert Pines wiki page (not super efficient)
@@ -60,6 +99,12 @@ for $i (split(/\n/, $res)) {
 }
 
 $page = read_file("/usr/local/etc/wiki/EL-WIKI.NET/$file");
+
+# TODO: this is a really ugly way of adding non-listed NPCs
+$page.="\n === NPC (spec) ===\n";
+for $i (sort keys %coords) {
+  $page.="[[$i]] - $coords{$i}\n\n";
+}
 
 for $i (split("\n",$page)) {
   debug("LINE: $i");
@@ -92,6 +137,9 @@ for $i (split("\n",$page)) {
     $name=~s/\s.*$//;
   }
 
+  # keep track of which pages I've seen
+  $ismentioned{$name} = 1;
+
   for $j (@coords) {
     debug("SECTION: $section");
     # breakdown marks into categories
@@ -120,6 +168,15 @@ for $i (split("\n",$page)) {
     $j=~s/,/ /isg;
     push(@marks, "$j|$color| $prefix$name");
   }
+}
+
+# NPCs that link to map page, but aren't on map page
+@linked = keys %islinked;
+@mentioned = keys %ismentioned;
+@wanted = minus(\@linked, \@mentioned);
+
+for $i (@wanted) {
+  debug("$i $coords{$i} -> $filename{$i}");
 }
 
 # intentionally put this in GIT so people can have updated versions
