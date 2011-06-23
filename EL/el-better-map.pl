@@ -8,6 +8,12 @@
 
 require "bclib.pl";
 
+# argument now required
+# ($map) = @ARGV;
+
+# unless ($map) {
+#  die("Usage: $0 [--username=username] [--unlinked] \"Portland|Desert Pines|other map name\");}
+
 # map maps to ... something
 $mapping = read_file("EL/mapmap.txt");
 
@@ -18,7 +24,8 @@ for $i (split(/\n/, $mapping)) {
   $markfile{$land} = "$fname.elm.txt";
 }
 
-$map = "Portland";
+$map = "Tarsengaard";
+# $map = "Portland";
 # $map = "Valley of the Dwarves";
 # $map = "Isla Prima";
 # $map = "White Stone";

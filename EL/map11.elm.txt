@@ -1,0 +1,75 @@
+261 205|255,255,255| NPC:Azra
+183 315|255,255,255| NPC:Itilli
+193 282|255,255,255| NPC:George
+180 214|255,255,255| NPC:Ghita
+155 216|255,255,255| NPC:Jade
+136 147|255,255,255| NPC:Kaleb
+210 213|255,255,255| NPC:Maechen
+87 42|255,255,255| NPC:Omri
+197 184|255,255,255| NPC:Relnor
+207 247|255,255,255| NPC:Tailorica
+121 82|255,255,255| H:Blue Lupine
+269 206|255,255,255| H:Blue Lupine
+302 160|255,255,255| H:Blue Star Flower
+312 119|255,255,255| H:Blue Star Flower
+271 152|255,255,255| H:Blue Star Flower
+185 79|255,255,255| H:Chrysanthemum
+198 111|255,255,255| H:Chrysanthemum
+317 26|255,255,255| H:Chrysanthemum
+243 135|255,255,255| H:Chrysanthemum
+134 159|255,255,255| H:Dung
+336 331|255,255,255| H:Emerald
+284 351|255,255,255| H:Fruits
+51 341|255,255,255| H:Henbane
+87 253|255,255,255| H:Henbane
+234 209|255,255,255| H:Henbane
+246 226|255,255,255| H:Henbane
+53 302|255,255,255| H:Impatiens
+85 73|255,255,255| H:Impatiens
+104 46|255,255,255| H:Impatiens
+257 204|255,255,255| H:Impatiens
+269 206|255,255,255| H:Impatiens
+123 143|255,255,255| H:Lilacs
+111 124|255,255,255| H:Lilacs
+62 322|255,255,255| H:Red Rose
+42 167|255,255,255| H:Red Snapdragons
+92 272|255,255,255| H:Toadstool
+103 210|255,255,255| H:Toadstool
+59 126|255,255,255| H:Toadstool
+180 146|255,255,255| H:Rue
+23 332|255,255,255| H:Sunflower
+222 153|255,255,255| H:Swamp Candles
+107 225|255,255,255| H:Tiger Lilly
+226 188|255,255,255| H:Tiger Lilly
+206 216|255,255,255| H:Tulips
+155 255|255,255,255| H:Tulips
+86 89|255,255,255| H:Valerian
+152 126|255,255,255| H:Valerian
+76 330|255,255,255| H:Vegetables
+93 122|255,255,255| H:Vegetables
+95 154|255,255,255| H:Vegetables
+120 115|255,255,255| H:Vegetables
+100 135|255,255,255| H:Vegetables
+127 164|255,255,255| H:Vegetables
+96 277|255,255,255| H:White Asiatic Lilly
+269 206|255,255,255| H:White Asiatic Lilly
+293 54|255,255,255| H:White Asiatic Lilly
+339 72|255,255,255| H:White Asiatic Lilly
+57 317|255,255,255| H:Wood Branches
+57 317|255,255,255| H:Wood Logs
+109 139|255,255,255| H:Wood Logs
+136 250|255,255,255| H:Wood Logs
+306 147|255,255,255| H:Wood Logs
+215 227|255,255,255| H:Wood Logs
+154 215|255,255,255| H:Yarrow
+148 218|255,255,255| H:Yarrow
+126 169|255,255,255| H:Yarrow
+185 257|255,255,255| H:Yarrow
+234 145|255,255,255| H:Yarrow
+261 205|255,255,255| Crafting
+87 42|255,255,255| Engineering
+117 47|255,255,255| Firepit
+48 51|255,255,255| Gargoyles Cave
+152 26|255,255,255| Orvimon's Crypt
+335 15|255,255,255| White Stone
+21 271|255,255,255| Valley of the Dwarves

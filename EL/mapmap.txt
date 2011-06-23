@@ -4,7 +4,7 @@ map3 Desert_Pines
 cave1 Crystal_Caverns
 cave2 Coal_Caves
 cave3 PK_Cave
-map11 Trasengaard
+map11 Tarsengaard
 map12 Nordcarn
 map13 Southern_Kilaran
 map14f Kilaran_Field
