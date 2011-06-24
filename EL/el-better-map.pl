@@ -24,7 +24,7 @@ for $i (split(/\n/, $mapping)) {
   $markfile{$land} = "$fname.elm.txt";
 }
 
-$map = "Tarsengaard";
+# $map = "Tarsengaard";
 # $map = "Portland";
 # $map = "Valley of the Dwarves";
 # $map = "Isla Prima";
@@ -32,6 +32,8 @@ $map = "Tarsengaard";
 # $map = "Desert Pines";
 # $map = "Morcraven Marsh";
 # $map = "Crystal Caverns";
+$map = "Grubani Peninsula";
+
 
 $markfile = $markfile{$map};
 
