@@ -1,0 +1,53 @@
+122 67|255,255,255| NPC:Ardur
+161 87|255,255,255| NPC:Viorel
+154 176|255,255,255| NPC:Zyrilik
+80 104|255,255,255| H:Blue Star Flower
+111 82|255,255,255| H:Blue Star Flower
+106 59|255,255,255| H:Blue Star Flower
+16 166|255,255,255| H:Chrysanthemum
+59 104|255,255,255| H:Chrysanthemum
+99 83|255,255,255| H:Chrysanthemum
+83 76|255,255,255| H:Chrysanthemum
+43 157|255,255,255| H:Fruits
+78 160|255,255,255| H:Henbane
+65 161|255,255,255| H:Henbane
+55 160|255,255,255| H:Henbane
+148 147|255,255,255| H:Henbane
+97 98|255,255,255| H:Henbane
+81 80|255,255,255| H:Henbane
+149 171|255,255,255| H:Henbane
+111 121|255,255,255| H:Henbane
+110 141|255,255,255| H:Impatiens
+105 60|255,255,255| H:Impatiens
+87 125|255,255,255| H:Impatiens
+84 140|255,255,255| H:Impatiens
+80 121|255,255,255| H:Nightshade
+61 176|255,255,255| H:Nightshade
+66 172|255,255,255| H:Nightshade
+82 150|255,255,255| H:Nightshade
+99 139|255,255,255| H:Nightshade
+172 135|255,255,255| H:Nightshade
+170 129|255,255,255| H:Nightshade
+59 104|255,255,255| H:Nightshade
+78 96|255,255,255| H:Nightshade
+80 126|255,255,255| H:Red Rose
+135 163|255,255,255| H:Red Snapdragons
+85 75|255,255,255| H:Sunflower
+132 49|255,255,255| H:Swamp Candles
+149 48|255,255,255| H:Swamp Candles
+170 42|255,255,255| H:Swamp Candles
+136 152|255,255,255| H:Tiger Lilly
+112 154|255,255,255| H:White Asiatic Lilly
+88 91|255,255,255| H:White Asiatic Lilly
+80 154|255,255,255| H:Wormwood
+164 174|255,255,255| H:Wormwood
+154 176|255,255,255| school
+106 164|255,255,255| Naralik Catacombs
+39 182|255,255,255| Morcraven Marsh
+186 69|255,255,255| Grubani Peninsula
+122 67|255,255,255| NPC:Ardur
+197 52|255,255,255| NPC:Kaimen
+205 49|255,255,255| NPC:Neddler
+135 161|255,255,255| NPC:Serpa
+162 88|255,255,255| NPC:Viorel
+154 177|255,255,255| NPC:Zyrilik
