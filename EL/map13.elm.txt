@@ -1,0 +1,35 @@
+171 35|255,255,255| NPC:Bakart
+152 123|255,255,255| NPC:Colton
+14 161|255,255,255| NPC:Gazhanar
+53 71|255,255,255| NPC:Pickle
+143 174|255,255,255| H:Blue Lupine
+139 160|255,255,255| H:Blue Star Flower
+67 33|255,255,255| H:Cactus
+96 166|255,255,255| H:Chrysanthemum
+110 167|255,255,255| H:Impatiens
+85 17|255,255,255| H:Quartz
+53 13|255,255,255| H:Quartz
+85 17|255,255,255| H:Rose Quartz
+53 13|255,255,255| H:Rose Quartz
+146 167|255,255,255| H:White Asiatic Lilly
+88 166|255,255,255| H:Wood Logs
+67 139|255,255,255| H:Wormwood
+176 174|255,255,255| H:Wormwood
+45 165|255,255,255| Summoning#Summoning Arenas|Summoning Arena
+108 49|255,255,255| Falcon
+38 136|255,255,255| Troll
+137 123|255,255,255| Troll
+77 104|255,255,255| Male Ogre
+79 134|255,255,255| Armed Male Orc
+76 108|255,255,255| Armed Male Orc
+57 176|255,255,255| Cyclops
+17 80|255,255,255| Cyclops
+176 174|255,255,255| Cyclops
+149 115|255,255,255| Fluffy Rabbit
+18 120|255,255,255| Fluffy Rabbit
+171 35|255,255,255| NPC:Bakart
+5 29|255,255,255| NPC:Buni
+152 123|255,255,255| NPC:Colton
+14 161|255,255,255| NPC:Gazhanar
+74 114|255,255,255| NPC:Jace
+53 71|255,255,255| NPC:Pickle
