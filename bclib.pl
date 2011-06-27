@@ -987,10 +987,13 @@ sub nestify {
 
 =item forex_quote($parity, $time)
 
-Obtains price of $parity (as "USD/CAD") at or near $time (in Unix seconds)
+Obtains price of $parity (as "USD/CAD") at or near $time (in Unix seconds).
+Options:
 
-Requires: free API username/password from
-http://api.efxnow.com/forum/index.php
+  - list=true: return list of quotes (in ugly XML format right now),
+  not just a single quote
+
+Requires: free API username/password from http://api.efxnow.com/forum/index.php
 
 TODO: confusing name, since it's close to forex_quotes(); however, may
 get rid of forex_quotes() as using efxnox.com's API seems easier
@@ -1001,9 +1004,11 @@ anyway
 =cut
 
 sub forex_quote {
-  my($parity, $time) = @_;
+  my($parity, $time, $options) = @_;
   my($price);
-  
+  my(%opts) = parse_form($options);
+  my(@res);
+
   # obtain username/password/brand
   my($username,$password,$brand) = split("\n",read_file("/home/barrycarter/efx-info.txt"));
 
@@ -1040,6 +1045,8 @@ sub forex_quote {
   # parse
   while ($rates=~s%<HistoricRates[^>]*?>(.*?)</HistoricRates>%%is) {
     my($quote) = $1;
+    # below only if list=true
+    push(@res, $quote);
     my(%hash);
     while ($quote=~s%<(.*?)>(.*?)</\1>%%) {$hash{$1}=$2;}
 
@@ -1052,6 +1059,8 @@ sub forex_quote {
       $price = ($hash{Bid}+$hash{Offer})/2;
     }
   }
+
+  if ($opts{list}) {return @res;}
 
   return $price;
 }

@@ -7,6 +7,28 @@
 
 require "bclib.pl";
 
+# find all el-services.net bots (does not work for other bots)
+
+($res) = cache_command("curl http://bots.el-services.net/", "age=3600");
+
+while ($res=~s/<a class="arrow" href="(.*?)">//) {
+  push(@bots, $1);
+}
+
+for $i (@bots) {
+  debug("BOT: $i");
+  ($res) = cache_command("curl http://bots.el-services.net/$i", "age=3600");
+
+  # items
+  while ($res=~s%<td class="public2">(.*?)</td>%%) {
+    debug("ITEM: $1");
+  }
+#  debug("BOT: $i", $res);
+}
+
+die "TESTING";
+
+
 # TODO: this will NOT catch things that redirect to Desert Pines
 
 $res = cache_command("fgrep -R '[[Desert Pines]] at' /usr/local/etc/wiki/EL-WIKI.NET", "age=3600");
