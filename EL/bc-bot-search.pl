@@ -3,6 +3,7 @@
 # Trivial script to change GET request to POST request so I can do things like:
 # #alias 1 #open_url http://el-wiki.net/$0
 
+push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
 # headers
