@@ -6,8 +6,9 @@
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
-# headers
+# headers and base href
 print "Content-type: text/html\n\n";
+print qq%<base href="http://bots.el-services.net/">\n%;
 
 chdir(tmpdir());
 

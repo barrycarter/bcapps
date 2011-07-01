@@ -25,7 +25,7 @@ our(%globopts);
 our(@tmpfiles);
 
 # largest possible path
-$ENV{PATH} = "/sw/bin/:/bin/:/usr/bin/:/usr/local/bin/:/usr/X11R6/bin/:/usr/lib/nagios/plugins:$ENV{HOME}/bin:$ENV{HOME}/PERL";
+$ENV{PATH} = "/sw/bin/:/bin/:/usr/bin/:/usr/local/bin/:/usr/X11R6/bin/:/usr/lib/nagios/plugins:/usr/lib:$ENV{HOME}/bin:$ENV{HOME}/PERL";
 
 =item list2hash(@list)
 
@@ -1570,6 +1570,31 @@ sub minus {
   for $i (@$x) {$z{$i}=1;}
   for $i (@$y) {delete $z{$i};}
   return keys %z;
+}
+
+=item sendmail($from, $to, $subject, $body)
+
+Uses sendmail -v to send email from $from to $to with subject $subject
+and body $body.
+
+Returns the stdout/stderr/return value of sendmail -v
+
+=cut
+
+sub sendmail {
+  my($from,$to,$subject,$body)=@_;
+  chdir(tmpdir());
+  my($str) = << "MARK";
+From: $from
+To: $to
+Subject: $subject
+
+$body
+
+MARK
+    ;
+  write_file($str, "mailme");
+  return cache_command("sendmail -v -f$from -t < mailme");
 }
 
 # cleanup files created by my_tmpfile (unless --keeptemp set)

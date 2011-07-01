@@ -7,6 +7,13 @@
 
 require "bclib.pl";
 
+@foo = sendmail("bob\@clown.com", "test20110701-2\@barrycarter.info", "This is my subject", "This is my life");
+
+debug("FOO:",@foo);
+
+die "TESTING";
+
+
 # find all el-services.net bots (does not work for other bots)
 
 ($res) = cache_command("curl http://bots.el-services.net/", "age=3600");

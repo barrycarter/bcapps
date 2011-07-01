@@ -73,3 +73,4 @@
 152 26|255,255,255| Orvimon's Crypt
 335 15|255,255,255| White Stone
 21 271|255,255,255| Valley of the Dwarves
+87 42|0,255,0| school

@@ -8,6 +8,9 @@
 
 require "bclib.pl";
 
+# --unlinked is now the default (maps are too incomplete w/o it)
+$globopts{unlinked} = 1;
+
 # argument now required
 # ($map) = @ARGV;
 
@@ -26,7 +29,7 @@ for $i (split(/\n/, $mapping)) {
 
 # $map = "Tarsengaard";
 # $map = "Portland";
-# $map = "Valley of the Dwarves";
+$map = "Valley of the Dwarves";
 # $map = "Isla Prima";
 # $map = "White Stone";
 # $map = "Desert Pines";
@@ -35,7 +38,7 @@ for $i (split(/\n/, $mapping)) {
 # $map = "Grubani Peninsula";
 # $map = "Nordcarn";
 # $map = "Naralik";
-$map = "Southern Kilaran";
+# $map = "Southern Kilaran";
 
 
 $markfile = $markfile{$map};

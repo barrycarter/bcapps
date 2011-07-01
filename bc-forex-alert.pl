@@ -6,10 +6,14 @@
 require "/home/barrycarter/BCGIT/bclib.pl";
 $now = stardate(time());
 
+# my private email address (public one: barry at barrycarter dot info)
+$email = read_file("/home/barrycarter/bc-email.txt");
+chomp($email);
+
 @x=forex_quote("USD/CAD",time(),"list=true");
 
-($low, $high) = (.9837, .9900);
-# ($low, $high) = (.9868, .9869);
+# TODO: move next line out of GIT since I keep changing it pointlessly
+($low, $high) = (0.9480, 0.9690);
 
 for $i (@x) {
   %hash = ();
@@ -22,9 +26,9 @@ for $i (@x) {
 
   # theoretically possible for both to be true, but not worth testing
   if ($hash{bid} < $low) {
-    $msg = "BC FOREX ALERT: USDCAD: $hash{bid} < $low ($now)";
+    $msg = "BC FOREX ALERT: USDCAD: $hash{bid} < $low ($hash{time}/$now)";
   } elsif ($hash{offer} > $high) {
-    $msg = "BC FOREX ALERT: USDCAD: $hash{offer} < $high ($now)";
+    $msg = "BC FOREX ALERT: USDCAD: $hash{offer} > $high ($hash{time}/$now)";
   } else {
     $msg = "";
   }
@@ -33,6 +37,7 @@ for $i (@x) {
   if ($msg) {
     system("pkill -f 'BC FOREX ALERT: USDCAD'");
     system("xmessage -geometry 1024 -nearmouse '$msg' &");
+    sendmail("alert\@barrycarter.info", $email, "", $msg);
     # no need to check rest
     exit();
   }

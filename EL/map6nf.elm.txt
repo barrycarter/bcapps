@@ -80,3 +80,4 @@
 217 122|255,255,255| NPC:Strajer
 229 78|255,255,255| NPC:William
 186 56|255,255,255| NPC:Xaquelina
+211 69|0,255,0| tutanchamon
