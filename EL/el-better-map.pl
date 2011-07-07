@@ -29,7 +29,7 @@ for $i (split(/\n/, $mapping)) {
 
 # $map = "Tarsengaard";
 # $map = "Portland";
-$map = "Valley of the Dwarves";
+# $map = "Valley of the Dwarves";
 # $map = "Isla Prima";
 # $map = "White Stone";
 # $map = "Desert Pines";
@@ -39,6 +39,7 @@ $map = "Valley of the Dwarves";
 # $map = "Nordcarn";
 # $map = "Naralik";
 # $map = "Southern Kilaran";
+$map = "Diamond Cave";
 
 
 $markfile = $markfile{$map};

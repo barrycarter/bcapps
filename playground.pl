@@ -7,13 +7,6 @@
 
 require "bclib.pl";
 
-@foo = sendmail("bob\@clown.com", "test20110701-2\@barrycarter.info", "This is my subject", "This is my life");
-
-debug("FOO:",@foo);
-
-die "TESTING";
-
-
 # find all el-services.net bots (does not work for other bots)
 
 ($res) = cache_command("curl http://bots.el-services.net/", "age=3600");
@@ -25,13 +18,38 @@ while ($res=~s/<a class="arrow" href="(.*?)">//) {
 for $i (@bots) {
   debug("BOT: $i");
   ($res) = cache_command("curl http://bots.el-services.net/$i", "age=3600");
+  debug("RES: $res");
+
+  # find the location (ugly)
+  $res=~s%<tr class="botinfo-location"><td class="botinfo-leftmargin"></td><td class="botinfo-location" colspan="2">(.*?)</td></tr>%%is;
+  $loc = $1;
+  # break into map, coords
+  $loc=~/^\s*(.*?)\s*\[(\d+\s*\,\d+)\]/;
+  ($map, $coord) = ($1,$2);
+  debug("LOC: $map/$coord");
+
+  # find the selling section (ugly)
+  $res=~s/<div id="selling">(.*?)<div id="purchasing">//s;
+  ($sell, $buy) = ($1, $res);
 
   # items
-  while ($res=~s%<td class="public2">(.*?)</td>%%) {
-    debug("ITEM: $1");
+  while ($sell=~s%<td class="public2">(.*?)</td>\s*<td class="public_right">(.*?)</td>\s*<td class="public_right">(.*?)</td>%%is) {
+    print join("\t", "SELL", $i, $1, $2, $3)."\n";
   }
-#  debug("BOT: $i", $res);
+
+  while ($res=~s%<td class="public2">(.*?)</td>\s*<td class="public_right">(.*?)</td>\s*<td class="public_right">(.*?)</td>%%is) {
+    print join("\t", "BUY", $i, $1, $2, $3)."\n";
+  }
+
+
 }
+
+die "TESTING";
+
+
+@foo = sendmail("bob\@clown.com", "test20110701-2\@barrycarter.info", "This is my subject", "This is my life");
+
+debug("FOO:",@foo);
 
 die "TESTING";
 

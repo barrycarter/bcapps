@@ -74,3 +74,4 @@
 335 15|255,255,255| White Stone
 21 271|255,255,255| Valley of the Dwarves
 87 42|0,255,0| school
+172 204|0,255,0| bot

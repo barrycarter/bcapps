@@ -16,6 +16,5 @@ map7 Morcraven_Marsh
 map8 Naralik
 map9f Grubani_Peninsula
 startmap Isla_Prima
-
-
+map2_cave Diamond Cave
 
