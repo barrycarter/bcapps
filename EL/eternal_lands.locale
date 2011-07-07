@@ -73,16 +73,9 @@ grouping        3;3
 END LC_NUMERIC
 
 LC_TIME
-abday	"A";"B";"C";"D";"E";"F";"G"
-day	"<U0053><U0075><U006E><U0064><U0061><U0079>";/
-	"<U004D><U006F><U006E><U0064><U0061><U0079>";/
-	"<U0054><U0075><U0065><U0073><U0064><U0061><U0079>";/
-	"<U0057><U0065><U0064><U006E><U0065><U0073><U0064><U0061><U0079>";/
-	"<U0054><U0068><U0075><U0072><U0073><U0064><U0061><U0079>";/
-	"<U0046><U0072><U0069><U0064><U0061><U0079>";/
-	"<U0053><U0061><U0074><U0075><U0072><U0064><U0061><U0079>"
-
-week    7;19971130;7
+abday	"Aur";"Wor";"Dra";"Mor";"Zar";"Ter";"xxx"
+day	"Aurun";"Worun";"Dranun";"Mortun";"Zarun";"Terun";"xxx"
+week    7;20110706;7
 first_weekday	1
 first_workday	2
 abmon	"Alu";"See";"Akb";"Zar";"Ela";"Via";"Fru";"Mor";"Car";"Nim";"Chi";"Ves"
