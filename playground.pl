@@ -7,6 +7,59 @@
 
 require "bclib.pl";
 
+debug(unix2el());
+
+=item unix2el($time=now)
+
+Converts Unix $time in seconds to Eternal Lands time (a list of [year,
+month, date, hours, minutes, seconds]), assuming that server has not
+been reset since this time:
+
+Thu Jul  7 17:26:00 MDT 2011 == [27, 11, 12, 0, 27, 24]
+
+(27th year, 12th day of Chimar, 00:27:24)
+
+=cut
+
+sub unix2el {
+  my($time) = @_;
+  # default to now
+  unless ($time) {$time=time();}
+
+  # Base times
+  my($ubase) = str2time("Thu Jul  7 17:26:00 MDT 2011");
+  my(@ebase) = (27, 11, 12, 0, 27, 24);
+
+  # RL seconds since base time
+  my($rl) = $time-$ubase;
+  debug("RL: $rl");
+
+  # add to EL (using array by position here is weird)
+
+  # 1 EL second = 61/60 RL seconds
+  $ebase[5] = ($ebase[5]+$rl/(61/60))%60;
+
+  # 1 EL minute = 61 RL seconds
+  $ebase[4] = ($ebase[4]+$rl/61)%60;
+
+  # 1 EL hour = 61*60 RL seconds (and EL days have only 6 hours)
+  $ebase[3] = ($ebase[3]+$rl/61/60)%6;
+
+  # 1 EL day = 366*60 RL seconds (months have 30 days)
+  $ebase[2] = ($ebase[2]+$rl/366/60)%30;
+
+  # 1 EL month = 7.625*86400 seconds (12 months/year)
+  $ebase[1] = ($ebase[1]+$rl/86400/7.625)%12;
+
+  # 1 EL year = 91.5*86400 seconds
+  $ebase[0] = int($ebase[0]+$rl/91.5/86400);
+
+  return @ebase;
+}
+
+die "TESTING";
+
+
 # find all el-services.net bots (does not work for other bots)
 
 ($res) = cache_command("curl http://bots.el-services.net/", "age=3600");
