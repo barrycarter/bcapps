@@ -28,33 +28,26 @@ sub unix2el {
 
   # Base times
   my($ubase) = str2time("Thu Jul  7 17:26:00 MDT 2011");
-  my(@ebase) = (27, 11, 12, 0, 27, 24);
+  # note format below is sec, min, hour, day, month, year, NOT same as in docs
+  my(@ebase) = (24, 27, 0, 12, 11, 27);
+  # below = seconds-in-minute, minutes-in-hour, hours-in-day (only 6 in EL)
+  # days-in-month (always 30 in EL), months-in-year
+  my(@eltimes) = (60, 60, 6, 30, 12);
 
   # RL seconds since base time
   my($rl) = $time-$ubase;
-  debug("RL: $rl");
+  # EL seconds since base time (1 EL second = 61/60 RL seconds)
+  $ebase[0] += 60*$rl/61;
 
-  # add to EL (using array by position here is weird)
+  # now push seconds to minutes, etc
+  for $i (0..$#ebase-1) {
+    # eg: 1214 seconds = 20 minutes and 14 seconds
+    debug("I: $i, $eltimes[$i]");
+    $ebase[$i+1] += int($ebase[$i]/$eltimes[$i]);
+    $ebase[$i] = $ebase[$i]%$eltimes[$i];
+  }
 
-  # 1 EL second = 61/60 RL seconds
-  $ebase[5] = ($ebase[5]+$rl/(61/60))%60;
-
-  # 1 EL minute = 61 RL seconds
-  $ebase[4] = ($ebase[4]+$rl/61)%60;
-
-  # 1 EL hour = 61*60 RL seconds (and EL days have only 6 hours)
-  $ebase[3] = ($ebase[3]+$rl/61/60)%6;
-
-  # 1 EL day = 366*60 RL seconds (months have 30 days)
-  $ebase[2] = ($ebase[2]+$rl/366/60)%30;
-
-  # 1 EL month = 7.625*86400 seconds (12 months/year)
-  $ebase[1] = ($ebase[1]+$rl/86400/7.625)%12;
-
-  # 1 EL year = 91.5*86400 seconds
-  $ebase[0] = int($ebase[0]+$rl/91.5/86400);
-
-  return @ebase;
+  return reverse @ebase;
 }
 
 die "TESTING";
