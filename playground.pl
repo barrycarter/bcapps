@@ -7,7 +7,7 @@
 
 require "bclib.pl";
 
-debug(unix2el());
+debug(unix2el(time()));
 
 =item unix2el($time=now)
 
@@ -37,7 +37,11 @@ sub unix2el {
   # RL seconds since base time
   my($rl) = $time-$ubase;
   # EL seconds since base time (1 EL second = 61/60 RL seconds)
-  $ebase[0] += 60*$rl/61;
+  my($el) = 60*$rl/61;
+  debug("RL/EL: $rl/$el");
+#  $ebase[0] += $rl;
+  $ebase[0] += $el;
+#  $ebase[0] += 61*$rl/60;
 
   # now push seconds to minutes, etc
   for $i (0..$#ebase-1) {
