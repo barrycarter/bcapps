@@ -15,9 +15,7 @@ Converts Unix $time in seconds to Eternal Lands time (a list of [year,
 month, date, hours, minutes, seconds]), assuming that server has not
 been reset since this time:
 
-Thu Jul  7 17:26:00 MDT 2011 == [27, 11, 12, 0, 27, 24]
-
-(27th year, 12th day of Chimar, 00:27:24)
+27th year, 18th Chimar [month 11], 3:42:00 == Sat 09 Jul 2011 09:11:01
 
 =cut
 
@@ -27,9 +25,9 @@ sub unix2el {
   unless ($time) {$time=time();}
 
   # Base times
-  my($ubase) = str2time("Thu Jul  7 17:26:00 MDT 2011");
+  my($ubase) = str2time("Sat 09 Jul 2011 09:11:01");
   # note format below is sec, min, hour, day, month, year, NOT same as in docs
-  my(@ebase) = (24, 27, 0, 12, 11, 27);
+  my(@ebase) = (0,42,3,18,11,27);
   # below = seconds-in-minute, minutes-in-hour, hours-in-day (only 6 in EL)
   # days-in-month (always 30 in EL), months-in-year
   my(@eltimes) = (60, 60, 6, 30, 12);
