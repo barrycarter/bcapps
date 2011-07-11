@@ -1597,6 +1597,90 @@ MARK
   return cache_command("sendmail -v -f$from -t < mailme");
 }
 
+
+=item elhrlen()
+
+Determine the length of an Eternal Lands hour (in RL seconds) by
+looking at log files since my last connection: the length given in the
+wiki appears to be inaccurate. This is a one-shot "hack" function.
+
+Only includes latest connection so there are no gaps in the warnings.
+
+=cut
+
+sub elhrlen {
+  my(@l);
+  my($tot);
+  local(*A);
+  open(A,"tac ~/.elc/main/srv_log.txt | egrep -i 'minute warning for the coming hour|connecting to server...' |");
+
+  # ultimately, we're just computing the difference between the first
+  # and last entries, but doing it one line at a time helps when total
+  # time period exceeds 24 hours
+
+  while(<A>) {
+    if (/connecting to server/i) {last;}
+    /^\[(\d{2}):(\d{2}):(\d{2})\]/||warnlocal("BAD LINE: $_");
+    push(@l,$1*3600+$2*60+$3);
+  }
+
+  # Starting at 1, since first diff is l[1] - l[0]
+  for $i (1..$#l) {
+    my($diff) = $l[$i]-$l[$i-1];
+    # if we've crossed a 24h line
+    if ($diff>0) {$diff-=86400;}
+    $tot+=$diff;
+    debug("$diff / $tot");
+  }
+
+  return -$tot/$#l;
+
+}
+
+=item unix2el($time=now)
+
+Converts Unix $time in seconds to Eternal Lands time (a list of [year,
+month, date, hours, minutes, seconds]), assuming that server has not
+been reset since subroutine last updated.
+
+Run elhrlen() occasionally to keep this accurate.
+
+=cut
+
+sub unix2el {
+  my($time) = @_;
+  # default to now
+  unless ($time) {$time=time();}
+
+  # Base times (based on server log)
+  my($ubase) = str2time("11 Jul 2011 13:01:59 MDT");
+  # note format below is sec, min, hour, day, month, year, NOT same as in docs
+  my(@ebase) = (0,59,0,27,11,27);
+  # below = seconds-in-minute, minutes-in-hour, hours-in-day (only 6 in EL)
+  # days-in-month (always 30 in EL), months-in-year
+  my(@eltimes) = (60, 60, 6, 30, 12);
+
+  # RL seconds since base time
+  my($rl) = $time-$ubase;
+  # EL seconds since base time (EL hour = 3638.95652173913 based on elhrlen)
+  my($el) = 3600*$rl/3638.95652173913;
+
+  debug("RL/EL: $rl/$el");
+#  $ebase[0] += $rl;
+  $ebase[0] += $el;
+#  $ebase[0] += 61*$rl/60;
+
+  # now push seconds to minutes, etc
+  for $i (0..$#ebase-1) {
+    # eg: 1214 seconds = 20 minutes and 14 seconds
+    debug("I: $i, $eltimes[$i]");
+    $ebase[$i+1] += int($ebase[$i]/$eltimes[$i]);
+    $ebase[$i] = $ebase[$i]%$eltimes[$i];
+  }
+
+  return reverse @ebase;
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 
 sub END {

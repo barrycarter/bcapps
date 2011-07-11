@@ -81,3 +81,5 @@
 229 78|255,255,255| NPC:William
 186 56|255,255,255| NPC:Xaquelina
 211 69|0,255,0| tutanchamon
+323 201|0,255,0| sapphire
+213 175|0,255,0| sapphire2

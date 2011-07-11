@@ -7,53 +7,7 @@
 
 require "bclib.pl";
 
-debug(unix2el(time()));
-
-=item unix2el($time=now)
-
-Converts Unix $time in seconds to Eternal Lands time (a list of [year,
-month, date, hours, minutes, seconds]), assuming that server has not
-been reset since this time:
-
-27th year, 18th Chimar [month 11], 3:42:00 == Sat 09 Jul 2011 09:11:01
-
-=cut
-
-sub unix2el {
-  my($time) = @_;
-  # default to now
-  unless ($time) {$time=time();}
-
-  # Base times
-  my($ubase) = str2time("Sat 09 Jul 2011 09:11:01");
-  # note format below is sec, min, hour, day, month, year, NOT same as in docs
-  my(@ebase) = (0,42,3,18,11,27);
-  # below = seconds-in-minute, minutes-in-hour, hours-in-day (only 6 in EL)
-  # days-in-month (always 30 in EL), months-in-year
-  my(@eltimes) = (60, 60, 6, 30, 12);
-
-  # RL seconds since base time
-  my($rl) = $time-$ubase;
-  # EL seconds since base time (1 EL second = 61/60 RL seconds)
-  my($el) = 60*$rl/61;
-  debug("RL/EL: $rl/$el");
-#  $ebase[0] += $rl;
-  $ebase[0] += $el;
-#  $ebase[0] += 61*$rl/60;
-
-  # now push seconds to minutes, etc
-  for $i (0..$#ebase-1) {
-    # eg: 1214 seconds = 20 minutes and 14 seconds
-    debug("I: $i, $eltimes[$i]");
-    $ebase[$i+1] += int($ebase[$i]/$eltimes[$i]);
-    $ebase[$i] = $ebase[$i]%$eltimes[$i];
-  }
-
-  return reverse @ebase;
-}
-
 die "TESTING";
-
 
 # find all el-services.net bots (does not work for other bots)
 

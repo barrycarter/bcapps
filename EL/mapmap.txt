@@ -17,4 +17,5 @@ map8 Naralik
 map9f Grubani_Peninsula
 startmap Isla_Prima
 map2_cave Diamond Cave
+map4f Ruins_of_Tirnym
 
