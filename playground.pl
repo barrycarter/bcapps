@@ -7,7 +7,30 @@
 
 require "bclib.pl";
 
+create_el_tz_file();
+
 die "TESTING";
+
+=item create_el_tz_file()
+
+Creates a timezone file for Eternal Lands. Use "zic" (as root) to
+compile it and then "setenv TZ Test/ELT" to use it. You must create a
+"TEST" subdirectory in /usr/share/zoneinfo or the equivalent
+
+=cut
+
+sub create_el_tz_file {
+  # current EL time
+  my($now) = time();
+
+  # update every minute for the next year (serious overkill?)
+  for ($i=$now; $i<=$now+60*24*365.2425; $i+=60) {
+    debug("I: $i");
+    my(@elt) = unix2el($i);
+    debug("$i:", @elt);
+  }
+
+}
 
 # find all el-services.net bots (does not work for other bots)
 

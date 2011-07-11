@@ -1,4 +1,8 @@
 # timezone file for Eternal Lands
 # To use: "zic EL/EternalLands" (needs root permission)
 # "man zic" for more information
-Zone Test/ELT 00:00:60 - ELT
+Zone Test/ELT 05:15:00 - ELT 2011 Jul 12 00:48
+50:30:00 - ELT 2011 Jul 14
+5000:45:00 - ELT
+
+
