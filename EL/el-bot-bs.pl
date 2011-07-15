@@ -43,13 +43,18 @@ for $i (@bots) {
 
   # items
   while ($sell=~s%<td class="public2">(.*?)</td>\s*<td class="public_right">(.*?)</td>\s*<td class="public_right">(.*?)</td>%%is) {
-    ($item, $price, $quant) = ($1, $2, $3);
+    handle_row($1, $2, $3);
+    ($item, $quant, $price) = ($1, $2, $3);
+    debug("A: $item/$price/$quant");
 
     # TODO: fix redundancy between this section + buy section
     $item=~s/\'//isg;
     $quant=~s/[^\d]//isg;
+    $price=~s/[^\d\.]//isg;
+    debug("PRICE BETA: $price");
     $price*=100;
-    $price=~s/[^\d]//isg;
+    debug("PRICE GAMMA: $price");
+
 
     # TODO: this is really bad, ignoring the most important ones
     # because they don't meet format above
@@ -59,16 +64,16 @@ for $i (@bots) {
     }
 
     push(@queries, "INSERT INTO items (bot, buyorsell, item, price, quantity)
-                    VALUES ('$i', 'SELL', '$item', $quant, $price/100)");
+                    VALUES ('$i', 'SELL', '$item', $price/100, $quant)");
   }
 
   while ($res=~s%<td class="public2">(.*?)</td>\s*<td class="public_right">(.*?)</td>\s*<td class="public_right">(.*?)</td>%%is) {
-    ($item, $price, $quant) = ($1, $2, $3);
+    ($item, $quant, $price) = ($1, $2, $3);
 
     $item=~s/\'//isg;
     $quant=~s/[^\d]//isg;
+    $price=~s/[^\d\.]//isg;
     $price*=100;
-    $price=~s/[^\d]//isg;
 
     # TODO: this is really bad, ignoring the most important ones
     # because they don't meet format above
@@ -78,7 +83,7 @@ for $i (@bots) {
     }
 
     push(@queries, "INSERT INTO items (bot, buyorsell, item, price, quantity)
-                    VALUES ('$i', 'BUY', '$item', $quant, $price/100)");
+                    VALUES ('$i', 'BUY', '$item', $price/100, $quant)");
   }
 }
 
@@ -89,6 +94,16 @@ push(@queries,"COMMIT");
 # TODO: choose a better tmp file
 write_file(join(";\n",@queries).";\n", "/tmp/botqueries.txt");
 system("sqlite3 ~/BCINFO/sites/DB/bots.db < /tmp/botqueries.txt");
+
+# Given a buy/sell row regex matches, return item name, price,
+# quantity (but not whether its buy/sell, since argument won't tell us
+# that)
+
+sub handle_row {
+  my($item, $price, $quant) = @_;
+  debug("$item/$price/$quant");
+}
+
 
 =item schema
 
