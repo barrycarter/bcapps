@@ -40,48 +40,24 @@ for $i (@bots) {
   # find the selling section (ugly)
   $res=~s/<div id="selling">(.*?)<div id="purchasing">//s;
   ($sell, $buy) = ($1, $res);
+  debug("SELL: $sell");
+
+  while ($sell=~s%<tr.*?>(.*?)</tr>%%is) {
+    handle_row($1);
+  }
+
+  warn("TESTING");
+  next;
 
   # items
-  while ($sell=~s%<td class="public2">(.*?)</td>\s*<td class="public_right">(.*?)</td>\s*<td class="public_right">(.*?)</td>%%is) {
-    handle_row($1, $2, $3);
-    ($item, $quant, $price) = ($1, $2, $3);
-    debug("A: $item/$price/$quant");
-
-    # TODO: fix redundancy between this section + buy section
-    $item=~s/\'//isg;
-    $quant=~s/[^\d]//isg;
-    $price=~s/[^\d\.]//isg;
-    debug("PRICE BETA: $price");
-    $price*=100;
-    debug("PRICE GAMMA: $price");
-
-
-    # TODO: this is really bad, ignoring the most important ones
-    # because they don't meet format above
-    if ($item=~/no limit/i) {
-      warnlocal("SKIPPING: $item/$quant/$price");
-      next;
-    }
-
+  while ($sell=~s%<td class="public2">(.*?)</td>\s*<td class="public_right.*">(.*?)</td>\s*<td class="public_right.*">(.*?)</td>%%is) {
+    ($item, $quant, $price) = handle_row($1, $2, $3);
     push(@queries, "INSERT INTO items (bot, buyorsell, item, price, quantity)
                     VALUES ('$i', 'SELL', '$item', $price/100, $quant)");
   }
 
-  while ($res=~s%<td class="public2">(.*?)</td>\s*<td class="public_right">(.*?)</td>\s*<td class="public_right">(.*?)</td>%%is) {
-    ($item, $quant, $price) = ($1, $2, $3);
-
-    $item=~s/\'//isg;
-    $quant=~s/[^\d]//isg;
-    $price=~s/[^\d\.]//isg;
-    $price*=100;
-
-    # TODO: this is really bad, ignoring the most important ones
-    # because they don't meet format above
-    if ($item=~/no limit/i) {
-      warnlocal("SKIPPING: $item/$quant/$price");
-      next;
-    }
-
+  while ($res=~s%<td class="public2">(.*?)</td>\s*<td class="public_right.*">(.*?)</td>\s*<td class="public_right.*">(.*?)</td>%%is) {
+    ($item, $quant, $price) = handle_row($1,$2,$3);
     push(@queries, "INSERT INTO items (bot, buyorsell, item, price, quantity)
                     VALUES ('$i', 'BUY', '$item', $price/100, $quant)");
   }
@@ -93,6 +69,8 @@ push(@queries,"COMMIT");
 
 # TODO: choose a better tmp file
 write_file(join(";\n",@queries).";\n", "/tmp/botqueries.txt");
+die "TESTING";
+
 system("sqlite3 ~/BCINFO/sites/DB/bots.db < /tmp/botqueries.txt");
 
 # Given a buy/sell row regex matches, return item name, price,
@@ -100,8 +78,21 @@ system("sqlite3 ~/BCINFO/sites/DB/bots.db < /tmp/botqueries.txt");
 # that)
 
 sub handle_row {
-  my($item, $price, $quant) = @_;
-  debug("$item/$price/$quant");
+  my($row) = @_;
+  my(@cells);
+
+  # break into table cells, removing td tags
+  while ($row=~s%<td.*?>(.*?)</td>%%is) {
+    push(@cells, $1);
+  }
+
+  # first two cells tell us nothing useful
+  ($item, $quant, $price) = @cells[2..4];
+  $price=~s/,//isg;
+  debug("$item/$quant/$price");
+
+  return($item, $quant, $price);
+
 }
 
 
