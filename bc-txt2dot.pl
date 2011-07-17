@@ -26,12 +26,26 @@ for $i (split(/\n/,$txt)) {
 
   # edges
   for $j (@rooms) {
+    # as above
     if ($j=~/^\d/) {$j="_$j";}
-    push(@edges, "$node -> $j;");
+
+    # TODO: cheating here, since I know TG Magic Garden graph is bidirectional
+    if ($edge{$node}{$j} || $edge{$j}{$node}) {next;}
+
+    # NOTE: putting semicolons at EOL actually breaks dot!
+    push(@edges, "$node -- $j");
+    $edge{$node}{$j} = 1;
   }
 }
 
-print "digraph tgmagic {\n";
-print join("\n", @nodes)."\n";
-print join("\n", @edges)."\n";
-print "}\n";
+debug("ROOMS",@rooms,"EDGES",@edges);
+
+open(A,">/home/barrycarter/BCGIT/EL/tg-magic.dot");
+print A "graph tgmagic {\n";
+print A join("\n", @nodes)."\n";
+print A join("\n", @edges)."\n";
+print A "}\n";
+close(A);
+
+# just for testing
+system("neato -Nshape=circle -Nfontsize=9 -Gnslimit=9999 -Gmclimit=9999 -Tpng EL/tg-magic.dot | display -");
