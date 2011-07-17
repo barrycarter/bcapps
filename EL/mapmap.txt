@@ -20,3 +20,4 @@ map2_cave Diamond Cave
 map4f Ruins_of_Tirnym
 anitora Port_Anitora
 cont2map1 Idaloran
+map11_insmsch Magic_School
