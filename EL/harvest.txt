@@ -1,0 +1,4 @@
+# Just a text table to record harvesting speeds
+# Fields: player_harvest_level item_harvested time xp (excl 1st harvest)
+23 "toadstool" 8 39
+34 "yarrow" 9 47

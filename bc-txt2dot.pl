@@ -48,4 +48,5 @@ print A "}\n";
 close(A);
 
 # just for testing
-system("neato -Nshape=circle -Nfontsize=9 -Gnslimit=9999 -Gmclimit=9999 -Tpng EL/tg-magic.dot | display -");
+# system("dot -Nshape=record -Tpng EL/tg-magic.dot | display -");
+system("dot -Nshape=record -Gnslimit=9999 -Gmclimit=9999 -Nfontsize=8 -Nheight=0.12 -Nwidth=0.65 -Tpng EL/tg-magic.dot | display -");
