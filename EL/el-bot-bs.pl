@@ -44,22 +44,20 @@ for $i (@bots) {
 
   while ($sell=~s%<tr.*?>(.*?)</tr>%%is) {
     handle_row($1);
+    # TODO: hack!
+    unless ($price) {next;}
+    debug("SELLRET: $item/$quant/$price");
+    push(@queries, "INSERT INTO items (bot, buyorsell, item, price, quantity)
+                    VALUES ('$i', 'SELL', '$item', $price, $quant)");
   }
 
-  warn("TESTING");
-  next;
-
-  # items
-  while ($sell=~s%<td class="public2">(.*?)</td>\s*<td class="public_right.*">(.*?)</td>\s*<td class="public_right.*">(.*?)</td>%%is) {
-    ($item, $quant, $price) = handle_row($1, $2, $3);
+  while ($buy=~s%<tr.*?>(.*?)</tr>%%is) {
+    handle_row($1);
+    # TODO: hack!
+    unless ($price) {next;}
+    debug("BUYRET: $item/$quant/$price");
     push(@queries, "INSERT INTO items (bot, buyorsell, item, price, quantity)
-                    VALUES ('$i', 'SELL', '$item', $price/100, $quant)");
-  }
-
-  while ($res=~s%<td class="public2">(.*?)</td>\s*<td class="public_right.*">(.*?)</td>\s*<td class="public_right.*">(.*?)</td>%%is) {
-    ($item, $quant, $price) = handle_row($1,$2,$3);
-    push(@queries, "INSERT INTO items (bot, buyorsell, item, price, quantity)
-                    VALUES ('$i', 'BUY', '$item', $price/100, $quant)");
+                    VALUES ('$i', 'BUY', '$item', $price, $quant)");
   }
 }
 
@@ -69,8 +67,6 @@ push(@queries,"COMMIT");
 
 # TODO: choose a better tmp file
 write_file(join(";\n",@queries).";\n", "/tmp/botqueries.txt");
-die "TESTING";
-
 system("sqlite3 ~/BCINFO/sites/DB/bots.db < /tmp/botqueries.txt");
 
 # Given a buy/sell row regex matches, return item name, price,
@@ -89,9 +85,11 @@ sub handle_row {
   # first two cells tell us nothing useful
   ($item, $quant, $price) = @cells[2..4];
   $price=~s/,//isg;
-  debug("$item/$quant/$price");
+  debug("HANDLE_ROW: $item/$quant/$price");
+#  my(@ret) = ($item, $quant, $price);
+#  return @ret;
 
-  return($item, $quant, $price);
+  return ($item, $quant, $price);
 
 }
 
