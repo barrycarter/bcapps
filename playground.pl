@@ -7,6 +7,16 @@
 
 require "bclib.pl";
 
+# solve the EL HE/SR problem
+
+for $i (1..1000) {
+  $he = $i/41*16;
+  $sr = $i/41*5;
+  debug("$i: $he HE, $sr SR");
+}
+
+die "TESTING";
+
 # find all el-services.net bots (does not work for other bots)
 
 ($res) = cache_command("curl http://bots.el-services.net/", "age=3600");
