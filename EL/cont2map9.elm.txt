@@ -1,0 +1,27 @@
+255 222|255,255,255| H:Blue Berries
+258 195|255,255,255| H:Blue Lupine
+283 165|255,255,255| H:Blue Lupine
+373 4|255,255,255| H:Blue Star Flower
+373 4|255,255,255| H:Chrysanthemum
+334 258|255,255,255| H:Coal
+375 15|255,255,255| H:Fruits
+16 8|255,255,255| H:Fruits
+345 178|255,255,255| H:Iron Ore
+105 17|255,255,255| H:Iron Ore
+116 362|255,255,255| H:Lilacs
+15 202|255,255,255| H:Poison Ivy
+217 223|255,255,255| H:Poison Ivy
+23 89|255,255,255| H:Poison Ivy
+284 163|255,255,255| H:Red Snapdragons
+31 372|255,255,255| H:Red Snapdragons
+334 113|255,255,255| H:Silver Ore
+105 17|255,255,255| H:Titanium Ore
+299 198|255,255,255| H:Tiger Lilly
+371 12|255,255,255| H:Wood Logs
+82 347|255,255,255| H:Yew
+104 15|255,255,255| Willowvine Forest
+334 258|255,255,255| Cockatrice
+105 17|255,255,255| Willowvine Forest
+361 121|255,255,255| Zirakinbar
+328 368|255,255,255| Palon Vertas
+57 33|255,255,255| NPC:Ellia

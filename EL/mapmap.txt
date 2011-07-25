@@ -21,3 +21,7 @@ map4f Ruins_of_Tirnym
 anitora Port_Anitora
 cont2map1 Idaloran
 map11_insmsch Magic_School
+cont2map5 Palon_Vertas
+cont2map9 Kusamura_Jungle
+cont2map8 Emerald_Valley_Trade_Route
+cont2map22 Irinveron

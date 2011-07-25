@@ -13,7 +13,7 @@ chomp($email);
 @x=forex_quote("USD/CAD",time(),"list=true");
 
 # TODO: move next line out of GIT since I keep changing it pointlessly
-($low, $high) = (0.9340, 0.9525);
+($low, $high) = (0.9350, 0.9535);
 
 for $i (@x) {
   %hash = ();

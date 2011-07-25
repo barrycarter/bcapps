@@ -1,0 +1,68 @@
+192 594|255,0,0| NPC:Alysia
+325 551|255,0,0| NPC:Arcus
+481 151|255,0,0| NPC:Arkos
+32 301|255,0,0| NPC:Chary
+180 511|255,0,0| NPC:Croitorul
+192 594|255,0,0| NPC:Luvela
+157 563|255,0,0| NPC:Mooseric
+201 176|255,0,0| NPC:Teyona
+207 157|255,0,0| H:Black Rose
+484 290|255,0,0| H:Blue Berries
+704 442|255,0,0| H:Blue Berries
+274 135|255,0,0| H:Blue Lupine
+410 481|255,0,0| H:Blue Lupine
+559 511|255,0,0| H:Blue Lupine
+629 260|255,0,0| H:Blue Lupine
+93 151|255,0,0| H:Blue Star Flower
+145 531|255,0,0| H:Blue Star Flower
+253 409|255,0,0| H:Chrysanthemum
+504 474|255,0,0| H:Chrysanthemum
+480 113|255,0,0| H:Daffodils
+726 426|255,0,0| H:Daffodils
+481 120|255,0,0| H:Dandelions
+492 232|255,0,0| H:Dandelions
+658 212|255,0,0| H:Dandelions
+709 522|255,0,0| H:Dandelions
+726 415|255,0,0| H:Dandelions
+355 741|255,0,0| H:Diamond
+339 352|255,0,0| H:Dung
+571 226|255,0,0| H:Fruits
+614 477|255,0,0| H:Henbane
+221 145|255,0,0| H:Impatiens
+255 317|255,0,0| H:Impatiens
+378 490|255,0,0| H:Impatiens
+739 187|255,0,0| H:Impatiens
+490 327|255,0,0| H:Lilacs
+501 321|255,0,0| H:Lilacs
+570 528|255,0,0| H:Lilacs
+727 415|255,0,0| H:Lilacs
+477 121|255,0,0| H:Poppies
+725 428|255,0,0| H:Poppies
+658 211|255,0,0| H:Red Currents
+592 161|255,0,0| H:Red Rose
+731 182|255,0,0| H:Rue
+452 627|255,0,0| H:Sunflower
+625 521|255,0,0| H:Tiger Lilly
+724 407|255,0,0| H:Tree Mushroom
+507 264|255,0,0| H:Tulips
+723 427|255,0,0| H:Tulips
+657 292|255,0,0| H:Tulips
+692 246|255,0,0| H:Tulips
+462 456|255,0,0| H:Wood Branches
+342 249|255,0,0| H:Wood Logs
+340 428|255,0,0| H:Wood Logs
+458 627|255,0,0| H:Wood Logs
+709 516|255,0,0| H:Wormwood
+617 603|255,0,0| H:Yellow Rose
+75 364|255,0,0| :Category:Manufacturing|manufacturing
+459 632|255,0,0| Firepit
+710 146|255,0,0| Irinveron Caves
+192 594|255,0,0| NPC:Alysia
+325 551|255,0,0| NPC:Arcus
+481 151|255,0,0| NPC:Arkos
+32 300|255,0,0| NPC:Chary
+183 511|255,0,0| NPC:Croitorul
+18 96|255,0,0| NPC:Enora
+192 594|255,0,0| NPC:Luvela
+157 536|255,0,0| NPC:Mooseric
+201 176|255,0,0| NPC:Teyona

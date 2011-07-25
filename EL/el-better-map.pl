@@ -42,7 +42,11 @@ for $i (split(/\n/, $mapping)) {
 # $map = "Ruins of Tirnym";
 # $map = "Port Anitora";
 # $map = "Idaloran";
-$map = "Magic School";
+# $map = "Magic School";
+# $map = "Palon Vertas";
+# $map = "Kusamura Jungle";
+# $map = "Emerald Valley Trade Route";
+$map = "Irinveron";
 
 $markfile = $markfile{$map};
 
@@ -175,6 +179,8 @@ for $i (split("\n",$page)) {
       $color="0,0,0";
     } else {
       $color="255,255,255";
+      # cheat for inver
+      $color="255,0,0";
     }
 
     unless ($name) {

@@ -1,0 +1,74 @@
+280 228|255,255,255| NPC:Crisan
+331 241|255,255,255| NPC:Darman
+311 288|255,255,255| NPC:Viorica
+294 276|255,255,255| NPC:Vulca
+303 248|255,255,255| NPC:Grigore Ureche
+339 235|255,255,255| H:Black Rose
+349 265|255,255,255| H:Blue Berries
+189 297|255,255,255| H:Blue Berries
+339 267|255,255,255| H:Blue Lupine
+267 340|255,255,255| H:Blue Lupine
+272 356|255,255,255| H:Blue Star Flower
+171 243|255,255,255| H:Blue Star Flower
+341 226|255,255,255| H:Blue Star Flower
+259 290|255,255,255| H:Chrysanthemum
+241 241|255,255,255| H:Chrysanthemum
+355 235|255,255,255| H:Chrysanthemum
+161 235|255,255,255| H:Chrysanthemum
+288 82|255,255,255| H:Chrysanthemum
+359 225|255,255,255| H:Daffodils
+284 334|255,255,255| H:Daffodils
+294 357|255,255,255| H:Dandelion
+281 281|255,255,255| H:Dung
+295 358|255,255,255| H:Fruits
+75 331|255,255,255| H:Henbane
+286 271|255,255,255| H:Impatiens
+150 350|255,255,255| H:Impatiens
+202 240|255,255,255| H:Impatiens
+231 265|255,255,255| H:Impatiens
+289 79|255,255,255| H:Impatiens
+295 368|255,255,255| H:Impatiens
+362 310|255,255,255| H:Lilacs
+293 367|255,255,255| H:Mullein
+71 324|255,255,255| H:Mullein
+72 345|255,255,255| H:Mullein
+226 323|255,255,255| H:Mugwort
+157 235|255,255,255| H:Ogre Toes
+184 296|255,255,255| H:Ogre Toes
+356 367|255,255,255| H:Ogre Toes
+177 222|255,255,255| H:Poison Ivy
+223 211|255,255,255| H:Poison Ivy
+253 206|255,255,255| H:Poison Ivy
+238 278|255,255,255| H:Poppies
+272 320|255,255,255| H:Red Currents
+63 44|255,255,255| H:Red Currents
+270 315|255,255,255| H:Red Rose
+369 292|255,255,255| H:Red Snapdragons
+20 44|255,255,255| H:Ruby
+290 17|255,255,255| H:Rue
+306 364|255,255,255| H:Sunflower
+210 322|255,255,255| H:Swamp Candles
+135 208|255,255,255| H:Swamp Candles
+109 235|255,255,255| H:Swamp Candles
+331 254|255,255,255| H:Tiger Lilly
+294 359|255,255,255| H:Toadstool
+164 370|255,255,255| H:Toadstool
+303 368|255,255,255| H:Toadstool
+237 231|255,255,255| H:Toadstool
+248 268|255,255,255| H:Vegetables
+242 307|255,255,255| H:White Asiatic Lilly
+369 272|255,255,255| H:White Asiatic Lilly
+243 308|255,255,255| H:White Asiatic Lilly
+158 235|255,255,255| H:White Chanterelle
+235 230|255,255,255| H:White Chanterelle
+319 294|255,255,255| H:Wood Branches
+362 288|255,255,255| H:Wood Branches
+359 282|255,255,255| H:Wood Logs
+347 245|255,255,255| H:Wormwood
+206 362|255,255,255| H:Yellow Rose
+32 352|255,255,255| Firepit
+280 228|255,255,255| NPC:Crisan
+331 241|255,255,255| NPC:Darman
+303 248|255,255,255| NPC:Grigore Ureche
+310 290|255,255,255| NPC:Viorica
+294 276|255,255,255| NPC:Vulca
