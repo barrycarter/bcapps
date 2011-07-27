@@ -1,57 +1,24 @@
 graph tgmagic {
-_1;
-_2;
-_3;
-_4;
-_5;
-_6;
-_7;
-_8;
-_9;
-_10;
-_11;
-_12;
-_13;
-_14;
-_15;
-_16;
-_17;
-_18;
-_19;
-_20;
-_22;
-_23;
-_24;
-_25;
-_1 -- _2
-_1 -- _8
-_1 -- _18
-_1 -- _9
-_1 -- _10
-_2 -- _23
-_2 -- _13
-_2 -- _12
-_3 -- _13
-_4 -- _6
-_4 -- _18
-_4 -- _20
-_5 -- _8
-_5 -- _13
-_7 -- _20
-_7 -- _23
-_8 -- _15
-_8 -- _14
-_11 -- _23
-_12 -- _22
-_12 -- _24
-_13 -- _18
-_15 -- _5
-_16 -- _18
-_17 -- _18
-_18 -- _6
-_19 -- Garden
-_20 -- _22
-_23 -- _25
-_23 -- Maze
-_25 -- Garden
+Idaloran;
+Irsis;
+Melinis;
+Thelinor;
+South_Redmoon;
+Zirakinbar;
+Aeth_Aelfan;
+Willowvine_Forest;
+Idaloran -- Port_Anitora
+Idaloran -- Melinis
+Idaloran -- North_Redmoon
+Idaloran -- Irinveron
+Irsis -- Arius
+Irsis -- Zirakinbar
+Melinis -- Hurquin
+Thelinor -- North_Redmoon
+South_Redmoon -- Hurquin
+South_Redmoon -- Zirakinbar
+Zirakinbar --  Irsis
+Zirakinbar -- Aeth_Aelfan
+Aeth_Aelfan -- Glacmor
+Willowvine_Forest -- Arius
 }

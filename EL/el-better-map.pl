@@ -46,7 +46,9 @@ for $i (split(/\n/, $mapping)) {
 # $map = "Palon Vertas";
 # $map = "Kusamura Jungle";
 # $map = "Emerald Valley Trade Route";
-$map = "Irinveron";
+# $map = "Irinveron";
+# $map = "Glacmor";
+$map = "Glacmor Skill Academy";
 
 $markfile = $markfile{$map};
 

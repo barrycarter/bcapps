@@ -25,3 +25,5 @@ cont2map5 Palon_Vertas
 cont2map9 Kusamura_Jungle
 cont2map8 Emerald_Valley_Trade_Route
 cont2map22 Irinveron
+cont2map23 Glacmor
+cont2map23_insides Glacmor_Skill_Academy

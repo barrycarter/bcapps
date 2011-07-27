@@ -1,0 +1,10 @@
+# connectivity graph for c2, boats only
+Idaloran:Port_Anitora,Melinis,North_Redmoon,Irinveron
+Irsis:Arius,Zirakinbar
+Melinis:Hurquin
+Thelinor:North_Redmoon
+South_Redmoon:Hurquin,Zirakinbar
+Zirakinbar: Irsis,South_Redmoon,Aeth_Aelfan
+Aeth_Aelfan:Glacmor,Zirakinbar
+Willowvine_Forest:Arius
+

@@ -1,0 +1,93 @@
+301 48|255,0,0| NPC:Shantir
+352 48|255,0,0| NPC:Dara
+362 44|255,0,0| NPC:Spade
+330 232|255,0,0| NPC:Lytrus
+292 316|255,0,0| NPC:Betty
+193 239|255,0,0| NPC:Meer
+201 219|255,0,0| H:Blue Berries
+310 240|255,0,0| H:Blue Berries
+342 258|255,0,0| H:Blue Berries
+155 140|255,0,0| H:Blue Lupine
+232 47|255,0,0| H:Blue Quartz
+356 60|255,0,0| H:Blue Quartz
+151 220|255,0,0| H:Blue Star Flower
+325 252|255,0,0| H:Chrysanthemum
+209 25|255,0,0| H:Coal
+344 164|255,0,0| H:Dandelions
+40 256|255,0,0| H:Henbane
+74 48|255,0,0| H:Henbane
+80 185|255,0,0| H:Henbane
+80 253|255,0,0| H:Henbane
+124 132|255,0,0| H:Henbane
+144 127|255,0,0| H:Henbane
+221 177|255,0,0| H:Henbane
+239 227|255,0,0| H:Henbane
+335 252|255,0,0| H:Impatiens
+22 251|255,0,0| H:Lilacs
+50 230|255,0,0| H:Lilacs
+107 233|255,0,0| H:Lilacs
+171 194|255,0,0| H:Lilacs
+241 228|255,0,0| H:Lilacs
+287 229|255,0,0| H:Lilacs
+387 229|255,0,0| H:Lilacs
+40 266|255,0,0| H:Mullein
+105 163|255,0,0| H:Mullein
+106 222|255,0,0| H:Mullein
+210 161|255,0,0| H:Mullein
+215 230|255,0,0| H:Mullein
+153 127|255,0,0| H:Mugwort
+163 104|255,0,0| H:Mugwort
+235 190|255,0,0| H:Mugwort
+25 157|255,0,0| H:Nightshade
+183 148|255,0,0| H:Nightshade
+282 239|255,0,0| H:Nightshade
+314 244|255,0,0| H:Nightshade
+18 225|255,0,0| H:Ogre Toes
+31 209|255,0,0| H:Ogre Toes
+97 147|255,0,0| H:Ogre Toes
+222 140|255,0,0| H:Ogre Toes
+234 128|255,0,0| H:Ogre Toes
+292 189|255,0,0| H:Ogre Toes
+63 116|255,0,0| H:Poison Ivy
+32 184|255,0,0| H:Red Rose
+16 299|255,0,0| H:Red Snapdragons
+30 358|255,0,0| H:Red Snapdragons
+55 261|255,0,0| H:Red Snapdragons
+67 336|255,0,0| H:Red Snapdragons
+164 123|255,0,0| H:Rue
+210 192|255,0,0| H:Rue
+249 180|255,0,0| H:Rue
+344 187|255,0,0| H:Rue
+363 172|255,0,0| H:Rue
+71 41|255,0,0| H:Tree Mushroom
+201 28|255,0,0| H:Tulips
+39 310|255,0,0| H:Valerian
+60 126|255,0,0| H:White Asiatic Lilly
+81 28|255,0,0| H:White Asiatic Lilly
+25 192|255,0,0| H:Wood Branches
+29 242|255,0,0| H:Wood Branches
+30 140|255,0,0| H:Wood Branches
+53 89|255,0,0| H:Wood Branches
+72 332|255,0,0| H:Wood Branches
+75 203|255,0,0| H:Wood Branches
+96 142|255,0,0| H:Wood Branches
+136 121|255,0,0| H:Wood Branches
+140 224|255,0,0| H:Wood Branches
+194 137|255,0,0| H:Wood Branches
+262 136|255,0,0| H:Wood Branches
+159 119|255,0,0| H:Wood Logs
+337 247|255,0,0| H:Wood Logs
+144 116|255,0,0| H:Wormwood
+175 120|255,0,0| H:Wormwood
+337 248|255,0,0| Firepit
+83 317|255,0,0| Waveneck Caves
+111 315|255,0,0| Waveneck Caves
+111 334|255,0,0| Waveneck Caves
+198 245|255,0,0| Aeth Aelfan
+292 316|255,0,0| NPC:Betty
+345 36|255,0,0| NPC:Dara
+18 96|255,0,0| NPC:Enora
+216 45|255,0,0| NPC:Sergio
+301 48|255,0,0| NPC:Shantir
+362 44|255,0,0| NPC:Spade
+216 45|255,0,0| NPC:Tyra
