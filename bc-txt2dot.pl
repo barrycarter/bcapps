@@ -5,7 +5,8 @@
 require "bclib.pl";
 
 # $txt = read_file("EL/tg-magic.txt");
-$txt = read_file("EL/mapgraph.txt");
+# $txt = read_file("EL/mapgraph.txt");
+$txt = read_file("EL/pv-magic.txt");
 
 for $i (split(/\n/,$txt)) {
   # ignore comments

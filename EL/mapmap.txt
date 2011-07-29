@@ -1,4 +1,4 @@
-# this file maps maps to lands... er, it converts numbers to lands
+A# this file maps maps to lands... er, it converts numbers to lands
 # based on EL's map numbering scheme
 map3 Desert_Pines
 cave1 Crystal_Caverns
@@ -27,3 +27,4 @@ cont2map8 Emerald_Valley_Trade_Route
 cont2map22 Irinveron
 cont2map23 Glacmor
 cont2map23_insides Glacmor_Skill_Academy
+cont2map5_inmsch Palon_Vertas_Magic_School

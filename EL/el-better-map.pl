@@ -27,6 +27,7 @@ for $i (split(/\n/, $mapping)) {
   $markfile{$land} = "$fname.elm.txt";
 }
 
+# TODO: Get this from arg, not hardcode
 # $map = "Tarsengaard";
 # $map = "Portland";
 # $map = "Valley of the Dwarves";
@@ -48,7 +49,8 @@ for $i (split(/\n/, $mapping)) {
 # $map = "Emerald Valley Trade Route";
 # $map = "Irinveron";
 # $map = "Glacmor";
-$map = "Glacmor Skill Academy";
+# $map = "Glacmor Skill Academy";
+$map = "Palon Vertas Magic School";
 
 $markfile = $markfile{$map};
 

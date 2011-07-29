@@ -1,24 +1,86 @@
 graph tgmagic {
-Idaloran;
-Irsis;
-Melinis;
-Thelinor;
-South_Redmoon;
-Zirakinbar;
-Aeth_Aelfan;
-Willowvine_Forest;
-Idaloran -- Port_Anitora
-Idaloran -- Melinis
-Idaloran -- North_Redmoon
-Idaloran -- Irinveron
-Irsis -- Arius
-Irsis -- Zirakinbar
-Melinis -- Hurquin
-Thelinor -- North_Redmoon
-South_Redmoon -- Hurquin
-South_Redmoon -- Zirakinbar
-Zirakinbar --  Irsis
-Zirakinbar -- Aeth_Aelfan
-Aeth_Aelfan -- Glacmor
-Willowvine_Forest -- Arius
+_1;
+_2;
+_3;
+_4;
+_5;
+_7;
+_8;
+_9;
+_10;
+_11;
+_12;
+_13;
+_14;
+_15;
+_16;
+_17;
+_18;
+_19;
+_20;
+_21;
+_22;
+_23;
+_24;
+_25;
+_26;
+_27;
+_28;
+_29;
+_30;
+_31;
+_32;
+_33;
+_34;
+_35;
+_36;
+_37;
+_38;
+_39;
+_1 -- _24
+_2 -- _24
+_3 -- _16
+_4 -- _5
+_4 -- _15
+_5 -- _9
+_5 -- _11
+_5 -- _12
+_5 -- _7
+_5 -- _16
+_8 -- _19
+_8 -- _28
+_9 -- _12
+_10 -- _15
+_10 -- _16
+_11 -- _24
+_12 -- _33
+_13 -- _16
+_14 -- _19
+_16 -- _4
+_16 -- _17
+_16 -- _18
+_16 -- _21
+_16 -- _22
+_16 -- _27
+_19 -- _22
+_20 -- _39
+_21 -- _23
+_22 -- _39
+_23 -- _28
+_23 -- _33
+_24 -- _28
+_24 -- _33
+_25 -- _26
+_25 -- _29
+_26 -- _30
+_26 -- _35
+_26 -- _38
+_26 -- _36
+_27 -- _26
+_30 -- _31
+_30 -- _32
+_31 -- _38
+_32 -- _38
+_34 -- _38
+_37 -- _39
 }
