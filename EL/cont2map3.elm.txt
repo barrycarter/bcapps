@@ -1,0 +1,41 @@
+54 30|255,0,0| NPC:Rotisor
+19 24|255,0,0| NPC:Omida
+117 147|255,0,0| H:Blue Berries
+148 169|255,0,0| H:Blue Berries
+34 137|255,0,0| H:Blue Lupine
+121 142|255,0,0| H:Blue Lupine
+165 171|255,0,0| H:Blue Lupine
+112 60|255,0,0| H:Blue Star Flower
+24 79|255,0,0| H:Cactus
+105 93|255,0,0| H:Cactus
+123 156|255,0,0| H:Cactus
+138 153|255,0,0| H:Dandelions
+44 124|255,0,0| H:Fruits
+105 131|255,0,0| H:Henbane
+26 26|255,0,0| H:Impatiens
+79 156|255,0,0| H:Impatiens
+104 138|255,0,0| H:Impatiens
+12 147|255,0,0| H:Lilacs
+101 47|255,0,0| H:Lilacs
+124 42|255,0,0| H:Mullein
+53 132|255,0,0| H:Nightshade
+53 140|255,0,0| H:Poison Ivy
+144 140|255,0,0| H:Poison Ivy
+82 63|255,0,0| H:Red Currents
+107 166|255,0,0| H:Red Currents
+53 118|255,0,0| H:Red Snapdragons
+132 134|255,0,0| H:Red Snapdragons
+148 169|255,0,0| H:Red Snapdragons
+152 43|255,0,0| H:Red Rose
+164 21|255,0,0| H:Sulfur
+57 55|255,0,0| H:Tiger Lilly
+85 43|255,0,0| H:Tiger Lilly
+45 163|255,0,0| H:Valerian
+24 43|255,0,0| H:Vegetables
+92 62|255,0,0| H:Vegetables
+152 35|255,0,0| H:Vegetables
+127 142|255,0,0| H:Yarrow
+14 110|255,0,0| Bethel
+180 50|255,0,0| Melinis
+120 14|255,0,0| Palon Vertas
+55 30|255,0,0| NPC:Rotisor

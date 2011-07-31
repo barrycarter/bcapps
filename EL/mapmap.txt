@@ -28,3 +28,17 @@ cont2map22 Irinveron
 cont2map23 Glacmor
 cont2map23_insides Glacmor_Skill_Academy
 cont2map5_inmsch Palon_Vertas_Magic_School
+cont2map3 Sedicolis
+cont2map2 Bethel
+cont2map15 North_Redmoon
+cont2map16 South_Redmoon
+cont2map17 Hurquin
+cont2map4 Melinis
+cont2map6 Thelinor
+cont2map7 Irsis
+cont2map9 Kusamura_Jungle
+cont2map10 Zirakinbar
+cont2map11 Willowvine_Forest
+cont2map12 Aeth_Aelfan
+cont2map13 Ergatia_Point
+cont2map14 Arius

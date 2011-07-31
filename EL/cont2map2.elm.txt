@@ -1,0 +1,15 @@
+100 99|255,0,0| Ring of Bethel|teleport ring
+126 26|255,0,0| NPC:Gynmor
+139 24|255,0,0| H:Fruits
+109 156|255,0,0| H:Fruits
+28 135|255,0,0| H:Nightshade
+107 151|255,0,0| H:Wood Logs
+114 154|255,0,0| H:Wood Logs
+142 23|255,0,0| Firepit
+109 156|255,0,0| Firepit
+125 11|255,0,0| Bethel Mine
+167 162|255,0,0| Bethel Cave
+42 24|255,0,0| Idaloran
+178 28|255,0,0| Palon Vertas
+177 131|255,0,0| Sedicolis
+126 27|255,0,0| NPC:Gynmor

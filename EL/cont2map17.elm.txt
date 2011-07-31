@@ -1,0 +1,22 @@
+88 60|255,0,0| NPC:Gallyanne
+80 103|255,0,0| H:Blue Star Flower
+80 103|255,0,0| H:Chrysanthemum
+64 165|255,0,0| H:Cotton
+151 164|255,0,0| H:Cotton
+58 52|255,0,0| H:Fruits
+128 172|255,0,0| H:Lilacs
+67 125|255,0,0| H:Ogre Toes
+24 56|255,0,0| H:Poison Ivy
+52 89|255,0,0| H:Red Snapdragons
+146 146|255,0,0| H:Quartz
+26 38|255,0,0| H:Swamp Candles
+140 65|255,0,0| H:Swamp Candles
+67 125|255,0,0| H:Toadstool
+120 24|255,0,0| H:Tree Mushroom
+120 168|255,0,0| H:Tree Mushroom
+80 115|255,0,0| H:Tree Mushroom
+49 148|255,0,0| H:Tulips
+49 137|255,0,0| H:Tulips
+67 125|255,0,0| H:White Chanterelle
+88 60|255,0,0| NPC:Gallyanne
+135 161|255,0,0| NPC:Serpa

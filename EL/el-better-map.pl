@@ -50,7 +50,14 @@ for $i (split(/\n/, $mapping)) {
 # $map = "Irinveron";
 # $map = "Glacmor";
 # $map = "Glacmor Skill Academy";
-$map = "Palon Vertas Magic School";
+# below doesn't actually have a page... yet!
+# $map = "Palon Vertas Magic School";
+# $map = "Sedicolis";
+# $map = "Bethel";
+# $map = "North Redmoon";
+# $map = "South Redmoon";
+# $map = "Hurquin";
+$map = "Arius";
 
 $markfile = $markfile{$map};
 

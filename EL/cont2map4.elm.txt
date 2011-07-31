@@ -1,0 +1,29 @@
+255 125|255,0,0| NPC:Closca
+169 276|255,0,0| NPC:Iancu Jianu
+648 668|255,0,0| NPC:Hazardel
+77 307|255,0,0| H:Blue Lupine
+34 25|255,0,0| H:Blue Quartz
+259 86|255,0,0| H:Blue Star Flower
+298 275|255,0,0| H:Cotton
+176 24|255,0,0| H:Daffodils
+164 189|255,0,0| H:Dung
+194 251|255,0,0| H:Dung
+201 27|255,0,0| H:Lilacs
+178 90|255,0,0| H:Toadstool
+368 312|255,0,0| H:Vegetables
+302 155|255,0,0| H:Wheat
+109 353|255,0,0| H:Emerald
+113 350|255,0,0| H:White Chanterelle
+108 344|255,0,0| H:Wood Logs
+129 169|255,0,0| H:Iron Ore
+62 204|255,0,0| H:Coal
+64 270|255,0,0| H:Obsidian
+101 252|255,0,0| H:Obsidian
+130 189|255,0,0| H:In
+166 143|255,0,0| H:In
+241 267|255,0,0| Hurquin
+218 258|255,0,0| Idaloran
+33 92|255,0,0| Sedicolis
+207 27|255,0,0| Thelinor
+648 668|255,0,0| NPC:Hazardel
+170 276|255,0,0| NPC:Iancu Jianu

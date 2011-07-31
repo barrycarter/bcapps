@@ -1,0 +1,180 @@
+126 201|255,0,0| NPC:Urania
+54 255|255,0,0| NPC:Nurcin
+111 184|255,0,0| H:Blue Berries
+113 182|255,0,0| H:Blue Berries
+30 358|255,0,0| H:Blue Lupine
+44 342|255,0,0| H:Blue Lupine
+121 128|255,0,0| H:Blue Lupine
+317 219|255,0,0| H:Blue Lupine
+48 315|255,0,0| H:Blue Star Flower
+123 270|255,0,0| H:Blue Star Flower
+56 184|255,0,0| H:Blue Star Flower
+61 168|255,0,0| H:Blue Star Flower
+62 202|255,0,0| H:Blue Star Flower
+83 214|255,0,0| H:Blue Star Flower
+103 166|255,0,0| H:Blue Star Flower
+120 67|255,0,0| H:Blue Star Flower
+125 123|255,0,0| H:Blue Star Flower
+129 153|255,0,0| H:Blue Star Flower
+131 178|255,0,0| H:Blue Star Flower
+173 277|255,0,0| H:Blue Star Flower
+218 158|255,0,0| H:Blue Star Flower
+278 97|255,0,0| H:Blue Star Flower
+298 119|255,0,0| H:Blue Star Flower
+350 76|255,0,0| H:Blue Star Flower
+68 150|255,0,0| H:Chrysanthemum
+73 215|255,0,0| H:Chrysanthemum
+82 295|255,0,0| H:Chrysanthemum
+98 178|255,0,0| H:Chrysanthemum
+99 166|255,0,0| H:Chrysanthemum
+33 301|255,0,0| H:Chrysanthemum
+100 212|255,0,0| H:Chrysanthemum
+106 182|255,0,0| H:Chrysanthemum
+153 307|255,0,0| H:Chrysanthemum
+78 283|255,0,0| H:Dandelions
+103 176|255,0,0| H:Dandelions
+52 200|255,0,0| H:Daffodils
+66 168|255,0,0| H:Daffodils
+82 295|255,0,0| H:Daffodils
+115 150|255,0,0| H:Daffodils
+282 96|255,0,0| H:Daffodils
+43 142|255,0,0| H:Fruits
+109 178|255,0,0| H:Fruits
+229 112|255,0,0| H:Fruits
+301 89|255,0,0| H:Fruits
+312 167|255,0,0| H:Fruits
+246 251|255,0,0| H:Gypsum
+237 242|255,0,0| H:Gypsum
+46 313|255,0,0| H:Henbane
+48 168|255,0,0| H:Henbane
+63 200|255,0,0| H:Henbane
+64 168|255,0,0| H:Henbane
+90 146|255,0,0| H:Henbane
+158 259|255,0,0| H:Henbane
+165 290|255,0,0| H:Henbane
+220 167|255,0,0| H:Henbane
+318 81|255,0,0| H:Henbane
+331 193|255,0,0| H:Henbane
+335 236|255,0,0| H:Henbane
+41 168|255,0,0| H:Impatiens
+54 168|255,0,0| H:Impatiens
+69 182|255,0,0| H:Impatiens
+82 295|255,0,0| H:Impatiens
+140 177|255,0,0| H:Impatiens
+218 158|255,0,0| H:Impatiens
+321 74|255,0,0| H:Impatiens
+343 236|255,0,0| H:Impatiens
+110 94|255,0,0| H:Lilacs
+149 324|255,0,0| H:Lilacs
+64 199|255,0,0| H:Mullein
+300 179|255,0,0| H:Mullein
+53 81|255,0,0| H:Mugwort
+54 168|255,0,0| H:Nightshade
+60 184|255,0,0| H:Nightshade
+71 168|255,0,0| H:Nightshade
+94 179|255,0,0| H:Nightshade
+105 182|255,0,0| H:Nightshade
+151 265|255,0,0| H:Nightshade
+154 270|255,0,0| H:Nightshade
+197 279|255,0,0| H:Nightshade
+327 241|255,0,0| H:Nightshade
+353 79|255,0,0| H:Nightshade
+242 170|255,0,0| H:Ogre Toes
+300 264|255,0,0| H:Ogre Toes
+321 266|255,0,0| H:Ogre Toes
+342 53|255,0,0| H:Ogre Toes
+129 181|255,0,0| H:Poppies
+207 126|255,0,0| H:Poppies
+238 159|255,0,0| H:Poppies
+171 214|255,0,0| H:Poison Ivy
+43 83|255,0,0| H:Poison Ivy
+94 69|255,0,0| H:Red Currents
+180 215|255,0,0| H:Red Currents
+62 208|255,0,0| H:Red Rose
+69 171|255,0,0| H:Red Rose
+94 148|255,0,0| H:Red Rose
+119 160|255,0,0| H:Red Rose
+123 160|255,0,0| H:Red Rose
+311 112|255,0,0| H:Red Rose
+141 79|255,0,0| H:Red Snapdragons
+136 268|255,0,0| H:Red Snapdragons
+214 164|255,0,0| H:Red Snapdragons
+91 125|255,0,0| H:Rue
+93 97|255,0,0| H:Rue
+325 205|255,0,0| H:Rue
+221 100|255,0,0| H:Sunflower
+50 168|255,0,0| H:Tiger Lilly
+59 205|255,0,0| H:Tiger Lilly
+62 136|255,0,0| H:Tiger Lilly
+70 168|255,0,0| H:Tiger Lilly
+279 97|255,0,0| H:Tiger Lilly
+177 186|255,0,0| H:Toadstool
+218 158|255,0,0| H:Toadstool
+253 277|255,0,0| H:Toadstool
+262 289|255,0,0| H:Toadstool
+273 277|255,0,0| H:Toadstool
+279 270|255,0,0| H:Toadstool
+290 266|255,0,0| H:Toadstool
+311 177|255,0,0| H:Toadstool
+351 82|255,0,0| H:Toadstool
+355 95|255,0,0| H:Toadstool
+356 211|255,0,0| H:Toadstool
+91 78|255,0,0| H:Tree Mushroom
+165 284|255,0,0| H:Tree Mushroom
+263 285|255,0,0| H:Tree Mushroom
+292 175|255,0,0| H:Tree Mushroom
+62 168|255,0,0| H:Tulips
+94 159|255,0,0| H:Tulips
+98 213|255,0,0| H:Tulips
+69 144|255,0,0| H:Tulips
+293 127|255,0,0| H:Tulips
+297 127|255,0,0| H:Tulips
+252 241|255,0,0| H:Turquoise
+101 90|255,0,0| H:Valerian
+108 157|255,0,0| H:Valerian
+124 61|255,0,0| H:Valerian
+125 153|255,0,0| H:Valerian
+315 239|255,0,0| H:Valerian
+343 40|255,0,0| H:Valerian
+344 79|255,0,0| H:Valerian
+354 216|255,0,0| H:Valerian
+60 168|255,0,0| H:White Asiatic Lilly
+91 136|255,0,0| H:White Asiatic Lilly
+170 212|255,0,0| H:White Chanterelle
+182 238|255,0,0| H:White Chanterelle
+243 172|255,0,0| H:White Chanterelle
+194 280|255,0,0| H:White Chanterelle
+233 168|255,0,0| H:White Chanterelle
+324 265|255,0,0| H:White Chanterelle
+327 241|255,0,0| H:White Chanterelle
+333 190|255,0,0| H:White Chanterelle
+337 94|255,0,0| H:White Chanterelle
+344 214|255,0,0| H:White Chanterelle
+89 68|255,0,0| H:Wood Branches
+97 95|255,0,0| H:Wood Branches
+108 120|255,0,0| H:Wood Branches
+115 121|255,0,0| H:Wood Branches
+327 125|255,0,0| H:Wormwood
+59 168|255,0,0| H:Yarrow
+94 69|255,0,0| H:Yarrow
+99 119|255,0,0| H:Yarrow
+101 96|255,0,0| H:Yarrow
+109 178|255,0,0| H:Yarrow
+123 68|255,0,0| H:Yarrow
+273 103|255,0,0| H:Yarrow
+315 239|255,0,0| H:Yarrow
+343 41|255,0,0| H:Yarrow
+344 54|255,0,0| H:Yarrow
+350 68|255,0,0| H:Yarrow
+352 81|255,0,0| H:Yarrow
+64 206|255,0,0| H:Yellow Rose
+70 172|255,0,0| H:Yellow Rose
+94 148|255,0,0| H:Yellow Rose
+297 104|255,0,0| H:Yellow Rose
+270 280|255,0,0| Firepit
+27 224|255,0,0| Irinveron
+222 338|255,0,0| Willowvine Forest
+19 189|255,0,0| Irsis
+142 122|255,0,0| NPC:Crusher
+53 256|255,0,0| NPC:Nurcin
+126 200|255,0,0| NPC:Urania

@@ -1,0 +1,95 @@
+275 290|255,0,0| NPC:Neculce
+247 269|255,0,0| NPC:Rocky
+54 111|255,0,0| H:Blue Berries
+68 280|255,0,0| H:Blue Berries
+71 267|255,0,0| H:Blue Berries
+72 306|255,0,0| H:Blue Berries
+200 35|255,0,0| H:Blue Berries
+35 128|255,0,0| H:Blue Lupine
+54 111|255,0,0| H:Blue Lupine
+74 29|255,0,0| H:Blue Lupine
+85 21|255,0,0| H:Blue Lupine
+115 61|255,0,0| H:Blue Lupine
+241 38|255,0,0| H:Blue Lupine
+255 46|255,0,0| H:Blue Lupine
+35 128|255,0,0| H:Blue Star Flower
+46 118|255,0,0| H:Blue Star Flower
+67 163|255,0,0| H:Blue Star Flower
+204 30|255,0,0| H:Blue Star Flower
+276 48|255,0,0| H:Blue Star Flower
+335 158|255,0,0| H:Blue Star Flower
+283 193|255,0,0| H:Cactus
+302 176|255,0,0| H:Cactus
+35 128|255,0,0| H:Chrysanthemum
+217 43|255,0,0| H:Chrysanthemum
+61 80|255,0,0| H:Daffodils
+66 259|255,0,0| H:Daffodils
+92 25|255,0,0| H:Daffodils
+235 36|255,0,0| H:Daffodils
+98 35|255,0,0| H:Henbane
+322 126|255,0,0| H:Henbane
+259 87|255,0,0| H:Henbane
+56 159|255,0,0| H:Impatiens
+65 99|255,0,0| H:Impatiens
+80 52|255,0,0| H:Impatiens
+98 36|255,0,0| H:Impatiens
+309 30|255,0,0| H:Impatiens
+317 56|255,0,0| H:Impatiens
+271 127|255,0,0| H:Impatiens
+211 39|255,0,0| H:Lilacs
+241 38|255,0,0| H:Lilacs
+83 68|255,0,0| H:Mugwort
+297 48|255,0,0| H:Mugwort
+103 43|255,0,0| H:Mullein
+106 42|255,0,0| H:Mullein
+63 24|255,0,0| H:Poppies
+47 153|255,0,0| H:Red Currents
+66 61|255,0,0| H:Red Currents
+67 222|255,0,0| H:Red Currents
+254 28|255,0,0| H:Red Currents
+282 49|255,0,0| H:Red Currents
+299 114|255,0,0| H:Red Currents
+179 30|255,0,0| H:Red Rose
+244 46|255,0,0| H:Red Rose
+53 154|255,0,0| H:Red Snapdragons
+82 62|255,0,0| H:Red Snapdragons
+166 39|255,0,0| H:Red Snapdragons
+227 39|255,0,0| H:Red Snapdragons
+42 54|255,0,0| H:Rue
+219 22|255,0,0| H:Rue
+77 59|255,0,0| H:Tiger Lilly
+157 30|255,0,0| H:Tiger Lilly
+216 52|255,0,0| H:Tiger Lilly
+34 119|255,0,0| H:Toadstool
+60 73|255,0,0| H:Toadstool
+79 207|255,0,0| H:Toadstool
+102 332|255,0,0| H:Toadstool
+178 42|255,0,0| H:Toadstool
+186 313|255,0,0| H:Toadstool
+227 39|255,0,0| H:Toadstool
+278 34|255,0,0| H:Toadstool
+303 52|255,0,0| H:Toadstool
+55 209|255,0,0| H:Tree Mushroom
+156 328|255,0,0| H:Tree Mushroom
+41 67|255,0,0| H:White Asiatic Lilly
+294 22|255,0,0| H:White Asiatic Lilly
+55 209|255,0,0| H:White Chanterelle
+154 31|255,0,0| H:White Chanterelle
+156 328|255,0,0| H:White Chanterelle
+227 39|255,0,0| H:White Chanterelle
+278 34|255,0,0| H:White Chanterelle
+305 113|255,0,0| H:White Chanterelle
+63 233|255,0,0| H:Wood Branches
+47 153|255,0,0| H:Wormwood
+62 70|255,0,0| H:Wormwood
+70 111|255,0,0| H:Wormwood
+224 31|255,0,0| H:Wormwood
+337 149|255,0,0| H:Wormwood
+266 87|255,0,0| H:Wormwood
+59 47|255,0,0| H:Yellow Rose
+166 50|255,0,0| H:Yellow Rose
+337 352|255,0,0| Idaloran
+264 23|255,0,0| South Redmoon
+304 348|255,0,0| Thelinor
+275 290|255,0,0| NPC:Neculce
+247 269|255,0,0| NPC:Rocky

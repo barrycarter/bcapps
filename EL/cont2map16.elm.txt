@@ -1,0 +1,60 @@
+171 205|255,0,0| NPC:Grrawl
+197 264|255,0,0| NPC:Wert
+183 269|255,0,0| NPC:Ramso
+268 234|255,0,0| H:Black Rose
+265 253|255,0,0| H:Black Rose
+268 231|255,0,0| H:Blue Berries
+123 97|255,0,0| H:Blue Lupine
+268 241|255,0,0| H:Chrysanthemum
+156 232|255,0,0| H:Daffodils
+162 194|255,0,0| H:Dandelions
+153 198|255,0,0| H:Dandelions
+153 158|255,0,0| H:Fruits
+155 105|255,0,0| H:Fruits
+202 230|255,0,0| H:Henbane
+265 253|255,0,0| H:Henbane
+160 74|255,0,0| H:Henbane
+171 88|255,0,0| H:Henbane
+156 221|255,0,0| H:Henbane
+91 170|255,0,0| H:Impatiens
+265 260|255,0,0| H:Lilacs
+275 306|255,0,0| H:Mullein
+157 235|255,0,0| H:Mullein
+157 228|255,0,0| H:Mullein
+181 219|255,0,0| H:Nightshade
+268 243|255,0,0| H:Nightshade
+156 236|255,0,0| H:Nightshade
+219 306|255,0,0| H:Ogre Toes
+140 211|255,0,0| H:Ogre Toes
+148 346|255,0,0| H:Poison Ivy
+188 203|255,0,0| H:Poison Ivy
+156 84|255,0,0| H:Poppies
+267 250|255,0,0| H:Red Currents
+261 251|255,0,0| H:Red Rose
+48 357|255,0,0| H:Red Snapdragons
+156 236|255,0,0| H:Rue
+156 233|255,0,0| H:Rue
+54 345|255,0,0| H:Toadstool
+106 82|255,0,0| H:Toadstool
+195 224|255,0,0| H:Toadstool
+156 236|255,0,0| H:Tulips
+181 219|255,0,0| H:Tulips
+196 226|255,0,0| H:Tree Mushroom
+240 146|255,0,0| H:Tree Mushroom
+267 241|255,0,0| H:Valerian
+153 192|255,0,0| H:Valerian
+200 245|255,0,0| H:Valerian
+140 249|255,0,0| H:White Chanterelle
+180 268|255,0,0| H:White Chanterelle
+54 345|255,0,0| H:Wood Branches
+154 230|255,0,0| H:Wood Branches
+161 246|255,0,0| H:Wormwood
+200 243|255,0,0| H:Yarrow
+268 254|255,0,0| H:Yarrow
+275 305|255,0,0| South Redmoon Mines
+167 12|255,0,0| Hurquin
+194 39|255,0,0| Zirakinbar
+77 356|255,0,0| North Redmoon
+171 205|255,0,0| NPC:Grrawl
+183 269|255,0,0| NPC:Ramso
+197 264|255,0,0| NPC:Wert
