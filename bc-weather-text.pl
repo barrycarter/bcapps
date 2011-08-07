@@ -4,6 +4,8 @@
 # weather and more
 # --nowrap: don't wordwrap the result
 
+# TODO: roudn off F temperatures, using decimals is silly
+
 push(@INC, "/usr/local/lib");
 require "bclib.pl";
 
@@ -29,6 +31,8 @@ debug("CITY: $city");
 $res = `bc-cityfind.pl '$city'`;
 chomp($res);
 
+=item commented_out
+
 # TODO: this is sample until I get this thing on bcinfo
 $res = "
 <response>
@@ -44,9 +48,10 @@ $res = "
 </response>
 ";
 
+=cut
+
 # not found?
 unless ($res) {print "Unable to find: $city\n"; exit(0);}
-
 
 # Set $hash using XML reply above
 while ($res=~s%<(.*?)>(.*?)</\1>%$hash{$1}=$2;%iseg) {}
@@ -78,7 +83,7 @@ $query=~s/\-\-/+/isg;
 
 @res = sqlite3hashlist($query,"/sites/DB/stations.db");
 
-push(@out,"$city, $state, $country is at ".nicedeg2($lat,"N").", ".nicedeg2($lon,"E"));
+push(@out,"$hash{city}, $hash{state}, $hash{country} is at ".nicedeg2($hash{latitude},"N").", ".nicedeg2($hash{longitude},"E"));
 
 # For this station: %ai = most recent observation; @e = all observations
 %ai = %{$res[0]};
@@ -87,7 +92,7 @@ push(@out,"$city, $state, $country is at ".nicedeg2($lat,"N").", ".nicedeg2($lon
 # meters to feet <h>metric system? never heard of it!</h>
 $ai{elev} = round($ai{elevation}/.3048);
 # distance between METAR station and entered location
-$ai{dist} = round(gcdist($lat,$lon,$ai{latitude},$ai{longitude}));
+$ai{dist} = round(gcdist($hash{latitude},$hash{longitude},$ai{latitude},$ai{longitude}));
 
 push(@out,"Nearest reporting station is $ai{city}, $ai{state}, $ai{country} ($ai{metar}), at ".nicedeg2($ai{latitude},"N").", ".nicedeg2($ai{longitude},"E")." (elevation $ai{elev} feet), $ai{dist} miles away");
 

@@ -526,12 +526,15 @@ sub warnlocal {
 =item gcddist($x,$y,$u,$v)
 
 Great circle distance between latitude/longitude x,y and
-latitude/longitude u,v in miles Source: http://williams.best.vwh.net/avform.htm
+latitude/longitude u,v in miles
+
+Source: http://williams.best.vwh.net/avform.htm
 
 =cut
 
 sub gcdist {
     my(@x)=@_;
+    debug("GCDIST GOT:",@x);
     my($x,$y,$u,$v)=map {$_*=$PI/180} @x;
     my($c1) = cos($x)*cos($y)*cos($u)*cos($v);
     my($c2) = cos($x)*sin($y)*cos($u)*sin($v);
