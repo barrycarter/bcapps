@@ -72,3 +72,4 @@
 303 248|255,255,255| NPC:Grigore Ureche
 310 290|255,255,255| NPC:Viorica
 294 276|255,255,255| NPC:Vulca
+263 263|0,255,0| zartob

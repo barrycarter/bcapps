@@ -1,0 +1,26 @@
+84 94|255,0,0| NPC:Ringa
+128 15|255,0,0| H:Blue Berries
+136 48|255,0,0| H:Blue Berries
+40 151|255,0,0| H:Blue Star Flower
+133 91|255,0,0| H:Coal
+103 72|255,0,0| H:Chrysanthemum
+40 151|255,0,0| H:Chrysanthemum
+40 151|255,0,0| H:Dandelion
+160 93|255,0,0| H:Diamond
+38 71|255,0,0| H:Fruits
+120 156|255,0,0| H:Fruits
+40 151|255,0,0| H:Impatiens
+35 26|255,0,0| H:Red Rose
+98 97|255,0,0| H:Red Rose
+111 50|255,0,0| H:Sulfur
+152 112|255,0,0| H:Sunflower
+97 26|255,0,0| H:Sunflower
+40 151|255,0,0| H:Sunflower
+38 116|255,0,0| H:Tiger Lilly
+67 113|255,0,0| H:Titanium Ore
+128 63|255,0,0| H:Toadstool
+45 171|255,0,0| H:White Asiatic Lilly
+23 97|255,0,0| H:Wood Branches
+40 151|255,0,0| H:Yellow Rose
+40 132|255,0,0| NPC:Bick
+84 94|255,0,0| NPC:Ringa

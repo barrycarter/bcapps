@@ -3,14 +3,32 @@
 showit := Module[{}, 
 Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
+(* Eternal Lands *)
+
+(* how much stuff do I have right now? ii = in inventory *)
+coalii = 101;
+feii = 150;
+ioii = 1313;
+gpii = 1225;
+
+(* how much does stuff cost from bots? bs = botsell *)
+
+coalbs = 0;
+febs = 4.95;
+iobs = 3.20;
+
+(* how to buy stuff to maximize number of steel bars? tb = to buy *)
+
+(* tb < 0 non-sensical since I can't sell at botsell prices *)
+
+Solve[{
+ (ioii+iotb)/8 == (feii+fetb)/3 == (coalii+coaltb)/5,
+ Max[iotb,0]*iobs + Max[fetb,0]*febs + Max[coaltb,0]*coalbs == gpii
+}, {iotb,fetb,coaltb}]
+
 (* tennis game at deuce, p change of getting point, q=1-p *)
 
 Simplify[Solve[x == p^2 + 2*p*q*x, x] /. q -> 1-p]
-
-
-
-
-
 
 
 (* box options *)

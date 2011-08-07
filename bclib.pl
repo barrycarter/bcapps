@@ -1681,6 +1681,179 @@ sub unix2el {
   return reverse @ebase;
 }
 
+=item blank($x)
+
+Is $x nothing but (possibly 0) space characters (not really worth
+being a function, but I'm porting progs that use it)
+
+=cut
+
+sub blank {$_[0]=~/^\s*$/;}
+
+=item ctof($c)
+
+Convert $c degrees Celsius to Farenheit
+
+=cut
+
+sub ctof {$_[0]*1.8+32;}
+
+=item nice_sec($secs, $nosecs)
+
+Given a number of seconds $secs, display it a nice way, returning
+minutes/hours/etc. If $nosecs is set, do not display seconds in return.
+
+NOTE: this is another function I wrote ages ago that doesn't look very
+good, but I need it to port some of my older stuff.
+
+=cut
+
+sub nice_sec {
+    my($s,$nosecs)=@_;
+    if ($nosecs) {$s+=30;} # roundoff kludge
+    my(@a)=(60,60,24,30.436875,12,1000);
+    my(@out);
+    my($m,$aa);
+    my(@b)=("seconds","minutes","hours","days","months","years","eons");
+    for(@a){
+      if($m=$s%$_){unshift(@out,$m,$b[0])}
+      $s=int($s/$_);shift(@b);
+    }
+    $aa=join(" ",@out);
+    if ($nosecs) {$aa=~s/\s*\d+\s+seconds//;}
+    return($aa);
+}
+
+=item rh($temp, $dew)
+
+Return the relative humidity, given the temperature and dew point,
+both in Celsius.
+
+NOTE: I have no idea where I got this formula
+
+=cut
+
+sub rh {
+  my($c,$d)=@_;
+  return(exp(17.67*$d/(243.5+$d))/exp(17.67*$c/(243.5+$c)));
+}
+
+=item hi($temp, $rh)
+
+Compute the heat index, given the temperature $temp in Farenheit, and
+the relative humidity $rh a percent (0 < $rh < 100).
+
+Source: http://www.hpc.ncep.noaa.gov/heat_index/hi_equation.html
+
+NOTE: I'm not convinced this formula is accurate.
+
+NOTE: these functions really belong in another lib, especially since
+their names are only two letters long + they could be easily confused
+w/ other functions
+
+=cut
+
+sub hi {
+  my($t,$rh)=@_;
+  if ($t<70) {return($t);} # per email from Pubnws@noaa.gov
+  my($a)=-42.379+2.04901523*$t+10.14333127*$rh-.22475541*$t*$rh -.00683783*$t*$t-.05481717*$rh*$rh+.00122874*$t*$t*$rh+.00085282*$t*$rh*$rh-.00000199*$t*$t*$rh*$rh;
+  if ($rh<=13 && $t>=80 && $t<=112) {
+    $a-=((13-$rh)/4)*sqrt((17-abs($t-95))/17);
+  }
+  if ($rh>=85 && $t>=80 && $t<=87) {
+    $a+=(($rh-85)/10)*((87-$t)/5);
+  }
+  return($a);
+}
+
+=item wc($temp, $speed)
+
+Compute wind chill temperature (in Farenheit), give temperature $temp
+(in Farenheit) and wind speed $speed (in miles per hour).
+
+<h>Don't you love how consistent I am using metrics vs the Imperial system?</h>
+
+NOTE: functions I import from my earlier work often have
+differently-named parameters (eg, $t and $w below instead of $temp and
+$speed), and don't follow my standard options-passing format.
+
+=cut
+
+sub wc {
+  my($t,$w)=@_;
+  if ($w<3 || $t>=50) {return($t);}
+  return(35.74+0.6215*$t-(35.75-0.4275*$t)*$w**.16);
+}
+
+=item wind($speed, $dir, $gust)
+
+Returns a descriptive phrase for a wind blowing at $speed knots, from
+angular direction $dir, and gusting to $gust knots.
+
+=cut
+
+sub wind {
+  my($speed,$dir,$gust)=@_;
+  my($a,$b);
+  $speed=int(.5+1.1507784538*$speed);
+  if ($speed==0) {return("calm");}
+  $gust=int(.5+1.1507784538*$gust);
+  @winddirs=("N","NNE","NE","ENE", "E","ESE","SE","SSE", "S","SSW","SW","WSW", "W","WNW","NW","NNW","N");
+
+  @winddirs=("north","north-northeast","northeast","east-northeast",
+	     "east","east-southeast","southeast","south-southeast",
+	     "south","south-southwest","southwest","west-southwest",
+	     "west","west-northwest","northwest","north-northwest","north");
+  $a=$winddirs[int($dir/22.5+.5)];
+  $b="from the $a at $speed mph";
+
+  if ($dir=~/^vrb$/i) {$b="variable at $speed mph";}
+  if ($gust>$speed) {$b="$b, with gusts to $gust mph";}
+  return($b);
+}
+
+=item maxclouds(@list)
+
+Given a list @list of METAR cloud covers, return a descriptive phrase
+based on the maximum cloudiness.
+
+<h>I dislike the word "scattered" and replaced it</h>
+
+=cut
+
+sub maxclouds {
+  my(@a)=@_;
+  if ($#a==-1) {return();} # if no list, return blank not clear
+  my($max,$i); # max will hold max clouds
+  %CLOUDCOVER=("clr" => 0, "few" => 1, "sct" => 2, "bkn" => 3, "ovc" => 4);
+  @clouds=("clear","partly cloudy","moderately cloudy","mostly cloudy","overcast");
+  for $i (@a) {
+    $i=~s/^([a-z]{3}).*$/$1/isg;
+    $max=max($max,$CLOUDCOVER{lc($i)});
+  }
+  
+  return($clouds[$max]);
+}
+
+=item wrap($string,$cols,$chop)
+
+Wrap $string to occupy approximately $cols columns; if $chop is set,
+drop last newline in return value.
+
+=cut
+
+sub wrap {
+    my($string,$cols,$chop)=@_;
+    $string=~s/\s+$//sg;
+    while ($string=~s/([^\s]{$cols})([^\s]+)/$1 $2/sg) {};
+    $string=~s/(.{0,$cols})( |$)/$1\n/mg;
+    $string=~s/[\n\r]+/\n/sg;
+    if ($chop) {
+	$string=~s/\s+$//g;
+    }
+    return($string);
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 
 sub END {

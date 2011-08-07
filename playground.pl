@@ -7,6 +7,24 @@
 
 require "bclib.pl";
 
+# read EL ELM files
+
+$all = read_file("/home/barrycarter/BCGIT/EL/startmap.elm");
+
+# the .e3d chunks start here (length 64+80=144)
+$e3d = hex("947c");
+
+$x = substr($all,$e3d,144);
+
+for ($i=0; $i<=length($all); $i+=144) {
+  $x = substr($all,$e3d+$i,144);
+  $file = substr($x,0,64);
+  $file=~s/\0//isg;
+  debug("X: $x", "FILE: $file");
+}
+
+die "TESTING";
+
 # solve the EL HE/SR problem
 
 for $i (1..1000) {

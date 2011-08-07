@@ -42,7 +42,7 @@ for $i (split(/\n/,$txt)) {
 
 debug("ROOMS",@rooms,"EDGES",@edges);
 
-open(A,">/home/barrycarter/BCGIT/EL/tg-magic.dot");
+open(A,">/home/barrycarter/BCGIT/EL/pv-magic.dot");
 print A "graph tgmagic {\n";
 print A join("\n", @nodes)."\n";
 print A join("\n", @edges)."\n";

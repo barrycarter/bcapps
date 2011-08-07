@@ -1,0 +1,23 @@
+253 62|255,0,0| NPC:Kerlyn
+254 245|255,0,0| NPC:Kiara
+192 127|255,0,0| NPC:Destinta
+256 154|255,0,0| NPC:Destinta
+97 171|255,0,0| H:Blue Lupine
+274 209|255,0,0| H:Blue Star Flower
+245 170|255,0,0| H:Chrysanthemum
+265 306|255,0,0| H:Ogre Toes
+278 233|255,0,0| H:Ogre Toes
+280 74|255,0,0| H:Ogre Toes
+303 198|255,0,0| H:Ogre Toes
+199 122|255,0,0| H:Valerian
+76 149|255,0,0| H:Wood Branches
+163 158|255,0,0| H:Wormwood
+255 76|255,0,0| Firepit
+16 175|255,0,0| Glacmor
+320 14|255,0,0| Hulda
+200 75|255,0,0| Isle of the Forgotten
+60 135|255,0,0| Trassian
+623 646|255,0,0| NPC:Destinta
+18 96|255,0,0| NPC:Enora
+253 62|255,0,0| NPC:Kerlyn
+256 247|255,0,0| NPC:Kiara

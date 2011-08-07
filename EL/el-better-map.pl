@@ -57,7 +57,9 @@ for $i (split(/\n/, $mapping)) {
 # $map = "North Redmoon";
 # $map = "South Redmoon";
 # $map = "Hurquin";
-$map = "Arius";
+# $map = "Arius";
+# $map = "Iscalrith";
+$map = "Isle of the Forgotten";
 
 $markfile = $markfile{$map};
 

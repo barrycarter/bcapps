@@ -42,3 +42,8 @@ cont2map11 Willowvine_Forest
 cont2map12 Aeth_Aelfan
 cont2map13 Ergatia_Point
 cont2map14 Arius
+cont2map18 Trassian
+cont2map19 Hulda
+cont2map20 Isle_of_the_Forgotten
+cont2map21 Imbroglio_Islands
+cont2map24 Iscalrith
