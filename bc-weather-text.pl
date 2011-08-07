@@ -47,6 +47,8 @@ $res = "
 # not found?
 unless ($res) {print "Unable to find: $city\n"; exit(0);}
 
+
+# Set $hash using XML reply above
 while ($res=~s%<(.*?)>(.*?)</\1>%$hash{$1}=$2;%iseg) {}
 
 # TODO: this is ugly for two reasons:
@@ -114,7 +116,7 @@ if (blank($oldpress)) {
 }
 
 # timezone
-$ENV{TZ} = $tz;
+$ENV{TZ} = $hash{tz};
 debug("ENV: $ENV{TZ}*");
 $time=strftime("%l:%M %p %Z on %A",localtime(time()));
 push(@out,"It's currently $time");
