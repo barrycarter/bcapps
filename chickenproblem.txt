@@ -1,0 +1,21 @@
+# connectivity graph (w/ named edges) for man needs to cross river problem
+# CFMW = man chicken fox; takes = side 1 to 2; returns = side 2 to 1
+# 1x2y means x on side 1, y on side 2
+
+1CFMW2,man takes chicken,1FW2CM
+1CFMW2,man takes fox,1CW2FM,chicken eats wheat,FAIL
+1CFMW2,man takes wheat,1CF2MW,fox eats chicken,FAIL
+1CFMW2,man takes self,1CFW2M,fox eats chicken eats wheat,FAIL
+1FW2CM,man returns chicken,1CFMW2
+1FW2CM,man returns self,1FMW2C
+1FMW2C,man takes fox,1W2CFM
+1FMW2C,man takes wheat,1F2CMW
+1FMW2C,man takes fox,1W2CFM
+1FMW2C,man takes self,1FW2CM
+1W2CFM,man returns self,1MW2CF,fox eats chicken,FAIL
+1W2CFM,man returns fox,1FMW2C
+1W2CFM,man returns chicken,1CMW2F
+1F2CMW,
+
+
+
