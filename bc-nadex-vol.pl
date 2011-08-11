@@ -4,9 +4,33 @@
 #  -under=x: assume underlying price is x, do not call forex_quote
 #  -nopost: don't post results to my blog, just calculate them
 
+push(@INC, "/home/barrycarter/BCGIT/");
 require "bclib.pl";
 
 $now = time(); #<h>for all good men to come to the aid of their country</h>
+
+# read parity from arg (format: eg, USDCAD)
+($parity) = @ARGV;
+
+# I have 3 different formats for parity: USD-CAD, USD/CAD,
+# USDCAD. Create vars for each of them
+$parity=~/^([A-Z]{3})([A-Z]{3})$/||die("BAD PARITY: $parity");
+($paritysource,$paritydest) = ($1,$2);
+$paritydash = "$paritysource-$paritydest";
+$parityslash = "$paritysource/$paritydest";
+
+# special case: NADEX version of USD-JPY is USD-YEN
+if ($parity eq "USDJPY") {$paritydash="USD-YEN";}
+
+# currently, only USDCAD generates a page on my site
+unless ($parity eq "USDCAD") {$globopts{nopost}=1;}
+
+# tmp file depends on parity (USDCAD was original, special)
+if ($parity eq "USDCAD") {
+  $tmpfile = "/tmp/nadex.m";
+} else {
+  $tmpfile = "/tmp/nadex.m.$parity";
+}
 
 # TODO: add theta, delta, vega, etc, based on calculated volt(?) [done
 # for bid, now for ask]
@@ -21,7 +45,7 @@ $now = time(); #<h>for all good men to come to the aid of their country</h>
 # TODO: this is hideously ugly, because it doesn't cache AND I need a more
 # uniform way of converting mathematica output to Perl
 # NOTE: I chose NOT to use nestify() here, it would've made things worse?
-$invnor = read_file("data/inv-norm-as-list.txt");
+$invnor = read_file("/home/barrycarter/BCGIT/data/inv-norm-as-list.txt");
 # mathematica precision oddness + other cleanup
 $invnor=~s/\`[\d\.]+//isg;
 # NOTE: yes, I should backslash {} below, but it's cool that I don't have to
@@ -31,7 +55,7 @@ $invnor=~s/\s+/ /isg;
 %invnor = split(/\,\s*/, $invnor);
 
 # Obtain NADEX quotes and FOREX quotes
-%hash = nadex_quotes("USD-CAD");
+%hash = nadex_quotes($paritydash);
 
 unless (%hash) {die "No data, stopping";}
 
@@ -39,7 +63,7 @@ unless (%hash) {die "No data, stopping";}
 # TODO: this may break when we stop daylight time(?)
 $ENV{TZ} = "EST5EDT";
 
-open(A,">/tmp/nadex.m.new");
+open(A,">$tmpfile.new");
 print A "nadex={\n";
 
 # Table header
@@ -66,8 +90,11 @@ I know this table looks horrible. Please contact me if you know how to fix it. D
 MARK
 ;
 
-for $strike (sort keys %{$hash{USDCAD}}) {
-  for $exp (sort keys %{$hash{USDCAD}{$strike}}) {
+debug(unfold(%hash));
+
+for $strike (sort keys %{$hash{$parity}}) {
+  for $exp (sort keys %{$hash{$parity}{$strike}}) {
+    debug("DOING: $parity/$strike/$exp");
 
     # already expired?
     if ($exp < $now) {
@@ -75,7 +102,7 @@ for $strike (sort keys %{$hash{USDCAD}}) {
       next;
     }
 
-    %k = %{$hash{USDCAD}{$strike}{$exp}};
+    %k = %{$hash{$parity}{$strike}{$exp}};
     ($bid, $ask, $updated) = ($k{bid}, $k{ask}, $k{updated});
     debug("UPDATED: $updated");
 
@@ -84,12 +111,12 @@ for $strike (sort keys %{$hash{USDCAD}}) {
     if ($globopts{under}) {
       $under = $globopts{under}
     } else {
-      debug("USD/CAD price at $updated...");
-      $under = forex_quote("USD/CAD", $updated);
+      debug("$parityslash price at $updated...");
+      $under = forex_quote($parityslash, $updated);
     }
 
     # logdiff + exptime (seconds)
-    unless ($under) {die "Unable to obtain price for USDCAD";}
+    unless ($under) {die "Unable to obtain price for $parity";}
     debug("$strike / $under");
     $logdiff = log($strike/$under);
     $exptime = $exp - $updated;
@@ -135,7 +162,15 @@ for $strike (sort keys %{$hash{USDCAD}}) {
     debug("NEWVOL: $newvol");
 
     # output for Mathematica (doesn't really need all of these, but...)
-    print A "{$strike, $exp, $bid, $ask, $under, $updated},\n";
+    if ($parity eq "USDJPY") {
+      $printstrike = $strike/100;
+      $printunder = $under/100;
+    } else {
+      $printstrike = $strike;
+      $printunder = $under;
+    }
+
+    print A "{$printstrike, $exp, $bid, $ask, $printunder, $updated},\n";
 
     # printing table here just to have some output; real work is above
     $str.= "<tr>\n";
@@ -197,4 +232,4 @@ print A "}\n";
 close(A);
 
 # this only happens if/when program doesn't die
-system("mv -f /tmp/nadex.m /tmp/nadex.m.old; mv /tmp/nadex.m.new /tmp/nadex.m");
+system("mv -f $tmpfile $tmpfile.old; mv $tmpfile.new $tmpfile");

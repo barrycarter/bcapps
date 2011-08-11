@@ -853,21 +853,22 @@ sub nadex_quotes {
  # I can't use cache-command, since I'm using curl's wildcarding feature
 
  # commands to obtain daily, weekly, and intra-daily options
- my($daily_cmd) = "curl -v -L -k -o /tmp/daily#1-#2.txt -v -L -H 'Cookie: $cookie' 'https://$prehost.nadex.com/dealing/pd/cfd/displaySingleMarket.htm?epic=N{B}.D.$parity.OPT-1-[1-21].IP'";
+ my($daily_cmd) = "curl -v -L -k -o /tmp/daily.$parity.#1-#2.txt -v -L -H 'Cookie: $cookie' 'https://$prehost.nadex.com/dealing/pd/cfd/displaySingleMarket.htm?epic=N{B}.D.$parity.OPT-1-[1-21].IP'";
 # my($daily_cmd) = "curl -v -L -k -o /tmp/daily#1-#2.txt -v -L -H 'Cookie: $cookie' 'https://$prehost.nadex.com/dealing/pd/cfd/displaySingleMarket.htm?epic=N{B}.D.$parity.OPT-2-[1-21].IP'";
- my($weekly_cmd) = "curl -v -L -k -o /tmp/weekly#1-#2.txt -v -L -H 'Cookie: $cookie' 'https://$prehost.nadex.com/dealing/pd/cfd/displaySingleMarket.htm?epic=N{B}.W.$parity.OPT-1-[1-14].IP'";
- my($intra_cmd) = "curl -v -L -k -o intra#1-#2-#3.txt -v -L -H 'Cookie: $cookie' 'https://$prehost.nadex.com/dealing/pd/cfd/displaySingleMarket.htm?epic=N{B}.I.$parity.OPT-[1-8]-[1-3].IP'";
+ my($weekly_cmd) = "curl -v -L -k -o /tmp/weekly.$parity.#1-#2.txt -v -L -H 'Cookie: $cookie' 'https://$prehost.nadex.com/dealing/pd/cfd/displaySingleMarket.htm?epic=N{B}.W.$parity.OPT-1-[1-14].IP'";
+ my($intra_cmd) = "curl -v -L -k -o intra.$parity.#1-#2-#3.txt -v -L -H 'Cookie: $cookie' 'https://$prehost.nadex.com/dealing/pd/cfd/displaySingleMarket.htm?epic=N{B}.I.$parity.OPT-[1-8]-[1-3].IP'";
 
  # and obtain data (since I'm using curl -o, below doesn't actually
  # return anything, so I ignore the return value)
 
+ debug("WEEKLY: $weekly_cmd");
  cache_command($daily_cmd, "age=$opts{cache}");
  cache_command($weekly_cmd, "age=$opts{cache}");
  unless ($opts{nointra}) {cache_command($daily_cmd, "age=$opts{cache}");}
 
  # parse results
  # TODO: in theory, could get old intra results here
- for $i (glob ("/tmp/daily*.txt /tmp/weekly*.txt /tmp/intra*.txt")) {
+ for $i (glob ("/tmp/daily.$parity.*.txt /tmp/weekly.$parity.*.txt /tmp/intra.$parity*.txt")) {
    my($all) = read_file($i);
 
    # option name
@@ -887,6 +888,7 @@ sub nadex_quotes {
    $dataq = 1;
 
    # title pieces + cleanup
+   debug("TITLE: $title");
    my($par, $strdir, $tim, $dat) = split(/\s/, $title);
    $par=~s/\///isg;
    for $j ($tim,$dat) {$j=~s/[\(\)]//isg;}
@@ -928,6 +930,7 @@ sub nadex_quotes {
    # TODO: not sure skipping no bid/ask is a good idea here
    if ($obid eq "-" || $oask eq "-") {next;}
 
+   debug("PAR IS: $par");
    $hash{$par}{$strdir}{$utime}{bid} = $obid;
    $hash{$par}{$strdir}{$utime}{ask} = $oask;
    $hash{$par}{$strdir}{$utime}{updated} = $uptime;
