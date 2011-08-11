@@ -2,11 +2,26 @@
 
 # compute fair value of box option using Mathematica (wrapper script)
 
+push(@INC, "/usr/local/lib");
 require "bclib.pl";
 
-# hardcoding values for now
+# HTML header
+print "Content-type: text/html\n\n";
+
+# read the query string and remove unwanted chars
+$query = $ENV{QUERY_STRING};
+$query=~s/[^a-z0-9\.\=\&]//isg;
+%query = str2hash($query);
+
+# vars: p0 = price of underlying, v = annual volatility of underlying,
+# p1 = box low price, p2 = box high price, t1 = box start time, t2 =
+# box end time
+
+# laziness here
 ($p0, $v, $p1, $p2, $t1, $t2) =
- (0.9850, .08, 0.9855, 1.3, 15/60, 20/60);
+ ($query{p0}, $query{v}, $query{p1}, $query{p2}, $query{t1}, $query{t2});
+
+print "QUERY IS: $query, p0: $p0, $t1 to $t2\n";
 
 chdir(tmpdir());
 
@@ -24,7 +39,7 @@ MARK
 write_file($str, "calc");
 
 # do the calculation and cleanup the results
-$res = join("\n",`math -initfile /home/barrycarter/BCGIT/box-option-value.m < calc`);
+$res = join("\n",`math -initfile /sites/TEST/box-option-value.m < calc`);
 $res=~s/\s*>\s*/ /isg;
 
 while ($res=~s/{(.*?), (.*?), (.*?)}//) {
@@ -57,19 +72,35 @@ for $i (sort keys %prob) {
   for $j (sort keys %{$prob{$i}}) {
     # print probability, and values calculated from it
     $prob = $prob{$i}{$j};
-    debug("1000/$prob");
-    $hitval = 1000/$prob;
-    $missval = 1000/(1-$prob);
-    $ohitval = ($hitval-1000)*.5+1000;
-    $omissval = ($missval-1000)*.5+1000;
+
+    # probability very low or very high (avoids division by 0)
+    if ($prob < 1e-6) {
+      ($hitval, $missval, $ohitval, $omissval) = ("~0%");
+    } elsif ($prob > 1-(1e-6)) {
+      ($hitval, $missval, $ohitval, $omissval) = ("~100%");
+    } else {
+
+      # the Mathematica script only calculates probability; below, I
+      # compute value of a hit and miss option of $1000
+      $hitval = 1000/$prob;
+      $missval = 1000/(1-$prob);
+
+      # TODO: assuming OANDA pays "half" the true value (of sorts), but
+      # this assumption appears to be completely false
+      $ohitval = ($hitval-1000)*.5+1000;
+      $omissval = ($missval-1000)*.5+1000;
+    }
 
     printf("<td>%0.2f%%<br>%0.0f/%0.0f<br>%0.0f/%0.0f</td>\n",
-	  $prob*100, $hitval, $missval, $ohitval, $omissval);
+	   $prob*100, $hitval, $missval, $ohitval, $omissval);
   }
   print "</tr>\n";
 }
 
 print "</table>\n";
+
+# stuff below not working
+exit(0);
 
 for $i (@res) {
   if ($i=~/^Out\[(\d+)\]=\s*(.*?)$/) {
