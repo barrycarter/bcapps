@@ -61,8 +61,9 @@ nadex = Select[nadex, Length[#]>2&]
 
 (* select options w/ given expiration time/date *)
 (* TODO: selling options w/ different expiries may be useful! *)
-expdate = 1313434800
-nadex = Select[nadex, #[[2]] == 1313434800 &]
+expdate = AbsoluteTime[{2011,8,19,19}, TimeZone->0]
+expdate = Round[expdate - AbsoluteTime[{1970}, TimeZone->0]]
+nadex = Select[nadex, #[[2]] == expdate &]
 
 (* compute midpoint vol for each option *)
 
@@ -87,10 +88,13 @@ strikes = Table[opt[[1]], {opt,nadex}]
 the values of n *)
 
 (* My total profit at price p when options expire = profit from
-underlying + gain/loss from sold options *)
+underlying + gain/loss from sold options; however, only count options
+less than or equal to current price, since I often sell them "one at a
+time" *)
 
 totalprofit[p_] := profitundertot[p] +
- Sum[n[a[[1]],a[[2]]] * optionprofit[p, a[[1]], a[[3]]], {a, opttab[p]}]
+ Sum[n[a[[1]],a[[2]]] * If[p>=a[[1]], optionprofit[p, a[[1]], a[[3]]], 0],
+ {a, opttab[p]}]
 
 (* constraints: totalprofit must be > 0 for all values of p [but only
 need to test at strike values] *)
@@ -106,5 +110,3 @@ vars = Table[n[i,expdate], {i, strikes}]
 premiums[p_] := Sum[n[a[[1]],a[[2]]] * a[[3]], {a,opttab[p]}]
 
 maxi[p_] := Maximize[premiums[p], cons, vars, Integers]
-
-
