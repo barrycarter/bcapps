@@ -19,17 +19,60 @@ directly NADEX, but useful for hedging *)
 
 profit[p_, q_] = (q/p-1)
 
-(* testing and plots *)
+(* This formula comes from box-option-value.m, but I'm sadistically
+changing some of the parameters:
 
-Plot[spread[p, .99, 1.01], {p,.95,1.05}]
+ p0 - current price of underlying instrument
+ v - volatility of underlying instrument (per year)
+ s - strike price of binary option
+ e - time to option expiration, in YEARS [was hours]
 
-Plot[10000*profit[.99, q], {q,.98,1}]
+ Output: probability binary call will be in money
+*)
 
-Plot[10000*profit[1, q], {q,.5,2}]
+bincallv[p0_, v_, s_, e_] =
+ 1-CDF[NormalDistribution[Log[p0],Sqrt[e]*v], Log[s]]
 
-Plot[10000*profit[1, q], {q,.5,2}]
+(* implied volatility, given other numbers (p1 = current price of
+option as fraction) *)
 
-Plot[210000*profit[.9905,q] - 
- (spread[q, .99, 1] - .9911)*21*10000,
-{q,.98,1}]
+impvol[p0_, s_, e_, p1_] = v /. Solve[bincallv[p0,v,s,e]==p1, v][[1]]
+
+(* deciding what to buy below (sample) *)
+
+(* load NADEX data *)
+<< /tmp/nadex.m
+
+(* load my positions [file is of form mypos=Table[...]] *)
+<< /home/barrycarter/usdcadpos.txt
+
+(* underlying profit from my positions; per position and then total
+[each pos is 10K] *)
+
+profitunder[p_, x_] = If[p>x, (p/x-1)*10000, 0]
+profitundertot[p_] = Sum[profitunder[p,x],{x,mypos}]
+
+(* current time in Unix seconds; kludge for MST *)
+now := AbsoluteTime[] - AbsoluteTime[{1970}, TimeZone->0]
+
+(* kludge to get rid of null that ends 'nadex' var *)
+
+nadex = Select[nadex, Length[#]>2&]
+
+(* select options w/ given expiration time/date *)
+nadex = Select[nadex, #[[2]] == 1313434800 &]
+
+(* compute midpoint vol for each option *)
+
+Table[vol[a[[1]],a[[2]]] = 
+ impvol[a[[5]], a[[1]], (a[[2]]-a[[6]])/365.2425/86400, (a[[3]]+a[[4]])/2/100],
+{a,nadex}]
+
+(* expected price of option when underlying is p *)
+
+price[p_, s_, e_] := bincallv[p, vol[s,e], s, (e-now)/86400/365.2425]
+
+(* table of option prices at given underlying price *)
+
+opttab[p_] := Table[{a[[1]],a[[2]],price[p,a[[1]],a[[2]]]}, {a, nadex}]
 
