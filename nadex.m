@@ -1,14 +1,26 @@
 (* Mathematica stuff for NADEX *)
 
+(* TODO: really seriously clean this up *)
+
 (* this stuff changes each time *)
 
-(* load NADEX data *)
+(* load NADEX data from bc-nadex-vol.pl output *)
 << /tmp/nadex.m.USDJPY
 
-(* load my positions [file is of form mypos=Table[...]] *)
+(* load my positions; this file looks something like this:
+
+(* long FOREX positions I hold, 10K each *)
+mypos = Table[.9871+.0012*i,{i,0,19}];
+
+(* options I've already sold: {number, strike, price-i-sold-at} *)
+myoptpos = {{2, .9925, 18}, {8, .9975, 9.5}}
+
+*)
+
 << /home/barrycarter/usdjpypos.txt
 
-(* and cash "cash = 123" *)
+(* and cash. Sample file: "cash = 123" *)
+
 << /home/barrycarter/nadexcash.txt
 
 (* select options w/ given expiration time/date *)
@@ -87,6 +99,9 @@ price[p_, s_, e_] := bincallv[p, vol[s,e], s, (e-now)/86400/365.2425]
 opttab[p_] := Table[{a[[1]], a[[2]], Round[400*price[p,a[[1]],a[[2]]]]/4},
  {a, nadex}]
 
+(* loss due to options I've already sold *)
+alreadysold[p_] :=  Sum[x[[1]]*If[p>=x[[2]], x[[3]]-101, 0], {x,myoptpos}]
+
 (* strike prices *)
 
 strikes = Table[opt[[1]], {opt,nadex}]
@@ -97,11 +112,12 @@ the values of n *)
 (* My total profit at price p when options expire = profit from
 underlying + gain/loss from sold options; however, only count options
 less than or equal to current price, since I often sell them "one at a
-time" *)
+time"; also subtract off options I've already sold *)
 
 totalprofit[p_] := profitundertot[p] +
  Sum[n[a[[1]],a[[2]]] * If[p>=a[[1]], optionprofit[p, a[[1]], a[[3]]], 0],
- {a, opttab[p]}]
+ {a, opttab[p]}] +
+ Sum[x[[1]]*If[p>=x[[2]], x[[3]]-101, 0], {x,myoptpos}]
 
 (* constraints: totalprofit must be > 0 for all values of p [but only
 need to test at strike values]; n > 0 because I can't really buy at same prices I sell [commissions, etc] *)
@@ -129,7 +145,7 @@ tab[p_] := N[{maxi[p][[1]], Sort[
  Round[400*price[p,s,expdate]]/4,
   n[s,expdate]*(Round[400*price[p,s,expdate]]/4-2)}, 
  {s, strikes}] /. maxi[p][[2]], #[[2]]>0&]
-, #1[[4]] > #2[[4]] &]}]
+, #1[[3]] > #2[[3]] &]}]
 
 (* below does not work; needs to curry, methinks *)
 f[p_,q_] := totalprofit[p] /. maxi[q][[2]]
