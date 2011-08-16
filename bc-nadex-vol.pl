@@ -233,3 +233,6 @@ close(A);
 
 # this only happens if/when program doesn't die
 system("mv -f $tmpfile $tmpfile.old; mv $tmpfile.new $tmpfile");
+
+# for consistency
+if ($tmpfile eq "/tmp/nadex.m") {system("cp $tmpfile $tmpfile.$parity");}

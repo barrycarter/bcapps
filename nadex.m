@@ -1,5 +1,28 @@
 (* Mathematica stuff for NADEX *)
 
+(* this stuff changes each time *)
+
+(* load NADEX data *)
+<< /tmp/nadex.m.USDJPY
+
+(* load my positions [file is of form mypos=Table[...]] *)
+<< /home/barrycarter/usdjpypos.txt
+
+(* and cash "cash = 123" *)
+<< /home/barrycarter/nadexcash.txt
+
+(* select options w/ given expiration time/date *)
+(* TODO: selling options w/ different expiries may be useful! *)
+expdate = AbsoluteTime[{2011,8,19,19}, TimeZone->0]
+
+(* changing stuff stops here *)
+
+expdate = Round[expdate - AbsoluteTime[{1970}, TimeZone->0]]
+(* kludge to get rid of null that ends 'nadex' var *)
+nadex = Select[nadex, Length[#]>2&]
+
+nadex = Select[nadex, #[[2]] == expdate &]
+
 (* TODO: sublibrary to include in all .m files *)
 
 showit := Module[{}, 
@@ -40,12 +63,6 @@ impvol[p0_, s_, e_, p1_] = v /. Solve[bincallv[p0,v,s,e]==p1, v][[1]]
 
 (* deciding what to buy below (sample) *)
 
-(* load NADEX data *)
-<< /tmp/nadex.m
-
-(* load my positions [file is of form mypos=Table[...]] *)
-<< /home/barrycarter/usdcadpos.txt
-
 (* underlying profit from my positions; per position and then total
 [each pos is 10K] *)
 
@@ -54,16 +71,6 @@ profitundertot[p_] = Sum[profitunder[p,x],{x,mypos}]
 
 (* current time in Unix seconds; kludge for MST *)
 now := AbsoluteTime[] - AbsoluteTime[{1970}, TimeZone->0]
-
-(* kludge to get rid of null that ends 'nadex' var *)
-
-nadex = Select[nadex, Length[#]>2&]
-
-(* select options w/ given expiration time/date *)
-(* TODO: selling options w/ different expiries may be useful! *)
-expdate = AbsoluteTime[{2011,8,19,19}, TimeZone->0]
-expdate = Round[expdate - AbsoluteTime[{1970}, TimeZone->0]]
-nadex = Select[nadex, #[[2]] == expdate &]
 
 (* compute midpoint vol for each option *)
 
@@ -75,9 +82,9 @@ Table[vol[a[[1]],a[[2]]] =
 
 price[p_, s_, e_] := bincallv[p, vol[s,e], s, (e-now)/86400/365.2425]
 
-(* table of option prices at given underlying price, rounding and converting to [0,100] *)
+(* table of option prices at given underlying price, rounding to nearest quarter and converting to [0,100] *)
 
-opttab[p_] := Table[{a[[1]], a[[2]], Round[100*price[p,a[[1]],a[[2]]]]},
+opttab[p_] := Table[{a[[1]], a[[2]], Round[400*price[p,a[[1]],a[[2]]]]/4},
  {a, nadex}]
 
 (* strike prices *)
@@ -97,9 +104,13 @@ totalprofit[p_] := profitundertot[p] +
  {a, opttab[p]}]
 
 (* constraints: totalprofit must be > 0 for all values of p [but only
-need to test at strike values] *)
+need to test at strike values]; n > 0 because I can't really buy at same prices I sell [commissions, etc] *)
 
-cons = Table[totalprofit[s] >= 0, {s, strikes}]
+cons = Table[{totalprofit[s] >= 0, n[s,expdate]>0}, {s, strikes}]
+
+(* extra constraint: max loss can't exceed cash *)
+
+cashcons[p_] := Sum[n[a[[1]],a[[2]]] * (a[[3]]-101), {a,opttab[p]}] > - cash
 
 (* variables we use [Mathematica needs these to Maximize] *)
 
@@ -109,4 +120,16 @@ vars = Table[n[i,expdate], {i, strikes}]
 
 premiums[p_] := Sum[n[a[[1]],a[[2]]] * a[[3]], {a,opttab[p]}]
 
-maxi[p_] := Maximize[premiums[p], cons, vars, Integers]
+maxi[p_] := Maximize[premiums[p], {cons, cashcons[p]}, vars, Integers]
+
+(* TODO: below is ugly, I should be able to use opttab directly *)
+
+tab[p_] := N[{maxi[p][[1]], Sort[
+ Select[Table[{s, n[s,expdate], 
+ Round[400*price[p,s,expdate]]/4,
+  n[s,expdate]*(Round[400*price[p,s,expdate]]/4-2)}, 
+ {s, strikes}] /. maxi[p][[2]], #[[2]]>0&]
+, #1[[4]] > #2[[4]] &]}]
+
+(* below does not work; needs to curry, methinks *)
+f[p_,q_] := totalprofit[p] /. maxi[q][[2]]
