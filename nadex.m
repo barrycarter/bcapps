@@ -5,7 +5,7 @@
 (* this stuff changes each time *)
 
 (* load NADEX data from bc-nadex-vol.pl output *)
-<< /tmp/nadex.m.USDJPY
+<< /tmp/nadex.m.USDCAD
 
 (* load my positions; this file looks something like this:
 
@@ -17,7 +17,7 @@ myoptpos = {{2, .9925, 18}, {8, .9975, 9.5}}
 
 *)
 
-<< /home/barrycarter/usdjpypos.txt
+<< /home/barrycarter/usdcadpos.txt
 
 (* and cash. Sample file: "cash = 123" *)
 
@@ -109,20 +109,29 @@ strikes = Table[opt[[1]], {opt,nadex}]
 (* I sell n[strike][exp] of each option, and let Mathematica optimize
 the values of n *)
 
-(* My total profit at price p when options expire = profit from
-underlying + gain/loss from sold options; however, only count options
-less than or equal to current price, since I often sell them "one at a
-time"; also subtract off options I've already sold *)
+(*
 
-totalprofit[p_] := profitundertot[p] +
+My total profit when underlying is at price p, assuming I sold options
+when underlying was at price p0. Since I sell options "one at a time",
+this only includes options that are in-the-money (ie, ones where I've
+lost money) so that I never lose money
+
+*)
+
+totalprofit[p_, p0_] := profitundertot[p] +
  Sum[n[a[[1]],a[[2]]] * If[p>=a[[1]], optionprofit[p, a[[1]], a[[3]]], 0],
- {a, opttab[p]}] +
+ {a, opttab[p0]}] +
  Sum[x[[1]]*If[p>=x[[2]], x[[3]]-101, 0], {x,myoptpos}]
 
-(* constraints: totalprofit must be > 0 for all values of p [but only
-need to test at strike values]; n > 0 because I can't really buy at same prices I sell [commissions, etc] *)
+(* 
 
-cons = Table[{totalprofit[s] >= 0, n[s,expdate]>0}, {s, strikes}]
+constraints if I sold when underlying was at price p0:
+  - totalprofit must be > 0 for all values of p (but it only changes discontinously at strike prices)
+  - can't sell negative options (buying != selling negative, since prices are different, commissions, etc)
+
+*)
+  
+cons[p0_] := Table[{totalprofit[s,p0] >= 0, n[s,expdate]>=0}, {s, strikes}]
 
 (* extra constraint: max loss can't exceed cash *)
 
@@ -134,9 +143,9 @@ vars = Table[n[i,expdate], {i, strikes}]
 
 (* total premiums = thing to maximize *)
 
-premiums[p_] := Sum[n[a[[1]],a[[2]]] * a[[3]], {a,opttab[p]}]
+premiums[p_] := Sum[n[a[[1]],a[[2]]] * (a[[3]]-2), {a,opttab[p]}]
 
-maxi[p_] := Maximize[premiums[p], {cons, cashcons[p]}, vars, Integers]
+maxi[p_] := Maximize[premiums[p], {cons[p], cashcons[p]}, vars, Integers]
 
 (* TODO: below is ugly, I should be able to use opttab directly *)
 
