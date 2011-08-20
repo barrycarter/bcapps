@@ -14,34 +14,67 @@
 
 require "bclib.pl";
 
-$all = read_file("sample-data/metamedia.txt");
+$all = read_file("sample-data/metamedia2.txt");
 
-while ($all=~s/\[\[([^\[\]]*?)\]\]/parse_text($1)/iseg) {}
+# in theory, I could just [[pagename!!page_content]] and parse that?
+
+# parse all [[foo]] and {{foo}} on page (I don't use {{foo}}, but it
+# needs to be protected
+
+# TODO: this matches [[foo}} (which it shouldn't)
+while ($all=~s/(\[\[|\{\{)([^\[\]\{\}]*?)(\]\]|\}\})/parse_text($1,$2,$3)/iseg) {}
+
+# now replace <<$n>> and any <<s$n>> not already parsed
+$all=~s/<<s?(\d+)>>/$text[$1]/isg;
+
+# and <<p$n>>
+# TODO: everything
+$all=~s/<<p(\d+)>>/MOD($text[$1])/isg;
 
 debug($all);
 
 sub parse_text {
-  my($text) = @_;
-  debug("PARSE_TEXT($text)");
-  
-  # if no !!, just change [[x]] to <<x>> (so it won't catch the regex again).
+  my($stag, $text, $etag) = @_;
+  debug("PARSE_TEXT($stag$text$etag)");
+
+  # if of form [[foo:bar]] or [[foo::bar]], it will display different
+  # on calling page and called page, so mark w/ tag s$n, not just $n
+  if ($text=~/^(.*?)::?(.*?)$/) {
+    $text[++$n] = "$stag$text$etag";
+    return "<<s$n>>";
+  }
+
+  # if no !!, replace with <<$n>> and keep track of $n
   # TODO: this is horrible; must be better way to do this!
 
-  unless ($text=~/\!\!/) {return "<<$text>>";}
+  unless ($text=~/\!\!/) {
+    # The ++$n means $text[1] is first, but saves me initialization step
+    # NOTE: @text is global
+    $text[++$n] = "$stag$text$etag";
+    return "<<$n>>";
+  }
 
   # handle case 2 first
   if ($text=~/^(.*?)\!\!(.*?)\|(.*?)$/) {
     my($page, $info, $alt) = ($1, $2, $3);
-    debug("$page ADD: $info");
+    # if $info contains any <<s$n>>, parse them immediately
+    $info=~s/<<s(\d+)>>/$text[$1]/isg;
     return $alt;
   }
 
   # case 1
   if ($text=~/^(.*?)\!\!(.*?)$/) {
     my($page, $info) = ($1,$2);
+
+    # if $info contains any <<s$n>>, parse them immediately, but keep
+    # original version (w/ s removed) to return to calling page
+    my($originfo) = $info;
+    # p$n indicates "parsed once already"
+    $originfo=~s/<<s(\d+)>>/<<p$1>>/isg;
+    $info=~s/<<s(\d+)>>/$text[$1]/isg;
     debug("$page: $info");
-    return converted($info);
-  }
+    return converted($originfo);
+AAA  }
 
   warn "SHOULD NEVER REACH THIS POINT!";
   return "";
@@ -53,9 +86,8 @@ sub parse_text {
 sub converted {
   my($text) = @_;
 
-  # NOTE: probably no need to recurse here, since inner levels already handled?
-  $text=~s/<<(.*?)::(.*?)>>/<<$2>>/isg;
-  $text=~s/<<(.*?):(.*?)>>/<<:$1:$2>>/isg;
+  # if $info contains any <<s$n>>, revert to <<$n>> for outside pages
+#  $text=~s/<<s(\d+)>>/<<$1>>/isg;
 
   return $text;
 }
