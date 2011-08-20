@@ -14,7 +14,7 @@
 
 require "bclib.pl";
 
-$all = read_file("sample-data/metamedia2.txt");
+$all = read_file("sample-data/metamedia.txt");
 
 while ($all=~s/\[\[([^\[\]]*?)\]\]/parse_text($1)/iseg) {}
 
@@ -23,44 +23,42 @@ debug($all);
 sub parse_text {
   my($text) = @_;
   debug("PARSE_TEXT($text)");
-
+  
   # if no !!, just change [[x]] to <<x>> (so it won't catch the regex again).
   # TODO: this is horrible; must be better way to do this!
 
   unless ($text=~/\!\!/) {return "<<$text>>";}
 
-  # add to page?
+  # handle case 2 first
+  if ($text=~/^(.*?)\!\!(.*?)\|(.*?)$/) {
+    my($page, $info, $alt) = ($1, $2, $3);
+    debug("$page ADD: $info");
+    return $alt;
+  }
+
+  # case 1
   if ($text=~/^(.*?)\!\!(.*?)$/) {
     my($page, $info) = ($1,$2);
     debug("$page: $info");
-
-    # how should $info show up on the next higher-level page?
-    $info = parse_tag($info);
-    return $info;
+    return converted($info);
   }
+
+  warn "SHOULD NEVER REACH THIS POINT!";
+  return "";
 }
 
-# given a tag of the format <<foo>>, parse it to return the value to
-# the containing document
+# convert text as per notes for case 1 above (note that [[foo]] is
+# <<foo>> by this point)
 
-sub parse_tag {
+sub converted {
   my($text) = @_;
-  debug("PARSE_TAG($text)");
 
-  # recursively parse inner tags first
-  $text=~s/<<(.*?)>>/parse_tag($1)/iseg;
+  # NOTE: probably no need to recurse here, since inner levels already handled?
+  $text=~s/<<(.*?)::(.*?)>>/<<$2>>/isg;
+  $text=~s/<<(.*?):(.*?)>>/<<:$1:$2>>/isg;
 
-  # alternate text
-  if ($text=~s/^(.*?)\|(.*?)$/$2/) {return $text;}
-
-  # semantic annotations
-  if ($text=~s/^(.*?)::(.*?)$/$2/) {return "<<$text>>";}
-
-  # everything else
-  return "<<$text>>";
+  return $text;
 }
-
-
 
 
 
