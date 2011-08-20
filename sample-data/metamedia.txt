@@ -1,0 +1,25 @@
+This is a regular link to [[Alpha]]. No semantic info. We can do the same for [[Omega|the last Greek character]].
+
+This gives info about Beta, which [[Beta!!is the second letter of the Greek alphabet]].
+
+This main page has a list of [[has_list::Greek letters]]
+
+Gamma [[Gamma!!is a [[is_a::Greek letter]]]]
+
+Delta [[Delta!!is a [[Category:Greek character]]]], but I'm putting it in a category, instead of using a semantic relation.
+
+Page Info has a [[Info!!link to the [[:Category:Greek character]]]], but isn't in the category itself.
+
+Epsilon [[Epsilon!!is a [[is_a::Greek letter]], and a [[Category:Greek character]], but, on Main, I don't want to say all that|is neat]]
+
+[[Zeta!!is a [[is_a::Greek letter]], but I don't want to say anything about it on the main page|]]
+
+[[Talk:Mickey!!Are we sure that Mickey is a Greek character? ~~~~]]
+
+[http://www.yahoo.com Yahoo] probably has more info on Greek characters.
+
+Here is the [[Pi!!wikipedia entry for {{TemplateA|pi}}]]
+
+Mu {{TemplateB|Mu}} (using a template).
+
+Rho [[Rho!!comes before [[Sigma]], which [[Sigma!! comes before [[preceeds::Tau]], which [[Tau!! comes before [[preceeds::Upsilon]], which [[Upsilon!! comes before [[preceeds::Phi]], which [[Phi!! comes before [[preceeds::Chi]], which [[Chi!! comes before [[preceeds::Psi]], which [[Psi!! comes before [[preceeds::Omega]]]]]]]]]]]]]]]]. Test of deep nesting
