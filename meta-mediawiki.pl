@@ -14,12 +14,14 @@
 
 require "bclib.pl";
 
-$all = read_file("sample-data/metamedia2.txt");
+$all = read_file("sample-data/metamedia.txt");
 
 # in theory, I could just [[pagename!!page_content]] and parse that?
 
 # parse all [[foo]] and {{foo}} on page (I don't use {{foo}}, but it
 # needs to be protected
+
+# TODO: pretty sure I can seriously improve coding here (entire program)
 
 # TODO: this matches [[foo}} (which it shouldn't)
 while ($all=~s/(\[\[|\{\{)([^\[\]\{\}]*?)(\]\]|\}\})/parse_text($1,$2,$3)/iseg) {}
@@ -29,9 +31,22 @@ $all=~s/<<s?(\d+)>>/$text[$1]/isg;
 
 # and <<p$n>>
 # TODO: everything
-$all=~s/<<p(\d+)>>/MOD($text[$1])/isg;
+$all=~s/<<p(\d+)>>/convert($text[$1])/iseg;
 
-debug($all);
+# do the same for all additions to all pages
+for $i (sort keys %add) {
+  @add = @{$add{$i}};
+
+  for $j (@add) {
+  # parse $n s$n p$n as above
+    $j=~s/<<s?(\d+)>>/$text[$1]/isg;
+    $j=~s/<<p(\d+)>>/convert($text[$1])/iseg;
+  }
+
+  debug("ADD($i)", @add);
+}
+
+debug("ALL: $all");
 
 sub parse_text {
   my($stag, $text, $etag) = @_;
@@ -72,23 +87,28 @@ sub parse_text {
     # p$n indicates "parsed once already"
     $originfo=~s/<<s(\d+)>>/<<p$1>>/isg;
     $info=~s/<<s(\d+)>>/$text[$1]/isg;
-    debug("$page: $info");
-    return converted($originfo);
-AAA  }
+    push(@{$add{$page}}, $info);
+    return $originfo;
+  }
 
   warn "SHOULD NEVER REACH THIS POINT!";
   return "";
 }
 
-# convert text as per notes for case 1 above (note that [[foo]] is
-# <<foo>> by this point)
+# convert tags with colons (they display differently on calling page
+# and called page
 
-sub converted {
+sub convert {
   my($text) = @_;
+  debug("GOT: $text");
 
-  # if $info contains any <<s$n>>, revert to <<$n>> for outside pages
-#  $text=~s/<<s(\d+)>>/<<$1>>/isg;
+  # special case: [:Category:Foo] (don't change!)
+  if ($text=~/^\[\[:/) {return $text;}
 
+  # colon fixing
+  $text=~s/\[\[(.*?)::?(.*)\]\]/[[$2]]/isg;
+
+  debug("RET: $text");
   return $text;
 }
 
