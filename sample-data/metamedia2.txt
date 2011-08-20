@@ -1,0 +1,4 @@
+# simpler testbed than metamedia.txt
+Epsilon [[Epsilon!!is a [[is_a::Greek letter]], and a [[Category:Greek character]], but, on Main, I don't want to say all that|is neat]]
+
+
