@@ -47,6 +47,7 @@ for $i (split(/\n/,$cont)) {
 
 }
 
+unshift(@queries, "DELETE FROM forex.nadex_trans");
 write_file(join(";\n",@queries).";", "/tmp/nadex-queries.txt");
 system("mysql < /tmp/nadex-queries.txt");
 

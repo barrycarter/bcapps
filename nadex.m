@@ -7,15 +7,18 @@
 (* load NADEX data from bc-nadex-vol.pl output *)
 << /tmp/nadex.m.USDCAD
 
-(* load my positions; this file looks something like this:
+(**
+
+Load my positions; this file looks something like this:
 
 (* long FOREX positions I hold, 10K each *)
 mypos = Table[.9871+.0012*i,{i,0,19}];
 
 (* options I've already sold: {number, strike, price-i-sold-at} *)
+
 myoptpos = {{2, .9925, 18}, {8, .9975, 9.5}}
 
-*)
+**)
 
 << /home/barrycarter/usdcadpos.txt
 
@@ -137,6 +140,10 @@ cons[p0_] := Table[{totalprofit[s,p0] >= 0, n[s,expdate]>=0}, {s, strikes}]
 
 cashcons[p_] := Sum[n[a[[1]],a[[2]]] * (a[[3]]-101), {a,opttab[p]}] > - cash
 
+(* never sell in-money options *)
+
+consitm[p_] := Table[n[s,expdate]==0, {s,Select[strikes, #<=p&]}]
+
 (* variables we use [Mathematica needs these to Maximize] *)
 
 vars = Table[n[i,expdate], {i, strikes}]
@@ -145,7 +152,8 @@ vars = Table[n[i,expdate], {i, strikes}]
 
 premiums[p_] := Sum[n[a[[1]],a[[2]]] * (a[[3]]-2), {a,opttab[p]}]
 
-maxi[p_] := Maximize[premiums[p], {cons[p], cashcons[p]}, vars, Integers]
+maxi[p_] := Maximize[premiums[p], {cons[p], cashcons[p], consitm[p]}, 
+ vars, Integers]
 
 (* TODO: below is ugly, I should be able to use opttab directly *)
 
