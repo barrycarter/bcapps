@@ -7,6 +7,25 @@
 
 require "bclib.pl";
 
+# write to a mediawiki installation
+
+# obtain token
+
+($token) = cache_command("curl 'http://wiki.barrycarter.info/api.php?action=query&prop=info&intoken=edit&titles=Test%20Page&format=xml'", "age=3600");
+
+debug("TOKEN: $token");
+
+# write sans token
+
+($res) = cache_command("curl 'http://wiki.barrycarter.info/api.php?action=edit&title=Test&text=article%20content&token=%2B%5C'", "age=3600");
+
+debug($res);
+
+
+
+
+die "TESTING";
+
 # read EL ELM files
 
 $all = read_file("/home/barrycarter/BCGIT/EL/startmap.elm");

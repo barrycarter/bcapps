@@ -12,26 +12,39 @@
 # CASE TWO: [[foo!!bar|alt]]: add text "bar" (not "bar|alt") to page
 # "foo", return "alt" to calling page
 
+# NOTE: as of now, adding to non-main pages fails (but I'm ok w/ that)
+
+# TODO: pretty sure I can seriously improve coding here (entire program)
+
 require "bclib.pl";
 
+$pagename = "Main"; # hardcoded for now
 $all = read_file("sample-data/metamedia.txt");
 
-# in theory, I could just [[pagename!!page_content]] and parse that?
+# treat the whole page as addition to itself
+chomp($all);
+$all = "[[$pagename!!$all]]";
 
 # parse all [[foo]] and {{foo}} on page (I don't use {{foo}}, but it
 # needs to be protected
 
-# TODO: pretty sure I can seriously improve coding here (entire program)
-
 # TODO: this matches [[foo}} (which it shouldn't)
-while ($all=~s/(\[\[|\{\{)([^\[\]\{\}]*?)(\]\]|\}\})/parse_text($1,$2,$3)/iseg) {}
+while 
+  ($all=~s/(\[\[?|\{\{?)([^\[\]\{\}]*?)(\]\]?|\}\}?)/
+   parse_text($1,$2,$3)/iseg) {
+#  ($all=~s/(\[\[|\{\{)(.*?)(\]\]|\}\})/parse_text($1,$2,$3)/iseg) {
+  $round++;
+#  debug("ROUND $round: $all");
+}
+
+# debug("END: $all");
 
 # now replace <<$n>> and any <<s$n>> not already parsed
-$all=~s/<<s?(\d+)>>/$text[$1]/isg;
+# $all=~s/<<s?(\d+)>>/$text[$1]/isg;
 
 # and <<p$n>>
 # TODO: everything
-$all=~s/<<p(\d+)>>/convert($text[$1])/iseg;
+# $all=~s/<<p(\d+)>>/convert($text[$1])/iseg;
 
 # do the same for all additions to all pages
 for $i (sort keys %add) {
@@ -43,10 +56,30 @@ for $i (sort keys %add) {
     $j=~s/<<p(\d+)>>/convert($text[$1])/iseg;
   }
 
+  # and reset @{$add{$i}}
+  # TODO: modify list directly, no middle step
+  @{$add{$i}} = @add;
+
   debug("ADD($i)", @add);
 }
 
-debug("ALL: $all");
+# db queries to update table
+# delete anything this page created previously
+push(@query, "DELETE FROM metatab WHERE creator='$pagename'");
+
+# TODO: could combine w/ above?
+for $i (sort keys %add) {
+  for $j (@{$add{$i}}) {
+    push(@query, "INSERT INTO metatab (creator, info) VALUES
+    ('$pagename', '$j')");
+  }
+}
+
+debug("QUERYS",@query);
+
+# TODO: rebuild all pages that need them AFTER running queries above
+
+
 
 sub parse_text {
   my($stag, $text, $etag) = @_;
@@ -78,7 +111,7 @@ sub parse_text {
   }
 
   # case 1
-  if ($text=~/^(.*?)\!\!(.*?)$/) {
+  if ($text=~/^(.*?)\!\!(.*?)$/s) {
     my($page, $info) = ($1,$2);
 
     # if $info contains any <<s$n>>, parse them immediately, but keep
