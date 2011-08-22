@@ -1,0 +1,186 @@
+# annotations for Peanuts
+# TODO: calendar
+# TODO: when does Charlie Brown first speak?
+# TODO: categories (in addition to those below):
+#  Lucy counts
+#  Violet-Lucy equivalence?
+
+# Key Strips from first book below (1950-1952 incl)
+
+* 2 Oct 1950: [[2 Oct 1950!!first appearance of [[first_appearance::Charlie Brown]], [[first_appearance::Shermy]], and [[first_appearance::Patty]]. Only [[first_named::Charlie Brown]] is named here, and only [[first_speech::Shermy]] speaks.]]
+
+* 3 Oct 1950: [[3 Oct 1950!![[first_speech::Patty]] speaks for the first time, singing {{wp|What Are Little Girls Made Of?}}, and socking [[has_character::Shermy]] in the eye]]
+
+* 4 Oct 1950: [[4 Oct 1950!!First strip with [[category::Speechless|no speech]]. First appearance of [[first_appearance::Snoopy]]: [[has_character::Patty]] pour water on his head, thinking he's a flower]]
+
+* 7 Oct 1950: [[7 Oct 1950!![[first_speech::Charlie Brown]] speaks for the first time, suggesting to [[has_character::Shermy]] that they ignore a 'Watch Out For Children' sign, since no children appear to be coming to play with them.]]
+
+* 16 Oct 1950: [[16 Oct 1950!![[has_character::Snoopy]] tries (and fails) to jump through a hoop (held by [[has_character::Charlie Brown]]) for the first time. The month/day is printed on the last panel of the strip for the first time (unless this is something the book publisher, and not Schulz, did?)]]
+
+* 25 Oct 1950: [[25 Oct 1950!![[has_character::Snoopy]] snoops/eavesdrops on [[has_character::Patty]]'s phone call (maybe that's how he got his name?). A similar gag is used in ???]]
+
+* 26 Oct 1950: [[26 Oct 1950!![[first_named::Patty]] is named, when [[has_character::Shermy]] asks if she's home]]
+
+* 30 Oct 1950: [[30 Oct 1950!![[has_character::Patty]] and [[has_character::Shermy]] aren't sure if it's [[has_character::Charlie Brown]]'s birthday. [[category::Birthdays|]]]]
+
+* 3 Nov 1950: [[3 Nov 1950!![[has_character::Charlie Brown]] states that he's 4 years old. [[category::Age|]]]]
+
+* 7 Nov 1950: [[7 Nov 1950!![[has_character::Charlie Brown]]'s mother calls him, the first time we hear an adult voice (from "off-stage")]]
+
+* 9 Nov 1950: [[9 Nov 1950!![[has_character::Patty]] speculates that [[has_character::Charlie Brown]] will "live for another 60 years", an amazingly accurate prediction (Peanuts lived for 50+ years after this strip was printed)]]
+
+* 10 Nov 1950: [[10 Nov 1950!![[first_named::Snoopy]] is named]]
+
+* 22 Nov 1950: [[22 Nov 1950!!We see [[has_character::Charlie Brown]] traipsing off to school, even though the [[contradicts::18 Sep 1951]] strip shows that [[18 Sep 1951!![[has_character::Charlie Brown]] is too young to go to school]]]]
+
+* 27 Nov 1950: [[27 Nov 1950!![[has_character::Charlie Brown]] says [[has_character::Snoopy]] can "hear a candy wrapper a mile off". On [[similar_to::15 Nov 1953]], we learn that [[15 Nov 1953||[[has_character::Snoopy]] can hear a candy wrapper opening ''5 miles'' away! (unless Snoopy's been cheating and following [[has_character::Charlie Brown]] and [[has_character::Shermy]], which might also explain how he could run 5 miles in a fraction of a minute)]]]]
+
+* 18 Dec 1950: [[18 Dec 1950!![[first_named::Shermy]] is named.]]
+
+* 21 Dec 1950: [[21 Dec 1950!!Remark: [[has_character::Patty]] must've had some idea what time it was, since [[has_character::Charlie Brown]]'s arm position could indicate either 10:15 or 2:50]]
+
+* 7 Feb 1951: [[7 Feb 1951!!First appearance of [[first_appearance::Violet]]]]
+
+* 16 Feb 1951: [[16 Feb 1951!!First mention of {{wp|Beethoven}}. Notably, this occurs ''before'' [[Schroeder]] is introduced]]
+
+* 28 Mar 1951: [[28 Mar 1951!![[has_character::Violet]] counts in the same way Lucy does. ???]]
+
+* 9 Apr 1951: [[9 Apr 1951!![[has_character::Charlie Brown]] hides behind a tree while playing Hide n Seek, but [[has_character::Patty]] spots him, because his round head and ears stick out ???CONTRALATER???]]
+
+* 18 May 1951: [[18 May 1951!![[has_character::Charlie Brown]] [[category::Self-Reference|self-referentially]] addresses the audience, breaking the {{wp|fourth_wall|"third wall"}}]]
+
+* 30 May 1951: [[30 May 1951!!First appearance of [[first_appearance::Schroeder]]]]
+
+* 5 Jun 1951: [[5 Jun 1951!!Remark: [[has_character::Violet]] wonders if [[has_character::Schroeder]] will ask her on a date when he grows up, demonstrating a remarkarble similarity to the yet-to-be-introduced [[Lucy]], who will later have a crush on Schroeder]]
+
+* 22 Jun 1951: [[22 Jun 1951!!There are several previous strips where [[has_character::Charlie Brown]] jokingly insults someone, and the last panels shows that person chasing Charlie Brown. This is the first reversal, as Charlie Brown chases [[has_character::Patty]] for insulting ''him'']]
+
+* 11 Jul 1951: [[11 Jul 1951!!We see [[first_speech::Schroeder]] speak for the first time]]
+
+* 4 Aug 1951: [[4 Aug 1951!![[has_character::Snoopy]] pretends his ears are wings, so that he can remain in [[has_character::Violet]]'s birdbath, possibly the first [[category::Snoopy imitation]]]]
+
+* 16 Aug 1951: [[16 Aug 1951!![[has_character::Charlie Brown]] is called a "blockhead" for the first time (by [[has_character::Violet]])]]
+
+* 28 Aug 1951: [[28 Aug 1951!![[has_character::Violet]] and [[has_character::Charlie Brown]] celebrate [[has_character::Snoopy]]'s birthday. [[category::Birthdays|]]]]
+
+* 11 Sep 1951: [[11 Sep 1951!![[has_character::Snoopy]] growls and roars (like a lion?), startling [[has_character::Violet]], but not [[has_character::Charlie Brown]], who explains that Snoopy's been "hanging around the zoo lately". [[category::Snoopy imitation|]]]]
+
+* 24 Sep 1951: [[24 Sep 1951!![[has_character::Schroeder]] [[category::Schroeder plays piano|plays the toy piano]] for the first time, brilliantly, embarrassing his would-be teacher, [[has_character::Charlie Brown]]]]
+
+* 14 Nov 1951: [[14 Nov 1951!![[has_character::Violet]] holds a football for [[has_character::Charlie Brown]] to placekick, but gets scared at the last minute and lets go, making Charlie Brown fall down. This first instance of the [[category::football gag]] is special. Normally, [[Lucy]] holds the ball, and pulls it away out of malice, not fear]]
+
+* 26 Nov 1951: [[26 Nov 1951!![[has_character::Schroeder]] first places a bust of {{wp|Beethoveen}} on his piano.]]
+
+* 18 Dec 1951: [[18 Dec 1951!![[has_character::Charlie Brown]] makes a note to buy [[has_character::Violet]] a jumping rope. Jumping ropes would later become far more associated with the yet-to-be-introduced [[Lucy]]]]
+
+* 3 Jan 1952: [[3 Jan 1952!![[has_character::Charlie Brown]] is disappointed that his sled doesn't slide very far on a small hill. ???]]
+
+* 6 Jan 1952: [[6 Jan 1952!!first [[category::Sunday strip]]]]
+
+* 14 Jan 1952: [[14 Jan 1952!!We learn that [[has_character::Charlie Brown]] can read.]]
+
+* 23 Jan 1952: [[23 Jan 1952!!Schulz prints his signature in the same fancy font he uses for the name of the piece [[has_character::Schroeder]] is playing. He does the same thing on [[similar_to::24 Jun 1952]], when [[24 Jun 1952!![[has_character::Schroeder]] plays {wp|Eine Kleine Nachtmusik}]]]]
+
+* 30 Jan 1952: [[30 Jan 1952!!Schroeder hockey stick stuff???]]
+
+* 25 Feb 1952: [[25 Feb 1952!!First mention that [[has_character::Charlie Brown]]'s father owns a barber shop]]
+
+* 29 Feb 1952: [[???rocking chair contradiction]]
+
+* 3 Mar 1952: [[3 Mar 1952!!In her first appearance, [[first_appearance::Lucy]] is jumping rope, but forgets what comes after "one". [[has_character::Charlie Brown]] tells her, but she then gets stuck on "two". [[category::Lucy counting]] things is a frequent theme in the early strips]]
+
+* 10 Mar 1952: [[???snoopy begs contradiction]]
+
+* 21 Mar 1952: [[21 Mar 1952!![[has_character::Charlie Brown]] flies a [[category::kite-flying|kite]] for the first time. Since he flies it low (for fear of airplanes, as he tells [[has_character::Patty]]), it does not get eaten by a tree or otherwise destroyed]]
+
+* 4 Apr 1952: [[4 Apr 1952!![[has_character::Snoopy]]'s first dream sequence]]
+
+* 14 May 1952: [[14 May 1952!!Schulz splits each of 4 panels in two, resulting in Peanuts' first [[category::8-panels|8-panel strip]]]]
+
+* 16 May 1952: [[16 May 1952!![[has_character::Charlie Brown]] wears a bunny shirt, instead of his standard striped shirt]]
+
+* 27 May 1952: [[27 May 1952!![[has_character::Snoopy]]'s first thought balloon]]
+
+* 15 Jun 1952: [[15 Jun 1952!!Remark: [[has_character::Charlie Brown]] misquotes the phrase "music has charms to soothe the savage breast" as "music soothes the savage beast"]]
+
+* 14 Jul 1952: [[14 Jul 1952!!First mention of [[first_mention::Linus]]]]
+
+* 14 Aug 1952: [[14 Aug 1952!!We learn that [[has_character::Schroeder]] [[Schroeder!!lives at [[address:=1770 James Street]]]]]]
+
+* 17 Aug 1952: [[17 Aug 1952!![[has_character::Lucy]] beats [[has_character::Charlie Brown]] at Checkers for the first time]]
+
+* 3 Sep 1952: [[3 Sep 1952!![[has_character::Snoopy]] [[category::Snoopy imitation|imitates]] {{wp|Beethoven}}. ???REPEAT]]
+
+* 8 Sep 1952: [[8 Sep 1952!!First appearance of a television set, though we see an antenna/aerial as early as [[19 Nov 1951]]]]
+
+* 19 Sep 1952: [[19 Sep 1952!!First appearance of [[first_appearance::Linus]]]]
+
+* 22 Sep 1952: [[22 Sep 1952!![[first_named::Linus]] is named]]
+
+* 1 Oct 1952: [[1 Oct 1952!![[has_character::Schroeder]] [[category::Self-Reference|self-referentially]] wonders if he should transfer to another comic strip]]
+
+* 16 Nov 1952: [[16 Nov 1952!![[has_character::Lucy]] [[category::football gag|pulls the football away]] from [[has_character::Charlie Brown]] for the first time, fearing it might get dirty. She then holds the football "real tight", making Charlie Brown bounce off it and fall over. In almost all future versions, Lucy will pull the football away out of malice]]
+
+* 19 Nov 1952: [[19 Nov 1952!![[has_character::Lucy]] beats [[has_character::Charlie Brown]] at Checkers for the 2023rd straight time. It's impressive Lucy can count this high, given...???. It's possible she's just making up this number, but Charlie Brown doesn't appear to contest the figure. This number rises to 3000 [[21 Nov 1952|2 days later]]; even though Peanuts isn't "real-time", this still seems like a large increase.]]
+
+* 29 Nov 1952: [[29 Nov 1952!!Saturday off vs 1630???]]
+
+# key strips from 1953-1954
+
+* 4 Jan 1953: [[4 Jan 1953!![[has_character::Snoopy]] begs in this strip, but ???]]
+
+* 16 Mar 1953: ???hand holding repeat (cross street)
+
+* 4 Apr 1953: [[4 Apr 1953!!It's for the sake of a joke, but we learn [[has_character::Violet]]'s last name, [[Violet!!last name is Gray|Gray]]. "Tattletale" gray = ???]]
+
+* 1 May 1953: [[1 May 1953!![[has_character::Schroeder]] gives his [[category::Age|age]] as 3]]
+
+* 12 May 1953: [[12 May 1953!!This is the first time we see a birdhouse on [[mentioned::Snoopy]]'s doghouse, something that becomes a familiar fixture once [[Woodstock]] is introduced]]
+
+* 14 May 1953: [[14 May 1953!![[has_character::Charlie Brown]] [[category:Self-Reference|self-referentially]] thinks of drawing a comic strip]]
+
+* 18 May 1953: ???ball owner gag
+
+* 19 May 1953: ???sprinkler gag repeat
+
+* 21 May 1953: [[21 May 1953!![[has_character::Shermy]] and [[has_character::Schroeder]] (and possibly others) build [[has_character::Charlie Brown]] a pitchers mound. This is the first appearance of the pitchers mound.]]
+
+* 30 May 1953: [[30 May 1953!!This is one of the first times we see [[has_character::Lucy]] express her crush for [[has_character::Schroeder]]]]
+
+* 5 Jun 1953: ??? come out and play contradiction
+
+* 21 Jun 1953: [[21 Jun 1953!![[has_character::Linus]] puts one block on top of another, starting his long career of building things (first out of blocks, and later out of wood/etc)]]
+
+* 30 Jun 1953: [[30 Jun 1953!![[has_character::Linus]] stands up for the first time]]
+
+* 3 Aug 1953: [[3 Aug 1953!![[has_character::Charlie Brown]] encourages [[has_character::Lucy]] to look at the sun to temporarily blind her. It's unlikely Schulz would've drawn this (or similar cartoons later) if he'd realized that looking at the sun can cause permanent eye damage]]
+
+* 21 Aug 1953: [[21 Aug 1953!![[has_character::Lucy]] beats [[has_character::Charlie Brown]] at checkers for the 6000th time]]
+
+* 2 Sep 1953: [[2 Sep 1953!!This is the first time we see [[has_character::Lucy]] counting in the right order. She usually jumbles numbers when counting]]
+
+* 27 Sep 1953: [[27 Sep 1953!!In this [[category::Speechless|no-dialogue]] strip, [[has_character::Snoopy]] ends up 'klunk'ing his back when sliding down a playground slide. [[has_character::Lucy]] did something similar on her first attempt... ???]]
+
+* 30 Sep 1953: [[30 Sep 1953!![[has_character::Lucy]] estimates to [[has_character::Charlie Brown]] that there are 10 stars in the night sky, but she's counted many more previously ???]]
+
+* 3 Oct 1953: [[3 Oct 1953!![[has_character::Lucy]] thinks that [[has_character::Charlie Brown]] is saying numbers in the right order when he gives the signals "1,6,3,2,5". This joke would've worked better before [[contradicts::2 Sep 1953]], when we learn that Lucy can count numbers in the right order]]
+
+* 7 Oct 1953: [[7 Oct 1953!!This [[category::Speechless|wordless]] strip is the first time we see [[has_character::Charlie Brown]] lose articles of clothing (a shoe and a sock in this case) when kicking a football]]
+
+* 22 Oct 1953: [[22 Oct 1953!!First [[category::8-Panel|8 panel]] strip]]
+
+* 1 Nov 1953: [[1 Nov 1953!![[has_character::Lucy]] beats [[has_character::Charlie Brown]] at checkers for the 7000th time]]
+
+* 5 Nov 1953: [[5 Nov 1953!![[has_character::Lucy]]'s mother speaks to Lucy, one of the few times we hear a grown-up voice (always "off-stage"). This may also be the first reference to Lucy's mother-- she always refers only to her father previously.]]
+
+===================
+
+Social Trends page
+
+* 19 Nov 1951:: [[19 Nov 1951!![[has_character::Patty]] and [[has_character::Charlie Brown]] note that even [[Snoopy]] has a television set, demonstrating the rapid growth of television's popularity]]
+
+* 22 Jun 1952: [[22 Jun 1952!![[has_character::Charlie Brown]] comments on the "beautiful gory layout" of comic books, which eventually led to the {{wp|Comics Code}}]]
+
+??? PRE 12 AUG 1952: traffic signals have only two colors
+
+============

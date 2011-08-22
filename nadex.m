@@ -5,7 +5,9 @@
 (* this stuff changes each time *)
 
 (* load NADEX data from bc-nadex-vol.pl output *)
-<< /tmp/nadex.m.USDCAD
+(* <h>no, there are no parities other than USDCAD and USDJPY!</h> *)
+If[$CommandLine[[4]] == "cad", Get["/tmp/nadex.m.USDCAD"],
+ Get["/tmp/nadex.m.USDJPY"]]
 
 (**
 
@@ -20,7 +22,8 @@ myoptpos = {{2, .9925, 18}, {8, .9975, 9.5}}
 
 **)
 
-<< /home/barrycarter/usdcadpos.txt
+If[$CommandLine[[4]] == "cad", Get["/home/barrycarter/usdcadpos.txt"],
+ Get["/home/barrycarter/usdjpypos.txt"]]
 
 (* and cash. Sample file: "cash = 123" *)
 
@@ -28,7 +31,7 @@ myoptpos = {{2, .9925, 18}, {8, .9975, 9.5}}
 
 (* select options w/ given expiration time/date *)
 (* TODO: selling options w/ different expiries may be useful! *)
-expdate = AbsoluteTime[{2011,8,19,19}, TimeZone->0]
+expdate = AbsoluteTime[{2011,8,26,19}, TimeZone->0]
 
 (* changing stuff stops here *)
 

@@ -19,7 +19,7 @@
 require "bclib.pl";
 
 $pagename = "Main"; # hardcoded for now
-$all = read_file("sample-data/metamedia.txt");
+$all = read_file("sample-data/anno1.txt");
 
 # treat the whole page as addition to itself
 chomp($all);
@@ -70,12 +70,32 @@ push(@query, "DELETE FROM metatab WHERE creator='$pagename'");
 # TODO: could combine w/ above?
 for $i (sort keys %add) {
   for $j (@{$add{$i}}) {
-    push(@query, "INSERT INTO metatab (creator, info) VALUES
-    ('$pagename', '$j')");
+    # convert ' to '' for sqlite3
+    $j=~s/\'/''/isg;
+    push(@query, "INSERT INTO metatab (creator, page, info) VALUES
+    ('$pagename', '$i', '$j')");
   }
 }
 
-debug("QUERYS",@query);
+# TODO: make this db more permanent
+unshift(@query, "BEGIN");
+push(@query,"COMMIT;");
+$querys = join(";\n", @query);
+write_file($querys, "/tmp/bcmm.txt");
+system("sqlite3 /tmp/wikithing.db < /tmp/bcmm.txt");
+
+# query all pages that this page affected
+for $i (sort keys %add) {
+  push(@affected, "'$i'");
+}
+
+# TODO: := not working right, probably minor fix
+
+$affected = join(", ", @affected);
+
+$query="SELECT * FROM metatab WHERE page IN ($affected) ORDER BY page,creator";
+
+debug("QUERY: $query");
 
 # TODO: rebuild all pages that need them AFTER running queries above
 
@@ -145,5 +165,10 @@ sub convert {
   return $text;
 }
 
+=item schema
 
+Schema for metatab table
 
+CREATE TABLE metatab (creator, page, info);
+
+=end

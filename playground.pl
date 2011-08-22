@@ -9,15 +9,23 @@ require "bclib.pl";
 
 # write to a mediawiki installation
 
+# authenticate
+$pw = read_file("/home/barrycarter/bc-wiki-pw.txt");
+chomp($pw);
+
+# ($token) = cache_command("curl -b /tmp/curlcook.txt -c /tmp/curlcook.txt -H 'Cookie: my_wiki_session=a696f041bcc497ee4cfa201dc4c54e65' http://wiki.barrycarter.info/api.php -d 'action=login&lgname=Barry+Carter&lgpassword=$pw&lgtoken=fadd1feaf1c21187769619ec1e2fa0f9&format=xml'", "age=3600");
+
+($token) = cache_command("curl -b /tmp/curlcook.txt -c /tmp/curlcook.txt http://wiki.barrycarter.info/api.php -d 'action=login&lgname=Barry+Carter&lgpassword=$pw&lgtoken=5df347b68a72fd2185010321debac1b1&format=xml'", "age=3600");
+
 # obtain token
 
-($token) = cache_command("curl 'http://wiki.barrycarter.info/api.php?action=query&prop=info&intoken=edit&titles=Test%20Page&format=xml'", "age=3600");
+($token) = cache_command("curl -b /tmp/curlcook.txt -c /tmp/curlcook.txt 'http://wiki.barrycarter.info/api.php?action=query&prop=info&intoken=edit&titles=Test%20Page&format=xml'", "age=3600");
 
 debug("TOKEN: $token");
 
-# write sans token
+# write with trivial token
 
-($res) = cache_command("curl 'http://wiki.barrycarter.info/api.php?action=edit&title=Test&text=article%20content&token=%2B%5C'", "age=3600");
+($res) = cache_command("curl -b /tmp/curlcook.txt -c /tmp/curlcook.txt 'http://wiki.barrycarter.info/api.php' -d 'action=edit&title=Test&text=article%20content&token=424f1be5e8cb9bdd008fc55b5f337758%2B%5C'", "age=3600");
 
 debug($res);
 
