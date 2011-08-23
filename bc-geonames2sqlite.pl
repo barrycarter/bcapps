@@ -61,9 +61,9 @@ while (<A>) {
   # for ADM1-4 and PCL, record full path
   if ($featurecode eq "ADM4" && $admin4code ne $geonameid && $admin4code ne "") {
     $ADM4{$countrycode}{$admin1code}{$admin2code}{$admin3code}{$admin4code} = $geonameid;
-    debug("$countrycode/$admin1code/$admin2code/$admin3code/$admin4code: $geonameid");
+#    debug("$countrycode/$admin1code/$admin2code/$admin3code/$admin4code: $geonameid");
   } elsif ($featurecode eq "ADM3" && $admin3code ne $geonameid && $admin3code ne "") {
-    $ADM3{$countrycode}{$admin1code}{$admin2code}{$admin3code} = $geonameid;
+#    $ADM3{$countrycode}{$admin1code}{$admin2code}{$admin3code} = $geonameid;
     debug("$countrycode/$admin1code/$admin2code/$admin3code: $geonameid");
   } elsif ($featurecode eq "ADM2" && $admin2code ne $geonameid && $admin2code ne "") {
     $ADM2{$countrycode}{$admin1code}{$admin2code} = $geonameid;
@@ -125,6 +125,9 @@ open(A,"bzcat allCountries.txt.bz2|");
 while (<A>) {
   chomp($_);
 
+  $lines++;
+  if ($lines >= 100000) {die "TESTING";}
+
   ($geonameid, $name, $asciiname, $alternatenames, $latitude, $longitude,
    $featureclass, $featurecode, $countrycode, $cc2, $admin1code,
    $admin2code, $admin3code, $admin4code, $population, $elevation,
@@ -173,12 +176,23 @@ while (<A>) {
   $admin1new = $ADM1{$countrycode}{$admin1code};
   $admin0new = $ADM0{$countrycode};
 
+  # record "parent" only; much more efficient
+  # TODO: better ways to do this... Perl coalesce?
+  if ($admin4new) {$parent = $admin4new;} elsif
+    ($admin3new) {$parent = $admin3new;} elsif
+      ($admin2new) {$parent = $admin2new;} elsif
+	($admin1new) {$parent = $admin1new;} elsif
+	  ($admin0new) {$parent = $admin0new;} else {
+	    $parent = 0;
+	  }
+
+  # TODO: parent = 0 is probably an error
+
   # the geonames table must come first, because writing to
   # alternate_names mangles stuff
 
   print C join("\t", $geonameid, $asciiname, $latitude, $longitude,
-  $featurecode, $admin0new, $admin4new, $admin3new, $admin2new,
-  $admin1new, $population, $tz)."\n";
+  $featurecode, $parent, $population, $tz)."\n";
 
   # $name and $asciiname and $alternatenames are alt names
   for $i ($name,$asciiname,split(",",$alternatenames)) {
@@ -234,16 +248,13 @@ CREATE TABLE geonames (
  latitude INT,
  longitude INT,
  feature_code INT,
- country_code INT,
- admin4_code INT,
- admin3_code INT,
- admin2_code INT,
- admin1_code INT,
+ parent INT,
  population INT,
  timezone INT
 );
 
 CREATE INDEX i_feature_code ON geonames(feature_code);
+CREATE INDEX i_parent ON geonames(parent);
 .separator "\t"
 .import /var/tmp/geonames.out geonames
 
