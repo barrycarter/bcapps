@@ -126,7 +126,7 @@ while (<A>) {
   chomp($_);
 
   $lines++;
-  if ($lines >= 100000) {die "TESTING";}
+#  if ($lines >= 100000) {die "TESTING";}
 
   ($geonameid, $name, $asciiname, $alternatenames, $latitude, $longitude,
    $featureclass, $featurecode, $countrycode, $cc2, $admin1code,
