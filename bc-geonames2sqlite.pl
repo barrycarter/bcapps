@@ -23,6 +23,12 @@ use Text::Unidecode;
 use Math::Round;
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
+
+# this program takes time to run, so warn about missing files ASAP
+for $i ("admin1CodesASCII.txt", "countryInfo.txt", "allCountries.txt.bz2") {
+  unless (-f $i) {die "$i must exist in current directory";}
+}
+
 # these files are pretty important so using /var/tmp not /tmp
 open(B,">/var/tmp/altnames.out");
 open(C,">/var/tmp/geonames.out");
@@ -176,6 +182,8 @@ while (<A>) {
   $admin1new = $ADM1{$countrycode}{$admin1code};
   $admin0new = $ADM0{$countrycode};
 
+  debug("ADMINS: $admin4new $admin3new $admin2new $admin1new $admin0new");
+
   # record "parent" only; much more efficient
   # TODO: better ways to do this... Perl coalesce?
   if ($admin4new) {$parent = $admin4new;} elsif
@@ -185,6 +193,8 @@ while (<A>) {
 	  ($admin0new) {$parent = $admin0new;} else {
 	    $parent = 0;
 	  }
+
+  debug("PARENT: $parent");
 
   # TODO: parent = 0 is probably an error
 

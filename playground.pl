@@ -6,6 +6,36 @@
 # chunks are normally separated with 'die "TESTING";'
 
 require "bclib.pl";
+# starting to store all my private pws, etc, in a single file
+require "/home/barrycarter/bc-private.pl";
+
+($user, $pass) = ($geonames{user}, $geonames{pass});
+debug(%geonames);
+
+debug("USER: $user");
+
+# get alt names (shouldn't require login)
+
+$cmd = "curl 'http://www.geonames.org/servlet/geonames?srv=150&id=5551752&callback=getAlternateNames'";
+
+# this just sets cookie
+$cmd = qq%curl -b /tmp/cookies.txt -c /tmp/cookies.txt -e "http://www.geonames.org/login" -d "username=$user" -d "password=$pass" -d "rememberme=1" -d "srv=12" "http://www.geonames.org/servlet/geonames?"%;
+
+($out, $err, $res) = cache_command($cmd, "age=3600");
+
+# alt names get info: http://sws.geonames.org/5454711/about.rdf [but
+# not real time?]
+
+# now to modify it (this is state of NM, not city of Abq)
+$cmd = "curl -b /tmp/cookies.txt -c /tmp/cookies.txt 'http://www.geonames.org/servlet/geonames?srv=151&&alternateNameId=0&id=5481136&alternateName=Land+of+Enchantment&alternateNameLocale=en&isOfficialName=false&isShortName=false'";
+
+die "TESTING";
+
+($out, $err, $res) = cache_command($cmd, "age=3600");
+
+debug($out,$err,$res);
+
+die "TESTING";
 
 # write to a mediawiki installation
 
