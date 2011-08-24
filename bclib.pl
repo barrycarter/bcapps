@@ -1860,6 +1860,21 @@ sub wrap {
     return($string);
 }
 
+=item csv()
+
+Stolen directly from PERL FAQ 4.28 and thus undocumented.
+
+=cut
+
+sub csv {
+    my($str)=@_;
+    my(@res);
+    while ($str=~m/\"([^\"\\]*(\\.[^\"\\]*)*)\"|([^,]+)/g) {
+        push(@res, defined($1) ? $1:$3);
+    }
+    return(@res);
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 
 sub END {
