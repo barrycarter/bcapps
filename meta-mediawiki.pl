@@ -17,6 +17,7 @@
 # TODO: pretty sure I can seriously improve coding here (entire program)
 
 require "bclib.pl";
+require "/home/barrycarter/bc-private.pl";
 
 $pagename = "Main"; # hardcoded for now
 $all = read_file("sample-data/anno1.txt");
@@ -93,13 +94,30 @@ for $i (sort keys %add) {
 
 $affected = join(", ", @affected);
 
+# rebuild all affected pages
 $query="SELECT * FROM metatab WHERE page IN ($affected) ORDER BY page,creator";
+@res = sqlite3hashlist($query, "/tmp/wikithing.db");
 
-debug("QUERY: $query");
+debug("ABOUT TO WRITE");
 
-# TODO: rebuild all pages that need them AFTER running queries above
+for $i (@res) {
+  %hash = %{$i};
+  # add section to current page from source page
+  push (@{$page{$hash{page}}}, "From $hash{creator}: $hash{info}");
+}
 
+for $i (sort keys %page) {
+  # TODO: figure out why below happens and fix it
+  if ($i=~/^\s*$/) {next;}
+  $curpage = join("\n\n", @{$page{$i}});
 
+  debug("I: $i");
+  ($out, $err, $res) = 
+    write_wiki_page("http://wiki.barrycarter.info/api.php", $i, $curpage, "",
+		  $bcwiki{user}, $bcwiki{pass});
+
+  debug("$out/$err/$res");
+}
 
 sub parse_text {
   my($stag, $text, $etag) = @_;
