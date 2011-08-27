@@ -9,18 +9,30 @@
 push(@INC, "/usr/local/lib");
 require "bclib.pl";
 
+# HTTP header
+print "Content-type: text/html\n\n";
+
 # do everything in UTC
 delete($ENV{TZ});
 $now = time();
 
+# turn this into a "webapp" by using hostname as location
+if ($ENV{HTTP_HOST}=~/^(.*?)\.weather\..*$/) {
+  # sanitization occurs below
+  $city = $1;
+} else {
+  print "URL does not appear to have correct format\n";
+  exit(0);
+}
+
 # read the args as one big arg and find city
 # reason: bc-cityfind.pl interprets multiple args as multiple cities
-$city = join(" ",@ARGV);
+# $city = join(" ",@ARGV);
 
 # if purely numeric, assume lat/lon
-# TODO: improve this
+# TODO: improve this (also not working)
 if ($city=~/^([0-9\.\-]+)[^0-9\.\-]([0-9\.\-]+)$/) {
-  ($lat,$lon) = ($1,$2);
+  ($hash{latitude},$hash{longitude}) = ($1,$2);
   # <h>it took me 25+ years to use my first goto!</h>
   goto LAT;
 }
@@ -30,25 +42,6 @@ $city=~s/[^a-z]/./isg;
 debug("CITY: $city");
 $res = `bc-cityfind.pl '$city'`;
 chomp($res);
-
-=item commented_out
-
-# TODO: this is sample until I get this thing on bcinfo
-$res = "
-<response>
-<city>Albuquerque</city>
-<cityq>albuquerque</cityq>
-<country>United States</country>
-<geonameid>5454711</geonameid>
-<latitude>35.0844869067959</latitude>
-<longitude>-106.651138463684</longitude>
-<population>487378</population>
-<state>New Mexico</state>
-<tz>America/Denver</tz>
-</response>
-";
-
-=cut
 
 # not found?
 unless ($res) {print "Unable to find: $city\n"; exit(0);}
@@ -197,7 +190,7 @@ if ($hi!=$tempf) {$ext1=", and a heat index of $hi${DEG}F";}
 unless ($h{windspeed}=~/null/i) {
   $wind=wind($h{windspeed},$h{winddir},$h{gust});
   $wc=floor(.5+wc($tempf,1.1507784538*$h{windspeed}));
-  if ($wc<$tempf) {$ext2=", for a windchill factor of $wc${DEG}F";}
+  if ($wc<floor($tempf)) {$ext2=", for a windchill factor of $wc${DEG}F";}
 }
 
 $clouds=maxclouds(split(/\s+/,$h{cloudcover}));
