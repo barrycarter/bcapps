@@ -167,7 +167,10 @@ unless (blank($maxwindknots)) {
    $MAXWINDPHRASE=", the maximum wind speed was $maxwindmph mph";
 }
 
-$extrema="Over the past 24 hours ($observations observations), the high was $maxtempf${DEG}F ($maxtime), the low was $mintempf${DEG}F ($mintime)$MAXWINDPHRASE";
+$printmaxtempf = round($maxtempf);
+$printmintempf = round($mintempf);
+
+$extrema="Over the past 24 hours ($observations observations), the high was $printmaxtempf${DEG}F ($maxtime), the low was $printmintempf${DEG}F ($mintime)$MAXWINDPHRASE";
 
 $aa=join(", ",keys(%oldweather));
 
@@ -205,10 +208,12 @@ for $i (split(/\s+/,$h{weather})) {push(@k,parse_weather($i));}
 $weather=join(", ",@k);
 
 unless ($dewf=~/null/i) {
-  $DEWPOINTPHRASE=", with a dewpoint of $dewf${DEG}F, for a relative humidity of $rh%$ext1";
+  $printdewf = round($dewf);
+  $DEWPOINTPHRASE=", with a dewpoint of $printdewf${DEG}F, for a relative humidity of $rh%$ext1";
 }
 
-push(@out,"At $minago, it was $tempf${DEG}F$DEWPOINTPHRASE");
+$printtempf = round($tempf);
+push(@out,"At $minago, it was $printtempf${DEG}F$DEWPOINTPHRASE");
 
 unless (blank($clouds)) {push(@out,"Skies are $clouds");}
 unless (blank($weather)) {push(@out,"There's $weather");}
