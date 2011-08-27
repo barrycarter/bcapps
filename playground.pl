@@ -9,64 +9,9 @@ require "bclib.pl";
 # starting to store all my private pws, etc, in a single file
 require "/home/barrycarter/bc-private.pl";
 
-write_wiki_page("http://wiki.barrycarter.info/api.php", "Hello", "This is some new content", "Comment", $bcwiki{user}, $bcwiki{pass});
+die "TESTING";
 
-=item write_wiki_page($wiki, $page, $newcontent, $comment, $user="", $pass="")
-
-Replaces (or creates) page $page on mediawiki $wiki with $newcontent
-and comment $comment. Logs in as $user/$pass
-
-$wiki: API endpoint for mediawiki
-
-=cut
-
-sub write_wiki_page {
-  my($wiki, $page, $newcontent, $comment, $user, $pass)= @_;
-
-  # cookie file must be consistent, so I can cache
-  my($cookiefile) = "/tmp/".sha1_hex("$user-$wiki");
-
-  # authenticate to wiki (but cache, so not doing this constantly)
-
-  # get token and sessionid and cookie prefix
-  my($token) = cache_command("curl -b  $cookiefile -c $cookiefile '$wiki' -d 'action=login&lgname=$user&lgpassword=$pass&format=xml'", "age=3600");
-  # TODO: cleanup below, perhaps using hash
-  debug("TOKEN: $token");
-  $token=~/sessionid=\"(.*?)\"/;
-  my($session) = $1;
-  $token=~/cookieprefix=\"(.*?)\"/;
-  my($cookieprefix) = $1;
-  $token=~/token=\"(.*?)\"/;
-  $token = $1;
-
-  # and use it to login
-  my($log_res) = cache_command("curl -b $cookiefile -c $cookiefile '$wiki' -d 'action=login&lgname=$user&lgpassword=$pass&lgtoken=$token&format=xml'", "age=3600");
-
-  # now obtain token for page itself
-  # TODO: requesting tokens 1-page-at-a-time is probably bad
-  my($pagetoken) = cache_command("curl -b $cookiefile -c $cookiefile '$wiki?action=query&prop=info&intoken=edit&titles=$page&format=xml'", "age=3600");
-  debug("PAGE: $pagetoken");
-  $pagetoken=~/edittoken=\"(.*?)\"/;
-  $pagetoken = $1;
-  $pagetoken = urlencode($pagetoken);
-
-  # write newcontent to file (might be too long for command line)
-  my($tmpfile) = "$cookiefile.tmp";
-  # Could use multiple -d's to curl, but below is probably easier
-  write_file("action=edit&title=$page&text=$newcontent&comment=$comment&token=$pagetoken", $tmpfile);
-
-  # can't cache this command, but using cache_command to get vals
-  my($out, $err, $res) = cache_command("curl -b $cookiefile -c $cookiefile '$wiki' -d \@$tmpfile");
-
-  debug("$out/$err/$res");
-
-  debug("TOKEN: $token");
-}
-
-
-
-
-
+write_wiki_page("http://wiki.barrycarter.info/api.php", "Hello", "`date`", "Comment", $bcwiki{user}, $bcwiki{pass});
 
 die "TESTING";
 

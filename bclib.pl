@@ -1875,6 +1875,51 @@ sub csv {
     return(@res);
 }
 
+
+=item write_wiki_page($wiki, $page, $newcontent, $comment, $user="", $pass="")
+
+Replaces (or creates) page $page on mediawiki $wiki with $newcontent
+and comment $comment. Logs in as $user/$pass
+
+$wiki: API endpoint for mediawiki
+
+Returns whatever cache_command returns for the final edit call (not
+terribly useful, may change this)
+
+=cut
+
+sub write_wiki_page {
+  my($wiki, $page, $newcontent, $comment, $user, $pass)= @_;
+  my(%hash);
+
+  # cookie file must be consistent, so I can cache
+  my($cookiefile) = "/tmp/".sha1_hex("$user-$wiki");
+
+  # authenticate to wiki (but cache, so not doing this constantly)
+
+  # get token and sessionid and cookie prefix
+  my($out, $err, $res) = cache_command("curl -b  $cookiefile -c $cookiefile '$wiki' -d 'action=login&lgname=$user&lgpassword=$pass&format=xml'", "age=3600");
+  # hashify results
+  $out=~s/(\S+)=\"(.*?)\"/$hash{$1}=urlencode($2)/iseg;
+
+  # and use it to login
+  my($log_res) = cache_command("curl -b $cookiefile -c $cookiefile '$wiki' -d 'action=login&lgname=$user&lgpassword=$pass&lgtoken=$hash{token}&format=xml'", "age=3600");
+
+  # now obtain token for page itself
+  # TODO: requesting tokens 1-page-at-a-time is probably bad
+  my($out, $err, $res) = cache_command("curl -b $cookiefile -c $cookiefile '$wiki?action=query&prop=info&intoken=edit&titles=$page&format=xml'", "age=3600");
+  # hashify
+  $out=~s/(\S+)=\"(.*?)\"/$hash{$1}=urlencode($2)/iseg;
+
+  # write newcontent to file (might be too long for command line)
+  my($tmpfile) = "$cookiefile.tmp";
+  # Could use multiple -d's to curl, but below is probably easier
+  write_file("action=edit&title=$page&text=$newcontent&comment=$comment&token=$hash{edittoken}&format=xml", $tmpfile);
+
+  # can't cache this command, but using cache_command to get vals
+  return cache_command("curl -b $cookiefile -c $cookiefile '$wiki' -d \@$tmpfile");
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 
 sub END {
