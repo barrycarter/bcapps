@@ -9,8 +9,8 @@
 push(@INC, "/usr/local/lib");
 require "bclib.pl";
 
-# HTTP header
-print "Content-type: text/html\n\n";
+# HTTP header (plain text formats nicer, bizarrely)
+print "Content-type: text/plain\n\n";
 
 # do everything in UTC
 delete($ENV{TZ});
