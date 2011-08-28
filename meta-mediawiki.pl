@@ -113,10 +113,14 @@ for $i (sort keys %page) {
 
   debug("I: $i");
   ($out, $err, $res) = 
-    write_wiki_page("http://wiki.barrycarter.info/api.php", $i, $curpage, "",
-		  $bcwiki{user}, $bcwiki{pass});
+#    write_wiki_page("http://wiki.barrycarter.info/api.php", $i, $curpage, "",
+#		  $bcwiki{user}, $bcwiki{pass});
+
+    write_wiki_page("http://carterpeanuts.wikia.com/api.php", $i, $curpage, "",
+		  $wikia{user}, $wikia{pass});
 
   debug("$out/$err/$res");
+
 }
 
 sub parse_text {
