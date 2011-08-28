@@ -5,13 +5,16 @@ Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
 (* ellipses *)
 
-f[x_] = y /. Solve[x*x + y*y/2 == 4, y][[2,1]]
-Plot[f[x], {x,-2,2}, AspectRatio -> 3/4]
+f[x_] = y/. Solve[Sqrt[(x+1)^2 + y^2] + Sqrt[(x-1)^2 + y^2] == 5, y][[2,1]]
+Plot[f[x], {x,-6,6}, AspectRatio -> Fixed, AxesOrigin -> {0,0}]
 Integrate[f[x], {x,0,2}]
+g[x_, m_] = Min[m*(x-1), f[x]]
+Plot[g[x,2], {x,1,5/2}, AspectRatio -> Fixed, AxesOrigin -> {0,0}]
+Integrate[g[x,2], {x,1,5/2}]
+h[m_] = Simplify[Integrate[g[x,m], {x,1,5/2}], {m>0}]
+Solve[h[m] == x, m]
 
-g[x_] = Min[x, f[x]]
-
-Integrate[g[x], {x,0,2}]
+Integrate[g[x,ArcTan[theta]], {x,1,5/2}]
 
 
 
