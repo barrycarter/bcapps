@@ -1133,7 +1133,7 @@ sub matrixmult {
 }
 
 
-=item postition($object, $t=now, $options)
+=item position($object, $t=now, $options)
 
 Determine the position (right ascension and declination) of $object at
 time $t, using Hermite approximation. Requires
