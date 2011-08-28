@@ -3,6 +3,18 @@
 showit := Module[{}, 
 Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
+(* ellipses *)
+
+f[x_] = y /. Solve[x*x + y*y/2 == 4, y][[2,1]]
+Plot[f[x], {x,-2,2}, AspectRatio -> 3/4]
+Integrate[f[x], {x,0,2}]
+
+g[x_] = Min[x, f[x]]
+
+Integrate[g[x], {x,0,2}]
+
+
+
 (* Eternal Lands *)
 
 (* how much stuff do I have right now? ii = in inventory *)

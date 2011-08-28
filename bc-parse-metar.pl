@@ -12,8 +12,41 @@ require "bclib.pl";
 ($all, $arg) = cmdfile();
 debug("PROCESSING FILE: $arg");
 
-# temporarily for testing
-# defaults("keeptemp=1");
+# list of METAR weather abbrevs (TODO: put this somewhere better)
+
+%ABBREV=("BC" => lc("Patches"),
+	 "BL" => lc("Blowing"),
+	 "DR" => lc("Low Drifting"),
+	 "FZ" => lc("Supercooled/freezing"),
+	 "MI" => lc("Shallow"),
+	 "PR" => lc("Partial"),
+	 "SH" => lc("Showers"),
+	 "TS" => lc("Thunderstorm"),
+	 "BR" => lc("Mist"),
+	 "DS" => lc("Dust Storm"),
+	 "DU" => lc("Widespread Dust"),
+	 "DZ" => lc("Drizzle"),
+	 "FC" => lc("Funnel Cloud"),
+	 "FG" => lc("Fog"),
+	 "FU" => lc("Smoke"),
+	 "GR" => lc("Hail"),
+	 "GS" => lc("Small Hail/Snow Pellets"),
+	 "HZ" => lc("Haze"),
+	 "IC" => lc("Ice Crystals"),
+	 "PL" => lc("Ice Pellets"),
+	 "PO" => lc("Dust/Sand Whirls"),
+	 "PY" => lc("Spray"),
+	 "RA" => lc("Rain"),
+	 "SA" => lc("Sand"),
+	 "SG" => lc("Snow Grains"),
+	 "SN" => lc("Snow"),
+	 "SQ" => lc("Squall"),
+	 "SS" => lc("Sandstorm"),
+	 "UP" => lc("Unknown Precipitation (Automated Observations)"),
+	 "VA" => lc("Volcanic Ash")
+	);
+
+$abbrevs= lc(join("|",sort keys %ABBREV));
 
 # do this only after we've got the data (in case user used short path)
 chdir(tmpdir());
@@ -245,6 +278,7 @@ sub parse_metar {
 
     # signifigant weather
     if ($i=~/^([\+\-]?)($abbrevs|)($abbrevs)$/i) {
+      # TODO: this returns "-RA", need to return "light rain"
       push(@weather,$i);
       next;
     }

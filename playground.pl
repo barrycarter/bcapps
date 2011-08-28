@@ -9,6 +9,68 @@ require "bclib.pl";
 # starting to store all my private pws, etc, in a single file
 require "/home/barrycarter/bc-private.pl";
 
+=item orbital_elements_mars
+
+2455801.500000000 = A.D. 2011-Aug-28 00:00:00.0000 (CT)
+ EC= 9.347044661513308E-02 QR= 1.381233968224160E+00 IN= 1.848831171264561E+00
+ OM= 4.952474133890512E+01 W = 2.865779111208922E+02 Tp=  2455629.987808809150
+ N = 5.240542156642154E-01 MA= 8.988168683134815E+01 TA= 1.005334943873345E+02
+ A = 1.523650236296000E+00 AD= 1.666066504367840E+00 PR= 6.869518252872292E+02
+
+EC=Eccentricity,e
+QR=Periapsis distance,q(AU)
+IN=Inclination w.r.t xy-plane,i(degrees)
+OM=Longitude of Ascending Node,OMEGA,(degrees)
+W=Argument of Perifocus,w(degrees)
+Tp=Time of periapsis (Julian day number)
+N=Mean motion,n(degrees/day)
+MA=Mean anomaly,M(degrees)
+TA=True anomaly,nu(degrees)
+A=Semi-major axis,a(AU)
+AD=Apoapsis distance(AU)
+PR=Orbital period (day)
+
+=cut
+
+
+
+
+
+
+
+
+
+
+
+die "TESTING";
+
+debug(position("sun"));
+
+debug(radec2azel(10.4/15,9.7,35,-106));
+
+sub radec2azel {
+  my($ra, $dec, $lat, $lon, $time) = @_;
+  unless ($time) {$time=time();}
+
+  # convert ra/dec, lat to radians (not lon)
+  $ra *= $PI/12;
+  $dec *= $PI/180;
+  $lat *= $PI/180;
+
+  # determine local siderial time
+  my($lst) = gmst($time) + $lon/15;
+  debug("LST: $lst");
+  # determine 'hour angle' (time since last culmination?) in radians
+  my($ha) = $lst*$PI/12-$ra;
+  debug("HA: $ha");
+  # and now azimuth and elevation
+  my($az)=atan2(-sin($ha)*cos($dec),cos($lat)*sin($dec)-sin($lat)*cos($dec)*cos($ha));
+  my($el)=asin(sin($lat)*sin($dec)+cos($lat)*cos($dec)*cos($ha));
+
+  # convert back to degrees
+  return ($az*180/$PI,$el*180/$PI);
+}
+
 die "TESTING";
 
 write_wiki_page("http://wiki.barrycarter.info/api.php", "Hello", "`date`", "Comment", $bcwiki{user}, $bcwiki{pass});

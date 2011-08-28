@@ -4,7 +4,7 @@
 # weather and more
 # --nowrap: don't wordwrap the result
 
-# TODO: roudn off F temperatures, using decimals is silly
+# TODO: improve this when data is unavailable
 
 push(@INC, "/usr/local/lib");
 require "bclib.pl";
@@ -29,10 +29,12 @@ if ($ENV{HTTP_HOST}=~/^(.*?)\.weather\..*$/) {
 # reason: bc-cityfind.pl interprets multiple args as multiple cities
 # $city = join(" ",@ARGV);
 
-# if purely numeric, assume lat/lon
-# TODO: improve this (also not working)
-if ($city=~/^([0-9\.\-]+)[^0-9\.\-]([0-9\.\-]+)$/) {
+# if numeric, assume lat/lon (allow x as start, since "-..." won't resolve)
+if ($city=~/^x?([0-9\.\-]+)[^0-9\.\-]([0-9\.\-]+)$/) {
   ($hash{latitude},$hash{longitude}) = ($1,$2);
+  $hash{city} = "Latitude $hash{latitude}";
+  $hash{state} = "Longitude $hash{longitude}";
+  $hash{country} = "Earth";
   # <h>it took me 25+ years to use my first goto!</h>
   goto LAT;
 }
