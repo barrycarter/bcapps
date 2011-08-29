@@ -6,17 +6,18 @@ Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 (* an ellipse w/ semimajor axis a, periapsis qr, apoapsis ad, NE quadrant *)
 
 y[x_, a_, qr_] = y /.
- Solve[{Sqrt[(x+a)^2 + y^2] + Sqrt[(x-a)^2 + y^2] == 2*a + 2*qr}, {y}][[2,1]]
+ Solve[{Sqrt[(x+a-qr)^2 + y^2] + 
+        Sqrt[(x-a+qr)^2 + y^2] == 2*a}, {y}][[2,1]]
 
 Plot[y[x,3,2],{x,-5,5}]
 
 (* tti = thing to integrate *)
 
-tti[x_, a_, qr_, theta_] = Min[(x-a)*Tan[theta], y[x, a, qr]]
+tti[x_, a_, qr_, theta_] = Min[(x-(a-qr))*Tan[theta], y[x, a, qr]]
 
-Plot[tti[x,3,2, 60 Degree],{x,3,5}]
+Plot[tti[x,3,2, 60 Degree],{x,0,6}]
 
-area[a_, qr_, theta_] = Integrate[tti[x,a,qr,theta], {x,a,a+qr}, 
+area[a_, qr_, theta_] = Integrate[tti[x,a,qr,theta], {x,a-qr,a}, 
  Assumptions -> {0 < theta < Pi/2, a>0, qr>0, Member[theta, Reals], 
  Member[a, Reals], Member[qr, Reals]}]
 
@@ -37,13 +38,15 @@ Integrate[Min[y[x,a,3], (x-a)*2], {x,a,a+3}]
 Integrate[y[x,a,qr], {x,x1,x2}]
 
 sliver[a_, qr_, x1_] = 
-Integrate[y[x,a,qr], {x,x1,a+qr}, Assumptions -> {a>0, qr>0, x1>0, a+qr > x1}]
+Integrate[y[x,a,qr], {x,x1,a}, Assumptions -> {a>0, qr>0, x1>0, a > x1}]
 
-meetpt[a_, qr_, m_] = x /. Solve[y[x,a,qr] == m*(x-a), x][[2]]
-
-
+meetpt[a_, qr_, m_] = x /. Solve[y[x,a,qr] == m*(x-(a-qr)), x][[2]]
 
 sliver[a, qr, meetpt[a,qr,m]]
+
+tti[x, 3.870991416593402/10, 3.075015900415988/10, theta]
+
+sliver[1,qr,m*qr]
 
 
 (* area at angle theta from focus [not center] *)
