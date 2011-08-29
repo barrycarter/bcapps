@@ -15,6 +15,9 @@ use Statistics::Distributions qw(uprob udistr);
 use Math::Round;
 require JSON;
 
+# include sublibs
+require "bc-astro-lib.pl";
+
 # HACK: defining constants here is probably bad
 $PI = 4.*atan(1);
 $DEGRAD=$PI/180; # degrees to radians

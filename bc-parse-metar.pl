@@ -72,6 +72,9 @@ for $i (split("\n", $all)) {
 
   debug("LINE: $i");
 
+  # skip lines with NIL= (but those w/ just NIL)
+  if ($i=~/NIL=/) {next;}
+
   # parse METAR
   %ac=parse_metar($i);
 

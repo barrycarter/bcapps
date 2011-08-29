@@ -12,6 +12,41 @@ require "bclib.pl";
 # HTTP header (plain text formats nicer, bizarrely)
 print "Content-type: text/plain\n\n";
 
+# list of METAR weather abbrevs (TODO: put this somewhere better, and
+# non-redundant)
+
+%ABBREV=("BC" => lc("Patches"),
+	 "BL" => lc("Blowing"),
+	 "DR" => lc("Low Drifting"),
+	 "FZ" => lc("Supercooled/freezing"),
+	 "MI" => lc("Shallow"),
+	 "PR" => lc("Partial"),
+	 "SH" => lc("Showers"),
+	 "TS" => lc("Thunderstorm"),
+	 "BR" => lc("Mist"),
+	 "DS" => lc("Dust Storm"),
+	 "DU" => lc("Widespread Dust"),
+	 "DZ" => lc("Drizzle"),
+	 "FC" => lc("Funnel Cloud"),
+	 "FG" => lc("Fog"),
+	 "FU" => lc("Smoke"),
+	 "GR" => lc("Hail"),
+	 "GS" => lc("Small Hail/Snow Pellets"),
+	 "HZ" => lc("Haze"),
+	 "IC" => lc("Ice Crystals"),
+	 "PL" => lc("Ice Pellets"),
+	 "PO" => lc("Dust/Sand Whirls"),
+	 "PY" => lc("Spray"),
+	 "RA" => lc("Rain"),
+	 "SA" => lc("Sand"),
+	 "SG" => lc("Snow Grains"),
+	 "SN" => lc("Snow"),
+	 "SQ" => lc("Squall"),
+	 "SS" => lc("Sandstorm"),
+	 "UP" => lc("Unknown Precipitation (Automated Observations)"),
+	 "VA" => lc("Volcanic Ash")
+	);
+
 # do everything in UTC
 delete($ENV{TZ});
 $now = time();
@@ -258,4 +293,35 @@ sub easteregg {
   exit(-1);
 }
 
+=item parse_weather($abbrev)
+
+Given an abbreviation for a type of weather (from %ABBREV), return the
+full form of that weather.
+
+Essentially a trivial wrapper around the %ABBREV hash.
+
+PEDANTIC: this returns +FC as "heavy funnel cloud"; NWS calls it "tornado"
+
+=cut
+
+sub parse_weather {
+  my($abbrev) = @_;
+  my(@res);
+
+  # + and - indicate heavy/light conditions
+  if ($abbrev=~s/^\+//) {push(@res,"heavy");}
+  if ($abbrev=~s/^\-//) {push(@res,"light");}
+
+  # cases like SHRA meaning "showers of rain", then regular two
+  # letter, then unknown
+    if ($abbrev=~/^(..)(..)$/) {
+    push(@res,"$ABBREV{$1} $ABBREV{$2}");
+  } elsif ($abbrev=~/^(..)$/) {
+    push(@res,"$ABBREV{$1}");
+  } else {
+    push(@res,"UNKNOWN: $abbrev");
+  }
+
+  return(join(" ",@res));
+}
 

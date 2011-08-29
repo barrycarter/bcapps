@@ -32,21 +32,17 @@ PR=Orbital period (day)
 
 =cut
 
-
-
-
-
-
-
-
-
-
-
-die "TESTING";
-
 debug(position("sun"));
 
-debug(radec2azel(10.4/15,9.7,35,-106));
+debug(radec2azel(10.4,9.7,35,-106));
+
+=item radec2azel($ra, $dec, $lat, $lon, $time)
+
+Given the azimuth and elevation of an object with right ascension $ra
+and declination $dec, at latitude $lat and longitude $lon at Unix time
+$time
+
+=cut
 
 sub radec2azel {
   my($ra, $dec, $lat, $lon, $time) = @_;
@@ -57,12 +53,14 @@ sub radec2azel {
   $dec *= $PI/180;
   $lat *= $PI/180;
 
-  # determine local siderial time
+  # determine local siderial time (in hours)
   my($lst) = gmst($time) + $lon/15;
   debug("LST: $lst");
+  debug("RA: $ra, OTHER",$lst*$PI/12);
   # determine 'hour angle' (time since last culmination?) in radians
   my($ha) = $lst*$PI/12-$ra;
   debug("HA: $ha");
+  debug("DEC: $dec", "LAT: $lat");
   # and now azimuth and elevation
   my($az)=atan2(-sin($ha)*cos($dec),cos($lat)*sin($dec)-sin($lat)*cos($dec)*cos($ha));
   my($el)=asin(sin($lat)*sin($dec)+cos($lat)*cos($dec)*cos($ha));
