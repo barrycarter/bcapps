@@ -19,12 +19,10 @@ sub radec2azel {
 
   # determine local siderial time (in hours)
   my($lst) = gmst($time) + $lon/15;
-  debug("LST: $lst");
-  debug("RA: $ra, OTHER",$lst*$PI/12);
+
   # determine 'hour angle' (time since last culmination?) in radians
   my($ha) = $lst*$PI/12-$ra;
-  debug("HA: $ha");
-  debug("DEC: $dec", "LAT: $lat");
+
   # and now azimuth and elevation
   my($az)=atan2(-sin($ha)*cos($dec),cos($lat)*sin($dec)-sin($lat)*cos($dec)*cos($ha));
   my($el)=asin(sin($lat)*sin($dec)+cos($lat)*cos($dec)*cos($ha));

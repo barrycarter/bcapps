@@ -16,7 +16,9 @@ use Math::Round;
 require JSON;
 
 # include sublibs
-require "bc-astro-lib.pl";
+push(@INC,"/home/barrycarter/BCGIT", "/usr/local/lib");
+# below broke stuff, so killing for now
+# require "bc-astro-lib.pl";
 
 # HACK: defining constants here is probably bad
 $PI = 4.*atan(1);

@@ -9,6 +9,11 @@
 If[$CommandLine[[4]] == "cad", Get["/tmp/nadex.m.USDCAD"],
  Get["/tmp/nadex.m.USDJPY"]]
 
+(* second argument is now `date +%s -d 'whatever'` so Mathematica
+no longer needs to calculate it *)
+
+expdate = ToExpression[$CommandLine[[5]]]
+
 (**
 
 Load my positions; this file looks something like this:
@@ -31,11 +36,7 @@ If[$CommandLine[[4]] == "cad", Get["/home/barrycarter/usdcadpos.txt"],
 
 (* select options w/ given expiration time/date *)
 (* TODO: selling options w/ different expiries may be useful! *)
-expdate = AbsoluteTime[{2011,8,26,19}, TimeZone->0]
 
-(* changing stuff stops here *)
-
-expdate = Round[expdate - AbsoluteTime[{1970}, TimeZone->0]]
 (* kludge to get rid of null that ends 'nadex' var *)
 nadex = Select[nadex, Length[#]>2&]
 

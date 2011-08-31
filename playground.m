@@ -3,6 +3,12 @@
 showit := Module[{}, 
 Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
+
+(* figure out 1900 GMT today and next Friday *)
+
+DateList[{"next Friday", {"DayName"}}]
+
+
 (* an ellipse w/ semimajor axis a, periapsis qr, apoapsis ad, NE quadrant *)
 
 y[x_, a_, qr_] = y /.
