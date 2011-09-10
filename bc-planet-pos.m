@@ -10,10 +10,6 @@ coordinates in the equinox of the date used.
 
 *)
 
-(* necessary constants/functions *)
-
-epoch = AbsoluteTime[{1970,1,1}]
-
 showit := Module[{},
 Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
@@ -21,16 +17,18 @@ Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
 xyz[planet_, year_] := Module[{x,s},
  x = Table[{t, AstronomicalData[planet, {"Position", DateList[t]}]},
- {t, AbsoluteTime[{year,1,1}], AbsoluteTime[{year+1,1,1}], 86400}];
+ {t, AbsoluteTime[{year,1,1}], AbsoluteTime[{year+1,1,1}], 300}];
  s = StringJoin[{"/home/barrycarter/BCGIT/planetdata/xyz-",
  ToString[planet], "-", ToString[year],  ".txt"}];
  Print[s];
  Put[x,s];
 ]
 
-t1 = xyz["Mars", 2011]
+p = {"Mercury", "Venus", "Earth", "Moon", "Mars", "Jupiter", "Saturn",
+ "Uranus", "Neptune", "Pluto"}
 
-AstronomicalData["Mars", "Position"]
+Table[xyz[pl,y], {pl, p}, {y,2011,2021}]
+
 
 
 
