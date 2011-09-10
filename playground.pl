@@ -6,8 +6,15 @@
 # chunks are normally separated with 'die "TESTING";'
 
 require "bclib.pl";
+require "bc-astro-lib.pl";
 # starting to store all my private pws, etc, in a single file
 require "/home/barrycarter/bc-private.pl";
+
+# Moon pos now
+debug(position("moon"));
+
+
+die "TESTING";
 
 ($az, $el) = radec2azel(13,-3.67594,35,-106, time());
 debug("$az/$el");

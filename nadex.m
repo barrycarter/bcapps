@@ -113,6 +113,12 @@ alreadysold[p_] :=  Sum[x[[1]]*If[p>=x[[2]], x[[3]]-101, 0], {x,myoptpos}]
 
 strikes = Table[opt[[1]], {opt,nadex}]
 
+(* strikes from options I've already sold, even if now worthless *)
+
+strikes2 = Table[x[[2]], {x,myoptpos}]
+
+strikes = Union[strikes, strikes2]
+
 (* I sell n[strike][exp] of each option, and let Mathematica optimize
 the values of n *)
 

@@ -17,11 +17,17 @@ y[x_, a_, qr_] = y /.
 
 Plot[y[x,3,2],{x,-5,5}]
 
+Graphics[Plot[y[x,3,2],{x,-5,5}], Text["hello",{1,3}]]
+
+Plot[Text["Hello",{1,0}], {x,-1,1}]
+
 (* tti = thing to integrate *)
 
 tti[x_, a_, qr_, theta_] = Min[(x-(a-qr))*Tan[theta], y[x, a, qr]]
 
-Plot[tti[x,3,2, 60 Degree],{x,0,6}]
+Plot[tti[x,3,2, 60 Degree],{x,1,6}]
+
+Plot[{y[x,3,2], tti[x,3,2, 60 Degree]},{x,-5,5}]
 
 area[a_, qr_, theta_] = Integrate[tti[x,a,qr,theta], {x,a-qr,a}, 
  Assumptions -> {0 < theta < Pi/2, a>0, qr>0, Member[theta, Reals], 
@@ -48,7 +54,9 @@ Integrate[y[x,a,qr], {x,x1,a}, Assumptions -> {a>0, qr>0, x1>0, a > x1}]
 
 meetpt[a_, qr_, m_] = x /. Solve[y[x,a,qr] == m*(x-(a-qr)), x][[2]]
 
-sliver[a, qr, meetpt[a,qr,m]]
+sliver[a, qr, meetpt[a,qr,m]] // CForm
+sliver[a, qr, meetpt[a,qr,m]] // SyntaxForm
+sliver[a, qr, meetpt[a,qr,m]] // TreeForm
 
 tti[x, 3.870991416593402/10, 3.075015900415988/10, theta]
 

@@ -2883,7 +2883,7 @@ KFFT;--;---;FRANKFORT CAPITAL CITY AIRPORT ;KY;United States;4;38-11N;84-54W;38-
 KFFZ;--;---;Mesa / Falcon Field;AZ;United States;4;33-28N;111-44W;;;424;;
 KFGN;--;---;Flag Island;MN;United States;4;49-19N;94-54W;;;329;;
 KFHR;--;---;FRIDAY HARBOR AIRPORT;WA;United States;4;48-31N;123-02W;48-31-31N;123-01-28W;33;32;
-KFHU;72;273;Fort Huachuca, Libby AAF Ft Huachuca;AZ;United States;4;46-98N;110-20W;;;1438;;
+KFHU;72;273;Fort Huachuca, Libby AAF Ft Huachuca;AZ;United States;4;33-19N;110-20W;;;1438;;
 KFIG;--;---;CLEARFIELD-LAWRENCE AIRPORT;PA;United States;4;41-03N;078-25W;41-02-51N;078-24-51W;462;462;
 KFIR;--;---;First Divide;WY;United States;4;41-18N;110-46W;;;2294;;
 KFIT;--;---;Fitchburg, Fitchburg Municipal Airport;MA;United States;4;42-33-07N;071-45-21W;42-33-15N;071-45-14W;106;103;

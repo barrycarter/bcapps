@@ -222,7 +222,8 @@ $tempf=ctof($h{temperature});
 $dewf=ctof($h{dewpoint});
 $rh=floor(.5+100*rh($h{temperature},$h{dewpoint}));
 $hi=floor(.5+hi($h{temperature}*1.8+32,100*rh($h{temperature},$h{dewpoint})));
-if ($hi!=$tempf) {$ext1=", and a heat index of $hi${DEG}F";}
+debug("$hi vs $printtempf");
+if ($hi!=round($tempf)) {$ext1=", and a heat index of $hi${DEG}F";}
 
 unless ($h{windspeed}=~/null/i) {
   $wind=wind($h{windspeed},$h{winddir},$h{gust});

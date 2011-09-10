@@ -858,7 +858,11 @@ sub nadex_quotes {
  # I can't use cache-command, since I'm using curl's wildcarding feature
 
  # commands to obtain daily, weekly, and intra-daily options
+
+ # TEMP HACK: for some reason OPT-2 is the one today
  my($daily_cmd) = "curl -v -L -k -o /tmp/daily.$parity.#1-#2.txt -v -L -H 'Cookie: $cookie' 'https://$prehost.nadex.com/dealing/pd/cfd/displaySingleMarket.htm?epic=N{B}.D.$parity.OPT-1-[1-21].IP'";
+# my($daily_cmd) = "curl -v -L -k -o /tmp/daily.$parity.#1-#2.txt -v -L -H 'Cookie: $cookie' 'https://$prehost.nadex.com/dealing/pd/cfd/displaySingleMarket.htm?epic=N{B}.D.$parity.OPT-2-[1-21].IP'";
+
 # my($daily_cmd) = "curl -v -L -k -o /tmp/daily#1-#2.txt -v -L -H 'Cookie: $cookie' 'https://$prehost.nadex.com/dealing/pd/cfd/displaySingleMarket.htm?epic=N{B}.D.$parity.OPT-2-[1-21].IP'";
  my($weekly_cmd) = "curl -v -L -k -o /tmp/weekly.$parity.#1-#2.txt -v -L -H 'Cookie: $cookie' 'https://$prehost.nadex.com/dealing/pd/cfd/displaySingleMarket.htm?epic=N{B}.W.$parity.OPT-1-[1-14].IP'";
  my($intra_cmd) = "curl -v -L -k -o intra.$parity.#1-#2-#3.txt -v -L -H 'Cookie: $cookie' 'https://$prehost.nadex.com/dealing/pd/cfd/displaySingleMarket.htm?epic=N{B}.I.$parity.OPT-[1-8]-[1-3].IP'";
@@ -866,6 +870,7 @@ sub nadex_quotes {
  # and obtain data (since I'm using curl -o, below doesn't actually
  # return anything, so I ignore the return value)
 
+ debug("DAILY: $daily_cmd");
  debug("WEEKLY: $weekly_cmd");
  cache_command($daily_cmd, "age=$opts{cache}");
  cache_command($weekly_cmd, "age=$opts{cache}");
@@ -1144,8 +1149,6 @@ Determine the position (right ascension and declination) of $object at
 time $t, using Hermite approximation. Requires
 data/{$object}fake[xy].txt and only accurate for the span in that
 file.
-
-Returns answers in degrees, even for RA
 
 TODO: I really need to start creating sub libraries?
 
