@@ -3,6 +3,9 @@
 # This (not terribly instructive) script emails HORIZONS for planetary
 # data for the next 10 years.
 
+# modified 10 Sep 2011 to obtain XYZ position and velocity from SSB
+# (solar system barycenter <h>barrycenter!</h>)
+
 # <h>Damn the IAU, I hereby re-dub Pluto a planet!</h>
 
 require "bclib.pl";
@@ -19,9 +22,9 @@ Subject: JOB
 
 !\$\$SOF
 COMMAND= '%OBJECT%'
-CENTER= '500@399'
+CENTER= '500\@0'
 MAKE_EPHEM= 'YES'
-TABLE_TYPE= 'OBSERVER'
+TABLE_TYPE= 'VECTOR'
 START_TIME= '%STARTYEAR%-01-01'
 STOP_TIME= '%ENDYEAR%-01-01'
 STEP_SIZE= '6 m'
@@ -47,15 +50,18 @@ MARK
 
 open(A,"> /tmp/horizons/runme.sh");
 
-# 10 years, all planets
+# 10 years, all planets + Earth moon + Pluto
+@planets = (10, 199, 299, 399, 499, 599, 699, 799, 899, 301);
+
 
 for $i (2011..2020) {
-  for $j (10,301) {
+  for $j (@planets) {
 
     # exclude Earth <h>(I usually know where it is)</h>
-    if ($j==3) {next;}
+    # for barycenter, I need earth
+#    if ($j==3) {next;}
 
-    # and convert template (note obj number is ${j}99, not $j)
+    # and convert template
     $email = $template;
     $i1 = $i + 1;
     $email=~s/%STARTYEAR%/$i/isg;
@@ -71,6 +77,3 @@ for $i (2011..2020) {
 }
 
 close(A);
-
-# below was my (non-ideal) test case
-# system("/usr/lib/sendmail -v -fcarter.barry\@gmail.com -t < mail.2016.7");
