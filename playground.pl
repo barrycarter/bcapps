@@ -10,9 +10,24 @@ require "bc-astro-lib.pl";
 # starting to store all my private pws, etc, in a single file
 require "/home/barrycarter/bc-private.pl";
 
+# pipe stuff
+$|=1;
+open(A,"curl -sN http://test.barrycarter.info/bc-slow-cgi.pl|");
+
+while (<A>) {
+  print "THUNK: $_\n";
+  if (/5$/) {last;}
+}
+
+print "LOOP EXIT\n";
+close(A);
+print "A CLOSED\n";
+
+
+die "TESTING";
+
 # Moon pos now
 debug(position("moon"));
-
 
 die "TESTING";
 
