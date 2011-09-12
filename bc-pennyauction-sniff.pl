@@ -1,7 +1,8 @@
 #!/bin/perl
 
-# Sniffs the pennyauctionsite.com bids and alerts when an item has
-# only 2 bidders left (which is a good time to bid on it)
+# Sniffs the pennyauctionsite.com [hereafter, simply "penny"] bids and
+# alerts when an item has only 2 bidders left (which is a good time to
+# bid on it)
 
 require "bclib.pl";
 
@@ -10,23 +11,50 @@ require "bclib.pl";
 # this, but yuck)
 $ids = "285,245,320,292,304";
 
+# TODO: fix cache_command so I don't have to do this
+$globopts{nocache} = 1;
+
 for (;;) {
   # obtain info
   # TODO: subroutineize this
-  # TODO: why does cache_command need age=-100 hack?
-  ($out,$err,$res) = cache_command("curl -L 'http://pennyauctionsite.com/down/info.php?ids=$ids'", "age=-100");
+  ($out,$err,$res) = cache_command("curl -L 'http://pennyauctionsite.com/down/info.php?ids=$ids'");
 
   # parse $out
-  while ($out=~s/(\#.*?)\#/\#/) {
+#  debug("OUTPRE: $out");
+  while ($out=~s/(\#.+?)(\#|$)/\#/) {
+#    debug("OUTNOW: $out");
     $item = $1;
     ($num, $start, $bidtime, $bidder, $price) = split(/\|/, $item);
     # keep track of each item/bidder combos last bidtime
     # NOTE: should I use my own clock here "just in case"?
-    debug("ITEM: $item");
-    $lastbid{$num}{$bidder} = str2time($bidtime);
+#    debug("ITEM: $item");
+    $lastbid{$num}{$bidder} = str2time("$bidtime UTC");
   }
 
-  debug(unfold(%lastbid));
+  # penny time
+  $out=~s/\#$//isg;
+  $cur = str2time("$out UTC");
+  debug("$out -> $cur");
+
+  # determine bidders in last 2m (TODO: 5m?)
+  for $i (sort keys %lastbid) {
+    @bidders = ();
+    for $j (sort keys %{$lastbid{$i}}) {
+
+      # kill bids over 120s
+      if ($cur-$lastbid{$i}{$j} > 120) {
+	delete $lastbid{$i}{$j};
+	next;
+      }
+
+      push(@bidders,$j);
+    }
+
+    print "$i: ".join(", ",@bidders)."\n";
+  }
+
+#  debug(unfold(%lastbid));
+  sleep(5);
 
 }
 

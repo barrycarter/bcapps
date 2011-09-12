@@ -214,6 +214,8 @@ sub cache_command {
   my($file) = "/tmp/cache-".sha1_hex("$opts{salt}$command$opts{salt}");
   if ($opts{cachefile}) {$file = $opts{cachefile};}
   my($fileage) = (-M $file)*86400;
+  # HACK: shouldn't have to do this
+  if ($fileage < 0) {$fileage=0;}
   debug("FILE: $file, AGE: $fileage");
 
   # if file is young enough, return existing values
