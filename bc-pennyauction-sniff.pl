@@ -9,7 +9,7 @@ require "bclib.pl";
 # TODO: get these numbers directly, don't hardcode
 # Ugly possibility: include ALL numbers 1-999 below (penny handles
 # this, but yuck)
-$ids = "285,245,320,292,304";
+$ids = "207,265";
 
 # TODO: fix cache_command so I don't have to do this
 $globopts{nocache} = 1;
@@ -27,7 +27,7 @@ for (;;) {
     ($num, $start, $bidtime, $bidder, $price) = split(/\|/, $item);
     # keep track of each item/bidder combos last bidtime
     # NOTE: should I use my own clock here "just in case"?
-#    debug("ITEM: $item");
+    debug("ITEM: $item");
     $lastbid{$num}{$bidder} = str2time("$bidtime UTC");
   }
 
@@ -39,18 +39,28 @@ for (;;) {
   # determine bidders in last 2m (TODO: 5m?)
   for $i (sort keys %lastbid) {
     @bidders = ();
+    # would sorting by time of last bid be better here?
     for $j (sort keys %{$lastbid{$i}}) {
 
-      # kill bids over 120s
-      if ($cur-$lastbid{$i}{$j} > 120) {
+      # age of bid
+      $age = $cur - $lastbid{$i}{$j};
+
+      # kill bids over 60s
+      if ($age > 60) {
 	delete $lastbid{$i}{$j};
 	next;
       }
 
-      push(@bidders,$j);
+      push(@bidders,"$j\@$age");
     }
 
     print "$i: ".join(", ",@bidders)."\n";
+
+    # alert me when exactly 2 bidders
+    if ($#bidders == 1) {
+      system("pkill -f 'PENNY: $i'");
+      system("xmessage 'PENNY: $i has 2 bidders' &");
+    }
   }
 
 #  debug(unfold(%lastbid));
