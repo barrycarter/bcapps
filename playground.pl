@@ -12,7 +12,9 @@ require "/home/barrycarter/bc-private.pl";
 
 # pipe stuff
 $|=1;
-open(A,"curl -sN http://test.barrycarter.info/bc-slow-cgi.pl|");
+my($pid) = open(A,"curl -sN http://test.barrycarter.info/bc-slow-cgi.pl|");
+
+debug("PID: $pid");
 
 while (<A>) {
   print "THUNK: $_\n";
@@ -20,9 +22,9 @@ while (<A>) {
 }
 
 print "LOOP EXIT\n";
+system("kill $pid");
 close(A);
 print "A CLOSED\n";
-
 
 die "TESTING";
 
