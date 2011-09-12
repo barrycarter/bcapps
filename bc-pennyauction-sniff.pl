@@ -23,7 +23,7 @@ for (;;) {
     # keep track of each item/bidder combos last bidtime
     # NOTE: should I use my own clock here "just in case"?
     debug("ITEM: $item");
-    $lastbid{$num}{$bidder} = $bidtime;
+    $lastbid{$num}{$bidder} = str2time($bidtime);
   }
 
   debug(unfold(%lastbid));
