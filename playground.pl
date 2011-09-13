@@ -10,6 +10,36 @@ require "bc-astro-lib.pl";
 # starting to store all my private pws, etc, in a single file
 require "/home/barrycarter/bc-private.pl";
 
+
+# all PWS in ABQ
+open(A,"grep KNMALBUQ db/wstations.txt|");
+
+while (<A>) {
+  chomp;
+  push(@cmd, "curl -s -o /tmp/pws-$_.xml 'http://api.wunderground.com/weatherstation/WXCurrentObXML.asp?ID=$_'");
+}
+
+write_file(join("\n",@cmd)."\n", "/tmp/pws-suck.sh");
+system("parallel < /tmp/pws-suck.sh");
+
+for $i (glob("/tmp/pws-*.xml")) {
+  $data = read_file($i);
+  %hash = ();
+
+  while ($data=~s%<(.*?)>(.*?)</\1>%%) {$hash{$1}=$2};
+
+  $time = str2time($hash{observation_time_rfc822});
+
+  # wanted: data below
+  debug("DATA: $hash{latitude}, $hash{longitude}, $hash{station_id}, $hash{temp_f}, $hash{observation_time_rfc822}, $time");
+
+#  debug("HASH:",%hash);
+}
+
+# debug(@cmd);
+
+die "TESTING";
+
 # pipe stuff
 $|=1;
 my($pid) = open(A,"curl -sN http://test.barrycarter.info/bc-slow-cgi.pl|");
