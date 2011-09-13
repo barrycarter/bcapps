@@ -3,6 +3,9 @@
 # Copied bc-temperature-voronoi to bc-generic-voronoi to clean it up
 # and, more importantly, make it generic for any db/color scheme/etc
 
+# TODO: could genercize to any list of hashs (where hashs contain
+# latitude/longitude/color/label/id)
+
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
@@ -86,6 +89,8 @@ print B << "MARK";
 MARK
 ;
 
+}
+
 # KML: end of file
 print B "</Document></kml>\n";
 close(B);
@@ -93,7 +98,10 @@ close(B);
 # zip to reduce chance of 3M limit issue
 # http://code.google.com/apis/kml/documentation/mapsSupport.html
 
-system("zip /home/barrycarter/BCINFO/sites/DATA/current-temperatures.kmz /home/barrycarter/BCINFO/sites/DATA/current-temperatures.kml");
+$kmz = $kmlout;
+$kmz=~s/\.kml/\.kmz/isg;
+
+system("zip $kmz $kmlout");
 
 # TODO: color map smoothly, not via polygons
 
