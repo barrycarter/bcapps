@@ -115,6 +115,17 @@ for $strike (sort keys %{$hash{$parity}}) {
       $under = forex_quote($parityslash, $updated);
     }
 
+    # output for Mathematica (doesn't really need all of these, but...)
+    if ($parity eq "USDJPY") {
+      $printstrike = $strike/100;
+      $printunder = $under/100;
+    } else {
+      $printstrike = $strike;
+      $printunder = $under;
+    }
+
+    print A "{$printstrike, $exp, $bid, $ask, $printunder, $updated},\n";
+
     # logdiff + exptime (seconds)
     unless ($under) {die "Unable to obtain price for $parity";}
     debug("$strike / $under");
@@ -129,7 +140,12 @@ for $strike (sort keys %{$hash{$parity}}) {
 
     # TODO: fix this (.50 implies meaningless volatility, but should
     # note that, not avoid it)
-    if ($bidsn == 0 || $asksn == 0) {next;}
+    if (!$bidsn || !$asksn) {
+      warnlocal("BID OR ASK 50 or 0/100, VOL NOT COMPUTED");
+      next;
+    }
+
+    debug("BIDSN: $bidsn, ASKSN: $asksn");
 
     # normalize SD for actual expiration time
     $bidsd = $logdiff/$bidsn;
@@ -151,6 +167,7 @@ for $strike (sort keys %{$hash{$parity}}) {
     }
 
     # compute (bid) volatility using new function I created
+    debug("bin_volt($bid, $strike, ($exp-$updated)/86400/365.2425, $under)");
     $newvol = bin_volt($bid, $strike, ($exp-$updated)/86400/365.2425, $under);
     # and the greeks (experimental on bid only for now)
     # $val is obviously redundant and just a  check
@@ -160,17 +177,6 @@ for $strike (sort keys %{$hash{$parity}}) {
     debug("GREEKS: $val/$delta/$theta/$vega");
 
     debug("NEWVOL: $newvol");
-
-    # output for Mathematica (doesn't really need all of these, but...)
-    if ($parity eq "USDJPY") {
-      $printstrike = $strike/100;
-      $printunder = $under/100;
-    } else {
-      $printstrike = $strike;
-      $printunder = $under;
-    }
-
-    print A "{$printstrike, $exp, $bid, $ask, $printunder, $updated},\n";
 
     # printing table here just to have some output; real work is above
     $str.= "<tr>\n";

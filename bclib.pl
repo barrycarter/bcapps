@@ -940,12 +940,17 @@ sub nadex_quotes {
   ($obid, $oask) = @vals;
 
    # TODO: not sure skipping no bid/ask is a good idea here
-   if ($obid eq "-" || $oask eq "-") {next;}
+   # (later decided it was and replacing "-" with 0)
+#   if ($obid eq "-" || $oask eq "-") {next;}
+
+   if ($obid eq "-") {$obid="0";}
+   if ($oask eq "-") {$oask="100";}
 
    debug("PAR IS: $par");
    $hash{$par}{$strdir}{$utime}{bid} = $obid;
    $hash{$par}{$strdir}{$utime}{ask} = $oask;
    $hash{$par}{$strdir}{$utime}{updated} = $uptime;
+   debug("SETTING $par/$strdir/$utime");
  }
 
  unless ($dataq) {
@@ -1229,9 +1234,10 @@ sub greeks_bin {
   # nesting subroutines = bad?
   sub bin_value {
     my($cur, $str, $exp, $vol) = @_;
+    debug("BIN_VALUE($cur, $str, $exp, $vol)");
 
-    # easy case
-    if ($exp <= 0) {return ($cur>$str?1:0);}
+    # easy cases (0 volatility = same price at expiration)
+    if ($exp <= 0 || $vol==0) {return ($cur>$str?1:0);}
 
     return uprob(log($str/$cur)/($vol*sqrt($exp)));
   }
@@ -1265,8 +1271,10 @@ NOTE: see older versions of bc-nadex-vol.pl for formula derivation
 
 sub bin_volt {
   my($price, $strike, $exp, $under) = @_;
+  debug("bin_volt($price, $strike, $exp, $under)");
   # can't calculate volatility if price is 50
-  if ($price == 50) {return 0;}
+  # volatility meaningless if price is 0 or 100
+  if ($price == 50 || $price == 100 || $price ==0) {return 0;}
   return log($strike/$under)/udistr($price/100)/sqrt($exp);
 }
 
