@@ -30,8 +30,11 @@ sub describe {
   my(%hash) = @_;
   my(%rethash);
 
+  debug("CHECKPOINT BRAVO");
+  debug(unfold(%hash));
+
   $rethash{label}="This is a label";
-  $rethash{color}="#80009bff";
+  $rethash{color}= hsv2rgb(rand(), 1, 1, "kml=1&opacity=80");
   $rethash{id} = ++$count;
 
   return %rethash;
