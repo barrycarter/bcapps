@@ -39,6 +39,8 @@ Integrate[tti[x,1,5,theta], {x,1,1+5}]
 
 (* mathematica does above, but not below *)
 
+Integrate[tti[x,1,5,theta], {x,a,a+5}]
+
 Integrate[tti[x,a,5,theta], {x,a,a+5}]
 
 Integrate[Min[y[x,a,qr], (x-a)*m], {x,a,a+qr}]
