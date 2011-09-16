@@ -9,14 +9,16 @@
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
-for $i (1..10) {
-  srand(++$seed);
+for $i (1..5000) {
+#  srand(++$seed*2);
+  $x = rand()*360-180;
+  $y = rand()*180-90;
   $hashref = {};
   %{$hashref}=(
-	       "x" => rand()*360-180,
-	       "y" => rand()*180-90,
+	       "x" => $x,
+	       "y" => $y,
 	       "color" => hsv2rgb(rand(),1,1,"kml=1&opacity=80"),
-	       "label" => "foo",
+	       "label" => "$x,$y",
 	       "id" => ++$n
 	      );
   push(@data, $hashref);
@@ -96,6 +98,8 @@ keys: id, x, y, label, color (KML-style); id must be unique
 Primarily intended for latitude/longitude "google style" maps
 
 $options currently unused
+
+TODO: this seems to leave off one (or more?) points, not sure why
 
 =cut
 
