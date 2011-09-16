@@ -9,45 +9,24 @@
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
-# START INPUTS (these are inputs to the program)
-
-# SQLite3 db to query
-$db = "/sites/DB/metar.db";
-
-# the query (must return 'latitude' and 'longitude' columns
-$query = "SELECT time, -strftime('%s', n.time)+strftime('%s', 'now') AS
-age, n.*, s.* FROM nowweather n JOIN stations s ON (n.code=s.metar)
-WHERE temperature IS NOT NULL AND age>0 AND age<7200";
-
-# where the KML file is written
-$kmlout = "/tmp/testing.kml";
-
-# Function that, given a row returned by $query (as a hash), returns a
-# hash that contains at least "label" and "color" (in KML-friendly
-# format), and a UNIQUE id
-
-sub describe {
-  my(%hash) = @_;
-  my(%rethash);
-
-  debug("CHECKPOINT BRAVO");
-  debug(unfold(%hash));
-
-  $rethash{label}="This is a label";
-  $rethash{color}= hsv2rgb(rand(), 1, 1, "kml=1&opacity=80");
-  $rethash{id} = ++$count;
-
-  return %rethash;
+for $i (1..10) {
+  srand(++$seed);
+  $hashref = {};
+  %{$hashref}=(
+	       "x" => rand()*360-180,
+	       "y" => rand()*180-90,
+	       "color" => hsv2rgb(rand(),1,1,"kml=1&opacity=80"),
+	       "label" => "foo",
+	       "id" => ++$n
+	      );
+  push(@data, $hashref);
 }
 
-# END INPUTS
+debug("DATA",@data);
 
-# work in my own temp dir + copy db locally
-chdir(tmpdir());
-system("cp $db my.db");
+voronoi_map(\@data);
 
-# query
-@res = sqlite3hashlist($query, "my.db");
+die "TESTING";
 
 # Voronoi-ify
 for $i (@res) {push(@vor, $i->{longitude}, $i->{latitude});}
@@ -107,4 +86,76 @@ $kmz=~s/\.kml/\.kmz/isg;
 system("zip $kmz $kmlout");
 
 # TODO: color map smoothly, not via polygons
+
+=item voronoi_map(\@hashlist, $options)
+
+Given @hashlist, a list of hashrefs, return a KML map (string)
+representing the voronoi diagram. Each hash must have at least these
+keys: id, x, y, label, color (KML-style); id must be unique
+
+Primarily intended for latitude/longitude "google style" maps
+
+$options currently unused
+
+=cut
+
+sub voronoi_map {
+  my($hashlistref, $options) = @_;
+  my(@hashlist) = @{$hashlistref};
+
+  # header/footer
+  my($header) = read_file("kmlhead.txt");
+  my($footer) = read_file("kmlfoot.txt");
+  print "$header\n";
+
+  # the Voronoi diagram
+  my(@vor);
+  for $i (@hashlist) {
+    debug("I: $i");
+    push(@vor, $$i{x}, $$i{y});
+  }
+  my(@tess) = voronoi(\@vor);
+
+  debug("TESS",@tess,"ENDTESS");
+
+  # the chunk for each polygon
+  for $i (0..$#tess) {
+    # not each point pair has a polygon
+    unless ($tess[$i]) {next;}
+    my(@points);
+    # hash in @hashlist corresponding to this polygon
+    my(%hash) = %{$hashlist[$i]};
+    debug("I: $tess[$i], II: %hash");
+    # polygon header
+    my($body) = << "MARK";
+<Placemark><styleUrl>#$hash{id}</styleUrl>
+<description>$hash{label}</description>
+<Polygon><outerBoundaryIs><LinearRing><coordinates>
+MARK
+;
+    # style URL
+    my($style) = << "MARK";
+<Style id="$hash{id}">
+<PolyStyle><color>$hash{color}</color>
+<fill>1</fill><outline>0</outline></PolyStyle></Style>
+MARK
+;
+
+    # the points for this polygon (pointless polygons OK w/ google)
+    for $j (@{$tess[$i]}) {
+    $j=~s/ /,/;
+    push(@points, $j);
+  }
+    my($tail) = "</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>";
+
+    print "$body\n",join("\n",@points),"\n","\n$tail\n",$style,"\n";
+  }
+
+  print $footer;
+
+}
+
+
+
+
 

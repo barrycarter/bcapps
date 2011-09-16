@@ -703,10 +703,9 @@ sub voronoi {
 
     # add polygon to result list (must use ref here)
     # must use $i to compensate for skipped polygons
+    debug("ASSIGNING ret[$i-$pts] to @points");	
     $ret[$i-$pts] = \@points;
   }
-
-  debug("RET:",@ret);
 
   return @ret;
 }
