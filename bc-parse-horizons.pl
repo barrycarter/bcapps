@@ -7,29 +7,25 @@ require "bclib.pl";
 
 $targetdir = "/home/barrycarter/20110916/";
 chdir($targetdir);
-open(A,"bzcat /home/barrycarter/mail/HORIZONS-ssbc.mbx.bz2|");
+open(A,"bzcat /home/barrycarter/mail/HORIZONS-SSBC.mbx.bz2|");
 
 while (<A>) {
-  # key/value pair (sadly, data lines contain colon too, so hack)
-  if (/^(.*?):(.*)$/ && !/^2/) {
-    ($key, $val) = ($1, $2);
-    # cleanup
-    $val=~s/[\(|\{].*?[\)|\}]//isg;
-    $val=~s/\s//isg;
-    $hash{$key} = $val;
-    if ($key=~/time|body/) {debug("$key -> $val");}
-
-    # for special key value pairs
-    if ($key=~/Target body name/) {
-      close(B);
-      # writing to "dir of day" just for now
-      open(B, ">>pos-$val.txt");
-      next;
-    }
+  # because results are multipart (many messages per planet), subject
+  # is the only reliable means of know where we are
+  if (/^Subject: MAJOR BODY \#C\((\d+)\@(\d+)\)_T\((\d+)\) \(\d+\/\d+\)/) {
+    close(B);
+    open(B,">>pos-$1-$2-$3.txt");
+    debug("APPENDING TO: pos-$1-$2-$3...");
+    next;
+  } elsif (/^Subject/) {
+    die("BAD SUBJECT: $_");
   }
 
   # kludge, but I think all Julian dates I care about start w/ 2
-  unless (/^2/) {next;}
+  unless (/^2/) {
+#    debug("SKIPPING: $_");
+    next;
+  }
 
   s/E/*10^/isg;
   ($jd, $junk, $x, $y, $z) = split(/\,/,$_);
@@ -46,8 +42,8 @@ close(B);
 
 # remove dupes
 for $i (glob("pos-*")) {
-  $i=~/pos-(.*?)\.txt/;
-  $name = lc($1);
+  $i=~/(\d+)\.txt/;
+  $name = "planet$1";
   debug("WORKING: $name");
   write_file("$name = {\n", "final-$i");
   system("sort $i | uniq >> final-$i; echo '};' >> final-$i");

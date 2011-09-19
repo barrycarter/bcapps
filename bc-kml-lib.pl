@@ -56,7 +56,7 @@ MARK
     my($style) = << "MARK";
 <Style id="$hash{id}">
 <PolyStyle><color>$hash{color}</color>
-<fill>1</fill><outline>0</outline></PolyStyle></Style>
+<fill>1</fill><outline>1</outline></PolyStyle></Style>
 MARK
 ;
 

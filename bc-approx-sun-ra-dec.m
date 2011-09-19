@@ -30,6 +30,27 @@ Despite this, it ultimately comes up w/ the right answers
 showit := Module[{},
 Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
+(* planet xyz position data *)
+
+<</home/barrycarter/20110916/final-pos-500-0-199.txt;
+
+t1 = Table[x[[2]], {x,planet199}];
+t2 = Take[t1,30000];
+t3 = Take[t1,{14000,16000}];
+t3 = Take[t1,{14000,16000}];
+t3 = Take[t1,{14900,15100}];
+t3 = Take[t1,{14970,14990}];
+
+(* jump from 2.45562*10^6 to 2.45593*10^6 at pos 14977-14978, why? *)
+
+t4 = Select[planet199, #[[1]] == 2011 &];
+
+In[45]:= Length[t4]
+
+Out[45]= 14977
+
+(* at 6m ints, expect 87600/yr *)
+
 (* the Unix epoch; we'll be feeding results to Perl ultimately *)
 
 epoch = AbsoluteTime[{1970,1,1}]
