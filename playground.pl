@@ -42,7 +42,7 @@ sub parse_dbuoy {
   my(@chunks) = split(/\s+/, $report);
 
   # the first few elements are fixed
-  my($date, $time, $lat, $lon) = @chunks;
+  my($id, $date, $time, $lat, $lon) = @chunks;
 
   # $date is in DDMMY format
   # <h>NOAA needed a Y2.01K problem!; once a century isn't enough!</h>
@@ -69,11 +69,13 @@ sub parse_dbuoy {
   if ($quadrant==3 || $quadrant==5) {$lat*=-1;}
 
   # and put into results
+  $rethash{time} = str2time("$date $time UTC");
+  $rethash{id} = $id;
   $rethash{latitude} = $lat;
   $rethash{longitude} = $lon;
 
   # ignore data (including data above) until 111 indicating group 1
-  while (shift(@chunks) ne "111") {}
+#  while (shift(@chunks) ne "111") {}
 
   for $i (@chunks) {
 
