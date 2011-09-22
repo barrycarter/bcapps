@@ -10,7 +10,15 @@ require "bc-astro-lib.pl";
 # starting to store all my private pws, etc, in a single file
 require "/home/barrycarter/bc-private.pl";
 
+$buoy = read_file("/home/barrycarter/BCGIT/sample-data/DBUOY/sn.0001.txt");
 
+@obs = split(/ZZYY\s*/, $buoy);
+
+for $i (@obs) {
+  $i=~s/\s+/ /isg;
+  %rethash = parse_dbuoy($i);
+  debug("OBS: $i, RET:", %rethash);
+}
 
 =item parse_dbuoy($report)
 
@@ -26,6 +34,9 @@ single line
 sub parse_dbuoy {
   my($report) = @_;
   my(%rethash) = ();
+
+  # TODO: it's probably ok to change / to 0
+  $report=~s%/%0%isg;
   
   # split report into chunks
   my(@chunks) = split(/\s+/, $report);
