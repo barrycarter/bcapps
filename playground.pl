@@ -10,96 +10,83 @@ require "bc-astro-lib.pl";
 # starting to store all my private pws, etc, in a single file
 require "/home/barrycarter/bc-private.pl";
 
-$buoy = read_file("/home/barrycarter/BCGIT/sample-data/DBUOY/sn.0001.txt");
+$ship = read_file("/home/barrycarter/BCGIT/sample-data/SHIPS/sn.0001.txt");
 
-@obs = split(/ZZYY\s*/, $buoy);
-
-for $i (@obs) {
+while ($ship=~s/BBXX\s*(.*?)\s*\=//s) {
+  $i = $1;
   $i=~s/\s+/ /isg;
-  %rethash = parse_dbuoy($i);
+  debug("OBS: $i");
+  %rethash = parse_ship($i);
   debug("OBS: $i, RET:", %rethash);
 }
 
-=item parse_dbuoy($report)
+=item parse_ship($report)
 
-Parses a DBUOY report from
-http://weather.noaa.gov/pub/SL.us008001/DF.an/DC.sfmar/DS.dbuoy/,
-returning a hash of data.
+Parses a SHIP report from
+http://weather.noaa.gov/pub/SL.us008001/DF.an/DC.sfmar/DS.ships/,
+based on www.nws.noaa.gov/om/marine/handbk1.pdf, returning a hash of data.
 
-Note: DBUOY reports may have multiple lines, but $report should be a
+Note: SHIP reports may have multiple lines, but $report should be a
 single line
 
 =cut
 
-sub parse_dbuoy {
+sub parse_ship {
   my($report) = @_;
   my(%rethash) = ();
 
+  # we ignore section 2 entirely
+  $report=~s/\s+222\d\d.*$//isg;
+
   # TODO: it's probably ok to change / to 0
   $report=~s%/%0%isg;
-  
+
   # split report into chunks
   my(@chunks) = split(/\s+/, $report);
 
   # the first few elements are fixed
-  my($id, $date, $time, $lat, $lon) = @chunks;
+  my($id, $datetime, $lat, $lon, $useless, $wind) = @chunks;
 
-  # $date is in DDMMY format
-  # <h>NOAA needed a Y2.01K problem!; once a century isn't enough!</h>
-  # TODO: compute current decade, don't hardcode 2010
-  unless ($date=~/^(\d{2})(\d{2})(\d{1})$/) {return "BADDATE: $date";}
-  $date = (2010+$3)."-$2-$1";
-
-  # $time is in HHMMx format, where x indicates whether wind speed is
-  # in m/s or knots <h>thank god NOAA isn't NIST!</h>
-  unless ($time=~/^(\d{2})(\d{2})([0134\/])/) {return "BADTIME: $time";}
-  $time = "$1:$2";
+  # $datetime is in DDHHx format, where x indicates wind speed measure type
+  # TODO: convert date/hour to Unix time or at least find month/year
+  unless ($datetime=~/^(\d{2})(\d{2})([0134])$/) {return "BADTIME: $datetime";}
+  ($rethash{date}, $rethash{hour}) = ($1, $2);
   my($wsm) = $3;
 
-  # first digit/char in $latitude indicates quadrant, rest is lat*100
-  unless ($lat=~/^(1|3|5|7)(\d{5})$/) {return "BADLAT: $lat"}
-  $lat = $2/100;
+  # $lat is 99xxx where xxx = lat/10
+  unless ($lat=~/^99(\d{3})$/) {return "BADLAT: $lat";}
+  $lat = $1/10;
+
+  # first digit/char in $longitude indicates quadrant, rest is lon/10
+  unless ($lon=~/^(1|3|5|7)(\d{4})$/) {return "BADLON: $lon"}
+  $lon = $2/10;
   my($quad) = $1;
 
-  # $longitude is just longitude*10000
-  $lon /= 10000;
+  # wind is Nddff where N=cloud cover/8, dd=direction, ff=speed
+  unless ($wind=~/^(\d)(\d{2})(\d{2})$/) {return "BADWIND: $wind";}
+  ($rethash{cloudcover}, $rethash{winddir}, $rethash{windspeed}) = ($1,$2,$3);
+  # if wind speed was given in m/s, convert to knots
+  if ($wsm==0 || $wsm==1) {$rethash{windspeed} *= 1.9438445;}
 
-  # correct for quadrant
+  # correct latitude/longitude for quadrant
   if ($quadrant==5 || $quadrant==7) {$lon*=-1;}
   if ($quadrant==3 || $quadrant==5) {$lat*=-1;}
 
   # and put into results
-  $rethash{time} = str2time("$date $time UTC");
   $rethash{id} = $id;
   $rethash{latitude} = $lat;
   $rethash{longitude} = $lon;
 
-  # ignore data (including data above) until 111 indicating group 1
-#  while (shift(@chunks) ne "111") {}
-
+  # rest of report is optional
   for $i (@chunks) {
+    # only care about temperature/pressure
+    unless ($i=~/^[124]\d{4}$/) {next;}
 
-    # wind (0xxyy, xx=direction/10 degrees, yy =speed in knots or m/s
-    # depending on $wsm)
-    # <h>I have run out of snide comments about this format</h>
-    if ($i=~/0(\d{2})(\d{2})/) {
-      $rethash{winddir} = $1*10;
-      $rethash{windspeed} = $2;
-      # if speed was in m/s, convert to knots
-      if ($wsm==0 || $wsm==1) {$rethash{windspeed} *= 1.9438445;}
-      next;
-    }
-
-    # temperature (1xttt, x=sign, ttt=temperature*10)
+    # temperature (1xttt, x=sign, ttt=temperature*10 Celsius)
     if ($i=~/^1(0|1)(\d{3})/) {
       $rethash{temperature} = $3/10*(0.5<=>$2);
       next;
     }
-
-    # <h>in an older version of this subroutine, I handled temperature
-    # and dewpoint at the same time using
-    # "$rethash{($1==1?"temperature":"dewpoint")}". Ah, impetuous
-    # youth!</h>
 
     # dewpoint (2xttt, same convention as temperature)
     if ($i=~/^2(0|1)(\d{3})/) {
@@ -107,24 +94,16 @@ sub parse_dbuoy {
       next;
     }
 
-    # relative humidity (29ppp) where ppp is percentage
-    if ($i=~/^290(\d{3})/) {
-      $rethash{humidity} = $1/100;
-      next;
-    }
-
-    # pressure (4xxxx) where xxxx is inches*100
-    # ignoring 3xxxx (pressure not corrected for sealevel) for now
+    # pressure (4xxxx) where xxxx is hectopascals*10 last four digits
     if ($i=~/4(\d{4})$/) {
-      $rethash{pressure} = $1/100;
+      $rethash{pressure} = ($1+($1<5000?10000:0))/10;
       next;
     }
-  }
 
+  }
   return %rethash;
 
 }
-
 
 die "TESTING";
 
