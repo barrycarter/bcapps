@@ -34,6 +34,31 @@ Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
 <</home/barrycarter/20110916/final-pos-500-0-199.txt;
 
+(* planet199 is unmanagely large at 700K+ entries at least on my machine *)
+
+p1 = planet199[[1;;Length[planet199];;10]];
+px = Table[x[[3]],{x,p1}];
+py = Table[x[[4]],{x,p1}]
+
+pfx = refine[px, 0 &]
+
+pfx = superfourier[px]
+pfx2 = refine[px, pfx]
+pfx3 = refine[px, pfx2]
+pfx4 = refine[px, pfx3]
+pfx5 = refine[px, pfx4]
+pfx6 = refine[px, pfx5]
+pfx7 = refine[px, pfx6]
+pfx8 = refine[px, pfx7]
+pfx9 = refine[px, pfx8]
+cfx = Table[px[[i]] - pfx9[i], {i, 1, Length[px]}];
+cfx = Table[px[[i]] - pfx2[i], {i, 1, Length[px]}];
+
+cfx = Table[px[[i]] - pfx3[i], {i, 1, Length[px]}];
+
+ListPlot[Take[px,88*24]]
+
+
 t1 = Table[x[[2]], {x,planet199}];
 t2 = Take[t1,30000];
 t3 = Take[t1,{14000,16000}];

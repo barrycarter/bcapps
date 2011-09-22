@@ -228,11 +228,6 @@ $wp_blog = "wordpress.barrycarter.info";
 # Make current time part of subject, and also actual timestamp
 $subject= strftime("NADEX USDCAD Implied Volatility(s) (%F %H:%M:%S ET)", localtime($now));
 
-# update on blog (unless --nopost)
-unless ($globopts{nopost}) {
-  post_to_wp($str, "action=wp.editPage&site=$wp_blog&author=$author&password=$pw&postid=9410&wp_slug=nadex&live=1&subject=$subject&timestamp=$now");
-}
-
 print A "}\n";
 
 close(A);
@@ -242,3 +237,9 @@ system("mv -f $tmpfile $tmpfile.old; mv $tmpfile.new $tmpfile");
 
 # for consistency
 if ($tmpfile eq "/tmp/nadex.m") {system("cp $tmpfile $tmpfile.$parity");}
+
+# update on blog (unless --nopost)
+unless ($globopts{nopost}) {
+  post_to_wp($str, "action=wp.editPage&site=$wp_blog&author=$author&password=$pw&postid=9410&wp_slug=nadex&live=1&subject=$subject&timestamp=$now");
+}
+

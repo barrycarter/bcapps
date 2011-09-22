@@ -11,6 +11,110 @@ require "bc-astro-lib.pl";
 require "/home/barrycarter/bc-private.pl";
 
 
+
+=item parse_dbuoy($report)
+
+Parses a DBUOY report from
+http://weather.noaa.gov/pub/SL.us008001/DF.an/DC.sfmar/DS.dbuoy/,
+returning a hash of data.
+
+Note: DBUOY reports may have multiple lines, but $report should be a
+single line
+
+=cut
+
+sub parse_dbuoy {
+  my($report) = @_;
+  my(%rethash) = ();
+  
+  # split report into chunks
+  my(@chunks) = split(/\s+/, $report);
+
+  # the first few elements are fixed
+  my($date, $time, $lat, $lon) = @chunks;
+
+  # $date is in DDMMY format
+  # <h>NOAA needed a Y2.01K problem!; once a century isn't enough!</h>
+  # TODO: compute current decade, don't hardcode 2010
+  unless ($date=~/^(\d{2})(\d{2})(\d{1})$/) {return "BADDATE: $date";}
+  $date = (2010+$3)."-$2-$1";
+
+  # $time is in HHMMx format, where x indicates whether wind speed is
+  # in m/s or knots <h>thank god NOAA isn't NIST!</h>
+  unless ($time=~/^(\d{2})(\d{2})([0134\/])/) {return "BADTIME: $time";}
+  $time = "$1:$2";
+  my($wsm) = $3;
+
+  # first digit/char in $latitude indicates quadrant, rest is lat*100
+  unless ($lat=~/^(1|3|5|7)(\d{5})$/) {return "BADLAT: $lat"}
+  $lat = $2/100;
+  my($quad) = $1;
+
+  # $longitude is just longitude*10000
+  $lon /= 10000;
+
+  # correct for quadrant
+  if ($quadrant==5 || $quadrant==7) {$lon*=-1;}
+  if ($quadrant==3 || $quadrant==5) {$lat*=-1;}
+
+  # and put into results
+  $rethash{latitude} = $lat;
+  $rethash{longitude} = $lon;
+
+  # ignore data (including data above) until 111 indicating group 1
+  while (shift(@chunks) ne "111") {}
+
+  for $i (@chunks) {
+
+    # wind (0xxyy, xx=direction/10 degrees, yy =speed in knots or m/s
+    # depending on $wsm)
+    # <h>I have run out of snide comments about this format</h>
+    if ($i=~/0(\d{2})(\d{2})/) {
+      $rethash{winddir} = $1*10;
+      $rethash{windspeed} = $2;
+      # if speed was in m/s, convert to knots
+      if ($wsm==0 || $wsm==1) {$rethash{windspeed} *= 1.9438445;}
+      next;
+    }
+
+    # temperature (1xttt, x=sign, ttt=temperature*10)
+    if ($i=~/^1(0|1)(\d{3})/) {
+      $rethash{temperature} = $3/10*(0.5<=>$2);
+      next;
+    }
+
+    # <h>in an older version of this subroutine, I handled temperature
+    # and dewpoint at the same time using
+    # "$rethash{($1==1?"temperature":"dewpoint")}". Ah, impetuous
+    # youth!</h>
+
+    # dewpoint (2xttt, same convention as temperature)
+    if ($i=~/^2(0|1)(\d{3})/) {
+      $rethash{dewpoint} = $3/10*(0.5<=>$2);
+      next;
+    }
+
+    # relative humidity (29ppp) where ppp is percentage
+    if ($i=~/^290(\d{3})/) {
+      $rethash{humidity} = $1/100;
+      next;
+    }
+
+    # pressure (4xxxx) where xxxx is inches*100
+    # ignoring 3xxxx (pressure not corrected for sealevel) for now
+    if ($i=~/4(\d{4})$/) {
+      $rethash{pressure} = $1/100;
+      next;
+    }
+  }
+
+  return %rethash;
+
+}
+
+
+die "TESTING";
+
 # all PWS in ABQ
 open(A,"grep KNMALBUQ db/wstations.txt|");
 
