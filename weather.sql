@@ -8,13 +8,11 @@ CREATE TABLE weather (
  cloudcover, -- in 1/8ths, so 1..8
  temperature, -- in degrees F
  dewpoint, -- in degrees F
- events, -- signifigant weather like "light rain"
  pressure, -- in inches of Hg (~30.00 is "normal")
- time, -- "YYYY-MM-DD HH:MM:SS" UTC
+ time, -- "YYYY-MM-DD HH:MM:SS"
  winddir, -- wind direction, in degrees, 0..360
  windspeed, -- in miles per hour
  gust, -- gust speed in miles per hour
- observation, -- the full text of the observation
  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
  comment
 );

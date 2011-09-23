@@ -1,5 +1,7 @@
 # Am I creating too many libs?
 
+# TODO: standardize units to match weather.sql
+
 =item parse_ship($report)
 
 Parses a SHIP report from
@@ -18,7 +20,7 @@ sub parse_ship {
   # we ignore section 2 entirely
   $report=~s/\s+222\d\d.*$//isg;
 
-  # TODO: it's probably ok to change / to 0
+  # TODO: it's probably ok to change / to 0 [maybe not]
   $report=~s%/%0%isg;
 
   # split report into chunks
@@ -30,8 +32,10 @@ sub parse_ship {
   # $datetime is in DDHHx format, where x indicates wind speed measure type
   # TODO: convert date/hour to Unix time or at least find month/year
   unless ($datetime=~/^(\d{2})(\d{2})([0134])$/) {return "BADTIME: $datetime";}
-  ($rethash{date}, $rethash{hour}) = ($1, $2);
+  my($date, $hour) = ($1, $2);
   my($wsm) = $3;
+  my($month, $year) = day2time($date);
+  $rethash{time} = "$year-$month-$date $hour:00:00";
 
   # $lat is 99xxx where xxx = lat/10
   unless ($lat=~/^99(\d{3})$/) {return "BADLAT: $lat";}
@@ -44,15 +48,19 @@ sub parse_ship {
 
   # wind is Nddff where N=cloud cover/8, dd=direction, ff=speed
   unless ($wind=~/^(\d)(\d{2})(\d{2})$/) {return "BADWIND: $wind";}
-  ($rethash{cloudcover}, $rethash{winddir}, $rethash{windspeed}) = ($1,$2,$3);
+  ($rethash{cloudcover}, $rethash{winddir}, $rethash{windspeed}) = ($1,$2*10,$3);
   # if wind speed was given in m/s, convert to knots
   if ($wsm==0 || $wsm==1) {$rethash{windspeed} *= 1.9438445;}
+
+  # and always convert knots to mph
+  $rethash{windspeed} *= 0.8689766;
 
   # correct latitude/longitude for quadrant
   if ($quadrant==5 || $quadrant==7) {$lon*=-1;}
   if ($quadrant==3 || $quadrant==5) {$lat*=-1;}
 
   # and put into results
+  $rethash{type} = "SHIP";
   $rethash{id} = $id;
   $rethash{latitude} = $lat;
   $rethash{longitude} = $lon;
@@ -65,18 +73,24 @@ sub parse_ship {
     # temperature (1xttt, x=sign, ttt=temperature*10 Celsius)
     if ($i=~/^1(0|1)(\d{3})/) {
       $rethash{temperature} = $2/10*(0.5<=>$1);
+      # convert to F
+      $rethash{temperature} = $rethash{temperature}*1.8+32;
       next;
     }
 
     # dewpoint (2xttt, same convention as temperature)
     if ($i=~/^2(0|1)(\d{3})/) {
       $rethash{dewpoint} = $2/10*(0.5<=>$1);
+      # convert to F
+      $rethash{dewpoint} = $rethash{dewpoint}*1.8+32;
       next;
     }
 
     # pressure (4xxxx) where xxxx is hectopascals*10 last four digits
     if ($i=~/4(\d{4})$/) {
       $rethash{pressure} = ($1+($1<5000?10000:0))/10;
+      # convert to inches of mercury
+      $rethash{pressure} /= 33.8638;
       next;
     }
 
@@ -234,7 +248,7 @@ sub parse_metar {
   # if report date is in future, subtract one month
   debug("CURRENT TIME: ",time());
   debug("$year-$mon-$day $hour:$min");
-  debug("REPORT TIME:", str2time("$year-$mon-$day $hour:$min"));
+  debug("REPORT TIME:", str2time("$year-$mon-$day $hour:$min UTC"));
 
   if (str2time("$year-$mon-$day $hour:$min UTC") > time()) {
     $mon--;
@@ -343,6 +357,36 @@ sub parse_metar {
   $b{weather}=join(" ",@weather);
   $b{leftover}=join(" ",@leftover);
   return(%b);
+}
+
+=item day2time($day, $hour)
+
+Given day of month $day and hour $hour, figure out month and year.
+
+TODO: this is a very kludgey function, solely for weather report oddness
+
+=cut
+
+sub day2time {
+  my($day, $hour) = @_;
+  my($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = gmtime(time());
+
+  # tweak return values
+  $year+=1900;
+  $mon++;
+  if ($mon==13) {$year++; $mon=1;}
+
+  # timestamp for this day of this month
+  my($thismo) = str2time("$year-$mon-$day UTC");
+
+  # 15 days either way, though this will never happen
+  if (($thismo - time()) < 86400*15) {return($mon,$year);}
+
+  # last month
+  $mon--;
+  if ($mon<=0) {$year--; $mon=12;}
+
+  return($mon,$year);
 }
 
 # <h>return beauty;</h>
