@@ -11,14 +11,120 @@ require "bc-weather-lib.pl";
 # starting to store all my private pws, etc, in a single file
 require "/home/barrycarter/bc-private.pl";
 
-$ship = read_file("/home/barrycarter/BCGIT/sample-data/SHIPS/sn.0001.txt");
+$ship = read_file("/home/barrycarter/BCGIT/sample-data/DBUOY/sn.0005.txt");
 
-while ($ship=~s/BBXX\s*(.*?)\s*\=//s) {
+while ($ship=~s/ZZYY\s*(.*?)\s*\=//s) {
   $i = $1;
   $i=~s/\s+/ /isg;
   debug("OBS: $i");
-  %rethash = parse_ship($i);
-  print "$rethash{latitude} $rethash{longitude}\n";
+  %rethash = parse_buoy($i);
+  debug("RET:", %rethash);
+#  print "$rethash{latitude} $rethash{longitude}\n";
+}
+
+=item parse_buoy($report)
+
+Parses a BUOY report (in FM18 format) from
+http://weather.noaa.gov/pub/SL.us008001/DF.an/DC.sfmar/DS.dbuoy/,
+based on
+http://www.wmo.int/pages/prog/www/WMOCodes/Manual/Volume-I-selection/Sel2.pdf,
+returning a hash of data.
+
+Note: reports may have multiple lines, but $report should be a single line
+
+=cut
+
+sub parse_buoy {
+  my($report) = @_;
+  my(%rethash) = ();
+
+  # TODO: it's probably ok to change / to 0
+  $report=~s%/%0%isg;
+
+  # we ignore sections 2+ entirely
+  $report=~s/\s+222\d\d.*$//isg;
+
+  # split report into chunks
+  my(@chunks) = split(/\s+/, $report);
+
+  debug("CHUNKS",@chunks);
+
+  # the first few elements are fixed
+  # TODO: this format differs slightly from PDF file, ponder
+  my($id, $date, $time, $lat, $lon, $quality) = @chunks;
+
+  # date is in DDMMY format
+  unless ($date=~/^(\d{2})(\d{2})(\d)$/) {return "BADDATE: $date";}
+  # TODO: don't hardcode 2010 below
+  my($year, $month, $day) = (2010+$3, $2, $1);
+
+  # time in HHMMX format, where X is wind speed unit
+  unless ($time=~/^(\d{2})(\d{2})(\d)$/) {return "BADTIME: $time";}
+  my($hour, $minute) = ($1, $2);
+  my($wsm) = $3;
+
+  # latitude is Qxxxxx, where xxxxx=lat*1000
+  unless ($lat=~/^(\d)(\d{5})$/) {return "BADLAT: $lat";}
+  my($quadrant) = $1;
+  $lat = $2/1000;
+
+  # lon is just lon*1000
+  unless ($lon=~/^(\d{6})$/) {return "BADLON: $lon";}
+  $lon /= 1000;
+
+  # correct latitude/longitude for quadrant
+  if ($quadrant==5 || $quadrant==7) {$lon*=-1;}
+  if ($quadrant==3 || $quadrant==5) {$lat*=-1;}
+
+  # and put into results
+  $rethash{id} = $id;
+  $rethash{latitude} = $lat;
+  $rethash{longitude} = $lon;
+  $rethash{time} = "$year-$month-$day $hour:$minute";
+
+  # nuke until section 111
+  while (@chunks && (shift(@chunks)!~/^111\d\d/)) {}
+
+  for $i (@chunks) {
+    # only care about temperature/pressure/wind
+    unless ($i=~/^[0124]\d{4}$/) {next;}
+
+    debug("CHUNK: $i");
+
+    # temperature (1xttt, x=sign, ttt=temperature*10 Celsius)
+    if ($i=~/^1(0|1)(\d{3})/) {
+      debug("SUB: $1, $2");
+      debug($2/10, 0.5<=>$1);
+      $rethash{temperature} = $2/10*(0.5<=>$1);
+      next;
+    }
+
+    # dewpoint (2xttt, same convention as temperature)
+    if ($i=~/^2(0|1)(\d{3})/) {
+      $rethash{dewpoint} = $2/10*(0.5<=>$1);
+      next;
+    }
+
+    # humidity (29xxx, alternative to dewpoint, xxx = humidity%*10)
+    if ($i=~/^29(\d{3})/) {
+      $rehash{humidity} = $1/100;
+    }
+
+    # pressure (4xxxx) where xxxx is hectopascals*10 last four digits
+    if ($i=~/4(\d{4})$/) {
+      $rethash{pressure} = ($1+($1<5000?10000:0))/10;
+      next;
+    }
+
+    # wind direction and speed
+    if ($i=~/0(\d{2})(\d{2})$/) {
+      ($rethash{winddir}, $rethash{windspeed}) = ($1*10,$2);
+      # if wind speed was given in m/s, convert to knots
+      if ($wsm==0 || $wsm==1) {$rethash{windspeed} *= 1.9438445;}
+    }
+
+  }
+  return %rethash;
 }
 
 die "TESTING";
