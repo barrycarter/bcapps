@@ -5,4 +5,4 @@
 
 print "Content-type: image/jpeg\n\n";
 
-system("cat /sites/TEST/moon.png");
+system("cat /sites/TEST/testpattern.png");
