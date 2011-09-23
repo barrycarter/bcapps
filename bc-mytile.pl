@@ -9,9 +9,9 @@ require "bclib.pl";
 # cheap hack
 $str = << "MARK";
 new
-size 500,500
+size 200,200
 setpixel 0,0,0,0,0
-string 255,255,255,100,100,small,<query>$ENV{QUERY_STRING}</query>
+string 255,255,255,0,100,small,$ENV{QUERY_STRING}
 MARK
 ;
 
