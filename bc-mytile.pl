@@ -3,6 +3,20 @@
 # if you visit test.barrycarter.info/gettile.php this is what returns
 # the image you get
 
-print "Content-type: image/jpeg\n\n";
+# cheap hack
+$str = << "MARK";
+new
+size 500,500
+setpixel 0,0,0,0,0
+string 255,255,255,100,100,small,hello
+MARK
+;
 
-system("cat /sites/TEST/testpattern.png");
+open(A,"|fly -q -o /tmp/test.gif");
+print A $str;
+close(A);
+
+print "Content-type: image/gif\n\n";
+
+system("cat /tmp/test.gif");
+
