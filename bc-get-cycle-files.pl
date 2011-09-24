@@ -1,32 +1,18 @@
 #!/bin/perl
 
+# 23 Sep 2011: daemonizing
 # visit URLs for NOAA cycle files and download new ones
 
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
+require "bc-weather-lib.pl";
 
-# if there is one of me already running, exit quietly
-# $0 is imperfect here, in case of path diffs?
-$res = system("pgrep $0");
-unless ($res) {exit();}
+# fields that weather.db has (could also use sqlitecols, hmmm)
+@fields = ("type", "id", "latitude", "longitude", "cloudcover", "temperature",
+"dewpoint", "pressure", "time", "winddir", "windspeed", "gust",
+"timestamp", "comment");
 
-# I tend to use up CPU, so renice myself
-system("renice 19 -p $$");
-
-defaults("mode=devel&root=/usr/local/etc/cycle");
-
-# different options depending on mode
-# THOUGHT: should this be in bclib?
-if ($globopts{mode} eq "prod") {
-  # never cache or debug in production
-  $globopts{nocache}=1;
-  $globopts{debug}=0;
-} elsif ($globopts{mode} eq "devel") {
-  # debug in devel
-  $globopts{debug}=1;
-} else {
-  die "MODE required";
-}
+$root = "/usr/local/etc/cycle";
 
 # the URLs and what programs to run after downloading new files
 # (currently, just downloads and does nothing)
@@ -45,10 +31,10 @@ for $i (sort keys %urls) {
   $type=uc($1);
 
   # these directories must already exist
-  dodie(qq%chdir("$globopts{root}/$type/")%);
+  dodie(qq%chdir("$root/$type/")%);
 
-  # download directory of files (cache if in development)
-  cache_command("curl -R -m 300 -s -o files.txt $i","age=300");
+  # download directory of files
+  cache_command("curl -R -m 300 -s -o files.txt $i");
 
   # look at files.txt to see which cycle files we need
   $list = read_file("files.txt");
@@ -76,27 +62,92 @@ for $i (sort keys %urls) {
     if (abs($loctime-$remtime) <= 2*3600) {next;}
 
     # The cycle file I have is stale, so get fresh copy
-    push(@commands, "curl -R -m 300 -s -o $globopts{root}/$type/$file $i/$file");
+    push(@commands, "curl -R -m 300 -s -o $root/$type/$file $i/$file");
     # keep track of the file I'm downloading; I'll need it for parse-metar
-    # TODO: need to generalize this for SYNOP/BUOY/etc
-    debug("TYPE: $type");
-    if ($type eq "METAR") {push(@metar, "$globopts{root}/$type/$file");}
+    push(@files, "$root/$type/$file");
   }
 }
 
 # run commands using gnu parallel
-
 $commands = join("\n",@commands);
 write_file($commands, "commands");
-# ARGH: new version of parallel defaults to "-j 1"
 ($out, $err, $stat) = cache_command("parallel -j 20 < commands");
 
-debug("METAR IS",@metar);
+warn "TESTING";
 
-# now, run bc-parse-metar.pl
-# TODO: this can be generalized and xarg'd
-for $i (@metar) {
-  debug("RUNNING: parse-metar on $i");
-  system("bc-parse-metar.pl --debug $i 1> /tmp/metar-out.txt 2> /tmp/metar-err.txt");
+@files = ("/usr/local/etc/cycle/SYNOP/sn.0029.txt",
+	  "/usr/local/etc/cycle/DBUOY/sn.0198.txt",
+	  "/usr/local/etc/cycle/SHIPS/sn.0081.txt",
+	  "/usr/local/etc/cycle/METAR/sn.0199.txt"
+	  );
+
+# go through files
+
+for $i (@files) {
+  debug("I: $i");
+
+  # what type (not sure why I get the double slash sometimes)
+  $i=~/\/([^\/]*?)\/sn\.\d+\.txt$/;
+  my($type) =  lc($1);
+  debug("TYPE: $type");
+
+  # handle
+  if ($type eq "metar") {
+    handle_metar($i);
+  } elsif ($type eq "ships") {
+    handle_ship($i);
+  } elsif ($type eq "dbuoy") {
+    handle_buoy($i);
+  } elsif ($type eq "synop") {
+    debug("Not currently handling SYNOP");
+  } else {
+    warnlocal("Can't handle: $type");
+  }
 }
 
+# TODO: use entire command line, not just $0
+# TODO: restore below
+# sleep(10);
+# exec("$0 --debug");
+
+# note: all routines below hardcode, which is ok, since they're not
+# intended to be general
+
+sub handle_metar {}
+
+# trivial wrapper around parse_ship
+sub handle_ship {
+  my($file) = @_;
+  my($data) = read_file($file);
+  my(@queries);
+  while ($data=~s/BBXX\s*(.*?)\s*\=//s) {
+    $i = $1;
+    $i=~s/\s+/ /isg;
+    my(%rethash) = parse_ship($i);
+    # convery hash to query
+#    my($query) = hash2query(%rethash);
+    push(@queries, hash2query(%rethash));
+  }
+
+  debug(@queries);
+
+}
+
+sub handle_buoy {}
+# below not yet used
+sub handle_synop {}
+
+# convert hash to query (trivial)
+sub hash2query {
+  my(%hash) = @_;
+  my(@vals);
+  debug("HASH2QUERY CALLED, fileds is", @fields);
+
+  for $i (@fields) {push(@vals, "'$hash{$i}'");}
+
+  my($keys) = join(", ", @fields);
+  my($vals) = join(", ", @vals);
+
+  return "REPLACE INTO weather ($keys) VALUES ($vals)",
+    "REPLACE INTO nowweather ($keys) VALUES ($vals)";
+}

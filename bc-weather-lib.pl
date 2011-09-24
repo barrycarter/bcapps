@@ -17,6 +17,9 @@ sub parse_ship {
   my($report) = @_;
   my(%rethash) = ();
 
+  # the whole thing
+  $rethash{observation} = $report;
+
   # we ignore section 2 entirely
   $report=~s/\s+222\d\d.*$//isg;
 
