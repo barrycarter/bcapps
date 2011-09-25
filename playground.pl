@@ -5,11 +5,27 @@
 
 # chunks are normally separated with 'die "TESTING";'
 
+push(@INC, "/usr/local/lib");
 require "bclib.pl";
 require "bc-astro-lib.pl";
 require "bc-weather-lib.pl";
 # starting to store all my private pws, etc, in a single file
 require "/home/barrycarter/bc-private.pl";
+
+chdir("/home/barrycarter/BCINFO/sites/DATA/");
+print "Content-type: text/plain\n\n";
+print join(",",overhead_sky())."\n";
+
+# the latitude/longitude where the sun or moon is overhead
+sub overhead_sky {
+  ($ra, $dec) = position("sun", $now);
+  $sdm = gmst($now);
+  $dege = ($ra-$sdm)*15;
+  ($lat, $lon) = ($dec, $dege);
+  return ($lat, $lon);
+}
+
+die "TESTING";
 
 $ship = read_file("/home/barrycarter/BCGIT/sample-data/SHIPS/sn.0005.txt");
 

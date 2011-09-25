@@ -184,7 +184,7 @@ sub transact {
   my(@queries) = @_;
   unshift(@queries, "BEGIN");
   push(@queries, "COMMIT");
-  my($now) = stardate().$$;
+  my($now) = stardate(time()).$$;
   write_file(join(";\n",@queries).";\n", "../commands.$now");
   system("sqlite3 ../weather.db < ../commands.$now 1> ../$now.out 2> ../$now.err");
 }

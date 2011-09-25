@@ -1,0 +1,27 @@
+
+<script type="text/javascript">
+
+function init() {
+  x = new XMLHttpRequest();
+  x.onreadystatechange = handler;
+  x.open('GET', 'http://test.barrycarter.info/playground.pl');
+  x.send();
+}
+
+function handler() {
+  if(x.readyState == 4 && x.status == 200) {
+   rt = x.responseText;
+   arr = rt.split(",");
+   alert("RT: " + arr[0] + "and" + arr[1]);
+   x = new XMLHttpRequest();
+  alert("X IS NOW: " + x);
+   x.onreadystatechange = handler;
+   x.open('GET', 'http://test.barrycarter.info/playground.pl');
+   x.send();
+  }
+}
+
+</script>
+
+<body onload="init()">
+
