@@ -8,11 +8,13 @@ require "bclib.pl";
 require "bc-weather-lib.pl";
 
 # fields that weather.db has (could also use sqlitecols, hmmm)
+# timestamp intentionally not included since it's auto-filled
 @fields = ("type", "id", "latitude", "longitude", "cloudcover", "temperature",
-"dewpoint", "pressure", "time", "winddir", "windspeed", "gust",
-"timestamp", "comment");
+"dewpoint", "pressure", "time", "winddir", "windspeed", "gust", "observation",
+"comment");
 
 $root = "/usr/local/etc/cycle";
+
 
 # the URLs and what programs to run after downloading new files
 # (currently, just downloads and does nothing)
@@ -73,13 +75,12 @@ $commands = join("\n",@commands);
 write_file($commands, "commands");
 ($out, $err, $stat) = cache_command("parallel -j 20 < commands");
 
-warn "TESTING";
-
-@files = ("/usr/local/etc/cycle/SYNOP/sn.0029.txt",
-	  "/usr/local/etc/cycle/DBUOY/sn.0198.txt",
-	  "/usr/local/etc/cycle/SHIPS/sn.0081.txt",
-	  "/usr/local/etc/cycle/METAR/sn.0199.txt"
-	  );
+# warn "TESTING";
+# @files = ("/usr/local/etc/cycle/SYNOP/sn.0029.txt",
+#	  "/usr/local/etc/cycle/DBUOY/sn.0198.txt",
+#	  "/usr/local/etc/cycle/SHIPS/sn.0081.txt",
+#	  "/usr/local/etc/cycle/METAR/sn.0199.txt"
+#	  );
 
 # go through files
 
@@ -105,35 +106,62 @@ for $i (@files) {
   }
 }
 
+# rsync (uses private key)
+system("rsync ../weather.db root\@barrycarter.info:/sites/DB/weather.db.new");
+system("ssh root\@barrycarter.info 'cd /sites/DB; mv weather.db weather.db.old; mv weather.db.new weather.db'");
+
 # TODO: use entire command line, not just $0
-# TODO: restore below
-# sleep(10);
-# exec("$0 --debug");
+sleep(10);
+exec("$0 --debug");
 
 # note: all routines below hardcode, which is ok, since they're not
 # intended to be general
 
-sub handle_metar {}
+# thin wrapper around parse_metar
+sub handle_metar {
+  my($file) = @_;
+  debug("HANDLE_METAR($file)");
+  my($data) = read_file($file);
+
+  for $i (split(/\n/, $data)) {
+    # ignore empty, comments, NIL=
+    if ($i=~/\#|^\s*$|^\s*NIL\=$/) {next;}
+    $i=~s/^(METAR|SPECI)\s*//isg;
+    push(@queries, hash2query(parse_metar($i)));
+  }
+
+  transact(@queries);
+}
 
 # trivial wrapper around parse_ship
 sub handle_ship {
   my($file) = @_;
+  debug("HANDLE_SHIP($file)");
   my($data) = read_file($file);
   my(@queries);
   while ($data=~s/BBXX\s*(.*?)\s*\=//s) {
     $i = $1;
     $i=~s/\s+/ /isg;
-    my(%rethash) = parse_ship($i);
-    # convery hash to query
-#    my($query) = hash2query(%rethash);
-    push(@queries, hash2query(%rethash));
+    push(@queries, hash2query(parse_ship($i)));
   }
 
-  debug(@queries);
-
+  transact(@queries);
 }
 
-sub handle_buoy {}
+sub handle_buoy {
+  my($file) = @_;
+  debug("HANDLE_BUOY($file)");
+  my($data) = read_file($file);
+  my(@queries);
+  while ($data=~s/ZZYY\s*(.*?)\s*\=//s) {
+    $i = $1;
+    $i=~s/\s+/ /isg;
+    push(@queries, hash2query(parse_ship($i)));
+  }
+
+  transact(@queries);
+}
+
 # below not yet used
 sub handle_synop {}
 
@@ -141,8 +169,7 @@ sub handle_synop {}
 sub hash2query {
   my(%hash) = @_;
   my(@vals);
-  debug("HASH2QUERY CALLED, fileds is", @fields);
-
+ 
   for $i (@fields) {push(@vals, "'$hash{$i}'");}
 
   my($keys) = join(", ", @fields);
@@ -150,4 +177,14 @@ sub hash2query {
 
   return "REPLACE INTO weather ($keys) VALUES ($vals)",
     "REPLACE INTO nowweather ($keys) VALUES ($vals)";
+}
+
+# send bunch of queries to weather.db in transaction
+sub transact {
+  my(@queries) = @_;
+  unshift(@queries, "BEGIN");
+  push(@queries, "COMMIT");
+  my($now) = stardate().$$;
+  write_file(join(";\n",@queries).";\n", "../commands.$now");
+  system("sqlite3 ../weather.db < ../commands.$now 1> ../$now.out 2> ../$now.err");
 }

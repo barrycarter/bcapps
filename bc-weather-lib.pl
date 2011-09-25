@@ -249,9 +249,9 @@ sub parse_metar {
   $year+=1900;
 
   # if report date is in future, subtract one month
-  debug("CURRENT TIME: ",time());
-  debug("$year-$mon-$day $hour:$min");
-  debug("REPORT TIME:", str2time("$year-$mon-$day $hour:$min UTC"));
+#  debug("CURRENT TIME: ",time());
+#  debug("$year-$mon-$day $hour:$min");
+#  debug("REPORT TIME:", str2time("$year-$mon-$day $hour:$min UTC"));
 
   if (str2time("$year-$mon-$day $hour:$min UTC") > time()) {
     $mon--;

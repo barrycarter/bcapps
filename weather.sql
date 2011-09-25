@@ -13,6 +13,7 @@ CREATE TABLE weather (
  winddir, -- wind direction, in degrees, 0..360
  windspeed, -- in miles per hour
  gust, -- gust speed in miles per hour
+ observation, -- the entire raw observation
  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
  comment
 );
@@ -35,8 +36,9 @@ CREATE TABLE nowweather (
  winddir, -- wind direction, in degrees, 0..360
  windspeed, -- in miles per hour
  gust, -- gust speed in miles per hour
+ observation, -- the entire raw observation
  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
  comment
 );
 
-CREATE UNIQUE INDEX i1 ON nowweather(type, id);
+CREATE UNIQUE INDEX i2 ON nowweather(type, id);
