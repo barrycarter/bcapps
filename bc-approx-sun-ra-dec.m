@@ -32,15 +32,21 @@ Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
 (* planet xyz position data *)
 
-<</home/barrycarter/20110916/final-pos-500-0-199.txt;
+<</home/barrycarter/20110916/final-pos-500-0-301.txt;
 
 (* planet199 is unmanagely large at 700K+ entries at least on my machine *)
 
-p1 = planet199[[1;;Length[planet199];;10]];
+p0 = planet301;
+p1 = p0[[1;;Length[p0];;10]];
 px = Table[x[[3]],{x,p1}];
-py = Table[x[[4]],{x,p1}]
+py = Table[x[[4]],{x,p1}];
+pz = Table[x[[5]],{x,p1}];
+
+superfour[px,1]
 
 pfx = refine[px, 0 &]
+pfy = refine[px, 0 &]
+pfz = refine[px, 0 &]
 
 pfx = superfourier[px]
 pfx2 = refine[px, pfx]

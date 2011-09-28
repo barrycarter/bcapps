@@ -3,6 +3,13 @@
 showit := Module[{}, 
 Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
+
+
+
+
+
+
+
 (* from http://hpiers.obspm.fr/eop-pc/models/constants.html *)
 ecliptic = ArcSin[0.397776995]
 mecliptic = {{1,0,0}, {0, Cos[ecliptic], -Sin[ecliptic]},
