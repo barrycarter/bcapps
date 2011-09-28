@@ -12,6 +12,20 @@ require "bc-weather-lib.pl";
 # starting to store all my private pws, etc, in a single file
 require "/home/barrycarter/bc-private.pl";
 
+
+use XML::Simple;
+
+$xml = new XML::Simple;
+$data = $xml->XMLin("/tmp/output2.xml");
+%data = %{$data};
+
+debug("DATA:", unfold(@{$data{reports}{buoy}}[5]));
+
+# debug("ALL: $all");
+
+
+die "TESTING";
+
 chdir("/home/barrycarter/BCINFO/sites/DATA/");
 print "Content-type: text/plain\n\n";
 print join(",",overhead_sky())."\n";

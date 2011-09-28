@@ -75,12 +75,14 @@ $commands = join("\n",@commands);
 write_file($commands, "commands");
 ($out, $err, $stat) = cache_command("parallel -j 20 < commands");
 
-# warn "TESTING";
+warn "TESTING";
 # @files = ("/usr/local/etc/cycle/SYNOP/sn.0029.txt",
 #	  "/usr/local/etc/cycle/DBUOY/sn.0198.txt",
 #	  "/usr/local/etc/cycle/SHIPS/sn.0081.txt",
 #	  "/usr/local/etc/cycle/METAR/sn.0199.txt"
 #	  );
+
+@files = ("/usr/local/etc/cycle/DBUOY/sn.0197.txt");
 
 # go through files
 
@@ -109,6 +111,10 @@ for $i (@files) {
 # rsync (uses private key)
 system("rsync ../weather.db root\@barrycarter.info:/sites/DB/weather.db.new");
 system("ssh root\@barrycarter.info 'cd /sites/DB; mv weather.db weather.db.old; mv weather.db.new weather.db'");
+
+warn "TESTING";
+print "HIT RETURN WHEN READY\n";
+<STDIN>;
 
 # TODO: use entire command line, not just $0
 sleep(10);
@@ -156,7 +162,7 @@ sub handle_buoy {
   while ($data=~s/ZZYY\s*(.*?)\s*\=//s) {
     $i = $1;
     $i=~s/\s+/ /isg;
-    push(@queries, hash2query(parse_ship($i)));
+    push(@queries, hash2query(parse_buoy($i)));
   }
 
   transact(@queries);

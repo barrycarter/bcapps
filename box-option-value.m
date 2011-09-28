@@ -76,8 +76,3 @@ quants[p0_, v_, p1_, p2_, t1_, t2_] :=
 
 bincallvalue[p0_, v_, s_, e_] =
  1-CDF[NormalDistribution[Log[p0],Sqrt[e/365.2425/24]*v], Log[s]]
-
-
-
-
-

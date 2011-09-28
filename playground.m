@@ -3,6 +3,26 @@
 showit := Module[{}, 
 Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
+(* from http://hpiers.obspm.fr/eop-pc/models/constants.html *)
+ecliptic = ArcSin[0.397776995]
+mecliptic = {{1,0,0}, {0, Cos[ecliptic], -Sin[ecliptic]},
+ {0, Sin[ecliptic], Cos[ecliptic]}}
+
+(* positions at 2455833.933333333 *)
+
+earth = {1.485770387408892*10^+08, 1.494799659360260*10^+07,
+3.747770517099129*10^+02}
+
+jupiter = {6.257010398453077*10^+08, 3.974473247851866*10^+08,
+-1.566407515423084*10^+07}
+
+vec1 = jupiter - earth
+vec = mecliptic . (vec1)
+
+ArcSin[vec[[3]]/Norm[vec]]
+
+(* -1.46448 in degrees *)
+
 
 (* figure out 1900 GMT today and next Friday *)
 

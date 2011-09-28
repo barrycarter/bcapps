@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<outer prop="foo">
+some cdata
+<inner key="val">
+more cdata
+</inner>
+other cdata
+</outer>
