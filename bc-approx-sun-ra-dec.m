@@ -32,20 +32,60 @@ Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
 (* planet xyz position data *)
 
-<</home/barrycarter/20110916/final-pos-500-0-301.txt;
+<</home/barrycarter/20110916/final-pos-500-0-199.txt;
 
 (* planet199 is unmanagely large at 700K+ entries at least on my machine *)
 
-p0 = planet301;
+(* TODO: use Unix command to choose every 10th line, not Mathematica *)
+
+p0 = planet199;
 p1 = p0[[1;;Length[p0];;10]];
 Clear[p0];
-Clear[planet301];
+Clear[planet199];
 px = Table[x[[3]],{x,p1}];
 py = Table[x[[4]],{x,p1}];
 pz = Table[x[[5]],{x,p1}];
 
-superleft[px,3]/Max[Abs[px]]
-ListPlot[%, PlotRange->All]
+ListPlot[superleft[px,1]/Max[Abs[px]], PlotRange->All]
+ListPlot[superleft[px,3]/Max[Abs[px]], PlotRange->All]
+ListPlot[superleft[px,5]/Max[Abs[px]], PlotRange->All]
+ListPlot[superleft[px,7]/Max[Abs[px]], PlotRange->All]
+ListPlot[superleft[px,9]/Max[Abs[px]], PlotRange->All]
+ListPlot[superleft[px,13]/Max[Abs[px]], PlotRange->All]
+ListPlot[superleft[px,20]/Max[Abs[px]], PlotRange->All]
+ListPlot[superleft[px,25]/Max[Abs[px]], PlotRange->All]
+ListPlot[superleft[px,30]/Max[Abs[px]], PlotRange->All]
+
+t7 = Table[Max[Abs[superleft[px,i]]]/Max[Abs[px]], {i,1,16}]
+
+ListPlot[t7, PlotJoined->True, PlotRange->All, AxesOrigin->{0,0}]
+
+t8 = Table[superfour[px,1][i], {i,1,10000}]
+
+Chop[TrigFactor[superfour[px,30][x]]]
+Chop[TrigFactor[superfour[px,2][x]]]
+Chop[TrigFactor[superfour[px,3][x]]]
+Chop[TrigFactor[superfour[px,4][x]]]
+Chop[TrigFactor[superfour[px,5][x]]]
+Chop[TrigFactor[superfour[px,6][x]]]
+Chop[TrigFactor[superfour[px,7][x]]]
+Chop[TrigFactor[superfour[px,8][x]]]
+Chop[TrigFactor[superfour[px,15][x]]]
+Chop[TrigFactor[superfour[px,20][x]]]
+Chop[TrigFactor[superfour[px,30][x]]]
+Chop[TrigFactor[superfour[px,50][x]]]
+Chop[TrigFactor[superfour[px,70][x]]]
+
+Chop[TrigFactor[superfour[py,10][x]]]
+Chop[TrigFactor[superfour[pz,10][x]]]
+
+Chop[TrigFactor[superfour[py,100][x]]]
+Chop[TrigFactor[superfour[pz,100][x]]]
+
+Log[Abs[superleft[px,1]/Max[Abs[px]]]]
+Log[Abs[superleft[px,70]/Max[Abs[px]]]]
+
+ListPlot[{t8, px}, PlotStyle -> {PointSize[0.0001]}]
 
 superfour[px,1]
 
