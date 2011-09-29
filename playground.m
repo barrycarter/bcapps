@@ -3,10 +3,27 @@
 showit := Module[{}, 
 Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
+t1 = Table[Sin[3/2*2*Pi*x/10000], {x,1,10000}];
+t2 = Table[Sin[20*2*Pi*x/10000], {x,1,10000}];
+t3 = N[t1*t2]
+
+t3 = N[Table[Sin[3/2*2*Pi*x/10000]  * Sin[20*2*Pi*x/10000], {x,1,10000}]];
+
+t3 = N[Table[Sin[n*2*Pi*x/10000]  * Sin[m*2*Pi*x/10000], {x,1,10000}]];
+t3 = Table[Sin[n*2*Pi*x/10000]  * Sin[m*2*Pi*x/10000], {x,1,10000}];
+t3 = Table[Sin[n*2*Pi*x/10000]  * Sin[m*2*Pi*x/10000], {x,1,100}];
+
+t4 = Fourier[t3]
+
+ListPlot[Abs[t4], PlotRange->All]
+
+Select[t4, # != 0 &]
 
 
-
-
+Simplify[Sin[n*x]*Sin[m*x], {Element[x,Reals]}]
+TrigFactor[Sin[n*x]*Sin[m*x]]
+TrigReduce[Sin[n*x]*Sin[m*x]]
+Log[Sin[n*x]*Sin[m*x]]
 
 
 

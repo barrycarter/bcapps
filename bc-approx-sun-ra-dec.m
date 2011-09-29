@@ -38,9 +38,14 @@ Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
 p0 = planet301;
 p1 = p0[[1;;Length[p0];;10]];
+Clear[p0];
+Clear[planet301];
 px = Table[x[[3]],{x,p1}];
 py = Table[x[[4]],{x,p1}];
 pz = Table[x[[5]],{x,p1}];
+
+superleft[px,3]/Max[Abs[px]]
+ListPlot[%, PlotRange->All]
 
 superfour[px,1]
 
