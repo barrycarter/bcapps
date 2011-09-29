@@ -17,8 +17,9 @@ mecliptic = {{1,0,0}, {0, Cos[ecliptic], -Sin[ecliptic]},
 http://stackoverflow.com/questions/4463481/continuous-fourier-transform-on-discrete-data-using-mathematica
 *)
 
-superfourier[data_] :=Module[{pdata, n, f, pos, fr, frpos, freq, phase, coeff},
- pdata = data - Mean[data];
+superfourier[data_] :=Module[
+ {pdata, n, f, pos, fr, frpos, freq, phase, coeff, estmean},
+ pdata = data;
  n = Length[data];
  f = Abs[Fourier[pdata]];
  pos = Ordering[-f, 1][[1]] - 1;
@@ -28,7 +29,9 @@ superfourier[data_] :=Module[{pdata, n, f, pos, fr, frpos, freq, phase, coeff},
  freq = (pos + 2*(frpos - 1)/n);
  phase = Sum[Exp[freq*2*Pi*I*x/n]*pdata[[x]], {x,1,n}];
  coeff =  N[{Mean[data], 2*Abs[phase]/n, freq*2*Pi/n, Arg[phase]}];
- Function[x, Evaluate[coeff[[1]] + coeff[[2]]*Cos[coeff[[3]]*x - coeff[[4]]]]]
+ estmean = Sum[coeff[[2]]*Cos[coeff[[3]]*x - coeff[[4]]],{x,1,n}]/n;
+ Function[x, Evaluate[coeff[[1]] -estmean +
+  coeff[[2]]*Cos[coeff[[3]]*x - coeff[[4]]]]]
 ]
 
 (* given data and a function that approximates that data, find an even

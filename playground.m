@@ -3,8 +3,19 @@
 showit := Module[{}, 
 Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
-superfourier[data_] :=Module[{pdata, n, f, pos, fr, frpos, freq, phase, coeff},
- pdata = data - Mean[data];
+t1 = N[Table[Sin[3/2*2*Pi*x/10000], {x,1,10000}]];
+t2 = N[Table[Sin[20*2*Pi*x/10000], {x,1,10000}]];
+t3 = N[t1*t2]
+t4 = N[Table[Sin[2*Pi*x/200], {x,1,200}]];
+t5 = N[Table[Sin[20*2*Pi*x/10000], {x,1,9750}]];
+t4 = N[Table[Sin[3.17*2*Pi*x/200], {x,1,200}]];
+
+superfourier[t4]
+superfourier2[t4]
+
+superfourier2[data_] :=Module[
+ {pdata, n, f, pos, fr, frpos, freq, phase, coeff, estmean},
+ pdata = data;
  n = Length[data];
  f = Abs[Fourier[pdata]];
  pos = Ordering[-f, 1][[1]] - 1;
@@ -14,13 +25,14 @@ superfourier[data_] :=Module[{pdata, n, f, pos, fr, frpos, freq, phase, coeff},
  freq = (pos + 2*(frpos - 1)/n);
  phase = Sum[Exp[freq*2*Pi*I*x/n]*pdata[[x]], {x,1,n}];
  coeff =  N[{Mean[data], 2*Abs[phase]/n, freq*2*Pi/n, Arg[phase]}];
- Function[x, Evaluate[coeff[[1]] + coeff[[2]]*Cos[coeff[[3]]*x - coeff[[4]]]]]
+ estmean = Sum[coeff[[2]]*Cos[coeff[[3]]*x - coeff[[4]]],{x,1,n}]/n;
+ Function[x, Evaluate[coeff[[1]] -estmean +
+  coeff[[2]]*Cos[coeff[[3]]*x - coeff[[4]]]]]
 ]
 
-t1 = N[Table[Sin[3/2*2*Pi*x/10000], {x,1,10000}]];
-t2 = N[Table[Sin[20*2*Pi*x/10000], {x,1,10000}]];
-t3 = N[t1*t2]
-t4 = N[Table[Sin[2*Pi*x/200], {x,1,200}]];
+Integrate[Sin[x], {x,0,2*Pi*3.17}]
+Integrate[Cos[x], {x,0,2*Pi*3.17}]
+Integrate[Cos[1.49867-x], {x,0,2*Pi*3.17}]
 
 superfour[t2,1][7]
 
