@@ -30,8 +30,23 @@ superfourier[data_] :=Module[
  phase = Sum[Exp[freq*2*Pi*I*x/n]*pdata[[x]], {x,1,n}];
  coeff =  N[{Mean[data], 2*Abs[phase]/n, freq*2*Pi/n, Arg[phase]}];
  estmean = Sum[coeff[[2]]*Cos[coeff[[3]]*x - coeff[[4]]],{x,1,n}]/n;
- Function[x, Evaluate[coeff[[1]] -estmean +
+ Function[x, Evaluate[coeff[[1]] - estmean +
   coeff[[2]]*Cos[coeff[[3]]*x - coeff[[4]]]]]
+]
+
+superfourier2[data_] :=Module[
+ {pdata, n, f, pos, fr, frpos, freq, phase, coeff},
+ pdata = data;
+ n = Length[data];
+ f = Abs[Fourier[pdata]];
+ pos = Ordering[-f, 1][[1]] - 1;
+ fr = Abs[Fourier[pdata*Exp[2*Pi*I*pos*Range[0,n-1]/n], 
+      FourierParameters -> {0, 2/n}]];
+ frpos = Ordering[-fr, 1][[1]];
+ freq = (pos + 2*(frpos - 1)/n);
+ phase = Sum[Exp[freq*2*Pi*I*x/n]*pdata[[x]], {x,1,n}];
+ coeff =  N[{Mean[data], 2*Abs[phase]/n, freq*2*Pi/n, Arg[phase]}];
+ Function[x, Evaluate[coeff[[1]] + coeff[[2]]*Cos[coeff[[3]]*x - coeff[[4]]]]]
 ]
 
 (* given data and a function that approximates that data, find an even

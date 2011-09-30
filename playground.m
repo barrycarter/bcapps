@@ -3,6 +3,17 @@
 showit := Module[{}, 
 Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
+n = 200;
+data = N[Table[Sin[3.17*2*Pi*x/200], {x, 1, n}]];
+welch = 1 - (2 (Range[n] - (n - 1)/2)/(n + 1))^2;
+fData = Append[Abs[Fourier[welch*data]]^2 / (Plus @@ (welch^2)), 0];
+ListPlot[fData, PlotRange->All]
+fData = (fData + Reverse[fData])/2;
+fData = fData / (Plus @@ fData);
+Log[fData]
+f = Interpolation[Log[fData], InterpolationOrder -> 3];
+Plot[f[x],{x,1,5}]
+
 t1 = N[Table[Sin[3/2*2*Pi*x/10000], {x,1,10000}]];
 t2 = N[Table[Sin[20*2*Pi*x/10000], {x,1,10000}]];
 t3 = N[t1*t2]
@@ -10,25 +21,25 @@ t4 = N[Table[Sin[2*Pi*x/200], {x,1,200}]];
 t5 = N[Table[Sin[20*2*Pi*x/10000], {x,1,9750}]];
 t4 = N[Table[Sin[3.17*2*Pi*x/200], {x,1,200}]];
 
-superfourier[t4]
-superfourier2[t4]
+t4m = t4[[1;;Length[t4];;10]]
+i1 = Interpolation[t4m, InterpolationOrder->16]
 
-superfourier2[data_] :=Module[
- {pdata, n, f, pos, fr, frpos, freq, phase, coeff, estmean},
- pdata = data;
- n = Length[data];
- f = Abs[Fourier[pdata]];
- pos = Ordering[-f, 1][[1]] - 1;
- fr = Abs[Fourier[pdata*Exp[2*Pi*I*pos*Range[0,n-1]/n], 
-      FourierParameters -> {0, 2/n}]];
- frpos = Ordering[-fr, 1][[1]];
- freq = (pos + 2*(frpos - 1)/n);
- phase = Sum[Exp[freq*2*Pi*I*x/n]*pdata[[x]], {x,1,n}];
- coeff =  N[{Mean[data], 2*Abs[phase]/n, freq*2*Pi/n, Arg[phase]}];
- estmean = Sum[coeff[[2]]*Cos[coeff[[3]]*x - coeff[[4]]],{x,1,n}]/n;
- Function[x, Evaluate[coeff[[1]] -estmean +
-  coeff[[2]]*Cos[coeff[[3]]*x - coeff[[4]]]]]
-]
+Plot[i1[x],{x,1,20}]
+
+Table[i1[1+(x-1)/10] - t4[[x]], {x,1,200}]
+
+diffs = Table[t4[[i]] - t4[[i-1]], {i,2,Length[t4]}]
+diff[t_] := Table[t[[i]] - t[[i-1]], {i,2,Length[t]}]
+
+t42 = diff[diff[t4]]
+
+NonlinearModelFit[t4, a*Cos[b*x-c], {{a, 0.983639} ,{b, -0.0992743},
+ {c, -1.49867}}, x]
+
+superfourier[t4]
+
+ListPlot[t4/Max[Abs[t4]]]
+ListPlot[ArcCos[t4/Max[Abs[t4]]]]
 
 Integrate[Sin[x], {x,0,2*Pi*3.17}]
 Integrate[Cos[x], {x,0,2*Pi*3.17}]

@@ -32,7 +32,7 @@ Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
 (* planet xyz position data *)
 
-<</home/barrycarter/20110916/final-pos-500-0-199.txt;
+<<"!bzcat /home/barrycarter/20110916/final-pos-500-0-199.txt.bz2";
 
 (* planet199 is unmanagely large at 700K+ entries at least on my machine *)
 
@@ -45,6 +45,29 @@ Clear[planet199];
 px = Table[x[[3]],{x,p1}];
 py = Table[x[[4]],{x,p1}];
 pz = Table[x[[5]],{x,p1}];
+
+pxsample = px[[1;;Length[px];;1400]]
+
+pxi = Interpolation[pxsample, InterpolationOrder -> 3]
+
+Plot[pxi[x], {x,1,Length[px]/1400}]
+
+pxi1 = Table[pxi[(x-1)/100 + 1], {x,1,Length[px]}]
+
+d1 = Table[pxi[(x-1)/1400 + 1] - px[[x]], {x,1,Length[px]}]
+
+diffs = Table[px[[i]] - px[[i-1]], {i,2,Length[px]}]
+
+
+nlm = NonlinearModelFit[px, a*Cos[b+c*x], { {a,5.6469*10^7}, {b,2.31149},
+ {c, 0.00297621}}, x]
+
+nlm["FitResiduals"]/Max[Abs[px]]
+
+superfourier[nlm["FitResiduals"]]
+
+nlm2 = NonlinearModelFit[px, a*Cos[b+c*x], { {a,7.61125*10^6}, {b,2.31149},
+ {c, 0.00297621}}, x]
 
 ListPlot[superleft[px,1]/Max[Abs[px]], PlotRange->All]
 ListPlot[superleft[px,3]/Max[Abs[px]], PlotRange->All]
@@ -63,6 +86,7 @@ ListPlot[t7, PlotJoined->True, PlotRange->All, AxesOrigin->{0,0}]
 t8 = Table[superfour[px,1][i], {i,1,10000}]
 
 Chop[TrigFactor[superfour[px,30][x]]]
+Chop[TrigFactor[superfour[px,1][x]]]
 Chop[TrigFactor[superfour[px,2][x]]]
 Chop[TrigFactor[superfour[px,3][x]]]
 Chop[TrigFactor[superfour[px,4][x]]]
