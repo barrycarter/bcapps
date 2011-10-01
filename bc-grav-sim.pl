@@ -44,9 +44,26 @@ require "bclib.pl";
 $g = 6.6742867*10**-20;
 
 debug("BEFORE", %earth);
-twobod(\%earth, \%sun);
-twobod(\%earth, \%moon);
+
+for $i (1..86400) {
+  twobod(\%earth, \%sun);
+  twobod(\%earth, \%moon);
+  update_pos(1);
+  debug("EARTHDY: $earth{dy}");
+}
+
 debug("AFTER", %earth);
+
+# update positions (but not velocities) for all objects for $n seconds
+
+sub update_pos {
+  my($n) = @_;
+  for $i (\%sun, \%earth, \%moon) {
+    for $j ("x".."z") {
+      $i->{$j} += $n*$i->{"d$j"};
+    }
+  }
+}
 
 # Given two bodies (hashref), update their positions and velocities
 sub twobod {
@@ -62,8 +79,8 @@ sub twobod {
     # the contribution to d2 from this coordinate
     $dist2 += $vec{$i}**2;
     # update positions for both a and b based on current velocity
-    $a->{$i} += $a->{"d$i"};
-    $b->{$i} += $b->{"d$i"};
+#    $a->{$i} += $a->{"d$i"};
+#    $b->{$i} += $b->{"d$i"};
   }
 
   # change in velocity for objects a and b
@@ -72,8 +89,8 @@ sub twobod {
 #    my($force) = $vec{$i}/$dist2/$dist2*$g*$a->{mass}*$b->{mass};
 #    my($ddi) = -$vec{$i}*$b->{mass}/$dist2/sqrt($dist2)*$g;
 #    debug("FORCE: $force, DD$i: $ddi");
-    $a->{"d$i"} +=  $vec{$i}*$b->{mass}/$dist2/sqrt($dist2)*$g;
-    $b->{"d$i"} += -$vec{$i}*$a->{mass}/$dist2/sqrt($dist2)*$g;
+    $a->{"d$i"} += $vec{$i}*$b->{mass}/$dist2/sqrt($dist2)*$g;
+    $b->{"d$i"} -= $vec{$i}*$a->{mass}/$dist2/sqrt($dist2)*$g;
   }
 }
 
