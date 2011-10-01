@@ -3,6 +3,21 @@
 showit := Module[{}, 
 Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
+(* the two body problem? *)
+
+DSolve[{
+ d2[t] == (x1[t]-x0[t])^2 + (y1[t]-y0[t])^2 + (z1[t]-z0[t])^2,
+ D[x0[t], t,t] == (x1[t]-x0[t])/d2[t],
+ D[y0[t], t,t] == (y1[t]-y0[t])/d2[t],
+ D[z0[t], t,t] == (z1[t]-z0[t])/d2[t],
+ D[x1[t], t,t] == -(x1[t]-x0[t])/d2[t],
+ D[y1[t], t,t] == -(y1[t]-y0[t])/d2[t],
+ D[z1[t], t,t] == -(z1[t]-z0[t])/d2[t]
+}, {x0,y0,z0,x1,y1,z1,d2}, t
+]
+
+
+
 n = 200;
 data = N[Table[Sin[3.17*2*Pi*x/200], {x, 1, n}]];
 welch = 1 - (2 (Range[n] - (n - 1)/2)/(n + 1))^2;

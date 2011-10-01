@@ -43,10 +43,29 @@ require "bclib.pl";
 # gravitational constant in m^3kg^-1s^-2
 $g = 6.6742867*10^-11;
 
-dist(\%earth);
+$dist = dist(\%earth, \%sun);
+
+$f = $g*$earth{mass}*$sun{mass}/$dist**2;
+
+# force in m*kg*s^-2
+
+# acceleration on earth in m*s^-2
+$accel = $f/$earth{mass};
+
+debug("F: $f, ACCEL: $accel");
+
+
 
 # distance between two "objects" (hashrefs)
 sub dist {
   my($a, $b) = @_;
-  debug($a{x});
+  my($dist);
+  for $i ("x".."z") {
+    warn "large numbers messing stuff up";
+    debug("I: $i, ${$a}{$i} vs ${$b}{$i}");
+    my($vec) = (${$a}{$i} - ${$b}{$i})**2;
+    $dist += $vec;
+    debug("DIST: $dist, VEC: $vec");
+  }
+  return sqrt($dist);
 }
