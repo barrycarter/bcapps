@@ -45,11 +45,11 @@ $g = 6.6742867*10**-20;
 
 debug("BEFORE", %earth);
 
-for $i (1..86400) {
-  twobod(\%earth, \%sun);
-  twobod(\%earth, \%moon);
-  update_pos(1);
-  debug("EARTHDY: $earth{dy}");
+for $i (1..2880) {
+  twobod(\%earth, \%sun, 30);
+  twobod(\%earth, \%moon, 30);
+  twobod(\%sun, \%moon, 30);
+  update_pos(30);
 }
 
 debug("AFTER", %earth);
@@ -65,9 +65,9 @@ sub update_pos {
   }
 }
 
-# Given two bodies (hashref), update their positions and velocities
+# Given two bodies (hashref), update their velocities in an $n-second increment
 sub twobod {
-  my($a, $b) = @_;
+  my($a, $b, $n) = @_;
 
   # compute distance squared and vector b-a (from a to b), and update
   # positions based on current velocity
@@ -78,19 +78,13 @@ sub twobod {
     $vec{$i} = $b->{$i} - $a->{$i};
     # the contribution to d2 from this coordinate
     $dist2 += $vec{$i}**2;
-    # update positions for both a and b based on current velocity
-#    $a->{$i} += $a->{"d$i"};
-#    $b->{$i} += $b->{"d$i"};
   }
 
   # change in velocity for objects a and b
   # $vec/sqrt($dist2) is a unit vector
   for $i ("x".."z") {
-#    my($force) = $vec{$i}/$dist2/$dist2*$g*$a->{mass}*$b->{mass};
-#    my($ddi) = -$vec{$i}*$b->{mass}/$dist2/sqrt($dist2)*$g;
-#    debug("FORCE: $force, DD$i: $ddi");
-    $a->{"d$i"} += $vec{$i}*$b->{mass}/$dist2/sqrt($dist2)*$g;
-    $b->{"d$i"} -= $vec{$i}*$a->{mass}/$dist2/sqrt($dist2)*$g;
+    $a->{"d$i"} += $vec{$i}*$b->{mass}/$dist2/sqrt($dist2)*$g*$n;
+    $b->{"d$i"} -= $vec{$i}*$a->{mass}/$dist2/sqrt($dist2)*$g*$n;
   }
 }
 
