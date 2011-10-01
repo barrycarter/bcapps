@@ -43,7 +43,9 @@ require "bclib.pl";
 # gravitational constant in m^3kg^-1s^-2
 $g = 6.6742867*10^-11;
 
-$dist = dist(\%earth, \%sun);
+debug("BEFORE",%earth);
+$dist = twobod(\%earth, \%sun);
+debug("AFTER",%earth);
 
 $f = $g*$earth{mass}*$sun{mass}/$dist**2;
 
@@ -55,17 +57,33 @@ $accel = $f/$earth{mass};
 debug("F: $f, ACCEL: $accel");
 
 
-
-# distance between two "objects" (hashrefs)
-sub dist {
+# Given two bodies (hashref), update their positions and velocities
+sub twobod {
   my($a, $b) = @_;
-  my($dist);
+  # TODO: make sure I change the originals, not copies!
+  my(%a) = %{$a};
+  my(%b) = %{$b};
+
+  debug("ARROW", $b->{x});
+
+  debug("STUFF", $a, $b, \%a, \%b);
+
+  # compute distance squared and vector b-a (from a to b), and update
+  # positions based on current velocity
+  my($dist2);
+  my(%vec);
   for $i ("x".."z") {
-    warn "large numbers messing stuff up";
-    debug("I: $i, ${$a}{$i} vs ${$b}{$i}");
-    my($vec) = (${$a}{$i} - ${$b}{$i})**2;
-    $dist += $vec;
-    debug("DIST: $dist, VEC: $vec");
+    # the $i component of the vector pointing from a to b
+    $vec{$i} = $b{$i} - $a{$i};
+    # the contribution to d2 from this coordinate
+    $dist2 += $vec{$i}**2;
+    # update positions for both a and b based on current velocity
+    $a{$i} += $a{"d$i"};
+    $b{$i} += $b{"d$i"};
   }
-  return sqrt($dist);
+
+  debug("A",%a);
+
+  debug("VEC:",%vec,"DIST",$dist);
+
 }
