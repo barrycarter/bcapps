@@ -15,11 +15,64 @@ require "/home/barrycarter/bc-private.pl";
 
 use XML::Simple;
 
+# system("metafsrc2raw.pl -Fsynop_nws sample-data/SHIPS/sn.0040.txt | metaf2xml.pl -TSYNOP -x /tmp/test1.xml");
+
+# system("metafsrc2raw.pl -Fbuoy_nws sample-data/DBUOY/sn.0040.txt | metaf2xml.pl -TBUOY -x /tmp/test2.xml");
+
 $xml = new XML::Simple;
-$data = $xml->XMLin("/tmp/output2.xml");
+$data = $xml->XMLin("/tmp/test2.xml");
 %data = %{$data};
 
-debug("DATA:", unfold(@{$data{reports}{buoy}}[5]));
+# debug(unfold(@{$data{reports}{buoy}}));
+
+@synop = @{$data{reports}{buoy}};
+
+for $i (@synop) {
+  debug("I: $i");
+  %hash = %{$i};
+#  debug("KEYS", sort keys %hash);
+  debug(unfold($hash{buoyId}{id}));
+#  debug(unfold($i));
+}
+
+
+die "TESTING";
+
+=item metaf2xml
+
+
+
+SHIPS:
+
+$hash{temperature}{air}{temp} = air temperature
+$hash{temperature}{dewpoint} = dew point
+$hash{temperature}{relHumid[1-4]} = relative humidity, computed in 4 diff ways
+$hash{stationPosition} = station position
+$hash{SLP} = sea level pressure (adjusted for altitude)
+$hash{sfcWind} = surface level winds
+$hash{synop_section3}{highestGust}{wind}{speed} = wind gust
+$hash{obsTime}{timeAt} = observation time, day and hour only
+$hash{totalCloudCover}{oktas} = cloud cover (in 8ths)
+$hash{callSign}{id} = ship ID
+
+BUOYS:
+
+$hash{buoy_section1}{temperature}{air}{temp} = air temperature
+$hash{buoy_section1}{temperature}{relHumid1} = relative humidity
+$hash{stationPosition} = station position
+$hash{buoy_section1}{SLP} = sea level pressure (adjusted)
+$hash{buoy_section1}{sfcWind}{wind} = wind speed and direction
+$hash{obsTime}{timeAt} = observation time (hours/minute/month/day/year-unit)
+$hash{buoyId}{id} = buoy ID
+
+
+
+
+
+
+
+
+# For SYNOP REPORTS:
 
 # debug("ALL: $all");
 

@@ -30,7 +30,7 @@ our(%globopts);
 our(@tmpfiles);
 
 # largest possible path
-$ENV{PATH} = "/sw/bin/:/bin/:/usr/bin/:/usr/local/bin/:/usr/X11R6/bin/:/usr/lib/nagios/plugins:/usr/lib:$ENV{HOME}/bin:$ENV{HOME}/PERL";
+$ENV{PATH} = "/opt/metaf2xml/bin/:/sw/bin/:/bin/:/usr/bin/:/usr/local/bin/:/usr/X11R6/bin/:/usr/lib/nagios/plugins:/usr/lib:$ENV{HOME}/bin:$ENV{HOME}/PERL";
 
 =item list2hash(@list)
 
