@@ -19,20 +19,26 @@ use XML::Simple;
 
 # system("metafsrc2raw.pl -Fbuoy_nws sample-data/DBUOY/sn.0040.txt | metaf2xml.pl -TBUOY -x /tmp/test2.xml");
 
+# system("metafsrc2raw.pl -Fsynop_nws sample-data/SYNOP/sn.0040.txt | metaf2xml.pl -TSYNOP -x /tmp/test3.xml");
+
+# system("metafsrc2raw.pl -Fmetaf_nws sample-data/METAR/sn.0038.txt | metaf2xml.pl -x /tmp/test4.xml");
+
 $xml = new XML::Simple;
-$data = $xml->XMLin("/tmp/test2.xml");
+$data = $xml->XMLin("/tmp/test4.xml");
 %data = %{$data};
+
+# debug(unfold($data));
 
 # debug(unfold(@{$data{reports}{buoy}}));
 
-@synop = @{$data{reports}{buoy}};
+@synop = @{$data{reports}{metar}};
 
 for $i (@synop) {
   debug("I: $i");
   %hash = %{$i};
 #  debug("KEYS", sort keys %hash);
-  debug(unfold($hash{buoyId}{id}));
-#  debug(unfold($i));
+ debug(unfold($hash{obsStationId}{id}));
+#   debug(unfold($i));
 }
 
 
@@ -40,9 +46,16 @@ die "TESTING";
 
 =item metaf2xml
 
+METAR:
 
+$hash{temperature}{*} = same as SHIPS/SYNOP
+$hash{QNH} = sea level pressure
+$hash{sfcWind}{wind} = surface level winds, gusts in gustSpeed
+$hash{obsTime}{timeAt} = observation time (hour/minute/day)
+@{$hash{cloud}} = cloud cover (as list)
+$hash{obsStationId}{id} = station ID
 
-SHIPS:
+SHIPS AND SYNOP:
 
 $hash{temperature}{air}{temp} = air temperature
 $hash{temperature}{dewpoint} = dew point
@@ -65,6 +78,7 @@ $hash{buoy_section1}{sfcWind}{wind} = wind speed and direction
 $hash{obsTime}{timeAt} = observation time (hours/minute/month/day/year-unit)
 $hash{buoyId}{id} = buoy ID
 
+=cut
 
 
 
