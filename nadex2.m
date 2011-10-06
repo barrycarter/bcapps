@@ -31,12 +31,11 @@ myoptpos = {{2, .9925, 18}, {8, .9975, 9.5}}
 
 **)
 
-If[$CommandLine[[4]] == "cad", Get["/home/barrycarter/usdcadpos.txt"],
- Get["/home/barrycarter/usdjpypos.txt"]]
+(* this file now contains all info *)
+<< /home/barrycarter/forexall.txt
 
-(* and cash. Sample file: "cash = 123" *)
-
-<< /home/barrycarter/nadexcash.txt
+mypos = If[$CommandLine[[4]] == "cad", myposcad, myposjpy]
+myoptpos = If[$CommandLine[[4]] == "cad", myoptposcad, myoptposjpy]
 
 (* select options w/ given expiration time/date *)
 (* TODO: selling options w/ different expiries may be useful! *)
