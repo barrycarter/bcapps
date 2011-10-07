@@ -34,21 +34,45 @@ for $i (1..20) {
   }
 }
 
+# TODO: Despite hash, URLs may have duplicates because same page may
+# have multiple URLs (google may correct for this, not sure)
+
 # <h>sort keys below solely for my OCD</h>
 for $i (sort keys %URL) {
   # NOTE: could use parallel here (and for google search above too)
   ($all) = cache_command("curl '$i'","age=86400");
 
-  # break into sections (CMT_ div tags DO nest, but this still works)
-  # actually it doesn't but let me checkpoint save before fixing
-  while ($all=~s%<div class="CMT_(.*?)>(.*?)</div>%%) {
-    ($tag, $content) = ($1, $2);
-    debug("TAG: $tag, CONTENT: $content");
+  # find comments
+  while ($all=~s%<div class="CMT_CommentList">(.*?)<div class="CMT_Footer">%%s) {
+    $cbody = $1;
+
+    # blank hash to store values (and avoid leftovers from previous)
+    %hash = ();
+
+    # the user
+    $cbody=~s%<div class="CMT_User"><a href="/users/.*?/">(.*?)</a></div>%%s;
+    $hash{user} = $1;
+
+    # rating
+    $cbody=~s%<div class="CMT_Rating">\s*<span>(.*?)</span>%%s;
+    $hash{rating} = $1;
+
+    # date
+    $cbody=~s%<div class="CMT_Date">(.*?)</div>%%s;
+    $hash{date} = $1;
+
+    # below only works because we remove CMT_Date above
+    $cbody=~s%<div class="CMT_Text">\s*(.*?)\s*<div%%s;
+    $hash{comment} = $1;
+
+    # ignore non-JamesDobry comments
+    unless ($hash{user}=~/jamesdobry/i) {next;}
+
+    # ignore non-"wag" comments
+    unless ($hash{comment}=~/w+a+g+/i) {next;}
+
+    print join(",",$hash{date},$hash{rating},$hash{comment})."\n";
+
   }
-
-#  debug("ALL: $all");
 }
-
-
-
 
