@@ -9,6 +9,8 @@
 # In theory, you could expand this program to find all of a given
 # user's Dilbert comments <h>... but that would be way too useful</h>
 
+# TODO: add the URL of the comic Dobry actually commented on!!!
+
 require "bclib.pl";
 
 for $i (1..20) {
