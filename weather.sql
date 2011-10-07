@@ -1,7 +1,7 @@
 -- SQLite3 (thus untyped) table to hold "all" weather observations
 
 CREATE TABLE weather (
- type, -- one of METAR, SHIP, BUOY, (may add SYNOP later)
+ type, -- one of METAR, SHIP, BUOY, SYNOP (are there others?)
  id, -- METAR/SHIP code or BUOY id
  latitude, -- in decimal degrees -90..+90
  longitude, -- in decimal degrees -180..+180
@@ -24,7 +24,7 @@ CREATE UNIQUE INDEX i1 ON weather(type, id, time);
 -- the most recent one)
 
 CREATE TABLE nowweather (
- type, -- one of METAR, SHIP, BUOY, (may add SYNOP later)
+ type, -- one of METAR, SHIP, BUOY, SYNOP
  id, -- METAR/SHIP code or BUOY id
  latitude, -- in decimal degrees -90..+90
  longitude, -- in decimal degrees -180..+180
