@@ -24,21 +24,81 @@ use XML::Simple;
 # system("metafsrc2raw.pl -Fmetaf_nws sample-data/METAR/sn.0038.txt | metaf2xml.pl -x /tmp/test4.xml");
 
 $xml = new XML::Simple;
-$data = $xml->XMLin("/tmp/test4.xml");
+$data = $xml->XMLin("/tmp/test1.xml");
 %data = %{$data};
 
 # debug(unfold($data));
 
 # debug(unfold(@{$data{reports}{buoy}}));
 
-@synop = @{$data{reports}{metar}};
+# @synop = @{$data{reports}{metar}};
+@synop = @{$data{reports}{synop}};
 
 for $i (@synop) {
   debug("I: $i");
   %hash = %{$i};
+  %ret = weather_hash(\%hash);
+  debug(%ret);
 #  debug("KEYS", sort keys %hash);
- debug(unfold($hash{obsStationId}{id}));
+# debug(unfold($hash{obsStationId}{id}));
 #   debug(unfold($i));
+}
+
+=item weather_hash(\%hash)
+
+Given a hash of weather data (converted to XML via metaf2xml and
+metafsrc2raw, and convert to a hash using XML::Simple), return a hash
+to populate the table described in weather.sql
+
+Unavailable fields are returned as "NULL" (the 4 letter string), since
+handling NULL as a quantity is difficult between Perl and SQLite3
+
+=cut
+
+sub weather_hash {
+  my($hashref) = @_;
+  my(%hash) = %{$hashref};
+  my(%rethash);
+
+  # BUOYS bury sections one level deep; this fixes
+  for $i (sort keys %{$hash{buoy_section1}}) {
+    debug("KEY: $i");
+    $hash{$i} = $hash{buoy_section1}{$i};
+  }
+
+#  debug("HASH",%hash);
+
+  debug("ALPHA", unfold($hash{temperature}{relHumid4}));
+
+  $rethash{temperature} = $hash{temperature}{air}{temp}{v};
+  # convert to Farenheit if needed
+  if ($hash{temperature}{air}{temp}{u} eq "C") {
+    $rethash{temperature} = $rethash{temperature}*1.8+32;
+  }
+
+  # convert pressure to inches mercury
+  $rethash{pressure} = $hash{SLP}{hPa}{v}*0.02953;
+
+  # if dewpoint exists, use it + convert to F, else use relative
+  # humidity, else use "NULL"
+
+  if (exists $rethash{temperature}{air}{dewpoint}) {
+    $rethash{dewpoint} = $hash{temperature}{air}{dewpoint}{v};
+    if ($hash{temperature}{air}{dewpoint}{u} eq "C") {
+      $rethash{dewpoint} = $rethash{dewpoint}*1.8+32;
+    }
+  } elsif (exists $rethash{temperature}{relHumid1}) {
+    debug("HUMIDITY");
+  } else {
+    $rethash{dewpoint} = "NULL";
+  }
+
+
+
+  warn "NOT YET DONE!";
+
+  return %rethash;
+
 }
 
 
