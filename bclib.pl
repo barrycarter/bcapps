@@ -1943,8 +1943,68 @@ sub write_wiki_page {
   return cache_command("curl -b $cookiefile -c $cookiefile '$wiki' -d \@$tmpfile");
 }
 
-# cleanup files created by my_tmpfile (unless --keeptemp set)
+=item convert($quant, $from, $to)
 
+Converts $quant from $from units to $to units (eg, Celsius to
+Farenheit), but returns "NULL" (string) if $quant is "NULL" (string).
+
+This is just a hack function to convert weather data w/o losing "NULL"
+
+=cut
+
+sub convert {
+  my($quant, $from, $to) = @_;
+  debug("CONVERT(",@_,")");
+  if ($quant eq "NULL" && length($quant)==0) {return "NULL";}
+  if ($from eq "c" && $to eq "f") {return $quant*1.8+32;}
+  if ($from eq "hpa" && $to eq "in") {return $quant/33.86;}
+  return "NULL";
+}
+
+
+=item coalesce(\@list)
+
+Returns first non-empty item of @list, or the literal string "NULL" if
+there aren't any. The null string and undefined value are considered
+empty, but the number "0" (or anything that has strlen) is not.
+
+=cut
+
+sub coalesce {
+  my($listref) = @_;
+  my(@list) = @{$listref};
+  for $i (@list) {if (length($i)>0) {return $i;}}
+  return "NULL";
+}
+
+=item hashlist2sqlite(\@hashes, $tabname)
+
+Given a list of @hashes and a table $tabname, return a list of queries
+to populate $tabname with data from @hashes.
+
+=cut
+
+sub hashlist2sqlite {
+  my($hashs, $tabname) = @_;
+  my(%iskey);
+  my(@queries);
+
+  for $i (@{$hashs}) {
+    my(@keys,@vals) = ();
+    my(%hash) = %{$i};
+    for $j (sort keys %hash) {
+      $iskey{$j} = 1;
+      push(@keys, $j);
+      push(@vals, "\"$hash{$j}\"");
+    }
+
+    push(@queries, "INSERT OR IGNORE INTO $tabname (".join(", ",@keys).") VALUES (".join(", ",@vals).")");
+  }
+
+  return @queries;
+}
+
+# cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
   local $?;
   if ($globopts{keeptemp}) {return;}

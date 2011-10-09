@@ -3,6 +3,9 @@
 # Script where I test code snippets; anything that works eventually
 # makes it into a library or real program
 
+# TODO: cleanup this file -- lots of stuff has been (or should be)
+# moved to production
+
 # chunks are normally separated with 'die "TESTING";'
 
 push(@INC, "/usr/local/lib");
@@ -12,6 +15,7 @@ require "bc-weather-lib.pl";
 # starting to store all my private pws, etc, in a single file
 require "/home/barrycarter/bc-private.pl";
 
+# debug(twitter_get_friends_followers("barrycarter", "friends"));
 
 use XML::Simple;
 
@@ -31,21 +35,38 @@ $data = $xml->XMLin("/tmp/test1.xml");
 
 # debug(unfold(@{$data{reports}{buoy}}));
 # @synop = @{$data{reports}{metar}};
-@synop = @{$data{reports}{synop}};
+# @synop = @{$data{reports}{synop}};
 
-for $i (@synop) {
+# @synop = @{$data{reports}{metar}} || @{$data{reports}{synop}} || 
+#  @{$data{reports}{buoy}};
+
+for $i ("metar", "synop", "buoy") {
+  @reports = @{$data{reports}{$i}};
+  if ($#reports>-1) {last;}
+}
+
+# debug("REPORTS", unfold(@reports));
+
+for $i (@reports) {
   debug("I: $i");
   %hash = %{$i};
 #  debug(unfold(%hash));
+  $ret = {};
   %ret = weather_hash(\%hash);
-
-  print "$ret{temperature}\n";
-
+  push(@hashes, {%ret});
 #  debug(%ret);
 #  debug("KEYS", sort keys %hash);
 # debug(unfold($hash{stationPosition}));
 #   debug(unfold($i));
 }
+
+@queries = hashlist2sqlite(\@hashes, "weather");
+warn "For tests, deleting first!";
+unshift(@queries, "DELETE FROM weather");
+unshift(@queries, "BEGIN");
+push(@queries, "COMMIT");
+write_file(join(";\n",@queries).";\n", "/tmp/playground.tmp");
+system("sqlite3 /home/barrycarter/BCINFO/sites/DB/test.db < /tmp/playground.tmp");
 
 =item weather_hash(\%hash)
 
@@ -83,21 +104,26 @@ sub weather_hash {
   $rethash{cloudcover} = coalesce([$hash{totalCloudCover}{oktas}{v}]);
 
   # temperature is in this field, unless NA (converted to F)
-  $rethash{temperature} = convert(coalesce([
-   $hash{temperature}{air}{temp}{v}]), "c", "f");
+  $rethash{temperature} = coalesce([
+   convert_uv({$hash{temperature}{air}{temp}})]);
 
   # dewpoint
-  $rethash{dewpoint} = convert(coalesce([
-   $hash{temperature}{air}{temp}{dewpoint}]), "c", "f");
+  debug("DEWPOINT");
+  debug("X",unfold($hash{temperature}{dewpoint}{temp}),"Y");
+  $rethash{dewpoint} = coalesce([
+   convert_uv($hash{temperature}{dewpoint}{temp})]);
+  debug("END DEWPOINT");
 
   # pressure, in inches
   $rethash{pressure} = coalesce([
-   $hash{QNH}, convert($hash{SLP},"hpa","in")]);
+   $hash{QNH}, convert($hash{SLP}{hPa}, "hpa", "in")]);
 
   # wind direction, speed, gust
-  $rethash{winddir} = coalesce([$hash{sfcWind}{wind}{dir}{v}]);
-  $rethash{windspeed} = coalesce([$hash{sfcWind}{wind}{v}]);
-  $rethash{gust} = coalesce([$hash{synop_section3}{highestGust}{wind}{speed}]);
+  $rethash{winddir} = coalesce($hash{sfcWind}{wind}{dir}{v});
+  $rethash{windspeed} = coalesce([
+   convert_uv($hash{sfcWind}{wind}{speed})]);
+  $rethash{gust} = coalesce([
+   convert_uv($hash{synop_section3}{highestGust}{wind}{speed})]);
 
   # TODO: unit checks across the board!
   # TODO: be suspicious of too many nulls in a given column
@@ -105,39 +131,17 @@ sub weather_hash {
   return %rethash;
 }
 
+# given a hash with units u and value v, return value in "canonical"
+# form (subroutine is specific to a given program, not generic)
 
-=item convert($quant, $from, $to)
-
-Converts $quant from $from units to $to units (eg, Celsius to
-Farenheit), but returns "NULL" (string) if $quant is "NULL" (string).
-
-This is just a hack function to convert weather data w/o losing "NULL"
-
-=cut
-
-sub convert {
-  debug("CONVERT(",@_,")");
-  my($quant, $from, $to) = @_;
-  if ($quant eq "NULL" && length($quant)==0) {return "NULL";}
-  if ($from eq "c" && $to eq "f") {return $quant*1.8+32;}
-  if ($from eq "hpa" && $to eq "in") {return $quant/33.86;}
-  return "NULL";
-}
-
-
-=item coalesce(\@list)
-
-Returns first non-empty item of @list, or the literal string "NULL" if
-there aren't any. The null string and undefined value are considered
-empty, but the number "0" (or anything that has strlen) is not.
-
-=cut
-
-sub coalesce {
-  my($listref) = @_;
-  my(@list) = @{$listref};
-  for $i (@list) {if (length($i)>0) {return $i;}}
-  return "NULL";
+sub convert_uv {
+  my($hashref) = @_;
+  debug("HASHREF: $hashref");
+  debug("HASH", sort values %{$hashref});
+#  debug(unfold(%{$hashref}));
+#  debug("X: $hashref");
+#  debug("MYHASH",unfold(%hash));
+  debug("U: $hashref->{u}, $hashref->{v}");
 }
 
 die "TESTING";
@@ -177,12 +181,6 @@ $hash{obsTime}{timeAt} = observation time (hours/minute/month/day/year-unit)
 $hash{buoyId}{id} = buoy ID
 
 =cut
-
-
-
-
-
-
 
 # For SYNOP REPORTS:
 
@@ -567,7 +565,7 @@ sub twitter_get_friends_followers {
   # loop to get enough pages (will never really hit 1000)
   for $i (1..$pages) {
     # get this page of followers
-    my($file) = cache_command("curl -s 'http://twitter.com/statuses/$which/$sn.json?page=$i'", "retfile=1&age=300");
+    my($file) = cache_command("curl -s 'http://api.twitter.com/1/statuses/$which/$sn.json?page=$i'", "retfile=1&age=300");
     my($res) = suck($file);
     my(@newres) = @{JSON::from_json($res)};
 
@@ -1137,34 +1135,6 @@ sub project {
   }
 }
 
-=item to_mercator($lat,$lon)
-
-Converts $lat, $lon (degrees) to google maps' yx Mercator projects
-(top left = 0,0; bottom right = 1,1); can return abs($y)>1 for far
-south/north latitudes. Options:
-
- order=(xy|yx): return coordinates in xy or yx format (latter is default)
-
-NOTE: return order is yx, not xy
-
-=cut
-
-sub to_mercator {
-  my($lat,$lon, $options) = @_;
-  my(%opts) = parse_form($options);
-
-  my($y) = 1/2-1*(log(tan($PI/4+$lat/180*$PI/2))/2/$PI);
-  if ($opts{order} eq "xy") {
-    return ($lon+180)/360, $y;
-    # else below is actually optional, but omitting it is confusing
-  } else {
-    return $y,($lon+180)/360;
-  }
-}
-
-
-
-
 die "TESTING";
 
 @pts = (35.08, -106.66, 48.87, 2.33, 71.26826, -156.80627, -41.2833,
@@ -1175,32 +1145,6 @@ debug(unfold(voronoi(\@pts,"infinityok=1")));
 
 die "TESTING";
 
-
-=item hashlist2sqlite
-
-DOC ME! (but test me first!)
-
-=cut
-
-sub hashlist2sqlite {
-  my($hashs, $tabname, $outfile) = @_;
-  my(%iskey);
-  my(@queries);
-
-  for $i (@{$hashs}) {
-    my(@keys,@vals) = ();
-    my(%hash) = %{$i};
-    for $j (sort keys %hash) {
-      $iskey{$j} = 1;
-      push(@keys, $j);
-      push(@vals, "\"$hash{$j}\"");
-    }
-
-    push(@queries, "INSERT INTO $tabname (".join(", ",@keys).") VALUES (".join(", ",@vals).");");
-  }
-
-  debug(@queries);
-}
 
 exit 1;
 
