@@ -32,10 +32,10 @@ CREATE TABLE nowweather (
  temperature, -- in degrees F
  dewpoint, -- in degrees F
  pressure, -- in inches of Hg (~30.00 is "normal")
- time, -- "YYYY-MM-DD HH:MM:SS"
  winddir, -- wind direction, in degrees, 0..360
  windspeed, -- in miles per hour
  gust, -- gust speed in miles per hour
+ time, -- "YYYY-MM-DD HH:MM:SS"
  observation, -- the entire raw observation
  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
  comment

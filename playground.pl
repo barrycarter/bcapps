@@ -27,20 +27,23 @@ $xml = new XML::Simple;
 $data = $xml->XMLin("/tmp/test1.xml");
 %data = %{$data};
 
-# debug(unfold($data));
+# for test1.xml, fields that look ok: id, lat/lon, cloudcover,
 
 # debug(unfold(@{$data{reports}{buoy}}));
-
 # @synop = @{$data{reports}{metar}};
 @synop = @{$data{reports}{synop}};
 
 for $i (@synop) {
   debug("I: $i");
   %hash = %{$i};
+#  debug(unfold(%hash));
   %ret = weather_hash(\%hash);
-  debug(%ret);
+
+  print "$ret{temperature}\n";
+
+#  debug(%ret);
 #  debug("KEYS", sort keys %hash);
-# debug(unfold($hash{obsStationId}{id}));
+# debug(unfold($hash{stationPosition}));
 #   debug(unfold($i));
 }
 
@@ -66,41 +69,76 @@ sub weather_hash {
     $hash{$i} = $hash{buoy_section1}{$i};
   }
 
-#  debug("HASH",%hash);
+  # entire observation
+  $rethash{observation} = coalesce([$hash{s}]);
 
-  debug("ALPHA", unfold($hash{temperature}{relHumid4}));
+  # station id
+  $rethash{id} = coalesce([$hash{obsStationId}{id}{v}, $hash{callSign}{id}{v},
+			 $hash{buoyId}{id}{v}]);
 
-  $rethash{temperature} = $hash{temperature}{air}{temp}{v};
-  # convert to Farenheit if needed
-  if ($hash{temperature}{air}{temp}{u} eq "C") {
-    $rethash{temperature} = $rethash{temperature}*1.8+32;
-  }
+  # below won't work for fixed stations (eg, METAR)
+  $rethash{latitude} = coalesce([$hash{stationPosition}{lat}{v}]);
+  $rethash{longitude} = coalesce([$hash{stationPosition}{lon}{v}]);
 
-  # convert pressure to inches mercury
-  $rethash{pressure} = $hash{SLP}{hPa}{v}*0.02953;
+  $rethash{cloudcover} = coalesce([$hash{totalCloudCover}{oktas}{v}]);
 
-  # if dewpoint exists, use it + convert to F, else use relative
-  # humidity, else use "NULL"
+  # temperature is in this field, unless NA (converted to F)
+  $rethash{temperature} = convert(coalesce([
+   $hash{temperature}{air}{temp}{v}]), "c", "f");
 
-  if (exists $rethash{temperature}{air}{dewpoint}) {
-    $rethash{dewpoint} = $hash{temperature}{air}{dewpoint}{v};
-    if ($hash{temperature}{air}{dewpoint}{u} eq "C") {
-      $rethash{dewpoint} = $rethash{dewpoint}*1.8+32;
-    }
-  } elsif (exists $rethash{temperature}{relHumid1}) {
-    debug("HUMIDITY");
-  } else {
-    $rethash{dewpoint} = "NULL";
-  }
+  # dewpoint
+  $rethash{dewpoint} = convert(coalesce([
+   $hash{temperature}{air}{temp}{dewpoint}]), "c", "f");
 
+  # pressure, in inches
+  $rethash{pressure} = coalesce([
+   $hash{QNH}, convert($hash{SLP},"hpa","in")]);
 
+  # wind direction, speed, gust
+  $rethash{winddir} = coalesce([$hash{sfcWind}{wind}{dir}{v}]);
+  $rethash{windspeed} = coalesce([$hash{sfcWind}{wind}{v}]);
+  $rethash{gust} = coalesce([$hash{synop_section3}{highestGust}{wind}{speed}]);
 
-  warn "NOT YET DONE!";
+  # TODO: unit checks across the board!
+  # TODO: be suspicious of too many nulls in a given column
 
   return %rethash;
-
 }
 
+
+=item convert($quant, $from, $to)
+
+Converts $quant from $from units to $to units (eg, Celsius to
+Farenheit), but returns "NULL" (string) if $quant is "NULL" (string).
+
+This is just a hack function to convert weather data w/o losing "NULL"
+
+=cut
+
+sub convert {
+  debug("CONVERT(",@_,")");
+  my($quant, $from, $to) = @_;
+  if ($quant eq "NULL" && length($quant)==0) {return "NULL";}
+  if ($from eq "c" && $to eq "f") {return $quant*1.8+32;}
+  if ($from eq "hpa" && $to eq "in") {return $quant/33.86;}
+  return "NULL";
+}
+
+
+=item coalesce(\@list)
+
+Returns first non-empty item of @list, or the literal string "NULL" if
+there aren't any. The null string and undefined value are considered
+empty, but the number "0" (or anything that has strlen) is not.
+
+=cut
+
+sub coalesce {
+  my($listref) = @_;
+  my(@list) = @{$listref};
+  for $i (@list) {if (length($i)>0) {return $i;}}
+  return "NULL";
+}
 
 die "TESTING";
 
