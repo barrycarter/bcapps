@@ -14,10 +14,13 @@ require "bc-astro-lib.pl";
 require "bc-weather-lib.pl";
 # starting to store all my private pws, etc, in a single file
 require "/home/barrycarter/bc-private.pl";
+use XML::Simple;
+
+debug(th2dp(53,.5));
+
+die "TESTING";
 
 # debug(twitter_get_friends_followers("barrycarter", "friends"));
-
-use XML::Simple;
 
 # system("metafsrc2raw.pl -Fsynop_nws sample-data/SHIPS/sn.0040.txt | metaf2xml.pl -TSYNOP -x /tmp/test1.xml");
 
@@ -28,8 +31,12 @@ use XML::Simple;
 # system("metafsrc2raw.pl -Fmetaf_nws sample-data/METAR/sn.0038.txt | metaf2xml.pl -x /tmp/test4.xml");
 
 $xml = new XML::Simple;
-$data = $xml->XMLin("/tmp/test1.xml");
+$data = $xml->XMLin("/tmp/test2.xml");
 %data = %{$data};
+
+# @t1 = @{$data{reports}{buoy}};
+# debug(%{$t1[0]});
+# die "TESTING";
 
 # for test1.xml, fields that look ok: id, lat/lon, cloudcover,
 
@@ -41,6 +48,7 @@ $data = $xml->XMLin("/tmp/test1.xml");
 #  @{$data{reports}{buoy}};
 
 for $i ("metar", "synop", "buoy") {
+#  debug("IEPS: $i", unfold($data{reports}));
   @reports = @{$data{reports}{$i}};
   if ($#reports>-1) {last;}
 }
@@ -51,8 +59,9 @@ for $i (@reports) {
   debug("I: $i");
   %hash = %{$i};
 #  debug(unfold(%hash));
-  $ret = {};
+  debug("ZETA: $hash{s}");
   %ret = weather_hash(\%hash);
+  debug("RETURN:",unfold(%ret));
   push(@hashes, {%ret});
 #  debug(%ret);
 #  debug("KEYS", sort keys %hash);
@@ -67,6 +76,25 @@ unshift(@queries, "BEGIN");
 push(@queries, "COMMIT");
 write_file(join(";\n",@queries).";\n", "/tmp/playground.tmp");
 system("sqlite3 /home/barrycarter/BCINFO/sites/DB/test.db < /tmp/playground.tmp");
+
+=item th2dp($t, $h)
+
+Given temperature $t in Farenheit and humidity $h (between 0 and 1),
+return dewpoint in Farenheit.
+
+This is a Farenheit-ed version of the inverse of the first formula
+given in metaf2xml
+
+=cut
+
+sub th2dp {
+  my($t,$h) = @_;
+  if (length($t)==0 || $t eq "NULL" || $h eq "NULL" || length($h)==0) {
+    return "NULL";
+  }
+  return (2280.52*$t + (48365.8 + 122.179*$t)*log($h))/
+    (2280.52 + (-122.179 - 0.308642*$t)*log($h));
+}
 
 =item weather_hash(\%hash)
 
@@ -84,14 +112,20 @@ sub weather_hash {
   my(%hash) = %{$hashref};
   my(%rethash);
 
+  # this must occur before unburying buoy data below
+  # entire observation
+  $rethash{observation} = coalesce([$hash{s}]);
+
   # BUOYS bury sections one level deep; this fixes
+  debug("EPSILON", unfold($hash{buoy_section1}), "HAMMELL");
   for $i (sort keys %{$hash{buoy_section1}}) {
     debug("KEY: $i");
     $hash{$i} = $hash{buoy_section1}{$i};
   }
 
-  # entire observation
-  $rethash{observation} = coalesce([$hash{s}]);
+  debug("DELTA", unfold($hash{temperature}), "BURKE");
+  debug("DELTA2", unfold({%hash}), "BURKE2");
+  debug("DELTA3", unfold($hash{buoy_section2}), "BURKE3");
 
   # station id
   $rethash{id} = coalesce([$hash{obsStationId}{id}{v}, $hash{callSign}{id}{v},
@@ -105,18 +139,16 @@ sub weather_hash {
 
   # temperature is in this field, unless NA (converted to F)
   $rethash{temperature} = coalesce([
-   convert_uv({$hash{temperature}{air}{temp}})]);
+   convert_uv($hash{temperature}{air}{temp})]);
 
   # dewpoint
-  debug("DEWPOINT");
-  debug("X",unfold($hash{temperature}{dewpoint}{temp}),"Y");
   $rethash{dewpoint} = coalesce([
    convert_uv($hash{temperature}{dewpoint}{temp})]);
-  debug("END DEWPOINT");
+
 
   # pressure, in inches
   $rethash{pressure} = coalesce([
-   $hash{QNH}, convert($hash{SLP}{hPa}, "hpa", "in")]);
+   $hash{QNH}, convert($hash{SLP}{hPa}{v}, "hpa", "in")]);
 
   # wind direction, speed, gust
   $rethash{winddir} = coalesce($hash{sfcWind}{wind}{dir}{v});
@@ -136,12 +168,26 @@ sub weather_hash {
 
 sub convert_uv {
   my($hashref) = @_;
-  debug("HASHREF: $hashref");
-  debug("HASH", sort values %{$hashref});
-#  debug(unfold(%{$hashref}));
-#  debug("X: $hashref");
-#  debug("MYHASH",unfold(%hash));
-  debug("U: $hashref->{u}, $hashref->{v}");
+
+  # no data? if v is not empty, worry
+  if ($hashref->{u} eq "") {
+    if ($hashref->{v} eq "") {
+      return "NULL";
+    } else {
+      return "ERR";
+    }
+  }
+
+  # c to f
+  if ($hashref->{u} eq "C") {return convert($hashref->{v}, "c", "f");}
+  # mps to mph
+  if ($hashref->{u} eq "MPS") {return convert($hashref->{v}, "mps", "mph");}
+  # knots to mph
+  if ($hashref->{u} eq "KT") {return convert($hashref->{v}, "kt", "mph");}
+
+  debug("CONVERT_UV DISLIKES: $hashref->{u}, $hashref->{v}");
+
+  return "ERR";
 }
 
 die "TESTING";

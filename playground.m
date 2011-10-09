@@ -3,6 +3,22 @@
 showit := Module[{}, 
 Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
+(* metaf2xml's first formula for humidity, reversing to get dewpoint *)
+
+humid[t_, d_] = 10^(7.5 * (d / (d + 237.7) - t / (t + 237.7)))
+humidf[t_, d_] = humid[(t-32)/1.8, (d-32)/1.8]
+
+dewpoint[t_, h_] = d /. Solve[humidf[t,d]==h, d][[1]]
+
+(* t in Celsius *)
+satpressure[t_] = 6.1121*Exp[(18.678-t/234.5)*(t/(257.14+t))]
+
+humid[t_, d_] = satpressure[d]/satpressure[t]
+
+Solve[humid[t,d]==h, d]
+
+
+
 (* the two body problem? *)
 
 DSolve[{

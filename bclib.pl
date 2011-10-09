@@ -1946,7 +1946,8 @@ sub write_wiki_page {
 =item convert($quant, $from, $to)
 
 Converts $quant from $from units to $to units (eg, Celsius to
-Farenheit), but returns "NULL" (string) if $quant is "NULL" (string).
+Farenheit), but returns "NULL" (string) if $quant is "NULL" (string),
+and "ERR" if it can't convert.
 
 This is just a hack function to convert weather data w/o losing "NULL"
 
@@ -1956,9 +1957,22 @@ sub convert {
   my($quant, $from, $to) = @_;
   debug("CONVERT(",@_,")");
   if ($quant eq "NULL" && length($quant)==0) {return "NULL";}
+
+  # celsius to farenheit
   if ($from eq "c" && $to eq "f") {return $quant*1.8+32;}
+
+  # hectopascals to inches of mercury
   if ($from eq "hpa" && $to eq "in") {return $quant/33.86;}
-  return "NULL";
+
+  # meters per second to miles per hour
+  if ($from eq "mps" && $to eq "mph") {return 2.23693629*$quant;}
+
+  # knots <h>per hour</h> to miles per hour
+  if ($from eq "kt" && $to eq "mph") {return 1.15077945*$quant;}
+
+  debug("CONVERT DISLIKES:",@_);
+
+  return "ERR";
 }
 
 
