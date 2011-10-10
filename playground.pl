@@ -15,10 +15,19 @@ require "bc-weather-lib.pl";
 # starting to store all my private pws, etc, in a single file
 require "/home/barrycarter/bc-private.pl";
 use XML::Simple;
+use Data::Dumper;
+$Data::Dumper::Indent = 0;
 
-debug(th2dp(53,.5));
+$foo{alongkeyname}{anotherlongkeyname}{yetanotherlongkeyname}{afairlyshortkeynamewellitgotlongwhileiwastypingitsoiguessnot}{bob}{something} = 1;
+
+print Dumper(\%foo);
+print unfold(\%foo);
 
 die "TESTING";
+
+# http://twitter.com/#!/sonia/status/123075586645176320
+
+# die "TESTING";
 
 # debug(twitter_get_friends_followers("barrycarter", "friends"));
 
@@ -31,7 +40,7 @@ die "TESTING";
 # system("metafsrc2raw.pl -Fmetaf_nws sample-data/METAR/sn.0038.txt | metaf2xml.pl -x /tmp/test4.xml");
 
 $xml = new XML::Simple;
-$data = $xml->XMLin("/tmp/test2.xml");
+$data = $xml->XMLin("/tmp/test4.xml");
 %data = %{$data};
 
 # @t1 = @{$data{reports}{buoy}};
@@ -56,10 +65,11 @@ for $i ("metar", "synop", "buoy") {
 # debug("REPORTS", unfold(@reports));
 
 for $i (@reports) {
+  print Dumper($i);
   debug("I: $i");
   %hash = %{$i};
 #  debug(unfold(%hash));
-  debug("ZETA: $hash{s}");
+#  debug("ZETA: $hash{s}");
   %ret = weather_hash(\%hash);
   debug("RETURN:",unfold(%ret));
   push(@hashes, {%ret});
@@ -76,25 +86,6 @@ unshift(@queries, "BEGIN");
 push(@queries, "COMMIT");
 write_file(join(";\n",@queries).";\n", "/tmp/playground.tmp");
 system("sqlite3 /home/barrycarter/BCINFO/sites/DB/test.db < /tmp/playground.tmp");
-
-=item th2dp($t, $h)
-
-Given temperature $t in Farenheit and humidity $h (between 0 and 1),
-return dewpoint in Farenheit.
-
-This is a Farenheit-ed version of the inverse of the first formula
-given in metaf2xml
-
-=cut
-
-sub th2dp {
-  my($t,$h) = @_;
-  if (length($t)==0 || $t eq "NULL" || $h eq "NULL" || length($h)==0) {
-    return "NULL";
-  }
-  return (2280.52*$t + (48365.8 + 122.179*$t)*log($h))/
-    (2280.52 + (-122.179 - 0.308642*$t)*log($h));
-}
 
 =item weather_hash(\%hash)
 
@@ -117,15 +108,15 @@ sub weather_hash {
   $rethash{observation} = coalesce([$hash{s}]);
 
   # BUOYS bury sections one level deep; this fixes
-  debug("EPSILON", unfold($hash{buoy_section1}), "HAMMELL");
+#  debug("EPSILON", unfold($hash{buoy_section1}{relHumid1}), "HAMMELL");
   for $i (sort keys %{$hash{buoy_section1}}) {
     debug("KEY: $i");
     $hash{$i} = $hash{buoy_section1}{$i};
   }
 
-  debug("DELTA", unfold($hash{temperature}), "BURKE");
-  debug("DELTA2", unfold({%hash}), "BURKE2");
-  debug("DELTA3", unfold($hash{buoy_section2}), "BURKE3");
+  debug("DELTA", unfold($hash{sfcWind}{wind}{dir}{v}), "BURKE");
+#  debug("DELTA2", unfold({%hash}), "BURKE2");
+#  debug("DELTA3", unfold($hash{buoy_section2}), "BURKE3");
 
   # station id
   $rethash{id} = coalesce([$hash{obsStationId}{id}{v}, $hash{callSign}{id}{v},
@@ -141,17 +132,25 @@ sub weather_hash {
   $rethash{temperature} = coalesce([
    convert_uv($hash{temperature}{air}{temp})]);
 
+  # humidity (just in case we need it below, not part of report)
+  debug("H1: <$humidity>");
+  my($humidity) = coalesce([$hash{temperature}{relHumid1}{v}]);
+  debug("H2: <$humidity>");
+
   # dewpoint
   $rethash{dewpoint} = coalesce([
-   convert_uv($hash{temperature}{dewpoint}{temp})]);
+   convert_uv($hash{temperature}{dewpoint}{temp}),
+   th2dp($rethash{temperature}, $humidity)
+]);
 
+  debug("MU: $rethash{dewpoint}");
 
   # pressure, in inches
   $rethash{pressure} = coalesce([
    $hash{QNH}, convert($hash{SLP}{hPa}{v}, "hpa", "in")]);
 
   # wind direction, speed, gust
-  $rethash{winddir} = coalesce($hash{sfcWind}{wind}{dir}{v});
+  $rethash{winddir} = coalesce([$hash{sfcWind}{wind}{dir}{v}]);
   $rethash{windspeed} = coalesce([
    convert_uv($hash{sfcWind}{wind}{speed})]);
   $rethash{gust} = coalesce([

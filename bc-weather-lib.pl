@@ -392,6 +392,28 @@ sub day2time {
   return($mon,$year);
 }
 
+=item th2dp($t, $h)
+
+Given temperature $t in Farenheit and humidity $h (between 0 and 100),
+return dewpoint in Farenheit.
+
+This is a Farenheit-ed version of the inverse of the first formula
+given in metaf2xml
+
+=cut
+
+sub th2dp {
+  my($t,$h) = @_;
+  debug("TH2DP($t,$h)");
+  if (length($t)==0 || $t eq "NULL" || $h eq "NULL" || length($h)==0) {
+    return "NULL";
+  }
+
+  $h/=100;
+  return (2280.52*$t + (48365.8 + 122.179*$t)*log($h))/
+    (2280.52 + (-122.179 - 0.308642*$t)*log($h));
+}
+
 # <h>return beauty;</h>
 
 true;

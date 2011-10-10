@@ -1987,7 +1987,7 @@ empty, but the number "0" (or anything that has strlen) is not.
 sub coalesce {
   my($listref) = @_;
   my(@list) = @{$listref};
-  for $i (@list) {if (length($i)>0) {return $i;}}
+  for $i (@list) {if (length($i)>0 && $i ne "NULL") {return $i;}}
   return "NULL";
 }
 
