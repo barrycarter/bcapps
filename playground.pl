@@ -15,15 +15,16 @@ require "bc-weather-lib.pl";
 # starting to store all my private pws, etc, in a single file
 require "/home/barrycarter/bc-private.pl";
 use XML::Simple;
-use Data::Dumper;
+use Data::Dumper 'Dumper';
 $Data::Dumper::Indent = 0;
 
-$foo{alongkeyname}{anotherlongkeyname}{yetanotherlongkeyname}{afairlyshortkeynamewellitgotlongwhileiwastypingitsoiguessnot}{bob}{something} = 1;
+$VAR1 = {'remark' => [{'obsStationType' => {'stationType' => {'v' => 'AO2'},'s' => 'AO2'}},{'needMaint' => {'s' => '$'}}],'QNH' => {'inHg' => {'v' => '29.99'},'s' => 'A2999'},'visPrev' => {'distance' => {'u' => 'SM','v' => '7','rp' => '1'},'s' => '7SM'},'sfcWind' => {'wind' => {'speed' => {'u' => 'KT','v' => '3'},'dir' => {'rn' => '5','v' => '60','rp' => '4'}},'measurePeriod' => {'u' => 'MIN','v' => '2'},'s' => '06003KT'},'obsStationId' => {'id' => {'v' => 'KBTR'},'s' => 'KBTR'},'obsTime' => {'s' => '080940Z','timeAt' => {'hour' => {'v' => '09'},'minute' => {'v' => '40'},'day' => {'v' => '08'}}},'s' => 'KBTR 080940Z 06003KT 7SM SCT003 BKN200 24/23 A2999 RMK AO2 $','cloud' => [{'cloudCover' => {'v' => 'SCT'},'s' => 'SCT003','cloudBase' => {'u' => 'FT','v' => '300'}},{'cloudCover' => {'v' => 'BKN'},'s' => 'BKN200','cloudBase' => {'u' => 'FT','v' => '20000'}}],'temperature' => {'relHumid4' => {'v' => '94.15'},'dewpoint' => {'temp' => {'u' => 'C','v' => '23'}},'relHumid3' => {'v' => '94.03'},'relHumid1' => {'v' => '94.16'},'relHumid2' => {'v' => '94.17'},'air' => {'temp' => {'u' => 'C','v' => '24'}},'s' => '24/23'}};
 
-print Dumper(\%foo);
-print unfold(\%foo);
+print dump_var("VAR1", $VAR1);
 
 die "TESTING";
+
+$foo{alongkeyname}{anotherlongkeyname}{yetanotherlongkeyname}{afairlyshortkeynamewellitgotlongwhileiwastypingitsoiguessnot}{bob}{something} = 1;
 
 # http://twitter.com/#!/sonia/status/123075586645176320
 
@@ -65,8 +66,7 @@ for $i ("metar", "synop", "buoy") {
 # debug("REPORTS", unfold(@reports));
 
 for $i (@reports) {
-  print Dumper($i);
-  debug("I: $i");
+  debug("I: $i",dump_var(\%{$i}));
   %hash = %{$i};
 #  debug(unfold(%hash));
 #  debug("ZETA: $hash{s}");
@@ -86,6 +86,36 @@ unshift(@queries, "BEGIN");
 push(@queries, "COMMIT");
 write_file(join(";\n",@queries).";\n", "/tmp/playground.tmp");
 system("sqlite3 /home/barrycarter/BCINFO/sites/DB/test.db < /tmp/playground.tmp");
+
+=item dump_var($prefix, $var)
+
+Better version of unfold(), stolen from
+http://stackoverflow.com/questions/7716409/
+
+=cut
+
+sub dump_var {
+    my ($prefix, $var) = @_;
+    my $ref = ref($var) || ""; 
+    my @rv;
+    local $Data::Dumper::Indent = 0;
+    local $Data::Dumper::Terse = 1;
+    if (ref $var eq 'ARRAY') {
+        for my $i (0 .. $#$var) {
+            push @rv, dump_var($prefix . "->[$i]", $var->[$i]);
+        }
+    } elsif (ref $var eq 'HASH') {
+        foreach my $key (sort keys %$var) {
+            push @rv, dump_var($prefix . '->{'.Dumper($key).'}', $var->{$key});
+	  }
+      } elsif (ref $var eq 'SCALAR') {
+        push @rv, dump_var('${' . $prefix . '}', $$var);
+      } else {
+        push @rv, "$prefix = " . Dumper($var) . ";\n";
+      }
+    return @rv;
+  }
+
 
 =item weather_hash(\%hash)
 
