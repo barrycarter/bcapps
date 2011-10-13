@@ -18,20 +18,6 @@ use XML::Simple;
 use Data::Dumper 'Dumper';
 $Data::Dumper::Indent = 0;
 
-$VAR1 = {'remark' => [{'obsStationType' => {'stationType' => {'v' => 'AO2'},'s' => 'AO2'}},{'needMaint' => {'s' => '$'}}],'QNH' => {'inHg' => {'v' => '29.99'},'s' => 'A2999'},'visPrev' => {'distance' => {'u' => 'SM','v' => '7','rp' => '1'},'s' => '7SM'},'sfcWind' => {'wind' => {'speed' => {'u' => 'KT','v' => '3'},'dir' => {'rn' => '5','v' => '60','rp' => '4'}},'measurePeriod' => {'u' => 'MIN','v' => '2'},'s' => '06003KT'},'obsStationId' => {'id' => {'v' => 'KBTR'},'s' => 'KBTR'},'obsTime' => {'s' => '080940Z','timeAt' => {'hour' => {'v' => '09'},'minute' => {'v' => '40'},'day' => {'v' => '08'}}},'s' => 'KBTR 080940Z 06003KT 7SM SCT003 BKN200 24/23 A2999 RMK AO2 $','cloud' => [{'cloudCover' => {'v' => 'SCT'},'s' => 'SCT003','cloudBase' => {'u' => 'FT','v' => '300'}},{'cloudCover' => {'v' => 'BKN'},'s' => 'BKN200','cloudBase' => {'u' => 'FT','v' => '20000'}}],'temperature' => {'relHumid4' => {'v' => '94.15'},'dewpoint' => {'temp' => {'u' => 'C','v' => '23'}},'relHumid3' => {'v' => '94.03'},'relHumid1' => {'v' => '94.16'},'relHumid2' => {'v' => '94.17'},'air' => {'temp' => {'u' => 'C','v' => '24'}},'s' => '24/23'}};
-
-print dump_var("VAR1", $VAR1);
-
-die "TESTING";
-
-$foo{alongkeyname}{anotherlongkeyname}{yetanotherlongkeyname}{afairlyshortkeynamewellitgotlongwhileiwastypingitsoiguessnot}{bob}{something} = 1;
-
-# http://twitter.com/#!/sonia/status/123075586645176320
-
-# die "TESTING";
-
-# debug(twitter_get_friends_followers("barrycarter", "friends"));
-
 # system("metafsrc2raw.pl -Fsynop_nws sample-data/SHIPS/sn.0040.txt | metaf2xml.pl -TSYNOP -x /tmp/test1.xml");
 
 # system("metafsrc2raw.pl -Fbuoy_nws sample-data/DBUOY/sn.0040.txt | metaf2xml.pl -TBUOY -x /tmp/test2.xml");
@@ -41,42 +27,22 @@ $foo{alongkeyname}{anotherlongkeyname}{yetanotherlongkeyname}{afairlyshortkeynam
 # system("metafsrc2raw.pl -Fmetaf_nws sample-data/METAR/sn.0038.txt | metaf2xml.pl -x /tmp/test4.xml");
 
 $xml = new XML::Simple;
-$data = $xml->XMLin("/tmp/test4.xml");
+$data = $xml->XMLin("/tmp/test3.xml");
 %data = %{$data};
-
-# @t1 = @{$data{reports}{buoy}};
-# debug(%{$t1[0]});
-# die "TESTING";
 
 # for test1.xml, fields that look ok: id, lat/lon, cloudcover,
 
-# debug(unfold(@{$data{reports}{buoy}}));
-# @synop = @{$data{reports}{metar}};
-# @synop = @{$data{reports}{synop}};
-
-# @synop = @{$data{reports}{metar}} || @{$data{reports}{synop}} || 
-#  @{$data{reports}{buoy}};
-
 for $i ("metar", "synop", "buoy") {
-#  debug("IEPS: $i", unfold($data{reports}));
   @reports = @{$data{reports}{$i}};
   if ($#reports>-1) {last;}
 }
 
-# debug("REPORTS", unfold(@reports));
-
 for $i (@reports) {
-  debug("I: $i",dump_var(\%{$i}));
+  debug("I: $i",dump_var("I",\%{$i}));
   %hash = %{$i};
-#  debug(unfold(%hash));
-#  debug("ZETA: $hash{s}");
   %ret = weather_hash(\%hash);
   debug("RETURN:",unfold(%ret));
   push(@hashes, {%ret});
-#  debug(%ret);
-#  debug("KEYS", sort keys %hash);
-# debug(unfold($hash{stationPosition}));
-#   debug(unfold($i));
 }
 
 @queries = hashlist2sqlite(\@hashes, "weather");
@@ -86,35 +52,6 @@ unshift(@queries, "BEGIN");
 push(@queries, "COMMIT");
 write_file(join(";\n",@queries).";\n", "/tmp/playground.tmp");
 system("sqlite3 /home/barrycarter/BCINFO/sites/DB/test.db < /tmp/playground.tmp");
-
-=item dump_var($prefix, $var)
-
-Better version of unfold(), stolen from
-http://stackoverflow.com/questions/7716409/
-
-=cut
-
-sub dump_var {
-    my ($prefix, $var) = @_;
-    my $ref = ref($var) || ""; 
-    my @rv;
-    local $Data::Dumper::Indent = 0;
-    local $Data::Dumper::Terse = 1;
-    if (ref $var eq 'ARRAY') {
-        for my $i (0 .. $#$var) {
-            push @rv, dump_var($prefix . "->[$i]", $var->[$i]);
-        }
-    } elsif (ref $var eq 'HASH') {
-        foreach my $key (sort keys %$var) {
-            push @rv, dump_var($prefix . '->{'.Dumper($key).'}', $var->{$key});
-	  }
-      } elsif (ref $var eq 'SCALAR') {
-        push @rv, dump_var('${' . $prefix . '}', $$var);
-      } else {
-        push @rv, "$prefix = " . Dumper($var) . ";\n";
-      }
-    return @rv;
-  }
 
 
 =item weather_hash(\%hash)
@@ -138,15 +75,15 @@ sub weather_hash {
   $rethash{observation} = coalesce([$hash{s}]);
 
   # BUOYS bury sections one level deep; this fixes
-#  debug("EPSILON", unfold($hash{buoy_section1}{relHumid1}), "HAMMELL");
   for $i (sort keys %{$hash{buoy_section1}}) {
-    debug("KEY: $i");
     $hash{$i} = $hash{buoy_section1}{$i};
   }
 
-  debug("DELTA", unfold($hash{sfcWind}{wind}{dir}{v}), "BURKE");
-#  debug("DELTA2", unfold({%hash}), "BURKE2");
-#  debug("DELTA3", unfold($hash{buoy_section2}), "BURKE3");
+  # time
+  # TODO: this will become an issue w/ different formats
+  my($da, $ho) = ($hash{obsTime}{timeAt}{day}{v}, $hash{obsTime}{timeAt}{hour}{v});
+  my($mo, $yr) = day2time($da,$ho);
+  debug("MOYR: $yr-$mo-$da $ho:00:00");
 
   # station id
   $rethash{id} = coalesce([$hash{obsStationId}{id}{v}, $hash{callSign}{id}{v},
@@ -178,6 +115,7 @@ sub weather_hash {
   # pressure, in inches
   $rethash{pressure} = coalesce([
    $hash{QNH}, convert($hash{SLP}{hPa}{v}, "hpa", "in")]);
+  debug("PRESSURE: $rethash{pressure}");
 
   # wind direction, speed, gust
   $rethash{winddir} = coalesce([$hash{sfcWind}{wind}{dir}{v}]);

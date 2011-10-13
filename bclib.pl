@@ -1956,7 +1956,7 @@ This is just a hack function to convert weather data w/o losing "NULL"
 sub convert {
   my($quant, $from, $to) = @_;
   debug("CONVERT(",@_,")");
-  if ($quant eq "NULL" && length($quant)==0) {return "NULL";}
+  if ($quant eq "NULL" || length($quant)==0) {return "NULL";}
 
   # celsius to farenheit
   if ($from eq "c" && $to eq "f") {return $quant*1.8+32;}
@@ -2017,6 +2017,35 @@ sub hashlist2sqlite {
 
   return @queries;
 }
+
+=item dump_var($prefix, $var)
+
+Better version of unfold(), stolen from
+http://stackoverflow.com/questions/7716409/
+
+=cut
+
+sub dump_var {
+    my ($prefix, $var) = @_;
+    my $ref = ref($var) || ""; 
+    my @rv;
+    local $Data::Dumper::Indent = 0;
+    local $Data::Dumper::Terse = 1;
+    if (ref $var eq 'ARRAY') {
+        for my $i (0 .. $#$var) {
+            push @rv, dump_var($prefix . "->[$i]", $var->[$i]);
+        }
+    } elsif (ref $var eq 'HASH') {
+        foreach my $key (sort keys %$var) {
+            push @rv, dump_var($prefix . '->{'.Dumper($key).'}', $var->{$key});
+	  }
+      } elsif (ref $var eq 'SCALAR') {
+        push @rv, dump_var('${' . $prefix . '}', $$var);
+      } else {
+        push @rv, "$prefix = " . Dumper($var) . ";\n";
+      }
+    return @rv;
+  }
 
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
