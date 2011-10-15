@@ -159,6 +159,24 @@ sub convert_uv {
 
 die "TESTING";
 
+for $i (1..10000) {
+  %hash=();
+  $hash{y} = rand()*180-90;
+  $hash{x} = rand()*360-180;
+  $hash{id} = ++$count;
+  $hash{label} = "Point $count";
+  $hash{color} = hsv2rgb(rand(),1,1,"kml=1");
+  push(@l, {%hash});
+}
+
+# @poly = voronoi(\@l);
+
+for $i (@l) {
+  debug("I: $i");
+}
+
+die "TESTING";
+
 =item metaf2xml
 
 METAR:

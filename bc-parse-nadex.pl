@@ -28,7 +28,7 @@ CREATE TABLE forex.nadex_trans (
 
 =cut
 
-require "bclib.pl";
+require "/home/barrycarter/BCGIT/bclib.pl";
 ($cont, $name) = cmdfile();
 
 for $i (split(/\n/,$cont)) {
