@@ -75,17 +75,7 @@ $commands = join("\n",@commands);
 write_file($commands, "commands");
 ($out, $err, $stat) = cache_command("parallel -j 20 < commands");
 
-warn "TESTING";
-# @files = ("/usr/local/etc/cycle/SYNOP/sn.0029.txt",
-#	  "/usr/local/etc/cycle/DBUOY/sn.0198.txt",
-#	  "/usr/local/etc/cycle/SHIPS/sn.0081.txt",
-#	  "/usr/local/etc/cycle/METAR/sn.0199.txt"
-#	  );
-
-@files = ("/usr/local/etc/cycle/DBUOY/sn.0197.txt");
-
 # go through files
-
 for $i (@files) {
   debug("I: $i");
 
@@ -96,16 +86,20 @@ for $i (@files) {
 
   # handle
   if ($type eq "metar") {
-    handle_metar($i);
+    system("metafsrc2raw.pl -Fmetaf_nws $i|metaf2xml.pl -x output.xml");
   } elsif ($type eq "ships") {
-    handle_ship($i);
+    system("metafsrc2raw.pl -Fsynop_nws $i|metaf2xml.pl -TSYNOP -x output.xml");
   } elsif ($type eq "dbuoy") {
-    handle_buoy($i);
+    system("metafsrc2raw.pl -Fbuoy_nws $i|metaf2xml.pl -TBUOY -x output.xml");
+
   } elsif ($type eq "synop") {
-    debug("Not currently handling SYNOP");
+    system("metafsrc2raw.pl -Fsynop_nws $i|metaf2xml.pl -TSYNOP -x output.xml");
   } else {
     warnlocal("Can't handle: $type");
   }
+
+  # data is now in output.xml regardless of original type
+
 }
 
 # rsync (uses private key)
