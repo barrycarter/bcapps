@@ -8,8 +8,16 @@ require "bclib.pl";
 open(A,">/tmp/test.svg");
 
 # header
-print A qq!<svg xmlns="http://www.w3.org/2000/svg" version="1.1">\n!;
-# print A qq!<g transform="scale(0.001,0.001)")>\n!;
+print A << "MARK";
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+ width="512px" height="512px"
+ viewBox="0 0 512 512"
+>
+MARK
+;
+
+# test transforms
+# print A qq!<g transform="scale(4,4)" >\n!;
 
 # <h>TODO: choose worse colors</h>
 
@@ -27,12 +35,12 @@ for $i (0..10) {
     debug("K: $k");
 
     # white circle <h>blue hearts, purple moons, ...</h>
-    print A qq!<circle cx="$j" cy="$l" r="2" fill="white" />\n!;
+    print A qq!<circle cx="$j" cy="$l" r="2" fill="black" />\n!;
 
     # and black text (NE of point)
-#    $j+=5;
-#    $l+=5;
-    print A qq!<text x="$j" y="$l" fill="black">$j,$l</text>\n!;
+    $textx = $j+5;
+    $texty = $l-5;
+    print A qq!<text x="$textx" y="$texty" fill="black" style="font-size:15">$j,$l</text>\n!;
 
   }
 }
