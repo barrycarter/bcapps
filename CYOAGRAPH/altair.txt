@@ -3,7 +3,7 @@
 -:red:failure
 v:gray50:cave
 p:tan:3rd planet surface/orbit
-s:white:on the ship
+s:purple:on the ship
 c:yellow:clouds/sky city
 o:lightblue:ocean/dome city
 x:pink:6th planet
