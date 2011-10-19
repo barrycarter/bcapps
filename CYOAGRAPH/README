@@ -1,0 +1,66 @@
+Attempts to create digraphs of some Choose Your Own Adventure books.
+
+(yes, I know other people have done this too-- I'm hoping to turn it
+into a multi-contributor project)
+
+Inspired by http://www.ethblue.com/cyoa/</a> , this project seeks to
+graph all CYOA books using the format below, and maybe make some nice
+graphs using graphviz. Format example:
+
+...
+27/49+50
+28/79
+30/41+51
+32
+...
+
+Line-by-line, the above (from "Third Planet From Altair") says:
+
+"27/49+50" means: at the end of page 27, you make a choice which
+takes you to either page 49 or page 50.
+
+"28/79" means: at the end of page 28, you must continue to page
+79. There is no choice to make.
+
+"30/41+51" means exactly the same thing as "27/49+50" (from page 30,
+you can choose to go to page 41 or 51).
+
+"32" means that page 32 is an end point for the story. 
+
+Notes:
+
+"9/14+15+16" means: after page 9, you can go to page 14, 15, or 16.
+
+Optional color coding format. Start the file like this:
+
+# Third Planet From Altair
+*:green:success
+-:red:failure
+v:gray50:cave
+p:tan:3rd planet surface/orbit
+s:white:on the ship
+c:yellow:clouds/sky city
+o:lightblue:ocean/dome city
+x:pink:6th planet
+m:orange:water moon
+
+Lines starting with "#" (like the first line above) are comments.
+
+Otherwise, the format is [single character]:[color]:[description]. Example:
+
+"c:yellow:clouds/sky city" means pages with a "c" after them will be
+colored yellow on the graph, and "clouds/sky city" means these pages
+take place in the clouds or in Sky City.
+
+"10c/17+19" means page 10 takes place in the clouds/Sky City.
+
+"10/17c+19c" won't work. You can only color nodes occuring before the "/".
+
+The first two non-comment lines of all files should be:
+
+*:green:success
+-:red:failure
+
+Only assign these to story endpoints, where green means "successful"
+ending and red means "unsuccessful" ending. TODO: make this less
+subjective

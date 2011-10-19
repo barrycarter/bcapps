@@ -1,3 +1,10 @@
+<html><head></head><body><script language="PerlScript">
+$window->document->write('This comes from perl\n');
+</script>
+
+<!--
+
+
 /* XMLHTTPREQUEST testing or something */
 
 <script type="text/javascript">
@@ -26,3 +33,5 @@ function handler {
 test.color = '#ff0000';
 
 </script>
+
+-->
