@@ -13,6 +13,7 @@ use MIME::Base64;
 use utf8;
 use Statistics::Distributions qw(uprob udistr);
 use Math::Round;
+use Data::Dumper 'Dumper';
 require JSON;
 
 # include sublibs
