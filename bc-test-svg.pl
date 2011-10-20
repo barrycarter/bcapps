@@ -10,8 +10,8 @@ open(A,">/tmp/test.svg");
 # header
 print A << "MARK";
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
- width="512px" height="512px"
- viewBox="0 0 512 512"
+ width="1000px" height="1000px"
+ viewBox="0 0 1000 1000"
 >
 MARK
 ;

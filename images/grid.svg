@@ -1,0 +1,269 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+ width="1000px" height="1000px"
+ viewBox="0 0 1000 1000"
+>
+<line x1="0" y1="0" x2="1000" y2="0" style="stroke:rgb(255,0,0)" />
+<line x1="0" y1="0" x2="0" y2="1000" style="stroke:rgb(0,0,255)" />
+<circle cx="0" cy="0" r="2" fill="black" />
+<text x="5" y="-5" fill="black" style="font-size:15">0,0</text>
+<circle cx="0" cy="100" r="2" fill="black" />
+<text x="5" y="95" fill="black" style="font-size:15">0,100</text>
+<circle cx="0" cy="200" r="2" fill="black" />
+<text x="5" y="195" fill="black" style="font-size:15">0,200</text>
+<circle cx="0" cy="300" r="2" fill="black" />
+<text x="5" y="295" fill="black" style="font-size:15">0,300</text>
+<circle cx="0" cy="400" r="2" fill="black" />
+<text x="5" y="395" fill="black" style="font-size:15">0,400</text>
+<circle cx="0" cy="500" r="2" fill="black" />
+<text x="5" y="495" fill="black" style="font-size:15">0,500</text>
+<circle cx="0" cy="600" r="2" fill="black" />
+<text x="5" y="595" fill="black" style="font-size:15">0,600</text>
+<circle cx="0" cy="700" r="2" fill="black" />
+<text x="5" y="695" fill="black" style="font-size:15">0,700</text>
+<circle cx="0" cy="800" r="2" fill="black" />
+<text x="5" y="795" fill="black" style="font-size:15">0,800</text>
+<circle cx="0" cy="900" r="2" fill="black" />
+<text x="5" y="895" fill="black" style="font-size:15">0,900</text>
+<circle cx="0" cy="1000" r="2" fill="black" />
+<text x="5" y="995" fill="black" style="font-size:15">0,1000</text>
+<line x1="0" y1="100" x2="1000" y2="100" style="stroke:rgb(255,0,0)" />
+<line x1="100" y1="0" x2="100" y2="1000" style="stroke:rgb(0,0,255)" />
+<circle cx="100" cy="0" r="2" fill="black" />
+<text x="105" y="-5" fill="black" style="font-size:15">100,0</text>
+<circle cx="100" cy="100" r="2" fill="black" />
+<text x="105" y="95" fill="black" style="font-size:15">100,100</text>
+<circle cx="100" cy="200" r="2" fill="black" />
+<text x="105" y="195" fill="black" style="font-size:15">100,200</text>
+<circle cx="100" cy="300" r="2" fill="black" />
+<text x="105" y="295" fill="black" style="font-size:15">100,300</text>
+<circle cx="100" cy="400" r="2" fill="black" />
+<text x="105" y="395" fill="black" style="font-size:15">100,400</text>
+<circle cx="100" cy="500" r="2" fill="black" />
+<text x="105" y="495" fill="black" style="font-size:15">100,500</text>
+<circle cx="100" cy="600" r="2" fill="black" />
+<text x="105" y="595" fill="black" style="font-size:15">100,600</text>
+<circle cx="100" cy="700" r="2" fill="black" />
+<text x="105" y="695" fill="black" style="font-size:15">100,700</text>
+<circle cx="100" cy="800" r="2" fill="black" />
+<text x="105" y="795" fill="black" style="font-size:15">100,800</text>
+<circle cx="100" cy="900" r="2" fill="black" />
+<text x="105" y="895" fill="black" style="font-size:15">100,900</text>
+<circle cx="100" cy="1000" r="2" fill="black" />
+<text x="105" y="995" fill="black" style="font-size:15">100,1000</text>
+<line x1="0" y1="200" x2="1000" y2="200" style="stroke:rgb(255,0,0)" />
+<line x1="200" y1="0" x2="200" y2="1000" style="stroke:rgb(0,0,255)" />
+<circle cx="200" cy="0" r="2" fill="black" />
+<text x="205" y="-5" fill="black" style="font-size:15">200,0</text>
+<circle cx="200" cy="100" r="2" fill="black" />
+<text x="205" y="95" fill="black" style="font-size:15">200,100</text>
+<circle cx="200" cy="200" r="2" fill="black" />
+<text x="205" y="195" fill="black" style="font-size:15">200,200</text>
+<circle cx="200" cy="300" r="2" fill="black" />
+<text x="205" y="295" fill="black" style="font-size:15">200,300</text>
+<circle cx="200" cy="400" r="2" fill="black" />
+<text x="205" y="395" fill="black" style="font-size:15">200,400</text>
+<circle cx="200" cy="500" r="2" fill="black" />
+<text x="205" y="495" fill="black" style="font-size:15">200,500</text>
+<circle cx="200" cy="600" r="2" fill="black" />
+<text x="205" y="595" fill="black" style="font-size:15">200,600</text>
+<circle cx="200" cy="700" r="2" fill="black" />
+<text x="205" y="695" fill="black" style="font-size:15">200,700</text>
+<circle cx="200" cy="800" r="2" fill="black" />
+<text x="205" y="795" fill="black" style="font-size:15">200,800</text>
+<circle cx="200" cy="900" r="2" fill="black" />
+<text x="205" y="895" fill="black" style="font-size:15">200,900</text>
+<circle cx="200" cy="1000" r="2" fill="black" />
+<text x="205" y="995" fill="black" style="font-size:15">200,1000</text>
+<line x1="0" y1="300" x2="1000" y2="300" style="stroke:rgb(255,0,0)" />
+<line x1="300" y1="0" x2="300" y2="1000" style="stroke:rgb(0,0,255)" />
+<circle cx="300" cy="0" r="2" fill="black" />
+<text x="305" y="-5" fill="black" style="font-size:15">300,0</text>
+<circle cx="300" cy="100" r="2" fill="black" />
+<text x="305" y="95" fill="black" style="font-size:15">300,100</text>
+<circle cx="300" cy="200" r="2" fill="black" />
+<text x="305" y="195" fill="black" style="font-size:15">300,200</text>
+<circle cx="300" cy="300" r="2" fill="black" />
+<text x="305" y="295" fill="black" style="font-size:15">300,300</text>
+<circle cx="300" cy="400" r="2" fill="black" />
+<text x="305" y="395" fill="black" style="font-size:15">300,400</text>
+<circle cx="300" cy="500" r="2" fill="black" />
+<text x="305" y="495" fill="black" style="font-size:15">300,500</text>
+<circle cx="300" cy="600" r="2" fill="black" />
+<text x="305" y="595" fill="black" style="font-size:15">300,600</text>
+<circle cx="300" cy="700" r="2" fill="black" />
+<text x="305" y="695" fill="black" style="font-size:15">300,700</text>
+<circle cx="300" cy="800" r="2" fill="black" />
+<text x="305" y="795" fill="black" style="font-size:15">300,800</text>
+<circle cx="300" cy="900" r="2" fill="black" />
+<text x="305" y="895" fill="black" style="font-size:15">300,900</text>
+<circle cx="300" cy="1000" r="2" fill="black" />
+<text x="305" y="995" fill="black" style="font-size:15">300,1000</text>
+<line x1="0" y1="400" x2="1000" y2="400" style="stroke:rgb(255,0,0)" />
+<line x1="400" y1="0" x2="400" y2="1000" style="stroke:rgb(0,0,255)" />
+<circle cx="400" cy="0" r="2" fill="black" />
+<text x="405" y="-5" fill="black" style="font-size:15">400,0</text>
+<circle cx="400" cy="100" r="2" fill="black" />
+<text x="405" y="95" fill="black" style="font-size:15">400,100</text>
+<circle cx="400" cy="200" r="2" fill="black" />
+<text x="405" y="195" fill="black" style="font-size:15">400,200</text>
+<circle cx="400" cy="300" r="2" fill="black" />
+<text x="405" y="295" fill="black" style="font-size:15">400,300</text>
+<circle cx="400" cy="400" r="2" fill="black" />
+<text x="405" y="395" fill="black" style="font-size:15">400,400</text>
+<circle cx="400" cy="500" r="2" fill="black" />
+<text x="405" y="495" fill="black" style="font-size:15">400,500</text>
+<circle cx="400" cy="600" r="2" fill="black" />
+<text x="405" y="595" fill="black" style="font-size:15">400,600</text>
+<circle cx="400" cy="700" r="2" fill="black" />
+<text x="405" y="695" fill="black" style="font-size:15">400,700</text>
+<circle cx="400" cy="800" r="2" fill="black" />
+<text x="405" y="795" fill="black" style="font-size:15">400,800</text>
+<circle cx="400" cy="900" r="2" fill="black" />
+<text x="405" y="895" fill="black" style="font-size:15">400,900</text>
+<circle cx="400" cy="1000" r="2" fill="black" />
+<text x="405" y="995" fill="black" style="font-size:15">400,1000</text>
+<line x1="0" y1="500" x2="1000" y2="500" style="stroke:rgb(255,0,0)" />
+<line x1="500" y1="0" x2="500" y2="1000" style="stroke:rgb(0,0,255)" />
+<circle cx="500" cy="0" r="2" fill="black" />
+<text x="505" y="-5" fill="black" style="font-size:15">500,0</text>
+<circle cx="500" cy="100" r="2" fill="black" />
+<text x="505" y="95" fill="black" style="font-size:15">500,100</text>
+<circle cx="500" cy="200" r="2" fill="black" />
+<text x="505" y="195" fill="black" style="font-size:15">500,200</text>
+<circle cx="500" cy="300" r="2" fill="black" />
+<text x="505" y="295" fill="black" style="font-size:15">500,300</text>
+<circle cx="500" cy="400" r="2" fill="black" />
+<text x="505" y="395" fill="black" style="font-size:15">500,400</text>
+<circle cx="500" cy="500" r="2" fill="black" />
+<text x="505" y="495" fill="black" style="font-size:15">500,500</text>
+<circle cx="500" cy="600" r="2" fill="black" />
+<text x="505" y="595" fill="black" style="font-size:15">500,600</text>
+<circle cx="500" cy="700" r="2" fill="black" />
+<text x="505" y="695" fill="black" style="font-size:15">500,700</text>
+<circle cx="500" cy="800" r="2" fill="black" />
+<text x="505" y="795" fill="black" style="font-size:15">500,800</text>
+<circle cx="500" cy="900" r="2" fill="black" />
+<text x="505" y="895" fill="black" style="font-size:15">500,900</text>
+<circle cx="500" cy="1000" r="2" fill="black" />
+<text x="505" y="995" fill="black" style="font-size:15">500,1000</text>
+<line x1="0" y1="600" x2="1000" y2="600" style="stroke:rgb(255,0,0)" />
+<line x1="600" y1="0" x2="600" y2="1000" style="stroke:rgb(0,0,255)" />
+<circle cx="600" cy="0" r="2" fill="black" />
+<text x="605" y="-5" fill="black" style="font-size:15">600,0</text>
+<circle cx="600" cy="100" r="2" fill="black" />
+<text x="605" y="95" fill="black" style="font-size:15">600,100</text>
+<circle cx="600" cy="200" r="2" fill="black" />
+<text x="605" y="195" fill="black" style="font-size:15">600,200</text>
+<circle cx="600" cy="300" r="2" fill="black" />
+<text x="605" y="295" fill="black" style="font-size:15">600,300</text>
+<circle cx="600" cy="400" r="2" fill="black" />
+<text x="605" y="395" fill="black" style="font-size:15">600,400</text>
+<circle cx="600" cy="500" r="2" fill="black" />
+<text x="605" y="495" fill="black" style="font-size:15">600,500</text>
+<circle cx="600" cy="600" r="2" fill="black" />
+<text x="605" y="595" fill="black" style="font-size:15">600,600</text>
+<circle cx="600" cy="700" r="2" fill="black" />
+<text x="605" y="695" fill="black" style="font-size:15">600,700</text>
+<circle cx="600" cy="800" r="2" fill="black" />
+<text x="605" y="795" fill="black" style="font-size:15">600,800</text>
+<circle cx="600" cy="900" r="2" fill="black" />
+<text x="605" y="895" fill="black" style="font-size:15">600,900</text>
+<circle cx="600" cy="1000" r="2" fill="black" />
+<text x="605" y="995" fill="black" style="font-size:15">600,1000</text>
+<line x1="0" y1="700" x2="1000" y2="700" style="stroke:rgb(255,0,0)" />
+<line x1="700" y1="0" x2="700" y2="1000" style="stroke:rgb(0,0,255)" />
+<circle cx="700" cy="0" r="2" fill="black" />
+<text x="705" y="-5" fill="black" style="font-size:15">700,0</text>
+<circle cx="700" cy="100" r="2" fill="black" />
+<text x="705" y="95" fill="black" style="font-size:15">700,100</text>
+<circle cx="700" cy="200" r="2" fill="black" />
+<text x="705" y="195" fill="black" style="font-size:15">700,200</text>
+<circle cx="700" cy="300" r="2" fill="black" />
+<text x="705" y="295" fill="black" style="font-size:15">700,300</text>
+<circle cx="700" cy="400" r="2" fill="black" />
+<text x="705" y="395" fill="black" style="font-size:15">700,400</text>
+<circle cx="700" cy="500" r="2" fill="black" />
+<text x="705" y="495" fill="black" style="font-size:15">700,500</text>
+<circle cx="700" cy="600" r="2" fill="black" />
+<text x="705" y="595" fill="black" style="font-size:15">700,600</text>
+<circle cx="700" cy="700" r="2" fill="black" />
+<text x="705" y="695" fill="black" style="font-size:15">700,700</text>
+<circle cx="700" cy="800" r="2" fill="black" />
+<text x="705" y="795" fill="black" style="font-size:15">700,800</text>
+<circle cx="700" cy="900" r="2" fill="black" />
+<text x="705" y="895" fill="black" style="font-size:15">700,900</text>
+<circle cx="700" cy="1000" r="2" fill="black" />
+<text x="705" y="995" fill="black" style="font-size:15">700,1000</text>
+<line x1="0" y1="800" x2="1000" y2="800" style="stroke:rgb(255,0,0)" />
+<line x1="800" y1="0" x2="800" y2="1000" style="stroke:rgb(0,0,255)" />
+<circle cx="800" cy="0" r="2" fill="black" />
+<text x="805" y="-5" fill="black" style="font-size:15">800,0</text>
+<circle cx="800" cy="100" r="2" fill="black" />
+<text x="805" y="95" fill="black" style="font-size:15">800,100</text>
+<circle cx="800" cy="200" r="2" fill="black" />
+<text x="805" y="195" fill="black" style="font-size:15">800,200</text>
+<circle cx="800" cy="300" r="2" fill="black" />
+<text x="805" y="295" fill="black" style="font-size:15">800,300</text>
+<circle cx="800" cy="400" r="2" fill="black" />
+<text x="805" y="395" fill="black" style="font-size:15">800,400</text>
+<circle cx="800" cy="500" r="2" fill="black" />
+<text x="805" y="495" fill="black" style="font-size:15">800,500</text>
+<circle cx="800" cy="600" r="2" fill="black" />
+<text x="805" y="595" fill="black" style="font-size:15">800,600</text>
+<circle cx="800" cy="700" r="2" fill="black" />
+<text x="805" y="695" fill="black" style="font-size:15">800,700</text>
+<circle cx="800" cy="800" r="2" fill="black" />
+<text x="805" y="795" fill="black" style="font-size:15">800,800</text>
+<circle cx="800" cy="900" r="2" fill="black" />
+<text x="805" y="895" fill="black" style="font-size:15">800,900</text>
+<circle cx="800" cy="1000" r="2" fill="black" />
+<text x="805" y="995" fill="black" style="font-size:15">800,1000</text>
+<line x1="0" y1="900" x2="1000" y2="900" style="stroke:rgb(255,0,0)" />
+<line x1="900" y1="0" x2="900" y2="1000" style="stroke:rgb(0,0,255)" />
+<circle cx="900" cy="0" r="2" fill="black" />
+<text x="905" y="-5" fill="black" style="font-size:15">900,0</text>
+<circle cx="900" cy="100" r="2" fill="black" />
+<text x="905" y="95" fill="black" style="font-size:15">900,100</text>
+<circle cx="900" cy="200" r="2" fill="black" />
+<text x="905" y="195" fill="black" style="font-size:15">900,200</text>
+<circle cx="900" cy="300" r="2" fill="black" />
+<text x="905" y="295" fill="black" style="font-size:15">900,300</text>
+<circle cx="900" cy="400" r="2" fill="black" />
+<text x="905" y="395" fill="black" style="font-size:15">900,400</text>
+<circle cx="900" cy="500" r="2" fill="black" />
+<text x="905" y="495" fill="black" style="font-size:15">900,500</text>
+<circle cx="900" cy="600" r="2" fill="black" />
+<text x="905" y="595" fill="black" style="font-size:15">900,600</text>
+<circle cx="900" cy="700" r="2" fill="black" />
+<text x="905" y="695" fill="black" style="font-size:15">900,700</text>
+<circle cx="900" cy="800" r="2" fill="black" />
+<text x="905" y="795" fill="black" style="font-size:15">900,800</text>
+<circle cx="900" cy="900" r="2" fill="black" />
+<text x="905" y="895" fill="black" style="font-size:15">900,900</text>
+<circle cx="900" cy="1000" r="2" fill="black" />
+<text x="905" y="995" fill="black" style="font-size:15">900,1000</text>
+<line x1="0" y1="1000" x2="1000" y2="1000" style="stroke:rgb(255,0,0)" />
+<line x1="1000" y1="0" x2="1000" y2="1000" style="stroke:rgb(0,0,255)" />
+<circle cx="1000" cy="0" r="2" fill="black" />
+<text x="1005" y="-5" fill="black" style="font-size:15">1000,0</text>
+<circle cx="1000" cy="100" r="2" fill="black" />
+<text x="1005" y="95" fill="black" style="font-size:15">1000,100</text>
+<circle cx="1000" cy="200" r="2" fill="black" />
+<text x="1005" y="195" fill="black" style="font-size:15">1000,200</text>
+<circle cx="1000" cy="300" r="2" fill="black" />
+<text x="1005" y="295" fill="black" style="font-size:15">1000,300</text>
+<circle cx="1000" cy="400" r="2" fill="black" />
+<text x="1005" y="395" fill="black" style="font-size:15">1000,400</text>
+<circle cx="1000" cy="500" r="2" fill="black" />
+<text x="1005" y="495" fill="black" style="font-size:15">1000,500</text>
+<circle cx="1000" cy="600" r="2" fill="black" />
+<text x="1005" y="595" fill="black" style="font-size:15">1000,600</text>
+<circle cx="1000" cy="700" r="2" fill="black" />
+<text x="1005" y="695" fill="black" style="font-size:15">1000,700</text>
+<circle cx="1000" cy="800" r="2" fill="black" />
+<text x="1005" y="795" fill="black" style="font-size:15">1000,800</text>
+<circle cx="1000" cy="900" r="2" fill="black" />
+<text x="1005" y="895" fill="black" style="font-size:15">1000,900</text>
+<circle cx="1000" cy="1000" r="2" fill="black" />
+<text x="1005" y="995" fill="black" style="font-size:15">1000,1000</text>
+</svg>

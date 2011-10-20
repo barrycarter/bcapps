@@ -10,16 +10,26 @@ require "bclib.pl";
 
 %query = str2hash($ENV{QUERY_STRING});
 
+
+($x, $y) = ($query{x}/2**$query{zoom}*1000, $query{y}/2**$query{zoom}*1000);
+
+
 ($r, $g, $b) = (int($query{x}/(2**$query{zoom})*255),
 		int($query{y}/(2**$query{zoom})*255),
 		0);
+
+$printstr = "$query{x},$query{y},$query{zoom}";
 # cheap hack
 $str = << "MARK";
 new
-size 200,200
-setpixel 0,0,$r,$g,$b
-string 255,255,255,0,100,small,$ENV{QUERY_STRING}
-string 255,255,255,0,150,small,$r/$g/$b
+size 256,256
+setpixel 0,0,255,255,255
+string 0,0,0,128,128,large,$printstr
+# stringup 255,255,255,128,128,large,$printstr
+# dline 0,0,256,256,255,0,0
+# dline 256,0,0,256,255,0,0
+rect 0,0,256,256,255,0,0
+# string 255,255,255,0,150,small,$r/$g/$b
 MARK
 ;
 
