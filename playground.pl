@@ -19,24 +19,6 @@ use XML::Simple;
 use Data::Dumper 'Dumper';
 $Data::Dumper::Indent = 0;
 
-srand(1044); # consistent randomness
-
-for $i (1..10) {
-  push(@x,rand(),rand());
-}
-
-@res = voronoi(\@x,"infinityok=1");
-debug("RES",@res);
-debug("A",dump_var("POLY",\@res),"B");
-
-while (@x) {
-  ($x, $y) = (shift(@x)*100, shift(@x)*100);
-  print "setpixel $x $y\n";
-}
-
-
-die "TESTING";
-
 # system("metafsrc2raw.pl -Fsynop_nws sample-data/SHIPS/sn.0040.txt | metaf2xml.pl -TSYNOP -x /tmp/test1.xml");
 
 # system("metafsrc2raw.pl -Fbuoy_nws sample-data/DBUOY/sn.0040.txt | metaf2xml.pl -TBUOY -x /tmp/test2.xml");
@@ -46,7 +28,7 @@ die "TESTING";
 # system("metafsrc2raw.pl -Fmetaf_nws sample-data/METAR/sn.0038.txt | metaf2xml.pl -x /tmp/test4.xml");
 
 $xml = new XML::Simple;
-$data = $xml->XMLin("/tmp/test3.xml");
+$data = $xml->XMLin("/tmp/test1.xml");
 %data = %{$data};
 
 # for test1.xml, fields that look ok: id, lat/lon, cloudcover,
@@ -57,10 +39,14 @@ for $i ("metar", "synop", "buoy") {
 }
 
 for $i (@reports) {
-  debug("I: $i",dump_var("I",\%{$i}));
+#  debug("I: $i",dump_var("I",\%{$i}));
   %hash = %{$i};
   %ret = weather_hash(\%hash);
-  debug("RETURN:",unfold(%ret));
+  debug("ALPHA: TIME:",dump_var("ALPHA",{%hash}));
+
+  # debugging so I can sort results and check
+  for $j (sort keys %ret) {debug("ALPHA: $j -> $ret{$j}");}
+
   push(@hashes, {%ret});
 }
 
@@ -93,6 +79,17 @@ sub weather_hash {
   # entire observation
   $rethash{observation} = coalesce([$hash{s}]);
 
+  # type of observation (this may leave 'type' blank if neither BUOY nor SHIP)
+  if ($rethash{observation}=~/^ZZYY/) {
+    $rethash{type} = "BUOY";
+  } elsif ($rethash{observation}=~/^BBXX/) {
+    $rethash{type} = "SHIP";
+  } elsif ($hash{synop}) {
+    $rethash{type} = "SYNOP";
+  } else {
+    $rethash{type} = "METAR";
+  }
+
   # BUOYS bury sections one level deep; this fixes
   for $i (sort keys %{$hash{buoy_section1}}) {
     $hash{$i} = $hash{buoy_section1}{$i};
@@ -100,9 +97,16 @@ sub weather_hash {
 
   # time
   # TODO: this will become an issue w/ different formats
-  my($da, $ho) = ($hash{obsTime}{timeAt}{day}{v}, $hash{obsTime}{timeAt}{hour}{v});
-  my($mo, $yr) = day2time($da,$ho);
-  debug("MOYR: $yr-$mo-$da $ho:00:00");
+  my($hour) = coalesce([$hash{exactObsTime}{timeAt}{hour}{v},
+		       $hash{obsTime}{timeAt}{hour}{v}]);
+
+  my($minute) = coalesce([$hash{exactObsTime}{timeAt}{minute}{v},
+		       $hash{obsTime}{timeAt}{minute}{v}]);
+
+
+  my($day) = coalesce([$hash{obsTime}{timeAt}{day}{v}]);
+
+  $rethash{time} = strftime("%Y-%m-%d %H:%M", gmtime(dahrmi2time($day, $hour, $minute)));
 
   # station id
   $rethash{id} = coalesce([$hash{obsStationId}{id}{v}, $hash{callSign}{id}{v},
@@ -175,6 +179,56 @@ sub convert_uv {
 
   return "ERR";
 }
+
+=item dahrmi2time($da, $hr, $mi, $time=time())
+
+Given day $da, hour $hr, minute $mi, return Unix timestamp nearest to $time
+
+=cut
+
+sub dahrmi2time {
+  my($da, $hr, $mi, $time) = @_;
+  unless ($time) {$time=time()};
+
+  # obtain/tweak values for time to match
+  my($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = gmtime($time);
+  $year+=1900;
+  $mon++;
+  if ($mon==13) {$year++; $mon=1;}
+
+  # timestamp for da/hr/mi "this" month
+  my($thismo) = str2time("$year-$mon-$da $hr:$mi UTC");
+
+  # and last month
+  $mon--;
+  if ($mon<=0) {$year--; $mon=12;}
+  my($lastmo) = str2time("$year-$mon-$da $hr:$mi UTC");
+
+  # and compare
+  if (abs($lastmo-$time) < abs($thismo-$time)) {
+    return $lastmo;
+  }
+
+  return $thismo;
+}
+
+die "TESTING";
+
+srand(1044); # consistent randomness
+
+for $i (1..10) {
+  push(@x,rand(),rand());
+}
+
+@res = voronoi(\@x,"infinityok=1");
+debug("RES",@res);
+debug("A",dump_var("POLY",\@res),"B");
+
+while (@x) {
+  ($x, $y) = (shift(@x)*100, shift(@x)*100);
+  print "setpixel $x $y\n";
+}
+
 
 die "TESTING";
 
