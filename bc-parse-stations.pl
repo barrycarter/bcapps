@@ -10,7 +10,7 @@
 # too..)
 
 require "bclib.pl";
-open(A,"/home/barrycarter/20110527/nsd_cccc_annotated.txt");
+open(A,"db/nsd_cccc_annotated.txt");
 
 while (<A>) {
   # hack to find my annotations
@@ -55,16 +55,19 @@ while (<A>) {
 
   # 3D coords (earth radius = 1) [on the theory they might be helpful
   # somewhere/somehow/someday]
+  # TODO: include elevation?
   ($x,$y,$z) = sph2xyz($flon,$flat,1);
 
   # print in importable format (for sqlite3)
-  print join("\t", ($indi, $place, $state, $country, $flat, $flon, $elev, $x, $y, $z, $ann)),"\n";
+  print join("\t", ($indi, $wmob, $wmos, $place, $state, $country, $flat, $flon, $elev, $x, $y, $z, $ann)),"\n";
 }
 
 =item schema
 
 CREATE TABLE stations (
  metar TEXT,
+ wmob INT,
+ wmos INT,
  city TEXT,
  state TEXT,
  country TEXT,

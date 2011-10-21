@@ -27,9 +27,20 @@ $Data::Dumper::Indent = 0;
 
 # system("metafsrc2raw.pl -Fmetaf_nws sample-data/METAR/sn.0038.txt | metaf2xml.pl -x /tmp/test4.xml");
 
+# get lat/lon for metar and SYNOP stations
+# NOTE: I have a metar.stations table, but it doesn't include SYNOP info alas
+for $i (split(/\n/,read_file("db/nsd_cccc.txt"))) {
+  
+  debug($i);
+}
+
+die "TESTING";
+
 $xml = new XML::Simple;
-$data = $xml->XMLin("/tmp/test1.xml");
+$data = $xml->XMLin("/tmp/test3.xml");
 %data = %{$data};
+
+# passed: test[12].xml
 
 # for test1.xml, fields that look ok: id, lat/lon, cloudcover,
 
@@ -42,7 +53,7 @@ for $i (@reports) {
 #  debug("I: $i",dump_var("I",\%{$i}));
   %hash = %{$i};
   %ret = weather_hash(\%hash);
-  debug("ALPHA: TIME:",dump_var("ALPHA",{%hash}));
+#  debug("ALPHA: TIME:",dump_var("ALPHA",{%hash}));
 
   # debugging so I can sort results and check
   for $j (sort keys %ret) {debug("ALPHA: $j -> $ret{$j}");}
@@ -82,7 +93,7 @@ sub weather_hash {
   # type of observation (this may leave 'type' blank if neither BUOY nor SHIP)
   if ($rethash{observation}=~/^ZZYY/) {
     $rethash{type} = "BUOY";
-  } elsif ($rethash{observation}=~/^BBXX/) {
+  } elsif ($rethash{observation}=~/^(BB|AA)XX/) {
     $rethash{type} = "SHIP";
   } elsif ($hash{synop}) {
     $rethash{type} = "SYNOP";
@@ -184,11 +195,20 @@ sub convert_uv {
 
 Given day $da, hour $hr, minute $mi, return Unix timestamp nearest to $time
 
+NOTE: without the $time argument, I could use things like:
+
+ date +%s -d 'last month'
+ date +%s -d 'next month'
+
 =cut
 
 sub dahrmi2time {
   my($da, $hr, $mi, $time) = @_;
+  debug("DAHRMI2TIME(",@_,")");
   unless ($time) {$time=time()};
+
+  # if minute null, assume 0
+  if ($mi eq "NULL") {$mi=0;}
 
   # obtain/tweak values for time to match
   my($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = gmtime($time);

@@ -2,6 +2,9 @@
 
 # TODO: standardize units to match weather.sql
 
+# Reference documents:
+# ftp://daac.ornl.gov/data/lba/physical_climate/SCAR-B/comp/WMO306vol-I-1PartA.pdf
+
 =item parse_ship($report)
 
 Parses a SHIP report from
