@@ -29,12 +29,18 @@ $Data::Dumper::Indent = 0;
 
 # get lat/lon for metar and SYNOP stations
 # NOTE: I have a metar.stations table, but it doesn't include SYNOP info alas
-for $i (split(/\n/,read_file("db/nsd_cccc.txt"))) {
-  
-  debug($i);
-}
 
-die "TESTING";
+@res = sqlite3hashlist("SELECT * FROM stations","db/stations.db");
+
+for $i (@res) {
+  %hash = %{$i};
+  # set lat/lon for METAR name
+  $lat{$hash{metar}} = $hash{latitude};
+  $lon{$hash{metar}} = $hash{longitude};
+  # and synop station
+  $lat{$hash{wmob}*1000+$hash{wmos}} = $hash{latitude};
+  $lon{$hash{wmob}*1000+$hash{wmos}} = $hash{longitude};
+}
 
 $xml = new XML::Simple;
 $data = $xml->XMLin("/tmp/test3.xml");
@@ -123,12 +129,13 @@ sub weather_hash {
   $rethash{id} = coalesce([$hash{obsStationId}{id}{v}, $hash{callSign}{id}{v},
 			 $hash{buoyId}{id}{v}]);
 
-  # below won't work for fixed stations (eg, METAR)
-  $rethash{latitude} = coalesce([$hash{stationPosition}{lat}{v}]);
-  $rethash{longitude} = coalesce([$hash{stationPosition}{lon}{v}]);
+  # below now works for fixed stations too
+  $rethash{latitude} = coalesce([$hash{stationPosition}{lat}{v}, $lat{$rethash{id}}]);
+  $rethash{longitude} = coalesce([$hash{stationPosition}{lon}{v}, $lon{$rethash{id}}]);
 
   $rethash{cloudcover} = coalesce([$hash{totalCloudCover}{oktas}{v}]);
 
+  debug("ID: $rethash{id}, $rethash{latitude}, $rethash{longitude}");
   # temperature is in this field, unless NA (converted to F)
   $rethash{temperature} = coalesce([
    convert_uv($hash{temperature}{air}{temp})]);
