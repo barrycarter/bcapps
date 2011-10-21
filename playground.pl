@@ -6,7 +6,8 @@
 # TODO: cleanup this file -- lots of stuff has been (or should be)
 # moved to production
 
-# chunks are normally separated with 'die "TESTING";'
+# chunks are normally separated with 'die "TESTING";' (TODO: use
+# subroutines instead?)
 
 push(@INC, "/usr/local/lib");
 require "bclib.pl";
@@ -17,6 +18,24 @@ require "/home/barrycarter/bc-private.pl";
 use XML::Simple;
 use Data::Dumper 'Dumper';
 $Data::Dumper::Indent = 0;
+
+srand(1044); # consistent randomness
+
+for $i (1..10) {
+  push(@x,rand(),rand());
+}
+
+@res = voronoi(\@x,"infinityok=1");
+debug("RES",@res);
+debug("A",dump_var("POLY",\@res),"B");
+
+while (@x) {
+  ($x, $y) = (shift(@x)*100, shift(@x)*100);
+  print "setpixel $x $y\n";
+}
+
+
+die "TESTING";
 
 # system("metafsrc2raw.pl -Fsynop_nws sample-data/SHIPS/sn.0040.txt | metaf2xml.pl -TSYNOP -x /tmp/test1.xml");
 
