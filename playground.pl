@@ -19,6 +19,60 @@ use XML::Simple;
 use Data::Dumper 'Dumper';
 $Data::Dumper::Indent = 0;
 
+recent_weather();
+
+=item recent_weather($options)
+
+Obtain recent weather from
+ftp://tgftp.nws.noaa.gov/data/observations/metar/decoded/ (cheating,
+since that's pre-decoded!)
+
+$options currently unused
+
+NOTE: /var/tmp/weather must exist
+
+=cut
+
+sub recent_weather {
+  my($options) = @_;
+
+  # TODO: define this globally (but not in such an ugly way?)
+  my($now) = time();
+
+  # obtain directory
+  # TODO: reduce age=300
+  my($out,$err,$res)=cache_command("curl ftp://tgftp.nws.noaa.gov/data/observations/metar/decoded/", "age=300");
+
+  # split result into lines, fields
+  for $i (split(/\n/,$out)) {
+    # $x = wanted fields
+    my($x, $x, $x, $x, $size, $mo, $da, $time, $file) = split(/\s+/, $i);
+    $time{$file} = str2time("$mo $da $time UTC");
+    debug("$file: $mo $da $time -> $time{$file}");
+  }
+
+  # order by most recent file first
+  for $i (sort {$time{$b} <=> $time{$a}} keys %time) {
+    # if it's more than 6 hours ago, jump out of loop
+    # TODO: make "6 hours" an option
+    if ($now - $time{$i} > 3600*6) {last;}
+
+    debug("$i -> $time{$i}");
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+die "TESTING";
+
 # system("metafsrc2raw.pl -Fsynop_nws sample-data/SHIPS/sn.0040.txt | metaf2xml.pl -TSYNOP -x /tmp/test1.xml");
 
 # system("metafsrc2raw.pl -Fbuoy_nws sample-data/DBUOY/sn.0040.txt | metaf2xml.pl -TBUOY -x /tmp/test2.xml");
@@ -79,7 +133,7 @@ system("sqlite3 /home/barrycarter/BCINFO/sites/DB/test.db < /tmp/playground.tmp"
 =item weather_hash(\%hash)
 
 Given a hash of weather data (converted to XML via metaf2xml and
-metafsrc2raw, and convert to a hash using XML::Simple), return a hash
+metafsrc2raw, and converted to a hash using XML::Simple), return a hash
 to populate the table described in weather.sql
 
 Unavailable fields are returned as "NULL" (the 4 letter string), since
