@@ -25,7 +25,7 @@ recent_weather();
 
 Obtain recent weather from
 ftp://tgftp.nws.noaa.gov/data/observations/metar/decoded/ (cheating,
-since that's pre-decoded!)
+since thats pre-decoded!)
 
 $options currently unused
 
@@ -35,6 +35,8 @@ NOTE: /var/tmp/weather must exist
 
 sub recent_weather {
   my($options) = @_;
+  my(@dls);
+  my(%time, %nicetime);
 
   # TODO: define this globally (but not in such an ugly way?)
   my($now) = time();
@@ -42,23 +44,38 @@ sub recent_weather {
   # obtain directory
   # TODO: reduce age=300
   my($out,$err,$res)=cache_command("curl ftp://tgftp.nws.noaa.gov/data/observations/metar/decoded/", "age=300");
+  write_file($out, "/var/tmp/weather/dir.txt");
 
   # split result into lines, fields
   for $i (split(/\n/,$out)) {
     # $x = wanted fields
     my($x, $x, $x, $x, $size, $mo, $da, $time, $file) = split(/\s+/, $i);
-    $time{$file} = str2time("$mo $da $time UTC");
-    debug("$file: $mo $da $time -> $time{$file}");
+    $time{$file} = str2time("$mo $da $time GMT");
+    $nicetime{$file} = "$mo $da $time GMT";
   }
 
   # order by most recent file first
   for $i (sort {$time{$b} <=> $time{$a}} keys %time) {
-    # if it's more than 6 hours ago, jump out of loop
-    # TODO: make "6 hours" an option
-    if ($now - $time{$i} > 3600*6) {last;}
 
-    debug("$i -> $time{$i}");
+    # if it's more than 2 hours ago, jump out of loop
+    # TODO: make "2 hours" an option
+    if ($now - $time{$i} > 3600*2) {last;}
+
+    # do we already have a more updated version of this one?
+    my($mtime) = (stat("/var/tmp/weather/$i"))[9];
+    if ($mtime >= $time{$i}) {next;}
+
+    debug("NEW: $nicetime{$i}");
+
+    # OK, we need to get this one (so push curl command for parallel)
+    # curl -R fails (due to DST change issue?), so just using current time
+    push(@dls, "curl -o /var/tmp/weather/$i ftp://tgftp.nws.noaa.gov/data/observations/metar/decoded/$i");
   }
+
+  # create file for parallel, and run parallel
+  write_file(join("\n",@dls),"/var/tmp/weather/download.txt");
+  system("parallel -j 50 < /var/tmp/weather/download.txt");
+  
 
 }
 
