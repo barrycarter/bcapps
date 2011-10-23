@@ -49,13 +49,13 @@ for $i (@tri) {
     %hash = %{$j};
     push(@tripoints, "$hash{longitude},$hash{latitude}");
     $tempavg += ($hash{temp_c}*1.8+32)/3;
+    debug("BETA: $hash{longitude}, $hash{latitude}, $hash{temp_c}");
   }
 
   $hue=5/6-($tempavg/100)*5/6;
+  debug("$tempavg -> $hue ALPHA");
   $tri = join(" ",@tripoints);
- 
-  # random color for testing
-  $col = hsv2rgb(rand(), 1, 1, "kml=1&opacity=80");
+  $col = hsv2rgb($hue, 1, 1);
 
   push(@svg,  "<polygon points='$tri' style='fill:$col' />");
 }
