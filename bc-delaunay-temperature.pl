@@ -16,7 +16,7 @@ chdir("/tmp/bcdtp");
 for $i (@w) {
   %hash = %{$i};
 
-#  if (++$count>5) {warn "TESTING"; last;}
+#  if (++$count>9000) {warn "TESTING"; last;}
 
   # confirm numeric
   unless ($hash{latitude}=~/^[0-9\-\.]+$/ && $hash{longitude}=~/^[0-9\-\.]+$/) {
@@ -25,11 +25,10 @@ for $i (@w) {
   }
 
   # hideous cheating
-  ($hash{longitude}, $hash{latitude}) = 
-    to_mercator($hash{latitude}, $hash{longitude}, "order=xy");
-
-  $hash{longitude} *= 1000;
-  $hash{latitude} *= 1000;
+#  ($hash{longitude}, $hash{latitude}) = 
+#    to_mercator($hash{latitude}, $hash{longitude}, "order=xy");
+#  $hash{longitude} *= 1000;
+#  $hash{latitude} *= 1000;
 
   push(@points, "$hash{longitude} $hash{latitude}");
 
@@ -62,18 +61,53 @@ for $i (@tri) {
   $hue=5/6-($tempavg/100)*5/6;
   debug("$tempavg -> $hue ALPHA");
   $tri = join(" ",@tripoints);
+  $kmltri = join("\n",@tripoints);
   $col = hsv2rgb($hue, 1, 1);
+  $kmlcol = hsv2rgb($hue, 1, 1, "kml=1&opacity=80");
 
   push(@svg,  "<polygon points='$tri' style='fill:$col' />");
+
+  # since the triangles don't "belong" to a single point, just number them
+  $npoly++;
+  $kml = << "MARK";
+<Placemark><styleUrl>#poly$npoly</styleUrl>
+<Polygon><outerBoundaryIs><LinearRing><coordinates>
+$kmltri
+</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
+
+<Style id="poly$npoly">
+<PolyStyle><color>$kmlcol</color>
+<fill>1</fill><outline>0</outline></PolyStyle></Style>
+
+MARK
+;
+
+  push(@kml, $kml);
+
 }
 
 open(A,">file3.svg");
 print A << "MARK";
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
- width="256px" height="256px"
- viewBox="0 0 1000 1000">
+ width="1080px" height="540px"
+ viewBox="-180 -90 360 180">
 MARK
 ;
 
 print A join("\n", @svg);
 print A "\n</svg>\n";
+close(A);
+
+open(A,">file3.kml");
+print A << "MARK";
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document>
+MARK
+;
+
+print A join("\n", @kml);
+print A "\n</Document></kml>\n";
+close(A);
+
+system("zip file3.kmz file3.kml");
