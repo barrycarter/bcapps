@@ -19,7 +19,7 @@ $size = 1024/2**$query{zoom};
 ($bx, $by) = ($tx+$size, $ty+$size);
 
 # TODO: make this SVG from query-string
-$svg = read_file("images/grid.svg");
+$svg = read_file("images/playground.svg");
 
 # TODO: make this work w/ viewbox-less SVGs?
 # TODO: this incorrectly assumes equiangular, not Mercator, projection
@@ -29,7 +29,7 @@ write_file($svg, "/tmp/debug.svg");
 
 # <h>temp files? Who needs 'em!</h>
 print "Content-type: image/png\n\n";
-open(A, "|convert svg:- png:-");
+open(A, "|convert -transparent white svg:- png:-");
 print A $svg;
 close(A);
 

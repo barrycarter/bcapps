@@ -13,80 +13,104 @@ push(@INC, "/usr/local/lib");
 require "bclib.pl";
 require "bc-astro-lib.pl";
 require "bc-weather-lib.pl";
+require "bc-kml-lib.pl";
 # starting to store all my private pws, etc, in a single file
 require "/home/barrycarter/bc-private.pl";
 use XML::Simple;
 use Data::Dumper 'Dumper';
 $Data::Dumper::Indent = 0;
 
-recent_weather();
+# debug(unfold(recent_weather()));
+
+for $i (recent_weather()) {
+  %hash = %{$i};
+
+  my(%newhash) = {};
+
+  $newhash{id} = $hash{station_id};
+#  ($newhash{x}, $newhash{y}) = to_mercator($hash{latitude}, $hash{longitude}, "order=xy");
+  ($newhash{x}, $newhash{y}) = ($hash{longitude}, $hash{latitude});
+  $newhash{label} = $hash{station_id};
+  $f = $hash{temp_c}*1.8+32;
+  $color = 5/6-($f/100)*5/6;
+  $newhash{color} = hsv2rgb($color,1,1,"kml=1&opacity=40");
+#  debug("COLOR: $newhash{color}");
+
+  # cleanup
+  for $j (sort keys %newhash) {$newhash{$j}=~s/[^a-z0-9 _\.\-\#]//isg;}
+
+  push(@res, \%newhash);
+}
+
+debug(unfold(@res));
+
+die "TESTING";
+
+$file = voronoi_map(\@res);
+print $file."\n";
+
+die "TESTING";
 
 =item recent_weather($options)
 
-Obtain recent weather from
-ftp://tgftp.nws.noaa.gov/data/observations/metar/decoded/ (cheating,
-since thats pre-decoded!)
+Obtain recent weather from http://weather.aero/dataserver_current/cache/metars.cache.csv.gz and return as list of hashes
 
 $options currently unused
-
-NOTE: /var/tmp/weather must exist
 
 =cut
 
 sub recent_weather {
   my($options) = @_;
-  my(@dls);
-  my(%time, %nicetime);
+  my(@headers, @hashes);
+  my($res) = cache_command("curl http://weather.aero/dataserver_current/cache/metars.cache.csv.gz | gunzip | tail -n +6", "age=300");
+  my(@res) = split(/\n/, $res);
 
-  # TODO: define this globally (but not in such an ugly way?)
-  my($now) = time();
+  # header line
+  @headers = split(/\,/, shift(@res));
 
-  # obtain directory
-  # TODO: reduce age=300
-  my($out,$err,$res)=cache_command("curl ftp://tgftp.nws.noaa.gov/data/observations/metar/decoded/", "age=300");
-  write_file($out, "/var/tmp/weather/dir.txt");
-
-  # split result into lines, fields
-  for $i (split(/\n/,$out)) {
-    # $x = wanted fields
-    my($x, $x, $x, $x, $size, $mo, $da, $time, $file) = split(/\s+/, $i);
-    $time{$file} = str2time("$mo $da $time GMT");
-    $nicetime{$file} = "$mo $da $time GMT";
+  # go through data
+  for $i (@res) {
+    my(@line) = split(/\,/, $i);
+    my(%hash) = {};
+    for $j (0..$#headers) {
+      $hash{$headers[$j]} = $line[$j];
+  }
+    push(@hashes, \%hash);
   }
 
-  # order by most recent file first
-  for $i (sort {$time{$b} <=> $time{$a}} keys %time) {
+  return @hashes;
+}
 
-    # if it's more than 2 hours ago, jump out of loop
-    # TODO: make "2 hours" an option
-    if ($now - $time{$i} > 3600*2) {last;}
+die "TESTING";
 
-    # do we already have a more updated version of this one?
-    my($mtime) = (stat("/var/tmp/weather/$i"))[9];
-    if ($mtime >= $time{$i}) {next;}
+# SVG thingy
 
-    debug("NEW: $nicetime{$i}");
+print << "MARK";
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+ width="1000px" height="1000px"
+ viewBox="0 0 1000 1000"
+>
+MARK
+;
 
-    # OK, we need to get this one (so push curl command for parallel)
-    # curl -R fails (due to DST change issue?), so just using current time
-    push(@dls, "curl -o /var/tmp/weather/$i ftp://tgftp.nws.noaa.gov/data/observations/metar/decoded/$i");
-  }
+# cheating by using stuff you don't have access to, but just testing
+for $i (split(/\n/, read_file("/home/barrycarter/.xearth-markers"))) {
+  debug("I: $i");
+  $i=~/^\s*(\S+)\s+(\S+)\s+\"(.*?)\"/;
+  ($lat, $lon, $name) = ($1, $2, $3);
+  if (abs($lat)>85) {next;}
 
-  # create file for parallel, and run parallel
-  write_file(join("\n",@dls),"/var/tmp/weather/download.txt");
-  system("parallel -j 50 < /var/tmp/weather/download.txt");
-  
+  ($x, $y) = to_mercator($lat, $lon, "order=xy");
+  $x*=1024;
+  $y*=1024;
+  debug("$x/$y");
+
+  # this is wrong on purpose
+  print qq%<text x="$x" y="$y" fill="red" style="font-size:15">$name</text>\n%;
 
 }
 
-
-
-
-
-
-
-
-
+print "</svg>\n";
 
 die "TESTING";
 

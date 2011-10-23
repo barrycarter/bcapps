@@ -1,5 +1,107 @@
-<?xml version="1.0" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg width="800px" height="800px" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+ width="256px" height="256px"
+ viewBox="0 0 1000 1000"
+>
+<text x="208.611555555556" y="405.326249243013" fill="red" style="font-size:15">Albuquerque</text>
+<text x="85.3333333333333" y="290.592188728384" fill="red" style="font-size:15">Anchorage</text>
+<text x="262.4" y="380.776066038339" fill="red" style="font-size:15">Chicago</text>
+<text x="731.591111111111" y="426.946401598834" fill="red" style="font-size:15">New Delhi</text>
+<text x="512" y="340.539950584955" fill="red" style="font-size:15">London</text>
+<text x="909.511111111111" y="403.268023470125" fill="red" style="font-size:15">Tokyo</text>
+<text x="292.977777777778" y="391.717227444773" fill="red" style="font-size:15">Washington</text>
+<text x="941.994666666667" y="614.669915910285" fill="red" style="font-size:15">Sydney</text>
+<text x="163.697777777778" y="395.887030099742" fill="red" style="font-size:15">San Francisco</text>
+<text x="345.6" y="617.252218485125" fill="red" style="font-size:15">Buenos Aires</text>
+<text x="564.536888888889" y="614.704195872377" fill="red" style="font-size:15">Cape Town</text>
+<text x="388.892444444444" y="578.882902115945" fill="red" style="font-size:15">Rio de Janeiro</text>
+<text x="65.9732764444444" y="218.288398560515" fill="red" style="font-size:15">Barrow</text>
+<text x="63.1346346666667" y="449.914894004525" fill="red" style="font-size:15">Honolulu</text>
+<text x="740.076088888889" y="474.700805388721" fill="red" style="font-size:15">Madras</text>
+<text x="163.110428444444" y="366.182978875739" fill="red" style="font-size:15">Portland</text>
+<text x="272.639800888889" y="388.791912163727" fill="red" style="font-size:15">Kettering</text>
+<text x="283.844721777778" y="436.076547493668" fill="red" style="font-size:15">Miami</text>
+<text x="279.394958222222" y="439.888349334454" fill="red" style="font-size:15">Key West</text>
+<text x="234.717752888889" y="435.60420936715" fill="red" style="font-size:15">Brownsville</text>
+<text x="193.621560888889" y="384.762326216948" fill="red" style="font-size:15">Salt Lake City</text>
+<text x="316.302222222222" y="163.390855333275" fill="red" style="font-size:15">Thule</text>
+<text x="1009.16148053333" y="641.14579347407" fill="red" style="font-size:15">Wellington</text>
+<text x="1009.16148053333" y="625.131886662166" fill="red" style="font-size:15">Auckland</text>
+<text x="1018.31111111111" y="564.063601774505" fill="red" style="font-size:15">Fiji</text>
+<text x="923.970369422222" y="473.337203655849" fill="red" style="font-size:15">Guam</text>
+<text x="812.562961066667" y="542.035258142084" fill="red" style="font-size:15">Xmas Island</text>
+<text x="812.562961066667" y="542.035258142084" fill="red" style="font-size:15">Xmas Island</text>
+<text x="85.3333333333333" y="290.592188728384" fill="red" style="font-size:15">Anchorage</text>
+<text x="579.498666666667" y="394.986148972297" fill="red" style="font-size:15">Athens</text>
+<text x="638.293333333333" y="411.107144456791" fill="red" style="font-size:15">Baghdad</text>
+<text x="797.866666666667" y="472.56654366591" fill="red" style="font-size:15">Bangkok</text>
+<text x="843.178666666667" y="387.961936425923" fill="red" style="font-size:15">Beijing</text>
+<text x="550.172444444444" y="335.779332968421" fill="red" style="font-size:15">Berlin</text>
+<text x="327.964444444444" y="414.831702275372" fill="red" style="font-size:15">Bermuda</text>
+<text x="309.816888888889" y="378.859850356718" fill="red" style="font-size:15">Boston</text>
+<text x="375.751111111111" y="557.52289903897" fill="red" style="font-size:15">Brasilia</text>
+<text x="555.52" y="523.957380200522" fill="red" style="font-size:15">Brazzaville</text>
+<text x="345.6" y="617.252218485125" fill="red" style="font-size:15">Buenos Aires</text>
+<text x="600.888888888889" y="419.009741469979" fill="red" style="font-size:15">Cairo</text>
+<text x="763.164444444444" y="446.288662161594" fill="red" style="font-size:15">Calcutta</text>
+<text x="564.536888888889" y="614.704195872377" fill="red" style="font-size:15">Cape Town</text>
+<text x="490.382222222222" y="410.424929439195" fill="red" style="font-size:15">Casablanca</text>
+<text x="262.4" y="380.776066038339" fill="red" style="font-size:15">Chicago</text>
+<text x="236.657777777778" y="413.212112185386" fill="red" style="font-size:15">Dallas</text>
+<text x="731.591111111111" y="426.946401598834" fill="red" style="font-size:15">New Delhi</text>
+<text x="213.333333333333" y="388.591654867327" fill="red" style="font-size:15">Denver</text>
+<text x="669.240888888889" y="440.927919908805" fill="red" style="font-size:15">Dubai</text>
+<text x="200.817777777778" y="592.130579147181" fill="red" style="font-size:15">Easter Island</text>
+<text x="1018.59555555556" y="564.063601774505" fill="red" style="font-size:15">Fiji</text>
+<text x="923.875555555556" y="473.239681964142" fill="red" style="font-size:15">Guam</text>
+<text x="583.111111111111" y="296.628219040237" fill="red" style="font-size:15">Helsinki</text>
+<text x="836.551111111111" y="447.211307556074" fill="red" style="font-size:15">Hong Kong</text>
+<text x="63.0613333333333" y="449.906497216074" fill="red" style="font-size:15">Honolulu</text>
+<text x="808.675555555556" y="337.316554880469" fill="red" style="font-size:15">Irkutsk</text>
+<text x="594.488888888889" y="383.924248864333" fill="red" style="font-size:15">Istanbul</text>
+<text x="815.644444444444" y="529.469804558071" fill="red" style="font-size:15">Jakarta</text>
+<text x="612.124444444444" y="416.509681140968" fill="red" style="font-size:15">Jerusalem</text>
+<text x="708.835555555556" y="407.335130854047" fill="red" style="font-size:15">Kabul</text>
+<text x="754.631111111111" y="429.947085777127" fill="red" style="font-size:15">Kathmandu</text>
+<text x="598.755555555556" y="345.506762093111" fill="red" style="font-size:15">Kiev</text>
+<text x="801.28" y="503.092457313617" fill="red" style="font-size:15">Kuala Lumpur</text>
+<text x="521.870222222222" y="493.614459361504" fill="red" style="font-size:15">Lagos</text>
+<text x="292.835555555556" y="546.676501026084" fill="red" style="font-size:15">Lima</text>
+<text x="511.516444444444" y="340.539950584955" fill="red" style="font-size:15">London</text>
+<text x="501.418666666667" y="386.10070085521" fill="red" style="font-size:15">Madrid</text>
+<text x="856.177777777778" y="470.014247684755" fill="red" style="font-size:15">Manila</text>
+<text x="625.208888888889" y="449.356545970489" fill="red" style="font-size:15">Mecca</text>
+<text x="230.115555555556" y="455.732111080273" fill="red" style="font-size:15">Mexico City</text>
+<text x="283.875555555556" y="435.999656203589" fill="red" style="font-size:15">Miami</text>
+<text x="481.28" y="494.329926110843" fill="red" style="font-size:15">Monrovia</text>
+<text x="302.933333333333" y="366.338258576883" fill="red" style="font-size:15">Montreal</text>
+<text x="619.235555555555" y="320.134347140517" fill="red" style="font-size:15">Moscow</text>
+<text x="616.760888888889" y="515.641191778963" fill="red" style="font-size:15">Nairobi</text>
+<text x="542.577777777778" y="297.767033816768" fill="red" style="font-size:15">Oslo</text>
+<text x="518.627555555556" y="352.227145842939" fill="red" style="font-size:15">Paris</text>
+<text x="841.671111111111" y="608.160411171654" fill="red" style="font-size:15">Perth</text>
+<text x="163.555555555556" y="366.338258576883" fill="red" style="font-size:15">Portland</text>
+<text x="288.711111111111" y="512.568890044182" fill="red" style="font-size:15">Quito</text>
+<text x="449.507555555556" y="272.11816263377" fill="red" style="font-size:15">Reykjavik</text>
+<text x="388.892444444444" y="578.882902115945" fill="red" style="font-size:15">Rio de Janeiro</text>
+<text x="547.555555555556" y="380.585121634157" fill="red" style="font-size:15">Rome</text>
+<text x="815.502222222222" y="480.517109424029" fill="red" style="font-size:15">Ho Chi Minh City</text>
+<text x="163.697777777778" y="395.887030099742" fill="red" style="font-size:15">San Francisco</text>
+<text x="272.867555555556" y="483.467799469663" fill="red" style="font-size:15">San Jose</text>
+<text x="323.982222222222" y="458.438842128744" fill="red" style="font-size:15">San Juan</text>
+<text x="310.897777777778" y="613.233766026712" fill="red" style="font-size:15">Santiago</text>
+<text x="807.537777777778" y="508.586417096707" fill="red" style="font-size:15">Singapore</text>
+<text x="578.275555555556" y="377.548112066693" fill="red" style="font-size:15">Sofia</text>
+<text x="563.427555555556" y="301.142786127494" fill="red" style="font-size:15">Stockholm</text>
+<text x="941.994666666667" y="614.669915910285" fill="red" style="font-size:15">Sydney</text>
+<text x="86.7555555555556" y="562.868616540982" fill="red" style="font-size:15">Tahiti</text>
+<text x="503.466666666667" y="463.513492876812" fill="red" style="font-size:15">Timbuktu</text>
+<text x="909.511111111111" y="403.268023470125" fill="red" style="font-size:15">Tokyo</text>
+<text x="286.094222222222" y="373.529877800802" fill="red" style="font-size:15">Toronto</text>
+<text x="549.546666666667" y="412.805853871356" fill="red" style="font-size:15">Tripoli</text>
+<text x="816.071111111111" y="356.38184594007" fill="red" style="font-size:15">Ulan Bator</text>
+<text x="161.848888888889" y="350.708285836306" fill="red" style="font-size:15">Vancouver</text>
+<text x="558.563555555556" y="355.019949351843" fill="red" style="font-size:15">Vienna</text>
+<text x="292.977777777778" y="391.717227444773" fill="red" style="font-size:15">Washington</text>
+<text x="1009.152" y="641.133302491974" fill="red" style="font-size:15">Wellington</text>
+<text x="186.88" y="282.575896121319" fill="red" style="font-size:15">Yellowknife</text>
 </svg>
-

@@ -727,6 +727,7 @@ sub to_mercator {
   my($lat,$lon, $options) = @_;
   my(%opts) = parse_form($options);
 
+  if (abs($lat)>=90) {return "ERR";}
   my($y) = 1/2-1*(log(tan($PI/4+$lat/180*$PI/2))/2/$PI);
   if ($opts{order} eq "xy") {
     return ($lon+180)/360, $y;
