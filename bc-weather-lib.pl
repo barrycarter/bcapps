@@ -417,6 +417,36 @@ sub th2dp {
     (2280.52 + (-122.179 - 0.308642*$t)*log($h));
 }
 
+=item recent_weather($options)
+
+Obtain recent weather from http://weather.aero/dataserver_current/cache/metars.cache.csv.gz and return as list of hashes
+
+$options currently unused
+
+=cut
+
+sub recent_weather {
+  my($options) = @_;
+  my(@headers, @hashes);
+  my($res) = cache_command("curl http://weather.aero/dataserver_current/cache/metars.cache.csv.gz | gunzip | tail -n +6", "age=300");
+  my(@res) = split(/\n/, $res);
+
+  # header line
+  @headers = split(/\,/, shift(@res));
+
+  # go through data
+  for $i (@res) {
+    my(@line) = split(/\,/, $i);
+    my(%hash) = {};
+    for $j (0..$#headers) {
+      $hash{$headers[$j]} = $line[$j];
+  }
+    push(@hashes, \%hash);
+  }
+
+  return @hashes;
+}
+
 # <h>return beauty;</h>
 
 true;
