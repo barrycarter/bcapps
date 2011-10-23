@@ -24,10 +24,17 @@ for $i (@w) {
     next;
   }
 
+  # hideous cheating
+  ($hash{longitude}, $hash{latitude}) = 
+    to_mercator($hash{latitude}, $hash{longitude}, "order=xy");
+
+  $hash{longitude} *= 1000;
+  $hash{latitude} *= 1000;
+
   push(@points, "$hash{longitude} $hash{latitude}");
 
   # @w contains even bad reports, so @wok contains good only
-  push(@wok, $i);
+  push(@wok, {%hash});
 
 }
 
@@ -63,8 +70,8 @@ for $i (@tri) {
 open(A,">file3.svg");
 print A << "MARK";
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
- width="1080px" height="540px"
- viewBox="-180 -90 360 180">
+ width="256px" height="256px"
+ viewBox="0 0 1000 1000">
 MARK
 ;
 
