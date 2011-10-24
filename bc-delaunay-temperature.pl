@@ -55,6 +55,12 @@ for $i (@tri) {
     %hash = %{$j};
     push(@tripoints, "$hash{longitude},$hash{latitude}");
     $tempavg += ($hash{temp_c}*1.8+32)/3;
+#    $tempavg += ($hash{dewpoint_c}*1.8+32)/3;
+#    $tempavg += ($hash{latitude}+90)/2/3;
+#    $tempavg += (($hash{altim_in_hg}-30)*20+50)/3;
+#    $tempavg += ($hash{maxT_c}*1.8+32)/3;
+
+    debug("HASH",%hash);
     debug("BETA: $hash{longitude}, $hash{latitude}, $hash{temp_c}");
   }
 
