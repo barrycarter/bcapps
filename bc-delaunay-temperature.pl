@@ -3,7 +3,7 @@
 # Uses Delaunay triangulation to map stuff, using average of vertex
 # values (qhull does the work)
 
-push(@INC,"/home/barrycarter/BCGIT");
+push(@INC,"/home/barrycarter/BCGIT", "/usr/local/bin/");
 require "bclib.pl";
 require "bc-weather-lib.pl";
 
@@ -104,11 +104,22 @@ print A join("\n", @svg);
 print A "\n</svg>\n";
 close(A);
 
+$date = `date`;
+
 open(A,">file3.kml");
 print A << "MARK";
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
 <Document>
+
+<Placemark>
+<name></name>
+<description>File updated: $date</description>
+<Point>
+<coordinates>-122.0822035425683,37.42228990140251,0</coordinates>
+</Point>
+</Placemark>
+
 MARK
 ;
 
@@ -117,3 +128,6 @@ print A "\n</Document></kml>\n";
 close(A);
 
 system("zip file3.kmz file3.kml");
+
+# this file is generated on a different machine, so copy file over
+system("rsync /tmp/bcdtp/file3.kmz root\@data.barrycarter.info:/sites/DATA/current-temperatures.kmz");
