@@ -26,12 +26,15 @@ for $i (@w) {
     next;
   }
 
+  # no temperature? no go!
+  if ($hash{temp_c} eq "NULL" || $hash{temp_c} eq "") {next;}
+
   # TODO: mercator version?
   # fields for voronoi_map()
   $hash{x} = $hash{longitude};
   $hash{y} = $hash{latitude};
   $hash{id} = $hash{station_id};
-  $hash{label} = ""; # TODO: change this, maybe
+  $hash{label} = "$hash{station_id}: $hash{temp_c}"; # TODO: change this, maybe
   $f= $hash{temp_c}*1.8+32;
   $hue = 5/6-($f/100)*5/6;
   $hash{color} = hsv2rgb($hue, 1, 1, "kml=1&opacity=80");

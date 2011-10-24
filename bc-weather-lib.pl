@@ -429,6 +429,9 @@ sub recent_weather {
   my($options) = @_;
   my(@headers, @hashes);
   my($res) = cache_command("curl http://weather.aero/dataserver_current/cache/metars.cache.csv.gz | gunzip | tail -n +6", "age=300");
+  # this file is important enough to keep around
+  write_file($res, "/var/tmp/weather.aero.metars.txt");
+
   my(@res) = split(/\n/, $res);
 
   # header line

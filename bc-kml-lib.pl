@@ -13,6 +13,8 @@ $options currently unused
 
 TODO: this seems to leave off one (or more?) points, not sure why
 
+TODO: option for placemarks at the points themselves
+
 =cut
 
 sub voronoi_map {

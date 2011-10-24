@@ -3,6 +3,8 @@
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
+warn "This program is semi-obsolete; you probably want bc-voronoi-temperature.pl";
+
 # the KML file created here is visible at
 # http://wordpress.barrycarter.info/index.php/voronoi-temperature-map/
 # --showpoints: show individual stations (doesn't work well)
