@@ -23,8 +23,8 @@ sub voronoi_map {
   open(A,">$tmpfile.kml");
 
   # header/footer
-  my($header) = read_file("kmlhead.txt");
-  my($footer) = read_file("kmlfoot.txt");
+  my($header) = read_file("/usr/local/lib/kmlhead.txt");
+  my($footer) = read_file("/usr/local/lib/kmlfoot.txt");
   print A "$header\n";
 
   # the Voronoi diagram

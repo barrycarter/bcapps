@@ -102,6 +102,8 @@ for $i (@files) {
 
 }
 
+die "TESTING";
+
 # rsync (uses private key)
 system("rsync ../weather.db root\@barrycarter.info:/sites/DB/weather.db.new");
 system("ssh root\@barrycarter.info 'cd /sites/DB; mv weather.db weather.db.old; mv weather.db.new weather.db'");
@@ -113,78 +115,3 @@ print "HIT RETURN WHEN READY\n";
 # TODO: use entire command line, not just $0
 sleep(10);
 exec("$0 --debug");
-
-# note: all routines below hardcode, which is ok, since they're not
-# intended to be general
-
-# thin wrapper around parse_metar
-sub handle_metar {
-  my($file) = @_;
-  debug("HANDLE_METAR($file)");
-  my($data) = read_file($file);
-
-  for $i (split(/\n/, $data)) {
-    # ignore empty, comments, NIL=
-    if ($i=~/\#|^\s*$|^\s*NIL\=$/) {next;}
-    $i=~s/^(METAR|SPECI)\s*//isg;
-    push(@queries, hash2query(parse_metar($i)));
-  }
-
-  transact(@queries);
-}
-
-# trivial wrapper around parse_ship
-sub handle_ship {
-  my($file) = @_;
-  debug("HANDLE_SHIP($file)");
-  my($data) = read_file($file);
-  my(@queries);
-  while ($data=~s/BBXX\s*(.*?)\s*\=//s) {
-    $i = $1;
-    $i=~s/\s+/ /isg;
-    push(@queries, hash2query(parse_ship($i)));
-  }
-
-  transact(@queries);
-}
-
-sub handle_buoy {
-  my($file) = @_;
-  debug("HANDLE_BUOY($file)");
-  my($data) = read_file($file);
-  my(@queries);
-  while ($data=~s/ZZYY\s*(.*?)\s*\=//s) {
-    $i = $1;
-    $i=~s/\s+/ /isg;
-    push(@queries, hash2query(parse_buoy($i)));
-  }
-
-  transact(@queries);
-}
-
-# below not yet used
-sub handle_synop {}
-
-# convert hash to query (trivial)
-sub hash2query {
-  my(%hash) = @_;
-  my(@vals);
- 
-  for $i (@fields) {push(@vals, "'$hash{$i}'");}
-
-  my($keys) = join(", ", @fields);
-  my($vals) = join(", ", @vals);
-
-  return "REPLACE INTO weather ($keys) VALUES ($vals)",
-    "REPLACE INTO nowweather ($keys) VALUES ($vals)";
-}
-
-# send bunch of queries to weather.db in transaction
-sub transact {
-  my(@queries) = @_;
-  unshift(@queries, "BEGIN");
-  push(@queries, "COMMIT");
-  my($now) = stardate(time()).$$;
-  write_file(join(";\n",@queries).";\n", "../commands.$now");
-  system("sqlite3 ../weather.db < ../commands.$now 1> ../$now.out 2> ../$now.err");
-}

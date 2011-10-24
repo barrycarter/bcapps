@@ -9,7 +9,7 @@ require "bclib.pl";
 # TODO: get these numbers directly, don't hardcode
 # Ugly possibility: include ALL numbers 1-999 below (penny handles
 # this, but yuck)
-$ids = "207,265";
+$ids = "313";
 
 # TODO: fix cache_command so I don't have to do this
 $globopts{nocache} = 1;
@@ -45,8 +45,8 @@ for (;;) {
       # age of bid
       $age = $cur - $lastbid{$i}{$j};
 
-      # kill bids over 60s
-      if ($age > 60) {
+      # kill bids over 2m
+      if ($age > 120) {
 	delete $lastbid{$i}{$j};
 	next;
       }
@@ -56,10 +56,10 @@ for (;;) {
 
     print "$i: ".join(", ",@bidders)."\n";
 
-    # alert me when exactly 2 bidders
-    if ($#bidders == 1) {
+    # alert me when down to 3 bidders
+    if ($#bidders <= 2) {
       system("pkill -f 'PENNY: $i'");
-      system("xmessage 'PENNY: $i has 2 bidders' &");
+      system("xmessage 'PENNY: $i has 3 bidders' &");
     }
   }
 
