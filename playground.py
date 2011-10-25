@@ -3,10 +3,16 @@
 # cloud testing (you must have a picloud.com account AND set
 # cloudconf.py correctly for any of this to work)
 
-import cloud; import os;
+# from __future__ import print_function
+import cloud
+# import os;
+def mirror(x): return x
 
-for x in range(1,100):
-    cloud.call(os.system,"curl picloudips.barrycarter.info")
+jid = cloud.call(mirror, "Hello")
+print cloud.result(jid)
+
+# for x in range(1,100):
+#    cloud.call(os.system,"curl picloudips.barrycarter.info")
 
 # jid = cloud.call(os.system, "curl `perl -le 'print time()'`.barrycarter.info")
 # jid = cloud.call(os.system, "curl `whoami`.barrycarter.info")
