@@ -34,10 +34,16 @@ for $i (@w) {
   $hash{x} = $hash{longitude};
   $hash{y} = $hash{latitude};
   $hash{id} = $hash{station_id};
-  $hash{label} = "$hash{station_id}: $hash{temp_c}"; # TODO: change this, maybe
   $f= $hash{temp_c}*1.8+32;
   $hue = 5/6-($f/100)*5/6;
   $hash{color} = hsv2rgb($hue, 1, 1, "kml=1&opacity=80");
+
+  # pretty print data
+  $f = round($f,1);
+  # TODO: change this, maybe
+  $hash{label} = "$hash{station_id}: ${f}F at $hash{observation_time}";
+
+
   push(@wok, {%hash});
 
 }
