@@ -4,8 +4,15 @@
 # cloudconf.py correctly for any of this to work)
 
 import cloud; import os;
-jid = cloud.call(os.system, "curl http://pi.barrycarter.info/")
-print cloud.result(jid)
+
+for x in range(1,100):
+    cloud.call(os.system,"curl picloudips.barrycarter.info")
+
+# jid = cloud.call(os.system, "curl `perl -le 'print time()'`.barrycarter.info")
+# jid = cloud.call(os.system, "curl `whoami`.barrycarter.info")
+# jid = cloud.call(os.system, "curl '`sudo whoami`.barrycarter.info'")
+# jid = cloud.call(os.system, "curl \"`date`.barrycarter.info\"")
+# print cloud.result(jid)
 
 # in my logs:
 
