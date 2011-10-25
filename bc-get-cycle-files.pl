@@ -150,9 +150,7 @@ for $i (@files) {
 }
 
 # rsync (uses private key)
-system("rsync weather.db root\@barrycarter.info:/sites/DB/weather.db.new");
-# does rsync already do this? copy to temp file and mv at last minutes?
-system("ssh root\@barrycarter.info 'cd /sites/DB; mv weather.db weather.db.old; mv weather.db.new weather.db'");
+system("rsync weather.db root\@barrycarter.info:/sites/DB/weather.db");
 
 # TODO: use entire command line, not just $0(?)
 sleep(10);

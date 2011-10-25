@@ -162,7 +162,8 @@ sub weather_hash {
 
   # pressure, in inches
   $rethash{pressure} = coalesce([
-   $hash{QNH}, convert($hash{SLP}{hPa}{v}, "hpa", "in")]);
+   convert($hash{QNH}{hPa}{v}, "hpa", "in"),
+   convert($hash{SLP}{hPa}{v}, "hpa", "in")]);
 
   # wind direction, speed, gust
   $rethash{winddir} = coalesce([$hash{sfcWind}{wind}{dir}{v}]);
