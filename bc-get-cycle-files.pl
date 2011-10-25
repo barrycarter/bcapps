@@ -9,7 +9,7 @@ require "bc-weather-lib.pl";
 use XML::Simple;
 
 # load METAR/SYNOP location data (only once per run)
-@res = sqlite3hashlist("SELECT * FROM stations","db/stations.db");
+@res = sqlite3hashlist("SELECT * FROM stations","/usr/local/lib/stations.db");
 
 for $i (@res) {
   %hash = %{$i};
@@ -149,16 +149,12 @@ for $i (@files) {
   system("sqlite3 weather.db < queries.txt");
 }
 
-die "TESTING";
-
 # rsync (uses private key)
-system("rsync ../weather.db root\@barrycarter.info:/sites/DB/weather.db.new");
+system("rsync weather.db root\@barrycarter.info:/sites/DB/weather.db.new");
+# does rsync already do this? copy to temp file and mv at last minutes?
 system("ssh root\@barrycarter.info 'cd /sites/DB; mv weather.db weather.db.old; mv weather.db.new weather.db'");
 
-warn "TESTING";
-print "HIT RETURN WHEN READY\n";
-<STDIN>;
-
-# TODO: use entire command line, not just $0
+# TODO: use entire command line, not just $0(?)
 sleep(10);
-exec("$0 --debug");
+exec($0);
+
