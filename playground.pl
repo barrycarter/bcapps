@@ -112,11 +112,11 @@ $data = $xml->XMLin("/tmp/test3.xml");
 # passed: test[12].xml
 
 # for test1.xml, fields that look ok: id, lat/lon, cloudcover,
-
 for $i ("metar", "synop", "buoy") {
   @reports = @{$data{reports}{$i}};
   if ($#reports>-1) {last;}
 }
+
 
 for $i (@reports) {
 #  debug("I: $i",dump_var("I",\%{$i}));

@@ -6,6 +6,20 @@
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 require "bc-weather-lib.pl";
+use XML::Simple;
+
+# load METAR/SYNOP location data (only once per run)
+@res = sqlite3hashlist("SELECT * FROM stations","db/stations.db");
+
+for $i (@res) {
+  %hash = %{$i};
+  # set lat/lon for METAR name
+  $lat{$hash{metar}} = $hash{latitude};
+  $lon{$hash{metar}} = $hash{longitude};
+  # and synop station
+  $lat{$hash{wmob}*1000+$hash{wmos}} = $hash{latitude};
+  $lon{$hash{wmob}*1000+$hash{wmos}} = $hash{longitude};
+}
 
 # fields that weather.db has (could also use sqlitecols, hmmm)
 # timestamp intentionally not included since it's auto-filled
@@ -15,6 +29,7 @@ require "bc-weather-lib.pl";
 
 $root = "/usr/local/etc/cycle";
 
+$now = time();
 
 # the URLs and what programs to run after downloading new files
 # (currently, just downloads and does nothing)
@@ -56,12 +71,15 @@ for $i (sort keys %urls) {
     # and remote time
     $remtime = str2time("$date $time UTC");
 
+    # if I already have a newer copy, ignore
+    if ($loctime >= $remtime) {next;}
+
+    # if server copy is too old, ignore it (this program runs as a
+    # daemon and shouldn't load old data on startup)
+    if ($remtime <= $now-3600) {next;}
+
     # TODO: maybe compare $sizefile and $size just in case we get
     # bogus file from NOAA
-
-    # cycle files are created no less than 1m apart, so 2h is very
-    # safe here
-    if (abs($loctime-$remtime) <= 2*3600) {next;}
 
     # The cycle file I have is stale, so get fresh copy
     push(@commands, "curl -R -m 300 -s -o $root/$type/$file $i/$file");
@@ -69,6 +87,9 @@ for $i (sort keys %urls) {
     push(@files, "$root/$type/$file");
   }
 }
+
+# chdir back to root
+chdir($root);
 
 # run commands using gnu parallel
 $commands = join("\n",@commands);
@@ -99,7 +120,33 @@ for $i (@files) {
   }
 
   # data is now in output.xml regardless of original type
+  # convert to hash
+  $xml = new XML::Simple;
+  $data = $xml->XMLin("output.xml");
+  %data = %{$data};
 
+  # HACK: this is cheating: I already know the type, but it's easier
+  # to do it this way
+  for $i ("metar", "synop", "buoy") {
+    @reports = @{$data{reports}{$i}};
+    if ($#reports>-1) {last;}
+  }
+
+  # create hash for each report
+  @hashes = ();
+  for $i (@reports) {
+    # TODO: is the below just weather_hash($i)?
+    %hash = %{$i};
+    %ret = weather_hash(\%hash);
+    push(@hashes, {%ret});
+  }
+
+  # add to db (as transaction)
+  @queries = hashlist2sqlite(\@hashes, "weather");
+  unshift(@queries, "BEGIN");
+  push(@queries, "COMMIT");
+  write_file(join(";\n",@queries).";\n", "queries.txt");
+  system("sqlite3 weather.db < queries.txt");
 }
 
 die "TESTING";
