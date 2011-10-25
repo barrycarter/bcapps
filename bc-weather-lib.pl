@@ -160,9 +160,11 @@ sub weather_hash {
    th2dp($rethash{temperature}, $humidity)
 ]);
 
-  # pressure, in inches
+  # pressure, in inches (not sure third one is ever used but...)
   $rethash{pressure} = coalesce([
+   $hash{QNH}{inHg}{v},
    convert($hash{QNH}{hPa}{v}, "hpa", "in"),
+   $hash{SLP}{inHg}{v},
    convert($hash{SLP}{hPa}{v}, "hpa", "in")]);
 
   # wind direction, speed, gust

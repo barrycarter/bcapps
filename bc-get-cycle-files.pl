@@ -147,6 +147,14 @@ for $i (@files) {
   push(@queries, "COMMIT");
   write_file(join(";\n",@queries).";\n", "queries.txt");
   system("sqlite3 weather.db < queries.txt");
+
+  # same thing for current observations table
+  @queries = hashlist2sqlite(\@hashes, "nowweather");
+  unshift(@queries, "BEGIN");
+  push(@queries, "COMMIT");
+  write_file(join(";\n",@queries).";\n", "nowqueries.txt");
+  system("sqlite3 weather.db < nowqueries.txt");
+
 }
 
 # rsync (uses private key)

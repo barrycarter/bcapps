@@ -4,5 +4,18 @@
 # cloudconf.py correctly for any of this to work)
 
 import cloud
-jid = cloud.call(lambda: 3*3)
+import os
+
+#os.system("date")
+# exit("TESTING")
+
+def sys(x): os.system(x)
+jid = cloud.call(sys, "curl http://barrycarter.info/")
 print cloud.result(jid)
+
+# os.system("perl -v")
+
+# die
+# jid = cloud.call(lambda: 3*3)
+# jid = cloud.call(sys("perl -v"))
+

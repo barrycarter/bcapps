@@ -2055,8 +2055,11 @@ sub END {
   if ($globopts{keeptemp}) {return;}
 
   for $i (@tmpfiles) {
-    debug("DELETING: $i");
-    unlink($i);
+    # I sometimes wrongly use tempfile.[ext], so handle that too
+    for $j ("", ".res", ".out", ".err", ".kml", ".kmz") {
+      debug("DELETING: $i$j");
+    unlink("$i$j");
+    }
   }
 
   for $i (@tmpdirs) {
