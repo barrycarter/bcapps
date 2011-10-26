@@ -8,7 +8,7 @@ import cloud
 # import os;
 def mirror(x): return x
 
-jid = cloud.call(mirror, "Hello")
+jid = cloud.call(mirror, "`date`")
 print cloud.result(jid)
 
 # for x in range(1,100):
