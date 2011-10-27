@@ -1,3 +1,40 @@
+-- revision below 27 Oct 2011 based on
+-- http://weather.aero/dataserver_current/cache/metars.cache.csv
+
+-- sky_cover and cloud_base_ft_agl appear 3 times in CSV, reducing to
+-- one below; will store greatest sky_cover and lowest cloud base
+
+CREATE TABLE metar (
+raw_text, station_id, observation_time, latitude, longitude, temp_c,
+dewpoint_c, wind_dir_degrees, wind_speed_kt, wind_gust_kt,
+visibility_statute_mi, altim_in_hg, sea_level_pressure_mb, corrected,
+auto, auto_station, maintenance_indicator_on, no_signal,
+lightning_sensor_off, freezing_rain_sensor_off,
+present_weather_sensor_off, wx_string, sky_cover, cloud_base_ft_agl,
+flight_category, three_hr_pressure_tendency_mb,
+maxT_c, minT_c, maxT24hr_c, minT24hr_c, precip_in, pcp3hr_in,
+pcp6hr_in, pcp24hr_in, snow_in, vert_vis_ft, metar_type, elevation_m
+);
+
+-- duplicate station_id and time? replace existing results!
+CREATE UNIQUE INDEX i1 ON metar(station_id, observation_time);
+
+-- same thing, but only keep latest observation for each station
+
+CREATE TABLE metar_now (
+raw_text, station_id, observation_time, latitude, longitude, temp_c,
+dewpoint_c, wind_dir_degrees, wind_speed_kt, wind_gust_kt,
+visibility_statute_mi, altim_in_hg, sea_level_pressure_mb, corrected,
+auto, auto_station, maintenance_indicator_on, no_signal,
+lightning_sensor_off, freezing_rain_sensor_off,
+present_weather_sensor_off, wx_string, sky_cover, cloud_base_ft_agl,
+flight_category, three_hr_pressure_tendency_mb,
+maxT_c, minT_c, maxT24hr_c, minT24hr_c, precip_in, pcp3hr_in,
+pcp6hr_in, pcp24hr_in, snow_in, vert_vis_ft, metar_type, elevation_m
+);
+
+CREATE UNIQUE INDEX i2 ON metar_now(station_id);
+
 -- SQLite3 (thus untyped) table to hold "all" weather observations
 
 CREATE TABLE weather (

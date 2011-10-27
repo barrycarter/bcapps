@@ -64,7 +64,8 @@ $options currently unused
 
 sub recent_weather {
   my($options) = @_;
-  my(@headers, @hashes);
+  my(@headers);
+  my(@hashes);
   my($res) = cache_command("curl http://weather.aero/dataserver_current/cache/metars.cache.csv.gz | gunzip | tail -n +6", "age=300");
   # this file is important enough to keep around
   write_file($res, "/var/tmp/weather.aero.metars.txt");
@@ -77,11 +78,13 @@ sub recent_weather {
   # go through data
   for $i (@res) {
     my(@line) = split(/\,/, $i);
-    my(%hash) = {};
+    my(%hash) = ();
     for $j (0..$#headers) {
+      debug("SETTING $headers[$j]");
       $hash{$headers[$j]} = $line[$j];
   }
-    push(@hashes, \%hash);
+    debug("HASH",%hash);
+    push(@hashes, {%hash});
   }
 
   return @hashes;
