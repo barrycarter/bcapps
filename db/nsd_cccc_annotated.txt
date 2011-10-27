@@ -4831,7 +4831,7 @@ LTAV;--;---;Sivrihisar;;Turkey;6;39-27N;031-21E;;;96;;
 LTAW;17;086;Tokat;;Turkey;6;40-18N;036-34E;;;608;608;
 LTAY;--;---;Cardak;;Turkey;6;37-47N;029-42E;;;849;;
 LTAZ;--;---;Nevsehir;;Turkey;6;38-46-12N;034-32-30E;;;945;;
-LTBA;17;060;Istanbul / Ataturk;;Turkey;6;40-58N;028-49E;;;48;37;P
+LTBA;17;060;Istanbul / Ataturk;;Turkey;6;40-58N;028-49E;;;48;37;P;"former name unknown"
 LTBD;17;234;Aydin;;Turkey;6;37-51N;027-51E;;;57;57;P
 LTBE;17;116;Bursa;;Turkey;6;40-11N;029-04E;;;101;100;P
 LTBF;17;150;Balikesir;;Turkey;6;39-37N;027-55E;;;101;102;P

@@ -5,11 +5,35 @@
 
 # from __future__ import print_function
 import cloud
-# import os;
-def mirror(x): return x
+import os;
 
-jid = cloud.call(mirror, "`date`")
-print cloud.result(jid)
+
+def mirror(x): return x
+def readfile(f): return open(f, 'r').read()
+
+# cloud.files.put("sample-data/testfile.txt")
+
+print cloud.files.getf("testfile.txt").read()
+
+# print cloud.files.put("playground.svg")
+# print cloud.files.getf("playground.svg").read()
+
+# print cloud.files.list()
+
+# jid = cloud.call(readfile, "/usr/share/")
+# print cloud.result(jid)
+
+# print cloud.rest.publish(readfile, "readfile", out_encoding='raw')
+# print cloud.rest.publish(os.system, "mysys", out_encoding='raw')
+# print cloud.rest.publish(mirror, "mirror", out_encoding='raw')
+
+# https://api.picloud.com/r/2957/mysys
+# https://api.picloud.com/r/2957/readfile
+
+# def mirror(x): return x
+
+# jid = cloud.call(mirror, "`date`")
+# print cloud.result(jid)
 
 # for x in range(1,100):
 #    cloud.call(os.system,"curl picloudips.barrycarter.info")

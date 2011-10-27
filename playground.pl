@@ -20,6 +20,25 @@ use XML::Simple;
 use Data::Dumper 'Dumper';
 $Data::Dumper::Indent = 0;
 
+# http://programmers.stackexchange.com/questions/116346/get-100-highest-numbers-from-an-infinite-list
+# Using whole number to mean "natural number" (n>=1)
+
+for (;;) {
+  # new number
+  $i = int(rand(2**31));
+
+  # it's too low?
+  if ($i < $min) {next;}
+
+  
+
+  debug($i);
+}
+
+
+
+die "TESTING";
+
 # debug(unfold(recent_weather()));
 
 for $i (recent_weather()) {
@@ -138,169 +157,6 @@ push(@queries, "COMMIT");
 write_file(join(";\n",@queries).";\n", "/tmp/playground.tmp");
 system("sqlite3 /home/barrycarter/BCINFO/sites/DB/test.db < /tmp/playground.tmp");
 
-
-=item weather_hash(\%hash)
-
-Given a hash of weather data (converted to XML via metaf2xml and
-metafsrc2raw, and converted to a hash using XML::Simple), return a hash
-to populate the table described in weather.sql
-
-Unavailable fields are returned as "NULL" (the 4 letter string), since
-handling NULL as a quantity is difficult between Perl and SQLite3
-
-=cut
-
-sub weather_hash {
-  my($hashref) = @_;
-  my(%hash) = %{$hashref};
-  my(%rethash);
-
-  # this must occur before unburying buoy data below
-  # entire observation
-  $rethash{observation} = coalesce([$hash{s}]);
-
-  # type of observation (this may leave 'type' blank if neither BUOY nor SHIP)
-  if ($rethash{observation}=~/^ZZYY/) {
-    $rethash{type} = "BUOY";
-  } elsif ($rethash{observation}=~/^(BB|AA)XX/) {
-    $rethash{type} = "SHIP";
-  } elsif ($hash{synop}) {
-    $rethash{type} = "SYNOP";
-  } else {
-    $rethash{type} = "METAR";
-  }
-
-  # BUOYS bury sections one level deep; this fixes
-  for $i (sort keys %{$hash{buoy_section1}}) {
-    $hash{$i} = $hash{buoy_section1}{$i};
-  }
-
-  # time
-  # TODO: this will become an issue w/ different formats
-  my($hour) = coalesce([$hash{exactObsTime}{timeAt}{hour}{v},
-		       $hash{obsTime}{timeAt}{hour}{v}]);
-
-  my($minute) = coalesce([$hash{exactObsTime}{timeAt}{minute}{v},
-		       $hash{obsTime}{timeAt}{minute}{v}]);
-
-
-  my($day) = coalesce([$hash{obsTime}{timeAt}{day}{v}]);
-
-  $rethash{time} = strftime("%Y-%m-%d %H:%M", gmtime(dahrmi2time($day, $hour, $minute)));
-
-  # station id
-  $rethash{id} = coalesce([$hash{obsStationId}{id}{v}, $hash{callSign}{id}{v},
-			 $hash{buoyId}{id}{v}]);
-
-  # below now works for fixed stations too
-  $rethash{latitude} = coalesce([$hash{stationPosition}{lat}{v}, $lat{$rethash{id}}]);
-  $rethash{longitude} = coalesce([$hash{stationPosition}{lon}{v}, $lon{$rethash{id}}]);
-
-  $rethash{cloudcover} = coalesce([$hash{totalCloudCover}{oktas}{v}]);
-
-  debug("ID: $rethash{id}, $rethash{latitude}, $rethash{longitude}");
-  # temperature is in this field, unless NA (converted to F)
-  $rethash{temperature} = coalesce([
-   convert_uv($hash{temperature}{air}{temp})]);
-
-  # humidity (just in case we need it below, not part of report)
-  debug("H1: <$humidity>");
-  my($humidity) = coalesce([$hash{temperature}{relHumid1}{v}]);
-  debug("H2: <$humidity>");
-
-  # dewpoint
-  $rethash{dewpoint} = coalesce([
-   convert_uv($hash{temperature}{dewpoint}{temp}),
-   th2dp($rethash{temperature}, $humidity)
-]);
-
-  debug("MU: $rethash{dewpoint}");
-
-  # pressure, in inches
-  $rethash{pressure} = coalesce([
-   $hash{QNH}, convert($hash{SLP}{hPa}{v}, "hpa", "in")]);
-  debug("PRESSURE: $rethash{pressure}");
-
-  # wind direction, speed, gust
-  $rethash{winddir} = coalesce([$hash{sfcWind}{wind}{dir}{v}]);
-  $rethash{windspeed} = coalesce([
-   convert_uv($hash{sfcWind}{wind}{speed})]);
-  $rethash{gust} = coalesce([
-   convert_uv($hash{synop_section3}{highestGust}{wind}{speed})]);
-
-  # TODO: unit checks across the board!
-  # TODO: be suspicious of too many nulls in a given column
-
-  return %rethash;
-}
-
-# given a hash with units u and value v, return value in "canonical"
-# form (subroutine is specific to a given program, not generic)
-
-sub convert_uv {
-  my($hashref) = @_;
-
-  # no data? if v is not empty, worry
-  if ($hashref->{u} eq "") {
-    if ($hashref->{v} eq "") {
-      return "NULL";
-    } else {
-      return "ERR";
-    }
-  }
-
-  # c to f
-  if ($hashref->{u} eq "C") {return convert($hashref->{v}, "c", "f");}
-  # mps to mph
-  if ($hashref->{u} eq "MPS") {return convert($hashref->{v}, "mps", "mph");}
-  # knots to mph
-  if ($hashref->{u} eq "KT") {return convert($hashref->{v}, "kt", "mph");}
-
-  debug("CONVERT_UV DISLIKES: $hashref->{u}, $hashref->{v}");
-
-  return "ERR";
-}
-
-=item dahrmi2time($da, $hr, $mi, $time=time())
-
-Given day $da, hour $hr, minute $mi, return Unix timestamp nearest to $time
-
-NOTE: without the $time argument, I could use things like:
-
- date +%s -d 'last month'
- date +%s -d 'next month'
-
-=cut
-
-sub dahrmi2time {
-  my($da, $hr, $mi, $time) = @_;
-  debug("DAHRMI2TIME(",@_,")");
-  unless ($time) {$time=time()};
-
-  # if minute null, assume 0
-  if ($mi eq "NULL") {$mi=0;}
-
-  # obtain/tweak values for time to match
-  my($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = gmtime($time);
-  $year+=1900;
-  $mon++;
-  if ($mon==13) {$year++; $mon=1;}
-
-  # timestamp for da/hr/mi "this" month
-  my($thismo) = str2time("$year-$mon-$da $hr:$mi UTC");
-
-  # and last month
-  $mon--;
-  if ($mon<=0) {$year--; $mon=12;}
-  my($lastmo) = str2time("$year-$mon-$da $hr:$mi UTC");
-
-  # and compare
-  if (abs($lastmo-$time) < abs($thismo-$time)) {
-    return $lastmo;
-  }
-
-  return $thismo;
-}
 
 die "TESTING";
 
