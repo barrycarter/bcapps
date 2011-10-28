@@ -1717,7 +1717,9 @@ sub blank {$_[0]=~/^\s*$/;}
 
 =item ctof($c)
 
-Convert $c degrees Celsius to Farenheit
+OBSOLETE: Convert $c degrees Celsius to Farenheit
+
+Use convert() instead
 
 =cut
 

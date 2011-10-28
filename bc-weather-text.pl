@@ -108,44 +108,60 @@ $query=~s/\-\-/+/isg;
 
 @res = sqlite3hashlist($query,"/sites/DB/metarnew.db");
 
-push(@out,"$hash{city}, $hash{state}, $hash{country} is at ".nicedeg2($hash{latitude},"N").", ".nicedeg2($hash{longitude},"E"));
+# converting units for all observations here avoids problems below
+for $i (@res) {
+  %report = %{$i};
+
+  # canonical elevation in ft
+  $report{elev} = convert($ai{elev}, "m", "ft");
+
+  # canonical pressure in inches
+  $report{pressure} = $report{altim_in_hg};
+
+  # canonical temperature + dewpoint in Farenheit
+  $report{temperature} = convert($report{temp_c}, "c", "f");
+  $report{dewpoint} = convert($report{dewpoint_c}, "c", "f");
+
+  # wind speed + gust (in mph)
+  $report{windspeed} = convert($report{wind_speed_kt}, "kt", "mph");
+  $report{gust} = convert($report{wind_gust_kt}, "kt", "mph");
+
+  # signifigant weather (as abbreviation)
+  $report{weather} = $report{wx_string};
+
+  # time in regular and Unix formats
+  $report{time} = $report{observation_time};
+  $report{xtime} = str2time($report{observation_time});
+
+  # the prettyprinted latitude and longitude
+  $report{nicelat} = nicedeg2($report{latitude}, "N");
+  $report{nicelon} = nicedeg2($report{longitude}, "E");
+
+}
+
+# @out = thing we're eventually going to print out.
+
+# location data
+push(@out,"$hash{city}, $hash{state}, $hash{country} is at $hash{nicelat}, $hash{nicelong}");
 
 # For this station: %ai = most recent observation; @e = all observations
 %ai = %{$res[0]};
 @e = @res;
 
-# meters to feet <h>metric system? never heard of it!</h>
-$ai{elev} = round(convert($ai{elevation_m}, "m", "ft"));
 # distance between METAR station and entered location
 $ai{dist} = round(gcdist($hash{latitude},$hash{longitude},$ai{latitude},$ai{longitude}));
 
 push(@out,"Nearest reporting station is $ai{city}, $ai{state}, $ai{country} ($ai{metar}), at ".nicedeg2($ai{latitude},"N").", ".nicedeg2($ai{longitude},"E")." (elevation $ai{elev} feet), $ai{dist} miles away");
 
-debug(@out);
-
-debug("XYZ: $x, $y, $z");
-
-die "TESTING";
-
-# for the most recent observation, fill in hash h
-# TODO: am I just copying %ai to %h... looks like it
-%f=%{$e[0]};
-for $i (keys %f) {$h{$i}=$f{$i};}
-
-# and special case for xtime
-$h{xtime} = str2time("$h{time} UTC");
-
-# and determine pressure direction
-
+# and determine pressure direction (manually)
 %oldpress=%{$e[1]};
 $oldpress=$oldpress{pressure};
-debug("OLD PRESSURE: $oldpress");
 
 if (blank($oldpress)) {
    $pressdir="";
- } elsif ($h{pressure}>$oldpress) {
+ } elsif ($f{pressure}>$oldpress) {
    $pressdir=" (rising)";
- } elsif ($h{pressure}<$oldpress) {
+ } elsif ($f{pressure}<$oldpress) {
    $pressdir=" (falling)";
  } else {
    $pressdir=" (steady)";
@@ -157,25 +173,25 @@ debug("ENV: $ENV{TZ}*");
 $time=strftime("%l:%M %p %Z on %A",localtime(time()));
 push(@out,"It's currently $time");
 
+# number of observations
 $observations=$#e+1;
-$maxwind=max($f{windspeed},$f{gust});
+# below makes sense because $f{gust} maybe undefined and thus essentially 0
+$maxwind=max($f{windspeed}, $f{gust});
 $oldweather=();
 
+# TODO: remove 24h+ observations from db!
+
+# go through old observations
 for $i (@e) {
    %f=%{$i};
-
-   # compute Unix time (sqlite3's datetime funcs choke on yyyy-m-dd [one m])
-   $f{xtime} = str2time("$f{time} UTC");
-
-   debug(unfold(%f));
 
    for $ab (split(/\s+/,$f{weather})) {
          $oldweather{parse_weather($ab)}=1;
       }
 
-   push(@m,max($f{windspeed},$f{gust}));
+   push(@m, $maxwind);
 
-   if ($f{temperature}=~/null/i) {next;}
+   if (blank($f{temperature})) {next;}
 
    if ($f{temperature}>$maxtemp || blank($maxtemp)) {
       $maxtemp=$f{temperature};
@@ -188,20 +204,16 @@ for $i (@e) {
     }
 }
 
-$maxtempf=ctof($maxtemp);
-$mintempf=ctof($mintemp);
-$maxwindknots=max(@m);
+$maxwindmph=max(@m);
 
-unless (blank($maxwindknots)) {
-  # knots to mph
-   $maxwindmph=int(.5+$maxwindknots*1.1507784538);
+unless (blank($maxwindmph)) {
    $MAXWINDPHRASE=", the maximum wind speed was $maxwindmph mph";
 }
 
-$printmaxtempf = round($maxtempf);
-$printmintempf = round($mintempf);
+$printmaxtemp = round($maxtemp);
+$printmintemp = round($mintemp);
 
-$extrema="Over the past 24 hours ($observations observations), the high was $printmaxtempf${DEG}F ($maxtime), the low was $printmintempf${DEG}F ($mintime)$MAXWINDPHRASE";
+$extrema="Over the past 24 hours ($observations observations), the high was $printmaxtemp${DEG}F ($maxtime), the low was $printmintemp${DEG}F ($mintime)$MAXWINDPHRASE";
 
 $aa=join(", ",keys(%oldweather));
 
@@ -216,27 +228,27 @@ unless (blank($aa)) {
 #  (incl calculated values like wind chill/relative humidity)?
 
 # spit out the output
-$minago=strftime("%I:%M %p %A",localtime($h{xtime}));
-$minago="$minago (".nice_sec($now-$h{xtime},1)." ago)";
+$minago=strftime("%I:%M %p %A",localtime($f{xtime}));
+$minago="$minago (".nice_sec($now-$f{xtime},1)." ago)";
 
-$tempf=ctof($h{temperature});
-$dewf=ctof($h{dewpoint});
-$rh=floor(.5+100*rh($h{temperature},$h{dewpoint}));
-$hi=floor(.5+hi($h{temperature}*1.8+32,100*rh($h{temperature},$h{dewpoint})));
+$tempf = $f{temperature};
+$dewf  = $f{dewpoint};
+$rh=floor(.5+100*rh($f{temperature},$f{dewpoint}));
+$hi=floor(.5+hi($f{temperature}*1.8+32,100*rh($f{temperature},$f{dewpoint})));
 debug("$hi vs $printtempf");
 if ($hi!=round($tempf)) {$ext1=", and a heat index of $hi${DEG}F";}
 
-unless ($h{windspeed}=~/null/i) {
-  $wind=wind($h{windspeed},$h{winddir},$h{gust});
-  $wc=floor(.5+wc($tempf,1.1507784538*$h{windspeed}));
+unless ($f{windspeed}=~/null/i) {
+  $wind=wind($f{windspeed},$f{winddir},$f{gust});
+  $wc=floor(.5+wc($tempf,1.1507784538*$f{windspeed}));
   if ($wc<floor($tempf)) {$ext2=", for a windchill factor of $wc${DEG}F";}
 }
 
-$clouds=maxclouds(split(/\s+/,$h{cloudcover}));
-$press=sprintf("%0.2f",$h{pressure});
+$clouds=maxclouds(split(/\s+/,$f{cloudcover}));
+$press=sprintf("%0.2f",$f{pressure});
 
 # signifigant weather
-for $i (split(/\s+/,$h{weather})) {push(@k,parse_weather($i));}
+for $i (split(/\s+/,$f{weather})) {push(@k,parse_weather($i));}
 $weather=join(", ",@k);
 
 unless ($dewf=~/null/i) {
@@ -255,7 +267,7 @@ push(@out,"The barometric pressure is $press inches$pressdir");
 
 push(@out,$extrema);
 
-push(@out,"Current METAR (for techies): '$h{metarreport}'");
+push(@out,"Current METAR (for techies): '$f{metarreport}'");
 unshift(@out,"Do not rely on this information");
 
 if ($NOWRAP) {
