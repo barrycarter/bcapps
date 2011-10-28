@@ -60,10 +60,6 @@ if ($ENV{HTTP_HOST}=~/^(.*?)\.weather\..*$/) {
   exit(0);
 }
 
-# read the args as one big arg and find city
-# reason: bc-cityfind.pl interprets multiple args as multiple cities
-# $city = join(" ",@ARGV);
-
 # if numeric, assume lat/lon (allow x as start, since "-..." won't resolve)
 if ($city=~/^x?([0-9\.\-]+)[^0-9\.\-]([0-9\.\-]+)$/) {
   ($hash{latitude},$hash{longitude}) = ($1,$2);
@@ -97,21 +93,20 @@ LAT:
 
 # TODO: further limit to stations that actually have reports
 $query = "
-ATTACH '/sites/DB/metar.db' AS metar;
-SELECT *, w.metar AS metarreport
- FROM weather w JOIN stations s ON (w.code=s.metar)
- WHERE w.code = 
+SELECT *
+ FROM metar m JOIN stations s ON (m.station_id=s.metar)
+ WHERE m.station_id = 
  (SELECT s.metar
- FROM stations s JOIN metar.weather w ON (s.metar = w.code)
+ FROM stations s JOIN metar m ON (s.metar = m.station_id)
  ORDER BY (x-$x)*(x-$x) + (y-$y)*(y-$y) + (z-$z)*(z-$z)
  LIMIT 1)
-ORDER BY time DESC
+ORDER BY observation_time DESC
 ;
 ";
 # double minuses are treated as comments, so...
 $query=~s/\-\-/+/isg;
 
-@res = sqlite3hashlist($query,"/sites/DB/stations.db");
+@res = sqlite3hashlist($query,"/sites/DB/metarnew.db");
 
 push(@out,"$hash{city}, $hash{state}, $hash{country} is at ".nicedeg2($hash{latitude},"N").", ".nicedeg2($hash{longitude},"E"));
 
@@ -120,11 +115,17 @@ push(@out,"$hash{city}, $hash{state}, $hash{country} is at ".nicedeg2($hash{lati
 @e = @res;
 
 # meters to feet <h>metric system? never heard of it!</h>
-$ai{elev} = round($ai{elevation}/.3048);
+$ai{elev} = round(convert($ai{elevation_m}, "m", "ft"));
 # distance between METAR station and entered location
 $ai{dist} = round(gcdist($hash{latitude},$hash{longitude},$ai{latitude},$ai{longitude}));
 
 push(@out,"Nearest reporting station is $ai{city}, $ai{state}, $ai{country} ($ai{metar}), at ".nicedeg2($ai{latitude},"N").", ".nicedeg2($ai{longitude},"E")." (elevation $ai{elev} feet), $ai{dist} miles away");
+
+debug(@out);
+
+debug("XYZ: $x, $y, $z");
+
+die "TESTING";
 
 # for the most recent observation, fill in hash h
 # TODO: am I just copying %ai to %h... looks like it

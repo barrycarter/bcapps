@@ -1972,6 +1972,9 @@ sub convert {
   # knots <h>per hour</h> to miles per hour
   if ($from eq "kt" && $to eq "mph") {return 1.15077945*$quant;}
 
+  # meters to feet
+  if ($from eq "m" && $to eq "ft") {return $quant/.3048;}
+
   debug("CONVERT DISLIKES:",@_);
 
   return "ERR";

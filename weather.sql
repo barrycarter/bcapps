@@ -13,7 +13,8 @@ lightning_sensor_off, freezing_rain_sensor_off,
 present_weather_sensor_off, wx_string, sky_cover, cloud_base_ft_agl,
 flight_category, three_hr_pressure_tendency_mb,
 maxT_c, minT_c, maxT24hr_c, minT24hr_c, precip_in, pcp3hr_in,
-pcp6hr_in, pcp24hr_in, snow_in, vert_vis_ft, metar_type, elevation_m
+pcp6hr_in, pcp24hr_in, snow_in, vert_vis_ft, metar_type, elevation_m,
+timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- duplicate station_id and time? replace existing results!
@@ -30,7 +31,8 @@ lightning_sensor_off, freezing_rain_sensor_off,
 present_weather_sensor_off, wx_string, sky_cover, cloud_base_ft_agl,
 flight_category, three_hr_pressure_tendency_mb,
 maxT_c, minT_c, maxT24hr_c, minT24hr_c, precip_in, pcp3hr_in,
-pcp6hr_in, pcp24hr_in, snow_in, vert_vis_ft, metar_type, elevation_m
+pcp6hr_in, pcp24hr_in, snow_in, vert_vis_ft, metar_type, elevation_m,
+timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE UNIQUE INDEX i2 ON metar_now(station_id);

@@ -56,7 +56,7 @@ while (<A>) {
   # 3D coords (earth radius = 1) [on the theory they might be helpful
   # somewhere/somehow/someday]
   # TODO: include elevation?
-  ($x,$y,$z) = sph2xyz($flon,$flat,1);
+  ($x,$y,$z) = sph2xyz($flon,$flat,1,"degrees=1");
 
   # print in importable format (for sqlite3)
   print join("\t", ($indi, $wmob, $wmos, $place, $state, $country, $flat, $flon, $elev, $x, $y, $z, $ann)),"\n";
@@ -84,6 +84,9 @@ CREATE INDEX i_metar ON stations(metar);
 CREATE INDEX i_x ON stations(x);
 CREATE INDEX i_y ON stations(y);
 CREATE INDEX i_z ON stations(z);
+
+.separator "\t"
+.import /path/to/output/of/this/program stations
 
 =cut
 
