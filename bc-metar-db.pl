@@ -22,5 +22,3 @@ system("rsync /usr/local/etc/WEATHER/metarnew.db root\@data.barrycarter.info:/si
 # NOTE: could also run this as cron job (and maybe should?)
 sleep(60);
 exec($0);
-
-

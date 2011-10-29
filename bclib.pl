@@ -1962,6 +1962,10 @@ sub convert {
   debug("CONVERT(",@_,")");
   if ($quant eq "NULL" || length($quant)==0) {return "NULL";}
 
+
+  # meters per second to knots
+  if ($from eq "mps" && $to eq "kt") {return $quant*1.944;}
+
   # celsius to farenheit
   if ($from eq "c" && $to eq "f") {return $quant*1.8+32;}
 
