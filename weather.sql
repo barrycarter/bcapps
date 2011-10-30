@@ -1,3 +1,20 @@
+-- buoy tables added 29 Oct 2011
+
+CREATE TABLE buoy ( 
+STN, LAT, LON, YYYY, MM, DD, hh, minute, WDIR, WSPD, GST, WVHT, DPD, APD,
+MWD, PRES, PTDY, ATMP, WTMP, DEWP, VIS, TIDE
+);
+
+-- no duplicate reports
+CREATE UNIQUE INDEX i3 ON buoy(STN,YYYY,MM,DD,hh,mm);
+
+-- same thing, but only latest observation per buoy
+CREATE TABLE buoy_now ( 
+STN, LAT, LON, YYYY, MM, DD, hh, minute, WDIR, WSPD, GST, WVHT, DPD, APD,
+MWD, PRES, PTDY, ATMP, WTMP, DEWP, VIS, TIDE
+);
+CREATE UNIQUE INDEX i4 ON buoy_now(STN);
+
 -- revision below 27 Oct 2011 based on
 -- http://weather.aero/dataserver_current/cache/metars.cache.csv
 

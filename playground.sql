@@ -1,3 +1,26 @@
+-- queries to extract various quantities from both METAR and BUOY observations
+
+SELECT stn AS id, atmp*1.8+32 AS value, lat AS y, lon AS x FROM
+buoy_now WHERE atmp != 'MM' UNION SELECT station_id AS id,
+temp_c*1.8+32 AS value, latitude AS y, longitude AS x FROM metar_now
+WHERE temp_c != ''
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.quit
+
 -- SQLite3 (thus untyped) table to hold "all" weather observations
 
 CREATE TABLE weather (

@@ -7,8 +7,8 @@ push(@INC,"/home/barrycarter/BCGIT", "/usr/local/bin/");
 require "bclib.pl";
 require "bc-weather-lib.pl";
 
-# all work in temporary directory
-chdir("/tmp/bcdtp");
+# all work in temporary-but-permanent directory
+chdir("/var/tmp/bcdtp");
 
 # obtain current weather
 @w = recent_weather();

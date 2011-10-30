@@ -20,51 +20,6 @@ use XML::Simple;
 use Data::Dumper 'Dumper';
 $Data::Dumper::Indent = 0;
 
-# buoy weather
-
-($out) = cache_command("curl http://www.ndbc.noaa.gov/data/latest_obs/latest_obs.txt", "age=150");
-
-@reports = split(/\n/, $out);
-
-# header line
-$headers = shift(@reports);
-$headers=~s/^\#//isg;
-@headers = split(/\s+/, $headers);
-
-# useless line
-shift(@reports);
-
-for $i (@reports) {
-
-  # set hash directly from data
-  %hash = ();
-  @fields = split(/\s+/, $i);
-  for $j (0..$#headers) {$hash{$headers[$j]} = $fields[$j];}
-
-  # create hash that we'll use for insert
-  $dbhash{station_id} = $hash{STN};
-  $dbhash{observation_time} = "$hash{YYYY}-$hash{MM}-$hash{DD}T$hash{hh}:$hash{mm}:00Z";
-  $dbhash{latitude} = $hash{LAT};
-  $dbhash{longitude} = $hash{LON};
-  # ATM = air temperature <h>, not automated teller machine!</h>
-  $dbhash{temp_c} = $hash{ATM};
-  # <h>DEWP? There it is!</h>
-  $dbhash{dewpoint_c} = $hash{DEWP};
-  $dbhash{wind_dir_degrees} = $hash{WDIR};
-  $dbhash{wind_speed_kt} = convert($hash{WSPD}, "mps", "kt");
-  $dbhash{wind_gust_kt} = convert($hash{GST}, "mps", "kt");
-
-  # buoys are at sea level, so SLP = actual pressure
-  $dbhash{altim_in_hg} = convert($hash{PRES}, "hpa", "in");
-  $dbhash{sea_level_pressure} = convert($hash{PRES}, "hpa", "in");
-  # millibars and hPa are identical, no need to convert
-  $dbhash{three_hr_pressure_tendency_mb} = $hash{PTDY};
-
-  push(@res, {%dbhash});
-}
-
-debug(unfold(@res));
-
 die "TESTING";
 
 # http://programmers.stackexchange.com/questions/116346/get-100-highest-numbers-from-an-infinite-list

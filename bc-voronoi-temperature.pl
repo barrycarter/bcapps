@@ -11,8 +11,8 @@ require "bclib.pl";
 require "bc-weather-lib.pl";
 require "bc-kml-lib.pl";
 
-# all work in temporary directory
-chdir("/tmp/bcvtp");
+# all work in temporary-but-permanent directory
+chdir("/var/tmp/bcvtp");
 
 # obtain current weather
 @w = recent_weather();

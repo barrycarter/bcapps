@@ -73,11 +73,11 @@ sub recent_weather {
   my(@res) = split(/\n/, $res);
 
   # header line
-  @headers = split(/\,/, shift(@res));
+  @headers = csv(shift(@res));
 
   # go through data
   for $i (@res) {
-    my(@line) = split(/\,/, $i);
+    my(@line) = csv($i);
     my(%hash) = ();
     for $j (0..$#headers) {
       $hash{$headers[$j]} = $line[$j];
@@ -249,6 +249,72 @@ sub dahrmi2time {
   }
 
   return $thismo;
+}
+
+=item recent_weather_buoy($options)
+
+Obtain recent weather from
+http://www.ndbc.noaa.gov/data/latest_obs/latest_obs.txt and return as
+list of hashes that are compatible with newmetar.metar table
+
+$options currently unused
+
+TODO: should I create a separate buoy-specific db table and union or something?
+
+=cut
+
+sub recent_weather_buoy {
+  my($options) = @_;
+  my(@res);
+
+  # get data, split into lines
+  my($out) = cache_command("curl http://www.ndbc.noaa.gov/data/latest_obs/latest_obs.txt", "age=150");
+  my(@reports) = split(/\n/, $out);
+
+  # header line (remove '#' at start of line)
+  $headers = shift(@reports);
+  $headers=~s/^\#//isg;
+  @headers = split(/\s+/, $headers);
+
+  # useless line (gives units of measurements)
+  shift(@reports);
+
+  for $i (@reports) {
+
+    # set hash directly from data
+    my(%hash) = ();
+    my(%dbhash) = ();
+    @fields = split(/\s+/, $i);
+    for $j (0..$#headers) {$hash{$headers[$j]} = $fields[$j];}
+    # sqlite3 case insensitivity requires below
+    $hash{minute} = $hash{mm}; delete $hash{mm};
+
+    # NOTE: The dbhash code below is NOT currently used; I've decided
+    # to go with a separate table for buoy data
+    # create hash that we'll use for insert
+    $dbhash{station_id} = $hash{STN};
+    $dbhash{observation_time} = "$hash{YYYY}-$hash{MM}-$hash{DD}T$hash{hh}:$hash{mm}:00Z";
+    $dbhash{latitude} = $hash{LAT};
+    $dbhash{longitude} = $hash{LON};
+    # ATM = air temperature <h>, not automated teller machine!</h>
+    $dbhash{temp_c} = $hash{ATM};
+    # <h>DEWP? There it is!</h>
+    $dbhash{dewpoint_c} = $hash{DEWP};
+    $dbhash{wind_dir_degrees} = $hash{WDIR};
+    $dbhash{wind_speed_kt} = convert($hash{WSPD}, "mps", "kt");
+    $dbhash{wind_gust_kt} = convert($hash{GST}, "mps", "kt");
+
+    # buoys are at sea level, so SLP = actual pressure
+    $dbhash{altim_in_hg} = convert($hash{PRES}, "hpa", "in");
+    $dbhash{sea_level_pressure} = convert($hash{PRES}, "hpa", "in");
+    # millibars and hPa are identical, no need to convert
+    $dbhash{three_hr_pressure_tendency_mb} = $hash{PTDY};
+
+    # As above, %dbhash is unused
+    push(@res, {%hash});
+    }
+
+return @res;
 }
 
 # <h>return beauty;</h>
