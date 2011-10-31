@@ -67,6 +67,10 @@ sub recent_weather {
   my(@headers);
   my(@hashes);
   my($res) = cache_command("curl http://weather.aero/dataserver_current/cache/metars.cache.csv.gz | gunzip | tail -n +6", "age=150");
+
+  # HACK: csv() does not handle ",," well
+  $res=~s/,,/, ,/isg;
+
   # this file is important enough to keep around
   write_file($res, "/var/tmp/weather.aero.metars.txt");
 
@@ -80,6 +84,8 @@ sub recent_weather {
     my(@line) = csv($i);
     my(%hash) = ();
     for $j (0..$#headers) {
+      # remove the space I added above (sigh)
+      $line[$j]=~s/^\s*$//isg;
       $hash{$headers[$j]} = $line[$j];
   }
     push(@hashes, {%hash});
@@ -269,6 +275,10 @@ sub recent_weather_buoy {
 
   # get data, split into lines
   my($out) = cache_command("curl http://www.ndbc.noaa.gov/data/latest_obs/latest_obs.txt", "age=150");
+
+  # HACK: csv() does not handle ",," well
+  $out=~s/,,/, ,/isg;
+
   my(@reports) = split(/\n/, $out);
 
   # header line (remove '#' at start of line)
@@ -285,7 +295,11 @@ sub recent_weather_buoy {
     my(%hash) = ();
     my(%dbhash) = ();
     @fields = split(/\s+/, $i);
-    for $j (0..$#headers) {$hash{$headers[$j]} = $fields[$j];}
+    for $j (0..$#headers) {
+      # remove the space I added above (sigh)
+      $fields[$j]=~s/^\s*$//isg;
+      $hash{$headers[$j]} = $fields[$j];
+    }
     # sqlite3 case insensitivity requires below
     $hash{minute} = $hash{mm}; delete $hash{mm};
 

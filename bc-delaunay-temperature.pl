@@ -24,11 +24,8 @@ for $i (@w) {
     next;
   }
 
-  # hideous cheating
-#  ($hash{longitude}, $hash{latitude}) = 
-#    to_mercator($hash{latitude}, $hash{longitude}, "order=xy");
-#  $hash{longitude} *= 1000;
-#  $hash{latitude} *= 1000;
+  # no temperature? no go!
+  if ($hash{temp_c} eq "NULL" || $hash{temp_c} eq "") {next;}
 
   push(@points, "$hash{longitude} $hash{latitude}");
 
