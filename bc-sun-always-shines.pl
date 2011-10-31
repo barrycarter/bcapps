@@ -16,7 +16,8 @@ $outputfile = "/home/barrycarter/BCINFO/sites/TEST/sunstuff.html";
 
 # TODO: ugly ugly ugly (should use Perl funcs and also not do "cat >>"
 $ENV{TZ} = "GMT";
-system("echo Last updated: `date` > $outputfile");
+system("echo '<meta http-equiv=\"refresh\" content=\"60\">' > $outputfile");
+system("echo Last updated: `date` >> $outputfile");
 system("/bin/cat /usr/local/etc/sun/gbefore.txt >> $outputfile");
 
 open(A, ">>$outputfile");
@@ -57,9 +58,6 @@ new google.maps.Marker({
 
 MARK
 ;
-
-# TODO: marker for Sun
-# TODO: add moon
 
 for $i (1..15) {
 
@@ -147,5 +145,3 @@ MARK
 close(A);
 
 system("cat /usr/local/etc/sun/gend.txt >> $outputfile");
-
-system("echo Last updated `date` known broken >> $outputfile");
