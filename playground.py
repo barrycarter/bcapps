@@ -11,6 +11,20 @@ def mirror(x): return x
 def readfile(f): return open(f, 'r').read()
 def sysop(cmd): return os.popen(cmd).read()
 
+
+# below is one off
+def update_voronoi(): sysop("bc-voronoi-temperature.pl --nodaemon 1> /tmp/out.txt 2> /tmp/err.txt; cat /tmp/out.txt /tmp/err.txt")
+cloud.cron.register(update_voronoi, "update_voronoi", "*/5 * * * *", _env="barryenv1")
+exit();
+
+# jid = cloud.call(sysop, "date | Mail -s Hi playground@barrycarter.info 1> /tmp/out.txt 2> /tmp/err.txt; cat /tmp/out.txt /tmp/err.txt")
+
+# jid = cloud.call(sysop, "bc-voronoi-temperature.pl --nodaemon 1> /tmp/out.txt 2> /tmp/err.txt; cat /tmp/out.txt /tmp/err.txt", _env="barryenv1")
+
+print cloud.result(jid)
+
+exit();
+
 # jid = sysop("ls")
 # print jid
 
@@ -37,16 +51,15 @@ def sysop(cmd): return os.popen(cmd).read()
 
 # jid = cloud.call(sysop, "whoami")
 
-jid = cloud.call(sysop, "sudo ls -laR /home/picloud/*")
+# jid = cloud.call(sysop, "sudo ls -laR /home/picloud/* 1> /tmp/sudo.txt 2> /tmp/sudo.err; cat /tmp/sudo.???")
+
+# jid = cloud.call(sysop, "whoami; pwd 1> /tmp/out.txt 2> /tmp/err.txt; cat /tmp/out.txt; cat /tmp/err.txt")
+
+# jid = cloud.call(sysop, "ls -laR /")
 
 # jid = cloud.call(os.system, "ls", _env="barryenv1", _profile=True)
 # jid = cloud.call(os.system, "rsync /usr/local/bin/bc-temperature-voronoi.pl root\@data.barrycarter.info:/sites/TEST/", _env="barryenv1", _profile=True)
 # jid = cloud.call(os.system, "bc-voronoi-temperature.pl --nodaemon", _env="barryenv1")
-
-print cloud.result(jid)
-
-
-exit();
 
 # cloud.files.put("sample-data/testfile.txt")
 

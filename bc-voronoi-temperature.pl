@@ -92,7 +92,7 @@ $res = voronoi_map(\@wok);
 debug("RES: $res");
 
 # this file is generated on a different machine, so copy file over
-system("rsync $res root\@data.barrycarter.info:/sites/DATA/current-voronoi-test.kmz");
+system("rsync -e 'ssh -i /usr/local/etc/id_rsa' $res root\@data.barrycarter.info:/sites/DATA/current-voronoi.kmz");
 
 # sleep 2.5 minutes and call myself again
 unless ($globopts{nodaemon}) {
