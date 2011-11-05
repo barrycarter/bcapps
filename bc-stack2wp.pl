@@ -25,59 +25,66 @@ $assoc_id = "aa1073f7-7e3b-4d4d-ace5-f2fca853f998";
 # find all stack sites (only need this because /associated below does
 # NOT give URLs, grumble)
 
-# below won't work when stack grows over 100 sites!
-$fname = cache_command("curl 'http://stackauth.com/1.1/sites?page=1&pagesize=100'","age=86400&retfile=1");
+# below won't work when stack grows over 200 sites! (upping pagesize= won't help)
 
-system("gunzip -fc $fname > json0");
-$sites = read_file("json0");
+for $i (1..2) {
+  ($out) = cache_command("curl 'http://stackauth.com/1.1/sites?page=$i&pagesize=100' | gunzip","age=86400");
+  $json = JSON::from_json($out);
+  %jhash = %{$json};
+  push(@items, @{$jhash{items}});
+}
 
-# parse..
-$json = JSON::from_json($sites);
-%jhash = %{$json};
-@items = @{$jhash{items}};
+debug("ITEMS",@items);
 
 # get data I need
 for $i (@items) {
   %hash = %{$i};
   %hash2 = %{$hash{main_site}};
+  debug("HASH",%hash,"HASH2",%hash2);
   $site{$hash2{name}} = $hash2{api_endpoint};
   $site_url{$hash2{api_endpoint}} = $hash2{site_url};
 }
+
+debug("FARFA", %site);
 
 # find all my ids
 
 $fname = cache_command("curl 'http://stackauth.com/1.1/users/$assoc_id/associated'","age=86400&retfile=1");
 
-warn("Using hardcoded file, since API does not return stack overflow id");
+# warn("Using hardcoded file, since API does not return stack overflow id");
 # kludge inside kludge: gunzip won't accept an uncompressed file
-system("gzip -c /home/barrycarter/BCGIT/data/stackcase.txt > stack.gz");
-$fname = "stack.gz";
-
-# unzip results
-system("gunzip -c $fname > json1");
-$json = JSON::from_json(read_file("json1"));
-%jhash = %{$json};
-@items = @{$jhash{items}};
+# system("gzip -c /home/barrycarter/BCGIT/data/stackcase.txt > stack.gz");
+# $fname = "stack.gz";
 
 # get data I need (my id on the site)
 for $i (@items) {
   %hash = %{$i};
+  debug("HASHALPHGA", %hash);
 
   # TODO: weird case, maybe fix later
   if ($hash{site_name} eq "Area 51") {next;}
 
+  debug("SITENAME: $hash{site_name}");
+
   # map URL to id, not name to id
+  debug("HSN: $hash{site_name}, SITE: $site{$hash{site_name}}");
   $myid{$site{$hash{site_name}}} = $hash{user_id};
 }
 
+debug("FETA",unfold(%myid));
+
+die "TESTNG";
+
 # and now, my questions on all sites
 for $i (sort keys %myid) {
-  debug($i,$site_url{$i});
+  debug("SITE", $i,$site_url{$i});
 
   $url = "$i/1.0/users/$myid{$i}/questions";
   # filename for questions for this site
   $i=~m%http://(.*?)/?$%;
   $outname = $1;
+
+  # TODO: handle multiple pages!
 
   # my questions
   $fname = cache_command("curl '$url'","age=86400&retfile=1");
@@ -105,12 +112,13 @@ for $i (sort keys %myid) {
 <a href='$qurl'>\n$qurl\n</a><p>Please make all comments/etc on that site, not here.";
 
     debug("QURL: $qurl");
-    unless ($qurl=~/overflow/i) {
-      warn "KLUDGE TO GET MY OVERFLOW POSTS UPLOAD";
-      next;
-    }
+#    unless ($qurl=~/overflow/i) {
+#      warn "KLUDGE TO GET MY OVERFLOW POSTS UPLOAD";
+#      next;
+#    }
 
-    post_to_wp($body, "site=$wp_blog&author=$author&password=$pw&subject=$qhash{title}&timestamp=$qhash{creation_date}&category=STACK&live=0");
+    warn "NOT ACTUALLY POSTING";
+#    post_to_wp($body, "site=$wp_blog&author=$author&password=$pw&subject=$qhash{title}&timestamp=$qhash{creation_date}&category=STACK&live=0");
 
     $qhash{qurl} = $qurl;
     debug("QHASH REF",unfold(\%qhash));
@@ -120,12 +128,18 @@ for $i (sort keys %myid) {
 
 # TODO: accepted_answer_id has vanished somehow
 
-hashlist2sqlite(\@allquestions, "questions", "/tmp/stack1.db");
+debug("GAMMA");
+debug("ALLQ",@allquestions);
 
-sub hashlist2sqlite {
+unlink("/tmp/stack1.db");
+hashlist2sqlite_local(\@allquestions, "questions", "/tmp/stack1.db");
+
+sub hashlist2sqlite_local {
   my($hashs, $tabname, $outfile) = @_;
   my(%iskey);
   my(@queries);
+
+  debug("DELTA", @{$hashs});
 
   for $i (@{$hashs}) {
     debug("I IS: $i",unfold($i));
@@ -149,6 +163,7 @@ sub hashlist2sqlite {
   push(@queries, "COMMIT;");
 
   my($tmpfile) = my_tmpfile();
+  debug("TMPFILE: $tmpfile");
   write_file(join(";\n",@queries), $tmpfile);
   system("sqlite3 $outfile < $tmpfile");
 }

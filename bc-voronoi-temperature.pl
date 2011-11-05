@@ -14,20 +14,57 @@ require "bc-kml-lib.pl";
 # all work in temporary-but-permanent directory
 chdir("/var/tmp/bcvtp");
 
-# obtain current weather
-@w = recent_weather();
+# obtain current weather including buoys
+# @w = recent_weather();
+warn "TESTING; just buoys";
+
+@w2 = recent_weather_buoy();
+
+# convert buoy hash to metar-style hash
+for $i (@w2) {
+  %hash = %{$i};
+  %dbhash = ();
+
+  # below stolen from bc-weather-lib where its unused; should make this a function
+  $dbhash{station_id} = $hash{STN};
+  $dbhash{observation_time} = "$hash{YYYY}-$hash{MM}-$hash{DD}T$hash{hh}:$hash{mm}:00Z";
+  $dbhash{latitude} = $hash{LAT};
+  $dbhash{longitude} = $hash{LON};
+  # ATMP = air temperature
+  $dbhash{temp_c} = $hash{ATMP};
+  # <h>DEWP? There it is!</h>
+  $dbhash{dewpoint_c} = $hash{DEWP};
+  $dbhash{wind_dir_degrees} = $hash{WDIR};
+  $dbhash{wind_speed_kt} = convert($hash{WSPD}, "mps", "kt");
+  $dbhash{wind_gust_kt} = convert($hash{GST}, "mps", "kt");
+  
+  # buoys are at sea level, so SLP = actual pressure
+  $dbhash{altim_in_hg} = convert($hash{PRES}, "hpa", "in");
+  $dbhash{sea_level_pressure} = convert($hash{PRES}, "hpa", "in");
+  # millibars and hPa are identical, no need to convert
+  $dbhash{three_hr_pressure_tendency_mb} = $hash{PTDY};
+
+  push(@w, {%dbhash});
+
+}
 
 for $i (@w) {
   %hash = %{$i};
 
+  debug("BETA",%hash);
+
   # confirm numeric
   unless ($hash{latitude}=~/^[0-9\-\.]+$/ && $hash{longitude}=~/^[0-9\-\.]+$/) {
-#    warn("BAD DATA: %hash");
+    warn("BAD DATA:");
+    debug("HASH", %hash);
     next;
   }
 
   # no temperature? no go!
-  if ($hash{temp_c} eq "NULL" || $hash{temp_c} eq "") {next;}
+  if ($hash{temp_c} eq "NULL" || $hash{temp_c} eq "") {
+    debug("$hash{station_id} has no temperature");
+    next;
+  }
 
   # TODO: mercator version?
   # fields for voronoi_map()
@@ -49,6 +86,7 @@ for $i (@w) {
 }
 
 $res = voronoi_map(\@wok);
+debug("RES: $res");
 
 # this file is generated on a different machine, so copy file over
 system("rsync $res root\@data.barrycarter.info:/sites/DATA/current-voronoi.kmz");

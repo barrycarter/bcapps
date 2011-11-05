@@ -276,6 +276,9 @@ sub recent_weather_buoy {
   # get data, split into lines
   my($out) = cache_command("curl http://www.ndbc.noaa.gov/data/latest_obs/latest_obs.txt", "age=150");
 
+  # this file is important enough to keep around
+  write_file($out, "/var/tmp/noaa.buoy.txt");
+
   # HACK: csv() does not handle ",," well
   $out=~s/,,/, ,/isg;
 
