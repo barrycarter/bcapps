@@ -22,7 +22,22 @@ def sysop(cmd): return os.popen(cmd).read()
 # jid = cloud.call(readfile, "/etc/passwd")
 # jid = cloud.call(os.system, "cat /etc/passwd")
 # jid = cloud.call(os.popen, "ls")
-jid = cloud.call(sysop, "date")
+# jid = cloud.call(sysop, "date")
+# jid = cloud.call(sysop, "bc-temperature-voronoi --nodaemon", _env="barryenv1")
+# jid = cloud.call(sysop, "rsync -Pavz /etc/passwd root@data.barrycarter.info:/sites/TEST/ |& tee")
+
+# below WORKS!
+# jid = cloud.call(sysop, "ls -l /tmp/; date", _env="barryenv1")
+
+# jid = cloud.call(sysop, "date; ls -l /tmp/ > /tmp/ls.txt; date; cat /tmp/ls.txt", _env="barryenv1")
+
+# jid = cloud.call(sysop, "ls -l /asfadsa 2> /tmp/ls.txt; date; cat /tmp/ls.txt", _env="barryenv1")
+
+# jid = cloud.call(sysop, "bc-voronoi-temperature.pl --nodaemon 1> /tmp/stdout.txt 2> /tmp/stderr.txt; echo OUT; cat /tmp/stdout.txt; echo ERR; cat /tmp/stderr.txt", _env="barryenv1")
+
+# jid = cloud.call(sysop, "whoami")
+
+jid = cloud.call(sysop, "sudo ls -laR /home/picloud/*")
 
 # jid = cloud.call(os.system, "ls", _env="barryenv1", _profile=True)
 # jid = cloud.call(os.system, "rsync /usr/local/bin/bc-temperature-voronoi.pl root\@data.barrycarter.info:/sites/TEST/", _env="barryenv1", _profile=True)
