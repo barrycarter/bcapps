@@ -4,6 +4,11 @@
 # is a clone of bc-delaunay-temperature, but using voronoi instead of
 # delaunay
 
+# --nobuoy: do not include buoy temperatures (including buoy
+# temperatures sometimes exceeds google maps polygon/size limit)
+
+# --nodaemon: run once, don't daemonify
+
 # NOTE: this program starts off as an exact copy of delaunay
 
 push(@INC,"/home/barrycarter/BCGIT", "/usr/local/bin/");
@@ -15,9 +20,7 @@ require "bc-kml-lib.pl";
 chdir("/var/tmp/bcvtp");
 
 # obtain current weather including buoys
-# @w = recent_weather();
-warn "TESTING; just buoys";
-
+@w = recent_weather();
 @w2 = recent_weather_buoy();
 
 # convert buoy hash to metar-style hash
@@ -44,7 +47,7 @@ for $i (@w2) {
   # millibars and hPa are identical, no need to convert
   $dbhash{three_hr_pressure_tendency_mb} = $hash{PTDY};
 
-  push(@w, {%dbhash});
+  unless ($globopts{nobuoy}) {push(@w, {%dbhash});}
 
 }
 
@@ -61,7 +64,7 @@ for $i (@w) {
   }
 
   # no temperature? no go!
-  if ($hash{temp_c} eq "NULL" || $hash{temp_c} eq "") {
+  if ($hash{temp_c} eq "NULL" || $hash{temp_c} eq "" || $hash{temp_c} eq "MM") {
     debug("$hash{station_id} has no temperature");
     next;
   }
@@ -89,11 +92,13 @@ $res = voronoi_map(\@wok);
 debug("RES: $res");
 
 # this file is generated on a different machine, so copy file over
-system("rsync $res root\@data.barrycarter.info:/sites/DATA/current-voronoi.kmz");
+system("rsync $res root\@data.barrycarter.info:/sites/DATA/current-voronoi-test.kmz");
 
 # sleep 2.5 minutes and call myself again
-sleep(150);
-exec($0);
+unless ($globopts{nodaemon}) {
+  sleep(150);
+  exec($0);
+}
 
 # TODO: reinstate this code for Voronoi maps
 # update time in various timezones (silly!)

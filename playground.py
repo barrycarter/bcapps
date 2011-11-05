@@ -7,9 +7,31 @@
 import cloud
 import os;
 
-
 def mirror(x): return x
 def readfile(f): return open(f, 'r').read()
+def sysop(cmd): return os.popen(cmd).read()
+
+# jid = sysop("ls")
+# print jid
+
+# os.system("ls")
+
+# jid = cloud.call(mirror, "hello")
+# jid = cloud.call(mirror, "`date`")
+# jid = cloud.call(os.system, "date"); # doesnt work
+# jid = cloud.call(readfile, "/etc/passwd")
+# jid = cloud.call(os.system, "cat /etc/passwd")
+# jid = cloud.call(os.popen, "ls")
+jid = cloud.call(sysop, "date")
+
+# jid = cloud.call(os.system, "ls", _env="barryenv1", _profile=True)
+# jid = cloud.call(os.system, "rsync /usr/local/bin/bc-temperature-voronoi.pl root\@data.barrycarter.info:/sites/TEST/", _env="barryenv1", _profile=True)
+# jid = cloud.call(os.system, "bc-voronoi-temperature.pl --nodaemon", _env="barryenv1")
+
+print cloud.result(jid)
+
+
+exit();
 
 # cloud.files.put("sample-data/testfile.txt")
 
