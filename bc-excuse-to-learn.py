@@ -34,6 +34,8 @@ reader = csv.DictReader(open("metar.txt"))
 # fields I want, and a hash to store them in
 fields = ['temp_c', 'sea_level_pressure_mb', 'wind_speed_kt']
 data = {}
+# special case for computed value
+data['humidity'] = []
 for i in fields: data[i] = []
 
 for row in reader:
@@ -50,18 +52,17 @@ for row in reader:
         data['humidity'].append([row['latitude'], row['longitude'], humidity])
 
 
-exit(0)
+# write files for qhull
+for i in data.keys():
+    f = open(i,"w")
+    f.write("2\n")
+    st = map(lambda x: [x[0], x[1]], data[i])
+    print st
+#    f.write(str(len(data[i]))+"\n")
+#    f.close()
 
-# reverse so I can use pop()
-metar = open("metar.txt").readlines()
-metar.reverse()
-headers = metar.pop()
+    
 
-print (headers)
 
-# headers = metar.pop()
-# print (headers)
 
-def humidity(temperature, dewpoint):
-    return
 
