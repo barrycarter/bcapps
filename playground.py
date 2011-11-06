@@ -17,7 +17,9 @@ def sysop(cmd): return os.popen(cmd).read()
 # cloud.cron.register(update_voronoi, "update_voronoi", "*/5 * * * *", _env="barryenv1")
 
 # cloud.call(sysop, "ls -l /var/tmp > /tmp/out.txt; cat /tmp/out.txt", _env="barryenv1")
-jid = cloud.call(sysop, "ls -ld /home/picloud")
+# jid = cloud.call(sysop, "ls -l /tmp /var/tmp; bc-voronoi-temperature.pl --nodaemon 1> /tmp/out.txt 2> /tmp/err.txt; cat /tmp/out.txt /tmp/err.txt; ls -l /tmp /var/tmp", _env="barryenv1")
+# jid = cloud.call(sysop, "ls -l /tmp /var/tmp", _env="barryenv1")
+jid = cloud.call(sysop, 'ls -l /tmp', _env='barryenv1', _type='c2')
 print cloud.result(jid)
 
 exit();
