@@ -4,7 +4,11 @@
 # maps for various atmospheric data, using "the cloud". This should be
 # more efficient than doing these maps separately
 
-import cloud, os, csv, math
+import cloud, os, csv, math, string
+
+print string.join(["a","b","c"], "\n")
+
+exit(0)
 
 # how much water can air at 'temperature' (in Celsius) hold
 def saturationVaporPressure(temperature):
@@ -31,12 +35,13 @@ if (not(os.path.isfile(tmpdir+"/metar.txt") and os.path.isfile(tmpdir+"/buoy.txt
 
 reader = csv.DictReader(open("metar.txt"))
 
-# fields I want, and a hash to store them in
+# fields I want, and a hash to store them in (+ computed value)
 fields = ['temp_c', 'sea_level_pressure_mb', 'wind_speed_kt']
 data = {}
-# special case for computed value
-data['humidity'] = []
+
 for i in fields: data[i] = []
+# special case
+data['humidity'] = [] 
 
 for row in reader:
     # ignore empty lat/lon
@@ -57,7 +62,8 @@ for i in data.keys():
     f = open(i,"w")
     f.write("2\n")
     st = map(lambda x: [x[0], x[1]], data[i])
-    print st
+#    print string.join("\n", st)
+
 #    f.write(str(len(data[i]))+"\n")
 #    f.close()
 
