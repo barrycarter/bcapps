@@ -11,16 +11,15 @@ def mirror(x): return x
 def readfile(f): return open(f, 'r').read()
 def sysop(cmd): return os.popen(cmd).read()
 
-
 # below is one off
 # def update_voronoi(): sysop("bc-voronoi-temperature.pl --nodaemon 1> /tmp/out.txt 2> /tmp/err.txt; cat /tmp/out.txt /tmp/err.txt")
-# cloud.cron.register(update_voronoi, "update_voronoi", "*/5 * * * *", _env="barryenv1")
+# cloud.cron.register(update_voronoi, "update_voronoi", "*/5 * * * *", _env="barryenv1", _profile=True)
 
 # cloud.call(sysop, "ls -l /var/tmp > /tmp/out.txt; cat /tmp/out.txt", _env="barryenv1")
 # jid = cloud.call(sysop, "ls -l /tmp /var/tmp; bc-voronoi-temperature.pl --nodaemon 1> /tmp/out.txt 2> /tmp/err.txt; cat /tmp/out.txt /tmp/err.txt; ls -l /tmp /var/tmp", _env="barryenv1")
 # jid = cloud.call(sysop, "ls -l /tmp /var/tmp", _env="barryenv1")
-jid = cloud.call(sysop, 'ls -l /tmp', _env='barryenv1', _type='c2')
-print cloud.result(jid)
+# jid = cloud.call(sysop, 'ls -l /tmp', _env='barryenv1', _type='c2')
+# print cloud.result(jid)
 
 exit();
 
