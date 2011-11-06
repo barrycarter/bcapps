@@ -4,8 +4,9 @@
 # maps for various atmospheric data, using "the cloud". This should be
 # more efficient than doing these maps separately
 
-import cloud;
-import os;
+import cloud
+import os
+import csv
 
 # do all work in temporary (but fixed) directory
 tmpdir = "/tmp/bcetlp"
@@ -22,9 +23,35 @@ if (not(os.path.isfile(tmpdir+"/metar.txt") and os.path.isfile(tmpdir+"/buoy.txt
     parfile.close()
     os.system("/usr/local/bin/parallel < parallel 1> par.out 2> par.err")
 
-metar = open("metar.txt").readlines()
+reader = csv.DictReader(open("metar.txt"))
+temps = []
+press = []
 
-print (metar)
+for row in reader:
+    # ignore empty lat/lon
+    if (row['latitude'] == "" or row['longitude'] == ""): continue
+
+    # temperature when avail
+    if (row['temp_c'] != ''):
+        temps.append([row['latitude'], row['longitude'], row['temp_c']])
+
+    if (row['sea_level_pressure_mb'] != ''):
+        press.append([row['latitude'], row['longitude'], row['sea_level_pressure_mb']])
+
+print (press)
+
+exit(0)
+
+# reverse so I can use pop()
+metar = open("metar.txt").readlines()
+metar.reverse()
+headers = metar.pop()
+
+print (headers)
+
+# headers = metar.pop()
+# print (headers)
+
 
 
        
