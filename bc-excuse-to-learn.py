@@ -12,29 +12,20 @@ tmpdir = "/tmp/bcetlp"
 if not(os.path.isdir(tmpdir)): os.mkdir(tmpdir)
 os.chdir(tmpdir)
 
-print tmpdir+"/metar.txt"
+# TODO: below is just for now; in reality, new copy each time (which
+# is actually automatic in cloud...)
 
-# get both files I need, in parallel (to save time)
-test = not(os.path.isfile(tmpdir+"/metar.txt") and
-        os.path.isfile(tmpdir+"/buoy.txt"))
+if (not(os.path.isfile(tmpdir+"/metar.txt") and os.path.isfile(tmpdir+"/buoy.txt"))):
+    parfile = open("parallel", "w")
+    parfile.write("curl http://weather.aero/dataserver_current/cache/metars.cache.csv.gz | gunzip | tail -n +6 > metar.txt\n")
+    parfile.write("curl -o buoy.txt http://www.ndbc.noaa.gov/data/latest_obs/latest_obs.txt\n")
+    parfile.close()
+    os.system("/usr/local/bin/parallel < parallel 1> par.out 2> par.err")
 
-print test
+metar = open("metar.txt").readlines()
 
-exit(0)
+print (metar)
 
-"""
- if (not(and(os.path.isfile("$tmpdir/metar.txt"), os.path.isfile("$tmpdir/buoy.txt")))):
-       print "Start"
-       parfile = open("parallel", "w")
-       parfile.write("curl http://weather.aero/dataserver_current/cache/metars.cache.csv.gz | gunzip | tail -n +6 > metar.txt\n")
-       parfile.write("curl -o buoy.txt http://www.ndbc.noaa.gov/data/latest_obs/latest_obs.txt\n")
-       parfile.close()
-       os.system("/usr/local/bin/parallel < parallel 1> par.out 2> par.err")
-
-
-print "Done"
-
-"""
 
        
 
