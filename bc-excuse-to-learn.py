@@ -6,9 +6,7 @@
 
 import cloud, os, csv, math, string
 
-print string.join(["a","b","c"], "\n")
-
-exit(0)
+# print string.join(["a","b","c"], "\n")
 
 # how much water can air at 'temperature' (in Celsius) hold
 def saturationVaporPressure(temperature):
@@ -31,7 +29,7 @@ if (not(os.path.isfile(tmpdir+"/metar.txt") and os.path.isfile(tmpdir+"/buoy.txt
     parfile.write("curl http://weather.aero/dataserver_current/cache/metars.cache.csv.gz | gunzip | tail -n +6 > metar.txt\n")
     parfile.write("curl -o buoy.txt http://www.ndbc.noaa.gov/data/latest_obs/latest_obs.txt\n")
     parfile.close()
-    os.system("/usr/local/bin/parallel < parallel 1> par.out 2> par.err")
+    os.system("/usr/local/bin/parallel -j 0 < parallel 1> par.out 2> par.err")
 
 reader = csv.DictReader(open("metar.txt"))
 
@@ -56,16 +54,26 @@ for row in reader:
         humidity = saturationVaporPressure(row['dewpoint_c'])/saturationVaporPressure(row['temp_c'])
         data['humidity'].append([row['latitude'], row['longitude'], humidity])
 
+# parallel compute del and vor
+par2 = open("parallel2", "w")
 
 # write files for qhull
 for i in data.keys():
     f = open(i,"w")
     f.write("2\n")
-    st = map(lambda x: [x[0], x[1]], data[i])
-#    print string.join("\n", st)
+    f.write(str(len(data[i]))+"\n")
+    f.write(string.join(map(lambda x: x[0]+' '+x[1], data[i]),"\n")+"\n")
+    f.close()
 
-#    f.write(str(len(data[i]))+"\n")
-#    f.close()
+    par2.write("qvoronoi s o < "+i+" > vor"+i+"\n")
+    par2.write("qdelaunay i < "+i+" > del"+i+"\n")
+
+par2.close()
+os.system("parallel -j 0 < parallel2")
+
+
+
+
 
     
 
