@@ -71,6 +71,9 @@ def doWeatherStuff():
     par2.close()
     os.system("parallel -j 0 < parallel2")
 
+    # at the moment, this is pointless
+    os.system("rsync -e 'ssh -i /usr/local/etc/id_rsa' del* vor* root@data.barrycarter.info:/tmp/")
 
-doWeatherStuff()
+cloud.call(doWeatherStuff, _env = "barryenv1", _profile = True)
+
 

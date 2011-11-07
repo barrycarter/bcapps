@@ -910,7 +910,7 @@ sub nadex_quotes {
    # Unix time
    # TODO: EST5EDT does NOT work below, but should; this will be
    # inaccurate once we leave DST
-   $utime = str2time("$dat $tim GMT-4");
+   $utime = str2time("$dat $tim GMT-5");
    debug("$utime <- $dat $tim");
 
    # last updated time
@@ -922,7 +922,7 @@ sub nadex_quotes {
    # convert updated to time + calculate minute
    # str2time() defaults to today
    debug("UPTIME: $updated");
-   my($uptime) = str2time("$updated EDT5EST");
+   my($uptime) = str2time("$updated GMT-5");
 
    # TODO: below is ugly, there should be better way
    # however, if that's in the future, assume yesterday update
@@ -1052,7 +1052,7 @@ sub forex_quote {
   # EFX uses ET, sigh
 
   my($tz) = $ENV{TZ};
-  $ENV{TZ} = "EST5EDT";
+  $ENV{TZ} = "EST";
   my($st) = strftime("%F\T%H:%M:%S", localtime($time-300));
   my($en) = strftime("%F\T%H:%M:%S", localtime($time+300));
   $ENV{TZ} = $tz;
@@ -1060,7 +1060,7 @@ sub forex_quote {
   my($url) = "http://api.efxnow.com/DEMOWebServices2.8/Service.asmx/GetHistoricRatesDataSet?Key=$key&Quote=$parity&StartDateTime=$st&EndDateTime=$en";
   my($rates) = cache_command("curl '$url'", "age=86400");
 
-  debug("URL: $url", "RATES: $rates");
+  debug("URL: $url", "RATES: $rates, TIME: $time");
 
   # TODO: probably better way to keep track of mintime (using "large
   # value" is bad)

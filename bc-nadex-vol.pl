@@ -61,7 +61,7 @@ unless (%hash) {die "No data, stopping";}
 
 # NADEX runs on Eastern time
 # TODO: this may break when we stop daylight time(?)
-$ENV{TZ} = "EST5EDT";
+$ENV{TZ} = "GMT-5";
 
 open(A,">$tmpfile.new");
 print A "nadex={\n";
@@ -127,7 +127,7 @@ for $strike (sort keys %{$hash{$parity}}) {
     print A "{$printstrike, $exp, $bid, $ask, $printunder, $updated},\n";
 
     # logdiff + exptime (seconds)
-    unless ($under) {die "Unable to obtain price for $parity";}
+    unless ($under) {die "Unable to obtain price for $parity at $updated";}
     debug("$strike / $under");
     $logdiff = log($strike/$under);
     $exptime = $exp - $updated;

@@ -95,7 +95,14 @@ impvol[p0_, s_, e_, p1_] = v /. Solve[bincallv[p0,v,s,e]==p1, v][[1]]
 (* underlying profit from my positions; per position and then total
 [each pos is 10K] *)
 
+(* formula below was wrong for a long time!
+
 profitunder[p_, x_] = If[p>x, (p/x-1)*10000, 0]
+
+ *)
+
+profitunder[p_, x_] = If[p>x, (1-x/p)*10000, 0]
+
 profitundertot[p_] = Sum[profitunder[p,x],{x,mypos}]
 
 (* current time in Unix seconds; kludge for MST *)
