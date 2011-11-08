@@ -42,6 +42,9 @@ def doWeatherStuff():
     data['humidity'] = [] 
 
     for row in reader:
+        print (row)
+        print "TESTING"
+        continue
         # ignore empty lat/lon
         if (row['latitude'] == "" or row['longitude'] == ""): continue
 
@@ -65,15 +68,40 @@ def doWeatherStuff():
         f.write(string.join(map(lambda x: x[0]+' '+x[1], data[i]),"\n")+"\n")
         f.close()
 
-        par2.write("qvoronoi s o < "+i+" > vor"+i+"\n")
-        par2.write("qdelaunay i < "+i+" > del"+i+"\n")
+        par2.write("qvoronoi s o < "+i+" > vor"+i+" 2> /dev/null\n")
+        par2.write("qdelaunay i < "+i+" > del"+i+" 2> /dev/null\n")
 
     par2.close()
     os.system("parallel -j 0 < parallel2")
 
+    # TODO: mercator vs linear
+    # write delauney kml files
+    for i in data.keys():
+        of = open("del"+i+".kml","w")
+        poly = open("del"+i).readlines()
+        # remove first item (which is just length)
+        del poly[0]
+        for j in poly:
+            polyid+=1
+            of.write('''
+<Placemark><styleUrl>#XXXX</styleUrl>
+<description>XXXX</description>
+<Polygon><outerBoundaryIs><LinearRing><coordinates>
+''')
+            for k in j.split():
+                print "K: "+k
+                of.write(data[i][int(k)][0]+","+data[i][int(k)][1]+"\n")
+            of.write('''
+</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
+''')
+            
+#            print (pts[0])
+#            print (data[i][930])
+
     # at the moment, this is pointless
-    os.system("rsync -e 'ssh -i /usr/local/etc/id_rsa' del* vor* root@data.barrycarter.info:/tmp/")
+    print "TODO: restore rsync below"
+#    os.system("rsync -e 'ssh -i /usr/local/etc/id_rsa' del* vor* root@data.barrycarter.info:/tmp/")
 
-cloud.call(doWeatherStuff, _env = "barryenv1", _profile = True)
-
+doWeatherStuff()
+# cloud.call(doWeatherStuff, _env = "barryenv1", _profile = True)
 
