@@ -42,9 +42,7 @@ def doWeatherStuff():
     data['humidity'] = [] 
 
     for row in reader:
-        print (row)
-        print "TESTING"
-        continue
+
         # ignore empty lat/lon
         if (row['latitude'] == "" or row['longitude'] == ""): continue
 
@@ -78,25 +76,30 @@ def doWeatherStuff():
     # write delauney kml files
     for i in data.keys():
         of = open("del"+i+".kml","w")
+        of.write('''
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document>
+''')
         poly = open("del"+i).readlines()
-        # remove first item (which is just length)
+        # remove first item (length)
         del poly[0]
         for j in poly:
-            polyid+=1
+#            polyid+=1
+# <!-- <styleUrl>#XXXX</styleUrl> -->
             of.write('''
-<Placemark><styleUrl>#XXXX</styleUrl>
+<Placemark>
 <description>XXXX</description>
 <Polygon><outerBoundaryIs><LinearRing><coordinates>
 ''')
             for k in j.split():
-                print "K: "+k
-                of.write(data[i][int(k)][0]+","+data[i][int(k)][1]+"\n")
+                of.write(data[i][int(k)][1]+","+
+                         data[i][int(k)][0]+"\n")
             of.write('''
 </coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 ''')
             
-#            print (pts[0])
-#            print (data[i][930])
+        of.write("</Document></kml>")
 
     # at the moment, this is pointless
     print "TODO: restore rsync below"
