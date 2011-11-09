@@ -187,7 +187,7 @@ maxi[p_] := Maximize[premiums[p], {cons[p], cashcons[p], consitm[p]},
 
 (* TODO: below is ugly, I should be able to use opttab directly *)
 
-tab[p_] := N[{maxi[p][[1]], Sort[
+tab[p_] := N[{maxi[p][[1]], maxi[p][[1]]/(expdate-now)*86400 , Sort[
  Select[Table[{s, n[s,expdate], 
  Round[400*price[p,s,expdate]]/4,
   n[s,expdate]*(Round[400*price[p,s,expdate]]/4-5)}, 
