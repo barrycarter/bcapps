@@ -334,6 +334,20 @@ sub recent_weather_buoy {
 return @res;
 }
 
+=item wc($t, $w)
+
+Given the current temperature $t in Farenheit and the current
+windspeed $w in miles-per-hour, return the windchill temperature in
+Farenheit
+
+=cut
+
+sub wc {
+  my($t,$w)=@_;
+  if ($w<3 || $t>=50) {return($t);}
+  return(35.74+0.6215*$t-(35.75-0.4275*$t)*$w**.16);
+}
+
 # <h>return beauty;</h>
 
 true;

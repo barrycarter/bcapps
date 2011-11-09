@@ -23,10 +23,10 @@ def getHue(quant, value, alpha):
     else:
         return 0
     # convert to hue
-    (r, g, b) = colorsys.hsv_to_rgb(1-ret, 1, 1)
+    (r, g, b) = colorsys.hsv_to_rgb(ret, 1, 1)
     print "HUE/QUANT: " + str(value) + ", " + str(ret)
 #    print "RGB" + str(r) + "," + str(g) + "," + str(b) + "\n"
-    hue = "#80%02X%02X%02X" % (255.*r,255.*g,255.*b)
+    hue = "#80%02X%02X%02X" % (255.*b,255.*g,255.*r)
 #    print "THUE" + str(hue)
     return hue
 
@@ -131,6 +131,16 @@ def doWeatherStuff():
     print "TODO: restore rsync below"
 #    os.system("rsync -e 'ssh -i /usr/local/etc/id_rsa' del* vor* root@data.barrycarter.info:/tmp/")
 
+# for hue in range(0,100):
+#    print (colorsys.hsv_to_rgb(hue/100.,1,1))
+# print "TESTING"
+# exit(0)
+
 doWeatherStuff()
 # cloud.call(doWeatherStuff, _env = "barryenv1", _profile = True)
+
+# python color convention:
+# hue 0 = blue
+# 0.2 = cyan
+
 
