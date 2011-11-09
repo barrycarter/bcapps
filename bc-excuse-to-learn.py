@@ -4,7 +4,7 @@
 # maps for various atmospheric data, using "the cloud". This should be
 # more efficient than doing these maps separately
 
-import cloud, os, csv, math, string
+import cloud, os, csv, math, string, colorsys
 
 # how much water can air at 'temperature' (in Celsius) hold
 def saturationVaporPressure(temperature):
@@ -13,6 +13,22 @@ def saturationVaporPressure(temperature):
     Rv = 461
     T = float(temperature)+273.15
     return 6.11*math.exp((L/Rv)*(1/273-1/T))
+
+# get the proper hue for a given quantity/value (KML format)
+# TODO: not working (colorsys has odd concept of HSV space?)
+def getHue(quant, value, alpha):
+    if (quant == "temp_c"):
+        f = value*1.8+32
+        ret = 5/6. - 5/6.*(f/120)
+    else:
+        return 0
+    # convert to hue
+    (r, g, b) = colorsys.hsv_to_rgb(1-ret, 1, 1)
+    print "HUE/QUANT: " + str(value) + ", " + str(ret)
+#    print "RGB" + str(r) + "," + str(g) + "," + str(b) + "\n"
+    hue = "#80%02X%02X%02X" % (255.*r,255.*g,255.*b)
+#    print "THUE" + str(hue)
+    return hue
 
 def doWeatherStuff():
 
@@ -87,17 +103,27 @@ def doWeatherStuff():
         count = 0
         for j in poly:
             count+=1
+            
             of.write('''
 <Placemark>
 <styleUrl>#style{0}</styleUrl>
 <Polygon><outerBoundaryIs><LinearRing><coordinates>
 '''.format(count))
+            tot = 0
             for k in j.split():
+                tot = tot + float(data[i][int(k)][2])
                 of.write(data[i][int(k)][1]+","+
                          data[i][int(k)][0]+ " ")
+            hue = getHue(i, tot/3., 1)
+#            print "AVG:"+i+","+str(tot/3.)
+
             of.write('''
 </coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
-''')
+
+<Style id="style{0}">
+<PolyStyle><color>{1}</color>
+<fill>1</fill><outline>0</outline></PolyStyle></Style>
+'''.format(count, hue))
             
         of.write("</Document></kml>")
 
