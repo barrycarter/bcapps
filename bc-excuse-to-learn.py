@@ -84,17 +84,17 @@ def doWeatherStuff():
         poly = open("del"+i).readlines()
         # remove first item (length)
         del poly[0]
+        count = 0
         for j in poly:
-#            polyid+=1
-# <!-- <styleUrl>#XXXX</styleUrl> -->
+            count+=1
             of.write('''
 <Placemark>
-<description>XXXX</description>
+<styleUrl>#style{0}</styleUrl>
 <Polygon><outerBoundaryIs><LinearRing><coordinates>
-''')
+'''.format(count))
             for k in j.split():
                 of.write(data[i][int(k)][1]+","+
-                         data[i][int(k)][0]+"\n")
+                         data[i][int(k)][0]+ " ")
             of.write('''
 </coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
 ''')
