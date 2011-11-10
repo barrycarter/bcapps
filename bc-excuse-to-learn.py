@@ -17,11 +17,17 @@ def saturationVaporPressure(temperature):
 # get the proper hue for a given quantity/value (KML format)
 # TODO: not working (colorsys has odd concept of HSV space?)
 def getHue(quant, value, alpha):
+    print "QUANT: "+quant
     if (quant == "temp_c"):
         f = value*1.8+32
         ret = 5/6. - 5/6.*(f/120)
+    elif (quant == "sea_level_pressure_mb"):
+        print "PRESS: " + str(value*0.0295300)
+        ret = 1.-(value*0.0295300-29.)/2.
     else:
-        return 0
+        ret=0
+
+    ret = min(max(ret,0),1)
     # convert to hue
     (r, g, b) = colorsys.hsv_to_rgb(ret, 1, 1)
     print "HUE/QUANT: " + str(value) + ", " + str(ret)

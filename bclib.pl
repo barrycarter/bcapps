@@ -28,7 +28,7 @@ $EARTH_RADIUS = 6371/1.609344; # miles
 
 # HACK: not sure this is right way to do this
 our(%globopts);
-our(@tmpfiles);
+our(%is_tempfile);
 
 # largest possible path
 $ENV{PATH} = "/opt/metaf2xml/bin/:/sw/bin/:/bin/:/usr/bin/:/usr/local/bin/:/usr/X11R6/bin/:/usr/lib/nagios/plugins:/usr/lib:$ENV{HOME}/bin:$ENV{HOME}/PERL";
@@ -245,9 +245,7 @@ sub cache_command {
   write_file($res,"$file.res");
 
   # if not caching, delete these files when done
-  if ($opts{nocache}) {
-    debug("PUSHING TO tmpfiles: $file, $file.err, $file.res");
-    push(@tmpfiles,$file,"$file.err","$file.res");
+  if ($opts{nocache}) {$is_tempfile{$file}=1;}
   }
 
   if ($opts{retfile}) {return $file;}
@@ -337,7 +335,7 @@ sub my_tmpfile {
   unless ($prefix) {$prefix="file";}
   my($x)=rand();
   while (-f "/tmp/$prefix$x$$") {$x=rand();}
-  push(@tmpfiles, "/tmp/$prefix$x$$");
+  $is_tempfile{"/tmp/$prefix$x$$"} = 1;
   return("/tmp/$prefix$x$$");
 }
 
@@ -2063,7 +2061,7 @@ sub END {
   local $?;
   if ($globopts{keeptemp}) {return;}
 
-  for $i (@tmpfiles) {
+  for $i (sort keys %is_tempfile) {
     # I sometimes wrongly use tempfile.[ext], so handle that too
     for $j ("", ".res", ".out", ".err", ".kml", ".kmz") {
       debug("DELETING: $i$j");
