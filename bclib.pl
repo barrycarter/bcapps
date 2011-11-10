@@ -246,7 +246,6 @@ sub cache_command {
 
   # if not caching, delete these files when done
   if ($opts{nocache}) {$is_tempfile{$file}=1;}
-  }
 
   if ($opts{retfile}) {return $file;}
   return (read_file($file), read_file("$file.err"), $res, $file);
