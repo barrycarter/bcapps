@@ -143,7 +143,7 @@ close(A);
 system("zip file3.kmz file3.kml");
 
 # this file is generated on a different machine, so copy file over
-system("rsync /tmp/bcdtp/file3.kmz root\@data.barrycarter.info:/sites/DATA/current-delaunay.kmz");
+system("rsync /var/tmp/bcdtp/file3.kmz root\@data.barrycarter.info:/sites/DATA/current-delaunay.kmz");
 
 # sleep 2.5 minutes and call myself again
 sleep(150);

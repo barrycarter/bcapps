@@ -91,6 +91,10 @@ LAT:
 
 ($x,$y,$z) = sph2xyz($hash{longitude},$hash{latitude},1,"degrees=1");
 
+# nice latitude/longitude for location (not METAR station)
+$hash{nicelat} = nicedeg2($hash{latitude},"N");
+$hash{nicelon} = nicedeg2($hash{longitude},"E");
+
 # TODO: further limit to stations that actually have reports
 $query = "
 SELECT *
@@ -113,7 +117,7 @@ for $i (@res) {
   %report = %{$i};
 
   # canonical elevation in ft
-  $report{elev} = convert($ai{elev}, "m", "ft");
+  $report{elev} = convert($report{elevation_m}, "m", "ft");
 
   # canonical pressure in inches
   $report{pressure} = $report{altim_in_hg};
@@ -142,7 +146,7 @@ for $i (@res) {
 # @out = thing we're eventually going to print out.
 
 # location data
-push(@out,"$hash{city}, $hash{state}, $hash{country} is at $hash{nicelat}, $hash{nicelong}");
+push(@out,"$hash{city}, $hash{state}, $hash{country} is at $hash{nicelat}, $hash{nicelon}");
 
 # For this station: %ai = most recent observation; @e = all observations
 %ai = %{$res[0]};
@@ -178,8 +182,6 @@ $observations=$#e+1;
 # below makes sense because $f{gust} maybe undefined and thus essentially 0
 $maxwind=max($f{windspeed}, $f{gust});
 $oldweather=();
-
-# TODO: remove 24h+ observations from db!
 
 # go through old observations
 for $i (@e) {
