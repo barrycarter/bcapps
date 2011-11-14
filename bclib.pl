@@ -1887,6 +1887,11 @@ Stolen directly from PERL FAQ 4.28 and thus undocumented.
 sub csv {
     my($str)=@_;
     my(@res);
+
+    # has trouble with ",," so fixing
+    debug("BEFORE: $str");
+    while ($str=~s/,,/, ,/isg) {}
+    debug("AFTER: $str");
     while ($str=~m/\"([^\"\\]*(\\.[^\"\\]*)*)\"|([^,]+)/g) {
         push(@res, defined($1) ? $1:$3);
     }

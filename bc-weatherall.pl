@@ -31,6 +31,18 @@ $headers = shift(@metar);
 $headers=~s/,sky_cover,/",sky_cover" . $n++ .","/iseg;
 @headers = csv($headers);
 
+for $i (@metar) {
+  @fields = csv($i);
+  %hash = ();
+  for $j (0..$#headers) {
+    debug("$headers[$j] -> $fields[$j], $j");
+    $hash{$headers[$j]} = $fields[$j];
+  }
+  die "TESTING";
+  push(@metarhashes, {%hash});
+}
+
+debug(unfold(@metarhashes));
 
 
 
