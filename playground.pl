@@ -20,6 +20,10 @@ use XML::Simple;
 use Data::Dumper 'Dumper';
 $Data::Dumper::Indent = 0;
 
+
+
+die "TESTING";
+
 $str="KYKN 302135Z AUTO 30022G26KT 10SM CLR A2997 RMK AO1,KYKN,2011-10-30T21:35:00Z,42.92,-97.37,,,300,22,26,10.0,29.970472,,,TRUE,TRUE,,,,,,,CLR,,,,,,,,VFR,,,,,,,,,,,,METAR,398.0";
 
 $str=~s/,,/, ,/isg;

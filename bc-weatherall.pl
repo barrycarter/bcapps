@@ -23,26 +23,67 @@ curl -o buoy.txt http://www.ndbc.noaa.gov/data/latest_obs/latest_obs.txt
   system("parallel -j 0 < commands");
 }
 
-# METAR file
-@metar = split(/\n/, read_file("metar.txt"));
-$headers = shift(@metar);
+handle_metar_and_buoy("BUOY");
 
-# sky_cover and cloud_base_ft_agl appear >=2 times, but I don't need the latter
-$headers=~s/,sky_cover,/",sky_cover" . $n++ .","/iseg;
-@headers = csv($headers);
+# this subroutine is specific to this program; created since
+# METAR/BUOY files are SIMILAR, but not identical; arg is either
+# 'METAR' or 'BUOY'
 
-for $i (@metar) {
-  @fields = csv($i);
-  %hash = ();
-  for $j (0..$#headers) {
-    debug("$headers[$j] -> $fields[$j], $j");
-    $hash{$headers[$j]} = $fields[$j];
+sub handle_metar_and_buoy {
+  my($arg) = @_;
+  my(@fields, @dbf, @dbv, @hashes, %hash);
+
+  # read file
+  my(@reports) = split(/\n/, read_file(lc($arg).".txt"));
+
+  # get headers
+  my($headers) = shift(@reports);
+
+  # sky_cover and cloud_base_ft_agl appear >=2 times, but I don't need
+  # the latter (only for METAR, but doesnt hurt for BUOY)
+  $headers=~s/,sky_cover,/",sky_cover" . $n++ .","/iseg;
+  # below only for BUOY (but doesnt hurt METAR either)
+  $headers=~s/\#//isg;
+
+  # the headers
+  if ($arg eq "METAR") {
+    @headers = csv($headers);
+  } else {
+    @headers = split(/\s+/, $headers);
   }
-  die "TESTING";
-  push(@metarhashes, {%hash});
+
+  # for BUOY, 2nd line is ignorable
+  if ($arg eq "BUOY") {shift(@reports);}
+
+  # go thru the reports
+  for $i (@reports) {
+    if ($arg eq "METAR") {
+      @fields = csv($i);
+    } else {
+      @fields = split(/\s+/, $i);
+    }
+
+    # db query + fill hash
+    @dbf = ();
+    @dbv = ();
+    %hash = ();
+    for $j (0..$#headers) {
+      push(@dbf, $headers[$j]);
+      push(@dbv, qq%"$fields[$j]"%);
+      $hash{$headers[$j]} = $fields[$j];
+    }
+
+    push(@hashes, {%hash});
+
+    # db query
+    debug("DBF", @dbf);
+    debug("DBV", @dbv);
+
+
+
+  }
+
+  
+
+  debug(unfold(@hashes));
 }
-
-debug(unfold(@metarhashes));
-
-
-

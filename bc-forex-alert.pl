@@ -4,6 +4,7 @@
 # every 1m (even though it looks back 5m). Options:
 # --until=yyyymmdd.hhmmss: don't run until yyyymmdd.hhmmss (lets me
 # turn off alerts temporarily)
+# --altquote = use an alternate quoting method, in case main method fails
 
 require "/home/barrycarter/BCGIT/bclib.pl";
 $now = stardate(time());
@@ -17,7 +18,20 @@ chomp($email);
 # obtain from args (parity format: USD/CAD)
 ($parity, $low, $high) = @ARGV;
 
+# TODO: restore line below!
 @x=forex_quote($parity,time(),"list=true");
+
+# when forex_quote() not working properly, try forex_quotes()?
+if ($globopts{altquote}) {
+  %quotes = forex_quotes();
+  $myparity = $parity;
+  $myparity=~s%/%%isg;
+  %bidask = %{$quotes{$myparity}};
+  # HACK: formatting this so it can be unformatted later is ugly!
+  push(@x, "<bid>$bidask{bid}</bid>\n<offer>$bidask{ask}</offer>\n");
+  debug("PAR: $parity");
+  debug(unfold(%quotes));
+}
 
 for $i (@x) {
   %hash = ();

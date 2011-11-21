@@ -787,12 +787,16 @@ Obtain current FOREX quotes; return as hash of bid/ask values
 sub forex_quotes {
   my(%hash); # for return values
   my($out,$err,$res) =  cache_command("curl -A 'Barrys Brow<h>no</h>ser' www.forexpros.com/common/quotes_platform/quotes_platform_data.php | tidy -xml","retry=5&sleep=1&age=30");
+  debug("OUT: $out");
 
   # loop through each parity
   while ($out=~s%([A-Z]{3})/([A-Z]{3})(.*?</div>)\s*</div>\s*</div>%%s) {
     my($parity, $data) = ("$1$2", $3);
     # prices for parity
-    my(@prices) = ($data=~m%<div class="quotes_platform_16" dir="ltr">(.*?)</div>\s*<div class="quotes_platform_17">(.*?)</div>%isg);
+    my(@prices) = ($data=~m%<div class="quotes_platform_16" dir="ltr">(.*?)</div>\s*<div class="quotes_platform_17[^\"]*">(.*?)</div>%isg);
+    # HACK: I should do this in a much more general way
+    if ($parity=~/USDJPY/) {$prices[1]*=100; $prices[3]*=100;}
+
     $hash{$parity}{bid} = $prices[0] + $prices[1]/10000;
     $hash{$parity}{ask} = $prices[2] + $prices[3]/10000;
   }
@@ -1051,7 +1055,9 @@ sub forex_quote {
   my($tz) = $ENV{TZ};
   $ENV{TZ} = "EST";
   my($st) = strftime("%F\T%H:%M:%S", localtime($time-300));
-  my($en) = strftime("%F\T%H:%M:%S", localtime($time+300));
+  # trying shorter time, since +300 seems to make it unhappy now
+  # my($en) = strftime("%F\T%H:%M:%S", localtime($time+300));
+  my($en) = strftime("%F\T%H:%M:%S", localtime($time+30));
   $ENV{TZ} = $tz;
 
   my($url) = "http://api.efxnow.com/DEMOWebServices2.8/Service.asmx/GetHistoricRatesDataSet?Key=$key&Quote=$parity&StartDateTime=$st&EndDateTime=$en";
@@ -1889,9 +1895,7 @@ sub csv {
     my(@res);
 
     # has trouble with ",," so fixing
-    debug("BEFORE: $str");
     while ($str=~s/,,/, ,/isg) {}
-    debug("AFTER: $str");
     while ($str=~m/\"([^\"\\]*(\\.[^\"\\]*)*)\"|([^,]+)/g) {
         push(@res, defined($1) ? $1:$3);
     }

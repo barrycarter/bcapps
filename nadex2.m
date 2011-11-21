@@ -85,6 +85,11 @@ changing some of the parameters:
 bincallv[p0_, v_, s_, e_] =
  1-CDF[NormalDistribution[Log[p0],Sqrt[e]*v], Log[s]]
 
+(* Greeks *)
+
+bincalldelta[p0_, v_, s_, e_] = D[bincallv[p0,v,s,e],p0]
+bincalltheta[p0_, v_, s_, e_] = D[bincallv[p0,v,s,e],e]
+
 (* implied volatility, given other numbers (p1 = current price of
 option as fraction) *)
 
@@ -113,6 +118,10 @@ now := AbsoluteTime[] - AbsoluteTime[{1970}, TimeZone->0]
 Table[vol[a[[1]],a[[2]]] = 
  impvol[a[[5]], a[[1]], (a[[2]]-a[[6]])/365.2425/86400, (a[[3]]+a[[4]])/2/100],
 {a,nadex}]
+
+(* and note price if I want to use it elsewhere *)
+
+Table[midprice[a[[1]],a[[2]]] = (a[[3]]+a[[4]])/2/100., {a,nadex}]
 
 (* expected price of option when underlying is p *)
 
