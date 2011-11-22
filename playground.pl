@@ -24,6 +24,10 @@ $Data::Dumper::Indent = 0;
 
 print "new\nsize 600,600\nsetpixel 0,0,0,0,0\n";
 
+# hue of the bottom point, and the rightmostpoint
+$bottomhue = .125;
+$rightpointhue = 1;
+
 for $y (1..600) {
 
   # "upside down" triangle
@@ -31,8 +35,8 @@ for $y (1..600) {
   $xright = 600-$y/2.;
 
   # hue for left and right most pixels (assume third point is .25 hue)
-  $lefthue = .25*$y/600;
-  $righthue = 1 - .75*$y/600;
+  $lefthue = $bottomhue*$y/600;
+  $righthue = $rightpointhue - ($rightpointhue-$bottomhue)*$y/600;
   debug("$y: $lefthue .. $righthue");
 
   for $x ($xleft..$xright) {
