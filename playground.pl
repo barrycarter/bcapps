@@ -20,7 +20,18 @@ use XML::Simple;
 use Data::Dumper 'Dumper';
 $Data::Dumper::Indent = 0;
 
+# triangle shading
 
+print "new\nsize 200,200\nsetpixel 0,0,0,0,0\n";
+
+for $y (1..200) {
+  # "upside down" triangle
+  $xleft = $y;
+  $xright = 200-$y;
+  for $x ($xleft..$xright) {
+    print "setpixel $x,$y,255,255,255\n";
+  }
+}
 
 die "TESTING";
 
