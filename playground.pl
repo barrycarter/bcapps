@@ -22,14 +22,28 @@ $Data::Dumper::Indent = 0;
 
 # triangle shading
 
-print "new\nsize 200,200\nsetpixel 0,0,0,0,0\n";
+print "new\nsize 600,600\nsetpixel 0,0,0,0,0\n";
 
-for $y (1..200) {
+for $y (1..600) {
+
   # "upside down" triangle
-  $xleft = $y;
-  $xright = 200-$y;
+  $xleft = $y/2.;
+  $xright = 600-$y/2.;
+
+  # hue for left and right most pixels (assume third point is .25 hue)
+  $lefthue = .25*$y/600;
+  $righthue = 1 - .75*$y/600;
+  debug("$y: $lefthue .. $righthue");
+
   for $x ($xleft..$xright) {
-    print "setpixel $x,$y,255,255,255\n";
+
+    # hue to be based on xy values later
+    $hue = $lefthue + ($righthue-$lefthue)*($x-$xleft)/($xright-$xleft);
+    # 255 color limit!
+    $hue = int($hue*255)/255;
+
+    $color = hsv2rgb($hue,1,1,"format=decimal");
+    print "setpixel $x,$y,$color\n";
   }
 }
 
