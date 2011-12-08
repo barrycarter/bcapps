@@ -18,7 +18,7 @@ require "bc-kml-lib.pl";
 require "/home/barrycarter/bc-private.pl";
 use XML::Simple;
 use Data::Dumper 'Dumper';
-use Astro::Time;
+use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 
 open(A,"bzcat /home/barrycarter/BCGIT/db/KABQ-hourly.txt.bz2|");
@@ -31,17 +31,48 @@ while (<A>) {
   # ignore null readings
   if ($tempc eq "null") {next;}
 
-  # convert to day
-  $day = cal2dayno($da, $mo, $yr);
-  debug("DAY: $day <- $da, $mo, $yr");
+  # convert to days since 1 Jan 1901
+  $day = julian_day($yr, $mo, $da)-julian_day(1901,1,1)+1;
+  # add hr/mi/se
+  $day += $hr/24 + $mi/1440 + $se/86400;
 
-  # compute "Unix-like" time
+  # convert to 10ths for better accuracy (nah)
+  # $day/=10;
 
-  
+  # data required for linear regress
+  $sum_x2 += $day*$day;
+  $sum_y2 += $tempc*$tempc;
+  $sum_x += $day;
+  $sum_y += $tempc;
+  $sum_xy += $day*$tempc;
+  $points++;
+
+  # slope so far
+  # THIS IS ABSOLUTELY AND COMPLETELY WRONG!
+  $den = ($points*$sum_x2) - $sum_x**2;
+  if ($den == 0) {next;}
+  $num = ($sum_y*$sum_x2) - ($sum_x*$sum_xy);
+  $a = $num/$den;
+
+$vals = << "MARK";
+
+X2: $sum_x2
+Y2: $sum_y2
+X: $sum_x
+Y: $sum_y
+XY: $sum_xy
+POINTS: $points
+
+MARK
+;
+
+  debug("VALS: $vals");
+  debug("SLOPE ($points): $a, NUM:$num, DEN: $den","");
 
 
 }
 
+debug("X: $x");
 
 die "TESTING";
 
