@@ -18,7 +18,32 @@ require "bc-kml-lib.pl";
 require "/home/barrycarter/bc-private.pl";
 use XML::Simple;
 use Data::Dumper 'Dumper';
+use Astro::Time;
 $Data::Dumper::Indent = 0;
+
+open(A,"bzcat /home/barrycarter/BCGIT/db/KABQ-hourly.txt.bz2|");
+
+while (<A>) {
+  # get data
+  /^(\d{4})\-(\d{2})\-(\d{2})\s+(\d{2}):(\d{2}):(\d{2}).*?\s+(.*?)$/;
+  ($yr, $mo, $da, $hr, $mi, $se, $tempc) = ($1, $2, $3, $4, $5, $6, $7);
+
+  # ignore null readings
+  if ($tempc eq "null") {next;}
+
+  # convert to day
+  $day = cal2dayno($da, $mo, $yr);
+  debug("DAY: $day <- $da, $mo, $yr");
+
+  # compute "Unix-like" time
+
+  
+
+
+}
+
+
+die "TESTING";
 
 # triangle shading, approach 2
 
@@ -27,6 +52,8 @@ $Data::Dumper::Indent = 0;
 
 for $i (0..600) {
   for $j (0..600) {
+  }
+}
 
 
 
