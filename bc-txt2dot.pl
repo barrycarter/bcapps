@@ -6,7 +6,7 @@ require "bclib.pl";
 
 # $txt = read_file("EL/tg-magic.txt");
 # $txt = read_file("EL/mapgraph.txt");
-$txt = read_file("EL/pv-magic.txt");
+$txt = read_file("chickenproblem.txt");
 
 for $i (split(/\n/,$txt)) {
   # ignore comments
@@ -51,4 +51,4 @@ close(A);
 
 # just for testing
 # system("dot -Nshape=record -Tpng EL/tg-magic.dot | display -");
-system("dot -Nshape=record -Gnslimit=9999 -Gmclimit=9999 -Nfontsize=8 -Nheight=0.12 -Nwidth=0.65 -Tpng EL/tg-magic.dot | display -");
+system("dot -Nshape=record -Gnslimit=9999 -Gmclimit=9999 -Nfontsize=8 -Nheight=0.12 -Nwidth=0.65 -Tpng EL/pv-magic.dot | display -");

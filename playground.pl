@@ -20,13 +20,25 @@ use XML::Simple;
 use Data::Dumper 'Dumper';
 $Data::Dumper::Indent = 0;
 
+# triangle shading, approach 2
+
+@points = ([0,0], [600,0], [300,600]);
+@hues = (0, .825, .5);
+
+for $i (0..600) {
+  for $j (0..600) {
+
+
+
+die "TESTING";
+
 # triangle shading
 
 print "new\nsize 600,600\nsetpixel 0,0,0,0,0\n";
 
 # hue of the bottom point, and the rightmostpoint
-$bottomhue = .125;
-$rightpointhue = 1;
+$bottomhue = .875;
+$rightpointhue = 0.125;
 
 for $y (1..600) {
 

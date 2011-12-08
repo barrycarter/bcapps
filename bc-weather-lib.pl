@@ -69,7 +69,7 @@ sub recent_weather {
   my($res) = cache_command("curl http://weather.aero/dataserver_current/cache/metars.cache.csv.gz | gunzip | tail -n +6", "age=150");
 
   # HACK: csv() does not handle ",," well
-  $res=~s/,,/, ,/isg;
+  while ($res=~s/,,/, ,/isg) {}
 
   # this file is important enough to keep around
   write_file($res, "/var/tmp/weather.aero.metars.txt");
