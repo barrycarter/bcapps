@@ -18,8 +18,13 @@ p0 = planet199;
 p1 = p0[[1;;Length[p0];;10]];
 Clear[p0];
 Clear[planet199];
-px = Table[{x[[2]],x[[3]]},{x,p1}];
+px = Table[{x[[2]]-2455562.500000000,x[[3]]},{x,p1}];
 f = Interpolation[px]
+
+Plot[f'[x]/f'''[x],{x,0,2922}]
+Plot[f'[x]/f'''[x],{x,0,2922},PlotRange->All]
+
+Integrate[f'[x]/f'''[x],{x,0,2922}]/2922
 
 
 (* metaf2xml's first formula for humidity, reversing to get dewpoint *)
