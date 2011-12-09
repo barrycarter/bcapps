@@ -3,6 +3,25 @@
 showit := Module[{}, 
 Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
+(* unusual property of Sin[] that may be an alternative to Fourier *)
+
+f[x_] = a+b*Sin[c*x+d]
+
+(* result below is -c^-2 *)
+f'[x]/f'''[x]
+
+(* with x data of jupiter *)
+
+<<"!bzcat /home/barrycarter/20110916/final-pos-500-0-199.txt.bz2"; 
+
+p0 = planet199;
+p1 = p0[[1;;Length[p0];;10]];
+Clear[p0];
+Clear[planet199];
+px = Table[{x[[2]],x[[3]]},{x,p1}];
+f = Interpolation[px]
+
+
 (* metaf2xml's first formula for humidity, reversing to get dewpoint *)
 
 humid[t_, d_] = 10^(7.5 * (d / (d + 237.7) - t / (t + 237.7)))
