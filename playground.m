@@ -7,8 +7,23 @@ Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
 f[x_] = a+b*Sin[c*x+d]
 
-(* result below is -c^-2 *)
-f'[x]/f'''[x]
+(* result below is -c^2 *)
+f'''[x]/f'[x]
+
+(* how about this... *)
+
+Log[f'[x]]
+D[Log[f'[x]],x]
+Log[D[Log[f'[x]],x]]
+D[Log[D[Log[f'[x]],x]],x]
+Log[D[Log[D[Log[f'[x]],x]],x]]
+D[Log[D[Log[D[Log[f'[x]],x]],x]],x]
+
+(* above is fun, but useless *)
+
+(* slightly more complex *)
+
+f[x_] = a1 +b1*Sin[c1*x+d1] +b2*Sin[c2*x+d2]
 
 (* with x data of jupiter *)
 
@@ -19,12 +34,22 @@ p1 = p0[[1;;Length[p0];;10]];
 Clear[p0];
 Clear[planet199];
 px = Table[{x[[2]]-2455562.500000000,x[[3]]},{x,p1}];
-f = Interpolation[px]
+g = Interpolation[px, InterpolationOrder->3]
+Plot[g'''[x]/g'[x],{x,0,2922}]
+Integrate[g'''[x]/g'[x],{x,0,2922}]/2922.
 
-Plot[f'[x]/f'''[x],{x,0,2922}]
-Plot[f'[x]/f'''[x],{x,0,2922},PlotRange->All]
+(* anti-Fourier values? *)
 
-Integrate[f'[x]/f'''[x],{x,0,2922}]/2922
+(* known perpindicular *)
+Integrate[Sin[2*x]*Sin[3*x],{x,0,2*Pi}]
+
+Integrate[Sin[58/10*x]*Sin[7*x],{x,0,2*Pi}]
+
+h[n_] = Integrate[Sin[58/10*x]*Sin[n*x],{x,0,2*Pi}]
+
+Solve[%==0, n]
+
+Plot[h[n],{n,3,8}]
 
 
 (* metaf2xml's first formula for humidity, reversing to get dewpoint *)
@@ -1179,15 +1204,4 @@ a2 == 12 b1 - 11 b2 + 9 b3 + 12 (f[i-1] - f[i]),
 a3 == -8 b1 + 8 b2 - 7 b3 - 8 (f[i-1] - f[i])
 
 }, {a1,a2,a3,b1,b2,b3,c1,c2,c3}]
-
-
-
-
-
-
-
-
-
-
-
 
