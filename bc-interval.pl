@@ -7,6 +7,9 @@
 
 require "bclib.pl";
 
+# assume UTC throughout
+$ENV{TZ} = "UTC";
+
 # get data and loop through lines
 my($data) = read_file("sample-data/intervals.txt");
 
@@ -48,13 +51,17 @@ while (@intervals) {
     }
   }
 
+  # and push to final list
+  push(@intsfinal, [@int1]);
+  # reset for next run
   reset(@intervals);
+
 }
 
-reset(@intervals);
-
-for $i (@intervals) {
-  debug("INT: @{$i}[0] - @{$i}[1]");
+for $i (@intsfinal) {
+  $sd1 = stardate(@{$i}[0]);
+  $sd2 = stardate(@{$i}[1]);
+  debug("INT: $sd1 - $sd2");
 }
 
 
