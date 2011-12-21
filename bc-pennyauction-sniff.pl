@@ -9,7 +9,9 @@ require "bclib.pl";
 # TODO: get these numbers directly, don't hardcode
 # Ugly possibility: include ALL numbers 1-999 below (penny handles
 # this, but yuck)
-$ids = "313";
+
+# NOTE: use "product_id" below
+$ids = "286";
 
 # TODO: fix cache_command so I don't have to do this
 $globopts{nocache} = 1;
@@ -40,16 +42,20 @@ for (;;) {
   for $i (sort keys %lastbid) {
     @bidders = ();
     # would sorting by time of last bid be better here?
-    for $j (sort keys %{$lastbid{$i}}) {
+    for $j (sort {$lastbid{$i}{$b} <=> $lastbid{$i}{$a}} keys %{$lastbid{$i}}) {
 
       # age of bid
       $age = $cur - $lastbid{$i}{$j};
 
-      # kill bids over 2m
-      if ($age > 120) {
+      # kill bids over 5m
+      if ($age > 300) {
 	delete $lastbid{$i}{$j};
 	next;
       }
+
+      # $age is compared to auction expire time; this converts to "s ago"
+      # TODO: genercize this for auctions where extra time is NOT 20s
+      $age+=20;
 
       push(@bidders,"$j\@$age");
     }
@@ -58,8 +64,8 @@ for (;;) {
 
     # alert me when down to 3 bidders
     if ($#bidders <= 2) {
-      system("pkill -f 'PENNY: $i'");
-      system("xmessage 'PENNY: $i has 3 bidders' &");
+#      system("pkill -f 'PENNY: $i'");
+#      system("xmessage 'PENNY: $i has 3 bidders' &");
     }
   }
 

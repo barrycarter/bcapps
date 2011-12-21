@@ -45,6 +45,8 @@ debug(@sums);
 # given a string, compute its value using the 'temp' hash
 # TODO: no need to hardcode hash
 
+# TODO: couldve just changed letters to digits and returned, hmmm
+
 sub compute {
   my($str) = @_;
   my($sum);
