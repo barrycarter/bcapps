@@ -21,6 +21,23 @@ use Data::Dumper 'Dumper';
 use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 
+# Monte Carlo testing for "dice problem"
+
+# roll 6-sided die 100 times and look at distribution of max frequency
+
+for(1..999999) {
+  %count = ();
+  for $i (1..100) {
+    $count{int(rand(6)+1)}++;
+  }
+  @counts = sort {$b <=> $a} values %count;
+  print "$counts[0]\n";
+}
+
+# debug(sort {$count{$a} <=> $count{$b}} (keys %count));
+
+die "TESTING";
+
 open(A,"bzcat /home/barrycarter/BCGIT/db/KABQ-hourly.txt.bz2|");
 
 while (<A>) {

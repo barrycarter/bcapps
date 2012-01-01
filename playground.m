@@ -3,6 +3,31 @@
 showit := Module[{}, 
 Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
+(* normal approximation to binomial distribution *)
+
+(* roll 100d6 and look at frequency of individual numbers *)
+
+Plot[PDF[NormalDistribution[100/6, Sqrt[100/6*5/6]], x],{x,0,100}, 
+ PlotRange->All]
+
+Solve[CDF[NormalDistribution[100/6, Sqrt[100/6*5/6]], x] == 5/6, x]
+
+(* Out[23]= {{x -> 20.272}} *)
+
+(* prob that at least one will exceed 20 is about 70% *)
+
+1-CDF[NormalDistribution[100/6, Sqrt[100/6*5/6]], 20]^6
+
+(* whats the CDF? of that *)
+
+atleastone[x_] = 1-CDF[NormalDistribution[100/6, Sqrt[100/6*5/6]], x]^6
+
+Plot[1-atleastone[x],{x,0,100}]
+
+
+
+
+
 (* unusual property of Sin[] that may be an alternative to Fourier *)
 
 f[x_] = a+b*Sin[c*x+d]
