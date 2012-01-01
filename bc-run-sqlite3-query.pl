@@ -2,7 +2,12 @@
 
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
-$sitename = "94y.info";
+
+# temp change due to DNS issues
+# $sitename = "94y.info";
+$sitename = "barrycarter.info";
+
+
 chdir("/sites/DB/"); # where all the dbs are
 
 # TODO: allow for just db.domain.com and list available dbs (if appropriate)
@@ -64,7 +69,7 @@ Although the database $db exists, I don't have a query that
 corresponds to the URL you typed. Please go to the URL below and try a
 new query.<p>
 
-<a href="http://$db.db.94y.info/">http://$db.db.94y.info/</a>
+<a href="http://$db.db.$sitename/">http://$db.db.$sitename/</a>
 
 MARK
 ;

@@ -11,7 +11,7 @@ require "bclib.pl";
 # this, but yuck)
 
 # NOTE: use "product_id" below
-$ids = "286";
+$ids = "269";
 
 # TODO: fix cache_command so I don't have to do this
 $globopts{nocache} = 1;

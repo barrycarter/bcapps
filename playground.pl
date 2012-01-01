@@ -51,8 +51,10 @@ while (<A>) {
   # THIS IS ABSOLUTELY AND COMPLETELY WRONG!
   $den = ($points*$sum_x2) - $sum_x**2;
   if ($den == 0) {next;}
-  $num = ($sum_y*$sum_x2) - ($sum_x*$sum_xy);
+  $num = $points*$sum_xy - $sum_x*$sum_y;
   $a = $num/$den;
+
+print "$a\n";
 
 $vals = << "MARK";
 
