@@ -22,11 +22,30 @@ Solve[CDF[NormalDistribution[100/6, Sqrt[100/6*5/6]], x] == 5/6, x]
 
 atleastone[x_] = 1-CDF[NormalDistribution[100/6, Sqrt[100/6*5/6]], x]^6
 
+(* CDF for highest freq? *)
+
 Plot[1-atleastone[x],{x,0,100}]
 
+pdfatleastone[x_] = D[CDF[NormalDistribution[100/6, Sqrt[100/6*5/6]], x]^6,x]
 
+Plot[pdfatleastone[x],{x,0,100},PlotRange->All]
 
+(* for
+http://www.quora.com/If-I-repeatedly-roll-a-fair-k-sided-die-how-many-rolls-on-average-will-it-take-before-Ive-rolled-any-number-n-times
+between 10-55 *)
 
+quorarolls[n_] = 1-CDF[NormalDistribution[n/6, Sqrt[n/6*5/6]], 10]^6
+dquorarolls[n_] = D[1-CDF[NormalDistribution[n/6, Sqrt[n/6*5/6]], 10]^6,n]
+
+Plot[quorarolls[n],{n,10,54}]
+Plot[dquorarolls[n],{n,10,54}]
+
+Integrate[quorarolls[n],{n,10,54}]
+Integrate[dquorarolls[n],{n,10,54}]
+
+t1 = N[Table[quorarolls[n],{n,10,54}]]
+
+Plot[PDF[BionomialDistribution[96,1/6],x],{x,0,96}]
 
 (* unusual property of Sin[] that may be an alternative to Fourier *)
 
