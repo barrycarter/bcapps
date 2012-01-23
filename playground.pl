@@ -27,11 +27,16 @@ $Data::Dumper::Indent = 0;
 
 for(1..999999) {
   %count = ();
-  for $i (1..100) {
-    $count{int(rand(6)+1)}++;
+  $n=0;
+
+  # loop until jump out
+  for (;;) {
+    $n++;
+    if (++$count{int(rand(6)+1)}==10) {last;}
   }
-  @counts = sort {$b <=> $a} values %count;
-  print "$counts[0]\n";
+
+  print "$n\n";
+
 }
 
 # debug(sort {$count{$a} <=> $count{$b}} (keys %count));

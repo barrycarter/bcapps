@@ -1044,6 +1044,12 @@ sub forex_quote {
   $key=~s/<.*?>//isg;
   $key=~s/\s//isg;
 
+  # bad key
+  if ($key=~/authenticationproblem/i) {
+    warnlocal("BAD KEY: $key");
+    return;
+  }
+
   # Convert Unix time to
   # http://api.efxnow.com/DEMOWebServices2.8/Service.asmx?op=GetHistoricRatesDataSet
   # use a 5 minute boundary on each side (TODO: too much? too little?)
