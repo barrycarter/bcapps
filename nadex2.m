@@ -34,6 +34,15 @@ myoptpos = {{2, .9925, 18}, {8, .9975, 9.5}}
 (* this file now contains all info *)
 << /home/barrycarter/forexall.txt
 
+(* find last prices for parities, and build table of values when requested *)
+
+usdcad := Mean[Take[Flatten[ReadList["!tail -1 /home/barrycarter/USDCAD.log", {Number,Number,Number}]], {2,3}]]
+
+usdjpy := Mean[Take[Flatten[ReadList["!tail -1 /home/barrycarter/USDJPY.log", {Number,Number,Number}]], {2,3}]]/100
+
+t1cad := t1cad = Table[{p,tab[p][[1]]}, {p, usdcad, usdcad+.01, .0001}]
+t1jpy := t1jpy = Table[{p,tab[p][[1]]}, {p, usdjpy, usdjpy+.01, .0001}]
+
 mypos = If[$CommandLine[[4]] == "cad", myposcad, myposjpy]
 myoptpos = If[$CommandLine[[4]] == "cad", myoptposcad, myoptposjpy]
 

@@ -9,6 +9,7 @@
 require "/home/barrycarter/BCGIT/bclib.pl";
 $now = stardate(time());
 
+# TODO: fix this to still log stuff even if --until=
 if ($globopts{until} && $now < $globopts{until}) {exit(0);}
 
 # my private email address (public one: barry at barrycarter dot info)
@@ -19,7 +20,7 @@ chomp($email);
 ($parity, $low, $high) = @ARGV;
 
 # TODO: restore line below!
-@x=forex_quote($parity,time(),"list=true");
+unless ($globopts{altquote}) {@x=forex_quote($parity,time(),"list=true");}
 
 # when forex_quote() not working properly, try forex_quotes()?
 if ($globopts{altquote}) {
@@ -62,9 +63,18 @@ for $i (@x) {
     system("pkill -f 'BC FOREX ALERT: $parity'");
     system("xmessage -geometry 1024 -nearmouse '$msg' &");
     sendmail("alert\@barrycarter.info", $email, "", $msg);
-    # no need to check rest
-    exit();
   }
+
+  $midpt = 1.*($hash{bid}+$hash{offer})/2.;
+
+  # this prints it to my bg image
+  $parity=~s%/%%isg;
+  write_file("$midpt ($parity)", "/tmp/quote-$parity");
+
+  # and log
+  $nowu = time();
+  append_file("$nowu $hash{bid} $hash{offer}\n", "/home/barrycarter/$parity.log");
+
 }
 
 

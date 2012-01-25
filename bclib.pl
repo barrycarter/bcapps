@@ -264,6 +264,19 @@ sub write_file {
   close(A);
 }
 
+=item append_file($string, $file)
+
+Append $string to $file
+
+=cut
+
+sub append_file {
+  local(*A);
+  open(A,">>$_[1]")||warnlocal("Can't open $_[1], $!");
+  print A $_[0];
+  close(A);
+}
+
 =item read_file($filename)
 
 Return the entire contents of $filename as a string
@@ -786,7 +799,8 @@ Obtain current FOREX quotes; return as hash of bid/ask values
 
 sub forex_quotes {
   my(%hash); # for return values
-  my($out,$err,$res) =  cache_command("curl -A 'Barrys Brow<h>no</h>ser' www.forexpros.com/common/quotes_platform/quotes_platform_data.php | tidy -xml","retry=5&sleep=1&age=30");
+  my($browser) = "nozilla";
+  my($out,$err,$res) =  cache_command("curl -A '$browser' www.forexpros.com/common/quotes_platform/quotes_platform_data.php | tidy -xml","retry=5&sleep=1&age=30");
   debug("OUT: $out");
 
   # loop through each parity
@@ -2069,6 +2083,7 @@ sub dump_var {
       }
     return @rv;
   }
+
 
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
