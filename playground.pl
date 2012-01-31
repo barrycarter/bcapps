@@ -21,12 +21,31 @@ use Data::Dumper 'Dumper';
 use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 
+
+# sub END{1};sub END{2};sub END{3};sub END{4}
+
+# use B;
+# debug(B::end_av->ARRAY);
+
+in_you_endo();
+
+
+
+# end game (http://stackoverflow.com/questions/9083485/force-perl-to-call-end-subroutines-when-ending-with-exec/9085151#comment11408126_9085151)
+
+sub in_you_endo {
+  use B;
+  my @ENDS = B::end_av->ARRAY;
+#  debug(unfold(@ENDS));
+  foreach $i (*(B::end_av->ARRAY)) {
+    debug("END: $END");
+    $END->object_2svref->();
+  }
+}
+
+die "TESTING";
+
 # oanda screen cap parsing (screencaps currently NA on github, sorry)
-
-
-
-
-
 
 die "TESTING";
 

@@ -14,6 +14,7 @@ use utf8;
 use Statistics::Distributions qw(uprob udistr);
 use Math::Round;
 use Data::Dumper 'Dumper';
+use B;
 require JSON;
 
 # include sublibs
@@ -2087,9 +2088,23 @@ sub dump_var {
     return @rv;
   }
 
+=item in_you_endo()
+
+Run all END subroutines, even if they wouldn't be run otherwise (eg,
+due to exec).
+
+=cut
+
+sub in_you_endo() {
+  my(@ENDS) = B::end_av->ARRAY;
+  foreach $i (@ENDS) {
+    $i->object_2svref->();
+  }
+}
 
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
+  debug("END: CLEANING UP TMP FILES");
   local $?;
   if ($globopts{keeptemp}) {return;}
 
