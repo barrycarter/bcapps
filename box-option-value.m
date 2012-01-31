@@ -9,6 +9,9 @@
  Output: probability of hitting the box
  *)
 
+showit := Module[{}, 
+Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
+
 (* Source: http://math.stackexchange.com/questions/9608/determining-distribution-of-maximum-of-dependent-normal-variables/9740 *)
 
 boxvalue[p0_, v_, p1_, p2_, t1_, t2_] := 

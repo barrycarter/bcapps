@@ -5,6 +5,12 @@
 require "/usr/local/lib/bclib.pl";
 require "/usr/local/lib/bc-weather-lib.pl";
 
+# in correct dir
+dodie('chdir("/var/tmp")');
+
+# renice self
+system("/usr/bin/renice 19 -p $$");
+
 @reports = recent_weather();
 @breports = recent_weather_buoy();
 @querys = (hashlist2sqlite(\@reports, "metar"),
@@ -17,8 +23,6 @@ open(A,">/var/tmp/metar-db-queries.txt")||warn("Can't open file, $!");
 
 # prevent stale stations from having current cached data + start
 # transaction + delete old data from main dbs
-
-# TODO: add DELETE FROM buoy WHERE strftime('%s', 'now') - strftime('%s', observation_time) > 86400; [but correctly]
 
 print A << "MARK";
 BEGIN;
@@ -40,8 +44,9 @@ close(A);
 #<h>TODO: work in a buoy-yah pun somehow</h>
 
 # run command + rsync
+# 30 Jan 2012: changed back to running on local machine, so copy/change/move
 
-system("sqlite3 /usr/local/etc/WEATHER/metarnew.db < /var/tmp/metar-db-queries.txt; rsync /usr/local/etc/WEATHER/metarnew.db root\@data.barrycarter.info:/sites/DB/metarnew.db");
+system("cp /usr/local/etc/WEATHER/metarnew.db /tmp; sqlite3 /tmp/metarnew.db < /var/tmp/metar-db-queries.txt; mv /usr/local/etc/WEATHER/metarnew.db /usr/local/etc/WEATHER/metarnew.db.old; mv /tmp/metarnew.db /usr/local/etc/WEATHER/metarnew.db");
 
 # NOTE: could also run this as cron job (and maybe should?)
 sleep(60);

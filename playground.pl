@@ -21,6 +21,15 @@ use Data::Dumper 'Dumper';
 use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 
+# oanda screen cap parsing (screencaps currently NA on github, sorry)
+
+
+
+
+
+
+die "TESTING";
+
 # Monte Carlo testing for "dice problem"
 
 # roll 6-sided die 100 times and look at distribution of max frequency
