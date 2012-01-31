@@ -8,7 +8,10 @@ require "bclib.pl";
 require "bc-weather-lib.pl";
 
 # all work in temporary-but-permanent directory
-chdir("/var/tmp/bcdtp");
+dodie('chdir("/var/tmp/bcdtp")');
+
+# renice self
+system("/usr/bin/renice 19 -p $$");
 
 # obtain current weather
 @w = recent_weather();
@@ -16,11 +19,8 @@ chdir("/var/tmp/bcdtp");
 for $i (@w) {
   %hash = %{$i};
 
-#  if (++$count>9000) {warn "TESTING"; last;}
-
   # confirm numeric
   unless ($hash{latitude}=~/^[0-9\-\.]+$/ && $hash{longitude}=~/^[0-9\-\.]+$/) {
-#    warn("BAD DATA: %hash");
     next;
   }
 
@@ -142,8 +142,7 @@ close(A);
 
 system("zip file3.kmz file3.kml");
 
-# this file is generated on a different machine, so copy file over
-system("rsync /var/tmp/bcdtp/file3.kmz root\@data.barrycarter.info:/sites/DATA/current-delaunay.kmz");
+system("mv /sites/DATA/current-delaunay.kmz /sites/DATA/current-delaunay.kmz.old; mv file3.kmz /sites/DATA/current-delaunay.kmz");
 
 # sleep 2.5 minutes and call myself again
 sleep(150);

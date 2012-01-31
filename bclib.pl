@@ -2094,7 +2094,7 @@ sub END {
     # I sometimes wrongly use tempfile.[ext], so handle that too
     for $j ("", ".res", ".out", ".err", ".kml", ".kmz") {
       debug("DELETING: $i$j");
-    unlink("$i$j");
+      system("rm $i$j");
     }
   }
 

@@ -46,7 +46,7 @@ close(A);
 # run command + rsync
 # 30 Jan 2012: changed back to running on local machine, so copy/change/move
 
-system("cp /usr/local/etc/WEATHER/metarnew.db /tmp; sqlite3 /tmp/metarnew.db < /var/tmp/metar-db-queries.txt; mv /usr/local/etc/WEATHER/metarnew.db /usr/local/etc/WEATHER/metarnew.db.old; mv /tmp/metarnew.db /usr/local/etc/WEATHER/metarnew.db");
+system("cp /sites/DB/metarnew.db .; sqlite3 metarnew.db < /var/tmp/metar-db-queries.txt; mv /sites/DB/metarnew.db /sites/DB//metarnew.db.old; mv metarnew.db /sites/DB");
 
 # NOTE: could also run this as cron job (and maybe should?)
 sleep(60);

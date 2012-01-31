@@ -17,7 +17,10 @@ require "bc-weather-lib.pl";
 require "bc-kml-lib.pl";
 
 # all work in temporary-but-permanent directory
-chdir("/var/tmp/bcvtp");
+dodie('chdir("/var/tmp/bcvtp")');
+
+# renice self
+system("/usr/bin/renice 19 -p $$");
 
 # obtain current weather including buoys
 @w = recent_weather();
@@ -91,8 +94,7 @@ for $i (@w) {
 $res = voronoi_map(\@wok);
 debug("RES: $res");
 
-# this file is generated on a different machine, so copy file over
-system("rsync -e 'ssh -i /usr/local/etc/id_rsa' $res root\@data.barrycarter.info:/sites/DATA/current-voronoi.kmz");
+system("mv /sites/DATA/current-voronoi.kmz /sites/DATA/current-voronoi.kmz.old; mv $res /sites/DATA/current-voronoi.kmz");
 
 # sleep 2.5 minutes and call myself again
 unless ($globopts{nodaemon}) {
