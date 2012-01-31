@@ -50,4 +50,5 @@ system("cp /sites/DB/metarnew.db .; sqlite3 metarnew.db < /var/tmp/metar-db-quer
 
 # NOTE: could also run this as cron job (and maybe should?)
 sleep(60);
+in_you_endo();
 exec($0);

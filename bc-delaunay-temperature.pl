@@ -146,5 +146,6 @@ system("mv /sites/DATA/current-delaunay.kmz /sites/DATA/current-delaunay.kmz.old
 
 # sleep 2.5 minutes and call myself again
 sleep(150);
+in_you_endo();
 exec($0);
 

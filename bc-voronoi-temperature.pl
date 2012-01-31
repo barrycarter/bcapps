@@ -99,6 +99,7 @@ system("mv /sites/DATA/current-voronoi.kmz /sites/DATA/current-voronoi.kmz.old; 
 # sleep 2.5 minutes and call myself again
 unless ($globopts{nodaemon}) {
   sleep(150);
+  in_you_endo();
   exec($0);
 }
 
