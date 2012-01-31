@@ -846,6 +846,9 @@ TODO: automate cookie obtaining procedure
 
 TODO: try to identify bad cookie earlier w/o multiple web accesses first
 
+TODO: query intraday options intelligently based on current time; no
+need to query them all all the time
+
 =cut
 
 sub nadex_quotes {
