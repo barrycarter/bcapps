@@ -19,10 +19,7 @@ chomp($email);
 # obtain from args (parity format: USD/CAD)
 ($parity, $low, $high) = @ARGV;
 
-# TODO: restore line below!
-unless ($globopts{altquote}) {@x=forex_quote($parity,time(),"list=true");}
-
-# when forex_quote() not working properly, try forex_quotes()?
+# when forex_quote() not working properly, try forex_quotes()
 if ($globopts{altquote}) {
   %quotes = forex_quotes();
   $myparity = $parity;
@@ -32,6 +29,8 @@ if ($globopts{altquote}) {
   push(@x, "<bid>$bidask{bid}</bid>\n<offer>$bidask{ask}</offer>\n");
   debug("PAR: $parity");
   debug(unfold(%quotes));
+} else {
+  @x=forex_quote($parity,time(),"list=true");
 }
 
 for $i (@x) {
