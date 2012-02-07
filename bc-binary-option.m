@@ -47,8 +47,9 @@ bsbinhedge[p_, n_, p0_, v_, e_] = Maximize[binhedge[p,n,p0,v,s,e],s]
 And if I'm not picky about expiration, I can maximize profit/time (bt
 = best time)
 
-[not working; mathematica handles nested maximize poorly]
+Mathematica handles nested maximize poorly, so using 2-variable maximize
 
 *)
 
-bsbtbinhedge[p_, n_, p0_, v_] = Maximize[bsbinhedge[p, n, p0, v, e]/e, e]
+bsbtbinhedge[p_, n_, p0_, v_] = Maximize[binhedge[p, n, p0, v, s, e]/e, {s,e}]
+
