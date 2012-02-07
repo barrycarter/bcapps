@@ -88,5 +88,6 @@ bincallvalue2[p0_, v_, s_, e_] =
  NOT YET WORKING!
 *)
 
-barriervalue[p0_, v_, s_, e_] =  1-Erf[Log[s/p0], v*Sqrt[e]/Sqrt[2]]
- 
+barriervalue[p0_, v_, s_, e_] = 
+ (1 - Erf[(-Log[p0] + Log[s])/(2*Sqrt[e]*v)])/2
+
