@@ -16,7 +16,7 @@ unless ($globopts{nocurl}) {system("rm commands.txt results.txt err.txt");}
 for $i (split(/\n/,read_file("$ENV{HOME}/montastic.txt"))) {
   if ($i=~/^\#/ || $i=~/^\s*$/) {next;}
   ($user,$pass) = split(":",$i);
-  append_file("curl -H 'Accept: application/xml' -u $user:$pass https://www.montastic.com/checkpoints/index\n", "commands.txt");
+  append_file("curl -s -H 'Accept: application/xml' -u $user:$pass https://www.montastic.com/checkpoints/index\n", "commands.txt");
   push(@users, $user);
 }
 

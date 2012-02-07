@@ -78,4 +78,15 @@ quants[p0_, v_, p1_, p2_, t1_, t2_] :=
 *)
 
 bincallvalue[p0_, v_, s_, e_] =
- 1-CDF[NormalDistribution[Log[p0],Sqrt[e/365.2425/24]*v], Log[s]]
+ 1-CDF[NormalDistribution[Log[p0],Sqrt[e/(365+2425/10000)/24]*v], Log[s]]
+
+bincallvalue2[p0_, v_, s_, e_] =
+ 1-CDF[NormalDistribution[Log[p0],v*Sqrt[e]], Log[s]]
+
+(* Barrier options:
+ Another limiting case of box options; oanda.com doesn't offer these, but close
+ NOT YET WORKING!
+*)
+
+barriervalue[p0_, v_, s_, e_] =  1-Erf[Log[s/p0], v*Sqrt[e]/Sqrt[2]]
+ 
