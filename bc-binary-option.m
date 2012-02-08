@@ -10,6 +10,9 @@ For this file, times are in years to correspond to volatility
 bincallvalue[p0_, v_, s_, e_] =
  1-CDF[NormalDistribution[Log[p0],Sqrt[e]*v], Log[s]]
 
+barriervalue[p0_, v_, s_, e_] =
+ 1-CDF[NormalDistribution[Log[p0],Sqrt[e]*v*Sqrt[2]], Log[s]]
+
 (*
 
 Suppose I purchased $n worth of a parity at price p. My profit at
@@ -21,17 +24,18 @@ profit if the option goes in money), I make:
 *)
 
 binhedge[p_, n_, p0_, v_, s_, e_] = n*(1-p/s)*bincallvalue[p0,v,s,e]
+barhedge[p_, n_, p0_, v_, s_, e_] = n*(1-p/s)*barriervalue[p0,v,s,e]
 
 (*
 
 Example: I bought 100K USDJPY at 78 and think it won't reach 79; if
 USDJPY reaches 79, I've made $1265.82, so I bet that amount that it
 won't. Assume vol = .1 and expiration one week from now; below shows I
-can make $226.24 right now
-
-*)
+could make $226.24 right now
 
 binhedge[78, 100000, 78, .1, 79, 7/365.2425]
+
+*)
 
 (*
 
@@ -41,6 +45,7 @@ profit (bs = best strike)
 *)
 
 bsbinhedge[p_, n_, p0_, v_, e_] = Maximize[binhedge[p,n,p0,v,s,e],s]
+bsbarhedge[p_, n_, p0_, v_, e_] = Maximize[barhedge[p,n,p0,v,s,e],s]
 
 (*
 
@@ -52,4 +57,7 @@ Mathematica handles nested maximize poorly, so using 2-variable maximize
 *)
 
 bsbtbinhedge[p_, n_, p0_, v_] = Maximize[binhedge[p, n, p0, v, s, e]/e, {s,e}]
+bsbtbarhedge[p_, n_, p0_, v_] = Maximize[barhedge[p, n, p0, v, s, e]/e, {s,e}]
 
+showit := Module[{}, 
+Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]

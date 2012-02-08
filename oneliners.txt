@@ -12,3 +12,6 @@ curl -u username:password http://stream.twitter.com/1/statuses/filter.json -d "f
 # @barrycarter mentions
 curl -o /tmp/bc.txt 'http://search.twitter.com/search.json?q=%40barrycarter'
 
+# mentions of all my twitter accounts
+perl -nle 'if(/username=(.*?)&/i){print "curl -o /tmp/twitter-$1 \47http://search.twitter.com/search.json?q=%40$1\47"}' ~/twitter.rc | parallel -j 20
+
