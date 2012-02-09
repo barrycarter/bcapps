@@ -29,7 +29,7 @@ mypos = Table[.9871+.0012*i,{i,0,19}];
 
 myoptpos = {{2, .9925, 18}, {8, .9975, 9.5}}
 
-**)
+*)
 
 (* this file now contains all info *)
 << /home/barrycarter/forexall.txt
@@ -50,7 +50,8 @@ myoptpos = If[$CommandLine[[4]] == "cad", myoptposcad, myoptposjpy]
 (* TODO: selling options w/ different expiries may be useful! *)
 
 (* kludge to get rid of null that ends 'nadex' var *)
-nadex = Select[nadex, Length[#]>2&]
+
+nadex = Select[nadex, Length[#]>2 &]
 
 nadex = Select[nadex, #[[2]] == expdate &]
 
