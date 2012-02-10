@@ -61,3 +61,9 @@ bsbtbarhedge[p_, n_, p0_, v_] = Maximize[barhedge[p, n, p0, v, s, e]/e, {s,e}]
 
 showit := Module[{}, 
 Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
+
+(* If oanda is willing to pay you x return on x0 investment, the
+percentage change is of a miss is ... *)
+
+oanda2pct[x0_, x_] = x0/x
+

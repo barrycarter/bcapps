@@ -19,6 +19,10 @@ system("/usr/bin/renice 19 -p $$");
 	   hashlist2sqlite(\@breports, "buoy_now")
 );
 
+# the "stardate" 24 hours ago (so I can kill off old BUOY reports)
+# <h>love was such an easy game to play</h>
+$yest = stardate(time()-86400);
+
 open(A,">/var/tmp/metar-db-queries.txt")||warn("Can't open file, $!");
 
 # prevent stale stations from having current cached data + start
@@ -29,6 +33,7 @@ BEGIN;
 DELETE FROM metar_now;
 DELETE FROM buoy_now;
 DELETE FROM metar WHERE strftime('%s', 'now') - strftime('%s', observation_time) > 86400;
+DELETE FROM buoy WHERE YYYY*10000 + MM*100 + DD + hh/100. + minute/10000 < $yest;
 MARK
 ;
 
