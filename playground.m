@@ -8,6 +8,9 @@ Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 (* remove null elt at end *)
 data = Drop[data,-1];
 
+(* -9999 = temp unknown *)
+data = Select[data, #[[5]] > -9999 &];
+
 (* closer to the way we need it *)
 data2 = Table[{ {x[[2]],x[[3]],x[[4]]}, {x[[1]],x[[5]]}}, {x,data}];
 
@@ -23,12 +26,21 @@ data4 = Table[{x[[1,1]], Table[y[[2]], {y,x[[2]]}]}, {x,data3}];
 
 f[m_] := {data3[[m,1,1]], Table[data3[[m,n,2]],{n,Length[data3[[m]]]}]}
 
-data5 = Table[f[i],{i,1,Length[data3]}]
+data5 = Table[f[i],{i,1,Length[data3]}];
 
-data3[[7,1,1]]
-data3[[7,1,2]]
-data3[[7,2,2]]
+Fit[data5[[8,2]], {1,x}, x]
 
+data6 = Table[{x[[1]], Fit[x[[2]], {1,t}, t]}, {x, data5}];
+
+data7 = Table[{x[[1]], D[x[[2]],t]}, {x, data6}];
+
+data7 = Sort[data7];
+
+data8 = Table[x[[2]], {x,data7}]
+
+data9 = Fourier[data8]
+
+ListPlot[data8, PlotJoined -> True]
 
 (* normal approximation to binomial distribution *)
 
