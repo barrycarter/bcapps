@@ -82,6 +82,8 @@ unless ($res) {print "Unable to find: $city\n"; exit(0);}
 # Set $hash using XML reply above
 while ($res=~s%<(.*?)>(.*?)</\1>%$hash{$1}=$2;%iseg) {}
 
+debug("HASH",unfold(%hash));
+
 # TODO: this is ugly for two reasons:
 # 1) geonames already lists all metar stations
 # 2) I could join bc-cityfind.pl's query to get everything in one go

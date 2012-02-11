@@ -2048,6 +2048,8 @@ sub hashlist2sqlite {
     my(@keys,@vals) = ();
     my(%hash) = %{$i};
     for $j (sort keys %hash) {
+      # ignore blank keys (can't use them anyway)
+      if ($j=~/^\s*$/) {next;}
       $iskey{$j} = 1;
       push(@keys, $j);
       push(@vals, "\"$hash{$j}\"");
@@ -2112,7 +2114,7 @@ sub END {
     # I sometimes wrongly use tempfile.[ext], so handle that too
     for $j ("", ".res", ".out", ".err", ".kml", ".kmz") {
       debug("DELETING: $i$j");
-      system("rm $i$j");
+      system("rm -f $i$j");
     }
   }
 

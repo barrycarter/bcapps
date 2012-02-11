@@ -348,6 +348,48 @@ sub wc {
   return(35.74+0.6215*$t-(35.75-0.4275*$t)*$w**.16);
 }
 
-# <h>return beauty;</h>
+=item recent_weather_ship($options)
 
+Obtain recent ship weather from
+http://coolwx.com/buoydata/data/curr/all.html and return as list of
+hashes that are compatible with newmetar.metar table $options
+currently unused
+
+=cut
+
+sub recent_weather_ship {
+  my($options) = @_;
+  my(@res);
+  my(%hash);
+
+  # columns where data starts (first col = 0)
+  # should write a general column parsing routine, but too lazy
+  my(@cols) = (0, 6, 12, 18, 25, 30, 35, 42, 47, 54, 60, 81, 91);
+  # trying to make these match metar table to extent possible
+  my(@names) = ("day", "", "latitude", "longitude", "temp_c",
+		"dewpoint_c", "wind", "gust", "maxgst",
+		"sea_level_pressure_mb", "", "station_id");
+
+  # get data, keep
+  my($out) = cache_command("curl -o /var/tmp/coolwx.ship.txt http://coolwx.com/buoydata/data/curr/all.html", "age=150");
+
+  for $i (split(/\n/, read_file("/var/tmp/coolwx.ship.txt"))) {
+    # ignore non-data lines
+    unless ($i=~/^\d/) {next;}
+
+    # get fields
+    for $j (0..$#cols) {
+      my($item) = substr($i, $cols[$j], $cols[$j+1]-$cols[$j]);
+      $item=~s/\s//isg;
+      $hash{$names[$j]} = $item;
+      debug("$names[$j] -> $item");
+    }
+
+    push(@res, {%hash});
+  }
+  
+  return @res;
+}
+
+# <h>return beauty;</h>
 true;

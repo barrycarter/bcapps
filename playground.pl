@@ -21,52 +21,6 @@ use Data::Dumper 'Dumper';
 use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 
-recent_weather_ship();
-
-=item recent_weather_ship($options)
-
-Obtain recent ship weather from
-http://coolwx.com/buoydata/data/curr/all.html and return as list of
-hashes that are compatible with newmetar.metar table $options
-currently unused
-
-=cut
-
-sub recent_weather_ship {
-  my($options) = @_;
-  my(@res);
-  my(%hash);
-
-  # columns where data starts (first col = 0)
-  # should write a general column parsing routine, but too lazy
-  my(@cols) = (0, 6, 12, 18, 25, 30, 35, 42, 47, 54, 60);
-  # trying to make these match metar table to extent possible
-  my(@names) = ("day", "station_id", "latitude", "longitude", "temp_c", 
-		"dewpoint_c", "wind2", "gust2", "maxgst2",
-		"sea_level_pressure_mb");
-
-  # get data, keep
-  my($out) = cache_command("curl -o /var/tmp/coolwx.ship.txt http://coolwx.com/buoydata/data/curr/all.html", "age=150");
-
-  for $i (split(/\n/, read_file("/var/tmp/coolwx.ship.txt"))) {
-    # ignore non-data lines
-    unless ($i=~/^\d/) {next;}
-
-    # get fields
-    for $j (0..$#cols) {
-      my($item) = substr($i, $cols[$j], $cols[$j+1]-$cols[$j]);
-      $item=~s/\s//isg;
-      $hash{$names[$j]} = $item;
-      debug("$names[$j] -> $item");
-    }
-
-    debug(%hash);
-  }
-
-return;
-
-}
-
 die "TESTING";
 
 # sub END{1};sub END{2};sub END{3};sub END{4}

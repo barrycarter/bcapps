@@ -3,6 +3,15 @@
 showit := Module[{}, 
 Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
+(* Use KABQ hourly data to determine trends, db/abqhourly.m (after bunzip) *)
+
+(* remove null elt at end *)
+data = Drop[data,-1];
+
+(* Gather by mo-da-hr *)
+
+data2=Gather[data,(#1[[2]]==#2[[2]]&&#1[[3]]==#2[[3]]&&#1[[4]]==#2[[4]])&]
+
 (* normal approximation to binomial distribution *)
 
 (* roll 100d6 and look at frequency of individual numbers *)

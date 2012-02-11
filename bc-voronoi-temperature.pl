@@ -9,6 +9,7 @@
 
 # --nodaemon: run once, don't daemonify
 
+# TODO: should really pull from metarnew.db
 # NOTE: this program starts off as an exact copy of delaunay
 
 push(@INC,"/home/barrycarter/BCGIT", "/usr/local/bin/");
@@ -25,6 +26,7 @@ system("/usr/bin/renice 19 -p $$");
 # obtain current weather including buoys
 @w = recent_weather();
 @w2 = recent_weather_buoy();
+@w3 = recent_weather_ship();
 
 # convert buoy hash to metar-style hash
 for $i (@w2) {
@@ -54,6 +56,9 @@ for $i (@w2) {
 
 }
 
+# does ship already have the right fields? let's find out
+push(@w, @w3);
+
 for $i (@w) {
   %hash = %{$i};
 
@@ -64,6 +69,14 @@ for $i (@w) {
     warn("BAD DATA:");
     debug("HASH", %hash);
     next;
+  }
+
+  # latitude -99.9 used as error for ship
+  if (abs($hash{latitude}) >90) {next;}
+
+  # kill trailing minus signs from ship data
+  for $j ("latitude", "longitude", "temp_c") {
+    $hash{$j}=~s/\-+$//;
   }
 
   # no temperature? no go!
@@ -91,7 +104,28 @@ for $i (@w) {
 
 }
 
+# create mathematica file (currently unused)
+
+
+$globopts{debug} = 1;
+
+for $i (@wok) {
+  %hash = %{$i};
+  ($mercy, $mercx) = to_mercator($hash{latitude}, $hash{longitude});
+  if (abs($mercy)>1) {next;}
+#  push(@math, "{$mercx, -1*$mercy, $hash{temp_c}}");
+  push(@math, "{$hash{longitude}, $hash{latitude}, $hash{temp_c}}");
+}
+
+write_file("map = {".join(",\n", @math)."}", "math.m");
+
+die "TESTING";
+
+write_file(unfold(@wok), "wok.txt");
+
 $res = voronoi_map(\@wok);
+system("cp $res /var/tmp/bcvtp/vormap.txt");
+
 debug("RES: $res");
 
 system("mv /sites/DATA/current-voronoi.kmz /sites/DATA/current-voronoi.kmz.old; mv $res /sites/DATA/current-voronoi.kmz");

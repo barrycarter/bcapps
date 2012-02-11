@@ -10,7 +10,7 @@ require "bclib.pl";
 
 dodie('chdir("/var/tmp/montastic")');
 
-unless ($globopts{nocurl}) {system("rm commands.txt results.txt err.txt");}
+system("rm -f commands.txt results.txt err.txt.new; touch err.txt.new");
 
 # format of this file, each line is "username:password", # starts comments
 for $i (split(/\n/,read_file("$ENV{HOME}/montastic.txt"))) {
@@ -37,8 +37,7 @@ while ($all=~s%<checkpoint>(.*?)</checkpoint>%%is) {
   $res=~m%<url>(.*?)</url>%isg;
 
   # write it to file
-  append_file("$1\n","err.txt");
+  append_file("$1\n","err.txt.new");
 }
 
-
-
+system("mv err.txt err.txt.old; mv err.txt.new err.txt");

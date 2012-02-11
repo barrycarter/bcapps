@@ -13,10 +13,13 @@ system("/usr/bin/renice 19 -p $$");
 
 @reports = recent_weather();
 @breports = recent_weather_buoy();
+@sreports = recent_weather_ship();
 @querys = (hashlist2sqlite(\@reports, "metar"),
 	   hashlist2sqlite(\@reports, "metar_now"),
 	   hashlist2sqlite(\@breports, "buoy"),
-	   hashlist2sqlite(\@breports, "buoy_now")
+	   hashlist2sqlite(\@breports, "buoy_now"),
+	   hashlist2sqlite(\@sreports, "ship"),
+	   hashlist2sqlite(\@sreports, "ship_now")
 );
 
 # the "stardate" 24 hours ago (so I can kill off old BUOY reports)
@@ -57,3 +60,18 @@ system("cp /sites/DB/metarnew.db .; sqlite3 metarnew.db < /var/tmp/metar-db-quer
 sleep(60);
 in_you_endo();
 exec($0);
+
+=item schema
+
+Schema for ship tables:
+
+CREATE TABLE ship (day, dewpoint_c, gust, latitude, longitude, maxgst,
+sea_level_pressure_mb, station_id, temp_c, wind);
+
+CREATE TABLE ship_now (day, dewpoint_c, gust, latitude, longitude, maxgst,
+sea_level_pressure_mb, station_id, temp_c, wind);
+
+CREATE UNIQUE INDEX i5 ON ship_now(station_id);
+CREATE UNIQUE INDEX i6 ON ship(station_id, day);
+
+=cut
