@@ -9,6 +9,9 @@
 push(@INC, "/usr/local/lib");
 require "bclib.pl";
 
+# own tmp dir
+dodie('chdir("/var/tmp/bcweathertext")');
+
 # HTTP header (plain text formats nicer, bizarrely)
 print "Content-type: text/plain\n\n";
 
@@ -113,6 +116,8 @@ ORDER BY observation_time DESC
 $query=~s/\-\-/+/isg;
 
 @res = sqlite3hashlist($query,"/sites/DB/metarnew.db");
+
+debug("RES",unfold(@res),"/RES");
 
 # converting units for all observations here avoids problems below
 for $i (@res) {

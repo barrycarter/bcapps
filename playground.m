@@ -5,10 +5,7 @@ Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
 (* Use KABQ hourly data to determine trends, db/abqhourly.m (after bunzip) *)
 
-(* remove null elt at end *)
-data = Drop[data,-1];
-
-(* -9999 = temp unknown *)
+(* -9999 = temp unknown  and drops nulls *)
 data = Select[data, #[[5]] > -9999 &];
 
 (* closer to the way we need it *)
@@ -34,13 +31,19 @@ data6 = Table[{x[[1]], Fit[x[[2]], {1,t}, t]}, {x, data5}];
 
 data7 = Table[{x[[1]], D[x[[2]],t]}, {x, data6}];
 
-data7 = Sort[data7];
+data8 = Sort[data7];
 
-data8 = Table[x[[2]], {x,data7}]
+data9 = Table[x[[2]], {x,data8}]
 
-data9 = Fourier[data8]
+(* daily *)
+Table[Take[data9,{i*24+1,i*24+24}],{i,0,365}]
+data11 = Table[Mean[Take[data9,{i*24+1,i*24+24}]],{i,0,365}]
 
-ListPlot[data8, PlotJoined -> True]
+ListPlot[data11, PlotJoined->True]
+
+data10 = Fourier[data9]
+
+ListPlot[data9, PlotJoined -> True]
 
 (* normal approximation to binomial distribution *)
 
