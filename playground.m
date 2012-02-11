@@ -8,9 +8,27 @@ Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 (* remove null elt at end *)
 data = Drop[data,-1];
 
+(* closer to the way we need it *)
+data2 = Table[{ {x[[2]],x[[3]],x[[4]]}, {x[[1]],x[[5]]}}, {x,data}];
+
 (* Gather by mo-da-hr *)
 
-data2=Gather[data,(#1[[2]]==#2[[2]]&&#1[[3]]==#2[[3]]&&#1[[4]]==#2[[4]])&]
+data3 = Gather[data2, #1[[1]] == #2[[1]] &];
+
+(* now get da-mo-hr -> list (easy way to do this? 
+http://stackoverflow.com/questions/6974544/using-mathematica-gather-collect-properly)
+*)
+
+data4 = Table[{x[[1,1]], Table[y[[2]], {y,x[[2]]}]}, {x,data3}];
+
+f[m_] := {data3[[m,1,1]], Table[data3[[m,n,2]],{n,Length[data3[[m]]]}]}
+
+data5 = Table[f[i],{i,1,Length[data3]}]
+
+data3[[7,1,1]]
+data3[[7,1,2]]
+data3[[7,2,2]]
+
 
 (* normal approximation to binomial distribution *)
 
