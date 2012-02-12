@@ -94,24 +94,37 @@ debug("HASH",unfold(%hash));
 
 LAT:
 
-($x,$y,$z) = sph2xyz($hash{longitude},$hash{latitude},1,"degrees=1");
+# ($x,$y,$z) = sph2xyz($hash{longitude},$hash{latitude},1,"degrees=1");
 
 # nice latitude/longitude for location (not METAR station)
 $hash{nicelat} = nicedeg2($hash{latitude},"N");
 $hash{nicelon} = nicedeg2($hash{longitude},"E");
 
 # TODO: further limit to stations that actually have reports
+# TODO: formula for closest below IS NOT 100% accurate
+
+# approximate ratio of latitude:longitude degree
+$ratio = cos($hash{latitude}/180*PI);
+
 $query = "
-SELECT *
- FROM metar m JOIN stations s ON (m.station_id=s.metar)
- WHERE m.station_id = 
- (SELECT s.metar
- FROM stations s JOIN metar m ON (s.metar = m.station_id)
- ORDER BY (x-$x)*(x-$x) + (y-$y)*(y-$y) + (z-$z)*(z-$z)
- LIMIT 1)
-ORDER BY observation_time DESC
+SELECT * FROM metar WHERE station_id = (
+SELECT station_id FROM metar_now m ORDER BY 
+ ABS(latitude-$hash{latitude}) +
+ $ratio*ABS(longitude-$hash{longitude}) LIMIT 1
+) ORDER BY observation_time DESC
 ;
 ";
+
+# JOIN stations s ON (m.station_id=s.metar)
+# WHERE m.station_id = 
+# (SELECT s.metar
+# FROM stations s JOIN metar m ON (s.metar = m.station_id)
+# ORDER BY (x-$x)*(x-$x) + (y-$y)*(y-$y) + (z-$z)*(z-$z)
+# LIMIT 1)
+#ORDER BY observation_time DESC
+# ;
+# ";
+
 # double minuses are treated as comments, so...
 $query=~s/\-\-/+/isg;
 

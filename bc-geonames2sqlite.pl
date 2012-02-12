@@ -7,14 +7,12 @@
 # http://download.geonames.org/export/dump/
 # into an SQLite3 db
 
-# allCountries comes in a .zip file, but I unzipped it and then bzip2'd it
-# <h>I'm not sure why. I suspect rabies</h>
-
-# NOTE: this program does NOT include allCountries.txt.bz2 (it'd be
-# out of date anyway); please obtain it yourself
+# NOTE: this program does NOT include allCountries.zip (it'd be
+# out of date anyway); please obtain it yourself:
+# http://download.geonames.org/export/dump/allCountries.zip
 
 # These files are assumed to be in the current directory:
-# allCountries.txt.bz2
+# allCountries.zip
 # admin1CodesASCII.txt
 # countryInfo.txt
 
@@ -25,7 +23,7 @@ push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
 # this program takes time to run, so warn about missing files ASAP
-for $i ("admin1CodesASCII.txt", "countryInfo.txt", "allCountries.txt.bz2") {
+for $i ("admin1CodesASCII.txt", "countryInfo.txt", "allCountries.zip") {
   unless (-f $i) {die "$i must exist in current directory";}
 }
 
@@ -40,12 +38,14 @@ open(E,">/var/tmp/featurecodes.out");
 # probably bad to hardcode ids here: one of them doesn't even exist anymore!
 # if you're REALLY curious what these are:
 # http://ws.geonames.org/get?geonameId=2634343 (for example)
-@fakeadm = (2411430,3370684,6940286,921810,6693220,2634343);
-%fakeadm = list2hash(@fakeadm);
+
+# removing as test 11 Feb 2012
+# @fakeadm = (2411430,3370684,6940286,921810,6693220,2634343);
+# %fakeadm = list2hash(@fakeadm);
 
 # create cheat table for parents
 unless (-f "/var/tmp/admpcl.txt") {
-  system("bzgrep -e 'ADM|PCL' allCountries.txt.bz2 1> /var/tmp/admpcl.txt");
+  system("zgrep -e 'ADM|PCL' allCountries.zip 1> /var/tmp/admpcl.txt");
 }
 
 open(A,"/var/tmp/admpcl.txt");
@@ -126,7 +126,7 @@ close(A);
 # TODO: remove any blank names that might've snuck in
 
 # and now the main file...
-open(A,"bzcat allCountries.txt.bz2|");
+open(A,"zcat allCountries.zip|");
 
 while (<A>) {
   chomp($_);
@@ -202,7 +202,7 @@ while (<A>) {
   # alternate_names mangles stuff
 
   print C join("\t", $geonameid, $asciiname, $latitude, $longitude,
-  $featurecode, $parent, $population, $tz)."\n";
+  $featurecode, $parent, $population, $tz, $elevation)."\n";
 
   # $name and $asciiname and $alternatenames are alt names
   for $i ($name,$asciiname,split(",",$alternatenames)) {
@@ -260,7 +260,8 @@ CREATE TABLE geonames (
  feature_code INT,
  parent INT,
  population INT,
- timezone INT
+ timezone INT,
+ elevation INT
 );
 
 CREATE INDEX i_feature_code ON geonames(feature_code);
