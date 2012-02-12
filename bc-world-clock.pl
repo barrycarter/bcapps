@@ -8,7 +8,10 @@ require "bclib.pl";
  "Albuquerque" => "US/Mountain",
  "Chicago" => "US/Central",
  "New York" => "US/Eastern",
- "GMT" => "GMT"
+ "GMT" => "GMT",
+ "Anchorage" => "US/Alaska",
+ "Tokyo" => "Asia/Tokyo",
+ "New Delhi" => "Asia/Kolkata"
 );
 
 $size = 600;
@@ -35,7 +38,9 @@ for $i (sort keys %zones) {
   my($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time());
   # angle for this time (in degrees, since this is for SVG)
   $an = ($hour*15 + $min/4 + $sec/240 - 90);
-  print "<text x='300' y='300' transform='rotate($an 300,300)' style='font-size:25'>............. $an</text>\n";
+  # pad with dots based on length
+  $pad= "-"x(30-length($i));
+  print "<text x='300' y='300' transform='rotate($an 300,300)' style='font-size:20'>$pad $i $min</text>\n";
 }
 
 # for $i (0..10) {
