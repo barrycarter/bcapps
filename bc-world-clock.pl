@@ -11,9 +11,9 @@ print << "MARK";
 MARK
 ;
 
-for $i (0..35) {
-  $an = $i*10;
-  print qq%<text x="300" y="300" transform="rotate($an 300,300)">$an</text>\n%;
+for $i (0..10) {
+  $an = $i*36;
+  print qq%<text x="300" y="300" transform="rotate($an 300,300)" style="font-size:25">............. $an</text>\n%;
 }
 
 print "</svg>\n";
