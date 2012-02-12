@@ -202,7 +202,8 @@ while (<A>) {
   # alternate_names mangles stuff
 
   print C join("\t", $geonameid, $asciiname, $latitude, $longitude,
-  $featurecode, $parent, $population, $tz, $elevation)."\n";
+  $featurecode, $admin0new, $admin4new, $admin3new, $admin2new, $admin1new,
+  $population, $tz, $elevation)."\n";
 
   # $name and $asciiname and $alternatenames are alt names
   for $i ($name,$asciiname,split(",",$alternatenames)) {

@@ -6,7 +6,11 @@ CREATE TABLE geonames (
  latitude INT,
  longitude INT,
  feature_code INT,
- parent INT,
+ country_code INT,
+ admin4_code INT,
+ admin3_code INT,
+ admin2_code INT,
+ admin1_code INT,
  population INT,
  timezone INT,
  elevation INT
