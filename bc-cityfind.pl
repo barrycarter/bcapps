@@ -40,7 +40,7 @@ CREATE INDEX i_count ON match1(count);
 .separator \"\\t\"
 .import $tmp1 match1
 
-ATTACH DATABASE '/sites/DB/geonames.db' AS geonames;
+ATTACH DATABASE '/sites/DB/geonames2.db' AS geonames;
 
 SELECT m.orig AS cityq, gn1.geonameid, 
  gn1.asciiname AS city,
@@ -48,6 +48,7 @@ SELECT m.orig AS cityq, gn1.geonameid,
  gn6.asciiname AS country,
  gn1.population, gn1.latitude/((1<<24)-1.)*180. AS latitude,
  gn1.longitude/((1<<24)-1.)*360. AS longitude,
+ gn1.elevation,
  tz.name AS tz
 FROM match1 m
  JOIN geonames.altnames an1 ON (m.c1 = an1.name)

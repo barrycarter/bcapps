@@ -104,10 +104,11 @@ $hash{nicelon} = nicedeg2($hash{longitude},"E");
 # TODO: formula for closest below IS NOT 100% accurate
 
 # approximate ratio of latitude:longitude degree
-$ratio = cos($hash{latitude}/180*PI);
+$ratio = cos($hash{latitude}/180*$PI);
 
 $query = "
-SELECT * FROM metar WHERE station_id = (
+SELECT * FROM metar m JOIN stations s ON (m.station_id = s.metar)
+WHERE m.station_id = (
 SELECT station_id FROM metar_now m ORDER BY 
  ABS(latitude-$hash{latitude}) +
  $ratio*ABS(longitude-$hash{longitude}) LIMIT 1
@@ -137,7 +138,7 @@ for $i (@res) {
   %report = %{$i};
 
   # canonical elevation in ft
-  $report{elev} = convert($report{elevation_m}, "m", "ft");
+  $report{elev} = round(convert($report{elevation_m}, "m", "ft"));
 
   # canonical pressure in inches
   $report{pressure} = $report{altim_in_hg};
@@ -161,7 +162,11 @@ for $i (@res) {
   $report{nicelat} = nicedeg2($report{latitude}, "N");
   $report{nicelon} = nicedeg2($report{longitude}, "E");
 
+  push(@res2, {%report});
+
 }
+
+debug("RES2",unfold(@res2),"/RES2");
 
 # @out = thing we're eventually going to print out.
 
@@ -169,8 +174,8 @@ for $i (@res) {
 push(@out,"$hash{city}, $hash{state}, $hash{country} is at $hash{nicelat}, $hash{nicelon}");
 
 # For this station: %ai = most recent observation; @e = all observations
-%ai = %{$res[0]};
-@e = @res;
+%ai = %{$res2[0]};
+@e = @res2;
 
 # distance between METAR station and entered location
 $ai{dist} = round(gcdist($hash{latitude},$hash{longitude},$ai{latitude},$ai{longitude}));

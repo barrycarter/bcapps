@@ -17,7 +17,6 @@ CREATE TABLE geonames (
 );
 
 CREATE INDEX i_feature_code ON geonames(feature_code);
-CREATE INDEX i_parent ON geonames(parent);
 .separator "\t"
 .import /var/tmp/geonames.out geonames
 

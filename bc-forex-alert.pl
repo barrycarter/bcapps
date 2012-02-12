@@ -42,6 +42,16 @@ for $i (@x) {
   debug("HASH",unfold(%hash));
   debug("$hash{bid} - $hash{offer}");
 
+  # bad bid/offer?
+  unless ($hash{bid} && $hash{offer}) {
+    # my error tracking system (this err not serious enough to send to phone)
+    write_file("$parity: no quote", "/home/barrycarter/ERR/$parity.err");
+    die "BAD BID/ASK";
+  }
+
+  # no error (at least of the type above, so remove file)
+  system("rm /home/barrycarter/ERR/$parity.err");
+
   # theoretically possible for both to be true, but not worth testing
 
   # my phone treats identical messages as a single msg, so being

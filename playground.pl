@@ -21,19 +21,37 @@ use Data::Dumper 'Dumper';
 use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 
-die "TESTING";
+sunriseset(time(),35,-106);
 
-# sub END{1};sub END{2};sub END{3};sub END{4}
+# simpler version of objriseset for sun (and later moon?) since I get
+# ra/dec in other ways?
 
-# use B;
-# debug(B::end_av->ARRAY);
+=item sunriseset($t,$lat,$lon)
 
-in_you_endo();
-exec("pwd");
+Return the sunrise and set nearest to (and "bracketing") $t for
+position, $lat, $lon
 
-die "TESTING";
+=cut
 
-# oanda screen cap parsing (screencaps currently NA on github, sorry)
+sub sunriseset {
+  my($t,$lat,$lon) = @_;
+
+  # find solar RA/DEC
+  my($ra,$dec) = position("sun", $t);
+
+  # And AZEL at this lat/lon
+  my($az,$el) = radecazel2($ra,$dec,$lat,$lon,$t);
+
+  # determine local true noon/midnight
+
+  my($noon) = $t-($az/15)*3600;
+  debug("NOON: $noon");
+
+  # AZEL 12 hours later (if no set/rise in 12 hours, midnight or no sun)
+#  my($az2,$el2) = 
+
+  debug("AZ: $az, EL: $el");
+}
 
 die "TESTING";
 
