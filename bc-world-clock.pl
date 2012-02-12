@@ -1,19 +1,46 @@
 #!/bin/perl
 
 # An unusual type of world clock
+require "bclib.pl";
 
+# zones (testing)
+%zones = (
+ "Albuquerque" => "US/Mountain",
+ "Chicago" => "US/Central",
+ "New York" => "US/Eastern",
+ "GMT" => "GMT"
+);
+
+$size = 600;
 
 print << "MARK";
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
- width="600px" height="600px"
- viewBox="0 0 600 600"
+ width="${size}px" height="${size}px"
+ viewBox="0 0 $size $size"
 >
 MARK
 ;
 
-for $i (0..10) {
-  $an = $i*36;
-  print qq%<text x="300" y="300" transform="rotate($an 300,300)" style="font-size:25">............. $an</text>\n%;
+# the clock face numbers
+for $i (0..23) {
+  $an = 15*$i/180*$PI-$PI/2;
+  # numbers go offedge unless I put .95 below
+  $x = .95*$size/2*cos($an)+$size/2;
+  $y = .95*$size/2*sin($an)+$size/2;
+  print "<text x='$x' y='$y'>$i</text>\n";
 }
+
+for $i (sort keys %zones) {
+  $ENV{TZ} = $zones{$i};
+  my($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time());
+  # angle for this time (in degrees, since this is for SVG)
+  $an = ($hour*15 + $min/4 + $sec/240 - 90);
+  print "<text x='300' y='300' transform='rotate($an 300,300)' style='font-size:25'>............. $an</text>\n";
+}
+
+# for $i (0..10) {
+#  $an = $i*36;
+#  print qq%<text x="300" y="300" transform="rotate($an 300,300)" style="font-size:25">............. $an</text>\n%;
+# }
 
 print "</svg>\n";
