@@ -8,11 +8,18 @@ require "bclib.pl";
  "Albuquerque" => "US/Mountain",
  "Chicago" => "US/Central",
  "New York" => "US/Eastern",
+ "San Francisco" => "US/Pacific",
  "GMT" => "GMT",
- "Anchorage" => "US/Alaska",
  "Tokyo" => "Asia/Tokyo",
- "New Delhi" => "Asia/Kolkata"
+ "New Delhi" => "Asia/Kolkata",
+ "Sydney" => "Australia/Sydney",
+ "Perth" => "Australia/Perth",
+ "Athens" => "Europe/Athens",
+ "Berlin" => "Europe/Berlin",
+ "Beijing" => "Asia/Shanghai"
 );
+
+# IDL = international date line (of sorts)
 
 $size = 600;
 
