@@ -3,8 +3,6 @@
 # Brute force solves http://www.thelab.gr/xmas2011/auga.php and may
 # serve as a template for similar problems
 
-# This program is dedicated to Christina Sereti (sereti at gmail dot com)
-
 # The problem: HHBBBL + LEBBTL + LTLHEH = TH3L4B, with E=3
 
 # solution: H=1, B=5, L=2, E=3, T=6 (appears to be unique)

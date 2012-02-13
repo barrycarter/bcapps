@@ -1194,16 +1194,8 @@ sub position {
   debug("POSITION($obj,$t)");
   unless ($t) {$t = time();}
 
-  ########## TODO: using global variable for caching
-  warn "ARGH!";
-  unless (@positiondata) {
-    @positiondata = (read_file("data/${obj}fakex.txt"), 
-		     read_file("data/${obj}fakey.txt"));
-  }
-
-
-#  my(@data) = (read_file("data/${obj}fakex.txt"), 
-#	       read_file("data/${obj}fakey.txt"));
+  my(@data) = (read_file("data/${obj}fakex.txt"), 
+	       read_file("data/${obj}fakey.txt"));
   my(@nest) = (nestify($positiondata[0]), nestify($positiondata[1]));
   my(@xvals0) = @{$nest[0]};
   my(@x2vals0) = @{$nest[1]};
