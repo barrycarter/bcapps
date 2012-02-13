@@ -43,15 +43,26 @@ sub sunriseset {
   # And AZEL at this lat/lon
   my($az,$el) = radecazel2($ra,$dec,$lat,$lon,$t);
 
-  # function to hit 0 (TODO: anonymize)
+  # function to hit minimize (TODO: anonymize)
   sub sunel {
     my($t) = @_;
     my($az,$el) = radecazel2($ra,$dec,$lat,$lon,$t);
     return $el;
   }
 
-  # for civil twilight
-  sub suntw {return sunel($_[0])+6;}
+  # for zenith finding return negative el
+  sub sunne {return -1*sunel($_[0]);}
+
+  my($nadir, $zenith);
+  # if sun is up, find nadir over next 24 hours; else, zenith
+  if ($el>0) {
+    $nadir = findmin(\&sunel, $t, $t+3600*24, 1);
+  } else {
+    $zenith = findmin(\&sunne, $t, $t+3600*24, 1);
+  }
+
+  debug("NADIR: $nadir, ZENITH: $zenith");
+  die "TESTING";
 
   # search for next sunrise/set/twilight in 12-hour overlapping blocks
   my($prev,$next,$prevt,$nextt);

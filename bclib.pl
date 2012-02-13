@@ -1544,6 +1544,7 @@ sub findmin {
 	# intervals are [$a,$b], [$b,$c], and [$c,$d]
 	($b,$c)=($a*2/3+$d/3,$a/3+$d*2/3);
 	($fa,$fb,$fc,$fd)=(&$f($a),&$f($b),&$f($c),&$f($d));
+	debug("$a -> $fa, $b -> $fb, $c -> $fc, $d -> $fd");
 
 	# too many steps?
 	if ($steps>$maxsteps) {
