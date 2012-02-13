@@ -43,24 +43,23 @@ returns twilight times
 sub sunriseset {
   my($t,$lat,$lon) = @_;
 
-  # find solar RA/DEC
-  my($ra,$dec) = position("sun", $t);
-  debug("SOLAR POS($t): $ra $dec");
-
-  # And AZEL at this lat/lon
-#  my($az,$el) = radecazel2($ra,$dec,$lat,$lon,$t);
-
   # function to hit minimize (TODO: anonymize)
   sub sunel {
-    debug("SUNEL($ra,$dec,$lat,$lon,$_[0])");
-    my($az,$el) = radecazel2($ra,$dec,$lat,$lon,$_[0]);
+    my($t) = @_;
+
+    # find solar RA/DEC at given time
+    my($ra,$dec) = position("sun", $t);
+
+    # And AZEL at this lat/lon
+    my($az,$el) = radecazel2($ra,$dec,$lat,$lon,$t);
+
+    # and return elevation
     return $el;
   }
 
-  debug(sunel(1340467535), sunel(1340510735));
-  debug(findmax(\&sunel, 1340467535, 1340510735, 1));
-
-  die "TESTING";
+#  debug(sunel(1340467535), sunel(1340510735));
+#  debug(findmax(\&sunel, 1340467535, 1340510735, 1));
+#  die "TESTING";
 
   my(%sol);
 
@@ -76,16 +75,10 @@ sub sunriseset {
 	# if already defined, ignore
 	if ($sol{$i}{$j}{$k}) {next;}
 
-	# YIKES!
-	if ("$i$j$k" eq "nextzenithhorizon") {
-	  $globopts{debug}=1;
-	} else {
-	  $globopts{debug}=0;
-	}
-
-
 	# otherwise, loop to find
 	for $n (0..1460) {
+
+	  debug("$i/$j/$k/$n");
 
 	  # window to look in
 	  my($st,$val,$thres);
@@ -102,7 +95,7 @@ sub sunriseset {
 	    $val = findmin(\&sunel, $st, $en, 1);
 	  } else {
 	    $val = findmax(\&sunel, $st, $en, 1);
-	    debug("findmax $st/$en yields $val",sunel($val));
+#	    debug("findmax $st/$en yields $val",sunel($val));
 	  }
 
 	  if ($k eq "horizon") {

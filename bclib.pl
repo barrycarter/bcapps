@@ -1191,10 +1191,20 @@ TODO: I really need to start creating sub libraries?
 
 sub position {
   my($obj, $t) = @_;
+  debug("POSITION($obj,$t)");
   unless ($t) {$t = time();}
-  my(@data) = (read_file("data/${obj}fakex.txt"), 
-	       read_file("data/${obj}fakey.txt"));
-  my(@nest) = (nestify($data[0]), nestify($data[1]));
+
+  ########## TODO: using global variable for caching
+  warn "ARGH!";
+  unless (@positiondata) {
+    @positiondata = (read_file("data/${obj}fakex.txt"), 
+		     read_file("data/${obj}fakey.txt"));
+  }
+
+
+#  my(@data) = (read_file("data/${obj}fakex.txt"), 
+#	       read_file("data/${obj}fakey.txt"));
+  my(@nest) = (nestify($positiondata[0]), nestify($positiondata[1]));
   my(@xvals0) = @{$nest[0]};
   my(@x2vals0) = @{$nest[1]};
   my(@yvals, @xvals, @yvals2, @xvals2);
@@ -1223,6 +1233,8 @@ sub position {
   my($ra) = atan2($ycoord,$xcoord)/$PI*12;
   if ($ra<0) {$ra+=24;}
   my($dec) = (sqrt($xcoord**2+$ycoord**2)-$PI)/$PI*180;
+
+  debug("RETURNING: $ra, $dec");
 
   return $ra,$dec;
 }
@@ -1544,7 +1556,7 @@ sub findmin {
 	# intervals are [$a,$b], [$b,$c], and [$c,$d]
 	($b,$c)=($a*2/3+$d/3,$a/3+$d*2/3);
 	($fa,$fb,$fc,$fd)=(&$f($a),&$f($b),&$f($c),&$f($d));
-	debug("$a -> $fa, $b -> $fb, $c -> $fc, $d -> $fd");
+#	debug("$a -> $fa, $b -> $fb, $c -> $fc, $d -> $fd");
 
 	# too many steps?
 	if ($steps>$maxsteps) {
