@@ -46,13 +46,13 @@ sub sunriseset {
   sub sunel {
     my($t) = @_;
     my($az,$el) = radecazel2($ra,$dec,$lat,$lon,$t);
-    debug("SUNEL($t) -> $az, $el");
     return $el;
   }
 
   # search for next sunrise/set in 12-hour overlapping blocks
   for $i (0..1461) {
-    my($time) = findroot(\&sunel, $t+6*$i*3600, $t+6*$i*3600+12*3600, 0.0001);
+    debug("CHECKING", $t+6*$i*3600, $t+6*$i*3600+12*3600);
+    my($time) = findroot(\&sunel, $t+6*$i*3600, $t+6*$i*3600+12*3600, 0.01);
     debug("root: $time");
   }
 
