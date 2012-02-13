@@ -1544,7 +1544,7 @@ sub findmin {
 	# intervals are [$a,$b], [$b,$c], and [$c,$d]
 	($b,$c)=($a*2/3+$d/3,$a/3+$d*2/3);
 	($fa,$fb,$fc,$fd)=(&$f($a),&$f($b),&$f($c),&$f($d));
-	debug("$a -> $fa, $b -> $fb, $c -> $fc, $d -> $fd");
+#	debug("$a -> $fa, $b -> $fb, $c -> $fc, $d -> $fd");
 
 	# too many steps?
 	if ($steps>$maxsteps) {
@@ -1554,15 +1554,15 @@ sub findmin {
 
 	if ($fc>=$fb && $fd>=$fc) {
 	  # if f($d) > f($c) > f($b), then min can't be in [$c,$d]
-	  debug("OMIT SEGMENT 3");
+#	  debug("OMIT SEGMENT 3");
 	  $d=$c;
 	} elsif ($fb<=$fa && $fc<=$fb) {
 	  # if f($a) > f($b) > f($c), min can't be in [$a,$b]
-	  debug("OMIT SEGMENT 1");
+#	  debug("OMIT SEGMENT 1");
 	  $a=$b;
 	} elsif ($fb<=$fa && $fd>=$fc) {
 	  # if f($b) < f($a) AND f($c) < $f(d), min must be in [$b,$c]
-	  debug("OMIT SEGMENTS 1 and 3");
+#	  debug("OMIT SEGMENTS 1 and 3");
 	  ($a,$d)=($b,$c);
 	} else {
 	  # impossible, unless intial parameters bad
