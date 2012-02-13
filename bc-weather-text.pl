@@ -112,7 +112,7 @@ WHERE m.station_id = (
 SELECT station_id FROM metar_now m ORDER BY 
  ABS(latitude-$hash{latitude}) +
  $ratio*ABS(longitude-$hash{longitude}) LIMIT 1
-) ORDER BY observation_time DESC
+) ORDER BY observation_time
 ;
 ";
 
@@ -294,7 +294,7 @@ push(@out,"The barometric pressure is $press inches$pressdir");
 
 push(@out,$extrema);
 
-push(@out,"Current METAR (for techies): '$f{metarreport}'");
+push(@out,"Current METAR (for techies): '$f{observation}'");
 unshift(@out,"Do not rely on this information");
 
 if ($NOWRAP) {

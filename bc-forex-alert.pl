@@ -42,15 +42,21 @@ for $i (@x) {
   debug("HASH",unfold(%hash));
   debug("$hash{bid} - $hash{offer}");
 
+  # remove slash for err file
+  $pfile = $parity;
+  $pfile=~s/\///isg;
+
   # bad bid/offer?
   unless ($hash{bid} && $hash{offer}) {
     # my error tracking system (this err not serious enough to send to phone)
-    write_file("$parity: no quote", "/home/barrycarter/ERR/$parity.err");
+    write_file("$parity: no quote", "/home/barrycarter/ERR/$pfile.err.new");
+    system("mv /home/barrycarter/ERR/$pfile.err /home/barrycarter/ERR/$pfile.err.old; mv /home/barrycarter/ERR/$pfile.err.new /home/barrycarter/ERR/$pfile.err");
     die "BAD BID/ASK";
   }
 
-  # no error (at least of the type above, so remove file)
-  system("rm /home/barrycarter/ERR/$parity.err");
+  # if not dead, fix err file
+  write_file("", "/home/barrycarter/ERR/$pfile.err.new");
+  system("mv /home/barrycarter/ERR/$pfile.err /home/barrycarter/ERR/$pfile.err.old; mv /home/barrycarter/ERR/$pfile.err.new /home/barrycarter/ERR/$pfile.err");
 
   # theoretically possible for both to be true, but not worth testing
 
