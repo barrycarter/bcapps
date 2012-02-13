@@ -2105,6 +2105,19 @@ sub in_you_endo() {
   }
 }
 
+=item findmax(\&f,$a,$d,$e,$maxsteps=50)
+
+Thin wrapper around findmin to find function max
+
+=cut
+
+sub findmax {
+  my($f,$a,$d,$e,$maxsteps,$steps,$b,$c)=@_;
+  my($nf) = sub {-1*&$f($_[0])};
+  debug("NF: $nf");
+  return findmin($nf,$a,$d,$e,$maxsteps,$steps,$b,$c)
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
   debug("END: CLEANING UP TMP FILES");

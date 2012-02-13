@@ -21,6 +21,25 @@ use Data::Dumper 'Dumper';
 use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 
+sub t1 {return 16-$_[0]**2;}
+
+debug(findmax(\&t1, 0, $PI, .01));
+
+=item findmax(\&f,$a,$d,$e,$maxsteps=50)
+
+Thin wrapper around findmin to find function max
+
+=cut
+
+sub findmax {
+  my($f,$a,$d,$e,$maxsteps,$steps,$b,$c)=@_;
+  my($nf) = sub {-1*&$f($_[0])};
+  debug("NF: $nf");
+  return findmin($nf,$a,$d,$e,$maxsteps,$steps,$b,$c)
+}
+
+die "TESTING";
+
 # sunriseset(time(),35.0844869067959,-106.651138463684);
 sunriseset(time(),65.0844869067959,-106.651138463684);
 
@@ -53,7 +72,79 @@ sub sunriseset {
   # for zenith finding return negative el
   sub sunne {return -1*sunel($_[0]);}
 
-  my($nadir, $zenith);
+  my(%sunextreme);
+
+  # use findmin to find last/next time sun was above/below 0/-6 degrees
+  # using 12 hour windows with 6 hour jumps to avoid corner cases
+  for $i (0..1460) {
+
+    # forward and backward window start/end
+    my($wfs) = $t+$i*6*3600;
+    my($wbe) = $t-$i*6*3600;
+    my($wfe) = $wfs + 12*3600;
+    my($wbs) = $wbe - 12*3600;
+
+    # find min for sunel and sunne in both directions
+    my($fnadir) = findmin(\&sunel, $wfs, $wfe, 1);
+    my($fzenith) = findmin(\&sunne, $wfs, $wfe, 1);
+    debug("FINDING BNADIR");
+    my($bnadir) = findmin(\&sunel, $wbs, $wbe, 1);
+    debug("DONE FINDING BNADIR");
+    my($bzenith) = findmin(\&sunne, $wbs, $wbe, 1);
+
+    debug("B: $bnadir/$bzenith");
+
+    # and store value in appropriate variable
+    # TODO: use loop here
+    if (sunel($fnadir)<0 && !$sunextreme{nadir}{next}{sun}) {
+      $sunextreme{nadir}{next}{sun} = $fnadir;
+    }
+
+    if (sunel($fnadir)<-6 && !$sunextreme{nadir}{next}{twi}) {
+      $sunextreme{nadir}{next}{twi} = $fnadir;
+    }
+
+    if (sunel($bnadir)<0 && !$sunextreme{nadir}{prev}{sun}) {
+      $sunextreme{nadir}{prev}{sun} = $fnadir;
+    }
+
+    if (sunel($bnadir)>-6 && !$sunextreme{nadir}{prev}{twi}) {
+      $sunextreme{nadir}{prev}{twi} = $fnadir;
+    }
+
+    if (sunel($fzenith)>0 && !$sunextreme{zenith}{next}{sun}) {
+      $sunextreme{zenith}{next}{sun} = $fzenith;
+    }
+
+    if (sunel($fzenith)>-6 && !$sunextreme{zenith}{next}{twi}) {
+      $sunextreme{zenith}{next}{twi} = $fzenith;
+    }
+
+    if (sunel($bzenith)>0 && !$sunextreme{zenith}{prev}{sun}) {
+      $sunextreme{zenith}{prev}{sun} = $fzenith;
+    }
+
+    if (sunel($bzenith)>-6 && !$sunextreme{zenith}{prev}{twi}) {
+      $sunextreme{zenith}{prev}{twi} = $fzenith;
+    }
+
+    if ($sunextreme{nadir}{prev}{sun} &&
+	$sunextreme{nadir}{prev}{twi} &&
+	$sunextreme{nadir}{next}{sun} &&
+	$sunextreme{nadir}{next}{twi} &&
+	$sunextreme{zenith}{prev}{sun} &&
+	$sunextreme{zenith}{prev}{twi} &&
+	$sunextreme{zenith}{next}{sun} &&
+	$sunextreme{zenith}{next}{twi}) {
+      last;
+    }
+  }
+
+debug(unfold(%sunextreme));
+
+die "TESTING";
+
+
   # if sun is up, find nadir over next 24 hours; else, zenith
   if ($el>0) {
     $nadir = findmin(\&sunel, $t, $t+3600*24, 1);
