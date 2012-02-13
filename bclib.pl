@@ -1544,7 +1544,7 @@ sub findmin {
 	# intervals are [$a,$b], [$b,$c], and [$c,$d]
 	($b,$c)=($a*2/3+$d/3,$a/3+$d*2/3);
 	($fa,$fb,$fc,$fd)=(&$f($a),&$f($b),&$f($c),&$f($d));
-#	debug("$a -> $fa, $b -> $fb, $c -> $fc, $d -> $fd");
+	debug("$a -> $fa, $b -> $fb, $c -> $fc, $d -> $fd");
 
 	# too many steps?
 	if ($steps>$maxsteps) {
@@ -2114,7 +2114,6 @@ Thin wrapper around findmin to find function max
 sub findmax {
   my($f,$a,$d,$e,$maxsteps,$steps,$b,$c)=@_;
   my($nf) = sub {-1*&$f($_[0])};
-  debug("NF: $nf");
   return findmin($nf,$a,$d,$e,$maxsteps,$steps,$b,$c)
 }
 

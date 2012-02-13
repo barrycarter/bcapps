@@ -21,8 +21,13 @@ use Data::Dumper 'Dumper';
 use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 
-sunriseset(time(),35.0844869067959,-106.651138463684);
-# sunriseset(time(),65.0844869067959,-106.651138463684);
+# sunriseset(time(),35.0844869067959,-106.651138463684);
+sunriseset(time(),77.0844869067959,-106.651138463684);
+
+# debug(sunel(1342173287), sunel(1342173287+4*3600));
+# findmax(\&sunel, 1342173287, 1342173287+12*3600, 1);
+
+die "TESTING";
 
 # simpler version of objriseset for sun (and later moon?) since I get
 # ra/dec in other ways?
@@ -40,16 +45,22 @@ sub sunriseset {
 
   # find solar RA/DEC
   my($ra,$dec) = position("sun", $t);
+  debug("SOLAR POS($t): $ra $dec");
 
   # And AZEL at this lat/lon
-  my($az,$el) = radecazel2($ra,$dec,$lat,$lon,$t);
+#  my($az,$el) = radecazel2($ra,$dec,$lat,$lon,$t);
 
   # function to hit minimize (TODO: anonymize)
   sub sunel {
+    debug("SUNEL($ra,$dec,$lat,$lon,$_[0])");
     my($az,$el) = radecazel2($ra,$dec,$lat,$lon,$_[0]);
     return $el;
   }
 
+  debug(sunel(1340467535), sunel(1340510735));
+  debug(findmax(\&sunel, 1340467535, 1340510735, 1));
+
+  die "TESTING";
 
   my(%sol);
 
@@ -64,6 +75,14 @@ sub sunriseset {
       for $k ("horizon", "twilight") {
 	# if already defined, ignore
 	if ($sol{$i}{$j}{$k}) {next;}
+
+	# YIKES!
+	if ("$i$j$k" eq "nextzenithhorizon") {
+	  $globopts{debug}=1;
+	} else {
+	  $globopts{debug}=0;
+	}
+
 
 	# otherwise, loop to find
 	for $n (0..1460) {
@@ -83,6 +102,7 @@ sub sunriseset {
 	    $val = findmin(\&sunel, $st, $en, 1);
 	  } else {
 	    $val = findmax(\&sunel, $st, $en, 1);
+	    debug("findmax $st/$en yields $val",sunel($val));
 	  }
 
 	  if ($k eq "horizon") {
@@ -103,9 +123,9 @@ sub sunriseset {
 	    
 	}
 
-	debug("$i/$j/$k -> $sol{$i}{$j}{$k}");
+#	debug("$i/$j/$k -> $sol{$i}{$j}{$k}");
 #	print "$i/$j/$k -> $sol{$i}{$j}{$k}\n";
-	print "$i/$j/$k -> ". strftime("%F %T", localtime($sol{$i}{$j}{$k})) ."\n";
+	print "$i/$j/$k -> ". strftime("%F %T", localtime($sol{$i}{$j}{$k})) . " ". sunel($sol{$i}{$j}{$k}) ."\n";
 
       }
     }
