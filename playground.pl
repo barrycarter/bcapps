@@ -21,15 +21,16 @@ use Data::Dumper 'Dumper';
 use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 
-sunriseset(time(),35,-106);
+# sunriseset(time(),35.0844869067959,-106.651138463684);
+sunriseset(time(),65.0844869067959,-106.651138463684);
 
 # simpler version of objriseset for sun (and later moon?) since I get
 # ra/dec in other ways?
 
-=item sunriseset($t,$lat,$lon)
+=item sunriseset($t,$lat,$lon,$el)
 
 Return the sunrise and set nearest to (and "bracketing") $t for
-position, $lat, $lon
+position, $lat, $lon, elevation $el feet (currently ignored)
 
 =cut
 
@@ -49,12 +50,34 @@ sub sunriseset {
     return $el;
   }
 
-  # search for next sunrise/set in 12-hour overlapping blocks
+  # for civil twilight
+  sub suntw {return sunel($_[0])+6;}
+
+  # search for next sunrise/set/twilight in 12-hour overlapping blocks
+  my($prev,$next,$prevt,$nextt);
+
   for $i (0..1461) {
-    debug("CHECKING", $t+6*$i*3600, $t+6*$i*3600+12*3600);
-    my($time) = findroot(\&sunel, $t+6*$i*3600, $t+6*$i*3600+12*3600, 0.01);
-    debug("root: $time");
+    unless ($next) {
+      $next = findroot(\&sunel, $t+6*$i*3600, $t+6*$i*3600+12*3600, 0.01);
+    }
+
+    unless ($nextt) {
+      $nextt = findroot(\&suntw, $t+6*$i*3600, $t+6*$i*3600+12*3600, 0.01);
+    }
+
+    unless ($prev) {
+      $prev = findroot(\&sunel, $t-6*$i*3600-12*3600, $t-6*$i*3600, 0.01);
+    }
+
+    unless ($prevt) {
+      $prevt = findroot(\&suntw, $t-6*$i*3600-12*3600, $t-6*$i*3600, 0.01);
+    }
+
+    if ($prev && $next && $prevt && $nextt) {last;}
   }
+
+  debug("$prevt,$prev,$next,$nextt");
+  die "TESTING";
 
   # determine local true noon/midnight
 
