@@ -106,9 +106,6 @@ for $i (@w) {
 
 # create mathematica file (currently unused)
 
-
-$globopts{debug} = 1;
-
 for $i (@wok) {
   %hash = %{$i};
   ($mercy, $mercx) = to_mercator($hash{latitude}, $hash{longitude});
@@ -118,8 +115,6 @@ for $i (@wok) {
 }
 
 write_file("map = {".join(",\n", @math)."}", "math.m");
-
-die "TESTING";
 
 write_file(unfold(@wok), "wok.txt");
 

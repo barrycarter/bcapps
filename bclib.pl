@@ -1310,8 +1310,6 @@ sub bin_volt {
   return log($strike/$under)/udistr($price/100)/sqrt($exp);
 }
 
-
-
 =item post_to_wp($body, $options)
 
 Posts $body as a new WordPress post with the following options:

@@ -3,6 +3,16 @@
 showit := Module[{}, 
 Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
+(* credit card DFQ from bc-cc-interest.pl; see also http://stackoverflow.com/questions/4455575/find-equivalent-interest-rate-for-cash-advance-fee-promo-rate *)
+
+Solve[owed[t] == have[t], t] /.
+DSolve[{
+ owed'[t] == int*owed[t] - min*owed[t],
+ have'[t] == int2*have[t] - min*owed[t],
+ have[0] == amt,
+ owed[0] == amt*fee
+}, {owed[t], have[t]}, t]
+
 (* Use KABQ hourly data to determine trends, db/abqhourly.m (after bunzip) *)
 
 (* -9999 = temp unknown  and drops nulls *)
