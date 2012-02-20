@@ -17,19 +17,37 @@ require "bclib.pl";
 
 %sun = ("mass" => 10**2); # all others to 0
 
-%earth = ("mass" => 1, "x" => 100, "dy" => 1); # all others 0
+%earth = ("mass" => 10, "x" => 100, "dy" => 1); # all others 0
+
+%sun = ("mass" => 1.9891*10**30,
+"x" => -6.243886115088563E+05,
+"y" => 1.062083997699179E+05,
+"z" => 2.400305101962630E+03,
+"dx" => 1.425074259611765E-03,
+"dy" => -1.068014319018527E-02,
+"dz" =>-1.402385389576667E-05
+);
+
+%earth = ("mass" => 5.9736*10**24,
+"x" => -2.629469163081263E+07,
+"y" => 1.449571069968961E+08,
+"z" => -1.207457863667849E+03,
+"dx" => -2.982509096017993E+01,
+"dy" => -5.315222157007564E+00,
+"dz" => -7.367084768116921E-04
+);
 
 # gravitational constant in km^3kg^-1s^-2
 $g = 6.6742867*10**-20;
 
 # test grav
-$g = 1;
+# $g = 1;
 
 debug("BEFORE", %earth);
 
-$step = 0.1;
+$step = 1440*60;
 # $total = 365*86400;
-$total = 144*4;
+$total = 86400*30*12*100;
 
 for $i (1..$total/$step) {
   twobod(\%earth, \%sun, $step);
@@ -37,7 +55,9 @@ for $i (1..$total/$step) {
 #  twobod(\%sun, \%moon, $step);
   update_pos($step);
   # I use gnuplot to graph the result as a test
-  print "$earth{x} $earth{y}\n";
+#  print "$earth{x} $earth{y}\n";
+#  print "$sun{x} $sun{y}\n";
+print $earth{x}-$sun{x}," ",$earth{y}-$sun{y},"\n";
 }
 
 debug("AFTER", %earth);
