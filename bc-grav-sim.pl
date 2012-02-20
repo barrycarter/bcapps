@@ -13,46 +13,31 @@ require "bclib.pl";
 
 # TODO: naming objects individually is inefficient
 
-%sun = ("mass" => 1.9891*10**30,
-	"x" => -6.243886115088563E+05,
-	"y" => 1.062083997699179E+05,
-	"z" => 2.400305101962630E+03,
-	"dx" => 1.425074259611765E-03,
-	"dy" => -1.068014319018527E-02,
-	"dz" =>-1.402385389576667E-05
-	);
+# simplified ellipse for testing
 
-%earth = ("mass" => 5.9736*10**24,
-	  "x" => -2.629469163081263E+07,
-	  "y" => 1.449571069968961E+08,
-	  "z" => -1.207457863667849E+03,
-	  "dx" => -2.982509096017993E+01,
-	  "dy" => -5.315222157007564E+00,
-	  "dz" => -7.367084768116921E-04
-	  );
+%sun = ("mass" => 10**2); # all others to 0
 
-%moon = ("mass" => 734.9*10**20,
-	 "x" => -2.648940524592340E+07,
-	 "y" => 1.446321279486018E+08,
-	 "z" => -2.055339080217336E+04,
-	 "dx" => -2.895706787392246E+01,
-	 "dy" => -5.878199883958461E+00,
-	 "dz" => 7.710557110927302E-02
-	 );
+%earth = ("mass" => 1, "x" => 100, "dy" => 1); # all others 0
 
 # gravitational constant in km^3kg^-1s^-2
 $g = 6.6742867*10**-20;
 
+# test grav
+$g = 1;
+
 debug("BEFORE", %earth);
 
-$step = 60;
-$total = 365*86400;
+$step = 0.1;
+# $total = 365*86400;
+$total = 144*4;
 
 for $i (1..$total/$step) {
   twobod(\%earth, \%sun, $step);
-  twobod(\%earth, \%moon, $step);
-  twobod(\%sun, \%moon, $step);
+#  twobod(\%earth, \%moon, $step);
+#  twobod(\%sun, \%moon, $step);
   update_pos($step);
+  # I use gnuplot to graph the result as a test
+  print "$earth{x} $earth{y}\n";
 }
 
 debug("AFTER", %earth);
@@ -86,8 +71,15 @@ sub twobod {
   # change in velocity for objects a and b
   # $vec/sqrt($dist2) is a unit vector
   for $i ("x".."z") {
-    $a->{"d$i"} += $vec{$i}*$b->{mass}/$dist2/sqrt($dist2)*$g*$n;
-    $b->{"d$i"} -= $vec{$i}*$a->{mass}/$dist2/sqrt($dist2)*$g*$n;
+
+    # velocity change for object $a, $b
+    my($dva) = $vec{$i}*$b->{mass}/$dist2/sqrt($dist2)*$g*$n;
+    my($dvb) = $vec{$i}*$a->{mass}/$dist2/sqrt($dist2)*$g*$n;
+
+    debug("For $i, $dva, $dvb");
+
+    $a->{"d$i"} += $dva;
+    $b->{"d$i"} -= $dvb;
   }
 }
 
