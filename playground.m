@@ -13,6 +13,94 @@ DSolve[{
  owed[0] == amt*fee
 }, {owed[t], have[t]}, t]
 
+conds =  {int -> 6/100, min -> 3/100, fee -> 2/100}
+
+Solve[owed[t] == have[t], int2] /.
+DSolve[{
+ owed'[t] == int*owed[t] - min*owed[t] /. conds,
+ have'[t] == int2*have[t] - min*owed[t] /. conds,
+ have[0] == 1 /. conds,
+ owed[0] == fee /. conds
+}, {owed[t], have[t]}, t]
+
+(* use http://aa.usno.navy.mil/cgi-bin/aa_rstablew.pl data to find best fit curve for length of day *)
+
+<<"!perl -anle 'sub BEGIN {print \"data={\"} sub END {print \"}\"} unless (/^[0-9]/) {next;} print \"{\"; for $i (0..11) {$x=substr($_,5+11*$i,10);$x=~s/\s/,/;$x=~s/\s*$//; print \"{$x},\"}; print \"},\"' /home/barrycarter/BCGIT/db/srss-65n.txt"
+
+(* the data is in ugly form: hhmm, and each rows represents a date,
+like the 27th, for each month; the below cleans this up nicely *)
+
+f[x_] = Floor[x/100] + Mod[x,100]/60
+d2 = Map[f,DeleteCases[Flatten[Transpose[DeleteCases[data,Null]]],Null]]
+d3 = Table[d2[[i+1]]-d2[[i]],{i,1,Length[d2],2}]
+
+(* nice, sine-like wave below *)
+
+ListPlot[d3]
+
+(* first three Fourier terms appear to work well *)
+
+fitme[x_] = c0 + c1*Sin[x/366*2*Pi + c2] + c3*Sin[2*x/366*2*Pi + c4] +
+ c5*Sin[3*x/366*2*Pi + c6]
+
+fit[x_] = fitme[x] /.
+FindFit[d3, fitme[x], {c0,c1,c2,c3,c4,c5,c6}, x]
+
+(* residuals (in minutes) *)
+diffs = Table[60*(d3[[i]] - fit[i]),{i,1,366}]
+
+ListPlot[diffs,PlotRange->All,PlotJoined->True]
+
+(*
+
+Results:
+
+for 35N: 
+
+12.17695810564663 - 2.2953248962442743*Sin[1.3975767265331764 - (Pi*x)/183] - 
+ 0.021757064356510064*Sin[1.4830003645309824 + (2*Pi*x)/183] - 
+ 0.05791554634652895*Sin[2.0862521448266143 + (Pi*x)/61]
+
+for 40N:
+
+12.195309653916212 - 2.7657088311643028*
+  Sin[1.3970291332060125 - (Pi*x)/183] - 0.026018266221687174*
+  Sin[1.4457660007570647 + (2*Pi*x)/183] - 
+ 0.07493789567389378*Sin[2.078928604511676 + (Pi*x)/61]
+
+for 45N:
+
+12.21848816029144 - 3.3213738010117693*Sin[1.3975212065347047 - (Pi*x)/183] - 
+ 0.029619752930272168*Sin[1.4369720568764897 + (2*Pi*x)/183] - 
+ 0.10039096273827293*Sin[2.0864065165171435 + (Pi*x)/61]
+
+for 50N:
+
+12.249863387978142 - 4.004529463127261*Sin[1.3975199952244841 - (Pi*x)/183] - 
+ 0.032938707095312054*Sin[1.3708424645486041 + (2*Pi*x)/183] - 
+ 0.13710842909531928*Sin[2.09344402070527 + (Pi*x)/61]
+
+for 55N: (diffs of over 1m, and definitely showing a "sin(5x)" pattern)
+
+12.29535519125683 - 4.88712126398891*Sin[1.3974823984389089 - (Pi*x)/183] - 
+ 0.03179707785286025*Sin[1.2247093298434937 + (2*Pi*x)/183] - 
+ 0.20085908488999415*Sin[2.0960777979500858 + (Pi*x)/61]
+
+for 60N: (diffs approaching 3m, strong "sin(5x)" pattern)
+
+12.366621129326047 - 0.3323859261039487*Sin[1.0498084329064128 - (Pi*x)/61] + 
+ 6.126639453559547*Sin[4.539058614130759 - (Pi*x)/183] - 
+ 0.028173091102636834*Sin[0.5143017626631174 + (2*Pi*x)/183]
+
+for 65N: 
+
+
+
+
+*)
+
+
+
 (* Use KABQ hourly data to determine trends, db/abqhourly.m (after bunzip) *)
 
 (* -9999 = temp unknown  and drops nulls *)
