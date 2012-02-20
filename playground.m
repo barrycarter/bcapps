@@ -25,7 +25,12 @@ DSolve[{
 
 (* use http://aa.usno.navy.mil/cgi-bin/aa_rstablew.pl data to find best fit curve for length of day *)
 
-<<"!perl -anle 'sub BEGIN {print \"data={\"} sub END {print \"}\"} unless (/^[0-9]/) {next;} print \"{\"; for $i (0..11) {$x=substr($_,5+11*$i,10);$x=~s/\s/,/;$x=~s/\s*$//; print \"{$x},\"}; print \"},\"' /home/barrycarter/BCGIT/db/srss-65n.txt"
+<<"!perl -anle 'sub BEGIN {print \"data={\"} sub END {print \"}\"} unless (/^[0-9]/) {next;} print \"{\"; for $i (0..11) {$x=substr($_,5+11*$i,10);$x=~s/\s/,/;$x=~s/\s*$//; print \"{$x},\"}; print \"},\"' /home/barrycarter/BCGIT/db/srss-60n.txt"
+
+(* below is probably correct version for all files, but turns out to
+be irrelevant south of 60N? *)
+
+<<"!perl -anle 'sub BEGIN {print \"data={\"} sub END {print \"}\"} unless (/^[0-9]/) {next;} print \"{\"; for $i (0..11) {$x=substr($_,4+11*$i,10);$x=~s/\s/,/;$x=~s/\s*$//; print \"{$x},\"}; print \"},\"' /home/barrycarter/BCGIT/db/srss-70n.txt"
 
 (* the data is in ugly form: hhmm, and each rows represents a date,
 like the 27th, for each month; the below cleans this up nicely *)
@@ -42,6 +47,19 @@ ListPlot[d3]
 
 fitme[x_] = c0 + c1*Sin[x/366*2*Pi + c2] + c3*Sin[2*x/366*2*Pi + c4] +
  c5*Sin[3*x/366*2*Pi + c6]
+
+(* modified below for 65N case *)
+
+fitme[x_] = c0 + c1*Sin[x/366*2*Pi + c2] + c3*Sin[2*x/366*2*Pi + c4] +
+ c5*Sin[3*x/366*2*Pi + c6] + c7*Sin[4*x/366*2*Pi + c8] + 
+ c9*Sin[5*x/366*2*Pi + c10]
+
+fitme[x_] = c0 + c1*Sin[x/366*2*Pi + c2] + c3*Sin[2*x/366*2*Pi + c4] +
+ c5*Sin[3*x/366*2*Pi + c6] + c7*Sin[5*x/366*2*Pi + c8]*Sin[1/2*x/366*2*Pi+c9]
+
+
+fit[x_] = fitme[x] /.
+FindFit[d3, fitme[x], {c0,c1,c2,c3,c4,c5,c6,c7,c8,c9,c10}, x]
 
 fit[x_] = fitme[x] /.
 FindFit[d3, fitme[x], {c0,c1,c2,c3,c4,c5,c6}, x]
@@ -92,9 +110,17 @@ for 60N: (diffs approaching 3m, strong "sin(5x)" pattern)
  6.126639453559547*Sin[4.539058614130759 - (Pi*x)/183] - 
  0.028173091102636834*Sin[0.5143017626631174 + (2*Pi*x)/183]
 
-for 65N: 
+for 65N: (diffs up to 20m, "sin(5x)" pattern is strong)
 
+12.53943533697632 + 8.227563673411336*Sin[4.538803223403626 - (Pi*x)/183] + 
+ 0.14114455405156695*Sin[2.20319450021785 + (2*Pi*x)/183] - 
+ 0.7550946690168826*Sin[2.093554971972919 + (Pi*x)/61]
 
+12.538333951043256 + 8.230179551945618*Sin[4.538729883308269 - (Pi*x)/183] - 
+ 0.24546385293978604*Sin[3.8150139254154904 - (5*Pi*x)/183]*
+  Sin[3.1507227641197093 + (Pi*x)/366] - 0.13662959788605702*
+  Sin[5.343824436119907 + (2*Pi*x)/183] - 0.7651221272215183*
+  Sin[2.09729425139858 + (Pi*x)/61]
 
 
 *)
