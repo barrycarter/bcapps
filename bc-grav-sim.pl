@@ -37,6 +37,15 @@ require "bclib.pl";
 "dz" => -7.367084768116921E-04
 );
 
+%moon = ("mass" => 734.9*10**20,
+"x" => -2.648940524592340E+07,
+"y" => 1.446321279486018E+08,
+"z" => -2.055339080217336E+04,
+"dx" => -2.895706787392246E+01,
+"dy" => -5.878199883958461E+00,
+"dz" => 7.710557110927302E-02
+);
+
 # gravitational constant in km^3kg^-1s^-2
 $g = 6.6742867*10**-20;
 
@@ -45,19 +54,24 @@ $g = 6.6742867*10**-20;
 
 debug("BEFORE", %earth);
 
-$step = 1440*60;
+$step = 600;
 # $total = 365*86400;
-$total = 86400*30*12*100;
+$total = 86400*365.2425;
 
 for $i (1..$total/$step) {
+
+# this occurs before, so I can test init conditions
+print $moon{x}-$earth{x}," ",$moon{y}-$earth{y},"\n";
+
   twobod(\%earth, \%sun, $step);
-#  twobod(\%earth, \%moon, $step);
-#  twobod(\%sun, \%moon, $step);
+  twobod(\%earth, \%moon, $step);
+  twobod(\%sun, \%moon, $step);
   update_pos($step);
   # I use gnuplot to graph the result as a test
 #  print "$earth{x} $earth{y}\n";
 #  print "$sun{x} $sun{y}\n";
-print $earth{x}-$sun{x}," ",$earth{y}-$sun{y},"\n";
+# print $earth{x}-$sun{x}," ",$earth{y}-$sun{y},"\n";
+# print $moon{x}-$earth{x}," ",$moon{y}-$earth{y},"\n";
 }
 
 debug("AFTER", %earth);
