@@ -50,6 +50,12 @@ test1[line1_, line2_] = {line1[0],line1[1],line2[0],line2[1]}
 intersectionbypts[sidea[test][0],sidea[test][1],sideb[test][0],sideb[test][1]]
 intersect[sidea[test],sideb[test]]
 
+(* line perpindicular to given line, going through given point *)
+
+perpin[line_, p_] = Function[t, p + (1 + I*Tan[Arg[line[0] - line[1]]+Pi/2])*t]
+perpin[line_, p_] = Function[t, p + (1 + I*Tan[Arg[line[0] - line[1]]-Pi/2])*t]
+
+
 (* the side formulas *)
 
 sidea[z_] = line[1,z]
@@ -68,9 +74,27 @@ medalen[z_] = Abs[(1+z)/2]
 medblen[z_] = Abs[1-z/2]
 medclen[z_] = Abs[z-1/2]
 
+(* centroid, calculated 3 different ways, agree; final one is super-simple form *)
+
+centroid1[z_] = intersect[meda[z],medb[z]]
+centroid2[z_] = intersect[meda[z],medc[z]]
+centroid3[z_] = intersect[medb[z],medc[z]]
+centroid[z_] = Simplify[centroid3[z]]
+
+(* altitudes *)
+
+alta[z_] = perpin[sidea[z],0]
+altb[z_] = perpin[sideb[z],1]
+altc[z_] = perpin[sidec[z],z]
+
+
 (* tests on sample triangle *)
 
 test = 1/6+3/5*I
+
+centroid1[test]
+centroid2[test]
+centroid3[test]
 
 N[anglea[test]/Degree]
 N[angleb[test]/Degree]
@@ -80,17 +104,27 @@ N[lena[test]]
 N[lenb[test]]
 N[lenc[test]]
 
+perpin[sidea[test], 0]
+
+plotline[perpin[sidea[test],0]]
+
 (* useful graphics *)
 
 plotline[line_] := ParametricPlot[{Re[line[t]],Im[line[t]]}, {t,0,1}]
 
-
 (* The 'Show' below forces all lines onto the same graph *)
+
+Show[{plotline[alta[test]], plotline[altb[test]],
+      plotline[sidea[test]], plotline[sideb[test]], plotline[sidec[test]]},
+ PlotRange->All, AxesOrigin->{0,0}]
 
 Show[{plotline[meda[test]], plotline[medb[test]], plotline[medc[test]]}]
 Show[{plotline[sidea[test]], plotline[sideb[test]], plotline[sidec[test]]}, 
  PlotRange->All, AxesOrigin->{0,0}]
 
-
-
+Show[{plotline[sidea[test]], plotline[sideb[test]], plotline[sidec[test]], 
+ plotline[perpin[sidea[test],0]], 
+ plotline[perpin[sideb[test],0]], 
+ plotline[perpin[sidec[test],0]]}, 
+ PlotRange->All, AxesOrigin->{0,0}]
 
