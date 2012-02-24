@@ -53,8 +53,6 @@ intersect[sidea[test],sideb[test]]
 (* line perpindicular to given line, going through given point *)
 
 perpin[line_, p_] = Function[t, p + (1 + I*Tan[Arg[line[0] - line[1]]+Pi/2])*t]
-perpin[line_, p_] = Function[t, p + (1 + I*Tan[Arg[line[0] - line[1]]-Pi/2])*t]
-
 
 (* the side formulas *)
 
@@ -81,11 +79,14 @@ centroid2[z_] = intersect[meda[z],medc[z]]
 centroid3[z_] = intersect[medb[z],medc[z]]
 centroid[z_] = Simplify[centroid3[z]]
 
-(* altitudes *)
+(* point where perpindicular hits opposite side *)
+intersect[perpin[sidea[z],0],sidea[z]]
 
-alta[z_] = perpin[sidea[z],0]
-altb[z_] = perpin[sideb[z],1]
-altc[z_] = perpin[sidec[z],z]
+(* altitudes scaled so t=1 hits opposite edge *)
+
+alta[z_] = line[0, intersect[perpin[sidea[z],0],sidea[z]]]
+altb[z_] = line[1, intersect[perpin[sideb[z],1],sideb[z]]]
+altc[z_] = line[z, intersect[perpin[sidec[z],z], sidec[z]]]
 
 
 (* tests on sample triangle *)
@@ -118,7 +119,10 @@ Show[{plotline[alta[test]], plotline[altb[test]],
       plotline[sidea[test]], plotline[sideb[test]], plotline[sidec[test]]},
  PlotRange->All, AxesOrigin->{0,0}]
 
-Show[{plotline[meda[test]], plotline[medb[test]], plotline[medc[test]]}]
+Show[{plotline[meda[test]], plotline[medb[test]], plotline[medc[test]]},
+ {plotline[sidea[test]],plotline[sideb[test]],plotline[sidec[test]]},
+ PlotRange->All, AxesOrigin->{0,0}]
+
 Show[{plotline[sidea[test]], plotline[sideb[test]], plotline[sidec[test]]}, 
  PlotRange->All, AxesOrigin->{0,0}]
 

@@ -16,7 +16,7 @@ system("rm -f commands.txt results.txt err.txt.new; touch err.txt.new");
 for $i (split(/\n/,read_file("$ENV{HOME}/montastic.txt"))) {
   if ($i=~/^\#/ || $i=~/^\s*$/) {next;}
   ($user,$pass) = split(":",$i);
-  append_file("curl -s -H 'Accept: application/xml' -u $user:$pass https://www.montastic.com/checkpoints/index\n", "commands.txt");
+  append_file("echo $user; curl -s -H 'Accept: application/xml' -u $user:$pass https://www.montastic.com/checkpoints/index\n", "commands.txt");
   push(@users, $user);
 }
 
