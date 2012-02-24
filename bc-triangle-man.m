@@ -54,6 +54,15 @@ intersect[sidea[test],sideb[test]]
 
 perpin[line_, p_] = Function[t, p + (1 + I*Tan[Arg[line[0] - line[1]]+Pi/2])*t]
 
+(* nonworking code alpha starts here 
+
+(* icky special case for vertical lines, not working *)
+
+perpin[line_, p_] = Function[t, p + (line[1]-line[0])*t] /; 
+ Member[(line[1]-line[0])/I, Reals]
+
+nonworking code alpha ends here *)
+
 (* the side formulas *)
 
 sidea[z_] = line[1,z]
@@ -86,12 +95,37 @@ intersect[perpin[sidea[z],0],sidea[z]]
 
 alta[z_] = line[0, intersect[perpin[sidea[z],0],sidea[z]]]
 altb[z_] = line[1, intersect[perpin[sideb[z],1],sideb[z]]]
-altc[z_] = line[z, intersect[perpin[sidec[z],z], sidec[z]]]
 
+(* TODO: dislike having below as special case! *)
+altc[z_] = line[z, Re[z]]
+
+(* orthocenter *)
+
+orthocenter1[z_] = Simplify[intersect[alta[z],altb[z]]]
+orthocenter2[z_] = Simplify[intersect[alta[z],altc[z]]]
+orthocenter3[z_] = Simplify[intersect[altb[z],altc[z]]]
+
+(* TODO: for now, orthocenter3 looks simplest, but not that simple *)
+
+orthocenter[z_] = Simplify[ComplexExpand[orthocenter3[z], {z}]]
+
+Simplify[orthocenter[z], {Im[z]>0,Re[z]>0}]
+
+Simplify[Cot[Arg[z]], {Im[z]>0, Re[z]>0}]
+
+(* below is testing only, Cot + Tan aren't always inverse functions *)
+
+orthocenter[z] //. {Arg[z_] -> Tan[Im[z]/Re[z]], Cot[Tan[z_]] -> z}
 
 (* tests on sample triangle *)
 
 test = 1/6+3/5*I
+
+(* useful graphics *)
+
+plotline[line_] := ParametricPlot[{Re[line[t]],Im[line[t]]}, {t,0,1}]
+
+(* test code below is commented out
 
 centroid1[test]
 centroid2[test]
@@ -109,13 +143,9 @@ perpin[sidea[test], 0]
 
 plotline[perpin[sidea[test],0]]
 
-(* useful graphics *)
-
-plotline[line_] := ParametricPlot[{Re[line[t]],Im[line[t]]}, {t,0,1}]
-
 (* The 'Show' below forces all lines onto the same graph *)
 
-Show[{plotline[alta[test]], plotline[altb[test]],
+Show[{plotline[alta[test]], plotline[altb[test]], plotline[altc[test]],
       plotline[sidea[test]], plotline[sideb[test]], plotline[sidec[test]]},
  PlotRange->All, AxesOrigin->{0,0}]
 
@@ -132,3 +162,4 @@ Show[{plotline[sidea[test]], plotline[sideb[test]], plotline[sidec[test]],
  plotline[perpin[sidec[test],0]]}, 
  PlotRange->All, AxesOrigin->{0,0}]
 
+test code above is commented out *)
