@@ -9,7 +9,7 @@ require "bclib.pl";
 
 # ignoring stderr and return val
 # TODO: reduce 600 below, it's too long
-($page) = cache_command("curl -A 'gocomics\@barrycarter.info' http://www.gocomics.com/comments/page/1", "age=600");
+($page) = cache_command("curl -A 'gocomics\@barrycarter.info' http://www.gocomics.com/comments/page/1", "age=60");
 
 while ($page=~s%<ol class='comment-thread'>(.*?)</ol>%%s) {
   # grab comment body
@@ -50,6 +50,13 @@ for $i (@querys) {
 }
 print A "COMMIT;\n";
 close(A);
+
+# playing it safe
+system("cd /var/tmp; cp /sites/DB/gocomics.db .; sqlite3 gocomics.db < gocomics-queries.txt; mv /sites/DB/gocomics.db /sites/DB/gocomics.db.old; mv gocomics.db /sites/DB/");
+
+# psuedo-daemonize
+sleep(150);
+exec($0);
 
 =item schema
 
