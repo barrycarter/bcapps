@@ -121,7 +121,8 @@ test = 1/6+3/5*I
 
 (* useful graphics *)
 
-plotline[line_] := ParametricPlot[{Re[line[t]],Im[line[t]]}, {t,0,1}]
+plotline[line_, style_:{}] :=
+ ParametricPlot[{Re[line[t]],Im[line[t]]}, {t,0,1}, PlotStyle -> style]
 
 (* test code below is commented out
 
@@ -139,7 +140,26 @@ N[lenc[test]]
 
 perpin[sidea[test], 0]
 
-plotline[perpin[sidea[test],0]]
+plotline[perpin[sidea[test],0], Red]
+
+(* everything w color scheme; red medians; blue alts *)
+
+Show[{
+ plotline[sidea[test],{Black,Thick}],
+ plotline[sideb[test],{Black,Thick}],
+ plotline[sidec[test],{Black,Thick}], 
+ plotline[meda[test],{Red,Thick}],
+ plotline[medb[test],{Red,Thick}],
+ plotline[medc[test],{Red,Thick}],
+ plotline[alta[test],{Blue,Thick}],
+ plotline[altb[test],{Blue,Thick}],
+ plotline[altc[test],{Blue,Thick}]
+}, PlotRange-> All, AxesOrigin -> {0,0}]
+
+
+(* testing color changes *)
+
+Show[{plotline[sidea[test]], Graphics[Red], plotline[sideb[test]]}]
 
 (* The 'Show' below forces all lines onto the same graph *)
 
