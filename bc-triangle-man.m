@@ -105,8 +105,6 @@ orthocenter1[z_] = Simplify[intersect[alta[z],altb[z]]]
 orthocenter2[z_] = Simplify[intersect[alta[z],altc[z]]]
 orthocenter3[z_] = Simplify[intersect[altb[z],altc[z]]]
 
-(* TODO: for now, orthocenter3 looks simplest, but not that simple *)
-
 orthocenter[z_] = Simplify[ComplexExpand[orthocenter3[z], {z}]]
 
 Simplify[orthocenter[z], {Im[z]>0,Re[z]>0}]

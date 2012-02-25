@@ -1,0 +1,8 @@
+http://www.gocomics.com/comments/page/{n} (where n is an integer)
+gives you the nth page of gocomics comics *comments*. Would be useful
+to db-ify this
+
+http://dilbert.com/rating.process?Type=comment&Rating=1&pkID=1153938&cid=cid
+autorates a Dilbert comment (but does require login)
+
+
