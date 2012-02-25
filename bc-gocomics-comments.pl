@@ -23,6 +23,9 @@ while ($page=~s%<ol class='comment-thread'>(.*?)</ol>%%s) {
   $comment=~s%commented on <a href="/(.*?)/(.*?)/(.*?)/(.*?)">(.*?)</a>\s*<em>(.*?)</em>%%s;
   ($strip, $yy, $mo, $da, $stripname, $time) = ($1, $2, $3, $4, $5, $6);
 
+  # some stripnames have apostrophes; stripping them is easy, but wrong
+  $stripname=~s/\'//isg;
+
   # body of comment
   $comment=~s%<p><p>(.*?)</p></p>%%s;
   $body = $1;
