@@ -2,6 +2,20 @@
 
 # TODO: standardize units to match weather.sql
 
+# weather abbreviations
+
+our(%ABBREV) = ("BC" => "Patches", "BL" => "Blowing", "DR" => "Low
+Drifting", "FZ" => "Supercooled/freezing", "MI" => "Shallow", "PR" =>
+"Partial", "SH" => "Showers", "TS" => "Thunderstorm", "BR" => "Mist",
+"DS" => "Dust Storm", "DU" => "Widespread Dust", "DZ" => "Drizzle",
+"FC" => "Funnel Cloud", "FG" => "Fog", "FU" => "Smoke", "GR" =>
+"Hail", "GS" => "Small Hail/Snow Pellets", "HZ" => "Haze", "IC" =>
+"Ice Crystals", "PL" => "Ice Pellets", "PO" => "Dust/Sand Whirls",
+"PY" => "Spray", "RA" => "Rain", "SA" => "Sand", "SG" => "Snow
+Grains", "SN" => "Snow", "SQ" => "Squall", "SS" => "Sandstorm", "UP"
+=> "Unknown Precipitation (Automated Observations)", "VA" => "Volcanic
+Ash" );
+
 =item day2time($day, $hour)
 
 Given day of month $day and hour $hour, figure out month and year.

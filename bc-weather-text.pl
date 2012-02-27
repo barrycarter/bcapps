@@ -8,47 +8,13 @@
 
 push(@INC, "/usr/local/lib");
 require "bclib.pl";
+require "bc-weather-lib.pl";
 
 # own tmp dir
 dodie('chdir("/var/tmp/bcweathertext")');
 
 # HTTP header (plain text formats nicer, bizarrely)
 print "Content-type: text/plain\n\n";
-
-# list of METAR weather abbrevs (TODO: put this somewhere better, and
-# non-redundant)
-
-%ABBREV=("BC" => lc("Patches"),
-	 "BL" => lc("Blowing"),
-	 "DR" => lc("Low Drifting"),
-	 "FZ" => lc("Supercooled/freezing"),
-	 "MI" => lc("Shallow"),
-	 "PR" => lc("Partial"),
-	 "SH" => lc("Showers"),
-	 "TS" => lc("Thunderstorm"),
-	 "BR" => lc("Mist"),
-	 "DS" => lc("Dust Storm"),
-	 "DU" => lc("Widespread Dust"),
-	 "DZ" => lc("Drizzle"),
-	 "FC" => lc("Funnel Cloud"),
-	 "FG" => lc("Fog"),
-	 "FU" => lc("Smoke"),
-	 "GR" => lc("Hail"),
-	 "GS" => lc("Small Hail/Snow Pellets"),
-	 "HZ" => lc("Haze"),
-	 "IC" => lc("Ice Crystals"),
-	 "PL" => lc("Ice Pellets"),
-	 "PO" => lc("Dust/Sand Whirls"),
-	 "PY" => lc("Spray"),
-	 "RA" => lc("Rain"),
-	 "SA" => lc("Sand"),
-	 "SG" => lc("Snow Grains"),
-	 "SN" => lc("Snow"),
-	 "SQ" => lc("Squall"),
-	 "SS" => lc("Sandstorm"),
-	 "UP" => lc("Unknown Precipitation (Automated Observations)"),
-	 "VA" => lc("Volcanic Ash")
-	);
 
 # do everything in UTC
 delete($ENV{TZ});
@@ -87,14 +53,7 @@ while ($res=~s%<(.*?)>(.*?)</\1>%$hash{$1}=$2;%iseg) {}
 
 debug("HASH",unfold(%hash));
 
-# TODO: this is ugly for two reasons:
-# 1) geonames already lists all metar stations
-# 2) I could join bc-cityfind.pl's query to get everything in one go
-# 3) converting lat/lon to 3D is just plain weird
-
 LAT:
-
-# ($x,$y,$z) = sph2xyz($hash{longitude},$hash{latitude},1,"degrees=1");
 
 # nice latitude/longitude for location (not METAR station)
 $hash{nicelat} = nicedeg2($hash{latitude},"N");
@@ -116,17 +75,7 @@ SELECT station_id FROM metar_now m ORDER BY
 ;
 ";
 
-# JOIN stations s ON (m.station_id=s.metar)
-# WHERE m.station_id = 
-# (SELECT s.metar
-# FROM stations s JOIN metar m ON (s.metar = m.station_id)
-# ORDER BY (x-$x)*(x-$x) + (y-$y)*(y-$y) + (z-$z)*(z-$z)
-# LIMIT 1)
-#ORDER BY observation_time DESC
-# ;
-# ";
-
-# double minuses are treated as comments, so...
+# double minuses are treated as comments in SQL , so change to single positive
 $query=~s/\-\-/+/isg;
 
 @res = sqlite3hashlist($query,"/sites/DB/metarnew.db");
@@ -138,6 +87,7 @@ for $i (@res) {
   %report = %{$i};
 
   # canonical elevation in ft
+  # this doesn't change per observation, so baddish to put it here
   $report{elev} = round(convert($report{elevation_m}, "m", "ft"));
 
   # canonical pressure in inches
@@ -166,6 +116,7 @@ for $i (@res) {
 
 }
 
+# @res2 = observations w/ "correct" units
 debug("RES2",unfold(@res2),"/RES2");
 
 # @out = thing we're eventually going to print out.
@@ -173,24 +124,28 @@ debug("RES2",unfold(@res2),"/RES2");
 # location data
 push(@out,"$hash{city}, $hash{state}, $hash{country} is at $hash{nicelat}, $hash{nicelon}");
 
-# For this station: %ai = most recent observation; @e = all observations
-%ai = %{$res2[0]};
-@e = @res2;
+# For this station: %recent = most recent observation
+%recent = %{$res2[-1]};
 
 # distance between METAR station and entered location
-$ai{dist} = round(gcdist($hash{latitude},$hash{longitude},$ai{latitude},$ai{longitude}));
+$text{dist} = round(gcdist($hash{latitude},$hash{longitude},$recent{latitude},$recent{longitude}));
 
-push(@out,"Nearest reporting station is $ai{city}, $ai{state}, $ai{country} ($ai{metar}), at ".nicedeg2($ai{latitude},"N").", ".nicedeg2($ai{longitude},"E")." (elevation $ai{elev} feet), $ai{dist} miles away");
+push(@out,"Nearest reporting station is $recent{city}, $recent{state}, $recent{country} ($recent{metar}), at $recent{nicelat}, $recent{nicelon} (elevation $recent{elev} feet), $text{dist} miles away");
 
-# and determine pressure direction (manually)
-%oldpress=%{$e[1]};
+debug(@out);
+
+die "TESTING";
+
+# and determine pressure direction (manually, which is less accurate)
+# pressure from penultimate report
+%oldpress=%{$report[-2]};
 $oldpress=$oldpress{pressure};
 
 if (blank($oldpress)) {
    $pressdir="";
- } elsif ($f{pressure}>$oldpress) {
+ } elsif ($recent{pressure}>$oldpress) {
    $pressdir=" (rising)";
- } elsif ($f{pressure}<$oldpress) {
+ } elsif ($recent{pressure}<$oldpress) {
    $pressdir=" (falling)";
  } else {
    $pressdir=" (steady)";
