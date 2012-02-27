@@ -30,7 +30,7 @@ if ($globopts{offset}) {
   # caching an ntpdate command is silly, but useful for testing
   cache_command("ntpdate -d $TIMESERVER > /var/tmp/ntpdate.txt","age=60");
   $ad=`egrep ' offset ' /var/tmp/ntpdate.txt`;
-  if ($ad=~/^offset\s+([\-\d\.]+)/) {
+  if ($ad=~/offset\s+([\-\d\.]+)/) {
     debug("NTPoffset: $ad");
     $curoffset=$1;
   } else {
