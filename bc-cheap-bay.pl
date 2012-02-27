@@ -5,7 +5,7 @@
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 chdir(tmpdir());
-system("pwd");
+# system("pwd");
 
 # defaults for maxprice and hours (to expiration)
 defaults("maxprice=0.99&hours=4");

@@ -1,6 +1,8 @@
 showit := Module[{}, 
 Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
+(* TODO: circumcenter, incenter *)
+
 (* An attempt to find all quantities for a given unscaled triangle in
 free space *)
 
@@ -30,6 +32,9 @@ lena[z_] = Abs[1-z]
 (* parametric equation of line in complex plane given two points *)
 
 line[z1_,z2_] = Function[z1 + #1*(z2-z1)]
+
+(* length of line segment, assuming t=0,1 are endpoints *)
+length[line_] = Abs[line[0]-line[1]]
 
 (* intersection of two lines, by 4 points *)
 (* Re and Im here is ugly! *)

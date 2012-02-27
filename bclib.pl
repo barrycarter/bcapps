@@ -32,7 +32,7 @@ our(%globopts);
 our(%is_tempfile);
 
 # largest possible path
-$ENV{PATH} = "/opt/metaf2xml/bin/:/sw/bin/:/bin/:/usr/bin/:/usr/local/bin/:/usr/X11R6/bin/:/usr/lib/nagios/plugins:/usr/lib:$ENV{HOME}/bin:$ENV{HOME}/PERL";
+$ENV{PATH} = "/opt/metaf2xml/bin/:/sw/bin/:/bin/:/usr/bin/:/usr/local/bin/:/usr/X11R6/bin/:/usr/lib/nagios/plugins:/usr/lib:/usr/sbin/:$ENV{HOME}/bin:$ENV{HOME}/PERL";
 
 =item list2hash(@list)
 
@@ -1128,8 +1128,11 @@ Computes the Mathematica interpolation (which I have dubbed the
 
 sub hermione {
   my($x,$xvals,$yvals) = @_;
+  debug("hermione($x,$xvals,$yvals)");
   my(@xvals) = @{$xvals};
   my(@yvals) = @{$yvals};
+
+  debug("XVALS",@xvals);
 
   # compute size of x intervals, assuming they are all the same
   my($intsize) = ($xvals[-1]-$xvals[0])/$#xvals;
@@ -1196,10 +1199,12 @@ sub position {
 
   my(@data) = (read_file("data/${obj}fakex.txt"), 
 	       read_file("data/${obj}fakey.txt"));
-  my(@nest) = (nestify($positiondata[0]), nestify($positiondata[1]));
+  my(@nest) = (nestify($data[0]), nestify($data[1]));
   my(@xvals0) = @{$nest[0]};
   my(@x2vals0) = @{$nest[1]};
   my(@yvals, @xvals, @yvals2, @xvals2);
+
+  debug("XVALS:",@xvals);
 
   for $i (@xvals0) {
     my(@j) = @{$i};
