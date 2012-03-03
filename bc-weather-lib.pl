@@ -16,6 +16,9 @@ Grains", "SN" => "Snow", "SQ" => "Squall", "SS" => "Sandstorm", "UP"
 => "Unknown Precipitation (Automated Observations)", "VA" => "Volcanic
 Ash" );
 
+# TODO: bad idea?
+for $i (keys %ABBREV) {$ABBREV{$i} = lc($ABBREV{$i});}
+
 =item day2time($day, $hour)
 
 Given day of month $day and hour $hour, figure out month and year.
@@ -404,6 +407,8 @@ sub recent_weather_ship {
   
   return @res;
 }
+
+
 
 # <h>return beauty;</h>
 true;

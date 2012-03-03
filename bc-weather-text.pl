@@ -127,18 +127,16 @@ push(@out,"$hash{city}, $hash{state}, $hash{country} is at $hash{nicelat}, $hash
 # For this station: %recent = most recent observation
 %recent = %{$res2[-1]};
 
+debug("RECENT",%recent);
+
 # distance between METAR station and entered location
 $text{dist} = round(gcdist($hash{latitude},$hash{longitude},$recent{latitude},$recent{longitude}));
 
 push(@out,"Nearest reporting station is $recent{city}, $recent{state}, $recent{country} ($recent{metar}), at $recent{nicelat}, $recent{nicelon} (elevation $recent{elev} feet), $text{dist} miles away");
 
-debug(@out);
-
-die "TESTING";
-
 # and determine pressure direction (manually, which is less accurate)
 # pressure from penultimate report
-%oldpress=%{$report[-2]};
+%oldpress=%{$res2[-2]};
 $oldpress=$oldpress{pressure};
 
 if (blank($oldpress)) {
@@ -158,31 +156,36 @@ $time=strftime("%l:%M %p %Z on %A",localtime(time()));
 push(@out,"It's currently $time");
 
 # number of observations
-$observations=$#e+1;
-# below makes sense because $f{gust} maybe undefined and thus essentially 0
-$maxwind=max($f{windspeed}, $f{gust});
-$oldweather=();
+$observations=$#res2+1;
+# since $recent{gust} could be 0, max it with $recent{windspeed}
+# $maxwind=max($recent{windspeed}, $recent{gust});
+# $oldweather=();
 
 # go through old observations
-for $i (@e) {
-   %f=%{$i};
+for $i (@res2) {
+   %report=%{$i};
 
-   for $ab (split(/\s+/,$f{weather})) {
-         $oldweather{parse_weather($ab)}=1;
-      }
+   for $ab (split(/\s+/,$report{weather})) {
+     # set oldweather hash to types of weather that's occurred
+     $oldweather{parse_weather($ab)}=1;
+   }
 
-   push(@m, $maxwind);
 
-   if (blank($f{temperature})) {next;}
+   # max wind is just windspeed if no gust
+   $maxwind = $report{gust}||$report{windspeed};
 
-   if ($f{temperature}>$maxtemp || blank($maxtemp)) {
-      $maxtemp=$f{temperature};
-      $maxtime=strftime("%I:%M %p %A",localtime($f{xtime}));
+   push(@m, round($maxwind));
+
+   if (blank($report{temperature})) {next;}
+
+   if ($report{temperature}>$maxtemp || blank($maxtemp)) {
+      $maxtemp=$report{temperature};
+      $maxtime=strftime("%I:%M %p %A",localtime($report{xtime}));
     }
 
-   if ($f{temperature}<$mintemp || blank($mintemp)) {
-      $mintemp=$f{temperature};
-      $mintime=strftime("%I:%M %p %A",localtime($f{xtime}));
+   if ($report{temperature}<$mintemp || blank($mintemp)) {
+      $mintemp=$report{temperature};
+      $mintime=strftime("%I:%M %p %A",localtime($report{xtime}));
     }
 }
 
@@ -210,27 +213,31 @@ unless (blank($aa)) {
 #  (incl calculated values like wind chill/relative humidity)?
 
 # spit out the output
-$minago=strftime("%I:%M %p %A",localtime($f{xtime}));
-$minago="$minago (".nice_sec($now-$f{xtime},1)." ago)";
+$minago=strftime("%I:%M %p %A",localtime($recent{xtime}));
+$minago="$minago (".nice_sec($now-$recent{xtime},1)." ago)";
 
-$tempf = $f{temperature};
-$dewf  = $f{dewpoint};
-$rh=floor(.5+100*rh($f{temperature},$f{dewpoint}));
-$hi=floor(.5+hi($f{temperature}*1.8+32,100*rh($f{temperature},$f{dewpoint})));
-debug("$hi vs $printtempf");
-if ($hi!=round($tempf)) {$ext1=", and a heat index of $hi${DEG}F";}
+$tempf = $recent{temperature};
+$dewf  = $recent{dewpoint};
 
-unless ($f{windspeed}=~/null/i) {
-  $wind=wind($f{windspeed},$f{winddir},$f{gust});
-  $wc=floor(.5+wc($tempf,1.1507784538*$f{windspeed}));
+# two below for calcs only (not sure why $recent{temp_c} fails)
+$tempc = ($tempf-32)/1.8;
+$dewc = ($dewf-32)/1.8;
+
+$rh= round(100*rh($tempc,$dewc));
+$hi= round(hi($tempf, $rh));
+if ($hi != round($tempf)) {$ext1=", and a heat index of $hi${DEG}F";}
+
+unless ($recent{windspeed}=~/null/i) {
+  $wind=wind($recent{windspeed},$recent{winddir},$recent{gust});
+  $wc=floor(.5+wc($tempf,1.1507784538*$recent{windspeed}));
   if ($wc<floor($tempf)) {$ext2=", for a windchill factor of $wc${DEG}F";}
 }
 
-$clouds=maxclouds(split(/\s+/,$f{cloudcover}));
-$press=sprintf("%0.2f",$f{pressure});
+$clouds=maxclouds(split(/\s+/,$recent{cloudcover}));
+$press=sprintf("%0.2f",$recent{pressure});
 
 # signifigant weather
-for $i (split(/\s+/,$f{weather})) {push(@k,parse_weather($i));}
+for $i (split(/\s+/,$recent{weather})) {push(@k,parse_weather($i));}
 $weather=join(", ",@k);
 
 unless ($dewf=~/null/i) {
@@ -249,7 +256,7 @@ push(@out,"The barometric pressure is $press inches$pressdir");
 
 push(@out,$extrema);
 
-push(@out,"Current METAR (for techies): '$f{observation}'");
+push(@out,"Current METAR (for techies): '$recent{raw_text}'");
 unshift(@out,"Do not rely on this information");
 
 if ($NOWRAP) {
