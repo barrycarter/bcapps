@@ -124,6 +124,14 @@ write_file("$query;", $tmp);
 # error?
 if ($res) {webdie("SQLITE ERROR: $err, QUERY: $query");}
 
+# RSS feed requested? (TODO: improve check below)
+if ($ENV{REQUEST_URI}=~/rss/i) {
+  open(A,"|/usr/local/bin/sqlite32rss.pl");
+  print A $out;
+  close(A);
+  exit(0);
+}
+
 # minor tweaking
 $out=~s/&lt;/</isg;
 $out=~s/&gt;/>/isg;

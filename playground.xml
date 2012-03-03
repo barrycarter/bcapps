@@ -1,7 +1,23 @@
+Content-type: text/xml
+
 <?xml version="1.0" encoding="ISO-8859-1" ?><rss version="0.91">
 <channel><title>title</title><description>channel desc</description>
 
-<item><title>AGGH</title><description>&lt;table border&gt;&lt;tr&gt;
+<item><title>AGGH</title><description>&lt;table border&gt;&lt;tr&gt;&lt;TR&gt;&lt;TH&gt;metar&lt;/TH&gt;
+&lt;TH&gt;wmob&lt;/TH&gt;
+&lt;TH&gt;wmos&lt;/TH&gt;
+&lt;TH&gt;city&lt;/TH&gt;
+&lt;TH&gt;state&lt;/TH&gt;
+&lt;TH&gt;country&lt;/TH&gt;
+&lt;TH&gt;latitude&lt;/TH&gt;
+&lt;TH&gt;longitude&lt;/TH&gt;
+&lt;TH&gt;elevation&lt;/TH&gt;
+&lt;TH&gt;x&lt;/TH&gt;
+&lt;TH&gt;y&lt;/TH&gt;
+&lt;TH&gt;z&lt;/TH&gt;
+&lt;TH&gt;humor&lt;/TH&gt;
+&lt;/TR&gt;
+&lt;tr&gt;
 &lt;TD&gt;91&lt;/TD&gt;
 &lt;TD&gt;520&lt;/TD&gt;
 &lt;TD&gt;Honiara / Henderson&lt;/TD&gt;
@@ -14,8 +30,22 @@
 &lt;TD&gt;-0.170384286165455&lt;/TD&gt;
 &lt;TD&gt;-0.00811120515848635&lt;/TD&gt;
 &lt;TD&gt;&lt;/TD&gt;
-&lt;/&lt;/tr&gt;table&gt;</description></item>
-<item><title>AGGL</title><description>&lt;table border&gt;&lt;tr&gt;
+&lt;/tr&gt;&lt;/table&gt;</description></item>
+<item><title>AGGL</title><description>&lt;table border&gt;&lt;tr&gt;&lt;TR&gt;&lt;TH&gt;metar&lt;/TH&gt;
+&lt;TH&gt;wmob&lt;/TH&gt;
+&lt;TH&gt;wmos&lt;/TH&gt;
+&lt;TH&gt;city&lt;/TH&gt;
+&lt;TH&gt;state&lt;/TH&gt;
+&lt;TH&gt;country&lt;/TH&gt;
+&lt;TH&gt;latitude&lt;/TH&gt;
+&lt;TH&gt;longitude&lt;/TH&gt;
+&lt;TH&gt;elevation&lt;/TH&gt;
+&lt;TH&gt;x&lt;/TH&gt;
+&lt;TH&gt;y&lt;/TH&gt;
+&lt;TH&gt;z&lt;/TH&gt;
+&lt;TH&gt;humor&lt;/TH&gt;
+&lt;/TR&gt;
+&lt;tr&gt;
 &lt;TD&gt;91&lt;/TD&gt;
 &lt;TD&gt;541&lt;/TD&gt;
 &lt;TD&gt;Santa Cruz&lt;/TD&gt;
@@ -28,8 +58,22 @@
 &lt;TD&gt;-0.188634526925503&lt;/TD&gt;
 &lt;TD&gt;0.956635016270188&lt;/TD&gt;
 &lt;TD&gt;&lt;/TD&gt;
-&lt;/&lt;/tr&gt;table&gt;</description></item>
-<item><title>AGGM</title><description>&lt;table border&gt;&lt;tr&gt;
+&lt;/tr&gt;&lt;/table&gt;</description></item>
+<item><title>AGGM</title><description>&lt;table border&gt;&lt;tr&gt;&lt;TR&gt;&lt;TH&gt;metar&lt;/TH&gt;
+&lt;TH&gt;wmob&lt;/TH&gt;
+&lt;TH&gt;wmos&lt;/TH&gt;
+&lt;TH&gt;city&lt;/TH&gt;
+&lt;TH&gt;state&lt;/TH&gt;
+&lt;TH&gt;country&lt;/TH&gt;
+&lt;TH&gt;latitude&lt;/TH&gt;
+&lt;TH&gt;longitude&lt;/TH&gt;
+&lt;TH&gt;elevation&lt;/TH&gt;
+&lt;TH&gt;x&lt;/TH&gt;
+&lt;TH&gt;y&lt;/TH&gt;
+&lt;TH&gt;z&lt;/TH&gt;
+&lt;TH&gt;humor&lt;/TH&gt;
+&lt;/TR&gt;
+&lt;tr&gt;
 &lt;TD&gt;91&lt;/TD&gt;
 &lt;TD&gt;503&lt;/TD&gt;
 &lt;TD&gt;Munda&lt;/TD&gt;
@@ -42,8 +86,22 @@
 &lt;TD&gt;-0.0857587840146856&lt;/TD&gt;
 &lt;TD&gt;-0.887294108094694&lt;/TD&gt;
 &lt;TD&gt;&lt;/TD&gt;
-&lt;/&lt;/tr&gt;table&gt;</description></item>
-<item><title>ANAU</title><description>&lt;table border&gt;&lt;tr&gt;
+&lt;/tr&gt;&lt;/table&gt;</description></item>
+<item><title>ANAU</title><description>&lt;table border&gt;&lt;tr&gt;&lt;TR&gt;&lt;TH&gt;metar&lt;/TH&gt;
+&lt;TH&gt;wmob&lt;/TH&gt;
+&lt;TH&gt;wmos&lt;/TH&gt;
+&lt;TH&gt;city&lt;/TH&gt;
+&lt;TH&gt;state&lt;/TH&gt;
+&lt;TH&gt;country&lt;/TH&gt;
+&lt;TH&gt;latitude&lt;/TH&gt;
+&lt;TH&gt;longitude&lt;/TH&gt;
+&lt;TH&gt;elevation&lt;/TH&gt;
+&lt;TH&gt;x&lt;/TH&gt;
+&lt;TH&gt;y&lt;/TH&gt;
+&lt;TH&gt;z&lt;/TH&gt;
+&lt;TH&gt;humor&lt;/TH&gt;
+&lt;/TR&gt;
+&lt;tr&gt;
 &lt;TD&gt;91&lt;/TD&gt;
 &lt;TD&gt;530&lt;/TD&gt;
 &lt;TD&gt;Nauru Airport&lt;/TD&gt;
@@ -56,8 +114,22 @@
 &lt;TD&gt;-0.345030154522665&lt;/TD&gt;
 &lt;TD&gt;-0.508406550931301&lt;/TD&gt;
 &lt;TD&gt;&lt;/TD&gt;
-&lt;/&lt;/tr&gt;table&gt;</description></item>
-<item><title>AYMD</title><description>&lt;table border&gt;&lt;tr&gt;
+&lt;/tr&gt;&lt;/table&gt;</description></item>
+<item><title>AYMD</title><description>&lt;table border&gt;&lt;tr&gt;&lt;TR&gt;&lt;TH&gt;metar&lt;/TH&gt;
+&lt;TH&gt;wmob&lt;/TH&gt;
+&lt;TH&gt;wmos&lt;/TH&gt;
+&lt;TH&gt;city&lt;/TH&gt;
+&lt;TH&gt;state&lt;/TH&gt;
+&lt;TH&gt;country&lt;/TH&gt;
+&lt;TH&gt;latitude&lt;/TH&gt;
+&lt;TH&gt;longitude&lt;/TH&gt;
+&lt;TH&gt;elevation&lt;/TH&gt;
+&lt;TH&gt;x&lt;/TH&gt;
+&lt;TH&gt;y&lt;/TH&gt;
+&lt;TH&gt;z&lt;/TH&gt;
+&lt;TH&gt;humor&lt;/TH&gt;
+&lt;/TR&gt;
+&lt;tr&gt;
 &lt;TD&gt;94&lt;/TD&gt;
 &lt;TD&gt;14&lt;/TD&gt;
 &lt;TD&gt;Madang&lt;/TD&gt;
@@ -70,8 +142,22 @@
 &lt;TD&gt;0.461491213457532&lt;/TD&gt;
 &lt;TD&gt;0.875523706841352&lt;/TD&gt;
 &lt;TD&gt;&lt;/TD&gt;
-&lt;/&lt;/tr&gt;table&gt;</description></item>
-<item><title>AYMO</title><description>&lt;table border&gt;&lt;tr&gt;
+&lt;/tr&gt;&lt;/table&gt;</description></item>
+<item><title>AYMO</title><description>&lt;table border&gt;&lt;tr&gt;&lt;TR&gt;&lt;TH&gt;metar&lt;/TH&gt;
+&lt;TH&gt;wmob&lt;/TH&gt;
+&lt;TH&gt;wmos&lt;/TH&gt;
+&lt;TH&gt;city&lt;/TH&gt;
+&lt;TH&gt;state&lt;/TH&gt;
+&lt;TH&gt;country&lt;/TH&gt;
+&lt;TH&gt;latitude&lt;/TH&gt;
+&lt;TH&gt;longitude&lt;/TH&gt;
+&lt;TH&gt;elevation&lt;/TH&gt;
+&lt;TH&gt;x&lt;/TH&gt;
+&lt;TH&gt;y&lt;/TH&gt;
+&lt;TH&gt;z&lt;/TH&gt;
+&lt;TH&gt;humor&lt;/TH&gt;
+&lt;/TR&gt;
+&lt;tr&gt;
 &lt;TD&gt;--&lt;/TD&gt;
 &lt;TD&gt;---&lt;/TD&gt;
 &lt;TD&gt;Manus Island/Momote&lt;/TD&gt;
@@ -84,8 +170,22 @@
 &lt;TD&gt;-0.107838940823851&lt;/TD&gt;
 &lt;TD&gt;-0.881791943306174&lt;/TD&gt;
 &lt;TD&gt;&lt;/TD&gt;
-&lt;/&lt;/tr&gt;table&gt;</description></item>
-<item><title>AYPY</title><description>&lt;table border&gt;&lt;tr&gt;
+&lt;/tr&gt;&lt;/table&gt;</description></item>
+<item><title>AYPY</title><description>&lt;table border&gt;&lt;tr&gt;&lt;TR&gt;&lt;TH&gt;metar&lt;/TH&gt;
+&lt;TH&gt;wmob&lt;/TH&gt;
+&lt;TH&gt;wmos&lt;/TH&gt;
+&lt;TH&gt;city&lt;/TH&gt;
+&lt;TH&gt;state&lt;/TH&gt;
+&lt;TH&gt;country&lt;/TH&gt;
+&lt;TH&gt;latitude&lt;/TH&gt;
+&lt;TH&gt;longitude&lt;/TH&gt;
+&lt;TH&gt;elevation&lt;/TH&gt;
+&lt;TH&gt;x&lt;/TH&gt;
+&lt;TH&gt;y&lt;/TH&gt;
+&lt;TH&gt;z&lt;/TH&gt;
+&lt;TH&gt;humor&lt;/TH&gt;
+&lt;/TR&gt;
+&lt;tr&gt;
 &lt;TD&gt;94&lt;/TD&gt;
 &lt;TD&gt;35&lt;/TD&gt;
 &lt;TD&gt;Moresby&lt;/TD&gt;
@@ -98,8 +198,22 @@
 &lt;TD&gt;-0.424283875756992&lt;/TD&gt;
 &lt;TD&gt;0.00855526819677596&lt;/TD&gt;
 &lt;TD&gt;&lt;/TD&gt;
-&lt;/&lt;/tr&gt;table&gt;</description></item>
-<item><title>AYWK</title><description>&lt;table border&gt;&lt;tr&gt;
+&lt;/tr&gt;&lt;/table&gt;</description></item>
+<item><title>AYWK</title><description>&lt;table border&gt;&lt;tr&gt;&lt;TR&gt;&lt;TH&gt;metar&lt;/TH&gt;
+&lt;TH&gt;wmob&lt;/TH&gt;
+&lt;TH&gt;wmos&lt;/TH&gt;
+&lt;TH&gt;city&lt;/TH&gt;
+&lt;TH&gt;state&lt;/TH&gt;
+&lt;TH&gt;country&lt;/TH&gt;
+&lt;TH&gt;latitude&lt;/TH&gt;
+&lt;TH&gt;longitude&lt;/TH&gt;
+&lt;TH&gt;elevation&lt;/TH&gt;
+&lt;TH&gt;x&lt;/TH&gt;
+&lt;TH&gt;y&lt;/TH&gt;
+&lt;TH&gt;z&lt;/TH&gt;
+&lt;TH&gt;humor&lt;/TH&gt;
+&lt;/TR&gt;
+&lt;tr&gt;
 &lt;TD&gt;94&lt;/TD&gt;
 &lt;TD&gt;4&lt;/TD&gt;
 &lt;TD&gt;Wewak&lt;/TD&gt;
@@ -112,8 +226,22 @@
 &lt;TD&gt;0.702108079602822&lt;/TD&gt;
 &lt;TD&gt;0.412388209393806&lt;/TD&gt;
 &lt;TD&gt;&lt;/TD&gt;
-&lt;/&lt;/tr&gt;table&gt;</description></item>
-<item><title>BGAM</title><description>&lt;table border&gt;&lt;tr&gt;
+&lt;/tr&gt;&lt;/table&gt;</description></item>
+<item><title>BGAM</title><description>&lt;table border&gt;&lt;tr&gt;&lt;TR&gt;&lt;TH&gt;metar&lt;/TH&gt;
+&lt;TH&gt;wmob&lt;/TH&gt;
+&lt;TH&gt;wmos&lt;/TH&gt;
+&lt;TH&gt;city&lt;/TH&gt;
+&lt;TH&gt;state&lt;/TH&gt;
+&lt;TH&gt;country&lt;/TH&gt;
+&lt;TH&gt;latitude&lt;/TH&gt;
+&lt;TH&gt;longitude&lt;/TH&gt;
+&lt;TH&gt;elevation&lt;/TH&gt;
+&lt;TH&gt;x&lt;/TH&gt;
+&lt;TH&gt;y&lt;/TH&gt;
+&lt;TH&gt;z&lt;/TH&gt;
+&lt;TH&gt;humor&lt;/TH&gt;
+&lt;/TR&gt;
+&lt;tr&gt;
 &lt;TD&gt;4&lt;/TD&gt;
 &lt;TD&gt;360&lt;/TD&gt;
 &lt;TD&gt;Tasiilaq&lt;/TD&gt;
@@ -126,8 +254,22 @@
 &lt;TD&gt;-0.061200621428082&lt;/TD&gt;
 &lt;TD&gt;0.364825822878242&lt;/TD&gt;
 &lt;TD&gt;&lt;/TD&gt;
-&lt;/&lt;/tr&gt;table&gt;</description></item>
-<item><title>BGAS</title><description>&lt;table border&gt;&lt;tr&gt;
+&lt;/tr&gt;&lt;/table&gt;</description></item>
+<item><title>BGAS</title><description>&lt;table border&gt;&lt;tr&gt;&lt;TR&gt;&lt;TH&gt;metar&lt;/TH&gt;
+&lt;TH&gt;wmob&lt;/TH&gt;
+&lt;TH&gt;wmos&lt;/TH&gt;
+&lt;TH&gt;city&lt;/TH&gt;
+&lt;TH&gt;state&lt;/TH&gt;
+&lt;TH&gt;country&lt;/TH&gt;
+&lt;TH&gt;latitude&lt;/TH&gt;
+&lt;TH&gt;longitude&lt;/TH&gt;
+&lt;TH&gt;elevation&lt;/TH&gt;
+&lt;TH&gt;x&lt;/TH&gt;
+&lt;TH&gt;y&lt;/TH&gt;
+&lt;TH&gt;z&lt;/TH&gt;
+&lt;TH&gt;humor&lt;/TH&gt;
+&lt;/TR&gt;
+&lt;tr&gt;
 &lt;TD&gt;4&lt;/TD&gt;
 &lt;TD&gt;285&lt;/TD&gt;
 &lt;TD&gt;Angisoq&lt;/TD&gt;
@@ -140,5 +282,5 @@
 &lt;TD&gt;0.898298648559015&lt;/TD&gt;
 &lt;TD&gt;-0.288895472476461&lt;/TD&gt;
 &lt;TD&gt;&lt;/TD&gt;
-&lt;/&lt;/tr&gt;table&gt;</description></item>
+&lt;/tr&gt;&lt;/table&gt;</description></item>
 </channel></rss>
