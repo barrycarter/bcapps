@@ -15,8 +15,8 @@ MARK
 ;
 
 # converting angle brackets to &sh; like this for ease
-$tabstart = "<table border><tr>";
-$tabend = "</tr></table>";
+$tabstart = "<table border>";
+$tabend = "</TR></table>";
 
 $tabstart=~s/</&lt;/isg;
 $tabstart=~s/>/&gt;/isg;
@@ -37,9 +37,9 @@ while (<STDIN>) {
   # start of new item, which is also title
   # note that table inside description must be escaped
   # the tr below starts the table row for the data
-  if (s%^<tr><td>(.*?)</td>$%<item><title>$1</title><description>$tabstart$head&lt;tr&gt;%i) {
+  if (s%^<tr><td>(.*?)</td>$%<item><title>$1</title><description>$tabstart$head&lt;TR&gt;%i) {
     # the first column should also be treated normally
-    $_ .= "&lt;td&gt;$1&lt;/td&gt;";
+    $_ .= "&lt;TD&gt;$1&lt;/TD&gt;";
   }
 
   # end of item
