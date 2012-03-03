@@ -1,8 +1,46 @@
-<?xml version="1.0" ?>
-<outer prop="foo">
-some cdata
-<inner key="val">
-more cdata
-</inner>
-other cdata
-</outer>
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+ <rss version="0.91">
+
+ <channel>
+ <title>OLDaily</title>
+ <link>http://www.downes.ca/news/OLDaily.htm</link>
+ <description>OLDaily - By Stephen Downes </description>
+ <language>en-us</language>
+
+ <image>
+ <title>Stephen's Web</title>
+ <url>http://www.downes.ca/images/rss.gif</url>
+ <link>http://www.downes.ca</link>
+ <width>90</width>
+ <height>36</height>
+ </image>
+
+<item>
+ <title>Attack Update</title>
+ <link>http://www.downes.ca</link>
+ <description>
+ OK, here's where we stand. I have no email into
+or out of downes.ca - this means that if you are sending me
+xxxxxxemail to stephen@downes.ca it will fail. It also means that
+newsletter mailouts are failing (at least, I think they're
+failing...). Additionally, all scheduled processes have
+terminated, which means that Edu_RSS will be updated
+manually. I have no tech support until at least tomorrow,
+so it looks like we'll be limping along like this for a
+bit. Again, please note, email sent to me at downes.ca is
+not reaching me. By Stephen Downes, Stephen's Web, July
+22, 2003
+ </description>
+ </item>
+ <item>
+ <title>Attack on Downes.ca</title>
+ <link>http://www.downes.ca</link>
+ <description>
+ Downes.ca was off the air for a few days
+following a denial of service attack. We are back for now
+but things are still touch and go. I'll keep you posted. 
+By Stephen Downes, July 21, 2003
+ </description>
+ </item>
+ </channel>
+ </rss>
