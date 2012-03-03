@@ -37,7 +37,10 @@ while (<STDIN>) {
   # start of new item, which is also title
   # note that table inside description must be escaped
   # the tr below starts the table row for the data
-  s%^<tr><td>(.*?)</td>$%<item><title>$1</title><description>$tabstart$head&lt;tr&gt;%i;
+  if (s%^<tr><td>(.*?)</td>$%<item><title>$1</title><description>$tabstart$head&lt;tr&gt;%i) {
+    # the first column should also be treated normally
+    $_ .= "&lt;td&gt;$1&lt;/td&gt;";
+  }
 
   # end of item
   s%^</tr>$%$tabend</description></item>%i;
