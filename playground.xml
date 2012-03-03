@@ -1,43 +1,144 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
- <rss version="0.91">
+<?xml version="1.0" encoding="ISO-8859-1" ?><rss version="0.91">
+<channel><title>title</title><description>channel desc</description>
 
- <channel>
- <title>OLDaily</title>
- <link>http://www.downes.ca/news/OLDaily.htm</link>
- <description>OLDaily - By Stephen Downes </description>
- <language>en-us</language>
-
- <image>
- <title>Stephen's Web</title>
- <url>http://www.downes.ca/images/rss.gif</url>
- <link>http://www.downes.ca</link>
- <width>90</width>
- <height>36</height>
- </image>
-
-<item>
- <title>Attack Update</title>
- <link>http://www.downes.ca</link>
- <description>
- OK, here's where we stand. I have no email into
-or out of downes.ca - this means that if you are sending me
-xxxxxxemail to stephen@downes.ca it will fail. It also means that
-newsletter mailouts are failing (at least, I think they're
-failing...). Additionally, all scheduled processes have
-terminated, which means that Edu_RSS will be updated
-manually. I have no tech support until at least tomorrow,
-so it looks like we'll be limping along like this for a
-bit. Again, please note, email sent to me at downes.ca is
-not reaching me. By Stephen Downes, Stephen's Web, July
-22, 2003
- </description>
- </item>
- <item>
- <title>Attack on Downes.ca</title>
- <link>http://www.downes.ca</link>
- <description>
-&lt;table border&gt;&lt;tr&gt;&lt;th&gt;Hello&lt;/th&gt;&lt;/tr&gt;&lt;/table&gt;
- </description>
- </item>
- </channel>
- </rss>
+<item><title>AGGH</title><description>&lt;table border&gt;&lt;tr&gt;
+&lt;TD&gt;91&lt;/TD&gt;
+&lt;TD&gt;520&lt;/TD&gt;
+&lt;TD&gt;Honiara / Henderson&lt;/TD&gt;
+&lt;TD&gt;&lt;/TD&gt;
+&lt;TD&gt;Solomon Islands&lt;/TD&gt;
+&lt;TD&gt;-9.41666666666667&lt;/TD&gt;
+&lt;TD&gt;160.05&lt;/TD&gt;
+&lt;TD&gt;8.0&lt;/TD&gt;
+&lt;TD&gt;0.985344307021036&lt;/TD&gt;
+&lt;TD&gt;-0.170384286165455&lt;/TD&gt;
+&lt;TD&gt;-0.00811120515848635&lt;/TD&gt;
+&lt;TD&gt;&lt;/TD&gt;
+&lt;/&lt;/tr&gt;table&gt;</description></item>
+<item><title>AGGL</title><description>&lt;table border&gt;&lt;tr&gt;
+&lt;TD&gt;91&lt;/TD&gt;
+&lt;TD&gt;541&lt;/TD&gt;
+&lt;TD&gt;Santa Cruz&lt;/TD&gt;
+&lt;TD&gt;&lt;/TD&gt;
+&lt;TD&gt;Solomon Islands&lt;/TD&gt;
+&lt;TD&gt;-10.7&lt;/TD&gt;
+&lt;TD&gt;165.8&lt;/TD&gt;
+&lt;TD&gt;23.0&lt;/TD&gt;
+&lt;TD&gt;0.221960494001363&lt;/TD&gt;
+&lt;TD&gt;-0.188634526925503&lt;/TD&gt;
+&lt;TD&gt;0.956635016270188&lt;/TD&gt;
+&lt;TD&gt;&lt;/TD&gt;
+&lt;/&lt;/tr&gt;table&gt;</description></item>
+<item><title>AGGM</title><description>&lt;table border&gt;&lt;tr&gt;
+&lt;TD&gt;91&lt;/TD&gt;
+&lt;TD&gt;503&lt;/TD&gt;
+&lt;TD&gt;Munda&lt;/TD&gt;
+&lt;TD&gt;&lt;/TD&gt;
+&lt;TD&gt;Solomon Islands&lt;/TD&gt;
+&lt;TD&gt;-8.33333333333333&lt;/TD&gt;
+&lt;TD&gt;157.266666666667&lt;/TD&gt;
+&lt;TD&gt;6.0&lt;/TD&gt;
+&lt;TD&gt;-0.453160674269914&lt;/TD&gt;
+&lt;TD&gt;-0.0857587840146856&lt;/TD&gt;
+&lt;TD&gt;-0.887294108094694&lt;/TD&gt;
+&lt;TD&gt;&lt;/TD&gt;
+&lt;/&lt;/tr&gt;table&gt;</description></item>
+<item><title>ANAU</title><description>&lt;table border&gt;&lt;tr&gt;
+&lt;TD&gt;91&lt;/TD&gt;
+&lt;TD&gt;530&lt;/TD&gt;
+&lt;TD&gt;Nauru Airport&lt;/TD&gt;
+&lt;TD&gt;&lt;/TD&gt;
+&lt;TD&gt;Nauru&lt;/TD&gt;
+&lt;TD&gt;-0.533333333333333&lt;/TD&gt;
+&lt;TD&gt;166.916666666667&lt;/TD&gt;
+&lt;TD&gt;6.0&lt;/TD&gt;
+&lt;TD&gt;-0.788972098011206&lt;/TD&gt;
+&lt;TD&gt;-0.345030154522665&lt;/TD&gt;
+&lt;TD&gt;-0.508406550931301&lt;/TD&gt;
+&lt;TD&gt;&lt;/TD&gt;
+&lt;/&lt;/tr&gt;table&gt;</description></item>
+<item><title>AYMD</title><description>&lt;table border&gt;&lt;tr&gt;
+&lt;TD&gt;94&lt;/TD&gt;
+&lt;TD&gt;14&lt;/TD&gt;
+&lt;TD&gt;Madang&lt;/TD&gt;
+&lt;TD&gt;&lt;/TD&gt;
+&lt;TD&gt;Papua New Guinea&lt;/TD&gt;
+&lt;TD&gt;-5.21666666666667&lt;/TD&gt;
+&lt;TD&gt;145.783333333333&lt;/TD&gt;
+&lt;TD&gt;3.0&lt;/TD&gt;
+&lt;TD&gt;0.143122669973254&lt;/TD&gt;
+&lt;TD&gt;0.461491213457532&lt;/TD&gt;
+&lt;TD&gt;0.875523706841352&lt;/TD&gt;
+&lt;TD&gt;&lt;/TD&gt;
+&lt;/&lt;/tr&gt;table&gt;</description></item>
+<item><title>AYMO</title><description>&lt;table border&gt;&lt;tr&gt;
+&lt;TD&gt;--&lt;/TD&gt;
+&lt;TD&gt;---&lt;/TD&gt;
+&lt;TD&gt;Manus Island/Momote&lt;/TD&gt;
+&lt;TD&gt;&lt;/TD&gt;
+&lt;TD&gt;Papua New Guinea&lt;/TD&gt;
+&lt;TD&gt;-2.06194444444444&lt;/TD&gt;
+&lt;TD&gt;147.424166666667&lt;/TD&gt;
+&lt;TD&gt;4.0&lt;/TD&gt;
+&lt;TD&gt;0.459144564992674&lt;/TD&gt;
+&lt;TD&gt;-0.107838940823851&lt;/TD&gt;
+&lt;TD&gt;-0.881791943306174&lt;/TD&gt;
+&lt;TD&gt;&lt;/TD&gt;
+&lt;/&lt;/tr&gt;table&gt;</description></item>
+<item><title>AYPY</title><description>&lt;table border&gt;&lt;tr&gt;
+&lt;TD&gt;94&lt;/TD&gt;
+&lt;TD&gt;35&lt;/TD&gt;
+&lt;TD&gt;Moresby&lt;/TD&gt;
+&lt;TD&gt;&lt;/TD&gt;
+&lt;TD&gt;Papua New Guinea&lt;/TD&gt;
+&lt;TD&gt;-9.43333333333333&lt;/TD&gt;
+&lt;TD&gt;147.216666666667&lt;/TD&gt;
+&lt;TD&gt;38.0&lt;/TD&gt;
+&lt;TD&gt;0.905488818351009&lt;/TD&gt;
+&lt;TD&gt;-0.424283875756992&lt;/TD&gt;
+&lt;TD&gt;0.00855526819677596&lt;/TD&gt;
+&lt;TD&gt;&lt;/TD&gt;
+&lt;/&lt;/tr&gt;table&gt;</description></item>
+<item><title>AYWK</title><description>&lt;table border&gt;&lt;tr&gt;
+&lt;TD&gt;94&lt;/TD&gt;
+&lt;TD&gt;4&lt;/TD&gt;
+&lt;TD&gt;Wewak&lt;/TD&gt;
+&lt;TD&gt;&lt;/TD&gt;
+&lt;TD&gt;Papua New Guinea&lt;/TD&gt;
+&lt;TD&gt;-3.56666666666667&lt;/TD&gt;
+&lt;TD&gt;143.633333333333&lt;/TD&gt;
+&lt;TD&gt;6.0&lt;/TD&gt;
+&lt;TD&gt;-0.580499964952116&lt;/TD&gt;
+&lt;TD&gt;0.702108079602822&lt;/TD&gt;
+&lt;TD&gt;0.412388209393806&lt;/TD&gt;
+&lt;TD&gt;&lt;/TD&gt;
+&lt;/&lt;/tr&gt;table&gt;</description></item>
+<item><title>BGAM</title><description>&lt;table border&gt;&lt;tr&gt;
+&lt;TD&gt;4&lt;/TD&gt;
+&lt;TD&gt;360&lt;/TD&gt;
+&lt;TD&gt;Tasiilaq&lt;/TD&gt;
+&lt;TD&gt;&lt;/TD&gt;
+&lt;TD&gt;Greenland&lt;/TD&gt;
+&lt;TD&gt;65.6&lt;/TD&gt;
+&lt;TD&gt;-37.6333333333333&lt;/TD&gt;
+&lt;TD&gt;50.0&lt;/TD&gt;
+&lt;TD&gt;-0.92906221691447&lt;/TD&gt;
+&lt;TD&gt;-0.061200621428082&lt;/TD&gt;
+&lt;TD&gt;0.364825822878242&lt;/TD&gt;
+&lt;TD&gt;&lt;/TD&gt;
+&lt;/&lt;/tr&gt;table&gt;</description></item>
+<item><title>BGAS</title><description>&lt;table border&gt;&lt;tr&gt;
+&lt;TD&gt;4&lt;/TD&gt;
+&lt;TD&gt;285&lt;/TD&gt;
+&lt;TD&gt;Angisoq&lt;/TD&gt;
+&lt;TD&gt;&lt;/TD&gt;
+&lt;TD&gt;Greenland&lt;/TD&gt;
+&lt;TD&gt;59.9833333333333&lt;/TD&gt;
+&lt;TD&gt;-45.2&lt;/TD&gt;
+&lt;TD&gt;16.0&lt;/TD&gt;
+&lt;TD&gt;-0.331057312228032&lt;/TD&gt;
+&lt;TD&gt;0.898298648559015&lt;/TD&gt;
+&lt;TD&gt;-0.288895472476461&lt;/TD&gt;
+&lt;TD&gt;&lt;/TD&gt;
+&lt;/&lt;/tr&gt;table&gt;</description></item>
+</channel></rss>
