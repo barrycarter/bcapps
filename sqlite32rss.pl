@@ -39,7 +39,7 @@ while (<STDIN>) {
   # the tr below starts the table row for the data
   if (s%^<tr><td>(.*?)</td>$%<item><title>$1</title><description>$tabstart$head&lt;TR&gt;%i) {
     # the first column should also be treated normally
-    $_ .= "&lt;TD&gt;$1&lt;/TD&gt;";
+    $_ .= "&lt;TD&gt;$1&lt;/TD&gt;\n";
   }
 
   # end of item
