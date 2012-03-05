@@ -11,6 +11,8 @@
 </script>
 <script type="text/javascript">
 
+var startime = new Date();
+
 function initialize() {
   var myLatLng = new google.maps.LatLng(0,0);
   var myOptions = {
@@ -45,7 +47,7 @@ var light = new Array();
 var dark = new Array();
 
 for (r=1; r<=15; r++) {
-
+ var nowtime = new Date();
    light.push(new google.maps.Circle({
  center: pt,
  radius: 667917*r,
@@ -66,7 +68,16 @@ for (r=1; r<=15; r++) {
 
 }
 
-dark[7].setCenter(test);
+function moveme() {
+ nowtime = (new Date()-startime)/1000;
+ newsun = new google.maps.LatLng(-6.16453214907868,297.19423018679-nowtime/1);
+// alert(nowtime);
+ for (r=1; r<=15; r++) {
+  light[r].setCenter(newsun);
+}
+}
+
+window.setInterval(moveme, 1000);
 
 mpt = new google.maps.LatLng(17.3185462836248,68.9703629502967);
 
