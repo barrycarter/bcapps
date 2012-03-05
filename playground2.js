@@ -24,19 +24,24 @@ function initialize() {
   var map = new google.maps.Map(document.getElementById("map_canvas"),
       myOptions);
 
-pt = new google.maps.LatLng(-6.16453214907868,297.19423018679);
-ap = new google.maps.LatLng(6.16453214907868,477.19423018679);
+// TODO: get these numbers from true source
+sunlon = 297.19423018679;
+sunlat = -6.16453214907868;
+pt = new google.maps.LatLng(sunlat,sunlon);
+ap = new google.maps.LatLng(-1*sunlat,sunlon+180.);
 
-test = new google.maps.LatLng(35,-106);
+// the longitude change of the sun/moon per second assuming their
+// ra/dec don't change (ie, 360 degrees in 24 hours)
+move = 10; // test value
 
-new google.maps.Marker({
+sun = new google.maps.Marker({
  position: pt,
  map: map,
  Icon: "http://test.barrycarter.info/sun.png",
  title:"Sun"
 });
 
-new google.maps.Marker({
+nem = new google.maps.Marker({
  position: ap,
  map: map,
  Icon: "http://test.barrycarter.info/nemesis.png",
@@ -50,6 +55,7 @@ for (r=1; r<=15; r++) {
  var nowtime = new Date();
    light.push(new google.maps.Circle({
  center: pt,
+ // TODO: make this value more accurate!
  radius: 667917*r,
  map: map,
  strokeWeight: 0.1,
@@ -69,11 +75,21 @@ for (r=1; r<=15; r++) {
 }
 
 function moveme() {
+ // how much time has elapsed since program started (seconds)
  nowtime = (new Date()-startime)/1000;
- newsun = new google.maps.LatLng(-6.16453214907868,297.19423018679-nowtime/1);
-// alert(nowtime);
+
+ // new solar longitude (latitude doesn't change) and antisun point
+ newsun = new google.maps.LatLng(sunlat,sunlon-nowtime*move);
+ newnem = new google.maps.LatLng(-1*sunlat,sunlon-nowtime*move+180);
+
+ // move sun and antisun
+ sun.setPosition(newsun);
+ nem.setPosition(newnem);
+
+ // and then the surrounding "ripples"
  for (r=1; r<=15; r++) {
   light[r].setCenter(newsun);
+  dark[r].setCenter(newnem);
 }
 }
 
