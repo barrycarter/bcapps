@@ -3,12 +3,15 @@
 # given a file with the (unsorted) output of sha1sum, list duplicate files
 # fairly trivial to write
 
+# "bc-dupe-checker.pl sha1file | xargs ls -l | sort -k5nr" helpful in
+# finding large duplicates
+
+push(@INC, "/usr/local/lib");
 require "bclib.pl";
+$dir = tmpdir();
 
-chdir(tmpdir());
-
-system("sort $ARGV[0] > sha1sorted.txt");
-$sha1s = read_file("sha1sorted.txt");
+system("sort $ARGV[0] > $dir/sha1sorted.txt");
+$sha1s = read_file("$dir/sha1sorted.txt");
 
 for $i (split(/\n/, $sha1s)) {
   # confirm the line is really sha1 or md5 followed by filename
@@ -22,7 +25,8 @@ for $i (split(/\n/, $sha1s)) {
 
   # are we seeing the same sha1 again?
   if ($sha1 eq $cur) {
-    print "'$file'\n";
+#    print qq%"$file";: $cur\n%;
+    print qq%"$file"\n%;
     next;
   }
 

@@ -4,6 +4,7 @@
 # consistent "sha1" format. Recreates mailbox with pointers to
 # attachment files
 
+push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
 # list of types we can handle (excl image/jpeg and octet-stream, which
@@ -23,6 +24,7 @@ while (<A>) {
     handle_attachment($msg);
     $msg=$_;
   } else {
+    debug("READ: $_");
     $msg = "$msg$_";
   }
 }
@@ -32,6 +34,7 @@ handle_attachment($msg);
 
 sub handle_attachment {
   my($a)=@_;
+  debug("handle_attachment length:". length($a));
   my($fname, $ctype, $bound);
   # need a global to preserve uniqueness
   $attachnum++;
@@ -45,6 +48,7 @@ sub handle_attachment {
   }
 
   my($head,$body)=($1,$2);
+  debug("HEAD: $head");
 
   # if multipart, get content-type and boundary (if not, just get content-type)
   if ($head=~/Content-[Tt]ype: (.*?); boundary="(.*?)"/m) {
@@ -57,6 +61,7 @@ sub handle_attachment {
   }
 
   my($ctype)=$1;
+  debug("CTYPE: $ctype");
 
   # is this a multipart msg? if so, recurse
   if ($ctype=~m!multipart/(.*?)!i) {
