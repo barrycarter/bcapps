@@ -15,3 +15,5 @@ curl -o /tmp/bc.txt 'http://search.twitter.com/search.json?q=%40barrycarter'
 # mentions of all my twitter accounts
 perl -nle 'if(/username=(.*?)&/i){print "curl -o /tmp/twitter-$1 \47http://search.twitter.com/search.json?q=%40$1\47"}' ~/twitter.rc | parallel -j 20
 
+# print all files in directory with size, mtime, sha1sum, filename
+find . -type f -printf '%s %T@ ' -exec sha1sum {} ';'
