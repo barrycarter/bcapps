@@ -2,6 +2,9 @@
 
 # given the output of sqlite3 -html -header, create an RSS feed
 # doesn't work if query has tables inside it
+# --title: feed title
+# --desc: channel description
+
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
@@ -9,7 +12,7 @@ print << "MARK";
 Content-type: text/xml
 
 <?xml version="1.0" encoding="ISO-8859-1" ?><rss version="0.91">
-<channel><title>title</title><description>channel desc</description>
+<channel><title>$globopts{title}</title><description>$globopts{desc}</description>
 
 MARK
 ;
