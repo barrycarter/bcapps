@@ -16,8 +16,15 @@
 
 # TODO: pretty sure I can seriously improve coding here (entire program)
 
+push(@INC,"/usr/local/lib");
 require "bclib.pl";
-require "/home/barrycarter/bc-private.pl";
+# removing below temporarily for testing
+# require "/home/barrycarter/bc-private.pl";
+
+# for debugging
+write_file($ARGV[0], "/tmp/meta-".time());
+
+die "TESTING";
 
 $pagename = "Main"; # hardcoded for now
 $all = read_file("sample-data/anno1.txt");
