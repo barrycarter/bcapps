@@ -17,7 +17,7 @@ function perlnotify($type) {
   # if (!(preg_match("/^MetaTestOne:/", $_REQUEST[title]))) {return true;}
 
   # cleanse, and send to meta-mediawiki.pl
-  $title = preg_replace("/[^a-z:]//ig", $_REQUEST[title]);
+  $title = preg_replace("/[^a-zA-Z_:]/", "", $_REQUEST[title]);
   filedebug("TITLE TO PERL: $title");
   system("/usr/local/bin/meta-mediawiki.pl $title 1> /tmp/hookout 2> /tmp/hookerr");
   return true;
