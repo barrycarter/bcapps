@@ -16,9 +16,10 @@ function perlnotify($type) {
   # TODO: re-add this line when ready
   # if (!(preg_match("/^MetaTestOne:/", $_REQUEST[title]))) {return true;}
 
-  # using env variable to reduce code injection
-  putenv("PHP_TITLE", $title);
-  system("/usr/local/bin/meta-mediawiki.pl");
+  # using tmpfile to reduce code injection
+  $file = tempnam("/tmp/","metamedia");
+  file_put_contents($file, $_REQUEST[title]);
+  system("/usr/local/bin/meta-mediawiki.pl $file");
   return true;
 }
 

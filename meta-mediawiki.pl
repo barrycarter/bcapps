@@ -22,8 +22,7 @@ require "bclib.pl";
 # require "/home/barrycarter/bc-private.pl";
 
 # for debugging
-$env = join(",",%ENV);
-write_file($env, "/tmp/meta-".time());
+write_file($ARGV[0], "/tmp/meta-".time());
 
 die "TESTING";
 
