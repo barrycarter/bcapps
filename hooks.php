@@ -1,5 +1,10 @@
 <?php
 
+# this is just for regular semantic stuff
+# include_once("$IP/extensions/SemanticMediaWiki/SemanticMediaWiki.php"); 
+# enableSemantics('wiki.barrycarter.info'); 
+
+
 # this file is included into mediawiki's LocalSettings.php for meta wiki purposes
 
 require '/sites/LIB/bclib.php';

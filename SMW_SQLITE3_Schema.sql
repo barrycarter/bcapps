@@ -1,7 +1,5 @@
+-- SQLite3 schema for Semantic MediaWiki?
 
--- Postgres schema for Semantic MediaWiki
-
-\ON_ERROR_STOP
 BEGIN;
 
 CREATE TABLE smw_relations (
