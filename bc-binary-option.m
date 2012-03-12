@@ -10,8 +10,10 @@ For this file, times are in years to correspond to volatility
 bincallvalue[p0_, v_, s_, e_] =
  1-CDF[NormalDistribution[Log[p0],Sqrt[e]*v], Log[s]]
 
+(* formula below was wrong, may still be *)
+
 barriervalue[p0_, v_, s_, e_] =
- 1-CDF[NormalDistribution[Log[p0],Sqrt[e]*v*Sqrt[2]], Log[s]]
+ 1-(2*CDF[NormalDistribution[Log[p0],Sqrt[e]*v*Sqrt[2]], Log[s]]-1)
 
 (*
 
