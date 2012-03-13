@@ -3,6 +3,8 @@
 # Given a page formatted as sample-data/metamedia.txt, create multiple
 # semantic Mediawiki pages reflecting the relations.
 
+# -test: use hardcoded data
+
 # Formats:
 
 # CASE ONE: [[foo!!bar]]: add text "bar" to page "foo", return "bar"
@@ -19,6 +21,12 @@
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
+if ($globopts{test}) {
+  $pagename="Page Name";
+  $all = read_file("sample-data/anno1.txt");
+  goto TEST;
+}
+
 # no need for pw, edits will be anon but from 127.0.0.1 only
 # "constant"
 $wiki = "wiki2.94y.info";
@@ -33,6 +41,8 @@ write_file($pagename, "/tmp/meta-".time());
 # remove XML
 # TODO: can content itself have XML? (if so, need to fix this!)
 $all=~s/<.*?>//isg;
+
+TEST:
 
 # treat the whole page as addition to itself
 chomp($all);
@@ -54,7 +64,7 @@ for $i (sort keys %add) {
   for $j (@add) {
   # parse $n s$n p$n as above
     $j=~s/<<s?(\d+)>>/$text[$1]/isg;
-    $j=~s/<<p(\d+)>>/convert($text[$1])/iseg;
+    $j=~s/<<p(\d+)>>/convert_text($text[$1])/iseg;
   }
 
   # and reset @{$add{$i}}
@@ -173,7 +183,7 @@ sub parse_text {
 # convert tags with colons (they display differently on calling page
 # and called page
 
-sub convert {
+sub convert_text {
   my($text) = @_;
   debug("GOT: $text");
 
