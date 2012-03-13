@@ -16,15 +16,13 @@ $wgHooks['ArticleInsertComplete'][] = array('perlnotify', 'delete');
 
 # just a test function for now
 function perlnotify($type) {
-  # only care about changes in the metatestone (wikiname) space
-  # TODO: generalize this
-  # TODO: re-add this line when ready
-  # if (!(preg_match("/^MetaTestOne:/", $_REQUEST[title]))) {return true;}
+  # ignore changes except in wiki namespace
+  if (!(preg_match("/^MetaTestOne:/", $_REQUEST[title]))) {return true;}
 
   # using tmpfile to reduce code injection
   $file = tempnam("/tmp/","metamedia");
   file_put_contents($file, $_REQUEST[title]);
-  system("/usr/local/bin/meta-mediawiki.pl $file");
+  system("/usr/local/bin/meta-mediawiki.pl --debug $file 1> /tmp/stdout.txt 2> /tmp/stderr.txt");
   return true;
 }
 

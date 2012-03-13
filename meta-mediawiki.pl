@@ -38,9 +38,12 @@ write_file($pagename, "/tmp/meta-".time());
 # mediawikifs not that great, using api
 ($all, $err, $res) = cache_command("curl 'http://$wiki/api.php?action=query&prop=revisions&rvprop=content&format=xml&titles=$pagename'");
 
-# remove XML (hopefully no embedded <rev> tags)
-$all=~m%<rev[> ].*?>(.*?)</rev>%is;
-$all = $1;
+# remove XML (hopefully no embedded <rev> tags) [if no revs, $all is empty]
+if ($all=~m%<rev[> ].*?>(.*?)</rev>%is) {
+  $all = $1;
+} else {
+  $all = "";
+}
 
 TEST:
 
@@ -83,7 +86,7 @@ for $i (sort keys %add) {
   $page=~m%<rev[> ].*?>(.*?)</rev>%is;
 
   # Case 1: this page had previously created a section and will replace it
-  unless ($page=~s%(<$pagename>)(.*?)(</$pagename>)%$1$content$2%) {
+  unless ($page=~s%(<$pagename>)(.*?)(</$pagename>)%$1\n$content\n$2%) {
     # Case 2: didn't already have it, so add it
     $page = "$page\n<$pagename>$content</$pagename>\n";
   }
@@ -95,7 +98,7 @@ for $i (sort keys %add) {
 
   debug("ADD($i)", @add);
 
-# die "TESTING";
+  print "$res\n";
 }
 
 sub parse_text {
