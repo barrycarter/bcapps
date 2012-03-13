@@ -21,15 +21,15 @@
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
+# no need for pw, edits will be anon but from 127.0.0.1 only
+# "constant"
+$wiki = "wiki2.94y.info";
+
 if ($globopts{test}) {
   $pagename="Page Name";
   $all = read_file("sample-data/anno1.txt");
   goto TEST;
 }
-
-# no need for pw, edits will be anon but from 127.0.0.1 only
-# "constant"
-$wiki = "wiki2.94y.info";
 
 # for debugging
 $pagename = read_file($ARGV[0]);
@@ -71,8 +71,27 @@ for $i (sort keys %add) {
   # TODO: modify list directly, no middle step
   @{$add{$i}} = @add;
 
+  # pull this page from the wiki (ok if it doesnt exist)
+  # TODO: escape title if needed
+  $iurl = urlencode($i);
+  ($page, $err, $res) = cache_command("curl 'http://$wiki/api.php?action=query&prop=revisions&rvprop=content&format=xml&titles=$iurl'");
+  $page=~s/<.*?>//isg;
+
+  # TODO: this will eventually REPLACE existing psuedosection, not add
+  # to page directly
+  $page .= join("\n",@add);
+
+  $res = write_wiki_page_anon($wiki, $i, $page, "AUTO");
+
+  debug("RES: $res");
+  debug("PAGE: $page");
+
   debug("ADD($i)", @add);
+
+die "TESTING";
 }
+
+die "TESTING";
 
 # db queries to update table
 # delete anything this page created previously
@@ -196,6 +215,26 @@ sub convert_text {
   debug("RET: $text");
   return $text;
 }
+
+# write wiki page when no login is required (faster)
+# TODO: limit anon writes to 127.0.0.1
+
+sub write_wiki_page_anon {
+  my($wiki, $page, $newcontent, $comment)= @_;
+
+  # use map() below?
+  ($page, $newcontent) = (urlencode($page), urlencode($newcontent));
+
+  # write newcontent to file (might be too long for command line)
+  my($tmpfile) = "/tmp/".sha1_hex("$user-$wiki-$page");
+
+  # Could use multiple -d's to curl, but below is probably easier
+  write_file("action=edit&title=$page&text=$newcontent&summary=$comment&token=%2B\\", $tmpfile);
+
+  # can't cache this command, but using cache_command to get vals
+  return cache_command("curl '$wiki/api.php' -d \@$tmpfile");
+}
+
 
 =item schema
 
