@@ -5,4 +5,25 @@ to db-ify this
 http://dilbert.com/rating.process?Type=comment&Rating=1&pkID=1153938&cid=cid
 autorates a Dilbert comment (but does require login)
 
+To create a clean mediawiki db:
+
+: unzip mediawiki in a directory, rename dir, + point a browser to it
+cd /sites ; tar xvfz ~/build/mediawiki-1.18.1.tar.gz
+mv mediawiki-1.18.1 WIKI3
+: unzip semantic mediawiki into extensions
+cd /sites/WIKI3/extensions; unzip ~/build/semediawiki.
+
+: edit lighttpd.conf or whatever and restart
+: setup the wiki normally, but only basic options; db name = sample
+: add this line to auto-generated LocalSettings.php
+require('/sites/LIB/hooks.php');
+: visit the Wiki, LOGIN, go to SMWAdmin page:
+http://wiki3.94y.info/index.php?title=Special:SMWAdmin
+: generate tables by pushing button
+: you now have ultra-clean (kinda) copies of the dbs, so dump them
+: --skip-extended-insert just makes it easier to see what they do
+mysqldump --skip-extended-insert=yes sample > pure-mediawiki.txt
+
+
+
 

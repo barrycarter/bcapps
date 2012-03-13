@@ -17,7 +17,8 @@ $wgHooks['ArticleInsertComplete'][] = array('perlnotify', 'delete');
 # just a test function for now
 function perlnotify($type) {
   # ignore changes except in wiki namespace
-  if (!(preg_match("/^MetaTestOne:/", $_REQUEST[title]))) {return true;}
+  # TODO: generalize this
+  if (!(preg_match("/^Sample:/", $_REQUEST[title]))) {return true;}
 
   # using tmpfile to reduce code injection
   $file = tempnam("/tmp/","metamedia");

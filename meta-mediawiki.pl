@@ -21,9 +21,11 @@
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
+# TODO: does not create the "page of itself"
+
 # no need for pw, edits will be anon but from 127.0.0.1 only
 # "constant"
-$wiki = "wiki2.94y.info";
+$wiki = "wiki3.94y.info";
 
 if ($globopts{test}) {
   $pagename="Page Name";
@@ -31,19 +33,16 @@ if ($globopts{test}) {
   goto TEST;
 }
 
-# for debugging
 $pagename = read_file($ARGV[0]);
-write_file($pagename, "/tmp/meta-".time());
+
+# TODO: dekludge this
+# $pagename=~s/^Sample://;
 
 # mediawikifs not that great, using api
 ($all, $err, $res) = cache_command("curl 'http://$wiki/api.php?action=query&prop=revisions&rvprop=content&format=xml&titles=$pagename'");
 
 # remove XML (hopefully no embedded <rev> tags) [if no revs, $all is empty]
-if ($all=~m%<rev[> ].*?>(.*?)</rev>%is) {
-  $all = $1;
-} else {
-  $all = "";
-}
+unless ($all=~s%<rev[> ].*?>(.*?)</rev>%$1%is) {$all = "";}
 
 TEST:
 
@@ -83,12 +82,12 @@ for $i (sort keys %add) {
   # TODO: escape title if needed
   $iurl = urlencode($i);
   ($page, $err, $res) = cache_command("curl 'http://$wiki/api.php?action=query&prop=revisions&rvprop=content&format=xml&titles=$iurl'");
-  $page=~m%<rev[> ].*?>(.*?)</rev>%is;
+  unless ($page=~s%<rev[> ].*?>(.*?)</rev>%$1%is) {$page = "";}
 
   # Case 1: this page had previously created a section and will replace it
   unless ($page=~s%(<$pagename>)(.*?)(</$pagename>)%$1\n$content\n$2%) {
     # Case 2: didn't already have it, so add it
-    $page = "$page\n<$pagename>$content</$pagename>\n";
+    $page = "$page\n<$pagename>\n$content\n</$pagename>\n";
   }
 
   $res = write_wiki_page_anon($wiki, $i, $page, "AUTO");
