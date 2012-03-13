@@ -928,8 +928,8 @@ sub nadex_quotes {
 
    # Unix time
    # TODO: EST5EDT does NOT work below, but should; this will be
-   # inaccurate once we leave DST
-   $utime = str2time("$dat $tim GMT-5");
+   # inaccurate once we leave DST (so I change it regularly sigh)
+   $utime = str2time("$dat $tim GMT-4");
    debug("$utime <- $dat $tim");
 
    # last updated time
