@@ -22,16 +22,19 @@ require "bclib.pl";
 # require "/home/barrycarter/bc-private.pl";
 
 # for debugging
-write_file($ARGV[0], "/tmp/meta-".time());
+$pagename = read_file($ARGV[0]);
+write_file($pagename, "/tmp/meta-".time());
 
-die "TESTING";
+# using wikipediafs here is really bad cheating (but it works)
+$all = read_file("/mnt/wiki/META/$pagename");
 
-$pagename = "Main"; # hardcoded for now
-$all = read_file("sample-data/anno1.txt");
+filedebug("ALL: $all");
 
 # treat the whole page as addition to itself
 chomp($all);
 $all = "[[$pagename!!$all]]";
+
+die "TESTING";
 
 # parse all [[foo]] and {{foo}} on page (I don't use {{foo}}, but it
 # needs to be protected
