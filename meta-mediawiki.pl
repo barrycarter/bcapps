@@ -18,17 +18,20 @@
 
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
-# removing below temporarily for testing
-# require "/home/barrycarter/bc-private.pl";
+
+# no need for pw, edits will be anon but from 127.0.0.1 only
+# "constant"
+$wiki = "wiki2.94y.info";
 
 # for debugging
 $pagename = read_file($ARGV[0]);
 write_file($pagename, "/tmp/meta-".time());
 
-# using wikipediafs here is really bad cheating (but it works)
-$all = read_file("/mnt/wiki/META/$pagename");
+# mediawikifs not that great, using api
+($out, $err, $res) = cache_command("curl 'http://$wiki/api.php?action=query&prop=revisions|imageinfo&titles=$pagename&rvprop=timestamp|content&iiprop=url&format=xml'");
 
-filedebug("ALL: $all");
+write_file("ALL: $all", "/tmp/all.txt");
+write_file("OUT: $out", "/tmp/out.txt");
 
 # treat the whole page as addition to itself
 chomp($all);
