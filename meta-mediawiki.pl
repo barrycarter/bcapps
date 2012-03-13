@@ -79,7 +79,7 @@ for $i (sort keys %add) {
 
   # TODO: this will eventually REPLACE existing psuedosection, not add
   # to page directly
-  $page .= join("\n",@add);
+  $page = "{$pagename}". join("\n",@add) . "{/$pagename}\n";
 
   $res = write_wiki_page_anon($wiki, $i, $page, "AUTO");
 
@@ -88,7 +88,7 @@ for $i (sort keys %add) {
 
   debug("ADD($i)", @add);
 
-die "TESTING";
+# die "TESTING";
 }
 
 die "TESTING";
