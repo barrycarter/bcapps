@@ -28,37 +28,24 @@ $pagename = read_file($ARGV[0]);
 write_file($pagename, "/tmp/meta-".time());
 
 # mediawikifs not that great, using api
-($out, $err, $res) = cache_command("curl 'http://$wiki/api.php?action=query&prop=revisions|imageinfo&titles=$pagename&rvprop=timestamp|content&iiprop=url&format=xml'");
+($all, $err, $res) = cache_command("curl 'http://$wiki/api.php?action=query&prop=revisions&rvprop=content&format=xml&titles=$pagename'");
 
-write_file("ALL: $all", "/tmp/all.txt");
-write_file("OUT: $out", "/tmp/out.txt");
+# remove XML
+# TODO: can content itself have XML? (if so, need to fix this!)
+$all=~s/<.*?>//isg;
 
 # treat the whole page as addition to itself
 chomp($all);
 $all = "[[$pagename!!$all]]";
-
-die "TESTING";
 
 # parse all [[foo]] and {{foo}} on page (I don't use {{foo}}, but it
 # needs to be protected
 
 # TODO: this matches [[foo}} (which it shouldn't)
 while 
-  ($all=~s/(\[\[?|\{\{?)([^\[\]\{\}]*?)(\]\]?|\}\}?)/
-   parse_text($1,$2,$3)/iseg) {
-#  ($all=~s/(\[\[|\{\{)(.*?)(\]\]|\}\})/parse_text($1,$2,$3)/iseg) {
+  ($all=~s/(\[\[?|\{\{?)([^\[\]\{\}]*?)(\]\]?|\}\}?)/parse_text($1,$2,$3)/iseg) {
   $round++;
-#  debug("ROUND $round: $all");
 }
-
-# debug("END: $all");
-
-# now replace <<$n>> and any <<s$n>> not already parsed
-# $all=~s/<<s?(\d+)>>/$text[$1]/isg;
-
-# and <<p$n>>
-# TODO: everything
-# $all=~s/<<p(\d+)>>/convert($text[$1])/iseg;
 
 # do the same for all additions to all pages
 for $i (sort keys %add) {
