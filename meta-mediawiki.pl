@@ -69,8 +69,8 @@ while
   $round++;
 }
 
-# TODO: this is hideous
-open(A,"|parallel -j 20");
+# TODO: this is hideous (so turning off)
+# open(A,"|parallel -j 20");
 
 # "add" things to pages as needed (actually, replace existing section)
 for $i (sort keys %add) {
@@ -103,12 +103,14 @@ for $i (sort keys %add) {
 #  debug("CONTENT: $content");
 
   # Case 1: this page had previously created a section and will replace it
-  unless ($page=~s%($stag)(.*?)($etag)%$1\n$content\n$2%s) {
+  unless ($page=~s%($stag)(.*?)($etag)%$1\n$content\n$3%s) {
     # Case 2: didn't already have it, so add it
     debug("$i doesn't have $stag/$etag, so adding psuedosection");
-    debug("CONTENT($i): $page");
+#    debug("CONTENT($i): $page");
     $page = "$page\n$stag$content$etag\n";
   }
+
+  debug("NEW $i: $page");
 
   $res = write_wiki_page_anon($wiki, $i, $page, "AUTO");
 
@@ -118,10 +120,10 @@ for $i (sort keys %add) {
   debug("ADD($i)", @add);
 
   print "$res\n";
-  print A "$res\n";
+#  print A "$res\n";
 }
 
-close(A);
+# close(A);
 
 sub parse_text {
   my($stag, $text, $etag) = @_;
