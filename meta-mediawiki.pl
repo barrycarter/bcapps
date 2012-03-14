@@ -25,7 +25,9 @@ require "bclib.pl";
 
 # no need for pw, edits will be anon but from 127.0.0.1 only
 # "constant"
+# both of these could/should be sent by hooks.php
 $wiki = "wiki3.94y.info";
+$pname = "Sample";
 
 if ($globopts{test}) {
   $pagename="Page Name";
@@ -34,9 +36,6 @@ if ($globopts{test}) {
 }
 
 $pagename = read_file($ARGV[0]);
-
-# TODO: dekludge this
-# $pagename=~s/^Sample://;
 
 # mediawikifs not that great, using api
 ($all, $err, $res) = cache_command("curl 'http://$wiki/api.php?action=query&prop=revisions&rvprop=content&format=xml&titles=$pagename'");
@@ -49,13 +48,16 @@ TEST:
 # treat the whole page as addition to itself
 chomp($all);
 
-# special case
-$all=~s/&lt;.?$pagename&gt;/<$pagename>/isg;
-
 $mainpage = $pagename;
 # TODO: genearlize below
 $mainpage =~s/^Sample://;
 $all = "[[$mainpage!!$all]]";
+
+# the tags I use to recognize the sections I create on other pages
+# <h>yes, I realize I use this as a my() var in a subroutine; ha ha</h>
+# TODO: create much better tags
+# NOTE: using escapeable characters will cause probs w later recognition
+($stag, $etag) = ("-$pagename-", "-$pagename-");
 
 # parse all [[foo]] and {{foo}} on page (I don't use {{foo}}, but it
 # needs to be protected
@@ -66,6 +68,9 @@ while
   ($all=~s/(\[\[?|\{\{?)([^\[\]\{\}]*?)(\]\]?|\}\}?)/parse_text($1,$2,$3)/iseg) {
   $round++;
 }
+
+# TODO: this is hideous
+open(A,"|parallel -j 20");
 
 # "add" things to pages as needed (actually, replace existing section)
 for $i (sort keys %add) {
@@ -98,11 +103,11 @@ for $i (sort keys %add) {
 #  debug("CONTENT: $content");
 
   # Case 1: this page had previously created a section and will replace it
-  unless ($page=~s%(<$pagename>)(.*?)(</$pagename>)%$1\n$content\n$2%s) {
+  unless ($page=~s%($stag)(.*?)($etag)%$1\n$content\n$2%s) {
     # Case 2: didn't already have it, so add it
-    debug("$i doesn't have <$pagename>, so adding psuedosection");
+    debug("$i doesn't have $stag/$etag, so adding psuedosection");
     debug("CONTENT($i): $page");
-    $page = "$page\n<$pagename>\n$content\n</$pagename>\n";
+    $page = "$page\n$stag$content$etag\n";
   }
 
   $res = write_wiki_page_anon($wiki, $i, $page, "AUTO");
@@ -113,7 +118,10 @@ for $i (sort keys %add) {
   debug("ADD($i)", @add);
 
   print "$res\n";
+  print A "$res\n";
 }
+
+close(A);
 
 sub parse_text {
   my($stag, $text, $etag) = @_;

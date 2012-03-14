@@ -4,6 +4,8 @@
 include_once("$IP/extensions/SemanticMediaWiki/SemanticMediaWiki.php"); 
 enableSemantics('wiki.barrycarter.info'); 
 
+$smwgShowFactbox = SMW_FACTBOX_NONEMPTY;
+$smwgBrowseShowInverse = true;
 
 # this file is included into mediawiki's LocalSettings.php for meta wiki purposes
 
