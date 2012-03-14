@@ -1,0 +1,304 @@
+Date: 1 September 1954
+
+Description: Patty and Violet are going to have a party and not invite Charlie Brown. He tells them that he’ll fly a jet plane over them, which convince them to invite him.
+
+Speaking: Violet, Patty, Charlie Brown 
+
+Category: friends, parties
+
+
+Date: 2 September 1954
+
+Description: Lucy declares that shes found scientific truth as her tests show that the butter side of bread will land down.
+
+Speaking: Lucy, Violet
+
+Category: science, friends
+
+
+Date: 3 September 1954
+
+Description: Charlie Brown wants Violet to love him, and he wants her to let him know when she changes her mind.
+
+Speaking: Violet, Charlie Brown
+
+Category: friends, love, sadness
+
+
+Date: 4 September 1954
+
+Description: Charlie Brown punts a football to Snoopy, which hops over Snoopy.
+
+Non-Speaking: Charlie Brown, Snoopy
+
+Category: speechless, dog, pet, football
+
+
+Date: 5 September 1954
+
+Description: Violet and Patty decide that they aren’t going to play Lucy’s way anymore.
+
+Speaking: Violet, Patty, Lucy
+
+Category: friends, angry
+
+Comments: 12 panel Sunday strip
+
+
+Date: 6 September 1954
+
+Description: Patty is going to give Pig-Pen a bath, but finds him already clean.
+
+Speaking: Patty
+
+Non-Speaking: Pig-Pen
+
+Category: dirty, bath, friends
+
+
+Date: 7 September 1954
+
+Description: Violet asks Charlie Brown what he wants to be when he grows up. He didn’t realize he had a choice.
+
+Speaking: Charlie Brown, Violet
+
+Category: friends, future, jobs
+
+
+Date: 8 September 1954
+
+Description: Patty tells Pig-Pen that no one will like him since he is dirty. Then, Schroeder walks by all dirty.
+
+Speaking: Patty, Pig-Pen
+
+Non-Speaking: Schroeder
+
+Category: dirty, friends, gossip
+
+
+Date: 9 September 1954
+
+Description: Patty is mad at Schroeder for being dirty, then Snoopy walks up dirty, too.
+
+Speaking: Patty
+
+Non-Speaking: Pig-Pen, Snoopy, Schroeder
+
+Category: friends, dirty
+
+
+Date: 10 September 1954
+
+Description: Patty complains to Charlie Brown over the phone about everyone being dirty. Turns out Charlie Brown is also dirty.
+
+Speaking: Charlie Brown, Patty
+
+Category: dirty, complaining
+
+
+Date: 11 September 1954
+
+Description: Charlie Brown calls Patty to say they decide that she was right, and they all are clean. Patty is now the one who is dirty.
+
+Speaking: Charlie Brown, Patty
+
+Non-Speaking: Schroeder, Snoopy
+
+Category: dirty, friends, peer pressure
+
+
+Date: 12 September 1954
+
+Description: Charlie Brown tries to show Linus how to build a house of cards. He fails, but Linus is able to do it anyway.
+
+Speaking: Charlie Brown
+
+Non-Speaking: Linus
+
+Category: toddler, building
+
+Comments: 9 panel Sunday strip
+
+
+Date: 13 September 1954
+
+Description: Lucy tells Charlie Brown about ants being stupid.
+
+Speaking: Lucy, Charlie Brown
+
+Category: ants
+
+
+Date: 14 September 1954
+
+Description: Violet knows Charlie Brown doesn’t like coconut, so she is going to have lots of coconut options at her party to upset him and make him not go.
+
+Speaking: Charlie Brown, Violet
+
+Category: parties, coconut
+
+
+Date: 15 September 1954
+
+Description: Charlie Brown asks Lucy if she is playing tennis. She says she is trying to grow on the tennis courts like her father did, but she hasn’t grown an inch yet.
+
+Speaking: Charlie Brown, Lucy 
+
+Mentioned: Lucy’s dad
+
+Category: tennis, friends, children
+
+
+Date: 16 September 1954
+
+Description: Charlie Brown tells everyone to back up. He swings and misses which Lucy catches right in front of him.
+
+Speaking: Charlie Brown
+
+Non-Speaking: Lucy
+
+Category: baseball, sadness
+
+
+Date: 17 September 1954
+
+Description: Violet brags that her dad got a new car, to which Charlie Brown says his dad doesn’t care that he doesn’t have a new car because he has Charlie Brown.
+
+Speaking: Charlie Brown, Violet
+
+Mentioned: Charlie Brown’s dad, Violet’s dad
+
+Category: cars, parents, bragging
+
+
+Date: 18 September 1954
+
+Description: Charlie Brown and Schroeder discuss hitting the baseball where the players aren’t in the field.
+
+Speaking: Charlie Brown, Schroeder
+
+Category: baseball
+
+
+Date: 19 September 1954
+
+Description: Snoopy bugs Charlie Brown to throw the ball. Charlie Brown finally does and Snoopy doesn’t care to chase it.
+
+Speaking: Charlie Brown
+
+Non-Speaking: Snoopy
+
+Category: pets, dogs, playing
+
+Comments: 9 panel Sunday strip
+
+
+Date: 20 September 1954
+
+Description: Violet and Patty tell Charlie Brown that he can’t play with them since Charlie Brown’s dad doesn’t make enough money. Charlie Brown says his dad makes more than both of their dads. They then tell him that he can’t play because his house isn’t painted green.
+
+Speaking: Violet, Charlie Brown, Patty
+
+Category: friends, parents
+
+
+Date: 21 September 1954
+
+Description: Lucy is trying to draw a line around the world. Charlie Brown suggests she can’t do it with just one crayon.  Lucy has a backup crayon.
+
+Speaking: Charlie Brown, Lucy
+
+Category: children, imagination
+
+
+Date: 22 September 1954
+
+Description: Lucy is still trying to draw a line around the world. Charlie Brown tries to convince her its not possible. She says there are bridges, so it is possible.
+
+Speaking: Lucy, Charlie Brown
+
+Category: friends, imagination, children
+
+
+Date: 23 September 1954
+
+Description: Lucy continues to draw a line around the world. Lucy tells Charlie Brown that she is doing so because of the saying “you have to draw the line someplace.”
+
+Speaking: Lucy, Charlie Brown
+
+Category: friends, children, imagination
+
+Wikipedia: “You have to draw the line someplace.”
+
+
+Date: 24 September 1954
+
+Description: Patty asks Charlie Brown what the line on the sidewalk is all about. He explains Lucy’s goal and how ridiculous it is just as Lucy finishes the line.
+
+Speaking: Patty, Charlie Brown
+
+Non-Speaking: Lucy
+
+Category: children, friends, imagination
+
+
+Date: 25 September 1954
+
+Description: Linus is watching television when Lucy joins him, followed by Patty. He decides to sit under the television.
+
+Non-Speaking: Linus, Lucy, Patty
+
+Category: television, speechless
+
+
+Date: 26 September 1954
+
+Description: Violet hugs Snoopy and Pig-Pen says he wishes someone would hug him like that. Violet tells him maybe someone would if he cleaned up. He does, but she still won’t hug him.
+
+Speaking: Violet, Pig-Pen
+
+Non-Speaking: Snoopy
+
+Category: dogs, dirty
+
+Comments: 11 panel Sunday strip
+
+
+Date: 27 September 1954
+
+Description: Lucy asks Schroeder about his Beethoven statue. She thought it was his grandpa.
+
+Speaking: Lucy, Schroeder
+
+Category: music, piano, children
+
+Wikipedia: Beethoven
+
+
+Date: 28 September 1954
+
+Description: Violet asks Charlie Brown what he is going to be in the future. He goes on a long spiel about how no one knows and makes her upset.
+
+Speaking: Violet, Charlie Brown
+
+Category: friends, anger
+
+
+Date: 29 September 1954
+
+Description: Lucy is watching television when Snoopy gets in her way and yells at him.
+
+Speaking: Lucy
+
+Non-Speaking: Snoopy
+
+Category: dogs, television
+
+
+Date: 30 September 1954
+
+Description: Charlie Brown complains that he is a useless guy. Patty tells him he is not that bad of a person to his surprise.
+
+Speaking: Patty, Charlie Brown
+
+Category: friends, sadness

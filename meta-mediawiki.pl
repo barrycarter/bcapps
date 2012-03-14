@@ -21,8 +21,6 @@
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
-# TODO: does not create the "page of itself"
-
 # no need for pw, edits will be anon but from 127.0.0.1 only
 # "constant"
 # both of these could/should be sent by hooks.php

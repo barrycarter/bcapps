@@ -1,0 +1,272 @@
+Date: July 1, 1955
+
+Description:  Charlie Brown realizes that he is obsessed with Davy Crocket.
+
+Speaking: Charlie Brow, Unknown Character
+
+Category: Davy Crocket
+
+Date: July 2, 1955
+
+Description: Charlie Brown and Schroeder ponder who their favorite baseball player and pianist is.  
+
+Speaking: Charlie Brown, Schroeder
+
+Category: Beethoven
+
+Date: July 3, 1955
+
+Description:  Lucy and Charlie Brown think that they can hear the ocean roar in Snoopy’s ear.
+
+Speaking:  Lucy, Charlie Brown, Snoopy
+
+Category: Ocean
+
+Date: July 4, 1955
+
+Description:  Lucy explains to Charlie Brown that she is ornery.
+
+Speaking:  Lucy, Charlie Brown
+
+Category:  Lucy’s mood
+
+Date: July 5, 1955
+
+Description: Lucy explains to Linus that more people live in the world than they think.
+
+Speaking:  Lucy, Linus
+
+Category: Lucy Teaching
+
+Date: July 6, 1955
+
+Description: Lucy tells Linus that the sun comes up in the North and sets in the South.
+
+Speaking: Linus, Lucy
+
+Category:  Lucy Teaching
+
+Date: July 7, 1955
+
+Description:  Linus is riding his small tricycle when he comes across a full size bicycle, and thinks it’s a giant.
+
+Non-speaking: Linus
+
+Category: Bicycle
+
+Date: July 8, 1955
+
+Description:  Lucy tells Linus their mother wants him in to eat lunch so he will become a big boy.
+
+Speaking: Lucy, Linus
+
+Category: Parents
+
+Date: July 9, 1955
+
+Description:  Charlie Brown tells Lucy that there is no one in the world that likes him, and with the population growth he’s getting more and more unpopular.
+
+Speaking:  Charlie Brown
+
+Non-speaking:  Lucy
+
+Category:  No one like Charlie Brown
+
+Date: July 10, 1955
+
+Description:  Snoopy keeps trying to eat some of Linus’ ice cream cone, so finally Linus moves into a cage where Snoopy cannot get to him.
+
+Non-speaking:  Linus, Snoopy
+
+Category:  Snoopy wants food
+
+Date: July 11, 1955
+
+Description:  Charlie Brown sees an unknown character ride by in a large wagon.  He sighs, and starts riding in his very small wagon.
+
+Non-speaking:  Charlie Brown, Unknown Character
+
+Category: Wagon
+
+Date: July 12, 1955
+
+Description:  Charlie Brown shows Sally Brown his watch, which is always stuck on ten minutes till three.
+
+Speaking:  Charlie Brown, Sally Brown
+
+Category:  Broken watch
+
+Date: July 13, 1955
+
+Description:  Linus and Charlie Brown are playing croquet, but Charlie Brown can’t shoot because Snoopy is in the way.
+
+Speaking: Linus, Charlie
+
+Non-speaking: Snoopy
+
+Category: Croquet
+
+Date: July 14, 1955
+
+Description:  Snoopy is sitting on the croquet stick when a ball strikes it and he is almost knocked off.
+
+Non-speaking:  Snoopy
+
+Category: Croquet
+
+Comments:  Continuation of the strip the day before.
+
+Date:  July 15, 1955
+
+Description:  Charlie Brown is trying to play croquet when Snoopy goes running through the wicket.
+
+Speaking:  Charlie Brown
+
+Non-speaking:  Snoopy
+
+Category: Croquet
+
+Comments:  Continuation from the strip the day and two days before.
+
+Date:  July 16, 1955
+
+Description:  Lucy is sitting in a blow up pool when Snoopy bites a hole in it.
+
+Speaking:  Lucy
+
+Non-speaking:  Snoopy
+
+Category: Pool
+
+Date: July 17, 1955
+
+Description:  Schroeder and Charlie Brown appear to be arguing and calling each other names when they are actually arguing is Beethoven or Davy Crocket is better.
+
+Speaking:  Schroeder, Charlie Brown, Sally Brown
+
+Category: Beethoven, Davy Crocket
+
+Date: July 18, 1955
+
+Description:  Linus puts a puzzle together that stands up vertically.
+
+Speaking:  Charlie Brown, Lucy
+
+Non-speaking:  Linus
+
+Category: Puzzle
+
+Date: July 19, 1955
+
+Description:  Snoopy almost gets hit with a horseshoe.
+
+Non-speaking: Snoopy
+
+Category:  Horseshoes
+
+Date: July 20, 1955
+
+Description:  Lucy explains to Linus what once the sun goes down, the day will be over and gone forever.
+
+Speaking:  Lucy, Linus
+
+Category:  Lucy Teaching
+
+Date: July 21, 1955
+
+Description:  Lucy tells Linus that he is just a baby and since she is older, she has all the power.  He then makes a gun out of his hand and pretends to shoot her.
+
+Speaking:  Linus, Lucy
+
+Category:  Lucy being annoying
+
+Date:  July 22, 1955
+
+Description:  Lucy asks Charlie Brown if he thinks they will ever get married.  Charlie Brown makes it very clear that he doesn’t think they will.
+
+Speaking:  Lucy, Charlie Brown
+
+Category:  Marriage
+
+Date: July 23, 1955
+
+Description:  Pig-pen walks by Charlie Brown all dressed up explaining he was at a birthday party.  When Charlie Brown asks him if it was fun, Pig-pen says he never made it inside because they did not recognize him looking all nice.
+
+Speaking:  Charlie Brown, Pig-pen
+
+Category:  Pig-pen gets clean
+
+Date: July 24, 1955
+
+Description:  Snoopy is playing jump rope with Sally Brown and Lucy when he gets tangled in the rope and hit the ground hard.  Snoopy wonders when he will learn not to play with them.
+
+Speaking:  Snoopy, Lucy, Sally Brown
+
+Category:  Jump rope
+
+Date: July 25, 1955
+
+Description:  Lucy comes and brags to Charlie Brown about how much fun she and Patty have had all day.
+
+Speaking:  Lucy
+
+Non-speaking:  Charlie Brown
+
+Mentioned:  Peppermint Patty
+
+Category: Fun
+
+Date:  July 26, 1955
+
+Description:  Linus drips some ice cream on the hot sidewalk and Snoopy tries to lick it up and burns his tongue.
+
+Speaking:  Snoopy
+
+Non-speaking:  Linus
+
+Category:  Snoopy is hungry
+
+Date:  July 27, 1955
+
+Description:  Lucy tells Charlie Brown she would be very happy if he went away.  He leaves thinking how nice it is to bring happiness to someones life.
+
+Speaking:  Charlie Brown, Lucy
+
+Category:  Lucy’s mood
+
+Date:  July 28, 1955
+
+Description:  Charlie Brown holds out a ring for Snoopy to jump through.  He instead gets stuck in it.
+
+Speaking:  Charlie Brown
+
+Non-speaking:  Snoopy
+
+Category:  Dog trick
+
+Date:  July 29, 1955
+
+Description:  Charlie Brown explains to Linus that two ears and one mouth means that listening is more important than talking.  Just then Snoopy runs by, so Charlie Brown says four legs, which must mean that running is the most important.
+
+Speaking:  Charlie Brown
+
+Non-speaking:  Linus, Snoopy
+
+Date: July 30, 1955
+
+Description:  Lucy follows a bug to see where it lives.
+
+Speaking:  Lucy
+
+Category: Bugs
+
+Date: July 31, 1955
+
+Description:  Charlie Brown, Schroeder, and Pig-pen are playing baseball when Pig-pen hits the ball and Snoopy catches it in his mouth.  Charlie Brown tries to get the ball back to throw it home to Schroeder, but when Snoopy wont let it go, he throws Snoopy to Schroeder and Pig-pen is safe.
+
+Speaking:  Charlie Brown, Pig-Pen, Schroeder
+
+Non-speaking: Snoopy
+
+Category: Baseball
+

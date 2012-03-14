@@ -1,0 +1,316 @@
+Date: 1 November 1954
+
+Description: Charlie Brown says that only yesterday’s Halloween pumpkins are the only thing more useless than yesterday’s newspaper.
+
+Speaking: Patty, Charlie Brown 
+
+Category: Halloween, newspaper
+
+Comments: Halloween
+
+
+Date: 2 November 1954
+
+Description: Snoopy chases a leaf only to get chased by a bunch of leaves.
+
+Non-Speaking: Snoopy
+
+Category: speechless, fall, leaves
+
+
+Date: 3 November 1954
+
+Description: Lucy asks Charlie Brown what he would do if the moon fell on his head.
+
+Speaking: Lucy, Charlie Brown
+
+Category: astronomy
+
+Comments: Continues the theme of Lucy and astronomy
+
+
+Date: 4 November 1954
+
+Description: Charlie Brown says that Pig-Pen isn’t better than an animal which upsets Snoopy.
+
+Speaking: Charlie Brown
+
+Non-Speaking: Pig-Pen, Snoopy
+
+Category: dogs, animals, friends, calling names
+
+
+Date: 5 November 1954
+
+Description: Lucy is babysitting and taking care of Linus which makes him cry.
+
+Speaking: Lucy
+
+Non-Speaking: Linus
+
+Category: brother/sister, mother
+
+
+Date: 6 November 1954
+
+Description: Charlie Brown asks Pig-Pen what he looks like clean. Pig-Pen runs and gets a picture of himself.
+
+Speaking: Charlie Brown, Pig-Pen
+
+Category: dirty, friends, photograph
+
+
+Date: 7 November 1954
+
+Description: Linus builds a house of cards. Lucy knocks it over, and Linus hits her with a block.
+
+Speaking: Lucy
+
+Non-Speaking: Linus
+
+Category: building, toddler, mean
+
+Comments: 10 panel Sunday strip
+
+
+Date: 8 November 1954
+
+Description: Lucy says all the toys are hers, so Linus gives her his shirt.
+
+Speaking: Lucy
+
+Non-Speaking: Linus
+
+Category: brother/sister, toys
+
+
+Date: 9 November 1954
+
+Description: Lucy is counting suns, of which she is up to 12. Charlie Brown tells her there is only 1 Sun.
+
+Speaking: Lucy, Charlie Brown
+
+Category: astronomy, Sun, counting
+
+Wikipedia: The Sun
+
+Comments: More Lucy and astronomy
+
+
+Date: 10 November 1954
+
+Description: Charlie Brown talks to Lucy while she is counting Suns, but she can’t see anything.
+
+Speaking: Lucy, Charlie Brown
+
+Category: astronomy, eye-sight
+
+Comments: More Lucy and astronomy
+
+
+Date: 11 November 1954
+
+Description: Snoopy is sleeping, and Charlie Brown wishes he’d sleep somewhere else. Snoopy moves in his sleep.
+
+Speaking: Charlie Brown
+
+Non-Speaking: Snoopy
+
+Category: dogs, sleeping
+
+
+Date: 12 November 1954
+
+Description: Lucy is proud that her mother awarded her number-one fussbudget again.
+
+Speaking: Lucy, Charlie Brown
+
+Category: parents, mother, daughter, fussbudget
+
+
+Date: 13 November 1954
+
+Description: Lucy can’t understand what Linus says, which Charlie Brown takes as she can’t related to Linus.
+
+Speaking: Lucy, Charlie Brown
+
+Mentioned: Linus
+
+Category: brother/sister, toddler, baby talk
+
+
+Date: 14 November 1954
+
+Description: Lucy tries to get Schroeder to pay attention to her instead of playing music. It doesn’t work, and she figures she’ll never get married.
+
+Speaking: Schroeder, Lucy
+
+Category: piano, love, sadness
+
+
+Date: 15 November 1954
+
+Description: Lucy is counting Suns again, and she thinks Charlie Brown is stupid because he says there is only one sun.
+
+Speaking: Lucy, Charlie Brown
+
+Category: astronomy, the Sun
+
+Comments: More Lucy and counting Suns
+
+
+Date: 16 November 1954
+
+Description: Lucy counts 48 suns, to which Charlie Brown says there are 48 states. She believe she has found some connection and scientific truth.
+
+Speaking: Lucy, Charlie Brown
+
+Category: astronomy, American history
+
+
+Date: 17 November 1954
+
+Description: Charlie Brown is getting fed up that Lucy won’t believe him that there is only one Sun.
+
+Speaking: Charlie Brown
+
+Non-Speaking: Lucy
+
+Category: astronomy, Sun
+
+
+Date: 18 November 1954
+
+Description: Lucy wants to know where the Sun goes if there is only one Sun. Charlie Brown says ‘No place’ which causes her to just laugh at him.
+
+Speaking: Lucy, Charlie Brown
+
+Category: astronomy, the Sun
+
+Comments: Continuing Lucy and the Sun
+
+
+Date: 19 November 1954
+
+Description: Charlie Brown gets upset with Lucy again because she keeps counting the Sun everyday. She feels bad for him when he cries.
+
+Speaking: Lucy, Charlie Brown
+
+Category: astronomy, the Sun
+
+Comments: more of Lucy and the Sun
+
+
+Date: 20 November 1954
+
+Description: Snoopy won’t let go of Charlie Brown’s comic book, so he has to read it while Snoopy is holding on to it.
+
+Speaking: Charlie Brown
+
+Non-Speaking: Snoopy
+
+Category: dogs, comic strips
+
+
+Date: 21 November 1954
+
+Description: Charlie Brown wants to hold Lucy’s hand so she can safely cross the street. She gets upset because she thinks he just wants to hold her hair. She makes up a compromise.
+
+Speaking: Lucy, Charlie Brown
+
+Category: holding hands, crossing the street, boy/girl
+
+Comments: 11 panel Sunday strip
+
+
+Date: 22 November 1954
+
+Description: Charlie Brown says he has never seen a student bring a teacher an apple. He is bringing her a frozen chicken pie.
+
+Speaking: Violet, Charlie Brown
+
+Category: teachers
+
+
+Date: 23 November 1954
+
+Description: Charlie Brown makes fun of Schroeder because he said Beethoven was the founder of his country.
+
+Speaking: Schroeder, Charlie Brown
+
+Non-Speaking: Patty
+
+Category: teasing, Beethoven
+
+Wikipedia: Beethoven
+
+
+Date: 24 November 1954
+
+Description: Lucy is watching a bug that Snoopy sniffs away.
+
+Speaking: Lucy
+
+Non-Speaking: Snoopy
+
+Category: dogs, bugs, angry
+
+
+Date: 25 November 1954
+
+Description: Charlie Brown says you just have to look out for yourself, when Violet tells him to watch out for a fence he was about to walk into.
+
+Speaking: Charlie Brown, Violet
+
+Category: sadness, embarrassment
+
+
+Date: 26 November 1954
+
+Description: Charlie Brown and Violet debate whether men are smarter than women, girls and girl babies.
+
+Speaking: Charlie Brown, Violet
+
+Category: men, smarts, women, girls, babies, arguement
+
+
+Date: 27 November 1954
+
+Description: Lucy is going to bed when her dad turns off the lights. She complains that he turned them off.
+
+Speaking: Lucy, Lucy’s dad
+
+Category: father/daughter, bedtime
+
+
+Date: 28 November 1954
+
+Description: Linus is playing with Lucy’s balloon, which makes her angry. He lets the air out and puts it in his mouth before she sees him playing with it.
+
+Speaking: Lucy
+
+Non-Speaking: Linus
+
+Category: brother/sister, balloon, angry
+
+Comments: 12 panel Sunday strip
+
+
+Date: 29 November 1954
+
+Description: Charlie Brown is petting Snoopy saying how much they like each other even if he doesn’t have certain items until he mentions that he doesn’t have candy. This comment makes Snoopy leave.
+
+Speaking: Charlie Brown
+
+Non-Speaking: Snoopy
+
+Category: candy, dogs, friendship
+
+
+Date: 30 November 1954
+
+Description: Charlie Brown meets a new girl named Charlotte Braun.
+
+Speaking: Charlotte Braun, Charlie Brown
+
+Category: new friends, introductions

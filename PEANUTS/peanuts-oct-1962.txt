@@ -1,0 +1,429 @@
+Date: October 1, 1962
+
+Description: Snoopy watches a solitary 
+
+leaf fall down from a tall tree.
+
+Speaking: Snoopy
+
+Category: Fall
+
+Date: October 2, 1962
+
+Description: Snoopy is in the same spot as 
+
+the strip in the previous day, and he sees 
+
+another leaf fall.
+
+Speaking: Snoopy
+
+Category: Fall
+
+Date: October 3, 1962
+
+Description: Snoopy eats from his supper 
+
+dish on the roof of his doghouse, then the 
+
+dish falls to the ground and lands upside 
+
+down.
+
+Speaking: Snoopy
+
+Category: Supper dish
+
+Date: October 4, 1962
+
+Description: Snoopy watches a leaf fall 
+
+from a tree. More leaves fall, and Snoopy 
+
+thinks the first leaf snowballed the 
+
+falling.
+
+Speaking: Snoopy
+
+Category: Fall
+
+Date: October 5, 1962
+
+Description: Snoopy watches a leaf fall 
+
+from a tree. Another leaf falls, and 
+
+before it touches the ground, it opens a 
+
+parachute.
+
+Speaking: Snoopy
+
+Category: Speechless, Fall
+
+Date: October 6, 1962
+
+Description: Snoopy throws a tantrum 
+
+because Charlie Brown is out of dog food 
+
+and he offers Snoopy bread and milk 
+
+instead.
+
+Speaking: Snoopy, Charlie Brown
+
+Category: Snoopy on his doghouse
+
+Date: October 7, 1962
+
+Description: Migrating season has begun, 
+
+and birds make Snoopy's dog house a 
+
+stopover.
+
+Speaking: Snoopy
+
+Non-speaking: A flock of birds
+
+Category: Migrating birds
+
+Date: October 8, 1962
+
+Description: Charlie Brown tells Linus 
+
+that a baby born in 1961 has a life 
+
+expectancy of seventy years and six weeks.
+
+Speaking: Charlie Brown, Linus
+
+Category: Statistics
+
+Date: October 9, 1962
+
+Description: Charlie Brown tells Snoopy 
+
+that $350,000,000 a year is spent on dog 
+
+food.
+
+Speaking: Charlie Brown, Snoopy
+
+Category: Statistics
+
+Date: October 10, 1962
+
+Description: Linus' mom places a letter in 
+
+his lunch bag. The letter says Linus' 
+
+parents are working hard so he can study, 
+
+and this drives Linus to tears.
+
+Speaking: Charlie Brown, Linus
+
+Category: Lunchtime
+
+Date: October 11, 1962
+
+Description: Charlie Brown was not able to 
+
+sleep well because of Snoopy's barking.
+
+Speaking: Charlie Brown, Snoopy
+
+Non-speaking: Lucy
+
+Category: Pet problems
+
+Date: October 12, 1962
+
+Description: Linus receives another note 
+
+from his mother, which tells him, ""Don't 
+
+fail us."" Charlie Brown thinks the overly 
+
+high expectations of his parents drive 
+
+Linus to drag his blanket everywhere with 
+
+him.
+
+Speaking: Charlie Brown, Linus
+
+Category: Lunchtime
+
+Date: October 13, 1962
+
+Description: Linus writes to the Great 
+
+Pumpkin to bring him presents on Halloween 
+
+night, and he doesn't want to know if he 
+
+really is a fake.
+
+Speaking: Linus
+
+Category: Great Pumpkin
+
+Date: October 14, 1962
+
+Description: Linus feels he needs a new 
+
+interest, and Lucy tells him to start a 
+
+leaf collection. Linus can't decide what 
+
+sort of book he should press the leaves 
+
+in.
+
+Speaking: Lucy, Linus
+
+Category: Hobby
+
+Date: October 15, 1962
+
+Description: Lucy took Sabin oral polio 
+
+vaccine with a sugar cube, which she says 
+
+her dentist prohibits eating.
+
+Speaking: Charlie Brown, Lucy
+
+Category: Vaccine
+
+Wikipedia: Albert Sabin, who developed an 
+
+oral polio vaccine. 
+
+http://en.wikipedia.org/wiki/Albert_Sabin
+
+Date: October 16, 1962
+
+Description: Linus writes to the Great 
+
+Pumpkin, and he tells Charlie Brown he'll 
+
+put in a good word for him.
+
+Speaking: Linus, Charlie Brown
+
+Category: Great Pumpkin
+
+Date: October 17, 1962
+
+Description: Lucy complains of getting 
+
+discouraged, and demands that she wants 
+
+nond of the ""downs"" in life's ""ups and 
+
+downs.""
+
+Speaking: Lucy, Charlie Brown
+
+Category: Serious talk
+
+Date: October 18, 1962
+
+Description: Linus thinks of making a 
+
+stencil template of a request letter and 
+
+send the same letter to the Great Pumpkin, 
+
+Santa Claus, and the Easter Bunny.
+
+Speaking: Linus, Charlie Brown
+
+Category: Great Pumpkin
+
+Date: October 19, 1962
+
+Description: Linus bets the Great Pumpkin, 
+
+Santa Claus, and the Easter Bunny don't 
+
+read letters, and thinks the gift-giving 
+
+system is similar to how big corporations 
+
+work.
+
+Speaking: Linus, Charlie Brown
+
+Category: Great Pumpkin
+
+Date: October 20, 1962
+
+Description: Frieda thinks Snoopy is too 
+
+withdrawn, as he spends all his time lying 
+
+on top of his doghouse, and tells him to 
+
+show some spirit. Snoopy gives her a 
+
+sardonic, forced smile.
+
+Speaking: Frieda
+
+Non-speaking: Snoopy
+
+Category: Snoopy's critics
+
+Date: October 21, 1962
+
+Description: Charlie Brown puts Snoopy on 
+
+a leash and they go for a walk, but Snoopy 
+
+pretends to choke on the leash.
+
+Speaking: Charlie Brown, Snoopy
+
+Non-speaking: Patty
+
+Category: Pet problems
+
+Date: October 22, 1962
+
+Description: Linus accuses Lucy of 
+
+forgetting how to smile, and Lucy proves 
+
+him right by frowning when she tried to 
+
+smile.
+
+Speaking: Lucy, Linus
+
+Category: Crabby Lucy
+
+Date: October 23, 1962
+
+Description: Frieda asks if Patty is 
+
+jealous of her curly hair, but Patty tells 
+
+her jealousy is a personality flaw and she 
+
+tries not to be jealous of anyone.
+
+Speaking: Frieda, Patty
+
+Category: Curly hair
+
+Date: October 24, 1962
+
+Description: Frieda asks if Violet is 
+
+jealous of her curly hair, but Violet says 
+
+there are more important things to worry 
+
+about.
+
+Speaking: Frieda, Violet
+
+Category: Curly hair
+
+Date: October 25, 1962
+
+Description: Linus writes to the Great 
+
+Pumpkin while Sally watches him, and she 
+
+tells him she thinks the Great Pumpkin is 
+
+a fake.
+
+Speaking: Linus, Sally
+
+Category: Great Pumpkin
+
+Date: October 26, 1962
+
+Description: Linus writes to the Great 
+
+Pumpkin to tell him he's the Pumpkin's 
+
+most loyal follower, and not to forget to 
+
+take out flight insurance.
+
+Speaking: Linus
+
+Category: Great Pumpkin
+
+Date: October 27, 1962
+
+Description: Snoopy feels optimistic and 
+
+energetic to take on big things, but he 
+
+goes off to lie on top of his doghouse.
+
+Speaking: Snoopy
+
+Category: Procrastination
+
+Date: October 28, 1962
+
+Description: Lucy starts her own pumpkin 
+
+patch, hoping that the Great Pumpkin will 
+
+choose her patch to emerge from, and she 
+
+thinks it will make her rich and famous. 
+
+Linus thinks her pumpkin patch is the most 
+
+hypocritical he has ever seen.
+
+Speaking: Lucy, Charlie Brown, Linus
+
+Category: Great Pumpkin
+
+Date: October 29, 1962
+
+Description: Linus tells a cynical Sally 
+
+about the Great Pumpkin.
+
+Speaking: Linus, Sally
+
+Category: Great Pumpkin
+
+Date: October 30, 1962
+
+Description: Linus is disillusioned 
+
+following Sally's admission that she 
+
+doesn't believe in such holiday stories.
+
+Speaking: Linus, Sally
+
+Category: Great Pumpkin
+
+Date: October 31, 1962
+
+Description: Linus and Sally wait in the 
+
+middle of a pumpkin patch for the Great 
+
+Pumpkin's arrival.
+
+Speaking: Linus, Sally
+
+Category: Great Pumpkin

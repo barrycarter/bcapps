@@ -1,0 +1,432 @@
+Date: April 1, 1964
+
+Description: It's April fools day, and Lucy 
+
+tells Charlie Brown the little red-haired 
+
+girl wants him to eat lunch with her.
+
+Speaking: Lucy
+
+Non-speaking: Charlie Brown
+
+Mentioned: Little red-haired girl
+
+Category: April Fools
+
+Date: April 2, 1964
+
+Description: Snoopy guards closely his 
+
+supper dish, and concludes that a watched 
+
+supper dish never fills.
+
+Speaking: Snoopy
+
+Category: Doghouse
+
+Date: April 3, 1964
+
+Description: Linus doesn't feel well, but 
+
+decides to go to school anyway because his 
+
+mother made packed lunch for him.
+
+Speaking: Charlie Brown, Linus
+
+Category: School
+
+Date: April 4, 1964
+
+Description: During a baseball game, rain 
+
+pours, and Lucy uses a stick to raise her 
+
+hat and make an umbrella.
+
+Non-speaking: Lucy
+
+Category: Speechless
+
+Date: April 5, 1964
+
+Description: Linus plans to show Charlie 
+
+Brown his soap carving of an American 
+
+clippership, but Lucy destroys it when she 
+
+uses the soap.
+
+Speaking: Charlie Brown, Linus, Lucy
+
+Category: Soap carving
+
+Date: April 6, 1964
+
+Description: Violet mentions that her dad 
+
+has been studying and reading a lot lately, 
+
+which helped him take his mind off bowling.
+
+Speaking: Charlie Brown, Violet
+
+Category: Parents
+
+Date: April 7, 1964
+
+Description: Snoopy clings to a tree so he 
+
+wouldn't have to receive rabies shots, 
+
+while the rest of the Peanuts characters 
+
+try to wrest him from the tree.
+
+Speaking: Snoopy
+
+Non-speaking: Sally, Shermy, Schroeder, 
+
+Lucy, Patty, Violet, Pigpen, Frieda, 555 
+
+95472, twins 3 and 4, Charlie Brown
+
+Category: Going to the vet
+
+Date: April 8, 1964
+
+Description: Snoopy's arm hurts from the 
+
+rabies shot, and Charlie Brown tells him 
+
+they both had arm injuries, so he thinks 
+
+they're a couple of sore-arm buddies.
+
+Speaking: charlie Brown
+
+Non-speaking: Snoopy
+
+Category: Going to the vet
+
+Date: April 9, 1964
+
+Description: Charlie Brown explains to 
+
+Snoopy he had to get rabies shot because 
+
+it's what the law says. Snoopy raises his 
+
+fist in indignation, and his arm stings.
+
+Speaking: Charlie Brown, Snoopy
+
+Category: Going to the vet
+
+Date: April 10, 1964
+
+Description: Charlie Brown reads to Snoopy 
+
+about rabies, and tells him he should be 
+
+grateful to receive an anti-rabies shot.
+
+Speaking: Charlie Brown
+
+Non-speaking: Snoopy
+
+Category: Going to the vet
+
+Date: April 11, 1964
+
+Description: Charlie Brown buys a present - 
+
+a globe - for Snoopy to cheer him up.
+
+Speaking: Charlie Brown, Linus
+
+Non-speaking: Snoopy
+
+Category: Going to the vet
+
+Date: April 12, 1964
+
+Description: Charlie Brown buys five 
+
+dollars worth of bubble gum in an attempy 
+
+to get a picture of his baseball hero Joe 
+
+Shlabotnik, and not a single card of him 
+
+appears. Lucy, on the other hand, buys a 
+
+single bubble gum, and gets a picture of 
+
+Joe Shlabotnik.
+
+Speaking: Charlie Brown, Lucy
+
+Mentioned: Joe Shlabotnik
+
+Category: Joe Shlabotnik
+
+Date: April 13, 1964
+
+Description: Lucy hopes to win at the 
+
+school's science fair, and thinks of a 
+
+project completely different from what the 
+
+other kids will come up with. She sees  
+
+Linus with his blanket and shouts ""THAT'S 
+
+IT!""
+
+Speaking: Lucy
+
+Non-speaking: Linus
+
+Category: Science fair
+
+Date: April 14, 1964
+
+Description: Lucy decides to test how a 
+
+blanket brings Linus security and turn in 
+
+her research as her science project.
+
+Speaking: Lucy, Linus
+
+Category: Science fair
+
+Date: April 15, 1964
+
+Description: Lucy tests Linus and takes 
+
+aways his blanket. After 50 seconds, he 
+
+passes out.
+
+Speaking: Lucy, Linus
+
+Category: Science fair
+
+Date: April 16, 1964
+
+Description: Lucy places the blanket on 
+
+Linus, who passed out, and Linus promptly 
+
+recovers.
+
+Speaking: Lucy
+
+Non-speaking: Linus
+
+Category: Science fair
+
+Date: April 17, 1964
+
+Description: In the science fair exhibit, 
+
+different projects are presented. Lucy's 
+
+project, which wins first prize, is titled, 
+
+""The Security Blanket"". Linus, who is 
+
+holding his blanket, is exhibited on a 
+
+table.
+
+Speaking: Linus
+
+Category: Science fair
+
+Date: April 18, 1964
+
+Description: Lucy baffles Charlie Brown, 
+
+who asks what sort of person is Lucy, if 
+
+she entertained the thought of turning her 
+
+brother into her science project. On the 
+
+other hand, Lucy thinks only of winning.
+
+Speaking: Lucy, Charlie Brown
+
+Category: Science fair
+
+Date: April 19, 1964
+
+Description: Lucy complains to Schroeder 
+
+that he's insensitive to her. He responds 
+
+by playing a note that literally kisses her 
+
+note.
+
+Speaking: Lucy
+
+Non-speaking: Schroeder
+
+Category: Schroeder Plays Piano
+
+Date: April 20, 1964
+
+Description: Linus tries to meditate. Lucy 
+
+thinks it helped him, but Linus tells her 
+
+he has just started.
+
+Speaking: Lucy, Linus
+
+Category: Meditation
+
+Date: April 21, 1964
+
+Description: Snoopy buries a bone, he 
+
+places a marker with a date (as if a 
+
+tombstone) on the digging site.
+
+Speaking: Charlie Brown, Lucy
+
+Non-speaking: Snoopy
+
+Category: Burying a bone
+
+Date: April 22, 1964
+
+Description: Linus tries to solve a ""new 
+
+math"" problem, but is unable to do so with 
+
+an ""old math"" mind.
+
+Speaking: Linus, Lucy
+
+Category: New Math
+
+Date: April 23, 1964
+
+Description: Linus writes his teacher a 
+
+birthday card, hoping that it will take her 
+
+mind of the fact that he didn't do his math 
+
+homework.
+
+Speaking: Linus, Charlie Brown
+
+Category: School
+
+Date: April 24, 1964
+
+Description: Lucy interrupts Schroeder to 
+
+tell him that the ""van"" in Beethoven's name 
+
+didn't mean anything.
+
+Speaking: Lucy
+
+Non-speaking: Schroeder
+
+Category: Schroeder Plays Piano
+
+Date: April 25, 1964
+
+Description: Lucy quizzes Schroeder on 
+
+three obscure names that she bets he 
+
+couldn't identity. Schroeder identifies 
+
+them correctly as Beethoven's music 
+
+teachers.
+
+Speaking: Lucy, Schroeder
+
+Category: Schroeder Plays Piano
+
+Date: April 26, 1964
+
+Description: Snoopy wakes up, goes to the 
+
+baseball field to play, and goes back to 
+
+his doghouse.
+
+Speaking: Snoopy
+
+Category: Baseball
+
+Date: April 27, 1964
+
+Description: Linus falls asleep while he 
+
+tries to meditate.
+
+Speaking: Linus
+
+Category: Meditation
+
+Date: April 28, 1964
+
+Description: Lucy declares that happiness 
+
+is not the same as being happy all the 
+
+time, but confuses Linus when she mentions 
+
+that if someone is sad sometimes, then that 
+
+person is happy all the time.
+
+Speaking: Lucy, Linus
+
+Category: Lucy's opinion
+
+Date: April 29, 1964
+
+Description: A rerun of the April 2 strip. 
+
+Snoopy guards closely his supper dish, and 
+
+concludes that a watched supper dish never 
+
+fills.
+
+Speaking: Snoopy
+
+Category: Snoopy on doghouse
+
+Date: April 30, 1964
+
+Description: Linus grooms himself for a 
+
+party. He soaks his hair down with water, 
+
+but his hair goes wild when he gets out in 
+
+the sunshine.
+
+Speaking: Charlie Brown, Linus
+
+Category: Getting ready for a party
+

@@ -1,0 +1,327 @@
+Date: 1 December 1957
+
+Description: Charlie Brown is watching TV. Snoopy climbs on top of the tv, and peers his head over to watch too, blocking Charlie's view. Charlie gets angry, Snoopy smiles sheepishly at him, and then lays on the TV sighing.
+
+Speaking: Charlie Brown, Snoopy
+
+Notes: Next to no dialogue, except for an ""ahem"" and ""sigh"".
+
+Category: TV, annoyance, anger
+
+
+Date: 2 December 1957
+
+Description: Linus tells Charlie Brown that winter is coming and the days are getting shorter. Charlie tells him that it's good because with how his days are going he doesn't want them to last too long.
+
+Speaking: Charlie Brown, Linus
+
+Category: depression, winter, friends
+
+
+Date: 3 December 1957
+
+Description: Violet yells at Charlie Brown, adamently telling him she never wants to speak to her again, and after some thought, Charlie asks her to define the word ""never"".
+
+Speaking: Charlie Brown, Violet
+
+Category: anger, enemies, shouting
+
+
+Date: 4 December 1957
+
+Description: Charlie Brown tells Shroeder that the whole world is filled with hatred and he knows it to be true because the whole world hates him.
+
+Speaking: Charlie Brown, Schroeder	
+
+Category: anger, hatred
+
+
+Date: 5 December 1957
+
+Description: Charlie Brown is lying down on the ground and comments to himself that nobody likes him. A bird lands on his shoes, flies away, and Charlie sees this as confirmation.
+
+Speaking: Charlie Brown
+
+Category: bird, depression, resentment
+
+
+Date: 6 December 1957
+
+Description: Charlie Brown is lying on the ground, Snoopy walks up and rests his head on Charlie's head, then Lucy comes up and rests against Snoopy.
+
+Speaking: Charlie Brown
+
+Non-speaking: Lucy, Snoopy
+
+Category: Good Grief, sleeping
+
+
+Date: 7 December 1957
+
+Description: Charlie wants to tell Lucy something personal and asks her to promise not to laugh. She promises, he tells her he lies awake at night hoping to hear someone shout that they like him, and Lucy laughs.
+
+Speaking: Charlie Brown, Lucy
+
+Category: laughing, mean, broken promise
+
+
+Date: 8 December 1957
+
+Description: Charlie Brown is arguing with Lucy, so she challenges him to a fight. When Charlie backs down, Linus tells him he should've slugged her, to which Schroeder explains that Charlie did the admirable thing by not hitting a girl. Charlie then admits he only backed down to avoid getting beat up.
+
+Speaking: Charlie Brown, Lucy, Linus, Schroeder
+
+Category: arguing, fighting, humiliation
+
+
+Date: 9 December 1957
+
+Description: Linus asks Lucy how old Santa Claus is, Lucy tells him he's pretty old as he's been around a long time, and after some thought, Linus comments on how he's amazed Santa can appreciate the problems of young people so well.
+
+Speaking: Linus, Lucy
+
+Wikipedia: Santa Claus
+
+Category: Santa Claus, age, brother/sister, family
+
+
+Date: 10 December 1957
+
+Description: Linus asks Charlie Brown to write a letter to Santa for him asking how old he is and what he's been doing all these months. Charlie Brown stops writing, and when Linus asks him what's the matter, Charlie tells him it's hard to write when nauseated.
+
+Speaking: Charlie Brown, Linus
+
+Wikipedia: Santa Claus
+
+Category: Santa Claus, age, letter, dictation
+
+
+Date: 11 December 1957
+
+Description: Linus continues to dictate his letter to Santa to Charlie Brown, going on about how much he thinks of him and how he is a ""friend among friends"". Charlie can't stand it and leaves, and Linus yells that he is a terrible secretary.
+
+Speaking: Linus, Charlie Brown
+
+Wikipedia: Santa Claus
+
+Category: Santa Claus, letter, dictation
+
+
+Date: 12 December 1957
+
+Description: Linus yells at Charlie Brown that he'll write his own letter to Santa without his help, and then proceeds to ask Charlie what end of the pencil to use.
+
+Speaking: Linus, Charlie Brown
+
+Wikipedia: Santa Claus
+
+Category: Santa Claus, letter, writing 
+
+
+Date: 13 December 1957
+
+Description: Linus asks Lucy to write his letter to Santa, but Lucy tells him to write his own letter. Linus in turn calls her a blockhead.
+
+Speaking: Linus, Lucy
+
+Notes: Usually Charlie Brown is the one who is referred to as a ""blockhead"".
+
+Wikipedia: Santa Claus
+
+Category: Santa Claus, brother/sister, blockhead
+
+
+Date: 14 December 1957
+
+Description: Linus is sadly walking with his letter to Santa, passes Snoopy, and asks if he takes dictation.
+
+Speaking: Linus
+
+Non-speaking: Snoopy
+
+Wikipedia: Santa Claus
+
+Category: Santa Claus, dictation, letter
+
+
+Date: 15 December 1957
+
+Description: Charlie Brown is walking with Schroeder when Snoopy excitedly runs up to him. Schroeder is repulsed as Charlie Brown and Snoopy hug and excitedly greet one another. Charlie Brown explains that Snoopy does this everyday when he comes home from school, to which Schroeder asks him if he intends to tell Snoopy that it's Sunday. Snoopy appears shocked and kicks Charlie Brown.
+
+Speaking: Charlie Brown, Schroeder
+
+Non-speaking: Snoopy
+
+Category: pals, school, greeting, kicking
+
+
+Date: 16 December 1957
+
+Description: Charlie Brown is preparing Snoopy's supper, and he asks Schroeder to whistle for Snoopy to come in and get it. Schroeder whistles Beethoven's F Minor Sonata, and tells Snoopy he is the only dog who has had that whistled to him. 
+
+Speaking: Schroeder, Charlie Brown
+
+Non-speaking: Snoopy
+
+Wikipedia: Ludwig van Beethoven, F Minor Sonata
+
+Category: whistling, Beethoven, supper
+
+
+Date: 17 December 1957
+
+Description: Charlie Brown asks Schroeder if he had a good time yesterday, Schroeder asks what he's referring to, and Charlie tells him it was Beethoven's birthday. Schroeder lets out a ""Good Grief"", and says that he forgot.
+
+Speaking: Schroeder, Charlie Brown
+
+Wikipedia: Ludwig van Beethoven
+
+Category: Beethoven's birthday, forgets, Good Grief
+
+
+Date: 18 December 1957
+
+Description: Lucy laughs at Schroeder for forgetting Beethoven's birthday after waiting a whole year for it. Schroeder bangs his head against a tree.
+
+Speaking: Lucy
+
+Non-speaking: Schroeder
+
+Wikipedia: Ludwig van Beethoven
+
+Category: Beethoven's birthday, forgets, laughing
+
+
+Date: 19 December 1957
+
+Description: Lucy sings Happy Birthday to Beethoven near Schroeder, and then laughs.
+
+Speaking: Lucy
+
+Non-speaking: Schroeder
+
+Wikipedia: Ludwig van Beethoven
+
+Category: Beethoven's birthday, Happy Birthday, singing
+
+
+Date: 20 December 1957
+
+Description: Lucy is leaning against Schroeder's piano and tells him she would never forget Pat Boone's birthday.
+
+Speaking: Lucy
+
+Non-speaking: Schroeder
+
+Wikipedia: Pat Boone
+
+Category: piano, Pat Boone, birthday
+
+
+Date: 21 December 1957
+
+Description: Schroeder walks up to his piano which has a Beethoven bust sitting on it. Schroeder looks at it sadly and asks what can he say.
+
+Speaking: Schroeder
+
+Category: bust of Beethoven, sadness, piano
+
+
+Date: 22 December 1957
+
+Description: Linus is holding his blanket and sucking his thumb. Lucy angrily snatches his blanket from him and rips it to shreds. Linus proceeds to weave the pieces back together and goes back to holding it and sucking his thumb. 
+
+Speaking: Lucy, Linus
+
+Category: blanket, rips, thumbsucking, anger, brother/sister
+
+
+Date: 23 December 1957
+
+Description: Charlie Brown asks Linus if he's done any Christmas shopping. Linus says he has no interesting in giving only ""gitting"".
+
+Speaking: Linus, Charlie Brown
+
+Category: Christmas, shopping, giving, gitting
+
+
+Date: 24 December 1957
+
+Description: Lucy tells Linus that tonight is the night that Santa drops presents down the chimney. Linus says they should fervently wish him a safe journey.
+
+Speaking: Linus, Lucy
+
+Wikipedia: Santa Claus
+
+Category: Santa Claus, brother/sister, Christmas, presents
+
+
+Date: 25 December 1957
+
+Description: Shermy, Lucy, Pig Pen, Violet, Patty, Snoopy, Shroeder, and Linus are holding up signs that say ""Christmas Greetings From"", followed by their names, while angrily looking over at Charlie Brown, who is holding his sign upside down.
+
+Non Speaking: Shermy, Lucy, Pig Pen, Violet, Patty, Snoopy, Shroeder, Linus, Charlie Brown
+ 
+Category: Christmas, greetings, Good Ol' Charlie Brown
+
+
+Date: 26 December 1957
+
+Description: Violet is telling Patty that there are a lot of instant products on the market. Charlie Brown walks by and Violet adds ""instant dislike"" to the list.
+
+Speaking: Violet
+
+Non-speaking: Charlie Brown, Patty
+
+Category: instant, food, drink, mean girls
+
+
+Date: 27 December 1957
+
+Description: Snoopy is chewing something, spits it out, and walks away. Charlie looks at it and says he wishes Snoopy wouldn't spit his gum on the sidewalk.
+
+Speaking: Charlie Brown
+
+Non-speaking: Snoopy
+
+Category: gum, chomp
+
+
+Date: 28 December 1957
+
+Description: Charlie Brown shows Lucy a list of his New Year's resolutions and says he wants to correct all his faults. Lucy appears overwhelmed and says that the human mind recoils at the contemplation of such a staggering task.
+
+Speaking: Charlie Brown, Lucy
+
+Category: New Year, resolutions, list
+
+
+Date: 29 December 1957
+
+Description: Snoopy sees a patch of ice and begins slipping and sliding on it. He slides too far however and falls, causing Charlie Brown to have to drag him off the ice on a sled. Linus tells Snoopy that one patch of ice doth not a winter make, and Snoopy tells him to shut up.
+
+Speaking: Linus, Snoopy
+
+Non-speaking: Charlie Brown
+
+Category: ice, sliding, skating, hurt, falls
+
+
+Date: 30 December 1957
+
+Description: Schroeder is listening to the radio and Snoopy walks up. Snoopy looks disgusted at the music, and presses his ears together to drown out the sound.
+
+Non-speaking: Schroeder, Snoopy
+
+Category: music, radio
+
+
+Date: 31 December 1957
+
+Description: Linus asks Charlie Brown if he's ever seen a penguin, and Charlie tells him how ""funny-looking"" they are. As he's trying to find a descriptive word, Snoopy imitates the penguin, and Charlie says it's sort of like that.
+
+Speaking: Linus, Charlie Brown
+
+Non-speaking: Snoopy
+
+Category: penguin, Snoopy imitation"

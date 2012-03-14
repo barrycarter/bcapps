@@ -1,0 +1,269 @@
+Date: May 1, 1962
+
+Description:  Snoopy is eating out of his dog bowl and wonders why he never gets to eat on fine china.
+
+Speaking: Snoopy
+
+Category:  Snoopy eats
+
+Date: May 2, 1962
+
+Description: Snoopy is thinking about how much easier he has it than his ancestors did.
+
+Speaking:  Snoopy
+
+Non-speaking:  Charlie Brown
+
+Category:  Snoopy thinking
+
+Date: May 3, 1962
+
+Description:  Snoopy is imitating an ape.
+
+Speaking: Snoopy
+
+Category:  Snoopy imitating
+
+Date: May 4, 1962
+
+Description:  Snoopy is pretending to be an ape again and swings from tree to tree.
+
+Speaking:  Snoopy
+
+Category:  Snoopy imitating
+
+Date: May 5, 1962
+
+Description:  Snoopy is in a bad mood and says no one better get in his way.
+
+Speaking:  Snoopy
+
+Non-speaking:  Lucy
+
+Category:  Snoopy thinking
+
+Date: May 6, 1962
+
+Description:  Charlie Brown wakes up Snoopy to see him bowl.
+
+Speaking:  Charlie Brown, Snoopy
+
+Category: Bowling
+
+Date: May 7, 1962
+
+Description: Lucy is reading to Schroeder what kind of men rate the best.
+
+Speaking:  Lucy, Schroeder
+
+Category: Piano
+
+Date: May 8, 1962
+
+Description: Lucy asks Schroeder is he thinks she is pretty.
+
+Speaking:  Lucy, Schroeder
+
+Category:  Piano
+
+Date: May 9, 1962
+
+Description: Lucy tells Schroeder he always plays things on the piano that no one wants to hear.
+
+Speaking:  Schroeder, Lucy
+
+Category:  Piano
+
+Date: May 10, 1962
+
+Description:  Snoopy plays the accordion for Schroeder to show him that’s what people like to hear.
+
+Speaking:  Lucy, Schroeder
+
+Non-speaking:  Snoopy
+
+Category: Piano
+
+Date: May 11, 1962
+
+Description:  Snoopy doesn’t want to play ball because he wants to focus on his music.
+
+Speaking:  Snoopy, Charlie Brown
+
+Category: Music
+
+Date: May 12, 1962
+
+Description:  Linus is reading to Snoopy.
+
+Speaking: Linus
+
+Non-speaking: Snoopy
+
+Category: Reading
+
+Date: May 13, 1962
+
+Description:  Lucy and Snoopy stare into Linus’ glasses because they can see themselves.
+
+Speaking:  Lucy, Linus
+
+Non-speaking:  Snoopy
+
+Category:  Glasses
+
+Date: May 14, 1962
+
+Description:  Snoopy plays in the sprinklers.
+
+Non-speaking:  Snoopy
+
+Category:  Sprinklers
+
+Date: May 15, 1962
+
+Description:  Linus and Charlie Brown try to think of ways to stay cool.
+
+Speaking:  Charlie Brown, Linus
+
+Non-speaking:  Snoopy
+
+Category:  Sprinklers
+
+Date:  May 16, 1962
+
+Description:  Snoopy plays in the sprinklers.
+
+Speaking:  Snoopy
+
+Category:  Sprinklers
+
+Date:  May 17, 1962
+
+Description:  Snoopy is sitting on his dog house when he finds himself wanting to go back to the sprinklers.
+
+Speaking:  Snoopy
+
+Category:  Sprinklers
+
+Date:  May 18, 1962
+
+Description:  Charlie Brown and Lucy try to help Snoopy quit his sprinkler habit.
+
+Speaking:  Charlie Brown, Snoopy, Lucy
+
+Category: Sprinklers
+
+Date: May 19, 1962
+
+Description:  Lucy and Linus think Charlie Brown got his kite stuck on a submarine.
+
+Speaking:  Lucy, Linus
+
+Non-speaking:  Charlie Brown
+
+Category:  Kites
+
+Date: May 20, 1962
+
+Description:  Lucy and Linus talk about a book.
+
+Speaking:  Lucy, Linus, Charlie Brown
+
+Category:  Edgar Allen Poe 
+
+Date:  May 21, 1962
+
+Description:  Charlie Brown is playing baseball.
+
+Speaking:  Charlie Brown, Lucy
+
+Category: Baseball
+
+Date: May 22, 1962
+
+Description:  Linus is cheering Charlie Brown on.
+
+Speaking:  Linus
+
+Mentioned:  Charlie Brown
+
+Category:  Baseball
+
+Date: May 23, 1962
+
+Description:  Linus tells Charlie Brown he can’t be out there rooting for him to strike the guy out when he knows he can’t.
+
+Speaking:  Linus, Charlie Brown
+
+Category:  Baseball
+
+Date:  May 24, 1962
+
+Description:  Linus tells Lucy not to say she knows Charlie Brown can strike out the batter.
+
+Speaking:  Lucy, Linus
+
+Mentioned:  Charlie Brown
+
+Category:  Baseball
+
+Date:  May 25, 1962
+
+Description:  Lucy tells Charlie Brown they can’t stand out there rooting him on because it is turning them into hypocrites.
+
+Speaking:  Lucy
+
+Non-speaking:  Charlie Brown
+
+Category:  Baseball
+
+Date:  May 26, 1962
+
+Description:  Sally Brown, Lucy, and Linus show little faith in Charlie Brown’s pitching abilities.
+
+Speaking:  Sally Brown, Charlie Brown, Lucy, Linus
+
+Category:  Baseball
+
+Date: May 27, 1962
+
+Description:  Lucy gets bored in the outfield.
+
+Speaking:  Frieda, Lucy
+
+Non-speaking:  Charlie Brown
+
+Category:  Baseball
+
+Date: May 28, 1962
+
+Description:  Snoopy and Linus try to read in the dark.
+
+Speaking:  Lucy, Linus, Snoopy
+
+Category:  Reading
+
+Date:  May 29, 1962
+
+Description:  Snoopy finds a bird’s nest on his dog house.
+
+Speaking:  Snoopy
+
+Category:  Dog house
+
+Date:  May 30, 1962
+
+Description:  Snoopy finds that a bird is left behind on his dog house.
+
+Speaking:  Snoopy
+
+Category:  Birds
+
+Date:  May 31, 1962
+
+Description:  The bird leaves all her babies sleeping in the nest on Snoopys roof.
+
+Speaking:  Snoopy
+
+Category:  Birds

@@ -1,0 +1,371 @@
+Date: March 1, 1960
+
+Description: It rains, and Snoopy feels lucky to have 
+
+a doghouse to go home to. However, he lies on top of 
+
+it.
+
+Speaking: Snoopy
+
+Category: Snoopy on his doghouse
+
+Date: March 2, 1960
+
+Description: Charlie Brown tries to fly a kite and 
+
+gets dragged by it.
+
+Speaking: Lucy
+
+Non-speaking: Charlie Brown, Patty
+
+Category: Kite Flying
+
+Date: March 3, 1960
+
+Description: Charlie Brown threatens to give Snoopy's 
+
+supper to the cat next door, and Snoopy leaps to 
+
+attack Charlie Brown.
+
+Speaking: Charlie Brown
+
+Non-speaking: Snoopy
+
+Category: Supper dish
+
+Date: March 4, 1960
+
+Description: When Linus tells Charlie Brown he wants 
+
+to study people when he grows up, Charlie Brown thinks 
+
+Linus wants to use that knowledge to help people. On 
+
+the other hand, Linus thinks he's just nosy.
+
+Speaking: Linus, Charlie Brown
+
+Category: When I grow up
+
+Date: March 5, 1960
+
+Description: Charlie Brown panics at the thought of 
+
+everything happening again the way it did before.
+
+Speaking: Lucy, Charlie Brown
+
+Category: Serious talk
+
+Date: March 6, 1960
+
+Description: Snoopy persistently hangs around Charlie 
+
+Brown in hopes of getting food.
+
+Speaking: Charlie Brown
+
+Non-speaking: Snoopy, Violet
+
+Category: Pet problems
+
+Date: March 7, 1960
+
+Description: Linus, who is wearing a cowboy outfit, 
+
+feels sick, and Lucy calls him the ""sickest gun in the 
+
+west.""
+
+Speaking: Lucy, Linus
+
+Non-speaking: Charlie Brown
+
+Category: Irony
+
+Date: March 8, 1960
+
+Description: Snoopy is surrounded by butterflies.
+
+Speaking: Snoopy
+
+Category: Dog instinct
+
+Date: March 9, 1960
+
+Description: Lucy tickles Snoopy to force him to tell 
+
+where Linus went.
+
+Speaking: Snoopy, Lucy
+
+Category: Petting Snoopy
+
+Date: March 10, 1960
+
+Description: When Schroeder plays the piano, a musical 
+
+scale appears above him. In Snoopy's case, paw prints 
+
+on a barline appear.
+
+Non-speaking: Schroeder, Snoopy
+
+Category: Schroeder plays the piano, Speechless
+
+Date: March 11, 1960
+
+Description: Shermy and Schroeder talk about the 
+
+rising cost of haircut, and Charlie Brown gets 
+
+dismayed by their conversation.
+
+Speaking: Charlie Brown, Shermy, Schroeder
+
+Category: Charlie Brown's dad
+
+Date: March 12, 1960
+
+Description: Linus talks about his grandma who came to 
+
+stay for a few days.
+
+Speaking: Charlie Brown, Linus
+
+Category: Grandma Van Pelt
+
+Date: March 13, 1960
+
+Description: Charlie Brown's kite explodes in mid-air.
+
+Speaking: Lucy, Charlie Brown
+
+Category: Kite flying
+
+Date: March 14, 1960
+
+Description: Linus calls Snoopy ""whirlydog,"" and Lucy 
+
+mistakes it for ""whirlybird.""
+
+Speaking: Linus, Lucy
+
+Non-speaking: Snoopy
+
+Category: Whirlydog, Chopper, Snoopy imitation
+
+Date: March 15, 1960
+
+Description: Snoopy flies midair and hovers above 
+
+Charlie Brown.
+
+Speaking: Charlie Brown
+
+Non-speaking: Snoopy
+
+Category: Chopper, Snoopy imitation, Whirlydog
+
+Date: March 16, 1960
+
+Description: Charlie Brown calls Snoopy for supper, 
+
+and Snoopy flies to get his dinner and kiss Charlie 
+
+Brown on the nose.
+
+Speaking: Charlie Brown
+
+Non-speaking: Snoopy
+
+Category: Chopper, Snoopy imitation, Whirlydog
+
+Date: March 17, 1960
+
+Description: Snoopy flies upside down and circles 
+
+around Charlie Brown.
+
+Speaking: Charlie Brown
+
+Non-speaking: Snoopy
+
+Category: Chopper, Snoopy imitation, Whirlydog
+
+Date: March 18, 1960
+
+Description: Charlie Brown throws a ball for Snoopy to 
+
+fetch, and Snoopy flies back with it.
+
+Non-speaking: Charlie Brown, Snoopy
+
+Category: Speechless, Chopper, Snoopy imitation, 
+
+Whirlydog
+
+Date: March 19, 1960
+
+Description: While Snoopy flies, he hits the ground 
+
+and his ears gets tangled.
+
+Speaking: Charlie Brown
+
+Non-speaking: Snoopy
+
+Category: Chopper, Snoopy imitation, Whirlydog
+
+Date: March 20, 1960
+
+Description: Linus teaches Sally to thumbsuck while 
+
+holding a blanket, and Charlie Brown is not pleased 
+
+with the prospect.
+
+Speaking: Linus, Charlie Brown
+
+Non-speaking: Sally
+
+Category: Linus and his blanket
+
+Date: March 21, 1960
+
+Description: Linus enumerates dentists and 
+
+grandmothers as two classes of people violently 
+
+opposed to thumbsucking.
+
+Speaking: Linus
+
+Non-speaking: Charlie Brown
+
+Category: Thumbsucking, Grandma Van Pelt
+
+Date: March 22, 1960
+
+Description: Linus plants decoy blankets to keep his 
+
+grandma from hiding his blanket.
+
+Speaking: Linus, Charlie Brown
+
+Category: Linus and his blanket, Grandma Van Pelt
+
+Date: March 23, 1960
+
+Description: Linus tries to outwit his grandma from 
+
+hiding his blanket by turning it into an oversized 
+
+ribbon.
+
+Speaking: Linus, Charlie Brown
+
+Category: Linus and his blanket, Grandma Van Pelt
+
+Date: March 24, 1960
+
+Description: Linus refuses to pretend to give up his 
+
+blanket because he feels she'll never become mature as 
+
+things always go by her way.
+
+Speaking: Linus, Lucy
+
+Category: Linus and his blanket, Grandma Van Pelt, 
+
+Irony
+
+Date: March 25, 1960
+
+Description: Linus teases his grandma by waving his 
+
+blanket.
+
+Speaking: Linus
+
+Category: Linus and his blanket, Grandma Van Pelt
+
+Date: March 26, 1960
+
+Description: Linus' Grandma goes back home, and Linus 
+
+feels he's going to miss the thrill of the chase.
+
+Speaking: Linus, Charlie Brown
+
+Category: Linus and his blanket, Grandma Van Pelt
+
+Date: March 27, 1960
+
+Description: The rain forces Charlie Brown to invite 
+
+instead his teammates to his house for a meeting, but 
+
+his teammates are more interested in watching TV.
+
+Speaking: Charlie Brown
+
+Non-speaking: Schroeder, Patty, Lucy, Linus, Violet, 
+
+Pigpen, Shermy, Snoopy
+
+Category: Baseball
+
+Date: March 28, 1960
+
+Description: Charlie Brown feels that life has knocked 
+
+him down and walked all over him.
+
+Speaking: Linus, Charlie Brown
+
+Category: Charlie Brown is a loser
+
+Date: March 29, 1960
+
+Description: Sally throws her milk bottle and Snoopy 
+
+fetches it with his mouth. The bottle's surface is 
+
+pierced.
+
+Speaking: Snoopy
+
+Non-speaking: Sally
+
+Category: Play fetch
+
+Date: March 30, 1960
+
+Description: Charlie Brown writes an ""unsolicited 
+
+testimonial"" to the company that makes the cereal he 
+
+eats in the morning.
+
+Speaking: Charlie Brown
+
+Mentioned: Snicker Snack company
+
+Category: Writing letters
+
+Date: March 31, 1960
+
+Description: Snoopy fails to see why Lucy doesn't want 
+
+the bone in his mouth, seeing it as untouched by human 
+
+hands.
+
+Speaking: Lucy, Snoopy
+
+Category: Dirty Snoopy

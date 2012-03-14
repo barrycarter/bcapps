@@ -1,0 +1,351 @@
+Date: September 1, 1958
+
+Description: Charlie Brown describes his family 
+
+to his pencil pal.
+
+Speaking: Charlie Brown
+
+Non-speaking: Snoopy
+
+Category: Pencil Pal
+
+Date: September 2, 1958
+
+Description: Linus despairs that at five years 
+
+old he's already illiterate.
+
+Speaking: Charlie Brown, Linus
+
+Category: Linus can't write
+
+Date: September 3, 1958
+
+Description: Charlie Brown writes to his pencil 
+
+pal about his school, and says he would like to 
+
+drive a school bus.
+
+Speaking: Charlie Brown
+
+Category: Pencil Pal
+
+Date: September 4, 1958
+
+Description: Charlie Brown asks his pencil pal 
+
+what the girls are like in his country.
+
+Speaking: Charlie Brown, Lucy
+
+Category: Pencil Pal
+
+Date: September 5, 1958
+
+Description: Charlie Brown explains to Linus 
+
+that the ""pen pal"" organization creates better 
+
+understanding among children all over the world.
+
+Speaking: Charlie Brown, Linus
+
+Category: Pencil Pal
+
+Date: September 6, 1958
+
+Description: Charlie Brown tries to write a 
+
+letter with a dip pen, but the ink keeps on 
+
+running on the paper.
+
+Speaking: Charlie Brown
+
+Category: Pencil Pal
+
+Date: September 7, 1958
+
+Description: Lucy proposes to kiss Schroeder, 
+
+and he walks out on her. Snoopy takes his place 
+
+and kisses an unwitting Lucy.
+
+Speaking: Schroeder, Lucy, Snoopy
+
+Notes: Lucy screams ""Germs! Disease! Infection!""
+
+Category: Schroeder playing the piano
+
+Date: September 8, 1958
+
+Description: Linus decides to save half of his 
+
+candy bar for the next day, and Lucy scares him 
+
+into thinking that he might never get a chance 
+
+to eat it if the world comes to an end the next 
+
+day.
+
+Speaking: Lucy, Linus
+
+Category: What-if scenario
+
+Date: September 9, 1958
+
+Description: Violet sees a spider and asks 
+
+Charlie Brown to kill it with a newspaper.
+
+Speaking: Violet, Charlie Brown
+
+Category: Violet the Snob
+
+Date: September 10, 1958
+
+Description: Snoopy judges his supper as bad 
+
+through his nose.
+
+Speaking: Snoopy
+
+Category: Supper dish
+
+Date: September 11, 1958
+
+Description: Charlie Brown gets an allergic 
+
+reaction from poison oak. When Violet tells him 
+
+he can get treated with a shot, Charlie Brown 
+
+pretends to feel fine.
+
+Speaking: Charlie Brown, Violet
+
+Category: Phobia
+
+Date: September 12, 1958
+
+Description: Linus sprinkles his potato chips 
+
+with sugar.
+
+Speaking: Lucy
+
+Non-speaking: Linus
+
+Category: Weird eating habits
+
+Date: September 13, 1958
+
+Description: Schroeder's dad takes him downtown 
+
+to get a haircut.
+
+Speaking: Schroeder, Lucy
+
+Category: Haircut
+
+Date: September 14, 1958
+
+Description: Charlie Brown and Linus plays fetch 
+
+with Snoopy, and he mistakes a small tree for 
+
+the stick.
+
+Speaking: Snoopy
+
+Non-speaking: Linus, Charlie Brown
+
+Category: Playing fetch
+
+Date: September 15, 1958
+
+Description: Lucy tells Schroeder that his toy 
+
+piano has a limited octave range; hence, it is 
+
+virtually useless as a musical instrument. 
+
+Schroeder responds by playing a complicated 
+
+multi-octave piece.
+
+Speaking: Schroeder, Lucy
+
+Category: Schroeder playing the piano
+
+Date: September 16, 1958
+
+Description: Schroeder tells Lucy there is no 
+
+such thing as ""World's Champion Piano Player.""
+
+Speaking: Schroeder, Lucy
+
+Category: Schroeder playing the piano
+
+Date: September 17, 1958
+
+Description: Linus considers having his blanket 
+
+made over into a sport coat once he's too old to 
+
+drag it around.
+
+Speaking: Charlie Brown, Linus
+
+Category: Linus and his blanket
+
+Date: September 18, 1958
+
+Description: Linus swats a bee with his blanket.
+
+Speaking: Linus
+
+Category: Linus and his blanket
+
+Date: September 19, 1958
+
+Description: Linus swats another bee with his 
+
+blanket, and calls it the ""Fastest Blanket in 
+
+the West.""
+
+Speaking: Linus
+
+Category: Linus and his blanket
+
+Date: September 20, 1958
+
+Description: Linus compares himself to Robin 
+
+Hood after Violet is chased by a bee and Linus 
+
+swats it with his blanket.
+
+Speaking: Linus, Violet
+
+Category: Linus and his blanket
+
+Date: September 21, 1958
+
+Description: Lucy volunteers to hold the 
+
+football for Charlie Brown and promises not to 
+
+pull it away. Charlie Brown believes her and 
+
+Lucy fools him again.
+
+Speaking: Lucy, Charlie Brown
+
+Category: Football Gag
+
+Date: September 22, 1958
+
+Description: Lucy points out the trouble with 
+
+Charlie Brown is that he's Charlie Brown, 
+
+implying that he's hopeless.
+
+Speaking: Lucy, Charlie Brown
+
+Date: September 23, 1958
+
+Description: Linus watches a tree for falling 
+
+leaves, and he doesn't notice a leaf fall behind 
+
+him.
+
+Speaking: Linus
+
+Category: Autumn
+
+Date: September 24, 1958
+
+Description: Lucy explains the usefulness of 
+
+tress.
+
+Speaking: Lucy
+
+Non-speaking: Linus, Charlie Brown
+
+Category: Trees
+
+Date: September 25, 1958
+
+Description: Linus spots a fallen leaf, and asks 
+
+the leaf if it had a nice summer.
+
+Speaking: Linus
+
+Category: Autumn
+
+Date: September 26, 1958
+
+Description: Another leaf falls, and Linus 
+
+points to the fallen leaf that its friend is 
+
+coming.
+
+Speaking: Linus
+
+Category: Autumn
+
+Date: September 27, 1958
+
+Description: Snoopy thinks he doesn't get enough 
+
+sleep, and realizes that he forgot his mid-
+
+afternoon nap.
+
+Speaking: Snoopy
+
+Category: Snoopy's troubles
+
+Date: September 28, 1958
+
+Description: Linus asks Lucy to read to him a 
+
+book, and Lucy sums up the story in a sentence 
+
+to get it over with.
+
+Speaking: Linus, Lucy
+
+Category: Crabby Lucy
+
+Date: September 29, 1958
+
+Description: The girls and Snoopy play with hula 
+
+hoops.
+
+Non-speaking: Lucy, Patty, Violet, Snoopy
+
+Category: Speechless
+
+Date: September 30, 1958
+
+Description: Linus unties a pretzel.
+
+Speaking: Charlie Brown
+
+Non-speaking: Linus, Patty
+
+Category: Stunt

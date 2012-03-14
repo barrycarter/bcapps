@@ -1,0 +1,272 @@
+Date: 1 February 1954
+
+Description: Charlie Brown watches Shermy play with a rather elaborate toy train set. Charlie goes home to play with his train set which is small and disappointing.
+
+Non-speaking: Shermy, Charlie Brown
+
+Category: speechless, train set, disappointment
+
+
+Date: 2 February 1954
+
+Description: Charlie Brown shows Lucy how Snoopy can balance a bottle of pop on his ear. Lucy asks what the flavor is, Charlie Brown tells her it's grape, and Lucy seems to think that that explains it.
+
+Speaking: Charlie Brown, Lucy
+
+Non-speaking: Snoopy
+
+Category: balancing bottle, soda pop, trick
+
+
+Date: 3 February 1954
+
+Description: Linus is sitting on the floor. He hiccups and falls backward. He hiccups again and returns to the seated position.
+
+Non-speaking: Linus
+
+Category: speechless, hiccups, klunk, falling
+
+
+Date: 4 February 1954
+
+Description: Charlie Brown is watching his toy train go around the track. When it enters the tunnel, Snoopy panickly darts from out of the tunnel.
+
+Non-speaking: Snoopy, Charlie Brown
+
+Category: speechless, train set, toy, tunnel
+
+
+Date: 5 February 1954
+
+Description: Charlie Brown and Schroeder are playing with a musical top, and Schroeder wonders what it's playing. Charlie Brown tells him tht title, and Schroeder is impressed with his knowledge, until Charlie tells him he read it on the side of the top.
+
+Speaking: Charlie Brown, Schroeder
+
+Wikipedia: Gloria Choral
+
+Category: top, music, Gloria Choral
+
+
+Date: 6 February 1954
+
+Description: Violet tells Charlie Brown that she's having a tea party and he's not invited. Charlie informs her that he doesn't like tea anyway, so Violet asks him what he likes. When Charlie tells her he likes hot chocolate, she says she's having a hot chocolate party and he's not invited.
+
+Speaking: Charlie Brown, Violet
+
+Category: tea party, not invited, hot chocolate
+
+
+Date: 7 February 1954
+
+Description: Charlie Brown and Snoopy are sitting on a sled on top of a very small hill. The sled only goes a few feet, and Charlie asks Snoopy if they should try again or wait until he catches his breath.
+
+Speaking: Charlie Brown
+
+Non-speaking: Snoopy
+
+Category: sledding, sleigh, small slope
+
+
+Date: 8 February 1954
+
+Description: Charlie Brown is walking ahead of Lucy, and although she's telling him to wait for her, Charlie doesn't stop. Lucy keeps falling further and further behind him.
+
+Speaking: Lucy
+
+Non-speaking: Charlie Brown
+
+Category: falling behind, walking, ""wait for me""
+
+
+Date: 9 February 1954
+
+Description: Charlie Brown and Schroeder are listening to a record player. Charlie begins asking Schroeder about the music. Every time Charlie tries to take an interest in what Schroeder is saying, Schroeder keeps correcting Charlie Brown and comes off as a know-it-all.
+
+Speaking: Charlie Brown, Schroeder
+
+Wikipedia: Joseph Haydn, Wolfgang Amadeus Mozart
+
+Category: record player, music, know-it-all
+
+
+Date: 10 February 1954
+
+Description: Snoopy barks at the musical top, and the top kicks him. 
+
+Non-Speaking: Snoopy
+
+Category: speechless, top, music
+
+
+Date: 11 February 1954
+
+Description: Violet tells Charlie Brown that she wants to be a nurse when she grows up. When she asks Charlie what he wants to be, he says ""perfect"".
+
+Speaking: Charlie Brown, Violet
+
+Category: aspiration, nurse, perfect
+
+
+Date: 12 February 1954
+
+Description: Shermy writes ""Charlie Brown loves all the girls"" on a fence.
+
+Non-Speaking: Shermy
+
+Category: speechless, message, writing, rumor
+
+
+Date: 13 February 1954
+
+Description: Violet comments to Lucy that Charlie Brown is a nice guy. Lucy jumps down her throat, but then calmly agrees.
+
+Speaking: Lucy, Violet
+
+Non-Speaking: Charlie Brown
+
+Category: Charlie Brown complimented, nice guy, over-reacting
+
+
+Date: 14 February 1954
+
+Description: Lucy is counting the stars and complains to Charlie Brown that it's a lot of trouble and it would help if she were closer. So she goes to get a small chair, gets on top, and claims it makes all the difference in the world.
+
+Speaking: Lucy, Charlie Brown
+
+Category: counting stars, night
+
+
+Date: 15 February 1954
+
+Description: Charlie Brown is siting behind Lucy in school. He tells her about how his grandfather used to dunk girls' pigtails in the inkwell. Lucy flips out and tells Charlie that if he does that she'll knock him across the room, to which Charlie says the same thing happened to his grandfather.
+
+Speaking: Lucy, Charlie Brown
+
+Mentioned: Charlie Brown's grandfather
+
+Category: Charlie Brown's grandfather, school, class, inkwell
+
+
+Date: 16 February 1954
+
+Description: Linus is sitting on the floor reading a book, and Lucy is sitting beside him watching the clock. When 7 o'clock comes, Lucy yells ""Bedtime"", startling Linus.
+
+Speaking: Lucy
+
+Non-Speaking: Linus
+
+Category: brother/sister, bedtime, reading, startled
+
+
+Date: 17 February 1954
+
+Description: Patty tells Charlie Brown that a bunch of them were talking about him. Charlie Brown jokingly says that he hopes it was nothing bad. Patty doesn't respond, and Charlie's laughter dwindles into embarrassment.
+
+Speaking: Patty, Charlie Brown
+
+Category: embarrassment, Charlie Brown insulted, laughing
+
+
+Date: 18 February 1954
+
+Description: Linus is hammering on one of his toys rather roughly. When it breaks after much abuse, Linus comments about how they don't make thing like they used to.
+
+Speaking: Linus
+
+Category: toy, hammering, broken
+
+
+Date: 19 February 1954
+
+Description: Charlie gives Patty some soap flakes and tells her to pat it to form a ball. He tells her it's his new invention: instant snowballs.
+
+Speaking: Patty, Charlie Brown
+
+Notes: I'm pretty sure what Charlie Brown gives Patty are soap flakes. It's an unlabeled box, but I'm not sure what else would be feasible.
+
+Category: instant snowballs, soap flakes, invention
+
+
+Date: 20 February 1954
+
+Description: Violet and Charlie Brown get into an argument and she tells him to go home. By the time Charlie Brown gets all his winter clothing on, Violet tells him she isn't mad anymore.
+
+Speaking: Violet, Charlie Brown
+
+Category: argument, winter clothes, bundled up, Violet's house
+
+
+Date: 21 February 1954
+
+Description: Lucy is still counting stars, and Charlie Brown offers to help her. He asks if she's counted a particular star, and Lucy has trouble figuring out which one he's pointing to. After going back and forth awhile, Lucy finally spots it and then asks Charlie Brown, ""What about it?""
+
+Speaking: Lucy, Charlie Brown
+
+Category: night, counting stars, frustration, determination
+
+
+Date: 22 February 1954
+
+Description: Charlie Brown tries to tell Lucy that the sun is a ball of fire and hangs in the air, but Lucy doesn't believe him and laughs at him. Charlie ends up feeling deflated.
+
+Speaking: Lucy, Charlie Brown
+
+Category: laughing, sun, depression
+
+
+Date: 23 February 1954
+
+Description: Patty and Lucy write on a fence, ""Violet loves Charlie Brown and Violet loves Shermy"".
+
+Non-speaking: Lucy, Patty
+
+Category: speechless, fence, writing, love, rumor
+
+
+Date: 24 February 1954
+
+Description: Violet and Patty are going on and on about how great this picture of Charlie Brown is. Violet then tells him it doesn't look a bit like him.
+
+Speaking: Patty, Violet
+
+Non-speaking: Charlie Brown
+
+Category: photograph, picture, Charlie Brown complimented, Charlie Brown insulted
+
+
+Date: 25 February 1954
+
+Description: Charlie Brown brings Lucy a peanut butter sandwich, and Lucy complains that he got jelly on it. He gets so fed up with her complaining that he tears the sandwich into shreds.
+
+Speaking: Lucy, Charlie Brown
+
+Category: Good Grief, peanut butter sandwich, anger
+
+
+Date: 26 February 1954
+
+Description: Schroeder telld Charlie Brown that he doesn't think his comic strip is very funny. Charlie Brown flies off the handle and yells at Schroeder for insulting his work. He then tells him he'll go get an honest opinion somewhere else.
+
+Speaking: Charlie Brown, Schroeder
+
+Category: comic strip, critique, anger
+
+
+Date: 27 February 1954
+
+Description: Lucy asks Charlie Brown if she could touch the sun by standing on a chair. Charlie tells her she couldn't even with ten chairs, to which Lucy suggests eleven.
+
+Speaking: Lucy, Charlie Brown
+
+Category: sun, chairs, pondering
+
+
+Date: 28 February 1954
+
+Description: Lucy is playing with her toys when her mom tells her she has to go to bed. Lucy throws a huge tantrum, tiring herself out.
+
+Speaking: Lucy, Lucy's Mom
+
+Notes: Lucy's mom appears off panel.
+
+Category: toys, bedtime, tantrum

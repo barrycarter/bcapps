@@ -1,0 +1,359 @@
+Date: 1 March 1954
+
+Description: Schroeder is trying to play the piano when Snoopy zooms in
+and accidentally takes it with him.
+
+Non-Speaking: Schroeder, Snoopy
+
+Category: Speechless
+
+
+Date: 2 March 1954
+
+Description: Patty and Charlie Brown are comparing who is taller with each
+stepping on their tippy toes to be taller than the other.
+
+Speaking: Charlie Brown, Patty
+
+Category: Height
+
+
+Date: 3 March 1954
+
+Description: Patty and Charlie Brown are racing each other when Patty stops
+as Charlie Brown hides behind a stop sign.
+
+Non-Speaking: Charlie Brown, Patty
+
+Category: Speechless
+
+
+Date: 4 March 1954
+
+Description: Charlie Brown tries to convince Linus that his block stack that
+hes building will fall since its diagonal.  Charlie Brown calls Linus smartalecky
+when it doesn't fall.
+
+Speaking: Charlie Brown
+
+Non-Speaking: Linus
+
+Category: Linus blocks, jealousy
+
+
+Date: 5 March 1954
+
+Description: Violet thinks Snoopy is the cutest thing and gives him a hug.  Charlie
+Brown gets upset because he can't get hugs and squeezed from girls like Snoopy can.
+
+Speaking: Violet, Charlie
+
+Non-Speaking: Snoopy
+
+Category: Dogs, Cuteness
+
+
+Date: 6 March 1954
+
+Description: Violet and Charlie Brown are having an argument with only ""Yes"" from
+Charlie Brown and ""No"" from Violet.  Each box they get louder, and Charlie Brown
+feels like he cannot win.
+
+Speaking: Violet, Charlie Brown
+
+Category: Fighting, Women
+
+
+Date: 7 March 1954
+
+Description: Charlie Brown is walking with Lucy and Patty telling them about his dream
+the previous night involving a castle and everyone he knew. Patty suggests its because
+its the last thing he read before going to bed. Lucy walks alone and agrees that it sounds
+reasonable.  She reads before bed and has dreams about what she read.
+
+Speaking: Charlie Brown, Lucy, Patty
+
+Category: Dreams, Imagination
+
+Comments: Eight panel Sunday Comic
+
+
+Date: 8 March 1954
+
+Description: Charlie Brown and Lucy are watching TV as Linus behind them builds a chair
+to sit with them.
+
+Non-Speaking: Charlie Brown, Lucy, Linus
+
+Category: Speechless, toddler, blocks, building
+
+
+Date: 9 March 1954
+
+Description: Snoopy gets patted on the head by Charlie Brown, Schroeder, Lucy, and Violet and 
+understands why he has a headache every night.
+
+Speaking: Charlie Brown, Schroeder, Lucy, Violet, Snoopy
+
+Category: dog, headache, pet
+
+
+Date: 10 March 1954
+
+Description: Lucy tells Linus that he can't go in her sandbox. Linus walks away and
+builds his own sandbox.
+
+Speaking: Lucy
+
+Non-Speaking: Linus
+
+Category: brother/sister, building, toddler
+
+
+Date: 11 March 1954
+
+Description: Snoopy sees Charlie Brown walking towards him and says he doesn't want to
+be patted on the head.  Charlie Brown pats Snoopy's head only to have Snoopy collapse to
+the ground which makes Charlie Brown think he killed Snoopy.
+
+Speaking: Snoopy, Charlie Brown
+
+Category: dog, pet, headache
+
+Comments: Refers to the March 9th comic
+
+
+Date: 12 March 1954
+
+Description: Snoopy is sleeping when Linus comes up to him and builds a doghouse around him.
+Snoopy awakes confused.
+
+Non-Speaking: Linus, Snoopy
+
+Category: building, dog
+
+
+Date: 13 March 1954
+
+Description: Lucy and Schroeder walk up to Snoopy and decide that they should pat him
+on the head because he'll like it.  Snoopy prevents that from happening with his ears.
+
+Speaking: Schroeder, Lucy
+
+Non-Speaking: Snoopy
+
+Category: dog, pet
+
+Comments: refers to March 9th and 11th comics
+
+
+Date: 14 March 1954
+
+Description: Charlie Brown builds a large mound of snowballs.  He is read to throw them
+at Lucy when shes walking by, but they get all stuck frozen together.
+
+Non-Speaking: Charlie Brown, Lucy
+
+Category: Speechless, snowballs, snow
+
+Comments: 8 panel Sunday strip
+
+
+Date: 15 March 1954
+
+Description: Charlie Brown gives Violet a Valentine's Day card a day late according to him.
+She replies that its a month late.  He turns it into a Happy Income Tax Day.
+
+Speaking: Violet, Charlie Brown
+
+Category: love, Valentine's Day, taxes
+
+Wikipedia: Valentine's Day, Tax Day
+
+
+Date: 16 March 1954
+
+Description: Snoopy thinks to himself that pats on the head will be okay because the
+humans mean well.  He decides to let Charlie Brown pat his head, but Charlie Brown just
+walks on by.
+
+Speaking: Snoopy
+
+Non-Speaking: Charlie Brown
+
+Category: pets, dogs, pats on head
+
+Comments: Refers to previous patting on head strips with Snoopy
+
+
+Date: 17 March 1954
+
+Description: Patty and Charlie Brown are playing marbles with Charlie Brown down to his
+last marble. He gives a sad speech about the marble that convinces Patty to let Charlie
+Brown keep it.
+
+Speaking: Charlie Brown, Patty
+
+Category: marbles, games
+
+
+Date: 18 March 1954
+
+Description: Linus is outside when it begins to rain outside. He builds himself a shelter.
+
+Non-Speaking: Linus
+
+Category: building, toddler, rain
+
+Comments: Continues the theme of Linus building random things
+
+
+Date: 19 March 1954
+
+Description: Snoopy is asleep, and Linus builds some blocks on Snoopy's head.  Snoopy awakes 
+and knocks all the blocks onto Linus.
+
+Non-Speaking: Linus, Snoopy
+
+Category: building, toddler
+
+Comments: More Linus building
+
+
+Date: 20 March 1954
+
+Description: Violet is sharing some chocolates with Charlie Brown.  Instead of the chocolates,
+she gives him the paper cups to pretend that they are boats.
+
+Speaking:  Charlie Brown, Violet
+
+Category: chocolates
+
+
+Date: 21 March 1954
+
+Description: Charlie Brown builds a sandcastle that Patty stomps and tears down. He gets angry, gives up,
+and goes to bed.
+
+Non-Speaking: Charlie Brown, Patty
+
+Category: sandcastle, tear down, speechless
+
+Comments: 15 panel Sunday strip
+
+
+Date: 22 March 1954
+
+Description: Charlie Brown calls Snoopy dumb for standing outside in the rain.  When Patty
+asks Charlie Brown why hes standing in the rain, he runs away in embarrassment.
+
+Speaking: Charlie Brown, Patty
+
+Non-Speaking: Snoopy
+
+Category: rain, embarrassment
+
+
+Date: 23 March 1954
+
+Description: Charlie Brown asks Violet about her new item.  Its sanitary mud-pies as they
+have never been touched by human hands.
+
+Speaking: Charlie Brown, Violet
+
+Category: mud, new item
+
+
+Date: 24 March 1954
+
+Description: Charlie Brown is down because the kids don't call for him to play.  Schroeder and 
+Shermy yell at him to come outside, and Charlie Brown is glad to be alive.
+
+Speaking: Charlie Brown, Shermy, Schroeder
+
+Category: baseball, friends, sadness
+
+
+Date: 25 March 1954
+
+Description: Patty tells Charlie Brown and Shermy that they are playing a game wrong. They
+say they know, but won't change because its how they've always played.
+
+Speaking: Shermy, Charlie Brown, Patty
+
+Category: games
+
+
+Date: 26 March 1954
+
+Description: Charlie Brown gives Schroeder a Jack-in-the-box designed for Schroeder.  The
+jack-in-the-box contains Beethoven.
+
+Speaking: Charlie Brown
+
+Non-Speaking: Schroeder
+
+Category: toys, piano
+
+Wikipedia: Beethoven
+
+
+Date: 27 March 1954
+
+Description: Charlie Brown tells Violet that he feels that everyone is laughing at him. The
+only time they are not is when hes trying to be funny.
+
+Speaking: Violet, Charlie Brown
+
+Category: funny, sadness
+
+
+Date: 28 March 1954
+
+Description: Charlie Brown and Lucy are playing a game that Charlie Brown complains is stupid and boring.
+Lucy says thats because hes losing. Charlie Brown decides to go play with Linus since Lucy says she won't.
+Charlie Brown thinks he can show Linus how to build something since hes a big kid. Linus has built a 
+large structure which CHarlie Brown says that some kids admire bigger kids.
+
+Speaking: Charlie Brown, Lucy
+
+Non-Speaking: Linus
+
+Category: building, toddler, brother/sister, big kids
+
+Comments: Eight panel Sunday Strip, continues Linus' building theme
+
+
+Date: 29 March 1954
+
+Description: Linus builds a brick wall for Snoopy to jump over.
+
+Non-Speaking: Linus, Snoopy
+
+Category: Speechless, Building
+
+Comments: Continues Linus building items theme
+
+
+Date: 30 March 1954
+
+Description: Charlie Brown tells everyone to go way out in the field.  He swings and misses the ball.
+He asks where the fielders were on the play.
+
+Speaking: Charlie Brown
+
+Mentioned: Fielders
+
+Category: baseball, swing and a miss
+
+
+Date: 31 March 1954
+
+Description: Charlie Brown is yelling at Snoopy for something. Snoopy hangs his head, which Charlie
+Brown says he should since hes in so much trouble. Snoopy falls asleep.
+
+Speaking: Charlie Brown
+
+Non-Speaking: Snoopy
+
+Category: Pets, dogs, discipline

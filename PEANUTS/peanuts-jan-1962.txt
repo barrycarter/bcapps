@@ -1,0 +1,439 @@
+Date: January 1, 1962
+
+Description: Charlie Brown greets Lucy a 
+
+happy new year, and Lucy questions if 
+
+saying ""happy new year"" would indeed make 
+
+it happy.
+
+Speaking: Charlie Brown, Lucy
+
+Category: Holiday
+
+Date: January 2, 1962
+
+Description: Linus explains to Lucy that 
+
+taking his blanket to school calms him down 
+
+and helps him get better grades.
+
+Speaking: Linus, Lucy
+
+Category: Linus and his blanket
+
+Date: January 3, 1962
+
+Description: Linus shows Charlie Brown how 
+
+he can use his blanket as a weapon.
+
+Speaking: Charlie Brown, Linus
+
+Category: Linus and his blanket
+
+Date: January 4, 1962
+
+Description: Linus tells Charlie Brown that 
+
+he is trying to get his teacher Miss Othmar 
+
+to allow him to hold on his blanket. He 
+
+bargains with her, agreeing to give up his 
+
+blanket if she would give up biting her 
+
+fingernails.
+
+Speaking: Charlie Brown, Linus
+
+Mentioned: Miss Othmar
+
+Category: Linus and his blanket
+
+Date: January 5, 1962
+
+Description: Linus tells Lucy of his 
+
+agreement with Miss Othmar regarding his 
+
+blanket. Lucy thinks Linus believes Miss 
+
+Othmar can't hold up her end of their 
+
+bargain.
+
+Speaking: Linus, Lucy
+
+Mentioned: Miss Othmar
+
+Category: Linus and his blanket
+
+Date: January 6, 1962
+
+Description: Snoopy comments on the 
+
+struggle between Linus and Miss Othmar, and 
+
+says that in situations like this, it's the 
+
+principal who loses.
+
+Speaking: Snoopy
+
+Non-speaking: Linus
+
+Mentioned: Miss Othmar
+
+Category: Linus and his blanket
+
+Date: January 7, 1962
+
+Description: Snoopy falls asleep on Linus' 
+
+blanket, and Linus drags him to his 
+
+doghouse.
+
+Non-speaking: Linus, Snoopy
+
+Category: Speechless
+
+Date: January 8, 1962
+
+Description: Linus underestimates Miss 
+
+Othmar, who holds up to her end of the 
+
+bargain in order to make Linus give up his 
+
+blanket.
+
+Speaking: Lucy, Linus
+
+Mentioned: Miss Othmar
+
+Category: Linus and his blanket
+
+Date: January 9, 1962
+
+Description: Linus admits that his mistake 
+
+was when he judged Miss Othmar as a human 
+
+being inclined to fail, instead of as a 
+
+school teacher inclined to be tenacious.
+
+Speaking: Charlie Brown, Linus
+
+Mentioned: Miss Othmar
+
+Category: Linus and his blanket
+
+Date: January 10, 1962
+
+Description: Linus realizes that he made a 
+
+fool out of himself by pushing his bargain 
+
+with Miss Othmar, and wonders why teachers 
+
+are smarter than pupils.
+
+Speaking: Linus
+
+Mentioned: Miss Othmar
+
+Category: Linus and his blanket
+
+Date: January 11, 1962
+
+Description: Linus crawls on the ground, 
+
+trying to look humble so he could surrender 
+
+to Miss Othmar and get his blanket back.
+
+Speaking: Charlie Brown, Linus
+
+Mentioned: Miss Othmar
+
+Category: Linus and his blanket
+
+Date: January 12, 1962
+
+Description: Miss Othmar gives Linus back 
+
+his blanket and thanks him for helping her 
+
+to stop biting her fingernails.
+
+Speaking: Linus, Lucy
+
+Mentioned: Miss Othmar
+
+Category: Linus and his blanket
+
+Date: January 13, 1962
+
+Description: Snoopy reveals that he wants 
+
+to get away so he could see new things and 
+
+meet new people, but his supper dish always 
+
+makes him stay.
+
+Speaking: Snoopy 
+
+Category: Snoopy on doghouse
+
+Date: January 14, 1962
+
+Description: Lucy throws Linus a rubber 
+
+ball, and it hits his head. Linus thinks 
+
+he's bleeding from the impact.
+
+Speaking: Lucy, Linus
+
+Non-speaking: Charlie Brown
+
+Category: Exaggeration
+
+Date: January 15, 1962
+
+Description: Snoopy feels his lot is 
+
+crowded when someone builds a snowman in 
+
+front of his doghouse.
+
+Speaking: Snoopy
+
+Notes: There is a snowman in front of 
+
+Snoopy's doghouse.
+
+Category: Snowman
+
+Date: January 16, 1962
+
+Description: Snoopy tries to make friendly 
+
+advances toward the snowman
+
+Speaking: Snoopy
+
+Notes: There is a snowman in front of 
+
+Snoopy's doghouse.
+
+Category: Snowman
+
+Date: January 17, 1962
+
+Description: Snoopy couldn't fall asleep 
+
+because he feels the snowman's stare.
+
+Speaking: Snoopy
+
+Notes: There is a snowman in front of 
+
+Snoopy's doghouse.
+
+Category: Snowman
+
+Date: January 18, 1962
+
+Description: Snoopy finds the snowman easy 
+
+to get along with; however, the sun 
+
+suddenly glares from a distance, worrying 
+
+Snoopy.
+
+Speaking: Snoopy
+
+Notes: There is a snowman in front of 
+
+Snoopy's doghouse.
+
+Category: Snowman
+
+Date: January 19, 1962
+
+Description: Snoopy tries to shield the 
+
+snowman from the sun, but it melts down.
+
+Speaking: Snoopy
+
+Category: Snowman
+
+Date: January 20, 1962
+
+Description: Snoopy is depressed, but he 
+
+gets over it and thinks the snowman was no 
+
+""fair weather"" friend.
+
+Speaking: Snoopy
+
+Notes: A play on the idiom ""fairweathered 
+
+friend""
+
+Category: Snowman
+
+Date: January 21, 1962
+
+Description: Lucy yanks the blanket out of 
+
+Linus' grip. Linus responds by pointing the 
+
+parallelism between a child and his blanket 
+
+and an adult and his hobbies, saying that 
+
+these things help people cope with everyday 
+
+problems. Linus then yanks the blanket out 
+
+of Lucy.
+
+Speaking: Lucy, Linus
+
+Category: Linus and his blanket
+
+Date: January 22, 1962
+
+Description: Charlie Brown complains about 
+
+everything being confusing and uncertain, 
+
+and Lucy accuses him of trying to start an 
+
+argument.
+
+Speaking: Charlie Brown, Lucy
+
+Category: Serious talk
+
+Date: January 23, 1962
+
+Description: Charlie Brown tells Lucy that 
+
+they live in dangerous times, and Lucy, who 
+
+is unnerved by Charlie Brown's words, 
+
+interrupts him.
+
+Speaking: Charlie Brown, Lucy
+
+Category: Serious talk
+
+Date: January 24, 1962
+
+Description: Lucy thinks when you have a 
+
+pretty face, you need not worry about world 
+
+problems.
+
+Speaking: Charlie Brown, Lucy
+
+Category: Serious talk
+
+Date: January 25, 1962
+
+Description: Lucy hands down an ultimatum 
+
+of twelve years on the world to straighten 
+
+out its problems, so she can live a perfect 
+
+life by the time she turns eighteen.
+
+Speaking: Charlie Brown, Lucy
+
+Category: Serious talk
+
+Date: January 26, 1962
+
+Description: Charlie Brown wonders whether 
+
+the world will need more time to get 
+
+everything in order, and Lucy declares that 
+
+she would not give an extension beyond 
+
+twelve years.
+
+Speaking: Charlie Brown, Lucy
+
+Category: Serious talk
+
+Date: January 27, 1962
+
+Description: Charlie Brown makes a snowman, 
+
+and Linus asks him what coal is.
+
+Speaking: Charlie Brown, Linus
+
+Non-speaking: Snoopy
+
+Category: Snowman
+
+Date: January 28, 1962
+
+Notes: There is no strip for this day.
+
+Date: January 29, 1962
+
+Description: Snoopy hones his alertness, 
+
+but he is surprised by the snapping of twig 
+
+trodden on by Charlie Brown.
+
+Speaking: Snoopy
+
+Non-speaking: Charlie Brown
+
+Category: Snoopy on his doghouse
+
+Date: January 30, 1962
+
+Description: Charlie Brown thinks it's his 
+
+stomach and not his brain that hates 
+
+school, because his stomach hurs everytime 
+
+he feels anxious about school.
+
+Speaking: Charlie Brown
+
+Category: Charlie Brown complaining
+
+Date: January 31, 1962
+
+Description: Linus takes an old tree branch 
+
+for a queen snake.
+
+Speaking: Linus, Lucy
+
+Category: Exaggeration

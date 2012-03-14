@@ -1,0 +1,271 @@
+Date: March 1, 1955
+
+Description:  Charlie Brown is wearing a space helmet and says he’s from Mars, but doesn’t know where it is.
+
+Speaking:  Lucy, Charlie Brown
+
+Category: Space
+
+Date: March 2, 1955
+
+Description: Charlie Brown is wearing a space helmet and Lucy and Peppermint Patty fog up the glass.
+
+Speaking:  Lucy, Peppermint Patty
+
+Non-speaking:  Charlie Brown
+
+Category: Space
+
+Comments: Continuation from the day before.
+
+Date: March 3, 1955
+
+Description:  Lucy asks Charlie Brown how he got from Mars to Earth.
+
+Speaking:  Lucy, Charlie Brown
+
+Category:  Space
+
+Comments:  Continued from the March 1st and 2nd strip.
+
+Date:  March 4, 1955
+
+Description:  Lucy and Violet Gray wonder whether Charlie Brown is really from space, and conclude that he must be because no earth creature has a head that round.
+
+Speaking: Lucy, Violet Gray
+
+Non-speaking: Charlie Brown
+
+Comments: Continued from March 1st, 2nd, and 3rd.
+
+Date: March 5, 1955
+
+Description: Charlie Brown is wearing a space helmet and Lucy and Peppermint Patty fog up the glass.
+
+Speaking:  Lucy, Peppermint Patty
+
+Non-speaking:  Charlie Brown
+
+Category: Space
+
+Date: March 6, 1955
+
+Description:  Linus is playing with blocks when he realizes hes cold, so he goes and gets an electric blanket.
+
+Speaking:  Linus
+
+Category: Cold weather
+
+Date: March 7, 1955
+
+Description:  Snoopy is sitting and when he realizes Charlie Brown has something in a bag he runs over.
+
+Non-speaking:  Snoopy, Charlie Brown
+
+Category:  Snoopy
+
+Date: March 8, 1955
+
+Description:  Snoopy and Charlie Brown realize there’s chocolate creams in the bag.
+
+Speaking:  Charlie Brown
+
+Non-speaking:  Violet Gray, Snoopy
+
+Category:  Snoopy is hungry
+
+Date:  March 9, 1955
+
+Description:  Charlie Brown states that a dog is mans best friend and Lucy says that a blanket is.
+
+Speaking:  Charlie Brown, Lucy
+
+Non-speaking:  Snoopy, Linus
+
+Category: Linus’ blanket
+
+Date: March 10, 1955
+
+Description:  Snoopy and Charlie Brown try the chocolate creams and hate them and fins out that they had coconut in them.
+
+Speaking:  Charlie Brown
+
+Non-speaking:  Sally Brown, Snoopy
+
+Category: Chocolate
+
+Date: March 11, 1955
+
+Description:  Lucy thinks that a bug is frowning at her and apologizes.
+
+Speaking: Charlie Brown, Lucy
+
+Category: Bug
+
+Date: March 12, 1955
+
+Description:  Charlie Brown explains the importance of bugs and then gets scared when one crawls up his back.
+
+Speaking:  Lucy, Charlie Brown
+
+Category: Bug
+
+Date: March 13, 1955
+
+Description: Lucy is flying a kite that looks like it is up much higher than it really is because it is so small.
+
+Speaking: Charlie Brown, Schroeder
+
+Non-speaking: Lucy
+
+Category: Flying a kite
+
+Date: March 14, 1955
+
+Description:  Charlie Brown asks Lucy if she ever thought she would be a fussbudget.
+
+Speaking: Charlie Brown, Lucy
+
+Category: Lucy’s mood
+
+Date: March 15, 1955
+
+Description:  Charlie Brown asks Lucy if she has any advice for little girls wanting to become a fussbudget.
+
+Speaking:  Charlie Brown, Lucy
+
+Category:  Lucy’s mood
+
+Date: March 16, 1955
+
+Description:  Violet Gray and Sally Brown admire Snoopy’s new collar.
+
+Speaking:  Violet Gray, Sally Brown
+
+Non-speaking:  Snoopy
+
+Category: Snoopy’s collar
+
+Date: March 17, 1955
+
+Description:  Charlie Brown is reading a book about Beethoven to Schroeder.
+
+Speaking:  Schroeder, Charlie Brown
+
+Category: Beethoven
+
+Date: March 18, 1955
+
+Description:  Charlie Brown is reading a book about Beethoven to Schroeder and Lucy.
+
+Speaking:  Charlie Brown, Schroeder
+
+Non-speaking:  Lucy
+
+Category: Beethoven
+
+Date: March 19, 1955
+
+Description:  Lucy tells Charlie Brown she feels sorry for him because he is so pathetic.
+
+Speaking:  Lucy, Charlie Brown
+
+Category: Lucy’s mood
+
+Date: March 20, 1955
+
+Description:  Lucy tries playing marbles with Charlie Brown and Schroeder, and when she is unsuccessful she pounds all the marbles into the ground.
+
+Speaking:  Lucy, Charlie Brown, Schroeder
+
+Category: Marbles
+
+Date: March 21, 1955
+
+Description:  Charlie Brown is upset when he doesn’t receive money for a paper he wrote for English class.
+
+Speaking:  Charlie Brown, Sally Brown
+
+Category: School
+
+Date: March 22, 1955
+
+Description:  Charlie Brown is wearing his space helmet and gets upset when he sees that Snoopy is wearing one too.
+
+Non-speaking:  Snoopy, Charlie Brown
+
+Category: Space
+
+Date: March 23, 1955
+
+Description:  Schroeder doesn’t believe that the whistle Charlie Brown has is one that only dogs can hear, so Charlie Brown blows it in Snoopy’s ear.
+
+Speaking: Schroeder, Charlie Brown
+
+Non-speaking: Snoopy
+
+Category: Dog whistle
+
+Date: March 24, 1955
+
+Description:  Lucy is afraid a bug crawling in the street will get run over.
+
+Speaking:  Charlie Brown, Lucy
+
+Category: Bug
+
+Date: March 25, 1955
+
+Description:  Linus is holding his blanket when Snoopy comes and sleeps on it.
+
+Non-speaking:  Linus, Snoopy
+
+Category:  Linus’ blanket
+
+Date: March 26, 1955
+
+Description:  Charlie Brown tells Violet Gray “I told you so.”
+
+Speaking:  Charlie Brown, Violet Gray
+
+Category: Charlie Brown
+
+Date: March 27, 1955
+
+Description:  Charlie Brown shows Linus a basketball and he makes it in the basket his first try.
+
+Speaking:  Lucy, Linus, Charlie Brown
+
+Category: Basketball
+
+Date: March 28, 1955
+
+Description:  Lucy wants Charlie Brown to say something in martian.
+
+Speaking:  Charlie Brown, Lucy
+
+Category: Space
+
+Date: March 29, 1955
+
+Description:  Lucy wants Charlie Brown to say something again in martian.
+
+Speaking:  Charlie Brown, Lucy
+
+Category: Space
+
+Date: March 30, 1955
+
+Description:  Lucy wants to know what the weather is like on Mars.
+
+Speaking: Charlie Brown, Lucy
+
+Category: Space
+
+Date: March 31, 1955
+
+Description:  Lucy wants to know what Charlie Brown (Mr. Spaceman) thinks about girls on Earth.
+
+Speaking:  Lucy, Charlie Brown, Sally Brown
+
+Category: Space

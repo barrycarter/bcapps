@@ -1,0 +1,324 @@
+Date: 1 December 1954
+
+Description: Violet wonders if Charlotte is related to Charlie Brown. She is adamant that she is not related to him, which upsets him.
+
+Speaking: Charlie Brown, Violet, Charlotte
+
+Category: introductions, friends 
+
+
+Date: 2 December 1954
+
+Description: Patty meets Charlotte. Patty says that Charlotte talks loud, which Charlotte says is a way to put over a point.
+
+Speaking: Charlie Brown, Patty, Charlotte Braun
+
+Category: introduction, loud
+
+
+Date: 3 December 1954
+
+Description: Charlie Brown asks Charlotte if she always has to talk loud. She said its her normal quiet voice and makes him hear her loud voice.
+
+Speaking: Charlotte Braun, Charlie Brown
+
+Non-Speaking: Snoopy
+
+Category: introductions, loud voices
+
+
+Date: 4 December 1954
+
+Description: Violet points out to Charlotte that if she marries Charlie Brown, her name would be Charlotte Brown instead of Charlotte Braun. Charlotte yells at Charlie Brown to stay out of her life.
+
+Speaking: Violet, Charlotte
+
+Non-Speaking: Charlie Brown 
+
+Category: introductions, marriage, friends, the future
+
+
+Date: 5 December 1954
+
+Description: Pig-Pen wants to give Charlie Brown candy, but the thought makes Charlie Brown sick. He “drops” it into Snoopy’s mouth, making Snoopy sick.
+
+Speaking: Charlie Brown, Pig-Pen
+
+Non-Speaking: Snoopy
+
+Category: candy, dirty, dogs, sickness
+
+Comments: 9 panel Sunday strip
+
+
+Date: 6 December 1954
+
+Description: Violet and Patty tell Charlie Brown he isn’t invited to their party. He makes a big scene, and they run away so happy that it made him sad. He says that he feels good to make them feel good.
+
+Speaking: Violet, Charlie Brown, Patty
+
+Category: friends, mean, teasing
+
+
+Date: 7 December 1954
+
+Description: Charlie Brown tries to say something nice to Charlotte, but she thinks he is being sarcastic and gets angry.
+
+Speaking: Charlie Brown, Charlotte
+
+Category: being nice, sarcastic, friends, yelling
+
+
+Date: 8 December 1954
+
+Description: Charlotte is complaining to Charlie Brown because the girls won’t play with her because they say she is too loud. She asks if that is true, which causes Charlie to walk away and ask what she was saying.
+
+Speaking: Charlotte, Charlie Brown
+
+Mentioned: Violet, Patty
+
+Category: friends, girls, yelling
+
+
+Date: 9 December 1954
+
+Description: Lucy asks Charlie Brown what the odds were that they would get married. Schroeder gave them better odds than Charlie Brown, which makes Charlie Brown clal him a traitor.
+
+Speaking: Lucy, Charlie Brown 
+
+Mentioned: Schroeder
+
+Category: Girls, boy/girl, marriage, friends, traitor
+
+
+Date: 10 December 1954
+
+Description: Lucy asks Charlie Brown how high up the sky goes.
+
+Speaking: Lucy, Charlie Brown
+
+Category: astronomy, the sky, friends, questions
+
+Comments: More Lucy and being curious
+
+
+Date: 11 December 1954
+
+Description: Schroeder makes Lucy happy by composing a piece of music for her called The Fussbudget Sonata.
+
+Speaking: Lucy
+
+Non-Speaking: Schroeder, Charlie Brown
+
+Category: piano, love, boy/girl
+
+
+Date: 12 December 1954
+
+Description: Lucy goes to throw a snowball at Charlie Brown, but then resists. He applauds her, and then she changes her mind and hits him anyway.
+
+Speaking: Charlie Brown, Lucy
+
+Category: snowballs, winter, violence
+
+Comments: 11 panel Sunday strip
+
+
+Date: 13 December 1954
+
+Description: Charlie Brown writes a normal letter to Santa Claus asking how is doing and adds a P.S. saying to greet Mrs. Claus after asking Patty if Santa is married.
+
+Speaking: Patty, Charlie Brown
+
+Category: Christmas, Santa Claus
+
+Wikipedia: Christmas, Santa Claus
+
+
+Date: 14 December 1954
+
+Description: Charlie Brown writes Santa a note asking him to not bring all the good toys to Shermy.
+
+Speaking: Charlie Brown 
+
+Mentioned: Shermy
+
+Category: letters, Santa Claus, toys
+
+
+Date: 15 December 1954
+
+Description: Charlie Brown writes a letter to Santa asking not for toys, but for a picture of Santa to hang on his wall.
+
+Speaking: Charlie Brown, Patty
+
+Category: Santa Claus, letters, toys
+
+
+Date: 16 December 1954
+
+Description: Schroeder bakes a cake for the school’s birthday celebration for Beethoven.
+
+Speaking: Charlie Brown, Schroeder
+
+Category: Beethoven, cake, party
+
+Wikipedia: Beethoven
+
+
+Date: 17 December 1954
+
+Description: Charlie Brown tells Lucy all the things that Santa Claus does. Lucy is amazed in the age they live in.
+
+Speaking: Lucy, Charlie Brown
+
+Category: Santa Claus, amazed, friends
+
+
+Date: 18 December 1954
+
+Description: Charlie Brown gets a letter from Santa that turns out to be a form rejection slip.
+
+Speaking: Patty, Charlie Brown
+
+Category: Santa Claus, sadness, letters
+
+
+Date: 19 December 1954
+
+Description: Lucy takes all of Linus toys except a rubber band. He has a ton of fun with it, so she steals it as well.
+
+Speaking: Lucy
+
+Non-Speaking: Linus
+
+Category: Brother/sister, mean
+
+Comments: 12 panel Sunday strip
+
+
+Date: 20 December 1954
+
+Description: Charlie Brown shows Linus how to blow up a balloon, which Linus blows into a cube.
+
+Speaking: Charlie Brown
+
+Non-Speaking: Linus
+
+Category: balloon, toddler
+
+Date: 21 December 1954
+
+Description: Charlie Brown tries to explain to Linus that balloons are suppose to be round, not square.
+
+Speaking: Charlie Brown
+
+Non-Speaking: Linus
+
+Category: balloon, toddler, teaching
+
+
+Date: 22 December 1954
+
+Description: Charlie Brown tells Lucy about Linus making square balloons, and she confronts him saying they will have to move out of the neighborhood.
+
+Speaking: Lucy, Charlie Brown
+
+Non-Speaking: Linus
+
+Category: toddler, brother/sister, balloons
+
+
+Date: 23 December 1954
+
+Description: Charlie Brown tries to get Linus to blow round balloons, but he is not successful.
+
+Speaking: Charlie Brown
+
+Non-Speaking: Linus
+
+Category: toddler, balloons
+
+
+Date: 24 December 1954
+
+Description: Charlie Brown brings a wavy shaped balloon, which Linus makes into a rectangle when he blows up his.
+
+Speaking: Charlie Brown
+
+Non-Speaking: Linus
+
+Category: toddler, balloon, teaching
+
+
+Date: 25 December 1954
+
+Description: Charlie Brown replaces Beethoven with a Christmas tree on top of Schroeder’s piano.
+
+Speaking: Charlie Brown, Schroeder
+
+Category: Christmas, tree, piano, Beethoven
+
+Wikipedia: Beethoven, Christmas
+
+
+Date: 26 December 1954
+
+Description: Schroeder shows Charlie Brown all the Beethoven gifts he got for Christmas, but doesn’t know what he is going to do with the electric train set he got.
+
+Speaking: Charlie Brown, Schroeder
+
+Category: Beethoven, Christmas, trains, presents
+
+Comments:12 panel Sunday strip
+
+
+Date: 27 December 1954
+
+Description: Lucy proves you cannot bounce a snowball no matter how hard you try.
+
+Speaking: Lucy, Charlie Brown
+
+Category: snowball, science tests
+
+
+Date: 28 December 1954
+
+Description: Linus tries to hit the ball off the paddle, but he isn’t successful.
+
+Non-Speaking: Linus
+
+Category: toys, toddler
+
+
+Date: 29 December 1954
+
+Description: Charlie Brown goes to Violet’s door with a big ball of snow and asks her to help him build a snowman.
+
+Speaking: Charlie Brown
+
+Non-Speaking: Violet
+
+Category: snowmen, boy/girls
+
+
+Date: 30 December 1954
+
+Description: Snoopy begs Linus for food. Linus gives him a teething-biscuits which Snoopy doesn’t like.
+
+Speaking: Snoopy
+
+Non-Speaking: Linus
+
+Category: toddler, dogs
+
+
+Date: 31 December 1954
+
+Description: Lucy licks a snowflake off of her mittens, but gets grossed out when she tastes fuzzy mittens.
+
+Speaking: Lucy
+
+Non-Speaking: Charlie Brown
+
+Category: snow, grossed out
