@@ -42,13 +42,18 @@ $pagename = read_file($ARGV[0]);
 ($all, $err, $res) = cache_command("curl 'http://$wiki/api.php?action=query&prop=revisions&rvprop=content&format=xml&titles=$pagename'");
 
 # remove XML (hopefully no embedded <rev> tags) [if no revs, $all is empty]
-unless ($all=~s%<rev[> ].*?>(.*?)</rev>%$1%is) {$all = "";}
+debug("ALL1: $all");
+if ($all=~m%<rev[> ].*?>(.*?)</rev>%is) {$all = $1;} else {$all = "";}
+debug("ALL2: $all");
 
 TEST:
 
 # treat the whole page as addition to itself
 chomp($all);
-$all = "[[$pagename!!$all]]";
+$mainpage = $pagename;
+# TODO: genearlize below
+$mainpage =~s/^Sample://;
+$all = "[[$mainpage!!$all]]";
 
 # parse all [[foo]] and {{foo}} on page (I don't use {{foo}}, but it
 # needs to be protected
@@ -72,6 +77,7 @@ for $i (sort keys %add) {
 
   # content generated from $pagename for page $i
   # TODO: improve this
+  debug("ADD",@add);
   $content = join("<br>",@add);
 
   # and reset @{$add{$i}}
@@ -82,10 +88,13 @@ for $i (sort keys %add) {
   # TODO: escape title if needed
   $iurl = urlencode($i);
   ($page, $err, $res) = cache_command("curl 'http://$wiki/api.php?action=query&prop=revisions&rvprop=content&format=xml&titles=$iurl'");
-  unless ($page=~s%<rev[> ].*?>(.*?)</rev>%$1%is) {$page = "";}
+  debug("PAGE1: $page");
+  if ($page=~m%<rev[> ].*?>(.*?)</rev>%is) {$page = $1;} else {$page = "";}
+  debug("PAGE2: $page");
+  debug("CONTENT: $content");
 
   # Case 1: this page had previously created a section and will replace it
-  unless ($page=~s%(<$pagename>)(.*?)(</$pagename>)%$1\n$content\n$2%) {
+  unless ($page=~s%(<$pagename>)(.*?)(</$pagename>)%$1\n$content\n$2%s) {
     # Case 2: didn't already have it, so add it
     $page = "$page\n<$pagename>\n$content\n</$pagename>\n";
   }
@@ -93,7 +102,7 @@ for $i (sort keys %add) {
   $res = write_wiki_page_anon($wiki, $i, $page, "AUTO");
 
   debug("RES: $res");
-  debug("PAGE: $page");
+  debug("PAGE3: $page");
 
   debug("ADD($i)", @add);
 
@@ -184,7 +193,7 @@ sub write_wiki_page_anon {
   write_file("action=edit&title=$page&text=$newcontent&summary=$comment&token=%2B\\", $tmpfile);
 
   # can't cache this command, but using cache_command to get vals
-  return "curl '$wiki/api.php' -d \@$tmpfile";
+  return "curl '$wiki/api.php?format=xml' -H 'Expect:' -d \@$tmpfile";
 }
 
 
