@@ -42,14 +42,16 @@ $pagename = read_file($ARGV[0]);
 ($all, $err, $res) = cache_command("curl 'http://$wiki/api.php?action=query&prop=revisions&rvprop=content&format=xml&titles=$pagename'");
 
 # remove XML (hopefully no embedded <rev> tags) [if no revs, $all is empty]
-debug("ALL1: $all");
 if ($all=~m%<rev[> ].*?>(.*?)</rev>%is) {$all = $1;} else {$all = "";}
-debug("ALL2: $all");
 
 TEST:
 
 # treat the whole page as addition to itself
 chomp($all);
+
+# special case
+$all=~s/&lt;.?$pagename&gt;/<$pagename>/isg;
+
 $mainpage = $pagename;
 # TODO: genearlize below
 $mainpage =~s/^Sample://;
@@ -67,9 +69,11 @@ while
 
 # "add" things to pages as needed (actually, replace existing section)
 for $i (sort keys %add) {
+  debug("I: $i");
   @add = @{$add{$i}};
 
   for $j (@add) {
+    debug("I: $i, J: $j");
   # parse $n s$n p$n as above
     $j=~s/<<s?(\d+)>>/$text[$1]/isg;
     $j=~s/<<p(\d+)>>/convert_text($text[$1])/iseg;
@@ -77,7 +81,7 @@ for $i (sort keys %add) {
 
   # content generated from $pagename for page $i
   # TODO: improve this
-  debug("ADD",@add);
+#  debug("ADD",@add);
   $content = join("<br>",@add);
 
   # and reset @{$add{$i}}
@@ -88,21 +92,23 @@ for $i (sort keys %add) {
   # TODO: escape title if needed
   $iurl = urlencode($i);
   ($page, $err, $res) = cache_command("curl 'http://$wiki/api.php?action=query&prop=revisions&rvprop=content&format=xml&titles=$iurl'");
-  debug("PAGE1: $page");
+#  debug("PAGE1: $page");
   if ($page=~m%<rev[> ].*?>(.*?)</rev>%is) {$page = $1;} else {$page = "";}
-  debug("PAGE2: $page");
-  debug("CONTENT: $content");
+#  debug("PAGE2: $page");
+#  debug("CONTENT: $content");
 
   # Case 1: this page had previously created a section and will replace it
   unless ($page=~s%(<$pagename>)(.*?)(</$pagename>)%$1\n$content\n$2%s) {
     # Case 2: didn't already have it, so add it
+    debug("$i doesn't have <$pagename>, so adding psuedosection");
+    debug("CONTENT($i): $page");
     $page = "$page\n<$pagename>\n$content\n</$pagename>\n";
   }
 
   $res = write_wiki_page_anon($wiki, $i, $page, "AUTO");
 
-  debug("RES: $res");
-  debug("PAGE3: $page");
+#  debug("RES: $res");
+#  debug("PAGE3: $page");
 
   debug("ADD($i)", @add);
 
@@ -111,7 +117,7 @@ for $i (sort keys %add) {
 
 sub parse_text {
   my($stag, $text, $etag) = @_;
-  debug("PARSE_TEXT($stag$text$etag)");
+#  debug("PARSE_TEXT($stag$text$etag)");
 
   # if of form [[foo:bar]] or [[foo::bar]], it will display different
   # on calling page and called page, so mark w/ tag s$n, not just $n
@@ -163,7 +169,7 @@ sub parse_text {
 
 sub convert_text {
   my($text) = @_;
-  debug("GOT: $text");
+#  debug("GOT: $text");
 
   # special case: [:Category:Foo] (don't change!)
   if ($text=~/^\[\[:/) {return $text;}
@@ -171,7 +177,7 @@ sub convert_text {
   # colon fixing
   $text=~s/\[\[(.*?)::?(.*)\]\]/[[$2]]/isg;
 
-  debug("RET: $text");
+#  debug("RET: $text");
   return $text;
 }
 
