@@ -19,6 +19,7 @@ system($cmd);
 
 sub urldecode {
   my($str) = @_;
+  $str=~s/\+/ /isg;
   $str=~s/%([a-fA-F0-9][a-fA-F0-9])/pack("C", hex($1))/iseg;
   return $str;
 }
