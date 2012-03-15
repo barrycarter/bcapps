@@ -1,0 +1,10 @@
+Seeing what I can do with a limited non-VPS account.
+
+Highlights of my chat with them:
+
+Godson Davis: We do not support SSH on our servers.
+Godson Davis: We do not support command-line access.
+Godson Davis: We do not support Cronjob.
+Godson Davis: It is not possible to make system() calls from Perl/PHP scripts.
+
+
