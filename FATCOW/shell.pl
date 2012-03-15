@@ -10,12 +10,13 @@ MARK
 ;
 
 # TODO: running this inside another shell (not sh/bash) might help?
+# TODO: print stderr and maybe return value as well (redirect stderr to stdin?)
 
 $cmd = <STDIN>;
 $cmd =~s/^cmd=//isg;
 $cmd = urldecode($cmd);
 print "Running: $cmd<p>";
-system($cmd);
+system("$cmd 2>&1");
 
 sub urldecode {
   my($str) = @_;
