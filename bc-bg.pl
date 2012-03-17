@@ -16,9 +16,9 @@ if (system("xset q 1> /dev/null 2> /dev/null")) {exit(0);}
 
 # TODO: add locking so program doesn't run twice
 # TODO: add alarms (maybe)
-# TODO: moon phase
 
 # This is REALLY REALLY REALLY ugly <h>also, it's ugly</h>
+# <h>Did I mention it's ugly?</h>
 # what event occurs next?
 
 $nextev = sqlite3val("SELECT event FROM abqastro WHERE time >
