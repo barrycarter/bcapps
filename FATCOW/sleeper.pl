@@ -5,11 +5,6 @@
 print "Content-type: text/plain\n\n";
 
 print "STARTING";
-
-if (fork()) {exit;}
-
-sleep(5);
+system("(sleep 10; date > $now) &");
 print "GOING";
-$now = time();
 
-system("date > $now &");
