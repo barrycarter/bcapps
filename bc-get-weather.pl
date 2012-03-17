@@ -98,9 +98,9 @@ $str = << "MARK";
 $sun
 M:$event{MR}-$event{MS}
 $moonphase
-$wind
 \@$time
 $current
+$wind
 $forecast[0]
 $forecast[1]
 MARK
