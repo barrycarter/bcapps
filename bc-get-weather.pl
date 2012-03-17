@@ -70,12 +70,20 @@ $wind = join("",
 );
 
 # TODO: moonrise/set (wunderground does NOT give these)
+# having the db do WAY too much work here
+@res = sqlite3hashlist("SELECT event, SUBSTR(REPLACE(TIME(time), ':',''),1,4) AS time FROM abqastro WHERE DATE(time)=DATE('now','localtime') AND event IN ('MR', 'MS')", "/home/barrycarter/BCGIT/db/abqastro.db");
+
+# TODO: this can be generalized (sqlite3hash function)
+for $i (@res) {$event{$i->{event}} = $i->{time};}
+
+# the moon doesn't rise/set some days, so moon string can look odd,
+# but I'm OK with that
 
 # print in order I want (even if I change mind later)
 $str = << "MARK";
 $time
 $sun
-M: NA
+M:$event{MR}-$event{MS}
 $wind
 $current
 $forecast[0]
