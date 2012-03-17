@@ -43,9 +43,9 @@ for $i (glob("/home/barrycarter/ERR/*.err")) {
   }
 }
 
-# TODO: add USDCAD/JPY quotes
-# TODO: add adjtimex
-# TODO: add alarms
+
+
+# TODO: add alarms (maybe)
 # TODO: add weather and forecast
 
 # push output to .fly script
@@ -69,7 +69,5 @@ MARK
 for $i (@fly) {print A "$i\n";}
 close(A);
 
-debug(read_file("bg.fly"));
-
 # using temp file disappears too fast for xv somehow
-system("fly -i bg.fly -o /tmp/bg.gif; xv +noresetroot -root -quit /tmp/bg.gif");
+system("fly -i bg.fly -o bg.gif; xv +noresetroot -root -quit bg.gif");

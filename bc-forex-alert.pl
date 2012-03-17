@@ -82,14 +82,16 @@ for $i (@x) {
 
   $midpt = 1.*($hash{bid}+$hash{offer})/2.;
 
-  # this prints it to my bg image
+  # this prints it to my bg image (changed for bc-bg.pl)
   $parity=~s%/%%isg;
-  write_file("$midpt ($parity)", "/tmp/quote-$parity");
+  # TODO: distinguish between errors and info (in bc-bg.pl)
+  write_file("$midpt ($parity)", "/home/barrycarter/ERR/$parity.err");
 
   # and log
   $nowu = time();
   append_file("$nowu $hash{bid} $hash{offer}\n", "/home/barrycarter/$parity.log");
 
 }
+
 
 
