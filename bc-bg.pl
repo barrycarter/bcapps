@@ -2,6 +2,7 @@
 
 # print updated text as my background image
 # came from a hideously much longer program
+# probably only useful to me <h>but I like spamming github</h>
 
 require "/home/barrycarter/BCGIT/bclib.pl";
 
@@ -17,7 +18,6 @@ if (system("xset q 1> /dev/null 2> /dev/null")) {exit(0);}
 
 
 # @info = stuff we print (to top left corner)
-
 # local and GMT time
 push(@info,"MT: ".stardate($curtime));
 push(@info,strftime("GMT: %Y%m%d.%H%M%S",gmtime($curtime)));
@@ -26,7 +26,7 @@ push(@info,strftime("GMT: %Y%m%d.%H%M%S",gmtime($curtime)));
 # format of suppress.txt:
 # xyz stardate [suppress alert xyz until stardate (local time)]
 
-@suppress = load_list("/home/barrycarter/ERR/suppress.txt","^\#");
+@suppress = `egrep -v '^#' /home/barrycarter/ERR/suppress.txt`;
 
 # know which alerts to suppress
 for $i (@suppress) {
@@ -48,13 +48,26 @@ for $i (glob("/home/barrycarter/ERR/*.err")) {
 # TODO: add alarms
 # TODO: add weather and forecast
 
-$INFOCOLOR="0,0,255"; # was 128,128,255 (changed/normalized 12 Mar 2005)
-$ERRCOLOR="255,0,0";
-
 # push output to .fly script
 for $i (@info) {
-    push(@fly, "string $INFOCOLOR,0,$pos,medium,$i");
-    $pos+=15;
+  # TODO: order these better
+  push(@fly, "string 0,0,255,0,$pos,medium,$i");
+  $pos+=15;
 }
 
-system("fly -q -i /bg.fly -o /bg.gif; xv +noresetroot -root -quit bg.gif");
+# send header and output to fly file
+# tried doing this w/ pipe but failed
+open(A, "> bg.fly");
+print A << "MARK";
+new
+size $xwid,$ywid
+# setpixel below needed so bg color is black
+setpixel 0,0,0,0,0
+MARK
+    ;
+
+for $i (@fly) {print A "$i\n";}
+close(A);
+
+# using temp file disappears too fast for xv somehow
+system("fly -i bg.fly -o /tmp/bg.gif; xv +noresetroot -root -quit /tmp/bg.gif");
