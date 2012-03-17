@@ -57,17 +57,19 @@ for $i (@info) {
 
 # send header and output to fly file
 # tried doing this w/ pipe but failed
+# setpixel below needed so bg color is black
 open(A, "> bg.fly");
 print A << "MARK";
 new
-size $xwid,$ywid
-# setpixel below needed so bg color is black
+size 1024,768
 setpixel 0,0,0,0,0
 MARK
     ;
 
 for $i (@fly) {print A "$i\n";}
 close(A);
+
+debug(read_file("bg.fly"));
 
 # using temp file disappears too fast for xv somehow
 system("fly -i bg.fly -o /tmp/bg.gif; xv +noresetroot -root -quit /tmp/bg.gif");
