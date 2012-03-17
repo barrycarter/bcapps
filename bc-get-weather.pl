@@ -72,6 +72,10 @@ $wind = join("",
 	     $json->{current_observation}->{pressure_in}, "in)"
 );
 
+# lunar phase (these are my own definitions)
+# <h>This code brought to you by the Insane School of Hideous Programming</h>
+$moonphase = "Phase: ". uc(("new", "crescent", "quarter", "gibbous", "full")[round($json->{moon_phase}->{percentIlluminated}/20)]);
+
 # TODO: moonrise/set (wunderground does NOT give these)
 # having the db do WAY too much work here
 @res = sqlite3hashlist("SELECT event, SUBSTR(REPLACE(TIME(time), ':',''),1,4) AS time FROM abqastro WHERE DATE(time)=DATE('now','localtime') AND event IN ('MR', 'MS')", "/home/barrycarter/BCGIT/db/abqastro.db");
@@ -86,6 +90,7 @@ for $i (@res) {$event{$i->{event}} = $i->{time};}
 $str = << "MARK";
 $sun
 M:$event{MR}-$event{MS}
+$moonphase
 $wind
 \@$time
 $current

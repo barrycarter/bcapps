@@ -15,12 +15,34 @@ chdir(tmpdir());
 if (system("xset q 1> /dev/null 2> /dev/null")) {exit(0);}
 
 # TODO: add locking so program doesn't run twice
+# TODO: add alarms (maybe)
+# TODO: moon phase
 
+# This is REALLY REALLY REALLY ugly <h>also, it's ugly</h>
+# what event occurs next?
+
+$nextev = sqlite3val("SELECT event FROM abqastro WHERE time >
+DATETIME('now','localtime') AND event NOT IN ('MR','MS') ORDER BY time
+LIMIT 1", "/home/barrycarter/BCGIT/abqastro.db");
+
+# map event to time of day
+%map = (
+	"ATS" => "night",
+	"NTS" => "astronomical twilight",
+	"CTS" => "nautical twilight",
+	"SR" => "civil twilight",
+	"SS" => "daytime",
+	"CTE" => "civil twilight",
+	"NTE" => "nautical twilight",
+	"ATE" => "astronomical twilight"
+	);
+
+push(@info, uc($map{$nextev}));
 
 # @info = stuff we print (to top left corner)
 # local and GMT time
-push(@info,"MT: ".stardate($curtime));
-push(@info,strftime("GMT: %Y%m%d.%H%M%S",gmtime($curtime)));
+push(@info,strftime("MT: %Y%m%d.%H%M%S",localtime($now)));
+push(@info,strftime("GMT: %Y%m%d.%H%M%S",gmtime($now)));
 
 # figure out what alerts to suppress
 # format of suppress.txt:
@@ -57,12 +79,15 @@ for $i (glob("/home/barrycarter/ERR/*.err")) {
  "Sydney" => "Australia/Sydney",
 );
 
-for $i (sort keys %zones) {
+# HACK: manual sorting is cheating/dangerous ... should be able to do
+# this auto somehow
+
+@zones= ("PT", "MT", "CT", "ET", "GMT", "Delhi", "Tokyo", "Sydney");
+
+for $i (@zones) {
   $ENV{TZ} = $zones{$i};
   push(@info, strftime("$i: %H%M,%a",localtime(time())));
 }
-
-# TODO: add alarms (maybe)
 
 # push output to .fly script
 for $i (@info) {
