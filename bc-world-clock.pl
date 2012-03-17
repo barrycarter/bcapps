@@ -20,6 +20,7 @@ print "Content-type: image/png\nRefresh: 60\n\n";
  "Tokyo" => "Asia/Tokyo",
  "New Delhi" => "Asia/Kolkata",
  "Sydney" => "Australia/Sydney",
+ "Honolulu" => "US/Hawaii",
 # "Perth" => "Australia/Perth",
  "Athens" => "Europe/Athens",
  "Berlin" => "Europe/Berlin",
