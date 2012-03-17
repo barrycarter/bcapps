@@ -43,10 +43,26 @@ for $i (glob("/home/barrycarter/ERR/*.err")) {
   }
 }
 
+# I have no cronjob for world time, so...
 
+# hash of how I want to see the zones
+%zones = (
+ "MT" => "US/Mountain",
+ "CT" => "US/Central",
+ "ET" => "US/Eastern",
+ "PT" => "US/Pacific",
+ "GMT" => "GMT",
+ "Tokyo" => "Asia/Tokyo",
+ "Delhi" => "Asia/Kolkata",
+ "Sydney" => "Australia/Sydney",
+);
+
+for $i (sort keys %zones) {
+  $ENV{TZ} = $zones{$i};
+  push(@info, strftime("$i: %H%M,%a",localtime(time())));
+}
 
 # TODO: add alarms (maybe)
-# TODO: add weather and forecast
 
 # push output to .fly script
 for $i (@info) {

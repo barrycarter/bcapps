@@ -1,6 +1,9 @@
 #!/bin/perl
 
+# runs from cron every 10m
+
 # Gets local weather from wunderground API solely to print on X root window
+push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
 # below is demo key, not my personal key
@@ -27,7 +30,7 @@ for $i (@{$json->{forecast}->{simpleforecast}->{forecastday}}) {
 
   $current = join("",
 		$json->{current_observation}->{weather}, "/",
-		$json->{current_observation}->{temp_f}, "/",
+		$json->{current_observation}->{temp_f}, "F/",
 		$json->{current_observation}->{windchill_f}, "F/",
 		$json->{current_observation}->{relative_humidity}, " (",
 		$json->{current_observation}->{dewpoint_f}, "F)"
@@ -81,10 +84,10 @@ for $i (@res) {$event{$i->{event}} = $i->{time};}
 
 # print in order I want (even if I change mind later)
 $str = << "MARK";
-$time
 $sun
 M:$event{MR}-$event{MS}
 $wind
+\@$time
 $current
 $forecast[0]
 $forecast[1]
