@@ -66,8 +66,6 @@ for $i (@suppress) {
 # all errors are in ERR subdir (and info alerts are there too)
 for $i (glob("/home/barrycarter/ERR/*.err")) {
   for $j (split("\n",read_file($i))) {
-    # unless suppressed, push to @err
-    if ($suppress{$j} > stardate($curtime)) {next;}
     push(@err,$j);
   }
 }
