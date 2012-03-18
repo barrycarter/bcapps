@@ -1,8 +1,9 @@
 #!/bin/perl
 
-# runs from cron every 10m
-
 # Gets local weather from wunderground API solely to print on X root window
+# runs from cron every 10m
+# -show: print out string I send to file
+
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
@@ -106,7 +107,7 @@ $forecast[1]
 MARK
 ;
 
-print $str;
+if ($globopts{show}) {print $str;}
 
 # and write to file
 write_file($str, "/home/barrycarter/ERR/forecast.err");

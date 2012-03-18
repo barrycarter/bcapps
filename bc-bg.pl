@@ -14,6 +14,9 @@ chdir(tmpdir());
 # and errors early May 2007)
 if (system("xset q 1> /dev/null 2> /dev/null")) {exit(0);}
 
+# HACK: leave n top lines blank for apps that "nest" there
+push(@info,"","","");
+
 # TODO: add locking so program doesn't run twice
 # TODO: add alarms (maybe)
 
@@ -111,4 +114,4 @@ for $i (@fly) {print A "$i\n";}
 close(A);
 
 # using temp file disappears too fast for xv somehow
-system("fly -i bg.fly -o bg.gif; xv +noresetroot -root -quit bg.gif");
+system("fly -q -i bg.fly -o bg.gif; xv +noresetroot -root -quit bg.gif");
