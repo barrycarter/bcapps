@@ -13,6 +13,7 @@ $key = "1bf62599411c7c17";
 # obtain + JSON parse data (caching solely for testing)
 if ($globopts{test}) {$age=300;} else {$age=-1;}
 ($out, $err, $res) = cache_command("curl http://api.wunderground.com/api/$key/conditions/forecast/astronomy/q/KABQ.json", "age=$age");
+debug("OUT: $out");
 $json = JSON::from_json($out);
 
 # <h>intermediate variables are for sissies!</h>

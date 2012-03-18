@@ -24,6 +24,7 @@ push(@err,"","","");
 # This is REALLY REALLY REALLY ugly <h>also, it's ugly</h>
 # <h>Did I mention it's ugly?</h>
 # what event occurs next?
+# TODO: add time of when this event occurs to display?
 
 $nextev = sqlite3val("SELECT event FROM abqastro WHERE time >
 DATETIME('now','localtime') AND event NOT IN ('MR','MS') ORDER BY time
@@ -121,11 +122,13 @@ for $i (@info) {
 # send header and output to fly file
 # tried doing this w/ pipe but failed
 # setpixel below needed so bg color is black
+# the gray x near middle of screen is so I know a black window isn't covering root
 open(A, "> bg.fly");
 print A << "MARK";
 new
 size 1024,768
 setpixel 0,0,0,0,0
+setpixel 512,384,255,255,255
 MARK
     ;
 
