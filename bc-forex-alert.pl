@@ -84,8 +84,7 @@ for $i (@x) {
 
   # this prints it to my bg image (changed for bc-bg.pl)
   $parity=~s%/%%isg;
-  # TODO: distinguish between errors and info (in bc-bg.pl)
-  write_file("$midpt ($parity)", "/home/barrycarter/ERR/$parity.err");
+  write_file_new("$midpt ($parity)", "/home/barrycarter/ERR/$parity.inf");
 
   # and log
   $nowu = time();

@@ -109,7 +109,7 @@ MARK
 
 if ($globopts{show}) {print $str;}
 
-# and write to file
-write_file($str, "/home/barrycarter/ERR/forecast.err");
+# and write to info file
+write_file_new($str, "/home/barrycarter/ERR/forecast.inf");
 
 # TODO: add tz stuff here (since I do it nowhere else)

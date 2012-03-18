@@ -15,7 +15,8 @@ chdir(tmpdir());
 if (system("xset q 1> /dev/null 2> /dev/null")) {exit(0);}
 
 # HACK: leave n top lines blank for apps that "nest" there
-push(@info,"","","");
+# push(@info,"","","");
+push(@err,"","","");
 
 # TODO: add locking so program doesn't run twice
 # TODO: add alarms (maybe)
@@ -62,6 +63,15 @@ for $i (@suppress) {
 # all errors are in ERR subdir (and info alerts are there too)
 for $i (glob("/home/barrycarter/ERR/*.err")) {
   for $j (split("\n",read_file($i))) {
+    # unless suppressed, push to @err
+    if ($suppress{$j} > stardate($curtime)) {next;}
+    push(@err,$j);
+  }
+}
+
+# informational messages (redundant code, sigh!)
+for $i (glob("/home/barrycarter/ERR/*.inf")) {
+  for $j (split("\n",read_file($i))) {
     # unless suppressed, push to @info
     if ($suppress{$j} > stardate($curtime)) {next;}
     push(@info,$j);
@@ -93,6 +103,14 @@ for $i (@zones) {
 }
 
 # push output to .fly script
+# err gets pushed first (and in red), then info
+for $i (@err) {
+  # TODO: order these better
+  push(@fly, "string 255,0,0,0,$pos,giant,$i");
+  $pos+=15;
+}
+
+# now info (in blue for now); note $pos is "global"
 for $i (@info) {
   # TODO: order these better
   push(@fly, "string 0,0,255,0,$pos,medium,$i");

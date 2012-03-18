@@ -265,6 +265,22 @@ sub write_file {
   close(A);
 }
 
+=item write_file_new($string, $file)
+
+Write $string to $file.new, then move $file to $file.old and $file.new
+to $file (so that $file is never unreadable?)
+
+=cut
+
+sub write_file_new {
+  my($string, $file) = @_;
+  local(*A);
+  open(A,">$file.new")||warnlocal("Can't open $file.new, $!");
+  print A $string;
+  close(A);
+  system("mv $file $file.old; mv $file.new $file");
+}
+
 =item append_file($string, $file)
 
 Append $string to $file
