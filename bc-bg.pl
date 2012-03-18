@@ -57,6 +57,9 @@ push(@info,strftime("GMT: %Y%m%d.%H%M%S",gmtime($now)));
 # know which alerts to suppress
 for $i (@suppress) {
   ($key,$val) = split(/\s+/,$i);
+  # if date has already occurred, ignore line
+  if ($val < stardate($now)) {next;}
+  debug("$key/$val");
   $suppress{$key}=$val;
 }
 
