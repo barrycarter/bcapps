@@ -20,7 +20,10 @@ $json = JSON::from_json($out);
 for $i (@{$json->{forecast}->{simpleforecast}->{forecastday}}) {
 
   # for now, only want today/tomorrow forecost
-  if ($i->{period} > 2) {next;}
+  # testing it w/o limits
+#  if ($i->{period} > 2) {next;}
+
+  debug("PER: $i->{period}, $i->{date}->{day}");
 
   # I want date:conditions/hi/lo/%pop (probability of precipitation)
   push(@forecast, join("", $i->{date}->{day},":",$i->{conditions},"/",
@@ -53,7 +56,7 @@ debug(sort keys %{$json->{moon_phase}});
 # sun and moon rise/set
 debug(unfold($json->{moon_phase}));
 
-# sun line ("0" below is major chat, since sun always rises between 4-8)
+# sun line ("0" below is major cheat, since sun always rises between 4-8)
 $sun = join("", 
 		"S:0", $json->{moon_phase}->{sunrise}->{hour},
 		$json->{moon_phase}->{sunrise}->{minute}, "-",
@@ -105,8 +108,14 @@ $current
 $wind
 $forecast[0]
 $forecast[1]
+$forecast[2]
+$forecast[3]
+$forecast[4]
+$forecast[5]
 MARK
 ;
+
+# there really aren't 6 days of forecasts but adding blank lines doesn't hurt
 
 if ($globopts{show}) {print $str;}
 
