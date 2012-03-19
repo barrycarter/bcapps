@@ -89,6 +89,14 @@ them from @ARGV
 
 sub parse_options {
 
+  # find old style options, convert, warn politely
+  # Yes, I realize this blocks args that actually start with -[a-z]
+  for $i (@ARGV) {
+    if ($i=~s/^-([a-z])/--$1/) {
+      warnlocal("Added - to $i");
+    }
+  }
+
   # find arguments that set options and remove them from ARGV
   my(@x)=grep(/^\-\-[a-z]/i,@ARGV);
   @ARGV=grep(!/^\-\-[a-z]/i,@ARGV);
