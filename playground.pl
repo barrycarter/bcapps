@@ -22,9 +22,6 @@ use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 
 
-$x = (sub {return 1});
-debug($x);
-die "TESTING";
 find_zenith("moon", 35, -106);
 
 =item find_zenith($obj,$lat,$lon,$time)
@@ -54,8 +51,17 @@ sub find_zenith {
   # ra/dec/lat/lon above); seeking 6h either direction is excessive
   # but works
 
-#  my($f) = {return 1;}
-  
+  my($f) = (sub {
+    # t = time when we find elevation
+    my($t) = @_;
+    # If these were constant, this subroutine would be unnecessary
+    my($ra,$dec) = position($obj);
+    my($az,$el) = radecazel2($ra, $dec, $lat, $lon, $t);
+    return $el;
+    });
+
+  debug("F: $f", &$f($time));
+#  debug("NOW:",&f($time));
 
   debug("LST: $lst, $ra, $diff");
 }
