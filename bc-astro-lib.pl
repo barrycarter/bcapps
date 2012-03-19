@@ -602,7 +602,7 @@ sub normalize {
     return($ret);
 }
 
-=item gmst($t)
+=item gmst($t=now)
 
 The Greenwich siderial time at time $t
 
@@ -610,6 +610,7 @@ The Greenwich siderial time at time $t
 
 sub gmst {
   my($t)=@_;
+  unless ($t) {$t=time();}
   my($aa)=6.59916+.9856002585*($t-$MILLSEC)/86400/15+($t%86400)/3600;
   return(24*($aa/24-int($aa/24)));
 }

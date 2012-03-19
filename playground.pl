@@ -21,7 +21,11 @@ use Data::Dumper 'Dumper';
 use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 
-find_zenith("sun", 35, -106);
+
+$x = (sub {return 1});
+debug($x);
+die "TESTING";
+find_zenith("moon", 35, -106);
 
 =item find_zenith($obj,$lat,$lon,$time)
 
@@ -37,9 +41,23 @@ sub find_zenith {
   my($ra,$dec) = position($obj);
 
   # local siderial time
-  my($lst) = $gmst + ($lon/15);
+  my($lst) = gmst() + ($lon/15);
+  if ($lst<0) {$lst+=24;}
 
-  debug("LST: $lst, $ra");
+  # how long to get to when ra = siderial time (zenith time)
+  # if $ra already past, add 24h to look for next one
+  my($diff) = $ra-$lst;
+  if ($diff<0) {$diff+=24;}
+
+  # if objects never moved, we'd be done, but they do, so we create a
+  # function that returns elevation given time (based on
+  # ra/dec/lat/lon above); seeking 6h either direction is excessive
+  # but works
+
+#  my($f) = {return 1;}
+  
+
+  debug("LST: $lst, $ra, $diff");
 }
   
 die "TESTING";
