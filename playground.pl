@@ -22,7 +22,8 @@ use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 
 
-find_zenith("moon", 35, -106);
+# find_zenith("moon", 35, -106);
+find_zenith("sun", 35, -106);
 
 =item find_zenith($obj,$lat,$lon,$time)
 
@@ -46,6 +47,9 @@ sub find_zenith {
   my($diff) = $ra-$lst;
   if ($diff<0) {$diff+=24;}
 
+  # approx time of zenith (ie, when ra matches local sid time)
+  my($approx) = $time+$diff;
+
   # if objects never moved, we'd be done, but they do, so we create a
   # function that returns elevation given time (based on
   # ra/dec/lat/lon above); seeking 6h either direction is excessive
@@ -57,12 +61,14 @@ sub find_zenith {
     # If these were constant, this subroutine would be unnecessary
     my($ra,$dec) = position($obj);
     my($az,$el) = radecazel2($ra, $dec, $lat, $lon, $t);
-    return $el;
+    debug("EL $t $el");
+    return -1*$el;
     });
 
-  debug("F: $f", &$f($time));
-#  debug("NOW:",&f($time));
+  my($ztime) = findmin($f, $approx-6*3600, $approx+6*3600,60);
 
+  debug("ZTIME: $ztime");
+  debug("NOW:",&$f($time+0.868799781616783*3600));
   debug("LST: $lst, $ra, $diff");
 }
   
