@@ -7,12 +7,15 @@
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
+# pull key from private file; you can get your own at api.wunderground.com
+require "/home/barrycarter/bc-private.pl";
+
 # below is demo key, not my personal key
-$key = "1bf62599411c7c17";
+$key = $wunderground{key};
 
 # obtain + JSON parse data (caching solely for testing)
 if ($globopts{test}) {$age=300;} else {$age=-1;}
-($out, $err, $res) = cache_command("curl http://api.wunderground.com/api/$key/conditions/forecast/astronomy/q/KABQ.json", "age=$age");
+($out, $err, $res) = cache_command("curl http://api.wunderground.com/api/$key/conditions/forecast10day/astronomy/q/KABQ.json", "age=$age");
 debug("OUT: $out");
 $json = JSON::from_json($out);
 
@@ -98,6 +101,9 @@ for $i (@res) {$event{$i->{event}} = $i->{time};}
 # the moon doesn't rise/set some days, so moon string can look odd,
 # but I'm OK with that
 
+# how many days of forecast to print?
+$forecast = join("\n",@forecast[0..6]);
+
 # print in order I want (even if I change mind later)
 $str = << "MARK";
 $sun
@@ -106,12 +112,7 @@ $moonphase
 \@$time
 $current
 $wind
-$forecast[0]
-$forecast[1]
-$forecast[2]
-$forecast[3]
-$forecast[4]
-$forecast[5]
+$forecast
 MARK
 ;
 
