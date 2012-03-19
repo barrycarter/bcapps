@@ -21,6 +21,29 @@ use Data::Dumper 'Dumper';
 use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 
+find_zenith("sun", 35, -106);
+
+=item find_zenith($obj,$lat,$lon,$time)
+
+Return when $obj first reaches zenith at $lat/$lon after $time
+
+=cut
+
+sub find_zenith {
+  my($obj,$lat,$lon,$time) = @_;
+  unless ($time) {$time=time();}
+
+  # objects current ra/dec
+  my($ra,$dec) = position($obj);
+
+  # local siderial time
+  my($lst) = $gmst + ($lon/15);
+
+  debug("LST: $lst, $ra");
+}
+  
+die "TESTING";
+
 # sunriseset(time(),35.0844869067959,-106.651138463684);
 sunriseset(time(),77.0844869067959,-106.651138463684);
 
@@ -652,9 +675,6 @@ debug("TOKEN: $token");
 ($res) = cache_command("curl -b /tmp/curlcook.txt -c /tmp/curlcook.txt 'http://wiki.barrycarter.info/api.php' -d 'action=edit&title=Test&text=article%20content&token=424f1be5e8cb9bdd008fc55b5f337758%2B%5C'", "age=3600");
 
 debug($res);
-
-
-
 
 die "TESTING";
 

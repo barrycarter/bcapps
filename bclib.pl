@@ -1207,8 +1207,8 @@ sub matrixmult {
 
 =item position($object, $t=now, $options)
 
-Determine the position (right ascension and declination) of $object at
-time $t, using Hermite approximation. Requires
+Determine the position (right ascension [0,24] and declination
+[-90,+90] of $object at time $t, using Hermite approximation. Requires
 data/{$object}fake[xy].txt and only accurate for the span in that
 file.
 

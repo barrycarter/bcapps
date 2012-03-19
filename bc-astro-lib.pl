@@ -13,7 +13,7 @@ our($SIDERIAL_DAY)=86400-.9856002585*240; # number of seconds in siderial day
 
 =item radecazel2($ra, $dec, $lat, $lon, $time)
 
-Given the azimuth and elevation of an object with right ascension $ra
+Return the azimuth and elevation of an object with right ascension $ra
 and declination $dec, at latitude $lat and longitude $lon at Unix time
 $time
 
@@ -149,9 +149,12 @@ sub radec {
 
 Returns RA/DEC/rs/lonsun for Sun, and GMST, given Unix time t
 
+DO NOT USE, CONTAINS ERRORS
+
 =cut
 
 sub radecsun {
+  die("Use position() instead");
     my($t)=@_;
     my($d)=epochdays($t);
     my($N,$i,$w,$a,$e,$M)=(0,0,282.9404*$PI/180,1,.016709,356.0470+.9856002585*$d);
@@ -200,6 +203,7 @@ Calculate the local siderial time from GMST and longitude
 =cut
 
 sub lst {
+  die("BROKEN");
   my($gmst,$long) = @_;
   return $gmst+$long;
 }
