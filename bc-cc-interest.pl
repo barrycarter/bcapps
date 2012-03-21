@@ -16,7 +16,11 @@
 # Will eventually run at apr.barrycarter.info
 
 # TODO: this doesn't work for certain values (I make certain
-# assumptions that don't always hold)
+# assumptions that don't always hold). Example:
+# http://apr.barrycarter.info/?amount=100&fee=.25&minmonth=.1&months=3&rate=0&submit=CALCULATE
+# this might just be because I limit interest to 100%?
+
+# TODO: the amount borrowed field is really superfluous
 
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
