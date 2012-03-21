@@ -22,12 +22,14 @@ use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 
 
-# find_zenith("moon", 35, -106);
-find_zenith("sun", 35, -106);
+# find_zenith("sun", 35, -106);
+find_zenith("moon", -35, -106);
 
-=item find_zenith($obj,$lat,$lon,$time)
+=item find_zenith($obj,$lat,$lon,$time,$options)
 
 Return when $obj first reaches zenith at $lat/$lon after $time
+
+$options currently unused
 
 =cut
 
@@ -51,9 +53,9 @@ sub find_zenith {
   my($approx) = $time+$diff;
 
   # if objects never moved, we'd be done, but they do, so we create a
-  # function that returns elevation given time (based on
-  # ra/dec/lat/lon above); seeking 6h either direction is excessive
-  # but works
+  # function that returns azimuth given time and ra/dec/lat/lon above;
+  # north of equator want az=180, south want az=0; seeking 6h either
+  # direction is excessive but works
 
   my($f) = (sub {
     # t = time when we find elevation
@@ -61,11 +63,17 @@ sub find_zenith {
     # If these were constant, this subroutine would be unnecessary
     my($ra,$dec) = position($obj);
     my($az,$el) = radecazel2($ra, $dec, $lat, $lon, $t);
-    debug("EL $t $el");
-    return -1*$el;
+
+    # for north lats, add 180 degs for negative to avoid singularity;
+    # if I did this for south lats, it would break things
+    if ($lat>0 && $az<=0) {$az+=360;}
+    debug("EL $t $el $az");
+    return $az-180;
     });
 
-  my($ztime) = findmin($f, $approx-6*3600, $approx+6*3600,60);
+
+#  debug("AZIMUTH-180 AT $t", &$f($t));
+  my($ztime) = findroot($f, $approx-6*3600, $approx+6*3600, .25);
 
   debug("ZTIME: $ztime");
   debug("NOW:",&$f($time+0.868799781616783*3600));

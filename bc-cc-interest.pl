@@ -15,6 +15,7 @@
 
 # Will eventually run at apr.barrycarter.info
 
+push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
 $advance = $globopts{fee}*$globopts{amount};

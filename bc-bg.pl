@@ -16,7 +16,9 @@ if (system("xset q 1> /dev/null 2> /dev/null")) {exit(0);}
 
 # HACK: leave n top lines blank for apps that "nest" there
 # push(@info,"","","");
-push(@err,"","","");
+# last line indicates break between blank and data
+push(@err,"","");
+push(@info,"______________________");
 
 # TODO: add locking so program doesn't run twice
 # TODO: add alarms (maybe)

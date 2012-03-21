@@ -1152,11 +1152,11 @@ Computes the Mathematica interpolation (which I have dubbed the
 
 sub hermione {
   my($x,$xvals,$yvals) = @_;
-  debug("hermione($x,$xvals,$yvals)");
+#  debug("hermione($x,$xvals,$yvals)");
   my(@xvals) = @{$xvals};
   my(@yvals) = @{$yvals};
 
-  debug("XVALS",@xvals);
+#  debug("XVALS",@xvals);
 
   # compute size of x intervals, assuming they are all the same
   my($intsize) = ($xvals[-1]-$xvals[0])/$#xvals;
@@ -1218,7 +1218,7 @@ TODO: I really need to start creating sub libraries?
 
 sub position {
   my($obj, $t) = @_;
-  debug("POSITION($obj,$t)");
+#  debug("POSITION($obj,$t)");
   unless ($t) {$t = time();}
 
   my(@data) = (read_file("data/${obj}fakex.txt"), 
@@ -1228,7 +1228,7 @@ sub position {
   my(@x2vals0) = @{$nest[1]};
   my(@yvals, @xvals, @yvals2, @xvals2);
 
-  debug("XVALS:",@xvals);
+#  debug("XVALS:",@xvals);
 
   for $i (@xvals0) {
     my(@j) = @{$i};
@@ -1552,7 +1552,8 @@ sub findroot {
 
 A non-calculus technique (the "interval technique", <h>formally known
 as "Caesar's divisa in partes tres" method</h>) to find the minimum of
-f [a one-argument function] on the interval [$a, $d], provided that:
+f [a one-argument function] on the interval [$a, $d] within $e,
+provided that:
 
   - f is continuous on [$a,$d]
   - f has a UNIQUE local minimum in [$a,$d]
