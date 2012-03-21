@@ -6,22 +6,41 @@
 
 require "bclib.pl";
 
-debug(get_strips());
+# debug(get_strips());
+# debug(get_gocomics());
 
 # experimenting with extreme subroutining
 
 # obtain the list of comicssherpa strips, return their 'cs' codes
 sub get_strips {
-  my(@res);
+  my(%res);
   # the page that lists all sherpa strips (long cache: this rarely changes)
   my($page) = cache_command("curl http://www.comicssherpa.com/site/home.html", "age=86400");
+#  debug($page);
 
   # find everything like http://www.comicssherpa.com/site/feature?uc_comic=csiit
-  while ($page=~s/uc_comic=(.*?)\"//) {
-    push(@res, $1);
+  while ($page=~s/uc_comic=(.*?)\">(.*?)<//) {
+    $res{$2}=$1;
   }
 
-  return @res;
+  return %res;
+}
+
+# find all strips on gocomics.com (all sherpa comics are on
+# gocomics.com, but with different URLs and no obvious way to map
+# between the sherpa and gocomics URLs
+
+sub get_gocomics {
+  my(%res);
+  # this site requires a user agent, sheesh
+  my($page) = cache_command("curl -A 'ikinhasagent\@barrycarter.info' http://www.gocomics.com/explore/sherpa_list", "age=86400");
+
+  # list of comics (title and URL)
+  while ($page=~s%/(.*?)\" class=\"alpha_list\">(.*?)</a>%%) {
+    $res{$2} = $1;
+  }
+
+  return %res;
 }
 
 # find the URL that shows a given strips comments 
