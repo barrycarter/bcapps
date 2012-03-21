@@ -15,8 +15,71 @@
 
 # Will eventually run at apr.barrycarter.info
 
+# TODO: this doesn't work for certain values (I make certain
+# assumptions that don't always hold)
+
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
+
+# webifying
+print "Content-type: text/html\n\n";
+# cleansing
+$ENV{QUERY_STRING}=~s/[^a-z0-9=&\.\-]//isg;
+
+# read GET vars into globopts hash (not great, but...)
+defaults($ENV{QUERY_STRING});
+debug("ALPHA",%globopts);
+# actual defaults (must come after string above to avoid overwriting)
+defaults("amount=10000&fee=.03&minmonth=.02&months=16&rate=.04&profit=.05");
+
+debug("BETA",%globopts);
+
+# header for HTML page
+print << "MARK";
+<title>Hidden Interest</title>
+
+When you borrow money from a credit card, what rate of return must you earn to breakeven? Find out below.<p>
+
+Note: This site is experimental. Do not rely on this information.<p>
+
+<form action="$ENV{REQUEST_URI}" method="GET">
+<table border>
+
+MARK
+;
+
+# create HTML table w/ headers and data (including text entry fields)
+# world's most hideous way to order hash keys
+%table = (
+"0Amount borrowed:" => "amount",
+"1Cash advance fee (.03=3%)" => "fee",
+"2Minimum monthly payment (.02 = 2%)" => "minmonth",
+"3Length of loan (months)" => "months",
+"4Loan APR (.04 = 4%)" => "rate"
+);
+
+for $i (sort keys %table) {
+  # for safety, strip value of dangerous symbols
+  $table{$i}=~s/[^a-z0-9\.\-]//i;
+  # get rid of sort key for printing
+  $printi= $i;
+  $printi=~s/^\d+//isg;
+  debug("I: $i, tablei: $table{$i}, $globopts{$table{$i}}");
+  print << "MARK";
+<tr><th>$printi</th><td>
+<input type='text' name='$table{$i}' value='$globopts{$table{$i}}' size='10'>
+</td></tr>
+MARK
+;
+}
+
+print << "MARK";
+<tr><th colspan=2>
+<input type="submit" name="submit" value="CALCULATE">
+</th></tr>
+</table></form>
+MARK
+;
 
 $advance = $globopts{fee}*$globopts{amount};
 $params = "amount=$globopts{amount}&months=$globopts{months}&rate=$globopts{rate}&fee=$advance&minmonth=$globopts{minmonth}";
@@ -118,7 +181,7 @@ gainonly - if set, return only final gain, nothing else
 sub sinking_table {
   my(%VALUE) = parse_form($_[0]);
 
-  debug("alpha",unfold(%VALUE),"/alpha");
+#  debug("alpha",unfold(%VALUE),"/alpha");
 
   my($oldowed, $oldhave, $owedint, $payment, $haveprof, $gain);
   my(@res);
