@@ -6,8 +6,20 @@
 
 require "bclib.pl";
 
-# debug(get_strips());
-# debug(get_gocomics());
+# surl = Sherpa URL, gurl = gocomics.com URL
+%surl2name = get_strips();
+%name2gurl = get_gocomics();
+
+debug(sort keys %name2gurl);
+debug("SPLIT");
+debug(sort keys %name2surl);
+
+# determine the gurl of each surl using transitivity
+
+for $i (sort keys %surl2name) {
+  debug("$i s-> $surl2name{$i}");
+  debug("$i g-> $name2gurl{$i}");
+}
 
 # experimenting with extreme subroutining
 
