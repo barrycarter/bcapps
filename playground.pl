@@ -20,7 +20,13 @@ use XML::Simple;
 use Data::Dumper 'Dumper';
 use Time::JulianDay;
 $Data::Dumper::Indent = 0;
+require "bc-twitter.pl";
 
+debug(twitter_get_info("barrycarter"));
+debug(twitter_get_friends_followers("barrycarter", "followers"));
+
+
+die "TESTING";
 
 # find_zenith("sun", 35, -106);
 find_zenith("moon", -35, -106);
@@ -826,47 +832,6 @@ die "TESTING";
 
 # twitter lib attempt
 
-=item twitter_get_info($sn)
-
-Get info on $sn as a hash
-
-=cut
-
-sub twitter_get_info {
-  my($sn) = @_;
-  my($file) = cache_command("curl -s 'http://twitter.com/users/show/$sn.json'","retfile=1&age=300");
-  my($res) = suck($file);
-  my(@hash) = JSON::from_json($res);
-  return %{$hash[0]};
-}
-
-=item twitter_get_followers($sn)
-
-Get all followers of $sn
-
-=cut
-
-sub twitter_get_followers {
-  my($sn) = @_;
-  my(@followers);
-  my(%info) = twitter_get_info($sn);
-  my($numf) = $info{followers_count};
-  my($i);
-
-  # loop to get enough pages
-  for ($i=1; $i<=int($numf/100)+1; $i++) {
-    # get this page of followers
-    my($file) = cache_command("curl -s 'http://twitter.com/statuses/followers/$sn.xml?page=$i'", "retfile=1&age=300");
-    my($res) = suck($file);
-
-    # HACK: this is ugly, better way to do it?
-    my(@page) = ($res=~m%<screen_name>(.*?)</screen_name>%isg);
-    push(@followers,@page);
-  }
-
-  return @followers;
-}
-
 =item twitter_get_friends($sn)
 
 Get friends of $sn (= those people that $sn follows)
@@ -895,39 +860,6 @@ sub twitter_get_friends {
   return @friends;
 }
 
-
-=item twitter_get_friends_followers($sn,$which="friends|followers")
-
-Gets all friends or followers of $sn as list of hashes
-
-=cut
-
-sub twitter_get_friends_followers {
-  my($sn,$which) = @_;
-  my(@retval);
-
-  # find out how many friends/followers $sn has
-  my(%info) = twitter_get_info($sn);
-  my($num) = $info{"${which}_count"};
-  my($pages) = int($num/100)+1;
-
-  # loop to get enough pages (will never really hit 1000)
-  for $i (1..$pages) {
-    # get this page of followers
-    my($file) = cache_command("curl -s 'http://api.twitter.com/1/statuses/$which/$sn.json?page=$i'", "retfile=1&age=300");
-    my($res) = suck($file);
-    my(@newres) = @{JSON::from_json($res)};
-
-    if (@newres) {
-      push(@retval, @newres);
-      debug("RETVAL SIZE: $#retval");
-      next;
-    }
-
-    return @retval;
-  }
-
-}
 
 debug("END");
 debug(unfold(twitter_get_friends_followers("barrycarter", "followers")));

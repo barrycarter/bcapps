@@ -1,51 +1,76 @@
 #!/bin/perl
 
+# WARNING: this library uses supertweet.net, since I'm too lazy to
+# learn OAuth. Here are some reasons this is "bad":
+#
+# - supertweet.net may go away (tho someone'll probably create a replacement)
+# - defeating OAuth is a bad idea (writing your own OAuth app is better)
+# - supertweet.net can send tweets as you (eg, ads, viruses, etc)
+# - supertweet.net can read your private DMs (and send DMs as you)
+# - if your timeline is private, supertweet can see it
+# - other bad things I can't think of right now
+
+# Of course, I trust supertweet.net to keep their servers virus-free
+# and act within their privacy policy
+
+# this is a "total rewrite" using supertweet.net (OAuth, who needs it!)
+
 # attempt to create a twitter library or app or something ... maybe
 
+# NOTE: caching for 5m during testing, but a good idea regardless
+
 require "bclib.pl";
-use Digest::HMAC_SHA1;
 
-# kludge below
-@keys = split("\n",read_file("/home/barrycarter/bc-twitter-keys.txt"));
-map(s/^.*?=//isg, @keys);
-map(s/[\";\s]//isg, @keys);
-($apikey, $pubkey, $seckey) = @keys;
+# endpoint for supertweet.net's "proxy" API (yes, it's global), and
+# twitters own API for requests that don't require authentication
 
-# timestamp and nonce for request
-$timestamp = time();
-$nonce = "bctwitter$timestamp";
+$TWITST = "http://api.supertweet.net/1";
+$TWITTW = "http://api.twitter.com/1";
 
-# the request hash
-%req = (
-	"oauth_consumer_key" => $pubkey,
-	"oauth_signature_method" => "HMAC-SHA1",
-	"oauth_timestamp" => $timestamp,
-	"oauth_nonce" => $nonce
-);
+=item twitter_get_info($sn)
 
-# lexigraphical order
-# <h>I knew there was a reason I obsessively sort hash keys</h>
-for $i (sort keys %req) {
-  push(@str, "$i=$req{$i}");
+Get info on $sn as a hash (no auth required)
+
+=cut
+
+sub twitter_get_info {
+  my($sn) = @_;
+  my($file) = cache_command("curl -s '$TWITTW/users/show/$sn.json'","retfile=1&age=300");
+  my($res) = suck($file);
+  my(@hash) = JSON::from_json($res);
+  return %{$hash[0]};
 }
 
-# the request
-$req = join("&", @str);
+=item twitter_get_friends_followers($sn,$which="friends|followers")
 
-# the thing to sign
-$sigme = "GET&api.twitter.com&".urlencode($req);
+Gets all friends or followers of $sn as list of hashes
 
-# signing the request
-my($hmac) = Digest::HMAC_SHA1->new($seckey);
-$hmac->add($sigme);
-$sig = urlencode($hmac->b64digest);
+=cut
 
-# and sending the whole thing
-$url = "https://api.twitter.com/oauth/request_token?$req&ouath_signature=$sig";
+sub twitter_get_friends_followers {
+  my($sn,$which) = @_;
+  my(@retval);
 
-debug($url);
+  # find out how many friends/followers $sn has
+  my(%info) = twitter_get_info($sn);
+  my($num) = $info{"${which}_count"};
+  my($pages) = int($num/100)+1;
 
-# and get the token
-$token = cache_command("curl '$url'");
+  # loop to get enough pages (will never really hit 1000)
+  for $i (1..$pages) {
+    # get this page of followers
+    my($file) = cache_command("curl -s '$TWITTW/statuses/$which/$sn.json?page=$i'", "retfile=1&age=300");
+    my($res) = suck($file);
+    my(@newres) = @{JSON::from_json($res)};
 
-debug(read_file($token));
+    if (@newres) {
+      push(@retval, @newres);
+      debug("RETVAL SIZE: $#retval");
+      next;
+    }
+    return @retval;
+  }
+}
+
+# all perl libs must return truth!
+1;
