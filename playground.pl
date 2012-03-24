@@ -22,14 +22,15 @@ use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
-debug(twitter_search("math help"));
+# debug(twitter_search("math help"));
 
 # debug(twitter_get_info("barrycarter"));
 # debug(twitter_get_friends_followers("barrycarter", "followers"));
 
 # ugly hack for testing bc-twitter.pl
-# ($user, $pass) = ($supertweet{user}, $supertweet{pass});
-# twitter_follow("marileetombo");
+($user, $pass) = ($supertweet{user}, $supertweet{pass});
+
+twitter_follow("marileetombo",0);
 
 $test = `date`x10;
 

@@ -144,15 +144,23 @@ sub tweet2list {
   return @res;
 }
 
-=item twitter_follow($sn)
+=item twitter_follow($sn, $un=0)
 
-Follow $sn (requires auth)
+Follow $sn (requires auth); if $un is set, unfollow
 
 =cut
 
 sub twitter_follow {
-  my($sn) = @_;
-  my($cmd) = "curl -s -d x -u $user:$pass '$TWITST/friendships/create/$sn.xml?follow=true'";
+  my($sn,$un) = @_;
+  my($url,$post);
+
+  if ($un) {
+    ($url, $post) = ("destroy","");
+  } else {
+    ($url, $post) = ("create","?follow=true");
+  }
+
+  my($cmd) = "curl -s -d x -u $user:$pass '$TWITST/friendships/$url/$sn.xml$post'";
   debug($cmd);
   my($file) = cache_command($cmd, "age=3600&retfile=1");
   my($res) = read_file($file);
