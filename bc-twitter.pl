@@ -30,6 +30,18 @@ require "bclib.pl";
 $TWITST = "http://api.supertweet.net/1";
 $TWITTW = "http://api.twitter.com/1";
 
+=item twitter_rate_limit_status()
+
+Get rate limit status (requires auth)
+
+=cut
+
+sub twitter_rate_limit_status {
+  # TODO: REALLY don't cache this result!
+  my($out, $err, $res) = cache_command("curl -s -u $user:$pass '$TWITST/account/rate_limit_status.json'", "age=300");
+  return %{JSON::from_json($out)};
+}
+
 =item twitter_search($term)
 
 Searches for English tweets w/ the given $term (no auth required)

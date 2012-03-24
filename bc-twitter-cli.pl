@@ -7,16 +7,19 @@
 # no reason except to get followback and don't really care about other
 # people's tweets unless they happen to mention me!
 
+# This client is synchronus, which is probably a bad thing
+
 # Below, use your supertweet.net password, NOT your twitter password
 # Usage: ssfe -hold $0 -username=username -password=password
 # does work w/ GNU screen
 #
 # Optiosn w/ default values:
 #
-# -nohome=1: don't show tweets from home page (ie, the crap I ignore)
-# -log=1: log to ~/bc-twitter-$username-log.txt
-# -verbose=0: be verbose, mostly for debugging
-# -db=~/bc-twitter-$username.db: use this sqlite3 db (must already exist)
+# --nohome=1: don't show tweets from home page (ie, the crap I ignore)
+# --log=1: log to ~/bc-twitter-$username-log.txt
+# --verbose=0: be verbose, mostly for debugging
+# --db=~/bc-twitter-$username.db: use this sqlite3 db (must already exist)
+# --create=create db if it doesn't already exist (won't overwrite existing)
 
 require "bclib.pl";
 
@@ -37,30 +40,36 @@ unless ($globopts{username} && $globopts{password}) {
 set_globals();
 defaults("nohome=1&log=1&db=$ENV{HOME}/bc-twitter-$globopts{username}.db");
 
-# die if sqlite3 db doesn't exist or has 0 size (could create it, but...)
+# die if sqlite3 db doesn't exist or has 0 size
 unless (-s $globopts{db}) {
-  die("$globopts{db} doesn't exist or has zero size");
+  unless ($globopts{create}) {
+    die("$globopts{db} doesn't exist or is empty; use --create to create");
+  } else {
+    create_db($globopts{db});
+  }
 }
 
 # TODO: let user set this
 %search = ();
 
-
-
-
 # get columns for SQLite3 tables, just in case they've changed from
-# 'schema' below; also useful to confirm this db really exists
+# 'schema' below
 
 %tweets_cols = sqlite3cols("tweets",$globopts{db});
 %users_cols = sqlite3cols("users",$globopts{db});
 
+# log
+if ($globopts{log}) {
+  open(A,">>$ENV{HOME}/bc-twitter-$globopts{username}-log.txt");
+}
 
 
-
-
-=item schema
-
-The schema for the SQLite3 db:
+# create SQLite3 db for this program
+sub create_db {
+  my($file) = @_;
+  local(*A);
+  open(A, "|sqlite3 $file");
+  print A << "MARK";
 
 -- highwater mark
 CREATE TABLE hwm (
@@ -142,7 +151,11 @@ CREATE INDEX i_user_id ON tweets(user_id);
 CREATE INDEX i_whoami ON tweets(whoami);
 CREATE INDEX i_whoami2 ON hwm(whoami);
 
-=cut
+MARK
+;
+
+close(A);
+}
 
 # globals for this script
 
@@ -151,4 +164,38 @@ sub set_globals {
   # VT100/ssfe colors
   ($RED,$GREEN,$YELLOW,$BLUE,$MAGENTA,$CYAN,$WHITE,$CLEAR,$BOLD,$OFF) =
     ("\e[31m","\e[32m","\e[33m","\e[34m","\e[35m","\e[36m","\e[37m","\e[H\e[J","\e[34m\e[1m","\e[0m");
+}
+
+# figure out what time I should sleep until to avoid hitting the API
+# limit
+
+sub sleep_calc {
+  my(%lim) = twitter_rate_limit_status();
+
+  # TODO: if 15s doesn't suffice, write more code here
+  
+
+  
+  # TODO: everything
+
+}
+
+# print to ssfe status line (and to main screen if in verbose mode)
+sub ssfeprint {
+  my($text) = @_;
+  # escape code for ssfe and text to print
+  my($body) = "`#ssfe#s$text";
+  # fill with "-" so status line looks complete
+  my($filler) = "-"x(139-length($body)).">";
+  print "$body$filler\n";
+  # if verbose, print on main screen as well
+  if ($globopts{verbose}) {doprint("$text\n");}
+}
+
+# wrapper for print function: print to stdout and log if needed
+
+sub doprint {
+  my($text) = @_;
+  print $text;
+  if ($globopts{log}) {print A $text;}
 }
