@@ -6,6 +6,9 @@
 
 require "bclib.pl";
 
+send_comment();
+die "TESTING";
+
 # surl = Sherpa URL, gurl = gocomics.com URL
 %name2surl = get_strips();
 %name2gurl = get_gocomics();
@@ -34,10 +37,33 @@ for $i (sort keys %surl2gurl) {
   $post = "query=SELECT+body%2C%22http%3A%2F%2Fgocomics.com%2F%22%7C%7Cstrip%7C%7C%22%2F%22%7C%7Cyear%7C%7C%22%2F%22%7C%7CSUBSTR%28%220%22%7C%7Cmonth%2C-2%2C2%29%7C%7C%22%2F%22%7C%7CSUBSTR%28%220%22%7C%7Cdate%2C-2%2C2%29+AS+url+FROM+comments+WHERE+strip%3D%27$i%27+ORDER+BY+timestamp+DESC+LIMIT+50+";
   # do NOT redirect here, we want the Location: URL
   $cmd = "curl -D - -d '$post' http://gocomics.db.barrycarter.info/";
-  print "$cmd\n";
+  ($out,$err,$res) = cache_command($cmd,"age=86400");
+
+  # find the redirect
+  $out=~/Location: (.*?)\n/s;
+  $loc = $1;
+  debug("LOC: $loc");
 }
 
 # experimenting with extreme subroutining
+
+# send an email via gocomics to author
+sub send_comment {
+  my($strip) = @_;
+
+  # TODO: set feature_name, urlencode $msg
+
+  my($msg) = << "MARK";
+
+Replies to rssman\@barrycarter.info (if you just hit 'R'eply, it won't
+get to me).
+
+MARK
+;
+
+  my($cmd) = "curl -d 'DETAILS=my+message&FORM=Contact+Us&SUBMIT=Submit&email=rssman\@barrycarter.info&feature=csiit&feature_name=Rose+is+Hosed' 'http://www.comicssherpa.com/site/feedback-action'";
+  system($cmd);
+}
 
 # obtain the list of comicssherpa strips, return their 'cs' codes
 sub get_strips {

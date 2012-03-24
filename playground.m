@@ -5,13 +5,122 @@ Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
 (* credit card DFQ from bc-cc-interest.pl; see also http://stackoverflow.com/questions/4455575/find-equivalent-interest-rate-for-cash-advance-fee-promo-rate *)
 
+(*
+
+int = yearly interest charge on loan
+min = minimum payment (per year) on loan
+int2 = interest earned on borrowed money
+amt = amount borrowed (but this is actually irrelevant)
+fee = %fee charged for loan ("points")
+
+*)
+
+(* specific example from apr.barrycarter.info *)
+
+t3 = DSolve[{
+ owed[0] == 10000*1.03,
+ have[0] == 10000,
+ owed'[t] == (.04/12-.02)*owed[t],
+ have'[t] == (.06/12)*have[t] - .02*owed[t]
+}, {owed[t], have[t]}, t]
+
+t2[t_] = owed[t] /. t3[[1]]
+t4[t_] = have[t] /. t3[[1]]
+
+Table[{t,t2[t]},{t,1,16}] // TableForm
+Table[{t,t4[t]},{t,1,16}] // TableForm
+
+(* generalizing slightly, and exactifying *)
+
+t3 = DSolve[{
+ owed[0] == 10000*103/100,
+ have[0] == 10000,
+ owed'[t] == (4/100/12-2/100)*owed[t],
+ have'[t] == (r/12)*have[t] - 2/100*owed[t]
+}, {owed[t], have[t]}, t]
+
+Solve[have[16] == owed[16], r] /.
+DSolve[{
+ owed[0] == 10000*103/100,
+ have[0] == 10000,
+ owed'[t] == (4/100/12-2/100)*owed[t],
+ have'[t] == (r/12)*have[t] - 2/100*owed[t]
+}, {owed[t], have[t]}, t][[1]]
+
+Solve[t2[16/12] == t4[16/12], r]
+
+FindRoot[t2[16/12] == t4[16/12], {r,0,1}]
+
+Solve[Exp[1/45]*t2[16/12] == Exp[1/45]*t4[16/12], r]
+
+Series[Solve[t2[16/12] == t4[16/12], r],r, 10]
+
+(* form that kills Math *)
+
+Solve[r + Exp[r] + r*Exp[r] == 10, r]
+
+Limit[r + Exp[r] + r*Exp[r], r->0]
+
+Series[r + Exp[r] + r*Exp[r], {r,0,4}]
+
+
 Solve[owed[t] == have[t], t] /.
 DSolve[{
- owed'[t] == int*owed[t] - min*owed[t],
+ owed'[t] == (int-min)*owed[t],
  have'[t] == int2*have[t] - min*owed[t],
  have[0] == amt,
- owed[0] == amt*fee
+ owed[0] == amt*(1+fee)
 }, {owed[t], have[t]}, t]
+
+
+t5 = DSolve[{
+ owed'[t] == (int-min)*owed[t],
+ have'[t] == int2*have[t] - min*owed[t],
+ have[0] == amt,
+ owed[0] == amt*(1+fee)
+}, {owed[t], have[t]}, t]
+
+t2[t_] = owed[t] /. t5[[1]]
+t4[t_] = have[t] /. t5[[1]]
+
+Normal[Series[t2[t], {int, 0, 2}]]
+Normal[Series[t4[t], {int, 0, 2}]]
+
+Normal[Series[t2[t], {int-min, 0, 2}]]
+
+
+Solve[Normal[Series[t2[t], {int, 0, 2}]] ==
+      Normal[Series[t4[t], {int, 0, 2}]], t]
+
+t9[t_] = t4[t] /. Exp[x_] -> 1+x
+t8[t_] = t2[t] /. Exp[x_] -> 1+x
+
+Solve[t9[t]==t8[t], int2]
+
+(* roughly int + fee*int + fee/t *)
+
+(* so the extra interest is roughly fee/t*12 [12 for months] *)
+
+t1[int_, min_, int2_, fee_] = t /. %[[1,1,1]]
+
+t1[.36, .01*12, .02*12, 0.01]
+
+(* more exact calc *)
+
+t9[t_] = t4[t] /. Exp[x_] -> 1+x+x^2/2
+t8[t_] = t2[t] /. Exp[x_] -> 1+x+x^2/2
+
+Solve[t9[t]==t8[t], int2] /.
+ {fee*min -> 0, fee*int -> 0, int*min->0, fee*int^2 -> 0,
+  int^2*min -> 0, min^2 -> 0, int^2 ->0, min^2*t^2 -> 0}
+
+ExpandAll[Solve[t9[t]==t8[t], int2]] /.
+ {fee*min -> 0, fee*int -> 0, int*min->0, fee*int^2 -> 0,
+  int^2*min -> 0, min^2 -> 0, int^2 ->0, min^2*t^2 -> 0}
+
+int2 /. %[[1]]
+
+
 
 conds =  {int -> 6/100, min -> 3/100, fee -> 2/100}
 
@@ -20,7 +129,7 @@ DSolve[{
  owed'[t] == int*owed[t] - min*owed[t] /. conds,
  have'[t] == int2*have[t] - min*owed[t] /. conds,
  have[0] == 1 /. conds,
- owed[0] == fee /. conds
+ owed[0] == 1+fee /. conds
 }, {owed[t], have[t]}, t]
 
 (* use http://aa.usno.navy.mil/cgi-bin/aa_rstablew.pl data to find best fit curve for length of day *)

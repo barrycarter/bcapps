@@ -85,11 +85,13 @@ $wind = join("",
 $moonphase =("new", "crescent", "quarter", "gibbous", "full")[round($json->{moon_phase}->{percentIlluminated}/20)];
 
 # this isn't 100% accurate; wunderground gives lunar age to day only
-if (json->{moon_phase}->{ageOfMoon} > 29.530589/2) {
-  $moonphase = "waxing $moonphase";
-} else {
+if ($json->{moon_phase}->{ageOfMoon} > 29.530589/2) {
   $moonphase = "waning $moonphase";
+} else {
+  $moonphase = "waxing $moonphase";
 }
+
+$moonphase.=" ($json->{moon_phase}->{ageOfMoon})";
 
 # TODO: moonrise/set (wunderground does NOT give these)
 # having the db do WAY too much work here
