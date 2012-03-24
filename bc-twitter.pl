@@ -19,6 +19,9 @@
 
 # NOTE: caching for 5m during testing, but a good idea regardless
 
+# badly assumes $user and $pass are global variables set by calling
+# program ($pass here = supertweet.net password)
+
 require "bclib.pl";
 
 # endpoint for supertweet.net's "proxy" API (yes, it's global), and
@@ -26,6 +29,98 @@ require "bclib.pl";
 
 $TWITST = "http://api.supertweet.net/1";
 $TWITTW = "http://api.twitter.com/1";
+
+
+=item tweet2list($str)
+
+Converts a long tweet into several smaller tweets, preserving @replies
+and \#hashtags
+
+This is specific to twitter, but could be modified to be more general.
+
+=cut
+
+sub tweet2list {
+  my($str) = @_;
+  my($pre) = "[...] "; # put this in front of 2nd-last tweet
+  my($post) = " [more]"; # put this in front of 1st-penultimate tweet
+  my($tweetlimit) = 140; # tweet limit
+  my($i);
+  my($msg);
+  my($res);
+  my(@res);
+
+  # if $str already less than $tweetlimit, just return 1 elt list
+  if (length($str) <= $tweetlimit) {return ($str);}
+
+  $str=" $str"; # HACK: hideous hack to make regex below work nicely
+
+  # find the hashtags and @replies and remove them from message
+  # UGLY: could I combine the two lines below?
+  # first the @replies
+  my(@rep) = ($str=~m/\s+(\@\S+)/g);
+  $str=~s/\s+(\@\S+)/ /g;
+
+  # now the hashtags
+  my(@tags) = ($str=~m/\s+(\#\S+)/g);
+  $str=~s/\s+(\#\S+)/ /g;
+
+  # the string that will be prepended to all tweets
+  my($prepend) = join(" ",@rep)." ".join(" ",@tags)." ";
+
+  # cleanup $prepend (including nuke it completely if no tags/replies) and $str
+  $prepend=~s/\s+/ /isg;
+  $prepend=trim($prepend)." ";
+  $str=trim($str);
+
+  # how many characters we have left after $pre/$post/hashtags/@replies
+  # if you have too many hashtags/@replies, this breaks
+  my($chars) = $tweetlimit-length("$prepend$pre$post");
+
+  # split message into words (fails if words are too long)
+  my(@words)=split(/\s+/,$str);
+  # always include the first word
+  $msg=shift(@words);
+
+  # keep adding words until we exceed tweetlimit (minus $pre and $post, etc)
+  while (@words) {
+    if (length("$msg $words[0]") <= $chars) {
+      $msg = "$msg ".shift(@words);
+      next;
+    }
+
+    # next word would put us over, so break here
+
+    unless (@res) {
+      # first tweet? No $prepend
+      push(@res,"$prepend$msg$post");
+    } else {
+      push(@res,"$prepend$pre$msg$post");
+    }
+
+    $msg = shift(@words);
+  }
+
+  # last tweet (no $post)
+  push(@res, "$prepend$pre$msg");
+  return @res;
+}
+
+=item twitter_follow($sn)
+
+Follow $sn (requires auth)
+
+=cut
+
+sub twitter_follow {
+  my($sn) = @_;
+  my($cmd) = "curl -s -d x -u $user:$pass '$TWITST/friendships/create/$sn.xml?follow=true'";
+  debug($cmd);
+  my($file) = cache_command($cmd, "age=3600&retfile=1");
+  my($res) = read_file($file);
+  if ($res=~/<error>/) {warn "FOLLOW($sn) FAILED";}
+  return;
+}
 
 =item twitter_get_info($sn)
 
@@ -41,9 +136,9 @@ sub twitter_get_info {
   return %{$hash[0]};
 }
 
-=item twitter_get_friends_followers($sn,$which="friends|followers")
+=item twitter_get_friends_followers($sn,$which="friends|followers", $options)
 
-Gets all friends or followers of $sn as list of hashes
+Gets all friends or followers of $sn as list of hashes. $options unused
 
 =cut
 
