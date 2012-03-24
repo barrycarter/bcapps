@@ -20,19 +20,33 @@
 
 require "bclib.pl";
 
-set_globals();
-defaults("nohome=1&log=1&db=$ENV{HOME}/bc-twitter-$globopts{username}.db");
-
 # don't block when reading STDIN and keep pipes instant
 use Fcntl;
 fcntl(STDIN,F_SETFL,O_NONBLOCK);
 $|=1;
 
+
+# error checking
+# twitter is case-insensitive, so lower case username
+$globopts{username} = lc($globopts{username});
+unless ($globopts{username} && $globopts{password}) {
+  die "--username=username --password=password required";
+}
+
+# globals
+set_globals();
+defaults("nohome=1&log=1&db=$ENV{HOME}/bc-twitter-$globopts{username}.db");
+
+# die if sqlite3 db doesn't exist or has 0 size (could create it, but...)
+unless (-s $globopts{db}) {
+  die("$globopts{db} doesn't exist or has zero size");
+}
+
 # TODO: let user set this
 %search = ();
 
-# twitter is case-insensitive
-$globopts{username} = lc($globopts{username});
+
+
 
 # get columns for SQLite3 tables, just in case they've changed from
 # 'schema' below; also useful to confirm this db really exists
