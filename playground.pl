@@ -22,7 +22,7 @@ use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
-debug("ALPYA");
+debug(twitter_search("math help"));
 
 # debug(twitter_get_info("barrycarter"));
 # debug(twitter_get_friends_followers("barrycarter", "followers"));
@@ -838,43 +838,6 @@ die "TESTING";
 $res = cache_command("fgrep -R '[[Desert Pines]] at' /usr/local/etc/wiki/EL-WIKI.NET", "age=3600");
 
 debug(read_file($res));
-
-die "TESTING";
-
-# twitter lib attempt
-
-=item twitter_get_friends($sn)
-
-Get friends of $sn (= those people that $sn follows)
-
-TODO: consider merging this w/ twitter_get_followers which is nearly identical
-
-=cut
-
-sub twitter_get_friends {
-  my($sn) = @_;
-  my(%info) = twitter_get_info($sn);
-  my($numf) = $info{friends_count};
-  my(@friends);
-  my($i);
-
-  # loop to get enough pages
-  for ($i=1; $i<=int($numf/100)+1; $i++) {
-    # get this page of friends
-    my($file) = cache_command("curl -s 'http://twitter.com/statuses/friends/$sn.xml?page=$i'","retfile=1&age=300");
-    my($res) = suck($file);
-    # HACK: this is ugly, better way to do it?
-    my(@page) = ($res=~m%<screen_name>(.*?)</screen_name>%isg);
-    push(@friends,@page);
-  }
-
-  return @friends;
-}
-
-
-debug("END");
-debug(unfold(twitter_get_friends_followers("barrycarter", "followers")));
-# debug(twitter_get_followers("barrycarter"));
 
 die "TESTING";
 

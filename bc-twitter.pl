@@ -30,6 +30,44 @@ require "bclib.pl";
 $TWITST = "http://api.supertweet.net/1";
 $TWITTW = "http://api.twitter.com/1";
 
+=item twitter_search($term)
+
+Searches for English tweets w/ the given $term (no auth required)
+
+=cut
+
+sub twitter_search {
+  my($term) = @_;
+  my($i);
+  my(@ret);
+
+  # required, especially for hashtags
+  $term = urlencode($term);
+
+  # we'll never really hit page 100 -- twitter API stops us at max ~15
+  for $i (1..100) {
+    my($file) = cache_command("curl -s '$TWITTW/search.json?q=$term&rpp=100&lang=en&page=$i'","age=300&retfile=1");
+    my($res) = suck($file);
+
+    # die on bad result (or empty)
+    if ($res=~/<error>/ || $res=~/^\s*$/) {
+      warn "SEARCH ERROR";
+      return;
+    }
+
+    my(%res) = %{JSON::from_json($res)};
+
+    # results we found on this page
+    my(@newres) = @{$res{results}};
+
+    # if we found more results, keep going; otherwise return
+    if ($#newres>=0) {
+      push(@ret,@{$res{results}});
+      next;
+    }
+    return @ret;
+  }
+}
 
 =item tweet2list($str)
 
