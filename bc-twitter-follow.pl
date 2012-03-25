@@ -11,6 +11,9 @@
 require "bclib.pl";
 require "bc-twitter.pl";
 
+get_twits();
+die "TESTING";
+
 # twitter is case-insensitive, so lower case username
 $globopts{username} = lc($globopts{username});
 unless ($globopts{username} && $globopts{password}) {
@@ -79,3 +82,25 @@ MARK
   close(A);
 }
 
+=item get_twits(\%hash, $n=100)
+
+Obtain a list of $n user ids, starting from the public timeline, that
+are not keys in %hash.
+
+For example, if %hash keys are friends/followers, return $n ids of
+twits who are not friends/followers.
+
+=cut
+
+sub get_twits {
+  my($hashref, $n) = @_;
+  unless ($n) {$n=100;}
+
+  # obtain ids from the public timeline
+  my(@tweets) = twitter_public_timeline();
+  for $i (@tweets) {
+    debug($i->{user}{id});
+  }
+  
+#  debug(@tweets);
+}

@@ -24,9 +24,10 @@ require "bc-twitter.pl";
 
 # ugly hack for testing bc-twitter.pl
 
-($user, $pass) = ($supertweet{user}, $supertweet{pass});
+# ($user, $pass) = ($supertweet{user}, $supertweet{pass});
+# debug(twitter_follower_ids($user,$pass));
 
-debug(twitter_follower_ids($user,$pass));
+debug(twitter_public_timeline());
 
 # debug(twitter_rate_limit_status());
 

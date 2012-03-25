@@ -30,6 +30,18 @@ require "bclib.pl";
 $TWITST = "http://api.supertweet.net/1";
 $TWITTW = "http://api.twitter.com/1";
 
+=item twitter_public_timeline()
+
+Obtain the twitter public timeline (a sample of the "firehose") (no
+auth required), return as list of hashes (each hash = one tweet)
+
+=cut
+
+sub twitter_public_timeline {
+  my($out, $err, $res) = cache_command("curl -s '$TWITTW/statuses/public_timeline.json'", "age=60");
+  return @{JSON::from_json($out)};
+}
+
 =item twitter_friends_followers_ids($which="friends|followers"$user,$pass)
 
 Obtain friends/followers ids for $user (auth required)
