@@ -18,10 +18,10 @@ unless ($globopts{username} && $globopts{password}) {
 }
 
 # SQL db to store data for this program
-$dbname = "$ENV{HOME}/bc-twitter-follow-$globopts{username}";
+$dbname = "$ENV{HOME}/bc-twitter-follow-$globopts{username}.db";
 
 # die if sqlite3 db doesn't exist or has 0 size
-unless (-s $tabname) {
+unless (-s $dbname) {
   unless ($globopts{create}) {
     die("$dbname doesn't exist or is empty; use --create to create");
   } else {
@@ -33,12 +33,29 @@ unless (-s $tabname) {
 @followers = twitter_friends_followers_ids("followers", $globopts{username}, $globopts{password});
 @friends = twitter_friends_followers_ids("friends", $globopts{username}, $globopts{password});
 
-debug(@followers);
-debug(@friends);
+# people who follow me, but I don't followback
+@tofollow = minus(\@followers, \@friends);
+
+# not sure reciprocality is useful, but it's polite
+for $i (@tofollow) {
+  debug("FOLLOWING: $i");
+  twitter_follow($i, $globopts{username}, $globopts{password});
+  # below to avoid slamming twitter/supertweet API
+  sleep(1);
+}
+
+die "TESTING";
+
+debug(@tofollow);
+
+# debug(@followers);
+# debug(@friends);
 
 die "TESTING";
 debug("ALPHA");
 debug(@followers);
+
+# NOTE: I'm copying this from a much longer program that does a lot more!
 
 =item create_db($file)
 

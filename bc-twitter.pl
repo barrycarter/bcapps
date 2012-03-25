@@ -171,14 +171,14 @@ sub tweet2list {
   return @res;
 }
 
-=item twitter_follow($sn, $un=0)
+=item twitter_follow($sn, $user, $pass, $un=0)
 
 Follow $sn (requires auth); if $un is set, unfollow
 
 =cut
 
 sub twitter_follow {
-  my($sn,$un) = @_;
+  my($sn, $user, $pass, $un) = @_;
   my($url,$post);
 
   if ($un) {
