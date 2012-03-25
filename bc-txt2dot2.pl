@@ -6,11 +6,9 @@
 require "bclib.pl";
 
 ($data, $file) = cmdfile();
-debug("DATA: $data");
 
 # go through file, line by line
 for $i (split(/\n/, $data)) {
-  debug("I: $i");
   # ignore comments and blanks
   if ($i=~/^\#/ || $i=~/^\s*$/) {next;}
 
@@ -18,13 +16,20 @@ for $i (split(/\n/, $data)) {
   @neds = split(/\,/, $i);
 
   # even numbered neds are nodes, odd are edges; go through nodes +
-  # associate edges
-  for ($j=0; $j<=$#neds; $j+=2) {
-    # this node
-    push(@gviz, $neds[j]);
+  # associate edges; no need to last entry, already handled by penultimate
+  for ($j=0; $j<=$#neds-1; $j+=2) {
+    # this is a node, and so is target
+    $nodes{"$neds[$j];"} = 1;
+    $nodes{"$neds[$j+2];"} = 1;
+    # edge between them
+#    $edges{qq%$neds[$j] -> $neds[$j+2] [label="$neds[$j+1]"];%} = 1;
+    $edges{qq%$neds[$j] -> $neds[$j+2];%} = 1;
   }
 }
 
-debug(@gviz);
+debug("digraph x {");
+debug(sort keys %nodes);
+debug(sort keys %edges);
+debug("}");
 
 
