@@ -13,13 +13,22 @@
 # Usage: ssfe -hold $0 -username=username -password=password
 # does work w/ GNU screen
 #
-# Optiosn w/ default values:
+# Options w/ default values:
 #
-# --nohome=1: don't show tweets from home page (ie, the crap I ignore)
 # --log=1: log to ~/bc-twitter-$username-log.txt
 # --verbose=0: be verbose, mostly for debugging
 # --db=~/bc-twitter-$username.db: use this sqlite3 db (must already exist)
 # --create=create db if it doesn't already exist (won't overwrite existing)
+# --timelines=REPLY,SEARCH,DIRECT (see below)
+
+# timelines:
+#
+# HOME: what you would see on your twitter home page
+# SEARCH: results of whatever phrases I'm currently searching for
+# REPLY: tweets with @your_username in them
+# DIRECT: direct message to you
+# SEND: direct messages you sent
+# USER-$twit: tweets from $twit
 
 require "bclib.pl";
 
@@ -38,7 +47,7 @@ unless ($globopts{username} && $globopts{password}) {
 
 # globals
 set_globals();
-defaults("nohome=1&log=1&db=$ENV{HOME}/bc-twitter-$globopts{username}.db");
+defaults("nohome=1&log=1&db=$ENV{HOME}/bc-twitter-$globopts{username}.db&timelines=REPLY,SEARCH,DIRECT");
 
 # die if sqlite3 db doesn't exist or has 0 size
 unless (-s $globopts{db}) {
@@ -62,6 +71,8 @@ unless (-s $globopts{db}) {
 if ($globopts{log}) {
   open(A,">>$ENV{HOME}/bc-twitter-$globopts{username}-log.txt");
 }
+
+
 
 
 # create SQLite3 db for this program
@@ -170,14 +181,19 @@ sub set_globals {
 # limit
 
 sub sleep_calc {
-  my(%lim) = twitter_rate_limit_status();
+#  my(%lim) = twitter_rate_limit_status();
 
   # TODO: if 15s doesn't suffice, write more code here
-  
+  my($sleep) = 15;
+  my($now) = time();
 
+  # print next grab to status line (in "stardate" format)
+  my($stardate) = stardate($now + $sleep);
+  
+  ssfeprint("NEXT: $stardate (${sleep}s)");
   
   # TODO: everything
-
+  return $now+$sleep;
 }
 
 # print to ssfe status line (and to main screen if in verbose mode)

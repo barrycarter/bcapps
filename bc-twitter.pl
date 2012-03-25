@@ -30,6 +30,21 @@ require "bclib.pl";
 $TWITST = "http://api.supertweet.net/1";
 $TWITTW = "http://api.twitter.com/1";
 
+=item twitter_friends_followers_ids($which="friends|followers"$user,$pass)
+
+Obtain friends/followers ids for $user (auth required)
+
+NOTE: Twitter lets you get friends/followers for others, but not via
+id-- weird?
+
+=cut
+
+sub twitter_friends_followers_ids {
+  my($which,$user,$pass) = @_;
+  my($out,$err,$res) = cache_command("curl -s -u $user:$pass '$TWITST/$which/ids.json'", "age=300");
+  return @{JSON::from_json($out)->{ids}};
+}
+
 =item twitter_rate_limit_status()
 
 Get rate limit status (requires auth)
