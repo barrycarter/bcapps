@@ -22,8 +22,7 @@ for $i (split(/\n/, $data)) {
     $nodes{"$neds[$j];"} = 1;
     $nodes{"$neds[$j+2];"} = 1;
     # edge between them
-#    $edges{qq%$neds[$j] -> $neds[$j+2] [label="$neds[$j+1]"];%} = 1;
-    $edges{qq%$neds[$j] -> $neds[$j+2];%} = 1;
+    $edges{qq%$neds[$j] -> $neds[$j+2] [label="$neds[$j+1]"];%} = 1;
   }
 }
 
