@@ -6,8 +6,14 @@
 
 require "bclib.pl";
 
-$t[0] = transport("MFCW|", "C");
-$t[1] = transport($t[0], "");
+$t[0] = "MFCW|";
+$t[1] = transport($t[0], "C");
+$t[2] = transport($t[1], "");
+$t[3] = transport($t[2], "W");
+$t[4] = transport($t[3], "C");
+$t[5] = transport($t[4], "F");
+$t[6] = transport($t[5], "");
+$t[7] = transport($t[6], "C");
 
 debug(@t);
 
@@ -47,7 +53,6 @@ different sides, return $state
 
 sub transport {
   my($state,$cr) = @_;
-  debug("GOT: $state");
 
   # split sides
   my($left,$right) = split(/\|/, $state);
@@ -62,7 +67,6 @@ sub transport {
     $left=~s/$cr//i;
     $left=~s/m//i;
     $right.= "M$cr";
-    debug("RETURNING $left$right");
     return "$left|$right";
   }
 
@@ -76,7 +80,6 @@ sub transport {
     $right=~s/$cr//i;
     $right=~s/m//i;
     $left .= "M$cr";
-    debug("RETURNING $left$right");
     return "$left|$right";
   }
 
