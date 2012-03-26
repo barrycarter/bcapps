@@ -11,8 +11,7 @@
 require "bclib.pl";
 require "bc-twitter.pl";
 
-get_twits();
-die "TESTING";
+# get_twits(); die "TESTING";
 
 # twitter is case-insensitive, so lower case username
 $globopts{username} = lc($globopts{username});
@@ -39,10 +38,26 @@ unless (-s $dbname) {
 # people who follow me, but I don't followback
 @tofollow = minus(\@followers, \@friends);
 
+debug(@tofollow);
+
+debug("SIZES: $#followers, $#friends, $#tofollow");
+
+die "TESTING";
+
 # not sure reciprocality is useful, but it's polite
 for $i (@tofollow) {
   debug("FOLLOWING: $i");
-  twitter_follow($i, $globopts{username}, $globopts{password});
+  $res = twitter_follow($i, $globopts{username}, $globopts{password});
+
+  if ($res) {
+    $failsinrow++;
+    debug("FAILS IN ROW: $failsinrow");
+  } else {
+    $failsinrow=0;
+  }
+  
+  if ($failsinrow>=10) {die "too many fails in row";}
+
   # below to avoid slamming twitter/supertweet API
   sleep(1);
 }

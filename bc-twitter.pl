@@ -53,8 +53,21 @@ id-- weird?
 
 sub twitter_friends_followers_ids {
   my($which,$user,$pass) = @_;
-  my($out,$err,$res) = cache_command("curl -s -u $user:$pass '$TWITST/$which/ids.json'", "age=300");
-  return @{JSON::from_json($out)->{ids}};
+  my($out,$err,$res);
+  my($cursor) = -1;
+  my(@res);
+
+  # twitter returns 5K or so results at a time, so loop using "next cursor"
+  do {
+    ($out,$err,$res) = cache_command("curl -s -u $user:$pass '$TWITST/$which/ids.json?cursor=$cursor'", "age=300");
+    my(%hash) = %{JSON::from_json($out)};
+    push(@res, @{$hash{ids}});
+    $cursor = $hash{next_cursor};
+    debug("CURSOR: $cursor, RES: $#res");
+  } until (!$cursor);
+
+  return @res;
+
 }
 
 =item twitter_rate_limit_status()
@@ -203,8 +216,8 @@ sub twitter_follow {
   debug($cmd);
   my($file) = cache_command($cmd, "age=3600&retfile=1");
   my($res) = read_file($file);
-  if ($res=~/<error>/) {warn "FOLLOW($sn) FAILED";}
-  return;
+  if ($res=~/<error>/) {warn "FOLLOW($sn) FAILED"; return -1}
+  return 0;
 }
 
 =item twitter_get_info($sn)
