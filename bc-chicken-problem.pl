@@ -6,8 +6,6 @@
 
 require "bclib.pl";
 
-debug(find_states("MFCW|"));
-
 # breadth first path finding (recursive would be more fun, but less efficient)
 
 # start with the 0-step path of starting state
@@ -25,7 +23,7 @@ for (;;) {
   unless ($elt) {last;}
 
   # is it cyclic? if so, treat is as a final result
-  debug("CYCLIC?",cyclic_pathq($elt));
+#  debug("CYCLIC?",cyclic_pathq($elt));
   if (cyclic_pathq($elt)) {
     push(@res, $elt);
     next;
@@ -35,6 +33,14 @@ for (;;) {
   $elt=~/(.{5})$/;
   $lstate = $1;
 
+  # if the last state is fatal, no point in going further
+  # same if last state is goal ("|" on far left means all on right side)
+  if (fatal_stateq($lstate) || $lstate=~/^\|/) {
+    debug("PATH: $elt, FATAL: $lstate");
+    push(@res, $elt);
+    next;
+  }
+
   # find all reachable states
   @reach = find_states($lstate);
 
@@ -43,28 +49,11 @@ for (;;) {
     push(@path, "$elt -> $i");
   }
 
-  debug(@path);
-
-  # HACK: avoid infinite recursion
-#  if (++$count>100) {die "TESTING";}
+#  debug(@path);
 
 }
 
-debug("FINAL",@final);
-
-
-die "TESTING";
-
-$t[0] = "MFCW|";
-$t[1] = transport($t[0], "C");
-$t[2] = transport($t[1], "");
-$t[3] = transport($t[2], "W");
-$t[4] = transport($t[3], "C");
-$t[5] = transport($t[4], "F");
-$t[6] = transport($t[5], "");
-$t[7] = transport($t[6], "C");
-
-debug(@t);
+debug("FINAL",@res);
 
 =item find_states($start);
 
@@ -189,3 +178,42 @@ sub cyclic_pathq {
   # no dupes? not cyclic!
   return 0;
 }
+
+=item fatal_stateq($state)
+
+Is $state fatal (chicken eats wheat or fox eats chicken)?
+
+=cut
+
+sub fatal_stateq {
+  my($state) = @_;
+  my($left,$right) = split(/\|/, $state);
+  my(%side);
+
+  # the side the man is on can never be fatal
+  if ($left=~/m/i) {
+    for $i (split(//,$right)) {
+      $side{$i} = "right";
+    }
+  } elsif ($right=~/m/i) {
+    for $i (split(//,$left)) {
+      $side{$i} = "left";
+    }
+    } else {
+      die "WTF";
+    }
+
+#  debug("SIDE",%side);
+
+  # if the man and the chicken are on the same side, state is never
+  # fatal ($side{C}="", since it's not set above
+  unless ($side{C}) {return 0;}
+  
+  # same side?
+  if ($side{F} eq $side{C}) {return 1;}
+  if ($side{C} eq $side{W}) {return 1;}
+  return 0;
+}
+
+
+ 
