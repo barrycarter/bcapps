@@ -94,13 +94,25 @@ twits who are not friends/followers.
 
 sub get_twits {
   my($hashref, $n) = @_;
+  my(@res); # result
+  my(@init); # list of "seeds" from which I recurse into followers/friends
   unless ($n) {$n=100;}
 
   # obtain ids from the public timeline
+  # TODO: this unnecessarily excludes friends/followers of people in %hash???
   my(@tweets) = twitter_public_timeline();
   for $i (@tweets) {
-    debug($i->{user}{id});
+    my($id) = $i->{user}{id};
+    unless ($hashref->{$id}) {
+      push(@init, $id);
+    }
   }
+
+
+
+
+
+  # TODO: filter out people in hash!
   
 #  debug(@tweets);
 }
