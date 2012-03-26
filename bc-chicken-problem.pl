@@ -11,7 +11,7 @@ debug(find_states("MFCW|"));
 # breadth first path finding (recursive would be more fun, but less efficient)
 
 # start with the 0-step path of starting state
-push(@path, "MFCW|");
+push(@path, sort_state("MFCW|"));
 
 # a "path" is a bunch of strings with -> between them
 
@@ -20,6 +20,16 @@ for (;;) {
 
   # find first path
   $elt = shift(@path);
+
+  # if nothing left, we're done
+  unless ($elt) {last;}
+
+  # is it cyclic? if so, treat is as a final result
+  debug("CYCLIC?",cyclic_pathq($elt));
+  if (cyclic_pathq($elt)) {
+    push(@res, $elt);
+    next;
+  }
 
   # find last state in first path
   $elt=~/(.{5})$/;
@@ -36,9 +46,12 @@ for (;;) {
   debug(@path);
 
   # HACK: avoid infinite recursion
-  if (++$count>100) {die "TESTING";}
+#  if (++$count>100) {die "TESTING";}
 
 }
+
+debug("FINAL",@final);
+
 
 die "TESTING";
 
@@ -112,7 +125,7 @@ sub transport {
     $left=~s/$cr//i;
     $left=~s/m//i;
     $right.= "M$cr";
-    return "$left|$right";
+    return sort_state("$left|$right");
   }
 
   # man on right
@@ -125,7 +138,7 @@ sub transport {
     $right=~s/$cr//i;
     $right=~s/m//i;
     $left .= "M$cr";
-    return "$left|$right";
+    return sort_state("$left|$right");
   }
 
   # can't do anything, so return original state
@@ -133,9 +146,46 @@ sub transport {
 
 }
 
+=item sort_state($state)
 
+Given a state, sort left and right sides to canonize
 
-  
+=cut
 
+sub sort_state {
+  my($state) = @_;
 
+  # split into left and right
+  my($left,$right) = split(/\|/, $state);
 
+  # sort letters
+  $left = join("",sort(split(//,$left)));
+  $right = join("",sort(split(//,$right)));
+
+  return "$left|$right";
+}
+
+=item cyclic_pathq($path)
+
+Given a path, determine if its cyclic
+
+=cut
+
+sub cyclic_pathq {
+  my($path) = @_;
+  my(%seen);
+
+  # split path into states
+  my(@states) = split(/\s*->\s*/,$path);
+
+  # check for dupes
+  for $i (@states) {
+    # state seen, path is cyclic
+    if ($seen{$i}) {return 1;}
+    # mark state as now seen
+    $seen{$i}=1;
+  }
+
+  # no dupes? not cyclic!
+  return 0;
+}
