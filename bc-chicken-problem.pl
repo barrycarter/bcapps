@@ -4,7 +4,11 @@
 # STATE = "xyz|u" meaning x,y,z on start site, u on terminal side
 # M = man = can transport self w/ 0-1 others
 
+# output of program piped to "dot -Tpng"
+
 require "bclib.pl";
+
+print "digraph x {\n";
 
 # breadth first path finding (recursive would be more fun, but less efficient)
 
@@ -47,6 +51,16 @@ for (;;) {
   # and push onto path
   for $i (@reach) {
     push(@path, "$elt -> $i");
+    # below is the only thing I really needed (sigh)
+    # but only one time each
+    if ($done{$lstate}{$i}) {next;}
+    $done{$lstate}{$i}=1;
+    # when printing, use "===" for bridge
+    $pstate = $lstate;
+    $pi = $i;
+    $pstate=~s/\|/===/isg;
+    $pi =~s/\|/===/isg;
+    print qq%"$pstate" -> "$pi"\n%;
   }
 
 #  debug(@path);
@@ -54,6 +68,8 @@ for (;;) {
 }
 
 debug("FINAL",@res);
+
+print "}\n";
 
 =item find_states($start);
 
