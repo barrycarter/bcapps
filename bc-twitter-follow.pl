@@ -38,11 +38,7 @@ unless (-s $dbname) {
 # people who follow me, but I don't followback
 @tofollow = minus(\@followers, \@friends);
 
-debug(@tofollow);
-
 debug("SIZES: $#followers, $#friends, $#tofollow");
-
-die "TESTING";
 
 # not sure reciprocality is useful, but it's polite
 for $i (@tofollow) {
@@ -61,17 +57,6 @@ for $i (@tofollow) {
   # below to avoid slamming twitter/supertweet API
   sleep(1);
 }
-
-die "TESTING";
-
-debug(@tofollow);
-
-# debug(@followers);
-# debug(@friends);
-
-die "TESTING";
-debug("ALPHA");
-debug(@followers);
 
 # NOTE: I'm copying this from a much longer program that does a lot more!
 
