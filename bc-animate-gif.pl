@@ -13,15 +13,15 @@ $|=1;
 
 # MIME boundary
 $boundary="---xyz---";
-print "Content-type: multipart/x-mixed-replace;boundary=$boundary\n\n";
+countprint("Content-type: multipart/x-mixed-replace;boundary=$boundary\n\n");
 
 # the boundry for the first image
-print "$boundary\n";
+countprint("$boundary\n");
 
 # this loop goes forever
 for (;;) {
   # header for this specific image
-  print "Content-type: image/jpeg\n\n";
+  countprint("Content-type: image/png\n\n");
 
   # testing by just printing increasing numbers
   $n++;
@@ -35,15 +35,10 @@ for (;;) {
   # and write my string
   $im->string(GD::gdGiantFont,0,0,$n,$black);
 
-  # testing until I at least get image right!
-  write_file($im->jpeg, "/tmp/bag.jpg");
-
-  die "TESTING";
-
-  print $im->jpeg;
+  countprint($im->png);
 
   # end boundary
-  print "\n$boundary\n";
+  countprint("\n$boundary\n");
 
   # safety check (for now)
   sleep(1);
@@ -52,3 +47,10 @@ for (;;) {
 
 # in theory, could end entire MIMEtype here, but since loop above is
 # infinite, no need
+
+# count bytes as I print them
+sub countprint {
+  my($str) = @_;
+  $bytes+= length($str);
+  print $str;
+}
