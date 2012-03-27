@@ -33,7 +33,12 @@ for (;;) {
   $im->transparent($white);
 
   # and write my string
-  $im->string(GD::gdSmallFont,0,30,$n,$black);
+  $im->string(GD::gdGiantFont,0,0,$n,$black);
+
+  # testing until I at least get image right!
+  write_file($im->jpeg, "/tmp/bag.jpg");
+
+  die "TESTING";
 
   print $im->jpeg;
 
