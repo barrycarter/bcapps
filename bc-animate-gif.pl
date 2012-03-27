@@ -21,7 +21,7 @@ print "$boundary\n";
 # this loop goes forever
 for (;;) {
   # header for this specific image
-  print "Content-type: image/png\n\n";
+  print "Content-type: image/jpeg\n\n";
 
   # testing by just printing increasing numbers
   $n++;
@@ -33,9 +33,9 @@ for (;;) {
   $im->transparent($white);
 
   # and write my string
-  $im->string(gdSmallFont,0,30,$n,$black);
+  $im->string(GD::gdSmallFont,0,30,$n,$black);
 
-  print $im->png;
+  print $im->jpeg;
 
   # end boundary
   print "\n$boundary\n";
