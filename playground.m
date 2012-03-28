@@ -3,6 +3,36 @@
 showit := Module[{}, 
 Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
+(* if you save $1/month at r% for y years... *)
+
+m[t_,r_] = m[t,r] /.
+DSolve[{D[m[t,r],t] == 12 + m[t,r]*r, m[0,r]==0}, m[t,r], {t,r}][[1]]
+
+m[t_,0] = 12*t
+
+t1 = Table[m[t,r],{t,1,40},{r,0,.24,.01}]
+
+StringJoin[
+Table["<td>"<>ToString[m[1,r]]<>"</td>",{r,0,.24,.01}]
+]
+
+
+mon[0] = 0
+mon[n_] = mon[n-1] + 1 + r*mon[n-1]
+
+RSolve[{
+ mon[0] == 0,
+ mon[n] == mon[n-1] + 1 + r*mon[n-1]},
+mon[n],n]
+
+RSolve[{
+ mon[0] == 0,
+ mon[n] == mon[n-1] + 1 + ((1+r)^(1/12)-1)*mon[n-1]},
+mon[n],n]
+
+
+
+
 (* credit card DFQ from bc-cc-interest.pl; see also http://stackoverflow.com/questions/4455575/find-equivalent-interest-rate-for-cash-advance-fee-promo-rate *)
 
 (*

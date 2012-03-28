@@ -22,6 +22,12 @@ use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
+@l = (1..5);
+
+debug(randomize(\@l));
+
+die "TESTING";
+
 # ugly hack for testing bc-twitter.pl
 
 # ($user, $pass) = ($supertweet{user}, $supertweet{pass});

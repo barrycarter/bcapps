@@ -8,6 +8,7 @@
 # WARNING: Twitter often bans users who use programs like this; use
 # with caution
 
+push(@INC,"/usr/local/lib");
 require "bclib.pl";
 require "bc-twitter.pl";
 
@@ -37,6 +38,12 @@ unless (-s $dbname) {
 
 # people who follow me, but I don't followback
 @tofollow = minus(\@followers, \@friends);
+
+# some people have to approve your follow request; choosing to follow
+# in the same order just means you'll fail on these requests, so
+# randomize @tofollow order
+
+
 
 debug("SIZES: $#followers, $#friends, $#tofollow");
 

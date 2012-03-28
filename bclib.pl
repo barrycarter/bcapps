@@ -2149,6 +2149,31 @@ sub findmax {
   return findmin($nf,$a,$d,$e,$maxsteps,$steps,$b,$c)
 }
 
+=item randomize(\@list)
+
+Randomize @list and return
+
+=cut
+
+sub randomize {
+  my($listref) = @_;
+  my(@list) = @{$listref};
+
+  # swap random element later in list (or same place)
+  for $i (0..$#list) {
+    # random element at $i or later
+    my($rand) = rand($#list-$i)+$i;
+
+    # 3-in-hand swap
+    my($temp) = $list[$rand];
+    $list[$rand] = $list[$i];
+    $list[$i] = $temp;
+  }
+
+  return @list;
+}
+
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
   debug("END: CLEANING UP TMP FILES");

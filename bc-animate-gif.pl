@@ -11,6 +11,9 @@ use GD;
 select(STDOUT);
 $|=1;
 
+# TODO: count time to the millisecond
+$t0 = time();
+
 # MIME boundary
 $boundary="---xyz---";
 countprint("Content-type: multipart/x-mixed-replace;boundary=$boundary\n\n");
@@ -27,13 +30,19 @@ for (;;) {
   $n++;
 
   # create the image (following "perldoc GD" here) w/ transparent bg
-  $im = new GD::Image(80,30);
+  $im = new GD::Image(800,30);
   $white = $im->colorAllocate(255,255,255);
   $black = $im->colorAllocate(0,0,0);
   $im->transparent($white);
 
+  # time so far
+  $t = time()-$t0;
+
+  # rate
+  $rate = $bytes/($t||1);
+
   # and write my string
-  $im->string(GD::gdGiantFont,0,0,$n,$black);
+  $im->string(GD::gdGiantFont,0,0,"I have sent $bytes bytes in $t seconds. That's $rate bytes per second",$black);
 
   countprint($im->png);
 
