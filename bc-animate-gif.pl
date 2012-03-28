@@ -3,9 +3,12 @@
 # attempt to display "animated PNG" (really MIME multipart) that may
 # one day display bandwidth speed
 
+# http://test.barrycarter.info/bc-animate-gif.pl
+
 push(@INC, "/usr/local/lib");
 require "bclib.pl";
 use GD;
+use Time::HiRes;
 
 # avoid caching
 select(STDOUT);
@@ -50,8 +53,7 @@ for (;;) {
   countprint("\n$boundary\n");
 
   # safety check (for now)
-  sleep(1);
-
+  Time::HiRes::sleep(0.001);
 }
 
 # in theory, could end entire MIMEtype here, but since loop above is
