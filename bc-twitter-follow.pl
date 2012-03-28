@@ -43,7 +43,7 @@ unless (-s $dbname) {
 # in the same order just means you'll fail on these requests, so
 # randomize @tofollow order
 
-
+@tofollow = randomize(\@tofollow);
 
 debug("SIZES: $#followers, $#friends, $#tofollow");
 

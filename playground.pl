@@ -24,7 +24,12 @@ require "bc-twitter.pl";
 
 @l = (1..5);
 
-debug(randomize(\@l));
+for $i (1..120000) {
+  @l = randomize(\@l);
+  print join(",",@l),"\n";
+}
+
+
 
 die "TESTING";
 

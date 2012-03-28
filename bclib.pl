@@ -2162,7 +2162,7 @@ sub randomize {
   # swap random element later in list (or same place)
   for $i (0..$#list) {
     # random element at $i or later
-    my($rand) = rand($#list-$i)+$i;
+    my($rand) = rand($#list-$i+1)+$i;
 
     # 3-in-hand swap
     my($temp) = $list[$rand];
