@@ -26,10 +26,20 @@ for $i (@{$json->{forecast}->{simpleforecast}->{forecastday}}) {
   # testing it w/o limits
 #  if ($i->{period} > 2) {next;}
 
+  debug("ALPHA: ",$i->{date}->{weekday_short});
+
   debug("PER: $i->{period}, $i->{date}->{day}");
 
+  # to save screen "real estate", shorten some conditions
+  # TODO: do this better
+  $i->{conditions}=~s/clear/CLR/isg;
+  $i->{conditions}=~s/partly cloudy/PCL/isg;
+
+  # want colons to line up!
+  $i->{date}->{day}=~s/^(\d)$/0$1/;
+
   # I want date:conditions/hi/lo/%pop (probability of precipitation)
-  push(@forecast, join("", $i->{date}->{day},":",$i->{conditions},"/",
+  push(@forecast, join("", $i->{date}->{weekday_short},$i->{date}->{day},":",$i->{conditions},"/",
 	      $i->{high}->{fahrenheit}, "/", $i->{low}{fahrenheit}, "/",
 	      $i->{pop},"%"));
 }
