@@ -97,6 +97,13 @@ $wind = join("",
 # <h>This code brought to you by the Insane School of Hideous Programming</h>
 $moonphase =("waxing new", "waxing crescent", "waxing quarter", "waxing gibbous", "waxing full", "waning full", "waning gibbous", "waning quarter", "waning crescent", "waning new")[5*$age/(29.530589/2)];
 
+# using arrows courtesy fly
+$moonphase=~s/waxing\s*/\x5e/isg;
+$moonphase=~s/waning\s*/\xb7/isg;
+
+# even shorter
+$moonphase=~s/(.)(.{4}).*$/$1.uc($2)/iseg;
+
 # age for printing
 $mage = sprintf("%0.2f",$age);
 
