@@ -30,7 +30,7 @@ push(@info,"______________________");
 
 $nextev = sqlite3val("SELECT event FROM abqastro WHERE time >
 DATETIME('now','localtime') AND event NOT IN ('MR','MS') ORDER BY time
-LIMIT 1", "/home/barrycarter/BCGIT/abqastro.db");
+LIMIT 1", "/home/barrycarter/BCGIT/db/abqastro.db");
 
 # map event to time of day
 %map = (

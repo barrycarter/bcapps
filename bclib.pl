@@ -395,7 +395,8 @@ sub sqlite3 {
   # if $query doesnt have ;, add it, unless it starts with .
   unless ($query=~/^\./ || $query=~/\;$/) {$query="$query;";}
   debug("WROTE: $query to $qfile");
-  write_file($query,$qfile);
+  # adding timeout because cronned jobs tend to fight over db
+  write_file(".timeout 15\n$query",$qfile);
   my($cmd) = "sqlite3 -batch -line $db < $qfile";
   my($out,$err,$res,$fname) = cache_command($cmd,"nocache=1");
   debug("OUT: $out, ERR: $err, RES: $res, FNAME: $fname");
