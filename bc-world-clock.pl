@@ -1,16 +1,22 @@
 #!/bin/perl
 
 # An unusual type of world clock
+# -noheader: don't print HTTP header (useful for testing)
+
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 chdir(tmpdir());
 open(A,">clock.svg");
 
 # Webapp...
-print "Content-type: image/png\nRefresh: 60\n\n";
+unless($globopts{noheader}){
+  # refresh not working
+  print "Content-type: image/png\nRefresh: 60\n\n";
+}
 
 # zones (testing)
 # Perth = Beijing = conflict
+# adding Nepal for fun (45m offset) and Darwin AU (30m offset)
 %zones = (
  "Albuquerque" => "US/Mountain",
  "Chicago" => "US/Central",
@@ -18,13 +24,15 @@ print "Content-type: image/png\nRefresh: 60\n\n";
  "San Francisco" => "US/Pacific",
  "GMT" => "GMT",
  "Tokyo" => "Asia/Tokyo",
- "New Delhi" => "Asia/Kolkata",
+ "India" => "Asia/Kolkata",
  "Sydney" => "Australia/Sydney",
  "Honolulu" => "US/Hawaii",
 # "Perth" => "Australia/Perth",
  "Athens" => "Europe/Athens",
  "Berlin" => "Europe/Berlin",
- "Beijing" => "Asia/Shanghai"
+ "Beijing" => "Asia/Shanghai",
+ "Nepal" => "Asia/Katmandu",
+ "Darwin" => "Australia/Darwin"
 );
 
 # IDL = international date line (of sorts)
@@ -40,6 +48,7 @@ MARK
 ;
 
 # the clock face numbers
+# TODO: make these line up better
 for $i (0..23) {
   $an = 15*$i/180*$PI-$PI/2;
   # numbers go offedge unless I put .95 below

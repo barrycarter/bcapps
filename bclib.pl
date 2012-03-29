@@ -392,7 +392,7 @@ sub sqlite3 {
   # ugly use of global here
   $SQL_ERROR = "";
 
-  # if $query doesnt have ;, add it, unless it starts with .
+ # if $query doesnt have ;, add it, unless it starts with .
   unless ($query=~/^\./ || $query=~/\;$/) {$query="$query;";}
   debug("WROTE: $query to $qfile");
   # adding timeout because cronned jobs tend to fight over db
@@ -2197,7 +2197,7 @@ sub moon_age {
 
   # find "nearest 6" moon phases
   my($query) = "SELECT *, (strftime('%s', time)-$time)/-86400. AS days FROM abqastro WHERE time <= '$stime' AND event IN ('New Moon', 'First Quarter', 'Last Quarter', 'Full Moon') ORDER BY time DESC LIMIT 6";
-  my(@res) = sqlite3hashlist($query,"db/abqastro.db");
+  my(@res) = sqlite3hashlist($query,"/home/barrycarter/BCGIT/db/abqastro.db");
 
   # loop to find lunar age, and closest phase
   for $i (@res) {
