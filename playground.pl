@@ -22,13 +22,31 @@ use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
-@l = (1..5);
+moon_age();
 
-for $i (1..120000) {
-  @l = randomize(\@l);
-  print join(",",@l),"\n";
+=item moon_age($t=now)
+
+Determines lunar age (days since last new moon) at $t using abqastro.db
+
+Note that this calculation is in UTC/GMT, not ABQ time
+
+=cut
+
+sub moon_age {
+  my($time) = $t;
+  unless ($time) {$time=time();}
+
+  # convert time to sqlite3 format (for some reason "strftime('%s',
+  # time) > x" doesn't seem to work)
+  $time = strftime("%Y-%m-%d %H:%M:%S",gmtime($time));
+
+  # find last four moon phases
+  my($query) = "SELECT * FROM abqastro WHERE time <= '$time' AND event LIKE '%Moon%' ORDER BY time DESC LIMIT 4";
+  my(@res) = sqlite3hashlist($query,"db/abqastro.db");
+
+  debug(@res);
+
 }
-
 
 
 die "TESTING";
