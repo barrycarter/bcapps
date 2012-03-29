@@ -22,7 +22,7 @@ use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
-moon_age();
+debug(moon_age());
 
 =item moon_age($t=now)
 
@@ -33,18 +33,39 @@ Note that this calculation is in UTC/GMT, not ABQ time
 =cut
 
 sub moon_age {
-  my($time) = $t;
+  my($time) = @_;
+  # impossible age so that max below works
+  my($age,$nphase,$closest) = (9999, "", 9999);
   unless ($time) {$time=time();}
 
   # convert time to sqlite3 format (for some reason "strftime('%s',
-  # time) > x" doesn't seem to work)
-  $time = strftime("%Y-%m-%d %H:%M:%S",gmtime($time));
+  # time) > x" doesn't seem to work), and add 10 days so we get next
+  # phase as well
+  $stime = strftime("%Y-%m-%d %H:%M:%S",gmtime($time+86400*10));
 
-  # find last four moon phases
-  my($query) = "SELECT * FROM abqastro WHERE time <= '$time' AND event LIKE '%Moon%' ORDER BY time DESC LIMIT 4";
+  # find "nearest 6" moon phases
+  my($query) = "SELECT *, (strftime('%s', time)-$time)/-86400. AS days FROM abqastro WHERE time <= '$stime' AND event IN ('New Moon', 'First Quarter', 'Last Quarter', 'Full Moon') ORDER BY time DESC LIMIT 6";
   my(@res) = sqlite3hashlist($query,"db/abqastro.db");
 
-  debug(@res);
+  # loop to find lunar age, and closest phase
+  for $i (@res) {
+
+    # if new moon is in past, and closer than any other new moon, that's age
+    debug("DAYS: $i->{days}, $age, $i->{event}");
+    if ($i->{event}=~/new/i && $i->{days} > 0 && $i->{days} < $age) {
+      $age = $i->{days};
+    }
+
+    # is this the closest phase
+    debug(abs($i->{days}), $closest, "FOO");
+    if (abs($i->{days}) < abs($closest)) {
+      $nphase = $i->{event};
+      $closest = $i->{days};
+    }
+
+  }
+
+  return ($age,$nphase,$closest);
 
 }
 
