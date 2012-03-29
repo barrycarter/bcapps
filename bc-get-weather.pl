@@ -90,18 +90,26 @@ $wind = join("",
 	     $json->{current_observation}->{pressure_in}, "in)"
 );
 
+# more accurate lunar age, nearest phase
+($age, $nphase, $dist) = moon_age();
+
 # lunar phase (these are my own definitions)
 # <h>This code brought to you by the Insane School of Hideous Programming</h>
-$moonphase =("new", "crescent", "quarter", "gibbous", "full")[round($json->{moon_phase}->{percentIlluminated}/20)];
+$moonphase =("waxing new", "waxing crescent", "waxing quarter", "waxing gibbous", "waxing full", "waning full", "waning gibbous", "waning quarter", "waning crescent", "waning new")[5*$age/(29.530589/2)];
 
-# this isn't 100% accurate; wunderground gives lunar age to day only
-if ($json->{moon_phase}->{ageOfMoon} > 29.530589/2) {
-  $moonphase = "waning $moonphase";
-} else {
-  $moonphase = "waxing $moonphase";
-}
+# age for printing
+$mage = sprintf("%0.2f",$age);
 
-$moonphase.=" ($json->{moon_phase}->{ageOfMoon})";
+# nearest phase for printing (remove all non caps)
+$nphase=~s/[^A-Z]//sg;
+$dist = sprintf("%0.2f",$dist);
+$pphase = "$nphase${dist}d";
+
+debug("PHASE: $pphase");
+
+debug("LUNA",$age, $nphase, $dist);
+
+$moonphase.=" (${mage}d;$pphase)";
 
 # TODO: moonrise/set (wunderground does NOT give these)
 # having the db do WAY too much work here

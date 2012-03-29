@@ -2173,6 +2173,52 @@ sub randomize {
   return @list;
 }
 
+=item moon_age($t=now)
+
+Determines lunar age (days since last new moon) at $t using
+abqastro.db; also returns nearest phase (past/future) w/ time to/from
+that phase
+
+Note that this calculation is in UTC/GMT, not ABQ time
+
+=cut
+
+sub moon_age {
+  my($time) = @_;
+  # impossible age so that max below works
+  my($age,$nphase,$closest) = (9999, "", 9999);
+  unless ($time) {$time=time();}
+
+  # convert time to sqlite3 format (for some reason "strftime('%s',
+  # time) > x" doesn't seem to work), and add 10 days so we get next
+  # phase as well
+  $stime = strftime("%Y-%m-%d %H:%M:%S",gmtime($time+86400*10));
+
+  # find "nearest 6" moon phases
+  my($query) = "SELECT *, (strftime('%s', time)-$time)/-86400. AS days FROM abqastro WHERE time <= '$stime' AND event IN ('New Moon', 'First Quarter', 'Last Quarter', 'Full Moon') ORDER BY time DESC LIMIT 6";
+  my(@res) = sqlite3hashlist($query,"db/abqastro.db");
+
+  # loop to find lunar age, and closest phase
+  for $i (@res) {
+
+    # if new moon is in past, and closer than any other new moon, that's age
+    debug("DAYS: $i->{days}, $age, $i->{event}");
+    if ($i->{event}=~/new/i && $i->{days} > 0 && $i->{days} < $age) {
+      $age = $i->{days};
+    }
+
+    # is this the closest phase
+    debug(abs($i->{days}), $closest, "FOO");
+    if (abs($i->{days}) < abs($closest)) {
+      $nphase = $i->{event};
+      $closest = $i->{days};
+    }
+
+  }
+
+  return ($age,$nphase,$closest);
+
+}
 
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
