@@ -22,52 +22,6 @@ use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
-=item moonriseset()
-
-For bc-get-weather, determine today's moon rise and following set
-time, with the following rules:
-
-  - If there is a moonrise today, use it.
-
-  - If there is no moonrise today, use yesterday's moonrise, but mark it as so
-
-  - Use the moonset following the moonrise above (not necessarily's today's moonset)
-
-  - If using tomorrow's moonset, mark it as so
-
-NOTE: cheating and using 'now' below, so this function does NOT work
-for times other than "now".
-
-=cut
-
-debug(moonriseset());
-
-sub moonriseset {
-  my($rise,$set);
-  my(%hash);
-  my($query) = "SELECT event, SUBSTR(REPLACE(TIME(time), ':',''),1,4) AS stime,(strftime('%s',DATE(time))-strftime('%s', DATE('now')))/86400 AS dist FROM abqastro WHERE event IN ('MR','MS') AND ABS(dist)<=1 ORDER BY time";
-  my(@res) = sqlite3hashlist($query, "/home/barrycarter/BCGIT/db/abqastro.db");
-
-  # create hash from results
-  for $i (@res) {$hash{$i->{dist}}{$i->{event}} = $i->{stime};}
-
-  # moonrise = today's or yesterday's (marked)
-  if ($hash{0}{MR}) {
-    $rise = $hash{0}{MR};
-  } else {
-    $rise = $hash{-1}{MR}."\xb7";
-  }
-
-  # if today's moonset is before moonrise (or doesn't exist), use tomorrow's
-  if ($hash{0}{MS} > $hash{0}{MR}) {
-    $set = $hash{0}{MS}
-  } else {
-    $set = $hash{1}{MS}."^";
-  }
-
-  return "$rise-$set";
-}
-
 die "TESTING";
 
 # ugly hack for testing bc-twitter.pl

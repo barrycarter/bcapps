@@ -10,7 +10,7 @@ require "bclib.pl";
 # pull key from private file; you can get your own at api.wunderground.com
 require "/home/barrycarter/bc-private.pl";
 
-# below is demo key, not my personal key
+# below is my personal key
 $key = $wunderground{key};
 
 # obtain + JSON parse data (caching solely for testing)
@@ -34,6 +34,7 @@ for $i (@{$json->{forecast}->{simpleforecast}->{forecastday}}) {
   # TODO: do this better
   $i->{conditions}=~s/clear/CLR/isg;
   $i->{conditions}=~s/partly cloudy/PCL/isg;
+  $i->{conditions}=~s/chance of a thunderstorm/?TSTORM/isg;
 
   # want colons to line up!
   $i->{date}->{day}=~s/^(\d)$/0$1/;
@@ -158,7 +159,7 @@ for times other than "now".
 sub moonriseset {
   my($rise,$set);
   my(%hash);
-  my($query) = "SELECT event, SUBSTR(REPLACE(TIME(time), ':',''),1,4) AS stime,(strftime('%s',DATE(time))-strftime('%s', DATE('now')))/86400 AS dist FROM abqastro WHERE event IN ('MR','MS') AND ABS(dist)<=1 ORDER BY time";
+  my($query) = "SELECT event, SUBSTR(REPLACE(TIME(time), ':',''),1,4) AS stime,(strftime('%s',DATE(time))-strftime('%s', DATE('now','localtime')))/86400 AS dist FROM abqastro WHERE event IN ('MR','MS') AND ABS(dist)<=1 ORDER BY time";
   my(@res) = sqlite3hashlist($query, "/home/barrycarter/BCGIT/db/abqastro.db");
 
   # create hash from results

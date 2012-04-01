@@ -1,7 +1,7 @@
 (* playground for Mathematica *)
 
 showit := Module[{}, 
-Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
+Export["/tmp/math.png",%, ImageSize->{800,600}]; Run["display /tmp/math.png&"]]
 
 (* if you save $1/month at r% for y years... *)
 
@@ -29,9 +29,6 @@ RSolve[{
  mon[0] == 0,
  mon[n] == mon[n-1] + 1 + ((1+r)^(1/12)-1)*mon[n-1]},
 mon[n],n]
-
-
-
 
 (* credit card DFQ from bc-cc-interest.pl; see also http://stackoverflow.com/questions/4455575/find-equivalent-interest-rate-for-cash-advance-fee-promo-rate *)
 
@@ -92,7 +89,6 @@ Solve[r + Exp[r] + r*Exp[r] == 10, r]
 Limit[r + Exp[r] + r*Exp[r], r->0]
 
 Series[r + Exp[r] + r*Exp[r], {r,0,4}]
-
 
 Solve[owed[t] == have[t], t] /.
 DSolve[{
