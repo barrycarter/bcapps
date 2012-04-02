@@ -55,13 +55,28 @@ sub send_comment {
 
   my($msg) = << "MARK";
 
-Replies to rssman\@barrycarter.info (if you just hit 'R'eply, it won't
-get to me).
+Gocomics.com doesn't send you an email when someone comments on your
+strip, so I've now created an experimental RSS feed for <<NAME>>'s
+comments at:
+
+<<URL>>
+
+You can see the recent comments in table form at:
+
+<<URL_ALT>>
+
+Comments/questions to rssman\@barrycarter.info
+
+NOTE: Be sure to send replies to rssman\@barrycarter.info; do not just
+hit 'R'eply, since that won't work.
 
 MARK
 ;
 
-  my($cmd) = "curl -d 'DETAILS=my+message&FORM=Contact+Us&SUBMIT=Submit&email=rssman\@barrycarter.info&feature=csiit&feature_name=Rose+is+Hosed' 'http://www.comicssherpa.com/site/feedback-action'";
+  $msg = urlencode($msg);
+  debug("MSG: $msg");
+
+  my($cmd) = "curl -d 'DETAILS=$msg&FORM=Contact+Us&SUBMIT=Submit&email=rssman\@barrycarter.info&feature=csiit&feature_name=Rose+is+Hosed' 'http://www.comicssherpa.com/site/feedback-action'";
   system($cmd);
 }
 
