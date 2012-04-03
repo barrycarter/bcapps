@@ -46,15 +46,16 @@ for $i (@strips) {
   $cmd = "curl -D - -d '$post' http://gocomics.db.barrycarter.info/";
   ($out,$err,$res) = cache_command($cmd,"age=86400");
 
-  # find the redirect
+  # find the redirect (removing newline)
   $out=~/Location: (.*?)\n/s;
   $loc = $1;
+  $loc=~s/\r//isg;
   $location{$i} = $loc;
 
   debug("L: $location{$i}");
   send_comment($i);
 
-  if (++$count>=2) {die "TESTING";}
+#  if (++$count>=0) {die "TESTING";}
 
 }
 
@@ -67,16 +68,19 @@ sub send_comment {
   my($strip) = @_;
   debug("STRIP: $strip");
   my($code, $name) = ($surl2gurl{$strip}, $surl2name{$surl2gurl{$strip}});
+  debug("CODE: $code, NAME: $name");
 
   # TODO: set feature_name, urlencode $msg
 
   my($msg) = << "MARK";
 
-Gocomics.com doesn't send you an email when someone comments on your
-comic strip, so I've now created a free experimental RSS feed for $name's
-comments at:
 
-$location{$strip}/rss.pl
+
+Gocomics.com doesn't send you an email when someone comments on your
+comic strip, so I've now created a free experimental RSS feed for
+${name}'s comments at:
+
+$location{$strip}rss.pl
 
 You can see the recent comments in table form at:
 
@@ -87,22 +91,20 @@ comment, just let me know.
 
 Comments/questions to rssman\@barrycarter.info
 
-REMINDER: Be sure to send replies to rssman\@barrycarter.info.
+REMINDER: Be sure to send replies to rssman\@barrycarter.info
+
 Do NOT hit 'R'eply, since that won't work.
 
 MARK
 ;
 
+  debug("MSG: $msg");
   $msg = urlencode($msg);
   $name = urlencode($name);
-  debug("MSG: $msg");
 
-  my($cmd) = "curl -d 'DETAILS=$msg&FORM=Contact+Us&SUBMIT=Submit&email=rssman\@barrycarter.info&feature=csiit&feature_name=$name' 'http://www.comicssherpa.com/site/feedback-action'";
-debug("CMD: $cmd");
-
-  warn "TESTING";
-
-  return;
+  # TODO: feature=$strip
+  my($cmd) = "curl -d 'DETAILS=$msg&FORM=Contact+Us&SUBMIT=Submit&email=rssman\@barrycarter.info&feature=$code&feature_name=$name&uc_full_date=RSS+Feed' 'http://www.comicssherpa.com/site/feedback-action'";
+  debug("CMD: $cmd");
   system($cmd);
 }
 
