@@ -6,6 +6,8 @@
 
 require "bclib.pl";
 
+die "You've already run me once, and that's enough (if you're not me, edit the code below before doing anything)";
+
 # send_comment();
 # die "TESTING";
 
