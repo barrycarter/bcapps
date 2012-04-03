@@ -6,33 +6,40 @@
 
 require "bclib.pl";
 
-send_comment();
-die "TESTING";
+# send_comment();
+# die "TESTING";
 
 # surl = Sherpa URL, gurl = gocomics.com URL
+debug("ALPHA");
 %name2surl = get_strips();
+debug("ALPHA2");
 %name2gurl = get_gocomics();
+debug("ALPHA3");
 
 # debug(sort keys %name2gurl);
 # debug("SPLIT");
 # debug(sort keys %name2surl);
 
-# determine the gurl of each surl using transitivity
+# the gurl of each surl using transitivity and surl2name using inverse
 
 for $i (sort keys %name2surl) {
-#  debug("$i, $name2gurl{$i}");
   $surl2gurl{$name2gurl{$i}} = $name2surl{$i};
-#  debug("$i s-> $name2surl{$i}");
-#  debug("$i g-> $name2gurl{$i}");
+  debug("$i -> $name2surl{$i}");
+  $surl2name{$name2surl{$i}} = $i;
 }
+
+debug("SURL2NAME",%surl2name);
 
 # debug("ALPHA",%surl2gurl);
 
 # now, get the db.94y.info URL that yields the recent comments for a
 # given strip
 
-for $i (sort keys %surl2gurl) {
-  debug("I: $i");
+# randomize for best testing
+@strips = keys %surl2gurl;
+@strips = randomize(\@strips);
+
+for $i (@strips) {
   # got this by using sniffit
   $post = "query=SELECT+body%2C%22http%3A%2F%2Fgocomics.com%2F%22%7C%7Cstrip%7C%7C%22%2F%22%7C%7Cyear%7C%7C%22%2F%22%7C%7CSUBSTR%28%220%22%7C%7Cmonth%2C-2%2C2%29%7C%7C%22%2F%22%7C%7CSUBSTR%28%220%22%7C%7Cdate%2C-2%2C2%29+AS+url+FROM+comments+WHERE+strip%3D%27$i%27+ORDER+BY+timestamp+DESC+LIMIT+50+";
   # do NOT redirect here, we want the Location: URL
@@ -42,41 +49,60 @@ for $i (sort keys %surl2gurl) {
   # find the redirect
   $out=~/Location: (.*?)\n/s;
   $loc = $1;
-  debug("LOC: $loc");
+  $location{$i} = $loc;
+
+  debug("L: $location{$i}");
+  send_comment($i);
+
+  if (++$count>=2) {die "TESTING";}
+
 }
+
+die "TESTING";
 
 # experimenting with extreme subroutining
 
 # send an email via gocomics to author
 sub send_comment {
   my($strip) = @_;
+  debug("STRIP: $strip");
+  my($code, $name) = ($surl2gurl{$strip}, $surl2name{$surl2gurl{$strip}});
 
   # TODO: set feature_name, urlencode $msg
 
   my($msg) = << "MARK";
 
 Gocomics.com doesn't send you an email when someone comments on your
-strip, so I've now created an experimental RSS feed for <<NAME>>'s
+comic strip, so I've now created a free experimental RSS feed for $name's
 comments at:
 
-<<URL>>
+$location{$strip}/rss.pl
 
 You can see the recent comments in table form at:
 
-<<URL_ALT>>
+$location{$strip}
+
+If you want to receive an email everytime your strip receives a
+comment, just let me know.
 
 Comments/questions to rssman\@barrycarter.info
 
-NOTE: Be sure to send replies to rssman\@barrycarter.info; do not just
-hit 'R'eply, since that won't work.
+REMINDER: Be sure to send replies to rssman\@barrycarter.info.
+Do NOT hit 'R'eply, since that won't work.
 
 MARK
 ;
 
   $msg = urlencode($msg);
+  $name = urlencode($name);
   debug("MSG: $msg");
 
-  my($cmd) = "curl -d 'DETAILS=$msg&FORM=Contact+Us&SUBMIT=Submit&email=rssman\@barrycarter.info&feature=csiit&feature_name=Rose+is+Hosed' 'http://www.comicssherpa.com/site/feedback-action'";
+  my($cmd) = "curl -d 'DETAILS=$msg&FORM=Contact+Us&SUBMIT=Submit&email=rssman\@barrycarter.info&feature=csiit&feature_name=$name' 'http://www.comicssherpa.com/site/feedback-action'";
+debug("CMD: $cmd");
+
+  warn "TESTING";
+
+  return;
   system($cmd);
 }
 
