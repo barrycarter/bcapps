@@ -6,6 +6,7 @@
 
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
+$now = time();
 
 # pull key from private file; you can get your own at api.wunderground.com
 require "/home/barrycarter/bc-private.pl";
@@ -63,20 +64,8 @@ $time=~s/^last updated on //isg;
 $time=~s/\s*[A-Z]+$//;
 $time=~s/^(.*?),\s*(.*?)$/$2, $1/;
 
-# <h>wunderground keeps sunrise/set under moon_phase, interesting</h>
-
-debug(sort keys %{$json->{moon_phase}});
-
-# sun and moon rise/set
-debug(unfold($json->{moon_phase}));
-
-# sun line ("0" below is major cheat, since sun always rises between 4-8)
-$sun = join("", 
-		"S:0", $json->{moon_phase}->{sunrise}->{hour},
-		$json->{moon_phase}->{sunrise}->{minute}, "-",
-		$json->{moon_phase}->{sunset}->{hour},
-		$json->{moon_phase}->{sunset}->{minute}
-);
+# get sunrise/set twilight from abqastro.db
+%sun = sunriseset();
 
 # wind and pressure (dir spdGgust (press))
 # treat no gust special
@@ -121,7 +110,7 @@ $mrs = moonriseset();
 
 # print in order I want (even if I change mind later)
 $str = << "MARK";
-$sun
+S:$sun{SR}-$sun{SS} ($sun{CTS}-$sun{CTE})
 M:$mrs
 $moonphase
 \@$time
@@ -137,6 +126,23 @@ if ($globopts{show}) {print $str;}
 
 # and write to info file
 write_file_new($str, "/home/barrycarter/ERR/forecast.inf");
+
+=item sunriseset()
+
+Determine today's sunrise/set and various twilight start/ends from abqastro.db
+
+TODO: extend this to arbitrary day?
+
+=cut
+
+sub sunriseset {
+  my($query) = "SELECT event, strftime('%H%M', time) AS time FROM abqastro WHERE DATE(time)=DATE('now','localtime') ORDER BY time";
+  my(%hash);
+  for $i (sqlite3hashlist($query, "/home/barrycarter/BCGIT/db/abqastro.db")) {
+    $hash{$i->{event}} = $i->{time};
+  }
+  return %hash;
+}
 
 =item moonriseset()
 
@@ -158,12 +164,33 @@ for times other than "now".
 
 sub moonriseset {
   my($rise,$set);
+  my(%date);
   my(%hash);
-  my($query) = "SELECT event, SUBSTR(REPLACE(TIME(time), ':',''),1,4) AS stime,(strftime('%s',DATE(time))-strftime('%s', DATE('now','localtime')))/86400 AS dist FROM abqastro WHERE event IN ('MR','MS') AND ABS(dist)<=1 ORDER BY time";
+
+  # determine yyyy-mm-dd for today +- 1 day
+  for $i (-1..1) {
+    $date{$i} = strftime("%Y-%m-%d", localtime($now+$i*86400));
+  }
+
+  # find MR/MS for today +- 1 day
+  my($query) = "SELECT event, strftime('%Y-%m-%d', time) AS date, strftime('%H%M', time) AS time FROM abqastro WHERE event IN ('MR','MS') AND DATE(time) IN ('$date{-1}', '$date{0}', '$date{1}')";
   my(@res) = sqlite3hashlist($query, "/home/barrycarter/BCGIT/db/abqastro.db");
 
   # create hash from results
-  for $i (@res) {$hash{$i->{dist}}{$i->{event}} = $i->{stime};}
+  for $i (@res) {
+    debug("$i->{date}, $i->{event} -> $i->{time}");
+    $hash{$i->{date}}{$i->{event}} = $i->{time};
+  }
+
+  # if today's moon sets later than it rises, return rise/set
+  if ($hash{$date{0}}{MS} > $hash{$date{0}}{MR}) {
+    return "$hash{$date{0}}{MR}-$hash{$date{0}}{MS}";
+  }
+
+  die "TESTING";
+
+  debug("HASH",unfold(%hash),"/HASH");
+  die "TESTING";
 
   # moonrise = today's or yesterday's (marked)
   if ($hash{0}{MR}) {
