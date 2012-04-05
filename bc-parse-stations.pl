@@ -9,6 +9,11 @@
 # don't have to spoiled if you don't want to be; considered rot 13
 # too..)
 
+# 05 Apr 2012: Greg Thompson's
+# http://www.rap.ucar.edu/weather/surface/stations.txt includes METAR
+# stations that nsd_cccc.txt doesn't, so adding them as well (but only
+# when they don't appear in nsd_cccc.txt already)
+
 require "bclib.pl";
 open(A,"db/nsd_cccc_annotated.txt");
 
@@ -27,6 +32,9 @@ while (<A>) {
 
   # x1, x2 = unknown (to me)
   my($indi,$wmob,$wmos,$place,$state,$country,$wmoregion,$lat,$lon,$x1,$x2,$elev) = split(/\;/, $_);
+
+  # record that we've seen this station
+  $seen{$indi}=1;
 
 #  debug($wmob,$wmos,$indi,$place,$state,$country,$wmoregion,$lat,$lon,$x1,$x2,$elev);
 
@@ -61,6 +69,52 @@ while (<A>) {
   # print in importable format (for sqlite3)
   print join("\t", ($indi, $wmob, $wmos, $place, $state, $country, $flat, $flon, $elev, $x, $y, $z, $ann)),"\n";
 }
+
+close(A);
+
+debug("PART TWO");
+
+# now, parse stations.txt
+# columns where data starts
+@cols = (0, 3, 20, 26, 32, 39, 47, 55, 61);
+open(A,"db/stations.txt");
+
+while (<A>) {
+  # ignore comments (start with "!") and blank lines
+  if (/^\!/ || /^\s*$/) {next;}
+
+  # if third column is non-blank, this is a header line, not a data line
+  unless (substr($_,2,1)=~/\s/) {next;}
+
+  # get data from columns
+  @data=();
+  for $j (0..$#cols) {
+    $item = substr($_, $cols[$j], $cols[$j+1]-$cols[$j]);
+    $item=trim($item);
+    push(@data,$item);
+  }
+
+  # assign data to vars
+  ($state, $name, $code, $iata, $synop, $lat, $long, $elev) = @data;
+
+  # ignore blank codes and seen codes
+  if ($code=~/^\s*$/ || $seen{$code}) {next;}
+
+  # third col test above insufficient; if $code starts with number, ignore
+  if ($code=~/^\d/) {next;}
+
+  # if synop, split into wmob/wmos
+  if ($synop=~/^(..)(...)$/) {
+    ($wmob,$wmos) = ($1,$2);
+  } else {
+    ($wmob,$wmos) = ("","");
+  }
+
+  # print in importable format (for sqlite3)
+  print join("\t", ($station, $wmob, $wmos, $place, $state, $country, $flat, $flon, $elev, $x, $y, $z, $ann)),"\n";
+}
+
+
 
 =item schema
 

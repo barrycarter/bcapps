@@ -2,7 +2,7 @@
 
 # the results of GEOLOCATION/bc-random-ips.pl (ignoring my router, my gateway [for privacy], and '???', the meaningless result)
 
-egrep -h '[0-9]+\. ' -R /var/tmp/mtr | perl -anle 'print $F[1]' | sort | uniq | egrep -v '^albq|^netgear\.local\.lan|^\?\?\?' > /home/barrycarter/BCGIT/GEOLOCATION/samplehosts.txt
+egrep -h '[0-9]+\. ' -R /var/tmp/mtr | perl -anle 'print $F[1]' | sort | uniq | egrep -v '^albq|^netgear\.local\.lan|^\?\?\?' >! /home/barrycarter/BCGIT/GEOLOCATION/samplehosts.txt
 
 exit;
 
