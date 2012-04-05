@@ -17,7 +17,6 @@ push(@path, sort_state("MFCW|"));
 
 # a "path" is a bunch of strings with -> between them
 
-# TODO: stop on cycles
 for (;;) {
 
   # find first path
@@ -58,9 +57,13 @@ for (;;) {
     # when printing, use "===" for bridge
     $pstate = $lstate;
     $pi = $i;
+    # what edge takes us from $pstate to $pi
+    $trans = $trans{$pstate}{$pi};
+    unless ($trans) {$trans="M";}
+
     $pstate=~s/\|/===/isg;
     $pi =~s/\|/===/isg;
-    print qq%"$pstate" -> "$pi"\n%;
+    print qq%"$pstate" -> "$pi"  [label="$trans"]\n%;
   }
 
 #  debug(@path);
@@ -70,6 +73,8 @@ for (;;) {
 debug("FINAL",@res);
 
 print "}\n";
+
+debug("TRANS",unfold(%trans));
 
 =item find_states($start);
 
@@ -130,6 +135,8 @@ sub transport {
     $left=~s/$cr//i;
     $left=~s/m//i;
     $right.= "M$cr";
+    # using global here is horrible and an afterthought (also below)
+    $trans{$state}{sort_state("$left|$right")} = $cr;
     return sort_state("$left|$right");
   }
 
@@ -143,6 +150,7 @@ sub transport {
     $right=~s/$cr//i;
     $right=~s/m//i;
     $left .= "M$cr";
+    $trans{$state}{sort_state("$left|$right")} = $cr;
     return sort_state("$left|$right");
   }
 

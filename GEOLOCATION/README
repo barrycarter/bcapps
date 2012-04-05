@@ -1,0 +1,8 @@
+An attempt to geolocate IP addresses/hostnames, based on:
+
+  - The hostname itself
+
+  - The WHOIS or rr.arin.net records
+
+  - DNS LOC
+

@@ -35,7 +35,8 @@ for $i (@{$json->{forecast}->{simpleforecast}->{forecastday}}) {
   # TODO: do this better
   $i->{conditions}=~s/clear/CLR/isg;
   $i->{conditions}=~s/partly cloudy/PCL/isg;
-  $i->{conditions}=~s/chance of a thunderstorm/?TSTORM/isg;
+  $i->{conditions}=~s/mostly cloudy/MCL/isg;
+  $i->{conditions}=~s/chance of a thunderstorm/TSTRM?/isg;
 
   # want colons to line up!
   $i->{date}->{day}=~s/^(\d)$/0$1/;
@@ -187,25 +188,7 @@ sub moonriseset {
     return "$hash{$date{0}}{MR}-$hash{$date{0}}{MS}";
   }
 
-  die "TESTING";
-
-  debug("HASH",unfold(%hash),"/HASH");
-  die "TESTING";
-
-  # moonrise = today's or yesterday's (marked)
-  if ($hash{0}{MR}) {
-    $rise = $hash{0}{MR};
-  } else {
-    $rise = $hash{-1}{MR}."\xb7";
-  }
-
-  # if today's moonset is before moonrise (or doesn't exist), use tomorrow's
-  if ($hash{0}{MS} > $hash{0}{MR}) {
-    $set = $hash{0}{MS}
-  } else {
-    $set = $hash{1}{MS}."^";
-  }
-
-  return "$rise-$set";
+  # otherwise, return yesterday rise - today set, today rise - tomorrow set
+  return "\xb7$hash{$date{-1}}{MR}-$hash{$date{0}}{MS},$hash{$date{0}}{MR}-$hash{$date{1}}{MS}^";
 }
 

@@ -65,8 +65,10 @@ $hash{nicelon} = nicedeg2($hash{longitude},"E");
 # approximate ratio of latitude:longitude degree
 $ratio = cos($hash{latitude}/180*$PI);
 
+# left join because m.station_id may not exist in stations table
+
 $query = "
-SELECT * FROM metar m JOIN stations s ON (m.station_id = s.metar)
+SELECT * FROM metar m LEFT JOIN stations s ON (m.station_id = s.metar)
 WHERE m.station_id = (
 SELECT station_id FROM metar_now m ORDER BY 
  ABS(latitude-$hash{latitude}) +
