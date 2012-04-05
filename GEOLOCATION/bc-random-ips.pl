@@ -12,6 +12,6 @@ for $i (1..10000) {
     push(@add,int(rand()*256));
   }
   $ip = join(".",@add);
-  print "mtr -rwc 1 $ip > /var/tmp/mtr/$ip.out\n";
+  print "mtr -rwc 1 $ip >> /var/tmp/mtr-single-file-test.txt\n";
 }
 
