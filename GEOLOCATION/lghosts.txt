@@ -1,0 +1,9 @@
+# list of looking glass (LG) hosts, useful for finding other host locations
+# 
+# Name: arbitrary name/URL for LG host "main page"
+# Location: location of LG host, in human readable format
+# PostData: string to POST to LG server (%IP% = target IP); "-" if using GET
+# URL: the URL to which to GET/POST data (incl GET data if any)
+Name   Location	PostData URL
+harenet.ad.jp   ?	host=%IP%	http://www.harenet.ad.jp/cgi-bin/harenet/traceroute/traceroute.cgi
+tumori.nu	Hiroshima		-	http://www.tumori.nu/cgi-bin/traceroute.cgi?Host=%IP%&IP=4

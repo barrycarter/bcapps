@@ -5,7 +5,7 @@
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
-for $i (1..100000) {
+for $i (1..10000) {
   @add=();
   for $j (1..4) {
     # TODO: exclude multicast + private?
