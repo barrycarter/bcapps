@@ -4,8 +4,8 @@
 # canonical place name for each
 
 # requires (and is really just a thin wrapper around) the
-# geonames/geonames.db at:
-# http://geonames.db.94y.info/
+# geonames/geonames2.db at:
+# http://geonames2.db.94y.info/
 
 # Example: $0 paris santa.fe.new.mexico.united.states chicago.us
 # corpus.christi.tx portugal michigan james.island tx.amarillo us.tx

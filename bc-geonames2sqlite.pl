@@ -1,7 +1,7 @@
 #!/bin/perl
 
 # NOTE: if you just want the resulting database:
-# http://geonames.db.94y.info
+# http://geonames2.db.94y.info
 
 # This script converts the geonames files at:
 # http://download.geonames.org/export/dump/

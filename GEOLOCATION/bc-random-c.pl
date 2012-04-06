@@ -13,7 +13,7 @@ for $i (0..255) {
       $l = int(rand()*256);
       # sorting by this random number will randomize the entries later
       $rand = rand();
-      print "$rand $i.$j.$k.$l\n";
+      print "$rand mtr -rwc 1 $i.$j.$k.$l >> /var/tmp/mtr-$i.txt\n";
     }
   }
 }
