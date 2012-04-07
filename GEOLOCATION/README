@@ -11,6 +11,8 @@ mtr's on various hosts (including my attempt to hit one IP in every
 "class C" network) [some runs are still in progress, so
 samplehosts4.txt will change somewhat during early April 2012]
 
+TODO: sometimes I can decode using IP, not hostname, so should store
+all IPs, even those for which I already have hostnames
 
 
 
