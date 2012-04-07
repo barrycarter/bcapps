@@ -14,31 +14,29 @@ $all = read_file("sortedips.txt");
 unless ($all) {die "No sortedips.txt?";}
 
 for $i (split(/\n/,$all)) {
-  $bin = dectobin(
-  # convert IP address to binary
-  for $j (split(/\./, $i)) {
-    $j = unpack("B8",pack("N",$j));
-    debug($j);
-  }
-
-#  debug($i);
+  debug("$i ->",ip2bin($i));
 }
 
-=item dectobin($n)
+=item ip2bin($s)
 
-Converts integer $n to a 32-bit binary number (does NOT necessarily
-work with 33+-bit numbers).
+Converts IP address $s (in dotted quad form) to binary.
 
 TODO: this may be inefficient, using pack/unpack is probably better
 
 =cut
 
-sub dectobin {
-  my($n) = @_;
+sub ip2bin {
+  my($s) = @_;
   my($res, @res);
+
+  # split dotted quad, figure out integer value
+  my(@split) = split(/\./, $s);
+  # TODO: I could write shorter code for below
+  my($intval) = $split[0]*256**3+$split[1]*256**2+$split[2]*256+$split[3];
+
   for (1..32) {
-    push(@res,$n%2);
-    $x=$x>>1;
+    push(@res,$intval%2);
+    $intval=$intval>>1;
   }
   $res=join("",reverse(@res));
   return($res);
