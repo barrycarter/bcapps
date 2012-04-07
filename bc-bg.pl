@@ -66,9 +66,13 @@ for $i (@suppress) {
   $suppress{$key}=$val;
 }
 
+debug("SUPPRESS",%suppress);
+
 # all errors are in ERR subdir (and info alerts are there too)
 for $i (glob("/home/barrycarter/ERR/*.err")) {
   for $j (split("\n",read_file($i))) {
+    # unless suppressed, push to @err
+    if ($suppress{$j} > stardate($now)) {next;}
     push(@err,$j);
   }
 }
@@ -77,7 +81,7 @@ for $i (glob("/home/barrycarter/ERR/*.err")) {
 for $i (glob("/home/barrycarter/ERR/*.inf")) {
   for $j (split("\n",read_file($i))) {
     # unless suppressed, push to @info
-    if ($suppress{$j} > stardate($curtime)) {next;}
+    if ($suppress{$j} > stardate($now)) {next;}
     push(@info,$j);
   }
 }

@@ -7,7 +7,8 @@
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
-$hosts = read_file("samplehosts.txt");
+# TODO: read samplehosts[1-3] as well, but samplehosts4.txt is the biggie!
+$hosts = read_file("samplehosts4.txt");
 unless ($hosts) {die "samplehosts.txt empty or wrong dir!";}
 open(A,">sortedhosts.txt");
 
