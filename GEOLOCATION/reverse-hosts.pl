@@ -11,12 +11,13 @@ require "bclib.pl";
 $hosts = read_file("samplehosts4.txt");
 unless ($hosts) {die "samplehosts.txt empty or wrong dir!";}
 open(A,">sortedhosts.txt");
+open(B,">sortedips.txt");
 
 
 for $i (split(/\n/,$hosts)) {
   # IP address? leave as is
   if ($i=~/^[\d\.]+$/) {
-    print A "$i\n";
+    print B "$i\n";
     next;
   }
 
@@ -26,7 +27,9 @@ for $i (split(/\n/,$hosts)) {
 
 close(A);
 
-# now to sort (-n doesn't hurt alphas, but helps IP addresses)
-system("sort -fn sortedhosts.txt -o sortedhosts.txt");
+# now to sort
+system("sort -f sortedhosts.txt -o sortedhosts.txt");
+# below is an imperfect sorting 1.8 > 1.79
+system("sort -fn sortedips.txt -o sortedips.txt");
 
 
