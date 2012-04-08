@@ -6,6 +6,7 @@
 
 # -nocurl: dont actually query montastic API (useful for testing)
 
+push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
 dodie('chdir("/var/tmp/montastic")');
