@@ -13,7 +13,7 @@ unless ($all) {die "No sortedhosts.txt?";}
 
 for $i (split(/\n/,$all)) {
   # lc
-  $i = lc($i);
+  $i = ".".lc($i);
 
   # split into dots
   @pieces = split(/\./, $i);
@@ -31,6 +31,8 @@ for $i (split(/\n/,$all)) {
 open(B,">hostfreq.txt");
 
 for $i (@hosts) {
+  # ignore unique hosts (and since sorted, first appearance of 1 suffices)
+  if ($count{$i}<2) {last;}
   print B "$i: $count{$i}\n";
 }
 

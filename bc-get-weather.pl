@@ -33,11 +33,13 @@ for $i (@{$json->{forecast}->{simpleforecast}->{forecastday}}) {
 
   # to save screen "real estate", shorten some conditions
   # TODO: do this better
+  # TODO: do this for current_observation -> weather as well
   $i->{conditions}=~s/clear/CLR/isg;
   $i->{conditions}=~s/partly cloudy/PCL/isg;
   $i->{conditions}=~s/mostly cloudy/MCL/isg;
   $i->{conditions}=~s/chance of a thunderstorm/TSTRM?/isg;
   $i->{conditions}=~s/chance of rain/RAIN?/isg;
+  $i->{conditions}=~s/thunderstorm/TSTRM!/isg;
 
   # want colons to line up!
   $i->{date}->{day}=~s/^(\d)$/0$1/;

@@ -6,7 +6,7 @@
 require "bclib.pl";
 
 # doing test work in perm dir
-dodie('chdir("/var/tmp/run")');
+dodie('chdir("/var/tmp/test")');
 
 # we assume pages (including linked-to pages) won't change soon
 ($out) = cache_command("curl http://www.traceroute.org/", "age=86400");
@@ -27,7 +27,26 @@ while ($out=~s/<(.*?)>//) {
   $url=~s/\#.*$//;
   unless ($url) {next;}
 
-  debug("TAG: $url");
+  # http only
+  unless ($url=~/http:/) {next;}
+
+  # keep track (using hash not list to avoid dupes)
+  # storing in sha1 file for convenience, and storing reverse
+  $sha = $sha1_hex($url);
+  $url{$url}=$sha;
+  $sha2url{$sha} = $url;
+
+  # if we already have the output of this URL (or err), don't run again
+  if (-f $url{$url} || -f "$url{$url}.err") {delete $url{$url};}
 }
 
-# debug("OUT: $out");
+open(B,">runme");
+
+for $i (sort keys %url) {
+  print B "curl -D $url{$i}.headers -L -o $url{$i} '$i' 2> $url{$i}.err\n";
+}
+
+close(B);
+
+# and run
+system("parallel -j 20 < runme");
