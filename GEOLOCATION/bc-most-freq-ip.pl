@@ -10,11 +10,10 @@
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
-# for testing, subset
-warn "TESTING";
-# system("sort -R sortedips.txt | head -10000 > /tmp/sortedips.txt");
-$all = read_file("/tmp/sortedips.txt");
+$all = read_file("sortedips.txt");
 unless ($all) {die "No sortedips.txt?";}
+
+open(A,">ipfreq.txt");
 
 for $i (split(/\n/,$all)) {
   $bin = ip2bin($i);
@@ -38,11 +37,10 @@ for $i (@blocks) {
   $ip=~/^(.{8})(.{8})(.{8})(.{8})$/||die("BAD STRING: $i");
   $ip=join(".",ord(pack("B8",$1)),ord(pack("B8",$2)),ord(pack("B8",$3)),ord(pack("B8",$4)));
   # and print
-  print "$ip/$len: $net{$i}\n";
-  debug("$i -> $ip/$len");
+  print A "$ip/$len: $net{$i}\n";
 }
 
-
+close(A);
 
 =item ip2bin($s)
 
