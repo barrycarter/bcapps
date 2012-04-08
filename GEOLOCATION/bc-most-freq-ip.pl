@@ -10,12 +10,39 @@
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
-$all = read_file("sortedips.txt");
+# for testing, subset
+warn "TESTING";
+# system("sort -R sortedips.txt | head -10000 > /tmp/sortedips.txt");
+$all = read_file("/tmp/sortedips.txt");
 unless ($all) {die "No sortedips.txt?";}
 
 for $i (split(/\n/,$all)) {
-  debug("$i ->",ip2bin($i));
+  $bin = ip2bin($i);
+  # add IP address to each block it belongs to (16 blocks in total?)
+  for $i (1..32) {$net{substr($bin,0,$i)}++;}
 }
+
+# which netblocks have most IPs (obviously either '1' or '0' will have most)
+@blocks = sort {$net{$b} <=> $net{$a}} (keys %net);
+
+for $i (@blocks) {
+  # ignore blocks w single IP
+  if ($net{$i}<2) {next;}
+
+  # convert "01" to 64.0.0.0/2 for example
+  $len = length($i);
+
+  # pad to 32 bits
+  $ip=substr($i."0"x32,0,32); # pad to 32 bits
+  # convert to IP form
+  $ip=~/^(.{8})(.{8})(.{8})(.{8})$/||die("BAD STRING: $i");
+  $ip=join(".",ord(pack("B8",$1)),ord(pack("B8",$2)),ord(pack("B8",$3)),ord(pack("B8",$4)));
+  # and print
+  print "$ip/$len: $net{$i}\n";
+  debug("$i -> $ip/$len");
+}
+
+
 
 =item ip2bin($s)
 
