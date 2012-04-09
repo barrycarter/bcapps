@@ -22,6 +22,9 @@ use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
+debug(cpanel($cpanel{site},$cpanel{user},$cpanel{pass}));
+
+
 die "TESTING";
 
 # ugly hack for testing bc-twitter.pl

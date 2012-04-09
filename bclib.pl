@@ -2221,6 +2221,22 @@ sub moon_age {
 
 }
 
+=item cpanel($site, $user, $pass, $port=2083)
+
+Log into cPanel $site running on port $port, authenticating as
+$user/$pass, and get back summary data (currently in hideous raw form)
+
+=cut
+
+sub cpanel {
+  my($site, $user, $pass, $port) = @_;
+  unless ($port) {$port=2083;}
+  my($cmd) = "curl -Lk -u $user:$pass 'https://$site:$port/'";
+  debug("CMD: $cmd");
+  my($out) = cache_command($cmd, "age=1800");
+  return $out;
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
   debug("END: CLEANING UP TMP FILES");
