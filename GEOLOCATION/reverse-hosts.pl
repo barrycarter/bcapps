@@ -15,13 +15,17 @@ open(B,">sortedips.txt");
 
 
 for $i (split(/\n/,$hosts)) {
+  # remove count (from uniq -c)
+  $i=~s/^\s*\d+\s*//;
+  
+  debug("I: $i");
+
   # IP address? leave as is
   if ($i=~/^[\d\.]+$/) {
     print B "$i\n";
     next;
   }
 
-  debug("I: $i");
   print A join(".",reverse(split(/\./,$i))),"\n";
 }
 
