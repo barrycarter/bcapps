@@ -22,6 +22,10 @@ use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
+debug(unfold(recent_weather()));
+
+die "TESTING";
+
 debug(cpanel($cpanel{site},$cpanel{user},$cpanel{pass}));
 
 

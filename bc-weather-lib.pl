@@ -105,6 +105,12 @@ sub recent_weather {
       $line[$j]=~s/^\s*$//isg;
       $hash{$headers[$j]} = $line[$j];
   }
+    # ignore 0 lat/lon (no wstations there)
+    unless ($hash{latitude} || $hash{longitude}) {
+      debug("BAD LINE: $i");
+      next;
+    }
+
     push(@hashes, {%hash});
   }
 
