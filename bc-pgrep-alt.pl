@@ -9,32 +9,29 @@
 push(@INC, "/usr/local/lib");
 require "bclib.pl";
 
-# put into hash since I may need to delete later
-for $i (@ARGV) {
-  ($str,$mach)=split(/\:/, $i);
-  $str{$mach} = $str;
-}
+# put into hash to make things easier
+for $i (@ARGV) {$cmd{$i}=1;}
 
 # loop forever
 for (;;) {
   # keylist changes, since I delete below
-  @proc = sort keys %str;
-  if ($#proc<0) {
+  @cmds = sort keys %cmd;
+  if ($#cmds<0) {
     debug("NO PROCS LEFT");
     exit(0);
   }
 
-  for $i (sort keys %str) {
-    ($out, $err, $res) = cache_command("ssh root\@$i 'pgrep $str{$i}'");
+  for $i (@cmds) {
+    ($str,$mach)=split(/\:/, $i);
+    ($out, $err, $res) = cache_command("ssh root\@$mach 'pgrep $str'");
     debug("RESULT: $out");
     # if there is a (numerical) result, keep going
     if ($out=~/^\d/s) {next;}
     # otherwise, announce result and delete this key
-    system("xmessage $i:$str{$i} complete! &");
-    delete $str{$i};
+    system("xmessage $mach:$str complete! &");
+    delete $cmd{$i};
   }
 
-  # TODO: 1 for testing only, increase later
-  sleep(1);
+  sleep(15);
 }
 
