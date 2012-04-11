@@ -26,6 +26,7 @@ for (;;) {
 
   for $i (sort keys %str) {
     ($out, $err, $res) = cache_command("ssh root\@$i 'pgrep $str{$i}'");
+    debug("RESULT: $out");
     # if there is a (numerical) result, keep going
     if ($out=~/^\d/s) {next;}
     # otherwise, announce result and delete this key
