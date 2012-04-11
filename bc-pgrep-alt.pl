@@ -17,6 +17,13 @@ for $i (@ARGV) {
 
 # loop forever
 for (;;) {
+  # keylist changes, since I delete below
+  @proc = sort keys %str;
+  if ($#proc<0) {
+    debug("NO PROCS LEFT");
+    exit(0);
+  }
+
   for $i (sort keys %str) {
     ($out, $err, $res) = cache_command("ssh root\@$i 'pgrep $str{$i}'");
     # if there is a (numerical) result, keep going
