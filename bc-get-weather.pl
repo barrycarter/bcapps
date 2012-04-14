@@ -39,6 +39,7 @@ for $i (@{$json->{forecast}->{simpleforecast}->{forecastday}}) {
   $i->{conditions}=~s/mostly cloudy/MCL/isg;
   $i->{conditions}=~s/chance of a thunderstorm/TSTRM?/isg;
   $i->{conditions}=~s/chance of rain/RAIN?/isg;
+  $i->{conditions}=~s/chance rain/RAIN?/isg;
   $i->{conditions}=~s/thunderstorm/TSTRM!/isg;
 
   # want colons to line up!

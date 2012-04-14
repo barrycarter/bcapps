@@ -29,8 +29,10 @@ push(@info,"______________________");
 # TODO: add time of when this event occurs to display?
 
 $nextev = sqlite3val("SELECT event FROM abqastro WHERE time >
-DATETIME('now','localtime') AND event NOT IN ('MR','MS') ORDER BY time
+DATETIME('now','localtime') AND event NOT IN ('MR','MS', 'Last Quarter', 'First Quarter', 'New Moon', 'Full Moon') ORDER BY time
 LIMIT 1", "/home/barrycarter/BCGIT/db/abqastro.db");
+
+debug("NEXTEV: $nextev");
 
 # map event to time of day
 %map = (
