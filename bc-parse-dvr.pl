@@ -53,38 +53,35 @@ for $i (@lines) {
   debug(gsn_time($stime,$i));
 
   unless ($stime < $sshow && $sshow < $mtime) {
-    debug("$i not in this recording");
+#    debug("$i not in this recording");
     next;
   }
 
-  debug("$i IS in this recording");
+  # recording is in this file, but is it clipped?
+  if ($sshow + $len*60 > $mtime) {
+    print "CLIPPED\n";
+  }
 
-  # next time this show starts
-#  debug("SENDING: $stime, $day, $hour, $min");
-#  $next = Date_GetNext("epoch $stime", $day, 1, $hour, $min);
-#  $next = UnixDate($next, "%s");
-#  debug("GETTING: $next");
+  print "$i IS in this recording\n";
 
-#  debug("$show, $day, $time, $len, $next");
+  # find start time in HMS format (ugly!)
+  # TODO: buffering!
+  $ss = strftime("%H:%M:%S", gmtime($sshow-$stime));
+  # length of show, in seconds
+  $length = $len*60;
+
+  # name of outfile
+  $oname = strftime("/var/tmp/$show-%Y%m%d%H%M.mp4", localtime($sshow));
+
+  debug("ONAME: $oname");
+
+
+  # command to extract
+  # TODO: rename test.mp4
+  $cmd="mencoder -quiet -fps 29.97 $file -oac pcm -ovc copy -ss $ss -endpos $length -o $oname";
+
+  system($cmd);
 }
-
-die "TESTING";
-
-# and length is (presumably read from file)
-$length = 30*60 + 2*$buffer;
-
-# 11pm MDT = test time
-
-$test = str2time("14 Apr 2012 23:00:00 MDT");
-$startpos = $test-$stime;
-
-# this is an ugly way to convert seconds to HMS and only accurate to 24h
-$ss = strftime("%H:%M:%S", gmtime($startpos-$buffer));
-
-$cmd="mencoder -fps 29.97 $file -oac pcm -ovc copy -ss $ss -endpos $length -o /var/tmp/test.mp4";
-
-debug($cmd);
-system($cmd);
 
 =item gsn_time($stime, $descrip)
 
@@ -98,6 +95,7 @@ day)
 sub gsn_time {
   my($stime, $descrip) = @_;
   my(%nday);
+  my(@temp);
 
   # I'm surprised this works, but it does
   local($ENV{TZ}) = "America/New_York";
@@ -106,28 +104,43 @@ sub gsn_time {
   # putting it in a subroutine too, sigh!)
 
   for $i (0..6) {
-    my($day) = strftime("%a", gmtime($i*86400+43200));
-    my($nday) = strftime("%a", gmtime(($i+1)*86400+43200));
+    my($day) = lc(strftime("%a", gmtime($i*86400+43200)));
+    my($nday) = lc(strftime("%a", gmtime(($i+1)*86400+43200)));
     $nday{$day} = $nday;
   }
 
-  # TODO: handle "Wek"
-
   # break into pieces (don\'t need $len (or $show for that matter))
-  my($x, $day, $time) = split(/\s+/, $descrip);
+  my($x, $dow, $time) = split(/\s+/, $descrip);
+
+  # if "m-f", find lowest time that exceeds $stime
+  if ($dow=~/^m\-f$/) {
+    for $i (split(/\,/,"mon,tue,wed,thu,fri")) {
+      debug("SENDING: $x $i $time");
+      my($gtime) = gsn_time($stime, "$x $i $time");
+      # if before $stime, ignore it
+      if ($gtime < $stime) {next;}
+      push(@temp, $gtime);
+    }
+
+    # and return the smallest such
+    return min(@temp);
+  }
 
   # split hour/min
   $time=~/^(\d{2})(\d{2})$/||warn("BAD TIME: $time");
   my($hour,$min) = ($1,$2);
 
-  # if before or at 5am, fix day
-  if ($hour <= 5) {$day = $nday{$day};}
+  # if before or at 5am, fix dow
+  if ($hour <= 5) {$dow = $nday{$dow};}
 
   # Date::Manip does the work
-  debug("$stime, $day, 1, $hour, $min");
-  my($res) = UnixDate(Date_GetNext("epoch $stime", $day, 1, $hour, $min),"%s");
+#  debug("CALLING: $stime, $dow, 1, $hour, $min");
+  my($res) = UnixDate(Date_GetNext("epoch $stime", $dow, 1, $hour, $min),"%s");
 
-  debug("$descrip -> $res");
+  # Date::Manip can give results in past, fix
+  if ($res < $stime) {$res+=7*86400;}
+
+#  debug("$descrip -> $res");
 
   return $res;
 
