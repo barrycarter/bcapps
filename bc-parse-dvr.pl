@@ -10,6 +10,9 @@
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
+# buffer, in seconds, around each "chunk"
+$buffer = 180;
+
 debug(strftime("%H:%M:%S", gmtime(100)));
 
 # file (fixed for now)
@@ -23,25 +26,22 @@ if ($out=~/ID_LENGTH=(.*?)\n/is) {$len=$1;} else {die "No length?";}
 # the timestamp is the end time
 ($dev,$ino,$mode,$nlink,$uid,$gid,$rdev,$sizefile, $atime,$mtime,$ctime,$blksize,$blocks) = stat($file);
 
-# so start time is
+# so start time is...
 $stime = $mtime-$len;
 
-debug($stime,$mtime);
+# and length is (presumably read from file)
+$length = 30*60 + 2*$buffer;
 
 # 11pm MDT = test time
 
 $test = str2time("14 Apr 2012 23:00:00 MDT");
-
 $startpos = $test-$stime;
-$endpos = $startpos + 30*60;
-warn "TESTING";
-$endpos = $startpos + 60;
 
 # this is an ugly way to convert seconds to HMS and only accurate to 24h
-$ss = strftime("%H:%M:%S", gmtime($startpos));
-$es = strftime("%H:%M:%S", gmtime($endpos));
+$ss = strftime("%H:%M:%S", gmtime($startpos-$buffer));
 
-$cmd="mencoder -fps 29.97 $file -oac pcm -ovc copy -ss $ss -endpos 60 -o /var/tmp/test.mp4";
+$cmd="mencoder -fps 29.97 $file -oac pcm -ovc copy -ss $ss -endpos $length -o /var/tmp/test.mp4";
 
+debug($cmd);
 system($cmd);
 
