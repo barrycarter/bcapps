@@ -12,12 +12,6 @@ require "bclib.pl";
 
 
 use Date::Manip;
-# debug(ParseDateString("next Saturday after 14 Apr 2012"));
-
-# debug(DateCalc(ParseDate("14 Apr 2012"), "next Saturday"));
-# debug(Date_GetNext("14 Apr 2012", "Sat", 1, 19));
-# debug(Date_GetNext("epoch 1234.56", "Sat", 1, 19));
-# debug(Date_GetNext("epoch 1334449133", "Sat", 1, 19, 30));
 
 # buffer, in seconds, around each "chunk"
 $buffer = 180;
@@ -40,6 +34,9 @@ $stime = round($mtime-$len);
 # that timeframe
 @lines = split(/\n/, read_file("/home/barrycarter/BCGIT/bc-parse-dvr.txt"));
 
+# I hate my system, so let's do this in parallel
+open(A,"|parallel -j 20");
+
 for $i (@lines) {
   # ignore comments/blanks
   if ($i=~/^\#/ || $i=~/^\s*$/) {next;}
@@ -59,29 +56,29 @@ for $i (@lines) {
 
   # recording is in this file, but is it clipped?
   if ($sshow + $len*60 > $mtime) {
+    # TODO: more with this
     print "CLIPPED\n";
   }
 
-  print "$i IS in this recording\n";
+#  print "$i IS in this recording\n";
 
   # find start time in HMS format (ugly!)
   # TODO: buffering!
-  $ss = strftime("%H:%M:%S", gmtime($sshow-$stime));
+  $ss = strftime("%H:%M:%S", gmtime($sshow-$stime-$buffer));
   # length of show, in seconds
-  $length = $len*60;
+  $length = $len*60+2*$buffer;
 
   # name of outfile
   $oname = strftime("/var/tmp/$show-%Y%m%d%H%M.mp4", localtime($sshow));
 
   debug("ONAME: $oname");
 
-
   # command to extract
-  # TODO: rename test.mp4
   $cmd="mencoder -quiet -fps 29.97 $file -oac pcm -ovc copy -ss $ss -endpos $length -o $oname";
-
-  system($cmd);
+  print A "$cmd\n";
 }
+
+close(A);
 
 =item gsn_time($stime, $descrip)
 
