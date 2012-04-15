@@ -44,31 +44,26 @@ for $i (@lines) {
   # ignore comments/blanks
   if ($i=~/^\#/ || $i=~/^\s*$/) {next;}
 
-  debug(gsn_time($stime,$i));
-
-  warn "TESTING";
-
-  system("date");
-
-  next;
-
+  # split (just for $show/$len, only gsn_time uses $day/$time)
   ($show, $day, $time, $len) = split(/\s+/, $i);
   $len||=30;
 
-  # split time into hhmm for Date::Manip
-  $time=~/^(\d{2})(\d{2})$/||die "BAD TIME: $time";
-  ($hour, $min) = ($1, $2);
+  # unix time that this occurs next
+  $sshow = gsn_time($stime,$i);
+  debug(gsn_time($stime,$i));
 
-  # if hour is between 0 and 5, it's really the next day
-  # TODO: more here
-  if ($hour<=5) {}
+  unless ($stime < $sshow && $sshow < $mtime) {
+    debug("$i not in this recording");
+    next;
+  }
 
+  debug("$i IS in this recording");
 
   # next time this show starts
-  debug("SENDING: $stime, $day, $hour, $min");
-  $next = Date_GetNext("epoch $stime", $day, 1, $hour, $min);
-  $next = UnixDate($next, "%s");
-  debug("GETTING: $next");
+#  debug("SENDING: $stime, $day, $hour, $min");
+#  $next = Date_GetNext("epoch $stime", $day, 1, $hour, $min);
+#  $next = UnixDate($next, "%s");
+#  debug("GETTING: $next");
 
 #  debug("$show, $day, $time, $len, $next");
 }
