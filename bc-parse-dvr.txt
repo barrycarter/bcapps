@@ -1,0 +1,50 @@
+# List of shows to record, in GSN's bizarre date format: http://www.gsn.com/cgi/onair/program_schedule_print.html
+# Format:
+#   - column 1: name of program (used for output file)
+#   - column 2: day of week, three letters ("All" = everyday, "Wek" = weekdays)
+#   - column 3: start time (EDT, between 0000-0600 = next day), in 24h format
+#   - column 4: length, in minutes (default 30m)
+
+# I realize showing everyone what I watch (far too much!) is a bad idea
+
+baggage fri 1830
+baggage sat 0230
+baggage sat 0300
+baggage sat 0330
+baggage thu 1800
+baggage thu 1830
+baggage wed 1800
+baggage wed 1830
+baggage wek 0130
+chainreaction wek 1530
+jeopardy sat 0900
+jeopardy sun 0900
+jeopardy wek 0200
+newlywed fri 1800
+newlywed mon 1800
+newlywed mon 1830
+newlywed sat 0100
+newlywed sat 0130
+newlywed sat 0200
+newlywed sat 1100
+newlywed sat 1130
+newlywed sat 1630
+newlywed sat 1700
+newlywed sat 1730
+newlywed sun 1100
+newlywed sun 1130
+newlywed tue 1800
+newlywed tue 1830
+newlywed tue 1900
+newlywed tue 1930
+newlywed tue 2000
+newlywed tue 2030
+newlywed tue 2100
+newlywed tue 2130
+newlywed tue 2200
+smarter5 fri 1700 60
+smarter5 sun 1800 60
+smarter5 sun 1900 60
+smarter5 sun 2000 60
+smarter5 sun 2100 60
+smarter5 sun 2200 60

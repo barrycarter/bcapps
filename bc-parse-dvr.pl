@@ -10,6 +10,20 @@
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
+
+use Date::Manip;
+# debug(ParseDateString("next Saturday after 14 Apr 2012"));
+
+# debug(DateCalc(ParseDate("14 Apr 2012"), "next Saturday"));
+# debug(Date_GetNext("14 Apr 2012", "Sat", 1, 19));
+
+debug(Date_GetNext("epoch 1234", "Sat", 1, 19));
+
+
+
+
+die "TESTING";
+
 # buffer, in seconds, around each "chunk"
 $buffer = 180;
 
