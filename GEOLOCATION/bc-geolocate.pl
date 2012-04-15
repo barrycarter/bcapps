@@ -24,8 +24,10 @@ while (<A>) {
 
   # check vs regexps
   for $i (@regexp) {
-    if ($_=~m/$i/) {
-      $code=$1;
+    if (@parts=($_=~m/$i/)) {
+      # join all matched expressions with "."
+      # TODO: is above wise?
+      $code = join(".",@parts);
       $match = $i;
       $iscode{$code} = 1;
       last;

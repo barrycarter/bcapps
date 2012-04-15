@@ -44,6 +44,14 @@ for $i (@lines) {
   # ignore comments/blanks
   if ($i=~/^\#/ || $i=~/^\s*$/) {next;}
 
+  debug(gsn_time($stime,$i));
+
+  warn "TESTING";
+
+  system("date");
+
+  next;
+
   ($show, $day, $time, $len) = split(/\s+/, $i);
   $len||=30;
 
@@ -82,4 +90,52 @@ $cmd="mencoder -fps 29.97 $file -oac pcm -ovc copy -ss $ss -endpos $length -o /v
 
 debug($cmd);
 system($cmd);
+
+=item gsn_time($stime, $descrip)
+
+Find the first occurring described time ($descrip) after $stime (in
+Unix seconds), using "GSN time", which is ET, plus says "tue 0200"
+when they mean "wed 0200" (times before 6am are listed as previous
+day)
+
+=cut
+
+sub gsn_time {
+  my($stime, $descrip) = @_;
+  my(%nday);
+
+  # I'm surprised this works, but it does
+  local($ENV{TZ}) = "America/New_York";
+
+  # clever (but very inefficient) way to find next day (and I\'m
+  # putting it in a subroutine too, sigh!)
+
+  for $i (0..6) {
+    my($day) = strftime("%a", gmtime($i*86400+43200));
+    my($nday) = strftime("%a", gmtime(($i+1)*86400+43200));
+    $nday{$day} = $nday;
+  }
+
+  # TODO: handle "Wek"
+
+  # break into pieces (don\'t need $len (or $show for that matter))
+  my($x, $day, $time) = split(/\s+/, $descrip);
+
+  # split hour/min
+  $time=~/^(\d{2})(\d{2})$/||warn("BAD TIME: $time");
+  my($hour,$min) = ($1,$2);
+
+  # if before or at 5am, fix day
+  if ($hour <= 5) {$day = $nday{$day};}
+
+  # Date::Manip does the work
+  debug("$stime, $day, 1, $hour, $min");
+  my($res) = UnixDate(Date_GetNext("epoch $stime", $day, 1, $hour, $min),"%s");
+
+  debug("$descrip -> $res");
+
+  return $res;
+
+}
+
 
