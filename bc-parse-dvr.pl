@@ -10,6 +10,8 @@
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
+debug(strftime("%H:%M:%S", gmtime(100)));
+
 # file (fixed for now)
 $file = "/var/tmp/mDVR001.3GP";
 
@@ -35,9 +37,11 @@ $endpos = $startpos + 30*60;
 warn "TESTING";
 $endpos = $startpos + 60;
 
-$cmd="mencoder -fps 29.97 $file -oac pcm -ovc copy -ss $startpos -endpos $endpos -o /var/tmp/test.mp4";
+# this is an ugly way to convert seconds to HMS and only accurate to 24h
+$ss = strftime("%H:%M:%S", gmtime($startpos));
+$es = strftime("%H:%M:%S", gmtime($endpos));
 
-debug($cmd);
+$cmd="mencoder -fps 29.97 $file -oac pcm -ovc copy -ss $ss -endpos 60 -o /var/tmp/test.mp4";
 
-# system($cmd);
+system($cmd);
 
