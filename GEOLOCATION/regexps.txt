@@ -1,0 +1,17 @@
+# Regular expressions where the parenthesized part yields some clue
+# about location (hostname is given reversed, as in sortedhosts.txt).
+# These regexps are in order, and must be evaulated in this order
+
+# doing com.rr first because it occurs most frequently
+
+# like com.rr.biz.central.rrcs-74-219-179-114 (extract "central")
+/^com\.rr\.biz\.(.*?)\.rrcs\-/
+
+# com.rr.austin.mta-68-201-180-147 (grab "austin"), also
+# com.rr.buffalo.ddns.mta-24-198-59-90
+# com.rr.cinci.network-024-029-001-186
+/^com\.rr\.(.*?)\.[mta-|ddns\.|network\-|voip\-]/
+
+# like com.rr.austin.austtxa-10k1.te1-0-0 (grabbing "austtx")
+/^com\.rr\..*?\.(.{6})/
+

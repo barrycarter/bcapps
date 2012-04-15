@@ -50,14 +50,17 @@ for $i (@lines) {
   # split time into hhmm for Date::Manip
   $time=~/^(\d{2})(\d{2})$/||die "BAD TIME: $time";
   ($hour, $min) = ($1, $2);
-  debug("HOUR: $hour");
 
-  # Date::Manip oddness?
-  $day = ucfirst($day);
+  # if hour is between 0 and 5, it's really the next day
+  # TODO: more here
+  if ($hour<=5) {}
+
 
   # next time this show starts
   debug("SENDING: $stime, $day, $hour, $min");
   $next = Date_GetNext("epoch $stime", $day, 1, $hour, $min);
+  $next = UnixDate($next, "%s");
+  debug("GETTING: $next");
 
 #  debug("$show, $day, $time, $len, $next");
 }
