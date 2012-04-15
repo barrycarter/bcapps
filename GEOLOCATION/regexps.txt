@@ -2,16 +2,21 @@
 # about location (hostname is given reversed, as in sortedhosts.txt).
 # These regexps are in order, and must be evaulated in this order
 
+# TODO: reduce to fewer regexps?
+
 # doing com.rr first because it occurs most frequently
 
+# like com.rr.neo.div.yntwoh1-swt901 to yntwoh
+/^com\.rr\.neo\.div\.(.{4})(.{2})/
+
 # like com.rr.biz.central.rrcs-74-219-179-114 (extract "central")
-/^com\.rr\.biz\.(.*?)\.rrcs\-/
+/^com\.rr\.(?:biz|res)\.(.*?)\.(?:rrcs|cpe|twdp)\-/
 
 # com.rr.austin.mta-68-201-180-147 (grab "austin"), also
 # com.rr.buffalo.ddns.mta-24-198-59-90
 # com.rr.cinci.network-024-029-001-186
-/^com\.rr\.(.*?)\.[mta-|ddns\.|network\-|voip\-]/
+/^com\.rr\.(.*?)\.(?:mta\-|ddns\.|network\-|voip\-|cpe\-|voip\.|rdc\-)/
 
 # like com.rr.austin.austtxa-10k1.te1-0-0 (grabbing "austtx")
-/^com\.rr\..*?\.(.{6})/
+/^com\.rr\..*?\.(.{4})(.{2})/
 

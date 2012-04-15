@@ -10,6 +10,10 @@ for $i (split("\n", read_file("/home/barrycarter/BCGIT/GEOLOCATION/regexps.txt")
   # ignore blanks and comments
   if ($i=~/^\s*$/ || $i=~/\#/) {next;}
   chomp($i);
+
+  # below is bad because it disallows post-/ options
+  $i=~s/\///isg;
+
   push(@regexp, $i);
 }
 
@@ -18,23 +22,21 @@ open(A,"fgrep com.rr. /home/barrycarter/BCGIT/GEOLOCATION/sortedhosts.txt|");
 while (<A>) {
   chomp;
 
-# if (/^com\.rr\.biz\.(.*?)\.rrcs\-/) {debug("$_ matches");}
-
-#  warn "TESTING";
-#  next;
-
   # check vs regexps
   for $i (@regexp) {
-    debug("I: $i");
-#    debug("TESTING $_ vs $i");
-    if ($_=~m$i) {
-      debug("MATCH!: $1");
+    if ($_=~m/$i/) {
+      $code=$1;
+      $match = $i;
+      $iscode{$code} = 1;
       last;
     }
   }
 
-  debug("MATCH?: $1");
-
-  debug("LINE: $_");
+  print "$_ -> $code ($match)\n";
 }
+
+# print all found codes
+debug(sort keys %iscode);
+
+
 
