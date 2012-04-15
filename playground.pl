@@ -9,6 +9,16 @@
 # chunks are normally separated with 'die "TESTING";' (TODO: use
 # subroutines instead?)
 
+$foo = "hello";
+@bar = ("hel");
+for $i (@bar) {
+  print "I: $i\n";
+#  if ($foo=~/hello/) {print "ONE\n";}
+  if ($foo=~/$i/) {print "TWO\n";}
+}
+
+die "TESTING";
+
 push(@INC, "/usr/local/lib");
 require "bclib.pl";
 require "bc-astro-lib.pl";
