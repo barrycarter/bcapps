@@ -27,6 +27,9 @@
 # like net.comcast.boston.ma.woburn.pos-1-12-0-0-ar01
 /^net\.comcast\..*?\.(..)\.(.*?)\./
 
+# like net.qwest.phnx.184-98-241-192
+/^net\.qwest\.(.*?)\.
+
 # if all else fails, use country code (if avail)
 /^(..)\./
 
