@@ -17,5 +17,25 @@ for $i (@codes) {
   $findme{"$city:$state"} = 1;
 }
 
-debug(sort keys %findme);
+# TODO: combine search terms in such a way that I still know what term
+# matched what line
 
+# TODO: easier to just load big-us-cities.txt manually?
+
+for $i (sort keys %findme) {
+  # split back into city/state (pointless to code/uncode?)
+  ($city,$state) = split(/:/,$i);
+
+  # convert foo to f.*o.*o.* (the first letter must still be first)
+  $city=~s/(.)/$1\.\*/isg;
+  # state must be exact postal match (uppercase)
+  $state=uc($state);
+
+  # search term is
+  $term="$city,$state";
+
+  # can pretty much cache forever here (need only first match)
+  ($out,$err,$res) = cache_command("egrep -im 1 '$term' big-us-cities.txt", "age=864000");
+  chomp($out);
+  print "$i $out\n";
+}

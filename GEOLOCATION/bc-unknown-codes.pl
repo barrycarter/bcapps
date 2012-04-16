@@ -9,14 +9,11 @@ require "bclib.pl";
 
 # use remote bc-cityfind to see which ones resolve
 # TODO: this is really really ugly; ssh root\@remote is such a bad idea!
-
-$arg = join(" ",@codes);
-
 # in theory, bc-cityfind.pl can take any number of args, but let's try
-# 16 at a time
+# n at a time
 
 while (@codes) {
-  @slice = splice(@codes,0,16);
+  @slice = splice(@codes,0,1);
   $args = join(" ",@slice);
   debug($args);
 
