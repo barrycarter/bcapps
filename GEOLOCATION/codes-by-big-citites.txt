@@ -1,0 +1,2269 @@
+0-ph.rr -
+024-.02 -
+10G-.1- -
+184-.15 -
+207-.68 -
+24-1.64 -
+24-1.68 -
+24-2.9- -
+24-9.2- -
+DRHN.NC -
+GE14.-0 -
+GE15.-0 -
+GE17.-0 -
+GE3-.0- -
+GE3-.1- -
+GigE.th -
+HNLL.HI Honolulu,HI
+HWTH.CA Hawthorne,CA
+ILM-.IL -
+ORNG.CA Orange,CA
+PBSD.CA -
+RDC-.24 -
+RDC-.65 -
+RDC-.72 -
+RDC-.76 -
+SRSD.CA South Monrovia Island,CA
+TEHP.CA Tehachapi,CA
+VNNY.CA -
+abrn.ne Auburn,NE
+ae0-.0- -
+ae0-.1- -
+ae1-.in -
+ae1-.wc -
+ae2-.0- -
+ae4-.dn -
+ae5-.dn -
+ae5-.nw -
+agor.ca Agoura,CA
+akrn.oh Akron,OH
+al.charlottedrv -
+al.chicksaw Chickasaw,AL
+al.dothan Dothan,AL
+al.florence Florence,AL
+al.gadsden Gadsden,AL
+al.hillcrestprk -
+al.huntsville Huntsville,AL
+al.hurtelst -
+al.l3-mobile -
+al.mobile Mobile,AL
+al.ninthave -
+al.northport Northport,AL
+al.tuscaloosa Tuscaloosa,AL
+alb..AL Alabaster,AL
+alb..CH -
+alb..al Alabaster,AL
+alb..cr -
+alb..pt -
+albn.pa Albion,PA
+alby.ny Albany,NY
+albyny NULL
+alcr.oh Apple Creek,OH
+alfe.ny Alfred,NY
+almt.ny Altamont,NY
+alnc.oh Alliance,OH
+alsi.gl -
+altnpa NULL
+amel.oh Amelia,OH
+amst.ny Amsterdam,NY
+ands.oh Andersonville,OH
+angl.ny Angola,NY
+anhm.ca Anaheim,CA
+appl.wi Appleton,WI
+ar.enmardr -
+ar.littlerock Little Rock,AR
+ar.lookoutrd -
+ar.nlittlerock North Little Rock,AR
+ar.sevenacresdr -
+ar.sshackleford -
+ar.westmemphis West Memphis,AR
+arcd.ca Arden-Arcade,CA
+ardl.me Arundel,ME
+asht.oh Ashtabula,OH
+atclnj NULL
+athn.oh Athens,OH
+athn.pa Athens,PA
+atl2.0. -
+atla.ga Atlanta,GA
+atwr.oh Antwerp,OH
+aubn.ny Auburn,NY
+aust.tx Austin,TX
+austin NULL
+austtx NULL
+avlk.oh Avon Lake,OH
+avoc.ny Avoca village,NY
+az.orovalley Oro Valley,AZ
+az.pimaco Pimaco Two,AZ
+az.snyder -
+az.valencia Valencia West,AZ
+babr.oh Barberton,OH
+bak NULL
+bath.oh Bratenahl,OH
+baut.oc -
+bavl.ny Baldwinsville,NY
+bchw.oh Beachwood,OH
+bcpt.me Bucksport,ME
+bcs..ah -
+bcs..ak -
+bcs..am -
+bcs..ar Black Springs,AR
+bcs..be -
+bcs..bl -
+bcs..cl -
+bcs..cn -
+bcs..db -
+bcs..dy -
+bcs..fl Beacon Square,FL
+bcs..fp -
+bcs..fr -
+bcs..ft -
+bcs..gm -
+bcs..gr -
+bcs..hb -
+bcs..he -
+bcs..hl -
+bcs..kt -
+bcs..ld -
+bcs..li -
+bcs..lo -
+bcs..lr -
+bcs..lv -
+bcs..lw -
+bcs..ly -
+bcs..ma Blackstone,MA
+bcs..mi -
+bcs..mn Bellechester,MN
+bcs..mt -
+bcs..my -
+bcs..nw -
+bcs..ov -
+bcs..ow -
+bcs..ox -
+bcs..po -
+bcs..pt -
+bcs..sd Blucksberg Mountain,SD
+bcs..sp -
+bcs..tp -
+bcs..tr -
+bcs..wa -
+bcs..wk -
+bcs..wo -
+bcs..wp -
+bcs..wv Blacksville,WV
+bcs..zn -
+be10.-l -
+be10.-t -
+bere.ky Berea,KY
+besd.ca Bakersfield,CA
+bflo.ny Buffalo,NY
+bflony NULL
+bflp.ny -
+bfrd.wi -
+bigi.hi -
+bigi.p- -
+bigi.p3 -
+bivl.me -
+blas.oh Blue Ash,OH
+blfl.ca Bellflower,CA
+blfs.me Belfast,ME
+blft.oh Bellefontaine,OH
+blgr.me Belgrade,ME
+bltmmd NULL
+blvr.ny Black River,NY
+blvr.oh Bolivar village,OH
+bngh.ny Binghamton,NY
+bngr.me Bangor,ME
+bnvl.ny Baldwinsville,NY
+boln.ny Brooklyn,NY
+brea.ca Brea,CA
+brew.me Brewer,ME
+brfd.wi Brookfield,WI
+brhr.me Bar Harbor,ME
+brln.nh Berlin,NH
+brtn.me Bridgton,ME
+brtw.ca Brentwood,CA
+brwd.ca Brentwood,CA
+brwl.ca Brawley,CA
+bsse.ng -
+bstnma NULL
+buff.ny Buffalo,NY
+buffalo NULL
+bumt.tx Beaumont,TX
+bun1.-n -
+bun6.-n -
+bun7.-n -
+burl.wi Burlington,WI
+bvly.oh Beverly,OH
+bwla.ca -
+bwlg.oh Bowling Green,OH
+bwsd.ca -
+bxtn.me Buxton,ME
+bzta.oh -
+ca.11greatoaks -
+ca.529bryant -
+ca.600wseventh -
+ca.castrovalley Castro Valley,CA
+ca.chico Chico,CA
+ca.clovis Clovis,CA
+ca.dalycity Daly City,CA
+ca.davis Davis,CA
+ca.emeryville Emeryville,CA
+ca.fairfield Fairfield,CA
+ca.fortbragg Fort Bragg,CA
+ca.fremont Fremont,CA
+ca.fremontcev1 -
+ca.fremontcev2 -
+ca.fremontcev3 -
+ca.frenchcamp French Camp,CA
+ca.fresno Fresno,CA
+ca.fresnordc -
+ca.hanford Hanford,CA
+ca.hayward Hayward,CA
+ca.lodi Lodi,CA
+ca.losangeles Los Angeles,CA
+ca.losbanos Los Banos,CA
+ca.madera Madera,CA
+ca.mendota Mendota,CA
+ca.modesto Modesto,CA
+ca.monterey Monterey Park,CA
+ca.napa Napa,CA
+ca.newmerced -
+ca.novato Novato,CA
+ca.oakland Oakland,CA
+ca.park Parkway,CA
+ca.petaluma Petaluma,CA
+ca.pinedale -
+ca.pinole Pinole,CA
+ca.pittsburg Pittsburg,CA
+ca.placerville Placerville,CA
+ca.pleasanton Pleasanton,CA
+ca.reedley Reedley,CA
+ca.rohnertpr Rohnert Park,CA
+ca.sacramento Sacramento,CA
+ca.sanjose San Jose,CA
+ca.sanmateo San Mateo,CA
+ca.sanrafael San Rafael,CA
+ca.santaclara Santa Clarita,CA
+ca.santamaria Santa Maria,CA
+ca.scotts Scotts Valley,CA
+ca.sf19th -
+ca.sffolsom -
+ca.sfgeary -
+ca.sfmission -
+ca.sfpine -
+ca.sfsutro -
+ca.shaw -
+ca.stockton Stockton,CA
+ca.stocktonhe3 -
+ca.toyon Trabuco Canyon,CA
+ca.tracy Tracy,CA
+ca.tulare Tulare,CA
+ca.ukiah Ukiah,CA
+ca.vanness -
+ca.visalia Visalia,CA
+ca.walnutcreek Walnut Creek,CA
+ca.willits Willits,CA
+ca.windsor Windsor,CA
+ca.yubacity Yuba City,CA
+camb.oh Cambridge,OH
+cana.oh Canal Winchester,OH
+cand.ny Coney Island,NY
+carb.me Caribou,ME
+carolina NULL
+cbls.ny Cobleskill,NY
+ccmn.ca -
+cdbg.wi Cedarburg,WI
+cdp0.1. -
+cdpt.pa Coudersport,PA
+central NULL
+cfl..24 -
+cfl..68 -
+char.oh Chardon,OH
+chcg.il Chicago,IL
+chct.il Chicago Heights,IL
+chi1.0. -
+chi3.0. -
+chi3.1. -
+chi7.5. -
+chil.oh Chillicothe,OH
+chpl.ny Champlain,NY
+chrl.nc Charlotte,NC
+chrt.ny Cedarhurst,NY
+chsh.me Chisholm,ME
+chsw.ca -
+chwo.ca -
+cinc.i. Clinton Stock Yards,IA
+cinci NULL
+clay.ny Clayton,NY
+clbo.h1 -
+clbs.ca Calabasas,CA
+clev.oh Cleveland,OH
+clma.sc Columbia,SC
+clmb.ne Columbus,NE
+clmb.oh Columbus,OH
+clmc.oh -
+clmk.oh -
+clns.ny Cornwall-on-Hudson,NY
+clpk.ny -
+clppva NULL
+clrk.wv Clarksburg,WV
+cltn.oh Clayton,OH
+clvh.oh Cleveland Heights,OH
+clxc.ca Calexico,CA
+cmdnnj NULL
+cmld.me Cumberland Center,ME
+cmrl.ca Camarillo,CA
+cmtn.ca Compton,CA
+cmtn.nh -
+cncdnh NULL
+cncn.oh Cincinnati,OH
+cnjh.ny Canajoharie,NY
+cnnt.oh Cincinnati,OH
+cnpk.ca Cameron Park,CA
+cnsd.ca Channel Islands Beach,CA
+cntm.fl -
+cntn.oh Canton,OH
+cntt.ny Centerport,NY
+cntv.oh Centerville,OH
+cnvl.oh Centerville,OH
+cnwy.nh Conway,NH
+cny..at -
+cny..au -
+cny..ba -
+cny..bl -
+cny..bn -
+cny..cl -
+cny..cr -
+cny..dr -
+cny..em -
+cny..es -
+cny..fl Country Club,FL
+cny..fy -
+cny..ga Conyers,GA
+cny..hm -
+cny..hr -
+cny..ir -
+cny..it -
+cny..jm -
+cny..lo -
+cny..lt -
+cny..ma -
+cny..md -
+cny..ms -
+cny..nh -
+cny..nr -
+cny..og -
+cny..on -
+cny..os -
+cny..ot -
+cny..ow -
+cny..ph -
+cny..pr -
+cny..pt -
+cny..ro -
+cny..sd -
+cny..sr -
+cny..sy -
+cny..un -
+cny..vs -
+cny..ws -
+cny..wt -
+co.181dc -
+co.910fifteenth -
+co.arvada Arvada,CO
+co.aspen Aspen,CO
+co.aurora Aurora,CO
+co.avon Avon,CO
+co.battlement Battlement Mesa,CO
+co.boulder Boulder,CO
+co.clinton -
+co.cmc Commerce City,CO
+co.cosprings Colorado Springs,CO
+co.denver Denver,CO
+co.denverqwest -
+co.dsit -
+co.englewood Englewood,CO
+co.fortcollins Fort Collins,CO
+co.granby Granby,CO
+co.greeley Greeley,CO
+co.littleton Littleton,CO
+co.longmont Longmont,CO
+co.potmc-englwd -
+co.potomac -
+co.pueblo Pueblo,CO
+co.rifle Rifle,CO
+co.spotlight -
+co.steamboat Steamboat Springs,CO
+co.summit -
+co.titan -
+co.trinidad Trinidad,CO
+co.tucsn-englwd -
+co.wheatridge Wheat Ridge,CO
+columbus NULL
+conc.oh Crown City village,OH
+corn.ca Corona,CA
+covn.ca Covina,CA
+cral.id Coeur d'Alene,ID
+crbt.co Crested Butte,CO
+crch.tx Corpus Christi,TX
+cret.ne Crete,NE
+crld.ny Cortland,NY
+crls.ca Carlsbad,CA
+crml.me Carmel,ME
+crng.ny Corning,NY
+crpn.ny Crompond,NY
+crsd.ca Carlsbad,CA
+crsn.ca Carson,CA
+crth.ny Croton-on-Hudson,NY
+crvl.oh Centerville,OH
+crvy.me -
+cs66.25 -
+csms.ca Costa Mesa,CA
+ct.berlin -
+ct.bloomfield -
+ct.bolton -
+ct.branford Branford,CT
+ct.bristol Bristol,CT
+ct.canaan Canaan,CT
+ct.chartford -
+ct.clinton Clinton,CT
+ct.danbury Danbury,CT
+ct.easthaddam East Haddam,CT
+ct.easthampton East Hampton,CT
+ct.ehartford East Hartford,CT
+ct.groton Groton,CT
+ct.hamden Hamden,CT
+ct.killingworth -
+ct.middletown Middletown,CT
+ct.naugatuck Naugatuck,CT
+ct.newbritain New Britain,CT
+ct.newhaven New Haven,CT
+ct.norwich Norwich,CT
+ct.nstonington -
+ct.seymour Seymour,CT
+ct.shelton Shelton,CT
+ct.wallingford Wallingford Center,CT
+ct.waterbury Waterbury,CT
+ct.westhaven West Haven,CT
+ct.whartford West Hartford,CT
+ct.wolcott Wolcott,CT
+cvsd.ca -
+cydn.ky Corydon,KY
+cyin.ca -
+cynt.ky Cynthiana,KY
+cypr.ca Cypress,CA
+cytn.ny Clayton,NY
+davl.ky Danville,KY
+dbln.oh Dublin,OH
+dc NULL
+dc.benning -
+dc.chillum -
+dc.floridaave -
+dc.michiganave -
+dc.newmexiconw -
+dc.scapitolstse -
+dca0.0. -
+dca0.1. -
+dca1.0. -
+dca2.0. -
+de.dover Dover,DE
+de.frenchtown -
+de.georgetown Georgetown,DE
+de.harrington Harrington,DE
+de.lewes Lewes,DE
+de.limestonedr -
+de.milford Milford,DE
+de.newcastle New Castle,DE
+de.newcastlerdc -
+de.rt202 -
+de.seaford Seaford,DE
+de.tyboutscrnr -
+de.uofdelaware -
+delh.ny Delhi,NY
+delr.tx Del Rio,TX
+den0.0. -
+den3.0. -
+depr.wi De Pere,WI
+dev-.15 -
+dfsp.fl De Funiak Springs,FL
+dfw1.0. -
+dhsp.ca Desert Hot Springs,CA
+div-.24 -
+div..am -
+div..ba -
+div..bl -
+div..bv -
+div..cl -
+div..cn -
+div..dy -
+div..fp -
+div..fr -
+div..hb -
+div..hm -
+div..lw -
+div..ly -
+div..md -
+div..mm -
+div..ow -
+div..sp -
+div..tr -
+dlfd.wi Delafield,WI
+dlla.tx Dallas,TX
+dllstx NULL
+dlly.tx Dilley,TX
+dlph.oh Delphos,OH
+dlwr.oh Delaware,OH
+dmbr.ca Diamond Bar,CA
+dnkr.ny Dunkirk,NY
+dns-.se -
+dnvr.co Denver,CO
+dnvr.rd -
+dr-n.sa -
+drfd.ny -
+dthn.al Dothan,AL
+dvfx.me Dover-Foxcroft,ME
+dytn.oh Dayton,OH
+dytw.oh Doylestown,OH
+eaur.ny East Aurora,NY
+ec NULL
+eglp.tx Eagle Pass,TX
+egrk.ca -
+elct.ca El Centro,CA
+elmo.re -
+elp NULL
+elps.tx El Paso,TX
+elsn.ca East Los Angeles,CA
+elwo.me Ellsworth,ME
+elyr.oh Elyria,OH
+emir.ny Elmira,NY
+engl.ab -
+er01..p -
+erie.pa Erie,PA
+eriepa NULL
+esyr.ny East New York,NY
+eton.oh Eaton,OH
+eufl.al Eufaula,AL
+fapt.ny Fairport,NY
+fas-.0- -
+fas-.9- -
+fbrn.oh Fairborn,OH
+ffax.va Fairfax,VA
+fl.16th-pmpnbch -
+fl.alicocentrrd -
+fl.arcadia Arcadia,FL
+fl.arlington -
+fl.avondale -
+fl.beaches -
+fl.beauclerc -
+fl.beaudr -
+fl.beeridgerd -
+fl.bocaraton Boca Raton,FL
+fl.bonitasprngs Bonita Springs,FL
+fl.boynton Boynton Beach,FL
+fl.callahan Callahan,FL
+fl.capecoral Cape Coral,FL
+fl.capehaze -
+fl.capitalcircl -
+fl.celebration Celebration,FL
+fl.chaffee -
+fl.coralgables Coral Gables,FL
+fl.davie Davie,FL
+fl.deerfield Deerfield Beach,FL
+fl.deerwood -
+fl.delrayeast -
+fl.delraywest -
+fl.dunnellon Dunnellon,FL
+fl.eastorange -
+fl.edgewood Edgewood,FL
+fl.englewood Englewood,FL
+fl.estates -
+fl.estero Estero,FL
+fl.etharpest -
+fl.fernandina Fernandina Beach,FL
+fl.fleming Fleming Island,FL
+fl.fortmyers Fort Myers,FL
+fl.fruitlandpr Fruitland Park,FL
+fl.ftcaroline -
+fl.ftlauderdale Fort Lauderdale,FL
+fl.ftpierce Fort Pierce,FL
+fl.gardens -
+fl.goldengate Golden Gate,FL
+fl.goodlettfrnk -
+fl.gunneryrd -
+fl.hallandale Hallandale Beach,FL
+fl.hialeahne -
+fl.hialeahse -
+fl.hialeahwest -
+fl.hobesound Hobe Sound,FL
+fl.homestead Homestead,FL
+fl.immokalee Immokalee,FL
+fl.jupiterfarms Jupiter Farms,FL
+fl.kendall Kendall,FL
+fl.kernan -
+fl.keylargo Key Largo,FL
+fl.keywest Key West,FL
+fl.l3-tallahas -
+fl.labelle LaBelle,FL
+fl.lakecity Lake City,FL
+fl.lakeplacid Lake Placid,FL
+fl.lakewales Lake Wales,FL
+fl.lakeworth Lake Worth,FL
+fl.leecocourt -
+fl.leesburg Leesburg,FL
+fl.lehigh Lehigh Acres,FL
+fl.longboatkey Longboat Key,FL
+fl.macclenny Macclenny,FL
+fl.madison Madison,FL
+fl.mandarin -
+fl.marathon Marathon,FL
+fl.marcoisland Marco Island,FL
+fl.margate Margate,FL
+fl.marianna Marianna,FL
+fl.miami Miami,FL
+fl.miamimetro -
+fl.miccosukeerd -
+fl.miramar Miramar,FL
+fl.mtdora Mount Dora,FL
+fl.mtplymouth Mount Plymouth,FL
+fl.murdock -
+fl.n111ave -
+fl.naples Naples,FL
+fl.normandy -
+fl.northdade North Andrews Gardens,FL
+fl.northeast New Port Richey East,FL
+fl.northlake -
+fl.northpoint -
+fl.northport North Port,FL
+fl.nota North Miami,FL
+fl.nworange -
+fl.okeechobee Okeechobee,FL
+fl.oldbainbridg -
+fl.orangepark Orange Park,FL
+fl.osceolaeast -
+fl.osceolawest -
+fl.pahokee Pahokee,FL
+fl.palatka Palatka,FL
+fl.palmcity Palm City,FL
+fl.palmerranch -
+fl.panamacity Panama City,FL
+fl.panamactybch Panama City Beach,FL
+fl.pembroke Pembroke Pines,FL
+fl.perrine -
+fl.perry Perry,FL
+fl.pershingst -
+fl.planteast -
+fl.plantwest -
+fl.pompanobeach Pompano Beach,FL
+fl.pontevedra Ponte Vedra Beach,FL
+fl.portcharlott Port Charlotte,FL
+fl.portstlucie Port Saint Lucie,FL
+fl.proctorrd -
+fl.puntagorda Punta Gorda Isles,FL
+fl.quincy Quincy,FL
+fl.redlands -
+fl.sarasota Sarasota,FL
+fl.sebastian Sebastian,FL
+fl.sebring Sebring,FL
+fl.siestakey Siesta Key,FL
+fl.southbay South Bay,FL
+fl.southdade -
+fl.southlake -
+fl.southorange -
+fl.southside -
+fl.southwest Southwest Ranches,FL
+fl.springfield Springfield,FL
+fl.staterd7 -
+fl.staugbeach Saint Augustine Beach,FL
+fl.staugustine Saint Augustine,FL
+fl.stjames Saint James City,FL
+fl.stjohns -
+fl.stluciewest -
+fl.stuart Stuart,FL
+fl.sumter -
+fl.sweetwater Sweetwater,FL
+fl.tallahassee Tallahassee,FL
+fl.tamarac Tamarac,FL
+fl.tamiamitrail -
+fl.tampa Tampa,FL
+fl.tequesta Tequesta,FL
+fl.timberlanerd -
+fl.timuquana -
+fl.towerrd -
+fl.venice Venice,FL
+fl.verandah -
+fl.verobeach Vero Beach South,FL
+fl.villages Villages of Oriole,FL
+fl.wakulla -
+fl.wellington Wellington,FL
+fl.westboca -
+fl.westside -
+fl.wolferd -
+fl.yulee Yulee,FL
+flcy.ne Falls City,NE
+fltn.ca Fullerton,CA
+fltn.ny Fulton,NY
+fmbg.ky Flemingsburg,KY
+fmhl.mi Farmington Hills,MI
+fnta.ca Fontana,CA
+fnvy.ca Fountain Valley,CA
+fore.se -
+frby.ne Fairbury,NE
+frdn.ny Fredonia,NY
+frfd.oh Fairfield,OH
+frmn.ne Fremont,NE
+frmt.oh Fremont,OH
+frnk.pa Franklin Park,PA
+frsh.ny Friendship,NY
+ftan.ny Fort Salonga,NY
+fthl.az Fortuna Foothills,AZ
+fw0-.tx -
+fyvl.nc Fayetteville,NC
+fyvl.ny Fayetteville,NY
+g-1-.0- -
+g-2-.0- -
+g-3-.0- -
+g-3-.1- -
+g1-0.-0 -
+g1-4.7- -
+g14-.1- -
+g16-.ar -
+g3-0.-0 -
+g3-1.-0 -
+ga.19cmb-atlant -
+ga.56marietta -
+ga.A3atlanta -
+ga.B0atlanta -
+ga.C2sdigital -
+ga.E1eastpoint -
+ga.G1norcross -
+ga.N2alpharetta -
+ga.S1marietta -
+ga.X1calhoun -
+ga.Y4Cumming -
+ga.a1atlanta -
+ga.a2atlanta -
+ga.a6atlanta -
+ga.abercornst -
+ga.appling Appling,GA
+ga.atlanta Atlanta,GA
+ga.augusta Augusta,GA
+ga.b0atlanta -
+ga.b1kennesaw -
+ga.b2marietta -
+ga.b3marietta -
+ga.b4marietta -
+ga.b5mableton -
+ga.b6powsprings -
+ga.b7powsprings -
+ga.bartlett -
+ga.battlefield -
+ga.brunswick Brunswick,GA
+ga.c1morrow -
+ga.c2sdigital -
+ga.c3riverdale -
+ga.d1stonemtn -
+ga.d2lithonia -
+ga.d3stonemtn -
+ga.d4decatur -
+ga.d5decatur -
+ga.d6decatur -
+ga.d7decatur -
+ga.d8decatur -
+ga.d9chamblee -
+ga.darien Darien,GA
+ga.e1eastpoint -
+ga.ebroadst -
+ga.elberton Elberton,GA
+ga.f2peachtree -
+ga.f3sfulton -
+ga.g1norcross -
+ga.g2lilburn -
+ga.g3lilburn -
+ga.g4snellville -
+ga.g5snellville -
+ga.g6lilburn -
+ga.g7lilburn -
+ga.highway341 -
+ga.hinesville Hinesville,GA
+ga.j1griffin -
+ga.jesup Jesup,GA
+ga.k1winder -
+ga.k2gwinnett -
+ga.l1douglas -
+ga.l2douglas -
+ga.lafayette LaFayette,GA
+ga.martinez Martinez,GA
+ga.metter Metter,GA
+ga.n1alpharetta -
+ga.n2alpharetta -
+ga.n3alpharetta -
+ga.naugusta -
+ga.newberry -
+ga.p1dallas -
+ga.p2villarica -
+ga.pembroke Pembroke,GA
+ga.pinehill -
+ga.pooler Pooler,GA
+ga.quitman Quitman,GA
+ga.r1conyers -
+ga.r2conyers -
+ga.richmondhill Richmond Hill,GA
+ga.s1marietta -
+ga.s2woodstock -
+ga.s3ndigital -
+ga.s3woodstock -
+ga.s5marietta -
+ga.savannah Savannah,GA
+ga.skidaway Skidaway Island,GA
+ga.south17 -
+ga.springfield Springfield,GA
+ga.stmary Saint Marys,GA
+ga.stngt-stnmnt -
+ga.stsimons Saint Simon Mills,GA
+ga.thompson -
+ga.vinings Vinings,GA
+ga.w1monroe -
+ga.waynesboro Waynesboro,GA
+ga.wilmington Wilmington Island,GA
+ga.wndsrsprng -
+ga.x1calhoun -
+ga.y1rome -
+ga.y2cartersvil -
+ga.y3canton -
+galn.oh Galion,OH
+galv.ny Grandyle Village,NY
+gate.wa Granite Falls,WA
+gbsn.oh Gibsonburg,OH
+gdgv.ca Garden Grove,CA
+gdis.ny Gordon Heights,NY
+ge-0.-0 -
+ge-0.-1 -
+ge-1.4- -
+ge-1.5- -
+ge-1.6- -
+ge-1.7- -
+ge-1.8- -
+ge-3.-0 -
+ge-3.-1 -
+ge-4.-1 -
+ge0-.1- -
+ge0-.2- -
+ge1-.0- -
+ge14.-0 -
+ge14.-1 -
+ge14.-p -
+ge15.-0 -
+ge15.-1 -
+ge15.-p -
+ge16.-1 -
+ge16.-f -
+ge17.-0 -
+ge17.-1 -
+ge18.-0 -
+ge18.-1 -
+ge3-.0- -
+ge3-.1- -
+genv.ny Glen Cove,NY
+genv.oh Greenville,OH
+ghna.oh Gahanna,OH
+gi3-.0- -
+gig-.0- -
+gig-.1- -
+gig-.14 -
+gig-.16 -
+gig-.17 -
+gig-.18 -
+gig-.2- -
+gig-.3- -
+gig-.4- -
+gig0.-1 -
+gig0.-2 -
+gig0.-3 -
+gig1.-0 -
+gig1.4- -
+gig1.6- -
+gig1.7- -
+gig1.8- -
+gig2.-0 -
+gig2.-2 -
+gig3.-0 -
+gig3.-1 -
+gig7.-0 -
+glfl.ny Glens Falls,NY
+glvl.ny Gloversville,NY
+glvv.ny Gloversville,NY
+gnbo.nc Greensboro,NC
+gnby.wi Green Bay,WI
+gndy.va Grundy,VA
+gnsn.co Glenwood Springs,CO
+gnwc.ny Greenwich,NY
+grdn.ca Garden Grove,CA
+gren.oh Green,OH
+grfd.oh Garfield Heights,OH
+grgv.ca Garden Grove,CA
+grhl.ca Granite Hills,CA
+grmt.oh Germantown,OH
+grrd.pa Girard,PA
+grts.oh Garfield Heights,OH
+grtw.ky Georgetown,KY
+grvi.ny Gloversville,NY
+grvl.oh Greenville,OH
+grvw.oh Grandview Heights,OH
+gsbk.oh Groesbeck,OH
+gt NULL
+gvcy.oh Grove City,OH
+gvll.pa Greenville,PA
+gvrn.ny Gouverneur,NY
+hawaii NULL
+hbck.pa -
+hbts.wi -
+hdbg.ky Harrodsburg,KY
+hemt.ca Hemet,CA
+herh.el -
+herntx NULL
+herp.rd -
+hgpn.nc High Point,NC
+hgrtmd NULL
+hlrd.oh Hilliard,OH
+hltp.oh Hilltop,OH
+hlwl.me Hallowell,ME
+hmbg.ny Hamburg,NY
+hmtn.ny Hampton Bays,NY
+hnbh.ca Huntington Beach,CA
+hnbi.ca -
+hnll.hi Honolulu,HI
+hnsn.ky Henderson,KY
+hot NULL
+hou3.0. -
+hrbgpa NULL
+hrbh.ca Hermosa Beach,CA
+hrkm.ny Herkimer,NY
+hrld.wi Hartland,WI
+hrnd.va Herndon,VA
+hrnl.ny Hornell,NY
+hsfl.ny Hudson Falls,NY
+hstn.tx Houston,TX
+hstntx NULL
+hvc NULL
+hvla.ca Hidden Valley Lake,CA
+hwth.ca Hawthorne,CA
+idyl.ca Idyllwild-Pine Cove,CA
+igwd.ca Inglewood,CA
+il.350ecermak -
+il.algonquin Algonquin,IL
+il.area4 -
+il.champaign Champaign,IL
+il.chicago Chicago,IL
+il.chicago201 -
+il.chicago301 -
+il.chicago302 -
+il.danville Danville,IL
+il.decatur Decatur,IL
+il.dekalb DeKalb,IL
+il.elmhurst Elmhurst,IL
+il.epeoria East Peoria,IL
+il.freeport Freeport,IL
+il.galesburg Galesburg,IL
+il.homewood Homewood,IL
+il.kankakee Kankakee,IL
+il.lincoln Lincoln,IL
+il.macomb Macomb,IL
+il.mchenry McHenry,IL
+il.mendota Mendota,IL
+il.mortongrove Morton Grove,IL
+il.mtprospect Mount Prospect,IL
+il.nchicago North Chicago,IL
+il.normal Normal,IL
+il.pekin Pekin,IL
+il.peoria Peoria,IL
+il.quincy Quincy,IL
+il.rockford Rockford,IL
+il.rollingmdws Rolling Meadows,IL
+il.romeoville Romeoville,IL
+il.springfield Springfield,IL
+il.wchicago West Chicago,IL
+il.wstrn-chicag -
+in.aboite -
+in.anderson Anderson,IN
+in.beechgrove Beech Grove,IN
+in.bloomington Bloomington,IN
+in.columbus Columbus,IN
+in.connersville Connersville,IN
+in.crawfordsvll Crawfordsville,IN
+in.elkhart Elkhart,IN
+in.frankfort Frankfort,IN
+in.greensburg Greensburg,IN
+in.greenwood Greenwood,IN
+in.griffith Griffith,IN
+in.hammond Hammond,IN
+in.huntington Huntington,IN
+in.indianapolis Indianapolis,IN
+in.kokomo Kokomo,IN
+in.lafayette Lafayette,IN
+in.lawrence Lawrence,IN
+in.lawrenceburg Lawrenceburg,IN
+in.logansport Logansport,IN
+in.main Marion,IN
+in.mishawaka Mishawaka,IN
+in.monticello Monticello,IN
+in.muncie Muncie,IN
+in.newhaven New Haven,IN
+in.noblesville Noblesville,IN
+in.northwest North Webster,IN
+in.peru Peru,IN
+in.pinevalley -
+in.richmond Richmond,IN
+in.seymour Seymour,IN
+in.shelbyville Shelbyville,IN
+in.south South Bend,IN
+in.speedway Speedway,IN
+in.tellcity Tell City,IN
+in.valparaiso Valparaiso,IN
+indi.ca Indio,CA
+indy NULL
+indy.ca Industry,CA
+insight NULL
+inst.oh -
+ipls.in Indianapolis,IN
+ipslin NULL
+iran.y0 -
+irtn.oh Ironton,OH
+ithc.ny Ithaca,NY
+jmtw.ny Jamestown,NY
+kaui.hi Kahului,HI
+kc NULL
+kc.C.PE -
+kc.bcs -
+kcsy.ks -
+keen.nh Keene,NH
+keno.wi Kenosha,WI
+kent.oh Kent,OH
+kihe.hi Kihei,HI
+klao.hi Kailua-Kona,HI
+kmla.hi -
+kmsd.ca -
+knds.me Kenduskeag,ME
+knmt.va -
+kntn.oh Kenton,OH
+ks.olathe Olathe,KS
+ksca.ks -
+kscd.mo -
+kscf.mo -
+kscy.ks Kansas City,KS
+kscy.mo Kansas City,MO
+kscz.mo -
+kttr.oh Kettering,OH
+kvwo.ks -
+ky.campbellsvil Campbellsville,KY
+ky.elizabethtwn Elizabethtown,KY
+ky.ftcampbell Fort Campbell North,KY
+ky.greenville Greenville,KY
+ky.horsecave Horse Cave,KY
+ky.paducah Paducah,KY
+la.eastshrvprt -
+la.houma Houma,LA
+la.laplace Laplace,LA
+la.mainshrvprt -
+la.monroe Monroe,LA
+la.northshrvprt -
+la.southshrvprt -
+la.westmonroe West Monroe,LA
+la.westshrvprt -
+lag-.1- -
+lamd.ca La Mirada,CA
+lamr.ca La Mirada,CA
+lard.tx Laredo,TX
+lax0.0. -
+lax3.0. -
+lbrt.ny Liberty,NY
+lbt-.wb -
+lcpt.ny Lockport,NY
+ldvl.ny Lloyd Harbor village,NY
+leem.a0 -
+leny.ks -
+lgan.oh Logan,OH
+libt.oh Liberty Center,OH
+lima.ny Lima,NY
+lima.oh Lima,OH
+limo.h1 -
+ljsd.ca -
+lker.ca Lake Forest,CA
+lkgn.wi Lake Geneva,WI
+lkgr.ny Lake Grove,NY
+lklz.ny Lake Luzerne,NY
+lksd.oh Lakeside,OH
+lkvl.oh Lakemore village,OH
+lkwd.ca Lakewood,CA
+lkwn.ny Lackawanna,NY
+lncl.me Lincoln,ME
+lncl.ne Lincoln,NE
+lncs.nh Lancaster,NH
+lncs.ny Lancaster,NY
+lndy.nh Londonderry,NH
+lodi.oh Lodi,OH
+lond.ky London,KY
+lorn.oh Lorain,OH
+lowv.ny Lowville,NY
+lrbg.ky Lawrenceburg,KY
+lrtt.ky Louisville/Jefferson County metro government,KY
+lrvl.pa Larksville,PA
+lsad.ca Lucas Valley-Marinwood,CA
+lsai.ca Los Alamitos,CA
+lsaj.ca -
+lsan.ca Los Angeles,CA
+lsanca NULL
+lsap.ca -
+lsau.ca -
+lsay.ca Lindsay,CA
+lstn.me Lewiston,ME
+ltfd.ny -
+lttn.nh Littleton,NH
+lvna.mi Livonia,MI
+lvnd.oh Loveland,OH
+lvwo.ks Leavenworth,KS
+lwbg.oh Lewisburg,OH
+lxtn.nc Lexington,NC
+lyme.ny -
+lync.oh Lynchburg,OH
+lyncva NULL
+lynd.oh Lyndhurst,OH
+ma NULL
+ma.amesbury Amesbury,MA
+ma.amherst Amherst Center,MA
+ma.barnstable Barnstable,MA
+ma.beverly Beverly Cove,MA
+ma.bllbr-chlmsf -
+ma.boston Boston,MA
+ma.bourne Bourne,MA
+ma.brockton Brockton,MA
+ma.brookline Brookline,MA
+ma.cambridge Cambridge,MA
+ma.chelmsfdrdc1 -
+ma.chelmsfdrdc2 -
+ma.cpe Chicopee,MA
+ma.deerfield Deerfield,MA
+ma.fallriver Fall River,MA
+ma.foxboro Foxborough,MA
+ma.framingham Framingham,MA
+ma.gardner Gardner,MA
+ma.gloucester Gloucester,MA
+ma.groveland Groveland,MA
+ma.lawrence Lawrence,MA
+ma.lowell Lowell,MA
+ma.lynn Lynn,MA
+ma.malden Malden,MA
+ma.marion Marion,MA
+ma.marlboro Marlborough,MA
+ma.marshfield Marshfield,MA
+ma.marthasvnyrd -
+ma.mashpee Mashpee,MA
+ma.maynard Maynard,MA
+ma.medfield Medfield,MA
+ma.middleboro Middleborough Center,MA
+ma.milford Milford,MA
+ma.monson Monson,MA
+ma.montague Montague,MA
+ma.nantucket Nantucket,MA
+ma.natick Natick,MA
+ma.needham Needham,MA
+ma.newbedford New Bedford,MA
+ma.newburyport Newburyport,MA
+ma.northampton Northampton,MA
+ma.norwood Norwood,MA
+ma.orleans Orleans,MA
+ma.peabody Peabody,MA
+ma.pembroke -
+ma.pinehills -
+ma.plymouth Plymouth,MA
+ma.quincy Quincy,MA
+ma.rehoboth Rehoboth,MA
+ma.rockland Rockland,MA
+ma.roxbury -
+ma.scituate Scituate,MA
+ma.springfield Springfield,MA
+ma.sterling Sterling,MA
+ma.sthplymouth -
+ma.warren Warren,MA
+ma.westfield Westfield,MA
+ma.westroxbury -
+ma.weymouth Weymouth,MA
+ma.winchendon Winchendon,MA
+ma.woburn Woburn,MA
+ma.yarmouth Yarmouth,MA
+maine NULL
+maln.ny Malverne,NY
+mari.oh Marion,OH
+maui.hi Maunawili,HI
+mcdn.oh Macedonia,OH
+mcfl.me Mechanic Falls,ME
+md.aberdeen Aberdeen,MD
+md.annapolis Annapolis,MD
+md.berlin Berlin,MD
+md.bethesdaeast -
+md.bethesdawest -
+md.bowie Bowie,MD
+md.cambridge Cambridge,MD
+md.capitolhghts Capitol Heights,MD
+md.catonsville Catonsville,MD
+md.churchville -
+md.damascus Damascus,MD
+md.deepcreek -
+md.denton Denton,MD
+md.desoto -
+md.ebaltimorest -
+md.elkridge Elkridge,MD
+md.elkton Elkton,MD
+md.ellicttcty Ellicott City,MD
+md.essex Essex,MD
+md.finchville -
+md.frankford -
+md.frederick Frederick,MD
+md.gaithersburg Gaithersburg,MD
+md.gambrills Gambrills,MD
+md.gampark -
+md.germantowne -
+md.germantownw -
+md.grantsville Grantsville,MD
+md.hancock Hancock,MD
+md.howardcounty -
+md.hyattsville Hyattsville,MD
+md.jefferson Jefferson,MD
+md.kirkave -
+md.lanham Lanham,MD
+md.livingstonrd -
+md.longhill -
+md.metrodr -
+md.middletown Middletown,MD
+md.mountcarmel -
+md.mtairy Mount Airy,MD
+md.mtpleasant -
+md.newmarket New Market,MD
+md.newtowson -
+md.oceancity Ocean City,MD
+md.olney Olney,MD
+md.owingsmills Owings Mills,MD
+md.parkville Parkville,MD
+md.poolesville Poolesville,MD
+md.potomac Potomac,MD
+md.rockville Rockville,MD
+md.rockvilleast -
+md.rockvillwest -
+md.salisbury Salisbury,MD
+md.thurmont Thurmont,MD
+md.waldorf Waldorf,MD
+md.westminster Westminster,MD
+md.whitemarsh White Marsh,MD
+md.whitoaknorth -
+md.whitoaksouth -
+md.willimsbrg -
+md.woodlawn Woodlawn,MD
+mdsn.in Madison,IN
+mdsn.ky Madisonville,KY
+mdsn.ny Middle Island,NY
+mdws.me Madawaska,ME
+me.brunswick Brunswick,ME
+mgfd.ky Morganfield,KY
+mi.adrian Adrian,MI
+mi.auburnhills Auburn Hills,MI
+mi.battlecreek Battle Creek,MI
+mi.birmingham Birmingham,MI
+mi.brighton Brighton,MI
+mi.browncity Brown City,MI
+mi.canton Canton,MI
+mi.clinton2 -
+mi.clinton3 -
+mi.dearborn Dearborn,MI
+mi.dearbornhgts Dearborn Heights,MI
+mi.downtown -
+mi.epointe Eastpointe,MI
+mi.flint Flint,MI
+mi.flushing Flushing,MI
+mi.gardencity Garden City,MI
+mi.grandrapids Grand Rapids,MI
+mi.grosspoint Grosse Pointe Woods,MI
+mi.holland Holland,MI
+mi.holt Holt,MI
+mi.jackson Jackson,MI
+mi.jonesville Jonesville,MI
+mi.lawton Lawton,MI
+mi.lyndon -
+mi.macomb -
+mi.madisonhghts Madison Heights,MI
+mi.melvindale Melvindale,MI
+mi.monroe Monroe,MI
+mi.mtmorris Mount Morris,MI
+mi.muskegon Muskegon,MI
+mi.nannarbor -
+mi.newhaven New Haven,MI
+mi.pigeon Pigeon,MI
+mi.plymouth Plymouth,MI
+mi.pontiac Pontiac,MI
+mi.porthuron Port Huron,MI
+mi.richland Richland village,MI
+mi.rochestrhlls Rochester Hills,MI
+mi.rockwood Rockwood,MI
+mi.romeo Romeo,MI
+mi.roseville Roseville,MI
+mi.royaloak Royal Oak,MI
+mi.sannarbor -
+mi.shaven South Haven,MI
+mi.shelby Shelby,MI
+mi.southfield Southfield,MI
+mi.southgate Southgate,MI
+mi.springfield Springfield,MI
+mi.stclaircty -
+mi.stclairshors Saint Clair Shores,MI
+mi.sterling1 -
+mi.sterling3 -
+mi.sterling4 -
+mi.stjoseph Saint Joseph,MI
+mi.taylor Taylor,MI
+mi.threerivers Three Rivers,MI
+mi.vanburen -
+mi.walledlake Walled Lake,MI
+mi.wannarbor -
+mi.warren1 -
+mi.warren3 -
+mi.warren4 -
+mi.waterford Waterford,MI
+mi.wayne Wayne,MI
+mi.wbloomfield -
+mi.westlandhe -
+mi.westlandotn -
+mi.westlandrdc -
+mi.woodhaven Woodhaven,MI
+mi.ypeast -
+mi.ypwest -
+midohio NULL
+midohio.bcs NULL
+mids.ou -
+midsouth NULL
+midwest NULL
+miln.hi Mililani Town,HI
+milw.wi Milwaukee,WI
+mlbg.oh Middleburg Heights,OH
+mlck.pa Mill Creek,PA
+mmsd.ca -
+mn.C.PE Circle Pines,MN
+mn.afton Afton,MN
+mn.anoka Anoka,MN
+mn.brooklynpark Brooklyn Park,MN
+mn.chaska Chaska,MN
+mn.crosstown -
+mn.eagan Eagan,MN
+mn.edina Edina,MN
+mn.fridley Fridley,MN
+mn.hamlake Ham Lake,MN
+mn.hastings Hastings,MN
+mn.hennepintown -
+mn.invergrove Inver Grove Heights,MN
+mn.jordan Jordan,MN
+mn.mahtomedi Mahtomedi,MN
+mn.maplegrove Maple Grove,MN
+mn.martin Martin Lake,MN
+mn.minnehaha -
+mn.minnetonka Minnetonka Mills,MN
+mn.nempls -
+mn.newhope New Hope,MN
+mn.newport Newport,MN
+mn.newulm New Ulm,MN
+mn.nmpls -
+mn.oakdale Oakdale,MN
+mn.pillsbury -
+mn.plymouth Plymouth,MN
+mn.richfield Richfield,MN
+mn.roseville Roseville,MN
+mn.rosevillerdc -
+mn.shakopee Shakopee,MN
+mn.shoreview Shoreview,MN
+mn.sims Saint James,MN
+mn.smpls -
+mn.stlouispark Saint Louis Park,MN
+mn.swmpls -
+mn.webster -
+mn.whitebear White Bear Lake,MN
+mnfd.oh Mansfield,OH
+mnfl.ny Montour Falls,NY
+mnta.oh Mentor-on-the-Lake,OH
+mntr.oh Mentor,OH
+mnvy.ca Moreno Valley,CA
+mo.independence Independence,MO
+monr.nc Monroe,NC
+mpls.mn Minneapolis,MN
+mrhd.ky Morehead,KY
+mrnt.wi Marinette,WI
+mrpk.ca Monterey Park,CA
+mrvy.ca Moreno Valley,CA
+ms.clinton Clinton,MS
+ms.corinth Corinth,MS
+ms.florence Florence,MS
+ms.hattiesburg Hattiesburg,MS
+ms.hernando Hernando,MS
+ms.jacksonnorth -
+ms.jacksonsouth -
+ms.lakecaroline -
+ms.laurel Laurel,MS
+ms.madison Madison,MS
+ms.meridian Meridian,MS
+ms.olivebranch Olive Branch,MS
+ms.rankin -
+ms.strayhorne -
+ms.tunica Tunica,MS
+ms.tupelo Tupelo,MS
+ms.westpoint West Point,MS
+msbg.oh Miamisburg,OH
+mscw.id Moscow,ID
+mskg.wi Muskego,WI
+mson.oh Massillon,OH
+mssn.ny Massena,NY
+mtgl.oh Mount Gilead,OH
+mtgm.oh Montgomery,OH
+mtst.ky Mount Washington,KY
+mwrtn NULL
+myfd.ky Mayfield,KY
+myvl.oh Marysville,OH
+nadm.ma North Adams,MA
+nans.me -
+nass.ny North Massapequa,NY
+nata.ll -
+natc.ky -
+natm.tn Nashville-Davidson metropolitan government,TN
+natn.ow -
+nats.ow -
+natw.ky -
+nc NULL
+nc.a.ol Ansonville,NC
+nc.charlotte Charlotte,NC
+nc.yanceyville Yanceyville,NC
+ncnt.oh North Canton,OH
+ne NULL
+ne.a.rd -
+ne.b.cp -
+ne.b.rt Bridgeport,NE
+ne.b.xt -
+ne.c.ml Chambers village,NE
+ne.c.nw -
+ne.k.ee Kenesaw village,NE
+ne.n.rw -
+ne.n.wp Newport village,NE
+ne.p.lm Palmer village,NE
+ne.p.tl Paxton village,NE
+ne.s.ac Syracuse,NE
+ne.s.cb -
+ne.s.eb Shelby village,NE
+ne.s.pl Saint Paul,NE
+ne.w.ll Willow Island,NE
+ne.w.rr Wood River,NE
+neb NULL
+neb..CP -
+nenh.wi Neenah,WI
+neo NULL
+neo.bcs NULL
+new NULL
+new..CP -
+ngfl.ny Niagara Falls,NY
+nh.boscawen Boscawen,NH
+nh.claremont Claremont,NH
+nh.concord Concord,NH
+nh.derry Derry Village,NH
+nh.dover Dover,NH
+nh.exeter Exeter,NH
+nh.hinsdale Hinsdale,NH
+nh.kingston Kingston,NH
+nh.lebanon Lebanon,NH
+nh.londonderry Londonderry,NH
+nh.manchester Manchester,NH
+nh.mtvernon Mont Vernon,NH
+nh.nashua Nashua,NH
+nh.portsmouth Portsmouth,NH
+nh.salem Salem,NH
+nhvl.ny North Amityville,NY
+nich.ky Nicholasville,KY
+nj NULL
+nj.absecon Absecon,NJ
+nj.arneysmount -
+nj.audubon Audubon,NJ
+nj.avalon Avalon,NJ
+nj.avenel Avenel,NJ
+nj.bayville -
+nj.bishopsgate -
+nj.brick1 -
+nj.brick2 -
+nj.bridgeton Bridgeton,NJ
+nj.brownsmills Browns Mills,NJ
+nj.burlington Burlington,NJ
+nj.cherryhille -
+nj.cherryhillw -
+nj.clementon Clementon,NJ
+nj.commercial -
+nj.dover Dover,NJ
+nj.eastwindsor -
+nj.eatontown Eatontown,NJ
+nj.ebrunswick East Brunswick,NJ
+nj.franklinvill -
+nj.gloucester Gloucester City,NJ
+nj.hammonton Hammonton,NJ
+nj.hillsboro -
+nj.jerseycity Jersey City,NJ
+nj.lambertville Lambertville,NJ
+nj.longbeachisl -
+nj.longhill -
+nj.manahawkin Manahawkin,NJ
+nj.mayslanding Mays Landing,NJ
+nj.medford Medford Lakes,NJ
+nj.middletown -
+nj.moorestown Moorestown-Lenola,NJ
+nj.mtlaurel Mount Laurel,NJ
+nj.narlington North Arlington,NJ
+nj.nhanover -
+nj.pennsauken Pennsauken,NJ
+nj.plainfield Plainfield,NJ
+nj.portmurray Port Murray,NJ
+nj.raritan Raritan,NJ
+nj.riogrande Rio Grande,NJ
+nj.salem Salem,NJ
+nj.southhampton -
+nj.summit Summit,NJ
+nj.swedesboro Swedesboro,NJ
+nj.tomsriver Toms River,NJ
+nj.trenton Trenton,NJ
+nj.turnersville Turnersville,NJ
+nj.union Union City,NJ
+nj.uppertwsp -
+nj.verona Verona,NJ
+nj.vineland Vineland,NJ
+nj.voorhees Voorhees,NJ
+nj.whiting Whittingham,NJ
+nj.woodbury Woodbury,NJ
+nl NULL
+nm.albuquerque Albuquerque,NM
+nm.broadway -
+nm.deming Deming,NM
+nm.farmington Farmington,NM
+nm.fourhills -
+nm.gallup Gallup,NM
+nm.lascruces Las Cruces,NM
+nm.losalamos Los Alamos,NM
+nm.loslunas Los Lunas,NM
+nm.montbel -
+nm.paradise Paradise Hills,NM
+nm.portales Portales,NM
+nm.sandia Sandia Heights,NM
+nm.santafe Santa Fe,NM
+nm.sequoia -
+nm.silvercity Silver City,NM
+nm.southvalley South Valley,NM
+nm.taos Taos,NM
+nm.tijeras Tijeras village,NM
+nm.tnnss-albqrq -
+nolm.oh North Olmsted,OH
+norg.ca North Glendale,CA
+northeast.alb NULL
+northeast.cny NULL
+northeast.ne -
+northeast.wny NULL
+nplh.oh New Philadelphia,OH
+nprr.wi North Prairie,WI
+nrflva NULL
+nrvl.ny North Amityville,NY
+nrwc.ny Norwich,NY
+ntet.pa Northwest Harborcreek,PA
+ntnw.ny North Tonawanda,NY
+nwbl.ny New Berlin,NY
+nwbl.wi New Berlin,WI
+nwbr.in Newburgh,IN
+nwln.oh New Franklin,OH
+nwrk.oh Newark,OH
+nwrknj NULL
+nwrm.oh New Bremen,OH
+ny.111eighthave -
+ny.carmel Carmel Hamlet,NY
+ny.newyork New York City,NY
+ny5030 NULL
+nyc NULL
+nyc2.0. -
+nyc3.0. -
+nyca.p. -
+nycap NULL
+nycm.ny -
+nycmny NULL
+nyroc NULL
+nys NULL
+oahu.hi -
+ocnt.wi Oconto,WI
+ogbg.ny Ogdensburg,NY
+oh.eliverpool East Liverpool,OH
+oh.stclairsvill Saint Clairsville,OH
+oh.steubenville Steubenville,OH
+ojai.ca Ojai,CA
+olen.ny Olean,NY
+olhl.ky Olive Hill,KY
+oned.ny Oneida,NY
+onnt.ny Oneonta,NY
+ontr.ca Ontario,CA
+onts.ca -
+onxr.ca -
+or.173rd-bevrtn -
+or.beaverton Beaverton,OR
+or.corvallis Corvallis,OR
+or.eugene Eugene,OR
+or.foster -
+or.gateway -
+or.hollywood -
+or.portlandhub -
+or.salem Salem,OR
+or.stjohns -
+or.troutdale Troutdale,OR
+ornc.a- -
+orng.ca Orange,CA
+orng.ma Orange,MA
+oron.me Orono,ME
+osgo.ny Oswego,NY
+oshk.wi Oshkosh,WI
+ossi.nh Ossipee,NH
+oswg.ny Oswego,NY
+otsc.ny -
+ottw.oh Ottawa Hills,OH
+ovpl.ks -
+owbo.ky Owensboro,KY
+oweg.ny Oswego,NY
+oxfd.oh Oxford,OH
+oxnr.ca Oxnard,CA
+pa.140mkt -
+pa.3crls-pttsbr -
+pa.401nbroadst -
+pa.49thst -
+pa.53rdst -
+pa.adams Adamstown,PA
+pa.balacynwyd -
+pa.beaverfalls Beaver Falls,PA
+pa.bensalem -
+pa.bethelpark Bethel Park,PA
+pa.blairsville Blairsville,PA
+pa.bluemountain -
+pa.boot-wstchs -
+pa.canonsburg Canonsburg,PA
+pa.carlisle Carlisle,PA
+pa.carrolltown Carrolltown,PA
+pa.centralcity Central City,PA
+pa.chambersburg Chambersburg,PA
+pa.chestnuthill -
+pa.christianst -
+pa.clarion Clarion,PA
+pa.coatesville Coatesville,PA
+pa.columbsblvd -
+pa.columbusblvd -
+pa.comcastcntr -
+pa.corliss -
+pa.dillsburg Dillsburg,PA
+pa.downingtown Downingtown,PA
+pa.doylestown Doylestown,PA
+pa.dtowndr -
+pa.dubois Du Bois,PA
+pa.egoshen -
+pa.elizabethtwn Elizabethtown,PA
+pa.epennsboro -
+pa.eprospect East Prospect,PA
+pa.fairmountave -
+pa.fairview Fairview,PA
+pa.fortloudon Fort Loudon,PA
+pa.franconia -
+pa.gettysburg Gettysburg,PA
+pa.greensburg Greensburg,PA
+pa.greenwayave -
+pa.hanover Hanover,PA
+pa.hershey Hershey,PA
+pa.highrock -
+pa.homestead Homestead,PA
+pa.huntingdon Huntingdon,PA
+pa.indiana Indiana,PA
+pa.inflow -
+pa.ivyland Ivyland,PA
+pa.jefferson Jefferson Hills,PA
+pa.jerseyshore Jersey Shore,PA
+pa.kane Kane,PA
+pa.kennetsquare Kennett Square,PA
+pa.kiski Kiskimere,PA
+pa.kittanning Kittanning,PA
+pa.lancaster Lancaster,PA
+pa.lansdale Lansdale,PA
+pa.latrobe Latrobe,PA
+pa.lebanon Lebanon,PA
+pa.lehighton Lehighton,PA
+pa.levittown Levittown,PA
+pa.lewistown Lewistown,PA
+pa.lockhaven Lock Haven,PA
+pa.lowerpaxton -
+pa.lowerswatera -
+pa.malvern Malvern,PA
+pa.manchester Manchester,PA
+pa.mckeesport McKeesport,PA
+pa.mechanicsbrg Mechanicsburg,PA
+pa.milford Milford,PA
+pa.millersburg Millersburg,PA
+pa.monroeville Monroeville,PA
+pa.montville Montgomeryville,PA
+pa.muncy Muncy,PA
+pa.murrysville Murrysville,PA
+pa.nbethlehem New Bethlehem,PA
+pa.ndceast -
+pa.newcastle New Castle,PA
+pa.newhanover -
+pa.newholland New Holland,PA
+pa.newport Newport,PA
+pa.newshaffrtwn New Schaefferstown,PA
+pa.newtown Newtown Grant,PA
+pa.norristown Norristown,PA
+pa.northeastave -
+pa.pennhills Penn Hills,PA
+pa.philadelphia Philadelphia,PA
+pa.phoenixville Phoenixville,PA
+pa.pinegrove Pine Grove,PA
+pa.pittsburgh Pittsburgh,PA
+pa.plum Plum,PA
+pa.plymouthmtng Plymouth Meeting,PA
+pa.pottstown Pottstown,PA
+pa.pottsville Pottsville,PA
+pa.punxy Punxsutawney,PA
+pa.quarryville Quarryville,PA
+pa.railroad Railroad,PA
+pa.reading Reading,PA
+pa.redlion Red Lion,PA
+pa.ross Reynolds Heights,PA
+pa.ruralvalley Rural Valley,PA
+pa.sacramento -
+pa.scranton Scranton,PA
+pa.sellersville Sellersville,PA
+pa.southhills -
+pa.statecollege State College,PA
+pa.summitpark -
+pa.tarentum Tarentum,PA
+pa.torresdale -
+pa.towanda Towanda,PA
+pa.umbriast -
+pa.upperdarby -
+pa.uppermerion -
+pa.wallingford -
+pa.wayneave -
+pa.waynesboro Waynesboro,PA
+pa.westchester West Chester,PA
+pa.westdeer -
+pa.westyork West York,PA
+pa.williamsport Williamsport,PA
+pa.willowgrove Willow Grove,PA
+pa.york York,PA
+panh.an -
+pars.ky Paris,KY
+pbsd.ca -
+pc5-.oa -
+pch1.0- -
+peakview NULL
+peru.oh Perrysburg,OH
+pghkny NULL
+phlapa NULL
+phrr.tx Pharr,TX
+pitbpa NULL
+pldl.ca Palmdale,CA
+plds.ca Palm Desert,CA
+plmn.wa Pullman,WA
+plmo.wi Plymouth,WI
+plsp.ca Palm Springs,CA
+plspca NULL
+plts.oh Pleasant Hills,OH
+pnhl.ky -
+po1-.dn -
+po3-.cr -
+po4-.yc -
+po47.-d -
+po5-.dh -
+pocl.oh Port Clinton,OH
+poko.h1 -
+polk.oh Portage Lakes,OH
+pomn.ca Pomona,CA
+pos-.0- -
+pos-.1- -
+pos-.2- -
+pos-.3- -
+pos-.4- -
+pos-.6- -
+powl.oh Powell,OH
+pris.ny Port Jervis,NY
+prvdri NULL
+psfl.id Post Falls,ID
+ptfd.ma Pittsfield,MA
+ptld.me Portland,ME
+ptmh.oh Portsmouth,OH
+ptsd.ny Potsdam,NY
+ptsk.oh Pataskala,OH
+pwsd.ca -
+racn.wi Racine,WI
+radn.c- -
+rcld.va Richlands,VA
+rcmd.ky Richmond,KY
+rcmdva NULL
+res.columbus NULL
+res.dc -
+res.hawaii NULL
+res.hvc NULL
+res.kc -
+res.ma Rochester,MA
+res.natcky NULL
+res.natnow NULL
+res.natsoe NULL
+res.natsow NULL
+res.natwky NULL
+res.neb NULL
+res.new NULL
+res.nj Robertsville,NJ
+res.nyc NULL
+res.san NULL
+res.si -
+res.socal NULL
+res.we -
+res.wi River Falls,WI
+rgv NULL
+riga.ny Richfield Springs village,NY
+rlgh.nc Raleigh,NC
+rmfr.me Rumford,ME
+rnbo.oh -
+rnlk.wi Random Lake,WI
+rnsl.ny Rensselaer,NY
+roch.es -
+roch.ny Rochester,NY
+rochester NULL
+rome.ny Rome,NY
+ronkva NULL
+rp-t.om -
+rrcs.-s -
+saco.me Saco,ME
+salm.wi Salem,WI
+san NULL
+sangtx NULL
+santtx NULL
+satx NULL
+satx.230-29 NULL
+satx.231-146 NULL
+satx.232-190 NULL
+satx.233-128 NULL
+satx.234-47 NULL
+satx.235-94 NULL
+satx.236-30 NULL
+satx.237-29 NULL
+satx.238-116 NULL
+satx.239-222 NULL
+sc NULL
+sc.a.ol Alcolu,SC
+sc.ashleyriver -
+sc.beaufort Beaufort,SC
+sc.charleston Charleston,SC
+sc.duneswest -
+sc.goosecreek Goose Creek,SC
+sc.hampton Hampton,SC
+sc.hollywood Hollywood,SC
+sc.jamesisle -
+sc.johnsisland -
+sc.ladson Ladson,SC
+sc.ladysisland -
+sc.mtpleasant Mount Pleasant,SC
+sc.walterboro Walterboro,SC
+scbo.me Scarborough,ME
+schn.ny Schenectady,NY
+scla.ca Santa Clarita,CA
+sctnpa NULL
+sdny.ny Sidney,NY
+sdny.oh Sidney,OH
+se NULL
+sea2.0. -
+sebg.me -
+semn.oh Sixteen Mile Stand,OH
+sfsq.ca -
+shlb.oh Shelby,OH
+shrn.pa Sharon,PA
+shro.ny South Blooming Grove,NY
+shtw.il Shawneetown,IL
+si NULL
+simi.ca Simi Valley,CA
+sjc1.0. -
+sjc3.0. -
+slbh.ca Seal Beach,CA
+slem.oh Salem,OH
+slka.ny Saranac Lake village,NY
+slsbmd NULL
+smrs.oh Saint Marys,OH
+smrt.ky Somerset,KY
+smtn.az Somerton,AZ
+smvl.mo Smithville,MO
+snan.ca San Francisco,CA
+snan.tx San Antonio,TX
+snap.ca San Juan Capistrano,CA
+snbr.ca San Bernardino,CA
+snby.oh Sunbury,OH
+sndh.ca Sunnyside-Tahoe City,CA
+snfcca NULL
+snloca NULL
+snmn.ca Santa Monica,CA
+snpl.ca Santa Paula,CA
+sntl.ca Santa Clarita,CA
+so-1.-0 -
+socal NULL
+sods.ny Sodus,NY
+southeast NULL
+spbr.oh Springboro,OH
+spfd.ky Springfield,KY
+spfdma NULL
+spld.me South Portland,ME
+spnf.oh Springfield,OH
+spsd.ca South Pasadena,CA
+srdn.ny -
+srlk.ny Saranac Lake,NY
+srsd.ca South Monrovia Island,CA
+srsp.ny Saratoga Springs,NY
+stcl.ca Santa Clarita,CA
+stcy.ca South Yuba City,CA
+stfr.ny South Farmingdale,NY
+stkh.ny -
+stny NULL
+stpr.oh Saint Paris,OH
+stru.oh Struthers,OH
+stvl.oh Strongsville,OH
+stx NULL
+svll.oh Strongsville,OH
+sw NULL
+swo NULL
+swrd.ne Seward,NE
+sycm.oh Sycamore village,OH
+syrc.ny Syracuse,NY
+syrcny NULL
+syrn.y- -
+tamp.ab -
+tamp.fl Tampa,FL
+tamp.l0 -
+tamp.l1 -
+tamp.l3 -
+tamp.l4 -
+tamp.l5 -
+tamp.l6 -
+tamp.l7 -
+tamp.l8 -
+tampabay NULL
+tampfl NULL
+tcnd.ny Ticonderoga,NY
+te0-.0- -
+te3-.1- -
+tele.oh The Village of Indian Hill,OH
+ten-.1- -
+ten-.10 -
+teng.e- -
+teng.e0 -
+teng.ig -
+tge1.-3 -
+tge9.-1 -
+tjga.ca -
+tjng.ca -
+tlrd.co Telluride,CO
+tmcl.ca Temecula,CA
+tn.anderson Andersonville,TN
+tn.ashgroverd -
+tn.athens Athens,TN
+tn.bartlett Bartlett,TN
+tn.benton Bean Station,TN
+tn.blairblvd -
+tn.blebanonrd -
+tn.bluelight -
+tn.bridgewater -
+tn.bullsgap Bulls Gap,TN
+tn.collierville Collierville,TN
+tn.cordova -
+tn.covington Covington,TN
+tn.crossstreet -
+tn.dannythomas -
+tn.dickson Dickson,TN
+tn.eads -
+tn.east East Chattanooga,TN
+tn.fairfield Fairfield Glade,TN
+tn.friendsville Friendsville,TN
+tn.gallatin Gallatin,TN
+tn.gatlinburg Gatlinburg,TN
+tn.germantown Germantown,TN
+tn.goodslettvll -
+tn.gray Graysville,TN
+tn.greenback Greenback,TN
+tn.greeneville Greeneville,TN
+tn.harriman Harriman,TN
+tn.hendersonvl Hendersonville,TN
+tn.hicksrd -
+tn.hornlake -
+tn.jacksboro Jacksboro,TN
+tn.kodak -
+tn.livingston Livingston,TN
+tn.middlevalley Middle Valley,TN
+tn.millingtonrd -
+tn.murfreesboro Murfreesboro,TN
+tn.nashville Nashville,TN
+tn.norris Norris,TN
+tn.oakland Oakland,TN
+tn.oakridge Oak Ridge,TN
+tn.oldgetwell -
+tn.pennington -
+tn.polymer -
+tn.poplarave -
+tn.raritybay -
+tn.riverdale -
+tn.ruralhillrd -
+tn.sevierville Sevierville,TN
+tn.sharpsridge -
+tn.smithville Smithville,TN
+tn.south South Cleveland,TN
+tn.springfield Springfield,TN
+tn.summerave -
+tn.summit -
+tn.tulipgrove -
+tn.west Winchester,TN
+tn.whitehaven -
+tn.williamson -
+tn.winchester Winchester,TN
+tpcy.oh Tipp City,OH
+trht.in Terre Haute,IN
+triad NULL
+trnc.ca Torrance,CA
+trne.ca Torrance,CA
+troy.ny Troy,NY
+troy.oh Troy,OH
+trth.in -
+tssd.ca Tamalpais-Homestead Valley,CA
+tust.ca Tustin,CA
+twal.ba -
+twcny NULL
+twdp.-0 -
+tx NULL
+tx.1950stemmons -
+tx.84tdw-houstn -
+tx.airport Airport Road Addition,TX
+tx.alief -
+tx.almeda -
+tx.alvin Alvin,TX
+tx.baytown Baytown,TX
+tx.bearcreek Bear Creek village,TX
+tx.bisbee -
+tx.cinco Cinco Ranch,TX
+tx.clute Clute,TX
+tx.dallas Dallas,TX
+tx.dayton Dayton,TX
+tx.east Eastland,TX
+tx.egypt -
+tx.galveston Galveston,TX
+tx.grant Granite Shoals,TX
+tx.greenspoint -
+tx.greensptrdc -
+tx.humble Humble,TX
+tx.lamarque La Marque,TX
+tx.lcwalker -
+tx.leaguecity League City,TX
+tx.luthe -
+tx.northshore -
+tx.pasadena Pasadena,TX
+tx.pike -
+tx.rosenberg Rosenberg,TX
+tx.royalton -
+tx.santateresa -
+tx.silverlake -
+tx.strack -
+tx.sugarland Sugar Land,TX
+tx.tidwell -
+tx.wallisville -
+tzwl.va Tazewell,VA
+ucsd.ca -
+uk NULL
+unal.lo -
+unct.pa Union City,PA
+uncy.oh Union City,OH
+ungv.wi Union Grove,WI
+unin.ny Uniondale,NY
+upar.oh Upper Arlington,OH
+urbn.oh Urbana,OH
+ut.heber Heber,UT
+ut.logan Logan,UT
+ut.ogden Ogden,UT
+ut.orem Orem,UT
+ut.saltlakecity Salt Lake City,UT
+ut.sandy Sandy Hills,UT
+uval.tx Universal City,TX
+va.abingdon Abingdon,VA
+va.alexandria Alexandria,VA
+va.amherst Amherst,VA
+va.arlington Arlington,VA
+va.ashburn Ashburn,VA
+va.ashland Ashland,VA
+va.bellsrd -
+va.blacksburg Blacksburg,VA
+va.boulevard -
+va.brandermill Brandermill,VA
+va.buenavista Buena Vista,VA
+va.catharpin -
+va.charlville Charlottesville,VA
+va.charlvilleco -
+va.chesterfield Chesterfield Court House,VA
+va.churchrd -
+va.culpeper Culpeper,VA
+va.dalecity Dale City,VA
+va.danville Danville,VA
+va.dinwiddie Dinwiddie,VA
+va.duffield Duffield,VA
+va.emporia Emporia,VA
+va.foresthillrd -
+va.frontroyal Front Royal,VA
+va.galax Galax,VA
+va.gladespring Glade Spring,VA
+va.goochland Goochland,VA
+va.gretna Gretna,VA
+va.harrisonburg Harrisonburg,VA
+va.hopewell Hopewell,VA
+va.lakeridge Lake Ridge,VA
+va.leecounty -
+va.leesburg Leesburg,VA
+va.lexington Lexington,VA
+va.louisa Louisa,VA
+va.luray Luray,VA
+va.lynchburg Lynchburg,VA
+va.manassas Manassas,VA
+va.manassascc -
+va.marion Marion,VA
+va.martinsville Martinsville,VA
+va.mcgayhesvlle -
+va.mclean McLean,VA
+va.mechanicsvll Mechanicsville,VA
+va.midlothian -
+va.norton Norton,VA
+va.orange Orange,VA
+va.palmyra Palmyra,VA
+va.petersburg Petersburg,VA
+va.pocohontas -
+va.powhatan Powhatan,VA
+va.pulaski Pulaski,VA
+va.purcellville Purcellville,VA
+va.reston Reston,VA
+va.robinsrd -
+va.ruckersville Ruckersville,VA
+va.salem Salem,VA
+va.sandyhook -
+va.sboston South Boston,VA
+va.shadygrove -
+va.south South Suffolk,VA
+va.southhill South Hill,VA
+va.spotsylvania Spotsylvania Courthouse,VA
+va.stafford Stafford,VA
+va.staplesmllrd -
+va.staunton Staunton,VA
+va.sterling Sterling,VA
+va.stewartsvlle -
+va.tollesboro -
+va.valley -
+va.warrenton Warrenton,VA
+va.waynesboro Waynesboro,VA
+va.winchester Winchester,VA
+va.yahleymill -
+verm.oh Vermilion-on-the-Lake,OH
+vinn.ny -
+vlan.80 -
+vln9.01 -
+vlnc.ca Valley Ranch,CA
+vnny.ca -
+vnnz.ca -
+vntr.ca Ventura,CA
+vrml.oh Vermilion-on-the-Lake,OH
+vrsl.ky Versailles,KY
+vstl.ny Valley Stream village,NY
+vt.bennington Bennington,VT
+vt.berlin -
+vt.derby Derby Center village,VT
+vt.milton Milton,VT
+vt.putney Poultney,VT
+vt.rutland Rutland,VT
+vt.williston Williston,VT
+vxr-.02 -
+wa.132nd-evertt -
+wa.aberdeen Aberdeen,WA
+wa.bellevue Bellevue,WA
+wa.bremerton Bremerton,WA
+wa.burien Burien,WA
+wa.burlington Burlington,WA
+wa.cpe College Place,WA
+wa.everett Everett,WA
+wa.federalway Federal Way,WA
+wa.ferndale Ferndale,WA
+wa.longview Longview,WA
+wa.olympia Olympia,WA
+wa.redmond Redmond,WA
+wa.seattle Seattle,WA
+wa.spokane Spokane,WA
+wa.tacoma Tacoma,WA
+wa.vancouver Vancouver,WA
+wa.woodland Woodland,WA
+waco.tx Waco,TX
+warn.oh Warren,OH
+washdc NULL
+wcfl.tx Wichita Falls,TX
+wcsd.ca -
+wdhl.ca -
+wdhm.oh Windham,OH
+wdst.nh Woodstock,NH
+we NULL
+west NULL
+west.-d -
+wevl.oh Westerville,OH
+wflb.oc -
+whfd.me Whitefield,ME
+whtr.ca Whittier,CA
+wi NULL
+wi.C.PE Chippewa Falls,WI
+wi.bcs Black River Falls,WI
+wi.manitowoc Manitowoc,WI
+wi.riverfalls River Falls,WI
+wksh.wi Waukesha,WI
+wlls.me Wells Beach Station,ME
+wlmg.ca -
+wlmg.nc Wilmington,NC
+wlvg.ca Westlake Village,CA
+wlvl.ny Williamsville,NY
+wmns.ca Westminster,CA
+wnch.ky Winchester,KY
+wnch.oh Washington Court House,OH
+wnhm.me -
+wnsl.me Winslow,ME
+wny..bu -
+wny..lk -
+wny..ln -
+wny..ws -
+woh NULL
+worl.ey -
+wotn.oh Worthington,OH
+wrrn.me Warren,ME
+wsch.oh Washington Court House,OH
+wstl.ny West Albany,NY
+wsvl.ny Washingtonville,NY
+wtmp.al Wetumpka,AL
+wttw.ny Watertown,NY
+wv.bluefield Bluefield,WV
+wv.hedgesville Hedgesville,WV
+wv.huntington Huntington,WV
+wv.inwood Inwood,WV
+wv.marion Marlinton,WV
+wv.martinsburg Martinsburg,WV
+wv.morgantown Morgantown,WV
+wv.ranson Ranson,WV
+wv.redhouse -
+wv.roundhill -
+wv.shphrdstwn Shepherdstown,WV
+wv.wheeling Wheeling,WV
+wvly.oh Waverly,OH
+wxla.ca -
+wyfd.oh Waynesfield village,OH
+wynt.ny Wynantskill,NY
+xe-0.-0 -
+xe-4.-0 -
+ycvy.ca Yucca Valley,CA
+yntw.oh Youngstown,OH
+york.ne York,NE
+yucp.ca Yucaipa,CA
+yuma.az Yuma,AZ
+znvl.oh Zanesville,OH
