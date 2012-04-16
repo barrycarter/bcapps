@@ -17,7 +17,7 @@ for $i (split("\n", read_file("/home/barrycarter/BCGIT/GEOLOCATION/regexps.txt")
   push(@regexp, $i);
 }
 
-open(A,"fgrep com.rr. /home/barrycarter/BCGIT/GEOLOCATION/sortedhosts.txt|");
+open(A,"egrep 'com\.rr\.|net\.comcast|net\.verizon' /home/barrycarter/BCGIT/GEOLOCATION/sortedhosts.txt|");
 
 while (<A>) {
   chomp;
@@ -34,11 +34,12 @@ while (<A>) {
     }
   }
 
-  print "$_ -> $code ($match)\n";
+#  print "$_ -> $code ($match)\n";
 }
 
-# print all found codes
-debug(sort keys %iscode);
+# print all found codes to "codelist.txt"
+# TODO: don't limit to specific hostnames
+write_file(join("\n",sort keys %iscode), "/home/barrycarter/BCGIT/GEOLOCATION/codelist.txt");
 
 
 

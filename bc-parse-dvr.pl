@@ -17,7 +17,7 @@ use Date::Manip;
 $buffer = 180;
 
 # file (fixed for now)
-$file = "/var/tmp/mDVR001.3GP";
+($file) = $ARGV[0]||die("Usage: $0 $file");
 
 # length
 ($out, $err, $res) = cache_command("mplayer -identify $file -frames 0","age=60");
@@ -75,6 +75,7 @@ for $i (@lines) {
 
   # command to extract
   $cmd="mencoder -quiet -fps 29.97 $file -oac pcm -ovc copy -ss $ss -endpos $length -o $oname";
+  debug("CMD: $cmd");
   print A "$cmd\n";
 }
 

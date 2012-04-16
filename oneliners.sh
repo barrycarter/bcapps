@@ -1,5 +1,11 @@
 # shell one liners
 
+# using http://download.geonames.org/export/dump/cities1000.zip (US
+# cities only, just for geolocation)
+perl -F"\t" -anle 'if ($F[8] eq "US") {print "$F[14],$F[2],$F[10]"}' cities1000.txt | sort -nr | cut -d, -f 2-3| tee /home/barrycarter/BCGIT/GEOLOCATION/big-us-cities.txt
+
+exit;
+
 # infinite insane IP testing
 perl -e 'for(;;){@ip=();for(1..4){push(@ip,int(rand(256)))}print "mtr -rwc 1  ",join(".",@ip),">>/var/tmp/mtr-single-file-test.txt\n"}'|less
 

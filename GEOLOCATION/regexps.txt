@@ -20,3 +20,14 @@
 # like com.rr.austin.austtxa-10k1.te1-0-0 (grabbing "austtx")
 /^com\.rr\..*?\.(.{4})(.{2})/
 
+# for net.verizon
+/^net\.verizon\..*?\.(.{6})\./
+
+# for net.comcast
+# like net.comcast.boston.ma.woburn.pos-1-12-0-0-ar01
+/^net\.comcast\..*?\.(..)\.(.*?)\./
+
+# if all else fails, use country code (if avail)
+/^(..)\./
+
+
