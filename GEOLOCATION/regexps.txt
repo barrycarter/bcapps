@@ -21,7 +21,7 @@
 /^com\.rr\..*?\.(.{4})(.{2})/
 
 # for net.verizon
-/^net\.verizon\..*?\.(.{6})\./
+/^net\.verizon\..*?\.(.{4})(.{2})\./
 
 # for net.comcast
 # like net.comcast.boston.ma.woburn.pos-1-12-0-0-ar01
@@ -31,6 +31,7 @@
 /^net\.qwest\.(.*?)\.
 
 # if all else fails, use country code (if avail)
-/^(..)\./
+# keeping this "in reserve" for now
+# /^(..)\./
 
 

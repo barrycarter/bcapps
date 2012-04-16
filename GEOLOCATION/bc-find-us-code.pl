@@ -7,7 +7,7 @@ push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
 # write my results
-open(A,">/home/barrycarter/BCGIT/GEOLOCATION/codes-by-big-citites.txt");
+open(A,">/home/barrycarter/BCGIT/GEOLOCATION/codes-by-big-cities.txt");
 
 @codes = split(/\n/, read_file("/home/barrycarter/BCGIT/GEOLOCATION/codelist.txt"));
 

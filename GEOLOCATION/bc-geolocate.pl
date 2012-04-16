@@ -19,10 +19,16 @@ for $i (split("\n", read_file("/home/barrycarter/BCGIT/GEOLOCATION/regexps.txt")
 
 open(A,"/home/barrycarter/BCGIT/GEOLOCATION/sortedhosts.txt");
 
+# write results
+open(B,">/home/barrycarter/BCGIT/GEOLOCATION/resolvedhosts.txt");
+
 while (<A>) {
   chomp;
 
-  # check vs regexps
+  if (++$count%10000==0) {debug("$count done");}
+
+  # check vs regexps (but start w/ blank code)
+  $code = "";
   for $i (@regexp) {
     if (@parts=($_=~m/$i/)) {
       # join all matched expressions with "."
@@ -34,10 +40,11 @@ while (<A>) {
     }
   }
 
-#  print "$_ -> $code ($match)\n";
+  if ($code) {print B "$_ $code\n";}
 }
 
 close(A);
+close(B);
 
 # print all found codes to "codelist.txt"
 # TODO: don't limit to specific hostnames
