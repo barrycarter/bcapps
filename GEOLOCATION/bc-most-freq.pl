@@ -1,6 +1,7 @@
 #!/bin/perl
 
-# given sortedhosts.txt, determine which TLD, 2LD, etc, appear most often
+# determine which TLD, 2LD, etc, appear most often in hosts that do
+# not match any patterns in regexp.txt
 
 # eg, info.barrycarter.foo would add 1 hit to "info",
 # "info.barrycarter", and "info.barrycarter.foo"
@@ -8,8 +9,8 @@
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
-$all = read_file("sortedhosts.txt");
-unless ($all) {die "No sortedhosts.txt?";}
+$all = read_file("unresolvedhosts.txt");
+unless ($all) {die "No unresolvedhosts.txt?";}
 
 for $i (split(/\n/,$all)) {
   # lc

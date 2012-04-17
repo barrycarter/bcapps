@@ -14,5 +14,37 @@ samplehosts4.txt will change somewhat during early April 2012]
 TODO: sometimes I can decode using IP, not hostname, so should store
 all IPs, even those for which I already have hostnames
 
+Files in this directory:
 
+samplehosts4.txt: a large list of hosts I found while mtr'ing to
+x.y.z.r for all possible values of x/y/z (0..255), and randomly chosen
+r for each x/y/z, along with number of times the host was 'hit' during
+the mtr's. Since all mtr's were run from a single machine, there is a
+bias towards hosts 'near' the source machine.
+
+samplehosts*.txt: currently ignored (samplehosts4.txt has pretty much
+everything)
+
+sortedhosts.txt: list of all hosts sorted by tld.2ld.3ld..., with
+frequencies ignored
+
+sortedips.txt: list of all IP addresses (where there was no hostname)
+sorted by most signifigant octet
+
+hostfreq.txt: the TLD, 2LD, 3LD, etc of hosts that match no pattern in
+regexp.txt; identifies where we should focus our efforts
+
+ipfreq.txt: identifies which netblocks have the most unresolved IP
+addresses; currently not used for much beyond that
+
+resolvedhosts.txt: list of hosts that match some regexp in regexp.txt,
+and the code extracted from the matching regexp
+
+unresolvedhosts.txt: list of hosts that match no regexp in regexp.txt
+
+codelist.txt: list of extracted codes from hosts that match patterns
+in regexp.txt
+
+codes-by-big-cities.txt: locations for codes, as determined
+automatically; not always accurate
 

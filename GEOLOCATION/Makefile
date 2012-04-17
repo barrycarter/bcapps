@@ -3,11 +3,13 @@ sortedhosts.txt: samplehosts4.txt
 	reverse-hosts.pl
 sortedips.txt: samplehosts4.txt
 	reverse-hosts.pl
-hostfreq.txt: sortedhosts.txt
+hostfreq.txt: unresolvedhosts.txt
 	bc-most-freq.pl
 ipfreq.txt: sortedips.txt
 	bc-most-freq-ip.pl
 resolvedhosts.txt: sortedhosts.txt regexps.txt
+	bc-geolocate.pl --debug
+unresolvedhosts.txt: sortedhosts.txt regexps.txt
 	bc-geolocate.pl --debug
 codelist.txt: sortedhosts.txt regexps.txt
 	bc-geolocate.pl --debug

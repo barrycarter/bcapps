@@ -28,10 +28,43 @@
 /^net\.comcast\..*?\.(..)\.(.*?)\./
 
 # like net.qwest.phnx.184-98-241-192
-/^net\.qwest\.(.*?)\.
+/^net\.qwest\.(.*?)\./
+
+# like net.sbcglobal.emhril.dsl.adsl-108-86-17-250
+/^net\.sbcglobal\.(.{4})(.{2})\./
+
+# like com.charter.tx.ftwo.dhcp.71-86-120-86
+/^com\.charter\.(..)\.(....)\./
 
 # if all else fails, use country code (if avail)
 # keeping this "in reserve" for now
 # /^(..)\./
+
+# regexps that provide no geo info (no parenthesized subpatterns)
+# just to get them out of the way
+
+<bad>
+
+/^ar\.com\.(?:fibertel|mrse|speedy)\.[\d\-]+$/
+/^ar\.com\.telecentro-reversos\.cpe\-[\d\-]+$/
+/^ar\.net\.telecom\.[\d\-]+\.host\d+$/
+/^be\.belgacom\.isp\.adsl-static\.[\d\-]+$/
+/^be\.telenet\.access\.d\d+$/
+/^br\.com\.ctbctelecom\.static\.[\d\-]+$/
+/^br\.com\.veloxzone\.user\.\d+$/
+/^br\.com\.virtua\.[0-9a-f]+$/
+/^br\.net\.telesp\.dsl\.[\d\-]+$/
+/^ca\.videotron\.mc\.[\d\-]+\.modemcable\d+$/
+/^ch\.bluewin\.cust\.[\d\-\.]+$/
+/^cn\.net\.jlccptt\.adsl-pool\.[\d\.]+$/
+/^cn\.sx\.adsl-pool\.[\d\.]+$/
+/^com\.akamaitechnologies\.deploy\.a[\d\-]+$/
+/^com\.myvzw\.sub-[\d\-\.]+$/
+/^com\.ono\.user\.dyn\.[\d\.]+$/
+/^com\.rogers\.cable\.net\.cpe.CPE[0-9a-f]+\-CM[0-9a-f]+$/
+/^com\.sky\.bb\.[0-9a-f]+$/
+/^de\.alicedsl\.adsl\.[0-9a-f]+$/
+
+</bad>
 
 
