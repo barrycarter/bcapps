@@ -7,6 +7,7 @@
 
 # This is another program that's probably useful just to me
 
+push(@INC,"/usr/local/lib");
 require "bclib.pl";
 chdir(tmpdir());
 ($all,) = cmdfile();

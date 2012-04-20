@@ -49,7 +49,7 @@ $newtick=int($newtickx);
 $newfreq=int(($newtickx-$newtick)*6553600+.5);
 
 $ac="adjtimex --tick $newtick --freq $newfreq";
-die "TESTING: $ac";
+# die "TESTING: $ac";
 open(A,">>/root/adjtimex.txt");
 print A "$now $curoffset $newtick $newfreq\n";
 close(A);

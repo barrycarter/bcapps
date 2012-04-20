@@ -14,6 +14,16 @@ samplehosts4.txt will change somewhat during early April 2012]
 TODO: sometimes I can decode using IP, not hostname, so should store
 all IPs, even those for which I already have hostnames
 
+A host/IP address can be in one of three states:
+
+  - Doesn't match any pattern in regexp.txt (unresolved)
+
+  - Matches pattern in regexp.txt, but resulting code has no location
+  (partially resolved)
+
+  - Matches pattern in regexp.txt, and resulting code has location
+  (fully resolved)
+
 Files in this directory:
 
 samplehosts4.txt: a large list of hosts I found while mtr'ing to

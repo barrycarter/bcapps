@@ -43,6 +43,7 @@ ae5-.dn -
 ae5-.nw -
 agor.ca Agoura,CA
 akrn.oh Akron,OH
+al NULL
 al.aubn Auburn,AL
 al.charlottedrv -
 al.chicksaw Chickasaw,AL
@@ -82,6 +83,7 @@ angl.ny Angola,NY
 anhm.ca Anaheim,CA
 apa NULL
 appl.wi Appleton,WI
+ar NULL
 ar.enmardr -
 ar.littlerock Little Rock,AR
 ar.lookoutrd -
@@ -106,6 +108,7 @@ aust.tx Austin,TX
 austin NULL
 avlk.oh Avon Lake,OH
 avoc.ny Avoca village,NY
+az NULL
 az.orovalley Oro Valley,AZ
 az.pimaco Pimaco Two,AZ
 az.snyder -
@@ -226,6 +229,7 @@ bwlg.oh Bowling Green,OH
 bwsd.ca -
 bxtn.me Buxton,ME
 bzta.oh -
+ca NULL
 ca.11greatoaks -
 ca.529bryant -
 ca.600wseventh -
@@ -429,6 +433,7 @@ cny..un -
 cny..vs -
 cny..ws -
 cny..wt -
+co NULL
 co.181dc -
 co.910fifteenth -
 co.arvada Arvada,CO
@@ -483,6 +488,7 @@ crvl.oh Centerville,OH
 crvy.me -
 cs66.25 -
 csms.ca Costa Mesa,CA
+ct NULL
 ct.asfd -
 ct.berlin -
 ct.bloomfield -
@@ -537,6 +543,7 @@ dca0.1. -
 dca1.0. -
 dca2.0. -
 dctr.il Decatur,IL
+de NULL
 de.dover Dover,DE
 de.frenchtown -
 de.georgetown Georgetown,DE
@@ -629,6 +636,7 @@ fas-.0- -
 fas-.9- -
 fbrn.oh Fairborn,OH
 ffax.va Fairfax,VA
+fl NULL
 fl.16th-pmpnbch -
 fl.alicocentrrd -
 fl.arcadia Arcadia,FL
@@ -817,6 +825,7 @@ g14-.1- -
 g16-.ar -
 g3-0.-0 -
 g3-1.-0 -
+ga NULL
 ga.19cmb-atlant -
 ga.56marietta -
 ga.A3atlanta -
@@ -1059,6 +1068,7 @@ hwth.ca Hawthorne,CA
 iad NULL
 idyl.ca Idyllwild-Pine Cove,CA
 igwd.ca Inglewood,CA
+il NULL
 il.350ecermak -
 il.algonquin Algonquin,IL
 il.area4 -
@@ -1095,6 +1105,7 @@ il.romeoville Romeoville,IL
 il.springfield Springfield,IL
 il.wchicago West Chicago,IL
 il.wstrn-chicag -
+in NULL
 in.aboite -
 in.anderson Anderson,IN
 in.beechgrove Beech Grove,IN
@@ -1167,6 +1178,7 @@ knmt.va -
 kntn.oh Kenton,OH
 kntp.in -
 knvl.tn Knoxville,TN
+ks NULL
 ks.olathe Olathe,KS
 ksc2.mo -
 ksca.ks -
@@ -1177,6 +1189,7 @@ kscy.mo Kansas City,MO
 kscz.mo -
 kttr.oh Kettering,OH
 kvwo.ks -
+ky NULL
 ky.campbellsvil Campbellsville,KY
 ky.elizabethtwn Elizabethtown,KY
 ky.ftcampbell Fort Campbell North,KY
@@ -1184,6 +1197,7 @@ ky.greenville Greenville,KY
 ky.horsecave Horse Cave,KY
 ky.paducah Paducah,KY
 ky.unas -
+la NULL
 la.eastshrvprt -
 la.houma Houma,LA
 la.laplace Laplace,LA
@@ -1333,6 +1347,7 @@ mari.oh Marion,OH
 maui.hi Maunawili,HI
 mcdn.oh Macedonia,OH
 mcfl.me Mechanic Falls,ME
+md NULL
 md.aberdeen Aberdeen,MD
 md.annapolis Annapolis,MD
 md.berlin Berlin,MD
@@ -1401,8 +1416,10 @@ mdsn.ny Middle Island,NY
 mdsn.wi Madison,WI
 mdst.ca Modesto,CA
 mdws.me Madawaska,ME
+me NULL
 me.brunswick Brunswick,ME
 mgfd.ky Morganfield,KY
+mi NULL
 mi.adrian Adrian,MI
 mi.aldl Allendale,MI
 mi.auburnhills Auburn Hills,MI
@@ -1494,6 +1511,7 @@ mlbg.oh Middleburg Heights,OH
 mlck.pa Mill Creek,PA
 mmph.tn Memphis,TN
 mmsd.ca -
+mn NULL
 mn.C.PE Circle Pines,MN
 mn.afton Afton,MN
 mn.anoka Anoka,MN
@@ -1540,6 +1558,7 @@ mnfl.ny Montour Falls,NY
 mnta.oh Mentor-on-the-Lake,OH
 mntr.oh Mentor,OH
 mnvy.ca Moreno Valley,CA
+mo NULL
 mo.clma Columbia,MO
 mo.cpgr Cape Girardeau,MO
 mo.independence Independence,MO
@@ -1555,6 +1574,7 @@ mrhd.ky Morehead,KY
 mrnt.wi Marinette,WI
 mrpk.ca Monterey Park,CA
 mrvy.ca Moreno Valley,CA
+ms NULL
 ms.clinton Clinton,MS
 ms.corinth Corinth,MS
 ms.florence Florence,MS
@@ -1639,6 +1659,7 @@ neo.bcs NULL
 new NULL
 new..CP -
 ngfl.ny Niagara Falls,NY
+nh NULL
 nh.boscawen Boscawen,NH
 nh.claremont Claremont,NH
 nh.concord Concord,NH
@@ -1712,6 +1733,7 @@ nj.vineland Vineland,NJ
 nj.voorhees Voorhees,NJ
 nj.whiting Whittingham,NJ
 nj.woodbury Woodbury,NJ
+nm NULL
 nm.albuquerque Albuquerque,NM
 nm.broadway -
 nm.deming Deming,NM
@@ -1758,6 +1780,7 @@ nwor.la New Orleans,LA
 nwrk.nj Newark,NJ
 nwrk.oh Newark,OH
 nwrm.oh New Bremen,OH
+ny NULL
 ny.111eighthave -
 ny.carmel Carmel Hamlet,NY
 ny.newyork New York City,NY
@@ -1774,6 +1797,7 @@ nys NULL
 oahu.hi -
 ocnt.wi Oconto,WI
 ogbg.ny Ogdensburg,NY
+oh NULL
 oh.eliverpool East Liverpool,OH
 oh.k717 -
 oh.stclairsvill Saint Clairsville,OH
@@ -1789,6 +1813,7 @@ onnt.ny Oneonta,NY
 ontr.ca Ontario,CA
 onts.ca -
 onxr.ca -
+or NULL
 or.173rd-bevrtn -
 or.beaverton Beaverton,OR
 or.corvallis Corvallis,OR
@@ -1817,6 +1842,7 @@ owbo.ky Owensboro,KY
 oweg.ny Oswego,NY
 oxfd.oh Oxford,OH
 oxnr.ca Oxnard,CA
+pa NULL
 pa.140mkt -
 pa.3crls-pttsbr -
 pa.401nbroadst -
@@ -2192,6 +2218,7 @@ tjga.ca -
 tjng.ca -
 tlrd.co Telluride,CO
 tmcl.ca Temecula,CA
+tn NULL
 tn.anderson Andersonville,TN
 tn.ashgroverd -
 tn.athens Athens,TN
@@ -2324,6 +2351,7 @@ ungv.wi Union Grove,WI
 unin.ny Uniondale,NY
 upar.oh Upper Arlington,OH
 urbn.oh Urbana,OH
+ut NULL
 ut.heber Heber,UT
 ut.logan Logan,UT
 ut.ogden Ogden,UT
@@ -2331,6 +2359,7 @@ ut.orem Orem,UT
 ut.saltlakecity Salt Lake City,UT
 ut.sandy Sandy Hills,UT
 uval.tx Universal City,TX
+va NULL
 va.abingdon Abingdon,VA
 va.alexandria Alexandria,VA
 va.amherst Amherst,VA
@@ -2417,6 +2446,7 @@ vntr.ca Ventura,CA
 vrml.oh Vermilion-on-the-Lake,OH
 vrsl.ky Versailles,KY
 vstl.ny Valley Stream village,NY
+vt NULL
 vt.bennington Bennington,VT
 vt.berlin -
 vt.davl Danville,VT
@@ -2426,6 +2456,7 @@ vt.putney Poultney,VT
 vt.rutland Rutland,VT
 vt.williston Williston,VT
 vxr-.02 -
+wa NULL
 wa.132nd-evertt -
 wa.aberdeen Aberdeen,WA
 wa.bellevue Bellevue,WA
@@ -2508,6 +2539,7 @@ wstl.ny West Albany,NY
 wsvl.ny Washingtonville,NY
 wtmp.al Wetumpka,AL
 wttw.ny Watertown,NY
+wv NULL
 wv.bluefield Bluefield,WV
 wv.hedgesville Hedgesville,WV
 wv.huntington Huntington,WV

@@ -43,6 +43,7 @@ ae5-.dn
 ae5-.nw
 agor.ca
 akrn.oh
+al
 al.aubn
 al.charlottedrv
 al.chicksaw
@@ -82,6 +83,7 @@ angl.ny
 anhm.ca
 apa
 appl.wi
+ar
 ar.enmardr
 ar.littlerock
 ar.lookoutrd
@@ -106,6 +108,7 @@ aust.tx
 austin
 avlk.oh
 avoc.ny
+az
 az.orovalley
 az.pimaco
 az.snyder
@@ -226,6 +229,7 @@ bwlg.oh
 bwsd.ca
 bxtn.me
 bzta.oh
+ca
 ca.11greatoaks
 ca.529bryant
 ca.600wseventh
@@ -429,6 +433,7 @@ cny..un
 cny..vs
 cny..ws
 cny..wt
+co
 co.181dc
 co.910fifteenth
 co.arvada
@@ -483,6 +488,7 @@ crvl.oh
 crvy.me
 cs66.25
 csms.ca
+ct
 ct.asfd
 ct.berlin
 ct.bloomfield
@@ -537,6 +543,7 @@ dca0.1.
 dca1.0.
 dca2.0.
 dctr.il
+de
 de.dover
 de.frenchtown
 de.georgetown
@@ -629,6 +636,7 @@ fas-.0-
 fas-.9-
 fbrn.oh
 ffax.va
+fl
 fl.16th-pmpnbch
 fl.alicocentrrd
 fl.arcadia
@@ -817,6 +825,7 @@ g14-.1-
 g16-.ar
 g3-0.-0
 g3-1.-0
+ga
 ga.19cmb-atlant
 ga.56marietta
 ga.A3atlanta
@@ -1059,6 +1068,7 @@ hwth.ca
 iad
 idyl.ca
 igwd.ca
+il
 il.350ecermak
 il.algonquin
 il.area4
@@ -1095,6 +1105,7 @@ il.romeoville
 il.springfield
 il.wchicago
 il.wstrn-chicag
+in
 in.aboite
 in.anderson
 in.beechgrove
@@ -1167,6 +1178,7 @@ knmt.va
 kntn.oh
 kntp.in
 knvl.tn
+ks
 ks.olathe
 ksc2.mo
 ksca.ks
@@ -1177,6 +1189,7 @@ kscy.mo
 kscz.mo
 kttr.oh
 kvwo.ks
+ky
 ky.campbellsvil
 ky.elizabethtwn
 ky.ftcampbell
@@ -1184,6 +1197,7 @@ ky.greenville
 ky.horsecave
 ky.paducah
 ky.unas
+la
 la.eastshrvprt
 la.houma
 la.laplace
@@ -1333,6 +1347,7 @@ mari.oh
 maui.hi
 mcdn.oh
 mcfl.me
+md
 md.aberdeen
 md.annapolis
 md.berlin
@@ -1401,8 +1416,10 @@ mdsn.ny
 mdsn.wi
 mdst.ca
 mdws.me
+me
 me.brunswick
 mgfd.ky
+mi
 mi.adrian
 mi.aldl
 mi.auburnhills
@@ -1494,6 +1511,7 @@ mlbg.oh
 mlck.pa
 mmph.tn
 mmsd.ca
+mn
 mn.C.PE
 mn.afton
 mn.anoka
@@ -1540,6 +1558,7 @@ mnfl.ny
 mnta.oh
 mntr.oh
 mnvy.ca
+mo
 mo.clma
 mo.cpgr
 mo.independence
@@ -1555,6 +1574,7 @@ mrhd.ky
 mrnt.wi
 mrpk.ca
 mrvy.ca
+ms
 ms.clinton
 ms.corinth
 ms.florence
@@ -1639,6 +1659,7 @@ neo.bcs
 new
 new..CP
 ngfl.ny
+nh
 nh.boscawen
 nh.claremont
 nh.concord
@@ -1712,6 +1733,7 @@ nj.vineland
 nj.voorhees
 nj.whiting
 nj.woodbury
+nm
 nm.albuquerque
 nm.broadway
 nm.deming
@@ -1758,6 +1780,7 @@ nwor.la
 nwrk.nj
 nwrk.oh
 nwrm.oh
+ny
 ny.111eighthave
 ny.carmel
 ny.newyork
@@ -1774,6 +1797,7 @@ nys
 oahu.hi
 ocnt.wi
 ogbg.ny
+oh
 oh.eliverpool
 oh.k717
 oh.stclairsvill
@@ -1789,6 +1813,7 @@ onnt.ny
 ontr.ca
 onts.ca
 onxr.ca
+or
 or.173rd-bevrtn
 or.beaverton
 or.corvallis
@@ -1817,6 +1842,7 @@ owbo.ky
 oweg.ny
 oxfd.oh
 oxnr.ca
+pa
 pa.140mkt
 pa.3crls-pttsbr
 pa.401nbroadst
@@ -2192,6 +2218,7 @@ tjga.ca
 tjng.ca
 tlrd.co
 tmcl.ca
+tn
 tn.anderson
 tn.ashgroverd
 tn.athens
@@ -2324,6 +2351,7 @@ ungv.wi
 unin.ny
 upar.oh
 urbn.oh
+ut
 ut.heber
 ut.logan
 ut.ogden
@@ -2331,6 +2359,7 @@ ut.orem
 ut.saltlakecity
 ut.sandy
 uval.tx
+va
 va.abingdon
 va.alexandria
 va.amherst
@@ -2417,6 +2446,7 @@ vntr.ca
 vrml.oh
 vrsl.ky
 vstl.ny
+vt
 vt.bennington
 vt.berlin
 vt.davl
@@ -2426,6 +2456,7 @@ vt.putney
 vt.rutland
 vt.williston
 vxr-.02
+wa
 wa.132nd-evertt
 wa.aberdeen
 wa.bellevue
@@ -2508,6 +2539,7 @@ wstl.ny
 wsvl.ny
 wtmp.al
 wttw.ny
+wv
 wv.bluefield
 wv.hedgesville
 wv.huntington

@@ -26,6 +26,9 @@
 # for net.comcast
 # like net.comcast.boston.ma.woburn.pos-1-12-0-0-ar01
 /^net\.comcast\..*?\.(..)\.(.*?)\./
+# like net.comcast.al.hsd1.c-68-62-194-171 (state only)
+/^net\.comcast\.(..)\.hsd\d.c[\d\-]+$/
+
 
 # like net.qwest.phnx.184-98-241-192
 /^net\.qwest\.(.*?)\./
@@ -64,6 +67,11 @@
 /^com\.rogers\.cable\.net\.cpe.CPE[0-9a-f]+\-CM[0-9a-f]+$/
 /^com\.sky\.bb\.[0-9a-f]+$/
 /^de\.alicedsl\.adsl\.[0-9a-f]+$/
+/^net\.sfr\.rev\.[\d\.]+$/
+/^mx\.com\.prod-infinitum\.dsl-[\d\-]+\-dyn$/
+/^net\.rima-tde\.dynamicIP\.Red-[\d\-\.]+$/
+/^net\.t-dialin\.dip.p[0-9a-f]+$/
+/^net\.arcor-ip\.pools\.dslb-[\d\-]+$/
 
 </bad>
 

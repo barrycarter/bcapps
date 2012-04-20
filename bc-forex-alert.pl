@@ -84,7 +84,7 @@ for $i (@x) {
 
   # this prints it to my bg image (changed for bc-bg.pl)
   $parity=~s%/%%isg;
-  write_file_new("$midpt ($parity)", "/home/barrycarter/ERR/$parity.inf");
+  write_file_new("$midpt ($parity) [$low - $high]", "/home/barrycarter/ERR/$parity.inf");
 
   # and log
   $nowu = time();
