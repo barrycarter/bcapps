@@ -35,7 +35,7 @@ for $i (@codes) {
     ($city, $state) = ($1,$2);
   } elsif (length($i)==3) {
     # airport codes (in the file, this is always uppercase and parenthesized)
-    # list of airport codes rarely changes, so hash
+    # list of airport codes rarely changes, so cache
     $str = uc($i);
     ($out) = cache_command("fgrep '($str)' /home/barrycarter/BCGIT/GEOLOCATION/airport-codes.html","age=86400");
     # get rid of airport code and name of airport
