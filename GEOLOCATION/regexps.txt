@@ -26,9 +26,10 @@
 # for net.comcast
 # like net.comcast.boston.ma.woburn.pos-1-12-0-0-ar01
 /^net\.comcast\..*?\.(..)\.(.*?)\./
+# like net.comcast.co.dnvr.m0015d0e21331 (state first)
+/^net\.comcast\.(..)\.(....)\.m
 # like net.comcast.al.hsd1.c-68-62-194-171 (state only)
 /^net\.comcast\.(..)\.hsd\d.c[\d\-]+$/
-
 
 # like net.qwest.phnx.184-98-241-192
 /^net\.qwest\.(.*?)\./
@@ -38,6 +39,21 @@
 
 # like com.charter.tx.ftwo.dhcp.71-86-120-86
 /^com\.charter\.(..)\.(....)\./
+
+# like com.cogentco.atlas.jfk01.b001159-0.na01.vl3566
+/^com\.cogentco\.atlas\.([a-zA-Z]+)\d*\.
+
+# like net.gblx.JFK1.ar1.581.so-1-3-1.Humanscale-Corporation
+/^net\.gblx\.([a-zA-Z]+)\d*\.
+
+# like net.bellsouth.jan.adsl-74-240-1-138
+/^net\.bellsouth\.([a-z]+)\.
+
+# like net.Level3.Chicago1.car1.HOSTWAY-COR
+/^net\.Level3\.([a-zA-Z]+?)\d*\.
+
+# like net.cox.oc.oc.wsip-98-189-191-80
+/^net\.cox\.(..)\.\\1\.
 
 # if all else fails, use country code (if avail)
 # keeping this "in reserve" for now
@@ -70,8 +86,13 @@
 /^net\.sfr\.rev\.[\d\.]+$/
 /^mx\.com\.prod-infinitum\.dsl-[\d\-]+\-dyn$/
 /^net\.rima-tde\.dynamicIP\.Red-[\d\-\.]+$/
-/^net\.t-dialin\.dip.p[0-9a-f]+$/
+/^net\.rima-tde\.staticIP\.Red-[\d\-\.]+$/
+/^net\.t-dialin\.dip\.p[0-9a-fA-F]+$/
 /^net\.arcor-ip\.pools\.dslb-[\d\-]+$/
+/^net\.windstream\.ip\.[\d\.]+$/
+/^net\.windstream\.ip\.dynamic\.[\d\.]+$/
+/^jp\.ne\.home\.rev\.[\d\-]+$/
+/^it\.telecomitalia\.business\.\d+\-\d+\-b\.host[0-9\-]+?\-static$/
 
 </bad>
 
