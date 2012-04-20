@@ -24,6 +24,7 @@ open(A,">/home/barrycarter/BCGIT/GEOLOCATION/codes-by-big-cities.txt");
 # matched what line
 
 # TODO: easier to just load big-us-cities.txt manually?
+# TODO: should probably rewrite this to be less ugly
 
 for $i (@codes) {
   # form ar.lookoutrd for example
@@ -32,6 +33,21 @@ for $i (@codes) {
   } elsif ($i=~/^(.*?)\.(..)$/) {
     # athn.oh for example
     ($city, $state) = ($1,$2);
+  } elsif (length($i)==3) {
+    # airport codes (in the file, this is always uppercase and parenthesized)
+    # list of airport codes rarely changes, so hash
+    $str = uc($i);
+    ($out) = cache_command("fgrep '($str)' /home/barrycarter/BCGIT/GEOLOCATION/airport-codes.html","age=86400");
+    # get rid of airport code and name of airport
+    chomp($out);
+    $out=~s/\s*\-.*$//;
+    $out=~s/\(.*$//;
+    if ($out) {
+      print A "$i $out\n";
+    } else {
+      print A "$i NULL\n";
+    }
+    next;
   } else {
 #    warn("CODE IS NOT CITY/STATE: $i?");
     print A "$i NULL\n";
