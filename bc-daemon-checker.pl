@@ -44,10 +44,12 @@ shift(@procs); # ignore header line
 
 @may = (
 	"SCREEN", "screen", "-csh", "sh", "/bin/sh", "/sbin/udevd",
-	"/usr/libexec/gam_server", "sshd:", "-bin/tcsh"
+	"/usr/libexec/gam_server", "sshd:", "-bin/tcsh",
+	"/usr/sbin/yum-updatesd"
 	);
 
 # Processes on this list must be killed if they run over 5m
+# <h>Right now, it's just you, curly!</h>
 @kill = (
 	 "curl"
 	 );
@@ -128,5 +130,12 @@ for $i (sort keys %MUST) {
   push(@err, "$i: not running, but is required");
 }
 
-debug(@err);
+# send me errors (if any)
+if (@err) {
+  $body = join("\n",@err);
+  # TODO: message should be host specific if run on multiple hosts
+  sendmail("erf\@barrycarter.info", "error\@barrycarter.info", "Errors exist!", $body);
+}
+
+
 

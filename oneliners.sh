@@ -1,5 +1,13 @@
 # shell one liners
 
+# find IP addresses for hostnames (even hostnames like
+# br.com.desktop.201-77-120-14 have nonobvious IP addresses, perhaps
+# due to reassignment; for that host, the IP is 67.215.65.132)
+
+perl -anle 'if ($F[1]=~/^[\d\.]+$/) {next;} $fname=substr($F[1],0,2); print "host -a $F[1] >> $fname-ip.txt"' samplehosts4.txt | sort -R >! /tmp/ips.txt
+
+exit;
+
 # processes sorted by time
 
 ps -www -ax -eo 'pid etime rss vsz args'

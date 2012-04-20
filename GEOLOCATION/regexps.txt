@@ -41,19 +41,40 @@
 /^com\.charter\.(..)\.(....)\./
 
 # like com.cogentco.atlas.jfk01.b001159-0.na01.vl3566
-/^com\.cogentco\.atlas\.([a-zA-Z]+)\d*\.
+/^com\.cogentco\.atlas\.([a-zA-Z]+)\d*\./
 
 # like net.gblx.JFK1.ar1.581.so-1-3-1.Humanscale-Corporation
-/^net\.gblx\.([a-zA-Z]+)\d*\.
+/^net\.gblx\.([a-zA-Z]+)\d*\./
 
 # like net.bellsouth.jan.adsl-74-240-1-138
-/^net\.bellsouth\.([a-z]+)\.
+/^net\.bellsouth\.([a-z]+)\./
 
 # like net.Level3.Chicago1.car1.HOSTWAY-COR
-/^net\.Level3\.([a-zA-Z]+?)\d*\.
+/^net\.Level3\.([a-zA-Z]+?)\d*\./
 
 # like net.cox.oc.oc.wsip-98-189-191-80
-/^net\.cox\.(..)\.\\1\.
+/^net\.cox\.(..)\.\\1\./
+
+# like cn.com.163data.dynamic.fj.fz.broad.110.87.162.249
+# pretty sure this really does tell location, though in a weird way
+/^(cn)\.com\.163data\.dynamic\.(..)\.(..)\.broad\./
+
+# like net.mediaways.nw.rdsl-kssl-de01-chan-2
+/^net\.mediaways\.nw\.rdsl-(....)\-de\d+/
+
+# like net.frontiernet.ca.cols.dr01.74-38-220-202
+/^net\.frontiernet\.(..)\.(....)\./
+
+# like jp.ne.ocn.gifu.p5091-ipad205gifu
+# TODO: can we get ward inside prefecture?
+/^(jp)\.ne\.ocn\.([a-z]+)\.p\d+/
+
+# like NET.ALTER.AMS2.XT1.at-5-3-0.326 or net.alter.ams7.gw1.Serial11-0-1
+/^(?:NET|net)\.(?:ALTER|alter)\.([A-Za-z]+)\d*\.
+
+# like net.embarqhsd.dhcp.nc-67-238-185-205 (state only)
+/^net\.embarqhsd\.dhcp\.(..)[\d\-]+$/
+
 
 # if all else fails, use country code (if avail)
 # keeping this "in reserve" for now
@@ -89,10 +110,19 @@
 /^net\.rima-tde\.staticIP\.Red-[\d\-\.]+$/
 /^net\.t-dialin\.dip\.p[0-9a-fA-F]+$/
 /^net\.arcor-ip\.pools\.dslb-[\d\-]+$/
+
+# like net.windstream.ip.dynamic.173.184.95.h248 (note the 'h')
 /^net\.windstream\.ip\.[\d\.]+$/
-/^net\.windstream\.ip\.dynamic\.[\d\.]+$/
+/^net\.windstream\.ip\.dynamic\.[\d\.h]+$/
+
 /^jp\.ne\.home\.rev\.[\d\-]+$/
 /^it\.telecomitalia\.business\.\d+\-\d+\-b\.host[0-9\-]+?\-static$/
+
+# like jp.ne.ucom.ftth.ap221.221x112x13x3
+/^jp\.ne\.ucom\.ftth\.ap[\d\.x]+$/
+
+# like net.hinet.dynamic.114-36-215-210
+/^net\.hinet\.dynamic\.[\d\-]+$/
 
 </bad>
 
