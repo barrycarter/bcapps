@@ -66,9 +66,15 @@ for $i (@procs) {
   # ignore [bracketed] processes (TODO: why?)
   if ($proc=~/^\[.*\]$/) {next;}
 
-  # for perl/xargs/python/ruby, the second arg tells what the process really is
+  # for perl/xargs/python/ruby, the next non-option arg tells what the process really is
   if ($proc=~m%/perl$%||$proc eq "xargs"||$proc=~m%/python$%||$proc=~m%(^|/)ruby$%) {
-    $proc=$proc2;
+
+    # TODO: this is imperfect
+    if ($proc2=~/^\-/) {
+      $proc=$proc3;
+    } else {
+      $proc=$proc2;
+    }
   }
 
   # really ugly HACK: (for "perl -w") [can't even do -* because of -tcsh]
