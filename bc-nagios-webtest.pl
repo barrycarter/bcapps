@@ -8,4 +8,4 @@ print "Content-type: text/plain\n\n";
 
 # TODO: allow more options and other programs (if needed)
 
-system("check_ntp -H 0.us.pool.ntp.org");
+system("/usr/lib/nagios/plugins/check_ntp -H 0.us.pool.ntp.org");

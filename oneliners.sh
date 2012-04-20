@@ -1,5 +1,11 @@
 # shell one liners
 
+# processes sorted by time
+
+ps -www -ax -eo 'pid etime rss vsz args'
+
+exit;
+
 # similar to below for
 # http://www.census.gov/geo/www/gazetteer/files/Gaz_places_national.txt;
 # this file doesn't have population, so sorting by land area = not
