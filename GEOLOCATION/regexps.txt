@@ -53,6 +53,7 @@
 /^net\.Level3\.([a-zA-Z]+?)\d*\./
 
 # like net.cox.oc.oc.wsip-98-189-191-80
+# TODO: this one not working (\\1 is wrong?)
 /^net\.cox\.(..)\.\\1\./
 
 # like cn.com.163data.dynamic.fj.fz.broad.110.87.162.249
@@ -123,6 +124,9 @@
 
 # like net.hinet.dynamic.114-36-215-210
 /^net\.hinet\.dynamic\.[\d\-]+$/
+
+# like au.net.iinet.dyn.124-169-14-221
+/^au\.net\.iinet\.dyn\.[\d\-]+$/
 
 </bad>
 
