@@ -22,8 +22,16 @@ $ydim = 3.08641975309902e-005;
 for $i (1..$nrows) {
   for $j (1..$ncols) {
     # get next two bytes and advance position
-    $el = substr($data,$pos,2);
-    debug("EL: $el");
+    $el1 = ord(substr($data,$pos,1));
+    $el2 = ord(substr($data,$pos+1,1));
     $pos+=2;
+    # LSB
+    $el = 256*$el2+$el1;
+
+    # TODO: below is a cheat, in theory, adjacent tiles could skip this value
+    # 1609.344m = 5280ft = 1 mile
+    unless ($el == 1609) {next;}
+    debug("EL: $el, I: $i, J: $j");
+
   }
 }
