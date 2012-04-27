@@ -31,7 +31,12 @@ for $i (1..$nrows) {
     # TODO: below is a cheat, in theory, adjacent tiles could skip this value
     # 1609.344m = 5280ft = 1 mile
     unless ($el == 1609) {next;}
-    debug("EL: $el, I: $i, J: $j");
 
+    # middle of tile
+    $lon = $ulxmap + $xdim*($j-.5);
+    # note that latitudes DECREASE as y increases
+    $lat = $ulymap - $ydim*($i-.5);
+
+    debug("EL: $el, $lat, $lon");
   }
 }
