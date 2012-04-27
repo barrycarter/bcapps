@@ -20,6 +20,11 @@ $xdim = 3.08641975309902e-005;
 $ydim = 3.08641975309902e-005;
 
 for $i (1..$nrows) {
+
+  # there are "too many" points w/ elevation 1 mile (1609m), so we find the median one for each row
+  @milehigh = ();
+
+
   for $j (1..$ncols) {
     # get next two bytes and advance position
     $el1 = ord(substr($data,$pos,1));
@@ -37,6 +42,14 @@ for $i (1..$nrows) {
     # note that latitudes DECREASE as y increases
     $lat = $ulymap - $ydim*($i-.5);
 
-    debug("EL: $el, $lat, $lon");
+    push(@milehigh, $lon);
   }
+
+  # @milehigh is necessarily in order (since we're going
+  # left-to-right), so median is (to trivial error)
+  $medlon = $milehigh[$#milehigh/2];
+  debug("$lat: $medlon");
 }
+
+# TODO: KMLify
+
