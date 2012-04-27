@@ -143,5 +143,5 @@ MARK
 for $i (@fly) {print A "$i\n";}
 close(A);
 
-# using temp file disappears too fast for xv somehow
-system("fly -q -i bg.fly -o bg.gif; xv +noresetroot -root -quit bg.gif");
+# also copy file since I will need it on other machines
+system("fly -q -i bg.fly -o bg.gif; xv +noresetroot -root -quit bg.gif; cp bg.gif /tmp/bgimage.gif");

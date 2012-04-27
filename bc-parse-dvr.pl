@@ -76,6 +76,7 @@ for $i (@lines) {
   # command to extract
   $cmd="mencoder -quiet -fps 29.97 $file -oac pcm -ovc copy -ss $ss -endpos $length -o $oname";
   debug("CMD: $cmd");
+  print "DOING: $cmd\n";
   print A "$cmd\n";
 }
 
