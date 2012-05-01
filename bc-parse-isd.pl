@@ -13,18 +13,31 @@
 # First ran this program (using find on individual stations is too slow):
 # find . -type f > allfiles.txt
 
+# To get list of all stations to run this in parallel in random order:
+
+# perl -nle 'if (m%/(\d+\-\d+)\-\d{4}\.gz$%) {print "bc-parse-isd.pl
+# $1";}' allfiles.txt | sort -R | uniq > allcmds.txt
+
+# This program runs on a "special" machine, where bclib.pl may not be
+# available
+
 # For this program, each USAF-WBAN number is treated as a different station
 
 unless (-f "allfiles.txt") {die "Wrong directory, or run 'find . -type f > allfiles.txt";}
 
-# using KABQ as test
-$stat = "723650-23050";
+(($stat) = @ARGV) || die("Usage: $0 <station>");
 
-# The sort below is unnecessary; only storing uncompressed data for
-# "fun", could just use and discard
+# The sort below is unnecessary as is the ">"; only storing
+# uncompressed data for "fun", could just use and discard
 
 unless (-f "$stat.all") {
   system("egrep '$stat-....\.gz' allfiles.txt | xargs zcat | sort -n > $stat.all");
+}
+
+# $stat.res is the resulting file
+if (-f "$stat.res") {
+#  print "All finished, sir\n";
+  exit(0);
 }
 
 # I plan to run this using "parallel", so keep memory profile low and
@@ -46,12 +59,23 @@ while (<A>) {
 
 close(A);
 
+open(B, ">$stat.res");
+
 for $mo (sort keys %temp) {
   for $da (sort keys %{$temp{$mo}}) {
     for $hr (sort keys %{$temp{$mo}{$da}}) {
-      print "$mo/$da/$hr -> \n";
-      print join(", ", @{$temp{$mo}{$da}{$hr}}),"\n";
+      @l = @{$temp{$mo}{$da}{$hr}};
+      # calculate average (TODO: better way, sans subroutine?)
+      # note how many obs for average (could be relevant)
+      $sum = 0;
+      $size = $#l+1;
+      for $i (@l) {$sum+=$i;}
+      # final 10. is because data is given as temp*10
+      $avg = $sum/$size/10.;
+      print B "$mo $da $hr $avg $size\n";
     }
   }
 }
+
+close(B);
 
