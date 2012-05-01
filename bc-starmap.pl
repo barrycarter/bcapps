@@ -14,6 +14,7 @@
 # --stars=1 draw stars
 # --lat=35.082463 latitude where to draw map
 # --lon=-106.629635 longitude where to draw map
+# --rot=90 rotate so north is at this many degrees (0 = right, 90 = up)
 
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
@@ -23,7 +24,7 @@ $gitdir = "/home/barrycarter/BCGIT/";
 
 # defaults
 $now = time();
-defaults("xwid=800&ywid=600&fill=0,0,0&time=$now&stars=1&lat=35.082463&lon=-106.629635");
+defaults("xwid=800&ywid=600&fill=0,0,0&time=$now&stars=1&lat=35.082463&lon=-106.629635&rot=90");
 
 # we use these a LOT, so putting them into global vars
 ($xwid, $ywid) = ($globopts{xwid}, $globopts{ywid});
@@ -63,7 +64,7 @@ if ($globopts{stars}) {draw_stars();}
 system("cat map.fly");
 
 close(A);
-system("fly -i map.fly -o map.gif; xv map.gif");
+system("fly -i map.fly -o map.gif; xv map.gif& sleep 5");
 
 # draw stars (program-specific subroutine)
 
@@ -80,17 +81,23 @@ sub draw_stars {
     # convert to az/el
     my($az, $el) = radecazel2($ra, $dec, $globopts{lat}, $globopts{lon}, $globopts{t});
 
+    # don't draw below horizon, which also handles fly trying to print
+    # offscreen
+    if ($el<0) {next;}
+
     # circle with center $halfwid,$halfhei and radius $mind/2
 
     # this assumes 0 azimuth (north) is to the right, something we'll
     # correct later
-    my($x) = $halfwid + cos($DEGRAD*$az)*$mind/2*(90-$el)/90;
-    my($y) = $halfhei + sin($DEGRAD*$az)*$mind/2*(90-$el)/90;
+    # "-" below because directions in sky are reversed
+    my($x) = $halfwid - cos($DEGRAD*($az-$globopts{rot}))*$mind/2*(90-$el)/90;
+    my($y) = $halfhei + sin($DEGRAD*($az-$globopts{rot}))*$mind/2*(90-$el)/90;
 
     # circle width based on magnitude (one of several possible formulas)
     my($width) = floor(5.5-$mag);
 
-    # x,y can be offscreen, but fly handles this fairly well
+    debug("$ra/$dec -> $x/$y");
+
     print A "fcircle $x,$y,$width,255,255,255\n";
   }
 }
