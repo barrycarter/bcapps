@@ -907,7 +907,7 @@ sub nadex_quotes {
  # commands to obtain daily, weekly, and intra-daily options
 
  # TEMP HACK: for some reason OPT-2 is the one today
- my($daily_cmd) = "curl -v -L -k -o /tmp/daily.$parity.#1-#2.txt -v -L -H 'Cookie: $cookie' 'https://$prehost.nadex.com/dealing/pd/cfd/displaySingleMarket.htm?epic=N{B}.D.$parity.OPT-1-[1-21].IP'";
+ my($daily_cmd) = "curl -v -L -k -o /tmp/daily.$parity.#1-#2.txt -v -L -H 'Cookie: $cookie' 'https://$prehost.nadex.com/dealing/pd/cfd/displaySingleMarket.htm?epic=N{B}.D.$parity.OPT-2-[1-21].IP'";
 # my($daily_cmd) = "curl -v -L -k -o /tmp/daily.$parity.#1-#2.txt -v -L -H 'Cookie: $cookie' 'https://$prehost.nadex.com/dealing/pd/cfd/displaySingleMarket.htm?epic=N{B}.D.$parity.OPT-2-[1-21].IP'";
 
 # my($daily_cmd) = "curl -v -L -k -o /tmp/daily#1-#2.txt -v -L -H 'Cookie: $cookie' 'https://$prehost.nadex.com/dealing/pd/cfd/displaySingleMarket.htm?epic=N{B}.D.$parity.OPT-2-[1-21].IP'";

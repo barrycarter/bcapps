@@ -1,5 +1,13 @@
 # shell one liners
 
+# bytes 67-70 appear to identify an SD card partition; replace
+# /dev/sdd w SD device (I have no idea why I believe this or even if
+# its true)
+
+perl -le 'open(A,"/dev/sdd1")||die("Cant open /dev/sdd, $!"); seek(A,67,0); read(A,$val,4); print "VAL: $val\n"; $val=~s/(.)/ord($1)."."/iseg; print $val'
+
+exit;
+
 # find IP addresses for hostnames (even hostnames like
 # br.com.desktop.201-77-120-14 have nonobvious IP addresses, perhaps
 # due to reassignment; for that host, the IP is 67.215.65.132)

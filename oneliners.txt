@@ -3,8 +3,6 @@
 # 15960.2139636773 and 1628 are totals I found after 1 run of below
 sort -k3n db/radecmag.asc | perl -anle '$tot+=100**(1/5*(6-$F[2])); print $tot/15960.2139636773," ",++$n," ",$n/1628'
 
-exit
-
 # follow someone's tweets in real time (19785284 = my twitter id)
 # can separate multiple ids by commas
 curl -u username:password http://stream.twitter.com/1/statuses/filter.json -d "follow=19785284"
