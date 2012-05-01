@@ -60,6 +60,7 @@ MARK
 # draw stars if requested
 if ($globopts{stars}) {draw_stars();}
 
+system("cat map.fly");
 
 close(A);
 system("fly -i map.fly -o map.gif; xv map.gif");
@@ -70,6 +71,7 @@ sub draw_stars {
   # load star data
   # <h>my stars... hee hee</h>
   my(@stars) = split(/\n/,read_file("$gitdir/db/radecmag.asc"));
+  debug("STARS:",@stars);
 
   for $i (@stars) {
     # split into ra/dec/mag
@@ -77,9 +79,19 @@ sub draw_stars {
 
     # convert to az/el
     my($az, $el) = radecazel2($ra, $dec, $globopts{lat}, $globopts{lon}, $globopts{t});
-    debug("AZEL: $az,$el");
+
+    # circle with center $halfwid,$halfhei and radius $mind/2
+
+    # this assumes 0 azimuth (north) is to the right, something we'll
+    # correct later
+    my($x) = $halfwid + cos($DEGRAD*$az)*$mind/2*(90-$el)/90;
+    my($y) = $halfhei + sin($DEGRAD*$az)*$mind/2*(90-$el)/90;
+
+    # circle width based on magnitude (one of several possible formulas)
+    my($width) = floor(5.5-$mag);
+
+    # x,y can be offscreen, but fly handles this fairly well
+    print A "fcircle $x,$y,$width,255,255,255\n";
   }
-
-
 }
 
