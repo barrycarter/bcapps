@@ -9,16 +9,6 @@
 # chunks are normally separated with 'die "TESTING";' (TODO: use
 # subroutines instead?)
 
-$foo = "hello";
-@bar = ("hel");
-for $i (@bar) {
-  print "I: $i\n";
-#  if ($foo=~/hello/) {print "ONE\n";}
-  if ($foo=~/$i/) {print "TWO\n";}
-}
-
-die "TESTING";
-
 push(@INC, "/usr/local/lib");
 require "bclib.pl";
 require "bc-astro-lib.pl";
@@ -31,6 +21,34 @@ use Data::Dumper 'Dumper';
 use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
+
+use Astro::Coords::Planet;
+
+$c = new Astro::Coords::Planet( 'uranus' );
+
+debug($c->summary());
+
+
+die "TESTING";
+
+use Astro::Coord::ECI::Moon;
+my $loc = Astro::Coord::ECI->geodetic (0, 0, 0);
+$moon = Astro::Coord::ECI::Moon->new ();
+@almanac = $moon->almanac($loc, time());
+
+debug(unfold(@almanac));
+
+die "TESTING";
+
+$foo = "hello";
+@bar = ("hel");
+for $i (@bar) {
+  print "I: $i\n";
+#  if ($foo=~/hello/) {print "ONE\n";}
+  if ($foo=~/$i/) {print "TWO\n";}
+}
+
+die "TESTING";
 
 debug(unfold(recent_weather()));
 
@@ -1344,15 +1362,6 @@ print convert_time(time(), "%Y years, %m months, %d days, %H hours, %M minutes, 
 # print convert_time(time(), "%U weeks")."\n";
 # print convert_time(time(), "%S seconds plus %U weeks")."\n";
 # print convert_time(time(), "%S seconds")."\n";
-
-die "TESTING";
-
-# use Astro::Coord::ECI::Moon;
-# my $loc = Astro::Coord::ECI->geodetic (0, 0, 0);
-# $moon = Astro::Coord::ECI::Moon->new ();
-# @almanac = $moon->almanac($loc, time());
-
-debug(unfold(@almanac));
 
 die "TESTING";
 

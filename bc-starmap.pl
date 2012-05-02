@@ -59,9 +59,9 @@ line $halfwid,$ys,$halfwid,$ye,128,0,0
 MARK
     ;
 
-# draw stars if requested
-if ($globopts{stars}) {draw_stars();}
+# draw stars/lines if requested (lines must preceed stars else they obscure)
 if ($globopts{lines}) {draw_lines();}
+if ($globopts{stars}) {draw_stars();}
 
 system("cat map.fly");
 
