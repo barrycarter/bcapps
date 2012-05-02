@@ -23,7 +23,7 @@ $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
 # not random, but more useful (lunar "ra" values)
-system("bzcat moon.csv.bz2 | cut -d, -f 4 | head -50 > /tmp/list.txt");
+system("bzcat /home/barrycarter/BCINFO/sites/DATA/planets/moon.csv.bz2 | cut -d, -f 4 | head -50 > /tmp/list.txt");
 @l = split(/\n/, read_file("/tmp/list.txt"));
 
 debug("ANSWER", best_linear(\@l, 0.0005));
@@ -65,6 +65,7 @@ sub best_linear {
     debug("I: $i");
 
     # each element limits the slope
+    # TODO: allow tolerance for first element too (non-trivial)
     my($slopeplus) = ($list[$i]-$list[0]+$tolerance)/$i;
     my($slopeminus) = ($list[$i]-$list[0]-$tolerance)/$i;
 
@@ -76,6 +77,7 @@ sub best_linear {
       my(@remainder) = @list[$i..$#list];
       debug("SIZE(REMAINDER): $#remainder+1");
       push(@ret, best_linear([@remainder], $tolerance));
+      return @ret;
     }
 
     # does this element limit the slope more than previously? 
@@ -91,6 +93,9 @@ sub best_linear {
 
   # if we made it this far, we can fit all into one slope
   debug("RETURNING");
+
+  # TODO: this is really ugly redundant code
+  push(@ret, $#list+1, ($minslope+$maxslope)/2);
   return @ret;
 
 #  debug(@list);
