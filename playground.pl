@@ -26,6 +26,9 @@ srand(20120502); # I need a reliable stream of "random" numbers for testing
 for $i (1..100) {push(@l,$i+rand());}
 best_linear(\@l, 0.5);
 
+write_file(join("\n",@l), "/tmp/gnuplotme.txt");
+system("echo plot \\\"/tmp/gnuplotme.txt\\\" with linespoints|gnuplot -persist");
+
 =item best_linear(\@list, $tolerance)
 
 Given a @list of numbers, find the least complex piecewise linear
