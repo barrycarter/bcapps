@@ -22,33 +22,61 @@ use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
-srand(20120502); # I need a reliable stream of "random" numbers for testing
-for $i (1..100) {push(@l,$i+rand());}
-best_linear(\@l, 0.5);
+# not random, but more useful (lunar "ra" values)
+system("bzcat moon.csv.bz2 | cut -d, -f 4 | head -50 > /tmp/list.txt");
+@l = split(/\n/, read_file("/tmp/list.txt"));
+
+debug("ANSWER", best_linear(\@l, 0.0005));
+
+# srand(20120502); # I need a reliable stream of "random" numbers for testing
+# for $i (1..100) {push(@l,$i+rand());}
 
 write_file(join("\n",@l), "/tmp/gnuplotme.txt");
-system("echo plot \\\"/tmp/gnuplotme.txt\\\" with linespoints|gnuplot -persist");
+# system("echo plot \\\"/tmp/gnuplotme.txt\\\" with linespoints|gnuplot -persist");
 
 =item best_linear(\@list, $tolerance)
 
 Given a @list of numbers, find the least complex piecewise linear
 function that fits the @list within $tolerance
 
+Return value is a list of (slope,#elements)
+
 =cut
 
 sub best_linear {
+  debug("BEST_LINEAR(",@_,")");
   my($listref, $tolerance) = @_;
   my(@list) = @{$listref};
+  debug("GOT LIST OF $#list+1 size");
+  my(@ret);
+  my($i); # this shouldn't be necessary
+
+  # recursion ending case
+#  if ($#list==1) {
+#    push(@ret, 2, $list[1]-$list[0]);
+#    return @ret;
+#  }
 
   # initial setting for minslope/maxslope
   my($minslope, $maxslope) = (-Infinity, +Infinity);
 
   # go thru 2nd-last element of list
   for $i (1..$#list) {
+    debug("I: $i");
 
     # each element limits the slope
     my($slopeplus) = ($list[$i]-$list[0]+$tolerance)/$i;
     my($slopeminus) = ($list[$i]-$list[0]-$tolerance)/$i;
+
+    debug("$i, $list[0], $list[$i], $minslope, $maxslope");
+
+    # if this element can't possibly fit in existing range, recurse
+    if ($slopeplus < $minslope || $slopeminus > $maxslope) {
+      push(@ret, $i, ($minslope+$maxslope)/2);
+      my(@remainder) = @list[$i..$#list];
+      debug("SIZE(REMAINDER): $#remainder+1");
+      push(@ret, best_linear([@remainder], $tolerance));
+    }
 
     # does this element limit the slope more than previously? 
     if ($slopeplus < $maxslope) {
@@ -59,8 +87,11 @@ sub best_linear {
       $minslope = $slopeminus;
     }
 
-   debug("$i, $list[$i], $minslope, $maxslope");
   }
+
+  # if we made it this far, we can fit all into one slope
+  debug("RETURNING");
+  return @ret;
 
 #  debug(@list);
 
