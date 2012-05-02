@@ -12,6 +12,7 @@
 # --fill=0,0,0 fill color (as r,g,b)
 # --time=now draw starmap at this time (GMT)
 # --stars=1 draw stars
+# --lines=1 draw constellation lines
 # --lat=35.082463 latitude where to draw map
 # --lon=-106.629635 longitude where to draw map
 # --rot=90 rotate so north is at this many degrees (0 = right, 90 = up)
@@ -24,7 +25,7 @@ $gitdir = "/home/barrycarter/BCGIT/";
 
 # defaults
 $now = time();
-defaults("xwid=800&ywid=600&fill=0,0,0&time=$now&stars=1&lat=35.082463&lon=-106.629635&rot=90");
+defaults("xwid=800&ywid=600&fill=0,0,0&time=$now&stars=1&lat=35.082463&lon=-106.629635&rot=90&lines=1");
 
 # we use these a LOT, so putting them into global vars
 ($xwid, $ywid) = ($globopts{xwid}, $globopts{ywid});
@@ -60,6 +61,7 @@ MARK
 
 # draw stars if requested
 if ($globopts{stars}) {draw_stars();}
+if ($globopts{lines}) {draw_lines();}
 
 system("cat map.fly");
 
@@ -90,9 +92,6 @@ sub radec2xy {
 
   # convert to Cartesian
   my($x,$y) = ($halfwid + $r*cos($theta), $halfhei + $r*sin($theta));
-
-  debug("$r/$theta -> $x/$y");
-
   return ($x,$y);
 }
 
@@ -104,33 +103,40 @@ sub draw_stars {
   for $i (@stars) {
     # split into ra/dec/mag
     my($ra, $dec, $mag) = split(/\s+/, $i);
-
     # convert to x/y
     my($x,$y) = radec2xy($ra,$dec);
-
+    # ignore below horizon
     if ($x<0) {next;}
-
-    # convert to az/el
-#    my($az, $el) = radecazel2($ra, $dec, $globopts{lat}, $globopts{lon}, $globopts{t});
-
-    # don't draw below horizon, which also handles fly trying to print
-    # offscreen
-#    if ($el<0) {next;}
-
-    # circle with center $halfwid,$halfhei and radius $mind/2
-
-    # this assumes 0 azimuth (north) is to the right, something we'll
-    # correct later
-    # "-" below because directions in sky are reversed
-#    my($x) = $halfwid - cos($DEGRAD*($az-$globopts{rot}))*$mind/2*(90-$el)/90;
-#    my($y) = $halfhei + sin($DEGRAD*($az-$globopts{rot}))*$mind/2*(90-$el)/90;
-
     # circle width based on magnitude (one of several possible formulas)
     my($width) = floor(5.5-$mag);
-
-    debug("$ra/$dec -> $x/$y");
-
     print A "fcircle $x,$y,$width,255,255,255\n";
   }
+
 }
+
+# draw constellation lines (program-specific subroutine)
+
+sub draw_lines {
+  load_stars();
+
+  for $i (split(/\n/,read_file("$gitdir/db/constellations.dat"))) {
+    # ignore non digit-digit lines
+    unless ($i=~/^(\d+)\s+(\d+)$/) {next;}
+    # from star $from to star $to
+    my($from,$to) = ($1, $2);
+    # find ra/dec of from and to stars
+    my($ra1,$dec1) = split(/\s+/, $stars[$from-1]);
+    my($ra2,$dec2) = split(/\s+/, $stars[$to-1]);
+
+    # find x/y pos of stars above
+    my($x1,$y1) = radec2xy($ra1,$dec1);
+    my($x2,$y2) = radec2xy($ra2,$dec2);
+
+    # if one part of line out of bounds, ignore
+    if ($x1 < 0 || $x2 < 0) {next;}
+
+    print A "line $x1,$y1,$x2,$y2,0,0,255\n";
+  }
+}
+
 
