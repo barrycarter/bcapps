@@ -23,16 +23,16 @@ $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
 # not random, but more useful (lunar "ra" values)
-system("bzcat /home/barrycarter/BCINFO/sites/DATA/planets/moon.csv.bz2 | cut -d, -f 4 | head -50 > /tmp/list.txt");
+system("bzcat /home/barrycarter/BCINFO/sites/DATA/planets/moon.csv.bz2 | cut -d, -f 4 | head -5000 > /tmp/list.txt");
 @l = split(/\n/, read_file("/tmp/list.txt"));
 
-debug("ANSWER", best_linear(\@l, 0.0005));
+debug("ANSWER", unfold(best_linear(\@l, 0.25)));
 
 # srand(20120502); # I need a reliable stream of "random" numbers for testing
 # for $i (1..100) {push(@l,$i+rand());}
 
 write_file(join("\n",@l), "/tmp/gnuplotme.txt");
-# system("echo plot \\\"/tmp/gnuplotme.txt\\\" with linespoints|gnuplot -persist");
+system("echo plot \\\"/tmp/gnuplotme.txt\\\" with linespoints|gnuplot -persist");
 
 =item best_linear(\@list, $tolerance)
 
@@ -51,12 +51,6 @@ sub best_linear {
   my(@ret);
   my($i); # this shouldn't be necessary
 
-  # recursion ending case
-#  if ($#list==1) {
-#    push(@ret, 2, $list[1]-$list[0]);
-#    return @ret;
-#  }
-
   # initial setting for minslope/maxslope
   my($minslope, $maxslope) = (-Infinity, +Infinity);
 
@@ -72,11 +66,11 @@ sub best_linear {
     debug("$i, $list[0], $list[$i], $minslope, $maxslope");
 
     # if this element can't possibly fit in existing range, recurse
-    if ($slopeplus < $minslope || $slopeminus > $maxslope) {
-      push(@ret, $i, ($minslope+$maxslope)/2);
+    # or we've reached last element 
+    if ($slopeplus < $minslope || $slopeminus > $maxslope || $i==$#list) {
+      push(@ret, [$list[0], $i, ($minslope+$maxslope)/2]);
       my(@remainder) = @list[$i..$#list];
-      debug("SIZE(REMAINDER): $#remainder+1");
-      push(@ret, best_linear([@remainder], $tolerance));
+      if (@remainder) {push(@ret, best_linear([@remainder], $tolerance));}
       return @ret;
     }
 
@@ -88,19 +82,7 @@ sub best_linear {
     if ($slopeminus > $minslope) {
       $minslope = $slopeminus;
     }
-
   }
-
-  # if we made it this far, we can fit all into one slope
-  debug("RETURNING");
-
-  # TODO: this is really ugly redundant code
-  push(@ret, $#list+1, ($minslope+$maxslope)/2);
-  return @ret;
-
-#  debug(@list);
-
-
 }
 
 
