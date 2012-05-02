@@ -66,32 +66,64 @@ system("cat map.fly");
 close(A);
 system("fly -i map.fly -o map.gif; xv map.gif& sleep 5");
 
+# load stars into *global* array (used by other subroutines) just once
+sub load_stars {
+  unless (@stars) {
+    @stars = split(/\n/,read_file("$gitdir/db/radecmag.asc"));
+  }
+}
+
+# convert ra/dec to x/y for given arguments to this program, return
+# -1,-1 if below horizon
+
+sub radec2xy {
+  my($ra, $dec) = @_;
+  # first, convert to azimuth and elevation for this lat/lon/time
+  my($az, $el) = radecazel2($ra, $dec, $globopts{lat}, $globopts{lon}, $globopts{t});
+  if ($el<0) {return (-1,-1);}
+
+  # polar coordinates: r = distance from center = 90-el ; el=0 -> edge
+  my($r) = (90-$el)/90*$mind/2;
+  # theta is reversed, because east is left of north when looking up
+  # adding requested rotation as well; convert to radians
+  my($theta) = -($az+$globopts{rot})*$DEGRAD;
+
+  # convert to Cartesian
+  my($x,$y) = ($halfwid + $r*cos($theta), $halfhei + $r*sin($theta));
+
+  debug("$r/$theta -> $x/$y");
+
+  return ($x,$y);
+}
+
 # draw stars (program-specific subroutine)
 
 sub draw_stars {
-  # load star data
-  # <h>my stars... hee hee</h>
-  my(@stars) = split(/\n/,read_file("$gitdir/db/radecmag.asc"));
-  debug("STARS:",@stars);
+  load_stars();
 
   for $i (@stars) {
     # split into ra/dec/mag
     my($ra, $dec, $mag) = split(/\s+/, $i);
 
+    # convert to x/y
+    my($x,$y) = radec2xy($ra,$dec);
+
+    if ($x<0) {next;}
+
     # convert to az/el
-    my($az, $el) = radecazel2($ra, $dec, $globopts{lat}, $globopts{lon}, $globopts{t});
+#    my($az, $el) = radecazel2($ra, $dec, $globopts{lat}, $globopts{lon}, $globopts{t});
 
     # don't draw below horizon, which also handles fly trying to print
     # offscreen
-    if ($el<0) {next;}
+#    if ($el<0) {next;}
 
     # circle with center $halfwid,$halfhei and radius $mind/2
 
     # this assumes 0 azimuth (north) is to the right, something we'll
     # correct later
     # "-" below because directions in sky are reversed
-    my($x) = $halfwid - cos($DEGRAD*($az-$globopts{rot}))*$mind/2*(90-$el)/90;
-    my($y) = $halfhei + sin($DEGRAD*($az-$globopts{rot}))*$mind/2*(90-$el)/90;
+#    my($x) = $halfwid - cos($DEGRAD*($az-$globopts{rot}))*$mind/2*(90-$el)/90;
+#    my($y) = $halfhei + sin($DEGRAD*($az-$globopts{rot}))*$mind/2*(90-$el)/90;
 
     # circle width based on magnitude (one of several possible formulas)
     my($width) = floor(5.5-$mag);
