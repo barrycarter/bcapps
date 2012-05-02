@@ -22,11 +22,55 @@ use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
-use Astro::Coords::Planet;
+srand(20120502); # I need a reliable stream of "random" numbers for testing
+for $i (1..100) {push(@l,$i+rand());}
+best_linear(\@l, 0.5);
 
-$c = new Astro::Coords::Planet( 'uranus' );
+=item best_linear(\@list, $tolerance)
 
-debug($c->summary());
+Given a @list of numbers, find the least complex piecewise linear
+function that fits the @list within $tolerance
+
+=cut
+
+sub best_linear {
+  my($listref, $tolerance) = @_;
+  my(@list) = @{$listref};
+
+  # initial setting for minslope/maxslope
+  my($minslope, $maxslope) = (-Infinity, +Infinity);
+
+  # go thru 2nd-last element of list
+  for $i (1..$#list) {
+
+    # each element limits the slope
+    my($slopeplus) = ($list[$i]-$list[0]+$tolerance)/$i;
+    my($slopeminus) = ($list[$i]-$list[0]-$tolerance)/$i;
+
+    # does this element limit the slope more than previously? 
+    if ($slopeplus < $maxslope) {
+      $maxslope = $slopeplus;
+    }
+    
+    if ($slopeminus > $minslope) {
+      $minslope = $slopeminus;
+    }
+
+   debug("$i, $list[$i], $minslope, $maxslope");
+  }
+
+#  debug(@list);
+
+
+}
+
+
+
+die "TESTING";
+
+# use Astro::Coords::Planet;
+# $c = new Astro::Coords::Planet( 'uranus' );
+# debug($c->summary());
 
 
 die "TESTING";
