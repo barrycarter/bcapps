@@ -22,8 +22,56 @@ use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
+
+
+# earlier method too inefficient, so...
+
+$tolerance=0.1;
+
+open(A,"bzcat /home/barrycarter/BCINFO/sites/DATA/planets/moon.csv.bz2|");
+
+while (<A>) {
+  /^(.*?)[, ]+(.*?),(.*?),*$/;
+  ($time, $ra, $dec) = ($1, $2, $3);
+
+  # first line?
+  if (++$n==1) {
+    $xstart = $time;
+    $ystart = $ra;
+    ($minslope, $maxslope) = (-Infinity, +Infinity);
+    next;
+  }
+
+  # not first line?
+  # acceptable ranges of slope for this point
+  $ptmax = ($ra+$tolerance-$ystart)/($time-$xstart);
+  $ptmin = ($ra-$tolerance-$ystart)/($time-$xstart);
+
+  # is there no way this point can fit? If so, write out previous
+  # point and treat it as new start value (and recompute $ptmin/max)
+  if ($ptmax < $minslope || $ptmin > $maxslope) {
+    print "$prevtime $prevra\n";
+    $xstart = $prevtime;
+    $ystart = $prevra;
+    ($minslope, $maxslope) = (-Infinity, +Infinity);
+    $ptmax = ($ra+$tolerance-$ystart)/($time-$xstart);
+    $ptmin = ($ra-$tolerance-$ystart)/($time-$xstart);
+  }
+
+  # min and max slope for all points so far
+  if ($ptmax < $maxslope) {$maxslope = $ptmax;}
+  if ($ptmin > $minslope) {$minslope = $ptmin;}
+
+  # keep track of current ra/dec/time
+  ($prevtime, $prevra, $prevdec) = ($time, $ra, $dec);
+    
+  debug("RANGE: $ptmin-$ptmax, TIGHT: $minslope-$maxslope");
+}
+
+die "TESTING";
+
 # not random, but more useful (lunar "ra" values)
-system("bzcat /home/barrycarter/BCINFO/sites/DATA/planets/moon.csv.bz2 | cut -d, -f 4 | head -5000 > /tmp/list.txt");
+system("bzcat /home/barrycarter/BCINFO/sites/DATA/planets/moon.csv.bz2 | cut -d, -f 4 > /tmp/list.txt");
 @l = split(/\n/, read_file("/tmp/list.txt"));
 
 debug("ANSWER", unfold(best_linear(\@l, 0.25)));
