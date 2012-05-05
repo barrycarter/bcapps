@@ -22,8 +22,13 @@ use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
-debug(planet_points("mercury"));
+%hash = planet_points("mercury", .1);
 
+for $i (sort keys %hash) {
+  print "$i $hash{$i}\n";
+}
+
+die "TESTING";
 
 =item planet_points($planet, $tolerance)
 
