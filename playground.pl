@@ -22,23 +22,121 @@ use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
+debug(planet_points("mercury"));
 
+
+=item planet_points($planet, $tolerance)
+
+One-off subroutine that looks at
+/home/barrycarter/BCINFO/sites/DATA/planets/$planet.csv.bz2 and
+returns (as a hash) the fewest points to convert ra to linear
+interpolation within $tolerance
+
+=cut
+
+sub planet_points {
+  my($planet, $tolerance) = @_;
+  local *A;
+  my($xstart, $ystart, $minslope, $maxslope, $ptmin, $ptmax, $n);
+  my(%rethash);
+
+  # open file
+  open(A,"bzcat /home/barrycarter/BCINFO/sites/DATA/planets/$planet.csv.bz2|");
+
+  while (<A>) {
+
+    # find time/ra/dec (we may use dec later)
+    /^(.*?)[, ]+(.*?),(.*?),*$/;
+    ($time, $ra, $dec) = ($1, $2, $3);
+
+    # first line? (TODO: remove this icky special case?)
+    if (++$n==1) {
+      $xstart = $time;
+      $ystart = $ra;
+      ($minslope, $maxslope) = (-Infinity, +Infinity);
+      $rethash{$time} = $ra;
+      next;
+    }
+
+    # not first line?
+    # acceptable ranges of slope for this point
+    $ptmax = ($ra+$tolerance-$ystart)/($time-$xstart);
+    $ptmin = ($ra-$tolerance-$ystart)/($time-$xstart);
+    
+    # is there no way this point can fit? If so, write out previous
+    # slope range (as midpoint) and treat current value as new start
+    # value (and recompute $ptmin/max)
+    
+    if ($ptmax < $minslope || $ptmin > $maxslope) {
+      # the ra that falls within $prevra +- $tolerance AND creates a slope
+      # that can be used by any points in between
+      my($accslope) = ($minslope + $maxslope)/2;
+      my($estra) = ($prevtime-$xstart)*$accslope + $ystart;
+      $rethash{$prevtime} = $estra;
+      $xstart = $prevtime;
+      $ystart = $prevra;
+      ($minslope, $maxslope) = (-Infinity, +Infinity);
+      $ptmax = ($ra+$tolerance-$ystart)/($time-$xstart);
+      $ptmin = ($ra-$tolerance-$ystart)/($time-$xstart);
+  }
+
+    # min and max slope for all points so far
+    if ($ptmax < $maxslope) {$maxslope = $ptmax;}
+    if ($ptmin > $minslope) {$minslope = $ptmin;}
+
+    # keep track of current ra/dec/time
+    ($prevtime, $prevra, $prevdec) = ($time, $ra, $dec);
+  }
+
+  return %rethash;
+}
+
+die "TESTING";
 
 # earlier method too inefficient, so...
 
 $tolerance=0.1;
 
-open(A,"bzcat /home/barrycarter/BCINFO/sites/DATA/planets/moon.csv.bz2|");
 
 while (<A>) {
   /^(.*?)[, ]+(.*?),(.*?),*$/;
   ($time, $ra, $dec) = ($1, $2, $3);
+
+  # use db to estimate!
+  @prev = sqlite3hashlist("SELECT * FROM foo WHERE time<=$time ORDER BY time DESC LIMIT 1", "tmp/test.db");
+  @next = sqlite3hashlist("SELECT * FROM foo WHERE time>=$time ORDER BY time LIMIT 1", "tmp/test.db");
+
+  # ignoring this case for now
+  unless (@prev) {next;}
+
+  %prevhash = %{$prev[0]};
+  %nexthash = %{$next[0]};
+
+  # another special case to ignore (for now)
+  if ($prevhash{time} == $nexthash{time}) {next;}
+
+  debug("PREV",%prevhash,"NEXT",%nexthash);
+
+  $slope = ($nexthash{angle}-$prevhash{angle})/($nexthash{time}-$prevhash{time});
+  $guess = ($time-$prevhash{time})*$slope + $prevhash{angle};
+  debug("GUESS: $guess, REAL: $ra");
+  print $guess-$ra,"\n";
+#  debug("SLOPE: $slope");
+
+#  debug("PREV",unfold(@prev));
+#  debug("NEXT",unfold(@next));
+
+#  warn "TESTING";
+  next;
+
+
 
   # first line?
   if (++$n==1) {
     $xstart = $time;
     $ystart = $ra;
     ($minslope, $maxslope) = (-Infinity, +Infinity);
+    print "$time $ra\n";
     next;
   }
 
@@ -48,9 +146,15 @@ while (<A>) {
   $ptmin = ($ra-$tolerance-$ystart)/($time-$xstart);
 
   # is there no way this point can fit? If so, write out previous
-  # point and treat it as new start value (and recompute $ptmin/max)
+  # slope range (as midpoint) and treat current value as new start
+  # value (and recompute $ptmin/max)
+
   if ($ptmax < $minslope || $ptmin > $maxslope) {
-    print "$prevtime $prevra\n";
+    # the ra that falls within $prevra +- $tolerance AND creates a slope
+    # that can be used my any points in between
+    $accslope = ($minslope + $maxslope)/2;
+    $estra = ($prevtime-$xstart)*$accslope + $ystart;
+    print "$prevtime $estra\n";
     $xstart = $prevtime;
     $ystart = $prevra;
     ($minslope, $maxslope) = (-Infinity, +Infinity);
