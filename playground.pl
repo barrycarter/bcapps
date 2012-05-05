@@ -22,13 +22,20 @@ use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
+$planet = "mercury";
+@ret = planet_points($planet, .1);
+write_file(join("\n",@ret), "/home/barrycarter/BCGIT/db/$planet-approx-ra.txt");
+
+die "TESTING";
+
 # for mercury, test that interpolation results (in
 # /home/barrycarter/20120505/merc3.txt) match real results with 0.1
 # degree
 
 # this file is only 684 lines long (wow?!)
-for $i (split(/\n/, read_file("/home/barrycarter/20120505/merc3.txt"))) {
+for $i (split(/\n/, read_file("/home/barrycarter/20120505/merc5.txt"))) {
   $i=~/^(.*?)\s+(.*)$/;
+  # now storing "starting_ra slope" in est
   $est{$1} = $2;
 }
 
@@ -44,24 +51,17 @@ while (<A>) {
   ($time, $ra, $dec) = ($1, $2, $3);
   $guess = linear_interpolate(\%est, $time);
   $diff = $ra-$guess;
-  debug("RA: $ra, GUESS: $ guess, DIFF: $diff");
+  debug("RA: $ra, GUESS: $guess, DIFF: $diff");
   print "$time $diff\n";
-}
-
-die "TESTING";
-
-%hash = planet_points("mercury", .1);
-
-for $i (sort keys %hash) {
-  print "$i $hash{$i}\n";
 }
 
 die "TESTING";
 
 =item linear_interpolate(\%hash, $point)
 
-Given %hash which represents points for linear interpolation, return
-value of interpolation at $point.
+Given %hash which represents points for linear interpolation (keys are
+x values, "ra slope" are vals), return value of interpolation at
+$point.
 
 TODO: this is extremely inefficient and for testing purposes only
 
@@ -76,28 +76,25 @@ sub linear_interpolate {
   my(@xvals) = sort keys %hash;
 
   for $i (0..$#xvals) {
+    debug("I: $i");
     debug("TESTING: $xvals[$i] vs $point vs $xvals[$i+1]");
     if (($xvals[$i] < $point) && ($point <= $xvals[$i+1])) {
+      debug("SETTING POS: $pos");
       $pos = $i;
       last;
     }
   }
 
-  debug("I: $i");
   debug("$point is between $xvals[$pos] and $xvals[$pos+1]");
 
+  # split y value into initial value and slope
+  my($iv, $slope) = split(/\ /, $hash{$xvals[$pos]});
+
   # it's between the ith and i+1-th element of xvals, so the interp is
-  my($slope)=($hash{$xvals[$pos+1]}-$hash{$xvals[$pos]})/($xvals[$pos+1]-$xvals[$pos]);
-  my($guess) = ($point-$xvals[$pos])*$slope + $hash{$xvals[$pos]};
-  debug("SLOPE: $slope");
-  debug("HASH: $hash{$xvals[$pos+1]} and $hash{$xvals[$pos]}");
+  my($guess) = ($point-$xvals[$pos])*$slope + $iv;
   return $guess;
 
 }
-
-
-die "TESTING";
-
 
 die "TESTING";
 
@@ -105,8 +102,12 @@ die "TESTING";
 
 One-off subroutine that looks at
 /home/barrycarter/BCINFO/sites/DATA/planets/$planet.csv.bz2 and
-returns (as a hash) the fewest points to convert $which to linear
-interpolation within $tolerance.
+returns (as a list) the fewest points to convert $which to
+linear interpolation within $tolerance. Return value is array of:
+
+"$time $value $slope"
+
+Where $slope is good until next $time
 
 TODO: not working for dec yet
 
@@ -116,7 +117,7 @@ sub planet_points {
   my($planet, $tolerance) = @_;
   local *A;
   my($xstart, $ystart, $minslope, $maxslope, $ptmin, $ptmax, $n);
-  my(%rethash);
+  my(@ret);
 
   # open file
   open(A,"bzcat /home/barrycarter/BCINFO/sites/DATA/planets/$planet.csv.bz2|");
@@ -132,7 +133,7 @@ sub planet_points {
       $xstart = $time;
       $ystart = $ra;
       ($minslope, $maxslope) = (-Infinity, +Infinity);
-      $rethash{$time} = $ra;
+      ($prevtime, $prevra, $prevdec) = ($time, $ra, $dec);
       next;
     }
 
@@ -149,8 +150,7 @@ sub planet_points {
       # the ra that falls within $prevra +- $tolerance AND creates a slope
       # that can be used by any points in between
       my($accslope) = ($minslope + $maxslope)/2;
-      my($estra) = ($prevtime-$xstart)*$accslope + $ystart;
-      $rethash{$prevtime} = $prevra;
+      push(@ret, "$xstart $ystart $accslope");
       $xstart = $prevtime;
       $ystart = $prevra;
       ($minslope, $maxslope) = (-Infinity, +Infinity);
@@ -166,7 +166,7 @@ sub planet_points {
     ($prevtime, $prevra, $prevdec) = ($time, $ra, $dec);
   }
 
-  return %rethash;
+  return @ret;
 }
 
 die "TESTING";
