@@ -22,6 +22,64 @@ use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
+# for mercury, test that interpolation results (in
+# /home/barrycarter/20120505/merc1.txt) match real results with 0.1
+# degree
+
+# this file is only 684 lines long (wow?!)
+for $i (split(/\n/, read_file("/home/barrycarter/20120505/merc1.txt"))) {
+  $i=~/^(.*?)\s+(.*)$/;
+  $est{$1} = $2;
+}
+
+# and now the actual data
+open(A,"bzcat /home/barrycarter/BCINFO/sites/DATA/planets/mercury.csv.bz2|");
+
+while (<A>) {
+  # find time/ra/dec (we may use dec later)
+  /^(.*?)[, ]+(.*?),(.*?),*$/;
+  ($time, $ra, $dec) = ($1, $2, $3);
+  $guess = linear_interpolate(\%est, $time);
+  debug("RA: $ra, GUESS: $ guess");
+}
+
+
+
+=item linear_interpolate(\%hash, $point)
+
+Given %hash which represents points for linear interpolation, return
+value of interpolation at $point.
+
+TODO: this is extremely inefficient and for testing purposes only
+
+=cut
+
+sub linear_interpolate {
+  my($hashref, $point) = @_;
+  my(%hash) = %{$hashref};
+
+  # sort the keys and fince where $point belongs
+  my(@xvals) = sort keys %hash;
+
+  for $i (0..$#xvals) {
+    if ($xvals[$i] < $point && $point < $xvals[$i+1]) {last;}
+  }
+
+  debug("$point is between $xvals[$i] and $xvals[$i+1]");
+
+  # it's between the ith and i+1-th element of xvals, so the interp is
+  my($slope)=($hash{$xvals[$i+1]}-$hash{$xvals[$i]})/($xvals[i+1]-$xvals[$i]);
+  debug("SLOPE: $slope");
+  debug("HASH: $hash{$xvals[$i+1]} and $hash{$xvals[$i]}");
+  my($guess) = ($point-$xvals[$i])*$slope + $hash{$xvals[$i]};
+  return $guess;
+
+}
+
+
+die "TESTING";
+
+
 %hash = planet_points("mercury", .1);
 
 for $i (sort keys %hash) {
@@ -30,12 +88,14 @@ for $i (sort keys %hash) {
 
 die "TESTING";
 
-=item planet_points($planet, $tolerance)
+=item planet_points($planet, $tolerance, $which="ra|dec")
 
 One-off subroutine that looks at
 /home/barrycarter/BCINFO/sites/DATA/planets/$planet.csv.bz2 and
-returns (as a hash) the fewest points to convert ra to linear
-interpolation within $tolerance
+returns (as a hash) the fewest points to convert $which to linear
+interpolation within $tolerance.
+
+TODO: not working for dec yet
 
 =cut
 
