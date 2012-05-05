@@ -22,7 +22,7 @@ use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
-$planet = "mercury";
+$planet = "uranus";
 @ret = planet_points($planet, .1);
 write_file(join("\n",@ret), "/home/barrycarter/BCGIT/db/$planet-approx-ra.txt");
 
