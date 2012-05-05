@@ -23,11 +23,11 @@ $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
 # for mercury, test that interpolation results (in
-# /home/barrycarter/20120505/merc1.txt) match real results with 0.1
+# /home/barrycarter/20120505/merc3.txt) match real results with 0.1
 # degree
 
 # this file is only 684 lines long (wow?!)
-for $i (split(/\n/, read_file("/home/barrycarter/20120505/merc1.txt"))) {
+for $i (split(/\n/, read_file("/home/barrycarter/20120505/merc3.txt"))) {
   $i=~/^(.*?)\s+(.*)$/;
   $est{$1} = $2;
 }
@@ -36,14 +36,27 @@ for $i (split(/\n/, read_file("/home/barrycarter/20120505/merc1.txt"))) {
 open(A,"bzcat /home/barrycarter/BCINFO/sites/DATA/planets/mercury.csv.bz2|");
 
 while (<A>) {
+  # too slow to analyze all points, so... (TODO: this is ugly)
+  unless (rand()<.1) {next;}
+
   # find time/ra/dec (we may use dec later)
   /^(.*?)[, ]+(.*?),(.*?),*$/;
   ($time, $ra, $dec) = ($1, $2, $3);
   $guess = linear_interpolate(\%est, $time);
-  debug("RA: $ra, GUESS: $ guess");
+  $diff = $ra-$guess;
+  debug("RA: $ra, GUESS: $ guess, DIFF: $diff");
+  print "$time $diff\n";
 }
 
+die "TESTING";
 
+%hash = planet_points("mercury", .1);
+
+for $i (sort keys %hash) {
+  print "$i $hash{$i}\n";
+}
+
+die "TESTING";
 
 =item linear_interpolate(\%hash, $point)
 
@@ -57,21 +70,27 @@ TODO: this is extremely inefficient and for testing purposes only
 sub linear_interpolate {
   my($hashref, $point) = @_;
   my(%hash) = %{$hashref};
+  my($pos);
 
   # sort the keys and fince where $point belongs
   my(@xvals) = sort keys %hash;
 
   for $i (0..$#xvals) {
-    if ($xvals[$i] < $point && $point < $xvals[$i+1]) {last;}
+    debug("TESTING: $xvals[$i] vs $point vs $xvals[$i+1]");
+    if (($xvals[$i] < $point) && ($point <= $xvals[$i+1])) {
+      $pos = $i;
+      last;
+    }
   }
 
-  debug("$point is between $xvals[$i] and $xvals[$i+1]");
+  debug("I: $i");
+  debug("$point is between $xvals[$pos] and $xvals[$pos+1]");
 
   # it's between the ith and i+1-th element of xvals, so the interp is
-  my($slope)=($hash{$xvals[$i+1]}-$hash{$xvals[$i]})/($xvals[i+1]-$xvals[$i]);
+  my($slope)=($hash{$xvals[$pos+1]}-$hash{$xvals[$pos]})/($xvals[$pos+1]-$xvals[$pos]);
+  my($guess) = ($point-$xvals[$pos])*$slope + $hash{$xvals[$pos]};
   debug("SLOPE: $slope");
-  debug("HASH: $hash{$xvals[$i+1]} and $hash{$xvals[$i]}");
-  my($guess) = ($point-$xvals[$i])*$slope + $hash{$xvals[$i]};
+  debug("HASH: $hash{$xvals[$pos+1]} and $hash{$xvals[$pos]}");
   return $guess;
 
 }
@@ -79,12 +98,6 @@ sub linear_interpolate {
 
 die "TESTING";
 
-
-%hash = planet_points("mercury", .1);
-
-for $i (sort keys %hash) {
-  print "$i $hash{$i}\n";
-}
 
 die "TESTING";
 
@@ -137,7 +150,7 @@ sub planet_points {
       # that can be used by any points in between
       my($accslope) = ($minslope + $maxslope)/2;
       my($estra) = ($prevtime-$xstart)*$accslope + $ystart;
-      $rethash{$prevtime} = $estra;
+      $rethash{$prevtime} = $prevra;
       $xstart = $prevtime;
       $ystart = $prevra;
       ($minslope, $maxslope) = (-Infinity, +Infinity);
