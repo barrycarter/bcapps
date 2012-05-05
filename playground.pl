@@ -22,9 +22,12 @@ use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
-$planet = "uranus";
-@ret = planet_points($planet, .1);
-write_file(join("\n",@ret), "/home/barrycarter/BCGIT/db/$planet-approx-ra.txt");
+$planet = "mercury";
+
+for $planet ("venus", "sun", "moon", "mars", "jupiter", "saturn", "uranus") {
+  @ret = planet_points($planet, .1, "dec");
+  write_file(join("\n",@ret), "/home/barrycarter/BCGIT/db/$planet-approx-dec.txt");
+}
 
 die "TESTING";
 
@@ -114,7 +117,7 @@ TODO: not working for dec yet
 =cut
 
 sub planet_points {
-  my($planet, $tolerance) = @_;
+  my($planet, $tolerance, $which) = @_;
   local *A;
   my($xstart, $ystart, $minslope, $maxslope, $ptmin, $ptmax, $n);
   my(@ret);
@@ -127,6 +130,9 @@ sub planet_points {
     # find time/ra/dec (we may use dec later)
     /^(.*?)[, ]+(.*?),(.*?),*$/;
     ($time, $ra, $dec) = ($1, $2, $3);
+
+    # this is just plain hideous
+    if ($which eq "dec") {$ra = $dec;}
 
     # first line? (TODO: remove this icky special case?)
     if (++$n==1) {
