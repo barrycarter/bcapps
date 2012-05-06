@@ -20,6 +20,9 @@
 # --lat=35.082463 latitude where to draw map
 # --lon=-106.629635 longitude where to draw map
 # --rot=90 rotate so north is at this many degrees (0 = right, 90 = up)
+# --info=1 display info about this map
+
+# TODO: label bright stars
 
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
@@ -29,7 +32,7 @@ $gitdir = "/home/barrycarter/BCGIT/";
 
 # defaults
 $now = time();
-defaults("xwid=800&ywid=600&fill=0,0,0&time=$now&stars=1&lat=35.082463&lon=-106.629635&rot=90&lines=1&planets=1&planetlabel=1");
+defaults("xwid=800&ywid=600&fill=0,0,0&time=$now&stars=1&lat=35.082463&lon=-106.629635&rot=90&lines=1&planets=1&planetlabel=1&info=1");
 
 # we use these a LOT, so putting them into global vars
 ($xwid, $ywid) = ($globopts{xwid}, $globopts{ywid});
@@ -68,6 +71,7 @@ if ($globopts{lines}) {draw_lines();}
 if ($globopts{boundary}) {draw_boundaries();}
 if ($globopts{stars}) {draw_stars();}
 if ($globopts{planets}) {draw_planets();}
+if ($globopts{info}) {draw_info();}
 
 # system("cat map.fly");
 
@@ -179,8 +183,6 @@ sub draw_planets {
     # xy position of planet (converting degrees to RA)
     my($x,$y) = radec2xy(($pos{$i}->{ra})/15, $pos{$i}->{dec});
     if ($x<0 && $y<0) {next;}
-    # TODO: individualize colors
-    debug("$i: $col{$i}");
     print A "fcircle $x,$y,$col{$i}\n";
     
     # label planets?
@@ -240,3 +242,13 @@ sub draw_boundaries {
   }
 }
 
+# draw info
+sub draw_info {
+  my($y)=0;
+  for $i (sort keys %globopts) {
+    # tmpdir is both long and pointless
+    if ($i eq "tmpdir") {next;}
+    print A "string 255,255,255,0,$y,small,$i: $globopts{$i}\n";
+    $y+=10;
+  }
+}
