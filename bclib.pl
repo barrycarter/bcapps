@@ -2238,6 +2238,19 @@ sub cpanel {
   return $out;
 }
 
+=item jd2unix($jd, $dir="jd2unix|unix2jd")
+
+Given the Julian date or Unix time, return the other based on $dir
+
+=cut
+
+sub jd2unix {
+  my($t, $dir) = @_;
+  if ($dir eq "jd2unix") {return ($t-2440587.5)*86400;}
+  elsif ($dir eq "unix2jd") {return $t/86400+2440587.5;}
+  else {warnlocal("second argument not understood")}
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
   debug("END: CLEANING UP TMP FILES");

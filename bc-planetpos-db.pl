@@ -16,7 +16,7 @@ for $i (glob "/home/barrycarter/BCGIT/db/*-ra.txt /home/barrycarter/BCGIT/db/*-d
 
   # split each data line
   for $i (@data) {
-    ($t, $y, $s) = split(/\ /, $i);
+    ($t, $y, $s) = split(/\s+/, $i);
     # insert statement
     push(@queries, "INSERT INTO planetpos (time, type, planet, xinit, slope)
 VALUES ('$t', '$which', '$planet', '$y', '$s')");
