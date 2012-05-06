@@ -7,8 +7,8 @@
 
 # Slew of options:
 #
-# --xwid=800 x width
-# --ywid=600 y width
+# --xwid=1024 x width
+# --ywid=768 y width
 # --fill=0,0,0 fill color (as r,g,b)
 # --time=now draw starmap at this time (GMT)
 # --stars=1 draw stars
@@ -32,7 +32,7 @@ $gitdir = "/home/barrycarter/BCGIT/";
 
 # defaults
 $now = time();
-defaults("xwid=800&ywid=600&fill=0,0,0&time=$now&stars=1&lat=35.082463&lon=-106.629635&rot=90&lines=1&planets=1&planetlabel=1&info=1");
+defaults("xwid=1024&ywid=768&fill=0,0,0&time=$now&stars=1&lat=35.082463&lon=-106.629635&rot=90&lines=1&planets=1&planetlabel=1&info=1");
 
 # we use these a LOT, so putting them into global vars
 ($xwid, $ywid) = ($globopts{xwid}, $globopts{ywid});
@@ -73,10 +73,10 @@ if ($globopts{stars}) {draw_stars();}
 if ($globopts{planets}) {draw_planets();}
 if ($globopts{info}) {draw_info();}
 
-# system("cat map.fly");
-
 close(A);
-system("fly -q -i map.fly -o map.gif; xv map.gif& sleep 1");
+# changed for CGI
+print "Content-type: image/gif\n\n";
+system("fly -q -i map.fly");
 
 # load stars into *global* array (used by other subroutines) just once
 sub load_stars {
