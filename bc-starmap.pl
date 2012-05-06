@@ -16,6 +16,7 @@
 # --planets=1 draw planets (sun/moon are considered planets)
 # --planetlabel=1 label planets
 # --boundary=0 draw constellation boundaries
+# --labelcons=0 label constellations when boundaries are drawn
 # --lat=35.082463 latitude where to draw map
 # --lon=-106.629635 longitude where to draw map
 # --rot=90 rotate so north is at this many degrees (0 = right, 90 = up)
@@ -197,6 +198,7 @@ sub draw_planets {
 
 # draw constellation boundaries
 sub draw_boundaries {
+  my(%bounds);
   my(@data) = split(/\n/, read_file("/home/barrycarter/BCGIT/db/constellation_boundaries.dat"));
 
   # just draw red dots
@@ -205,15 +207,32 @@ sub draw_boundaries {
     $i = trim($i);
     # convert "+ 9" to "+9"
     $i=~s/([\+\-])\s+/$1/isg;
-    # cname currently unused
     my($ra, $dec, $cname) = split(/\s+/, $i);
+
+    # record ra/dec for this constellation to print label later
+    push(@{$bounds{$cname}{ra}}, $ra);
+    push(@{$bounds{$cname}{dec}}, $dec);
+
     # find xy
     my($x,$y) = radec2xy($ra,$dec);
     debug("$ra/$dec/$cname -> $x,$y");
     if ($x<0 && $y<0) {next;}
     # and draw
     print A "setpixel $x,$y,255,0,0\n";
-    print "setpixel $x,$y,255,0,0\n";
+  }
+
+  # now, labels (if desired)
+  if ($globopts{labelcons}) {
+    for $i (sort keys %bounds) {
+      # TODO: handle constellations that cross 0h
+      my($minra) = min(@{$bounds{$i}{ra}});
+      my($maxra) = max(@{$bounds{$i}{ra}});
+      my($mindec) = min(@{$bounds{$i}{dec}});
+      my($maxdec) = max(@{$bounds{$i}{dec}});
+      # find xy of midpoint (not necessarily in constellation: convexity)
+      my($x,$y) = radec2xy(($minra+$maxra)/2,($mindec+$maxdec)/2);
+      print A "string 255,255,255,$x,$y,tiny,$i\n";
+    }
   }
 }
 
