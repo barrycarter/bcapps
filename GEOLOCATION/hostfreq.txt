@@ -1,4 +1,4 @@
-: 620726
+: 619705
 .net: 233278
 .com: 74270
 .jp: 31673
@@ -15,9 +15,9 @@
 .edu: 9609
 .fr: 9098
 .nl: 8988
-.au: 8935
 .net.mediaways: 8569
 .net.mediaways.pool: 8040
+.au: 7914
 .com.virginmedia: 7150
 .com.virginmedia.cable: 6991
 .net.proxad.dslg: 6937
@@ -42,7 +42,6 @@
 .jp.ad: 4486
 .ca: 4482
 .pt: 4383
-.au.net: 4331
 .au.com: 4295
 .no: 4288
 .be: 4255
@@ -57,6 +56,7 @@
 .fi: 3410
 .tw: 3393
 .cn.com.163data.dynamic: 3357
+.au.net: 3310
 .dk.tele: 3245
 .se: 3238
 .th: 3230
@@ -207,7 +207,6 @@
 .net.lyse: 1264
 .th.co.3bb: 1249
 .bg.btc-net: 1235
-.au.net.iinet: 1223
 .net.lyse.customer: 1221
 .net.fuse: 1219
 .com.btcentralplus: 1218
@@ -244,7 +243,6 @@
 .jp.ad.odn: 1050
 .com.theplanet.static: 1042
 .jp.or.asahi-net: 1041
-.au.net.iinet.dyn: 1040
 .net.cantv: 1030
 .jp.ne.nttpc: 1026
 .net.telia.se.link: 1025
@@ -951,6 +949,7 @@
 .sg.com.maxonline: 203
 .my.jaring: 203
 .net.epix: 202
+.au.net.iinet: 202
 .br.rnp: 202
 .md.starnet: 202
 .se.tdcsong: 202
@@ -7316,6 +7315,7 @@
 .com.btcentralplus.range86-163: 19
 .ru.akado-ural.92.248: 19
 .net.ario: 19
+.au.net.iinet.dyn: 19
 .hu.interware: 19
 .de.uni-ulm: 19
 .br.com.fornet: 19

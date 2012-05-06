@@ -31,7 +31,7 @@ unless (-f "allfiles.txt") {die "Wrong directory, or run 'find . -type f > allfi
 # uncompressed data for "fun", could just use and discard
 
 unless (-f "$stat.all") {
-  system("egrep '$stat-....\.gz' allfiles.txt | xargs zcat | sort -n > $stat.all");
+  system("egrep '$stat-....\.gz' allfiles.txt | xargs zcat > $stat.all");
 }
 
 # $stat.res is the resulting file
@@ -79,3 +79,5 @@ for $mo (sort keys %temp) {
 
 close(B);
 
+# turns out *.all files fill up disk, so...
+system("rm -f $stat.all; bzip2 $stat.res");
