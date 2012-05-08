@@ -27,17 +27,17 @@ unless (-f "allfiles.txt") {die "Wrong directory, or run 'find . -type f > allfi
 
 (($stat) = @ARGV) || die("Usage: $0 <station>");
 
+# $stat.res is the resulting file
+if (-f "$stat.res.bz2") {
+  warn "$stat.res.bz2 exists";
+  exit(0);
+}
+
 # The sort below is unnecessary as is the ">"; only storing
 # uncompressed data for "fun", could just use and discard
 
 unless (-f "$stat.all") {
   system("egrep '$stat-....\.gz' allfiles.txt | xargs zcat > $stat.all");
-}
-
-# $stat.res is the resulting file
-if (-f "$stat.res") {
-#  print "All finished, sir\n";
-  exit(0);
 }
 
 # I plan to run this using "parallel", so keep memory profile low and
