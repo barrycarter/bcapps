@@ -22,53 +22,7 @@ use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
-# require Math::GSL::Fit;
 
-# linear_regression([1,2,3],[1,2,3]);
-
-$wikx = [1.47, 1.50, 1.52, 1.55, 1.57, 1.60, 1.63, 1.65, 1.68, 1.70,
-1.73, 1.75, 1.78, 1.80, 1.83];
-
-$wiky = [52.21, 53.12, 54.48, 55.84, 57.20, 58.57, 59.93, 61.29,
-63.11, 64.47, 66.28, 68.10, 69.92, 72.19, 74.46];
-
-$ehowx = [1, 3, 3, 5];
-$ehowy = [12, 12, 11, 7];
-
-linear_regression($ehowx, $ehowy);
-
-=item linear_regression(\@x,\@y)
-
-Computes the linear regression between same-sized arrays x and
-y. Packages like Math::GSL::Fit probably do this better, but I can't
-get them to compile :(
-
-TODO: this seems really inefficient
-
-=cut
-
-sub linear_regression {
-  my($xref, $yref) = @_;
-  my($sumxy, $sumx, $sumy, $sumx2);
-  my(@x) = @{$xref};
-  my(@y) = @{$yref};
-  my($n) = $#x+1;
-
-  # from wikipedia
-  # TODO: should probably call these avgxy, avgx, etc
-  for $i (0..$#x) {
-    # TODO: getting averages, but dividing by n each time is inefficient
-    $sumxy += $x[$i]*$y[$i]/$n;
-    $sumx += $x[$i]/$n;
-    $sumy += $y[$i]/$n;
-    $sumx2 += $x[$i]*$x[$i]/$n;
-  }
-
-  my($cov) = $sumxy - $sumx*$sumy;
-  my($var) = $sumx2 - $sumx*$sumx;
-
-  debug("SUMX: $sumx, SUMY: $sumy, SUMXY: $sumxy, SUMX2: $sumx2, COV: $cov, VAR: $var");
-}
 
 die "TESTING";
 

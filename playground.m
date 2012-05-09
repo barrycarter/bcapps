@@ -3,6 +3,26 @@
 showit := Module[{}, 
 Export["/tmp/math.png",%, ImageSize->{800,600}]; Run["display /tmp/math.png&"]]
 
+(* figuring out linear regression myself *)
+
+(yi-(a*xi+b))^2
+
+(* sum of squares for given line *)
+diff[a_,b_] = Sum[(y[i]-(a*x[i]+b))^2,{i,1,5}]
+
+(* Minimize, but below hangs Mathematica *)
+Minimize[diff[a,b],{a,b}]
+
+(* look for 0 derv *)
+Solve[D[diff[a,b],a]==0, a]
+Solve[D[diff[a,b],b]==0, b]
+zd[a_] = b /. %[[1,1]] 
+
+(* from above b == -a*(sumx) + (sumy) *)
+
+Solve[D[diff[a,b],a]==0, a] /. b -> zd[a]
+
+
 (* if you save $1/month at r% for y years... *)
 
 m[t_,r_] = m[t,r] /.

@@ -2251,6 +2251,44 @@ sub jd2unix {
   else {warnlocal("second argument not understood")}
 }
 
+=item linear_regression(\@x,\@y)
+
+Computes the linear regression between same-sized arrays x and
+y. Packages like Math::GSL::Fit probably do this better, but I can't
+get them to compile :(
+
+TODO: this seems really inefficient
+
+=cut
+
+sub linear_regression {
+  my($xref, $yref) = @_;
+  my($sumxy, $sumx, $sumy, $sumx2);
+  my(@x) = @{$xref};
+  my(@y) = @{$yref};
+  my($n) = $#x+1;
+
+  # from wikipedia
+  # TODO: should probably call these avgxy, avgx, etc
+  for $i (0..$#x) {
+    # TODO: getting averages, but dividing by n each time is inefficient
+    $sumxy += $x[$i]*$y[$i]/$n;
+    $sumx += $x[$i]/$n;
+    $sumy += $y[$i]/$n;
+    $sumx2 += $x[$i]*$x[$i]/$n;
+ }
+
+  my($cov) = $sumxy - $sumx*$sumy;
+  my($var) = $sumx2 - $sumx*$sumx;
+
+  my($b) = $cov/$var;
+  my($a) = $sumy-$b*$sumx;
+
+  return $a,$b;
+}
+
+
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
   debug("END: CLEANING UP TMP FILES");
