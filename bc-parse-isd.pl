@@ -1,16 +1,19 @@
 #!/bin/perl
 
-# Finds the average hourly temperature (and other potentially useful
-# averages) for a given station over multiple years, provided that
-# current directory contains the results of the following command
-# (returns about 16G+ compressed data, 500K+ files):
-#
+# For each weather station in isd-lite, output for each hour of year:
+# number of observations, average, coefficient of linear regression,
+# constant of linear regression
+
+# To obtain all isd-lite data (it's a LOT!):
 # ncftpget -T -R ftp://ftp3.ncdc.noaa.gov/pub/data/noaa/isd-lite/
 
 # Stations identified as "USAF-WBAN"; see db/ish-history.csv for more info
-# Example: 723650-23050 is KABQ, 723647-03034 and 723647-99999 are KAEG
+# Example: 723650-23050 is KABQ, 723647-03034 and 723647-99999 are KAEG.
+# This program assumes (incorrectly) that each USAF-WBAN pair
+# represents a uniq weather station.
 
-# First ran this program (using find on individual stations is too slow):
+# First ran this program in the directory with isd-lite data 
+# (using find on individual stations is too slow):
 # find . -type f > allfiles.txt
 
 # To get list of all stations to run this in parallel in random order:
@@ -18,23 +21,22 @@
 # perl -nle 'if (m%/(\d+\-\d+)\-\d{4}\.gz$%) {print "bc-parse-isd.pl
 # $1";}' allfiles.txt | sort -R | uniq > allcmds.txt
 
-# This program runs on a "special" machine, where bclib.pl may not be
-# available
-
-# For this program, each USAF-WBAN number is treated as a different station
+push(@INC,"/usr/local/lib");
+require "bclib.pl";
 
 unless (-f "allfiles.txt") {die "Wrong directory, or run 'find . -type f > allfiles.txt";}
 
 (($stat) = @ARGV) || die("Usage: $0 <station>");
 
-# $stat.res is the resulting file
+# $stat.res.bz2 is the resulting file
+# compressing due to large size, would fill up disk otherwise(?)
 if (-f "$stat.res.bz2") {
   warn "$stat.res.bz2 exists";
   exit(0);
 }
 
-# The sort below is unnecessary as is the ">"; only storing
-# uncompressed data for "fun", could just use and discard
+# combine all data for this station into one file
+# (which we must delete later due to space considerations)
 
 unless (-f "$stat.all") {
   system("egrep '$stat-....\.gz' allfiles.txt | xargs zcat > $stat.all");
@@ -50,9 +52,10 @@ while (<A>) {
   ($yr, $mo, $da, $hr, $temp, $dewp, $slp, $wdir, $wspd, $cover) = 
     split(/\s+/, $_);
 
-  # just temp for right now, store all values for $mo/$da/$hr
+  # store year/temp pair
+  # TODO: do this better?
   unless ($temp == -9999) {
-      push(@{$temp{$mo}{$da}{$hr}}, $temp);
+      push(@{$temp{$mo}{$da}{$hr}}, "$yr:$temp");
     }
 
 }
@@ -65,14 +68,15 @@ for $mo (sort keys %temp) {
   for $da (sort keys %{$temp{$mo}}) {
     for $hr (sort keys %{$temp{$mo}{$da}}) {
       @l = @{$temp{$mo}{$da}{$hr}};
+      warn("TEMPS FOR $mo/$da/$hr:". join(",",@l));
       # calculate average (TODO: better way, sans subroutine?)
       # note how many obs for average (could be relevant)
-      $sum = 0;
-      $size = $#l+1;
-      for $i (@l) {$sum+=$i;}
+#      $sum = 0;
+#      $size = $#l+1;
+#      for $i (@l) {$sum+=$i;}
       # final 10. is because data is given as temp*10
-      $avg = $sum/$size/10.;
-      print B "$mo $da $hr $avg $size\n";
+#      $avg = $sum/$size/10.;
+#      print B "$mo $da $hr $avg $size\n";
     }
   }
 }

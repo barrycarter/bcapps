@@ -2287,8 +2287,6 @@ sub linear_regression {
   return $a,$b;
 }
 
-
-
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
   debug("END: CLEANING UP TMP FILES");
