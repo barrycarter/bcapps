@@ -68,7 +68,21 @@ for $mo (sort keys %temp) {
   for $da (sort keys %{$temp{$mo}}) {
     for $hr (sort keys %{$temp{$mo}{$da}}) {
       @l = @{$temp{$mo}{$da}{$hr}};
-      warn("TEMPS FOR $mo/$da/$hr:". join(",",@l));
+
+      # do linear regression, etc
+      @x = ();
+      @y = ();
+      for $i (@l) {
+	($yr,$val) = split(/\:/, $i);
+	# treating 1900 as 0
+	push(@x,$yr-1900);
+	push(@y,$val);
+      }
+
+      debug("X",@x,"Y",@y);
+      debug("FOR $mo/$da/$hr:");
+      debug(linear_regression(\@x,\@y));
+      debug("TEMPS",@l);
       # calculate average (TODO: better way, sans subroutine?)
       # note how many obs for average (could be relevant)
 #      $sum = 0;
