@@ -22,7 +22,12 @@ use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
-debug(objriseset2("moon", 35.11083, -106.61));
+for $i (1337118123-1..1337118123+1) {
+  debug("I: $i");
+  debug(radecazel2(position("moon", $i), 35.11083, -106.61, $i));
+}
+
+# debug(objriseset2("moon", 35.11083, -106.61));
 
 die "TESTING";
 
@@ -56,13 +61,13 @@ sub objriseset2 {
   # create one-variable function ($time) for which we want to find 0
   my($func) = sub {
     my($t) = @_;
-    debug("CALLED WITH: $t");
-    my($x, $ret) = radecazel2(position($obj), $t)-$el;
-    debug("RETURNING: $ret");
-    return $ret;
+    my($x, $objel) = radecazel2(position($obj, $t), $lat, $lon, $t);
+    my($eldiff) = $objel-$el;
+    debug("f($t) = $eldiff");
+    return $eldiff;
   };
 
-  return findroot($func, $nad, $zen, 1, 50);
+  return findroot($func, $nad, $zen, 0.005, 50);
 
 }
 
