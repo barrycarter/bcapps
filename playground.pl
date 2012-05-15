@@ -24,12 +24,33 @@ require "bc-twitter.pl";
 
 debug(find_nearest_zenith("sun",35,-106,time()+3600));
 
+for $i (0..365) {
+  $res = find_nearest_zenith("sun",35,-106,time()+$i*86400)%86400;
+  print "$res\n";
+}
+
+=item fmodp($num, $mod)
+
+Returns the same thing as fmod($num,$mod), but adds $mod if result
+would be negative.
+
+=cut
+
+sub fmodp {
+  my($num,$mod) = @_;
+  my($res) = fmod($num,$mod);
+  if ($res<0) {$res+=$mod;}
+  return $res;
+}
+
 =item find_nearest_zenith($obj,$lat,$lon,$time=now,$options)
 
 Return Unix second of when $obj reaches zenith at $lat/$lon, close to
 $time ($time should not be close to time of nadir)
 
 $options currently unused
+
+TODO: use loop, not just first guess
 
 =cut
 
@@ -43,13 +64,11 @@ sub find_nearest_zenith {
   my($az,$el) = radecazel2($ra, $dec, $lat, $lon, $time);
 
   # current local siderial time (between 0 and 24)
-  my($lst) = (gmst($time) + ($lon/15));
-  if ($lst<0) {$lst+=24;}
+  my($lst) = fmodp(gmst($time) + ($lon/15), 24);
 
   # hours to zenith (assuming incorrectly that siderial hour = clock hour)
   # between 0 and 24
-  my($hours) = $ra-$lst;
-  if ($hours<0) {$hours+=24;}
+  my($hours) = fmodp($ra-$lst,24);
 
   # if more than 12, return previous zenith
   if ($hours>12) {return $time+($hours-24)*3600;}
