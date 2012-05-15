@@ -1,5 +1,13 @@
 # shell one liners
 
+# useful cron job to screenshot yourself every minute
+* * * * * xwd -root | convert xwd:- /home/barrycarter/XWD/pic.`date +\%Y\%m\%d:\%H\%M\%S`.png
+
+# to grep for number of '-' in a bz2 file:
+bzcat 723650-23050.res.bz2 | fgrep -c -- -
+
+exit;
+
 # bytes 67-70 appear to identify an SD card partition; replace
 # /dev/sdd w SD device (I have no idea why I believe this or even if
 # its true)

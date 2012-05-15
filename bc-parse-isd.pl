@@ -21,6 +21,9 @@
 # perl -nle 'if (m%/(\d+\-\d+)\-\d{4}\.gz$%) {print "bc-parse-isd.pl
 # $1";}' allfiles.txt | sort -R | uniq > allcmds.txt
 
+# run using parallel:
+# (parallel -j 32 --joblog parjoblog.txt < allcmds.txt) >&! parouterr.txt &
+
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
@@ -28,9 +31,9 @@ unless (-f "allfiles.txt") {die "Wrong directory, or run 'find . -type f > allfi
 
 (($stat) = @ARGV) || die("Usage: $0 <station>");
 
-# $stat.res.bz2 is the resulting file
+# $stat.res.bz2 is the resulting file (if empty, something is wrong)
 # compressing due to large size, would fill up disk otherwise(?)
-if (-f "$stat.res.bz2") {
+if (-s "$stat.res.bz2") {
   warn "$stat.res.bz2 exists";
   exit(0);
 }
@@ -76,21 +79,19 @@ for $mo (sort keys %temp) {
 	($yr,$val) = split(/\:/, $i);
 	# treating 1900 as 0
 	push(@x,$yr-1900);
-	push(@y,$val);
+	# value is actually temp*10 (celsius)
+	# HACK: storing as farenheit is so evil!
+	push(@y,$val/10*1.8+32.);
       }
 
       debug("X",@x,"Y",@y);
       debug("FOR $mo/$da/$hr:");
-      debug(linear_regression(\@x,\@y));
-      debug("TEMPS",@l);
-      # calculate average (TODO: better way, sans subroutine?)
-      # note how many obs for average (could be relevant)
-#      $sum = 0;
-#      $size = $#l+1;
-#      for $i (@l) {$sum+=$i;}
-      # final 10. is because data is given as temp*10
-#      $avg = $sum/$size/10.;
-#      print B "$mo $da $hr $avg $size\n";
+      ($b, $m, $avg) = linear_regression(\@x,\@y);
+      # number of reports
+      $size = $#x+1;
+
+      # and output...
+      print B "$mo $da $hr $size $avg $m $b\n";
     }
   }
 }

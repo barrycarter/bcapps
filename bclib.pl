@@ -2257,6 +2257,10 @@ Computes the linear regression between same-sized arrays x and
 y. Packages like Math::GSL::Fit probably do this better, but I can't
 get them to compile :(
 
+Also returns average of y's, since I calculate it anyway
+
+TODO: above is very kludgey
+
 TODO: this seems really inefficient
 
 =cut
@@ -2266,15 +2270,24 @@ sub linear_regression {
   my($sumxy, $sumx, $sumy, $sumx2);
   my(@x) = @{$xref};
   my(@y) = @{$yref};
+  debug("X",@x,"Y",@y);
   my($n) = $#x+1;
+
+  # empty list = special case
+  if ($n==0) {return NaN,NaN,NaN;}
+
+  # 1-elt list = special case
+  if ($n==1) {return NaN,NaN,$y[0];}
 
   # from wikipedia
   # TODO: should probably call these avgxy, avgx, etc
   for $i (0..$#x) {
     # TODO: getting averages, but dividing by n each time is inefficient
+    debug("I: $i, $x[$i], $y[$i]");
     $sumxy += $x[$i]*$y[$i]/$n;
     $sumx += $x[$i]/$n;
     $sumy += $y[$i]/$n;
+    debug("SUMY: $sumy");
     $sumx2 += $x[$i]*$x[$i]/$n;
  }
 
@@ -2284,7 +2297,7 @@ sub linear_regression {
   my($b) = $cov/$var;
   my($a) = $sumy-$b*$sumx;
 
-  return $a,$b;
+  return $a,$b,$sumy;
 }
 
 # cleanup files created by my_tmpfile (unless --keeptemp set)

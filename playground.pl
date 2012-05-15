@@ -22,7 +22,7 @@ use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
-
+debug(linear_regression([3,5],[4,7]));
 
 die "TESTING";
 
