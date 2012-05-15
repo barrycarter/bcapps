@@ -22,14 +22,7 @@ use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
-for $i (0..1440) {
-  ($az,$el)=radecazel2(5,-50,35,-106,time()+$i*60);
-  print "$az\n";
-}
-
-die "TESTING";
-
-find_nearest_zenith("sun",35,-106);
+debug(find_nearest_zenith("sun",35,-106,time()+3600));
 
 =item find_nearest_zenith($obj,$lat,$lon,$time=now,$options)
 
@@ -41,26 +34,26 @@ $options currently unused
 =cut
 
 sub find_nearest_zenith {
-  my($obj,$lat,$lon,$time) = @_;
+  my($obj, $lat, $lon, $time, $options) = @_;
+  my(%opts) = parse_form($options);
   unless ($time) {$time=time();}
 
   # objects current ra/dec and az/el
-  my($ra,$dec) = position($obj);
-  my($az,$el) = radecazel2($ra, $dec, $lat, $lon, $t);
+  my($ra,$dec) = position($obj, $time);
+  my($az,$el) = radecazel2($ra, $dec, $lat, $lon, $time);
 
-  # zenith = 0 az north of eq, 180 az south
-  my($zenith)=$lat<0?180:0;
+  # current local siderial time (between 0 and 24)
+  my($lst) = (gmst($time) + ($lon/15));
+  if ($lst<0) {$lst+=24;}
 
-  # distance to zenith (between -180 and +180)
-  my($zdist) = ($zenith-$az)%360-180;
-  debug("AZ: $az, ZDIST: $zdist");
+  # hours to zenith (assuming incorrectly that siderial hour = clock hour)
+  # between 0 and 24
+  my($hours) = $ra-$lst;
+  if ($hours<0) {$hours+=24;}
 
-  # if ahead of zenith, subtract $zdist*240 seconds (earth rotation moves
-  # everything 1/240 degrees per second azimuthally), if behind add
-  my($correction) = $zdist*240;
-  my($newguess) = $time+$correction;
-
-  debug("NEW GUESS: $newguess");
+  # if more than 12, return previous zenith
+  if ($hours>12) {return $time+($hours-24)*3600;}
+  return $time+$hours*3600;
 }
 
 die "TESTING";
