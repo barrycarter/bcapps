@@ -22,6 +22,49 @@ use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
+for $i (0..1440) {
+  ($az,$el)=radecazel2(5,-50,35,-106,time()+$i*60);
+  print "$az\n";
+}
+
+die "TESTING";
+
+find_nearest_zenith("sun",35,-106);
+
+=item find_nearest_zenith($obj,$lat,$lon,$time=now,$options)
+
+Return Unix second of when $obj reaches zenith at $lat/$lon, close to
+$time ($time should not be close to time of nadir)
+
+$options currently unused
+
+=cut
+
+sub find_nearest_zenith {
+  my($obj,$lat,$lon,$time) = @_;
+  unless ($time) {$time=time();}
+
+  # objects current ra/dec and az/el
+  my($ra,$dec) = position($obj);
+  my($az,$el) = radecazel2($ra, $dec, $lat, $lon, $t);
+
+  # zenith = 0 az north of eq, 180 az south
+  my($zenith)=$lat<0?180:0;
+
+  # distance to zenith (between -180 and +180)
+  my($zdist) = ($zenith-$az)%360-180;
+  debug("AZ: $az, ZDIST: $zdist");
+
+  # if ahead of zenith, subtract $zdist*240 seconds (earth rotation moves
+  # everything 1/240 degrees per second azimuthally), if behind add
+  my($correction) = $zdist*240;
+  my($newguess) = $time+$correction;
+
+  debug("NEW GUESS: $newguess");
+}
+
+die "TESTING";
+
 debug(linear_regression([3,5],[4,7]));
 
 die "TESTING";
