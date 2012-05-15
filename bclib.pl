@@ -2300,6 +2300,68 @@ sub linear_regression {
   return $a,$b,$sumy;
 }
 
+=item fmodp($num, $mod)
+
+Returns the same thing as fmod($num,$mod), but adds $mod if result
+would be negative.
+
+=cut
+
+sub fmodp {
+  my($num,$mod) = @_;
+  my($res) = fmod($num,$mod);
+  if ($res<0) {$res+=$mod;}
+  return $res;
+}
+
+=item find_nearest_zenith($obj,$lat,$lon,$time=now,$options)
+
+Return Unix second of when $obj reaches zenith at $lat/$lon, close to
+$time ($time should not be close to time of nadir)
+
+$options:
+
+nadir=1: find nearest nadir, not zenith
+<h>abed=1: find nearest abed</h>
+
+=cut
+
+sub find_nearest_zenith {
+  my($obj, $lat, $lon, $time, $options) = @_;
+  my(%opts) = parse_form($options);
+  unless ($time) {$time=time();}
+
+  # run this loop forever, until sufficient accuracy reached
+  for (;;) {
+
+    # objects current ra/dec and az/el
+    my($ra,$dec) = position($obj, $time);
+
+    # find nadir instead?
+    if ($opts{nadir}) {$ra = fmodp($ra+12,24);}
+    debug("RA: $ra");
+
+    # current local siderial time (between 0 and 24)
+    my($lst) = fmodp(gmst($time) + ($lon/15), 24);
+
+    # hours to zenith (assuming incorrectly that siderial hour = clock hour)
+    # between 0 and 24
+    my($hours) = fmodp($ra-$lst,24);
+    debug("TIME: $time, LST: $lst, RA: $ra, HOURS: $hours");
+
+    # .001 hour = .015 degrees = close enough
+    if (abs($hours)<.001 || abs($hours-24)<.001) {return $time;}
+
+    # nextguess is time until location ra = object ra
+    # we are using $time to store the guesses
+    if ($hours>12) {
+      $time += ($hours-24)*3600;
+    } else {
+      $time += $hours*3600;
+    }
+  }
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
   debug("END: CLEANING UP TMP FILES");

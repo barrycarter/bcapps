@@ -22,57 +22,58 @@ use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
-debug(find_nearest_zenith("sun",35,-106,time()+3600));
+debug(objriseset2("moon", 35.11083, -106.61));
+
+die "TESTING";
+
+=item objriseset2($obj, $lat, $lon, $time=now(), $el=0)
+
+Find the nearest time to $time that $obj crosses elevation $el
+(default $el=0=horizon) at $lat/$lon
+
+=cut
+
+sub objriseset2 {
+  my($obj, $lat, $lon, $time, $el) = @_;
+  unless ($time) {$time=time();}
+
+  # find objects nearest nadir and zenith
+  my($zen) = find_nearest_zenith($obj, $lat, $lon, $time);
+  my($nad) = find_nearest_zenith($obj, $lat, $lon, $time, "nadir=1");
+
+  # objects elevation at zenith and nadir ($x=unwanted)
+  my($x, $zenel) = radecazel2(position($obj, $zen), $lat, $lon, $zen);
+  my($x, $nadel) = radecazel2(position($obj, $nad), $lat, $lon, $nad);
+
+  # if object never crosses $el, warn and return nothing
+  # positive*positive = negative*negative = positive
+  # TODO: handle this special case
+  if (($zenel-$el)*($nadel-$el)>0) {
+    warn "CASE NOT YET HANDLED";
+    return;
+  }
+
+  # create one-variable function ($time) for which we want to find 0
+  my($func) = sub {
+    my($t) = @_;
+    debug("CALLED WITH: $t");
+    my($x, $ret) = radecazel2(position($obj), $t)-$el;
+    debug("RETURNING: $ret");
+    return $ret;
+  };
+
+  return findroot($func, $nad, $zen, 1, 50);
+
+}
+
+
+debug(find_nearest_zenith("moon",35,-106,time()+3600,"nadir=1"));
+
+die "TESTING";
 
 for $i (0..365) {
   $res = find_nearest_zenith("sun",35,-106,time()+$i*86400)%86400;
   print "$res\n";
-}
-
-=item fmodp($num, $mod)
-
-Returns the same thing as fmod($num,$mod), but adds $mod if result
-would be negative.
-
-=cut
-
-sub fmodp {
-  my($num,$mod) = @_;
-  my($res) = fmod($num,$mod);
-  if ($res<0) {$res+=$mod;}
-  return $res;
-}
-
-=item find_nearest_zenith($obj,$lat,$lon,$time=now,$options)
-
-Return Unix second of when $obj reaches zenith at $lat/$lon, close to
-$time ($time should not be close to time of nadir)
-
-$options currently unused
-
-TODO: use loop, not just first guess
-
-=cut
-
-sub find_nearest_zenith {
-  my($obj, $lat, $lon, $time, $options) = @_;
-  my(%opts) = parse_form($options);
-  unless ($time) {$time=time();}
-
-  # objects current ra/dec and az/el
-  my($ra,$dec) = position($obj, $time);
-  my($az,$el) = radecazel2($ra, $dec, $lat, $lon, $time);
-
-  # current local siderial time (between 0 and 24)
-  my($lst) = fmodp(gmst($time) + ($lon/15), 24);
-
-  # hours to zenith (assuming incorrectly that siderial hour = clock hour)
-  # between 0 and 24
-  my($hours) = fmodp($ra-$lst,24);
-
-  # if more than 12, return previous zenith
-  if ($hours>12) {return $time+($hours-24)*3600;}
-  return $time+$hours*3600;
 }
 
 die "TESTING";
@@ -440,63 +441,6 @@ die "TESTING";
 
 # find_zenith("sun", 35, -106);
 find_zenith("moon", -35, -106);
-
-=item find_zenith($obj,$lat,$lon,$time,$options)
-
-Return when $obj first reaches zenith at $lat/$lon after $time
-
-$options currently unused
-
-=cut
-
-sub find_zenith {
-  my($obj,$lat,$lon,$time) = @_;
-  unless ($time) {$time=time();}
-
-  # objects current ra/dec
-  my($ra,$dec) = position($obj);
-
-  # local siderial time
-  my($lst) = gmst() + ($lon/15);
-  if ($lst<0) {$lst+=24;}
-
-  # how long to get to when ra = siderial time (zenith time)
-  # if $ra already past, add 24h to look for next one
-  my($diff) = $ra-$lst;
-  if ($diff<0) {$diff+=24;}
-
-  # approx time of zenith (ie, when ra matches local sid time)
-  my($approx) = $time+$diff;
-
-  # if objects never moved, we'd be done, but they do, so we create a
-  # function that returns azimuth given time and ra/dec/lat/lon above;
-  # north of equator want az=180, south want az=0; seeking 6h either
-  # direction is excessive but works
-
-  my($f) = (sub {
-    # t = time when we find elevation
-    my($t) = @_;
-    # If these were constant, this subroutine would be unnecessary
-    my($ra,$dec) = position($obj);
-    my($az,$el) = radecazel2($ra, $dec, $lat, $lon, $t);
-
-    # for north lats, add 180 degs for negative to avoid singularity;
-    # if I did this for south lats, it would break things
-    if ($lat>0 && $az<=0) {$az+=360;}
-    debug("EL $t $el $az");
-    return $az-180;
-    });
-
-
-#  debug("AZIMUTH-180 AT $t", &$f($t));
-  my($ztime) = findroot($f, $approx-6*3600, $approx+6*3600, .25);
-
-  debug("ZTIME: $ztime");
-  debug("NOW:",&$f($time+0.868799781616783*3600));
-  debug("LST: $lst, $ra, $diff");
-}
-  
-die "TESTING";
 
 # sunriseset(time(),35.0844869067959,-106.651138463684);
 sunriseset(time(),77.0844869067959,-106.651138463684);
