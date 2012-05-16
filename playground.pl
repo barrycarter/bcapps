@@ -22,12 +22,20 @@ use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
-for $i (1337118123-1..1337118123+1) {
-  debug("I: $i");
-  debug(radecazel2(position("moon", $i), 35.11083, -106.61, $i));
-}
+# for $i (1337118123-1..1337118123+1) {
+#   debug("I: $i");
+#  debug(radecazel2(position("moon", $i), 35.11083, -106.61, $i));
+# }
 
 # debug(objriseset2("moon", 35.11083, -106.61));
+
+for $i (0..180) {
+#  $ret =objriseset2("moon", 35.11083, -106.61, time()+86400*$i, 0.949659);
+#  $ret =objriseset2("sun", 35.11083, -106.61, time()+86400*$i, 0)
+#  $ret =objriseset2("sun", 71.29556, -156.76639, time()+86400*$i, 0);
+  $ret =objriseset2("sun", 70, 0, time()+86400*$i, 0);
+  print "$i: $ret\n";
+}
 
 die "TESTING";
 
