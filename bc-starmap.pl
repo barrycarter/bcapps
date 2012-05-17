@@ -18,6 +18,7 @@
 # --boundary=0 draw constellation boundaries
 # --labelcons=0 label constellations when boundaries are drawn
 # --grid=0 draw ra/dec grid
+# --gridlabel=1 if drawing ra/dec grid, label it
 # --lat=35.082463 latitude where to draw map
 # --lon=-106.629635 longitude where to draw map
 # --rot=90 rotate so north is at this many degrees (0 = right, 90 = up)
@@ -34,7 +35,7 @@ $gitdir = "/home/barrycarter/BCGIT/";
 
 # defaults
 $now = time();
-defaults("xwid=1024&ywid=768&fill=0,0,0&time=$now&stars=1&lat=35.082463&lon=-106.629635&rot=90&lines=1&planets=1&planetlabel=1&info=1");
+defaults("xwid=1024&ywid=768&fill=0,0,0&time=$now&stars=1&lat=35.082463&lon=-106.629635&rot=90&lines=1&planets=1&planetlabel=1&info=1&gridlabel=1");
 
 # we use these a LOT, so putting them into global vars
 ($xwid, $ywid) = ($globopts{xwid}, $globopts{ywid});
@@ -262,11 +263,26 @@ sub draw_info {
 # draw grid
 sub draw_grid {
   # declination grid
+  # TODO: add labels
   for ($dec=-90; $dec<=90; $dec+=10) {
     for ($ra=0; $ra<=24; $ra+=1/15.) {
       my($x,$y) = radec2xy($ra, $dec);
       if ($x<0 && $y<0) {next;}
-      print A "setpixel $x,$y,255,255,255\n";
+      print A "setpixel $x,$y,64,64,64\n";
+    }
+  }
+
+  # RA grid
+  for ($ra=0; $ra<=24; $ra+=1) {
+    for ($dec=-90; $dec<=90; $dec+=1) {
+      my($x,$y) = radec2xy($ra, $dec);
+      if ($x<0 && $y<0) {next;}
+      print A "setpixel $x,$y,64,64,64\n";
+      # label at equator
+      # TODO: not convinced this is best spot; antimap of zenith maybe?
+      if ($dec==0 && $globopts{gridlabel}) {
+	print A "string 64,64,64,$x,$y,tiny,${ra}h\n";
+      }
     }
   }
 }
