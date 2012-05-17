@@ -17,10 +17,12 @@
 # --planetlabel=1 label planets
 # --boundary=0 draw constellation boundaries
 # --labelcons=0 label constellations when boundaries are drawn
+# --grid=0 draw ra/dec grid
 # --lat=35.082463 latitude where to draw map
 # --lon=-106.629635 longitude where to draw map
 # --rot=90 rotate so north is at this many degrees (0 = right, 90 = up)
 # --info=1 display info about this map
+# --nocgi=0 output raw GIF, no CGI header
 
 # TODO: label bright stars
 
@@ -72,10 +74,14 @@ if ($globopts{boundary}) {draw_boundaries();}
 if ($globopts{stars}) {draw_stars();}
 if ($globopts{planets}) {draw_planets();}
 if ($globopts{info}) {draw_info();}
+if ($globopts{grid}) {draw_grid();}
 
 close(A);
+
 # changed for CGI
-print "Content-type: image/gif\n\n";
+
+unless ($globopts{nocgi}) {print "Content-type: image/gif\n\n";}
+
 system("fly -q -i map.fly");
 
 # load stars into *global* array (used by other subroutines) just once
@@ -250,5 +256,17 @@ sub draw_info {
     if ($i eq "tmpdir") {next;}
     print A "string 255,255,255,0,$y,small,$i: $globopts{$i}\n";
     $y+=10;
+  }
+}
+
+# draw grid
+sub draw_grid {
+  # declination grid
+  for ($dec=-90; $dec<=90; $dec+=10) {
+    for ($ra=0; $ra<=24; $ra+=1/15.) {
+      my($x,$y) = radec2xy($ra, $dec);
+      if ($x<0 && $y<0) {next;}
+      print A "setpixel $x,$y,255,255,255\n";
+    }
   }
 }
