@@ -1,3 +1,6 @@
 Goal: Setup a version of nagios that uses my programs to handle alerts, 
-fixes, etc
+fixes, etc. Run as:
+
+sudo nagios /home/barrycarter/BCGIT/NAGIOS/nagios.cfg
+
 
