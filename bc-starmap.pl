@@ -97,10 +97,10 @@ sub load_stars {
 
 sub radec2xy {
   my($ra, $dec) = @_;
-  debug("GOT($ra,$dec)");
+#  debug("GOT($ra,$dec)");
   # first, convert to azimuth and elevation for this lat/lon/time
   my($az, $el) = radecazel2($ra, $dec, $globopts{lat}, $globopts{lon}, $globopts{t});
-  debug("RETURNING NOT: $az,$el");
+#  debug("RETURNING NOT: $az,$el");
   if ($el<0) {return (-1,-1);}
 
   # polar coordinates: r = distance from center = 90-el ; el=0 -> edge
@@ -272,6 +272,10 @@ sub draw_grid {
     }
   }
 
+  # label at declination closest to zenith (rounded to 10 degrees)
+  my($decmark) = round($globopts{lat}/10.)*10;
+  debug("DECMARK: $decmark");
+
   # RA grid
   for ($ra=0; $ra<=24; $ra+=1) {
     for ($dec=-90; $dec<=90; $dec+=1) {
@@ -280,7 +284,7 @@ sub draw_grid {
       print A "setpixel $x,$y,64,64,64\n";
       # label at equator
       # TODO: not convinced this is best spot; antimap of zenith maybe?
-      if ($dec==0 && $globopts{gridlabel}) {
+      if ($dec==$decmark && $globopts{gridlabel}) {
 	print A "string 64,64,64,$x,$y,tiny,${ra}h\n";
       }
     }
