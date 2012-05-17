@@ -45,7 +45,7 @@ shift(@procs); # ignore header line
 @may = (
 	"SCREEN", "screen", "-csh", "sh", "/bin/sh", "/sbin/udevd",
 	"/usr/libexec/gam_server", "sshd:", "-bin/tcsh",
-	"/usr/sbin/yum-updatesd"
+	"/usr/sbin/yum-updatesd", "/sites/TEST/bc-slow-cgi.pl"
 	);
 
 # Processes on this list must be killed if they run over 5m
