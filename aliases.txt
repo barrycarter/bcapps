@@ -16,7 +16,7 @@ alias nagcheck "grep host_name /var/nagios/status.dat | sort | uniq | cut -d= -f
 # <h>who needs /etc/init.d anyway!</h>
 # this fails if nagios isn't running already; pkill nagios && nagios
 # would've been a better option
-alias nagstart "echo '['`date +%s`']' RESTART_PROGRAM >> /var/nagios/rw/nagios.cmd; sleep 5; nagclean; nagcheck"
+alias nagstart "sudo rm /home/barrycarter/ERR/nagios.*.err; sudo pkill nagios; sudo nagios -d /home/barrycarter/BCGIT/NAGIOS/nagios.cfg; sleep 5; nagcheck"
 
 
 
