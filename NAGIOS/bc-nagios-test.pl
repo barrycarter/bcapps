@@ -30,12 +30,11 @@ if ($bin=~/^bc_/) {
   exit($res);
 }
 
-# TODO: allow for non-plugin runs (at which point splitting bin and
-# arg will make sense
 # >>8 converts Perl exit value to program exit value (kind of)
 $res = system("$bin $arg")>>8;
 
 # run function on result before returning?
+# no need to do this on functions I write myself, above
 if ($globopts{func}) {$res = func($globopts{func}, $res);}
 
 # this is ugly, but works (spits out stuff to console)
