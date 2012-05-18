@@ -10,6 +10,9 @@ push(@INC,"/usr/local/lib");
 
 require "bclib.pl";
 
+# for testing only!
+$globopts{debug}=1;
+
 # what are we being asked to run?
 my($cmd) = $ENV{NAGIOS_ARG1};
 
@@ -17,6 +20,15 @@ my($cmd) = $ENV{NAGIOS_ARG1};
 $cmd=~s/\"//isg;
 $cmd=~/^\s*(.*?)\s+(.*)$/;
 my($bin,$arg) = ($1,$2);
+
+# if the "binary" starts with "bc_", I want to run a local function
+if ($bin=~/^bc_/) {
+  # this is dangerous, but I control my nagios files
+  $res = eval($cmd);
+  debug("$cmd returns: $res");
+  # below just for testing
+  exit($res);
+}
 
 # TODO: allow for non-plugin runs (at which point splitting bin and
 # arg will make sense
@@ -28,7 +40,7 @@ if ($globopts{func}) {$res = func($globopts{func}, $res);}
 
 # this is ugly, but works (spits out stuff to console)
 # TODO: redirect output of nagios to file that should remain empty
-print STDERR "FUNC: $globopts{func}, RES: $res\n";
+# debug("FUNC: $globopts{func}, RES: $res");
 
 exit($res);
 
@@ -56,6 +68,24 @@ sub func {
     if ($val==1) {return 2;}
     return $val;
   }
-
 }
+
+=item bc_nagios_file_size($file, $size, $options)
+
+Confirm that $file (which can be a directory) is less than $size
+bytes; $options currently unused
+
+=cut
+
+sub bc_nagios_file_size {
+  my($file, $size, $options) = @_;
+  my($stat) = `/usr/local/bin/stat $file | fgrep Size:`;
+  $stat=~/Size:\s+(\d+)\s/;
+  $stat=$1;
+  debug("SIZE: $stat");
+  if ($stat > $size) {return 2;}
+  return 0;
+}
+
+
 
