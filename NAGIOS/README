@@ -3,4 +3,7 @@ fixes, etc. Run as:
 
 sudo nagios /home/barrycarter/BCGIT/NAGIOS/nagios.cfg
 
+Also attempts to "fix" what I percieve as design flaws in nagios
+
+
 
