@@ -19,22 +19,27 @@ push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
 # if host is down, write to ERR
+# if we're seeing a recovery, remove error file
+
+$fbase = "/home/barrycarter/ERR/nagios.$ENV{NAGIOS_HOSTALIAS}";
 if ($ENV{NAGIOS_HOSTSTATEID}) {
-  $fbase = "/home/barrycarter/ERR/nagios.$ENV{NAGIOS_HOSTALIAS}";
   write_file("nagios.$ENV{NAGIOS_HOSTALIAS}.down", "$fbase.new");
   system("mv $fbase.err $fbase.old; mv $fbase.new $fbase.err");
+} else {
+  system("mv $fbase.err $fbase.old");
 }
 
-# if service is down...
+# if there is no NAGIOS_SERVICECHECKCOMMAND, this was a host check and
+# we should stop here
+
+unless ($ENV{NAGIOS_SERVICECHECKCOMMAND}) {exit(0);}
+
+# if service is down or recovering
+$fbase = "/home/barrycarter/ERR/nagios.$ENV{NAGIOS_HOSTALIAS}.$ENV{NAGIOS_SERVICEDESC}";
+
 if ($ENV{NAGIOS_SERVICESTATEID}) {
-  $fbase = "/home/barrycarter/ERR/nagios.$ENV{NAGIOS_HOSTALIAS}.$ENV{NAGIOS_SERVICEDESC}";
   write_file("nagios.$ENV{NAGIOS_HOSTALIAS}.$ENV{NAGIOS_SERVICEDESC}.down", "$fbase.new");
   system("mv $fbase.err $fbase.old; mv $fbase.new $fbase.err");
+} else {
+  system("mv $fbase.err $fbase.old");
 }
-
-$id = time().$$;
-open(A,">/tmp/bnht$id.txt");
-for $i (sort keys %ENV) {
-  print A "$i -> $ENV{$i}\n";
-}
-close(A);
