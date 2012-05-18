@@ -3,3 +3,9 @@
 # nagios status from status.dat (very kludgey)
 alias nagstat "egrep 'host_name|plugin_output|current_state|(host|service)status|service_description' /var/nagios/status.dat | grep -v 'long_plugin_output'"
 
+# cleanup nagios status files that are older than last nagios invocation
+# TODO: this should really be done automatically at nagios restart
+alias nagclean "find /home/barrycarter/ERR -iname 'nagios.*.err' ! -newer /var/nagios/rw/nagios.cmd | xargs rm"
+
+
+
