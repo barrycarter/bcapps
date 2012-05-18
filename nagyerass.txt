@@ -17,7 +17,7 @@
 #   - ability to run only specific tests would be nice
 
 # DNS, A records (returns status 0 if good)
-dig +trace barrycarter.info | egrep 'IN[[:space:]]A' | cut -f 5 | sort | paste -s -d, | fgrep -x 204.12.202.206
+dig +trace barrycarter.info | egrep 'IN[[:space:]]+A' | cut -f 5 | sort | paste -s -d, | fgrep -x 204.12.202.206
 
 # DNS, MX records
 dig -t mx +trace barrycarter.info | egrep 'IN[[:space:]]MX' | cut -f 5 | sort | paste -s -d, | fgrep -x "10 ASPMX2.GOOGLEMAIL.com.,10 ASPMX3.GOOGLEMAIL.com.,10 ASPMX4.GOOGLEMAIL.com.,10 ASPMX5.GOOGLEMAIL.com.,1 ASPMX.L.GOOGLE.com.,5 ALT1.ASPMX.L.GOOGLE.com.,5 ALT2.ASPMX.L.GOOGLE.com."
