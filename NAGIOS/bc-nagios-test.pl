@@ -4,6 +4,10 @@
 # subroutines defined here
 
 push(@INC,"/usr/local/lib");
+
+# this is hideous; pass args to the program using NAGIOS_ARG2
+@ARGV = split(/\s+/, $ENV{NAGIOS_ARG2});
+
 require "bclib.pl";
 
 # what are we being asked to run?
@@ -21,6 +25,10 @@ $res = system("$bin $arg")>>8;
 
 # run function on result before returning?
 if ($globopts{func}) {$res = func($globopts{func}, $res);}
+
+# this is ugly, but works (spits out stuff to console)
+# TODO: redirect output of nagios to file that should remain empty
+print STDERR "FUNC: $globopts{func}, RES: $res\n";
 
 exit($res);
 

@@ -8,10 +8,9 @@ Also attempts to "fix" what I percieve as design flaws in nagios
 
 To force nagios to run a command instantly, see http://old.nagios.org/developerinfo/externalcommands/commandlist.php (examples below)
 
-(not working yet?!)
+echo "["`date +%s`"]" "SCHEDULE_FORCED_HOST_CHECK;bcmac;"`date +%s` >> /var/nagios/rw/nagios.cmd
 
-echo `date +%s` "SCHEDULE_FORCED_HOST_CHECK;bcmac;"`date +%s` >> /var/nagios/rw/nagios.cmd
-
+echo "["`date +%s`"]" "SCHEDULE_FORCED_HOST_SVC_CHECKS;localhost;"`date +%s` >> /var/nagios/rw/nagios.cmd
 
 
 
