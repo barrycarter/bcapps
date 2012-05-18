@@ -1,0 +1,5 @@
+# useful aliases
+
+# nagios status from status.dat (very kludgey)
+alias nagstat "egrep 'host_name|plugin_output|current_state|(host|service)status|service_description' /var/nagios/status.dat | grep -v 'long_plugin_output'"
+

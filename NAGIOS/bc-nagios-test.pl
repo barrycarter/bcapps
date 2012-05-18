@@ -16,9 +16,7 @@ my($bin,$arg) = ($1,$2);
 
 # TODO: allow for non-plugin runs (at which point splitting bin and
 # arg will make sense
-$run = "/usr/lib/nagios/plugins/$bin $arg";
-write_file("RUN: $run","/tmp/bntd.txt");
-$res = system($run);
+$res = system("$bin $arg");
 
 # >>8 converts Perl exit value to program exit value (kind of)
 exit($res>>8);
