@@ -11,26 +11,33 @@ push(@INC,"/usr/local/lib");
 require "bclib.pl";
 chdir(tmpdir());
 ($all,) = cmdfile();
-
-# really should use XML parser, but too lazy
-# divs we want start with class= "s4" or "s15"; class="s32" is meta-separator
-while ($all=~s%<div class=\"s[14].*?>(.*?)</div>%%is) {
-  $line = $1;
-
-  # ignore until end of headers (month starts with 0 or 1)
-  if ($line=~/^[01]/) {$OK=1;}
-  unless ($OK) {next;}
-
-  push(@lines, $line);
-}
-
 open(A,">querys.txt");
 print A "BEGIN;\n";
 
-# suck them down 5 fields at a time
-while (($date, $desc, $with, $dep, $bal) = @lines[$n..$n+5]) {
-  if ($n > $#lines) {last;}
-  $n+=5;
+# really should use XML parser, but too lazy
+# divs we want start with class= "s4" or "s15"; class="s32" is meta-separator
+# May 2012: changes, sigh
+
+while ($all=~s%<tr class=\"lh25.*?>(.*?)</tr>%%is) {
+  $line = $1;
+
+  # break into table calls
+  @fields=($line=~m%<td.*?>(.*?)</td>%sg);
+
+  # clean up fields
+  for $i (@fields) {
+    # no XML
+    $i=~s/<.*?>//isg;
+    # no commas
+    $i=~s/,//isg;
+    # treat negatives as negatives
+    $i=~s/\((.*?)\)/-$1/isg;
+    # trim spaces
+    $i=trim($i);
+  }
+
+  # assign fields to values ($x = don't care)
+  ($x, $date, $desc, $with, $dep, $bal) = @fields;
 
   # amount is either $with or $dep; figure out which, assign sign, cleanup
   if ($with eq "&nbsp;") {
@@ -38,17 +45,6 @@ while (($date, $desc, $with, $dep, $bal) = @lines[$n..$n+5]) {
   } else {
     $amount = "-$with";
   }
-
-  $amount=~s/,//;
-
-#  debug("WITH/DEP: $with/$dep");
-#  $amount = (-1*$with)||$dep;
-#  $amount=~s/,//isg;
-#  debug("AMOUNT: $amount");
-#  $amount=~s/\.00$//;
-
-  # cleanup balance
-  $bal=~s/,//isg;
 
   # date to MySQL form
   $date=~s%^(\d{2})/(\d{2})/(\d{4})$%% || warn("BAD DATE: $date");

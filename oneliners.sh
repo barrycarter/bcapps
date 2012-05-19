@@ -1,7 +1,7 @@
 # shell one liners
 
 # speed up MP3s pointlessly (in a way that can be piped to parallel safely)
-find . -iname '*.mp3' | perl -nle 's/\.mp3$//; print "/usr/bin/mplayer -ao \47pcm:fast:file=/tmp/$_.wav\47 \47$_.mp3\47; sox \47/tmp/$_.wav\47 \47/tmp/$_-temp.wav\47 tempo 1.5 norm; lame \47/tmp/$_-temp.wav\47 \47/tmp/$_-fast.mp3\47"'
+\ls *.mp3 | perl -nle 's/\.mp3$//; print "/usr/bin/mplayer -ao \47pcm:fast:file=/mnt/usbext/mp3/FAST/$_.wav\47 \47$_.mp3\47; sox \47/mnt/usbext/mp3/FAST/$_.wav\47 \47/mnt/usbext/mp3/FAST/$_-temp.wav\47 tempo 1.5 norm; lame \47/mnt/usbext/mp3/FAST/$_-temp.wav\47 \47/mnt/usbext/mp3/FAST/$_-fast.mp3\47"'
 
 exit;
 
