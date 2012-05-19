@@ -20,10 +20,19 @@ mount($dev,$dir);
 
 # what would <h>jesus^H^H^H^H^H</h> rsync do?
 # remote systems rounds times, thus --modify-window=1
-# ignore directories via egrep
-($out,$err,$res) = cache_command("rsync --modify-window=1 -Prtn $source $target | egrep -v '/\$'");
+# ignore directories and info msgs via egrep (this could accidentally ignore real files, but...)
+($out,$err,$res) = cache_command("rsync --modify-window=1 -Prtn $source $target | egrep -v '/\$|files...|receiving file list ...'");
 
-debug("OUT: $out");
+# files to transfer
+@files = split("\n", $out);
+
+for $i (@files) {
+  # using --include here is bizarre, but works (other methods would be harder?)
+  $cmd = "rsync --include='$i' -Prtn $source $target";
+  debug("CMD: $cmd");
+}
+
+# debug("OUT: $out");
 
 =item mount($dev, $dir, $umount)
 
