@@ -9,7 +9,7 @@
 #
 # --xwid=1024 x width
 # --ywid=768 y width
-# --fill=0,0,0 fill color (as r,g,b)
+# --fill=0,0,0 fill color (as r,g,b) (or "transparent" for transparent)
 # --time=now draw starmap at this time (GMT)
 # --stars=1 draw stars
 # --lines=1 draw constellation lines
@@ -59,6 +59,12 @@ debug("HW: $halfwid, $halfhei");
 open(A, ">map.fly");
 
 # create a blank map (circle and graticule)
+
+if ($globopts{fill}=~/transparent/) {
+  # hideous way to add transparent line to fly
+  $globopts{fill}="0,0,0\ntransparent 0,0,0\n";
+}
+
 print A << "MARK";
 new
 size $xwid,$ywid
