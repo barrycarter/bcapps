@@ -28,16 +28,17 @@ while ($all=~s%<tr class=\"lh25.*?>(.*?)</tr>%%is) {
   for $i (@fields) {
     # no XML
     $i=~s/<.*?>//isg;
-    # no commas
-    $i=~s/,//isg;
-    # treat negatives as negatives
-    $i=~s/\((.*?)\)/-$1/isg;
     # trim spaces
     $i=trim($i);
   }
 
   # assign fields to values ($x = don't care)
   ($x, $date, $desc, $with, $dep, $bal) = @fields;
+
+  # no commas in $with,$dep,$bal (but OK in $desc!)
+  $with=~s/,//isg;
+  $dep=~s/,//isg;
+  $bal=~s/,//isg;
 
   # amount is either $with or $dep; figure out which, assign sign, cleanup
   if ($with eq "&nbsp;") {
@@ -53,6 +54,9 @@ while ($all=~s%<tr class=\"lh25.*?>(.*?)</tr>%%is) {
   # below for backwards compat
   $mo=~s/^0//;
   $da=~s/^0//;
+
+  # treat negatives as negatives (but only balance!)
+  $bal=~s/\((.*?)\)/-$1/isg;
 
   # I sometimes have 2+ transactions with the same day/merchant/amount
   # (FOREX, gotta love it). Since I don't have a FITID here, making up
