@@ -1,38 +1,28 @@
 #!/usr/bin/perl
 
-die "DO NOT USE; I am hideously outdated";
-
+# as of 23 May 2012, does DNS for f96.info and nothing else
 # -nodetach: remain in foreground
 
 use Net::DNS::Nameserver;
 use MIME::Base64;
 
 # TODO: get rid of this hack
-push(@INC,"/usr/local/lib");
-require "bclib.pl";
+require "/usr/local/lib/bclib.pl";
+
+# log queries
+open(A,">>/var/tmp/dns.log");
 
 # background myself
-unless ($NODETACH) {if (fork()) {exit;}}
+unless ($globopts{nodetach}) {if (fork()) {exit;}}
 
 # I have no idea why I have to do this, but I do
-open(STDIN,"/dev/null");
-open(STDOUT,"/dev/null");
+# 23 May 2012: maybe I don't
+# open(STDIN,"/dev/null");
+# open(STDOUT,"/dev/null");
 # open(STDERR,"/dev/null");
 
-# list of hosts currently up
-open(A,"/root/bcs.txt")||die("Can't open /root/bcs.txt");
-while (<A>) {
-  if (/^\#/ || /^\s*$/) {next;}
-  ($host,$ip) = split(/\s+/,$_);
-  $auth{$host} = $ip;
-}
-
-# the ttl for normal queries
-$ttl1 = 120;
-# the ttl for IN NS auth queries
-$ttl2 = 86400;
-# the ttl for 'A' queries on nameservers (additional section)
-$ttl3 = 86400;
+# the ttl for normal, IN NS, and A queries for nameservers
+@ttl = (120, 86400, 86400);
 
 # kill off any existing procs (incl tinydns)
 system("/usr/bin/pkill -f tinydns");
@@ -46,7 +36,6 @@ $0 = "teenydns";
 
 do {
   $ns = Net::DNS::Nameserver->new(ReplyHandler => \&reply_handler);
-  # TODO: add dig test here; sometimes $ns only comes up on TCP?
   sleep(1);
 
 } until $ns;
@@ -55,21 +44,16 @@ do {
 # in theory, we could force specific return value, but this server isn't
 # accurate for external domains anyway, so no point
 $res = system("check_dig -l yahoo.com -H 127.0.0.1");
-debug("RES: $res");
-
-# horrible way to "fix"
+# horrible way to "fix" (if check_dig fails, restart)
 if ($res) {exec($0);}
 
-# fixed IP addresses
-
-# %FIXED = ("hello-mynameisinigomontoya-youkilledmyfather-preparetodie.info" =>
-
-# waits for dns requests in an infinite loop
 $ns->main_loop;
 
 sub reply_handler {
   my ($qname, $qclass, $qtype, $peerhost,$query) = @_;
   debug("REPLY_HANDLER($qname, $qclass, $qtype, $peerhost,$query)  CALLED");
+  print A "$qname $qclass $qtype $peerhost $query\n";
+  warn "TESTING"; return;
   my ($rcode, $ttl, $rdata, @ans, @auth, @add);
   my (@trail);
 
