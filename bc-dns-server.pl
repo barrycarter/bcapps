@@ -3,17 +3,21 @@
 # as of 23 May 2012, does DNS for f96.info and nothing else
 # -nodetach: remain in foreground
 
+#<h>The official purpose of this program is to clutter DNS space; any
+#other use is purely incidental</h>
+
 use Net::DNS::Nameserver;
 use MIME::Base64;
 
 # TODO: get rid of this hack
 require "/usr/local/lib/bclib.pl";
 
-# log queries
-open(A,">>/var/tmp/dns.log");
-
 # background myself
 unless ($globopts{nodetach}) {if (fork()) {exit;}}
+
+# hardcoding is hideous way to keep my IP (but checkip.dyndns.org
+# isn't much better?)
+$myip = "204.12.202.206";
 
 # I have no idea why I have to do this, but I do
 # 23 May 2012: maybe I don't
@@ -51,8 +55,11 @@ $ns->main_loop;
 
 sub reply_handler {
   my ($qname, $qclass, $qtype, $peerhost,$query) = @_;
-  debug("REPLY_HANDLER($qname, $qclass, $qtype, $peerhost,$query)  CALLED");
-  print A "$qname $qclass $qtype $peerhost $query\n";
+  debug("REPLY_HANDLER($qname, $qclass, $qtype, $peerhost, $query)  CALLED");
+  debug("query is ",unfold($query));
+
+  # log queries synchronously, since this programs runs "forever"
+  append_file("$qname $qclass $qtype $peerhost $query\n", "/var/log/dns.log");
   warn "TESTING"; return;
   my ($rcode, $ttl, $rdata, @ans, @auth, @add);
   my (@trail);
