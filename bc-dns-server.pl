@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 
+die "DO NOT USE; I am hideously outdated";
+
 # -nodetach: remain in foreground
 
 use Net::DNS::Nameserver;
