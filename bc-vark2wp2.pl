@@ -6,7 +6,14 @@
 
 require "/usr/local/lib/bclib.pl";
 
-@lines=split(/\n/, read_file("/home/barrycarter/VARK-carter_barry-at-gmail_com.txt"));
+$data = read_file("/home/barrycarter/VARK-carter_barry-at-gmail_com.txt");
 
-debug(@lines);
+# split into questions (each starts with "*something*")
+
+@qs = split(/\*(.*?)\*/s, $data);
+
+for $i (@qs) {
+  debug("I: $i");
+}
+
 
