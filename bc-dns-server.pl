@@ -18,6 +18,10 @@ unless ($globopts{nodetach}) {if (fork()) {exit;}}
 # hardcoding is hideous way to keep my IP (but checkip.dyndns.org
 # isn't much better?)
 $myip = "204.12.202.206";
+# TODO: is this really my IPv6 address?
+$myip6 = "2002::cc0c:cace";
+# this is a registered nameserver
+$myns = "dns.f96.info.";
 
 # I have no idea why I have to do this, but I do
 # 23 May 2012: maybe I don't
@@ -56,71 +60,28 @@ $ns->main_loop;
 sub reply_handler {
   my ($qname, $qclass, $qtype, $peerhost,$query) = @_;
   debug("REPLY_HANDLER($qname, $qclass, $qtype, $peerhost, $query)  CALLED");
-  debug("query is ",unfold($query));
 
   # log queries synchronously, since this programs runs "forever"
   append_file("$qname $qclass $qtype $peerhost $query\n", "/var/log/dns.log");
-  warn "TESTING"; return;
-  my ($rcode, $ttl, $rdata, @ans, @auth, @add);
-  my (@trail);
 
-  # figure out the "domain trail" for $qname
-  # (removed for effiicency until I need it)
-#  my($qname2) = $qname;
-#  do {unshift(@trail,$qname2);} while ($qname2=~s/^.*?\.//);
+  # $query contains very technical details about the request + I
+  # probably won't use it
+
+  my ($rcode, $ttl, $rdata, @ans, @auth, @add);
 
   # the auth/add records will always be the same
-  for $i (randomize(keys %auth)) {
-    push(@auth, Net::DNS::RR->new("$qname $ttl2 IN NS $i"));
-    push(@add, Net::DNS::RR->new("$i $ttl3 IN A $auth{$i}"));
+  push(@auth, Net::DNS::RR->new("$qname $ttl[0] IN NS $myns"));
+  push(@add, Net::DNS::RR->new("$myns $ttl[1] IN A $myip"));
+
+  # all 'A' records return $myip, at least for now
+  if ($qtype eq "A") {
+    @ans = (Net::DNS::RR->new("$qname $ttl[0] IN A $myip"));
   }
 
-  # if bcinfo(n), return CNAME to dns(n)
-  if ($qname=~/^bcinfo(\d+)\./) {
-    @ans = (Net::DNS::RR->new("$qname $ttl1 IN CNAME ns$1.barrycarter.info"));
-    return ("NOERROR", \@ans, \@auth, \@add, {aa=>1, ra=>0});
+  # and AAAA records
+  if ($qtype eq "AAAA") {
+    @ans = (Net::DNS::RR->new("$qname $ttl[0] IN AAAA $myip6"));
   }
 
-  # very special case for ns.barrycarter.info (no number)
-  if ($qtype eq "A" && $qname=~/^ns\.barrycarter\.info$/) {
-    my(@ns) = randomize(keys %auth);
-    @ans = Net::DNS::RR->new("$qname $ttl3 IN A $auth{$ns[0]}");
-    return ("NOERROR", \@ans, \@auth, \@add, {aa=>1, ra=>0});
-  }
-
-  # special case for ns*.barrycarter.info
-  if ($qtype eq "A" && $qname=~/^ns\d+\.barrycarter\.info$/) {
-    debug("NS* case: $qname -> $auth{$qname}");
-    if ($auth{$qname}) {
-      # if ns* exists, return it
-      @ans = (Net::DNS::RR->new("$qname $ttl1 IN A $auth{$qname}"));
-    } else {
-      # if not, CNAME it to ns
-      @ans = (Net::DNS::RR->new("$qname $ttl1 IN CNAME ns.barrycarter.info"));
-    }
-    return ("NOERROR", \@ans, \@auth, \@add, {aa => 1, ra =>0});
-  }
-
-  # case for db.conquerclub.barrycarter.info (keeping on one server
-  # since realtime request db mirroring is painful)
-  if ($qtype eq "A" && $qname=~/(^|\.)db\./) {
-    @ans = (Net::DNS::RR->new("$qname $ttl1 IN CNAME ns1.barrycarter.info"));
-    return ("NOERROR", \@ans, \@auth, \@add, {aa=>1, ra=>0});
-}
-
-  # default A record
-  for $i (randomize(values %auth)) {
-    push(@ans, Net::DNS::RR->new("$qname $ttl1 IN A $i"));
-  }
   return ("NOERROR", \@ans, \@auth, \@add, {aa=>1, ra=>0});
 }
-
-sub randomize {
-  my(@l) = @_;
-  foreach $pos (1..$#l) {
-    my($rand) = int(rand($pos+1));
-    @l[$pos, $rand] = @l[$rand, $pos];
-  }
-  return @l;
-}
-
