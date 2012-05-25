@@ -13,6 +13,8 @@ require "/usr/local/lib/bclib.pl";
 
 $all = read_file("/home/barrycarter/BCGIT/db/program_schedule_print.html");
 
+print "<table border=1>\n";
+
 # rows
 while ($all=~s%<tr>(.*?)</tr>%%is) {
   push(@rows, $1);
@@ -32,8 +34,9 @@ for $i (@rows) {
 
   # convert to MT
   $time = strftime("%H%M",localtime(str2time($time)-3600*2));
-  debug("TIME: $time");
-  warn "TESTING"; next;
+
+  # row header
+  print "<tr><th>$time</th>\n";
 
   for $j (@cells) {
     # remove HTML
@@ -66,7 +69,19 @@ for $i (@rows) {
 
     $j=trim($j);
 
+    debug("JP: $j");
+    unless ($j) {$j="&nbsp;";}
+    debug("JA: $j");
+
+    # print cell
+    print "<td>$j</td>\n";
+
   }
 
-  debug("CELLS",@cells);
+  # end of row
+  print "</tr>\n";
+
 }
+
+print "</table>\n";
+
