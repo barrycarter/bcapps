@@ -27,6 +27,13 @@ for $i (@rows) {
 
   # first cell is timing info
   $time = shift(@cells);
+  $time=~s/<.*?>//isg;
+  $time=~s/\s*Eastern\s*//isg;
+
+  # convert to MT
+  $time = strftime("%H%M",localtime(str2time($time)-3600*2));
+  debug("TIME: $time");
+  warn "TESTING"; next;
 
   for $j (@cells) {
     # remove HTML
@@ -37,9 +44,6 @@ for $i (@rows) {
 
     # preserve parentheses for these (multiple hosts)
     $j=~s/family feud/FF/isg;
-    $j=~s/^.*newlywed game/NG/isg;
-    $j=~s/match game/MG/isg;
-    $j=~s/^.*pyramid/PMD/isg;
 
     # do not preserve parens (single host or paren info useless)
     $j=~s/^.*deal or no deal.*$/DOND/isg;
@@ -52,6 +56,13 @@ for $i (@rows) {
     $j=~s/^.*catch 21.*$/C21/isg;
     $j=~s/^.*millionaire.*$/M\$/isg;
     $j=~s/^.*1 vs 100.*$/1V100/isg;
+    $j=~s/^.*5th grader.*$/5G/isg;
+    $j=~s/^.*chain reaction.*$/CR/isg;
+    $j=~s/^.*newlywed game.*$/NG/isg;
+    $j=~s/^.*match game.*$/MG/isg;
+    $j=~s/^.*pyramid.*$/PMD/isg;
+
+    # "Baggage" seems short enough as is
 
     $j=trim($j);
 
