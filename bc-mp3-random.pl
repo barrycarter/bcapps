@@ -31,31 +31,39 @@ for (;;) {
 
   debug("PLAYING: $mp3s[$pos] (song $pos+1)");
   # first killing all other mplayer procs == bad?
-  # not sure about speaking name first (and, yes, it speaks over first part of song)
-  system("pkill mplayer; echo \"$shortsong\" | festival --tts& mplayer -really-quiet -af scaletempo,volnorm -speed 1.5 file \"$song\" < /dev/null &");
+  # not sure about speaking name first (and, yes, it speaks over first
+  # part of song)
+  # sleep necessary for pgrep
+  system("pkill mplayer; echo \"$shortsong\" | festival --tts& mplayer -really-quiet -af scaletempo,volnorm -speed 1.5 file \"$song\" < /dev/null >& /dev/null & sleep 1");
 
-  # has the song ended; if yes, bump position and restart loop
-  $res = system("pgrep mplayer > /dev/null");
-  if ($res) {$pos++; next;}
+  # wait for song to end or keypress
+  for (;;) {
+    # if song end, abort inner loop
+    $res = system("pgrep mplayer > /dev/null");
+    if ($res) {$pos++; last;}
 
-  # if not, listen for keybord input (nonblocking)
-  $input = <>;
+    # if not, listen for keybord input (nonblocking)
+    $input = <>;
 
-  # respond to input
-  if ($input=~/^p/i) {
-    $pos--;
-  } elsif ($input) {
-    # default case is to advance song if there is any other input
-    $pos++;
-  } else {
-    # do nothing
+    # respond to input
+    if ($input=~/^p/i) {
+      $pos--;
+    } elsif ($input) {
+      # default case is to advance song if there is any other input
+      $pos++;
+    } else {
+      # do nothing
+    }
+
+    # if there was any input, restart loop
+    if ($input) {
+#      debug("THERE WAS INPUT");
+      last;
+    }
+
+    # otherwise, sleep (to avoid CPU hang)
+    sleep(1);
   }
-
-  # if there was any input, restart loop
-  if ($input) {last;}
-
-  # otherwise, sleep (to avoid CPU hang)
-  sleep(1);
 }
 
 
