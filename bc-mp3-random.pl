@@ -7,10 +7,6 @@
 require "/usr/local/lib/bclib.pl";
 use Fcntl;
 
-# this is probably bad, but useful to catch garbage from other
-# invokations this program
-system("pkill mplayer");
-
 # STDIN needs to be interactive
 fcntl(STDIN,F_SETFL,O_NONBLOCK);
 
@@ -21,29 +17,49 @@ $pos = 0; # starting position in file
 
 # loop forever
 for (;;) {
-  # play current song
-  debug("PLAYING: $mp3s[$pos]");
-  system("mplayer -really-quiet -af scaletempo,volnorm -speed 1.5 file \"$mp3s[$pos]\" < /dev/null &");
-  # give pgrep enough time to see this proc (w/o it, 2 songs play at once sometimes)
-  sleep(1);
+  # if $pos goes beyond limits, fix
+  if ($pos<0) {$pos=$#mp3s;}
+  if ($pos>$#mp3s) {$pos=0;}
 
-  # wait for song to end
-  # TODO: this is ugly and catches other mplayer processes
+  # current song
+  $song = $mp3s[$pos];
+  # short form for festival (remove dir name and extension)
+  $shortsong = $song;
+  $shortsong=~s%^.*/%%isg;
+  $shortsong=~s/\..*$//isg;
+  $shortsong=~s/_/ /isg;
+
+  debug("PLAYING: $mp3s[$pos] (song $pos+1)");
+  # first killing all other mplayer procs == bad?
+  # not sure about speaking name first (and, yes, it speaks over first part of song)
+  system("pkill mplayer; echo \"$shortsong\" | festival --tts& mplayer -really-quiet -af scaletempo,volnorm -speed 1.5 file \"$song\" < /dev/null &");
+
+  # wait for song to end or keypress
+  # pgrep below is ok, because 
   while (system("pgrep mplayer > /dev/null")==0) {
     $input = <>;
-    if ($input) {debug("INPUT: $input");}
+
+    debug("POS BEFORE: $pos");
+
+    # respond to input (and end loop)
+    if ($input=~/^p/i) {
+      $pos--;
+    } elsif ($input) {
+      # default case is to advance song if there is any other input
+      $pos++;
+    } else {
+      # do nothing
+    }
+
+    debug("POS NOW: $pos");
+
+    # if there was any input, go back to main loop
+    if ($input) {last;}
+
+    # otherwise
     sleep(1);
   }
-
+  # if song ends, go to next one
   $pos++;
-#  debug("RES: $res");
-#  die "TESTING";
-#  debug("WAITING...");
-#  sleep(1);
 }
-
-# debug(@mp3s);
-
-# NOTES: mplayer -af scaletempo -speed 1.5 file
-# mplayer -really-quiet -af scaletempo -speed 1.5 file /mnt/sshfs/MP3/file.mp3 < /dev/null &
 

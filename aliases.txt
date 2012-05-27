@@ -18,7 +18,5 @@ alias nagcheck "grep host_name /var/nagios/status.dat | sort | uniq | cut -d= -f
 # would've been a better option
 alias nagstart "sudo rm /home/barrycarter/ERR/nagios.*.err; sudo pkill nagios; sudo nagios -d /home/barrycarter/BCGIT/NAGIOS/nagios.cfg; sleep 5; nagcheck"
 
-
-
-
-
+# volume
+alias volume "amixer set 'Master Front' \!*"
