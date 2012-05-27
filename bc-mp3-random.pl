@@ -34,32 +34,28 @@ for (;;) {
   # not sure about speaking name first (and, yes, it speaks over first part of song)
   system("pkill mplayer; echo \"$shortsong\" | festival --tts& mplayer -really-quiet -af scaletempo,volnorm -speed 1.5 file \"$song\" < /dev/null &");
 
-  # wait for song to end or keypress
-  # pgrep below is ok, because 
-  while (system("pgrep mplayer > /dev/null")==0) {
-    $input = <>;
+  # has the song ended; if yes, bump position and restart loop
+  $res = system("pgrep mplayer > /dev/null");
+  if ($res) {$pos++; next;}
 
-    debug("POS BEFORE: $pos");
+  # if not, listen for keybord input (nonblocking)
+  $input = <>;
 
-    # respond to input (and end loop)
-    if ($input=~/^p/i) {
-      $pos--;
-    } elsif ($input) {
-      # default case is to advance song if there is any other input
-      $pos++;
-    } else {
-      # do nothing
-    }
-
-    debug("POS NOW: $pos");
-
-    # if there was any input, go back to main loop
-    if ($input) {last;}
-
-    # otherwise
-    sleep(1);
+  # respond to input
+  if ($input=~/^p/i) {
+    $pos--;
+  } elsif ($input) {
+    # default case is to advance song if there is any other input
+    $pos++;
+  } else {
+    # do nothing
   }
-  # if song ends, go to next one
-  $pos++;
+
+  # if there was any input, restart loop
+  if ($input) {last;}
+
+  # otherwise, sleep (to avoid CPU hang)
+  sleep(1);
 }
+
 
