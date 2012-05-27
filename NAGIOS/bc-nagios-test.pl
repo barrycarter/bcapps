@@ -86,5 +86,38 @@ sub bc_nagios_file_size {
   return 0;
 }
 
+=item bc_gaim_log_unanswered($options)
 
+Checks GAIM logs for last 3 days to see if there are any conversations
+awaiting my input, namely those where:
+
+  - I am not the last speaker AND
+
+  - The other speaker is not someone I'm intentionally ignoring.
+
+I use GAIM's "message notification" plugin, which is much more
+immediate, but this is for catching longer-term situations
+
+~/myids.txt should contain a list of ids you use
+
+~/badpeeps.txt should contain a list of people you are OK ignoring
+
+$options currently unused
+
+=cut
+
+sub bc_gaim_log_unanswered {
+  my($out, $err, $res) = cache_command("find $ENV{HOME}/.gaim/logs/ -mtime -3 -type f | xargs -n 1 tail -1 | fgrep -vf $ENV{HOME}/myids.txt | fgrep -vf $ENV{HOME}/badpeeps.txt");
+  if ($res) {
+    print "FIND command failed!\n";
+    return 2;
+  }
+
+  if ($out) {
+    print "FIND returned: $out\n";
+    return 2;
+  }
+
+  return 0;
+}
 

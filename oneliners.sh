@@ -1,5 +1,21 @@
 # shell one liners
 
+# I downloaded a bunch of mp3s from freesubliminals.com, but didn't
+# note down which mp3 was supposed to do what; this uses archive.org
+# to partially reconstruct what I have (manually downloaded the
+# various category pages from
+# http://web.archive.org/web/20071105010424/http://www.freesubliminals.com/index.php/2007/inspiring-article-ambitiously-pursuing-your-own-self-direction/
+# first
+
+# ran command below "exit" first, then ran:
+# nothing I want ends in a / or /#postcomment or xmlrpc
+
+grep -h href take1-*.html | perl -nle 's%/\#.*?$%%; /href="(.*?)"/; unless ($1) {next;}; print "curl -L -O $1"' | egrep -v '/$|xmlrpc|javascript' | sort | uniq
+
+exit;
+
+grep -h free-subliminal-mp3 *.html | sort | uniq | perl -nle '$n++; /href="(.*?)"/; print "curl -L -o take1-$n.html $1"'
+
 exit;
 
 # on Mac, extract audio from mp4/mpg to WAV
