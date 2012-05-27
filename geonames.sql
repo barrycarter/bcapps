@@ -17,6 +17,10 @@ CREATE TABLE geonames (
 );
 
 CREATE INDEX i_feature_code ON geonames(feature_code);
+
+-- added below later, it is useful
+CREATE INDEX i_population ON geonames(population);
+
 .separator "\t"
 .import /var/tmp/geonames.out geonames
 
@@ -26,6 +30,8 @@ CREATE TABLE altnames (
 );
 
 CREATE INDEX i_name ON altnames(name);
+-- added below later, useful
+CREATE INDEX i_geonameid ON altnames(geonameid);
 .import /var/tmp/altnames2.out altnames
 DELETE FROM altnames WHERE name = '';
 INSERT INTO altnames VALUES (0,'');

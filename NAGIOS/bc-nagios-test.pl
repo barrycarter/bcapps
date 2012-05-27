@@ -15,11 +15,14 @@ $globopts{debug}=1;
 
 # what are we being asked to run?
 my($cmd) = $ENV{NAGIOS_ARG1};
+debug("CMD: $cmd");
 
 # split into command and arguments (removing quotes first)
 $cmd=~s/\"//isg;
 $cmd=~/^\s*(.*?)\s+(.*)$/;
 my($bin,$arg) = ($1,$2);
+
+debug("BIN/ARG: $bin/$arg");
 
 # if the "binary" starts with "bc_", I want to run a local function
 if ($bin=~/^bc_/) {
@@ -104,17 +107,20 @@ immediate, but this is for catching longer-term situations
 
 $options currently unused
 
+TODO: don't hardcode my homedir (can't use $ENV{HOME}, since test runs
+as root, not me)
+
 =cut
 
 sub bc_gaim_log_unanswered {
-  my($out, $err, $res) = cache_command("find $ENV{HOME}/.gaim/logs/ -mtime -3 -type f | xargs -n 1 tail -1 | fgrep -vf $ENV{HOME}/myids.txt | fgrep -vf $ENV{HOME}/badpeeps.txt");
-  if ($res) {
-    print "FIND command failed!\n";
+  my($out, $err, $res) = cache_command("find /home/barrycarter/.gaim/logs/ -mtime -3 -type f | xargs -n 1 tail -1 | fgrep -vf /home/barrycarter/myids.txt | fgrep -vf /home/barrycarter/badpeeps.txt", "ignoreerror=1");
+  if ($err) {
+    print "ERR: $err\n";
     return 2;
   }
 
   if ($out) {
-    print "FIND returned: $out\n";
+    print "OUT: $out\n";
     return 2;
   }
 
