@@ -4,6 +4,21 @@
 # the command line, but letting me skip and unskip songs; also, play
 # songs at my preferred speed (= faster than normal)
 
+# keypresses (NYI = not yet implemented):
+#
+# p - previous song
+# n or <ENTER> - next song
+# q - quit (NYI)
+# r - restart program (not useful due to caching?; unless prog itself changes)
+# number - play song #number (NYI)
+# up/down - increase/reduce volume (using external amixer) (NYI)
+# /phrase - search for and play song matching phrase + reset $pos (NYI)
+# l - list all songs by number (piped to less?)
+# o - do nothing <h>(everyone needs null ops!)</h>
+
+# TODO: would be nice to get some overlap... know when a song's about to end
+# TODO: would be nice to have mplayer controls too
+
 require "/usr/local/lib/bclib.pl";
 use Fcntl;
 
@@ -28,6 +43,8 @@ for (;;) {
   $shortsong=~s%^.*/%%isg;
   $shortsong=~s/\..*$//isg;
   $shortsong=~s/_/ /isg;
+  # This changes TongueTied -> Tongue Tied (for example)
+  $shortsong=~s/([a-z])([A-Z])/$1 $2/sg;
 
   debug("PLAYING: $mp3s[$pos] (song $pos+1)");
   # first killing all other mplayer procs == bad?
@@ -55,9 +72,15 @@ for (;;) {
       # do nothing
     }
 
+    # up arrow/ENTER: 27/91/65
+    # down arrow/ENTER: 27/91/66
+
     # if there was any input, restart loop
     if ($input) {
-#      debug("THERE WAS INPUT");
+      chomp($input);
+      for $i (split(//,$input)) {
+	debug("I: ". ord($i));
+      }
       last;
     }
 
