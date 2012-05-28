@@ -48,16 +48,25 @@ for $i (sort keys %wanted) {
 
   # name of city admins
   for $j (0..4) {
+    # if the city is its own admin$j, ignore it
+    if ($admin{$j}{$i} == $i) {next;}
+
     @names = keys %{$isname{$admin{$j}{$i}}};
 #    debug("$i/$j names:",@names);
     @rand = randomize(\@names);
     push(@name, $rand[0]);
   }
 
-  debug(@name);
+  # and the city itself (which could really be state, country, etc, of course)
+  @names = keys %{$isname{$i}};
+  @rand = randomize(\@names);
+  push(@name, $rand[0]);
 
-  # names for the city itself
-#  debug(sort keys %{$isname{$i}});
+  # join them and clean it up
+  $url = join(".", reverse(@name)).".weather.94y.info";
+  $url=~s/\.+/./isg;
+
+  debug("URL: $url");
 
 }
 
