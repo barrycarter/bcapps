@@ -14,6 +14,15 @@ defaults("norecord=1"); warn "TESTING";
 # TODO: this doesn't need to be a constant
 @tiers = ([450, 0.0906237], [450, 0.1185101], [+Infinity, 0.1283520]);
 
+debug(tiered_cost(500));
+
+for $i (1..2000) {
+  $j = tiered_cost($i)-$i*0.1185101;
+  print "$i $j\n";
+}
+
+die "TESTING";
+
 # yyyy-mm-dd when meter last read, and amount
 ($time,$read) = ("2012-05-22", "50492");
 # current time
