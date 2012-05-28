@@ -24,19 +24,41 @@ eval(read_file("/tmp/dumpme.txt"));
 # admin codes for ids we want
 
 for $i (@res) {
-  debug("ID/NAME, $i->{altid}, $i->{name}");
+#  debug("ID/NAME, $i->{altid}, $i->{name}");
   $isname{$i->{altid}}{$i->{name}}=1;
-  $admin4{$i->{geonameid}} = $i->{admin4_code};
-  $admin3{$i->{geonameid}} = $i->{admin3_code};
-  $admin2{$i->{geonameid}} = $i->{admin2_code};
-  $admin1{$i->{geonameid}} = $i->{admin1_code};
-  $admin0{$i->{geonameid}} = $i->{country_code};
+
+  # in theory, the asciiname should also be an altname, but..
+  $ascname{$i->{geonameid}} = $i->{asciiname};
+
+  $admin{4}{$i->{geonameid}} = $i->{admin4_code};
+  $admin{3}{$i->{geonameid}} = $i->{admin3_code};
+  $admin{2}{$i->{geonameid}} = $i->{admin2_code};
+  $admin{1}{$i->{geonameid}} = $i->{admin1_code};
+  # <h>$admin{contact} = "it's the answer..."</h>
+  $admin{0}{$i->{geonameid}} = $i->{country_code};
   $wanted{$i->{geonameid}} = 1;
 }
 
 # and now, build up names of the ids we want
 for $i (sort keys %wanted) {
-  debug("I: $i");
+  debug("I: $i, $ascname{$i}");
+
+  # build up name into array
+  @name = ();
+
+  # name of city admins
+  for $j (0..4) {
+    @names = keys %{$isname{$admin{$j}{$i}}};
+#    debug("$i/$j names:",@names);
+    @rand = randomize(\@names);
+    push(@name, $rand[0]);
+  }
+
+  debug(@name);
+
+  # names for the city itself
+#  debug(sort keys %{$isname{$i}});
+
 }
 
 # debug(%admin2);
@@ -50,5 +72,4 @@ die "TESTING";
 write_file(Dumper(\@res),"/tmp/dumpme.txt");
 
 die "TESTING";
-
 

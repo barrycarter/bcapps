@@ -52,3 +52,6 @@ CREATE TABLE tzones (
 .separator "\t"
 .import /var/tmp/tzones.out tzones
 
+-- not sure how these get in, but lets get rid of them
+DELETE FROM altnames WHERE geonameid = '';
+
