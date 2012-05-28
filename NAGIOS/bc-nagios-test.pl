@@ -105,6 +105,8 @@ immediate, but this is for catching longer-term situations
 
 ~/badpeeps.txt should contain a list of people you are OK ignoring
 
+~/imignoredir.txt should contain a list of your ids for which you're OK w/ someone else answering last
+
 $options currently unused
 
 TODO: don't hardcode my homedir (can't use $ENV{HOME}, since test runs
@@ -113,7 +115,7 @@ as root, not me)
 =cut
 
 sub bc_gaim_log_unanswered {
-  my($out, $err, $res) = cache_command("find /home/barrycarter/.gaim/logs/ -mtime -3 -type f | xargs -n 1 tail -1 | fgrep -vf /home/barrycarter/myids.txt | fgrep -vf /home/barrycarter/badpeeps.txt", "ignoreerror=1");
+  my($out, $err, $res) = cache_command("find /home/barrycarter/.gaim/logs/ -mtime -3 -type f | fgrep -vf /home/barrycarter/imignoredir.txt | xargs -n 1 tail -1 | fgrep -vf /home/barrycarter/myids.txt | fgrep -vf /home/barrycarter/badpeeps.txt", "ignoreerror=1");
   if ($err) {
     print "ERR: $err\n";
     return 2;
