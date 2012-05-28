@@ -14,15 +14,6 @@ defaults("norecord=1"); warn "TESTING";
 # TODO: this doesn't need to be a constant
 @tiers = ([450, 0.0906237], [450, 0.1185101], [+Infinity, 0.1283520]);
 
-debug(tiered_cost(500));
-
-for $i (1..2000) {
-  $j = tiered_cost($i)-$i*0.1185101;
-  print "$i $j\n";
-}
-
-die "TESTING";
-
 # yyyy-mm-dd when meter last read, and amount
 ($time,$read) = ("2012-05-22", "50492");
 # current time
@@ -42,8 +33,10 @@ $maxtime = $now-str2time("$time 08:00:00 MST7MDT");
 $mintime = $now-str2time("$time 17:00:00 MST7MDT");
 
 # average kilowatt usage (reading is in kilowatthours)
-$max = ($cur-$read)/($now-$mintime)*3600;
-$min = ($cur-$read)/($now-$maxtime)*3600;
+$max = ($cur-$read)/$mintime*3600;
+$min = ($cur-$read)/$maxtime*3600;
+
+debug("MAX/MIN: $max/$min");
 
 # per month (365.2425 days in a year, Gregorian calendar)
 ($monthmin, $monthmax) = ($min*365.2425/12*24, $max*365.2425/12*24);
@@ -51,9 +44,9 @@ $min = ($cur-$read)/($now-$maxtime)*3600;
 
 printf("Last reading: %s\n", $time);
 printf("Usage to date: %d (\$%.2f)\n", $cur-$read, tiered_cost($cur-$read));
-printf("Average usage: %d - %d watts\n",$max*1000,$min*1000);
-printf("Monthly usage: %d - %d kwh\n",$monthmax,$monthmin);
-printf("Cost: \$%.2f - \$%.2f\n",$costmax,$costmin);
+printf("Average usage: %d - %d watts (J/s)\n",$max*1000,$min*1000);
+printf("Monthly usage: %d - %d kwh\n",$monthmin,$monthmax);
+printf("Cost: \$%.2f - \$%.2f\n",$costmin,$costmax);
 
 # work out cost of $n kilowatthours of electricity, using tiers
 sub tiered_cost {
