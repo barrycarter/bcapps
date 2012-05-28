@@ -13,7 +13,7 @@
 # number - play song #number (NYI)
 # up/down - increase/reduce volume (using external amixer) (NYI)
 # /phrase - search for and play song matching phrase + reset $pos (NYI)
-# l - list all songs by number (piped to less?)
+# l - list all songs by number (piped to less?) [restrict by number/phrase?]
 # o - do nothing <h>(everyone needs null ops!)</h>
 
 # TODO: would be nice to get some overlap... know when a song's about to end
