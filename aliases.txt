@@ -20,3 +20,8 @@ alias nagstart "sudo rm /home/barrycarter/ERR/nagios.*.err; sudo pkill nagios; s
 
 # volume
 alias volume "amixer set 'Master Front' \!*"
+
+# how many watts (joules/second) of electricity you're using, if it
+# takes your meter n+-1 seconds to go around (assuming you have
+# standard 7.2 electric meter)
+alias watts 'echo "25920/\!*\n25920/(\!* -1)\n25920/(\!* +1)" | bc'

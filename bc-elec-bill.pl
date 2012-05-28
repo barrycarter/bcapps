@@ -7,7 +7,8 @@
 # -norecord: don't record reading in ~/elecbill.txt
 
 require "/usr/local/lib/bclib.pl";
-defaults("norecord=1"); warn "TESTING";
+defaults("norecord=1");
+warn "--norecord set by default; use --norecord=0 to record";
 
 # tiered usage cost (first 450 at .0906, next 450 at .1185, rest at .1284)
 # http://www.nmprc.state.nm.us/consumer-relations/company-directory/electric/pnm/forms/form90.pdf is accurate, at least for May 2012
