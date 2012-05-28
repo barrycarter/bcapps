@@ -32,6 +32,13 @@ CREATE TABLE altnames (
 CREATE INDEX i_name ON altnames(name);
 -- added below later, useful
 CREATE INDEX i_geonameid ON altnames(geonameid);
+-- below 5 are useful for joins
+CREATE INDEX i_country_code ON geonames(country_code);
+CREATE INDEX i_admin1_code ON geonames(admin1_code);
+CREATE INDEX i_admin2_code ON geonames(admin2_code);
+CREATE INDEX i_admin3_code ON geonames(admin3_code);
+CREATE INDEX i_admin4_code ON geonames(admin4_code);
+
 .import /var/tmp/altnames2.out altnames
 DELETE FROM altnames WHERE name = '';
 INSERT INTO altnames VALUES (0,'');
