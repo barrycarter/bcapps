@@ -66,10 +66,17 @@ my($cmd7) = qq%curl -k https://$user:$pass\@stage.rest.click2mail.com/v1/address
 
 my($cmd8) = qq%curl -k -v -X GET -H "Accept: application/pdf" https://$user:$pass\@stage.rest.click2mail.com/v1/mailingBuilders/$bid/proofs/1 -o myProof.pdf%;
 
-
 my($out,$err,$res) = cache_command($cmd8, "age=86400");
 
+# and (fake) send it
+my($cmd9) = qq%curl -v -X POST https://$user:$pass\@stage.rest.click2mail.com/v1/mailingBuilders/$bid/build%;
+
+# can't cache this, it gives us a status result
+my($out,$err,$res) = cache_command($cmd9, "age=0");
+
 debug("OUT: $out, IDS: $id $bid $pid $did");
+
+# cost me 10000-9993.98 = 6.02 fake $ to send fake letter above
 
 
 
