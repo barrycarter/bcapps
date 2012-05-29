@@ -10,6 +10,7 @@ require "/usr/local/lib/bclib.pl";
 # this is a staging account only
 ($user, $pass) = ("barrycarter", "Pr0egte9ar");
 
+# create an address list
 $cmd1 = qq%curl -k -X POST https://$user:$pass\@stage.rest.click2mail.com/v1/addressLists -H "Content-Type: application/xml" -d "<addressList><address><name>Joe Smith</name><address1>123 Main St.</address1><city>Anytown</city><state>VA</state><postalCode>11105</postalCode></address></addressList>"%;
 
 debug("CMD: $cmd1");
@@ -38,11 +39,32 @@ my($out,$err,$res) = cache_command($cmd3, "age=86400");
 $out=~m%<id>(.*?)</id>%;
 $pid = $1;
 
-debug("OUT: $out, IDS: $id $bid $pid");
-
 #<h>I love using $bid and $pid as variables, since there's NO WAY they
 #could be confused for anything else, ha ha</h>
 
+my($cmd4) = qq%curl -k -v -X POST https://$user:$pass\@stage.rest.click2mail.com/v1/documents/ -H "Content-Type: application/pdf" --data-binary "\@sample-data/bcpage.pdf"%;
+
+my($out,$err,$res) = cache_command($cmd4, "age=86400");
+
+$out=~m%<id>(.*?)</id>%;
+$did = $1;
+
+# attach document to builder
+my($cmd5) = qq%curl -k -v -X PUTo https://$user:$pass\@stage.rest.click2mail.com/v1/mailingBuilders/$bid/document -H "Content-Type: application/x-www-form-urlencoded" -d "id=$did"%;
+
+my($out,$err,$res) = cache_command($cmd5, "age=86400");
+
+my($cmd6) = qq%curl -k -v -X PUT https://$user:$pass\@stage.rest.click2mail.com/v1/mailingBuilders/$bid/addressList -H "Content-Type: application/x-www-form-urlencoded" -d "id=$id"%;
+
+my($out,$err,$res) = cache_command($cmd6, "age=86400");
+
+#Is the address list ready? <h>"are we there yet?"</h>
+
+my($cmd7) = qq%curl -k https://$user:$pass\@stage.rest.click2mail.com/v1/addressLists/$id%;
+
+my($out,$err,$res) = cache_command($cmd7, "age=86400");
+
+debug("OUT: $out, IDS: $id $bid $pid $did");
 
 
 
