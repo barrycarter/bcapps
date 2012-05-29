@@ -62,7 +62,12 @@ my($out,$err,$res) = cache_command($cmd6, "age=86400");
 
 my($cmd7) = qq%curl -k https://$user:$pass\@stage.rest.click2mail.com/v1/addressLists/$id%;
 
-my($out,$err,$res) = cache_command($cmd7, "age=86400");
+# what does it look like?
+
+my($cmd8) = qq%curl -k -v -X GET -H "Accept: application/pdf" https://$user:$pass\@stage.rest.click2mail.com/v1/mailingBuilders/$bid/proofs/1 -o myProof.pdf%;
+
+
+my($out,$err,$res) = cache_command($cmd8, "age=86400");
 
 debug("OUT: $out, IDS: $id $bid $pid $did");
 
