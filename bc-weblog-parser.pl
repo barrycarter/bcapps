@@ -8,7 +8,12 @@
 require "/usr/local/lib/bclib.pl";
 
 # TODO: allow multiple arguments, and don't assume .gz
-open(A,"egrep -v '^#|^ *\$' /home/barrycarter/BCGIT/bots.txt | zgrep -ivf- $ARGV[0]|");
+$cmd = "egrep -v '^#|^ *\$' /home/barrycarter/BCGIT/bots.txt | zfgrep -ivf- $ARGV[0]";
+debug("CMD: $cmd");
+open(A,"$cmd|");
+# open(A,"$cmd /home/barrycarter/BCGIT/bots.txt|");
+# system("$cmd /home/barrycarter/BCGIT/bots.txt");
+# open(A,"egrep -v '^#|^ *\$' /home/barrycarter/BCGIT/bots.txt |");
 
 while (<A>) {
   debug("THUNK: $_");
