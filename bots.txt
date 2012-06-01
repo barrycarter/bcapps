@@ -15,8 +15,7 @@
 # To the extent possible, listing URLs (less likely false positives)
 
 # DID YOU KNOW: lines starting with '#' are NOT treated as comments by
-# grep -f (but I'm relying on the hope that not too many weblog lines
-# have '# stuff' in them)
+# grep -f (but my program filters those + blank lines out)
 
 # <h>I have this nagging worry that my site gets no non-bot hits at all!</h>
 
@@ -30,7 +29,8 @@ http://www.80legs.com/spider.html
 http://www.80legs.com/webcrawler.html
 http://www.exabot.com/go/robot
 http://search.msn.com/msnbot.htm
-http://www.baidu.com/search/spider.html
+# below also catches .html
+http://www.baidu.com/search/spider.htm
 http://www.bing.com/bingbot.htm
 http://www.brandwatch.net
 http://www.alexa.com/site/help/webmasters
@@ -40,12 +40,57 @@ http://help.soso.com/webspider.htm
 http://crawler.sistrix.net/
 http://filterdb.iss.net/crawler/
 http://www.commoncrawl.org/bot.html
+http://www.sogou.com/docs/help/webmasters.htm
+http://www.entireweb.com/about/search_tech/speedy_spider/
+http://fulltext.sblog.cz
+http://www.pipl.com/bot/
+http://www.huaweisymantec.com/en/IRL/spider
+http://www.openindex.io/en/webmasters/spider.html
+http://www.youdao.com/help/webmaster/spider/
+http://shoulu.jike.com/spider.html
+http://www.hailoo.com/spider.html
+http://www.linkbutler.de/spider
+# resisted temptation to add siteua.org/ (at least for now)
+http://it.siteua.org/
+http://kino.siteua.org/
+http://lady.siteua.org/
+http://market.siteua.org/
+http://auto.siteua.org/
+http://games.siteua.org/
+http://music.siteua.org/
+http://discoveryengine.com/discobot.html
+http://www.acoon.de/robot.asp
+http://www.botje.com/plukkie.htm
+http://solfo.com/linkbot.html
+http://www.weblex.org/bot.html
+
+# tempted to add raw phrase "nutch" but nah
+http://www.Nutch.de/
+
+# these bots don't provide complete URLs, but do provide partial URLs
+# or email addresses
+
+www.metadatalabs.com/mlbot
+ezooms.bot@gmail.com
+bot@language-tools.com
+
+# these bots provide nothing but a "recognizable phrase"
+Content Crawler
+sGroup crawler
+gsa-crawler
+New-Sogou-Spider
+Applied-Technologies-Inc-Spider
+Screaming Frog SEO Spider
+WCH Web Spider
+Googlebot-Image
+GSLFbot
+citeseerxbot
+SurveyBot
+news bot
 
 # montastic.com is a great service + nagios is a great prog, but their
 # hits don't count
 nagios-plugins
 montastic.com
 
-# Content Crawler
-# sGroup crawler
-
+#<h>If you want to surf anonymously, just put 'bot' in your User-Agent ;) </h>
