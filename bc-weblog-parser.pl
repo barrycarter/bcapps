@@ -14,5 +14,22 @@ system("egrep -v '^#|^ *\$' /home/barrycarter/BCGIT/bots.txt > phrases.txt");
 open(A, "zfgrep -ivf phrases.txt $ARGV[0]|");
 
 while (<A>) {
-  debug("THUNK: $_");
+  # extract ip
+  s/\s+.*$//;
+
+  # add to visits from that IP (not that we really count number of visits)
+  $visit4{$_}++;
+
+  # and the "class C" it belongs to
+  s/\.\d+$//;
+
+  $visit3{$_}++;
 }
+
+@visit4 = sort keys %visit4;
+@visit3 = sort keys %visit3;
+
+$num4 = $#visit4+1;
+$num3 = $#visit3+1;
+
+print "TOTAL IPs: $num4\nTOTAL 'class C's: $num3\n";
