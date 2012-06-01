@@ -1,0 +1,51 @@
+# agents matching these regexps are treated as webbots for
+# bc-weblog-parser.pl
+
+# TODO: this actually eliminates any hits with these regexps in them =
+# bad (but using URLs helps)
+
+# Only contains bots I've personally seen (in my logs)
+
+# It's tempting to add 'bot', 'spider', 'crawl' below, but that might
+# be excessive;
+
+# See also:
+# http://www.ubbwiki.com/index.php?title=Spider_Listing
+# http://code.google.com/p/yourls/wiki/PluginDontLogBots
+# To the extent possible, listing URLs (less likely false positives)
+
+# DID YOU KNOW: lines starting with '#' are NOT treated as comments by
+# grep -f (but I'm relying on the hope that not too many weblog lines
+# have '# stuff' in them)
+
+# <h>I have this nagging worry that my site gets no non-bot hits at all!</h>
+
+http://www.majestic12.co.uk/bot.php
+http://www.google.com/bot.html
+http://help.yahoo.com/help/us/ysearch/slurp
+http://help.naver.com/robots/
+http://blekko.com/about/blekkobot
+http://yandex.com/bots
+http://www.80legs.com/spider.html
+http://www.80legs.com/webcrawler.html
+http://www.exabot.com/go/robot
+http://search.msn.com/msnbot.htm
+http://www.baidu.com/search/spider.html
+http://www.bing.com/bingbot.htm
+http://www.brandwatch.net
+http://www.alexa.com/site/help/webmasters
+http://spider.neofonie.de
+http://ahrefs.com/robot
+http://help.soso.com/webspider.htm
+http://crawler.sistrix.net/
+http://filterdb.iss.net/crawler/
+http://www.commoncrawl.org/bot.html
+
+# montastic.com is a great service + nagios is a great prog, but their
+# hits don't count
+nagios-plugins
+montastic.com
+
+# Content Crawler
+# sGroup crawler
+

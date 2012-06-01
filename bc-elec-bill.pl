@@ -6,6 +6,13 @@
 # Options:
 # -norecord: don't record reading in ~/elecbill.txt
 
+# TODO:
+# add --last option that just shows results from previous reading
+# show "what if" scenarios
+# measure usage since last reading(s)
+# add +-.1 inaccuracy in reading itself
+# add +-1 minute inaccuracy in reading time (though 8h window sort of covers this)
+
 require "/usr/local/lib/bclib.pl";
 defaults("norecord=1");
 warn "--norecord set by default; use --norecord=0 to record";
@@ -16,6 +23,7 @@ warn "--norecord set by default; use --norecord=0 to record";
 @tiers = ([450, 0.0906237], [450, 0.1185101], [+Infinity, 0.1283520]);
 
 # yyyy-mm-dd when meter last read, and amount
+# TODO: this obviously shouldn't be hardcoded
 ($time,$read) = ("2012-05-22", "50492");
 # current time
 $now = time();
