@@ -134,19 +134,26 @@ sub tiered_cost {
 # +-60s error in time [per reading]
 
 sub elec_stats {
-  my($usage, $sec) = @_;
-  debug("elec_stats($usage,$sec)");
+  my($rtimeref, $readingref) = @_;
 
-  # max and min seconds (+-60s each way, so total 120s)
-  my($minsec, $maxsec) = ($sec-120, $sec+120);
-  # and usage (+-.1 each way, so .2 total)
-  my($minuse, $maxuse) = ($usage-.2, $usage+.2);
+  my(@rtime) = @{$rtimeref};
+  my(@reading) = @{$readingref};
 
-  # maximum and minimum usage (in watts)
-  my($maxwatts) = $maxuse/$minsec*3600*1000;
-  my($minwatts) = $minuse/$maxsec*3600*1000;
+  debug("RTIME",@rtime);
+  debug("RTIME",@reading);
 
-  debug("RANGE: $minwatts-$maxwatts");
+  # time elapsed between @rtime and @now
+  my(@elapse) = ($now[0]-$rtime[2], $now[1]-$rtime[1], $now[2]-$rtime[0]);
+
+  # kwh/sec usage between @rtime and @now
+  my(@usage2) = (($cur[0]-$reading[2])/$elapse[2],
+		 ($cur[1]-$reading[1])/$elapse[1],
+		 ($cur[2]-$reading[0])/$elapse[0]);
+
+  # usage in watts
+  for $i (@usage2) {$i*=3600000;}
+
+  debug("USAGE2",@usage2);
 
   # number of seconds left this month
   my($secsleftmax) = $secspermonth - $mintime;
