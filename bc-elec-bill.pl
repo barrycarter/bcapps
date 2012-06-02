@@ -12,6 +12,8 @@
 # measure usage since last reading(s)
 # add +-.1 inaccuracy in reading itself
 # add +-1 minute inaccuracy in reading time (though 8h window sort of covers this)
+# sort elecbill.txt as I might start allowing out-of-order entries
+# allow --time= entries for previous times
 
 require "/usr/local/lib/bclib.pl";
 defaults("norecord=1");
