@@ -44,6 +44,8 @@ $readtime = str2time("$time 12:30:00 MST7MDT");
 if ($globopts{last}) {
   my($out,$err,$res) = cache_command("tail -1 $elecfile");
   ($now, $cur) = split(/\s+/, $out);
+  debug("CUR: $cur");
+  print strftime("Using: %x %X\n", localtime($now));
 } else {
   # current time
   $now = time();
@@ -68,24 +70,37 @@ if ($globopts{last}) {
 for $i (@timeleft) {$i = $secspermonth-$i;}
 
 # look at last few entries and determine usage
-open(A,"tac $elecfile|"); 
+open(A,"tac $elecfile|");
+
+# create plotfile for gnuplot, beats:
+# echo plot \'-\' with linespoints; tail -10 ~/elecbill.txt) | gnuplot -persist
+# TODO: add reference lines?
+open(B,">/tmp/gnuplot.txt");
 
 while (<A>) {
   my($rtime, $reading) = split(/\s+/, $_);
 
   # ignore readings older than last known reading (otherwise, run risk
   # of negative usage)
-  if ($rtime < $read[2]) {last;}
+  if ($rtime < $readtime[2]) {last;}
+
+  # plotting in seconds is ugly, so go with days ago (gnuplot)
+  # TODO: could do this for even older readings?
+  debug("RTIME: $rtime, READ: $read[2]");
+  $plotdays = sprintf("%.2f", ($now-$rtime)/86400);
+  print B "$plotdays $reading\n";
 
   # standard 60 second and +-.1 kwh
   @rtime = ($rtime-60, $rtime, $rtime+60);
   @reading = ($reading-.1, $reading, $reading+.1);
   
-  warn "TESTING";
+  # no longer sure how useful elec_stats() is, so leaving it disabled
+  # TODO: reconsider elec_stats
   #  elec_stats(\@rtime, \@reading);
 }
 
 close(A);
+close(B);
 
 # usage in kwh so far this month
 @usagekwh = ($cur[0]-$read[2], $cur[1]-$read[1], $cur[2]-$read[0]);
@@ -114,27 +129,23 @@ debug("MONTH",@month);
 debug("COST",@cost);
 debug("TIMELEFT",@timeleft);
 
-=item this_no_longer_works
-
-printf("Last reading: %s\n", $time);
-printf("Usage to date: %.1f (\$%.2f)\n", $cur-$read, tiered_cost($cur-$read));
-printf("Average usage: %d - %d watts (J/s)\n",$max*1000,$min*1000);
-printf("Monthly usage: %d - %d kwh\n",$monthmin,$monthmax);
-printf("Cost: \$%.2f - \$%.2f\n",$costmin,$costmax);
-
-=cut
-
 # time in days for printing
 for $i (@time) {push(@timeindays,$i/86400.);}
 
-printf("Last reading: %s\n", $time);
+printf("Last PNM reading: %s\n", $time);
 printf("Usage to date (kwh): %.1f (%.1f - %.1f)\n", @usagekwh[1,0,2]);
 printf("Days since last reading: %.2f (%.2f - %.2f)\n", @timeindays[1,0,2]);
 printf("Usage (watts): %d (%d - %d)\n", @usage[1,0,2]);
+printf("Usage for month (kwh): %d (%d - %d)\n",@month[1,0,2]);
+printf("Cost: \$%.2f (\$%.2f - \$%.2f)\n",@cost[1,0,2]);
+
+# separator
+print "\n";
 
 # if/thens if we assume different wattage for rest of month
 # using 10K watts is hard, but I've hit ~8K before, so not unreasonable
 for $i (0..20) {
+  # note that $i=0 also gives current usage
   $watts = $i*500;
 
   # total usage for month would be this (in kwh) and cost

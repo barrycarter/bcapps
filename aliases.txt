@@ -25,3 +25,6 @@ alias volume "amixer set 'Master Front' \!*"
 # takes your meter n+-1 seconds to go around (assuming you have
 # standard 7.2 electric meter)
 alias watts 'echo "25920/\!*\n25920/(\!* -1)\n25920/(\!* +1)" | bc'
+
+# just a silly way to do a quick plot
+alias qplot 'echo plot \"/tmp/gnuplot.txt\" with linespoints | gnuplot -persist'
