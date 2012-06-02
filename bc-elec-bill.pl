@@ -80,8 +80,9 @@ while (<A>) {
   # standard 60 second and +-.1 kwh
   @rtime = ($rtime-60, $rtime, $rtime+60);
   @reading = ($reading-.1, $reading, $reading+.1);
-
-  elec_stats(\@rtime, \@reading);
+  
+  warn "TESTING";
+  #  elec_stats(\@rtime, \@reading);
 }
 
 close(A);
@@ -123,19 +124,31 @@ printf("Cost: \$%.2f - \$%.2f\n",$costmin,$costmax);
 
 =cut
 
+# time in days for printing
+for $i (@time) {push(@timeindays,$i/86400.);}
+
+printf("Last reading: %s\n", $time);
+printf("Usage to date (kwh): %.1f (%.1f - %.1f)\n", @usagekwh[1,0,2]);
+printf("Days since last reading: %.2f (%.2f - %.2f)\n", @timeindays[1,0,2]);
+printf("Usage (watts): %d (%d - %d)\n", @usage[1,0,2]);
+
 # if/thens if we assume different wattage for rest of month
 # using 10K watts is hard, but I've hit ~8K before, so not unreasonable
-for $i (1..20) {
+for $i (0..20) {
   $watts = $i*500;
 
-  # remaining usage for month would be this (in kwh)
+  # total usage for month would be this (in kwh) and cost
   @hypusage=();
-  for $i (@timeleft) {
-    push(@hypusage, $i*$watts/3600000);
+  @hyprice=();
+  for $i (0..2) {
+    my($hypwatts) = $timeleft[$i]*$watts/3600000 + $usagekwh[$i];
+    push(@hypusage, $hypwatts);
+    push(@hyprice, tiered_cost($hypwatts));
   }
 
-  debug("$watts watts:",@hypusage);
+  debug("$watts watts:",@hypusage,"price",@hyprice);
 
+  print "At $watts watts: $hyprice[1] ($hyprice[0] - $hyprice[2])\n";
 }
 
 # work out cost of $n kilowatthours of electricity, using tiers
