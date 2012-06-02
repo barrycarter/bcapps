@@ -18,11 +18,12 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# useful constants
+# useful constants/vars
 $secspermonth = 365.2425*86400/12; # gregorian
+$elecfile = "$ENV{HOME}/elecbill.txt";
 
 # sort (just in case of out-of-order entries in the future)
-system("sort -n $ENV{HOME}/elecbill.txt -o $ENV{HOME}/elecbill.txt");
+system("sort -n $elecfile -o $elecfile");
 
 # tiered usage cost (first 450 at .0906, next 450 at .1185, rest at .1284)
 # http://www.nmprc.state.nm.us/consumer-relations/company-directory/electric/pnm/forms/form90.pdf is accurate, at least for May 2012
@@ -33,13 +34,15 @@ system("sort -n $ENV{HOME}/elecbill.txt -o $ENV{HOME}/elecbill.txt");
 # TODO: this obviously shouldn't be hardcoded
 ($time,$read) = ("2012-05-22", "50492");
 
-# min and max time read, assuming meter was read 8a-5p
-$minreadtime = str2time("$time 08:00:00 MST7MDT");
-$maxreadtime = str2time("$time 17:00:00 MST7MDT");
+# ranges are now represented as [low, med, high] where med = the
+# "true" reading in some sense; 12:30pm = center of 8-5 day
+$readtime = str2time("$time 12:30:00 MST7MDT");
+@readtime = ($readtime-4.5*3600, $readtime, $readtime+4.5*3600);
+@read = ($read-.1, $read, $read+.1);
 
 # if reading from file...
 if ($globopts{last}) {
-  my($out,$err,$res) = cache_command("tail -1 $ENV{HOME}/elecbill.txt");
+  my($out,$err,$res) = cache_command("tail -1 $elecfile");
   ($now, $cur) = split(/\s+/, $out);
 } else {
   # current time
@@ -48,47 +51,63 @@ if ($globopts{last}) {
   (($cur)=@ARGV)||die("Usage: $0 <current_reading>");
 
   unless ($globopts{norecord}) {
-    append_file("$now $cur\n", "$ENV{HOME}/elecbill.txt");
+    append_file("$now $cur\n", "$elecfile");
   }
 }
 
-# I don't know WHEN on $time meter was read, so calculate for both 8am and 5pm
-# <h>this is the only really clever bit to this program, assuming there is one</h>
+# give or take 1 minute
+@now = ($now-60, $now, $now+60);
+# give or take .1
+@cur = ($cur-.1, $cur, $cur+.1);
 
-# max and min number of seconds since meter read
-$maxtime = $now-$minreadtime;
-$mintime = $now-$maxreadtime;
+# number of seconds since meter read
+@time = ($now[0]-$readtime[2], $now[1]-$readtime[1],$now[2]-$readtime[0]);
 
 # look at last few entries and determine usage
-open(A,"tac $ENV{HOME}/elecbill.txt|"); 
+open(A,"tac $elecfile|"); 
 
 while (<A>) {
   my($rtime, $reading) = split(/\s+/, $_);
 
-  # ignore readings older than last known reading
-  if ($rtime < $maxreadtime) {last;}
+  # ignore readings older than last known reading (otherwise, run risk
+  # of negative usage)
+  if ($rtime < $read[2]) {last;}
 
-  # compare to most recent reading
-  $elapsed = $now - $rtime;
-  $used = $cur - $reading;
-  elec_stats($used, $elapsed);
+  # standard 60 second and +-.1 kwh
+  @rtime = ($rtime-60, $rtime, $rtime+60);
+  @reading = ($reading-.1, $reading, $reading+.1);
+
+  elec_stats(\@rtime, \@reading);
 }
 
 close(A);
 
 # average kilowatt usage (reading is in kilowatthours)
-# allow .1 fudge in reading
-$max = ($cur+.1-$read)/$mintime*3600;
-$min = ($cur-.1-$read)/$maxtime*3600;
+# TODO: PNM only reads to nearest .5, but using .1 below
+@usage = (($cur[0]-$read[2])/$time[2], ($cur[1]-$read[1])/$time[1],
+	  ($cur[2]-$read[0])/$time[0]);
 
-debug("MAX/MIN: $max/$min");
+# above is kilowatthours/second (joules), so multiple
+# <h>one day, I hope to learn how to use the map command!</h>
+for $i (@usage) {$i*=3600000;}
 
-# per month (365.2425 days in a year, Gregorian calendar)
-($monthmin, $monthmax) = ($min*$secspermonth/3600, $max*$secspermonth/3600);
-($costmin, $costmax) = (tiered_cost($monthmin), tiered_cost($monthmax));
+
+# TODO: include all intrahour reading diffs, or just current vs those?
+
+# per month
+for $i (@usage) {push(@month, $i*$secspermonth/3600000);}
+for $i (@month) {push(@cost, tiered_cost($i));}
+
+debug("NOW",@now);
+debug("CUR",@cur);
+debug("READTIME",@readtime);
+debug("TIME",@time);
+debug("USAGE",@usage);
+debug("MONTH",@month);
+debug("COST",@cost);
 
 printf("Last reading: %s\n", $time);
-printf("Usage to date: %d (\$%.2f)\n", $cur-$read, tiered_cost($cur-$read));
+printf("Usage to date: %.1f (\$%.2f)\n", $cur-$read, tiered_cost($cur-$read));
 printf("Average usage: %d - %d watts (J/s)\n",$max*1000,$min*1000);
 printf("Monthly usage: %d - %d kwh\n",$monthmin,$monthmax);
 printf("Cost: \$%.2f - \$%.2f\n",$costmin,$costmax);
