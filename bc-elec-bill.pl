@@ -86,15 +86,16 @@ while (<A>) {
 
 close(A);
 
+# usage in kwh so far this month
+@usagekwh = ($cur[0]-$read[2], $cur[1]-$read[1], $cur[2]-$read[0]);
+
 # average kilowatt usage (reading is in kilowatthours)
 # TODO: PNM only reads to nearest .5, but using .1 below
-@usage = (($cur[0]-$read[2])/$time[2], ($cur[1]-$read[1])/$time[1],
-	  ($cur[2]-$read[0])/$time[0]);
+@usage =(($usagekwh[0]/$time[2],$usagekwh[1]/$time[1],$usagekwh[2]/$time[0]));
 
 # above is kilowatthours/second (joules), so multiple
 # <h>one day, I hope to learn how to use the map command!</h>
 for $i (@usage) {$i*=3600000;}
-
 
 # TODO: include all intrahour reading diffs, or just current vs those?
 
@@ -107,9 +108,12 @@ debug("CUR",@cur);
 debug("READTIME",@readtime);
 debug("TIME",@time);
 debug("USAGE",@usage);
+debug("USAGEKWH",@usagekwh);
 debug("MONTH",@month);
 debug("COST",@cost);
 debug("TIMELEFT",@timeleft);
+
+=item this_no_longer_works
 
 printf("Last reading: %s\n", $time);
 printf("Usage to date: %.1f (\$%.2f)\n", $cur-$read, tiered_cost($cur-$read));
@@ -117,12 +121,21 @@ printf("Average usage: %d - %d watts (J/s)\n",$max*1000,$min*1000);
 printf("Monthly usage: %d - %d kwh\n",$monthmin,$monthmax);
 printf("Cost: \$%.2f - \$%.2f\n",$costmin,$costmax);
 
+=cut
+
 # if/thens if we assume different wattage for rest of month
 # using 10K watts is hard, but I've hit ~8K before, so not unreasonable
 for $i (1..20) {
   $watts = $i*500;
 
-  # 
+  # remaining usage for month would be this (in kwh)
+  @hypusage=();
+  for $i (@timeleft) {
+    push(@hypusage, $i*$watts/3600000);
+  }
+
+  debug("$watts watts:",@hypusage);
+
 }
 
 # work out cost of $n kilowatthours of electricity, using tiers
