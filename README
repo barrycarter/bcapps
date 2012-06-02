@@ -70,3 +70,15 @@ Captioned:
 
  These files are open captioned for humor-impaired. The XML tag {h}
  indicates itentional humor.
+
+Things I want to learn about git:
+
+  - Search all files, past and present, for given phrase (git-grep
+  does NOT do this)
+
+  - Checkout all versions of a given file
+
+  - Checkout the entire tree as separate directories
+
+  - diff between edited-uncommitted version and last committed version
+
