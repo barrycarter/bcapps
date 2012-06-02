@@ -148,7 +148,7 @@ for $i (0..20) {
 
   debug("$watts watts:",@hypusage,"price",@hyprice);
 
-  print "At $watts watts: $hyprice[1] ($hyprice[0] - $hyprice[2])\n";
+  printf("%5d watts: \$%.2f (\$%.2f - \$%.2f)\n", $watts, @hyprice[1,0,2]);
 }
 
 # work out cost of $n kilowatthours of electricity, using tiers
