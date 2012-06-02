@@ -22,5 +22,21 @@ while ($subs=~s%<option value="(.*?)">(.*?)</option>%%) {
 
 # TODO: allow user to select subs?
 
-debug("SUBS:", %subs);
+# the guts of the iim file
+for $i (sort keys %subs) {
+  $n++;
+
+  if ($n>10) {die "TESTING";}
+  # the fixed values for format and page are Kindle Book, and 25 hits/page
+  print << "MARK";
+TAB OPEN
+TAB T=$n
+URL GOTO=http://cabq.lib.overdrive.com/en/AdvancedSearch.htm
+TAG POS=1 TYPE=SELECT FORM=ACTION:BANGSearch.dll ATTR=ID:format CONTENT=%420
+TAG POS=1 TYPE=SELECT FORM=ACTION:BANGSearch.dll ATTR=ID:page CONTENT=%25
+TAG POS=1 TYPE=SELECT FORM=ACTION:BANGSearch.dll ATTR=ID:sub CONTENT=%$i
+TAG POS=1 TYPE=INPUT:SUBMIT FORM=ACTION:BANGSearch.dll ATTR=VALUE:Search
+MARK
+;
+}
 
