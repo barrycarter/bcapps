@@ -20,13 +20,32 @@ while ($subs=~s%<option value="(.*?)">(.*?)</option>%%) {
   $subs{$1} = $2;
 }
 
+debug(sort values %subs);
+
+# these are regexs I personally want
+# TODO: allow user to set these
+# NOTE TO SELF: this list is not complete
+@regex = ("analysis", "business", "cartoon", "comic", "computer", "education",
+	  "engineering", "erotic", "fantasy", "finance", "folklore", "games",
+	  "humor", "math", "science", "TV");
+
 # TODO: allow user to select subs?
 
 # the guts of the iim file
 for $i (sort keys %subs) {
+
+  # does this meet a regex I want
+  $wanted = 0;
+  for $j (@regex) {
+    if ($subs{$i}=~/$j/i) {
+      $wanted=1;
+      last;
+    }
+  }
+  unless ($wanted) {next;}
+
   $n++;
 
-  if ($n>10) {die "TESTING";}
   # the fixed values for format and page are Kindle Book, and 25 hits/page
   print << "MARK";
 TAB OPEN
