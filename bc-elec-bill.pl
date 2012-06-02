@@ -63,6 +63,10 @@ if ($globopts{last}) {
 # number of seconds since meter read
 @time = ($now[0]-$readtime[2], $now[1]-$readtime[1],$now[2]-$readtime[0]);
 
+# time to end of month
+@timeleft = ($now[2]-$readtime[0], $now[1]-$readtime[1], $now[0]-$readtime[2]);
+for $i (@timeleft) {$i = $secspermonth-$i;}
+
 # look at last few entries and determine usage
 open(A,"tac $elecfile|"); 
 
@@ -105,12 +109,21 @@ debug("TIME",@time);
 debug("USAGE",@usage);
 debug("MONTH",@month);
 debug("COST",@cost);
+debug("TIMELEFT",@timeleft);
 
 printf("Last reading: %s\n", $time);
 printf("Usage to date: %.1f (\$%.2f)\n", $cur-$read, tiered_cost($cur-$read));
 printf("Average usage: %d - %d watts (J/s)\n",$max*1000,$min*1000);
 printf("Monthly usage: %d - %d kwh\n",$monthmin,$monthmax);
 printf("Cost: \$%.2f - \$%.2f\n",$costmin,$costmax);
+
+# if/thens if we assume different wattage for rest of month
+# using 10K watts is hard, but I've hit ~8K before, so not unreasonable
+for $i (1..20) {
+  $watts = $i*500;
+
+  # 
+}
 
 # work out cost of $n kilowatthours of electricity, using tiers
 sub tiered_cost {
@@ -139,11 +152,17 @@ sub elec_stats {
   my(@rtime) = @{$rtimeref};
   my(@reading) = @{$readingref};
 
+  # if the rtime is possibly bigger than now, ignore
+  debug("NOW",@now);
   debug("RTIME",@rtime);
-  debug("RTIME",@reading);
+  if ($now[0] <= $rtime[2]) {return;}
+
+  debug("RTIME",@rtime);
+  debug("RREAD",@reading);
 
   # time elapsed between @rtime and @now
   my(@elapse) = ($now[0]-$rtime[2], $now[1]-$rtime[1], $now[2]-$rtime[0]);
+  debug("ELAPSE",@elapse);
 
   # kwh/sec usage between @rtime and @now
   my(@usage2) = (($cur[0]-$reading[2])/$elapse[2],
