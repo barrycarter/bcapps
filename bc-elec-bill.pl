@@ -93,14 +93,29 @@ while (<A>) {
   # standard 60 second and +-.1 kwh
   @rtime = ($rtime-60, $rtime, $rtime+60);
   @reading = ($reading-.1, $reading, $reading+.1);
-  
-  # no longer sure how useful elec_stats() is, so leaving it disabled
-  # TODO: reconsider elec_stats
-  #  elec_stats(\@rtime, \@reading);
+
+  # push on list of measurements
+  push(@measures, [\@rtime, \@reading]);
 }
 
 close(A);
 close(B);
+
+# we want the last reading first (yes, I could've used unshift above!)
+@measures = reverse(@measures);
+
+for $i (0..$#measures-1) {
+  # TODO: redundant code, blech
+  ($rtimeref, $readingref) = @{$measures[$i]};
+  @rtime = @{$rtimeref};
+  @reading = @{$readingref};
+
+  ($rtimeref2, $readingref2) = @{$measures[$i+1]};
+  @rtime2 = @{$rtimeref2};
+  @reading2 = @{$readingref2};
+
+  debug("$i -> ",@rtime,"x",@reading,"x",@rtime2,"x",@reading2);
+}
 
 # usage in kwh so far this month
 @usagekwh = ($cur[0]-$read[2], $cur[1]-$read[1], $cur[2]-$read[0]);
