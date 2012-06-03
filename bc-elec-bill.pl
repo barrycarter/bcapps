@@ -94,27 +94,49 @@ while (<A>) {
   @rtime = ($rtime-60, $rtime, $rtime+60);
   @reading = ($reading-.1, $reading, $reading+.1);
 
-  # push on list of measurements
-  push(@measures, [\@rtime, \@reading]);
+  # push on list of measurements (couldn't do with more refs, alas)
+  push(@measures, [@rtime, @reading]);
 }
 
 close(A);
 close(B);
 
 # we want the last reading first (yes, I could've used unshift above!)
-@measures = reverse(@measures);
+# @measures = reverse(@measures);
+
+# debug(unfold(@measures));
 
 for $i (0..$#measures-1) {
   # TODO: redundant code, blech
-  ($rtimeref, $readingref) = @{$measures[$i]};
-  @rtime = @{$rtimeref};
-  @reading = @{$readingref};
+  @rtime1 = @{$measures[$i]}[0..2];
+  @read1 = @{$measures[$i]}[3..5];
+  @rtime2 = @{$measures[$i+1]}[0..2];
+  @read2 = @{$measures[$i+1]}[3..5];
 
-  ($rtimeref2, $readingref2) = @{$measures[$i+1]};
-  @rtime2 = @{$rtimeref2};
-  @reading2 = @{$readingref2};
+  # time between the two readings
+  # <h>Today on how NOT to name your variables...</h>
+  @timediff = ($rtime1[0]-$rtime2[2], $rtime1[1]-$rtime2[1], 
+	       $rtime1[2]-$rtime2[0]);
 
-  debug("$i -> ",@rtime,"x",@reading,"x",@rtime2,"x",@reading2);
+  # and usage
+  @usagediff = ($read1[0]-$read2[2], $read1[1]-$read2[1], $read1[2]-$read2[0]);
+
+  # and wattage
+  @wattage = ($usagediff[2]/$timediff[0], $usagediff[1]/$timediff[1],
+	      $usagediff[0]/$timediff[2]);
+
+  # above is kwh/s, so converting
+  for $j (@wattage) {$j*=3600000;}
+
+  debug("RTIME",@rtime1,"x",@rtime2);
+  debug("READ",@read1,"x",@read2);
+  debug("TIMEDIFF",@timediff);
+  debug("USDIFF",@usagediff);
+  debug("WATTAGE",@wattage);
+
+  # and print (no ranges here, but ok w/ that)
+  printf("Watts (%.2f - %.2f days ago): %d (%d - %d)\n",
+	 ($now-$rtime2[1])/86400, ($now-$rtime1[1])/86400, @wattage[1,2,0]);
 }
 
 # usage in kwh so far this month
@@ -193,67 +215,3 @@ sub tiered_cost {
     $n -= $tier;
   }
 }
-
-# given kwh usage and number of seconds, print out (TODO: blech!)
-# information about usage, allowing for +-.1 error in reading and
-# +-60s error in time [per reading]
-
-sub elec_stats {
-  my($rtimeref, $readingref) = @_;
-
-  my(@rtime) = @{$rtimeref};
-  my(@reading) = @{$readingref};
-
-  # if the rtime is possibly bigger than now, ignore
-  debug("NOW",@now);
-  debug("RTIME",@rtime);
-  if ($now[0] <= $rtime[2]) {return;}
-
-  debug("RTIME",@rtime);
-  debug("RREAD",@reading);
-
-  # time elapsed between @rtime and @now
-  my(@elapse) = ($now[0]-$rtime[2], $now[1]-$rtime[1], $now[2]-$rtime[0]);
-  debug("ELAPSE",@elapse);
-
-  # kwh/sec usage between @rtime and @now
-  my(@usage2) = (($cur[0]-$reading[2])/$elapse[2],
-		 ($cur[1]-$reading[1])/$elapse[1],
-		 ($cur[2]-$reading[0])/$elapse[0]);
-
-  # usage in watts
-  for $i (@usage2) {$i*=3600000;}
-
-  debug("USAGE2",@usage2);
-
-  # number of seconds left this month
-  my($secsleftmax) = $secspermonth - $mintime;
-  my($secsleftmin) = $secspermonth - $maxtime;
-
-  # we could do +-.1 on current reading, but it won't really matter
-  my($usagetodate) = ($cur-$read);
-
-  # max and min estimated usage for month
-  my($maxusage) = $usagetodate + ($secsleftmax*$maxwatts)/3600000;
-  my($minusage) = $usagetodate + ($secsleftmin*$minwatts)/3600000;
-
-  debug("MINMAX: $minusage-$maxusage");
-
-  # and price
-  my($maxprice) = tiered_cost($maxusage);
-  my($minprice) = tiered_cost($minusage);
-
-  debug("MINMAX: $minprice-$maxprice");
-
-  # TODO: subroutines printing is bad!
-print << "MARK";
-
-Usage (since $time): $usagetodate
-Average (last $minsec-$maxsec seconds): $minwatts-$maxwatts
-Total usage for month: $minusage-$maxusage
-Total cost for month: $minprice-$maxprice
-MARK
-;
-
-}
-
