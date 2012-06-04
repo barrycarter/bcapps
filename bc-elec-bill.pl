@@ -135,9 +135,12 @@ for $i (0..$#measures-1) {
   debug("WATTAGE",@wattage);
 
   # and print (no ranges here, but ok w/ that)
-  printf("Watts (%.2f - %.2f days ago): %d (%d - %d)\n",
-	 ($now-$rtime2[1])/86400, ($now-$rtime1[1])/86400, @wattage[1,2,0]);
+  printf("Watts (%.2f - %.2f days ago [%.2f d]): %d (%d - %d)\n",
+	 ($now-$rtime2[1])/86400, ($now-$rtime1[1])/86400,
+	 ($rtime1[1]-$rtime2[1])/86400, @wattage[1,2,0]);
 }
+
+print "\n";
 
 # usage in kwh so far this month
 @usagekwh = ($cur[0]-$read[2], $cur[1]-$read[1], $cur[2]-$read[0]);

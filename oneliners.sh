@@ -1,5 +1,10 @@
 # shell one liners
 
+# temp.temp contains elec readings, this spits them out properly
+perl -anle 'use Date::Parse; print str2time("2012-06-03 $F[0] MDT")," ",$F[1]' ~/temp.temp
+
+exit;
+
 # I downloaded a bunch of mp3s from freesubliminals.com, but didn't
 # note down which mp3 was supposed to do what; this uses archive.org
 # to partially reconstruct what I have (manually downloaded the
