@@ -67,10 +67,8 @@ for (;;) {
   sleep(1);
 }
 
-# TODO: send this file to <h>the aptly named
-# program-I-haven't-written-yet</h> QFX parser
-debug("FILE: $out");
+# send file to ofx parser
+($out, $err, $res) = cache_command("/home/barrycarter/BCGIT/bc-parse-ofx.pl $out");
 
 # useless fact: allybank.com names their OFX dumps as trans[x], where
 # x is the unix time to the millisecond (I think)
-

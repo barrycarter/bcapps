@@ -381,7 +381,7 @@ sub my_tmpfile {
 Run the query $query on the sqlite3 db (file) $db and return results
 in raw format.
 
-<h>Modules, who needs 'em!</h>
+<h>Modules, who needs \'em!</h>
 
 =cut
 
@@ -482,8 +482,20 @@ sub sqlite3cols {
   my($schema) = $1;
 
   for $i (split(/\,/,$schema)) {
-    $i=~/^\s*(.*?)\s+(.*)$/||warnlocal("BAD SCHEMA LINE: $i");
-    $ret{$1}=$2;
+    # kill extraneous spaces
+    $i = trim($i);
+    debug("I: $i");
+    # for cols w/ types
+    if ($i=~/^\s*(.*?)\s+(.*)$/) {
+      debug("$1 -> $2");
+      $ret{$1} = $2;
+    } elsif ($i=~/^\s*(\S*?)$/) {
+      debug("$1 -> null");
+      $ret{$1} = "null";
+    } else {
+      debug("BAD LINE: $i");
+      warnlocal("BAD SCHEMA LINE: $i");
+    }
   }
   
   return %ret;
@@ -491,7 +503,7 @@ sub sqlite3cols {
 
 =item webdie($str)
 
-The die() command doesn't work well for CGI; this is die for CGI scripts
+The die() command doesn\'t work well for CGI; this is die for CGI scripts
 
 =cut
 
