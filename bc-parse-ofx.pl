@@ -21,16 +21,32 @@ while ($all=~s%<STMTTRN>(.*?)</STMTTRN>%%is) {
 
   # query
   push(@queries,
-"INSERT IGNORE INTO ofxstatements
+"INSERT OR REPLACE INTO ofxstatements
  (acctid, trnamt, trntype, dtposted, fitid, memo, refnum) VALUES
  ('$ofx{ACCTID}', $trans{TRNAMT}, '$trans{TRNTYPE}', '$trans{DTPOSTED}',
  '$trans{FITID}', '$trans{MEMO}', '$trans{REFNUM}')");
 }
 
+# this is probably stupid
+open(A,"|sqlite3 /home/barrycarter/ofx.db");
+print A "BEGIN;\n";
+for $i (@queries) {print A "$i;\n"}
+print A "COMMIT;\n";
+close(A);
 
-debug(@queries);
+=item schema
 
+-- Schema for SQLite3 db for above (timestamp always useful)
 
+CREATE TABLE ofxstatements (
+ acctid, trnamt, trntype, dtposted, fitid, memo, refnum, 
+ timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- fitid is only unique per acctid
+CREATE UNIQUE INDEX i1 ON ofxstatements(acctid,fitid);
+
+=cut
 
 
 
