@@ -1,5 +1,11 @@
 # shell one liners
 
+# obtain info from Z3950 server <h>(insert raucous laughter here)</h>
+
+echo "f @attr 1=7 0425*\nshow" | yaz-client clas.caltechu:210/INNOPAC
+
+exit;
+
 # temp.temp contains elec readings, this spits them out properly
 perl -anle 'use Date::Parse; print str2time("2012-06-03 $F[0] MDT")," ",$F[1]' ~/temp.temp
 

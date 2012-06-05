@@ -28,3 +28,8 @@ alias watts 'echo "25920/\!*\n25920/(\!* -1)\n25920/(\!* +1)" | bc'
 
 # just a silly way to do a quick plot
 alias qplot 'echo plot \"/tmp/gnuplot.txt\" with linespoints | gnuplot -persist'
+
+# makes locate case-insensitive and stores result in file (I often do
+# 'locate', expecting minimal results, but there are lots and they
+# scroll off-screen)
+alias locate 'locate -i \!* | tee /var/tmp/bc-cmd-locate.txt'
