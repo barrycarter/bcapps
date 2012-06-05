@@ -5,6 +5,8 @@
 # including myself)</h>, creates an IIM iMacros file to download my
 # allybank.com information
 
+# --norun: create the macro, but don't run it in Firefox
+
 # The macro is mostly fixed, only the dates change
 
 require "/usr/local/lib/bclib.pl";
@@ -46,4 +48,29 @@ $macro=~s/:ENDDATE:/$enddate/isg;
 
 write_file($macro, "/home/barrycarter/iMacros/Macros/bc-create-ally.iim");
 
+# if not running macro, stop here
+if ($globopts{norun}) {exit 0;}
+
+# run the macro
+# TODO: yes, this is a terrible place to keep my firefox
+($out, $err, $res) = cache_command("/root/build/firefox/firefox -remote 'openURL(http://run.imacros.net/?m=bc-create-ally.iim)'");
+
+# not sure how long it takes to run above command, so wait until
+# trans*.ofx shows up in download directory (and is fairly recent)
+
+# TODO: this is hideous (-mmin -60 should be calculated not a guess)
+
+for (;;) {
+  ($out, $err, $res) = cache_command("find '/home/barrycarter/Download/' -iname 'trans*.ofx' -mmin -60");
+  if ($out) {last;}
+  debug("OUT: $out");
+  sleep(1);
+}
+
+# TODO: send this file to <h>the aptly named
+# program-I-haven't-written-yet</h> QFX parser
+debug("FILE: $out");
+
+# useless fact: allybank.com names their OFX dumps as trans[x], where
+# x is the unix time to the millisecond (I think)
 
