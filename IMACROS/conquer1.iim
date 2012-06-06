@@ -1,0 +1,189 @@
+﻿' as of 6 Jun 2012, this script doesn't work and the list of maps isn't complete, but I think both are fixable; this creates 1 game, but iMacros repeat feature lets you create many at one time
+VERSION BUILD=6251204 RECORDER=FX
+TAB T=1
+URL GOTO=http://www.conquerclub.com/player.php?mode=start
+' number of players
+TAG POS=1 TYPE=INPUT:RADIO FORM=ACTION:http://www.conquerclub.com/player.php?mode=start&submit=Create ATTR=ID:num_players_2
+' standard game
+TAG POS=1 TYPE=INPUT:RADIO FORM=ACTION:http://www.conquerclub.com/player.php?mode=start&submit=Create ATTR=ID:game_type_s
+' map (doodle earth is %37, classic is %1, usa southwest=%112)
+TAG POS=1 TYPE=SELECT FORM=ACTION:http://www.conquerclub.com/player.php?mode=start&submit=Create ATTR=ID:maps CONTENT=%42
+' initial troops automatic
+TAG POS=1 TYPE=INPUT:RADIO FORM=ACTION:http://www.conquerclub.com/player.php?mode=start&submit=Create ATTR=ID:initial_troops_m
+' player order sequential
+TAG POS=1 TYPE=INPUT:RADIO FORM=ACTION:http://www.conquerclub.com/player.php?mode=start&submit=Create ATTR=ID:play_order_s
+' no spoils
+TAG POS=1 TYPE=INPUT:RADIO FORM=ACTION:http://www.conquerclub.com/player.php?mode=start&submit=Create ATTR=ID:bonus_cards_1
+' unlimited reinforcements
+TAG POS=1 TYPE=INPUT:RADIO FORM=ACTION:http://www.conquerclub.com/player.php?mode=start&submit=Create ATTR=ID:fortifications_m
+' no fog of war
+TAG POS=1 TYPE=INPUT:RADIO FORM=ACTION:http://www.conquerclub.com/player.php?mode=start&submit=Create ATTR=ID:war_fog_n
+' not a speed game
+TAG POS=1 TYPE=INPUT:RADIO FORM=ACTION:http://www.conquerclub.com/player.php?mode=start&submit=Create ATTR=ID:speed_game_n
+TAG POS=1 TYPE=INPUT:SUBMIT FORM=ACTION:http://www.conquerclub.com/player.php?mode=start&submit=Create ATTR=NAME:submit&&VALUE:Create
+' full map list
+' <option selected="selected" value="1">Classic</option>
+' <option value="155">13 Colonies</option>
+' <option value="127">8 Thoughts</option>
+' <option value="2">Africa</option>
+' <option value="3">Age Of Merchants</option>
+' <option value="4">Age Of Realms 1</option>
+' <option value="5">Age Of Realms 2</option>
+' <option value="6">Age Of Realms 3</option>
+' <option value="7">Alexander's Empire</option>
+' <option value="8">American Civil War</option>
+' <option value="9">Ancient Greece</option>
+' <option value="10">Archipelago</option>
+' <option value="11">Arctic</option>
+' <option value="12">Arms Race!</option>
+' <option value="13">Asia</option>
+' <option value="153">Atlantis</option>
+' <option value="140">Austerlitz</option>
+' <option value="14">Australia</option>
+' <option value="15">Bamboo Jack</option>
+' <option value="16">Battle For Iraq!</option>
+' <option value="17">Battle Of Actium</option>
+' <option value="18">BeNeLux</option>
+' <option value="19">Berlin 1961</option>
+' <option value="20">Brazil</option>
+' <option value="21">British Isles</option>
+' <option value="22">Cairns Coral Coast</option>
+' <option value="23">Cairns Metro</option>
+' <option value="24">Canada</option>
+' <option value="25">Caribbean Islands</option>
+' <option value="133">Castle Lands</option>
+' <option value="26">CCU</option>
+' <option value="162">Central America</option>
+' <option value="27">Charleston</option>
+' <option value="150">Chicago</option>
+' <option value="28">Chinese Checkers</option>
+' <option value="29">Circus Maximus</option>
+' <option value="31">City Mogul</option>
+' <option value="32">Conquer 4</option>
+' <option value="33">Conquer Man</option>
+' <option value="34">Crossword</option>
+' <option value="35">D-Day: Omaha Beach!</option>
+' <option value="157">Dawn Of Ages</option>
+' <option value="36">Discworld</option>
+' <option value="37">Doodle Earth</option>
+' <option value="38">Draknor - Level 1</option>
+' <option value="39">Duck And Cover</option>
+' <option value="40">Dust Bowl</option>
+' <option value="129">Eastern Hemisphere</option>
+' <option value="41">Egypt: Lower</option>
+' <option value="42">Egypt: Nubia</option>
+' <option value="43">Egypt: Upper</option>
+' <option value="44">Egypt: Valley Of The Kings</option>
+' <option value="143">England</option>
+' <option value="45">Europa</option>
+' <option value="46">Europe</option>
+' <option value="47">Europe 1914</option>
+' <option value="48">Extreme Global Warming</option>
+' <option value="148">Feudal Epic</option>
+' <option value="49">Feudal War</option>
+' <option value="142">First Nations North America</option>
+' <option value="50">Forbidden City</option>
+' <option value="152">Fractured America</option>
+' <option value="51">France</option>
+' <option value="52">France 1789</option>
+' <option value="53">Germany</option>
+' <option value="137">Gilgamesh</option>
+' <option value="54">Great Lakes</option>
+' <option value="55">Greater China</option>
+' <option value="134">Greenland</option>
+' <option value="56">Haiti</option>
+' <option value="57">Halloween Hollows</option>
+' <option value="58">High Seas</option>
+' <option value="151">Hive</option>
+' <option value="59">Holy Roman Empire</option>
+' <option value="60">Hong Kong</option>
+' <option value="61">Iberia</option>
+' <option value="62">Iceland</option>
+' <option value="63">Imperium Romanum</option>
+' <option value="135">Indian Empire</option>
+' <option value="64">Indochina</option>
+' <option value="65">Ireland</option>
+' <option value="66">Italy</option>
+' <option value="146">Jamaica</option>
+' <option value="154">Japan</option>
+' <option value="67">King Of The Mountains</option>
+' <option value="132">Land And Sea</option>
+' <option value="68">Luxembourg</option>
+' <option value="165">Macedonia</option>
+' <option value="69">Madagascar</option>
+' <option value="70">Madness</option>
+' <option value="71">Malta</option>
+' <option value="72">Middle East</option>
+' <option value="73">Midgard</option>
+' <option value="74">Midkemdil</option>
+' <option value="75">Mongol Empire</option>
+' <option value="156">Monsters</option>
+' <option value="76">Montreal</option>
+' <option value="77">Netherlands</option>
+' <option value="78">New World</option>
+' <option value="158">Nordic Countries</option>
+' <option value="79">North America</option>
+' <option value="80">NYC</option>
+' <option value="81">Oasis</option>
+' <option value="131">Oceania</option>
+' <option value="82">Operation Drug War</option>
+' <option value="83">Pearl Harbor</option>
+' <option value="130">Peloponnesian War</option>
+' <option value="84">Philippines</option>
+' <option value="136">Poison Rome</option>
+' <option value="85">Poker Club</option>
+' <option value="86">Portugal</option>
+' <option value="87">Prohibition Chicago</option>
+' <option value="88">Puget Sound</option>
+' <option value="147">Rail Africa</option>
+' <option value="89">Rail Australia</option>
+' <option value="90">Rail Europe</option>
+' <option value="91">Rail USA</option>
+' <option value="141">Route 66</option>
+' <option value="93">San Francisco</option>
+' <option value="94">San Marino</option>
+' <option value="95">Scotland</option>
+' <option value="96">Siege!</option>
+' <option value="97">Solar System</option>
+' <option value="98">South America</option>
+' <option value="99">Soviet Union</option>
+' <option value="100">Space</option>
+' <option value="101">Supermax: Prison Riot!</option>
+' <option value="102">Sydney Metro</option>
+' <option value="103">Tamriel</option>
+' <option value="104">Texan Wars</option>
+' <option value="30">The Citadel</option>
+' <option value="144">Third Crusade</option>
+' <option value="105">Treasures Of Galapagos</option>
+' <option value="106">Triple Alliance</option>
+' <option value="115">U.S. Senate</option>
+' <option value="107">USA</option>
+' <option value="108">USA Great Lakes</option>
+' <option value="109">USA New England</option>
+' <option value="110">USA Rockies</option>
+' <option value="111">USA Southeast</option>
+' <option value="112">USA Southwest</option>
+' <option value="113">USA West</option>
+' <option value="114">USApocalypse</option>
+' <option value="139">Vancouver</option>
+' <option value="116">Wales</option>
+' <option value="117">Waterloo</option>
+' <option value="161">Woodboro</option>
+' <option value="118">World 2.1</option>
+' <option value="119">WWI Ottoman Empire</option>
+' <option value="120">WWII Ardennes</option>
+' <option value="121">WWII Australia</option>
+' <option value="122">WWII Eastern Front</option>
+' <option value="123">WWII Europe</option>
+' <option value="124">WWII Gazala</option>
+' <option value="125">WWII Iwo Jima</option>
+' <option value="145">WWII Poland</option>
+' <option value="126">WWII Western Front</option>
+' <option value="128">Das Schloss (Beta)</option>
+' <option value="163">Flanders 1302 (Beta)</option>
+' <option value="167">Napoleonic Europe (Beta)</option>
+' <option value="166">Stalingrad (Beta)</option>
+' <option value="168">Thyseneal (Beta)</option>
+' <option value="159">Unification Germany (Beta)</option>
+' <option value="160">Unification Italy (Beta)</option>
+' <option value="0">Random</option>

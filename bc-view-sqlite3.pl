@@ -21,14 +21,15 @@ debug(show_table("ofxstatements"));
 # shows the table, with options to select columns/sorting
 sub show_table {
   my($tabname) = @_;
+  my($check);
   my(%cols) = sqlite3cols($tabname, $db);
   my(@cols) = keys %cols;
 
   # below lets user choose fewer than $#cols
   push(@cols, "-");
 
-  # column headers
-  for $i (0..$#cols+1) {
+  # column headers (ignoring the '-' column I added above)
+  for $i (0..$#cols) {
     # cheating by making i=0 a special case
     if ($i==0) {push(@ret, "<tr><th>*</th>"); next;}
     push(@ret,"<th>$i</th>");
@@ -37,14 +38,24 @@ sub show_table {
   push(@ret, "</tr>");
 
   # show column name and position choice
-  for $i (@cols) {
+  for $i (0..$#cols) {
     # row header
-    push(@ret, "<tr><th>$i</th>");
-    for $j (0..$#cols) {
+    push(@ret, "<tr><th>$cols[$i]</th>");
+
+    # excluding last column (the fictional '-' I added above)
+    for $j (0..$#cols-1) {
+
+      # if column number matches position of field in @cols, check the
+      # radio button (I dislike HTML forms with 'no-button-selected'
+      # for radio fields)
+      $check = $i==$j?"CHECKED":"";
+
       # the radio button is on a per-column basis; only one column can be
       # in the 5th position, for example
-      push(@ret, qq%<td><input type="radio" name="$cols[$j]" value="$j"></td>%);
+      push(@ret, qq%<td><input type="radio" name="$cols[$j]" value="$j" $check></td>%);
     }
+    # end row
+    push(@ret,"</tr>");
   }
 
   return @ret;
