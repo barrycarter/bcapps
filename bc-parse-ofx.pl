@@ -39,7 +39,7 @@ close(A);
 -- Schema for SQLite3 db for above (timestamp always useful)
 
 CREATE TABLE ofxstatements (
- acctid, trnamt, trntype, dtposted, fitid, memo, refnum, 
+ acctid, trnamt, trntype, dtposted, fitid, memo, refnum, category,
  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

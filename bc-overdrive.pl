@@ -3,8 +3,8 @@
 # quick n dirty script that creates an iMacro to search Kindle books
 # in all categories in Albuquerque Digital Library
 
-# --only=m,n: only provide iim for subjects m through n, 0 based (eg,
-# --only=0,4 would choose the first five subjects the user wants)
+# --only=m-n: only provide iim for subjects m through n, 0 based (eg,
+# --only=0-4 would choose the first five subjects the user wants)
 
 #<h>Part of the useless-except-to-me series of programs!</h>
 
@@ -25,27 +25,30 @@ while ($subs=~s%<option value="(.*?)">(.*?)</option>%%) {
 
 debug(sort values %subs);
 
-# these are regexs I personally want
-# TODO: allow user to set these
-# NOTE TO SELF: this list is not complete
-@regex = ("analysis", "business", "cartoon", "comic", "computer", "education",
-	  "engineering", "erotic", "fantasy", "finance", "folklore", "games",
-	  "humor", "math", "science", "TV");
+# now read from file and exact match required (was hardcoded)
+%regex=list2hash(split(/\n+/, `egrep -v '^\$|^#' $ENV{HOME}/bc-overdrive.txt | sed 's/\&/\&amp;/g'`));
+
+debug(%regex);
 
 # figure out which subjects user has chosen
+# TODO: I could probably tighten this code signifigantly
 for $i (sort keys %subs) {
-
-  # does this meet a regex I want
-  $wanted = 0;
-  for $j (@regex) {
-    if ($subs{$i}=~/$j/i) {
-      $wanted=1;
-      last;
-    }
+  debug("TESTING: $subs{$i}");
+  if ($regex{$subs{$i}}) {
+    push(@wanted, $i);
+    delete $regex{$subs{$i}};
+    debug("SUCCESS!; $i -> @wanted");
   }
-
-    if ($wanted) {push(@wanted,$i);}
 }
+
+# any subects not picked up (due to errors or whatever?)
+@notgot = sort keys %regex;
+
+if (@notgot) {
+  warn "Subjects on your list not on overdrive list: ". join(", ",@notgot);
+}
+
+debug("WANTED",@wanted);
 
 # parse --only (or choose everything if no such option)
 if ($globopts{only}=~/^(\d+)\-(\d+)$/) {
@@ -64,29 +67,14 @@ open(B,">$ENV{HOME}/iMacros/Macros/bc-overdrive.iim");
 # the guts of the iim file
 for $i (@wanted[$start..$end]) {
 
-  # does this meet a regex I want
-  $wanted = 0;
-  for $j (@regex) {
-    if ($subs{$i}=~/$j/i) {
-      $wanted=1;
-      last;
-    }
-  }
-  unless ($wanted) {next;}
-
-  $n++;
-
-  if ($globopts{limit} && $n > $globopts{limit}) {last;}
-
-  $count++; # yes, I should use $n for this, sigh
+  $count++;
 
   # the fixed values for format and page are Kindle Book, and 25 hits/page
   # and most recent books (since I tend to run this often?)
 
-  # the #$subs{$i} below is solely for end user to know what was searched
   print B << "MARK";
 TAB OPEN
-TAB T=$n
+TAB T=$count
 URL GOTO=http://cabq.lib.overdrive.com/en/AdvancedSearch.htm
 TAG POS=1 TYPE=SELECT FORM=ACTION:BANGSearch.dll ATTR=ID:format CONTENT=%420
 TAG POS=1 TYPE=SELECT FORM=ACTION:BANGSearch.dll ATTR=ID:page CONTENT=%25

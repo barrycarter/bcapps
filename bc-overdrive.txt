@@ -1,0 +1,86 @@
+# sample bc-overdrive.txt file; uncomment subjects you like
+# this list not guarenteed complete, visit overdrive site for complete list
+# Analysis
+# Antiquarian
+# Antiques
+# Architecture
+# Art
+# Biography & Autobiography
+# Business
+# Careers
+# Children
+# Classic Literature
+# Comic and Graphic Books
+# Computer Technology
+# Cooking & Food
+# Crafts
+# Current Events
+# Drama
+# Education
+# Engineering
+# Erotic Literature
+# Essays
+# Family & Relationships
+# Fantasy
+# Fiction
+# Finance
+# Folklore
+# Foreign Language Study
+# Games
+# Gardening
+# Gay/Lesbian
+# Health & Fitness
+# Historical Fiction
+# History
+# Home Design & Décor
+# Horror
+# Humor (Fiction)
+# Humor (Nonfiction)
+# Juvenile Fiction
+# Juvenile Literature
+# Juvenile Nonfiction
+# Language Arts
+# Law
+# Literary Anthologies
+# Literary Criticism
+# Literature
+# Mathematics
+# Medical
+# Military
+# Music
+# Mystery
+# Mythology
+# Nature
+# New Age
+# Non-English Fiction
+# Nonfiction
+# Outdoor Recreation
+# Performing Arts
+# Pets
+# Philosophy
+# Photography
+# Physics
+# Poetry
+# Politics
+# Psychology
+# Reference
+# Religion & Spirituality
+# Romance
+# Scholarly
+# Science
+# Science Fiction
+# Science Fiction & Fantasy
+# Self-Improvement
+# Short Stories
+# Sociology
+# Sports & Recreations
+# Suspense
+# Technology
+# Thriller
+# Travel
+# True Crime
+# Western
+# Women's Studies
+# Young Adult Fiction
+# Young Adult Literature
+# Young Adult Nonfiction
