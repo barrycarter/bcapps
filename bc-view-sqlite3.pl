@@ -7,20 +7,24 @@
 
 require "/usr/local/lib/bclib.pl";
 
+print "Content-type: text/html\n\n";
+
 # db is fixed for now (TODO: allow choice)
 $db = "/home/barrycarter/ofx.db";
 
-open(A,">/tmp/test.html");
-print A "<table border>\n";
-print A join("\n",show_table("ofxstatements"));
-print A "</table>\n";
-close(A);
+# open(A,">/tmp/test.html");
+print  "<table border>\n";
+print  join("\n",show_table("ofxstatements"));
+print  "</table>\n";
+# close(A);
 
 debug(show_table("ofxstatements"));
 
-# shows the table, with options to select columns/sorting
+# shows the table, with options to select columns/sorting; if sort
+# set, return sort table, otherwise return coltable
+
 sub show_table {
-  my($tabname) = @_;
+  my($tabname, $sort) = @_;
   my($check);
   my(%cols) = sqlite3cols($tabname, $db);
   my(@cols) = keys %cols;
@@ -52,6 +56,7 @@ sub show_table {
 
       # the radio button is on a per-column basis; only one column can be
       # in the 5th position, for example
+      # sortcol for sorting, just col for showing
       push(@ret, qq%<td><input type="radio" name="$cols[$j]" value="$j" $check></td>%);
     }
     # end row
