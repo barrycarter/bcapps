@@ -116,6 +116,7 @@ for $i (@zones) {
 # err gets pushed first (and in red), then info
 for $i (@err) {
   # TODO: order these better
+  push(@rss, "<item><title>$i</title></item>");
   push(@fly, "string 255,0,0,0,$pos,giant,$i");
   $pos+=15;
 }
@@ -123,9 +124,18 @@ for $i (@err) {
 # now info (in blue for now); note $pos is "global"
 for $i (@info) {
   # TODO: order these better
+  push(@rss, "<item><title>$i</title></item>");
   push(@fly, "string 0,0,255,0,$pos,medium,$i");
   $pos+=15;
 }
+
+# create RSS
+open(A, ">/var/tmp/bc-bg.rss");
+print A qq%<?xml version="1.0" encoding="ISO-8859-1" ?><rss version="0.91">
+<channel><title>bc-bg</title>\n%;
+print A join("\n", @rss),"\n";
+print A "</channel></rss>\n";
+close(A);
 
 # send header and output to fly file
 # tried doing this w/ pipe but failed
