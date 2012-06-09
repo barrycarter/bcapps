@@ -11,7 +11,8 @@
 
 require "/usr/local/lib/bclib.pl";
 
-print "Content-type: text/html\n\n";
+# text/plain just for debugging
+print "Content-type: text/plain\n\n";
 
 # obtain and dehtmlify the STDIN
 $stdin = <STDIN>;
@@ -20,9 +21,23 @@ $stdin=~s/%(..)/chr(hex($1))/iseg;
 print "STDIN IS: $stdin\n";
 
 # split and parse
-@cmds = split(/\&/, $stdin);
+for $i (split(/\&/, $stdin)) {
+  # cols
+  if ($i=~m/^col\[(\d+)\]\=([a-z0-9]+)$/) {
+    $cols[$1] = $2;
+  } elsif ($i=~m/sortcol\[(\d+)\]\=([a-z0-9]+)$/i) {
+    $sortcols[$1] = $2;
+  } else {
+    print "Ignoring $i\n";
+  }
+}
 
-print "CMDS",@cmds;
+$cols = join(", ", @cols);
+$sortcols = join(", ", @sortcols);
+
+
+print "SORT",@sortcols;
+print "COLS",@cols;
 
 # db is fixed for now (TODO: allow choice)
 $db = "/home/barrycarter/ofx.db";
