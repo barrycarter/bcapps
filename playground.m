@@ -3,6 +3,44 @@
 showit := Module[{}, 
 Export["/tmp/math.png",%, ImageSize->{800,600}]; Run["display /tmp/math.png&"]]
 
+(*
+
+How much water at 55F [tap water] would it take to cool my 25x25x8
+living room from 80F to 79F?
+
+http://www.wolframalpha.com/input/?i=mass+of+5000+cubic+feet+of+air
+tells us my 5000 cu ft living room has 181kg of air (wow!) [assuming I
+lived at sea level, which I don't, but let's pretend-- in reality,
+pressure is about 20% lower here]
+
+The specific heat of air
+http://www.wolframalpha.com/input/?i=specific+heat+of+air&a=*C.specific+heat-_*ThermodynamicPropertyPhrase-
+is about 717.8 joules per kilogram kelvin
+
+The specific heat of water 1 calorie/gram (definition of calorie) or http://www.wolframalpha.com/input/?i=specific+heat+of+water&a=*C.specific+heat-_*ThermodynamicPropertyPhrase- 4157 joules per kilogram kelvin
+
+80F is 26.6666666666C, 79F is 26.1111111111C, 55F is 12.7777777777
+
+To decrease 181kg of air by 5/9 degree Celsius/Kelvin (ie, 1 degree
+Farenheit), we need:
+
+717.8 joules per kilogram kelvin * 181kg * 5/9 Kelvin =
+72178.7777777777 joules of energy
+
+for every kg of water we raise from 12.77C to 26.11C, we lose
+
+4157 joules per kilogram kelvin * 1 kg * 13.3333 kelvins or
+
+55426.66 joules of energy
+
+So, we need 72178.7777777777/55426.666666 or 1.302kg of water to lower
+the temperature 1 degree; that's about http://www.wolframalpha.com/input/?i=1.302+kg+of+water+in+gallons 0.344 gallons
+
+[unrealistically assuming there is no other heat gain/loss, and the
+entire room is full of air and the walls have no effect, etc]
+
+*)
+
 (* figuring out linear regression myself *)
 
 (yi-(a*xi+b))^2
