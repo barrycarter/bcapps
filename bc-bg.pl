@@ -10,6 +10,9 @@ require "/home/barrycarter/BCGIT/bclib.pl";
 $now=time();
 chdir(tmpdir());
 
+# shade of blue I want to use
+$blue = "128,128,255";
+
 # no X server? die instantly (really only useful for massive rebooting
 # and errors early May 2007)
 if (system("xset q 1> /dev/null 2> /dev/null")) {exit(0);}
@@ -88,6 +91,20 @@ for $i (glob("/home/barrycarter/ERR/*.inf")) {
   }
 }
 
+# local weather (below info, above TZ = not great)
+($out, $err, $res) = cache_command("curl -s 'http://api.wunderground.com/weatherstation/WXCurrentObXML.asp?ID=KNMALBUQ80'", "age=120");
+
+# create hash
+while ($out=~s%<(.*?)>(.*?)</\1>%%is) {
+  ($key, $val) = ($1, $2);
+  # reset match to first character
+  pos($out)=0;
+  debug("KV: $key -> $val");
+  $hash{$key}=$val;
+}
+
+debug("HASH",%hash);
+
 # I have no cronjob for world time, so...
 
 # hash of how I want to see the zones
@@ -125,7 +142,7 @@ for $i (@err) {
 for $i (@info) {
   # TODO: order these better
   push(@rss, "$i");
-  push(@fly, "string 0,0,255,0,$pos,medium,$i");
+  push(@fly, "string $blue,0,$pos,medium,$i");
   $pos+=15;
 }
 
@@ -139,8 +156,9 @@ $br = 768-20; # bottom y value
 while (<A>) {
   chomp;
   $br -= 15;
-  $xval = 1024-length($_)*8+8;
-  push(@fly, "string 0,0,255,$xval,$br,medium,$_");
+  # this is left justified, which means it won't work for arb files, sigh
+  $xval = 950;
+  push(@fly, "string $blue,$xval,$br,medium,$_");
   debug("CHOMP: $_");
 }
 
