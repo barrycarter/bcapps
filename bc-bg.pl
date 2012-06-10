@@ -94,14 +94,15 @@ for $i (glob("/home/barrycarter/ERR/*.inf")) {
 # local weather (below info, above TZ = not great)
 ($out, $err, $res) = cache_command("curl -s 'http://api.wunderground.com/weatherstation/WXCurrentObXML.asp?ID=KNMALBUQ80'", "age=120");
 
-# create hash
-while ($out=~s%<(.*?)>(.*?)</\1>%%is) {
+# create hash + strip trailing .0
+while ($out=~s%<(.*?)>([^<>]*?)</\1>%%is) {
   ($key, $val) = ($1, $2);
-  # reset match to first character
-  pos($out)=0;
-  debug("KV: $key -> $val");
+  $val=~s/\.0$//;
   $hash{$key}=$val;
 }
+
+
+push(@info, "Local/$hash{temp_f}F/$hash{wind_dir} $hash{wind_mph}G$hash{wind_gust_mph}/$hash{relative_humidity}% ($hash{dewpoint_f}F)");
 
 debug("HASH",%hash);
 
