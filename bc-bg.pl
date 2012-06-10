@@ -116,7 +116,7 @@ for $i (@zones) {
 # err gets pushed first (and in red), then info
 for $i (@err) {
   # TODO: order these better
-  push(@rss, "<item><title>$i</title></item>");
+  push(@rss, "$i");
   push(@fly, "string 255,0,0,0,$pos,giant,$i");
   $pos+=15;
 }
@@ -124,17 +124,32 @@ for $i (@err) {
 # now info (in blue for now); note $pos is "global"
 for $i (@info) {
   # TODO: order these better
-  push(@rss, "<item><title>$i</title></item>");
+  push(@rss, "$i");
   push(@fly, "string 0,0,255,0,$pos,medium,$i");
   $pos+=15;
 }
 
-# create RSS
+# puts the International Phonetic Alphabet at the bottom right corner
+# of the screen (as I am trying to learn it); technique should be
+# general enough to work with any file
+
+open(A,"tac /home/barrycarter/BCGIT/db/ipa.txt|");
+$br = 768-20; # bottom y value
+
+while (<A>) {
+  chomp;
+  $br -= 15;
+  $xval = 1024-length($_)*8+8;
+  push(@fly, "string 0,0,255,$xval,$br,medium,$_");
+  debug("CHOMP: $_");
+}
+
+# create RSS (not working, will probably dump)
 open(A, ">/var/tmp/bc-bg.rss");
 print A qq%<?xml version="1.0" encoding="ISO-8859-1" ?><rss version="0.91">
-<channel><title>bc-bg</title>\n%;
-print A join("\n", @rss),"\n";
-print A "</channel></rss>\n";
+<channel><title>bc-bg</title><item><title>\n%;
+print A join("&lt;br&gt;\n", @rss),"\n";
+print A "</title></item></channel></rss>\n";
 close(A);
 
 # send header and output to fly file
