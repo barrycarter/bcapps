@@ -101,8 +101,10 @@ while ($out=~s%<(.*?)>([^<>]*?)</\1>%%is) {
   $hash{$key}=$val;
 }
 
+$hash{observation_time}=~s/^last updated on //isg;
 
-push(@info, "Local/$hash{temp_f}F/$hash{wind_dir} $hash{wind_mph}G$hash{wind_gust_mph}/$hash{relative_humidity}% ($hash{dewpoint_f}F)");
+
+push(@info, "Local/$hash{temp_f}F/$hash{wind_dir}$hash{wind_mph}G$hash{wind_gust_mph}/$hash{relative_humidity}% ($hash{dewpoint_f}F) [$hash{observation_time}]");
 
 debug("HASH",%hash);
 
