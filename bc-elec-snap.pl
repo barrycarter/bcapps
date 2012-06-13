@@ -16,7 +16,7 @@ $sshroot = $1;
 
 # same device? the not mounted!
 # TODO: this should be a separate nagios test too
-if ($devroot eq $sshroot) {die "ssfs not mounted";}
+if ($devroot eq $sshroot) {die "sshfs not mounted";}
 
 # file to write to
 $file = `/bin/date +%Y%m%d.%H%M%S`;
