@@ -1,4 +1,6 @@
-#!/bin/perl -00
+#!/bin/perl
+
+# adds ABQ street addresses to OSM (openstreetmap.org)
 
 =item proc
 
@@ -32,30 +34,46 @@ ALTER TABLE abq3 ADD full_address TEXT;
 UPDATE abq3 SET full_address = 
 TRIM(streetnumb||' '||COALESCE(streetname,'')||' '||COALESCE(streetdesi,'')||' '||COALESCE(streetquad,''));
 
-SELECT full_address||','||centroid FROM abq3 LIMIT 50;
+SELECT full_address||','||centroid FROM abq3;
+
+(output of above is in db/abqaddr.bz2)
 
 =cut
 
-# parses the output of applying "ogrinfo -al" to the base.shp file in
-# http://www.cabq.gov/gisshapes/base.zip (using base.dbf yields the
-# exact same results, upto:
-
-# < INFO: Open of `base.dbf'
-# ---
-# > INFO: Open of `base.shp'
-
-# Unfortunately, both base.zip and the output of ogrinfo -al are too
-# big to keep in GIT, even bzip2'd
-
-# each item of data is separated by double newline, thus the "-00" above
-
 require "/usr/local/lib/bclib.pl";
-
-open(A,"bzcat /home/barrycarter/20120612/BASE/ogrinfo.al.base.shp.bz2|");
+open(A,"bzcat /home/barrycarter/BCGIT/db/abqaddr.bz2|");
 
 while (<A>) {
-  
+  # skip junk
+  unless (/^(.*?),POINT\((.*?) (.*?)\)$/) {next;}
 
-  debug("THUNK: $_");
+  ($addr, $lon, $lat) = ($1,$2,$3);
+
+  # skip ridiculous (zero) addresses
+  if ($addr=~/^\s*0\s*$/) {
+    next;
+  }
+
+  # obtain OSM data for this chunk (to avoid duplicating stuff!)
+  # caching is important here, so normalizing to 1/100th degree
+  $url = sprintf("http://api.openstreetmap.org/api/0.6/map/?bbox=%.2f,%.2f,%.2f,%.2f", $lon, $lat, $lon+.01, $lat+.01);
+  $sha = sha1_hex($url);
+
+  # have I dl'd this URL before?
+  unless (-f "/var/tmp/OSM/$sha") {
+    ($out, $err, $res) = cache_command("curl -o /var/tmp/OSM/$sha '$url'");
+  }
+
+  $data = read_file("/var/tmp/OSM/$sha");
+  $n++;
+
+  if ($data=~/$addr/is) {
+    debug("FOUND($n) $addr in $sha!");
+  } else {
+    # do nothing
+  }
 }
+
+close(A);
+
 
