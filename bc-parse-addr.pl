@@ -31,10 +31,11 @@ UPDATE abq3 SET centroid = ST_ASTEXT(ST_TRANSFORM(ST_CENTROID(the_geom),4326));
 and we only need the full address (at least for now?), so:
 
 ALTER TABLE abq3 ADD full_address TEXT;
-UPDATE abq3 SET full_address = 
-TRIM(streetnumb||' '||COALESCE(streetname,'')||' '||COALESCE(streetdesi,'')||' '||COALESCE(streetquad,''));
+UPDATE abq3 SET full_address = TRIM(
+streetnumb||'|'||COALESCE(streetname,'')||'|'||COALESCE(streetdesi,'')||
+'|'||COALESCE(streetquad,''));
 
-SELECT full_address||','||centroid FROM abq3;
+SELECT full_address||'|'||centroid FROM abq3;
 
 (output of above is in db/abqaddr.bz2)
 
