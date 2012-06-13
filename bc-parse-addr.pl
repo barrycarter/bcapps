@@ -45,22 +45,15 @@ require "/usr/local/lib/bclib.pl";
 open(A,"bzcat /home/barrycarter/BCGIT/db/abqaddr.bz2|");
 
 while (<A>) {
-  # skip junk
-  unless (/^(.*?),POINT\((.*?) (.*?)\)$/) {next;}
+  $_ = trim($_);
+  ($num, $sname, $stype, $sdir, $latlon) = split(/\|/, $_);
 
-  ($addr, $lon, $lat) = ($1,$2,$3);
+  # if addr is 0 or missing, pointless
+  unless ($num) {next;}
 
-  # skip purely numerical
-  if ($addr=~/^\s*\d*\s*$/) {
-    next;
-  }
-
-  # TODO: stop doing this (or at least restore full when PUTting new data)
-  # for now, clip addresses to avoid AV vs AVENUE type issues
-  debug("BEFORE: $addr");
-  $addr=~s/(\S*?)\s+(\S*?)$//isg;
-  $addr=trim($addr);
-  debug("ADDR: $addr");
+  # get lat lon (or skip if NA)
+  unless ($latlon=~/^POINT\((.*?)\s+(.*?)\)$/) {next;}
+  ($lon, $lat) = ($1, $2);
 
   # obtain OSM data for this chunk (to avoid duplicating stuff!)
   # caching is important here, so normalizing to 1/100th degree
@@ -75,8 +68,8 @@ while (<A>) {
   $data = read_file("/var/tmp/OSM/$sha");
   $n++;
 
-  if ($data=~/$addr/is) {
-    debug("FOUND($n) $addr in $sha!");
+  if ($data=~/$num $sname/is) {
+    debug("FOUND($n) $num $sname in $sha!");
   } else {
     # do nothing
   }
