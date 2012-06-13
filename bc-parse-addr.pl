@@ -49,10 +49,17 @@ while (<A>) {
 
   ($addr, $lon, $lat) = ($1,$2,$3);
 
-  # skip ridiculous (zero) addresses
-  if ($addr=~/^\s*0\s*$/) {
+  # skip purely numerical
+  if ($addr=~/^\s*\d*\s*$/) {
     next;
   }
+
+  # TODO: stop doing this (or at least restore full when PUTting new data)
+  # for now, clip addresses to avoid AV vs AVENUE type issues
+  debug("BEFORE: $addr");
+  $addr=~s/(\S*?)\s+(\S*?)$//isg;
+  $addr=trim($addr);
+  debug("ADDR: $addr");
 
   # obtain OSM data for this chunk (to avoid duplicating stuff!)
   # caching is important here, so normalizing to 1/100th degree
