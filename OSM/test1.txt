@@ -1,9 +1,9 @@
 <osm>
-<node lat='3.141592653' lon='2.718281828'>
+<node lat='3.141592653' lon='2.718281828' changeset='11897676'>
 <tag k="testing" v="barrycarter" />
 <tag k="ignore" v="pie" />
 </node>
-<node lat='2.718281828' lon='3.141592653'>
+<node lat='2.718281828' lon='3.141592653' changeset='11897676'>
 <tag k="testing" v="barrycarter" />
 <tag k="ignore" v="epi" />
 </node>
