@@ -1,0 +1,15 @@
+<osmChange version="0.3" generator="Osmosis">
+<create version="0.3" generator="Osmosis">
+<node id="-1" timestamp="2007-01-02T00:00:00.0+11:00" lat="-33.9133118622908" lon="151.117335519304">
+<tag k="created_by" v="JOSM"/>
+</node>
+<node id="-2" timestamp="2007-01-02T00:00:00.0+11:00" lat="-33.9233118622908" lon="151.117335519304">
+<tag k="created_by" v="JOSM"/>
+</node>
+<way id="-3" timestamp="2007-01-02T00:00:00.0+11:00">
+<nd ref="-1"/>
+<nd ref="-2"/>
+<tag k="created_by" v="JOSM"/>
+</way>
+</create>
+</osmChange>

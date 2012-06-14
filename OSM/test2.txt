@@ -1,0 +1,11 @@
+<osmChange version="0.3"><create version="0.3">
+<node id="-1" lat="3.141592653" lon="2.718281828" changeset="11897676" version="1">
+<tag k="testing" v="barrycarter" />
+<tag k="ignore" v="pie" />
+</node>
+<node id="-2" lat="2.718281828" lon="3.141592653" changeset="11897676" version="1">
+<tag k="testing" v="barrycarter" />
+<tag k="ignore" v="epi" />
+</node>
+</create></osmChange>
+

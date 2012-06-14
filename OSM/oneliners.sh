@@ -1,3 +1,7 @@
+curl -vv -n -d @test2.txt -XPUT http://api.openstreetmap.org/api/0.6/changeset/create |& tee /tmp/out2.txt
+
+exit;
+
 # check that my edits made it in
 curl -o /tmp/epi.txt 'http://api.openstreetmap.org/api/0.6/map/?bbox=2.71,3.14,2.72,3.15'
 
