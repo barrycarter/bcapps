@@ -28,16 +28,26 @@ so
 ALTER TABLE abq3 ADD centroid TEXT;
 UPDATE abq3 SET centroid = ST_ASTEXT(ST_TRANSFORM(ST_CENTROID(the_geom),4326));
 
-and we only need the full address (at least for now?), so:
+<h>COALESCE would make a good street name</h>
 
-ALTER TABLE abq3 ADD full_address TEXT;
-UPDATE abq3 SET full_address = TRIM(
-streetnumb||'|'||COALESCE(streetname,'')||'|'||COALESCE(streetdesi,'')||
-'|'||COALESCE(streetquad,''));
+And get the data:
 
-SELECT full_address||'|'||centroid FROM abq3;
+ALTER TABLE abq3 ADD data_export TEXT;
 
-(output of above is in db/abqaddr.bz2)
+UPDATE abq3 SET data_export = TRIM(
+COALESCE(lot,'')||'|'||
+COALESCE(block,'')||'|'||
+COALESCE(subdivisio,'')||'|'||
+COALESCE(streetnumb,0)||'|'||
+COALESCE(streetname,'')||'|'||
+COALESCE(streetdesi,'')||'|'||
+COALESCE(streetquad,'')||'|'||
+COALESCE(apartment,'')||'|'||
+COALESCE(pin,'')||'|'||
+COALESCE(centroid,'')
+);
+
+SELECT data_export FROM abq3; (output of this is in db/abqaddr.bz2)
 
 =cut
 
@@ -50,6 +60,9 @@ while (<A>) {
 
   # if addr is 0 or missing, pointless
   unless ($num) {next;}
+
+  # 99999 is junk addr
+  if ($num == 99999) {next;}
 
   # get lat lon (or skip if NA)
   unless ($latlon=~/^POINT\((.*?)\s+(.*?)\)$/) {next;}
@@ -70,11 +83,21 @@ while (<A>) {
 
   if ($data=~/$num $sname/is) {
     debug("FOUND($n) $num $sname in $sha!");
-  } else {
-    # do nothing
+    next;
   }
+
+  # at this point, we need to add (or at least record that we need to add)
+  push(@{$list{$sha}}, $_);
 }
 
 close(A);
+
+# <h>I wonder if there's treatment for excessive sorting disease</h>
+for $i (sort keys %list) {
+  $list = join("\n", sort(@{$list{$i}}));
+  write_file($list, "/var/tmp/OSM/put-$i");
+}
+
+
 
 
