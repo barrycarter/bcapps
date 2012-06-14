@@ -1,11 +1,16 @@
-curl -vv -n -d @test2.txt -XPUT http://api.openstreetmap.org/api/0.6/changeset/create |& tee /tmp/out2.txt
-
-exit;
+# aliases below just to speed things up a bit
 
 # check that my edits made it in
-curl -o /tmp/epi.txt 'http://api.openstreetmap.org/api/0.6/map/?bbox=2.71,3.14,2.72,3.15'
+alias osm1 "curl -o /tmp/epi.txt 'http://api.openstreetmap.org/api/0.6/map/?bbox=2.71,3.14,2.72,3.15'; curl -o /tmp/pie.txt 'http://api.openstreetmap.org/api/0.6/map/?bbox=3.14,2.71,3.15,2.72'"
 
-curl -o /tmp/pie.txt 'http://api.openstreetmap.org/api/0.6/map/?bbox=3.14,2.71,3.15,2.72'
+# tries to create a changeset
+alias osm2 "curl -vv -n -d @test2.txt -XPUT http://api.openstreetmap.org/api/0.6/changeset/create |& tee /tmp/out2.txt"
+
+# adds to a given changeset?
+alias osm4 "curl -vv -n -d @test4.txt -XPOST http://api.openstreetmap.org/api/0.6/changeset/11899798/upload"
+
+# deletes specified node (not working)
+alias osm3 'curl -vv -d <osm><node id=\!*/></osm> -n -XDELETE http://api.openstreetmap.org/api/0.6/node/\!* |& tee /tmp/out-delete.txt'
 
 exit;
 
