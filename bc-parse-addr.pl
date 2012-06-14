@@ -56,13 +56,11 @@ open(A,"bzcat /home/barrycarter/BCGIT/db/abqaddr.bz2|");
 
 while (<A>) {
   $_ = trim($_);
-  ($num, $sname, $stype, $sdir, $latlon) = split(/\|/, $_);
+  ($lot, $block, $subdivision, $num, $sname, $stype, $sdir, $apt, $pin,
+$latlon) = split(/\|/, $_);
 
   # if addr is 0 or missing, pointless
   unless ($num) {next;}
-
-  # 99999 is junk addr
-  if ($num == 99999) {next;}
 
   # get lat lon (or skip if NA)
   unless ($latlon=~/^POINT\((.*?)\s+(.*?)\)$/) {next;}

@@ -1,0 +1,78 @@
+* About to connect() to PUT port 80 (#0)
+*   Trying 199.191.128.105... Connection refused
+*   Trying 12.127.16.69... No route to host
+*   Trying 12.144.5.2... connected
+* Connected to PUT (12.144.5.2) port 80 (#0)
+> POST / HTTP/1.1
+> User-Agent: curl/7.19.7 (i386-redhat-linux-gnu) libcurl/7.19.7 NSS/3.12.6.2 zlib/1.2.3 libidn/1.9 libssh2/1.2.4
+> Host: PUT
+> Accept: */*
+> Content-Length: 2
+> Content-Type: application/x-www-form-urlencoded
+> 
+} [data not shown]
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     2      0      0 --:--:--  0:00:09 --:--:--     0< HTTP/1.1 405 Method Not Allowed
+< Date: Thu, 14 Jun 2012 17:54:09 GMT
+< Server: Apache/1.3.20 (Unix) mod_ssl/2.8.4 OpenSSL/0.9.6
+< Allow: GET, HEAD, OPTIONS, TRACE
+< Transfer-Encoding: chunked
+< Content-Type: text/html; charset=iso-8859-1
+< 
+{ [data not shown]
+149   297    0   297    0     2     31      0 --:--:--  0:00:09 --:--:--  2322* Connection #0 to host PUT left intact
+
+* About to connect() to test1.txt port 80 (#1)
+*   Trying 67.215.65.132... connected
+* Connected to test1.txt (67.215.65.132) port 80 (#1)
+* Server auth using Basic with user ''
+> POST / HTTP/1.1
+> Authorization: Basic Og==
+> User-Agent: curl/7.19.7 (i386-redhat-linux-gnu) libcurl/7.19.7 NSS/3.12.6.2 zlib/1.2.3 libidn/1.9 libssh2/1.2.4
+> Host: test1.txt
+> Accept: */*
+> Content-Length: 2
+> Content-Type: application/x-www-form-urlencoded
+> 
+} [data not shown]
+  0     0    0     0    0     2      0     13 --:--:-- --:--:-- --:--:--    13* HTTP 1.0, assume close after body
+< HTTP/1.0 303 See Other
+< Location: http://test1.txt/
+< Content-Length: 0
+< Connection: close
+< Date: Thu, 14 Jun 2012 17:54:56 GMT
+< Server: OpenDNS Guide
+< 
+  0     0    0     0    0     2      0      9 --:--:-- --:--:-- --:--:--     0* Closing connection #1
+
+* About to connect() to server port 80 (#1)
+*   Trying 68.178.232.99... connected
+* Connected to server (68.178.232.99) port 80 (#1)
+> POST /api/0.6/changeset/create HTTP/1.1
+> User-Agent: curl/7.19.7 (i386-redhat-linux-gnu) libcurl/7.19.7 NSS/3.12.6.2 zlib/1.2.3 libidn/1.9 libssh2/1.2.4
+> Host: server
+> Accept: */*
+> Content-Length: 2
+> Content-Type: application/x-www-form-urlencoded
+> 
+} [data not shown]
+< HTTP/1.1 408 Request Timeout
+< Connection: Close
+< Pragma: no-cache
+< cache-control: no-cache
+< Content-Type: text/html; charset=iso-8859-1
+< 
+{ [data not shown]
+  0     0    0     0    0     2      0     10 --:--:-- --:--:-- --:--:--    10* Closing connection #1
+
+* Closing connection #0
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<HTML><HEAD>
+<TITLE>405 Method Not Allowed</TITLE>
+</HEAD><BODY>
+<H1>Method Not Allowed</H1>
+The requested method POST is not allowed for the URL /index.html.<P>
+<HR>
+<ADDRESS>Apache/1.3.20 Server at main.put.com Port 80</ADDRESS>
+</BODY></HTML>

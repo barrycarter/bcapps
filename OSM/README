@@ -1,0 +1,3 @@
+Adding many data to openstreetmap.org
+
+curl -vv -d @test1.txt -XPUT http://api.openstreetmap.org/api/0.6/node/create
