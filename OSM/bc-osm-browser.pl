@@ -49,16 +49,22 @@ sub parse_file {
   my($data) = @_;
   my(@nodes);
 
-  
+  # convert <node .../> to <node ...></node>
+  $data=~s%<(node[^>]*)/>%<$1></node>%isg;
 
-  # first, <node .../>
-  while ($data=~s%<(node[^>]*/)>%%s) {
-    my($node) = $1;
+  # handle nodes
+  while ($data=~s%<node(.*?)>(.*?)</node>%%s) {
+    my($head, $tags) = ($1, $2);
 
     # store node data in hash
     my(%node) = ();
 
-    while ($node=~s/(\S+)\=\"(.*?)\"//) {
+    # values in tag itself
+    while ($head=~s/(\S+)\=\"(.*?)\"//) {$node{$1} = $2;}
+
+    # tag values
+    while ($tags=~s%<tag k="(.*?)" v="(.*?)"/>%%s) {
+      debug("$1 -> $2");
       $node{$1} = $2;
     }
 
@@ -67,23 +73,7 @@ sub parse_file {
     debug("NODE:",%node);
   }
 
-  # TODO: combine this w/ code above, redundant
-  # now, <node...></node>
-  while ($data=~s%<node(.*?)</node>%%s) {
-    my($node) = $1;
-
-    # store node data in hash
-    my(%node) = ();
-
-    while ($node=~s/(\S+)\=\"(.*?)\"//) {
-      $node{$1} = $2;
-    }
-
-    debug("CHONK: $1");
-  }
-
-
-#  debug("NODES",@nodes);
+  debug(@nodes);
 
 }
 
