@@ -4,10 +4,29 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# debug(get_osm(35,-106));
-# debug(get_osm(35.01,-105.99));
+# TODO: let user set these
+$lat = 35.116;
+$lon = -106.554;
 
-debug(parse_file(get_osm(35.09,-106.66)));
+# get OSM data for 3x3 .01^2 degrees around user
+for $i (-1..1) {
+  for $j (-1..1) {
+    push(@nodes, parse_file(get_osm($lat+$i*.01, $lon+$j*.01)));
+  }
+}
+
+# for each node, add distance and direction (from user)
+for $i (@nodes) {
+  $i->{distance} = gcdist($lat, $lon, $i->{lat}, $i->{lon});
+  # TODO: pretty sure this formula is wrong except at equator
+  $i->{direction} = atan2($i->{lat}-$lat, $i->{lon}-$lon)*180/$PI;
+
+  if ($i->{name}) {
+    print "$i->{name} at $i->{distance}, $i->{direction}; $i->{lat}, $i->{lon}\n";
+  }
+}
+
+# debug(@nodes);
 
 =item get_osm($lat, $lon)
 
@@ -69,11 +88,10 @@ sub parse_file {
     }
 
     push(@nodes, {%node});
-
-    debug("NODE:",%node);
   }
 
-  debug(@nodes);
+  # TODO: return more than nodes!
+  return @nodes;
 
 }
 
