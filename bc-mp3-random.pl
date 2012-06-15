@@ -8,13 +8,14 @@
 #
 # p - previous song
 # n or <ENTER> - next song
+# h - help: show this list (NYI)
 # q - quit (NYI)
 # r - restart program (not useful due to caching?; unless prog itself changes)
 # number - play song #number (NYI)
 # up/down - increase/reduce volume (using external amixer) (NYI)
 # /phrase - search for and play song matching phrase + reset $pos (NYI)
-# l - list all songs by number (piped to less?) [restrict by number/phrase?]
-# o - do nothing <h>(everyone needs null ops!)</h>
+# l - list all songs by number (piped to less?) [restrict by number/phrase?] (NYI)
+# o - do nothing <h>(everyone needs null ops!)</h> (NYI)
 
 # TODO: would be nice to get some overlap... know when a song's about to end
 # TODO: would be nice to have mplayer controls too
