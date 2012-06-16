@@ -11,22 +11,27 @@ $lon = -106.554;
 # get OSM data for 3x3 .01^2 degrees around user
 for $i (-1..1) {
   for $j (-1..1) {
-    push(@nodes, parse_file(get_osm($lat+$i*.01, $lon+$j*.01)));
+    ($noderef, $wayref) = parse_file(get_osm($lat+$i*.01, $lon+$j*.01));
+    push(@nodes, @{$noderef});
+    push(@ways, @{$wayref});
   }
 }
+
+debug(unfold($ways[1]));
+
+die "TESTING";
 
 # for each node, add distance and direction (from user)
 for $i (@nodes) {
   $i->{distance} = gcdist($lat, $lon, $i->{lat}, $i->{lon});
-  # TODO: pretty sure this formula is wrong except at equator
-  $i->{direction} = atan2($i->{lat}-$lat, $i->{lon}-$lon)*180/$PI;
+  $i->{direction} = atan2($i->{lat}-$lat, ($i->{lon}-$lon)*cos($lat/180*$PI))*180/$PI;
+}
 
+for $i (sort {$a->{distance} <=> $b->{distance}} @nodes) {
   if ($i->{name}) {
     print "$i->{name} at $i->{distance}, $i->{direction}; $i->{lat}, $i->{lon}\n";
   }
 }
-
-# debug(@nodes);
 
 =item get_osm($lat, $lon)
 
@@ -82,18 +87,40 @@ sub parse_file {
     while ($head=~s/(\S+)\=\"(.*?)\"//) {$node{$1} = $2;}
 
     # tag values
-    while ($tags=~s%<tag k="(.*?)" v="(.*?)"/>%%s) {
-      debug("$1 -> $2");
-      $node{$1} = $2;
-    }
+    while ($tags=~s%<tag k="(.*?)" v="(.*?)"/>%%s) {$node{$1} = $2;}
 
     push(@nodes, {%node});
   }
 
-  # TODO: return more than nodes!
-  return @nodes;
+  # <h>ooh, baby I love your</h> ways
+  while ($data=~s%<way(.*?)>(.*?)</way>%%is) {
+    my($head, $tags) = ($1, $2);
 
+    #<h>The following line of code is in tribute to Frank Sinatra</h>
+    my(%way) = ();
+    # list of nodes for this way
+    my(@nodelist);
+
+    # values in tag itself
+    while ($head=~s/(\S+)\=\"(.*?)\"//) {$way{$1} = $2;}
+
+    # tag values
+    while ($tags=~s%<tag k="(.*?)" v="(.*?)"/>%%s) {$way{$1} = $2;}
+
+    # nodes in way
+    while ($tags=~s%<nd ref="(.*?)"/>%%) {push(@nodelist,$1);}
+    
+    $way{nodelist} = [@nodelist];
+    push(@ways, {%way});
+
+  }
+
+  $data=~s/\s+/ /isg;
+  debug("LEFT: $data");
+
+  return [{@nodes}, {@ways}];
 }
+
 
 
 
