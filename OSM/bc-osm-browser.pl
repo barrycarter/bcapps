@@ -9,17 +9,22 @@ $lat = 35.116;
 $lon = -106.554;
 
 # get OSM data for 3x3 .01^2 degrees around user
+# TODO: remove dupes (should only happen w ways)
 for $i (-1..1) {
   for $j (-1..1) {
+    $ref = parse_file(get_osm($lat+$i*.01, $lon+$j*.01));
+    debug("REF: $ref");
     ($noderef, $wayref) = parse_file(get_osm($lat+$i*.01, $lon+$j*.01));
+    debug("NODEREF: $noderef");
     push(@nodes, @{$noderef});
     push(@ways, @{$wayref});
   }
 }
 
-debug(unfold($ways[1]));
+# debug(unfold(@ways));
+debug("NODE1",unfold($nodes[1]));
 
-die "TESTING";
+# die "TESTING";
 
 # for each node, add distance and direction (from user)
 for $i (@nodes) {
@@ -31,6 +36,12 @@ for $i (sort {$a->{distance} <=> $b->{distance}} @nodes) {
   if ($i->{name}) {
     print "$i->{name} at $i->{distance}, $i->{direction}; $i->{lat}, $i->{lon}\n";
   }
+}
+
+# TODO: vastly improve this
+for $i (@ways) {
+ unless ($i->{name}) {next;}
+ print "$i->{name} is here!\n";
 }
 
 =item get_osm($lat, $lon)
@@ -62,6 +73,7 @@ sub get_osm {
   system("mkdir -p $dir");
 
   # and get the data
+  # TODO: handle "too much data" case
  my($cmd) = sprintf("curl -o $dir/$sha 'http://api.openstreetmap.org/api/0.6/map/?bbox=%.2f,%.2f,%.2f,%.2f'", $lon, $lat, $lon+.01, $lat+.01);
 
   my($out, $err, $res) = cache_command($cmd);
@@ -118,10 +130,5 @@ sub parse_file {
   $data=~s/\s+/ /isg;
   debug("LEFT: $data");
 
-  return [{@nodes}, {@ways}];
+  return ([@nodes], [@ways]);
 }
-
-
-
-
-

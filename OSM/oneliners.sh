@@ -1,5 +1,11 @@
 # aliases below just to speed things up a bit
 
+# downloads ABQ business data (step 1)
+
+perl -le 'for(0..6049) {$x=$_*10; print "curl -o $x.out \47http://falcon.cabq.gov/envhealth/Results.asp?BusinessName=&StreetName=&StreetNumber=&StreetQuad=&ZipCode=&submit=Search&offset=$x\47"}'
+
+exit;
+
 # check that my edits made it in
 alias osm1 "curl -o /tmp/epi.txt 'http://api.openstreetmap.org/api/0.6/map/?bbox=2.71,3.14,2.72,3.15'; curl -o /tmp/pie.txt 'http://api.openstreetmap.org/api/0.6/map/?bbox=3.14,2.71,3.15,2.72'"
 
