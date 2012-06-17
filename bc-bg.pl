@@ -53,8 +53,8 @@ push(@info, uc($map{$nextev}));
 
 # @info = stuff we print (to top left corner)
 # local and GMT time
-push(@info,strftime("MT: %Y%m%d.%H%M%S",localtime($now)));
-push(@info,strftime("GMT: %Y%m%d.%H%M%S",gmtime($now)));
+# push(@info,strftime("MT: %Y%m%d.%H%M%S",localtime($now)));
+# push(@info,strftime("GMT: %Y%m%d.%H%M%S",gmtime($now)));
 
 # figure out what alerts to suppress
 # format of suppress.txt:
@@ -129,7 +129,7 @@ debug("HASH",%hash);
 
 for $i (@zones) {
   $ENV{TZ} = $zones{$i};
-  push(@info, strftime("$i: %H%M,%a",localtime(time())));
+  push(@info, strftime("$i: %H%M,%a%d%b",localtime(time())));
 }
 
 # push output to .fly script

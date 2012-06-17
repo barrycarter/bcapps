@@ -33,3 +33,7 @@ alias qplot 'echo plot \"/tmp/gnuplot.txt\" with linespoints | gnuplot -persist'
 # 'locate', expecting minimal results, but there are lots and they
 # scroll off-screen)
 alias locate 'locate -i \!* | tee /var/tmp/bc-cmd-locate.txt'
+
+# useful to confirm pkill works
+# <h>NOTE: -v does NOT mean verbose!</h>
+alias pkill "pkill \!*; pgrep -l \!*"
