@@ -1,6 +1,12 @@
 # aliases below just to speed things up a bit
 
+# obtains deeper info on ABQ businesses, from the bzip'd results of step 1
+bzfgrep -h ID=FA *.bz2 | perl -nle '/id=(.*?)"/i; print "curl -o $1 \47http://falcon.cabq.gov/envhealth/Details.asp?ID=$1\47"' | sort | uniq > runme.par
+
+exit;
+
 # downloads ABQ business data (step 1)
+# the bzipped output of the concat of this is in data/firstrun.html.bz2
 
 perl -le 'for(0..6049) {$x=$_*10; print "curl -o $x.out \47http://falcon.cabq.gov/envhealth/Results.asp?BusinessName=&StreetName=&StreetNumber=&StreetQuad=&ZipCode=&submit=Search&offset=$x\47"}'
 
