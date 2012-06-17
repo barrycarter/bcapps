@@ -2,34 +2,38 @@
 
 # text browser for OSM (openstreetmap.org)
 
+# %user: global hash with user information
+# %node: global hash with node information
+# %way: global hash with way information
+
 require "/usr/local/lib/bclib.pl";
 
 # TODO: let user set these
-$lat = 35.116;
-$lon = -106.554;
+$user{lat} = 35.116;
+$user{lon} = -106.554;
 
 # get OSM data for 3x3 .01^2 degrees around user
 # TODO: remove dupes (should only happen w ways)
 for $i (-1..1) {
   for $j (-1..1) {
-    $ref = parse_file(get_osm($lat+$i*.01, $lon+$j*.01));
-    debug("REF: $ref");
-    ($noderef, $wayref) = parse_file(get_osm($lat+$i*.01, $lon+$j*.01));
-    debug("NODEREF: $noderef");
-    push(@nodes, @{$noderef});
-    push(@ways, @{$wayref});
+    parse_file(get_osm($user{lat}+$i*.01, $user{lon}+$j*.01));
   }
 }
 
+debug("NODE",unfold(%node));
+debug("WAY",unfold(%way));
+
+die "TESTING";
+
 # debug(unfold(@ways));
-debug("NODE1",unfold($nodes[1]));
+# debug("NODE1",unfold($nodes[1]));
 
 # die "TESTING";
 
 # for each node, add distance and direction (from user)
 for $i (@nodes) {
-  $i->{distance} = gcdist($lat, $lon, $i->{lat}, $i->{lon});
-  $i->{direction} = atan2($i->{lat}-$lat, ($i->{lon}-$lon)*cos($lat/180*$PI))*180/$PI;
+  $i->{distance} = gcdist($user{lat}, $user{lon}, $i->{lat}, $i->{lon});
+  $i->{direction} = atan2($i->{lat}-$user{lat}, ($i->{lon}-$user{lon})*cos($user{lat}/180*$PI))*180/$PI;
 }
 
 for $i (sort {$a->{distance} <=> $b->{distance}} @nodes) {
@@ -79,11 +83,11 @@ sub get_osm {
   my($out, $err, $res) = cache_command($cmd);
 }
 
-# parses the result of what the API sends us
+# parses the result of what the API sends us by updating the %node and
+# %way hashes. Returns nothing
 
 sub parse_file {
   my($data) = @_;
-  my(@nodes);
 
   # convert <node .../> to <node ...></node>
   $data=~s%<(node[^>]*)/>%<$1></node>%isg;
@@ -93,15 +97,16 @@ sub parse_file {
     my($head, $tags) = ($1, $2);
 
     # store node data in hash
-    my(%node) = ();
+    my(%thisnode) = ();
 
     # values in tag itself
-    while ($head=~s/(\S+)\=\"(.*?)\"//) {$node{$1} = $2;}
+    while ($head=~s/(\S+)\=\"(.*?)\"//) {$thisnode{$1} = $2;}
 
     # tag values
-    while ($tags=~s%<tag k="(.*?)" v="(.*?)"/>%%s) {$node{$1} = $2;}
+    while ($tags=~s%<tag k="(.*?)" v="(.*?)"/>%%s) {$thisnode{$1} = $2;}
 
-    push(@nodes, {%node});
+    # update the global node hash
+    $node{$thisnode{id}} = {%thisnode};
   }
 
   # <h>ooh, baby I love your</h> ways
@@ -109,26 +114,22 @@ sub parse_file {
     my($head, $tags) = ($1, $2);
 
     #<h>The following line of code is in tribute to Frank Sinatra</h>
-    my(%way) = ();
+    my(%thisway) = ();
     # list of nodes for this way
     my(@nodelist);
 
     # values in tag itself
-    while ($head=~s/(\S+)\=\"(.*?)\"//) {$way{$1} = $2;}
+    while ($head=~s/(\S+)\=\"(.*?)\"//) {$thisway{$1} = $2;}
 
     # tag values
-    while ($tags=~s%<tag k="(.*?)" v="(.*?)"/>%%s) {$way{$1} = $2;}
+    while ($tags=~s%<tag k="(.*?)" v="(.*?)"/>%%s) {$thisway{$1} = $2;}
 
     # nodes in way
     while ($tags=~s%<nd ref="(.*?)"/>%%) {push(@nodelist,$1);}
     
-    $way{nodelist} = [@nodelist];
-    push(@ways, {%way});
+    $thisway{nodelist} = [@nodelist];
+
+    $way{$thisway{id}} = {%thisway};
 
   }
-
-  $data=~s/\s+/ /isg;
-  debug("LEFT: $data");
-
-  return ([@nodes], [@ways]);
 }
