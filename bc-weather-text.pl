@@ -154,7 +154,7 @@ if (blank($oldpress)) {
 # timezone
 $ENV{TZ} = $hash{tz};
 debug("ENV: $ENV{TZ}*");
-$time=strftime("%l:%M %p %Z on %A",localtime(time()));
+$time=strftime("%l:%M %p %Z on %A (%d %b %Y)",localtime(time()));
 push(@out,"It's currently $time");
 
 # number of observations
