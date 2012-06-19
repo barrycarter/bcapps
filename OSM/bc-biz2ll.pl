@@ -7,6 +7,36 @@
 
 require "/usr/local/lib/bclib.pl";
 
+&bizaddr2ll;
+
+debug(%hash);
+
+# convert business addresses to lat/lon, return as hash
+
+# NOTE: doing this with ALL ABQ addresses would be much harder, using
+# just business addresses makes it easier
+
+sub bizaddr2ll {
+  my($data) = read_file("/home/barrycarter/BCGIT/OSM/data/bizll.txt");
+
+  for $i (split(/\n/,$data)) {
+    # extract the colored section = address
+    # I'm too lazy to match ESC, so just using . below
+    $i=~/.01\;31m.\[K(.*?).\[m.\[K/;
+    $addr = $1;
+
+    # and now the lat lon
+    $i=~/point\((.*?)\)/i;
+    $latlon = $1;
+
+    # and hash (global)
+    $hash{$addr} = $latlon;
+
+  }
+}
+
+die "TESTING";
+
 # this is a little ugly, but even the unbzipped file isn't THAT big
 $all = `bzcat data/firstrun.html.bz2`;
 
@@ -23,6 +53,8 @@ while ($all=~s%<tr>(.*?)</tr>%%s) {
   # simply print this, so I can use out to fgrep -f in list of addresses
   print "$addr\n";
 }
+
+
 
 
 
