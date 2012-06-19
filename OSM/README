@@ -1,3 +1,11 @@
 Adding many data to openstreetmap.org
 
-curl -vv -d @test1.txt -XPUT http://api.openstreetmap.org/api/0.6/node/create
+Here's what I did with the output of bc-biz2ll.pl (ie,
+data/businessaddresses.txt):
+
+bzcat ../db/abqaddr.bz2|perl -pnle 's/\|/ /isg;' > /var/tmp/addr-with-space.txt
+fgrep -f data/businessaddresses.txt /var/tmp/addr-with-space.txt > data/bizll.txt
+
+This gives me latitude/longitude for ABQ businesses (roughly)
+
+
