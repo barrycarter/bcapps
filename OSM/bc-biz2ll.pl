@@ -8,8 +8,33 @@
 require "/usr/local/lib/bclib.pl";
 
 &bizaddr2ll;
+&biz2ll;
 
-debug(%hash);
+# map business name (from data/firstrun.html.bz2 to
+# latitude/longitude, in preparation to add to OSM)
+
+sub biz2ll {
+  my(@all) = `bzcat /home/barrycarter/BCGIT/OSM/data/firstrun.html.bz2`;
+  my($all) = join("",@all);
+
+  while ($all=~s%<tr>(.*?)</tr>%%s) {
+    # extract each business' data
+    my($data) = $1;
+
+#    debug("DATA: $data");
+
+    # if no link to Details.asp, this row doesn't contain a business' info
+    unless ($data=~/Details.asp/is) {next;}
+
+    # name and address (don\'t need city/zip)
+    $data=~m:<td width="40%">(.*?)</td>:;
+    my($addr) = $1;
+    $data=~m%<a href=.*?>(.*?)</a>%;
+    my($name) = $1;
+
+    debug("$name -> $addr");
+  }
+}
 
 # convert business addresses to lat/lon, return as hash
 
