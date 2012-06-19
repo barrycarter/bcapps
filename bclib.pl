@@ -25,6 +25,7 @@ push(@INC,"/home/barrycarter/BCGIT", "/usr/local/lib");
 # HACK: defining constants here is probably bad
 $PI = 4.*atan(1);
 $DEGRAD=$PI/180; # degrees to radians
+$RADDEG=180./$PI; # radians to degrees
 $EARTH_RADIUS = 6371/1.609344; # miles
 
 # HACK: not sure this is right way to do this

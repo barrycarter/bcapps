@@ -2,6 +2,8 @@
 
 # text browser for OSM (openstreetmap.org)
 
+# NOTE: this assumes Earth is locally flat and does NOT work for large distances
+
 # %user: global hash with user information
 # %node: global hash with node information
 # %way: global hash with way information
@@ -20,32 +22,35 @@ for $i (-1..1) {
   }
 }
 
-debug("NODE",unfold(%node));
-debug("WAY",unfold(%way));
-
-die "TESTING";
-
-# debug(unfold(@ways));
-# debug("NODE1",unfold($nodes[1]));
-
-# die "TESTING";
+# figure out max visibility (limited by longitude)
+$maxvis = $EARTH_RADIUS*$PI*2*.01/360*cos($user{lat}*$DEGRAD);
+debug("VIS: $maxvis");
 
 # for each node, add distance and direction (from user)
-for $i (@nodes) {
-  $i->{distance} = gcdist($user{lat}, $user{lon}, $i->{lat}, $i->{lon});
-  $i->{direction} = atan2($i->{lat}-$user{lat}, ($i->{lon}-$user{lon})*cos($user{lat}/180*$PI))*180/$PI;
+for $i (keys %node) {
+  # calculate *approximate* N/S and E/W distance in miles
+
+  # N/S dist is constant
+  $nsdist = ($node{$i}{lat}-$user{lat})*$EARTH_RADIUS*2*$PI/360;
+
+  # E/W distance is scaled by cos(lat)
+  $ewdist = ($node{$i}{lon}-$user{lon})*$EARTH_RADIUS*2*$PI/360*cos($user{lat}*$DEGRAD);
+
+  # direction and total dist (Pythag ok for small distances)
+  $node{$i}{dir} = atan2($nsdist,$ewdist)*$RADDEG;
+  $node{$i}{dist} = sqrt($nsdist*$nsdist+$ewdist*$ewdist);
 }
 
-for $i (sort {$a->{distance} <=> $b->{distance}} @nodes) {
-  if ($i->{name}) {
-    print "$i->{name} at $i->{distance}, $i->{direction}; $i->{lat}, $i->{lon}\n";
+for $i (sort {$node{$a}{dist} <=> $node{$b}{dist}} keys %node) {
+  if ($node{$i}{name}) {
+    print "$node{$i}{name} at $node{$i}{dist}, $node{$i}{dir}; $node{$i}{lat}, $node{$i}{lon}\n";
   }
 }
 
 # TODO: vastly improve this
-for $i (@ways) {
- unless ($i->{name}) {next;}
- print "$i->{name} is here!\n";
+for $i (keys %way) {
+ unless ($way{$i}{name}) {next;}
+ print "$way{$i}{name} is here!\n";
 }
 
 =item get_osm($lat, $lon)

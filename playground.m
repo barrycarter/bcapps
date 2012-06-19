@@ -3,6 +3,41 @@
 showit := Module[{}, 
 Export["/tmp/math.png",%, ImageSize->{800,600}]; Run["display /tmp/math.png&"]]
 
+(* 
+
+Assuming local planarity but a NON-square grid, what's the closest a
+line through t1,t2 comes to a point p?
+
+*)
+
+(* Allowing t1 and t2 to be complex and p to be 0, equation of line is *)
+
+f[t_] = t1 + (t2-t1)*t
+
+d[t_] = Abs[f[t]]
+
+D[d[t],t]
+
+Minimize[d[t],t,{t1,t2}]
+
+(* above didn't work, so... *)
+
+lat[t_] = lat1 + (lat2-lat1)*t
+lon[t_] = lon1 + (lon2-lon1)*t
+
+(* Cos[theta] is a constant below, based on user latitude *)
+
+dist[t_] = lat[t]^2+Cos[theta]*lon[t]^2
+
+Solve[D[dist[t],t]==0,t]
+
+(*
+
+Answer: (lat1*(lat1 - lat2) + lon1*(lon1 - lon2)*Cos[theta])/
+ ((lat1 - lat2)^2 + (lon1 - lon2)^2*Cos[theta])
+
+*)
+
 (*
 
 How much water at 55F [tap water] would it take to cool my 25x25x8
