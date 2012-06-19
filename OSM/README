@@ -4,8 +4,11 @@ Here's what I did with the output of bc-biz2ll.pl (ie,
 data/businessaddresses.txt):
 
 bzcat ../db/abqaddr.bz2|perl -pnle 's/\|/ /isg;' > /var/tmp/addr-with-space.txt
-fgrep -f data/businessaddresses.txt /var/tmp/addr-with-space.txt > data/bizll.txt
+fgrep --color=always -if data/businessaddresses.txt /var/tmp/addr-with-space.txt > data/bizll.txt
 
-This gives me latitude/longitude for ABQ businesses (roughly)
+This gives me latitude/longitude for ABQ businesses (roughly). Adding
+coloring will let me snip out the exact address from the line.
+
+
 
 
