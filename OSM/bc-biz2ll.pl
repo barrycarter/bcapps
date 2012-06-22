@@ -32,7 +32,8 @@ sub biz2ll {
     $data=~m%<a href=.*?>(.*?)</a>%;
     my($name) = $1;
 
-    debug("$name -> $addr");
+    # now the lat/lon?
+    debug("$name -> $addr -> $hash{$addr}");
   }
 }
 
