@@ -31,7 +31,8 @@ my($out, $err, $res) = cache_command("xawtv-remote snap jpeg win /var/tmp/$file.
 for (;;) {
   if (-f "/var/tmp/$file.jpg") {last;}
   sleep(1);
-  # TODO: maybe give up after n seconds
+  # give up after 300s
+  if (++$n > 300) {die "/var/tmp/$file.jpg does not exist!";}
 }
 
 system("cp /var/tmp/$file.jpg /mnt/sshfs/ELEC2012/; sudo rm /var/tmp/$file.jpg");

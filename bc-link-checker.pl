@@ -3,13 +3,15 @@
 # created to test links on traceroute.org (after confirming it's
 # maintained), but can be used as generalized linkchecker one day?
 
-require "bclib.pl";
+require "/usr/local/lib/bclib.pl";
+
+($url) = @ARGV;
 
 # doing test work in perm dir
 dodie('chdir("/var/tmp/test")');
 
 # we assume pages (including linked-to pages) won't change soon
-($out) = cache_command("curl http://www.traceroute.org/", "age=86400");
+($out) = cache_command("curl $url", "age=86400");
 
 # find all angle brackets, keep 'a ... href' ones
 while ($out=~s/<(.*?)>//) {
@@ -32,7 +34,7 @@ while ($out=~s/<(.*?)>//) {
 
   # keep track (using hash not list to avoid dupes)
   # storing in sha1 file for convenience, and storing reverse
-  $sha = $sha1_hex($url);
+  $sha = sha1_hex($url);
   $url{$url}=$sha;
   $sha2url{$sha} = $url;
 

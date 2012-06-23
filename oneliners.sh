@@ -1,5 +1,9 @@
 # shell one liners
 
+
+
+exit;
+
 # obtain info from Z3950 server <h>(insert raucous laughter here)</h>
 
 echo "f @attr 1=7 0425*\nshow" | yaz-client clas.caltechu:210/INNOPAC
