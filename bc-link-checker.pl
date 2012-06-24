@@ -5,25 +5,31 @@
 
 require "/usr/local/lib/bclib.pl";
 
-($url) = @ARGV;
+($surl) = @ARGV;
 
 # doing test work in perm dir
 dodie('chdir("/var/tmp/test")');
 
 # we assume pages (including linked-to pages) won't change soon
-($out) = cache_command("curl $url", "age=86400");
+($out) = cache_command("curl $surl", "age=86400");
+
+debug("OUT: $out");
 
 # find all angle brackets, keep 'a ... href' ones
 while ($out=~s/<(.*?)>//) {
   $tag = $1;
 
+  debug("TAG: $tag");
+
   # ignore non-a tags
   unless ($tag=~/^a/i) {next;}
 
   # find the href in this tag (assumes well-behaved hyperlinks; eg, quoted)
-  unless ($tag=~/href="(.*?)"/) {next;}
+  unless ($tag=~/href=[\"\'](.*?)[\"\']/) {next;}
 
   $url = $1;
+
+  debug("URL: $url");
 
   # strip hash tags and ignore if now empty
   $url=~s/\#.*$//;

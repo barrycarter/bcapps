@@ -3,6 +3,28 @@
 showit := Module[{}, 
 Export["/tmp/math.png",%, ImageSize->{800,600}]; Run["display /tmp/math.png&"]]
 
+(*
+
+Non square grid again, but no silly translating to 0,0
+
+*)
+
+segx[t_] = ax+t*(bx-ax)
+segy[t_] = ay+t*(by-ay)
+
+(* we are scaling distance, so x distance counts "r" as much *)
+
+dist[cx_,cy_,t_] = Sqrt[(r*(cx-segx[t]))^2 + (cy-segy[t])^2]
+
+least[ax_,ay_,bx_,by_,cx_,cy_] = t /. Solve[D[dist[cx,cy,t],t]==0,t][[1,1]]
+
+least[ax,ay,bx,by,cx,cy] // TeXForm
+least[ax,ay,bx,by,cx,cy] // MathML
+
+(* below does not work [because of complex numbers?] *)
+
+Minimize[dist[cx,cy,t],t]
+
 (* 
 
 Assuming local planarity but a NON-square grid, what's the closest a
