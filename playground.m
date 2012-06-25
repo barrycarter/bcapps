@@ -18,6 +18,10 @@ dist[cx_,cy_,t_] = Sqrt[(r*(cx-segx[t]))^2 + (cy-segy[t])^2]
 
 least[ax_,ay_,bx_,by_,cx_,cy_] = t /. Solve[D[dist[cx,cy,t],t]==0,t][[1,1]]
 
+segx[least[ax,ay,bx,by,cx,cy]]
+segy[least[ax,ay,bx,by,cx,cy]]
+dist[cx,cy,least[ax,ay,bx,by,cx,cy]]
+
 least[ax,ay,bx,by,cx,cy] // TeXForm
 least[ax,ay,bx,by,cx,cy] // MathML
 
