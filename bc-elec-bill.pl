@@ -8,8 +8,6 @@
 # --last: use last reading in ~/elecbill.txt, not new measurement
 
 # TODO:
-# add --last option that just shows results from previous reading
-# show "what if" scenarios
 # measure usage since last reading(s)
 # add +-1 minute inaccuracy in reading time (though 8h window sort of covers this)
 # allow --time= entries for previous times
@@ -26,13 +24,13 @@ $elecfile = "$ENV{HOME}/elecbill.txt";
 system("sort -n $elecfile -o $elecfile");
 
 # tiered usage cost (first 450 at .0906, next 450 at .1185, rest at .1284)
-# http://www.nmprc.state.nm.us/consumer-relations/company-directory/electric/pnm/forms/form90.pdf is accurate, at least for May 2012
+# http://www.pnm.com/regulatory/electricity_legacy.htm (for July)
 # TODO: this doesn't need to be a constant
-@tiers = ([450, 0.0906237], [450, 0.1185101], [+Infinity, 0.1283520]);
+@tiers = ([450, 0.0906237], [450, 0.1373455], [+Infinity, 0.1576960]);
 
 # yyyy-mm-dd when meter last read, and amount
 # TODO: this obviously shouldn't be hardcoded
-($time,$read) = ("2012-05-22", "50492");
+($time,$read) = ("2012-06-21", "52642");
 
 # ranges are now represented as [low, med, high] where med = the
 # "true" reading in some sense; 12:30pm = center of 8-5 day
