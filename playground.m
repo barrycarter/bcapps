@@ -3,6 +3,17 @@
 showit := Module[{}, 
 Export["/tmp/math.png",%, ImageSize->{800,600}]; Run["display /tmp/math.png&"]]
 
+(* Deal or No Deal *)
+
+dond = {.01, 1, 5, 10, 25, 50, 75, 100, 200, 300, 400, 500, 750, 1000, 5000,
+10000, 25000, 50000, 75000, 100000, 200000, 300000, 400000, 500000,
+750000, 1000000};
+
+(* no cool pattern, sadly, more like double broken parabola [break at
+1000/5000] *)
+
+ListPlot[Log[dond]/Log[10], PlotJoined->True, PlotRange->All]
+
 (*
 
 Non square grid again, but no silly translating to 0,0
