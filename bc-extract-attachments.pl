@@ -1,4 +1,4 @@
-#!/bin/perl
+#!/bin/perl -d:DProf -w
 
 # Hideous hack: finds pieces of messages that "look like" MIME
 # attachments and stores them in files, replacing the attachment with
@@ -33,12 +33,13 @@ while (<A>) {
   # handle message we just saw (handle_msg'll ignore empty call on first msg)
   if (/^From /) {
     $num++;
-    handle_attachments($msg);
-    $msg = "";
+    handle_attachments(@msg);
+    @msg=();
     debug("MSG: $num");
+#    if ($num>=228) {exit;}
   }
 
-  $msg = "$msg$_";
+  push(@msg,$_);
 }
 
 # last one
@@ -47,11 +48,23 @@ handle_attachments($msg);
 # sample MIME line:
 # MDAwOTg2IDY1NTM1IGYNCjAwMDAwMDA5ODcgNjU1MzUgZg0KMDAwMDAwMDk4OCA2NTUzNSBmDQow
 
+# this should probably be handle_message()
+
 sub handle_attachments {
-  my($msg) = @_;
+  my($msg) = join("",@_);
   my($chars) = "[a-zA-Z0-9\+\/]";
 
-  debug("MSG:",$msg,"ENDMSG");
+  $msg=~s/(($chars{50,}\n)+)/handle_attachment($1)/sg;
+
+  # and append to outfile
+  append_file($msg,$outfile);
+
+#  debug("MSG: $msg");
+
+#  warn "TESTING";
+  return;
+
+#  debug("MSG:",$msg,"ENDMSG");
 
   # tokenize mime-like lines
   # could theoretically capture long words, but handle_attachment
@@ -93,6 +106,7 @@ TODO: should I be using Perl::Tokenize or similar here?
 sub inner_regex {
   my($str, $regex, $options) = @_;
   my($n, $token, %hash) = (0);
+  my(@l);
 
   # find token not in string
   # TODO: this could theoretically fail, but unlikely
@@ -100,10 +114,11 @@ sub inner_regex {
   # Society for the Prevention of Menstruation (ARGHHH)</h>
   do {$rand=rand(); $rand=~s/\.//;} until ($str!~/$rand/);
 
-  while ($str=~s/($regex)/[TOKEN-$rand-$n]\n/) {
-    $hash{$rand}{$n} = $1;
-    debug("$rand/$n -> $hash{$rand}{$n}");
-    $n++;
+  $str=~s/($regex)/inner_regex_helper($1)/eg;
+
+  sub inner_regex_helper {
+    $hash{$rand}{$n} = shift;
+    return "[TOKEN-$rand-$n]";
   }
 
   return $str, {%hash};
