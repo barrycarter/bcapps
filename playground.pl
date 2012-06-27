@@ -22,6 +22,19 @@ use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
+$str = "food"x12;
+
+if ($str=~/((food)+)/) {
+  debug("MATCH: $1");
+}
+
+# debug($str);
+
+
+
+
+die "TESTING";
+
 # for $i (1337118123-1..1337118123+1) {
 #   debug("I: $i");
 #  debug(radecazel2(position("moon", $i), 35.11083, -106.61, $i));

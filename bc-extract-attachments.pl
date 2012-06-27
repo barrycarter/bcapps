@@ -27,16 +27,6 @@ while (<A>) {
   }
 
   $msg = "$msg$_";
-
-  # potential MIME line?
-  if (/^[a-z0-9\+\/]+$/i) {
-    push(@{$attach{$an}}, $_);
-  } else {
-    # a non-MIME line means we MUST advance $an, even though this will
-    # lead to big gaps in the numbering of %attach (which is one of
-    # the reasons it's a hash and not an array)
-    $an++;
-  }
 }
 
 # last one
@@ -47,31 +37,76 @@ handle_attachments($msg);
 
 sub handle_attachments {
   my($msg) = @_;
+  my($rand);
 
-  debug("MSG: $msg");
+  # tokenize mime-like lines
+  my($str, $hashref) = inner_regex($msg, "[a-zA-Z0-9\+\/]+\n");
+  my(%hash) = %{$hashref};
+  debug("STR:",$str,"HASHREF:",$hashref);
 
-  debug("ATTACH(",unfold({%attach}),")");
+  # what was the random key?
+  # TODO: should inner_regex just return this too?
+  ($rand) = keys %hash;
 
-  # only match "big" attachments
+  # and now, handle each attachment
+  # TODO: the inner regex isn't matched, so I should use symbols to
+  # reduce CPU work
+  $str=~s/((\[TOKEN-$rand-\d+\]\n)+)/handle_attachment($1,$hashref)/esg;
 
-  # TODO: this could theoretically capture text, but until we have
-  # nested regexs, can't do much about this (except write my own
-  # parser, not necessarily a bad idea)
-  # TODO: 32767 is max Perl allows below
-#  while ($msg=~s/([a-zA-Z0-9\+\n\/\=]{32767,})//s) {
-#    debug("1: <$1>");
-#  }
+  return;
+}
 
-  
+=item inner_regex($str, $regex, $options)
 
-#  while ($msg=~/([a-zA-Z0-9\+\n]{5,})/s) {
-#    debug("THUNK: $1");
-#  }
+Given string $str, replace $regex with token string that's guarenteed
+not to appear in $str itself. Return the parsed string and a hash
+mapping the replacement back to the original string.
 
-#  my($thunk) = $1;
+$options currently unused
 
-#  if ($thunk) {debug("THUNK: $thunk");}
+TODO: not super happy with [TOKEN-], don't really need it.
 
-#  debug("GOT: $msg");
+TODO: should I be using Perl::Tokenize or similar here?
+
+=cut
+
+sub inner_regex {
+  my($str, $regex, $options) = @_;
+  my($token, %hash, $n);
+
+  # find token not in string
+  # TODO: this could theoretically fail, but unlikely
+  # <h>the second statement below is dedicated to the
+  # Society for the Prevention of Menstruation (ARGHHH)</h>
+  do {$rand=rand(); $rand=~s/\.//;} until ($str!~/$rand/);
+
+  while ($str=~s/($regex)/[TOKEN-$rand-$n]\n/) {
+    $hash{$rand}{$n} = $1;
+    $n++;
+  }
+
+  return $str, {%hash};
+}
+
+# handles a single attachment
+
+sub handle_attachment {
+  my($attach, $hashref) = @_;
+
+  # find the random key I'm dealing with
+  my(%hash) = %{$hashref};
+  my($rand) = (keys %hash);
+
+  # convert attachment back to what it was
+  $attach=~s/\[TOKEN-$rand-(\d+)\]\n/$hash{$rand}{$1}/sg;
+
+  # it's tempting to mime-decode here, but no
+  # using sha1 here (instead of just random) lets identical
+  # attachments share space
+  my($sha) = sha1_hex($attach);
+
+  write_file($attach,"/usr/local/etc/sha/$sha");
+
+  return "[SEE /usr/local/etc/sha/$sha]";
 }
 
