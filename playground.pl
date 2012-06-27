@@ -25,7 +25,7 @@ require "bc-twitter.pl";
 $str = "food"x12;
 
 if ($str=~/((food)+)/) {
-  debug("MATCH: $1");
+  debug("MATCH: $1, $2");
 }
 
 # debug($str);
