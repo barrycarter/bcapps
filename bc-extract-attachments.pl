@@ -54,7 +54,7 @@ sub handle_attachments {
   my($msg) = join("",@_);
   my($chars) = "[a-zA-Z0-9\+\/]";
 
-  $msg=~s/(($chars{50,}\n)+)/handle_attachment($1)/sg;
+  $msg=~s/(($chars{50,}\=*\n)+)($chars+\=*)/handle_attachment("$1$2")/seg;
 
   # and append to outfile
   append_file($msg,$outfile);
@@ -133,13 +133,6 @@ sub handle_attachment {
   # ignore tiny attachments
   if (length($attach)<10000) {return $attach;}
 
-  # find the random key I'm dealing with
-  my(%hash) = %{$hashref};
-  my($rand) = (keys %hash);
-
-  # convert attachment back to what it was
-  $attach=~s/\[TOKEN-$rand-(\d+)\]\n/$hash{$rand}{$1}/sg;
-
   # it's tempting to mime-decode here, but no
   # using sha1 here (instead of just random) lets identical
   # attachments share space
@@ -149,9 +142,10 @@ sub handle_attachment {
   unless (-f "/usr/local/etc/sha/$sha") {
     write_file($attach,"/usr/local/etc/sha/$sha");
     # half-hearted attempt to decode
-    system("mimencode -u /usr/local/etc/sha/$sha > /usr/local/etc/sha/$sha.dec");
+    system("base64 -d /usr/local/etc/sha/$sha > /usr/local/etc/sha/$sha.dec");
   }
 
-  return "[SEE /usr/local/etc/sha/$sha]";
+  return encode_base64("[SEE /usr/local/etc/sha/$sha]");
 }
+
 
