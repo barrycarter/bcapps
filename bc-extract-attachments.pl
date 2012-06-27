@@ -19,14 +19,23 @@ chdir(tmpdir("bc-extract"));
 debug("DIR: $ENV{PWD}");
 
 while (<A>) {
+  # could I use redo here?
   # handle message we just saw (handle_msg'll ignore empty call on first msg)
   if (/^From /) {
     $num++;
     handle_attachments($msg);
-    $msg=$_;
+  }
+
+  $msg = "$msg$_";
+
+  # potential MIME line?
+  if (/^[a-z0-9\+\/]+$/i) {
+    push(@{$attach{$an}}, $_);
   } else {
-#    debug("READ: $_");
-    $msg = "$msg$_";
+    # a non-MIME line means we MUST advance $an, even though this will
+    # lead to big gaps in the numbering of %attach (which is one of
+    # the reasons it's a hash and not an array)
+    $an++;
   }
 }
 
@@ -41,15 +50,17 @@ sub handle_attachments {
 
   debug("MSG: $msg");
 
+  debug("ATTACH(",unfold({%attach}),")");
+
   # only match "big" attachments
 
   # TODO: this could theoretically capture text, but until we have
   # nested regexs, can't do much about this (except write my own
   # parser, not necessarily a bad idea)
   # TODO: 32767 is max Perl allows below
-  while ($msg=~s/([a-zA-Z0-9\+\n\/\=]{32767,})//s) {
-    debug("1: <$1>");
-  }
+#  while ($msg=~s/([a-zA-Z0-9\+\n\/\=]{32767,})//s) {
+#    debug("1: <$1>");
+#  }
 
   
 
