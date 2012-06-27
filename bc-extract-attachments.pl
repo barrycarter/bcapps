@@ -41,8 +41,15 @@ sub handle_attachments {
 
   debug("MSG: $msg");
 
-  $msg=~/^([a-zA-Z0-9\+]+)$/;
-  debug("1: <$1>");
+  # only match "big" attachments
+
+  # TODO: this could theoretically capture text, but until we have
+  # nested regexs, can't do much about this (except write my own
+  # parser, not necessarily a bad idea)
+  # TODO: 32767 is max Perl allows below
+  while ($msg=~s/([a-zA-Z0-9\+\n\/\=]{32767,})//s) {
+    debug("1: <$1>");
+  }
 
   
 
