@@ -8,6 +8,13 @@ require "/usr/local/lib/bclib.pl";
 
 (($file) = shift) || die("Usage: $0 filename");
 
+warn "TESTING";
+$outfile = "/home/barrycarter/20120627/outfile";
+
+if (-f $outfile) {
+  die ("$outfile exists and I'm too chicken to overwrite it");
+}
+
 # handle bzipped files
 if ($file=~/\.bz2$/) {
   open(A,"bzcat $file|")||die("Can't open pipe $file, $!");
@@ -40,7 +47,9 @@ sub handle_attachments {
   my($rand);
 
   # tokenize mime-like lines
-  my($str, $hashref) = inner_regex($msg, "[a-zA-Z0-9\+\/]+\n");
+  # could theoretically capture long words, but handle_attachment
+  # should take care of that
+  my($str, $hashref) = inner_regex($msg, "[a-zA-Z0-9\+\/]{50,}\n");
   my(%hash) = %{$hashref};
   debug("STR:",$str,"HASHREF:",$hashref);
 
@@ -52,6 +61,9 @@ sub handle_attachments {
   # TODO: the inner regex isn't matched, so I should use symbols to
   # reduce CPU work
   $str=~s/((\[TOKEN-$rand-\d+\]\n)+)/handle_attachment($1,$hashref)/esg;
+
+  # and append to outfile
+  append_file($str,$outfile);
 
   return;
 }
@@ -72,7 +84,7 @@ TODO: should I be using Perl::Tokenize or similar here?
 
 sub inner_regex {
   my($str, $regex, $options) = @_;
-  my($token, %hash, $n);
+  my($n, $token, %hash) = (0);
 
   # find token not in string
   # TODO: this could theoretically fail, but unlikely
