@@ -4,6 +4,9 @@
 # attachments and stores them in files, replacing the attachment with
 # a text string
 
+# Options:
+# --overwrite: overwrite output file (only for testing!)
+
 require "/usr/local/lib/bclib.pl";
 
 (($file) = shift) || die("Usage: $0 filename");
@@ -11,9 +14,12 @@ require "/usr/local/lib/bclib.pl";
 warn "TESTING";
 $outfile = "/home/barrycarter/20120627/outfile";
 
-if (-f $outfile) {
+if (-f $outfile && !$globopts{overwrite}) {
   die ("$outfile exists and I'm too chicken to overwrite it");
 }
+
+# this prevents appending to an existing file
+system("rm $outfile");
 
 # handle bzipped files
 if ($file=~/\.bz2$/) {
@@ -43,19 +49,6 @@ sub handle_attachments {
   my($msg) = @_;
   my($rand);
 
-  # find things that might be MIME messages (ugly!)
-  while ($msg =~s/\n\-\-(.*?)\n(.*?)\n\-\-\1\-\-/handle_attachment($2)/es) {
-    debug("1: $1");
-  }
-
-warn "TESTING";
-  return ;
-
-  # find all potential MIME boundaries
-  my(@bounds) = ($msg=~/boundary=\"(.*?)\"/isg);
-
-  debug("BOUNDS",@bounds);
-
   # tokenize mime-like lines
   # could theoretically capture long words, but handle_attachment
   # should take care of that
@@ -67,10 +60,11 @@ warn "TESTING";
   # TODO: should inner_regex just return this too?
   ($rand) = keys %hash;
 
-  # and now, handle each attachment
+  # and now, handle each attachment (including last line of MIME
+  # characters that may be less than 50 in length
   # TODO: the inner regex isn't matched, so I should use symbols to
   # reduce CPU work
-  $str=~s/((\[TOKEN-$rand-\d+\]\n)+)/handle_attachment($1,$hashref)/esg;
+  $str=~s/((?:\[TOKEN-$rand-\d+\]\n)+)(.*?)$/handle_attachment("$1$2",$hashref)/esg;
 
   # and append to outfile
   append_file($str,$outfile);
