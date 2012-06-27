@@ -34,6 +34,8 @@ while (<A>) {
   if (/^From /) {
     $num++;
     handle_attachments($msg);
+    $msg = "";
+    debug("MSG: $num");
   }
 
   $msg = "$msg$_";
@@ -48,13 +50,14 @@ handle_attachments($msg);
 sub handle_attachments {
   my($msg) = @_;
   my($rand);
+  my($chars) = "[a-zA-Z0-9\+\/]";
 
   # tokenize mime-like lines
   # could theoretically capture long words, but handle_attachment
   # should take care of that
-  my($str, $hashref) = inner_regex($msg, "[a-zA-Z0-9\+\/]{50,}\n");
+  my($str, $hashref) = inner_regex($msg, "$chars\{50,\}\=?\n");
   my(%hash) = %{$hashref};
-  debug("STR:",$str,"HASHREF:",$hashref);
+#  debug("STR:",$str,"HASHREF:",$hashref);
 
   # what was the random key?
   # TODO: should inner_regex just return this too?
@@ -64,7 +67,7 @@ sub handle_attachments {
   # characters that may be less than 50 in length
   # TODO: the inner regex isn't matched, so I should use symbols to
   # reduce CPU work
-  $str=~s/((?:\[TOKEN-$rand-\d+\]\n)+)(.*?)$/handle_attachment("$1$2",$hashref)/esg;
+  $str=~s/((?:\[TOKEN-$rand-\d+\]\n)+)($chars+\=?)/handle_attachment("$1$2",$hashref)/esg;
 
   # and append to outfile
   append_file($str,$outfile);
@@ -108,7 +111,7 @@ sub inner_regex {
 
 sub handle_attachment {
   my($attach, $hashref) = @_;
-  debug("GOT: $attach");
+#  debug("GOT: $attach");
 
   # find the random key I'm dealing with
   my(%hash) = %{$hashref};
@@ -122,7 +125,10 @@ sub handle_attachment {
   # attachments share space
   my($sha) = sha1_hex($attach);
 
-  write_file($attach,"/usr/local/etc/sha/$sha");
+  # if it already exists, no point in writing it
+  unless (-f "/usr/local/etc/sha/$sha") {
+    write_file($attach,"/usr/local/etc/sha/$sha");
+  }
 
   return "[SEE /usr/local/etc/sha/$sha]";
 }
