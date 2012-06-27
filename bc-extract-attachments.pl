@@ -22,9 +22,6 @@ if ($file=~/\.bz2$/) {
   open(A,$file)||die("Can't open $file, $!");
 }
 
-chdir(tmpdir("bc-extract"));
-debug("DIR: $ENV{PWD}");
-
 while (<A>) {
   # could I use redo here?
   # handle message we just saw (handle_msg'll ignore empty call on first msg)
@@ -45,6 +42,19 @@ handle_attachments($msg);
 sub handle_attachments {
   my($msg) = @_;
   my($rand);
+
+  # find things that might be MIME messages (ugly!)
+  while ($msg =~s/\n\-\-(.*?)\n(.*?)\n\-\-\1\-\-/handle_attachment($2)/es) {
+    debug("1: $1");
+  }
+
+warn "TESTING";
+  return ;
+
+  # find all potential MIME boundaries
+  my(@bounds) = ($msg=~/boundary=\"(.*?)\"/isg);
+
+  debug("BOUNDS",@bounds);
 
   # tokenize mime-like lines
   # could theoretically capture long words, but handle_attachment
@@ -104,6 +114,7 @@ sub inner_regex {
 
 sub handle_attachment {
   my($attach, $hashref) = @_;
+  debug("GOT: $attach");
 
   # find the random key I'm dealing with
   my(%hash) = %{$hashref};
