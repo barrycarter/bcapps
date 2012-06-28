@@ -2375,6 +2375,41 @@ sub find_nearest_zenith {
   }
 }
 
+=item inner_regex($str, $regex, $options)
+
+Given string $str, replace $regex with token string that's guarenteed
+not to appear in $str itself. Return the parsed string and a hash
+mapping the replacement back to the original string.
+
+$options currently unused
+
+TODO: not super happy with [TOKEN-], don't really need it.
+
+TODO: should I be using Perl::Tokenize or similar here?
+
+=cut
+
+sub inner_regex {
+  my($str, $regex, $options) = @_;
+  my($n, $token, %hash) = (0);
+  my(@l);
+
+  # find token not in string
+  # TODO: this could theoretically fail, but unlikely
+  # <h>the second statement below is dedicated to the
+  # Society for the Prevention of Menstruation (ARGHHH)</h>
+  do {$rand=rand(); $rand=~s/\.//;} until ($str!~/$rand/);
+
+  $str=~s/($regex)/inner_regex_helper($1)/eg;
+
+  sub inner_regex_helper {
+    $hash{$rand}{$n} = shift;
+    return "[TOKEN-$rand-$n]";
+  }
+
+  return $str, {%hash};
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
   debug("END: CLEANING UP TMP FILES");

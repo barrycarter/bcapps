@@ -36,7 +36,6 @@ while (<A>) {
     handle_attachments(@msg);
     @msg=();
     debug("MSG: $num");
-#    if ($num>=228) {exit;}
   }
 
   push(@msg,$_);
@@ -58,35 +57,6 @@ sub handle_attachments {
 
   # and append to outfile
   append_file($msg,$outfile);
-
-#  debug("MSG: $msg");
-
-#  warn "TESTING";
-  return;
-
-#  debug("MSG:",$msg,"ENDMSG");
-
-  # tokenize mime-like lines
-  # could theoretically capture long words, but handle_attachment
-  # should take care of that
-  my($str, $hashref) = inner_regex($msg, "$chars\{50,\}\=*\n");
-  my(%hash) = %{$hashref};
-#  debug("STR:",$str,"HASHREF:",$hashref);
-
-  # what was the random key?
-  # TODO: should inner_regex just return this too?
-  my($rand) = keys %hash;
-
-  # and now, handle each attachment (including last line of MIME
-  # characters that may be less than 50 in length
-  # TODO: the inner regex isn't matched, so I should use symbols to
-  # reduce CPU work
-  $str=~s/((?:\[TOKEN-$rand-\d+\]\n)+)($chars+\=*)/handle_attachment("$1$2",$hashref)/esg;
-
-  # and append to outfile
-  append_file($str,$outfile);
-
-  return;
 }
 
 =item inner_regex($str, $regex, $options)
