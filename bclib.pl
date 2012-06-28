@@ -2431,7 +2431,7 @@ sub osm_cache_bc {
 
   my($dir) = "/var/tmp/OSM/cache/$1/$2";
 
-  # creating directory here is probably a bad idea
+  # creating directory here is probably a bad idea (inefficient)
   unless (-d $dir) {system("mkdir -p $dir");}
 
   return "$dir/$sha";
