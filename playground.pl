@@ -22,6 +22,8 @@ use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
+exit;
+
 $str = "food"x12;
 
 if ($str=~/((food)+)/) {

@@ -1,9 +1,9 @@
 <osmChange><create>
-<node id="-1" lat="3.141592653" lon="2.718281828" changeset="11899798">
+<node id="-1" lat="3.141592653" lon="2.718281828" changeset="12048085">
 <tag k="testing" v="barrycarter" />
 <tag k="ignore" v="pie" />
 </node>
-<node id="-2" lat="2.718281828" lon="3.141592653" changeset="11899798">
+<node id="-2" lat="2.718281828" lon="3.141592653" changeset="12048085">
 <tag k="testing" v="barrycarter" />
 <tag k="ignore" v="epi" />
 </node>

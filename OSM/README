@@ -9,6 +9,7 @@ fgrep --color=always -if data/businessaddresses.txt /var/tmp/addr-with-space.txt
 This gives me latitude/longitude for ABQ businesses (roughly). Adding
 coloring will let me snip out the exact address from the line.
 
+note: test4.txt is the working version
 
 
 

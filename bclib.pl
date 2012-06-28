@@ -2410,6 +2410,33 @@ sub inner_regex {
   return $str, {%hash};
 }
 
+=item osm_cache_bc($lat,$lon)
+
+Given the "lower left" (southwest) latitude/longitude of a 0.1x0.1
+degree box, return a consistent filename to cache it.
+
+Really only useful for stuff in OSM/ (so that all programs there use
+the same scheme)
+
+=cut
+
+sub osm_cache_bc {
+  my($lat,$lon) = @_;
+
+  # .2f just to make sure we're rounded to 2 digits
+  my($sha) = sha1_hex(sprintf("%.2f,%.2f"),$lat,$lon);
+
+  # sub directorize
+  $sha=~/^(..)(..)/;
+
+  my($dir) = "/var/tmp/OSM/cache/$1/$2";
+
+  # creating directory here is probably a bad idea
+  unless (-d $dir) {system("mkdir -p $dir");}
+
+  return "$dir/$sha";
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
   debug("END: CLEANING UP TMP FILES");

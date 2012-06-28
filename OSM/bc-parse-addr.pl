@@ -69,14 +69,19 @@ $latlon) = split(/\|/, $_);
   # obtain OSM data for this chunk (to avoid duplicating stuff!)
   # caching is important here, so normalizing to 1/100th degree
   $url = sprintf("http://api.openstreetmap.org/api/0.6/map/?bbox=%.2f,%.2f,%.2f,%.2f", $lon, $lat, $lon+.01, $lat+.01);
-  $sha = sha1_hex($url);
+  my($outfile) = osm_cache_bc($lat,$lon);
+
+debug("OUTFILE: $outfile");
+
+warn "TESTING";
+next;
 
   # have I dl'd this URL before?
-  unless (-f "/var/tmp/OSM/$sha") {
-    ($out, $err, $res) = cache_command("curl -o /var/tmp/OSM/$sha '$url'");
+  unless (-f $outfile) {
+    ($out, $err, $res) = cache_command("curl -o $outfile '$url'");
   }
 
-  $data = read_file("/var/tmp/OSM/$sha");
+  $data = read_file($outfile);
   $n++;
 
   if ($data=~/$num $sname/is) {
@@ -93,7 +98,8 @@ close(A);
 # <h>I wonder if there's treatment for excessive sorting disease</h>
 for $i (sort keys %list) {
   $list = join("\n", sort(@{$list{$i}}));
-  write_file($list, "/var/tmp/OSM/put-$i");
+  debug("LIST: $list");
+#  write_file($list, "/var/tmp/OSM/put-$i");
 }
 
 

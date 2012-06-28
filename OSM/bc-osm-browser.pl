@@ -68,22 +68,14 @@ sub get_osm {
   $lon = sprintf("%.2f", $lon);
 
   # where to store this
-  my($sha) = sha1_hex("$lat,$lon");
-
-  # .01 degree tiles -> 360*100*180*100 = ~648M tiles total, so
-  # splitting into dirs
-  $sha=~m%^(..)(..)%;
-  my($dir) = "/var/tmp/OSM/cache/$1/$2";
+  my($outfile) = osm_cache_bc($lat,$lon);
 
   # does it already exist?
-  if (-f "$dir/$sha") {return read_file("$dir/$sha");}
-
-  # TODO: test that below works
-  system("mkdir -p $dir");
+  if (-f $outfile) {return read_file($outfile);}
 
   # and get the data
   # TODO: handle "too much data" case
- my($cmd) = sprintf("curl -o $dir/$sha 'http://api.openstreetmap.org/api/0.6/map/?bbox=%.2f,%.2f,%.2f,%.2f'", $lon, $lat, $lon+.01, $lat+.01);
+ my($cmd) = sprintf("curl -o $outfile 'http://api.openstreetmap.org/api/0.6/map/?bbox=%.2f,%.2f,%.2f,%.2f'", $lon, $lat, $lon+.01, $lat+.01);
 
   my($out, $err, $res) = cache_command($cmd);
 }
