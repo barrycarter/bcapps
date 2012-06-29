@@ -2413,10 +2413,12 @@ sub inner_regex {
 =item osm_cache_bc($lat,$lon)
 
 Given the "lower left" (southwest) latitude/longitude of a 0.1x0.1
-degree box, return a consistent filename to cache it.
+degree box, return the data for that box (and cache results)
 
 Really only useful for stuff in OSM/ (so that all programs there use
-the same scheme)
+the same caching scheme)
+
+This function subsumes get_osm() in bc-osm-browser.pl
 
 =cut
 
@@ -2434,7 +2436,13 @@ sub osm_cache_bc {
   # creating directory here is probably a bad idea (inefficient)
   unless (-d $dir) {system("mkdir -p $dir");}
 
-  return "$dir/$sha";
+  # if file doesn't already exist, get it
+  unless (-f "$dir/$sha") {
+    my($cmd) = sprintf("curl -o $dir/$sha 'http://api.openstreetmap.org/api/0.6/map/?bbox=%.2f,%.2f,%.2f,%.2f'", $lon, $lat, $lon+.01, $lat+.01);
+    my($out, $err, $res) = cache_command($cmd);
+  }
+
+  return read_file("$dir/$sha");
 }
 
 # cleanup files created by my_tmpfile (unless --keeptemp set)

@@ -18,7 +18,7 @@ $user{lon} = -106.554;
 # TODO: remove dupes (should only happen w ways)
 for $i (-1..1) {
   for $j (-1..1) {
-    parse_file(get_osm($user{lat}+$i*.01, $user{lon}+$j*.01));
+    parse_file(osm_cache_bc($user{lat}+$i*.01, $user{lon}+$j*.01));
   }
 }
 
@@ -51,33 +51,6 @@ for $i (sort {$node{$a}{dist} <=> $node{$b}{dist}} keys %node) {
 for $i (keys %way) {
  unless ($way{$i}{name}) {next;}
  print "$way{$i}{name} is here!\n";
-}
-
-=item get_osm($lat, $lon)
-
-Obtain AND cache (important!) the OSM data for the .01 degree box
-whose lower left corner is $lat, $lon
-
-$lat and $lon are truncated to 2 decimal places for caching
-
-=cut
-
-sub get_osm {
-  my($lat, $lon) = @_;
-  $lat = sprintf("%.2f", $lat);
-  $lon = sprintf("%.2f", $lon);
-
-  # where to store this
-  my($outfile) = osm_cache_bc($lat,$lon);
-
-  # does it already exist?
-  if (-f $outfile) {return read_file($outfile);}
-
-  # and get the data
-  # TODO: handle "too much data" case
- my($cmd) = sprintf("curl -o $outfile 'http://api.openstreetmap.org/api/0.6/map/?bbox=%.2f,%.2f,%.2f,%.2f'", $lon, $lat, $lon+.01, $lat+.01);
-
-  my($out, $err, $res) = cache_command($cmd);
 }
 
 # parses the result of what the API sends us by updating the %node and

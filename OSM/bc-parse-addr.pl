@@ -66,23 +66,12 @@ $latlon) = split(/\|/, $_);
   unless ($latlon=~/^POINT\((.*?)\s+(.*?)\)$/) {next;}
   ($lon, $lat) = ($1, $2);
 
-  # obtain OSM data for this chunk (to avoid duplicating stuff!)
-  # caching is important here, so normalizing to 1/100th degree
-  $url = sprintf("http://api.openstreetmap.org/api/0.6/map/?bbox=%.2f,%.2f,%.2f,%.2f", $lon, $lat, $lon+.01, $lat+.01);
-  my($outfile) = osm_cache_bc($lat,$lon);
-
-debug("OUTFILE: $outfile");
-
-warn "TESTING";
-next;
-
-  # have I dl'd this URL before?
-  unless (-f $outfile) {
-    ($out, $err, $res) = cache_command("curl -o $outfile '$url'");
-  }
-
-  $data = read_file($outfile);
+  $data = osm_cache_bc($lat,$lon);
   $n++;
+
+  if ($n%1000==0) {debug("COUNT: $n");}
+
+#  debug("$num $sname($n)");
 
   if ($data=~/$num $sname/is) {
     debug("FOUND($n) $num $sname in $sha!");
