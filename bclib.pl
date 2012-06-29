@@ -31,6 +31,7 @@ $EARTH_RADIUS = 6371/1.609344; # miles
 # HACK: not sure this is right way to do this
 our(%globopts);
 our(%is_tempfile);
+our(%shared);
 
 # largest possible path
 $ENV{PATH} = "/opt/metaf2xml/bin/:/sw/bin/:/bin/:/usr/bin/:/usr/local/bin/:/usr/X11R6/bin/:/usr/lib/nagios/plugins:/usr/lib:/usr/sbin/:$ENV{HOME}/bin:$ENV{HOME}/PERL";
@@ -2420,6 +2421,8 @@ the same caching scheme)
 
 This function subsumes get_osm() in bc-osm-browser.pl
 
+TODO: Memory caching here is probably a bad idea
+
 =cut
 
 sub osm_cache_bc {
@@ -2427,6 +2430,9 @@ sub osm_cache_bc {
 
   # .2f just to make sure we're rounded to 2 digits
   my($sha) = sha1_hex(sprintf("%.2f,%.2f"),$lat,$lon);
+
+  # is it already cached in memory?
+  if ($shared{osm}{$sha}) {return $shared{osm}{$sha};}
 
   # sub directorize
   $sha=~/^(..)(..)/;
@@ -2442,7 +2448,10 @@ sub osm_cache_bc {
     my($out, $err, $res) = cache_command($cmd);
   }
 
-  return read_file("$dir/$sha");
+  debug("$lat/$lon not in memory, reading file $sha");
+  $shared{osm}{$sha} = read_file("$dir/$sha");
+
+  return $shared{osm}{$sha};
 }
 
 # cleanup files created by my_tmpfile (unless --keeptemp set)

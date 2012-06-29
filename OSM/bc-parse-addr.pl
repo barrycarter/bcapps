@@ -1,4 +1,4 @@
-#!/bin/perl
+#!/bin/perl -d:DProf
 
 # adds ABQ street addresses to OSM (openstreetmap.org)
 
@@ -70,6 +70,11 @@ $latlon) = split(/\|/, $_);
   $n++;
 
   if ($n%1000==0) {debug("COUNT: $n");}
+
+  if ($n>4000) {
+    warn "PROFILING";
+    exit(0);
+  }
 
 #  debug("$num $sname($n)");
 
