@@ -1,4 +1,4 @@
-#!/bin/perl -d:DProf
+#!/bin/perl
 
 # adds ABQ street addresses to OSM (openstreetmap.org)
 
@@ -71,12 +71,10 @@ $latlon) = split(/\|/, $_);
 
   if ($n%1000==0) {debug("COUNT: $n");}
 
-  if ($n>4000) {
-    warn "PROFILING";
-    exit(0);
-  }
-
-#  debug("$num $sname($n)");
+#  if ($n>4000) {
+#    warn "PROFILING";
+#    exit(0);
+#  }
 
   if ($data=~/$num $sname/is) {
     debug("FOUND($n) $num $sname in $sha!");
@@ -92,8 +90,8 @@ close(A);
 # <h>I wonder if there's treatment for excessive sorting disease</h>
 for $i (sort keys %list) {
   $list = join("\n", sort(@{$list{$i}}));
-  debug("LIST: $list");
-#  write_file($list, "/var/tmp/OSM/put-$i");
+ # debug("LIST: $list");
+  write_file($list, "/var/tmp/OSM/thelist");
 }
 
 

@@ -2429,18 +2429,16 @@ sub osm_cache_bc {
   my($lat,$lon) = @_;
 
   # .2f just to make sure we're rounded to 2 digits
-  my($sha) = sha1_hex(sprintf("%.2f,%.2f"),$lat,$lon);
+  # $sha is legacy variable name; sha1sum no longer involved
+  # NOTE: I had the call to sprintf completely messed up earlier :(
+  # The -.005 is for rounding
+  my($sha) = sprintf("OSM-%.2f,%.2f",$lat-.005,$lon-.005);
 
   # is it already cached in memory?
   if ($shared{osm}{$sha}) {return $shared{osm}{$sha};}
 
-  # sub directorize
-  $sha=~/^(..)(..)/;
-
-  my($dir) = "/var/tmp/OSM/cache/$1/$2";
-
-  # creating directory here is probably a bad idea (inefficient)
-  unless (-d $dir) {system("mkdir -p $dir");}
+  # no splitting into subdirectories
+  my($dir) = "/var/cache/OSM/";
 
   # if file doesn't already exist, get it
   unless (-f "$dir/$sha") {
@@ -2448,9 +2446,7 @@ sub osm_cache_bc {
     my($out, $err, $res) = cache_command($cmd);
   }
 
-  debug("$lat/$lon not in memory, reading file $sha");
   $shared{osm}{$sha} = read_file("$dir/$sha");
-
   return $shared{osm}{$sha};
 }
 
