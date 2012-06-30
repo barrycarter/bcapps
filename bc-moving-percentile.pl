@@ -3,7 +3,7 @@
 # Given a series of data, find the "moving percentile" of the first element
 require "/usr/local/lib/bclib.pl";
 
-$val = <>; $same = 1.;
+$val = <>;
 
 while (<>) {
   if ($_>$val) {$more++;} elsif ($_<$val) {$less++;} else {$same++;}
