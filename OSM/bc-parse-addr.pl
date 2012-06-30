@@ -51,19 +51,52 @@ SELECT data_export FROM abq3; (output of this is in db/abqaddr.bz2)
 
 =cut
 
+=item NOTES
+
+For chunk 1, obtained changeset id: 12068062
+
+
+=cut
+
 require "/usr/local/lib/bclib.pl";
+
+# TODO: add comments/tags to changeset (ie, metadata)
+
+# uploading in chunks
+# NOTE: early uploads are failing, so trying 5K at a time instead
+$chunksize = 5000;
+$changesetid = "12068062";
+$chunk = 1;
+
+# and the start and end of this chunk
+$chunkstart = ($chunk-1)*$chunksize+1;
+$chunkend = $chunkstart + $chunksize-1;
+
+# file for XML and XML headers
+open(B,">/tmp/abqaddresses-$chunkstart-$chunkend.xml");
+print B "<osmChange><create>\n";
 
 warn "Need changeset to actually do something with this program!";
 
-# open(A,"bzcat /home/barrycarter/BCGIT/db/abqaddr.bz2|");
+# sort the address in 'pin' order (no real reason why I chose this field)
+unless (-f "/tmp/abqsortbypin.txt") {
+  system("bzcat /home/barrycarter/BCGIT/db/abqaddr.bz2|sort -t'|' -k9 > /tmp/abqsortbypin.txt");
+}
 
-open(A,"/tmp/randomaddr.txt");
-
-warn "Using random sorted version solely for testing";
-
-warn "Testing, do not use!";
+open(A,"/tmp/abqsortbypin.txt");
 
 while (<A>) {
+  # counting here means I'm counting addresses I don't even use, but is faster
+
+  # number these so I can upload them one batch at a time
+  $count++;
+  if ($count%1000==0) {debug("COUNT: $count");}
+
+  # this controls which ones I upload this batch (hardcoding here is
+  # bad, but this is ultimately a 'single-use' program)
+
+  unless ($count>=$chunkstart && $count<=$chunkend) {next;}
+
   $_ = trim($_);
   ($lot, $block, $subdivision, $num, $sname, $stype, $sdir, $apt, $pin,
 $latlon) = split(/\|/, $_);
@@ -77,9 +110,6 @@ $latlon) = split(/\|/, $_);
   ($lon, $lat) = ($1, $2);
 
   $data = osm_cache_bc($lat,$lon);
-  $n++;
-
-  if ($n%1000==0) {debug("COUNT: $n");}
 
   if ($data=~/$num $sname/is) {
     debug("FOUND($n) $num $sname in $sha!");
@@ -94,19 +124,20 @@ $latlon) = split(/\|/, $_);
   $saddr=~s/\s+/ /isg;
   $saddr=trim($saddr);
 
-  debug("SADDR: *$saddr*");
-  next;
-
   # this is the XML to add this address
   # meta-tags will appear in changeset only
 my($xml) = << "MARK";
-
-<node id="-1" lat="$lat" lon="$lon" changeset="0">
-<tag k='' v='' />
-
+<node id="-$count" lat="$lat" lon="$lon" changeset="$changesetid">
+<tag k='name' v='$saddr' />
+<tag k='lot' v='$lot' />
+<tag k='block' v='$block' />
+<tag k='subdivision' v='$subdivision' />
+<tag k='pin' v='$pin' />
 </node>
 MARK
 ;
+
+print B $xml;
 
   # at this point, we need to add (or at least record that we need to add)
   push(@{$list{$sha}}, $_);
@@ -114,13 +145,12 @@ MARK
 
 close(A);
 
-# <h>I wonder if there's treatment for excessive sorting disease</h>
-for $i (sort keys %list) {
-  $list = join("\n", sort(@{$list{$i}}));
- # debug("LIST: $list");
-  write_file($list, "/var/tmp/OSM/thelist");
-}
+# footer for xml
+print B "</create></osmChange>\n";
+close(B);
+
+=item tags_for_changeset
 
 
 
-
+=cut

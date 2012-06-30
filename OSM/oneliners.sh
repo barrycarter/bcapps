@@ -37,7 +37,7 @@ exit;
 # request changeset (note my username/password is in ~/.netrc)
 # got back 11897676
 
-curl -vv -n -d @getchangesetid.txt -XPUT http://api.openstreetmap.org/api/0.6/changeset/create |& tee /tmp/out1.txt
+curl -vv -n -d '<osm><changeset /></osm>' -XPUT http://api.openstreetmap.org/api/0.6/changeset/create |& tee /tmp/out1.txt
 
 exit;
 
