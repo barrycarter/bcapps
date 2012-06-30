@@ -65,12 +65,13 @@ require "/usr/local/lib/bclib.pl";
 # uploading in chunks
 # NOTE: early uploads are failing, so trying 5K at a time instead
 $chunksize = 5000;
-$changesetid = "12068062";
+$changesetid = "12068601";
 $chunk = 1;
 
 # and the start and end of this chunk
-$chunkstart = ($chunk-1)*$chunksize+1;
-$chunkend = $chunkstart + $chunksize-1;
+# for testing, I'm defining chunkstart/chunkend myself
+$chunkstart = 1;
+$chunkend = 45000;
 
 # file for XML and XML headers
 open(B,">/tmp/abqaddresses-$chunkstart-$chunkend.xml");
@@ -86,8 +87,12 @@ unless (-f "/tmp/abqsortbypin.txt") {
 open(A,"/tmp/abqsortbypin.txt");
 
 while (<A>) {
-  # counting here means I'm counting addresses I don't even use, but is faster
+  
+  # HTML escaping
+  s/\&/&amp;/isg;
+  s/\'/&apos;/isg;
 
+  # counting here means I'm counting addresses I don't even use, but is faster
   # number these so I can upload them one batch at a time
   $count++;
   if ($count%1000==0) {debug("COUNT: $count");}
@@ -148,6 +153,9 @@ close(A);
 # footer for xml
 print B "</create></osmChange>\n";
 close(B);
+
+# and the command I should run (but don't actually run it)
+print "curl -vv -n -d @/tmp/abqaddresses-$chunkstart-$chunkend.xml -XPOST http://api.openstreetmap.org/api/0.6/changeset/$changesetid/upload | & tee output-chunkstart-$chunkstart.txt &\n";
 
 =item tags_for_changeset
 
