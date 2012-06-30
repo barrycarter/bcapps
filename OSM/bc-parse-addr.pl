@@ -52,7 +52,16 @@ SELECT data_export FROM abq3; (output of this is in db/abqaddr.bz2)
 =cut
 
 require "/usr/local/lib/bclib.pl";
-open(A,"bzcat /home/barrycarter/BCGIT/db/abqaddr.bz2|");
+
+warn "Need changeset to actually do something with this program!";
+
+# open(A,"bzcat /home/barrycarter/BCGIT/db/abqaddr.bz2|");
+
+open(A,"/tmp/randomaddr.txt");
+
+warn "Using random sorted version solely for testing";
+
+warn "Testing, do not use!";
 
 while (<A>) {
   $_ = trim($_);
@@ -60,7 +69,8 @@ while (<A>) {
 $latlon) = split(/\|/, $_);
 
   # if addr is 0 or missing, pointless
-  unless ($num) {next;}
+  # 99999 also indicates some sort of weirdness
+  unless ($num && $num != 99999) {next;}
 
   # get lat lon (or skip if NA)
   unless ($latlon=~/^POINT\((.*?)\s+(.*?)\)$/) {next;}
@@ -71,15 +81,32 @@ $latlon) = split(/\|/, $_);
 
   if ($n%1000==0) {debug("COUNT: $n");}
 
-#  if ($n>4000) {
-#    warn "PROFILING";
-#    exit(0);
-#  }
-
   if ($data=~/$num $sname/is) {
     debug("FOUND($n) $num $sname in $sha!");
     next;
   }
+
+  # determine street address (base.zip doesn't include it sadly)
+  my($saddr) = "$num $sname $stype $sdir";
+  if ($apt) {$saddr = "$saddr #$apt";}
+
+  # strip extra spaces
+  $saddr=~s/\s+/ /isg;
+  $saddr=trim($saddr);
+
+  debug("SADDR: *$saddr*");
+  next;
+
+  # this is the XML to add this address
+  # meta-tags will appear in changeset only
+my($xml) = << "MARK";
+
+<node id="-1" lat="$lat" lon="$lon" changeset="0">
+<tag k='' v='' />
+
+</node>
+MARK
+;
 
   # at this point, we need to add (or at least record that we need to add)
   push(@{$list{$sha}}, $_);
