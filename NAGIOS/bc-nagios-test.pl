@@ -112,6 +112,8 @@ $options currently unused
 TODO: don't hardcode my homedir (can't use $ENV{HOME}, since test runs
 as root, not me)
 
+TODO: should only find most recent file in each directory
+
 =cut
 
 sub bc_gaim_log_unanswered {
