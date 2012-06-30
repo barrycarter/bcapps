@@ -6,11 +6,8 @@ require "/usr/local/lib/bclib.pl";
 $val = <>;
 
 while (<>) {
-  if ($_>$val) {$more++;} elsif ($_<$val) {$less++;} else {$same++;}
-  $num = $less+$same/2;
-  $den = $less+$same+$more;
-  debug("$num/$den");
-#  debug("LESS/SAME/MORE: $less/$same/$more, SUM:",$less+$same+$more);
-  print $num/$den;
+  $pos{$_<=>$val}++;
+  # doesn't work sans $pile= below due to weird division rules?
+  print $pile=($pos{-1}+$pos{0}/2)/($pos{-1}+$pos{0}+$pos{1});
 }
 
