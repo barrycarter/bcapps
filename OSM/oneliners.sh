@@ -1,5 +1,11 @@
 # aliases below just to speed things up a bit
 
+# add addresses 500 at a time (I realize I'll have problems at 50K addresses)
+
+perl -le 'for ($i=501; $i<=255000; $i+=500) {$j=$i+499; print "bc-parse-addr.pl --changesetid=12101666 --chunkstart=$i --chunkend=$j --debug"}'
+
+exit;
+
 # check that my edits made it in
 alias osm1 "curl -o /tmp/epi.txt 'http://api.openstreetmap.org/api/0.6/map/?bbox=2.71,3.14,2.72,3.15'; curl -o /tmp/pie.txt 'http://api.openstreetmap.org/api/0.6/map/?bbox=3.14,2.71,3.15,2.72'"
 

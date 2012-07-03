@@ -64,9 +64,13 @@ require "/usr/local/lib/bclib.pl";
 
 # uploading in small chunks of 100 addr each (sharing changeset, but
 # not HTTP connection); chunkstart/end is now an option to prog
-$changesetid = "12068601";
+$changesetid = $globopts{changesetid};
 $chunkstart = $globopts{chunkstart};
 $chunkend = $globopts{chunkend};
+
+unless ($changesetid && $chunkstart && $chunkend) {
+  die ("Usage: $0 --changesetid=x --chunkstart=x --chunkend=x");
+}
 
 # file for XML and XML headers
 open(B,">/tmp/abqaddresses-$chunkstart-$chunkend.xml");
@@ -76,6 +80,9 @@ print B "<osmChange><create>\n";
 unless (-f "/tmp/abqsortbypin.txt") {
   system("bzcat /home/barrycarter/BCGIT/db/abqaddr.bz2|sort -t'|' -k9 > /tmp/abqsortbypin.txt");
 }
+
+# NOTE: I manually edited /tmp/abqsortbypin.txt after the above to
+# remove the addresses I'd already added via changeset 12068601
 
 open(A,"/tmp/abqsortbypin.txt");
 
@@ -88,7 +95,6 @@ while (<A>) {
   # counting here means I'm counting addresses I don't even use, but is faster
   # number these so I can upload them one batch at a time
   $count++;
-  if ($count%1000==0) {debug("COUNT: $count");}
 
   # this controls which ones I upload this batch (hardcoding here is
   # bad, but this is ultimately a 'single-use' program)
@@ -148,7 +154,9 @@ print B "</create></osmChange>\n";
 close(B);
 
 # and the command I should run (but don't actually run it)
-print "curl -vv -n -d @/tmp/abqaddresses-$chunkstart-$chunkend.xml -XPOST http://api.openstreetmap.org/api/0.6/changeset/$changesetid/upload | & tee output-chunkstart-$chunkstart.txt &\n";
+$cmd = "curl -vv -n -d \@/tmp/abqaddresses-$chunkstart-$chunkend.xml -XPOST http://api.openstreetmap.org/api/0.6/changeset/$changesetid/upload >& output-chunkstart-$chunkstart.txt\n";
+
+system($cmd);
 
 =item tags_for_changeset
 
