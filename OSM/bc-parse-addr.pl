@@ -62,22 +62,15 @@ require "/usr/local/lib/bclib.pl";
 
 # TODO: add comments/tags to changeset (ie, metadata)
 
-# uploading in chunks
-# NOTE: early uploads are failing, so trying 5K at a time instead
-$chunksize = 5000;
+# uploading in small chunks of 100 addr each (sharing changeset, but
+# not HTTP connection); chunkstart/end is now an option to prog
 $changesetid = "12068601";
-$chunk = 1;
-
-# and the start and end of this chunk
-# for testing, I'm defining chunkstart/chunkend myself
-$chunkstart = 1;
-$chunkend = 45000;
+$chunkstart = $globopts{chunkstart};
+$chunkend = $globopts{chunkend};
 
 # file for XML and XML headers
 open(B,">/tmp/abqaddresses-$chunkstart-$chunkend.xml");
 print B "<osmChange><create>\n";
-
-warn "Need changeset to actually do something with this program!";
 
 # sort the address in 'pin' order (no real reason why I chose this field)
 unless (-f "/tmp/abqsortbypin.txt") {

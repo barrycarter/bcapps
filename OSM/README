@@ -1,5 +1,17 @@
 Adding many data to openstreetmap.org
 
+This projects aims to add all Albuquerque street addresses (and later
+businesses) to OSM. It is NOT really part of the City of Albuquerque's
+open data initiative (http://cabq.gov/abq-data), but the data I use is
+also available there now (it's been available for years, but was
+harder to find).
+
+Changeset 12068601 was my attempt to upload 45K addresses at a time;
+this failed, as did my attempt to upload 5K addresses at a time, so
+this changeset somehow ended up with 3839 nodes. I plan to update
+bc-parse-addr.pl to ignore these nodes (alternate plan was to delete +
+re-add, but that seems excessive)
+
 Here's what I did with the output of bc-biz2ll.pl (ie,
 data/businessaddresses.txt):
 
