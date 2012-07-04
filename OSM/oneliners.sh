@@ -1,5 +1,12 @@
 # aliases below just to speed things up a bit
 
+# add the handful of addresses I've misses several times (BERN pincode
+# is repeated many times, so don't try to catch it)
+
+grep "'pin'" /tmp/abqaddresses-1-500000.xml | perl -nle '/v=.(.*?). \//; print $1' | sort | uniq | egrep -v '^BERN$' | fgrep -f - /tmp/abqsortbypin.txt | tee /tmp/abqsortbypin2.txt;: then replace abqsortbypin.txt by abqsortbypin2.txt
+
+exit;
+
 # add addresses 500 at a time (I realize I'll have problems at 50K addresses)
 
 perl -le 'for ($i=501; $i<=255000; $i+=500) {$j=$i+499; print "bc-parse-addr.pl --changesetid=12101666 --chunkstart=$i --chunkend=$j --debug"}'
