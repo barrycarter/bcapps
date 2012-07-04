@@ -12,6 +12,13 @@ this changeset somehow ended up with 3839 nodes. I plan to update
 bc-parse-addr.pl to ignore these nodes (alternate plan was to delete +
 re-add, but that seems excessive)
 
+Changeset 12101666 was another screw-up: I had the program uploading
+500 at a time, but accidentally did "curl &" instead of "curl", so had
+100+ curl processes running parallel.
+
+After that settles, I'll re-dl ABQ city data, so I won't duplicate
+anything I already added.
+
 Here's what I did with the output of bc-biz2ll.pl (ie,
 data/businessaddresses.txt):
 
