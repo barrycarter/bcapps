@@ -2442,7 +2442,7 @@ sub osm_cache_bc {
 
   # if file doesn't already exist, get it
   unless (-f "$dir/$sha") {
-    my($cmd) = sprintf("curl -o $dir/$sha 'http://api.openstreetmap.org/api/0.6/map/?bbox=%.2f,%.2f,%.2f,%.2f'", $lon, $lat, $lon+.01, $lat+.01);
+    my($cmd) = sprintf("curl -o $dir/$sha 'http://api.openstreetmap.org/api/0.6/map/?bbox=%.2f,%.2f,%.2f,%.2f'", $lon-.005, $lat-.005, $lon+.005, $lat+.005);
     my($out, $err, $res) = cache_command($cmd);
   }
 
