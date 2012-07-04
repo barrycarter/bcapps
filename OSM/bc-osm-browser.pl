@@ -11,8 +11,8 @@
 require "/usr/local/lib/bclib.pl";
 
 # TODO: let user set these
-$user{lat} = 35.116;
-$user{lon} = -106.554;
+# ($user{lat}, $user{lon}) = (35.116, -106.554);
+($user{lat}, $user{lon}) = (-35.116, -106.554+180);
 
 # get OSM data for 3x3 .01^2 degrees around user
 # TODO: remove dupes (should only happen w ways)

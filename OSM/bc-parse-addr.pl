@@ -154,9 +154,11 @@ print B "</create></osmChange>\n";
 close(B);
 
 # and the command I should run (but don't actually run it)
-$cmd = "curl -vv -n -d \@/tmp/abqaddresses-$chunkstart-$chunkend.xml -XPOST http://api.openstreetmap.org/api/0.6/changeset/$changesetid/upload >& output-chunkstart-$chunkstart.txt\n";
+$cmd = "curl -vv -n -d \@/tmp/abqaddresses-$chunkstart-$chunkend.xml -XPOST http://api.openstreetmap.org/api/0.6/changeset/$changesetid/upload >& /tmp/output-chunkstart-$chunkstart.txt";
 
-system($cmd);
+debug("CMD",$cmd);
+
+# system($cmd);
 
 =item tags_for_changeset
 
