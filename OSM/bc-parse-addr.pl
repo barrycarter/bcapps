@@ -120,6 +120,9 @@ $latlon) = split(/\|/, $_);
     next;
   }
 
+  # count of addresses I actually add
+  $truecount++;
+
   # determine street address (base.zip doesn't include it sadly)
   my($saddr) = "$num $sname $stype $sdir";
   if ($apt) {$saddr = "$saddr #$apt";}
@@ -154,11 +157,21 @@ print B "</create></osmChange>\n";
 close(B);
 
 # and the command I should run (but don't actually run it)
-$cmd = "curl -vv -n -d \@/tmp/abqaddresses-$chunkstart-$chunkend.xml -XPOST http://api.openstreetmap.org/api/0.6/changeset/$changesetid/upload >& /tmp/output-chunkstart-$chunkstart.txt";
+$cmd = "curl -f -Ss -n -d \@/tmp/abqaddresses-$chunkstart-$chunkend.xml -XPOST http://api.openstreetmap.org/api/0.6/changeset/$changesetid/upload >& /tmp/output-chunkstart-$chunkstart.txt";
+
+# if none at all, pointless
+unless ($truecount) {die "No addressed added, not running curl";}
 
 debug("CMD",$cmd);
 
-# system($cmd);
+$res = system($cmd);
+
+debug("RES: $res");
+
+# expect success, report failure
+if ($res) {
+  system("xmessage Something is not right, something is quite wrong!");
+}
 
 =item tags_for_changeset
 
