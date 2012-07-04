@@ -170,7 +170,7 @@ debug("RES: $res");
 
 # expect success, report failure
 if ($res) {
-  system("xmessage Something is not right, something is quite wrong!");
+  die "Something is not right, something is quite wrong!";
 }
 
 =item tags_for_changeset
