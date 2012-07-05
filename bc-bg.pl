@@ -23,6 +23,12 @@ if (system("xset q 1> /dev/null 2> /dev/null")) {exit(0);}
 push(@err,"","");
 push(@info,"______________________");
 
+# uptime (just the seconds)
+$uptime = read_file("/proc/uptime");
+$uptime=~s/ .*$//;
+$uptime = convert_time($uptime, "%dd%Hh%Mm");
+debug("UPTIME: $uptime");
+
 # TODO: add locking so program doesn't run twice
 # TODO: add alarms (maybe)
 
@@ -50,6 +56,8 @@ debug("NEXTEV: $nextev");
 	);
 
 push(@info, uc($map{$nextev}));
+
+push(@info, "UPTIME: $uptime");
 
 # @info = stuff we print (to top left corner)
 # local and GMT time
