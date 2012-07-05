@@ -164,7 +164,7 @@ unless ($truecount) {die "No addressed added, not running curl";}
 
 debug("CMD",$cmd);
 
-$res = system($cmd);
+# $res = system($cmd);
 
 debug("RES: $res");
 
