@@ -581,7 +581,7 @@ sub warnlocal {
   unless ($globopts{nowarn}) {warn(join("\n",@_));}
 }
 
-=item gcddist($x,$y,$u,$v)
+=item gcdist($x,$y,$u,$v)
 
 Great circle distance between latitude/longitude x,y and
 latitude/longitude u,v in miles

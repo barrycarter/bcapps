@@ -34,18 +34,44 @@ for $i (-1..1) {
   }
 }
 
-# use slippy map for reference (18 is max, but not always useful)
-$fname = osm_map($user{lat},$user{lon},15);
-system("xv $fname&");
+# user mercator coords
+($mercy, $mercx) = to_mercator($user{lat}, $user{lon});
 
-die "TESTING";
+# use slippy map for reference (18 is max, but not always useful)
+# $fname = osm_map($user{lat},$user{lon},15);
+# $fname2 = osm_map($user{lat},$user{lon},16);
+# $fname3 = osm_map($user{lat},$user{lon},17);
+# system("xv $fname $fname2 $fname3 &");
+
+# at this latitude, a mercator "unit" in feet is cos(lat)*world circumference
+$mercunit = $EARTH_RADIUS*$PI*2*cos($user{lat}*$DEGRAD)*5280;
+
+debug("MU: $mercunit");
+
+# for each node, compute distance/angle from user (+ more)
+for $i (keys %node) {
+  # convert to mercator
+  ($nodey, $nodex) = to_mercator($node{$i}{lat}, $node{$i}{lon});
+  # distance (OK to use Pythag since small area); below is in feet
+  $node{$i}{dist} = sqrt(($nodex-$mercx)**2 + ($nodey-$mercy)**2)*$mercunit;
+
+  # this is for testing only
+  $truedist = gcdist($user{lat},$user{lon},$node{$i}{lat},$node{$i}{lon})*5280;
+
+  debug($node{$i}{dist}-$truedist);
+
+#  debug("X/Y: $user{lat}, $user{lon}, $node{$i}{lat}, $node{$i}{lon}, $node{$i}{dist}, $truedist");
+}
+
+die "ETSTING";
+  
 
 # figure out max visibility (limited by longitude)
 $maxvis = $EARTH_RADIUS*$PI*2*.01/360*cos($user{lat}*$DEGRAD);
 debug("VIS: $maxvis");
 
 # for each node, add distance and direction (from user)
-for $i (keys %node) {
+# for $i (keys %node) {
   # calculate *approximate* N/S and E/W distance in miles
 
   # N/S dist is constant
@@ -66,7 +92,7 @@ for $i (keys %node) {
 
   # for printing...
   $node{$i}{nicedist} = sprintf("%d feet",$node{$i}{dist}*5280);
-}
+# }
 
 # print closest "20" nodes
 $nodeprintcount = 0;
