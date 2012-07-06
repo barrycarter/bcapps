@@ -2,17 +2,25 @@
 
 # text browser for OSM (openstreetmap.org)
 
-# NOTE: this assumes Earth is locally flat and does NOT work for large distances
+require "/usr/local/lib/bclib.pl";
+
+# NOTE: this assumes Earth is locally flat and does NOT work for large
+# distances
+
+# cardinal directions (0=8=east)
+@dirs = ("east", "northeast", "north", "northwest", "west", "southwest",
+	 "south", "southeast", "east");
+
+# defaults if user doesn't set them via global options
+defaults("lat=35.116&lon=-106.554&maxnodes=20");
+
+# copy global options to %user
+# this could copy pointless values, but that's probably ok?
+for $i (keys %globopts) {$user{$i} = $globopts{$i};}
 
 # %user: global hash with user information
 # %node: global hash with node information
 # %way: global hash with way information
-
-require "/usr/local/lib/bclib.pl";
-
-# TODO: let user set these
-# ($user{lat}, $user{lon}) = (35.116, -106.554);
-($user{lat}, $user{lon}) = (-35.116, -106.554+180);
 
 # get OSM data for 3x3 .01^2 degrees around user
 # TODO: remove dupes (should only happen w ways)
@@ -39,13 +47,29 @@ for $i (keys %node) {
   # direction and total dist (Pythag ok for small distances)
   $node{$i}{dir} = atan2($nsdist,$ewdist)*$RADDEG;
   $node{$i}{dist} = sqrt($nsdist*$nsdist+$ewdist*$ewdist);
+
+  # cardinal direction (to nearest 22.5 degrees)
+  if ($node{$i}{dir}<0) {$node{$i}{dir}+=360};
+
+  $card = round($node{$i}{dir}/45);
+  $node{$i}{nicedir} = $dirs[$card];
+
+  # for printing...
+  $node{$i}{nicedist} = sprintf("%d feet",$node{$i}{dist}*5280);
 }
+
+# print closest "20" nodes
+$nodeprintcount = 0;
 
 for $i (sort {$node{$a}{dist} <=> $node{$b}{dist}} keys %node) {
   if ($node{$i}{name}) {
-    print "$node{$i}{name} at $node{$i}{dist}, $node{$i}{dir}; $node{$i}{lat}, $node{$i}{lon}\n";
+    print "$node{$i}{name} is $node{$i}{nicedist} to your $node{$i}{nicedir}\n";
+    $nodeprintcount++;
   }
+  if ($nodeprintcount >= $user{maxnodes}) {last;}
 }
+
+die "TSETING";
 
 # TODO: vastly improve this
 for $i (keys %way) {

@@ -1,0 +1,5 @@
+<osm>
+  <changeset>
+    <tag k="test" v="please ignore this test"/>
+  </changeset>
+</osm>
