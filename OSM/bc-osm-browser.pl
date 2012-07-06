@@ -11,6 +11,10 @@ require "/usr/local/lib/bclib.pl";
 @dirs = ("east", "northeast", "north", "northwest", "west", "southwest",
 	 "south", "southeast", "east");
 
+# %user: global hash with user information
+# %node: global hash with node information
+# %way: global hash with way information
+
 # defaults if user doesn't set them via global options
 defaults("lat=35.116&lon=-106.554&maxnodes=20");
 
@@ -18,9 +22,9 @@ defaults("lat=35.116&lon=-106.554&maxnodes=20");
 # this could copy pointless values, but that's probably ok?
 for $i (keys %globopts) {$user{$i} = $globopts{$i};}
 
-# %user: global hash with user information
-# %node: global hash with node information
-# %way: global hash with way information
+warn("JFF");
+$user{lat}+=rand()*.02-.01;
+$user{lon}+=rand()*.02-.01;
 
 # get OSM data for 3x3 .01^2 degrees around user
 # TODO: remove dupes (should only happen w ways)
@@ -29,6 +33,12 @@ for $i (-1..1) {
     parse_file(osm_cache_bc($user{lat}+$i*.01, $user{lon}+$j*.01));
   }
 }
+
+# use slippy map for reference (18 is max, but not always useful)
+$fname = osm_map($user{lat},$user{lon},15);
+system("xv $fname&");
+
+die "TESTING";
 
 # figure out max visibility (limited by longitude)
 $maxvis = $EARTH_RADIUS*$PI*2*.01/360*cos($user{lat}*$DEGRAD);

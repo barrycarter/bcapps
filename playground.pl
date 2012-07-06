@@ -22,6 +22,36 @@ use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
+osm_map(35,-106,16);
+
+=item osm_map($lat, $lon, $zoom)
+
+Obtain and cache the level $zoom slippy? map for $lat, $lon
+
+returns name of file with PNG in it
+
+=cut
+
+sub osm_map {
+  my($lat, $lon, $zoom) = @_;
+
+  # convert to mercator
+  my($y,$x) = to_mercator($lat, $lon);
+
+  # use zoom to figure out canonical name
+  $y = floor($y*2**$zoom);
+  $x= floor($x*2**$zoom);
+  my($url) = "$zoom/$x/$y.png";
+  my($fname) = "$zoom,$x,$y.png";
+
+  # already exists?
+  if (-f "/var/cache/OSM/$fname") {return $fname;}
+
+  cache_command("curl -o /var/cache/OSM/$fname http://tile.openstreetmap.org/$url");
+
+  return $fname;
+}
+
 exit;
 
 $str = "food"x12;

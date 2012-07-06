@@ -2450,6 +2450,35 @@ sub osm_cache_bc {
   return $shared{osm}{$sha};
 }
 
+=item osm_map($lat, $lon, $zoom)
+
+Obtain and cache the level $zoom slippy? map for $lat, $lon
+Returns name of file with PNG in it
+
+TODO: tell where $lat, $lon would be on returned map
+
+=cut
+
+sub osm_map {
+  my($lat, $lon, $zoom) = @_;
+
+  # convert to mercator
+  my($y,$x) = to_mercator($lat, $lon);
+
+  # use zoom to figure out canonical name
+  $y = floor($y*2**$zoom);
+  $x= floor($x*2**$zoom);
+  my($url) = "$zoom/$x/$y.png";
+  my($fname) = "/var/cache/OSM/$zoom,$x,$y.png";
+
+  # already exists?
+  if (-f $fname) {return $fname;}
+
+  cache_command("curl -o $fname http://tile.openstreetmap.org/$url");
+
+  return $fname;
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
   debug("END: CLEANING UP TMP FILES");
