@@ -172,10 +172,10 @@ size 800,600
 setpixel 0,0,0,0,0
 MARK
 ;
-debug("HERRO!");
   # using global variables, but that's OK, since this is a
   # program-specific subroutine
   for $i (keys %way) {
+    debug("NAME: $way{$i}{name}");
     debug("X: $way{$i}{nodelist}");
     for $j (@{$way{$i}{nodelist}}) {
       # ignore points outside range
@@ -185,11 +185,19 @@ debug("HERRO!");
       my($px) = round(400 + 400*$node{$j}{dist}/$vis*cos($node{$j}{dir}*$DEGRAD));
       my($py) = round(300 + 300*$node{$j}{dist}/$vis*sin($node{$j}{dir}*$DEGRAD));
       debug("PY: $py", 300*$node{$j}{dist}/$vis*sin($node{$j}{dir}*$DEGRAD));
-      print A "setpixel $px,$py,255,255,255\n";
+
+      # single street printing for now
+#      unless ($way{$i}{name}=~/(cand|verm|wisc|virg)/i) {next;}
+
+      my($print) = substr($way{$i}{name},0,3);
+
+#      print A "setpixel $px,$py,255,255,255\n";
+      print A "string 255,255,255,$px,$py,tiny,$print\n";
 #      debug("J: $j");
     }
   }
 
   close(A);
+  system("fly -i /tmp/bob-fly.txt -o /tmp/output.gif && xv /tmp/output.gif");
 
 }
