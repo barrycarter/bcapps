@@ -16,16 +16,21 @@ ListPlot[Log[dond]/Log[10], PlotJoined->True, PlotRange->All]
 
 (*
 
-Non square grid again, but no silly translating to 0,0
+Simple segment-to-point distance
 
 *)
 
-segx[t_] = ax+t*(bx-ax)
-segy[t_] = ay+t*(by-ay)
+(* the x and y value of line segment x1,y1 to x2,y2 parametrized by t *)
+segx[t_] = x1 + t*(x2-x1)
+segy[t_] = y1 + t*(y2-y1)
 
-(* we are scaling distance, so x distance counts "r" as much *)
+(* square of distance from x0,y0 at parameter t *)
+dist2[x0_,y0_,t_] = (x0-segx[t])^2 + (y0-segy[t])^2
+dist[x0_,y0_,t_] = Sqrt[(x0-segx[t])^2 + (y0-segy[t])^2]
 
-dist[cx_,cy_,t_] = Sqrt[(r*(cx-segx[t]))^2 + (cy-segy[t])^2]
+mint2[x0_,y0_] = t /. Solve[D[dist2[x0,y0,t],t]==0,t][[1,1]]
+mint[x0_,y0_] = t /. Solve[D[dist[x0,y0,t],t]==0,t][[1,1]]
+
 
 least[ax_,ay_,bx_,by_,cx_,cy_] = t /. Solve[D[dist[cx,cy,t],t]==0,t][[1,1]]
 

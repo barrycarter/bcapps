@@ -22,35 +22,41 @@ use Time::JulianDay;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
-osm_map(35,-106,16);
+debug(closest(7,0,1,1,9,9));
 
-=item osm_map($lat, $lon, $zoom)
+=item closest($x0,$y0,$x1,$y1,$x2,$y2,$options)
 
-Obtain and cache the level $zoom slippy? map for $lat, $lon
+Return the smallest distance between the point $x0,$y0 and the line
+segment through ($x1,$y1) and ($x2,$y2), and the point on the line
+where $x0,$y0 is closest
 
-returns name of file with PNG in it
+$options currently unused
+
+TODO: allow closest distance to entire line, not just segment
 
 =cut
 
-sub osm_map {
-  my($lat, $lon, $zoom) = @_;
+sub closest {
+  my($x0,$y0,$x1,$y1,$x2,$y2) = @_;
 
-  # convert to mercator
-  my($y,$x) = to_mercator($lat, $lon);
+  # if x1,y1 to x2,y2 is parametrized by t, this t yields the smallest
+  # distance see playground.m for more details; there does NOT appear
+  # to be a simpler formula
+  my($t) = ($x1**2-$x1*$x2+$x0*(-$x1+$x2)-($y0-$y1)*($y1-$y2))/($x1**2- 2*$x1*$x2+$x2**2+($y1-$y2)**2);
 
-  # use zoom to figure out canonical name
-  $y = floor($y*2**$zoom);
-  $x= floor($x*2**$zoom);
-  my($url) = "$zoom/$x/$y.png";
-  my($fname) = "$zoom,$x,$y.png";
+  # since we're limiting to segment, truncate t at 0,1
+  $t = min(max($t,0),1);
 
-  # already exists?
-  if (-f "/var/cache/OSM/$fname") {return $fname;}
+  # point on segment where this min is acheived
+  my($minx) = $x1+$t*($x2-$x1);
+  my($miny) = $y1+$t*($y2-$y1);
 
-  cache_command("curl -o /var/cache/OSM/$fname http://tile.openstreetmap.org/$url");
+  # and distance
+  my($dist) = sqrt(($x0-$minx)**2 + ($y0-$miny)**2);
 
-  return $fname;
+  return $dist,$minx,$miny;
 }
+
 
 exit;
 

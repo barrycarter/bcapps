@@ -46,60 +46,47 @@ for $i (-1..1) {
 # at this latitude, a mercator "unit" in feet is cos(lat)*world circumference
 $mercunit = $EARTH_RADIUS*$PI*2*cos($user{lat}*$DEGRAD)*5280;
 
-debug("MU: $mercunit");
+# we can only guarentee .01 longitude worth of visibility (in feet)
+$vis = $mercunit/360/100;
+
+debug("VIS: $vis ft");
 
 # for each node, compute distance/angle from user (+ more)
 for $i (keys %node) {
+  # ignore unnamed nodes
+  unless ($node{$i}{name}) {next;}
+
   # convert to mercator
   ($nodey, $nodex) = to_mercator($node{$i}{lat}, $node{$i}{lon});
   # distance (OK to use Pythag since small area); below is in feet
-  $node{$i}{dist} = sqrt(($nodex-$mercx)**2 + ($nodey-$mercy)**2)*$mercunit;
+  # rounding to nearest foot
+  $node{$i}{dist} = round(sqrt(($nodex-$mercx)**2+($nodey-$mercy)**2)*$mercunit);
+  # ignore nodes that are out of visibility range (does this do anything?)
+  if ($node{$i}{dist} > $vis) {next;}
+
+  # and direction
+  $node{$i}{dir} = atan2($nodey-$mercy,$nodex-$nodey)*$RADDEG;
+  if ($node{$i}{dir}<0) {$node{$i}{dir}+=360;}
+
+  # niceify direction (integer division below)
+  $node{$i}{nicedir} = $dirs[$node{$i}{dir}/45];
+
+  # x and y coords of this node on a 800x600 image centered on user
+  $node{$i}{x} = 400 + 400*cos($node{$i}{dir}*DEGRAD);
 
   # this is for testing only
-  $truedist = gcdist($user{lat},$user{lon},$node{$i}{lat},$node{$i}{lon})*5280;
+#  $truedist = gcdist($user{lat},$user{lon},$node{$i}{lat},$node{$i}{lon})*5280;
 
-  debug($node{$i}{dist}-$truedist);
+#  debug($node{$i}{dist}-$truedist);
 
 #  debug("X/Y: $user{lat}, $user{lon}, $node{$i}{lat}, $node{$i}{lon}, $node{$i}{dist}, $truedist");
 }
 
-die "ETSTING";
-  
-
-# figure out max visibility (limited by longitude)
-$maxvis = $EARTH_RADIUS*$PI*2*.01/360*cos($user{lat}*$DEGRAD);
-debug("VIS: $maxvis");
-
-# for each node, add distance and direction (from user)
-# for $i (keys %node) {
-  # calculate *approximate* N/S and E/W distance in miles
-
-  # N/S dist is constant
-  $nsdist = ($node{$i}{lat}-$user{lat})*$EARTH_RADIUS*2*$PI/360;
-
-  # E/W distance is scaled by cos(lat)
-  $ewdist = ($node{$i}{lon}-$user{lon})*$EARTH_RADIUS*2*$PI/360*cos($user{lat}*$DEGRAD);
-
-  # direction and total dist (Pythag ok for small distances)
-  $node{$i}{dir} = atan2($nsdist,$ewdist)*$RADDEG;
-  $node{$i}{dist} = sqrt($nsdist*$nsdist+$ewdist*$ewdist);
-
-  # cardinal direction (to nearest 22.5 degrees)
-  if ($node{$i}{dir}<0) {$node{$i}{dir}+=360};
-
-  $card = round($node{$i}{dir}/45);
-  $node{$i}{nicedir} = $dirs[$card];
-
-  # for printing...
-  $node{$i}{nicedist} = sprintf("%d feet",$node{$i}{dist}*5280);
-# }
-
-# print closest "20" nodes
 $nodeprintcount = 0;
 
 for $i (sort {$node{$a}{dist} <=> $node{$b}{dist}} keys %node) {
   if ($node{$i}{name}) {
-    print "$node{$i}{name} is $node{$i}{nicedist} to your $node{$i}{nicedir}\n";
+    print "$node{$i}{name} is $node{$i}{dist} feet to your $node{$i}{nicedir}\n";
     $nodeprintcount++;
   }
   if ($nodeprintcount >= $user{maxnodes}) {last;}
