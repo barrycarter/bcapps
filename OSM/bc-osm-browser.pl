@@ -22,9 +22,10 @@ defaults("lat=35.116&lon=-106.554&maxnodes=20");
 # this could copy pointless values, but that's probably ok?
 for $i (keys %globopts) {$user{$i} = $globopts{$i};}
 
-warn("JFF");
-$user{lat}+=rand()*.02-.01;
-$user{lon}+=rand()*.02-.01;
+# peturb the start point for testing
+# warn("JFF");
+# $user{lat}+=rand()*.02-.01;
+# $user{lon}+=rand()*.02-.01;
 
 # get OSM data for 3x3 .01^2 degrees around user
 # TODO: remove dupes (should only happen w ways)
@@ -54,7 +55,7 @@ debug("VIS: $vis ft");
 # for each node, compute distance/angle from user (+ more)
 for $i (keys %node) {
   # ignore unnamed nodes
-  unless ($node{$i}{name}) {next;}
+#  unless ($node{$i}{name}) {next;}
 
   # convert to mercator
   ($nodey, $nodex) = to_mercator($node{$i}{lat}, $node{$i}{lon});
@@ -65,14 +66,15 @@ for $i (keys %node) {
   if ($node{$i}{dist} > $vis) {next;}
 
   # and direction
-  $node{$i}{dir} = atan2($nodey-$mercy,$nodex-$nodey)*$RADDEG;
+  $node{$i}{dir} = atan2($nodey-$mercy,$nodex-$mercx)*$RADDEG;
+  debug("node{$i}{dir} -> $node{$i}{$dir}");
   if ($node{$i}{dir}<0) {$node{$i}{dir}+=360;}
 
   # niceify direction (integer division below)
   $node{$i}{nicedir} = $dirs[$node{$i}{dir}/45];
 
   # x and y coords of this node on a 800x600 image centered on user
-  $node{$i}{x} = 400 + 400*cos($node{$i}{dir}*DEGRAD);
+  $node{$i}{x} = 400 + 400*cos($node{$i}{dir}*$DEGRAD);
 
   # this is for testing only
 #  $truedist = gcdist($user{lat},$user{lon},$node{$i}{lat},$node{$i}{lon})*5280;
@@ -81,6 +83,10 @@ for $i (keys %node) {
 
 #  debug("X/Y: $user{lat}, $user{lon}, $node{$i}{lat}, $node{$i}{lon}, $node{$i}{dist}, $truedist");
 }
+
+flymap();
+
+die "TESTING";
 
 $nodeprintcount = 0;
 
@@ -149,4 +155,41 @@ sub parse_file {
     $way{$thisway{id}} = {%thisway};
 
   }
+}
+
+# construct a PNG map using fly of current nodes/ways
+# this is more to help me as I write the program, not really "part" of
+# the program
+
+sub flymap {
+  # fly commands
+  # TODO: use tmpfile or subdir
+  open(A,">/tmp/bob-fly.txt");
+
+  print A << "MARK";
+new
+size 800,600
+setpixel 0,0,0,0,0
+MARK
+;
+debug("HERRO!");
+  # using global variables, but that's OK, since this is a
+  # program-specific subroutine
+  for $i (keys %way) {
+    debug("X: $way{$i}{nodelist}");
+    for $j (@{$way{$i}{nodelist}}) {
+      # ignore points outside range
+      if ($node{$j}{dist} > $vis) {next;}
+      # x/y position based on current location and 800x600 map
+      debug("DIST: $node{$j}{dist}/$vis, AN: $node{$j}{dir}");
+      my($px) = round(400 + 400*$node{$j}{dist}/$vis*cos($node{$j}{dir}*$DEGRAD));
+      my($py) = round(300 + 300*$node{$j}{dist}/$vis*sin($node{$j}{dir}*$DEGRAD));
+      debug("PY: $py", 300*$node{$j}{dist}/$vis*sin($node{$j}{dir}*$DEGRAD));
+      print A "setpixel $px,$py,255,255,255\n";
+#      debug("J: $j");
+    }
+  }
+
+  close(A);
+
 }
