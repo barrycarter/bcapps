@@ -2452,10 +2452,9 @@ sub osm_cache_bc {
 
 =item osm_map($lat, $lon, $zoom)
 
-Obtain and cache the level $zoom slippy? map for $lat, $lon
-Returns name of file with PNG in it
-
-TODO: tell where $lat, $lon would be on returned map
+Obtain and cache the level $zoom slippy? map for $lat, $lon Returns
+name of file with PNG in it, and the x/y positions of $lat/$lon in
+that PNG file (assuming 256x256 tiles)
 
 =cut
 
@@ -2465,18 +2464,48 @@ sub osm_map {
   # convert to mercator
   my($y,$x) = to_mercator($lat, $lon);
 
+  # figure out where in map $lat/$lon occurs
+  ($x,$y) = ($x*2**$zoom, $y*2**$zoom);
+
+  # for now, intentionally not rounding
+  my($px, $py) = (($x-int($x))*256, ($y-int($y))*256);
+
   # use zoom to figure out canonical name
-  $y = floor($y*2**$zoom);
-  $x= floor($x*2**$zoom);
+  $y = floor($y);
+  $x= floor($x);
   my($url) = "$zoom/$x/$y.png";
   my($fname) = "/var/cache/OSM/$zoom,$x,$y.png";
 
   # already exists?
-  if (-f $fname) {return $fname;}
+  if (-f $fname) {return $fname,$px,$py;}
 
   cache_command("curl -o $fname http://tile.openstreetmap.org/$url");
+  
+  debug("PX/PY: $px/$py");
+  return $fname,$px,$py;
+}
 
-  return $fname;
+=item slippy2latlon($x,$y,$zoom,$px,$py)
+
+Return the latitude and longitude of the $px/$py point on a slippy map
+whose zoom value is $zoom and whose x and y values are $x and $y
+
+(mostly copied from bc-mytile.pl)
+
+=cut
+
+sub slippy2latlon {
+  my($x,$y,$zoom,$px,$py) = @_;
+
+  # convert x/y to scaled coordinates (and add in pixel)
+  $x = ($x+$px/256)/2**$zoom;
+  $y = ($y+$py/256)/2**$zoom;
+
+  # and convert
+  my($lat) = -90 + (360*atan(exp($PI - 2*$PI*$y)))/$PI;
+  my($lon) = $x*360-180;
+
+  return $lat,$lon;
 }
 
 # cleanup files created by my_tmpfile (unless --keeptemp set)

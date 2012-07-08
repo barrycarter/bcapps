@@ -12,12 +12,15 @@ require "/usr/local/lib/bclib.pl";
 sub grab_osm_maps {
   for $lat (-82..82) {
     for $lon (-180..180) {
-      debug(osm_map($lat,$lon,0));
+      debug(osm_map($lat,$lon,4));
     }
   }
 }
 
-grab_osm_maps();
+($png, $x, $y) = osm_map(35,-106,4);
+debug("$png/$x/$y");
+debug(slippy2latlon(3,6,4,74,86.5));
+
 die "TESTING";
 
 open(A,">/tmp/bcdg.fly");
