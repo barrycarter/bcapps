@@ -6,6 +6,20 @@
 # and not try to recreate everything myself
 
 require "/usr/local/lib/bclib.pl";
+
+# grab all level 4? OSM maps (this isn't as hideous as it looks thanks
+# to caching)
+sub grab_osm_maps {
+  for $lat (-82..82) {
+    for $lon (-180..180) {
+      debug(osm_map($lat,$lon,0));
+    }
+  }
+}
+
+grab_osm_maps();
+die "TESTING";
+
 open(A,">/tmp/bcdg.fly");
 
 # spacing in degrees
