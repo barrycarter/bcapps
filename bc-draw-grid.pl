@@ -8,6 +8,13 @@
 require "/usr/local/lib/bclib.pl";
 open(A,">/tmp/bcdg.fly");
 
+# spacing in degrees
+$latspace = 15;
+$lonspace = 20;
+
+# the function
+$f = \&img_idtest;
+
 print A << "MARK";
 new
 size 800,600
@@ -15,22 +22,20 @@ setpixel 0,0,255,255,255
 MARK
 ;
 
-for $i (-6..6) {
-  for $j (-9..9) {
-    $lat = $i*15;
-    $lon = $j*20;
-    ($x,$y) = img_idtest($lat, $lon);
+for ($lat=90; $lat>=-90; $lat-=$latspace) {
+  for ($lon=180; $lon>=-180; $lon-=$lonspace) {
+    ($x,$y) = &$f($lat, $lon);
 
     # position string a little "SE" of dot
     my($sx,$sy) = ($x+5, $y+5);
     print A "string 0,0,0,$sx,$sy,tiny,$lat,$lon\n";
 
     # line to next east longitude
-    my($xe,$ye) = img_idtest($lat, $lon+20);
+    my($xe,$ye) = &$f($lat, $lon+20);
     print A "line $x,$y,$xe,$ye,255,0,0\n";
 
     # line to next south latitude
-    my($xs,$ys) = img_idtest($lat-15, $lon);
+    my($xs,$ys) = &$f($lat-15, $lon);
     print A "line $x,$y,$xs,$ys,0,0,255\n";
 
     # fcircle must come last to avoid being overwritten by lines
