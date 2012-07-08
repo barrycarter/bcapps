@@ -19,24 +19,36 @@ warn "TESTING w single value of x y";
 # loop through all level 4 slippy tiles
 for $x (0..15) {
   for $y (0..15) {
-    unless ($x==3 && $y==6) {next;}
+#    unless ($x==3 && $y==6) {next;}
 
-    # reset border
+    # reset border and distortion parameters
     %border = ();
+    @params = ();
 
     # below is sheer laziness, could've written out 4 statements
     for $px (0,255) {
       for $py (0,255) {
-	@{$border{$px}{$py}} = &$f(slippy2latlon($x,$y,4,$px,$py));
+	# the borders of this slippy tile
+	($lat,$lon) = slippy2latlon($x,$y,4,$px,$py);
+	# how we would map this border
+	($myx, $myy) = &$f($lat,$lon);
+	# store this info
+#	$translate{$px}{$py}{x} = $myx;
+#	$translate{$px}{$py}{y} = $myy;
+	# the distortion parameter for convert (imagemagick)
+	push(@params, "$px,$py,$myx,$myy");
+
       }
     }
 
-    debug(dump_var(%border));
+    # build up the convert command
+    $distort = join(" ",@params);
+    $distort = "'$distort'";
 
-
+    # and convert..
+    system("convert /var/cache/OSM/4,$x,$y.png -virtual-pixel transparent -distort Perspective $distort /tmp/bcdg-$x-$y.png");
   }
 }
-
 
 die "TESTING";
 
