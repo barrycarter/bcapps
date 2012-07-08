@@ -11,20 +11,37 @@ open(A,">/tmp/bcdg.fly");
 print A << "MARK";
 new
 size 800,600
-setpixel 0,0,0,0,0
+setpixel 0,0,255,255,255
 MARK
 ;
 
-for $i (-9..9) {
-  for $j (-18..18) {
-    $lat = $i*10;
-    $lon = $j*10;
+for $i (-6..6) {
+  for $j (-9..9) {
+    $lat = $i*15;
+    $lon = $j*20;
     ($x,$y) = img_idtest($lat, $lon);
-    print A "string 255,255,255,$x,$y,tiny,$lat,$lon\n";
+
+    # position string a little "SE" of dot
+    my($sx,$sy) = ($x+5, $y+5);
+    print A "string 0,0,0,$sx,$sy,tiny,$lat,$lon\n";
+
+    # line to next east longitude
+    my($xe,$ye) = img_idtest($lat, $lon+20);
+    print A "line $x,$y,$xe,$ye,255,0,0\n";
+
+    # line to next south latitude
+    my($xs,$ys) = img_idtest($lat-15, $lon);
+    print A "line $x,$y,$xs,$ys,0,0,255\n";
+
+    # fcircle must come last to avoid being overwritten by lines
+    print A "circle $x,$y,5,0,0,0\n";
+
   }
 }
 
 close(A);
+
+system("fly -i /tmp/bcdg.fly -o /tmp/bcdg.gif && xv /tmp/bcdg.gif&");
 
 # equiangular
 sub img_idtest {
