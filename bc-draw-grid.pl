@@ -18,9 +18,13 @@ warn "TESTING w single value of x y";
 
 # loop through all level 4 slippy tiles
 for $x (0..15) {
-  for $y (0..15) {
+  # TODO: not sure why y can't be 0 or 15?
+  for $y (1..14) {
 #    unless ($x==3 && $y==6) {next;}
 
+    print "copy 0,0,0,0,800,600,/tmp/bcdg-$x-$y.gif\n";
+
+    if (-f "/tmp/bcdg-$x-$y.gif") {next;}
     # reset border and distortion parameters
     %border = ();
     @params = ();
@@ -46,7 +50,7 @@ for $x (0..15) {
     $distort = "'$distort'";
 
     # and convert..
-    system("convert /var/cache/OSM/4,$x,$y.png -virtual-pixel transparent -distort Perspective $distort /tmp/bcdg-$x-$y.png");
+    system("convert -extent 800x600 -background transparent -matte -virtual-pixel transparent -distort Perspective $distort /var/cache/OSM/4,$x,$y.png /tmp/bcdg-$x-$y.gif");
   }
 }
 
