@@ -7,30 +7,40 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# grab all level 4? OSM maps (this isn't as hideous as it looks thanks
-# to caching)
-sub grab_osm_maps {
-  for $lat (-82..82) {
-    for $lon (-180..180) {
-      debug(osm_map($lat,$lon,4));
-    }
-  }
-}
-
-($png, $x, $y) = osm_map(35,-106,4);
-debug("$png/$x/$y");
-debug(slippy2latlon(3,6,4,74,86.5));
-
-die "TESTING";
-
-open(A,">/tmp/bcdg.fly");
-
 # spacing in degrees
 $latspace = 15;
 $lonspace = 20;
 
 # the function
 $f = \&img_idtest;
+
+warn "TESTING w single value of x y";
+
+# loop through all level 4 slippy tiles
+for $x (0..15) {
+  for $y (0..15) {
+    unless ($x==3 && $y==6) {next;}
+
+    # reset border
+    %border = ();
+
+    # below is sheer laziness, could've written out 4 statements
+    for $px (0,255) {
+      for $py (0,255) {
+	@{$border{$px}{$py}} = &$f(slippy2latlon($x,$y,4,$px,$py));
+      }
+    }
+
+    debug(dump_var(%border));
+
+
+  }
+}
+
+
+die "TESTING";
+
+open(A,">/tmp/bcdg.fly");
 
 print A << "MARK";
 new
@@ -75,3 +85,14 @@ sub img_idtest {
 
   return round($x),round($y);
 }
+
+# grab all level 4? OSM maps (this isn't as hideous as it looks thanks
+# to caching) [only needed to do this once]
+sub grab_osm_maps {
+  for $lat (-82..82) {
+    for $lon (-180..180) {
+      debug(osm_map($lat,$lon,4));
+    }
+  }
+}
+
