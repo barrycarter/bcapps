@@ -4,6 +4,7 @@
 # larger attempt to create mercator maps w/ arbitrary 'north pole' and
 # otherwise 'zoomed' maps); future idea is to use slippy tiles (OSM)
 # and not try to recreate everything myself
+# --gridonly: only draw the grid (useful for testing)
 
 # TODO: adaptive zooming (zoom more where needed)
 
@@ -14,8 +15,46 @@ $latspace = 15;
 $lonspace = 20;
 
 # the function
-$f = \&img_idtest;
-# $f = \&shrinkpole;
+# $f = \&img_idtest;
+# $f = \&sinusoidal;
+$f = \&polar;
+
+open(A,">/tmp/bdg2.fly");
+
+print A << "MARK";
+new
+size 800,600
+setpixel 0,0,255,255,255
+MARK
+;
+
+for ($lat=90; $lat>=-90; $lat-=$latspace) {
+  for ($lon=180; $lon>=-180; $lon-=$lonspace) {
+    ($x,$y) = &$f($lat, $lon);
+
+    # position string a little "SE" of dot
+    my($sx,$sy) = ($x+5, $y+5);
+    print A "string 0,0,0,$sx,$sy,tiny,$lat,$lon\n";
+
+    # line to next east longitude
+    my($xe,$ye) = &$f($lat, $lon+20);
+    print A "line $x,$y,$xe,$ye,255,0,0\n";
+
+    # line to next south latitude
+    my($xs,$ys) = &$f($lat-15, $lon);
+    print A "line $x,$y,$xs,$ys,0,0,255\n";
+
+    # fcircle must come last to avoid being overwritten by lines
+    print A "circle $x,$y,5,0,0,0\n";
+
+  }
+}
+
+close(A);
+
+system("fly -i /tmp/bdg2.fly -o /tmp/bdg2.gif");
+
+if ($globopts{gridonly}) {exit;}
 
 # TODO: better temp file naming
 open(A,">/tmp/bdg.fly");
@@ -57,48 +96,14 @@ for $x (0..15) {
     $distort = "'$distort'";
 
     # and convert..
-    system("convert -extent 800x600 -background transparent -matte -virtual-pixel transparent -distort Perspective $distort /var/cache/OSM/4,$x,$y.png /tmp/bcdg-$x-$y.gif");
+    $cmd = "convert -mattecolor transparent -extent 800x600 -background transparent -matte -virtual-pixel transparent -distort Perspective $distort /var/cache/OSM/4,$x,$y.png /tmp/bcdg-$x-$y.gif";
+    system($cmd);
   }
 }
 
 close(A);
 
 system("fly -i /tmp/bdg.fly -o /tmp/bdg1.gif");
-
-open(A,">/tmp/bdg2.fly");
-
-print A << "MARK";
-new
-size 800,600
-setpixel 0,0,255,255,255
-MARK
-;
-
-for ($lat=90; $lat>=-90; $lat-=$latspace) {
-  for ($lon=180; $lon>=-180; $lon-=$lonspace) {
-    ($x,$y) = &$f($lat, $lon);
-
-    # position string a little "SE" of dot
-    my($sx,$sy) = ($x+5, $y+5);
-    print A "string 0,0,0,$sx,$sy,tiny,$lat,$lon\n";
-
-    # line to next east longitude
-    my($xe,$ye) = &$f($lat, $lon+20);
-    print A "line $x,$y,$xe,$ye,255,0,0\n";
-
-    # line to next south latitude
-    my($xs,$ys) = &$f($lat-15, $lon);
-    print A "line $x,$y,$xs,$ys,0,0,255\n";
-
-    # fcircle must come last to avoid being overwritten by lines
-    print A "circle $x,$y,5,0,0,0\n";
-
-  }
-}
-
-close(A);
-
-system("fly -i /tmp/bdg2.fly -o /tmp/bdg2.gif");
 
 # equiangular
 sub img_idtest {
@@ -111,14 +116,24 @@ sub img_idtest {
   return round($x),round($y);
 }
 
-# I don't know the name for this, but it's often used
+# sinusoidal?
 
-sub shrinkpole {
+sub sinusoidal {
   my($lat,$lon) = @_;
 
   my($x) = 400 + ($lon/180)*400*cos($lat*$DEGRAD);
   my($y) = (90-$lat)*600/180;
 
+  return round($x),round($y);
+}
+
+# polar
+
+sub polar {
+  my($lat,$lon) = @_;
+  my($r) = (90-$lat)/180*300;
+  my($x) = 400+$r*cos(-$lon*$DEGRAD);
+  my($y) = 300+$r*sin(-$lon*$DEGRAD);
   return round($x),round($y);
 }
 
