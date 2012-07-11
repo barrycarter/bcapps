@@ -35,6 +35,30 @@ for $i (-1..1) {
   }
 }
 
+for $i (keys %way) {
+  %hash = $way{$i};
+#  debug("BETA: $way{$i}{name}");
+}
+
+# debug("ALPHA",%way);
+
+way_relative();
+
+# <h>"sub way" would've gotten me sued<G></h>
+# for ways, compute info relative to user
+
+sub way_relative {
+  for $i (keys %way) {
+    # ignore unnamed ways
+    my(%way) = %{$way{$i}};
+#    debug("WAY: $way", dump_var($way));
+    unless ($way{name}) {next;}
+    debug($way{name});
+  }
+}
+
+die "TESTING";
+
 # user mercator coords
 ($mercy, $mercx) = to_mercator($user{lat}, $user{lon});
 
@@ -51,6 +75,8 @@ $mercunit = $EARTH_RADIUS*$PI*2*cos($user{lat}*$DEGRAD)*5280;
 $vis = $mercunit/360/100;
 
 debug("VIS: $vis ft");
+
+# TODO: subroutinize a LOT of this
 
 # for each node, compute distance/angle from user (+ more)
 for $i (keys %node) {
@@ -153,6 +179,8 @@ sub parse_file {
     $thisway{nodelist} = [@nodelist];
 
     $way{$thisway{id}} = {%thisway};
+
+#    debug("RESULT",%thisway);
 
   }
 }
