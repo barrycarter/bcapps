@@ -72,11 +72,11 @@ sub projection {
 #  my($x, $y) = split(/\s+/, `echo $lat $lon | cs2cs +unit=km +proj=latlong +to +proj=merc`);
 #  my($x, $y) = split(/\s+/, `echo $lat $lon | cs2cs +proj=latlong +unit=km +to +proj=natearth`);
 
-  my($x, $y) = split(/\s+/, `echo $lat $lon | cs2cs +proj=latlong +to +proj=robin`);
+  my($x, $y) = split(/\s+/, `echo $lat $lon | cs2cs +proj=latlong +to +proj=gnom`);
 
 #  my($div) = 6378137*4;
 #  my($div) = 20*10**6;
-  my($div) = 10*10**6;
+  my($div) = 20*10**6;
 
   # special case
   if ($x eq "*") {return -1,-1;}
@@ -85,6 +85,9 @@ sub projection {
   # projection to projection (grumble)
   $x = 400 + $x/$div*400;
   $y = 300 + $y/$div*300;
+
+  # this is probably ugly
+  if ($x<0 || $y<0 || $x>800 || $y>600) {return -1,-1;}
 
   return round($x), round($y);
 }
