@@ -46,10 +46,34 @@ while ($data=~s/(<img[^>]*?>)//is) {
   unless ($src=~/cdn\.svcs\.c2\.uclick\.com/) {next;}
 
   # download image and exit this loop
-
-
-  debug($src);
+  unless (-f "$datadir/$date.gif") {
+    cache_command("curl -o $datadir/$date.gif -A 'Mozilla' '$src'");
+  }
+  last;
 }
+
+# convert 4-wide to 2x2 for kindle
+
+# split into 4 panels
+for $i (0,150,300,450) {
+  unless (-f "/tmp/peanuts-$date-$i.gif") {
+    cache_command("convert -crop 150x9999+$i+0 -trim -rotate -90 -geometry 300x400\! $datadir/$date.gif /tmp/peanuts-$date-$i.gif");
+  }
+}
+
+# and stitch back together
+unless (-f "/tmp/peanuts-$date-final.gif") {
+  cache_command("montage -tile 2x2 -geometry 300x400+0+0 /tmp/peanuts-$date-150.gif /tmp/peanuts-$date-450.gif /tmp/peanuts-$date-0.gif /tmp/peanuts-$date-300.gif /tmp/peanuts-$date-final.gif");
+}
+
+# created db/peanut-shell.html by hand
+
+# convert to mobi (I had to do this by hand because of the way my
+# mobi2html is installed:
+
+# html2mobi --title "Peanuts Test by Barry Carter (kindletest@barrycarter.info)" --author "Charles Schulz" --gentoc --fixhtmlbr /home/barrycarter/BCGIT/db/peanut-shell.html
+
+
 
 
 
