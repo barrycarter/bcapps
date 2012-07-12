@@ -4,6 +4,16 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# new approach, XML::Bare
+use XML::Bare;
+
+my $ob = new XML::Bare(text => read_file("/var/cache/OSM/OSM-51.51,-0.13"));
+
+my $hash = $ob->parse();
+
+debug(unfold($hash));
+die "TESTING";
+
 # NOTE: this assumes Earth is locally flat and does NOT work for large
 # distances
 
@@ -22,23 +32,23 @@ defaults("lat=35.116&lon=-106.554&maxnodes=20");
 # this could copy pointless values, but that's probably ok?
 for $i (keys %globopts) {$user{$i} = $globopts{$i};}
 
-# peturb the start point for testing
-# warn("JFF");
-# $user{lat}+=rand()*.02-.01;
-# $user{lon}+=rand()*.02-.01;
-
 # get OSM data for 3x3 .01^2 degrees around user
 # TODO: remove dupes (should only happen w ways)
 for $i (-1..1) {
   for $j (-1..1) {
+    debug("IJS: $i,$j");
     parse_file(osm_cache_bc($user{lat}+$i*.01, $user{lon}+$j*.01));
+    debug("IJE: $i,$j");
   }
 }
 
 for $i (keys %way) {
-  %hash = $way{$i};
-#  debug("BETA: $way{$i}{name}");
+  %hash = %{$way{$i}};
+  @nodes = $hash{nodes};
+  debug("BETA: $hash{name}, $hash{nodes}");
 }
+
+die "TESTING";
 
 # debug("ALPHA",%way);
 
@@ -136,10 +146,14 @@ for $i (keys %way) {
 # %way hashes. Returns nothing
 
 sub parse_file {
+  debug("START PARSE FILE");
   my($data) = @_;
+  debug("DATA: $data");
+die "TESTING";
 
   # convert <node .../> to <node ...></node>
-  $data=~s%<(node[^>]*)/>%<$1></node>%isg;
+  # for speed, ignore nodes w/ no info at least for now
+#  $data=~s%<(node[^>]*)/>%<$1></node>%isg;
 
   # handle nodes
   while ($data=~s%<node(.*?)>(.*?)</node>%%s) {
@@ -177,12 +191,10 @@ sub parse_file {
     while ($tags=~s%<nd ref="(.*?)"/>%%) {push(@nodelist,$1);}
     
     $thisway{nodelist} = [@nodelist];
-
     $way{$thisway{id}} = {%thisway};
-
-#    debug("RESULT",%thisway);
-
   }
+
+  debug("END PARSE FILE");
 }
 
 # construct a PNG map using fly of current nodes/ways
