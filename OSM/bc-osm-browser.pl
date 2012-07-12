@@ -29,15 +29,32 @@ for $i (keys %globopts) {$user{$i} = $globopts{$i};}
 # TODO: remove dupes (should only happen w ways)
 for $i (-1..1) {
   for $j (-1..1) {
-    debug("IJS: $i,$j");
-
     # using XML::Bare for speed <h>(not comfort)</h>
-    my($ob) = new XML::Bare(text => osm_cache_bc($user{lat}+$i*.01, $user{lon}+$j*.01));
+    # putting XML::Bare in list context forces parsing
+    ($ob) = new XML::Bare(text => osm_cache_bc($user{lat}+$i*.01, $user{lon}+$j*.01));
+
+    # may need to subroutinize this
+    # have to handle nodes/ways inside double loop, since I re-use $ob
+    for $k (@{$ob->{xml}{osm}{node}}) {
+      
+
+      debug("K: $k");
+      %k = %{$k};
+
+      if (ref($k{tag})=~/array/i) {debug("ARRAY",@{$k{$tag}},"ENDARRAY");}
+
+      for $l (keys %k) {
+	debug("L: $l -> $k{$l}");
+#	debug("L: $l -> $k{$l}{value}");
+      }
+    }
 
     # mark all nodes as such
-    push(@nodes, @{$ob->{xml}{osm}{node}});
+#    push(@nodes, @{$ob->{xml}{osm}{node}});
   }
 }
+
+die "TESTING";
 
 for $i (@nodes) {
 #  unless ($i->{name}) {next;}
