@@ -46,10 +46,8 @@ for $i (-1..1) {
 for $i (@nodes) {relative_node($i);}
 for $i (@ways) {relative_way($i);}
 
-
-
-for $i (@nodes) {
-  debug("I: $i->{dist}");
+for $i (@goodnodes) {
+  debug("I: $i->{name}, DIST: $i->{dist}");
 }
 
 die "TESTING";
@@ -117,7 +115,7 @@ sub relative_node {
     $noderef->{$i->{k}{value}} = $i->{v}{value};
   }
 
-  debug("NAME: $noderef->{name}");
+  unless ($noderef->{name}) {return;}
 
   # get lat, lon
   my($lat,$lon) = ($noderef->{lat}{value}, $noderef->{lon}{value});
@@ -129,6 +127,9 @@ sub relative_node {
 
   # ignore nodes that are out of visibility range (does this do anything?)
   if ($dist > $vis) {return;}
+
+  # "interesting" nodes (have names and within sight range)
+  push(@goodnodes, $noderef);
 
   # and direction
   my($dir) = fmod(atan2($nodey-$mercy,$nodex-$mercx),1)*$RADDEG;
