@@ -23,7 +23,7 @@ while ($all=~s%<tr>(.*?)</tr>%%is) {
 for $i (@rows) {
   # break into cells
   @cells = ();
-  while ($i=~s%<td[^>]*?>(.*?)</td>%%is) {
+  while ($i=~s%<td\s*[^>]*?>(.*?)</td>%%is) {
     push(@cells, $1);
   }
 
@@ -39,6 +39,13 @@ for $i (@rows) {
   print "<tr><th>$time</th>\n";
 
   for $j (@cells) {
+    # before removing HTML, check for double-high row
+    if ($j=~/show_rowspan2/) {
+      $tdextra = "rowspan=2";
+    } else {
+      $tdextra = "";
+    }
+
     # remove HTML
     $j=~s/<.*?>//isg;
 
@@ -74,7 +81,7 @@ for $i (@rows) {
     debug("JA: $j");
 
     # print cell
-    print "<td>$j</td>\n";
+    print "<td $tdextra align='center'>$j</td>\n";
 
   }
 
