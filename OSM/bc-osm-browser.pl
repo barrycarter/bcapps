@@ -36,6 +36,23 @@ for $i (-1..1) {
   }
 }
 
+for $i (@items) {
+  # <h>from the insane school of programming...</h>
+  for $j (@{$i->{xml}{osm}{node}}) {relative_node($j);}
+  for $j (@{$i->{xml}{osm}{way}}) {relative_way($j);}
+}
+
+# print closest nodes
+# for $i ($node{dist} <=> $node
+
+# sort {$node{$a}{dist} <=> $node{$b}{dist}} keys %node) {
+#  if ($node{$i}{name}) {
+#    print "$node{$i}{name} is $node{$i}{dist} feet to your $node{$i}{nicedir}\n";
+#    $nodeprintcount++;
+#  }
+#  if ($nodeprintcount >= $user{maxnodes}) {last;}
+# }
+
 die "TESTING";
 
 for $i (@nodes) {
@@ -57,12 +74,12 @@ die "TESTING";
 
 # debug("ALPHA",%way);
 
-way_relative();
+relative_way();
 
 # <h>"sub way" would've gotten me sued<G></h>
 # for ways, compute info relative to user
 
-sub way_relative {
+sub relative_way {
   for $i (keys %way) {
     # ignore unnamed ways
     my(%way) = %{$way{$i}};
@@ -93,36 +110,32 @@ debug("VIS: $vis ft");
 
 # TODO: subroutinize a LOT of this
 
-# for each node, compute distance/angle from user (+ more)
-for $i (keys %node) {
-  # ignore unnamed nodes
-#  unless ($node{$i}{name}) {next;}
+# given a node (hash), add keys for user distance/angle/more
 
+sub relative_node {
+  my($noderef) = @_;
+
+  # get lat, lon
+  my($lat,$lon) = ($noderef->{lat}{value}, $noderef->{lon}{value});
   # convert to mercator
-  ($nodey, $nodex) = to_mercator($node{$i}{lat}, $node{$i}{lon});
-  # distance (OK to use Pythag since small area); below is in feet
-  # rounding to nearest foot
-  $node{$i}{dist} = round(sqrt(($nodex-$mercx)**2+($nodey-$mercy)**2)*$mercunit);
+  ($nodey, $nodex) = to_mercator($lat,$lon);
+
+  # distance to nearest foot (using Pythagorean thm since distance is small)
+  my($dist) = round(sqrt(($nodex-$mercx)**2+($nodey-$mercy)**2)*$mercunit);
+
   # ignore nodes that are out of visibility range (does this do anything?)
-  if ($node{$i}{dist} > $vis) {next;}
+  if ($dist > $vis) {return;}
 
   # and direction
-  $node{$i}{dir} = atan2($nodey-$mercy,$nodex-$mercx)*$RADDEG;
-  debug("node{$i}{dir} -> $node{$i}{$dir}");
-  if ($node{$i}{dir}<0) {$node{$i}{dir}+=360;}
+  my($dir) = fmod(atan2($nodey-$mercy,$nodex-$mercx),1)*$RADDEG;
 
   # niceify direction (integer division below)
-  $node{$i}{nicedir} = $dirs[$node{$i}{dir}/45];
+  my($nicedir) = $dirs[$dir/45];
 
-  # x and y coords of this node on a 800x600 image centered on user
-  $node{$i}{x} = 400 + 400*cos($node{$i}{dir}*$DEGRAD);
-
-  # this is for testing only
-#  $truedist = gcdist($user{lat},$user{lon},$node{$i}{lat},$node{$i}{lon})*5280;
-
-#  debug($node{$i}{dist}-$truedist);
-
-#  debug("X/Y: $user{lat}, $user{lon}, $node{$i}{lat}, $node{$i}{lon}, $node{$i}{dist}, $truedist");
+  # assign to node
+  $noderef->{dist} = $dist;
+  $noderef->{dir} = $dir;
+  $noderef->{nicedir} = $nicedir;
 }
 
 flymap();
@@ -130,14 +143,6 @@ flymap();
 die "TESTING";
 
 $nodeprintcount = 0;
-
-for $i (sort {$node{$a}{dist} <=> $node{$b}{dist}} keys %node) {
-  if ($node{$i}{name}) {
-    print "$node{$i}{name} is $node{$i}{dist} feet to your $node{$i}{nicedir}\n";
-    $nodeprintcount++;
-  }
-  if ($nodeprintcount >= $user{maxnodes}) {last;}
-}
 
 die "TSETING";
 
