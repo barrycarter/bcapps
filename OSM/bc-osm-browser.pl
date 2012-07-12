@@ -7,13 +7,6 @@ require "/usr/local/lib/bclib.pl";
 # new approach, XML::Bare
 use XML::Bare;
 
-my $ob = new XML::Bare(text => read_file("/var/cache/OSM/OSM-51.51,-0.13"));
-
-my $hash = $ob->parse();
-
-debug(unfold($hash));
-die "TESTING";
-
 # NOTE: this assumes Earth is locally flat and does NOT work for large
 # distances
 
@@ -37,10 +30,23 @@ for $i (keys %globopts) {$user{$i} = $globopts{$i};}
 for $i (-1..1) {
   for $j (-1..1) {
     debug("IJS: $i,$j");
-    parse_file(osm_cache_bc($user{lat}+$i*.01, $user{lon}+$j*.01));
-    debug("IJE: $i,$j");
+
+    # using XML::Bare for speed <h>(not comfort)</h>
+    my($ob) = new XML::Bare(text => osm_cache_bc($user{lat}+$i*.01, $user{lon}+$j*.01));
+
+    # mark all nodes as such
+    push(@nodes, @{$ob->{xml}{osm}{node}});
   }
 }
+
+for $i (@nodes) {
+#  unless ($i->{name}) {next;}
+#  debug("NAME: $i{name}");
+  debug("TAGS:",unfold($i->{tag}));
+#  debug("I: $i");
+}
+
+die "TESTING";
 
 for $i (keys %way) {
   %hash = %{$way{$i}};

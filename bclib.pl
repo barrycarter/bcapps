@@ -2508,6 +2508,39 @@ sub slippy2latlon {
   return $lat,$lon;
 }
 
+=item closest($x0,$y0,$x1,$y1,$x2,$y2,$options)
+
+Return the smallest distance between the point $x0,$y0 and the line
+segment through ($x1,$y1) and ($x2,$y2), and the point on the line
+where $x0,$y0 is closest
+
+$options currently unused
+
+TODO: allow closest distance to entire line, not just segment
+
+=cut
+
+sub closest {
+  my($x0,$y0,$x1,$y1,$x2,$y2) = @_;
+
+  # if x1,y1 to x2,y2 is parametrized by t, this t yields the smallest
+  # distance see playground.m for more details; there does NOT appear
+  # to be a simpler formula
+  my($t) = ($x1**2-$x1*$x2+$x0*(-$x1+$x2)-($y0-$y1)*($y1-$y2))/($x1**2- 2*$x1*$x2+$x2**2+($y1-$y2)**2);
+
+  # since we're limiting to segment, truncate t at 0,1
+  $t = min(max($t,0),1);
+
+  # point on segment where this min is acheived
+  my($minx) = $x1+$t*($x2-$x1);
+  my($miny) = $y1+$t*($y2-$y1);
+
+  # and distance
+  my($dist) = sqrt(($x0-$minx)**2 + ($y0-$miny)**2);
+
+  return $dist,$minx,$miny;
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
   debug("END: CLEANING UP TMP FILES");
