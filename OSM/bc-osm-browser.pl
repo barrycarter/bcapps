@@ -25,22 +25,34 @@ defaults("lat=35.116&lon=-106.554&maxnodes=20");
 # this could copy pointless values, but that's probably ok?
 for $i (keys %globopts) {$user{$i} = $globopts{$i};}
 
+# update global vars based on user new position
+user_vars();
+
 # get OSM data for 3x3 .01^2 degrees around user
 # TODO: remove dupes (should only happen w ways)
+
+@nodes=();@ways=();
 for $i (-1..1) {
   for $j (-1..1) {
     # using XML::Bare for speed <h>(not comfort)</h>
     # putting XML::Bare in list context forces parsing
     ($ob) = new XML::Bare(text => osm_cache_bc($user{lat}+$i*.01, $user{lon}+$j*.01));
-    push(@items, $ob);
+    # separate into nodes/ways, ignore rest
+    push(@nodes, @{$ob->{xml}{osm}{node}});
+    push(@ways, @{$ob->{xml}{osm}{way}});
   }
 }
 
-for $i (@items) {
-  # <h>from the insane school of programming...</h>
-  for $j (@{$i->{xml}{osm}{node}}) {relative_node($j);}
-  for $j (@{$i->{xml}{osm}{way}}) {relative_way($j);}
+for $i (@nodes) {relative_node($i);}
+for $i (@ways) {relative_way($i);}
+
+
+
+for $i (@nodes) {
+  debug("I: $i->{dist}");
 }
+
+die "TESTING";
 
 # print closest nodes
 # for $i ($node{dist} <=> $node
@@ -91,25 +103,6 @@ sub relative_way {
 
 die "TESTING";
 
-# user mercator coords
-($mercy, $mercx) = to_mercator($user{lat}, $user{lon});
-
-# use slippy map for reference (18 is max, but not always useful)
-# $fname = osm_map($user{lat},$user{lon},15);
-# $fname2 = osm_map($user{lat},$user{lon},16);
-# $fname3 = osm_map($user{lat},$user{lon},17);
-# system("xv $fname $fname2 $fname3 &");
-
-# at this latitude, a mercator "unit" in feet is cos(lat)*world circumference
-$mercunit = $EARTH_RADIUS*$PI*2*cos($user{lat}*$DEGRAD)*5280;
-
-# we can only guarentee .01 longitude worth of visibility (in feet)
-$vis = $mercunit/360/100;
-
-debug("VIS: $vis ft");
-
-# TODO: subroutinize a LOT of this
-
 # given a node (hash), add keys for user distance/angle/more
 
 sub relative_node {
@@ -118,7 +111,7 @@ sub relative_node {
   # get lat, lon
   my($lat,$lon) = ($noderef->{lat}{value}, $noderef->{lon}{value});
   # convert to mercator
-  ($nodey, $nodex) = to_mercator($lat,$lon);
+  my($nodey, $nodex) = to_mercator($lat,$lon);
 
   # distance to nearest foot (using Pythagorean thm since distance is small)
   my($dist) = round(sqrt(($nodex-$mercx)**2+($nodey-$mercy)**2)*$mercunit);
@@ -251,3 +244,15 @@ MARK
   system("fly -i /tmp/bob-fly.txt -o /tmp/output.gif && xv /tmp/output.gif");
 
 }
+
+# global vars change based on user location
+sub user_vars {
+  # user mercator coordinates
+  ($mercy, $mercx) = to_mercator($user{lat}, $user{lon});
+  # at this latitude, a mercator "unit" in feet is cos(lat)*world circumference
+  $mercunit = $EARTH_RADIUS*$PI*2*cos($user{lat}*$DEGRAD)*5280;
+
+  # we can only guarentee .01 longitude worth of visibility (in feet)
+  $vis = $mercunit/360/100;
+}
+
