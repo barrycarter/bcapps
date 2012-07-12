@@ -114,12 +114,10 @@ sub relative_node {
   my(@tags) = @{$noderef->{tag}};
 
   for $i (@tags) {
-    my(%hash) = %{$i};
-    my(%tagkeys) = $hash{k};
-    my(%tagvals) = $hash{v};
-    debug("KEYS",keys %tagkeys);
-    debug("VALS",keys %tagvals);
+    $noderef->{$i->{k}{value}} = $i->{v}{value};
   }
+
+  debug("NAME: $noderef->{name}");
 
   # get lat, lon
   my($lat,$lon) = ($noderef->{lat}{value}, $noderef->{lon}{value});
