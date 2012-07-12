@@ -2,6 +2,11 @@
 
 # text browser for OSM (openstreetmap.org)
 
+# --lat: starting latitude
+# --lon: starting longitude
+# --maxnodes=20: show this many nearest nodes
+# --peturb=.01: peturb starting latitude/longitude by this much
+
 require "/usr/local/lib/bclib.pl";
 
 # new approach, XML::Bare
@@ -25,13 +30,27 @@ defaults("lat=35.116&lon=-106.554&maxnodes=20");
 # this could copy pointless values, but that's probably ok?
 for $i (keys %globopts) {$user{$i} = $globopts{$i};}
 
-# update global vars based on user new position
-user_vars();
+# TODO: infinite loop will start here
+
+if ($globopts{peturb}) {
+  $user{lat} += rand($globopts{peturb})-.01;
+  $user{lon} += rand($globopts{peturb})-.01;
+}
+
+# update global vars based on user new position and clear nodes/ways
+user_vars(); @nodes=();@ways=();
+
+# the OSM URL
+$url = "http://www.openstreetmap.org/?mlat=$user{lat}&mlon=$user{lon}&zoom=15";
+
+# just for now
+system("firefox '$url'");
+
+print "Latitude: $user{lat}, Longitude: $user{lon}, Visibility: $vis feet\n";
 
 # get OSM data for 3x3 .01^2 degrees around user
 # TODO: remove dupes (should only happen w ways)
 
-@nodes=();@ways=();
 for $i (-1..1) {
   for $j (-1..1) {
     # using XML::Bare for speed <h>(not comfort)</h>
@@ -46,8 +65,11 @@ for $i (-1..1) {
 for $i (@nodes) {relative_node($i);}
 for $i (@ways) {relative_way($i);}
 
-for $i (@goodnodes) {
-  debug("I: $i->{name}, DIST: $i->{dist}");
+# sort by distance
+@goodnodes = sort {$a->{dist} <=> $b->{dist}} @goodnodes;
+
+for $i (0..$user{maxnodes}) {
+  print "$goodnodes[$i]->{name} (node $goodnodes[$i]->{id}{value}) is $goodnodes[$i]->{dist} feet to your $goodnodes[$i]->{nicedir} ($goodnodes[$i]->{lat}{value}, $goodnodes[$i]->{lon}{value}) ($goodnodes[$i]->{dir})\n";
 }
 
 die "TESTING";
@@ -106,6 +128,12 @@ die "TESTING";
 sub relative_node {
   my($noderef) = @_;
 
+  # have we seen this node before?
+  my($id) = $noderef->{id}{value};
+
+  if ($node_seen{$id}) {return;}
+  $node_seen{$id} = 1;
+
   # TODO: handle other cases!
   unless (ref($noderef->{tag})=~/array/i) {return;}
 
@@ -122,6 +150,8 @@ sub relative_node {
   # convert to mercator
   my($nodey, $nodex) = to_mercator($lat,$lon);
 
+  debug("$noderef->{name}: $nodex, $nodey VS $mercx, $mercy");
+
   # distance to nearest foot (using Pythagorean thm since distance is small)
   my($dist) = round(sqrt(($nodex-$mercx)**2+($nodey-$mercy)**2)*$mercunit);
 
@@ -132,10 +162,13 @@ sub relative_node {
   push(@goodnodes, $noderef);
 
   # and direction
-  my($dir) = fmod(atan2($nodey-$mercy,$nodex-$mercx),1)*$RADDEG;
+  # in mercator latitude coordinates, larger = south
+  my($dir) = atan2($mercy-$nodey,$nodex-$mercx)*$RADDEG;
+  if ($dir<0) {$dir+=360;}
 
-  # niceify direction (integer division below)
-  my($nicedir) = $dirs[$dir/45];
+  # niceify direction
+  my($nicedir) = $dirs[round($dir/45)];
+  debug("$dir -> $nicedir");
 
   # assign to node
   $noderef->{dist} = $dist;
