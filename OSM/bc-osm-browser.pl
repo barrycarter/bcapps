@@ -108,6 +108,19 @@ die "TESTING";
 sub relative_node {
   my($noderef) = @_;
 
+  # TODO: handle other cases!
+  unless (ref($noderef->{tag})=~/array/i) {return;}
+
+  my(@tags) = @{$noderef->{tag}};
+
+  for $i (@tags) {
+    my(%hash) = %{$i};
+    my(%tagkeys) = $hash{k};
+    my(%tagvals) = $hash{v};
+    debug("KEYS",keys %tagkeys);
+    debug("VALS",keys %tagvals);
+  }
+
   # get lat, lon
   my($lat,$lon) = ($noderef->{lat}{value}, $noderef->{lon}{value});
   # convert to mercator
