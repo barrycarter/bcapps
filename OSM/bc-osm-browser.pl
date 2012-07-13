@@ -44,7 +44,7 @@ user_vars(); @nodes=();@ways=();
 $url = "http://www.openstreetmap.org/?mlat=$user{lat}&mlon=$user{lon}&zoom=15";
 
 # just for now
-system("firefox '$url'");
+# system("firefox '$url'");
 
 print "Latitude: $user{lat}, Longitude: $user{lon}, Visibility: $vis feet\n";
 
@@ -69,62 +69,39 @@ for $i (@ways) {relative_way($i);}
 @goodnodes = sort {$a->{dist} <=> $b->{dist}} @goodnodes;
 
 for $i (0..$user{maxnodes}) {
-  print "$goodnodes[$i]->{name} (node $goodnodes[$i]->{id}{value}) is $goodnodes[$i]->{dist} feet to your $goodnodes[$i]->{nicedir} ($goodnodes[$i]->{lat}{value}, $goodnodes[$i]->{lon}{value}) ($goodnodes[$i]->{dir})\n";
+#  print "$goodnodes[$i]->{name} (node $goodnodes[$i]->{id}{value}) is $goodnodes[$i]->{dist} feet to your $goodnodes[$i]->{nicedir} ($goodnodes[$i]->{lat}{value}, $goodnodes[$i]->{lon}{value}) ($goodnodes[$i]->{dir})\n";
+  print "$goodnodes[$i]->{name} (node $goodnodes[$i]->{id}{value}) is $goodnodes[$i]->{dist} feet to your $goodnodes[$i]->{nicedir}\n";
 }
 
 die "TESTING";
-
-# print closest nodes
-# for $i ($node{dist} <=> $node
-
-# sort {$node{$a}{dist} <=> $node{$b}{dist}} keys %node) {
-#  if ($node{$i}{name}) {
-#    print "$node{$i}{name} is $node{$i}{dist} feet to your $node{$i}{nicedir}\n";
-#    $nodeprintcount++;
-#  }
-#  if ($nodeprintcount >= $user{maxnodes}) {last;}
-# }
-
-die "TESTING";
-
-for $i (@nodes) {
-#  unless ($i->{name}) {next;}
-#  debug("NAME: $i{name}");
-  debug("TAGS:",unfold($i->{tag}));
-#  debug("I: $i");
-}
-
-die "TESTING";
-
-for $i (keys %way) {
-  %hash = %{$way{$i}};
-  @nodes = $hash{nodes};
-  debug("BETA: $hash{name}, $hash{nodes}");
-}
-
-die "TESTING";
-
-# debug("ALPHA",%way);
-
-relative_way();
 
 # <h>"sub way" would've gotten me sued<G></h>
 # for ways, compute info relative to user
-
 sub relative_way {
-  for $i (keys %way) {
-    # ignore unnamed ways
-    my(%way) = %{$way{$i}};
-#    debug("WAY: $way", dump_var($way));
-    unless ($way{name}) {next;}
-    debug($way{name});
+  my($wayref) = @_;
+
+  # have we seen this way before?
+  my($id) = $wayref->{id}{value};
+
+  if ($way_seen{$id}) {return;}
+  $way_seen{$id} = 1;
+
+  # TODO: handle other cases! (are there any?)
+  unless (ref($wayref->{tag})=~/array/i) {return;}
+
+  my(@tags) = @{$wayref->{tag}};
+  for $i (@tags) {$wayref->{$i->{k}{value}} = $i->{v}{value};}
+  unless ($wayref->{name}) {return;}
+
+  my(@nodes) = @{$wayref->{nd}};
+
+  for $i (@nodes) {
+    my($nodenum) = $i->{ref}{value};
+    debug(unfold($node{$nodenum}));
   }
 }
 
-die "TESTING";
-
 # given a node (hash), add keys for user distance/angle/more
-
 sub relative_node {
   my($noderef) = @_;
 
@@ -133,6 +110,9 @@ sub relative_node {
 
   if ($node_seen{$id}) {return;}
   $node_seen{$id} = 1;
+
+  # link id to node
+  $node{$id} = $noderef;
 
   # TODO: handle other cases!
   unless (ref($noderef->{tag})=~/array/i) {return;}
@@ -150,8 +130,6 @@ sub relative_node {
   # convert to mercator
   my($nodey, $nodex) = to_mercator($lat,$lon);
 
-  debug("$noderef->{name}: $nodex, $nodey VS $mercx, $mercy");
-
   # distance to nearest foot (using Pythagorean thm since distance is small)
   my($dist) = round(sqrt(($nodex-$mercx)**2+($nodey-$mercy)**2)*$mercunit);
 
@@ -168,7 +146,6 @@ sub relative_node {
 
   # niceify direction
   my($nicedir) = $dirs[round($dir/45)];
-  debug("$dir -> $nicedir");
 
   # assign to node
   $noderef->{dist} = $dist;
@@ -178,71 +155,10 @@ sub relative_node {
 
 flymap();
 
-die "TESTING";
-
-$nodeprintcount = 0;
-
-die "TSETING";
-
 # TODO: vastly improve this
 for $i (keys %way) {
  unless ($way{$i}{name}) {next;}
  print "$way{$i}{name} is here!\n";
-}
-
-# parses the result of what the API sends us by updating the %node and
-# %way hashes. Returns nothing
-
-sub parse_file {
-  debug("START PARSE FILE");
-  my($data) = @_;
-  debug("DATA: $data");
-die "TESTING";
-
-  # convert <node .../> to <node ...></node>
-  # for speed, ignore nodes w/ no info at least for now
-#  $data=~s%<(node[^>]*)/>%<$1></node>%isg;
-
-  # handle nodes
-  while ($data=~s%<node(.*?)>(.*?)</node>%%s) {
-    my($head, $tags) = ($1, $2);
-
-    # store node data in hash
-    my(%thisnode) = ();
-
-    # values in tag itself
-    while ($head=~s/(\S+)\=\"(.*?)\"//) {$thisnode{$1} = $2;}
-
-    # tag values
-    while ($tags=~s%<tag k="(.*?)" v="(.*?)"/>%%s) {$thisnode{$1} = $2;}
-
-    # update the global node hash
-    $node{$thisnode{id}} = {%thisnode};
-  }
-
-  # <h>ooh, baby I love your</h> ways
-  while ($data=~s%<way(.*?)>(.*?)</way>%%is) {
-    my($head, $tags) = ($1, $2);
-
-    #<h>The following line of code is in tribute to Frank Sinatra</h>
-    my(%thisway) = ();
-    # list of nodes for this way
-    my(@nodelist);
-
-    # values in tag itself
-    while ($head=~s/(\S+)\=\"(.*?)\"//) {$thisway{$1} = $2;}
-
-    # tag values
-    while ($tags=~s%<tag k="(.*?)" v="(.*?)"/>%%s) {$thisway{$1} = $2;}
-
-    # nodes in way
-    while ($tags=~s%<nd ref="(.*?)"/>%%) {push(@nodelist,$1);}
-    
-    $thisway{nodelist} = [@nodelist];
-    $way{$thisway{id}} = {%thisway};
-  }
-
-  debug("END PARSE FILE");
 }
 
 # construct a PNG map using fly of current nodes/ways
