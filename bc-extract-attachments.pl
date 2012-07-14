@@ -1,4 +1,4 @@
-#!/bin/perl -d:DProf -w
+#!/bin/perl
 
 # Hideous hack: finds pieces of messages that "look like" MIME
 # attachments and stores them in files, replacing the attachment with
@@ -11,14 +11,17 @@ require "/usr/local/lib/bclib.pl";
 
 (($file) = shift) || die("Usage: $0 filename");
 
-warn "TESTING";
-$outfile = "/home/barrycarter/20120627/outfile";
+$outfile = "$file.extracted";
+
+# in test mode, delete the attachment I'm having trouble with, forcing
+# prg to re-create it
+
+if ($globopts{test}) {system("rm /usr/local/etc/sha/372765976e150ed47f3449f1e1c07087cd41e0de /usr/local/etc/sha/2abca5a6deb95baf32bdab1b4d5ffedf0476166c");}
 
 if (-f $outfile && !$globopts{overwrite}) {
   die ("$outfile exists and I'm too chicken to overwrite it");
 }
 
-# this prevents appending to an existing file
 system("rm $outfile");
 
 # handle bzipped files
@@ -42,80 +45,58 @@ while (<A>) {
 }
 
 # last one
-handle_attachments($msg);
+handle_attachments(@msg);
 
 # sample MIME line:
 # MDAwOTg2IDY1NTM1IGYNCjAwMDAwMDA5ODcgNjU1MzUgZg0KMDAwMDAwMDk4OCA2NTUzNSBmDQow
 
 # this should probably be handle_message()
-
 sub handle_attachments {
   my($msg) = join("",@_);
   my($chars) = "[a-zA-Z0-9\+\/]";
 
-  $msg=~s/(($chars{50,}\=*\n)+)($chars+\=*)/handle_attachment("$1$2")/seg;
+  # note that $2 is just the last line repeated
+  $msg=~s/(($chars{50,}\=*\n)+)($chars+\=*)/handle_attachment("$1$3")/seg;
 
   # and append to outfile
   append_file($msg,$outfile);
 }
 
-=item inner_regex($str, $regex, $options)
-
-Given string $str, replace $regex with token string that's guarenteed
-not to appear in $str itself. Return the parsed string and a hash
-mapping the replacement back to the original string.
-
-$options currently unused
-
-TODO: not super happy with [TOKEN-], don't really need it.
-
-TODO: should I be using Perl::Tokenize or similar here?
-
-=cut
-
-sub inner_regex {
-  my($str, $regex, $options) = @_;
-  my($n, $token, %hash) = (0);
-  my(@l);
-
-  # find token not in string
-  # TODO: this could theoretically fail, but unlikely
-  # <h>the second statement below is dedicated to the
-  # Society for the Prevention of Menstruation (ARGHHH)</h>
-  do {$rand=rand(); $rand=~s/\.//;} until ($str!~/$rand/);
-
-  $str=~s/($regex)/inner_regex_helper($1)/eg;
-
-  sub inner_regex_helper {
-    $hash{$rand}{$n} = shift;
-    return "[TOKEN-$rand-$n]";
-  }
-
-  return $str, {%hash};
-}
-
 # handles a single attachment
-
 sub handle_attachment {
   my($attach, $hashref) = @_;
-#  debug("GOT: $attach");
-
   # ignore tiny attachments
   if (length($attach)<10000) {return $attach;}
+
+#  debug("GOT: $attach");
 
   # it's tempting to mime-decode here, but no
   # using sha1 here (instead of just random) lets identical
   # attachments share space
+#  debug("LAT:",substr($attach,1,5));
   my($sha) = sha1_hex($attach);
+#  debug("LATA:",substr($attach,1,5));
+
+  debug("SHA: /usr/local/etc/sha/$sha");
 
   # if it already exists, no point in writing it
   unless (-f "/usr/local/etc/sha/$sha") {
+#    debug("ABOUT TO WRITE TO /usr/local/etc/sha/$sha: $attach");
     write_file($attach,"/usr/local/etc/sha/$sha");
     # half-hearted attempt to decode
     system("base64 -d /usr/local/etc/sha/$sha > /usr/local/etc/sha/$sha.dec");
   }
 
-  return encode_base64("[SEE /usr/local/etc/sha/$sha]");
+  my($ret) = encode_base64("[SEE /usr/local/etc/sha/$sha]");
+
+  # for the program that checks this, internal newlines are bad, but
+  # surrounding newlines are important
+  $ret=~s/\n//isg;
+  $ret="\n$ret\n";
+
+  debug("ABOUT TO RET: *$ret*");
+
+  return $ret;
 }
 
 
