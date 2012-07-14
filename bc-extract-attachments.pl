@@ -94,7 +94,7 @@ sub handle_attachment {
   $ret=~s/\n//isg;
   $ret="\n$ret\n";
 
-  debug("ABOUT TO RET: *$ret*");
+#  debug("ABOUT TO RET: *$ret*");
 
   return $ret;
 }

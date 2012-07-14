@@ -31,11 +31,12 @@ while (<A>) {
 
   # matching phrase, so decode
   $str = decode_base64($_);
+  debug("DECODED: $str");
 
   # find file (if this is a coincidental match, ignore)
   unless ($str=~m%^\[SEE (/usr/local/etc/sha/.*?)\]$%) {print B $_; next;}
   my($infile) = $1;
   debug("INSERTING: $infile");
 
-  print B read_file($infile),"\n";
+  print B read_file($infile);
 }
