@@ -28,6 +28,17 @@ system("sort -n $elecfile -o $elecfile");
 # TODO: this doesn't need to be a constant
 @tiers = ([450, 0.0906237], [450, 0.1373455], [+Infinity, 0.1576960]);
 
+# apply NM sales tax of 7% and fuel cost/Palo Verde adjustments
+ for $i (@tiers) {
+  @{$i}[1] += -.0000390 + .0035020;
+}
+
+# fixed costs
+$fixed = 5 + 7.89 + 6.13;
+
+# 7% tax
+$tax = 1.07;
+
 # yyyy-mm-dd when meter last read, and amount
 # TODO: this obviously shouldn't be hardcoded
 ($time,$read) = ("2012-06-21", "52642");
@@ -209,10 +220,11 @@ sub tiered_cost {
     my($tier,$price) = @$i;
 
     # if not used up entire tier, return
-    if ($n < $tier) {return $total+$n*$price;}
+    if ($n < $tier) {return ($total+$n*$price+$fixed)*$tax;}
 
     # used up entire tier, so keep going
     $total += $tier*$price;
     $n -= $tier;
   }
 }
+
