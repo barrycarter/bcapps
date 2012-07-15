@@ -38,5 +38,5 @@ while (<A>) {
   my($infile) = $1;
   debug("INSERTING: $infile");
 
-  print B read_file($infile);
+  print B read_file($infile),"\n";
 }

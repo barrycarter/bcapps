@@ -13,6 +13,9 @@ require "/usr/local/lib/bclib.pl";
 
 $outfile = "$file.extracted";
 
+# during testing only
+$globopts{debug} = 1;
+
 # in test mode, delete the attachment I'm having trouble with, forcing
 # prg to re-create it
 
@@ -47,6 +50,9 @@ while (<A>) {
 # last one
 handle_attachments(@msg);
 
+# during testing only
+system("bc-check-extract-attachments.pl --debug $file");
+
 # sample MIME line:
 # MDAwOTg2IDY1NTM1IGYNCjAwMDAwMDA5ODcgNjU1MzUgZg0KMDAwMDAwMDk4OCA2NTUzNSBmDQow
 
@@ -56,7 +62,7 @@ sub handle_attachments {
   my($chars) = "[a-zA-Z0-9\+\/]";
 
   # note that $2 is just the last line repeated
-  $msg=~s/(($chars{50,}\=*\n)+)($chars+\=*)/handle_attachment("$1$3")/seg;
+  $msg=~s/(\n($chars{50,}\=*\n)+)($chars+\=*\n)/handle_attachment("$1$3")/seg;
 
   # and append to outfile
   append_file($msg,$outfile);
@@ -68,20 +74,18 @@ sub handle_attachment {
   # ignore tiny attachments
   if (length($attach)<10000) {return $attach;}
 
-#  debug("GOT: $attach");
+  # because I'm going to return two newlines anyway, strip them here
+  $attach=~s/^\n//s;
+  $attach=~s/\n$//s;
 
   # it's tempting to mime-decode here, but no
   # using sha1 here (instead of just random) lets identical
   # attachments share space
-#  debug("LAT:",substr($attach,1,5));
   my($sha) = sha1_hex($attach);
-#  debug("LATA:",substr($attach,1,5));
-
   debug("SHA: /usr/local/etc/sha/$sha");
 
   # if it already exists, no point in writing it
   unless (-f "/usr/local/etc/sha/$sha") {
-#    debug("ABOUT TO WRITE TO /usr/local/etc/sha/$sha: $attach");
     write_file($attach,"/usr/local/etc/sha/$sha");
     # half-hearted attempt to decode
     system("base64 -d /usr/local/etc/sha/$sha > /usr/local/etc/sha/$sha.dec");
@@ -89,13 +93,9 @@ sub handle_attachment {
 
   my($ret) = encode_base64("[SEE /usr/local/etc/sha/$sha]");
 
-  # for the program that checks this, internal newlines are bad, but
-  # surrounding newlines are important
+  # nuke internal newlines to base64, surround with newlines
   $ret=~s/\n//isg;
   $ret="\n$ret\n";
-
-#  debug("ABOUT TO RET: *$ret*");
-
   return $ret;
 }
 
