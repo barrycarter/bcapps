@@ -23,6 +23,8 @@ use XML::Bare;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
+warnlocal("Is warn local borken");
+
 $ob = new XML::Bare(text=>'<xml><name>Bob</name></xml>');
 for $i (keys %{$ob->{xml}}) {print "KEY: $i\n";}
 
