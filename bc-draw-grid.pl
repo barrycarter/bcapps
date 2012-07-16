@@ -17,7 +17,9 @@ $lonspace = 20;
 # the function
 # $f = \&img_idtest;
 # $f = \&sinusoidal;
-$f = \&polar;
+# $f = \&polar;
+
+
 
 open(A,">/tmp/bdg2.fly");
 
@@ -146,4 +148,25 @@ sub grab_osm_maps {
     }
   }
 }
+
+=item proj4($lat, $lon, $proj, $div)
+
+Given a cs2cs projection $proj, return the x/y coordinates of $lat,
+$lon under $projection scaled by $div, assuming 800x600.
+
+Return -1,-1 if coordinates are off-image.
+
+TODO: calling cs2cs on each coordinate separately is hideously inefficient
+
+=cut
+
+sub proj4 {
+  my($lat, $lon, $proj, $div) = @_;
+
+  # echoing back $lat/$lon is pointless here, but may be useful later
+  my($lt, $lo, $x, $y) = split(/\s+/, `echo $lat $lon | cs2cs -E +proj=latlon +to +proj=$proj`);
+  debug("$lt $lo $x $y");
+}
+  
+
 

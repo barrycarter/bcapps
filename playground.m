@@ -3,16 +3,39 @@
 showit := Module[{}, 
 Export["/tmp/math.png",%, ImageSize->{800,600}]; Run["display /tmp/math.png&"]]
 
+(* another shot at polar transforms *)
+
 (* polar transformation using matrix *)
 
-(* start with point at r, theta, phi *)
+(* start with point at 1, theta, phi *)
 
-pt = {r*Cos[theta]*Cos[phi], r*Sin[theta]*Cos[phi], r*Cos[phi]}
+pt = {Cos[theta]*Cos[phi], Sin[theta]*Cos[phi], Cos[phi]}
 
-(* arbitrary three D matrix *)
+(* arbitrary three D matrix, assuming it is a rotation *)
 
 mat = { {a11, a12, a13}, {a21, a22, a23}, {a31, a32, a33}}
 
+Solve[{
+ (mat.pt)[[1]] == Cos[theta2],
+ (mat.pt)[[2]] == Sin[theta2],
+ (mat.pt)[[3]] == Cos[phi2]
+},Flatten[mat]]
+
+(* result only depends on first col? *)
+
+Solve[{
+ (mat.pt)[[1]] == Cos[theta2],
+ (mat.pt)[[2]] == Sin[theta2],
+ (mat.pt)[[3]] == Cos[phi2],
+ a21 == 1,
+ a22 == 1,
+ a12 == 1,
+ a13 == 1,
+ a21 == 1,
+ a22 == 1,
+ a32 == 1,
+ a33 == 1
+},Flatten[mat]]
 
 
 

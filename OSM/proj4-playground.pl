@@ -6,12 +6,12 @@
 
 $cmd = "cs2cs +proj=latlong +to +proj=ortho";
 # $cmd = "cs2cs +proj=latlong +to +proj=omerc +lat_0=35"; $div=2*10**7;
-# $div = 6378137;
 $cmd = "cs2cs +proj=latlong +to +proj=omerc +lat_0=35 +lonc=-106 +k=0.5 +alpha=0.01"; $div = 10**7;
 $cmd = "cs2cs +proj=omerc +lat_0=35 +lonc=-106 +k=0.5 +alpha=0.01"; $div = 10**7;
 $cmd = "cs2cs +proj=latlon +to +proj=merc"; $div=2*10**7*1.05;
 $cmd = "cs2cs +proj=latlon +to +proj=omerc +lat_0=10 +lonc=0 +k=1 +alpha=1"; $div = 2*10**7*1.05;
 $cmd = "cs2cs +proj=latlon +to +proj=robin"; $div = 2*10**7*1.05;
+$cmd = "cs2cs +proj=latlong +to +proj=ortho"; $div = 6378137;
 
 
 require "/usr/local/lib/bclib.pl";

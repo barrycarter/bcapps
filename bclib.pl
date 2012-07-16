@@ -2541,6 +2541,31 @@ sub closest {
   return $dist,$minx,$miny;
 }
 
+=item rotrad($th, $ax="x|y|z")
+
+The 3D matrix that rotates $th radians around the $ax axis
+
+=cut
+
+sub rotrad {
+    my($th,$ax)=@_;
+    my($si,$co)=(sin($th),cos($th));
+    if ($ax eq "x") {return(([1,0,0],[0,$co,$si],[0,-$si,$co]));}
+    if ($ax eq "y") {return(([$co,0,-$si],[0,1,0],[$si,0,$co]));}
+    if ($ax eq "z") {return(([$co,-$si,0],[$si,$co,0],[0,0,1]));}
+}
+
+=item rotdeg($th, $ax="x|y|z")
+
+Does exactly what rotrad does, but $theta is given in degrees
+
+=cut
+
+sub rotdeg {
+    my($th,$ax)=@_;
+    return(rotrad($th*$PI/180,$ax));
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
   debug("END: CLEANING UP TMP FILES");
