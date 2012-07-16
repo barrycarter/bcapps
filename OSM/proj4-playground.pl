@@ -2,6 +2,12 @@
 
 # uses proj4 to do what bc-draw-grid.pl does
 
+# proj4 cs2cs notes:
+
+$cmd = "cs2cs +proj=latlong +to +proj=ortho";
+$cmd = "cs2cs +proj=latlong +to +proj=omerc +lat_0=35"; $div=2*10**7;
+# $div = 6378137;
+
 require "/usr/local/lib/bclib.pl";
 
 # spacing in degrees
@@ -72,17 +78,17 @@ sub projection {
 #  my($x, $y) = split(/\s+/, `echo $lat $lon | cs2cs +unit=km +proj=latlong +to +proj=merc`);
 #  my($x, $y) = split(/\s+/, `echo $lat $lon | cs2cs +proj=latlong +unit=km +to +proj=natearth`);
 
-  my($x, $y) = split(/\s+/, `echo $lat $lon | cs2cs +proj=latlong +to +proj=gnom`);
+#  my($x, $y) = split(/\s+/, `echo $lat $lon | cs2cs +proj=latlong +to +proj=gnom`);
 
 #  my($div) = 6378137*4;
 #  my($div) = 20*10**6;
-  my($div) = 20*10**6;
+#  my($div) = 20*10**6;
+
+  my($x, $y) = split(/\s+/, `echo $lat $lon | $cmd`);
 
   # special case
   if ($x eq "*") {return -1,-1;}
 
-  # below is for orthographic projection, but it varies from
-  # projection to projection (grumble)
   $x = 400 + $x/$div*400;
   $y = 300 + $y/$div*300;
 
