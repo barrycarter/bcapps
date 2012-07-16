@@ -1,5 +1,11 @@
 # aliases below just to speed things up a bit
 
+# testing different projections
+
+cs2cs -E +proj=latlong +to +proj=omerc +lat_0=0 +k=1 +alpha=0.01 +lonc=-0 < uniformlatlon.txt | sort -k1n -k2n | uniq | less
+
+exit;
+
 # add the handful of addresses I've misses several times (BERN pincode
 # is repeated many times, so don't try to catch it)
 

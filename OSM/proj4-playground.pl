@@ -5,8 +5,11 @@
 # proj4 cs2cs notes:
 
 $cmd = "cs2cs +proj=latlong +to +proj=ortho";
-$cmd = "cs2cs +proj=latlong +to +proj=omerc +lat_0=35"; $div=2*10**7;
+# $cmd = "cs2cs +proj=latlong +to +proj=omerc +lat_0=35"; $div=2*10**7;
 # $div = 6378137;
+$cmd = "cs2cs +proj=latlong +to +proj=omerc +lat_0=35 +lonc=-106 +k=0.5 +alpha=0.01"; $div = 10**7;
+$cmd = "cs2cs +proj=omerc +lat_0=35 +lonc=-106 +k=0.5 +alpha=0.01"; $div = 10**7;
+$cmd = "cs2cs +proj=latlon +datum=NAD83 +to +proj=merc"; $div=2*10**7*1.05;
 
 require "/usr/local/lib/bclib.pl";
 
@@ -84,13 +87,13 @@ sub projection {
 #  my($div) = 20*10**6;
 #  my($div) = 20*10**6;
 
-  my($x, $y) = split(/\s+/, `echo $lat $lon | $cmd`);
+  my($x, $y) = split(/\s+/, `echo $lon $lat | $cmd`);
 
   # special case
   if ($x eq "*") {return -1,-1;}
 
   $x = 400 + $x/$div*400;
-  $y = 300 + $y/$div*300;
+  $y = 300 - $y/$div*300; # in y direction, reversed
 
   # this is probably ugly
   if ($x<0 || $y<0 || $x>800 || $y>600) {return -1,-1;}
