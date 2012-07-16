@@ -3,6 +3,19 @@
 showit := Module[{}, 
 Export["/tmp/math.png",%, ImageSize->{800,600}]; Run["display /tmp/math.png&"]]
 
+(* polar transformation using matrix *)
+
+(* start with point at r, theta, phi *)
+
+pt = {r*Cos[theta]*Cos[phi], r*Sin[theta]*Cos[phi], r*Cos[phi]}
+
+(* arbitrary three D matrix *)
+
+mat = { {a11, a12, a13}, {a21, a22, a23}, {a31, a32, a33}}
+
+
+
+
 (* Deal or No Deal *)
 
 dond = {.01, 1, 5, 10, 25, 50, 75, 100, 200, 300, 400, 500, 750, 1000, 5000,
@@ -14,11 +27,7 @@ dond = {.01, 1, 5, 10, 25, 50, 75, 100, 200, 300, 400, 500, 750, 1000, 5000,
 
 ListPlot[Log[dond]/Log[10], PlotJoined->True, PlotRange->All]
 
-(*
-
-Simple segment-to-point distance
-
-*)
+(* Simple segment-to-point distance *)
 
 (* the x and y value of line segment x1,y1 to x2,y2 parametrized by t *)
 segx[t_] = x1 + t*(x2-x1)
@@ -30,6 +39,7 @@ dist[x0_,y0_,t_] = Sqrt[(x0-segx[t])^2 + (y0-segy[t])^2]
 
 mint2[x0_,y0_] = t /. Solve[D[dist2[x0,y0,t],t]==0,t][[1,1]]
 mint[x0_,y0_] = t /. Solve[D[dist[x0,y0,t],t]==0,t][[1,1]]
+
 
 
 least[ax_,ay_,bx_,by_,cx_,cy_] = t /. Solve[D[dist[cx,cy,t],t]==0,t][[1,1]]
