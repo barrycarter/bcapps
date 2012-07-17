@@ -19,7 +19,8 @@ $lonspace = 20;
 # $f = \&sinusoidal;
 # $f = \&polar;
 
-
+$proj = "ortho";
+$div = 6378137;
 
 open(A,">/tmp/bdg2.fly");
 
@@ -32,18 +33,24 @@ MARK
 
 for ($lat=90; $lat>=-90; $lat-=$latspace) {
   for ($lon=180; $lon>=-180; $lon-=$lonspace) {
-    ($x,$y) = &$f($lat, $lon);
+#    ($x,$y) = &$f($lat, $lon);
+    my($x,$y) = proj4($lat, $lon, $proj, $div);
+    if ($x == -1) {next;}
 
     # position string a little "SE" of dot
     my($sx,$sy) = ($x+5, $y+5);
     print A "string 0,0,0,$sx,$sy,tiny,$lat,$lon\n";
 
     # line to next east longitude
-    my($xe,$ye) = &$f($lat, $lon+20);
+#    my($xe,$ye) = &$f($lat, $lon+20);
+    my($xe,$ye) = proj4($lat, $lon+20, $proj, $div);
+    if ($xe == -1) {next;}
     print A "line $x,$y,$xe,$ye,255,0,0\n";
 
     # line to next south latitude
-    my($xs,$ys) = &$f($lat-15, $lon);
+#    my($xs,$ys) = &$f($lat-15, $lon);
+    my($xs,$ys) = proj4($lat-15, $lon, $proj, $div);
+    if ($xs == -1) {next;}
     print A "line $x,$y,$xs,$ys,0,0,255\n";
 
     # fcircle must come last to avoid being overwritten by lines
@@ -59,7 +66,7 @@ system("fly -i /tmp/bdg2.fly -o /tmp/bdg2.gif");
 if ($globopts{gridonly}) {exit;}
 
 # TODO: better temp file naming
-open(A,">/tmp/bdg.fly");
+open(A,">/tmp/bdg.fly")||die("Can't open /tmp/bdg.fly, $!");
 print A << "MARK";
 new
 size 800,600
@@ -72,10 +79,18 @@ for $x (0..15) {
   for $y (2..14) {
     debug("XY: $x $y");
 
-    print A "copy 0,0,0,0,800,600,/tmp/bcdg-$x-$y.gif\n";
+    if ($taint{$x}{$y}) {
+      debug("SKIPPING $x/$y, TAINTED");
+      next;
+    }
 
     # TODO: better temp file naming (but do cache stuff like this)
-    if (-f "/tmp/bcdg-$x-$y.gif") {next;}
+    # TODO: consider caching more carefully in future
+#    if (-f "/tmp/bcdg-$x-$y.gif") {
+#      warn("Using existing /tmp/bcdg-$x-$y.gif");
+#      next;
+# }
+
     # reset border and distortion parameters
     %border = ();
     @params = ();
@@ -86,12 +101,26 @@ for $x (0..15) {
 	# the borders of this slippy tile
 	($lat,$lon) = slippy2latlon($x,$y,4,$px,$py);
 	# how we would map this border
-	($myx, $myy) = &$f($lat,$lon);
+#	($myx, $myy) = &$f($lat,$lon);
+	($myx, $myy) = proj4($lat,$lon,$proj,$div);
+
+	if ($myx==-1 || $myy==-1) {
+	  # can't use 'last' here, too deeply nested
+	  $taint{$x}{$y} = 1;
+	  debug("$x $y TAINTED");
+	  last;
+	}
+
 	# the distortion parameter for convert (imagemagick)
 	push(@params, "$px,$py,$myx,$myy");
 
       }
     }
+
+    # skip if tainted
+    if ($taint{$x}{$y}) {next;}
+
+    print A "copy 0,0,0,0,800,600,/tmp/bcdg-$x-$y.gif\n";
 
     # build up the convert command
     $distort = join(" ",@params);
@@ -163,10 +192,23 @@ TODO: calling cs2cs on each coordinate separately is hideously inefficient
 sub proj4 {
   my($lat, $lon, $proj, $div) = @_;
 
+  warn "TESTING";
+  # try to match wikipedia
+  $lon-=60; if ($lon<0) {$lon+=360;}
+
   # echoing back $lat/$lon is pointless here, but may be useful later
-  my($lt, $lo, $x, $y) = split(/\s+/, `echo $lat $lon | cs2cs -E +proj=latlon +to +proj=$proj`);
-  debug("$lt $lo $x $y");
+  # NOTE: +proj=latlon still requires lon/lat order
+  my($lt, $lo, $x, $y) = split(/\s+/, `echo $lon $lat | cs2cs -E -e 'ERR ERR' +proj=latlon +to +proj=$proj`);
+
+#  debug("RES: $lt $lo $x $y");
+
+  # off image?
+  if (abs($x)>$div || abs($y)>$div || $x eq "ERR") {return -1,-1;}
+
+  # scale
+  $x = 400+$x/$div*400;
+  $y = 300-$y/$div*300;
+
+#  debug("XY: $x $y");
+  return round($x),round($y);
 }
-  
-
-
