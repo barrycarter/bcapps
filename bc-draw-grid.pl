@@ -15,8 +15,8 @@ $latspace = 15;
 $lonspace = 20;
 
 # x/y of image
-$xsize = 1600;
-$ysize = 1200;
+$xsize = 800*8;
+$ysize = 600*8;
 
 # the function
 # $f = \&img_idtest;
@@ -26,7 +26,7 @@ $ysize = 1200;
 # test of "pre" function
 sub pre {
   my($lat,$lon) = @_;
-  $lon-=60; if ($lon<0) {$lon+=360;}
+  $lon= fmod($lon-+106.5,360);
   return $lat,$lon;
 }
 
@@ -208,16 +208,16 @@ sub proj4 {
   unless ($xsize) {$xsize=800;}
   unless ($ysize) {$ysize=600;}
 
-  debug("PRE: $pre");
-  debug("PRE PRE: $lat, $lon");
+#  debug("PRE: $pre");
+#  debug("PRE PRE: $lat, $lon");
   if ($pre) {
     ($lat, $lon) = &$pre($lat,$lon);
   }
-  debug("POST PRE: $lat, $lon");
+#  debug("POST PRE: $lat, $lon");
 
   # echoing back $lat/$lon is pointless here, but may be useful later
   # NOTE: +proj=latlon still requires lon/lat order
-  my($lt, $lo, $x, $y) = split(/\s+/, `echo $lon $lat | cs2cs -E -e 'ERR ERR' +proj=latlon +to +proj=$proj`);
+  my($lt, $lo, $x, $y) = split(/\s+/, `echo $lon $lat | cs2cs -E -e 'ERR ERR' +proj=latlon +to +proj=$proj 2> /dev/null`);
 
 #  debug("RES: $lt $lo $x $y");
 
@@ -225,11 +225,11 @@ sub proj4 {
   if (abs($x)>$div || abs($y)>$div || $x eq "ERR") {return -1,-1;}
 
   # scale
-  debug("X: $x, XSIZE: $xsize, DIV: $div");
-  debug("Y: $y, YSIZE: $xsize, DIV: $div");
+#  debug("X: $x, XSIZE: $xsize, DIV: $div");
+#  debug("Y: $y, YSIZE: $xsize, DIV: $div");
   $x = $xsize/2*(1+$x/$div);
   $y = $ysize/2*(1-$y/$div);
 
-  debug("XY: $x $y");
+#  debug("XY: $x $y");
   return round($x),round($y);
 }
