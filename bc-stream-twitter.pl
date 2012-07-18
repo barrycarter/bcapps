@@ -7,11 +7,17 @@ require "/home/barrycarter/bc-private.pl";
 
 # what we're looking for
 # note: using big locations for testing, will trim
-$data = "locations=-107,35,-106,36";
+$data = "track=math+tutor,math+help,perl+help,\@barrycarter";
 
 open(A,"curl -s -u $twitter{user}:$twitter{pass} 'https://stream.twitter.com/1/statuses/filter.json?$data'|");
 
 while (<A>) {
+  debug("RAW: $_");
+  if (/^\s*$/s) {
+    debug("BLANK MESSAGE");
+    next;
+  }
+
   # data is in JSON format
   $json = JSON::from_json($_);
   $str = "[$json->{created_at}] ($json->{id} : $json->{in_reply_to_status_id}) <$json->{user}{screen_name}> $json->{text}";
@@ -21,8 +27,11 @@ while (<A>) {
   $str = "[$time] <$json->{user}{screen_name}> $json->{text}";
   print "$str\n";
 
-#  debug("TEXT: $json->{text}, $json->{screen_name}, $json->{name}, $json->{id}, $json->{created_at}");
-#  debug("RAW: $_");
-#  debug("JSON:", unfold($json));
-#  debug("VAR:",dump_var(%{$json}));
+  $str=~s/\'//isg;
+
+  system("firefox https://twitter.com/$json->{user}{screen_name}/status/$json->{id}");
+
+  # TODO: have firefox open to tweet directly
+
+#  system("xmessage '$str'&");
 }
