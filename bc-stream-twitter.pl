@@ -37,7 +37,6 @@ while (<A>) {
 
   # create URL specific to user
   my($out,$err,$res) = cache_command("echo http://tutor.u.94y.info/\?$json->{user}{screen_name} | surl");
-  print "SURL: $out\n";
 
   $str = "[$json->{created_at}] ($json->{id} : $json->{in_reply_to_status_id}) <$json->{user}{screen_name}> $json->{text}";
 
@@ -46,11 +45,11 @@ while (<A>) {
   $str = "[$time] <$json->{user}{screen_name}> $json->{text}";
   print "$str\n";
 
+  # my signature line
+  print "If you'll accept help from a stranger, $out\n";
+
   $str=~s/\'//isg;
 
   system("firefox https://twitter.com/$json->{user}{screen_name}/status/$json->{id}");
 
-  # TODO: have firefox open to tweet directly
-
-#  system("xmessage '$str'&");
 }
