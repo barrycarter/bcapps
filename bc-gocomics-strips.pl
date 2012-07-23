@@ -68,7 +68,7 @@ for $i (glob "page-*") {
   # look for the image
   while ($all=~s/(<img[^>]*?>)//is) {
     $img = $1;
-    debug("FOUND: $img");
+#    debug("FOUND: $img");
     # see bc-get-peanuts.pl for more details on the below
     # look for src
     unless ($img=~/src="(.*?)"/) {next;}
@@ -76,7 +76,10 @@ for $i (glob "page-*") {
 
     # slightly different assets server for pearlsbeforeswine
 #    unless ($src=~/cdn\.svcs\.c2\.uclick\.com/) {next;}
-    unless ($src=~/assets\.amuniversal\.com/) {next;}
+    unless ($src=~/^http:..assets\.amuniversal\.com/) {next;}
+
+    # I think all pearlsbeforeswine has a 900 version
+    unless ($src=~/width\=900/) {next;}
 
     unless (-f "$i.gif") {
       debug("ADDING: $i.gif");
@@ -87,6 +90,7 @@ for $i (glob "page-*") {
 
 if (@commands3) {
   write_file(join("\n",@commands3), "runme3.sh");
+  # /var/tmp/gocomics is sshfs-mounted, so don't want to run parallel here
   die "TESTING";
   system("parallel -j 20 < runme3.sh");
 }
