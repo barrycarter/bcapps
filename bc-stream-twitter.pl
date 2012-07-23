@@ -21,11 +21,26 @@ while (<A>) {
     next;
   }
 
+  # if over a minute has passed, reload certain files (currently: none)
+  if (time()-$time > 60) {
+    # do stuff here
+    print "Minute to win it\n";
+    $time = time();
+  }
+
   # data is in JSON format
   $json = JSON::from_json($_);
 
   # getting tired of typing out $json->{text}
   $tweet = $json->{text};
+
+  # the list comes from bc-private.pl and includes ^rt to avoid retweets
+  for $i (@badtwitterregex) {
+    if ($tweet=~/$i/) {
+      debug("MATCH: $i to $tweet, ignoring");
+      next;
+    }
+  }
 
   # ignore RTs (we catch them the first time)
   if ($tweet=~/^rt/i) {next;}
