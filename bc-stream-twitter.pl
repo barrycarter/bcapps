@@ -30,6 +30,8 @@ while (<A>) {
   # this guy's doing what I am
   if ($json->{user}{screen_name}=~/mathtutor01/i) {$FLAG=1;}
 
+  # TODO: handle RTs (for both filtering and username-specification)
+
 #  # for now, just warn
 #  if ($FLAG) {warn "Would normally not be shown";}
 
