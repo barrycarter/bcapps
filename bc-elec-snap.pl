@@ -6,6 +6,9 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# lock
+unless (mylock("bc-elec-snap.pl","lock")) {die("Locked");}
+
 # check that /mnt/sshfs exists and is a mount point
 my($out, $err, $res) = cache_command("stat / | grep -i device:");
 $out=~m%device: (.*?)\s+%i||die("BAD STAT /");
@@ -36,3 +39,5 @@ for (;;) {
 }
 
 system("cp /var/tmp/$file.jpg /mnt/sshfs/ELEC2012/; sudo rm /var/tmp/$file.jpg");
+
+mylock("bc-elec-snap.pl","unlock");

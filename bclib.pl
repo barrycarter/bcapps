@@ -2566,6 +2566,90 @@ sub rotdeg {
     return(rotrad($th*$PI/180,$ax));
 }
 
+=item mylock($name,$action)
+
+Takes the lock $name if $action = "lock"; returns the lock $name if
+action = "unlock"
+
+returns 1 on success, 0 on failure (including case where lock already held)
+
+TODO: improve this to only warn when asked
+
+TODO: this code is hideous, improve it
+
+TODO: keep track of things I lock/unlock so I cean clean them up in sub END
+
+=cut
+
+sub mylock {
+  my($name,$action) = @_;
+  my($lockdir) = "/usr/local/etc/locks";
+  my($text);
+
+  # if unlocking... 
+  if ($action eq "unlock") {
+
+    # first check if lockfile exists
+    unless (-f "$lockdir/$name") {
+      warn("Lockfile $lockdir/$name doesn't exist [so no need to unlock]");
+      return 1;
+    }
+
+    # check to see that I own lock file, then remove it
+    $text = read_file("$lockdir/$name");
+    if ($text eq $$) {
+      # yes its my lock
+      unlink("$lockdir/$name");
+      return 1;
+    }
+
+    # does lock belong to defunct process?
+    if (-f "/proc/$text") {
+      warn("LOCK $name owned by living process $text, can't unlock");
+      return 0;
+    }
+
+    # lock belongs to dead process
+    warn("LOCKFILE $name exists, but $text is dead proc");
+    unlink("$lockdir/$name");
+    return 1;
+  }
+
+  # if locking...
+  if ($action eq "lock") {
+
+    # if lock doesn't exist, write my PID to it and return success
+    unless (-f "$lockdir/$name") {
+      write_file($$,"$lockdir/$name");
+      return 1;
+    }
+
+    # lock exists, so read it
+    $text = read_file("$lockdir/$name");
+
+    # do I own it?
+    if ($text eq $$) {
+      warn("LOCK $name already mine (not an error)");
+      return 1;
+    }
+
+    # owned by a living process?
+    if (-f "/proc/$text") {
+      warn("LOCK $name owned by living process $text");
+      return 0;
+    }
+
+    # lock owned by dead proc
+    warn("LOCK owned by dead proc $text, replacing");
+    write_file($$,"$lockdir/$name");
+    return 1;
+
+  }
+
+  warn("ACTION $action not understood");
+  return 0;
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
   debug("END: CLEANING UP TMP FILES");
