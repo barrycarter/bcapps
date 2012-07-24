@@ -37,13 +37,19 @@ while (<A>) {
   $tweet = $json->{text};
 
   # the list comes from bc-private.pl and includes ^rt to avoid retweets
+  $FLAG=0;
   for $i (@badtwitterregex) {
     debug("Comparing $tweet to $i");
     if ($tweet=~/$i/i) {
       debug("MATCH: $i to $tweet, ignoring");
+      # this next pushes to the next for $i, not the next while, so we need
+      # a temp var
+      $FLAG=1;
       next;
     }
   }
+
+  if ($FLAG) {next;}
 
   # to another person and not mentioning me? (special case, not simple regex)
   if ($tweet=~/^\@/ && $tweet!~/barry/i) {next;}
