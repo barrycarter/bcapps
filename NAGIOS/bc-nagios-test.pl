@@ -40,6 +40,12 @@ $res = system("$bin $arg")>>8;
 # no need to do this on functions I write myself, above
 if ($globopts{func}) {$res = func($globopts{func}, $res);}
 
+# does the function tell what subroutine to call to fix itself
+# (assuming its broken)?
+if ($res && $globopts{fix}) {
+  eval($globopts{fix});
+}
+
 # this is ugly, but works (spits out stuff to console)
 # TODO: redirect output of nagios to file that should remain empty
 # debug("FUNC: $globopts{func}, RES: $res");
@@ -131,5 +137,10 @@ sub bc_gaim_log_unanswered {
   }
 
   return 0;
+}
+
+# fixes resolv.conf in a fairly obvious way
+sub fix_resolv {
+  system("sudo cp -f /etc/resolv.conf.opendns /etc/resolv.conf");
 }
 
