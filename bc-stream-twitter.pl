@@ -9,7 +9,8 @@ require "/home/barrycarter/bc-private.pl";
 # note: using big locations for testing, will trim
 $data = "track=math+tutor,math+help,homework+help,\@barrycarter";
 
-debug("BAD LIST:", @badtwitterregex);
+# convert bad twits from priv file (ie, ones I don't want to hear from) to hash
+my(%badhash) = list2hash(@badtwitterusers);
 
 # write to logfile (not root, so can't write to /var/log?)
 open(B,">>/var/tmp/log/twitstream.txt");
@@ -32,6 +33,8 @@ while (<A>) {
 
   # data is in JSON format
   $json = JSON::from_json($_);
+
+  if ($badhash{$json->{user}{screen_name}}) {next;}
 
   # getting tired of typing out $json->{text}
   $tweet = $json->{text};
