@@ -15,7 +15,9 @@ my(%badhash) = list2hash(@badtwitterusers);
 # write to logfile (not root, so can't write to /var/log?)
 open(B,">>/var/tmp/log/twitstream.txt");
 
-open(A,"curl -s -u $twitter{user}:$twitter{pass} 'https://stream.twitter.com/1/statuses/filter.json?$data'|");
+my($cmd) = "curl -s -u $twitter{user}:$twitter{pass} 'https://stream.twitter.com/1/statuses/filter.json?$data'";
+debug("CMD: $cmd");
+open(A,"$cmd|");
 
 while (<A>) {
 #  debug("RAW: $_");
