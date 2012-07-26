@@ -26,15 +26,17 @@ while (<A>) {
 
   # if over a minute has passed, reload certain files (currently: none)
   if (time()-$time > 60) {
-    # do stuff here
-    print "Minute to win it\n";
+    # reload lists every minute
+    require "/home/barrycarter/bc-private.pl";
+#    print "Minute to win it\n";
     $time = time();
   }
 
   # data is in JSON format
   $json = JSON::from_json($_);
 
-  if ($badhash{$json->{user}{screen_name}}) {next;}
+  # must lc here since usernames are case-sensitive
+  if ($badhash{lc($json->{user}{screen_name})}) {next;}
 
   # getting tired of typing out $json->{text}
   $tweet = $json->{text};
