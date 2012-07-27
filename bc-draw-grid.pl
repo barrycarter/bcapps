@@ -10,13 +10,19 @@
 
 require "/usr/local/lib/bclib.pl";
 
+latlonrot(0,0,0,"x");
+
+
+
+die "TESTING";
+
 # spacing in degrees
 $latspace = 15;
 $lonspace = 20;
 
 # x/y of image
-$xsize = 800*8;
-$ysize = 600*8;
+$xsize = 800;
+$ysize = 600;
 
 # the function
 # $f = \&img_idtest;
@@ -232,4 +238,36 @@ sub proj4 {
 
 #  debug("XY: $x $y");
   return round($x),round($y);
+}
+
+=item latlonrot($lat, $lon, $th, $ax="x|y|z")
+
+Given a latitude/longitude, rotate it $th degrees around the $ax axis.
+
+z-axis: center of earth to north pole
+x-axis: center of earth to intersection of prime meridian and equator
+y-axis: center of earth to longitude +90, latitude 0 (right hand rule)
+
+NOTE: this inefficiently uses rotdeg() which is sometimes unnecessary;
+for example, rotation around the z axis simply adds to longitude and
+preservers latitude.
+
+NOT YET WRITTEN
+
+=cut
+
+sub latlonrot {
+  my($lat, $lon, $th, $ax) = @_;
+
+  # convert lat/lon to xyz coords (on sphere of radius 1)
+  my($x,$y,$z) = sph2xyz($lon, $lat, 1);
+  debug("OLD XYZ: $x, $y, $z");
+
+  # perform the rotation
+  my(@matrix) = rotdeg($th, $ax);
+  debug("MATRIX",@matrix);
+  my($nx,$ny,$nz) = matrixmult(\@matrix, [$x, $y, $z]);
+
+  debug("NEW XYZ: $nx, $ny, $nz");
+
 }

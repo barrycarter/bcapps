@@ -74,8 +74,9 @@ while (<A>) {
   print B "$str\n";
 
   # my signature line
-  print "Free live help at $out (online whiteboard)\n";
-  print B "Free live help at $out (online whiteboard)\n";
+  my($line) = "I might be able to help at: $out (online whiteboard)\n";
+  print $line;
+  print B $line;
 
   $str=~s/\'//isg;
 
