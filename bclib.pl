@@ -681,6 +681,29 @@ sub sph2xyz {
 }
 
 
+=item xyz2sph($x,$y,$z,$options)
+
+Converts ($x,$y,$z) to spherical coordinates ($theta,$phi,$r). Options:
+
+ degrees=1: return $th and $phi in degrees, not radians
+
+
+(unless $deg set, in which case returns degrees)
+
+=cut
+
+sub xyz2sph {
+    my($x,$y,$z,$options)=@_;
+#    debug("XYZ: $x $y $z");
+    my(%opts) = parse_form($options);
+    my(@ret)=(atan2($y,$x),atan2($z,sqrt($x*$x+$y*$y)),
+	      sqrt($x*$x+$y*$y+$z*$z));
+    # normalize
+    if ($ret[0]<0) {$ret[0]+=2*$PI;}
+    if ($opts{degrees}) {$ret[0]/=$DEGRAD; $ret[1]/=$DEGRAD;}
+    return(@ret);
+}
+
 =item voronoi(\@points, $options)
 
 Returns the Voronoi tesselation (in polygons) for a list of 2-D
@@ -1207,12 +1230,17 @@ sub matrixmult {
     my($a,$b)=@_;
     my(@a)=@$a;
     my(@b)=@$b;
+    debug("B: $b",@b);
     my($rows,$cols)=($#a,$#{$b[0]});
     my($share)=$#b;
     my(@ans);
+
+    debug("ROWS: $rows, COLS: $cols");
+
     for $i (0..$rows) {
 	for $j (0..$cols) {
 	    for $k (0..$share) {
+	      debug("$i,$j,$k -> $a[$i][$k] * $b[$k][$j]");
 		$ans[$i][$j]+= $a[$i][$k]*$b[$k][$j];
 	    }
 	}

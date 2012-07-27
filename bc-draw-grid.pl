@@ -10,11 +10,7 @@
 
 require "/usr/local/lib/bclib.pl";
 
-latlonrot(0,0,0,"x");
-
-
-
-die "TESTING";
+# debug(latlonrot(0,100,100,"z"));
 
 # spacing in degrees
 $latspace = 15;
@@ -32,13 +28,17 @@ $ysize = 600;
 # test of "pre" function
 sub pre {
   my($lat,$lon) = @_;
-  $lon= fmod($lon-+106.5,360);
+
+  ($lat, $lon) = latlonrot($lat, $lon, +106, "z");
+  ($lat, $lon) = latlonrot($lat, $lon, -35, "y");
+#  ($lat, $lon) = latlonrot($lat, $lon, 90, "x");
+
+#  $lon= fmod($lon-+106.5,360);
   return $lat,$lon;
 }
 
-$proj = "ortho";
-$div = 6378137;
-$pre = \&pre;
+$proj = "ortho"; $div = 6378137; $pre = \&pre;
+$proj = "merc"; $div = 20000000; $pre = \&pre;
 
 open(A,">/tmp/bdg2.fly");
 
@@ -252,22 +252,32 @@ NOTE: this inefficiently uses rotdeg() which is sometimes unnecessary;
 for example, rotation around the z axis simply adds to longitude and
 preservers latitude.
 
-NOT YET WRITTEN
-
 =cut
 
 sub latlonrot {
   my($lat, $lon, $th, $ax) = @_;
 
   # convert lat/lon to xyz coords (on sphere of radius 1)
-  my($x,$y,$z) = sph2xyz($lon, $lat, 1);
-  debug("OLD XYZ: $x, $y, $z");
+  my(@xyz) = sph2xyz($lon, $lat, 1, "degrees=1");
+#  debug("OLD",@xyz);
+  my(@newxyz);
 
   # perform the rotation
   my(@matrix) = rotdeg($th, $ax);
-  debug("MATRIX",@matrix);
-  my($nx,$ny,$nz) = matrixmult(\@matrix, [$x, $y, $z]);
 
-  debug("NEW XYZ: $nx, $ny, $nz");
+  # I know the matrix is 3x3, so this is slightly over kill
+  for $row (0..$#matrix) {
+    my(@cols) = @{$matrix[$row]};
+    for $col (0..$#cols) {
+      @newxyz[$row] += $matrix[$row][$col]*$xyz[$col];
+    }
+  }
 
+  # return to sph coords (ignore radius)
+  my($newlon, $newlat) = xyz2sph(@newxyz,"degrees=1");
+
+  # for longitude, [-180,180] is used, not [0,360]
+  if ($newlon>=180) {$newlon-=360;}
+
+  return $newlat,$newlon;
 }
