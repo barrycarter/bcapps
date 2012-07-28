@@ -70,16 +70,19 @@ while (<A>) {
   $time = strftime("%Y%m%d.%H%M%S", localtime(str2time($json->{created_at})));
 
   $str = "[$time] <$json->{user}{screen_name}> $json->{text}";
-  print "$str\n";
-  print B "$str\n";
 
   # my signature line
-  my($line) = "I might be able to help at: $out (online whiteboard)\n";
-  print $line;
-  print B $line;
+  my($line) = "I might be able to help at: $out (online whiteboard)";
 
-  $str=~s/\'//isg;
+  # "bracket" the tweet (easier when I search file using 'tac')
+  print "$line\n$str\n$line\n";
+  print B "$line\n$str\n$line\n";
 
-  system("firefox https://twitter.com/$json->{user}{screen_name}/status/$json->{id}");
+  if ($str=~s/\'//isg) {
+    warn("Removed apos: $str");
+  }
+
+  # must use full path to firefox to avoid rare error
+  system("/root/build/firefox/firefox https://twitter.com/$json->{user}{screen_name}/status/$json->{id}");
 
 }
