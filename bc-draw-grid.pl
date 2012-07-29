@@ -18,11 +18,11 @@ $latspace = 15;
 $lonspace = 20;
 
 # x/y of image
-$xsize = 800;
-$ysize = 600;
+$xsize = 800*4;
+$ysize = 600*4;
 
 # use slippy tiles at this zoom level (prev hardcoded at 4)
-$zoomtile = 2;
+$zoomtile = 4;
 
 # test of "pre" function
 sub pre {
@@ -31,15 +31,15 @@ sub pre {
   # TODO: add zooming somehow? (can't do it here though)
 
 #  ($lat, $lon) = latlonrot($lat, $lon, +106, "z");
-#  ($lat, $lon) = latlonrot($lat, $lon, -35, "y");
+#  ($lat, $lon) = latlonrot($lat, $lon, -90, "y");
 #  ($lat, $lon) = latlonrot($lat, $lon, 90, "x");
 
 #  $lon= fmod($lon-+106.5,360);
   return $lat,$lon;
 }
 
-$proj = "ortho"; $div = 6378137/1.1; $pre = \&pre;
-# $proj = "merc"; $div = 20000000; $pre = \&pre;
+# $proj = "ortho"; $div = 6378137; $pre = \&pre;
+$proj = "merc"; $div = 20000000; $pre = \&pre;
 # <h>And here's to you...</h>
 # $proj = "robin"; $div = 17005833; $pre = \&pre;
 
@@ -68,7 +68,6 @@ for ($lat=90; $lat>=-90; $lat-=$latspace) {
   if ($globopts{nogrid}) {next;}
   for ($lon=180; $lon>=-180; $lon-=$lonspace) {
     my($x,$y) = split(/\,/,$proj4{"$lat,$lon"});
-    debug("LATLON: $lat, $lon, XY: $x,$y");
     if ($x == -1) {next;}
 
     # position string a little "SE" of dot
@@ -79,7 +78,6 @@ for ($lat=90; $lat>=-90; $lat-=$latspace) {
     $lone = $lon+$lonspace;
     if ($lone>180){$lone-=360;}
     my($xe,$ye) = split(/\,/, $proj4{"$lat,$lone"});
-    debug("$xe/$ye, alf");
     unless ($xe == -1) {
     print A "line $x,$y,$xe,$ye,255,0,0\n";
   }
@@ -87,7 +85,6 @@ for ($lat=90; $lat>=-90; $lat-=$latspace) {
     # line to next south latitude
     $lats = $lat-$latspace;
     my($xs,$ys) = split(/\,/, $proj4{"$lats,$lon"});
-    debug("$xs/$ys, bet");
     unless ($xs == -1 || $lats<-90) {
     print A "line $x,$y,$xs,$ys,0,0,255\n";
   }
@@ -116,8 +113,6 @@ MARK
 for $x (0..(2**$zoomtile-1)) {
   for $y (0..2**$zoomtile-1) {
 
-    debug("XY: $x $y");
-
     if ($taint{$x}{$y}) {
       debug("SKIPPING $x/$y, TAINTED");
       next;
@@ -135,14 +130,12 @@ for $x (0..(2**$zoomtile-1)) {
       for $py (0,255) {
 	# the borders of this slippy tile
 	($lat,$lon) = slippy2latlon($x,$y,$zoomtile,$px,$py);
-	debug("POINT $px,$py -> $lat,$lon");
 	# how we would map this border
 	($myx, $myy) = proj4($lat,$lon,$proj,$div,$xsize,$ysize,$pre);
 
 	if ($myx==-1 || $myy==-1) {
 	  # can't use 'last' here, too deeply nested
 	  $taint{$x}{$y} = 1;
-	  debug("$x $y TAINTED");
 	  last;
 	}
 
@@ -160,8 +153,8 @@ for $x (0..(2**$zoomtile-1)) {
     $distort = "'$distort'";
 
     # and convert..
+    debug("CONVERTING: $x,$y zoom $zoomtile");
     $cmd = "convert -mattecolor transparent -extent ${xsize}x$ysize -background transparent -matte -virtual-pixel transparent -distort Perspective $distort /var/cache/OSM/$zoomtile,$x,$y.png /tmp/bcdg-$x-$y.gif";
-    debug("CMD: $cmd");
     system($cmd);
 
     # fly gets annoyed if file doesn't exist, so check that above worked
@@ -200,7 +193,6 @@ TODO: calling cs2cs on each coordinate separately is hideously inefficient
 
 sub proj4 {
   my($lat, $lon, $proj, $div, $xsize, $ysize, $pre) = @_;
-  debug("GOT: $lat, $lon, $proj, $div, $xsize, $ysize, $pre");
   unless ($xsize) {$xsize=800;}
   unless ($ysize) {$ysize=600;}
 
@@ -208,15 +200,10 @@ sub proj4 {
     ($lat, $lon) = &$pre($lat,$lon);
   }
 
-  debug("AFTER ROTATION: $lat,$lon");
-
   # echoing back $lat/$lon is pointless here, but may be useful later
   # NOTE: +proj=latlon still requires lon/lat order
   my($cmd) = "echo $lon $lat | cs2cs -E -e 'ERR ERR' +proj=latlon +to +proj=$proj 2> /dev/null";
-  debug("PCMD: $cmd");
   my($lt, $lo, $x, $y) = split(/\s+/, `$cmd`);
-
-  debug("POSTPROJ: $x/$div, $y/$div");
 
   # off image?
   # allow a little bit off image
@@ -225,8 +212,6 @@ sub proj4 {
   # scale
   $x = $xsize/2*(1+$x/$div);
   $y = $ysize/2*(1-$y/$div);
-
-  debug("XY: $x,$y");
 
   return round($x),round($y);
 }

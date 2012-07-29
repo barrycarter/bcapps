@@ -77,7 +77,7 @@ while (<A>) {
   $str=~s/[^ -~]//isg;
 
   # my signature line
-  my($line) = "I might be able to help at: $out (online whiteboard)";
+  my($line) = "I might be able to help for free at: $out (online whiteboard)";
 
   # "bracket" the tweet (easier when I search file using 'tac')
   print "$line\n$str\n$line\n";

@@ -8,6 +8,14 @@ for (;;) {
   debug("ENTERING LOOP");
   $res = system("pgrep plugin|xargs ps -wwwl | fgrep flash > /dev/null");
   debug("RES: $res");
-  if ($res) {system("/root/build/firefox/firefox http://tutor.u.94y.info/\?restart");}
-  sleep(5);
+
+  if ($res) {
+    system("/root/build/firefox/firefox http://tutor.u.94y.info/\?restart");
+    # if I actually just restarted, wait longer
+    sleep(15);
 }
+
+  sleep(1);
+}
+
+
