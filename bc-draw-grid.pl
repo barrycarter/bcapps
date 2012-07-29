@@ -5,6 +5,7 @@
 # otherwise 'zoomed' maps); future idea is to use slippy tiles (OSM)
 # and not try to recreate everything myself
 # --gridonly: only draw the grid (useful for testing)
+# --nogrid: don't draw the grid (useful for testing)
 
 # TODO: adaptive zooming (zoom more where needed)
 
@@ -21,12 +22,7 @@ $xsize = 800;
 $ysize = 600;
 
 # use slippy tiles at this zoom level (prev hardcoded at 4)
-$zoomtile = 3;
-
-# the function
-# $f = \&img_idtest;
-# $f = \&sinusoidal;
-# $f = \&polar;
+$zoomtile = 2;
 
 # test of "pre" function
 sub pre {
@@ -34,15 +30,15 @@ sub pre {
 
   # TODO: add zooming somehow? (can't do it here though)
 
-  ($lat, $lon) = latlonrot($lat, $lon, +106, "z");
-  ($lat, $lon) = latlonrot($lat, $lon, -35, "y");
+#  ($lat, $lon) = latlonrot($lat, $lon, +106, "z");
+#  ($lat, $lon) = latlonrot($lat, $lon, -35, "y");
 #  ($lat, $lon) = latlonrot($lat, $lon, 90, "x");
 
 #  $lon= fmod($lon-+106.5,360);
   return $lat,$lon;
 }
 
-$proj = "ortho"; $div = 6378137; $pre = \&pre;
+$proj = "ortho"; $div = 6378137/1.1; $pre = \&pre;
 # $proj = "merc"; $div = 20000000; $pre = \&pre;
 # <h>And here's to you...</h>
 # $proj = "robin"; $div = 17005833; $pre = \&pre;
@@ -58,6 +54,8 @@ MARK
 
 # making this more efficient and flexible by only calcing values once
 for ($lat=90; $lat>=-90; $lat-=$latspace) {
+  # TODO: this is terrible way of skipping grid
+  if ($globopts{nogrid}) {next;}
   for ($lon=180; $lon>=-180; $lon-=$lonspace) {
     # cheating by not using list
     $proj4{"$lat,$lon"} = join(",",proj4($lat, $lon, $proj, $div, $xsize, $ysize, $pre));
@@ -66,6 +64,8 @@ for ($lat=90; $lat>=-90; $lat-=$latspace) {
 
 # now to use the values we just calced
 for ($lat=90; $lat>=-90; $lat-=$latspace) {
+  # TODO: this is terrible way of skipping grid
+  if ($globopts{nogrid}) {next;}
   for ($lon=180; $lon>=-180; $lon-=$lonspace) {
     my($x,$y) = split(/\,/,$proj4{"$lat,$lon"});
     debug("LATLON: $lat, $lon, XY: $x,$y");
@@ -73,7 +73,6 @@ for ($lat=90; $lat>=-90; $lat-=$latspace) {
 
     # position string a little "SE" of dot
     my($sx,$sy) = ($x+5, $y+5);
-    print "string 0,0,0,$sx,$sy,tiny,$lat,$lon\n";
     print A "string 0,0,0,$sx,$sy,tiny,$lat,$lon\n";
 
     # same lat, east long
@@ -90,7 +89,6 @@ for ($lat=90; $lat>=-90; $lat-=$latspace) {
     my($xs,$ys) = split(/\,/, $proj4{"$lats,$lon"});
     debug("$xs/$ys, bet");
     unless ($xs == -1 || $lats<-90) {
-    print "line $x,$y,$xs,$ys,0,0,255\n";
     print A "line $x,$y,$xs,$ys,0,0,255\n";
   }
 
@@ -137,6 +135,7 @@ for $x (0..(2**$zoomtile-1)) {
       for $py (0,255) {
 	# the borders of this slippy tile
 	($lat,$lon) = slippy2latlon($x,$y,$zoomtile,$px,$py);
+	debug("POINT $px,$py -> $lat,$lon");
 	# how we would map this border
 	($myx, $myy) = proj4($lat,$lon,$proj,$div,$xsize,$ysize,$pre);
 
@@ -156,53 +155,25 @@ for $x (0..(2**$zoomtile-1)) {
     # skip if tainted
     if ($taint{$x}{$y}) {next;}
 
-    print A "copy 0,0,0,0,$xsize,$ysize,/tmp/bcdg-$x-$y.gif\n";
-
     # build up the convert command
     $distort = join(" ",@params);
     $distort = "'$distort'";
 
     # and convert..
     $cmd = "convert -mattecolor transparent -extent ${xsize}x$ysize -background transparent -matte -virtual-pixel transparent -distort Perspective $distort /var/cache/OSM/$zoomtile,$x,$y.png /tmp/bcdg-$x-$y.gif";
+    debug("CMD: $cmd");
     system($cmd);
+
+    # fly gets annoyed if file doesn't exist, so check that above worked
+    if (-f "/tmp/bcdg-$x-$y.gif") {
+      print A "copy 0,0,0,0,$xsize,$ysize,/tmp/bcdg-$x-$y.gif\n";
+    }
   }
 }
 
 close(A);
 
-system("fly -i /tmp/bdg.fly -o /tmp/bdg1.gif");
-
-# equiangular
-sub img_idtest {
-  my($lat,$lon) = @_;
-
-  # using 800x600 hardcoded here = bad?
-  my($y) = (90-$lat)*600/180;
-  my($x) = ($lon+180)*800/360;
-
-  return round($x),round($y);
-}
-
-# sinusoidal?
-
-sub sinusoidal {
-  my($lat,$lon) = @_;
-
-  my($x) = 400 + ($lon/180)*400*cos($lat*$DEGRAD);
-  my($y) = (90-$lat)*600/180;
-
-  return round($x),round($y);
-}
-
-# polar
-
-sub polar {
-  my($lat,$lon) = @_;
-  my($r) = (90-$lat)/180*300;
-  my($x) = 400+$r*cos(-$lon*$DEGRAD);
-  my($y) = 300+$r*sin(-$lon*$DEGRAD);
-  return round($x),round($y);
-}
+system("fly -q -i /tmp/bdg.fly -o /tmp/bdg1.gif");
 
 # grab all level 4? OSM maps (this isn't as hideous as it looks thanks
 # to caching) [only needed to do this once]
@@ -229,32 +200,34 @@ TODO: calling cs2cs on each coordinate separately is hideously inefficient
 
 sub proj4 {
   my($lat, $lon, $proj, $div, $xsize, $ysize, $pre) = @_;
+  debug("GOT: $lat, $lon, $proj, $div, $xsize, $ysize, $pre");
   unless ($xsize) {$xsize=800;}
   unless ($ysize) {$ysize=600;}
 
-#  debug("PRE: $pre");
-#  debug("PRE PRE: $lat, $lon");
   if ($pre) {
     ($lat, $lon) = &$pre($lat,$lon);
   }
-#  debug("POST PRE: $lat, $lon");
+
+  debug("AFTER ROTATION: $lat,$lon");
 
   # echoing back $lat/$lon is pointless here, but may be useful later
   # NOTE: +proj=latlon still requires lon/lat order
-  my($lt, $lo, $x, $y) = split(/\s+/, `echo $lon $lat | cs2cs -E -e 'ERR ERR' +proj=latlon +to +proj=$proj 2> /dev/null`);
+  my($cmd) = "echo $lon $lat | cs2cs -E -e 'ERR ERR' +proj=latlon +to +proj=$proj 2> /dev/null";
+  debug("PCMD: $cmd");
+  my($lt, $lo, $x, $y) = split(/\s+/, `$cmd`);
 
-#  debug("RES: $lt $lo $x $y");
+  debug("POSTPROJ: $x/$div, $y/$div");
 
   # off image?
-  if (abs($x)>$div || abs($y)>$div || $x eq "ERR") {return -1,-1;}
+  # allow a little bit off image
+  if (abs($x)>$div*2 || abs($y)>$div*2 || $x eq "ERR") {return -1,-1;}
 
   # scale
-#  debug("X: $x, XSIZE: $xsize, DIV: $div");
-#  debug("Y: $y, YSIZE: $xsize, DIV: $div");
   $x = $xsize/2*(1+$x/$div);
   $y = $ysize/2*(1-$y/$div);
 
-#  debug("XY: $x $y");
+  debug("XY: $x,$y");
+
   return round($x),round($y);
 }
 
