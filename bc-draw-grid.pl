@@ -20,6 +20,9 @@ $lonspace = 20;
 $xsize = 800;
 $ysize = 600;
 
+# use slippy tiles at this zoom level (prev hardcoded at 4)
+$zoomtile = 3;
+
 # the function
 # $f = \&img_idtest;
 # $f = \&sinusoidal;
@@ -29,10 +32,10 @@ $ysize = 600;
 sub pre {
   my($lat,$lon) = @_;
 
-  # TODO: add zooming somehow?
+  # TODO: add zooming somehow? (can't do it here though)
 
-#  ($lat, $lon) = latlonrot($lat, $lon, +106, "z");
-#  ($lat, $lon) = latlonrot($lat, $lon, -35, "y");
+  ($lat, $lon) = latlonrot($lat, $lon, +106, "z");
+  ($lat, $lon) = latlonrot($lat, $lon, -35, "y");
 #  ($lat, $lon) = latlonrot($lat, $lon, 90, "x");
 
 #  $lon= fmod($lon-+106.5,360);
@@ -41,6 +44,8 @@ sub pre {
 
 $proj = "ortho"; $div = 6378137; $pre = \&pre;
 # $proj = "merc"; $div = 20000000; $pre = \&pre;
+# <h>And here's to you...</h>
+# $proj = "robin"; $div = 17005833; $pre = \&pre;
 
 open(A,">/tmp/bdg2.fly")||die("Can't open /tmp/bdg2.fly, $!");
 
@@ -109,16 +114,9 @@ size $xsize,$ysize
 MARK
 ;
 
-# loop through all level 4 slippy tiles
-for $x (0..15) {
-  # TODO: not sure why y can't be 0 or 15?
-  for $y (0..15) {
-    # figure out lat/lon range (may help explain $y limits?)
-
-#    ($nwlat,$nwlon) = slippy2latlon($x,$y,4,0,0);
-#    ($nwlat,$nwlon) = slippy2latlon($x,$y,4,0,0);
-    
-
+# loop through all level $zoomtile slippy tiles
+for $x (0..(2**$zoomtile-1)) {
+  for $y (0..2**$zoomtile-1) {
 
     debug("XY: $x $y");
 
@@ -129,10 +127,6 @@ for $x (0..15) {
 
     # TODO: better temp file naming (but do cache stuff like this)
     # TODO: consider caching more carefully in future
-#    if (-f "/tmp/bcdg-$x-$y.gif") {
-#      warn("Using existing /tmp/bcdg-$x-$y.gif");
-#      next;
-# }
 
     # reset border and distortion parameters
     %border = ();
@@ -142,9 +136,8 @@ for $x (0..15) {
     for $px (0,255) {
       for $py (0,255) {
 	# the borders of this slippy tile
-	($lat,$lon) = slippy2latlon($x,$y,4,$px,$py);
+	($lat,$lon) = slippy2latlon($x,$y,$zoomtile,$px,$py);
 	# how we would map this border
-#	($myx, $myy) = &$f($lat,$lon);
 	($myx, $myy) = proj4($lat,$lon,$proj,$div,$xsize,$ysize,$pre);
 
 	if ($myx==-1 || $myy==-1) {
@@ -170,7 +163,7 @@ for $x (0..15) {
     $distort = "'$distort'";
 
     # and convert..
-    $cmd = "convert -mattecolor transparent -extent ${xsize}x$ysize -background transparent -matte -virtual-pixel transparent -distort Perspective $distort /var/cache/OSM/4,$x,$y.png /tmp/bcdg-$x-$y.gif";
+    $cmd = "convert -mattecolor transparent -extent ${xsize}x$ysize -background transparent -matte -virtual-pixel transparent -distort Perspective $distort /var/cache/OSM/$zoomtile,$x,$y.png /tmp/bcdg-$x-$y.gif";
     system($cmd);
   }
 }
