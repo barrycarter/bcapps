@@ -26,11 +26,13 @@ while (<A>) {
     next;
   }
 
-  # if over a minute has passed, reload certain files (currently: none)
+  # if over a minute has passed, reload certain files
   if (time()-$time > 60) {
     # reload lists every minute
-    require "/home/barrycarter/bc-private.pl";
-#    print "Minute to win it\n";
+    # can't require the same file twice, so...
+    my($tmp) = my_tmpfile();
+    system("cp /home/barrycarter/bc-private.pl $tmp");
+    require $tmp;
     $time = time();
   }
 
@@ -71,16 +73,15 @@ while (<A>) {
 
   $str = "[$time] <$json->{user}{screen_name}> $json->{text}";
 
+  # remove nonprintables
+  $str=~s/[^ -~]//isg;
+
   # my signature line
   my($line) = "I might be able to help at: $out (online whiteboard)";
 
   # "bracket" the tweet (easier when I search file using 'tac')
   print "$line\n$str\n$line\n";
   print B "$line\n$str\n$line\n";
-
-  if ($str=~s/\'//isg) {
-    warn("Removed apos: $str");
-  }
 
   # must use full path to firefox to avoid rare error
   system("/root/build/firefox/firefox https://twitter.com/$json->{user}{screen_name}/status/$json->{id}");
