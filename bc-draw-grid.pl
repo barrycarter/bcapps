@@ -29,8 +29,10 @@ $ysize = 600;
 sub pre {
   my($lat,$lon) = @_;
 
-  ($lat, $lon) = latlonrot($lat, $lon, +106, "z");
-  ($lat, $lon) = latlonrot($lat, $lon, -35, "y");
+  # TODO: add zooming somehow?
+
+#  ($lat, $lon) = latlonrot($lat, $lon, +106, "z");
+#  ($lat, $lon) = latlonrot($lat, $lon, -35, "y");
 #  ($lat, $lon) = latlonrot($lat, $lon, 90, "x");
 
 #  $lon= fmod($lon-+106.5,360);
@@ -38,9 +40,9 @@ sub pre {
 }
 
 $proj = "ortho"; $div = 6378137; $pre = \&pre;
-$proj = "merc"; $div = 20000000; $pre = \&pre;
+# $proj = "merc"; $div = 20000000; $pre = \&pre;
 
-open(A,">/tmp/bdg2.fly");
+open(A,">/tmp/bdg2.fly")||die("Can't open /tmp/bdg2.fly, $!");
 
 print A << "MARK";
 new
@@ -49,27 +51,43 @@ setpixel 0,0,255,255,255
 MARK
 ;
 
+# making this more efficient and flexible by only calcing values once
 for ($lat=90; $lat>=-90; $lat-=$latspace) {
   for ($lon=180; $lon>=-180; $lon-=$lonspace) {
-#    ($x,$y) = &$f($lat, $lon);
-    my($x,$y) = proj4($lat, $lon, $proj, $div, $xsize, $ysize, $pre);
+    # cheating by not using list
+    $proj4{"$lat,$lon"} = join(",",proj4($lat, $lon, $proj, $div, $xsize, $ysize, $pre));
+  }
+}
+
+# now to use the values we just calced
+for ($lat=90; $lat>=-90; $lat-=$latspace) {
+  for ($lon=180; $lon>=-180; $lon-=$lonspace) {
+    my($x,$y) = split(/\,/,$proj4{"$lat,$lon"});
+    debug("LATLON: $lat, $lon, XY: $x,$y");
     if ($x == -1) {next;}
 
     # position string a little "SE" of dot
     my($sx,$sy) = ($x+5, $y+5);
+    print "string 0,0,0,$sx,$sy,tiny,$lat,$lon\n";
     print A "string 0,0,0,$sx,$sy,tiny,$lat,$lon\n";
 
-    # line to next east longitude
-#    my($xe,$ye) = &$f($lat, $lon+20);
-    my($xe,$ye) = proj4($lat, $lon+20, $proj, $div, $xsize, $ysize, $pre);
-    if ($xe == -1) {next;}
+    # same lat, east long
+    $lone = $lon+$lonspace;
+    if ($lone>180){$lone-=360;}
+    my($xe,$ye) = split(/\,/, $proj4{"$lat,$lone"});
+    debug("$xe/$ye, alf");
+    unless ($xe == -1) {
     print A "line $x,$y,$xe,$ye,255,0,0\n";
+  }
 
     # line to next south latitude
-#    my($xs,$ys) = &$f($lat-15, $lon);
-    my($xs,$ys) = proj4($lat-15, $lon, $proj, $div, $xsize, $ysize, $pre);
-    if ($xs == -1) {next;}
+    $lats = $lat-$latspace;
+    my($xs,$ys) = split(/\,/, $proj4{"$lats,$lon"});
+    debug("$xs/$ys, bet");
+    unless ($xs == -1 || $lats<-90) {
+    print "line $x,$y,$xs,$ys,0,0,255\n";
     print A "line $x,$y,$xs,$ys,0,0,255\n";
+  }
 
     # fcircle must come last to avoid being overwritten by lines
     print A "circle $x,$y,5,0,0,0\n";
@@ -79,7 +97,7 @@ for ($lat=90; $lat>=-90; $lat-=$latspace) {
 
 close(A);
 
-system("fly -i /tmp/bdg2.fly -o /tmp/bdg2.gif");
+system("fly -q -i /tmp/bdg2.fly -o /tmp/bdg2.gif");
 
 if ($globopts{gridonly}) {exit;}
 
@@ -94,7 +112,14 @@ MARK
 # loop through all level 4 slippy tiles
 for $x (0..15) {
   # TODO: not sure why y can't be 0 or 15?
-  for $y (2..14) {
+  for $y (0..15) {
+    # figure out lat/lon range (may help explain $y limits?)
+
+#    ($nwlat,$nwlon) = slippy2latlon($x,$y,4,0,0);
+#    ($nwlat,$nwlon) = slippy2latlon($x,$y,4,0,0);
+    
+
+
     debug("XY: $x $y");
 
     if ($taint{$x}{$y}) {
