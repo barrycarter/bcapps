@@ -6,6 +6,7 @@
 # and not try to recreate everything myself
 # --gridonly: only draw the grid (useful for testing)
 # --nogrid: don't draw the grid (useful for testing)
+# --nogridstring: don't print most strings on the grid
 
 # TODO: adaptive zooming (zoom more where needed)
 
@@ -18,8 +19,8 @@ $latspace = 15;
 $lonspace = 20;
 
 # x/y of image
-$xsize = 800*4;
-$ysize = 600*4;
+$xsize = 800;
+$ysize = 600;
 
 # use slippy tiles at this zoom level (prev hardcoded at 4)
 $zoomtile = 4;
@@ -30,8 +31,8 @@ sub pre {
 
   # TODO: add zooming somehow? (can't do it here though)
 
-#  ($lat, $lon) = latlonrot($lat, $lon, +106, "z");
-#  ($lat, $lon) = latlonrot($lat, $lon, -90, "y");
+  ($lat, $lon) = latlonrot($lat, $lon, +106, "z");
+  ($lat, $lon) = latlonrot($lat, $lon, -35, "y");
 #  ($lat, $lon) = latlonrot($lat, $lon, 90, "x");
 
 #  $lon= fmod($lon-+106.5,360);
@@ -71,8 +72,10 @@ for ($lat=90; $lat>=-90; $lat-=$latspace) {
     if ($x == -1) {next;}
 
     # position string a little "SE" of dot
+unless ($globopts{nogridstring}) {
     my($sx,$sy) = ($x+5, $y+5);
     print A "string 0,0,0,$sx,$sy,tiny,$lat,$lon\n";
+}
 
     # same lat, east long
     $lone = $lon+$lonspace;
@@ -88,6 +91,26 @@ for ($lat=90; $lat>=-90; $lat-=$latspace) {
     unless ($xs == -1 || $lats<-90) {
     print A "line $x,$y,$xs,$ys,0,0,255\n";
   }
+
+    # position of next point (for testing)
+    ($xn,$yn) = split(/\,/,$proj4{"$lats,$lone"});
+
+    # check to see where "halfway SE" point would map
+    $latm = ($lat+$lats)/2.;
+    $lonm = ($lon+$lone)/2.;
+
+    my($xm,$ym) = proj4($latm, $lonm, $proj, $div, $xsize, $ysize, $pre);
+
+    if (($xm-$xn)*($xm-$x)>0 && $xn!=-1 && $xm!=-1) {
+      # this shouldn't happen, means xm is not between x and xn
+      print A "string 255,0,0,$xm,$ym,tiny,$latm,$lonm\n";
+      debug("X: $latm/$lonm ($lat/$lon to $lats/$lone): $x,$xm,$xn");
+    }
+
+
+#    if (($xm-$xs)*($xm-$x)>0) {
+#      debug("XM: $xm, vs $x, $xs");
+#    }
 
     # fcircle must come last to avoid being overwritten by lines
     print A "circle $x,$y,5,0,0,0\n";
