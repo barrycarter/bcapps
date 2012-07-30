@@ -280,3 +280,75 @@ sub latlonrot {
 
   return $newlat,$newlon;
 }
+
+=item quadrangle($slat, $wlon, $nlat, $elon)
+
+Given a SW and NE latitude/longitude, return the quadrangle (four x/y)
+points that this projection maps them to.
+
+Similar to calling proj4 multiple times, but uses caching, and checks
+that the quadrangle actually "makes sense" (is a true polygon) before
+returning it
+
+=cut
+
+sub quadrangle {
+  my($arg{slat}, $arg{wlon}, $arg{nlat}, $arg{$elon}) = @_;
+  my($minx,$maxx,$miny,$maxy) = (+Infinity,-Infinity,+Infinity,-Infinity);
+
+  # compute all four corners (we'll need them anyway)
+  for $lat ("slat","nlat") {
+    for $lon ("wlon","elon") {
+      my($rlat, $rlon) = ($arg{$lat}, $arg{$lon});
+      unless ($proj4{$rlat}{$rlon}) {
+	my(@ans) = proj4($rlat, $rlon, $proj, $div, $xsize, $ysize, $pre);
+
+	# update max/min
+	# TODO: must be better way to do this (sorting?)
+	$minx = min($minx,$ans[0]);
+	$maxx = max($maxx,$ans[0]);
+	$miny = min($miny,$ans[1]);
+	$maxy = max($maxy,$ans[1]);
+
+	# if even one of these is invalid, return nothing
+	if ($ans[0]==-1) {return;}
+	@{$proj4{$rlat}{$rlon}} = @ans;
+      }
+    }
+  }
+
+  # for testing, see if midpoint is inside the quadrangle (it should be)
+  # special case for lon straddling +-180
+  my($mlon) = ($arg{wlon}+$arg{elon})/2;
+  if ($arg{elon} < $arg{wlon}) {
+    $mlon+=180;
+    if ($mlon>180) {$mlon-=360;}
+  }
+
+  my($mlat) = ($arg{slat}+$arg{nlat})/2;
+
+  # TODO: recalculating this is probably bad
+  my($mx,$my) = proj4($mlat, $mlon, $proj, $div, $xsize, $ysize, $pre);
+
+  # betweenness testing
+  if ($mx < $minx || $mx > $maxx) {return;}
+  if ($my < $miny || $my > $maxy) {return;}
+
+  # all looks well (is this the right thing to return?)
+  return %arg;
+}
+
+# TODO: move this to bclib.pl
+
+=item signum($x)
+
+Returns the sign (not sine) of $x
+
+=cut
+
+sub signum {
+  my($x) = @_;
+  if ($x>0) {return 1;}
+  if ($x<0) {return -1;}
+  return 0;
+}
