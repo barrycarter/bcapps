@@ -32,7 +32,15 @@ unless($globopts{noheader}){
  "Berlin" => "Europe/Berlin",
  "Beijing" => "Asia/Shanghai",
  "Nepal" => "Asia/Katmandu",
- "Darwin" => "Australia/Darwin"
+ "Darwin" => "Australia/Darwin",
+ "Samoa" => "Pacific/Apia",
+ "Anchorage" => "America/Anchorage",
+ "Newfies" => "America/St_Johns",
+ "Lagos" => "Africa/Lagos",
+ "Moscow" => "Europe/Moscow",
+ "Iran" => "Asia/Tehran",
+ "Jakarta" => "Asia/Jakarta",
+ "Auckland" => "Pacific/Auckland"
 );
 
 # IDL = international date line (of sorts)
