@@ -295,13 +295,19 @@ returning it
 sub quadrangle {
   my($arg{slat}, $arg{wlon}, $arg{nlat}, $arg{$elon}) = @_;
   my($minx,$maxx,$miny,$maxy) = (+Infinity,-Infinity,+Infinity,-Infinity);
+  my(@ret);
 
   # compute all four corners (we'll need them anyway)
-  for $lat ("slat","nlat") {
+  for $lat ("nlat","slat") {
     for $lon ("wlon","elon") {
       my($rlat, $rlon) = ($arg{$lat}, $arg{$lon});
       unless ($proj4{$rlat}{$rlon}) {
 	my(@ans) = proj4($rlat, $rlon, $proj, $div, $xsize, $ysize, $pre);
+
+	# if even one of these is invalid, return nothing
+	if ($ans[0]==-1) {return;}
+
+	push(@ret,@ans);
 
 	# update max/min
 	# TODO: must be better way to do this (sorting?)
@@ -310,8 +316,6 @@ sub quadrangle {
 	$miny = min($miny,$ans[1]);
 	$maxy = max($maxy,$ans[1]);
 
-	# if even one of these is invalid, return nothing
-	if ($ans[0]==-1) {return;}
 	@{$proj4{$rlat}{$rlon}} = @ans;
       }
     }
@@ -335,7 +339,7 @@ sub quadrangle {
   if ($my < $miny || $my > $maxy) {return;}
 
   # all looks well (is this the right thing to return?)
-  return %arg;
+  return @ret;
 }
 
 # TODO: move this to bclib.pl
