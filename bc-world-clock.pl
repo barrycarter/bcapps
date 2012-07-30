@@ -62,17 +62,28 @@ for $i (0..23) {
   # numbers go offedge unless I put .95 below
   $x = .95*$size/2*cos($an)+$size/2;
   $y = .95*$size/2*sin($an)+$size/2;
-  print A "<text x='$x' y='$y'>$i</text>\n";
+  print A "<text x='$x' y='$y' stroke='#ff0000'>$i</text>\n";
 }
 
 for $i (sort keys %zones) {
   $ENV{TZ} = $zones{$i};
   my($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time());
+  my($strftime) = strftime("%-l:%M%P %a",localtime(time()));
   # angle for this time (in degrees, since this is for SVG)
   $an = ($hour*15 + $min/4 + $sec/240 - 90);
   # pad with dots based on length
   $pad= "-"x(30-length($i));
-  print A "<text x='300' y='300' transform='rotate($an 300,300)' style='font-size:20'>$pad $i $min</text>\n";
+  $pad= "-"x(35-length($i));
+
+#  $spacepad = $pad;
+#  $spacepad=~s/./ /isg;
+  $spacepad=" "x48;
+  $an2 = $an+4;
+
+#  $pad= "-"x(30-length($strftime));
+#  print A "<text x='300' y='300' transform='rotate($an 300,300)' style='font-size:20'>$pad $i $min</text>\n";
+  print A "<text x='300' y='300' transform='rotate($an 300,300)' style='font-size:18'>$pad $i</text>\n";
+  print A "<text x='300' y='300' transform='rotate($an2 300,300)' style='font-size:14' stroke='#0000ff' xml:space='preserve'>$spacepad$strftime</text>\n";
 }
 
 # for $i (0..10) {
