@@ -346,10 +346,11 @@ sub quadrangle {
       debug("STARTCORNER: $rlat/$rlon");
 
       unless (@{$proj4{$rlat}{$rlon}}) {
-	@{$proj4{$rlat}{$lon}} = proj4($rlat, $rlon, $proj, $div, $xsize, $ysize, $pre);
+	debug("GETTING DATA ($rlat,$rlon)");
+	@{$proj4{$rlat}{$rlon}} = proj4($rlat, $rlon, $proj, $div, $xsize, $ysize, $pre);
       }
 
-        @ans = @{$proj4{$rlat}{$rlon}};
+      @ans = @{$proj4{$rlat}{$rlon}};
       debug("ANS",@ans,"PR",@{$proj4{$rlat}{$rlon}});
 
 	# if even one of these is invalid, return nothing
@@ -368,8 +369,6 @@ sub quadrangle {
 	$maxy = max($maxy,$ans[1]);
 
 	debug("CORNER: $rlat/$rlon",@ans);
-
-	@{$proj4{$rlat}{$rlon}} = @ans;
       }
   }
 
