@@ -365,12 +365,13 @@ sub quadrangle {
 	$miny = min($miny,$ans[1]);
 	$maxy = max($maxy,$ans[1]);
 
+      push(@ret,@ans);
+
 	debug("CORNER: $rlat/$rlon",@ans);
       }
   }
 
   #      debug("FOR $rlat/$rlon:",@{$proj4{$rlat}{$rlon}});
-  push(@ret,@ans);
 
   # for testing, see if midpoint is inside the quadrangle (it should be)
   # special case for lon straddling +-180
@@ -397,7 +398,7 @@ sub quadrangle {
   }
 
   # all looks well
-  debug("RETURNING",@ret);
+  debug("RETURNING size $#ret",@ret);
   return @ret;
 }
 
