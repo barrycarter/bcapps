@@ -10,7 +10,7 @@ for (;;) {
   debug("RES: $res");
 
   if ($res) {
-    system("/root/build/firefox/firefox http://tutor.u.94y.info/\?restart");
+    system("/root/build/firefox/firefox http://www.scribblar.com/wwcdp0qj");
     # if I actually just restarted, wait longer
     sleep(15);
 }

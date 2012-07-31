@@ -96,8 +96,8 @@ close(A);
 
 # using later version in /usr/local/bin/ (not)
 
-if ($globopts{test}) {
+#if ($globopts{test}) {
   system("/usr/local/bin/convert clock.svg png:-");
-} else {
-  system("convert clock.svg png:-");
-}
+#} else {
+#  system("convert clock.svg png:-");
+#}

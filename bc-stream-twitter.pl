@@ -84,6 +84,6 @@ while (<A>) {
   print B "$line\n$str\n$line\n";
 
   # must use full path to firefox to avoid rare error
-  system("/root/build/firefox/firefox https://twitter.com/$json->{user}{screen_name}/status/$json->{id}");
+  system("/root/build/firefox/firefox https://twitter.com/$json->{user}{screen_name}/status/$json->{id} 1> /dev/null 2> /dev/null");
 
 }
