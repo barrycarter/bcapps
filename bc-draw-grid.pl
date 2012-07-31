@@ -59,88 +59,31 @@ for ($lat=90; $lat>=-90; $lat-=$latspace) {
   if ($globopts{nogrid}) {next;}
   for ($lon=180; $lon>=-180; $lon-=$lonspace) {
 
-    # quadrangle for this grid
+    # quadrangle for this grid (if none, do nothing)
     @quad = quadrangle($lat,$lon,$lat+$latspace,$lon+$lonspace);
-    debug("Sending $lat,$lon,etc");
-
-    # if none, do nothing
     unless (@quad) {next;}
 
-    debug("QUAD",@quad);
-
     # what quad returns
-    # <h>dirty variable name, hee hee</h>
+    # <h>"dirty" variable name below, hee hee</h>
     ($nwx, $nwy, $nex, $ney, $swx, $swy, $sex, $sey) = @quad;
 
     # the lines we want (we only draw the nw-touching lines, the others will
     # be drawn by other lat/lon
     print A "line $nwx,$nwy,$nex,$ney,255,0,0\n";
     print A "line $nwx,$nwy,$swx,$swy,0,0,255\n";
+    # circle comes last so not overwritten
+
+    # TODO: not working, since overwritten by next lat/lon! (fix =
+    # push to two lists and join later)
+
+    print A "fcircle $nwx,$nwy,15,0,0,0\n";
+
     # string
     unless ($globopts{nogridstring}) {
       $strx = $nwx+5;
       $stry = $nwy+5;
       print A "string 0,0,0,$strx,$stry,tiny,$lat,$lon\n";
     }
-  }
-}
-
-close(A);
-
-die "TESTING";
-
-# now to use the values we just calced
-for ($lat=90; $lat>=-90; $lat-=$latspace) {
-  # TODO: this is terrible way of skipping grid
-  if ($globopts{nogrid}) {next;}
-  for ($lon=180; $lon>=-180; $lon-=$lonspace) {
-    my($x,$y) = split(/\,/,$proj4{"$lat,$lon"});
-    if ($x == -1) {next;}
-
-    # position string a little "SE" of dot
-unless ($globopts{nogridstring}) {
-    my($sx,$sy) = ($x+5, $y+5);
-    print A "string 0,0,0,$sx,$sy,tiny,$lat,$lon\n";
-}
-
-    # same lat, east long
-    $lone = $lon+$lonspace;
-    if ($lone>180){$lone-=360;}
-    my($xe,$ye) = split(/\,/, $proj4{"$lat,$lone"});
-    unless ($xe == -1) {
-    print A "line $x,$y,$xe,$ye,255,0,0\n";
-  }
-
-    # line to next south latitude
-    $lats = $lat-$latspace;
-    my($xs,$ys) = split(/\,/, $proj4{"$lats,$lon"});
-    unless ($xs == -1 || $lats<-90) {
-    print A "line $x,$y,$xs,$ys,0,0,255\n";
-  }
-
-    # position of next point (for testing)
-    ($xn,$yn) = split(/\,/,$proj4{"$lats,$lone"});
-
-    # check to see where "halfway SE" point would map
-    $latm = ($lat+$lats)/2.;
-    $lonm = ($lon+$lone)/2.;
-
-    my($xm,$ym) = proj4($latm, $lonm, $proj, $div, $xsize, $ysize, $pre);
-
-    if (($xm-$xn)*($xm-$x)>0 && $xn!=-1 && $xm!=-1) {
-      # this shouldn't happen, means xm is not between x and xn
-      print A "string 255,0,0,$xm,$ym,tiny,$latm,$lonm\n";
-      debug("X: $latm/$lonm ($lat/$lon to $lats/$lone): $x,$xm,$xn");
-    }
-
-
-#    if (($xm-$xs)*($xm-$x)>0) {
-#      debug("XM: $xm, vs $x, $xs");
-#    }
-
-    # fcircle must come last to avoid being overwritten by lines
-    print A "circle $x,$y,5,0,0,0\n";
-
   }
 }
 
@@ -167,38 +110,18 @@ for $x (0..(2**$zoomtile-1)) {
       next;
     }
 
-    # TODO: better temp file naming (but do cache stuff like this)
-    # TODO: consider caching more carefully in future
+    # the latitude and longitude range of this tile (NW + SE corners)
+    my($nlat,$wlon) = slippy2latlon($x,$y,$zoomtile,0,0);
+    my($slat,$elon) = slippy2latlon($x,$y,$zoomtile,255,255);
 
-    # reset border and distortion parameters
-    %border = ();
-    @params = ();
+    @quad = quadrangle($slat,$wlon,$nlat,$elon);
+    unless (@quad) {next;}
 
-    # below is sheer laziness, could've written out 4 statements
-    for $px (0,255) {
-      for $py (0,255) {
-	# the borders of this slippy tile
-	($lat,$lon) = slippy2latlon($x,$y,$zoomtile,$px,$py);
-	# how we would map this border
-	($myx, $myy) = proj4($lat,$lon,$proj,$div,$xsize,$ysize,$pre);
+    # <h>the more you do it, the less dirty it seems</h>
+    ($nwx, $nwy, $nex, $ney, $swx, $swy, $sex, $sey) = @quad;
 
-	if ($myx==-1 || $myy==-1) {
-	  # can't use 'last' here, too deeply nested
-	  $taint{$x}{$y} = 1;
-	  last;
-	}
-
-	# the distortion parameter for convert (imagemagick)
-	push(@params, "$px,$py,$myx,$myy");
-
-      }
-    }
-
-    # skip if tainted
-    if ($taint{$x}{$y}) {next;}
-
-    # build up the convert command
-    $distort = join(" ",@params);
+    # where the projection maps the 4 corners
+    $distort="0,0,$nwx,$nwy 0,255,$nex,$ney 255,0,$swx,$swy 255,255,$sex,$sey";
     $distort = "'$distort'";
 
     # and convert..
