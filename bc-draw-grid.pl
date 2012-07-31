@@ -343,15 +343,12 @@ sub quadrangle {
     for $lon ("wlon","elon") {
       my($rlat, $rlon) = ($arg{$lat}, $arg{$lon});
 
-      debug("STARTCORNER: $rlat/$rlon");
-
       unless (@{$proj4{$rlat}{$rlon}}) {
-	debug("GETTING DATA ($rlat,$rlon)");
 	@{$proj4{$rlat}{$rlon}} = proj4($rlat, $rlon, $proj, $div, $xsize, $ysize, $pre);
       }
 
       @ans = @{$proj4{$rlat}{$rlon}};
-      debug("ANS",@ans,"PR",@{$proj4{$rlat}{$rlon}});
+#      debug("ANS",@ans,"PR",@{$proj4{$rlat}{$rlon}});
 
 	# if even one of these is invalid, return nothing
 	if ($ans[0]==-1) {
@@ -372,9 +369,8 @@ sub quadrangle {
       }
   }
 
-      # regardless of whether it already existed or not, add it
-      debug("FOR $rlat/$rlon:",@{$proj4{$rlat}{$rlon}});
-      push(@ret,@{$proj4{$rlat}{$rlon}});
+  #      debug("FOR $rlat/$rlon:",@{$proj4{$rlat}{$rlon}});
+  push(@ret,@ans);
 
   # for testing, see if midpoint is inside the quadrangle (it should be)
   # special case for lon straddling +-180
@@ -400,7 +396,8 @@ sub quadrangle {
     return;
   }
 
-  # all looks well (is this the right thing to return?)
+  # all looks well
+  debug("RETURNING",@ret);
   return @ret;
 }
 
