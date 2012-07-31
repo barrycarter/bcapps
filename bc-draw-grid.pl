@@ -31,8 +31,8 @@ sub pre {
 
   # TODO: add zooming somehow? (can't do it here though)
 
-  ($lat, $lon) = latlonrot($lat, $lon, +106, "z");
-  ($lat, $lon) = latlonrot($lat, $lon, -35, "y");
+#  ($lat, $lon) = latlonrot($lat, $lon, +106, "z");
+#  ($lat, $lon) = latlonrot($lat, $lon, -35, "y");
 #  ($lat, $lon) = latlonrot($lat, $lon, 90, "x");
 
 #  $lon= fmod($lon-+106.5,360);
@@ -58,6 +58,16 @@ for ($lat=90; $lat>=-90; $lat-=$latspace) {
   # TODO: this is terrible way of skipping grid
   if ($globopts{nogrid}) {next;}
   for ($lon=180; $lon>=-180; $lon-=$lonspace) {
+
+    # quadrangle for this grid
+    @quad = quadrangle($lat-10,$lon-10,$lat,$lon);
+    debug("QUAD $lat/$lon",@quad);
+
+    warn "TESTING";
+
+next;
+
+
     # cheating by not using list
     $proj4{"$lat,$lon"} = join(",",proj4($lat, $lon, $proj, $div, $xsize, $ysize, $pre));
   }
@@ -216,6 +226,7 @@ TODO: calling cs2cs on each coordinate separately is hideously inefficient
 
 sub proj4 {
   my($lat, $lon, $proj, $div, $xsize, $ysize, $pre) = @_;
+  debug("proj4($lat, $lon, $proj, $div, $xsize, $ysize, $pre)");
   unless ($xsize) {$xsize=800;}
   unless ($ysize) {$ysize=600;}
 
@@ -290,10 +301,13 @@ Similar to calling proj4 multiple times, but uses caching, and checks
 that the quadrangle actually "makes sense" (is a true polygon) before
 returning it
 
+%proj4 is a global variable
+
 =cut
 
 sub quadrangle {
-  my($arg{slat}, $arg{wlon}, $arg{nlat}, $arg{$elon}) = @_;
+  my(%arg);
+  ($arg{slat}, $arg{wlon}, $arg{nlat}, $arg{elon}) = @_;
   my($minx,$maxx,$miny,$maxy) = (+Infinity,-Infinity,+Infinity,-Infinity);
   my(@ret);
 
@@ -307,8 +321,6 @@ sub quadrangle {
 	# if even one of these is invalid, return nothing
 	if ($ans[0]==-1) {return;}
 
-	push(@ret,@ans);
-
 	# update max/min
 	# TODO: must be better way to do this (sorting?)
 	$minx = min($minx,$ans[0]);
@@ -318,6 +330,11 @@ sub quadrangle {
 
 	@{$proj4{$rlat}{$rlon}} = @ans;
       }
+
+      # regardless of whether it already existed or not, add it
+      debug("FOR $rlat/$rlon:",@{$proj4{$rlat}{$rlon}});
+      push(@ret,@{$proj4{$rlat}{$rlon}});
+
     }
   }
 

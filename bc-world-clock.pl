@@ -94,6 +94,9 @@ for $i (sort keys %zones) {
 print A "</svg>\n";
 close(A);
 
+# testing
+system("cp clock.svg /tmp");
+
 # using later version in /usr/local/bin/ (not)
 
 #if ($globopts{test}) {
