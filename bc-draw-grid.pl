@@ -60,18 +60,34 @@ for ($lat=90; $lat>=-90; $lat-=$latspace) {
   for ($lon=180; $lon>=-180; $lon-=$lonspace) {
 
     # quadrangle for this grid
-    @quad = quadrangle($lat-10,$lon-10,$lat,$lon);
-    debug("QUAD $lat/$lon",@quad);
+    @quad = quadrangle($lat,$lon,$lat+$latspace,$lon+$lonspace);
+    debug("Sending $lat,$lon,etc");
 
-    warn "TESTING";
+    # if none, do nothing
+    unless (@quad) {next;}
 
-next;
+    debug("QUAD",@quad);
 
+    # what quad returns
+    # <h>dirty variable name, hee hee</h>
+    ($nwx, $nwy, $nex, $ney, $swx, $swy, $sex, $sey) = @quad;
 
-    # cheating by not using list
-    $proj4{"$lat,$lon"} = join(",",proj4($lat, $lon, $proj, $div, $xsize, $ysize, $pre));
+    # the lines we want (we only draw the nw-touching lines, the others will
+    # be drawn by other lat/lon
+    print A "line $nwx,$nwy,$nex,$ney,255,0,0\n";
+    print A "line $nwx,$nwy,$swx,$swy,0,0,255\n";
+    # string
+    unless ($globopts{nogridstring}) {
+      $strx = $nwx+5;
+      $stry = $nwy+5;
+      print A "string 0,0,0,$strx,$stry,tiny,$lat,$lon\n";
+    }
   }
 }
+
+close(A);
+
+die "TESTING";
 
 # now to use the values we just calced
 for ($lat=90; $lat>=-90; $lat-=$latspace) {
@@ -311,15 +327,38 @@ sub quadrangle {
   my($minx,$maxx,$miny,$maxy) = (+Infinity,-Infinity,+Infinity,-Infinity);
   my(@ret);
 
+  # impossible lats/lons?
+  if (max(abs($arg{slat}),abs($arg{nlat}))>90) {
+    debug("LATITUDE out of range");
+    return;
+  }
+
+  if (max(abs($arg{wlon}),abs($arg{elon}))>180) {
+    debug("LONGITUDE out of range");
+    return;
+  }
+
   # compute all four corners (we'll need them anyway)
   for $lat ("nlat","slat") {
     for $lon ("wlon","elon") {
       my($rlat, $rlon) = ($arg{$lat}, $arg{$lon});
-      unless ($proj4{$rlat}{$rlon}) {
-	my(@ans) = proj4($rlat, $rlon, $proj, $div, $xsize, $ysize, $pre);
+
+      debug("STARTCORNER: $rlat/$rlon");
+
+      unless (@{$proj4{$rlat}{$rlon}}) {
+	@{$proj4{$rlat}{$lon}} = proj4($rlat, $rlon, $proj, $div, $xsize, $ysize, $pre);
+      }
+
+        @ans = @{$proj4{$rlat}{$rlon}};
+      debug("ANS",@ans,"PR",@{$proj4{$rlat}{$rlon}});
 
 	# if even one of these is invalid, return nothing
-	if ($ans[0]==-1) {return;}
+	if ($ans[0]==-1) {
+	  debug("proj4($rlat,$rlon) returned -1");
+	  return;
+	}
+
+      debug("ANS IS",@ans);
 
 	# update max/min
 	# TODO: must be better way to do this (sorting?)
@@ -328,15 +367,15 @@ sub quadrangle {
 	$miny = min($miny,$ans[1]);
 	$maxy = max($maxy,$ans[1]);
 
+	debug("CORNER: $rlat/$rlon",@ans);
+
 	@{$proj4{$rlat}{$rlon}} = @ans;
       }
+  }
 
       # regardless of whether it already existed or not, add it
       debug("FOR $rlat/$rlon:",@{$proj4{$rlat}{$rlon}});
       push(@ret,@{$proj4{$rlat}{$rlon}});
-
-    }
-  }
 
   # for testing, see if midpoint is inside the quadrangle (it should be)
   # special case for lon straddling +-180
@@ -352,8 +391,15 @@ sub quadrangle {
   my($mx,$my) = proj4($mlat, $mlon, $proj, $div, $xsize, $ysize, $pre);
 
   # betweenness testing
-  if ($mx < $minx || $mx > $maxx) {return;}
-  if ($my < $miny || $my > $maxy) {return;}
+  if ($mx < $minx || $mx > $maxx) {
+    debug("X $mx midpoint not between $minx and $maxx");
+    return;
+  }
+
+  if ($my < $miny || $my > $maxy) {
+    debug("Y midpoint not between miny and maxy");
+    return;
+  }
 
   # all looks well (is this the right thing to return?)
   return @ret;
