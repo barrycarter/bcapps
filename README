@@ -17,6 +17,33 @@ Summary:
 
  bclib.pl: A library of useful functions
 
+ aliases.txt: useful aliases
+
+ bc-get-peanuts.pl: demonstrates how to create an Amazon Kindle
+ compatible MOBI book from Peanuts comics strips
+
+ bots.txt: user agents for common bots
+
+ bc-mol.pl: sends postal mail (not email) using postedigitals API
+
+ bc-dns-server.pl: generic DNS server
+
+ bc-starmap.pl: generates a map of which stars/planets are visible at
+ a given location/time
+
+ bc-draw-grid.pl: draws world maps in various projections w arbitrary
+ north/south pole using OSM slippy tiles
+
+ bc-world-clock.pl: shows world time zones in an unusual way
+
+ bc-mytile.pl: developer tool for google maps, showing the
+ coordinates/ranges of each tile at
+ http://test.barrycarter.info/gettile.php
+
+ bc-extract-attachments.pl and bc-check-extract-attachments.pl:
+ carefully removes attachments from mail folders and stores them
+ canonically and non-redundantly (using sha1)
+
  bc-stack2wp.pl: converts my stackoverflow questions to WordPress posts
 
  playground.pl: constantly changing testbed of functions

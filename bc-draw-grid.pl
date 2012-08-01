@@ -23,7 +23,7 @@ $xsize = 800;
 $ysize = 600;
 
 # use slippy tiles at this zoom level (prev hardcoded at 4)
-$zoomtile = 4;
+$zoomtile = 3;
 
 # test of "pre" function
 sub pre {
@@ -121,7 +121,7 @@ for $x (0..(2**$zoomtile-1)) {
     ($nwx, $nwy, $nex, $ney, $swx, $swy, $sex, $sey) = @quad;
 
     # where the projection maps the 4 corners
-    $distort="0,0,$nwx,$nwy 0,255,$nex,$ney 255,0,$swx,$swy 255,255,$sex,$sey";
+    $distort="0,0,$nwx,$nwy 0,255,$swx,$swy 255,0,$nex,$ney 255,255,$sex,$sey";
     $distort = "'$distort'";
 
     # and convert..
@@ -279,7 +279,7 @@ sub quadrangle {
 	  return;
 	}
 
-      debug("ANS IS",@ans);
+#      debug("ANS IS",@ans);
 
 	# update max/min
 	# TODO: must be better way to do this (sorting?)
@@ -290,7 +290,7 @@ sub quadrangle {
 
       push(@ret,@ans);
 
-	debug("CORNER: $rlat/$rlon",@ans);
+#	debug("CORNER: $rlat/$rlon",@ans);
       }
   }
 
@@ -321,7 +321,7 @@ sub quadrangle {
   }
 
   # all looks well
-  debug("RETURNING size $#ret",@ret);
+#  debug("RETURNING size $#ret",@ret);
   return @ret;
 }
 

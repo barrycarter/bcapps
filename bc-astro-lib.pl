@@ -632,46 +632,6 @@ sub kepler {
     return($retval);
 }
 
-=item rotrad($th, $ax="x|y|z")
-
-The 3D matrix that rotates $th radians around the $ax axis
-
-=cut
-
-sub rotrad {
-    my($th,$ax)=@_;
-    my($si,$co)=(sin($th),cos($th));
-    if ($ax eq "x") {return(([1,0,0],[0,$co,$si],[0,-$si,$co]));}
-    if ($ax eq "y") {return(([$co,0,-$si],[0,1,0],[$si,0,$co]));}
-    if ($ax eq "z") {return(([$co,-$si,0],[$si,$co,0],[0,0,1]));}
-}
-
-=item rotdeg($th, $ax="x|y|z")
-
-Does exactly what rotrad does, but $theta is given in degrees
-
-=cut
-
-sub rotdeg {
-    my($th,$ax)=@_;
-    return(rotrad($th*$PI/180,$ax));
-}
-
-=item xyz2sph($x,$y,$z,$deg)
-
-Converts $x,$y,$z to spherical coordinates th,phi,r, in radians
-(unless $deg set, in which case returns degrees)
-
-=cut
-
-sub xyz2sph {
-    my($x,$y,$z,$deg)=@_;
-    my(@ret)=(atan2($y,$x),atan2($z,sqrt($x*$x+$y*$y)),sqrt($x*$x+$y*$y+$z*$z));
-    if ($ret[0]<0) {$ret[0]+=2*$PI;}
-    if ($deg) {$ret[0]/=$DEGRAD; $ret[1]/=$DEGRAD;}
-    return(@ret);
-}
-
 =item sph2xyz($theta,$phi,$r,$deg)
 
 Converts spherical coordinates to xyz; if $deg, coordinates are in degrees
