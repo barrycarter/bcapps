@@ -23,7 +23,7 @@ $xsize = 800;
 $ysize = 600;
 
 # use slippy tiles at this zoom level (prev hardcoded at 4)
-$zoomtile = 3;
+$zoomtile = 4;
 
 # test of "pre" function
 sub pre {
@@ -31,16 +31,16 @@ sub pre {
 
   # TODO: add zooming somehow? (can't do it here though)
 
-#  ($lat, $lon) = latlonrot($lat, $lon, +106, "z");
-#  ($lat, $lon) = latlonrot($lat, $lon, -35, "y");
-#  ($lat, $lon) = latlonrot($lat, $lon, 90, "x");
+  ($lat, $lon) = latlonrot($lat, $lon, +106, "z");
+  ($lat, $lon) = latlonrot($lat, $lon, -35, "y");
+  ($lat, $lon) = latlonrot($lat, $lon, 90, "x");
 
 #  $lon= fmod($lon-+106.5,360);
   return $lat,$lon;
 }
 
-# $proj = "ortho"; $div = 6378137; $pre = \&pre;
-$proj = "merc"; $div = 20000000; $pre = \&pre;
+$proj = "ortho"; $div = 6378137; $pre = \&pre;
+# $proj = "merc"; $div = 20000000; $pre = \&pre;
 # <h>And here's to you...</h>
 # $proj = "robin"; $div = 17005833; $pre = \&pre;
 
@@ -125,8 +125,10 @@ for $x (0..(2**$zoomtile-1)) {
     $distort = "'$distort'";
 
     # and convert..
-    debug("CONVERTING: $x,$y zoom $zoomtile");
-    $cmd = "convert -mattecolor transparent -extent ${xsize}x$ysize -background transparent -matte -virtual-pixel transparent -distort Perspective $distort /var/cache/OSM/$zoomtile,$x,$y.png /tmp/bcdg-$x-$y.gif";
+    debug("CONVERTING: $x,$y,$zoomtile");
+    ($file) = osm_map($x,$y,$zoomtile,"xy=1");
+    $cmd = "convert -mattecolor transparent -extent ${xsize}x$ysize -background transparent -matte -virtual-pixel transparent -distort Perspective $distort $file /tmp/bcdg-$x-$y.gif";
+#    debug("CMD: $cmd");
     system($cmd);
 
     # fly gets annoyed if file doesn't exist, so check that above worked
@@ -165,7 +167,7 @@ TODO: calling cs2cs on each coordinate separately is hideously inefficient
 
 sub proj4 {
   my($lat, $lon, $proj, $div, $xsize, $ysize, $pre) = @_;
-  debug("proj4($lat, $lon, $proj, $div, $xsize, $ysize, $pre)");
+#  debug("proj4($lat, $lon, $proj, $div, $xsize, $ysize, $pre)");
   unless ($xsize) {$xsize=800;}
   unless ($ysize) {$ysize=600;}
 

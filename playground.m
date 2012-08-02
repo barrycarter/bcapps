@@ -170,6 +170,22 @@ zd[a_] = b /. %[[1,1]]
 
 Solve[D[diff[a,b],a]==0, a] /. b -> zd[a]
 
+(* another approach: *)
+
+Solve[{D[diff[a,b],a]==0, D[diff[a,b],b]==0}, {a,b}]
+
+sola = a /. %[[1,1]]
+
+test1 = a /. {Table[x[i],{i,1,5}],Table[y[i],{i,1,5}]}
+
+Simplify[sola, {Sum[x[i]^2,{i,1,5}] == sumx2}]
+Simplify[sola, {Sum[x[i]^2,{i,1,2}] == sumx2}]
+Simplify[sola, {x[1]^2+x[2]^2+x[3]^2 == sumx2}]
+Simplify[sola, {x[1]^2+x[2]^2 == sx2}]
+Simplify[sola, {x[1]^2+x[2]^2 == sx2}]
+Simplify[sola, {x[1]^2+x[2]^2+x[3]^2+x[4]^2 == sx2}]
+
+
 
 (* if you save $1/month at r% for y years... *)
 

@@ -2478,38 +2478,47 @@ sub osm_cache_bc {
   return $shared{osm}{$sha};
 }
 
-=item osm_map($lat, $lon, $zoom)
+=item osm_map($lat, $lon, $zoom, $options)
 
 Obtain and cache the level $zoom slippy? map for $lat, $lon Returns
 name of file with PNG in it, and the x/y positions of $lat/$lon in
-that PNG file (assuming 256x256 tiles)
+that PNG file (assuming 256x256 tiles). Options:
+
+xy=1: assume $lat and $lon are x and y coordinates, do no conversion
 
 =cut
 
 sub osm_map {
-  my($lat, $lon, $zoom) = @_;
+  my($lat, $lon, $zoom, $options) = @_;
+  my(%opts) = parse_form($options);
+  my($x,$y,$px,$py);
 
-  # convert to mercator
-  my($y,$x) = to_mercator($lat, $lon);
+  if ($opts{xy}) {
+    ($x, $y) = ($lat,$lon);
+    ($px,$py) = (-1,-1); # nonsensical
+  } else {
+    # convert to mercator
+    ($y,$x) = to_mercator($lat, $lon);
 
-  # figure out where in map $lat/$lon occurs
-  ($x,$y) = ($x*2**$zoom, $y*2**$zoom);
+    # figure out where in map $lat/$lon occurs
+    ($x,$y) = ($x*2**$zoom, $y*2**$zoom);
 
-  # for now, intentionally not rounding
-  my($px, $py) = (($x-int($x))*256, ($y-int($y))*256);
+    # for now, intentionally not rounding
+    ($px, $py) = (($x-int($x))*256, ($y-int($y))*256);
 
-  # use zoom to figure out canonical name
-  $y = floor($y);
-  $x= floor($x);
+    # use zoom to figure out canonical name
+    $y = floor($y);
+    $x= floor($x);
+  }
+
   my($url) = "$zoom/$x/$y.png";
   my($fname) = "/var/cache/OSM/$zoom,$x,$y.png";
 
-  # already exists?
-  if (-f $fname) {return $fname,$px,$py;}
+  # if it doesn't exist, get it
+  unless (-f $fname) {
+    cache_command("curl -o $fname http://tile.openstreetmap.org/$url");
+  }
 
-  cache_command("curl -o $fname http://tile.openstreetmap.org/$url");
-  
-  debug("PX/PY: $px/$py");
   return $fname,$px,$py;
 }
 
