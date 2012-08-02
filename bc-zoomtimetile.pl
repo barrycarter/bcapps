@@ -9,8 +9,14 @@ require "/usr/local/lib/bclib.pl";
 
 # determine LOG of x coords (in absolute 2^29 coords) [ignoring y]
 # this formula after a lot of work, which I probably should've shown
-$logx = 44.9004 - 1.54829*$query{z} + 2.23371*log($query{x});
-$lognx = 44.9004 - 1.54829*$query{z} + 2.23371*log($query{x}+1);
+
+if ($query{x}==0) {
+  $logx=0;
+} else {
+  $logx = 32.5141 - 1.54829*$query{zoom} + 2.23371*log($query{x});
+}
+
+$lognx = 32.5141 - 1.54829*$query{zoom} + 2.23371*log($query{x}+1);
 
 # determine other useful information
 
