@@ -7,23 +7,17 @@ require "/usr/local/lib/bclib.pl";
 # get google query
 %query = str2hash($ENV{QUERY_STRING});
 
-# determine x/y coords (in absolute 2^29 coords)
-($x, $y) = ($query{x}/2**(29-$query{zoom}), $query{y}/2**(29-$query{zoom}));
-
-# and the next east x coord
-$nx = $query{x}+1/2**(29-$query{zoom});
-
-# yoctoseconds from year 2000 = log base 1+10**-6 of x (I probably need
-# to adjust this to be less insane), sign preserved
-$lsec = log($x)/log(1+10**-6)/10**24;
-$rsec = log($nx)/log(1+10**-6)/10**24;
+# determine LOG of x coords (in absolute 2^29 coords) [ignoring y]
+# this formula after a lot of work, which I probably should've shown
+$logx = 44.9004 - 1.54829*$query{z} + 2.23371*log($query{x});
+$lognx = 44.9004 - 1.54829*$query{z} + 2.23371*log($query{x}+1);
 
 # determine other useful information
 
 $printstr = << "MARK";
 x=$query{x},y=$query{y},zoom=$query{zoom}
-LSEC: $lsec
-RSEC: $rsec
+LX: $logx
+LNX: $lognx
 MARK
 ;
 
