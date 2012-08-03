@@ -23,7 +23,9 @@ use XML::Bare;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
-twitter_highuser();
+$res = twitter_highuser();
+debug("RES: $res");
+debug(twitter_get_info($res));
 
 =item twitter_highuser()
 
@@ -38,13 +40,20 @@ sub twitter_highuser {
   # binary search with +Infinity at the top
   my($start) = 2**28; # I know twitter user 2**28 exists
 
-  # keep doubling until we find we've gone too far
-  for (;;) {
-    my(%res) = twitter_get_info($start);
-    debug($res{created_at});
-    sleep(5);
-    $start*=2;
+  # determines whether twitter user exists; +1 for yes, -1 for no
+  # return values like that so I can do true binary search
+  # hf = helper function (TODO: should this be anon?)
+  sub twitter_user_exist_hf {
+    my(%res) = twitter_get_info(shift);
+    # NOTE: sometimes screen_name == user_id, but that's OK
+    if ($res{screen_name}) {return +1;}
+    return -1;
   }
+
+  do {$start*=2;} until (twitter_user_exist_hf($start)==-1);
+
+  # now, true binary search (this actually might be off by 1)
+  return floor(findroot(\&twitter_user_exist_hf, $start/2, $start, 0.5, 50, "delta=1"));
 }
 
 die "TESTING";

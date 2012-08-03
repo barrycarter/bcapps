@@ -1531,22 +1531,26 @@ MARK
 
 }
 
-=item findroot(\&f, $x1, $x2, $e, $maxsteps=50)
+=item findroot(\&f, $x1, $x2, $e, $maxsteps=50, $options)
 
 Find where f [a one-argument function] reaches 0 (to an accuracy of
 $e) between $x1 and $x2. Stop if $maxsteps reached before specified
-accuracy
+accuracy. Options:
 
-<h>I wrote this function years ago, so it's not as polished as my
+delta: stop and return when the x difference reaches this value,
+regardless of difference if y value
+
+<h>I wrote this function years ago, so its not as polished as my
 current coding</h>
 
 =cut
 
 sub findroot {
-    my($f,$x1,$x2,$e,$maxsteps)=@_;
+    my($f,$x1,$x2,$e,$maxsteps,$options)=@_;
     if ($maxsteps==0) {$maxsteps=50;}
     my($le,$ri)=($x1,$x2);
     my($steps,$mid,$fmid);
+    my(%opts) = parse_form($options);
 
     # value of the function at interval edges
     my($fle,$fri)=(&$f($le),&$f($ri));
@@ -1565,6 +1569,9 @@ sub findroot {
     # infinite loop broken by $maxsteps
     for (;;) {
 	$steps++;
+
+	# is x delta small?
+	if ($opts{delta}&&(abs($ri-$le)<$opts{delta})) {return $mid;}
 
 	# find value at midpoint
 	$mid=($le+$ri)/2;
