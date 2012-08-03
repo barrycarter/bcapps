@@ -20,7 +20,7 @@ debug("CMD: $cmd");
 open(A,"$cmd|");
 
 while (<A>) {
-#  debug("RAW: $_");
+  debug("RAW: $_");
   if (/^\s*$/s) {
 #    debug("BLANK MESSAGE");
     next;
