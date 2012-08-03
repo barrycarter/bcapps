@@ -23,6 +23,32 @@ use XML::Bare;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
+twitter_highuser();
+
+=item twitter_highuser()
+
+Finds the highest number twitter user (most recently created), under
+set of assumptions
+
+<h>Use twitter_reallyhighuser() to find stoned users</h>
+
+=cut
+
+sub twitter_highuser {
+  # binary search with +Infinity at the top
+  my($start) = 2**28; # I know twitter user 2**28 exists
+
+  # keep doubling until we find we've gone too far
+  for (;;) {
+    my(%res) = twitter_get_info($start);
+    debug($res{created_at});
+    sleep(5);
+    $start*=2;
+  }
+}
+
+die "TESTING";
+
 print join("\n",twitter_dump_unfollowers($supertweet{user},$supertweet{pass}));
 
 =item twitter_dump_unfollowers($user,$pass)

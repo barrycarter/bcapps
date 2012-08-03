@@ -19,8 +19,8 @@ $latspace = 15;
 $lonspace = 20;
 
 # x/y of image
-$xsize = 800;
-$ysize = 600;
+$xsize = 800*5;
+$ysize = 600*5;
 
 # use slippy tiles at this zoom level (prev hardcoded at 4)
 $zoomtile = 5;
@@ -44,15 +44,6 @@ $proj = "merc"; $div = 20000000; $pre = \&pre;
 # <h>And here's to you...</h>
 # $proj = "robin"; $div = 17005833; $pre = \&pre;
 
-open(A,">/tmp/bdg2.fly")||die("Can't open /tmp/bdg2.fly, $!");
-
-print A << "MARK";
-new
-size $xsize,$ysize
-setpixel 0,0,255,255,255
-MARK
-;
-
 # making this more efficient and flexible by only calcing values once
 for ($lat=90; $lat>=-90; $lat-=$latspace) {
   # TODO: this is terrible way of skipping grid
@@ -69,23 +60,37 @@ for ($lat=90; $lat>=-90; $lat-=$latspace) {
 
     # the lines we want (we only draw the nw-touching lines, the others will
     # be drawn by other lat/lon
-    print A "line $nwx,$nwy,$nex,$ney,255,0,0\n";
-    print A "line $nwx,$nwy,$swx,$swy,0,0,255\n";
+    push(@lines,"line $nwx,$nwy,$nex,$ney,255,0,0");
+    push(@lines,"line $nwx,$nwy,$swx,$swy,0,0,255");
     # circle comes last so not overwritten
 
     # TODO: not working, since overwritten by next lat/lon! (fix =
     # push to two lists and join later)
 
-    print A "fcircle $nwx,$nwy,5,0,0,0\n";
+    push(@circles,"fcircle $nwx,$nwy,5,0,0,0");
 
     # string
     unless ($globopts{nogridstring}) {
       $strx = $nwx+5;
       $stry = $nwy+5;
-      print A "string 0,0,0,$strx,$stry,tiny,$lat,$lon\n";
+      push(@strings,"string 0,0,0,$strx,$stry,tiny,$lat,$lon");
     }
   }
 }
+
+open(A,">/tmp/bdg2.fly")||die("Can't open /tmp/bdg2.fly, $!");
+
+print A << "MARK";
+new
+size $xsize,$ysize
+setpixel 0,0,255,255,255
+MARK
+;
+
+# print these in right order
+print A join("\n",@lines),"\n";
+print A join("\n",@circles),"\n";
+print A join("\n",@strings),"\n";
 
 close(A);
 

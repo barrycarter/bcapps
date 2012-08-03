@@ -11,6 +11,29 @@ def mirror(x): return x
 def readfile(f): return open(f, 'r').read()
 def sysop(cmd): return os.popen(cmd).read()
 
+jid1 = cloud.call(sysop,"sleep 10; date +%s")
+print jid1
+jid2 = cloud.call(sysop,"sleep 7; date +%M")
+print jid2
+jid3 = cloud.call(sysop,"sleep 2; date +%Y")
+print jid3
+jid4 = cloud.call(sysop,"date +%d")
+print jid4
+jid5 = cloud.call(sysop,"date +%q")
+print jid5
+
+print cloud.result(jid1)
+print cloud.result(jid2)
+print cloud.result(jid3)
+print cloud.result(jid4)
+print cloud.result(jid5)
+
+exit()
+
+jid = cloud.call(sysop,"convert -mattecolor transparent -extent 800x600 -background transparent -matte -virtual-pixel transparent -distort Perspective '0,0,1,1 0,255,255,0 255,255,128,128 255,0,1,2' /var/cache/OSM/5,9,31.png - ", _env="barryenv1")
+# print jid
+print cloud.result(jid)
+
 # below is one off
 # def update_voronoi(): sysop("bc-voronoi-temperature.pl --nodaemon 1> /tmp/out.txt 2> /tmp/err.txt; cat /tmp/out.txt /tmp/err.txt")
 # cloud.cron.register(update_voronoi, "update_voronoi", "*/5 * * * *", _env="barryenv1", _profile=True)
