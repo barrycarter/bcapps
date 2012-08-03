@@ -23,7 +23,7 @@ $xsize = 800;
 $ysize = 600;
 
 # use slippy tiles at this zoom level (prev hardcoded at 4)
-$zoomtile = 4;
+$zoomtile = 5;
 
 # test of "pre" function
 sub pre {
@@ -33,14 +33,14 @@ sub pre {
 
   ($lat, $lon) = latlonrot($lat, $lon, +106, "z");
   ($lat, $lon) = latlonrot($lat, $lon, -35, "y");
-  ($lat, $lon) = latlonrot($lat, $lon, 90, "x");
+#  ($lat, $lon) = latlonrot($lat, $lon, 90, "x");
 
 #  $lon= fmod($lon-+106.5,360);
   return $lat,$lon;
 }
 
-$proj = "ortho"; $div = 6378137; $pre = \&pre;
-# $proj = "merc"; $div = 20000000; $pre = \&pre;
+# $proj = "ortho"; $div = 6378137; $pre = \&pre;
+$proj = "merc"; $div = 20000000; $pre = \&pre;
 # <h>And here's to you...</h>
 # $proj = "robin"; $div = 17005833; $pre = \&pre;
 
@@ -76,7 +76,7 @@ for ($lat=90; $lat>=-90; $lat-=$latspace) {
     # TODO: not working, since overwritten by next lat/lon! (fix =
     # push to two lists and join later)
 
-    print A "fcircle $nwx,$nwy,15,0,0,0\n";
+    print A "fcircle $nwx,$nwy,5,0,0,0\n";
 
     # string
     unless ($globopts{nogridstring}) {

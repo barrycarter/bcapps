@@ -23,6 +23,35 @@ use XML::Bare;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
+print join("\n",twitter_dump_unfollowers($supertweet{user},$supertweet{pass}));
+
+=item twitter_dump_unfollowers($user,$pass)
+
+Generates commands to dump twitter users you are following that are
+not following you back. Does NOT actually remove any friends
+
+=cut
+
+sub twitter_dump_unfollowers {
+  my($user,$pass) = @_;
+  my(@cmds);
+
+  # my friends and followers
+  my(@friends) = twitter_friends_followers_ids("friends",$user,$pass);
+  my(@followers) = twitter_friends_followers_ids("followers",$user,$pass);
+
+  # friends who are not followers
+  my(@dumpees) = minus(\@friends, \@followers);
+
+  for $i (@dumpees) {
+    push(@cmds,twitter_follow($i, $user, $pass, 1, "cmdonly=1"));
+  }
+
+  return @cmds;
+}
+
+die "TESTING";
+
 warnlocal("Is warn local borken");
 
 $ob = new XML::Bare(text=>'<xml><name>Bob</name></xml>');
@@ -41,9 +70,6 @@ if ($str=~/((food)+)/) {
 }
 
 # debug($str);
-
-
-
 
 die "TESTING";
 

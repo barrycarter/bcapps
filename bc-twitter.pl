@@ -196,14 +196,17 @@ sub tweet2list {
   return @res;
 }
 
-=item twitter_follow($sn, $user, $pass, $un=0)
+=item twitter_follow($sn, $user, $pass, $un=0, $options)
 
-Follow $sn (requires auth); if $un is set, unfollow
+Follow $sn (requires auth); if $un is set, unfollow. $options:
+
+cmdonly=1: return only the curl command, don't run it
 
 =cut
 
 sub twitter_follow {
-  my($sn, $user, $pass, $un) = @_;
+  my($sn, $user, $pass, $un, $options) = @_;
+  my(%opts) = parse_form($options);
   my($url,$post);
 
   if ($un) {
@@ -214,6 +217,7 @@ sub twitter_follow {
 
   my($cmd) = "curl -s -d x -u $user:$pass '$TWITST/friendships/$url/$sn.xml$post'";
   debug($cmd);
+  if ($opts{cmdonly}) {return $cmd;}
   my($file) = cache_command($cmd, "age=3600&retfile=1");
   my($res) = read_file($file);
   if ($res=~/<error>/) {warn "FOLLOW($sn) FAILED"; return -1}
