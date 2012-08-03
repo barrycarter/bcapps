@@ -5,11 +5,31 @@
 
 # from __future__ import print_function
 import cloud
-import os;
+import os
+# from array import *
+
+# cloud.shell.execute("date +%s")
+# exit()
 
 def mirror(x): return x
 def readfile(f): return open(f, 'r').read()
 def sysop(cmd): return os.popen(cmd).read()
+
+jid = []
+jid.append(cloud.call(sysop,"date +%s", _env='barryenv1'))
+jid.append(cloud.call(sysop,"date +%Y", _env='barryenv1'))
+jid.append(cloud.call(sysop,"date +%m", _env='barryenv1'))
+jid.append(cloud.call(sysop,"date +%d", _env='barryenv1'))
+jid.append(cloud.call(sysop,"date +%H", _env='barryenv1'))
+jid.append(cloud.call(sysop,"date +%M", _env='barryenv1'))
+
+print jid
+
+print cloud.result(jid)
+
+
+
+exit()
 
 jid1 = cloud.call(sysop,"sleep 10; date +%s")
 print jid1

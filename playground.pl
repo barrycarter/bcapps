@@ -38,15 +38,17 @@ set of assumptions
 
 sub twitter_highuser {
   # binary search with +Infinity at the top
-  my($start) = 2**28; # I know twitter user 2**28 exists
+  my($start) = 1; # I know twitter user 1 (and 2) exist, probably
 
   # determines whether twitter user exists; +1 for yes, -1 for no
   # return values like that so I can do true binary search
   # hf = helper function (TODO: should this be anon?)
   sub twitter_user_exist_hf {
-    my(%res) = twitter_get_info(shift);
-    # NOTE: sometimes screen_name == user_id, but that's OK
-    if ($res{screen_name}) {return +1;}
+    my($arg) = @_;
+    my(%res) = twitter_get_info($arg);
+    debug("$arg: id = $res{id}, name = $res{screen_name}");
+    debug("RES",%res);
+    if ($res{id} == $arg) {return +1;}
     return -1;
   }
 
