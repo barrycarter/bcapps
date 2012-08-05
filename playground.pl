@@ -23,69 +23,43 @@ use XML::Bare;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
+$all = read_file("/tmp/piout.txt");
+
+while ($all=~s/\'(.*?)\'(, |$)//) {
+  my($res) = $1;
+
+#  debug("RES: $res");
+
+  # convert hex
+  $res=~s/\\x([0-9a-f][0-9a-f])/chr(hex($1))/iseg;
+  $res=~s/\\r/\r/isg;
+  $res=~s/\\n/\n/isg;
+  $res=~s/\\\'/\'/isg;
+  $res=~s/\\\\/\\/isg;
+
+  $temp++;
+  write_file($res,"/tmp/temp-$temp.png");
+
+  die "TESTING";
+
+#  debug("RES: $res");
+}
+
+# debug($all);
+
+die "TESTING";
+
+picloud_commands("date", "time ls", "ls -l /usr/local/etc/");
+
+die "TESTING";
+
 $res = twitter_highuser();
 debug("RES: $res");
 debug(twitter_get_info($res));
 
-=item twitter_highuser()
-
-Finds the highest number twitter user (most recently created), under
-set of assumptions
-
-<h>Use twitter_reallyhighuser() to find stoned users</h>
-
-=cut
-
-sub twitter_highuser {
-  # binary search with +Infinity at the top
-  my($start) = 1; # I know twitter user 1 (and 2) exist, probably
-
-  # determines whether twitter user exists; +1 for yes, -1 for no
-  # return values like that so I can do true binary search
-  # hf = helper function (TODO: should this be anon?)
-  sub twitter_user_exist_hf {
-    my($arg) = @_;
-    my(%res) = twitter_get_info($arg);
-    debug("$arg: id = $res{id}, name = $res{screen_name}");
-    debug("RES",%res);
-    if ($res{id} == $arg) {return +1;}
-    return -1;
-  }
-
-  do {$start*=2;} until (twitter_user_exist_hf($start)==-1);
-
-  # now, true binary search (this actually might be off by 1)
-  return floor(findroot(\&twitter_user_exist_hf, $start/2, $start, 0.5, 50, "delta=1"));
-}
-
 die "TESTING";
 
 print join("\n",twitter_dump_unfollowers($supertweet{user},$supertweet{pass}));
-
-=item twitter_dump_unfollowers($user,$pass)
-
-Generates commands to dump twitter users you are following that are
-not following you back. Does NOT actually remove any friends
-
-=cut
-
-sub twitter_dump_unfollowers {
-  my($user,$pass) = @_;
-  my(@cmds);
-
-  # my friends and followers
-  my(@friends) = twitter_friends_followers_ids("friends",$user,$pass);
-  my(@followers) = twitter_friends_followers_ids("followers",$user,$pass);
-
-  # friends who are not followers
-  my(@dumpees) = minus(\@friends, \@followers);
-
-  for $i (@dumpees) {
-    push(@cmds,twitter_follow($i, $user, $pass, 1, "cmdonly=1"));
-  }
-
-  return @cmds;
-}
 
 die "TESTING";
 

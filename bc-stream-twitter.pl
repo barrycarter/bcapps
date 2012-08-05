@@ -5,6 +5,8 @@
 require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
 
+$|=1;
+
 # what we're looking for
 # note: using big locations for testing, will trim
 $data = "track=math+tutor,math+help,homework+help,\@barrycarter";
@@ -15,7 +17,7 @@ my(%badhash) = list2hash(@badtwitterusers);
 # write to logfile (not root, so can't write to /var/log?)
 open(B,">>/var/tmp/log/twitstream.txt");
 
-my($cmd) = "curl -s -u $twitter{user}:$twitter{pass} 'https://stream.twitter.com/1/statuses/filter.json?$data'";
+my($cmd) = "curl -N -s -u $twitter{user}:$twitter{pass} 'https://stream.twitter.com/1/statuses/filter.json?$data'";
 debug("CMD: $cmd");
 open(A,"$cmd|");
 
@@ -77,7 +79,7 @@ while (<A>) {
   $str=~s/[^ -~]//isg;
 
   # my signature line
-  my($line) = "I might be able to help (free) at: $out (online whiteboard)";
+  my($line) = "I might be able to help at: $out (online whiteboard)";
 
   # "bracket" the tweet (easier when I search file using 'tac')
   print "$line\n$str\n$line\n";

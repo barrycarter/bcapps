@@ -269,5 +269,63 @@ sub twitter_get_friends_followers {
   }
 }
 
+=item twitter_highuser()
+
+Finds the highest number twitter user (most recently created), under
+set of assumptions
+
+TODO: this is probably not working!
+
+<h>Use twitter_reallyhighuser() to find stoned users</h>
+
+=cut
+
+sub twitter_highuser {
+  # binary search with +Infinity at the top
+  my($start) = 1; # I know twitter user 1 (and 2) exist, probably
+
+  # determines whether twitter user exists; +1 for yes, -1 for no
+  # return values like that so I can do true binary search
+  # hf = helper function (TODO: should this be anon?)
+  sub twitter_user_exist_hf {
+    my($arg) = @_;
+    my(%res) = twitter_get_info($arg);
+    debug("$arg: id = $res{id}, name = $res{screen_name}");
+    debug("RES",%res);
+    if ($res{id} == $arg) {return +1;}
+    return -1;
+  }
+
+  do {$start*=2;} until (twitter_user_exist_hf($start)==-1);
+
+  # now, true binary search (this actually might be off by 1)
+  return floor(findroot(\&twitter_user_exist_hf, $start/2, $start, 0.5, 50, "delta=1"));
+}
+
+=item twitter_dump_unfollowers($user,$pass)
+
+Generates commands to dump twitter users you are following that are
+not following you back. Does NOT actually remove any friends
+
+=cut
+
+sub twitter_dump_unfollowers {
+  my($user,$pass) = @_;
+  my(@cmds);
+
+  # my friends and followers
+  my(@friends) = twitter_friends_followers_ids("friends",$user,$pass);
+  my(@followers) = twitter_friends_followers_ids("followers",$user,$pass);
+
+  # friends who are not followers
+  my(@dumpees) = minus(\@friends, \@followers);
+
+  for $i (@dumpees) {
+    push(@cmds,twitter_follow($i, $user, $pass, 1, "cmdonly=1"));
+  }
+
+  return @cmds;
+}
+
 # all perl libs must return truth!
 1;

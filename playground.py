@@ -16,12 +16,12 @@ def readfile(f): return open(f, 'r').read()
 def sysop(cmd): return os.popen(cmd).read()
 
 jid = []
-jid.append(cloud.call(sysop,"date +%s", _env='barryenv1'))
-jid.append(cloud.call(sysop,"date +%Y", _env='barryenv1'))
-jid.append(cloud.call(sysop,"date +%m", _env='barryenv1'))
-jid.append(cloud.call(sysop,"date +%d", _env='barryenv1'))
-jid.append(cloud.call(sysop,"date +%H", _env='barryenv1'))
-jid.append(cloud.call(sysop,"date +%M", _env='barryenv1'))
+jid.append(cloud.call(sysop,"convert /var/cache/OSM/1,1,0.png -", _env='barryenv1'))
+# jid.append(cloud.call(sysop,"date +%Y", _env='barryenv1'))
+# jid.append(cloud.call(sysop,"date +%m", _env='barryenv1'))
+# jid.append(cloud.call(sysop,"date +%d", _env='barryenv1'))
+# jid.append(cloud.call(sysop,"date +%H", _env='barryenv1'))
+# jid.append(cloud.call(sysop,"date +%M", _env='barryenv1'))
 
 print jid
 

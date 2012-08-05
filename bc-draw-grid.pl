@@ -133,7 +133,9 @@ for $x (0..(2**$zoomtile-1)) {
     debug("CONVERTING: $x,$y,$zoomtile");
     ($file) = osm_map($x,$y,$zoomtile,"xy=1");
     $cmd = "convert -mattecolor transparent -extent ${xsize}x$ysize -background transparent -matte -virtual-pixel transparent -distort Perspective $distort $file /tmp/bcdg-$x-$y.gif";
-#    debug("CMD: $cmd");
+#    $cmd = "convert -mattecolor transparent -extent ${xsize}x$ysize -background transparent -matte -virtual-pixel transparent -distort Perspective $distort $file -";
+    push(@cmds, $cmd);
+    push(@outfiles, "/tmp/bcdg-$x-$y.gif");
     system($cmd);
 
     # fly gets annoyed if file doesn't exist, so check that above worked
@@ -144,6 +146,42 @@ for $x (0..(2**$zoomtile-1)) {
 }
 
 close(A);
+
+# picloud_commands(@cmds);
+
+=item picloud_commands(@list)
+
+Given a @list of shell commands, execute them on picloud (via a Python
+script) and return the results as an array
+
+TODO: dont hardcode barryenv1 as environment
+
+=cut
+
+sub picloud_commands {
+  my(@list) = @_;
+  local(*A);
+
+  # TODO: better temp file names
+  open(A,">/tmp/picloudrun.py");
+
+  # headers
+  print A "import cloud\nimport os\ndef sysop(cmd): return os.popen(cmd).read()\n";
+  print A "jid=[]\n";
+
+  for $i (@list) {
+    print A qq%jid.append(cloud.call(sysop,"$i", _env="barryenv1"))\n%
+  }
+
+  # and the results
+  print A "print cloud.result(jid)\n";
+  close(A);
+
+  # run program and write results to file
+  # TODO: do this whole thing better later
+  system("python /tmp/picloudrun.py 1> /tmp/piout.txt 2> /tmp/pierr.txt");
+
+}
 
 system("fly -q -i /tmp/bdg.fly -o /tmp/bdg1.gif");
 

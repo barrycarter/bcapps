@@ -139,6 +139,23 @@ sub bc_gaim_log_unanswered {
   return 0;
 }
 
+=item bc_stream_twitter_test()
+
+This one off tests that bc-stream-twitter.pl is working properly, and
+its child curl process isnt hanging (running, but not receiving data)
+
+=cut
+
+sub bc_stream_twitter_test {
+  # is bc-stream-twitter.pl running at all?
+  my($res) = system("pgrep -f bc-stream-twitter");
+  # if not, no need to check
+  if ($res) {return 0;}
+
+  # its running, so make sure its output file is recent
+  return system("check_file_age /var/tmp/log/twitstream.txt -w 600 -c 1200");
+}
+
 # fixes resolv.conf in a fairly obvious way
 sub fix_resolv {
   system("sudo cp -f /etc/resolv.conf.opendns /etc/resolv.conf");
