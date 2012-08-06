@@ -150,7 +150,10 @@ sub bc_stream_twitter_test {
   # is bc-stream-twitter.pl running at all?
   my($res) = system("pgrep -f bc-stream-twitter");
   # if not, no need to check
-  if ($res) {return 0;}
+  if ($res) {
+    print "OK - bc-stream-twitter not running\n";
+    return 0;
+  }
 
   # its running, so make sure its output file is recent
   return system("check_file_age /var/tmp/log/twitstream.txt -w 600 -c 1200");

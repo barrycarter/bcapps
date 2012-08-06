@@ -19,11 +19,11 @@ $latspace = 15;
 $lonspace = 20;
 
 # x/y of image
-$xsize = 800*5;
-$ysize = 600*5;
+$xsize = 800;
+$ysize = 600;
 
 # use slippy tiles at this zoom level (prev hardcoded at 4)
-$zoomtile = 5;
+$zoomtile = 4;
 
 # test of "pre" function
 sub pre {
@@ -31,9 +31,9 @@ sub pre {
 
   # TODO: add zooming somehow? (can't do it here though)
 
-  ($lat, $lon) = latlonrot($lat, $lon, +106, "z");
-  ($lat, $lon) = latlonrot($lat, $lon, -35, "y");
-#  ($lat, $lon) = latlonrot($lat, $lon, 90, "x");
+  ($lat, $lon) = latlonrot($lat, $lon, 0, "z");
+  ($lat, $lon) = latlonrot($lat, $lon, -90, "y");
+  ($lat, $lon) = latlonrot($lat, $lon, 90, "x");
 
 #  $lon= fmod($lon-+106.5,360);
   return $lat,$lon;
