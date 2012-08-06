@@ -148,7 +148,8 @@ its child curl process isnt hanging (running, but not receiving data)
 
 sub bc_stream_twitter_test {
   # is bc-stream-twitter.pl running at all?
-  my($res) = system("pgrep -f bc-stream-twitter");
+  # not sure why running in shell limits to 14 chars?
+  my($res) = system("pgrep -f bc-stream-twit");
   # if not, no need to check
   if ($res) {
     print "OK - bc-stream-twitter not running\n";
@@ -156,7 +157,7 @@ sub bc_stream_twitter_test {
   }
 
   # its running, so make sure its output file is recent
-  return system("check_file_age /var/tmp/log/twitstream.txt -w 600 -c 1200");
+  return system("check_file_age /var/tmp/log/twitstream.txt -w 600 -c 1200")>>8;
 }
 
 # fixes resolv.conf in a fairly obvious way

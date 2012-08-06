@@ -4,9 +4,12 @@
 # larger attempt to create mercator maps w/ arbitrary 'north pole' and
 # otherwise 'zoomed' maps); future idea is to use slippy tiles (OSM)
 # and not try to recreate everything myself
+
+# --picloud: run CPU-intensive commands on picloud.com (requires account)
 # --gridonly: only draw the grid (useful for testing)
 # --nogrid: don't draw the grid (useful for testing)
 # --nogridstring: don't print most strings on the grid
+
 
 # TODO: adaptive zooming (zoom more where needed)
 
@@ -19,8 +22,8 @@ $latspace = 15;
 $lonspace = 20;
 
 # x/y of image
-$xsize = 800;
-$ysize = 600;
+$xsize = 800*4;
+$ysize = 600*4;
 
 # use slippy tiles at this zoom level (prev hardcoded at 4)
 $zoomtile = 4;
@@ -31,16 +34,16 @@ sub pre {
 
   # TODO: add zooming somehow? (can't do it here though)
 
-  ($lat, $lon) = latlonrot($lat, $lon, 0, "z");
-  ($lat, $lon) = latlonrot($lat, $lon, -90, "y");
-  ($lat, $lon) = latlonrot($lat, $lon, 90, "x");
+  ($lat, $lon) = latlonrot($lat, $lon, +106, "z");
+  ($lat, $lon) = latlonrot($lat, $lon, -35, "y");
+  ($lat, $lon) = latlonrot($lat, $lon, 0, "x");
 
 #  $lon= fmod($lon-+106.5,360);
   return $lat,$lon;
 }
 
-# $proj = "ortho"; $div = 6378137; $pre = \&pre;
-$proj = "merc"; $div = 20000000; $pre = \&pre;
+$proj = "ortho"; $div = 6378137; $pre = \&pre;
+# $proj = "merc"; $div = 20000000; $pre = \&pre;
 # <h>And here's to you...</h>
 # $proj = "robin"; $div = 17005833; $pre = \&pre;
 
@@ -132,11 +135,16 @@ for $x (0..(2**$zoomtile-1)) {
     # and convert..
     debug("CONVERTING: $x,$y,$zoomtile");
     ($file) = osm_map($x,$y,$zoomtile,"xy=1");
-    $cmd = "convert -mattecolor transparent -extent ${xsize}x$ysize -background transparent -matte -virtual-pixel transparent -distort Perspective $distort $file /tmp/bcdg-$x-$y.gif";
-#    $cmd = "convert -mattecolor transparent -extent ${xsize}x$ysize -background transparent -matte -virtual-pixel transparent -distort Perspective $distort $file -";
+
+    if ($globopts{picloud}) {
+      $cmd = "convert -mattecolor transparent -extent ${xsize}x$ysize -background transparent -matte -virtual-pixel transparent -distort Perspective $distort $file gif:- | od -v -x -An";
+    } else {
+      $cmd = "convert -mattecolor transparent -extent ${xsize}x$ysize -background transparent -matte -virtual-pixel transparent -distort Perspective $distort $file /tmp/bcdg-$x-$y.gif";
+    }
+
     push(@cmds, $cmd);
     push(@outfiles, "/tmp/bcdg-$x-$y.gif");
-    system($cmd);
+    unless ($globopts{picloud}) {system($cmd);}
 
     # fly gets annoyed if file doesn't exist, so check that above worked
     if (-f "/tmp/bcdg-$x-$y.gif") {
@@ -144,6 +152,31 @@ for $x (0..(2**$zoomtile-1)) {
     }
   }
 }
+
+if ($globopts{picloud}) {
+  picloud_commands(@cmds);
+  # testing here
+  $piout = read_file("/tmp/piout.txt");
+
+  # answers are in Python list, so get them...
+  while ($piout=~s/\'(.*?)\'//) {
+    my($ans) = $1;
+    # remove spaces (and newlines, which are given as hard "\n")
+    $ans=~s/\s+//isg;
+    $ans=~s/\\n//isg;
+#    debug("PREBIN: $ans");
+    # od flip flop
+    $ans=~s/(..)(..)/$2$1/isg;
+     # convert to binary
+    $ans=~s/(..)/chr(hex($1))/iseg;
+#    debug("POSTBIN: $ans");
+#    die "TESTING";
+   # and write to file
+    write_file($ans, shift(@outfiles));
+  }
+#  debug("PIOUT: $piout");
+}
+
 
 close(A);
 
@@ -221,7 +254,11 @@ sub proj4 {
   # echoing back $lat/$lon is pointless here, but may be useful later
   # NOTE: +proj=latlon still requires lon/lat order
   my($cmd) = "echo $lon $lat | cs2cs -E -e 'ERR ERR' +proj=latlon +to +proj=$proj 2> /dev/null";
-  my($lt, $lo, $x, $y) = split(/\s+/, `$cmd`);
+#  debug("CMD is: $cmd");
+  my($res) = `$cmd`;
+#  debug("RESULT IS: $res");
+  my($lt, $lo, $x, $y) = split(/\s+/, $res);
+#  debug("$lt, $lo, $x, $y ALPHA vs $div");
 
   # off image?
   # allow a little bit off image
@@ -230,6 +267,11 @@ sub proj4 {
   # scale
   $x = $xsize/2*(1+$x/$div);
   $y = $ysize/2*(1-$y/$div);
+
+#  debug("X: $x");
+
+  # odd case where x is "almost" 0
+  if ($x<0 && $x>=-1) {$x=0;}
 
   return round($x),round($y);
 }
@@ -292,6 +334,7 @@ returning it
 sub quadrangle {
   my(%arg);
   ($arg{slat}, $arg{wlon}, $arg{nlat}, $arg{elon}) = @_;
+#  debug("QUADRANGLE NS: $arg{slat} to $arg{nlat}, $arg{wlon} to $arg{elon}");
   my($minx,$maxx,$miny,$maxy) = (+Infinity,-Infinity,+Infinity,-Infinity);
   my(@ret);
 

@@ -9,7 +9,7 @@ $|=1;
 
 # what we're looking for
 # note: using big locations for testing, will trim
-$data = "track=math+tutor,math+help,homework+help,\@barrycarter";
+$data = "track=math+tutor,math+help,homework+help,algebra+help,calculus+help,trig+help,\@barrycarter";
 
 # convert bad twits from priv file (ie, ones I don't want to hear from) to hash
 my(%badhash) = list2hash(@badtwitterusers);
