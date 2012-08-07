@@ -164,4 +164,3 @@ sub bc_stream_twitter_test {
 sub fix_resolv {
   system("sudo cp -f /etc/resolv.conf.opendns /etc/resolv.conf");
 }
-
