@@ -1,17 +1,33 @@
 <body onload="draw();">
 above
-<canvas id="tutorial" width="150" height="150"></canvas>
+<canvas id="tutorial" width="800" height="600"></canvas>
 below
 
 <script type="text/javascript">
+
+var canvas;
+var ctx;
+
 function draw(){
- var canvas = document.getElementById('tutorial');
- if (canvas.getContext){
-  var ctx = canvas.getContext('2d');
-  ctx.fillStyle = "rgb(200,0,0)";
-  ctx.fillRect (10, 10, 55, 50);
-  ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
-  ctx.fillRect (30, 30, 55, 50);
- }
+ canvas = document.getElementById('tutorial');
+ ctx = canvas.getContext('2d');
+ ctx.fillStyle = "rgb(200,0,0)";
+ ctx.fillRect (10, 10, 55, 50);
+ ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+ ctx.fillRect (30, 30, 55, 50);
 }
+
+tutorial.addEventListener('click', alert3)
+tutorial.addEventListener('dblclick', alert1)
+tutorial.addEventListener('contextmenu', alert2)
+
+
+function alert1(){alert('dblclick')}
+function alert2(){alert('rightclick')}
+function alert3(){
+ alert('click');
+ window.ctx.scale(2,2)
+ draw()
+}
+
 </script>

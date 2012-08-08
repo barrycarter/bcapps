@@ -8,8 +8,8 @@ require "/home/barrycarter/bc-private.pl";
 $|=1;
 
 # what we're looking for
-# note: using big locations for testing, will trim
-$data = "track=math+tutor,math+help,homework+help,algebra+help,calculus+help,trig+help,\@barrycarter";
+# TODO: put this into bc-private.pl soon!
+$data = "track=math+tutor,math+help,homework+help,algebra+help,calculus+help,trig+help,\@barrycarter&lang=en";
 
 # convert bad twits from priv file (ie, ones I don't want to hear from) to hash
 my(%badhash) = list2hash(@badtwitterusers);
@@ -69,11 +69,11 @@ while (<A>) {
   my($out,$err,$res) = cache_command("echo http://tutor.u.94y.info/\?$json->{user}{screen_name} | surl -s is.gd");
   chomp($out);
 
-  $str = "[$json->{created_at}] ($json->{id} : $json->{in_reply_to_status_id}) <$json->{user}{screen_name}> $json->{text}";
+#  $str = "[$json->{created_at}] ($json->{id} : $json->{in_reply_to_status_id}) <$json->{user}{screen_name}> $json->{text}";
 
   $time = strftime("%Y%m%d.%H%M%S", localtime(str2time($json->{created_at})));
 
-  $str = "[$time] <$json->{user}{screen_name}> $json->{text}";
+  $str = "[$time] <$json->{user}{screen_name} ($json->{user}{name})> $json->{text}";
 
   # remove nonprintables
   $str=~s/[^ -~]//isg;
@@ -82,8 +82,8 @@ while (<A>) {
   my($line) = "I might be able to help at: $out (online whiteboard)";
 
   # "bracket" the tweet (easier when I search file using 'tac')
-  print "$line\n$str\n$line\n";
-  print B "$line\n$str\n$line\n";
+  print "$line\n$str\n$line\n\n";
+  print B "$line\n$str\n$line\n\n";
 
   # must use full path to firefox to avoid rare error
   system("/root/build/firefox/firefox https://twitter.com/$json->{user}{screen_name}/status/$json->{id} 1> /dev/null 2> /dev/null");
