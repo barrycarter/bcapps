@@ -1,12 +1,24 @@
 #!/bin/perl
 
-# Similar to bc-stream-twitter, this looks for all help requests in the twitter stream to see which ones I can respond too
+# Similar to bc-stream-twitter, this looks for all help requests in
+# the twitter stream to see which ones I can respond too
+
+# --justme: only look for tweets to me, don't search for help requests
 
 require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
 $|=1;
 
-$data = "track=science,math,perl,sql,trig,algebra,calculus,physics,programming,computer,logic,statistics,database,probability,astronomy,geometry,geography,meteorlogy&lang=en";
+# Don't run two copies
+# <h>This computer isn't big enough fir the two of us!</h>
+system("pkill seekhelp2");
+$0="seekhelp2";
+
+unless ($globopts{justme}) {
+  $data = "track=science,math,perl,sql,trig,algebra,calculus,physics,programming,computer,logic,statistics,database,probability,astronomy,geometry,geography,meteorlogy,\@barrycarter,\@leftbraintutor&lang=en";
+} else {
+  $data = "track=\@barrycarter,\@leftbraintutor&lang=en";
+}
 
 # write to logfile (not root, so can't write to /var/log?)
 open(B,">>/var/tmp/log/helpreq.txt");
@@ -43,6 +55,9 @@ while (<A>) {
 
   print "$str\n\n";
   print B "$str\n\n";
+
+  system("/root/build/firefox/firefox https://twitter.com/$json->{user}{screen_name}/status/$json->{id} 1> /dev/null 2> /dev/null");
+
 }
 
 close(B);
