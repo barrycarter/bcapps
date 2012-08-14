@@ -32,6 +32,10 @@ while (<A>) {
   # data is in JSON format
   $json = JSON::from_json($_);
 
+  debug(unfold($json));
+  debug("SOURCE: $json->{source}");
+  debug("BETA");
+
   # getting tired of typing out $json->{text}
   $tweet = $json->{text};
 
