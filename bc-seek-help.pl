@@ -15,9 +15,9 @@ system("pkill seekhelp2");
 $0="seekhelp2";
 
 unless ($globopts{justme}) {
-  $data = "track=science,math,perl,sql,trig,algebra,calculus,physics,programming,computer,logic,statistics,database,probability,astronomy,geometry,geography,meteorlogy,\@barrycarter,\@leftbraintutor&lang=en";
+  $data = "track=science,math,perl,sql,trig,algebra,calculus,physics,programming,computer,logic,statistics,database,probability,astronomy,geometry,geography,meteorlogy,\@$twitter{user}&lang=en";
 } else {
-  $data = "track=\@barrycarter,\@leftbraintutor&lang=en";
+  $data = "track=\@$twitter{user}&lang=en";
 }
 
 # write to logfile (not root, so can't write to /var/log?)
@@ -32,9 +32,19 @@ while (<A>) {
   # data is in JSON format
   $json = JSON::from_json($_);
 
-  debug(unfold($json));
+#  debug(unfold($json));
   debug("SOURCE: $json->{source}");
-  debug("BETA");
+
+  # exclude phones (TODO: is this bad?; most twitter traffic is phones?)
+  # and iPad because they can't use Flash (argh, Ive become evil!)
+  # TODO: this cuts out people I could help incl people w computer qs
+
+  # via twitter for [x] ignores
+ # if ($json->{source}=~/^twitter for (android|ipad|iphone)$/i) {next;}
+
+  # other ignores
+#  if ($json->{source}=~/^txt$/i) {next;}
+
 
   # getting tired of typing out $json->{text}
   $tweet = $json->{text};
