@@ -14,10 +14,10 @@ require "/usr/local/lib/bclib.pl";
 
 ($data,$file) = cmdfile();
 
-# the page name is the tail of the filename (excluding the .mww extension)
+# the page name is the tail of the filename (excluding the .mmw extension)
 $pagename = $file;
 $pagename=~s/^.*\///;
-$pagename=~s/\.mww//;
+$pagename=~s/\.mmw//;
 
 # the meta page always adds to the wiki page it represents
 $all = "[[$pagename!!$data]]";
@@ -28,6 +28,9 @@ while
   # TODO: disallow infinite loops
   $round++;
 }
+
+# declare tags
+($stag, $etag) = ("-$pagename-\n\n", "\n\n-$pagename-\n");
 
 # "add" things to pages as needed (actually, replace existing section)
 for $i (sort keys %add) {
@@ -51,7 +54,12 @@ for $i (sort keys %add) {
 
   # pull this page from the .mw file (ok if it doesn't exist)
   # TODO: what if this is in different dir?
-  $page = read_file("$i.mw");
+  if (-f "$i.mw") {
+    $page = read_file("$i.mw");
+  } else {
+    warn("Will create $i.mw");
+    $page = "";
+  }
 
   # Case 1: this page had previously created a section and will replace it
   unless ($page=~s%($stag)(.*?)($etag)%$1\n$content\n$3%s) {
@@ -63,6 +71,9 @@ for $i (sort keys %add) {
 
   debug("NEW $i: $page");
 
+  # and write it
+  write_file($page,"$i.mw");
+
 #  $res = write_wiki_page_anon($wiki, $i, $page, "AUTO");
 
 #  debug("RES: $res");
@@ -70,7 +81,7 @@ for $i (sort keys %add) {
 
   debug("ADD($i)", @add);
 
-  print "$res\n";
+#  print "$res\n";
 #  print A "$res\n";
 }
 
