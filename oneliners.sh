@@ -1,6 +1,6 @@
 # shell one liners
 
-
+perl -e '@n=(0..9); @l=("a".."z","A".."Z"); for (1..8) {print $n[rand()*10];} print "-"; for(1..40) {print $l[rand()*52]}; print "\n"'
 
 exit;
 

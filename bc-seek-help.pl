@@ -4,6 +4,11 @@
 # the twitter stream to see which ones I can respond too
 
 # --justme: only look for tweets to me, don't search for help requests
+# --nofirefox: do not open tweets in firefox (useful for "firehose" testing)
+# --links=0: if set, don't ignore tweets with links
+# --rt=0: if set, don't ignore retweets not involving me
+# --mentions=0: if set, don't ignore tweets that mention someone else + not me
+# --filter: if set, show only tweets matching this regex
 
 require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
@@ -14,14 +19,29 @@ $|=1;
 system("pkill seekhelp2");
 $0="seekhelp2";
 
+# sources I can't help (TODO: this is just bad)
+# %bads = list2hash("http://twitter.com/download/iphone", "http://twitter.com/download/android");
+
+# @twitter_tags is in bc-private.pl and is a list of hashtags (not
+# phrases) I used to follow; converting to one big phrase for
+# streaming API
+
+# NOTE: twitter limits to 400 track keywords of length 60, don't think
+# I'm anywhere near that, so not checking
+
+for $i (@twitter_tags) {$i=~s/\#//isg;}
+$phrase = join(",",@twitter_tags);
+
+debug("PHRASE: $phrase");
+
 unless ($globopts{justme}) {
-  $data = "track=science,math,perl,sql,trig,algebra,calculus,physics,programming,computer,logic,statistics,database,probability,astronomy,geometry,geography,meteorlogy,\@$twitter{user}&lang=en";
+  $data = "lang=en&track=$phrase,\@$twitter{user}";
 } else {
   $data = "track=\@$twitter{user}&lang=en";
 }
 
 # write to logfile (not root, so can't write to /var/log?)
-open(B,">>/var/tmp/log/helpreq.txt");
+open(B,">>/var/tmp/log/helpreq2.txt");
 
 my($cmd) = "curl -N -s -u $twitter{user}:$twitter{pass} 'https://stream.twitter.com/1/statuses/filter.json?$data'";
 open(A,"$cmd|");
@@ -32,8 +52,10 @@ while (<A>) {
   # data is in JSON format
   $json = JSON::from_json($_);
 
-#  debug(unfold($json));
-  debug("SOURCE: $json->{source}");
+  # find the URL in the source
+  $json->{source}=~/<a href="(.*?)"/isg;
+  $surl = $1;
+  if ($bads{$surl}) {next;}
 
   # exclude phones (TODO: is this bad?; most twitter traffic is phones?)
   # and iPad because they can't use Flash (argh, Ive become evil!)
@@ -49,20 +71,29 @@ while (<A>) {
   # getting tired of typing out $json->{text}
   $tweet = $json->{text};
 
-  # help reqs only
-  unless ($tweet=~/(help|tutor|homework|problem|study|question|assign|student|class|desparate)/i) {next;}
+  # filter (works even if --filter not set)
+  unless ($tweet=~/$globopts{filter}/i) {next;}
 
   # mentions someone else and not me? ignore
-  if ($tweet=~/\@/i && !($tweet=~/barry/i)) {next;}
+  if ($tweet=~/\@/i && !($tweet=~/$twitter{user}/i) && !$globopts{mentions}) {
+    next;
+  }
 
   # same w retweets
-  if ($tweet=~/^rt/i && !($tweet=~/barry/i)) {next;}
+  if ($tweet=~/^rt/i && !($tweet=~/$twitter{user}/i) && !$globopts{rt}) {
+    next;
+  }
 
   # and hyperlinks
-  if ($tweet=~/http/i && !($tweet=~/barry/i)) {next;}
+  if ($tweet=~/http/i && !($tweet=~/$twitter{user}/i && !$globopts{links})) {
+    next;
+  }
+
+  # and these phrases (which I eventually need to not hardcode)
+#  if ($tweet=~/inga nielsen|without my cell phone|drama queen|excuse for not having math homework|solve your own problems|when my name\'s on a math problem|stop asking me to find your x|10ReasonsWhyIHateSchool|good friend is like a computer|HowIMetMyBestfriend|mermaid wear to math class|dear 69/i) {next;}
 
   $time = strftime("%Y%m%d.%H%M%S", localtime(str2time($json->{created_at})));
-  $str = "[$time] <$json->{user}{screen_name} ($json->{user}{name})> $json->{text}";
+  $str = "[$time] <$json->{user}{screen_name} ($json->{user}{name})> $json->{text} [SOURCE: $surl]";
 
   # remove nonprintables
   $str=~s/[^ -~]//isg;
@@ -70,7 +101,9 @@ while (<A>) {
   print "$str\n\n";
   print B "$str\n\n";
 
-  system("/root/build/firefox/firefox https://twitter.com/$json->{user}{screen_name}/status/$json->{id} 1> /dev/null 2> /dev/null");
+  unless ($globopts{nofirefox}) {
+    system("/root/build/firefox/firefox https://twitter.com/$json->{user}{screen_name}/status/$json->{id} 1> /dev/null 2> /dev/null");
+  }
 
 }
 

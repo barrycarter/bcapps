@@ -23,6 +23,29 @@ use XML::Bare;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
+# following discussion at http://erisds.co.uk/code/twitter-oauth-simple-curl-requests-for-your-own-data
+
+# all variables are defined in bc-private.pl
+
+%oauth = ('oauth_consumer_key' => $consumer_key,
+	  'oauth_nonce' => time(),
+	  'oauth_signature_method' => 'HMAC-SHA1',
+	  'oauth_token' => $oauth_access_token,
+	  'oauth_timestamp' => time(),
+	  'oauth_version' => '1.0');
+
+for $i (keys %oauth) {push(@strs,"$i=$oauth{$i}");}
+$str = join("&", @strs);
+
+($out, $err, $res) = cache_command("curl 'https://api.twitter.com/oauth/request_token?$str'","age=3000");
+
+debug("STR: $str");
+debug("OUT: $out");
+
+
+
+die "ETSTING";
+
 $all = read_file("/tmp/piout.txt");
 
 while ($all=~s/\'(.*?)\'(, |$)//) {
