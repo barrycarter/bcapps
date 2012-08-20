@@ -29,8 +29,17 @@ $0="seekhelp2";
 # NOTE: twitter limits to 400 track keywords of length 60, don't think
 # I'm anywhere near that, so not checking
 
-for $i (@twitter_tags) {$i=~s/\#//isg;}
+for $i (@twitter_tags) {
+  # before removing hashtag, create regexp
+  push(@regex, $i);
+  $i=~s/\#//isg;
+}
+
 $phrase = join(",",@twitter_tags);
+# TODO: this is absolutely horrible way to check for hashtags
+$regex = join("|",@regex);
+
+debug("REGEXP: $regex");
 
 debug("PHRASE: $phrase");
 
@@ -75,7 +84,7 @@ while (<A>) {
   # getting tired of typing out $json->{text}
   $tweet = $json->{text};
 
-  unless ($tweet=~/\#/) {next;}
+#  unless ($tweet=~/$regex/i) {next;}
 
   # filter (works even if --filter not set)
   unless ($tweet=~/$globopts{filter}/i) {next;}
