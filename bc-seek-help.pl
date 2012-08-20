@@ -47,6 +47,10 @@ my($cmd) = "curl -N -s -u $twitter{user}:$twitter{pass} 'https://stream.twitter.
 open(A,"$cmd|");
 
 while (<A>) {
+  # solely to make sure curl is still running
+  debug("THUNK!");
+  system("touch /var/tmp/log/helpreq2.txt");
+
   # ignore blanks
   if (/^\s*$/s) {next;}
   # data is in JSON format

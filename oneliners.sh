@@ -1,5 +1,16 @@
 # shell one liners
 
+# if you've downloaded your quora questions/answers main page, this gets the full questions/answers
+
+perl -nle 'while (s/<a class="question_link" href="(.*?)"//i) {print $1}' /home/barrycarter/Download/bc-questions.html /home/barrycarter/Download/bc-answers.html
+
+exit;
+
+# which surls still work?
+surl -h | grep is.gd | perl -anle 'for $i (@F) {$i=~s/,//isg; print "echo test.com | surl -s $i > $i.out"}'
+
+exit;
+
 perl -e '@n=(0..9); @l=("a".."z","A".."Z"); for (1..8) {print $n[rand()*10];} print "-"; for(1..40) {print $l[rand()*52]}; print "\n"'
 
 exit;
