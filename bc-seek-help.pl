@@ -48,7 +48,7 @@ open(A,"$cmd|");
 
 while (<A>) {
   # solely to make sure curl is still running
-  debug("THUNK!");
+  debug("THUNK: $_");
   system("touch /var/tmp/log/helpreq2.txt");
 
   # ignore blanks
@@ -74,6 +74,8 @@ while (<A>) {
 
   # getting tired of typing out $json->{text}
   $tweet = $json->{text};
+
+  unless ($tweet=~/\#/) {next;}
 
   # filter (works even if --filter not set)
   unless ($tweet=~/$globopts{filter}/i) {next;}
