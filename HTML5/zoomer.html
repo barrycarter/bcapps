@@ -12,17 +12,37 @@ Attempts to replicate a TCL application I wrote at the dawn of time (1992)
 
 function runme() {
  draw();
- zoom(0,0,2);
+ zoom(0,0,12);
  draw();
 }
 
 // zooms around x,y with a zoom factor of z
 function zoom(x,y,z) {
- ctx.scale(z,z)
+ ctx.translate(x,y);
+ ctx.scale(z,z);
+ ctx.translate(-x,-y);
 }
 
+// moves to a given point x,y
+function move(x,y) {
+ ctx.translate(x,y);
+}
+
+// keeps zooming until stopped
+function holdzoom() {
+ ctx.zoom(pad["zf"],pad["zf"]);
+ setTimeout("holdzoom()", pad["zu"]);
+}
+
+// pad-specific variables
+var pad = [];
+pad["zu"] = 10; // "zoom update" how fast to zoom/move on drag/mousedown
+pad["zf"] = 1.002 // "zoom factor" how much to zoom on drag/mousedown
 var canvas = document.getElementById('zoom');;
 var ctx = canvas.getContext('2d');
+
+// convert pad point coordinates to canvas coordinatese (NOT WORKING)
+function ptsc(x,y) {}
 
 function draw(){
  ctx.clearRect(0,0,canvas.width,canvas.height)
