@@ -14,17 +14,18 @@ function draw(){
  ctx.fillRect (30, 30, 55, 50);
 }
 
-tutorial.addEventListener('click', alert3)
-tutorial.addEventListener('dblclick', alert1)
+// tutorial.addEventListener('click', alert3)
+tutorial.addEventListener('mousedown', alert3)
+tutorial.addEventListener('mouseup', alert2)
 tutorial.addEventListener('contextmenu', alert2)
 
 
 function alert1(){alert('dblclick')}
-function alert2(){alert('rightclick')}
+function alert2(){alert('mouseup')}
 function alert3(){
- alert('click');
- window.ctx.scale(2,2)
- draw()
+  window.ctx.scale(1.01,1.01);
+  draw();
+  setTimeout("alert3()", 100);
 }
 
 </script>

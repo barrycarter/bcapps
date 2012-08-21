@@ -1,0 +1,39 @@
+<!-- 
+
+Attempts to replicate a TCL application I wrote at the dawn of time (1992)
+<h>I was dating a girl named Dawn at the time</h>
+
+-->
+
+<body onload="runme();">
+<canvas id="zoom" width="800" height="600"></canvas>
+
+<script type="text/javascript">
+
+function runme() {
+ draw();
+ zoom(0,0,2);
+ draw();
+}
+
+// zooms around x,y with a zoom factor of z
+function zoom(x,y,z) {
+ ctx.scale(z,z)
+}
+
+var canvas = document.getElementById('zoom');;
+var ctx = canvas.getContext('2d');
+
+function draw(){
+ ctx.clearRect(0,0,canvas.width,canvas.height)
+ ctx.fillStyle = "rgb(200,0,0)";
+ ctx.fillRect (10, 10, 55, 50);
+ ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+ ctx.fillRect (30, 30, 55, 50);
+}
+
+
+
+
+
+</script>
