@@ -12,6 +12,7 @@
 
 require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
+use Fcntl;
 $|=1;
 
 # Don't run two copies
@@ -29,11 +30,17 @@ $0="seekhelp2";
 # NOTE: twitter limits to 400 track keywords of length 60, don't think
 # I'm anywhere near that, so not checking
 
+# warn "TESTING";
+# @twitter_tags = ("perl");
+
+
 for $i (@twitter_tags) {
   # before removing hashtag, create regexp
   push(@regex, $i);
   $i=~s/\#//isg;
 }
+
+
 
 $phrase = join(",",@twitter_tags);
 # TODO: this is absolutely horrible way to check for hashtags
@@ -55,31 +62,34 @@ open(B,">>/var/tmp/log/helpreq2.txt");
 my($cmd) = "curl -N -s -u $twitter{user}:$twitter{pass} 'https://stream.twitter.com/1/statuses/filter.json?$data'";
 open(A,"$cmd|");
 
-while (<A>) {
-  # solely to make sure curl is still running
-  debug("THUNK: $_");
-  system("touch /var/tmp/log/helpreq2.txt");
+# make this nonblocking
+fcntl(A,F_SETFL,O_NONBLOCK);
 
-  # ignore blanks
-  if (/^\s*$/s) {next;}
+# forever <h>and a day</h>
+for (;;) {
+  $thunk = <A>;
+#  debug("THUNK: $thunk");
+
+  # if we got nothing, sleep a bit
+  if ($thunk=~/^\s*$/) {
+    # if we've slept too long, we've probably lost connection to curl
+    sleep(1);
+    if ($sleep++>60) {
+      warn("Sleeping $sleep seconds, too long?");
+    }
+    debug("SLEEP: $sleep seconds");
+    next;
+  }
+
+  # reset sleep if not sleeping
+  $sleep = 0;
+
+  # TODO: don't let non-JSON reply kill the whole program
+
   # data is in JSON format
-  $json = JSON::from_json($_);
+  $json = JSON::from_json($thunk);
 
-  # find the URL in the source
-  $json->{source}=~/<a href="(.*?)"/isg;
-  $surl = $1;
-  if ($bads{$surl}) {next;}
-
-  # exclude phones (TODO: is this bad?; most twitter traffic is phones?)
-  # and iPad because they can't use Flash (argh, Ive become evil!)
-  # TODO: this cuts out people I could help incl people w computer qs
-
-  # via twitter for [x] ignores
- # if ($json->{source}=~/^twitter for (android|ipad|iphone)$/i) {next;}
-
-  # other ignores
-#  if ($json->{source}=~/^txt$/i) {next;}
-
+  # in theory, could do filtering (via source, etc) here
 
   # getting tired of typing out $json->{text}
   $tweet = $json->{text};
@@ -104,9 +114,6 @@ while (<A>) {
     next;
   }
 
-  # and these phrases (which I eventually need to not hardcode)
-#  if ($tweet=~/inga nielsen|without my cell phone|drama queen|excuse for not having math homework|solve your own problems|when my name\'s on a math problem|stop asking me to find your x|10ReasonsWhyIHateSchool|good friend is like a computer|HowIMetMyBestfriend|mermaid wear to math class|dear 69/i) {next;}
-
   $time = strftime("%Y%m%d.%H%M%S", localtime(str2time($json->{created_at})));
   $str = "[$time] <$json->{user}{screen_name} ($json->{user}{name})> $json->{text} [SOURCE: $surl]";
 
@@ -114,10 +121,13 @@ while (<A>) {
   $str=~s/[^ -~]//isg;
 
   print "$str\n\n";
+  debug("ALPHA");
   print B "$str\n\n";
+  debug("BETA");
 
   unless ($globopts{nofirefox}) {
-    system("/root/build/firefox/firefox https://twitter.com/$json->{user}{screen_name}/status/$json->{id} 1> /dev/null 2> /dev/null");
+    # NOTE: you *cannot* quote the URL inside openURL
+    system(qq%/root/build/firefox/firefox -remote 'openURL(https://twitter.com/$json->{user}{screen_name}/status/$json->{id})' 1> /dev/null 2> /dev/null%);
   }
 
 }
