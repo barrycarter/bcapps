@@ -91,6 +91,10 @@ for (;;) {
 
   # in theory, could do filtering (via source, etc) here
 
+  # TODO: I feel really bad about this next bit (but these are
+  # probably the only people I can help, sigh)
+  unless ($json->{source}=~/web/i) {next;}
+
   # getting tired of typing out $json->{text}
   $tweet = $json->{text};
 
