@@ -41,7 +41,7 @@ $tax = 1.07;
 
 # yyyy-mm-dd when meter last read, and amount
 # TODO: this obviously shouldn't be hardcoded
-($time,$read) = ("2012-07-23", "54614");
+($time,$read) = ("2012-08-22", "56417");
 
 # ranges are now represented as [low, med, high] where med = the
 # "true" reading in some sense; 12:30pm = center of 8-5 day
