@@ -95,15 +95,15 @@ function mouseup() {
 function ptsc(x,y) {}
 
 function draw(){
- ctx.clearRect(0,0,canvas.width,canvas.height)
- ctx.fillStyle = "rgb(200,0,0)";
- ctx.fillRect (300, 300, 55, 50);
- ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
- ctx.fillRect (400, 200, 55, 50);
+  ctx.clearRect(0,0,canvas.width,canvas.height)
+    for (x=0; x<600; x=x+50) {
+      for (y=0; y<600; y=y+50) {
+	ctx.fillStyle = "rgb(200,0,0)";
+	ctx.font = "12px Times New Roman";
+	ctx.fillText(x+","+y,x,y);
+	//	ctx.fillRect (x-2, y-2, 4, 4);
+      }
+    }
 }
-
-
-
-
 
 </script>
