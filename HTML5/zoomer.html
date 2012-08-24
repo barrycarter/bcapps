@@ -6,7 +6,7 @@ Attempts to replicate a TCL application I wrote at the dawn of time (1992)
 -->
 
 <body onload="runme();">
-<canvas id="zoom" width="800" height="600"></canvas>
+<canvas id="zoom" width="600" height="600"></canvas>
 
 <script src="jquery-1.8.0.min.js"></script>
 <script type="text/javascript">
@@ -14,7 +14,8 @@ Attempts to replicate a TCL application I wrote at the dawn of time (1992)
 // $(document).click(function () {alert("hi there");})
 $(document).mousedown(function(e) {
  if (e.shiftKey) {shiftmousedown(e);}
- if (e.ctrlKey) {ctrlmousedown(e);}
+ else if (e.ctrlKey) {ctrlmousedown(e);}
+ else {mousedown(e);}
 })
 $(document).mouseup(mouseup)
 
@@ -22,10 +23,13 @@ $(document).mouseup(mouseup)
 var pad = [];
 pad["zu"] = 10; // "zoom update" how fast to zoom/move on drag/mousedown
 pad["zf"] = 1.002 // "zoom factor" how much to zoom on drag/mousedown
+// the center point and minimal radius of the pad in scaled coords
+pad["x"] = 600/2;
+pad["y"] = 600/2;
+pad["z"] = 600/2;
+
 var canvas = document.getElementById('zoom');;
 var ctx = canvas.getContext('2d');
-
-bindings();
 
 function runme() {
  draw();
@@ -33,34 +37,38 @@ function runme() {
 
 // zooms around x,y with a zoom factor of z
 function zoom(x,y,z) {
+
+ // shift, scale, unshift <h>(conjugation, not just a word!)</h>
  ctx.translate(x,y);
  ctx.scale(z,z);
  ctx.translate(-x,-y);
+
+ // this changes the center and radius of the grid in scaled coords
+ pad["z"] = pad["z"]*z;
+ pad["x"] = x + z*(pad["x"]-x);
+ pad["y"] = y + z*(pad["y"]-y);
+
+ draw();
 }
 
 // moves to a given point x,y
 function move(x,y) {
  ctx.translate(x,y);
+ draw();
 }
 
 // keeps zooming if is_holdzoom is set
 function holdzoom(x,y,z) {
  if (is_holdzoom==0) {return;}
  zoom(x,y,z);
- draw();
  setTimeout("holdzoom("+x+","+y+","+z+")", pad["zu"]);
 }
 
 // move on mouse drag
-function holdmove() {
+function holdmove(x,y) {
+ move(x,y);
  // TODO: write this
 }
-
-// the bindings (functionalized solely for convenience)
-function bindings() {
- // TODO: write this
-}
-
 
 // function to call when mouse is shift-clicked (for now: start zooming)
 function shiftmousedown(e) {
@@ -74,7 +82,14 @@ function ctrlmousedown(e) {
  holdzoom(e.pageX,e.pageY,1./pad["zf"]);
 }
 
-function mouseup() {is_holdzoom=0;}
+function mousedown(e) {
+ holdmove(e.pageX,e.pageY);
+}
+
+function mouseup() {
+ is_holdzoom=0;
+ alert("PAD"+pad["x"]+","+pad["y"]+","+pad["z"]);
+}
 
 // convert pad point coordinates to canvas coordinatese (NOT WORKING)
 function ptsc(x,y) {}
@@ -82,9 +97,9 @@ function ptsc(x,y) {}
 function draw(){
  ctx.clearRect(0,0,canvas.width,canvas.height)
  ctx.fillStyle = "rgb(200,0,0)";
- ctx.fillRect (10, 10, 55, 50);
+ ctx.fillRect (300, 300, 55, 50);
  ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
- ctx.fillRect (30, 30, 55, 50);
+ ctx.fillRect (400, 200, 55, 50);
 }
 
 
