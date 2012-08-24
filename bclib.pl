@@ -28,6 +28,10 @@ $DEGRAD=$PI/180; # degrees to radians
 $RADDEG=180./$PI; # radians to degrees
 $EARTH_RADIUS = 6371/1.609344; # miles
 
+# note month 0 is blank intentionally
+our(@months) = ("", "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December");
+
 # HACK: not sure this is right way to do this
 our(%globopts);
 our(%is_tempfile);
