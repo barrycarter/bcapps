@@ -8,7 +8,15 @@ Attempts to replicate a TCL application I wrote at the dawn of time (1992)
 <body onload="runme();">
 <canvas id="zoom" width="800" height="600"></canvas>
 
+<script src="jquery-1.8.0.min.js"></script>
 <script type="text/javascript">
+
+// $(document).click(function () {alert("hi there");})
+$(document).mousedown(function(e) {
+ if (e.shiftKey) {shiftmousedown(e);}
+ if (e.ctrlKey) {ctrlmousedown(e);}
+})
+$(document).mouseup(mouseup)
 
 // pad-specific variables
 var pad = [];
@@ -21,8 +29,6 @@ bindings();
 
 function runme() {
  draw();
-// zoom(0,0,.21);
-// draw();
 }
 
 // zooms around x,y with a zoom factor of z
@@ -37,13 +43,12 @@ function move(x,y) {
  ctx.translate(x,y);
 }
 
-// keeps zooming if t is set; otherwise, stop
-function holdzoom(t) {
- if (t==0) {return;}
- // alert("holdzoom working");
- ctx.scale(pad["zf"],pad["zf"]);
+// keeps zooming if is_holdzoom is set
+function holdzoom(x,y,z) {
+ if (is_holdzoom==0) {return;}
+ zoom(x,y,z);
  draw();
- setTimeout("holdzoom()", pad["zu"]);
+ setTimeout("holdzoom("+x+","+y+","+z+")", pad["zu"]);
 }
 
 // move on mouse drag
@@ -53,16 +58,23 @@ function holdmove() {
 
 // the bindings (functionalized solely for convenience)
 function bindings() {
- canvas.addEventListener('mousedown',mousedown);
  // TODO: write this
 }
 
 
-// function to call when mouse is clicked (for now: start zooming)
-function mousedown() {
- alert("mousedown called");
- holdzoom(1);
+// function to call when mouse is shift-clicked (for now: start zooming)
+function shiftmousedown(e) {
+ is_holdzoom=1;
+ holdzoom(e.pageX,e.pageY,pad["zf"]);
 }
+
+// function to call when mouse is ctrl-clicked (for now: start unzooming)
+function ctrlmousedown(e) {
+ is_holdzoom=1;
+ holdzoom(e.pageX,e.pageY,1./pad["zf"]);
+}
+
+function mouseup() {is_holdzoom=0;}
 
 // convert pad point coordinates to canvas coordinatese (NOT WORKING)
 function ptsc(x,y) {}
