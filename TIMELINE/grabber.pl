@@ -25,7 +25,7 @@ for $i (1..12) {
 for $i (1..12) {
   for $j (1..31) {
     # TODO: TESTING!
-    unless ($i==10&&$j==1){next;}
+#    unless ($i==10&&$j==1){next;}
 
     debug("PARSING: $months[$i]$j");
     $data = read_file("$months[$i]$j");
@@ -36,44 +36,50 @@ for $i (1..12) {
 
     # currently only doing births/deaths, not events (the most important)
 
-    # grab births (assumes next session exists, maybe bad)
-    $data=~s/==\s*births\s*==(.*?)==/==/is;
-    $births = $1;
-    @births=split(/\n/, $births);
+    # grab births/deaths (assumes next session exists, maybe bad)
 
-    # split into lines
-    for $k (@births) {
-      if ($k=~/^\s*$/) {next;}
-      debug("DOING: $k");
-      # strip leading star and get date
-      unless ($k=~s/^[\*|\~]\s*\[*(\d+)\]*\s*//) {next;}
-      $date = $1;
-      # remove crap up to persons name/link
-      unless ($k=~s/^.*?\[/\[/) {next;}
-      
-      # drop anything after newline
-      $k=~s/\n.*$//isg;
-#      debug("K: $k");
+    for $m ("births","deaths") {
+      $data=~s/==\s*$m\s*==(.*?)==/==/is;
+      $births = $1;
+      @births=split(/\n/, $births);
 
-      # convert apos to double apos for sqlite3
-      $k=~s/\'/''/isg;
+      # split into lines
+      for $k (@births) {
+	if ($k=~/^\s*$/) {next;}
+	debug("DOING: $k");
+	# strip leading star and get date
+	unless ($k=~s/^[\*|\~]\s*\[*(\d+)\]*\s*//) {next;}
+	$date = $1;
+	# remove crap up to persons name/link
+	unless ($k=~s/^.*?\[/\[/) {next;}
 
-      # get long and short of it
-      $longname = $k;
-      # first [[thing]] is taken
-      $longname=~/\[\[(.*?)\]\]/;
-      $shortname = $1;
-      # realdate will be determined later
-      push(@queries, "INSERT OR IGNORE INTO events 
+	# drop anything after newline
+	$k=~s/\n.*$//isg;
+
+	# convert apos to double apos for sqlite3
+	$k=~s/\'/''/isg;
+
+	# get long and short of it
+	$longname = $k;
+	# first [[thing]] is taken
+	$longname=~/\[\[(.*?)\]\]/;
+	$shortname = $1;
+	$type = uc($m);
+	# realdate will be determined later
+	push(@queries, "INSERT OR IGNORE INTO events 
 (stardate, shortname, longname, type) VALUES
-($date*10000+$i*100+$j, '$shortname', '$longname', 'BIRTH');");
+($date*10000+$i*100+$j, '$shortname', '$longname', '$type');");
     }
+}
   }
 }
 
+
 print "BEGIN;\n";
+# TODO: this is only for right now
+print "DELETE FROM events;\n";
 print join("\n", @queries);
-print "COMMIT;\n";
+print "\nCOMMIT;\n";
 
 =item schema
 
