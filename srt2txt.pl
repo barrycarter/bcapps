@@ -15,6 +15,8 @@
 
 # ignore blank lines
 
+s/\r//isg;
+
 if (/^\s*$/) {
 #  print "STOPPED: $_\n";
  next;

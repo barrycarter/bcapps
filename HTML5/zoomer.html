@@ -10,10 +10,19 @@ Attempts to replicate a TCL application I wrote at the dawn of time (1992)
 
 <script type="text/javascript">
 
+// pad-specific variables
+var pad = [];
+pad["zu"] = 10; // "zoom update" how fast to zoom/move on drag/mousedown
+pad["zf"] = 1.002 // "zoom factor" how much to zoom on drag/mousedown
+var canvas = document.getElementById('zoom');;
+var ctx = canvas.getContext('2d');
+
+bindings();
+
 function runme() {
  draw();
- zoom(0,0,12);
- draw();
+// zoom(0,0,.21);
+// draw();
 }
 
 // zooms around x,y with a zoom factor of z
@@ -28,9 +37,12 @@ function move(x,y) {
  ctx.translate(x,y);
 }
 
-// keeps zooming until stopped
-function holdzoom() {
- ctx.zoom(pad["zf"],pad["zf"]);
+// keeps zooming if t is set; otherwise, stop
+function holdzoom(t) {
+ if (t==0) {return;}
+ // alert("holdzoom working");
+ ctx.scale(pad["zf"],pad["zf"]);
+ draw();
  setTimeout("holdzoom()", pad["zu"]);
 }
 
@@ -41,15 +53,16 @@ function holdmove() {
 
 // the bindings (functionalized solely for convenience)
 function bindings() {
+ canvas.addEventListener('mousedown',mousedown);
  // TODO: write this
 }
 
-// pad-specific variables
-var pad = [];
-pad["zu"] = 10; // "zoom update" how fast to zoom/move on drag/mousedown
-pad["zf"] = 1.002 // "zoom factor" how much to zoom on drag/mousedown
-var canvas = document.getElementById('zoom');;
-var ctx = canvas.getContext('2d');
+
+// function to call when mouse is clicked (for now: start zooming)
+function mousedown() {
+ alert("mousedown called");
+ holdzoom(1);
+}
 
 // convert pad point coordinates to canvas coordinatese (NOT WORKING)
 function ptsc(x,y) {}
