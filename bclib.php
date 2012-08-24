@@ -1,5 +1,21 @@
 <?php
 
+# global constant for months
+$months=array(
+	      1 => "January",
+	      2 => "February",
+	      3 => "March",
+	      4 => "April",
+	      5 => "May",
+	      6 => "June",
+	      7 => "July",
+	      8 => "August",
+	      9 => "September",
+	      10 => "October",
+	      11 => "November",
+	      12 => "December"
+	 );
+
 # write debugging info to file (why? because redirects/etc means end
 # user cant always see debug info)
 
@@ -73,11 +89,11 @@ function selectmarkedhash($name,$hash,$options="") {
 
   # determine salted encrypt hash + BASE64 encode it
   # @ suppresses the "empty IV" error
-  $encrypt = @mcrypt_ecb(MCRYPT_RIJNDAEL_256,$opts[salt],$keys,MCRYPT_ENCRYPT);
-  $encrypt = base64_encode($encrypt);
+  //  $encrypt = @mcrypt_ecb(MCRYPT_RIJNDAEL_256,$opts[salt],$keys,MCRYPT_ENCRYPT);
+  //  $encrypt = base64_encode($encrypt);
 
   # and return a hidden field for it
-  $result=$result."<input type='hidden' name='salt[$name]' value='$encrypt'>";
+  //  $result=$result."<input type='hidden' name='salt[$name]' value='$encrypt'>";
 
   return($result);
 }
@@ -88,6 +104,45 @@ function list2hash($arr) {
   $retval = array();
   foreach ($arr as $i) {$retval[$i]=$i;}
   return $retval;
+}
+
+# creates multiple HTML fields to select a date, using strftime like format
+# TODO: document this, created in hurry to help someone
+
+function selectdate($name,$timestamp,$strf) {
+    global $months;
+    debug("DELTA0");
+    if ($timestamp=="NOW") {$timestamp=time();}
+    debug("DELTA0.2");
+    $date=getdate($timestamp);
+    debug("DELTA0.4: $date[year]");
+    debug("TEST: $strf,".numberhash(1,31));
+    $temp1 = numberhash($date["year"]-10,$date["year"]+10);
+    debug("TEMP1: $temp1");
+    $temp2 = selectmarkedhash($name."[year]",$temp1,"marked=$date[year]");
+    debug("TEMP2: $temp2");
+    $strf=str_replace("%Y",$temp2,$strf);
+    debug("DELTA1");
+    $strf=str_replace("%B",selectmarkedhash($name."[mon]",$months,"marked=$date[mon]"),$strf);
+    debug("DELTA2");
+    $strf=str_replace("%d",selectmarkedhash($name."[mday]",numberhash(1,31),"marked=$date[mday]"),$strf);
+    debug("DELTA3");
+    $strf=str_replace("%H",selectmarkedhash($name."[hours]",numberhash(0,23),"marked=$date[hours]"),$strf);
+    debug("DELTA4");
+    $strf=str_replace("%M",selectmarkedhash($name."[minutes]",numberhash(0,59),"marked=$date[minutes]"),$strf);
+    debug("DELTA5");
+    $strf=str_replace("%S",selectmarkedhash($name."[seconds]",numberhash(0,59),"marked=$date[seconds]"),$strf);
+    $strf="$strf\n<input type=\"hidden\" name=\"${name}[isdate]\" value=\"t\">\n";
+return($strf);
+}
+
+# TODO: document below, created quickly to help someone
+# numberhash(from,to): creates the hash hash(x)=x for x=from..to
+function numberhash($from,$to) {
+    for($i=$from;$i<=$to;$i++) {
+	$hash[$i]=$i;
+    }
+    return($hash);
 }
 
 # print string if $DEBUG set
