@@ -22,11 +22,16 @@ $(document).mouseup(mouseup)
 // pad-specific variables
 var pad = [];
 pad["zu"] = 10; // "zoom update" how fast to zoom/move on drag/mousedown
+// TODO: restore regular speed; ludicrous for testing only
 pad["zf"] = 1.002 // "zoom factor" how much to zoom on drag/mousedown
+pad["zf"] = 1.02 // "zoom factor" how much to zoom on drag/mousedown
 // the center point and minimal radius of the pad in scaled coords
 pad["x"] = 600/2;
 pad["y"] = 600/2;
 pad["z"] = 600/2;
+
+// array to hold random, but consistent, colors
+var rgb= [];
 
 var canvas = document.getElementById('zoom');;
 var ctx = canvas.getContext('2d');
@@ -44,7 +49,7 @@ function zoom(x,y,z) {
  ctx.translate(-x,-y);
 
  // this changes the center and radius of the grid in scaled coords
- pad["z"] = pad["z"]*z;
+ pad["z"] = pad["z"]/z;
  pad["x"] = x + z*(pad["x"]-x);
  pad["y"] = y + z*(pad["y"]-y);
 
@@ -88,20 +93,30 @@ function mousedown(e) {
 
 function mouseup() {
  is_holdzoom=0;
- alert("PAD"+pad["x"]+","+pad["y"]+","+pad["z"]);
+ // alert("PAD"+pad["x"]+","+pad["y"]+","+pad["z"]);
 }
 
 // convert pad point coordinates to canvas coordinatese (NOT WORKING)
 function ptsc(x,y) {}
 
 function draw(){
-  ctx.clearRect(0,0,canvas.width,canvas.height)
+  //  Math.srand(0);
+  ctx.clearRect(-10,-10,canvas.width+20,canvas.height+20)
     for (x=0; x<600; x=x+50) {
       for (y=0; y<600; y=y+50) {
-	ctx.fillStyle = "rgb(200,0,0)";
+	// TODO: this is horrible psuedo-array
+	if (!rgb[x*1000+y]) {
+	  var r = Math.floor(Math.random()*256.);
+	  var g = Math.floor(Math.random()*256.);
+	  var b = Math.floor(Math.random()*256.);
+	  rgb[x*1000+y] = r+","+g+","+b;
+	  //	  alert("ASSIGNING:"+(x*1000+y)+"TO"+rgb[x*1000+y]);
+	}
+	//	ctx.fillStyle = "rgb(r,g,b)";
+	ctx.fillStyle = "rgb("+rgb[x*1000+y]+")";
 	ctx.font = "12px Times New Roman";
-	ctx.fillText(x+","+y,x,y);
-	//	ctx.fillRect (x-2, y-2, 4, 4);
+	//	ctx.fillText(x+","+y,x,y);
+		ctx.fillRect (x, y, 50, 50);
       }
     }
 }
