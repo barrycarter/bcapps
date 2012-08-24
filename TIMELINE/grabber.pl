@@ -38,7 +38,7 @@ for $i (1..12) {
 
     # grab births/deaths (assumes next session exists, maybe bad)
 
-    for $m ("births","deaths") {
+    for $m ("births","deaths","events") {
       $data=~s/==\s*$m\s*==(.*?)==/==/is;
       $births = $1;
       @births=split(/\n/, $births);
@@ -64,6 +64,10 @@ for $i (1..12) {
 	# first [[thing]] is taken
 	$longname=~/\[\[(.*?)\]\]/;
 	$shortname = $1;
+
+	# for events, shortname generated above is bad
+	if ($m eq "events") {$shortname=$longname;}
+
 	$type = uc($m);
 	# realdate will be determined later
 	push(@queries, "INSERT OR IGNORE INTO events 

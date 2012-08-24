@@ -1,0 +1,24 @@
+# these events were created by hand
+# only listing very few events here to get general feel, not intended to be
+# even remotely complete
+# format: y*mmdd.hhmmss shortname [longname]
+# commas are solely for convenience, and refer to the year part only
+# (but also separate year from month/date)
+-9,000,0000 Neolithic Era starts
+-10,000,0000 Mesolithic Era starts
+-5,000,0000 Mesolithic Era ends
+-300,000,0000 Middle Palaeolithic Era starts
+-30000,0000 Middle Palaeolithic Era ends
+-3400,000,0000 Stone Age starts
+-4,500,0000 Stone Age ends
+-5,332,000,0000 Pliocene Era starts
+-2,588,000,0000 Pliocene Era ends
+-4,600,000,000,0000 Hadean Era starts
+-3,800,000,000,0000 Hadean Era ends
+-13,750,000,000,0000 Big Bang
+5,000,000,000,0000 Sun becomes red giant
+100,000,000,000,000,0000 Stelliferous Era ends
+100,000,000,000,000,0000 Degenerate Era starts
+10,000,000,000,000,000,000,000,000,000,000,000,000,000,0000 Degenerate Era ends
+10,000,000,000,000,000,000,000,000,000,000,000,000,000,0000 Black Hole Era starts
+10,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,0000 Black Hole Era ends
