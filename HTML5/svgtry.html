@@ -6,15 +6,33 @@
 
 <script language="javascript">
 
+// the SVG file and its graphics content
+svg = document.getElementById("svg");
 g = document.getElementById("g");
-g.addEventListener("mousedown",mousedown);
+svg.addEventListener("mousedown",mousedown);
+svg.addEventListener("mouseup",mouseup);
 
-function mousedown () {
- alert("HI");
+// the initial values
+var is_zooming = 0;
+var zoom = 1;
+
+function mousedown() {
+ is_zooming = 1;
+ holdzoom();
 }
 
-// foo.setAttribute("transform","scale(2,2)");
-// alert(foo);
-// foo.scale(2,2);
+function mouseup() {
+  is_zooming = 0;
+}
+
+function holdzoom() {
+  if (is_zooming) {
+    zoom=zoom*1.001;
+    g.setAttribute("transform","scale("+zoom+",1)");
+    setTimeout("holdzoom()", 10);
+  }
+}
+
+ 
 
 </script>
