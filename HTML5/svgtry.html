@@ -1,11 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="foo" width=800 height=600>
- <circle cx="100" cy="50" r="40" stroke="black" stroke-width="2" fill="red"/>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="foo" width="800" height="600" scale="(1,1)")>
+ <g id="test">
+  <circle cx="100" cy="50" r="40" stroke="black" stroke-width="2" fill="red"/>
+ </g>
 </svg>
 
 <script language="javascript">
 
-foo = document.getElementById("foo");
-foo.width=20;
+// foo = document.getElementById("foo");
+foo = document.getElementById("test");
+foo.setAttribute("transform","scale(2,2)");
+alert(foo);
 // foo.scale(2,2);
 
 </script>
