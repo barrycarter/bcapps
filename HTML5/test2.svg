@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="svg" 
+ width="1024px" height="600px" viewbox="-512 -300 1024 600">
+ <g id="g">
+  <text x="-400" y="0" fill="black" style="font-size:015">-400</text>
+  <text x="-300" y="0" fill="black" style="font-size:15">-300</text>
+  <text x="-200" y="0" fill="black" style="font-size:15">-200</text>
+  <text x="-100" y="0" fill="black" style="font-size:15">-100</text>
+  <text x="0" y="0" fill="black" style="font-size:15">0</text>
+  <text x="100" y="0" fill="black" style="font-size:15">100</text>
+  <text x="200" y="0" fill="black" style="font-size:15">200</text>
+  <text x="300" y="0" fill="black" style="font-size:15">300</text>
+  <text x="400" y="0" fill="black" style="font-size:15">400</text>
+ </g>
+</svg>
