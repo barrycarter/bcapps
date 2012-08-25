@@ -24,7 +24,7 @@ for($i=-2000;$i<=2000;$i+=100) {
 
   debug("POS: $pos");
 
-  print qq%<text x="$pos" y="0" fill="black" style="font-size:015">$i</text>\n%;
+  print qq%<text x="$pos" y="0" fill="black" style="font-size:0.15">$i</text>\n%;
 
 }
 
