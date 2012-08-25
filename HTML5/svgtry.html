@@ -1,7 +1,9 @@
 <script src="jquery-1.8.0.min.js"></script>
 
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="svg" width="800" height="600">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="svg" 
+ width="800" height="600" viewbox="0 0 800 600">
  <g id="g">
+  <line x1="0" y1="300" x2="800" y2="300" style="stroke:rgb(255,0,0);stroke-width:2">
   <circle cx="100" cy="50" r="40" stroke="black" stroke-width="2" fill="red"/>
  </g>
 </svg>
@@ -14,7 +16,10 @@ g = document.getElementById("g");
 
 // the initial values
 var is_zooming = 0;
+var is_moving = 0;
+// the initial view is [-1,+1]
 var zoom = 1;
+var xcenter = 0;
 var zoomfactor = 1.001;
 
 // bindings (should these be on the SVG instead of the document?)
@@ -32,7 +37,10 @@ function shiftmousedown() {
 }
 
 // to be written
-function mousedown(e) {}
+function mousedown(e) {
+ is_moving = 1;
+ holdmove();
+}
 
 function ctrlmousedown(e) {
  is_zooming = 1;
@@ -41,6 +49,7 @@ function ctrlmousedown(e) {
 
 function mouseup(e) {
   is_zooming = 0;
+  is_moving = 0;
 }
 
 // keep zooming by zf
@@ -53,6 +62,13 @@ function holdzoom(zf) {
   }
 }
 
- 
+// keep on movin'
+function holdmove() {
+ if (is_moving) {
+  xcenter++;
+  g.setAttribute("transform","translate("+xcenter+",0)");
+  setTimeout("holdmove()", 10);
+ }
+}
 
 </script>
