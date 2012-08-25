@@ -30,6 +30,11 @@ pad["x"] = 600/2;
 pad["y"] = 600/2;
 pad["z"] = 600/2;
 
+// convert screen coordinates to pad coordinates
+function stpc(x,y) {
+  return [(x-pad["x"])/pad["z"], (y-pad["y"])/pad["z"]];
+}
+
 // array to hold random, but consistent, colors
 var rgb= [];
 
@@ -43,13 +48,13 @@ function runme() {
 // zooms around x,y with a zoom factor of z
 function zoom(x,y,z) {
 
- // shift, scale, unshift <h>(conjugation, not just a word!)</h>
+ // shift, scale, unshift <h>(conjugation, it's not just a word!)</h>
  ctx.translate(x,y);
  ctx.scale(z,z);
  ctx.translate(-x,-y);
 
  // this changes the center and radius of the grid in scaled coords
- pad["z"] = pad["z"]/z;
+ pad["z"] = pad["z"]*z;
  pad["x"] = x + z*(pad["x"]-x);
  pad["y"] = y + z*(pad["y"]-y);
 
@@ -92,7 +97,8 @@ function mousedown(e) {
 }
 
 function mouseup() {
- is_holdzoom=0;
+  is_holdzoom=0;
+  alert("STPC00:"+stpc(0,0));
  // alert("PAD"+pad["x"]+","+pad["y"]+","+pad["z"]);
 }
 
@@ -113,10 +119,10 @@ function draw(){
 	  //	  alert("ASSIGNING:"+(x*1000+y)+"TO"+rgb[x*1000+y]);
 	}
 	//	ctx.fillStyle = "rgb(r,g,b)";
-	ctx.fillStyle = "rgb("+rgb[x*1000+y]+")";
+	//	ctx.fillStyle = "rgb("+rgb[x*1000+y]+")";
 	ctx.font = "12px Times New Roman";
-	//	ctx.fillText(x+","+y,x,y);
-		ctx.fillRect (x, y, 50, 50);
+	ctx.fillText((x-300)/300. + "," +(y-300)/300.,x,y);
+		//	ctx.fillRect (x, y, 50, 50);
       }
     }
 }

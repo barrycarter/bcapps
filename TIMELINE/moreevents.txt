@@ -22,3 +22,10 @@
 10,000,000,000,000,000,000,000,000,000,000,000,000,000,0000 Degenerate Era ends
 10,000,000,000,000,000,000,000,000,000,000,000,000,000,0000 Black Hole Era starts
 10,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,0000 Black Hole Era ends
+-206,0000 Great Wall of China completed
+-2540,0000 We built the pyramids
+-65,500,000,0000 Earth began to cool
+-4,000,000,0000 Australopithecus starts
+-2,000,000,0000 Australopithecus ends
+-1,560,000,0000 Neandrathals develop tools
+-23,000,000 We built a wall
