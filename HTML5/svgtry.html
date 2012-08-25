@@ -31,6 +31,13 @@ $(document).mousedown(
 		      })
 $(document).mouseup(mouseup)
 
+// recenter/scale the document when any change is made
+// (doesn't actually redraw, the SVG handles that)
+function redraw() {
+  var str = "translate(" + xcenter + ",0) scale(" + zoom +",1)";
+  g.setAttribute("transform",str);
+}
+
 function shiftmousedown() {
  is_zooming = 1;
  holdzoom(zoomfactor);
@@ -50,14 +57,15 @@ function ctrlmousedown(e) {
 function mouseup(e) {
   is_zooming = 0;
   is_moving = 0;
+  redraw();
+  alert("X:"+zoom+","+xcenter);
 }
 
 // keep zooming by zf
 function holdzoom(zf) {
   if (is_zooming) {
     zoom=zoom*zf;
-    //    alert("ZOOM FACTOR: "+zf);
-    g.setAttribute("transform","scale("+zoom+",1)");
+    redraw();
     setTimeout("holdzoom("+zf+")", 10);
   }
 }
@@ -66,7 +74,7 @@ function holdzoom(zf) {
 function holdmove() {
  if (is_moving) {
   xcenter++;
-  g.setAttribute("transform","translate("+xcenter+",0)");
+  redraw();
   setTimeout("holdmove()", 10);
  }
 }
