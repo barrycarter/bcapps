@@ -1,3 +1,5 @@
+<script src="jquery-1.8.0.min.js"></script>
+
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="svg" width="800" height="600">
  <g id="g">
   <circle cx="100" cy="50" r="40" stroke="black" stroke-width="2" fill="red"/>
@@ -9,27 +11,45 @@
 // the SVG file and its graphics content
 svg = document.getElementById("svg");
 g = document.getElementById("g");
-svg.addEventListener("mousedown",mousedown);
-svg.addEventListener("mouseup",mouseup);
 
 // the initial values
 var is_zooming = 0;
 var zoom = 1;
+var zoomfactor = 1.001;
 
-function mousedown() {
+// bindings (should these be on the SVG instead of the document?)
+$(document).mousedown(
+		      function(e) {
+			if (e.shiftKey) {shiftmousedown(e);}
+			else if (e.ctrlKey) {ctrlmousedown(e);}
+			else {mousedown(e);}
+		      })
+$(document).mouseup(mouseup)
+
+function shiftmousedown() {
  is_zooming = 1;
- holdzoom();
+ holdzoom(zoomfactor);
 }
 
-function mouseup() {
+// to be written
+function mousedown(e) {}
+
+function ctrlmousedown(e) {
+ is_zooming = 1;
+ holdzoom(1./zoomfactor);
+}
+
+function mouseup(e) {
   is_zooming = 0;
 }
 
-function holdzoom() {
+// keep zooming by zf
+function holdzoom(zf) {
   if (is_zooming) {
-    zoom=zoom*1.001;
+    zoom=zoom*zf;
+    //    alert("ZOOM FACTOR: "+zf);
     g.setAttribute("transform","scale("+zoom+",1)");
-    setTimeout("holdzoom()", 10);
+    setTimeout("holdzoom("+zf+")", 10);
   }
 }
 
