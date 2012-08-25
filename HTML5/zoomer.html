@@ -35,6 +35,11 @@ function stpc(x,y) {
   return [(x-pad["x"])/pad["z"], (y-pad["y"])/pad["z"]];
 }
 
+// and back
+function ptsc(x,y) {
+  return [x+pad["x"]*pad["z"],y+pad["y"]*pad["z"]];
+}
+
 // array to hold random, but consistent, colors
 var rgb= [];
 
@@ -108,8 +113,9 @@ function ptsc(x,y) {}
 function draw(){
   //  Math.srand(0);
   ctx.clearRect(-10,-10,canvas.width+20,canvas.height+20)
-    for (x=0; x<600; x=x+50) {
-      for (y=0; y<600; y=y+50) {
+    for (x=-1; x<1; x=x+0.25) {
+      for (y=-1; y<1; y=y+0.25) {
+
 	// TODO: this is horrible psuedo-array
 	if (!rgb[x*1000+y]) {
 	  var r = Math.floor(Math.random()*256.);
@@ -121,7 +127,8 @@ function draw(){
 	//	ctx.fillStyle = "rgb(r,g,b)";
 	//	ctx.fillStyle = "rgb("+rgb[x*1000+y]+")";
 	ctx.font = "12px Times New Roman";
-	ctx.fillText((x-300)/300. + "," +(y-300)/300.,x,y);
+	//	ctx.fillText((x-300)/300. + "," +(y-300)/300.,x,y);
+	ctx.fillText(x+","+y,x,y);
 		//	ctx.fillRect (x, y, 50, 50);
       }
     }

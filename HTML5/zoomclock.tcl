@@ -5,7 +5,7 @@ source /home/barrycarter/BCGIT/HTML5/zoomer.tcl
 
 eval destroy [winfo children .]
 button .b -text "EXIT" -command {exit}
-button .re -text "RELOAD" -command {exec padclock.tcl &; destroy .}
+button .re -text "RELOAD" -command {exec zoomclock.tcl &; destroy .}
 pack .b .re
 
 set PI [expr 4.*atan(1.0)]
@@ -42,7 +42,7 @@ proc renderclock {t} {
     set fco [expr int(128-127*cos(2*$PI*$t/86400))]
     .p itemconfigure $face -fill [format "\#%2.2x%2.2x%2.2x" 0 $fco $fco]
     update
-    after 100 "renderclock [expr 1.*$t+.1]"
+    after 1 "renderclock [expr ([clock microseconds]/1000000.+3600)]"
 }
 
 renderclock [expr [clock seconds]%86400-3600*6]

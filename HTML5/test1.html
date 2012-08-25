@@ -6,26 +6,13 @@
 var canvas = document.getElementById('tutorial');;
 var ctx = canvas.getContext('2d');
 
-function draw(){
- ctx.clearRect(0,0,canvas.width,canvas.height)
- ctx.fillStyle = "rgb(200,0,0)";
- ctx.fillRect (10, 10, 55, 50);
- ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
- ctx.fillRect (30, 30, 55, 50);
-}
+ctx.clearRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle = "rgb(200,0,0)";
+ctx.fillRect (10, 10, 55, 50);
+ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+ctx.fillRect (30, 30, 55, 50);
 
-// tutorial.addEventListener('click', alert3)
-tutorial.addEventListener('mousedown', alert3)
-tutorial.addEventListener('mouseup', alert2)
-tutorial.addEventListener('contextmenu', alert2)
-
-
-function alert1(){alert('dblclick')}
-function alert2(){alert('mouseup')}
-function alert3(){
-  window.ctx.scale(1.01,1.01);
-  draw();
-  setTimeout("alert3()", 100);
-}
+ctx.scale(1/5.,1/5.);
+//ctx.translate(-200,-200);
 
 </script>
