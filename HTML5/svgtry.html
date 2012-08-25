@@ -1,15 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="foo" width="800" height="600" scale="(1,1)")>
- <g id="test">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="svg" width="800" height="600">
+ <g id="g">
   <circle cx="100" cy="50" r="40" stroke="black" stroke-width="2" fill="red"/>
  </g>
 </svg>
 
 <script language="javascript">
 
-// foo = document.getElementById("foo");
-foo = document.getElementById("test");
-foo.setAttribute("transform","scale(2,2)");
-alert(foo);
+g = document.getElementById("g");
+g.addEventListener("mousedown",mousedown);
+
+function mousedown () {
+ alert("HI");
+}
+
+// foo.setAttribute("transform","scale(2,2)");
+// alert(foo);
 // foo.scale(2,2);
 
 </script>
