@@ -1,9 +1,18 @@
 <script src="jquery-1.8.0.min.js"></script>
 
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="svg" 
- width="800" height="600" viewbox="0 0 800 600">
+ width="800px" height="600px" viewbox="0 0 800 600">
  <g id="g">
-  <line x1="0" y1="300" x2="800" y2="300" style="stroke:rgb(255,0,0);stroke-width:2">
+  <text x="0" y="300" fill="black" style="font-size:15">0</text>
+  <text x="100" y="300" fill="black" style="font-size:15">100</text>
+  <text x="200" y="300" fill="black" style="font-size:15">200</text>
+  <text x="300" y="300" fill="black" style="font-size:15">300</text>
+  <text x="400" y="300" fill="black" style="font-size:15">400</text>
+  <text x="500" y="300" fill="black" style="font-size:15">500</text>
+  <text x="600" y="300" fill="black" style="font-size:15">600</text>
+  <text x="700" y="300" fill="black" style="font-size:15">700</text>
+  <text x="800" y="300" fill="black" style="font-size:15">800</text>
+  <line x1="0" y1="300" x2="800" y2="300" style="stroke:rgb(255,0,0);stroke-width:2"/>
   <circle cx="100" cy="50" r="40" stroke="black" stroke-width="2" fill="red"/>
  </g>
 </svg>
@@ -17,25 +26,40 @@ g = document.getElementById("g");
 // the initial values
 var is_zooming = 0;
 var is_moving = 0;
+var mouse_down = 0;
 // the initial view is [-1,+1]
 var zoom = 1;
 var xcenter = 0;
 var zoomfactor = 1.001;
+var mousex;
 
 // bindings (should these be on the SVG instead of the document?)
 $(document).mousedown(
 		      function(e) {
+			mouse_down = 1;
 			if (e.shiftKey) {shiftmousedown(e);}
 			else if (e.ctrlKey) {ctrlmousedown(e);}
 			else {mousedown(e);}
 		      })
 $(document).mouseup(mouseup)
+$(document).mousemove(
+		      function(e) {
+			if (mouse_down) {
+			  mousemove(e);
+			    }
+		      }
+		      );
 
 // recenter/scale the document when any change is made
 // (doesn't actually redraw, the SVG handles that)
 function redraw() {
   var str = "translate(" + xcenter + ",0) scale(" + zoom +",1)";
   g.setAttribute("transform",str);
+}
+
+function mousemove(e) {
+  xcenter = oldcenter + (e.pageX-oldmouse);
+  redraw();
 }
 
 function shiftmousedown() {
@@ -46,7 +70,11 @@ function shiftmousedown() {
 // to be written
 function mousedown(e) {
  is_moving = 1;
- holdmove();
+
+ // record the current xcenter and mouse position for mousemove()
+ oldcenter = xcenter;
+ // <h>this old mouse...</h>
+ oldmouse = e.pageX;
 }
 
 function ctrlmousedown(e) {
@@ -57,8 +85,9 @@ function ctrlmousedown(e) {
 function mouseup(e) {
   is_zooming = 0;
   is_moving = 0;
+  mouse_down = 0;
   redraw();
-  alert("X:"+zoom+","+xcenter);
+  //  alert("X:"+zoom+","+xcenter);
 }
 
 // keep zooming by zf
