@@ -89,6 +89,9 @@ print "\nCOMMIT;\n";
 
 CREATE TABLE events (
  stardate, -- as y*mmdd.hhmmss (for human users)
+ enddate, -- as y*mmdd.hhmmss (for human users)
+ logstart, -- the log of the start date (for display)
+ logend, -- the log of the end date (for display)
  shortname, -- shortname of the event
  longname, -- longname of the event (optional)
  realdate, -- date as decimal year (more useful format)

@@ -13,17 +13,17 @@ MARK
 
 
 # some historical events
-@res = sqlite3hashlist("SELECT * FROM events ORDER BY RANDOM() LIMIT 100", "/home/barrycarter/BCINFO/sites/DB/history.db");
+@res = sqlite3hashlist("SELECT * FROM (SELECT * FROM events ORDER BY RANDOM() LIMIT 100) ORDER BY stardate", "/home/barrycarter/BCINFO/sites/DB/history.db");
 
-for $i (@res) {
-  %row= %{$i};
+for $i (0..$#res) {
+  %row= %{$res[$i]};
   # TODO: this is inaccurate and for testing only
   $year = $row{stardate}/10000.;
   $year = 2013-$year;
   # in seconds
-  $pos = log($year*365.2425*86400)*100;
+  $pos = -log($year*365.2425*86400)*100;
 
-  print qq%<text x="$pos" y="300" fill="black" style="font-size:1" transform="rotate(-90,$pos,0)">$row{shortname} ($row{stardate})</text>\n%;
+  print qq%<text title="$row{shortname}" x="$pos" y="300" fill="black" style="font-size:1" transform="rotate(-90,$pos,0)">$row{stardate}</text>\n%;
 
 }
 
