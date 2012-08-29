@@ -1,31 +1,29 @@
 # these events were created by hand
+# <h>Eras excluded from this list: Ostentatious Era, Idiopathic Era, Pernicious Era</h>
 # only listing very few events here to get general feel, not intended to be
 # even remotely complete
-# format: y*mmdd.hhmmss shortname [longname]
+# format: start end shortname [longname]
 # commas are solely for convenience, and refer to the year part only
 # (but also separate year from month/date)
--9,000,0000 Neolithic Era starts
--10,000,0000 Mesolithic Era starts
--5,000,0000 Mesolithic Era ends
--300,000,0000 Middle Palaeolithic Era starts
--30000,0000 Middle Palaeolithic Era ends
--3400,000,0000 Stone Age starts
--4,500,0000 Stone Age ends
--5,332,000,0000 Pliocene Era starts
--2,588,000,0000 Pliocene Era ends
--4,600,000,000,0000 Hadean Era starts
--3,800,000,000,0000 Hadean Era ends
--13,750,000,000,0000 Big Bang
-5,000,000,000,0000 Sun becomes red giant
-100,000,000,000,000,0000 Stelliferous Era ends
+# allowing exponential (engineering) notation
+# y at end means years (no month/date)
+# - for enddate means "no end date"
+-9000y - Neolithic Era starts
+-10000y -5000y Mesolithic Era
+-300000y -30000y Middle Palaeolithic Era
+-3.4e6y -4500y Stone Age
+-5.332e+6y -2.588e+6y Pliocene Era
+-4.6e+9y -3.8e+9y Hadean Era
+-13.75e+9y - Big Bang
+5e+9y - Sun becomes red giant
+1e+15y - Stelliferous Era ends
 100,000,000,000,000,0000 Degenerate Era starts
 10,000,000,000,000,000,000,000,000,000,000,000,000,000,0000 Degenerate Era ends
 10,000,000,000,000,000,000,000,000,000,000,000,000,000,0000 Black Hole Era starts
 10,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,0000 Black Hole Era ends
--206,0000 Great Wall of China completed
--2540,0000 We built the pyramids
--65,500,000,0000 Earth began to cool
--4,000,000,0000 Australopithecus starts
--2,000,000,0000 Australopithecus ends
--1,560,000,0000 Neandrathals develop tools
--23,000,000 We built a wall
+-206y - Great Wall of China completed
+-2540y - We built the pyramids
+-65.5e+6y - Earth began to cool
+-4e+6y -2e+6y Australopithecus
+-1560000y - Neandrathals develop tools
+-23000y - We built a wall

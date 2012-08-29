@@ -1,6 +1,7 @@
 #!/bin/perl
 
 # puts test dates into an SVG for zooming log timeline
+# --nodb: don't query the db, just use moreevents.txt
 
 require "/usr/local/lib/bclib.pl";
 
@@ -11,9 +12,17 @@ print << "MARK";
 MARK
 ;
 
+# random historical events, unless nodb set (query time is nontrivial)
+unless ($globopts{nodb}) {
+  @res= sqlite3hashlist("SELECT * FROM (SELECT * FROM events ORDER BY RANDOM() LIMIT 100) ORDER BY stardate", "/home/barrycarter/BCINFO/sites/DB/history.db");
+}
 
-# some historical events
-@res = sqlite3hashlist("SELECT * FROM (SELECT * FROM events ORDER BY RANDOM() LIMIT 100) ORDER BY stardate", "/home/barrycarter/BCINFO/sites/DB/history.db");
+# also picking up ALL event from moreevents.txt
+for $i (split(/\n/,read_file("/home/barrycarter/BCGIT/TIMELINE/moreevents.txt"))) {
+  debug("I: $i");
+}
+
+die "TESTING";
 
 for $i (0..$#res) {
   %row= %{$res[$i]};

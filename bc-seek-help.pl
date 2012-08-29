@@ -74,8 +74,22 @@ for (;;) {
   if ($thunk=~/^\s*$/) {
     # if we've slept too long, we've probably lost connection to curl
     sleep(1);
-    if ($sleep++>60) {
-      warn("Sleeping $sleep seconds, too long?");
+    if ($sleep++>30) {
+      # TODO: the whole kill thing below is hideously kludgey
+      # child process
+      my($kids) = `ps h --ppid $$ -o pid=`;
+      chomp($kids);
+      debug("KIDS: $kids");
+      system("kill $kids");
+
+      # restart command
+      warn("RESTARTING!");
+      close(A);
+      sleep(5);
+      open(A,"$cmd|");
+      fcntl(A,F_SETFL,O_NONBLOCK);
+      warn("DONE RESTARTING");
+      $sleep = 0;
     }
     debug("SLEEP: $sleep seconds");
     next;
