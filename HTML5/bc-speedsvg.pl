@@ -119,10 +119,17 @@ for $i (0..$#speeds) {
 
   print qq%<rect title="$desc{$speeds[$i]} ($speeds[$i] m/s)" x="$x" y="-10" height="20" width="$width" fill="$color" />\n%;
 
-  $translate = -$x;
-  $scale = $width/150;
+  $textx = $logspeed[$i];
+  $translate = -$textx;
+#  $scale = $width/150;
 
-  print qq%<text title="$desc{$speeds[$i]} ($speeds[$i] m/s)" x="$x" y="0" fill="black" style="font-size:10" transform="translate($x,0) scale($scale,1) translate($translate,0)">$desc{$speeds[$i]}</text>\n%;
+  $fontsize=12;
+
+  $scale = $width/15;
+
+  print qq%<text title="$desc{$speeds[$i]} ($speeds[$i] m/s)" x="$textx" y="0" fill="black" style="font-size:$fontsize" transform="translate($textx,0) scale($scale,1) rotate(-90,0,0) translate($translate,0)">$desc{$speeds[$i]}</text>\n%;
+
+#  print qq%<text title="$desc{$speeds[$i]} ($speeds[$i] m/s)" x="$textx" y="0" fill="black" style="font-size:$fontsize" transform="translate($textx,0) scale($scale,1) translate($translate,0)">$desc{$speeds[$i]}</text>\n%;
 
 
 
