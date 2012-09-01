@@ -18,7 +18,6 @@ MARK
 # TODO: make this nonglobal and way better
 
 # numbers to multiply by to convert units to standard units
-# TODO: not convinced that allow m/s directly is good
 %conversions = (
  "" => 1,
  "m" => 1,
@@ -106,7 +105,28 @@ for $i (0..$#speeds) {
 
   debug("CENTER: $x, WIDTH: $width, HUE: $hue");  
 
+  # text starts at right edge (only if rotated)
+  $textx = $x+$width;
+
+  $scale = 0.5/$width;
+
+#  $fontsize = $width/length($desc{$speeds[$i]});
+#  $fontsize = $width*30/length($desc{$speeds[$i]});
+  $fontsize = $width;
+#  $fontsize = sqrt($width)*30/length($desc{$speeds[$i]});
+
   print qq%<rect title="$desc{$speeds[$i]} ($speeds[$i] m/s)" x="$x" y="-10" height="20" width="$width" fill="$color" />\n%;
+
+  print qq%<text title="$desc{$speeds[$i]} ($speeds[$i] m/s)" x="$logspeed[$i]" y="0" fill="black" style="font-size:$fontsize" transform="rotate(-90,$logspeed[$i],0) scale(1,$scale)">$desc{$speeds[$i]}</text>\n%;
+
+  print qq%<text title="$desc{$speeds[$i]} ($speeds[$i] m/s)" x="$logspeed[$i]" y="0" fill="black" style="font-size:$fontsize" transform="scale(1,$scale)">$desc{$speeds[$i]}</text>\n%;
+
+
+
+#  print qq%<text title="$desc{$speeds[$i]} ($row{stardate})" x="$textx" y="0" fill="black" style="font-size:5" transform="rotate(-90,$x,0)">$desc{$speeds[$i]}</text>\n%;
+#  print qq%<text title="$desc{$speeds[$i]} ($row{stardate})" x="$x" y="0" fill="black" style="font-size:$fontsize">$desc{$speeds[$i]}</text>\n%;
+#   print qq%<text title="$desc{$speeds[$i]} ($row{stardate})" x="$x" y="0" fill="black" width="$fontsize" height="200">$desc{$speeds[$i]}</text>\n%;
+
 }
 
 # and SVG tail
