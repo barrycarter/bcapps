@@ -3,6 +3,8 @@
 # before creating a timeline, Im creating a much simpler "comparison
 # of speeds" line
 
+# -nolog: use real line, not log
+
 require "/usr/local/lib/bclib.pl";
 
 # SVG header
@@ -65,18 +67,46 @@ for $i (split(/\n/,read_file("speeds.txt"))) {
 @speeds = sort {$a <=> $b} keys %desc;
 
 # logify
-for $i (0..$#speeds) {$logspeed[$i]=log($speeds[$i]);}
+for $i (0..$#speeds) {
+  if ($globopts{nolog}) {
+    $logspeed[$i] = $speeds[$i];
+  } else {
+    $logspeed[$i]=log($speeds[$i]);
+  }
+}
 
 # and create SVG (at last!)
 
 for $i (0..$#speeds) {
-  # width of this rectangle is half distance to next event
-  # argh, this may not work
-  $width = ($logspeed[$i+1]-$logspeed[$i])/2;
   debug("($logspeed[$i]) $speeds[$i]: $desc{$speeds[$i]}");
 
-  # for now, trivial
-  print qq%<rect title="$desc{$speeds[$i]} ($speeds[$i] m/s)" x="$logspeed[$i]" y="-10" height="20" width="0.5" fill="black" />\n%;
+  # width of rectangle is half min distance to 2 neighbors
+  # special case for first/last elt (but not needed for last!)
+  if ($i==0) {
+    $width = $logspeed[1]-$logspeed[0];
+  } elsif ($i==$#speeds) {
+    $width = $logspeed[$i]-$logspeed[$i-1];
+  } else {
+    $width = min($logspeed[$i]-$logspeed[$i-1],$logspeed[$i+1]-$logspeed[$i]);
+  }
+
+#  $width/=2;
+
+  # left edge is thus x-$width/2
+  $x = $logspeed[$i]-$width/2;
+
+  # random colors (for now)
+  $color = hsv2rgb(rand(),1,1);
+  debug("COLOR: $color");
+
+  # blue=slow (hue=.875), red=fast (hue=.125)
+  $hue = ($logspeed[$i]-$logspeed[0])/($logspeed[$#speeds]-$logspeed[$0]);
+  $hue = .625 - $hue*.625;
+#  $color = hsv2rgb($hue,1,1);
+
+  debug("CENTER: $x, WIDTH: $width, HUE: $hue");  
+
+  print qq%<rect title="$desc{$speeds[$i]} ($speeds[$i] m/s)" x="$x" y="-10" height="20" width="$width" fill="$color" />\n%;
 }
 
 # and SVG tail

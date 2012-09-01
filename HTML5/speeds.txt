@@ -16,3 +16,20 @@
 100mph 100mph
 c light (vacuum)
 # <h>light (dusting)</h>
+11.2km/s escape velocity
+200mph falcon (peregrine)
+70mph cheetah (fastest land mammal)
+0.03mph snail (garden)
+25mph swallow (European, unladen)
+100m/s golf club swing (pro)
+340m/s bullet
+10.4384133611m/s record 100m sprint
+680m/s kids (pumped-up kicks)
+550mph airplane
+343.2m/s sound
+.7502c light (water)
+1040.4mph Earth rotation (equator)
+29.82km/s Earth revolution
+
+
+

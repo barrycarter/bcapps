@@ -55,7 +55,11 @@ $(document).mousemove(
 // (doesn't actually redraw, the SVG handles that)
 function redraw() {
   //  var str = "translate(" + -xcenter + ",0) scale(" + zoom +",1)";
+
+  // below is either zoom x only or zoom both
   var str = "translate(" + -xcenter*zoom + ",0) scale(" + zoom +","+1+")";
+//  var str = "translate(" + -xcenter*zoom + ",0) scale(" + zoom +","+zoom+")";
+
   // WRONG: var str = "scale(" + zoom +",1) translate("+ -xcenter*zoom + ",0)";
   g.setAttribute("transform",str);
 }
