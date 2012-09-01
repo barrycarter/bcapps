@@ -108,7 +108,9 @@ for $i (0..$#speeds) {
   # text starts at right edge (only if rotated)
   $textx = $x+$width;
 
-  $scale = 0.5/$width;
+#  $scale = 0.5/$width;
+
+  $xscale = 0.5;
 
 #  $fontsize = $width/length($desc{$speeds[$i]});
 #  $fontsize = $width*30/length($desc{$speeds[$i]});
@@ -117,9 +119,14 @@ for $i (0..$#speeds) {
 
   print qq%<rect title="$desc{$speeds[$i]} ($speeds[$i] m/s)" x="$x" y="-10" height="20" width="$width" fill="$color" />\n%;
 
-  print qq%<text title="$desc{$speeds[$i]} ($speeds[$i] m/s)" x="$logspeed[$i]" y="0" fill="black" style="font-size:$fontsize" transform="rotate(-90,$logspeed[$i],0) scale(1,$scale)">$desc{$speeds[$i]}</text>\n%;
+  $translate = -$x;
+  $scale = $width/150;
 
-  print qq%<text title="$desc{$speeds[$i]} ($speeds[$i] m/s)" x="$logspeed[$i]" y="0" fill="black" style="font-size:$fontsize" transform="scale(1,$scale)">$desc{$speeds[$i]}</text>\n%;
+  print qq%<text title="$desc{$speeds[$i]} ($speeds[$i] m/s)" x="$x" y="0" fill="black" style="font-size:10" transform="translate($x,0) scale($scale,1) translate($translate,0)">$desc{$speeds[$i]}</text>\n%;
+
+
+
+#  print qq%<text title="$desc{$speeds[$i]} ($speeds[$i] m/s)" x="$logspeed[$i]" y="0" fill="black" style="font-size:$fontsize" transform="scale(1,$s)">$desc{$speeds[$i]}</text>\n%;
 
 
 
