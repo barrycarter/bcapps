@@ -22,7 +22,7 @@ for $i (split(/\n/,read_file("/home/barrycarter/BCGIT/TIMELINE/moreevents.txt"))
   debug("I: $i");
 }
 
-die "TESTING";
+# die "TESTING";
 
 for $i (0..$#res) {
   %row= %{$res[$i]};
@@ -32,7 +32,11 @@ for $i (0..$#res) {
   # in seconds
   $pos = -log($year*365.2425*86400)*100;
 
-  print qq%<text title="$row{shortname} ($row{stardate})" x="$pos" y="300" fill="black" style="font-size:1" transform="rotate(-90,$pos,0)">$row{stardate}</text>\n%;
+#  print qq%<text title="$row{shortname} ($row{stardate})" x="$pos" y="300" fill="black" style="font-size:1" transform="rotate(-90,$pos,0)">$row{stardate}</text>\n%;
+
+  print qq%<rect title="$row{shortname} ($row{stardate})" x="$pos" y="300" height=1 width=600 fill="black" transform="rotate(-90,$pos,0)" />\n%;
+
+#  print qq%<rect title="$row{shortname} ($row{stardate})" x="$pos" y="300" height=600 width=600 fill="black" />\n%;
 
 }
 

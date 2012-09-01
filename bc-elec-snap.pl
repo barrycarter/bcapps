@@ -38,6 +38,11 @@ for (;;) {
   if (++$n > 300) {die "/var/tmp/$file.jpg does not exist!";}
 }
 
-system("cp /var/tmp/$file.jpg /mnt/sshfs/ELEC2012/; sudo rm /var/tmp/$file.jpg");
+# break into days, since this many files in a single dir is baddish
+$date=$file;
+$date=~s/\..*$//isg;
+unless (-d "/mnt/sshfs/ELEC2012/$date") {system("mkdir /mnt/sshfs/ELEC2012/$date");}
+
+system("cp /var/tmp/$file.jpg /mnt/sshfs/ELEC2012/$date/; sudo rm /var/tmp/$file.jpg");
 
 mylock("bc-elec-snap.pl","unlock");
