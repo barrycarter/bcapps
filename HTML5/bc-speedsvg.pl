@@ -5,6 +5,14 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# SVG header
+print << "MARK";
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="svg" 
+ width="1024px" height="600px" viewbox="-512 -300 1024 600">
+ <g id="g">
+MARK
+;
+
 # TODO: make this nonglobal and way better
 
 # numbers to multiply by to convert units to standard units
@@ -56,11 +64,25 @@ for $i (split(/\n/,read_file("speeds.txt"))) {
 # sort, so we can make rectangles the right width
 @speeds = sort {$a <=> $b} keys %desc;
 
+# logify
+for $i (0..$#speeds) {$logspeed[$i]=log($speeds[$i]);}
+
 # and create SVG (at last!)
 
-for $i (@speeds) {
-  debug("$i: $desc{$i}");
+for $i (0..$#speeds) {
+  # width of this rectangle is half distance to next event
+  # argh, this may not work
+  $width = ($logspeed[$i+1]-$logspeed[$i])/2;
+  debug("($logspeed[$i]) $speeds[$i]: $desc{$speeds[$i]}");
+
+  # for now, trivial
+  print qq%<rect title="$desc{$speeds[$i]} ($speeds[$i] m/s)" x="$logspeed[$i]" y="-10" height="20" width="0.5" fill="black" />\n%;
 }
+
+# and SVG tail
+print "</g></svg>\n";
+
+print read_file("svgtry.html");
 
 =item convert2($quant,$from,$to="",$type="")
 
