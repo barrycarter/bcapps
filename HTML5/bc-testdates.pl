@@ -34,7 +34,9 @@ for $i (0..$#res) {
 
 #  print qq%<text title="$row{shortname} ($row{stardate})" x="$pos" y="300" fill="black" style="font-size:1" transform="rotate(-90,$pos,0)">$row{stardate}</text>\n%;
 
-  print qq%<rect title="$row{shortname} ($row{stardate})" x="$pos" y="300" height=1 width=600 fill="black" transform="rotate(-90,$pos,0)" />\n%;
+#  print qq%<rect title="$row{shortname} ($row{stardate})" x="$pos" y="300" height=1 width=300 fill="black" transform="rotate(-90,$pos,0)" />\n%;
+
+  print qq%<rect title="$row{shortname} ($row{stardate})" x="$pos" y="-10" height="20" width="0.5" fill="black" />\n%;
 
 #  print qq%<rect title="$row{shortname} ($row{stardate})" x="$pos" y="300" height=600 width=600 fill="black" />\n%;
 
