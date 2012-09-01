@@ -13,12 +13,11 @@ require "/usr/local/lib/bclib.pl";
  "" => 1,
  "m" => 1,
  "s" => 1,
-# "m/s" => 1,
  "mi" => 1609.344,
  "hr" => 3600,
-# "mph" => 1/0.44704,
  "in" => 1/39.3701,
- "year" => 365.2425*86400
+ "year" => 365.2425*86400,
+ "c" => 1/299792458
 );
 
 # the metric prefixes (excluding non 10^-3*n for now)
@@ -31,17 +30,36 @@ for $i (split(//,"yazfpnum|kMGTPY")) {
   $size*=1000;
 }
 
+# debug(%metric);
+
+# convert2("20.4774871938", "km/hr");
+
+# die "TESTING";
+
 for $i (split(/\n/,read_file("speeds.txt"))) {
   # skip comments/blanks
   if ($i=~/\#/ || $i=~/^\s*$/) {next;}
 
   debug("I: $i");
   # separate number from units and desc
-  $i=~/^([\d\.]+)(.*?)\s+(.*?)$/;
+  $i=~/^([\d\.]*)(.*?)\s+(.*?)$/;
   # TODO: add "short desc" for bar itself?
   my($speed,$unit,$desc) = ($1,$2,$3);
-  $res = convert2($speed,$unit,"m/s");
+  # for things like "c"
+  unless ($speed) {$speed=1;}
+  $res = convert2($speed,$unit);
   debug("I: $desc: $res");
+  # store
+  $desc{$res} = $desc;
+}
+
+# sort, so we can make rectangles the right width
+@speeds = sort {$a <=> $b} keys %desc;
+
+# and create SVG (at last!)
+
+for $i (@speeds) {
+  debug("$i: $desc{$i}");
 }
 
 =item convert2($quant,$from,$to="",$type="")
@@ -63,69 +81,58 @@ TODO: serious error checking
 
 sub convert2 {
   my($quant,$from,$to,$type) = @_;
+  debug("convert2($quant,$from,$to,$type)");
+  my(@u) = ($from,$to);
   my($temp);
 
-  # redundant code again: mph to mi/hr
-  if ($from=~/^mph$/i) {$from="mi/hr";}
-  if ($to=~/^mph$/i) {$to="mi/hr";}
+  # both both unit types...
+  for $i (@u) {
+    # convert mph to mi/hr
+    $i=~s/^mph$/mi\/hr/;
 
   # if the first letter is a metric prefix and the rest is a unit we
   # know about, convert (note: this breaks for deka since its prefix
   # is two letters, but I don't care)
-  $from=~/^(.)(.*?)$/;
-  my($first,$rest) = ($1,$2);
+    $i=~/^(.)(.*?)$/;
+    my($first,$rest) = ($1,$2);
+#    debug("FIRST: $first, REST: $rest");
 
-  if ($metric{$first} && $conversions{$rest}) {
-    # remove the prefix
-    $from=~s/^.//isg;
-    # multiply the quant
-    $quant*=$metric{$first};
+    if ($metric{$first} && $i && $rest && $conversions{$rest}) {
+      debug("*$i* being metricized");
+      debug("FIRST: *$first* -> $metric{$first}");
+      debug("REST: *$rest* -> $conversions{$rest}");
+      # remove the prefix
+      $i=~s/^.//isg;
+      # multiply the quant
+      $quant/=$metric{$first};
+      debug("quant now $quant (metric: $first)");
   }
-
-  $to=~/^(.)(.*?)$/;
-  my($first,$rest) = ($1,$2);
-
-  if ($metric{$first} && $conversions{rest}) {
-    # remove the prefix
-    $to=~s/^.//isg;
-    # multiply the quant
-    $quant*=$metric{substr($to,0,1)};
-  }
-
-  debug("convert2($quant,$from,$to)");
 
   # if either unit contains "/", parse pieces
-  if ($from=~/^(.*?)\/(.*?)$/) {
-    my($num,$den) = ($1,$2);
-    $quant/=convert2(1,$num,"");
-    $quant*=convert2(1,$den,"");
-    # new unit is standard unit
-    debug("quant now $quant ($from -> stdunit)");
-    $from = "";
+    if ($i=~/^(.*?)\/(.*?)$/) {
+      my($num,$den) = ($1,$2);
+      $quant/=convert2(1,$num,"");
+      $quant*=convert2(1,$den,"");
+      # new unit is standard unit
+      debug("quant now $quant ($i -> stdunit)");
+      $i = "";
+    }
   }
 
-  # TODO: ack, redundant code!
-  if ($to=~/^(.*?)\/(.*?)$/) {
-    my($num,$den) = ($1,$2);
-    $quant*=convert2(1,$num,"");
-    $quant/=convert2(1,$den,"");
-    # new unit is standard unit
-    debug("quant now $quant ($to -> stdunit)");
-    $to = "";
-  }
-
+  # code below isn't redundant (* vs /) but could still be combined
+  
   # convert unit to standard quantity
-  if ($conversions{$from}) {
-    debug("FROM OK: $conversions{$from}");
-    $temp=$quant/$conversions{$from};
+  if ($conversions{$u[0]}) {
+    debug("FROM OK: $conversions{$u[0]}");
+    $temp=$quant/$conversions{$u[0]};
   } else {
-    return "NULL: can't convert $from to stdunit";
+    return "NULL: can't convert $u[0] to stdunit";
   }
 
   # and to new unit
-  if ($conversions{$to}) {
+  if ($conversions{$u[1]}) {
 #    debug("TO OK");
-    return $temp*$conversions{$to};
+    return $temp*$conversions{$u[1]};
   }
 
   return "NULL: can't convert $to to stdunit";
