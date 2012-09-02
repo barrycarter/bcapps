@@ -5,26 +5,26 @@
 2in/year continental drift
 2mph strolling
 3mph walking
-15mph 15mph
+15mph 15mph (school zone speed)
 16.1340922333mph record mile run
 20.4774871938km/hr record marathon run
-25mph 25mph
-35mph 35mph
-55mph 55mph
-65mph 65mph
-80mph 80mph
-100mph 100mph
+25mph 25mph (residential street speed)
+35mph 35mph (regular street speed)
+55mph 55mph (double nickel)
+65mph 65mph (highway speeds)
+80mph 80mph (highway speeds)
+120mph 120mph (max car speeds)
 c light (vacuum)
 # <h>light (dusting)</h>
 11.2km/s escape velocity
 200mph falcon (peregrine)
 70mph cheetah (fastest land mammal)
 0.03mph snail (garden)
-25mph swallow (European, unladen)
+25.000000001mph swallow (European, unladen)
 100m/s golf club swing (pro)
 340m/s bullet
 10.4384133611m/s record 100m sprint
-680m/s kids (pumped-up kicks)
+341m/s kids (pumped-up kicks)
 550mph airplane
 343.2m/s sound
 .7502c light (water)

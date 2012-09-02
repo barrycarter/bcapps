@@ -5,6 +5,10 @@
 
 # -nolog: use real line, not log
 
+# --noscale: don't scale text in x direction (useful when using xy zoom mode of svgtry.html)
+
+# TODO: this breaks if two things have identical speeds
+
 require "/usr/local/lib/bclib.pl";
 
 # SVG header
@@ -36,7 +40,12 @@ MARK
 $size = 10**-24;
 for $i (split(//,"yazfpnum|kMGTPY")) {
   $metric{$i} = $size;
+
+  # TODO: below is cheating, since this code should be indep of this prg
+  $desc{$size}="1 ${i}m/s";
+
   $size*=1000;
+
 }
 
 # debug(%metric);
@@ -58,6 +67,12 @@ for $i (split(/\n/,read_file("speeds.txt"))) {
   unless ($speed) {$speed=1;}
   $res = convert2($speed,$unit);
   debug("I: $desc: $res");
+
+  if ($desc{$res}) {
+    warn "Speed: $res already belongs to $desc{$res}";
+    next;
+  }
+
   # store
   $desc{$res} = $desc;
 }
@@ -73,6 +88,8 @@ for $i (0..$#speeds) {
     $logspeed[$i]=log($speeds[$i]);
   }
 }
+
+@trueplace = place_items(\@logspeed,0.25);
 
 # and create SVG (at last!)
 
@@ -92,6 +109,7 @@ for $i (0..$#speeds) {
 #  $width/=2;
 
   # left edge is thus x-$width/2
+  $width=.05;
   $x = $logspeed[$i]-$width/2;
 
   # random colors (for now)
@@ -105,41 +123,25 @@ for $i (0..$#speeds) {
 
   debug("CENTER: $x, WIDTH: $width, HUE: $hue");  
 
-  # text starts at right edge (only if rotated)
-  $textx = $x+$width;
-
-#  $scale = 0.5/$width;
-
-  $xscale = 0.5;
-
-#  $fontsize = $width/length($desc{$speeds[$i]});
-#  $fontsize = $width*30/length($desc{$speeds[$i]});
   $fontsize = $width;
-#  $fontsize = sqrt($width)*30/length($desc{$speeds[$i]});
 
   print qq%<rect title="$desc{$speeds[$i]} ($speeds[$i] m/s)" x="$x" y="-10" height="20" width="$width" fill="$color" />\n%;
 
-  $textx = $logspeed[$i];
+#  $textx = $logspeed[$i];
+  $textx = $trueplace[$i];
   $translate = -$textx;
-#  $scale = $width/150;
-
   $fontsize=12;
-
   $scale = $width/15;
+  $scale = .02;
 
-  print qq%<text title="$desc{$speeds[$i]} ($speeds[$i] m/s)" x="$textx" y="0" fill="black" style="font-size:$fontsize" transform="translate($textx,0) scale($scale,1) rotate(-90,0,0) translate($translate,0)">$desc{$speeds[$i]}</text>\n%;
+  if ($globopts{noscale}) {
+    $fontsize=1;
+    $scale=1;
+  }
 
-#  print qq%<text title="$desc{$speeds[$i]} ($speeds[$i] m/s)" x="$textx" y="0" fill="black" style="font-size:$fontsize" transform="translate($textx,0) scale($scale,1) translate($translate,0)">$desc{$speeds[$i]}</text>\n%;
+  print qq%<text title="$desc{$speeds[$i]} ($speeds[$i] m/s)" x="$textx" y="0" fill="black" style="font-size:$fontsize" transform="translate($textx,-20) scale($scale,1) rotate(-90,0,0) translate($translate,0)">$desc{$speeds[$i]}</text>\n%;
 
-
-
-#  print qq%<text title="$desc{$speeds[$i]} ($speeds[$i] m/s)" x="$logspeed[$i]" y="0" fill="black" style="font-size:$fontsize" transform="scale(1,$s)">$desc{$speeds[$i]}</text>\n%;
-
-
-
-#  print qq%<text title="$desc{$speeds[$i]} ($row{stardate})" x="$textx" y="0" fill="black" style="font-size:5" transform="rotate(-90,$x,0)">$desc{$speeds[$i]}</text>\n%;
-#  print qq%<text title="$desc{$speeds[$i]} ($row{stardate})" x="$x" y="0" fill="black" style="font-size:$fontsize">$desc{$speeds[$i]}</text>\n%;
-#   print qq%<text title="$desc{$speeds[$i]} ($row{stardate})" x="$x" y="0" fill="black" width="$fontsize" height="200">$desc{$speeds[$i]}</text>\n%;
+  print qq%<line x1="$x" y1="-10" x2="$textx" y2="-20" style="stroke:rgb(0,0,0);stroke-width:0.02;" />\n%;
 
 }
 
@@ -224,3 +226,30 @@ sub convert2 {
   return "NULL: can't convert $to to stdunit";
 }
 
+=item place_items(\@l, $dist)
+
+Given a list @l of numbers, return a list that keeps numbers as close
+to original but at least $dist apart from each other
+
+=cut
+
+sub place_items {
+  my($lref,$dist) = @_;
+  my(@l) = @{$lref};
+  my($minval)=$l[0];
+  my(@ret);
+
+  # TODO: this is a very simplistic approach that can be improved by
+  # starting with the median element and working outwards
+
+  @l = sort {$a <=> $b} @l;
+
+  for $i (@l) {
+    # give element lowest position above what it wants above minval
+    my($val) = max($minval,$i);
+    push(@ret,$val);
+    $minval = $val+$dist;
+  }
+
+  return @ret;
+}
