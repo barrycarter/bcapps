@@ -1,0 +1,14 @@
+An attempt to autoread my electric meter (I take snapshots every
+minute). Notes:
+
+  - This is a sample of 100 snapshots; many more exist
+
+  - The camera is fixed
+
+  - Many readings are dark, illegible, staticky, etc. It's important
+  that these be discarded (ie, misreading is worse than no reading).
+
+  - long-term, the program will know of previous readings (which might
+  help it improve accuracy)
+
+
