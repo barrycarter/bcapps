@@ -11,6 +11,17 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# HTML (minimal)
+print << "MARK";
+Hold down the left mouse button and move left/right to drag.<br>
+Hold down the left mouse button and SHIFT to zoom in (image is very zoomed out, so do this first)<br>
+Hold down the left mouse button and CTRL to zoom out<br>
+Hover over text/boxes for more information<br>
+Scale is logarithmic<br>
+Help make this better, source code: https://github.com/barrycarter/bcapps/blob/master/HTML5/bc-speedsvg.pl<br>
+MARK
+;
+
 # SVG header
 print << "MARK";
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="svg" 
@@ -30,7 +41,10 @@ MARK
  "hr" => 3600,
  "in" => 1/39.3701,
  "year" => 365.2425*86400,
- "c" => 1/299792458
+ "c" => 1/299792458,
+ "day" => 86400,
+ "ft" => .3048,
+ "minute" => 60
 );
 
 # the metric prefixes (excluding non 10^-3*n for now)
@@ -38,7 +52,7 @@ MARK
 # | as placeholder)
 
 $size = 10**-24;
-for $i (split(//,"yazfpnum|kMGTPY")) {
+for $i (split(//,"yazfpnum|kMGTPEZY")) {
   $metric{$i} = $size;
 
   # TODO: below is cheating, since this code should be indep of this prg
@@ -89,7 +103,7 @@ for $i (0..$#speeds) {
   }
 }
 
-@trueplace = place_items(\@logspeed,0.25);
+@trueplace = place_items(\@logspeed,0.125);
 
 # and create SVG (at last!)
 
@@ -132,14 +146,18 @@ for $i (0..$#speeds) {
   $translate = -$textx;
   $fontsize=12;
   $scale = $width/15;
-  $scale = .02;
+  $scale = .01;
 
   if ($globopts{noscale}) {
     $fontsize=1;
     $scale=1;
   }
 
-  print qq%<text title="$desc{$speeds[$i]} ($speeds[$i] m/s)" x="$textx" y="0" fill="black" style="font-size:$fontsize" transform="translate($textx,-20) scale($scale,1) rotate(-90,0,0) translate($translate,0)">$desc{$speeds[$i]}</text>\n%;
+  # trim text print
+  $texttoprint = $desc{$speeds[$i]};
+  $texttoprint=~s/\s*\(.*?\)\s*//isg;
+
+  print qq%<text title="$desc{$speeds[$i]} ($speeds[$i] m/s)" x="$textx" y="0" fill="black" style="font-size:$fontsize" transform="translate($textx,-20) scale($scale,1) rotate(-90,0,0) translate($translate,0)">$texttoprint</text>\n%;
 
   print qq%<line x1="$x" y1="-10" x2="$textx" y2="-20" style="stroke:rgb(0,0,0);stroke-width:0.02;" />\n%;
 

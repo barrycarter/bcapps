@@ -2,7 +2,8 @@
 # mph = miles per hour
 # c = speed of light
 # in/year = inches per year
-2in/year continental drift
+0.3725in/year continental drift (slow)
+3.725in/year continental drift (fast)
 2mph strolling
 3mph walking
 15mph 15mph (school zone speed)
@@ -16,7 +17,7 @@
 120mph 120mph (max car speeds)
 c light (vacuum)
 # <h>light (dusting)</h>
-11.2km/s escape velocity
+11.2km/s Earth escape velocity
 200mph falcon (peregrine)
 70mph cheetah (fastest land mammal)
 0.03mph snail (garden)
@@ -26,10 +27,37 @@ c light (vacuum)
 10.4384133611m/s record 100m sprint
 341m/s kids (pumped-up kicks)
 550mph airplane
-343.2m/s sound
+343.2m/s sound (air)
 .7502c light (water)
 1040.4mph Earth rotation (equator)
 29.82km/s Earth revolution
-
-
-
+106000mph Mercury revolution
+10400mph Pluto revolution
+490000mph Sun revolution (around Milky Way)
+87mi/s Barnard's star approach
+13mph Deimos escape velocity
+617540m/s Solar escape velocity
+0.4mm/day Hair growth (human)
+13000m/s sound (in Be)
+3316mph sound (in water)
+2200km/s electron (hydrogen)
+253mph wind gust (max, Cyclone Olivia)
+74mph Hurricane-1 (level 1)
+96mph Hurricane-2 (level 2)
+111mph Hurricane-3 (level 3)
+131mph Hurricane-4 (level 4)
+156mph Hurricane-5 (level 5)
+489km/s solar flares (avg)
+3200km/s solar flares (max)
+55mm/year fingernails
+36.5mm/year toenails
+3.4ft/year redwood tree
+0.1in/year saguro cactus
+15mm/year coral
+0.5ft/minute sloth
+.66c fiber optic cable
+.77c 1g acceleration, 1 year (including relativistic effects)
+.99999999996c 1g acceleration, 12 years (including relativistic effects)
+.035in/year Mountains (French alps)
+.6580645160mm/year slowest tree (white cedar in Canada)
+0.9m/day fastest tree (bamboo)
