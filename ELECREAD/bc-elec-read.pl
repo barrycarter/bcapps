@@ -28,32 +28,82 @@ for $i (0..4) {
   # left of circle
   my($pos) = 72+82*$i-80/2;
   # ypos is fixed at 97-83/2 (assuming true circles)
-  system("convert -crop 83x83+$pos+55 /tmp/bcer0.pnm /tmp/bcer2-$i.pnm");
+  # TODO: remove -monochrome
+  system("convert -colorspace gray -crop 83x83+$pos+55 /tmp/bcer0.pnm /tmp/bcer2-$i.pnm");
 }
-
-die "TESTING";
-
 
 # general idea is to read circles radiating out from center points and
 # find "darkest point" for each dial
 
 # This is for testing only
 # PNM is also the name of my power company
-system("convert 20120617.173402.jpg /tmp/bcer1.pnm");
-@pnm = pnm("/tmp/bcer1.pnm");
 
-# debug(unfold($pnm[32]));
+# TODO: need to loop through the files
+@pnm = pnm("/tmp/bcer2-4.pnm");
 
-# search outwards starting at dial 1 (TODO: other dials)
-# NOTE: dial 1 changes least and is least important
+# TODO: need to loop through the numbers (images)
+
+# using degrees
+
+$radius = 15;
+for $i (0..$radius*4) {
+  $x = round(83/2+$radius*cos($i*$radius*4/2/$PI));
+  $y = round(83/2+$radius*sin($i*$radius*4/2/$PI));
+  $hash{"$x,$y"} = $pnm[$y][$x];
+}
+
+@keys = sort {$hash{$a} <=> $hash{$b}} keys %hash;
+
+# no need for full sort above, but OK
+my($minx,$miny) = split(/\,/, $keys[0]);
+debug("$minx,$miny");
+# reversal of y direction: image vs trig
+my($ang) = atan2(83/2-$miny,$minx-83/2)*$RADDEG;
+debug($minx,$miny,$ang);
+
+
+for $i (@keys) {
+#  debug("$i -> $hash{$i}");
+}
+
+# debug(%hash);
+
+die "TESTING";
+
+# first, 10 pixels
+
+# TODO: combine these!
+# north edge
+
+for $i (-10..10) {
+  $xpos = 43+$i;
+  $ypos = 43-10;
+#  debug("I: $pnm[$ypos][$xpos]");
+}
+
+# south edge
+%hash = ();
+for $i (-10..10) {
+  $xpos = 43+$i;
+  $ypos = 43+10;
+  $hash{"$xpos,$ypos"} = $pnm[$ypos][$xpos];
+}
+
+@keys = sort {$hash{$a} <=> $hash{$b}} keys %hash; 
+
+for $i (@keys) {
+  debug("$i -> $hash{$i}");
+}
+
+# where x/y is 10 pixels away
 
 # the "east edge" at 10 pixels
 
 # debug(unfold($pnm[15]), $#pnm);
 
-for $j (-10..10) {
- debug("10,$j: ",$pnm[67+10][60+$j]);
-}
+#for $j (-10..10) {
+# debug("10,$j: ",$pnm[67+10][60+$j]);
+#}
 
 
 
