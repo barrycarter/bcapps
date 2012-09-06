@@ -39,28 +39,30 @@ for $i (0..4) {
 # PNM is also the name of my power company
 
 # TODO: need to loop through the files
-@pnm = pnm("/tmp/bcer2-4.pnm");
+@pnm = pnm("/tmp/bcer2-3.pnm");
 
 # TODO: need to loop through the numbers (images)
 
-# using degrees
+# for each radius
 
-$radius = 15;
-for $i (0..$radius*4) {
-  $x = round(83/2+$radius*cos($i*$radius*4/2/$PI));
-  $y = round(83/2+$radius*sin($i*$radius*4/2/$PI));
-  $hash{"$x,$y"} = $pnm[$y][$x];
-}
+for $radius (1..50) {
+  %hash = ();
+  # each point on radius (this might be redundant)
+  for $i (0..$radius*4) {
+    $x = round(83/2+$radius*cos($i*$radius*4/2/$PI));
+    $y = round(83/2+$radius*sin($i*$radius*4/2/$PI));
+    $hash{"$x,$y"} = $pnm[$y][$x];
+  }
 
-@keys = sort {$hash{$a} <=> $hash{$b}} keys %hash;
+  my(@keys) = sort {$hash{$a} <=> $hash{$b}} keys %hash;
 
-# no need for full sort above, but OK
-my($minx,$miny) = split(/\,/, $keys[0]);
-debug("$minx,$miny");
+  # no need for full sort above, but OK
+  my($minx,$miny) = split(/\,/, $keys[0]);
+  #debug("$minx,$miny");
 # reversal of y direction: image vs trig
-my($ang) = atan2(83/2-$miny,$minx-83/2)*$RADDEG;
-debug($minx,$miny,$ang);
-
+  my($ang) = atan2(83/2-$miny,$minx-83/2)*$RADDEG;
+  debug("$radius: $minx,$miny,$ang");
+}
 
 for $i (@keys) {
 #  debug("$i -> $hash{$i}");
