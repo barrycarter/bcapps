@@ -21,8 +21,11 @@ require "/usr/local/lib/bclib.pl";
 # 320,97 (82px shift) [321 works pretty well too]
 # 399,97 (79px shift) [400 works, but 403 does not]
 
+# even at radius 18, bumping into numbers
+# at radius 11, hitting "bulby" part of needle
+
 # straigten image and then slice into 5 dials
-system("convert -rotate -5.6579 20120617.173402.jpg /tmp/bcer0.pnm");
+system("convert -rotate -5.6579 20120702.121702.jpg /tmp/bcer0.pnm");
 
 for $i (0..4) {
   # left of circle
@@ -39,13 +42,13 @@ for $i (0..4) {
 # PNM is also the name of my power company
 
 # TODO: need to loop through the files
-@pnm = pnm("/tmp/bcer2-3.pnm");
+@pnm = pnm("/tmp/bcer2-2.pnm");
 
 # TODO: need to loop through the numbers (images)
 
 # for each radius
 
-for $radius (1..50) {
+for $radius (12..17) {
   %hash = ();
   # each point on radius (this might be redundant)
   for $i (0..$radius*4) {
@@ -60,8 +63,10 @@ for $radius (1..50) {
   my($minx,$miny) = split(/\,/, $keys[0]);
   #debug("$minx,$miny");
 # reversal of y direction: image vs trig
-  my($ang) = atan2(83/2-$miny,$minx-83/2)*$RADDEG;
-  debug("$radius: $minx,$miny,$ang");
+  my($ang) = fmodp(90-atan2(83/2-$miny,$minx-83/2)*$RADDEG,360);
+  # TODO: correct for even numbered meters where numbers are reversed
+  my($read) = $ang/36;
+  debug("$radius: $minx,$miny,$ang,$read");
 }
 
 for $i (@keys) {
