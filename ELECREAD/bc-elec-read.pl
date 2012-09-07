@@ -1,8 +1,10 @@
 #!/bin/perl
 
 # read electric meter automatically
+# -orig: images are original snapshots, not trimmed for github
 
 require "/usr/local/lib/bclib.pl";
+
 
 # these are roughly the 5 center points of the dials in any image
 # images are 448x140
@@ -24,8 +26,17 @@ require "/usr/local/lib/bclib.pl";
 # even at radius 18, bumping into numbers
 # at radius 11, hitting "bulby" part of needle
 
-# straigten image and then slice into 5 dials
-system("convert -rotate -5.6579 20120702.121702.jpg /tmp/bcer0.pnm");
+# straighten image and then slice into 5 dials
+unless ($ARGV[0]) {die "Usage: $0 file";}
+
+
+# if pulling from my original (uncropped) collection, also crop
+
+if ($globopts{orig}) {
+  system("convert -crop 448x140+191+89 -rotate -5.6579 $ARGV[0] /tmp/bcer0.pnm");
+} else {
+  system("convert -rotate -5.6579 $ARGV[0] /tmp/bcer0.pnm");
+}
 
 for $i (0..4) {
   # left of circle
@@ -41,10 +52,9 @@ for $i (0..4) {
 # This is for testing only
 # PNM is also the name of my power company
 
-# TODO: need to loop through the files
-@pnm = pnm("/tmp/bcer2-2.pnm");
-
-# TODO: need to loop through the numbers (images)
+for $dial (0..4) {
+  @pnm = pnm("/tmp/bcer2-$dial.pnm");
+  %count = ();
 
 # for each radius
 
@@ -66,53 +76,21 @@ for $radius (12..17) {
   my($ang) = fmodp(90-atan2(83/2-$miny,$minx-83/2)*$RADDEG,360);
   # TODO: correct for even numbered meters where numbers are reversed
   my($read) = $ang/36;
+  $count{floor($read)}++;
   debug("$radius: $minx,$miny,$ang,$read");
 }
 
-for $i (@keys) {
-#  debug("$i -> $hash{$i}");
+@counts = sort {$count{$b} <=> $count{$a}} keys %count;
+
+  if ($dial%2) {$counts[0] = fmodp(-$counts[0],10);}
+
+  push(@out,$counts[0]);
+
+  debug("COUNT: $counts[0]");
+
 }
 
-# debug(%hash);
-
-die "TESTING";
-
-# first, 10 pixels
-
-# TODO: combine these!
-# north edge
-
-for $i (-10..10) {
-  $xpos = 43+$i;
-  $ypos = 43-10;
-#  debug("I: $pnm[$ypos][$xpos]");
-}
-
-# south edge
-%hash = ();
-for $i (-10..10) {
-  $xpos = 43+$i;
-  $ypos = 43+10;
-  $hash{"$xpos,$ypos"} = $pnm[$ypos][$xpos];
-}
-
-@keys = sort {$hash{$a} <=> $hash{$b}} keys %hash; 
-
-for $i (@keys) {
-  debug("$i -> $hash{$i}");
-}
-
-# where x/y is 10 pixels away
-
-# the "east edge" at 10 pixels
-
-# debug(unfold($pnm[15]), $#pnm);
-
-#for $j (-10..10) {
-# debug("10,$j: ",$pnm[67+10][60+$j]);
-#}
-
-
+print "$ARGV[0]: ".join("",@out)."\n";
 
 =item pnm($file)
 
