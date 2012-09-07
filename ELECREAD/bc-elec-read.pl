@@ -5,15 +5,10 @@
 
 require "/usr/local/lib/bclib.pl";
 
-
 # these are roughly the 5 center points of the dials in any image
 # images are 448x140
 
-# 67,60
-# 149,68
-# 232,77
-# 314,85
-# 390,92
+# 67,60; 149,68; 232,77; 314,85; 390,92
 
 # center position after rotation of -5.6579 degs
 
@@ -37,6 +32,12 @@ if ($globopts{orig}) {
 } else {
   system("convert -rotate -5.6579 $ARGV[0] /tmp/bcer0.pnm");
 }
+
+
+reading(10);
+
+
+die "TESTING"; 
 
 for $i (0..4) {
   # left of circle
@@ -118,3 +119,42 @@ sub pnm {
   return @ret;
 }
 
+=item reading($r,$options)
+
+Find the "best reading" at radius $r (uses global variables;
+app-specific subroutine)
+
+$options currently unused
+
+=cut
+
+sub reading {
+  my($r,$options) = @_;
+
+  # for each value of x (within $r), determine y values w distance $r
+  for $i (-$r..$r) {
+    # we want to find y such that ($r-.5)^2 <= $y^2+$i^2 <= (r+.5)^2
+
+    # the range of y values for ($r-.5,$r+.5)
+#    my($rmax) = sqrt2(($r+.5)**2-$i**2);
+#    my($rmin) = sqrt2(($r-.5)**2-$i**2);
+#    debug("R: $r, I: $i, RANGE: $rmin-$rmax");
+#    next;
+
+    my($max) = floor(sqrt(($r+.5)**2-$i**2));
+    my($min) = ceil((abs($r-.5)>abs($i))?(sqrt(($r-.5)**2-$i**2)):0);
+    debug("R: $r, $i, $min, $max");
+  }
+}
+
+=item sqrt2($x)
+
+Returns the square root of $x if $x>0, 0 otherwise
+
+=cut
+
+sub sqrt2 {
+  my($x) = @_;
+  if ($x<=0) {return 0;}
+  return sqrt($x);
+}
