@@ -34,11 +34,6 @@ if ($globopts{orig}) {
 }
 
 
-reading(10);
-
-
-die "TESTING"; 
-
 for $i (0..4) {
   # left of circle
   my($pos) = 72+82*$i-80/2;
@@ -60,31 +55,16 @@ for $dial (0..4) {
 # for each radius
 
 for $radius (12..17) {
-  %hash = ();
-  # each point on radius (this might be redundant)
-  for $i (0..$radius*4) {
-    $x = round(83/2+$radius*cos($i*$radius*4/2/$PI));
-    $y = round(83/2+$radius*sin($i*$radius*4/2/$PI));
-    $hash{"$x,$y"} = $pnm[$y][$x];
-  }
-
-  my(@keys) = sort {$hash{$a} <=> $hash{$b}} keys %hash;
-
-  # no need for full sort above, but OK
-  my($minx,$miny) = split(/\,/, $keys[0]);
-  #debug("$minx,$miny");
-# reversal of y direction: image vs trig
-  my($ang) = fmodp(90-atan2(83/2-$miny,$minx-83/2)*$RADDEG,360);
-  # TODO: correct for even numbered meters where numbers are reversed
-  my($read) = $ang/36;
+  my($read) = reading($radius);
   $count{floor($read)}++;
-  debug("$radius: $minx,$miny,$ang,$read");
+  debug("$dial/$radius: $read");
 }
 
-@counts = sort {$count{$b} <=> $count{$a}} keys %count;
+  debug("COUNTHAS",%count);
+  @counts = sort {$count{$b} <=> $count{$a}} keys %count;
 
   if ($dial%2) {$counts[0] = fmodp(-$counts[0],10);}
-
+  
   push(@out,$counts[0]);
 
   debug("COUNT: $counts[0]");
@@ -122,7 +102,8 @@ sub pnm {
 =item reading($r,$options)
 
 Find the "best reading" at radius $r (uses global variables;
-app-specific subroutine)
+app-specific subroutine). Returns a decimal since that might be
+helpful w other dial reading.
 
 $options currently unused
 
@@ -130,21 +111,34 @@ $options currently unused
 
 sub reading {
   my($r,$options) = @_;
+  my(%hash);
 
   # for each value of x (within $r), determine y values w distance $r
   for $i (-$r..$r) {
     # we want to find y such that ($r-.5)^2 <= $y^2+$i^2 <= (r+.5)^2
-
-    # the range of y values for ($r-.5,$r+.5)
-#    my($rmax) = sqrt2(($r+.5)**2-$i**2);
-#    my($rmin) = sqrt2(($r-.5)**2-$i**2);
-#    debug("R: $r, I: $i, RANGE: $rmin-$rmax");
-#    next;
-
     my($max) = floor(sqrt(($r+.5)**2-$i**2));
     my($min) = ceil((abs($r-.5)>abs($i))?(sqrt(($r-.5)**2-$i**2)):0);
-    debug("R: $r, $i, $min, $max");
+
+    for $j ($min..$max) {
+      # using 43,43 as center = bad?
+      my($x,$y) = (43+$i,43+$j);
+      # pnm is in row/col order
+      $hash{"$x,$y"} = $pnm[$y][$x];
+    }
   }
+
+  # find the darkest point(s)
+  my(@keys) = sort {$hash{$a} <=> $hash{$b}} keys %hash;
+
+  # find angle of darkest point from 43,43
+  ($dx,$dy) = split(/\,/, $keys[0]);
+  debug("DARK($dial,$r): $dx,$dy");
+  # this is a 90 degree right rotate so 0 meter = 0 degrees
+  my($an) = fmodp(atan2($dx-43, 43-$dy)*$RADDEG,360);
+  my($read) = $an/36;
+  debug("ANGLE/READ($dial,$r): $an/$read");
+  return $read;
+
 }
 
 =item sqrt2($x)
