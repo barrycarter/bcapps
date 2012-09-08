@@ -1,8 +1,13 @@
 # shell one liners
 
+# if you tcpflow-dump when you enter a scribblar room, this downloads all the assets file (so you can delete them as needed)
+perl -nle 'if (/\006S(.*?)\006/) {print "curl -O http://api.muchosmedia.com/brainwave/uploads/client_12/$1"}' /home/barrycarter/20120908/TCP/078.129.167.103.00080-192.168.000.002.58323
+
+exit;
+
 # if you've downloaded your quora questions/answers main page, this gets the full questions/answers
 
-perl -nle 'while (s/<a class="question_link" href="(.*?)"//i) {print $1}' /home/barrycarter/Download/bc-questions.html /home/barrycarter/Download/bc-answers.html
+perl -nle 'while (s/<a class="question_link" href="(.*?)"//i) {$url=$1; $file=$url; $file=~s/^.*\///isg; if (-f "/home/barrycarter/QUORA/$file") {next;}; print "curl -L -O $url"}' /home/barrycarter/Download/bc-questions.html /home/barrycarter/Download/bc-answers.html | sort | uniq 
 
 exit;
 
