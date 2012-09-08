@@ -1,0 +1,5 @@
+formulas(sos).
+  -man(x) | mortal(x).
+  man(george).
+  -mortal(george).
+end_of_list.

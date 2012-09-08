@@ -1,0 +1,13 @@
+formulas(assumptions).
+
+all x (all y (R(x,y) -> R(y,x))).
+all x (all y (all z ((R(x,y) & R(y,z)) -> R(x,z)))).
+
+% false unless below added
+% all x exists y R(x,y).
+
+formulas(goals).
+
+-(all x R(x,x)).
+
+

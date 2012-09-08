@@ -1,0 +1,13 @@
+formulas(sos).
+
+  (x * y) * z = x * (y * z).
+  x * e = x.
+  x * x' = e.
+
+end_of_list.
+
+formulas(goals).
+
+  x * y = y * x.
+
+end_of_list.

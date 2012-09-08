@@ -1,0 +1,8 @@
+formulas(assumptions).   % synonym for formulas(sos).
+  man(x) -> mortal(x).   % open formula with free variable x
+  man(george).
+end_of_list.
+
+formulas(goals).         % to be negated and placed in the sos list
+  mortal(george).
+end_of_list.

@@ -1,0 +1,29 @@
+set(raw).
+set(hyper_resolution).
+set(eval_rewrite).
+clear(back_subsume).
+
+formulas(usable).
+
+J(x, y) -> J(3, y).                          % fill the 3-gallon jug
+J(x, y) -> J(0, y).                          % empty the 3-gallon jug
+J(x, y) -> J(x, 4).                          % fill the 4-gallon jug
+J(x, y) -> J(x, 0).                          % empty the 4-gallon jug
+J(x, y) & (x+y <= 4) -> J(0, y+x).           % empty the small jug into the big jug
+J(x, y) & (x+y >  4) -> J(x + -(4+ -y), 4).  % small -> big, until full
+J(x, y) & (x+y <= 3) -> J(x+y, 0).           % empty the big jug into the small jug
+J(x, y) & (x+y >  3) -> J(3, y + - (3+ -x)). % big -> small, until full
+
+end_of_list.
+
+formulas(assumptions).
+
+J(0, 0).           % initial state: both jugs empty
+
+end_of_list.
+
+formulas(goals).
+
+exists x J(x, 2).  % goal state: 4-gallon jug containing 2 gallons
+
+end_of_list.
