@@ -1,0 +1,9 @@
+formulas(assumptions).
+
+-((
+(all x all y R(x,y)->R(y,x)) &
+(all x all y all z R(x,y)&R(y,z)->R(x,z))
+) ->
+(all x R(x,x))
+)
+.

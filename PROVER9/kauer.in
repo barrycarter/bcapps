@@ -1,0 +1,5 @@
+formulas(assumptions).
+all x exists y (x < y).
+all x all y (x < y -> -(y < x)).
+all x all y (x < y -> (exists z (x < z & z < y))).
+end_of_list.

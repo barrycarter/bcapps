@@ -1,7 +1,4 @@
-set(raw).
-set(hyper_resolution).
-set(eval_rewrite).
-clear(back_subsume).
+set(production).
 
 formulas(usable).
 
