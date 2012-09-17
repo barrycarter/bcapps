@@ -23,6 +23,14 @@ use XML::Bare;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
+@arr=gnumeric2array("/home/barrycarter/BCGIT/FOODTRACK/foods.gnumeric");
+
+($foo, $bar) = arraywheaders2hashlist(\@arr, "UPC");
+
+debug("RES",unfold($bar));
+
+die "TESTING";
+
 # following discussion at http://erisds.co.uk/code/twitter-oauth-simple-curl-requests-for-your-own-data
 
 # all variables are defined in bc-private.pl

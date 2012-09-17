@@ -2697,6 +2697,28 @@ sub mylock {
   return 0;
 }
 
+=item gnumeric2array($file)
+
+Converts a simple gnumeric spreadsheet (in raw form: ie, compressed
+XML) to an array of arrays. Only works w/ very simple sheets
+
+=cut
+
+sub gnumeric2array {
+  my($file) = @_;
+  my($res) = join("",`zcat $file`);
+  my(@ret);
+
+  while ($res=~s%<gnm:Cell(.*?)>(.*?)</gnm:Cell>%%) {
+    my($info,$val) = ($1,$2);
+    # extract row/col from info (TODO: error check)
+    $info=~/Row="(.*?)" Col="(.*?)"/i;
+    $ret[$1][$2] = $val;
+  }
+
+  return @ret;
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
   debug("END: CLEANING UP TMP FILES");
@@ -2715,6 +2737,43 @@ sub END {
     debug("RM -R: $i");
     system("rm -r $i");
   }
+}
+
+=item arraywheaders2hashlist(\@array, $index="", $options)
+
+Given an array of arrays where the first row is treated as a header
+row, return a list of hashes mapping hash key (header) to value.
+
+If $index set, return an additional hash (outside of the return array)
+whose keys are the specified index on the hash, and whose value is the
+hash itself
+
+$options currently unused <h>but not for long!</h>
+
+=cut
+
+sub arraywheaders2hashlist {
+  my($arrayref, $index, $options) = @_;
+  my(@arr) = @{$arrayref};
+  my(@ret);
+  my(%hash) = ();
+  my(%hash2) = ();
+
+  # the header row's length
+  my($len) = $#{$arr[0]};
+
+  # starting at first NONheader row
+  for $i (1..$#arr) {
+    my(%hash) = ();
+    for $j (0..$len) {
+      $hash{$arr[0][$j]} = $arr[$i][$j];
+    }
+    push(@ret,\%hash);
+    # set the key for the second hash to return
+    $hash2{$hash{$index}} = \%hash;
+  }
+
+  return \@ret, \%hash2;
 }
 
 # parse_form = alias for str2hash (but some of my code uses it)
