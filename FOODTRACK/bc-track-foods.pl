@@ -12,6 +12,10 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# list of fields it makes sense to total
+# TODO: order this list
+@totalfields = ("Saturated Fat", "Calcium", "Vitamin A", "Total Fat", "Cholestrol", "Iron", "Trans Fat", "Total Carbohydrates", "Sugars", "Vitamin C", "Protein", "Fiber", "Sodium", "Calories");
+
 # load the hash of known foods
 @knownfoods=gnumeric2array("/home/barrycarter/BCGIT/FOODTRACK/foods.gnumeric");
 ($x, $hashref) = arraywheaders2hashlist(\@knownfoods, "UPC");
@@ -41,7 +45,7 @@ while (<A>) {
   unless (/^SHORT:\s*(.*?)\s*$/) {next;}
 
   # clear vars from last time
-  $caltot=0;
+  %total = ();
   $done = 0;
 
   @foods = split(/\s*,\s*/, $1);
@@ -64,16 +68,15 @@ while (<A>) {
 
     debug("$quant of $item");
 
-    # total calories (only thing Im calcing.. for now)
-    $caltot += $quant*$itemhash{'Calories'};
-    debug("FOOD: $item, CALS($date): $caltot");
-
-    # now, add nutrients,etc
-#    for $j (sort keys %itemhash) {
-#      debug("$j -> $itemhash{$j}");
+    for $j (@totalfields) {
+      $total{$j} += $quant*$itemhash{$j};
     }
+  }
 
-#  }
+  # totals for day
+  print "\nDATE: $date\n";
+  for $j (@totalfields) {
+    print "$j: $total{$j}\n";
+  }
 
-      print "$date: $caltot\n";
 }
