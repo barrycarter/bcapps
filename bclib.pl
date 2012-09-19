@@ -1684,6 +1684,7 @@ TODO: has to be a much shorter way to do this?
 
 sub datestar {
   my($str) = @_;
+  debug("DATESTAR($str)");
   my(@frac);
   # yyyymmdd must be present
   $str=~s/^(\d{4})(\d{2})(\d{2})//;
