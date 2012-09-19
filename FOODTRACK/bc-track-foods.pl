@@ -48,17 +48,32 @@ while (<A>) {
   %total = ();
   $done = 0;
 
+  # count number of days
+  $days++;
+
   @foods = split(/\s*,\s*/, $1);
 
   # if done for day, note so
+  # TODO: don't average for days that are not done, throws off results
   if ($foods[-1] eq "DONE") {$done=1; pop(@foods);}
 
   # parse foods
   for $i (@foods) {
+
     if ($i=~/^(\d)\*(.*?)$/) {
       ($quant, $item) = ($1, $2);
     } else {
       ($quant, $item) = (1,$2);
+    }
+
+    # kill leading 0s
+    # TODO: fix this in spreadsheet somehow
+    $item=~s/^0+//isg;
+
+    # if no such food, warn
+    unless ($hash{$item}) {
+      warn "NO SUCH FOOD: $item";
+      next;
     }
 
     %itemhash = %{$hash{$item}};
@@ -70,6 +85,8 @@ while (<A>) {
 
     for $j (@totalfields) {
       $total{$j} += $quant*$itemhash{$j};
+      # across multiple days
+      $grandtotal{$j} += $quant*$itemhash{$j};
     }
   }
 
@@ -78,5 +95,12 @@ while (<A>) {
   for $j (@totalfields) {
     print "$j: $total{$j}\n";
   }
-
 }
+
+# grand totals
+print "\nGRAND TOTALS: ($days days)\n";
+for $j (@totalfields) {
+  $avg = $grandtotal{$j}/$days;
+  printf("%s: %0.2f\n", $j,$avg);
+}
+
