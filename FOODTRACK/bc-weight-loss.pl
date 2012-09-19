@@ -50,14 +50,19 @@ $time1 = ($wt-$t1)/($tloss/$days)*86400+$secs;
 $time2 = ($wt-$t2)/($tloss/$days)*86400+$secs;
 
 print strftime("Achieve $t1 lbs (linear): %c\n",localtime($time1));
-print strftime("Achieve $t2 lbs (linear): %c\n",localtime($time2));
+print strftime("Achieve $t2 lbs (linear): %c\n\n",localtime($time2));
 
 # weight loss (log)
 $pctloss = $wt/$sweight;
 
 printf("Loss of %0.2f%% in %0.2f days\nLoss/day: %0.2f%\nLoss/week: %0.2f%\n\n", 100*(1-$pctloss), $days, 100*(1-($pctloss**(1/$days))), 100*(1-($pctloss**(7/$days))));
 
+# time to targets (log)
+$ltime1 = (log($wt)-log($t1))/(log($sweight)-log($wt))*$days*86400+$secs;
+$ltime2 = (log($wt)-log($t2))/(log($sweight)-log($wt))*$days*86400+$secs;
 
+print strftime("Achieve $t1 lbs (log): %c\n",localtime($ltime1));
+print strftime("Achieve $t2 lbs (log): %c\n\n",localtime($ltime2));
 
 
 
