@@ -1,0 +1,19 @@
+Notes:
+
+  - To run, cd to directory where this is installed and "java -cp . Starmap"
+
+  - After running the program, click the mouse at least once on the
+  canvas, otherwise nothing else will work (not sure why)
+
+  - Use cursor keys to pan, page up/down to rotate, F7/F8 to zoom in/out
+
+  - Click on/near star to identify; click again to remove identification
+
+  - I originally wrote this WAYYYYYY back in 1995 (I think), so it's
+  poorly written, not compliant with current Java (generates warnings
+  when compiling), etc. Also, I was a poorer coder then (hard to
+  believe), so the code isn't as well written or as well documented as
+  my current code.
+
+  - Uploaded to github primarily for a friend, not really useful nowadays.
+
