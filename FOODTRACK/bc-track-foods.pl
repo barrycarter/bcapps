@@ -21,7 +21,7 @@ require "/usr/local/lib/bclib.pl";
 ($x, $hashref) = arraywheaders2hashlist(\@knownfoods, "UPC");
 %hash = %{$hashref};
 
-debug(%hash);
+# debug(%hash);
 
 # bc-SUPERFILE has a lot of very dull information, including my eating habits
 open(A,"/home/barrycarter/bc-SUPERFILE")||die("Can't open, $!");
@@ -52,6 +52,7 @@ while (<A>) {
   $days++;
 
   @foods = split(/\s*,\s*/, $1);
+  debug("FOODS",@foods);
 
   # if done for day, note so
   # TODO: don't average for days that are not done, throws off results
@@ -60,12 +61,13 @@ while (<A>) {
   # parse foods
   for $i (@foods) {
 
-    if ($i=~/^(\d)\*(.*?)$/) {
+    if ($i=~/^([\d\.]+)\*(.*?)$/) {
       ($quant, $item) = ($1, $2);
     } else {
       ($quant, $item) = (1,$2);
     }
 
+    debug("ITEM: $item");
     # kill leading 0s
     # TODO: fix this in spreadsheet somehow
     $item=~s/^0+//isg;
