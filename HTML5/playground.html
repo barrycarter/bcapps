@@ -1,6 +1,5 @@
 <script src="jquery-1.8.0.min.js"></script>
 <script language="javascript">
-res = jQuery.get("http://barrycarter.info/");
-document.write(res);
+res = $.get("speeds.txt", "", function(data) {alert(data);}, "text");
 </script>
 
