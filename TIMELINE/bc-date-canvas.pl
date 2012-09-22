@@ -19,7 +19,9 @@ print read_file("canvas-header.html");
 # min (ie, longer than the min draw threshold)
 
 # birth/death of same person, both occurring 1950-2013
-$query = "SELECT e1.shortname, e1.longname, e1.stardate AS birth, e2.stardate AS death FROM events e1 JOIN events e2 ON (e1.shortname=e2.shortname) AND e1.type='BIRTHS' AND e2.type='DEATHS' AND e1.stardate>$start AND e2.stardate<$end ORDER BY e2.stardate DESC LIMIT 5";
+$query = "SELECT e1.shortname, e1.longname, e1.stardate AS birth, e2.stardate AS death FROM events e1 JOIN events e2 ON (e1.shortname=e2.shortname) AND e1.type='BIRTHS' AND e2.type='DEATHS' AND e1.stardate>$start AND e2.stardate<$end ORDER BY e2.stardate DESC LIMIT 25";
+
+$query = "SELECT e1.shortname, e1.longname, e1.stardate AS birth, e2.stardate AS death FROM events e1 JOIN events e2 ON (e1.shortname=e2.shortname) AND e1.type='BIRTHS' AND e2.type='DEATHS' AND e1.stardate>$start AND e2.stardate<$end ORDER BY RANDOM() LIMIT 50";
 
 @res = sqlite3hashlist($query,"/home/barrycarter/BCINFO/sites/DB/history.db");
 
@@ -35,9 +37,21 @@ for $i (@res) {
   # start and end pixels (if we choose to draw this)
   $spixel = ($i->{birth}-$start)/($end-$start)*$width;
   $epixel = ($i->{death}-$start)/($end-$start)*$width;
+
+  # TODO: if (decide not to print) {next;}
+
+  # removed dreaded apostrophe of doom
+  $i->{shortname}=~s/\'//isg;
+
+  $ypos+=15;
+
   # and print it
-  print "ctx.fillRect ($spixel, $height/2, 5, 10);\n";
-  print "ctx.fillText('$i->{shortname}', $spixel, $height/2);\n";
+#  print "ctx.fillStyle = 'rgb(255,255,255)';\n";
+  print "ctx.strokeStyle = 'rgb(255,0,0)';\n";
+  print "ctx.strokeWidth = 15;\n";
+  print "ctx.strokeRect($spixel, $ypos, $epixel-$spixel, 10);\n";
+#  print "ctx.fillStyle = 'rgb(0,0,0)';\n";
+  print "ctx.fillText('$i->{shortname} ($i->{birth} - $i->{death})', $spixel, $ypos+9);\n";
 
   debug("PIX: $spixel-$epixel");
 }
