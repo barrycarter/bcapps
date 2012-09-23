@@ -7,10 +7,10 @@ require "/usr/local/lib/bclib.pl";
 
 # test case: 1950-present
 # assuming a 1024-pixel width
-$start = "19500000";
-$end = "20130000";
-$width = 1024;
-$height=768;
+$start = 1900*10000;
+$end = 2000*10000;
+$width = 800;
+$height=600;
 
 # the header
 print read_file("canvas-header.html");
@@ -18,10 +18,8 @@ print read_file("canvas-header.html");
 # TODO: in real select, we can limit to events longer than a certain
 # min (ie, longer than the min draw threshold)
 
-# birth/death of same person, both occurring 1950-2013
-$query = "SELECT e1.shortname, e1.longname, e1.stardate AS birth, e2.stardate AS death FROM events e1 JOIN events e2 ON (e1.shortname=e2.shortname) AND e1.type='BIRTHS' AND e2.type='DEATHS' AND e1.stardate>$start AND e2.stardate<$end ORDER BY e2.stardate DESC LIMIT 25";
-
-$query = "SELECT e1.shortname, e1.longname, e1.stardate AS birth, e2.stardate AS death FROM events e1 JOIN events e2 ON (e1.shortname=e2.shortname) AND e1.type='BIRTHS' AND e2.type='DEATHS' AND e1.stardate>$start AND e2.stardate<$end ORDER BY RANDOM() LIMIT 50";
+# birth/death of same person
+$query = "SELECT e1.shortname, e1.longname, e1.stardate AS birth, e2.stardate AS death FROM events e1 JOIN events e2 ON (e1.shortname=e2.shortname) AND e1.type='BIRTHS' AND e2.type='DEATHS' AND e1.stardate>$start AND e2.stardate<$end AND e1.stardate<e2.stardate ORDER BY RANDOM() LIMIT 50";
 
 @res = sqlite3hashlist($query,"/home/barrycarter/BCINFO/sites/DB/history.db");
 
@@ -31,6 +29,12 @@ $query = "SELECT e1.shortname, e1.longname, e1.stardate AS birth, e2.stardate AS
 
 # sort, finding shortest events first
 @res = sort {$a->{death}-$a->{birth} <=> $b->{death}-$b->{birth}} @res;
+@res = reverse(@res);
+
+# TODO: this is just testing
+@res = sort {$a->{birth} <=> $b->{birth}} @res;
+@res = sort {$a->{death} <=> $b->{death}} @res;
+@res = sort {($a->{death}+$a{birth}) <=> ($b->{death}+$b{birth})} @res;
 
 # go through events
 for $i (@res) {
