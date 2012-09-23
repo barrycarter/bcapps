@@ -80,6 +80,8 @@ while (<A>) {
 
     %itemhash = %{$hash{$item}};
 
+    debug("IH: $itemhash{'Personal Serving'}");
+
     # if I have a setting for personal servings, use it
     if ($itemhash{'Personal Serving'}) {$quant*=$itemhash{'Personal Serving'}};
 

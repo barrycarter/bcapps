@@ -1,0 +1,225 @@
+-------------------------------------------------------------
+-- MDB Tools - A library for reading MS Access database files
+-- Copyright (C) 2000-2004 Brian Bruns
+-- Files in libmdb are licensed under LGPL and the utilities under
+-- the GPL, see COPYING.LIB and COPYING files respectively.
+-- Check out http://mdbtools.sourceforge.net
+-------------------------------------------------------------
+
+DROP TABLE DATA_SRC;
+CREATE TABLE DATA_SRC
+ (
+	DataSrc_ID			Text (12), 
+	Authors			Text (510), 
+	Title			Text (510), 
+	Year			Text (8), 
+	Journal			Text (270), 
+	Vol_City			Text (32), 
+	Issue_State			Text (10), 
+	Start_Page			Text (10), 
+	End_Page			Text (10)
+);
+-- CREATE ANY INDEXES ...
+
+DROP TABLE DATSRCLN;
+CREATE TABLE DATSRCLN
+ (
+	NDB_No			Text (10), 
+	Nutr_No			Text (6), 
+	DataSrc_ID			Text (12)
+);
+-- CREATE ANY INDEXES ...
+
+DROP TABLE DERIV_CD;
+CREATE TABLE DERIV_CD
+ (
+	Deriv_CD			Text (8), 
+	Deriv_Desc			Text (240)
+);
+-- CREATE ANY INDEXES ...
+
+DROP TABLE FD_GROUP;
+CREATE TABLE FD_GROUP
+ (
+	FdGrp_CD			Text (8), 
+	FdGrp_Desc			Text (120)
+);
+-- CREATE ANY INDEXES ...
+
+DROP TABLE FOOD_DES;
+CREATE TABLE FOOD_DES
+ (
+	NDB_No			Text (10), 
+	FdGrp_Cd			Text (8), 
+	Long_Desc			Text (400), 
+	Shrt_Desc			Text (120), 
+	ComName			Text (200), 
+	ManufacName			Text (130), 
+	Survey			Text (2), 
+	Ref_Desc			Text (270), 
+	Refuse			Integer, 
+	SciName			Text (130), 
+	N_Factor			Single, 
+	Pro_Factor			Single, 
+	Fat_Factor			Single, 
+	CHO_Factor			Single
+);
+-- CREATE ANY INDEXES ...
+
+DROP TABLE FOOTNOTE;
+CREATE TABLE FOOTNOTE
+ (
+	NDB_No			Text (10), 
+	Footnt_No			Text (8), 
+	Footnot_Typ			Text (2), 
+	Nutr_No			Text (6), 
+	Footnot_Txt			Text (400)
+);
+-- CREATE ANY INDEXES ...
+
+DROP TABLE LANGDESC;
+CREATE TABLE LANGDESC
+ (
+	Factor			Text (12), 
+	Description			Text (500)
+);
+-- CREATE ANY INDEXES ...
+
+DROP TABLE NUT_DATA;
+CREATE TABLE NUT_DATA
+ (
+	NDB_No			Text (10), 
+	Nutr_No			Text (6), 
+	Nutr_Val			Double, 
+	Num_Data_Pts			Long Integer, 
+	Std_Error			Double, 
+	Src_Cd			Text (4), 
+	Deriv_Cd			Text (8), 
+	Ref_NDB_No			Text (10), 
+	Add_Nutr_Mark			Text (2), 
+	Num_Studies			Integer, 
+	Min			Double, 
+	Max			Double, 
+	DF			Double, 
+	Low_EB			Double, 
+	Up_EB			Double, 
+	Stat_Cmt			Text (20), 
+	AddMOd_Date			Text (20)
+);
+-- CREATE ANY INDEXES ...
+
+DROP TABLE NUTR_DEF;
+CREATE TABLE NUTR_DEF
+ (
+	Nutr_No			Text (6), 
+	Units			Text (14), 
+	Tagname			Text (40), 
+	NutrDesc			Text (120), 
+	Num_Dec			Text (2), 
+	SR_Order			Single
+);
+-- CREATE ANY INDEXES ...
+
+DROP TABLE SRC_CD;
+CREATE TABLE SRC_CD
+ (
+	Src_Cd			Text (4), 
+	SrcCd_Desc			Text (120)
+);
+-- CREATE ANY INDEXES ...
+
+DROP TABLE WEIGHT;
+CREATE TABLE WEIGHT
+ (
+	NDB_No			Text (10), 
+	Seq			Text (4), 
+	Amount			Double, 
+	Msre_Desc			Text (160), 
+	Gm_Wgt			Double, 
+	Num_Data_Pts			Integer, 
+	Std_Dev			Double
+);
+-- CREATE ANY INDEXES ...
+
+DROP TABLE LANGUAL;
+CREATE TABLE LANGUAL
+ (
+	NDB_No			Text (10), 
+	Factor			Text (12)
+);
+-- CREATE ANY INDEXES ...
+
+DROP TABLE Abbrev;
+CREATE TABLE Abbrev
+ (
+	NDB_No			Text (510), 
+	Shrt_Desc			Text (510), 
+	Water_(g)			Double, 
+	Energ_Kcal			Double, 
+	Protein_(g)			Double, 
+	Lipid_Tot_(g)			Double, 
+	Ash_(g)			Double, 
+	Carbohydrt_(g)			Double, 
+	Fiber_TD_(g)			Double, 
+	Sugar_Tot_(g)			Double, 
+	Calcium_(mg)			Double, 
+	Iron_(mg)			Double, 
+	Magnesium_(mg)			Double, 
+	Phosphorus_(mg)			Double, 
+	Potassium_(mg)			Double, 
+	Sodium_(mg)			Double, 
+	Zinc_(mg)			Double, 
+	Copper_mg)			Double, 
+	Manganese_(mg)			Double, 
+	Selenium_(µg)			Double, 
+	Vit_C_(mg)			Double, 
+	Thiamin_(mg)			Double, 
+	Riboflavin_(mg)			Double, 
+	Niacin_(mg)			Double, 
+	Panto_Acid_mg)			Double, 
+	Vit_B6_(mg)			Double, 
+	Folate_Tot_(µg)			Double, 
+	Folic_Acid_(µg)			Double, 
+	Food_Folate_(µg)			Double, 
+	Folate_DFE_(µg)			Double, 
+	Choline_Tot_ (mg)			Double, 
+	Vit_B12_(µg)			Double, 
+	Vit_A_IU			Double, 
+	Vit_A_RAE			Double, 
+	Retinol_(µg)			Double, 
+	Alpha_Carot_(µg)			Double, 
+	Beta_Carot_(µg)			Double, 
+	Beta_Crypt_(µg)			Double, 
+	Lycopene_(µg)			Double, 
+	Lut+Zea_ (µg)			Double, 
+	Vit_E_(mg)			Double, 
+	Vit_D_µg			Double, 
+	ViVit_D_IU			Double, 
+	Vit_K_*(µg)			Double, 
+	FA_Sat_(g)			Double, 
+	FA_Mono_(g)			Double, 
+	FA_Poly_(g)			Double, 
+	Cholestrl_(mg)			Double, 
+	GmWt_1			Double, 
+	GmWt_Desc1			Text (510), 
+	GmWt_2			Double, 
+	GmWt_Desc2			Text (510), 
+	Refuse_Pct			Double
+);
+-- CREATE ANY INDEXES ...
+
+DROP TABLE SR24_Kellogg;
+CREATE TABLE SR24_Kellogg
+ (
+	NDB_No			Text (10), 
+	FdGrp_Cd			Text (8), 
+	Long_Desc			Text (400), 
+	ManufacName			Text (130)
+);
+-- CREATE ANY INDEXES ...
+
+
+
+-- CREATE ANY Relationships ...
+
+-- relationships are not supported for access

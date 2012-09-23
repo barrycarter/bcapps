@@ -7,8 +7,8 @@ require "/usr/local/lib/bclib.pl";
 
 # test case: 1950-present
 # assuming a 1024-pixel width
-$start = 1900*10000;
-$end = 2000*10000;
+$start = 1970*10000;
+$end = 2013*10000;
 $width = 800;
 $height=600;
 
@@ -19,7 +19,7 @@ print read_file("canvas-header.html");
 # min (ie, longer than the min draw threshold)
 
 # birth/death of same person
-$query = "SELECT e1.shortname, e1.longname, e1.stardate AS birth, e2.stardate AS death FROM events e1 JOIN events e2 ON (e1.shortname=e2.shortname) AND e1.type='BIRTHS' AND e2.type='DEATHS' AND e1.stardate>$start AND e2.stardate<$end AND e1.stardate<e2.stardate ORDER BY RANDOM() LIMIT 50";
+$query = "SELECT e1.shortname, e1.longname, e1.stardate AS birth, e2.stardate AS death FROM events e1 JOIN events e2 ON (e1.shortname=e2.shortname) AND e1.type='BIRTHS' AND e2.type='DEATHS' AND e1.stardate>$start AND e2.stardate<$end AND e1.stardate<e2.stardate";
 
 @res = sqlite3hashlist($query,"/home/barrycarter/BCINFO/sites/DB/history.db");
 
@@ -29,12 +29,14 @@ $query = "SELECT e1.shortname, e1.longname, e1.stardate AS birth, e2.stardate AS
 
 # sort, finding shortest events first
 @res = sort {$a->{death}-$a->{birth} <=> $b->{death}-$b->{birth}} @res;
-@res = reverse(@res);
+# @res = reverse(@res);
 
 # TODO: this is just testing
-@res = sort {$a->{birth} <=> $b->{birth}} @res;
-@res = sort {$a->{death} <=> $b->{death}} @res;
-@res = sort {($a->{death}+$a{birth}) <=> ($b->{death}+$b{birth})} @res;
+# @res = sort {$a->{birth} <=> $b->{birth}} @res;
+# @res = sort {$a->{death} <=> $b->{death}} @res;
+# @res = sort {($a->{death}+$a{birth}) <=> ($b->{death}+$b{birth})} @res;
+
+$ypos = $height;
 
 # go through events
 for $i (@res) {
@@ -43,11 +45,12 @@ for $i (@res) {
   $epixel = ($i->{death}-$start)/($end-$start)*$width;
 
   # TODO: if (decide not to print) {next;}
+  if ($epixel-$spixel < 100) {next;}
 
   # removed dreaded apostrophe of doom
   $i->{shortname}=~s/\'//isg;
 
-  $ypos+=15;
+  $ypos-=15;
 
   # and print it
 #  print "ctx.fillStyle = 'rgb(255,255,255)';\n";

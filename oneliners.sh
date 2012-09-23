@@ -1,5 +1,11 @@
 # shell one liners
 
+# exports the USDA nutritional database (http://www.ars.usda.gov/Services/docs.htm?docid=22113) from Microsoft Access to SQLite3 using mdbtools (I could've used the ASCII version too)
+pushd . ; cd /home/barrycarter/20120923/ACCESS; mdb-tables sr24.mdb | perl -anle 'for $i (@F) {print "mdb-export -I sr24.mdb $i > $i.out"}' | sh; popd;
+
+
+exit;
+
 # if you tcpflow-dump when you enter a scribblar room, this downloads all the assets file (so you can delete them as needed)
 perl -nle 'if (/\006S(.*?)\006/) {print "curl -O http://api.muchosmedia.com/brainwave/uploads/client_12/$1"}' /home/barrycarter/20120908/TCP/078.129.167.103.00080-192.168.000.002.58323
 
