@@ -1,4 +1,5 @@
 Attempt to create SQLite3 db of USDA nutrition tables using the Access
-db (not the ASCII format)
+db (not the ASCII format). See oneliner.sh for initial commands.
+
 
 
