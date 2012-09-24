@@ -64,7 +64,8 @@ while (<A>) {
     if ($i=~/^([\d\.]+)\*(.*?)$/) {
       ($quant, $item) = ($1, $2);
     } else {
-      ($quant, $item) = (1,$2);
+      # item remains as is
+      ($quant, $item) = (1, $i);
     }
 
     debug("ITEM: $item");
@@ -97,14 +98,60 @@ while (<A>) {
   # totals for day
   print "\nDATE: $date\n";
   for $j (@totalfields) {
+    # stardate format (to store total just in case we need it later)
+    $stardate = stardate(str2time($date),"localtime=1");
+    $stardate=~s/\..*$//isg;
+    $totals{$stardate}{$j} = $total{$j};
     print "$j: $total{$j}\n";
   }
 }
 
-# grand totals
-print "\nGRAND TOTALS: ($days days)\n";
+# averages
+print "\nAVERAGE: ($days days)\n";
 for $j (@totalfields) {
   $avg = $grandtotal{$j}/$days;
   printf("%s: %0.2f\n", $j,$avg);
 }
+
+# Calorie banking: every hour I'm awake, I allow myself 75 calories.
+
+# <h>While most of my programs are designed to help just me and
+# clutter github, this one may actually harm me, since I'm pretty sure
+# calorie banking is a bad idea... I don't even get an ATM card!</h>
+
+# today's date (store HMS for later)
+$today = stardate("","localtime=1");
+$today=~s/\.(.*)$//isg;
+$hms = $1;
+
+# TODO: maybe add --wake= for cases when TODAY file is inaccurate
+
+# find the first instance of 'wake' in "today's" file (which is
+# usually a fairly good indication of when I woke)
+$wake = `grep wake /home/barrycarter/TODAY/$today.txt`;
+
+# extract HMS
+$wake=~s/\s+.*$//isg;
+
+# convert to seconds since midnight, same for $hms
+$wake=~s/^(..)(..)(..)$/$1*3600+$2*60+$3/e;
+$hms=~s/^(..)(..)(..)$/$1*3600+$2*60+$3/e;
+
+# compute calories earned
+$cals = 75*($hms-$wake)/3600;
+
+# already eaten
+$eaten = $totals{$today}{Calories};
+
+# remaining
+$remain = $cals-$eaten;
+
+printf("\nCalories Earned: %d\nCalories Eaten: %d\nCalories Remaining: %d\n\n", $cals, $eaten, $remain);
+
+# string for bc-bg.pl
+$bgstring = sprintf("kcal: %d/%d/%d (remain/earned/eaten)",$remain,$cals,$eaten);
+
+write_file_new($bgstring, "/home/barrycarter/ERR/cal.inf");
+
+# TODO: my days don't always end at midnight, compensate
 

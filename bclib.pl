@@ -183,7 +183,7 @@ sub debug {
 
 =item dodie($perlcmd)
 
-Try to run Perl code $perlcmd, die if there's an error
+Try to run Perl code $perlcmd, die if theres an error
 
 =cut
 
@@ -1661,17 +1661,29 @@ sub findmin {
     }
 }
 
-=item stardate($time)
+=item stardate($time=now, $options)
 
 Returns $time in somewhat human (<h>Vulcan, Andorran, Betazoid, etc</h>)
 readable format, yyyymmdd.hhmmss
+
+Options:
+ localtime=1: use localtime, not gmtime
 
 <h>I've coded this many different ways over the years: I think I
 finally found the right way to do this!</h>
 
 =cut
 
-sub stardate {strftime("%Y%m%d.%H%M%S", gmtime($_[0]));}
+sub stardate {
+  my($time, $options) = @_;
+  unless ($time) {$time = time();}
+  my(%opts) = parse_form($options);
+  if ($opts{localtime}) {
+    return strftime("%Y%m%d.%H%M%S", localtime($time));
+  } else {
+    return strftime("%Y%m%d.%H%M%S", gmtime($time));
+  }
+}
 
 =item datestar($str)
 
