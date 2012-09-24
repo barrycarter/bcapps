@@ -23,6 +23,55 @@ use XML::Bare;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
+gnumeric2sqlite3("/home/barrycarter/BCGIT/FOODTRACK/foods.gnumeric", "foods", "/tmp/test.sql");
+
+=item gnumeric2sqlite3($gnm, $tab, $sql)
+
+Given a simple gnumeric spreadsheet (with a header row) in file $gnm,
+construct a table $tab in the SQLite3 db $sql (any existing tables in
+$sql named $tab will be destroyed)
+
+=cut
+
+sub gnumeric2sqlite3 {
+  my($gnm,$tab,$sql) = @_;
+  my(@cmds);
+
+  # does using this function really help
+  my(@arr) = gnumeric2array($gnm);
+
+  # create the table
+  push(@cmds, "BEGIN");
+  push(@cmds, "DROP TABLE IF EXISTS $tab");
+  my(@fields);
+
+  for $i (@{$arr[0]}) {
+    push(@fields, "'$i'");
+  }
+  my($fields) = join(", ",@fields);
+  push(@cmds, "CREATE TABLE $tab ($fields)");
+
+  debug("ARR",@arr);
+  # now, the rows
+  for $i (1..$#arr) {
+    # HACK: using consistent order to avoid fieldnames, works but icky
+    @vals = ();
+    for $j (@{$arr[$i]}) {
+      push(@vals, "'$j'");
+    }
+    my($vals) = join(", ",@vals);
+    push(@cmds,"INSERT INTO $tab VALUES ($vals)");
+  }
+
+  push(@cmds, "COMMIT");
+
+  print join(";\n",@cmds),";\n";
+
+
+}
+
+die "TESTING";
+
 @arr=gnumeric2array("/home/barrycarter/BCGIT/FOODTRACK/foods.gnumeric");
 
 ($foo, $bar) = arraywheaders2hashlist(\@arr, "UPC");
