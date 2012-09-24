@@ -23,7 +23,7 @@ use XML::Bare;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
-gnumeric2sqlite3("/home/barrycarter/BCGIT/FOODTRACK/foods.gnumeric", "foods", "/tmp/test.sql");
+gnumeric2sqlite3("/home/barrycarter/BCGIT/FOODTRACK/foods.gnumeric", "foods", "/home/barrycarter/BCINFO/sites/DB/foods.db");
 
 =item gnumeric2sqlite3($gnm, $tab, $sql)
 
@@ -46,6 +46,10 @@ sub gnumeric2sqlite3 {
   my(@fields);
 
   for $i (@{$arr[0]}) {
+    # sqlite3 will happily create tables with '*' in field names, but
+    # it messes up other progs
+    # TODO: tighten this up to alphanumerics only (not even spaces?)
+#    $i=~s/\*//isg;
     push(@fields, "'$i'");
   }
   my($fields) = join(", ",@fields);
@@ -56,8 +60,9 @@ sub gnumeric2sqlite3 {
   for $i (1..$#arr) {
     # HACK: using consistent order to avoid fieldnames, works but icky
     @vals = ();
-    for $j (@{$arr[$i]}) {
-      push(@vals, "'$j'");
+    for $j (0..$#fields) {
+      $arr[$i][$j]=~s/\'/''/isg;
+      push(@vals, "'$arr[$i][$j]'");
     }
     my($vals) = join(", ",@vals);
     push(@cmds,"INSERT INTO $tab VALUES ($vals)");
@@ -65,9 +70,10 @@ sub gnumeric2sqlite3 {
 
   push(@cmds, "COMMIT");
 
-  print join(";\n",@cmds),";\n";
-
-
+  # TODO: better file naming here
+  write_file(join(";\n",@cmds).";\n", "/tmp/commands.sql");
+  # TODO: error checking <h>(not really, but I put it in to pretend)</h>
+  system("sqlite3 $sql < /tmp/commands.sql");
 }
 
 die "TESTING";

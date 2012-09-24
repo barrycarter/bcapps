@@ -2789,6 +2789,58 @@ sub arraywheaders2hashlist {
   return \@ret, \%hash2;
 }
 
+
+=item gnumeric2sqlite3($gnm, $tab, $sql)
+
+Given a simple gnumeric spreadsheet (with a header row) in file $gnm,
+construct a table $tab in the SQLite3 db $sql (any existing tables in
+$sql named $tab will be destroyed)
+
+=cut
+
+sub gnumeric2sqlite3 {
+  my($gnm,$tab,$sql) = @_;
+  my(@cmds);
+
+  # does using this function really help
+  my(@arr) = gnumeric2array($gnm);
+
+  # create the table
+  push(@cmds, "BEGIN");
+  push(@cmds, "DROP TABLE IF EXISTS $tab");
+  my(@fields);
+
+  for $i (@{$arr[0]}) {
+    # sqlite3 will happily create tables with '*' in field names, but
+    # it messes up other progs
+    # TODO: tighten this up to alphanumerics only (not even spaces?)
+#    $i=~s/\*//isg;
+    push(@fields, "'$i'");
+  }
+  my($fields) = join(", ",@fields);
+  push(@cmds, "CREATE TABLE $tab ($fields)");
+
+  debug("ARR",@arr);
+  # now, the rows
+  for $i (1..$#arr) {
+    # HACK: using consistent order to avoid fieldnames, works but icky
+    @vals = ();
+    for $j (0..$#fields) {
+      $arr[$i][$j]=~s/\'/''/isg;
+      push(@vals, "'$arr[$i][$j]'");
+    }
+    my($vals) = join(", ",@vals);
+    push(@cmds,"INSERT INTO $tab VALUES ($vals)");
+  }
+
+  push(@cmds, "COMMIT");
+
+  # TODO: better file naming here
+  write_file(join(";\n",@cmds).";\n", "/tmp/commands.sql");
+  # TODO: error checking <h>(not really, but I put it in to pretend)</h>
+  system("sqlite3 $sql < /tmp/commands.sql");
+}
+
 # parse_form = alias for str2hash (but some of my code uses it)
 sub parse_form {return str2hash(@_);}
 
