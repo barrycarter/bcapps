@@ -24,6 +24,7 @@
 # --rot=90 rotate so north is at this many degrees (0 = right, 90 = up)
 # --info=1 display info about this map
 # --nocgi=0 output raw GIF, no CGI header
+# --view=90 show this many degrees around zenith (NOT WORKING!)
 
 # TODO: label bright stars
 
@@ -35,7 +36,7 @@ $gitdir = "/home/barrycarter/BCGIT/";
 
 # defaults
 $now = time();
-defaults("xwid=1024&ywid=768&fill=0,0,0&time=$now&stars=1&lat=35.082463&lon=-106.629635&rot=90&lines=1&planets=1&planetlabel=1&info=1&gridlabel=1");
+defaults("xwid=1024&ywid=768&fill=0,0,0&time=$now&stars=1&lat=35.082463&lon=-106.629635&rot=90&lines=1&planets=1&planetlabel=1&info=1&gridlabel=1&view=90");
 
 # we use these a LOT, so putting them into global vars
 ($xwid, $ywid) = ($globopts{xwid}, $globopts{ywid});
@@ -109,8 +110,8 @@ sub radec2xy {
 #  debug("RETURNING NOT: $az,$el");
   if ($el<0) {return (-1,-1);}
 
-  # polar coordinates: r = distance from center = 90-el ; el=0 -> edge
-  my($r) = (90-$el)/90*$mind/2;
+  # polar coordinates: r = distance from center = $view-el ; el=0 -> edge
+  my($r) = ($globopts{view}-$el)/$globopts{view}*$mind/2;
   # theta is reversed, because east is left of north when looking up
   # adding requested rotation as well; convert to radians
   my($theta) = -($az+$globopts{rot})*$DEGRAD;

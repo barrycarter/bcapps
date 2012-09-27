@@ -26,7 +26,11 @@ system("sort -n $elecfile -o $elecfile");
 # tiered usage cost (first 450 at .0906, next 450 at .1185, rest at .1284)
 # http://www.pnm.com/regulatory/electricity_legacy.htm (for July)
 # TODO: this doesn't need to be a constant
-@tiers = ([450, 0.0906237], [450, 0.1373455], [+Infinity, 0.1576960]);
+
+# @tiers = ([450, 0.0906237], [450, 0.1373455], [+Infinity, 0.1576960]);
+
+# non-summer rates below
+@tiers = ([450, 0.0906237], [450, 0.1185101], [+Infinity, 0.1283520]);
 
 # apply NM sales tax of 7% and fuel cost/Palo Verde adjustments
  for $i (@tiers) {
@@ -41,7 +45,7 @@ $tax = 1.07;
 
 # yyyy-mm-dd when meter last read, and amount
 # TODO: this obviously shouldn't be hardcoded
-($time,$read) = ("2012-08-22", "56417");
+($time,$read) = ("2012-09-21", "57881");
 
 # ranges are now represented as [low, med, high] where med = the
 # "true" reading in some sense; 12:30pm = center of 8-5 day

@@ -109,11 +109,16 @@ while (<A>) {
 # averages
 print "\nAVERAGE: ($days days)\n";
 for $j (@totalfields) {
-  $avg = $grandtotal{$j}/$days;
-  printf("%s: %0.2f\n", $j,$avg);
+  $avg{$j} = $grandtotal{$j}/$days;
+  printf("%s: %0.2f\n", $j,$avg{$j});
 }
 
-# Calorie banking: every hour I'm awake, I allow myself 75 calories.
+# calories I "earn" per hour is average calories divided by 16 hours
+# (since I usually dont eat right up to bedtime, this has the effect
+# of bringing down the average slightly if I follow it)
+$calsperhr = $avg{Calories}/16;
+
+# Calorie banking: every hour I'm awake, I allow myself $calsperhr calories.
 
 # <h>While most of my programs are designed to help just me and
 # clutter github, this one may actually harm me, since I'm pretty sure
@@ -138,7 +143,7 @@ $wake=~s/^(..)(..)(..)$/$1*3600+$2*60+$3/e;
 $hms=~s/^(..)(..)(..)$/$1*3600+$2*60+$3/e;
 
 # compute calories earned
-$cals = 75*($hms-$wake)/3600;
+$cals = $calsperhr*($hms-$wake)/3600;
 
 # already eaten
 $eaten = $totals{$today}{Calories};
@@ -146,7 +151,7 @@ $eaten = $totals{$today}{Calories};
 # remaining
 $remain = $cals-$eaten;
 
-printf("\nCalories Earned: %d\nCalories Eaten: %d\nCalories Remaining: %d\n\n", $cals, $eaten, $remain);
+printf("\nHours Awake: %0.2f\nCalories Earned: %d\nCalories Eaten: %d\nCalories Remaining: %d\n\n", ($hms-$wake)/3600, $cals, $eaten, $remain);
 
 # string for bc-bg.pl
 $bgstring = sprintf("kcal: %d/%d/%d (remain/earned/eaten)",$remain,$cals,$eaten);
