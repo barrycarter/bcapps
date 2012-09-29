@@ -64,8 +64,14 @@ for $dial (0..4) {
 
 # want to find deviation, so sort
 @yvals = sort(@yvals);
+$ydev = $yvals[-1]-$yvals[0];
 
-debug("Y VALS",@yvals);
+# ydev=2 seems OK, ydev=4 excessive
+debug("YDEV: $ydev");
+
+if ($ydev>=4) {exit(0);}
+
+# debug("Y VALS",@yvals);
 
 close(A);
 system("fly -q -i /tmp/bcer.fly -o /tmp/bcer2.gif");
