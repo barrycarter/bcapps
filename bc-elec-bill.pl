@@ -47,6 +47,10 @@ $tax = 1.07;
 # TODO: this obviously shouldn't be hardcoded
 ($time,$read) = ("2012-09-21", "57881");
 
+# same month last year (as target)
+$lastyearcost = "103.15";
+$lastyearusage = "821";
+
 # ranges are now represented as [low, med, high] where med = the
 # "true" reading in some sense; 12:30pm = center of 8-5 day
 $readtime = str2time("$time 12:30:00 MST7MDT");
