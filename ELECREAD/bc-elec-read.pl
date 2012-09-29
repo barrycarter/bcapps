@@ -35,7 +35,7 @@ for $dial (0..4) {
   # mark where we start the search
   $xcenter = $centers[$dial];
   $ycenter = 92;
-  print A "setpixel $centers[$dial],92,255,0,0\n";
+#  print A "setpixel $centers[$dial],92,255,0,0\n";
 
   for $i (-5..5) {
     for $j (-5..5) {
@@ -54,7 +54,9 @@ for $dial (0..4) {
   # find/show lightest spot
   ($lx,$ly) = split(/\,/,$pix[-1]);
   print A "setpixel $lx,$ly,0,255,0\n";
+  # TODO: seriously cleanup this code
   push(@yvals, $ly);
+  push(@xvals, $lx);
 #  debug("LXLY: $lx, $ly");
 
   for $k (@pix) {
@@ -71,7 +73,12 @@ debug("YDEV: $ydev");
 
 if ($ydev>=4) {exit(0);}
 
-# debug("Y VALS",@yvals);
+for $dial (0..4) {
+  for $radius (10..30) {
+    $ret = reading($radius,$xvals[$dial],$yvals[$dial]);
+    debug("DIAL: $dial, RADIUS: $radius, ANGLE: $ret");
+  }
+}
 
 close(A);
 system("fly -q -i /tmp/bcer.fly -o /tmp/bcer2.gif");
@@ -146,29 +153,17 @@ sub pnm {
   return @ret;
 }
 
-# find and mark darkest pixel in each row of pnm (for this prog only)
-# TODO: everything
-sub darkest {}
+=item reading($r,$cx,$cy,$options)
 
-=item reading($r,$options)
-
-Find the "best reading" at radius $r (uses global variables;
-app-specific subroutine). Returns a decimal since that might be
-helpful w other dial reading.
+Find the "best reading" at rectangular radius $r from $cx,$cy
 
 $options currently unused
 
 =cut
 
 sub reading {
-  my($r,$options) = @_;
+  my($r,$cx,$cy,$options) = @_;
   my(%hash);
-
-  # center point
-  my($cx,$cy) = split(/\,/,$centers[$dial]);
-
-  # and mark
-  print A "setpixel $cx,$cy,0,255,0\n";
 
   # for each value of x (within $r), determine y values w distance $r
   for $i (-$r..$r) {
@@ -188,9 +183,9 @@ sub reading {
   # find the darkest point(s)
   my(@keys) = sort {$hash{$a} <=> $hash{$b}} keys %hash;
 
-  for $i (@keys) {
-    debug("DIAL $dial, RADIUS: $r, KEY: $i -> $hash{$i}");
-  }
+#  for $i (@keys) {
+#    debug("DIAL $dial, RADIUS: $r, KEY: $i -> $hash{$i}");
+#  }
 
   # find angle of darkest point from center (and lightest)
   my($dx,$dy) = split(/\,/, $keys[0]);
@@ -198,24 +193,14 @@ sub reading {
 
   # and print to fly
   print A "setpixel $dx,$dy,255,0,0\n";
-  print A "setpixel $lx,$ly,0,0,255\n";
+#  print A "setpixel $lx,$ly,0,0,255\n";
 
   debug("DARK($dial,$r): $dx-$cx,$dy-$cy");
   # this is a 90 degree right rotate so 0 meter = 0 degrees
 
-  # note that we need to reverse the angle direction and add 90 for clockwise meters and keep the direction and subtract 90 for counterclock
-  my($an);
-  if ($dial%2) {
-    $an = fmodp((atan2($cy-$dy,$dx-$cx)-$PI/2)*$RADDEG,360);
-    debug("DIAL $dial, RAD: $r: $an");
-  } else {
-    $an = fmodp(($PI/2-atan2($cy-$dy, $dx-$cx))*$RADDEG,360);
-  }
-
-  my($read) = $an/36;
-  debug("ANGLE/READ($dial,$r): $an/$read");
-  return $read;
-
+  # return just the angle
+  my($an) = fmodp((atan2($cy-$dy,$dx-$cx)-$PI/2)*$RADDEG,360);
+  return $an;
 }
 
 =item sqrt2($x)
