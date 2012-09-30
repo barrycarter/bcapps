@@ -1,5 +1,6 @@
 # hand edited after initial generation by:
 # \ls *.jpg | xargs -n 1 bc-elec-read.pl | & tee readings.txt &
+# 6 right, 8 wrong, 86 rejected
 20120615.095901.jpg: 52286 [RIGHT]
 20120621.103901.jpg: 43555 [WRONG]
 20120624.064902.jpg: 43732 [WRONG]

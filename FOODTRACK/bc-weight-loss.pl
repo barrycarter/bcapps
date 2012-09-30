@@ -11,8 +11,8 @@ $stime = 1347412858;
 $startime = stardate($stime-6*3600);
 $sweight = 191.8;
 
-# target weights (borders for obese, overweight, normal, and severely underweight)
-@t=(180,150,120,90);
+# target weights (borders for obese, overweight, normal, and severely underweight) [added midpoints 30 Sep 2012 JFF]
+@t=(180,165,150,135,120,105,90);
 
 print "\n";
 
