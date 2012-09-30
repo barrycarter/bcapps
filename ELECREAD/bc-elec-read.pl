@@ -78,8 +78,8 @@ for $dial (0..4) {
     # compute which of 10 numbers this mean (ignoring reversals for now)
     # always read toward lower number, not closest number
     # 0 -> 7.5, so -18-+18 -> 7, +18-+54 -> 8, and so on
-    $read = fmodp(($ret-18)/36+8,10);
-    debug("READING: $read FROM ANGLE: $ret");
+    $read = int(fmodp(($ret-18)/36+8,10));
+    $count[$dial]{$read}++;
 
     # angles for this dial (returned clockwise starting at "7.5")
     $angs[$dial][$radius] = $ret;
@@ -87,56 +87,24 @@ for $dial (0..4) {
 }
 
 for $dial (0..4) {
-#  debug("DIAL: $dial, ANGLES:", @{$angs[$dial]});
+  %counts = %{$count[$dial]};
+  # sort the counts for this dial
+  @counts = sort {$counts{$b} <=> $counts{$a}} keys %counts;
+
+  # for dials 1 + 3, read in reverse (so 1 becomes 8 [not 9])
+  if ($dial%2) {$counts[0] = 9 - $counts[0];}
+
+  debug("DIAL: $dial, READING: $counts[0]");
+  push(@reading, $counts[0]);
 }
 
 close(A);
 system("fly -q -i /tmp/bcer.fly -o /tmp/bcer2.gif");
-system("cp /tmp/bcer2.gif $tmpbase.gif");
-system("display $tmpbase.gif &");
+# system("cp /tmp/bcer2.gif $tmpbase.gif");
+# system("display $tmpbase.gif &");
 
-die "TESTING";
-
-# general idea is to read circles radiating out from center points and
-# find "darkest point" for each dial
-
-# dial centers
-%centers =(0 => "40,38", 1 => "41,38", 2 => "42,38", 3=> "41,37", 4=> "39,37");
-
-# and again?
-@centers = ("39,34", "40,34", "40,34", "39,33", "34,32");
-
-for $dial (0..4) {
-  # left of circle
-  my($pos) = 72+82*$dial-80/2;
-  # ypos is fixed at 97-83/2 (assuming true circles)
-  system("convert -colorspace gray -crop 83x83+$pos+55 /tmp/bcer0.pnm /tmp/bcer2-$dial.pnm");
-
-  @pnm = pnm("/tmp/bcer2-$dial.pnm");
-  %count = ();
-
-# use fly to show how this program "thinks"
-system("convert /tmp/bcer2-$dial.pnm /tmp/bcer2-$dial.gif");
-open(A,">/tmp/bcer2-$dial.fly");
-print A "existing /tmp/bcer2-$dial.gif\n";
-
-# for each radius
-# for $radius (12..17) {
-  for $radius (0..50) {
-  my($read) = reading($radius);
-  $count{floor($read)}++;
-  debug("$dial/$radius: $read");
-}
-
-  debug("COUNTHAS",%count);
-  @counts = sort {$count{$b} <=> $count{$a}} keys %count;
-  push(@out,$counts[0]);
-
-  debug("COUNT: $counts[0]");
-
-}
-
-print "$ARGV[0]: ".join("",@out)."\n";
+$reading = join("",@reading);
+print "$tmpbase: $reading\n";
 
 =item pnm($file)
 
