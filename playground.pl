@@ -23,6 +23,75 @@ use XML::Bare;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
+
+%test = obtain_weights(str2time("20120911 192058 MDT"));
+
+for $i (keys %test) {
+ push(@x, $i);
+ push(@y,$test{$i});
+}
+
+debug("X",@x,"Y",@y);
+
+($a,$b) = linear_regression(\@x, \@y);
+
+debug("LIN: $a $b");
+
+=item obtain_weights($time)
+
+Obtain all weights since $time from my "today" files, return as hash.
+
+Another unbelievable useless function that only I use
+
+=cut
+
+sub obtain_weights {
+  my($time) = @_;
+  my(@days, %rethash);
+
+  # all days since $time (need +86400 to compensate for time zones?)
+  for ($i=$time; $i<=time()+86400; $i+=86400) {
+    push(@days, strftime("%Y%m%d.txt",localtime($i)));
+  }
+
+  my($days) = join(" ",@days);
+  my(@res) = `cd /home/barrycarter/TODAY; fgrep '#%%' $days`;
+
+  for $i (@res) {
+    # date/time
+    $i=~/^(\d{8}\.)txt:(\d{6})/||next;
+    my($datetime) = str2time("$1 $2");
+    # ignore too early
+    if ($datetime < $time) {next;}
+    # weight
+    $i=~/([\d\.]+)\#/||next;
+    my($weight) = $1;
+    $rethash{$datetime} = $weight;
+  }
+
+  return %rethash;
+
+}
+
+die "TESTING";
+
+# does clustering harm linear regression (apparently not)
+
+@x=(1,2,3);
+@y=(4,6,8);
+
+for $i (1..1000) {
+  push(@x,3+$i/1000000);
+  push(@y,8);
+}
+
+($a,$b,$c) = linear_regression(\@x,\@y);
+
+debug("RES: $a $b $c");
+
+# <h>ETSTING is like testing, only moreso</h>
+die "ETSTING";
+
 gnumeric2sqlite3("/home/barrycarter/BCGIT/FOODTRACK/foods.gnumeric", "foods", "/home/barrycarter/BCINFO/sites/DB/foods.db");
 die "TESTING";
 

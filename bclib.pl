@@ -2732,6 +2732,42 @@ sub gnumeric2array {
   return @ret;
 }
 
+=item obtain_weights($time)
+
+Obtain all weights since $time from my "today" files, return as hash.
+
+Another unbelievable useless function that only I use
+
+=cut
+
+sub obtain_weights {
+  my($time) = @_;
+  my(@days, %rethash);
+
+  # all days since $time (need +86400 to compensate for time zones?)
+  for ($i=$time; $i<=time()+86400; $i+=86400) {
+    push(@days, strftime("%Y%m%d.txt",localtime($i)));
+  }
+
+  my($days) = join(" ",@days);
+  my(@res) = `cd /home/barrycarter/TODAY; fgrep '#%%' $days`;
+
+  for $i (@res) {
+    # date/time
+    $i=~/^(\d{8}\.)txt:(\d{6})/||next;
+    my($datetime) = str2time("$1 $2");
+    # ignore too early
+    if ($datetime < $time) {next;}
+    # weight
+    $i=~/([\d\.]+)\#/||next;
+    my($weight) = $1;
+    $rethash{$datetime} = $weight;
+  }
+
+  return %rethash;
+
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
   debug("END: CLEANING UP TMP FILES");

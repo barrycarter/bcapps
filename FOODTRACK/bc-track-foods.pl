@@ -14,7 +14,7 @@ require "/usr/local/lib/bclib.pl";
 
 # list of fields it makes sense to total
 # TODO: order this list
-@totalfields = ("Saturated Fat", "Calcium", "Vitamin A", "Total Fat", "Cholestrol", "Iron", "Trans Fat", "Total Carbohydrates", "Sugars", "Vitamin C", "Protein", "Fiber", "Sodium", "Calories");
+@totalfields = ("Calories", "Total Fat", "Total Carbohydrates", "Sugars", "Saturated Fat", "Calcium", "Vitamin A", "Cholestrol", "Iron", "Trans Fat", "Vitamin C", "Protein", "Fiber", "Sodium");
 
 # load the hash of known foods
 @knownfoods=gnumeric2array("/home/barrycarter/BCGIT/FOODTRACK/foods.gnumeric");
@@ -52,7 +52,7 @@ while (<A>) {
   $days++;
 
   @foods = split(/\s*,\s*/, $1);
-  debug("FOODS",@foods);
+#  debug("FOODS",@foods);
 
   # if done for day, note so
   # TODO: don't average for days that are not done, throws off results
@@ -68,7 +68,7 @@ while (<A>) {
       ($quant, $item) = (1, $i);
     }
 
-    debug("ITEM: $item");
+#    debug("ITEM: $item");
     # kill leading 0s
     # TODO: fix this in spreadsheet somehow
     $item=~s/^0+//isg;
@@ -81,12 +81,12 @@ while (<A>) {
 
     %itemhash = %{$hash{$item}};
 
-    debug("IH: $itemhash{'Personal Serving'}");
+#    debug("IH: $itemhash{'Personal Serving'}");
 
     # if I have a setting for personal servings, use it
     if ($itemhash{'Personal Serving'}) {$quant*=$itemhash{'Personal Serving'}};
 
-    debug("$quant of $item");
+#    debug("$quant of $item");
 
     for $j (@totalfields) {
       $total{$j} += $quant*$itemhash{$j};
@@ -148,10 +148,17 @@ $cals = $calsperhr*($hms-$wake)/3600;
 # already eaten
 $eaten = $totals{$today}{Calories};
 
+# must eat 1200 cals min by 2030
+$timeto830 = 60*(20*60+30)-$hms;
+$reqperhr = 3600*(1200-$eaten)/$timeto830;
+debug("PER HOUR: $reqperhr");
+
 # remaining
 $remain = $cals-$eaten;
 
 printf("\nHours Awake: %0.2f\nCalories Earned: %d\nCalories Eaten: %d\nCalories Remaining: %d\n\n", ($hms-$wake)/3600, $cals, $eaten, $remain);
+
+printf("Hours to 2030: %0.2f\nCalories Required: %d\nCalories Eaten: %d\nCalories remaining (total): %d\nCalories Remaining (per hour): %d\n\n", $timeto830/3600, 1200, $eaten, 1200-$eaten, 3600*(1200-$eaten)/$timeto830);
 
 # string for bc-bg.pl
 $bgstring = sprintf("kcal: %d/%d/%d (remain/earned/eaten)",$remain,$cals,$eaten);
