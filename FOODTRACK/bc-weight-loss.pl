@@ -6,20 +6,29 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# plot using gnuplot
+open(A,">/tmp/bwl.txt");
+
 # my weight and when I started tracking calories
 $stime = 1347412858;
 $startime = stardate($stime-6*3600);
 $sweight = 191.8;
+$now = time();
 
 # obtain all weights and do linear regression (experimental for now)
 %weights = obtain_weights($stime);
 
 # to make life easier, converting times to days since $stime
 for $i (sort keys %weights) {
-  push(@x, ($i-$stime)/86400);
+  my($days) = ($i-$stime)/86400;
+  my($days2) = ($i-$now)/86400;
+  print A "$days2 $weights{$i}\n";
+  push(@x, $days);
   push(@y, $weights{$i});
   push(@z,log($weights{$i}));
 }
+
+close(A);
 
 # the regression coefficients for standard and log regression
 ($b,$m) = linear_regression(\@x,\@y);
@@ -90,3 +99,14 @@ for $i (0..$#t) {
   print strftime("Achieve $t[$i] lbs (logreg): %c\n\n",localtime($lrtime[$i]));
 }
 
+open(B,">/tmp/bwl.plt");
+print B << "MARK";
+set xlabel "Days ago"
+set ylabel "Weight"
+plot "/tmp/bwl.txt" title "Weight" with linespoints
+MARK
+;
+
+close(B);
+
+system("gnuplot -persist /tmp/bwl.plt");
