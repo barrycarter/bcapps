@@ -45,6 +45,13 @@ $logweight = exp($blog - $mlog*$daysago);
 write_file("$daysago $b\n0 $linweight\n","/tmp/bwl2.txt");
 write_file("$daysago $b\n0 $logweight\n","/tmp/bwl3.txt");
 
+# and the straight line (very inaccurate) estimation
+# TODO: getting loss in sea of variables
+$mostrecent = $x[-1]-($now-$stime)/86400;
+write_file("$daysago $y[0]\n$mostrecent $y[-1]\n", "/tmp/bwl4.txt");
+# same for log (first two points)
+write_file("$daysago $y[0]\n$mostrecent $y[-1]\n", "/tmp/bwl5.txt");
+
 debug("DAYSAGO: $daysago, LINWT: $linweight");
 
 # target weights (borders for obese, overweight, normal, and severely underweight) [added midpoints 30 Sep 2012 JFF]
@@ -93,6 +100,9 @@ for $i (0..$#t) {
   $daysfromnow = ($rtime[$i]-$now)/86400;
   append_file("$daysfromnow $t[$i]\n", "/tmp/bwl2.txt");
 
+  $daysfromnow = ($time[$i]-$now)/86400;
+  append_file("$daysfromnow $t[$i]\n", "/tmp/bwl4.txt");
+
   print strftime("Achieve $t[$i] lbs (linear): %c\n",localtime($time[$i]));
   print strftime("Achieve $t[$i] lbs (linreg): %c\n",localtime($rtime[$i]));
   print "\n";
@@ -116,6 +126,9 @@ for $i (0..$#t) {
   $daysfromnow = ($lrtime[$i]-$now)/86400;
   append_file("$daysfromnow $t[$i]\n", "/tmp/bwl3.txt");
 
+  $daysfromnow = ($ltime[$i]-$now)/86400;
+  append_file("$daysfromnow $t[$i]\n", "/tmp/bwl5.txt");
+
   print strftime("Achieve $t[$i] lbs (strlog): %c\n",localtime($ltime[$i]));
   print strftime("Achieve $t[$i] lbs (logreg): %c\n\n",localtime($lrtime[$i]));
 }
@@ -124,11 +137,15 @@ open(B,">/tmp/bwl.plt");
 print B << "MARK";
 set style line 1 lc rgb "blue"
 set style line 2 lc rgb "black"
+set style line 3 lc rgb "purple"
+set style line 4 lc rgb "green"
 set xlabel "Days ago"
 set ylabel "Weight"
 plot "/tmp/bwl.txt" title "Weight" with linespoints, \\
-"/tmp/bwl2.txt" title "Linear" with linespoints ls 1, \\
-"/tmp/bwl3.txt" title "Log" with linespoints ls 2
+"/tmp/bwl2.txt" title "LinReg" with linespoints ls 1, \\
+"/tmp/bwl3.txt" title "LogReg" with linespoints ls 2, \\
+"/tmp/bwl4.txt" title "Linear" with linespoints ls 3, \\
+"/tmp/bwl5.txt" title "Log" with linespoints ls 4
 MARK
 ;
 
