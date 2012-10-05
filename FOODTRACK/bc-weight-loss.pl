@@ -31,8 +31,6 @@ debug("$m $b and $mlog $blog");
 # target weights (borders for obese, overweight, normal, and severely underweight) [added midpoints 30 Sep 2012 JFF]
 @t=(180,165,150,135,120,105,90);
 
-print "\n";
-
 # I store my current weight in /home/barrycarter/TODAY/yyyymmdd.txt
 # files as 'x#%%' where x is my weight in pounds [there used to be
 # numbers before the % signs but not any more]
@@ -62,7 +60,7 @@ $days = ($secs-$stime)/86400;
 
 print "Starting weight: $sweight at $startime\nCurrent weight: $wt at $stardate.$date\n\n";
 
-printf("Loss of %0.2f lbs in %0.2f days\nLoss/day: %0.2f lbs\nLoss/week: %0.2f lbs\n\n", $tloss, $days, $tloss/$days, $tloss/$days*7);
+printf("Loss of %0.2f lbs in %0.2f days (%0.2f lb per day, %0.2f lb per week)\n", $tloss, $days, $tloss/$days, $tloss/$days*7);
 
 printf("Linear Regression: %0.2f + %0.4f*t = %0.2f\n\n", $b, $m, $b+$m*$days);
 
@@ -76,17 +74,19 @@ for $i (0..$#t) {
   print "\n";
 }
 
-print "\n";
-
 # weight loss (log)
 $pctloss = $wt/$sweight;
 
-printf("Loss of %0.2f%% in %0.2f days\nLoss/day: %0.2f%\nLoss/week: %0.2f%\n\n", 100*(1-$pctloss), $days, 100*(1-($pctloss**(1/$days))), 100*(1-($pctloss**(7/$days))));
+printf("Loss of %0.2f%% in %0.2f days (%0.2f%% per day, %0.2f%% per week)\n", 100*(1-$pctloss), $days, 100*(1-($pctloss**(1/$days))), 100*(1-($pctloss**(7/$days))));
+
+printf("Log regression: %0.2f*(%0.4f)^t = %0.2f\n\n", exp($blog), exp($mlog), exp($blog+$mlog*$days));
 
 # time to targets (log)
 for $i (0..$#t) {
   $ltime[$i] = (log($wt)-log($t[$i]))/(log($sweight)-log($wt))*$days*86400+$secs;
-  print strftime("Achieve $t[$i] lbs (log): %c\n",localtime($ltime[$i]));
+  # regressed
+  $lrtime[$i] = (log($t[$i])-$blog)/$mlog*86400+$stime;
+  print strftime("Achieve $t[$i] lbs (strlog): %c\n",localtime($ltime[$i]));
+  print strftime("Achieve $t[$i] lbs (logreg): %c\n\n",localtime($lrtime[$i]));
 }
 
-print "\n";
