@@ -37,10 +37,13 @@ close(A);
 # <h>I've always wanted to name a variable $blog for a good reason!</h>
 ($blog,$mlog) = linear_regression(\@x,\@z);
 
-# plot linear regression (to now, not just to last reading)
+# plot log/linear regression (to now, not just to last reading)
 $daysago = ($stime-$now)/86400;
 $linweight = $b - $m*$daysago;
+# this should be an exponential curve, but close to linear for now
+$logweight = exp($blog - $mlog*$daysago);
 write_file("$daysago $b\n0 $linweight\n","/tmp/bwl2.txt");
+write_file("$daysago $b\n0 $logweight\n","/tmp/bwl3.txt");
 
 debug("DAYSAGO: $daysago, LINWT: $linweight");
 
@@ -85,6 +88,11 @@ for $i (0..$#t) {
   $time[$i] = ($wt-$t[$i])/($tloss/$days)*86400+$secs;
   # rtime = linear w regression
   $rtime[$i] = ($t[$i]-$b)/$m*86400+$stime;
+
+  # and plotting
+  $daysfromnow = ($rtime[$i]-$now)/86400;
+  append_file("$daysfromnow $t[$i]\n", "/tmp/bwl2.txt");
+
   print strftime("Achieve $t[$i] lbs (linear): %c\n",localtime($time[$i]));
   print strftime("Achieve $t[$i] lbs (linreg): %c\n",localtime($rtime[$i]));
   print "\n";
@@ -102,6 +110,12 @@ for $i (0..$#t) {
   $ltime[$i] = (log($wt)-log($t[$i]))/(log($sweight)-log($wt))*$days*86400+$secs;
   # regressed
   $lrtime[$i] = (log($t[$i])-$blog)/$mlog*86400+$stime;
+
+  # TODO: appending here is silly, should just keep file open longer
+  # and plotting
+  $daysfromnow = ($lrtime[$i]-$now)/86400;
+  append_file("$daysfromnow $t[$i]\n", "/tmp/bwl3.txt");
+
   print strftime("Achieve $t[$i] lbs (strlog): %c\n",localtime($ltime[$i]));
   print strftime("Achieve $t[$i] lbs (logreg): %c\n\n",localtime($lrtime[$i]));
 }
@@ -109,9 +123,12 @@ for $i (0..$#t) {
 open(B,">/tmp/bwl.plt");
 print B << "MARK";
 set style line 1 lc rgb "blue"
+set style line 2 lc rgb "black"
 set xlabel "Days ago"
 set ylabel "Weight"
-plot "/tmp/bwl.txt" title "Weight" with linespoints, "/tmp/bwl2.txt" title "Linear" with linespoints ls 1
+plot "/tmp/bwl.txt" title "Weight" with linespoints, \\
+"/tmp/bwl2.txt" title "Linear" with linespoints ls 1, \\
+"/tmp/bwl3.txt" title "Log" with linespoints ls 2
 MARK
 ;
 
