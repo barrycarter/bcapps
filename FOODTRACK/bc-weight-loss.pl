@@ -13,6 +13,8 @@ open(A,">/tmp/bwl.txt");
 $stime = 1347412858;
 $startime = stardate($stime-6*3600);
 $sweight = 191.8;
+
+# some useful calculated values
 $now = time();
 
 # obtain all weights and do linear regression (experimental for now)
@@ -35,7 +37,12 @@ close(A);
 # <h>I've always wanted to name a variable $blog for a good reason!</h>
 ($blog,$mlog) = linear_regression(\@x,\@z);
 
-debug("$m $b and $mlog $blog");
+# plot linear regression (to now, not just to last reading)
+$daysago = ($stime-$now)/86400;
+$linweight = $b - $m*$daysago;
+write_file("$daysago $b\n0 $linweight\n","/tmp/bwl2.txt");
+
+debug("DAYSAGO: $daysago, LINWT: $linweight");
 
 # target weights (borders for obese, overweight, normal, and severely underweight) [added midpoints 30 Sep 2012 JFF]
 @t=(180,165,150,135,120,105,90);
@@ -46,7 +53,7 @@ debug("$m $b and $mlog $blog");
 
 # go backwards through days until finding a weight
 for ($i=0;;) {
-  $stardate = strftime("%Y%m%d",localtime(time()-86400*$i++));
+  $stardate = strftime("%Y%m%d",localtime($now-86400*$i++));
   # last result is the one I want
   $res= `fgrep '#%%' /home/barrycarter/TODAY/$stardate.txt | tail -1`;
   if ($res) {last;}
@@ -101,9 +108,10 @@ for $i (0..$#t) {
 
 open(B,">/tmp/bwl.plt");
 print B << "MARK";
+set style line 1 lc rgb "blue"
 set xlabel "Days ago"
 set ylabel "Weight"
-plot "/tmp/bwl.txt" title "Weight" with linespoints
+plot "/tmp/bwl.txt" title "Weight" with linespoints, "/tmp/bwl2.txt" title "Linear" with linespoints ls 1
 MARK
 ;
 
