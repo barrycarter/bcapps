@@ -2732,16 +2732,18 @@ sub gnumeric2array {
   return @ret;
 }
 
-=item obtain_weights($time)
+=item obtain_weights($time, $until="")
 
-Obtain all weights since $time from my "today" files, return as hash.
+Obtain all weights since $time from my "today" files until time $until
+(given as unix seconds, treated as infinity if null [default]), return as
+hash.
 
 Another unbelievable useless function that only I use
 
 =cut
 
 sub obtain_weights {
-  my($time) = @_;
+  my($time, $until) = @_;
   my(@days, %rethash);
 
   # all days since $time (need +86400 to compensate for time zones?)
@@ -2750,12 +2752,13 @@ sub obtain_weights {
   }
 
   my($days) = join(" ",@days);
-  my(@res) = `cd /home/barrycarter/TODAY; fgrep '#%%' $days`;
+  my(@res) = `cd /home/barrycarter/TODAY; fgrep '#%%' $days 2> /dev/null`;
 
   for $i (@res) {
     # date/time
     $i=~/^(\d{8}\.)txt:(\d{6})/||next;
     my($datetime) = str2time("$1 $2");
+    if ($until && $datetime>=$until) {next;}
     # ignore too early
     if ($datetime < $time) {next;}
     # weight

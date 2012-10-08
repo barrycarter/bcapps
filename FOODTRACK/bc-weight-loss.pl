@@ -4,6 +4,9 @@
 # loss and estimates the time until I reach my non-obese and then
 # non-overweight goals, starting from when I started tracking calories
 
+# --until=stardate: only use data until stardate
+# --nograph: dont display graph
+
 require "/usr/local/lib/bclib.pl";
 
 # plot using gnuplot
@@ -17,8 +20,8 @@ $sweight = 191.8;
 # some useful calculated values
 $now = time();
 
-# obtain all weights and do linear regression (experimental for now)
-%weights = obtain_weights($stime);
+# obtain all weights and do linear regression
+%weights = obtain_weights($stime, str2time($globopts{until}));
 
 # to make life easier, converting times to days since $stime
 for $i (sort keys %weights) {
@@ -57,34 +60,20 @@ debug("DAYSAGO: $daysago, LINWT: $linweight");
 # target weights (borders for obese, overweight, normal, and severely underweight) [added midpoints 30 Sep 2012 JFF]
 @t=(180,165,150,135,120,105,90);
 
-# I store my current weight in /home/barrycarter/TODAY/yyyymmdd.txt
-# files as 'x#%%' where x is my weight in pounds [there used to be
-# numbers before the % signs but not any more]
+# when graphing, don't show beyond this value
+# TODO: optionize this
+$graphtarget = 165;
 
-# go backwards through days until finding a weight
-for ($i=0;;) {
-  $stardate = strftime("%Y%m%d",localtime($now-86400*$i++));
-  # last result is the one I want
-  $res= `fgrep '#%%' /home/barrycarter/TODAY/$stardate.txt | tail -1`;
-  if ($res) {last;}
-}
-
-# from $res, extract date and weight
-$res=~s/^(\d{6})//;
-$date = $1;
-$res=~s/([\d\.]+)\#%%//;
-$wt = $1;
-
-# convert date to seconds
-$secs = datestar("$stardate.$date");
-
-# TODO: use linear regression, not first/last points?
+# TODO: with removal of 2nd fgrep, code can be efficientized
+($secs,$wt) = ($x[-1]*86400+$stime,$y[-1]);
+$stardate = stardate($secs,"localtime=1");
+debug("SECS: $secs, wt: $wt");
 
 # compute weight loss and targets time (linear)
 $tloss = $sweight-$wt;
 $days = ($secs-$stime)/86400;
 
-print "Starting weight: $sweight at $startime\nCurrent weight: $wt at $stardate.$date\n\n";
+print "Starting weight: $sweight at $startime\nCurrent weight: $wt at $stardate\n\n";
 
 printf("Loss of %0.2f lbs in %0.2f days (%0.2f lb per day, %0.2f lb per week)\n", $tloss, $days, $tloss/$days, $tloss/$days*7);
 
@@ -97,11 +86,13 @@ for $i (0..$#t) {
   $rtime[$i] = ($t[$i]-$b)/$m*86400+$stime;
 
   # and plotting
-  $daysfromnow = ($rtime[$i]-$now)/86400;
-  append_file("$daysfromnow $t[$i]\n", "/tmp/bwl2.txt");
+  if ($t[$i] >= $graphtarget) {
+    $daysfromnow = ($rtime[$i]-$now)/86400;
+    append_file("$daysfromnow $t[$i]\n", "/tmp/bwl2.txt");
 
-  $daysfromnow = ($time[$i]-$now)/86400;
-  append_file("$daysfromnow $t[$i]\n", "/tmp/bwl4.txt");
+    $daysfromnow = ($time[$i]-$now)/86400;
+    append_file("$daysfromnow $t[$i]\n", "/tmp/bwl4.txt");
+  }
 
   print strftime("Achieve $t[$i] lbs (linear): %c\n",localtime($time[$i]));
   print strftime("Achieve $t[$i] lbs (linreg): %c\n",localtime($rtime[$i]));
@@ -123,11 +114,13 @@ for $i (0..$#t) {
 
   # TODO: appending here is silly, should just keep file open longer
   # and plotting
-  $daysfromnow = ($lrtime[$i]-$now)/86400;
-  append_file("$daysfromnow $t[$i]\n", "/tmp/bwl3.txt");
+  if ($t[$i] >= $graphtarget) {
+    $daysfromnow = ($lrtime[$i]-$now)/86400;
+    append_file("$daysfromnow $t[$i]\n", "/tmp/bwl3.txt");
 
-  $daysfromnow = ($ltime[$i]-$now)/86400;
-  append_file("$daysfromnow $t[$i]\n", "/tmp/bwl5.txt");
+    $daysfromnow = ($ltime[$i]-$now)/86400;
+    append_file("$daysfromnow $t[$i]\n", "/tmp/bwl5.txt");
+  }
 
   print strftime("Achieve $t[$i] lbs (strlog): %c\n",localtime($ltime[$i]));
   print strftime("Achieve $t[$i] lbs (logreg): %c\n\n",localtime($lrtime[$i]));
@@ -135,6 +128,8 @@ for $i (0..$#t) {
 
 open(B,">/tmp/bwl.plt");
 print B << "MARK";
+# set xdata time
+# set timefmt "%Y-%m-%d"
 set style line 1 lc rgb "blue"
 set style line 2 lc rgb "black"
 set style line 3 lc rgb "purple"
@@ -151,4 +146,4 @@ MARK
 
 close(B);
 
-system("gnuplot -persist /tmp/bwl.plt");
+unless ($globopts{nograph}) {system("gnuplot -persist /tmp/bwl.plt");}

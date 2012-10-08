@@ -142,6 +142,8 @@ $out=~s/&#39;/'/isg;
 print << "MARK"
 Content-type: text/html
 
+<title>$query</title>
+
 NOTE: This page is experimental. Bug reports to
 carter.barry\@gmail.com. Query language is SQLite3.
 
@@ -152,7 +154,7 @@ To edit query (or if query above is munged), see textbox at bottom of page<p>
 Empty result may indicate error: I'm not sure why my error checking
 code isn't working.<p>
 
-<a href="https://github.com/barrycarter/bcapps/blob/master/bc-run-sqlite3-query.pl">Source code</a>
+<a href="https://github.com/barrycarter/bcapps/blob/master/bc-run-sqlite3-query.pl" target="_blank">Source code</a>
 
 <p><table border>
 $out
@@ -170,7 +172,7 @@ print << "MARK";
 <tr><th><input type="submit" value="RUN QUERY"></th></tr>
 </form></table>
 
-<p><a href='http://schema.$db.db.$sitename/'>Schema</a>
+<p><a href='http://schema.$db.db.$sitename/' target='_blank'>Schema</a>
 <a href="http://$db.db.$sitename/$db.db">Raw SQLite3 db</a>
 
 MARK
