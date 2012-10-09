@@ -73,9 +73,10 @@ while (<A>) {
     # TODO: fix this in spreadsheet somehow
     $item=~s/^0+//isg;
 
-    # if no such food, warn
+    # if no such food, warn + set errflag
     unless ($hash{$item}) {
       warn "NO SUCH FOOD: $item";
+      $ERR_FLAG = "NO SUCH FOOD: $item";
       next;
     }
 
@@ -164,6 +165,8 @@ printf("Hours to 2030: %0.2f\nCalories Required: %d\nCalories Eaten: %d\nCalorie
 $bgstring = sprintf("kcal: %d/%d/%d (remain/earned/eaten)",$remain,$cals,$eaten);
 
 write_file_new($bgstring, "/home/barrycarter/ERR/cal.inf");
+
+write_file_new($ERR_FLAG, "/home/barrycarter/ERR/cal.err");
 
 # TODO: my days don't always end at midnight, compensate
 

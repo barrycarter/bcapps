@@ -68,7 +68,10 @@ $ydev = $yvals[-1]-$yvals[0];
 # ydev=2 seems OK, ydev=4 excessive
 # debug("YDEV: $ydev");
 
-if ($ydev>=4) {exit(0);}
+if ($ydev>=4) {
+  debug("YDEV: $ydev >= 4");
+  exit(0);
+}
 
 for $dial (0..4) {
   for $radius (10..30) {
