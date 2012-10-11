@@ -111,7 +111,7 @@ while (<A>) {
 print "\nAVERAGE: ($days days)\n";
 for $j (@totalfields) {
   $avg{$j} = $grandtotal{$j}/$days;
-  printf("%s: %0.2f\n", $j,$avg{$j});
+  printf("%s (avg): %0.2f\n", $j,$avg{$j});
 }
 
 # calories I "earn" per hour is average calories divided by 16 hours
