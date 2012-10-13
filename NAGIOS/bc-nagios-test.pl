@@ -84,11 +84,6 @@ sub func {
 
 Confirm that $file (which can be a directory) is less than $size bytes
 
-$options:
-
-server=$server: use ssh to query on server, not local host
-sshkey=$sshkey: use $sshkey (file) to connect to $server
-
 =cut
 
 sub bc_nagios_file_size {
@@ -97,8 +92,10 @@ sub bc_nagios_file_size {
 
   my($cmd) = "stat $file | fgrep Size:";
 
-  if ($opts{server}) {
-    $cmd = "ssh -i $opts{sshkey} '$cmd'";
+  # if not localhost, use ssh to get results
+  # TODO: hardcoding here is bad
+  if ($ENV{NAGIOS_HOSTNAME} eq "bcinfo") {
+    $cmd = "ssh -i /home/barrycarter/.ssh/id_rsa.bc root\@bcinfo '$cmd'";
   }
 
   my($stat) = `$cmd`;

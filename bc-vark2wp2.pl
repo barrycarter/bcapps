@@ -8,12 +8,18 @@ require "/usr/local/lib/bclib.pl";
 
 $data = read_file("/home/barrycarter/VARK-carter_barry-at-gmail_com.txt");
 
+# warn "TESTING"; $data = read_file("/tmp/vark2.txt");
+
 # split into questions (each starts with "*something*")
 
-@qs = split(/\*(.*?)\*/s, $data);
+@qs = split(/(\n\*[^\*\n]*?\*\n\d{4}-\d{2}\-\d{2} \d{2}:\d{2}:\d{2}) UTC\n/s, $data);
 
-for $i (@qs) {
-  debug("I: $i");
+# get rid of pointless header
+shift(@qs);
+
+while (@qs) {
+  ($head, $body) = (shift(@qs), shift(@qs));
+  debug("$head");
 }
 
 
