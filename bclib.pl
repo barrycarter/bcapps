@@ -1391,8 +1391,8 @@ sub bin_volt {
 
 Posts $body as a new WordPress post with the following options:
 
-  - site: site to post to
-  - author: post author
+  - site: site to post to (eg, wordpress.barrycarter.info)
+  - author: post author (eg, barrycarter)
   - password: password for posting
   - subject: subject/title of post (if editing, use current subject)
   - timestamp: UNIX timestamp of post
