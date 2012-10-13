@@ -44,12 +44,11 @@ while (@qs) {
     $body = "[I asked this question on vark.com, but never received an answer]\n";
   }
 
-  # and subject (but only if I asked question
-  $ques=~s/^\(.*?\):\s*//isg;
+  # and subject (but only if I asked question)
+  $ques=~s/^\(you\):\s*//isg;
 
 #  if (++$n>1) {die "TESTING";}
 
-  # using vark-new to avoid confusion (for now)
   post_to_wp($body, "site=wordpress.barrycarter.info&author=barrycarter&password=$wordpress{pass}&subject=$ques&timestamp=$time&category=Barry After Vark");
 
   debug("<body>\n$body\n</body>");
