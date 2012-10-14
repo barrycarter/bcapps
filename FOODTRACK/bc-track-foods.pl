@@ -14,14 +14,14 @@ require "/usr/local/lib/bclib.pl";
 
 # list of fields it makes sense to total
 # TODO: order this list
-@totalfields = ("Calories", "Total Fat", "Total Carbohydrates", "Sugars", "Saturated Fat", "Calcium", "Vitamin A", "Cholestrol", "Iron", "Trans Fat", "Vitamin C", "Protein", "Fiber", "Sodium");
+@totalfields = ("Calories", "Total Fat(g)", "Total Carbohydrates(g)", "Sugars(g)", "Saturated Fat(g)", "Calcium(%DV)", "Vitamin A(%DV)", "Cholestrol(mg)", "Iron(%DV)", "Trans Fat", "Vitamin C(%DV)", "Protein(g)", "Fiber(g)", "Sodium(mg)");
 
 # load the hash of known foods
 @knownfoods=gnumeric2array("/home/barrycarter/BCGIT/FOODTRACK/foods.gnumeric");
 ($x, $hashref) = arraywheaders2hashlist(\@knownfoods, "UPC");
 %hash = %{$hashref};
 
-# debug(%hash);
+debug(%hash);
 
 # bc-SUPERFILE has a lot of very dull information, including my eating habits
 open(A,"/home/barrycarter/bc-SUPERFILE")||die("Can't open, $!");
