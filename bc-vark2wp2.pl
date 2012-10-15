@@ -21,8 +21,9 @@ shift(@qs);
 while (@qs) {
   ($head, $body) = (shift(@qs), shift(@qs));
 
-  # randomly choose
-  unless (rand()<.001) {next;}
+  # a little bit at a time for now
+  $n++;
+  if ($n>=10) {next;}
 
   # date and varks bizarre "subject"
   $head=~/\*(.*?)\*\n(.*)/||warn("BAD HEAD: $head");
@@ -39,15 +40,13 @@ while (@qs) {
   $body=~s/>/\&gt\;/isg;
   $body=~s/\n\-\-\n/\n----------------------\n/isg;
 
-  # if empty...
-  if ($body=~/^\s*$/) {
-    $body = "[I asked this question on vark.com, but never received an answer]\n";
-  }
+  # add question
+  $body = "$ques\n\n$body";
 
   # and subject (but only if I asked question)
   $ques=~s/^\(you\):\s*//isg;
 
-#  if (++$n>1) {die "TESTING";}
+  $body = "$body\n\n[Vark assigned category: $subject, <a href=''>more details/disclaimer</a>\n";
 
   post_to_wp($body, "site=wordpress.barrycarter.info&author=barrycarter&password=$wordpress{pass}&subject=$ques&timestamp=$time&category=Barry After Vark");
 
