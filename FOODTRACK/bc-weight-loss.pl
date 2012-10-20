@@ -6,16 +6,22 @@
 
 # --until=stardate: only use data until stardate
 # --nograph: dont display graph
+# --start: start date (default: Tue Sep 11 19:20:58 MDT 2012)
 
 require "/usr/local/lib/bclib.pl";
+
+# defaults
+defaults("start=20120911.192058");
+
+# if --start is in "stardate" format, fix it to change dot to space
+# (str2time doesn't like stardate format)
+$globopts{start}=~s/^(\d{8})\.(\d*)$/$1 $2/;
 
 # plot using gnuplot
 open(A,">/tmp/bwl.txt");
 
-# my weight and when I started tracking calories
-$stime = 1347412858;
-$startime = stardate($stime-6*3600);
-$sweight = 191.8;
+# convert to unix seconds
+$stime = str2time($globopts{start});
 
 # some useful calculated values
 $now = time();
@@ -32,6 +38,8 @@ for $i (sort keys %weights) {
   push(@y, $weights{$i});
   push(@z,log($weights{$i}));
 }
+
+$sweight = $y[0];
 
 close(A);
 
@@ -73,6 +81,7 @@ debug("SECS: $secs, wt: $wt");
 $tloss = $sweight-$wt;
 $days = ($secs-$stime)/86400;
 
+$startime = strftime("%Y%m%d.%H%M%S", localtime($stime));
 print "Starting weight: $sweight at $startime\nCurrent weight: $wt at $stardate\n\n";
 
 printf("Loss of %0.2f lbs in %0.2f days (%0.2f lb per day, %0.2f lb per week)\n", $tloss, $days, $tloss/$days, $tloss/$days*7);

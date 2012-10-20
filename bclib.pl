@@ -1486,7 +1486,7 @@ MARK
 
   debug($req);
 
-  debug(read_file("/tmp/answer"));
+  return read_file("/tmp/answer");
 }
 
 
@@ -2332,7 +2332,7 @@ TODO: this seems really inefficient
 
 sub linear_regression {
   my($xref, $yref) = @_;
-  my($sumxy, $sumx, $sumy, $sumx2);
+  my($sumxy, $sumx, $sumy, $sumx2, $cov, $var, $a, $b);
   my(@x) = @{$xref};
   my(@y) = @{$yref};
   debug("X",@x,"Y",@y);
@@ -2354,13 +2354,15 @@ sub linear_regression {
     $sumy += $y[$i]/$n;
     debug("SUMY: $sumy");
     $sumx2 += $x[$i]*$x[$i]/$n;
+
+    # intentionally computing this each time in case we want "running regression"
+    $cov = $sumxy - $sumx*$sumy;
+    $var = $sumx2 - $sumx*$sumx;
+    if ($var) {
+      $b = $cov/$var;
+      $a = $sumy-$b*$sumx;
+    }
  }
-
-  my($cov) = $sumxy - $sumx*$sumy;
-  my($var) = $sumx2 - $sumx*$sumx;
-
-  my($b) = $cov/$var;
-  my($a) = $sumy-$b*$sumx;
 
   return $a,$b,$sumy;
 }
@@ -2752,7 +2754,7 @@ sub obtain_weights {
   }
 
   my($days) = join(" ",@days);
-  my(@res) = `cd /home/barrycarter/TODAY; fgrep '#%%' $days 2> /dev/null`;
+  my(@res) = `cd /home/barrycarter/TODAY; egrep '#[0-9.]*%[0-9.]*%' $days 2> /dev/null`;
 
   for $i (@res) {
     # date/time

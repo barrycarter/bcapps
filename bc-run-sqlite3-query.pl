@@ -122,7 +122,10 @@ write_file("$query;", $tmp);
 ($out,$err,$res) = cache_command("ulimit -t 5 && sqlite3 -html -header $db.db < $tmp");
 
 # error?
-if ($res) {webdie("SQLITE ERROR: $err, QUERY: $query");}
+if ($res) {
+  #  webdie("SQLITE ERROR: $err, QUERY: $query");
+  $out = "<tr><th>ERROR: $err</th></tr><th>QUERY: $query</th></tr>";
+}
 
 # RSS feed requested? (TODO: improve check below)
 if ($ENV{REQUEST_URI}=~/rss/i) {
