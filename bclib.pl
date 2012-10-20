@@ -2319,10 +2319,11 @@ sub jd2unix {
 =item linear_regression(\@x,\@y)
 
 Computes the linear regression between same-sized arrays x and
-y. Packages like Math::GSL::Fit probably do this better, but I can't
-get them to compile :(
+y. Packages like Math::GSL::Fit probably do this better, but I cant
+get them to compile <frowny face>
 
-Also returns average of y's, since I calculate it anyway
+Also returns average of ys, since I calculate it anyway, and
+(reference to a) list of running regression (for same reason)
 
 TODO: above is very kludgey
 
@@ -2332,7 +2333,7 @@ TODO: this seems really inefficient
 
 sub linear_regression {
   my($xref, $yref) = @_;
-  my($sumxy, $sumx, $sumy, $sumx2, $cov, $var, $a, $b);
+  my($sumxy, $sumx, $sumy, $sumx2, $cov, $var, $a, $b, @running);
   my(@x) = @{$xref};
   my(@y) = @{$yref};
   debug("X",@x,"Y",@y);
@@ -2341,30 +2342,34 @@ sub linear_regression {
   # empty list = special case
   if ($n==0) {return NaN,NaN,NaN;}
 
-  # 1-elt list = special case
+  # 1-elt list = special case?
+  # TODO: is this really a special case?
   if ($n==1) {return NaN,NaN,$y[0];}
 
   # from wikipedia
-  # TODO: should probably call these avgxy, avgx, etc
   for $i (0..$#x) {
-    # TODO: getting averages, but dividing by n each time is inefficient
-    debug("I: $i, $x[$i], $y[$i]");
-    $sumxy += $x[$i]*$y[$i]/$n;
-    $sumx += $x[$i]/$n;
-    $sumy += $y[$i]/$n;
-    debug("SUMY: $sumy");
-    $sumx2 += $x[$i]*$x[$i]/$n;
+    $sumxy += $x[$i]*$y[$i];
+    $sumx += $x[$i];
+    $sumy += $y[$i];
+    $sumx2 += $x[$i]*$x[$i];
 
-    # intentionally computing this each time in case we want "running regression"
-    $cov = $sumxy - $sumx*$sumy;
-    $var = $sumx2 - $sumx*$sumx;
+    # convenience variable
+    my($count) = $i+1;
+
+    # intentionally computing this each time for "running regression"
+    $cov = $sumxy/$count - $sumx*$sumy/$count/$count;
+    $var = $sumx2/$count - $sumx*$sumx/$count/$count;
     if ($var) {
       $b = $cov/$var;
-      $a = $sumy-$b*$sumx;
+      $a = ($sumy-$b*$sumx)/$count;
+    } else {
+      ($a,$b) = ($y[0],0);
     }
+
+    push(@running,$a,$b);
  }
 
-  return $a,$b,$sumy;
+  return $a,$b,$sumy,\@running;
 }
 
 =item fmodp($num, $mod)
