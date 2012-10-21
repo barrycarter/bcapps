@@ -23,14 +23,14 @@ use XML::Bare;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
-# for $i (split(/\n/,read_file("/tmp/bwl.txt")))
-#  ($x,$y) = split(/\s+/,$i);
-#  push(@x,$x);
-#  push(@y,$y);
-#}
+for $i (split(/\n/,read_file("/tmp/bwl.txt"))) {
+  ($x,$y) = split(/\s+/,$i);
+  push(@x,$x);
+  push(@y,$y);
+}
 
-@x= (1,2,3,4);
-@y=(3,5,7,9);
+# @x= (1,2,3,4);
+# @y=(3,5,7,9);
 
 # @x=(1,2);
 # @y=(3,5);
@@ -40,7 +40,14 @@ require "bc-twitter.pl";
 debug($a,$b,$sumy,$ref);
 @running = @{$ref};
 
-debug("RUNNING",@running);
+while (@running) {
+  ($x,$y) = (shift(@running), shift(@running));
+  if (++$n<10) {next;}
+#  print "$x[$n-1] $y\n";
+  print "$x[$n-1] $x\n";
+}
+
+# debug("RUNNING",@running);
 
 die "TESTING";
 
