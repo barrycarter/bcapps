@@ -1,0 +1,260 @@
+FOOD: 701311 Rice, white, long grain, precooked (cost per pound/453.6 grams) [Rice]
+
+20049 Rice, white, long-grain, precooked or instant, enriched, prepared
+
+FOOD: 702111 Bread, white, pan, per lb. (453.6 gm) [Bread]
+
+18069 Bread, white, commercially prepared (includes soft bread crumbs)
+
+FOOD: 702112 Bread, French, per lb. (453.6 gm) [Bread]
+
+18029 Bread, french or vienna (includes sourdough)
+
+FOOD: 702211 Bread, rye, pan (cost per pound/453.6 grams) [Bread]
+
+18060 Bread, rye
+
+FOOD: 702212 Bread, whole wheat, pan, per lb. (453.6 gm) [Bread]
+
+18075 Bread, whole-wheat, commercially prepared
+
+FOOD: 702221 Rolls, hamburger (cost per pound/453.6 grams) [Rolls]
+
+18350 Rolls, hamburger or hotdog, plain
+
+FOOD: 702421 Cookies, chocolate chip, per lb. (453.6 gm) [Cookies]
+
+18158 Cookies, chocolate chip, commercially prepared, regular, lower fat
+18159 Cookies, chocolate chip, commercially prepared, regular, higher fat, enriched
+18160 Cookies, chocolate chip, commercially prepared, soft-type
+18422 Cookies, chocolate chip, commercially prepared, regular, higher fat, unenriched
+
+FOOD: 702611 Crackers, soda, salted, per lb. (453.6 gm) [Crackers]
+
+18228 Crackers, saltines (includes oyster, soda, soup)
+
+FOOD: 704312 Ham, boneless, excluding canned, per lb. (453.6 gm) [Ham]
+
+7027 Ham, chopped, not canned
+
+FOOD: 704321 Ham, canned, 3 or 5 lbs, per lb. (453.6 gm) [Ham]
+
+7026 Ham, chopped, canned
+
+FOOD: 705121 Bologna, all beef or mixed, per lb. (453.6 gm) [Bologna]
+
+7007 Bologna, beef
+
+FOOD: 709112 Milk, fresh, whole, fortified, per gal. (3.8 lit) [Milk]
+
+1077 Milk, whole, 3.25% milkfat, with added vitamin D
+
+FOOD: 709211 Milk, fresh, skim (cost per one-half gallon/1.9 liters) [Milk]
+
+1151 Milk, nonfat, fluid, without added vitamin A and vitamin D (fat free or skim)
+
+FOOD: 709213 Milk, fresh, low fat, per gal. (3.8 lit) [Milk]
+
+1082 Milk, lowfat, fluid, 1% milkfat, with added vitamin A and vitamin D
+
+FOOD: 710111 Butter, salted, grade AA, stick, per lb. (453.6 gm) [Butter]
+
+1001 Butter, salted
+
+FOOD: 710122 Yogurt, natural, fruit flavored, per 8 oz. (226.8 gm) [Yogurt]
+
+1120 Yogurt, fruit, low fat, 9 grams protein per 8 ounce
+1121 Yogurt, fruit, low fat, 10 grams protein per 8 ounce
+1122 Yogurt, fruit, low fat, 11 grams protein per 8 ounce
+
+FOOD: 711111 Apples, Red Delicious, per lb. (453.6 gm) [Apples]
+
+9003 Apples, raw, with skin
+
+FOOD: 711211 Bananas, per lb. (453.6 gm) [Bananas]
+
+9040 Bananas, raw
+
+FOOD: 711311 Oranges, Navel, per lb. (453.6 gm) [Oranges]
+
+9202 Oranges, raw, navels
+
+FOOD: 711312 Oranges, Valencia, per lb. (453.6 gm) [Oranges]
+
+9201 Oranges, raw, California, valencias
+
+FOOD: 711411 Grapefruit, per lb. (453.6 gm) [Grapefruit]
+
+9111 Grapefruit, raw, pink and red and white, all areas
+9112 Grapefruit, raw, pink and red, all areas
+9116 Grapefruit, raw, white, all areas
+
+FOOD: 711412 Lemons, per lb. (453.6 gm) [Lemons]
+
+9150 Lemons, raw, without peel
+
+FOOD: 711414 Peaches, per lb. (453.6 gm) [Peaches]
+
+9236 Peaches, raw
+
+FOOD: 711415 Strawberries, dry pint, per 12 oz. (340.2 gm) [Strawberries]
+
+9316 Strawberries, raw
+
+FOOD: 711416 Grapes, Emperor or Tokay (cost per pound/453.6 grams) [Grapes]
+
+9129 Grapes, muscadine, raw
+9131 Grapes, american type (slip skin), raw
+
+FOOD: 711417 Grapes, Thompson Seedless, per lb. (453.6 gm) [Grapes]
+
+9132 Grapes, red or green (European type, such as Thompson seedless), raw
+
+FOOD: 711418 Cherries, per lb. (453.6 gm) [Cherries]
+
+9063 Cherries, sour, red, raw
+9070 Cherries, sweet, raw
+
+FOOD: 712111 Potatoes, white (cost per pound/453.6 grams) [Potatoes]
+
+11354 Potatoes, white, flesh and skin, raw
+
+FOOD: 712112 Potatoes, white, per lb. (453.6 gm) [Potatoes]
+
+11354 Potatoes, white, flesh and skin, raw
+
+FOOD: 712211 Lettuce, iceberg, per lb. (453.6 gm) [Lettuce]
+
+11252 Lettuce, iceberg (includes crisphead types), raw
+
+FOOD: 712311 Tomatoes, field grown, per lb. (453.6 gm) [Tomatoes]
+
+11529 Tomatoes, red, ripe, raw, year round average
+
+FOOD: 712401 Cabbage, per lb. (453.6 gm) [Cabbage]
+
+11109 Cabbage, raw
+
+FOOD: 712402 Celery, per lb. (453.6 gm) [Celery]
+
+11143 Celery, raw
+
+FOOD: 712403 Carrots, short trimmed and topped, per lb. (453.6 gm) [Carrots]
+
+11124 Carrots, raw
+
+FOOD: 712404 Onions, dry yellow, per lb. (453.6 gm) [Onions]
+
+11282 Onions, raw
+
+FOOD: 712405 Onions, green scallions (cost per pound/453.6 grams) [Onions]
+
+11291 Onions, spring or scallions (includes tops and bulb), raw
+
+FOOD: 712406 Peppers, sweet, per lb. (453.6 gm) [Peppers]
+
+11333 Peppers, sweet, green, raw
+11821 Peppers, sweet, red, raw
+11951 Peppers, sweet, yellow, raw
+
+FOOD: 712410 Beans, green, snap (cost per pound/453.6 grams) [Beans]
+
+11052 Beans, snap, green, raw
+
+FOOD: 712412 Broccoli, per lb. (453.6 gm) [Broccoli]
+
+11090 Broccoli, raw
+
+FOOD: 713111 Orange juice, frozen concentrate, 12 oz. can, per 16 oz. (473.2 ml) [Orange juice]
+
+9214 Orange juice, frozen concentrate, unsweetened, undiluted
+
+FOOD: 713312 Peaches, any variety, all sizes, per lb. (453.6 gm) [Peaches]
+
+9236 Peaches, raw
+
+FOOD: 714111 Potatoes, frozen, French fried, per lb. (453.6 gm) [Potatoes]
+
+11842 Potatoes, french fried, all types, salt not added in processing, frozen, as purchased
+
+FOOD: 714221 Corn, canned, any style, all sizes, per lb. (453.6 gm) [Corn]
+
+11170 Corn, sweet, yellow, canned, brine pack, regular pack, solids and liquids
+11172 Corn, sweet, yellow, canned, whole kernel, drained solids
+11174 Corn, sweet, yellow, canned, cream style, regular pack
+11176 Corn, sweet, yellow, canned, vacuum pack, regular pack
+11177 Corn, sweet, yellow, canned, drained solids, rinsed with tap water
+11771 Corn, sweet, yellow, canned, no salt added, solids and liquids
+11772 Corn, sweet, yellow, canned, cream style, no salt added
+11773 Corn, sweet, yellow, canned, vacuum pack, no salt added
+11903 Corn, sweet, white, canned, whole kernel, regular pack, solids and liquids
+11904 Corn, sweet, white, canned, whole kernel, no salt added, solids and liquids
+11905 Corn, sweet, white, canned, whole kernel, drained solids
+11906 Corn, sweet, white, canned, cream style, regular pack
+11907 Corn, sweet, white, canned, cream style, no salt added
+11908 Corn, sweet, white, canned, vacuum pack, regular pack
+11909 Corn, sweet, white, canned, vacuum pack, no salt added
+
+FOOD: 714231 Tomatoes, canned, whole, per lb. (453.6 gm) [Tomatoes]
+
+11885 Tomatoes, red, ripe, canned, packed in tomato juice, no salt added
+
+FOOD: 714232 Tomatoes, canned, any type, all sizes,  per lb. (453.6 gm) [Tomatoes]
+
+11693 Tomatoes, crushed, canned
+
+FOOD: 715212 Sugar, white, 33-80 oz. pkg, per lb. (453.6 gm) [Sugar]
+
+19335 Sugars, granulated
+
+FOOD: 716111 Margarine, vegetable oil blends, stick (cost per pound/453.6 grams) [Margarine]
+
+4629 Margarine, margarine-type vegetable oil spread, 70% fat, soybean and partially hydrogenated soybean, stick
+
+FOOD: 716113 Margarine, vegetable oil blends, soft, tubs (cost per pound/453.6 grams) [Margarine]
+
+# NEED TO REDO THIS WITH FULL LIST, SCREWED UP
+4629 Margarine, margarine-type vegetable oil spread, 70% fat, soybean and partially hydrogenated soybean, stick
+
+FOOD: 716114 Margarine, stick, per lb. (453.6 gm) [Margarine]
+
+4617 Margarine, regular, 80% fat, composite, stick, without salt
+4628 Margarine, 80% fat, stick, includes regular and hydrogenated corn and soybean oils
+
+FOOD: 716116 Margarine, soft, tubs, per lb. (453.6 gm) [Margarine]
+
+4684 Margarine, 80% fat, tub, CANOLA HARVEST Soft Spread (canola, palm and palm kernel oils)
+
+FOOD: 716121 Shortening, vegetable oil blends, per lb. (453.6 gm) [Shortening]
+
+4615 Shortening, vegetable, household, composite
+
+
+FOOD: 716141 Peanut butter, creamy, all sizes, per lb. (453.6 gm) [Peanut butter]
+
+16398 Peanut butter, smooth style, without salt
+
+FOOD: 717311 Coffee, 100%, ground roast, all sizes, per lb. (453.6 gm) [Coffee]
+
+14209 Coffee, brewed from grounds, prepared with tap water
+
+FOOD: 717312 Coffee, 100%, ground roast, 13.1-20 oz. can, per lb. (453.6 gm) [Coffee]
+
+14209 Coffee, brewed from grounds, prepared with tap water
+
+FOOD: 717327 Coffee, instant, plain, regular, all sizes, per lb. (453.6 gm) [Coffee]
+
+14214 Coffee, instant, regular, powder
+
+FOOD: 718311 Potato chips, per 16 oz. [Potato chips]
+
+19823 Potato chips, without salt, reduced fat
+
+
+FOOD: FF1101 Chicken breast, boneless, per lb. (453.6 gm) [Chicken breast]
+
+5327 Chicken breast tenders, uncooked
+
+FOOD: FL2101 Lettuce, romaine, per lb. (453.6 gm) [Lettuce]
+
+11251 Lettuce, cos or romaine, raw
