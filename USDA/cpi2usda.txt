@@ -1,3 +1,5 @@
+######## THIS FILE IS OBSOLETE AND WILL BE REMOVED SOON, SEE food.items.txt
+
 FOOD: 701311 Rice, white, long grain, precooked (cost per pound/453.6 grams) [Rice]
 
 20049 Rice, white, long-grain, precooked or instant, enriched, prepared

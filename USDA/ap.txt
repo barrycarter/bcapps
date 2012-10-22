@@ -1,0 +1,292 @@
+				Average Price Data (AP)
+					ap.txt
+
+Section Listing
+
+1.  Survey Definition
+2.  FTP files listed in the survey directory
+3.  Time series, series file, data file, & mapping file definitions and relationships
+4.  Series file format and field definitions
+5.  Data file format and field definitions
+6.  Mapping file formats and field defintions
+7.  Data Element Dictionary
+
+===================================================================================
+Section 1
+===================================================================================
+
+The following is a definition of:  Average Price Data (AP)
+
+Survey Description:  Average consumer prices are calculated for household
+fuel, motor fuel, and food items from prices collected for the Consumer
+Price Index (CPI).  Average prices are best used to measure the price level
+in a particular month, not to measure price change over time.  It is more
+appropriate to use the CU or CW and its individual item indexes to measure
+price change.
+
+Prices, except for electricity, are collected monthly by BLS representatives
+in the 85 urban areas priced for the CPI.  Electricity prices are collected
+for the BLS for the same 85 areas on a monthly basis by the Department of
+Energy using mail questionnaires.  All fuel prices include applicable
+Federal, State, and local taxes; prices for natural gas and electricity also
+include fuel and purchased gas adjustments.
+
+Summary Data Available:  Average consumer prices for household fuel and
+motor fuel are available for the U.S. city average, 28 urban areas, four
+regions, and 16 region/size class groupings.
+
+Average consumer prices for food are available for the U.S. city average and
+four regions.
+
+Monthly data are available for up to six household fuel categories, six
+motor fuel categories, and 104 food categories.
+
+Frequency of Observations:  All data are monthly; annual averages are not
+available.
+
+Data Characteristics:  Average prices are stored to three decimal places.
+
+Updating Schedule:  Updates become available near the 15th of the month
+following the reference month.
+====================================================================================
+Section 2
+====================================================================================
+The following Average Price Data files are on the BLS internet in the sub-directory 
+pub/time.series/ap:
+
+	ap.data.0.Current		- All current year-to-date data
+	ap.data.1.HouseholdFuels	- All household fuels data
+	ap.data.2.Gasoline		- All gasoline data
+	ap.data.3.Food			- All food data
+	ap.area				- Area codes		mapping file
+	ap.contacts			- Contacts for ap survey  
+	ap.footnote			- Footnote codes	mapping file
+	ap.item				- Item codes		mapping file
+	ap.period			- Period codes		mapping file
+	ap.series			- All series and their beginning and end Dates
+	ap.txt				- General information
+	
+=================================================================================
+Section 3
+=================================================================================
+The definition of a time series, its relationship to and the interrelationship
+among series, data and mapping files is detailed below:
+
+A time series refers to a set of data observed over an extended period of time
+over consistent time intervals (i.e. monthly, quarterly, semi-annually, annually).  
+BLS time series data are typically produced at monthly intervals and represent data 
+ranging from a specific consumer item in a specific geographical area whose price 
+is gathered monthly to a category of worker in a specific industry whose employment
+rate is being recorded monthly, etc.
+
+The FTP files are organized such that data users are provided with the following
+set of files to use in their efforts to interpret data files:
+
+a)  a series file (only one series file per survey)
+b)  mapping files
+c)  data files
+
+The series file contains a set of codes which, together, compose a series 
+identification code that serves to uniquely identify a single time series.  
+Additionally, the series file also contains the following series-level information:
+
+a) the period and year corresponding to the first data observation 
+b) the period and year corresponding to the most recent data observation. 
+
+The mapping files are definition files that contain explanatory text descriptions
+that correspond to each of the various codes contained within each series
+identification code.
+
+The data file contains one line of data for each observation period pertaining to a
+specific time series.  Each line contains a reference to the following:
+
+a) a series identification code
+b) year in which data is observed
+c) period for which data is observed (M13, Q05, and S03 indicate annual averages)
+d) value
+e) footnote code (if available)
+=================================================================================
+Section 4
+=================================================================================
+File Structure and Format: The following represents the file format used to define
+ap.series.  Note the Field Numbers are for reference only; they do not exist in the
+database.  Data files are in ASCII text format.  Data elements are separated by 
+spaces; the first record of each file contains the column headers for the data 
+elements stored in each field.  Each record ends with a new line character. 
+
+Field #/Data Element	Length		Value(Example)		
+
+1.  series_id		  17		APU0000701111
+
+2.  area_code		   4		A100
+
+3.  item_code		   7		712211
+
+4.  begin_year		   4		1980
+
+5.  begin_period	   3		M01		
+				
+6.  end_year		   4		2002		
+
+7.  end_period		   3		M02	
+					
+
+The series_id (APU0000701111) can be broken out into:
+
+Code					Value(Example)
+
+survey abbreviation	=		AP
+seasonal(code)		=		U
+area_code		=		0000
+item_code		=		701111
+==================================================================================
+Section 5
+==================================================================================
+File Structure and Format: The following represents the file format used to define
+each data file.  Note that the field numbers are for reference only; they do not 
+exist in the database.  Data files are in ASCII text format.  Data elements are 
+separated by spaces; the first record of each file contains the column headers for 
+the data elements stored in each field.  Each record ends with a new line character.  
+
+The ap.data file is partitioned into four separate files:  
+
+	1.  ap.data.0.Current		= All current year-to-date data
+	2.  ap.data.1.HouseholdFuels	= All household fuel (fuel oil,
+					  utility gas, electricity) data
+	3.  ap.data.2.Gasoline		= All gasoline data
+	4.  ap.data.3.Food		= All food data
+
+Both of the above data files have the following format:
+
+Field #/Data Element	Length		Value(Example)		
+
+1. series_id		  17		APU0000701111
+
+2. year			   4		1980	
+
+3. period		   3		M01		
+
+4. value		  12      	0.238	
+				 
+
+5. footnote_codes	  10		It varies
+				
+
+The series_id (APU0000701111) can be broken out into:
+
+Code					Value(Example)
+
+survey abbreviation	=		AP
+seasonal(code)		=		U
+area_code		=		0000
+item_code		=		701111
+============================================================================
+Section 6
+============================================================================
+File Structure and Format:  The following represents the file format used to define
+each mapping file. Note that the field numbers are for reference only; they do not
+exist in the database.  Mapping files are in ASCII text format.  Data elements are
+separated by tabs; the first record of each file contains the column headers for the
+data elements stored in each field.  Each record ends with a new line character. 
+
+File Name:  ap.area
+
+Field #/Data Element		Length		Value(Example)
+
+1. area_code			4		A100
+
+2. area_name			80		Text
+
+
+File Name:  ap.footnote
+
+Field #/Data Element		Length		Value(Example)
+
+1. footnote_code		1		C
+
+2. footnote_text		100		Text
+
+
+File Name:  ap.item
+
+Field #/Data Element		Length		Value(Example)
+
+1. item_code			7		712211
+
+2. item_name			100		Text
+
+
+File Name:  ap.period
+
+Field #/Data Element		Length		Value(Example)
+
+1. period			3		M01
+
+2. period_abbr			5		JAN
+
+3. period_name			20		Text
+==============================================================================
+Section 7
+==============================================================================
+
+AVERAGE PRICE DATA (AP) DATABASE ELEMENTS
+
+
+Data Element	Length		Value(Example)			Description
+
+area_code	4		A100			Unique code used to identify
+							a specific geographic area.
+
+area_name	80		Text			Name of specific geographic
+				Ex: MIAMI, FLA		area.
+				
+begin_period	3		M02			Identifies first data observation
+				Ex: M02=Feb		within the first year for which
+				(M=Monthly, M13= 	data is available for a given time
+				Annual Avg)		series.					
+						
+begin_year	4		1990			Identifies first year for which
+ 							data is available for a given time
+							series.
+						
+end_period	3		M06			Identifies last data observation 
+ 				Ex: M06=June		within the last year for which
+				(M=Monthly, M13=	data is available for a given time
+				Annual Avg)		series.
+						
+end_year	4		2000			Identifies las year for which data
+ 							is available for a given time
+							series.
+							
+footnote_code	1		C			Identifies footnote for the data 
+							series.
+
+footnote_codes	10		It varies		Identifies footnotes for the data 
+							series.	
+							
+footnote_text	100		Text			Contains the text of the footnote.
+
+item_code	7		712211			Identifies item for which
+ 							data observations pertain.
+
+item_name	100		Text			Full names of items.
+					
+period_abbr	5		JAN			Abbreviation of period name.
+ 					
+period		3		M01			Identifies period for which data 
+ 				Ex: M01=Jan		is observed.
+				(M=Monthly, M13=	
+				Annual Avg)
+ 				
+period_name	20		Text			Full name of period to which
+ 				Ex: January		the data observation refers.
+				
+
+series_id	17		APU0000701111		Code identifying the specific 
+ 							series.
+
+value		12		10.124			Average price of item.
+	    
+year		4		1990			Identifies year of observation.        	
+				
+
