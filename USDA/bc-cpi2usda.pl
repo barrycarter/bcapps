@@ -55,7 +55,7 @@ for $i (split(/\n/,read_file("/home/barrycarter/BCGIT/USDA/food.items.txt"))) {
   # and the query
   # TODO: editing the existing USDA table is ugly, but easier than creating
   # a new one, especially given that we have repeats
-  $query = "INSERT INTO prices (food_id, price) VALUES ($usda, $price{$cpi}/$div)";
+  $query = "UPDATE food SET price=$price{$cpi}/$div WHERE id IN ($usda)";
 
   debug("QUERY: $query");
   debug("I: $i");
