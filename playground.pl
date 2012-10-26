@@ -23,6 +23,10 @@ use XML::Bare;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
+gnumeric2sqlite3("/home/barrycarter/BCGIT/FOODTRACK/foods.gnumeric", "foods", "/home/barrycarter/BCINFO/sites/DB/foods.db");
+
+die "TESTING";
+
 for $i (split(/\n/,read_file("/tmp/bwl.txt"))) {
   ($x,$y) = split(/\s+/,$i);
   push(@x,$x);
@@ -82,9 +86,6 @@ debug("RES: $a $b $c");
 
 # <h>ETSTING is like testing, only moreso</h>
 die "ETSTING";
-
-gnumeric2sqlite3("/home/barrycarter/BCGIT/FOODTRACK/foods.gnumeric", "foods", "/home/barrycarter/BCINFO/sites/DB/foods.db");
-die "TESTING";
 
 @arr=gnumeric2array("/home/barrycarter/BCGIT/FOODTRACK/foods.gnumeric");
 

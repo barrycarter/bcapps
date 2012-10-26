@@ -17,8 +17,11 @@ while (<A>) {
   s/^ap.0000//isg;
   # we know year/month are 2012/m09, so don't really need them
   ($code, $x, $x, $price) = split(/\s+/,$_);
+  debug("$code -> $price");
   $price{$code} = $price;
 }
+
+close(A);
 
 for $i (split(/\n/,read_file("/home/barrycarter/BCGIT/USDA/food.items.txt"))) {
   # ignore comments
@@ -45,47 +48,29 @@ for $i (split(/\n/,read_file("/home/barrycarter/BCGIT/USDA/food.items.txt"))) {
     # gallon milk = 8.6 pounds (http://www.ers.usda.gov/data-products/price-spreads-from-farm-to-consumer/documentation.aspx)
     $div = 39;
   } else {
-    debug("BAD WEIGHT: $i");
+    warn("BAD WEIGHT: $i");
   }
 
   # split into usda items, cpi index number
   $i=~/^(.*?)\s+(.*?)\s+/;
   my($usda, $cpi) = ($1,$2);
 
+  unless ($price{$cpi}) {
+    warn("NO PRICE: $cpi");
+    next;
+  }
+
   # and the query
   # TODO: editing the existing USDA table is ugly, but easier than creating
   # a new one, especially given that we have repeats
-  $query = "UPDATE food SET price=$price{$cpi}/$div WHERE id IN ($usda)";
-
-  debug("QUERY: $query");
-  debug("I: $i");
-  debug("USDA: $usda, CPI: $cpi, PRICE: $price{$cpi}");
-  next;
-
-  chomp($i);
-  debug("I: $i"); next;
-  $i=~s/\s*$//isg;
-  $i=~/^(.*?)\t(.*)$/||warn("Bad line: $i");
-  my($num,$food) = ($1,$2);
-
-  # will try to match part of food before comma
-  $sfood=$food;
-  $sfood=~s/\,.*//;
-
-  # query (this is redundant, since many sfood's are identical)
-  $query = "SELECT id||' '||long_desc AS usda FROM food WHERE long_desc LIKE '$sfood%'";
-  debug($query);
-
-  @res = sqlite3hashlist($query,"/home/barrycarter/BCINFO/sites/DB/usda.db");
-
-  print "\n\nFOOD: $num $food [$sfood]\n\n";
-
-  for $j (@res) {
-    %hash = %{$j};
-    print "$hash{usda}\n";
-  }
-
+  push(@queries, "UPDATE food SET price=$price{$cpi}/$div WHERE id IN ($usda);");
 }
+
+print "BEGIN;\n";
+print join("\n",@queries);
+print "\nCOMMIT;\n";
+
+
 
 
 

@@ -4,6 +4,7 @@ db (not the ASCII format). See oneliner.sh for initial commands.
 The '0100' in APU0100711211 refers to region; for this program, we
 only use the '0000' values (US city average)
 
+TODO: use commodity data when CPI data is unavailble
 
 
 
