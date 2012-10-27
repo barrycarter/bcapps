@@ -13,7 +13,7 @@ while (<A>) {
   debug("FILE: $_");
   $all = read_file($_);
 
-  %hash = ();
+  my(%hash) = ();
 
   # product name
   $all=~s%<title>(.*?)</title>%%;
@@ -23,6 +23,8 @@ while (<A>) {
   # special case for data delimited using <strong>
   while ($all=~s%<strong>(.*?):?</strong>(.*?)<%%is) {
     ($key,$val) = ($1,$2);
+    # ignore empties and numericals
+    if ($key=~/^\d*$/) {next;}
     $hash{$key} = trim($val);
   }
 
@@ -38,6 +40,9 @@ while (<A>) {
   while ($all=~s%<tr.*?>(.*?)</tr>%%is) {
     $row = $1;
 
+    # ignore empty (not working, may contain empty <td>s
+#    if ($row=~/^\s*$/s) {next;}
+
     @arr = ();
     while ($row=~s%<td.*?>(.*?)</td>%%s) {
       # cleanup cell + push to row-specific array
@@ -50,14 +55,17 @@ while (<A>) {
     $hash{$arr[0]} = coalesce([@arr[1..$#arr]]);
   }
 
-  for $i (sort keys %hash) {
-    print "$i: $hash{$i}\n";
+  # only stuff that has calories
+  unless ($hash{Calories}) {next;}
+
+  push(@hashes, \%hash);
+
+  if (++$n > 100) {
+    warn "TESTING";
+    last;
   }
-
-  print "\n";
-
-  if (++$n > 10) {die "TESTING";}
-
 }
+
+debug(hashlist2sqlite(\@hashes, "foods"));
 
 
