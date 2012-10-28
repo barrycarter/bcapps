@@ -5,6 +5,8 @@
 #  Downloaded content IS checked for hrefs
 #  Downloads multiple URLs in parallel
 
+# TODO: get rid of mailto URLs
+
 # Program name "mmm" is like "yummy".
 
 # More details: http://stackoverflow.com/questions/13092229/cant-resume-wget-mirror-with-no-clobber-c-f-b-unhelpful
@@ -22,26 +24,39 @@ $site = "www.directionsforme.org";
 
 @urls = get_hrefs(read_file($file));
 
-for $i (@urls) {
+# during testing, write out mapping and URL list to files
+open(A,">/mnt/sshfs/20121027/map.txt");
+open(B,">/mnt/sshfs/20121027/urls.txt");
+
+while ($i = shift(@urls)) {
 #  debug("URL: $i");
 
   # if this url already visited, ignore it, else mark it visited
   if ($visited{$i}) {next;}
   $visited{$i} = 1;
 
-  # check to see if I have this URL locally from wget
+  # check to see if I have this URL locally from wget or earlier instances of this prog
   $file = url2file($i);
-  debug("FILE: $file");
-  warn "TESTING";
-  next;
+  unless ($file) {
+    print A "$i NULL\n";
+    next;
+  }
 
   $all = read_file($file);
 
-  push(@urls, get_hrefs($all));
-  debug("LENGTH: $#urls+1");
+  print A "$i $file\n";
+  @news = get_hrefs($all);
 
-
+  for $j (@news) {
+    # not strictly necessary to filter out visited URLs here, but helps
+    if ($visited{$j}) {next;}
+    print B "$i $j\n";
+    push(@urls,$j);
+  }
 }
+
+close(A);
+close(B);
 
 =item get_hrefs($str)
 
@@ -56,12 +71,17 @@ sub get_hrefs {
   # TODO: this assumes well-formed href/src, which many are not
   while ($str=~s/(href|src)=[\"\'](.*?)[\"\']//is) {
     my($url) = $2;
+#    debug("ALPHA: $url");
 
     # if relative (to host), fix
     if ($url=~m%^/%) {$url = "http://$site$url";}
 
     # canonize URL (after adding $site)
     $url = canonize_url($url);
+
+    # ignore empty URL
+    # TODO: not convinced this is correct behavior
+    unless ($url) {next;}
 
     # TODO: make this more general
     # ignore images
@@ -118,7 +138,7 @@ such file exists
 
 sub url2file {
   my($url) = @_;
-  debug("URL2FILE($url)");
+#  debug("URL2FILE($url)");
 
   # check to see if I have this URL locally from wget
   $file = $i;
