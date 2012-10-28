@@ -48,10 +48,11 @@ while ($i = shift(@urls)) {
   @news = get_hrefs($all);
 
   for $j (@news) {
-    # not strictly necessary to filter out visited URLs here, but helps
-    if ($visited{$j}) {next;}
+    # only add each URL once
+    if ($added{$j}) {next;}
     print B "$i $j\n";
     push(@urls,$j);
+    $added{$j}=1;
   }
 }
 
