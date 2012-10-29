@@ -32,10 +32,10 @@ debug("DONE MAKING/CHECKING DIRS");
 
 # this file contains the output of "find . -type f" from the directory
 # where I ran "wget -m"
-open(A,"/mnt/sshfs/D4M2/D4M/allfiles.txt");
+open(A,"/mnt/sshfs/DIRECTIONSFORME/allfiles.txt");
 
 # to be doubly safe, note down where I put files (and run this when done)
-open(B,">/mnt/sshfs/D4M2/D4M/wget2sha.sh");
+open(B,">/mnt/sshfs/DIRECTIONSFORME/wget2sha.sh");
 
 while (<A>) {
   chomp;
