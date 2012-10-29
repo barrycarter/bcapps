@@ -23,6 +23,14 @@ use XML::Bare;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
+for $i (0..255) {
+  for $j (0..255) {
+    printf("%02x %02x\n",$i,$j);
+  }
+}
+
+die "TESTING";
+
 gnumeric2sqlite3("/home/barrycarter/BCGIT/FOODTRACK/foods.gnumeric", "foods", "/home/barrycarter/BCINFO/sites/DB/foods.db");
 
 die "TESTING";

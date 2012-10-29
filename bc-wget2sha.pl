@@ -17,10 +17,12 @@ require "/usr/local/lib/bclib.pl";
 $target = "/mnt/sshfs/D4M3";
 
 unless ($globopts{nomakedirs}) {
-  for $i ("00".."ff") {
-    for $j ("00".."ff") {
-      unless (-d "$target/$i/$j") {
-	system("mkdir -p $target/$i/$j");
+  for $i (0..255) {
+    for $j (0..255) {
+      $path = sprintf("%02x/%02x",$i,$j);
+      $dir = "$target/$path";
+      unless (-d $dir) {
+	system("mkdir -p $dir");
       }
     }
   }
