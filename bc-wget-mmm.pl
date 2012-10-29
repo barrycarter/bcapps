@@ -16,87 +16,131 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# the directory where wget -m started the download
-# TODO: in the final version, the start location will be a URL
-$dir = "/mnt/sshfs/D4M2/D4M/www.directionsforme.org";
-$file = "$dir/index.html";
-$site = "www.directionsforme.org";
+# TODO: turn all of the below into command line options
+# list of initial URLs
+my(@list) = ("http://www.directionsforme.org");
+# all visited URLs must meet this regex
+my($regexp) = "directionsforme";
+# ignore URLs meeting this regex, even if they match $regex
+# special case: if empty, ignore nothing
+my($ignore) = "";
+# target directory
+my($target) = "/mnt/sshfs/D4M3";
+# do all work in target
+dodie("chdir('$target')");
 
-@urls = get_hrefs(read_file($file));
+# write out URL map + URL to sha1 conversions
+open(A,">index.txt");
+open(B,">hrefs.txt");
+open(C,">list.txt");
 
-# during testing, write out mapping and URL list to files
-open(A,">/mnt/sshfs/20121027/map.txt");
-open(B,">/mnt/sshfs/20121027/urls.txt");
+while ($i = shift(@list)) {
 
-while ($i = shift(@urls)) {
-#  debug("URL: $i");
+  # canonize this URL
+  $i = canonize_url($i);
 
   # if this url already visited, ignore it, else mark it visited
-  if ($visited{$i}) {next;}
+  # we may not have really visited this URL, just ignored it, but still works
+  if ($visited{$i}) {
+    debug("SKIPPING, ALREADY SEEN: $i");
+    next;
+  }
   $visited{$i} = 1;
 
-  # check to see if I have this URL locally from wget or earlier instances of this prog
-  $file = url2file($i);
-  unless ($file) {
-    print A "$i NULL\n";
+  if ($regexp && $i!~m!$regexp!) {
+    debug("SKIPPING, FAILS REGEX: $i");
     next;
   }
 
-  $all = read_file($file);
+  if ($ignore && $i=~m!$ignore!) {
+    debug("SKIPPING, MEETS IGNORE REGEX: $i");
+    next;
+  }
 
-  print A "$i $file\n";
-  @news = get_hrefs($all);
+  my($res) = url2file($i);
 
-  for $j (@news) {
-    # only add each URL once
-    if ($added{$j}) {next;}
+  unless ($res) {
+    warn "SKIPPING DURING TESTING ONLY";
+    next;
+  }
+
+  # note where URL is stored
+  print A "$res $i\n";
+
+  @newurls = get_hrefs(read_file($res),$i);
+
+  debug("NEW",@newurls);
+
+  for $j (@newurls) {
+    # canonize the URL
+    $j = canonize_url($j);
+
+    # exclude URLs that fail regex (dont HAVE to do this here, but it
+    # helps keep list shorter)
+    if ($regexp && $j!~m!$regexp!) {next;}
+    if ($ignore && $j=~m!$ignore!) {next;}
+
+    # if already visited URL (or its on the to-visit list), dont readd
+    if ($added{$j}||$visited{$j}) {next;}
+
+    # add it and mark it "added"
     print B "$i $j\n";
-    push(@urls,$j);
+    print C "$j\n";
+    push(@list,$j);
     $added{$j}=1;
   }
 }
 
 close(A);
 close(B);
+close(C);
 
-=item get_hrefs($str)
+=item get_hrefs($str,$url)
 
-Obtains all hrefs (and srcs) from given string, provided they are on
-the same host
+Obtains all hrefs (and srcs) from given string, assuming the hrefs
+came from $url (used to fix relative paths)
 
 =cut
 
 sub get_hrefs {
-  my($str) = @_;
-  my(%ret);
-  # TODO: this assumes well-formed href/src, which many are not
-  while ($str=~s/(href|src)=[\"\'](.*?)[\"\']//is) {
-    my($url) = $2;
-#    debug("ALPHA: $url");
+  my($str,$url) = @_;
+  my(@res);
 
-    # if relative (to host), fix
-    if ($url=~m%^/%) {$url = "http://$site$url";}
+  # get hostname
+  $url=~m!(https?://.*?)($|/)!||warn("NOHOSTNAME: $url");
+  my($hostname)=$1;
+  $url=~m!^(.*/)[^/]*$!||warn("NODIRNAME: $url");
+  my($dirname)=$1;
 
-    # canonize URL (after adding $site)
-    $url = canonize_url($url);
-
-    # ignore empty URL
-    # TODO: not convinced this is correct behavior
-    unless ($url) {next;}
-
-    # TODO: make this more general
-    # ignore images
-    if ($url=~/\.(jpg|png)$/) {next;}
-
-    # now fully qualified, if another host, ignore
-    $url=~m%^https?://([^/]*?)(/|$)% || warn("BAD URL: $url");
-    my($host) = $1;
-    unless ($host eq $site) {next;}
-
-    # avoid dupes
-    $ret{$url}=1;
+  # find all HTML tags, and store those with href/src
+  my(@tags)= ($str=~/<(.*?)>/isg);
+  my(%hrefs);
+  for $i (@tags) {
+    # use hash to avoid dupes
+    if ($i=~/(href|src)=[\"\']?(.*?)[\"\']?($|\s)/is) {$hrefs{$2}=1;}
   }
-  return keys %ret;
+
+  # go through hrefs and turn them into complete URLs
+  for $i (keys %hrefs) {
+    # ignore empty URLS
+    # TODO: is this the right behavior here?
+    if ($i=~/^\s*$/) {next;}
+
+    if ($i=~m!^[a-z]+:!) {
+      # do nothing; leave "protocol:something" as is
+    }  elsif ($i=~m!^/!) {
+      # starts with /, just add hostname
+      $i="$hostname$i";
+    } else {
+      # doesnt start with /, so append to $dirname
+      $i="$dirname$i";
+    }
+
+    # always canonize
+    $i = canonize_url($i);
+    push(@res,$i);
+  }
+  return @res;
 }
 
 =item canonize_url($url)
@@ -122,9 +166,9 @@ sub canonize_url {
   # remove virtual directory sorting options
   $url=~s!/\?[NMSD]\=[AD]/*!!isg;
 
-  # add trailing slash (just one) to URL
-  # TODO: copied this from one of my old programs, not sure its valid
-  # if ($url=~m!/[^/\.]+$!) {$url="$url/";}
+  # remove trailing slash(es)
+  # TODO: is this bad?
+  $url=~s!/+$!!;
 
   return $url;
 }
@@ -139,16 +183,28 @@ such file exists
 
 sub url2file {
   my($url) = @_;
-#  debug("URL2FILE($url)");
+  my($sha,$file);
+  # URLs should be canonized before calling this sub, but just in case
+  $url = canonize_url($url);
 
-  # check to see if I have this URL locally from wget
-  $file = $i;
-  $file=~s%https?://$site/?%$dir/%;
-
-  # if $file happens to be a directory, use $file/index.html (wget convention)
-  if (-d $file) {$file = "$file/index.html";}
+  # using two directory level sha1 (ie xx/xx/sha)
+  $sha = sha1_hex($url);
+  $sha=~/^(..)(..)/;
+  $file = "$1/$2/$sha";
 
   if (-f $file) {return $file;}
+
+  # TODO: check for </html> or something?
+
+  # due to (yet another) error, I hashed http://./URL instead
+  $url=~s%http://%http://./%;
+  $sha = sha1_hex($url);
+  $sha=~/^(..)(..)/;
+  $file = "$1/$2/$sha";
+
+  if (-f $file) {return $file;}
+
+  debug("URL NOT FOUND: $url");
 
   return;
 }
