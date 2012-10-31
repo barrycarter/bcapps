@@ -34,6 +34,10 @@ open(A,">index.txt");
 open(B,">hrefs.txt");
 open(C,">list.txt");
 
+# next two are temporary should not appear in final version
+open(D,">moves.txt");
+open(E,">wanted.txt");
+
 while ($i = shift(@list)) {
 
   # canonize this URL
@@ -60,6 +64,7 @@ while ($i = shift(@list)) {
   my($res) = url2file($i);
 
   unless ($res) {
+    print E "$i\n";
     warn "SKIPPING DURING TESTING ONLY";
     next;
   }
@@ -68,8 +73,6 @@ while ($i = shift(@list)) {
   print A "$res $i\n";
 
   @newurls = get_hrefs(read_file($res),$i);
-
-  debug("NEW",@newurls);
 
   for $j (@newurls) {
     # canonize the URL
@@ -86,6 +89,7 @@ while ($i = shift(@list)) {
     # add it and mark it "added"
     print B "$i $j\n";
     print C "$j\n";
+    debug("ADDED: $j");
     push(@list,$j);
     $added{$j}=1;
   }
@@ -197,12 +201,16 @@ sub url2file {
   # TODO: check for </html> or something?
 
   # due to (yet another) error, I hashed http://./URL instead
-  $url=~s%http://%http://./%;
-  $sha = sha1_hex($url);
-  $sha=~/^(..)(..)/;
-  $file = "$1/$2/$sha";
+  # move it to correct place then return
+  my($url2) = $url;
+  $url2=~s%http://%http://./%;
+  my($sha2) = sha1_hex($url2);
+  $sha2=~/^(..)(..)/;
+  my($file2) = "$1/$2/$sha2";
 
-  if (-f $file) {return $file;}
+  print D "mv $file $file2\n";
+
+  if (-f $file2) {return $file2;}
 
   debug("URL NOT FOUND: $url");
 
