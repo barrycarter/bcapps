@@ -23,6 +23,8 @@ use XML::Bare;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
+die "TESTING";
+
 for $i (0..255) {
   for $j (0..255) {
     printf("%02x %02x\n",$i,$j);
