@@ -24,8 +24,8 @@ while (@qs) {
   # a little bit at a time for now
   $n++;
   print "N: $n\n";
-  # NOTE: thru 1000 done, rest still to go
-  unless ($n>=901 && $n<=1000) {next;}
+  # NOTE: thru 1100 done, rest still to go
+  unless ($n>=1001 && $n<=1100) {next;}
 
   # date and varks bizarre "subject"
   $head=~/\*(.*?)\*\n(.*)/||warn("BAD HEAD: $head");

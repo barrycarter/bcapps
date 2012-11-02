@@ -82,12 +82,11 @@ while (<A>) {
 
     %itemhash = %{$hash{$item}};
 
-#    debug("IH: $itemhash{'Personal Serving'}");
+    # this is intentionally done for my personal serving count
+    $totalquant{$item} += $quant;
 
     # if I have a setting for personal servings, use it
     if ($itemhash{'Personal Serving'}) {$quant*=$itemhash{'Personal Serving'}};
-
-#    debug("$quant of $item");
 
     for $j (@totalfields) {
       $total{$j} += $quant*$itemhash{$j};
@@ -161,6 +160,12 @@ printf("\nHours Awake: %0.2f\nCalories Earned: %d\nCalories Eaten: %d\nCalories 
 
 printf("Hours to 2030: %0.2f\nCalories Required: %d\nCalories Eaten: %d\nCalories remaining (total): %d\nCalories Remaining (per hour): %d\n\n", $timeto830/3600, 1200, $eaten, 1200-$eaten, 3600*(1200-$eaten)/$timeto830);
 
+# probably printing out too much information, but heres some more
+
+for $i (sort {$totalquant{$a} <=> $totalquant{$b}} keys %totalquant) {
+  print "$i: $totalquant{$i}\n";
+}
+
 # string for bc-bg.pl
 $bgstring = sprintf("kcal: %d/%d/%d (remain/earned/eaten)",$remain,$cals,$eaten);
 
@@ -169,4 +174,7 @@ write_file_new($bgstring, "/home/barrycarter/ERR/cal.inf");
 write_file_new($ERR_FLAG, "/home/barrycarter/ERR/cal.err");
 
 # TODO: my days don't always end at midnight, compensate
+
+
+
 
