@@ -5,6 +5,8 @@
 
 # Files in this program may be very large, so no loading in memory. Files:
 
+# if restarting, rm urlsdone*.txt mapping.txt
+
 require "/usr/local/lib/bclib.pl";
 
 # for this download
@@ -18,9 +20,6 @@ system("touch urlsdone.txt");
 # write curl commands to download urlstodo.txt to curltodo.txt
 # write curl output files (for urlstodo.txt) to curloutfiles.txt
 url2curl("urlstodo.txt","curltodo.txt","curloutfiles.txt");
-
-# record where we are putting files
-system("/bin/cat curltodo.txt >> curlall.txt");
 
 # run curltodo.txt using parallel
 system("parallel -j 20 < curltodo.txt");
@@ -87,6 +86,7 @@ sub url2curl {
   open(A,$infile);
   open(B,">$outfile1");
   open(C,">$outfile2");
+  open(D,">>mapping.txt");
   while (<A>) {
     chomp;
     my($sha) = sha1_hex($_);
@@ -97,15 +97,18 @@ sub url2curl {
     # TODO: this test is expensive and for testing only!
     if (-f $fname) {
       # do nothing if already have it
-      print B ": curl -sLo $fname '$_'\n";
+#      print B ": curl -sLo $fname '$_'\n";
     } else {
       print B "curl -sLo $fname '$_'\n";
     }
+    # however, always print out file and mapping
     print C "$fname\n";
+    print D "$fname $_\n";
   }
   close(A);
   close(B);
   close(C);
+  close(D);
 }
 
 =item hrefgrep2urls($infile,$outfile,$site)
@@ -128,22 +131,23 @@ sub hrefgrep2urls {
     chomp;
 
     # find URL (TODO: assumes well-formed)
-    /href="(.*?)"/;
-    $_ = $1;
+    while (s/href="(.*?)"//) {
+      my($i) = $1;
 
-    # strip positionals + trailing slashes
-    s/\#.*$//;
-    s%/*$%%g;
+      # strip positionals + trailing slashes
+      $i=~s/\#.*$//;
+      $i=~s%/*$%%g;
 
-    # for fully qualified URLs, only ones that match site
-    if (m/^$site/) {
-      # pass pure URLs
-      print B "$_\n";
-    } elsif (m%^/%) {
-      # add site to / urls
-      print B "$site$_\n";
-    } else {
-      # ignore all else (BAD!)
+      # for fully qualified URLs, only ones that match site
+      if ($i=~m/^$site/) {
+	# pass pure URLs
+	print B "$i\n";
+      } elsif ($i=~m%^/%) {
+	# add site to / urls
+	print B "$site$i\n";
+      } else {
+	# ignore all else (BAD!)
+      }
     }
   }
 
