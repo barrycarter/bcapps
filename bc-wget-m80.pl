@@ -5,23 +5,60 @@
 
 # Files in this program may be very large, so no loading in memory. Files:
 
+require "/usr/local/lib/bclib.pl";
+
+# for this download
+$site = "http://www.directionsforme.org";
+
+unless (-d "f/f/f") {die "CWD must contain a/b/c for all hex abc";}
+
+# this file must exist for sort -m to work
+system("touch urlsdone.txt");
+
+# write curl commands to download urlstodo.txt to curltodo.txt
+# write curl output files (for urlstodo.txt) to curloutfiles.txt
+url2curl("urlstodo.txt","curltodo.txt","curloutfiles.txt");
+
+# record where we are putting files
+system("/bin/cat curltodo.txt >> curlall.txt");
+
+# run curltodo.txt using parallel
+system("parallel -j 20 < curltodo.txt");
+
+# add urlstodo.txt to urlsdone.txt
+system("sort -um urlstodo.txt urlsdone.txt > urlsdone.txt.new");
+system("mv urlsdone.txt urlsdone.txt.old; mv urlsdone.txt.new urlsdone.txt");
+
+# search files in curloutfiles.txt for hrefs, out to newhrefs.txt
+system("parallel -j 20 fgrep -i href < curloutfiles.txt > newhrefs.txt");
+
+# find new URLs to download from newhrefs.txt (uniqify) to newhrefs2.txt
+# omit from new URLs ones we already have to urlstodo.txt
+hrefgrep2urls("newhrefs.txt","newhrefs2.txt",$site);
+
+system("mv urlstodo.txt urlstodo.txt.old; mv newhrefs2.txt urlstodo.txt");
+
+# url2curl("urls0.txt","curl0.txt");
+# hrefgrep2urls("hrefs0.txt","urls1.txt", "http://www.directionsforme.org");
+
 =item comments
 
 Flowchart of sorts:
 
+  - write curl commands to download urlstodo.txt to curltodo.txt 
+  - write curl output files (for urlstodo.txt) to curloutfiles.txt
   - run curltodo.txt using parallel
   - add urlstodo.txt to urlsdone.txt
   - search files in curloutfiles.txt for hrefs, out to newhrefs.txt
   - find new URLs to download from newhrefs.txt (uniqify) to newhrefs2.txt
   - omit from new URLs ones we already have to urlstodo.txt
-  - write curl commands to download urlstodo.txt to curltodo.txt
-  - write curl output file (for urlstodo.txt) to curloutfiles.txt
   - loop
 
 Files used:
 
 urlsdone.txt: a sorted list of URLs already downloaded
 urlstodo.txt: a sorted list of URLs to visit next
+mapping.txt: file location of URLs downloaded
 
 These unix commands dont require a subroutine (yet).
 
@@ -33,39 +70,42 @@ parallel fgrep -i href < curloutfiles.txt
 
 =cut
 
-require "/usr/local/lib/bclib.pl";
-
-unless (-d "f/f/f") {die "CWD must contain a/b/c for all hex abc";}
-
-# url2curl("urls0.txt","curl0.txt");
-
-hrefgrep2urls("hrefs0.txt","urls1.txt", "http://www.directionsforme.org");
-
-=item url2curl($infile,$outfile)
+=item url2curl($infile,$outfile1,$outfile2)
 
 Given $infile containing a sorted list of fully qualified URLs, write
-$outfile, a list of curl commands to download these files to their
+$outfile1, a list of curl commands to download these files to their
 sha1 sums, using three level deep directories (eg, a/b/c/), and
-$outfile.files, a list of the output files (for later use)
+$outfile2, a list of the output files (for later use)
 
 =cut
 
 sub url2curl {
-  my($infile,$outfile) = @_;
+  my($infile,$outfile1,$outfile2) = @_;
   local(*A);
   local(*B);
+  local(*C);
   open(A,$infile);
-  open(B,">$outfile");
+  open(B,">$outfile1");
+  open(C,">$outfile2");
   while (<A>) {
     chomp;
     my($sha) = sha1_hex($_);
     # <h>this is NOT a reference to Eccentrica Gallumbits</h>
     $sha=~/^(.)(.)(.)/;
-    print B "curl -o $1/$2/$3/$sha '$_'\n";
+    my($fname) = "$1/$2/$3/$sha";
+
+    # TODO: this test is expensive and for testing only!
+    if (-f $fname) {
+      # do nothing if already have it
+      print B ": curl -sLo $fname '$_'\n";
+    } else {
+      print B "curl -sLo $fname '$_'\n";
+    }
+    print C "$fname\n";
   }
   close(A);
   close(B);
-  system("cut -d ' ' -f 3 $outfile > $outfile.files");
+  close(C);
 }
 
 =item hrefgrep2urls($infile,$outfile,$site)
@@ -111,7 +151,7 @@ sub hrefgrep2urls {
   close(B);
 
   # uniqify
-  system("sort $outfile-1 | uniq > $outfile-2");
+  system("sort -u $outfile-1 > $outfile-2");
 
   # remove URLs weve already downloaded
   system("comm -23 $outfile-2 urlsdone.txt > $outfile");
