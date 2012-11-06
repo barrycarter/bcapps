@@ -12,6 +12,9 @@ require "/usr/local/lib/bclib.pl";
 # for this download
 $site = "http://www.directionsforme.org";
 
+# number of jobs parallel should run at once
+$parjobs = 10;
+
 unless (-d "f/f/f") {die "CWD must contain a/b/c for all hex abc";}
 
 # this file must exist for sort -m to work
@@ -21,15 +24,15 @@ system("touch urlsdone.txt");
 # write curl output files (for urlstodo.txt) to curloutfiles.txt
 url2curl("urlstodo.txt","curltodo.txt","curloutfiles.txt");
 
-# run curltodo.txt using parallel
-system("parallel -j 20 < curltodo.txt");
+# run curltodo.txt using bc-parallel (this is the only one where sockets are important; for the rest continue to use regular parallel)
+system("bc-parallel.pl -j $parjobs < curltodo.txt");
 
 # add urlstodo.txt to urlsdone.txt
 system("sort -um urlstodo.txt urlsdone.txt > urlsdone.txt.new");
 system("mv urlsdone.txt urlsdone.txt.old; mv urlsdone.txt.new urlsdone.txt");
 
 # search files in curloutfiles.txt for hrefs, out to newhrefs.txt
-system("parallel -j 20 fgrep -i href < curloutfiles.txt > newhrefs.txt");
+system("parallel -j $parjobs fgrep -i href < curloutfiles.txt > newhrefs.txt");
 
 # find new URLs to download from newhrefs.txt (uniqify) to newhrefs2.txt
 # omit from new URLs ones we already have to urlstodo.txt
