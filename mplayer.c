@@ -1271,11 +1271,11 @@ static void print_status(float a_pos, float a_v, float corr)
     // end
     if (erase_to_end_of_line) {
         line[pos] = 0;
-        mp_msg(MSGT_STATUSLINE, MSGL_STATUS, "%s%s\r", line, erase_to_end_of_line);
+        mp_msg(MSGT_STATUSLINE, MSGL_STATUS, "%s%s\n", line, erase_to_end_of_line);
     } else {
         memset(&line[pos], ' ', width - pos);
         line[width] = 0;
-        mp_msg(MSGT_STATUSLINE, MSGL_STATUS, "%s\r", line);
+        mp_msg(MSGT_STATUSLINE, MSGL_STATUS, "%s\n", line);
     }
     free(line);
 }
@@ -2528,7 +2528,7 @@ static void pause_loop(void)
             set_osd_msg(OSD_MSG_PAUSE, 1, 0, MSGTR_Paused);
             update_osd_msg();
         } else
-            mp_msg(MSGT_CPLAYER, MSGL_STATUS, "\n"MSGTR_Paused "\r");
+            mp_msg(MSGT_CPLAYER, MSGL_STATUS, "\n"MSGTR_Paused "\n");
         mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_PAUSED\n");
     }
 #ifdef CONFIG_GUI
@@ -2571,7 +2571,7 @@ static void pause_loop(void)
                                 new_cache_fill);
                     update_osd_msg();
                 } else
-                    mp_msg(MSGT_CPLAYER, MSGL_STATUS, MSGTR_Paused " %d%%\r",
+                    mp_msg(MSGT_CPLAYER, MSGL_STATUS, MSGTR_Paused " %d%%\n",
                            new_cache_fill);
                 old_cache_fill = new_cache_fill;
             }
