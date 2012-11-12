@@ -32,7 +32,7 @@ system("sort -um urlstodo.txt urlsdone.txt > urlsdone.txt.new");
 system("mv urlsdone.txt urlsdone.txt.old; mv urlsdone.txt.new urlsdone.txt");
 
 # search files in curloutfiles.txt for hrefs, out to newhrefs.txt
-system("parallel -j $parjobs fgrep -i href < curloutfiles.txt > newhrefs.txt");
+system("parallel -j $parjobs \fgrep -i href < curloutfiles.txt > newhrefs.txt");
 
 # find new URLs to download from newhrefs.txt (uniqify) to newhrefs2.txt
 # omit from new URLs ones we already have to urlstodo.txt

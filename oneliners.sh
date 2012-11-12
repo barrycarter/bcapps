@@ -1,14 +1,19 @@
 # shell one liners
 
-# if you've downloaded your quora questions/answers main page, this gets the full questions/answers
-# ACK: this does not cover updated questions sadly
-
-perl -nle 'while (s/<a class="question_link" href="(.*?)"//i) {$url=$1; $file=$url; $file=~s/^.*\///isg; if (-f "/home/barrycarter/QUORA/$file") {next;}; print "curl -L -O $url"}' /home/barrycarter/Download/bc-questions.html /home/barrycarter/Download/bc-answers.html | sort | uniq 
+# (suggests) renaming files that make doesn't handle well
+\ls | perl -nle '$x=$_; if (s/[^a-z0-9_\.\-\%\,\(\)]/_/isg) {print "mv \47$x\47 $_"}'
 
 exit;
 
 # if you tcpflow-dump when you enter a scribblar room, this downloads all the assets file (so you can delete them as needed)
-perl -nle 'if (/\006S(.*?)\006/) {print "curl -O http://api.muchosmedia.com/brainwave/uploads/client_12/$1"}' /home/barrycarter/20120908/TCP/078.129.167.103.00080-192.168.000.002.58323
+perl -nle 'if (/\006G(.*?)\006/) {print "curl -O http://api.muchosmedia.com/brainwave/uploads/client_12/$1"}' *
+
+exit;
+
+# if you've downloaded your quora questions/answers main page, this gets the full questions/answers
+# ACK: this does not cover updated questions sadly
+
+perl -nle 'while (s/<a class="question_link" href="(.*?)"//i) {$url=$1; $file=$url; $file=~s/^.*\///isg; if (-f "/home/barrycarter/QUORA/$file") {next;}; print "curl -L -O $url"}' /home/barrycarter/Download/bc-questions.html /home/barrycarter/Download/bc-answers.html | sort | uniq 
 
 exit;
 
