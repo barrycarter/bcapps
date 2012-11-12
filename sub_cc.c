@@ -85,6 +85,7 @@ static void clear_buffer(subtitle *buf)
 	int i;
 	buf->lines=0;
 	for (i = 0; i < SUB_MAX_TEXT; i++) {
+	  if (buf->text[i]) {fprintf(stderr,"CC: %s\n",buf->text[i]);}
 		free(buf->text[i]);
 		buf->text[i] = NULL;
 	}
