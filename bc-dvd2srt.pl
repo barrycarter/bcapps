@@ -16,13 +16,12 @@ $tits = $1;
 
 # go through each title and count chapters
 for $i (1..$tits) {
-  $chaps = `mplayer dvd://$i -frames 0 -vo null -ao null`;
-  debug("CHAPS: $chaps");
-  unless ($chaps=~/there are (\d+) chapters in this dvd title\./is) {
-    warn("Can't determine number of chapters for title $i");
-    next;
-  }
-  $chaps = $1;
+  # extract cc as fast as possible
+  # TODO: better use of tempfile (but do need one, process takes a while)
+  # TODO: in theory, could create SRT while we read, but bad?
+  system("mplayer -subcc 1 -speed 100 -nosound -vo null dvd://$i &> /tmp/out2.txt");
 
-  debug("TITLE: $i, CHAP: $chaps");
+  die "TESTING";
 }
+
+
