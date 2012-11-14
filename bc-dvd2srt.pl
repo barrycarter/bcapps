@@ -29,12 +29,22 @@ for $i (1..$tits) {
       next;
     }
 
+    # if time hasnt been set at all yet, ignore lines
+    unless ($time) {next;}
+
+    # find milliseconds as 3 digits (strftime doesnt do this?)
+    $milli = sprintf("%0.3d",($time-int($time))*1000);
+
+    # convert time to SRT format
+    $str = strftime("%H:%M:%S",gmtime($time));
+    debug("STR: $str,$milli");
+
     # this probably wont work, early test only
     $count++;
     $time=~s/\./,/isg;
     print << "MARK";
 $count
-00:00:$time --> 00:00:$time
+$str,$milli --> $str,$milli
 $_
 
 MARK
