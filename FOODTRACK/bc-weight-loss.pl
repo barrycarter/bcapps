@@ -37,9 +37,31 @@ for $i (sort keys %weights) {
   push(@x, $days);
   push(@y, $weights{$i});
   push(@z,log($weights{$i}));
+
+  # keep track of min/max weights too
+  if ($weights{$i} > $max || !$count) {
+    push(@maxdays, $days);
+    push(@maxvals, $weights{$i});
+    $max = $weights{$i};
+  }
+
+  if ($weights{$i}<$min || !$count) {
+    debug("MIN!");
+    push(@mindays, $days);
+    push(@minvals, $weights{$i});
+    $min = $weights{$i};
+  }
+
+  $count++;
 }
 
 $sweight = $y[0];
+
+debug("MINDY:",@mindays);
+debug("MINVAL:",@minvals);
+
+debug("MAXDY:",@maxdays);
+debug("MAXVAL:",@maxvals);
 
 close(A);
 
