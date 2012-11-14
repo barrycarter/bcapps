@@ -17,11 +17,33 @@ $tits = $1;
 # go through each title and count chapters
 for $i (1..$tits) {
   # extract cc as fast as possible
-  # TODO: better use of tempfile (but do need one, process takes a while)
-  # TODO: in theory, could create SRT while we read, but bad?
-  system("mplayer -subcc 1 -speed 100 -nosound -vo null dvd://$i &> /tmp/out2.txt");
+  # TODO: printing file while reading is inefficient
+  open(A,"mplayer -subcc 1 -speed 100 -nosound -vo null dvd://$i 2>&1|");
 
-  die "TESTING";
+  while(<A>) {
+    chomp;
+
+    # if this line is a timestamp, record it and move on
+    if (/v:\s+(.*?)\s+/i) {
+      $time = $1;
+      next;
+    }
+
+    # this probably wont work, early test only
+    $count++;
+    $time=~s/\./,/isg;
+    print << "MARK";
+$count
+00:00:$time --> 00:00:$time
+$_
+
+MARK
+;
 }
+
+die "TESTING";
+
+}
+
 
 
