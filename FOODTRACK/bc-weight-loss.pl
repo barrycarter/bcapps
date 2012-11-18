@@ -70,6 +70,11 @@ close(A);
 # <h>I've always wanted to name a variable $blog for a good reason!</h>
 ($blog,$mlog) = linear_regression(\@x,\@z);
 
+# linear regression for min weights
+($bmin, $mmin) = linear_regression(\@mindays, \@minvals);
+
+debug("MIN: $mmin slope, $bmin offset");
+
 # plot log/linear regression (to now, not just to last reading)
 $daysago = ($stime-$now)/86400;
 $linweight = $b - $m*$daysago;

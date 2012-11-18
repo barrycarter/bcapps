@@ -1,7 +1,7 @@
 # shell one liners
 
 # (suggests) renaming files that make doesn't handle well
-\ls | perl -nle '$x=$_; if (s/[^a-z0-9_\.\-\%\,\(\)]/_/isg) {print "mv \47$x\47 $_"}'
+\ls | perl -nle '$x=$_; if (s/[^a-z0-9_\.\-\%\,]/_/isg) {print "mv \"$x\" $_"}'
 
 exit;
 

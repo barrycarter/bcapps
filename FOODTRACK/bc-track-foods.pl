@@ -118,6 +118,9 @@ for $j (@totalfields) {
 # of bringing down the average slightly if I follow it)
 $calsperhr = $avg{Calories}/16;
 
+# Changing this to 1200 cals / 16 hours
+$calsperhr = 1200/16;
+
 # Calorie banking: every hour I'm awake, I allow myself $calsperhr calories.
 
 # <h>While most of my programs are designed to help just me and

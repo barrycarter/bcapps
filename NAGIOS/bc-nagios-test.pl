@@ -80,6 +80,60 @@ sub func {
   }
 }
 
+=item bc_metformin_test()
+
+This fairly insane and pointless (except to me) test checks if I've
+taken the appropriate amount of metformin based on how much I've
+eaten: 1 metformin after I've had ANY number of calories, 2 metformin
+if I've had 600 or more calories.
+
+Metformin count in /home/barrycarter/TODAY/yyyymmdd.txt (where
+yyyymmdd is current date)
+
+=cut
+
+sub bc_metformin_test {
+  # read calories consumed (output by bc-food-track)
+  # TODO: relying on format of cal.inf is probably bad
+  my($cals) = read_file("/home/barrycarter/ERR/cal.inf");
+  # only need last number
+  $cals=~s/\(.*?\)//isg;
+  $cals=~s%.*/%%isg;
+
+  # if no calories consumed, no problem (no need to even check TODAY)
+
+  if ($cals == 0) {
+    print "OK: No calories consumed\n";
+    return 0;
+  }
+
+  # since cals consumed, find file for today and grep
+  my($cmd) = strftime("grep -ic metformin /home/barrycarter/TODAY/%Y%m%d.txt",localtime(time()));
+  my($res) = `$cmd`;
+
+  # compare metformin dose to calories
+  if ($res==0) {
+    print "ERR: Consumed $cal calories, no metformin\n";
+    return 2;
+  }
+
+  # more than 2 metformin = never a problem
+  if ($res>=2) {
+    print "OK: Consumed $res metformin\n";
+    return 0;
+  }
+
+  # remaining case: 1 metformin
+  if ($cals<600) {
+    print "OK: 1 metformin for $cals calories\n";
+    return 0;
+  }
+
+  print "ERR: Only 1 metformin for $cals > 600 calories\n";
+
+  return 2;
+}
+
 =item bc_nagios_file_size($file, $size, $options)
 
 Confirm that $file (which can be a directory) is less than $size bytes

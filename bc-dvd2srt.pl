@@ -32,6 +32,8 @@ for $i (1..$tits) {
     # if time hasnt been set at all yet, ignore lines
     unless ($time) {next;}
 
+    debug("TIME: $time");
+
     # find milliseconds as 3 digits (strftime doesnt do this?)
     $milli = sprintf("%0.3d",($time-int($time))*1000);
 
@@ -41,7 +43,6 @@ for $i (1..$tits) {
 
     # this probably wont work, early test only
     $count++;
-    $time=~s/\./,/isg;
     print << "MARK";
 $count
 $str,$milli --> $str,$milli
