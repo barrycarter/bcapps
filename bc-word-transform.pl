@@ -11,7 +11,30 @@ require "/usr/local/lib/bclib.pl";
 # debug(word_drop_letter("sources"));
 # debug(word_add_letter("source"));
 # debug(word_change_letter("source"));
-debug(word_anagram("source"));
+# debug(word_anagram("source"));
+
+# starting literally with 'source', what can we get
+
+@words = ("SOURCE");
+
+while (@words) {
+  $word = shift(@words);
+
+  # if weve already seen this word, ignore it
+  if ($seen{$word}) {next;}
+  $seen{$word} = 1;
+
+  print "$word\n";
+
+  # push words (only) for now
+  %drop = word_drop_letter($word);
+  %add = word_add_letter($word);
+  %change = word_change_letter($word);
+  %ana = word_anagram($word);
+
+  @morewords = (keys %drop, keys %add, keys %change, keys %ana);
+  push(@words, @morewords);
+}
 
 =item word_drop_letter($word)
 
