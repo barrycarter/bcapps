@@ -8,21 +8,17 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# debug(word_drop_letter("sources"));
-# debug(word_add_letter("source"));
-# debug(word_change_letter("source"));
-# debug(word_anagram("source"));
-
 # load entire db into memory (faster?)
-@res = sqlite3hashlist("SELECT word,definition FROM words", "/home/barrycarter/BCINFO/sites/DB/scrab.db");
+@res = sqlite3hashlist("SELECT * FROM words", "/home/barrycarter/BCINFO/sites/DB/scrab.db");
 
-for $i (@res) {$worddef{$i->{word}} = $i->{definition};}
+for $i (@res) {
+  # map word to definition
+  $worddef{$i->{word}} = $i->{definition};
+  # anagrams
+  push(@{$ana{$i->{sig1}}}, $i->{word});
+}
 
-debug("WORDDEF:",%worddef);
-
-warn "NO ANAGRAMS WHILE TESTING";
-
-@words = ("A");
+@words = ("WORD");
 
 while (@words) {
 
@@ -38,8 +34,7 @@ while (@words) {
   %{$words{drop}} = word_drop_letter($word);
   %{$words{add}} = word_add_letter($word);
   %{$words{change}} = word_change_letter($word);
-  # TODO: re-add anagrams!
-#  %{$words{anagram}} = word_anagram($word);
+  %{$words{anagram}} = word_anagram($word);
 
   # for each of the new words, record definition and path to word
   for $i (keys %words) {
@@ -66,7 +61,6 @@ sub word_drop_letter {
 
   # potential words, quoted
   for $i (1..length($word)) {
-#    push(@words, "'".uc(substr($word,0,$i-1).substr($word,$i))."'");
     push(@words, uc(substr($word,0,$i-1).substr($word,$i)));
   }
 
@@ -86,7 +80,6 @@ sub word_add_letter {
   # potential words, quoted
   for $i (0..length($word)) {
     for $j ("a".."z") {
-#      push(@words, "'".uc(substr($word,0,$i).$j.substr($word,$i))."'");
       push(@words, uc(substr($word,0,$i).$j.substr($word,$i)));
     }
   }
@@ -110,7 +103,6 @@ sub word_change_letter {
     for $j ("A".."Z") {
       # cant change letter for itself, pointless
       if (substr($word,$i-1,1) eq $j) {next;}
-#      push(@words, "'".uc(substr($word,0,$i-1).$j.substr($word,$i))."'");
       push(@words, uc(substr($word,0,$i-1).$j.substr($word,$i)));
     }
   }
@@ -134,12 +126,10 @@ sub word_anagram {
   # determine sig1 of word (as caps)
   my($sig1) = uc(join("",sort(split(//,$word))));
 
-  # query (explicitly exclude word itself)
-  my(@res) = sqlite3hashlist("SELECT word,definition FROM words WHERE sig1='$sig1' AND word != '$word'", "/home/barrycarter/BCINFO/sites/DB/scrab.db");
-
-  # return just word and definition
-  for $i (@res) {
-    $rethash{$i->{word}} = $i->{definition};
+  # look through anagram list for this sig
+  for $i (@{$ana{$sig1}}) {
+    if ($i eq $word) {next;}
+    $rethash{$i} = $worddef{$i};
   }
 
   return %rethash;
@@ -158,25 +148,10 @@ sub word_get {
 
   # look in worddef hash (global)
   for $i (@list) {
-    debug("CHECKING: $i");
     if ($worddef{$i}) {
-      debug("FOUND: $i");
       $rethash{$i} = $worddef{$i};
     }
   }
 
   return %rethash;
-
-  # build SQL query
-  my($words) = join(",",@list);
-  my(@res) = sqlite3hashlist("SELECT word,definition FROM words WHERE word IN ($words)", "/home/barrycarter/BCINFO/sites/DB/scrab.db");
-
-  # return just word and definition
-  for $i (@res) {
-    $rethash{$i->{word}} = $i->{definition};
-  }
-
-  return %rethash;
 }
-
-
