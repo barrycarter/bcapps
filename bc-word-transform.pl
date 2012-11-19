@@ -15,11 +15,9 @@ require "/usr/local/lib/bclib.pl";
 
 # starting literally with 'source', what can we get
 
-@words = ("SOURCE");
+@words = ("BARRY");
 
 while (@words) {
-
-#  if (++$count>=7) {die "TESTING";}
 
   $word = shift(@words);
 
