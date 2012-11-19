@@ -18,30 +18,33 @@ require "/usr/local/lib/bclib.pl";
 @words = ("SOURCE");
 
 while (@words) {
+
+#  if (++$count>=7) {die "TESTING";}
+
   $word = shift(@words);
 
   # if weve already seen this word, ignore it
   if ($seen{$word}) {next;}
   $seen{$word} = 1;
 
-  print "$word: $method{$word}\n";
+  print "$word: $path{$word}\n";
 
-  # push words (only) for now
-  %drop = word_drop_letter($word);
-  %add = word_add_letter($word);
-  %change = word_change_letter($word);
-  %ana = word_anagram($word);
+  # "superhash" of words and definitions
+  %{$words{drop}} = word_drop_letter($word);
+  %{$words{add}} = word_add_letter($word);
+  %{$words{change}} = word_change_letter($word);
+  %{$words{anagram}} = word_anagram($word);
 
-  # keep track of method used to get here
-  for $i (keys %drop) {$method{$i}="$method{$word} $word:DROP:$i";}
-  for $i (keys %add) {$method{$i}="$method{$word} $word:ADD:$i";}
-  for $i (keys %change) {$method{$i}="$method{$word} $word:CHANGE:$i";}
-  for $i (keys %ana) {$method{$i}="$method{$word} $word:ANA:$i";}
-
-  debug("ACEROUS -> $method{ACEROUS}");
-
-  @morewords = (keys %drop, keys %add, keys %change, keys %ana);
-  push(@words, @morewords);
+  # for each of the new words, record definition and path to word
+  for $i (keys %words) {
+    for $j (keys %{$words{$i}}) {
+      # if this word already defined, weve already got path too
+      if ($definition{$j}) {next;}
+      $definition{$j} = $words{$i}->{$j};
+      $path{$j} = "$path{$word} $word:$i:$j";
+      push(@words, $j);
+    }
+  }
 }
 
 =item word_drop_letter($word)
