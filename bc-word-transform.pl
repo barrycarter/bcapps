@@ -24,13 +24,21 @@ while (@words) {
   if ($seen{$word}) {next;}
   $seen{$word} = 1;
 
-  print "$word\n";
+  print "$word: $method{$word}\n";
 
   # push words (only) for now
   %drop = word_drop_letter($word);
   %add = word_add_letter($word);
   %change = word_change_letter($word);
   %ana = word_anagram($word);
+
+  # keep track of method used to get here
+  for $i (keys %drop) {$method{$i}="$method{$word} $word:DROP:$i";}
+  for $i (keys %add) {$method{$i}="$method{$word} $word:ADD:$i";}
+  for $i (keys %change) {$method{$i}="$method{$word} $word:CHANGE:$i";}
+  for $i (keys %ana) {$method{$i}="$method{$word} $word:ANA:$i";}
+
+  debug("ACEROUS -> $method{ACEROUS}");
 
   @morewords = (keys %drop, keys %add, keys %change, keys %ana);
   push(@words, @morewords);
@@ -88,7 +96,7 @@ sub word_change_letter {
 
   # potential words, quoted
   for $i (1..length($word)) {
-    for $j ("a".."z") {
+    for $j ("A".."Z") {
       # cant change letter for itself, pointless
       if (substr($word,$i-1,1) eq $j) {next;}
       push(@words, "'".uc(substr($word,0,$i-1).$j.substr($word,$i))."'");
