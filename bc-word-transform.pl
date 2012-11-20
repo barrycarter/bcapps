@@ -16,9 +16,18 @@ for $i (@res) {
   $worddef{$i->{word}} = $i->{definition};
   # anagrams
   push(@{$ana{$i->{sig1}}}, $i->{word});
+  # currently unused
+  push(@{$lba{$i->{sig2}}}, $i->{word});
 }
 
-@words = ("WORD");
+warn "FORCE DEBUGGING";
+$globopts{debug}=1;
+debug(word_transforms("BARRY"));
+
+
+die "TESTING";
+
+@words = ("WORD", "GAMES");
 
 while (@words) {
 
@@ -46,6 +55,43 @@ while (@words) {
       push(@words, $j);
     }
   }
+}
+
+=item word_transforms(@words)
+
+Given a list of words, return all one-level transforms of those words
+in a hash mapping new word to "old_word:transform_type"
+
+=cut
+
+sub word_transforms {
+  my(@words) = @_;
+  my(%words);
+  my(%ret);
+
+  for $word (@words) {
+
+    # "superhash" of words and definitions
+    %{$words{drop}} = word_drop_letter($word);
+    %{$words{add}} = word_add_letter($word);
+    %{$words{change}} = word_change_letter($word);
+    %{$words{anagram}} = word_anagram($word);
+
+    # for each type of transform
+    for $i (keys %words) {
+      # for each word in type $i transform
+      for $j (keys %{$words{$i}}) {
+	# if this word already defined, weve already got path too
+	#      if ($definition{$j}) {next;}
+	#      $definition{$j} = $words{$i}->{$j};
+	$ret{$j} = "$word:$i";
+#      $path{$j} = "$path{$word} $word:$i:$j";
+#      push(@words, $j);
+    }
+  }
+}
+
+  return %ret;
 }
 
 =item word_drop_letter($word)
