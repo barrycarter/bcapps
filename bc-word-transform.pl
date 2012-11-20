@@ -45,14 +45,9 @@ for (;;) {
 
     # do any match things target has hit?
     if ($target{$i}) {
-      debug("TI: $i");
-      $alldone = 1; last;
+      $final = $i; $alldone = 1; last;
     }
   }
-
-  # TODO: kludgey because Im nested fairly deep
-  # TODO: have to do this twice, so $i doesn't reset (blech!)
-  if ($alldone) {last;}
 
   # if not, go backwards from target word
   %twords = word_transforms(@target);
@@ -67,8 +62,7 @@ for (;;) {
 
     # do any match things target has hit?
     if ($source{$i}) {
-      debug("SI: $i");
-      $alldone = 1; last;
+      $final = $i; $alldone = 1; last;
     }
   }
 
@@ -82,40 +76,8 @@ for (;;) {
   if (++$count>=6) {die "TESTING";}
 }
 
-debug("I: $i","SOURCE: $source{$i}", "TARGET: $target{$i}");
+debug("FINAL: $final","SOURCE: $source{$final}", "TARGET: $target{$final}");
 
-
-die "TESTING";
-
-@words = ("WORD", "GAMES");
-
-while (@words) {
-
-  $word = shift(@words);
-
-  # if weve already seen this word, ignore it
-  if ($seen{$word}) {next;}
-  $seen{$word} = 1;
-
-  print "$word: $path{$word}\n";
-
-  # "superhash" of words and definitions
-  %{$words{drop}} = word_drop_letter($word);
-  %{$words{add}} = word_add_letter($word);
-  %{$words{change}} = word_change_letter($word);
-  %{$words{anagram}} = word_anagram($word);
-
-  # for each of the new words, record definition and path to word
-  for $i (keys %words) {
-    for $j (keys %{$words{$i}}) {
-      # if this word already defined, weve already got path too
-      if ($definition{$j}) {next;}
-      $definition{$j} = $words{$i}->{$j};
-      $path{$j} = "$path{$word} $word:$i:$j";
-      push(@words, $j);
-    }
-  }
-}
 
 =item word_transforms(@words)
 
