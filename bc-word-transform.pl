@@ -34,27 +34,46 @@ for (;;) {
   %swords = word_transforms(@source);
 
   for $i (keys %swords) {
-    # note that source has reached this word
-    $source{$i} = 1;
+    # TODO: this seems kludgey somehow
+    # figure out original word
+    $oword = $swords{$i};
+    $oword=~s/:.*$//isg;
+
+    # note that source has hit this words + path
+    $source{$i} = "$source{$oword} $swords{$i}";
+    debug("SWORDS: $i -> $swords{$i}, SOURCE: $i -> $source{$i}");
 
     # do any match things target has hit?
     if ($target{$i}) {
-      die("DONE: $i hit on both sides");
+      debug("TI: $i");
+      $alldone = 1; last;
     }
   }
+
+  # TODO: kludgey because Im nested fairly deep
+  # TODO: have to do this twice, so $i doesn't reset (blech!)
+  if ($alldone) {last;}
 
   # if not, go backwards from target word
   %twords = word_transforms(@target);
 
   for $i (keys %twords) {
-    # note that source has reached this word
-    $target{$i} = 1;
+    # TODO: this seems kludgey AND redundant
+    $oword = $swords{$i};
+    $oword=~s/:.*$//isg;
+
+    # note that target has hit this word + path
+    $target{$i} = "$target{$oword} $twords{$i}";
 
     # do any match things target has hit?
     if ($source{$i}) {
-      die("DONE: $i hit on both sides");
+      debug("SI: $i");
+      $alldone = 1; last;
     }
   }
+
+  # TODO: kludgey because Im nested fairly deep
+  if ($alldone) {last;}
 
   # new source and target for next round
   @source = keys %swords;
@@ -62,6 +81,8 @@ for (;;) {
 
   if (++$count>=6) {die "TESTING";}
 }
+
+debug("I: $i","SOURCE: $source{$i}", "TARGET: $target{$i}");
 
 
 die "TESTING";
@@ -169,7 +190,7 @@ sub word_add_letter {
     }
   }
 
-  debug("SIZE: $#words");
+#  debug("SIZE: $#words");
   return word_get(@words);
 }
 
@@ -192,7 +213,7 @@ sub word_change_letter {
     }
   }
 
-  debug("SIZE: $#words");
+#  debug("SIZE: $#words");
   return word_get(@words);
 }
 
