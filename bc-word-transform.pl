@@ -8,6 +8,9 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# TODO: hardcoding source/target during testing only
+($source, $target) = ("BARRY", "CARTER");
+
 # load entire db into memory (faster?)
 @res = sqlite3hashlist("SELECT * FROM words", "/home/barrycarter/BCINFO/sites/DB/scrab.db");
 
@@ -22,7 +25,43 @@ for $i (@res) {
 
 warn "FORCE DEBUGGING";
 $globopts{debug}=1;
-debug(word_transforms("BARRY"));
+
+@source = ($source);
+@target = ($target);
+
+for (;;) {
+  # first, go forward from source word
+  %swords = word_transforms(@source);
+
+  for $i (keys %swords) {
+    # note that source has reached this word
+    $source{$i} = 1;
+
+    # do any match things target has hit?
+    if ($target{$i}) {
+      die("DONE: $i hit on both sides");
+    }
+  }
+
+  # if not, go backwards from target word
+  %twords = word_transforms(@target);
+
+  for $i (keys %twords) {
+    # note that source has reached this word
+    $target{$i} = 1;
+
+    # do any match things target has hit?
+    if ($source{$i}) {
+      die("DONE: $i hit on both sides");
+    }
+  }
+
+  # new source and target for next round
+  @source = keys %swords;
+  @target = keys %twords;
+
+  if (++$count>=6) {die "TESTING";}
+}
 
 
 die "TESTING";
