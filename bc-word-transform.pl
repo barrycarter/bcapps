@@ -10,6 +10,7 @@ require "/usr/local/lib/bclib.pl";
 
 # TODO: hardcoding source/target during testing only
 ($source, $target) = ("BARRY", "CARTER");
+($source, $target) = ("WORD", "GAMES");
 
 # load entire db into memory (faster?)
 @res = sqlite3hashlist("SELECT * FROM words", "/home/barrycarter/BCINFO/sites/DB/scrab.db");
@@ -40,7 +41,7 @@ for (;;) {
     $oword=~s/:.*$//isg;
 
     # note that source has hit this words + path
-    $source{$i} = "$source{$oword} $swords{$i}";
+    $source{$i} = "$source{$oword} $swords{$i}:$i";
     debug("SWORDS: $i -> $swords{$i}, SOURCE: $i -> $source{$i}");
 
     # do any match things target has hit?
@@ -54,11 +55,11 @@ for (;;) {
 
   for $i (keys %twords) {
     # TODO: this seems kludgey AND redundant
-    $oword = $swords{$i};
+    $oword = $twords{$i};
     $oword=~s/:.*$//isg;
 
     # note that target has hit this word + path
-    $target{$i} = "$target{$oword} $twords{$i}";
+    $target{$i} = "$target{$oword} $twords{$i}:$i";
 
     # do any match things target has hit?
     if ($source{$i}) {
