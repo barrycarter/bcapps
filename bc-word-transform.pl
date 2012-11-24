@@ -11,6 +11,9 @@ require "/usr/local/lib/bclib.pl";
 # TODO: hardcoding source/target during testing only
 ($source, $target) = ("BARRY", "CARTER");
 ($source, $target) = ("WORD", "GAMES");
+($source, $target) = ("SALT", "PEPPER");
+($source, $target) = ("DAY", "NIGHT");
+($source, $target) = ("GESTATION", "BIRTH");
 
 # load entire db into memory (faster?)
 @res = sqlite3hashlist("SELECT * FROM words", "/home/barrycarter/BCINFO/sites/DB/scrab.db");
@@ -31,10 +34,14 @@ $globopts{debug}=1;
 @target = ($target);
 
 for (;;) {
-  # first, go forward from source word
+  # first, go forward from source word and reset @source
   %swords = word_transforms(@source);
+  @source = ();
 
   for $i (keys %swords) {
+    # if weve already reached this word, ignore it
+    if ($source{$i}) {next;}
+
     # TODO: this seems kludgey somehow
     # figure out original word
     $oword = $swords{$i};
@@ -42,18 +49,24 @@ for (;;) {
 
     # note that source has hit this words + path
     $source{$i} = "$source{$oword} $swords{$i}:$i";
-    debug("SWORDS: $i -> $swords{$i}, SOURCE: $i -> $source{$i}");
 
     # do any match things target has hit?
     if ($target{$i}) {
       $final = $i; $alldone = 1; last;
     }
+
+    # add word to source
+    push(@source, $i);
   }
 
-  # if not, go backwards from target word
+  # if not, go backwards from target word and reset target
   %twords = word_transforms(@target);
+  @target = ();
 
   for $i (keys %twords) {
+    # if weve already reached this word, ignore it
+    if ($target{$i}) {next;}
+
     # TODO: this seems kludgey AND redundant
     $oword = $twords{$i};
     $oword=~s/:.*$//isg;
@@ -65,16 +78,17 @@ for (;;) {
     if ($source{$i}) {
       $final = $i; $alldone = 1; last;
     }
+
+    # add word to target
+    push(@target, $i);
+
   }
 
   # TODO: kludgey because Im nested fairly deep
   if ($alldone) {last;}
 
-  # new source and target for next round
-  @source = keys %swords;
-  @target = keys %twords;
-
-  if (++$count>=6) {die "TESTING";}
+  debug("SOURCE",@source);
+  debug("TARGET",@target);
 }
 
 debug("FINAL: $final","SOURCE: $source{$final}", "TARGET: $target{$final}");

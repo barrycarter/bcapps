@@ -2230,6 +2230,7 @@ sub start_more_jobs {
     # BC hack
     for (;;) {
       my($sockets) = `netstat -anp | grep -i tcp |wc -l`;
+      chomp($sockets);
       if ($sockets < 50) {last;}
       if ($sockets > 50) {
 	print STDERR "$sockets > 50 sockets open, waiting 1 second\n";

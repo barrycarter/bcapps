@@ -136,7 +136,7 @@ $hms = $1;
 
 # find the first instance of 'wake' in "today's" file (which is
 # usually a fairly good indication of when I woke)
-$wake = `grep wake /home/barrycarter/TODAY/$today.txt`;
+$wake = `egrep -i 'wake|woke' /home/barrycarter/TODAY/$today.txt`;
 
 # extract HMS
 $wake=~s/\s+.*$//isg;

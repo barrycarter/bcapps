@@ -3,6 +3,12 @@
 showit := Module[{}, 
 Export["/tmp/math.png",%, ImageSize->{800,600}]; Run["display /tmp/math.png&"]]
 
+(* hourly data averages *)
+
+<<"!bzcat /home/barrycarter/BCGIT/db/abqhourly.m.bz2"
+data2 = Gather[data, (#1[[2]] == #2[[2]] && #1[[3]] == #2[[3]] &&
+#1[[4]] == #2[[4]]) &]
+
 (* another shot at polar transforms *)
 
 (* polar transformation using matrix *)
@@ -443,7 +449,6 @@ for 65N: (diffs up to 20m, "sin(5x)" pattern is strong)
 
 
 *)
-
 
 
 (* Use KABQ hourly data to determine trends, db/abqhourly.m (after bunzip) *)
