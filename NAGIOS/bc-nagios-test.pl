@@ -3,12 +3,11 @@
 # Runs a nagios test; if a plugin exists, use it; otherwise, use
 # subroutines defined here
 
-push(@INC,"/usr/local/lib");
-
 # this is hideous; pass args to the program using NAGIOS_ARG2
 @ARGV = split(/\s+/, $ENV{NAGIOS_ARG2});
 
-require "bclib.pl";
+require "/usr/local/lib/bclib.pl";
+require "/home/barrycarter/bc-private.pl";
 
 # for testing only!
 $globopts{debug}=1;
@@ -78,6 +77,26 @@ sub func {
     if ($val==1) {return 2;}
     return $val;
   }
+}
+
+
+=item bc_hostname_test()
+
+Confirms hostname is correct
+
+=cut
+
+sub bc_hostname_test {
+  my($hostname) = `hostname`;
+  chomp($hostname);
+
+  if ($hostname eq $bc{hostname}) {
+    print "HOSTNAME OK: $bc{hostname}\n";
+    return 0;
+  }
+
+  print "BAD HOSTNAME: $hostname != $bc{hostname}\n";
+  return 2;
 }
 
 =item bc_metformin_test()

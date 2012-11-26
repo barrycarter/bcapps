@@ -2778,6 +2778,21 @@ sub obtain_weights {
 
 }
 
+=item datediff($t1,$t2)
+
+Return seconds between $t1 and $t2, both in format that str2time will accept
+
+Mostly intended for command line calling
+
+TODO: use "date -d" instead?
+
+=cut
+
+sub datediff {
+  my($t1,$t2) = @_;
+  return str2time($t2)-str2time($t1);
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
   debug("END: CLEANING UP TMP FILES");
