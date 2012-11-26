@@ -138,6 +138,11 @@ $hms = $1;
 # usually a fairly good indication of when I woke)
 $wake = `egrep -i 'wake|woke' /home/barrycarter/TODAY/$today.txt`;
 
+# error if none
+unless ($wake) {
+  $ERR_FLAG .= "ERR: No wake time (bctf)";
+}
+
 # extract HMS
 $wake=~s/\s+.*$//isg;
 
