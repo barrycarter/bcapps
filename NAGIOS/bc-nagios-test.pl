@@ -95,6 +95,10 @@ sub bc_hostname_test {
     return 0;
   }
 
+  # attempt to fix hostname
+  # TODO: should this be here?
+  system("sudo hostname $bc{hostname}");
+
   print "BAD HOSTNAME: $hostname != $bc{hostname}\n";
   return 2;
 }

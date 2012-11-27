@@ -71,6 +71,9 @@ sub handle_attachments {
 # handles a single attachment
 sub handle_attachment {
   my($attach, $hashref) = @_;
+
+  debug("ATTACHMENT",$attach);
+
   # ignore tiny attachments
   if (length($attach)<10000) {return $attach;}
 
