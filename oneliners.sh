@@ -1,14 +1,14 @@
 # shell one liners
 
+# (suggests) renaming files that make doesn't handle well
+\ls | perl -nle '$x=$_; if (s/[^a-z0-9_\.\-\%\,]/_/isg) {print "mv \"$x\" $_"}'
+
+exit;
+
 # extracts words/definitions from Scrabble dictionary
 # 45947 words
 perl -0777 -nle 'while (s%<b>(\D*?)</b>.*?<br>\s*(.*?)\s*</p>%%is) {print "$1 $2\n"}' scrabble-dictionary.html
 
-
-exit;
-
-# (suggests) renaming files that make doesn't handle well
-\ls | perl -nle '$x=$_; if (s/[^a-z0-9_\.\-\%\,]/_/isg) {print "mv \"$x\" $_"}'
 
 exit;
 

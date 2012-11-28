@@ -97,7 +97,7 @@ debug("DAYSAGO: $daysago, LINWT: $linweight");
 
 # when graphing, don't show beyond this value
 # TODO: optionize this
-$graphtarget = 165;
+$graphtarget = 150;
 
 # TODO: with removal of 2nd fgrep, code can be efficientized
 ($secs,$wt) = ($x[-1]*86400+$stime,$y[-1]);
