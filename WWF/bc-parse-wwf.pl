@@ -80,25 +80,10 @@ while ($all=~s%<div data-game-id="(\d+)" id="game_(\d+)"(.*?)(</div>\s*</div>\s*
   $playsco = $1;
 
   # id, score, name for both players
-  $playsco =~s%<div class="player.*? data-player-id="(.*?)">\s*<div class="score">(\d+)</div>\s*<div class="player_1">(.*?)</div>%%;
-  debug("SOFAR: $1, $2, $3");
+  $playsco =~s%<div class="player.*? data-player-id="(.*?)">\s*<div class="score">(\d+)</div>\s*<div class="player_1">(.*?)</div>\s*</div>\s*<div class="player.*? data-player-id="(.*?)">\s*<div class="score">(\d+)</div>\s*<div class="player_2">(.*?)\s*$%%;
+  ($p1i, $p1s, $p1n, $p2i, $p2s, $p2n) = ($1, $2, $3, $4, $5, $6);
+  debug($p1i, $p1s, $p1n, $p2i, $p2s, $p2n);
 
-
-=item cut
-
-
-  1: <div class="player active" data-player-id="62489603">
-        <div class="score">459</div>
-        <div class="player_1">Barry Carter</div>
-      </div>
-      <div class="player" data-player-id="105796975">
-        <div class="score">255</div>
-        <div class="player_2">zyngawf_45765903
-
-=cut
-
-
-  debug("1: $1");
 
   # chat messages
   $gamedata=~s%<ul class="chat_messages">(.*?)</ul>%%s;
