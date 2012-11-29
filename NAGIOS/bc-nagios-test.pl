@@ -213,7 +213,7 @@ TODO: should only find most recent file in each directory
 sub bc_gaim_log_unanswered {
   # logs that are very recent probably just mean I haven't had time to
   # answer yet, so add -mmin +1
-  my($out, $err, $res) = cache_command("find /home/barrycarter/.gaim/logs/ -mtime -3 -mmin +1 -type f | fgrep -vf /home/barrycarter/imignoredir.txt | xargs -n 1 tail -1 | fgrep -vf /home/barrycarter/myids.txt | fgrep -vf /home/barrycarter/badpeeps.txt", "ignoreerror=1");
+  my($out, $err, $res) = cache_command("find /home/barrycarter/.purple/logs/ -mtime -3 -mmin +1 -type f | fgrep -vf /home/barrycarter/imignoredir.txt | xargs -n 1 tail -1 | fgrep -vf /home/barrycarter/myids.txt | fgrep -vf /home/barrycarter/badpeeps.txt", "ignoreerror=1");
   if ($err) {
     print "ERR: $err\n";
     return 2;
