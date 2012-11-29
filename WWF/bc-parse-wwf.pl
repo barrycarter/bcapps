@@ -6,18 +6,21 @@
 
 require "/usr/local/lib/bclib.pl";
 
-$all = read_file("/mnt/sshfs/tmp/wwf2.html");
+$all = read_file("/mnt/sshfs/tmp/wwf3.html");
 
 while ($all=~s%<li class="game game-desc\s*right_side"(.*?)</li>%%s) {
   $data = $1;
+
+#  debug("DATA: $data");
 
   # game and opponent number
   $data=~/data-game-id="(\d+)" data-opponent-id="(\d+)"/;
   ($game,$opp) = ($1,$2);
 
   # opponent name and status
-  $data=~m%<div class="title">(.*?)</div>%;
+  $data=~m%<div class="title">(.*?)</div>%s;
   $namestat = $1;
+  $namestat=~s/^\s*(.*?)\s*$/$1/;
 
   # start date (as UTC)
   $data=~m%<span class="date">(.*?)</span>%;
@@ -37,8 +40,22 @@ Last: $last
 
 MARK
 ;
+}
+
+# more details on the games?
+
+# divs ended up nested 5 deep (this is wrong, but easy way to find gamedata)
+while ($all=~s%<div data-game-id="(\d+)" id="game_(\d+)"(.*?)(</div>\s*</div>\s*</div>\s*</div>\s*</div>\s*)%%s) {
+  # $id[12] are probably identical <h>(or $id-entical?)</h>
+  ($id1,$id2, $gamedata, $delimiter) = ($1,$2,$3,$4);
+
+  # the board
+  while ($gamedata=~s%<div class="space_(\d+)_(\d+).*?>(.*?)</div>%%s) {
+      debug("$1 $2 $3");
+}
 
 
+  debug("D1: $d1","D2: $d2");
 }
 
 die "TESTING";
