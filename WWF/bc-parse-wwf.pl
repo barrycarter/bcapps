@@ -6,9 +6,9 @@
 
 require "/usr/local/lib/bclib.pl";
 
-$all = read_file("/mnt/sshfs/tmp/wwf3.html");
+$all = read_file("/mnt/sshfs/tmp/wwf5.html");
 
-while ($all=~s%<li class="game game-desc\s*right_side"(.*?)</li>%%s) {
+while ($all=~s%<li class="game game-desc(.*?)</li>%%s) {
   $data = $1;
 
 #  debug("DATA: $data");
@@ -49,15 +49,17 @@ while ($all=~s%<div data-game-id="(\d+)" id="game_(\d+)"(.*?)(</div>\s*</div>\s*
   # $id[12] are probably identical <h>(or $id-entical?)</h>
   ($id1,$id2, $gamedata, $delimiter) = ($1,$2,$3,$4);
 
+  print "GAME2: $id1\n";
+
   # the board
   while ($gamedata=~s%<div class=\"space_(\d+)_(\d+).*?>(.*?)</div>%%s) {
     # row column content
     ($row,$col,$cont) = ($1,$2,$3);
-    debug("RCC: $row/$col/$cont");
+#    debug("RCC: $row/$col/$cont");
 
     # just letter for content
     if ($cont=~s%<span class=.*?>(.)</span>%%s) {
-      debug("1: $1");
+ #     debug("1: $1");
       $board[$row][$col] = uc($1);
     } else {
       $board[$row][$col] = " ";
@@ -70,7 +72,43 @@ while ($all=~s%<div data-game-id="(\d+)" id="game_(\d+)"(.*?)(</div>\s*</div>\s*
       print $board[$i][$j]," ";
     }
   }
-#      debug("$1 $2 $3");
-}
 
+  print "\n";
+
+  # players and scores
+  $gamedata=~s%<div class="players">(.*?)</div>\s*</div>\s*</div>\s*%%s;
+  $playsco = $1;
+
+  # id, score, name for both players
+  $playsco =~s%<div class="player.*? data-player-id="(.*?)">\s*<div class="score">(\d+)</div>\s*<div class="player_1">(.*?)</div>%%;
+  debug("SOFAR: $1, $2, $3");
+
+
+=item cut
+
+
+  1: <div class="player active" data-player-id="62489603">
+        <div class="score">459</div>
+        <div class="player_1">Barry Carter</div>
+      </div>
+      <div class="player" data-player-id="105796975">
+        <div class="score">255</div>
+        <div class="player_2">zyngawf_45765903
+
+=cut
+
+
+  debug("1: $1");
+
+  # chat messages
+  $gamedata=~s%<ul class="chat_messages">(.*?)</ul>%%s;
+  debug("CHAT: $1");
+
+  # this is just cleanup so I can see it better, no programmatic use
+  $gamedata=~s/\s*\n+\s*/\n/sg;
+
+  # TODO: scores, gameover?, chat messages, rack letters
+
+  debug("<GD>",$gamedata,"</GD>");
+}
 
