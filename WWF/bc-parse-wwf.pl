@@ -50,21 +50,27 @@ while ($all=~s%<div data-game-id="(\d+)" id="game_(\d+)"(.*?)(</div>\s*</div>\s*
   ($id1,$id2, $gamedata, $delimiter) = ($1,$2,$3,$4);
 
   # the board
-  while ($gamedata=~s%<div class="space_(\d+)_(\d+).*?>(.*?)</div>%%s) {
-      debug("$1 $2 $3");
+  while ($gamedata=~s%<div class=\"space_(\d+)_(\d+).*?>(.*?)</div>%%s) {
+    # row column content
+    ($row,$col,$cont) = ($1,$2,$3);
+    debug("RCC: $row/$col/$cont");
+
+    # just letter for content
+    if ($cont=~s%<span class=.*?>(.)</span>%%s) {
+      debug("1: $1");
+      $board[$row][$col] = uc($1);
+    } else {
+      $board[$row][$col] = " ";
+    }
+  }
+
+  for $i (0..14) {
+    print "\n";
+    for $j (0..14) {
+      print $board[$i][$j]," ";
+    }
+  }
+#      debug("$1 $2 $3");
 }
 
-
-  debug("D1: $d1","D2: $d2");
-}
-
-die "TESTING";
-
-# debug("ALL: $all");
-
-# @games = split(/<li class="game game-desc  right_side" data-game-id="3779148583" data-opponent-id="39380772">
-
-while ($all=~s%<span class="tile letter-(.)%%s) {
-  debug("1: $1");
-}
 
