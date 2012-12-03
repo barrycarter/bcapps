@@ -4,9 +4,14 @@
 # over the score of any of them, the resulting file might be parseable
 # (no example included, as it may contain my sensitive data)
 
+# in directory with wwf*.html files:
+# \ls -1t *.html | xargs -n 1 bc-parse-wwf.pl
+# TODO: above is nonideal since assumes file mtimes are correct
+# TODO: instead, use "last move" time to see which entry for given game is more current
+
 require "/usr/local/lib/bclib.pl";
 
-$all = read_file("/mnt/sshfs/tmp/wwf8.html");
+($all,$fname) = cmdfile();
 
 while ($all=~s%<li class="game game-desc(.*?)</li>%%s) {
   $data = $1;
