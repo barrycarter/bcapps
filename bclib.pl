@@ -2145,6 +2145,7 @@ sub hashlist2sqlite {
   my(@queries);
 
   for $i (@{$hashs}) {
+    debug("HASH: $i");
     my(@keys,@vals) = ();
     my(%hash) = %{$i};
     for $j (sort keys %hash) {

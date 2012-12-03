@@ -5,13 +5,30 @@
 require "/usr/local/lib/bclib.pl";
 
 # TODO: as the name suggests, this is just a temporary list for testing
-open(A,"/mnt/sshfs/D4M2/temp.somefiles.rand");
+# these are lines from mapping.txt
+open(A,"/mnt/sshfs/D4M4/temp.somefiles.rand");
 
 while (<A>) {
+
+  # only need filename not target URL
+  s/\s+.*$//isg;
+
   # correct to full path
-  s%^\./%/mnt/sshfs/D4M2/%;
-  debug("FILE: $_");
+  s%^%/mnt/sshfs/D4M4/%;
+
+  # mapping.txt contains mappings for files that don't exist (yet); skip those
+  unless (-f $_) {
+#    debug("NOEXIST: $_");
+    next;
+  }
+
   $all = read_file($_);
+
+  # ignore files sans calories (case-sensitive)
+  unless ($all=~/Calories/) {
+#    debug("NOTFOOD: $_");
+    next;
+  }
 
   my(%hash) = ();
 
@@ -25,6 +42,7 @@ while (<A>) {
     ($key,$val) = ($1,$2);
     # ignore empties and numericals
     if ($key=~/^\d*$/) {next;}
+    $key=~s/[^a-z]//isg;
     $hash{$key} = trim($val);
   }
 
@@ -47,7 +65,7 @@ while (<A>) {
     while ($row=~s%<td.*?>(.*?)</td>%%s) {
       # cleanup cell + push to row-specific array
       $cell = $1;
-      $cell = trim($cell);
+      $cell =~s/[^a-z]//isg;
       push(@arr, $cell);
     }
 
@@ -58,14 +76,18 @@ while (<A>) {
   # only stuff that has calories
   unless ($hash{Calories}) {next;}
 
-  push(@hashes, \%hash);
+  # silly to wrap single hash in list, but I didnt want to write new function
+  $l[0] = \%hash;
+  debug("0: $l[0]");
 
-  if (++$n > 100) {
-    warn "TESTING";
-    last;
-  }
+  # this gets large, so print on a row by row basis
+  @query = hashlist2sqlite(\@l,"foods");
+
+ debug("QUERY:", @query);
+
+  # debug(hashlist2sqlite(\@hashes, "foods"));
+  # push(@hashes, \%hash);
+
+
 }
-
-debug(hashlist2sqlite(\@hashes, "foods"));
-
 

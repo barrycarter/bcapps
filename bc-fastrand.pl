@@ -15,7 +15,6 @@ defaults("n=1");
 open(A, $fname) || die("Can't open $fname, $!");
 $fsize = -s $fname;
 
-
 for $i (1..$globopts{n}) {
 
   # random byte
