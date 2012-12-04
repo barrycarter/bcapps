@@ -3,6 +3,12 @@
 showit := Module[{}, 
 Export["/tmp/math.png",%, ImageSize->{800,600}]; Run["display /tmp/math.png&"]]
 
+(* truncated sine waves *)
+
+t1 = Table[If[Abs[Sin[x]]>.9,Sign[Sin[x]]*.9,Sin[x]],{x,0,2*Pi,.01}]
+
+f1 = Abs[Fourier[t1]]
+
 (* hourly data averages *)
 
 <<"!bzcat /home/barrycarter/BCGIT/db/abqhourly.m.bz2"
