@@ -5,7 +5,7 @@
 # (no example included, as it may contain my sensitive data)
 
 # in directory with wwf*.html files:
-# \ls -1t *.html | xargs -n 1 bc-parse-wwf.pl
+# \ls -1t /mnt/sshfs/tmp/*.html | xargs -n 1 bc-parse-wwf.pl | sqlite3 /home/barrycarter/BCINFO/sites/DB/wwf.db
 # TODO: above is nonideal since assumes file mtimes are correct
 # TODO: instead, use "last move" time to see which entry for given game is more current
 
@@ -16,7 +16,7 @@ require "/usr/local/lib/bclib.pl";
 while ($all=~s%<li class="game game-desc(.*?)</li>%%s) {
   $data = $1;
 
-#  debug("DATA: $data");
+  debug("DATA: $data");
 
   # game and opponent number
   $data=~/data-game-id="(\d+)" data-opponent-id="(\d+)"/;
@@ -95,36 +95,95 @@ while ($all=~s%<div data-game-id="(\d+)" id="game_(\d+)"(.*?)(</div>\s*</div>\s*
 
   # chat messages
   $gamedata=~s%<ul class="chat_messages">(.*?)</ul>%%s;
-  debug("CHAT: $1");
+#  debug("CHAT: $1");
 
   # this is just cleanup so I can see it better, no programmatic use
   $gamedata=~s/\s*\n+\s*/\n/sg;
 
   # TODO: scores, gameover?, chat messages, rack letters
 
-  debug("<GD>",$gamedata,"</GD>");
+#  debug("<GD>",$gamedata,"</GD>");
 }
 
 for $i (sort keys %gamedata) {
-  print "GAME: $i\n";
+  # just this game itself
+  %game = %{$gamedata{$i}};
 
-  for $j (sort keys %{$gamedata{$i}}) {
-    # ignore board itself
-    if ($j=~/^\d+$/) {next;}
-    print "$j: $gamedata{$i}{$j}\n";
+  # create hash for this game (as db row)
+  $hashref = {};
+  my(%hash) = %{$hashref};
+
+  $hash{game} = $i;
+
+  # if namestat shows game has finished, indicate this
+  if ($game{namestat}=~/^(.*?) beat you/i) {
+    $hash{win} = $1;
+    $hash{oppname} = $hash{win};
+    # TODO: can I always get my own name?
+    $hash{lose} = "you";
+  } elsif ($game{namestat}=~/^you beat (.*?)$/i) {
+    $hash{lose} = $1;
+    $hash{oppname} = $hash{lose};
+    $hash{win} = "you";
+  } else {
+    # ie, game is in progress so namestat is just oppname
+    $hash{win} = "NA";
+    $hash{lose} = "NA";
+    $hash{oppname} = $game{namestat};
   }
-  print "\n";
 
-  # board
-  if ($gamedata{$i}{0}) {
-    for $k (0..14) {
-      print "\n";
-      for $l (0..14) {
-	print "$gamedata{$i}{$l}{$k} ";
+  # we no longer need or want namestat
+  delete $hash{namestat};
+
+  # fix start time
+  $game{start}=~s/^started\s*//isg;
+  $hash{start} = strftime("%Y-%m-%d %H:%M:%S", localtime(str2time($game{start})));
+
+  # and last move time
+  $game{last}=~/^(.*?)T(.*?)\+/;
+  $hash{last}="$1 $2";
+
+  # opponent number just gets copied over
+  $hash{opp} = $game{opp};
+
+  # some games have additional information, like player scores (and
+  # other info that turns out to be surprisingly useless)
+  for $j ("p1s", "p2s") {$hash{$j} = $game{$j};}
+
+  # and now boardstat (in ugly ugly format)
+  for $k (0..14) {
+        for $l (0..14) {
+	  $hash{board} .= $game{$l}{$k};
+	}
       }
-    }
-  print "\n\n";
-  }
+
+  push(@rows,\%hash);
 }
 
-# TODO: put in sqlite3 db that updates based on game number
+@queries = hashlist2sqlite(\@rows, "wwf");
+
+# we want later entries to replace earlier ones (though this is
+# irrelevant when parsing a single file)
+
+for $i (@queries) {$i=~s/INSERT OR IGNORE/REPLACE/isg;}
+
+# print the queries (surrounded by BEGIN/COMMIT)
+
+print "BEGIN;\n";
+print join(";\n",@queries),";\n";
+# special case to ignore really early games
+print "DELETE FROM wwf WHERE last <= '2012-11-01 00:00:00';\n";
+print "COMMIT;\n";
+
+=item schema
+
+DROP TABLE IF EXISTS wwf;
+CREATE TABLE wwf (board, game, last, lose, opp, oppname, p1s, p2s, start, win);
+-- CREATE UNIQUE INDEX igame ON wwf(game);
+
+=cut
+
+
+
+
+
