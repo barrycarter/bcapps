@@ -36,6 +36,21 @@ while ($all=~s%<li class="game game-desc(.*?)</li>%%s) {
   # <h>I realize last is a reserved word in Perl; IJDGAF!</h>
   $last = $1;
 
+  # have i seen this game before?
+  if ($gamedata{$game}) {
+    debug("REPEAT: $game, $gamedata{$game}{last} vs $last");
+    # is this version of this game older than what I already have?
+    # if so, mark it, so we wont overwrite board info later either
+    if (str2time($last) < str2time($gamedata{$game}{last})) {
+      debug("IGNORING!");
+      $gamedata{$game}{isold}=1;
+      next;
+    } else {
+      # reset isold flag
+      $gamedata{$game}{isold}=0;
+    }
+  }
+
   # putting into hash (TODO: could do this above too)
   $gamedata{$game}{opp} = $opp;
   # TODO: separate name and status into two fields
@@ -50,6 +65,9 @@ while ($all=~s%<li class="game game-desc(.*?)</li>%%s) {
 while ($all=~s%<div data-game-id="(\d+)" id="game_(\d+)"(.*?)(</div>\s*</div>\s*</div>\s*</div>\s*</div>\s*)%%s) {
   # $id[12] are probably identical <h>(or $id-entical?)</h>
   ($id1,$id2, $gamedata, $delimiter) = ($1,$2,$3,$4);
+
+  # if this data for this game is old, ignore it
+  if ($gamedata{$game}{isold}) {next;}
 
 #  print "GAME2: $id1\n";
 
@@ -148,7 +166,7 @@ for $i (sort keys %gamedata) {
 
   # some games have additional information, like player scores (and
   # other info that turns out to be surprisingly useless)
-  for $j ("p1s", "p2s") {$hash{$j} = $game{$j};}
+  for $j ("p1s", "p2s", "p1i", "p2i", "p1n", "p2n") {$hash{$j} = $game{$j};}
 
   # and now boardstat (in ugly ugly format)
   for $k (0..14) {
@@ -156,6 +174,15 @@ for $i (sort keys %gamedata) {
 	  $hash{board} .= $game{$l}{$k};
 	}
       }
+
+  # if "you" won/lost this game, replace with p1n
+  if ($hash{win}=~/^you$/i && $hash{p1n}) {
+    $hash{win} = $hash{p1n};
+  }
+
+  if ($hash{lose}=~/^you$/i && $hash{p1n}) {
+    $hash{lose} = $hash{p1n};
+  }
 
   push(@rows,\%hash);
 }
@@ -168,17 +195,30 @@ for $i (sort keys %gamedata) {
 for $i (@queries) {$i=~s/INSERT OR IGNORE/REPLACE/isg;}
 
 # print the queries (surrounded by BEGIN/COMMIT)
+open(A,">/tmp/bcpwwf.sql");
 
-print "BEGIN;\n";
-print join(";\n",@queries),";\n";
+print A << "MARK";
+DROP TABLE IF EXISTS wwf;
+CREATE TABLE wwf (board, game, last, lose, opp, oppname, p1s, p2s,
+ start, win, p1i, p2i, p1n, p2n);
+BEGIN;
+MARK
+;
+
+print A join(";\n",@queries),";\n";
 # special case to ignore really early games
-print "DELETE FROM wwf WHERE last <= '2012-11-01 00:00:00';\n";
-print "COMMIT;\n";
+print A "DELETE FROM wwf WHERE last <= '2012-11-01 00:00:00';\n";
+print A "COMMIT;\n";
+
+system("sqlite3 /home/barrycarter/BCINFO/sites/DB/wwf.db < /tmp/bcpwwf.sql");
+
+warn "Should not create db over again each time when live";
 
 =item schema
 
 DROP TABLE IF EXISTS wwf;
-CREATE TABLE wwf (board, game, last, lose, opp, oppname, p1s, p2s, start, win);
+CREATE TABLE wwf (board, game, last, lose, opp, oppname, p1s, p2s,
+ start, win, p1i, p2i, p1n, p2n);
 -- CREATE UNIQUE INDEX igame ON wwf(game);
 
 =cut
