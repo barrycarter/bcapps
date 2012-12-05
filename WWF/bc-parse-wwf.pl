@@ -59,7 +59,7 @@ for $file (glob "/mnt/sshfs/tmp/wwf*.html") {
     $gamedata{$game}{opp} = $opp;
     $gamedata{$game}{namestat} = $namestat;
     $gamedata{$game}{start} = $start;
-    $gamedata{$game}{last} = $last;
+    $gamedata{$game}{lastmove} = $lastmove;
 
     # this is the tricky bit: try to get more info on game ASAP, not
     # after looping thru all short descs as I did earlier
@@ -93,9 +93,9 @@ for $file (glob "/mnt/sshfs/tmp/wwf*.html") {
 
       # just letter for content
       if ($cont=~s%<span class=.*?>(.)</span>%%s) {
-	$gamedata{$id1}{board}{$row}{$col} = uc($1);
+	$gamedata{$game}{board}{$row}{$col} = uc($1);
       } else {
-	$gamedata{$id1}{board}{$row}{$col} = " ";
+	$gamedata{$game}{board}{$row}{$col} = " ";
       }
     }
   }
@@ -105,56 +105,60 @@ for $file (glob "/mnt/sshfs/tmp/wwf*.html") {
 
 for $i (sort keys %gamedata) {
   # just this game itself
-  %game = %{$gamedata{$i}};
+  $game = $gamedata{$i};
+
+  $game->{id} = $i;
 
   # if namestat shows game has finished, indicate this
-  if ($game{namestat}=~/^(.*?) beat you/i) {
-    $game{win} = $1;
-    $game{oppname} = $game{win};
+  if ($game->{namestat}=~/^(.*?) beat you/i) {
+    $game->{win} = $1;
+    $game->{oppname} = $game->{win};
     # TODO: can I always get my own name?
-    $game{lose} = "you";
-  } elsif ($game{namestat}=~/^you beat (.*?)$/i) {
-    $game{lose} = $1;
-    $game{oppname} = $game{lose};
-    $game{win} = "you";
+    $game->{lose} = "you";
+  } elsif ($game->{namestat}=~/^you beat (.*?)$/i) {
+    $game->{lose} = $1;
+    $game->{oppname} = $game->{lose};
+    $game->{win} = "you";
   } else {
     # ie, game is in progress so namestat is just oppname
-    $game{win} = "NA";
-    $game{lose} = "NA";
-    $game{oppname} = $game{namestat};
+    $game->{win} = "NA";
+    $game->{lose} = "NA";
+    $game->{oppname} = $game->{namestat};
   }
 
   # we no longer need or want namestat
-  delete $game{namestat};
+  delete $game->{namestat};
 
   # fix start time
-  $game{start}=~s/^started\s*//isg;
-  $game{start}=strftime("%Y-%m-%d %H:%M:%S",localtime(str2time($game{start})));
+  $game->{start}=~s/^started\s*//isg;
+  $game->{start}=strftime("%Y-%m-%d %H:%M:%S",localtime(str2time($game->{start})));
 
   # and last move time
-  $game{last}=~/^(.*?)T(.*?)\+/;
-  $game{last}="$1 $2";
+  $game->{lastmove}=~/^(.*?)T(.*?)\+/;
+  $game->{lastmove}="$1 $2";
 
   # and now boardstat (in ugly ugly format)
   for $k (0..14) {
     for $l (0..14) {
-      $game{boardstring} .= $game{board}{$l}{$k};
+      $game->{boardstring} .= $game->{board}{$l}{$k};
     }
   }
 
+  debug("BS: $game->{boardstring}");
+
   # once weve converted it, we dont need it in the db
-  delete $game{board};
+  delete $game->{board};
 
   # if "you" won/lost this game, replace with p1n
-  if ($game{win}=~/^you$/i && $game{p1n}) {
-    $game{win} = $game{p1n};
+  if ($game->{win}=~/^you$/i && $game->{p1n}) {
+    $game->{win} = $game->{p1n};
   }
 
-  if ($game{lose}=~/^you$/i && $game{p1n}) {
-    $game{lose} = $game{p1n};
+  if ($game->{lose}=~/^you$/i && $game->{p1n}) {
+    $game->{lose} = $game->{p1n};
   }
 
-  push(@rows,$gamedata{$i});
+  push(@rows,$game);
 }
 
 @queries = hashlist2sqlite(\@rows, "wwf");
@@ -169,32 +173,17 @@ open(A,">/tmp/bcpwwf.sql");
 
 print A << "MARK";
 DROP TABLE IF EXISTS wwf;
-CREATE TABLE wwf (boardstring, last, lastmove, lose, opp, oppname, p1i, p1n, p1s, p2i, p2n, p2s, start, win);
+CREATE TABLE wwf (id, boardstring, lastmove, lose, opp, oppname,
+ p1i, p1n, p1s, p2i, p2n, p2s, start, win);
 BEGIN;
 MARK
 ;
 
 print A join(";\n",@queries),";\n";
 # special case to ignore really early games
-print A "DELETE FROM wwf WHERE last <= '2012-11-01 00:00:00';\n";
+print A "DELETE FROM wwf WHERE lastmove <= '2012-11-01 00:00:00';\n";
 print A "COMMIT;\n";
 
 system("sqlite3 /home/barrycarter/BCINFO/sites/DB/wwf.db < /tmp/bcpwwf.sql");
 
 warn "Should not create db over again each time when live";
-
-=cut
-
-=item schema
-
-DROP TABLE IF EXISTS wwf;
-CREATE TABLE wwf (board, game, last, lose, opp, oppname, p1s, p2s,
- start, win, p1i, p2i, p1n, p2n);
--- CREATE UNIQUE INDEX igame ON wwf(game);
-
-=cut
-
-
-
-
-
