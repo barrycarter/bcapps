@@ -16,7 +16,7 @@ require "/usr/local/lib/bclib.pl";
 while ($all=~s%<li class="game game-desc(.*?)</li>%%s) {
   $data = $1;
 
-  debug("DATA: $data");
+#  debug("DATA: $data");
 
   # game and opponent number
   $data=~/data-game-id="(\d+)" data-opponent-id="(\d+)"/;
@@ -37,18 +37,10 @@ while ($all=~s%<li class="game game-desc(.*?)</li>%%s) {
   $last = $1;
 
   # have i seen this game before?
-  if ($gamedata{$game}) {
-    debug("REPEAT: $game, $gamedata{$game}{last} vs $last");
-    # is this version of this game older than what I already have?
-    # if so, mark it, so we wont overwrite board info later either
-    if (str2time($last) < str2time($gamedata{$game}{last})) {
-      debug("IGNORING!");
-      $gamedata{$game}{isold}=1;
-      next;
-    } else {
-      # reset isold flag
-      $gamedata{$game}{isold}=0;
-    }
+  # is this version of this game older than what I already have?
+  if ($gamedata{$game} && str2time($last) < str2time($gamedata{$game}{last})) {
+    debug("IGNORING $game: $last < $gamedata{$game}{last}");
+    next;
   }
 
   # putting into hash (TODO: could do this above too)
@@ -66,10 +58,20 @@ while ($all=~s%<div data-game-id="(\d+)" id="game_(\d+)"(.*?)(</div>\s*</div>\s*
   # $id[12] are probably identical <h>(or $id-entical?)</h>
   ($id1,$id2, $gamedata, $delimiter) = ($1,$2,$3,$4);
 
-  # if this data for this game is old, ignore it
-  if ($gamedata{$game}{isold}) {next;}
+  # determine players and scores first
+  $gamedata=~s%<div class="players">(.*?)</div>\s*</div>\s*</div>\s*%%s;
+  $playsco = $1;
 
-#  print "GAME2: $id1\n";
+  # id, score, name for both players
+  $playsco =~s%<div class="player.*? data-player-id="(.*?)">\s*<div class="score">(\d+)</div>\s*<div class="player_1">(.*?)</div>\s*</div>\s*<div class="player.*? data-player-id="(.*?)">\s*<div class="score">(\d+)</div>\s*<div class="player_2">(.*?)\s*$%%;
+  ($p1i, $p1s, $p1n, $p2i, $p2s, $p2n) = ($1, $2, $3, $4, $5, $6);
+
+  # if neither player score is higher than what we already have,
+  # ignore this entry (its old)
+  if ($p1s<=$gamedata{$id1}{p1s} && $p2s<=$gamedata{$id1}{p2s}) {
+    debug("ISOLD: $id1");
+    next;
+  }
 
   # the board
   while ($gamedata=~s%<div class=\"space_(\d+)_(\d+).*?>(.*?)</div>%%s) {
@@ -94,14 +96,6 @@ while ($all=~s%<div data-game-id="(\d+)" id="game_(\d+)"(.*?)(</div>\s*</div>\s*
   }
 
 #  print "\n";
-
-  # players and scores
-  $gamedata=~s%<div class="players">(.*?)</div>\s*</div>\s*</div>\s*%%s;
-  $playsco = $1;
-
-  # id, score, name for both players
-  $playsco =~s%<div class="player.*? data-player-id="(.*?)">\s*<div class="score">(\d+)</div>\s*<div class="player_1">(.*?)</div>\s*</div>\s*<div class="player.*? data-player-id="(.*?)">\s*<div class="score">(\d+)</div>\s*<div class="player_2">(.*?)\s*$%%;
-  ($p1i, $p1s, $p1n, $p2i, $p2s, $p2n) = ($1, $2, $3, $4, $5, $6);
 
   # assigning to hash
   $gamedata{$id1}{p1i} = $p1i;
