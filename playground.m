@@ -3,6 +3,21 @@
 showit := Module[{}, 
 Export["/tmp/math.png",%, ImageSize->{800,600}]; Run["display /tmp/math.png&"]]
 
+(*
+
+if my weight loss is proportional to calories eaten [which I measure]
+minus calories burned [which is proportional to my weight itself],
+what happens?
+
+c[i] = calories eaten on ith day
+
+*)
+
+w[0] = w0
+w[i_] := w[i-1] + k1*(c[i] - k2*w[i-1])
+
+DSolve[{w'[t] == k1*c[t] - k2*w[t], w[0]==w0}, w[t], t]
+
 (* truncated sine waves *)
 
 t1 = Table[If[Abs[Sin[x]]>.9,Sign[Sin[x]]*.9,Sin[x]],{x,0,2*Pi,.01}]

@@ -9,8 +9,10 @@ require "/usr/local/lib/bclib.pl";
 # As I somewhat suspected earlier, I will have to do this one file at a time
 
 # TODO: in theory, can read existing db for current data vs reading all files
+# TODO: use <h5>Your Move</h5> and playerData stuff
 
 for $file (glob "/mnt/sshfs/tmp/wwf*.html") {
+  debug("FILENAME: $file");
   $all = read_file($file);
 
   # find all short game descs
@@ -26,17 +28,23 @@ for $file (glob "/mnt/sshfs/tmp/wwf*.html") {
     $data=~m%<abbr class="timeago" title="(.*?)"%;
     $lastmove = $1;
 
+    debug("$game: $gamedata{$game}{lastmove} vs $lastmove");
+
     # have I seen this game before? If so, compare lastmove times
-    if ($gamedata{$game}{lastmove} > $lastmove) {
+    if (str2time($gamedata{$game}{lastmove}) > str2time($lastmove)) {
       debug("$game: Already have newer information: $gamedata{$game}{lastmove} > $lastmove");
       next;
     }
 
     # if this game data is newer, wipe out any cached info (ie, state
     # of the board)
-    if ($gamedata{$game}{lastmove} < $lastmove) {
+    if (str2time($gamedata{$game}{lastmove}) < str2time($lastmove)) {
       debug("$game: this information strictly newer, wiping out cache");
       $gamedata{$game} = ();
+    }
+
+    if ($game eq "3822276575") {
+      debug("GAMEDATA:",unfold($gamedata{$game}));
     }
 
     # note that above excludes case where lastmove time is same: in
@@ -64,12 +72,17 @@ for $file (glob "/mnt/sshfs/tmp/wwf*.html") {
     # this is the tricky bit: try to get more info on game ASAP, not
     # after looping thru all short descs as I did earlier
     unless ($all=~s%<div data-game-id="$game" id="game_$game"(.*?)(</div>\s*</div>\s*</div>\s*</div>\s*</div>\s*)%%s) {
-      debug("NO EXTRA INFORMATION FOR $game");
+      debug("NO EXTRA INFORMATION FOR $game in $file");
       next;
     }
 
     # there is extra info, so use it
     $gamedata = $1;
+
+    debug("EXTRA INFORMATION FOR $game in $file!");
+
+    # assign filename for extended data
+    $gamedata{$game}{filename} = $file;
 
     # determine players and scores
     $gamedata=~s%<div class="players">(.*?)</div>\s*</div>\s*</div>\s*%%s;
@@ -174,7 +187,7 @@ open(A,">/tmp/bcpwwf.sql");
 print A << "MARK";
 DROP TABLE IF EXISTS wwf;
 CREATE TABLE wwf (id, boardstring, lastmove, lose, opp, oppname,
- p1i, p1n, p1s, p2i, p2n, p2s, start, win);
+ p1i, p1n, p1s, p2i, p2n, p2s, start, win, filename);
 BEGIN;
 MARK
 ;

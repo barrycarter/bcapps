@@ -93,11 +93,11 @@ write_file("$daysago $y[0]\n$mostrecent $y[-1]\n", "/tmp/bwl5.txt");
 debug("DAYSAGO: $daysago, LINWT: $linweight");
 
 # target weights (borders for obese, overweight, normal, and severely underweight) [added midpoints 30 Sep 2012 JFF]
-@t=(180,170,165,150,135,120,105);
+@t=(180,170,165,160,150,135,120,105);
 
 # when graphing, don't show beyond this value
 # TODO: optionize this
-$graphtarget = 150;
+$graphtarget = 160;
 
 # TODO: with removal of 2nd fgrep, code can be efficientized
 ($secs,$wt) = ($x[-1]*86400+$stime,$y[-1]);
