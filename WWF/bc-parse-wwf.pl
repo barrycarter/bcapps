@@ -39,15 +39,11 @@ for $file (glob "/mnt/sshfs/tmp/wwf*.html") {
     # if this game data is newer, wipe out any cached info (ie, state
     # of the board)
     if (str2time($gamedata{$game}{lastmove}) < str2time($lastmove)) {
-      debug("$game: this information strictly newer, wiping out cache");
-      $gamedata{$game} = ();
+      debug("$game: this information strictly newer, BUT NOT wiping out cache");
+#      $gamedata{$game} = ();
     }
 
-    if ($game eq "3822276575") {
-      debug("GAMEDATA:",unfold($gamedata{$game}));
-    }
-
-    # note that above excludes case where lastmove time is same: in
+     # note that above excludes case where lastmove time is same: in
     # that case, we keep any information (ie, scores + board state) we
     # had before
 
@@ -55,12 +51,12 @@ for $file (glob "/mnt/sshfs/tmp/wwf*.html") {
     $gamedata{$game}{lastmove} = $lastmove;
 
     # opponent name and status
-    $data=~m%<div class="title">(.*?)</div>%s;
+    $data=~s%<div class="title">(.*?)</div>%%s;
     $namestat = $1;
     $namestat=~s/^\s*(.*?)\s*$/$1/;
 
     # start date (as UTC)
-    $data=~m%<span class="date">(.*?)</span>%;
+    $data=~s%<span class="date">(.*?)</span>%%;
     $start = $1;
 
     # putting into hash (TODO: could do this above too)
@@ -68,6 +64,26 @@ for $file (glob "/mnt/sshfs/tmp/wwf*.html") {
     $gamedata{$game}{namestat} = $namestat;
     $gamedata{$game}{start} = $start;
     $gamedata{$game}{lastmove} = $lastmove;
+
+    # last word played
+    $data=~s%<small>(.*?)</small>%%;
+    $gamedata{$game}{last} = $1;
+    $gamedata{$game}{last}=~s/<.*?>//isg;
+
+  # fix start and last move time
+  for $j ("start", "lastmove") {
+    $gamedata{$game}{$j}=~s/^started\s*//isg;
+    $gamedata{$game}{$j}=strftime("%Y-%m-%d %H:%M:%S",localtime(str2time($gamedata{$game}{$j})));
+  }
+
+    # ignore declined games
+    if ($gamedata{$game}{last}=~/declined game/i) {
+      delete $gamedata{$game};
+      next;
+    }
+
+    # the "mainfile" is the one that contains the latest summary
+    $gamedata{$game}{mainfile} = $file;
 
     # this is the tricky bit: try to get more info on game ASAP, not
     # after looping thru all short descs as I did earlier
@@ -81,8 +97,11 @@ for $file (glob "/mnt/sshfs/tmp/wwf*.html") {
 
     debug("EXTRA INFORMATION FOR $game in $file!");
 
+    # this is the lastmove for which we have extra info
+    $gamedata{$game}{lmextra} = $gamedata{$game}{lastmove};
+
     # assign filename for extended data
-    $gamedata{$game}{filename} = $file;
+    $gamedata{$game}{extrafile} = $file;
 
     # determine players and scores
     $gamedata=~s%<div class="players">(.*?)</div>\s*</div>\s*</div>\s*%%s;
@@ -104,6 +123,9 @@ for $file (glob "/mnt/sshfs/tmp/wwf*.html") {
       # row column content
       ($row,$col,$cont) = ($1,$2,$3);
 
+      # push the raw string to an array (we might use later)
+      $bs[$row][$col] = $&;
+
       # just letter for content
       if ($cont=~s%<span class=.*?>(.)</span>%%s) {
 	$gamedata{$game}{board}{$row}{$col} = uc($1);
@@ -111,6 +133,14 @@ for $file (glob "/mnt/sshfs/tmp/wwf*.html") {
 	$gamedata{$game}{board}{$row}{$col} = " ";
       }
     }
+
+    # last play
+    $gamedata=~s%<p>(.*?)</p>%%;
+    $gamedata{$game}{lastplay} = $1;
+    $gamedata{$game}{lastplay}=~s/<.*?>//isg;
+
+    debug("BS",unfold(@bs));
+
   }
 }
 
@@ -142,13 +172,11 @@ for $i (sort keys %gamedata) {
   # we no longer need or want namestat
   delete $game->{namestat};
 
-  # fix start time
-  $game->{start}=~s/^started\s*//isg;
-  $game->{start}=strftime("%Y-%m-%d %H:%M:%S",localtime(str2time($game->{start})));
-
   # and last move time
-  $game->{lastmove}=~/^(.*?)T(.*?)\+/;
-  $game->{lastmove}="$1 $2";
+#  $game->{lastmove}=~/^(.*?)T(.*?)\+/;
+#  $game->{lastmove}="$1 $2";
+
+  debug("LM: $game->{lastmove}");
 
   # and now boardstat (in ugly ugly format)
   for $k (0..14) {
@@ -186,15 +214,15 @@ open(A,">/tmp/bcpwwf.sql");
 
 print A << "MARK";
 DROP TABLE IF EXISTS wwf;
-CREATE TABLE wwf (id, boardstring, lastmove, lose, opp, oppname,
- p1i, p1n, p1s, p2i, p2n, p2s, start, win, filename);
+CREATE TABLE wwf (id, boardstring, lastmove, lose, opp, oppname, lastplay,
+ p1i, p1n, p1s, p2i, p2n, p2s, start, win, mainfile, extrafile, last, lmextra);
 BEGIN;
 MARK
 ;
 
 print A join(";\n",@queries),";\n";
-# special case to ignore really early games
-print A "DELETE FROM wwf WHERE lastmove <= '2012-11-01 00:00:00';\n";
+# special case to ignore early games
+print A "DELETE FROM wwf WHERE start <= '2012-11-01 00:00:00';\n";
 print A "COMMIT;\n";
 
 system("sqlite3 /home/barrycarter/BCINFO/sites/DB/wwf.db < /tmp/bcpwwf.sql");
