@@ -13,8 +13,10 @@ c[i] = calories eaten on ith day
 
 *)
 
+Solve[w[t] == b0 + b1*w[t] + b2*c[t], w[t]]
+
 w[0] = w0
-w[i_] := w[i-1] + k1*(c[i] - k2*w[i-1])
+w[i_] := w[i-1] + k1*(c[i] - k2*w[i-1]) + k3
 
 DSolve[{w'[t] == k1*c[t] - k2*w[t], w[0]==w0}, w[t], t]
 
