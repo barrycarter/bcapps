@@ -139,7 +139,8 @@ for $file (glob "/mnt/sshfs/tmp/wwf*.html") {
     $gamedata{$game}{lastplay} = $1;
     $gamedata{$game}{lastplay}=~s/<.*?>//isg;
 
-    debug("BS",unfold(@bs));
+#    debug("BS",unfold(@bs));
+    $gamedata{$game}{boardstring} = build_board(\@bs);
 
   }
 }
@@ -181,7 +182,7 @@ for $i (sort keys %gamedata) {
   # and now boardstat (in ugly ugly format)
   for $k (0..14) {
     for $l (0..14) {
-      $game->{boardstring} .= $game->{board}{$l}{$k};
+#      $game->{boardstring} .= $game->{board}{$l}{$k};
     }
   }
 
@@ -228,3 +229,47 @@ print A "COMMIT;\n";
 system("sqlite3 /home/barrycarter/BCINFO/sites/DB/wwf.db < /tmp/bcpwwf.sql");
 
 warn "Should not create db over again each time when live";
+
+sub build_board {
+  my($listref) = @_;
+  my($letter,$color,$spec);
+  my(@list) = @$listref;
+  my(@ret);
+
+  # really no need to define this here
+  my(%color) = ("tw" => "#ff8000", "tl" => "#00ff00", "dl" => "#8080ff",
+	       "dw" => "#ff8080");
+  debug("TEST: $color{tw}");
+
+  push(@ret, "<table border>");
+  for $i (0..14) {
+    push(@ret, "<tr>");
+    for $j (0..14) {
+
+      # determine letter
+      if ($list[$i][$j]=~s%<span class=.*?>(.*?)</span>%%) {
+	$letter = $1;
+      } else {
+	$letter = "<font size='-4'>.</font>";
+      }
+
+      # determine color
+      if ($list[$i][$j]=~/space (..) /) {
+	$spec = $1;
+	$color = $color{$spec};
+	debug("COLOR: $spec, $color{$1}");
+      } else {
+	# TODO: this is probably wrong
+	$color = "#ffffff";
+	$spec = "";
+      }
+
+      # TODO: maybe add scores either as title or teeny subscript
+      push(@ret,"<td bgcolor='$color' align='center' title='$spec' width='20px' height='20px'>$letter</td>");
+    }
+    push(@ret,"</tr>");
+  }
+  push(@ret,"</table>");
+
+  return join("\n",@ret);
+}
