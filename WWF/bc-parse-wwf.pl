@@ -15,14 +15,21 @@ for $file (glob "/mnt/sshfs/tmp/wwf*.html") {
   debug("FILENAME: $file");
   $all = read_file($file);
 
+  # find my name (doesnt always work, but helps)
+  $all=~s/playerdata: \{"name":"(.*?)"//is;
+  $myname = $1;
+
   # find all short game descs
   # backslash before quote below is unnecessary, solely to make emacs happy
-  while ($all=~s%<li class=\"game game-desc(.*?)</li>%%s) {
+  while ($all=~s%(<li class=\"game game-desc.*?</li>)%%s) {
     $data = $1;
 
     # game and opponent number
     $data=~/data-game-id="(\d+)" data-opponent-id="(\d+)"/;
     ($game,$opp) = ($1,$2);
+
+    # ignore last years games
+    if ($game=~/^1/) {next;}
 
     # last move
     $data=~m%<abbr class="timeago" title="(.*?)"%;
@@ -36,6 +43,13 @@ for $file (glob "/mnt/sshfs/tmp/wwf*.html") {
       next;
     }
 
+    # is useful to have data in "raw" form for testing
+    $gamedata{$game}{data} = $data;
+    debug("DATAPRE: $data");
+    $gamedata{$game}{data}=~s/<[^>]*?>//isg;
+    $gamedata{$game}{data}=~s/\s+/ /isg;
+    debug("DATA: $gamedata{$game}{data}");
+
     # if this game data is newer, wipe out any cached info (ie, state
     # of the board)
     if (str2time($gamedata{$game}{lastmove}) < str2time($lastmove)) {
@@ -43,7 +57,7 @@ for $file (glob "/mnt/sshfs/tmp/wwf*.html") {
 #      $gamedata{$game} = ();
     }
 
-     # note that above excludes case where lastmove time is same: in
+    # note that above excludes case where lastmove time is same: in
     # that case, we keep any information (ie, scores + board state) we
     # had before
 
@@ -118,7 +132,7 @@ for $file (glob "/mnt/sshfs/tmp/wwf*.html") {
       $gamedata{$game}{"p$j$k"} = substr($&,$-[++$n],$+[$n]-$-[$n]);
     }}
 
-  # the board
+    # the board
     while ($gamedata=~s%<div class=\"space_(\d+)_(\d+).*?>(.*?)</div>%%s) {
       # row column content
       ($row,$col,$cont) = ($1,$2,$3);
@@ -157,12 +171,11 @@ for $i (sort keys %gamedata) {
   if ($game->{namestat}=~/^(.*?) beat you/i) {
     $game->{win} = $1;
     $game->{oppname} = $game->{win};
-    # TODO: can I always get my own name?
-    $game->{lose} = "you";
+    $game->{lose} = $myname;
   } elsif ($game->{namestat}=~/^you beat (.*?)$/i) {
     $game->{lose} = $1;
     $game->{oppname} = $game->{lose};
-    $game->{win} = "you";
+    $game->{win} = $myname;
   } else {
     # ie, game is in progress so namestat is just oppname
     $game->{win} = "NA";
@@ -216,7 +229,8 @@ open(A,">/tmp/bcpwwf.sql");
 print A << "MARK";
 DROP TABLE IF EXISTS wwf;
 CREATE TABLE wwf (id, boardstring, lastmove, lose, opp, oppname, lastplay,
- p1i, p1n, p1s, p2i, p2n, p2s, start, win, mainfile, extrafile, last, lmextra);
+ p1i, p1n, p1s, p2i, p2n, p2s, start, win, mainfile, extrafile, last, lmextra,
+ data);
 BEGIN;
 MARK
 ;
