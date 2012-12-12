@@ -50,6 +50,13 @@ for $file (glob "/mnt/sshfs/tmp/wwf*.html /mnt/sshfs/tmp/wwf*.html.bz2") {
     # convenience variable
     $game = $pre{game};
 
+    # HTML is space-insensitive, and altho SQLite3 can handle
+    # newlines, I dont want to deal with them
+    $pre{data}=~s/\s+/ /isg;
+    # since I use double quotes as delimiters, get rid of those too
+    $pre{data}=~s/\"/\'/isg;
+    # TODO: tweak hashlist2sqlite to have an option to use "'" as delimiter
+
     # at this point, acknowledge this game exists, in case we drop it
     # by mistake later
     $isgame{$game} = 1;
@@ -97,16 +104,27 @@ for $file (glob "/mnt/sshfs/tmp/wwf*.html /mnt/sshfs/tmp/wwf*.html.bz2") {
       $gamedata{$game}{winner} = "TIE";
     } else {
       $gamedata{$game}{oppname} = $pre{oppname};
+      $gamedata{$game}{loser} = "IP";
+      $gamedata{$game}{winner} = "IP";
     }
 
-#    debug("OPPNAME: $gamedata{$game}{oppname}");
+    # is the game over or still in progress (we could get this from "x
+    # beat y", but this provides a nice double check
+    if ($pre{state}=~/active/) {
+      $gamedata{$game}{gameover}=0;
+    } else {
+      $gamedata{$game}{gameover}=1;
+    }
 
-    debug("GAMEDATA",%{$gamedata{$game}});
+    # the copyovers
+    for $i ("lastmove", "data", "game", "opp") {
+      $gamedata{$game}{$i} = $pre{$i};
+    }
 
-    # TODO: copy values to $gamedata{$game} hash
+    # for debugging
+    $gamedata{$game}{file} = $file;
 
-
-#    debug("TESTING");
+    # for now, lets get the basics right
     next;
 
     # this is the tricky bit: try to get more info on game ASAP, not
@@ -169,38 +187,15 @@ for $file (glob "/mnt/sshfs/tmp/wwf*.html /mnt/sshfs/tmp/wwf*.html.bz2") {
   }
 }
 
+# TODO: use the isgame check!
+
 # and now, we go through the latest data for each game
 
 for $i (sort keys %gamedata) {
   # just this game itself
   $game = $gamedata{$i};
 
-  $game->{id} = $i;
-
-  # if namestat shows game has finished, indicate this
-  if ($game->{namestat}=~/^(.*?) beat you/i) {
-    $game->{win} = $1;
-    $game->{oppname} = $game->{win};
-    $game->{lose} = $myname;
-  } elsif ($game->{namestat}=~/^you beat (.*?)$/i) {
-    $game->{lose} = $1;
-    $game->{oppname} = $game->{lose};
-    $game->{win} = $myname;
-  } else {
-    # ie, game is in progress so namestat is just oppname
-    $game->{win} = "NA";
-    $game->{lose} = "NA";
-    $game->{oppname} = $game->{namestat};
-  }
-
-  # we no longer need or want namestat
-  delete $game->{namestat};
-
-  # and last move time
-#  $game->{lastmove}=~/^(.*?)T(.*?)\+/;
-#  $game->{lastmove}="$1 $2";
-
-  debug("LM: $game->{lastmove}");
+  debug("KEYS:",keys %{$game});
 
   # and now boardstat (in ugly ugly format)
   for $k (0..14) {
@@ -214,15 +209,6 @@ for $i (sort keys %gamedata) {
   # once weve converted it, we dont need it in the db
   delete $game->{board};
 
-  # if "you" won/lost this game, replace with p1n
-  if ($game->{win}=~/^you$/i && $game->{p1n}) {
-    $game->{win} = $game->{p1n};
-  }
-
-  if ($game->{lose}=~/^you$/i && $game->{p1n}) {
-    $game->{lose} = $game->{p1n};
-  }
-
   push(@rows,$game);
 }
 
@@ -233,21 +219,21 @@ for $i (sort keys %gamedata) {
 
 for $i (@queries) {$i=~s/INSERT OR IGNORE/REPLACE/isg;}
 
+# these are the keys for gamedata{game} (aka the column names for the db)
+# we could compute these, but that takes longer
+$keys = "data, game, gameover, lastmove, lasttime, loser, opp, oppname, start, winner, file";
+
 # print the queries (surrounded by BEGIN/COMMIT)
 open(A,">/tmp/bcpwwf.sql");
 
 print A << "MARK";
 DROP TABLE IF EXISTS wwf;
-CREATE TABLE wwf (id, boardstring, lastmove, lose, opp, oppname, lastplay,
- p1i, p1n, p1s, p2i, p2n, p2s, start, win, mainfile, extrafile, last, lmextra,
- data);
+CREATE TABLE wwf ($keys);
 BEGIN;
 MARK
 ;
 
 print A join(";\n",@queries),";\n";
-# special case to ignore early games
-print A "DELETE FROM wwf WHERE start <= '2012-11-01 00:00:00';\n";
 print A "COMMIT;\n";
 
 system("sqlite3 /home/barrycarter/BCINFO/sites/DB/wwf.db < /tmp/bcpwwf.sql");
