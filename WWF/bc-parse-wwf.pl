@@ -33,7 +33,7 @@ for $file (glob "/mnt/sshfs/tmp/wwf*.html /mnt/sshfs/tmp/wwf*.html.bz2") {
     # this is ugly but lets me test all elements at once
     unless ($data=~m%<li class="game (.*?)" data-game-id="(\d+)" data-opponent-id="(\d+)">.*?<div class="title">\s*(.*?)</div>\s*<span class="date">Started (.*?)</span><small>(.*?)</small>%s) {
 # <small>'(.*?)' played <abbr class="timeago" title="(.*?)">%s) {
-      warn "BAD DATA: $data";
+      die "BAD DATA: $data";
       next;
     }
 
@@ -43,49 +43,71 @@ for $file (glob "/mnt/sshfs/tmp/wwf*.html /mnt/sshfs/tmp/wwf*.html.bz2") {
       $pre{$short[$i]} = substr($&,$-[$i],$+[$i]-$-[$i]);
 
       # in fact must be at least 2 chars long
-      if (length($pre{$short[$i]}) < 2) {die "BAD: $short[$i] -> $pre{$short[$i]}";}
+      if (length($pre{$short[$i]}) < 2) {
+	die "BAD: $short[$i] -> $pre{$short[$i]}";}
     }
+
+    # convenience variable
+    $game = $pre{game};
 
     # at this point, acknowledge this game exists, in case we drop it
     # by mistake later
-    # TODO: handle pre-Thanksgiving-2012 games
-    $isgame{$pre{game}} = 1;
+    $isgame{$game} = 1;
 
-    # ignore declined games
-    # TODO: this will also affect isgame
-    if ($pre{status}=~/declined/i) {
+    # ignore declined games and games w no moves
+    # TODO: reconsider ignoring moveless games
+    if ($pre{status}=~/declined/i || $pre{status}=~/no moves yet/i) {
       debug("IGNORING GAME WITH STATUS: $pre{status}");
+      delete $isgame{$game};
       next;
     }
 
-    # could also do str2time here
-    # <h>Perls string comparison operators doent get used enough!</h>
-    # also discard games where lastmove is pre-Thanksgiving-2012
-    # nothing magical here, I just dont want to count these games
-    if (($gamedata{$game}{lastmove} gt $pre{lastmove}) ||
-       $game{lastmove} lt "2012-11-23T00:07:00+00:00") {
+    # get last move info from status
+    unless ($pre{status}=~m%^(.*?)<abbr class="timeago" title="(.*?)">.*?</abbr>%) {
+      die "BAD STATUS: $pre{status}";
       next;
     }
 
-    # last word played
-    $data=~s%<small>(.*?)</small>%%;
-    $gamedata{$game}{last} = $1;
-    $gamedata{$game}{last}=~s/<.*?>//isg;
-
-  # fix start and last move time
-  for $j ("start", "lastmove") {
-    $gamedata{$game}{$j}=~s/^started\s*//isg;
-    $gamedata{$game}{$j}=strftime("%Y-%m-%d %H:%M:%S",localtime(str2time($gamedata{$game}{$j})));
-  }
-
-    # ignore declined games
-    if ($gamedata{$game}{last}=~/declined game/i) {
-      delete $gamedata{$game};
+    ($pre{lastmove},$pre{lasttime}) = ($1,$2);
+    
+    # ignore pre-Thanksgiving-2012 games
+    if ($pre{lasttime} lt "2012-11-23T00:07:00+00:00") {
+      debug("IGNORING GAME WITH LASTTIME: $pre{lasttime}");
+      delete $isgame{$game};
       next;
     }
 
-    # the "mainfile" is the one that contains the latest summary
-    $gamedata{$game}{mainfile} = $file;
+    # fix start and last move time (and start creating true hash)
+    for $j ("start", "lasttime") {
+      $gamedata{$game}{$j}=strftime("%Y-%m-%d %H:%M:%S",localtime(str2time($pre{$j})));
+    }
+
+    # if oppname has 'beat' in it, write winner/loser to fields
+    if ($pre{oppname}=~/you beat (.*?)$/is) {
+      $gamedata{$game}{oppname} = $1;
+      $gamedata{$game}{winner} = $myname;
+      $gamedata{$game}{loser} = $gamedata{$game}{oppname};
+    } elsif ($pre{oppname}=~/^(.*?) beat you/i) {
+      $gamedata{$game}{oppname} = $1;
+      $gamedata{$game}{loser} = $myname;
+      $gamedata{$game}{winner} = $gamedata{$game}{oppname};
+    } elsif ($pre{oppname}=~/you tied (.*?)$/is) {
+      $gamedata{$game}{oppname} = $1;
+      $gamedata{$game}{loser} = "TIE";
+      $gamedata{$game}{winner} = "TIE";
+    } else {
+      $gamedata{$game}{oppname} = $pre{oppname};
+    }
+
+#    debug("OPPNAME: $gamedata{$game}{oppname}");
+
+    debug("GAMEDATA",%{$gamedata{$game}});
+
+    # TODO: copy values to $gamedata{$game} hash
+
+
+#    debug("TESTING");
+    next;
 
     # this is the tricky bit: try to get more info on game ASAP, not
     # after looping thru all short descs as I did earlier
