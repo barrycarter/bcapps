@@ -7,6 +7,8 @@
 # Options:
 # --overwrite: overwrite output file (only for testing!)
 
+die "DO NOT USE; Perl 32767 char regexp error breaks this program";
+
 require "/usr/local/lib/bclib.pl";
 
 (($file) = shift) || die("Usage: $0 filename");

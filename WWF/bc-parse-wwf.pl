@@ -6,12 +6,14 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# As I somewhat suspected earlier, I will have to do this one file at a time
-
 # TODO: in theory, can read existing db for current data vs reading all files
 # TODO: use <h5>Your Move</h5> and playerData stuff
 
-for $file (glob "/mnt/sshfs/tmp/wwf*.html") {
+# these are the names of the fields in the short form ("data" is the
+# entire matched string)
+@short = ("data", "state", "game", "opp", "oppname", "start","status");
+
+for $file (glob "/mnt/sshfs/tmp/wwf*.html /mnt/sshfs/tmp/wwf*.html.bz2") {
   debug("FILENAME: $file");
   $all = read_file($file);
 
@@ -19,65 +21,51 @@ for $file (glob "/mnt/sshfs/tmp/wwf*.html") {
   $all=~s/playerdata: \{"name":"(.*?)"//is;
   $myname = $1;
 
+  # TODO: keep track of which files have which games + "delete" those
+  # files whose games are all finished and in db
+
   # find all short game descs
   # backslash before quote below is unnecessary, solely to make emacs happy
   while ($all=~s%(<li class=\"game game-desc.*?</li>)%%s) {
     $data = $1;
 
-    # game and opponent number
-    $data=~/data-game-id="(\d+)" data-opponent-id="(\d+)"/;
-    ($game,$opp) = ($1,$2);
-
-    # ignore last years games
-    if ($game=~/^1/) {next;}
-
-    # last move
-    $data=~m%<abbr class="timeago" title="(.*?)"%;
-    $lastmove = $1;
-
-    debug("$game: $gamedata{$game}{lastmove} vs $lastmove");
-
-    # have I seen this game before? If so, compare lastmove times
-    if (str2time($gamedata{$game}{lastmove}) > str2time($lastmove)) {
-      debug("$game: Already have newer information: $gamedata{$game}{lastmove} > $lastmove");
+    # try to get all the short form information at once
+    # this is ugly but lets me test all elements at once
+    unless ($data=~m%<li class="game (.*?)" data-game-id="(\d+)" data-opponent-id="(\d+)">.*?<div class="title">\s*(.*?)</div>\s*<span class="date">Started (.*?)</span><small>(.*?)</small>%s) {
+# <small>'(.*?)' played <abbr class="timeago" title="(.*?)">%s) {
+      warn "BAD DATA: $data";
       next;
     }
 
-    # is useful to have data in "raw" form for testing
-    $gamedata{$game}{data} = $data;
-    debug("DATAPRE: $data");
-    $gamedata{$game}{data}=~s/<[^>]*?>//isg;
-    $gamedata{$game}{data}=~s/\s+/ /isg;
-    debug("DATA: $gamedata{$game}{data}");
+    # and assign to prehash (which we mostly copy to real hash, but not 100%)
+    for $i (0..$#short) {
+      # if value is empty, we parsed badly ('0' however is ok)
+      $pre{$short[$i]} = substr($&,$-[$i],$+[$i]-$-[$i]);
 
-    # if this game data is newer, wipe out any cached info (ie, state
-    # of the board)
-    if (str2time($gamedata{$game}{lastmove}) < str2time($lastmove)) {
-      debug("$game: this information strictly newer, BUT NOT wiping out cache");
-#      $gamedata{$game} = ();
+      # in fact must be at least 2 chars long
+      if (length($pre{$short[$i]}) < 2) {die "BAD: $short[$i] -> $pre{$short[$i]}";}
     }
 
-    # note that above excludes case where lastmove time is same: in
-    # that case, we keep any information (ie, scores + board state) we
-    # had before
+    # at this point, acknowledge this game exists, in case we drop it
+    # by mistake later
+    # TODO: handle pre-Thanksgiving-2012 games
+    $isgame{$pre{game}} = 1;
 
-    # assign lastmove since its not older
-    $gamedata{$game}{lastmove} = $lastmove;
+    # ignore declined games
+    # TODO: this will also affect isgame
+    if ($pre{status}=~/declined/i) {
+      debug("IGNORING GAME WITH STATUS: $pre{status}");
+      next;
+    }
 
-    # opponent name and status
-    $data=~s%<div class="title">(.*?)</div>%%s;
-    $namestat = $1;
-    $namestat=~s/^\s*(.*?)\s*$/$1/;
-
-    # start date (as UTC)
-    $data=~s%<span class="date">(.*?)</span>%%;
-    $start = $1;
-
-    # putting into hash (TODO: could do this above too)
-    $gamedata{$game}{opp} = $opp;
-    $gamedata{$game}{namestat} = $namestat;
-    $gamedata{$game}{start} = $start;
-    $gamedata{$game}{lastmove} = $lastmove;
+    # could also do str2time here
+    # <h>Perls string comparison operators doent get used enough!</h>
+    # also discard games where lastmove is pre-Thanksgiving-2012
+    # nothing magical here, I just dont want to count these games
+    if (($gamedata{$game}{lastmove} gt $pre{lastmove}) ||
+       $game{lastmove} lt "2012-11-23T00:07:00+00:00") {
+      next;
+    }
 
     # last word played
     $data=~s%<small>(.*?)</small>%%;
@@ -287,3 +275,26 @@ sub build_board {
 
   return join("\n",@ret);
 }
+
+=item sample
+
+Sample of short form description (used w opponent permission). Note
+that wwf165541_files is an artifact of "save as web page complete".
+
+<li class="game game-desc  right_side active" data-game-id="3857526416" data-opponent-id="88745690">
+        <a href="#" data-game-id="3857526416">
+          <span class="arrow"></span>
+          <span class="eyeballs"></span>
+                  <span class="game_photo wwf" title="TX Barbara M">
+          <img src="wwf165541_files/blank_user_icon.png" alt="TX Barbara M">
+          <span class="letter">T</span>
+          <div class="letterValue"></div>
+        </span>
+      
+          <div class="title">
+            TX Barbara M</div>
+          <span class="date">Started December 10, 2:12pm</span><small>'RETRAINED' played <abbr class="timeago" title="2012-12-10T23:50:31+00:00">5 minutes ago</abbr></small>
+          </a>
+      </li>
+
+=cut
