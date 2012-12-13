@@ -7,10 +7,12 @@
 
 # if restarting, rm urlsdone*.txt mapping.txt
 
+# must put initial site name in urlstodo.txt before starting
+
 require "/usr/local/lib/bclib.pl";
 
 # for this download
-$site = "http://www.gocomics.com/";
+$site = "http://www.foodfacts.com";
 
 # number of jobs parallel should run at once
 $parjobs = 5;

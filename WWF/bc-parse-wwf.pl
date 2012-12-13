@@ -13,7 +13,7 @@ require "/usr/local/lib/bclib.pl";
 # entire matched string)
 @short = ("data", "state", "game", "opp", "oppname", "start","status");
 
-for $file (glob "/mnt/sshfs/tmp/wwf*.html /mnt/sshfs/tmp/wwf*.html.bz2") {
+for $file (glob "/mnt/sshfs/WWF/wwf*.html /mnt/sshfs/WWF/wwf*.html.bz2") {
   debug("FILENAME: $file");
   $all = read_file($file);
 
@@ -84,9 +84,18 @@ for $file (glob "/mnt/sshfs/tmp/wwf*.html /mnt/sshfs/tmp/wwf*.html.bz2") {
       next;
     }
 
+    # ignore games for which we have more recent status
+      debug("GAME $game: COMPARING $gamedata{$game}{lasttime} vs $pre{lasttime}");
+    if ($gamedata{$game}{lasttime} gt $pre{lasttime}) {
+      debug("GAME $game: $gamedata{$game}{lasttime} > $pre{lasttime}");
+      next;
+    }
+
     # fix start and last move time (and start creating true hash)
     for $j ("start", "lasttime") {
-      $gamedata{$game}{$j}=strftime("%Y-%m-%d %H:%M:%S",localtime(str2time($pre{$j})));
+      $gamedata{$game}{$j}=$pre{$j}
+# TODO: fix this in a comparison compatible way
+# strftime("%Y-%m-%d %H:%M:%S",localtime(str2time($pre{$j})));
     }
 
     # if oppname has 'beat' in it, write winner/loser to fields
@@ -110,7 +119,8 @@ for $file (glob "/mnt/sshfs/tmp/wwf*.html /mnt/sshfs/tmp/wwf*.html.bz2") {
 
     # is the game over or still in progress (we could get this from "x
     # beat y", but this provides a nice double check
-    if ($pre{state}=~/active/) {
+    # note the space is needed below, sometimes class is "inactive"
+    if ($pre{state}=~/ active/) {
       $gamedata{$game}{gameover}=0;
     } else {
       $gamedata{$game}{gameover}=1;
@@ -124,13 +134,35 @@ for $file (glob "/mnt/sshfs/tmp/wwf*.html /mnt/sshfs/tmp/wwf*.html.bz2") {
     # for debugging
     $gamedata{$game}{file} = $file;
 
-    # for now, lets get the basics right
+    # NOTE: we only get sometimes, depending on whether info for this
+    # game is more recent than previous info for this game.
+    # TODO: worry about above
+
+    # to make sure were doing the regex right, confirm a simpler regex first
+    if ($all=~/game_$game/) {
+      $pre{extrainfo} = 1;
+    } else {
+      $pre{extrainfo} = 0;
+      next;
+    }
+
+    # TODO: in theory could capture player ids, but do I care?
+    unless ($all=~m%<div data-game-id="$game" id="game_$game" class="(.*?)">.*?<div class="remaining"><span>(\d+)</span>\s* letters remaining.*?<div class="score">(\d+)</div>\s*<div class="player_1">(.*?)</div>.*?<div class="score">(\d+)</div>.*?<div class="player_2">(.*?)</div>.*?<div class="score">(\d+)</div>%s) {
+
+# <div class="remaining">(\d+)</span>\s*letters remaining</div>%s) {
+      warn "BAD EXTRA INFO: $all"
+    }
+
+    debug("123: $1, $2, $3, $4, $5, $6, $7");
+
     next;
+
 
     # this is the tricky bit: try to get more info on game ASAP, not
     # after looping thru all short descs as I did earlier
     unless ($all=~s%<div data-game-id="$game" id="game_$game"(.*?)(</div>\s*</div>\s*</div>\s*</div>\s*</div>\s*)%%s) {
       debug("NO EXTRA INFORMATION FOR $game in $file");
+      # TODO: check pre{extrainfo} to see if we just did regex wrong
       next;
     }
 
@@ -138,6 +170,9 @@ for $file (glob "/mnt/sshfs/tmp/wwf*.html /mnt/sshfs/tmp/wwf*.html.bz2") {
     $gamedata = $1;
 
     debug("EXTRA INFORMATION FOR $game in $file!");
+
+    # an attempt to get everything at once
+    
 
     # this is the lastmove for which we have extra info
     $gamedata{$game}{lmextra} = $gamedata{$game}{lastmove};
@@ -305,4 +340,40 @@ that wwf165541_files is an artifact of "save as web page complete".
           </a>
       </li>
 
+Here is a sample of the long game information for the same game (the
+wwf165541_files stuff is again an artifact of 'save frame as' complete
+web page)
+
+        <div data-game-id="3857526416" id="game_3857526416" class="game shown inactive">
+              <div class="scoreboard">
+                <div class="game_status">
+                  <a style="display: inline;" class="game-btn store"><span>store</span></a>
+                  <div class="player_image me"><span class="game_photo" title="Barry Carter">
+          <img src="wwf165541_files/UlIqmHJn-SK.gif" alt="Barry Carter">
+          <div class="indicator"><img src="wwf165541_files/blank.png"><span></span></div>
+        </span></div>
+                  <div class="player_image"><span class="game_photo wwf" title="TX Barbara M">
+          <img src="wwf165541_files/blank_user_icon.png" alt="TX Barbara M">
+          <span class="letter">T</span>
+          <div class="indicator"><img src="wwf165541_files/blank.png"><span></span></div>
+        </span></div>
+                  <div class="remaining"><span>62</span> letters remaining</div>
+                  <div class="players"><div class="player" data-player-id="62489603">
+        <div class="score">105</div>
+        <div class="player_1">Barry Carter</div>
+      </div>
+      <div class="player active" data-player-id="88745690">
+        <div class="score">64</div>
+        <div class="player_2">TX Barbara M</div>
+      </div></div>
+                  <p>Barry Carter played <span>RETRAINED</span> for 24 points</p>
+                  <a href="#game_3857526416_chat" class="game-btn chat chat_button has_tooltip"><span>chat</span></a>
+                  <div class="eye left"><div class="pupil"></div></div>
+                  <div class="eye right"><div class="pupil"></div></div>
+                </div>
+              </div><div style="display: none;" class="chat_container">
+
+[the chat container is intentionally not shown]
+
 =cut
+
