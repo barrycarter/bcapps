@@ -37,6 +37,9 @@ for $file (glob "/mnt/sshfs/WWF/wwf*.html /mnt/sshfs/WWF/wwf*.html.bz2") {
       next;
     }
 
+    # clear pre to avoid stale info
+    %pre = ();
+
     # and assign to prehash (which we mostly copy to real hash, but not 100%)
     for $i (0..$#short) {
       # if value is empty, we parsed badly ('0' however is ok)
@@ -145,7 +148,36 @@ for $file (glob "/mnt/sshfs/WWF/wwf*.html /mnt/sshfs/WWF/wwf*.html.bz2") {
     }
 
     # date of the extra info
-    $pre{extradate} = $gamedata{$game}{lastmove};
+    $pre{extradate} = $gamedata{$game}{lasttime};
+
+    # suck data to next div data-game-id
+    $all=~m%(<div data-game-id="$game" id="game_$game".*?)<div data-game-id%s;
+    my($extra) = $1;
+
+    # lots of info is stored as div class...
+    while ($extra=~s%<div class="(.*?)">(.*?)</div>%%s) {
+      my($key,$val) = ($1,$2);
+
+      # ignore empty vals (TODO: bad?)
+      if ($val=~/^\s*$/s) {next;}
+
+      # for now, ignore the board itself
+      if ($key=~/^space_/) {next;}
+
+      # strip HTML tags and extra spaces
+      $val=~s/<.*?>//isg;
+      $val=~s/\s+/ /isg;
+      $pre{$key} = $val;
+    }
+
+    for $i (sort keys %pre) {
+      debug("ALF: $game, $i -> $pre{$i}");
+    }
+
+    next;
+
+
+
 
     # TODO: in theory could capture player ids, but do I care?
     unless ($all=~m%<div data-game-id="$game" id="game_$game" class="(.*?)">.*?<div class="remaining"><span>(\d+)</span>\s* letters remaining.*?<div class="score">(\d+)</div>\s*<div class="player_1">(.*?)</div>.*?<div class="score">(\d+)</div>.*?<div class="player_2">(.*?)</div>.*?<div class="score">(\d+)</div>%s) {

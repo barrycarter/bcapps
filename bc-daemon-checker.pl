@@ -31,7 +31,7 @@ shift(@procs); # ignore header line
 	 "/usr/local/bin/bc-metar-db.pl", 
 	 "/usr/local/bin/bc-gocomics-comments.pl",
 	 "/usr/sbin/lighttpd", "/usr/local/bin/php-cgi",
-	 "teenydns", "pickup"
+	 "teenydns", "pickup", "/usr/bin/fail2ban-server"
 	);
 
 # processes that MAY run forever but aren't required to do so (choices
