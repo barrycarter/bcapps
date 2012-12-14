@@ -144,6 +144,11 @@ sub hrefgrep2urls {
       $i=~s/\#.*$//;
       $i=~s%/*$%%g;
 
+#      debug("I: $i");
+
+      # NOTE: THIS IS FOR foodfacts only!
+      unless ($i=~/nutrition/i) {next;}
+
       # for fully qualified URLs, only ones that match site
       if ($i=~m/^$site/) {
 	# pass pure URLs

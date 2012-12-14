@@ -94,8 +94,6 @@ for $file (glob "/mnt/sshfs/WWF/wwf*.html /mnt/sshfs/WWF/wwf*.html.bz2") {
     # fix start and last move time (and start creating true hash)
     for $j ("start", "lasttime") {
       $gamedata{$game}{$j}=$pre{$j}
-# TODO: fix this in a comparison compatible way
-# strftime("%Y-%m-%d %H:%M:%S",localtime(str2time($pre{$j})));
     }
 
     # if oppname has 'beat' in it, write winner/loser to fields
@@ -146,11 +144,12 @@ for $file (glob "/mnt/sshfs/WWF/wwf*.html /mnt/sshfs/WWF/wwf*.html.bz2") {
       next;
     }
 
+    # date of the extra info
+    $pre{extradate} = $gamedata{$game}{lastmove};
+
     # TODO: in theory could capture player ids, but do I care?
     unless ($all=~m%<div data-game-id="$game" id="game_$game" class="(.*?)">.*?<div class="remaining"><span>(\d+)</span>\s* letters remaining.*?<div class="score">(\d+)</div>\s*<div class="player_1">(.*?)</div>.*?<div class="score">(\d+)</div>.*?<div class="player_2">(.*?)</div>.*?<div class="score">(\d+)</div>%s) {
-
-# <div class="remaining">(\d+)</span>\s*letters remaining</div>%s) {
-      warn "BAD EXTRA INFO: $all"
+      warn "BAD EXTRA INFO FOR $game in $file: $all"
     }
 
     debug("123: $1, $2, $3, $4, $5, $6, $7");
@@ -243,6 +242,8 @@ for $i (sort keys %gamedata) {
 
   # once weve converted it, we dont need it in the db
   delete $game->{board};
+
+  debug("GAME: ");
 
   push(@rows,$game);
 }
