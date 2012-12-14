@@ -88,9 +88,9 @@ for $file (glob "/mnt/sshfs/WWF/wwf*.html /mnt/sshfs/WWF/wwf*.html.bz2") {
     }
 
     # ignore games for which we have more recent status
-      debug("GAME $game: COMPARING $gamedata{$game}{lasttime} vs $pre{lasttime}");
+#      debug("GAME $game: COMPARING $gamedata{$game}{lasttime} vs $pre{lasttime}");
     if ($gamedata{$game}{lasttime} gt $pre{lasttime}) {
-      debug("GAME $game: $gamedata{$game}{lasttime} > $pre{lasttime}");
+#      debug("GAME $game: $gamedata{$game}{lasttime} > $pre{lasttime}");
       next;
     }
 
@@ -154,62 +154,16 @@ for $file (glob "/mnt/sshfs/WWF/wwf*.html /mnt/sshfs/WWF/wwf*.html.bz2") {
     $all=~m%(<div data-game-id="$game" id="game_$game".*?)<div data-game-id%s;
     my($extra) = $1;
 
-=item comment
-
-    debug("EXTRA: $extra");
-    @keys=(); @vals=();
-
-    # lots of info is stored as div class... but some nested, some repeats
-    while ($extra=~s%<div class="([^<>]*?)">([^<>]*?)</div>%%s) {
-      my($key,$val) = ($1,$2);
-      # ignore empty vals (TODO: bad?)
-      if ($val=~/^\s*$/s) {next;}
-      # for now, ignore the board itself
-      if ($key=~/^space_/) {next;}
-      # strip HTML tags and extra spaces
-      $val=~s/<.*?>//isg;
-      $val=~s/\s+/ /isg;
-      push(@keys, $key);
-      push(@vals, $val);
-    }
-
-    debug("KEYS",@keys,"VALS",@vals);
-
-
-    next;
-
-=cut
-
-
     # TODO: in theory could capture player ids, but do I care?
     # hideous double regex since score can come before or after player name
     unless ($all=~m%<div data-game-id="$game" id="game_$game" class="(.*?)">.*?<div class="remaining"><span>(\d+)</span>\s* letters remaining.*?<div class="score">(\d+)</div>\s*<div class="player_1">(.*?)</div>.*?<div class="score">(\d+)</div>.*?<div class="player_2">(.*?)</div>.*?<div class="score">(\d+)</div>%s  || $all=~m%<div data-game-id="$game" id="game_$game" class="(.*?)">.*?<div class="remaining"><span>(\d+)</span>\s* letters remaining.*?<div class="score">(\d+)</div>\s*<div class="player_1">(.*?)</div>.*?<div class="score">(\d+)</div>\s*<div class="player_2">(.*?)</div>%s) {
       warn "BAD EXTRA INFO FOR $game in $file: $all"
 }
 
-    debug("123: $1, $2, $3, $4, $5, $6, $7");
+    debug("123: $1, $2, $3, $4, $5, $6, $7, $8, $9, $10");
 
     next;
 
-
-    # this is the tricky bit: try to get more info on game ASAP, not
-    # after looping thru all short descs as I did earlier
-    unless ($all=~s%<div data-game-id="$game" id="game_$game"(.*?)(</div>\s*</div>\s*</div>\s*</div>\s*</div>\s*)%%s) {
-      debug("NO EXTRA INFORMATION FOR $game in $file");
-      # TODO: check pre{extrainfo} to see if we just did regex wrong
-      next;
-    }
-
-    # there is extra info, so use it
-    $gamedata = $1;
-
-    debug("EXTRA INFORMATION FOR $game in $file!");
-
-    # an attempt to get everything at once
-    
-
-    # this is the lastmove for which we have extra info
-    $gamedata{$game}{lmextra} = $gamedata{$game}{lastmove};
 
     # assign filename for extended data
     $gamedata{$game}{extrafile} = $file;
@@ -255,6 +209,8 @@ for $file (glob "/mnt/sshfs/WWF/wwf*.html /mnt/sshfs/WWF/wwf*.html.bz2") {
 
   }
 }
+
+debug("About to parse gamedata...");
 
 # TODO: use the isgame check!
 
