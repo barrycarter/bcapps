@@ -148,7 +148,8 @@ for $file (glob "/mnt/sshfs/WWF/wwf*.html /mnt/sshfs/WWF/wwf*.html.bz2") {
     }
 
     # date of the extra info
-    $pre{extradate} = $gamedata{$game}{lasttime};
+    $gamedata{$game}{extradate} = $gamedata{$game}{lasttime};
+    debug("GETTING EXTRA DATA...");
 
     # suck data to next div data-game-id
     $all=~m%(<div data-game-id="$game" id="game_$game".*?)<div data-game-id%s;
@@ -156,7 +157,10 @@ for $file (glob "/mnt/sshfs/WWF/wwf*.html /mnt/sshfs/WWF/wwf*.html.bz2") {
 
     # TODO: in theory could capture player ids, but do I care?
     # hideous double regex since score can come before or after player name
-    unless ($all=~m%<div data-game-id="$game" id="game_$game" class="(.*?)">.*?<div class="remaining"><span>(\d+)</span>\s* letters remaining.*?<div class="score">(\d+)</div>\s*<div class="player_1">(.*?)</div>.*?<div class="score">(\d+)</div>.*?<div class="player_2">(.*?)</div>.*?<div class="score">(\d+)</div>%s  || $all=~m%<div data-game-id="$game" id="game_$game" class="(.*?)">.*?<div class="remaining"><span>(\d+)</span>\s* letters remaining.*?<div class="score">(\d+)</div>\s*<div class="player_1">(.*?)</div>.*?<div class="score">(\d+)</div>\s*<div class="player_2">(.*?)</div>%s) {
+    # Changed $game to \d+ so Perl could compile regexs below; I tried
+    # changing %s to %so but it makes no difference
+    unless ($all=~m%<div data-game-id="\d+" id="game_\d+" class="(.*?)">.*?<div class="remaining"><span>(\d+)</span>\s* letters remaining.*?<div class="score">(\d+)</div>\s*<div class="player_1">(.*?)</div>.*?<div class="score">(\d+)</div>.*?<div class="player_2">(.*?)</div>.*?<div class="score">(\d+)</div>%s || $all=~m%<div data-game-id="\d+" id="game_\d+" class="(.*?)">.*?<div class="remaining"><span>(\d+)</span>\s* letters remaining.*?<div class="score">(\d+)</div>\s*<div class="player_1">(.*?)</div>.*?<div class="score">(\d+)</div>\s*<div class="player_2">(.*?)</div>%s) {
+ 
       warn "BAD EXTRA INFO FOR $game in $file: $all"
 }
 
@@ -164,6 +168,7 @@ for $file (glob "/mnt/sshfs/WWF/wwf*.html /mnt/sshfs/WWF/wwf*.html.bz2") {
 
     next;
 
+    debug("I AM NOT REACHED");
 
     # assign filename for extended data
     $gamedata{$game}{extrafile} = $file;
@@ -220,7 +225,10 @@ for $i (sort keys %gamedata) {
   # just this game itself
   $game = $gamedata{$i};
 
-  debug("KEYS:",keys %{$game});
+  # compare lasttime to extratime
+  debug("TC: $game->{lasttime} >? $game->{extradate}");
+
+#  debug("GAMEHAS:",%{$game});
 
   # and now boardstat (in ugly ugly format)
   for $k (0..14) {
@@ -238,6 +246,8 @@ for $i (sort keys %gamedata) {
 
   push(@rows,$game);
 }
+
+die "TESTING";
 
 @queries = hashlist2sqlite(\@rows, "wwf");
 
