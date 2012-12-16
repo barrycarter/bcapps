@@ -4,6 +4,9 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# these fields can be null (not all manufacturers provide them)
+%nullok = list2hash("Vitamin A", "Vitamin C", "Calcium", "Iron");
+
 # this file contains output of:
 # fgrep -liR 'upc code:' . | tee fileswithupc.txt
 @upc = split(/\n/, read_file("/mnt/sshfs/FF/fileswithupc.txt"));
@@ -36,7 +39,7 @@ for $i (@upc) {
   # <strong>key:?</strong>value
   for $j ("Total Fat", "Cholesterol", "Sodium", "Potassium",
 	  "Total Carbohydrate", "Protein", "Manufactured by", "Brand",
-	 "UPC Code:") {
+	 "UPC Code:", "Found In") {
     $data=~s%<strong>$j:?\s*</strong>\s*(.*?)\s*</%%s;
 #    $data=~s%<strong>$j:\s*</strong>(.*?)<%%s;
     $item{$j} = $1;
@@ -48,17 +51,22 @@ for $i (@upc) {
     $item{$j} = $1;
   }
 
-  # UPC (or other) code
-#  $data=~s%<strong>UPC Code:</strong>\s*(.*?)\s*</li>%%s;
-#  $item{"UPC Code"} = $1;
-
-  # name/title
-  $data=~s%<title>(.*?)</title>%%s;
+  # name/title (2nd test slightly more reliable?)
+#  $data=~s%<title>(.*?)</title>%%s;
+  $data=~s%<div class="product-title">\s*<h2>(.*?)</h2>%%s;
   $item{Title} = $1;
 
+  # check that fields are nonnull
+  for $j (keys %item) {
+    if ($nullok{$j}) {next;}
+    unless (length($item{$j})) {
+      warn "$i,$j,$item{$j}";
+    }
+  }
 
 
-  # TODO: check that all fields are non-null
+  next;
+
   # TODO: check that numeric fields are numeric, 'gram' fields end in 'g'
 
 #  $data=~s%<span class="nutri-left"><b>Total Calories (\d+)</b>%%;
