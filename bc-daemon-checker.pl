@@ -6,6 +6,8 @@
 
 # Runs from cron (so doesn't need to be in @must below)
 
+# --nomail: dont send email
+
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
 
@@ -134,7 +136,9 @@ for $i (sort keys %MUST) {
 if (@err) {
   $body = join("\n",@err);
   # TODO: message should be host specific if run on multiple hosts
-  sendmail("erf\@barrycarter.info", "error\@barrycarter.info", "Errors exist!", $body);
+  unless ($globopts{nomail}) {
+    sendmail("erf\@barrycarter.info", "error\@barrycarter.info", "Errors exist!", $body);
+  }
 }
 
 

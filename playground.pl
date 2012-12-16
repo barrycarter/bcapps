@@ -23,6 +23,12 @@ use XML::Bare;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
+$foo = "x"x50000;
+
+$foo=~/(x{6000})(x{6000})(x{6000})(x{6000})(x{6000})(x{6000})(x{6000})/;
+
+debug("$&",@_,@+);
+
 die "TESTING";
 
 for $i (0..255) {

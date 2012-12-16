@@ -159,12 +159,25 @@ for $file (glob "/mnt/sshfs/WWF/wwf*.html /mnt/sshfs/WWF/wwf*.html.bz2") {
     # hideous double regex since score can come before or after player name
     # Changed $game to \d+ so Perl could compile regexs below; I tried
     # changing %s to %so but it makes no difference
-    unless ($all=~m%<div data-game-id="\d+" id="game_\d+" class="(.*?)">.*?<div class="remaining"><span>(\d+)</span>\s* letters remaining.*?<div class="score">(\d+)</div>\s*<div class="player_1">(.*?)</div>.*?<div class="score">(\d+)</div>.*?<div class="player_2">(.*?)</div>.*?<div class="score">(\d+)</div>%s || $all=~m%<div data-game-id="\d+" id="game_\d+" class="(.*?)">.*?<div class="remaining"><span>(\d+)</span>\s* letters remaining.*?<div class="score">(\d+)</div>\s*<div class="player_1">(.*?)</div>.*?<div class="score">(\d+)</div>\s*<div class="player_2">(.*?)</div>%s) {
+    unless ($extra=~m%<div data-game-id="\d+" id="game_\d+" class="(.*?)">.*?<div class="remaining"><span>(\d+)</span>\s* letters remaining.*?<div class="score">(\d+)</div>\s*<div class="player_1">(.*?)</div>.*?<div class="score">(\d+)</div>.*?<div class="player_2">(.*?)</div>.*?<div class="score">(\d+)</div>%s || $extra=~m%<div data-game-id="\d+" id="game_\d+" class="(.*?)">.*?<div class="remaining"><span>(\d+)</span>\s* letters remaining.*?<div class="score">(\d+)</div>\s*<div class="player_1">(.*?)</div>.*?<div class="score">(\d+)</div>\s*<div class="player_2">(.*?)</div>%s) {
  
       warn "BAD EXTRA INFO FOR $game in $file: $all"
 }
 
-    debug("123: $1, $2, $3, $4, $5, $6, $7, $8, $9, $10");
+    # gave up on trying to be overly clever here
+    @matches = ("",$1,$2,$3,$4,$5,$6,$7,$8,$9,$10);
+
+    for $i (0..$#matches) {
+      debug("MATCHES[$i]: $matches[$i]");
+    }
+
+    # 1: status of game (game hidden over, game inactive hidden, game over, game over hidden, game shown inactive, game shown over)
+    # 2: letters remaining
+    # 3: player 1 score
+    # 4: player 1 name (always "Barry Carter" in my case)
+    # 5: player 2 score
+    # 6: player 2 name
+    # 7: 
 
     next;
 
@@ -221,9 +234,24 @@ debug("About to parse gamedata...");
 
 # and now, we go through the latest data for each game
 
-for $i (sort keys %gamedata) {
+# find the most recent games for which I dont have extra info
+
+for $i (sort {$gamedata{$b}->{lasttime} cmp $gamedata{$a}->{lasttime}} keys %gamedata) {
+  debug("ALF: $gamedata{$i}->{lasttime}");
+
   # just this game itself
+  # this is just for me: find games where I can maybe get more data?
   $game = $gamedata{$i};
+
+  if ($game->{extradate}) {
+    if ($game->{lasttime} gt $game->{extradate}) {
+          debug("STALE EXTRA INFO: $i (start $game->{start} $game->{oppname}, $game->{lastmove}), $game->{lasttime} vs $game->{extradate}) ($game->{gameover})");
+	}
+  } else {
+    debug("NO EXTRA INFO AT ALL: $i (start $game->{start} $game->{oppname}, $game->{lastmove}) ($game->{lasttime}) ($game->{gameover})");
+  }
+
+#  next;
 
   # compare lasttime to extratime
   debug("TC: $game->{lasttime} >? $game->{extradate}");
@@ -247,8 +275,7 @@ for $i (sort keys %gamedata) {
   push(@rows,$game);
 }
 
-die "TESTING";
-
+debug("ROWS",@rows);
 @queries = hashlist2sqlite(\@rows, "wwf");
 
 # we want later entries to replace earlier ones (though this is
@@ -258,7 +285,7 @@ for $i (@queries) {$i=~s/INSERT OR IGNORE/REPLACE/isg;}
 
 # these are the keys for gamedata{game} (aka the column names for the db)
 # we could compute these, but that takes longer
-$keys = "data, game, gameover, lastmove, lasttime, loser, opp, oppname, start, winner, file";
+$keys = "data, game, gameover, lastmove, lasttime, loser, opp, oppname, start, winner, file, extradate";
 
 # print the queries (surrounded by BEGIN/COMMIT)
 open(A,">/tmp/bcpwwf.sql");
@@ -319,6 +346,32 @@ sub build_board {
   push(@ret,"</table>");
 
   return join("\n",@ret);
+}
+
+=item regex2array()
+
+Returns the most recently matches regex parts as an array.
+
+WARNING: not sure how long regex variables stay in scope, so this may
+not work all the time (or at all)
+
+NOTE: this function is either not working or not useful, possibly both
+
+=cut
+
+sub regex2array {
+  debug("ALLMATCH: $& vs $1");
+  my(@res);
+  debug("MINARR:",@-, );
+  debug("MAXARR:",@+);
+  debug("LENGTH",length($&));
+  for $i (0..$#-) {
+    
+    push(@res,substr($&,$-[$i],$+[$i]-$-[$i]));
+  }
+
+  debug("RES",@res);
+  return @res;
 }
 
 =item sample
