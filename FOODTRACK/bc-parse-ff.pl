@@ -7,6 +7,9 @@ require "/usr/local/lib/bclib.pl";
 # these fields can be null (not all manufacturers provide them)
 %nullok = list2hash("Vitamin A", "Vitamin C", "Calcium", "Iron");
 
+# these fields should not be stripped of 'g/mg/%'
+%nostrip = list2hash("Serving Size");
+
 # this file contains output of:
 # fgrep -liR 'upc code:' . | tee fileswithupc.txt
 @upc = split(/\n/, read_file("/mnt/sshfs/FF/fileswithupc.txt"));
@@ -15,13 +18,14 @@ for $i (@upc) {
 
   # convert to absolute path
   $i=~s%^\.%/mnt/sshfs/FF%;
-  debug("FILE: $i");
+#  debug("FILE: $i");
 
   # read file
   $data = read_file($i);
 
   # was being too clever, doing these individually now
   %item = ();
+  $item{file} = $i;
 
   # these are similar (key: value)
   for $j ("Serving Size", "Servings Per Container") {
@@ -39,7 +43,7 @@ for $i (@upc) {
   # <strong>key:?</strong>value
   for $j ("Total Fat", "Cholesterol", "Sodium", "Potassium",
 	  "Total Carbohydrate", "Protein", "Manufactured by", "Brand",
-	 "UPC Code:", "Found In") {
+	 "UPC Code", "Found In") {
     $data=~s%<strong>$j:?\s*</strong>\s*(.*?)\s*</%%s;
 #    $data=~s%<strong>$j:\s*</strong>(.*?)<%%s;
     $item{$j} = $1;
@@ -64,22 +68,27 @@ for $i (@upc) {
     }
   }
 
-
-  next;
-
-  # TODO: check that numeric fields are numeric, 'gram' fields end in 'g'
-
-#  $data=~s%<span class="nutri-left"><b>Total Calories (\d+)</b>%%;
-#  $item{totalcalories} = $1;
-
-  # TODO: check calories*servings = total calories (to make sure parsing good)
-
+  # strip trailing g, mg, or % from all fields
+  # remove HTML tags (should be none at this point)
+  # TODO: can I do this in the nonnull check?
+  for $j (keys %item) {
+    if ($nostrip{$j}) {next;}
+    $item{$j}=~s/\s*(mg|g|%)$//;
+    $item{$j}=~s/<.*?>//isg;
+  }
 
   for $j (sort keys %item) {
     debug("$j: $item{$j}");
   }
 
   next;
+
+
+
+  # TODO: check that numeric fields are numeric, 'gram' fields end in 'g'
+
+  # TODO: check calories*servings = total calories (to make sure parsing good)
+
 
   # much of info is in form below
   @info = ();

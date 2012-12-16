@@ -105,6 +105,7 @@ for $file (@files) {
     }
 
     # if oppname has 'beat' in it, write winner/loser to fields
+    # TODO: there HAS to be a better way to write this!
     if ($pre{oppname}=~/you beat (.*?)$/is) {
       $gamedata{$game}{oppname} = $1;
       $gamedata{$game}{winner} = $myname;
@@ -147,6 +148,13 @@ for $file (@files) {
     # game is more recent than previous info for this game.
     # TODO: worry about above
 
+    # do we already have info on this game matching the last move
+    # TODO: can refine this test a bit
+    if ($gamedata{$game}{extradate} eq $gamedata{$game}{lasttime}) {
+      debug("Already have $game extra data for $gamedata{$game}{lasttime}");
+      next;
+    }
+
     # to make sure were doing the regex right, confirm a simpler regex first
     if ($all=~/game_$game/) {
       $pre{extrainfo} = 1;
@@ -167,7 +175,7 @@ for $file (@files) {
     # hideous double regex since score can come before or after player name
     # Changed $game to \d+ so Perl could compile regexs below; I tried
     # changing %s to %so but it makes no difference
-    unless ($extra=~m%<div data-game-id="\d+" id="game_\d+" class="(.*?)">.*?<div class="remaining"><span>(\d+)</span>\s* letters remaining.*?<div class="score">(\d+)</div>\s*<div class="player_1">(.*?)</div>.*?<div class="score">(\d+)</div>.*?<div class="player_2">(.*?)</div>.*?<div class="score">(\d+)</div>%s || $extra=~m%<div data-game-id="\d+" id="game_\d+" class="(.*?)">.*?<div class="remaining"><span>(\d+)</span>\s* letters remaining.*?<div class="score">(\d+)</div>\s*<div class="player_1">(.*?)</div>.*?<div class="score">(\d+)</div>\s*<div class="player_2">(.*?)</div>%s) {
+    unless ($extra=~m%<div data-game-id="\d+" id="game_\d+" class="(.*?)">.*?<div class="remaining"><span>(\d+)</span>\s* letters remaining.*?<div class="score">(\d+)</div>\s*<div class="player_1">(.*?)</div>.*?<div class="score">(\d+)</div>\s*<div class="player_2">(.*?)</div>%s) {
  
       warn "BAD EXTRA INFO FOR $game in $file: $extra"
 }
@@ -185,7 +193,6 @@ for $file (@files) {
     # 4: player 1 name (always "Barry Carter" in my case)
     # 5: player 2 score
     # 6: player 2 name
-    # 7: 
 
     next;
 
