@@ -4,6 +4,8 @@
 # over the score of any of them, the resulting file might be parseable
 # (no example included, as it may contain my sensitive data)
 
+# --fast: do not attempt to find extra info for games, just basics
+
 require "/usr/local/lib/bclib.pl";
 
 # TODO: in theory, can read existing db for current data vs reading all files
@@ -13,7 +15,10 @@ require "/usr/local/lib/bclib.pl";
 # entire matched string)
 @short = ("data", "state", "game", "opp", "oppname", "start","status");
 
-for $file (glob "/mnt/sshfs/WWF/wwf*.html /mnt/sshfs/WWF/wwf*.html.bz2") {
+# reverse order should help speed things up
+@files = `ls -t /mnt/sshfs/WWF/wwf*.html /mnt/sshfs/WWF/wwf*.html.bz2`;
+
+for $file (@files) {
   debug("FILENAME: $file");
   $all = read_file($file);
 
@@ -90,7 +95,7 @@ for $file (glob "/mnt/sshfs/WWF/wwf*.html /mnt/sshfs/WWF/wwf*.html.bz2") {
     # ignore games for which we have more recent status
 #      debug("GAME $game: COMPARING $gamedata{$game}{lasttime} vs $pre{lasttime}");
     if ($gamedata{$game}{lasttime} gt $pre{lasttime}) {
-#      debug("GAME $game: $gamedata{$game}{lasttime} > $pre{lasttime}");
+      debug("GAME $game: $gamedata{$game}{lasttime} > $pre{lasttime}");
       next;
     }
 
@@ -135,6 +140,9 @@ for $file (glob "/mnt/sshfs/WWF/wwf*.html /mnt/sshfs/WWF/wwf*.html.bz2") {
     # for debugging
     $gamedata{$game}{file} = $file;
 
+    # just want game win/loss data, no extra info
+    if ($globopts{fast}) {next;}
+
     # NOTE: we only get sometimes, depending on whether info for this
     # game is more recent than previous info for this game.
     # TODO: worry about above
@@ -149,10 +157,10 @@ for $file (glob "/mnt/sshfs/WWF/wwf*.html /mnt/sshfs/WWF/wwf*.html.bz2") {
 
     # date of the extra info
     $gamedata{$game}{extradate} = $gamedata{$game}{lasttime};
-    debug("GETTING EXTRA DATA...");
+    debug("GETTING EXTRA DATA ($game)");
 
     # suck data to next div data-game-id
-    $all=~m%(<div data-game-id="$game" id="game_$game".*?)<div data-game-id%s;
+    $all=~m%(<div data-game-id="$game" id="game_$game".*?)(<div data-game-id|$)%s;
     my($extra) = $1;
 
     # TODO: in theory could capture player ids, but do I care?
@@ -161,7 +169,7 @@ for $file (glob "/mnt/sshfs/WWF/wwf*.html /mnt/sshfs/WWF/wwf*.html.bz2") {
     # changing %s to %so but it makes no difference
     unless ($extra=~m%<div data-game-id="\d+" id="game_\d+" class="(.*?)">.*?<div class="remaining"><span>(\d+)</span>\s* letters remaining.*?<div class="score">(\d+)</div>\s*<div class="player_1">(.*?)</div>.*?<div class="score">(\d+)</div>.*?<div class="player_2">(.*?)</div>.*?<div class="score">(\d+)</div>%s || $extra=~m%<div data-game-id="\d+" id="game_\d+" class="(.*?)">.*?<div class="remaining"><span>(\d+)</span>\s* letters remaining.*?<div class="score">(\d+)</div>\s*<div class="player_1">(.*?)</div>.*?<div class="score">(\d+)</div>\s*<div class="player_2">(.*?)</div>%s) {
  
-      warn "BAD EXTRA INFO FOR $game in $file: $all"
+      warn "BAD EXTRA INFO FOR $game in $file: $extra"
 }
 
     # gave up on trying to be overly clever here
