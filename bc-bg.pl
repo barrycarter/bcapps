@@ -141,6 +141,14 @@ for $i (@zones) {
   push(@info, strftime("$i: %H%M,%a%d%b",localtime(time())));
 }
 
+# random (but predictable) word from BCGIT/WWF/enable-random.txt
+# 172820 is fixed
+$num = ($now/60)%172820;
+debug("NUM: $num");
+$res = `head -$num /home/barrycarter/BCGIT/WWF/enable-random.txt | tail -1`;
+chomp($res);
+push(@info, "WOTM: $res");
+
 # push output to .fly script
 # err gets pushed first (and in red), then info
 for $i (@err) {

@@ -2152,7 +2152,7 @@ sub hashlist2sqlite {
       # ignore blank keys (can't use them anyway)
       if ($j=~/^\s*$/) {next;}
       $iskey{$j} = 1;
-      push(@keys, $j);
+      push(@keys, "'$j'");
       push(@vals, "\"$hash{$j}\"");
     }
 

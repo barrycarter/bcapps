@@ -24,8 +24,10 @@ shift(@procs); # ignore header line
 
 # NOTE: full path varies because of the way these procs start
 
+# sshd dropped for dropbear 17 Dec 2012
+
 @must = (
-	 "init", "syslogd", "klogd", "/usr/sbin/sshd", "ntpd",
+	 "init", "syslogd", "klogd", "/usr/sbin/dropbear", "ntpd",
 	 "/usr/libexec/mysqld", "/usr/libexec/postfix/master", "qmgr",
 	 "crond", "/usr/sbin/atd", "/sbin/mingetty",
 	 "/usr/local/bin/bc-voronoi-temperature.pl",

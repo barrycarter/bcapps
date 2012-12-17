@@ -15,6 +15,9 @@ require "/usr/local/lib/bclib.pl";
 # entire matched string)
 @short = ("data", "state", "game", "opp", "oppname", "start","status");
 
+# extra data in order
+@extra = ("", "extstatus", "remaining", "p1s", "p1n", "p2s", "p2n");
+
 # reverse order should help speed things up
 @files = `ls -t /mnt/sshfs/WWF/wwf*.html /mnt/sshfs/WWF/wwf*.html.bz2`;
 
@@ -183,8 +186,9 @@ for $file (@files) {
     # gave up on trying to be overly clever here
     @matches = ("",$1,$2,$3,$4,$5,$6,$7,$8,$9,$10);
 
-    for $i (0..$#matches) {
-      debug("MATCHES[$i]: $matches[$i]");
+    # note that array starts at 1 on purpose
+    for $i (1..$#matches) {
+      $gamedata{$game}{$extra[$i]} = $matches[$i];
     }
 
     # 1: status of game (game hidden over, game inactive hidden, game over, game over hidden, game shown inactive, game shown over)
@@ -193,28 +197,6 @@ for $file (@files) {
     # 4: player 1 name (always "Barry Carter" in my case)
     # 5: player 2 score
     # 6: player 2 name
-
-    next;
-
-    debug("I AM NOT REACHED");
-
-    # assign filename for extended data
-    $gamedata{$game}{extrafile} = $file;
-
-    # determine players and scores
-    $gamedata=~s%<div class="players">(.*?)</div>\s*</div>\s*</div>\s*%%s;
-    $playsco = $1;
-
-    # id, score, name for both players
-    $playsco =~s%<div class="player.*? data-player-id="(.*?)">\s*<div class="score">(\d+)</div>\s*<div class="player_1">(.*?)</div>\s*</div>\s*<div class="player.*? data-player-id="(.*?)">\s*<div class="score">(\d+)</div>\s*<div class="player_2">(.*?)\s*$%%;
-
-    # <h>Today on "insane things you must never do with Perl..."</h>
-    # we intentionally ignore the 0th match (the whole regex)
-    # NOTE: this code is (intentionally) hideous, just to see how badly
-    # I could mangle Perls constructs
-    $n=0; for $j (1,2) {for $k (split(//,"isn")) {
-      $gamedata{$game}{"p$j$k"} = substr($&,$-[++$n],$+[$n]-$-[$n]);
-    }}
 
     # the board
     while ($gamedata=~s%<div class=\"space_(\d+)_(\d+).*?>(.*?)</div>%%s) {
@@ -232,12 +214,6 @@ for $file (@files) {
       }
     }
 
-    # last play
-    $gamedata=~s%<p>(.*?)</p>%%;
-    $gamedata{$game}{lastplay} = $1;
-    $gamedata{$game}{lastplay}=~s/<.*?>//isg;
-
-#    debug("BS",unfold(@bs));
     $gamedata{$game}{boardstring} = build_board(\@bs);
 
   }
@@ -266,27 +242,6 @@ for $i (sort {$gamedata{$b}->{lasttime} cmp $gamedata{$a}->{lasttime}} keys %gam
     debug("NO EXTRA INFO AT ALL: $i (start $game->{start} $game->{oppname}, $game->{lastmove}) ($game->{lasttime}) ($game->{gameover})");
   }
 
-#  next;
-
-  # compare lasttime to extratime
-  debug("TC: $game->{lasttime} >? $game->{extradate}");
-
-#  debug("GAMEHAS:",%{$game});
-
-  # and now boardstat (in ugly ugly format)
-  for $k (0..14) {
-    for $l (0..14) {
-#      $game->{boardstring} .= $game->{board}{$l}{$k};
-    }
-  }
-
-  debug("BS: $game->{boardstring}");
-
-  # once weve converted it, we dont need it in the db
-  delete $game->{board};
-
-  debug("GAME: ");
-
   push(@rows,$game);
 }
 
@@ -300,7 +255,7 @@ for $i (@queries) {$i=~s/INSERT OR IGNORE/REPLACE/isg;}
 
 # these are the keys for gamedata{game} (aka the column names for the db)
 # we could compute these, but that takes longer
-$keys = "data, game, gameover, lastmove, lasttime, loser, opp, oppname, start, winner, file, extradate";
+$keys = "boardstring, data, extradate, extstatus, file, game, gameover, lastmove, lasttime, loser, opp, oppname, p1n, p1s, p2n, p2s, remaining, start, winner";
 
 # print the queries (surrounded by BEGIN/COMMIT)
 open(A,">/tmp/bcpwwf.sql");

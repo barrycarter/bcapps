@@ -69,37 +69,41 @@ for $i (@upc) {
   }
 
   # strip trailing g, mg, or % from all fields
-  # remove HTML tags (should be none at this point)
+  # remove HTML tags (should be none at this point) + quotes
   # TODO: can I do this in the nonnull check?
   for $j (keys %item) {
+    # even serving size must be stripped of quotation marks
+    $item{$j}=~s/\"//isg;
     if ($nostrip{$j}) {next;}
     $item{$j}=~s/\s*(mg|g|%)$//;
     $item{$j}=~s/<.*?>//isg;
   }
 
-  for $j (sort keys %item) {
-    debug("$j: $item{$j}");
-  }
+#  for $j (sort keys %item) {
+#    debug("$j: $item{$j}");
+#  }
 
-  next;
+#  if (++$count > 1000) {warn "TESTING"; last;}
 
-
-
-  # TODO: check that numeric fields are numeric, 'gram' fields end in 'g'
-
-  # TODO: check calories*servings = total calories (to make sure parsing good)
-
-
-  # much of info is in form below
-  @info = ();
-  while ($data=~s%<li class="colspan2-nutri.*?">(.*?)</li>%%s) {
-    $item = $1;
-    $item=~s/\s+/ /isg;
-
-    # TODO: below is purely for debugging, I actually need the tags
-    $item=~s/<.*?>//isg;
-    push(@info,$item);
-  }
-
-  debug("INFO",@info);
+  push(@items, {%item});
 }
+
+@queries = hashlist2sqlite(\@items, "foods");
+
+print "BEGIN;\n";
+print join(";\n",@queries),";\n";
+print "COMMIT;\n";
+
+# TODO: make some columns INT and FLOAT for better sorting (default is text)
+# TODO: current version is highly incomplete, fix!
+
+=item schema
+
+CREATE TABLE foods ('Brand', 'Calcium', 'Calories', 'Cholesterol',
+'Dietary Fiber', 'Found In', 'Iron', 'Manufactured by', 'Potassium',
+'Protein', 'Saturated Fat', 'Serving Size', 'Servings Per Container',
+'Sodium', 'Sugars', 'Title', 'Total Calories', 'Total Carbohydrate',
+'Total Fat', 'Trans Fat', 'UPC Code', 'Vitamin A', 'Vitamin C',
+'file');
+
+=cut
