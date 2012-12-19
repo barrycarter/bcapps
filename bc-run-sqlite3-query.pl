@@ -54,6 +54,8 @@ The database <b>$db</b> doesn't exist, or I've been instructed not to give it
 you, or maybe I'm just depressed and don't want to. Here I am, brain
 the size of a planet...
 
+Visit wordpress.barrycarter.info for more?
+
 MARK
 ;
 
@@ -140,10 +142,15 @@ $out=~s/&lt;/</isg;
 $out=~s/&gt;/>/isg;
 $out=~s/&#39;/'/isg;
 
+# helper text? (this works even if file doesn't exist)
+$extra = read_file("$db.txt");
+
 # TODO: handle errors incl timeout
 # print results
 print << "MARK"
 Content-type: text/html
+
+$extra
 
 <title>$query</title>
 

@@ -72,24 +72,18 @@ for $file (@files) {
     # by mistake later
     $isgame{$game} = 1;
 
-    # ignore declined games and games w no moves
-    # TODO: reconsider ignoring moveless games
-    if ($pre{status}=~/declined/i || $pre{status}=~/no moves yet/i) {
-      debug("IGNORING GAME WITH STATUS: $pre{status}");
-      delete $isgame{$game};
-      next;
-    }
-
     # get last move info from status
-    unless ($pre{status}=~m%^(.*?)<abbr class="timeago" title="(.*?)">.*?</abbr>%) {
+    if ($pre{status}=~/no moves yet/i) {
+      ($pre{lastmove},$pre{lasttime}) = ("",0);
+    } elsif ($pre{status}=~m%^(.*?)<abbr class="timeago" title="(.*?)">.*?</abbr>%) {
+      ($pre{lastmove},$pre{lasttime}) = ($1,$2);
+    } else {
       die "BAD STATUS: $pre{status}";
       next;
     }
 
-    ($pre{lastmove},$pre{lasttime}) = ($1,$2);
-    
-    # ignore pre-Thanksgiving-2012 games
-    if ($pre{lasttime} lt "2012-11-23T00:07:00+00:00") {
+    # ignore pre-Thanksgiving-2012 games (but not "0" games)
+    if ($pre{lasttime} lt "2012-11-23T00:07:00+00:00" && $pre{lastname} > 0) {
       debug("IGNORING GAME WITH LASTTIME: $pre{lasttime}");
       delete $isgame{$game};
       next;
@@ -99,6 +93,14 @@ for $file (@files) {
 #      debug("GAME $game: COMPARING $gamedata{$game}{lasttime} vs $pre{lasttime}");
     if ($gamedata{$game}{lasttime} gt $pre{lasttime}) {
       debug("GAME $game: $gamedata{$game}{lasttime} > $pre{lasttime}");
+      next;
+    }
+
+    # ignore declined games and games w no moves
+    # TODO: reconsider ignoring moveless games
+    if ($pre{status}=~/declined/i || $pre{status}=~/no moves yet/i) {
+      debug("IGNORING GAME $game WITH STATUS: $pre{status}");
+      delete $isgame{$game};
       next;
     }
 
@@ -125,15 +127,6 @@ for $file (@files) {
       $gamedata{$game}{oppname} = $pre{oppname};
       $gamedata{$game}{loser} = "IP";
       $gamedata{$game}{winner} = "IP";
-    }
-
-    # is the game over or still in progress (we could get this from "x
-    # beat y", but this provides a nice double check
-    # note the space is needed below, sometimes class is "inactive"
-    if ($pre{state}=~/ active/) {
-      $gamedata{$game}{gameover}=0;
-    } else {
-      $gamedata{$game}{gameover}=1;
     }
 
     # the copyovers
@@ -199,7 +192,7 @@ for $file (@files) {
     # 6: player 2 name
 
     # the board
-    while ($gamedata=~s%<div class=\"space_(\d+)_(\d+).*?>(.*?)</div>%%s) {
+    while ($extra=~s%<div class=\"space_(\d+)_(\d+).*?>(.*?)</div>%%s) {
       # row column content
       ($row,$col,$cont) = ($1,$2,$3);
 
@@ -216,6 +209,11 @@ for $file (@files) {
 
     $gamedata{$game}{boardstring} = build_board(\@bs);
 
+    # delete now unneeded board
+    delete $gamedata{$game}{board};
+
+#    debug("BS: $gamedata{$game}{boardstring}");
+
   }
 }
 
@@ -228,6 +226,13 @@ debug("About to parse gamedata...");
 # find the most recent games for which I dont have extra info
 
 for $i (sort {$gamedata{$b}->{lasttime} cmp $gamedata{$a}->{lasttime}} keys %gamedata) {
+
+  # rare case of my passing a game and then it being declined on other side
+  unless ($isgame{$i}) {
+    debug("IGNORING: $i, NOT REALLY A GAME");
+    next;
+  }
+
   debug("ALF: $gamedata{$i}->{lasttime}");
 
   # just this game itself
@@ -236,11 +241,17 @@ for $i (sort {$gamedata{$b}->{lasttime} cmp $gamedata{$a}->{lasttime}} keys %gam
 
   if ($game->{extradate}) {
     if ($game->{lasttime} gt $game->{extradate}) {
-          debug("STALE EXTRA INFO: $i (start $game->{start} $game->{oppname}, $game->{lastmove}), $game->{lasttime} vs $game->{extradate}) ($game->{gameover})");
+          debug("STALE EXTRA INFO: $i (start $game->{start} $game->{oppname}, $game->{lastmove}), $game->{lasttime} vs $game->{extradate})");
 	}
   } else {
-    debug("NO EXTRA INFO AT ALL: $i (start $game->{start} $game->{oppname}, $game->{lastmove}) ($game->{lasttime}) ($game->{gameover})");
+    debug("NO EXTRA INFO AT ALL: $i (start $game->{start} $game->{oppname}, $game->{lastmove}) ($game->{lasttime})");
   }
+
+  # final cleanup (TODO: this is yucky)
+  $game->{lasttime}=strftime("%Y-%m-%d %H:%M:%S", localtime(str2time($game->{lasttime})));
+  $game->{start} = strftime("%Y-%m-%d %H:%M:%S", localtime(str2time($game->{start})));
+
+  debug("TIME: $game->{start}");
 
   push(@rows,$game);
 }
@@ -255,7 +266,8 @@ for $i (@queries) {$i=~s/INSERT OR IGNORE/REPLACE/isg;}
 
 # these are the keys for gamedata{game} (aka the column names for the db)
 # we could compute these, but that takes longer
-$keys = "boardstring, data, extradate, extstatus, file, game, gameover, lastmove, lasttime, loser, opp, oppname, p1n, p1s, p2n, p2s, remaining, start, winner";
+# INT forces numerical sort
+$keys = "boardstring, data, extradate, extstatus, file, game, lastmove, lasttime, loser, opp, oppname, p1n, p1s INT, p2n, p2s INT, remaining, start, winner";
 
 # print the queries (surrounded by BEGIN/COMMIT)
 open(A,">/tmp/bcpwwf.sql");
@@ -283,7 +295,6 @@ sub build_board {
   # really no need to define this here
   my(%color) = ("tw" => "#ff8000", "tl" => "#00ff00", "dl" => "#8080ff",
 	       "dw" => "#ff8080");
-  debug("TEST: $color{tw}");
 
   push(@ret, "<table border>");
   for $i (0..14) {
@@ -301,7 +312,7 @@ sub build_board {
       if ($list[$i][$j]=~/space (..) /) {
 	$spec = $1;
 	$color = $color{$spec};
-	debug("COLOR: $spec, $color{$1}");
+#	debug("COLOR: $spec, $color{$1}");
       } else {
 	# TODO: this is probably wrong
 	$color = "#ffffff";
