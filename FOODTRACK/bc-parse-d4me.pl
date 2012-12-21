@@ -12,11 +12,12 @@ BEGIN;
 MARK
 ;
 
-# TODO: as the name suggests, this is just a temporary list for testing
-# these are lines from mapping.txt
-open(A,"/mnt/sshfs/D4M4/temp.somefiles.rand");
+# sorting the mapping file has the unusual effect of semi-randomizing
+# it, since the first field is a sha1sum
+open(A,"/mnt/sshfs/D4M4/mapping-sorted.txt");
 
 while (<A>) {
+  ++$count;
 
   # only need filename not target URL
   s/\s+.*$//isg;
@@ -37,6 +38,13 @@ while (<A>) {
 #    debug("NOTFOOD: $_");
     next;
   }
+
+  if (++$n>1000) {
+    warn "TESITNG";
+    last;
+  }
+
+  debug("N: $n/$count");
 
   my(%hash) = ();
 
@@ -65,7 +73,7 @@ while (<A>) {
   $all=~s%<h3>UPC</h3>\s*<p>(.*?)</p>%%;
   $hash{UPC} = $1;
 
-  debug("ALL: $all");
+#  debug("ALL: $all");
 
   # go through table rows and cells
   while ($all=~s%<tr.*?>(.*?)</tr>%%is) {
@@ -74,20 +82,20 @@ while (<A>) {
     # ignore empty (not working, may contain empty <td>s
 #    if ($row=~/^\s*$/s) {next;}
 
-    debug("ROW: $row");
+#    debug("ROW: $row");
     @arr = ();
     while ($row=~s%<td.*?>(.*?)</td>%%is) {
       # cleanup cell + push to row-specific array
       $cell = $1;
       # remove g/mcg/mg at end only (also % and extra space)
-      debug("CELL: $cell");
+#      debug("CELL: $cell");
       $cell=trim($cell);
       $cell=~s/\s*m?c?g$//;
       $cell=~s/\s*\%$//;
 
 #      $cell =~s/[^a-z]//isg;
       push(@arr, $cell);
-      debug("PUSHED: $cell");
+#      debug("PUSHED: $cell");
     }
 
     # hash for this row (assuming it has a header)
@@ -99,7 +107,7 @@ while (<A>) {
 
   # silly to wrap single hash in list, but I didnt want to write new function
   $l[0] = \%hash;
-  debug("0: $l[0]");
+#  debug("0: $l[0]");
 
   # this gets large, so print on a row by row basis
   @query = hashlist2sqlite(\@l,"foods");
