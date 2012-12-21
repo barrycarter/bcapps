@@ -25,9 +25,19 @@ for $file (@files) {
   debug("FILENAME: $file");
   $all = read_file($file);
 
+  # note that this is a file
+  $isfile{$file} = 1;
+
+  # all game numbers/opponent numbers just to be safe
+  # NOTE: this is semi-ugly way to program this
+  map($isgame{$_}=1, ($all=~/data-game-id="(.*?)"/isg));
+  map($isopp{$_}=1, ($all=~/data-opponent-id="(.*?)"/isg));
+
   # find my name (doesnt always work, but helps)
-  $all=~s/playerdata: \{"name":"(.*?)"//is;
-  $myname = $1;
+  unless ($myname) {
+    $all=~s/playerdata: \{"name":"(.*?)"//is;
+    $myname = $1;
+  }
 
   # TODO: keep track of which files have which games + "delete" those
   # files whose games are all finished and in db
@@ -40,7 +50,6 @@ for $file (@files) {
     # try to get all the short form information at once
     # this is ugly but lets me test all elements at once
     unless ($data=~m%<li class="game (.*?)" data-game-id="(\d+)" data-opponent-id="(\d+)">.*?<div class="title">\s*(.*?)</div>\s*<span class="date">Started (.*?)</span><small>(.*?)</small>%s) {
-# <small>'(.*?)' played <abbr class="timeago" title="(.*?)">%s) {
       die "BAD DATA: $data";
       next;
     }
@@ -68,13 +77,12 @@ for $file (@files) {
     $pre{data}=~s/\"/\'/isg;
     # TODO: tweak hashlist2sqlite to have an option to use "'" as delimiter
 
-    # at this point, acknowledge this game exists, in case we drop it
-    # by mistake later
-    $isgame{$game} = 1;
-
     # get last move info from status
     if ($pre{status}=~/no moves yet/i) {
-      ($pre{lastmove},$pre{lasttime}) = ("",0);
+      # if this game has no moves right now, it cant be the latest useful info
+      # but still need to record it
+      $hasnomoves{$game} = 1;
+      next;
     } elsif ($pre{status}=~m%^(.*?)<abbr class="timeago" title="(.*?)">.*?</abbr>%) {
       ($pre{lastmove},$pre{lasttime}) = ($1,$2);
     } else {
@@ -82,32 +90,28 @@ for $file (@files) {
       next;
     }
 
-    # ignore pre-Thanksgiving-2012 games (but not "0" games)
-    if ($pre{lasttime} lt "2012-11-23T00:07:00+00:00" && $pre{lastname} > 0) {
-      debug("IGNORING GAME WITH LASTTIME: $pre{lasttime}");
-      delete $isgame{$game};
-      next;
+    # if we have extra info for this game (not necessarily current), record
+    # we intentionally use $all here to be safer
+    if ($all=~/game_$game/) {
+      # TODO: not sure why Im using extrainfo, not extradate here
+      $gamedata{$game}{extrainfo} = $gamedata{$game}{lasttime};
     }
 
-    # ignore games for which we have more recent status
-#      debug("GAME $game: COMPARING $gamedata{$game}{lasttime} vs $pre{lasttime}");
+    # if we have more recent status, ignore this status
     if ($gamedata{$game}{lasttime} gt $pre{lasttime}) {
       debug("GAME $game: $gamedata{$game}{lasttime} > $pre{lasttime}");
       next;
     }
 
-    # ignore declined games and games w no moves
-    # TODO: reconsider ignoring moveless games
-    if ($pre{status}=~/declined/i || $pre{status}=~/no moves yet/i) {
-      debug("IGNORING GAME $game WITH STATUS: $pre{status}");
-      delete $isgame{$game};
+    # if we have same time status AND current extradate info, ignore
+    if ($gamedata{$game}{lasttime} eq $pre{lasttime} &&
+	$gamedata{$game}{extratime} eq $pre{lasttime}) {
+      debug("GAME: $game, all info already known");
       next;
     }
 
-    # fix start and last move time (and start creating true hash)
-    for $j ("start", "lasttime") {
-      $gamedata{$game}{$j}=$pre{$j}
-    }
+    # TODO: (maybe) if we have current shortstatus but not current
+    # long status, jump to getting longstatus?
 
     # if oppname has 'beat' in it, write winner/loser to fields
     # TODO: there HAS to be a better way to write this!
@@ -124,13 +128,14 @@ for $file (@files) {
       $gamedata{$game}{loser} = "TIE";
       $gamedata{$game}{winner} = "TIE";
     } else {
+      # game still in progress
       $gamedata{$game}{oppname} = $pre{oppname};
       $gamedata{$game}{loser} = "IP";
       $gamedata{$game}{winner} = "IP";
     }
 
     # the copyovers
-    for $i ("lastmove", "data", "game", "opp") {
+    for $i ("lastmove", "data", "game", "opp", "start", "lasttime") {
       $gamedata{$game}{$i} = $pre{$i};
     }
 
@@ -140,26 +145,25 @@ for $file (@files) {
     # just want game win/loss data, no extra info
     if ($globopts{fast}) {next;}
 
+
     # NOTE: we only get sometimes, depending on whether info for this
     # game is more recent than previous info for this game.
     # TODO: worry about above
 
     # do we already have info on this game matching the last move
+    # if so, we dont want to delete it if this file doesnt have it
     # TODO: can refine this test a bit
-    if ($gamedata{$game}{extradate} eq $gamedata{$game}{lasttime}) {
-      debug("Already have $game extra data for $gamedata{$game}{lasttime}");
-      next;
-    }
+#    if ($gamedata{$game}{extradate} eq $gamedata{$game}{lasttime}) {
+#      debug("Already have $game extra data for $gamedata{$game}{lasttime}");
+#      next;
+#    }
 
     # to make sure were doing the regex right, confirm a simpler regex first
-    if ($all=~/game_$game/) {
-      $pre{extrainfo} = 1;
-    } else {
-      $pre{extrainfo} = 0;
-      next;
-    }
+    unless ($all=~/game_$game/) {next;}
+    # this file has current extra info for this game
+    $pre{extrainfo} = 1;
 
-    # date of the extra info
+    # store date of the extra info
     $gamedata{$game}{extradate} = $gamedata{$game}{lasttime};
     debug("GETTING EXTRA DATA ($game)");
 
@@ -168,16 +172,15 @@ for $file (@files) {
     my($extra) = $1;
 
     # TODO: in theory could capture player ids, but do I care?
-    # hideous double regex since score can come before or after player name
-    # Changed $game to \d+ so Perl could compile regexs below; I tried
-    # changing %s to %so but it makes no difference
+    # Changed $game to \d+ so Perl could compile regexs below; I also tried
+    # changing %s to %so but it makes no difference (implicit compilation)
     unless ($extra=~m%<div data-game-id="\d+" id="game_\d+" class="(.*?)">.*?<div class="remaining"><span>(\d+)</span>\s* letters remaining.*?<div class="score">(\d+)</div>\s*<div class="player_1">(.*?)</div>.*?<div class="score">(\d+)</div>\s*<div class="player_2">(.*?)</div>%s) {
  
       warn "BAD EXTRA INFO FOR $game in $file: $extra"
 }
 
     # gave up on trying to be overly clever here
-    @matches = ("",$1,$2,$3,$4,$5,$6,$7,$8,$9,$10);
+    @matches = ("",$1,$2,$3,$4,$5,$6);
 
     # note that array starts at 1 on purpose
     for $i (1..$#matches) {
@@ -211,15 +214,20 @@ for $file (@files) {
 
     # delete now unneeded board
     delete $gamedata{$game}{board};
-
-#    debug("BS: $gamedata{$game}{boardstring}");
-
   }
+}
+
+# do I have info on all games?
+for $i (keys %isgame) {
+  if ($hasnomoves{$i}) {debug("$i: no moves yet"); next;}
+  if ($gamedata{$i}) {next;}
+  die ("NO DATA FOR GAME: $i");
 }
 
 debug("About to parse gamedata...");
 
-# TODO: use the isgame check!
+# TODO: ignore pre-Thanksgiving 2012 games (previously done above)
+# TODO: ignore declined games, and "no moves" games (latter = maybe not?)
 
 # and now, we go through the latest data for each game
 
@@ -227,13 +235,9 @@ debug("About to parse gamedata...");
 
 for $i (sort {$gamedata{$b}->{lasttime} cmp $gamedata{$a}->{lasttime}} keys %gamedata) {
 
-  # rare case of my passing a game and then it being declined on other side
-  unless ($isgame{$i}) {
-    debug("IGNORING: $i, NOT REALLY A GAME");
-    next;
-  }
+  debug("PARSING GAME: $i");
 
-  debug("ALF: $gamedata{$i}->{lasttime}");
+  debug("ALF: $gamedata{$i}->{lasttime} vs $gamedata{$i}{extrainfo}");
 
   # just this game itself
   # this is just for me: find games where I can maybe get more data?
@@ -267,7 +271,7 @@ for $i (@queries) {$i=~s/INSERT OR IGNORE/REPLACE/isg;}
 # these are the keys for gamedata{game} (aka the column names for the db)
 # we could compute these, but that takes longer
 # INT forces numerical sort
-$keys = "boardstring, data, extradate, extstatus, file, game, lastmove, lasttime, loser, opp, oppname, p1n, p1s INT, p2n, p2s INT, remaining, start, winner";
+$keys = "boardstring, data, extradate, extstatus, file, game, lastmove, lasttime, loser, opp, oppname, p1n, p1s INT, p2n, p2s INT, remaining, start, winner, extrainfo";
 
 # print the queries (surrounded by BEGIN/COMMIT)
 open(A,">/tmp/bcpwwf.sql");
