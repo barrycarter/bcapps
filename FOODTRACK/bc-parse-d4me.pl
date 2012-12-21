@@ -4,17 +4,17 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# this is an ugly way to do this
-print << "MARK";
-DROP TABLE IF EXISTS foods;
-CREATE TABLE foods ('Calories', 'Calories from Fat', 'Cholesterol', 'Is or Contains Eg', 'Is or Contains Flavor', 'Is or Contains Kosher', 'Is or Contains Milk', 'Is or Contains Organic', 'Is or Contains Peanut', 'Is or Contains Soy', 'Is or Contains Tree Nut', 'Is or Contains Wheat', 'Manufacturer', 'Name', 'Protein', 'Saturated Fat', 'ServingSize-InGrams', 'Servingsize', 'Servingspercontainer', 'Sodium', 'Sugars', 'Total Carbohydrate', 'Total Fat', 'UPC', 'Weight', 'file', 'Calcium', 'Dietary Fiber', 'Iron', 'Chromium (as Chromium GTF Polynicotinate)', 'Folate (as Folate Acid)', 'Gluten', 'Vitamin A', 'Is or Contains Gluten Free', 'Iodine', 'Niacin', 'Milk', ' Is or Contains Low Fat', 'Phosphorus', 'Riboflavin', 'Soy', 'Is or Contains Low Fat', 'Potassium', 'Thiamin', 'Wheat', 'Vitamin D');
-BEGIN;
-MARK
-;
+# these things are known to be keys
+for $i ("file", "Name", "Manufacturer", "UPC") {$iskey{$i}=1;}
 
 # sorting the mapping file has the unusual effect of semi-randomizing
 # it, since the first field is a sha1sum
 open(A,"/mnt/sshfs/D4M4/mapping-sorted.txt");
+
+# print queries to a file
+open(B,">/var/tmp/bcpd4m-queries.txt");
+
+print B "BEGIN;\n";
 
 while (<A>) {
   ++$count;
@@ -39,10 +39,10 @@ while (<A>) {
     next;
   }
 
-  if (++$n>1000) {
-    warn "TESITNG";
-    last;
-  }
+#  if (++$n>1000) {
+#    warn "TESTING";
+#    last;
+#  }
 
   debug("N: $n/$count");
 
@@ -63,6 +63,7 @@ while (<A>) {
     if ($key=~/^\d*$/) {next;}
     $key=~s/[^a-z]//isg;
     $hash{$key} = trim($val);
+    $iskey{$key}=1;
   }
 
   # special cases for manufacturer
@@ -92,18 +93,25 @@ while (<A>) {
       $cell=trim($cell);
       $cell=~s/\s*m?c?g$//;
       $cell=~s/\s*\%$//;
+      # I use double quote as delimiter, so cant be in cells
+      $cell=~s/\"//isg;
 
 #      $cell =~s/[^a-z]//isg;
       push(@arr, $cell);
 #      debug("PUSHED: $cell");
     }
 
+    # from the header only, remove bad characters and case-desensitize
+    $arr[0]=~s/[\s\(\)\-\/\'\"]//isg;
+    $arr[0] = lc($arr[0]);
     # hash for this row (assuming it has a header)
     $hash{$arr[0]} = coalesce([@arr[1..$#arr]]);
+    # make note of all keys
+    $iskey{$arr[0]}=1;
   }
 
   # only stuff that has calories (just in case other check failed)
-  unless ($hash{Calories}) {next;}
+  unless ($hash{calories}) {next;}
 
   # silly to wrap single hash in list, but I didnt want to write new function
   $l[0] = \%hash;
@@ -112,12 +120,31 @@ while (<A>) {
   # this gets large, so print on a row by row basis
   @query = hashlist2sqlite(\@l,"foods");
 
-  print "$query[0];\n";
+  print B "$query[0];\n";
 
   # debug(hashlist2sqlite(\@hashes, "foods"));
   # push(@hashes, \%hash);
 
-
 }
 
-print "COMMIT;\n";
+print B "COMMIT;\n";
+close(B);
+
+for $i (keys %iskey) {
+  unless ($i) {next;}
+  push(@keys,"'$i'");
+}
+
+$keys = join(", ",@keys);
+
+open(C,">/var/tmp/bcpd4m-schema.txt");
+print C << "MARK";
+DROP TABLE IF EXISTS foods;
+CREATE TABLE foods ($keys);
+MARK
+;
+
+close(C);
+
+system("sqlite3 /home/barrycarter/BCINFO/sites/DB/dfoods.db < /var/tmp/bcpd4m-schema.txt");
+system("sqlite3 /home/barrycarter/BCINFO/sites/DB/dfoods.db < /var/tmp/bcpd4m-queries.txt");
