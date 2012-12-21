@@ -1,8 +1,8 @@
 # useful aliases
 
 # when network connection goes down, many procs hang; this kills them in a single blow (because typing on the keyboard can be hard + remembering which processes to kill can be difficult as well)
-alias diedie "sudo pkill convert; sudo pkill xwd; sudo pkill curl; sudo pkill grep; sudo pkill sshfs; sudo pkill find"
-alias diediedie "sudo pkill -9 convert; sudo pkill -9 xwd; sudo pkill -9 curl; sudo pkill -9 grep; sudo pkill -9 sshfs; sudo pkill -9 find"
+alias diedie "sudo pkill convert; sudo pkill xwd; sudo pkill curl; sudo pkill grep; sudo pkill sshfs; sudo pkill find; sudo pkill bc-xwd.pl; sudo pkill bc-elec-snap.pl"
+alias diediedie "sudo pkill -9 convert; sudo pkill -9 xwd; sudo pkill -9 curl; sudo pkill -9 grep; sudo pkill -9 sshfs; sudo pkill -9 find; sudo pkill -9 bc-xwd.pl; sudo pkill -9 bc-elec-snap.pl"
 
 # nagios status from status.dat (very kludgey)
 alias nagstat "egrep 'host_name|plugin_output|current_state|(host|service)status|service_description|check_command' /var/nagios/status.dat | grep -v 'long_plugin_output'"

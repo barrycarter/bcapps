@@ -4,6 +4,14 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# this is an ugly way to do this
+print << "MARK";
+DROP TABLE IF EXISTS foods;
+CREATE TABLE foods ('Calories', 'Calories from Fat', 'Cholesterol', 'Is or Contains Eg', 'Is or Contains Flavor', 'Is or Contains Kosher', 'Is or Contains Milk', 'Is or Contains Organic', 'Is or Contains Peanut', 'Is or Contains Soy', 'Is or Contains Tree Nut', 'Is or Contains Wheat', 'Manufacturer', 'Name', 'Protein', 'Saturated Fat', 'ServingSize-InGrams', 'Servingsize', 'Servingspercontainer', 'Sodium', 'Sugars', 'Total Carbohydrate', 'Total Fat', 'UPC', 'Weight', 'file', 'Calcium', 'Dietary Fiber', 'Iron', 'Chromium (as Chromium GTF Polynicotinate)', 'Folate (as Folate Acid)', 'Gluten', 'Vitamin A', 'Is or Contains Gluten Free', 'Iodine', 'Niacin', 'Milk', ' Is or Contains Low Fat', 'Phosphorus', 'Riboflavin', 'Soy', 'Is or Contains Low Fat', 'Potassium', 'Thiamin', 'Wheat', 'Vitamin D');
+BEGIN;
+MARK
+;
+
 # TODO: as the name suggests, this is just a temporary list for testing
 # these are lines from mapping.txt
 open(A,"/mnt/sshfs/D4M4/temp.somefiles.rand");
@@ -32,6 +40,9 @@ while (<A>) {
 
   my(%hash) = ();
 
+  # note filename for debugging
+  $hash{file} = $_;
+
   # product name
   $all=~s%<title>(.*?)</title>%%;
   $hash{Name} = $1;
@@ -54,6 +65,8 @@ while (<A>) {
   $all=~s%<h3>UPC</h3>\s*<p>(.*?)</p>%%;
   $hash{UPC} = $1;
 
+  debug("ALL: $all");
+
   # go through table rows and cells
   while ($all=~s%<tr.*?>(.*?)</tr>%%is) {
     $row = $1;
@@ -61,19 +74,27 @@ while (<A>) {
     # ignore empty (not working, may contain empty <td>s
 #    if ($row=~/^\s*$/s) {next;}
 
+    debug("ROW: $row");
     @arr = ();
-    while ($row=~s%<td.*?>(.*?)</td>%%s) {
+    while ($row=~s%<td.*?>(.*?)</td>%%is) {
       # cleanup cell + push to row-specific array
       $cell = $1;
-      $cell =~s/[^a-z]//isg;
+      # remove g/mcg/mg at end only (also % and extra space)
+      debug("CELL: $cell");
+      $cell=trim($cell);
+      $cell=~s/\s*m?c?g$//;
+      $cell=~s/\s*\%$//;
+
+#      $cell =~s/[^a-z]//isg;
       push(@arr, $cell);
+      debug("PUSHED: $cell");
     }
 
     # hash for this row (assuming it has a header)
     $hash{$arr[0]} = coalesce([@arr[1..$#arr]]);
   }
 
-  # only stuff that has calories
+  # only stuff that has calories (just in case other check failed)
   unless ($hash{Calories}) {next;}
 
   # silly to wrap single hash in list, but I didnt want to write new function
@@ -83,7 +104,7 @@ while (<A>) {
   # this gets large, so print on a row by row basis
   @query = hashlist2sqlite(\@l,"foods");
 
- debug("QUERY:", @query);
+  print "$query[0];\n";
 
   # debug(hashlist2sqlite(\@hashes, "foods"));
   # push(@hashes, \%hash);
@@ -91,3 +112,4 @@ while (<A>) {
 
 }
 
+print "COMMIT;\n";

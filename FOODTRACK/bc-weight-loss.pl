@@ -38,6 +38,13 @@ for $i (sort keys %weights) {
   push(@y, $weights{$i});
   push(@z,log($weights{$i}));
 
+  # keep track of lowest weight per day (day starts/ends at 1000 GMT for me)
+  # TODO: maybe keep track of highest but that seems less useful
+  $mday = int(($i-10*3600)/86400);
+  if ($weights{$i} < $low{$mday} || !$low{$mday}) {
+    $low{$mday} = $weights{$i};
+  }
+
   # keep track of min/max weights too
   if ($weights{$i} > $max || !$count) {
     push(@maxdays, $days);
@@ -64,6 +71,13 @@ debug("MAXDY:",@maxdays);
 debug("MAXVAL:",@maxvals);
 
 close(A);
+
+# delete "low" weight for first day, since it was incomplete
+delete $low{15594};
+
+open(B,">/tmp/bwlm.txt");
+for $i (sort keys %low) {print B "$i $low{$i}\n";}
+close(B);
 
 # the regression coefficients for standard and log regression
 ($b,$m) = linear_regression(\@x,\@y);

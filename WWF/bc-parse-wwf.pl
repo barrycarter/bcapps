@@ -22,6 +22,7 @@ require "/usr/local/lib/bclib.pl";
 @files = `ls -t /mnt/sshfs/WWF/wwf*.html /mnt/sshfs/WWF/wwf*.html.bz2`;
 
 for $file (@files) {
+  chomp($file);
   debug("FILENAME: $file");
   $all = read_file($file);
 
@@ -81,6 +82,7 @@ for $file (@files) {
     if ($pre{status}=~/no moves yet/i) {
       # if this game has no moves right now, it cant be the latest useful info
       # but still need to record it
+      debug("FILE: $file, GAME: $game, nomoves");
       $hasnomoves{$game} = 1;
       next;
     } elsif ($pre{status}=~m%^(.*?)<abbr class="timeago" title="(.*?)">.*?</abbr>%) {
@@ -90,23 +92,25 @@ for $file (@files) {
       next;
     }
 
+    debug("FILE: $file, GAME: $game, regular data: $pre{lasttime}");
+
     # if we have extra info for this game (not necessarily current), record
     # we intentionally use $all here to be safer
     if ($all=~/game_$game/) {
-      # TODO: not sure why Im using extrainfo, not extradate here
-      $gamedata{$game}{extrainfo} = $gamedata{$game}{lasttime};
+      debug("FILE: $file GAME: $game, extra data: $pre{lasttime}");
+      $extradate = $pre{lasttime};
     }
 
     # if we have more recent status, ignore this status
     if ($gamedata{$game}{lasttime} gt $pre{lasttime}) {
-      debug("GAME $game: $gamedata{$game}{lasttime} > $pre{lasttime}");
+      debug("FILE $file GAME $game: already data for $gamedata{$game}{lasttime}");
       next;
     }
 
     # if we have same time status AND current extradate info, ignore
     if ($gamedata{$game}{lasttime} eq $pre{lasttime} &&
-	$gamedata{$game}{extratime} eq $pre{lasttime}) {
-      debug("GAME: $game, all info already known");
+	$gamedata{$game}{extradate} eq $pre{lasttime}) {
+      debug("FILE: $file GAME: $game, extra info already obtained");
       next;
     }
 
@@ -161,11 +165,11 @@ for $file (@files) {
     # to make sure were doing the regex right, confirm a simpler regex first
     unless ($all=~/game_$game/) {next;}
     # this file has current extra info for this game
-    $pre{extrainfo} = 1;
+#    $pre{extrainfo} = 1;
 
     # store date of the extra info
     $gamedata{$game}{extradate} = $gamedata{$game}{lasttime};
-    debug("GETTING EXTRA DATA ($game)");
+    debug("FILE: $file GAME: $game GETTING EXTRA DATA");
 
     # suck data to next div data-game-id
     $all=~m%(<div data-game-id="$game" id="game_$game".*?)(<div data-game-id|$)%s;
