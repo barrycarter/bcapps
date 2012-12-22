@@ -10,12 +10,13 @@
 # must put initial site name in urlstodo.txt before starting
 
 require "/usr/local/lib/bclib.pl";
+require "$ENV{HOME}/bc-private.pl";
 
 # for this download
-$site = "http://www.foodfacts.com";
+$site = "http://www.directionsforme.org";
 
 # number of jobs parallel should run at once
-$parjobs = 5;
+$parjobs = 1;
 
 unless (-d "f/f/f") {die "CWD must contain a/b/c for all hex abc";}
 
@@ -27,7 +28,11 @@ system("touch urlsdone.txt");
 url2curl("urlstodo.txt","curltodo.txt","curloutfiles.txt");
 
 # run curltodo.txt using bc-parallel (this is the only one where sockets are important; for the rest continue to use regular parallel)
-system("bc-parallel.pl -j $parjobs < curltodo.txt");
+
+if (-s "curltodo.txt") {
+#  die "TESTING";
+  system("parallel -j $parjobs < curltodo.txt");
+}
 
 # add urlstodo.txt to urlsdone.txt
 system("sort -um urlstodo.txt urlsdone.txt > urlsdone.txt.new");
@@ -105,7 +110,8 @@ sub url2curl  {
 #      print B ": curl -sLo $fname '$_'\n";
     } else {
       # some 1
-      print B "curl -H 'User-Agent: Fauxzilla' -sLo $fname '$_'\n";
+#      print B "curl -H 'User-Agent: Fauxzilla' -sLo $fname '$_'\n";
+      print B "ssh -i $remote{pem} $remote{user}\@$remote{server} 'curl -H \"User-Agent: Fauxzilla\" -sL \"$_\"' > $fname\n";
     }
     # however, always print out file and mapping
     print C "$fname\n";
@@ -147,7 +153,7 @@ sub hrefgrep2urls {
 #      debug("I: $i");
 
       # NOTE: THIS IS FOR foodfacts only!
-      unless ($i=~/nutrition/i) {next;}
+#      unless ($i=~/nutrition/i) {next;}
 
       # for fully qualified URLs, only ones that match site
       if ($i=~m/^$site/) {

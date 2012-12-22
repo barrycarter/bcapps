@@ -4,6 +4,16 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# it turns out directionsforme.org tracks over 2000 nutrients, and
+# SQLite3 is default limited to 2000 columns; I can increase this, but
+# instead will focus on columns I really need/want
+
+%validkeys = list2hash("file", "Name", "Manufacturer", "UPC", "url",
+"caffeine", "calcium", "cholesterol", "dietaryfiber", "iron",
+"monounsaturatedfat", "potassium", "protein", "saturatedfat", "serving size", "servings per container", "sodium", "sugars",
+"totalcarbohydrate", "totalfat", "transfat", "vitamina", "vitaminc",
+"vitamind", "vitamine", "vitamink", "weight", "servingsize_prepared", "servingsizeingrams", "calories");
+
 # these things are known to be keys
 for $i ("file", "Name", "Manufacturer", "UPC") {$iskey{$i}=1;}
 
@@ -19,19 +29,20 @@ print B "BEGIN;\n";
 while (<A>) {
   ++$count;
 
-  # only need filename not target URL
-  s/\s+.*$//isg;
+  # get both filename and target URL
+  /^(.*?)\s+(.*?)$/;
+  ($file,$url) = ($1,$2);
 
   # correct to full path
-  s%^%/mnt/sshfs/D4M4/%;
+  $file=~s%^%/mnt/sshfs/D4M4/%;
 
   # mapping.txt contains mappings for files that don't exist (yet); skip those
-  unless (-f $_) {
+  unless (-f $file) {
 #    debug("NOEXIST: $_");
     next;
   }
 
-  $all = read_file($_);
+  $all = read_file($file);
 
   # ignore files sans calories (case-sensitive)
   unless ($all=~/Calories/) {
@@ -47,9 +58,10 @@ while (<A>) {
   debug("N: $n/$count");
 
   my(%hash) = ();
+  $hash{url} = $url;
 
   # note filename for debugging
-  $hash{file} = $_;
+  $hash{file} = $file;
 
   # product name
   $all=~s%<title>(.*?)</title>%%;
@@ -58,12 +70,15 @@ while (<A>) {
 
   # special case for data delimited using <strong>
   while ($all=~s%<strong>(.*?):?</strong>(.*?)<%%is) {
-    ($key,$val) = ($1,$2);
+    ($key,$val) = (lc($1),$2);
+#    $key=~s/[^a-z]//isg;
     # ignore empties and numericals
     if ($key=~/^\d*$/) {next;}
-    $key=~s/[^a-z]//isg;
+    unless ($validkeys{$key}) {
+      $ignored{$key} = 1;
+      next;
+    }
     $hash{$key} = trim($val);
-    $iskey{$key}=1;
   }
 
   # special cases for manufacturer
@@ -104,10 +119,16 @@ while (<A>) {
     # from the header only, remove bad characters and case-desensitize
     $arr[0]=~s/[\s\(\)\-\/\'\"]//isg;
     $arr[0] = lc($arr[0]);
+
+    # is this info we want? (if not, record that we are ignoring it)
+    unless ($validkeys{$arr[0]}) {
+      $ignored{$arr[0]}=1;
+      next;
+    }
+
     # hash for this row (assuming it has a header)
     $hash{$arr[0]} = coalesce([@arr[1..$#arr]]);
     # make note of all keys
-    $iskey{$arr[0]}=1;
   }
 
   # only stuff that has calories (just in case other check failed)
@@ -130,7 +151,9 @@ while (<A>) {
 print B "COMMIT;\n";
 close(B);
 
-for $i (keys %iskey) {
+debug("IGNORED",sort keys %ignored);
+
+for $i (keys %validkeys) {
   unless ($i) {next;}
   push(@keys,"'$i'");
 }
