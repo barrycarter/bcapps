@@ -19,7 +19,7 @@ for $i ("file", "Name", "Manufacturer", "UPC") {$iskey{$i}=1;}
 
 # sorting the mapping file has the unusual effect of semi-randomizing
 # it, since the first field is a sha1sum
-open(A,"/mnt/sshfs/D4M4/mapping-sorted.txt");
+open(A,"/mnt/sshfs/D4M4/map3-sorted.txt");
 
 # print queries to a file
 open(B,">/var/tmp/bcpd4m-queries.txt");

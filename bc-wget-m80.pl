@@ -15,6 +15,8 @@ require "$ENV{HOME}/bc-private.pl";
 # for this download
 $site = "http://www.directionsforme.org";
 
+# hrefgrep2urls("newhrefs.txt","newhrefs2.txt",$site);
+
 # number of jobs parallel should run at once
 $parjobs = 1;
 
@@ -27,11 +29,14 @@ system("touch urlsdone.txt");
 # write curl output files (for urlstodo.txt) to curloutfiles.txt
 url2curl("urlstodo.txt","curltodo.txt","curloutfiles.txt");
 
+die "TESTING";
+
 # run curltodo.txt using bc-parallel (this is the only one where sockets are important; for the rest continue to use regular parallel)
 
 if (-s "curltodo.txt") {
 #  die "TESTING";
-  system("parallel -j $parjobs < curltodo.txt");
+#  system("parallel -j $parjobs < curltodo.txt");
+  system("sh curltodo.txt");
 }
 
 # add urlstodo.txt to urlsdone.txt
@@ -39,7 +44,8 @@ system("sort -um urlstodo.txt urlsdone.txt > urlsdone.txt.new");
 system("mv urlsdone.txt urlsdone.txt.old; mv urlsdone.txt.new urlsdone.txt");
 
 # search files in curloutfiles.txt for hrefs, out to newhrefs.txt
-system("parallel -j $parjobs fgrep -i href < curloutfiles.txt > newhrefs.txt");
+# system("parallel -j $parjobs fgrep -i href < curloutfiles.txt > newhrefs.txt");
+system("xargs fgrep -i href < curloutfiles.txt > newhrefs.txt");
 
 # find new URLs to download from newhrefs.txt (uniqify) to newhrefs2.txt
 # omit from new URLs ones we already have to urlstodo.txt
@@ -110,8 +116,8 @@ sub url2curl  {
 #      print B ": curl -sLo $fname '$_'\n";
     } else {
       # some 1
-#      print B "curl -H 'User-Agent: Fauxzilla' -sLo $fname '$_'\n";
-      print B "ssh -i $remote{pem} $remote{user}\@$remote{server} 'curl -H \"User-Agent: Fauxzilla\" -sL \"$_\"' > $fname\n";
+      print B "curl -H 'User-Agent: Fauxzilla' -sLo $fname '$_'\n";
+#      print B "ssh -i $remote{pem} $remote{user}\@$remote{server} 'curl -H \"User-Agent: Fauxzilla\" -sL \"$_\"' > $fname\n";
     }
     # however, always print out file and mapping
     print C "$fname\n";
