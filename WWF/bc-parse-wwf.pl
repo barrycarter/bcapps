@@ -6,6 +6,8 @@
 
 # --fast: do not attempt to find extra info for games, just basics
 
+# TODO: extract (but do not publicize) chats
+
 require "/usr/local/lib/bclib.pl";
 
 # TODO: in theory, can read existing db for current data vs reading all files
@@ -34,11 +36,22 @@ for $file (@files) {
   map($isgame{$_}=1, ($all=~/data-game-id="(.*?)"/isg));
   map($isopp{$_}=1, ($all=~/data-opponent-id="(.*?)"/isg));
 
-  # find my name (doesnt always work, but helps)
-  unless ($myname) {
-    $all=~s/playerdata: \{"name":"(.*?)"//is;
+  # my name/id (some files have null?!)
+  if ($all=~s/playerdata: \{"name":"(.*?)"//i) {
     $myname = $1;
+  } elsif ($all=~m%<div class="player_1">(.*?)%isg) {
+    $myname = $1;
+  } else {
+    # so far, all files have at least one of the two above
+    die "FILE $file has no user data";
   }
+
+  # all files have this
+  unless ($all=~s/zid: (\d+),//) {
+    die "NO ZYNGA ID: $file";
+  }
+
+  $myid = $1;
 
   # TODO: keep track of which files have which games + "delete" those
   # files whose games are all finished and in db
@@ -60,10 +73,9 @@ for $file (@files) {
 
     # and assign to prehash (which we mostly copy to real hash, but not 100%)
     for $i (0..$#short) {
-      # if value is empty, we parsed badly ('0' however is ok)
       $pre{$short[$i]} = substr($&,$-[$i],$+[$i]-$-[$i]);
 
-      # in fact must be at least 2 chars long
+      # values must be at least 2 chars
       if (length($pre{$short[$i]}) < 2) {
 	die "BAD: $short[$i] -> $pre{$short[$i]}";}
     }
@@ -91,6 +103,9 @@ for $file (@files) {
       die "BAD STATUS: $pre{status}";
       next;
     }
+
+    # record "max time" of this file
+    if ($pre{lasttime} gt $last{$file}) {$last{$file} = $pre{lasttime};}
 
     debug("FILE: $file, GAME: $game, regular data: $pre{lasttime}");
 
@@ -261,8 +276,29 @@ for $i (sort {$gamedata{$b}->{lasttime} cmp $gamedata{$a}->{lasttime}} keys %gam
 
   debug("TIME: $game->{start}");
 
+  debug("FILE: $game->{file}, TIME: $last{$game->{file}}");
+
+  # TODO: seriously modify + maybe subroutinize this "report"
+  print "GAME: $i\n";
+
+  if ($game->{p1n} eq $game->{winner}) {
+    print "$game->{p1n} $game->{p1s}, $game{p2n} $game->{p2s}\n";
+  } elsif ($game->{p2n} eq $game->{winner}) {
+    print "$game->{p2n} $game->{p2s}, $game{p1n} $game->{p1s}\n";
+  } else {
+    warn("GAME $game->{game} has no winner?!");
+  }
+
+  for $j (keys %{$game}) {
+    if ($j=~/^boardstring$/) {next;}
+    print "$j: $game->{$j}\n";
+  }
+  print "\n";
+
   push(@rows,$game);
 }
+
+warn "About to run SQL";
 
 debug("ROWS",@rows);
 @queries = hashlist2sqlite(\@rows, "wwf");
