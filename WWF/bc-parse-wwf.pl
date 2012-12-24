@@ -271,22 +271,41 @@ for $i (sort {$gamedata{$b}->{lasttime} cmp $gamedata{$a}->{lasttime}} keys %gam
   }
 
   # final cleanup (TODO: this is yucky)
-  $game->{lasttime}=strftime("%Y-%m-%d %H:%M:%S", localtime(str2time($game->{lasttime})));
-  $game->{start} = strftime("%Y-%m-%d %H:%M:%S", localtime(str2time($game->{start})));
+  # turned off for testing (this tweak belongs after score report [or change extradate too?])
+#  $game->{lasttime}=strftime("%Y-%m-%d %H:%M:%S", localtime(str2time($game->{lasttime})));
+#  $game->{start} = strftime("%Y-%m-%d %H:%M:%S", localtime(str2time($game->{start})));
 
   debug("TIME: $game->{start}");
 
   debug("FILE: $game->{file}, TIME: $last{$game->{file}}");
 
   # TODO: seriously modify + maybe subroutinize this "report"
-  print "GAME: $i\n";
+  print "GAME: $i (as of $last{$game->{file}})\n";
 
-  if ($game->{p1n} eq $game->{winner}) {
-    print "$game->{p1n} $game->{p1s}, $game{p2n} $game->{p2s}\n";
-  } elsif ($game->{p2n} eq $game->{winner}) {
-    print "$game->{p2n} $game->{p2s}, $game{p1n} $game->{p1s}\n";
+  # cleanup name for printing (really applies to Mspint only)
+  # TODO: should probably create a %print has, not modify $game
+  $game->{p2n}=~s/[^ -~]//isg;
+  $game->{oppname}=~s/[^ -~]//isg;
+
+  # TODO: this is ugly
+  if ($game->{loser} eq "IP") {
+    $post = "[in progress]";
   } else {
-    warn("GAME $game->{game} has no winner?!");
+    $post = "[final]";
+  }
+
+  if ($game->{extradate} eq $game->{lasttime}) {
+    if ($game->{p1s} > $game->{p2s}) {
+      print "SCORE: $game->{p1n} $game->{p1s}, $game->{p2n} $game->{p2s} $post\n";
+    } elsif ($game->{p2s} > $game->{p1s}) {
+      print "SCORE: $game->{p2n} $game->{p2s}, $game->{p1n} $game->{p1s} $post\n";
+    } elsif ($game->{p1s} == $game->{p2s}) {
+      print "SCORE: TIE: $game->{p1n} $game->{p1s}, $game->{p2n} $game->{p2s} $post\n";
+    } else {
+      warn("GAME $game->{game} has no winner?!");
+    }
+  } else {
+    print "SCORE: $game->{game}: vs $game->{oppname}, no score $post\n";
   }
 
   for $j (keys %{$game}) {
