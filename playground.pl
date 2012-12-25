@@ -23,6 +23,37 @@ use XML::Bare;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
+upc2nutrition([1,2,4,5]);
+
+=item upc2nutrition(\@codes)
+
+Given a list of UPC codes (assumed to be food items), return
+nutritional information for these codes using db at
+dfoods.db.94y.info. Allow for loss of leading 0s and UPC code short
+forms. Uses LEFT JOIN, so returns all codes, including those w/o
+information in db (primarily for testing)
+
+NOTE: this is a fairly trivial function, and I feel silly writing
+it. Its a thin wrapper around an SQL query.
+
+=cut
+
+sub upc2nutrition {
+  # TODO: below is annoyingly bad Perl
+  for $i (@{$_[0]}) {
+    # UPC codes are 12 digits, so a 12 digit code is fine as is
+    if (length($i) == 12) {next;}
+    debug("I: $i");
+  }
+
+  my($codes) = 
+  my($query) = "SELECT * FROM foods WHERE UPC IN ()";
+
+
+}
+
+die "TESTING";
+
 $foo = "x"x50000;
 
 $foo=~/(x{6000})(x{6000})(x{6000})(x{6000})(x{6000})(x{6000})(x{6000})/;
