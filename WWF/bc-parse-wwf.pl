@@ -289,9 +289,9 @@ for $i (sort {$gamedata{$b}->{lasttime} cmp $gamedata{$a}->{lasttime}} keys %gam
 
   # TODO: this is ugly
   if ($game->{loser} eq "IP") {
-    $post = "[in progress]";
+    $post = "[in progress] ($game->{lasttime})";
   } else {
-    $post = "[final]";
+    $post = "[final] ($game->{lasttime})";
   }
 
   if ($game->{extradate} eq $game->{lasttime}) {
