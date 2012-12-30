@@ -61,7 +61,8 @@ while (<A>) {
   # parse foods
   for $i (@foods) {
 
-    if ($i=~/^([\d\.]+)\*(.*?)$/) {
+    # negative foods allowed to subtract items off other items (eg, subway sandwich with no/less bread)
+    if ($i=~/^(\-?[\d\.]+)\*(.*?)$/) {
       ($quant, $item) = ($1, $2);
     } else {
       # item remains as is

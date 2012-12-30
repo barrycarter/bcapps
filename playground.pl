@@ -23,6 +23,12 @@ use XML::Bare;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
+mylock("test","lock");
+
+sleep(60);
+
+die "TESTING";
+
 upc2nutrition([1,2,4,5]);
 
 =item upc2nutrition(\@codes)

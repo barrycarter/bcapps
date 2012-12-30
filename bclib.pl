@@ -409,6 +409,7 @@ sub sqlite3 {
 
   if ($res) {
     warnlocal("SQLITE3 returns $res: $out/$err, CMD: $cmd");
+    debug("DB is $db", `pwd`);
     $SQL_ERROR = "$res: $out/$err FROM $cmd";
     return "";
   }
@@ -2645,7 +2646,9 @@ TODO: improve this to only warn when asked
 
 TODO: this code is hideous, improve it
 
-TODO: keep track of things I lock/unlock so I cean clean them up in sub END
+TODO: keep track of things I lock/unlock so I can clean them up in sub END
+
+NOTE: relies on /proc, which is terrible
 
 =cut
 
@@ -2654,7 +2657,7 @@ sub mylock {
   my($lockdir) = "/usr/local/etc/locks";
   my($text);
 
-  # if unlocking... 
+  # if unlocking...
   if ($action eq "unlock") {
 
     # first check if lockfile exists
@@ -2672,7 +2675,7 @@ sub mylock {
     }
 
     # does lock belong to defunct process?
-    if (-f "/proc/$text") {
+    if (-d "/proc/$text") {
       warn("LOCK $name owned by living process $text, can't unlock");
       return 0;
     }
@@ -2702,7 +2705,7 @@ sub mylock {
     }
 
     # owned by a living process?
-    if (-f "/proc/$text") {
+    if (-d "/proc/$text") {
       warn("LOCK $name owned by living process $text");
       return 0;
     }

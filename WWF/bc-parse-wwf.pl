@@ -13,6 +13,15 @@ require "/usr/local/lib/bclib.pl";
 # TODO: in theory, can read existing db for current data vs reading all files
 # TODO: use <h5>Your Move</h5> and playerData stuff
 
+# read/parse existing data
+@res = sqlite3hashlist("SELECT * FROM wwf", "/home/barrycarter/BCINFO/sites/DB/wwf.db");
+
+for $i (@res) {
+  $gamedata{$i->{game}} = $i;
+}
+
+# debug("RES",%gamedata);
+
 # these are the names of the fields in the short form ("data" is the
 # entire matched string)
 @short = ("data", "state", "game", "opp", "oppname", "start","status");
@@ -280,7 +289,7 @@ for $i (sort {$gamedata{$b}->{lasttime} cmp $gamedata{$a}->{lasttime}} keys %gam
   debug("FILE: $game->{file}, TIME: $last{$game->{file}}");
 
   # TODO: seriously modify + maybe subroutinize this "report"
-  print "GAME: $i (as of $last{$game->{file}})\n";
+  print "GAME: $i (as of $last{$game->{lasttime}})\n";
 
   # cleanup name for printing (really applies to Mspint only)
   # TODO: should probably create a %print has, not modify $game
@@ -335,9 +344,11 @@ $keys = "boardstring, data, extradate, extstatus, file, game, lastmove, lasttime
 # print the queries (surrounded by BEGIN/COMMIT)
 open(A,">/tmp/bcpwwf.sql");
 
+# now trying to update sans re-creating table each time
 print A << "MARK";
-DROP TABLE IF EXISTS wwf;
-CREATE TABLE wwf ($keys);
+-- DROP TABLE IF EXISTS wwf;
+-- CREATE TABLE wwf ($keys);
+-- CREATE UNIQUE INDEX i1 ON wwf(game);
 BEGIN;
 MARK
 ;
