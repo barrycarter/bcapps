@@ -12,7 +12,7 @@
 
 require "/usr/local/lib/bclib.pl";
 
-debug(compute_upc_check_digit("04100000365"));
+debug(upc2upc("4460909"));
 
 die "TESTING";
 
@@ -383,3 +383,59 @@ sub compute_upc_check_digit {
   return (10-($tot%10))%10;
 }
 
+=item upc2upc($upc)
+
+Converts a UPE-E code UPC-A code using
+http://en.wikipedia.org/wiki/Universal_Product_Code
+
+=cut
+
+sub upc2upc {
+  my($upc) = @_;
+  my($check1, $check2);
+
+  # vaguely hideous to use if/then/else here
+
+  # already complete
+  if (length($upc)==12) {return $upc;}
+
+  # special case for me only
+  if (length($upc)==11) {return "0$upc";}
+
+  # UPC-E with check digit
+  if (length($upc)==7) {
+    $upc=~s/(.)$//;
+    $check1 = $1;
+  }
+
+  # now the 0-9 cases (these are checkdigitless)
+  # the dash is solely for my benefit and will be removed
+  # TODO: Im sure theres a simpler way to do this (w/o using
+  # Business:UPC or whatever). WARNING: hideous code ahead
+
+  if ($upc=~/(..)(...)0/) {
+    $upc = "0${1}000-00$2";
+  } elsif ($upc=~/(..)(...)(1|2)/) {
+    $upc = "0$1${3}00-00$2";
+  } elsif ($upc=~/(...)(..)3/) {
+    $upc = "0${1}00-000$2";
+  } elsif ($upc=~/(....)(.)4/) {
+    $upc = "0${1}0-0000$2";
+  } elsif ($upc=~/(....)(5|6|7|8|9)/) {
+    $upc = "0$1-0000$2";
+  } else {
+    warn("NOT A UPC-E CODE: $upc");
+    return;
+  }
+
+  # strip hyphen
+  $upc=~s/\-//isg;
+
+  $check2 = compute_upc_check_digit($upc);
+
+  if ($check1 && $check1 != $check2) {
+    warn("Computed check digit doesnt match given check digit: $upc");
+  }
+
+  return "$upc$check2";
+}
