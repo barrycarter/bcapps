@@ -119,6 +119,7 @@ debug("HASH",%hash);
 # I have no cronjob for world time, so...
 
 # hash of how I want to see the zones
+# explicitly excluding the Kiritimati cheat
 %zones = (
  "MT" => "US/Mountain",
  "CT" => "US/Central",
@@ -129,12 +130,15 @@ debug("HASH",%hash);
  "Tokyo" => "Asia/Tokyo",
  "Delhi" => "Asia/Kolkata",
  "Sydney" => "Australia/Sydney",
+ "Chatham" => "Pacific/Chatham",
+ "Samoa" => "US/Samoa"
 );
 
 # HACK: manual sorting is cheating/dangerous ... should be able to do
 # this auto somehow
 
-@zones= ("PT", "MT", "CT", "ET", "GMT", "Delhi", "HongKong", "Tokyo", "Sydney");
+@zones= ("Samoa", "PT", "MT", "CT", "ET", "GMT", "Delhi", "HongKong", "Tokyo",
+	 "Sydney", "Chatham");
 
 for $i (@zones) {
   $ENV{TZ} = $zones{$i};

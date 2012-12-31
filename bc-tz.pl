@@ -29,4 +29,11 @@ for $i (sort keys %istz) {
   print "TZ: $i ".`date`;
 }
 
+=item comments
+
+Sample use (if output piped to tzs.txt):
+
+grep 'dec 30' tzs.txt | sort -k6n
+
+=cut
 
