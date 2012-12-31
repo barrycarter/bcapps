@@ -51,12 +51,12 @@ while (<A>) {
   # count number of days
   $days++;
 
-  @foods = split(/\s*,\s*/, $1);
-#  debug("FOODS",@foods);
+  # this keeps dates in order
+  push(@dates,$date);
 
-  # if done for day, note so
-  # TODO: don't average for days that are not done, throws off results
-  if ($foods[-1] eq "DONE") {$done=1; pop(@foods);}
+  @foods = split(/\s*,\s*/, $1);
+
+  # if done for day, note so (feature never used, dropped)
 
   # parse foods
   for $i (@foods) {
@@ -70,11 +70,11 @@ while (<A>) {
     }
 
     # store what I ate on what day, look up later
-    push(@{$foods{$date}}, $quant, $item);
+    push(@{$foods{$date}}, "$quant*$item");
+
     # note that this is an item (so we can look it up)
     $isitem{$item} = 1;
 
-#    debug("ITEM: $item");
     # kill leading 0s
     # TODO: fix this in spreadsheet somehow
     $item=~s/^0+//isg;
@@ -112,6 +112,8 @@ while (<A>) {
   }
 }
 
+close(A);
+
 for $i (keys %isitem) {
   my($code) = upc2upc($i);
   $upce{$code} = $i;
@@ -119,10 +121,114 @@ for $i (keys %isitem) {
 }
 
 $upcs = join(", ",@upcs);
-
 $query = "SELECT * FROM foods WHERE UPC IN ($upcs)";
-
 @res = sqlite3hashlist($query, "/home/barrycarter/BCINFO/sites/DB/dfoods.db");
+
+# link the UPC to the hash
+for $i (@res) {$info{$upce{$i->{UPC}}} = $i;}
+
+debug("DATE",%date);
+
+# this is a repeat of what I do earlier w the spreadsheet, except I
+# now use the db and already have foods for each day <h>so it's not a
+# repeat of what I did earlier</h>
+
+# TODO: allow measurements in grams, containers, etc.
+
+for $i (@dates) {
+  debug("DATE: $i");
+
+  # clear vars from last time
+  %total = ();
+  $done = 0;
+
+  # count number of days
+  $days++;
+
+  @foods = @{$foods{$i}};
+
+  debug("FOODS($i):",@foods);
+
+  # parse foods for day
+  for $i (@foods) {
+
+    # negative foods allowed to subtract items off other items (eg, subway sandwich with no/less bread)
+    if ($i=~/^(\-?[\d\.]+)\*(.*?)$/) {
+      ($quant, $item) = ($1, $2);
+    } else {
+      # item remains as is
+      ($quant, $item) = (1, $i);
+    }
+
+    # cant trim $item, may need it for db
+    $item2=$item;
+    $item2=~s/^0+//isg;
+
+    # first check spreadsheet, then db, then give up
+    # <h>TO NOT DO: use coalesce here</h>
+    if ($hash{$item2}) {
+      %itemhash = $hash{$item}
+    } elsif ($info{$item}) {
+      %itemhash = $info{$item};
+    } else {
+      warn "NO SUCH ITEM: $item";
+      next;
+    }
+
+    # does it exist in db?
+    # !!!!! TODO !!!!!: info in spreadsheet overrides at least for now
+    %itemhash = $info{$item};
+
+    $item=~s/^0+//isg;
+
+    # if no such food, warn + set errflag
+    unless ($hash{$item}) {
+      warn "NO SUCH FOOD (spreadsheet): $item";
+      unless (%itemhash) {
+	warn "NO SUCH FOOD(db): $item";
+	$ERR_FLAG = "NO SUCH FOOD: $item";
+	next;
+      }
+    }
+
+    %itemhash = %{$hash{$item}};
+
+    # this is intentionally done for my personal serving count
+    $totalquant{$item} += $quant;
+
+    # if I have a setting for personal servings, use it
+    if ($itemhash{'Personal Serving'}) {$quant*=$itemhash{'Personal Serving'}};
+
+    for $j (@totalfields) {
+      $total{$j} += $quant*$itemhash{$j};
+      # across multiple days
+      $grandtotal{$j} += $quant*$itemhash{$j};
+    }
+  }
+
+  # totals for day
+  print "\nDATE: $date\n";
+  for $j (@totalfields) {
+    # stardate format (to store total just in case we need it later)
+    $stardate = stardate(str2time($date),"localtime=1");
+    $stardate=~s/\..*$//isg;
+    $totals{$stardate}{$j} = $total{$j};
+    print "$j: $total{$j}\n";
+  }
+}
+
+
+die "TESTING";
+
+for $i (keys %isitem) {
+  my($code) = upc2upc($i);
+  $upce{$code} = $i;
+  push(@upcs, "'$code'");
+}
+
+debug("INFO",unfold(%info));
+
+die "TESTING";
 
 # debugging only, what do we find?
 for $i (@res) {

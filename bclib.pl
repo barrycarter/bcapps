@@ -34,7 +34,7 @@ our(@months) = ("", "January", "February", "March", "April", "May", "June",
 
 # directionsforme.org values I want
 
-%d4mekeys = list2hash("file", "Name", "Manufacturer", "UPC", "url",
+our(%d4mekeys) = list2hash("file", "Name", "Manufacturer", "UPC", "url",
 "caffeine", "calcium", "cholesterol", "dietaryfiber", "iron",
 "monounsaturatedfat", "potassium", "protein", "saturatedfat", "serving size", "servings per container", "sodium", "sugars",
 "totalcarbohydrate", "totalfat", "transfat", "vitamina", "vitaminc",
@@ -2739,7 +2739,7 @@ XML) to an array of arrays. Only works w/ very simple sheets
 
 sub gnumeric2array {
   my($file) = @_;
-  my($res) = join("",`zcat $file`);
+  my($res) = join("",`zcat -f $file`);
   my(@ret);
 
   while ($res=~s%<gnm:Cell(.*?)>(.*?)</gnm:Cell>%%) {
