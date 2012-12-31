@@ -69,6 +69,11 @@ while (<A>) {
       ($quant, $item) = (1, $i);
     }
 
+    # store what I ate on what day, look up later
+    push(@{$foods{$date}}, $quant, $item);
+    # note that this is an item (so we can look it up)
+    $isitem{$item} = 1;
+
 #    debug("ITEM: $item");
     # kill leading 0s
     # TODO: fix this in spreadsheet somehow
@@ -106,6 +111,8 @@ while (<A>) {
     print "$j: $total{$j}\n";
   }
 }
+
+debug("FOODS",%foods,"/FOODS");
 
 # averages
 print "\nAVERAGE: ($days days)\n";
