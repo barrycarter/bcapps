@@ -12,6 +12,10 @@
 
 require "/usr/local/lib/bclib.pl";
 
+debug(compute_upc_check_digit("04100000365"));
+
+die "TESTING";
+
 # list of fields it makes sense to total
 # TODO: order this list
 @totalfields = ("Calories", "Total Fat(g)", "Total Carbohydrates(g)", "Sugars(g)", "Saturated Fat(g)", "Calcium(%DV)", "Vitamin A(%DV)", "Cholestrol(mg)", "Iron(%DV)", "Trans Fat", "Vitamin C(%DV)", "Protein(g)", "Fiber(g)", "Sodium(mg)");
@@ -122,6 +126,20 @@ for $i (keys %isitem) {
     next;
   }
 
+  # product ID (could use substr here too)
+  $i=~/^(.*?)(.{6})$/;
+  my($manu,$id) = ($1,$2);
+
+  # fewer than 11 digits, fill in middle
+  # TODO: this is hideous way to do this, but Im lazy
+  # per http://en.wikipedia.org/wiki/Universal_Product_Code#Variations (UPC-E)
+  # 6 is probably shortest legit value
+
+#  if (length($i)==6) {
+    # eg 414130 -> 0 41000 00413 [check digit]
+#    $upc2upc{$i} = "${manu}00000$id";
+#  } elsif {
+
   # 11 digits?, add leading 0
   if (length($i)==11) {
     push(@upcs, "'0$i'");
@@ -132,6 +150,7 @@ for $i (keys %isitem) {
   push(@upcs, "'$i'");
 
 }
+
 
 $upcs = join(", ",@upcs);
 
@@ -148,7 +167,15 @@ debug("FOUND",@found);
 
 @notfound = minus(\@upcs, \@found);
 
+for $i (sort @notfound) {
+  $i=~s/\'//isg;
+  unless ($hash{$i}) {$i=~s/^0//isg;}
+  debug("NOTFOUND: $i -> $hash{$i}{Name}, $hash{$i}{Company}");
+}
+
 debug("NOTFOUND",@notfound);
+
+die "TESTING";
 
 for $i (@notfound) {
   # this is a oneshot
@@ -330,5 +357,29 @@ sub d4me2db {
   }
 
   return %hash;
+}
+
+=item compute_upc_check_digit($upc)
+
+Given an 11-digit UPC-A code (not a UPC-E code), compute the check
+digit. Useful for computing UPC-E check digits after expansion.
+
+http://en.wikipedia.org/wiki/Universal_Product_Code#Check_digits
+
+=cut
+
+sub compute_upc_check_digit {
+  my($upc) = @_;
+  my(@arr) = split(//,$upc);
+  # we want arr to start with 1 to match instructions
+  unshift(@arr,"");
+  my($tot);
+
+  # NOTE: Yes, I couldve written a for loop here
+  for $i (1,3,5,7,9,11) {$tot += 3*$arr[$i];}
+  for $i (2,4,6,8,10) {$tot += $arr[$i];}
+
+  # <h>It vaguely bothers me this works; it bothers me more that I used it</h>
+  return (10-($tot%10))%10;
 }
 
