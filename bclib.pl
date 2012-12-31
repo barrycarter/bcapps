@@ -32,6 +32,15 @@ $EARTH_RADIUS = 6371/1.609344; # miles
 our(@months) = ("", "January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December");
 
+# directionsforme.org values I want
+
+%d4mekeys = list2hash("file", "Name", "Manufacturer", "UPC", "url",
+"caffeine", "calcium", "cholesterol", "dietaryfiber", "iron",
+"monounsaturatedfat", "potassium", "protein", "saturatedfat", "serving size", "servings per container", "sodium", "sugars",
+"totalcarbohydrate", "totalfat", "transfat", "vitamina", "vitaminc",
+"vitamind", "vitamine", "vitamink", "weight", "servingsize_prepared",
+"servingsizeingrams", "calories");
+
 # HACK: not sure this is right way to do this
 our(%globopts);
 our(%is_tempfile);

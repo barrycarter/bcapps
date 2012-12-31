@@ -112,7 +112,57 @@ while (<A>) {
   }
 }
 
-debug("FOODS",%foods,"/FOODS");
+# this wont work in raw form, I tweak UPCs too much
+for $i (keys %isitem) {
+  # this was going to be subroutine upc2nutrition
+
+  # 12 digits?, add as is
+  if (length($i)==12) {
+    push(@upcs, "'$i'");
+    next;
+  }
+
+  # 11 digits?, add leading 0
+  if (length($i)==11) {
+    push(@upcs, "'0$i'");
+    next;
+  }
+
+  # just for testing
+  push(@upcs, "'$i'");
+
+}
+
+$upcs = join(", ",@upcs);
+
+$query = "SELECT * FROM foods WHERE UPC IN ($upcs)";
+
+@res = sqlite3hashlist($query, "/home/barrycarter/BCINFO/sites/DB/dfoods.db");
+
+# debugging only, what do we find?
+for $i (@res) {
+  push(@found, "'$i->{UPC}'");
+}
+
+debug("FOUND",@found);
+
+@notfound = minus(\@upcs, \@found);
+
+debug("NOTFOUND",@notfound);
+
+for $i (@notfound) {
+  # this is a oneshot
+  %hash = d4me2db($i);
+  unless (%hash) {next;}
+  push(@hashlist, {d4me2db($i)});
+}
+
+debug("HASHLIST1",@hashlist);
+debug("HASHLIST2",hashlist2sqlite(\@hashlist, "foods"));
+
+die "TESTING";
+
+debug("ISITEM",%isitem,"/ISITEM");
 
 # averages
 print "\nAVERAGE: ($days days)\n";
@@ -191,6 +241,94 @@ write_file_new($ERR_FLAG, "/home/barrycarter/ERR/cal.err");
 
 # TODO: my days don't always end at midnight, compensate
 
+# TODO: add this subroutine to bclib.pl when working
 
+=item d4me2db($upc)
 
+Looks up $upc on directionsforme.org, and returns query to insert it
+into dfoods.db.94y.info
+
+=cut
+
+sub d4me2db {
+  my($upc) = @_;
+
+  # strip quotes
+  $upc=~s/[\'\"]//isg;
+
+  unless (length($upc) == 12) {
+    warn "BAD UPC: $upc";
+    return;
+  }
+
+  my($url)="http://www.directionsforme.org/index.php/directions/results/$upc";
+  my($all,$err,$res) = cache_command("curl -L '$url'", "age=86400");
+
+  # this is basically bc-parsed4me.pl in subroutine form
+    # ignore files sans calories (case-sensitive)
+  unless ($all=~/Calories/) {
+    warn "NOT FOOD: $upc";
+    return;
+  }
+
+  my(%hash) = ();
+  $hash{url} = $url;
+
+  # note filename for debugging (since no filename, note subroutine)
+  $hash{file} = "d4me2db($upc)";
+
+  # product name
+  $all=~s%<title>(.*?)</title>%%;
+  $hash{Name} = $1;
+  $hash{Name}=~s/\s*\-\s*Directions for me//i;
+
+  # special case for data delimited using <strong>
+  while ($all=~s%<strong>(.*?):?</strong>(.*?)<%%is) {
+    ($key,$val) = (lc($1),$2);
+    # ignore empties and numericals
+    if ($key=~/^\d*$/) {next;}
+    unless ($validkeys{$key}) {
+      $ignored{$key} = 1;
+      next;
+    }
+    $hash{$key} = trim($val);
+  }
+
+  # special cases for manufacturer
+  $all=~s%<h3>Manufacturer</h3>\s*(.*?)<%%;
+  $hash{Manufacturer} = $1;
+
+  # and UPC
+  $all=~s%<h3>UPC</h3>\s*<p>(.*?)</p>%%;
+  $hash{UPC} = $1;
+
+  # go through table rows and cells
+  while ($all=~s%<tr.*?>(.*?)</tr>%%is) {
+    my($row) = $1;
+    @arr = ();
+    while ($row=~s%<td.*?>(.*?)</td>%%is) {
+      # cleanup cell + push to row-specific array
+      my($cell) = $1;
+      # remove g/mcg/mg at end only (also % and extra space)
+      $cell=trim($cell);
+      $cell=~s/\s*m?c?g$//;
+      $cell=~s/\s*\%$//;
+      # I use double quote as delimiter, so cant be in cells
+      $cell=~s/\"//isg;
+      push(@arr, $cell);
+    }
+
+    # from the header only, remove bad characters and case-desensitize
+    $arr[0]=~s/[\s\(\)\-\/\'\"]//isg;
+    $arr[0] = lc($arr[0]);
+
+    # ignore info we dont want
+    unless ($d4mekeys{$arr[0]}) {next;}
+
+    # hash for this row (assuming it has a header)
+    $hash{$arr[0]} = coalesce([@arr[1..$#arr]]);
+  }
+
+  return %hash;
+}
 
