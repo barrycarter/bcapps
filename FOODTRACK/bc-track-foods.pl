@@ -75,16 +75,11 @@ while (<A>) {
     # note that this is an item (so we can look it up)
     $isitem{$item} = 1;
 
+=item commentout
+
     # kill leading 0s
     # TODO: fix this in spreadsheet somehow
     $item=~s/^0+//isg;
-
-    # if no such food, warn + set errflag
-    unless ($hash{$item}) {
-      warn "NO SUCH FOOD: $item";
-      $ERR_FLAG = "NO SUCH FOOD: $item";
-      next;
-    }
 
     %itemhash = %{$hash{$item}};
 
@@ -110,7 +105,10 @@ while (<A>) {
     $totals{$stardate}{$j} = $total{$j};
     print "$j: $total{$j}\n";
   }
-}
+
+=cut
+
+}}
 
 close(A);
 
@@ -127,7 +125,7 @@ $query = "SELECT * FROM foods WHERE UPC IN ($upcs)";
 # link the UPC to the hash
 for $i (@res) {$info{$upce{$i->{UPC}}} = $i;}
 
-debug("DATE",%date);
+debug("FOODS",%foods);
 
 # this is a repeat of what I do earlier w the spreadsheet, except I
 # now use the db and already have foods for each day <h>so it's not a
@@ -167,33 +165,20 @@ for $i (@dates) {
     # first check spreadsheet, then db, then give up
     # <h>TO NOT DO: use coalesce here</h>
     if ($hash{$item2}) {
-      %itemhash = $hash{$item}
+      %itemhash = $hash{$item2};
+      # restore value of $item
+      $item = $item2;
     } elsif ($info{$item}) {
       %itemhash = $info{$item};
     } else {
       warn "NO SUCH ITEM: $item";
+      $ERR_FLAG = "NO SUCH ITEM: $item";
       next;
     }
 
-    # does it exist in db?
-    # !!!!! TODO !!!!!: info in spreadsheet overrides at least for now
-    %itemhash = $info{$item};
+    debug("ITEMHASH($item)",unfold(%itemhash));
 
-    $item=~s/^0+//isg;
-
-    # if no such food, warn + set errflag
-    unless ($hash{$item}) {
-      warn "NO SUCH FOOD (spreadsheet): $item";
-      unless (%itemhash) {
-	warn "NO SUCH FOOD(db): $item";
-	$ERR_FLAG = "NO SUCH FOOD: $item";
-	next;
-      }
-    }
-
-    %itemhash = %{$hash{$item}};
-
-    # this is intentionally done for my personal serving count
+    # this is intentionally done before my personal serving count
     $totalquant{$item} += $quant;
 
     # if I have a setting for personal servings, use it
@@ -216,7 +201,6 @@ for $i (@dates) {
     print "$j: $total{$j}\n";
   }
 }
-
 
 die "TESTING";
 
