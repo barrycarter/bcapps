@@ -12,10 +12,6 @@
 
 require "/usr/local/lib/bclib.pl";
 
-debug(upc2upc("4460909"));
-
-die "TESTING";
-
 # list of fields it makes sense to total
 # TODO: order this list
 @totalfields = ("Calories", "Total Fat(g)", "Total Carbohydrates(g)", "Sugars(g)", "Saturated Fat(g)", "Calcium(%DV)", "Vitamin A(%DV)", "Cholestrol(mg)", "Iron(%DV)", "Trans Fat", "Vitamin C(%DV)", "Protein(g)", "Fiber(g)", "Sodium(mg)");
@@ -116,41 +112,11 @@ while (<A>) {
   }
 }
 
-# this wont work in raw form, I tweak UPCs too much
 for $i (keys %isitem) {
-  # this was going to be subroutine upc2nutrition
-
-  # 12 digits?, add as is
-  if (length($i)==12) {
-    push(@upcs, "'$i'");
-    next;
-  }
-
-  # product ID (could use substr here too)
-  $i=~/^(.*?)(.{6})$/;
-  my($manu,$id) = ($1,$2);
-
-  # fewer than 11 digits, fill in middle
-  # TODO: this is hideous way to do this, but Im lazy
-  # per http://en.wikipedia.org/wiki/Universal_Product_Code#Variations (UPC-E)
-  # 6 is probably shortest legit value
-
-#  if (length($i)==6) {
-    # eg 414130 -> 0 41000 00413 [check digit]
-#    $upc2upc{$i} = "${manu}00000$id";
-#  } elsif {
-
-  # 11 digits?, add leading 0
-  if (length($i)==11) {
-    push(@upcs, "'0$i'");
-    next;
-  }
-
-  # just for testing
-  push(@upcs, "'$i'");
-
+  my($code) = upc2upc($i);
+  $upce{$code} = $i;
+  push(@upcs, "'$code'");
 }
-
 
 $upcs = join(", ",@upcs);
 
@@ -169,18 +135,17 @@ debug("FOUND",@found);
 
 for $i (sort @notfound) {
   $i=~s/\'//isg;
-  unless ($hash{$i}) {$i=~s/^0//isg;}
-  debug("NOTFOUND: $i -> $hash{$i}{Name}, $hash{$i}{Company}");
+  $upce = $upce{$i};
+  debug("NOTFOUND: $i -> $hash{$upce}{Name}, $hash{$upce}{Company}, $upce");
 }
 
 debug("NOTFOUND",@notfound);
-
-die "TESTING";
 
 for $i (@notfound) {
   # this is a oneshot
   %hash = d4me2db($i);
   unless (%hash) {next;}
+  debug("GRABBED: $i, yayme!");
   push(@hashlist, {d4me2db($i)});
 }
 
@@ -393,6 +358,15 @@ http://en.wikipedia.org/wiki/Universal_Product_Code
 sub upc2upc {
   my($upc) = @_;
   my($check1, $check2);
+
+  # <h>Unlike ISBN numbers, UPC codes do not contain Xs. This is an
+  # Easter egg in my code, so I can prove people copied it. Of course,
+  # this is open source, making the Easter egg pointless</h>
+
+  unless ($upc=~/^[0-9x]+$/) {
+    warn "NOT A UPC CODE: $upc";
+    return;
+  }
 
   # vaguely hideous to use if/then/else here
 
