@@ -118,9 +118,64 @@ for $i (keys %isitem) {
   push(@upcs, "'$code'");
 }
 
+# TODO: dfoods.db "-1" means "<1", need to worry about this
+
 $upcs = join(", ",@upcs);
 $query = "SELECT * FROM foods WHERE UPC IN ($upcs)";
+
+# note that dfoods does use %DV for vitamins
+
+# alternate query using spreadsheet headers (ie, backwords)
+$query = << "MARK";
+SELECT
+ UPC,
+ calories AS "Calories",
+ totalfat AS "Total Fat(g)",
+ totalcarbohydrate AS "Total Carbohydrates(g)",
+ sugars AS "Sugars(g)",
+ saturatedfat AS "Saturated Fat(g)",
+ calcium AS "Calcium(%DV)",
+ vitamina AS "Vitamin A(%DV)",
+ cholesterol AS "Cholestrol(mg)",
+ iron AS "Iron(%DV)",
+ transfat AS "Trans Fat",
+ vitaminc AS "Vitamin C(%DV)",
+ protein AS "Protein(g)",
+ dietaryfiber AS "Fiber(g)",
+ sodium AS "Sodium(mg)",
+ 'fromdb' AS source
+FROM foods WHERE UPC in ($upcs)
+MARK
+;
+
+debug("QUERY: $query");
+
+=item schema
+
+CREATE TABLE foods ('cholesterol', 'dietaryfiber', 'sodium', 'file', 'sugars', 'totalcarbohydrate', 'servings per container', 'vitamina', 'caffeine', 'url', 'weight', 'Manufacturer', 'iron', 'monounsaturatedfat', 'serving size', 'vitamink', 'potassium', 'vitamind', 'calories', 'transfat', 'saturatedfat', 'protein', 'calcium', 'vitaminc', 'UPC', 'vitamine', 'servingsizeingrams', 'Name', 'totalfat', 'servingsize_prepared');
+
+8*044700010907: no Calories information, bad entry? at /home/user/BCGIT/FOODTRACK//bc-track-foods.pl line 202.
+8*044700010907: no Total Fat(g) information, bad entry? at /home/user/BCGIT/FOODTRACK//bc-track-foods.pl line 202.
+8*044700010907: no Total Carbohydrates(g) information, bad entry? at /home/user/BCGIT/FOODTRACK//bc-track-foods.pl line 202.
+8*044700010907: no Sugars(g) information, bad entry? at /home/user/BCGIT/FOODTRACK//bc-track-foods.pl line 202.
+8*044700010907: no Saturated Fat(g) information, bad entry? at /home/user/BCGIT/FOODTRACK//bc-track-foods.pl line 202.
+8*044700010907: no Calcium(%DV) information, bad entry? at /home/user/BCGIT/FOODTRACK//bc-track-foods.pl line 202.
+8*044700010907: no Vitamin A(%DV) information, bad entry? at /home/user/BCGIT/FOODTRACK//bc-track-foods.pl line 202.
+8*044700010907: no Cholestrol(mg) information, bad entry? at /home/user/BCGIT/FOODTRACK//bc-track-foods.pl line 202.
+8*044700010907: no Iron(%DV) information, bad entry? at /home/user/BCGIT/FOODTRACK//bc-track-foods.pl line 202.
+8*044700010907: no Trans Fat information, bad entry? at /home/user/BCGIT/FOODTRACK//bc-track-foods.pl line 202.
+8*044700010907: no Vitamin C(%DV) information, bad entry? at /home/user/BCGIT/FOODTRACK//bc-track-foods.pl line 202.
+8*044700010907: no Protein(g) information, bad entry? at /home/user/BCGIT/FOODTRACK//bc-track-foods.pl line 202.
+8*044700010907: no Fiber(g) information, bad entry? at /home/user/BCGIT/FOODTRACK//bc-track-foods.pl line 202.
+8*044700010907: no Sodium(mg) information, bad entry? at /home/user/BCGIT/FOODTRACK//bc-track-foods.pl line 202.
+
+
+=cut
+
+
 @res = sqlite3hashlist($query, "/home/barrycarter/BCINFO/sites/DB/dfoods.db");
+
+debug("RES",unfold(@res),"/RES");
 
 # link the UPC to the hash
 for $i (@res) {$info{$upce{$i->{UPC}}} = $i;}
@@ -148,14 +203,14 @@ for $i (@dates) {
   debug("FOODS($i):",@foods);
 
   # parse foods for day
-  for $i (@foods) {
+  for $k (@foods) {
 
     # negative foods allowed to subtract items off other items (eg, subway sandwich with no/less bread)
-    if ($i=~/^(\-?[\d\.]+)\*(.*?)$/) {
+    if ($k=~/^(\-?[\d\.]+)\*(.*?)$/) {
       ($quant, $item) = ($1, $2);
     } else {
       # item remains as is
-      ($quant, $item) = (1, $i);
+      ($quant, $item) = (1, $k);
     }
 
     # cant trim $item, may need it for db
@@ -165,11 +220,11 @@ for $i (@dates) {
     # first check spreadsheet, then db, then give up
     # <h>TO NOT DO: use coalesce here</h>
     if ($hash{$item2}) {
-      %itemhash = $hash{$item2};
+      %itemhash = %{$hash{$item2}};
       # restore value of $item
       $item = $item2;
     } elsif ($info{$item}) {
-      %itemhash = $info{$item};
+      %itemhash = %{$info{$item}};
     } else {
       warn "NO SUCH ITEM: $item";
       $ERR_FLAG = "NO SUCH ITEM: $item";
@@ -185,6 +240,14 @@ for $i (@dates) {
     if ($itemhash{'Personal Serving'}) {$quant*=$itemhash{'Personal Serving'}};
 
     for $j (@totalfields) {
+
+    # debugging only
+    unless (length($itemhash{$j})) {
+      warn "$k: no $j information, bad entry?";
+    }
+
+
+
       $total{$j} += $quant*$itemhash{$j};
       # across multiple days
       $grandtotal{$j} += $quant*$itemhash{$j};
@@ -192,7 +255,7 @@ for $i (@dates) {
   }
 
   # totals for day
-  print "\nDATE: $date\n";
+  print "\nDATE: $i\n";
   for $j (@totalfields) {
     # stardate format (to store total just in case we need it later)
     $stardate = stardate(str2time($date),"localtime=1");
