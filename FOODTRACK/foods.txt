@@ -1,0 +1,34 @@
+# Primarily to satisfy my exhibitionistic tendencies (and not because
+# it provides sample data for the soon-to-be-written
+# bc-track-foods-2013.pl), I will record "everything" I eat starting
+# in 2013 [US Mountain Time] in this file.
+
+# The format will be "DATE: 20130101" indicates the information below
+# will be for 01 Jan 2013. The line "FOODS: 4*UPC@time" indicates I
+# had 4 servings of UPC code at time. "FOODS: 4c*UPC@time" indicates 4
+# containers, while "FOODS: 4u*UPC@time" indicates 4 units (ie,
+# serving size divided by units per serving size), and "FOODS:
+# 4g*UPC@time" indicates 4 grams of UPC.
+
+# Lines starting with neither "DATE:" nor "FOODS:" are text
+# descriptions of foods I eat, comments, etc.
+
+# I normally do NOT include the following (but may do so if I wish):
+
+#  - Items listed as having 0 calories (eg, tabasco sauce, ICBINB (I Can't Believe It's Not Butter), etc)
+#  - Low calorie drinks (eg, rockstar, powder stick drinks)
+#  - Medications and supplements (eg, Tums, Viactiv Chews, Vitamin D, Centrum Silver, etc)
+#  - Sugar-free coffee creamer
+
+# I take the following items daily (but do not list them):
+
+# 5000 IU Vitamin D3 (681131312714)
+# Centrum Silver (no UPC code on bottle, possibly 0300054177230 ?)
+# 3 Maalox Multi [for calcium] (300670343903)
+
+# Since I don't list supplements, my daily vitamin totals are off; in
+# particular, I probably DO get enough vitamins even if
+# bc-track-foods-2013.pl says otherwise
+
+DATE: 20130101
+
