@@ -1,0 +1,4 @@
+Web-based interface to SQLite3, *different* from phpmyadmin, but
+similar to something I wrote for MySQL (that is not open source, but
+there's no reason it shouldn't be someday)
+

@@ -12,7 +12,7 @@
 require "/usr/local/lib/bclib.pl";
 
 # text/plain just for debugging
-print "Content-type: text/plain\n\n";
+print "Content-type: text/html\n\n";
 
 # obtain and dehtmlify the STDIN
 $stdin = <STDIN>;
