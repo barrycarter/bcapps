@@ -4,6 +4,9 @@
 
 # TODO: allow multi-edit
 
+# NOTE: trying to make this output exactly the same thing as my PHP
+# version (which isnt open source, so things look a bit kludgey)
+
 # NOTE: I'm usually opposed to 'web programs', but I originally wrote
 # this a long time ago, which makes it ok (well, not really)
 
@@ -14,7 +17,7 @@ require "/usr/local/lib/bclib.pl";
 # text/plain just for debugging
 print "Content-type: text/html\n\n";
 
-# obtain and dehtmlify the STDIN
+
 $stdin = <STDIN>;
 $stdin=~s/%(..)/chr(hex($1))/iseg;
 
@@ -43,11 +46,31 @@ print "COLS",@cols;
 $db = "/home/barrycarter/ofx.db";
 
 print "<form action='bc-view-sqlite3.pl' method='POST'>\n";
-print "<table border><tr><th>Show Columns</th><th>Sort Columns</th></tr>\n";
+print "<table><tr><th>Show Columns</th><th>Sort Columns</th></tr>\n";
 
 print  "<tr><td><table border>\n";
 print  join("\n",show_table("ofxstatements"));
 print  "</table></td>\n";
+
+print << "MARK";
+
+<b>Where</b>
+<input type="text" name="wherecond" size=80>
+<br>
+
+<b>Limit</b>
+<select name="limit">
+<option>20
+<option>50
+<option>100
+<option>500
+<option value="0">NONE
+</select>
+
+<br>
+
+MARK
+;
 
 print  "<td><table border>\n";
 print  join("\n",show_table("ofxstatements",1));
@@ -73,7 +96,7 @@ sub show_table {
   my(@ret);
 
   # below lets user choose fewer than $#cols
-  push(@cols, "-");
+  unshift(@cols, "-");
 
   # column headers (ignoring the '-' column I added above)
   for $i (0..$#cols) {
@@ -85,27 +108,27 @@ sub show_table {
   push(@ret, "</tr>");
 
   # show column name and position choice
-  for $i (0..$#cols) {
+  for $i (1..$#cols) {
     # row header
-    push(@ret, "<tr><th>$cols[$i]</th>");
+    push(@ret, "</tr><tr><th>$cols[$i]</th>");
 
     # excluding last column (the fictional '-' I added above)
-    for $j (0..$#cols-1) {
+    for $j (1..$#cols) {
 
       # if column number matches position of field in @cols, check the
       # radio button (I dislike HTML forms with 'no-button-selected'
       # for radio fields)
-      $check = $i==$j?"CHECKED":"";
+      $check = $i==$j?q% checked="checked"%:"";
 
       # the radio button is on a per-column basis; only one column can be
       # in the 5th position, for example
       # sortcol for sorting, just col for showing
       if ($sort) {$sort="sort";}
       debug("SORT: $sort");
-      push(@ret, qq%<td><input type="radio" name="${sort}col[$j]" value="$cols[$i]" $check></td>%);
+      push(@ret, qq%<td><input name="${sort}col[$j]" value="$cols[$i]" $check type="radio"></td>%);
     }
     # end row
-    push(@ret,"</tr>");
+#    push(@ret,"</tr>");
   }
 
   return @ret;
