@@ -42,7 +42,7 @@ print "COLS",@cols;
 # db is fixed for now (TODO: allow choice)
 $db = "/home/barrycarter/ofx.db";
 
-print "<form method='POST'>\n";
+print "<form action='bc-view-sqlite3.pl' method='POST'>\n";
 print "<table border><tr><th>Show Columns</th><th>Sort Columns</th></tr>\n";
 
 print  "<tr><td><table border>\n";
