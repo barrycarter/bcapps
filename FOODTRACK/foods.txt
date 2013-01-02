@@ -10,6 +10,8 @@
 # serving size divided by units per serving size), and "FOODS:
 # 4g*UPC@time" indicates 4 grams of UPC.
 
+# Both @time and val* are optional; val* defaults to 1 serving
+
 # Lines starting with neither "DATE:" nor "FOODS:" are text
 # descriptions of foods I eat, comments, etc.
 
@@ -18,17 +20,31 @@
 #  - Items listed as having 0 calories (eg, tabasco sauce, ICBINB (I Can't Believe It's Not Butter), etc)
 #  - Low calorie drinks (eg, rockstar, powder stick drinks)
 #  - Medications and supplements (eg, Tums, Viactiv Chews, Vitamin D, Centrum Silver, etc)
-#  - Sugar-free coffee creamer
+#  - Coffee creamers and other low-calorie toppings
 
 # I take the following items daily (but do not list them):
 
 # 5000 IU Vitamin D3 (681131312714)
 # Centrum Silver (no UPC code on bottle, possibly 0300054177230 ?)
-# 3 Maalox Multi [for calcium] (300670343903)
+# 3 Maalox Multi [for calcium] (3u*300670343903)
 
 # Since I don't list supplements, my daily vitamin totals are off; in
 # particular, I probably DO get enough vitamins even if
 # bc-track-foods-2013.pl says otherwise
 
+# Times refer to my waking day, which doesnt always end at 2400. A
+# time of 2530, for example, means 1:30am Mountain Time the next day.
+
 DATE: 20130101
+
+1401 angus deluxe + fries (mcdonalds)
+1830 2 cans roast beef hash, 2 vintage cheddar smart fries, vinegar fresh smart fries
+2135 1 container cotto salami
+2530 1 can roast beef hash, 2 honey bbq smart fries (2nd planned)
+
+SHORT: MCD-ANG-DEL@1401, MCD-FRIES@1401, 2c*037600199919@1830, 2*853762002085@1830, 1*853672002023@1830, 1c*044700011201@2135, 1c*037600199919@2530, 2*853762002047
+
+
+
+
 
