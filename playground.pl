@@ -23,27 +23,11 @@ use XML::Bare;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
-=item d4me2db($upc)
 
-Looks up $upc on directionsforme.org, and returns query to insert it
-into dfoods.db.94y.info
+debug(sqlite3cols("foods","/home/barrycarter/BCINFO/sites/DB/myfoods.db"));
 
-=cut
 
-sub d4me2db {
-  my($upc) = @_;
-
-  unless (length($upc) == 12) {
-    warn "BAD UPC: $upc";
-    return;
-  }
- 
-  my($url) = "http://www.directionsforme.org/index.php/directions/product/DIABETIC/$upc";
-
-  my($out,$err,$res) = cache_command("curl -L '$url'", "age=86400");
-
-  debug("OUT: $out");
-}
+die "TESTING";
 
 =item upc2nutrition(\@codes)
 

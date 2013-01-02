@@ -491,7 +491,7 @@ sub sqlite3cols {
   my(%ret);
 
   unless ($raw=~/create table $tabname \((.*?)\)/is) {
-    warnlocal("Schema return value not understood");
+    warnlocal("Schema return value not understood: $raw");
     return;
   }
 
@@ -500,10 +500,14 @@ sub sqlite3cols {
   for $i (split(/\,/,$schema)) {
     # kill extraneous spaces and apos
     $i = trim($i);
-    $i=~s/\'//isg;
+#    $i=~s/\'//isg;
     debug("I: $i");
+
+    if ($i=~/\'(.*?)\'/) {
+      # special case for apostrophe quoted cols with no type
+      $ret{$1} = "null";
+    } elsif ($i=~/^\s*(.*?)\s+(.*)$/) {
     # for cols w/ types
-    if ($i=~/^\s*(.*?)\s+(.*)$/) {
       debug("$1 -> $2");
       $ret{$1} = $2;
     } elsif ($i=~/^\s*(\S*?)$/) {
@@ -2164,6 +2168,8 @@ sub hashlist2sqlite {
       if ($j=~/^\s*$/) {next;}
       $iskey{$j} = 1;
       push(@keys, "'$j'");
+      # strip newlines
+      $hash{$j}=~s/\n//isg;
       push(@vals, "\"$hash{$j}\"");
     }
 
