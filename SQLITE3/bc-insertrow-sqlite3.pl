@@ -5,7 +5,7 @@ require "/usr/local/lib/bclib.pl";
 
 print "Content-type: text/html\n\n";
 
-$globopts{keeptemp} = 1;
+# $globopts{keeptemp} = 1;
 $tabname = "foods";
 $db = "/home/barrycarter/BCINFO/sites/DB/myfoods.db";
 

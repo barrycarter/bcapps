@@ -46,19 +46,44 @@ for $i (keys %isupc) {
 $upcs = join(", ",@upcs);
 $query = "SELECT * FROM foods WHERE UPC IN ($upcs)";
 
+# DBs at dfoods.db.94y.info and myfoods.db.94y.info
 # results and index via UPC
-@res = sqlite3hashlist($query, "/home/barrycarter/BCINFO/sites/DB/dfoods.db");
+@res = sqlite3hashlist($query,"/home/barrycarter/BCINFO/sites/DB/dfoods.db");
+# db where I keep my own list of foods (not in dfoods.db)
+@res2 = sqlite3hashlist($query,"/home/barrycarter/BCINFO/sites/DB/myfoods.db");
+# 
+@res = (@res,@res2);
 
+# map UPC to nutrition data
 for $i (@res) {$info{$i->{UPC}} = $i;}
 
 # compare list we got to list we want
 my(@gotinfo) = keys %info;
 my(@wanted) = keys %isupc;
-
 my(@missing) = minus(\@wanted,\@gotinfo);
+if (@missing) {die "No info for: @missing";}
 
-if (@missing) {
-  die "No info for: @missing";
-}
+# everything find, so go through days
+for $i (keys %foods) {
+  for $j (@{$foods{$i}}) {
+    # parse food data
+    $j=~/^(\d+[cu]?)\*(.*?)\@(\d{4})$/;
+    # <h>Unfascinating fact: item and time are anagrams</h>
+    my($quant, $item, $time) = ($1, $2, $3);
+    %item = %{$info{$item}};
+
+    # TODO: just doing calories now for testing
+
+    # convert serving size to actual servings
+    if ($quant=~/^\d+$/) {
+      # do nothing, but dont throw error
+    } elsif ($quant=~s/c$//) {
+      $quant = $item{'servings per container'};
+    } else {
+      die("QUANTITY: $quant NOT UNDERSTOOD: $j");
+      }
+    }
+  }
+
 
 
