@@ -498,8 +498,9 @@ sub sqlite3cols {
   my($schema) = $1;
 
   for $i (split(/\,/,$schema)) {
-    # kill extraneous spaces
+    # kill extraneous spaces and apos
     $i = trim($i);
+    $i=~s/\'//isg;
     debug("I: $i");
     # for cols w/ types
     if ($i=~/^\s*(.*?)\s+(.*)$/) {

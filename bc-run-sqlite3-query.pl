@@ -17,8 +17,9 @@ if ($ENV{HTTP_HOST}=~/(^|\.)schema\.([a-z]+)\.db\./i) {
   $db = $2;
   ($out,$err,$res) = cache_command("echo '.schema' | sqlite3 $db.db");
   if ($res) {webdie($err);}
+  # changed schema to HTML solely to get word wrap
   print << "MARK"
-Content-type: text/plain
+Content-type: text/html
 
 $out
 MARK

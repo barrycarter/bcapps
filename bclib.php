@@ -169,4 +169,16 @@ function var_dump_ret($mixed = null) {
   return $content; 
 }
 
+// the SQLite functions below copied from one of my old non-working
+// libs; I magically expect them to start working now
+
+function sqlite3_command ($query,$db){
+  $han = sqlite3_open($db);
+  $aa=sqlite3_query($han,$query);
+  if (!$aa) {
+    echo "SQLITE3 QUERY $query returned error: ".sqlite3_error($han);
+  }
+  return($aa);
+}
+
 ?>
