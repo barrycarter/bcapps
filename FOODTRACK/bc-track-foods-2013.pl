@@ -77,13 +77,21 @@ for $i (keys %foods) {
     # convert serving size to actual servings
     if ($quant=~/^\d+$/) {
       # do nothing, but dont throw error
-    } elsif ($quant=~s/c$//) {
-      $quant = $item{'servings per container'};
+    } elsif ($quant=~s/^(\d+)c$//) {
+      $quant = $1*$item{'servings per container'};
     } else {
       die("QUANTITY: $quant NOT UNDERSTOOD: $j");
-      }
+    }
+
+    # note this probably doesnt make sense for all fields
+    for $k (keys %item) {
+      debug("ADDING $i, $j, $k, $item{Name}, $quant * $item{$k}");
+      $total{$i}{$k} += $quant*$item{$k};
     }
   }
+}
 
+debug("TOTAL");
+debug(unfold(%total));
 
 
