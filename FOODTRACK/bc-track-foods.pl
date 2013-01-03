@@ -12,6 +12,11 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# one off for coke one, er coke zero
+print hashlist2sqlite([{d4me2db("049000042566")}],"foods"),";";
+
+die "TESTING";
+
 # list of fields it makes sense to total
 # TODO: order this list
 @totalfields = ("Calories", "Total Fat(g)", "Total Carbohydrates(g)", "Sugars(g)", "Saturated Fat(g)", "Calcium(%DV)", "Vitamin A(%DV)", "Cholestrol(mg)", "Iron(%DV)", "Trans Fat", "Vitamin C(%DV)", "Protein(g)", "Fiber(g)", "Sodium(mg)");
@@ -410,11 +415,12 @@ sub d4me2db {
   my($all,$err,$res) = cache_command("curl -L '$url'", "age=86400");
 
   # this is basically bc-parsed4me.pl in subroutine form
-    # ignore files sans calories (case-sensitive)
-  unless ($all=~/Calories/) {
-    warn "NOT FOOD: $upc";
-    return;
-  }
+  # ignore files sans calories (case-sensitive)
+  # actually, coke zero + others HAVE no calories so this is wrong
+#  unless ($all=~/Calories/) {
+#    warn "NOT FOOD: $upc [$all]";
+#    return;
+#  }
 
   my(%hash) = ();
   $hash{url} = $url;
@@ -501,68 +507,3 @@ sub compute_upc_check_digit {
   return (10-($tot%10))%10;
 }
 
-=item upc2upc($upc)
-
-Converts a UPE-E code UPC-A code using
-http://en.wikipedia.org/wiki/Universal_Product_Code
-
-=cut
-
-sub upc2upc {
-  my($upc) = @_;
-  my($check1, $check2);
-
-  # <h>Unlike ISBN numbers, UPC codes do not contain Xs. This is an
-  # Easter egg in my code, so I can prove people copied it. Of course,
-  # this is open source, making the Easter egg pointless</h>
-
-  unless ($upc=~/^[0-9x]+$/) {
-    warn "NOT A UPC CODE: $upc";
-    return;
-  }
-
-  # vaguely hideous to use if/then/else here
-
-  # already complete
-  if (length($upc)==12) {return $upc;}
-
-  # special case for me only
-  if (length($upc)==11) {return "0$upc";}
-
-  # UPC-E with check digit
-  if (length($upc)==7) {
-    $upc=~s/(.)$//;
-    $check1 = $1;
-  }
-
-  # now the 0-9 cases (these are checkdigitless)
-  # the dash is solely for my benefit and will be removed
-  # TODO: Im sure theres a simpler way to do this (w/o using
-  # Business:UPC or whatever). WARNING: hideous code ahead
-
-  if ($upc=~/(..)(...)0/) {
-    $upc = "0${1}000-00$2";
-  } elsif ($upc=~/(..)(...)(1|2)/) {
-    $upc = "0$1${3}00-00$2";
-  } elsif ($upc=~/(...)(..)3/) {
-    $upc = "0${1}00-000$2";
-  } elsif ($upc=~/(....)(.)4/) {
-    $upc = "0${1}0-0000$2";
-  } elsif ($upc=~/(....)(5|6|7|8|9)/) {
-    $upc = "0$1-0000$2";
-  } else {
-    warn("NOT A UPC-E CODE: $upc");
-    return;
-  }
-
-  # strip hyphen
-  $upc=~s/\-//isg;
-
-  $check2 = compute_upc_check_digit($upc);
-
-  if ($check1 && $check1 != $check2) {
-    warn("Computed check digit doesnt match given check digit: $upc");
-  }
-
-  return "$upc$check2";
-}

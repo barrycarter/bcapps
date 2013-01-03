@@ -42,7 +42,7 @@ for $i (sort keys %weights) {
   # TODO: maybe keep track of highest but that seems less useful
   $mday = int(($i-10*3600)/86400);
   if ($weights{$i} < $low{$mday} || !$low{$mday}) {
-    $low{$mday} = $weights{$i};
+    $low{$mday-15594} = $weights{$i};
   }
 
   # keep track of min/max weights too
@@ -76,8 +76,15 @@ close(A);
 delete $low{15594};
 
 open(B,">/tmp/bwlm.txt");
-for $i (sort keys %low) {print B "$i $low{$i}\n";}
+for $i (sort keys %low) {
+  print B "$i $low{$i}\n";
+  push(@lowx, $i);
+  push(@lowy, $low{$i});
+}
 close(B);
+
+($blow,$mlow) = linear_regression(\@lowx,\@lowy);
+debug("LOW: $mlow slope, $blow offset");
 
 # the regression coefficients for standard and log regression
 ($b,$m) = linear_regression(\@x,\@y);

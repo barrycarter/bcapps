@@ -41,8 +41,21 @@ DATE: 20130101
 1830 2 cans roast beef hash, 2 vintage cheddar smart fries, vinegar fresh smart fries
 2135 1 container cotto salami
 2530 1 can roast beef hash, 2 honey bbq smart fries (2nd planned)
+9999 [all day total, not time specific] 6 coke zero cans
 
-SHORT: 1*MCD-ANG-DEL@1401, 1*MCD-FRIES@1401, 2c*037600199919@1830, 2*853762002085@1830, 1*853762002023@1830, 1c*044700011201@2135, 1c*037600199919@2530, 2*853762002047@2530
+SHORT: 1*MCD-ANG-DEL@1401, 1*MCD-FRIES@1401, 2c*037600199919@1830, 2*853762002085@1830, 1*853762002023@1830, 1c*044700011201@2135, 1c*037600199919@2530, 2*853762002047@2530, 6*049000042566@9999
+
+DATE: 20130102
+
+1445 2 Red Baron French pizza (pepperoni) [2nd planned] (UPC code for box of 9 is 072180734327, but using indiv UPC since db can't find that one), vinegar splash fries
+1650 47 slim jims (so far) [026200613680 = UPC for 100 pack, 026200101927 for individual sticks, value below is per 4 sticks, matches label for 100 pack] (each slim jim = 1/4 serving) (at various times, so putting down 9999 as time value)
+1929 12oz true Coke (vs hypoglycemia)
+2230 140g nacho cheese doritos, 118g cool ranch doritos
+
+SHORT: 2*072180044198@1445, 1*853762002023@1445, 11.75*026200160214@9999, 1*04963406@1930, 140g*028400047661@2230, 118g*028400002875@2230
+
+
+
 
 
 

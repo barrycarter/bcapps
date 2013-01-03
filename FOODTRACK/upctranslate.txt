@@ -1,0 +1,8 @@
+# Shows equivalence between UPC codes. The line 'x y' means that UPC
+# code x has the same nutritional information as y, and that I
+# (hopefully) have nutritional information for y
+
+# Slim Jims
+026200613680 026200160214
+026200101927 026200160214
+
