@@ -249,6 +249,7 @@ sub draw_boundaries {
       if (abs($minra-$maxra)>=12) {$minra+=24;}
 
       # find xy of midpoint (not necessarily in constellation: convexity)
+      # TODO: fix for nonconvex constellations
       my($x,$y) = radec2xy(($minra+$maxra)/2,($mindec+$maxdec)/2);
       if ($x<0 && $y<0) {next;}
       print A "string 255,255,255,$x,$y,tiny,$i\n";
