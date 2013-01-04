@@ -23,8 +23,7 @@ for $i ("file", "Name", "Manufacturer", "UPC") {$iskey{$i}=1;}
 
 # sorting the mapping file has the unusual effect of semi-randomizing
 # it, since the first field is a sha1sum
-open(A,"/mnt/sshfs/D4M4/maptest-sorted.txt");
-warn "TESTING";
+open(A,"/mnt/sshfs/D4M4/map3-sorted.txt");
 
 # print queries to a file
 open(B,">/var/tmp/bcpd4m-queries.txt");
@@ -43,20 +42,11 @@ while (<A>) {
 
   # mapping.txt contains mappings for files that don't exist (yet); skip those
   unless (-f $file) {
-    debug("NOEXIST: $_");
+#    debug("NOEXIST: $_");
     next;
   }
 
   $all = read_file($file);
-
-  # ignore files sans calories (case-sensitive) It turns out there are
-  # foods/beverages with 0 calories that dont even have a Calories
-  # listing, so this check is wrong
-
-#  unless ($all=~/Calories/) {
-#    debug("NOTFOOD: $_");
-#    next;
-#  }
 
   my(%hash) = ();
   $hash{url} = $url;
@@ -82,11 +72,7 @@ while (<A>) {
     next;
   }
 
-#  if (++$n>1000) {
-#    warn "TESTING";
-#    last;
-#  }
-
+#  if (++$n>1000) {warn "TESTING"; last;}
 #  debug("N: $n/$count");
 
   # now, the longer name
@@ -101,7 +87,6 @@ while (<A>) {
   # special case for data delimited using <strong>
   while ($all=~s%<strong>(.*?):?</strong>(.*?)<%%is) {
     ($key,$val) = (lc($1),$2);
-#    $key=~s/[^a-z]//isg;
     # ignore empties and numericals
     if ($key=~/^\d*$/) {next;}
     unless ($validkeys{$key}) {
@@ -127,13 +112,10 @@ while (<A>) {
     while ($row=~s%<td.*?>(.*?)</td>%%is) {
       # cleanup cell + push to row-specific array
       $cell = $1;
-      debug("CELL PRE: $cell");
       # remove g/mcg/mg at end only (also % and extra space)
-#      debug("CELL: $cell");
       $cell=trim($cell);
       $cell=~s/\s*m?c?g$//;
       $cell=~s/\s*\%$//;
-      debug("CELL POST: $cell");
       push(@arr, $cell);
     }
 
@@ -152,9 +134,6 @@ while (<A>) {
     # make note of all keys
   }
 
-  # only stuff that has calories (just in case other check failed)
-#  unless ($hash{calories}) {next;}
-
   # I use double quote as delimiter, so cant be in cells (any hash vals at all)
   for $i (keys %hash) {
     $hash{$i}=~s/\"//isg;
@@ -168,29 +147,18 @@ while (<A>) {
   @query = hashlist2sqlite(\@l,"foods");
 
   print B "$query[0];\n";
-
-  # debug(hashlist2sqlite(\@hashes, "foods"));
-  # push(@hashes, \%hash);
-
 }
 
 print B "COMMIT;\n";
 close(B);
 
-debug("IGNORED",sort keys %ignored);
-
-for $i (keys %validkeys) {
-  unless ($i) {next;}
-  # because of SQLite3s "non"-typing, this should work fine
-  push(@keys,"'$i' REAL");
-}
-
-$keys = join(", ",@keys);
+# really hate to layout schema directly, but some fields need to be
+# numeric while others (like UPC) cant be numeric
 
 open(C,">/var/tmp/bcpd4m-schema.txt");
 print C << "MARK";
 DROP TABLE IF EXISTS foods;
-CREATE TABLE foods ($keys);
+CREATE TABLE foods ('cholesterol' REAL, 'dietaryfiber' REAL, 'sodium' REAL, 'file', 'sugars' REAL, 'totalcarbohydrate' REAL, 'servings per container' REAL, 'vitamina' REAL, 'caffeine' REAL, 'url', 'weight' REAL, 'Manufacturer', 'iron' REAL, 'monounsaturatedfat' REAL, 'serving size' REAL, 'vitamink' REAL, 'potassium' REAL, 'vitamind' REAL, 'calories' REAL, 'transfat' REAL, 'protein' REAL, 'saturatedfat' REAL, 'calcium' REAL, 'vitaminc' REAL, 'UPC', 'vitamine' REAL, 'servingsizeingrams' REAL, 'Name', 'totalfat' REAL, 'servingsize_prepared' REAL);
 MARK
 ;
 

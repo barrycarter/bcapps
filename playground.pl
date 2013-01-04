@@ -23,7 +23,6 @@ use XML::Bare;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
-
 debug(sqlite3cols("foods","/home/barrycarter/BCINFO/sites/DB/myfoods.db"));
 
 

@@ -2901,6 +2901,30 @@ sub END {
   }
 }
 
+=item compute_upc_check_digit($upc)
+
+Given an 11-digit UPC-A code (not a UPC-E code), compute the check
+digit. Useful for computing UPC-E check digits after expansion.
+
+http://en.wikipedia.org/wiki/Universal_Product_Code#Check_digits
+
+=cut
+
+sub compute_upc_check_digit {
+  my($upc) = @_;
+  my(@arr) = split(//,$upc);
+  # we want arr to start with 1 to match instructions
+  unshift(@arr,"");
+  my($tot);
+
+  # NOTE: Yes, I couldve written a for loop here
+  for $i (1,3,5,7,9,11) {$tot += 3*$arr[$i];}
+  for $i (2,4,6,8,10) {$tot += $arr[$i];}
+
+  # <h>It vaguely bothers me this works; it bothers me more that I used it</h>
+  return (10-($tot%10))%10;
+}
+
 =item arraywheaders2hashlist(\@array, $index="", $options)
 
 Given an array of arrays where the first row is treated as a header

@@ -6,3 +6,8 @@
 026200613680 026200160214
 026200101927 026200160214
 
+# Red Baron French Bread Pizza
+072180734327 072180044198
+
+# Doritos Cool Ranch (verified 028400082976 [in db] and 028400002875 [not in db] share the same nutrition info, using http://www.fritolay.com/assets/images/bigVault/doritos-cool-ranch.jpg) [except weight of bag + thus servings per container]
+028400002875 028400082976

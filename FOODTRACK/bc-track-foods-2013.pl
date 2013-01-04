@@ -9,7 +9,16 @@
 # TODO: add option to not include 0 calorie foods and/or beverages in
 # total weight (ie, beverage-like products)
 
+# TODO: d4m uses "-5" to mean "< 5", which throws off totals; must fix this
+
 require "/usr/local/lib/bclib.pl";
+
+# TODO: make this less kludgey
+# load the list of UPC translations for foods we dont have info for
+for $i (`egrep -v '^\$|^#' /home/barrycarter/BCGIT/FOODTRACK/upctranslate.txt`) {
+  unless ($i=~/^(\d+)\s+(\d+)$/) {die "BAD LINE: $i in upctranslate.txt";}
+  $upctranslate{$1} = $2;
+}
 
 for $i (split(/\n/,read_file("/home/barrycarter/BCGIT/FOODTRACK/foods.txt"))) {
   # ignore comments and blank lines
@@ -27,20 +36,26 @@ for $i (split(/\n/,read_file("/home/barrycarter/BCGIT/FOODTRACK/foods.txt"))) {
   # record foods for day (as list) + get "UPC codes" to look up
   for $j (@foods) {
     # TODO: may loosen restriction that all foods be in this format
-    unless ($j=~/^([\d\.]+[cu]?)\*(.*?)\@(\d{4})$/) {
+    unless ($j=~/^([\d\.]+[cug]?)\*(.*?)\@(\d{4})$/) {
       die "BAD LINE: $j";
     }
 
     ($quant, $food, $time) = ($1, $2, $3);
+    debug("QFT: $quant $food $time");
+    # translate upc if needed
+    if ($upctranslate{$food}) {$food = $upctranslate{$food};}
+    # must convert to UPC-A code here
+    $food = upc2upc($food);
     $isupc{$food} = 1;
-    push(@{$foods{$date}}, $j);
+    # this may be nonidentical to $j because of translates above
+    push(@{$foods{$date}}, "$quant*$food\@$time");
   }
 }
 
 # lookup UPC codes
 for $i (keys %isupc) {
-  # TODO: dont need to convert here because I use pure UPCs?
-  #  my($code) = upc2upc($i);
+  # need to convert code since I *do* use shortcodes (nope, done above)
+#  my($code) = upc2upc($i);
   #  $upce{$code} = $i;
   push(@upcs, "'$i'");
 }
@@ -53,6 +68,7 @@ $query = "SELECT * FROM foods WHERE UPC IN ($upcs)";
 # results and index via UPC
 @res = sqlite3hashlist($query,"/home/barrycarter/BCINFO/sites/DB/dfoods.db");
 # db where I keep my own list of foods (not in dfoods.db)
+# this intentionally trumps data in dfoods.db, which has errors
 @res2 = sqlite3hashlist($query,"/home/barrycarter/BCINFO/sites/DB/myfoods.db");
 # 
 @res = (@res,@res2);
@@ -70,7 +86,7 @@ if (@missing) {die "No info for: @missing";}
 for $i (keys %foods) {
   for $j (@{$foods{$i}}) {
     # parse food data
-    $j=~/^([\d\.]+[cu]?)\*(.*?)\@(\d{4})$/;
+    $j=~/^([\d\.]+[cug]?)\*(.*?)\@(\d{4})$/;
     # <h>Unfascinating fact: item and time are anagrams</h>
     my($quant, $item, $time) = ($1, $2, $3);
     %item = %{$info{$item}};
@@ -83,7 +99,11 @@ for $i (keys %foods) {
     if ($quant=~/^[\d\.]+$/) {
       # do nothing, but dont throw error
     } elsif ($quant=~s/^([\d\.]+)c$//) {
+      # in containers
       $quant = $1*$item{'servings per container'};
+    } elsif ($quant=~s/^([\d\.]+)g$//) {
+      # in grams
+      $quant = $1/$item{'servingsizeingrams'};
     } else {
       die("QUANTITY: $quant NOT UNDERSTOOD: $j");
     }

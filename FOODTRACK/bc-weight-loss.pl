@@ -40,9 +40,10 @@ for $i (sort keys %weights) {
 
   # keep track of lowest weight per day (day starts/ends at 1000 GMT for me)
   # TODO: maybe keep track of highest but that seems less useful
-  $mday = int(($i-10*3600)/86400);
+  $mday = int(($i-10*3600)/86400)-15594;
+  debug("KEY: $i, MDAY: $mday");
   if ($weights{$i} < $low{$mday} || !$low{$mday}) {
-    $low{$mday-15594} = $weights{$i};
+    $low{$mday} = $weights{$i};
   }
 
   # keep track of min/max weights too
