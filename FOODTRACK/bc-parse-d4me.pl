@@ -159,6 +159,7 @@ open(C,">/var/tmp/bcpd4m-schema.txt");
 print C << "MARK";
 DROP TABLE IF EXISTS foods;
 CREATE TABLE foods ('cholesterol' REAL, 'dietaryfiber' REAL, 'sodium' REAL, 'file', 'sugars' REAL, 'totalcarbohydrate' REAL, 'servings per container' REAL, 'vitamina' REAL, 'caffeine' REAL, 'url', 'weight' REAL, 'Manufacturer', 'iron' REAL, 'monounsaturatedfat' REAL, 'serving size' REAL, 'vitamink' REAL, 'potassium' REAL, 'vitamind' REAL, 'calories' REAL, 'transfat' REAL, 'protein' REAL, 'saturatedfat' REAL, 'calcium' REAL, 'vitaminc' REAL, 'UPC', 'vitamine' REAL, 'servingsizeingrams' REAL, 'Name', 'totalfat' REAL, 'servingsize_prepared' REAL);
+CREATE INDEX iUPC ON foods(UPC);
 MARK
 ;
 

@@ -73,8 +73,18 @@ $query = "SELECT * FROM foods WHERE UPC IN ($upcs)";
 # 
 @res = (@res,@res2);
 
+# write file of UPCs -> products to make my life easier
+open(A,">/home/barrycarter/BCGIT/FOODTRACK/upcfoods.txt");
+
 # map UPC to nutrition data
-for $i (@res) {$info{$i->{UPC}} = $i;}
+for $i (@res) {
+  # dont link UPC to info twice (harmless, but creates dupes in upcfoods.txt)
+  if ($info{$i->{UPC}}) {next;}
+  print A "$i->{UPC} $i->{Name} ($i->{Manufacturer})\n";
+  $info{$i->{UPC}} = $i;
+}
+
+close(A);
 
 # compare list we got to list we want
 my(@gotinfo) = keys %info;
