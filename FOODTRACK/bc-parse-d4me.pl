@@ -12,25 +12,32 @@ require "/usr/local/lib/bclib.pl";
 #SQLite3s DROP COLUMN feature later (try to figure out why this is
 #funny<G>)</h>
 
+chdir("/mnt/sshfs/D4M4");
+
 %validkeys = list2hash("file", "Name", "Manufacturer", "UPC", "url",
 "caffeine", "calcium", "cholesterol", "dietaryfiber", "iron",
 "monounsaturatedfat", "potassium", "protein", "saturatedfat", "serving size", "servings per container", "sodium", "sugars",
 "totalcarbohydrate", "totalfat", "transfat", "vitamina", "vitaminc",
 "vitamind", "vitamine", "vitamink", "weight", "servingsize_prepared", "servingsizeingrams", "calories");
 
+
 # these things are known to be keys
 for $i ("file", "Name", "Manufacturer", "UPC") {$iskey{$i}=1;}
 
 # sorting the mapping file has the unusual effect of semi-randomizing
 # it, since the first field is a sha1sum
-open(A,"/mnt/sshfs/D4M4/map3-sorted.txt");
+open(A,"/mnt/sshfs/D4M4/massive-map-2.txt");
 
-# print queries to a file
-open(B,">/var/tmp/bcpd4m-queries.txt");
+# print queries to a file (semi-perm because proc may take days)
+open(B,">/home/barrycarter/20130104/bcpd4m-queries.txt");
+
+# keep track of URLs we know about but dont have
+open(C,">/home/barrycarter/20130104/bcpd4m-missing.txt");
 
 print B "BEGIN;\n";
 
 while (<A>) {
+  chomp();
   ++$count;
 
   # get both filename and target URL
@@ -42,7 +49,7 @@ while (<A>) {
 
   # mapping.txt contains mappings for files that don't exist (yet); skip those
   unless (-f $file) {
-#    debug("NOEXIST: $_");
+    print C "NOFILE: $_\n";
     next;
   }
 
@@ -62,27 +69,27 @@ while (<A>) {
 
     # just an info page, no product
     if ($hash{Name} eq "Directions for Me") {
-      debug("NO ITEM: $file");
+      print C "NOITEM (type I): $file\n";
       next;
     }
 
     $hash{Name}=~s/\s\-\s*Directions for me//i;
   } else {
-    debug("NO ITEM: $file");
+    print C "NOITEM (type II): $file\n";
     next;
   }
 
-#  if (++$n>1000) {warn "TESTING"; last;}
-#  debug("N: $n/$count");
+  if (++$n>1000) {warn "TESTING"; last;}
+  debug("N: $n/$count");
 
   # now, the longer name
   if ($all=~s%<h2>$hash{Name}</h2>\s*<p>(.*?)</p>%%) {
     $hash{Name} .= ": $1";
   } else {
-    warn "NO EXTRA INFO IN $file, suspect!";
+    print C "NOEXTRAINFO: $file\n";
   }
 
-  debug("NAME: $hash{Name}");
+#  debug("NAME: $hash{Name}");
 
   # special case for data delimited using <strong>
   while ($all=~s%<strong>(.*?):?</strong>(.*?)<%%is) {

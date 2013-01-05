@@ -13,7 +13,9 @@
 require "/usr/local/lib/bclib.pl";
 
 # one off for coke one, er coke zero
-print hashlist2sqlite([{d4me2db("049000042566")}],"foods"),";";
+# print hashlist2sqlite([{d4me2db("049000042566")}],"foods"),";";
+
+print hashlist2sqlite([{d4me2db("041196010886")}],"foods"),";";
 
 die "TESTING";
 
@@ -401,6 +403,9 @@ into dfoods.db.94y.info
 =cut
 
 sub d4me2db {
+
+  die "THIS SUBROUTINE IS OBSOLETE DUE TO CHANGES TO bc-parse-d4me.pl";
+
   my($upc) = @_;
 
   # strip quotes

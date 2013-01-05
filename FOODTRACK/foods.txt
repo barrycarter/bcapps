@@ -65,5 +65,12 @@ DATE: 20130103
 
 SHORT: 10*026200160214@9999, 2*853762002047@1503, 122g*028400002684@1503, 15g*853762002108@1709, 2c*037600199919@1945, 138g*028400047661@2209, 8*049000042566@9999
 
+DATE: 20130104
 
+1627 43 slim jims (total for day), 168g nacho cheese doritos
+1800 1 can chicken noodle soup (2 servings, the 'c' notation not working for this product yet)
+2300 1 can roast beef hash, ginger garlic stir fry/chicken, classic sea salt fries, honey mustard onion smart fries (planned)
+9999 9 coke zeros all day
+
+SHORT: 10.75*026200160214@9999, 168g*028400047661@1627, 2*041196010886@1800, 1c*037600199919@2330, 1*013800144089@2300, 1*853762002009@2300, 1*853762002061@2300, 9*049000042566@9999
 
