@@ -3,6 +3,32 @@
 showit := Module[{}, 
 Export["/tmp/math.png",%, ImageSize->{800,600}]; Run["display /tmp/math.png&"]]
 
+(* How much does the Earth move when you jump? *)
+
+(* Earth's circumference in meters)
+ec = 40*10^6
+
+(* Earth's radius in meters *)
+er = ec/2/Pi
+
+(* Earth's angular rotation in s seconds *)
+ar[s_] = Mod[s*2*Pi/86400,2*Pi]
+
+(* rotation speed in m/s at equator *)
+rs = ec/86400
+
+(* straight-line distance you travel in s seconds *)
+sld[s_] =s*rs
+
+(* angular distance you travel *)
+angd[s_] = Mod[ArcTan[sld[s]/er],2*Pi]
+
+(* Your gain/loss vs Earth's angle change *)
+angdelta[s_] = If[angd[s] - ar[s] < Pi, angd[s]-ar[s], angd[s]-ar[s]-2-Pi]
+
+(* And how far that moves you along the Earths surface *)
+d[s_] = er*angdelta[s]
+
 (*
 
 if my weight loss is proportional to calories eaten [which I measure]

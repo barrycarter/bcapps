@@ -13,6 +13,11 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# do not add these columns, pointless
+%donotadd = list2hash("file", "comments", "url", "Manufacturer", "modified",
+		      "servings per container", "serving size", "UPC",
+		      "Name");
+
 # TODO: make this less kludgey
 # load the list of UPC translations for foods we dont have info for
 for $i (`egrep -v '^\$|^#' /home/barrycarter/BCGIT/FOODTRACK/upctranslate.txt`) {
@@ -119,8 +124,13 @@ for $i (keys %foods) {
       die("QUANTITY: $quant NOT UNDERSTOOD: $j");
     }
 
+    unless ($quant) {
+      die "Quantity 0 for $quant/$item/$time";
+    }
+
     # note this probably doesnt make sense for all fields
     for $k (keys %item) {
+      if ($donotadd{$k}) {next;}
       debug("ADDING $i, $j, $k, $item{Name}, $quant * $item{$k}");
       $total{$i}{$k} += $quant*$item{$k};
     }

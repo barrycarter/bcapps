@@ -13,11 +13,11 @@
 require "/usr/local/lib/bclib.pl";
 
 # one off for coke one, er coke zero
-# special cases to date: 049000042566 041196010886 
+# special cases to date: 049000042566 041196010886 029000073302
 # print hashlist2sqlite([{d4me2db("049000042566")}],"foods"),";";
 
 # note: add this to myfoods.db too to play it safe (since I tend to wipe out dfoods)
-print hashlist2sqlite([{d4me2db("029000073302")}],"foods"),";\n";
+print hashlist2sqlite([{d4me2db("041196010886")}],"foods"),";\n";
 
 die "TESTING";
 

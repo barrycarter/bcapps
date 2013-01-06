@@ -55,6 +55,8 @@ while (<A>) {
 
   $all = read_file($file);
 
+  warn "TRY USING SUBROUTINE INSTEAD";
+
   my(%hash) = ();
   $hash{url} = $url;
 
