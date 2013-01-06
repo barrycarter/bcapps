@@ -13,9 +13,11 @@
 require "/usr/local/lib/bclib.pl";
 
 # one off for coke one, er coke zero
+# special cases to date: 049000042566 041196010886 
 # print hashlist2sqlite([{d4me2db("049000042566")}],"foods"),";";
 
-print hashlist2sqlite([{d4me2db("041196010886")}],"foods"),";";
+# note: add this to myfoods.db too to play it safe (since I tend to wipe out dfoods)
+print hashlist2sqlite([{d4me2db("029000073302")}],"foods"),";\n";
 
 die "TESTING";
 
@@ -404,7 +406,7 @@ into dfoods.db.94y.info
 
 sub d4me2db {
 
-  die "THIS SUBROUTINE IS OBSOLETE DUE TO CHANGES TO bc-parse-d4me.pl";
+  warn "THIS SUBROUTINE MAY BE OBSOLETE DUE TO CHANGES TO bc-parse-d4me.pl";
 
   my($upc) = @_;
 
@@ -418,14 +420,9 @@ sub d4me2db {
 
   my($url)="http://www.directionsforme.org/index.php/directions/results/$upc";
   my($all,$err,$res) = cache_command("curl -L '$url'", "age=86400");
+  debug("ALL: $all");
 
   # this is basically bc-parsed4me.pl in subroutine form
-  # ignore files sans calories (case-sensitive)
-  # actually, coke zero + others HAVE no calories so this is wrong
-#  unless ($all=~/Calories/) {
-#    warn "NOT FOOD: $upc [$all]";
-#    return;
-#  }
 
   my(%hash) = ();
   $hash{url} = $url;
@@ -434,16 +431,32 @@ sub d4me2db {
   $hash{file} = "d4me2db($upc)";
 
   # product name
-  $all=~s%<title>(.*?)</title>%%;
-  $hash{Name} = $1;
-  $hash{Name}=~s/\s*\-\s*Directions for me//i;
+  if ($all=~s%<title>(.*?)</title>%%) {
+    $hash{Name} = $1;
+
+    # just an info page, no product
+    if ($hash{Name} eq "Directions for Me") {
+      warn("NO ITEM (type I)");
+      return;
+    }
+
+    $hash{Name}=~s/\s*\-\s*Directions for me//i;
+  } else {
+    warn("NO ITEM (type II)");
+    return;
+  }
+
+  # now, the longer name
+  if ($all=~s%<h2>$hash{Name}</h2>\s*<p>(.*?)</p>%%) {
+    $hash{Name} .= ": $1";
+  }
 
   # special case for data delimited using <strong>
   while ($all=~s%<strong>(.*?):?</strong>(.*?)<%%is) {
     ($key,$val) = (lc($1),$2);
     # ignore empties and numericals
     if ($key=~/^\d*$/) {next;}
-    unless ($validkeys{$key}) {
+    unless ($d4mekeys{$key}) {
       $ignored{$key} = 1;
       next;
     }
@@ -483,6 +496,11 @@ sub d4me2db {
 
     # hash for this row (assuming it has a header)
     $hash{$arr[0]} = coalesce([@arr[1..$#arr]]);
+  }
+
+  # I use double quote as delimiter, so cant be in cells (any hash vals at all)
+  for $i (keys %hash) {
+    $hash{$i}=~s/\"//isg;
   }
 
   return %hash;

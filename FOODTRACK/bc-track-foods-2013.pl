@@ -113,6 +113,7 @@ for $i (keys %foods) {
       $quant = $1*$item{'servings per container'};
     } elsif ($quant=~s/^([\d\.]+)g$//) {
       # in grams
+      debug("gramming: $item{Name}");
       $quant = $1/$item{'servingsizeingrams'};
     } else {
       die("QUANTITY: $quant NOT UNDERSTOOD: $j");
