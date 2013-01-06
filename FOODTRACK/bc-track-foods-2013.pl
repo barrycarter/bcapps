@@ -70,8 +70,8 @@ $query = "SELECT * FROM foods WHERE UPC IN ($upcs)";
 # db where I keep my own list of foods (not in dfoods.db)
 # this intentionally trumps data in dfoods.db, which has errors
 @res2 = sqlite3hashlist($query,"/home/barrycarter/BCINFO/sites/DB/myfoods.db");
-# 
-@res = (@res,@res2);
+# Order below is important: myfoods must trump dfoods
+@res = (@res2,@res);
 
 # write file of UPCs -> products to make my life easier
 open(A,">/home/barrycarter/BCGIT/FOODTRACK/upcfoods.txt");
