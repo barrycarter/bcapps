@@ -2830,7 +2830,8 @@ sub upc2upc {
 
   unless ($upc=~/^[0-9x]+$/) {
     # return 'as is' for non-UPC
-    warn "NOT A UPC CODE: $upc";
+    # killed warning, just annoying since I know some queries arent
+    # warn "NOT A UPC CODE: $upc";
     return $upc;
   }
 

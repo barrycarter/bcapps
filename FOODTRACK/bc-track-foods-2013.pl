@@ -13,7 +13,7 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# do not add these columns, pointless
+# do not sum up these columns, pointless
 %donotadd = list2hash("file", "comments", "url", "Manufacturer", "modified",
 		      "servings per container", "serving size", "UPC",
 		      "Name");
@@ -53,15 +53,13 @@ for $i (split(/\n/,read_file("/home/barrycarter/BCGIT/FOODTRACK/foods.txt"))) {
     $food = upc2upc($food);
     $isupc{$food} = 1;
     # this may be nonidentical to $j because of translates above
+    # my days sometimes end past midnight, but thats ok because i report the "right" date in foods.txt
     push(@{$foods{$date}}, "$quant*$food\@$time");
   }
 }
 
 # lookup UPC codes
 for $i (keys %isupc) {
-  # need to convert code since I *do* use shortcodes (nope, done above)
-#  my($code) = upc2upc($i);
-  #  $upce{$code} = $i;
   push(@upcs, "'$i'");
 }
 
@@ -84,6 +82,7 @@ open(A,">/home/barrycarter/BCGIT/FOODTRACK/upcfoods.txt");
 # map UPC to nutrition data
 for $i (@res) {
   # dont link UPC to info twice (harmless, but creates dupes in upcfoods.txt)
+  # also allows myfoods to trump dfoods
   if ($info{$i->{UPC}}) {next;}
   print A "$i->{UPC} $i->{Name} ($i->{Manufacturer})\n";
   $info{$i->{UPC}} = $i;
@@ -124,6 +123,7 @@ for $i (keys %foods) {
       die("QUANTITY: $quant NOT UNDERSTOOD: $j");
     }
 
+    # catch errors where I list in non-existent unit
     unless ($quant) {
       die "Quantity 0 for $quant/$item/$time";
     }
@@ -137,7 +137,17 @@ for $i (keys %foods) {
   }
 }
 
-debug("TOTAL");
-debug(unfold(%total));
+debug("FINAL");
+
+for $i (sort keys %total) {
+  print "DATE: $i\n\n";
+  for $j ("calories") {
+    print "$j: $total{$i}{$j}\n";
+  }
+  print "\n";
+}
+
+# debug("TOTAL");
+# debug(unfold(%total));
 
 
