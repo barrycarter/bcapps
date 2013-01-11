@@ -122,4 +122,17 @@ DATE: 20130109
 
 SHORT: 2*016000261648@1939, 97g*876274001841@1907, 55g*876274001865@1907, 10*026200160214@9999, 62g*028400002684@2043, 7*049000042566@9999
 
+DATE: 20130110
 
+1616 jal trio, honey mustard, classic sea salt (left 13g of last)
+1908 4 slices (half) 14" Domino bacon cheeseburger pizza [left 2 crusts, but not sure how to subtract these off; cant just use crust data since that applies to whole crust, not crust crust], 12 Dominos mango habanero wings (3 servings)
+9999 36 slim jims, 7 coke zero
+
+SHORT: 9*026200160214@9999, 1*853762002108@1616, 1*853762002061@1616, 0.5357*853762002009@1616, 4*DOMINO-BACON-CHEESEBURGER-PIZZA@1908, 3*DOMINO-MANGO-HABANERO-WINGS@1908, 7*049000042566@9999
+
+DATE: 20130111
+
+1048 5 fiber chocolate bars
+9999 26 slim jims (so far)
+
+SHORT: 6.5*026200160214@9999, 5*016000261648@1048

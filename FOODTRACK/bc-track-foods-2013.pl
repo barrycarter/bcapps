@@ -133,7 +133,13 @@ for $i (keys %foods) {
       if ($donotadd{$k}) {next;}
       debug("ADDING $i, $j, $k, $item{Name}, $quant * $item{$k}");
       $total{$i}{$k} += $quant*$item{$k};
+
+      # food specific
+      $total{$i}{foods}{$item{Name}}{$k} += $quant*$item{$k};
     }
+
+    # servings of this food
+    $total{$i}{foods}{$item{Name}}{servings} += $quant;
   }
 }
 
@@ -144,6 +150,15 @@ for $i (sort keys %total) {
   for $j ("calories") {
     print "$j: $total{$i}{$j}\n";
   }
+
+  # separate totals from per-food totals
+  print "\n";
+
+  # foods eaten
+  for $j (keys %{$total{$i}{foods}}) {
+    print "$j: $total{$i}{foods}{$j}{servings} ($total{$i}{foods}{$j}{calories})\n";
+  }
+
   print "\n";
 }
 

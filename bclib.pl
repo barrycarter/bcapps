@@ -2881,6 +2881,40 @@ sub upc2upc {
   return "$upc$check2";
 }
 
+=item run_nagios_test($host, $service)
+
+Runs the nagios test identified by $service on $host as a one-off
+
+=cut
+
+sub run_nagios_test {
+  my($host, $service) = @_;
+
+  # TODO: allow for alternate file here
+  my($all) = read_file("/var/nagios/status.dat");
+
+  # this relies a bit too heavily on order
+  unless ($all=~m%\{.*?host_name=$host[^\}]*?service_description=$service.*?check_command=(.*?)\n%is) {
+    warn "COULD NOT FIND: $host/$service";
+    return;
+  }
+
+  my($cmd) = $1;
+
+  # break command into pieces
+  my(@cmd) = split(/\!/,$cmd);
+
+  # assign to ENV vars
+  # TODO: only supports 2 arguments (could use loop w/ eval but yeesh!)
+  # TODO: check that $cmd[0] is "raw" or "bc" (but actually never "bc")
+  # $cmd[0] intentionally ignored below
+  $ENV{NAGIOS_ARG1} = $cmd[1];
+  $ENV{NAGIOS_ARG2} = $cmd[2];
+
+  system("/home/barrycarter/BCGIT/NAGIOS/bc-nagios-test.pl");
+
+}
+
 # TODO: this really belongs below the subroutines below
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
