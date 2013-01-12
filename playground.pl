@@ -11,7 +11,7 @@
 
 push(@INC, "/usr/local/lib");
 require "bclib.pl";
-require "bc-astro-lib.pl";
+# require "bc-astro-lib.pl";
 require "bc-weather-lib.pl";
 require "bc-kml-lib.pl";
 # starting to store all my private pws, etc, in a single file
@@ -23,45 +23,27 @@ use XML::Bare;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
-run_nagios_test("localhost","smtp");
+# debug(find_nearest_zenith("sun",35,-106,time(),"nadir=0&which=-1"));
 
-=item run_nagios_test($host, $service)
+$ENV{TZ}="UTC";
 
-Runs the nagios test identified by $service on $host as a one-off
+# debug(gmst(time()));
 
-=cut
+# debug(str2time("2012-05-06 04:16"));
 
-sub run_nagios_test {
-  my($host, $service) = @_;
+# die "TESTING";
 
-  # TODO: allow for alternate file here
-  my($all) = read_file("/var/nagios/status.dat");
+# ($ra,$dec) = position("sun",str2time("2012-05-06 04:09 GMT"));
 
-  # this relies a bit too heavily on order
-  unless ($all=~m%\{.*?host_name=$host[^\}]*?service_description=$service.*?check_command=(.*?)\n%is) {
-    warn "COULD NOT FIND: $host/$service";
-    return;
-  }
+# debug("RADEC: $ra $dec");
 
-  my($cmd) = $1;
+# debug(radecazel($ra,$dec,55,0,str2time("2012-05-06 04:09 GMT")));
 
-  # break command into pieces
-  my(@cmd) = split(/\!/,$cmd);
+# debug(radecazel(43.4062357/15,16.5861687,55,0,str2time("2012-05-06 04:09 GMT")));
 
-  # assign to ENV vars
-  # TODO: only supports 2 arguments (could use loop w/ eval but yeesh!)
-  # TODO: check that $cmd[0] is "raw" or "bc" (but actually never "bc")
-  # $cmd[0] intentionally ignored below
-  $ENV{NAGIOS_ARG1} = $cmd[1];
-  $ENV{NAGIOS_ARG2} = $cmd[2];
+$res = objriseset2("sun",55,0,86400*15+str2time("May 01 2012 00:00:00 GMT"),-.8333333333333);
 
-  system("/home/barrycarter/BCGIT/NAGIOS/bc-nagios-test.pl");
-
-}
-
-die "TESTING";
-
-debug(sqlite3cols("foods","/home/barrycarter/BCINFO/sites/DB/myfoods.db"));
+system("date -d \@$res");
 
 die "TESTING";
 
@@ -299,8 +281,8 @@ sub objriseset2 {
   my($nad) = find_nearest_zenith($obj, $lat, $lon, $time, "nadir=1");
 
   # objects elevation at zenith and nadir ($x=unwanted)
-  my($x, $zenel) = radecazel2(position($obj, $zen), $lat, $lon, $zen);
-  my($x, $nadel) = radecazel2(position($obj, $nad), $lat, $lon, $nad);
+  my($x, $zenel) = radecazel(position($obj, $zen), $lat, $lon, $zen);
+  my($x, $nadel) = radecazel(position($obj, $nad), $lat, $lon, $nad);
 
   # if object never crosses $el, warn and return nothing
   # positive*positive = negative*negative = positive
@@ -313,7 +295,7 @@ sub objriseset2 {
   # create one-variable function ($time) for which we want to find 0
   my($func) = sub {
     my($t) = @_;
-    my($x, $objel) = radecazel2(position($obj, $t), $lat, $lon, $t);
+    my($x, $objel) = radecazel(position($obj, $t), $lat, $lon, $t);
     my($eldiff) = $objel-$el;
     debug("f($t) = $eldiff");
     return $eldiff;
@@ -729,7 +711,7 @@ sub sunriseset {
     my($ra,$dec) = position("sun", $t);
 
     # And AZEL at this lat/lon
-    my($az,$el) = radecazel2($ra,$dec,$lat,$lon,$t);
+    my($az,$el) = radecazel($ra,$dec,$lat,$lon,$t);
 
     # and return elevation
     return $el;

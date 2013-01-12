@@ -19,14 +19,19 @@ require JSON;
 
 # include sublibs
 push(@INC,"/home/barrycarter/BCGIT", "/usr/local/lib");
-# below broke stuff, so killing for now
-# require "bc-astro-lib.pl";
 
 # HACK: defining constants here is probably bad
 $PI = 4.*atan(1);
 $DEGRAD=$PI/180; # degrees to radians
 $RADDEG=180./$PI; # radians to degrees
 $EARTH_RADIUS = 6371/1.609344; # miles
+
+our($DEGRAD)=$PI/180; # degrees to radians
+our($RADDEG)=180/$PI; # radians to degrees
+our($HOURRAD)=$PI/12; # hours to radians
+our($RADHOUR)=12/$PI; # radians to hours
+our($DEGHOUR)=1/15; # degrees to hours
+our($HOURDEG)=15; # hours to degrees
 
 # note month 0 is blank intentionally
 our(@months) = ("", "January", "February", "March", "April", "May", "June",
@@ -1332,8 +1337,14 @@ Compute the Greenwich Mean Siderial Time at Unix time t
 sub gmst {
   my($t)=@_;
   unless ($t) {$t = time();}
-  my($aa)=6.59916+.9856002585*($t-$MILLSEC)/86400/15+($t%86400)/3600;
-  return(24*($aa/24-int($aa/24)));
+
+  # from http://en.wikipedia.org/wiki/Sidereal_time
+  # 946728000 = unix time at 2000 January 1, at 12h UT
+  my($res) = 18.697374558 + 24.06570982441908*($t-946728000.)/86400.;
+  return fmodp($res,24);
+
+  # i have no idea where I got this formula, but it's wrong
+#  my($aa)=6.59916+.9856002585*($t-$MILLSEC)/86400/15+($t%86400)/3600;
 }
 
 =item greeks_bin($cur, $str, $exp, $vol)
@@ -2404,7 +2415,7 @@ sub fmodp {
   return $res;
 }
 
-=item find_nearest_zenith($obj,$lat,$lon,$time=now,$options)
+=item find_nearest_zenith($obj,$lat,$lon,$t0=now,$options)
 
 Return Unix second of when $obj reaches zenith at $lat/$lon, close to
 $time ($time should not be close to time of nadir)
@@ -2412,14 +2423,16 @@ $time ($time should not be close to time of nadir)
 $options:
 
 nadir=1: find nearest nadir, not zenith
+which=-1,0,1: if -1, find previous not nearest; +1 = find next not nearest
 <h>abed=1: find nearest abed</h>
 
 =cut
 
 sub find_nearest_zenith {
-  my($obj, $lat, $lon, $time, $options) = @_;
+  my($obj, $lat, $lon, $t0, $options) = @_;
   my(%opts) = parse_form($options);
-  unless ($time) {$time=time();}
+  unless ($t0) {$t0=time();}
+  my($time) = $t0;
 
   # run this loop forever, until sufficient accuracy reached
   for (;;) {
@@ -2440,7 +2453,21 @@ sub find_nearest_zenith {
     debug("TIME: $time, LST: $lst, RA: $ra, HOURS: $hours");
 
     # .001 hour = .015 degrees = close enough
-    if (abs($hours)<.001 || abs($hours-24)<.001) {return $time;}
+    if (abs($hours)<.001 || abs($hours-24)<.001) {
+
+      # if we found next and they wanted previous...
+      if ($opts{which}==-1 && $time > $t0) {
+	# &which=0 below is a hideous way to force closest on the recursion
+	return find_nearest_zenith($obj,$lat,$lon,$t0-86400,"$options&which=0");
+      }
+
+      # if we found perv and they wanted next...
+      if ($opts{which}==1 && $time < $t0) {
+	return find_nearest_zenith($obj,$lat,$lon,$t0+86400,"$options&which=0");
+      }
+
+      return $time;
+    }
 
     # nextguess is time until location ra = object ra
     # we are using $time to store the guesses
@@ -2913,6 +2940,27 @@ sub run_nagios_test {
 
   system("/home/barrycarter/BCGIT/NAGIOS/bc-nagios-test.pl");
 
+}
+
+=item radecazel($ra, $dec, $lat, $lon, $time)
+
+Return the azimuth and elevation of an object with right ascension $ra
+and declination $dec, at latitude $lat and longitude $lon at Unix time
+$time
+
+=cut
+
+sub radecazel {
+  my($ra,$dec,$lat,$lon,$t)=@_;
+  $ra*=$HOURRAD;
+  $dec*=$DEGRAD;
+  $lat*=$DEGRAD;
+  $lon*=$DEGRAD;
+  my($lst)=gmst($t)*$HOURRAD+$lon;
+  my($ha,$az,$el)=($lst-$ra,,); 
+  $az=atan2(-sin($ha)*cos($dec),cos($lat)*sin($dec)-sin($lat)*cos($dec)*cos($ha));
+  $el=asin(sin($lat)*sin($dec)+cos($lat)*cos($dec)*cos($ha));
+  return($az*$RADDEG,$el*$RADDEG);
 }
 
 # TODO: this really belongs below the subroutines below
