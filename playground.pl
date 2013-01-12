@@ -25,7 +25,7 @@ require "bc-twitter.pl";
 
 # debug(find_nearest_zenith("sun",35,-106,time(),"nadir=0&which=-1"));
 
-$ENV{TZ}="UTC";
+# $ENV{TZ}="UTC";
 
 # debug(gmst(time()));
 
@@ -41,7 +41,10 @@ $ENV{TZ}="UTC";
 
 # debug(radecazel(43.4062357/15,16.5861687,55,0,str2time("2012-05-06 04:09 GMT")));
 
-$res = objriseset2("sun",70,0,86400*87.75+str2time("May 01 2012 00:00:00 GMT"),-.8333333333333);
+# $res = objriseset2("sun",70,0,86400*87.75+str2time("May 01 2012 00:00:00 GMT"),-.8333333333333);
+# $res = objriseset2("sun",70,0,str2time("Jan 18 2012 12:00:00 GMT"),-5/6.);
+
+$res = objriseset2("moon",35.05,-106.5,time()-12*3600,-5/6.+0.942433227487068);
 
 system("date -d \@$res");
 
