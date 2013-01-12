@@ -41,7 +41,7 @@ $ENV{TZ}="UTC";
 
 # debug(radecazel(43.4062357/15,16.5861687,55,0,str2time("2012-05-06 04:09 GMT")));
 
-$res = objriseset2("sun",55,0,86400*15+str2time("May 01 2012 00:00:00 GMT"),-.8333333333333);
+$res = objriseset2("sun",70,0,86400*87.75+str2time("May 01 2012 00:00:00 GMT"),-.8333333333333);
 
 system("date -d \@$res");
 
