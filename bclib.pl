@@ -1289,8 +1289,8 @@ sub position {
 #  debug("POSITION($obj,$t)");
   unless ($t) {$t = time();}
 
-  my(@data) = (read_file("data/${obj}fakex.txt"), 
-	       read_file("data/${obj}fakey.txt"));
+  my(@data) = (read_file("$ENV{HOME}/BCGIT/data/${obj}fakex.txt"), 
+	       read_file("$ENV{HOME}/BCGIT/data/${obj}fakey.txt"));
   my(@nest) = (nestify($data[0]), nestify($data[1]));
   my(@xvals0) = @{$nest[0]};
   my(@x2vals0) = @{$nest[1]};
@@ -2430,6 +2430,7 @@ which=-1,0,1: if -1, find previous not nearest; +1 = find next not nearest
 
 sub find_nearest_zenith {
   my($obj, $lat, $lon, $t0, $options) = @_;
+  debug("GOT",@_);
   my(%opts) = parse_form($options);
   unless ($t0) {$t0=time();}
   my($time) = $t0;
@@ -2718,13 +2719,13 @@ sub mylock {
     }
 
     # does lock belong to defunct process?
-    if (-d "/proc/$text") {
+    if (-d "/proc/$text" && $text) {
       warn("LOCK $name owned by living process $text, can't unlock");
       return 0;
     }
 
     # lock belongs to dead process
-    warn("LOCKFILE $name exists, but $text is dead proc");
+    warn("LOCKFILE $name exists, but $text is dead or empty proc");
     unlink("$lockdir/$name");
     return 1;
   }
@@ -2748,13 +2749,13 @@ sub mylock {
     }
 
     # owned by a living process?
-    if (-d "/proc/$text") {
+    if (-d "/proc/$text" && $text) {
       warn("LOCK $name owned by living process $text");
       return 0;
     }
 
     # lock owned by dead proc
-    warn("LOCK owned by dead proc $text, replacing");
+    warn("LOCK owned by dead or null proc $text, replacing");
     write_file($$,"$lockdir/$name");
     return 1;
 

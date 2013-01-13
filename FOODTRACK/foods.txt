@@ -141,8 +141,17 @@ SHORT: 13.50*026200160214@9999, 5*016000261648@1048, 4*DOMINO-BACON-CHEESEBURGER
 DATE: 20130112
 
 1240 1 can (2 servings) wolf beanless chili, 153g Lays potato chips, 104g ranch crackers
-1650 1 package cotto salami (planned)
+1628 66g sour cream crackers
+1650 1 package cotto salami
+1710 3 fiber one chocolate bars
+1835 1 can dinty moore stew (planned)
+2212 1 can wolf beanless chili, 240g cool ranch chips
 
-SHORT: 1c*014900012704@1240, 153g*028400002684@1240, 104g*876274001872@1240, 1c*044700011201@1650
+SHORT: 1c*014900012704@1240, 153g*028400002684@1240, 104g*876274001872@1240, 1c*044700011201@1650, 3*016000261648@1710, 66g*876274001865@1628, 1c*037600215831@1835, 1c*014900012704@2212, 240g*028400082976@2212
 
+DATE: 20130113
 
+1242 2 honey mustard + 1 vintage cheddar fries
+1419 2 honey bbq + 1 vintage cheddar + 1 vinegar splash fries
+
+SHORT: 2*853762002061@1242, 1*853762002085@1242, 2*853762002047@1419, 1*853762002085@1419, 1*853762002023@1419

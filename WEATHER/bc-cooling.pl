@@ -24,7 +24,8 @@ for $i (@obs) {
   @f = split(/\s+/,$i);
 
   # ignore nonclear sky readings
-  if ($f[9]) {next;}
+  # TODO: currently overcast
+  unless ($f[9]==8) {next;}
 
   # ignore non-night readings
   unless ($f[3]>=3 && $f[3]<=11) {next;}
@@ -33,7 +34,7 @@ for $i (@obs) {
   if ($f[4] == -9999) {next;}
 
   # TODO: comment out for temps
-  if ($f[5] == -9999) {next;}
+#  if ($f[5] == -9999) {next;}
 
   push(@obs2, $i);
 }
@@ -49,6 +50,12 @@ for $i (0..$#obs2-1) {
 
   debug($obs2[$i],$obs2[$i+1],"========");
 
+  # convert to F
+  # TODO: do this only for measures that originally CAME from F
+  $f1[4] = round($f1[4]/10*1.8+32);
+  $f2[4] = round($f2[4]/10*1.8+32);
+  debug("$f1[4] vs $f2[4]");
+
   # the change (temp and dp)
   $diff = $f2[4]-$f1[4];
   $dpdiff = $f2[5]-$f1[5];
@@ -56,7 +63,7 @@ for $i (0..$#obs2-1) {
   # and print old new temp (or diff)
 #  print "$f1[4] $f2[4]\n";
 #  print "$f1[4] $diff\n";
-  print "$f1[4] $dpdiff\n";
+  print "$f1[4] $diff\n";
 #  debug("X:",$obs2[$i],"Y",$obs2[$i+1]);
 }
 

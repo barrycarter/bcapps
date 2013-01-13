@@ -23,6 +23,12 @@ use XML::Bare;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
+$res = objriseset("sun",70,0,86400*87.75+str2time("May 01 2012 00:00:00 GMT"),-.8333333333333);
+
+debug($res);
+
+die "TESTING";
+
 # debug(find_nearest_zenith("sun",35,-106,time(),"nadir=0&which=-1"));
 
 # $ENV{TZ}="UTC";
@@ -267,6 +273,33 @@ for $i (0..180) {
 }
 
 die "TESTING";
+
+=item objriseset($obj, $lat, $lon, $which, $when, $time=time(), $el=0)
+
+Determines when a next ($when=1) or previously ($when=-1) rises/rose
+[above $el] ($which=1) or set/sets [below $el] ($which=-1) at $lat
+$lon before/after $time
+
+Uses code from soon-to-be-defunct objriseset2()
+
+=cut
+
+sub objriseset {
+  my($obj, $lat, $lon, $which, $when, $time, $el) = @_;
+  unless ($time) {$time=time();}
+  my(@l);
+
+  # find objects next/previous zenith/nadir (all 4)
+  for $i (0,1) {
+    for $j (-1,1) {
+      $l[$i][$j] = find_nearest_zenith($obj, $lat, $lon, $time, "which=$j&nadir=$i");
+    }
+  }
+
+  # TODO: too many cases below
+
+  debug("LL",@l);
+}
 
 =item objriseset2($obj, $lat, $lon, $time=now(), $el=0)
 

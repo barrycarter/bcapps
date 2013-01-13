@@ -609,8 +609,14 @@ The Greenwich siderial time at time $t
 =cut
 
 sub gmst {
+  die "Use bclib.pl version instead";
   my($t)=@_;
   unless ($t) {$t=time();}
+
+  # from http://en.wikipedia.org/wiki/Sidereal_time
+#  my($res) = 18.697374558 + 24.06570982441908*($t-$MILLSEC,
+
+  # i have no idea where I got this formula, but it's wrong
   my($aa)=6.59916+.9856002585*($t-$MILLSEC)/86400/15+($t%86400)/3600;
   return(24*($aa/24-int($aa/24)));
 }

@@ -51,7 +51,7 @@ for $i (@days) {
   if (-f $outfile) {next;}
 
   # if not, we will be downloading it
-  push(@commands2, "curl -L -A 'Richie Cunningham' -o $outfile http://www.gocomics.com/$strip/$i");
+  push(@commands2, "curl -L -A 'Richie Cunningham' -o $outfile http://www.gocomics.com/$strip/$i")
 }
 
 # if any for first batch, run commands to get
