@@ -23,9 +23,13 @@ use XML::Bare;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
-$res = objriseset("sun",70,0,86400*87.75+str2time("May 01 2012 00:00:00 GMT"),-.8333333333333);
+for $i (-24..24) {
+  objriseset("sun", 35, -106.5, -1, 1, time()+$i*3600,0);
+}
 
-debug($res);
+# $res = objriseset("sun",70,0,86400*87.75+str2time("May 01 2012 00:00:00 GMT"),-.8333333333333);
+
+# debug($res);
 
 die "TESTING";
 
@@ -287,6 +291,29 @@ Uses code from soon-to-be-defunct objriseset2()
 sub objriseset {
   my($obj, $lat, $lon, $which, $when, $time, $el) = @_;
   unless ($time) {$time=time();}
+
+  # find LST
+  my($lst) = fmodp(gmst($time) + ($lon/15), 24);
+
+  # get object RA
+  my($ra,$dec) = position($obj,$time);
+
+  # siderial hours to culmination
+  my($dist) = fmodp($ra-$lst,24);
+
+  # if more than 12 to culm, object is sinking, else not
+  # opted not to use $rising as varname, ambigious meaning
+  my($sinking) = ($dist>=12);
+
+  # current elevation of object (and if its above or below $el)
+  my($objaz, $objel) = radecazel($ra, $dec, $lat, $lon, $time);
+  my($above) = ($objel>=$el);
+
+
+
+
+  return;
+
   my(@l);
 
   # find objects next/previous zenith/nadir (all 4)

@@ -8,4 +8,7 @@
 # 'walkaround', ha!
 
 # note that 'walkaround' itself would match this script, sigh!
-system("pgrep -f ' and walkaround' || xmessage get up and walkaround &");
+
+$res = system("pgrep -f 'and walkaround'");
+# print STDERR "RES: $res\n";
+if ($res) {system("xmessage get up and walkaround &");}
