@@ -13,11 +13,19 @@ my(@data) = split(/DATA./,$all);
 for $i (@data) {
   # remove nulls (must happen before removing other things)
   $i=~s/\0//isg;
-  # tabs to spaces
-#  $i=~s/\x11/ /isg;
-  # remove nonprintables (incl nulls)
-  $i=~s/[\x00-\x1F\x81-\xFF]/ /isg;
-  
-  debug("I: $i");
+  # remove first char (always bogus)
+  $i=~s/^.//isg;
+  # all else to spaces
+  $i=~s/[^ -~]/ /isg;
+  # collapse spaces
+  $i=~s/\s+/ /isg;
+  $i = trim($i);
+  # anything after BKMK is garbage
+  $i=~s/BKMK4.*?$//isg;
+
+  # EBVS = internal use, not to print
+  if ($i=~/EBAR EBVS/ || $i=~/PARMOBI/) {next;}
+
+  print "$i\n";
 }
 
