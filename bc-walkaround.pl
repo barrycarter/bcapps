@@ -11,4 +11,4 @@
 
 $res = system("pgrep -f 'and walkaround'");
 # print STDERR "RES: $res\n";
-if ($res) {system("xmessage get up and walkaround &");}
+if ($res) {system("xmessage -geometry 1024 get up and walkaround &");}

@@ -22,6 +22,13 @@ use Time::JulianDay;
 use XML::Bare;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
+use Astro::Sunrise;
+
+($sunrise, $sunset) = sunrise(2013,01,15,-106.5,75.05,-7);
+
+debug($sunrise,$sunset);
+
+die "TESTING";
 
 for $i (-24..24) {
   objriseset("sun", 35, -106.5, -1, 1, time()+$i*3600,0);

@@ -131,15 +131,15 @@ debug("HASH",%hash);
  "Tokyo" => "Asia/Tokyo",
  "Delhi" => "Asia/Kolkata",
  "Sydney" => "Australia/Sydney",
- "Chatham" => "Pacific/Chatham",
- "Samoa" => "US/Samoa"
+ "Samoa" => "Pacific/Apia",
+ "Pago Pago" => "Pacific/Pago_Pago"
 );
 
 # HACK: manual sorting is cheating/dangerous ... should be able to do
 # this auto somehow (eg, by deviation from GMT?)
 
-@zones= ("Samoa", "PT", "MT", "CT", "ET", "GMT", "Cairo", "Delhi",
-	 "HongKong", "Tokyo", "Sydney", "Chatham");
+@zones= ("Pago Pago", "PT", "MT", "CT", "ET", "GMT", "Cairo", "Delhi",
+	 "HongKong", "Tokyo", "Sydney", "Samoa");
 
 for $i (@zones) {
   $ENV{TZ} = $zones{$i};

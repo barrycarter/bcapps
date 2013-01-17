@@ -11,3 +11,6 @@
 
 # Doritos Cool Ranch (verified 028400082976 [in db] and 028400002875 [not in db] share the same nutrition info, using http://www.fritolay.com/assets/images/bigVault/doritos-cool-ranch.jpg) [except weight of bag + thus servings per container]
 028400002875 028400082976
+
+# Planters Extra Large Virginia Peanuts (confirmed that label agrees w d4m information)
+029000010390 029000016057

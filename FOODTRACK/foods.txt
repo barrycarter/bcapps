@@ -159,3 +159,42 @@ DATE: 20130113
 
 SHORT: 2*853762002061@1242, 1*853762002085@1242, 2*853762002047@1419, 1*853762002085@1419, 1*853762002023@1419, 5*016000261648@1721, 6*038000121586@2031, 2c*014900022703@2100
 
+DATE: 20130114
+
+1120 sea salt fries
+1244 jal trio fries, 4 slices healthy life italian bread, vinegar splash fries, 2 honey mustard onion fries
+1540 2 vinegar splash smart fries, jal trio smart fries, 11g ranch crackers, 2 vitapizzas, 4 slices healthy life bread
+1807 pop secret popcorn, ginger garlic stir fry w chicken, chicken teriyaki stir fry, 9 taquitos (3 servings)
+
+SHORT: 1*853762002009@1120, 1*853762002108@1244, 4*024126008955@1244, 1*853762002023@1244, 2*853762002061@1244, 2*853762002023@1540, 1*853762002108@1540, 11g*876274001872@1540, 2*826246890010@1540, 4*024126008955@1540, 1*023896420653@1807, 1*013800144089@1807, 1*013800552853@1807, 3*073202894524@1807
+
+DATE: 20130115
+
+0859 2 honey bbq fries, 2 vintage cheese fries
+1150 honey mustard fries
+1255 jal trio fries
+1429 12oz true coke (vs hypoglycemia), 3 strawberry bars, 2 sea salt fries, 1 box black forest ham
+1718 2 cans wolf bean chili, 180g extra large virginia peanuts
+2230 spaghetti/meatballs, chicken parmesan, 1 pack hard salami (minus 8 slices = 5 1/3 servigs)
+
+SHORT: 2*853762002047@0859, 2*853762002085@0859, 1*853762002061@1150, 1*853762002108@1255, 1*049000006346@1429, 3*038000121586@1429, 2*853762002009@1429, 1c*044700032527@1429, 2c*14900022703@1718, 180g*029000010390@1718, 1*013800103901@2230, 1*013800166074@2230, 5.33333333333*044700010907@2230
+
+DATE: 20130116
+
+1106 8 slices hard salami (8/3 servings)
+1210 2 cans wolf chilibean
+1525 1 can chicken noodle soup
+1615 1 can roast beef hash, sea salt fries, jal trio fries
+1758 sea salt fries, honey mustard onion fries
+1821 9 pecan shortbread sugarfree cookies (3 serving)
+2044 2 cheese sticks, pop secret popcorn, 1 can roast beef hash
+
+SHORT: 2.6666666*044700010907@1106, 2c*14900022703@1210, 1c*041196010886@1525, 1c*037600199919@1615, 1*853762002009@1615, 1*853762002108@1615, 1*853762002009@1758, 1*853762002061@1758, 3*082011172471@1821, 2*074550654228@2044, 1*023896420653@2044, 1c*037600199919@2044
+
+DATE: 20130117
+
+0822 14 slices hard salami (14/3 servings)
+1058 10 slices hard salami (10/3 servings)
+1330 1 can wolf chilibean, 140g dry roasted peanuts
+
+SHORT: 4.66666666*044700010907@0822, 3.3333333*044700010907@1058, 1c*14900022703@1330, 140g*029000073302@1330

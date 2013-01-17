@@ -3,15 +3,24 @@
 showit := Module[{}, 
 Export["/tmp/math.png",%, ImageSize->{800,600}]; Run["display /tmp/math.png&"]]
 
+(* ellipses where one focus is origin, other is (1,0) and d=3 *)
+
+y[x_] = y /.  Solve[Sqrt[x^2+y^2] + Sqrt[(x-1)^2+y^2] == 3, y][[2,1]]
+
+Plot[y[x], {x,-3,3}, AspectRatio->Fixed]
+
+
+
+
 (* How much does the Earth move when you jump? *)
 
-(* Earth's circumference in meters)
+(* Earths circumference in meters)
 ec = 40*10^6
 
-(* Earth's radius in meters *)
+(* Earths radius in meters *)
 er = ec/2/Pi
 
-(* Earth's angular rotation in s seconds *)
+(* Earths angular rotation in s seconds *)
 ar[s_] = Mod[s*2*Pi/86400,2*Pi]
 
 (* rotation speed in m/s at equator *)
@@ -23,7 +32,7 @@ sld[s_] =s*rs
 (* angular distance you travel *)
 angd[s_] = Mod[ArcTan[sld[s]/er],2*Pi]
 
-(* Your gain/loss vs Earth's angle change *)
+(* Your gain/loss vs Earths angle change *)
 angdelta[s_] = If[angd[s] - ar[s] < Pi, angd[s]-ar[s], angd[s]-ar[s]-2-Pi]
 
 (* And how far that moves you along the Earths surface *)
@@ -764,6 +773,8 @@ y[x_, a_, qr_] = y /.
 
 Plot[y[x,3,2],{x,-5,5}]
 
+Plot[y[x,5,2],{x,-5,5}]
+
 Graphics[Plot[y[x,3,2],{x,-5,5}], Text["hello",{1,3}]]
 
 Plot[Text["Hello",{1,0}], {x,-1,1}]
@@ -823,10 +834,6 @@ Integrate[tti[x,theta], {x,a,a+qr}]
 Integrate[Min[x-a,y[x]],{x,a,a+qr}] /. a->4
 
 
-
-
-
-
 (* ellipses *)
 
 f[x_] = y/. Solve[Sqrt[(x+1)^2 + y^2] + Sqrt[(x-1)^2 + y^2] == 5, y][[2,1]]
@@ -839,8 +846,6 @@ h[m_] = Simplify[Integrate[g[x,m], {x,1,5/2}], {m>0}]
 Solve[h[m] == x, m]
 
 Integrate[g[x,ArcTan[theta]], {x,1,5/2}]
-
-
 
 (* Eternal Lands *)
 

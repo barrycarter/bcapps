@@ -1,5 +1,13 @@
 # shell one liners
 
+# time in all time zones in zone.tab (but not all files in
+# /usr/share/zoneinfo) to find earliest/latest (did Samoa just trump
+# Chatam Islands?) after installing latest tzdata
+
+\egrep -v '^#' /usr/share/zoneinfo/zone.tab | perl -anle 'print "setenv TZ $F[2]; echo $F[2]; date"' | sort | uniq
+
+exit;
+
 # mathematica format for sunrise/set data
 perl -anle 'sub BEGIN {print "data={"} sub END {print "}"} unless (/^[0-9]/) {next;} print "{"; for $i (0..11) {$x=substr($_,4+11*$i,10);$x=~s/\s/,/;$x=~s/\s*$//; $x=~s/\-{4},\-{4}/0000,0000/; $x=~s/\*{4},\*{4}/2400,0000/; print "{$x},"}; print "},"' /home/barrycarter/BCGIT/db/srss-40n.txt
 
