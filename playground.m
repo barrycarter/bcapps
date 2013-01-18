@@ -3,14 +3,52 @@
 showit := Module[{}, 
 Export["/tmp/math.png",%, ImageSize->{800,600}]; Run["display /tmp/math.png&"]]
 
-(* ellipses where one focus is origin, other is (1,0) and d=3 *)
+<</home/barrycarter/BCGIT/bclib.m
 
-y[x_] = y /.  Solve[Sqrt[x^2+y^2] + Sqrt[(x-1)^2+y^2] == 3, y][[2,1]]
+(* testing superfourier *)
 
-Plot[y[x], {x,-3,3}, AspectRatio->Fixed]
+t1 = N[Table[Sin[2*Pi*x/789],{x,1,10001}]]
+f = superfour[t1,1]
+Table[t1[[i]]-f[i],{i,1,10001}]
+
+n=10001
+pdata = t1 - Total[t1]/Length[t1];
+f = Abs[Fourier[pdata]];
+ListPlot[f,PlotRange->All]
+pos = Ordering[-f, 1][[1]]; (*the position of the first Maximal value*)  
+fr = Abs[Fourier[pdata Exp[2 Pi I (pos - 2) N[Range[0, n - 1]]/n], 
+   FourierParameters -> {0, 2/n}]];
+ListPlot[fr,PlotRange->All]
 
 
+(* random thoughts *)
 
+Sum[Cos[n*x]/n,{n,1,100}]
+
+(* ellipses where one focus is origin, other is (-1,0) and d=3 *)
+
+y[x_] = y /.  Solve[Sqrt[x^2+y^2] + Sqrt[(x+1)^2+y^2] == 3, y][[2,1]]
+
+Plot[y[x], {x,-2,1}, AspectRatio->Fixed]
+
+(* area carved out at x *)
+area[x_] := NIntegrate[y[t],{t,x,1}] + x*y[x]/2
+
+(* x for given area *)
+xarea[a_] := x /. FindRoot[area[x] == a,{x,-2,1}]
+
+t3 = Table[xarea[a],{a,0,3.33,.01}]
+
+t1 = Table[{x,area[x]},{x,-2,1,.01}]
+
+ListPlot[t1]
+
+t2 = Table[{a[[2]],a[[1]]},{a,t1}]
+ListPlot[t2]
+
+t3 = Table [xa
+
+Abs[Fourier[t2]]
 
 (* How much does the Earth move when you jump? *)
 
@@ -626,6 +664,11 @@ p1 = p0[[1;;Length[p0];;10]];
 Clear[p0];
 Clear[planet199];
 px = Table[{x[[2]]-2455562.500000000,x[[3]]},{x,p1}];
+px2 = Table[x[[3]],{x,p1}];
+fx2 = Fourier[px2];
+Take[fx2,100]
+ListPlot[Abs[%],PlotRange->All]
+ListPlot[Abs[fx2],PlotRange->All]
 g = Interpolation[px, InterpolationOrder->3]
 Plot[g'''[x]/g'[x],{x,0,2922}]
 Integrate[g'''[x]/g'[x],{x,0,2922}]/2922.
