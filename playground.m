@@ -5,9 +5,49 @@ Export["/tmp/math.png",%, ImageSize->{800,600}]; Run["display /tmp/math.png&"]]
 
 <</home/barrycarter/BCGIT/bclib.m
 
+(* http://stackoverflow.com/questions/13977107 *)
+
+Clear[reach];
+reach[{}] = {}
+reach[{n_}] := reach[n] = {n}
+reach[s_] := reach[s] = Table[allsops[reach[i],reach[Complement[s,i]]], 
+  {i,Complement[Subsets[s],{ {},s}]}]
+
+(* given two numbers, return all 'operations' between them, bidirectionally *)
+allops[x_,y_] = DeleteDuplicates[{x+y, x-y, x*y, x^y, y-x, y^x, x/y, y/x}]
+(* same for two sets *)
+allsops[s_,t_] := allsops[s,t] = 
+ DeleteDuplicates[Flatten[Outer[allops[#1,#2]&,s,t]]]
+
 (* testing superfourier *)
 
-t1 = N[Table[Sin[2*Pi*x/789],{x,1,10001}]]
+t1 = N[Table[Cos[2*Pi*x/789],{x,1,10001}]]
+
+ac[n_] := Sum[t1[[i]]*t1[[i+n]],{i,1,Length[t1]-n}]
+
+t2 = Table[ac[n],{n,0,Length[t1],10}]
+
+t3 = Table[ArcCos[i],{i,t1}]
+
+t4 = Table[Abs[Fourier[t1]]]
+
+Sum[i*t4[[i]],{i,1,Length[t4]}]
+
+Sum[i*Abs[t4[[i]]],{i,1,Length[t4]}]
+
+ListPlot[Table[Abs[Fourier[t1]][[x]], {x,2,20}], PlotJoined->True, 
+ PlotRange->All] 
+
+convolve[n_] := Sum[t1[[x]]*Cos[n*x], {x,1,10001}] 
+
+ListPlot[Abs[fx2],PlotRange->All]
+
+Plot[convolve[n],{n,12,14}, PlotRange->All] 
+Plot[convolve[n],{n,12.5,12.7}, PlotRange->All] 
+Plot[convolve[n],{n,12.55,12.6}, PlotRange->All] 
+Plot[convolve[n],{n,12.59,12.6}, PlotRange->All] 
+Plot[convolve[n],{n,12.59,12.59+10/10001.}, PlotRange->All] 
+
 f = superfour[t1,1]
 Table[t1[[i]]-f[i],{i,1,10001}]
 
@@ -19,6 +59,7 @@ pos = Ordering[-f, 1][[1]]; (*the position of the first Maximal value*)
 fr = Abs[Fourier[pdata Exp[2 Pi I (pos - 2) N[Range[0, n - 1]]/n], 
    FourierParameters -> {0, 2/n}]];
 ListPlot[fr,PlotRange->All]
+frpos = Ordering[-fr, 1][[1]];
 
 
 (* random thoughts *)
@@ -665,6 +706,19 @@ Clear[p0];
 Clear[planet199];
 px = Table[{x[[2]]-2455562.500000000,x[[3]]},{x,p1}];
 px2 = Table[x[[3]],{x,p1}];
+
+fx2 = Abs[Fourier[px2]]
+ListPlot[Take[fx2,50],PlotRange->All]
+
+fx3 = Table[{i,fx2[[i]],convolve[i]},{i,1,50}]
+
+convolve[n_] := Sum[px2[[x]]*Cos[n*x], {x,1,Length[px2]}]
+Plot[convolve[n],{n,31,33}]
+
+
+
+
+
 fx2 = Fourier[px2];
 Take[fx2,100]
 ListPlot[Abs[%],PlotRange->All]

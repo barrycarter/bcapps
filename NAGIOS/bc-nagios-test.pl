@@ -175,7 +175,12 @@ sub bc_nagios_file_size {
     $cmd = "ssh -i /home/barrycarter/.ssh/id_rsa.bc root\@bcinfo '$cmd'";
   }
 
-  my($stat) = `$cmd`;
+  my($stat,$err,$res) = cache_command($cmd);
+  if ($res) {
+    print "$cmd failed\n";
+    return 2;
+  }
+
   $stat=~/Size:\s+(\d+)\s/;
   $stat=$1;
   debug("SIZE: $stat");

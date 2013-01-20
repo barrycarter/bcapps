@@ -2938,6 +2938,7 @@ sub run_nagios_test {
   # $cmd[0] intentionally ignored below
   $ENV{NAGIOS_ARG1} = $cmd[1];
   $ENV{NAGIOS_ARG2} = $cmd[2];
+  $ENV{NAGIOS_HOSTNAME} = $host;
 
   system("/home/barrycarter/BCGIT/NAGIOS/bc-nagios-test.pl");
 

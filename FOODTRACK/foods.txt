@@ -207,6 +207,19 @@ DATE: 20130118
 
 1240 2 cans chilibean
 1335 10 sf choc chip cookies (3.33333 serving)
+1725 4 slices 35 cal ital bread, 11 slices cheese (2 in sandwiches)
+1750 4 bags vintage cheddar smart fries
+2115 5 slices tuscan salami pizza, 6 slices sausage trio pizza
 
-SHORT: 2c*14900022703@1240, 3.333333333333*082011913357@1335
+SHORT: 2c*14900022703@1240, 3.333333333333*082011913357@1335, 4*024126008955@1725, 11*046100002230@1725, 4*853762002085@1750, 6*DOMINO-ARTISAN-SAUSAGE-PEPPER-TRIO@2115, 5*DOMINO-ARTISAN-TUSCAN-SALAMI@2115
+
+DATE: 20130119
+
+0807 2 vintage cheddar fries
+1120 1 can chilibean, 3 vintage cheddar fries
+1640 austin cheese crackers w peanut butter, 4 packs
+1710 3 slices tuscan salami pizza, 2 slices sausage trio pizza, vintage cheddar fries
+1827 188g mezetta giardiniera italian mix [ACTUAL AMOUNT TO BE FILLED IN LATER]
+
+SHORT: 2*853762002085@0807, 1c*14900022703@1120, 3*853762002085@1120, 4*079783406125@1640, 3*DOMINO-ARTISAN-TUSCAN-SALAMI@1710, 2*DOMINO-ARTISAN-SAUSAGE-PEPPER-TRIO@1710, 1*853762002085@1710, 188g*073214001026@1827
 
