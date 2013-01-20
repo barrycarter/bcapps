@@ -17,6 +17,24 @@ gd[x_,y_] = 1/g[x,y]
 (* distributive property *)
 g[a_,f[x_,y_]] = f[g[a,x],g[a,y]]
 
+(* START HERE *)
+
+(* it turns out the symbolizing + * is not that useful after all *)
+f[x_,y_] = x+y
+fm[x_,y_] = x-y
+g[x_,y_] = x*y
+gd[x_,y_] = x/y
+
+(* power properties *)
+h[h[a_,b_],c_] = h[a,b*c]
+h[a_/b_,n_] = h[a,n]/h[b,n]
+h[1,n_] = 1
+
+(* expand simple powers only! *)
+(* does this make things worse? *)
+h[a_,2] = a*a
+h[a_,3] = a*a*a
+
 (* all symbols for two numbers *)
 allsyms[x_,y_] := allsyms[x,y] = 
  DeleteDuplicates[Flatten[{f[x,y], fm[x,y], fm[y,x], 
