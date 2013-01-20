@@ -7,14 +7,49 @@ Export["/tmp/math.png",%, ImageSize->{800,600}]; Run["display /tmp/math.png&"]]
 
 (* http://stackoverflow.com/questions/13977107 *)
 
+(* fake multiply, etc?; f= addition, fm=minus, g= mult, gd=divide, h= expon *)
+
+SetAttributes[f,{Orderless,Flat}]
+SetAttributes[g,{Orderless,Flat}]
+fm[x_,y_] = -f[x,y]
+gd[x_,y_] = 1/g[x,y]
+
+(* distributive property *)
+g[a_,f[x_,y_]] = f[g[a,x],g[a,y]]
+
+(* all symbols for two numbers *)
+allsyms[x_,y_] := allsyms[x,y] = 
+ DeleteDuplicates[Flatten[{f[x,y], fm[x,y], fm[y,x], 
+ g[x,y], gd[x,y], gd[y,x], h[x,y], h[y,x]}]]
+
+allsymops[s_,t_] := allsymops[s,t] = 
+ DeleteDuplicates[Flatten[Outer[allsyms[#1,#2]&,s,t]]]
+
 Clear[reach];
 reach[{}] = {}
 reach[{n_}] := reach[n] = {n}
-reach[s_] := reach[s] = Table[allsops[reach[i],reach[Complement[s,i]]], 
-  {i,Complement[Subsets[s],{ {},s}]}]
+reach[s_] := reach[s] = DeleteDuplicates[Flatten[
+ Table[allsymops[reach[i],reach[Complement[s,i]]], 
+  {i,Complement[Subsets[s],{ {},s}]}]]]
 
 (* given two numbers, return all 'operations' between them, bidirectionally *)
-allops[x_,y_] = DeleteDuplicates[{x+y, x-y, x*y, x^y, y-x, y^x, x/y, y/x}]
+alltest[x_,y_] := alltest[x,y] = 
+ DeleteDuplicates[Flatten[{x+y, x-y, x*y, x^y, y-x, y^x, x/y, y/x}]]
+
+s = {2,3,4,5,6,7,8}
+
+
+
+Clear[reach];
+reach[{}] = {}
+reach[{n_}] := reach[n] = {n}
+reach[s_] := reach[s] = DeleteDuplicates[Flatten[
+ Table[allsops[reach[i],reach[Complement[s,i]]], 
+  {i,Complement[Subsets[s],{ {},s}]}]]]
+
+(* given two numbers, return all 'operations' between them, bidirectionally *)
+allops[x_,y_] := allops[x,y] = 
+ DeleteDuplicates[{x+y, x-y, x*y, x^y, y-x, y^x, x/y, y/x}]
 (* same for two sets *)
 allsops[s_,t_] := allsops[s,t] = 
  DeleteDuplicates[Flatten[Outer[allops[#1,#2]&,s,t]]]
