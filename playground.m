@@ -17,13 +17,21 @@ gd[x_,y_] = 1/g[x,y]
 (* distributive property *)
 g[a_,f[x_,y_]] = f[g[a,x],g[a,y]]
 
-(* START HERE *)
+(* START HERE; see stack1.m, broken out *)
 
 (* it turns out the symbolizing + * is not that useful after all *)
 f[x_,y_] = x+y
 fm[x_,y_] = x-y
 g[x_,y_] = x*y
 gd[x_,y_] = x/y
+gd[x_,0] = Null
+
+(* "unlog[x]" means 2^x but I dont want Mathematica to expand *)
+(* using log base 2 since 2,4,8 all powers of two *)
+h[a_,b_] = unlog[b*Log[2,a]]
+
+(* expand unlog if "small" *)
+unlog[x_] := 2^x /; x<10
 
 (* power properties *)
 h[h[a_,b_],c_] = h[a,b*c]
