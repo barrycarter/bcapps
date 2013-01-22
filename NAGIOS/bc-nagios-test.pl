@@ -79,6 +79,35 @@ sub func {
   }
 }
 
+=item hwclock_test()
+
+Confirms the hardware clock is within 60 seconds of the computer clock
+
+TODO: allow 60 to be a parameter
+
+=cut
+
+sub bc_hwclock_test {
+  my($hwclock) = `sudo hwclock --show`;
+  my($now) = time();
+
+  # split hwclock into time, seconds delta
+  unless ($hwclock=~/^(.*?)\s+(\-?\d+\.\d+)\s+seconds$/) {
+    print "HWCLOCK not parseable: $hwclock\n";
+    return 2;
+  }
+
+  my($hwtime,$delta) = ($1,$2);
+  my($diff) = abs(str2time($hwtime)+$delta-$now);
+
+  if ($diff<60) {
+    print "HWCLOCK delta: $diff < 60\n";
+    return 0;
+  }
+
+  print "HWCLOCK delta: $diff >= 60\n";
+  return 2;
+}
 
 =item bc_hostname_test()
 

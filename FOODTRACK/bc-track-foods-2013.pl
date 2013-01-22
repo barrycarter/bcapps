@@ -147,7 +147,7 @@ debug("FINAL");
 
 for $i (sort keys %total) {
   print "DATE: $i\n\n";
-  for $j ("calories") {
+  for $j ("calories", "sugars", "totalfat") {
     print "$j: $total{$i}{$j}\n";
   }
 

@@ -18,15 +18,11 @@ gd[x_,y_] = x/y
 gd[x_,0] = Null
 
 (* expand out h for "small" values *)
-h[a_,b_] := a^b /; (Element[b,Reals] && Element[a,Reals] && 
- Element[Log[a],Reals] && b*Log[a]<10)
+(* h[a_,b_] := a^b /; (Element[b,Integers] && Element[a,Reals] && 
+ b*Log[Abs[a]]<17) *)
 
-(* "unlog[x]" means 2^x but I dont want Mathematica to expand *)
-(* using log base 2 since 2,4,8 all powers of two *)
-(* h[a_,b_] = unlog[simplify[b*Log[2,a]]] *)
-
-(* expand unlog if "small" *)
-(* unlog[x_] := 2^x /; x<10 *)
+(* power rule *)
+h[h[a_,b_],c_] := h[a,b*c]
 
 (* all symbols for two numbers *)
 allsyms[x_,y_] := allsyms[x,y] = 
@@ -43,4 +39,6 @@ reach[s_] := reach[s] = DeleteDuplicates[Flatten[
  Table[allsymops[reach[i],reach[Complement[s,i]]], 
   {i,Complement[Subsets[s],{ {},s}]}]]]
 
-res = reach[{2,3,4,5,6}]
+res = reach[{2,3,4,5}];
+
+res >> /tmp/math.txt

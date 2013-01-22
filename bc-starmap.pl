@@ -30,7 +30,7 @@
 
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
-require "bc-astro-lib.pl";
+# require "bc-astro-lib.pl";
 chdir(tmpdir());
 $gitdir = "/home/barrycarter/BCGIT/";
 
@@ -106,7 +106,7 @@ sub radec2xy {
   my($ra, $dec) = @_;
 #  debug("GOT($ra,$dec)");
   # first, convert to azimuth and elevation for this lat/lon/time
-  my($az, $el) = radecazel2($ra, $dec, $globopts{lat}, $globopts{lon}, $globopts{t});
+  my($az, $el) = radecazel($ra, $dec, $globopts{lat}, $globopts{lon}, $globopts{t});
 #  debug("RETURNING NOT: $az,$el");
   if ($el<0) {return (-1,-1);}
 
@@ -266,6 +266,7 @@ sub draw_info {
     print A "string 255,255,255,0,$y,small,$i: $globopts{$i}\n";
     $y+=10;
   }
+  print A "string 255,255,255,0,$y,small,Source: s.u.94y.info\n";
 }
 
 # draw grid

@@ -224,3 +224,24 @@ DATE: 20130119
 2300 1 can hormel bean chili, 1 can hatch green chili
 
 SHORT: 2*853762002085@0807, 1c*14900022703@1120, 3*853762002085@1120, 4*079783406125@1640, 3*DOMINO-ARTISAN-TUSCAN-SALAMI@1710, 2*DOMINO-ARTISAN-SAUSAGE-PEPPER-TRIO@1710, 1*853762002085@1710, 188g*073214001026@1827, 3*853762002085@2020, 1c*037600223188@2300, 1c*028189750059@2300
+
+DATE: 20130120
+
+0858 vintage cheddar fries
+0939 3 vintage cheddar fries
+1316 cheese peanut butter crackers (5 packs), 5 sf choc chip cookies (1.666666 serving), 2 vintage cheddar fries
+1430 2 can chilibean
+1745 18 slices (6 servings) hard salami, vintage cheddar fries
+2048 vegetarian vegetable soup (1 can), 2 vintage cheddar fries
+2140 6 slices (2 servings) hard salami
+
+SHORT: 1*853762002085@0858, 3*853762002085@0939, 5*079783406125@1316, 1.666666666*082011913357@1316, 2*853762002085@1316, 2c*037600223188@1430, 6*044700010907@1745, 1*853762002085@1745, 1c*051000011510@2048, 2*853762002085@2048, 2*044700010907@2140
+
+DATE: 20130121
+
+0743 5 vintage cheddar fries
+1300 5.33 austin cheese crackers [left 4 crackers last box], 8 mango habanero wings (2 servings), 1 extra mango habanero sauce, 7 pieces Stuffed Cheesy Bread with Bacon & Jalapeno
+2115 Sausage marinara pasta bowl (not bread bowl), dominos italian sandwich, 1 vintage cheddar fries
+
+SHORT: 5*853762002085@0743, 5.33333*079783406125@1300, 2*DOMINO-MANGO-HABANERO-WINGS@1300, 7*DOMINOS-JAL-BACON-STUF-CHEESE-BREAD@1300, 1*DOMINOS-MANGO-HABANERO-SAUCE@1300, 1*DOMINO-ITALIAN-SAUSAGE-MARINARA-BOWL@2115, 1*853762002085@2115, 1*DOMINO-ITALIAN-SANDWICH@2115
+

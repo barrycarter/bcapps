@@ -12,6 +12,8 @@ if ($ENV{HTTP_HOST} eq "tutor.u.94y.info") {
 
 } elsif ($ENV{HTTP_HOST} eq "r.u.94y.info") {
   print "Location: http://www.yahoo.com/";
+} elsif ($ENV{HTTP_HOST} eq "s.u.94y.info") {
+  print "Location: https://github.com/barrycarter/bcapps/blob/master/bc-starmap.pl";
 } else {
   # do nothing
 }
