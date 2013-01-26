@@ -21,8 +21,7 @@ for $i (split(/\n/,$out)) {
 }
 
 # by its nature, dudmail has no passwords
-# TODO: reduce/omit age= after testing
-my($out,$err,$res) = cache_command("curl http://dudmail.com/for/$acct","age=3600");
+my($out,$err,$res) = cache_command("curl http://dudmail.com/for/$acct","age=30");
 
 while ($out=~s%href="/emails/(\d+)"%%is) {
   my($url) = $1;

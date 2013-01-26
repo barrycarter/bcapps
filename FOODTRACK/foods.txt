@@ -247,8 +247,38 @@ SHORT: 5*853762002085@0743, 5.33333*079783406125@1300, 2*DOMINO-MANGO-HABANERO-W
 
 DATE: 20130122
 
-1046 vintage cheddar fries
+1046 2 vintage cheddar fries
+1514 276g lays chips, 346g french onion dip, hot italian sausage (3 links)
+1730 vintage cheddar fries
+1750 clover club chili chips
+2045 243g tapatio corn chips
 
-SHORT: 1*853762002085@1046
+SHORT: 2*853762002085@1046, 3*077782008135@1514, 276g*028400002684@1514, 346g*070578004243@1514, 1*853762002085@1730, 75g*039700005800@1750, 243g*028400045278@2045
+
+DATE: 20130123
+
+1230 2 hot italian sausage links, 231g jalapeno dip, 227g potato chips
+1700 Chilis Jalapeno Smokehouse Burger
+2207 238g green chili dip, 212g lays potato chips
+
+SHORT: 2*077782008135@1230, 231g*070578004250@1230, 227g*028400002684@1230, 1*CHILI-JALAP-SMOKE-BURGER@1700, 238g*070578004236@2207, 212g*028400002684@2207
+
+DATE: 20130124
+
+1445 5 2/3 beef hot links, 151g peanut-butter filled pretzel nuggets
+1723 298g jalapeno dip, 238g Lays potato chips
+2355 1 can wolf chilibean, 129g chili chips
+
+SHORT: 5.666666666666*077782018608@1445, 151g*072600074071@1445, 298g*070578004250@1723, 238g*028400002684@1723, 1c*037600223188@2355, 129g*039700005800@2355
+
+DATE: 20130125
+
+1405 3.5 pieces italian sausage, 123g chili chips
+1645 1 can chilibean (planned), 85g peanut butter pretzels
+1722 2 vintage cheddar fries, 29g chili chips
+2310 104g rice + 1 can wolf beanless chili, 109g chili chips
+
+SHORT: 3.5*077782008135@1405, 123g*039700005800@1405, 1c*037600223188@1645, 85g*072600074071@1645, 2*853762002085@1722, 29g*039700005800@1722, 104g*011110847270@2310, 1c*014900012704@2310, 109g*039700005800@2310
+
 
 

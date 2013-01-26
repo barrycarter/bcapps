@@ -131,6 +131,12 @@ for $i (keys %foods) {
     # note this probably doesnt make sense for all fields
     for $k (keys %item) {
       if ($donotadd{$k}) {next;}
+      # -5 actually means <5 which Im estimating as 4.5
+      if ($item{$k}=~m/^\-(.*?)$/) {
+	$item{$k} = $1 - .5;
+      }
+      
+      debug("$k -> $item{$k}");
       debug("ADDING $i, $j, $k, $item{Name}, $quant * $item{$k}");
       $total{$i}{$k} += $quant*$item{$k};
 
@@ -147,7 +153,7 @@ debug("FINAL");
 
 for $i (sort keys %total) {
   print "DATE: $i\n\n";
-  for $j ("calories", "sugars", "totalfat") {
+  for $j ("calories", "sugars", "totalcarbohydrate", "protein", "dietaryfiber", "totalfat", "cholesterol", "sodium", "servingsizeingrams") {
     print "$j: $total{$i}{$j}\n";
   }
 

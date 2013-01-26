@@ -24,6 +24,62 @@ $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 use Astro::Sunrise;
 
+
+=item dothisfirst
+
+: create a file with two large MIME-encoded files separated by a triple newline(dd if=/dev/urandom bs=2000 count=1000 | base64 ; echo "\n\n\n" ; dd if=/dev/urandom bs=2000 count=1000 | base64 ) >! /tmp/testfile.txt
+
+=cut
+
+# our goal: capture the MIME-encode of the first file in a single
+# string without capturing the MIME-encode of the second file
+
+# in other words, we want the first ~675K characters of
+# /tmp/testfile.txt (however, in production, we wouldnt know how long
+# the MIME-encode was)
+
+undef $/;
+open(A,"/tmp/testfile.txt");
+$all = <A>;
+close(A);
+
+# debug("ALL: $all");
+
+my($chars) = "[a-zA-Z0-9\+\/]";
+
+# below yields full length of $all (MIME-encode of both files)
+# $all=~s/^(.*)$/foo($1)/iseg;
+
+# below yields "2523137" then "178467" then "2523137" then "178544"
+
+# In other words, it captures the first 2523137 character of the first
+# file, then the next 178467 characters of the first file, instead of
+# capturing all 2701604 characters of the first file like I want. Note
+# that 2523137 is approximately 77*32767 (and each line of
+# /tmp/testfile.txt is 77 characters long)
+
+# $all=~s/(\n($chars{50,}\=*\n)+)($chars+\=*\n)/foo("$1$3")/seg;
+
+# this is @ikegami solution (I think)
+$all=~s/((\n($chars{50,}\=*\n){0,20000})+)($chars+\=*\n)//seg;
+print STDERR "1 is $1\n";
+print STDERR "2 is $2\n";
+print STDERR "3 is $3\n";
+print STDERR "4 is $4\n";
+print STDERR "5 is $5\n";
+print STDERR "6 is $6\n";
+
+# below makes foo() print 2391992 [which is ~73*32767] many times
+# $all=~s/(\n($chars{50,}\=*\n)+)/foo("$1")/seg;
+
+# $all=~s/((\n($chars{50,}\=*\n){0,20000})+)/foo("$1")/seg;
+
+sub foo {print STDERR length($_[0]),"\n";}
+
+# debug($1);
+
+die "TESTING";
+
 ($sunrise, $sunset) = sunrise(2013,01,15,-106.5,75.05,-7);
 
 debug($sunrise,$sunset);
