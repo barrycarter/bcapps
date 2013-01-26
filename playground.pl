@@ -43,7 +43,9 @@ open(A,"/tmp/testfile.txt");
 $all = <A>;
 close(A);
 
-# debug("ALL: $all");
+$all=~s/\n/\*/isg;
+
+debug("ALL: $all");
 
 my($chars) = "[a-zA-Z0-9\+\/]";
 
@@ -58,7 +60,9 @@ my($chars) = "[a-zA-Z0-9\+\/]";
 # that 2523137 is approximately 77*32767 (and each line of
 # /tmp/testfile.txt is 77 characters long)
 
-# $all=~s/(\n($chars{50,}\=*\n)+)($chars+\=*\n)/foo("$1$3")/seg;
+$all=~s/(\*($chars{50,}\=*\*)+)($chars+\=*\*)/foo("$1$3")/eg;
+
+die "TESTING";
 
 # this is @ikegami solution (I think)
 $all=~s/((\n($chars{50,}\=*\n){0,20000})+)($chars+\=*\n)//seg;
