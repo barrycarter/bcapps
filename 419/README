@@ -4,5 +4,9 @@ The idea is to actually shut them down by overwhelming them with fake emails.
 
 <h>I am probably enjoying this far too much</h>
 
+First ping: leonard.zepowitz@dudmail.com, as below:
+
+ping-419.pl --from="leonard.zepowitz@dudmail.com" --to=list1.txt --subject="The email you have sent me" msgfile.txt --debug
+
 
 

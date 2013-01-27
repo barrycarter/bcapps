@@ -1,0 +1,30 @@
+# list of email addresses that appear in 419 scam emails; must contact
+# these to confirm they really are scammers (and not just innocent
+# email addresses used by a scammer)
+
+# source: my gmail spam folder has oodles of these! (I only use the
+# most recent, since these tend to get shutdown quickly)
+
+# Codes:
+# BOUNCE: the initial email bounced
+
+
+ntaifamily1@yahoo.com.hk
+tony.richard887@yahoo.co.uk
+info.nokiapromo@qq.com
+atmcardinfo@kingstonbank.org 
+dr.lurdwilson@msn.com
+chevmotorsuk44@hotmail.com
+claims_2012@live.com
+adamsuman009@gmail.com
+trustees.trustees@yahoo.se
+toyotamobile123@hotmail.com
+harry.peters29@aol.com
+claimcoke1111@hotmail.com
+ekabpriestman@yahoo.com
+mt1956@wss-id.org
+drrobertbenson416@yahoo.es
+ojossceola27@yahoo.fr
+
+
+
