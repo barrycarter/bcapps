@@ -8,22 +8,20 @@
 # Codes:
 # BOUNCE: the initial email bounced
 
-ntaifamily1@yahoo.com.hk
-tony.richard887@yahoo.co.uk
-info.nokiapromo@qq.com
-atmcardinfo@kingstonbank.org 
-dr.lurdwilson@msn.com
-chevmotorsuk44@hotmail.com
-claims_2012@live.com
-adamsuman009@gmail.com
-trustees.trustees@yahoo.se
-toyotamobile123@hotmail.com
-harry.peters29@aol.com
-claimcoke1111@hotmail.com
 BOUNCE: ekabpriestman@yahoo.com
 BOUNCE: mt1956@wss-id.org
-drrobertbenson416@yahoo.es
+adamsuman009@gmail.com
+atmcardinfo@kingstonbank.org 
+chevmotorsuk44@hotmail.com
+claimcoke1111@hotmail.com
+claims_2012@live.com
+harry.peters29@aol.com
+BOUNCE: info.nokiapromo@qq.com
+ntaifamily1@yahoo.com.hk
 ojossceola27@yahoo.fr
+tony.richard887@yahoo.co.uk
+toyotamobile123@hotmail.com
+trustees.trustees@yahoo.se
 
 
 
