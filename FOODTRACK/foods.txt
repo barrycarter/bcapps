@@ -284,8 +284,9 @@ DATE: 20130126
 
 1355 1.5 subway salads (ate only "half" of 2nd), 262g jacked chipotle chips
 1849 1.5 pieces italian sausage, 7/6 subway salad
+2100 ??? planned, some amount of italian hot ground sausage (added just to confirm its in db)
 
-SHORT: 262g*028400009546@1355, 1.5*SUBWAY-20130126@1355, 1.5*077782008135@1849, 1.6666666666*SUBWAY-20130126@1849
+SHORT: 262g*028400009546@1355, 1.5*SUBWAY-20130126@1355, 1.5*077782008135@1849, 1.6666666666*SUBWAY-20130126@1849, 1g*077782008685@2100
 
 
 

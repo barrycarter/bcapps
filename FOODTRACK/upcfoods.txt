@@ -61,6 +61,7 @@ SUBWAY-20130126 Spicy Italian Salad%2C pepperjack cheese%2C green peppers%2C red
 073214001026 Mezzetta  Giardiniera: Giardiniera, Italian Mix (GL Mezzetta)
 074550654228 Precious Sticksters Cheese Sticks: Cheese Sticks, Reduced Fat, Colby Jack (Lactalis Retail Dairy, Inc.)
 077782008135 Johnsonville  Italian Sausage: Italian Sausage, Hot (Johnsonville Sausage, LLC)
+077782008685 Johnsonville  Sausage: Sausage, Italian, Hot (Johnsonville Sausage, LLC)
 077782018608 Johnsonville  Hot Links: Hot Links, Beef (Johnsonville Sausage, LLC)
 079783406125 Austin  Cracker Sandwiches: Cracker Sandwiches, Cheese with Peanut Butter (Kellogg Sales Co.)
 082011172471 Murray  Cookies: Cookies, Sugar Free, Pecan Shortbread (Murray Biscuit Company, LLC)

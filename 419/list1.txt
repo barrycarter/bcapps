@@ -8,7 +8,6 @@
 # Codes:
 # BOUNCE: the initial email bounced
 
-
 ntaifamily1@yahoo.com.hk
 tony.richard887@yahoo.co.uk
 info.nokiapromo@qq.com
@@ -21,8 +20,8 @@ trustees.trustees@yahoo.se
 toyotamobile123@hotmail.com
 harry.peters29@aol.com
 claimcoke1111@hotmail.com
-ekabpriestman@yahoo.com
-mt1956@wss-id.org
+BOUNCE: ekabpriestman@yahoo.com
+BOUNCE: mt1956@wss-id.org
 drrobertbenson416@yahoo.es
 ojossceola27@yahoo.fr
 

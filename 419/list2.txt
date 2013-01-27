@@ -1,0 +1,11 @@
+# this list from http://forum.419eater.com/forum/viewforum.php?f=18
+
+# i will manually (using sort/comm) delete the stuff from list1.txt
+# before sending
+
+claims.tonybruce@london.com
+cunit.uk@gmail.com
+darren.waterson@live.com
+greenstarexpress@ymail.com
+BOUNCE: net2wset@live.com
+ukbbc0012@hotmail.com

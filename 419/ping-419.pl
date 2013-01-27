@@ -8,6 +8,9 @@
 
 # TODO: tag emails somehow to recognize when they come back
 
+# TODO: add sent flag to people Ive emailed to avoid dupes (until they
+# are confirmed as scammers)
+
 require "/usr/local/lib/bclib.pl";
 
 # check valid call
