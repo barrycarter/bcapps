@@ -8,5 +8,57 @@ First ping: leonard.zepowitz@dudmail.com, as below:
 
 ping-419.pl --from="leonard.zepowitz@dudmail.com" --to=list1.txt --subject="The email you have sent me" msgfile.txt --debug
 
+STRATEGY AND FILES
+==================
 
+[this strategy is not yet in place]
+
+Ping strategy:
+
+  - Frequently, obtain list of *possible* scammers (and possible
+  innocent people) by scraping scamreporter sites and/or manually to
+  create file toping.txt
+
+  - Autoremove people in pinged.txt from toping.txt
+
+  - Ping people with from address: leonard.zeptowitz+{n}@gmail.com,
+  where n is a unique number
+
+  - Remove addresses from toping.txt and add to pinged.txt along with
+  the pinging address
+
+Reply strategy:
+
+  - leonard.zeptowitz@gmail.com has spam filtering turned off
+
+  - Setup gmail autoreply with my "contact info", hoping scammer will
+  spend time customizing fake form for me and/or otherwise respond.
+
+  - Check to make sure scammer has replied to correct {n} address; if
+  scammer is now using a different From/Reply-to: address, ping that
+  one as well.
+
+  - From that sublist, manually vette who is an actual scammer, since
+  innocent people may reply in confusion too. Add the true scammers to
+  confirmed.txt
+
+"Flood" strategy:
+
+  - Send confirmed.txt many emails designed to waste time: random
+  address information, long surveys, instruction requests, and so on.
+
+  - The emails will come from non-existent, but realistic looking,
+  email addresses, so the replies will bounce.
+
+  - Scammers send out bulk emails: we're trying to make them think
+  they hit an unusually good list of addresses.
+
+  - The goal is NOT to flood/close their mailboxes, but to force them
+  to send replies, since they can never be sure which request is "legit"
+  and which isn't.
+
+Chat strategy:
+
+  - For confirmed scammers with gmail.com, aim.com, and similar
+  addresses, add to buddy list and annoy as possible.
 

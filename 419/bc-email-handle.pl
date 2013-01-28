@@ -6,29 +6,26 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# other than '@', characters that can appear in an email
-# TODO: there has to be something canon for this
-$cc="/[a-z]";
+open(A,"fgrep -hR @ /home/barrycarter/mail/dudmail|");
 
 # get all email addresses used in all dudmail scambaiting
 # TODO: below could break if dir gets big, but it probably wont
-for $i (glob "/home/barrycarter/mail/dudmail/*") {
-  open(A,$i);
-
-  while(<A>) {
-    chomp;
-    # skip references/etc: lines
-    if (/^(references|x-yahoo-newman-id|message-id):/i) {next;}
-    $orig = $_;
-    # hack to find email addresses, could do better
-    while (s/([\w\.]+\@[\w\.]+\.[\w\.]+)//) {
-#      debug("EMAIL($orig): $1");
-      $dudmail{$1}=1;
-    }
+while(<A>) {
+  chomp;
+  # skip references/etc: lines (in-reply-to bad, reply-to good)
+  if (/^(references|x-yahoo-newman-id|message-id|in-reply-to):/i) {next;}
+  $orig = $_;
+  # hack to find email addresses, could do better
+  while (s/([\w\.]+\@[\w\.]+\.[\w\.]+)//) {
+    $addr = $1;
+    # this is hideous; references: hack doesnt get everything, this prunes
+    # by knowing .gbl isnt a TLD (blech)
+    if ($addr=~/\.gbl/) {next;}
+    #      debug("EMAIL($orig): $1");
+    $dudmail{$1}=1;
   }
-
-  close(A);
 }
 
-debug(%dudmail);
+close(A);
 
+debug(%dudmail);
