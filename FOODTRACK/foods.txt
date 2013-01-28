@@ -285,11 +285,17 @@ DATE: 20130126
 1355 1.5 subway salads (ate only "half" of 2nd), 262g jacked chipotle chips
 1849 1.5 pieces italian sausage, 7/6 subway salad
 2221 1 container italian hot ground sausage
+2240 84g tapatio chips, 38g chipotle chips
 
-SHORT: 262g*028400009546@1355, 1.5*SUBWAY-20130126@1355, 1.5*077782008135@1849, 1.6666666666*SUBWAY-20130126@1849, 1c*077782008685@2100
+SHORT: 262g*028400009546@1355, 1.5*SUBWAY-20130126@1355, 1.5*077782008135@1849, 1.6666666666*SUBWAY-20130126@1849, 1c*077782008685@2100, 84g*028400045278@2240, 38g*028400009546@2240
 
+DATE: 20130127
 
+1317 1.25 container Kung Pao Chicken
+1611 0.75 container Kung Pao Chicken
+1659 2 fortune cookies
+1857 dominos cheesy jal/bacon bread (1 box), 8 cheesy bread bites (2 servings)
+2245 8 deli style beef bun length hot dogs, vintage cheddar fries
 
-
-
+SHORT: 1.25c*PANDA-EXPRESS-KPC@1317, 0.75c*PANDA-EXPRESS-KPC@1611, 2*PANDA-EXPRESS-FORTUNE-COOKIE@1659, 1c*DOMINOS-JAL-BACON-STUF-CHEESE-BREAD@1857, 2*DOMINO-PARM-BREAD-BITES@1857, 8*054500101088@2245, 1*853762002085@2245
 
