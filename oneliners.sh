@@ -1,5 +1,13 @@
 # shell one liners
 
+# hack to find gmail addresses in scam-baiting mailbox (not 100%)
+
+egrep -i '^from:|^reply-to:|^ from' ~/mail/leonard.zeptowitz | fgrep -i gmail | sort | uniq
+
+# grep gmail /home/barrycarter/mail/leonard.zeptowitz | perl -nle 'while (s/([a-z0-9\.\+]+\@[a-z0-9\.]+\.[a-z]+)//) {print $1}' | fgrep -iv zeptowitz | sort | uniq
+
+exit;
+
 # time in all time zones in zone.tab (but not all files in
 # /usr/share/zoneinfo) to find earliest/latest (did Samoa just trump
 # Chatam Islands?) after installing latest tzdata
