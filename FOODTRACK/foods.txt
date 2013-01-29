@@ -303,9 +303,10 @@ DATE: 20130128
 
 1350 parmesan bread bites (amount TBD), jal/bacon bread (entire box), vintage cheese fries
 1550 23 slices hard salami (24th was freezer burned?)
+1705 vintage cheddar fries
+1742 vintage cheddar fries
 
-SHORT: 1*853762002085@1350, 1c*DOMINOS-JAL-BACON-STUF-CHEESE-BREAD@1350, .9583333333c*044700010907@1550
-
+SHORT: 1*853762002085@1350, 1c*DOMINOS-JAL-BACON-STUF-CHEESE-BREAD@1350, .9583333333c*044700010907@1550, 1*853762002085@1705, 1*853762002085@1742
 
 
 

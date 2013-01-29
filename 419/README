@@ -13,7 +13,7 @@ STRATEGY AND FILES
 
 [this strategy is not yet in place]
 
-Ping strategy:
+Ping strategy: [run bc-ping.pl to do this]
 
   - Frequently, obtain list of *possible* scammers (and possible
   innocent people) by scraping scamreporter sites and/or manually to
@@ -42,13 +42,14 @@ Reply strategy:
   innocent people may reply in confusion too. Add the true scammers to
   confirmed.txt
 
-"Flood" strategy:
+"Flood" strategy: (bc-hit-scammer.pl will do this)
 
   - Send confirmed.txt many emails designed to waste time: random
   address information, long surveys, instruction requests, and so on.
 
   - The emails will come from non-existent, but realistic looking,
-  email addresses, so the replies will bounce.
+  email addresses, so the replies will bounce. Alternately, the emails
+  come from addresses of other verified scammers.
 
   - Scammers send out bulk emails: we're trying to make them think
   they hit an unusually good list of addresses.
@@ -57,7 +58,7 @@ Reply strategy:
   to send replies, since they can never be sure which request is "legit"
   and which isn't.
 
-Chat strategy:
+Chat strategy: (bc-check-scammer.pl will confirm these are all on my buddy list [not yet written])
 
   - For confirmed scammers with gmail.com, aim.com, and similar
   addresses, add to buddy list and annoy as possible.

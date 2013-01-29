@@ -9,6 +9,10 @@ dodie('chdir($dir)');
 $catch = "leonard.zeptowitz";
 $now = time();
 
+# TODO: in theory, if I run this frequently enough, timestamps could
+# collide; this is unlikely, but perhaps "tail -1 pinged.txt" to be
+# extra careful
+
 # read entries from toping.txt (too much Unix below?)
 @emails = `egrep -v '^#|^\$' toping.txt | sort | uniq | sed 's/ //g'`;
 

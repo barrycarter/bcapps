@@ -13,6 +13,8 @@
 
 require "/usr/local/lib/bclib.pl";
 
+die "OBSOLETE, see bc-ping.pl";
+
 # check valid call
 $usagestring="$0 --from=from --to=filename --subject=subject message_file";
 for $i ("from","to","subject") {unless ($globopts{$i}) {die $usagestring;}}
