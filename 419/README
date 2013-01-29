@@ -4,6 +4,20 @@ The idea is to actually shut them down by overwhelming them with fake emails.
 
 <h>I am probably enjoying this far too much</h>
 
+What these programs do:
+
+bc-has-replied.pl: determines who has replied to my initial "tell me
+more" email, based on receiving address (eg,
+leonard.zeptowitz+number@gmail.com)
+
+bc-scrape-scamwarners.pl: scrapes scamwarners forums for new potential
+scammers to ping
+
+bc-check-scammer.pl: Makes sure all gmail addreses I've pinged are
+also in my buddy list
+
+bc-ping.pl: pings all scammers in toping.txt, excluding those already pinged
+
 First ping: leonard.zepowitz@dudmail.com, as below:
 
 ping-419.pl --from="leonard.zepowitz@dudmail.com" --to=list1.txt --subject="The email you have sent me" msgfile.txt --debug
