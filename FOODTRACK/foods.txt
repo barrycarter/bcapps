@@ -301,14 +301,11 @@ SHORT: 1.25c*PANDA-EXPRESS-KPC@1317, 0.75c*PANDA-EXPRESS-KPC@1611, 2*PANDA-EXPRE
 
 DATE: 20130128
 
-1350 parmesan bread bites (amount TBD), jal/bacon bread (entire box), vintage cheese fries
+1350 3 parmesan bread bites (.75 serving), jal/bacon bread (entire box), vintage cheese fries
 1550 23 slices hard salami (24th was freezer burned?)
 1705 vintage cheddar fries
 1742 vintage cheddar fries
+2058 1 can wolf chili, beanless
+2355 1 pack ball park bun size beef franks
 
-SHORT: 1*853762002085@1350, 1c*DOMINOS-JAL-BACON-STUF-CHEESE-BREAD@1350, .9583333333c*044700010907@1550, 1*853762002085@1705, 1*853762002085@1742
-
-
-
-
-
+SHORT: 1*853762002085@1350, .75*DOMINO-PARM-BREAD-BITES@1350, 1c*DOMINOS-JAL-BACON-STUF-CHEESE-BREAD@1350, .9583333333c*044700010907@1550, 1*853762002085@1705, 1*853762002085@1742, 1c*014900012704@2058, 1c*054500100364@2355
