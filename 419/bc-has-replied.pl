@@ -8,6 +8,9 @@
 
 require "/usr/local/lib/bclib.pl";
 
+print "Please remove all bounces from scambaiter mailbox, hit return\n";
+<STDIN>;
+
 # look in bait box (must double escape "+")
 $cmd = "egrep 'leonard.zeptowitz\\+[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]\@gmail.com' /home/barrycarter/mail/leonard.zeptowitz";
 @addrs = `$cmd`;
