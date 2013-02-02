@@ -22,7 +22,57 @@ use Time::JulianDay;
 use XML::Bare;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
-use Astro::Sunrise;
+use Astro::Coord::ECI;
+use Astro::Coord::ECI::Sun;
+use Astro::Coord::ECI::Utils qw{deg2rad};
+# use Astro::Sunrise;
+
+ my $lat = deg2rad (38.899);    # Radians
+ my $long = deg2rad (-77.038);  # Radians
+ my $alt = 16.68 / 1000;        # Kilometers
+my $sun = Astro::Coord::ECI::Sun->new ();
+my $sta = Astro::Coord::ECI->
+     universal (time ())->
+     geodetic ($lat, $long, $alt);
+ my ($time, $rise) = $sta->next_elevation ($sun);
+ print "Sun @{[$rise ? 'rise' : 'set']} is ",
+     scalar gmtime $time, " UT\n";
+
+die "TESTING";
+
+#($sunrise, $sunset) = sunrise(2012,05,17,0,70,0,0);
+
+$sunrise = sun_rise(0,70);
+$sunset = sun_set(0,70);
+
+debug($sunrise,$sunset);
+
+die "TESTING";
+
+=item str2emails($str)
+
+Attempts to returns all email addresses in $str
+
+Subroutine-izing this so, if I ever figure out the magic regexs, I
+won't have to change in multiple places. No guarentee this works well.
+
+=cut
+
+sub str2emails {
+  my($str) = @_;
+
+  while ($str=~s///) {}
+
+
+
+
+}
+
+
+
+
+
+die "TESTING";
 
 
 =item dothisfirst
@@ -81,12 +131,6 @@ print STDERR "6 is $6\n";
 sub foo {print STDERR length($_[0]),"\n";}
 
 # debug($1);
-
-die "TESTING";
-
-($sunrise, $sunset) = sunrise(2013,01,15,-106.5,75.05,-7);
-
-debug($sunrise,$sunset);
 
 die "TESTING";
 

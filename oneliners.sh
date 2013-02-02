@@ -1,8 +1,15 @@
 # shell one liners
 
+# people who ive dealt with but were never pinged (for completeness)
+# I add these to toping.txt and then ping them (auto-exclude for repeats)
+
+egrep '^From: ' ~/mail/leonard.zeptowitz | perl -nle 'if (/<(.*?\@.*?)>/) {print $1}' | sort | uniq | grep -v zeptowitz
+
+exit;
+
 # hack to find gmail addresses in scam-baiting mailbox (not 100%)
 
-egrep -i '^from:|^reply-to:|^ from' ~/mail/leonard.zeptowitz | fgrep -i gmail | sort | uniq
+egrep -i '^from:|^reply-to:|^from ' ~/mail/leonard.zeptowitz | fgrep -i gmail | sort | uniq
 
 # grep gmail /home/barrycarter/mail/leonard.zeptowitz | perl -nle 'while (s/([a-z0-9\.\+]+\@[a-z0-9\.]+\.[a-z]+)//) {print $1}' | fgrep -iv zeptowitz | sort | uniq
 

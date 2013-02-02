@@ -17,7 +17,7 @@ require "/usr/local/lib/bclib.pl";
 @buds = `fgrep -A 2 "<buddy account='leonard.zeptowitz\@gmail.com/" /home/barrycarter/.purple/blist.xml | fgrep '<name>'`;
 
 # list of gmail addresses I've pinged
-@pinged = `cut -d' ' -f 2 pinged.txt | fgrep gmail.com`;
+@pinged = `cut -d' ' -f 2 /home/barrycarter/BCGIT/419/pinged.txt | fgrep gmail.com`;
 for $i (@pinged) {chomp($i);}
 
 # cleanup list of buds (newline needed to match @pinged

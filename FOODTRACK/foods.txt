@@ -315,8 +315,40 @@ DATE: 20130129
 
 1345 1 can beanless chili, 1 pack ball park bun size beef franks
 1652 2 vintage cheddar fries
+1729 113g peanut butter pretzels
 1825 hatch green chili stew, 1 can
+2135 1 can bean chili
+2350 2 cheese stick
+2415 1 pack deli style beef franks
 
-SHORT: 1c*014900012704@1345, 1c*054500100364@1345, 2*853762002085@1652, 1c*028189750059@1825
+SHORT: 1c*014900012704@1345, 1c*054500100364@1345, 2*853762002085@1652, 1c*028189750059@1825, 1c*14900022703@2135, 2*074550654228@2350, 1c*054500101088@2415, 113g*072600074071@1729
+
+DATE: 20130130
+
+1255 6 slices Dominos Large Pizza: Italian Sausage, Green Chili, Salami
+1457 2 vintage cheddar fries
+2115 4.81567 slices dominos thin crust cheeseburger pizza (see http://wordpress.barrycarter.info/index.php/2013/01/31/dominos-pizza-thin-crust-slicing/ for details)
+2144 10 sf cc cookies (3.33 servings)
+2200 2 vintage cheddar fries
+2315 1 can chicken noodle soup
+
+SHORT: 6*DOMINO-20130130@1255, 2*853762002085@1457, 1c*041196010886@2315, 2*853762002085@2200, 3.33333333*082011913357@2144, 4.81567*DOMINO-CHEESEBURGER-LARGE-THINCRUST@2115
+
+DATE: 20130131
+
+1206 22 slices pack hard salami
+1635 2 cans roast beef hash, 3 bags vintage cheddar fries
+
+SHORT: 0.91666666c*044700010907@1206, 2c*037600199919@1635, 3*853762002085@1635
+
+DATE: 20130201
+
+0805 1 can roast beef hash (planned)
+1005 2 slices Large Pizza: Italian Sausage, Green Chili, Salami; remainder of dominos thin crust cheeseburger pizza
+
+SHORT: 1c*037600199919@0805, 2*DOMINO-20130130@1005, 3.18433*DOMINO-CHEESEBURGER-LARGE-THINCRUST@1004
+
+
+
 
 
