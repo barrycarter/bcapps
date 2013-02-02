@@ -25,27 +25,69 @@ require "bc-twitter.pl";
 use Astro::Coord::ECI;
 use Astro::Coord::ECI::Sun;
 use Astro::Coord::ECI::Utils qw{deg2rad};
-# use Astro::Sunrise;
+use Astro::Sunrise;
 
- my $lat = deg2rad (38.899);    # Radians
- my $long = deg2rad (-77.038);  # Radians
- my $alt = 16.68 / 1000;        # Kilometers
-my $sun = Astro::Coord::ECI::Sun->new ();
+=item sunhoriz($yr,$mo,$da,$long,$lat,$type="rise|set",$seek=+-1)
+
+Determine the sunrise or set on $yr/$mo/$da for $lat/$long in GMT.
+
+If there is no sunrise/set, seek forward ($seek=1) or backwards
+($seek=-1) to nearest sunrise/set.
+
+Thin wrapper around Astro::Sunrise
+
+=cut
+
+sub sunhoriz {
+  my($yr,$mo,$da,$long,$lat,$type,$seek) = @_;
+  # prevents Astro::Sunrise from carping improperly
+  local $SIG{__WARN__} = sub { die $_[0] };
+  my(@res);
+
+  # basic try
+  @res = eval{sunrise($yr,$mo,$da,$long,$lat)};
+
+  unless ($@) {
+    if ($type eq "rise") {return $res[0];}
+    return $res[1];
+  }
+
+  debug("ERF: $@");
+
+  # now need to seek
+  # TODO: everything
+}
+
+# debug(sunhoriz(2013,5,16,0,70,"rise"));
+
+$ENV{TZ}="UTC";
+system("date");
+print sun_rise(0,70,0),"\n";
+$ENV{TZ}="America/Denver";
+system("date");
+print sun_rise(0,70,-0.999),"\n";
+
+# ($sunrise, $sunset) = sunrise(2012,11,26,0,70,0,0);
+# local $SIG{__WARN__} = sub { die $_[0] };
+# @res = eval{sunrise(2012,9,26,0,70,0,0)};
+# debug("0: $@");
+# debug("RES",@res,$@);
+# debug($sunrise,$sunset);
+# $sunrise = sun_rise(0,70);
+# $sunset = sun_set(0,70);
+
+die "TESTING";
+
+my $lat = deg2rad(70);
+my $long = deg2rad(0);
+my $alt = 0;
+my $sun = Astro::Coord::ECI::Sun->new();
 my $sta = Astro::Coord::ECI->
      universal (time ())->
      geodetic ($lat, $long, $alt);
  my ($time, $rise) = $sta->next_elevation ($sun);
  print "Sun @{[$rise ? 'rise' : 'set']} is ",
      scalar gmtime $time, " UT\n";
-
-die "TESTING";
-
-#($sunrise, $sunset) = sunrise(2012,05,17,0,70,0,0);
-
-$sunrise = sun_rise(0,70);
-$sunset = sun_set(0,70);
-
-debug($sunrise,$sunset);
 
 die "TESTING";
 
