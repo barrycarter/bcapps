@@ -1,17 +1,18 @@
 #!/usr/bin/python
 
-import ephem
+import ephem, sys
+from sys import argv
 from datetime import datetime, timedelta
 
-def nsrise(date, lat, long, horizon, f, object, seek=1):
-    obs.date, obs.lat, obs.long, obs.horizon, obs.pressure = date, lat, long, horizon, 0
-    try:
-        return f(object)
-    except (ephem.AlwaysUpError, ephem.NeverUpError):
-        return nsrise(date+timedelta(hours=12*seek), lat, long, horizon, f, object, seek)
+def nsrise(horizon, f, object, seek=1):
+    obs.horizon = horizon
+    try: return f(object)
+    except (ephem.AlwaysUpError, ephem.NeverUpError): return nsrise(date+timedelta(hours=12*seek), lat, long, horizon, f, object, seek)
 
 obs = ephem.Observer()
-lat, lon, date = '89.5', '0', datetime(2011,5,16,12)
+obs.lat,obs.long,obs.date,obs.pressure=argv[1],argv[2],argv[3],0
+print obs
+
 print "SR",nsrise(date,lat,lon,'-0:34',obs.previous_rising, ephem.Sun(),-1)
 print "SS",nsrise(date,lat,lon,'-0:34',obs.next_setting, ephem.Sun(),+1)
 
