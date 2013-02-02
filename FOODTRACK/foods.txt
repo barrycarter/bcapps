@@ -345,10 +345,9 @@ DATE: 20130201
 
 0805 1 can roast beef hash (planned)
 1005 2 slices Large Pizza: Italian Sausage, Green Chili, Salami; remainder of dominos thin crust cheeseburger pizza
+1544 4 slices dominos medium italian sausage + jalp pizza, 4 slices dominos medium beef and onion pizza
+1655 vintage cheddar fries
+1807 1 can chilibean
+2350 4 slices dominos medium italian sausage + jalp pizza, 3 slices dominos medium beef and onion pizza
 
-SHORT: 1c*037600199919@0805, 2*DOMINO-20130130@1005, 3.18433*DOMINO-CHEESEBURGER-LARGE-THINCRUST@1004
-
-
-
-
-
+SHORT: 1c*037600199919@0805, 2*DOMINO-20130130@1005, 3.18433*DOMINO-CHEESEBURGER-LARGE-THINCRUST@1004, 4*DOMINO-20130201-1@1544, 4*DOMINO-20130201-2@1544, 4*DOMINO-20130201-1@2350, 3*DOMINO-20130201-2@2350, 1c*037600223188@1807, 1*853762002085@1655

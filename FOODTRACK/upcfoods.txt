@@ -21,6 +21,8 @@
 853762002108 Jalapeno Trio Smart Fries (Gourmet Basics)
 CHILI-JALAP-SMOKE-BURGER Jalapeno Smokehouse Burger w Ranch (Chili%27s)
 DOMINO-20130130 Dominos Large Pizza%3A Italian Sausage%2C Green Chili%2C Salami (Dominos)
+DOMINO-20130201-1 Medium Italian Sausage and Jalapeno Pizza (Dominos)
+DOMINO-20130201-2 Medium Beef and Onion Pizza (Dominos)
 DOMINO-ARTISAN-SAUSAGE-PEPPER-TRIO Sausage Pepper Trio Artisan Pizza (Dominos)
 DOMINO-ARTISAN-TUSCAN-SALAMI Tuscan Salami Artisan Pizza (Dominos)
 DOMINO-BACON-CHEESEBURGER-PIZZA Dominos Bacon Cheeseburger Pizza%2C 14 inch%2C hand tossed crust (Dominos)
