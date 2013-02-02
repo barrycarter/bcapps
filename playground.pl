@@ -58,7 +58,7 @@ sub sunhoriz {
   # TODO: everything
 }
 
-# debug(sunhoriz(2013,5,16,0,70,"rise"));
+debug(sunhoriz(2012,5,15,0,70,"rise"));
 
 $ENV{TZ}="UTC";
 system("date");
