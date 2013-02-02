@@ -3,15 +3,13 @@
 import ephem
 from datetime import datetime, timedelta
 
-def nsrise(date, lat, long, horizon):
-    obs = ephem.Observer()
+def nsrise(date, lat, long, horizon, f, object, seek=1):
     obs.date, obs.lat, obs.long, obs.horizon, obs.pressure = date, lat, long, horizon, 0
     try:
-        return obs.next_rising(ephem.Sun())
+        return f(object)
     except (ephem.AlwaysUpError, ephem.NeverUpError):
-        return nsrise(date+timedelta(hours=12), lat, long, horizon)
+        return nsrise(date+timedelta(hours=12*seek), lat, long, horizon, f, object, seek)
 
-
-
-print nsrise(datetime(2012,5,16,12), '70', '0', '-0:34')
+obs = ephem.Observer()
+print nsrise(datetime(2011,5,16,12), '89.5', '0', '-0:34', obs.previous_setting, ephem.Sun(), 1)
 
