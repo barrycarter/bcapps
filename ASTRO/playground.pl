@@ -9,19 +9,29 @@ $Data::Dumper::Indent = 0;
 
 # my location
 my $observer = Astro::Nova::LnLatPosn->new();
-$observer->set_lat(35);
-$observer->set_lng(-106);
+$observer->set_lat(35.1);
+$observer->set_lng(-106.5);
 
 # julian day
 $jd = Astro::Nova::get_julian_from_sys();
+debug("NOW: $jd");
+# below is dec 22nd
+$jd = Astro::Nova::get_julian_from_timet(1356159600);
+debug("THEN: $jd");
+
+# rst
+$rst = Astro::Nova::get_solar_rst($jd, $observer);
+debug(Astro::Nova::get_timet_from_julian($rst->get_rise()));
+debug($rst);
+
 
 # solar geocentric(?) coords
-$c1 = Astro::Nova::get_solar_geom_coords($jd);
+# $c1 = Astro::Nova::get_solar_geom_coords($jd);
 
 # ra/dec
-$radec = Astro::Nova::get_solar_equ_coords($jd);
+# $radec = Astro::Nova::get_solar_equ_coords($jd);
 
-debug("RADEC: ",$radec->get_ra(), $radec->get_dec());
+# debug("RADEC: ",$radec->get_ra(), $radec->get_dec());
 
 die "TESTING";
 
