@@ -351,3 +351,33 @@ DATE: 20130201
 2350 4 slices dominos medium italian sausage + jalp pizza, 3 slices dominos medium beef and onion pizza
 
 SHORT: 1c*037600199919@0805, 2*DOMINO-20130130@1005, 3.18433*DOMINO-CHEESEBURGER-LARGE-THINCRUST@1004, 4*DOMINO-20130201-1@1544, 4*DOMINO-20130201-2@1544, 4*DOMINO-20130201-1@2350, 3*DOMINO-20130201-2@2350, 1c*037600223188@1807, 1*853762002085@1655
+
+DATE: 20130202
+
+1235 4 bags vintage cheddar fries
+1426 1 can beanless chili
+1645 1 sonic reeses blast
+1935 1 can Amy organic chili
+2043 2 slices (=.666 servings) hard salami
+2100 4 slices Domino beef/hot sauce medium pizza, 4 slices Domino italian sausage/onions medium pizza
+
+SHORT: 4*853762002085@1235, 1c*014900012704@1426, 1*SONIC-REESES-BLAST-32@1645, 1c*042272005307@1935, 0.66666666666*044700010907@2043, 4*DOMINO-MEDIUM-BEEF-HOT-SAUCE@2100, 4*DOMINO-MEDIUM-ITALSAUS-ONIONS@2100
+
+DATE: 20130203
+
+1025 4 slices beef/hot sauce pizza, 2 vintage cheddar fries
+1419 4 slices italian sausage/onion pizza
+1509 4 slices feta/greenchile pizza, 4 slices italsaus/salami pizza
+1807 2 vintage cheddar fries
+1845 2 slices swiss cheese [serving size is really 3 slices, but 1 slice in db]
+
+SHORT: 4*DOMINO-MEDIUM-BEEF-HOT-SAUCE@1025, 2*853762002085@1025, 4*DOMINO-MEDIUM-ITALSAUS-ONIONS@1419, 2*046100002223@1845, 2*853762002085@1807, 4*DOMINO-MEDIUM-FETA-CHILE@1419, 4*DOMINO-MEDIUM-ITALSAUS-SALAMI@1419
+
+DATE: 20130204
+
+1009 4 slices fetacheese/chile pizza
+1035 2 vintage cheddar fries
+
+SHORT: 2*853762002085@1035, 4*DOMINO-MEDIUM-FETA-CHILE@1009
+
+
