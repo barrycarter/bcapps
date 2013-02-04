@@ -4,31 +4,37 @@
 # TODO: use scammer addresses as from addresses to
 
 require "/usr/local/lib/bclib.pl";
+$fromaddr= "richard.hernandez\@dudmail.com";
 
 # TODO: this is just testing to see to what extent they reply
 @addr = split(/\n/,`egrep -v '^#|^\$' /home/barrycarter/BCGIT/419/confirmed.txt`);
 
+open(B,">/var/tmp/bchit.sh");
+
 for $i (@addr) {
-  $rand = int(rand()*(1e+10-1e+9))+1e+9;
+  
+  my($msg) = << "MARK";
+From: Richard Hernandez <$fromaddr>
+To: $i
+Subject: re: your contact information
 
-$msg = << "MARK";
+I am sending my contact information as you requested:
 
-I have now sent the transfer fees by Western Union.
+Mr Richard Hernandez
+7241 Parkway Blvd Apt #214
+Minneapolis, MN 81412
 
-SENDER: Carl Carlson
-MCTN: $rand
-
-Please confirm you have received these, thank you.
-
+Please tell me what to do next, thank you!
 MARK
 ;
 
+  write_file($msg,"/var/tmp/bchit-$i.txt");
 
-#  sendmail("adam.adamson\@dudmail.com", $i, "I have sent the money", "The MTCN they gave me is $rand. Please reply back that you get this money, thank you!");
-  # recorded twilio number forwarding to free sex line
-#  sendmail("bob.bobson\@dudmail.com", $i, "Please call me now", "Sequel to your email, please call me at 802-275-4787 in the USA as soon as you can!");
-
-#  sendmail("carl.carlson\@dudmail.com", $i, "Western Union Money Transfer", $msg);
-  sendmail("donald.donaldson\@dudmail.com", $i, "The FBI has called me", "The FBI wants to know more about our emails, what should I tell them?");
-
+  print B "sendmail -v -f$fromaddr -t < /var/tmp/bchit-$i.txt 1> /var/tmp/bchit-$i.out 2> /var/tmp/bchit-$i.err\n";
 }
+
+close(B);
+
+print "To actually send mail:\nsh /var/tmp/bchit.sh\n";
+
+

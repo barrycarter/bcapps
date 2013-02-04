@@ -7,8 +7,9 @@
 # reply; only added to confirmed.txt after looking at body of email
 
 require "/usr/local/lib/bclib.pl";
+dodie('chdir("/home/barrycarter/BCGIT")');
 
-print "Please remove all bounces from scambaiter mailbox, hit return\n";
+print STDERR "Please remove all bounces from scambaiter mailbox\nconfirm that all emails to plus addresses are truly scamlike,\nthen hit return\n";
 <STDIN>;
 
 # look in bait box (must double escape "+")

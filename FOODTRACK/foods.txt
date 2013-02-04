@@ -367,11 +367,11 @@ DATE: 20130203
 
 1025 4 slices beef/hot sauce pizza, 2 vintage cheddar fries
 1419 4 slices italian sausage/onion pizza
-1509 4 slices feta/greenchile pizza, 4 slices italsaus/salami pizza
+1509 4 slices feta/greenchile pizza, 2 slices italsaus/salami pizza
 1807 2 vintage cheddar fries
 1845 2 slices swiss cheese [serving size is really 3 slices, but 1 slice in db]
 
-SHORT: 4*DOMINO-MEDIUM-BEEF-HOT-SAUCE@1025, 2*853762002085@1025, 4*DOMINO-MEDIUM-ITALSAUS-ONIONS@1419, 2*046100002223@1845, 2*853762002085@1807, 4*DOMINO-MEDIUM-FETA-CHILE@1419, 4*DOMINO-MEDIUM-ITALSAUS-SALAMI@1419
+SHORT: 4*DOMINO-MEDIUM-BEEF-HOT-SAUCE@1025, 2*853762002085@1025, 4*DOMINO-MEDIUM-ITALSAUS-ONIONS@1419, 2*046100002223@1845, 2*853762002085@1807, 4*DOMINO-MEDIUM-FETA-CHILE@1419, 2*DOMINO-MEDIUM-ITALSAUS-SALAMI@1419
 
 DATE: 20130204
 
