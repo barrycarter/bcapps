@@ -7,31 +7,22 @@ use Astro::Nova;
 use Data::Dumper 'Dumper';
 $Data::Dumper::Indent = 0;
 
+$ENV{TZ}="UTC";
+
 # my location
 my $observer = Astro::Nova::LnLatPosn->new();
-$observer->set_lat(35.1);
-$observer->set_lng(-106.5);
+$observer->set_lat(70);
+$observer->set_lng(0);
+$observer->set_altitude(5000);
 
-# julian day
-$jd = Astro::Nova::get_julian_from_sys();
-debug("NOW: $jd");
-# below is dec 22nd
-$jd = Astro::Nova::get_julian_from_timet(1356159600);
-debug("THEN: $jd");
+# unix time
+$ut = Time::Local::timegm(0,0,12,14,5-1,2012);
+$jd = Astro::Nova::get_julian_from_timet($ut);
 
 # rst
 $rst = Astro::Nova::get_solar_rst($jd, $observer);
 debug(Astro::Nova::get_timet_from_julian($rst->get_rise()));
-debug($rst);
-
-
-# solar geocentric(?) coords
-# $c1 = Astro::Nova::get_solar_geom_coords($jd);
-
-# ra/dec
-# $radec = Astro::Nova::get_solar_equ_coords($jd);
-
-# debug("RADEC: ",$radec->get_ra(), $radec->get_dec());
+debug(Astro::Nova::get_timet_from_julian($rst->get_set()));
 
 die "TESTING";
 

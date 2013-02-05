@@ -377,7 +377,10 @@ DATE: 20130204
 
 1009 4 slices fetacheese/chile pizza
 1035 2 vintage cheddar fries
+1416 6 slices ital/salami pizza
+1812 pop secret popcorn
+1829 1 can beanless chili
+1855 9 taquitos (3 servings)
+2124 2 bags vinegar splash fries
 
-SHORT: 2*853762002085@1035, 4*DOMINO-MEDIUM-FETA-CHILE@1009
-
-
+SHORT: 2*853762002085@1035, 4*DOMINO-MEDIUM-FETA-CHILE@1009, 6*DOMINO-MEDIUM-ITALSAUS-ONIONS@1416, 2*853762002023@2124, 3*073202894524@1855, 1c*014900012704@1829, 1*023896420653@1812

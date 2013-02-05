@@ -4,12 +4,14 @@ import ephem
 from datetime import datetime, timedelta
 
 obs = ephem.Observer()
-obs.lat = '89:30'
+obs.lat = '70:00'
 obs.long = '0'
+obs.horizon= '-0:00'
+# print obs.horizon
 
-start = datetime(2011, 1, 1)
-end = datetime(2012, 1, 1)
-step = timedelta(minutes=10)
+start = datetime(2012, 1, 1)
+end = datetime(2013, 1, 1)
+step = timedelta(minutes=720)
 
 sun = ephem.Sun()
 
