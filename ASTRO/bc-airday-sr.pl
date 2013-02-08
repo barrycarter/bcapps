@@ -22,7 +22,17 @@ for $i (@res) {
   ($mrise,$mset) = (Astro::Nova::get_timet_from_julian($rst2->get_rise()),
 		  Astro::Nova::get_timet_from_julian($rst2->get_set()));
 
-  $loc = "$i->{city}, $i->{country}";
+  $loc = "$i->{city}, $i->{country} ($i->{metar})";
+
+  # print out all data
+  print "$rise SRISE $loc\n";
+  print "$mrise MRISE $loc\n";
+  print "$set SSET $loc\n";
+  print "$mset MSET $loc\n";
+#  print "$rise SRISE $loc\n";
+
+  next;
+
   if (abs($rise-$now) < 60) {
     print "$loc $rise RISE\n";
   } elsif (abs($set-$now) < 60) {
