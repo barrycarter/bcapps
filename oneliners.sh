@@ -7,6 +7,11 @@ egrep '^From: ' ~/mail/leonard.zeptowitz | perl -nle 'if (/<(.*?\@.*?)>/) {print
 
 exit;
 
+# (suggests) renaming files that make doesn't handle well
+\ls | perl -nle '$x=$_; if (s/[^a-z0-9_\.\-\%\,]/_/isg) {print "mv \"$x\" $_"}'
+
+exit;
+
 # hack to find gmail addresses in scam-baiting mailbox (not 100%)
 
 egrep -i '^from:|^reply-to:|^from ' ~/mail/leonard.zeptowitz | fgrep -i gmail | sort | uniq
@@ -25,11 +30,6 @@ exit;
 
 # mathematica format for sunrise/set data
 perl -anle 'sub BEGIN {print "data={"} sub END {print "}"} unless (/^[0-9]/) {next;} print "{"; for $i (0..11) {$x=substr($_,4+11*$i,10);$x=~s/\s/,/;$x=~s/\s*$//; $x=~s/\-{4},\-{4}/0000,0000/; $x=~s/\*{4},\*{4}/2400,0000/; print "{$x},"}; print "},"' /home/barrycarter/BCGIT/db/srss-40n.txt
-
-exit;
-
-# (suggests) renaming files that make doesn't handle well
-\ls | perl -nle '$x=$_; if (s/[^a-z0-9_\.\-\%\,]/_/isg) {print "mv \"$x\" $_"}'
 
 exit;
 

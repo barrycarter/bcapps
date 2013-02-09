@@ -4,7 +4,7 @@
 # TODO: use scammer addresses as from addresses to
 
 require "/usr/local/lib/bclib.pl";
-$fromaddr= "robert.hallman\@dudmail.com";
+$fromaddr= "vergetta.pervect\@dudmail.com";
 
 # TODO: this is just testing to see to what extent they reply
 @addr = split(/\n/,`egrep -v '^#|^\$' /home/barrycarter/BCGIT/419/confirmed.txt`);
@@ -14,20 +14,17 @@ open(B,">/var/tmp/bchit.sh");
 for $i (@addr) {
   
   my($msg) = << "MARK";
-From: Robert Hallman <$fromaddr>
+From: Ms Vergetta Pervect <$fromaddr>
 To: $i
-Subject: re: your contact information
+Subject: Is this what you wanted?
 
-I received your email, but was a little confused. Could you call me at
-940-468-3927 in the United States to clarify?
+OK, I'm giving you my contact info below, but could you please call me
+at 809-534-6565 to clarify what we're doing here?
 
-Here's the contact information you requested:
+Ms Vergetta Pervect
+6873 Bazaar Blvd
+Devilton, MI 15203
 
-Dr Robert Hallman
-1527 Eastern St
-Mineral Hills, TX 72411
-
-Please call me to let me know what I need to do next, thanks!
 MARK
 ;
 

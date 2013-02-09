@@ -6,6 +6,10 @@
 # NOTE: some of these might be legit people who just happened to
 # reply; only added to confirmed.txt after looking at body of email
 
+# have safe checked all entries through:
+# 04 Feb 2013: DUB117-W10825E22AD687301F0D0AFCAC010@phx.gbl
+# 09 Feb 2013: 1360421609.38704.YahooMailNeo@web161405.mail.bf1.yahoo.com
+
 require "/usr/local/lib/bclib.pl";
 dodie('chdir("/home/barrycarter/BCGIT")');
 

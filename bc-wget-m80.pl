@@ -9,11 +9,19 @@
 
 # must put initial site name in urlstodo.txt before starting
 
+# --createdirs: print commands to create 3 level directorys, do nothing else
+
 require "/usr/local/lib/bclib.pl";
 require "$ENV{HOME}/bc-private.pl";
 
+if ($globopts{createdirs}) {
+  my(@a)=("0".."9","a".."f");
+  for $i(@a){for $j(@a){ for $k(@a) {print "mkdir -p $i/$j/$k\n"}}}
+  exit;
+}
+
 # for this download
-$site = "http://www.directionsforme.org";
+$site = "http://www.airshipentertainment.com/";
 
 # hrefgrep2urls("newhrefs.txt","newhrefs2.txt",$site);
 
@@ -29,7 +37,7 @@ system("touch urlsdone.txt");
 # write curl output files (for urlstodo.txt) to curloutfiles.txt
 url2curl("urlstodo.txt","curltodo.txt","curloutfiles.txt");
 
-die "TESTING";
+# die "TESTING";
 
 # run curltodo.txt using bc-parallel (this is the only one where sockets are important; for the rest continue to use regular parallel)
 
@@ -169,6 +177,7 @@ sub hrefgrep2urls {
 	# add site to / urls
 	print B "$site$i\n";
       } else {
+	debug("IGNORING: $i");
 	# ignore all else (BAD!)
       }
     }

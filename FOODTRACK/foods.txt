@@ -397,15 +397,36 @@ DATE: 20130206
 
 1227 4 slices italsaus/chile pizza, 3 slices feta/redpepper pizza
 1829 6.5 slices italsaus/2*cheese pizza, 1 slice salami/2*cheese pizza
-2447 2 cans roast beef hash
+2447 1 cans roast beef hash
+2613 2 cans roast beef hash 
 
-SHORT: 4*DOMINO-MEDIUM-ITALSAUS-CHILE@1227, 3*DOMINO-MEDIUM-FETA-REDPEPPER@1227, 6.5*DOMINO-MEDIUM-DOUBLECHEESE-ITALSAUS@1829, 1*DOMINO-MEDIUM-DOUBLECHEESE-SALAMI@1829, 2c*037600199919@2447
+SHORT: 4*DOMINO-MEDIUM-ITALSAUS-CHILE@1227, 3*DOMINO-MEDIUM-FETA-REDPEPPER@1227, 6.5*DOMINO-MEDIUM-DOUBLECHEESE-ITALSAUS@1829, 1*DOMINO-MEDIUM-DOUBLECHEESE-SALAMI@1829, 1c*037600199919@2447, 2c*037600199919@2613
 
 DATE: 20130207
 
 1202 sea salt fries, vinegar splash fries
+1321 honey bbq fries (left 13g, so only ate 28-13=15g)
 1444 3 slices large double cheese + ital saus + onions pizza
 1648 7 slices salami/2*cheese pizza (left portions of crust, but not sure how to compensate)
+2104 1 can roast beef hash, 1.5 slices medium italsaus/2*cheese pizza, 5 slices large 2*cheese/italsaus/onions pizza (just ate cheese off last 2-3, so not AS bad as it seems)
 
-SHORT: 7*DOMINO-MEDIUM-DOUBLECHEESE-SALAMI@1648, 3*DOMINO-LARGE-DOUBLECHEESE-ITALSAUS-ONION@1444, 1*853762002009@1202, 1*853762002023@1202
+SHORT: 7*DOMINO-MEDIUM-DOUBLECHEESE-SALAMI@1648, 3*DOMINO-LARGE-DOUBLECHEESE-ITALSAUS-ONION@1444, 1*853762002009@1202, 1*853762002023@1202, 1c*037600199919@2104, 1.5*DOMINO-MEDIUM-DOUBLECHEESE-ITALSAUS@2104, 5*DOMINO-LARGE-DOUBLECHEESE-ITALSAUS-ONION@2104, 15g*853762002047@1321
+
+DATE: 20130208
+
+1202 honey bbq fries, 2 honey mustard onion fries
+1418 1 can wolf beanless chili
+1456 cheddar fries
+1702 3 jal trio fries, sea salt fries, 2 honey mustard fries, vintage cheddar fries
+1852 217g peanut butter nuggets
+
+SHORT: 1*853762002047@1202, 2*853762002061@1202, 1*853762002085@1456, 1c*014900012704@1418, 217g*072600074071@1852, 3*853762002108@1702, 1*853762002009@1702, 2*853762002061@1702, 1*853762002085@1702
+
+DATE: 20130209
+
+0940 2 vintage cheddar fries
+1341 1 entire package tyson beef hot dogs
+
+SHORT: 2*853762002085@0940, 1c*023700034212@1341
+
 
