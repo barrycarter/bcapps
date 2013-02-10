@@ -19,8 +19,18 @@ for $i (glob "/mnt/sshfs/WORDNET/dict/data.*") {
     }
 
     my($words,$gloss) = ($1,$2);
+    # nuke numbers + split
+    $words=~s/\s+[0-f]\s*/ /isg;
     debug("WORDS: $words");
-    debug("GLOSS: $gloss");
+    @words = split(/\s+/,$words);
+    debug("WORDS[a]",@words);
+
+    print join("\n",@words),"\n";
+#    debug("WORDS:",@words);
+#    debug("GLOSS: $gloss");
   }
+  print "\n";
 }
+
+print "\n";
 

@@ -425,8 +425,7 @@ SHORT: 1*853762002047@1202, 2*853762002061@1202, 1*853762002085@1456, 1c*0149000
 DATE: 20130209
 
 0940 2 vintage cheddar fries
-1341 1 entire package tyson beef hot dogs
+1341 1 entire package tyson beef hot dogs, 220g peanut butter nuggets, vintage cheddar fries
+1732 11 slices hard salami (11/3 servings), vintage cheddar fries
 
-SHORT: 2*853762002085@0940, 1c*023700034212@1341
-
-
+SHORT: 2*853762002085@0940, 1c*023700034212@1341, 3.6666666666*044700010907@1732, 1*853762002085@1732, 220g*072600074071@1341, 1*853762002085@1341
