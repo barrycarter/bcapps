@@ -11,18 +11,20 @@ require "/usr/local/lib/bclib.pl";
 @kindle = glob("/mnt/usbext2/documents/*.mobi");
 @hd = glob("/home/barrycarter/LIB2KINDLE/*.mobi");
 
-# remove dir paths and spaces/dollarsigns
 for $i (@kindle,@hd) {
-  $i=~s%^.*/%%isg;
-  $i=~s/[\s\$]/_/isg;
+  $j = $i;
+  # remove dir path and normalize
+  $i=~s%.*?/%%isg;
+  $i=~s/[^0-9a-z]//isg;
+  $map{$i} = $j;
 }
 
-debug("KINDLE",@kindle);
-debug("HD",@hd);
+# debug("KINDLE",@kindle);
+# debug("HD",@hd);
 
 
 @copy = minus([@hd], [@kindle]);
 
-debug(@copy);
-
-
+for $i (@copy) {
+  print "cp $map{$i} /mnt/usbext2/documents/\n";
+}
