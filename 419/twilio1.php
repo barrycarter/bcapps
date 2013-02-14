@@ -13,6 +13,8 @@
 
   // verified scammers and the recordings that verify them:
 
+  // 12147029034 (verified by code words + gmail)
+
   // 17042492811 james newell (not yet verified)
   // 15856266050 doris brock (not yet verified)
 
@@ -23,6 +25,7 @@
   // reset number below to scammer phone number
   // mirror file to live site
   // determine code words (randomly)
+  // http://1f59d65c666c69bf8bc52bf5e4c82e27.scowl.db.94y.info may help
   // note down code words for number to see if i get them back
   // prep mac speech code to read form letter
   // call with code words [repeat twice if possible]
@@ -34,6 +37,6 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
 <Response>
 <Dial record="true">
-<Number>+15856266050</Number>
+<Number>+18326868867</Number>
 </Dial>
 </Response>

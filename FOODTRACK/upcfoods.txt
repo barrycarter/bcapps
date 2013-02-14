@@ -69,6 +69,7 @@ SUBWAY-20130126 Spicy Italian Salad%2C pepperjack cheese%2C green peppers%2C red
 037600223188 Hormel  Chili: Chili, with Beans (Hormel Foods Sales, LLC)
 038000121586 Special K  Cereal Bar: Cereal Bar, Strawberry. (Kellogg Sales Co.)
 042272005307 Amys Organic Chili: Chili, Black Bean, Medium, Low Fat (Amys Kitchen)
+044700000953 Oscar Mayer  Franks: Franks, Beef, Classic (Kraft Foods Global, Inc.)
 044700010907 Oscar Mayer  Salami: Salami, Hard (Kraft Foods Global, Inc.)
 044700011201 Oscar Mayer  Cotto Salami: Cotto Salami, Beef (Kraft Foods Global Inc.)
 044700032527 Oscar Mayer Deli Fresh Ham: Ham, Black Forest, Shaved (Kraft Foods Global, Inc.)

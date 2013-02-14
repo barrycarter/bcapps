@@ -41,7 +41,7 @@ for $i (split(/\n/,read_file("/home/barrycarter/BCGIT/FOODTRACK/foods.txt"))) {
   # record foods for day (as list) + get "UPC codes" to look up
   for $j (@foods) {
     # TODO: may loosen restriction that all foods be in this format
-    unless ($j=~/^([\d\.]+[cug]?)\*(.*?)\@(\d{4})$/) {
+    unless ($j=~/^(\-?[\d\.]+[cug]?)\*(.*?)\@(\d{4})$/) {
       die "BAD LINE: $j";
     }
 
@@ -100,22 +100,22 @@ if (@missing) {die "No info for: @missing";}
 for $i (keys %foods) {
   for $j (@{$foods{$i}}) {
     # parse food data
-    $j=~/^([\d\.]+[cug]?)\*(.*?)\@(\d{4})$/;
+    $j=~/^(\-?[\d\.]+[cug]?)\*(.*?)\@(\d{4})$/;
     # <h>Unfascinating fact: item and time are anagrams</h>
     my($quant, $item, $time) = ($1, $2, $3);
     %item = %{$info{$item}};
 
-    debug("$quant/$item/$time");
+    debug("QIT: $quant/$item/$time");
 
     # TODO: just doing calories now for testing
 
     # convert serving size to actual servings
-    if ($quant=~/^[\d\.]+$/) {
+    if ($quant=~/^\-?[\d\.]+$/) {
       # do nothing, but dont throw error
-    } elsif ($quant=~s/^([\d\.]+)c$//) {
+    } elsif ($quant=~s/^(\-?[\d\.]+)c$//) {
       # in containers
       $quant = $1*$item{'servings per container'};
-    } elsif ($quant=~s/^([\d\.]+)g$//) {
+    } elsif ($quant=~s/^(\-?[\d\.]+)g$//) {
       # in grams
       debug("gramming: $item{Name}");
       $quant = $1/$item{'servingsizeingrams'};

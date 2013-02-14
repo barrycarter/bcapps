@@ -18,14 +18,30 @@ require "/usr/local/lib/bclib.pl";
 
 # list of gmail addresses I've pinged
 @pinged = `cut -d' ' -f 2 /home/barrycarter/BCGIT/419/pinged.txt | fgrep gmail.com`;
-for $i (@pinged) {chomp($i);}
 
-# cleanup list of buds (newline needed to match @pinged
+for $i (@pinged) {
+  # cleanup slightly
+  chomp($i);
+
+  if ($i=~m/mailto:(.*?)\"/) {$i = $1;}
+
+  $i=~s/^.*?>(.*?)<.*?/$1/isg;
+
+}
+
+debug("PINGED:",@pinged);
+
+# cleanup list of buds (newline needed to match @pinged)
 for $i (@buds) {$i=~s%.*<name>(.*?)</name>.*%$1%s;}
 
 @left = minus(\@pinged, \@buds);
 
 unless (@left) {print "gmail buddy list is up to date\n"; exit;}
 
-print "Add or whitelist the following:\n\n";
-print join("\n",@left),"\n\n";
+# print in "list editing" format for GAIM/Pidgin
+for $i (@left) {
+  print "\t\t\t<buddy screenname='$i'/>\n";
+}
+
+# print "Add or whitelist the following:\n\n";
+# print join("\n",@left),"\n\n";
