@@ -15,9 +15,6 @@
 
   // 12147029034 (verified by code words + gmail)
 
-  // 17042492811 james newell (not yet verified)
-  // 15856266050 doris brock (not yet verified)
-
   // Verification procedure:
   //
   // find email with phone number
@@ -37,6 +34,6 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
 <Response>
 <Dial record="true">
-<Number>+18326868867</Number>
+<Number>+16462260706</Number>
 </Dial>
 </Response>

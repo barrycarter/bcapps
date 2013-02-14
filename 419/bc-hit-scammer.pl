@@ -5,28 +5,46 @@
 
 require "/usr/local/lib/bclib.pl";
 # $fromaddr= "vergetta.pervect\@dudmail.com";
-$fromaddr= "alfred.yankovic\@gmail.com";
+# $fromaddr= "alfred.yankovic\@gmail.com";
+# $fromaddr= "jennifer.perry\@usa.com";
+$fromaddr= "survey.master\@adexec.com";
 
 # TODO: this is just testing to see to what extent they reply
-@addr = split(/\n/,`egrep -v '^#|^\$' /home/barrycarter/BCGIT/419/confirmed.txt`);
+@addr = split(/\n/,`egrep -v '^#|^\$' /home/barrycarter/BCGIT/419/confirmed.txt| fgrep -vf /home/barrycarter/BCGIT/419/confirmed-bounces.txt`);
 
 open(B,">/var/tmp/bchit.sh");
 
 for $i (@addr) {
   
   my($msg) = << "MARK";
-From: Alfred Yankovic <$fromaddr>
+From: Survey Master International <$fromaddr>
 To: $i
-Subject: OK, ready to go here
+Subject: Please complete 10 question survey for \$100
 
-OK, I am ready to go on this end.
+Our research company would like to pay you \$100 to complete this brief
+10-question survey.  Please send your reply to
+survey.master\@adexec.com to receive your \$100, thank you.
 
-Call me at 213-814-0993 in Glendale, CA, when you're ready to get
-moving on this too!
+1. What is your opinion of US President Barack Obama?
 
-Oh, ask for "Uncle Al" if someone else answers, they know who I am.
+2. What is your favorite city in the world?
 
-Thanks, Al!
+3. What is your least favorite city in the world?
+
+4. To how many countries have you travelled?
+
+5. Do you believe in God?
+
+6. What is your opinion of the US state of Texas?
+
+7. Would you rather live in Los Angeles or Miami?
+
+8. Do you consider 80 degrees to be hot or just warm?
+
+9. Who are your three favorite composers?
+
+10. Would you be interested in completing a longer survey for
+additional compensation?
 
 MARK
 ;
