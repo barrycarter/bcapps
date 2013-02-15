@@ -495,7 +495,7 @@ sub sqlite3cols {
   my($raw) = sqlite3(".schema $tabname",$db);
   my(%ret);
 
-  unless ($raw=~/create table $tabname \((.*?)\)/is) {
+  unless ($raw=~/create table $tabname \((.*?)\)\;/is) {
     warnlocal("Schema return value not understood: $raw");
     return;
   }

@@ -2512,29 +2512,29 @@
         <gnm:RowInfo No="174" Unit="25.5"/>
         <gnm:RowInfo No="175" Unit="12.75" Count="77"/>
       </gnm:Rows>
-      <gnm:Selections CursorCol="1" CursorRow="38">
-        <gnm:Selection startCol="1" startRow="38" endCol="1" endRow="38"/>
+      <gnm:Selections CursorCol="4" CursorRow="1">
+        <gnm:Selection startCol="4" startRow="1" endCol="4" endRow="1"/>
       </gnm:Selections>
       <gnm:Cells>
-        <gnm:Cell Row="0" Col="0" ValueType="60">UPC (added by BC)</gnm:Cell>
-        <gnm:Cell Row="0" Col="1" ValueType="60">  Success 2012                                      RTG &amp; Select Nutrition Facts                        (Updated 02-13-13)</gnm:Cell>
-        <gnm:Cell Row="0" Col="2" ValueType="60">Net Weight (g)</gnm:Cell>
-        <gnm:Cell Row="0" Col="3" ValueType="60">Calories</gnm:Cell>
-        <gnm:Cell Row="0" Col="4" ValueType="60">Calories from Fat</gnm:Cell>
-        <gnm:Cell Row="0" Col="5" ValueType="60">Total Fat (g)</gnm:Cell>
-        <gnm:Cell Row="0" Col="6" ValueType="60">Saturated Fat (g)</gnm:Cell>
-        <gnm:Cell Row="0" Col="7" ValueType="60">trans-Fat (g)</gnm:Cell>
-        <gnm:Cell Row="0" Col="8" ValueType="60">Cholesterol (mg)</gnm:Cell>
-        <gnm:Cell Row="0" Col="9" ValueType="60">Sodium (mg)</gnm:Cell>
-        <gnm:Cell Row="0" Col="10" ValueType="60">Total Carbohydrates (g)</gnm:Cell>
-        <gnm:Cell Row="0" Col="11" ValueType="60">Dietary Fiber (g)</gnm:Cell>
-        <gnm:Cell Row="0" Col="12" ValueType="60">Sugars (g)</gnm:Cell>
-        <gnm:Cell Row="0" Col="13" ValueType="60">Sugar Alcohol (g)</gnm:Cell>
-        <gnm:Cell Row="0" Col="14" ValueType="60">Protein (g)</gnm:Cell>
-        <gnm:Cell Row="0" Col="15" ValueType="60">%DV Vitamin A</gnm:Cell>
-        <gnm:Cell Row="0" Col="16" ValueType="60">%DV Vitamin C</gnm:Cell>
-        <gnm:Cell Row="0" Col="17" ValueType="60">%DV Calcium</gnm:Cell>
-        <gnm:Cell Row="0" Col="18" ValueType="60">%DV Iron</gnm:Cell>
+        <gnm:Cell Row="0" Col="0" ValueType="60">UPC</gnm:Cell>
+        <gnm:Cell Row="0" Col="1" ValueType="60">Name</gnm:Cell>
+        <gnm:Cell Row="0" Col="2" ValueType="60">servingsizeingrams</gnm:Cell>
+        <gnm:Cell Row="0" Col="3" ValueType="60">calories</gnm:Cell>
+        <gnm:Cell Row="0" Col="4" ValueType="60">caloriesfromfat</gnm:Cell>
+        <gnm:Cell Row="0" Col="5" ValueType="60">totalfat</gnm:Cell>
+        <gnm:Cell Row="0" Col="6" ValueType="60">saturatedfat</gnm:Cell>
+        <gnm:Cell Row="0" Col="7" ValueType="60">transfat</gnm:Cell>
+        <gnm:Cell Row="0" Col="8" ValueType="60">cholesterol</gnm:Cell>
+        <gnm:Cell Row="0" Col="9" ValueType="60">sodium</gnm:Cell>
+        <gnm:Cell Row="0" Col="10" ValueType="60">totalcarbohydrate</gnm:Cell>
+        <gnm:Cell Row="0" Col="11" ValueType="60">dietaryfiber</gnm:Cell>
+        <gnm:Cell Row="0" Col="12" ValueType="60">sugars</gnm:Cell>
+        <gnm:Cell Row="0" Col="13" ValueType="60">sugaralcohols</gnm:Cell>
+        <gnm:Cell Row="0" Col="14" ValueType="60">protein</gnm:Cell>
+        <gnm:Cell Row="0" Col="15" ValueType="60">vitamina</gnm:Cell>
+        <gnm:Cell Row="0" Col="16" ValueType="60">vitaminc</gnm:Cell>
+        <gnm:Cell Row="0" Col="17" ValueType="60">calcium</gnm:Cell>
+        <gnm:Cell Row="0" Col="18" ValueType="60">iron</gnm:Cell>
         <gnm:Cell Row="1" Col="1" ValueType="60" ValueFormat="@[family=Arial:24:2147483647][size=10240:24:2147483647][bold=1:24:2147483647][italic=0:24:2147483647][strikethrough=0:24:2147483647][underline=none:24:2147483647][rise=0:24:2147483647][color=00x00x00:24:2147483647]">RTG (Ready To Go) Foods  </gnm:Cell>
         <gnm:Cell Row="2" Col="1" ValueType="60">Breakfast</gnm:Cell>
         <gnm:Cell Row="3" Col="1" ValueType="60">Apple Cinnamon Oatmeal</gnm:Cell>
@@ -5685,7 +5685,7 @@
         <gnm:Cell Row="203" Col="17" ValueType="40" ValueFormat="0%">0</gnm:Cell>
         <gnm:Cell Row="203" Col="18" ValueType="40" ValueFormat="0%">0.04</gnm:Cell>
       </gnm:Cells>
-      <gnm:SheetLayout TopLeft="A24">
+      <gnm:SheetLayout TopLeft="C2">
         <gnm:FreezePanes FrozenTopLeft="A1" UnfrozenTopLeft="A2"/>
       </gnm:SheetLayout>
       <gnm:Solver ProblemType="1" Inputs="" MaxTime="0" MaxIter="0" NonNeg="1" Discr="0" AutoScale="0" ShowIter="0" AnswerR="0" SensitivityR="0" LimitsR="0" PerformR="0" ProgramR="0"/>
