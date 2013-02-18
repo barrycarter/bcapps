@@ -74,3 +74,32 @@ Chat strategy: (bc-check-scammer.pl will confirm these are all on my buddy list 
   - For confirmed scammers with gmail.com, aim.com, and similar
   addresses, add to buddy list and annoy as possible.
 
+MAILBOX STRATEGY
+================
+
+All emails come into leonard.zeptowitz
+
+To add to "leonard.zeptowitz.has.replied", look for all ANSWERED
+UNIMPORTANT emails to leonard.zeptowitz+<n> where n is a number. Do
+NOT add unanswered/important emails to this mailbox, since I will end
+up never answering them (important = I've set the "important" flag in
+Alpine). Look at emails to make sure they are really 419y. In Alpine,
+this command sequence:
+
+<h>below will break on May 17 2033, near the end of Unix time</h>
+
+;ttleonard.zeptowitz+1
+;nsa
+;ns!*
+
+If doing many of these at once, searching for phrases like "dear
+winner", "million", "western union", "defiled" [sic], "mtcn",
+"moneygram", "money gram" may help find 419y spams faster [as opposed
+to innocent party responses]
+
+TODO: improve this procedure to ignore duplicates (ie, once a 'to'
+address is in leonard.zeptowitz.has.replied, no need to add it again)
+
+
+
+

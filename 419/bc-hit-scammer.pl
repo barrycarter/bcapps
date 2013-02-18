@@ -7,7 +7,8 @@ require "/usr/local/lib/bclib.pl";
 # $fromaddr= "vergetta.pervect\@dudmail.com";
 # $fromaddr= "alfred.yankovic\@gmail.com";
 # $fromaddr= "jennifer.perry\@usa.com";
-$fromaddr= "survey.master\@adexec.com";
+# $fromaddr= "survey.master\@adexec.com";
+$fromaddr= "herman.bright\@accountant.com";
 
 # TODO: this is just testing to see to what extent they reply
 @addr = split(/\n/,`egrep -v '^#|^\$' /home/barrycarter/BCGIT/419/confirmed.txt| fgrep -vf /home/barrycarter/BCGIT/419/confirmed-bounces.txt`);
@@ -17,34 +18,18 @@ open(B,">/var/tmp/bchit.sh");
 for $i (@addr) {
   
   my($msg) = << "MARK";
-From: Survey Master International <$fromaddr>
+From: Herman Bright <$fromaddr>
 To: $i
-Subject: Please complete 10 question survey for \$100
+Subject: Ready to proceed!
 
-Our research company would like to pay you \$100 to complete this brief
-10-question survey.  Please send your reply to
-survey.master\@adexec.com to receive your \$100, thank you.
+I read over your proposal, and would like to proceed.
 
-1. What is your opinion of US President Barack Obama?
+Could you give me a quick call at +44-703-197-3669 to answer a couple
+of questions?
 
-2. What is your favorite city in the world?
+Thanks!
 
-3. What is your least favorite city in the world?
-
-4. To how many countries have you travelled?
-
-5. Do you believe in God?
-
-6. What is your opinion of the US state of Texas?
-
-7. Would you rather live in Los Angeles or Miami?
-
-8. Do you consider 80 degrees to be hot or just warm?
-
-9. Who are your three favorite composers?
-
-10. Would you be interested in completing a longer survey for
-additional compensation?
+- Herm
 
 MARK
 ;
