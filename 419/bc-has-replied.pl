@@ -16,11 +16,11 @@
 require "/usr/local/lib/bclib.pl";
 dodie('chdir("/home/barrycarter/BCGIT")');
 
-print STDERR "Please remove all bounces from scambaiter mailbox\nconfirm that all emails to plus addresses are truly scamlike,\nthen hit return\n";
-<STDIN>;
+# print STDERR "Please remove all bounces from scambaiter mailbox\nconfirm that all emails to plus addresses are truly scamlike,\nthen hit return\n";
+# <STDIN>;
 
 # look in bait box (must double escape "+")
-$cmd = "egrep 'leonard.zeptowitz\\+[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]\@gmail.com' /home/barrycarter/mail/leonard.zeptowitz";
+$cmd = "egrep 'leonard.zeptowitz\\+[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]\@gmail.com' /home/barrycarter/mail/leonard.zeptowitz.has.replied";
 @addrs = `$cmd`;
 
 for $i (@addrs) {

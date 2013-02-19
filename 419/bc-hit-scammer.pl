@@ -8,7 +8,8 @@ require "/usr/local/lib/bclib.pl";
 # $fromaddr= "alfred.yankovic\@gmail.com";
 # $fromaddr= "jennifer.perry\@usa.com";
 # $fromaddr= "survey.master\@adexec.com";
-$fromaddr= "herman.bright\@accountant.com";
+# $fromaddr= "herman.bright\@accountant.com";
+$fromaddr= "anderson.posh\@lawyer.com";
 
 # TODO: this is just testing to see to what extent they reply
 @addr = split(/\n/,`egrep -v '^#|^\$' /home/barrycarter/BCGIT/419/confirmed.txt| fgrep -vf /home/barrycarter/BCGIT/419/confirmed-bounces.txt`);
@@ -18,18 +19,19 @@ open(B,">/var/tmp/bchit.sh");
 for $i (@addr) {
   
   my($msg) = << "MARK";
-From: Herman Bright <$fromaddr>
+From: Anderson Posh <$fromaddr>
 To: $i
-Subject: Ready to proceed!
+Subject: Just got back home!
 
-I read over your proposal, and would like to proceed.
+My apologies for the delay in getting back to you.
 
-Could you give me a quick call at +44-703-197-3669 to answer a couple
-of questions?
+I just got back home, and am completely flooded with emails.
 
-Thanks!
+Could you call me at (646)-504-6977
 
-- Herm
+Thanks,
+
+Anderson Posh, attorney at law
 
 MARK
 ;
