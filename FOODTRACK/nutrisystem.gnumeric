@@ -2512,8 +2512,8 @@
         <gnm:RowInfo No="174" Unit="25.5"/>
         <gnm:RowInfo No="175" Unit="12.75" Count="77"/>
       </gnm:Rows>
-      <gnm:Selections CursorCol="0" CursorRow="7">
-        <gnm:Selection startCol="0" startRow="7" endCol="0" endRow="7"/>
+      <gnm:Selections CursorCol="0" CursorRow="108">
+        <gnm:Selection startCol="0" startRow="108" endCol="0" endRow="108"/>
       </gnm:Selections>
       <gnm:Cells>
         <gnm:Cell Row="0" Col="0" ValueType="60">UPC</gnm:Cell>
@@ -2902,6 +2902,7 @@
         <gnm:Cell Row="22" Col="16" ValueType="40" ValueFormat="0%">0</gnm:Cell>
         <gnm:Cell Row="22" Col="17" ValueType="40" ValueFormat="0%">0.1</gnm:Cell>
         <gnm:Cell Row="22" Col="18" ValueType="40" ValueFormat="0%">0.1</gnm:Cell>
+        <gnm:Cell Row="23" Col="0" ValueType="40" ValueFormat="General_)">632674320438</gnm:Cell>
         <gnm:Cell Row="23" Col="1" ValueType="60" ValueFormat="General_)">Peanut Butter Granola Bar</gnm:Cell>
         <gnm:Cell Row="23" Col="2" ValueType="40">40</gnm:Cell>
         <gnm:Cell Row="23" Col="3" ValueType="40">160</gnm:Cell>
@@ -3317,6 +3318,7 @@
         <gnm:Cell Row="47" Col="16" ValueType="40" ValueFormat="0%">0.02</gnm:Cell>
         <gnm:Cell Row="47" Col="17" ValueType="40" ValueFormat="0%">0.04</gnm:Cell>
         <gnm:Cell Row="47" Col="18" ValueType="40" ValueFormat="0%">0.1</gnm:Cell>
+        <gnm:Cell Row="48" Col="0" ValueType="40" ValueFormat="General_)">632764580597</gnm:Cell>
         <gnm:Cell Row="48" Col="1" ValueType="60" ValueFormat="General_)">Peanut Butter and Jelly Bar</gnm:Cell>
         <gnm:Cell Row="48" Col="2" ValueType="40">49</gnm:Cell>
         <gnm:Cell Row="48" Col="3" ValueType="40">210</gnm:Cell>
@@ -3554,6 +3556,7 @@
         <gnm:Cell Row="62" Col="16" ValueType="40" ValueFormat="0%">0.25</gnm:Cell>
         <gnm:Cell Row="62" Col="17" ValueType="40" ValueFormat="0%">0.02</gnm:Cell>
         <gnm:Cell Row="62" Col="18" ValueType="40" ValueFormat="0%">0.1</gnm:Cell>
+        <gnm:Cell Row="63" Col="0" ValueType="40">632674650092</gnm:Cell>
         <gnm:Cell Row="63" Col="1" ValueType="60">Chicken Pasta Parmesan </gnm:Cell>
         <gnm:Cell Row="63" Col="2" ValueType="40">227</gnm:Cell>
         <gnm:Cell Row="63" Col="3" ValueType="40">200</gnm:Cell>
@@ -5700,7 +5703,7 @@
         <gnm:Cell Row="203" Col="17" ValueType="40" ValueFormat="0%">0</gnm:Cell>
         <gnm:Cell Row="203" Col="18" ValueType="40" ValueFormat="0%">0.04</gnm:Cell>
       </gnm:Cells>
-      <gnm:SheetLayout TopLeft="A3">
+      <gnm:SheetLayout TopLeft="A90">
         <gnm:FreezePanes FrozenTopLeft="A1" UnfrozenTopLeft="A2"/>
       </gnm:SheetLayout>
       <gnm:Solver ProblemType="1" Inputs="" MaxTime="0" MaxIter="0" NonNeg="1" Discr="0" AutoScale="0" ShowIter="0" AnswerR="0" SensitivityR="0" LimitsR="0" PerformR="0" ProgramR="0"/>
