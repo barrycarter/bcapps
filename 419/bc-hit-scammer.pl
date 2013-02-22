@@ -10,7 +10,8 @@ require "/usr/local/lib/bclib.pl";
 # $fromaddr= "survey.master\@adexec.com";
 # $fromaddr= "herman.bright\@accountant.com";
 # $fromaddr= "anderson.posh\@lawyer.com";
-$fromaddr= "sarah.hill\@geologist.com";
+# $fromaddr= "sarah.hill\@geologist.com";
+$fromaddr= "julia.wilson\@artlover.com";
 
 # TODO: this is just testing to see to what extent they reply
 @addr = split(/\n/,`egrep -v '^#|^\$' /home/barrycarter/BCGIT/419/confirmed.txt| fgrep -vf /home/barrycarter/BCGIT/419/confirmed-bounces.txt`);
@@ -20,12 +21,17 @@ open(B,">/var/tmp/bchit.sh");
 for $i (@addr) {
   
   my($msg) = << "MARK";
-From: Sarah Hill <$fromaddr>
+From: Julia Wilson <$fromaddr>
 To: $i
-Subject: Accidentally deleted your last email!
+Subject: Need a US contact number
 
-I'm so sorry, but I just accidentally deleted your last email. Could
-you please re-send? Thanks!
+I got your email, and your offer sounds quite attractive, but I can
+only do business with people in the USA.
+
+Do you have a phone number in the USA and/or someone in the USA who
+can vouch for you?
+
+Thanks much, Julia
 
 MARK
 ;
