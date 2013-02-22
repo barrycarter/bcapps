@@ -1,0 +1,12 @@
+# phone numbers scammers have provided (possibly false) and status as
+# of given day (scammers often change phone numbers, so a status
+# that's valid today may not be valid tomorrow). All times US/Denver
+
++12024556956 Stella Paulson (head customer care, Standard Chartered Bank)
+21 Feb 2013 1836: skype "call failed"
+
++13057918246 Mr. William E. Bennett (Foreign Operation Manager City State Bank Inc)
+21 Feb 2013 1844: "your call cannot be completed as dialed... [0443]"
+
+
+

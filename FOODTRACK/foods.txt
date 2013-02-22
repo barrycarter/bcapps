@@ -523,6 +523,27 @@ DATE: 20130219
 1003 jal trio fries, honey bbq fries, honey mustard onion fries
 1335 peanut butter granola bar (breakfast), peanut butter and jelly bar (lunch), chocolate caramel bar (dessert#1)
 1551 chicken pasta parmesan, fudge brownie, vinegar splash fries, 1 can roast beef hash
+2021 wolf beanless chili, 5 oscar mayer hot dogs, 4 slices italian 35 cal bread, vintage cheddar fries, jal trio fries
 
-SHORT: 1*853762002108@1003, 1*853762002047@1003, 1*853762002061@1003, 1*632674320438@1335, 1*632764580597@1335, 1*632674440075@1335, 1*632674650092@1551, 1*632764440327@1551, 1*853762002023@1551, 1c*037600199919@1551
+SHORT: 1*853762002108@1003, 1*853762002047@1003, 1*853762002061@1003, 1*632674320438@1335, 1*632764580597@1335, 1*632674440075@1335, 1*632674650092@1551, 1*632764440327@1551, 1*853762002023@1551, 1c*037600199919@1551, 1c*014900012704@2021, 5*044700000953@2021, 4*024126008955@2021, 1*853762002108@2021, 1*853762002085@2021
+
+DATE: 20130220
+
+1236 2 sea salt fries
+1705 chewy chocolate chip granola bar, fudge graham bar, chewy peanut bar, jal trio fries, 2 vintage cheddar fries
+2111 chicken pasta parmesan, chocolate peanut butter bar, 5 oscar mayer hot dogs, 1 can roast beef hash
+
+SHORT: 2*853762002009@1236, 1*632674320339@1705, 1*632674580177@1705, 1*632764440518@1705, 1*853762002108@1705, 2*853762002085@1705, 1*632674650092@2111, 1*632674440617@2111, 5*044700000953@2111, 1c*037600199919@2111
+
+DATE: 20130221
+
+0933 peanut butter granola bar, peanut butter and jelly bar
+1102 chocolate peanut butter bar, ravioli in basil tomato sauce, carrot cake
+1530 5 slices Dominos large Ital saus/greenchile/onion pizza
+
+SHORT: 1*632674320438@0933, 1*632764580597@0933, 1*632674440617@1102, 1*632764650061@1102, 1*632674440426@1102, 5*DOMINO-LARGE-ITALSAUS-ONION-GC@1530
+
+
+
+
 
