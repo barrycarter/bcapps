@@ -11,7 +11,8 @@ require "/usr/local/lib/bclib.pl";
 # $fromaddr= "herman.bright\@accountant.com";
 # $fromaddr= "anderson.posh\@lawyer.com";
 # $fromaddr= "sarah.hill\@geologist.com";
-$fromaddr= "julia.wilson\@artlover.com";
+# $fromaddr= "julia.wilson\@artlover.com";
+$fromaddr= "barr.jsmith4\@lawyer.com";
 
 # TODO: this is just testing to see to what extent they reply
 @addr = split(/\n/,`egrep -v '^#|^\$' /home/barrycarter/BCGIT/419/confirmed.txt| fgrep -vf /home/barrycarter/BCGIT/419/confirmed-bounces.txt`);
@@ -21,17 +22,19 @@ open(B,">/var/tmp/bchit.sh");
 for $i (@addr) {
   
   my($msg) = << "MARK";
-From: Julia Wilson <$fromaddr>
+From: John Smith Attorney at Law <$fromaddr>
 To: $i
-Subject: Need a US contact number
+Subject: Please call me at home
 
-I got your email, and your offer sounds quite attractive, but I can
-only do business with people in the USA.
+I am an attorney, but I do not want to handle this through my office,
+given the amount involved.
 
-Do you have a phone number in the USA and/or someone in the USA who
-can vouch for you?
+Could you call me at my home phone +1-602-354-9152
 
-Thanks much, Julia
+Please do not contact me at my office email again, this is not
+something I want to share with my partners.
+
+Thank you, John Smith (Atty at Law, Lices. AZ)
 
 MARK
 ;

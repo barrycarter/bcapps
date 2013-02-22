@@ -14,4 +14,27 @@
 +19376198458 (Barrister John Smith, Google team)
 21 Feb 2013 1956: verified scammer, I called to confirm
 
++16465046977 (Barrister Aaron Wilson, Gordon Herrington & Associates)
+21 Feb 2013 2158: confirmed scammer!
+21 Feb 2013 2146: non-personalized voicemail "you've reached [number]"
+
++16825033652 (Hayes Watkins, associate of Theresa Monica)
+22 Feb 2013 0744: beep (similar to "please record message after the ~")
+
++14048261746 (Jack Bryant INSPECTION OFFICER)
+22 Feb 2013 0804: "if you would like to make..." [MagicJack error message]
+
++16462260706 (James Williams, IMF Office USA)
+22 Feb 2013 0807: voice answer
+TODO: followup here!
+
++17733123120 (Anthony Bruce, remittance officer)
+22 Feb 2013 0810: voice answer
+TODO: followup here!
+
++17742240935 (statefinance-department@live.com, "text messages only")
+22 Feb 2013 0815: Busy (according to SkyPE); odd voice-like busy signal once
+
++13472981707 ("diplomat in [CA] for Skye Bank Nigeria Plc)
+22 Feb 2013 0824: "if you would like to make..." [MagicJack error message]
 
