@@ -33,7 +33,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 ?>
 
 <Response>
-<Record startOnDialAnswer="true" redirect="false"/>
+<Record startOnDialAnswer="true" maxLength="3600" redirect="false"/>
 <Dial>
 <Number>19376198458</Number>
 </Dial>

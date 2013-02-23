@@ -12,6 +12,10 @@
 
 require "/usr/local/lib/bclib.pl";
 
+print hashlist2sqlite([{d4me2db("030900005669")}],"foods"),";";
+
+die "USE bc-track-foods-2013.pl; $0 may damage databases";
+
 # one off for coke one, er coke zero
 # special cases to date: 049000042566 041196010886 029000073302
 # print hashlist2sqlite([{d4me2db("049000042566")}],"foods"),";";

@@ -540,8 +540,15 @@ DATE: 20130221
 0933 peanut butter granola bar, peanut butter and jelly bar
 1102 chocolate peanut butter bar, ravioli in basil tomato sauce, carrot cake
 1530 5 slices Dominos large Ital saus/greenchile/onion pizza
+1624 honey bbq fries, honey mustard fries, vintage cheddar fries
+2112 3 pieces pizza (remaining), Weight Watchers smoked string cheese, 5 oscar mayer hot dogs, 64g peanut butter pretzels
 
-SHORT: 1*632674320438@0933, 1*632764580597@0933, 1*632674440617@1102, 1*632764650061@1102, 1*632674440426@1102, 5*DOMINO-LARGE-ITALSAUS-ONION-GC@1530
+SHORT: 1*632674320438@0933, 1*632764580597@0933, 1*632674440617@1102, 1*632764650061@1102, 1*632674440426@1102, 5*DOMINO-LARGE-ITALSAUS-ONION-GC@1530, 3*DOMINO-LARGE-ITALSAUS-ONION-GC@2112, 1*030900005669@2112, 5*044700000953@2112, 64g*072600074071@2112, 1*853762002047@1624, 1*853762002061@1624, 1*853762002085@1624
+
+
+
+
+
 
 
 
