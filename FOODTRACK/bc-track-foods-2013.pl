@@ -15,7 +15,7 @@ require "/usr/local/lib/bclib.pl";
 
 # do not sum up these columns, pointless
 %donotadd = list2hash("file", "comments", "url", "Manufacturer", "modified",
-		      "servings per container", "serving size", "UPC",
+		      "servings per container", "serving size",
 		      "Name");
 
 # TODO: make this less kludgey
@@ -162,7 +162,11 @@ for $i (sort keys %total) {
 
   # foods eaten
   for $j (keys %{$total{$i}{foods}}) {
-    print "$j: $total{$i}{foods}{$j}{servings} ($total{$i}{foods}{$j}{calories})\n";
+    debug("HASH",unfold($total{$i}{foods}{$j}));
+    $jprint = $j;
+    $jprint=~s/\%28/\(/isg;
+    $jprint=~s/\%29/\)/isg;
+    print "$jprint [$total{$i}{foods}{$j}{UPC}]: $total{$i}{foods}{$j}{servings} ($total{$i}{foods}{$j}{calories})\n";
   }
 
   print "\n";

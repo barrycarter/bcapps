@@ -2563,8 +2563,8 @@
         <gnm:RowInfo No="174" Unit="25.5"/>
         <gnm:RowInfo No="175" Unit="12.75" Count="77"/>
       </gnm:Rows>
-      <gnm:Selections CursorCol="0" CursorRow="196">
-        <gnm:Selection startCol="0" startRow="196" endCol="0" endRow="196"/>
+      <gnm:Selections CursorCol="0" CursorRow="18">
+        <gnm:Selection startCol="0" startRow="18" endCol="0" endRow="18"/>
       </gnm:Selections>
       <gnm:Cells>
         <gnm:Cell Row="0" Col="0" ValueType="60">UPC</gnm:Cell>
@@ -2845,6 +2845,7 @@
         <gnm:Cell Row="16" Col="16" ValueType="40" ValueFormat="0%">0</gnm:Cell>
         <gnm:Cell Row="16" Col="17" ValueType="40" ValueFormat="0%">0.02</gnm:Cell>
         <gnm:Cell Row="16" Col="18" ValueType="40" ValueFormat="0%">0.06</gnm:Cell>
+        <gnm:Cell Row="17" Col="0" ValueType="40">632674320308</gnm:Cell>
         <gnm:Cell Row="17" Col="1" ValueType="60">Harvest Nut Bar </gnm:Cell>
         <gnm:Cell Row="17" Col="2" ValueType="40">40</gnm:Cell>
         <gnm:Cell Row="17" Col="3" ValueType="40">170</gnm:Cell>
@@ -3881,6 +3882,7 @@
         <gnm:Cell Row="77" Col="16" ValueType="40" ValueFormat="0%">0.02</gnm:Cell>
         <gnm:Cell Row="77" Col="17" ValueType="40" ValueFormat="0%">0.08</gnm:Cell>
         <gnm:Cell Row="77" Col="18" ValueType="40" ValueFormat="0%">0.15</gnm:Cell>
+        <gnm:Cell Row="78" Col="0" ValueType="40">632674650252</gnm:Cell>
         <gnm:Cell Row="78" Col="1" ValueType="60">Pasta Fagioli Soup</gnm:Cell>
         <gnm:Cell Row="78" Col="2" ValueType="40">298</gnm:Cell>
         <gnm:Cell Row="78" Col="3" ValueType="40">240</gnm:Cell>
@@ -5757,7 +5759,7 @@
         <gnm:Cell Row="203" Col="17" ValueType="40" ValueFormat="0%">0</gnm:Cell>
         <gnm:Cell Row="203" Col="18" ValueType="40" ValueFormat="0%">0.04</gnm:Cell>
       </gnm:Cells>
-      <gnm:SheetLayout TopLeft="A177">
+      <gnm:SheetLayout TopLeft="A18">
         <gnm:FreezePanes FrozenTopLeft="A1" UnfrozenTopLeft="A2"/>
       </gnm:SheetLayout>
       <gnm:Solver ProblemType="1" Inputs="" MaxTime="0" MaxIter="0" NonNeg="1" Discr="0" AutoScale="0" ShowIter="0" AnswerR="0" SensitivityR="0" LimitsR="0" PerformR="0" ProgramR="0"/>
