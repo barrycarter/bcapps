@@ -551,3 +551,18 @@ DATE: 20130222
 2028 Italian sausage and green chile medium pizza (whole thing), 2 vintage cheddar fries, vinegar splash fries
 
 SHORT: 1*632674320308@1341, 1*632674580641@1341, 1*632674440617@1341, 1*632674650252@1341, 1*632674440617@1341, 2*853762002009@1341, 1*853762002023@1341, 8*DOMINO-MEDIUM-ITALSAUS-CHILE@2028, 2*853762002085@2028, 1*853762002023@2028
+
+DATE: 20130223
+
+1404 harvest nut bar, fudge graham bar, chocolately delight bar, 2 vintage cheddar fries, vinegar splash fries
+1522 pasta fagioli, white chocolate chunk cookies
+1742 Italian sausage and green chile medium pizza (whole thing)
+2015 10 oscar mayer hot dogs, PARTIAL honey bbq fries
+
+SHORT: 1*632674320308@1404, 1*632674580177@1404, 1*632674440341@1404, 2*853762002085@1404, 1*853762002023@1404, 1*632674650252@1522, 1*632674440686@1522, 8*DOMINO-MEDIUM-ITALSAUS-CHILE@1742, 10*044700000953@2015
+
+
+
+
+
+

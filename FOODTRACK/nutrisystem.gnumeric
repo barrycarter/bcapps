@@ -2563,8 +2563,8 @@
         <gnm:RowInfo No="174" Unit="25.5"/>
         <gnm:RowInfo No="175" Unit="12.75" Count="77"/>
       </gnm:Rows>
-      <gnm:Selections CursorCol="0" CursorRow="18">
-        <gnm:Selection startCol="0" startRow="18" endCol="0" endRow="18"/>
+      <gnm:Selections CursorCol="0" CursorRow="123">
+        <gnm:Selection startCol="0" startRow="123" endCol="0" endRow="123"/>
       </gnm:Selections>
       <gnm:Cells>
         <gnm:Cell Row="0" Col="0" ValueType="60">UPC</gnm:Cell>
@@ -4302,6 +4302,7 @@
         <gnm:Cell Row="102" Col="16" ValueType="40" ValueFormat="0%">0</gnm:Cell>
         <gnm:Cell Row="102" Col="17" ValueType="40" ValueFormat="0%">0.04</gnm:Cell>
         <gnm:Cell Row="102" Col="18" ValueType="40" ValueFormat="0%">0.08</gnm:Cell>
+        <gnm:Cell Row="103" Col="0" ValueType="40">632674440341</gnm:Cell>
         <gnm:Cell Row="103" Col="1" ValueType="60">Chocolatey Delight Bar </gnm:Cell>
         <gnm:Cell Row="103" Col="2" ValueType="40">41</gnm:Cell>
         <gnm:Cell Row="103" Col="3" ValueType="40">150</gnm:Cell>
@@ -4647,6 +4648,7 @@
         <gnm:Cell Row="121" Col="16" ValueType="40" ValueFormat="0%">0</gnm:Cell>
         <gnm:Cell Row="121" Col="17" ValueType="40" ValueFormat="0%">0.02</gnm:Cell>
         <gnm:Cell Row="121" Col="18" ValueType="40" ValueFormat="0%">0.06</gnm:Cell>
+        <gnm:Cell Row="122" Col="0" ValueType="40">632674440686</gnm:Cell>
         <gnm:Cell Row="122" Col="1" ValueType="60">White Chocolate Chunk Cookie </gnm:Cell>
         <gnm:Cell Row="122" Col="2" ValueType="40">36</gnm:Cell>
         <gnm:Cell Row="122" Col="3" ValueType="40">170</gnm:Cell>
@@ -5759,7 +5761,7 @@
         <gnm:Cell Row="203" Col="17" ValueType="40" ValueFormat="0%">0</gnm:Cell>
         <gnm:Cell Row="203" Col="18" ValueType="40" ValueFormat="0%">0.04</gnm:Cell>
       </gnm:Cells>
-      <gnm:SheetLayout TopLeft="A18">
+      <gnm:SheetLayout TopLeft="A105">
         <gnm:FreezePanes FrozenTopLeft="A1" UnfrozenTopLeft="A2"/>
       </gnm:SheetLayout>
       <gnm:Solver ProblemType="1" Inputs="" MaxTime="0" MaxIter="0" NonNeg="1" Discr="0" AutoScale="0" ShowIter="0" AnswerR="0" SensitivityR="0" LimitsR="0" PerformR="0" ProgramR="0"/>
