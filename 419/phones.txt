@@ -8,7 +8,7 @@
 +13057918246 Mr. William E. Bennett (Foreign Operation Manager City State Bank Inc) http://419.94y.info/13057918246.txt
 21 Feb 2013 1844: "your call cannot be completed as dialed... [0443]"
 
-+16075950694 (Sam Jonah, Director Transfer Services Manager, Standard Bank)
++16075950694 (Sam Jonah, Director Transfer Services Manager, Standard Bank) http://419.94y.info/16075950694.txt
 21 Feb 2013 1914: "if you would like to make..." [MagicJack error message]
 
 VERIFIED: +19376198458 (Barrister John Smith, Google team)
@@ -19,6 +19,7 @@ VERIFIED: +16465046977 (Barrister Aaron Wilson, Gordon Herrington & Associates)
 21 Feb 2013 2146: non-personalized voicemail "you've reached [number]"
 
 +16825033652 (Hayes Watkins, associate of Theresa Monica) http://419.94y.info/16825033652.txt
+TODO: nuke this
 22 Feb 2013 0744: beep (similar to "please record message after the ~")
 
 +14048261746 (Jack Bryant INSPECTION OFFICER) http://419.94y.info/14048261746.txt
@@ -29,6 +30,7 @@ VERIFIED: +16465046977 (Barrister Aaron Wilson, Gordon Herrington & Associates)
 TODO: followup here!
 
 +17733123120 (Anthony Bruce, remittance officer) http://419.94y.info/17733123120.txt
+25 Feb 2013 0819: verified by Wendy O
 22 Feb 2013 0810: voice answer
 TODO: followup here!
 
@@ -38,7 +40,7 @@ TODO: followup here!
 +13472981707 ("diplomat in [CA] for Skye Bank Nigeria Plc)
 22 Feb 2013 0824: "if you would like to make..." [MagicJack error message]
 
-+13477227739 (James Campbell, "held by Customs")
++13477227739 (James Campbell, "held by Customs") http://419.94y.info/13477227739.txt
 22 Feb 2013 0916: "if you would like to make..." [MagicJack error message]
 
 +13472019514 (diplomat/delivery officer Kelvin Jones) http://419.94y.info/13472019514.txt
@@ -59,9 +61,16 @@ TODO: followup here!
 +15163486039 (our office in New York) http://419.94y.info/15163486039.txt
 24 Feb 2013 0910: "if you would like to make..." [MagicJack error message]
 
-+12023043000 (FBI)
++12023043000 (FBI) http://419.94y.info/12023043000.txt
 24 Feb 2013 0913: "wireless customer not available" message one [MD02UL]
 
++442035143179 http://419.94y.info/442035143179.txt
 
++441224459234 http://419.94y.info/441224459234.txt
 
++442032875507 http://419.94y.info/442032875507.txt
+
++442070609614 ext 3 http://419.94y.info/442070609614.txt
+
++442086984949 http://419.94y.info/442086984949.txt
 
