@@ -4,6 +4,28 @@
 # TODO: use scammer addresses as from addresses to
 
 require "/usr/local/lib/bclib.pl";
+use Data::Faker;
+
+chdir("/home/barrycarter/BCGIT/419/");
+
+# determine to address (this is probably inefficient)
+$addr = `sort -R confirmed.txt|head -1`;
+
+# fake up some data
+my(%dude);
+my($faker) = Data::Faker->new();
+for $i ($faker->methods()) {
+  $dude{$i} = $faker->$i();
+}
+
+for $i (sort keys %dude) {debug("$i: $dude{$i}");}
+
+# debug($faker->methods());
+# debug($faker->hostname());
+# debug(unfold(%{$faker}));
+
+die "TESTING";
+
 # $fromaddr= "vergetta.pervect\@dudmail.com";
 # $fromaddr= "alfred.yankovic\@gmail.com";
 # $fromaddr= "jennifer.perry\@usa.com";
@@ -14,7 +36,8 @@ require "/usr/local/lib/bclib.pl";
 # $fromaddr= "julia.wilson\@artlover.com";
 # $fromaddr= "barr.jsmith4\@lawyer.com";
 # $fromaddr= "judith.jones\@lobbyist.com";
-$fromaddr= "john.smith.bar\@lawyer.com";
+# $fromaddr= "john.smith.bar\@lawyer.com";
+$fromaddr= "anthony.bruce\@lawyer.com";
 
 # TODO: this is just testing to see to what extent they reply
 @addr = split(/\n/,`egrep -v '^#|^\$' /home/barrycarter/BCGIT/419/confirmed.txt| fgrep -vf /home/barrycarter/BCGIT/419/confirmed-bounces.txt`);
@@ -24,20 +47,19 @@ open(B,">/var/tmp/bchit.sh");
 for $i (@addr) {
   
   my($msg) = << "MARK";
-From: Good Fellow <$fromaddr>
+From: Mr Anthony Bruce <$fromaddr>
 To: $i
-Subject: Get America number
+Subject: Why haven't you called me?
 
-I am fellow man like you.
+This is Anthony Bruce.
 
-Sometimes, people in America will not call me since number is foriegn.
+I have been waiting for your call regarding my money.
 
-Now I discover: http://www.koalacalling.com/1/291/global_call_forwarding.asp
+Why have you not called me?
 
-which gives me number in America, so more Americans call me.
+Please call me about my money RIGHT NOW at (602)-354-9152.
 
-If you sign up, tell my code name 'john.smith.bar@lawyer.com' so I
-get small bonus.
+Anthony Bruce
 
 MARK
 ;

@@ -1,0 +1,14 @@
+# Note: bc_var means variable comes from my script, not Data::Faker
+From: {first_name} {last_name} <{bc_email}>
+To: {bc_scammer}
+Subject: Why haven't you called me?
+
+This is {first_name} {last_name}.
+
+I have been waiting for your call regarding my money.
+
+Why have you not called me?
+
+Please call me about my money RIGHT NOW at {bc_phone}.
+
+{first_name} {last_name}

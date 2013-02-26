@@ -27,6 +27,17 @@ use Astro::Coord::ECI::Sun;
 use Astro::Coord::ECI::Utils qw{deg2rad};
 use Astro::Sunrise;
 
+use Data::Faker;
+
+my $faker = Data::Faker->new();
+
+         print "Name:    ".$faker->name."\n";
+         print "Company: ".$faker->company."\n";
+         print "Address: ".$faker->street_address."\n";
+         print "         ".$faker->city.", ".$faker->us_state_abbr." ".$faker->us_zip_code."\n";
+
+die "TESTING";
+
 =item sunhoriz($yr,$mo,$da,$long,$lat,$type="rise|set",$seek=+-1)
 
 Determine the sunrise or set on $yr/$mo/$da for $lat/$long in GMT.
