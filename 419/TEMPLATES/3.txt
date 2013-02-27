@@ -1,0 +1,19 @@
+From: {first_name} {last_name} <{email_address}>
+To: [this can be anything, will be overwritten]
+Subject: Apologies and layover in Lagos
+
+I wanted to apologize again for the long delay in contacting you.
+
+I'm flying to Pretoria, and have a one-day layover in Lagos on March 4th.
+
+Please let me buy you breakfast at the Ibis Lagos Airport. I will be
+in the breakfast lounge at around 9am, or you can have the hotel page
+"{first_name} {last_name}".
+
+I will of course bring your money. I am carrying US dollars, but if
+you need the money in naira, please let me know, and I can change at
+the airport.
+
+If you have some extra time, I would love to take a tour of your lovely city.
+
+Sincerely (and apologetically), {first_name} {last_name}

@@ -1,0 +1,7 @@
+From: {first_name} {last_name} <{email_address}>
+To: [this can be anything, will be overwritten]
+Subject: Interesting offer, please tell me more
+
+I'm interested in your offer. Please tell me more.
+
+Sincerely, {first_name} ({email_address})

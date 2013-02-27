@@ -31,6 +31,13 @@ use Data::Faker;
 
 my $faker = Data::Faker->new();
 
+for $i (sort $faker->methods()) {
+  print "$i: ". $faker->$i(). "\n";
+}
+
+die "TESTING";
+
+
          print "Name:    ".$faker->name."\n";
          print "Company: ".$faker->company."\n";
          print "Address: ".$faker->street_address."\n";

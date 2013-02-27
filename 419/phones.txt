@@ -9,6 +9,7 @@
 21 Feb 2013 1844: "your call cannot be completed as dialed... [0443]"
 
 +16075950694 (Sam Jonah, Director Transfer Services Manager, Standard Bank) http://419.94y.info/16075950694.txt
+25 Feb 2013 0843: same as below
 21 Feb 2013 1914: "if you would like to make..." [MagicJack error message]
 
 VERIFIED: +19376198458 (Barrister John Smith, Google team)
@@ -18,18 +19,15 @@ VERIFIED: +16465046977 (Barrister Aaron Wilson, Gordon Herrington & Associates)
 21 Feb 2013 2158: confirmed scammer!
 21 Feb 2013 2146: non-personalized voicemail "you've reached [number]"
 
-+16825033652 (Hayes Watkins, associate of Theresa Monica) http://419.94y.info/16825033652.txt
-TODO: nuke this
-22 Feb 2013 0744: beep (similar to "please record message after the ~")
-
 +14048261746 (Jack Bryant INSPECTION OFFICER) http://419.94y.info/14048261746.txt
 22 Feb 2013 0804: "if you would like to make..." [MagicJack error message]
 
 +16462260706 (James Williams, IMF Office USA) http://419.94y.info/16462260706.txt
+25 Feb 2013 0840: inconclusive
 22 Feb 2013 0807: voice answer
 TODO: followup here!
 
-+17733123120 (Anthony Bruce, remittance officer) http://419.94y.info/17733123120.txt
+VERIFIED: +17733123120 (Anthony Bruce, remittance officer) http://419.94y.info/17733123120.txt
 25 Feb 2013 0819: verified by Wendy O
 22 Feb 2013 0810: voice answer
 
@@ -46,18 +44,22 @@ TODO: followup here!
 22 Feb 2013 1031: "if you would like to make..." [MagicJack error message]
 
 +19402382338 (Dami Durban) http://419.94y.info/19402382338.txt
+25 Feb 2013 0809: voice mail
 22 Feb 2013 1407: voice answer
 TODO: followup here!
 
 +17636477000 (fax) http://419.94y.info/17636477000.txt
+25 Feb 2013 0825: voice answer, sounded Nigerian, but inconclusive
 
 +13473077706 (Tony Adams, FedEx Office) http://419.94y.info/13473077706.txt
+25 Feb 2013 0900: inconclusive
 24 Feb 2013 0906: voice mail
 
 +16788137636 (richard_michael_1420@yahoo.com.hk) http://419.94y.info/16788137636.txt
 24 Feb 2013 0908: person at extension 6788137636 is unavailable, leave message
 
 +15163486039 (our office in New York) http://419.94y.info/15163486039.txt
+25 Feb 2013 0846: same as below
 24 Feb 2013 0910: "if you would like to make..." [MagicJack error message]
 
 +12023043000 (FBI) http://419.94y.info/12023043000.txt
@@ -72,4 +74,14 @@ TODO: followup here!
 +442070609614 ext 3 http://419.94y.info/442070609614.txt
 
 +442086984949 http://419.94y.info/442086984949.txt
+
++17604620283 http://419.94y.info/17604620283.txt
+
++442035142231 http://419.94y.info/442035142231.txt
+
++17702688098 http://419.94y.info/17702688098.txt
+
++17733776337 http://419.94y.info/17733776337.txt
+
++13472982785 http://419.94y.info/13472982785.txt
 

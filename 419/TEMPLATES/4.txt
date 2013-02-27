@@ -1,0 +1,13 @@
+From: {first_name} {last_name} <{email_address}>
+To: [this can be anything, will be overwritten]
+Subject: Delivery address
+
+Please send it to:
+
+{first_name} {last_name}
+{street_address}
+{city}, {us_state_abbr} {us_zip_code}
+
+Tel: {phone_number}
+
+THANK YOU!!!!

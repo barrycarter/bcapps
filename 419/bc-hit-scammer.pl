@@ -7,70 +7,49 @@ require "/usr/local/lib/bclib.pl";
 use Data::Faker;
 
 chdir("/home/barrycarter/BCGIT/419/");
+my(%dude);
+open(B,">/var/tmp/bchit.sh");
 
-# determine to address (this is probably inefficient)
-$addr = `sort -R confirmed.txt|head -1`;
+# scammer addresses
+@addr = split(/\n/,`egrep -v '^#|^\$' confirmed.txt| fgrep -vf confirmed-bounces.txt`);
 
 # fake up some data
-my(%dude);
 my($faker) = Data::Faker->new();
 for $i ($faker->methods()) {
   $dude{$i} = $faker->$i();
 }
 
-for $i (sort keys %dude) {debug("$i: $dude{$i}");}
+# I dislike the "extension" thing
+$dude{phone_number}=~s/\s*x.*$//isg;
 
-# debug($faker->methods());
-# debug($faker->hostname());
-# debug(unfold(%{$faker}));
+# data faker emails not believable in this use case
+# TODO: dont hardcode domain (just for testing now)
+$dude{email_address} = "$dude{first_name}.$dude{last_name}\@mobi.web.id";
 
-die "TESTING";
+# one off for friend
+# $dude{first_name} = "Michelina";
+# $dude{last_name} = "Hunt";
+# $dude{email_address} = "michalinahunt\@gmail.com";
 
-# $fromaddr= "vergetta.pervect\@dudmail.com";
-# $fromaddr= "alfred.yankovic\@gmail.com";
-# $fromaddr= "jennifer.perry\@usa.com";
-# $fromaddr= "survey.master\@adexec.com";
-# $fromaddr= "herman.bright\@accountant.com";
-# $fromaddr= "anderson.posh\@lawyer.com";
-# $fromaddr= "sarah.hill\@geologist.com";
-# $fromaddr= "julia.wilson\@artlover.com";
-# $fromaddr= "barr.jsmith4\@lawyer.com";
-# $fromaddr= "judith.jones\@lobbyist.com";
-# $fromaddr= "john.smith.bar\@lawyer.com";
-$fromaddr= "anthony.bruce\@lawyer.com";
+# TODO: randomize
+my($template) = read_file("TEMPLATES/4.txt");
 
-# TODO: this is just testing to see to what extent they reply
-@addr = split(/\n/,`egrep -v '^#|^\$' /home/barrycarter/BCGIT/419/confirmed.txt| fgrep -vf /home/barrycarter/BCGIT/419/confirmed-bounces.txt`);
+$template=~s/\{(.*?)\}/$dude{$1}/isg;
 
-open(B,">/var/tmp/bchit.sh");
-
+# loop
 for $i (@addr) {
-  
-  my($msg) = << "MARK";
-From: Mr Anthony Bruce <$fromaddr>
-To: $i
-Subject: Why haven't you called me?
+  # to address changes each time
+  $template=~s/^To:.*?$/To: $i/m;
 
-This is Anthony Bruce.
+  # write to file
+  write_file($template,"/var/tmp/bchit-$i.txt");
 
-I have been waiting for your call regarding my money.
-
-Why have you not called me?
-
-Please call me about my money RIGHT NOW at (602)-354-9152.
-
-Anthony Bruce
-
-MARK
-;
-
-  write_file($msg,"/var/tmp/bchit-$i.txt");
-
-  print B "sendmail -v -f$fromaddr -t < /var/tmp/bchit-$i.txt 1> /var/tmp/bchit-$i.out 2> /var/tmp/bchit-$i.err\n";
+  print B "sendmail -v -f$dude{email_address} -t < /var/tmp/bchit-$i.txt 1> /var/tmp/bchit-$i.out 2> /var/tmp/bchit-$i.err\n";
 }
 
 close(B);
 
+# print data to file (w timestamp)
+append_file(time()." ".join("|",%dude)."\n", "/var/tmp/bhsd.txt");
+
 print "To actually send mail:\nsh /var/tmp/bchit.sh\n";
-
-

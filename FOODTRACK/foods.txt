@@ -557,21 +557,32 @@ DATE: 20130223
 1404 harvest nut bar, fudge graham bar, chocolately delight bar, 2 vintage cheddar fries, vinegar splash fries
 1522 pasta fagioli, white chocolate chunk cookies
 1742 Italian sausage and green chile medium pizza (whole thing)
-2015 10 oscar mayer hot dogs, PARTIAL honey bbq fries
+2015 10 oscar mayer hot dogs, 24g honey bbq fries (all but 4g)
 
-SHORT: 1*632674320308@1404, 1*632674580177@1404, 1*632674440341@1404, 2*853762002085@1404, 1*853762002023@1404, 1*632674650252@1522, 1*632674440686@1522, 8*DOMINO-MEDIUM-ITALSAUS-CHILE@1742, 10*044700000953@2015
+SHORT: 1*632674320308@1404, 1*632674580177@1404, 1*632674440341@1404, 2*853762002085@1404, 1*853762002023@1404, 1*632674650252@1522, 1*632674440686@1522, 8*DOMINO-MEDIUM-ITALSAUS-CHILE@1742, 10*044700000953@2015, 24g*853762002047@2015
 
 DATE: 20130224
 
 1307 apple strudel bar, pasta and beef, 2 bags white chocolate chunk cookies, chicken and dumpling
 1825 2 cans roast beef hash, 1 pack hard salami
 2003 vintage cheddar fries
+2042 vinegar splash fries
 
-SHORT: 1*632674320261@1307, 1*632674580238@1307, 2*632674440686@1307, 1*632674650467@1307, 2c*037600199919@1825, 1c*044700010907@1825, 1*853762002085@2003
+SHORT: 1*632674320261@1307, 1*632674580238@1307, 2*632674440686@1307, 1*632674650467@1307, 2c*037600199919@1825, 1c*044700010907@1825, 1*853762002085@2003, 1*853762002023@2042
 
+DATE: 20130225
 
+1459 apple strudel bar, pasta and beef, chocolatey delight bar, ravioli in basil tomato sauce, white chocolate chunk cookies, vintage cheddar fries
+1621 honey bbq fries
+1844 5 ballpark beef franks, 170g Lays potato chips, 92g parmesan cheese
+2134 1 can hatch green chile, jal trio fries
 
+SHORT: 170g*028400002684@1844, 1*632674320261@1459, 1*632674580238@1459, 1*632674440341@1459, 1*632764650061@1459, 1*632674440686@1459, 1*853762002085@1459, 1*853762002047@1621, 5*054500100210@1844, 92g*21000010868@1844, 1c*028189750059@2134, 1*853762002108@2134
 
+DATE: 20130226
 
+1114 1 can roast beef hash, sea salt fries, honey bbq fries
+1345 6 ballpark franks, 100g lays chips
+1704 2 honey mustard onion fries
 
-
+SHORT: 1c*037600199919@1114, 1*853762002009@1114, 1*853762002047@1114, 6*054500100210@1345, 100g*028400002684@1345, 2*853762002061@1704

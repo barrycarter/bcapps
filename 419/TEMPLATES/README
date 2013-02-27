@@ -1,0 +1,51 @@
+Templates to send scammers. Valid fields (when enclosed {like_this})
+and examples (from Perl's Data::Faker):
+
+ampm: AM
+ampm_format: %P
+century: 19
+city: Nogales
+company: Towne, Adams and Windler
+company_suffix: Group
+date: 1976-10-14
+date_format: %D
+date_locale: 10/17/1994
+datetime_format: %FT%H
+datetime_locale: Wed 31 Jul 1974 06:05:36 PM MDT
+dayofmonth: 28
+domain_name: auer-lynch-and-klein.fo
+domain_suffix: lb
+domain_word: carter-llc
+email: deshaun@lebsack-inc.pa
+first_name: Branson
+hostname: fritsch-gerhold-and-turner.pfannerstill-llc.af
+ip_address: 113.16.97.46
+job_title: Hand Cutter
+last_name: Emmerich
+month: September
+month_abbr: Jul
+name: Miss Anita Hegmann
+name_prefix: Ms.
+name_suffix: DDS
+network_service: shell
+phone_number: (249)311-9410 x84025
+rfc822: Tue,  05  Feb  1980  21:17:32  -0700
+secondary_unit_designator: Rear
+secondary_unit_number: D
+server_name: pop3.johns-reichel.io
+sqldate: 1984-02-20
+street_address: 74718 Lola Avenue #806
+street_name: Price Mountain
+street_suffix: Bypass
+time: 05:33:17 PM
+time_format: %R
+time_locale: 05:02:36 AM
+unixtime: 890299933
+us_state: Nebraska
+us_state_abbr: VT
+us_zip_code: 05202
+username: eduardo
+weekday: Monday
+weekday_abbr: Sun
+
+

@@ -1,0 +1,14 @@
+From: {first_name} {last_name} <{email_address}>
+To: [this can be anything, will be overwritten]
+Subject: Next step?
+
+OK, so what do I do next?
+
+--
+Sincerely,
+
+{first_name} {last_name}
+{street_address}
+{city}, {us_state_abbr} {us_zip_code}
+
+Tel: {phone_number}
