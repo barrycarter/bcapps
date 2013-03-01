@@ -14,6 +14,8 @@ if ($ENV{HTTP_HOST} eq "tutor.u.94y.info") {
   print "Location: http://www.yahoo.com/";
 } elsif ($ENV{HTTP_HOST} eq "s.u.94y.info") {
   print "Location: https://github.com/barrycarter/bcapps/blob/master/bc-starmap.pl";
+} elsif ($ENV{HTTP_HOST} eq "419s.u.94y.info") {
+  print "Location: http://wordpress.barrycarter.info/index.php/2013/03/01/why-419eater-com-sucks/";
 } else {
   # do nothing
 }
