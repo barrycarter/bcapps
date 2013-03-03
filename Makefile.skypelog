@@ -1,0 +1,7 @@
+# creates text files from skypelogs using skypelog
+# To use: put in ~/.Skype/user/ directory and rename as "Makefile"
+imageOBJS=$(shell echo *.dbb | perl -nle 's/\.dbb/.dbb.txt/isg; print $_')
+all: $(imageOBJS)
+
+%.dbb.txt: %.dbb
+	skypelog $< > $@

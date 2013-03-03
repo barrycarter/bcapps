@@ -19,12 +19,20 @@ $now = time();
 # read entries from already pinged
 @pinged = `cut -d' ' -f 2 pinged.txt`;
 
+# downcase both <h>I like the word 'downcase'</h>
+for $i (@emails) {$i=lc($i);}
+for $i (@pinged) {$i=lc($i);}
+
 # subtract pinged from emails
 @res = minus(\@emails, \@pinged);
 
 unless (@res) {
   die "There are no new addresses in toping.txt, edit pinged.txt or toping.txt";
 }
+
+# this should yield nothing, and compensate for case insensitivity
+my($out,$err,$res) = cache_command("fgrep -if toping.txt pinged.txt", "ignoreerror=1");
+debug("OUT: $out, ERR: $err, RES: $res");
 
 # will add these to pinged.txt
 open(A,">>pinged.txt");
@@ -61,6 +69,4 @@ MARK
 close(A);
 
 print "To actually send mail:\nsh /var/tmp/bcping.sh\n";
-
-
 

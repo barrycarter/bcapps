@@ -591,5 +591,43 @@ SHORT: 1c*037600199919@1114, 1*853762002009@1114, 1*853762002047@1114, 6*0545001
 DATE: 20130227
 
 1515 4 slices Dominos doublecheese/ital saus/gc pizza, 4 vintage cheddar fries
+1744 1 pack hard salami
+2317 3 slices pizza above
 
-SHORT: 4*DOMINO-LARGE-ITALSAUS-GC-DOUBLECHEESE@1515, 4*853762002085@1515
+SHORT: 4*DOMINO-LARGE-ITALSAUS-GC-DOUBLECHEESE@1515, 4*853762002085@1515, 1c*044700010907@1744, 3*DOMINO-LARGE-ITALSAUS-GC-DOUBLECHEESE@2317
+
+DATE: 20130228
+
+1547 8 LC lemon pepper wings, 8 LC parmesan garlic wings
+2018 1 can beanless chili, 130g lays potato chips
+
+SHORT: 8*LC-WING-LP@1547, 8*LC-WING-GP@1547, 1c*014900012704@2018, 130g*028400002684@2018
+
+DATE: 20130301
+
+1143 beanless chili, 129g lays potato chips
+1758 4 slices jal/beef medium pizza, 3 slices italsaus/gc medium pizza
+1850 17g jal trio fries (didn't finish bag)
+2334 6 ball park franks, classic sea salt fries
+
+SHORT: 1c*014900012704@1143, 129g*028400002684@1143, 3*DOMINO-MEDIUM-ITALSAUS-CHILE@1758, 4*DOMINO-MEDIUM-BEEF-JAL@1758, 17g*853762002108@1850, 6*054500100210@2334, 1*853762002009@2334
+
+DATE: 20130302
+
+1037 1 can roast beef hash, vinegar splash fries, sea salt fries
+1449 4 slices jal/beef medium pizza, 2 slices italsaus/gc medium pizza
+1830 7 ball park franks, 140g lays potato chips
+
+SHORT: 1c*037600199919@1037, 1*853762002023@1037, 1*853762002009@1037, 4*DOMINO-MEDIUM-BEEF-JAL@1449, 2*DOMINO-MEDIUM-ITALSAUS-CHILE@1449, 7*054500100210@1830, 140g*028400002684@1830
+
+
+
+
+
+
+
+
+
+
+
+
