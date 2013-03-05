@@ -3,7 +3,7 @@
 # people who ive dealt with but were never pinged (for completeness)
 # I add these to toping.txt and then ping them (auto-exclude for repeats)
 
-egrep '^From: ' ~/mail/leonard.zeptowitz | perl -nle 'if (/<(.*?\@.*?)>/) {print $1}' | sort | uniq | grep -v zeptowitz
+\egrep -i '^From:|^Reply-to: ' ~/mail/leonard.zeptowitz ~/mail/leonard.zeptowitz.has.replied | perl -nle 'if (/<(.*?\@.*?)>/) {print lc($1)}' | sort | uniq | grep -v zeptowitz
 
 exit;
 

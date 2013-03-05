@@ -463,7 +463,7 @@ DATE: 20130213
 
 1219 1 can roast beef hash, 225g lays potato chips
 1553 jal trio fries
-1825 chili w beans, chili wo beans, lays potato chips, 181g potato chips
+1825 chili w beans, chili wo beans, 181g potato chips
 2226 4 slices 35 ital bread, classic sea salt fries
 
 SHORT: 1c*037600199919@1219, 225g*028400002684@1219, 1*853762002108@1553, 1c*14900022703@1825, 1c*014900012704@1825, 181g*028400002684@1825, 4*024126008955@2226, 1*853762002009@2226
@@ -483,7 +483,7 @@ SHORT: 1*632674320346@1203, 1*632674580092@1203, 1*632674440532@1203, 1*85376200
 DATE: 20130215
 
 1145 choc chip scone
-1355 kung pao noodes, golden pound cake, 2 jal trio chips
+1355 kung pao noodes, golden pound cake, 2 jal trio fries
 1523 2 vinegar splash fries
 1622 beef stew, chocolate cake
 1756 2 cans roast beef hash
@@ -620,13 +620,20 @@ DATE: 20130302
 
 SHORT: 1c*037600199919@1037, 1*853762002023@1037, 1*853762002009@1037, 4*DOMINO-MEDIUM-BEEF-JAL@1449, 2*DOMINO-MEDIUM-ITALSAUS-CHILE@1449, 7*054500100210@1830, 140g*028400002684@1830
 
+DATE: 20130303
 
+1310 (approx) 1 can roast beef hash, jal trio fries, sea salt fries, honey bbq fries, honey mustard onion fries
+1632 1 large container Kung Pao chicken, 1 large container sweetfire chicken breast
+2357 3 slices italian sausage and green chile pizza, vintage cheddar fries, 2*honey bbq fries
 
+SHORT: 1c*037600199919@1310, 1*853762002108@1310, 1*853762002009@1310, 1*853762002047@1310, 1*853762002061@1310, 1c*PANDA-EXPRESS-KPC@1632, 1c*PANDA-EXPRESS-SCB@1632, 3*DOMINO-MEDIUM-ITALSAUS-CHILE@2357, 1*853762002085@2357, 2*853762002047@2357
 
+DATE: 20130304
 
+1317 kung pao chicken
+1544 kung pao chicken 3 fortune cookies
 
-
-
+SHORT: 1c*PANDA-EXPRESS-KPC@1317, 1c*PANDA-EXPRESS-KPC@1544, 3*PANDA-EXPRESS-FORTUNE-COOKIE@1544
 
 
 
