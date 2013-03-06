@@ -32,7 +32,7 @@ $dude{email_address} = "$dude{first_name}.$dude{last_name}\@mobi.web.id";
 # $dude{email_address} = "michalinahunt\@gmail.com";
 
 # TODO: randomize
-my($template) = read_file("TEMPLATES/4.txt");
+my($template) = read_file("TEMPLATES/7.txt");
 
 $template=~s/\{(.*?)\}/$dude{$1}/isg;
 
@@ -52,4 +52,7 @@ close(B);
 # print data to file (w timestamp)
 append_file(time()." ".join("|",%dude)."\n", "/var/tmp/bhsd.txt");
 
-print "To actually send mail:\nsh /var/tmp/bchit.sh\n";
+print $template;
+
+print "\n\nTo actually send mail:\nsh /var/tmp/bchit.sh\n";
+

@@ -1,0 +1,6 @@
+From: {first_name} {last_name} <{email_address}>
+To: [this can be anything, will be overwritten]
+Subject: Trouble at the Western Union
+
+I had some trouble at the Western Union office. Could you call me at
+{phone_number} to help?

@@ -4,13 +4,37 @@
 # from onewaymail.com
 
 require "/usr/local/lib/bclib.pl";
+my($email) = @ARGV;
+unless ($email) {die "Usage: $0 <email address>";}
 
-# TODO: dont hardcode
-$url = "http://onewaymail.com/en/mob/Monroe.Reilly";
+# convert host to directory
+%host2dir = ("mobi.web.id" => "mob", "onewaymail.com" => "owm",
+	     "ag.us.to" => "agt", "gelitik.in" => "gel",
+	     "fixmail.tk" => "fix");
 
-# age just for testing, onewayemail.com seems a bit slow
-($out,$err,$res) = cache_command("curl $url","age=600");
+unless ($email=~s/\@(.*?)$//) {die "BAD EMAIL: $email";}
+my($host) = $1;
+my($dir) = $host2dir{$host};
 
-debug("OUT: $out");
+unless ($dir) {die "NO DIR FOR: $host";}
 
+$url = "http://onewaymail.com/en/$dir/$email";
 
+# one minute cache to be nice to onewaymail.com servers
+($out,$err,$res) = cache_command("curl -sS $url","age=60");
+
+while ($out=~s/href="($url.*?)"//) {
+  $dl{$1}=1;
+}
+
+chdir("/usr/local/etc/onewaymail/");
+
+open(A,"|parallel -j 10");
+
+for $i (keys %dl) {
+  $i=~m/^.*?(\d+)$/;
+  if (-f $1) {next;}
+  print A "curl -O $i\n";
+}
+
+close(A);

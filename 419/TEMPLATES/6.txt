@@ -1,0 +1,8 @@
+From: {first_name} {last_name} <{email_address}>
+To: [this can be anything, will be overwritten]
+Subject: Payment information?
+
+Could you send me the Western Union payment information again? I seem
+to have misplaced it, sorry.
+
+Thanks, {first_name} {last_name}
