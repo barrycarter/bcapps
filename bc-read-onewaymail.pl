@@ -34,7 +34,7 @@ open(A,"|parallel -j 10");
 for $i (keys %dl) {
   $i=~m/^.*?(\d+)$/;
   if (-f $1) {next;}
-  print A "curl -O $i\n";
+  print A "curl -sSO $i\n";
 }
 
 close(A);

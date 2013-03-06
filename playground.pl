@@ -27,6 +27,41 @@ use Astro::Coord::ECI::Sun;
 use Astro::Coord::ECI::Utils qw{deg2rad};
 use Astro::Sunrise;
 
+
+open(A,"/home/barrycarter/mail/empty");
+while (($head,$body) = next_email_fh(\*A)) {
+  unless ($head) {last;}
+  debug("HEAD: <$head>");
+}
+
+=item next_email_fh(\*A)
+
+Given a filehandle, return the header and body of the next email in
+that filehandle (assumes nothing else uses or moves the pointed in A).
+
+=cut
+
+sub next_email_fh {
+  my($fh) = @_;
+  my($all, $seen);
+
+  while (<$fh>) {
+    # TODO: improve this... From line should contain env sender and date too
+    # We stop when we see the next From (not the one from our own message)
+    if (/^From / && ++$seen>=2) {last;}
+    $all .= $_;
+  }
+
+  # unread next line
+  seek($fh, -length($_), 1);
+  # we have the entire message, split into head and body
+  $all=~m/^(.*?)\n\n(.*)$/is;
+  my($head,$body) = ($1,$2);
+  return ($head,$body);
+}
+
+die "TESTING";
+
 use Data::Faker;
 
 my $faker = Data::Faker->new();
