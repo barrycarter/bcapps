@@ -1,0 +1,26 @@
+From: {first_name} {last_name} <{email_address}>
+To: [this can be anything, will be overwritten]
+Subject: Western Union customer
+
+I'm a clerk at the local Western Union.
+
+A customer just came in, asking me to send you a considerable amount
+of money.
+
+I told the customer I'd sent it, but I've actually kept it on hold.
+
+The customer showed me your letter. I immediately recognized it as a
+419 advance free fraud scam, but didn't say anything.
+
+I'd like to make you a deal. I'll send you half the money, if you let
+me keep half for myself.
+
+You can then direct other victims here, and we can share more profits.
+
+If you don't agree or don't answer, I'll tell the customer and the
+local police that you're a scammer, and you'll get nothing.
+
+Please reply to my private email address {email_address} or call me on
+my cell at {phone_number}.
+
+Please do not call me at work, as I will deny all knowledge of this email.

@@ -28,36 +28,27 @@ use Astro::Coord::ECI::Utils qw{deg2rad};
 use Astro::Sunrise;
 
 
-open(A,"/home/barrycarter/mail/empty");
+open(A,"/home/barrycarter/mail/leonard.zeptowitz");
 while (($head,$body) = next_email_fh(\*A)) {
   unless ($head) {last;}
-  debug("HEAD: <$head>");
-}
 
-=item next_email_fh(\*A)
+  $head=~/^From: (.*?)$/im;
+  my($from) = $1;
 
-Given a filehandle, return the header and body of the next email in
-that filehandle (assumes nothing else uses or moves the pointed in A).
+  # remove refs to my own email addresses
+  $body=~s/\+(\d+)\@gmail\.com//isg;
 
-=cut
+  if ($body=~/(\+[^a-z]{5,})\n/is) {
+    my($phone) = $1;
+#    debug("PRE: $phone");
+#    $phone = trim($phone);
+    $phone=~s/\D//isg;
+    # no interesting phone numbers less than 5 digits
+    unless (length($phone)>=5) {next;}
 
-sub next_email_fh {
-  my($fh) = @_;
-  my($all, $seen);
-
-  while (<$fh>) {
-    # TODO: improve this... From line should contain env sender and date too
-    # We stop when we see the next From (not the one from our own message)
-    if (/^From / && ++$seen>=2) {last;}
-    $all .= $_;
+    debug("$phone [$from]");
+#    debug("BODY: $body");
   }
-
-  # unread next line
-  seek($fh, -length($_), 1);
-  # we have the entire message, split into head and body
-  $all=~m/^(.*?)\n\n(.*)$/is;
-  my($head,$body) = ($1,$2);
-  return ($head,$body);
 }
 
 die "TESTING";

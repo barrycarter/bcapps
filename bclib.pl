@@ -2965,6 +2965,36 @@ sub radecazel {
   return($az*$RADDEG,$el*$RADDEG);
 }
 
+=item next_email_fh(\*A)
+
+Given a filehandle, return the header and body of the next email in
+that filehandle (assumes nothing else uses or moves the pointed in A).
+
+=cut
+
+sub next_email_fh {
+  my($fh) = @_;
+  my($all, $seen);
+
+  while (<$fh>) {
+    # TODO: improve this... From line should contain env sender and date too
+    # We stop when we see the next From (not the one from our own message)
+    if (/^From / && ++$seen>=2) {last;}
+    $all .= $_;
+  }
+
+  # unread next line
+  seek($fh, -length($_), 1);
+  # we have the entire message, split into head and body
+  $all=~m/^(.*?)\n\n(.*)$/is;
+  my($head,$body) = ($1,$2);
+
+  # the equal sign as continuation
+  $body=~s/\=\n//isg;
+
+  return ($head,$body);
+}
+
 # TODO: this really belongs below the subroutines below
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
