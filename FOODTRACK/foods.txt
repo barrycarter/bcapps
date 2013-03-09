@@ -655,14 +655,28 @@ SHORT: 1*853762002009@1007, 2*853762002061@1007, 1c*037600199919@1505, 1c*028189
 
 DATE: 20130307
 
-0926 1.63134 slices pizza
+0926 1.63134 slices pizza, honey mustard onion fries, vintage cheddar fries, jal trio fries, 6 slices salami (2 servings)
+1414 1 brooklyn style pizza
+1645 vintage cheddar fries, jal trio fries, honey mustard onion fries
+1817 5 slices salami (1.66... servings)
+1842 fortune cookie
+1957 1.75 boxes kung pao chicken
 
-SHORT: 1.63134*DOMINO-LARGE-FETA-CHEDDAR-PARM-THIN@0926
+SHORT: 1.63134*DOMINO-LARGE-FETA-CHEDDAR-PARM-THIN@0926, 1*853762002085@1645, 1*853762002108@1645, 1*853762002061@1645, 1*853762002061@0926, 1*853762002085@0926, 1*853762002108@0926, 1c*DOMINO-LARGE-BROOKLYN-IS-ON-GC@1414, 1.66666666*044700010907@1817, 2*044700010907@0926, 1.75c*PANDA-EXPRESS-KPC@1957, 1*PANDA-EXPRESS-FORTUNE-COOKIE@1842
+
+DATE: 20130308
+
+0912 .25 container kung pao chicken, 1 can roast beef hash, jal trio fries, sea salt fries
+1400 mandarin kung pao beef, mongolian beef (both pei wei; both full container = 2 servings), 2 fortune cookies
+1810 spicy korean beef, spicy peiwei-style beef, 2 fortune cookies
+1919 panda express fortune cookie
+2330 1 bag pop secret 100cal popcorn, 5 oscar mayer hot dogs
+
+SHORT: 0.25c*PANDA-EXPRESS-KPC@0912, 1c*037600199919@0912, 1*853762002108@0912, 1*853762002009@0912, 1*023896420653@2330, 5*044700000953@2330, 1c*PEIWEI-BEEF-KUNG-PAO@1400, 1c*PEIWEI-BEEF-MONGOLIAN@1400, 1c*PEIWEI-BEEF-SPICY-KOREAN@1810, 1c*PEIWEI-BEEF-SPICY-PEIWEI@1810, 2*PEIWEI-FORTUNE-COOKIE@1400, 2*PEIWEI-FORTUNE-COOKIE@1810, 1*PANDA-EXPRESS-FORTUNE-COOKIE@1919
 
 
+DATE: 20130309
 
+1121 vintage cheddar fries, honey mustard fries, vinegar splash fries
 
-
-
-
-
+SHORT: 1*853762002085@1121, 1*853762002061@1121, 1*853762002023@1121

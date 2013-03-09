@@ -1,14 +1,14 @@
 # shell one liners
 
+# (suggests) renaming files that make doesn't handle well
+\ls | perl -nle '$x=$_; if (s/[^a-z0-9_\.\-\%\,]/_/isg) {print "mv \"$x\" $_"}'
+
+exit;
+
 # people who ive dealt with but were never pinged (for completeness)
 # I add these to toping.txt and then ping them (auto-exclude for repeats)
 
 \egrep -i '^From:|^Reply-to: ' ~/mail/leonard.zeptowitz ~/mail/leonard.zeptowitz.has.replied | perl -nle 'if (/<(.*?\@.*?)>/) {print lc($1)}' | sort | uniq | grep -v zeptowitz
-
-exit;
-
-# (suggests) renaming files that make doesn't handle well
-\ls | perl -nle '$x=$_; if (s/[^a-z0-9_\.\-\%\,]/_/isg) {print "mv \"$x\" $_"}'
 
 exit;
 

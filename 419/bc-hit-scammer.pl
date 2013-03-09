@@ -7,7 +7,7 @@ require "/usr/local/lib/bclib.pl";
 use Data::Faker;
 
 # domain to use (only while testing)
-$domain = "mailinator.com";
+$domain = "graduate.org";
 
 chdir("/home/barrycarter/BCGIT/419/");
 my(%dude);
@@ -30,12 +30,9 @@ $dude{phone_number}=~s/\s*x.*$//isg;
 $dude{email_address} = "$dude{first_name}.$dude{last_name}\@$domain";
 
 # TODO: randomize
-my($template) = read_file("/var/tmp/3a.txt");
+my($template) = read_file("TEMPLATES/9.txt");
 
 $template=~s/\{(.*?)\}/$dude{$1}/isg;
-
-# special case for re-send only
-$dude{email_address} = "lily.swaniawski\@gmx.com";
 
 # loop
 for $i (@addr) {

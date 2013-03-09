@@ -27,6 +27,56 @@ use Astro::Coord::ECI::Sun;
 use Astro::Coord::ECI::Utils qw{deg2rad};
 use Astro::Sunrise;
 
+# extract_emails_phones("leonard.zeptowitz+130130143936\@gmail.com");
+
+# die "TESTING";
+
+open(A,"/home/barrycarter/mail/leonard.zeptowitz");
+while (($head,$body) = next_email_fh(\*A)) {
+  unless ($head) {last;}
+  extract_emails_phones($body);
+}
+
+=item extract_emails_phones($str)
+
+Returns a list of phone numbers and email addresses in $str
+
+This subroutine doesnt necessarily work well, just subroutinizing it
+for consistency.
+
+=cut
+
+sub extract_emails_phones {
+  my($str) = @_;
+
+#  debug("STR: $str");
+
+  # worthless junk that seems to show up a lot in email
+  $str=~s/=[0-9A-F][0-9A-F]//isg;
+
+  # email addresses CAN have spaces, but its rare nowadays
+  # address must end in alphanumeric (just alpha?) [.com/.net/.mobi/.sg/etc]
+  # and start with alphanum
+  while ($str=~s/([a-z0-9][^\s<>;:\"\&\?\(\)\*\,\[\]\{\}]+\@[^\s<>;:\"\&\?\(\)\*\,\[\]\{\}]+[a-z0-9])//i) {
+    my($cand) = $1;
+
+    # reject pure numericals pre @ and double dots
+    if ($cand=~/^\d+\@/) {next;}
+    if ($cand=~/\.\./) {next;}
+
+#    debug("EMAIL: $1");
+  }
+
+  # and phone numbers (harder)
+  while ($str=~s/(\+[^a-z]+)//i) {
+    my($cand) = $1;
+    $cand=~s/\D//isg;
+    unless (length($cand)>=5) {next;}
+    debug("PHONE: $cand");
+  }
+}
+
+die "TESTING";
 
 open(A,"/home/barrycarter/mail/leonard.zeptowitz");
 while (($head,$body) = next_email_fh(\*A)) {

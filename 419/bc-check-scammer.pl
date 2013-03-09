@@ -36,10 +36,15 @@ for $i (@buds) {$i=~s%.*<name>(.*?)</name>.*%$1%s;}
 
 @left = minus(\@pinged, \@buds);
 
+# new scheme: simply replace all the buds w new list
+for $i (@buds,@pinged) {$all{$i}=1;}
+
 unless (@left) {print "gmail buddy list is up to date\n"; exit;}
 
+# print join("\n",sort keys %all),"\n";
+
 # print in "list editing" format for GAIM/Pidgin
-for $i (@left) {
+for $i (sort keys %all) {
   print "\t\t\t<buddy screenname='$i'/>\n";
 }
 
