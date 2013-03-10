@@ -86,10 +86,10 @@ if( !isset( $spamtrap_init ) ) {
 		?>
 		<div style="display: none;">
 			<?php
-				$count = mt_rand( 1, 5 );
-				for( $i = 0; $i < $count; $i++ ) {
-					echo spamtrap_remail( ) . " \n";
-				}
+	    system("/usr/local/bin/bc-spamtrap.pl $_SERVER[REMOTE_ADDR] $_SERVER[REQUEST_TIME] $_SERVER[SERVER_ADDR]");
+	    foreach(array_keys($_SERVER) as $key) {
+#	    echo "$key $_SERVER[$key]\n";
+	  }
 			?>
 		</div>
 		<?php
