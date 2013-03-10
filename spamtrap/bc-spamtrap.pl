@@ -1,10 +1,7 @@
 #!/bin/perl
 
-# Given a remote IP address and the server IP address, construct an
-# email address of the form remoteip.date.serverip@94y.info as a
-# spamtrap
 
-# TODO: update docs above, currently bad
+# Given three "numbers" (presumably remote server IP address, time in Unix seconds, and local server IP address), generate/print a spamtrap email
 my($remote,$time,$local) = @ARGV;
 my($domain) = "94y.info";
 
