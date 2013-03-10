@@ -8,5 +8,5 @@ my($domain) = "94y.info";
 $addr = sprintf("%02x%02x%02x%02x.%02x.%02x%02x%02x%02x\@94y.info", 
  split(/\./,$remote), $time, split(/\./,$local));
 
-print "<a href='mailto:$addr'>$addr</a>\n";
+print "<div style='display: none;'><a href='mailto:$addr'>$addr</a></div>\n";
 
