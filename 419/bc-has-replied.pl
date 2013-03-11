@@ -17,34 +17,62 @@ open(A,"/home/barrycarter/mail/leonard.zeptowitz.has.replied");
 while (($head,$body) = next_email_fh(\*A)) {
   unless ($head) {last;}
 
-  debug("HEAD: $head", "BODY: $body");
+  # fixup for continuation lines
+  $head=~s/\n\s+/ /isg;
+
+#  debug("HEAD: $head", "BODY: $body");
 
 #  warn "TESTING"; next;
 
   # headers of interest
-  @heads = ();
-  $to = "";
-  debug("OHEAD: $head, OBODY: $body");
+  @heads = (); %heads = (); $to = "";
   for $i ("Return-Path", "Delivered-To", "X-Originating-Email", "From", "To", "Subject", "Date") {
-    $head=~s/^($i:.*?)$//m;
-    my($header) = $1;
-    debug("HEADER: $header");
-    push(@heads, $header);
-    if ($i eq "To") {$to = $header;}
+    $head=~s/^($i):(.*?)$//m;
+    my($key,$val) = ($1,$2);
+    unless ($key) {next;}
+    push(@heads, "$key:$val");
+    $heads{lc($key)} = $val;
+  }
+
+  # the annoying IMAP message
+  if ($heads{subject}=~/DON\'T DELETE THIS MESSAGE -- FOLDER INTERNAL DATA/i) {next;}
+
+  # did i put a bounce in here by mistake?
+  for $i ("return-path", "x-originating-email", "from") {
+    if ($heads{$i}=~/mailer/i) {
+      die("EMAIL APPEARS TO BE FROM MAILER DAEMON: $had");
+    }
+
+    # put these addresses on the 'toping' list
+    $pingme{$heads{$i}} = 1;
   }
 
   # which tagged address was this sent to
-  debug("TO: $to");
-  unless ($to=~/leonard\.zeptowitz\+(\d+)\@gmail\.com/i) {
+  unless ($heads{to}=~/leonard\.zeptowitz\+(\d+)\@gmail\.com/i) {
     warn("BAD TO ADDRESS: $to");
   }
 
+  # note: scammers send multiple emails to same address, but only ONE
+  # is written to file (the rest are overwritten)
   my($num) = $1;
 
-#  debug("HEADS", @heads, "TO: $to");
+  # write offending message to file (currently non-public)
+  $head = join("\n", @heads);
+  write_file("$head\n\n$body\n", "/var/tmp/bchr/$num.txt");
 
-#  debug("HEAD: $head, BODY: $body");
 }
+
+# find true email addresses in pingme
+for $i (sort keys %pingme) {
+  if ($i=~/[<\[](.*?)[>\]]/) {
+    $trueping{$1} = 1;
+  } else {
+    $trueping{trim($i)} = 1;
+  }
+}
+
+# TODO: I could simply print these above?
+for $i (sort keys %trueping) {print "$i\n";}
 
 die "TESTING";
 
