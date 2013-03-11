@@ -2979,11 +2979,12 @@ sub next_email_fh {
   while (<$fh>) {
     # TODO: improve this... From line should contain env sender and date too
     # We stop when we see the next From (not the one from our own message)
-    if (/^From / && ++$seen>=2) {last;}
+    if (/^From \S+ (mon|tue|wed|thu|fri|sat|sun)/i && ++$seen>=2) {last;}
     $all .= $_;
   }
 
-  # unread next line
+  # unread next line (unless eof)
+  if (eof($fh)) {return;}
   seek($fh, -length($_), 1);
   # we have the entire message, split into head and body
   $all=~m/^(.*?)\n\n(.*)$/is;
