@@ -16,7 +16,7 @@ require "/usr/local/lib/bclib.pl";
 @matches = split(/<div class=\"match_row/is, $text);
 
 for $i (@matches) {
-  if ($i=~/your rating of her/i) {next;}
+  if ($i=~/your rating of (her|him)/i) {next;}
   $i=~/id=\"usr-(.*?)"/;
   print "/root/build/firefox/firefox -remote 'openURL(http://www.okcupid.com/profile/$1)'; sleep 2\n";
 }
