@@ -3,13 +3,35 @@
 # determines which scammers have replied to "bait" addresses of form
 # leonard.zeptowitz+(number)@gmail.com
 
+# message modifications:
+# long lines consisting of no spaces (usually attachment lines) deleted
+# TODO: IN SOME CASES, this means the "proof" email appears nearly empty
+
 # NOTE: some of these might be legit people who just happened to
 # reply; only added to confirmed.txt after looking at body of email
+
+# TODO: add bounces + maybe even non-scammy replies?
+# TODO: look for spf bounces + treat them as non-bounces
 
 require "/usr/local/lib/bclib.pl";
 dodie('chdir("/home/barrycarter/BCGIT")');
 
-# TODO: look out for emails from mailer-daemon
+$disclaimer = "[This message has been modified: see
+https://github.com/barrycarter/bcapps/blob/master/419/bc-has-replied.pl
+for details]";
+
+# load the list/hash of pinged addresses
+# TODO: at some point, this will become slow
+# TODO: should really stop hardcoding leonard.zeptowitz everywhere
+for $i (split(/\n/,read_file("419/pinged.txt"))) {
+  chomp($i);
+  $i=~/^leonard\.zeptowitz\+(\d+)\@gmail\.com\s+(.*)$/ || warn("BAD LINE: $i");
+  $addr{$1}=$2;
+}
+
+# for now, print results to confirmed2.txt
+# TODO: make this confirmed.txt and tweak bc-hit-scammer.pl to compensate
+open(B,">419/confirmed2.txt");
 
 # mailbox below = scammer has replied in scam-like way
 open(A,"/home/barrycarter/mail/leonard.zeptowitz.has.replied");
@@ -17,12 +39,8 @@ open(A,"/home/barrycarter/mail/leonard.zeptowitz.has.replied");
 while (($head,$body) = next_email_fh(\*A)) {
   unless ($head) {last;}
 
-  # fixup for continuation lines
+  # fixup for continuation lines (mainly for subject)
   $head=~s/\n\s+/ /isg;
-
-#  debug("HEAD: $head", "BODY: $body");
-
-#  warn "TESTING"; next;
 
   # headers of interest
   @heads = (); %heads = (); $to = "";
@@ -56,11 +74,27 @@ while (($head,$body) = next_email_fh(\*A)) {
   # is written to file (the rest are overwritten)
   my($num) = $1;
 
+  # to confirmed2.txt print the scammer email address and the pinger address
+  print B "$num $addr{$num}\n";
+
+  # compress 3 or more newlines to 2
+  $body=~s/\n{3,}/\n\n/isg;
+
   # write offending message to file (currently non-public)
   $head = join("\n", @heads);
-  write_file("$head\n\n$body\n", "/var/tmp/bchr/$num.txt");
-
+  write_file("$head\n\n$disclaimer\n\n$body\n", "/var/tmp/bchr/$num");
+  # strip attachment like lines
+  # TODO: this strips HTML attachments which is bad
+  $cmd = "grep -v --perl-regexp '^[a-zA-Z0-9\/\+]{50,}\$' /var/tmp/bchr/$num 1> /var/tmp/bchr/$num.txt";
+#  debug("CMD: $cmd");
+  system($cmd);
+#  die "TESTING";
 }
+
+close(B);
+
+# pointless but useful
+system("sort -nu 419/confirmed2.txt -o 419/confirmed2.txt");
 
 # find true email addresses in pingme
 for $i (sort keys %pingme) {
@@ -73,21 +107,3 @@ for $i (sort keys %pingme) {
 
 # TODO: I could simply print these above?
 for $i (sort keys %trueping) {print "$i\n";}
-
-die "TESTING";
-
-# look in bait-reply box (must double escape "+")
-$cmd = "egrep 'leonard.zeptowitz\\+[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]\@gmail.com' /home/barrycarter/mail/leonard.zeptowitz.has.replied";
-@addrs = `$cmd`;
-
-for $i (@addrs) {
-  while ($i=~s/(leonard\.zeptowitz\+\d+\@gmail\.com)//) {$addr{$1}=1;}
-}
-
-$str = join("\n", sort keys %addr);
-
-write_file($str, "/var/tmp/bc-has-replied.txt");
-
-system("fgrep -f /var/tmp/bc-has-replied.txt 419/pinged.txt | cut -d ' ' -f 2 | sort | uniq");
-
-# TODO: more

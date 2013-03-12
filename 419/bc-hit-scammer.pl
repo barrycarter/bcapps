@@ -14,7 +14,7 @@ my(%dude);
 open(B,">/var/tmp/bchit.sh");
 
 # scammer addresses
-@addr = split(/\n/,`egrep -v '^#|^\$' confirmed.txt| fgrep -vf confirmed-bounces.txt`);
+@addr = split(/\n/,`egrep -v '^#|^\$' confirmed2.txt|cut -d ' ' -f 2| fgrep -vf confirmed-bounces.txt`);
 
 # fake up some data
 my($faker) = Data::Faker->new();

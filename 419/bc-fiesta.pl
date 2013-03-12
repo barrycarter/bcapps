@@ -5,6 +5,8 @@
 
 require "/usr/local/lib/bclib.pl";
 
+die "DO NOT USE; confirmed.txt format has changed";
+
 @addr = split(/\n/,`egrep -v '^#|^\$' /home/barrycarter/BCGIT/419/confirmed.txt`);
 
 for $i (@addr) {
