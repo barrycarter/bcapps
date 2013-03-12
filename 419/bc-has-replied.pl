@@ -85,10 +85,8 @@ while (($head,$body) = next_email_fh(\*A)) {
   write_file("$head\n\n$disclaimer\n\n$body\n", "/var/tmp/bchr/$num");
   # strip attachment like lines
   # TODO: this strips HTML attachments which is bad
-  $cmd = "grep -v --perl-regexp '^[a-zA-Z0-9\/\+]{50,}\$' /var/tmp/bchr/$num 1> /var/tmp/bchr/$num.txt";
-#  debug("CMD: $cmd");
+  $cmd = "grep -v --perl-regexp '^[a-zA-Z0-9\/\+]{50,}\$' /var/tmp/bchr/$num 1> 419/PROOFS/$num.txt";
   system($cmd);
-#  die "TESTING";
 }
 
 close(B);
