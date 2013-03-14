@@ -1,0 +1,14 @@
+From: {first_name} {last_name} <{email_address}>
+To: [this can be anything, will be overwritten]
+Subject: I want to be sure I can trust you
+
+There is a lot of fraud in your area, and I am having some doubts.
+
+But, we are both religious people.
+
+If you will swear upon your life that you are telling me the truth, we
+can proceed.
+
+Please do not be offended: I am only doing what I must to protect my
+hard-earned money.
+
