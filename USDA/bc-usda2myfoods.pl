@@ -19,6 +19,42 @@ WHERE nutrient_id IN (
 require "/usr/local/lib/bclib.pl";
 dodie("chdir('/home/barrycarter/BCGIT/USDA')");
 
+# converts USDA field names to myfoods fieldnames
+%convert = (
+	    "Vitamin E (alpha-tocopherol)" => "vitamine",
+	    "Vitamin D" => "vitamind",
+	    "Fiber, total dietary" => "dietaryfiber",
+	    "Vitamin K (phylloquinone)" => "vitamink",
+	    "Vitamin C, total ascorbic acid" => "vitaminc",
+	    "Caffeine" => "caffeine",
+	    "Sodium, Na" => "sodium",
+	    "Iron, Fe" => "iron",
+	    "Total lipid (fat)" => "totalfat",
+	    "Calcium, Ca" => "calcium",
+	    "Fatty acids, total monounsaturated" => "monounsaturatedfat",
+	    "Potassium, K" => "potassium",
+	    "Protein" => "protein",
+	    "Fatty acids, total saturated" => "saturatedfat",
+	    "Carbohydrate, by difference" => "totalcarbohydrate",
+	    "Energy" => "calories",
+	    "Cholesterol" => "cholesterol",
+	    "Sugars, total" => "sugars",
+	    "Vitamin A, IU" => "vitamina",
+	    "Fatty acids, total trans" => "transfat"
+	    );
+
+# these fields apply to all USDA data
+%fixed = (
+	  "file" => "http://ndb.nal.usda.gov/ndb/foods/list",
+	  "url" => "http://ndb.nal.usda.gov/ndb/foods/list",
+	  "weight" => "100",
+	  "Manufacturer" => "USDA database",
+	  "serving_size" => "100g",
+	  "servingsizeingrams" => 100,
+	  "servingsize_prepared" => 100,
+	  "comments" => "USDA units differ for vitamins + maybe others"
+	  );
+
 open(A,"bzcat usda-line-dump.bz2|");
 
 while (<A>) {
@@ -28,10 +64,29 @@ while (<A>) {
   if (/^\s*$/) {next;}
 
   # the dump is highly redundant so this is inefficient
-  debug("LINE: $_");
   /^\s*(.*?)\s*\=\s*(.*?)$/;
   my($key,$val) = ($1,$2);
 
-  debug("$key/$val");
+  if ($key eq "id") {
+    # change the current id, and set the fixed fields (+ UPC special case)
+    $curid = $val;
+    $data{$curid}{UPC} = "USDA$val";
+    for $i (keys %fixed) {
+      $data{$curid}{$i} = $fixed{$i};
+    }
+    next;
+  }
+
+  if ($key eq "long_desc") {$data{$curid}{Name} = $val; next;}
+  if ($key eq "name") {$curname = $val; next;}
+
+  # only remaining case is amount
+  unless ($key eq "amount") {die "BAD KEY: $key IN $_";}
+
+  # amount (after converversion)
+  my($foodname) = $convert{$curname};
+  unless ($foodname) {die "NO CONVERSION FOR $curname";}
+  $data{$curid}{$foodname} = $val;
 }
 
+debug(unfold(%data));
