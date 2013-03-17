@@ -712,5 +712,29 @@ SHORT: 1c*PEIWEI-BEEF-ORANGE-VELVETED@2155, 1c*PEIWEI-BEEF-SESAME-VELVETED@1423,
 DATE: 20130313
 
 1501 1 whole brooklyn italsaus/onion/feta pizza
+1902 vintage cheddar fries, jal trio fries
+2253 1 container coconut peiwei beef (velveted)
 
-SHORT: 1c*DOMINO-LARGE-BROOKLYN-IS-ON-FETA@1501
+SHORT: 1c*DOMINO-LARGE-BROOKLYN-IS-ON-FETA@1501, 1c*PEIWEI-BEEF-COCONUT-VELVETED@2253, 1*853762002085@1902, 1*853762002108@1902
+
+DATE: 20130314
+
+1422 beanless chili, 171g peanut butter pretzels
+2243 8 bun length beef ballpark franks (whole container [smaller size]), vinegar splash fries, 253g queso salsa dip, 131g lays potato chips
+
+SHORT: 1c*014900012704@1422, 171g*072600074071@1422, 8*054500100210@2243, 1*853762002023@2243, 253g*028400070980@2243, 131g*028400002684@2243
+
+DATE: 20130315
+
+1541 1 container ground italian spicy sausage w 128g white onion [***NOT ADDED TO DB YET***], honey mustard fries
+2033 6 slices dominos medium pan pizza: italian sausage + green chile
+
+SHORT: 1c*077782008685@1455, 1*853762002061@1541, 6*DOMINO-MEDIUM-PAN-IS-GC@2033
+
+DATE: 20130316
+
+1346 2 slices dominos medium pan pizza: italian sausage + green chile, 4 slices dominos medium pan pizza: italian sausage + jalapeno
+1643 honey bbq fries
+
+SHORT: 2*DOMINO-MEDIUM-PAN-IS-GC@1346, 4*DOMINO-MEDIUM-PAN-IS-JAL@1346, 1*853762002047@1643
+

@@ -34,7 +34,10 @@ for $i (split(/\n/,read_file("419/pinged.txt"))) {
 open(B,">419/confirmed2.txt");
 
 # mailbox below = scammer has replied in scam-like way
-open(A,"/home/barrycarter/mail/leonard.zeptowitz.has.replied");
+# moved this to where I have more disk space and split into smaller folders
+# open(A,"cat /mnt/sshfs/MAIL/leonard.zeptowitz.has.replied*|");
+die "this is broken; need to look at old file too";
+open(A,"/mnt/sshfs/MAIL/leonard.zeptowitz.has.replied");
 
 while (($head,$body) = next_email_fh(\*A)) {
   unless ($head) {last;}
@@ -43,7 +46,7 @@ while (($head,$body) = next_email_fh(\*A)) {
   $head=~s/\n\s+/ /isg;
 
   # headers of interest
-  @heads = (); %heads = (); $to = "";
+  @heads = (); %heads = ();
   for $i ("Return-Path", "Delivered-To", "X-Originating-Email", "From", "To", "Subject", "Date") {
     $head=~s/^($i):(.*?)$//m;
     my($key,$val) = ($1,$2);
@@ -67,8 +70,10 @@ while (($head,$body) = next_email_fh(\*A)) {
 
   # which tagged address was this sent to
   unless ($heads{to}=~/leonard\.zeptowitz\+(\d+)\@gmail\.com/i) {
-    warn("BAD TO ADDRESS: $to");
+    warn("BAD TO ADDRESS: $heads{to}");
   }
+
+  debug("TO: $heads{to}");
 
   # note: scammers send multiple emails to same address, but only ONE
   # is written to file (the rest are overwritten)
