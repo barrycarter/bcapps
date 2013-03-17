@@ -17,4 +17,21 @@ WHERE nutrient_id IN (
 =cut
 
 require "/usr/local/lib/bclib.pl";
+dodie("chdir('/home/barrycarter/BCGIT/USDA')");
+
+open(A,"bzcat usda-line-dump.bz2|");
+
+while (<A>) {
+  chomp;
+
+  # skip empty lines
+  if (/^\s*$/) {next;}
+
+  # the dump is highly redundant so this is inefficient
+  debug("LINE: $_");
+  /^\s*(.*?)\s*\=\s*(.*?)$/;
+  my($key,$val) = ($1,$2);
+
+  debug("$key/$val");
+}
 
