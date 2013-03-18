@@ -1,0 +1,38 @@
+Return-Path: <golvanwilliams@gmail.com>
+Delivered-To: leonard.zeptowitz+130221035809@gmail.com
+From: Golvan Williams <golvanwilliams@gmail.com>
+To: Leonard Zeptowitz <leonard.zeptowitz+130221035809@gmail.com>
+Subject: Details............
+Date: Thu, 21 Feb 2013 07:37:27 +0200
+
+[This message has been modified: see
+https://github.com/barrycarter/bcapps/blob/master/419/bc-has-replied.pl
+for details]
+
+--e89a8f838b7b5dc31504d63578c7
+Content-Type: text/plain; charset=ISO-8859-1
+
+Attention Beneficiary,
+
+I need you to provide me with your personal details such as your full
+Names, Address, Telephone Numbers,Sex, Occupation and Country. Further
+explanation will be given to you in my next mail to you.
+
+I will commence your payment process as soon as I receive the details.
+
+Yours in Service,
+
+Mr. Golvan Williams.
+
+--e89a8f838b7b5dc31504d63578c7
+Content-Type: text/html; charset=ISO-8859-1
+
+Attention Beneficiary,<br><br>I need you to provide me with your 
+personal details such as your full Names, Address, Telephone 
+Numbers,Sex, Occupation and Country. Further explanation will be given 
+to you in my next mail to you.<br>
+<br>I will commence your payment process as soon as I receive the details.<br><br>Yours in Service,<br><br>Mr. Golvan Williams.
+
+--e89a8f838b7b5dc31504d63578c7--
+
+

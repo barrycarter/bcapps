@@ -91,7 +91,8 @@ while (($head,$body) = next_email_fh(\*A)) {
   # strip attachment like lines
   # TODO: this strips HTML attachments which is bad
   # TODO: sending to /var/tmp/ for testing only
-  $outdir = "/var/tmp/bchr";
+#  $outdir = "/var/tmp/bchr";
+  $outdir = "419/PROOFS/";
   $cmd = "grep -v --perl-regexp '^[a-zA-Z0-9\/\+]{50,}\$' /var/tmp/bchr/$num 1> $outdir/$num.txt";
   system($cmd);
 }
