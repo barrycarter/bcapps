@@ -33,9 +33,18 @@ for $i (0..$#res) {
     }
 
     my($dist) = gcdist(@latlon);
-    print "$res[$i]->{city} to $res[$j]->{city}: $dist miles\n";
+
+    # number of light milliseconds
+    my($ltms) = $dist*$MIPERKM/$SPEEDOFLIGHT*10**6;
+
+    # the three ltms numbers below
+    # 1st: light milliseconds
+    # 2nd: light roundtrip milliseconds (fastest possible ping time)
+    # 3rd: twice light roundtrip milliseconds (near best realistic ping time)
+    printf("$res[$i]->{city} to $res[$j]->{city}: %d mi (%d km, %0.2f/%0.2f/%0.2f ltms)\n", $dist, $dist*$MIPERKM, $ltms, $ltms*2, $ltms*4);
   }
 }
+
 
 
 

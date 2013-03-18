@@ -26,6 +26,9 @@ $DEGRAD=$PI/180; # degrees to radians
 $RADDEG=180./$PI; # radians to degrees
 $EARTH_RADIUS = 6371/1.609344; # miles
 
+our($MIPERKM) = 1.609344; # miles per kilometer
+our($SPEEDOFLIGHT) = 299792458; # meters per second
+
 our($DEGRAD)=$PI/180; # degrees to radians
 our($RADDEG)=180/$PI; # radians to degrees
 our($HOURRAD)=$PI/12; # hours to radians
