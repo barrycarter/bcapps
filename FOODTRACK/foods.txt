@@ -729,7 +729,7 @@ DATE: 20130315
 1541 1 container ground italian spicy sausage w 128g white onion [***NOT ADDED TO DB YET***], honey mustard fries
 2033 6 slices dominos medium pan pizza: italian sausage + green chile
 
-SHORT: 1c*077782008685@1455, 1*853762002061@1541, 6*DOMINO-MEDIUM-PAN-IS-GC@2033
+SHORT: 1c*077782008685@1455, 1*853762002061@1541, 6*DOMINO-MEDIUM-PAN-IS-GC@2033, 128g*USDA11282@1541
 
 DATE: 20130316
 

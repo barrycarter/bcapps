@@ -49,7 +49,7 @@ dodie("chdir('/home/barrycarter/BCGIT/USDA')");
 	  "url" => "http://ndb.nal.usda.gov/ndb/foods/list",
 	  "weight" => "100",
 	  "Manufacturer" => "USDA database",
-	  "serving_size" => "100g",
+	  "serving size" => "100g",
 	  "servingsizeingrams" => 100,
 	  "servingsize_prepared" => 100,
 	  "comments" => "USDA units differ for vitamins + maybe others"
@@ -67,18 +67,23 @@ while (<A>) {
   /^\s*(.*?)\s*\=\s*(.*?)$/;
   my($key,$val) = ($1,$2);
 
+  $val=~s/[\'\"]//isg;
+
   if ($key eq "id") {
     # change the current id, and set the fixed fields (+ UPC special case)
     $curid = $val;
-    $data{$curid}{UPC} = "USDA$val";
+    $data[$curid]{UPC} = "USDA$val";
     for $i (keys %fixed) {
-      $data{$curid}{$i} = $fixed{$i};
+      $data[$curid]{$i} = $fixed{$i};
     }
     next;
   }
 
-  if ($key eq "long_desc") {$data{$curid}{Name} = $val; next;}
-  if ($key eq "name") {$curname = $val; next;}
+  if ($key eq "long_desc") {$data[$curid]{Name} = $val; next;}
+  if ($key eq "name") {
+    $curname = $val;
+    next;
+  }
 
   # only remaining case is amount
   unless ($key eq "amount") {die "BAD KEY: $key IN $_";}
@@ -86,7 +91,20 @@ while (<A>) {
   # amount (after converversion)
   my($foodname) = $convert{$curname};
   unless ($foodname) {die "NO CONVERSION FOR $curname";}
-  $data{$curid}{$foodname} = $val;
+  $data[$curid]{$foodname} = $val;
+
 }
 
-debug(unfold(%data));
+# making data an array is inefficient (the USDA ids are sparse), but
+# lets me use hashlist2sqlite
+
+@queries = hashlist2sqlite(\@data, "foods");
+
+debug(@queries);
+
+print "BEGIN;\n";
+print join(";\n", @queries);
+print ";\n";
+print "COMMIT;\n";
+
+

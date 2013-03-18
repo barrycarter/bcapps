@@ -27,6 +27,10 @@ use Astro::Coord::ECI::Sun;
 use Astro::Coord::ECI::Utils qw{deg2rad};
 use Astro::Sunrise;
 
+bcinfolog();
+
+die "TESTING";
+
 # extract_emails_phones("leonard.zeptowitz+130130143936\@gmail.com");
 
 # die "TESTING";

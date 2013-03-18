@@ -79,7 +79,34 @@ sub func {
   }
 }
 
-=item hwclock_test()
+=item bc_info_log()
+
+Confirms that the last entry in the bcinfonew log file (which I rsync
+over regularly) is relatively recent (could also use check_file_age,
+but this is slightly more reliable).
+
+TODO: make MUCH more generic
+
+=cut
+
+sub bc_info_log {
+  # last line of access log
+  my($lastline) = `tail -1 /home/barrycarter/html/weblogs/bcinfonew/access.log`;
+  # find timestamp
+  $lastline=~/\[(.*?)\]/;
+  # convert to unix time and check diff
+  my($diff) = abs(time()-str2time($1));
+  # note: too far in future is also bad
+  if ($diff > 86400) {
+    print "bcinfonew access.log rsync too old! ($diff seconds)\n";
+    return 2;
+  }
+
+  print "bcinfonew access.log fine: $diff seconds\n";
+  return 0;
+}
+
+=item bc_hwclock_test()
 
 Confirms the hardware clock is within 60 seconds of the computer clock
 
