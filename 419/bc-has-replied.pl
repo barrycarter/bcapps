@@ -33,11 +33,11 @@ for $i (split(/\n/,read_file("419/pinged.txt"))) {
 # TODO: make this confirmed.txt and tweak bc-hit-scammer.pl to compensate
 open(B,">419/confirmed2.txt");
 
+# leonard.zeptowitz.has.replied.FINAL: where the scamlike replies are ultimately stored
+# leonard.zeptowitz.has.replied: temporary storage for scamlike replies (small mailboxes work better w Alpine, especially over sshfs)
+
 # mailbox below = scammer has replied in scam-like way
-# moved this to where I have more disk space and split into smaller folders
-# open(A,"cat /mnt/sshfs/MAIL/leonard.zeptowitz.has.replied*|");
-die "this is broken; need to look at old file too";
-open(A,"/mnt/sshfs/MAIL/leonard.zeptowitz.has.replied");
+open(A,"/mnt/sshfs/MAIL/leonard.zeptowitz.has.replied.FINAL");
 
 while (($head,$body) = next_email_fh(\*A)) {
   unless ($head) {last;}
@@ -90,7 +90,9 @@ while (($head,$body) = next_email_fh(\*A)) {
   write_file("$head\n\n$disclaimer\n\n$body\n", "/var/tmp/bchr/$num");
   # strip attachment like lines
   # TODO: this strips HTML attachments which is bad
-  $cmd = "grep -v --perl-regexp '^[a-zA-Z0-9\/\+]{50,}\$' /var/tmp/bchr/$num 1> 419/PROOFS/$num.txt";
+  # TODO: sending to /var/tmp/ for testing only
+  $outdir = "/var/tmp/bchr";
+  $cmd = "grep -v --perl-regexp '^[a-zA-Z0-9\/\+]{50,}\$' /var/tmp/bchr/$num 1> $outdir/$num.txt";
   system($cmd);
 }
 
