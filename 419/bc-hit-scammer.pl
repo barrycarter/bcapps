@@ -30,17 +30,31 @@ $dude{phone_number}=~s/\s*x.*$//isg;
 $dude{email_address} = "$dude{first_name}.$dude{last_name}\@$domain";
 
 # TODO: randomize
-my($template) = read_file("TEMPLATES/9.txt");
+my($template) = read_file("TEMPLATES/13.txt");
 
 $template=~s/\{(.*?)\}/$dude{$1}/isg;
 
+# remove comments
+$template=~s/#.*?\n//isg;
+
+# special case for 13.txt (TODO: standardize this)
+$dude{email_address} = "do_not_reply\@heathrow.com";
+
 # loop
 for $i (@addr) {
+  # copy original template each time
+  $mplate = $template;
+
   # to address changes each time
-  $template=~s/^To:.*?$/To: $i/m;
+#  $mplate=~s/^To:.*?$/To: $i/m;
+
+  # note: |sha1| is converted to recipient emails sha1
+  # TODO: generalize concept of recipient-based templating
+  $mplate=~s/\|sha1\|/sha1_hex($i)/iseg;
+  $mplate=~s/\|email\|/$i/iseg;
 
   # write to file
-  write_file($template,"/var/tmp/bchit-$i.txt");
+  write_file($mplate,"/var/tmp/bchit-$i.txt");
 
   print B "sendmail -v -f$dude{email_address} -t < /var/tmp/bchit-$i.txt 1> /var/tmp/bchit-$i.out 2> /var/tmp/bchit-$i.err\n";
 }
@@ -50,7 +64,8 @@ close(B);
 # print data to file (w timestamp)
 append_file(time()." ".join("|",%dude)."\n", "/var/tmp/bhsd.txt");
 
-print $template;
+# really just shows it for last person
+print $mplate;
 
 print "\n\nTo actually send mail:\nsh /var/tmp/bchit.sh\n";
 

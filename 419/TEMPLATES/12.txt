@@ -1,0 +1,11 @@
+# this is a hardcoded test of sending an embedded recipient-specific
+# image to track scammers
+From: Jennifer Perry <jennifer.perry@usa.com>
+To: |email|
+Subject: Did you get this?
+
+Could you please reply to this email so that I can be sure you got it?
+
+Thanks much, Jenny!
+
+<img src='http://|sha1|.rr.94y.info/'>

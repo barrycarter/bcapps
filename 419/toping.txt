@@ -1,4 +1,4 @@
-cat /home/barrycarter/mail/leonard.zeptowitz.has.replied >> /mnt/sshfs/MAIL/leonard.zeptowitz.has.replied.FINAL; rm /home/barrycarter/mail/leonard.zeptowitz.has.replied; touch /home/barrycarter/mail/leonard.zeptowitz.has.replied; touch /mnt/sshfs/MAIL/leonard.zeptowitz.has.replied.FINAL
+cat /home/barrycarter/mail/leonard.zeptowitz.has.replied >> /mnt/sshfs/MAIL/leonard.zeptowitz.has.replied.FINAL; rm /home/barrycarter/mail/leonard.zeptowitz.has.replied; touch /home/barrycarter/mail/leonard.zeptowitz.has.replied; sleep 1; touch /mnt/sshfs/MAIL/leonard.zeptowitz.has.replied.FINAL
 bc-has-replied.pl
 
 12345bena@gmail.com
@@ -27,6 +27,7 @@ adrianbay1@yahoo.co.uk
 advocatekoffijohn@yahoo.fr
 agency2002@hotmail.com
 agent7.westernunion@ovi.com
+agentmaxwell2013@rediffmail.com
 agentmorgan1144@gmail.com
 ahessian@rocketmail.com
 ahmedaaansari1@superposta.com
@@ -72,6 +73,7 @@ allenvioletlarge823@yahoo.ca
 allenvioletlargedpt@outlook.com
 allenvlarge12@live.com
 allvioelarge1@live.com
+alwayshci@yahoo.com
 amadaben@aol.com
 aminataabdullah3@gmail.com
 amomodu20@yahoo.com
@@ -108,6 +110,7 @@ atm_delivery@globomail.com
 atmservice007@hotmail.com
 atty.mark@rogers.com
 au_stino55@yahoo.es
+aviz_rahimi@yahoo.com
 awardmicrosoft66@yahoo.co.uk
 awardpromo2013@asia.com
 ayi.komi201@gmail.com
@@ -157,6 +160,7 @@ blackbmclaim@hotmail.com
 bmwclaimdpt@live.co.uk
 bmwdept1@wss-id.org
 bnocukanniversary@hotmail.co.uk
+boniericson@kimo.com
 bonisuzan@yahoo.com
 bophamuket@gmail.com
 brooksam2012@gmail.com
@@ -221,6 +225,7 @@ colmarcusluthan111@gmail.com
 commercialbank527@yahoo.com
 compensation44@hotmail.com
 compensation_payment26@yahoo.com
+contact@boafinance.iwarp.com
 contact@brsnasubaexpress.net.ms
 contactangilu11@nokiamail.com
 corrine.burriere@yahoo.fr
@@ -241,10 +246,12 @@ darlinchi2627@yahoo.com
 dave-angela.dawes4@ozledim.net
 dave_angel@bellair.net
 daveandangelafoundation77@gmail.com
+daveangeladawesdonation@yahoo.com.hk
 davedawes889@gmail.com
 davegregor61@yahoo.com
 david00_1benson@yahoo.fr
 david_lunberg@yahoo.com
+davidl.woodgardens@gmail.com
 davidmark.senatepresident100@gmail.com
 davidmarkonly1@yahoo.com
 davidmarkonly3@yahoo.co.uk
@@ -260,12 +267,14 @@ defencecourierdelivery1@hotmail.com
 dekkercompany01@gmail.com
 dempsey.e.martin@gmail.com
 deng_alicia@yahoo.com
+deptverificationpaymentoffice@yahoo.co.uk
 dewill.aurelie@yahoo.fr
 dhl-servicebj2011@live.fr
 dhl.express001@administrativos.com
 dhlcouriercompany@yahoo.com
 dhldc.20121@yahoo.com
 dhlexpressng@yahoo.com.ph
+diplomatangelawilliams@yahoo.co.uk
 diplomatkelvinjones@gmail.com
 directorhomes@gmail.com
 disbursementdept10@gmail.com
@@ -313,11 +322,13 @@ drusmanhassa2@gmail.com
 drvansaun@gmail.com
 dubaiiprom111@hotmail.com
 dubaiprom111@live.com
+ecobank_bj@rocketmail.com
 ecobankplc757@rocketmail.com
 ecobankplc813@yahoo.fr
 edmund_p1@yahoo.cn
 edward-mark@representative.com
 edwardwhiteconsultant@hotmail.fr
+efcc_nigerian777@yahoo.com
 efcccompensationforce01@gmail.com
 efccngr6@gmail.com
 eliamoffitt@hotmail.com
@@ -329,6 +340,7 @@ ellema22111@gmail.com
 elliedavid01@hotmail.com
 emanalzaw@gmail.com
 emmanuel.anderson34@yahoo.com
+engr_ahmeddaneil@yahoo.com
 enquiriesofi@yahoo.co.uk
 enquiry@jpgrenfell-bnknl.com
 enquirybbcdesk2013@hotmail.com
@@ -449,6 +461,7 @@ hamedmalaki872@yahoo.fr
 hamiltonwilkins2@e-mail.ua
 hamza_kabore2012@yahoo.com
 hans_1w@yahoo.se
+happynesskarume@yahoo.com
 hardytom497@yahoo.com
 harrimorris@manager.in.th
 harrycoleinc@live.com
@@ -469,6 +482,7 @@ hrycole@gmail.com
 hsbcbankatmdivision@depthsbc.com
 hu.huimin06@yahoo.com.hk
 hu_huimin28@yahoo.com.hk
+hulbankslouis@gmail.com
 ibrahi_buba01@yahoo.com
 ibrahim.assan@rocketmail.com
 ibrahim.zufar@ymail.com
@@ -480,11 +494,13 @@ idris.bello14@hotmail.com
 iicpc@ymail.com
 imfbenin29@yahoo.it
 indn4@msn.com
+info.banque.atl@onet.eu
 info.maybankcustomer@financier.com
 info@bmw.com
 info@e-fccnigeria.info.ms
 info@grahambartletlawfirm.co.uk
 info@halllifxb.com
+info@monicawilliamsldn.net
 info@nat-lot.org
 info@tnt-deliveryservices.gr.vu
 info@ustreasury-dept.org
@@ -523,7 +539,9 @@ jameskaila_jjk@yahoo.co.uk
 jameskings2006@hotmail.com
 jamessamuel112@yahoo.com
 jamicha@voila.fr
+janaahtamba@yahoo.com
 janetbrownz@hotmail.com
+jecykigali@yahoo.com
 jefferson.smith00@gmail.com
 jefferyjamesdean556@yahoo.co.uk
 jeffjones.jones13@gmail.com
@@ -557,6 +575,7 @@ juanxmiller@live.com
 judeisiaka_72@yahoo.com
 juliet_matin@yahoo.com
 jullieyolanda1@msn.com
+jumdept@hotmail.com
 jumlott133@hotmail.co.uk
 jwalkerstd@yahoo.co.za
 jyousof_02@yahoo.com
@@ -585,6 +604,7 @@ konan.coulibaly_salim@yahoo.com
 kpogobi2@yahoo.in
 kricky400@sify.com
 krivaneckay@gmail.com
+krudouck@yahoo.com
 l_chan33@live.com
 lamidosanusi000022222@gmail.com
 larryniko123@gmail.com
@@ -645,6 +665,7 @@ mchim317@yahoo.com.hk
 mcouk177@msn.com
 mcp.claims@careceo.com
 mdcokeuk_2013@hotmail.co.uk
+mdmjd_042@yahoo.com
 meetellen24@yahoo.com
 mercedes.benz2013@hotmail.co.uk
 mercyjohnsonkone@yahoo.co.uk
@@ -653,6 +674,7 @@ mhenry608@gmail.com
 michaelosei777@gmail.com
 michelkabore1965@hotmail.fr
 michelmboma2@yahoo.com
+micjosep3@yahoo.com
 micpaulson1@yahoo.com
 mike-green.p@hotmail.com
 mikewearh1@aol.co.uk
@@ -664,6 +686,7 @@ miss.edithsteve@yahoo.co.uk
 miss.samirasaitoti@yahoo.co.za
 missdaniella_nester1988@hotmail.fr
 missmariamjustin@yahoo.com
+missmaureenkkones@gmail.com
 mnhgfwer@msn.com
 moghalukingsley22@yahoo.com
 mohammed_capt@yahoo.com
@@ -720,6 +743,8 @@ mrharryben017@hotmail.com
 mrharrysonemos@yahoo.fr
 mrherbertnnwi@superposta.com
 mrjamesw_mcjunkin@aim.com
+mrjohnwalkers@hotmail.com
+mrkarimmohamed@live.com
 mrkayordafote@yahoo.com
 mrlikiemenandrew@gmail.com
 mrmmw.wiryanto.indonesian@gmail.com
@@ -728,6 +753,8 @@ mrs.alicewanguikuje@yahoo.es
 mrs.awasule@yahoo.fr
 mrs.barbarahg@gmail.com
 mrs.cecikenig@yahoo.com.hk
+mrs.ishatibrahim.ecbWUdept.gh@fastservice.com
+mrs.ishatibrahim.ecbwudept.gh@fastservice.com
 mrs.janemoses1935@hotmail.com
 mrs.kalistyaron@sify.com
 mrs.maryobi1@yahoo.com
@@ -820,6 +847,7 @@ paulsanders2009@live.com
 payoutprocedures@outlook.com
 pchonline@yahoo.cn
 pchsearchnwin@mitrovica.se
+peirreegomez@yahoo.fr
 person@e-mail.cz
 peteradams003@yahoo.com
 peterbrown1701@yahoo.com
@@ -827,8 +855,10 @@ peterwong08@hotmail.com.hk
 peterwong4356@hotmail.com
 peugeotautomobiles@hotmail.com
 peyadema57@yahoo.com
+philipdzifa1@hotmail.com
 philipikeazor55@rocketmail.com
 philipobada001@gmail.com
+philipsglansagent55@gmail.com
 phillip.lofty@yahoo.com
 pierra_saitoti@yahoo.com
 piggott_w@yahoo.com
@@ -864,12 +894,14 @@ rashida.banabas@yahoo.com
 ray102g@gmail.com
 raziriabdu@yahoo.com
 rebecca.brazell@zing.vn
+receiveyourcompensation@hotmail.com
 remainbless@yahoo.ie
 remittuncc0011@superposta.com
 reservebanktransferunit@yahoo.in
 rev.scott.martinrennie@live.com
 rev_simonjames01@yahoo.com
 revdrpaulsmith6458@gmail.com
+reverendjwilliams@yahoo.com
 revfatherm@yahoo.in
 revfrphillipsmathews@yahoo.com
 revjones111@yahoo.com
@@ -920,6 +952,7 @@ senatohopeuzodinma@126.com
 seydourahmane926@yahoo.fr
 sgt.agjnsn@gmail.com
 sgt.jasonmiller62@hotmail.com
+sgt.scottorlando@dgoh.org
 sgt_a.johnson@hotmail.com
 shabangum@yahoo.com
 sharifkarim7@gmail.com
@@ -930,6 +963,7 @@ shumtelsanou@rocketmail.com
 simonwilly1212@gmail.com
 sintsovmnikolay@yahoo.com
 sitirohani.salleh@hotmail.com
+skanskares@gmail.com
 sklclaim2013@live.com
 skyebankplc48@ymail.com
 skyebankplcplc13@gmail.com
@@ -1019,6 +1053,7 @@ utgwesternoffice@yahoo.com
 va607va@yahoo.com
 vanbrks@hotmail.com
 vanessa_hernandez47@yahoo.com
+vanessawillard12@yahoo.com
 verakennedy1990@gmail.com
 verificationcentre2@hotmail.co.za
 verificationwire.dept@ymail.com

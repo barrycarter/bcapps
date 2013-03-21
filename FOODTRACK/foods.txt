@@ -726,7 +726,7 @@ SHORT: 1c*014900012704@1422, 171g*072600074071@1422, 8*054500100210@2243, 1*8537
 
 DATE: 20130315
 
-1541 1 container ground italian spicy sausage w 128g white onion [***NOT ADDED TO DB YET***], honey mustard fries
+1541 1 container ground italian spicy sausage w 128g white onion, honey mustard fries
 2033 6 slices dominos medium pan pizza: italian sausage + green chile
 
 SHORT: 1c*077782008685@1455, 1*853762002061@1541, 6*DOMINO-MEDIUM-PAN-IS-GC@2033, 128g*USDA11282@1541
@@ -739,3 +739,34 @@ DATE: 20130316
 2227 7 slices salami (7/24 container), jal trio fries
 
 SHORT: 2*DOMINO-MEDIUM-PAN-IS-GC@1346, 4*DOMINO-MEDIUM-PAN-IS-JAL@1346, 1*853762002047@1643, 0.29167c*044700010907@2227, 1*853762002108@2227, 1c*028189750059@1912, 4*DOMINO-MEDIUM-PAN-IS-JAL@2227
+
+DATE: 20130317
+
+1606 5 slices Dominos medium pan italian sausage/onion
+2305 150g lays potato chips, 265g french onion dip, classic sea salt fries
+
+SHORT: 5*DOMINO-MEDIUM-PAN-IS-ONION@1606, 150g*028400002684@2305, 265g*028400070942@2305, 1*853762002009@2305
+
+DATE: 20130318
+
+1517 4 slices pan pizza (medium, italian sausage + green chile), 3 slices pan pizza (medium, italian sausage + onion)
+2005 1 can chicken/rotini soup, 8 bun length ballpark beef franks, 194g Lays potato chips, 158g french onion dip
+
+SHORT: 4*DOMINO-MEDIUM-PAN-IS-GC@1517, 3*DOMINO-MEDIUM-PAN-IS-ONION@1517, 1c*041196911169@2005, 8*054500100210@2005, 194g*028400002684@2005, 158g*028400070942@2005
+
+DATE: 20130319
+
+1416 1 whole large thincrust/nocheese/on/gc/sauce pizza
+1936 8 bun length beef franks, 90g lays potato chips
+2211 1 can beanless chili, 141g onions
+
+SHORT: 1c*014900012704@2211, 141g*USDA11282@2211, 90g*028400002684@1956, 8*054500100210@1936, 1c*DOMINO-LARGE-THINCRUST-NOCHEESE-ON-GC-SAUCE@1416
+
+DATE: 20130320
+
+1343 1.5 large thin crust no cheese hot sauce/onion/gc pizza
+
+SHORT: 1.5c*DOMINO-LARGE-THINCRUST-NOCHEESE-ON-GC-SAUCE@1343
+
+
+

@@ -1,0 +1,6 @@
+# testing flextel.com using a 44 70 number (thanks, TM!)
+From: Airport Terminal Email Service <do_not_reply@heathrow.com>
+To: |email|
+Subject: Just landed in London, please call me at +44-7010089526
+
+Oh, forgot to send my name, sorry. This is Benjamin.
