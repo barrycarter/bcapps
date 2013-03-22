@@ -1,3 +1,104 @@
 This directory contains notes and commands I use to setup a newserver,
 bcinfo3. My goal is to migrate barrycarter.info and related domains here.
 
+It may or may not help other people setup a new server (probably not)
+
+% NOTE: add bcinfo3 to /etc/hosts locally:
+193.183.99.226 bcinfo3 
+
+% Create ssh trust
+mkdir /root/.ssh/; cd /root/.ssh; ex authorized_keys
+
+% Test locally
+> ssh -i ~/.ssh/id_rsa.bc root@bcinfo3 date
+
+% Put Perl in /bin as well
+ln -s `which perl` /bin
+
+% One off copy Perl files to /usr/local/bin
+% TODO: create a better rsyncing method
+cd /home/barrycarter/BCGIT;
+\rsync -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' -Pavz *.pl */*.pl root@bcinfo3:/usr/local/bin/
+
+% put library in right place
+ln -s /usr/local/bin/bclib.pl /usr/local/lib
+
+% Obtain base RPMs (epel)
+[http://www.thegeekstuff.com/2012/06/enable-epel-repository/]:
+
+mkdir /root/RPM; cd /root/RPM;
+curl -O https://fedoraproject.org/static/0608B895.txt
+rpm --import 0608B895.txt
+curl -O http://mirror.pnl.gov/epel/5/i386/epel-release-5-4.noarch.rpm
+rpm -i epel-release-5-4.noarch.rpm
+
+% Programs to install (should really all be in one command of course):
+
+yum -y install lighttpd dropbear perl-Text-Unidecode.noarch
+# note: I didnt need to escape perl-Date* below even tho I had glob set?!
+yum -y install perl-IO-Digest.noarch gcc perl-Date*
+
+% Perl modules (excluding those available via yum)
+
+cpan Math::Round Digest::SHA1 Statistics::Distributions JSON
+
+% mail.resilans.se does not relay:
+
+[root@bcinfo3 ~]# telnet mail.resilans.se 25
+Trying 2a01:280:1::2...
+Connected to mail.resilans.se.
+Escape character is '^]'.
+220 server.resilans.se ESMTP Postfix
+HELO testing
+250 server.resilans.se
+MAIL FROM: <here@me.com>
+250 2.1.0 Ok
+RCPT TO: <barry@barrycarter.info>
+554 5.7.1 <barry@barrycarter.info>: Relay access denied
+QUIT
+221 2.0.0 Bye
+Connection closed by foreign host.
+
+% Neither does smtp.cdlan.net:
+
+[root@bcinfo3 ~]# telnet smtp.cdlan.net 25
+Trying 217.171.33.231...
+Connected to smtp.cdlan.net.
+Escape character is '^]'.
+220 smtpout.cdlan.net ESMTP
+HELO testing 
+250 smtpout.cdlan.net
+MAIL FROM: <here@me.com> 
+250 2.1.0 Ok
+RCPT TO: <barry@barrycarter.info> 
+554 5.7.1 <unknown[193.183.99.226]>: Client host rejected: Access denied
+QUIT
+221 2.0.0 Bye
+Connection closed by foreign host.
+
+% Stop/remove/replace unnecessary services:
+
+chkconfig sendmail off
+chkconfig httpd off
+chkconfig xinetd off
+chkconfig saslauthd off
+chkconfig dropbear on
+chkconfig sshd off
+/etc/init.d/sendmail stop
+/etc/init.d/httpd stop
+/etc/init.d/xinetd stop
+/etc/init.d/saslauthd stop
+/etc/init.d/sshd stop
+/etc/init.d/dropbear start
+yum -y remove sendmail httpd xinetd saslauthd openssh-server
+
+%% TODO: reboot after changes to make sure they "stick"
+
+% install geonames db:
+
+mkdir ~/GEONAMES; cd GEONAMES;
+curl -O http://download.geonames.org/export/dump/allCountries.zip
+curl -O http://download.geonames.org/export/dump/admin1CodesASCII.txt
+curl -O http://download.geonames.org/export/dump/countryInfo.txt
+/usr/local/bin/bc-geonames2sqlite.pl
+

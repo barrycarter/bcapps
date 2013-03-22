@@ -74,6 +74,7 @@ DOMINO-LARGE-DOUBLECHEESE-ITALSAUS-ONION Dominos Large Double Cheese Italian Sau
 DOMINO-LARGE-FETA-CHEDDAR-PARM-THIN Dominos Large Feta Cheese%2C Cheddar Cheese%2C Shredded Parmesan on Thin Crust (Dominos)
 DOMINO-LARGE-ITALSAUS-GC-DOUBLECHEESE Dominos Large Sliced Italian Sausage%2C Green Chile%2C Double Cheese Pizza (Dominos)
 DOMINO-LARGE-ITALSAUS-ONION-GC Dominos Large Sliced Italian Sausage Onion Green Chili (Dominos)
+DOMINO-LARGE-THINCRUST-NOCHEESE-ON-GC-REDPEP Dominos Large Thin Crust No Cheese w onions%2C green chile and roasted red peppers (Dominos)
 DOMINO-LARGE-THINCRUST-NOCHEESE-ON-GC-SAUCE Dominos Large Thin Crust No Cheese w onions%2C green chile and wing sauce (Dominos)
 DOMINO-MANGO-HABANERO-WINGS Dominos Mango Habanero Wings (Dominos)
 DOMINO-MEDIUM-BEEF-HOT-SAUCE Dominos Medium Beef and Hot Sauce (Dominos)
