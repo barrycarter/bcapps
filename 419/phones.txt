@@ -16,10 +16,13 @@
 +16465046977 http://419.94y.info/16465046977.txt
 
 +14048261746 http://419.94y.info/14048261746.txt
+20130322.1933: magicjack caller id error
 
 +16462260706 http://419.94y.info/16462260706.txt
+20130322.1934: got voicemail, do retest
 
 +17733123120 http://419.94y.info/17733123120.txt
+
 
 +17742240935 (statefinance-department@live.com, "text messages only")
 22 Feb 2013 0815: Busy (according to SkyPE); odd voice-like busy signal once

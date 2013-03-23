@@ -35,8 +35,10 @@ rpm -i epel-release-5-4.noarch.rpm
 % Programs to install (should really all be in one command of course):
 
 yum -y install lighttpd dropbear perl-Text-Unidecode.noarch
-# note: I didnt need to escape perl-Date* below even tho I had glob set?!
+: note: I didnt need to escape perl-Date* below even tho I had glob set?!
 yum -y install perl-IO-Digest.noarch gcc perl-Date*
+: lighttpd-fastcgi does not install fcgi, wow
+yum -y install mysql mysql-server lighttpd-fastcgi fcgi libxml2 libxml2-devel
 
 % Perl modules (excluding those available via yum)
 
@@ -84,15 +86,35 @@ chkconfig xinetd off
 chkconfig saslauthd off
 chkconfig dropbear on
 chkconfig sshd off
+chkconfig mysqld on
+chkconfig lighttpd on
 /etc/init.d/sendmail stop
 /etc/init.d/httpd stop
 /etc/init.d/xinetd stop
 /etc/init.d/saslauthd stop
 /etc/init.d/sshd stop
 /etc/init.d/dropbear start
+/etc/init.d/mysqld start
+/etc/init.d/lighttpd start
 yum -y remove sendmail httpd xinetd saslauthd openssh-server
 
-%% TODO: reboot after changes to make sure they "stick"
+% PHP version too old, so remove it (and rebuild)
+
+: some of these may not be installed
+yum -y remove php php-cli php-mysql
+
+% reinstall from source
+
+mkdir /root/build; cd /root/build
+curl -L -o php5413.tbz http://www.php.net/get/php-5.4.13.tar.bz2/from/this/mirror
+tar --bzip -xvf php5413.tbz
+: wordpress requires at least this
+cd php-5.4.13/
+sh configure --with-mysql --with-zlib | tee configure.out
+make | tee make.out
+make install
+
+% TODO: reboot after changes to make sure they "stick"
 
 % install geonames db:
 
@@ -101,4 +123,30 @@ curl -O http://download.geonames.org/export/dump/allCountries.zip
 curl -O http://download.geonames.org/export/dump/admin1CodesASCII.txt
 curl -O http://download.geonames.org/export/dump/countryInfo.txt
 /usr/local/bin/bc-geonames2sqlite.pl
+
+% TODO: turn off TCP connections to 3306 mysql server
+
+% move over wordpress files:
+
+# my wordpress is fairly specialized, so I have to rsync it over (not
+# do a new install), at least for now
+
+mkdir /sites; cd /sites
+rsync -Pavz root@wordpress.barrycarter.info:/usr/share/wordpress /sites
+
+% and wordpress db:
+
+# <h>a braver man would combine these steps</h>
+ssh root@wordpress.barrycarter.info "mysqldump wordpress">/tmp/wp.txt
+mysql> CREATE DATABASE wordpress;
+mysql wordpress < /tmp/wp.txt
+
+% for now, this command syncs this directory to my server
+% TODO: make this more efficient
+% TODO: copying files at this level is pointless
+\rsync -Pavz -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' /home/barrycarter/BCGIT/BCINFO3/ root@bcinfo3:/
+
+
+
+
 

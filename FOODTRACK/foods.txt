@@ -775,10 +775,16 @@ DATE: 20130321
 
 1400 thai coconut curry beef (not velveted) w noodles
 1709 32oz sonic reeses blast
-2403 0.5 large thin crust no cheese hot sauce/onion/gc pizza, 3.81037 slices domino thincrust/nocheese/on/gc/redpeppers
+2353 13 slices hard salami (13/3 servings), 0.5 large thin crust no cheese hot sauce/onion/gc pizza, 3.81037 slices domino thincrust/nocheese/on/gc/redpeppers
 
-SHORT: 1*SONIC-REESES-BLAST-32@1709, 1c*PEIWEI-BEEF-THAI-COCONUT@1400, 1c*PEIWEI-EGG-NOODLES@1400, 0.5c*DOMINO-LARGE-THINCRUST-NOCHEESE-ON-GC-SAUCE@2403, 3.81037*DOMINO-LARGE-THINCRUST-NOCHEESE-ON-GC-REDPEP@2403
+SHORT: 1*SONIC-REESES-BLAST-32@1709, 1c*PEIWEI-BEEF-THAI-COCONUT@1400, 1c*PEIWEI-EGG-NOODLES@1400, 0.5c*DOMINO-LARGE-THINCRUST-NOCHEESE-ON-GC-SAUCE@2353, 3.81037*DOMINO-LARGE-THINCRUST-NOCHEESE-ON-GC-REDPEP@2353, 4.3333333*044700010907@2353
 
+DATE: 20130322
+
+1540 1 medium nocheese/thincrust/italiansausage/hotsauce pizza, medium nocheese/thincrust/salami/hotsauce pizza
+2242 1 can beanless chili, 124g onions, classic sea salt fries, honey bbq fries, honey mustard onion fries
+
+SHORT: 1c*014900012704@2242, 124g*USDA11282@2242, 1*853762002009@2242, 1*853762002047@2242, 1*853762002061@2242, 1c*DOMINO-MEDIUM-THINCRUST-NOCHEESE-IS-SAUCE@1540, 1c*DOMINO-MEDIUM-THINCRUST-NOCHEESE-SALAMI-SAUCE@1540
 
 
 
