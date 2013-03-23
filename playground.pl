@@ -27,6 +27,34 @@ use Astro::Coord::ECI::Sun;
 use Astro::Coord::ECI::Utils qw{deg2rad};
 use Astro::Sunrise;
 
+bc_head_size("http://s3.amazonaws.com/plivocloud/4c743546-7e1b-11e2-9060-002590662312.mp3", 1962720);
+
+=item bc_head_size($url,$size)
+
+Does a HEAD request to $url and confirms content-length is $size
+(useful for checking size consistency without doing full pull for
+large files)
+
+<h>My actual head size is: too big</h>
+
+=cut
+
+sub bc_head_size {
+  my($url,$size) = @_;
+  my($out,$err,$res) = cache_command("curl --head $url | grep Content-Length: | cut -d ' ' -f 2", "age=60");
+  # below gets rid of \r as well as \n
+  $out=~s/\s*$//isg;
+  if ($out eq $size) {
+    print "$url is $out bytes\n";
+    return 0;
+  }
+
+  print "$url is $out bytes != $size bytes\n";
+  return 2;
+}
+
+die "TESTING";
+
 bcinfolog();
 
 die "TESTING";
