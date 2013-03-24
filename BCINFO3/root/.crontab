@@ -1,0 +1,17 @@
+# email output to me, not locally
+# TODO: this wont work until I set up SOME sort of SMTP server on bcinfo3
+MAILTO="bcinfo3@barrycarter.info"
+# reload self every hour (meaning I can just update this file instead
+# of having to run "crontab -e"; however, I DO have to run crontab
+# ~/.crontab once)
+0 * * * * crontab /root/.crontab
+# update http://test.barrycarter.info/sunstuff.html
+* * * * * /usr/local/bin/bc-sun-always-shines.pl
+# update http://cheapbay.barrycarter.info/
+*/5 * * * * /usr/local/bin/bc-cheap-bay.pl
+# send email to comicssherpa.com authors who have requested it
+*/10 * * * * r2e run
+# confirms that all daemons are running
+*/10 * * * * /usr/local/bin/bc-daemon-checker.pl
+# keeps /tmp clean (I tend to create a lot of /tmp files)
+42 * * * * find /tmp -name 'cache*' -mmin +180 | xargs --no-run-if-empty rm

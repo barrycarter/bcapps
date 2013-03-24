@@ -17,6 +17,7 @@ for $i (glob ("/home/barrycarter/.Skype/*/")) {
     system("cp /home/barrycarter/BCGIT/Makefile.skypelog $i");
   }
 
-  my($out,$err,$res) = cache_command("make");
+  # I have *NO* idea why I need exec below, but it does work
+  my($out,$err,$res) = cache_command("exec /usr/local/bin/make");
   debug("OUT: $out", "ERR: $err", "RES: $res");
 }

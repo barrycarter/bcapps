@@ -126,6 +126,9 @@ curl -O http://download.geonames.org/export/dump/countryInfo.txt
 
 % TODO: turn off TCP connections to 3306 mysql server
 
+% Start crontab once (and it will reload itself after that)
+
+
 % move over wordpress files:
 
 # my wordpress is fairly specialized, so I have to rsync it over (not
@@ -146,7 +149,7 @@ mysql wordpress < /tmp/wp.txt
 % TODO: copying files at this level is pointless
 \rsync -Pavz -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' /home/barrycarter/BCGIT/BCINFO3/ root@bcinfo3:/
 
+% TODO: bring over test.barrycarter.info (I link to it a LOT from wordpress)
 
-
-
+% TODO: configure r2e to match setting on old bc
 
