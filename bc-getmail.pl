@@ -12,7 +12,7 @@ for (;;) {
     # emacs droppings
     if ($i=~/\~$/) {next;}
     debug("I: $i");
-    system("getmail --rcfile $i");
+    system("timed-run 300 getmail --rcfile $i 1> /dev/null");
   }
   $etime = time();
   $lapse = $etime-$stime;

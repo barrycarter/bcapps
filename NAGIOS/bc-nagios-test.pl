@@ -79,6 +79,32 @@ sub func {
   }
 }
 
+=item bc_check_files_age($files,$age)
+
+Given multiple files (as a file spec that ls can handle), check that
+all of them (and thus the oldest one) is younger than $age seconds
+
+=cut
+
+sub bc_check_files_age {
+  my($files,$age) = @_;
+  my($out,$err,$res) = cache_command("ls -1tr $files | head -1 | xargs stat -c '%Y'");
+
+  if ($res) {
+    print "Command returned error $res: $err\n";
+    return 2;
+  }
+
+  my($fileage) = time()-$out;
+  if ($fileage <= $age) {
+    print "$files all less than $age seconds old\n";
+    return 0;
+  }
+
+  print "$files older than $age (max age: $fileage) seconds\n";
+  return 2;
+}
+
 =item bc_head_size($url,$size)
 
 Does a HEAD request to $url and confirms content-length is $size
@@ -92,6 +118,12 @@ large files)
 sub bc_head_size {
   my($url,$size) = @_;
   my($out,$err,$res) = cache_command("curl --head $url | grep Content-Length: | cut -d ' ' -f 2", "age=60");
+
+  if ($res) {
+    print "Command returned error $res: $err\n";
+    return 2;
+  }
+  
   # below gets rid of \r as well as \n
   $out=~s/\s*$//isg;
   if ($out eq $size) {
