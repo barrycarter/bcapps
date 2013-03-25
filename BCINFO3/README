@@ -36,7 +36,7 @@ rpm -i epel-release-5-4.noarch.rpm
 
 yum -y install lighttpd dropbear perl-Text-Unidecode.noarch
 : note: I didnt need to escape perl-Date* below even tho I had glob set?!
-yum -y install perl-IO-Digest.noarch gcc perl-Date*
+yum -y install perl-IO-Digest.noarch gcc perl-Date* msmtp
 : lighttpd-fastcgi does not install fcgi, wow
 yum -y install mysql mysql-server lighttpd-fastcgi fcgi libxml2 libxml2-devel
 
@@ -148,6 +148,22 @@ mysql wordpress < /tmp/wp.txt
 % TODO: make this more efficient
 % TODO: copying files at this level is pointless
 \rsync -Pavz -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' /home/barrycarter/BCGIT/BCINFO3/ root@bcinfo3:/
+
+% Download and install msmtp
+
+curl -L -o msmtp.bz2 http://sourceforge.net/projects/msmtp/files/msmtp/1.4.30/msmtp-1.4.30.tar.bz2/download
+
+tar --bzip -xvf msmtp.bz2
+cd msmtp-1.4.30/
+sh configure | tee configure.out
+make | tee make.out
+make install
+
+: and the queuer
+
+curl -L -o msmtpq.tar.gz 'http://sourceforge.net/projects/msmtp/files/msmtpqueue/0.5/msmtpqueue-0.5.tar.gz/download'
+tar -zxvf msmtpq.tar.gz
+cd msmtpqueue-0.5/
 
 % TODO: bring over test.barrycarter.info (I link to it a LOT from wordpress)
 
