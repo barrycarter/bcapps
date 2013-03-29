@@ -27,32 +27,6 @@ bc_check_files_age("/home/barrycarter/.getmail/oldmail-imap*", 10);
 
 die "TESTING";
 
-=item bc_check_files_age($files,$age)
-
-Given multiple files (as a file spec that ls can handle), check that
-all of them (and thus the oldest one) is younger than $age seconds
-
-=cut
-
-sub bc_check_files_age {
-  my($files,$age) = @_;
-  my($out,$err,$res) = cache_command("ls -1tr $files | head -1 | xargs stat -c '%Y'");
-
-  if ($res) {
-    print "Command returned error $res: $err\n";
-    return 2;
-  }
-
-  my($fileage) = time()-$out;
-  if ($fileage <= $age) {
-    print "$files all less than $age seconds old\n";
-    return 0;
-  }
-
-  print "$files older than $age (max age: $fileage) seconds\n";
-  return 2;
-}
-
 die "TESTING";
 
 bc_head_size("http://s3.amazonaws.com/plivocloud/4c743546-7e1b-11e2-9060-002590662312.mp3", 1962720);

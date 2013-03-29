@@ -794,3 +794,33 @@ DATE: 20130323
 
 SHORT: 7*CHURCHS-SPICY-LEG@1442, 182g*072600074071@2011, 4*CHURCHS-SPICY-LEG@2246, 1c*014900012704@2011, 178g*USDA11282@2011
 
+DATE: 20130324
+
+1526 2 peiwei kung pao chicken stock velvet containers, 2 containers noodles
+2206 7 churchs spicy legs, classic sea salt fries, vinegar splash fries
+
+SHORT: 2c*PEIWEI-CHICKEN-KUNG-PAO-VELVET@1526, 2c*PEIWEI-EGG-NOODLES@1526, 7*CHURCHS-SPICY-LEG@2206, 1*853762002009@2206, 1*853762002023@2206
+
+DATE: 20130325
+
+1634 1.5 containers panda express kung pao chicken
+1758 classic sea salt fries, vintage cheddar fries
+2115 2 large bags mcdonalds fries, 11 hard salamis [remainder of above, 11/3 servings], 0.5 containers panda express kung pao
+
+SHORT: 1.5c*PANDA-EXPRESS-KPC@1634, 1*853762002009@1758, 1*853762002085@1758, 2*MCD-FRIES@2115, 3.6666666666*044700010907@2115, 0.5c*PANDA-EXPRESS-KPC@2115
+
+DATE: 20130326
+
+1400 2 slices dominos olive/chili/onion pizza
+1847 7 slices pizza hut large super supreme pan pizza (left 221g, but counting that as 1 slice left [6 eaten], since I left mostly bread)
+2125 2 jal trio fries, vintage cheddar fries
+2450 0.8 container peiwei kung pao chicken + noodles
+
+SHORT: 2*DOMINO-LARGE-GC-BO-ON@1400, 6*PIZZA-HUT-LARGE-SUPER-SUPREME-PAN@1847, 2*853762002108@2125, 1*853762002085@2125, 0.8c*PEIWEI-CHICKEN-KUNG-PAO-VELVET@2450, 0.8c*PEIWEI-EGG-NOODLES@2450
+
+DATE: 20130327
+
+1725 128g onion, 1 can beanless chili, 1 container pei wei kung pao chicken (w noodles), honey mustard onion fries
+2127 8 ballpark bun length beef hot dogs, remaining 1/2 dominos pan pizza IS/GC
+
+SHORT: 128g*USDA11282@1725, 1c*014900012704@1725, 1c*PEIWEI-CHICKEN-KUNG-PAO-VELVET@1725, 2*PEIWEI-EGG-NOODLES@1725, 1*853762002061@1725, 8*054500100210@2127, 4*DOMINO-MEDIUM-PAN-IS-GC@2127
