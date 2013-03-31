@@ -4,7 +4,10 @@ bcinfo3. My goal is to migrate barrycarter.info and related domains here.
 It may or may not help other people setup a new server (probably not)
 
 % NOTE: add bcinfo3 to /etc/hosts locally:
-193.183.99.226 bcinfo3 
+193.183.99.226 bcinfo3
+
+% change root shell to /bin/tcsh
+
 
 % Create ssh trust
 mkdir /root/.ssh/; cd /root/.ssh; ex authorized_keys
@@ -34,7 +37,7 @@ rpm -i epel-release-5-4.noarch.rpm
 
 % Programs to install (should really all be in one command of course):
 
-yum -y install lighttpd dropbear perl-Text-Unidecode.noarch
+yum -y install lighttpd dropbear perl-Text-Unidecode.noarch emacs nmap
 : note: I didnt need to escape perl-Date* below even tho I had glob set?!
 yum -y install perl-IO-Digest.noarch gcc perl-Date*
 : lighttpd-fastcgi does not install fcgi, wow
@@ -88,14 +91,21 @@ chkconfig dropbear on
 chkconfig sshd off
 chkconfig mysqld on
 chkconfig lighttpd on
+chkconfig iptables off
+: xfs installed by "yum install emacs", sigh
+chkconfig xfs off
 /etc/init.d/sendmail stop
 /etc/init.d/httpd stop
 /etc/init.d/xinetd stop
 /etc/init.d/saslauthd stop
 /etc/init.d/sshd stop
+/etc/init.d/iptables stop
 /etc/init.d/dropbear start
 /etc/init.d/mysqld start
 /etc/init.d/lighttpd start
+/etc/init.d/iptables stop
+/etc/init.d/xfs stop
+
 : intentionally not removing sendmail below, need client
 yum -y remove httpd xinetd saslauthd openssh-server
 
@@ -124,6 +134,20 @@ curl -O http://download.geonames.org/export/dump/allCountries.zip
 curl -O http://download.geonames.org/export/dump/admin1CodesASCII.txt
 curl -O http://download.geonames.org/export/dump/countryInfo.txt
 /usr/local/bin/bc-geonames2sqlite.pl
+
+% tweak /usr/local/lib/php.ini (instead of rewriting the whole thing)
+[not /etc/php.ini]
+
+: backup first
+cd /usr/local/lib; bc-quikbak php.ini
+
+
+: make these changes
+; sendmail_path = /usr/sbin/sendmail -t -i
+sendmail_path = /usr/local/bin/bc-wrap-sendmail.pl
+
+: restart lighttpd
+/etc/init.d/lighttpd restart
 
 % TODO: turn off TCP connections to 3306 mysql server
 
@@ -162,3 +186,9 @@ do the trick
 
   - mirror r2e config (change constantly on live site?)
 
+% TODO: make sure all unix commands my perl scripts call are available!
+
+% TODO: the following monitoring commands are useful
+
+top
+/sbin/chkconfig --list | grep 3:on

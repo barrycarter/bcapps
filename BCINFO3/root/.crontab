@@ -15,3 +15,5 @@ MAILTO="bcinfo3@barrycarter.info"
 */10 * * * * /usr/local/bin/bc-daemon-checker.pl
 # keeps /tmp clean (I tend to create a lot of /tmp files)
 42 * * * * find /tmp -name 'cache*' -mmin +180 | xargs --no-run-if-empty rm
+# update database of files for locate
+0 2 * * * updatedb
