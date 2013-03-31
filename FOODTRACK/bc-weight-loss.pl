@@ -77,7 +77,7 @@ close(A);
 delete $low{15594};
 
 open(B,">/tmp/bwlm.txt");
-for $i (sort keys %low) {
+for $i (sort {$a <=> $b} keys %low) {
   print B "$i $low{$i}\n";
   push(@lowx, $i);
   push(@lowy, $low{$i});

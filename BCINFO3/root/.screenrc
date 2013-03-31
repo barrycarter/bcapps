@@ -1,0 +1,6 @@
+# ctrl-a is too useful for other things, so using ctrl-b
+escape ^bb
+# visual bell is annoying
+vbell off
+# nethack is cool
+nethack on

@@ -824,3 +824,31 @@ DATE: 20130327
 2127 8 ballpark bun length beef hot dogs, remaining 1/2 dominos pan pizza IS/GC
 
 SHORT: 128g*USDA11282@1725, 1c*014900012704@1725, 1c*PEIWEI-CHICKEN-KUNG-PAO-VELVET@1725, 2*PEIWEI-EGG-NOODLES@1725, 1*853762002061@1725, 8*054500100210@2127, 4*DOMINO-MEDIUM-PAN-IS-GC@2127
+
+DATE: 20130328
+
+1603 2 bags mcdonalds fries
+1757 218g lays potato chips, 360g salsa
+
+SHORT: 2*MCD-FRIES@1603, 218g*028400002684@1757, 360g*078742086408@1757
+
+DATE: 20130329
+
+1258 2 bags mcdonalds fries
+1355 vintage cheddar fries
+1704 one can beanless chili w 141g onions, 206g french onion dip, 170g lays potato chips
+2035 chicken/rotini soup, 314g salsa, some number of salamis
+
+SHORT: 2*MCD-FRIES@1258, 1*853762002085@1355, 1c*014900012704@1704, 141g*USDA11282@1704, 314g*078742086408@2035, 1c*041196911169@2035, 206g*028400070942@1704, 170g*028400002684@1704
+
+DATE: 20130330
+
+1341 1 can roast beef hash, 130g onion
+1811 2 bags French Fries, 187g lays potato chips, 173g cheese salsa dip, 416g regular salsa
+
+SHORT: 2*MCD-FRIES@1811, 1c*037600199919@1341, 130g*USDA11282@1341, 187g*028400002684@1811, 173g*028400070980@1811, 416g*078742086408@1811
+
+
+
+
+
