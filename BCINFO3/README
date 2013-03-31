@@ -129,7 +129,6 @@ curl -O http://download.geonames.org/export/dump/countryInfo.txt
 
 % Start crontab once (and it will reload itself after that)
 
-
 % move over wordpress files:
 
 # my wordpress is fairly specialized, so I have to rsync it over (not
@@ -156,4 +155,10 @@ do the trick
 % TODO: bring over test.barrycarter.info (I link to it a LOT from wordpress)
 
 % TODO: configure r2e to match setting on old bc
+
+% LAST MINUTE STEPS:
+
+  - resync wordpress db and files (change constantly on live site)
+
+  - mirror r2e config (change constantly on live site?)
 
