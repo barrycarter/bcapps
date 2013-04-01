@@ -3,6 +3,9 @@ scammers. I played the message to my google voicemail to get a
 transcript for the first 3 minutes. Unhappy with the first transcript,
 I tried several times with different volume levels. Results:
 
+<h>The line "do not want to chat with the possums" strikes me as
+extremely funny for some reason</h>
+
 master-front-16.mp3 (the master front volume was set to 16% for this
 transcription):
 
@@ -202,3 +205,12 @@ speakers):
 2: FBI over here in
 1: no, no, no, no, no 2: I just
 2: I'm calling [crosstalk]
+
+cmu-output-whole-file.txt: CMU Sphinx's transcription of the whole
+file, courtesy Nikolay Shmyrev
+(http://stackoverflow.com/questions/15590183/)
+
+voicebase-transcribe.txt: voicebase.com's transcription of the whole file
+
+
+
