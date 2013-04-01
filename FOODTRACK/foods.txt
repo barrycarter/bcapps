@@ -837,17 +837,26 @@ DATE: 20130329
 1258 2 bags mcdonalds fries
 1355 vintage cheddar fries
 1704 one can beanless chili w 141g onions, 206g french onion dip, 170g lays potato chips
-2035 chicken/rotini soup, 314g salsa, some number of salamis
+2035 chicken/rotini soup, 314g salsa, 13 slices (13/3 servings) hard salami
 
-SHORT: 2*MCD-FRIES@1258, 1*853762002085@1355, 1c*014900012704@1704, 141g*USDA11282@1704, 314g*078742086408@2035, 1c*041196911169@2035, 206g*028400070942@1704, 170g*028400002684@1704
+SHORT: 2*MCD-FRIES@1258, 1*853762002085@1355, 1c*014900012704@1704, 141g*USDA11282@1704, 314g*078742086408@2035, 1c*041196911169@2035, 206g*028400070942@1704, 170g*028400002684@1704, 4.3333333333*044700010907@2035
 
 DATE: 20130330
 
-1341 1 can roast beef hash, 130g onion
-1811 2 bags French Fries, 187g lays potato chips, 173g cheese salsa dip, 416g regular salsa
+1341 1 can roast beef hash, 130g onion, 187g lays potato chips
+1811 2 bags French Fries, 173g cheese salsa dip, 416g regular salsa, 128g lays potato chips
 
-SHORT: 2*MCD-FRIES@1811, 1c*037600199919@1341, 130g*USDA11282@1341, 187g*028400002684@1811, 173g*028400070980@1811, 416g*078742086408@1811
+SHORT: 2*MCD-FRIES@1811, 1c*037600199919@1341, 130g*USDA11282@1341, 187g*028400002684@1341, 173g*028400070980@1811, 416g*078742086408@1811, 128g*028400002684@1811
 
+DATE: 20130331
+
+1213 2 bags fries
+1650 1 can beanless chili, 11 slices (11/3 servings) hard salami
+1756 2 bourbon burgers (lettuce for buns)
+2019 reheated mcd fries
+2330 8 slices 35-cal ital bread, sea salt fries
+
+SHORT: 2*MCD-FRIES@1213, 2*CARLS-JR-BOURBON-LETTUCE4BUNS@1756, 1c*014900012704@1650, 3.6666666666*044700010907@1650, 1*MCD-FRIES@2019, 8*024126008955@2330, 1*853762002009@2330
 
 
 

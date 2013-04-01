@@ -1,0 +1,3 @@
+# sendmail needs localhost to be last (?)
+193.183.99.226 bcinfo3.localdomain bcinfo3
+127.0.0.1 localhost.localdomain localhost

@@ -59,6 +59,7 @@
 853762002108 Jalapeno Trio Smart Fries (Gourmet Basics)
 BWW-BONE-IN-WING Bone-in %28traditional%29 chicken wings (Buffalo Wild Wings %28BWW%29)
 BWW-SAUCE-CJ Caribbean Jerk sauce (Buffalo Wild Wings %28BWW%29)
+CARLS-JR-BOURBON-LETTUCE4BUNS Bourbon Burger %28single%29%2C lettuce wrap instead of sesame seed buns (Carls Jr)
 CHILI-JALAP-SMOKE-BURGER Jalapeno Smokehouse Burger w Ranch (Chili%27s)
 CHURCHS-SPICY-LEG Spicy Leg (Churchs Chicken)
 DOMINO-20130130 Dominos Large Pizza%3A Italian Sausage%2C Green Chili%2C Salami (Dominos)

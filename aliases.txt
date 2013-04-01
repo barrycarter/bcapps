@@ -55,3 +55,5 @@ alias nagtest "sudo /home/barrycarter/BCGIT/bc-call-func.pl run_nagios_test \!*"
 # logs me into bcinfo3 into a new local screen and starts remote screen
 alias bcinfo3 "screen -t BC3 ssh -i /home/barrycarter/.ssh/id_rsa.bc -tt root@bcinfo3 screen -d -R"
 
+# rsyncs to bcinfo3
+alias bcinfo3sync "cd /home/barrycarter/BCGIT; \rsync -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' -Pvzrlpt *.pl */*.pl root@bcinfo3:/usr/local/bin/; \rsync -Pvzrlpt -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' /home/barrycarter/BCGIT/BCINFO3/ root@bcinfo3:/"
