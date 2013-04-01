@@ -1,0 +1,114 @@
+Simple mixer control 'Master Front',0
+  Capabilities: pvolume pswitch penum
+  Playback channels: Front Left - Front Right
+  Limits: Playback 0 - 31
+  Mono:
+  Front Left: Playback 5 [16%] [-31.50dB] [on]
+  Front Right: Playback 5 [16%] [-31.50dB] [on]
+Simple mixer control 'Headphone',0
+  Capabilities: pvolume pswitch penum
+  Playback channels: Front Left - Front Right
+  Limits: Playback 0 - 27
+  Mono:
+  Front Left: Playback 27 [100%] [0.00dB] [on]
+  Front Right: Playback 27 [100%] [0.00dB] [on]
+Simple mixer control 'PCM',0
+  Capabilities: pvolume penum
+  Playback channels: Front Left - Front Right
+  Limits: Playback 0 - 255
+  Mono:
+  Front Left: Playback 255 [100%] [0.00dB]
+  Front Right: Playback 255 [100%] [0.00dB]
+Simple mixer control 'Front',0
+  Capabilities: pvolume pswitch penum
+  Playback channels: Front Left - Front Right
+  Limits: Playback 0 - 27
+  Mono:
+  Front Left: Playback 27 [100%] [0.00dB] [off]
+  Front Right: Playback 27 [100%] [0.00dB] [off]
+Simple mixer control 'Front Mic',0
+  Capabilities: pvolume pswitch penum
+  Playback channels: Front Left - Front Right
+  Limits: Playback 0 - 31
+  Mono:
+  Front Left: Playback 24 [77%] [1.75dB] [on]
+  Front Right: Playback 24 [77%] [1.75dB] [on]
+Simple mixer control 'Surround',0
+  Capabilities: pvolume pswitch penum
+  Playback channels: Front Left - Front Right
+  Limits: Playback 0 - 27
+  Mono:
+  Front Left: Playback 27 [100%] [0.00dB] [off]
+  Front Right: Playback 27 [100%] [0.00dB] [off]
+Simple mixer control 'Center',0
+  Capabilities: pvolume pvolume-joined pswitch pswitch-joined penum
+  Playback channels: Mono
+  Limits: Playback 0 - 27
+  Mono: Playback 27 [100%] [0.00dB] [off]
+Simple mixer control 'LFE',0
+  Capabilities: pvolume pvolume-joined pswitch pswitch-joined penum
+  Playback channels: Mono
+  Limits: Playback 0 - 27
+  Mono: Playback 27 [100%] [0.00dB] [off]
+Simple mixer control 'Side',0
+  Capabilities: pvolume pswitch penum
+  Playback channels: Front Left - Front Right
+  Limits: Playback 0 - 27
+  Mono:
+  Front Left: Playback 27 [100%] [0.00dB] [off]
+  Front Right: Playback 27 [100%] [0.00dB] [off]
+Simple mixer control 'Line',0
+  Capabilities: pvolume pswitch penum
+  Playback channels: Front Left - Front Right
+  Limits: Playback 0 - 31
+  Mono:
+  Front Left: Playback 31 [100%] [14.00dB] [off]
+  Front Right: Playback 31 [100%] [14.00dB] [off]
+Simple mixer control 'CD',0
+  Capabilities: pvolume pswitch penum
+  Playback channels: Front Left - Front Right
+  Limits: Playback 0 - 31
+  Mono:
+  Front Left: Playback 31 [100%] [14.00dB] [off]
+  Front Right: Playback 31 [100%] [14.00dB] [off]
+Simple mixer control 'Mic',0
+  Capabilities: pvolume pswitch penum
+  Playback channels: Front Left - Front Right
+  Limits: Playback 0 - 31
+  Mono:
+  Front Left: Playback 31 [100%] [14.00dB] [off]
+  Front Right: Playback 31 [100%] [14.00dB] [off]
+Simple mixer control 'IEC958',0
+  Capabilities: pswitch pswitch-joined penum
+  Playback channels: Mono
+  Mono: Playback [off]
+Simple mixer control 'IEC958 Default PCM',0
+  Capabilities: pswitch pswitch-joined penum
+  Playback channels: Mono
+  Mono: Playback [off]
+Simple mixer control 'Capture',0
+  Capabilities: cvolume cswitch penum
+  Capture channels: Front Left - Front Right
+  Limits: Capture 0 - 20
+  Front Left: Capture 0 [0%] [0.00dB] [on]
+  Front Right: Capture 0 [0%] [0.00dB] [on]
+Simple mixer control 'Capture',1
+  Capabilities: cvolume cswitch penum
+  Capture channels: Front Left - Front Right
+  Limits: Capture 0 - 20
+  Front Left: Capture 0 [0%] [0.00dB] [on]
+  Front Right: Capture 0 [0%] [0.00dB] [on]
+Simple mixer control 'Digital',0
+  Capabilities: cvolume penum
+  Capture channels: Front Left - Front Right
+  Limits: Capture 0 - 120
+  Front Left: Capture 120 [100%] [30.00dB]
+  Front Right: Capture 120 [100%] [30.00dB]
+Simple mixer control 'Independent HP',0
+  Capabilities: enum
+  Items: 'OFF' 'ON'
+  Item0: 'ON'
+Simple mixer control 'Input Source',0
+  Capabilities: cenum
+  Items: 'Stereo Mixer' 'Mic' 'Front Mic' 'Line' 'CD'
+  Item0: 'Stereo Mixer'

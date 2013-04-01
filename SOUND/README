@@ -212,5 +212,9 @@ file, courtesy Nikolay Shmyrev
 
 voicebase-transcribe.txt: voicebase.com's transcription of the whole file
 
+Other files here:
+
+record-skype.mix: the correct settings on my mixer to record Skype
+calls (including calls to actual phones)
 
 
