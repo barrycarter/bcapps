@@ -1,0 +1,43 @@
+Return-Path: <firstbritishbank@fbrit-b.co.uk>
+Delivered-To: leonard.zeptowitz+130207172841@gmail.com
+From: First British Bank Plc <firstbritishbank@fbrit-b.co.uk>
+To: Leonard Zeptowitz <leonard.zeptowitz+130207172841@gmail.com>
+Subject: KINDLY OPEN THE TWO ATTACHMENTS FOR DETAILS
+Date: Thu, 07 Feb 2013 19:47:22 +0100
+
+[This message has been modified: see
+https://github.com/barrycarter/bcapps/blob/master/419/bc-has-replied.pl
+for details]
+
+--=_cd7361affca026551b406600f4155b95
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+
+Dear
+
+Please kindly open the attachment and complete the form and return it 
+to us to enable
+us process and transfer your fund deposited here by MRS ZAINAB MCTTAY.
+
+Best Regards
+Mr Johnson Frank
+--=_cd7361affca026551b406600f4155b95
+Content-Transfer-Encoding: base64
+Content-Type: application/msword;
+ name="FIRST BRITISH BANK PLC LETTER MZ.rtf"
+Content-Disposition: attachment;
+ filename="FIRST BRITISH BANK PLC LETTER MZ.rtf";
+ size=143497
+
+MDAwMDAwMDAwMDAxMDUwMDAwMDAwMDAwMDB9fQ=--=_cd7361affca026551b406600f4155b95
+Content-Transfer-Encoding: base64
+Content-Type: application/msword;
+ name="FIRST BRITISH BANK PLC NOTARY FORM.rtf"
+Content-Disposition: attachment;
+ filename="FIRST BRITISH BANK PLC NOTARY FORM.rtf";
+ size=159344
+
+MDAwMDAwMDAwMDAwMTA1MDAwMDAwMDAwMDAwfX0--=_cd7361affca026551b406600f4155b95--
+
+

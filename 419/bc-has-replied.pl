@@ -16,6 +16,11 @@
 require "/usr/local/lib/bclib.pl";
 dodie('chdir("/home/barrycarter/BCGIT")');
 
+# since I occasionally wipe out stuff in /var/tmp, recreate subdir
+if (system("mkdir -p /var/tmp/bchr")) {
+  die "mkdir fails";
+}
+
 $disclaimer = "[This message has been modified: see
 https://github.com/barrycarter/bcapps/blob/master/419/bc-has-replied.pl
 for details]";
@@ -79,8 +84,11 @@ while (($head,$body) = next_email_fh(\*A)) {
   # is written to file (the rest are overwritten)
   my($num) = $1;
 
+  # adding sha1 to see results of TEMPLATES/12.txt
+  my($sha) = sha1_hex($addr{$num});
+
   # to confirmed2.txt print the scammer email address and the pinger address
-  print B "$num $addr{$num}\n";
+  print B "$num $addr{$num} $sha\n";
 
   # compress 3 or more newlines to 2
   $body=~s/\n{3,}/\n\n/isg;
