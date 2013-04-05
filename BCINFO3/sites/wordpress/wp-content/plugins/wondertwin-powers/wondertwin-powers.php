@@ -23,19 +23,20 @@ function wt_filter($content) {
 }
 
 function url_filter($regex) {
-  // just for testing
+  // find the full URL
   if (!preg_match("%http://%i", $regex[2])) {
-    return "$regex[1]<a href='http://$regex[2]'>$regex[2]</a>$regex[3]";
+    $furl = "http://$regex[2]";
+  } else {
+    $furl = $regex[2];
   }
 
-  return "$regex[1]<a href='$regex[2]'>$regex[2]</a>";
+  // change to tracking URL
+  $furl = "http://u.94y.info/".base64_encode($furl);
 
-  return "GOT($regex[1], $regex[2])";
+  // $regex[3] will be empty for already-complete URLs
+  return "$regex[1]<a href='$furl'>$regex[2]</a>$regex[3]";
 
   // TODO: don't redirect my own URLs, semi-pointless
-
-
-  return '<a href="http://u.94y.info/'.base64_encode($regex[1]).'">'.$regex[1].'</a>'.$regex[2];
 }
 
 ?>
