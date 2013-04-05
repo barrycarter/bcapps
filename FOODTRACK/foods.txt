@@ -862,10 +862,32 @@ DATE: 20130401
 
 1300 2 Carls Jr $6 burgers (lettuce for buns)
 1553 jal trio fries, honey mustard onion fries
+1851 3 angus deluxe wraps, honey bbq fries
+2029 5 bun length ballpark franks, 275g salsa
 
-SHORT: 2*CARLS-JR-SIXDOLLAR-LETTUCE4BUNS@1300, 1*853762002108@1553, 1*853762002061@1553
+SHORT: 2*CARLS-JR-SIXDOLLAR-LETTUCE4BUNS@1300, 1*853762002108@1553, 1*853762002061@1553, 3*MCD-ANG-DEL-WRAP@1851, 1*853762002047@1851, 5*054500100210@2029, 275g*078742086408@2029
 
+DATE: 20130402
 
+1307 155g yellow onion, beanless chili, honey bbq fries
+1637 jal trio fries, honey bbq fries
+1735 7 slices large super supreme thin crust pizza (pizza hut)
 
+SHORT: 7*PIZZA-HUT-LARGE-SUPER-SUPREME-THIN@1735, 1*853762002108@1637, 1*853762002047@1637, 155g*USDA11282@1307, 1c*014900012704@1307, 1*853762002047@1307
 
+DATE: 20130403
 
+1300 5 slices large pizza hut pan pizza (spicy sicilian)
+1741 2 honey mustard fries
+2046 131g yellow onions, 1 can beanless chili, remaining slice super supreme thin crust pizza, honey bbq fries
+
+SHORT: 5*PIZZA-HUT-LARGE-PAN-SPICY-SICILIAN@1300, 2*853762002061@1741, 131g*USDA11282@2046, 1c*014900012704@2046, 1*PIZZA-HUT-LARGE-SUPER-SUPREME-THIN@2046, 1*853762002047@2046
+
+DATE: 20130404
+
+0903 sea salt fries, vintage cheddar fries
+1116 1 can hatch green chile stew, 3 slices spicy sicilian pizza
+1646 1 can beanless chili, 8 sugar free chocolate chip cookies (8/3 servings)
+1843 1 can roast beef hash, vinegar splash fries
+
+SHORT: 1*853762002009@0903, 1*853762002085@0903, 1c*028189750059@1116, 3*PIZZA-HUT-LARGE-PAN-SPICY-SICILIAN@1116, 1c*014900012704@1646, 1c*037600199919@1843, 1*853762002023@1843, 2.6666666*082011913357@1646

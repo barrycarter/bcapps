@@ -1,0 +1,25 @@
+Return-Path: <fbisecurity@inbox.ru>
+Delivered-To: leonard.zeptowitz+130330004234@gmail.com
+From: =?UTF-8?B?SU5GTyBGQkkgU0VDVVJJVFk=?= <fbisecurity@inbox.ru>
+To: leonard.zeptowitz+130330004234@gmail.com
+Subject: =?UTF-8?B?UmU6IEFib3V0IHRoZSBlbWFpbCB5b3Ugc2VudCBtZT8=?=
+Date: Tue, 02 Apr 2013 15:32:20 +0400
+
+[This message has been modified: see
+https://github.com/barrycarter/bcapps/blob/master/419/bc-has-replied.pl
+for details]
+
+
+----ALT--p4eibian1364902340
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
+
+LgrCoMKgwqAgMjA1MzUtMDAwMSwgVVNBCg=
+----ALT--p4eibian1364902340
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: base64
+
+
+----ALT--p4eibian1364902340--
+
+

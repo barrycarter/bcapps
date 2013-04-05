@@ -1,0 +1,39 @@
+Return-Path: <intercontinentalatm@live.co.uk>
+Delivered-To: leonard.zeptowitz+130329124911@gmail.com
+X-Originating-Email: [intercontinentalatm@live.co.uk]
+From: Hans Bruce <intercontinentalatm@live.co.uk>
+To: Leonard Zeptowitz <leonard.zeptowitz+130329124911@gmail.com>
+Subject: =?windows-1256?Q?PAYMENT_NO?= =?windows-1256?Q?TIFICATION?= =?windows-1256?Q?_FROM_INTE?= =?windows-1256?Q?RCONTINENT?= =?windows-1256?Q?AL_BANK_PL?= =?windows-1256?Q?C_UNITED_K?= =?windows-1256?Q?INGDOM=FE=FE=FE=FE?= =?windows-1256?B?/v7+/v7+/v4=?=
+Date: Tue, 2 Apr 2013 08:35:51 +0100
+
+[This message has been modified: see
+https://github.com/barrycarter/bcapps/blob/master/419/bc-has-replied.pl
+for details]
+
+--_ee497447-65c9-433a-837a-5eef19e7f64d_
+Content-Type: multipart/alternative;
+	boundary="_b116b2bd-ec16-411a-a1a4-0ada00493499_"
+
+--_b116b2bd-ec16-411a-a1a4-0ada00493499_
+Content-Type: text/plain; charset="windows-1256"
+Content-Transfer-Encoding: base64
+
+ICAJCSAgCiAJCSAJICAgCQkgICAJCSAJICAgCQkgICAJCSAJICAgCQkgIA=
+--_b116b2bd-ec16-411a-a1a4-0ada00493499_
+Content-Type: text/html; charset="windows-1256"
+Content-Transfer-Encoding: base64
+
+aXY+IAkJIAkgICAJCSAgPC9kaXY+PC9ib2R5Pg0KPC9odG1sPg=
+--_b116b2bd-ec16-411a-a1a4-0ada00493499_--
+
+--_ee497447-65c9-433a-837a-5eef19e7f64d_
+Content-Type: application/pdf
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+	filename="ACCOUNT-ATM CARD FUND TRANSFER APPLICATION-1-1 (1)-1.pdf"
+
+Pj4NCnN0YXJ0eHJlZg0KMTE2DQolJUVPRg0K
+
+--_ee497447-65c9-433a-837a-5eef19e7f64d_--
+
+
