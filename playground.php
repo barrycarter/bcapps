@@ -2,6 +2,13 @@
 <?php
 
 # The PHP playground
+$remote = "166.87.136.183";
+$arr = explode(".",$remote);
+print "ARR: $arr\n";
+
+vprintf("%02x%02x%02x%02x\n", $arr);
+
+exit();
 
 # add captions to image
 
