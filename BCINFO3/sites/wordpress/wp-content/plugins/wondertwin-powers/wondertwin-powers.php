@@ -18,7 +18,8 @@ add_filter('wp_footer', 'spamtrap');
 // filter URLs and stuff
 function wt_filter($content) {
   // handle fully qualified URLs (need > for end of HTML tag)
-  $content=preg_replace_callback("%(\s|^|>)(https?://[^\s<>]+)%", "url_filter", $content);
+  // URLs can't end in : or parens, but can have them internally
+  $content=preg_replace_callback("%(\s|^|>)(https?://[^\s\)]+)%", "url_filter", $content);
   // and the rest... <h>(here on Gilligan's Isle!)</h>
   $content=preg_replace_callback("/(\s|^|>)([a-z0-9\.]+\.[a-z]{2,})([^a-z0-9])/i", "url_filter", $content);
   
@@ -32,6 +33,9 @@ function url_filter($regex) {
   } else {
     $furl = $regex[2];
   }
+
+  // trim garbage at end of URL (NOT WORKING)
+  $furl = preg_replace_all("/[\)\:]+/g", "", $furl);
 
   // change to tracking URL
   $furl = "http://u.94y.info/?".base64_encode($furl);
