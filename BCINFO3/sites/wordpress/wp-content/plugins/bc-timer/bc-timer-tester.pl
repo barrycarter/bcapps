@@ -7,12 +7,20 @@ require "/usr/local/lib/bclib.pl";
 # need these in order (sort of) [not bothering w centuries]
 @times=split(//,"YmUdHMS");
 
+# names of the time units
+@names=("years", "months", "weeks", "days", "hours", "minutes", "seconds");
+
+# map times to names
+for $i (0..$#times) {
+  $names{$times[$i]} = $names[$i];
+}
+
 @power = power_set([@times]);
 
 for $i (@power) {
   # add % signs
-  map($_="%$_", @{$i});
-  $str = join(" ", @{$i});
+  map($_="%$_ $names{$_}", @{$i});
+  $str = join(", ", @{$i});
   print qq%[bctimer time="315532800" format="$str"]<br>\n%;
 }
 
