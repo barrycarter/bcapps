@@ -7,6 +7,8 @@ Author: Barry Carter
 Author URI: http://barrycarter.info
 */
 
+// TODO: allow fractional time units
+
 // the JS I need
 wp_enqueue_script('bctimer', '/wp-content/plugins/bc-timer/bc-timer.js');
 
@@ -15,7 +17,7 @@ add_shortcode('bctimer', 'bctimer');
 
 // whenever we see this shortcode, just put a span class
 function bctimer ($atts) {
-  echo "<span class='bctimer' id='$atts[time]' format='$atts[format]'></span>";
+  return "<span class='bctimer' time='$atts[time]' format='$atts[format]'></span>";
 }
 
 ?>
