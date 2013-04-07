@@ -7,7 +7,7 @@
 # $file.quikbak, a series of patches to revert it to any previous
 # version
 
-require "bclib.pl";
+require "/usr/local/lib/bclib.pl";
 
 # where to put the backups
 $etcdir="/usr/local/etc/quikbak";
@@ -96,6 +96,8 @@ sub get_target {
   } else {
     die("Can't find dir for $i");
   }
+
+  if ($aa=~m%^/tmp/%) {warn("$i: tmp file"); return();}
 
   # create directory in backup area if not already there
   unless (-d "$etcdir/$aa") {system("/bin/mkdir", "-p" ,"$etcdir/$aa");}
