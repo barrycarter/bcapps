@@ -3,10 +3,6 @@
 
 // NOTE: down to about 29 lines now
 
-// Greogrian calendar has 365.2425 days/year excluding leap seconds
-// below roughly follows strftime format
-var secs={S:1,M:60,H:3600,d:86400,U:604800,m:2629746,Y:31556952,C:3155695200};
-
 // we must parse largest units first, regardless of how they appear in format
 function sortme(x,y) {
   if (secs[x.replace('%','')] > secs[y.replace('%','')]) {return(-1);}
@@ -14,6 +10,10 @@ function sortme(x,y) {
 }
 
 function timer(el) {
+  // Greogrian calendar has 365.2425 days/year excluding leap seconds
+  // below roughly follows strftime format
+  var secs={S:1,M:60,H:3600,d:86400,U:604800,m:2629746,Y:31556952,C:3155695200};
+
   format = bctimer[el].getAttribute("format");
 
   // seconds to event
@@ -23,9 +23,12 @@ function timer(el) {
  // replace %x with actual value (but with largest units first)
  var matches = format.match(/%./g);
  matches.sort(sortme);
+ // alert("SEX IS"+secs[U]);
 
  for (i in matches) {
    j = matches[i].replace('%','');
+   alert("JED:"+j);
+   alert("JETHRO:"+secs[j]);
    var units = Math.floor(sec/secs[j]);
    sec = sec - secs[j]*units;
    format = format.replace(matches[i], units);
@@ -39,7 +42,8 @@ function start() {
   // removed a bunch of code here that older browsers may've needed re
   // document.getElementsByClassName == undefined
   bctimer = document.getElementsByClassName('bctimer');
-  for (el in bctimer) {setInterval('timer('+el+')', 1000); }
+  for (el in bctimer) {
+    setInterval('timer('+el+')', 1000); }
 }
 
 window.onload = start;

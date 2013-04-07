@@ -7,9 +7,8 @@ Author: Barry Carter
 Author URI: http://barrycarter.info
 */
 
-// include the required JS
-$url = plugin_dir_url(__FILE__);
-// echo "<script type='text/javascript' src='$url/bc-timer.js' />";
+// the JS I need
+wp_enqueue_script('bctimer', '/wp-content/plugins/bc-timer/bc-timer.js');
 
 // put [bctimer time="time_in_unix_seconds" format="format_in_strftimeish"]
 add_shortcode('bctimer', 'bctimer');
