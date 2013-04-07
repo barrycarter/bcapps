@@ -15,6 +15,9 @@ wp_enqueue_script('bctimer', '/wp-content/plugins/bc-timer/bc-timer.js');
 // put [bctimer time="time_in_unix_seconds" format="format_in_strftimeish"]
 add_shortcode('bctimer', 'bctimer');
 
+// and work in widgets too
+add_filter('widget_text', 'do_shortcode');
+
 // whenever we see this shortcode, just put a span class
 function bctimer ($atts) {
   return "<span class='bctimer' time='$atts[time]' format='$atts[format]'></span>";
