@@ -14,8 +14,7 @@ function sortme(x,y) {
 }
 
 function timer(el) {
-  // TODO: allow user-set formats
-  format = "%Y years, %m months, %U weeks, %d days, %H hours, %M minutes, %S seconds";
+  format = bctimer[el].getAttribute("format");
 
   // seconds to event
   // TODO: get substr() working so I can have multiple timers with same date
