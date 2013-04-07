@@ -7,21 +7,38 @@ require "/usr/local/lib/bclib.pl";
 # need these in order (sort of) [not bothering w centuries]
 @times=split(//,"YmUdHMS");
 
-# TODO: maybe subroutinize this
-# clever way to find all subsets w/o multiple for loops
-# intentionally omitting 0 as it would represent the empty set
-for $i (1..2**($#times+1)) {
-  # TODO: more efficient way to see which bits are 'lit'?
-  @list = ();
-  for $j (0..$#times) {
-    # intentional use of bitand below
-    if ($i & 2**$j) {
-      debug("LIT: $j in $i");
-      push(@list, $times[$j]);
-    }
-  }
-  push(@power, [@list]);
+@power = power_set([@times]);
+
+for $i (@power) {
+  # add % signs
+  map($_="%$_", @{$i});
+  $str = join(" ", @{$i});
+  print qq%[bctimer time="315532800" format="$str"]<br>\n%;
 }
 
-debug(@power);
+=item power_set([@s])
 
+Returns all subsets of @s (could I just use Data::PowerSet or something?)
+
+=cut
+
+sub power_set {
+  my($sr) = @_;
+  my(@s) = @{$sr};
+  my(@res);
+
+  # clever way to find all subsets w/o multiple for loops
+  for $i (0..2**($#s+1)) {
+    # TODO: more efficient way to see which bits are 'lit'?
+    my(@list) = ();
+    for $j (0..$#times) {
+      # intentional use of bitand below
+      if ($i & 2**$j) {
+	push(@list, $times[$j]);
+    }
+  }
+  push(@res, [@list]);
+  }
+
+  return @res;
+}
