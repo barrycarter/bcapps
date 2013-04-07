@@ -3,13 +3,15 @@
 
 // NOTE: down to about 29 lines now
 
-// we must parse largest units first, regardless of how they appear in format
-function sortme(x,y) {
-  if (secs[x.replace('%','')] > secs[y.replace('%','')]) {return(-1);}
-  return(1);
-}
-
 function timer(el) {
+
+  // not sure why this has to be inside timer(), but it does
+  // we must parse largest units first, regardless of how they appear in format
+  function sortme(x,y) {
+    if (secs[x.replace('%','')] > secs[y.replace('%','')]) {return(-1);}
+    return(1);
+  }
+
   // Greogrian calendar has 365.2425 days/year excluding leap seconds
   // below roughly follows strftime format
   // lower case s below is really incorrect, but harmless
@@ -32,7 +34,7 @@ function timer(el) {
   
  // replace %x with actual value (but with largest units first)
  var matches = format.match(/%./g);
- // matches.sort(sortme);
+ matches.sort(sortme);
 
  for (i in matches) {
    j = matches[i].replace('%','');
