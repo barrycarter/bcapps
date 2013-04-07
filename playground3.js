@@ -1,19 +1,16 @@
-function timer(sec) {
+// Greogrian calendar has 365.2425 days/year excluding leap seconds
+// below roughly follows strftime format
+var secs={S:1,M:60,H:3600,d:86400,U:604800,m:2629746,Y:31556952,C:3155695200};
 
-  //  sec=dhmscountdown[el].id.substr(10)-Math.round(((new Date()).getTime())/1000);
+function timer(el) {
+
+  // seconds to event
+  // TODO: get substr() working so I can have multiple timers with same date
+  sec=bctimer[el].id-Math.round(((new Date()).getTime())/1000);
 
   /* hardcoding for now - BC */
  format = "%Y years, %m months, %U weeks, %d days, %H hours, %M minutes, %S seconds";
   /* ported from Perl */
- var secs = {};
- secs['S'] = 1; 
- secs['M'] = 60; 
- secs['H'] = 3600; 
- secs['d'] = 86400;
- secs['U'] = 604800;
- secs['m'] = 2629746;
- secs['Y'] = 31556952;
- secs['C'] = 3155695200;
 
  function sortme(x,y) {
    if (secs[x.replace('%','')] > secs[y.replace('%','')]) {return(-1);}
@@ -30,17 +27,9 @@ function timer(sec) {
    format = format.replace(matches[i], units);
  }
 
- dhmscountdown[el].innerHTML = format;
- 
- return(format);
+ bctimer[el].innerHTML = format;
 
 };
-
-function dhmstimer_decrease(el) {
-var T = Math.round(((new Date()).getTime())/1000);
-var S = dhmscountdown[el].id.substr(10) - T;
-if (S <= 0) { window.location.reload(); }
-dhmscountdown[el].innerHTML = timer(S); }
 
 function start() {
 if (document.getElementsByClassName == undefined) {
@@ -55,8 +44,8 @@ if (elementClass && elementClass.indexOf(className) != -1 && hasClassName.test(e
 results.push(element); } }
 return results; } }
 
-dhmscountdown = document.getElementsByClassName('dhmscountdown');
-for (el in dhmscountdown) { if (parseInt(el) + 1) { setInterval('dhmstimer_decrease('+el+')', 1000); } }
+bctimer = document.getElementsByClassName('bctimer');
+for (el in bctimer) {setInterval('timer('+el+')', 1000); }
 
 }
 
