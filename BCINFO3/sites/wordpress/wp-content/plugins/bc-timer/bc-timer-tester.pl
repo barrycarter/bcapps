@@ -15,7 +15,7 @@ for $i (0..$#times) {
   $names{$times[$i]} = $names[$i];
 }
 
-@power = power_set([@times]);
+@power = reverse(power_set([@times]));
 
 for $i (@power) {
   # add % signs
