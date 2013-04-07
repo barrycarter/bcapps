@@ -1,22 +1,27 @@
+// NOTE: I probably destroyed some cross-browser portability when
+// creating/changing this, but I think it's legit JS the way it is
+
+// NOTE: down to about 29 lines now
+
 // Greogrian calendar has 365.2425 days/year excluding leap seconds
 // below roughly follows strftime format
 var secs={S:1,M:60,H:3600,d:86400,U:604800,m:2629746,Y:31556952,C:3155695200};
 
+// we must parse largest units first, regardless of how they appear in format
+function sortme(x,y) {
+  if (secs[x.replace('%','')] > secs[y.replace('%','')]) {return(-1);}
+  return(1);
+}
+
 function timer(el) {
+  // TODO: allow user-set formats
+  format = "%Y years, %m months, %U weeks, %d days, %H hours, %M minutes, %S seconds";
 
   // seconds to event
   // TODO: get substr() working so I can have multiple timers with same date
   sec=bctimer[el].id-Math.round(((new Date()).getTime())/1000);
 
-  /* hardcoding for now - BC */
- format = "%Y years, %m months, %U weeks, %d days, %H hours, %M minutes, %S seconds";
-  /* ported from Perl */
-
- function sortme(x,y) {
-   if (secs[x.replace('%','')] > secs[y.replace('%','')]) {return(-1);}
-   return(1);
- }
-
+ // replace %x with actual value (but with largest units first)
  var matches = format.match(/%./g);
  matches.sort(sortme);
 
@@ -32,23 +37,10 @@ function timer(el) {
 };
 
 function start() {
-if (document.getElementsByClassName == undefined) {
-document.getElementsByClassName = function(className) {
-var hasClassName = new RegExp('(?:^|\\s)' + className + '(?:$|\\s)');
-var allElements = document.getElementsByTagName('*');
-var results = [];
-var element;
-for (i = 0; (element = allElements[i]) != null; i++) {
-var elementClass = element.className;
-if (elementClass && elementClass.indexOf(className) != -1 && hasClassName.test(elementClass)) {
-results.push(element); } }
-return results; } }
-
-bctimer = document.getElementsByClassName('bctimer');
-for (el in bctimer) {setInterval('timer('+el+')', 1000); }
-
+  // removed a bunch of code here that older browsers may've needed re
+  // document.getElementsByClassName == undefined
+  bctimer = document.getElementsByClassName('bctimer');
+  for (el in bctimer) {setInterval('timer('+el+')', 1000); }
 }
 
-if (typeof(document.addEventListener) == 'function') {
-document.addEventListener('DOMContentLoaded', start, false); }
-else { window.onload = start; }
+window.onload = start;
