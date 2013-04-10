@@ -23,6 +23,11 @@ use XML::Bare;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 
+
+debug(stardate(time(), "localtime=1"));
+
+die "TESTING";
+
 bc_check_files_age("/home/barrycarter/.getmail/oldmail-imap*", 10);
 
 die "TESTING";

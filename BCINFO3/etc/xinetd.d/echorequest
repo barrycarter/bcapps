@@ -1,0 +1,9 @@
+# below is just to make it run on 8080
+service webcache
+{
+disable = no
+socket_type = stream
+wait = no
+user = root
+server = /usr/local/bin/bc-echo.pl
+}

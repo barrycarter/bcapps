@@ -74,7 +74,7 @@ push(@info, "UPTIME: $uptime");
 for $i (@suppress) {
   ($key,$val) = split(/\s+/,$i);
   # if date has already occurred, ignore line
-  if ($val < stardate($now)) {next;}
+  if ($val < stardate($now,"localtime=1")) {next;}
   debug("$key/$val");
   $suppress{$key}=$val;
 }

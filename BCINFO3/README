@@ -41,9 +41,8 @@ rpm -i epel-release-5-4.noarch.rpm
 
 % Programs to install (should really all be in one command of course):
 
-yum -y install lighttpd dropbear perl-Text-Unidecode.noarch emacs nmap
-: note: I didnt need to escape perl-Date* below even tho I had glob set?!
-yum -y install perl-IO-Digest.noarch gcc perl-Date*
+yum -y install lighttpd dropbear perl-Text-Unidecode.noarch emacs xinetd gpp4
+yum -y install perl-IO-Digest.noarch gcc "perl-Date*" socat nc gcc-c++
 : lighttpd-fastcgi does not install fcgi, wow
 yum -y install mysql mysql-server lighttpd-fastcgi fcgi libxml2 libxml2-devel
 
@@ -89,7 +88,6 @@ Connection closed by foreign host.
 
 chkconfig sendmail off
 chkconfig httpd off
-chkconfig xinetd off
 chkconfig saslauthd off
 chkconfig dropbear on
 chkconfig sshd off
@@ -100,7 +98,6 @@ chkconfig iptables off
 chkconfig xfs off
 /etc/init.d/sendmail stop
 /etc/init.d/httpd stop
-/etc/init.d/xinetd stop
 /etc/init.d/saslauthd stop
 /etc/init.d/sshd stop
 /etc/init.d/iptables stop
@@ -111,7 +108,7 @@ chkconfig xfs off
 /etc/init.d/xfs stop
 
 : intentionally not removing sendmail below, need client
-yum -y remove httpd xinetd saslauthd openssh-server
+yum -y remove httpd saslauthd openssh-server
 
 % edit sendmail files
 
@@ -132,6 +129,15 @@ tar --bzip -xvf php5413.tbz
 cd php-5.4.13/
 sh configure --with-mysql --with-zlib | tee configure.out
 make | tee make.out
+make install
+
+% install ncat (do NOT do this from yum, doesn't install everything)
+
+cd /root/build; curl -O http://nmap.org/dist/nmap-6.25.tar.bz2
+tar --bzip -xvf nmap-6.25.tar.bz2
+cd nmap-6.25
+sh configure | & tee configure.out
+make |& tee make.out
 make install
 
 % TODO: reboot after changes to make sure they "stick"

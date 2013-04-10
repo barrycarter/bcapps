@@ -1,0 +1,5 @@
+# no autologout
+unset autologout
+# largest useful path
+setenv PATH /sbin:/usr/bin:/bin:/usr/local/bin
+

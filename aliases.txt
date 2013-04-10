@@ -57,3 +57,6 @@ alias bcinfo3 "screen -t BC3 ssh -i /home/barrycarter/.ssh/id_rsa.bc -tt root@bc
 
 # rsyncs to bcinfo3 (my new plugin is so awesome,I even sync it to my old site)
 alias bcinfo3sync "cd /home/barrycarter/BCGIT; \rsync -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' -Pvzrlpt *.pl */*.pl root@bcinfo3:/usr/local/bin/; \rsync -Pvzrlpt -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' /home/barrycarter/BCGIT/BCINFO3/ root@bcinfo3:/; \rsync -Pvzrlpt -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' /home/barrycarter/BCGIT/BCINFO3/sites/wordpress/wp-content/plugins/ root@bcinfo:/usr/share/wordpress/wp-content/plugins/"
+
+# chmods all Perl scripts to +x (something I tend to be bad about)
+alias perlfix "find /home/barrycarter/PERL /home/barrycarter/BCGIT -iname '*.pl' | xargs chmod +x"

@@ -11,6 +11,9 @@ if ($ENV{HTTP_HOST} eq "u.94y.info") {
   # convert to true URL
   $ENV{REQUEST_URI} = decode_base64($ENV{REQUEST_URI});
   print "Location: $ENV{REQUEST_URI}\n";
+} elsif ($ENV{HTTP_HOST} eq "e.u.94y.info") {
+  # redirect to echo server (listening on port 8080)
+  print "Location: http://wordpress.barrycarter.info:8080\n";
 } elsif ($ENV{HTTP_HOST} eq "tutor.u.94y.info") {
   # my permanent(?) scribblar board
   print "Location: http://wordpress.barrycarter.info/index.php/free-math-tutoring-at-httpwww-scribblar-comwwcdp0qj/";
