@@ -24,6 +24,13 @@ $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 use OpenGL;
 
+$particles[7]{foo} = "bar";
+
+debug(unfold(@particles));
+
+
+die "TESTING";
+
 glpOpenWindow;
 glClearColor(0,0,1,1);
 glClear(GL_COLOR_BUFFER_BIT);
