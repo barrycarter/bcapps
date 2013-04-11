@@ -25,15 +25,17 @@ glutIdleFunc(display);
 
 glutMainLoop();
 
-<>;
-
 sub display {
-glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-glPushMatrix();
-glBegin(GL_POINTS);
-glColor3f(128,128,128);
-glVertex2f(10,10);
-glEnd();
-glPopMatrix();
-glutSwapBuffers();
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glPushMatrix();
+
+  for $i (1..100) {
+    glBegin(GL_POINTS);
+    glColor3f(128,128,128);
+    glVertex2f(rand(),rand());
+    glEnd();
+  }
+
+  glPopMatrix();
+  glutSwapBuffers();
 }
