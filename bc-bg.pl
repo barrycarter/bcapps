@@ -75,7 +75,7 @@ for $i (@suppress) {
   ($key,$val) = split(/\s+/,$i);
   # if date has already occurred, ignore line
   if ($val < stardate($now,"localtime=1")) {next;}
-  debug("$key/$val");
+  debug("KV: $key/$val");
   $suppress{$key}=$val;
 }
 
@@ -85,7 +85,7 @@ debug("SUPPRESS",%suppress);
 for $i (glob("/home/barrycarter/ERR/*.err")) {
   for $j (split("\n",read_file($i))) {
     # unless suppressed, push to @err
-    if ($suppress{$j} > stardate($now)) {next;}
+    if ($suppress{$j}) {next;}
     push(@err,$j);
   }
 }
@@ -94,7 +94,7 @@ for $i (glob("/home/barrycarter/ERR/*.err")) {
 for $i (glob("/home/barrycarter/ERR/*.inf")) {
   for $j (split("\n",read_file($i))) {
     # unless suppressed, push to @info
-    if ($suppress{$j} > stardate($now)) {next;}
+    if ($suppress{$j}) {next;}
     push(@info,$j);
   }
 }

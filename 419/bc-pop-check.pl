@@ -3,6 +3,9 @@
 # Run from cron, POP checks mailinator.com accounts as needed
 require "/usr/local/lib/bclib.pl";
 
+# I dont even really use this program anymore, but its a good test for mylock
+mylock("bc-pop-check", "lock");
+
 @accts = ("Lily.Swaniawski");
 
 for $i (@accts) {

@@ -890,9 +890,9 @@ DATE: 20130404
 1116 1 can hatch green chile stew, 3 slices spicy sicilian pizza
 1646 1 can beanless chili, 8 sugar free chocolate chip cookies (8/3 servings)
 1843 1 can roast beef hash, vinegar splash fries
-2101 16 slices (16/3 servings) hard salami
+2101 16 slices (16/3 servings) hard salami, 5 slices 35 cal ital bread
 
-SHORT: 1*853762002009@0903, 1*853762002085@0903, 1c*028189750059@1116, 3*PIZZA-HUT-LARGE-PAN-SPICY-SICILIAN@1116, 1c*014900012704@1646, 1c*037600199919@1843, 1*853762002023@1843, 2.6666666*082011913357@1646, 5.3333333*044700010907@2101
+SHORT: 1*853762002009@0903, 1*853762002085@0903, 1c*028189750059@1116, 3*PIZZA-HUT-LARGE-PAN-SPICY-SICILIAN@1116, 1c*014900012704@1646, 1c*037600199919@1843, 1*853762002023@1843, 2.6666666*082011913357@1646, 5.3333333*044700010907@2101, 5*024126008955@2101
 
 DATE: 20130405
 
@@ -932,10 +932,19 @@ DATE: 20130409
 
 1121 honey mustard fries, 2 honey bbq fries, 1 link smoked sausage (4 servings), 1 link polish sausage (4 servings)
 1605 3 arbys molten chocolate cakes, vinegar splash fries
+1841 chicken/rotini soup
+2044 104g enriched white rice, carls jr western burger, 74g mango relish
 
-SHORT: 4*074700000080@1121, 4*074700000073@1121, 1*853762002061@1121, 2*853762002047@1121, 3*ARBYS-MOLTEN-CAKE@1605, 1*853762002023@1605
+SHORT: 4*074700000080@1121, 4*074700000073@1121, 1*853762002061@1121, 2*853762002047@1121, 3*ARBYS-MOLTEN-CAKE@1605, 1*853762002023@1605, 1c*041196911169@1841, 104g*011110847270@2044, 1*CARLS-JR-WESTERN-LETTUCE-WRAPS@2044, 74g*069276012056@2044
 
+DATE: 20130410
 
+1316 1 pound ground beef (4 servings), 141g onions, honey bbq fries, honey mustard onion fries
+1627 chicken/rotini soup, jal trio fries, sea salt fries
+1900 1 thai coconut curry w beef (not stock velveted) w egg noodles
+2153 1 link (4 servings) smoked sausage, 162g virginia extra large peanuts
+
+SHORT: 4*074700000073@2153, 2*PEIWEI-EGG-NOODLES@1900, 1c*PEIWEI-BEEF-THAI-COCONUT@1900, 4*011110979209@1316, 141g*USDA11282@1316, 1*853762002047@1316, 1*853762002061@1316, 1c*041196911169@1627, 1*853762002108@1627, 1*853762002009@1627, 162g*029000010390@2153
 
 
 
