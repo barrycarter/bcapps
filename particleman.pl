@@ -71,32 +71,33 @@ sub display {
   glutSwapBuffers();
 }
 
-# update the particles (@particle and $t are global variables)
+# update the particles (@particles and $t are global variables)
 sub updateParticles () {
-  my(@nparticle); # new particles
+  # TODO: better way to have finite particles, but copying from C for now
 
   # create new particles
   # TODO: this should be $num*$dt or something?
   for $i (1..$num) {
+    if (++$highwater > $MAXPARTICLES) {$highwater = 0;}
+
+    debug("HIGHWATER: $highwater");
+
     # starting location = emitter
-    for $j ("x","y","z") {$nparticle[$i]{$j} = $emitter{$j};}
+    for $j ("x","y","z") {$particles[$highwater]{$j} = $emitter{$j};}
 
     # starting direction
-    for $j ("x","y","z") {$nparticle[$i]{"d$j"}=$dir{$j}+(rand()-.5)*$turb_dir{$j};}
+    for $j ("x","y","z") {$particles[$highwater]{"d$j"}=$dir{$j}+(rand()-.5)*$turb_dir{$j};}
 
     # starting color
-    for $j ("r","g","b") {$nparticle[$i]{$j} = $color_start{$j};}
+    for $j ("r","g","b") {$particles[$highwater]{$j} = $color_start{$j};}
 
     # and size
-    $nparticle[$i]{size} = $size_start;
+    $particles[$highwater]{size} = $size_start;
 
     # and birth time
-    $nparticle[$i]{birth} = $t;
+    $particles[$highwater]{birth} = $t;
 
   }
-
-  # this list isglobal
-  push(@particles, @nparticle);
 
   # random vector (list)
   @rand = (rand()-.5,rand()-.5,rand()-.5);
