@@ -160,14 +160,14 @@ void display (void) {
 
     if (SLOW) {
       // method 1 for rendering particles (slow)
-      glPushMatrix();
+      //      glPushMatrix();
       glTranslatef(part.x,part.y,part.z);
       glColor3f(part.r,part.g,part.b);
       glutSolidSphere(part.size,10,10);
       glPopMatrix();
     } else {
       glBegin(GL_POINTS);
-      printf("%f %f %f %f %f %f\n",t,part.r,part.g,part.b,part.x,part.y);
+      printf("%0.1f %0.0f %0.0f %0.0f %0.0f %0.0f\n",t,part.r*256,part.g*256,part.b*256,part.x*800,part.y*600);
       glColor3f(part.r,part.g,part.b);
       glVertex2f(part.x,part.y);
       // failed experiment w/ GL_POLYGON below (too slow)
@@ -179,7 +179,7 @@ void display (void) {
 
   }
 
-  glPopMatrix();
+  //  glPopMatrix();
   glutSwapBuffers();
 }
 
