@@ -3,11 +3,18 @@
 # attempt to convert particleman.c to Perl
 require "/usr/local/lib/bclib.pl";
 use OpenGL qw(:all);
+use Time::HiRes;
 
 # size currently ignored
 
 # constants (of sorts)
-$MAXPARTICLES = 65535;
+$MAXPARTICLES = 65536;
+$MAXPARTICLES = 2048;
+$MAXPARTICLES = 512;
+
+# TEST: pre-create array helps?
+# for $i (0..$MAXPARTICLES) {$particles[$i] = {};}
+$particles[$MAXPARTICLES]= 0;
 
 # the interval for each redraw
 $dt = .1;
@@ -51,10 +58,11 @@ glutMainLoop();
 sub display {
   # update particles
   updateParticles();
+#  return;
 
   # clear buffer, translate
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  glPushMatrix();
+#  glPushMatrix();
 
   # draw the particles
   for $i (@particles) {
@@ -63,11 +71,11 @@ sub display {
     glBegin(GL_POINTS);
     glColor3f($i->{r},$i->{g},$i->{b});
     glVertex2f($i->{x},$i->{y});
-    debug("DREW: ($i->{r},$i->{g},$i->{b},$i->{x},$i->{y})");
+#    debug("DREW: ($i->{r},$i->{g},$i->{b},$i->{x},$i->{y})");
     glEnd();
   }
 
-  glPopMatrix();
+#  glPopMatrix();
   glutSwapBuffers();
 }
 
@@ -78,9 +86,9 @@ sub updateParticles () {
   # create new particles
   # TODO: this should be $num*$dt or something?
   for $i (1..$num) {
-    if (++$highwater > $MAXPARTICLES) {$highwater = 0;}
-
-    debug("HIGHWATER: $highwater");
+    if (++$highwater > $MAXPARTICLES) {
+      $highwater = 0;
+    }
 
     # starting location = emitter
     for $j ("x","y","z") {$particles[$highwater]{$j} = $emitter{$j};}
@@ -99,19 +107,16 @@ sub updateParticles () {
 
   }
 
-  # random vector (list)
-  @rand = (rand()-.5,rand()-.5,rand()-.5);
-
   # loop through particles
   for $i (@particles) {
     # age of this particle
-    $age = $t-$i{birth};
+    $age = $t-$i->{birth};
 
     # if particle has exceeded lifetime, kill it (set size to 0)
     # ignore particles that already dead
     # TODO: should -1 be the "dead value" instead?
     # TODO: this is totally wrong for Perl?
-    if ($age>$life||$i->{size}==0) {$i->{size}=0; next;}
+#    if ($age>$life||$i->{size}==0) {$i->{size}=0; next;}
 
     # adjust velocity
     for $j ("x","y","z") {$i->{"d$j"}+=$gravity{$j}*$dt;}
@@ -129,4 +134,7 @@ sub updateParticles () {
 
   # increment global time
   $t += $dt;
+
+  if ($t>204.8) {die "TESTING";}
+
 }

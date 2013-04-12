@@ -167,6 +167,7 @@ void display (void) {
       glPopMatrix();
     } else {
       glBegin(GL_POINTS);
+      printf("%f %f %f %f %f %f\n",t,part.r,part.g,part.b,part.x,part.y);
       glColor3f(part.r,part.g,part.b);
       glVertex2f(part.x,part.y);
       // failed experiment w/ GL_POLYGON below (too slow)

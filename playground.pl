@@ -22,32 +22,60 @@ use Time::JulianDay;
 use XML::Bare;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
-use OpenGL;
+use GD;
 
-$particles[7]{foo} = "bar";
+# TODO: try fly
+# create a 100K pixel image is faster than libGL?
 
-debug(unfold(@particles));
+$im = new GD::Image(800,600);
+$white = $im->colorAllocate(255,255,255);
+$black = $im->colorAllocate(0,0,0);
 
+for $i (1..1000000) {
+  $im->setPixel(rand()*800,rand()*600,$black);
+}
+
+write_file($im->png,"temp.png");
 
 die "TESTING";
 
-glpOpenWindow;
-glClearColor(0,0,1,1);
-glClear(GL_COLOR_BUFFER_BIT);
-glLoadIdentity;
-glOrtho(-1,1,-1,1,-1,1);
+use OpenGL qw(:all);
 
-glColor3f(1,0,0);
-glBegin(GL_POLYGON);
-glVertex2f(-0.5,-0.5);
-glVertex2f(-0.5, 0.5);
-glVertex2f( 0.5, 0.5);
-glVertex2f( 0.5,-0.5);
-glEnd();
-glFlush();
+glutInit();
 
-print "Program 1-1 Simple, hit control-D to quit:\n\n";
-while(<>){;}
+# use double buffering + depth buffering
+glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
+
+# optional: window size
+glutInitWindowSize(800,600);
+
+# create the window
+glutCreateWindow("Particle Man");
+
+# glutDisplayFunc(): what to do when display is damaged
+glutDisplayFunc(display);
+
+# glutIdleFunc(): what to do when application is idle
+# often same as glutDisplayFunc()
+glutIdleFunc(display);
+
+glutMainLoop();
+
+sub display {
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+  for $i (1..100000) {
+    glBegin(GL_POINTS);
+    glColor3f(rand(),rand(),rand());
+    glVertex2f(2*rand()-1,2*rand()-1);
+    glEnd();
+  }
+
+  glutSwapBuffers();
+
+  if (++$count>100) {die "ETSTING";}
+
+}
 
 die "TESTING";
 
