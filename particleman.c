@@ -18,6 +18,9 @@
 // set to 1 for 3-D particles, not just points (very slow on my machine)
 #define SLOW 0
 
+// print out time and particles
+#define PRINT 0
+
 // a particle has 3D position, velocity, RGBA color, birth time, and size
 // size=0 -> don't render this particle
 // TODO: should 'life' be a property of each particle?
@@ -101,6 +104,7 @@ void updateParticles (void) {
     // silliness: if particle hits top/bottom/sides, bounce?
     // bounce < -1 = flubber
     float bounce = -.20;
+    //    bounce = 1.;
     if (particles[i].y<-1.) {particles[i].dy *= bounce;}
     if (particles[i].y>1.) {particles[i].dy *= bounce;}
     // could use abs() below, but not working? (#include math.h? && -lm?)
@@ -167,7 +171,11 @@ void display (void) {
       glPopMatrix();
     } else {
       glBegin(GL_POINTS);
-      printf("%0.1f %0.0f %0.0f %0.0f %0.0f %0.0f\n",t,part.r*256,part.g*256,part.b*256,part.x*800,part.y*600);
+
+      if (PRINT) {
+	printf("%0.1f %0.0f %0.0f %0.0f %0.0f %0.0f\n",t,part.r*256,part.g*256,part.b*256,part.x*800+400,part.y*600+300);
+      }
+
       glColor3f(part.r,part.g,part.b);
       glVertex2f(part.x,part.y);
       // failed experiment w/ GL_POLYGON below (too slow)
@@ -192,10 +200,12 @@ int main(int argc, char **argv)
  glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 
  // optional: window size
- glutInitWindowSize(800,600);
+ glutInitWindowSize(320,200);
 
  // create the window
  glutCreateWindow("Particle Man");
+
+ glutFullScreen();
 
  // glutDisplayFunc(): what to do when display is damaged
  glutDisplayFunc(display);
