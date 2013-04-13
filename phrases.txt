@@ -1,34 +1,13 @@
-# agents matching these regexps are treated as webbots for
-# bc-weblog-parser.pl
-
-# TODO: this actually eliminates any hits with these regexps in them =
-# bad (but using URLs helps)
-
-# Only contains bots I've personally seen (in my logs)
-
-# It's tempting to add 'bot', 'spider', 'crawl' below, but that might
-# be excessive;
-
-# See also:
-# http://www.ubbwiki.com/index.php?title=Spider_Listing
-# http://code.google.com/p/yourls/wiki/PluginDontLogBots
-# To the extent possible, listing URLs (less likely false positives)
-
-# DID YOU KNOW: lines starting with '#' are NOT treated as comments by
-# grep -f (but my program filters those + blank lines out)
-
-# <h>I have this nagging worry that my site gets no non-bot hits at all!</h>
-
 http://www.majestic12.co.uk/bot.php
 http://www.google.com/bot.html
 http://help.yahoo.com/help/us/ysearch/slurp
 http://help.naver.com/robots/
 http://blekko.com/about/blekkobot
+http://yandex.com/bots
 http://www.80legs.com/spider.html
 http://www.80legs.com/webcrawler.html
 http://www.exabot.com/go/robot
 http://search.msn.com/msnbot.htm
-# below also catches .html
 http://www.baidu.com/search/spider.htm
 http://www.bing.com/bingbot.htm
 http://www.brandwatch.net
@@ -49,7 +28,6 @@ http://www.youdao.com/help/webmaster/spider/
 http://shoulu.jike.com/spider.html
 http://www.hailoo.com/spider.html
 http://www.linkbutler.de/spider
-# resisted temptation to add siteua.org/ (at least for now)
 http://it.siteua.org/
 http://kino.siteua.org/
 http://lady.siteua.org/
@@ -63,19 +41,10 @@ http://www.botje.com/plukkie.htm
 http://solfo.com/linkbot.html
 http://www.weblex.org/bot.html
 http://www.wotbox.com/bot
-http://yandex.com/bots
-
-# tempted to add raw phrase "nutch" but nah
 http://www.Nutch.de/
-
-# these bots don't provide complete URLs, but do provide partial URLs
-# or email addresses
-
 www.metadatalabs.com/mlbot
 ezooms.bot@gmail.com
 bot@language-tools.com
-
-# these bots provide nothing but a "recognizable phrase"
 Content Crawler
 sGroup crawler
 gsa-crawler
@@ -88,14 +57,7 @@ GSLFbot
 citeseerxbot
 SurveyBot
 news bot
-
-# montastic.com is a great service + nagios is a great prog, but their
-# hits don't count
 nagios-plugins
 montastic.com
 mon.itor.us
-
-# rss2email
 http://www.aaronsw.com/2002/rss2email/
-
-#<h>If you want to surf anonymously, just put 'bot' in your User-Agent ;) </h>

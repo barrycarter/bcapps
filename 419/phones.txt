@@ -38,10 +38,12 @@
 +17636477000 http://419.94y.info/17636477000.txt [fax]
 
 +13473077706 http://419.94y.info/13473077706.txt
+20130412.1839: "[at the] subscriber's request, this phone does not accept incoming calls NY23158"
 
 +16788137636 http://419.94y.info/16788137636.txt
 
 +15163486039 http://419.94y.info/15163486039.txt
+20130412.1843: magicjack error message
 
 +12023043000 http://419.94y.info/12023043000.txt
 
@@ -74,10 +76,12 @@
 +12024776691 http://419.94y.info/12024776691.txt (fax)
 
 +13153088106 http://419.94y.info/13153088106.txt
+20130412.1845: magicjack customer unavailable (voicemail)
 
 +18137623040 http://419.94y.info/18137623040.txt (fax)
 
 +13052802145 http://419.94y.info/13052802145.txt
+20130412.1846: magicjack error message
 
 +17053020360 http://419.94y.info/17053020360.txt
 
@@ -100,19 +104,28 @@
 +13057919895 http://419.94y.info/13057919895.txt
 
 +17165260351 http://419.94y.info/17165260351.txt
+20130412.1905: "party unavailable, will be notified you called"
 
 +15856266050 http://419.94y.info/15856266050.txt
+20130412.1903: magicjack error message
 
 +17132393389 http://419.94y.info/17132393389.txt
+20130412.1902: automated voice voicemail with long gap (so do try again)
 
 +18326868867 http://419.94y.info/18326868867.txt
+20130412.1901: "person called unavailable"; message 2, switch 400
 
 +18165335806 http://419.94y.info/18165335806.txt
+20130412.1857: voicemail (so try again)
 
 +19405609682 http://419.94y.info/19405609682.txt
+20130412.1852: confirmed scammer
 
 +14252434990 http://419.94y.info/14252434990.txt
+20130412.1851: long ringing, then generic voicemail
 
 +17185149556 http://419.94y.info/17185149556.txt
+20130412.1849: "invalid number" (skype error message)
 
 +12069840559 http://419.94y.info/12069840559.txt
+20130412.1848: inactive laservoice(?) account

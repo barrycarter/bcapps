@@ -46,12 +46,12 @@ float num = 1.; // particles generated per time interval
 float life = 800.; // life of each particle, in time units
 float size_start = 0.001; // starting size of each particle
 float size_end = 0.01; // ending size of each particle
-VECTOR color_start = {1.,1.,0.}; // starting color of each particle
-VECTOR color_end = {1.,0.,0.}; // ending color of each particle
-VECTOR dir = {0.,.02,0.}; // direction in which particles are emitted
-VECTOR turb_dir = {0.01,0.,0.}; // randomness of direction
-VECTOR emitter = {0.,-1.,0}; // location of particle emitter
-VECTOR gravity = {0.,-.0001,0.}; // the force of gravity (or whatever)
+VECTOR color_start = {1.,1.,1.}; // starting color of each particle
+VECTOR color_end = {1.,1.,1.}; // ending color of each particle
+VECTOR dir = {0.,-0.001,0.}; // direction in which particles are emitted
+VECTOR turb_dir = {.1,0,0}; // randomness of direction
+VECTOR emitter = {0,1.,0}; // location of particle emitter
+VECTOR gravity = {0.,-0.001,0.}; // the force of gravity (or whatever)
 
 // the start time
 float t = 0.0;
@@ -103,13 +103,14 @@ void updateParticles (void) {
 
     // silliness: if particle hits top/bottom/sides, bounce?
     // bounce < -1 = flubber
-    float bounce = -.20;
+    // TODO: we might need anti abs value or something here
+    float bounce = -0.1;
     //    bounce = 1.;
-    if (particles[i].y<-1.) {particles[i].dy *= bounce;}
-    if (particles[i].y>1.) {particles[i].dy *= bounce;}
+    if (particles[i].y<-1.) {particles[i].y=-1; particles[i].dy *= bounce;}
+    if (particles[i].y>1.) {particles[i].y=1; particles[i].dy *= bounce;}
     // could use abs() below, but not working? (#include math.h? && -lm?)
-    if (particles[i].x>1.) {particles[i].dx *= bounce;}
-    if (particles[i].x<-1.) {particles[i].dx *= bounce;}
+    if (particles[i].x>1.) {particles[i].x=1; particles[i].dx *= bounce;}
+    if (particles[i].x<-1.) {particles[i].x=-1; particles[i].dx *= bounce;}
   }
 
   // generate new particles (starting at highwater)
@@ -200,12 +201,12 @@ int main(int argc, char **argv)
  glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 
  // optional: window size
- glutInitWindowSize(320,200);
+ glutInitWindowSize(800,600);
 
  // create the window
  glutCreateWindow("Particle Man");
 
- glutFullScreen();
+ // glutFullScreen();
 
  // glutDisplayFunc(): what to do when display is damaged
  glutDisplayFunc(display);
