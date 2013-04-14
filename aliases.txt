@@ -60,3 +60,6 @@ alias bcinfo3sync "cd /home/barrycarter/BCGIT; \rsync -e 'ssh -i /home/barrycart
 
 # chmods all Perl scripts to +x (something I tend to be bad about)
 alias perlfix "find /home/barrycarter/PERL /home/barrycarter/BCGIT -iname '*.pl' | xargs chmod +x"
+
+# easier access to datediff subroutine
+alias datediff "bc-call-func.pl datediff"

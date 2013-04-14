@@ -882,6 +882,7 @@ DATE: 20130403
 1741 2 honey mustard fries
 2046 131g yellow onions, 1 can beanless chili, remaining slice super supreme thin crust pizza, honey bbq fries
 
+# BELOW IS KNOWN INCOMPLETE: peanut butter nuggets
 SHORT: 5*PIZZA-HUT-LARGE-PAN-SPICY-SICILIAN@1300, 2*853762002061@1741, 131g*USDA11282@2046, 1c*014900012704@2046, 1*PIZZA-HUT-LARGE-SUPER-SUPREME-THIN@2046, 1*853762002047@2046
 
 DATE: 20130404
@@ -892,6 +893,7 @@ DATE: 20130404
 1843 1 can roast beef hash, vinegar splash fries
 2101 16 slices (16/3 servings) hard salami, 5 slices 35 cal ital bread
 
+# BELOW IS KNOWN INCOMPLETE, CHIPS AND PEANUTS AND PEPPERS MISSING
 SHORT: 1*853762002009@0903, 1*853762002085@0903, 1c*028189750059@1116, 3*PIZZA-HUT-LARGE-PAN-SPICY-SICILIAN@1116, 1c*014900012704@1646, 1c*037600199919@1843, 1*853762002023@1843, 2.6666666*082011913357@1646, 5.3333333*044700010907@2101, 5*024126008955@2101
 
 DATE: 20130405
@@ -941,23 +943,33 @@ DATE: 20130410
 
 1316 1 pound ground beef (4 servings), 141g onions, honey bbq fries, honey mustard onion fries
 1627 chicken/rotini soup, jal trio fries, sea salt fries
-1900 1 thai coconut curry w beef (not stock velveted) w egg noodles
+1900 1 thai coconut curry w beef (not stock velveted) w egg noodles [version I got was extra spicy, but PeiWei doesn't list that in their nutritional info, so using regular version nutritional data]
 2153 1 link (4 servings) smoked sausage, 162g virginia extra large peanuts
 
 SHORT: 4*074700000073@2153, 2*PEIWEI-EGG-NOODLES@1900, 1c*PEIWEI-BEEF-THAI-COCONUT@1900, 4*011110979209@1316, 141g*USDA11282@1316, 1*853762002047@1316, 1*853762002061@1316, 1c*041196911169@1627, 1*853762002108@1627, 1*853762002009@1627, 162g*029000010390@2153
 
 DATE: 20130411
 
+1410 11.66 slices (equivalent) thin crust no cheese large GC, Onions, hot sauce
 1721 2 sea salt fries
 2025 coconut curry container, 2 polish sausage links (8 servings)
 
-SHORT: 2*PEIWEI-EGG-NOODLES@2025, 1c*PEIWEI-BEEF-THAI-COCONUT@2025, 8*074700000080@2025, 2*853762002009@1721
+SHORT: 2*PEIWEI-EGG-NOODLES@2025, 1c*PEIWEI-BEEF-THAI-COCONUT@2025, 8*074700000080@2025, 2*853762002009@1721, 11.66*DOMINO-LARGE-THINCRUST-NOCHEESE-ON-GC-SAUCE@1410
 
 DATE: 20130412
 
 1250 196g red onion, 1 can wolf chili w beans, 1 bag chipotle bbq bean chips, 61g chipotle unflavored bean chips, 1 can lean beef wolf chili
+1644 full bag chipotle bean chips
+1935 wolf homestyle chili (1 can), 121g chili chips, 121g french onion dip [double checked and these amounts ARE coincidentally identical]
 
-SHORT: 1c*014900023502@1250, 1c*852834002022@1250, 61g*852834002008@1250, 1c*014900013909@1250, 196g*USDA11282@1250
+SHORT: 1c*014900023502@1250, 1c*852834002022@1250, 61g*852834002008@1250, 1c*014900013909@1250, 196g*USDA11282@1250, 1c*852834002022@1644, 1c*014900442037@1935, 121g*039700005800@1935, 121g*028400070942@1935
+
+DATE: 20130413
+
+1022 6 slices ital 35 cal toast, 37g parmesan cheese, 114g black bean chips
+1438 231g chili chips
+1710 coconut curry container
+2019 1 can hot wolf chili
 
 
-
+SHORT: 6*024126008955@1022, 37g*21000010868@1022, 114g*852834002008@1022, 231g*039700005800@1438, 2*PEIWEI-EGG-NOODLES@1710, 1c*PEIWEI-BEEF-THAI-COCONUT@1710, 1c*014900012803@2019
