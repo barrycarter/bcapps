@@ -3,7 +3,6 @@ http://www.google.com/bot.html
 http://help.yahoo.com/help/us/ysearch/slurp
 http://help.naver.com/robots/
 http://blekko.com/about/blekkobot
-http://yandex.com/bots
 http://www.80legs.com/spider.html
 http://www.80legs.com/webcrawler.html
 http://www.exabot.com/go/robot
@@ -41,6 +40,7 @@ http://www.botje.com/plukkie.htm
 http://solfo.com/linkbot.html
 http://www.weblex.org/bot.html
 http://www.wotbox.com/bot
+http://yandex.com/bots
 http://www.Nutch.de/
 www.metadatalabs.com/mlbot
 ezooms.bot@gmail.com

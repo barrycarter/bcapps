@@ -10,11 +10,4 @@
 # this to work
 
 require "/usr/local/lib/bclib.pl";
-
-open(A,">/tmp/crond.txt");
-print A "HELLO\n";
-print A <STDIN>;
-print A "GOODBYE\n";
-close(A);
-
-# append_file(<STDIN>,"/home/barrycarter/mail/CRON.test");
+append_file(<STDIN>,"/home/barrycarter/mail/CRON");

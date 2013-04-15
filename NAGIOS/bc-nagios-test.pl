@@ -164,9 +164,11 @@ sub bc_info_log {
 
 =item bc_hwclock_test()
 
-Confirms the hardware clock is within 60 seconds of the computer clock
+Confirms the hardware clock is within 1 hour of the computer clock
 
-TODO: allow 60 to be a parameter
+EDITED: it turns out the value of the hwclock isnt super-relevant
+
+TODO: allow 3600s to be a parameter
 
 =cut
 
@@ -183,12 +185,12 @@ sub bc_hwclock_test {
   my($hwtime,$delta) = ($1,$2);
   my($diff) = abs(str2time($hwtime)+$delta-$now);
 
-  if ($diff<60) {
-    print "HWCLOCK delta: $diff < 60\n";
+  if ($diff<3600) {
+    print "HWCLOCK delta: $diff < 3600\n";
     return 0;
   }
 
-  print "HWCLOCK delta: $diff >= 60\n";
+  print "HWCLOCK delta: $diff >= 3600\n";
   return 2;
 }
 

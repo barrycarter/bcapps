@@ -11,6 +11,7 @@
 
 #include <GL/glut.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 // max number of particles
 #define MAXPARTICLES 65535
@@ -19,7 +20,7 @@
 #define SLOW 0
 
 // print out time and particles
-#define PRINT 0
+#define PRINT 1
 
 // a particle has 3D position, velocity, RGBA color, birth time, and size
 // size=0 -> don't render this particle
@@ -46,12 +47,12 @@ float num = 1.; // particles generated per time interval
 float life = 800.; // life of each particle, in time units
 float size_start = 0.001; // starting size of each particle
 float size_end = 0.01; // ending size of each particle
-VECTOR color_start = {1.,1.,1.}; // starting color of each particle
-VECTOR color_end = {1.,1.,1.}; // ending color of each particle
-VECTOR dir = {0.,-0.001,0.}; // direction in which particles are emitted
+VECTOR color_start = {1.,0.5,0.5}; // starting color of each particle
+VECTOR color_end = {1.,0.5,0.5}; // ending color of each particle
+VECTOR dir = {0.,-0.01,0.}; // direction in which particles are emitted
 VECTOR turb_dir = {.1,0,0}; // randomness of direction
-VECTOR emitter = {0,1.,0}; // location of particle emitter
-VECTOR gravity = {0.,-0.001,0.}; // the force of gravity (or whatever)
+VECTOR emitter = {0,-1.,0}; // location of particle emitter
+VECTOR gravity = {0.,+0.001,0.}; // the force of gravity (or whatever)
 
 // the start time
 float t = 0.0;
@@ -154,6 +155,8 @@ void display (void) {
   // forces all translations to be local?
   glPushMatrix();
 
+  //  FILE *fi = fopen("/tmp/1.txt","rw");
+
   // render the particles
   for (i=0; i<MAXPARTICLES; i++) {
     PARTICLE part = particles[i]; // convenience
@@ -174,7 +177,10 @@ void display (void) {
       glBegin(GL_POINTS);
 
       if (PRINT) {
-	printf("%0.1f %0.0f %0.0f %0.0f %0.0f %0.0f\n",t,part.r*256,part.g*256,part.b*256,part.x*800+400,part.y*600+300);
+	//	printf("%0.1f %0.0f %0.0f %0.0f %0.0f %0.0f\n",t,part.r*256,part.g*256,part.b*256,part.x*800+400,part.y*600+300);
+	// fly format (except for t)
+	//	printf("setpixel %0.0f,%0.0f,%0.0f,%0.0f,%0.0f\n",part.x*800+400,part.y*600+300,part.r*255,part.g*255,part.b*255);
+	//	fprintf(fi,"setpixel %0.0f,%0.0f,%0.0f,%0.0f,%0.0f\n",part.x*800+400,part.y*600+300,part.r*255,part.g*255,part.b*255);
       }
 
       glColor3f(part.r,part.g,part.b);
@@ -187,6 +193,8 @@ void display (void) {
     }
 
   }
+
+  //  fclose(fi);
 
   //  glPopMatrix();
   glutSwapBuffers();
