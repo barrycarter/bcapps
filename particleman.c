@@ -155,7 +155,12 @@ void display (void) {
   // forces all translations to be local?
   glPushMatrix();
 
-  //  FILE *fi = fopen("/tmp/1.txt","rw");
+  // TODO: file below must already exist, which is bad
+  FILE *fi;
+  char s[5000];
+  sprintf(s, "/tmp/pmfile%0.1f", t);
+  fi = fopen(s,"w");
+  fprintf(fi, "Hello\n");
 
   // render the particles
   for (i=0; i<MAXPARTICLES; i++) {
@@ -180,7 +185,7 @@ void display (void) {
 	//	printf("%0.1f %0.0f %0.0f %0.0f %0.0f %0.0f\n",t,part.r*256,part.g*256,part.b*256,part.x*800+400,part.y*600+300);
 	// fly format (except for t)
 	//	printf("setpixel %0.0f,%0.0f,%0.0f,%0.0f,%0.0f\n",part.x*800+400,part.y*600+300,part.r*255,part.g*255,part.b*255);
-	//	fprintf(fi,"setpixel %0.0f,%0.0f,%0.0f,%0.0f,%0.0f\n",part.x*800+400,part.y*600+300,part.r*255,part.g*255,part.b*255);
+	fprintf(fi,"setpixel %0.0f,%0.0f,%0.0f,%0.0f,%0.0f\n",part.x*800+400,part.y*600+300,part.r*255,part.g*255,part.b*255);
       }
 
       glColor3f(part.r,part.g,part.b);
@@ -194,7 +199,7 @@ void display (void) {
 
   }
 
-  //  fclose(fi);
+  fclose(fi);
 
   //  glPopMatrix();
   glutSwapBuffers();
