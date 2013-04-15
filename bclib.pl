@@ -2999,25 +2999,50 @@ sub next_email_fh {
   return ($head,$body);
 }
 
-# TODO: this really belongs below the subroutines below
-# cleanup files created by my_tmpfile (unless --keeptemp set)
-sub END {
-  debug("END: CLEANING UP TMP FILES");
-  local $?;
-  if ($globopts{keeptemp}) {return;}
+=item recent_forecast($options)
 
-  for $i (sort keys %is_tempfile) {
-    # I sometimes wrongly use tempfile.[ext], so handle that too
-    for $j ("", ".res", ".out", ".err", ".kml", ".kmz") {
-      debug("DELETING: $i$j");
-      system("rm -f $i$j");
+Obtain recent forecast data (just high and low for now) from
+http://nws.noaa.gov/mdl/forecast/text/avnmav.txt and return as list of
+hashes
+
+$options currently unused
+
+=cut
+
+sub recent_forecast {
+  my($options) = ();
+  my($cur,$date,$time);
+  my(%rethash);
+
+  # there does not appear to be a compressed form
+  # guidances are for 6h, so 1h cache is fine
+  my($out,$err,$res) = cache_command("curl http://nws.noaa.gov/mdl/forecast/text/avnmav.txt", "age=3600");
+
+  # TODO: can X/N sometimes be N/X (and does it give order of high/low?)
+
+  for $i (split(/\n/,$out)) {
+    # multiple spaces only for formatting, so I dont need them
+    $i=~s/\s+/ /isg;
+    # station name and date of "forecast"
+    if ($i=~/^\s*(.*?) GFS MOS GUIDANCE (.*?) (.*?) UTC/) {
+      # $cur needs to live outside this loop
+      ($cur, $date, $time) = ($1,$2,$3);
+      $rethash{$cur}{date} = $date;
+      $rethash{$cur}{time} = $time;
+      next;
+    }
+
+    # highs and lows (only other thing I care about for now)
+    # TODO: split and return as list? determine hi from lo?
+    # TODO: deal w 999s here or elsewhere?
+    if ($i=~m%^\s*(X/N|N/X) (.*?)$%) {
+      $rethash{$cur}{dir} = $1;
+      $rethash{$cur}{hilo} = $2;
+      next;
     }
   }
 
-  for $i (@tmpdirs) {
-    debug("RM -R: $i");
-    system("rm -r $i");
-  }
+  return %rethash;
 }
 
 =item compute_upc_check_digit($upc)
@@ -3131,6 +3156,26 @@ sub gnumeric2sqlite3 {
   write_file(join(";\n",@cmds).";\n", "/tmp/commands.sql");
   # TODO: error checking <h>(not really, but I put it in to pretend)</h>
   system("sqlite3 $sql < /tmp/commands.sql");
+}
+
+# cleanup files created by my_tmpfile (unless --keeptemp set)
+sub END {
+  debug("END: CLEANING UP TMP FILES");
+  local $?;
+  if ($globopts{keeptemp}) {return;}
+
+  for $i (sort keys %is_tempfile) {
+    # I sometimes wrongly use tempfile.[ext], so handle that too
+    for $j ("", ".res", ".out", ".err", ".kml", ".kmz") {
+      debug("DELETING: $i$j");
+      system("rm -f $i$j");
+    }
+  }
+
+  for $i (@tmpdirs) {
+    debug("RM -R: $i");
+    system("rm -r $i");
+  }
 }
 
 # parse_form = alias for str2hash (but some of my code uses it)

@@ -880,10 +880,9 @@ DATE: 20130403
 
 1300 5 slices large pizza hut pan pizza (spicy sicilian)
 1741 2 honey mustard fries
-2046 131g yellow onions, 1 can beanless chili, remaining slice super supreme thin crust pizza, honey bbq fries
+2046 131g yellow onions, 1 can beanless chili, remaining slice super supreme thin crust pizza, honey bbq fries, 126g peanut butter nuggets
 
-# BELOW IS KNOWN INCOMPLETE: peanut butter nuggets
-SHORT: 5*PIZZA-HUT-LARGE-PAN-SPICY-SICILIAN@1300, 2*853762002061@1741, 131g*USDA11282@2046, 1c*014900012704@2046, 1*PIZZA-HUT-LARGE-SUPER-SUPREME-THIN@2046, 1*853762002047@2046
+SHORT: 5*PIZZA-HUT-LARGE-PAN-SPICY-SICILIAN@1300, 2*853762002061@1741, 131g*USDA11282@2046, 1c*014900012704@2046, 1*PIZZA-HUT-LARGE-SUPER-SUPREME-THIN@2046, 1*853762002047@2046, 126g*072600074071@2046
 
 DATE: 20130404
 
@@ -971,5 +970,14 @@ DATE: 20130413
 1710 coconut curry container
 2019 1 can hot wolf chili
 
-
 SHORT: 6*024126008955@1022, 37g*21000010868@1022, 114g*852834002008@1022, 231g*039700005800@1438, 2*PEIWEI-EGG-NOODLES@1710, 1c*PEIWEI-BEEF-THAI-COCONUT@1710, 1c*014900012803@2019
+
+DATE: 20130414
+
+1221 1 container ground italian sausage, 136g red onions, 111g chili chips
+1517 195g shurfine chips, 83g french onion dip, 135g queso salsa dip
+1913 1 can lean beef chili, 1 can hot chili
+
+SHORT: 1c*077782008685@1221, 136g*USDA11282@1221, 111g*039700005800@1221, 195g*015400855600@1517, 83g*028400070942@1221, 135g*028400070980@1517, 1c*014900013909@1913, 1c*014900012803@1913
+
+
