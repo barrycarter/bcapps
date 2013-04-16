@@ -155,12 +155,14 @@ void display (void) {
   // forces all translations to be local?
   glPushMatrix();
 
-  // TODO: file below must already exist, which is bad
   FILE *fi;
   char s[5000];
-  sprintf(s, "/tmp/pmfile%0.1f", t);
+  sprintf(s, "/var/tmp/PM/file%0.1f", t);
   fi = fopen(s,"w");
-  fprintf(fi, "Hello\n");
+
+  // TODO: allow 800x600 to be changeable
+  // TODO: black = background color = bad?
+  fprintf(fi,"new\nsize 800,600\nsetpixel 0,0,0,0,0\n");
 
   // render the particles
   for (i=0; i<MAXPARTICLES; i++) {
@@ -185,7 +187,7 @@ void display (void) {
 	//	printf("%0.1f %0.0f %0.0f %0.0f %0.0f %0.0f\n",t,part.r*256,part.g*256,part.b*256,part.x*800+400,part.y*600+300);
 	// fly format (except for t)
 	//	printf("setpixel %0.0f,%0.0f,%0.0f,%0.0f,%0.0f\n",part.x*800+400,part.y*600+300,part.r*255,part.g*255,part.b*255);
-	fprintf(fi,"setpixel %0.0f,%0.0f,%0.0f,%0.0f,%0.0f\n",part.x*800+400,part.y*600+300,part.r*255,part.g*255,part.b*255);
+	fprintf(fi,"setpixel %0.0f,%0.0f,%0.0f,%0.0f,%0.0f\n",part.x*400+400,part.y*-300+300,part.r*255,part.g*255,part.b*255);
       }
 
       glColor3f(part.r,part.g,part.b);
