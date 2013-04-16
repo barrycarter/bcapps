@@ -7,7 +7,7 @@
 # --notime: don't set the timestamp for older files
 # Usage: $0 /usr/local/etc/quikbak/dirpath/filename
 
-require "bclib.pl";
+require "/usr/local/lib/bclib.pl";
 
 # quikbak dir must have current copy of file and file.quikbak
 $file= $ARGV[0];

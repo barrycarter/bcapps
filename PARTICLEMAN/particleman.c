@@ -20,7 +20,7 @@
 #define SLOW 0
 
 // print out time and particles
-#define PRINT 1
+#define PRINT 0
 
 // a particle has 3D position, velocity, RGBA color, birth time, and size
 // size=0 -> don't render this particle
@@ -43,7 +43,7 @@ float dt = .1;
 int highwater = 0;
 
 // defining the particle system
-#include "stream1.c";
+#include "ellipse.c"
 
 // the start time
 float t = 0.0;
@@ -99,7 +99,7 @@ void updateParticles (void) {
     // silliness: if particle hits top/bottom/sides, bounce?
     // bounce < -1 = flubber
     // TODO: we might need anti abs value or something here
-    float bounce = -0.1;
+    float bounce = -1;
     //    bounce = 1.;
     if (particles[i].y<-1.) {particles[i].y=-1; particles[i].dy *= bounce;}
     if (particles[i].y>1.) {particles[i].y=1; particles[i].dy *= bounce;}
@@ -150,15 +150,19 @@ void display (void) {
   // forces all translations to be local?
   glPushMatrix();
 
+  // have to declare this even if I don't use it
   FILE *fi;
-  char s[5000];
-  // pad with 0s so sorted order is correct
-  sprintf(s, "/var/tmp/PM/file%012d", count);
-  fi = fopen(s,"w");
 
-  // TODO: allow 800x600 to be changeable
-  // TODO: black = background color = bad?
-  fprintf(fi,"new\nsize 800,600\nsetpixel 0,0,0,0,0\n");
+  if (PRINT) {
+    char s[5000];
+    // pad with 0s so sorted order is correct
+    sprintf(s, "/var/tmp/PM/file%012d", count);
+    fi = fopen(s,"w");
+
+    // TODO: allow 800x600 to be changeable
+    // TODO: black = background color = bad?
+    fprintf(fi,"new\nsize 800,600\nsetpixel 0,0,0,0,0\n");
+  }
 
   // render the particles
   for (i=0; i<MAXPARTICLES; i++) {
@@ -197,7 +201,7 @@ void display (void) {
 
   }
 
-  fclose(fi);
+  if (PRINT) {fclose(fi);}
 
   //  glPopMatrix();
   glutSwapBuffers();
