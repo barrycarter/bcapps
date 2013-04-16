@@ -43,7 +43,7 @@ float dt = .1;
 int highwater = 0;
 
 // defining the particle system
-#include "ellipse.c"
+#include "test.c"
 
 // the start time
 float t = 0.0;
