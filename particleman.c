@@ -57,6 +57,9 @@ VECTOR gravity = {0.,+0.001,0.}; // the force of gravity (or whatever)
 // the start time
 float t = 0.0;
 
+// the count (always an int)
+int count = 0;
+
 // Spits out vector info w/ tag
 void debugVector (VECTOR vec, char *tag) {
   printf("%s: <%f,%f,%f>\n",tag,vec.x,vec.y,vec.z);
@@ -139,8 +142,9 @@ void updateParticles (void) {
 
   }
 
-  // increment the time
+  // increment the time and count
   t += dt;
+  count++;
 }
 
 void display (void) {
@@ -157,7 +161,8 @@ void display (void) {
 
   FILE *fi;
   char s[5000];
-  sprintf(s, "/var/tmp/PM/file%0.1f", t);
+  // pad with 0s so sorted order is correct
+  sprintf(s, "/var/tmp/PM/file%012d", count);
   fi = fopen(s,"w");
 
   // TODO: allow 800x600 to be changeable
