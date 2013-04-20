@@ -34,11 +34,39 @@ for $i (@block) {
 $inner = read_file("/home/barrycarter/Download/pof-inner.html");
 
 # split into chunks
-while ($inner=~s%profile_id=(.*?)" class="mi" onclick=".*?"><img src="pof-inner_files/(.*?).jpg"%%) {
+while ($inner=~s%profile_id=(.*?)" class="mi" onclick=".*?"><img src="pof-inner_files/([^"]*?\d+)\.jpg"%%) {
+  debug("CHUNK STYLE: $&");
   my($id,$url) = ($1,$2);
   # if its not an id we want to block ignore it
   unless ($block{$id}) {next;}
-  debug("$id -> $url");
+  debug("ID: $id, URL: $url");
+  # and the GM portion to block it
+  push(@blocks, "str=str.replace(/$url.jpg/gi,'');")
 }
 
+# join them
+$blocks = join("\n",@blocks);
+
+# create the script
+$str = << "MARK";
+// ==UserScript==
+// \@name pofthing2
+// \@namespace http://barrycarter.info
+// \@description Blocks POF user thumbnails
+// \@include *pof*
+// ==/UserScript==
+
+str = document.documentElement.innerHTML
+$blocks
+document.documentElement.innerHTML = str
+MARK
+;
+
+# write to file + redirect firefox
+write_file($str,"/tmp/pof.user.js");
+
+# TODO: major flaw here is that it will wipe out old blocks, need to
+# keep track of jpg URLs over multiple runs (sqlite3?)
+
+system("/root/build/firefox/firefox -remote 'openURL(file:///tmp/pof.user.js)'");
 
