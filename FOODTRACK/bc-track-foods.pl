@@ -13,7 +13,7 @@
 require "/usr/local/lib/bclib.pl";
 
 # print hashlist2sqlite([{d4me2db("030900005669")}],"foods"),";";
-print hashlist2sqlite([{d4me2db("014900023502")}],"foods"),";";
+print hashlist2sqlite([{d4me2db("041321241178")}],"foods"),";";
 
 die "USE bc-track-foods-2013.pl; $0 may damage databases";
 

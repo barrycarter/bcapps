@@ -988,7 +988,24 @@ DATE: 20130415
 
 SHORT: 3*DOMINO-BROOKLYN-BEEF-FETA-TOMATO@1230, 1*DOMINO-BROOKLYN-ITAL-CHEDDAR-JAL@1230, 4*DOMINO-BROOKLYN-ITAL-CHEDDAR-JAL@1841, 1c*014900442037@2259, 1c*014900012803@2259
 
+DATE: 20130416
 
+1612 2 vintage cheddar fries, 1 can homestyle chili, 122g shurfine potato chips
+1954 2 links (8 servings) smoked sausages, 1 can lean beef chili, 35g shurfine chips
 
+SHORT: 2*853762002085@1612, 1c*014900442037@1612, 122g*015400855600@1612, 8*074700000073@1954, 1c*014900013909@1954, 35g*015400855600@1954
 
+DATE: 20130417
+
+1240 one can nalley jalapeno chili (2 servings), one can nalley onion chili (2 servings), vintage cheese fries
+2037 3 slices brooklyn style is/feta/tomato pizza, coconut curry (but sense I left about 1 serving noodles in the container)
+
+SHORT: 2*041321241499@1240, 2*041321241178@1240, 1*853762002085@1240, 3*DOMINO-BROOKLYN-IS-FETA-TOMATO@2037, 1c*PEIWEI-BEEF-THAI-COCONUT@2037, 1*PEIWEI-EGG-NOODLES@2037
+
+DATE: 20130418
+
+1344 2 ice cream sandwiches (Carls Jr)
+2004 2 links (8 servings) polish sausage, 239g red onions, 1 ice cream sandwich
+
+SHORT: 2*CARLS-COOKIE-ICE-CREAM-SANDWICH@1344, 8*074700000080@2004, 239g*USDA11282@2004, 1*CARLS-COOKIE-ICE-CREAM-SANDWICH@2004
 
