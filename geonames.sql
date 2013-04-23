@@ -52,6 +52,16 @@ CREATE TABLE tzones (
 .separator "\t"
 .import /var/tmp/tzones.out tzones
 
+-- TODO: probably need feature class too
+-- or at least http://www.geonames.org/export/codes.html
+-- TODO: full description of feature codes too
+CREATE TABLE featurecodes (
+ featurecodeid INTEGER PRIMARY KEY,
+ abbrev TEXT
+);
+.separator "\t"
+.import /var/tmp/featurecodes.out featurecodes
+
 -- not sure how these get in, but lets get rid of them
 DELETE FROM altnames WHERE geonameid = '';
 

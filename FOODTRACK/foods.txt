@@ -1009,3 +1009,38 @@ DATE: 20130418
 
 SHORT: 2*CARLS-COOKIE-ICE-CREAM-SANDWICH@1344, 8*074700000080@2004, 239g*USDA11282@2004, 1*CARLS-COOKIE-ICE-CREAM-SANDWICH@2004
 
+DATE: 20130419
+
+1428 2 bags fries
+
+SHORT: 2*MCD-FRIES@1428
+
+DATE: 20130420
+
+1257 lean beef chili, reheated french fries
+1448 2 slices pan pizza from April 5th (reheated), carls jr double bourbon burger
+1632 2 carls jr ice cream sandwiches
+1911 black pepper chicken, 1/2 container kung pao chicken
+
+SHORT: 1c*PANDA-EXPRESS-BPC@1911, 0.5c*PANDA-EXPRESS-KPC@1911, 1c*014900013909@1257, 1*MCD-FRIES@1257, 2*DOMINO-MEDIUM-PAN-IS-ONION@1448, 2*CARLS-COOKIE-ICE-CREAM-SANDWICH@1632
+
+DATE: 20130421
+
+1148 2 jal trio fries, honey mustard fries
+1548 black pepper chicken
+1703 kung pao chicken
+1921 sea salt fries, honey mustard fries
+2243 nalley onion chili, 111g shurfine potato chips
+
+SHORT: 2*853762002108@1148, 1*853762002061@1148, 1*853762002009@1921, 1*853762002061@1921, 1c*PANDA-EXPRESS-BPC@1548, 1c*PANDA-EXPRESS-KPC@1703, 1c*041321241178@2243, 111g*015400855600@2243
+
+DATE: 20130422
+
+1026 nalley jalapeno chili
+1430 spicy italian subway salad, provolone cheese, onions, tomatoes
+1615 black pepper chicken, kung pao chicken
+2124 jal trio fries, honey bbq fries, 8 slices hard salami (8/3 servings), 1 can wolf chili w beans, 271g red onions
+
+SHORT: 1c*041321241499@1026, 1c*PANDA-EXPRESS-BPC@1615, 1c*PANDA-EXPRESS-KPC@1615, 1*SUBWAY-20130422@1430, 1*853762002108@2124, 1*853762002047@2124, 2.6666666*044700010907@2124, 1c*037600223188@2124, 271g*USDA11282@2124
+
+

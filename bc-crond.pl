@@ -10,26 +10,24 @@
 # this to work
 
 require "/usr/local/lib/bclib.pl";
-write_file(<STDIN>,"/tmp/test7.txt");
-exit(0);
 
-# the mail "cron -m" sends does not have the "from space" line nor a
-# date line, so I add these
+# split into head/body
+$all = <STDIN>;
+$all=~s/(^.*?)\n\n(.*)$//is;
+my($head,$body) = ($1,$2);
 
+# add date and "from space" line
 # NOTE: this date isnt exactly in the right format but close enough?
 $date = `date`;
 $date=~s/\s*$//isg;
 
-$all = <STDIN>; chomp($all);
-
 $str = << "MARK";
-From daemon\@barrycarter.info $date
-From: Daemon <daemon\@barrycarter.info>
+From daemon $date
+$head
 Date: $date
 
-$all
-
+$body
 MARK
 ;
 
-debug("STR: $str");
+append_file($str,"/home/barrycarter/mail/CRON");

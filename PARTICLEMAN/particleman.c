@@ -20,7 +20,7 @@
 #define SLOW 0
 
 // print out time and particles
-#define PRINT 0
+#define PRINT 1
 
 // a particle has 3D position, velocity, RGBA color, birth time, and size
 // size=0 -> don't render this particle
