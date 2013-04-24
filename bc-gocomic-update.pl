@@ -5,6 +5,15 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# tomorrow
+# TODO: This may not not 100% accurate
+$tom = time()+86400;
+
+# URL format
+$urlf = strftime("%Y/%m/%d", localtime($tom));
+# printed format
+$urlp = strftime("%B %d, %Y", localtime($tom));
+
 # list of comics (rarely changes)
 my($out,$err,$res) = cache_command("curl -H 'User-Agent: Fauxilla' http://www.gocomics.com/explore/comics", "age=86400");
 
@@ -15,5 +24,11 @@ $out=~s/<!-- end popular fragment cache -->.*$//isg;
 # find comics
 while ($out=~s%"/(.*?)"%%) {
   my($comic) = $1;
-  debug("COIMIC: $comic");
+
+  my($out,$err,$res) = cache_command("curl -L -H 'User-Agent: Fauxilla' http://www.gocomics.com/l$comic/$urlf","age=600");
+
+  # does it have "tomorrows" true date?
+  if ($out=~/$urlp/) {
+    print "UPDATED($comic): $urlp\n";
+  }
 }
