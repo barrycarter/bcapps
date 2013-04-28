@@ -1055,6 +1055,37 @@ SHORT: 1.25c*PANDA-EXPRESS-BPC@1244, 1*853762002047@1448, 1*853762002061@1448, 1
 
 DATE: 20130424
 
-1050 nalley jal chili
+1050 nalley jal chili, sea salt fries, honey bbq fries, jal trio fries
+1528 kung pao beef, kung pao chicken, kung pao chicken+beef (ALL: stock velvet, no noodles) [totals as 1.5 of each]
+2225 4 honey bbq fries, 2 classic sea salt fries
 
-SHORT: 1c*041321241499@1050
+SHORT: 1c*041321241499@1050, 1*853762002009@1050, 1*853762002047@1050, 1*853762002108@1050, 4*853762002047@2225, 2*853762002009@2225, 1.5c*PEIWEI-CHICKEN-KUNG-PAO-VELVET@1528, 1.5c*PEIWEI-BEEF-KUNG-PAO-VELVET@1528
+
+DATE: 20130425
+
+1359 2 kung pao chicken (panda express)
+1743 chicken/rotini soup
+1927 2 arbys molten chocolate cakes
+2008 4 slices 35 cal italian toast
+
+SHORT: 2c*PANDA-EXPRESS-KPC@1359, 1c*041196911169@1743, 2*ARBYS-MOLTEN-CAKE@1927, 4*024126008955@2008
+
+DATE: 20130426
+
+1356 204g red onion, lean beef chili
+1744 kung pao chicken, 8 slices 35 cal ital toast
+2227 8 ballpark bun length beef hot dogs
+
+SHORT: 1c*014900013909@1356, 204g*USDA11282@1356, 1c*PANDA-EXPRESS-KPC@1744, 8*024126008955@1744, 8*054500100210@2227
+
+DATE: 20130427
+
+1709 1 molta carne pizza, 0.5 campagnola pizza, 0.5 salsiccia pizza, 0.5 da vinci pizza
+2248 1 testarossa pizza, 0.5 salsiccia pizza
+
+SHORT: 1*IL-VICINO-MOLTACARNE-SMALL@1709, 0.5*IL-VICINO-CAMPAGNOLA-SMALL@1709, 0.5*IL-VICINO-SALSICCIA-SMALL@1709, 0.5*IL-VICINO-DAVINCI-SMALL@1709, 1*IL-VICINO-TESTAROSSA-SMALL@2248, 0.5*IL-VICINO-SALSICCIA-SMALL@2248, 3*015900238279@2248
+
+
+
+
+

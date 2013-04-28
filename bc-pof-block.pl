@@ -45,6 +45,8 @@ while ($inner=~s%profile_id=(.*?)" class="mi" onclick=".*?"><img src=".*?_files/
   # if its not an id we want to block ignore it
   unless ($block{$id}) {next;}
   debug("ID: $id, URL: $url");
+  # this only works for ones in current viewmatches.aspx.html
+  $id{$url} = $id;
   push(@newjpgs,$url);
 }
 
@@ -60,10 +62,14 @@ system("sort $badfile -u -o $badfile");
 # and turn into GM lines
 # have no idea why I need .2.jpg and .3.jpg here, but I do
 for $i (@allbad) {
+  # ignore blanks
+  unless ($i) {next;}
+  debug("I: $i, ID: $id{$i}");
+  my(@list) = "// ID: $id{$i}";
   # apparently [0-9] doesnt work
-  my(@list) = "str=str.replace(/$i.jpg/gi,'')";
+ push(@list,"str=str.replace(/$i.jpg/gi,'$i-blocked.jpg')");
   for $j (0..9) {
-    push(@list,"str=str.replace(/$i.$j.jpg/gi,'')");
+    push(@list,"str=str.replace(/$i.$j.jpg/gi,'$i-blocked.jpg')");
   }
   $i = join("\n",@list)."\n";
 }
@@ -75,7 +81,7 @@ $allbad = join("\n",@allbad);
 $str = << "MARK";
 // ==UserScript==
 // \@name pofthing2
-// \@naBmespace http://barrycarter.info
+// \@namespace http://barrycarter.info
 // \@description Blocks POF user thumbnails
 // \@include *pof*
 // ==/UserScript==

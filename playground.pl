@@ -29,6 +29,49 @@ $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 use GD;
 
+wii_tennis("L",40,1928,-18);
+
+=item wii_tennis($wl="W|L",$sc="0|15|30|40", $ns, $delta="")
+
+Attempts to validate
+http://orden-y-concierto.blogspot.de/2013/04/wii-sports-tennis-skill-points-system.html
+by computing expected change in Wii Tennis skill level based on
+victory/loss, losers point score $sc, new skill level $ns, and $delta,
+the change in skill level.
+
+TODO: generalize for non-Elisa/Sarah
+
+=cut
+
+sub wii_tennis {
+  my($wl,$sc,$ns,$delta) = @_;
+  my($asy);
+
+  # TODO: make this hash "our" in bclib.pl?
+  # note the +1200 adjustment for Elisa/Sarah
+  my(%winhash) = (0=>1200+1200,15=>1050+1200,30=>900+1200,40=>800+1200);
+  my(%losehash) = (0=>0+1200,15=>150+1200,30=>300+1200,40=>400+1200);
+
+  # the asymptote
+  if ($wl=~/^w/i) {
+    $asy = $winhash{$sc};
+  } elsif ($wl=~/^l/i) {
+    $asy = $losehash{$sc};
+  } else {
+    warn "$wl is not w|l";
+    return;
+  }
+
+  # the computed new score
+  my($cns) = ($asy+19*($ns-$delta))/20;
+
+  # TODO: more meaningful return value
+  return $cns;
+}
+
+die "TESTING";
+
+
 %ret = recent_forecast();
 for $i (sort keys %ret) {
   print "$i $ret{$i}{hilo}\n";
