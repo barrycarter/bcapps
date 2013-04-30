@@ -11,6 +11,15 @@ $ENV{TZ}="UTC";
 
 # my location
 my $observer = Astro::Nova::LnLatPosn->new();
+$ut = Time::Local::timegm(0,0,0,1,1-1,2013);
+$jd = Astro::Nova::get_julian_from_timet($ut);
+$rst = Astro::Nova::get_solar_equ_coords($jd);
+debug($rst->get_ra(), $rst->get_dec());
+
+
+
+die "TESTING";
+
 $observer->set_lat(70);
 $observer->set_lng(0);
 $observer->set_altitude(5000);

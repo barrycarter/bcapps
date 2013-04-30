@@ -1,5 +1,12 @@
 # shell one liners
 
+# random lat/lon/alt in world [alt in m, others in degrees] for
+# stellarium/etc lunar testing
+
+perl -le 'printf("%0.4f,%0.4f,%d\n",rand(360)-180,rand(180)-90,rand(10000))';
+
+exit;
+
 # (suggests) renaming files that make doesn't handle well
 \ls | perl -nle '$x=$_; if (s/[^a-z0-9_\.\-\%\,]/_/isg) {print "mv \"$x\" $_"}'
 
