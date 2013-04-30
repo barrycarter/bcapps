@@ -29,45 +29,27 @@ $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 use GD;
 
-wii_tennis("L",40,1928,-18);
+# great circle route as line
 
-=item wii_tennis($wl="W|L",$sc="0|15|30|40", $ns, $delta="")
+# albuquerque and randomish city
+my(@s) = sph2xyz("-106","35",1,"degrees=1");
+my(@t) = sph2xyz("-90","40",1,"degrees=1");
 
-Attempts to validate
-http://orden-y-concierto.blogspot.de/2013/04/wii-sports-tennis-skill-points-system.html
-by computing expected change in Wii Tennis skill level based on
-victory/loss, losers point score $sc, new skill level $ns, and $delta,
-the change in skill level.
+# debug(xyz2sph(@s,"degrees=1"));
 
-TODO: generalize for non-Elisa/Sarah
-
-=cut
-
-sub wii_tennis {
-  my($wl,$sc,$ns,$delta) = @_;
-  my($asy);
-
-  # TODO: make this hash "our" in bclib.pl?
-  # note the +1200 adjustment for Elisa/Sarah
-  my(%winhash) = (0=>1200+1200,15=>1050+1200,30=>900+1200,40=>800+1200);
-  my(%losehash) = (0=>0+1200,15=>150+1200,30=>300+1200,40=>400+1200);
-
-  # the asymptote
-  if ($wl=~/^w/i) {
-    $asy = $winhash{$sc};
-  } elsif ($wl=~/^l/i) {
-    $asy = $losehash{$sc};
-  } else {
-    warn "$wl is not w|l";
-    return;
+# 100 points on param line
+for ($i=0; $i<=1; $i+=.01) {
+  for $j (0..2) {
+    $m[$j] = $s[$j]+$i*($t[$j]-$s[$j]);
   }
-
-  # the computed new score
-  my($cns) = ($asy+19*($ns-$delta))/20;
-
-  # TODO: more meaningful return value
-  return $cns;
+  my(@pos) = xyz2sph(@m,"degrees=1");
+#  debug("M",@m);
+  debug("POS",@pos);
 }
+
+die "TESTING";
+
+wii_tennis("L",40,1928,-18);
 
 die "TESTING";
 
