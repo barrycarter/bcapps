@@ -36,6 +36,9 @@ our($RADHOUR)=12/$PI; # radians to hours
 our($DEGHOUR)=1/15; # degrees to hours
 our($HOURDEG)=15; # hours to degrees
 
+# this might be a bad idea
+our($now) = time();
+
 # note month 0 is blank intentionally
 our(@months) = ("", "January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December");

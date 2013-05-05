@@ -31,20 +31,26 @@ use GD;
 
 # great circle route as line
 
-# albuquerque and randomish city
+# albuquerque and cape town south africa
 my(@s) = sph2xyz("-106","35",1,"degrees=1");
-my(@t) = sph2xyz("-90","40",1,"degrees=1");
+my(@t) = sph2xyz("18.42389","-33.92528",1,"degrees=1");
 
 # debug(xyz2sph(@s,"degrees=1"));
 
-# 100 points on param line
-for ($i=0; $i<=1; $i+=.01) {
+# points on param line
+for ($i=0; $i<=1; $i+=.2) {
   for $j (0..2) {
     $m[$j] = $s[$j]+$i*($t[$j]-$s[$j]);
   }
   my(@pos) = xyz2sph(@m,"degrees=1");
-#  debug("M",@m);
-  debug("POS",@pos);
+
+  # store to gc dist between points
+  push(@post, $pos[0],$pos[1]);
+
+}
+
+for ($i=0; $i<=8; $i+=2) {
+  debug(gcdist($post[$i+1],$post[$i],$post[$i+3],$post[$i+2]));
 }
 
 die "TESTING";

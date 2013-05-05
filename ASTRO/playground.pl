@@ -9,14 +9,36 @@ $Data::Dumper::Indent = 0;
 
 $ENV{TZ}="UTC";
 
+my $observer = Astro::Nova::LnLatPosn->new();
+$observer->set_lat(80);
+$observer->set_lng(0);
+
+$jd = Astro::Nova::get_julian_from_timet(1361360700+60);
+$ans = Astro::Nova::get_solar_equ_coords($jd);
+$ans2 = Astro::Nova::get_hrz_from_equ($ans, $observer, $jd);
+
+debug(%Astro::Nova::HrzPosn::);
+
+# debug(methods($ans2));
+
+debug($ans2,$ans2->get_alt(), $ans2->get_az());
+
+
+# rst
+# $rst = Astro::Nova::get_solar_rst($jd, $observer);
+# debug(Astro::Nova::get_timet_from_julian($rst->get_rise()));
+# debug(Astro::Nova::get_timet_from_julian($rst->get_set()));
+
+die "TESTING";
+
+# below is http://stackoverflow.com/questions/16293146
+
 # my location
 my $observer = Astro::Nova::LnLatPosn->new();
 $ut = Time::Local::timegm(0,0,0,1,1-1,2013);
 $jd = Astro::Nova::get_julian_from_timet($ut);
 $rst = Astro::Nova::get_solar_equ_coords($jd);
 debug($rst->get_ra(), $rst->get_dec());
-
-
 
 die "TESTING";
 
