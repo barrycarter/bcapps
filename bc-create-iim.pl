@@ -22,11 +22,11 @@ $macro = << "MARK";
 TAB T=1
 URL GOTO=http://www.ally.com/
 TAG POS=1 TYPE=SPAN ATTR=TXT:log<SP>in
-TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:actionForm ATTR=ID:username CONTENT=$ally{username}
-TAG POS=1 TYPE=INPUT:BUTTON FORM=ID:noautocomplete ATTR=NAME:button&&VALUE:Continue
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:actionForm ATTR=ID:userNamePvtEncrypt CONTENT=$ally{username}
+TAG POS=1 TYPE=INPUT:BUTTON FORM=ID:noautocomplete ATTR=NAME:continue&&VALUE:Continue
 SET !ENCRYPTION NO
-TAG POS=1 TYPE=INPUT:PASSWORD FORM=NAME:actionForm ATTR=NAME:password CONTENT=$ally{password}
-TAG POS=1 TYPE=INPUT:SUBMIT FORM=ID:noautocomplete ATTR=NAME:button&&VALUE:Login
+TAG POS=1 TYPE=INPUT:PASSWORD FORM=NAME:actionForm ATTR=NAME:passwordPvtBlock CONTENT=$ally{password}
+TAG POS=1 TYPE=INPUT:SUBMIT FORM=ID:noautocomplete ATTR=NAME:button&&VALUE:log<SP>in
 URL GOTO=https://secure.ally.com/allyWebClient/downloadAccountActivity.do
 TAG POS=1 TYPE=SELECT ATTR=ID:accountSelect CONTENT=%e*
 TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:downloadActivityForm ATTR=ID:date1 CONTENT=:STARTDATE:

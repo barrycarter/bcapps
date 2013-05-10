@@ -9,15 +9,32 @@
 
 require "/usr/local/lib/bclib.pl";
 
-$msg = "get up and walkaround";
-# already running? If so, do nothing
-$res = system("pgrep -f '$msg'");
-unless ($res) {exit(0);}
+# run only once (no warnings during lock phase)
+$globopts{nowarn}=1;
+unless(mylock("bc-walkaround.pl","lock")) {exit(0);}
+$globopts{nowarn}=0;
+
+$msg = "Get up and walkaround";
+$shortmsg = "GUAWA";
 
 # record that this message popped up (can be useful)
 # my normal 'diary' file is /home/barrycarter/TODAY/yyyymmdd.txt, but
 # I'm not quite prepared to append to that (yet)
-my($file) = strftime("/home/barrycarter/TODAY/%Y%m%d-extra.txt", localtime($now));
+my($file) = strftime("/home/barrycarter/TODAY/%Y%m%d.txt", localtime($now));
 my($time) = strftime("%H%M%S", localtime($now));
-append_file("$time $0: xmessage posted\n",$file);
-system("xmessage -geometry 1024 get up and walkaround &");
+append_file("$time POST: $shortmsg\n",$file);
+
+# reply must be nonempty (or annoy crap out of myself)
+my($res);
+
+for (;;) {
+  # I have ~/.fvwm2rc so that "sticky" in title makes it sticky:
+  # Style "*sticky*" NoTitle, NoHandles, Sticky
+  $res = `zenity --entry --text "$msg" --width 1024 --title stickymessage`;
+  if ($res=~/\S/) {last;}
+  $msg .= " [reply cannot be blank]";
+}
+
+my($time2) = strftime("%H%M%S", localtime());
+append_file("$time2 GUAWA REPLY: $res\n",$file);
+mylock("bc-walkaround.pl","unlock");

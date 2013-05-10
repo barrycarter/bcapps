@@ -391,7 +391,7 @@ sub bc_check_mount {
   }
 
   my($devroot) = $1;
-  my($out, $err, $res) = cache_command("/usr/local/bin/stat $fs | grep -i device:");
+  my($out, $err, $res) = cache_command("timed-run 60 /usr/local/bin/stat $fs | grep -i device:");
   unless ($out=~m%device: (.*?)\s+%i) {
     print "ERR: could not stat $fs, stdout/err is: $out/$err/$res\n";
     return 2;

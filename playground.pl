@@ -29,6 +29,56 @@ $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 use GD;
 
+gcstats(35,-106,40,-90,1);
+
+=item gcstats($lat1,$lon1,$lat2,$lon2,$r)
+
+Given two latitudes/longitudes, find the lat/lon point r percentage of
+the way (0<=r<=1) between the first and second points (true parametric
+circle, not projected parametrization of line)
+
+TODO: expand this to give more, incl distances and bearing
+
+=cut
+
+sub gcstats {
+  my($lat1,$lon1,$lat2,$lon2,$r) = @_;
+
+  # the xyz equivalents
+  my(@p1) = sph2xyz($lon1,$lat1,1,"degrees=1");
+  my(@p2) = sph2xyz($lon2,$lat2,1,"degrees=1");
+  debug("P1:",@p1);
+
+  # angle between the two (dot products) + straight line ("thru earth") dist
+  my($dot,$dist);
+  # TODO: create dot product function
+  for $i (0..2) {
+    $dot+=$p1[$i]*$p2[$i];
+    $dist+=($p1[$i]-$p2[$i])**2;
+}
+  # actually calc'd dist^2, fixing
+  $dist = sqrt($dist);
+  # angle between the points
+  my($ang) = acos($dot);
+  # when parametrizing the circle (not the line) t = sin(r)/dist
+  my($t) = sin($r*$ang)/$dist;
+  debug("ANG: $ang, T: $t");
+  # the value of the line at point $t
+  my(@rp);
+  for $i (0..2) {$rp[$i] = (1-$t)*$p1[$i] + $t*$p2[$i];}
+  # projecting back to spherical (in general, r<>1)
+  debug(@p1,@p2,@rp);
+  my($th,$ph,$r) = xyz2sph(@rp,"degrees=1");
+
+  debug("THPHR: $th, $ph, $r");
+
+  my($cang) = cos($r*acos($sum));
+
+#  debug($dist,acos($dot));
+}
+
+die "TESTING";
+
 # great circle route as line
 
 # albuquerque and cape town south africa

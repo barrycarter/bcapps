@@ -20,6 +20,9 @@ require JSON;
 # include sublibs
 push(@INC,"/home/barrycarter/BCGIT", "/usr/local/lib");
 
+# for X11 goodness (when starting Perl from nagios/cron or similar)
+$ENV{'DISPLAY'}=":0.0";
+
 # HACK: defining constants here is probably bad
 $PI = 4.*atan(1);
 $DEGRAD=$PI/180; # degrees to radians
@@ -2698,6 +2701,8 @@ TODO: this code is hideous, improve it
 
 TODO: keep track of things I lock/unlock so I can clean them up in sub END
 
+TODO: create subdirs when needed
+
 NOTE: relies on /proc, which is terrible
 
 =cut
@@ -2712,7 +2717,7 @@ sub mylock {
 
     # first check if lockfile exists
     unless (-f "$lockdir/$name") {
-      warn("Lockfile $lockdir/$name doesn't exist [so no need to unlock]");
+      warnlocal("Lockfile $lockdir/$name doesn't exist [so no need to unlock]");
       return 1;
     }
 
@@ -2726,12 +2731,12 @@ sub mylock {
 
     # does lock belong to defunct process?
     if (-d "/proc/$text" && $text) {
-      warn("LOCK $name owned by living process $text, can't unlock");
+      warnlocal("LOCK $name owned by living process $text, can't unlock");
       return 0;
     }
 
     # lock belongs to dead process
-    warn("LOCKFILE $name exists, but $text is dead or empty proc");
+    warnlocal("LOCKFILE $name exists, but $text is dead or empty proc");
     unlink("$lockdir/$name");
     return 1;
   }
@@ -2750,24 +2755,24 @@ sub mylock {
 
     # do I own it?
     if ($text eq $$) {
-      warn("LOCK $name already mine (not an error)");
+      warnlocal("LOCK $name already mine (not an error)");
       return 1;
     }
 
     # owned by a living process?
     if (-d "/proc/$text" && $text) {
-      warn("LOCK $name owned by living process $text");
+      warnlocal("LOCK $name owned by living process $text");
       return 0;
     }
 
     # lock owned by dead proc
-    warn("LOCK owned by dead or null proc $text, replacing");
+    warnlocal("LOCK owned by dead or null proc $text, replacing");
     write_file($$,"$lockdir/$name");
     return 1;
 
   }
 
-  warn("ACTION $action not understood");
+  warnlocal("ACTION $action not understood");
   return 0;
 }
 
