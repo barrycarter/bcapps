@@ -3,9 +3,10 @@
 # attempt to learn mongo using gocomics comments
 
 require "/usr/local/lib/bclib.pl";
-@testfiles=glob("/mnt/sshfs/gocomics/comments/20130411/15027*.out.bz2");
+@files=glob("/mnt/sshfs/gocomics/comments/*.out.bz2");
 
-for $i (@testfiles) {
+for $i (@files) {
+  debug("WORKING: $i");
   $all = `bzcat $i`;
 
   # stolen from bc-gocomics-comments.pl
@@ -13,6 +14,8 @@ for $i (@testfiles) {
     # grab comment body (which we do NOT use in hash, BTW)
     $comment = $1;
     %hash = ();
+
+    $hash{filename} = $i;
 
     # commentor id and name
     $comment=~s%<a href="/profile/(\d+)">(.*?)</a>%%s;
@@ -30,19 +33,22 @@ for $i (@testfiles) {
     $comment=~s%<p><p>(.*?)</p></p>%%s;
     $hash{body} = $1;
 
+    # fix newlines -> breaks
+    $hash{body}=~s/\n/<br>/isg;
+
     # comment id
     $comment=~s%<ul id='comment_(\d+)'>%%;
     $hash{commentid} = $1;
 
     @str = ();
     for $j (sort keys %hash) {
-      push(@str,"$j:\"$hash{$j}\"");
+      push(@str,"$j:'$hash{$j}'");
     }
     $str = join(", ",@str);
 
-    debug($str);
+    print "db.comments.insert({$str});\n";
 
-    debug("HASH",%hash);
+#    debug("HASH",%hash);
   }
 }
 
