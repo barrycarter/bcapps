@@ -46,7 +46,7 @@ Solve[theta[t]==r,t]
 
 (* Let v2[t] be this parametrized vector extended to length 1 *)
 
-(* Mathematica doesnt simplify norms of real vectors well *)
+(*Mathematica doesnt simplify norms of real vectors well *)
 norm[v_] := Sqrt[Simplify[Sum[v[[i]]^2,{i,1,Length[v]}]]]
 v2[t_] := Simplify[v[t]/norm[v[t]], {x1^2+y1^2+z1^2==1,x2^2+y2^2+z2^2==1}]
 
@@ -101,9 +101,6 @@ pint[an_] := ({x,y,z} /. Solve[{
 
 Plot[pint[an],{an,0,360 Degree}]
 
-
-
-
 cp = Cross[p1,p2]
 
 p3={Cos[lon3]*Cos[lat3], Sin[lon3]*Cos[lat3], Sin[lat3]}
@@ -124,5 +121,41 @@ Solve[{
 
 Simplify[%, {x1^2+y1^2+z1^2==1}]
 
+Solve[{{x,y,z}.{x1,y1,z1}==r, x^2+y^2+z^2==1, {x,y,z}.{x2,y2,z2}==0}, {x,y,z}]
 
- 
+{x,y,z} = {x,y,z} /.
+ Solve[{x,y,z}.{x2,y2,z2}==0,{x,y,z}][[1]]
+
+rlon = RotationTransform[-lon Degree, {0, 0, 1}]
+rlat = RotationTransform[-lat Degree, {1, 0, 0}]
+
+{u, v} = rz @ rx @ {{1, 0, 0}, {0, 1, 0}};
+
+p1={x1,y1,z1}
+p2={x2,y2,z2}
+
+mat = { {a11, a12, a13}, {a21, a22, a23}, {a31, a32, a33}}
+
+Solve[{mat.p1=={1,0,0},mat.p2=={0,1,0}},Flatten[mat]]
+
+rx = RotationTransform[angx, {1, 0, 0}]
+ry = RotationTransform[angy, {0, 1, 0}]
+rz = RotationTransform[angz, {0, 0, 1}]
+
+(* arbitrary matrix of length preservation *)
+mat = Transpose[{
+ {Cos[th1]*Cos[ph1], Sin[th1]*Cos[ph1], Sin[ph1]},
+ {Cos[th2]*Cos[ph2], Sin[th2]*Cos[ph2], Sin[ph2]},
+ {Cos[th3]*Cos[ph3], Sin[th3]*Cos[ph3], Sin[ph3]}
+}]
+
+Reduce[(mat.{1,0,0}).(mat.{0,1,0})==0, {th1,ph1,th2,ph2,th3,ph3}]
+
+(* rotation about cross vector? *)
+
+Cross[p1,p2]
+
+RotationTransform[ang, Cross[p1,p2]] @ p1
+
+Simplify[%, Member[{x1,y1,z1,x2,y2,z2,ang},Reals]]
+

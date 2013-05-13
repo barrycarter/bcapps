@@ -40,13 +40,17 @@ for $i (@files) {
     $comment=~s%<ul id='comment_(\d+)'>%%;
     $hash{commentid} = $1;
 
+    # added per suggestion of http://stackoverflow.com/questions/16510706/
+    $hash{stripid} = "$hash{strip}-$hash{yy}-$hash{mo}-$hash{da}";
+
     @str = ();
     for $j (sort keys %hash) {
       push(@str,"$j:'$hash{$j}'");
     }
     $str = join(", ",@str);
 
-    print "db.comments.insert({$str});\n";
+    # plan to use much faster mongoimport, so no command string
+    print "{$str}\n";
 
 #    debug("HASH",%hash);
   }

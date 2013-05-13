@@ -1951,3 +1951,16 @@ a3 == -8 b1 + 8 b2 - 7 b3 - 8 (f[i-1] - f[i])
 
 }, {a1,a2,a3,b1,b2,b3,c1,c2,c3}]
 
+(* http://www.physicsforums.com/showthread.php?t=690745 *)
+
+f[x_,y_] = x*Sqrt[1+y^2]+y*Sqrt[1+x^2]
+
+f[f[x,y],z]
+f[x,f[y,z]]
+
+f[f[x,y],z]/f[x,f[y,z]]
+
+g[x_,y_,z_] = f[f[x,y],z]-f[x,f[y,z]]
+
+g[x,y,z] /. {x->r*Cos[th]*Cos[ph], y->r*Sin[th]*Cos[ph], z->r*Sin[ph]}
+Simplify[%,Member[{th,ph,r},Reals]]

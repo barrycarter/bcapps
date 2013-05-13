@@ -29,7 +29,25 @@ $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 use GD;
 
-gcstats(35,-106,40,-90,1);
+# gcstats(35,-106,40,-90,1);
+
+debug(crossproduct(0,1,0,0,0,1));
+
+die "TESTING";
+
+=item crossproduct($x1,$y1,$z1,$x2,$y2,$z2)
+
+Return the vector cross product of {x1,y1,z1} and {x2,y2,z2}. Just
+hardcodes the formula from Mathematica.
+
+TODO: compute this myself and allow 3+ dimensions
+
+=cut
+
+sub crossproduct {
+  my($x1,$y1,$z1,$x2,$y2,$z2) = @_;
+  return ($y1*$z2-$y2*$z1, $x2*$z1-$x1*$z2, $x1*$y2-$x2*$y1);
+}
 
 =item gcstats($lat1,$lon1,$lat2,$lon2,$r)
 

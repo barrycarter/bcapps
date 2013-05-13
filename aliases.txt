@@ -51,6 +51,7 @@ alias weather "curl \!*.weather.94y.info"
 
 # run a single nagios test
 alias nagtest "sudo /home/barrycarter/BCGIT/bc-call-func.pl run_nagios_test \!*"
+alias nagiostest "echo 'this is obsolete; use nagtest instead'"
 
 # logs me into bcinfo3 into a new local screen and starts remote screen
 alias bcinfo3 "screen -t BC3 ssh -i /home/barrycarter/.ssh/id_rsa.bc -tt root@bcinfo3 screen -d -R"

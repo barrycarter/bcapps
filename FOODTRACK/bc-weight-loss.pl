@@ -115,7 +115,7 @@ write_file("$daysago $y[0]\n$mostrecent $y[-1]\n", "/tmp/bwl5.txt");
 debug("DAYSAGO: $daysago, LINWT: $linweight");
 
 # target weights (borders for obese, overweight, normal, and severely underweight) [added midpoints 30 Sep 2012 JFF]
-@t=(165,160,155,150,135,120,105);
+@t=(200, 195,190,185,180);
 
 # when graphing, don't show beyond this value
 # TODO: optionize this
