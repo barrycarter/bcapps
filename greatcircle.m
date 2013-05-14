@@ -3,6 +3,21 @@
 showit := Module[{}, 
 Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
+(* Below is an easyish working solution *)
+
+p1={Cos[lon1]*Cos[lat1], Sin[lon1]*Cos[lat1], Sin[lat1]}
+p2={Cos[lon2]*Cos[lat2], Sin[lon2]*Cos[lat2], Sin[lat2]}
+
+(* Let v[t] be the parametrized vector that starts as p1 and ends at p2 *)
+
+v[t_] := Simplify[(1-t)*p1+t*p2]
+
+(* at some point v[t] is perpendicular to p1, that occurs when... *)
+
+perp[t_] = t /. Solve[Simplify[v[t].p1]==0,t][[1]]
+
+
+
 (* Let p1 and p2 be the (unit) vectors representing lat1,lon1 and
 lat2,lon2 on the unit sphere: *)
 
@@ -158,4 +173,19 @@ Cross[p1,p2]
 RotationTransform[ang, Cross[p1,p2]] @ p1
 
 Simplify[%, Member[{x1,y1,z1,x2,y2,z2,ang},Reals]]
+
+Cross[Cross[p1,p2],p1]
+
+lat1 = (Random[]*180-90)*Degree;
+lat2 = (Random[]*180-90)*Degree;
+lon1 = (Random[]*360-180)*Degree;
+lon2 = (Random[]*360-180)*Degree;
+
+p1:={Cos[lon1]*Cos[lat1], Sin[lon1]*Cos[lat1], Sin[lat1]}
+p2:={Cos[lon2]*Cos[lat2], Sin[lon2]*Cos[lat2], Sin[lat2]}
+
+(* an oblique representation *)
+v1[t_] := p1*Cos[t*Pi/2]+p2*Sin[t*Pi/2]
+v[t_] := v1[t]/Norm[v1[t]]
+
 

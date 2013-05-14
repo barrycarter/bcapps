@@ -29,25 +29,9 @@ $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 use GD;
 
-# gcstats(35,-106,40,-90,1);
-
-debug(crossproduct(0,1,0,0,0,1));
+gcstats(35,-106,40,-90,1);
 
 die "TESTING";
-
-=item crossproduct($x1,$y1,$z1,$x2,$y2,$z2)
-
-Return the vector cross product of {x1,y1,z1} and {x2,y2,z2}. Just
-hardcodes the formula from Mathematica.
-
-TODO: compute this myself and allow 3+ dimensions
-
-=cut
-
-sub crossproduct {
-  my($x1,$y1,$z1,$x2,$y2,$z2) = @_;
-  return ($y1*$z2-$y2*$z1, $x2*$z1-$x1*$z2, $x1*$y2-$x2*$y1);
-}
 
 =item gcstats($lat1,$lon1,$lat2,$lon2,$r)
 
@@ -57,6 +41,9 @@ circle, not projected parametrization of line)
 
 TODO: expand this to give more, incl distances and bearing
 
+TODO: this is NOT efficient if computing for multiple $r (ie, if
+computing a path)-- should I pass $r as a listref or something?
+
 =cut
 
 sub gcstats {
@@ -65,17 +52,27 @@ sub gcstats {
   # the xyz equivalents
   my(@p1) = sph2xyz($lon1,$lat1,1,"degrees=1");
   my(@p2) = sph2xyz($lon2,$lat2,1,"degrees=1");
-  debug("P1:",@p1);
+  debug("NORMS",norm(\@p1),norm([@p2]));
 
   # angle between the two (dot products) + straight line ("thru earth") dist
-  my($dot,$dist);
-  # TODO: create dot product function
-  for $i (0..2) {
-    $dot+=$p1[$i]*$p2[$i];
-    $dist+=($p1[$i]-$p2[$i])**2;
-}
-  # actually calc'd dist^2, fixing
-  $dist = sqrt($dist);
+  my($ang) = acos(dotproduct(\@p1,\@p2));
+  my($dist) = norm([vecapply(\@p1,\@p2,"-")]);
+
+  debug("P1",@p1,"P2",@p2);
+  debug("CP",crossproduct(@p1,@p2));
+
+  # double cross product method
+  # (http://www.physicsforums.com/showpost.php?p=3732362&postcount=5)
+  my(@cross) = crossproduct(crossproduct(@p1,@p2),@p1);
+  debug("NC",norm([@cross]));
+
+  # we want $r*$ang
+  my($newang) = $r*$ang;
+  my(@newvec) = vecapply([map($_*cos($newang),@p1)],[map($_*sin($newang),@cross)],"+");
+  debug("NORMS:",norm([@cross]),norm([@newvec]),norm([@p1]));
+  debug("NEWVEC",@newvec);
+  die "TESTING";
+
   # angle between the points
   my($ang) = acos($dot);
   # when parametrizing the circle (not the line) t = sin(r)/dist

@@ -3209,6 +3209,75 @@ sub wii_tennis {
   return $cns;
 }
 
+=item crossproduct($x1,$y1,$z1,$x2,$y2,$z2)
+
+Return the vector cross product of {x1,y1,z1} and {x2,y2,z2}. Just
+hardcodes the formula from Mathematica.
+
+TODO: compute this myself and allow 3+ dimensions
+
+TODO: probably should pass vectors as listrefs, not as 3 args each
+
+=cut
+
+sub crossproduct {
+  my($x1,$y1,$z1,$x2,$y2,$z2) = @_;
+  return ($y1*$z2-$y2*$z1, $x2*$z1-$x1*$z2, $x1*$y2-$x2*$y1);
+}
+
+=item dotproduct(\@v1,\@v2,$options)
+
+Returns the dot product of v1 and v2 ($options currently unused)
+
+=cut
+
+sub dotproduct {
+  my($v1ref,$v2ref,$options) = @_;
+  my($res);
+  my(@v1) = @{$v1ref};
+  my(@v2) = @{$v2ref};
+  for $i (0..$#v1) {$res+=$v1[$i]*$v2[$i];}
+  return $res;
+}
+
+=item norm(\@v,$options)
+
+Return the norm of vector v ($options currently unused)
+
+<h>NORM!</h>
+
+=cut
+
+sub norm {
+  my($vref) = @_;
+  my(@v) = @{$vref};
+  my($ret);
+  for $i (@v) {$ret+=$i*$i;}
+  return sqrt($ret);
+}
+
+=item vecapply(\@v1,\@v2,$f)
+
+Apply the function $f (which must be a *string* not a function
+reference) pointwise to v1 and v2, return the resulting vector.
+
+NOTE: this would work WAY better if $f were a function reference, but
+I plan to use simple builtin functions, and converting a simple
+builtin function to a ref seems hard:
+http://stackoverflow.com/questions/1585560/can-you-take-a-reference-of-a-builtin-function-in-perl
+
+=cut
+
+sub vecapply {
+  my($v1ref,$v2ref,$f) = @_;
+  my(@v1)= @{$v1ref};
+  my(@v2)= @{$v2ref};
+  my(@res);
+  # in addition to being ugly, this is inefficient
+  for $i (0..$#v1) {$res[$i] = eval("$v1[$i] $f $v2[$i]");}
+  return @res;
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
   debug("END: CLEANING UP TMP FILES");
