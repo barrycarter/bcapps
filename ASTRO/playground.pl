@@ -9,6 +9,17 @@ $Data::Dumper::Indent = 0;
 
 $ENV{TZ}="UTC";
 
+
+
+
+
+
+
+
+
+
+die "TESTING";
+
 my $observer = Astro::Nova::LnLatPosn->new();
 $observer->set_lat(80);
 $observer->set_lng(0);

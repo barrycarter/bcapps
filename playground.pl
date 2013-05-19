@@ -29,7 +29,13 @@ $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 use GD;
 
-gcstats(35,-106,40,-90,1);
+debug(gcstats(35,-106,35,135,0));
+
+die "TESTING";
+
+my($out,$err,$res) = cache_command("curl http://nws.noaa.gov/mdl/forecast/text/avnmav.txt", "age=3600");
+$out=~/\n(\s*KABQ.*?)\n +\n/is;
+debug($1);
 
 die "TESTING";
 
@@ -47,19 +53,38 @@ computing a path)-- should I pass $r as a listref or something?
 =cut
 
 sub gcstats {
+  # convert first 4 params to radians
+  for $i (@_[0]..@_[3]) {$i*=$DEGRAD;}
   my($lat1,$lon1,$lat2,$lon2,$r) = @_;
 
-  # the xyz equivalents
-  my(@p1) = sph2xyz($lon1,$lat1,1,"degrees=1");
-  my(@p2) = sph2xyz($lon2,$lat2,1,"degrees=1");
-  debug("NORMS",norm(\@p1),norm([@p2]));
+  # the value of t for which v(t) is perpendicular to p1
+  # (see greatcircle.m)
+  my($t)=1/(1-cos($lat1)*cos($lat2)*cos($lon1-$lon2)-sin($lat1)*sin($lat2));
+
+  # the xyz equivalents of two points
+  my(@p1) = sph2xyz($lon1,$lat1,1);
+  my(@p2) = sph2xyz($lon2,$lat2,1);
+
+  # the value of the "thru the earth" line at $t, normalized
+  my(@perp) = vecapply([map($_*(1-$t),@p1)],[map($_*$t,@p2)],"+");
+  @perp = map($_/norm([@perp]),@perp);
 
   # angle between the two (dot products) + straight line ("thru earth") dist
-  my($ang) = acos(dotproduct(\@p1,\@p2));
-  my($dist) = norm([vecapply(\@p1,\@p2,"-")]);
+  my($ang) = acos(dotproduct([@p1],[@p2]));
+  my($dist) = norm([vecapply([@p1],[@p2],"-")]);
+  debug("DEGREES:",$r*$ang*$RADDEG);
 
-  debug("P1",@p1,"P2",@p2);
-  debug("CP",crossproduct(@p1,@p2));
+  # great circle now parametrized by @perp + @p1
+  # the angle we want is $r*$ang (ie, r% of the whole angle)
+  my(@fin) = vecapply([map($_*cos($r*$ang),@p1)], [map($_*sin($r*$ang),@perp)], "+");
+  debug(@fin);
+  # back to spherical coords ($rdist should be 1)
+  my($rlat,$rlon,$rdist) = xyz2sph(@fin,"degrees=1");
+  debug("R: $rlat,$rlon,$rdist");
+
+  die "TESTING";
+
+
 
   # double cross product method
   # (http://www.physicsforums.com/showpost.php?p=3732362&postcount=5)

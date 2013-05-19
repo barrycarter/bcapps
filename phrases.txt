@@ -41,6 +41,12 @@ http://solfo.com/linkbot.html
 http://www.weblex.org/bot.html
 http://www.wotbox.com/bot
 http://yandex.com/bots
+http://www.turnitin.com/robot/crawlerinfo.html
+http://discoveryengine.com/discoverybot.html
+http://showyou.com/crawler
+http://www.linguee.com/bot
+http://www.searchmetrics.com/en/searchmetrics-bot
+http://www.warebay.com/bot.html
 http://www.Nutch.de/
 www.metadatalabs.com/mlbot
 ezooms.bot@gmail.com
@@ -57,6 +63,14 @@ GSLFbot
 citeseerxbot
 SurveyBot
 news bot
+PercolateCrawler/3.1.30 (ops@percolate.com)
+netEstate NE Crawler (+http://www.website-datenbank.de/)
+www.integromedb.org/Crawler
+GarlikCrawler/1.2 (http://garlik.com/, crawler@garlik.com)
+LinksCrawler 0.1beta
+360Spider
+TweetmemeBot/3.0
+TweetedTimes Bot/1.0
 nagios-plugins
 montastic.com
 mon.itor.us

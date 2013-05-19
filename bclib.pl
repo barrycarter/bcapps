@@ -2951,13 +2951,14 @@ sub run_nagios_test {
   $ENV{NAGIOS_ARG2} = $cmd[2];
   $ENV{NAGIOS_HOSTNAME} = $host;
 
-  system("/home/barrycarter/BCGIT/NAGIOS/bc-nagios-test.pl");
+  my($res) = system("/home/barrycarter/BCGIT/NAGIOS/bc-nagios-test.pl");
 
   # TODO: make below part optional
   # force instant check as well
   $now = time();
   # this should work w 0 instead of $now?
   system ("echo '[0] SCHEDULE_FORCED_SVC_CHECK;$host;$service;0' >> /var/nagios/rw/nagios.cmd");
+  return $res;
 }
 
 =item radecazel($ra, $dec, $lat, $lon, $time)
