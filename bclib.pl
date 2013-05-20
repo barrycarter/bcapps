@@ -3279,6 +3279,53 @@ sub vecapply {
   return @res;
 }
 
+=item gcstats($lat1,$lon1,$lat2,$lon2,$r)
+
+Given two latitudes/longitudes, find the lat/lon point r percentage of
+the way (0<=r<=1) between the first and second points (true parametric
+circle, not projected parametrization of line)
+
+TODO: expand this to give more, incl distances and bearing
+
+TODO: this is NOT efficient if computing for multiple $r (ie, if
+computing a path)-- should I pass $r as a listref or something?
+
+=cut
+
+sub gcstats {
+  my(@rads) = @_;
+  # convert first 4 params to radians
+  for $i (@rads[0..3]) {$i*=$DEGRAD;}
+  my($lat1,$lon1,$lat2,$lon2,$r) = @rads;
+
+  # the value of t for which v(t) is perpendicular to p1
+  # (see greatcircle.m)
+  my($t)=1/(1-cos($lat1)*cos($lat2)*cos($lon1-$lon2)-sin($lat1)*sin($lat2));
+
+  # the xyz equivalents of two points
+  my(@p1) = sph2xyz($lon1,$lat1,1);
+  my(@p2) = sph2xyz($lon2,$lat2,1);
+
+  # the straight line point r% from p1 to p2 (returned as xyz)
+  my(@xyz) = vecapply([map($_*$r,@p2)],[map($_*(1-$r),@p1)],"+");
+
+  # the value of the "thru the earth" line at $t, normalized
+  my(@perp) = vecapply([map($_*(1-$t),@p1)],[map($_*$t,@p2)],"+");
+  @perp = map($_/norm([@perp]),@perp);
+
+  # angle between the two (dot products) + straight line ("thru earth") dist
+  my($ang) = acos(dotproduct([@p1],[@p2]));
+  my($dist) = norm([vecapply([@p1],[@p2],"-")]);
+
+  # great circle now parametrized by @perp + @p1
+  # the angle we want is $r*$ang (ie, r% of the whole angle)
+  my(@fin) = vecapply([map($_*cos($r*$ang),@p1)], [map($_*sin($r*$ang),@perp)], "+");
+  # back to spherical coords ($rdist should be 1, computed JFF)
+  my($rlon,$rlat,$rdist) = xyz2sph(@fin,"degrees=1");
+
+  return $rlat,$rlon,@xyz;
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
   debug("END: CLEANING UP TMP FILES");
