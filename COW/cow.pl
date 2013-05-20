@@ -18,6 +18,9 @@ print B << "MARK";
 MARK
 ;
 
+# TODO: ugly for drawing otherwise OK
+($newlat,$newlon)=(0,0);
+
 # note that starting at 0E,0N is not an issue
 while (<A>) {
   /^(\d+) ([\d\.\-]+) ([\d\.\-]+) (.*?)$/||warn("BAD LINE: $_");
@@ -38,12 +41,20 @@ while (<A>) {
 
   $oldpop += $pop;
 
+  # useful to remember old point
+  ($oldnewlat, $oldnewlon) = ($newlat, $newlon);
+
   # find "mid" point (not using xyz for now)
   ($newlat, $newlon, $newx, $newy, $newz, $ang, $dist) =
     gcstats($newlat, $newlon, $lat, $lon, $ratio);
 
   $n++;
   if ($n>$globopts{points}) {last;}
+
+  # test of line from old to new
+  print B "<Placemark><LinearRing><gx:altitudeMode>clampToGround</gx:altitudeMode><coordinates>\n";
+  print B "$oldnewlon,$oldnewlat,0\n$lon,$lat,0\n$oldnewlon,$oldnewlat,0\n";
+  print B "</coordinates></LinearRing></Placemark>\n";
 
   print B "<Placemark><Point><coordinates>$newlon,$newlat</coordinates></Point>\n";
   print B "<name>Point $n</name>\n<description>\n";
