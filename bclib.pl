@@ -3323,7 +3323,8 @@ sub gcstats {
   # back to spherical coords ($rdist should be 1, computed JFF)
   my($rlon,$rlat,$rdist) = xyz2sph(@fin,"degrees=1");
 
-  return $rlat,$rlon,@xyz;
+  # TODO: return this stuff way better
+  return $rlat,$rlon,@xyz,$ang,$dist;
 }
 
 # cleanup files created by my_tmpfile (unless --keeptemp set)
