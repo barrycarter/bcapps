@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
@@ -26,11 +25,10 @@ function initialize() {
 // BEGIN INSERTED CODE
 
 var flightPath = new google.maps.Polyline({
- path: [new google.maps.LatLng(37.772323, -122.214897),
-    new google.maps.LatLng(21.291982, -157.821856),
-    new google.maps.LatLng(-18.142599, 178.431),
-    new google.maps.LatLng(-27.46758, 153.027892)]
-})
+ geodesic: true,
+ path: [new google.maps.LatLng(35, -106),
+    new google.maps.LatLng(35, 135)]
+      });
 
 flightPath.setMap(map);
 
