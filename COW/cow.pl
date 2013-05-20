@@ -45,25 +45,47 @@ while (<A>) {
   $n++;
   if ($n>$globopts{points}) {last;}
 
+  @info=();
+  push(@info,sprintf("Population seen: %d",$oldpop-$pop));
+  push(@info,sprintf("Population of $name: %d",$pop));
+  push(@info,sprintf("%age of population seen: %0.2f%%",$ratio*100));
+  push(@info,sprintf("Total distance from point %d to $name: %d miles", $n-1, $ang*$EARTH_RADIUS));
+  push(@info,sprintf("%0.2f%% of %d miles: %d miles", $ratio*100, $ang*$EARTH_RADIUS, $ang*$ratio*$EARTH_RADIUS));
+  push(@info,sprintf("Moved %d miles from point %d towards $name", $ang*$ratio*$EARTH_RADIUS, $n-1));
+  $info = join(" ",@info);
   # using Google Maps JS API (not KML) just to get great circles
   $placemark = << "MARK";
 
 new google.maps.Marker({
  position: new google.maps.LatLng($newlat,$newlon),
  map: map,
- title:"Point $n"
+ flat: true,
+ title:"Point $n: $info",
 });
 
-new google.maps.Marker({
- position: new google.maps.LatLng($lat,$lon),
- map: map,
- title:"$name"
-});
+// new google.maps.Marker({
+// position: new google.maps.LatLng($lat,$lon),
+// map: map,
+// flat: true,
+// title:"$name"
+// });
 
 new google.maps.Polyline({
  geodesic: true,
  path: [new google.maps.LatLng($oldnewlat, $oldnewlon),
         new google.maps.LatLng($newlat, $newlon)],
+ strokeColor: "#000000",
+ strokeWeight: 0.5,
+ icons: [{icon: google.maps.SymbolPath.FORWARD_CLOSED_ARROW}],
+ map: map
+});
+
+new google.maps.Polyline({
+ geodesic: true,
+ path: [new google.maps.LatLng($newlat, $newlon),
+        new google.maps.LatLng($lat, $lon)],
+ strokeColor: "#ff0000",
+ strokeWeight: 0.25,
  map: map
 });
 
