@@ -11,6 +11,10 @@ open(A,"bzcat bigcit.txt.bz2|");
 while (<A>) {
   /^(\d+) ([\d\.\-]+) ([\d\.\-]+) (.*?)$/||warn("BAD LINE: $_");
   ($pop, $lat, $lon, $name) = ($1,$2,$3,$4);
+
+  # population = 0? ignore (and, since sorted, ignore rest too)
+  if ($pop==0) {last;}
+
   $name = unidecode($name);
 
   # checks for repeats of the "London error"
@@ -26,5 +30,12 @@ while (<A>) {
   ($newlat, $newlon, $newx, $newy, $newz) =
     gcstats($newlat, $newlon, $lat, $lon, $ratio);
 
-  debug("$pop/$name ($newlat,$newlon)");
+#  debug("$pop/$name ($newlat,$newlon)");
 }
+
+print "$newlat $newlon\n";
+print "$newx $newy $newz\n";
+
+# results:
+# 48.1427865119067 43.6927383256267
+# 0.482477442393203 0.460948481355447 0.744810052899443
