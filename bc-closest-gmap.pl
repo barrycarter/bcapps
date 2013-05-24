@@ -6,56 +6,25 @@
 # Albuquerque <h>(two major world hubs)</h>; had to add more later;
 # min is 5 says qhull [but I was using wrong prog, meant qconvex]
 
-require "bclib.pl";
-
-# Perl doesn't define pi?
-$pi = 4*atan(1);
+require "/usr/local/lib/bclib.pl";
 
 # latitude and longitude of points
 %points = (
  "Albuquerque" => "35.08 -106.66",
- "Paris" => "48.87 2.33"
-# "Barrow" => "71.26826 -156.80627",
-# "Wellington" => "-41.2833 174.783333"
-# "Rio de Janeiro" => "-22.88  -43.28"
+ "Paris" => "48.87 2.33",
+ "Barrow" => "71.26826 -156.80627",
+ "Wellington" => "-41.2833 174.783333",
+ "Rio de Janeiro" => "-22.88  -43.28"
 );
-
-# testing w/ nearby points
-# %points = (
-# "Auckland" => "-36.840417 174.7398694",
-# "Christchurch" => "-43.53; 172.62028",
-# "Sydney" => "-33.859972 151.21111",
-# "Wellington" => "-41.2833 174.783333"
-# );
-
-# with known good points
-# %points = (
-# "NPole" => "90 0",
-# "SPole" => "-90 0",
-# "Center" => "0 0",
-# "AntiCenter" => "0 180"
-# );
-
-# with diff known good points
-# %points = (
-# "A" => "0 0",
-# "B" => "0 30",
-# "C" => "0 60",
-# "D" => "0 90"
-# );
 
 # convert to 3D
 for $i (sort keys %points) {
   ($lat,$lon) = split(/\s+/, $points{$i});
-  $z = sin($lat/180*$pi);
-  $x = cos($lat/180*$pi)*cos($lon/180*$pi);
-  $y = cos($lat/180*$pi)*sin($lon/180*$pi);
-
+  ($x,$y,$z) = sph2xyz($lon,$lat,1,"degrees=1");
   debug("$i -> $x $y $z");
 
   # we need to number points for qhull
   $qhull[$n] = "$x $y $z";
-  $city[$n] = $i;
 
   # just in case we need these
   $x[$n] = $x;
@@ -71,7 +40,7 @@ open(A,">/tmp/qclose.txt");
 # 3D points and how many
 print A "3\n$n\n";
 
-for $i (0..$#city) {
+for $i (0..$#qhull) {
  print A "$qhull[$i]\n";
 }
 
@@ -82,8 +51,13 @@ close(A);
 # TODO: this doesn't tell what two cities we're separating
 # TODO: remove QJ
 # @res = `qconvex QJ n < /tmp/qclose.txt`;
+# TODO:  can't cache this really, since I use a fixed filename
+my($out,$err,$res) = cache_command("qhull Qz v n < /tmp/qclose.txt","age=60");
+debug($out);
+die "TESTING";
 @res = `qhull Qz v n < /tmp/qclose.txt`;
 debug(@res);
+die "TESTING";
 
 # TODO: really should be using chdir(tmpdir()) universally
 open(B,">/home/barrycarter/BCINFO/sites/TEST/gmarkclose.txt");
@@ -117,8 +91,8 @@ for $i (2..$#res) {
     debug("DIST FOO-ABQ: ". (dist($x,$y,$z,$x[0],$y[0],$z[0])));
     debug("DIST FOO-CDG: ". (dist($x,$y,$z,$x[1],$y[1],$z[1])));
 
-    $lon = atan2($y,$x)/$pi*180;
-    $lat = asin($z)/$pi*180;
+    $lon = atan2($y,$x)/$PI*180;
+    $lat = asin($z)/$PI*180;
     debug("$x/$y/$z -> $lat/$lon");
     # TODO: this is NOT the correct way to check for "not a number"
     if ($lat eq "nan" || $lon eq "nan") {next;}

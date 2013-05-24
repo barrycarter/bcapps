@@ -27,18 +27,23 @@ require "bclib.pl";
 # endpoint for supertweet.net's "proxy" API (yes, it's global), and
 # twitters own API for requests that don't require authentication
 
-$TWITST = "http://api.supertweet.net/1";
+$TWITST = "http://api.supertweet.net/1.1";
 $TWITTW = "http://api.twitter.com/1";
 
-=item twitter_public_timeline()
+=item twitter_public_timeline($user,$pass)
 
 Obtain the twitter public timeline (a sample of the "firehose") (no
 auth required), return as list of hashes (each hash = one tweet)
 
+NOTE: as of API 1.1, yes, auth is required even for this (twitter sucks!)
+
+(you can still sort of get a public timeline from the web interface, but icky?)
+
 =cut
 
 sub twitter_public_timeline {
-  my($out, $err, $res) = cache_command("curl -s '$TWITTW/statuses/public_timeline.json'", "age=60");
+  my($user,$pass) = @_;
+  my($out, $err, $res) = cache_command("curl -s -u $user:$pass '$TWITST/statuses/public_timeline.json'", "age=300");
   return @{JSON::from_json($out)};
 }
 

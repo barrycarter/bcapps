@@ -89,6 +89,15 @@ new google.maps.Polyline({
  map: map
 });
 
+new google.maps.Polyline({
+ geodesic: true,
+ path: [new google.maps.LatLng($oldnewlat, $oldnewlon),
+        new google.maps.LatLng($lat, $lon)],
+ strokeColor: "#0000ff",
+ strokeWeight: 2,
+ map: map
+});
+
 MARK
 ;
 
