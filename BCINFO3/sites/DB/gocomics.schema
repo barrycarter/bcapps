@@ -1,25 +1,16 @@
--- the schema of gocomics.db
+-- the schema of gocomics.db (denormalized for BCINFO3)
 
-CREATE TABLE commentors ( 
- commentorid INT, -- id of commentor 
- name, -- name of commentor 
- timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
-);
 CREATE TABLE comments ( 
- id INTEGER PRIMARY KEY, -- the comment id 
+ commentid INTEGER PRIMARY KEY, -- the comment id
+ commentor, -- commentor name
  commentorid INT, -- id of commentor 
- strip, -- short form of strip being commented on 
+ strip, -- name of strip being commented on
+ stripid, -- short name of strip being commented on
  year INT, -- year of strip being commented on 
  month INT, -- month 
  date INT, -- date 
  body, -- body of comment 
- time, -- almost useless field 
+ time, -- gocomics short form of time
+ unixtime, -- time comment added to db
  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
 );
-CREATE TABLE strips ( 
- stripid, -- short form of strip name 
- stripname, -- long form of strip name 
- timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
-);
-CREATE UNIQUE INDEX i1 ON strips(stripid,stripname);
-CREATE UNIQUE INDEX i2 ON commentors(commentorid,name);

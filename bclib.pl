@@ -3026,12 +3026,12 @@ $options currently unused
 sub recent_forecast {
   my($options) = ();
   my($cur,$date,$time);
+  my(@hrs);
   my(%rethash);
 
   # there does not appear to be a compressed form
   # guidances are for 6h, so 1h cache is fine
   my($out,$err,$res) = cache_command("curl http://nws.noaa.gov/mdl/forecast/text/avnmav.txt", "age=3600");
-  debug($out);
 
   # TODO: can X/N sometimes be N/X (and does it give order of high/low?)
 
@@ -3047,7 +3047,17 @@ sub recent_forecast {
       next;
     }
 
-    # highs and lows (only other thing I care about for now)
+    # list of guidance hours (this doesn't really change per station, but...)
+    if ($i=~s/^\s*hr\s*//i) {@hrs = split(/\s+/,$i); next;}
+
+    # list of other hourly data
+    if ($i=~s/^\s*(tmp|dpt|cld|wdr|wsp|poz|pos|typ)\s*//i) {
+      my($elt) = $1;
+      my(@vals) = split(/\s+/,$i);
+      for $j (0..$#hrs) {$rethash{$cur}{$elt}{$hrs[$j]} = $vals[$j];}
+      next;
+    }
+
     # TODO: split and return as list? determine hi from lo?
     # TODO: deal w 999s here or elsewhere?
     if ($i=~m%^\s*(X/N|N/X) (.*?)$%) {
