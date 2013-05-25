@@ -9,24 +9,31 @@
 # version 2: modified for bcinfo3, denormalizes the tables (nosql is
 # rubbing off on me... like a frickin cancer)
 
-push(@INC,"/usr/local/lib");
-require "bclib.pl";
+require "/usr/local/lib/bclib.pl";
+require "/home/barrycarter/BCGIT/bclib-playground.pl";
 
 # ignoring stderr and return val
 # TODO: reduce 600 below, it's too long
 if ($globopts{file}) {
   # this allows $page to be bzipped
-  ($page) = cache_command("bzcat $globopts{file}");
+  ($page) = cache_command2("bzcat $globopts{file}");
 } else {
-  ($page) = cache_command("curl -A 'gocomics\@barrycarter.info' http://www.gocomics.com/comments/page/1", "age=60");
+  ($page) = cache_command2("curl -A 'gocomics\@barrycarter.info' http://www.gocomics.com/comments/page/1", "age=60");
 }
 
 unless ($page) {die "Empty or nonexistent page";}
 #debug("PAGE: $page");
 
-while ($page=~s%<ol class='comment-thread'>(.*?)</ol>%%s) {
+# this appears to be better way to get comments
+@comments = split(/<ol class='comment-thread'>/,$page);
+# first "comment" is just garbage to start of comments
+shift(@comments);
+
+#while ($page=~s%<ol class='comment-thread'>(.*?)</li>\s*</ol>%%s) {
   # grab comment body
-  $comment = $1;
+#  $comment = $1;
+
+for $comment (@comments) {
 
   # commentor id and name
   $comment=~s%<a href="/profile/(\d+)">(.*?)</a>%%s;
