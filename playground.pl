@@ -1,4 +1,4 @@
-#!/bin/perl
+#!/bin/perl -w
 
 # Script where I test code snippets; anything that works eventually
 # makes it into a library or real program
@@ -14,8 +14,9 @@
 # 6h at 0000,0600,1200,1800 GMT, use that info to dl as needed instead
 # of "is my cache x hours old"
 
-push(@INC, "/usr/local/lib");
-require "bclib.pl";
+require "/usr/local/lib/bclib.pl";
+# below lets me override functions when testing
+require "/home/barrycarter/BCGIT/bclib-playground.pl";
 # require "bc-astro-lib.pl";
 require "bc-weather-lib.pl";
 require "bc-kml-lib.pl";
@@ -29,9 +30,14 @@ $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 use GD;
 
+debug(unfold(recent_forecast()));
+
+die "TESTING";
+
 my($out,$err,$res) = cache_command("curl http://nws.noaa.gov/mdl/forecast/text/avnmav.txt", "age=3600");
 $out=~/\n(\s*KABQ.*?)\n +\n/is;
 debug($1);
+
 
 die "TESTING";
 
@@ -46,51 +52,6 @@ for $i (sort keys %ret) {
 }
 
 # debug(unfold(recent_forecast()));
-
-=item recent_forecast($options)
-
-Obtain recent forecast data (just high and low for now) from
-http://nws.noaa.gov/mdl/forecast/text/avnmav.txt and return as list of
-hashes
-
-$options currently unused
-
-=cut
-
-sub recent_forecast {
-  my($options) = ();
-  my($cur,$date,$time);
-  my(%rethash);
-
-  # there does not appear to be a compressed form
-  # guidances are for 6h, so 1h cache is fine
-  my($out,$err,$res) = cache_command("curl http://nws.noaa.gov/mdl/forecast/text/avnmav.txt", "age=3600");
-
-  # TODO: can X/N sometimes be N/X (and does it give order of high/low?)
-
-  for $i (split(/\n/,$out)) {
-    # multiple spaces only for formatting, so I dont need them
-    $i=~s/\s+/ /isg;
-    # station name and date of "forecast"
-    if ($i=~/^\s*(.*?) GFS MOS GUIDANCE (.*?) (.*?) UTC/) {
-      # $cur needs to live outside this loop
-      ($cur, $date, $time) = ($1,$2,$3);
-      $rethash{$cur}{date} = $date;
-      $rethash{$cur}{time} = $time;
-      next;
-    }
-
-    # highs and lows (only other thing I care about for now)
-    # TODO: split and return as list? determine hi from lo?
-    # TODO: deal w 999s here or elsewhere?
-    if ($i=~m%^\s*X/N (.*?)$%) {
-      $rethash{$cur}{hilo} = $1;
-      next;
-    }
-  }
-
-  return %rethash;
-}
 
 die "TESTING";
 

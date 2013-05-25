@@ -27,8 +27,9 @@ ln -s `which perl` /bin
 cd /home/barrycarter/BCGIT;
 \rsync -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' -Pvzrlpt *.pl */*.pl root@bcinfo3:/usr/local/bin/
 
-% put library in right place
+% put libraries in right place
 ln -s /usr/local/bin/bclib.pl /usr/local/lib
+ln -s /usr/local/bin/bc-weather-lib.pl /usr/local/lib
 
 % Obtain base RPMs (epel)
 [http://www.thegeekstuff.com/2012/06/enable-epel-repository/]:
@@ -198,3 +199,7 @@ top
 
 : sendmail needs this (another option is DontBlameSendmail)
 chmod 755 / /etc /etc/mail
+
+% get db query runner to work
+ln -s /usr/local/bin/bc-run-sqlite3-query.pl /sites/DB/index.pl
+

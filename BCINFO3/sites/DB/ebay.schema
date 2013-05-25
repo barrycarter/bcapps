@@ -1,0 +1,3 @@
+-- schema for the cheapbay db
+
+CREATE TABLE cheapbay (autopay, bestofferenabled, bidcount, buyitnowavailable, categoryid, categoryname, charityid, condition, conditiondisplayname, conditionid, convertedcurrentprice, country, currentprice, endtime, expeditedshipping, gallerypluspictureurl, galleryurl, gift, globalid, handlingtime, ismultivariationlisting, itemid, listinginfo, listingtype, location, onedayshippingavailable, paymentmethod, postalcode, primarycategory, productid, returnsaccepted, secondarycategory, sellingstate, sellingstatus, shippinginfo, shippingservicecost, shippingtype, shiptolocations, starttime, subtitle, timeleft, title, topratedlisting, viewitemurl);

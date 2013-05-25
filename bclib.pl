@@ -3031,6 +3031,7 @@ sub recent_forecast {
   # there does not appear to be a compressed form
   # guidances are for 6h, so 1h cache is fine
   my($out,$err,$res) = cache_command("curl http://nws.noaa.gov/mdl/forecast/text/avnmav.txt", "age=3600");
+  debug($out);
 
   # TODO: can X/N sometimes be N/X (and does it give order of high/low?)
 
