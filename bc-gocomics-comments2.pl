@@ -6,11 +6,15 @@
 
 # --file=x: read data from file x, not from gocomics webpage
 
+# --db=x: use a database other than gocomics.db (really only useful
+# for local testing)
+
 # version 2: modified for bcinfo3, denormalizes the tables (nosql is
 # rubbing off on me... like a frickin cancer)
 
 require "/usr/local/lib/bclib.pl";
-require "/home/barrycarter/BCGIT/bclib-playground.pl";
+
+defaults("db=gocomics");
 
 # ignoring stderr and return val
 # TODO: reduce 600 below, it's too long
@@ -78,50 +82,13 @@ print A "COMMIT;\n";
 close(A);
 
 # testing, hoping to fix "bad characters" that seem to show up in bodies
-system("sqlite3 /tmp/gocomics.db < /var/tmp/gocomics-queries.txt");
-
-die "TESTING";
+# system("sqlite3 /tmp/gocomics.db < /var/tmp/gocomics-queries.txt");
+# die "TESTING";
 
 # playing it safe
-system("cd /var/tmp; cp /sites/DB/gocomics.db .; sqlite3 gocomics.db < gocomics-queries.txt; mv /sites/DB/gocomics.db /sites/DB/gocomics.db.old; mv gocomics.db /sites/DB/");
+system("cd /var/tmp; cp /sites/DB/$globopts{db}.db .; sqlite3 $globopts{db}.db < gocomics-queries.txt; mv /sites/DB/$globopts{db}.db /sites/DB/$globopts{db}.db.old; mv $globopts{db}.db /sites/DB/");
 
 # psuedo-daemonize (unless file mode)
 if ($globopts{file}) {exit(0);}
 sleep(150);
 exec($0);
-
-=item schema
-
-Schema for sqlite3 db to hold these
-
-CREATE TABLE comments (
- id INTEGER PRIMARY KEY, -- the comment id
- commentorid INT, -- id of commentor
- strip, -- short form of strip being commented on
- year INT, -- year of strip being commented on
- month INT, -- month
- date INT, -- date
- body, -- body of comment
- time, -- almost useless field
- timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE strips (
- stripid, -- short form of strip name
- stripname, -- long form of strip name
- timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE UNIQUE INDEX i1 ON strips(stripid,stripname);
-
-CREATE TABLE commentors (
- commentorid INT, -- id of commentor
- name, -- name of commentor
- timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE UNIQUE INDEX i2 ON commentors(commentorid,name);
-
-=cut
-
-# <h>yes, I know I misspelled 'commenter' above; deal!</h>
