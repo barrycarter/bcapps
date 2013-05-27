@@ -20,7 +20,7 @@ defaults("db=gocomics");
 # TODO: reduce 600 below, it's too long
 if ($globopts{file}) {
   # this allows $page to be bzipped
-  ($page) = cache_command2("bzcat $globopts{file}");
+  ($page) = cache_command2("bzcat -f $globopts{file}");
 } else {
   ($page) = cache_command2("curl -A 'gocomics\@barrycarter.info' http://www.gocomics.com/comments/page/1", "age=60");
 }
