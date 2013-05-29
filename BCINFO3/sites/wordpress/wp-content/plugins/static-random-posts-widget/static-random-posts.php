@@ -114,7 +114,7 @@ if (!class_exists('static_random_posts')) {
 				$posts = get_posts("include=$post_ids");
 				$posts_string = '';
 				foreach ($posts as $post) {
-					$posts_string .= "<li><a href='" . get_permalink($post->ID) . "' title='". esc_attr($post->post_title) ."'>" . esc_html($post->post_title) ."</a></li>\n";
+					$posts_string .= "<li><a href='" . get_permalink($post->ID) . "' title='". esc_attr($post->post_title) ."' target='_blank'>" . esc_html($post->post_title) ."</a></li>\n";
 				}
 				if ($echo) {
 					echo $posts_string;

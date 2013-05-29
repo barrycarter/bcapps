@@ -2,26 +2,30 @@
 
 # run an arbitrary readonly SQL query webapp
 # v2 does NOT canonize the domain name, tries to derive it from HTTP_HOST
+# format: [query|"schema"].db.(db|database).other.stuff
 
 require "/usr/local/lib/bclib.pl";
 
-# split hostname into dots
-@hp = split(/\./,$ENV{HTTP_HOST});
+# parse hostname
+# TODO: allow for just db.domain.com and list available dbs (if appropriate)
+if ($ENV{HTTP_HOST}=~/^([^\.]+)\.([^\.]+)\.(db|database)\.(.*?)$/i) {
+  # query or schema request
+  ($queryhash, $db, $junk, $tld) = ($1, $2, $3, $4);
+} elsif ($ENV{HTTP_HOST}=~/^([^\.]+)\.(db|database)\.(.*?)$/i) {
+  # just tablename, no schema/query
+  ($queryhash, $db, $junk, $tld) = ("", $1, $2, $3);
+}
 
-# top two chunks are sitename
-$sitename = "$hp[-2].$hp[-1]";
+# $junk is actually part of tld
+$tld = "$junk.$tld";
 
-# where the dbs are
+# where the dbs are <h>(sadly, /sites/GIRLS/ does not work as well...)</h>
 chdir("/sites/DB/");
 
-# is this a schema request (if yes, record position to get db requested)
-for $i (0..$#hp) {if ($hp[$i]=~/^schema$/i) {$schema_request=$i+1;}}
-
-# TODO: allow for just db.domain.com and list available dbs (if appropriate)
+debug("$db/$junk/$tld");
 
 # special case for schema request
-if ($schema_request) {
-  $db = $hp[$i];
+if ($queryhash=~/^schema$/i) {
   ($out,$err,$res) = cache_command2("echo '.schema' | sqlite3 $db.db");
   if ($res) {webdie($err);}
   print << "MARK"
@@ -33,18 +37,15 @@ MARK
 exit(0);
 }
 
-# if *.[md5].[database].db.*, query is already stored in requests.db
+# for everything else, use html(?)
+print "Content-type: text/html\n\n";
 
-# note: db name must be pure alpha (security measure + I can hide private dbs
-# w/ numbers (not that I should put private dbs inside web root!)
-if ($ENV{HTTP_HOST}=~/(^|\.)([0-9a-f]{32})\.([a-z]+)\.db\./i) {
-  ($md,$db) = ($2,$3);
-  $query = decode_base64(sqlite3val("SELECT query FROM requests WHERE md5='$md' AND db='$db'", "requests.db"));
-  $using_hash = 1; # we are using a stored query
+debug("ALPHA");
+
+# if query is md5 hash, query already in db
+if ($queryhash) {
+  $query = decode_base64(sqlite3val("SELECT query FROM requests WHERE md5='$queryhash' AND db='$db'", "requests.db"));
 } else {
-  # determine database
-  $ENV{HTTP_HOST}=~/(^|\.)([a-z]+)\.db\./||webdie("Can't parse hostname: $ENV{HTTP_HOST}");
-  $db = $2;
   # get query from POST data, strip query= + webdecode
   $query = <STDIN>;
   $query=~s/^query=//isg;
@@ -52,12 +53,12 @@ if ($ENV{HTTP_HOST}=~/(^|\.)([0-9a-f]{32})\.([a-z]+)\.db\./i) {
   $query=~s/\%([A-Fa-f0-9]{2})/pack('C', hex($1))/seg;
 }
 
+debug("BETA");
+
 # test if db exists
 # TODO: code getting ugly, should cleanup
 unless (-f "$db.db") {
 print << "MARK"
-Content-type: text/html
-
 The database <b>$db</b> doesn't exist, or I've been instructed not to give it
 you, or maybe I'm just depressed and don't want to. Here I am, brain
 the size of a planet...
@@ -70,16 +71,14 @@ MARK
   exit(0);
 }
 
-# db yes, md5 sum no
-if ($using_hash && !$query) {
+# db yes, hash no
+if ($queryhash && !$query) {
   print << "MARK";
-Content-type: text/html
-
 Although the database $db exists, I dont have a query that
 corresponds to the URL you typed. Please go to the URL below and try a
 new query.<p>
 
-<a href="http://$db.db.$sitename/">http://$db.db.$sitename/</a>
+<a href="http://$db.$tld/">http://$db.$tld/</a>
 
 MARK
 ;
@@ -102,20 +101,17 @@ if ($query=~/([^a-z0-9_: \(\)\,\*\<\>\"\'\=\.\/\?\|\!\+\-\%\\])/i) {
 
 # blank query? skip most steps
 # TODO: goto? GOTO? goto??? really?
-if ($query=~/^\s*$/) {
-  print "Content-type: text/html\n\n";
-  goto FORM;
-}
+if ($query=~/^\s*$/) {goto FORM;}
 
 # if query not stored, store it now (we know it's "safe") + redirect
-unless ($using_hash) {
+unless ($queryhash) {
   $iquery = encode_base64($query);
-  $md = md5_hex($query);
-  sqlite3("REPLACE INTO requests (query,db,md5) VALUES ('$iquery', '$db', '$md')", "requests.db");
+  $queryhash = md5_hex($iquery);
+  sqlite3("REPLACE INTO requests (query,db,md5) VALUES ('$iquery', '$db', '$queryhash')", "requests.db");
   if ($SQL_ERROR) {webdie("SQL ERROR (requests): $SQL_ERROR");}
   # keep safe copy
-#  system("cp requests.db requests.db.saf");
-  print "Location: http://$md.$db.db.$sitename/\n\n";
+  #  system("cp requests.db requests.db.saf");
+  print "Location: http://$queryhash.$db.db.$tld/\n\n";
   exit(0);
 }
 
@@ -153,8 +149,6 @@ $extra = read_file("$db.txt");
 # TODO: handle errors incl timeout
 # print results
 print << "MARK"
-Content-type: text/html
-
 $extra
 
 <title>$query</title>
@@ -180,15 +174,15 @@ MARK
 # and now the query form
 FORM:
 print << "MARK";
-<form method='POST' action='http://$db.db.$sitename/'><table border>
+<form method='POST' action='http://$db.$tld/'><table border>
 <tr><th>Enter query below (must start w/ SELECT):</th></tr>
 <tr><th><input type="submit" value="RUN QUERY"></th></tr>
 <tr><th><textarea name="query" rows=20 cols=79>$query</textarea></th></tr>
 <tr><th><input type="submit" value="RUN QUERY"></th></tr>
 </form></table>
 
-<p><a href='http://schema.$db.db.$sitename/' target='_blank'>Schema</a>
-<a href="http://$db.db.$sitename/$db.db">Raw SQLite3 db</a>
+<p><a href='http://schema.$db.$tld/' target='_blank'>Schema</a>
+<a href="http://$db.$tld/$db.db">Raw SQLite3 db</a>
 
 MARK
 ;
