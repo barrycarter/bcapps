@@ -24,8 +24,8 @@ while (@qs) {
   # a little bit at a time for now
   $n++;
   print "N: $n\n";
-  # NOTE: thru 1100 done, rest still to go
-  unless ($n>=1001 && $n<=1100) {next;}
+  # NOTE: thru 1900 done, rest still to go
+  unless ($n>=1851 && $n<=1900) {next;}
 
   # date and varks bizarre "subject"
   $head=~/\*(.*?)\*\n(.*)/||warn("BAD HEAD: $head");
@@ -49,6 +49,8 @@ while (@qs) {
   $ques=~s/^\(you\):\s*//isg;
 
   $body = "$body\n\n[Vark assigned category: <b>$subj</b>, <a target='_blank' href='http://wordpress.barrycarter.info/index.php/more-details-about-barry-after-vark/'>more details</a>]\n";
+
+#  debug("BODY: $body"); die "TESTING";
 
   # find the new (draft) post ids + open page in firefox
   $res = post_to_wp($body, "site=wordpress.barrycarter.info&author=barrycarter&password=$wordpress{pass}&subject=$ques&timestamp=$time&category=Barry After Vark");

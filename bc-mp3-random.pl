@@ -27,8 +27,13 @@ use Fcntl;
 fcntl(STDIN,F_SETFL,O_NONBLOCK);
 
 # I keep these on a different machine using sshfs (list changes infrequently)
-my($out, $err, $res) = cache_command("ls /mnt/sshfs/MP3/*.mp3 | sort -R", "age=86400");
-@mp3s = split(/\n/, $out);
+if (@ARGV) {
+  @mp3s = randomize([@ARGV]);
+} else {
+  my($out, $err, $res) = cache_command("ls /mnt/sshfs/MP3/*.mp3 | sort -R", "age=86400");
+  @mp3s = split(/\n/, $out);
+}
+
 $pos = 0; # starting position in file
 
 # loop forever
@@ -47,12 +52,13 @@ for (;;) {
   # This changes TongueTied -> Tongue Tied (for example)
   $shortsong=~s/([a-z])([A-Z])/$1 $2/sg;
 
-  debug("PLAYING: $mp3s[$pos] (song $pos+1)");
+  debug("PLAYING: $mp3s[$pos] (song $pos+1/$#mp3s)");
   # first killing all other mplayer procs == bad?
   # not sure about speaking name first (and, yes, it speaks over first
   # part of song)
   # sleep necessary for pgrep
-  system("pkill mplayer; echo \"$shortsong\" | festival --tts& mplayer -really-quiet -af scaletempo,volnorm -speed 1.5 file \"$song\" < /dev/null >& /dev/null & sleep 1");
+#  system("pkill mplayer; echo \"$shortsong\" | festival --tts& mplayer -really-quiet -af scaletempo,volnorm -speed 1.5 file \"$song\" < /dev/null >& /dev/null & sleep 1");
+  system("pkill mplayer; mplayer -really-quiet -af scaletempo,volnorm -speed 1.5 file \"$song\" < /dev/null >& /dev/null & sleep 1");
 
   # wait for song to end or keypress
   for (;;) {
@@ -61,7 +67,7 @@ for (;;) {
     if ($res) {$pos++; last;}
 
     # if not, listen for keybord input (nonblocking)
-    $input = <>;
+    $input = <STDIN>;
 
     # respond to input
     if ($input=~/^p/i) {
