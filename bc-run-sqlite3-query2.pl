@@ -10,37 +10,26 @@ require "/usr/local/lib/bclib.pl";
 # TODO: allow for just db.domain.com and list available dbs (if appropriate)
 if ($ENV{HTTP_HOST}=~/^([^\.]+)\.([^\.]+)\.(db|database)\.(.*?)$/i) {
   # query or schema request
-  ($queryhash, $db, $junk, $tld) = ($1, $2, $3, $4);
+  ($queryhash, $db, $tld) = ($1, $2, "$3.$4");
 } elsif ($ENV{HTTP_HOST}=~/^([^\.]+)\.(db|database)\.(.*?)$/i) {
   # just tablename, no schema/query
-  ($queryhash, $db, $junk, $tld) = ("", $1, $2, $3);
+  ($queryhash, $db, $tld) = ("", $1, "$2.$3");
 }
-
-# $junk is actually part of tld
-$tld = "$junk.$tld";
 
 # where the dbs are <h>(sadly, /sites/GIRLS/ does not work as well...)</h>
 chdir("/sites/DB/");
 
-debug("$db/$junk/$tld");
-
 # special case for schema request
 if ($queryhash=~/^schema$/i) {
+  print "Content-type: text/plain\n\n";
   ($out,$err,$res) = cache_command2("echo '.schema' | sqlite3 $db.db");
-  if ($res) {webdie($err);}
-  print << "MARK"
-Content-type: text/plain
-
-$out
-MARK
-;
-exit(0);
+  if ($res) {webdie("SCHEMA ERROR: $err");}
+  print $out;
+  exit(0);
 }
 
 # for everything else, use html(?)
 print "Content-type: text/html\n\n";
-
-debug("ALPHA");
 
 # if query is md5 hash, query already in db
 if ($queryhash) {
@@ -52,8 +41,6 @@ if ($queryhash) {
   $query=~s/\+/ /isg;
   $query=~s/\%([A-Fa-f0-9]{2})/pack('C', hex($1))/seg;
 }
-
-debug("BETA");
 
 # test if db exists
 # TODO: code getting ugly, should cleanup
@@ -92,16 +79,16 @@ $query=~s/[\;\r\n]/ /isg;
 # trim spaces to canonize query (may not be a great idea)
 $query=~s/\s+/ /isg;
 
+# blank query? skip most steps
+# TODO: goto? GOTO? goto??? really?
+if ($query=~/^\s*$/) {goto FORM;}
+
 # query safety checks
 unless ($query=~/^select/i) {webdie("Query doesn't start w SELECT: $query");}
 # permitted characters (is this going to end up being everything?)
 if ($query=~/([^a-z0-9_: \(\)\,\*\<\>\"\'\=\.\/\?\|\!\+\-\%\\])/i) {
   webdie("Query contains illegal character '$1': $query");
 }
-
-# blank query? skip most steps
-# TODO: goto? GOTO? goto??? really?
-if ($query=~/^\s*$/) {goto FORM;}
 
 # if query not stored, store it now (we know it's "safe") + redirect
 unless ($queryhash) {

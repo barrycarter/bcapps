@@ -43,7 +43,7 @@ NOTE: as of API 1.1, yes, auth is required even for this (twitter sucks!)
 
 sub twitter_public_timeline {
   my($user,$pass) = @_;
-  my($out, $err, $res) = cache_command("curl -s -u $user:$pass '$TWITST/statuses/public_timeline.json'", "age=300");
+  my($out, $err, $res) = cache_command("curl -s -u '$user:$pass' '$TWITST/statuses/public_timeline.json'", "age=300");
   return @{JSON::from_json($out)};
 }
 
@@ -64,7 +64,7 @@ sub twitter_friends_followers_ids {
 
   # twitter returns 5K or so results at a time, so loop using "next cursor"
   do {
-    ($out,$err,$res) = cache_command("curl -s -u $user:$pass '$TWITST/$which/ids.json?cursor=$cursor'", "age=300");
+    ($out,$err,$res) = cache_command("curl -s -u '$user:$pass' '$TWITST/$which/ids.json?cursor=$cursor'", "age=300");
     my(%hash) = %{JSON::from_json($out)};
     push(@res, @{$hash{ids}});
     $cursor = $hash{next_cursor};
@@ -83,7 +83,7 @@ Get rate limit status (requires auth)
 
 sub twitter_rate_limit_status {
   # TODO: REALLY don't cache this result!
-  my($out, $err, $res) = cache_command("curl -s -u $user:$pass '$TWITST/account/rate_limit_status.json'", "age=300");
+  my($out, $err, $res) = cache_command("curl -s -u '$user:$pass' '$TWITST/account/rate_limit_status.json'", "age=300");
   return %{JSON::from_json($out)};
 }
 
@@ -220,7 +220,7 @@ sub twitter_follow {
     ($url, $post) = ("create","?follow=true");
   }
 
-  my($cmd) = "curl -s -d x -u $user:$pass '$TWITST/friendships/$url/$sn.xml$post'";
+  my($cmd) = "curl -s -d x -u '$user:$pass' '$TWITST/friendships/$url/$sn.xml$post'";
   debug($cmd);
   if ($opts{cmdonly}) {return $cmd;}
   my($file) = cache_command($cmd, "age=3600&retfile=1");

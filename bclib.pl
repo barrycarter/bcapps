@@ -3367,6 +3367,7 @@ was run recently, return cached output. $options:
 
 sub cache_command2 {
   my($command,$options) = @_;
+  my($now) = time(); # useful to know when run above/beyond file timestamp
 
   my(%opts) = parse_form($options);
 
@@ -3375,6 +3376,7 @@ sub cache_command2 {
 
   # determine "name" of tmpfile
   my($file) = sha1_hex("$opts{salt}$command$opts{salt}");
+  debug("CC2 FILE: $file");
   # split into two levels of subdirs
   $file=~m/^(..)(..)/;
   my($d1,$d2) = ($1, $2);
@@ -3390,7 +3392,7 @@ sub cache_command2 {
 
   # if too old (or file doesnt exist), run command and put in $file
   # (or if caching disallowed globally)
-  if  (!(-f $file && $fileage < $opts{age}) || $globopts{nocache}) {
+  if  (!(-f $file && $fileage < $opts{age} && $opts{age}>0) || $globopts{nocache}) {
     # if fake, just say command would be run
     if ($opts{fake}) {return "NOT CACHED: $command";}
 
@@ -3401,10 +3403,11 @@ sub cache_command2 {
     unlink("$file-out","$file-err");
     # write cached results to $file
     write_file(join("\n", (
-			   "<cmd>", $command, "</cmd>",
+			   "<cmd>$command</cmd>",
+			   "<time>$now</time>",
 			   "<stdout>", $stdout, "</stdout>",
 			   "<stderr>", $stderr, "</stderr>",
-			   "<status>", $res, "</status>", "\n"
+			   "<status>$res</status>", "\n"
 			   )), $file);
     # and return them
     return $stdout, $stderr, $res;

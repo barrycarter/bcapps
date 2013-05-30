@@ -25,7 +25,7 @@ while (@qs) {
   $n++;
   print "N: $n\n";
   # NOTE: thru 1900 done, rest still to go
-  unless ($n>=1851 && $n<=1900) {next;}
+  unless ($n>=1901 && $n<=1950) {next;}
 
   # date and varks bizarre "subject"
   $head=~/\*(.*?)\*\n(.*)/||warn("BAD HEAD: $head");

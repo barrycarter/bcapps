@@ -5,11 +5,12 @@
 # --password: supertweet (NOT TWITTER) password
 # --create: create SQLite3 table it it doesn't already exist
 
+# v2: adds unfollows and never re-follows initial attempts
+
 # WARNING: Twitter often bans users who use programs like this; use
 # with caution
 
 require "/usr/local/lib/bclib.pl";
-require "/home/barrycarter/BCGIT/bc-twitter.pl";
 
 # twitter is case-insensitive, so lower case username
 $globopts{username} = lc($globopts{username});
@@ -28,9 +29,11 @@ unless (-s $dbname) {
   die("$dbname doesn't exist or is empty; use --create to create");
 }
 
-# my friends and followers
+# my friends and followers (NOT using bc-twitter.pl)
 @followers = twitter_friends_followers_ids("followers", $globopts{username}, $globopts{password});
 @friends = twitter_friends_followers_ids("friends", $globopts{username}, $globopts{password});
+
+debug("FOLLOWERS",@followers,"FRIENDS",@friends);
 
 # no point in following either (friends: already following; followers:
 # they're already following you, you get nothing more by following
@@ -40,13 +43,17 @@ for $i (@friends,@followers) {$donotfollow{$i}=1;}
 # won't really follow this many, but good to get
 @twits = get_twits(500);
 
+debug("TWITS",@twits);
+
+die "TESTING";
+
 # now to follow and record
 for $i (@twits) {
   if ($donotfollow{$i}) {next;}
   if (++$totes>=25) {last;}
 
   # cache result just to avoid duplicating everything
-  my($out,$err,$res) = cache_command("curl -s -u '$globopts{username}:$globopts{password}' -d 'user_id=$i' 'http://api.supertweet.net/1.1/friendships/create.json'","age=86400");
+  my($out,$err,$res) = cache_command2("curl -s -u '$globopts{username}:$globopts{password}' -d 'user_id=$i' 'http://api.supertweet.net/1.1/friendships/create.json'","age=86400");
   debug("OUT: $out, ERR: $err");
 
   # add to db
@@ -95,9 +102,9 @@ sub get_twits {
   my($pos)=0;
 
   # query for "i"
-  my($out,$err,$res) = cache_command("curl -s 'https://twitter.com/search?q=i'", "age=300");
-  debug($out);
+  my($out,$err,$res) = cache_command2("curl -s 'https://twitter.com/search?q=i'", "age=60");
   # find all user ids
+  debug("OUT: $out");
   while ($out=~s/data-user-id="(\d+)"//is) {$ids{$1}=1;}
   my(@ids) = keys %ids;
 
@@ -114,7 +121,7 @@ sub get_twits {
     # friends/followers; below gets friends followers of arbitrary
     # person
     # sleep to avoid getting locked out of supertweet
-    my($out,$err,$res) = cache_command("sleep 1; curl -s -u '$globopts{username}:$globopts{password}' 'http://api.supertweet.net/1.1/friends/ids.json?user_id=$user'","age=60");
+    my($out,$err,$res) = cache_command2("sleep 1; curl -s -u '$globopts{username}:$globopts{password}' 'http://api.supertweet.net/1.1/friends/ids.json?user_id=$user'","age=60");
     $out=~m/\[(.*?)\]/;
     my($friends) = $1;
     my(@friends) = split(/\,\s*/,$friends);
@@ -128,7 +135,7 @@ sub get_twits {
     }
 
     # same for followers
-    my($out,$err,$res) = cache_command("sleep 1; curl -s -u '$globopts{username}:$globopts{password}' 'http://api.supertweet.net/1.1/followers/ids.json?user_id=$user'","age=60");
+    my($out,$err,$res) = cache_command2("sleep 1; curl -s -u '$globopts{username}:$globopts{password}' 'http://api.supertweet.net/1.1/followers/ids.json?user_id=$user'","age=60");
     $out=~m/\[(.*?)\]/;
     my($followers) = $1;
     my(@followers) = split(/\,\s*/,$friends);
@@ -143,5 +150,36 @@ sub get_twits {
   }
 
   return @ids;
+}
+
+=item twitter_friends_followers_ids($which="friends|followers"$user,$pass)
+
+NOTE: I COPIED/MODIFIED THIS FROM bc-twitter.pl which I expect to stop using
+
+Obtain friends/followers ids for $user (auth required)
+
+NOTE: Twitter lets you get friends/followers for others, but not via
+id-- weird?
+
+=cut
+
+sub twitter_friends_followers_ids {
+  my($TWITST) = "http://api.supertweet.net/1.1";
+  my($which,$user,$pass) = @_;
+  my($out,$err,$res);
+  my($cursor) = -1;
+  my(@res);
+
+  # twitter returns 5K or so results at a time, so loop using "next cursor"
+  do {
+    ($out,$err,$res) = cache_command2("curl -s -u '$user:$pass' '$TWITST/$which/ids.json?cursor=$cursor'", "age=60");
+    my(%hash) = %{JSON::from_json($out)};
+    push(@res, @{$hash{ids}});
+    $cursor = $hash{next_cursor};
+    debug("CURSOR: $cursor, RES: $#res");
+  } until (!$cursor);
+
+  return @res;
+
 }
 
