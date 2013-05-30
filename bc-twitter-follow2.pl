@@ -29,16 +29,27 @@ unless (-s $dbname) {
   die("$dbname doesn't exist or is empty; use --create to create");
 }
 
+# people Ive already (tried to) followed
+# TODO: loading the whole db here seems inefficient
+@db = sqlite3hashlist("SELECT * FROM bc_twitter_follow ORDER BY time", $dbname);
+
+# do not try to refollow people i have followed, even if i unfollowed them
+for $i (@db) {
+  if ($i->{action}=~/SOURCE_FOLLOWS_TARGET/i) {
+    # we will use time of follow later
+    $alreadyfollowed{$i->{target_id}}=$i->{time};
+  }
+}
+
 # my friends and followers (NOT using bc-twitter.pl)
 @followers = twitter_friends_followers_ids("followers", $globopts{username}, $globopts{password});
 @friends = twitter_friends_followers_ids("friends", $globopts{username}, $globopts{password});
 
-debug("FOLLOWERS",@followers,"FRIENDS",@friends);
-
 # no point in following either (friends: already following; followers:
 # they're already following you, you get nothing more by following
 # them back)
-for $i (@friends,@followers) {$donotfollow{$i}=1;}
+for $i (@friends) {$friends{$i}=1;}
+for $i (@followers) {$followers{$i}=1;}
 
 # won't really follow this many, but good to get
 @twits = get_twits(500);
@@ -110,16 +121,12 @@ sub get_twits {
 
   # add new ids until we have enough
   while (@ids) {
-#    debug("CURRENTLY HAVE: $#ids ids");
     # already have enough?
     if ($#ids > $n) {last;}
 
     # if not, get first one, and add followers/friends
     my($user) = $ids[$pos++];
 
-    # my twitter lib is seriously broken and only gets your own
-    # friends/followers; below gets friends followers of arbitrary
-    # person
     # sleep to avoid getting locked out of supertweet
     my($out,$err,$res) = cache_command2("sleep 1; curl -s -u '$globopts{username}:$globopts{password}' 'http://api.supertweet.net/1.1/friends/ids.json?user_id=$user'","age=60");
     $out=~m/\[(.*?)\]/;
@@ -129,7 +136,6 @@ sub get_twits {
     # add these to @ids but avoid repeats
     for $i (@friends) {
       if ($ids{$i}) {next;}
-#      debug("ADDING $i to IDS list [FRI]");
       push(@ids,$i);
       $ids{$i}=1;
     }
@@ -138,7 +144,7 @@ sub get_twits {
     my($out,$err,$res) = cache_command2("sleep 1; curl -s -u '$globopts{username}:$globopts{password}' 'http://api.supertweet.net/1.1/followers/ids.json?user_id=$user'","age=60");
     $out=~m/\[(.*?)\]/;
     my($followers) = $1;
-    my(@followers) = split(/\,\s*/,$friends);
+    my(@followers) = split(/\,\s*/,$followers);
 
     # add these to @ids but avoid repeats
     for $i (@followers) {

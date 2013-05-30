@@ -131,7 +131,7 @@ sub get_twits {
     my($out,$err,$res) = cache_command("sleep 1; curl -s -u '$globopts{username}:$globopts{password}' 'http://api.supertweet.net/1.1/followers/ids.json?user_id=$user'","age=60");
     $out=~m/\[(.*?)\]/;
     my($followers) = $1;
-    my(@followers) = split(/\,\s*/,$friends);
+    my(@followers) = split(/\,\s*/,$followers);
 
     # add these to @ids but avoid repeats
     for $i (@followers) {
