@@ -3368,6 +3368,7 @@ was run recently, return cached output. $options:
 sub cache_command2 {
   my($command,$options) = @_;
   my($now) = time(); # useful to know when run above/beyond file timestamp
+  my($cached) = 0; # default: not cached
 
   my(%opts) = parse_form($options);
 
@@ -3376,7 +3377,6 @@ sub cache_command2 {
 
   # determine "name" of tmpfile
   my($file) = sha1_hex("$opts{salt}$command$opts{salt}");
-  debug("CC2 FILE: $file");
   # split into two levels of subdirs
   $file=~m/^(..)(..)/;
   my($d1,$d2) = ($1, $2);
@@ -3387,15 +3387,30 @@ sub cache_command2 {
     system("mkdir -p /var/tmp/cache/$d1/$d2");
   }
 
-  # how old is this file?
+  # TODO: slightly inefficient to compute this when unneeded
   my($fileage) = (-M $file)*86400;
 
-  # if too old (or file doesnt exist), run command and put in $file
-  # (or if caching disallowed globally)
-  if  (!(-f $file && $fileage < $opts{age} && $opts{age}>0) || $globopts{nocache}) {
+  # NOTE: I was doing this all in one complex IF statement, but it is
+  # easier to understand this way
+
+  if ($globopts{nocache}) {
+  # if global nocache, then not cached
+    debug("--nocache, not cached");
+  } elsif (!(-f $file)) {
+    debug("$file does not exist, not cached");
+  } elsif ($opts{age}<=0) {
+    # setting age=-1 can be useful for testing (instead of just omitting age=)
+    debug("opts{age} < 0, not cached");
+  } elsif ($fileage > $opts{age}) {
+    debug("$file age $fileage > opts{age} $opts{age}, not cached");
+  } else {
+    debug("result cached in $file ($fileage <= $opts{age})");
+    $cached = 1;
+  }
+
+  unless ($cached) {
     # if fake, just say command would be run
     if ($opts{fake}) {return "NOT CACHED: $command";}
-
     # otherwise, run command
     my($res) = system("($command) 1> $file-out 2> $file-err");
     my($stdout,$stderr) = (read_file("$file-out"), read_file("$file-err"));
@@ -3416,18 +3431,20 @@ sub cache_command2 {
   # reamining case, cached result exists
   # if faking, just indicate cache exists
   if ($opts{fake}) {return "CACHED: $command";}
-
+  debug("CACHED, returning contents of $file");
 
   # read/parse/return cached value
   my($cached) = read_file($file);
 
-  unless ($cached=~m%^\s*<cmd>(.*?)</cmd>\s*<stdout>(.*?)</stdout>\s*<stderr>(.*?)</stderr>\s*<status>(.*?)</status>\s*$%s) {
+  # TODO: allow myself to add more tags without having to rewrite
+  # below constantly?
+  unless ($cached=~m%^\s*<cmd>(.*?)</cmd>\s*<time>(.*?)</time>\s*<stdout>(.*?)</stdout>\s*<stderr>(.*?)</stderr>\s*<status>(.*?)</status>\s*$%s) {
     warn "BROKEN CACHE FILE: $file";
     return;
   }
 
   # bad form to return $2, $3, $4 "as is"?
-  my($stdout,$stderr,$res) = ($2,$3,$4);
+  my($stdout,$stderr,$res) = ($3,$4,$5);
   return $stdout, $stderr, $res;
 }
 

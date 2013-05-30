@@ -10,7 +10,13 @@
 # WARNING: Twitter often bans users who use programs like this; use
 # with caution
 
+# <h>I wish to apologize to all people my age for using $totes and
+# $peeps as variables</h>
+
 require "/usr/local/lib/bclib.pl";
+
+# cache for most (not all) curl commands (60 for prod, 300/600 for testing)
+$cachetime = 600;
 
 # twitter is case-insensitive, so lower case username
 $globopts{username} = lc($globopts{username});
@@ -54,25 +60,40 @@ for $i (@followers) {$followers{$i}=1;}
 # won't really follow this many, but good to get
 @twits = get_twits(500);
 
-debug("TWITS",@twits);
-
-die "TESTING";
-
-# now to follow and record
+# find peeps to follow
 for $i (@twits) {
-  if ($donotfollow{$i}) {next;}
+  # people to not follow
+  if ($friends{$i} || $followers{$i} || $alreadyfollowed{$i}) {next;}
   if (++$totes>=25) {last;}
-
-  # cache result just to avoid duplicating everything
-  my($out,$err,$res) = cache_command2("curl -s -u '$globopts{username}:$globopts{password}' -d 'user_id=$i' 'http://api.supertweet.net/1.1/friendships/create.json'","age=86400");
-  debug("OUT: $out, ERR: $err");
+  push(@tofollow, $i);
 
   # add to db
   $now = time(); # timestamp does this too, but I don't trust it
-  $query = "INSERT INTO bc_twitter_follow (source_id, target_id, action, time)
-VALUES ('$globopts{username}', '$i', 'SOURCE_FOLLOWS_TARGET', $now)";
-  sqlite3($query,$dbname);
+#  $query = "INSERT INTO bc_twitter_follow (source_id, target_id, action, time)
+# VALUES ('$globopts{username}', '$i', 'SOURCE_FOLLOWS_TARGET', $now)";
+#  sqlite3($query,$dbname);
 }
+
+# get some (fairly constant) info on these users
+$tofollow=join(",",@tofollow);
+
+my($out,$err,$res) = cache_command2("curl -s -u '$globopts{username}:$globopts{password}' 'http://api.supertweet.net/1.1/users/lookup.json?user_id=$tofollow'","age=86400");
+
+@json = @{JSON::from_json($out)};
+
+# lots of good info here, but I just record the screen name
+for $i (@json) {$name{$i->{id}} = $i->{screen_name};}
+
+# now, to actually follow
+for $i (@tofollow) {
+  debug("ABOUT TO FOLLOW: $i ($name{$i})");
+  # sleep to avoid annoying supertweet
+  my($out,$err,$res) = cache_command2("sleep 1; curl -s -u '$globopts{username}:$globopts{password}' -d 'user_id=$i' 'http://api.supertweet.net/1.1/friendships/create.json'","age=86400");
+  # did it work?
+  debug("LEN($out)",length($out));
+}
+
+# debug(%name);
 
 =item create_db($file)
 
@@ -88,6 +109,7 @@ sub create_db {
 CREATE TABLE bc_twitter_follow (
  source_id BIGINT,
  target_id BIGINT,
+ target_name TEXT,
  action TEXT,
  time BIGINT,
  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -113,7 +135,7 @@ sub get_twits {
   my($pos)=0;
 
   # query for "i"
-  my($out,$err,$res) = cache_command2("curl -s 'https://twitter.com/search?q=i'", "age=60");
+  my($out,$err,$res) = cache_command2("curl -s 'https://twitter.com/search?q=i'", "age=$cachetime");
   # find all user ids
   debug("OUT: $out");
   while ($out=~s/data-user-id="(\d+)"//is) {$ids{$1}=1;}
@@ -127,38 +149,26 @@ sub get_twits {
     # if not, get first one, and add followers/friends
     my($user) = $ids[$pos++];
 
-    # sleep to avoid getting locked out of supertweet
-    my($out,$err,$res) = cache_command2("sleep 1; curl -s -u '$globopts{username}:$globopts{password}' 'http://api.supertweet.net/1.1/friends/ids.json?user_id=$user'","age=60");
+    for $j ("friends","followers") {
+      # sleep to avoid getting locked out of supertweet
+      my($out,$err,$res) = cache_command2("sleep 1; curl -s -u '$globopts{username}:$globopts{password}' 'http://api.supertweet.net/1.1/$j/ids.json?user_id=$user'","age=$cachetime");
     $out=~m/\[(.*?)\]/;
-    my($friends) = $1;
-    my(@friends) = split(/\,\s*/,$friends);
+      my($peeps) = $1;
+      my(@peeps) = split(/\,\s*/,$peeps);
 
-    # add these to @ids but avoid repeats
-    for $i (@friends) {
-      if ($ids{$i}) {next;}
-      push(@ids,$i);
-      $ids{$i}=1;
-    }
-
-    # same for followers
-    my($out,$err,$res) = cache_command2("sleep 1; curl -s -u '$globopts{username}:$globopts{password}' 'http://api.supertweet.net/1.1/followers/ids.json?user_id=$user'","age=60");
-    $out=~m/\[(.*?)\]/;
-    my($followers) = $1;
-    my(@followers) = split(/\,\s*/,$followers);
-
-    # add these to @ids but avoid repeats
-    for $i (@followers) {
-      if ($ids{$i}) {next;}
-#      debug("ADDING $i to IDS list [FOL]");
-      push(@ids,$i);
-      $ids{$i}=1;
+      # add these to @ids but avoid repeats
+      # TODO: create a ordered hash class/function?
+      for $i (@peeps) {
+	if ($ids{$i}) {next;}
+	push(@ids,$i);
+	$ids{$i}=1;
+      }
     }
   }
-
   return @ids;
 }
 
-=item twitter_friends_followers_ids($which="friends|followers"$user,$pass)
+=item twitter_friends_followers_ids($which="friends|followers",$user,$pass)
 
 NOTE: I COPIED/MODIFIED THIS FROM bc-twitter.pl which I expect to stop using
 
@@ -178,7 +188,7 @@ sub twitter_friends_followers_ids {
 
   # twitter returns 5K or so results at a time, so loop using "next cursor"
   do {
-    ($out,$err,$res) = cache_command2("curl -s -u '$user:$pass' '$TWITST/$which/ids.json?cursor=$cursor'", "age=60");
+    ($out,$err,$res) = cache_command2("curl -s -u '$user:$pass' '$TWITST/$which/ids.json?cursor=$cursor'", "age=$cachetime");
     my(%hash) = %{JSON::from_json($out)};
     push(@res, @{$hash{ids}});
     $cursor = $hash{next_cursor};
@@ -188,4 +198,3 @@ sub twitter_friends_followers_ids {
   return @res;
 
 }
-
