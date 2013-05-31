@@ -4,6 +4,9 @@
 # --username: twitter username
 # --password: supertweet (NOT TWITTER) password
 # --create: create SQLite3 table it it doesn't already exist
+# --hours=72: hours people have to follow you back before you drop them
+# --follow_number=55: follow up to this many people per run
+# --unfollow_number=55: unfollow up to this many people per run
 
 # v2: adds unfollows and never re-follows initial attempts
 
@@ -15,15 +18,10 @@
 
 require "/usr/local/lib/bclib.pl";
 
+defaults("hours=72&follow_number=55&unfollow_number=55");
+
 # cache for most (not all) curl commands (60 for prod, 300/600 for testing)
 $cachetime = 60;
-
-# how many people to follow/unfollow every time this program is run
-# numbers should almost equal each other to avoid backlog
-# TODO: make this a cmd line option
-# temporarily lowered to 1 as beta testers run out of follow perms
-$follow_number = 55;
-$unfollow_number = 55;
 
 # twitter is case-insensitive, so lower case username
 $globopts{username} = lc($globopts{username});
@@ -76,7 +74,7 @@ logmsg("INFO: $globopts{username} has $#followers+1 followers");
 for $i (@twits) {
   # people to not follow
   if ($friends{$i} || $followers{$i} || $alreadyfollowed{$i}) {next;}
-  if (++$totes>=$follow_number) {last;}
+  if (++$totes>=$globopts{follow_number}) {last;}
   push(@tofollow, $i);
 }
 
@@ -127,10 +125,10 @@ MARK
 # and now the unfollows
 # TODO: write query for this, dont go thru entire db
 for $i (@db) {
-  # if less than 72 hours, ignore all from now on (since time-ordered)
+  # if less than $hours hours, ignore all from now on (since time-ordered)
   # using $now from above
   # TODO: let '3' be a parameter
-  if ($now-$i->{time}<86400*3) {last;}
+  if ($now-$i->{time}<3600*$globopts{hours}) {last;}
 
   # if not following, cant unfollow
   unless ($friends{$i->{target_id}}) {next;}
@@ -143,7 +141,7 @@ for $i (@db) {
   # left with: people i followed 3+ days ago, have not followed back
   push(@unfollow,$i->{target_id});
   # never unfollow more than $unfollow_number at a time
-  if ($#unfollow>$unfollow_number) {last;}
+  if ($#unfollow>$globopts{unfollow_number}) {last;}
 
 }
 
