@@ -18,6 +18,13 @@ require "/usr/local/lib/bclib.pl";
 # cache for most (not all) curl commands (60 for prod, 300/600 for testing)
 $cachetime = 60;
 
+# how many people to follow/unfollow every time this program is run
+# numbers should almost equal each other to avoid backlog
+# TODO: make this a cmd line option
+# temporarily lowered to 1 as beta testers run out of follow perms
+$follow_number = 35;
+$unfollow_number = 35;
+
 # twitter is case-insensitive, so lower case username
 $globopts{username} = lc($globopts{username});
 unless ($globopts{username} && $globopts{password}) {
@@ -69,7 +76,7 @@ logmsg("INFO: $globopts{username} has $#followers+1 followers");
 for $i (@twits) {
   # people to not follow
   if ($friends{$i} || $followers{$i} || $alreadyfollowed{$i}) {next;}
-  if (++$totes>=25) {last;}
+  if (++$totes>=$follow_number) {last;}
   push(@tofollow, $i);
 }
 
@@ -98,6 +105,10 @@ for $i (@tofollow) {
   # screen names do not match? error!
   unless ($json{screen_name} eq $name{$i}) {
     logmsg("FAIL: follow($i:$name{$i}): bad JSON: $out");
+    if ($out=~/You are unable to follow more people at this time/i) {
+      logmsg("You cannot follow more people, ending follow loop early");
+      last;
+    }
     next;
   }
 
@@ -131,8 +142,8 @@ for $i (@db) {
 
   # left with: people i followed 3+ days ago, have not followed back
   push(@unfollow,$i->{target_id});
-  # never unfollow more than 25 at a time
-  if ($#unfollow>25) {last;}
+  # never unfollow more than $unfollow_number at a time
+  if ($#unfollow>$unfollow_number) {last;}
 
 }
 
