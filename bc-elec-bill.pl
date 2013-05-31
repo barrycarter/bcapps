@@ -45,7 +45,7 @@ $tax = 1.07;
 
 # yyyy-mm-dd when meter last read, and amount
 # TODO: this obviously shouldn't be hardcoded
-($time,$read) = ("2013-04-22", "63512");
+($time,$read) = ("2013-05-22", "64255");
 
 # same month last year (as target)
 # $lastyearcost = "103.15";

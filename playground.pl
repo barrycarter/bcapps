@@ -30,100 +30,47 @@ $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 use GD;
 
-my($out,$err,$res) = cache_command2("date +%x","age=30");
+bc_check_domain_exp();
 
-debug("OUT: $out");
+=item bc_check_domain_exp()
 
-=item cache_command2($command, $options)
-
-version 2: write name of command to file and use /var/tmp and multiple
-levels of subdirectories to avoid filling /tmp and making it too
-large. However, I broke several features when upgrading this function
-(commented out options are broken in this version)
-
-Runs $command and returns stdout, stderr, and exit status. If command
-was run recently, return cached output. $options:
-
- salt=xyz: store results in file determined by hashing command w/ salt
- (useful if running multiple instances of the same command)
-
- age=n: if output file is less than n seconds old + no error, return cached
-
- fake=1: dont run the command at all, just say what would be done
-
-# retry=n: retry command n times if it fails (returns non-0)
-# sleep=n: sleep n seconds between retries
- # TODO: documentation for nocache below is wrong
-# nocache=1: dont really cache the results (also global --nocache)
-# retfile=1: return the filename where output is cached, not output itself
-# cachefile=x: use x as cachefile; dont use hash to determine cachefile name
-# ignoreerror: assume return code from command is 0, even if its not
+Checks whether any of my domains are within 60 days of expiration (nagios).
 
 =cut
 
-sub cache_command2 {
-  my($command,$options) = @_;
-
-  my(%opts) = parse_form($options);
-
-  # TODO: global nocache means don't *USE* cached results
-  # TODO: local nocache would mean don't CREATE cached results
-
-  # determine "name" of tmpfile
-  my($file) = sha1_hex("$opts{salt}$command$opts{salt}");
-  # split into two levels of subdirs
-  $file=~m/^(..)(..)/;
-  my($d1,$d2) = ($1, $2);
-  # put in /var/tmp/cache
-  $file = "/var/tmp/cache/$d1/$d2/$file";
-  # make sure dir exists
-  unless (-d "/var/tmp/cache/$d1/$d2") {
-    system("mkdir -p /var/tmp/cache/$d1/$d2");
+sub bc_check_domain_exp {
+  # TODO: generalize this a bit... but per domain testing would be ugly,
+  # since nagios would need 1 test per domain = bad?
+  my(@domains) = `egrep -v '^#|^ *\$' /home/barrycarter/mydomains.txt`;
+  my($now) = time();
+  for $i (@domains) {
+    chomp($i);
+    # cache long time and sleep to avoid overwhelming servers
+    my($out,$err,$res) = cache_command2("whois $i", "age=43200");
+    # no expiration date?
+    unless ($out=~/^\s*(Expiration Date|Expires on|Domain Expiration Date):\s*(.*?)$/m) {
+      print "ERR: No expiration date found: $i\n";
+      return 2;
+    }
+    my($date) = $2;
+    $date=~s/\s*$//isg;
+    my($exp) = (str2time($date)-$now)/86400;
+    if ($exp<60) {
+      printf("ERR: $i expires in %d < 60 days\n",$exp);
+      return 2;
+    }
+    printf("OK: $i expires in %d > 60 days\n",$exp);
   }
 
-  # how old is this file?
-  my($fileage) = (-M $file)*86400;
-
-  # if too old (or file doesnt exist), run command and put in $file
-  # (or if caching disallowed globally)
-  if  (!(-f $file && $fileage < $opts{age}) || $globopts{nocache}) {
-    # if fake, just say command would be run
-    if ($opts{fake}) {return "NOT CACHED: $command";}
-
-    # otherwise, run command
-    my($res) = system("($command) 1> $file-out 2> $file-err");
-    my($stdout,$stderr) = (read_file("$file-out"), read_file("$file-err"));
-    # delete now unneeded files
-    unlink("$file-out","$file-err");
-    # write cached results to $file
-    write_file(join("\n", (
-			   "<cmd>", $command, "</cmd>",
-			   "<stdout>", $stdout, "</stdout>",
-			   "<stderr>", $stderr, "</stderr>",
-			   "<status>", $res, "</status>", "\n"
-			   )), $file);
-    # and return them
-    return $stdout, $stderr, $res;
-  }
-
-  # reamining case, cached result exists
-  # if faking, just indicate cache exists
-  if ($opts{fake}) {return "CACHED: $command";}
-
-
-  # read/parse/return cached value
-  my($cached) = read_file($file);
-
-  unless ($cached=~m%^\s*<cmd>(.*?)</cmd>\s*<stdout>(.*?)</stdout>\s*<stderr>(.*?)</stderr>\s*<status>(.*?)</status>\s*$%s) {
-    warn "BROKEN CACHE FILE: $file";
-    return;
-  }
-
-  # bad form to return $2, $3, $4 "as is"?
-  my($stdout,$stderr,$res) = ($2,$3,$4);
-  return $stdout, $stderr, $res;
+  print "All domains expire > 60 days\n";
+  return 0;
 }
 
+die "TESTING";
+
+my($out,$err,$res) = cache_command2("date +%x","age=30");
+
+debug("OUT: $out");
 
 die "TESTING";
 

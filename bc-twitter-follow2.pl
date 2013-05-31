@@ -22,8 +22,8 @@ $cachetime = 60;
 # numbers should almost equal each other to avoid backlog
 # TODO: make this a cmd line option
 # temporarily lowered to 1 as beta testers run out of follow perms
-$follow_number = 35;
-$unfollow_number = 35;
+$follow_number = 55;
+$unfollow_number = 55;
 
 # twitter is case-insensitive, so lower case username
 $globopts{username} = lc($globopts{username});
