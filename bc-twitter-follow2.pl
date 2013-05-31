@@ -16,7 +16,7 @@
 require "/usr/local/lib/bclib.pl";
 
 # cache for most (not all) curl commands (60 for prod, 300/600 for testing)
-$cachetime = 600;
+$cachetime = 60;
 
 # twitter is case-insensitive, so lower case username
 $globopts{username} = lc($globopts{username});
@@ -47,15 +47,20 @@ for $i (@db) {
   }
 }
 
-# my friends and followers (NOT using bc-twitter.pl)
-@followers = twitter_friends_followers_ids("followers", $globopts{username}, $globopts{password});
-@friends = twitter_friends_followers_ids("friends", $globopts{username}, $globopts{password});
-
+# my friends and followers
 # no point in following either (friends: already following; followers:
 # they're already following you, you get nothing more by following
 # them back)
-for $i (@friends) {$friends{$i}=1;}
-for $i (@followers) {$followers{$i}=1;}
+%followers = list2hash(twitter_friends_followers_ids("followers", $globopts{username}, $globopts{password}));
+%friends = list2hash(twitter_friends_followers_ids("friends", $globopts{username}, $globopts{password}));
+
+# just for reporting purposes (which means I pretty much broke earlier
+# code and fixed it wrong, yay!)
+@friends = sort keys %friends;
+@followers = sort keys %followers;
+
+logmsg("INFO: $globopts{username} follows $#friends+1 people");
+logmsg("INFO: $globopts{username} has $#followers+1 followers");
 
 # won't really follow this many, but good to get
 @twits = get_twits(500);
@@ -66,34 +71,115 @@ for $i (@twits) {
   if ($friends{$i} || $followers{$i} || $alreadyfollowed{$i}) {next;}
   if (++$totes>=25) {last;}
   push(@tofollow, $i);
-
-  # add to db
-  $now = time(); # timestamp does this too, but I don't trust it
-#  $query = "INSERT INTO bc_twitter_follow (source_id, target_id, action, time)
-# VALUES ('$globopts{username}', '$i', 'SOURCE_FOLLOWS_TARGET', $now)";
-#  sqlite3($query,$dbname);
 }
 
 # get some (fairly constant) info on these users
+# it turns out we get this info when following anyway, but makes a
+# great double check
 $tofollow=join(",",@tofollow);
-
 my($out,$err,$res) = cache_command2("curl -s -u '$globopts{username}:$globopts{password}' 'http://api.supertweet.net/1.1/users/lookup.json?user_id=$tofollow'","age=86400");
-
 @json = @{JSON::from_json($out)};
-
 # lots of good info here, but I just record the screen name
 for $i (@json) {$name{$i->{id}} = $i->{screen_name};}
 
 # now, to actually follow
 for $i (@tofollow) {
-  debug("ABOUT TO FOLLOW: $i ($name{$i})");
   # sleep to avoid annoying supertweet
   my($out,$err,$res) = cache_command2("sleep 1; curl -s -u '$globopts{username}:$globopts{password}' -d 'user_id=$i' 'http://api.supertweet.net/1.1/friendships/create.json'","age=86400");
-  # did it work?
-  debug("LEN($out)",length($out));
+
+  # result not JSON? follow failed
+  unless ($out=~/^\s*\{/) {
+    logmsg("FAIL: follow($i:$name{$i}): result not JSON: $out");
+    next;
+  }
+
+  # cant do this wo making sure result is JSON; program ends otherwise
+  %json = %{JSON::from_json($out)};
+  # screen names do not match? error!
+  unless ($json{screen_name} eq $name{$i}) {
+    logmsg("FAIL: follow($i:$name{$i}): bad JSON: $out");
+    next;
+  }
+
+  # success!
+  logmsg("SUCC: follow($i:$name{$i})");
+  # add to db (using self-computed timestamp to be safe)
+  $query = << "MARK";
+INSERT INTO bc_twitter_follow
+(source_id, target_id, action, time, target_name) VALUES
+('$globopts{username}', '$i', 'SOURCE_FOLLOWS_TARGET', $now, '$name{$i}')
+MARK
+;
+  sqlite3($query,$dbname);
 }
 
-# debug(%name);
+# and now the unfollows
+# TODO: write query for this, dont go thru entire db
+for $i (@db) {
+  # if less than 72 hours, ignore all from now on (since time-ordered)
+  # using $now from above
+  # TODO: let '3' be a parameter
+  if ($now-$i->{time}<86400*3) {last;}
+
+  # if not following, cant unfollow
+  unless ($friends{$i->{target_id}}) {next;}
+
+  # if they are following me, shouldnt unfollow
+  # TODO: add --cruel option since some people keep following even
+  # after unfollowed
+  if ($followers{$i->{target_id}}) {next;}
+
+  # left with: people i followed 3+ days ago, have not followed back
+  push(@unfollow,$i->{target_id});
+  # never unfollow more than 25 at a time
+  if ($#unfollow>25) {last;}
+
+}
+
+# and now to actually unfollow
+for $i (@unfollow) {
+  # sleep to avoid annoying supertweet
+  my($out,$err,$res) = cache_command2("sleep 1; curl -s -u '$globopts{username}:$globopts{password}' -d 'user_id=$i' 'http://api.supertweet.net/1.1/friendships/destroy.json'","age=86400");
+  # result not JSON? unfollow failed
+  unless ($out=~/^\s*\{/s) {
+    logmsg("FAIL: unfollow($i): result not JSON: *$out*");
+    next;
+  }
+
+  # cant do this wo making sure result is JSON; program ends otherwise
+  %json = %{JSON::from_json($out)};
+  # screen names do not match? error!
+#  unless ($json{screen_name} eq $name{$i}) {
+#    logmsg("FAIL: follow($i:$name{$i}): bad JSON: $out");
+#    next;
+#  }
+
+  # success!
+  logmsg("SUCC: unfollow($i:$json{screen_name})");
+  # add to db (using self-computed timestamp to be safe)
+  $query = << "MARK";
+INSERT INTO bc_twitter_follow
+(source_id, target_id, action, time, target_name) VALUES
+('$globopts{username}', '$i', 'SOURCE_UNFOLLOWS_TARGET', $now, '$json{screen_name}')
+MARK
+;
+  sqlite3($query,$dbname);
+}
+
+$logs = join("\n",@logs);
+
+# email
+if ($globopts{email}) {
+  sendmail("tweety\@barrycarter.info", $globopts{email}, "bc-twitter-follow log ($globopts{username})", $logs);
+}
+
+# the end-user log (without all my crappy debugging statements)
+sub logmsg {
+  my($str) = join(" ",@_);
+  $str=~s/\s+/ /isg;
+  my($date) = strftime("[%Y%m%d.%H%M%S] $str\n",gmtime());
+  push(@logs,$date);
+}
 
 =item create_db($file)
 
