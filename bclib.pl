@@ -3380,11 +3380,12 @@ sub cache_command2 {
   # split into two levels of subdirs
   $file=~m/^(..)(..)/;
   my($d1,$d2) = ($1, $2);
-  # put in /var/tmp/cache
-  $file = "/var/tmp/cache/$d1/$d2/$file";
+  # put in /var/tmp/cache (add username to avoid collision)
+  $file = "/var/tmp/cache/$d1/$d2/$file-$ENV{USER}";
   # make sure dir exists
   unless (-d "/var/tmp/cache/$d1/$d2") {
-    system("mkdir -p /var/tmp/cache/$d1/$d2");
+    # /tmp style directory
+    system("mkdir -p /var/tmp/cache/$d1/$d2; chmod 1777 /var/tmp/cache/$d1/$d2");
   }
 
   # TODO: slightly inefficient to compute this when unneeded

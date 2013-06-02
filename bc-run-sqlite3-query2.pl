@@ -6,7 +6,15 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# parse hostname
+# where the dbs are <h>(sadly, /sites/GIRLS/ does not work as well...)</h>
+# this is a really ugly hack so I can run on my home machine
+@dirpath = ("/home/barrycarter/LOCALHOST/20121228/DB", "/sites/DB");
+
+for $i (@dirpath) {
+  if (-d $i) {chdir($i); last;}
+}
+
+# parse hostname (tld includes the ".db" part
 # TODO: allow for just db.domain.com and list available dbs (if appropriate)
 if ($ENV{HTTP_HOST}=~/^([^\.]+)\.([^\.]+)\.(db|database)\.(.*?)$/i) {
   # query or schema request
@@ -16,8 +24,7 @@ if ($ENV{HTTP_HOST}=~/^([^\.]+)\.([^\.]+)\.(db|database)\.(.*?)$/i) {
   ($queryhash, $db, $tld) = ("", $1, "$2.$3");
 }
 
-# where the dbs are <h>(sadly, /sites/GIRLS/ does not work as well...)</h>
-chdir("/sites/DB/");
+debug("VALS: $queryhash/$db/$tld");
 
 # special case for schema request
 if ($queryhash=~/^schema$/i) {
@@ -27,9 +34,6 @@ if ($queryhash=~/^schema$/i) {
   print $out;
   exit(0);
 }
-
-# for everything else, use html(?)
-print "Content-type: text/html\n\n";
 
 # if query is md5 hash, query already in db
 if ($queryhash) {
@@ -42,10 +46,14 @@ if ($queryhash) {
   $query=~s/\%([A-Fa-f0-9]{2})/pack('C', hex($1))/seg;
 }
 
+# TODO: cant preprint text/html since Location: directive later requires I NOT do that
+
 # test if db exists
 # TODO: code getting ugly, should cleanup
 unless (-f "$db.db") {
 print << "MARK"
+Content-type: text/html
+
 The database <b>$db</b> doesn't exist, or I've been instructed not to give it
 you, or maybe I'm just depressed and don't want to. Here I am, brain
 the size of a planet...
@@ -61,6 +69,8 @@ MARK
 # db yes, hash no
 if ($queryhash && !$query) {
   print << "MARK";
+Content-type: text/html
+
 Although the database $db exists, I dont have a query that
 corresponds to the URL you typed. Please go to the URL below and try a
 new query.<p>
@@ -98,9 +108,12 @@ unless ($queryhash) {
   if ($SQL_ERROR) {webdie("SQL ERROR (requests): $SQL_ERROR");}
   # keep safe copy
   #  system("cp requests.db requests.db.saf");
-  print "Location: http://$queryhash.$db.db.$tld/\n\n";
+  print "Location: http://$queryhash.$db.$tld/\n\n";
   exit(0);
 }
+
+# now ok to print text/html
+print "Content-type: text/html\n\n";
 
 # TODO: there's some code redundancy and weirdness since we ONLY run
 # query if using hash; cleanup code to reflect this
