@@ -32,40 +32,6 @@ use GD;
 
 bc_check_domain_exp();
 
-=item bc_check_domain_exp()
-
-Checks whether any of my domains are within 60 days of expiration (nagios).
-
-=cut
-
-sub bc_check_domain_exp {
-  # TODO: generalize this a bit... but per domain testing would be ugly,
-  # since nagios would need 1 test per domain = bad?
-  my(@domains) = `egrep -v '^#|^ *\$' /home/barrycarter/mydomains.txt`;
-  my($now) = time();
-  for $i (@domains) {
-    chomp($i);
-    # cache long time and sleep to avoid overwhelming servers
-    my($out,$err,$res) = cache_command2("whois $i", "age=43200");
-    # no expiration date?
-    unless ($out=~/^\s*(Expiration Date|Expires on|Domain Expiration Date):\s*(.*?)$/m) {
-      print "ERR: No expiration date found: $i\n";
-      return 2;
-    }
-    my($date) = $2;
-    $date=~s/\s*$//isg;
-    my($exp) = (str2time($date)-$now)/86400;
-    if ($exp<60) {
-      printf("ERR: $i expires in %d < 60 days\n",$exp);
-      return 2;
-    }
-    printf("OK: $i expires in %d > 60 days\n",$exp);
-  }
-
-  print "All domains expire > 60 days\n";
-  return 0;
-}
-
 die "TESTING";
 
 my($out,$err,$res) = cache_command2("date +%x","age=30");

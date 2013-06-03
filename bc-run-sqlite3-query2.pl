@@ -9,62 +9,109 @@ require "/usr/local/lib/bclib.pl";
 # where the dbs are <h>(sadly, /sites/GIRLS/ does not work as well...)</h>
 # this is a really ugly hack so I can run on my home machine
 @dirpath = ("/home/barrycarter/LOCALHOST/20121228/DB", "/sites/DB");
+for $i (@dirpath) {if (-d $i) {chdir($i); last;}}
 
-for $i (@dirpath) {
-  if (-d $i) {chdir($i); last;}
+# check to see if db exists
+# TODO: add non-redundant error checking
+# parse hostname ($tld includes ".db." part)
+if ($ENV{HTTP_HOST}=~/^schema\.([a-z]+)\.(db|database)\.(.*?)$/i) {
+  # schema request($database, $tld)
+  check_db($1);
+  schema_request($1,"$2.$3");
+} elsif ($ENV{HTTP_HOST}=~/^([0-9a-f]+)\.([a-z]+)\.(db|database)\.(.*?)$/i) {
+  # request for existing query
+  check_db($2);
+  query_request($1,$2,"$3.$4");
+} elsif ($ENV{HTTP_HOST}=~/^post\.([a-z]+)\.(db|database)\.(.*?)$/i) {
+  # posting a new query
+  check_db($1,"$2.$3");
+  post_request($1,"$2.$3");
+} elsif ($ENV{HTTP_HOST}=~/^([a-z]+)\.(db|database)\.(.*?)$/i) {
+  # request for form only
+  check_db($1);
+  form_request($1,"$2.$3");
+} elsif ($ENV{HTTP_HOST}=~/^(db|database)\.(.*?)$/i) {
+  # request for list of dbs (currently not honored)
+  dblist_request("$1.$2");
+} else {
+  print "Content-type: text/html\n\nHostname $ENV{HTTP_HOST} not understood";
 }
 
-# parse hostname (tld includes the ".db" part
-# TODO: allow for just db.domain.com and list available dbs (if appropriate)
-if ($ENV{HTTP_HOST}=~/^([^\.]+)\.([^\.]+)\.(db|database)\.(.*?)$/i) {
-  # query or schema request
-  ($queryhash, $db, $tld) = ($1, $2, "$3.$4");
-} elsif ($ENV{HTTP_HOST}=~/^([^\.]+)\.(db|database)\.(.*?)$/i) {
-  # just tablename, no schema/query
-  ($queryhash, $db, $tld) = ("", $1, "$2.$3");
+exit();
+
+sub check_db {
+  my($db) = @_;
+
+  # doesnt exist
+  unless (-f "$db.db") {
+    print "Content-type: text/html\n\n";
+    webdie("$db.db: no such file");
+  }
+
+  return;
 }
 
-debug("VALS: $queryhash/$db/$tld");
-
-# special case for schema request
-if ($queryhash=~/^schema$/i) {
+# this subroutines are specific to this program thus not well documented
+sub schema_request {
+  my($db,$tld) = @_;
   print "Content-type: text/plain\n\n";
-  ($out,$err,$res) = cache_command2("echo '.schema' | sqlite3 $db.db");
+  my($out,$err,$res) = cache_command2("echo '.schema' | sqlite3 $db.db");
   if ($res) {webdie("SCHEMA ERROR: $err");}
   print $out;
-  exit(0);
 }
 
-# if query is md5 hash, query already in db
-if ($queryhash) {
-  $query = decode_base64(sqlite3val("SELECT query FROM requests WHERE md5='$queryhash' AND db='$db'", "requests.db"));
-} else {
+sub query_request {
+  my($hash,$db,$tld) = @_;
+  my($query) = decode_base64(sqlite3val("SELECT query FROM requests WHERE md5='$hash' AND db='$db'", "requests.db"));
+  # this routine will always print something
+  print "Content-type: text/html\n\n";
+
+  # no query returned?
+  unless ($query) {
+    webdie("$db exists, but no query with hash $hash. Try http://$db.$tld/");
+  }
+
+  # actually run query (use tmpfile to avoid command lin  danger)
+  my($tmp) = my_tmpfile("dbquery");
+  write_file("$query;", $tmp);
+  # avoid DOS by limiting cputime
+  my($out,$err,$res) = cache_command2("ulimit -t 5 && sqlite3 -html -header $db.db < $tmp");
+
+  # look at result
+
+  # error?
+  if ($res) {webdie("QUERY: $query<br>ERROR: $err<br>");}
+
+  # known good result; requesting rss?
+  if ($ENV{REQUEST_URI}=~/rss/i) {
+    local(*A);
+    open(A,"|/usr/local/bin/sqlite32rss.pl --title=$ENV{HTTP_HOST} --desc=DB_QUERY");
+    print A $out;
+    close(A);
+  } else {
+    # info about db
+    print read_file("$db.txt");
+    print $out;
+    form_request();
+  }
+}
+
+sub post_request {
+  my($db,$tld) = @_;
+  my($stdin) = <STDIN>;
+
+  # check this query, add it to requests.db, redirect to execute it
+  
+
+
+}
   # get query from POST data, strip query= + webdecode
   $query = <STDIN>;
   $query=~s/^query=//isg;
   $query=~s/\+/ /isg;
   $query=~s/\%([A-Fa-f0-9]{2})/pack('C', hex($1))/seg;
-}
 
 # TODO: cant preprint text/html since Location: directive later requires I NOT do that
-
-# test if db exists
-# TODO: code getting ugly, should cleanup
-unless (-f "$db.db") {
-print << "MARK"
-Content-type: text/html
-
-The database <b>$db</b> doesn't exist, or I've been instructed not to give it
-you, or maybe I'm just depressed and don't want to. Here I am, brain
-the size of a planet...
-
-Visit wordpress.barrycarter.info for more?
-
-MARK
-;
-
-  exit(0);
-}
 
 # db yes, hash no
 if ($queryhash && !$query) {

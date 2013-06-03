@@ -138,8 +138,11 @@ for $i (@db) {
   # after unfollowed
   if ($followers{$i->{target_id}}) {next;}
 
+  # avoid dupes on this list
+  if ($about_to_unfollow{$i->{target_id}}) {next;}
   # left with: people i followed 3+ days ago, have not followed back
   push(@unfollow,$i->{target_id});
+  $about_to_unfollow{$i->{target_id}} = 1;
   # never unfollow more than $unfollow_number at a time
   if ($#unfollow>$globopts{unfollow_number}) {last;}
 

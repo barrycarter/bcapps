@@ -901,6 +901,7 @@ DATE: 20130405
 1759 6 slices dominos medium pan pizza (italian sausage, onions), 1 bag sea salt fries
 2022 8 slices hard salami (8/3 servings), 3 bun-length ballpark franks
 
+# BELOW IS KNOWN INCOMPLETE; DOES NOT INCLUDE PORTION OF 1 CHEESE STICK
 SHORT: 2*MCD-FRIES@1508, 6*DOMINO-MEDIUM-PAN-IS-ONION@1759, 1*853762002009@1759, 2.66666666*044700010907@2022, 3*054500100210@2022
 
 DATE: 20130406
