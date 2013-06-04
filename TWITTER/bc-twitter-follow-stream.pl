@@ -46,6 +46,13 @@ for $i (keys %pass) {
   }
 }
 
+# TODO: load list of people each user has followed (and then
+# unfollowed) to avoid redundant following
+
+# TODO: people use hashtags a lot less than I expected; consider
+# searching for tweets with 'foo' not '#foo' (although that will
+# nominally slow down the matching process)
+
 # create filter (apparently adding '#' breaks things, hmmm)
 # but %23 works as it should
 my($filter) = join(",",(map("%23$_", keys %interest)));
@@ -61,8 +68,28 @@ while (<A>) {
     next;
   }
 
+  # to avoid "inbreeding", we only allow one follow per tweet, even if
+  # multiple users "want" this tweet
+  my($tweet_followed) = 0;
+
   %json = %{JSON::from_json($_)};
-  debug(unfold(%json));
+  debug("JSON",dump_var("json",[%json]));
+  # TODO: put entire tweet info into db so we don't lose anything
+  my($base64) = encode_base64($_);
+
+  debug("THUNK: $_",$base64);
+
+    # TODO: favor users who have rarer hashtags by sorting by last follow?
+    # TODO: if doing above, must do outside this loop though
+
+  # find the hashtags and who is interested in them
+  %interested = ();
+  # NOTE: this is REALLY hideous coding, pretty much me showing off
+  for $i (@{$json{entities}{hashtags}}) {
+    map($interested{$_}=$i->{text}, keys %{$interest{$i->{text}}});
+  }
+
+  debug(%interested);
 }
 
 # TODO: this function is ugly
