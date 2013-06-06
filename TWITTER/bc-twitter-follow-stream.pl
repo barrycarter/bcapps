@@ -68,28 +68,26 @@ while (<A>) {
     next;
   }
 
-  # to avoid "inbreeding", we only allow one follow per tweet, even if
-  # multiple users "want" this tweet
-  my($tweet_followed) = 0;
-
   %json = %{JSON::from_json($_)};
-  debug("JSON",dump_var("json",[%json]));
+  debug("JSON",dump_var("json",{%json}));
   # TODO: put entire tweet info into db so we don't lose anything
   my($base64) = encode_base64($_);
 
   debug("THUNK: $_",$base64);
 
-    # TODO: favor users who have rarer hashtags by sorting by last follow?
-    # TODO: if doing above, must do outside this loop though
-
   # find the hashtags and who is interested in them
   %interested = ();
   # NOTE: this is REALLY hideous coding, pretty much me showing off
   for $i (@{$json{entities}{hashtags}}) {
-    map($interested{$_}=$i->{text}, keys %{$interest{$i->{text}}});
+    map($interested{$_}=lc($i->{text}), keys %{$interest{lc($i->{text})}});
   }
 
-  debug(%interested);
+  # TODO: favor users who have rarer hashtags by sorting by last follow?
+#  my(@interested) = keys %interested;
+  for $i (randomize([keys %interested])) {
+    debug("IKEA: $i");
+    debug("$i to follow $json{user}{id} $json{user}{screen_name} for $json{text}, tweet number $json{id}");
+  }
 }
 
 # TODO: this function is ugly
