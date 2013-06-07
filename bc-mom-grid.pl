@@ -7,16 +7,22 @@
 
 require "/usr/local/lib/bclib.pl";
 
-$str = "new\nsize 1000,1000\nsetpixel 0,0,255,255,255\n";
+$gap = 75;
+$gridcolor = "0,0,255";
+$textcolor = "254,255,255";
+$width = 1000;
+$height = 675;
 
-for $i (0..10) {
-  $x = $i*100;
-  $str .= "line 0,$x,1000,$x,0,0,0\n";
-  $str .= "line $x,0,$x,1000,0,0,0\n";
-  for $j (0..10) {
-    $y = $j*100;
+$str = "new\nsize $width,$height\nsetpixel 0,0,255,255,255\n";
+
+for $i (0..$width/$gap) {
+  $x = $i*$gap;
+  $str .= "line 0,$x,1000,$x,$gridcolor\n";
+  $str .= "line $x,0,$x,1000,$gridcolor\n";
+  for $j (0..$height/$gap) {
+    $y = $j*$gap;
     $xp = $x+2;
-    $str .= "string 0,0,0,$xp,$y,small,$x,$y\n";
+    $str .= "string $textcolor,$xp,$y,small,$x,$y\n";
   }
 }
 
