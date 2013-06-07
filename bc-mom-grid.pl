@@ -17,8 +17,8 @@ $str = "new\nsize $width,$height\nsetpixel 0,0,255,255,255\n";
 
 for $i (0..$width/$gap) {
   $x = $i*$gap;
-  $str .= "line 0,$x,1000,$x,$gridcolor\n";
-  $str .= "line $x,0,$x,1000,$gridcolor\n";
+  $str .= "dline 0,$x,1000,$x,$gridcolor\n";
+  $str .= "dline $x,0,$x,1000,$gridcolor\n";
   for $j (0..$height/$gap) {
     $y = $j*$gap;
     $xp = $x+2;
