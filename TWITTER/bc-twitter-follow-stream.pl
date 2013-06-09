@@ -71,6 +71,7 @@ while (<A>) {
   %json = %{JSON::from_json($_)};
   debug("JSON",dump_var("json",{%json}));
   # TODO: put entire tweet info into db so we don't lose anything
+  # TODO: does this include info about user too? if not, request it?
   my($base64) = encode_base64($_);
 
   debug("THUNK: $_",$base64);
@@ -87,6 +88,51 @@ while (<A>) {
   for $i (randomize([keys %interested])) {
     debug("IKEA: $i");
     debug("$i to follow $json{user}{id} $json{user}{screen_name} for $json{text}, tweet number $json{id}");
+
+    # can $i follow $json{user}{id}?
+
+    # putting this in loop would do weird things to 'next', so not doing it
+    if ($ff{$i}{friends}{$json{user}{id}}) {
+      debug("$i can't follow $json{user}{id} $json{user}{screen_name}, already following");
+      next;
+    }
+
+    if ($ff{$i}{followers}{$json{user}{id}}) {
+      debug("$i won't follow $json{user}{id} $json{user}{screen_name}, since latter is already following");
+      next;
+    }
+
+    # TODO: be sure to use/initialize %alreadyfollowed
+    if ($alreadyfollowed{$i}{$json{user}{id}}) {
+      debug("$i won't follow $json{user}{id} $json{user}{screen_name}; already followed at one point, may or may not be following now");
+      next;
+    }
+
+    # TODO: if twitter has said "too many follows" (or other reasons),
+    # set this variable
+    if ($nextfollowtime{$i} > time()) {
+      debug("$i won't follow $json{user}{id} $json{user}{screen_name}; can't follow anyone until $nextfollowtime{$i}");
+      next;
+    }
+
+    debug("$i would follow $json{user}{id} $json{user}{screen_name}");
+    die "TESTING";
+
+    # at this point, we have no excuse not to follow, so let's try it
+    my($out,$err,$res) = cache_command2("sleep 1; curl -s -u '$i:$pass{$i}' -d 'user_id=$json{user}{id}' 'http://api.supertweet.net/1.1/friendships/create.json'","age=86400");
+
+    # the unknown failure <h>(my nickname in high school!)</h>
+    unless ($out=~/^\s*\{/) {
+      logmsg("FAIL: follow($i,$json{user}{screen_name}:$json{user}{screen_name}): result not JSON: $out");
+      next;
+    }
+
+    
+    
+
+
+
+
   }
 }
 
