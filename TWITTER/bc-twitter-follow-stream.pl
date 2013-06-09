@@ -3,6 +3,13 @@
 require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
 
+# program tends to die so I am lazily crontabbing this... however,
+# this means I must lock against double run
+unless (mylock("bctfs", "lock")) {
+  logmsg("LOCKED");
+  exit(0);
+}
+
 $db = "/usr/local/etc/bc-multi-follow.db";
 unless (-s $db) {die "$db: does not exist or empty";}
 
@@ -27,7 +34,7 @@ logmsg("START");
 # TODO: unfollow!!!
 
 # TODO: lower this in prod
-$cachetime = 3600;
+$cachetime = 30;
 
 # NOTE: not in git directory, since it contains private info
 @users = `egrep -v '^#' /home/barrycarter/20130603/users.txt`;
@@ -39,7 +46,7 @@ for $i (@users) {
   $pass{$user} = $pass;
   # parse interests
   for $j (split(/\,\s*/,$int)) {
-    $interest{$j}{$user} = 1;
+    $interest{lc($j)}{$user} = 1;
   }
 }
 
@@ -106,10 +113,16 @@ while (<A>) {
   # find the hashtags and who is interested in them
   %interested = ();
   # NOTE: this is REALLY hideous coding, pretty much me showing off
-  for $i (@{$json{entities}{hashtags}}) {
-    logmsg("\#$tweet_id HASHTAG: $i->{text}");
+  my(@hashtags) = @{$json{entities}{hashtags}};
+
+  @hashtagstext = ();
+  for $i (@hashtags) {
+#    logmsg("\#$tweet_id HASHTAG: $i->{text}");
+    push(@hashtagstext, $i->{text});
     map($interested{$_}=lc($i->{text}), keys %{$interest{lc($i->{text})}});
   }
+  my($hashtags) = join(", ",@hashtagstext);
+  logmsg("\#$tweet_id HASHTAGS: $hashtags");
 
   # TODO: favor users who have rarer hashtags by sorting by last follow?
 #  my(@interested) = keys %interested;
@@ -135,11 +148,10 @@ while (<A>) {
       next;
     }
 
-    # TODO: if twitter has said "too many follows" (or other reasons),
-    # set this variable
 
+    # TODO: move this test higher?
     if ($nextfollowtime{$i} > time()) {
-      logmsg("\#$tweet_id $i NOFOLLOW $twit_name:$twit_id (can't follow anyone until $nextfollowtime{$i}");
+      logmsg("\#$tweet_id $i NOFOLLOW $twit_name:$twit_id (can't follow anyone until $nextfollowtime{$i})");
       next;
     }
 
