@@ -24,6 +24,8 @@ logmsg("START");
 # NOTE: these are supertweet passwords and I use them to let users
 # follow others, NOT to connect to the stream
 
+# TODO: unfollow!!!
+
 # TODO: lower this in prod
 $cachetime = 3600;
 
@@ -45,10 +47,20 @@ for $i (@users) {
 for $i (keys %pass) {
   for $j ("friends","followers") {
     my(@ff) = twitter_friends_followers_ids($j,$i,$pass{$i});
+    logmsg("START: $i has $#ff+1 $j");
     for $k (@ff) {
       $ff{$i}{$j}{$k}=1;
     }
   }
+}
+
+my(@res) = sqlite3hashlist("SELECT * FROM bc_multi_follow", $db);
+logmsg("START: $#res+1 rows in database");
+
+for $i (@res) {
+  unless ($i->{action} eq "SOURCE_FOLLOWS_TARGET") {next;}
+  my($source,$target) = ($i->{source_id},$i->{target_id});
+  $alreadyfollowed{$source}{$target}=1;
 }
 
 # TODO: load list of people each user has followed (and then
@@ -75,7 +87,7 @@ while (<A>) {
     next;
   }
 
-  if (++$count > 10) {die "TESTING";}
+#  if (++$count > 4) {die "TESTING";}
 
   %json = %{JSON::from_json($_)};
 
@@ -104,21 +116,21 @@ while (<A>) {
   for $i (randomize([keys %interested])) {
     logmsg("\#$tweet_id HASHTAG: $interested{$i} INTERESTS: $i");
 
-    # can $i follow $json{user}{id}?
+    # can $i follow $twit_id ?
 
     # putting this in loop would do weird things to 'next', so not doing it
-    if ($ff{$i}{friends}{$json{user}{id}}) {
+    if ($ff{$i}{friends}{$twit_id}) {
       logmsg("\#$tweet_id $i NOFOLLOW $twit_name:$twit_id (already following)");
       next;
     }
 
-    if ($ff{$i}{followers}{$json{user}{id}}) {
+    if ($ff{$i}{followers}{$twit_id}) {
       logmsg("\#$tweet_id $i NOFOLLOW $twit_name:$twit_id (twit already follows)");
       next;
     }
 
     # TODO: be sure to use/initialize %alreadyfollowed
-    if ($alreadyfollowed{$i}{$json{user}{id}}) {
+    if ($alreadyfollowed{$i}{$twit_id}) {
       logmsg("\#$tweet_id $i NOFOLLOW $twit_name:$twit_id (already followed once)");
       next;
     }
@@ -130,6 +142,9 @@ while (<A>) {
       logmsg("\#$tweet_id $i NOFOLLOW $twit_name:$twit_id (can't follow anyone until $nextfollowtime{$i}");
       next;
     }
+
+    # TODO: if no one can follow due to nextfollowtime, wait until
+    # first one who can
 
     logmsg("\#$tweet_id $i FOLLOW $twit_name:$twit_id ATTEMPT");
 
@@ -157,9 +172,14 @@ while (<A>) {
     # the JSON of the reply
     %json_reply = %{JSON::from_json($out)};
 
-    # TODO: ignoring possibility that json_reply is weird for now
-  
+    # reply is JSON, but error
+    unless ($json_reply{screen_name} eq $twit_name) {
+      logmsg("\#$tweet_id $i FOLLOW $twit_name:$twit_id FAIL (bad JSON reply): $out");
+      next;
+    }
+
     logmsg("\#$tweet_id $i FOLLOW $twit_name:$twit_id SUCCESS");
+    $ff{$i}{friends}{$twit_id} = 1;
     # add to db (using self-computed timestamp to be safe)
     $now = time();
     $query = << "MARK";
