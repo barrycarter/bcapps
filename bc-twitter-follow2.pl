@@ -185,14 +185,6 @@ if ($globopts{email}) {
   sendmail("tweety\@barrycarter.info", $globopts{email}, "bc-twitter-follow log ($globopts{username})", $logs);
 }
 
-# the end-user log (without all my crappy debugging statements)
-sub logmsg {
-  my($str) = join(" ",@_);
-  $str=~s/\s+/ /isg;
-  my($date) = strftime("[%Y%m%d.%H%M%S] $str\n",gmtime());
-  push(@logs,$date);
-}
-
 =item create_db($file)
 
 Create SQLite3 db in file $file
@@ -296,3 +288,12 @@ sub twitter_friends_followers_ids {
   return @res;
 
 }
+
+# the end-user log (without all my crappy debugging statements)
+sub logmsg {
+  my($str) = join(" ",@_);
+  $str=~s/\s+/ /isg;
+  my($date) = strftime("[%Y%m%d.%H%M%S] $str\n",gmtime());
+  push(@logs,$date);
+}
+

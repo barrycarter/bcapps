@@ -1,0 +1,155 @@
+[JSON decoded sample tweet]
+
+json->{'contributors'} = undef;
+
+json->{'coordinates'} = undef;
+
+json->{'created_at'} = 'Sun Jun 09 04:16:08 +0000 2013';
+
+json->{'entities'}->{'hashtags'}->[0]->{'indices'}->[0] = 45;
+
+json->{'entities'}->{'hashtags'}->[0]->{'indices'}->[1] = 51;
+
+json->{'entities'}->{'hashtags'}->[0]->{'text'} = 'weird';
+
+json->{'entities'}->{'hashtags'}->[1]->{'indices'}->[0] = 52;
+
+json->{'entities'}->{'hashtags'}->[1]->{'indices'}->[1] = 56;
+
+json->{'entities'}->{'hashtags'}->[1]->{'text'} = 'car';
+
+json->{'entities'}->{'hashtags'}->[2]->{'indices'}->[0] = 57;
+
+json->{'entities'}->{'hashtags'}->[2]->{'indices'}->[1] = 61;
+
+json->{'entities'}->{'hashtags'}->[2]->{'text'} = 'mom';
+
+json->{'entities'}->{'hashtags'}->[3]->{'indices'}->[0] = 62;
+
+json->{'entities'}->{'hashtags'}->[3]->{'indices'}->[1] = 68;
+
+json->{'entities'}->{'hashtags'}->[3]->{'text'} = 'music';
+
+json->{'entities'}->{'urls'}->[0]->{'display_url'} = 'vine.co/v/bLTd0Ej5brP';
+
+json->{'entities'}->{'urls'}->[0]->{'expanded_url'} = 'https://vine.co/v/bLTd0Ej5brP';
+
+json->{'entities'}->{'urls'}->[0]->{'indices'}->[0] = 69;
+
+json->{'entities'}->{'urls'}->[0]->{'indices'}->[1] = 92;
+
+json->{'entities'}->{'urls'}->[0]->{'url'} = 'https://t.co/frre31Uxtb';
+
+json->{'favorite_count'} = 0;
+
+json->{'favorited'} = bless( do{\(my $o = 0)}, 'JSON::XS::Boolean' );
+
+json->{'filter_level'} = 'medium';
+
+json->{'geo'} = undef;
+
+json->{'id'} = '343582257837129728';
+
+json->{'id_str'} = '343582257837129728';
+
+json->{'in_reply_to_screen_name'} = undef;
+
+json->{'in_reply_to_status_id'} = undef;
+
+json->{'in_reply_to_status_id_str'} = undef;
+
+json->{'in_reply_to_user_id'} = undef;
+
+json->{'in_reply_to_user_id_str'} = undef;
+
+json->{'lang'} = 'en';
+
+json->{'place'} = undef;
+
+json->{'possibly_sensitive'} = bless( do{\(my $o = 0)}, 'JSON::XS::Boolean' );
+
+json->{'retweet_count'} = 0;
+
+json->{'retweeted'} = bless( do{\(my $o = 0)}, 'JSON::XS::Boolean' );
+
+json->{'source'} = '<a href="http://vine.co" rel="nofollow">Vine - Make a Scene</a>';
+
+json->{'text'} = 'Lol doing weird shit in the car with the mom #weird #car #mom #music https://t.co/frre31Uxtb';
+
+json->{'truncated'} = bless( do{\(my $o = 0)}, 'JSON::XS::Boolean' );
+
+json->{'user'}->{'contributors_enabled'} = bless( do{\(my $o = 0)}, 'JSON::XS::Boolean' );
+
+json->{'user'}->{'created_at'} = 'Fri Jan 25 23:13:43 +0000 2013';
+
+json->{'user'}->{'default_profile'} = bless( do{\(my $o = 0)}, 'JSON::XS::Boolean' );
+
+json->{'user'}->{'default_profile_image'} = bless( do{\(my $o = 0)}, 'JSON::XS::Boolean' );
+
+json->{'user'}->{'description'} = 'Instagram: sashagurkan  Tumblr: sashagurkan   and don\'t forget to be yourself :)';
+
+json->{'user'}->{'favourites_count'} = 100;
+
+json->{'user'}->{'follow_request_sent'} = undef;
+
+json->{'user'}->{'followers_count'} = 66;
+
+json->{'user'}->{'following'} = undef;
+
+json->{'user'}->{'friends_count'} = 172;
+
+json->{'user'}->{'geo_enabled'} = bless( do{\(my $o = 0)}, 'JSON::XS::Boolean' );
+
+json->{'user'}->{'id'} = 1120483183;
+
+json->{'user'}->{'id_str'} = '1120483183';
+
+json->{'user'}->{'is_translator'} = bless( do{\(my $o = 0)}, 'JSON::XS::Boolean' );
+
+json->{'user'}->{'lang'} = 'en';
+
+json->{'user'}->{'listed_count'} = 0;
+
+json->{'user'}->{'location'} = '';
+
+json->{'user'}->{'name'} = 'Sasha Gurkan';
+
+json->{'user'}->{'notifications'} = undef;
+
+json->{'user'}->{'profile_background_color'} = 'ACDED6';
+
+json->{'user'}->{'profile_background_image_url'} = 'http://a0.twimg.com/images/themes/theme18/bg.gif';
+
+json->{'user'}->{'profile_background_image_url_https'} = 'https://si0.twimg.com/images/themes/theme18/bg.gif';
+
+json->{'user'}->{'profile_background_tile'} = bless( do{\(my $o = 0)}, 'JSON::XS::Boolean' );
+
+json->{'user'}->{'profile_banner_url'} = 'https://pbs.twimg.com/profile_banners/1120483183/1369874668';
+
+json->{'user'}->{'profile_image_url'} = 'http://a0.twimg.com/profile_images/3773907360/dc7b24e66b21254e7b326174036172c4_normal.jpeg';
+
+json->{'user'}->{'profile_image_url_https'} = 'https://si0.twimg.com/profile_images/3773907360/dc7b24e66b21254e7b326174036172c4_normal.jpeg';
+
+json->{'user'}->{'profile_link_color'} = '038543';
+
+json->{'user'}->{'profile_sidebar_border_color'} = 'EEEEEE';
+
+json->{'user'}->{'profile_sidebar_fill_color'} = 'F6F6F6';
+
+json->{'user'}->{'profile_text_color'} = '333333';
+
+json->{'user'}->{'profile_use_background_image'} = bless( do{\(my $o = 1)}, 'JSON::XS::Boolean' );
+
+json->{'user'}->{'protected'} = bless( do{\(my $o = 0)}, 'JSON::XS::Boolean' );
+
+json->{'user'}->{'screen_name'} = 'SashaGurkan';
+
+json->{'user'}->{'statuses_count'} = 151;
+
+json->{'user'}->{'time_zone'} = 'Eastern Time (US & Canada)';
+
+json->{'user'}->{'url'} = undef;
+
+json->{'user'}->{'utc_offset'} = -18000;
+
+json->{'user'}->{'verified'} = bless( do{\(my $o = 0)}, 'JSON::XS::Boolean' );

@@ -3,6 +3,11 @@
 require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
 
+$db = "/usr/local/etc/bc-multi-follow.db";
+unless (-s $db) {die "$db: does not exist or empty";}
+
+logmsg("START");
+
 # TODO: if silent too long, check connection
 
 # allows multiple people (not just me) to follow others based on
@@ -59,80 +64,117 @@ my($filter) = join(",",(map("%23$_", keys %interest)));
 # my($filter) = join(",",keys %interest);
 
 # connect to twitter stream (using MY TWITTER pw, not users supertweet pw)
-my($cmd) = "curl -N -s -u $twitter{user}:$twitter{pass} 'https://stream.twitter.com/1/statuses/filter.json?track=$filter'";
+my($cmd) = "curl -N -s -u $twitter{user}:$twitter{pass} 'https://stream.twitter.com/1/statuses/filter.json?track=$filter&stall_warnings=true'";
 open(A,"$cmd|");
+
+logmsg("ENTERING MAIN LOOP");
 
 while (<A>) {
   unless (/^\{/) {
-    debug("NOT JSON, IGNORED: $_");
+    logmsg("STREAM: BAD TWEET: #_");
     next;
   }
 
+  if (++$count > 10) {die "TESTING";}
+
   %json = %{JSON::from_json($_)};
-  debug("JSON",dump_var("json",{%json}));
+
+  # convenience vars
+  my($tweet_id, $twit_name, $twit_id, $tweet_body) = 
+    ($json{id}, $json{user}{screen_name}, $json{user}{id}, $json{text});
+
+  # log this tweet
+  logmsg("\#$tweet_id ($twit_name:$twit_id) $tweet_body");
+
   # TODO: put entire tweet info into db so we don't lose anything
   # TODO: does this include info about user too? if not, request it?
   my($base64) = encode_base64($_);
-
-  debug("THUNK: $_",$base64);
+  $base64=~s/\s+//isg;
 
   # find the hashtags and who is interested in them
   %interested = ();
   # NOTE: this is REALLY hideous coding, pretty much me showing off
   for $i (@{$json{entities}{hashtags}}) {
+    logmsg("\#$tweet_id HASHTAG: $i->{text}");
     map($interested{$_}=lc($i->{text}), keys %{$interest{lc($i->{text})}});
   }
 
   # TODO: favor users who have rarer hashtags by sorting by last follow?
 #  my(@interested) = keys %interested;
   for $i (randomize([keys %interested])) {
-    debug("IKEA: $i");
-    debug("$i to follow $json{user}{id} $json{user}{screen_name} for $json{text}, tweet number $json{id}");
+    logmsg("\#$tweet_id HASHTAG: $interested{$i} INTERESTS: $i");
 
     # can $i follow $json{user}{id}?
 
     # putting this in loop would do weird things to 'next', so not doing it
     if ($ff{$i}{friends}{$json{user}{id}}) {
-      debug("$i can't follow $json{user}{id} $json{user}{screen_name}, already following");
+      logmsg("\#$tweet_id $i NOFOLLOW $twit_name:$twit_id (already following)");
       next;
     }
 
     if ($ff{$i}{followers}{$json{user}{id}}) {
-      debug("$i won't follow $json{user}{id} $json{user}{screen_name}, since latter is already following");
+      logmsg("\#$tweet_id $i NOFOLLOW $twit_name:$twit_id (twit already follows)");
       next;
     }
 
     # TODO: be sure to use/initialize %alreadyfollowed
     if ($alreadyfollowed{$i}{$json{user}{id}}) {
-      debug("$i won't follow $json{user}{id} $json{user}{screen_name}; already followed at one point, may or may not be following now");
+      logmsg("\#$tweet_id $i NOFOLLOW $twit_name:$twit_id (already followed once)");
       next;
     }
 
     # TODO: if twitter has said "too many follows" (or other reasons),
     # set this variable
+
     if ($nextfollowtime{$i} > time()) {
-      debug("$i won't follow $json{user}{id} $json{user}{screen_name}; can't follow anyone until $nextfollowtime{$i}");
+      logmsg("\#$tweet_id $i NOFOLLOW $twit_name:$twit_id (can't follow anyone until $nextfollowtime{$i}");
       next;
     }
 
-    debug("$i would follow $json{user}{id} $json{user}{screen_name}");
-    die "TESTING";
+    logmsg("\#$tweet_id $i FOLLOW $twit_name:$twit_id ATTEMPT");
 
     # at this point, we have no excuse not to follow, so let's try it
     my($out,$err,$res) = cache_command2("sleep 1; curl -s -u '$i:$pass{$i}' -d 'user_id=$json{user}{id}' 'http://api.supertweet.net/1.1/friendships/create.json'","age=86400");
+ 
+   # we may put this in db too
+    my($base64_reply) = encode_base64($out);
+    $base64_reply=~s/\s+//isg;
 
     # the unknown failure <h>(my nickname in high school!)</h>
     unless ($out=~/^\s*\{/) {
-      logmsg("FAIL: follow($i,$json{user}{screen_name}:$json{user}{screen_name}): result not JSON: $out");
+      logmsg("\#$tweet_id $i FOLLOW $twit_name:$twit_id FAIL (response was not JSON): $out");
       next;
     }
 
-    
-    
+    # too many follows
+    if ($out=~/You are unable to follow more people at this time/i) {
+      logmsg("\#$tweet_id $i FOLLOW $twit_name:$twit_id FAIL (unable to follow more people)");
+      $nextfollowtime{$i} = time()+15*60;
+      logmsg("\#$tweet_id $i THROTTLED for 15m (until $nextfollowtime{$i})");
+      next;
+    }
 
+    # the JSON of the reply
+    %json_reply = %{JSON::from_json($out)};
 
+    # TODO: ignoring possibility that json_reply is weird for now
+  
+    logmsg("\#$tweet_id $i FOLLOW $twit_name:$twit_id SUCCESS");
+    # add to db (using self-computed timestamp to be safe)
+    $now = time();
+    $query = << "MARK";
+INSERT INTO bc_multi_follow 
+ (source_id, target_id, target_name, action, time, tweet, follow_reply)
+VALUES
+ ('$i', '$twit_id', '$twit_name', 'SOURCE_FOLLOWS_TARGET', $now,
+  '$base64', '$base64_reply')
+MARK
+;
 
+    sqlite3($query, $db);
 
+    # only one follow per tweet to avoid 'inbreeding'
+    last;
   }
 }
 
@@ -153,5 +195,32 @@ sub twitter_friends_followers_ids {
   } until (!$cursor);
 
   return @res;
-
 }
+
+# logging for this program (auto timestamping)
+sub logmsg {
+  my($str) = join(" ",@_);
+  $str=~s/\s+/ /isg;
+  my($date) = strftime("[%Y%m%d.%H%M%S] $str\n",gmtime());
+  # this program runs forever so just spew logs to STDOUT for now
+  print "$date\n";
+}
+
+
+=item schema
+
+Schema of the twitter follow db for multiple user names:
+
+CREATE TABLE bc_multi_follow (
+ source_id BIGINT,
+ target_id BIGINT,
+ target_name TEXT,
+ action TEXT,
+ time BIGINT,
+ tweet TEXT,
+ follow_reply TEXT,
+ timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+=cut
+
