@@ -3,6 +3,9 @@
 require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
 
+# for logging purposes
+$|=1;
+
 # program tends to die so I am lazily crontabbing this... however,
 # this means I must lock against double run
 unless (mylock("bctfs", "lock")) {
@@ -89,6 +92,17 @@ open(A,"$cmd|");
 logmsg("ENTERING MAIN LOOP");
 
 while (<A>) {
+
+  # if no one can follow, sleep
+  $now = time();
+  @nextfollow = sort {$a <=> $b} values %nextfollowtime;
+  debug("NF",@nextfollow);
+  if ($nextfollow[0] > $now) {
+    my($sleep) = $nextfollow[0]-$now;
+    logmsg("SLEEP: $sleep seconds until next possible follow");
+    sleep($sleep);
+  }
+
   unless (/^\{/) {
     logmsg("STREAM: BAD TWEET: #_");
     next;
