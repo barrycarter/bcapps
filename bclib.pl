@@ -296,9 +296,17 @@ Write $string to $file
 =cut
 
 sub write_file {
+  my($string, $file) = @_;
   local(*A);
-  open(A,">$_[1]")||warnlocal("Can't open $_[1], $!");
-  print A $_[0];
+
+  # this may be a terrible idea (creating directory if doesnt exist)
+  my($dir) = $file;
+  if ($dir=~s/\/[^\/]+?$//isg) {
+    unless (-d $dir) {system("mkdir -p $dir");}
+  }
+
+  open(A,">$file")||warnlocal("Can't open $file, $!");
+  print A $string;
   close(A);
 }
 
@@ -2695,6 +2703,8 @@ action = "unlock"
 
 returns 1 on success, 0 on failure (including case where lock already held)
 
+If --ignorelock is set, always returns 1
+
 TODO: improve this to only warn when asked
 
 TODO: this code is hideous, improve it
@@ -2711,6 +2721,9 @@ sub mylock {
   my($name,$action) = @_;
   my($lockdir) = "/usr/local/etc/locks";
   my($text);
+
+  # global override (dangerous, assuming user knows what they're doing)
+  if ($globopts{ignorelock}) {return 1;}
 
   # if unlocking...
   if ($action eq "unlock") {

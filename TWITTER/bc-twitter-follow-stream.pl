@@ -1,5 +1,19 @@
 #!/bin/perl
 
+# allows multiple people (not just me) to follow others based on
+# individualized interests from the live twitter stream
+
+# NOTE: I use *my* (not clients) *twitter* (not supertweet) id to
+# connect to the stream. In other words, I could run this program for
+# other people using my twitter username/password, even if I didn't
+# want to follow anyone myself
+
+# This file contains lines like:
+# user1:pass1:list,of,interests,for,user,1
+# user2:pass2:list,of,interests,for,user,2
+# NOTE: these are supertweet passwords and I use them to let users
+# follow others, NOT to connect to the stream
+
 require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
 
@@ -20,20 +34,6 @@ logmsg("START");
 
 # TODO: if silent too long, check connection
 
-# allows multiple people (not just me) to follow others based on
-# individualized interests from the live twitter stream
-
-# NOTE: I use *my* (not clients) *twitter* (not supertweet) id to
-# connect to the stream. In other words, I could run this program for
-# other people using my twitter username/password, even if I didn't
-# want to follow anyone myself
-
-# This file contains lines like:
-# user1:pass1:list,of,interests,for,user,1
-# user2:pass2:list,of,interests,for,user,2
-# NOTE: these are supertweet passwords and I use them to let users
-# follow others, NOT to connect to the stream
-
 # TODO: unfollow!!!
 
 # TODO: lower this in prod
@@ -51,26 +51,32 @@ for $i (@users) {
   for $j (split(/\,\s*/,$int)) {
     $interest{lc($j)}{$user} = 1;
   }
+  # initialize nextfollowtime (should be unnecessary, but...)
+  $nextfollowtime{$user} = 0;
 }
 
-# friends/followers for each user
-for $i (keys %pass) {
-  for $j ("friends","followers") {
-    my(@ff) = twitter_friends_followers_ids($j,$i,$pass{$i});
-    logmsg("START: $i has $#ff+1 $j");
-    for $k (@ff) {
-      $ff{$i}{$j}{$k}=1;
-    }
-  }
-}
-
+# TODO: the fact that I'm loading the entire db here suggests I'm
+# doing something wrong (and/or could just use a flat file)
 my(@res) = sqlite3hashlist("SELECT * FROM bc_multi_follow", $db);
 logmsg("START: $#res+1 rows in database");
 
 for $i (@res) {
   unless ($i->{action} eq "SOURCE_FOLLOWS_TARGET") {next;}
-  my($source,$target) = ($i->{source_id},$i->{target_id});
-  $alreadyfollowed{$source}{$target}=1;
+  my($source,$target,$time) = ($i->{source_id},$i->{target_id},$i->{time});
+  # we will need 'when followed' for unfollows later
+  $alreadyfollowed{$source}{$target}=$time;
+  $whenfollowed{$time}{$source}{$target} = 1;
+}
+
+# not using this yet, but it will help later
+@whenfollowed = sort {$a <=> $b} (keys %whenfollowed);
+
+for $i (@whenfollowed) {
+  for $j (keys %{$whenfollowed{$i}}) {
+    for $k (keys %{$whenfollowed{$i}{$j}}) {
+      debug("$i, $j, $k");
+    }
+  }
 }
 
 # TODO: load list of people each user has followed (and then
@@ -86,7 +92,7 @@ my($filter) = join(",",(map("%23$_", keys %interest)));
 # my($filter) = join(",",keys %interest);
 
 # connect to twitter stream (using MY TWITTER pw, not users supertweet pw)
-my($cmd) = "curl -N -s -u $twitter{user}:$twitter{pass} 'https://stream.twitter.com/1/statuses/filter.json?track=$filter&stall_warnings=true'";
+my($cmd) = "curl -N -s -u $twitter{user}:$twitter{pass} 'https://stream.twitter.com/1/statuses/filter.json?track=$filter&stall_warnings=true&lang=en'";
 open(A,"$cmd|");
 
 logmsg("ENTERING MAIN LOOP");
@@ -95,13 +101,18 @@ while (<A>) {
 
   # if no one can follow, sleep
   $now = time();
+  # think this sorts blanks improperly?
   @nextfollow = sort {$a <=> $b} values %nextfollowtime;
-  debug("NF",@nextfollow);
+  $nextfollow = join(", ",@nextfollow);
+  logmsg("DEBUG: $nextfollow");
   if ($nextfollow[0] > $now) {
     my($sleep) = $nextfollow[0]-$now;
     logmsg("SLEEP: $sleep seconds until next possible follow");
     sleep($sleep);
   }
+
+  # actual updates occur once an hour
+  update_ff();
 
   unless (/^\{/) {
     logmsg("STREAM: BAD TWEET: #_");
@@ -232,9 +243,11 @@ sub twitter_friends_followers_ids {
   my($cursor) = -1;
   my(@res);
 
-  # twitter returns 5K or so results at a time, so loop using "next cursor"
+  # twitter returns 5K or so results at a time, so loop using "next
+  # cursor" age=0 below, since we are now only called from another
+  # subroutine that does its own timekeeping
   do {
-    ($out,$err,$res) = cache_command2("curl -s -u '$user:$pass' '$TWITST/$which/ids.json?cursor=$cursor'", "age=$cachetime");
+    ($out,$err,$res) = cache_command2("curl -s -u '$user:$pass' '$TWITST/$which/ids.json?cursor=$cursor'", "age=0");
     my(%hash) = %{JSON::from_json($out)};
     push(@res, @{$hash{ids}});
     $cursor = $hash{next_cursor};
@@ -269,4 +282,33 @@ CREATE TABLE bc_multi_follow (
 );
 
 =cut
+
+# updates friends/followers every hour (this subroutine is specific to
+# this program)
+
+sub update_ff {
+  my($now) = time();
+  # this allows updates to survive restarting program
+  my($lastupdate) = read_file("/var/tmp/bctfs/ff.txt");
+  if ($now-$lastupdate<3600) {
+    return;
+  }
+
+  logmsg("FF: UPDATING");
+  # intentionally NOT removing friends/followers, only adding to
+  # global %ff hash
+  for $i (keys %pass) {
+    for $j ("friends","followers") {
+      my(@ff) = twitter_friends_followers_ids($j,$i,$pass{$i});
+      logmsg("FF: $i has $#ff+1 $j");
+      for $k (@ff) {
+	$ff{$i}{$j}{$k}=1;
+      }
+    }
+  }
+
+  # and record update
+  write_file($now,"/var/tmp/bctfs/ff.txt");
+}
+
 
