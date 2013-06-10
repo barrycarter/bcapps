@@ -3398,7 +3398,7 @@ sub cache_command2 {
   # make sure dir exists
   unless (-d "/var/tmp/cache/$d1/$d2") {
     # /tmp style directory
-    system("mkdir -p /var/tmp/cache/$d1/$d2; chmod 1777 /var/tmp/cache/$d1/$d2");
+    system("mkdir -p /var/tmp/cache/$d1/$d2; chmod -f 1777 /var/tmp/cache/$d1 /var/tmp/cache/$d1/$d2");
   }
 
   # TODO: slightly inefficient to compute this when unneeded

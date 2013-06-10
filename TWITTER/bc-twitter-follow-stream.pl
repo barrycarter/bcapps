@@ -217,6 +217,11 @@ while (<A>) {
 
     logmsg("\#$tweet_id $i FOLLOW $twit_name:$twit_id SUCCESS");
     $ff{$i}{friends}{$twit_id} = 1;
+
+    # keep whenfollowed hash and list up to date
+    unless ($whenfollowed{$now}) {push(@whenfollowed,$now);}
+    $whenfollowed{$now}{$i}{$twit_id} = 1;
+
     # add to db (using self-computed timestamp to be safe)
     $now = time();
     $query = << "MARK";
