@@ -1,5 +1,6 @@
 # no autologout
 unset autologout
-# largest useful path
-setenv PATH /sbin:/usr/bin:/bin:/usr/local/bin
+# largest useful path (/usr/local/bin must come before /usr/bin for
+# right sqlite3 to run, sigh)
+setenv PATH /sbin:/usr/local/bin:/usr/bin:/bin
 

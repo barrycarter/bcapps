@@ -204,3 +204,14 @@ chmod 755 / /etc /etc/mail
 ln -s /usr/local/bin/bc-run-sqlite3-query2.pl /sites/DB/index.pl
 
 % TODO: change things like ns*.barrycarter.info to point to bcinfo3
+
+% auto-installed sqlite is wrong version, so
+
+curl -O http://www.sqlite.org/2013/sqlite-autoconf-3071700.tar.gz
+tar xvfz sqlite-autoconf-3071700.tar.gz
+cd sqlite-autoconf-3071700
+sh configure
+make
+
+: removing older sqlite would break deps, so have to do it this way
+rpm --nodeps -e sqlite
