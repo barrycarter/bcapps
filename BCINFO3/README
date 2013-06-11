@@ -215,3 +215,6 @@ make
 
 : removing older sqlite would break deps, so have to do it this way
 rpm --nodeps -e sqlite
+
+% TODO: start rsyncing bcinfo3 logs as well
+

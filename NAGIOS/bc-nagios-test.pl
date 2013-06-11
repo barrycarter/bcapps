@@ -284,9 +284,8 @@ sub bc_nagios_file_size {
   my($cmd) = "stat $file | fgrep Size:";
 
   # if not localhost, use ssh to get results
-  # TODO: hardcoding here is bad
-  if ($ENV{NAGIOS_HOSTNAME} eq "bcinfo") {
-    $cmd = "ssh -i /home/barrycarter/.ssh/id_rsa.bc root\@bcinfo '$cmd'";
+  if ($ENV{NAGIOS_HOSTNAME} ne "localhost") {
+    $cmd = "ssh -i /home/barrycarter/.ssh/id_rsa.bc root\@$ENV{NAGIOS_HOSTNAME} '$cmd'";
   }
 
   my($stat,$err,$res) = cache_command($cmd);
