@@ -99,8 +99,67 @@ logmsg("ENTERING MAIN LOOP");
 
 while (<A>) {
 
-  # if no one can follow, sleep
+  # TODO: undo
+  $globopts{debug}=1;
+
   $now = time();
+
+  # actual updates occur once an hour
+  update_ff();
+
+  # TODO: find unfollows (unfollows ARE blocked by "no more follows",
+  # which is bad)
+  # TODO: seriously subroutineize!
+  # 25h allows for ff to be 1hr behind
+  debug("WF: $whenfollowed[0]");
+  if ($whenfollowed[0] < $now-25*3600) {
+    # dont look at the same follow/fellow twice
+    my($drop) = shift(@whenfollowed);
+    for $i (keys %{$whenfollowed{$drop}}) {
+      for $j (keys %{$whenfollowed{$drop}{$i}}) {
+	debug("$drop/$i/$j");
+	# is $i following $j at all?
+	unless ($ff{$i}{friends}{$j}) {
+	  debug("$i can't unfollow $j: not following");
+	  next;
+	}
+	# have they reciprocated? (if yes, don't drop?)
+	# TODO: could have an "evil" option to drop anyway
+	if ($ff{$i}{followers}{$j}) {
+	  debug("$i follow reciprocated by $j (so not dropping)");
+	  next;
+	}
+
+	# now the drop case
+	my($out,$err,$res) = cache_command2("sleep 1; curl -s -u '$i:$pass{$i}' -d 'user_id=$j' 'http://api.supertweet.net/1.1/friendships/destroy.json'","age=86400");
+	my($out64) = encode_base64("<out>$out</out>\n<err>$err</err>\n<res>$res</res>\n");
+	# remove from hash
+	delete $ff{$i}{friends}{$j};
+	# log in db (we don't have twit name here or tweet, not sure I care)
+	my($query) = << "MARK";
+INSERT INTO bc_multi_follow 
+ (source_id, target_id, action, time, follow_reply)
+VALUES
+ ('$i', '$j', 'SOURCE_UNFOLLOWS_TARGET', $now, '$out64')
+
+MARK
+;
+	sqlite3($query, $db);
+	# and log
+	logmsg("UNFOLLOW: $i UNFOLLOW $j ATTEMPT (did not reciprocate follow at $drop)");
+
+	# for testing
+	die "TESTING";
+      }
+    }
+
+    # TODO: this should not be "next" except in testing
+    next;
+  }
+
+  die "TESTING"; # should never actually get here, but...
+
+  # if no one can follow, sleep
   # think this sorts blanks improperly?
   @nextfollow = sort {$a <=> $b} values %nextfollowtime;
   $nextfollow = join(", ",@nextfollow);
@@ -110,9 +169,6 @@ while (<A>) {
     logmsg("SLEEP: $sleep seconds until next possible follow");
     sleep($sleep);
   }
-
-  # actual updates occur once an hour
-  update_ff();
 
   unless (/^\{/) {
     logmsg("STREAM: BAD TWEET: #_");
@@ -289,23 +345,35 @@ CREATE TABLE bc_multi_follow (
 =cut
 
 # updates friends/followers every hour (this subroutine is specific to
-# this program)
+# this program); also writes to file for debugging
 
 sub update_ff {
   my($now) = time();
-  # this allows updates to survive restarting program
+
+  # when this subroutine was last run
   my($lastupdate) = read_file("/var/tmp/bctfs/ff.txt");
-  if ($now-$lastupdate<3600) {
-    return;
-  }
+
+  # if less than an hour ago, and in this instance (ie, %ff is
+  # defined), do nothing
+  if ($now-$lastupdate<3600 && %ff) {return;}
 
   logmsg("FF: UPDATING");
   # intentionally NOT removing friends/followers, only adding to
   # global %ff hash
   for $i (keys %pass) {
     for $j ("friends","followers") {
-      my(@ff) = twitter_friends_followers_ids($j,$i,$pass{$i});
-      logmsg("FF: $i has $#ff+1 $j");
+      my(@ff);
+      # if less than an hour ago, but in different instance, load from files
+      if ($now-$lastupdate<3600 && -f "/var/tmp/bctfs/$i-$j.txt") {
+	@ff = split(/\n/, read_file("/var/tmp/bctfs/$i-$j.txt"));
+	logmsg("FF: $i has $#ff+1 $j (cached)");
+      } else {
+	@ff = twitter_friends_followers_ids($j,$i,$pass{$i});
+	# write these to file
+	write_file(join("\n",@ff)."\n","/var/tmp/bctfs/$i-$j.txt");
+	logmsg("FF: $i has $#ff+1 $j (not cached)");
+      }
+
       for $k (@ff) {
 	$ff{$i}{$j}{$k}=1;
       }
