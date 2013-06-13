@@ -752,7 +752,7 @@ points. The list must be passed by reference, and is actually a 1-D
 list where each 2 element pair is treated like a 2-element list.
 
 This subroutine is a thin wrapper around qhull, and just
-subroutine-ifys what I've already done in bc-temperature-voronoi.pl
+subroutine-ifys what I have already done in bc-temperature-voronoi.pl
 
 Options:
  infinityok: include polygons with points at infinity (not working)
@@ -827,7 +827,7 @@ sub voronoi {
 
 =item to_mercator($lat,$lon)
 
-Converts $lat, $lon (degrees) to google maps' yx Mercator projects
+Converts $lat, $lon (degrees) to google maps yx Mercator projects
 (top left = 0,0; bottom right = 1,1); can return abs($y)>1 for far
 south/north latitudes. Options:
 
@@ -2215,6 +2215,7 @@ http://stackoverflow.com/questions/7716409/
 =cut
 
 sub dump_var {
+  # TODO: warn if initial call has no $var, but that's ok for recursive calls
     my ($prefix, $var) = @_;
     my $ref = ref($var) || ""; 
     my @rv;

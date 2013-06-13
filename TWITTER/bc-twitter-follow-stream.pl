@@ -14,6 +14,28 @@
 # NOTE: these are supertweet passwords and I use them to let users
 # follow others, NOT to connect to the stream
 
+# list of global hashes this program uses:
+#
+# $ff{$i}{friends|followers}{$j}: if set, $i is a friend/follower of $j
+#
+# $pass{$user}: $user's supertweet (not twitter) password
+#
+# $interest{$keyword}{$i}: if set, $i is interested in $keyword
+#
+# $nextfollowtime{$user}: next time $user may follow someone (if throttled)
+#
+# $alreadyfollowed{$user}{$target}: $user once followed $target, but
+# perhaps not currently
+#
+# $whenfollowed{$time}{$user}{$target}: $user followed $target at $time
+# @whenfollowed: sorted list of keys %whenfollowed
+# when $user unfollows $target, entries are removed from unfollowed hash+list
+
+# TODO: subroutinize properly. Currently, just taking code out of main
+# loop and putting it into subroutines almost verbatim (ie, the
+# opposite of inlining ... but pretty sure it's not called outlining),
+# instead of making things true subroutines
+
 require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
 
@@ -33,63 +55,17 @@ unless (-s $db) {die "$db: does not exist or empty";}
 logmsg("START");
 
 # TODO: if silent too long, check connection
-
 # TODO: unfollow!!!
 
-# TODO: lower this in prod
-$cachetime = 30;
-
-# NOTE: not in git directory, since it contains private info
-@users = `egrep -v '^#' /home/barrycarter/20130603/users.txt`;
-
-# parse
-for $i (@users) {
-  unless ($i=~m%^(.*?):(.*?):(.*)$%) {warn "BAD LINE: $i";}
-  my($user,$pass,$int) = ($1,$2,$3);
-  $pass{$user} = $pass;
-  # parse interests
-  for $j (split(/\,\s*/,$int)) {
-    $interest{lc($j)}{$user} = 1;
-  }
-  # initialize nextfollowtime (should be unnecessary, but...)
-  $nextfollowtime{$user} = 0;
-}
-
-# TODO: the fact that I'm loading the entire db here suggests I'm
-# doing something wrong (and/or could just use a flat file)
-my(@res) = sqlite3hashlist("SELECT * FROM bc_multi_follow", $db);
-logmsg("START: $#res+1 rows in database");
-
-for $i (@res) {
-  unless ($i->{action} eq "SOURCE_FOLLOWS_TARGET") {next;}
-  my($source,$target,$time) = ($i->{source_id},$i->{target_id},$i->{time});
-  # we will need 'when followed' for unfollows later
-  $alreadyfollowed{$source}{$target}=$time;
-  $whenfollowed{$time}{$source}{$target} = 1;
-}
-
-# not using this yet, but it will help later
-@whenfollowed = sort {$a <=> $b} (keys %whenfollowed);
-
-for $i (@whenfollowed) {
-  for $j (keys %{$whenfollowed{$i}}) {
-    for $k (keys %{$whenfollowed{$i}{$j}}) {
-      debug("$i, $j, $k");
-    }
-  }
-}
-
-# TODO: load list of people each user has followed (and then
-# unfollowed) to avoid redundant following
+parse_users();
+load_db();
 
 # TODO: people use hashtags a lot less than I expected; consider
 # searching for tweets with 'foo' not '#foo' (although that will
 # nominally slow down the matching process)
 
-# create filter (apparently adding '#' breaks things, hmmm)
-# but %23 works as it should
+# create filter (apparently adding '#' breaks things, but %23 is fine)
 my($filter) = join(",",(map("%23$_", keys %interest)));
-# my($filter) = join(",",keys %interest);
 
 # connect to twitter stream (using MY TWITTER pw, not users supertweet pw)
 my($cmd) = "curl -N -s -u $twitter{user}:$twitter{pass} 'https://stream.twitter.com/1/statuses/filter.json?track=$filter&stall_warnings=true&lang=en'";
@@ -99,62 +75,27 @@ logmsg("ENTERING MAIN LOOP");
 
 while (<A>) {
 
-  # TODO: undo
-  $globopts{debug}=1;
-
   $now = time();
 
-  # actual updates occur once an hour
+  # actual updates occur once an hour (update_ff() keeps track)
   update_ff();
 
   # TODO: find unfollows (unfollows ARE blocked by "no more follows",
   # which is bad)
-  # TODO: seriously subroutineize!
   # 25h allows for ff to be 1hr behind
-  debug("WF: $whenfollowed[0]");
+  # NOTE: this could be "while", but I prefer to unfollow slowly
   if ($whenfollowed[0] < $now-25*3600) {
-    # dont look at the same follow/fellow twice
+    # we look at each timestamp once, but maintain %whenfollowed hash
+    # so we won't try to re-follow someone we dropped for not
+    # reciprocating
     my($drop) = shift(@whenfollowed);
     for $i (keys %{$whenfollowed{$drop}}) {
       for $j (keys %{$whenfollowed{$drop}{$i}}) {
-	debug("$drop/$i/$j");
-	# is $i following $j at all?
-	unless ($ff{$i}{friends}{$j}) {
-	  debug("$i can't unfollow $j: not following");
-	  next;
+	if (unfollow_q($i,$j)) {
+	  do_unfollow($i,$j, "did not reciprocate follow at $drop");
 	}
-	# have they reciprocated? (if yes, don't drop?)
-	# TODO: could have an "evil" option to drop anyway
-	if ($ff{$i}{followers}{$j}) {
-	  debug("$i follow reciprocated by $j (so not dropping)");
-	  next;
-	}
-
-	# now the drop case
-	my($out,$err,$res) = cache_command2("sleep 1; curl -s -u '$i:$pass{$i}' -d 'user_id=$j' 'http://api.supertweet.net/1.1/friendships/destroy.json'","age=86400");
-	my($out64) = encode_base64("<out>$out</out>\n<err>$err</err>\n<res>$res</res>\n");
-	# remove from hash
-	delete $ff{$i}{friends}{$j};
-	# log in db (we don't have twit name here or tweet, not sure I care)
-	my($query) = << "MARK";
-INSERT INTO bc_multi_follow 
- (source_id, target_id, action, time, follow_reply)
-VALUES
- ('$i', '$j', 'SOURCE_UNFOLLOWS_TARGET', $now, '$out64')
-
-MARK
-;
-	sqlite3($query, $db);
-	# and log
-	logmsg("UNFOLLOW: $i UNFOLLOW $j ATTEMPT (did not reciprocate follow at $drop)");
-
-	# for testing
-	die "TESTING";
       }
     }
-
-    # TODO: this should not be "next" except in testing
-    next;
   }
 
   die "TESTING"; # should never actually get here, but...
@@ -170,26 +111,12 @@ MARK
     sleep($sleep);
   }
 
-  unless (/^\{/) {
-    logmsg("STREAM: BAD TWEET: #_");
-    next;
-  }
+  parse_tweet($_);
 
 #  if (++$count > 4) {die "TESTING";}
 
   %json = %{JSON::from_json($_)};
 
-  # convenience vars
-  my($tweet_id, $twit_name, $twit_id, $tweet_body) = 
-    ($json{id}, $json{user}{screen_name}, $json{user}{id}, $json{text});
-
-  # log this tweet
-  logmsg("\#$tweet_id ($twit_name:$twit_id) $tweet_body");
-
-  # TODO: put entire tweet info into db so we don't lose anything
-  # TODO: does this include info about user too? if not, request it?
-  my($base64) = encode_base64($_);
-  $base64=~s/\s+//isg;
 
   # find the hashtags and who is interested in them
   %interested = ();
@@ -384,4 +311,132 @@ sub update_ff {
   write_file($now,"/var/tmp/bctfs/ff.txt");
 }
 
+# parse users
 
+sub parse_users {
+  # NOTE: not in git directory, since it contains private info
+  # users is not a global, but the hashes below are
+  my(@users) = `egrep -v '^#' /home/barrycarter/20130603/users.txt`;
+
+  # parse
+  for $i (@users) {
+    unless ($i=~m%^(.*?):(.*?):(.*)$%) {warn "BAD LINE: $i";}
+    my($user,$pass,$int) = ($1,$2,$3);
+    $pass{$user} = $pass;
+    # parse interests
+    for $j (split(/\,\s*/,$int)) {
+      $interest{lc($j)}{$user} = 1;
+    }
+    # initialize nextfollowtime (should be unnecessary, but...)
+    $nextfollowtime{$user} = 0;
+  }
+}
+
+# loads the db, indicating who has followed whom and whence
+sub load_db {
+  # TODO: the fact that I'm loading the entire db here suggests I'm
+  # doing something wrong (and/or could just use a flat file)
+  my(@res) = sqlite3hashlist("SELECT * FROM bc_multi_follow", $db);
+  logmsg("START: $#res+1 rows in database");
+
+  for $i (@res) {
+    # TODO: perhaps only select these rows?
+    # TODO: use unfollows somehow?
+    unless ($i->{action} eq "SOURCE_FOLLOWS_TARGET") {next;}
+    my($source,$target,$time) = ($i->{source_id},$i->{target_id},$i->{time});
+    # we will need 'when followed' for unfollows later
+    $alreadyfollowed{$source}{$target}=$time;
+    $whenfollowed{$time}{$source}{$target} = 1;
+  }
+
+  @whenfollowed = sort {$a <=> $b} (keys %whenfollowed);
+}
+
+# parses a given tweet (and updates global variables), returning 0 if
+# tweet is unparseable
+sub parse_tweet {
+  my($tweet) = @_;
+
+  # not JSON? no good
+  unless ($tweet=~/^\s*\{/) {
+    logmsg("STREAM: BAD TWEET: $tweet");
+    return 0;
+  }
+
+  # %json is global
+  %json = %{JSON::from_json($_)};
+
+  # convenience vars (also global)
+  ($tweet_id, $twit_name, $twit_id, $tweet_body) = 
+    ($json{id}, $json{user}{screen_name}, $json{user}{id}, $json{text});
+
+  # log this tweet
+  logmsg("\#$tweet_id ($twit_name:$twit_id) $tweet_body");
+
+  # TODO: put entire tweet info into db so we don't lose anything
+  # TODO: does this include info about user too? if not, request it?
+  $base64 = encode_base64($_);
+  $base64=~s/\s+//isg;
+}
+
+# under rules of this program, can $i unfollow $j?; returns 1 if yes
+sub unfollow_q {
+  my($i,$j) = @_;
+
+  # is $i following $j at all?
+  unless ($ff{$i}{friends}{$j}) {
+    debug("$i can't unfollow $j: not following");
+    return 0;
+  }
+
+  # have they reciprocated? (if yes, don't drop?)
+  # TODO: could have an "evil" option to drop anyway
+  if ($ff{$i}{followers}{$j}) {
+    debug("$i follow reciprocated by $j (so not dropping)");
+    return 0;
+  }
+
+  # no excuse not to unfollow...
+  return 1;
+}
+
+# do_unfollow($i,$j,$msg): have $i unfollow $j with log message $msg;
+# returns 0 on fail, 1 on success
+
+sub do_unfollow {
+  my($i,$j,$msg) = @_;
+
+  # log attempt
+  logmsg("UNFOLLOW: $i UNFOLLOW $j ATTEMPT ($msg)");
+  # actual drop
+  my($out,$err,$res) = cache_command2("sleep 1; curl -s -u '$i:$pass{$i}' -d 'user_id=$j' 'http://api.supertweet.net/1.1/friendships/destroy.json'","age=86400");
+  # record out/err/res in base64 (for db)
+  my($out64) = encode_base64("<out>$out</out>\n<err>$err</err>\n<res>$res</res>\n");
+  # is reply JSON?
+  unless ($out=~/^\s*\{/) {
+    logmsg("UNFOLLOW: $i UNFOLLOW $j FAIL (response was not JSON): $out");
+    return 0;
+  }
+  # look at JSON of reply
+  my(%json) = %{JSON::from_json($out)};
+
+  # TODO: look at JSON for possible other errors!!!
+  # for now, assuming success
+
+  # update friends/followers hash
+  delete $ff{$i}{friends}{$j};
+
+  # log in db (we don't have twit name here or tweet, not sure I care)
+  my($query) = << "MARK";
+INSERT INTO bc_multi_follow 
+ (source_id, target_id, action, time, follow_reply)
+VALUES
+ ('$i', '$j', 'SOURCE_UNFOLLOWS_TARGET', $now, '$out64')
+MARK
+;
+  sqlite3($query, $db);
+  # TODO: do this in other places where I make sqlite3 queries
+  if ($SQL_ERROR) {logmsg("SQLERROR: $SQL_ERROR");}
+
+  return 1;
+}

@@ -30,6 +30,57 @@ $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 use GD;
 
+
+
+$res = sqlite3val("SELECT follow_reply FROM bc_multi_follow WHERE action='SOURCE_UNFOLLOWS_TARGET'","/usr/local/etc/bc-multi-follow.db");
+
+$res = decode_base64($res);
+
+$res=~m%<out>(.*?)</out>%is;
+$res = $1;
+
+$json = JSON::from_json($res);
+
+debug("JSON:",dump_var("json",$json));
+
+die "TESTING";
+
+use Flickr::API;
+
+debug($flickr{apikey},$flickr{apisecret});
+my $api = new Flickr::API({
+		'key'    => $flickr{apikey},
+                'secret' => $flickr{apisecret}
+        });
+
+  my $response = $api->execute_method('flickr.test.echo', {
+                'foo' => 'bar',
+                'baz' => 'quux',
+        });
+
+debug(dump_var($api));
+debug(dump_var($response));
+
+die "TESTING";
+
+# spit out 2nd wednesdays of each month
+for $i (2013..2032) {
+  for $j ("01".."12") {
+    my($dom) = sprintf("%02d",14-(str2time("$i-$j-1 12:00:00")/86400)%7);
+    print "$i$j$dom\n";
+  }
+}
+
+die "TESTING";
+
+my($x) = 7;
+a();
+sub a {print "HELLO, $x\n"; b()}
+sub b {print "$x still 7!\n"; c()}
+sub c {my($x); print "but not $x now\n";}
+
+die "TESTING";
+
 bc_check_domain_exp();
 
 die "TESTING";
