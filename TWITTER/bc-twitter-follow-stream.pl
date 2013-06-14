@@ -55,7 +55,6 @@ unless (-s $db) {die "$db: does not exist or empty";}
 logmsg("START");
 
 # TODO: if silent too long, check connection
-# TODO: unfollow!!!
 
 parse_users();
 load_db();
@@ -67,13 +66,26 @@ load_db();
 # create filter (apparently adding '#' breaks things, but %23 is fine)
 my($filter) = join(",",(map("%23$_", keys %interest)));
 
+# TODO: undo!
+$globopts{debug}=1;
+
 # connect to twitter stream (using MY TWITTER pw, not users supertweet pw)
-my($cmd) = "curl -N -s -u $twitter{user}:$twitter{pass} 'https://stream.twitter.com/1/statuses/filter.json?track=$filter&stall_warnings=true&lang=en'";
+my($cmd) = "curl -N -s -u $twitter{user}:$twitter{pass} 'https://stream.twitter.com/1.1/statuses/filter.json?track=$filter&stall_warnings=true&lang=en'";
+debug("CMD: $cmd");
 open(A,"$cmd|");
+
+warn "TESTING";
+
+while (<A>) {print $_;}
+
+die "TESTING";
+
 
 logmsg("ENTERING MAIN LOOP");
 
 while (<A>) {
+
+  debug("RAW: $_");
 
   $now = time();
 
@@ -83,8 +95,9 @@ while (<A>) {
   # TODO: find unfollows (unfollows ARE blocked by "no more follows",
   # which is bad)
   # 25h allows for ff to be 1hr behind
-  # NOTE: this could be "while", but I prefer to unfollow slowly
-  if ($whenfollowed[0] < $now-25*3600) {
+
+  # we only unfollow one person per loop, but need 'while' to find that person
+WHILE:  while ($whenfollowed[0] < $now-25*3600) {
     # we look at each timestamp once, but maintain %whenfollowed hash
     # so we won't try to re-follow someone we dropped for not
     # reciprocating
@@ -93,18 +106,17 @@ while (<A>) {
       for $j (keys %{$whenfollowed{$drop}{$i}}) {
 	if (unfollow_q($i,$j)) {
 	  do_unfollow($i,$j, "did not reciprocate follow at $drop");
+	  # drop out of while loop
+	  last WHILE;
 	}
       }
     }
   }
 
-  die "TESTING"; # should never actually get here, but...
+  die "TESTING";
 
-  # if no one can follow, sleep
-  # think this sorts blanks improperly?
+  # if everyone is throttled, sleep
   @nextfollow = sort {$a <=> $b} values %nextfollowtime;
-  $nextfollow = join(", ",@nextfollow);
-  logmsg("DEBUG: $nextfollow");
   if ($nextfollow[0] > $now) {
     my($sleep) = $nextfollow[0]-$now;
     logmsg("SLEEP: $sleep seconds until next possible follow");
@@ -420,22 +432,26 @@ sub do_unfollow {
   # look at JSON of reply
   my(%json) = %{JSON::from_json($out)};
 
-  # TODO: look at JSON for possible other errors!!!
-  # for now, assuming success
+  # id must match
+  unless ($json{id} == $j) {
+    logmsg("UNFOLLOW: $i UNFOLLOW $j FAIL (id not $j): $out");
+    return 0;
+  }
 
-  # update friends/followers hash
+  # at this point, successful, so update friends/followers hash + log
   delete $ff{$i}{friends}{$j};
+  logmsg("UNFOLLOW: $i UNFOLLOW $j:$json{screen_name} SUCCESS");
 
-  # log in db (we don't have twit name here or tweet, not sure I care)
   my($query) = << "MARK";
 INSERT INTO bc_multi_follow 
- (source_id, target_id, action, time, follow_reply)
+ (source_id, target_id, target_name, action, time, follow_reply)
 VALUES
- ('$i', '$j', 'SOURCE_UNFOLLOWS_TARGET', $now, '$out64')
+ ('$i', '$j', '$json{screen_name}', 'SOURCE_UNFOLLOWS_TARGET', $now, '$out64')
 MARK
 ;
   sqlite3($query, $db);
   # TODO: do this in other places where I make sqlite3 queries
+  # we still return 1 on error, since its an SQL error, not unfollow error
   if ($SQL_ERROR) {logmsg("SQLERROR: $SQL_ERROR");}
 
   return 1;
