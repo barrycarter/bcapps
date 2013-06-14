@@ -54,6 +54,11 @@ unless (-s $db) {die "$db: does not exist or empty";}
 
 logmsg("START");
 
+# testing now that stream API is broken (will move this into main loop later)
+get_tweets();
+
+die "TESTING";
+
 # TODO: if silent too long, check connection
 
 parse_users();
@@ -456,3 +461,44 @@ MARK
 
   return 1;
 }
+
+# obtain tweets using twitter's HTTP search stream (since they shut
+# down basic auth stream API, the fish poops [aka bass turds])
+
+sub get_tweets {
+  # TODO: currently hardcoding to find followbackers, not by keyword
+  my($keyword)=urlencode("#teamfollowback OR #autofollowback OR #followback");
+#  my($url) = "http://twitter.com/search?q=$keyword";
+  my($url) = "http://twitter.com/search/realtime?q=$keyword";
+  # TODO: reduce 3600 to 0 when not testing
+  my($out,$err,$res) = cache_command2("curl -NL '$url'","age=3600");
+  # this is just for debugging
+  $out=~s/\n+/\n/isg;
+  $out=~s/ +/ /isg;
+  # split into tweets
+  my(@tweets) = split(/<div class=\"tweet/s,$out);
+  # kill off HTML header
+  shift(@tweets);
+
+  # parse each tweet and store in hash
+  for $i (@tweets) {
+    %tweet = ();
+    while ($i=~s/data-(.*?)="(.*?)"//s) {
+      my($key,$val) = ($1,$2);
+      debug("KV: $key -> $val");
+      $key=~s/-/_/isg;
+      $tweet{$key} = $val;
+    }
+
+    # cleanup expanded footer
+    $tweet{expanded_footer}=~s/&lt;/</isg;
+    $tweet{expanded_footer}=~s/&gt;/>/isg;
+    $tweet{expanded_footer}=~s/&quot;/\"/isg;
+    $tweet{expanded_footer}=~s/\&\#10\;/\n/isg;
+
+    debug("TWEET",dump_var("tweet",{%tweet}));
+    die "TESTING";
+  }
+}
+
+
