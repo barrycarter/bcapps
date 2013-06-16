@@ -55,7 +55,9 @@ unless (-s $db) {die "$db: does not exist or empty";}
 logmsg("START");
 
 # testing now that stream API is broken (will move this into main loop later)
-get_tweets();
+@tweets = get_tweets();
+
+debug(dump_var("tweets",\@tweets));
 
 die "TESTING";
 
@@ -466,6 +468,7 @@ MARK
 # down basic auth stream API, the fish poops [aka bass turds])
 
 sub get_tweets {
+  my(@res);
   # TODO: currently hardcoding to find followbackers, not by keyword
   my($keyword)=urlencode("#teamfollowback OR #autofollowback OR #followback");
 #  my($url) = "http://twitter.com/search?q=$keyword";
@@ -482,23 +485,33 @@ sub get_tweets {
 
   # parse each tweet and store in hash
   for $i (@tweets) {
-    %tweet = ();
+    my(%tweet) = ();
     while ($i=~s/data-(.*?)="(.*?)"//s) {
       my($key,$val) = ($1,$2);
-      debug("KV: $key -> $val");
       $key=~s/-/_/isg;
       $tweet{$key} = $val;
     }
 
-    # cleanup expanded footer
+    # cleanup expanded footer (even though I won't use it, hmmm)
     $tweet{expanded_footer}=~s/&lt;/</isg;
     $tweet{expanded_footer}=~s/&gt;/>/isg;
     $tweet{expanded_footer}=~s/&quot;/\"/isg;
     $tweet{expanded_footer}=~s/\&\#10\;/\n/isg;
 
-    debug("TWEET",dump_var("tweet",{%tweet}));
-    die "TESTING";
+    # and the tweet itself
+    $i=~s%<p class=".*?tweet-text.*?">(.*?)</p>%%;
+    # <h>please resist the urge to sing "Rockin' Robin" here</h>
+    $tweet{tweet} = $1;
+    # remove inline HTML
+    $tweet{tweet}=~s/<.*?>//isg;
+    # add to results
+    push(@res,{%tweet});
   }
+
+  debug("RES",@res);
+  return @res;
+
 }
+
 
 
