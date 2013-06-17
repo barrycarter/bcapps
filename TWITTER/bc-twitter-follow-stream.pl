@@ -96,7 +96,7 @@ for (;;) {
   }
 
   # if no one can follow for a while, sleep
-    @nextfollow = sort {$a <=> $b} values %nextfollowtime;
+  @nextfollow = sort {$a <=> $b} values %nextfollowtime;
   if ($nextfollow[0] > $now) {
     my($sleep) = $nextfollow[0]-$now;
     logmsg("SLEEP: $sleep seconds until next possible follow");
@@ -135,23 +135,6 @@ sub logmsg {
   print "$date\n";
 }
 
-
-=item schema
-
-Schema of the twitter follow db for multiple user names:
-
-CREATE TABLE bc_multi_follow (
- source_id BIGINT,
- target_id BIGINT,
- target_name TEXT,
- action TEXT,
- time BIGINT,
- tweet TEXT,
- follow_reply TEXT,
- timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-=cut
 
 # updates friends/followers every hour (this subroutine is specific to
 # this program); also writes to file for debugging
@@ -222,6 +205,8 @@ sub load_db {
   logmsg("START: $#res+1 rows in database");
 
   for $i (@res) {
+    # keep track of screen name
+    $screen_name{$i->{target_id}} = $i->{target_name};
     # TODO: perhaps only select these rows?
     # TODO: use unfollows somehow?
     unless ($i->{action} eq "SOURCE_FOLLOWS_TARGET") {next;}
@@ -262,14 +247,14 @@ sub do_unfollow {
   my($i,$j,$msg) = @_;
 
   # log attempt
-  logmsg("UNFOLLOW: $i UNFOLLOW $j ATTEMPT ($msg)");
+  logmsg("UNFOLLOW: $i UNFOLLOW $screen_name{$j}:$j ATTEMPT ($msg)");
   # actual drop
   my($out,$err,$res) = cache_command2("sleep 1; curl -s -u '$i:$pass{$i}' -d 'user_id=$j' 'http://api.supertweet.net/1.1/friendships/destroy.json'","age=86400");
   # record out/err/res in base64 (for db)
   my($out64) = encode_base64("<out>$out</out>\n<err>$err</err>\n<res>$res</res>\n");
   # is reply JSON?
   unless ($out=~/^\s*\{/) {
-    logmsg("UNFOLLOW: $i UNFOLLOW $j FAIL (response was not JSON): $out");
+    logmsg("UNFOLLOW: $i UNFOLLOW $screen_name{$j}:$j FAIL (response was not JSON): $out");
     return 0;
   }
   # look at JSON of reply
@@ -277,13 +262,13 @@ sub do_unfollow {
 
   # id must match
   unless ($json{id} == $j) {
-    logmsg("UNFOLLOW: $i UNFOLLOW $j FAIL (id not $j): $out");
+    logmsg("UNFOLLOW: $i UNFOLLOW $screen_name{$j}:$j FAIL (id not $j): $out");
     return 0;
   }
 
   # at this point, successful, so update friends/followers hash + log
   delete $ff{$i}{friends}{$j};
-  logmsg("UNFOLLOW: $i UNFOLLOW $j:$json{screen_name} SUCCESS");
+  logmsg("UNFOLLOW: $i UNFOLLOW $json{screen_name}:$j SUCCESS");
 
   my($query) = << "MARK";
 INSERT INTO bc_multi_follow 
@@ -396,7 +381,7 @@ sub do_follow {
     ($tweet->{user_id}, $tweet->{screen_name}, $tweet->{'tweet_id'});
 
   # log attempt
-  logmsg("FOLLOW: $i FOLLOW $twit_id:$twit_name ATTEMPT");
+  logmsg("FOLLOW: $i FOLLOW $twit_name:$twit_id ATTEMPT");
 
   # actual follow (1s sleep to avoid annoying supertweet)
   my($out,$err,$res) = cache_command2("sleep 1; curl -s -u '$i:$pass{$i}' -d 'user_id=$twit_id' 'http://api.supertweet.net/1.1/friendships/create.json'","age=86400");
@@ -406,7 +391,7 @@ sub do_follow {
 
   # is reply JSON?
   unless ($out=~/^\s*\{/) {
-    logmsg("FOLLOW: $i FOLLOW $twit_id FAIL (response was not JSON): $out");
+    logmsg("FOLLOW: $i FOLLOW $twit_name:$twit_id FAIL (response was not JSON): $out");
     return 0;
   }
 
@@ -424,7 +409,7 @@ sub do_follow {
 
   # id must match
   unless ($json{id} == $twit_id) {
-    logmsg("FOLLOW: $i FOLLOW $twit_id:$twit_name FAIL (id not $twit_id): $out");
+    logmsg("FOLLOW: $i FOLLOW $twit_name:$twit_id FAIL (id not $twit_id): $out");
     return 0;
   }
 
@@ -436,7 +421,7 @@ sub do_follow {
   $whenfollowed{$now}{$i}{$twit_id} = 1;
 
 
-  logmsg("FOLLOW: $i FOLLOW $twit_id:$twit_name SUCCESS");
+  logmsg("FOLLOW: $i FOLLOW $twit_name:$twit_id SUCCESS");
 
   my($query) = << "MARK";
 INSERT INTO bc_multi_follow 
@@ -452,3 +437,21 @@ MARK
 
   return 1;
 }
+
+=item schema
+
+Schema of the twitter follow db for multiple user names:
+
+CREATE TABLE bc_multi_follow (
+ source_id BIGINT,
+ target_id BIGINT,
+ target_name TEXT,
+ action TEXT,
+ time BIGINT,
+ tweet TEXT,
+ follow_reply TEXT,
+ timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+=cut
+
