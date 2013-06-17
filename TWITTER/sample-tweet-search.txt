@@ -1,0 +1,26 @@
+# dump of tweet from http search page (not stream)
+tweet->{'feedback_key'} = 'stream_status_346482808719564802';
+
+tweet->{'item_id'} = '346482806408482817';
+
+tweet->{'item_type'} = 'tweet';
+
+tweet->{'long_form'} = 'true';
+
+tweet->{'modal'} = 'tweet-retweet';
+
+tweet->{'name'} = 'Rebecca_Pasqual';
+
+tweet->{'nav'} = 'embed_tweet';
+
+tweet->{'query_source'} = 'hashtag_click';
+
+tweet->{'screen_name'} = 'Rebecca_Pasqual';
+
+tweet->{'time'} = '1371442913';
+
+tweet->{'tweet'} = 'i need more follower!! #teamfollowback | #500aday | #ifollowback | #instantfollowback';
+
+tweet->{'tweet_id'} = '346482808719564802';
+
+tweet->{'user_id'} = '973597284';

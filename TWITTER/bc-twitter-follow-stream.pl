@@ -36,6 +36,8 @@
 # opposite of inlining ... but pretty sure it's not called outlining),
 # instead of making things true subroutines
 
+# TODO: find unfollows (unfollows ARE blocked by "no more follows",
+
 require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
 
@@ -54,57 +56,30 @@ unless (-s $db) {die "$db: does not exist or empty";}
 
 logmsg("START");
 
-# testing now that stream API is broken (will move this into main loop later)
-@tweets = get_tweets();
-
-debug(dump_var("tweets",\@tweets));
-
-die "TESTING";
-
-# TODO: if silent too long, check connection
-
+# setup (we ignore user interests for now)
 parse_users();
 load_db();
 
-# TODO: people use hashtags a lot less than I expected; consider
-# searching for tweets with 'foo' not '#foo' (although that will
-# nominally slow down the matching process)
-
-# create filter (apparently adding '#' breaks things, but %23 is fine)
-my($filter) = join(",",(map("%23$_", keys %interest)));
-
-# TODO: undo!
-$globopts{debug}=1;
-
-# connect to twitter stream (using MY TWITTER pw, not users supertweet pw)
-my($cmd) = "curl -N -s -u $twitter{user}:$twitter{pass} 'https://stream.twitter.com/1.1/statuses/filter.json?track=$filter&stall_warnings=true&lang=en'";
-debug("CMD: $cmd");
-open(A,"$cmd|");
-
-warn "TESTING";
-
-while (<A>) {print $_;}
-
-die "TESTING";
-
-
-logmsg("ENTERING MAIN LOOP");
-
-while (<A>) {
-
-  debug("RAW: $_");
-
-  $now = time();
+# neverending loop
+for (;;) {
 
   # actual updates occur once an hour (update_ff() keeps track)
   update_ff();
 
-  # TODO: find unfollows (unfollows ARE blocked by "no more follows",
-  # which is bad)
-  # 25h allows for ff to be 1hr behind
+  # get more tweets if I've run out
+  # TODO: handle getting repeated tweets (which can happen)
+  unless (@tweets) {@tweets = get_tweets();}
+  my($tweet) = shift(@tweets);
+
+  # for now, just randomizing users (TODO: use interests as I did previously)
+  for $user (randomize([keys %pass])) {
+    # if user can and successfully follows tweeter, end this loop
+    if (follow_q($user,$tweet) && do_follow($user,$tweet)) {last;}
+  }
 
   # we only unfollow one person per loop, but need 'while' to find that person
-WHILE:  while ($whenfollowed[0] < $now-25*3600) {
+  # 25h since update_ff occurs only hourly
+ WHILE:  while ($whenfollowed[0] < $now-25*3600) {
     # we look at each timestamp once, but maintain %whenfollowed hash
     # so we won't try to re-follow someone we dropped for not
     # reciprocating
@@ -120,126 +95,14 @@ WHILE:  while ($whenfollowed[0] < $now-25*3600) {
     }
   }
 
-  die "TESTING";
-
-  # if everyone is throttled, sleep
-  @nextfollow = sort {$a <=> $b} values %nextfollowtime;
+  # if no one can follow for a while, sleep
+    @nextfollow = sort {$a <=> $b} values %nextfollowtime;
   if ($nextfollow[0] > $now) {
     my($sleep) = $nextfollow[0]-$now;
     logmsg("SLEEP: $sleep seconds until next possible follow");
     sleep($sleep);
   }
 
-  parse_tweet($_);
-
-#  if (++$count > 4) {die "TESTING";}
-
-  %json = %{JSON::from_json($_)};
-
-
-  # find the hashtags and who is interested in them
-  %interested = ();
-  # NOTE: this is REALLY hideous coding, pretty much me showing off
-  my(@hashtags) = @{$json{entities}{hashtags}};
-
-  @hashtagstext = ();
-  for $i (@hashtags) {
-#    logmsg("\#$tweet_id HASHTAG: $i->{text}");
-    push(@hashtagstext, $i->{text});
-    map($interested{$_}=lc($i->{text}), keys %{$interest{lc($i->{text})}});
-  }
-  my($hashtags) = join(", ",@hashtagstext);
-  logmsg("\#$tweet_id HASHTAGS: $hashtags");
-
-  # TODO: favor users who have rarer hashtags by sorting by last follow?
-#  my(@interested) = keys %interested;
-  for $i (randomize([keys %interested])) {
-    logmsg("\#$tweet_id HASHTAG: $interested{$i} INTERESTS: $i");
-
-    # can $i follow $twit_id ?
-
-    # putting this in loop would do weird things to 'next', so not doing it
-    if ($ff{$i}{friends}{$twit_id}) {
-      logmsg("\#$tweet_id $i NOFOLLOW $twit_name:$twit_id (already following)");
-      next;
-    }
-
-    if ($ff{$i}{followers}{$twit_id}) {
-      logmsg("\#$tweet_id $i NOFOLLOW $twit_name:$twit_id (twit already follows)");
-      next;
-    }
-
-    # TODO: be sure to use/initialize %alreadyfollowed
-    if ($alreadyfollowed{$i}{$twit_id}) {
-      logmsg("\#$tweet_id $i NOFOLLOW $twit_name:$twit_id (already followed once)");
-      next;
-    }
-
-
-    # TODO: move this test higher?
-    if ($nextfollowtime{$i} > time()) {
-      logmsg("\#$tweet_id $i NOFOLLOW $twit_name:$twit_id (can't follow anyone until $nextfollowtime{$i})");
-      next;
-    }
-
-    # TODO: if no one can follow due to nextfollowtime, wait until
-    # first one who can
-
-    logmsg("\#$tweet_id $i FOLLOW $twit_name:$twit_id ATTEMPT");
-
-    # at this point, we have no excuse not to follow, so let's try it
-    my($out,$err,$res) = cache_command2("sleep 1; curl -s -u '$i:$pass{$i}' -d 'user_id=$json{user}{id}' 'http://api.supertweet.net/1.1/friendships/create.json'","age=86400");
- 
-   # we may put this in db too
-    my($base64_reply) = encode_base64($out);
-    $base64_reply=~s/\s+//isg;
-
-    # the unknown failure <h>(my nickname in high school!)</h>
-    unless ($out=~/^\s*\{/) {
-      logmsg("\#$tweet_id $i FOLLOW $twit_name:$twit_id FAIL (response was not JSON): $out");
-      next;
-    }
-
-    # too many follows
-    if ($out=~/You are unable to follow more people at this time/i) {
-      logmsg("\#$tweet_id $i FOLLOW $twit_name:$twit_id FAIL (unable to follow more people)");
-      $nextfollowtime{$i} = time()+15*60;
-      logmsg("\#$tweet_id $i THROTTLED for 15m (until $nextfollowtime{$i})");
-      next;
-    }
-
-    # the JSON of the reply
-    %json_reply = %{JSON::from_json($out)};
-
-    # reply is JSON, but error
-    unless ($json_reply{screen_name} eq $twit_name) {
-      logmsg("\#$tweet_id $i FOLLOW $twit_name:$twit_id FAIL (bad JSON reply): $out");
-      next;
-    }
-
-    logmsg("\#$tweet_id $i FOLLOW $twit_name:$twit_id SUCCESS");
-    $ff{$i}{friends}{$twit_id} = 1;
-
-    # keep whenfollowed hash and list up to date
-    unless ($whenfollowed{$now}) {push(@whenfollowed,$now);}
-    $whenfollowed{$now}{$i}{$twit_id} = 1;
-
-    # add to db (using self-computed timestamp to be safe)
-    $now = time();
-    $query = << "MARK";
-INSERT INTO bc_multi_follow 
- (source_id, target_id, target_name, action, time, tweet, follow_reply)
-VALUES
- ('$i', '$twit_id', '$twit_name', 'SOURCE_FOLLOWS_TARGET', $now,
-  '$base64', '$base64_reply')
-MARK
-;
-
-    sqlite3($query, $db);
-
-    # only one follow per tweet to avoid 'inbreeding'
-    last;
-  }
 }
 
 # TODO: this function is ugly
@@ -371,33 +234,6 @@ sub load_db {
   @whenfollowed = sort {$a <=> $b} (keys %whenfollowed);
 }
 
-# parses a given tweet (and updates global variables), returning 0 if
-# tweet is unparseable
-sub parse_tweet {
-  my($tweet) = @_;
-
-  # not JSON? no good
-  unless ($tweet=~/^\s*\{/) {
-    logmsg("STREAM: BAD TWEET: $tweet");
-    return 0;
-  }
-
-  # %json is global
-  %json = %{JSON::from_json($_)};
-
-  # convenience vars (also global)
-  ($tweet_id, $twit_name, $twit_id, $tweet_body) = 
-    ($json{id}, $json{user}{screen_name}, $json{user}{id}, $json{text});
-
-  # log this tweet
-  logmsg("\#$tweet_id ($twit_name:$twit_id) $tweet_body");
-
-  # TODO: put entire tweet info into db so we don't lose anything
-  # TODO: does this include info about user too? if not, request it?
-  $base64 = encode_base64($_);
-  $base64=~s/\s+//isg;
-}
-
 # under rules of this program, can $i unfollow $j?; returns 1 if yes
 sub unfollow_q {
   my($i,$j) = @_;
@@ -473,8 +309,7 @@ sub get_tweets {
   my($keyword)=urlencode("#teamfollowback OR #autofollowback OR #followback");
 #  my($url) = "http://twitter.com/search?q=$keyword";
   my($url) = "http://twitter.com/search/realtime?q=$keyword";
-  # TODO: reduce 3600 to 0 when not testing
-  my($out,$err,$res) = cache_command2("curl -NL '$url'","age=3600");
+  my($out,$err,$res) = cache_command2("curl -NL '$url'","age=0");
   # this is just for debugging
   $out=~s/\n+/\n/isg;
   $out=~s/ +/ /isg;
@@ -513,5 +348,107 @@ sub get_tweets {
 
 }
 
+# under rules of this program, can $i follow the person tweeting
+# $tweet?; returns 1 if yes
+
+sub follow_q {
+  my($i,$tweet) = @_;
+
+  my($twit_id, $twit_name, $tweet_id) = 
+    ($tweet->{user_id}, $tweet->{screen_name}, $tweet->{'tweet_id'});
+
+  # hit follow limit (this is independant of who tweeted)
+  if ($nextfollowtime{$i} > time()) {
+    logmsg("\#$tweet_id $i NOFOLLOW $twit_name:$twit_id (can't follow anyone until $nextfollowtime{$i})");
+    return 0;
+    }
+
+  # already following, so no
+  if ($ff{$i}{friends}{$twit_id}) {
+    logmsg("\#$tweet_id $i NOFOLLOW $twit_name:$twit_id (already following)");
+    return 0;
+  }
+
+  # no point in following follower
+  if ($ff{$i}{followers}{$twit_id}) {
+    logmsg("\#$tweet_id $i NOFOLLOW $twit_name:$twit_id (twit already follows)");
+    return 0;
+  }
+
+  # followed once, not reciprocated
+  if ($alreadyfollowed{$i}{$twit_id}) {
+    logmsg("\#$tweet_id $i NOFOLLOW $twit_name:$twit_id (already followed once)");
+    return 0;
+    }
+
+  # no excuse not to follow...
+  return 1;
+}
 
 
+# do_follow($i,$tweet,$msg): have $i follow the person who tweeted
+# $tweet with log message $msg; returns 0 on fail, 1 on success
+
+sub do_follow {
+  my($now) = time();
+  my($i,$tweet) = @_;
+  my($twit_id, $twit_name, $tweet_id) = 
+    ($tweet->{user_id}, $tweet->{screen_name}, $tweet->{'tweet_id'});
+
+  # log attempt
+  logmsg("FOLLOW: $i FOLLOW $twit_id:$twit_name ATTEMPT");
+
+  # actual follow (1s sleep to avoid annoying supertweet)
+  my($out,$err,$res) = cache_command2("sleep 1; curl -s -u '$i:$pass{$i}' -d 'user_id=$twit_id' 'http://api.supertweet.net/1.1/friendships/create.json'","age=86400");
+
+  # record out/err/res in base64 (for db)
+  my($out64) = encode_base64("<out>$out</out>\n<err>$err</err>\n<res>$res</res>\n");
+
+  # is reply JSON?
+  unless ($out=~/^\s*\{/) {
+    logmsg("FOLLOW: $i FOLLOW $twit_id FAIL (response was not JSON): $out");
+    return 0;
+  }
+
+  # JSON reply stating "too many follows"
+  if ($out=~/You are unable to follow more people at this time/i) {
+    logmsg("\#$tweet_id $i FOLLOW $twit_name:$twit_id FAIL (unable to follow more people)");
+    $nextfollowtime{$i} = time()+15*60;
+    logmsg("\#$tweet_id $i THROTTLED for 15m (until $nextfollowtime{$i})");
+    return 0;
+  }
+
+  # reply is JSON and not "too many follows"
+  # TODO: I should decode JSON even before 'too many follows'
+  my(%json) = %{JSON::from_json($out)};
+
+  # id must match
+  unless ($json{id} == $twit_id) {
+    logmsg("FOLLOW: $i FOLLOW $twit_id:$twit_name FAIL (id not $twit_id): $out");
+    return 0;
+  }
+
+  # at this point, successful, so update friends/followers hash + log
+  $ff{$i}{friends}{$twit_id} = 1;
+
+  # keep whenfollowed log updated
+  unless ($whenfollowed{$now}) {push(@whenfollowed,$now);}
+  $whenfollowed{$now}{$i}{$twit_id} = 1;
+
+
+  logmsg("FOLLOW: $i FOLLOW $twit_id:$twit_name SUCCESS");
+
+  my($query) = << "MARK";
+INSERT INTO bc_multi_follow 
+ (source_id, target_id, target_name, action, time, follow_reply)
+VALUES
+ ('$i', '$twit_id', '$twit_name', 'SOURCE_FOLLOWS_TARGET', $now, '$out64')
+MARK
+;
+  sqlite3($query, $db);
+  # TODO: do this in other places where I make sqlite3 queries
+  # we still return 1 on error, since its an SQL error, not follow error
+  if ($SQL_ERROR) {logmsg("SQLERROR: $SQL_ERROR");}
+
+  return 1;
+}
