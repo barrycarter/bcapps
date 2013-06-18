@@ -62,6 +62,7 @@ load_db();
 
 # neverending loop
 for (;;) {
+  $now = time();
 
   # actual updates occur once an hour (update_ff() keeps track)
   update_ff();
@@ -70,6 +71,8 @@ for (;;) {
   # TODO: handle getting repeated tweets (which can happen)
   unless (@tweets) {@tweets = get_tweets();}
   my($tweet) = shift(@tweets);
+
+  # TODO: filter for English tweets only (can't using HTTP search!)
 
   # for now, just randomizing users (TODO: use interests as I did previously)
   for $user (randomize([keys %pass])) {
@@ -86,8 +89,9 @@ for (;;) {
     my($drop) = shift(@whenfollowed);
     for $i (keys %{$whenfollowed{$drop}}) {
       for $j (keys %{$whenfollowed{$drop}{$i}}) {
-	if (unfollow_q($i,$j)) {
-	  do_unfollow($i,$j, "did not reciprocate follow at $drop");
+	# TODO: update db when followed person has followed back or other reason to not unfollow
+	logmsg("DEBUG: consider unfollow: $drop $i $j");
+	if (unfollow_q($i,$j) && do_unfollow($i,$j, "did not reciprocate follow at $drop")) {
 	  # drop out of while loop
 	  last WHILE;
 	}
@@ -291,7 +295,7 @@ MARK
 sub get_tweets {
   my(@res);
   # TODO: currently hardcoding to find followbackers, not by keyword
-  my($keyword)=urlencode("#teamfollowback OR #autofollowback OR #followback");
+  my($keyword)=urlencode("#teamfollowback OR #autofollowback OR #followback OR #500aday OR #ifollowback OR #instantfollowback");
 #  my($url) = "http://twitter.com/search?q=$keyword";
   my($url) = "http://twitter.com/search/realtime?q=$keyword";
   my($out,$err,$res) = cache_command2("curl -NL '$url'","age=0");
@@ -398,8 +402,11 @@ sub do_follow {
   # JSON reply stating "too many follows"
   if ($out=~/You are unable to follow more people at this time/i) {
     logmsg("\#$tweet_id $i FOLLOW $twit_name:$twit_id FAIL (unable to follow more people)");
-    $nextfollowtime{$i} = time()+15*60;
-    logmsg("\#$tweet_id $i THROTTLED for 15m (until $nextfollowtime{$i})");
+
+    # TODO: unfollowing means more follows allowed, so waiting n
+    # minutes may actually hurt, not help
+    $nextfollowtime{$i} = time()+5*60;
+    logmsg("\#$tweet_id $i THROTTLED for 5m (until $nextfollowtime{$i})");
     return 0;
   }
 
