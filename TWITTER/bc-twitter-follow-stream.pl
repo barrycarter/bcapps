@@ -86,7 +86,8 @@ for (;;) {
 
   # we only unfollow one person per loop, but need 'while' to find that person
   # 25h since update_ff occurs only hourly
- WHILE:  while ($whenfollowed[0] < $now-25*3600) {
+  # going evil and dropping to 12h (13h for caching)
+ WHILE:  while ($whenfollowed[0] < $now-13*3600) {
     # we look at each timestamp once, but maintain %whenfollowed hash
     # so we won't try to re-follow someone we dropped for not
     # reciprocating
@@ -95,7 +96,7 @@ for (;;) {
       for $j (keys %{$whenfollowed{$drop}{$i}}) {
 	# TODO: update db when followed person has followed back or other reason to not unfollow
 	logmsg("DEBUG: consider unfollow: $drop $i $j");
-	if (unfollow_q($i,$j) && do_unfollow($i,$j, "did not reciprocate follow at $drop")) {
+	if (unfollow_q($i,$j) && do_unfollow($i,$j, "originally followed at $drop")) {
 	  # drop out of while loop
 	  last WHILE;
 	}
@@ -239,10 +240,11 @@ sub unfollow_q {
 
   # have they reciprocated? (if yes, don't drop?)
   # TODO: could have an "evil" option to drop anyway
-  if ($ff{$i}{followers}{$j}) {
-    debug("$i follow reciprocated by $j (so not dropping)");
-    return 0;
-  }
+  # TODO: going evil and disabling this
+#  if ($ff{$i}{followers}{$j}) {
+#    debug("$i follow reciprocated by $j (so not dropping)");
+#    return 0;
+#  }
 
   # no excuse not to unfollow...
   return 1;
