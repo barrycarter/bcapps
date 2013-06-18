@@ -36,7 +36,7 @@
 # opposite of inlining ... but pretty sure it's not called outlining),
 # instead of making things true subroutines
 
-# TODO: find unfollows (unfollows ARE blocked by "no more follows",
+# TODO: add timeouts ("timed-run 60 ...." fails: munges output)
 
 require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
@@ -58,7 +58,10 @@ logmsg("START");
 
 # setup (we ignore user interests for now)
 parse_users();
+
+$globopts{debug}=0;
 load_db();
+$globopts{debug}=1;
 
 # neverending loop
 for (;;) {
@@ -71,6 +74,7 @@ for (;;) {
   # TODO: handle getting repeated tweets (which can happen)
   unless (@tweets) {@tweets = get_tweets();}
   my($tweet) = shift(@tweets);
+  debug("TWEET",dump_var("tweet",$tweet));
 
   # TODO: filter for English tweets only (can't using HTTP search!)
 

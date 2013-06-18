@@ -424,7 +424,7 @@ in raw format.
 
 sub sqlite3 {
   my($query,$db) = @_;
-  my($qfile) = (my_tmpfile("sqlite"));
+  my($qfile) = (my_tmpfile2());
 
   # ugly use of global here
   $SQL_ERROR = "";
@@ -3463,6 +3463,33 @@ sub cache_command2 {
   return $stdout, $stderr, $res;
 }
 
+=item my_tmpfile2()
+
+Returns a non-existant file in /var/tmp/xx/yy/ that can be used as a
+temp file (creates parent directories as needed). Similar to
+my_tmpfile() but uses sub directories to avoid overfilling /tmp
+
+=cut
+
+sub my_tmpfile2() {
+  my($d1,$d2,$x);
+  do {
+    # pid and username helps prevent collision
+    $x = sha1_hex(rand().$$.$ENV{USER});
+    # split into two levels of subdirs
+    $x=~m/^(..)(..)/;
+    ($d1,$d2) = ($1, $2);
+    # make sure dir exists
+    unless (-d "/var/tmp/cache/$d1/$d2") {
+      # use /tmp permissions/mode
+      system("mkdir -p /var/tmp/cache/$d1/$d2; chmod -f 1777 /var/tmp/cache/$d1 /var/tmp/cache/$d1/$d2");
+    }
+  } until (!(-f "/var/tmp/cache/$d1/$d2/$x"));
+  # mark as tempfile for later deletion + return
+  $is_tempfile{"/var/tmp/cache/$d1/$d2/$x"}=1;
+  return "/var/tmp/cache/$d1/$d2/$x";
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
   debug("END: CLEANING UP TMP FILES");
@@ -3471,6 +3498,7 @@ sub END {
 
   for $i (sort keys %is_tempfile) {
     # I sometimes wrongly use tempfile.[ext], so handle that too
+    # TODO: change this to .* ?
     for $j ("", ".res", ".out", ".err", ".kml", ".kmz") {
       debug("DELETING: $i$j");
       system("rm -f $i$j");
