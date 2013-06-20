@@ -5,6 +5,6 @@
 
 my($date) = `date +%Y%M%d.%H%M%S.%N`;
 chomp($date);
-system("sudo scanimage --resolution 300 > $date.ppm");
+system("sudo scanimage --resolution 600 > $date.ppm");
 print "SCAN COMPLETE, CONVERTING\n";
 system("convert $date.ppm $date.jpg");

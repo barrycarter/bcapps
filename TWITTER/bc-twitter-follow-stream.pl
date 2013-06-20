@@ -208,9 +208,11 @@ sub parse_users {
 
 # loads the db, indicating who has followed whom and whence
 sub load_db {
-  # TODO: the fact that I'm loading the entire db here suggests I'm
-  # doing something wrong (and/or could just use a flat file)
-  my(@res) = sqlite3hashlist("SELECT * FROM bc_multi_follow", $db);
+  # TODO: the fact that I'm loading the entire db here (albeit only
+  # certain columns) suggests I'm doing something wrong (and/or could
+  # just use a flat file)
+
+  my(@res) = sqlite3hashlist("SELECT source_id,target_id,target_name,action,time,timestamp FROM bc_multi_follow", $db);
   logmsg("START: $#res+1 rows in database");
 
   for $i (@res) {
