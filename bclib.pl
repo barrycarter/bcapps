@@ -856,6 +856,10 @@ sub to_mercator {
 Convert time interval in seconds to years/months/days/etc based on
 $format (documented below, but very strftime-like).
 
+$options unused
+
+TODO: format < 10 seconds with leading 0
+
 =cut
 
 sub convert_time {

@@ -41,6 +41,9 @@
 require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
 
+# sleep between calls
+$st_sleep = 0.5;
+
 # for logging purposes
 $|=1;
 
@@ -59,9 +62,9 @@ logmsg("START");
 # setup (we ignore user interests for now)
 parse_users();
 
-$globopts{debug}=0;
+# $globopts{debug}=0;
 load_db();
-$globopts{debug}=1;
+# $globopts{debug}=1;
 
 # neverending loop
 for (;;) {
@@ -86,8 +89,8 @@ for (;;) {
 
   # we only unfollow one person per loop, but need 'while' to find that person
   # 25h since update_ff occurs only hourly
-  # going evil and dropping to 12h (13h for caching)
- WHILE:  while ($whenfollowed[0] < $now-13*3600) {
+  # going evil and dropping to 6h (7h for caching)
+ WHILE:  while ($whenfollowed[0] < $now-7*3600) {
     # we look at each timestamp once, but maintain %whenfollowed hash
     # so we won't try to re-follow someone we dropped for not
     # reciprocating
@@ -109,7 +112,9 @@ for (;;) {
   if ($nextfollow[0] > $now) {
     my($sleep) = $nextfollow[0]-$now;
     logmsg("SLEEP: $sleep seconds until next possible follow");
-    sleep($sleep);
+#    sleep($sleep);
+    # could be pending unfollows, so no real sleep
+    sleep(1);
   }
 
 }
@@ -261,7 +266,7 @@ sub do_unfollow {
   # log attempt
   logmsg("UNFOLLOW: $i UNFOLLOW $screen_name{$j}:$j ATTEMPT ($msg)");
   # actual drop
-  my($out,$err,$res) = cache_command2("sleep 1; curl -s -u '$i:$pass{$i}' -d 'user_id=$j' 'http://api.supertweet.net/1.1/friendships/destroy.json'","age=86400");
+  my($out,$err,$res) = cache_command2("sleep $st_sleep; curl -s -u '$i:$pass{$i}' -d 'user_id=$j' 'http://api.supertweet.net/1.1/friendships/destroy.json'","age=86400");
   # record out/err/res in base64 (for db)
   my($out64) = encode_base64("<out>$out</out>\n<err>$err</err>\n<res>$res</res>\n");
   # is reply JSON?
@@ -354,6 +359,12 @@ sub follow_q {
   my($twit_id, $twit_name, $tweet_id) = 
     ($tweet->{user_id}, $tweet->{screen_name}, $tweet->{'tweet_id'});
 
+  # different users never follow the same person wo an hour gap
+  if ($lastfollowedat{$twit_id} > $now-3600) {
+    logmsg("\#$tweet_id $i NOFOLLOW  $twit_name:$twit_id (can't refollow $twit_name:$twit_id until $lastfollowedat{$twit_id}+3600");
+    return 0;
+  }
+
   # hit follow limit (this is independant of who tweeted)
   if ($nextfollowtime{$i} > time()) {
     logmsg("\#$tweet_id $i NOFOLLOW $twit_name:$twit_id (can't follow anyone until $nextfollowtime{$i})");
@@ -396,7 +407,7 @@ sub do_follow {
   logmsg("FOLLOW: $i FOLLOW $twit_name:$twit_id ATTEMPT");
 
   # actual follow (1s sleep to avoid annoying supertweet)
-  my($out,$err,$res) = cache_command2("sleep 1; curl -s -u '$i:$pass{$i}' -d 'user_id=$twit_id' 'http://api.supertweet.net/1.1/friendships/create.json'","age=86400");
+  my($out,$err,$res) = cache_command2("sleep $st_sleep; curl -s -u '$i:$pass{$i}' -d 'user_id=$twit_id' 'http://api.supertweet.net/1.1/friendships/create.json'","age=86400");
 
   # record out/err/res in base64 (for db)
   my($out64) = encode_base64("<out>$out</out>\n<err>$err</err>\n<res>$res</res>\n");
@@ -435,6 +446,8 @@ sub do_follow {
   unless ($whenfollowed{$now}) {push(@whenfollowed,$now);}
   $whenfollowed{$now}{$i}{$twit_id} = 1;
 
+  # update last followed at time
+  $lastfollowedat{$twit_id} = $now;
 
   logmsg("FOLLOW: $i FOLLOW $twit_name:$twit_id SUCCESS");
 
