@@ -30,6 +30,12 @@ $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 use GD;
 
+%hash=(1=>2,3=>4);
+
+debug(0+keys %hash);
+
+die "TESTING";
+
 my($file) = my_tmpfile2();
 debug("FILE: $file");
 write_file("hello",$file);

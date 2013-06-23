@@ -61,10 +61,7 @@ logmsg("START");
 
 # setup (we ignore user interests for now)
 parse_users();
-
-# $globopts{debug}=0;
 load_db();
-# $globopts{debug}=1;
 
 # neverending loop
 for (;;) {
@@ -73,24 +70,43 @@ for (;;) {
   # actual updates occur once an hour (update_ff() keeps track)
   update_ff();
 
+  $globopts{debug}=1;
+
+  debug("ALPHA");
+  debug(scalar keys %{$ff{barrycarter}{followers}});
+  debug("POLO");
+
+
+
+  # sort users by number of followers (lowest first)
+  my(@users) = sort {scalar keys %{$ff{$a}{followers}} <=> scalar keys %{$ff{$b}{followers}}} (keys %pass);
+  for $i (@users) {
+    debug("$i -> ",scalar keys %{$ff{$i}{followers}});
+  }
+
+  die "TESTING";
+
   # get more tweets if I've run out
   # TODO: handle getting repeated tweets (which can happen)
   unless (@tweets) {@tweets = get_tweets();}
   my($tweet) = shift(@tweets);
-  debug("TWEET",dump_var("tweet",$tweet));
+
+  # don't use the same tweet twice
+  if ($seen{$tweet->{tweet_id}}) {next;}
+  $seen{$tweet->{tweet_id}} = 1;
 
   # TODO: filter for English tweets only (can't using HTTP search!)
 
   # for now, just randomizing users (TODO: use interests as I did previously)
   for $user (randomize([keys %pass])) {
     # if user can and successfully follows tweeter, end this loop
+    # TODO: while this works, it looks ugly + confusing, codewise
     if (follow_q($user,$tweet) && do_follow($user,$tweet)) {last;}
   }
 
   # we only unfollow one person per loop, but need 'while' to find that person
   # 25h since update_ff occurs only hourly
-  # going evil and dropping to 6h (7h for caching)
- WHILE:  while ($whenfollowed[0] < $now-7*3600) {
+ WHILE:  while ($whenfollowed[0] < $now-25*3600) {
     # we look at each timestamp once, but maintain %whenfollowed hash
     # so we won't try to re-follow someone we dropped for not
     # reciprocating
