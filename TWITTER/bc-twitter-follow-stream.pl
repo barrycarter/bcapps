@@ -70,22 +70,6 @@ for (;;) {
   # actual updates occur once an hour (update_ff() keeps track)
   update_ff();
 
-  $globopts{debug}=1;
-
-  debug("ALPHA");
-  debug(scalar keys %{$ff{barrycarter}{followers}});
-  debug("POLO");
-
-
-
-  # sort users by number of followers (lowest first)
-  my(@users) = sort {scalar keys %{$ff{$a}{followers}} <=> scalar keys %{$ff{$b}{followers}}} (keys %pass);
-  for $i (@users) {
-    debug("$i -> ",scalar keys %{$ff{$i}{followers}});
-  }
-
-  die "TESTING";
-
   # get more tweets if I've run out
   # TODO: handle getting repeated tweets (which can happen)
   unless (@tweets) {@tweets = get_tweets();}
@@ -97,8 +81,9 @@ for (;;) {
 
   # TODO: filter for English tweets only (can't using HTTP search!)
 
-  # for now, just randomizing users (TODO: use interests as I did previously)
-  for $user (randomize([keys %pass])) {
+  # give priority to users with fewer followers
+  # this code is hideous, but does work
+  for $user (sort {scalar keys %{$ff{$a}{followers}} <=> scalar keys %{$ff{$b}{followers}}} (keys %pass)) {
     # if user can and successfully follows tweeter, end this loop
     # TODO: while this works, it looks ugly + confusing, codewise
     if (follow_q($user,$tweet) && do_follow($user,$tweet)) {last;}
@@ -128,11 +113,8 @@ for (;;) {
   if ($nextfollow[0] > $now) {
     my($sleep) = $nextfollow[0]-$now;
     logmsg("SLEEP: $sleep seconds until next possible follow");
-#    sleep($sleep);
-    # could be pending unfollows, so no real sleep
-    sleep(1);
+    sleep($sleep);
   }
-
 }
 
 # TODO: this function is ugly
@@ -263,11 +245,10 @@ sub unfollow_q {
 
   # have they reciprocated? (if yes, don't drop?)
   # TODO: could have an "evil" option to drop anyway
-  # TODO: going evil and disabling this
-#  if ($ff{$i}{followers}{$j}) {
-#    debug("$i follow reciprocated by $j (so not dropping)");
-#    return 0;
-#  }
+  if ($ff{$i}{followers}{$j}) {
+    debug("$i follow reciprocated by $j (so not dropping)");
+    return 0;
+  }
 
   # no excuse not to unfollow...
   return 1;
