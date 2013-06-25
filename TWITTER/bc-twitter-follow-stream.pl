@@ -71,7 +71,6 @@ for (;;) {
   update_ff();
 
   # get more tweets if I've run out
-  # TODO: handle getting repeated tweets (which can happen)
   unless (@tweets) {@tweets = get_tweets();}
   my($tweet) = shift(@tweets);
 
