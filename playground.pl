@@ -30,6 +30,27 @@ $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 use GD;
 
+# device testing (did "chmod a+r /dev/sdb3" first)
+open(A,"/dev/sdb3");
+seek(A, 91672576, SEEK_SET);
+read(A,$foo,512);
+debug("FOO: $foo");
+
+die "TESTING";
+
+for ($i=0; $i<=4e+12; $i+=512) {
+  seek(A, $i, SEEK_SET);
+  read(A,$foo,512);
+  # get rid of nulls and "fulls"
+#  $foo=~s/\xff//isg;
+#  $foo=~s/\x00//isg;
+  $foo=~s/[^ -~]//isg;
+  unless (length($foo)>50) {next;}
+  debug("I: $i",$foo);
+}
+
+die "TESTING";
+
 %hash=(1=>2,3=>4);
 
 debug(0+keys %hash);

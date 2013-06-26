@@ -15,7 +15,7 @@ unless (-f $file) {die("$file does not exist");}
 open(A,"$file.quikbak") || die("Can't open $file.quikbak, $!");
 
 # first line must be "! date (ORIGINAL)"
-if (<A> =~ /^!\s*(.*?)\s*\(ORIGINAL\)$/) {
+if (<A> =~ /^\!\s*(.*?)$/) {
   @patches = ($1);
 } else {
   die("diff file: bad first line");
