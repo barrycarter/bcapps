@@ -3,13 +3,15 @@
 # creates an Morse code image from text
 require "/usr/local/lib/bclib.pl";
 
-$text = "Test #001";
+$height = 48;
+$width = 48;
 
-$test="- .  ...  - ----- ----- .---- ...-.-";
+$test = `morse -s < /home/barrycarter/20130626/morse-msg.txt`;
+chomp($test);
+debug("TEST: $test");
 $test=~s/\s+/ /isg;
-
-$height = 20;
-$width = 200;
+$test=trim($test);
+debug("TEST: $test");
 
 # header
 print << "MARK";
@@ -27,6 +29,8 @@ for $i (split(//,$test)) {
     print "setpixel $x,$y,0,0,0\n";
   } elsif ($i eq "-") {
     # print the dash
+    # dash should not go over edge
+    if ($x>$height-1) {$x=0; $y+=2}
     print "setpixel $x,$y,0,0,0\n";
     $x++;
     print "setpixel $x,$y,0,0,0\n";
@@ -36,7 +40,9 @@ for $i (split(//,$test)) {
     die "BAD CHARCTER: $i";
   }
 
-  # print space advance cursor
+  # print space advance cursor (if end of line, go to next line)
   $x+=2;
+  if ($x>$width) {$x=0; $y+=2;}
+
 }
 

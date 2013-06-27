@@ -128,7 +128,7 @@ sub twitter_friends_followers_ids {
   # cursor" age=0 below, since we are now only called from another
   # subroutine that does its own timekeeping
   do {
-    ($out,$err,$res) = cache_command2("curl -s -u '$user:$pass' '$TWITST/$which/ids.json?cursor=$cursor'", "age=0");
+    ($out,$err,$res) = cache_command2("sleep $st_sleep; curl -s -u '$user:$pass' '$TWITST/$which/ids.json?cursor=$cursor'", "age=0");
     my(%hash) = %{JSON::from_json($out)};
     push(@res, @{$hash{ids}});
     $cursor = $hash{next_cursor};
