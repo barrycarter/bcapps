@@ -36,7 +36,12 @@
 # opposite of inlining ... but pretty sure it's not called outlining),
 # instead of making things true subroutines
 
-# TODO: add timeouts ("timed-run 60 ...." fails: munges output)
+# I have 'curl' symlinked to both 'curl-kill' and 'curl-keep', and an
+# external program (bc-daemon-checker.pl) that will kill curl-kill
+# instances that run too long, but keep curl-keep instances no matter
+# how long they run; since the curl instances here are disposable
+# (should be killed), I use 'curl-kill' throughout this program; this
+# effectively implements timeouts
 
 require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
@@ -128,7 +133,7 @@ sub twitter_friends_followers_ids {
   # cursor" age=0 below, since we are now only called from another
   # subroutine that does its own timekeeping
   do {
-    ($out,$err,$res) = cache_command2("sleep $st_sleep; curl -s -u '$user:$pass' '$TWITST/$which/ids.json?cursor=$cursor'", "age=0");
+    ($out,$err,$res) = cache_command2("sleep $st_sleep; curl-kill -s -u '$user:$pass' '$TWITST/$which/ids.json?cursor=$cursor'", "age=0");
     my(%hash) = %{JSON::from_json($out)};
     push(@res, @{$hash{ids}});
     $cursor = $hash{next_cursor};
@@ -262,7 +267,7 @@ sub do_unfollow {
   # log attempt
   logmsg("UNFOLLOW: $i UNFOLLOW $screen_name{$j}:$j ATTEMPT ($msg)");
   # actual drop
-  my($out,$err,$res) = cache_command2("sleep $st_sleep; curl -s -u '$i:$pass{$i}' -d 'user_id=$j' 'http://api.supertweet.net/1.1/friendships/destroy.json'","age=86400");
+  my($out,$err,$res) = cache_command2("sleep $st_sleep; curl-kill -s -u '$i:$pass{$i}' -d 'user_id=$j' 'http://api.supertweet.net/1.1/friendships/destroy.json'","age=86400");
   # record out/err/res in base64 (for db)
   my($out64) = encode_base64("<out>$out</out>\n<err>$err</err>\n<res>$res</res>\n");
   # is reply JSON?
@@ -307,7 +312,7 @@ sub get_tweets {
   my($keyword)=urlencode("#teamfollowback OR #autofollowback OR #followback OR #500aday OR #ifollowback OR #instantfollowback");
 #  my($url) = "http://twitter.com/search?q=$keyword";
   my($url) = "http://twitter.com/search/realtime?q=$keyword";
-  my($out,$err,$res) = cache_command2("curl -NL '$url'","age=0");
+  my($out,$err,$res) = cache_command2("curl-kill -NL '$url'","age=0");
   # this is just for debugging
   $out=~s/\n+/\n/isg;
   $out=~s/ +/ /isg;
@@ -403,7 +408,7 @@ sub do_follow {
   logmsg("FOLLOW: $i FOLLOW $twit_name:$twit_id ATTEMPT");
 
   # actual follow (1s sleep to avoid annoying supertweet)
-  my($out,$err,$res) = cache_command2("sleep $st_sleep; curl -s -u '$i:$pass{$i}' -d 'user_id=$twit_id' 'http://api.supertweet.net/1.1/friendships/create.json'","age=86400");
+  my($out,$err,$res) = cache_command2("sleep $st_sleep; curl-kill -s -u '$i:$pass{$i}' -d 'user_id=$twit_id' 'http://api.supertweet.net/1.1/friendships/create.json'","age=86400");
 
   # record out/err/res in base64 (for db)
   my($out64) = encode_base64("<out>$out</out>\n<err>$err</err>\n<res>$res</res>\n");
