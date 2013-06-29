@@ -64,3 +64,6 @@ alias perlfix "find /home/barrycarter/PERL /home/barrycarter/BCGIT -iname '*.pl'
 
 # easier access to datediff subroutine
 alias datediff "bc-call-func.pl datediff"
+
+# check if word is in WWF dictionary
+alias wwf "bzfgrep -ix \!* /home/barrycarter/BCGIT/WWF/wwf.txt.bz2"
