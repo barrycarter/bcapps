@@ -4,16 +4,11 @@
 require "/usr/local/lib/bclib.pl";
 
 $height = 48;
-$width = 16;
+$width = 48;
 
 $test = `morse -s < /home/barrycarter/20130626/morse-msg.txt`;
-chomp($test);
-debug("TEST: $test");
 $test=~s/\s+/ /isg;
 $test=trim($test);
-debug("TEST: $test");
-
-die "TESTING";
 
 # header
 print << "MARK";
@@ -25,29 +20,29 @@ MARK
 
 ($x,$y) = (0,0);
 
-for $i (split(//,$test)) {
-  if ($i eq ".") {
-    # print the dot
-    debug("DOT AT $x,$y");
-    print "setpixel $x,$y,0,0,0\n";
-  } elsif ($i eq "-") {
-    # print the dash
-    # dash should not go over edge
-    debug("DASH AT $x,$y");
-    if ($x>$width-3) {$x=0; $y+=2; debug("DASH MOVED $x,$y");}
-    print "setpixel $x,$y,0,0,0\n";
-    $x++;
-    print "setpixel $x,$y,0,0,0\n";
-  } elsif ($i eq " ") {
-    # do nothing but accept as valid character
-  } else {
-    die "BAD CHARCTER: $i";
+for $i (split(/ /,$test)) {
+  # number of pixels required for this word = 3 for dash, 2 for dot incl space
+  my($chars) = ($i=~tr/.//)*2 + ($i=~tr/-//)*3;
+  # enough chars left on this line? ($x+1 since we start count at 0)
+  if ($chars+$x+1 > $width) {$x=0; $y+=2;}
+  # TODO: if $width < $chars, no hope, should check for that
+  for $j (split(//,$i)) {
+    if ($j eq ".") {
+    # print the dot and space
+      print "setpixel $x,$y,0,0,0\n";
+      $x+=2;
+    } elsif ($j eq "-") {
+    # print the dash and space
+      print "setpixel $x,$y,0,0,0\n";
+      $x++;
+      print "setpixel $x,$y,0,0,0\n";
+      $x+=2;
+    } else {
+      warn "BAD CHARACTER IN WORDS: $j";
+    }
   }
 
-  # print space advance cursor (if end of line, go to next line)
-  # note that last pixel is $width-1, since we start numbering at 0
+  # "print" space separating words
   $x+=2;
-  if ($x>$width-1) {$x=0; $y+=2;}
-
 }
 
