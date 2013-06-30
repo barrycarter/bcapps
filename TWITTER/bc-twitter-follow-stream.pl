@@ -110,34 +110,12 @@ for (;;) {
   # give priority to users with fewer followers
   # this code is hideous, but does work
   for $user (sort {$numfollowers{$a} <=> $numfollowers{$b}} keys %pass) {
-    debug("USER: $user ($numfollowers{$user})");
-    warn "TESTING";
-    next;
     # if user can and successfully follows tweeter, end this loop
     # TODO: while this works, it looks ugly + confusing, codewise
     if (follow_q($user,$tweet) && do_follow($user,$tweet)) {last;}
   }
 
-die "TESTING";
-
-  # we only unfollow one person per loop, but need 'while' to find that person
-  # 25h since update_ff occurs only hourly
- WHILE:  while ($whenfollowed[0] < $now-25*3600) {
-    # we look at each timestamp once, but maintain %whenfollowed hash
-    # so we won't try to re-follow someone we dropped for not
-    # reciprocating
-    my($drop) = shift(@whenfollowed);
-    for $i (keys %{$whenfollowed{$drop}}) {
-      for $j (keys %{$whenfollowed{$drop}{$i}}) {
-	# TODO: update db when followed person has followed back or other reason to not unfollow
-	logmsg("DEBUG: consider unfollow: $drop $i $j");
-	if (unfollow_q($i,$j) && do_unfollow($i,$j, "originally followed at $drop")) {
-	  # drop out of while loop
-	  last WHILE;
-	}
-      }
-    }
-  }
+  # unfollows are now entirely handled by another (as-yet-unwritten) program
 
   # if no one can follow for a while, sleep
   @nextfollow = sort {$a <=> $b} values %nextfollowtime;
@@ -387,12 +365,6 @@ sub follow_q {
   my($twit_id, $twit_name, $tweet_id) = 
     ($tweet->{user_id}, $tweet->{screen_name}, $tweet->{'tweet_id'});
 
-  # different users never follow the same person wo an hour gap
-  if ($lastfollowedat{$twit_id} > $now-3600) {
-    logmsg("\#$tweet_id $i NOFOLLOW  $twit_name:$twit_id (can't refollow $twit_name:$twit_id until $lastfollowedat{$twit_id}+3600");
-    return 0;
-  }
-
   # hit follow limit (this is independant of who tweeted)
   if ($nextfollowtime{$i} > time()) {
     logmsg("\#$tweet_id $i NOFOLLOW $twit_name:$twit_id (can't follow anyone until $nextfollowtime{$i})");
@@ -400,22 +372,16 @@ sub follow_q {
     }
 
   # already following, so no
-  if ($ff{$i}{friends}{$twit_id}) {
+  if (is_ff($i,"friends",$twit_id)) {
     logmsg("\#$tweet_id $i NOFOLLOW $twit_name:$twit_id (already following)");
     return 0;
   }
 
   # no point in following follower
-  if ($ff{$i}{followers}{$twit_id}) {
+  if (is_ff($i,"followers",$twit_id)) {
     logmsg("\#$tweet_id $i NOFOLLOW $twit_name:$twit_id (twit already follows)");
     return 0;
   }
-
-  # followed once, not reciprocated
-  if ($alreadyfollowed{$i}{$twit_id}) {
-    logmsg("\#$tweet_id $i NOFOLLOW $twit_name:$twit_id (already followed once)");
-    return 0;
-    }
 
   # no excuse not to follow...
   return 1;
@@ -426,15 +392,15 @@ sub follow_q {
 # $tweet with log message $msg; returns 0 on fail, 1 on success
 
 sub do_follow {
-  my($now) = time();
   my($i,$tweet) = @_;
+  my($now) = time();
   my($twit_id, $twit_name, $tweet_id) = 
     ($tweet->{user_id}, $tweet->{screen_name}, $tweet->{'tweet_id'});
 
   # log attempt
   logmsg("FOLLOW: $i FOLLOW $twit_name:$twit_id ATTEMPT");
 
-  # actual follow (1s sleep to avoid annoying supertweet)
+  # actual follow (sleep to avoid annoying supertweet)
   my($out,$err,$res) = cache_command2("sleep $st_sleep; curl-kill -s -u '$i:$pass{$i}' -d 'user_id=$twit_id' 'http://api.supertweet.net/1.1/friendships/create.json'","age=86400");
 
   # record out/err/res in base64 (for db)
@@ -467,19 +433,21 @@ sub do_follow {
     return 0;
   }
 
-  # at this point, successful, so update friends/followers hash + log
-  $ff{$i}{friends}{$twit_id} = 1;
+  # at this point, successful, so update friends/followers db + log
+  my($query) = "INSERT INTO ff (user, type, target) VALUES ('$i', 'friends', '$twit_id')";
+  sqlite3($query,$db);
 
-  # keep whenfollowed log updated
-  unless ($whenfollowed{$now}) {push(@whenfollowed,$now);}
-  $whenfollowed{$now}{$i}{$twit_id} = 1;
-
-  # update last followed at time
-  $lastfollowedat{$twit_id} = $now;
+  # this is new: insert reminder to unfollow (doing this in separate
+  # db because sqlite3 locks entire dbs, not just tables, so this is
+  # safer?)
+  # below query does make SQLite3 do the math
+  $query = "INSERT INTO unfollow (source_id, target_id, time) VALUES
+            ('$i', '$twit_id', $now+86400)";
+  sqlite3($query,$db);
 
   logmsg("FOLLOW: $i FOLLOW $twit_name:$twit_id SUCCESS");
 
-  my($query) = << "MARK";
+  $query = << "MARK";
 INSERT INTO bc_multi_follow 
  (source_id, target_id, target_name, action, time, follow_reply)
 VALUES
@@ -487,6 +455,7 @@ VALUES
 MARK
 ;
   sqlite3($query, $db);
+  # TODO: check for sqlite3 errors in above queries too
   # TODO: do this in other places where I make sqlite3 queries
   # we still return 1 on error, since its an SQL error, not follow error
   if ($SQL_ERROR) {logmsg("SQLERROR: $SQL_ERROR");}
@@ -557,6 +526,24 @@ CREATE TABLE bc_multi_follow (
  follow_reply TEXT,
  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+And of the unfollow reminder table (now handled by a separate program); people in this table aren't automatically unfollowed; rather, this is a reminder to check whether to unfollow them or not + update status
+
+CREATE TABLE unfollow (
+ source_id BIGINT,
+ target_id BIGINT,
+ time BIGINT,
+ resolution TEXT,
+ timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE UNIQUE INDEX i1 ON unfollow(source_id,target_id);
+
+The table above is initially seeded FROM bc-multi-follow.db AS
+
+INSERT IGNORE INTO unfollow 
+SELECT source_id,target_id,time+86400 AS time FROM bc_multi_follow
+WHERE action='SOURCE_FOLLOWS_TARGET';
 
 =cut
 
