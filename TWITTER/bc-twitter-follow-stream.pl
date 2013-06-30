@@ -60,38 +60,65 @@ unless (mylock("bctfs", "lock")) {
 }
 
 $db = "/usr/local/etc/bc-multi-follow.db";
-unless (-s $db) {die "$db: does not exist or empty";}
+# below is updated hourly so its ok that its in a "tmp" directory
+$ffdb = "/var/tmp/bctfs2/ff.db";
+unless (-s $db && -s $ffdb) {die "$db: does not exist or empty";}
 
 logmsg("START");
 
 # setup (we ignore user interests for now)
 parse_users();
-load_db();
+# load_db();
 
 # neverending loop
 for (;;) {
   $now = time();
 
+  # prioritize users w/ fewest followers, so update hourly
+  if ($now-$lastfollowupdate>3600) {
+    $lastfollowupdate = $now;
+    for $i (sort keys %pass) {
+      # below is purely information, we don't use it
+      my($numfriends) = count_ff($i, "friends");
+      # TODO: handle -1 case better (what if prog start?)
+      my($numfollowers) = count_ff($i, "followers");
+      if ($numfollowers == -1) {next;}
+      $numfollowers{$i} = $numfollowers;
+      logmsg("UPDATE: $i has $numfollowers followers ($numfriends friends)");
+    }
+  }
+
   # actual updates occur once an hour (update_ff() keeps track)
-  update_ff();
+#  update_ff();
 
   # get more tweets if I've run out
   unless (@tweets) {@tweets = get_tweets();}
   my($tweet) = shift(@tweets);
 
-  # don't use the same tweet twice
+  # don't use the same tweet
   if ($seen{$tweet->{tweet_id}}) {next;}
   $seen{$tweet->{tweet_id}} = 1;
+
+  # even cross user, don't follow the same person twice ever (which
+  # also avoids following someone who didnt reciprocate) to avoid suspicion
+  my($query) = "SELECT COUNT(*) FROM bc_multi_follow WHERE target_id = $tweet->{user_id} AND action='SOURCE_FOLLOWS_TARGET'";
+  my($res) = sqlite3val($query,$db);
+  if ($res>0) {next;}
 
   # TODO: filter for English tweets only (can't using HTTP search!)
 
   # give priority to users with fewer followers
   # this code is hideous, but does work
-  for $user (sort {scalar keys %{$ff{$a}{followers}} <=> scalar keys %{$ff{$b}{followers}}} (keys %pass)) {
+  for $user (sort {$numfollowers{$a} <=> $numfollowers{$b}} keys %pass) {
+    debug("USER: $user ($numfollowers{$user})");
+    warn "TESTING";
+    next;
     # if user can and successfully follows tweeter, end this loop
     # TODO: while this works, it looks ugly + confusing, codewise
     if (follow_q($user,$tweet) && do_follow($user,$tweet)) {last;}
   }
+
+die "TESTING";
 
   # we only unfollow one person per loop, but need 'while' to find that person
   # 25h since update_ff occurs only hourly
@@ -464,6 +491,55 @@ MARK
   # we still return 1 on error, since its an SQL error, not follow error
   if ($SQL_ERROR) {logmsg("SQLERROR: $SQL_ERROR");}
 
+  return 1;
+}
+
+# Attempting to get rid of memory bloat $ff hash; this subroutine
+# queries the db for ff status, but also checks its fairly recently
+# updated. is_ff($source, $type, $target)
+# [$type='friend|follower']. Returns -1 on error, +1 on success, 0 on
+# failure
+
+sub is_ff {
+  my($source,$type,$target) = @_;
+
+  unless (freshness_check($source,$type)) {return -1;}
+
+  # now the friend/follower query itself
+  $query = "SELECT COUNT(*) FROM ff WHERE user='$source' AND type='$type' AND target='$target'";
+  $res = sqlite3val($query,$ffdb);
+  if ($SQL_ERROR) {logmsg("SQLERROR: $SQL_ERROR"); return -1;}
+  return $res;
+}
+
+# counts number of friends/followers for given user (returns -1 on error)
+sub count_ff {
+  my($source,$type) = @_;
+
+  unless (freshness_check($source,$type)) {return -1;}
+
+  # now the count
+  $query = "SELECT COUNT(*) FROM ff WHERE user='$source' AND type='$type'";
+  $res = sqlite3val($query,$ffdb);
+  if ($SQL_ERROR) {logmsg("SQLERROR: $SQL_ERROR"); return -1;}
+  return $res;
+}
+
+# checks freshness of ff db for given user and type (ie, "friends" or
+# "followers"); returns 0 if db not fresh [or other error], 1 if db is
+# fresh (called from other subroutines)
+
+sub freshness_check {
+  my($source,$type) = @_;
+  # when was the db last updated for this $source/$type
+  my($query) = "SELECT MIN(timestamp) FROM ff WHERE user='$source' AND type='$type'";
+  # TODO: could do the math here in sqlite3, but easier this way?
+  my($res) = sqlite3val($query, $ffdb);
+  # if no result, error
+  unless ($res) {return 0;}
+  # distrust results more than an hour old
+  my($diff) = str2time("$res UTC")-time();
+  if (abs($diff)>3600) {return 0;}
   return 1;
 }
 
