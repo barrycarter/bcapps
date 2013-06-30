@@ -62,17 +62,21 @@ unless (mylock("bctfs", "lock")) {
 $db = "/usr/local/etc/bc-multi-follow.db";
 # below is updated hourly so its ok that its in a "tmp" directory
 $ffdb = "/var/tmp/bctfs2/ff.db";
-unless (-s $db && -s $ffdb) {die "$db: does not exist or empty";}
+$unfollowdb = "/usr/local/etc/bc-unfollow.db";
+unless (-s $db && -s $ffdb && -s $unfollowdb) {
+  die "$db: does not exist or empty";
+}
 
 logmsg("START");
 
 # setup (we ignore user interests for now)
 parse_users();
-# load_db();
 
 # neverending loop
 for (;;) {
   $now = time();
+
+  if (++$testingvar>50) {die "TESTING";}
 
   # prioritize users w/ fewest followers, so update hourly
   if ($now-$lastfollowupdate>3600) {
@@ -88,9 +92,6 @@ for (;;) {
     }
   }
 
-  # actual updates occur once an hour (update_ff() keeps track)
-#  update_ff();
-
   # get more tweets if I've run out
   unless (@tweets) {@tweets = get_tweets();}
   my($tweet) = shift(@tweets);
@@ -99,11 +100,21 @@ for (;;) {
   if ($seen{$tweet->{tweet_id}}) {next;}
   $seen{$tweet->{tweet_id}} = 1;
 
+  # convenience variables
+  my($twit_id, $twit_name, $tweet_id) = 
+    ($tweet->{user_id}, $tweet->{screen_name}, $tweet->{'tweet_id'});
+
+  # not sure why this happens, but it causes problems
+  unless ($twit_id) {next;}
+
   # even cross user, don't follow the same person twice ever (which
   # also avoids following someone who didnt reciprocate) to avoid suspicion
-  my($query) = "SELECT COUNT(*) FROM bc_multi_follow WHERE target_id = $tweet->{user_id} AND action='SOURCE_FOLLOWS_TARGET'";
+  my($query) = "SELECT COUNT(*) FROM bc_multi_follow WHERE target_id = $twit_id AND action='SOURCE_FOLLOWS_TARGET'";
   my($res) = sqlite3val($query,$db);
-  if ($res>0) {next;}
+  if ($res>0) {
+    logmsg("\#$tweet_id NOFOLLOW: * $twit_name:$twit_id (already followed once)");
+    next;
+  }
 
   # TODO: filter for English tweets only (can't using HTTP search!)
 
@@ -126,27 +137,6 @@ for (;;) {
   }
 }
 
-# TODO: this function is ugly
-sub twitter_friends_followers_ids {
-  my($TWITST) = "http://api.supertweet.net/1.1";
-  my($which,$user,$pass) = @_;
-  my($out,$err,$res);
-  my($cursor) = -1;
-  my(@res);
-
-  # twitter returns 5K or so results at a time, so loop using "next
-  # cursor" age=0 below, since we are now only called from another
-  # subroutine that does its own timekeeping
-  do {
-    ($out,$err,$res) = cache_command2("sleep $st_sleep; curl-kill -s -u '$user:$pass' '$TWITST/$which/ids.json?cursor=$cursor'", "age=0");
-    my(%hash) = %{JSON::from_json($out)};
-    push(@res, @{$hash{ids}});
-    $cursor = $hash{next_cursor};
-  } until (!$cursor);
-
-  return @res;
-}
-
 # logging for this program (auto timestamping)
 sub logmsg {
   my($str) = join(" ",@_);
@@ -156,49 +146,7 @@ sub logmsg {
   print "$date\n";
 }
 
-
-# updates friends/followers every hour (this subroutine is specific to
-# this program); also writes to file for debugging
-
-sub update_ff {
-  my($now) = time();
-
-  # when this subroutine was last run
-  my($lastupdate) = read_file("/var/tmp/bctfs/ff.txt");
-
-  # if less than an hour ago, and in this instance (ie, %ff is
-  # defined), do nothing
-  if ($now-$lastupdate<3600 && %ff) {return;}
-
-  logmsg("FF: UPDATING");
-  # intentionally NOT removing friends/followers, only adding to
-  # global %ff hash
-  for $i (keys %pass) {
-    for $j ("friends","followers") {
-      my(@ff);
-      # if less than an hour ago, but in different instance, load from files
-      if ($now-$lastupdate<3600 && -f "/var/tmp/bctfs/$i-$j.txt") {
-	@ff = split(/\n/, read_file("/var/tmp/bctfs/$i-$j.txt"));
-	logmsg("FF: $i has $#ff+1 $j (cached)");
-      } else {
-	@ff = twitter_friends_followers_ids($j,$i,$pass{$i});
-	# write these to file
-	write_file(join("\n",@ff)."\n","/var/tmp/bctfs/$i-$j.txt");
-	logmsg("FF: $i has $#ff+1 $j (not cached)");
-      }
-
-      for $k (@ff) {
-	$ff{$i}{$j}{$k}=1;
-      }
-    }
-  }
-
-  # and record update
-  write_file($now,"/var/tmp/bctfs/ff.txt");
-}
-
 # parse users
-
 sub parse_users {
   # NOTE: not in git directory, since it contains private info
   # users is not a global, but the hashes below are
@@ -218,99 +166,8 @@ sub parse_users {
   }
 }
 
-# loads the db, indicating who has followed whom and whence
-sub load_db {
-  # TODO: the fact that I'm loading the entire db here (albeit only
-  # certain columns) suggests I'm doing something wrong (and/or could
-  # just use a flat file)
-
-  my(@res) = sqlite3hashlist("SELECT source_id,target_id,target_name,action,time,timestamp FROM bc_multi_follow", $db);
-  logmsg("START: $#res+1 rows in database");
-
-  for $i (@res) {
-    # keep track of screen name
-    $screen_name{$i->{target_id}} = $i->{target_name};
-    # TODO: perhaps only select these rows?
-    # TODO: use unfollows somehow?
-    unless ($i->{action} eq "SOURCE_FOLLOWS_TARGET") {next;}
-    my($source,$target,$time) = ($i->{source_id},$i->{target_id},$i->{time});
-    # we will need 'when followed' for unfollows later
-    $alreadyfollowed{$source}{$target}=$time;
-    $whenfollowed{$time}{$source}{$target} = 1;
-  }
-
-  @whenfollowed = sort {$a <=> $b} (keys %whenfollowed);
-}
-
-# under rules of this program, can $i unfollow $j?; returns 1 if yes
-sub unfollow_q {
-  my($i,$j) = @_;
-
-  # is $i following $j at all?
-  unless ($ff{$i}{friends}{$j}) {
-    debug("$i can't unfollow $j: not following");
-    return 0;
-  }
-
-  # have they reciprocated? (if yes, don't drop?)
-  # TODO: could have an "evil" option to drop anyway
-  if ($ff{$i}{followers}{$j}) {
-    debug("$i follow reciprocated by $j (so not dropping)");
-    return 0;
-  }
-
-  # no excuse not to unfollow...
-  return 1;
-}
-
-# do_unfollow($i,$j,$msg): have $i unfollow $j with log message $msg;
-# returns 0 on fail, 1 on success
-
-sub do_unfollow {
-  my($i,$j,$msg) = @_;
-
-  # log attempt
-  logmsg("UNFOLLOW: $i UNFOLLOW $screen_name{$j}:$j ATTEMPT ($msg)");
-  # actual drop
-  my($out,$err,$res) = cache_command2("sleep $st_sleep; curl-kill -s -u '$i:$pass{$i}' -d 'user_id=$j' 'http://api.supertweet.net/1.1/friendships/destroy.json'","age=86400");
-  # record out/err/res in base64 (for db)
-  my($out64) = encode_base64("<out>$out</out>\n<err>$err</err>\n<res>$res</res>\n");
-  # is reply JSON?
-  unless ($out=~/^\s*\{/) {
-    logmsg("UNFOLLOW: $i UNFOLLOW $screen_name{$j}:$j FAIL (response was not JSON): $out");
-    return 0;
-  }
-  # look at JSON of reply
-  my(%json) = %{JSON::from_json($out)};
-
-  # id must match
-  unless ($json{id} == $j) {
-    logmsg("UNFOLLOW: $i UNFOLLOW $screen_name{$j}:$j FAIL (id not $j): $out");
-    return 0;
-  }
-
-  # at this point, successful, so update friends/followers hash + log
-  delete $ff{$i}{friends}{$j};
-  logmsg("UNFOLLOW: $i UNFOLLOW $json{screen_name}:$j SUCCESS");
-
-  my($query) = << "MARK";
-INSERT INTO bc_multi_follow 
- (source_id, target_id, target_name, action, time, follow_reply)
-VALUES
- ('$i', '$j', '$json{screen_name}', 'SOURCE_UNFOLLOWS_TARGET', $now, '$out64')
-MARK
-;
-  sqlite3($query, $db);
-  # TODO: do this in other places where I make sqlite3 queries
-  # we still return 1 on error, since its an SQL error, not unfollow error
-  if ($SQL_ERROR) {logmsg("SQLERROR: $SQL_ERROR");}
-
-  return 1;
-}
-
 # obtain tweets using twitter's HTTP search stream (since they shut
 # down basic auth stream API, the fish poops [aka bass turds])
-
 sub get_tweets {
   my(@res);
   # TODO: currently hardcoding to find followbackers, not by keyword
@@ -435,7 +292,7 @@ sub do_follow {
 
   # at this point, successful, so update friends/followers db + log
   my($query) = "INSERT INTO ff (user, type, target) VALUES ('$i', 'friends', '$twit_id')";
-  sqlite3($query,$db);
+  sqlite3($query,$ffdb);
 
   # this is new: insert reminder to unfollow (doing this in separate
   # db because sqlite3 locks entire dbs, not just tables, so this is
@@ -443,7 +300,7 @@ sub do_follow {
   # below query does make SQLite3 do the math
   $query = "INSERT INTO unfollow (source_id, target_id, time) VALUES
             ('$i', '$twit_id', $now+86400)";
-  sqlite3($query,$db);
+  sqlite3($query,$unfollowdb);
 
   logmsg("FOLLOW: $i FOLLOW $twit_name:$twit_id SUCCESS");
 
@@ -546,4 +403,3 @@ SELECT source_id,target_id,time+86400 AS time FROM bc_multi_follow
 WHERE action='SOURCE_FOLLOWS_TARGET';
 
 =cut
-
