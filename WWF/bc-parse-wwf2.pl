@@ -5,7 +5,9 @@
 
 require "/usr/local/lib/bclib.pl";
 
-$filespec = "/mnt/sshfs/WWF/wwf*.html";
+$argv = join(" ",@ARGV);
+$filespec = "/mnt/sshfs/WWF/wwf*.html $argv";
+debug("FILESPEC: $filespec");
 
 # TODO: really need to start getting rid of some files once game is
 # complete... I tend to save files FREQUENTLY

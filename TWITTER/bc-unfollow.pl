@@ -10,24 +10,34 @@ $ffdb = "/var/tmp/bctfs2/ff.db";
 
 $now=time();
 
-# doing these in chunks of 1000 and piping instead of doing via this prog
-$query = "SELECT oid,* FROM unfollow WHERE time<$now AND (resolution='' OR resolution IS NULL) LIMIT 1000";
+$query = "SELECT oid,* FROM unfollow WHERE time<$now AND (resolution='' OR resolution IS NULL)";
 @res = sqlite3hashlist($query,$unfollowdb);
-
-print "BEGIN;\n";
 
 for $i (@res) {
   my($source_id, $target_id) = ($i->{source_id}, $i->{target_id});
+
   # does source still follow target (if not, can't unfollow, but update db)
   $follow_q = is_ff($source_id, "friends", $target_id);
   unless ($follow_q) {
     $query = "UPDATE unfollow SET resolution='SOURCE_NO_LONGER_FOLLOWS_TARGET' WHERE rowid=$i->{rowid}";
-    # TODO: first shot: just going to wrap this into a TRANSACT block
-    print "$query;\n";
+    sqlite3($query,$unfollowdb);
+    # this is really just a debugging statement
+    print "NOLONGERFOLLOWS: $i->{rowid}\n";
     next;
   }
-}
 
-print "COMMIT;\n";
+  # has target followed back (if yes, no need to unfollow)
+  $follower_q = is_ff($source_id, "followers", $target_id);
+  if ($follower_q) {
+    $query = "UPDATE unfollow SET resolution='TARGET_FOLLOWEDBACK_SOURCE' WHERE rowid=$i->{rowid}";
+    sqlite3($query,$unfollowdb);
+    # this is really just a debugging statement
+    print "FOLLOWBACK: $i->{rowid}\n";
+    next;
+  }
+
+  print "NEITHER: $i->{rowid}\n";
+
+}
 
 
