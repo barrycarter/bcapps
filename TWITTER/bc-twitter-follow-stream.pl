@@ -141,35 +141,6 @@ for (;;) {
   }
 }
 
-# logging for this program (auto timestamping)
-sub logmsg {
-  my($str) = join(" ",@_);
-  $str=~s/\s+/ /isg;
-  my($date) = strftime("[%Y%m%d.%H%M%S] $str\n",gmtime());
-  # this program runs forever so just spew logs to STDOUT for now
-  print "$date\n";
-}
-
-# parse users
-sub parse_users {
-  # NOTE: not in git directory, since it contains private info
-  # users is not a global, but the hashes below are
-  my(@users) = `egrep -v '^#' /home/barrycarter/20130603/users.txt`;
-
-  # parse
-  for $i (@users) {
-    unless ($i=~m%^(.*?):(.*?):(.*)$%) {warn "BAD LINE: $i";}
-    my($user,$pass,$int) = ($1,$2,$3);
-    $pass{$user} = $pass;
-    # parse interests
-    for $j (split(/\,\s*/,$int)) {
-      $interest{lc($j)}{$user} = 1;
-    }
-    # initialize nextfollowtime (should be unnecessary, but...)
-    $nextfollowtime{$user} = 0;
-  }
-}
-
 # obtain tweets using twitter's HTTP search stream (since they shut
 # down basic auth stream API, the fish poops [aka bass turds])
 sub get_tweets {
