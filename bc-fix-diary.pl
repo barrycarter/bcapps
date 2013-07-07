@@ -7,23 +7,38 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# TODO: look through older files as well... this subset for testing only
+# NOTE: because each day may affect the day AFTER it, this loop must
+# work in reverse, latest to earliest
 
-for $i (glob "/home/barrycarter/TODAY/201306*.txt") {
+# TODO: stopping at july 1st for now, but go back further
+for ($i=time(); $i>=str2time("2013-07-01 00:00:00 MDT"); $i-=86400) {
+  $file = strftime("/home/barrycarter/TODAY/%Y%m%d.txt",localtime($i));
+  # next days file (since we'll be adding to it, maybe)
+  $tommfile = strftime("/home/barrycarter/TODAY/%Y%m%d.txt",localtime($i+86400));
   $lastreading = 0;
-  open(A,$i)||die("Can't open $i, $!");
+  open(A,$file)||die("Can't open $file, $!");
+  # this is the output file (we don't alter originals)
+  open(B,">$file.new")||die("Can't open $file.new, $!");
   while (<A>) {
-    chomp;
-    # ignore blanks
-    if (/^\s*$/) {next;}
-    # just the timestamp, delete the rest
-    s/\s+.*$//;
-    unless ($_ > $lastreading) {
-      die("OUT OF ORDER($i): $_ <= $lastreading");
+    # ignore blanks, but print them to output file
+    if (/^\s*$/) {
+      print B $_;
+      next;
     }
 
-    $lastreading = $_;
-  }
+    # obtain the timestamp (first field)
+    $tstamp = $_;
+    $tstamp=~s/\s.*$//isg;
 
+    # if tstamp is in order, everything is good
+    if ($tstamp >= $lastreading) {
+      print B $_;
+      $lastreading = $tstamp;
+      next;
+    }
+
+    debug("OOO: $file, $tstamp < $lastreading");
+  }
   close(A);
+  close(B);
 }
