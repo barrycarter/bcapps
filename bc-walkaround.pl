@@ -35,6 +35,8 @@ for (;;) {
   $msg .= " [reply cannot be blank]";
 }
 
+# recompute file here in case day has changed
+my($file2) = strftime("/home/barrycarter/TODAY/%Y%m%d.txt", localtime($now));
 my($time2) = strftime("%H%M%S", localtime());
-append_file("$time2 GUAWA REPLY: $res\n",$file);
+append_file("$time2 GUAWA REPLY: $res\n",$file2);
 mylock("bc-walkaround.pl","unlock");

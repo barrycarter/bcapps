@@ -11,7 +11,7 @@ require "/usr/local/lib/bclib.pl";
 # work in reverse, latest to earliest
 
 # TODO: stopping at july 1st for now, but go back further
-for ($i=time(); $i>=str2time("2013-07-01 00:00:00 MDT"); $i-=86400) {
+for ($i=time(); $i>=str2time("2013-01-01 00:00:00 MDT"); $i-=86400) {
   $file = strftime("/home/barrycarter/TODAY/%Y%m%d.txt",localtime($i));
   # next days file (since we'll be adding to it, maybe)
   $tommfile = strftime("/home/barrycarter/TODAY/%Y%m%d.txt",localtime($i+86400));
@@ -37,8 +37,32 @@ for ($i=time(); $i>=str2time("2013-07-01 00:00:00 MDT"); $i-=86400) {
       next;
     }
 
-    debug("OOO: $file, $tstamp < $lastreading");
+    # tstamp is out of order, append to start of next days file (this
+    # SHOULD keep next days file in order because of the error types I
+    # expect; if it DOESNT, I have more serious problems, and need to
+    # know about them).
+    # There's no good way to prepend to a file, but this works
+    open(C,">$tommfile.new.new");
+    print C $_;
+    close(C);
+    system("cat $tommfile.new >> $tommfile.new.new");
+    system("mv $tommfile.new.new $tommfile.new");
   }
   close(A);
   close(B);
 }
+
+=item testing
+
+Testing that no data has been lost:
+
+\cat 2013????.txt.new | sort >! bigfile1
+\cat 2013????.txt | sort >! bigfile2
+diff bigfile[12];: empty as expected
+
+Confirm that the .new files are now in order (if not, more serious
+problems have occurred; only compare first field) [pipe to shell]:
+
+\ls 2013*.txt.new|perl -nle 'print "echo $_;egrep -v \47\^\$\47 $_|sort -c -k1,1 -s"'
+
+=cut
