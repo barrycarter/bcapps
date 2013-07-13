@@ -11,8 +11,15 @@ require "/usr/local/lib/bclib.pl";
 # work in reverse, latest to earliest
 
 # TODO: stopping at july 1st for now, but go back further
-for ($i=time(); $i>=str2time("2013-01-01 00:00:00 MDT"); $i-=86400) {
+for ($i=time(); $i>=str2time("2000-01-01 00:00:00 MDT"); $i-=86400) {
   $file = strftime("/home/barrycarter/TODAY/%Y%m%d.txt",localtime($i));
+
+  # ignore if no such file
+  unless (-f $file) {
+    warn("NO SUCH FILE: $file");
+    next;
+  }
+
   # next days file (since we'll be adding to it, maybe)
   $tommfile = strftime("/home/barrycarter/TODAY/%Y%m%d.txt",localtime($i+86400));
   $lastreading = 0;
@@ -31,7 +38,8 @@ for ($i=time(); $i>=str2time("2013-01-01 00:00:00 MDT"); $i-=86400) {
     $tstamp=~s/\s.*$//isg;
 
     # if tstamp is in order, everything is good
-    if ($tstamp >= $lastreading) {
+    # using string sort for rare case where timestamp is 4 digits
+    if ($tstamp ge $lastreading) {
       print B $_;
       $lastreading = $tstamp;
       next;
@@ -56,13 +64,13 @@ for ($i=time(); $i>=str2time("2013-01-01 00:00:00 MDT"); $i-=86400) {
 
 Testing that no data has been lost:
 
-\cat 2013????.txt.new | sort >! bigfile1
-\cat 2013????.txt | sort >! bigfile2
+\cat ????????.txt.new | sort >! bigfile1
+\cat ????????.txt | sort >! bigfile2
 diff bigfile[12];: empty as expected
 
 Confirm that the .new files are now in order (if not, more serious
 problems have occurred; only compare first field) [pipe to shell]:
 
-\ls 2013*.txt.new|perl -nle 'print "echo $_;egrep -v \47\^\$\47 $_|sort -c -k1,1 -s"'
+\ls ????????.txt.new|perl -nle 'print "echo $_;egrep -v \47\^\$\47 $_|sort -c -k1,1 -s"'
 
 =cut
