@@ -12,7 +12,9 @@ echo "["`date +%s`"]" "SCHEDULE_FORCED_HOST_CHECK;bcmac;"`date +%s` >> /var/nagi
 
 echo "["`date +%s`"]" "SCHEDULE_FORCED_HOST_SVC_CHECKS;localhost;"`date +%s` >> /var/nagios/rw/nagios.cmd
 
+Created this view solely to avoid quoting problems in 'badbank' test
 
-
+CREATE VIEW badbank AS SELECT * FROM bankstatements WHERE
+(recognized IS NULL OR recognized!='YES') AND amount<0 AND date>='2013-07-01';
 
 

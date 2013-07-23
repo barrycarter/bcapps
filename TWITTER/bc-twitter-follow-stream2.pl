@@ -18,6 +18,21 @@ unless (-s $db) {die "$db: does not exist or is empty file";}
 
 
 
+
+
+die "TESTING";
+
+# neverending loop
+for (;;) {
+  $now = time();
+  # TODO: add sleep
+}
+
+
+
+
+
+
 =item schema
 
 Single database /usr/local/etc/bctfs3/db.db with these tables
@@ -71,4 +86,3 @@ sub get_tweets {
   return @res;
 
 }
-

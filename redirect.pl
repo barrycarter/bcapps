@@ -28,6 +28,8 @@ if ($ENV{HTTP_HOST} eq "u.94y.info") {
   print "Location: http://wordpress.barrycarter.info/index.php/2013/03/01/why-419eater-com-sucks/";
 } elsif ($ENV{HTTP_HOST} eq "ftf.u.94y.info") {
   print "Location: http://wordpress.barrycarter.info/index.php/free-open-source-perl-script-to-increase-twitter-followers/";
+} elsif ($ENV{HTTP_HOST} eq "lt.u.94y.info") {
+  print "Location: http://wordpress.barrycarter.info/index.php/track-albuquerque-lightning-july-16th-20th/";
 } else {
   # do nothing
 }
