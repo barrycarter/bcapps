@@ -3,7 +3,11 @@
 # Split an mbox style mailbox into individual messages (useful for
 # checking dupes)
 
-# require "/usr/local/lib/bclib.pl";
+# --nofrom: do not include the "from space" line when splitting
+# emails; useful for comparing emails that are identical on a server
+# but whose timestamp is different when downloaded (eg, via getmail)
+
+require "/usr/local/lib/bclib.pl";
 
 $file=shift||die("Usage: $0 file");
 open(A,$file)||die("Can't open $file, $!");
@@ -16,6 +20,7 @@ while (<A>) {
     $i++;
     close(B);
     open(B,">mail.$i");
+    if ($globopts{nofrom}) {next;}
   }
   print B $_;
 }
