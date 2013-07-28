@@ -22,7 +22,7 @@ if ($globopts{file}) {
   # this allows $page to be bzipped
   ($page) = cache_command2("bzcat -f $globopts{file}");
 } else {
-  ($page) = cache_command2("curl -A 'gocomics\@barrycarter.info' http://www.gocomics.com/comments/page/1", "age=60");
+  ($page) = cache_command2("curl -H 'Accept: text/html' -A 'gocomics\@barrycarter.info' http://www.gocomics.com/comments/page/1", "age=60");
 }
 
 unless ($page) {die "Empty or nonexistent page";}
@@ -80,8 +80,6 @@ print A "BEGIN;\n";
 for $i (@querys) {print A "$i;\n";}
 print A "COMMIT;\n";
 close(A);
-
-die "TESTING";
 
 # testing, hoping to fix "bad characters" that seem to show up in bodies
 # system("sqlite3 /tmp/gocomics.db < /var/tmp/gocomics-queries.txt");
