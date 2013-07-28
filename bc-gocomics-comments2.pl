@@ -81,6 +81,8 @@ for $i (@querys) {print A "$i;\n";}
 print A "COMMIT;\n";
 close(A);
 
+die "TESTING";
+
 # testing, hoping to fix "bad characters" that seem to show up in bodies
 # system("sqlite3 /tmp/gocomics.db < /var/tmp/gocomics-queries.txt");
 # die "TESTING";
