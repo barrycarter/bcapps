@@ -5,6 +5,7 @@
 # <h>(I like dbs)</h>. Runs repeatedly in hope of keeping db complete
 
 # --file=x: read data from file x, not from gocomics webpage
+# --printonly: print queries, do not execute them
 
 # --db=x: use a database other than gocomics.db (really only useful
 # for local testing)
@@ -73,6 +74,11 @@ MARK
 
   push(@querys,$query);
 
+}
+
+if ($globopts{printonly}) {
+  for $i (@querys) {print "$i;\n";}
+  exit(0);
 }
 
 open(A,">/var/tmp/gocomics-queries.txt");
