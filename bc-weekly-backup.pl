@@ -7,20 +7,38 @@
 
 require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
-my($dir) = "/usr/local/etc/weekly-backups-files";
+my($dir) = "/usr/local/etc/weekly-backups/files";
 
 # root only, and run at nice level 19
 if ($>) {die("Must run as root");}
 system("/usr/bin/renice 19 -p $$");
 
-# saving filelists on my machines is very useful, since I'll at least
-# know what I've lost
-my($tmpfile) = my_tmpfile2();
-$str = << "MARK";
-ssh $secret{bcpc_user}\@bcpc "/usr/bin/find / -ls" 1> $dir/bcpc-files.txt 2> $dir/bcpc-errs.txt
-ssh root\@bcmac "/usr/bin/find / -ls" 1> $dir/bcmac-files.txt 2> $dir/bcmac-errs.txt
-/usr/bin/find / -ls 1> $dir/bcunix-files.txt 2> $dir/bcunix-errs.txt
+# TODO: call subroutines!
+
+# dump filelists from all my machines (useful to see what files I'm
+# missing in case of disaster recovery)
+sub dump_ls {
+  # generate file lists from all machines (in parallel)
+  $str = << "MARK";
+(ssh $secret{bcpc_user}\@bcpc "/usr/bin/find / -ls" > $dir/bcpc-files.txt.new) >& $dir/bcpc-errs.txt
+(ssh root\@bcmac "/usr/bin/find / -ls" > $dir/bcmac-files.txt.new) >& $dir/bcmac-errs.txt
+(/usr/bin/find / -ls > $dir/bcunix-files.txt.new) >& $dir/bcunix-errs.txt
 MARK
 ;
+  debug("STR: $str");
+  open(A,"|parallel");
+  print A $str;
+  close(A);
 
-debug($str);
+  # TODO: add sanity check here; if .new files are too small they are probably bad
+  for $i ("bcpc","bcmac","bcunix") {
+    system("mv $dir/bcpc-files.txt $dir/bcpc-files.txt.old; mv $dir/bcpc-files.txt.new $dir/bcpc-files.txt");
+  }
+}
+
+# TODO: run program at least twice to make sure file overwrites work
+
+# TODO: rename files after checking (new -> cur -> old)
+
+# TODO: bzip2 file dumps locally (because I have limited space), even
+# though the final tar will bzip anyway
