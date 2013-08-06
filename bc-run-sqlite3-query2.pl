@@ -82,6 +82,10 @@ sub query_request {
   # avoid DOS by limiting cputime
   my($out,$err,$res) = cache_command2("ulimit -t 5 && sqlite3 -html -header $db.db < $tmp");
 
+  # restore hyperlinks
+  $out=~s/&lt;/</isg;
+  $out=~s/&gt;/>/isg;
+
   # error?
   if ($res) {
     print "Content-type: text/html\n\n";
@@ -181,101 +185,6 @@ MARK
     print "<a href='http://rss.$queryhash.$db.$tld'>RSS feed for this query</a>\n";
   }
 }
-
-=item comment
-
-  # get query from POST data, strip query= + webdecode
-  $query = <STDIN>;
-  $query=~s/^query=//isg;
-  $query=~s/\+/ /isg;
-  $query=~s/\%([A-Fa-f0-9]{2})/pack('C', hex($1))/seg;
-
-# TODO: cant preprint text/html since Location: directive later requires I NOT do that
-
-# db yes, hash no
-if ($queryhash && !$query) {
-  print << "MARK";
-Content-type: text/html
-
-Although the database $db exists, I dont have a query that
-corresponds to the URL you typed. Please go to the URL below and try a
-new query.<p>
-
-<a href="http://$db.$tld/">http://$db.$tld/</a>
-
-MARK
-;
-exit(0);
-}
-
-# TODO: chmod db to readonly UNLESS its requests.db
-
-# blank query? skip most steps
-# TODO: goto? GOTO? goto??? really?
-if ($query=~/^\s*$/) {goto FORM;}
-
-# query safety checks
-unless ($query=~/^select/i) {webdie("Query doesn't start w SELECT: $query");}
-# permitted characters (is this going to end up being everything?)
-if ($query=~/([^a-z0-9_: \(\)\,\*\<\>\"\'\=\.\/\?\|\!\+\-\%\\])/i) {
-  webdie("Query contains illegal character '$1': $query");
-}
-
-# if query not stored, store it now (we know it's "safe") + redirect
-unless ($queryhash) {
-  $iquery = encode_base64($query);
-  $queryhash = md5_hex($iquery);
-  sqlite3("REPLACE INTO requests (query,db,md5) VALUES ('$iquery', '$db', '$queryhash')", "requests.db");
-  if ($SQL_ERROR) {webdie("SQL ERROR (requests): $SQL_ERROR");}
-  # keep safe copy
-  #  system("cp requests.db requests.db.saf");
-  print "Location: http://$queryhash.$db.$tld/\n\n";
-  exit(0);
-}
-
-# now ok to print text/html
-print "Content-type: text/html\n\n";
-
-# TODO: there's some code redundancy and weirdness since we ONLY run
-# query if using hash; cleanup code to reflect this
-
-# run query
-$tmp = my_tmpfile("dbquery");
-write_file("$query;", $tmp);
-# avoid DOS by limiting cputime
-($out,$err,$res) = cache_command2("ulimit -t 5 && sqlite3 -html -header $db.db < $tmp");
-
-# error?
-if ($res) {
-  $out = "<tr><th>ERROR: $err</th></tr><th>QUERY: $query</th></tr>";
-}
-
-# RSS feed requested? (TODO: improve check below)
-if ($ENV{REQUEST_URI}=~/rss/i) {
-  open(A,"|/usr/local/bin/sqlite32rss.pl --title=$ENV{HTTP_HOST} --desc=DB_QUERY");
-  print A $out;
-  close(A);
-  exit(0);
-}
-
-# minor tweaking
-# TODO: improe this, it breaks stuff
-$out=~s/&lt;/</isg;
-$out=~s/&gt;/>/isg;
-$out=~s/&#39;/'/isg;
-
-# helper text? (this works even if file doesn't exist)
-$extra = read_file("$db.txt");
-
-# TODO: handle errors incl timeout
-# print results
-print << "MARK"
-$extra
-
-# and now the query form
-FORM:
-
-=cut
 
 =item schema
 

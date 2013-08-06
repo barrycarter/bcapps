@@ -61,6 +61,9 @@ for $comment (@comments) {
   $comment=~s%<ul id='comment_(\d+)'>%%;
   $commentid = $1;
 
+  # cleanup body
+  $body=~s/\'//isg;
+
   $now = time();
 
   $query = << "MARK";
