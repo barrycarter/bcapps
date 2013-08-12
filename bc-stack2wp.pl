@@ -60,6 +60,7 @@ $fname = cache_command("curl 'http://stackauth.com/1.1/users/$assoc_id/associate
 for $i (@items) {
   %hash = %{$i};
   debug("HASHALPHGA", %hash);
+  debug("MAIN", %{$hash{main_site}});
 
   # TODO: weird case, maybe fix later
   if ($hash{site_name} eq "Area 51") {next;}
@@ -72,8 +73,6 @@ for $i (@items) {
 }
 
 debug("FETA",unfold(%myid));
-
-die "TESTNG";
 
 # and now, my questions on all sites
 for $i (sort keys %myid) {

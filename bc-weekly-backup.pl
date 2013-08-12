@@ -65,7 +65,7 @@ sub dump_remote {
 ssh -i /home/barrycarter/.ssh/id_rsa.bc root\@bcinfonew 'mysqldump wordpress' > $dir/bcinfonew-wordpress.txt; bzip2 -v -f $dir/bcinfonew-wordpress.txt
 ssh -i /home/barrycarter/.ssh/id_rsa.bc root\@bcinfo3 'mysqldump wordpress' > $dir/bcinfo3-wordpress.txt; bzip2 -v -f $dir/bcinfo3-wordpress.txt
 rsync -vtrlzo -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' root\@bcinfonew:/usr/share/wordpress root\@bcinfonew:/sites/DB/requests.db $dir/
-rsync -v "root@bcmac:/Users/*/*" "root@bcmac:/Users/*/.*" bcmac/
+rsync -v "root\@bcmac:/Users/*/*" "root\@bcmac:/Users/*/.*" bcmac/
 MARK
 ;
   debug("STR: $str");
