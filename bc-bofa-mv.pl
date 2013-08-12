@@ -10,10 +10,27 @@ $ENV{TZ}="UTC";
 for $i (@ARGV) {
   my($acct,$date) = get_acct_date(join("\n",`pdftotext $i - 2> /dev/null`));
   unless ($acct && $date) {next;}
-  $date = lc(strftime("%b%Y-$acct.pdf",gmtime(str2time($date))));
+  @date = gmtime(str2time($date));
+  $date = lc(strftime("%b%Y-$acct.pdf",@date));
+  # TODO: check that we have RECENT statements too
+  # record that we have a statement for this month for this account
+  # TODO: there HAS to be a better way of doing below!
+  my($month) = strftime("%Y",@date)*12+strftime("%m",@date);
+  $months{$acct}{$month}=1;
   # filenames already equal?
   if ($i eq $date) {next;}
   print "mv $i $date\n";
+}
+
+# check for gaps in months for accounts
+for $i (keys %months) {
+  my(@months) = sort keys %{$months{$i}};
+  debug("$i -> ",@months);
+  $monthrange = $months[$#months]-$months[0];
+  $missing = $monthrange-$#months;
+  if ($missing) {
+    warn("MISSING STATEMENTS: $i ($missing)");
+  }
 }
 
 # obtains date and account number from text version of bofa pdf file
