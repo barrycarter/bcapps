@@ -24,12 +24,12 @@ for $i (@ARGV) {
 
 # check for gaps in months for accounts
 for $i (keys %months) {
-  my(@months) = sort keys %{$months{$i}};
+  my(@months) = sort {$a <=> $b} keys %{$months{$i}};
   debug("$i -> ",@months);
   $monthrange = $months[$#months]-$months[0];
   $missing = $monthrange-$#months;
   if ($missing) {
-    warn("MISSING STATEMENTS: $i ($missing)");
+    warn("MISSING STATEMENTS: $i ($missing; $months[0]-$months[$#months] with only $#months+1 entries)");
   }
 }
 
