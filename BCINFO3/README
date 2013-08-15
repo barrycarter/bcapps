@@ -218,3 +218,7 @@ rpm --nodeps -e sqlite
 
 % TODO: start rsyncing bcinfo3 logs as well
 
+% TODO: determine startup procedure
+
+bc-gocomics-comments2.pl&
+bc-metar-db.pl&

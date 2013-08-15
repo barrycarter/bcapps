@@ -26,7 +26,7 @@ $xsize = 800*4;
 $ysize = 600*4;
 
 # use slippy tiles at this zoom level (prev hardcoded at 4)
-$zoomtile = 4;
+$zoomtile = 3;
 
 # test of "pre" function
 sub pre {

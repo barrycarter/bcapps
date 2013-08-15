@@ -80,7 +80,9 @@ MARK
 }
 
 if ($globopts{printonly}) {
+  print "BEGIN;\n";
   for $i (@querys) {print "$i;\n";}
+  print "COMMIT;\n";
   exit(0);
 }
 

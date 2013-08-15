@@ -8,7 +8,7 @@ require "/usr/local/lib/bclib.pl";
 $ENV{TZ}="UTC";
 
 for $i (@ARGV) {
-  my($acct,$date) = get_acct_date(join("\n",`pdftotext $i - 2> /dev/null`));
+  my($acct,$date) = get_acct_date(join("\n",`pdftotext '$i' - 2> /dev/null`));
   unless ($acct && $date) {next;}
   @date = gmtime(str2time($date));
   $date = lc(strftime("%b%Y-$acct.pdf",@date));
@@ -19,7 +19,7 @@ for $i (@ARGV) {
   $months{$acct}{$month}=1;
   # filenames already equal?
   if ($i eq $date) {next;}
-  print "mv $i $date\n";
+  print "mv '$i' $date\n";
 }
 
 # check for gaps in months for accounts
@@ -39,14 +39,24 @@ sub get_acct_date {
   my($text) = @_;
   my($acct,$date);
 
-  # TODO: handle combined statements and maybe 1099-INTs
-  if ($text=~/combined statement|1099-INT/i) {return;}
+  # can't handle tax statements
+  if ($text=~/1099-INT/i) {return;}
+
+  # combined statements
+  if ($text=~s/combined statement page \d+ of \d+ (\d+) statement period .*? through ([\d\-]+)//is) {
+    ($acct,$date) = ($1,$2);
+    debug("COMBINED STATEMENT");
+    return $acct,$date;
+  }
 
   # account number and date on same line
   if ($text=~s/account number: ([\d ]+)(.*?)account information://is) {
     ($acct,$date) = ($1,$2);
     $acct=~s/ //isg;
     $date=~s/^.*\-\s+//;
+    debug("CASE ALPHA: $date");
+    # if $date is super long, this is an error
+    if (length($date)>50) {return;}
     return $acct,$date;
   }
 
@@ -55,6 +65,7 @@ sub get_acct_date {
     ($acct,$date) = ($1,$2);
     $acct=~s/ //isg;
     $date=~s/^.*to\s+//;
+    debug("CASE BETA");
     return $acct,$date;
   }
 
@@ -65,6 +76,7 @@ sub get_acct_date {
   # end period
   $text=~s/statement period .* through (\d{2}\-\d{2}\-\d{2})//is;
   $date = $1;
+  debug("CASE GAMMA");
   # return (may be empty, but caller will handle)
   return $acct,$date;
 }

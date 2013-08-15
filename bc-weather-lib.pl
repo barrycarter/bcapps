@@ -414,7 +414,5 @@ sub recent_weather_ship {
   return @res;
 }
 
-
-
 # <h>return beauty;</h>
 true;

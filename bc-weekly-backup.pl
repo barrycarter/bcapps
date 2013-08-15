@@ -16,9 +16,14 @@ system("/usr/bin/renice 19 -p $$");
 # TODO: call subroutines!
 # TODO: all subroutines to run in parallel
 
+debug("CALLING dump_ls()");
 dump_ls();
+debug("CALLING dump_other()");
 dump_other();
+debug("CALLING dump_remote()");
 dump_remote();
+# <h>thanks shoeshine boy, you're humble and loveable</h>
+debug("ALL FINISHED, SIR");
 
 # dump filelists from all my machines (useful to see what files I'm
 # missing in case of disaster recovery)
