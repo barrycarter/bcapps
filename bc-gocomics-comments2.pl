@@ -52,6 +52,8 @@ for $comment (@comments) {
 
   # some stripnames have apostrophes; stripping them is easy, but wrong
   $stripname=~s/\'//isg;
+  # same, surprisingly, with commentor names
+  $commentor=~s/\'//isg;
 
   # body of comment
   $comment=~s%<p><p>(.*?)</p></p>%%s;
