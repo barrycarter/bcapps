@@ -19,7 +19,6 @@ print "Content-type: text/html\n\n";
 # the given URL parameter is assumed to be in
 # data.bcinfo3.barrycarter.info and is randomized to prevent caching
 
-# TODO: randomize!
 $rand = int(rand()*2**32);
 $kmlurl = "http://$rand.data.bcinfo3.barrycarter.info/$query{url}";
 
