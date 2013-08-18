@@ -1,30 +1,30 @@
 #!/bin/perl
 
-# CGI script: given an image URL, bounding box coordinates, and
-# transparency, create a KMZ file of the image with given transparency
+# Given a KML on my server (bcinfo3), create google map with that KML
+# file, using randomization to prevent caching
 
 require "/usr/local/lib/bclib.pl";
 
-# stolen directly from NWS' radar map and modified
+print "Content-type: text/html\n\n";
 
-<?xml version="1.0" encoding="utf-8"?>
-<kml xmlns="http://earth.google.com/kml/2.0">
-<Document>
-<name>name-to-depend-on-params</name>
-<GroundOverlay>
-<name>name-to-depend-on-params</name>
-<Icon>
-<href>http://radar.weather.gov/ridge/RadarImg/N0R/ABX_N0R_0.gif</href>
-</Icon>
-<color>55ffffff</color>
-<LatLonBox>
-<north>37.5650361494585</north>
-<south>32.726168961958</south>
-<east>-104.17921697443</east>
-<west>-109.457981178977</west>
-</LatLonBox>
-</GroundOverlay>
-</Document>
-</kml>
+my($str) = << "MARK";
+<html><head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<style type="text/css">
+  html { height: 100% }
+  body { height: 100%; margin: 0px; padding: 0px }
+  #map_canvas { height: 100% }
+</style>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript">
+function initialize() {
+ var myLatLng = new google.maps.LatLng(0,0);
+ var myOptions = {zoom: 2, center: myLatLng, mapTypeId: google.maps.MapTypeId.TERRAIN};
+ var map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
+}
+</script></head>
+<body onload="initialize()"><div id="map_canvas" style="width:100%; height:100%"></div></body></html>
+MARK
+;
 
-
+print $str;

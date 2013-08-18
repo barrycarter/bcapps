@@ -26,9 +26,14 @@ for $i ("N0R","N0S","N0V","N0Z","N1P","NCR","NET","NTP","NVL") {
   # assuming 600x550
   my($sc) = $yc+$yp*550;
   my($ec) = $xc+$xp*600;
-  debug("$xc/$ec");
-  # create KML file (the box is hardcoded for Albuquerque; in theory,
-  # could use GFX files to determine bounding box)
+
+  # find the center point to placemark date this file was created (not
+  # really that useful, but helps check for caching; doesn't check PNG
+  # file recency)
+  my($cx,$cy) = (($ec+$xc)/2, ($sc+$yc)/2);
+  my($time) = strftime("%Y-%m-%d %H:%M:%S", gmtime(time()));
+
+  # create KML file
   $str = << "MARK";
 <?xml version="1.0" encoding="utf-8"?>
 <kml xmlns="http://earth.google.com/kml/2.0">
@@ -44,6 +49,9 @@ for $i ("N0R","N0S","N0V","N0Z","N1P","NCR","NET","NTP","NVL") {
 <west>$xc</west>
 </LatLonBox>
 </GroundOverlay>
+<Placemark><name>$time</name><Point><coordinates>
+$cx,$cy
+</coordinates></Point></Placemark>
 </Document>
 </kml>
 MARK
