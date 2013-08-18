@@ -3,4 +3,7 @@ unset autologout
 # largest useful path (/usr/local/bin must come before /usr/bin for
 # right sqlite3 to run, sigh)
 setenv PATH /sbin:/usr/local/bin:/usr/bin:/bin
-
+# below required for yum sqlite3 issues
+setenv LD_LIBRARY_PATH /usr/local/lib/
+# torn between my local time and UTC, sticking w my local time for now
+setenv TZ MST7MDT

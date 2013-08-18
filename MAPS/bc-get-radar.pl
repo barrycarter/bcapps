@@ -13,9 +13,10 @@ for $i ("N0R","N0S","N0V","N0Z","N1P","NCR","NET","NTP","NVL") {
   # radar is updated every 3m, so 90s is a good cache time
   # cache_command2 doesn't support retfile yet
   my($out) = cache_command("curl $url","age=90&retfile=1");
+  debug("$url -> $out");
 
   # convert to half-transparent png
-  system("convert $out -transparent white -channel Alpha -evaluate Divide 2 /var/tmp/${site}_$i.png");
+  system("convert $out -transparent white -channel Alpha -evaluate Divide 2 /sites/data/${site}_$i.png");
 
   # these files almost never change...
   ($out,$err,$res) = cache_command2("curl http://radar.weather.gov/ridge/RadarImg/$i/${site}_${i}_0.gfw", "age=86400");
@@ -47,5 +48,8 @@ for $i ("N0R","N0S","N0V","N0Z","N1P","NCR","NET","NTP","NVL") {
 </kml>
 MARK
 ;
-  write_file($str,"/var/tmp/${site}_$i.kml");
+  write_file($str,"/sites/data/${site}_$i.kml");
 }
+
+sleep(60);
+exec($0);
