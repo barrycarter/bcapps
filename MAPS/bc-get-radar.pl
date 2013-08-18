@@ -5,12 +5,14 @@
 require "/usr/local/lib/bclib.pl";
 
 for $i ("N0R","N0S","N0V","N0Z","N1P","NCR","NET","NTP","NVL") {
-  my($url) = "http://radar.weather.gov/ridge/RadarImg/$i/ABX_${i}_0.gif";
+  # TODO: decide on "best" URL here
+#  my($url) = "http://radar.weather.gov/ridge/RadarImg/$i/ABX_${i}_0.gif";
+  my($url) = "http://radar.weather.gov/ridge/lite/$i/ABX_0.png";
   # radar is updated every 3m, so 90s is a good cache time
   # cache_command2 doesn't support retfile yet
   my($out) = cache_command("curl $url","age=90&retfile=1");
   # convert to half-transparent png
-  system("convert $out -channel Alpha -evaluate Divide 2 /var/tmp/ABX_$i.png");
+  system("convert $out -transparent white -channel Alpha -evaluate Divide 2 /var/tmp/ABX_$i.png");
 
   # create KML file (the box is hardcoded for Albuquerque; in theory,
   # could use GFX files to determine bounding box)
