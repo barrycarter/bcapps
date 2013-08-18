@@ -5,14 +5,16 @@
 
 require "/usr/local/lib/bclib.pl";
 
-print "Content-type: text/html\n\n";
-
 # query string will determine most chars (incl KML map in question)
 my($query) = $ENV{QUERY_STRING};
 $query=~s/[^a-z0-9_\.\=\&\,\-]//isg;
 # by making defaults come first, $query stuff will override
-$defaults = "center=0,0&zoom=2&maptypeid=TERRAIN";
+$defaults = "center=0,0&zoom=2&maptypeid=HYBRID";
 my(%query) = str2hash("$defaults&$query");
+
+# refresh header?
+if ($query{refresh}) {print "Refresh: $query{refresh}\n";}
+print "Content-type: text/html\n\n";
 
 # the given URL parameter is assumed to be in
 # data.bcinfo3.barrycarter.info and is randomized to prevent caching
@@ -35,7 +37,8 @@ function initialize() {
  var myLatLng = new google.maps.LatLng($query{center});
  var myOptions = {zoom: $query{zoom}, center: myLatLng, mapTypeId: google.maps.MapTypeId.$query{maptypeid}};
  var map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
- var kmllayer = new google.maps.KmlLayer('$kmlurl');
+ var kmlLayerOptions = {preserveViewport:true};
+ var kmllayer = new google.maps.KmlLayer('$kmlurl',kmlLayerOptions);
  kmllayer.setMap(map);
 }
 </script></head>
