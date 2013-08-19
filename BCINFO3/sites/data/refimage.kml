@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kml xmlns="http://earth.google.com/kml/2.0">
+<Document>
+<GroundOverlay>
+<Icon>
+<href>http://data.bcinfo3.barrycarter.info/grid.png</href>
+</Icon>
+<LatLonBox>
+<north>90</north>
+<south>-90</south>
+<east>180</east>
+<west>-180</west>
+</LatLonBox>
+</GroundOverlay>
+</Document>
+</kml>
