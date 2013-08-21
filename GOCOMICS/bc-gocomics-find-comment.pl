@@ -11,7 +11,6 @@ require "/usr/local/lib/bclib.pl";
 # find initial slope (TODO: put this in loop?)
 @p1=get_page_comments(1);
 @p2=get_page_comments(2);
-# debug("P1",@p1,"P2",@p2);
 $median{1} = median(\@p1);
 $median{2} = median(\@p2);
 debug("$median{1} vs $median{2}");
@@ -24,37 +23,32 @@ for $i (@ARGV) {
 
   # enter loop to find page
   for (;;) {
-    debug("SLOPE/PAGE: $slope/$page/$i");
+    debug("PAGE: $page, GOAL: $i, SLOPE: $slope, MEDIAN($page): $median{$page}");
     my($guess) = int($page + ($median{$page}-$i)/$slope);
+    debug("NEW GUESS: $guess");
+    # if guess is same as page, we have found page for this commentid
+    if ($guess == $page) {$location{$i} = $guess; last;}
     my(@guessids) = get_page_comments($guess);
-    debug("GUESS: $guess, IDS:",@guessids);
-    die "TESTING"
+    my($median) = median(\@guessids);
+    $median{$guess} = $median;
+    # new slope guess
+    $slope = -($median{$page}-$median)/($page-$guess);
+    # new page is now current page
+    $page = $guess;
   }
-
 }
 
-die "TESTING";
-
-
-for (;;) {
-  @ids = ();
-  # 3600 is a large cache time, but should be OK
-  my($out,$err,$res) = cache_command("curl -A 'Fauxzilla' http://www.gocomics.com/comments/page/$page","age=3600");
-  # look at ids and estimate position of $commentid
-  while ($out=~s/"id":(\d+)//) {push(@ids,$1);}
-  # 25/page, so... (but closer to 30 after deletes)
-  $page += ($ids[0]-$commentid)/30;
-  $page = int($page);
-  debug("NEW PAGE: $page");
+for $i (sort keys %location) {
+  print "$i -> $location{$i}\n";
 }
 
 # given a gocomics comments page number, return list of ids on that page
 sub get_page_comments {
   my($page) = @_;
-  my(@ids);
+  my(%ids);
   my($out,$err,$res) = cache_command2("curl -H 'Accept: text/html' -A 'Fauxzilla' http://www.gocomics.com/comments/page/$page","age=3600");
-  while ($out=~s/comment_(\d+)//) {push(@ids,$1);}
-  return @ids;
+  while ($out=~s/comment_(\d+)//) {$ids{$1}=1;}
+  return sort keys %ids;
 }
 
 # TODO: add me to bclib.pl
