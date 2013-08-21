@@ -8,10 +8,19 @@
 
 require "/usr/local/lib/bclib.pl";
 
-(($commentid)=@ARGV)||die("Usage: $0 commentid");
+# find initial slope
+@p1=get_page_comments(1);
+@p2=get_page_comments(2);
+$m1 = median(\@p1);
+$m2 = median(\@p2);
+$slope = $m1-$m2;
 
-# start looking at page 1
-$page = 1;
+for $i (@ARGV) {
+  debug("SEARCHING FOR: $i");
+}
+
+die "TESTING";
+
 
 for (;;) {
   @ids = ();
@@ -23,4 +32,40 @@ for (;;) {
   $page += ($ids[0]-$commentid)/30;
   $page = int($page);
   debug("NEW PAGE: $page");
+}
+
+# given a gocomics comments page number, return list of ids on that page
+sub get_page_comments {
+  my($page) = @_;
+  my(@ids);
+  my($out,$err,$res) = cache_command("curl -H 'Accept: text/html' -A 'Fauxzilla' http://www.gocomics.com/comments/page/$page","age=3600");
+  while ($out=~s/comment_(\d+)//) {push(@ids,$1);}
+  return @ids;
+}
+
+# TODO: add me to bclib.pl
+
+=item median(\@list, $options)
+
+Return the median of @list
+
+$options currently unused [add option for incoming list already sorted]
+
+=cut
+
+sub median {
+  # TODO: add 
+  my($listref) = @_;
+  my(@list) = @{$listref};
+
+  # assume unsorted
+  @list = sort(@list);
+
+  # count how many elements in list
+  my($elts) = $#list+1;
+  debug("ELTS: $elts");
+  # if odd, return middle element
+  if ($elts%2==1) {return $list[$#list/2];}
+  # return the average of the two middle elements
+  return ($list[($#list-1)/2] + $list[($#list+1)/2])/2
 }
