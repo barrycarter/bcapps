@@ -19,8 +19,8 @@ for (;;) {
   my($out,$err,$res) = cache_command("curl -A 'Fauxzilla' http://www.gocomics.com/comments/page/$page","age=3600");
   # look at ids and estimate position of $commentid
   while ($out=~s/"id":(\d+)//) {push(@ids,$1);}
-  # 25/page, so...
-  $page += ($ids[0]-$commentid)/25;
+  # 25/page, so... (but closer to 30 after deletes)
+  $page += ($ids[0]-$commentid)/30;
   $page = int($page);
   debug("NEW PAGE: $page");
 }
