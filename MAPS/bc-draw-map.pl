@@ -15,7 +15,7 @@ open(A,"|parallel -j 10");
 my(@outfiles) = ();
 
 # go through the level n slippy tiles
-for $i (glob "/var/cache/OSM/3,*") {
+for $i (glob "/var/cache/OSM/4,*") {
   debug("I: $i");
   # which slippy tile is this?
   $i=~m%/(\d+)\,(\d+)\,(\d+)\.png$%;
@@ -23,6 +23,8 @@ for $i (glob "/var/cache/OSM/3,*") {
 
   # TODO: using floating point numbers to index hashes is bad
 
+  # TODO: this is inefficient, since slippy tiles are mercator
+  # (longitude range doesn't change for south/north edges)
   # the 4 corners of the slippy tile (in lon/lat format)
   # order here is NW, NE, SW, SE
   my(@corners) = ();
@@ -38,35 +40,52 @@ for $i (glob "/var/cache/OSM/3,*") {
   # TODO: this is inefficient, should actually bundle and do at once
   # (ie, all slippy tiles, not one tile at a time)
   my(%hash) = cs2cs([@corners], "ortho");
-  debug(dump_var("hash",{%hash}));
+#  debug(dump_var("hash",{%hash}));
 
-  # determine the 4 new coords (and skip if ERR)
-  my(@xs,@ys) = ();
+  # TODO: find a cleaner, more consistent way to do this
+  # convert ortho coords to screen coords
+  my($error) = 0;
   for $j (keys %hash) {
-    if ($hash{$j}{x} eq "ERR" || $hash{$j}{y} eq "ERR") {last;}
-    # convert to pixels (note that y is reversed)
-    $pix{$j}{x} = round($hash{$j}{x}/6378137*400+400);
-    $pix{$j}{y} = round($hash{$j}{y}/6378137-300+300);
-    # determine x and y extent
-    push(@xs, $pix{$j}{x});
-    push(@ys, $pix{$j}{y});
+    if ($hash{$j}{x} eq "ERR" || $hash{$j}{y} eq "ERR") {$error=1; last;}
+    $hash{$j}{x} = $hash{$j}{x}/6378137*400+400;
+    $hash{$j}{y} = $hash{$j}{y}/6378137*-300+300;
+  }
+  if ($error) {
+    debug("ERROR!");
+    $error = 0;
+    next;
+  }
+  
+  my(@xs,@ys) = ();
+  # determine the 4 new coords (and skip if ERR)
+  for $j (keys %hash) {
+    # find the bounding box of this slippy tile under projection
+    push(@xs, $hash{$j}{x});
+    push(@ys, $hash{$j}{y});
   }
 
-  # ignore unmapples
+  # ignore unmapables
   unless (@xs) {next;}
 
-  debug("XS",@xs);
-  debug("YS",@ys);
+  # transform coords to start at 0,0 and map to correct corner of slippy tile
+  @distort = ();
+  for $j (keys %hash) {
+    $hash{$j}{x} -= min(@xs);
+    $hash{$j}{y} -= min(@ys);
+    $hash{$j}{x} = round($hash{$j}{x});
+    $hash{$j}{y} = round($hash{$j}{y});
+    push(@distort, "$pixel{$j},$hash{$j}{x},$hash{$j}{y}");
+  }
+  $distort = join(" ",@distort);
 
-
-  # if no distort, we cant translate this slippy tile
-#  unless (@distort) {next;}
-#  $distort = join(" ",@distort);
+  # determine extent
+  $xe = round(max(@xs)-min(@xs));
+  $ye = round(max(@ys)-min(@ys));
 
   # create a distorted version of this tile 
-  my($cmd) = "convert -mattecolor transparent -extent 800x600 -background transparent -matte -virtual-pixel transparent -distort Perspective \"$distort\" $i /tmp/bcdg-$x-$y-$z.gif";
-#  print "CMD: $cmd\n";
-#  print A "$cmd\n";
+  my($cmd) = "convert -mattecolor transparent -extent ${xe}x$ye -background transparent -matte -virtual-pixel transparent -distort Perspective \"$distort\" $i /tmp/bcdg-$x-$y-$z.gif";
+  print "CMD: $cmd\n";
+  print A "$cmd\n";
   push(@outfiles, "/tmp/bcdg-$x-$y-$z.gif");
 }
 
@@ -112,12 +131,18 @@ $rethash{"$lon,$lat"}{z} = the z coordinate of the transform
 
 A simple wrapper around cs2cs.
 
-$options currently unused
+$options: [NOT YET IMPLEMENTED]
+
+  fx=f: apply the function f to the x coordinates before returning
+  fy=f: apply the function f to the y coordinates before returning
+  fz=f: apply the function f to the z coordinates before returning
 
 =cut
 
 sub cs2cs {
   my($listref, $proj, $options) = @_;
+  # by default, apply the id function to x,y,z
+  my(%opts) = parse_form("fx=id&fy=id&fz=id&$options");
   my(@lonlat) = @{$listref};
   my($str);
   my(%rethash);
