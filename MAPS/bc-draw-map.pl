@@ -17,31 +17,29 @@ for $i (glob "/var/cache/OSM/5,*") {
 
   # TODO: using floating point numbers to index hashes is bad
 
-  # what latitude/longitude does it represent (NW + SE corners)
-  # note slippy2latlon returns lat/lon, not lon/lat
-  my($nwlat, $nwlon) = slippy2latlon($x,$y,$z,0,0);
-  my($selat, $selon) = slippy2latlon($x,$y,$z,255,255);
-
-  # TODO: this is inefficient, should actually bundle and do at once
-  # NOTE: switching order to be lon/lat
-  my(%hash) = cs2cs([$nwlon,$nwlat,$selon,$selat], "ortho");
-
-  # if either is error, ignore this slippy tile
-  # sufficient to check just x value
-  if ($hash{$nwlon}{$nwlat}{x} eq "ERR" || $hash{$selon}{$selat}{x} eq "ERR") {
-    next;
+  # the 4 corners of the slippy tile (in lon/lat format)
+  # order here is NW, NE, SW, SE
+  my(@corners) = ();
+  for $j (0,255) {
+    for $k (0,255) {
+      my($lat,$lon) = slippy2latlon($x,$y,$z,$k,$j);
+      push(@corners, $lon, $lat);
+    }
   }
 
-  # convert to x/y coords
-  ($nwx, $nwy) = ($hash{$nwlon}{$nwlat}{x}/6378137*400+400,
-		  $hash{$nwlon}{$nwlat}{y}/6378137*300+300);
+  # TODO: this is inefficient, should actually bundle and do at once
+  # (ie, all slippy tiles, not one tile at a time)
+  my(%hash) = cs2cs([@corners], "ortho");
 
-  ($sex, $sey) = ($hash{$selon}{$selat}{x}/6378137*400+400,
-		  $hash{$selon}{$selat}{y}/6378137*300+300);
-
-  
-
-  debug("$nwx,$nwy to $sex,$sey");
+  # determine the 4 new coords (and skip if ERR)
+  my($err) = 0;
+  for $j (keys %hash) {
+    for $k (keys %{$hash{$j}}) {
+      if ($hash{$j}{$k}{x} eq "ERR" || $hash{$j}{$k}{y} eq "ERR") {$err=1;}
+      if ($err) {last;}
+    }
+    if ($err) {last;}
+  }
 
   die "TESTING";
 
