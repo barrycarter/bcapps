@@ -5,7 +5,53 @@
 
 # note "cs2cs -l" or "cs2cs -lP" to list projecctions
 
+# ortho proj: 6378137 = divisor
+
 require "/usr/local/lib/bclib.pl";
+
+# go through the level 5 slippy tiles
+for $i (glob "/var/cache/OSM/5,*") {
+  # which slippy tile is this?
+  $i=~m%/(\d+)\,(\d+)\,(\d+)\.png$%;
+  my($z,$x,$y) = ($1,$2,$3);
+
+  # TODO: using floating point numbers to index hashes is bad
+
+  # what latitude/longitude does it represent (NW + SE corners)
+  # note slippy2latlon returns lat/lon, not lon/lat
+  my($nwlat, $nwlon) = slippy2latlon($x,$y,$z,0,0);
+  my($selat, $selon) = slippy2latlon($x,$y,$z,255,255);
+
+  # TODO: this is inefficient, should actually bundle and do at once
+  # NOTE: switching order to be lon/lat
+  my(%hash) = cs2cs([$nwlon,$nwlat,$selon,$selat], "ortho");
+
+  # if either is error, ignore this slippy tile
+  # sufficient to check just x value
+  if ($hash{$nwlon}{$nwlat}{x} eq "ERR" || $hash{$selon}{$selat}{x} eq "ERR") {
+    next;
+  }
+
+  # convert to x/y coords
+  ($nwx, $nwy) = ($hash{$nwlon}{$nwlat}{x}/6378137*400+400,
+		  $hash{$nwlon}{$nwlat}{y}/6378137*300+300);
+
+  ($sex, $sey) = ($hash{$selon}{$selat}{x}/6378137*400+400,
+		  $hash{$selon}{$selat}{y}/6378137*300+300);
+
+  
+
+  debug("$nwx,$nwy to $sex,$sey");
+
+  die "TESTING";
+
+}
+
+%hash = cs2cs([@coords],"ortho");
+
+debug(dump_var("hash",{%hash}));
+
+die "TESTING";
 
 for ($i=-90; $i<=90; $i+=30) {
   for ($j=-180; $j<=180; $j+=30) {
@@ -15,51 +61,21 @@ for ($i=-90; $i<=90; $i+=30) {
 
 %hash = cs2cs([@l],"ortho");
 
-debug($hash{60}{0}{y});
+print << "MARK";
+new
+size 800,600
+setpixel 0,0,0,0,0
+MARK
+;
 
-=item cs2cs(\@lonlat, $proj, $options)
-
-Given a list of longitude/latitudes (simple list of even length),
-return the mapping of these longitude/latitudes under cs2cs projection
-$proj as a hash such that:
-
-$rethash{$lon}{$lat}{x} = the x coordinate of the transform
-$rethash{$lon}{$lat}{y} = the y coordinate of the transform
-$rethash{$lon}{$lat}{z} = the z coordinate of the transform
-
-A simple wrapper around cs2cs.
-
-$options currently unused
-
-=cut
-
-sub cs2cs {
-  my($listref, $proj, $options) = @_;
-  my(@lonlat) = @{$listref};
-  my($str);
-  my(%rethash);
-
-  # write data to file
-  while (@lonlat) {
-    # TODO: this may break if right side eval isn't in order
-    my($lon,$lat) = (shift(@lonlat),shift(@lonlat));
-    $str .= "$lon $lat\n";
+for $i (sort keys %hash) {
+  for $j (sort keys %{$hash{$i}}) {
+    if ($hash{$i}{$j}{x} eq "ERR") {next;}
+    my($x,$y) = ($hash{$i}{$j}{x}/6378137,$hash{$i}{$j}{y}/6378137);
+    # mapping on to 700x500 for padding
+    $x = $x*350+400;
+    $y = $y*-250+300;
+    print "string 255,255,255,$x,$y,tiny,$i,$j\n";
   }
-
-  my($tmpfile) = my_tmpfile2();
-  write_file($str, $tmpfile);
-  debug("TMPFILE: $tmpfile");
-
-  # -r since we're doing lonlat, not latlon; oddly, "lonlat" for proj4
-  # ALSO requires lat/lon order, bizarre
-  my($out,$err,$res) = cache_command("cs2cs -r -E -e 'ERR ERR' +proj=latlon +to +proj=$proj < $tmpfile","age=86400");
-  for $i (split(/\n/,$out)) {
-    my(@fields) = split(/\s+/,$i);
-    $rethash{$fields[0]}{$fields[1]}{x} = $fields[2];
-    $rethash{$fields[0]}{$fields[1]}{y} = $fields[3];
-    $rethash{$fields[0]}{$fields[1]}{z} = $fields[4];
-  }
-
-  return %rethash;
 }
 
