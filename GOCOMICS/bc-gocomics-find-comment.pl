@@ -4,6 +4,12 @@
 # http://www.gocomics.com/comments/page/120318) it is on; useful to
 # complete my collection of gocomics comments
 
+# --maxpage: if guess exceeds this number, bring it down to this
+# number (useful for excessive divergence)
+
+# TODO: determine maxpage automatically, since it is found on each
+# comment page
+
 # NOTE: a given comment's page number increases as new comments come in
 
 require "/usr/local/lib/bclib.pl";
@@ -25,6 +31,15 @@ for $i (@ARGV) {
   for (;;) {
     debug("PAGE: $page, GOAL: $i, SLOPE: $slope, MEDIAN($page): $median{$page}");
     my($guess) = int($page + ($median{$page}-$i)/$slope);
+
+    # out of range pages
+    if ($globopts{maxpage} && $guess > $globopts{maxpage}) {
+      warn("Guess $guess exceeds $globopts{maxpage}, fixing");
+      $guess = $globopts{maxpage};
+    }
+
+    if ($guess<1) {$guess=1;}
+
     debug("NEW GUESS: $guess");
     # if guess is same as page, we have found page for this commentid
     if ($guess == $page) {$location{$i} = $guess; last;}
@@ -33,6 +48,8 @@ for $i (@ARGV) {
     $median{$guess} = $median;
     # new slope guess
     $slope = -($median{$page}-$median)/($page-$guess);
+    # fix 0 slope
+    if ($slope==0) {$slope=1;}
     # new page is now current page
     $page = $guess;
   }

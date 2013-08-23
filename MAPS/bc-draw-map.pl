@@ -10,9 +10,35 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# OSM tile level
+$level = 4;
+chdir(tmpdir());
+
+# determine the lat/lon range of all slippy tiles at level $level
+for $i (0..2**$level-1) {
+  for $j (0..2**$level-1) {
+    # using 256 below to all for overlaps
+    for $k (0,256) {
+      for $l (0,256) {
+	my($lat,$lon) = slippy2latlon($i,$j,$level,$k,$l);
+	# correct order for cs2cs()
+	push(@coords, "$lon,$lat");
+      }
+    }
+  }
+}
+
+%hash = cs2cs([@coords],"merc");
+
+die "TESTING";
+
 open(A,"|parallel -j 10");
 
 my(@outfiles) = ();
+$proj = "merc";
+$divisor = 20037508.34;
+$height = 6000;
+$width = 8000;
 
 # go through the level n slippy tiles
 for $i (glob "/var/cache/OSM/4,*") {
@@ -34,27 +60,30 @@ for $i (glob "/var/cache/OSM/4,*") {
       push(@corners, "$lon,$lat");
       # remember which corner of the slippy tile gave us this lat/lon
       $pixel{"$lon,$lat"} = "$k,$j";
+      debug("PIXEL($lon,$lat) -> $k,$j");
     }
   }
 
   # TODO: this is inefficient, should actually bundle and do at once
   # (ie, all slippy tiles, not one tile at a time)
-  my(%hash) = cs2cs([@corners], "ortho");
-#  debug(dump_var("hash",{%hash}));
+  my(%hash) = cs2cs([@corners], $proj);
+  debug(dump_var("hashpre",{%hash}));
 
   # TODO: find a cleaner, more consistent way to do this
   # convert ortho coords to screen coords
   my($error) = 0;
   for $j (keys %hash) {
     if ($hash{$j}{x} eq "ERR" || $hash{$j}{y} eq "ERR") {$error=1; last;}
-    $hash{$j}{x} = $hash{$j}{x}/6378137*400+400;
-    $hash{$j}{y} = $hash{$j}{y}/6378137*-300+300;
+    $hash{$j}{x} = $hash{$j}{x}/$divisor*$width/2+$width/2;
+    $hash{$j}{y} = $hash{$j}{y}/$divisor*-$height/2+$height/2;
   }
   if ($error) {
     debug("ERROR!");
     $error = 0;
     next;
   }
+
+  debug(dump_var("hashpost",{%hash}));
   
   my(@xs,@ys) = ();
   # determine the 4 new coords (and skip if ERR)
@@ -83,7 +112,7 @@ for $i (glob "/var/cache/OSM/4,*") {
   $ye = round(max(@ys)-min(@ys));
 
   # create a distorted version of this tile 
-  my($cmd) = "convert -mattecolor transparent -extent ${xe}x$ye -background transparent -matte -virtual-pixel transparent -distort Perspective \"$distort\" $i /tmp/bcdg-$x-$y-$z.gif";
+  my($cmd) = "convert -mattecolor transparent -extent 255x255 -background transparent -matte -virtual-pixel transparent -distort Perspective \"$distort\" $i -crop ${xe}x$ye /tmp/bcdg-$x-$y-$z.gif";
   print "CMD: $cmd\n";
   print A "$cmd\n";
   push(@outfiles, "/tmp/bcdg-$x-$y-$z.gif");
@@ -156,14 +185,11 @@ sub cs2cs {
   my($tmpfile) = my_tmpfile2();
   write_file($str, $tmpfile);
 
-  # -r since we're doing lonlat, not latlon; oddly, "lonlat" for proj4
-  # ALSO requires lat/lon order, bizarre
-  my($out,$err,$res) = cache_command("cs2cs -r -E -e 'ERR ERR' +proj=latlon +to +proj=$proj < $tmpfile","age=86400");
+  my($out,$err,$res) = cache_command("cs2cs -E -e 'ERR ERR' +proj=lonlat +to +proj=$proj < $tmpfile","age=86400");
   for $i (split(/\n/,$out)) {
     my(@fields) = split(/\s+/,$i);
-    # return order here is y/x/z, surprisingly
-    $rethash{"$fields[0],$fields[1]"}{y} = $fields[2];
-    $rethash{"$fields[0],$fields[1]"}{x} = $fields[3];
+    $rethash{"$fields[0],$fields[1]"}{x} = $fields[2];
+    $rethash{"$fields[0],$fields[1]"}{y} = $fields[3];
     $rethash{"$fields[0],$fields[1]"}{z} = $fields[4];
   }
 

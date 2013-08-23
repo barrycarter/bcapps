@@ -22,8 +22,8 @@ $latspace = 15;
 $lonspace = 20;
 
 # x/y of image
-$xsize = 800*4;
-$ysize = 600*4;
+$xsize = 800;
+$ysize = 600;
 
 # use slippy tiles at this zoom level (prev hardcoded at 4)
 $zoomtile = 3;
@@ -139,11 +139,15 @@ for $x (0..(2**$zoomtile-1)) {
     if ($globopts{picloud}) {
       $cmd = "convert -mattecolor transparent -extent ${xsize}x$ysize -background transparent -matte -virtual-pixel transparent -distort Perspective $distort $file gif:- | od -v -x -An";
     } else {
-      $cmd = "convert -mattecolor transparent -extent ${xsize}x$ysize -background transparent -matte -virtual-pixel transparent -distort Perspective $distort $file /tmp/bcdg-$x-$y.gif";
+      $cmd = "convert -mattecolor transparent -extent ${xsize}x$ysize -background transparent -matte -virtual-pixel transparent -distort Perspective $distort $file -extent ${xsize}x$ysize /tmp/bcdg-$x-$y.gif";
+
     }
 
     push(@cmds, $cmd);
     push(@outfiles, "/tmp/bcdg-$x-$y.gif");
+
+#    warn("only printing command, not running it");
+    print "$cmd\n";
     unless ($globopts{picloud}) {system($cmd);}
 
     # fly gets annoyed if file doesn't exist, so check that above worked
@@ -254,9 +258,9 @@ sub proj4 {
   # echoing back $lat/$lon is pointless here, but may be useful later
   # NOTE: +proj=latlon still requires lon/lat order
   my($cmd) = "echo $lon $lat | cs2cs -E -e 'ERR ERR' +proj=latlon +to +proj=$proj 2> /dev/null";
-#  debug("CMD is: $cmd");
+  debug("CMD is: $cmd");
   my($res) = `$cmd`;
-#  debug("RESULT IS: $res");
+  debug("RESULT IS: $res");
   my($lt, $lo, $x, $y) = split(/\s+/, $res);
 #  debug("$lt, $lo, $x, $y ALPHA vs $div");
 
