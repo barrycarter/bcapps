@@ -28,7 +28,22 @@ for $i (0..2**$level-1) {
   }
 }
 
+# translate coords
 %hash = cs2cs([@coords],"merc");
+
+# scale factor
+my(%coordvals);
+for $i (keys %hash) {
+  for $j ("x","y","z") {
+    # TODO: noting ALL values of xyz here unnecessary; just need min/max
+    $coordvals{$j}{$hash{$i}{$j}} = 1;
+  }
+}
+
+# TODO: could use hash of lists here instead
+@x = sort {$a <=> $b} (keys %{$coordvals{x}});
+@y = sort {$a <=> $b} (keys %{$coordvals{y}});
+@z = sort {$a <=> $b} (keys %{$coordvals{z}});
 
 die "TESTING";
 
