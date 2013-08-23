@@ -10,8 +10,12 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# OSM tile level
+# OSM tile level; x/y of final image
 $level = 4;
+$proj = "cass";
+$size{x} = 800;
+$size{y} = 600;
+
 chdir(tmpdir());
 
 # determine the lat/lon range of all slippy tiles at level $level
@@ -29,7 +33,7 @@ for $i (0..2**$level-1) {
 }
 
 # translate coords
-%hash = cs2cs([@coords],"merc");
+%hash = cs2cs([@coords],$proj);
 
 # scale factor
 my(%coordvals);
@@ -40,11 +44,36 @@ for $i (keys %hash) {
   }
 }
 
+my(%vals);
 # TODO: could use hash of lists here instead
-@x = sort {$a <=> $b} (keys %{$coordvals{x}});
-@y = sort {$a <=> $b} (keys %{$coordvals{y}});
-@z = sort {$a <=> $b} (keys %{$coordvals{z}});
+for $i ("x","y","z") {
+  my(@vals) = sort {$a <=> $b} (keys %{$coordvals{$i}});
+  $vals{$i}{min} = $vals[0];
+  $vals{$i}{max} = $vals[$#vals];
+  $vals{$i}{avg} = ($vals[0]+$vals[$#vals])/2;
+  $vals{$i}{range} = $vals[$#vals]-$vals[0];
+}
 
+# translate coord values to pixel values
+my(%trans);
+for $i (keys %hash) {
+  for $j ("x","y","z") {
+    # TODO: improve pointless test below (avoids z axis for now)
+    if ($vals{$j}{range} == 0) {next;}
+    $hash{$i}{$j} = ($hash{$i}{$j} - $vals{$j}{min})/$vals{$j}{range}*$size{$j};
+    # correction for y coord, sigh
+    if ($j eq "y") {$hash{$i}{$j} = $size{y} - $hash{$i}{$j};}
+    debug("HASH $i, $j: $hash{$i}{$j}");
+  }
+}
+
+print "new\nsize $size{x},$size{y}\nsetpixel 0,0,255,255,255\n";
+
+for $i (keys %hash) {
+  my($pr) = sprintf("%0.0f,%0.0f",split(",",$i));
+  print "setpixel $hash{$i}{x},$hash{$i}{y},255,0,0\n";
+  print "string 0,0,0,$hash{$i}{x},$hash{$i}{y},tiny,$pr\n";
+}
 die "TESTING";
 
 open(A,"|parallel -j 10");
