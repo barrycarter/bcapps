@@ -12,7 +12,7 @@ require "/usr/local/lib/bclib.pl";
 
 # OSM tile level; x/y of final image
 $level = 4;
-$proj = "cass";
+$proj = "gs50";
 $size{x} = 800;
 $size{y} = 600;
 
@@ -71,7 +71,7 @@ print "new\nsize $size{x},$size{y}\nsetpixel 0,0,255,255,255\n";
 
 for $i (keys %hash) {
   my($pr) = sprintf("%0.0f,%0.0f",split(",",$i));
-  print "setpixel $hash{$i}{x},$hash{$i}{y},255,0,0\n";
+  print "circle $hash{$i}{x},$hash{$i}{y},3,255,0,0\n";
   print "string 0,0,0,$hash{$i}{x},$hash{$i}{y},tiny,$pr\n";
 }
 die "TESTING";
