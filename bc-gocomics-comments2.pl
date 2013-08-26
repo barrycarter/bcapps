@@ -68,12 +68,15 @@ for $comment (@comments) {
 
   $now = time();
 
+  # useful for joining
+  $url = "http://gocomics.com/$strip/$yy/$mo/$da";
+
   $query = << "MARK";
 INSERT OR IGNORE INTO comments
  (commentid, commentor, commentorid, strip, stripid,
- year, month, date, body, time, unixtime) VALUES
+ year, month, date, body, time, unixtime, url) VALUES
  ($commentid, '$commentor', $commentorid, '$stripname', '$strip',
- $yy, $mo, $da, '$body', '$time', $now)
+ $yy, $mo, $da, '$body', '$time', $now, '$url')
 MARK
 ;
 

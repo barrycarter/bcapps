@@ -6,6 +6,6 @@
 $scanner = "hp5590:libusb:001:004";
 my($date) = `date +%Y%m%d.%H%M%S.%N`;
 chomp($date);
-system("sudo scanimage -d $scanner --resolution 600 > $date.ppm");
+system("sudo scanimage --mode Color -d $scanner --resolution 600 > $date.ppm");
 print "SCAN COMPLETE, CONVERTING\n";
 system("convert $date.ppm $date.jpg");

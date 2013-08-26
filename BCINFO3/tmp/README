@@ -1,0 +1,6 @@
+This directory contains "important" /tmp files that I tend to use often:
+
+stations.txt: tab separated list of weather stations to populate the
+stations table in geonames.db
+
+

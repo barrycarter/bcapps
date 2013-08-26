@@ -33,6 +33,7 @@ $widths = ($lone-$lonw)*cos($lats*$DEGRAD)/180*$PI*$EARTH_RADIUS;
 
 $printstr = << "MARK";
 x=$query{x},y=$query{y},zoom=$query{zoom}
+Query: $ENV{QUERY_STRING}
 Westlon: $lonw
 Eastlon: $lone
 Medlon: $lonm

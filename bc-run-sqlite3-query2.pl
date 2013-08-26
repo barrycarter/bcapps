@@ -82,9 +82,11 @@ sub query_request {
   # avoid DOS by limiting cputime
   my($out,$err,$res) = cache_command2("ulimit -t 5 && sqlite3 -html -header $db.db < $tmp");
 
-  # restore hyperlinks
+  # restore hyperlinks and quotes
   $out=~s/&lt;/</isg;
   $out=~s/&gt;/>/isg;
+  $out=~s/&quot;/\"/isg;
+  $out=~s/&\#39;/\'/isg;
 
   # error?
   if ($res) {

@@ -10,7 +10,7 @@ for (;;) {
   # no actual caching, since each image is different
   my($date) = `date +%Y%m%d.%H%M%S.%N`;
   chomp($date);
-  my($cmd) = qq%sudo scanimage -d 'hp5590:libusb:001:004' --source "ADF" --resolution 600 > $date.ppm%;
+  my($cmd) = qq%sudo scanimage --mode Color -d 'hp5590:libusb:001:004' --source "ADF" --resolution 600 > $date.ppm%;
   debug("CMD: $cmd");
   ($out,$err,$res) = cache_command2($cmd);
 
