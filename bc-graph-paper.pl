@@ -4,12 +4,14 @@
 
 require "/usr/local/lib/bclib.pl";
 
+$lightcolor = "200,200,255";
+
 print "new\nsize 1000,1000\nsetpixel 0,0,255,255,255\n";
 
 # the lighter lines (not sure I actually want these
 for ($i=0; $i<=1000; $i+=10) {
-  print "line 0,$i,1000,$i,200,200,200\n";
-  print "line $i,0,$i,1000,200,200,200\n";
+  print "line 0,$i,1000,$i,$lightcolor\n";
+  print "line $i,0,$i,1000,$lightcolor\n";
 }
 
 for ($i=0; $i<=1000; $i+=100) {
