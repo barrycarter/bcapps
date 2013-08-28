@@ -2,6 +2,9 @@
 
 # creates graph paper using fly
 
+# TODO: allow for arbitrary axes (eg, scatter plots), size, etc; allow
+# for unlabelled paper as well
+
 require "/usr/local/lib/bclib.pl";
 
 $lightcolor = "200,200,255";
