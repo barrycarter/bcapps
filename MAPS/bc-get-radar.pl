@@ -4,16 +4,30 @@
 
 require "/usr/local/lib/bclib.pl";
 
+dodie('chdir("/var/tmp/radar")');
+
 $site = "ABX";
 
 for $i ("N0R","N0S","N0V","N0Z","N1P","NCR","NET","NTP","NVL") {
   # this one is current even when timestamp looks odd
-  my($url) = "http://radar.weather.gov/ridge/RadarImg/$i/${site}_${i}_0.gif";
+  my($url) = "http://radar.weather.gov/ridge/RadarImg/$i/$site/";
 
   # radar is updated every 3m, so 90s is a good cache time
-  # cache_command2 doesn't support retfile yet
-  my($out) = cache_command("curl $url","age=90&retfile=1");
-  debug("$url -> $out");
+  my($out,$err,$res) = cache_command2("curl $url","age=90");
+
+  # look for hrefs
+  while ($out=~s/<a href="(.*?)"//is) {
+    # ignore hrefs that dont point to site radar
+    my($href) = $1;
+    unless ($href=~/^$site/) {next;}
+    # if we already have this file, ignore
+    if (-f "/var/tmp/radar/$href") {next;}
+    # obtain image
+    system("curl -O http://radar.weather.gov/ridge/RadarImg/$i/$site/$href");
+    debug("HREF: $href");
+  }
+
+  warn "TESTING"; next;
 
   # convert to half-transparent png
   system("convert $out -transparent white -channel Alpha -evaluate Divide 2 /sites/data/${site}_$i.png");
