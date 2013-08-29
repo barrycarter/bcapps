@@ -1,6 +1,7 @@
 #!/bin/perl
 
 # obtains radar images for Albuquerque and transparent-izes them
+# --nodaemon: don't "daemonize", end up after one run
 
 require "/usr/local/lib/bclib.pl";
 
@@ -9,28 +10,37 @@ dodie('chdir("/var/tmp/radar")');
 $site = "ABX";
 
 for $i ("N0R","N0S","N0V","N0Z","N1P","NCR","NET","NTP","NVL") {
-  # this one is current even when timestamp looks odd
-  my($url) = "http://radar.weather.gov/ridge/RadarImg/$i/$site/";
-
   # radar is updated every 3m, so 90s is a good cache time
-  my($out,$err,$res) = cache_command2("curl $url","age=90");
+  my($out,$err,$res) = cache_command2("curl http://radar.weather.gov/ridge/RadarImg/$i/$site/","age=90");
+  # debugging: some files are listed in .out but vanish quickly
+  write_file($out, "$i-$site.out");
+
+  # list of files for this type of radar
+  my(@files);
 
   # look for hrefs
   while ($out=~s/<a href="(.*?)"//is) {
     # ignore hrefs that dont point to site radar
     my($href) = $1;
     unless ($href=~/^$site/) {next;}
+
+    # create list of files (even ones we have) for sorting later
+    push(@files,$href);
+
     # if we already have this file, ignore
     if (-f "/var/tmp/radar/$href") {next;}
     # obtain image
     system("curl -O http://radar.weather.gov/ridge/RadarImg/$i/$site/$href");
-    debug("HREF: $href");
+    # convert to semi-transparent
+    # TODO: move these to correct location!
+  system("convert /var/tmp/radar/$href -transparent white -channel Alpha -evaluate Divide 2 /var/tmp/radar/$href.png");
   }
 
-  warn "TESTING"; next;
-
-  # convert to half-transparent png
-  system("convert $out -transparent white -channel Alpha -evaluate Divide 2 /sites/data/${site}_$i.png");
+  # find most recent file (max() won't work here, not numerical)
+  @files = sort(@files);
+  my($mrf) = $files[$#files];
+  # copy this file (transparent version) to /sites/data
+  system("cp $mrf.png /sites/data/${site}_$i.png");
 
   # these files almost never change...
   ($out,$err,$res) = cache_command2("curl http://radar.weather.gov/ridge/RadarImg/$i/${site}_${i}_0.gfw", "age=86400");
@@ -41,9 +51,7 @@ for $i ("N0R","N0S","N0V","N0Z","N1P","NCR","NET","NTP","NVL") {
   my($sc) = $yc+$yp*550;
   my($ec) = $xc+$xp*600;
 
-  # find the center point to placemark date this file was created (not
-  # really that useful, but helps check for caching; doesn't check PNG
-  # file recency)
+  # find the center point to placemark date this file was created
   my($cx,$cy) = (($ec+$xc)/2, ($sc+$yc)/2);
   my($time) = strftime("%Y-%m-%d %H:%M:%S", gmtime(time()));
 
@@ -63,7 +71,7 @@ for $i ("N0R","N0S","N0V","N0Z","N1P","NCR","NET","NTP","NVL") {
 <west>$xc</west>
 </LatLonBox>
 </GroundOverlay>
-<Placemark><name>$time</name><Point><coordinates>
+<Placemark><name>$mrf</name><Point><coordinates>
 $cx,$cy
 </coordinates></Point></Placemark>
 </Document>
@@ -73,5 +81,6 @@ MARK
   write_file($str,"/sites/data/${site}_$i.kml");
 }
 
+if ($globopts{nodaemon}) {exit(0);}
 sleep(60);
 exec($0);
