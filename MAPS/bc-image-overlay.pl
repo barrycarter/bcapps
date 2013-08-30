@@ -34,7 +34,7 @@ my($str) = << "MARK";
 <script type="text/javascript">
 function initialize() {
  var myLatLng = new google.maps.LatLng($query{center});
- var myOptions = {zoom: $query{zoom}, center: myLatLng, mapTypeId: google.maps.MapTypeId.$query{maptypeid}};
+ var myOptions = {zoom: $query{zoom}, center: myLatLng, mapTypeId: google.maps.MapTypeId.$query{maptypeid}, scaleControl: true};
  var map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
  var kmlLayerOptions = {preserveViewport:true};
  var kmllayer = new google.maps.KmlLayer('$kmlurl',kmlLayerOptions);

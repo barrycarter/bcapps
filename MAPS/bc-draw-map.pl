@@ -12,13 +12,14 @@ require "/usr/local/lib/bclib.pl";
 
 # OSM tile level; x/y of final image
 $level = 4;
-$proj = "gs50";
+$proj = "ortho";
 $size{x} = 800;
 $size{y} = 600;
 
 chdir(tmpdir());
 
 # determine the lat/lon range of all slippy tiles at level $level
+# TODO: this is doubtless inefficient because of repeats
 for $i (0..2**$level-1) {
   for $j (0..2**$level-1) {
     # using 256 below to all for overlaps
@@ -67,14 +68,23 @@ for $i (keys %hash) {
   }
 }
 
-print "new\nsize $size{x},$size{y}\nsetpixel 0,0,255,255,255\n";
+# now, where to map slippy tiles?
+for $i (0..2**$level-1) {
+  for $j (0..2**$level-1) {
+    my($nwlat,$nwlon) = slippy2latlon($i,$j,$level,0,0);
+    debug("GOES TO: $hash{$nwlon}{$nwlat}{x}");
+  }
+}
+
+die "TESTING";
+
+# print "new\nsize $size{x},$size{y}\nsetpixel 0,0,255,255,255\n";
 
 for $i (keys %hash) {
   my($pr) = sprintf("%0.0f,%0.0f",split(",",$i));
   print "circle $hash{$i}{x},$hash{$i}{y},3,255,0,0\n";
   print "string 0,0,0,$hash{$i}{x},$hash{$i}{y},tiny,$pr\n";
 }
-die "TESTING";
 
 open(A,"|parallel -j 10");
 
