@@ -4,6 +4,7 @@
 # tiles where needed
 
 require "/usr/local/lib/bclib.pl";
+use Math::Polygon::Calc;
 chdir(tmpdir());
 slippy2proj(19,17,5,"ortho");
 
@@ -17,6 +18,7 @@ sub slippy2proj {
   my($x,$y,$z,$proj) = @_;
   my(@coords);
   my(@coordpairs);
+  my(%trans);
   # the order here is nw, sw, ne, se I think!
   for $i (0,128,256) {
     for $j (0,128,256) {
@@ -29,10 +31,11 @@ sub slippy2proj {
   }
 
   my($coords) = join("\n",@coords);
-  debug("COORDS: $coords");
+  debug("COORDS: $coords</coords>");
   write_file("$coords\n", "coords");
 
-  my($out,$err,$res) = cache_command("cs2cs -E -e 'ERR ERR' +proj=lonlat +to +proj=$proj < coords","age=86400");
+  # below cannot be cached!
+  my($out,$err,$res) = cache_command2("cs2cs -E -e 'ERR ERR' +proj=lonlat +to +proj=$proj < coords");
   debug("OUT: $out");
 
   for $i (split(/\n/,$out)) {
@@ -41,6 +44,12 @@ sub slippy2proj {
     # fields[2] and [3] are the unscaled x/y coords
     # get the coordpair matching these values
     my($pair) = shift(@coordpair);
-    debug("$pair -> $fields[2], $fields[3]");
+    $trans{$pair} = [$fields[2],$fields[3]];
   }
+
+  my(@poly) = ($trans{"0,0"},$trans{"256,0"},$trans{"256,256"},$trans{"0,256"},$trans{"0,0"});
+  debug("POLY",@poly);
+  debug(polygon_area(@poly));
+  debug(polygon_bbox(@poly));
+
 }
