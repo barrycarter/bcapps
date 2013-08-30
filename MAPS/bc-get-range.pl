@@ -20,8 +20,16 @@ for ($i=-180; $i<=180; $i+=10) {
 for $i (split(/\n/,$out)) {
   unless ($i=~s/\s*:.*$//) {next;}
   %res = cs2cs([@coords], $i);
-  debug(dump_var("res",{%res}));
-  die "TESTING";
+  my(%xs) = ();
+  my(%ys) = ();
+  for $j (keys %res) {
+    $xs{$res{$j}{x}}=1;
+    $ys{$res{$j}{y}}=1;
+  }
+  @xs = sort {$a <=> $b} keys %xs;
+  @ys = sort {$a <=> $b} keys %ys;
+  debug("YS",@ys);
+  print "$i XRANGE $xs[0] $xs[$#xs] YRANGE $ys[0] $ys[$#ys]\n";
 }
 
 =item cs2cs(\@lonlat, $proj, $options)
