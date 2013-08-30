@@ -61,6 +61,7 @@ for $i ("N0R","N0S","N0V","N0Z","N1P","NCR","NET","NTP","NVL") {
 <kml xmlns="http://earth.google.com/kml/2.0">
 <Document>
 <GroundOverlay>
+<Description>$mrf</Description>
 <Icon>
 <href>http://data.bcinfo3.barrycarter.info/${site}_$i.png</href>
 </Icon>
