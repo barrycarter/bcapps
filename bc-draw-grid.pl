@@ -130,21 +130,27 @@ for $x (0..(2**$zoomtile-1)) {
 
     # TODO: rewrite this to be cleaner
     # find min and max x/y vals
-    my(@xs) = sort($nwx, $nex, $swx, $sex);
-    my(@ys) = sort($nwy, $ney, $swy, $sey);
-    debug("YS",@ys,"MIN:",min(@ys));
+    my(@xs) = sort {$a <=> $b} ($nwx, $nex, $swx, $sex);
+    my(@ys) = sort {$a <=> $b} ($nwy, $ney, $swy, $sey);
+    debug("XS",@xs);
+    debug("YS",@ys);
     # shift x coords
-    $nwx -= min(@xs);
-    $nex -= min(@xs);
-    $swx -= min(@xs);
-    $sex -= min(@xs);
+    $nwx -= $xs[0];
+    $nex -= $xs[0];
+    $swx -= $xs[0];
+    $sex -= $xs[0];
     # and y coords
-    $nwy -= min(@ys);
-    $ney -= min(@ys);
-    $sey -= min(@ys);
-    $swy -= min(@ys);
-
-    
+    $nwy -= $ys[0];
+    $ney -= $ys[0];
+    $sey -= $ys[0];
+    $swy -= $ys[0];
+    # and the extents
+    $xe = $xs[$#xs]-$xs[0]+1;
+    $ye = $ys[$#ys]-$ys[0]+1;
+    # the extent of the slippy tile is the max of 255 (its
+    # height/width) and the extent for the target image (not sure why)
+    $slipex = max(255,$xe);
+    $slipey = max(255,$ye);
 
     # where the projection maps the 4 corners
     $distort="0,0,$nwx,$nwy 0,255,$swx,$swy 255,0,$nex,$ney 255,255,$sex,$sey";
@@ -159,8 +165,7 @@ for $x (0..(2**$zoomtile-1)) {
     } else {
       # $cmd = "convert -mattecolor transparent -extent ${xsize}x$ysize -background transparent -matte -virtual-pixel transparent -distort Perspective $distort $file -extent ${xsize}x$ysize /tmp/bcdg-$x-$y.gif";
       # experimental below
-      $cmd = "convert -mattecolor transparent -extent 255x255 -background transparent -matte -virtual-pixel transparent -distort Perspective $distort $file -extent ${xsize}x$ysize /tmp/bcdg-$x-$y.gif";
-
+      $cmd = "convert -mattecolor transparent -extent ${slipex}x$slipey -background transparent -matte -virtual-pixel transparent -distort Perspective $distort $file -extent ${xe}x$ye /tmp/bcdg-$x-$y.gif";
     }
 
     push(@cmds, $cmd);
@@ -172,7 +177,8 @@ for $x (0..(2**$zoomtile-1)) {
 
     # fly gets annoyed if file doesn't exist, so check that above worked
     if (-f "/tmp/bcdg-$x-$y.gif") {
-      print A "copy 0,0,0,0,$xsize,$ysize,/tmp/bcdg-$x-$y.gif\n";
+#      print A "copy 0,0,0,0,$xsize,$ysize,/tmp/bcdg-$x-$y.gif\n";
+      print A "copy $xs[0],$ys[0],0,0,$xe,$ye,/tmp/bcdg-$x-$y.gif\n";
     }
   }
 }
