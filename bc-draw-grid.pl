@@ -26,7 +26,7 @@ $xsize = 800;
 $ysize = 600;
 
 # use slippy tiles at this zoom level (prev hardcoded at 4)
-$zoomtile = 4;
+$zoomtile = 3;
 
 # test of "pre" function
 sub pre {
@@ -42,7 +42,8 @@ sub pre {
   return $lat,$lon;
 }
 
-$proj = "ortho"; $div = 6378137; $pre = \&pre;
+$proj = "etmerc"; $div = 20003931; $pre = \&pre;
+# $proj = "ortho"; $div = 6378137; $pre = \&pre;
 # $proj = "merc"; $div = 20000000; $pre = \&pre;
 # <h>And here's to you...</h>
 # $proj = "robin"; $div = 17005833; $pre = \&pre;

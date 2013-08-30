@@ -18,7 +18,7 @@ $size{y} = 600;
 
 chdir(tmpdir());
 
-slippy2screen(19,17,5);
+slippy2proj(19,17,5);
 
 die "TESTING";
 
@@ -254,10 +254,10 @@ sub cs2cs {
   return %rethash;
 }
 
-# Given a slippy tile, return the screen coordinates for the four
+# Given a slippy tile, return the proj4 coordinates for the four
 # corners of the slippy tile
 
-sub slippy2screen {
+sub slippy2proj {
   my($x,$y,$z) = @_;
   my(@coords);
   my(@coordpairs);
@@ -279,7 +279,6 @@ sub slippy2screen {
   for $i (split(/\n/,$out)) {
     my(@fields) = split(/\s+/,$i);
     # fields[2] and [3] are the unscaled x/y coords
-    
     # get the coordpair matching these values
     my($pair) = shift(@coordpair);
     debug("$pair -> $fields[2], $fields[3]");
