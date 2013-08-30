@@ -128,6 +128,24 @@ for $x (0..(2**$zoomtile-1)) {
     # <h>the more you do it, the less dirty it seems</h>
     ($nwx, $nwy, $nex, $ney, $swx, $swy, $sex, $sey) = @quad;
 
+    # TODO: rewrite this to be cleaner
+    # find min and max x/y vals
+    my(@xs) = sort($nwx, $nex, $swx, $sex);
+    my(@ys) = sort($nwy, $ney, $swy, $sey);
+    debug("YS",@ys,"MIN:",min(@ys));
+    # shift x coords
+    $nwx -= min(@xs);
+    $nex -= min(@xs);
+    $swx -= min(@xs);
+    $sex -= min(@xs);
+    # and y coords
+    $nwy -= min(@ys);
+    $ney -= min(@ys);
+    $sey -= min(@ys);
+    $swy -= min(@ys);
+
+    
+
     # where the projection maps the 4 corners
     $distort="0,0,$nwx,$nwy 0,255,$swx,$swy 255,0,$nex,$ney 255,255,$sex,$sey";
     $distort = "'$distort'";
@@ -139,7 +157,9 @@ for $x (0..(2**$zoomtile-1)) {
     if ($globopts{picloud}) {
       $cmd = "convert -mattecolor transparent -extent ${xsize}x$ysize -background transparent -matte -virtual-pixel transparent -distort Perspective $distort $file gif:- | od -v -x -An";
     } else {
-      $cmd = "convert -mattecolor transparent -extent ${xsize}x$ysize -background transparent -matte -virtual-pixel transparent -distort Perspective $distort $file -extent ${xsize}x$ysize /tmp/bcdg-$x-$y.gif";
+      # $cmd = "convert -mattecolor transparent -extent ${xsize}x$ysize -background transparent -matte -virtual-pixel transparent -distort Perspective $distort $file -extent ${xsize}x$ysize /tmp/bcdg-$x-$y.gif";
+      # experimental below
+      $cmd = "convert -mattecolor transparent -extent 255x255 -background transparent -matte -virtual-pixel transparent -distort Perspective $distort $file -extent ${xsize}x$ysize /tmp/bcdg-$x-$y.gif";
 
     }
 

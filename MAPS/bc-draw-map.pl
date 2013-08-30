@@ -18,6 +18,10 @@ $size{y} = 600;
 
 chdir(tmpdir());
 
+slippy2screen(19,17,5);
+
+die "TESTING";
+
 # determine the lat/lon range of all slippy tiles at level $level
 # TODO: this is doubtless inefficient because of repeats
 for $i (0..2**$level-1) {
@@ -229,6 +233,7 @@ sub cs2cs {
   my(@lonlat) = @{$listref};
   my($str);
   my(%rethash);
+  my(%iscoord);
 
   # write data to file
   for $i (@lonlat) {
@@ -246,7 +251,37 @@ sub cs2cs {
     $rethash{"$fields[0],$fields[1]"}{y} = $fields[3];
     $rethash{"$fields[0],$fields[1]"}{z} = $fields[4];
   }
-
   return %rethash;
 }
 
+# Given a slippy tile, return the screen coordinates for the four
+# corners of the slippy tile
+
+sub slippy2screen {
+  my($x,$y,$z) = @_;
+  my(@coords);
+  my(@coordpairs);
+  # the order here is nw, sw, ne, se I think!
+  for $i (0,256) {
+    for $j (0,256) {
+      # this separates lon lat with space and puts them in right order
+      # <h>also demonstrates unnecessarily functional programming!</h>
+      push(@coords, join(" ",reverse(slippy2latlon($x,$y,$z,$i,$j))));
+      push(@coordpair, "$i,$j");
+    }
+  }
+
+  my($coords) = join("\n",@coords);
+  write_file("$coords\n", "coords");
+
+  my($out,$err,$res) = cache_command("cs2cs -E -e 'ERR ERR' +proj=lonlat +to +proj=$proj < coords","age=86400");
+
+  for $i (split(/\n/,$out)) {
+    my(@fields) = split(/\s+/,$i);
+    # fields[2] and [3] are the unscaled x/y coords
+    
+    # get the coordpair matching these values
+    my($pair) = shift(@coordpair);
+    debug("$pair -> $fields[2], $fields[3]");
+  }
+}
