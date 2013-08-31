@@ -6,7 +6,14 @@
 require "/usr/local/lib/bclib.pl";
 use Math::Polygon::Calc;
 chdir(tmpdir());
-slippy2proj(19,17,5,"ortho");
+$z = 2;
+
+for $i (0..2**$z-1) {
+  for $j (0..2**$z-1) {
+    %res = slippy2proj($i,$j,$z,"ortho");
+    debug("IJ: $i,$j -> $res{distortion}");
+  }
+}
 
 =item slippy2proj($x,$y,$z,$proj)
 
@@ -19,13 +26,11 @@ sub slippy2proj {
   my(@coords);
   my(@coordpairs);
   my(%trans);
-  # the order here is nw, sw, ne, se I think!
   for $i (0,128,256) {
     for $j (0,128,256) {
       # this separates lon lat with space and puts them in right order
       # <h>also demonstrates unnecessarily functional programming!</h>
       push(@coords, join(" ",reverse(slippy2latlon($x,$y,$z,$i,$j))));
-      debug("IJ: $i,$j");
       push(@coordpair, "$i,$j");
     }
   }
@@ -47,9 +52,11 @@ sub slippy2proj {
     $trans{$pair} = [$fields[2],$fields[3]];
   }
 
+  # compare the polygon area to its bbox to determine "rectangularity"
   my(@poly) = ($trans{"0,0"},$trans{"256,0"},$trans{"256,256"},$trans{"0,256"},$trans{"0,0"});
-  debug("POLY",@poly);
-  debug(polygon_area(@poly));
-  debug(polygon_bbox(@poly));
-
+  my($area) = polygon_area(@poly);
+  my ($xmin, $ymin, $xmax, $ymax) = polygon_bbox(@poly);
+  my($bbarea) = ($ymax-$ymin)*($xmax-$xmin);
+  $trans{distortion} = $area/$bbarea;
+  return %trans;
 }
