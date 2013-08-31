@@ -7,12 +7,29 @@ require "/usr/local/lib/bclib.pl";
 use Math::Polygon::Calc;
 chdir(tmpdir());
 $z = 2;
+$proj = "ortho";
+
+# TODO: this will not always work, especially for projections with options
+my($out,$err,$res) = cache_command2("fgrep $proj /home/barrycarter/BCGIT/MAPS/projranges.txt");
+my(@f) = split(/\s+/,$out);
+my($xmin, $xmax, $ymin, $ymax) = @f[2,3,5,6];
+my($projarea) = ($xmax-$xmin)*($ymax-$ymin);
+debug("AREA: $projarea");
+die "TESTING";
 
 for $i (0..2**$z-1) {
   for $j (0..2**$z-1) {
     %res = slippy2proj($i,$j,$z,"ortho");
     debug("IJ: $i,$j -> $res{distortion}");
   }
+}
+
+# recursive routine that attempts to map a slippy tile, but handles
+# errors and distortions
+
+sub map_tile {
+  my($x,$y,$z,$proj) = @_;
+  my(%res) = slippy2proj($i,$j,$z,"ortho");
 }
 
 =item slippy2proj($x,$y,$z,$proj)
@@ -26,6 +43,7 @@ sub slippy2proj {
   my(@coords);
   my(@coordpairs);
   my(%trans);
+  # the order here is: nw, n, ne, w, center, e, sw, s, se
   for $i (0,128,256) {
     for $j (0,128,256) {
       # this separates lon lat with space and puts them in right order
