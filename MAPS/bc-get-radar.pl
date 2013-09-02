@@ -29,13 +29,10 @@ for $i ("N0R","N0S","N0V","N0Z","N1P","NCR","NET","NTP","NVL") {
     # look for hrefs
     debug("OUT: $out");
     while ($out=~s/<a href="(.*?)"//s) {
-      debug("1: $1");
       my($href) = $1;
-      debug("HREF: $href");
       unless ($href=~/^$site/) {next;}
       push(@files,$href);
       # if we already have this file, ignore
-      debug("HREF: $href");
       if (-f "/var/tmp/radar/$href") {next;}
       # obtain image
       system("curl -O http://radar.weather.gov/ridge/RadarImg/$i/$site/$href");
@@ -43,8 +40,6 @@ for $i ("N0R","N0S","N0V","N0Z","N1P","NCR","NET","NTP","NVL") {
       # TODO: move these to correct location!
       system("convert /var/tmp/radar/$href -transparent white -channel Alpha -evaluate Divide 2 /var/tmp/radar/$href.png");
     }
-      die "TESTING";
-
 
     # find most recent file (max() won't work here, not numerical)
     @files = sort(@files);
@@ -92,6 +87,8 @@ MARK
   write_file($str,"/sites/data/${site}_$i.kml");
 }
 }
+
+# TODO: combine radar images into one file, naturally
 
 if ($globopts{nodaemon}) {exit(0);}
 sleep(60);
