@@ -3494,6 +3494,23 @@ sub my_tmpfile2() {
   return "/var/tmp/cache/$d1/$d2/$x";
 }
 
+=item affirm($key)
+
+affirm user has typed a given $key ($key="" is an acceptable value).
+
+-affirm autoaffirms everything
+
+=cut
+
+sub affirm {
+  my($aa)=@_;
+  if ($globopts{affirm}) {return;}
+  $ab=lc(<STDIN>);
+  chomp($ab);
+  unless ($ab eq $aa) {die("AFFIRM FAILED: $ab ne $aa");}
+  return();
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
   debug("END: CLEANING UP TMP FILES");
