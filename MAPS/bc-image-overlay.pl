@@ -16,9 +16,14 @@ my(%query) = str2hash("$defaults&$query");
 if ($query{refresh}) {print "Refresh: $query{refresh}\n";}
 print "Content-type: text/html\n\n";
 
+# security check
+unless ($query{url}=~/^[a-z0-9_\.]+$/i) {
+  print "Your URL, $query{url}, frightens me!\n";
+  exit(0);
+}
+
 # the given URL parameter is assumed to be in
 # data.bcinfo3.barrycarter.info and is randomized to prevent caching
-
 $rand = int(rand()*2**32);
 $kmlurl = "http://$rand.data.bcinfo3.barrycarter.info/$query{url}";
 
@@ -47,6 +52,13 @@ MARK
 
 print $str;
 
-print "<p>Viewing: $kmlurl\n";
+print "<p>Viewing: $kmlurl<br>\n";
+
+# if the KML has a description tag, display it here
+my($out,$err,$res) = cache_command2("fgrep -i '<description>' /sites/data/$query{url}");
+if ($out) {
+  $out=~s/<.*?>//isg;
+  print "Description: $out<br>\n";
+}
 
 print "</body></html>\n";
