@@ -8,8 +8,10 @@ require "/usr/local/lib/bclib.pl";
 dodie('chdir("/var/tmp/radar")');
 
 my($out,$err,$res);
+my(@overlays);
 
-for $i ("N0R","N0S","N0V","N0Z","N1P","NCR","NET","NTP","NVL") {
+# TODO: get list below from main site, now hardcoded
+ for $i ("N0R","N0S","N0V","N0Z","N1P","NCR","NET","NTP","NVL") {
   # obtain list of sites for this type of radar (changes rarely)
   my(@sites) = ();
   ($out,$err,$res) = cache_command2("curl http://radar.weather.gov/ridge/RadarImg/$i/","age=86400");
@@ -60,11 +62,9 @@ for $i ("N0R","N0S","N0V","N0Z","N1P","NCR","NET","NTP","NVL") {
     my($cx,$cy) = (($ec+$xc)/2, ($sc+$yc)/2);
     my($time) = strftime("%Y-%m-%d %H:%M:%S", gmtime(time()));
 
+    # create ground overlay for this radar
     # create KML file
-  $str = << "MARK";
-<?xml version="1.0" encoding="utf-8"?>
-<kml xmlns="http://earth.google.com/kml/2.0">
-<Document>
+    my($str) = << "MARK";
 <GroundOverlay>
 <Description>$mrf</Description>
 <Icon>
@@ -80,12 +80,25 @@ for $i ("N0R","N0S","N0V","N0Z","N1P","NCR","NET","NTP","NVL") {
 <Placemark><name>$mrf</name><Point><coordinates>
 $cx,$cy
 </coordinates></Point></Placemark>
+MARK
+;
+  push(@overlays, $str);
+}
+
+$overlays = join("\n",@overlays);
+
+# create KML file
+  $str = << "MARK";
+<?xml version="1.0" encoding="utf-8"?>
+<kml xmlns="http://earth.google.com/kml/2.0">
+<Document>
+$overlays
 </Document>
 </kml>
 MARK
 ;
-  write_file($str,"/sites/data/${site}_$i.kml");
-}
+  
+write_file($str,"/sites/data/radar_$i.kml");
 }
 
 # TODO: combine radar images into one file, naturally
