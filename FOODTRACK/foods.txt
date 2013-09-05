@@ -1100,9 +1100,3 @@ SHORT: 1*IL-VICINO-MOLTACARNE-SMALL@1709, 0.5*IL-VICINO-CAMPAGNOLA-SMALL@1709, 0
 # NOTE: records stop 20130427; data for 20130427 is incomplete; other
 # data incomplete as noted above records for thin crust pizzas are
 # inaccurate
-
-
-
-
-
-

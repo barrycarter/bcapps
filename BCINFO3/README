@@ -223,3 +223,9 @@ rpm --nodeps -e sqlite
 bc-gocomics-comments2.pl&
 bc-metar-db.pl&
 bc-get-radar.pl&
+
+% other tasks
+
+: must do below for xdg-desktop-menu required by Mathematica install
+mkdir /usr/share/desktop-directories/
+

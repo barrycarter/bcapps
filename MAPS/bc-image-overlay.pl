@@ -3,6 +3,8 @@
 # Given a KML on my server (bcinfo3), create google map with that KML
 # file, using randomization to prevent caching
 
+# sample URL: http://test.bcinfo3.barrycarter.info/bc-image-overlay.pl?center=35.1,-106.55&zoom=13&maptypeid=HYBRID&url=conus.kml&refresh=60
+
 require "/usr/local/lib/bclib.pl";
 
 # query string will determine most chars (incl KML map in question)
@@ -16,10 +18,19 @@ my(%query) = str2hash("$defaults&$query");
 if ($query{refresh}) {print "Refresh: $query{refresh}\n";}
 print "Content-type: text/html\n\n";
 
-# security check
-unless ($query{url}=~/^[a-z0-9_\.]+$/i) {
+# security check (empty URL is allowed)
+unless ($query{url}=~/^[a-z0-9_\.]*$/i) {
   print "Your URL, $query{url}, frightens me!\n";
   exit(0);
+}
+
+# user marker (in lat,lng format, very simple, nothing fancy)
+if ($query{marker}) {
+  $markstring = << "MARK";
+var marklatlng = new google.maps.LatLng($query{marker});
+var marker = new google.maps.Marker({position: marklatlng,map: map});
+MARK
+;
 }
 
 # the given URL parameter is assumed to be in
@@ -44,6 +55,7 @@ function initialize() {
  var kmlLayerOptions = {preserveViewport:true};
  var kmllayer = new google.maps.KmlLayer('$kmlurl',kmlLayerOptions);
  kmllayer.setMap(map);
+ $markstring
 }
 </script></head>
 <body onload="initialize()"><div id="map_canvas" style="width:100%; height:100%"></div>

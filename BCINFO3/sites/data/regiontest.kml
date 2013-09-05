@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Flat Region</name>
+    <Region>
+      <LatLonAltBox>
+        <north>37.430419921875</north>
+        <south>37.41943359375</south>
+        <east>-122.080078125</east>
+        <west>-122.091064453125</west>
+      </LatLonAltBox>
+      <Lod>
+        <minLodPixels>128</minLodPixels>
+      </Lod>
+    </Region>
+    <GroundOverlay>
+      <name>Mountain View DOQQ</name>
+      <Icon>
+        <href>http://data.bcinfo3.barrycarter.info/graphpaper.gif</href>
+      </Icon>
+      <LatLonBox>
+        <north>37.430419921875</north>
+        <south>37.41943359375</south>
+        <east>-122.080078125</east>
+        <west>-122.091064453125</west>
+      </LatLonBox>
+    </GroundOverlay>
+  </Document>
+</kml>
