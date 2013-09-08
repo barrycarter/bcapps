@@ -22,11 +22,11 @@ $latspace = 15;
 $lonspace = 20;
 
 # x/y of image
-$xsize = 800;
-$ysize = 600;
+$xsize = 1100;
+$ysize = 1250;
 
 # use slippy tiles at this zoom level (prev hardcoded at 4)
-$zoomtile = 3;
+$zoomtile = 4;
 
 # test of "pre" function
 sub pre {
@@ -34,19 +34,19 @@ sub pre {
 
   # TODO: add zooming somehow? (can't do it here though)
 
-#  ($lat, $lon) = latlonrot($lat, $lon, 106, "z");
-#  ($lat, $lon) = latlonrot($lat, $lon, -35, "y");
-#  ($lat, $lon) = latlonrot($lat, $lon, 90, "x");
+  ($lat, $lon) = latlonrot($lat, $lon, -135, "z");
+  ($lat, $lon) = latlonrot($lat, $lon, 25, "y");
+  ($lat, $lon) = latlonrot($lat, $lon, 180, "x");
 
 #  $lon= fmod($lon-+106.5,360);
   return $lat,$lon;
 }
 
-$proj = "etmerc"; $div = 20003931; $pre = \&pre;
+# $proj = "etmerc"; $div = 20003931; $pre = \&pre;
 # $proj = "ortho"; $div = 6378137; $pre = \&pre;
 # $proj = "merc"; $div = 20000000; $pre = \&pre;
 # <h>And here's to you...</h>
-# $proj = "robin"; $div = 17005833; $pre = \&pre;
+$proj = "robin"; $div = 17005833; $pre = \&pre;
 
 # making this more efficient and flexible by only calcing values once
 for ($lat=90; $lat>=-90; $lat-=$latspace) {

@@ -46,6 +46,7 @@ yum -y install lighttpd dropbear perl-Text-Unidecode.noarch emacs xinetd gpp4
 yum -y install perl-IO-Digest.noarch gcc "perl-Date*" socat nc gcc-c++
 : lighttpd-fastcgi does not install fcgi, wow
 yum -y install mysql mysql-server lighttpd-fastcgi fcgi libxml2 libxml2-devel
+yum -y install nano
 
 % Perl modules (excluding those available via yum)
 

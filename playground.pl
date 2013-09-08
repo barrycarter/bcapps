@@ -30,6 +30,27 @@ $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 use GD;
 
+# perl pair oddness
+
+my(@pairs);
+
+for $i (0..5) {
+  for $j (0..5) {
+    push(@pairs,[$i,$j]);
+  }
+}
+
+@pairs = sort {abs($a->[1]-$a->[0]) <=> abs($b->[1]-$b->[0])} @pairs;
+
+for $i (@pairs) {
+  debug("I: $i");
+  debug("0: $i->[0]");
+  @list = @{$i};
+  print "$list[0],$list[1]\n";
+}
+
+die "TESTING";
+
 # device testing (did "chmod a+r /dev/sdb3" first)
 open(A,"/dev/sdb3");
 seek(A, 91672576, SEEK_SET);

@@ -35,8 +35,8 @@ sub fix_scanned_files {
 
   for $i (@files) {
     # first image (this is 8.5" x 22" [since both sides scanned] at 200dpi)
-    my($cmd1)="convert $i -geometry 1700x4400 -crop 1700x2200+0+0 -flip -flop $i.1.jpg";
-    my($cmd2)="convert $i -geometry 1700x4400 -crop 1700x2200+0+2200 -flip -flop $i.2.jpg";
-    system("$cmd1; $cmd2");
+    my($cmd1)="convert $i -geometry 1700x2200 -crop 1700x2200+0+0 -flip -flop $i.1.jpg";
+#    my($cmd2)="convert $i -geometry 1700x2200 -crop 1700x2200+0+2200 -flip -flop $i.2.jpg";
+    system($cmd1);
   }
 }
