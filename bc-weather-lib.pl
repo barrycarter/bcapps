@@ -387,7 +387,7 @@ sub recent_weather_ship {
 
   # columns where data starts (first col = 0)
   # should write a general column parsing routine, but too lazy
-  my(@cols) = (0, 6, 12, 18, 25, 30, 35, 42, 47, 54, 60, 81, 91);
+  my(@cols) = (0, 6, 12, 18, 24, 30, 35, 42, 47, 54, 60, 81, 91);
   # trying to make these match metar table to extent possible
   my(@names) = ("day", "", "latitude", "longitude", "temp_c",
 		"dewpoint_c", "wind", "gust", "maxgst",
