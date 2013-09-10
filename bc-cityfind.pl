@@ -4,8 +4,8 @@
 # canonical place name for each
 
 # requires (and is really just a thin wrapper around) the
-# geonames/geonames2.db at:
-# http://geonames2.db.94y.info/
+# geonames/geonames.db at:
+# http://geonames.db.94y.info/
 
 # Example: $0 paris santa.fe.new.mexico.united.states chicago.us
 # corpus.christi.tx portugal michigan james.island tx.amarillo us.tx
@@ -13,8 +13,8 @@
 
 # TODO: add elevation and timezone
 
-push(@INC, "/usr/local/lib");
-require "bclib.pl";
+require "/usr/local/lib/bclib.pl";
+
 ($tmp1, $tmp2) = (my_tmpfile("cityp"),my_tmpfile("cityq"));
 
 for $i (@ARGV) {

@@ -68,6 +68,13 @@ my($str) = << "MARK";
 <west>$xc</west>
 </LatLonBox>
 </GroundOverlay>
+<ScreenOverlay>
+<Icon>
+<href>http://data.bcinfo3.barrycarter.info/radar_key.png</href>
+</Icon>
+<overlayXY x="0" y="0" xunits="fraction" yunits="fraction"/>
+<screenXY x="0" y="0" xunits="fraction" yunits="fraction"/>
+</ScreenOverlay>
 <Placemark><name>$mrf</name><Point><coordinates>
 $cx,$cy
 </coordinates></Point></Placemark>

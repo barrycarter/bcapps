@@ -16,7 +16,7 @@ for $i (@ARGV) {
   ($target,$mod) = get_target($i);
 
   # should I back this up? if so, where?
-  unless ($target) {warn("$i ignored"); next;}
+  unless ($target) {debug("$i ignored"); next;}
 
   # does target file exist? if not, copy from original and create
   # blank quikbak file
