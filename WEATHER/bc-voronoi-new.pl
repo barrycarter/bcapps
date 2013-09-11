@@ -11,25 +11,33 @@ $db = "/home/barrycarter/20130908/metarnew.db";
 chdir(tmpdir());
 # TODO: does not include SYNOP/RAWS
 $metar_query = "SELECT station_id AS id, latitude AS y,
-longitude AS x, 'METAR' AS source,
+longitude AS x, observation_time AS time, 'METAR' AS source,
 temp_c*1.8+32 AS temp_f FROM metar_now";
-$buoy_query = "SELECT STN AS station_id, LAT AS latitude, LON AS longitude,
-'BUOY' AS source, ATMP*1.8+32 AS temp_f FROM buoy_now WHERE ATMP!='MM'";
+$buoy_query = "SELECT STN AS id, LAT AS y, 
+LON AS x, YYYY*10000+MM*100+DD+hh/100.+mm/10000. AS time, 'BUOY' AS source,
+ATMP*1.8+32 AS temp_f FROM buoy_now WHERE ATMP!='MM'";
 $ship_query = "SELECT station_id, latitude, longitude, 'SHIP' AS source,
 temp_c*1.8+32 AS temp_f FROM ship_now WHERE temp_c!=''";
 
 $query = "$metar_query UNION $buoy_query UNION $ship_query";
-$query = "$metar_query";
+$query = "$metar_query UNION $buoy_query";
 
 @res = sqlite3hashlist($query,$db);
 
 # only thing we need to define is color + label
 for $i (@res) {
+  # ignore bad entries
+  # TODO: not all 0 temps are bad!
+  # TODO: should ignore on original value, not converted value
+  if ($i->{temp_f}==32) {
+    # this doesnt really delete the hash, but voronoi_map will ignore it
+    delete $i{id};
+    next;
+  }
   $hue = min(max(5/600*(100-$i->{temp_f}),0),1);
-  debug("HUE: $hue");
   $i->{color} = hsv2rgb($hue,1,1,"kml=1&opacity=80");
-  debug("COLOR: $i->{color}");
-  $i->{label} = "test";
+  $i->{label} = "$i->{id} @ $i->{time}: $i->{temp_f}F";
+  debug("LABEL: $i->{label}");
 }
 
 my($file) = voronoi_map(\@res);
