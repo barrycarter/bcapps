@@ -10,7 +10,8 @@ $db = "/home/barrycarter/20130908/metarnew.db";
 
 chdir(tmpdir());
 # TODO: does not include SYNOP/RAWS
-$metar_query = "SELECT station_id, latitude, longitude, 'METAR' AS source,
+$metar_query = "SELECT station_id AS id, latitude AS y,
+longitude AS x, 'METAR' AS source,
 temp_c*1.8+32 AS temp_f FROM metar_now";
 $buoy_query = "SELECT STN AS station_id, LAT AS latitude, LON AS longitude,
 'BUOY' AS source, ATMP*1.8+32 AS temp_f FROM buoy_now WHERE ATMP!='MM'";
@@ -18,8 +19,23 @@ $ship_query = "SELECT station_id, latitude, longitude, 'SHIP' AS source,
 temp_c*1.8+32 AS temp_f FROM ship_now WHERE temp_c!=''";
 
 $query = "$metar_query UNION $buoy_query UNION $ship_query";
+$query = "$metar_query";
 
 @res = sqlite3hashlist($query,$db);
+
+# only thing we need to define is color + label
+for $i (@res) {
+  $hue = min(max(5/600*(100-$i->{temp_f}),0),1);
+  debug("HUE: $hue");
+  $i->{color} = hsv2rgb($hue,1,1,"kml=1&opacity=80");
+  debug("COLOR: $i->{color}");
+  $i->{label} = "test";
+}
+
+my($file) = voronoi_map(\@res);
+system("cp $file /tmp/vtest1.kmz");
+
+die "TESTING";
 
 # mathematica format (testing)
 my(@print);
