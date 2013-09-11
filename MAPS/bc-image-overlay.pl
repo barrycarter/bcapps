@@ -73,4 +73,8 @@ if ($out) {
   print "Description: $out<br>\n";
 }
 
+print "<p>Source: https://github.com/barrycarter/bcapps/blob/master/MAPS/bc-image-overlay.pl<br>See also: https://github.com/barrycarter/bcapps/blob/master/MAPS/<br>\n";
+
 print "</body></html>\n";
+
+# TODO: add instructions re how to change zoom, map type, refresh, center, etc
