@@ -780,9 +780,7 @@ sub voronoi {
     print A "$pts[$i] $pts[$i+1]\n";
   }
   close(A);
-
-  debug("POINTS",read_file("points"));
-
+  debug("FILE:",read_file("points"));
   system("qvoronoi s o < points > output");
 
   # break output into lines/polygons

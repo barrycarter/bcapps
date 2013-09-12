@@ -2,15 +2,16 @@
 
 # scans images using my ADF scanner
 
+# TODO: this seems to keep changing, automate how to find it
+$scanner = "libusb:001:005";
 require "/usr/local/lib/bclib.pl";
 my($out,$err,$res);
 
 for (;;) {
-  if (++$count>=10) {warn "Testing limited to 10 docs"; last;}
   # no actual caching, since each image is different
   my($date) = `date +%Y%m%d.%H%M%S.%N`;
   chomp($date);
-  my($cmd) = qq%sudo scanimage --mode Color -d 'hp5590:libusb:001:004' --source "ADF" --resolution 600 > $date.ppm%;
+  my($cmd) = qq%sudo scanimage --mode Color -d 'hp5590:$scanner' --source "ADF" --resolution 600 > $date.ppm%;
   debug("CMD: $cmd");
   ($out,$err,$res) = cache_command2($cmd);
 
