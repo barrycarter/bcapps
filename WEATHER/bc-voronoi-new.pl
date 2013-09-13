@@ -37,7 +37,7 @@ for $i (@res) {
 }
 
 my($file) = voronoi_map(\@res);
-system("cp $file /sites/data/temprature-voronoi.kmz");
+system("cp $file /sites/data/temperature-voronoi.kmz");
 
 sleep(60);
 in_you_endo();

@@ -31,6 +31,9 @@ $all = read_file("results.txt");
 while ($all=~s%<checkpoint>(.*?)</checkpoint>%%is) {
   $res = $1;
 
+  # ignore turned off monitors
+  if ($res=~m%<is-monitoring-enabled type="boolean">false</is-monitoring-enabled>%) {next;}
+
   # ignore good results
   if ($res=~m%<status type="integer">1</status>%) {next;}
 

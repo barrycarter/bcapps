@@ -19,7 +19,7 @@ if ($query{refresh}) {print "Refresh: $query{refresh}\n";}
 print "Content-type: text/html\n\n";
 
 # security check (empty URL is allowed)
-unless ($query{url}=~/^[a-z0-9_\.]*$/i) {
+unless ($query{url}=~/^[a-z0-9_\.\-]*$/i) {
   print "Your URL, $query{url}, frightens me!\n";
   exit(0);
 }
