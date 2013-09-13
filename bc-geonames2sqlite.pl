@@ -19,11 +19,10 @@
 use utf8;
 use Text::Unidecode;
 use Math::Round;
-push(@INC,"/usr/local/lib");
-require "bclib.pl";
+require "/usr/local/lib/bclib.pl";
 
 # this program takes time to run, so warn about missing files ASAP
-for $i ("admin1CodesASCII.txt", "countryInfo.txt", "allCountries.zip") {
+for $i ("admin1CodesASCII.txt", "countryInfo.txt", "allCountries.zip", "alternateNames.zip") {
   unless (-f $i) {die "$i must exist in current directory";}
 }
 
@@ -33,15 +32,6 @@ open(C,">/var/tmp/geonames.out");
 open(D,">/var/tmp/tzones.out");
 # TODO: I never create a table from the file below, but should
 open(E,">/var/tmp/featurecodes.out");
-
-# things that are listed as ADM/PCL, but aren't really
-# probably bad to hardcode ids here: one of them doesn't even exist anymore!
-# if you're REALLY curious what these are:
-# http://ws.geonames.org/get?geonameId=2634343 (for example)
-
-# removing as test 11 Feb 2012
-# @fakeadm = (2411430,3370684,6940286,921810,6693220,2634343);
-# %fakeadm = list2hash(@fakeadm);
 
 # create cheat table for parents
 unless (-f "/var/tmp/admpcl.txt") {
@@ -57,9 +47,6 @@ while (<A>) {
    $featureclass, $featurecode, $countrycode, $cc2, $admin1code,
    $admin2code, $admin3code, $admin4code, $population, $elevation,
    $gtopo30, $timezone, $modificationdate) = split("\t",$_);
-
-  # ignore fake ADM/PCL
-  if ($fakeadm{$geonameid}) {next;}
 
   # ignore admin1code of 00 meaning unknown (unless this is a PCL)
   if ($admin1code eq "00" && $featurecode=~/^ADM/) {next;}

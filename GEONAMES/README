@@ -1,0 +1,47 @@
+Faster way to create geonames db:
+
+in shell:
+
+perl -nle '@f=split(/\t/);$f[0]=~s/\./\t/;print join("\t",@f[0,3])' admin1CodesASCII.txt > adm1.txt
+
+perl -nle '@f=split(/\t/);$f[0]=~s/\./\t/g;print join("\t",@f[0,3])' admin2Codes.txt > adm2.txt
+
+egrep -v '^#|^$' countryInfo.txt | perl -F"\t" -anle 'print "$F[0]\t$F[16]"' > cc.txt
+
+unzip alternateNames.zip
+
+zcat allCountries.zip | perl -nle 's/\"//isg;@f=split(/\t/);print join("\t",@f[0,2,4..18])' > ac2.txt &
+
+in sqlite3 (geonamesthree.db for now):
+
+-- tables below exist only temporarily to help geonames later
+
+.separator "\t:
+CREATE TEMP TABLE admin1codes (countrycode, admin1code, geonameid);
+.import adm1.txt admin1codes
+
+
+
+
+
+
+CREATE TABLE geonames (geonameid INT, asciiname, latitude DOUBLE,
+ longitude DOUBLE, featureclass, featurecode, countrycode, cc2,
+ admin1code, admin2code, admin3code, admin4code, population, elevation,
+ dem, timezone, modification date);
+
+.separator "\t"
+
+.import ac2.txt geonames
+
+CREATE TABLE altnames (alternateNameId, geonameid INT, isolanguage,
+alternatename, isPreferredName, isShortName, isColloquial, isHistoric);
+
+.import alternateNames.txt altnames
+
+CREATE TABLE adfix AS
+ SELECT g.*, a1.geonameid AS parent FROM geonames g JOIN admin1codes a1 ON 
+ (g.admin1code = a1.admin1code AND g.countrycode = a1.countrycode)
+LIMIT 500;
+
+-- TODO: add geonames names to altnames
