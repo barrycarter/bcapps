@@ -16,32 +16,35 @@ in sqlite3 (geonamesthree.db for now):
 
 -- tables below exist only temporarily to help geonames later
 
-.separator "\t:
-CREATE TEMP TABLE admin1codes (countrycode, admin1code, geonameid);
+.separator "\t"
+CREATE TABLE admin1codes (countrycode, admin1code, geonameid);
 .import adm1.txt admin1codes
 
+CREATE TABLE admin2codes (countrycode, admin1code, admin2code, geonameid);
+.import adm2.txt admin2codes
 
-
-
-
+CREATE TABLE countrycodes (countrycode, geonameid);
+.import cc.txt countrycodes
+CREATE INDEX i2 ON countrycodes(countrycode);
 
 CREATE TABLE geonames (geonameid INT, asciiname, latitude DOUBLE,
  longitude DOUBLE, featureclass, featurecode, countrycode, cc2,
  admin1code, admin2code, admin3code, admin4code, population, elevation,
  dem, timezone, modification date);
-
-.separator "\t"
-
 .import ac2.txt geonames
 
 CREATE TABLE altnames (alternateNameId, geonameid INT, isolanguage,
 alternatename, isPreferredName, isShortName, isColloquial, isHistoric);
-
 .import alternateNames.txt altnames
 
-CREATE TABLE adfix AS
- SELECT g.*, a1.geonameid AS parent FROM geonames g JOIN admin1codes a1 ON 
- (g.admin1code = a1.admin1code AND g.countrycode = a1.countrycode)
-LIMIT 500;
+INSERT INTO altnames 
+SELECT -1*geonameid, geonameid, 'orig', asciiname, 0, 0, 0, 0 FROM geonames;
 
--- TODO: add geonames names to altnames
+CREATE INDEX i1 ON geonames(countrycode);
+
+UPDATE geonames SET countrycode = (
+ SELECT geonameid FROM countrycodes c WHERE c.countrycode = countrycode
+);
+
+
+
