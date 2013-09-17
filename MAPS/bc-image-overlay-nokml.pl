@@ -65,7 +65,7 @@ function initialize() {
     new google.maps.LatLng($query{n},$query{e}));
 
  var gl = new google.maps.GroundOverlay(
-    "http://www.lib.utexas.edu/maps/historical/newark_nj_1922.jpg",
+    "http://data.bcinfo3.barrycarter.info/$query{url}",
     imageBounds);
  gl.setMap(map);
  $markstring
