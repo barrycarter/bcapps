@@ -13,7 +13,10 @@
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script>
+// must be declared globally since I reference them in other funcs
 var oldmap;
+var map;
+
 function initialize() {
 var newark = new google.maps.LatLng(40.740, -74.18);
 var imageBounds = new google.maps.LatLngBounds(
@@ -26,7 +29,7 @@ var mapOptions = {
   mapTypeId: google.maps.MapTypeId.ROADMAP
 }
 
-var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
 oldmap = new google.maps.GroundOverlay(
     "http://www.lib.utexas.edu/maps/historical/newark_nj_1922.jpg",
@@ -37,7 +40,9 @@ oldmap.setMap(map);
 
 function foo() {
  alert("I am foo!");
- oldmap.url = "https://developers.google.com/_static/images/developers-logo.svg"
+ oldmap.setMap();
+ oldmap.url = "https://developers.google.com/_static/images/developers-logo.svg";
+ oldmap.setMap(map);
 }
     </script>
   </head>
