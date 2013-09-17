@@ -39,9 +39,14 @@ oldmap.setMap(map);
 }
 
 function foo() {
- alert("I am foo!");
  oldmap.setMap();
  oldmap.url = "https://developers.google.com/_static/images/developers-logo.svg";
+ oldmap.setMap(map);
+}
+
+function foo2() {
+ oldmap.setMap();
+ oldmap.url = "http://www.lib.utexas.edu/maps/historical/newark_nj_1922.jpg";
  oldmap.setMap(map);
 }
     </script>
@@ -49,7 +54,8 @@ function foo() {
   <body onload="initialize()">
     <div id="map-canvas"></div>
 
-<a href="javascript:foo()">don't click me</a>
+<a href="javascript:foo()">foo</a>
+<a href="javascript:foo2()">foo2</a>
 
   </body>
 </html>
