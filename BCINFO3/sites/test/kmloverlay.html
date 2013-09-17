@@ -13,6 +13,7 @@
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script>
+var oldmap;
 function initialize() {
 var newark = new google.maps.LatLng(40.740, -74.18);
 var imageBounds = new google.maps.LatLngBounds(
@@ -27,14 +28,23 @@ var mapOptions = {
 
 var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
-var oldmap = new google.maps.GroundOverlay(
+oldmap = new google.maps.GroundOverlay(
     "http://www.lib.utexas.edu/maps/historical/newark_nj_1922.jpg",
     imageBounds);
 oldmap.setMap(map);
+
+}
+
+function foo() {
+ alert("I am foo!");
+ oldmap.url = "https://developers.google.com/_static/images/developers-logo.svg"
 }
     </script>
   </head>
   <body onload="initialize()">
     <div id="map-canvas"></div>
+
+<a href="javascript:foo()">don't click me</a>
+
   </body>
 </html>
