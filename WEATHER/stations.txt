@@ -5115,7 +5115,7 @@ BRAZIL             30-APR-13
    UBERLANDIA       SBUL        83525  18 52S  048 13W  922   X     T          6 BR
    URUBUPUNGA/CASTI SBUP        83617  20 48S  051 34W  356   X                7 BR
    UBERABA          SBUR        83576  19 46S  047 58W  807   X     T          6 BR
-   PORTO URUCU      SBUY                4 53S  065 21W   72   X                7 BR
+   PORTO URUCU      SBUY               04 53S  065 21W   72   X                7 BR
    VARGINHA         SBVG               21 35S  045 28W  923   X                8 BR
    VILHENA          SBVH        83208  12 43S  060 07W  652   X     T          6 BR
    VITORIA/GOIABEIR SBVT        83649  20 16S  040 16W    4   X     T          6 BR
@@ -5941,7 +5941,7 @@ NORWAY             30-APR-13
    TORP (CIV/NOR-AF ENTO        01483  59 12N  010 16E   88   X     T          6 NO
    TRONDHEIM/VAERNE ENVA        01271  63 28N  010 55E   17   X     T          6 NO
    VADSO            ENVD        01088  70 04N  029 51E   39   X     T          6 NO
-   VALHALL (OIL)    ENVH               56 16N    3 23E    4   X                6 NO
+   VALHALL (OIL)    ENVH               56 16N  003 23E    4   X                6 NO
    STAVANGER/SOLA(A ENZV        01415  58 52N  005 37E    9   X     T  X       6 NO
    DAGALI           ENDI               60 25N  008 31E  798   Z                8 NO
    OSLO OLD ENFB                01488  59 53N  010 37E   17   Z                8 NO

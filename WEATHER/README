@@ -1,3 +1,14 @@
 Creating this directory to keep weather stuff in one place from now on
 
 KNMALBU80.bz2: all 5m observations from wunderground PWS KNMALBU80
+
+As of 17 Sep 2013:
+
+nsd_cccc.txt lists 6678 stations
+stations.txt lists 8729 stations
+6168 stations are common to both; there are 9239 stations total
+
+frombbsss.txt lists 3884 METAR stations and 7664 non-METAR stations
+
+All of the METAR stations in frombbsss.txt are also in nsd_cccc.txt
+
