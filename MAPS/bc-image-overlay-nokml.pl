@@ -27,6 +27,9 @@ $query=~s/[^a-z0-9_\.\=\&\,\-]//isg;
 $defaults = "center=0,0&zoom=2&maptypeid=HYBRID&s=-90&n=90&e=180&w=-180";
 my(%query) = str2hash("$defaults&$query");
 
+# image comments (if any)
+my($out,$err,$res) = cache_command2("identify -verbose /sites/data/$query{url} | fgrep Comment:");
+
 # refresh header?
 if ($query{refresh}) {print "Refresh: $query{refresh}\n";}
 print "Content-type: text/html\n\n";
@@ -56,26 +59,50 @@ my($str) = << "MARK";
 </style>
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 <script type="text/javascript">
+
+// these must exist outside initialize because i use them globally
+var map;
+var gl;
+
 function initialize() {
  var myLatLng = new google.maps.LatLng($query{center});
  var myOptions = {zoom: $query{zoom}, center: myLatLng, mapTypeId: google.maps.MapTypeId.$query{maptypeid}, scaleControl: true};
- var map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
+ map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
  var imageBounds = new google.maps.LatLngBounds(
     new google.maps.LatLng($query{s},$query{w}),
     new google.maps.LatLng($query{n},$query{e}));
 
- var gl = new google.maps.GroundOverlay(
+ gl = new google.maps.GroundOverlay(
     "http://data.bcinfo3.barrycarter.info/$query{url}",
     imageBounds);
  gl.setMap(map);
  $markstring
 }
+
+// this function, outside initialize, allows changing the overlayed image
+function chgimg(img) {
+ gl.setMap();
+ gl.url="http://data.bcinfo3.barrycarter.info/"+img;
+ gl.setMap(map);
+}
+
 </script></head>
 <body onload="initialize()"><div id="map_canvas" style="width:100%; height:100%"></div>
 MARK
 ;
 
 print $str;
+
+if ($out) {print "Image $out<p>\n";}
+
+# these URLs are for testing only
+for $i ("Conus_20130917_1918_N0Ronly.gif.png", 
+	"Conus_20130917_1908_N0Ronly.gif.png", 
+	"Conus_20130917_1858_N0Ronly.gif.png", 
+	"Conus_20130917_1838_N0Ronly.gif.png",
+	"Conus_20130917_1848_N0Ronly.gif.png") {
+  print qq%<a href='javascript:chgimg("$i")'>$i</a>\n%;
+}
 
 print "<p>Source: https://github.com/barrycarter/bcapps/blob/master/MAPS/bc-image-overlay-nokml.pl<br>See also: https://github.com/barrycarter/bcapps/blob/master/MAPS/<br>\n";
 

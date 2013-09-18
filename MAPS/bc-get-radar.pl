@@ -12,8 +12,8 @@ dodie('chdir("/var/tmp/radar")');
 my($out,$err,$res);
 my(@overlays);
 
-# TODO: get list below from main site, now hardcoded
- for $i ("N0R","N0S","N0V","N0Z","N1P","NCR","NET","NTP","NVL") {
+# these are the only "interesting" radars, to me at least
+for $i ("N0R","NCR","N0Z") {
   # obtain list of sites for this type of radar (changes rarely)
   my(@sites) = ();
 #  ($out,$err,$res) = cache_command2("curl http://radar.weather.gov/ridge/RadarImg/$i/","age=86400");
@@ -39,13 +39,6 @@ my(@overlays);
       my($href) = $1;
       unless ($href=~/^$site/) {next;}
       push(@files,$href);
-      # if we already have this file, ignore
-#      if (-f "/var/tmp/radar/$href") {next;}
-      # obtain image
-#      system("curl -O http://radar.weather.gov/ridge/RadarImg/$i/$site/$href");
-      # convert to semi-transparent
-      # TODO: move these to correct location!
-#      system("convert /var/tmp/radar/$href -transparent white -channel Alpha -evaluate Divide 2 /var/tmp/radar/$href.png");
     }
 
     # no files? no hope
@@ -62,6 +55,8 @@ my(@overlays);
     for $j (@files) {
       $mrf = $j;
       debug("J: $j");
+      # if we already have image and its over 331b, use it
+      if (-f $j && -s $j > 331) {last;}
       # can't actually cache here: if this file doesn't exist one
       # time, it may exist next time
       ($out,$err,$res) = cache_command2("curl -O http://radar.weather.gov/ridge/RadarImg/$i/$site/$j");
@@ -70,12 +65,14 @@ my(@overlays);
       debug("$j too small, trying again");
     }
 
-    # convert mrf to semi-transparent
-    system("convert /var/tmp/radar/$mrf -transparent white -channel Alpha -evaluate Divide 2 /var/tmp/radar/$mrf.png");
+    # convert mrf to semi-transparent + add comment giving date
+    system("convert -comment '$mrf' $mrf -transparent white -channel Alpha -evaluate Divide 2 $mrf.png");
     debug("MRF: $mrf");
 
     # copy this file (transparent version) to /sites/data
     system("cp $mrf.png /sites/data/${site}_$i.png");
+    # keep original in /sites/data too for viewing of previous
+    system("cp $mrf.png /sites/data/");
 
     # these files almost never change...
     ($out,$err,$res) = cache_command2("curl http://radar.weather.gov/ridge/RadarImg/$i/${site}_${i}_0.gfw", "age=86400");

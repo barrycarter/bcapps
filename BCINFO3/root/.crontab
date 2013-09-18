@@ -17,3 +17,5 @@ MAILTO="bcinfo3@barrycarter.info"
 42 * * * * find /tmp -name 'cache*' -mmin +180 | xargs --no-run-if-empty rm
 # update database of files for locate
 0 2 * * * updatedb
+# remove cache files
+28 * * * * find /var/tmp/cache -type f -mtime +1 | xargs rm
