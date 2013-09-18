@@ -16,7 +16,7 @@
 # stations that nsd_cccc.txt doesn't, so adding them as well (but only
 # when they don't appear in nsd_cccc.txt already)
 
-require "bclib.pl";
+require "/usr/local/lib/bclib.pl";
 
 open(A,"db/nsd_cccc_annotated.txt");
 
@@ -80,7 +80,7 @@ debug("PART TWO");
 # now, parse stations.txt
 # columns where data starts (not actually all data, just start/end cols I need)
 @cols = (0, 3, 20, 26, 32, 39, 47, 55, 61, 80, 99);
-open(A,"db/stations.txt");
+open(A,"/home/barrycarter/BCGIT/WEATHER/stations.txt");
 
 while (<A>) {
   # ignore comments (start with "!") and blank lines
@@ -117,7 +117,7 @@ while (<A>) {
   } elsif ($lat=~/^(\d{2})\s(\d{2})\s(\d{2})(N|S)/) {
     ($lad,$lam,$las,$lax)=($1,$2,$3,$4);
   } else {
-    die("BAD LAT: $lat");
+    warn("BAD LAT: $lat");
   }
 
   $flat=$lad+$lam/60+$las/3600;
@@ -128,7 +128,7 @@ while (<A>) {
   } elsif ($lon=~/^(\d{2,3})\s(\d{2})\s(\d{2})(E|W)/) {
     ($lod,$lom,$los,$lox)=($1,$2,$3,$4);
   } else {
-    die("BAD LON: $lon");
+    warn("BAD LON: $lon");
   }
 
   $flon=$lod+$lom/60+$los/3600;
