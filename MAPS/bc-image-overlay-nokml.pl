@@ -13,6 +13,8 @@
 # url = the url of the image ON MY SERVER you want to see
 # marker = place marker at lat,lon (in that order)
 # s= n= e= w= the east/west/north/south longitude/latitudes of where to place the image
+# key = image to use as key
+# keypos = where to put key (LEFT_BOTTOM, etc)
 
 # TODO: fix below
 # sample URL: http://test.bcinfo3.barrycarter.info/bc-image-overlay.pl?center=35.1,-106.55&zoom=13&maptypeid=HYBRID&url=conus.kml&refresh=60
@@ -24,7 +26,7 @@ my($query) = $ENV{QUERY_STRING};
 $query=~s/[^a-z0-9_\.\=\&\,\-]//isg;
 # by making defaults come first, $query stuff will override
 # NOTE: default of entire world is REALLY ugly + doesn't work well (Mercator)
-$defaults = "center=0,0&zoom=2&maptypeid=HYBRID&s=-90&n=90&e=180&w=-180";
+$defaults = "center=0,0&zoom=2&maptypeid=HYBRID&s=-90&n=90&e=180&w=-180&keypos=LEFT_BOTTOM";
 my(%query) = str2hash("$defaults&$query");
 
 # image comments (if any)
@@ -38,6 +40,11 @@ print "Content-type: text/html\n\n";
 unless ($query{url}=~/^[a-z0-9_\.\-]*$/i) {
   print "Your URL, $query{url}, frightens me!\n";
   exit(0);
+}
+
+# img for key, if any (otherwise div tag will be empty)
+if ($query{key}) {
+  $divstring = qq%<img src="http://data.bcinfo3.barrycarter.info/$query{key}">%;
 }
 
 # user marker (in lat,lng format, very simple, nothing fancy)
@@ -66,8 +73,11 @@ var gl;
 
 function initialize() {
  var myLatLng = new google.maps.LatLng($query{center});
+
  var myOptions = {zoom: $query{zoom}, center: myLatLng, mapTypeId: google.maps.MapTypeId.$query{maptypeid}, scaleControl: true};
+
  map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
+
  var imageBounds = new google.maps.LatLngBounds(
     new google.maps.LatLng($query{s},$query{w}),
     new google.maps.LatLng($query{n},$query{e}));
@@ -76,6 +86,9 @@ function initialize() {
     "http://data.bcinfo3.barrycarter.info/$query{url}",
     imageBounds);
  gl.setMap(map);
+
+ map.controls[google.maps.ControlPosition.$query{keypos}].push(i);
+
  $markstring
 }
 
@@ -88,6 +101,9 @@ function chgimg(img) {
 
 </script></head>
 <body onload="initialize()"><div id="map_canvas" style="width:100%; height:100%"></div>
+
+<div id="i">$divstring</div>
+
 MARK
 ;
 
