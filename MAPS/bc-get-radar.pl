@@ -13,7 +13,7 @@ my($out,$err,$res);
 my(@overlays);
 
 # these are the only "interesting" radars, to me at least
-for $i ("N0R","NCR","N0Z") {
+for $i ("N0R","NCR","N0Z", "N0S", "N0V", "N1P", "NTP") {
   # obtain list of sites for this type of radar (changes rarely)
   my(@sites) = ();
 #  ($out,$err,$res) = cache_command2("curl http://radar.weather.gov/ridge/RadarImg/$i/","age=86400");
