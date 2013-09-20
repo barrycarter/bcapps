@@ -112,13 +112,10 @@ print $str;
 if ($out) {print "Image $out<p>\n";}
 
 # these URLs are for testing only
-for $i ("Conus_20130917_1918_N0Ronly.gif.png", 
-	"Conus_20130917_1908_N0Ronly.gif.png", 
-	"Conus_20130917_1858_N0Ronly.gif.png", 
-	"Conus_20130917_1838_N0Ronly.gif.png",
-	"Conus_20130917_1848_N0Ronly.gif.png") {
-  print qq%<a href='javascript:chgimg("$i")'>$i</a>\n%;
-}
+# chdir("/sites/data/");
+# for $i (reverse(sort(glob("ABX_*_N0R.gif.png")))) {
+#   print qq%<li><a href='javascript:chgimg("$i")'>$i</a></li>\n%;
+# }
 
 print "<p>Source: https://github.com/barrycarter/bcapps/blob/master/MAPS/bc-image-overlay-nokml.pl<br>See also: https://github.com/barrycarter/bcapps/blob/master/MAPS/<br>\n";
 
