@@ -18,7 +18,7 @@ unless ($res) {goto RADAR;}
 if (-f "$res.png") {goto RADAR;}
 system("convert -comment '$res' $res -transparent white -channel Alpha -evaluate Divide 2 $res.png");
 # and copy it to latest (and also put copy in /sites/db)
-system("cp $res.png /sites/data/; cp $res.png /sites/data/$i-$j.png");
+system("cp $res.png /sites/data/; cp $res.png /sites/data/Conus.png");
 
 # I still feel bad about using a goto; <h>is there a support group?</h>
 RADAR:
