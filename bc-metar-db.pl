@@ -1,6 +1,7 @@
 #!/bin/perl
 
 # Populates metarnew.db using recent_weather() [thin wrapper]
+# --nodaemon: just run once, don't "daemonize"
 
 require "/usr/local/lib/bclib.pl";
 require "/usr/local/lib/bc-weather-lib.pl";
@@ -58,9 +59,12 @@ close(A);
 system("cp /sites/DB/metarnew.db .; sqlite3 metarnew.db < /var/tmp/metar-db-queries.txt; mv /sites/DB/metarnew.db /sites/DB//metarnew.db.old; mv metarnew.db /sites/DB");
 
 # NOTE: could also run this as cron job (and maybe should?)
-sleep(60);
 in_you_endo();
-exec($0);
+
+unless ($globopts{nodaemon}) {
+  sleep(60);
+  exec($0);
+}
 
 =item schema
 
