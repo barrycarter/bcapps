@@ -26,7 +26,7 @@ my($query) = $ENV{QUERY_STRING};
 $query=~s/[^a-z0-9_\.\=\&\,\-]//isg;
 # by making defaults come first, $query stuff will override
 # NOTE: default of entire world is REALLY ugly + doesn't work well (Mercator)
-$defaults = "center=0,0&zoom=2&maptypeid=HYBRID&s=-90&n=90&e=180&w=-180&keypos=LEFT_BOTTOM";
+$defaults = "center=0,0&zoom=2&maptypeid=HYBRID&s=-90&n=90&e=180&w=-180&keypos=LEFT_BOTTOM&opacity=0.5";
 my(%query) = str2hash("$defaults&$query");
 
 # image comments (if any)
@@ -85,6 +85,7 @@ function initialize() {
  gl = new google.maps.GroundOverlay(
     "http://data.bcinfo3.barrycarter.info/$query{url}",
     imageBounds);
+ gl.setOpacity($query{opacity});
  gl.setMap(map);
 
  map.controls[google.maps.ControlPosition.$query{keypos}].push(i);

@@ -1,10 +1,12 @@
 #!/bin/perl
 
-# obtains radar images for Albuquerque and transparent-izes them
+# obtains radar images for Albuquerque and comments them with timestamp
 # --nodaemon: don't "daemonize", end up after one run
 
 # NOTE: there are about 219 radar stations listed by radar.weather.gov
 # This version does NOT create KML files
+
+# Turns out google maps lets you set opacity directly, no need to do it here
 
 require "/usr/local/lib/bclib.pl";
 
@@ -14,11 +16,10 @@ dodie('chdir("/var/tmp/radar")');
 my($res) = get_current_conus();
 # no result, go to regular radar
 unless ($res) {goto RADAR;}
-# already have this PNG file? nothing more to do
-if (-f "$res.png") {goto RADAR;}
-system("convert -comment '$res' $res -transparent white -channel Alpha -evaluate Divide 2 $res.png");
-# and copy it to latest (and also put copy in /sites/db)
-system("cp $res.png /sites/data/; cp $res.png /sites/data/Conus.png");
+# already have it?
+if (-f "/sites/data/$res") {goto RADAR;}
+# if not, convert and copy (both as timestamp and current file)
+system("convert -comment '$res' /sites/data/$res; cp /sites/data/$res /sites/data/Conus.gif");
 
 # I still feel bad about using a goto; <h>is there a support group?</h>
 RADAR:
@@ -36,14 +37,14 @@ for $i (@sites) {
 
     # get the radar image
     my($res) = get_current_radar($i,$j);
+    debug("IJRES: $i, $j, $res");
     # if no return value, move on
     unless ($res) {next;}
-    # if we already have the .png version, nothing else to do
-    if (-f "$res.png") {next;}
-    # if not, comment it, semi-transparentize it
-    system("convert -comment '$res' $res -transparent white -channel Alpha -evaluate Divide 2 $res.png");
-    # and copy it to latest (and also put copy in /sites/db)
-    system("cp $res.png /sites/data/; cp $res.png /sites/data/$i-$j.png");
+    # if we already have it in the target dir, nothing to do
+    if (-f "/sites/data/$res") {next;}
+    # if not, add comment and copy
+    debug("ABOUT TO CONVERT");
+    system("convert -comment '$res' $res /sites/data/$res; cp /sites/data/$res /sites/data/$i-$j.gif");
   }
 }
 
@@ -75,10 +76,12 @@ sub get_current_radar {
 
   # attempt to get most current
   for $i (@files) {
+    debug("LOOKING FOR: $i");
     # if we already have this one and its over the dreaded 331 bytes, return it
     if (-f "/var/tmp/radar/$i" && -s "/var/tmp/radar/$i" > 331) {return $i;}
     # we don't have it, so try to get it
     ($out,$err,$res) = cache_command2("curl -o /var/tmp/radar/$i http://radar.weather.gov/ridge/RadarImg/$type/$station/$i");
+    debug("/var/tmp/radar/$i hopefully written");
     # if we have it now, return it
     if (-f "/var/tmp/radar/$i" && -s "/var/tmp/radar/$i" > 331) {return $i;}
   }
@@ -148,7 +151,7 @@ sub create_radar_link {
   # center
   $hash{marker} = join(",", ($hash{n}+$hash{s})/2, ($hash{w}+$hash{e})/2);
   $hash{center} = $hash{marker};
-  $hash{url} = "${station}-${type}.png";
+  $hash{url} = "${station}-${type}.gif";
   $hash{key} = "radar_${type}_key.png";
   # this works for non-Conus images
   $hash{zoom} = 7;
