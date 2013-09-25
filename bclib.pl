@@ -2147,6 +2147,9 @@ sub convert {
 
   # hectopascals to inches of mercury
   if ($from eq "hpa" && $to eq "in") {return $quant/33.86;}
+  
+  # millibars to inches of mercury
+  if ($from eq "mb" && $to eq "in") {return $quant*0.0295333727;}
 
   # meters per second to miles per hour
   if ($from eq "mps" && $to eq "mph") {return 2.23693629*$quant;}
