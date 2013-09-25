@@ -30,9 +30,6 @@ my($out,$err,$res) = cache_command2("curl http://www.ndbc.noaa.gov/data/latest_o
 # this file is important enough to keep around
 write_file($out, "/var/tmp/noaa.buoy.txt");
 
-# HACK: csv() does not handle ",," well
-$out=~s/,,/, ,/isg;
-
 my(@reports) = split(/\n/, $out);
 # find first nonblank line
 do {$headers = shift(@reports)} until $headers;
@@ -68,19 +65,19 @@ for $i (@reports) {
   $dbhash{time} = "$hash{YYYY}-$hash{MM}-$hash{DD} $hash{hh}:$hash{mm}:00";
 
   # pressure
-  $dbhash{pressure} = convert($hash{PRES},"hpa","in");
+  $dbhash{pressure} = round2(convert($hash{PRES},"hpa","in"),2);
 
   # set dbhash values that convert over
   for $j (keys %convert) {$dbhash{$convert{$j}} = $hash{$j};}
 
-  # similar, but convert m/s to mph
+  # similar, but convert m/s to mph (accurate to nearest 10th only)
   for $j (keys %convertms) {
-    $dbhash{$convertms{$j}} = convert($hash{$j},"mps","mph");
+    $dbhash{$convertms{$j}} = round2(convert($hash{$j},"mps","mph"),1);
   }
 
-  # similar, but convert C to F
+  # similar, but convert C to F (to nearest 10th only)
   for $j (keys %convertcf) {
-    $dbhash{$convertcf{$j}} = convert($hash{$j},"c","f");
+    $dbhash{$convertcf{$j}} = round2(convert($hash{$j},"c","f"),1);
   }
 
   # push this hash to results
@@ -89,9 +86,27 @@ for $i (@reports) {
 
 @queries = hashlist2sqlite(\@res, "weather");
 
+# need to delete old entries from weather and weather_now (maybe)
 print "BEGIN;\n";
-print join(";\n", @queries);
-print ";\nCOMMIT;\n";
+
+for $i (@queries) {
+  # REPLACE if needed
+  $i=~s/IGNORE/REPLACE/;
+  print "$i;\n";
+  # and now for weather_now
+  $i=~s/weather/weather_now/;
+  print "$i;\n";
+}
+
+print "COMMIT;\n";
+
+# ugly function to round null to null
+sub round2 {
+  my($num,$digits) = @_;
+  # TODO: improve this to deal with other strings
+  if ($num eq "NULL") {return "NULL";}
+  return sprintf("%0.${digits}f", $num);
+}
 
 =item headers
 
