@@ -6,6 +6,7 @@ CREATE TABLE weather (
  name, -- descriptive name of station
  latitude, -- in decimal degrees -90..+90
  longitude, -- in decimal degrees -180..+180
+ elevation -- in feet above sealevel
  cloudcover, -- in 1/8ths, so 1..8
  temperature, -- in degrees F
  dewpoint, -- in degrees F
@@ -26,6 +27,7 @@ CREATE TABLE weather_now (
  name, -- descriptive name of station
  latitude, -- in decimal degrees -90..+90
  longitude, -- in decimal degrees -180..+180
+ elevation -- in feet above sealevel
  cloudcover, -- in 1/8ths, so 1..8
  temperature, -- in degrees F
  dewpoint, -- in degrees F
