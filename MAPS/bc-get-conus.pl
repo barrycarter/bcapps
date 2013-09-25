@@ -12,6 +12,8 @@
 
 require "/usr/local/lib/bclib.pl";
 
+die "This program has been subsumed by bc-get-radar.pl";
+
 dodie('chdir("/var/tmp/radar")');
 
 # this changes constantly

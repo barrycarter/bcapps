@@ -19,7 +19,7 @@ unless ($res) {goto RADAR;}
 # already have it?
 if (-f "/sites/data/$res") {goto RADAR;}
 # if not, convert and copy (both as timestamp and current file)
-system("convert -comment '$res' /sites/data/$res; cp /sites/data/$res /sites/data/Conus.gif");
+system("convert -comment '$res' $res /sites/data/$res; cp /sites/data/$res /sites/data/Conus.gif");
 
 # I still feel bad about using a goto; <h>is there a support group?</h>
 RADAR:
