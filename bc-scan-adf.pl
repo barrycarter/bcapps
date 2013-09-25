@@ -3,7 +3,7 @@
 # scans images using my ADF scanner
 
 # TODO: this seems to keep changing, automate how to find it
-$scanner = "libusb:001:005";
+$scanner = "libusb:001:003";
 require "/usr/local/lib/bclib.pl";
 my($out,$err,$res);
 

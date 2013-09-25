@@ -9,7 +9,8 @@ require "bc-weather-lib.pl";
 use XML::Simple;
 
 # load METAR/SYNOP location data (only once per run)
-@res = sqlite3hashlist("SELECT * FROM stations","/usr/local/lib/stations.db");
+warn "SKIPPING STATION LOAD";
+# @res = sqlite3hashlist("SELECT * FROM stations","/usr/local/lib/stations.db");
 
 for $i (@res) {
   %hash = %{$i};
@@ -76,7 +77,8 @@ for $i (sort keys %urls) {
 
     # if server copy is too old, ignore it (this program runs as a
     # daemon and shouldn't load old data on startup)
-    if ($remtime <= $now-3600) {next;}
+    warn "LOADING OLDER DATA TOO";
+#    if ($remtime <= $now-3600) {next;}
 
     # TODO: maybe compare $sizefile and $size just in case we get
     # bogus file from NOAA
@@ -95,6 +97,8 @@ chdir($root);
 $commands = join("\n",@commands);
 write_file($commands, "commands");
 ($out, $err, $stat) = cache_command("parallel -j 20 < commands");
+
+die "TESTING";
 
 # go through files
 for $i (@files) {

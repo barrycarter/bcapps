@@ -51,6 +51,8 @@ MARK
 ;
 close(A);
 
+die "TESTING";
+
 #<h>TODO: work in a buoy-yah pun somehow</h>
 
 # run command + rsync

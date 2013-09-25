@@ -68,6 +68,14 @@ CREATE UNIQUE INDEX i6 ON ship(station_id, day);
 
 -- adding timestamps and full observations to tables that dont have them
 ALTER TABLE buoy ADD timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
-ALTER TABLE buoy ADD raw_text;
+ALTER TABLE buoy ADD raw_text DEFAULT '';
+ALTER TABLE buoy_now ADD timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+ALTER TABLE buoy_now ADD raw_text DEFAULT '';
 
+ALTER TABLE ship ADD timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+ALTER TABLE ship ADD raw_text DEFAULT '';
+ALTER TABLE ship_now ADD timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+ALTER TABLE ship_now ADD raw_text DEFAULT '';
+
+-- TODO: create view that unifies fields
 
