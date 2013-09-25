@@ -2136,7 +2136,8 @@ This is just a hack function to convert weather data w/o losing "NULL"
 sub convert {
   my($quant, $from, $to) = @_;
   debug("CONVERT(",@_,")");
-  if ($quant eq "NULL" || length($quant)==0) {return "NULL";}
+  # "MM" is null for buoy reports
+  if ($quant eq "NULL" || $quant eq "MM" || length($quant)==0) {return "NULL";}
 
   # meters per second to knots
   if ($from eq "mps" && $to eq "kt") {return $quant*1.944;}
