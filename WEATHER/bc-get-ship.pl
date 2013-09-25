@@ -31,8 +31,9 @@ for $i (@reports) {
   # fill hash
   %hash = ();
   $hash{observation} = $i;
-  # type is always ship
+  # type is always ship, and elevation is always 0
   $hash{type} = "SHIP";
+  $hash{elevation} = "0";
 
   # somewhat excessive here, but good to know what data is provided
   for $j ("name", "cloudcover", "events") {$hash{$j} = "NULL";}
@@ -112,16 +113,12 @@ sub ship2time {
 
 =item headers
 
-The list of data that buoy report provides that we do NOT use (from
-http://www.ndbc.noaa.gov/measdes.shtml)
+The list of data that ship report provides that we do NOT use
 
-WVHT - wave height
-DPD - Dominant wave period
-APD - Average wave period
-MWD - The direction from which the [DPD] waves [...] are coming
-PTDY - pressure tendency (may add this later)
-WTMP - Sea surface temperature (maybe use this later?)
-VIS - Station visibility
-TIDE - tide
+MaxGst - maximum gust for entire day
+PTend - pressure tendency
+SeaT - sea temperature
+Wvht - wave height
+WvPd - not sure
 
 =cut

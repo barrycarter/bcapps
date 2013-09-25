@@ -58,8 +58,12 @@ for $i (@reports) {
     $hash{$headers[$j]} = $fields[$j];
   }
 
-  # all BUOY data here
+  # all BUOY data here and elevation is 0
   $dbhash{type} = "BUOY";
+  $dbhash{elevation} = 0;
+
+  # somewhat excessive here, but good to know what data is provided
+  for $j ("name", "cloudcover", "events") {$dbhash{$j} = "NULL";}
 
   # the date (uses up many fields)
   $dbhash{time} = "$hash{YYYY}-$hash{MM}-$hash{DD} $hash{hh}:$hash{mm}:00";

@@ -49,6 +49,10 @@ for $i (@res) {
   # all observations are METAR
   $dbhash{type} = "METAR";
 
+  # fields we are aware of, but do not fill
+  # TODO: should be able to fill name?
+  for $j ("name") {$dbhash{$j} = "NULL";}
+
   # copyovers
   for $j ("latitude", "longitude") {$dbhash{$j} = $hash{$j};}
 
