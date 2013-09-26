@@ -9,6 +9,11 @@ $db = "/sites/DB/metarnew.db";
 
 chdir(tmpdir());
 # TODO: does not include SYNOP/RAWS
+
+=item comment
+
+Trying to use new "weather.db"
+
 $metar_query = "SELECT station_id AS id, latitude AS y,
 longitude AS x, observation_time AS time, 'METAR' AS source,
 temp_c*1.8+32 AS temp_f FROM metar_now WHERE temp_c != ''";
@@ -22,22 +27,38 @@ longitude NOT LIKE '%-'";
 
 $query = "$metar_query UNION $buoy_query UNION $ship_query";
 
+=cut
+
+warn("USING TEST DB");
+$db = "/tmp/test.db";
+
+$query = "SELECT id, latitude AS y, longitude AS x, time, temperature
+FROM weather_now WHERE temperature != 'NULL'";
+
+$query = "SELECT id, latitude AS y, longitude AS x, time, 
+ temperature+3.5/1000*elevation AS temperature
+FROM weather_now WHERE temperature != 'NULL'";
+
 @res = sqlite3hashlist($query,$db);
+
+debug("RES",var_dump(\@res));
 
 # only thing we need to define is color + label
 # TODO: probably need to exclude older results and build second list
 # since we can't delete list entries "inline"
 
 for $i (@res) {
-  $hue = min(max(5/600*(100-$i->{temp_f}),0),1);
+  $hue = min(max(5/600*(100-$i->{temperature}),0),1);
   $i->{color} = hsv2rgb($hue,1,1,"kml=1&opacity=80");
-  $i->{label} = "$i->{id} @ $i->{time}: $i->{temp_f}F";
+  $i->{label} = "$i->{id} @ $i->{time}: $i->{temperature}F";
   # TODO: cleanup time (include METAR names + maybe ship names, buoy names?)
   debug("LABEL: $i->{label}");
 }
 
 my($file) = voronoi_map(\@res);
 system("cp $file /sites/data/temperature-voronoi.kmz");
+
+die "TESTING";
 
 sleep(60);
 in_you_endo();
