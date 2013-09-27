@@ -42,7 +42,7 @@ for $i (@urls) {
     # name and coords
     $report=~s%<name>(.*?)</name>%%;
     $hash{name} = $1;
-    $report=~s%<coordinates>([\d\-\.]+?)\s*,\s*([\d\-\.]+?).*</coordinates>%%;
+    $report=~s%<coordinates>([\d\-\.]+?)\s*,\s*([\d\-\.]+).*</coordinates>%%;
     ($hash{longitude},$hash{latitude}) = ($1,$2);
     while ($report=~s%<tr><td><B>(.*?)</B></td><td><B>(.*?)</B></td>.*?</tr>%%) {
       if ($convert{$1}) {$hash{$convert{$1}} = $2} else {$hash{$1}=$2;}
@@ -51,12 +51,16 @@ for $i (@urls) {
     # cleanup to insert in db
     %dbhash = ();
     # copy overs
-    for $j ("name", "latitude", "longitude", values %convert) {
-      debug("J: $j");
+    for $j ("latitude", "longitude", values %convert) {
       $dbhash{$j} = $hash{$j};
     }
     # trivial cleanup
     for $j ("dewpoint", "temperature") {$dbhash{$j}=~s/[cf\s]//isg;}
+
+    # extract id from name
+    $hash{name}=~s/^\s*(\S+)\s*//;
+    $dbhash{id} = $1;
+    $dbhash{name} = $hash{name};
 
     # remove junk in these fields but otherwise copy as is
 #    for $j ("ELEV", "TEMP", "DWPT", "WIND SPD", "
