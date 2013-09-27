@@ -11,6 +11,10 @@
 require "/usr/local/lib/bclib.pl";
 dodie("chdir('/var/tmp')");
 
+# convert fields in KMZ files to weather2.sql format
+%convert = ("TEMP" => "temperature", "DWPT" => "dewpoint",
+	    "WIND DIR" => "winddir", "OBS TYPE" => "type");
+
 @urls = ("http://www.srh.noaa.gov/gis/kml/raws/rawstf.kmz",
 	 "http://www.srh.noaa.gov/gis/kml/aprswxnet/aprstf.kmz",
 	 "http://www.srh.noaa.gov/gis/kml/mesowest/mesowesttf.kmz",
@@ -38,13 +42,31 @@ for $i (@urls) {
     # name and coords
     $report=~s%<name>(.*?)</name>%%;
     $hash{name} = $1;
-
+    $report=~s%<coordinates>([\d\-\.]+?)\s*,\s*([\d\-\.]+?).*</coordinates>%%;
+    ($hash{longitude},$hash{latitude}) = ($1,$2);
     while ($report=~s%<tr><td><B>(.*?)</B></td><td><B>(.*?)</B></td>.*?</tr>%%) {
-      $hash{$1}=$2;
+      if ($convert{$1}) {$hash{$convert{$1}} = $2} else {$hash{$1}=$2;}
     }
-    debug("REMAIN: $report");
+
+    # cleanup to insert in db
+    %dbhash = ();
+    # copy overs
+    for $j ("name", "latitude", "longitude", values %convert) {
+      debug("J: $j");
+      $dbhash{$j} = $hash{$j};
+    }
+    # trivial cleanup
+    for $j ("dewpoint", "temperature") {$dbhash{$j}=~s/[cf\s]//isg;}
+
+    # remove junk in these fields but otherwise copy as is
+#    for $j ("ELEV", "TEMP", "DWPT", "WIND SPD", "
+
+    for $j (sort keys %dbhash) {debug("$j -> $dbhash{$j}");}
+
   }
 }
+
+
 
 
 
