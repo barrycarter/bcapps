@@ -37,6 +37,7 @@ for $i (@urls) {
   # build hash from each placemark
   while ($data=~s%<placemark>(.*?)</placemark>%%is) {
     my($report) = $1;
+    debug("REPORT: $report");
     # snip out data
     %hash = ();
     # name and coords
@@ -61,17 +62,33 @@ for $i (@urls) {
     $hash{name}=~s/^\s*(\S+)\s*//;
     $dbhash{id} = $1;
     $dbhash{name} = $hash{name};
+    $dbhash{name}=~s/\s+/ /isg;
 
-    # remove junk in these fields but otherwise copy as is
-#    for $j ("ELEV", "TEMP", "DWPT", "WIND SPD", "
+    $hash{"WIND SPD"}=~s/\s*kt\s*//isg;
+    $dbhash{windspeed} = convert($hash{"WIND SPD"},"kt","mph");
 
-    for $j (sort keys %dbhash) {debug("$j -> $dbhash{$j}");}
+    $hash{"WIND GUST"}=~s/\s*kt\s*//isg;
+    $dbhash{gust} = convert($hash{"WIND GUST"},"kt","mph");
+
+    $hash{ELEV} =~s/\s*m\s*//isg;
+    $dbhash{elevation} = convert($hash{ELEV}, "m", "ft");
+
+
+    for $j (sort keys %hash) {debug("HASH: $j -> $hash{$j}");}
+    for $j (sort keys %dbhash) {debug("DBHASH: $j -> $dbhash{$j}");}
 
   }
 }
 
+=item convert_reading($val, $target_unit, $round)
 
+For this program only, convert $val to $target_unit, rounding to
+$round places, preserving nulls
 
+=cut
 
-
+sub convert_reading {
+  my($val, $target_unit, $round);
+  debug("VAL: $val");
+}
 
