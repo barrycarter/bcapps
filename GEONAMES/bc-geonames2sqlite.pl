@@ -1,15 +1,13 @@
 #!/bin/perl
 
-# NOTE: if you just want the resulting database:
-# http://geonames2.db.94y.info
-
 # This script converts the geonames files at:
 # http://download.geonames.org/export/dump/
-# into an SQLite3 db
+# into an SQLite3 db (result: http://geonames2.db.94y.info)
 
-# NOTE: this program does NOT include allCountries.zip (it'd be
-# out of date anyway); please obtain it yourself:
-# http://download.geonames.org/export/dump/allCountries.zip
+# Improvements 28 Sep 2013:
+# latitude/longitude no longer mangled
+# new 'parent' field
+# add ids to altnames table
 
 use utf8;
 use Text::Unidecode;
@@ -140,14 +138,6 @@ while (<A>) {
   } else {
     $adm = -1;
   }
-
-  # In theory, the below lets me store both latitude/longitude in a
-  # 63-bit (or even 48-bit) integer; this may be useful one day if I
-  # use sqlite3's implicit oid column; for now, it just confuses things
-
-  # convert lat/lon to 3-byte int
-  $latitude = round($latitude*8388607/90);
-  $longitude = round($longitude*8388607/180);
 
   # index timezone
   unless ($TZ{$timezone}) {
