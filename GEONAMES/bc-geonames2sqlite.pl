@@ -4,6 +4,8 @@
 # http://download.geonames.org/export/dump/
 # into an SQLite3 db (result: http://geonames2.db.94y.info)
 
+# --nodep: don't check for file dependencies (useful when testing)
+
 # Improvements 28 Sep 2013:
 # latitude/longitude no longer mangled
 # new 'parent' field
@@ -17,6 +19,7 @@ require "/usr/local/lib/bclib.pl";
 # this program takes time to run, so warn about missing files ASAP
 for $i ("admin1CodesASCII.txt", "countryInfo.txt", "allCountries.txt",
 	"alternateNames.txt", "featureCodes_en.txt") {
+  if ($globopts{nodep}) {next;}
   unless (-f $i) {die "$i must exist in current directory (you may need to unzip)";}
 }
 
@@ -55,21 +58,52 @@ close(B);
 
 ALLCOUNTRIES:
 
-# these files are pretty important so using /var/tmp not /tmp
-open(B,">/var/tmp/altnames.out");
-open(C,">/var/tmp/geonames.out");
-open(D,">/var/tmp/tzones.out");
-# TODO: I never create a table from the file below, but should
-open(E,">/var/tmp/featurecodes.out");
-
 # create cheat table for parents
 unless (-f "/var/tmp/admpcl.txt") {
   debug("Creating /var/tmp/admpcl.txt");
-  system("grep -e 'ADM|PCL' allCountries.txt 1> /var/tmp/admpcl.txt");
+  # there really is no ADM0, I'm being snarky
+  system("egrep 'PCLI|ADM[0-4]' allCountries.txt 1> /var/tmp/admpcl.txt");
 }
+
+# the idea here is to map all ADM0-4 codes (ADM0=PCL) to
+# geonameids. However, the ADM3 code "123" can mean different things
+# depending on the values of ADM0-2; the code below attempts to do
+# this
 
 open(A,"/var/tmp/admpcl.txt");
 debug("Parsing /var/tmp/admpcl.txt");
+
+while (<A>) {
+  chomp($_);
+
+  # easier to think of country code as ADM0
+  @admin = ();
+  ($geonameid, $name, $asciiname, $alternatenames, $latitude, $longitude,
+   $featureclass, $featurecode, $admin[0], $cc2, $admin[1],
+   $admin[2], $admin[3], $admin[4], $population, $elevation,
+   $gtopo30, $timezone, $modificationdate) = split("\t",$_);
+
+  # the grep collects some things we don't want...
+  if ($featurecode eq "RDGE") {next;}
+
+  # ignore historicals
+  if ($featurecode=~/^ADM\dH$/ || $featurecode eq "PCLH") {next;}
+
+  # what level admin code is this?
+  # TODO: not sure the check for countries is correct; do all have
+  # their own country code? (may not matter if they don't)
+  if ($featurecode=~/^PCL[FIDS]?X?$/) {
+    $level=0
+  } elsif ($featurecode=~/^ADM(\d)$/) {
+    $level = $1
+  } else {
+    warn("BAD LINE: $_");
+  }
+
+  debug("FC: $level, ADMIN:",@admin);
+}
+
+die "TESTING";
 
 # feature codes we can safely ignore (not usable admin districts)
 # TODO: ADMD bad to ignore?
@@ -115,6 +149,13 @@ while (<A>) {
 }
 
 close(A);
+
+# these files are pretty important so using /var/tmp not /tmp
+open(B,">/var/tmp/altnames.out");
+open(C,">/var/tmp/geonames.out");
+open(D,">/var/tmp/tzones.out");
+# TODO: I never create a table from the file below, but should
+open(E,">/var/tmp/featurecodes.out");
 
 # handle admin1codes
 open(A,"admin1CodesASCII.txt");
