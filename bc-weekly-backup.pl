@@ -35,9 +35,9 @@ sub dump_ls {
   local(*A);
   # on bcpc and bcmac, I *do* want to descend into other devices
   my($str) = << "MARK";
-(ssh $secret{bcpc_user}\@bcpc "/usr/bin/find / -ls" > $dir/bcpc-files.txt) >&! $dir/bcpc-errs.txt; bzip2 -f -v $dir/bcpc-files.txt
-(ssh root\@bcmac "/usr/bin/find / -ls" > $dir/bcmac-files.txt) >&! $dir/bcmac-errs.txt; bzip2 -f -v $dir/bcmac-files.txt
-(/usr/bin/find / -xdev -ls > $dir/bcunix-files.txt) >&! $dir/bcunix-errs.txt; bzip2 -f -v $dir/bcunix-files.txt
+(ssh $secret{bcpc_user}\@bcpc "/usr/bin/find / -ls" > $dir/bcpc-files.txt) >&! $dir/bcpc-errs.txt; echo EOF >> $dir/bcpc-files.txt; bzip2 -f -v $dir/bcpc-files.txt
+(ssh root\@bcmac "/usr/bin/find / -ls" > $dir/bcmac-files.txt) >&! $dir/bcmac-errs.txt; echo EOF >> $dir/bcmac-files.txt; bzip2 -f -v $dir/bcmac-files.txt
+(/usr/bin/find / -xdev -ls > $dir/bcunix-files.txt) >&! $dir/bcunix-errs.txt; echo EOF >> $dir/bcunix-files.txt; bzip2 -f -v $dir/bcunix-files.txt
 MARK
 ;
   debug("STR: $str");

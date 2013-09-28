@@ -1,3 +1,7 @@
+See geonames.sql in this directory for correct creation method.
+
+THE METHOD BELOW DOES NOT WORK, IGNORE IT!
+
 Faster way to create geonames db:
 
 in shell:
