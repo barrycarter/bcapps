@@ -15,33 +15,45 @@ use Math::Round;
 require "/usr/local/lib/bclib.pl";
 
 # this program takes time to run, so warn about missing files ASAP
-for $i ("admin1CodesASCII.txt", "countryInfo.txt", "allCountries.txt", "alternateNames.txt") {
-  unless (-f $i) {die "$i must exist in current directory (you may need to unzip alternateNames.zip";}
+for $i ("admin1CodesASCII.txt", "countryInfo.txt", "allCountries.txt",
+	"alternateNames.txt", "featureCodes_en.txt") {
+  unless (-f $i) {die "$i must exist in current directory (you may need to unzip)";}
+}
+
+# using GOTO is getting addictive
+if (-f "/var/tmp/altnames1.out") {
+  warn("Using existing version of /var/tmp/altnames1.out");
+  goto ALLCOUNTRIES;
 }
 
 # create altnames table first, since I'm testing it
-open(A,"/var/tmp/alternateNames.txt");
-open(B,">/var/tmp/altnames.out");
+open(A,"alternateNames.txt");
+open(B,">/var/tmp/altnames1.out");
 
 while (<A>) {
   chomp($_);
-  $lines++;
 
-  # shortcut?
-  $_ = cleanup($_);
-  debug("THUNK: $_");
+  if ($lines++ % 100000==0) {debug("$lines LINES");}
 
   my($alternateNameId, $geonameid, $isolanguage, $alternatename,
      $isPreferredName, $isShortName, $isColloquial, $isHistoric) =
        split("\t", $_);
+
+  # ignore links (TODO: I feel bad about this)
+  if ($isolanguage eq "link") {next;}
+
   # clean alternate name
   $alternatename = cleanup($alternatename);
-#  print B 
+
+  # and print
+  print B join("\t", ($alternateNameId, $geonameid, $isolanguage, 
+		       $alternatename, $isPreferredName, $isShortName,
+		       $isColloquial, $isHistoric)),"\n";
 }
 
 close(B);
 
-die "TESTING";
+ALLCOUNTRIES:
 
 # these files are pretty important so using /var/tmp not /tmp
 open(B,">/var/tmp/altnames.out");
@@ -52,10 +64,18 @@ open(E,">/var/tmp/featurecodes.out");
 
 # create cheat table for parents
 unless (-f "/var/tmp/admpcl.txt") {
+  debug("Creating /var/tmp/admpcl.txt");
   system("grep -e 'ADM|PCL' allCountries.txt 1> /var/tmp/admpcl.txt");
 }
 
 open(A,"/var/tmp/admpcl.txt");
+debug("Parsing /var/tmp/admpcl.txt");
+
+# feature codes we can safely ignore (not usable admin districts)
+# TODO: ADMD bad to ignore?
+# NOTE: WADM shows up because of grep above (TODO: improve grep?)
+%ignorefc = list2hash("ADMD", "ADM1H", "ADM2H", "ADM3H", "ADM4H", "WADM",
+		     "ADMF");
 
 while (<A>) {
   chomp($_);
@@ -65,30 +85,32 @@ while (<A>) {
    $admin2code, $admin3code, $admin4code, $population, $elevation,
    $gtopo30, $timezone, $modificationdate) = split("\t",$_);
 
-  # ignore admin1code of 00 meaning unknown (unless this is a PCL)
-  if ($admin1code eq "00" && $featurecode=~/^ADM/) {
-    debug("IGNORING: $_");
-    next;
-  }
+  if ($ignorefc{$featurecode}) {next;}
+
+  # TODO: are there any ADM3/4 which aren't geonameids?
 
   # for ADM1-4 and PCL, record full path
   if ($featurecode eq "ADM4" && $admin4code ne $geonameid && $admin4code ne "") {
     $ADM4{$countrycode}{$admin1code}{$admin2code}{$admin3code}{$admin4code} = $geonameid;
-#    debug("$countrycode/$admin1code/$admin2code/$admin3code/$admin4code: $geonameid");
+    debug("ADM4: $countrycode/$admin1code/$admin2code/$admin3code/$admin4code: $geonameid");
   } elsif ($featurecode eq "ADM3" && $admin3code ne $geonameid && $admin3code ne "") {
-#    $ADM3{$countrycode}{$admin1code}{$admin2code}{$admin3code} = $geonameid;
-    debug("$countrycode/$admin1code/$admin2code/$admin3code: $geonameid");
+    $ADM3{$countrycode}{$admin1code}{$admin2code}{$admin3code} = $geonameid;
+    debug("ADM3: $countrycode/$admin1code/$admin2code/$admin3code: $geonameid");
   } elsif ($featurecode eq "ADM2" && $admin2code ne $geonameid && $admin2code ne "") {
     $ADM2{$countrycode}{$admin1code}{$admin2code} = $geonameid;
-    debug("$countrycode/$admin1code/$admin2code: $geonameid");
+#    debug("$countrycode/$admin1code/$admin2code: $geonameid");
   } elsif ($featurecode eq "ADM1" && $admin1code ne $geonameid && $admin1code ne "") {
     $ADM1{$countrycode}{$admin1code} = $geonameid;
     debug("$countrycode/$admin1code: $geonameid");
   } elsif ($featurecode=~/^PCL/ && $countrycode ne $geonameid && $countrycode ne "") {
     $ADM0{$countrycode} = $geonameid;
     debug("$countrycode: $geonameid");
+  } elsif ($admin2code == $geonameid) {
+    # this just catches non-errors
+    # TODO: of course, this could happen with ADM1, ADM3/4 too
+#    debug("ADM2 code is already geonameid");
   } else {
-    # do nothing
+    debug("COULD NOT HANDLE: $_, FC: $featurecode, CODE: $admin3code");
   }
 }
 
@@ -129,6 +151,8 @@ while (<A>) {
 }
 
 close(A);
+
+die "TESTING";
 
 # TODO: remove any blank names that might've snuck in
 

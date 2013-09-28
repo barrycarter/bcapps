@@ -3,10 +3,11 @@
 CREATE TABLE geonames (
  geonameid INTEGER PRIMARY KEY,
  asciiname TEXT,
- latitude INT,
- longitude INT,
+ latitude DOUBLE,
+ longitude DOUBLE,
  feature_code INT,
  country_code INT,
+ parent INT,
  admin4_code INT,
  admin3_code INT,
  admin2_code INT,
@@ -25,8 +26,14 @@ CREATE INDEX i_population ON geonames(population);
 .import /var/tmp/geonames.out geonames
 
 CREATE TABLE altnames (
+ alternatenameid INTEGER PRIMARY KEY,
  geonameid INT,
- name TEXT
+ isolanguage TEXT,
+ name TEXT,
+ isPreferredName TINYINT,
+ isShortName TINYINT,
+ isColloquial TINYINT,
+ isHistoric TINYINT
 );
 
 CREATE INDEX i_name ON altnames(name);
