@@ -46,7 +46,7 @@ yum -y install lighttpd dropbear perl-Text-Unidecode.noarch emacs xinetd gpp4
 yum -y install perl-IO-Digest.noarch gcc "perl-Date*" socat nc gcc-c++
 : lighttpd-fastcgi does not install fcgi, wow
 yum -y install mysql mysql-server lighttpd-fastcgi fcgi libxml2 libxml2-devel
-yum -y install nano graphviz qhull zip strace
+yum -y install nano graphviz qhull zip strace xz
 
 % Perl modules (excluding those available via yum)
 
@@ -229,4 +229,9 @@ bc-get-radar.pl&
 
 : must do below for xdg-desktop-menu required by Mathematica install
 mkdir /usr/share/desktop-directories/
+
+% 28 Sep 2013: hand installed coreutils 8.21 to get "sort -R" (cannot
+do "yum remove coreutils", since too many packages depend on it)
+
+
 

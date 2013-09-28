@@ -15,9 +15,33 @@ use Math::Round;
 require "/usr/local/lib/bclib.pl";
 
 # this program takes time to run, so warn about missing files ASAP
-for $i ("admin1CodesASCII.txt", "countryInfo.txt", "allCountries.zip", "alternateNames.zip") {
-  unless (-f $i) {die "$i must exist in current directory";}
+for $i ("admin1CodesASCII.txt", "countryInfo.txt", "allCountries.txt", "alternateNames.txt") {
+  unless (-f $i) {die "$i must exist in current directory (you may need to unzip alternateNames.zip";}
 }
+
+# create altnames table first, since I'm testing it
+open(A,"/var/tmp/alternateNames.txt");
+open(B,">/var/tmp/altnames.out");
+
+while (<A>) {
+  chomp($_);
+  $lines++;
+
+  # shortcut?
+  $_ = cleanup($_);
+  debug("THUNK: $_");
+
+  my($alternateNameId, $geonameid, $isolanguage, $alternatename,
+     $isPreferredName, $isShortName, $isColloquial, $isHistoric) =
+       split("\t", $_);
+  # clean alternate name
+  $alternatename = cleanup($alternatename);
+#  print B 
+}
+
+close(B);
+
+die "TESTING";
 
 # these files are pretty important so using /var/tmp not /tmp
 open(B,">/var/tmp/altnames.out");
@@ -28,7 +52,7 @@ open(E,">/var/tmp/featurecodes.out");
 
 # create cheat table for parents
 unless (-f "/var/tmp/admpcl.txt") {
-  system("zgrep -e 'ADM|PCL' allCountries.zip 1> /var/tmp/admpcl.txt");
+  system("grep -e 'ADM|PCL' allCountries.txt 1> /var/tmp/admpcl.txt");
 }
 
 open(A,"/var/tmp/admpcl.txt");
@@ -42,7 +66,10 @@ while (<A>) {
    $gtopo30, $timezone, $modificationdate) = split("\t",$_);
 
   # ignore admin1code of 00 meaning unknown (unless this is a PCL)
-  if ($admin1code eq "00" && $featurecode=~/^ADM/) {next;}
+  if ($admin1code eq "00" && $featurecode=~/^ADM/) {
+    debug("IGNORING: $_");
+    next;
+  }
 
   # for ADM1-4 and PCL, record full path
   if ($featurecode eq "ADM4" && $admin4code ne $geonameid && $admin4code ne "") {
@@ -106,7 +133,7 @@ close(A);
 # TODO: remove any blank names that might've snuck in
 
 # and now the main file...
-open(A,"zcat allCountries.zip|");
+open(A,"allCountries.txt");
 
 while (<A>) {
   chomp($_);
@@ -118,10 +145,6 @@ while (<A>) {
    $featureclass, $featurecode, $countrycode, $cc2, $admin1code,
    $admin2code, $admin3code, $admin4code, $population, $elevation,
    $gtopo30, $timezone, $modificationdate) = split("\t",$_);
-
-  # NOTE: considered limiting to places w/ population of featurecode AP
-  # meaning "populated place", but decided to just convert everything
-  #  unless ($population || $featureclass=~/^[ap]$/i ) {next;}
 
   # index featurecode
   unless ($FEATURECODE{$featurecode}) {
@@ -174,8 +197,8 @@ while (<A>) {
   # alternate_names mangles stuff
 
   print C join("\t", $geonameid, $asciiname, $latitude, $longitude,
-  $featurecode, $admin0new, $admin4new, $admin3new, $admin2new, $admin1new,
-  $population, $tz, $elevation)."\n";
+  $featurecode, $parent, $admin0new, $admin4new, $admin3new, $admin2new,
+  $admin1new, $population, $tz, $elevation)."\n";
 
   # $name and $asciiname and $alternatenames are alt names
   for $i ($name,$asciiname,split(",",$alternatenames)) {
