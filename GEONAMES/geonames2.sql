@@ -1,7 +1,11 @@
 -- yet another attempt to create geonames "quickly" wo a perl script
 
-: in shell
+: in shell (this may take some time to run)
+: on my machine: 
+sed 's/"//g' allCountries.txt | 
+perl -F"\t" -anle 'print join("\t",@F[0,2,4,5,7,8,10..15,17])' > wanted.txt
 
+-- below in sqlite3
 CREATE TABLE geonames (
  geonameid INTEGER PRIMARY KEY,
  asciiname TEXT,
@@ -17,6 +21,12 @@ CREATE TABLE geonames (
  elevation INT,
  timezone TEXT
 );
+
+.separator "\t"
+.import wanted.txt geonames
+
+
+
 
 : below in shell
 
