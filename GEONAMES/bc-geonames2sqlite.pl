@@ -2,7 +2,7 @@
 
 # This script converts the geonames files at:
 # http://download.geonames.org/export/dump/
-# into an SQLite3 db (result: http://geonames2.db.94y.info)
+# into an SQLite3 db (result: http://geonames.db.94y.info)
 
 # --nodep: don't check for file dependencies (useful when testing)
 
@@ -16,20 +16,48 @@ use Text::Unidecode;
 use Math::Round;
 require "/usr/local/lib/bclib.pl";
 
-# and now the main file...
-open(A,"allCountries.txt");
+# sort -R version of allCountries.txt, useful for testing
+open(A,"all-scramble.txt");
 open(C,">geonames.tsv");
+open(B,">canon.txt");
 
 while (<A>) {
   chomp($_);
 
   $lines++;
-#  if ($lines >= 100000) {die "TESTING";}
+  if ($lines >= 100000) {
+    warn "TESTING";
+    last;
+  }
 
+  @admin = ();
+  @adminnew = ();
   ($geonameid, $name, $asciiname, $alternatenames, $latitude, $longitude,
-   $featureclass, $featurecode, $countrycode, $cc2, $admin1code,
-   $admin2code, $admin3code, $admin4code, $population, $elevation,
+   $featureclass, $featurecode, $admin[0], $cc2, $admin[1],
+   $admin[2], $admin[3], $admin[4], $population, $elevation,
    $gtopo30, $timezone, $modificationdate) = split("\t",$_);
+
+  # store the full "admin{n}code", which includes higher codes
+  for $j (0..4) {
+    # if there is no admin{$j}code, leave empty (but allowed to be "0")
+    unless (length($admin[$j])>=1) {next;}
+    $adminnew[$j] = join(".",@admin[0..$j]);
+  }
+
+  # if this actually IS an ADM{n}, its canonical
+  # ADM5 not stored uniformly in geonames so ignoring it
+  if ($featurecode=~/^ADM([1-4])$/) {
+    my($level) = $1;
+    # some ADM don't have "trails", oddly
+    if (length($adminnew[$level])) {
+      print B "$level $geonameid $adminnew[$level]\n";
+    }
+  }
+
+  # same thing for PCLs
+  if ($featurecode=~/^PCL[FIDS]?X?$/) {
+    print B "0 $geonameid $adminnew[0]\n";
+  }
 
   print C join("\t", $geonameid, $asciiname, $latitude, $longitude,
   $featurecode, $parent, $admin0new, $admin4new, $admin3new, $admin2new,
@@ -37,7 +65,8 @@ while (<A>) {
 }
 
 close(A);
-
+close(B);
+close(C);
 
 die "TESTING";
 
@@ -319,9 +348,6 @@ sub cleanup {
   $name=~s/\(general\)//isg;
   $name=~s/\[provisional\]//isg;
 
-  # for other (x), change to x (later decided against this)
-#  $name=~s/\((.*?)\)/$1/isg;
-
   # this is really ugly + might break stuff
   $name=~s/[^a-z]//isg;
 
@@ -333,3 +359,18 @@ sub cleanup {
 
   return $name;
 }
+
+# memorize the geonameids of ADM0-4 (ADM0 = PCL) so we can store
+# geonameids of these values, not the values themselves
+
+sub admpcl {
+  # create from allcountries
+  # TODO: unhappy with this since it means we look thru allCountries.txt twice
+  # (and if we're going to do that, might as well do more?)
+  unless (-f "/var/tmp/admpcl.txt") {
+    system("egrep 'PCLI|ADM[1-4]' allCountries.txt 1> /var/tmp/admpcl.txt");
+  }
+
+  die "TESTING";
+}
+
