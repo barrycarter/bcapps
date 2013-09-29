@@ -16,6 +16,31 @@ use Text::Unidecode;
 use Math::Round;
 require "/usr/local/lib/bclib.pl";
 
+# and now the main file...
+open(A,"allCountries.txt");
+open(C,">geonames.tsv");
+
+while (<A>) {
+  chomp($_);
+
+  $lines++;
+#  if ($lines >= 100000) {die "TESTING";}
+
+  ($geonameid, $name, $asciiname, $alternatenames, $latitude, $longitude,
+   $featureclass, $featurecode, $countrycode, $cc2, $admin1code,
+   $admin2code, $admin3code, $admin4code, $population, $elevation,
+   $gtopo30, $timezone, $modificationdate) = split("\t",$_);
+
+  print C join("\t", $geonameid, $asciiname, $latitude, $longitude,
+  $featurecode, $parent, $admin0new, $admin4new, $admin3new, $admin2new,
+  $admin1new, $population, $tz, $elevation)."\n";
+}
+
+close(A);
+
+
+die "TESTING";
+
 # this program takes time to run, so warn about missing files ASAP
 for $i ("admin1CodesASCII.txt", "countryInfo.txt", "allCountries.txt",
 	"alternateNames.txt", "featureCodes_en.txt") {

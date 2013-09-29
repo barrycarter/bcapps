@@ -2,6 +2,25 @@ See geonames.sql in this directory for correct creation method.
 
 THE METHOD BELOW DOES NOT WORK, IGNORE IT!
 
+time perl -F"\t" -anle 'print join("\t",@F[0,2,4..18])' allCountries.txt>ac2.txt
+
+174.398u 4.503s 3:13.48 92.4%   0+0k 2057960+1535832io 0pf+0w
+
+reducing number of fields (15..18 instead of 4..18):
+
+147.600u 3.292s 2:40.05 94.2%   0+0k 954584+903608io 0pf+0w
+
+in /dev/shm
+
+165.491u 2.174s 2:48.21 99.6%   0+0k 0+0io 0pf+0w
+
+add tabs as needed:
+
+time perl -nle 'print tr/\t//' allCountries.txt > counts.txt&
+
+17.585u 0.743s 0:19.46 94.1%    0+0k 824928+49960io 0pf+0w
+
+
 Faster way to create geonames db:
 
 in shell:
@@ -15,6 +34,8 @@ egrep -v '^#|^$' countryInfo.txt | perl -F"\t" -anle 'print "$F[0]\t$F[16]"' > c
 unzip alternateNames.zip
 
 zcat allCountries.zip | perl -nle 's/\"//isg;@f=split(/\t/);print join("\t",@f[0,2,4..18])' > ac2.txt &
+
+
 
 in sqlite3 (geonamesthree.db for now):
 
