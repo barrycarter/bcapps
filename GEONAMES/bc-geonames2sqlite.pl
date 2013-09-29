@@ -8,64 +8,62 @@
 
 # Improvements 28 Sep 2013:
 # latitude/longitude no longer mangled
-# new 'parent' field
 # add ids to altnames table
+
+# TODO: this entire code seems really ugly
+# TODO: all geonames are also altnames!
 
 use utf8;
 use Text::Unidecode;
 use Math::Round;
 require "/usr/local/lib/bclib.pl";
 
+unless (-f "canon.txt") {admpcl();}
+
+# load the canon.txt hash
+for $i (split("\n",read_file("canon.txt"))) {
+#  debug("I: $i");
+  unless ($i=~m%^(\d)\s+(\d+)\s+(.*?)$%) {die "BAD LINE: $i";}
+  $canon{$1}{$3} = $2;
+}
+
 # sort -R version of allCountries.txt, useful for testing
-open(A,"all-scramble.txt");
+open(A,"allCountries.txt");
 open(C,">geonames.tsv");
-open(B,">canon.txt");
 
 while (<A>) {
   chomp($_);
+  s/\"//isg;
 
   $lines++;
-  if ($lines >= 100000) {
-    warn "TESTING";
-    last;
-  }
+#  if ($lines >= 100000) {warn "TESTING"; last;}
 
   @admin = ();
-  @adminnew = ();
   ($geonameid, $name, $asciiname, $alternatenames, $latitude, $longitude,
    $featureclass, $featurecode, $admin[0], $cc2, $admin[1],
    $admin[2], $admin[3], $admin[4], $population, $elevation,
    $gtopo30, $timezone, $modificationdate) = split("\t",$_);
 
-  # store the full "admin{n}code", which includes higher codes
-  for $j (0..4) {
-    # if there is no admin{$j}code, leave empty (but allowed to be "0")
-    unless (length($admin[$j])>=1) {next;}
-    $adminnew[$j] = join(".",@admin[0..$j]);
+  # convert admin codes to geonameid where possible
+  # everything has a country code (hopefully)
+  $admintest = $admin[0];
+  $admin[0] = $canon{0}{$admin[0]};
+  for $j (1..4) {
+    # if ADM$j is empty, ignore rest (but if it's 0 do not ignore)
+    unless (length($admin[$j])>=1) {last;}
+    # does this admin level match a know canonical ADM?
+    $admintest = "$admintest.$admin[$j]";
+    if ($canon{$j}{$admintest}) {$admin[$j] = $canon{$j}{$admintest};}
   }
 
-  # if this actually IS an ADM{n}, its canonical
-  # ADM5 not stored uniformly in geonames so ignoring it
-  if ($featurecode=~/^ADM([1-4])$/) {
-    my($level) = $1;
-    # some ADM don't have "trails", oddly
-    if (length($adminnew[$level])) {
-      print B "$level $geonameid $adminnew[$level]\n";
-    }
-  }
-
-  # same thing for PCLs
-  if ($featurecode=~/^PCL[FIDS]?X?$/) {
-    print B "0 $geonameid $adminnew[0]\n";
-  }
+  # whatever $admintest ends up as will be the adminstring
 
   print C join("\t", $geonameid, $asciiname, $latitude, $longitude,
-  $featurecode, $parent, $admin0new, $admin4new, $admin3new, $admin2new,
-  $admin1new, $population, $tz, $elevation)."\n";
+  $featurecode, $admin[0], $admin[4], $admin[3], $admin[2],
+  $admin[1], $admintest, $population, $timezone, $elevation)."\n";
 }
 
 close(A);
-close(B);
 close(C);
 
 die "TESTING";
@@ -364,13 +362,40 @@ sub cleanup {
 # geonameids of these values, not the values themselves
 
 sub admpcl {
-  # create from allcountries
-  # TODO: unhappy with this since it means we look thru allCountries.txt twice
-  # (and if we're going to do that, might as well do more?)
+  # create from allcountries (irks me that I have to go through
+  # allCountries.txt, but this appears to be unavoidable)
   unless (-f "/var/tmp/admpcl.txt") {
-    system("egrep 'PCLI|ADM[1-4]' allCountries.txt 1> /var/tmp/admpcl.txt");
+    system("egrep 'PCL|ADM[1-4]' allCountries.txt 1> /var/tmp/admpcl.txt");
   }
 
-  die "TESTING";
+  local(*A);
+  local(*C);
+  open(A,"/var/tmp/admpcl.txt");
+  open(C,">canon.txt");
+  while (<A>) {
+    my($level);
+    # TODO: use my() here correctly with $admin
+    ($geonameid, $name, $asciiname, $alternatenames, $latitude, $longitude,
+       $featureclass, $featurecode, $admin[0], $cc2, $admin[1],
+       $admin[2], $admin[3], $admin[4], $population, $elevation,
+       $gtopo30, $timezone, $modificationdate) = split("\t",$_);
+    # is this an ADM or PCL (if not, ignore)
+    if ($featurecode=~/^ADM([1-4])$/) {
+      $level = $1;
+    } elsif ($featurecode=~/^PCL[FIDS]?X?$/) {
+      $level = 0;
+    } else {
+      next;
+    }
+
+    # if I'm an ADMx but my ADMx value is empty, ignore
+    if (length($admin[$level]) == 0) {next;}
+    # if it's already my geonameid, also ignore
+    if ($admin[$level] == $geonameid) {next;}
+
+    # all other cases print my "full" ADMx value
+    my($full) = join(".",@admin[0..$level]);
+    print C "$level $geonameid $full\n";
+  }
 }
 

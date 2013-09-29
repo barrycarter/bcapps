@@ -1,4 +1,4 @@
--- creates the geonames sqlite3 tables, assuming the output of bc-geonames2sqlite.pl is in /var/tmp/
+-- creates the geonames sqlite3 tables after running bc-geonames2sqlite.pl
 
 CREATE TABLE geonames (
  geonameid INTEGER PRIMARY KEY,
@@ -6,24 +6,29 @@ CREATE TABLE geonames (
  latitude DOUBLE,
  longitude DOUBLE,
  feature_code INT,
- country_code INT,
- parent INT,
+ admin0_code INT,
  admin4_code INT,
  admin3_code INT,
  admin2_code INT,
  admin1_code INT,
+ adminstring TEXT,
  population INT,
  timezone INT,
  elevation INT
 );
 
-CREATE INDEX i_feature_code ON geonames(feature_code);
-
--- added below later, it is useful
-CREATE INDEX i_population ON geonames(population);
-
 .separator "\t"
-.import /var/tmp/geonames.out geonames
+.import geonames.tsv geonames
+
+-- many indexes (do NOT need for asciiname, since altnames will handle that)
+CREATE INDEX i1 ON geonames(feature_code);
+CREATE INDEX i2 ON geonames(population);
+CREATE INDEX i3 ON geonames(admin0_code);
+CREATE INDEX i4 ON geonames(admin1_code);
+CREATE INDEX i5 ON geonames(admin2_code);
+CREATE INDEX i6 ON geonames(admin3_code);
+CREATE INDEX i7 ON geonames(admin4_code);
+
 
 CREATE TABLE altnames (
  alternatenameid INTEGER PRIMARY KEY,
@@ -40,11 +45,6 @@ CREATE INDEX i_name ON altnames(name);
 -- added below later, useful
 CREATE INDEX i_geonameid ON altnames(geonameid);
 -- below 5 are useful for joins
-CREATE INDEX i_country_code ON geonames(country_code);
-CREATE INDEX i_admin1_code ON geonames(admin1_code);
-CREATE INDEX i_admin2_code ON geonames(admin2_code);
-CREATE INDEX i_admin3_code ON geonames(admin3_code);
-CREATE INDEX i_admin4_code ON geonames(admin4_code);
 
 .import /var/tmp/altnames2.out altnames
 DELETE FROM altnames WHERE name = '';
