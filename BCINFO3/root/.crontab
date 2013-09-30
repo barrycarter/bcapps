@@ -19,6 +19,8 @@ MAILTO="bcinfo3@barrycarter.info"
 0 2 * * * updatedb
 # remove cache files
 28 * * * * find /var/tmp/cache -type f -mtime +1 | xargs rm
+# and radar
+04 * * * * find /var/tmp/radar -mtime +1 | xargs rm
 # this is really ugly (TODO: clean this up)
 54 * * * * find /sites/data/ -mtime +1 -name 'ABX*_N*.gif' | xargs rm
 59 * * * * find /sites/data/ -mtime +1 -name 'Conus*.gif' | xargs rm

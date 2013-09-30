@@ -1,5 +1,7 @@
 -- creates the geonames sqlite3 tables after running bc-geonames2sqlite.pl
 
+.separator "\t"
+
 CREATE TABLE geonames (
  geonameid INTEGER PRIMARY KEY,
  latitude DOUBLE,
