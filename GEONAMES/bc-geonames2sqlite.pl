@@ -18,6 +18,32 @@ use Text::Unidecode;
 use Math::Round;
 require "/usr/local/lib/bclib.pl";
 
+open(A,"alternateNames.txt");
+open(B,">altnames1.tsv");
+
+while (<A>) {
+  chomp($_);
+  s/\"//isg;
+
+  if ($lines++%100000==0) {debug("$lines LINES");}
+  if ($lines >= 100000) {warn "TESTING"; last;}
+
+  my(@fields) = split("\t", $_);
+
+  # ignore links (get mangled too badly by "cleanup" and not useful)
+  if ($fields[2] eq "link") {next;}
+
+  # sqlite requires EXACTLY 8 fields per line
+  for $j (0..7) {unless ($fields[$j]) {$fields[$j]="";}}
+
+  # $fields[3] is the alternatename, and the only one we must cleanup
+  $fields[3] = cleanup($fields[3]);
+
+  print B join("\t",@fields)."\n";
+}
+
+die "TESTING";
+
 unless (-f "canon.txt") {admpcl();}
 
 # load the canon.txt hash
@@ -30,12 +56,13 @@ for $i (split("\n",read_file("canon.txt"))) {
 # sort -R version of allCountries.txt, useful for testing
 open(A,"allCountries.txt");
 open(C,">geonames.tsv");
+open(B,">altnames0.tsv");
 
 while (<A>) {
   chomp($_);
   s/\"//isg;
 
-  $lines++;
+  if ($lines++%100000==0) {debug("$lines LINES");}
 #  if ($lines >= 100000) {warn "TESTING"; last;}
 
   @admin = ();
@@ -43,6 +70,10 @@ while (<A>) {
    $featureclass, $featurecode, $admin[0], $cc2, $admin[1],
    $admin[2], $admin[3], $admin[4], $population, $elevation,
    $gtopo30, $timezone, $modificationdate) = split("\t",$_);
+
+  # ASCII name written ONLY to altnames, geonames will no longer have ANY names
+  # the artificial altnameid is -1*geonameid
+  print B join("\t",(-1*$geonameid,$geonameid,"orig",$asciiname,0,0,0,0))."\n";
 
   # convert admin codes to geonameid where possible
   # everything has a country code (hopefully)
@@ -58,12 +89,13 @@ while (<A>) {
 
   # whatever $admintest ends up as will be the adminstring
 
-  print C join("\t", $geonameid, $asciiname, $latitude, $longitude,
+  print C join("\t", $geonameid, $latitude, $longitude,
   $featurecode, $admin[0], $admin[4], $admin[3], $admin[2],
   $admin[1], $admintest, $population, $timezone, $elevation)."\n";
 }
 
 close(A);
+close(B);
 close(C);
 
 die "TESTING";

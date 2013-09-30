@@ -2,7 +2,6 @@
 
 CREATE TABLE geonames (
  geonameid INTEGER PRIMARY KEY,
- asciiname TEXT,
  latitude DOUBLE,
  longitude DOUBLE,
  feature_code INT,
@@ -41,10 +40,12 @@ CREATE TABLE altnames (
  isHistoric TINYINT
 );
 
-CREATE INDEX i_name ON altnames(name);
--- added below later, useful
-CREATE INDEX i_geonameid ON altnames(geonameid);
--- below 5 are useful for joins
+.separator "\t"
+.import altnames0.tsv altnames
+
+CREATE INDEX i8 ON altnames(name);
+CREATE INDEX i9 ON altnames(geonameid);
+CREATE INDEX i10 ON altnames(isolanguage);
 
 .import /var/tmp/altnames2.out altnames
 DELETE FROM altnames WHERE name = '';
