@@ -16,10 +16,7 @@ CREATE TABLE geonames (
  elevation INT
 );
 
-.separator "\t"
-.import geonames.tsv geonames
-
--- many indexes (do NOT need for asciiname, since altnames will handle that)
+-- many indexes (creating these before import = good/bad/indifferent?)
 CREATE INDEX i1 ON geonames(feature_code);
 CREATE INDEX i2 ON geonames(population);
 CREATE INDEX i3 ON geonames(admin0_code);
@@ -27,7 +24,6 @@ CREATE INDEX i4 ON geonames(admin1_code);
 CREATE INDEX i5 ON geonames(admin2_code);
 CREATE INDEX i6 ON geonames(admin3_code);
 CREATE INDEX i7 ON geonames(admin4_code);
-
 
 CREATE TABLE altnames (
  alternatenameid INTEGER PRIMARY KEY,
@@ -40,36 +36,10 @@ CREATE TABLE altnames (
  isHistoric TINYINT
 );
 
-.separator "\t"
-.import altnames0.tsv altnames
-
 CREATE INDEX i8 ON altnames(name);
 CREATE INDEX i9 ON altnames(geonameid);
 CREATE INDEX i10 ON altnames(isolanguage);
 
-.import /var/tmp/altnames2.out altnames
-DELETE FROM altnames WHERE name = '';
-INSERT INTO altnames VALUES (0,'');
-INSERT INTO geonames (geonameid) VALUES (0);
-VACUUM;
-
-CREATE TABLE tzones (
- timezoneid INTEGER PRIMARY KEY,
- name TEXT
-);
-.separator "\t"
-.import /var/tmp/tzones.out tzones
-
--- TODO: probably need feature class too
--- or at least http://www.geonames.org/export/codes.html
--- TODO: full description of feature codes too
-CREATE TABLE featurecodes (
- featurecodeid INTEGER PRIMARY KEY,
- abbrev TEXT
-);
-.separator "\t"
-.import /var/tmp/featurecodes.out featurecodes
-
--- not sure how these get in, but lets get rid of them
-DELETE FROM altnames WHERE geonameid = '';
-
+.import geonames.tsv geonames
+.import altnames0.tsv altnames
+.import altnames1.tsv altnames
