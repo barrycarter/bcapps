@@ -103,7 +103,9 @@ print A "VACUUM;\n";
 close(A);
 
 # TODO: shouldn't tweak db in place?
-system("sqlite3 /sites/DB/madis.db < queries.txt");
+system("cp /sites/DB/madis.db /sites/DB/madis.db.new");
+system("sqlite3 /sites/DB/madis.db.new < queries.txt");
+system("mv /sites/DB/madis.db /sites/DB/madis.db.old; mv /sites/DB/madis.db.new /sites/DB/madis.db");
 
 in_you_endo();
 unless ($globopts{nodaemon}) {
