@@ -1,16 +1,17 @@
--- goal for weather.db which may replace metarnew.db
+-- goal for madis.db which may replace metarnew.db (but then again,
+-- maybe not, especially since MADIS lacks cloudcover and events fields)
 
-CREATE TABLE weather (
- type, -- one of METAR, SHIP, BUOY, (may add SYNOP/RAWS later)
- id, -- METAR/SHIP code or BUOY id
+-- MADIS does NOT include: cloudcover, events
+
+CREATE TABLE madis (
+ type, -- type, as defined by MADIS
+ id, -- id, as defined by MADIS
  name, -- descriptive name of station
  latitude DOUBLE, -- in decimal degrees -90..+90
  longitude DOUBLE, -- in decimal degrees -180..+180
  elevation DOUBLE, -- in feet above sealevel
- cloudcover, -- in 1/8ths, so 1..8
  temperature DOUBLE, -- in degrees F
  dewpoint DOUBLE, -- in degrees F
- events, -- signifigant weather like "light rain"
  pressure DOUBLE, -- in inches of Hg (~30.00 is "normal")
  time, -- time of observation as "YYYY-MM-DD HH:MM:SS" UTC
  winddir DOUBLE, -- wind direction, in degrees, 0..360
@@ -21,17 +22,15 @@ CREATE TABLE weather (
  comment
 );
 
-CREATE TABLE weather_now (
- type, -- one of METAR, SHIP, BUOY, (may add SYNOP/RAWS later)
- id, -- METAR/SHIP code or BUOY id
+CREATE TABLE madis (
+ type, -- type, as defined by MADIS
+ id, -- id, as defined by MADIS
  name, -- descriptive name of station
  latitude DOUBLE, -- in decimal degrees -90..+90
  longitude DOUBLE, -- in decimal degrees -180..+180
  elevation DOUBLE, -- in feet above sealevel
- cloudcover, -- in 1/8ths, so 1..8
  temperature DOUBLE, -- in degrees F
  dewpoint DOUBLE, -- in degrees F
- events, -- signifigant weather like "light rain"
  pressure DOUBLE, -- in inches of Hg (~30.00 is "normal")
  time, -- time of observation as "YYYY-MM-DD HH:MM:SS" UTC
  winddir DOUBLE, -- wind direction, in degrees, 0..360
@@ -42,10 +41,10 @@ CREATE TABLE weather_now (
  comment
 );
 
--- for weather, only one report from a given station at a given time
-CREATE UNIQUE INDEX i1 ON weather(type, id, time);
+-- for madis, only one report from a given station at a given time
+CREATE UNIQUE INDEX i1 ON madis(type, id, time);
 
--- for weather_now, newer observations replace older ones
-CREATE UNIQUE INDEX i2 ON weather_now(type, id);
+-- for madis_now, newer observations replace older ones
+CREATE UNIQUE INDEX i2 ON madis_now(type, id);
 
 

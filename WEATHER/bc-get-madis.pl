@@ -6,6 +6,8 @@
 # puts them in a db; it overrides most bc-get-[thing].pl programs in
 # this directory
 
+# TODO: cloudcover IS included in some reports! (but not "events")
+
 require "/usr/local/lib/bclib.pl";
 dodie("chdir('/var/tmp')");
 
