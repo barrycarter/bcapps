@@ -72,7 +72,8 @@ for $i (@urls) {
     $dbhash{name}=~s/\s+/ /isg;
     # if no name at all, use id
     unless ($dbhash{name}) {$dbhash{name} = $dbhash{id};}
-    $dbhash{time} = strftime("%Y-%m-%dT%H:%MZ",gmtime(str2time("$dbhash{time} UTC")));
+    # making time format agree with sqlite3 TIMESTAMP/DATETIME format
+    $dbhash{time} = strftime("%Y-%m-%d %H:%M:%S",gmtime(str2time("$dbhash{time} UTC")));
 
     push(@reports, {%dbhash});
 

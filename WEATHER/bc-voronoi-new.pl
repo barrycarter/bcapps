@@ -5,39 +5,22 @@
 
 require "/usr/local/lib/bclib.pl";
 
-$db = "/sites/DB/metarnew.db";
+# TODO: make sure madis.db is up-to-date enough for this to make sense
+$db = "/sites/DB/madis.db";
 
 chdir(tmpdir());
-# TODO: does not include SYNOP/RAWS
 
-=item comment
+$query = "SELECT id, latitude AS y, longitude AS x, temperature FROM
+madis_now WHERE time > DATETIME(CURRENT_TIMESTAMP, '-1 hour') AND type
+IN ('OTHER-MTR') AND temperature!='NULL'";
 
-Trying to use new "weather.db"
 
-$metar_query = "SELECT station_id AS id, latitude AS y,
-longitude AS x, observation_time AS time, 'METAR' AS source,
-temp_c*1.8+32 AS temp_f FROM metar_now WHERE temp_c != ''";
-$buoy_query = "SELECT STN AS id, LAT AS y, 
-LON AS x, YYYY*10000+MM*100+DD+hh/100.+mm/10000. AS time, 'BUOY' AS source,
-ATMP*1.8+32 AS temp_f FROM buoy_now WHERE ATMP!='MM' AND ATMP!=''";
-$ship_query = "SELECT station_id AS id, latitude AS y, longitude AS x,
-day AS time, 'SHIP' AS source,
-temp_c*1.8+32 AS temp_f FROM ship_now WHERE temp_c!='' AND
-longitude NOT LIKE '%-'";
+# $query = "SELECT id, latitude AS y, longitude AS x, time, temperature
+# FROM weather_now WHERE temperature != 'NULL'";
 
-$query = "$metar_query UNION $buoy_query UNION $ship_query";
-
-=cut
-
-warn("USING TEST DB");
-$db = "/tmp/test.db";
-
-$query = "SELECT id, latitude AS y, longitude AS x, time, temperature
-FROM weather_now WHERE temperature != 'NULL'";
-
-$query = "SELECT id, latitude AS y, longitude AS x, time, 
- temperature+3.5/1000*elevation AS temperature
-FROM weather_now WHERE temperature != 'NULL'";
+# $query = "SELECT id, latitude AS y, longitude AS x, time, 
+# temperature+3.5/1000*elevation AS temperature
+# FROM weather_now WHERE temperature != 'NULL'";
 
 @res = sqlite3hashlist($query,$db);
 
@@ -49,6 +32,9 @@ debug("RES",var_dump(\@res));
 
 for $i (@res) {
   $hue = min(max(5/600*(100-$i->{temperature}),0),1);
+  # for mathematica testing
+  print "{$i->{x},$i->{y},$hue},\n";
+
   $i->{color} = hsv2rgb($hue,1,1,"kml=1&opacity=80");
   $i->{label} = "$i->{id} @ $i->{time}: $i->{temperature}F";
   # TODO: cleanup time (include METAR names + maybe ship names, buoy names?)
