@@ -23,22 +23,36 @@ dodie("chdir('/var/tmp')");
 	 );
 
 for $i (@urls) {
-  my($out,$err,$res) = cache_command2("curl $i","age=900");
+  # obtain file and unzip if needed
+  $i=~/([^\/]*?)\.kmz$/;
+  $file = $1;
+  my($out,$err,$res) = cache_command2("curl -O $i","age=900");
+  if ((-M "$file.kmz" < -M "$file.kml") || !(-f "$file.kml")) {
+    system("unzip -jo $file.kmz; touch $file.kml");
+  }
 
-  # write to file (not sure why I need to strip newline from $out but I do)
-  $out=~s/^\s+//isg;
-  $i=~s/^.*\///;
-  write_file($out, $i);
+  my($data) = read_file("$file.kml");
 
   # parse data
   # TODO: should I dl all first then parse?
-  # TODO: this is ugly, should be better way to handle zipped file
-  my($data) = join("",`zcat $i`);
 
   # build hash from each placemark
   while ($data=~s%<placemark>(.*?)</placemark>%%is) {
     my($report) = $1;
-    debug("REPORT: $report");
+    %dbhash = ();
+
+    # ugly, but works
+    $report=~s%<tr><td><B>ELEV</B>.*?<B>(\d+) FT</B>.*</td></tr>%%i;
+    $dbhash{elevation} = $1;
+
+    $report=~s%<tr><td><B>TEMP</B>.*?<B>(\d+) F</B>.*</td></tr>%%i;
+    $dbhash{temperature} = $1;
+
+    $report=~s%<tr><td><B>DEWP</B>.*?<B>(\d+) F</B>.*</td></tr>%%i;
+    $dbhash{dewpoint} = $1;
+
+    debug("DBHASH",%dbhash);
+    die "TESTING";
     # snip out data
     %hash = ();
     # name and coords
