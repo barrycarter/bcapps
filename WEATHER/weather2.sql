@@ -21,12 +21,14 @@ CREATE TABLE madis (
  winddir DOUBLE, -- wind direction, in degrees, 0..360
  windspeed DOUBLE, -- in miles per hour
  gust DOUBLE, -- gust speed in miles per hour
- observation, -- the full text of the observation
+ cloudcover TEXT,
+ events TEXT,
+ observation TEXT, -- the full text of the observation
  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
  comment
 );
 
-CREATE TABLE madis (
+CREATE TABLE madis_now (
  type, -- type, as defined by MADIS
  id, -- id, as defined by MADIS
  name, -- descriptive name of station
@@ -40,10 +42,13 @@ CREATE TABLE madis (
  winddir DOUBLE, -- wind direction, in degrees, 0..360
  windspeed DOUBLE, -- in miles per hour
  gust DOUBLE, -- gust speed in miles per hour
- observation, -- the full text of the observation
+ cloudcover TEXT,
+ events TEXT,
+ observation TEXT, -- the full text of the observation
  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
  comment
 );
+
 
 -- for madis, only one report from a given station at a given time
 CREATE UNIQUE INDEX i1 ON madis(type, id, time);
