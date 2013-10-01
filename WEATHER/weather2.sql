@@ -1,7 +1,11 @@
 -- goal for madis.db which may replace metarnew.db (but then again,
 -- maybe not, especially since MADIS lacks cloudcover and events fields)
 
--- MADIS does NOT include: cloudcover, events
+-- MADIS does NOT include: events
+
+-- most observations DO include relative humidity, but that's
+-- redundant (can be calculated from temperature and dewpoint), so I
+-- don't include it below
 
 CREATE TABLE madis (
  type, -- type, as defined by MADIS

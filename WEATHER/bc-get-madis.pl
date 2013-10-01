@@ -6,7 +6,7 @@
 # puts them in a db; it overrides most bc-get-[thing].pl programs in
 # this directory
 
-# TODO: cloudcover IS included in some reports! (but not "events")
+# METAR DOES include events and cloudcover
 
 require "/usr/local/lib/bclib.pl";
 dodie("chdir('/var/tmp')");
@@ -15,11 +15,11 @@ dodie("chdir('/var/tmp')");
 %convert = ("TEMP" => "temperature", "DWPT" => "dewpoint",
 	    "WIND DIR" => "winddir", "OBS TYPE" => "type");
 
-@urls = ("http://www.srh.noaa.gov/gis/kml/raws/rawstf.kmz",
+@urls = ("http://www.srh.noaa.gov/gis/kml/metar/tf.kmz",
+	 "http://www.srh.noaa.gov/gis/kml/raws/rawstf.kmz",
 	 "http://www.srh.noaa.gov/gis/kml/aprswxnet/aprstf.kmz",
 	 "http://www.srh.noaa.gov/gis/kml/mesowest/mesowesttf.kmz",
-	 "http://www.srh.noaa.gov/gis/kml/other/othertf.kmz",
-	 "http://www.srh.noaa.gov/gis/kml/metar/tf.kmz"
+	 "http://www.srh.noaa.gov/gis/kml/other/othertf.kmz"
 	 );
 
 for $i (@urls) {
@@ -32,14 +32,52 @@ for $i (@urls) {
   }
 
   my($data) = read_file("$file.kml");
-
   # parse data
   # TODO: should I dl all first then parse?
 
   # build hash from each placemark
   while ($data=~s%<placemark>(.*?)</placemark>%%is) {
     my($report) = $1;
+    debug("REPORT: $report");
     %dbhash = ();
+
+    # report_tag:unit:db field
+    for $j ("ELEV:FT:elevation", "TEMP:F:temperature", "DWPT:F:dewpoint",
+	    "WIND SPD:MPH:windspeed", "WIND GUST:MPH:gust", 
+	    "WIND DIR::winddir", "OBS TYPE::type", "OBS DATE/TIME::time",
+	    "ALT SETTING:IN HG:pressure", "PRES WX::events",
+	    "SKY::cloudcover") {
+      my($f1,$unit,$f2) = split(":",$j);
+      if ($report=~s%<tr><td><B>$f1</B>.*<B>(.*?)\s*$unit</B>.*</td></tr>%%im){
+	$dbhash{$f2} = $1;
+      } else {
+	$dbhash{$f2} = "NULL";
+      }
+    }
+
+    # special cases
+    if ($report=~s%<coordinates>(.*?), (.*?), .*?</coordinates>%%im) {
+      ($dbhash{longitude}, $dbhash{latitude}) = ($1,$2)
+    } else {
+      die "NO COORDS?: $report";
+    }
+
+    if ($report=~s%<name>(.*?)\s+(.*)</name>%%) {
+      ($dbhash{id}, $dbhash{name}) = ($1,$2);
+    } else {
+      die "NO NAME?: $report";
+    }
+
+    # cleanup
+    $dbhash{name}=~s/\s+/ /isg;
+    # if no name at all, use id
+    unless ($dbhash{name}) {$dbhash{name} = $dbhash{id};}
+    $dbhash{time} = strftime("%Y-%m-%dT%H:%MZ",gmtime(str2time("$dbhash{time} UTC")));
+
+    debug("DBHASH:",%dbhash);
+    debug("REMAINS:",$report);
+
+die "TESTING";
 
     # ugly, but works
     $report=~s%<tr><td><B>ELEV</B>.*?<B>(\d+) FT</B>.*</td></tr>%%i;
