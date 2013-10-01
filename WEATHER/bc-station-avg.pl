@@ -14,15 +14,19 @@ for $i (split(/\n/,read_file("/home/barrycarter/BCGIT/WEATHER/nsd_cccc_annotated
 @all = split(/\n/, read_file("/home/barrycarter/BCGIT/WEATHER/ish-history.csv"));
 
 for $i (@all) {
-  # split into fields
+  # split into fields get rid of quotes
   my(@fields) = split(/\,/,$i);
+  map(s/\"//g, @fields);
 
   # the station code field
   my($code) = $fields[6];
-  $code=~s/\"//isg;
 
   # if not a valid code, ignore
   unless ($iscode{$code}) {next;}
+
+  # how much data in years (approx)
+  my($range) = ($fields[11]-$fields[10])/10000;
+  debug("I: $i, $range");
 
   # the file where data for this code is kept
   my($file) = "/mnt/sshfs/WEATHER/CALC/$fields[0]-$fields[1].res";
@@ -31,9 +35,15 @@ for $i (@all) {
   # does it exist
   unless (-f $file) {
     warn "NO SUCH FILE: $file ($code)";
+    next;
   }
 
-#  debug("$code/$file");
+  # read file add code write to stdout
+  for $j (split(/\n/, read_file($file))) {
+    debug("J: $j");
+  }
+
+  debug("$code/$file");
 #
 #  debug("I: $i");
 }

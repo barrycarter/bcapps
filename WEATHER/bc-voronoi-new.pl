@@ -10,9 +10,8 @@ $db = "/sites/DB/madis.db";
 
 chdir(tmpdir());
 
-$query = "SELECT id, latitude AS y, longitude AS x, temperature FROM
-madis_now WHERE time > DATETIME(CURRENT_TIMESTAMP, '-1 hour') AND type
-IN ('OTHER-MTR') AND temperature!='NULL'";
+$query = "SELECT id, latitude AS y, longitude AS x, temperature+3.5/1000*elevation AS temperature FROM
+madis_now WHERE temperature!='NULL' AND type IN ('OTHER-MTR') AND time > DATETIME(CURRENT_TIMESTAMP,'-1 hour')";
 
 
 # $query = "SELECT id, latitude AS y, longitude AS x, time, temperature
@@ -33,7 +32,7 @@ debug("RES",var_dump(\@res));
 for $i (@res) {
   $hue = min(max(5/600*(100-$i->{temperature}),0),1);
   # for mathematica testing
-  print "{$i->{x},$i->{y},$hue},\n";
+#  print "{$i->{x},$i->{y},$hue},\n";
 
   $i->{color} = hsv2rgb($hue,1,1,"kml=1&opacity=80");
   $i->{label} = "$i->{id} @ $i->{time}: $i->{temperature}F";
