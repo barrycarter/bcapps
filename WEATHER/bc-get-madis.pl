@@ -6,8 +6,6 @@
 # puts them in a db; it overrides most bc-get-[thing].pl programs in
 # this directory
 
-# TODO: METAR is an ugly format, can not use as is
-
 require "/usr/local/lib/bclib.pl";
 dodie("chdir('/var/tmp')");
 
@@ -18,7 +16,8 @@ dodie("chdir('/var/tmp')");
 @urls = ("http://www.srh.noaa.gov/gis/kml/raws/rawstf.kmz",
 	 "http://www.srh.noaa.gov/gis/kml/aprswxnet/aprstf.kmz",
 	 "http://www.srh.noaa.gov/gis/kml/mesowest/mesowesttf.kmz",
-	 "http://www.srh.noaa.gov/gis/kml/other/othertf.kmz"
+	 "http://www.srh.noaa.gov/gis/kml/other/othertf.kmz",
+	 "http://www.srh.noaa.gov/gis/kml/metar/tf.kmz"
 	 );
 
 for $i (@urls) {
@@ -73,12 +72,16 @@ for $i (@urls) {
     $hash{ELEV} =~s/\s*m\s*//isg;
     $dbhash{elevation} = convert($hash{ELEV}, "m", "ft");
 
+    # this is just to compare what I get here to what I get from other sources
+    print "$dbhash{id} $dbhash{latitude} $dbhash{longitude} $dbhash{type}\n";
 
     for $j (sort keys %hash) {debug("HASH: $j -> $hash{$j}");}
     for $j (sort keys %dbhash) {debug("DBHASH: $j -> $dbhash{$j}");}
 
   }
 }
+
+
 
 =item convert_reading($val, $target_unit, $round)
 
