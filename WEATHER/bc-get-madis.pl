@@ -6,7 +6,7 @@
 # puts them in a db; it overrides most bc-get-[thing].pl programs in
 # this directory
 
-# METAR DOES include events and cloudcover
+# --nodaemon: just run once, don't "daemonize"
 
 require "/usr/local/lib/bclib.pl";
 dodie("chdir('/var/tmp')");
@@ -36,6 +36,9 @@ for $i (@urls) {
   # build hash from each placemark
   while ($data=~s%<placemark>(.*?)</placemark>%%is) {
     my($report) = $1;
+    # remove deadly quotation marks
+    # <h>it sometimes bugs me that I use isg even for non-alpha chars</h>
+    $report=~s/\"//isg;
     %dbhash = ();
 
     # report_tag:unit:db field
@@ -76,7 +79,7 @@ for $i (@urls) {
   }
 }
 
-my(@querys) = hashlist2sqlite(\@reports);
+my(@querys) = hashlist2sqlite(\@reports, "madis");
 
 open(A,">queries.txt");
 print A "BEGIN;\n";
@@ -93,4 +96,12 @@ for $i (@querys) {
 print A "COMMIT;\n";
 close(A);
 
+# TODO: shouldn't tweak db in place?
 system("sqlite3 /sites/DB/madis.db < queries.txt");
+
+in_you_endo();
+unless ($globopts{nodaemon}) {
+  sleep(60);
+  exec($0);
+}
+

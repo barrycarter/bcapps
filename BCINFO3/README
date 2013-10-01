@@ -224,6 +224,7 @@ rpm --nodeps -e sqlite
 bc-gocomics-comments2.pl&
 bc-metar-db.pl&
 bc-get-radar.pl&
+bc-get-madis.pl &
 
 % other tasks
 
