@@ -94,6 +94,12 @@ for $i (@querys) {
 }
 
 print A "COMMIT;\n";
+
+# delete old reports + clean db
+print A "DELETE FROM madis_now WHERE timestamp < DATETIME(CURRENT_TIMESTAMP, '-3 hour');\n";
+print A "DELETE FROM madis WHERE timestamp < DATETIME(CURRENT_TIMESTAMP, '-24 hour');\n";
+print A "VACUUM;\n";
+
 close(A);
 
 # TODO: shouldn't tweak db in place?
@@ -104,4 +110,3 @@ unless ($globopts{nodaemon}) {
   sleep(60);
   exec($0);
 }
-
