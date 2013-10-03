@@ -2,7 +2,7 @@
 
 # run an arbitrary readonly SQL query webapp
 # v2 does NOT canonize the domain name, tries to derive it from HTTP_HOST
-# format: [query|"schema"].db.(db|database).other.stuff
+# format: [rss|csv|].[query|"schema"].db.(db|database).other.stuff
 
 require "/usr/local/lib/bclib.pl";
 
@@ -25,6 +25,10 @@ if ($ENV{HTTP_HOST}=~/^schema\.([a-z]+)\.(db|database)\.(.*?)$/i) {
   # request for RSS (same subroutine as request for query)
   check_db($2);
   query_request($1,$2,"$3.$4", "rss");
+} elsif ($ENV{HTTP_HOST}=~/^csv\.([0-9a-f]+)\.([a-z]+)\.(db|database)\.(.*?)$/i) {
+  # request for CSV (same subroutine as request for query)
+  check_db($2);
+  query_request($1,$2,"$3.$4", "csv");
 } elsif ($ENV{HTTP_HOST}=~/^([0-9a-f]+)\.([a-z]+)\.(db|database)\.(.*?)$/i) {
   # request for existing query
   debug("RFEQ");
@@ -79,8 +83,13 @@ sub query_request {
   # actually run query (use tmpfile to avoid command line danger)
   my($tmp) = my_tmpfile("dbquery");
   write_file("$query;", $tmp);
+
+  # if $rss is actually "csv", give comma-separated output
+  my($format);
+  if ($rss=~/^csv$/) {$format="csv";} else {$format="html";}
+
   # avoid DOS by limiting cputime
-  my($out,$err,$res) = cache_command2("ulimit -t 5 && sqlite3 -html -header $db.db < $tmp");
+  my($out,$err,$res) = cache_command2("ulimit -t 5 && sqlite3 -$format -header $db.db < $tmp");
 
   # restore hyperlinks and quotes
   $out=~s/&lt;/</isg;
@@ -95,20 +104,26 @@ sub query_request {
   }
 
   # known good result; requesting rss?
-  if ($rss) {
+  if ($rss=~/^rss$/i) {
     local(*A);
     open(A,"|/usr/local/bin/sqlite32rss.pl --title=$ENV{HTTP_HOST} --desc=DB_QUERY");
     print A $out;
     close(A);
   } else {
     # info about db
-    print "Content-type: text/html\n\n";
+    if ($format=~/^csv$/) {
+      print "Content-type: text/plain\n\n";
+    } else {
+      print "Content-type: text/html\n\n";
+    }
     print read_file("$db.txt");
     print << "MARK";
 <title>$query</title>
 
 NOTE: This page is experimental. Bug reports to
-carter.barry\@gmail.com. Query language is SQLite3.
+carter.barry\@gmail.com. Query language is SQLite3.<p>
+
+Prepend rss. to the URL for an RSS feed, csv. to the URL for CSV output.<p>
 
 <p><pre>QUERY: $query</pre><p>
 

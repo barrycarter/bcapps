@@ -25,12 +25,19 @@ for $i (@all) {
   unless ($iscode{$code}) {next;}
 
   # how much data in years (approx)
-  my($range) = ($fields[11]-$fields[10])/10000;
-  debug("I: $i, $range");
+#  my($range) = ($fields[11]-$fields[10])/10000;
+#  if ($range < 10) {next;}
 
   # the file where data for this code is kept
   my($file) = "/mnt/sshfs/WEATHER/CALC/$fields[0]-$fields[1].res";
-  $file=~s/\"//isg;
+  debug("FILE: $file");
+
+  # this is hideously ugly way to check we have at least 10 years data/date
+  my($miny) = `cut -d" " -f 4 $file | sort -n | head -1`;
+  debug("MIN: $code: $miny");
+  if ($miny < 10) {next;}
+
+  # TODO: check that we don't have missing rows entirely
 
   # does it exist
   unless (-f $file) {
@@ -40,7 +47,7 @@ for $i (@all) {
 
   # read file add code write to stdout
   for $j (split(/\n/, read_file($file))) {
-    debug("J: $j");
+    print "$code $j\n";
   }
 
   debug("$code/$file");

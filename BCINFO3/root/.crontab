@@ -24,3 +24,5 @@ MAILTO="bcinfo3@barrycarter.info"
 # this is really ugly (TODO: clean this up)
 54 * * * * find /sites/data/ -mtime +1 -name 'ABX*_N*.gif' | xargs rm
 59 * * * * find /sites/data/ -mtime +1 -name 'Conus*.gif' | xargs rm
+# TODO: should really use tmpwatch here or access time instead of mtime...
+09 * * * * find /tmp/ -mtime +7 | xargs rm
