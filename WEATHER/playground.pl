@@ -2,6 +2,81 @@
 
 require "/usr/local/lib/bclib.pl";
 
+%hash = recent_forecast2();
+
+debug(var_dump("hash",{%hash}));
+
+sub recent_forecast2 {
+  my($options) = ();
+  my($cur,$date,$time,$unix);
+  my(@hrs);
+  my(%rethash);
+
+  # there does not appear to be a compressed form
+  # guidances are for 6h, so 1h cache is fine
+  my($out,$err,$res) = cache_command("curl http://nws.noaa.gov/mdl/forecast/text/avnmav.txt", "age=3600");
+
+  # TODO: can X/N sometimes be N/X (and does it give order of high/low?)
+
+  for $i (split(/\n/,$out)) {
+    # multiple spaces only for formatting, so I dont need them
+    # TODO: I might be wrong about this
+    $i=~s/\s+/ /isg;
+    # station name and date of "forecast"
+    if ($i=~/^\s*(.*?) GFS MOS GUIDANCE (.*?) (.*? UTC)/) {
+      # $cur needs to live outside this loop
+      ($cur, $date, $time) = ($1,$2,$3);
+      # add colon to time for str2time
+      $time=~s/^(\d\d)/$1:/;
+      $unix = str2time("$date $time");
+      # now strip UTC
+      $time=~s/\s*UTC//;
+      $rethash{$cur}{date} = $date;
+      $rethash{$cur}{time} = $time;
+      debug(str2time("$date $time"));
+      next;
+    }
+
+    # list of guidance hours (this doesn't really change per station, but...)
+    my(@realhours);
+    if ($i=~s/^\s*hr\s*//i) {
+      @hrs = split(/\s+/,$i);
+      # the guidance time is a psuedo-entry
+      unshift(@hrs, $time);
+      for $j (1..$#hrs) {
+	my($gap) = ($hrs[$j]-$hrs[$j-1])*3600;
+	if ($gap<0) {$gap+=86400;}
+	$unix += $gap;
+	$realhours[$j] = gmtime($unix);
+      }
+
+      debug("HRS vs $date/$time",@hrs);
+      debug("REALHOURS",@realhours);
+      next;
+    }
+
+    # list of other hourly data
+    if ($i=~s/^\s*(tmp|dpt|cld|wdr|wsp|poz|pos|typ)\s*//i) {
+      my($elt) = $1;
+      my(@vals) = split(/\s+/,$i);
+      for $j (0..$#hrs) {$rethash{$cur}{$elt}{$hrs[$j]} = $vals[$j];}
+      next;
+    }
+
+    # TODO: split and return as list? determine hi from lo?
+    # TODO: deal w 999s here or elsewhere?
+    if ($i=~m%^\s*(X/N|N/X) (.*?)$%) {
+      $rethash{$cur}{dir} = $1;
+      $rethash{$cur}{hilo} = $2;
+      next;
+    }
+  }
+
+  return %rethash;
+}
+
+die "TESTING";
+
 # tests by recreating
 chdir("/home/barrycarter/BCGIT/WEATHER");
 system("rm /tmp/test.db; sqlite3 /tmp/test.db < weather2.sql; ./bc-get-metar.pl | sqlite3 /tmp/test.db; ./bc-get-ship.pl | sqlite3 /tmp/test.db; ./bc-get-buoy.pl | sqlite3 /tmp/test.db");

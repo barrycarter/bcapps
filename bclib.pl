@@ -3041,6 +3041,8 @@ hashes
 
 $options currently unused
 
+TODO: THIS IS WRONG, HOUR 03 OVERRIDES OLDER HOUR 03!
+
 =cut
 
 sub recent_forecast {
