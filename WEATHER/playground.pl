@@ -9,7 +9,7 @@ debug(var_dump("hash",{%hash}));
 sub recent_forecast2 {
   my($options) = ();
   my($cur,$date,$time,$unix);
-  my(@hrs);
+  my(@hrs,@realhours);
   my(%rethash);
 
   # there does not appear to be a compressed form
@@ -33,13 +33,12 @@ sub recent_forecast2 {
       $time=~s/\s*UTC//;
       $rethash{$cur}{date} = $date;
       $rethash{$cur}{time} = $time;
-      debug(str2time("$date $time"));
       next;
     }
 
     # list of guidance hours (this doesn't really change per station, but...)
-    my(@realhours);
     if ($i=~s/^\s*hr\s*//i) {
+      @realhours = ();
       @hrs = split(/\s+/,$i);
       # the guidance time is a psuedo-entry
       unshift(@hrs, $time);
@@ -47,11 +46,8 @@ sub recent_forecast2 {
 	my($gap) = ($hrs[$j]-$hrs[$j-1])*3600;
 	if ($gap<0) {$gap+=86400;}
 	$unix += $gap;
-	$realhours[$j] = gmtime($unix);
+	$realhours[$j-1] = gmtime($unix);
       }
-
-      debug("HRS vs $date/$time",@hrs);
-      debug("REALHOURS",@realhours);
       next;
     }
 
@@ -59,7 +55,8 @@ sub recent_forecast2 {
     if ($i=~s/^\s*(tmp|dpt|cld|wdr|wsp|poz|pos|typ)\s*//i) {
       my($elt) = $1;
       my(@vals) = split(/\s+/,$i);
-      for $j (0..$#hrs) {$rethash{$cur}{$elt}{$hrs[$j]} = $vals[$j];}
+      for $j (1..$#realhours) {
+	$rethash{$cur}{$realhours[$j]}{$elt} = $vals[$j];}
       next;
     }
 
