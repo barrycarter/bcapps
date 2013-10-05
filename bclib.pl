@@ -23,6 +23,41 @@ push(@INC,"/home/barrycarter/BCGIT", "/usr/local/lib");
 # for X11 goodness (when starting Perl from nagios/cron or similar)
 $ENV{'DISPLAY'}=":0.0";
 
+# TODO: sort of bad to call this "abbrev" in global lib
+our(%ABBREV)=("BC" => lc("Patches"),
+	 "BL" => lc("Blowing"),
+	 "DR" => lc("Low Drifting"),
+	 "FZ" => lc("Supercooled/freezing"),
+	 "MI" => lc("Shallow"),
+	 "PR" => lc("Partial"),
+	 "SH" => lc("Showers"),
+	 "TS" => lc("Thunderstorm"),
+	 "BR" => lc("Mist"),
+	 "DS" => lc("Dust Storm"),
+	 "DU" => lc("Widespread Dust"),
+	 "DZ" => lc("Drizzle"),
+	 "FC" => lc("Funnel Cloud"),
+	 "FG" => lc("Fog"),
+	 "FU" => lc("Smoke"),
+	 "GR" => lc("Hail"),
+	 "GS" => lc("Small Hail/Snow Pellets"),
+	 "HZ" => lc("Haze"),
+	 "IC" => lc("Ice Crystals"),
+	 "PL" => lc("Ice Pellets"),
+	 "PO" => lc("Dust/Sand Whirls"),
+	 "PY" => lc("Spray"),
+	 "RA" => lc("Rain"),
+	 "SA" => lc("Sand"),
+	 "SG" => lc("Snow Grains"),
+	 "SN" => lc("Snow"),
+	 "SQ" => lc("Squall"),
+	 "SS" => lc("Sandstorm"),
+	 "UP" => lc("Unknown Precipitation (Automated Observations)"),
+	 "VA" => lc("Volcanic Ash")
+	);
+
+our($abbrevs)= lc(join("|",sort keys %ABBREV));
+
 # HACK: defining constants here is probably bad
 $PI = 4.*atan(1);
 $DEGRAD=$PI/180; # degrees to radians
@@ -3035,61 +3070,99 @@ sub next_email_fh {
 
 =item recent_forecast($options)
 
-Obtain recent forecast data (just high and low for now) from
-http://nws.noaa.gov/mdl/forecast/text/avnmav.txt and return as list of
-hashes
+Obtain recent forecast data (MOS GUIDANCE) and return as a list of
+hashes, each hash representing a given station at a given time.
 
 $options currently unused
-
-TODO: THIS IS WRONG, HOUR 03 OVERRIDES OLDER HOUR 03!
 
 =cut
 
 sub recent_forecast {
+  # TODO: cleanup vars I no longer use
   my($options) = ();
-  my($cur,$date,$time);
-  my(@hrs);
   my(%rethash);
 
-  # there does not appear to be a compressed form
-  # guidances are for 6h, so 1h cache is fine
-  my($out,$err,$res) = cache_command("curl http://nws.noaa.gov/mdl/forecast/text/avnmav.txt", "age=3600");
-
-  # TODO: can X/N sometimes be N/X (and does it give order of high/low?)
-
-  for $i (split(/\n/,$out)) {
-    # multiple spaces only for formatting, so I dont need them
-    $i=~s/\s+/ /isg;
-    # station name and date of "forecast"
-    if ($i=~/^\s*(.*?) GFS MOS GUIDANCE (.*?) (.*?) UTC/) {
-      # $cur needs to live outside this loop
-      ($cur, $date, $time) = ($1,$2,$3);
-      $rethash{$cur}{date} = $date;
-      $rethash{$cur}{time} = $time;
-      next;
-    }
-
-    # list of guidance hours (this doesn't really change per station, but...)
-    if ($i=~s/^\s*hr\s*//i) {@hrs = split(/\s+/,$i); next;}
-
-    # list of other hourly data
-    if ($i=~s/^\s*(tmp|dpt|cld|wdr|wsp|poz|pos|typ)\s*//i) {
-      my($elt) = $1;
-      my(@vals) = split(/\s+/,$i);
-      for $j (0..$#hrs) {$rethash{$cur}{$elt}{$hrs[$j]} = $vals[$j];}
-      next;
-    }
-
-    # TODO: split and return as list? determine hi from lo?
-    # TODO: deal w 999s here or elsewhere?
-    if ($i=~m%^\s*(X/N|N/X) (.*?)$%) {
-      $rethash{$cur}{dir} = $1;
-      $rethash{$cur}{hilo} = $2;
-      next;
+  # this is probably a bad way to do this (global %stathash)
+  unless (%stathash) {
+    # TODO: subroutinize this?
+    for $i (split(/\n/,read_file("/home/barrycarter/BCGIT/WEATHER/juststations.txt"))) {
+      $i=~/^(\S+)\s+(.{28})\s*(\S+)\s*(\S+)$/;
+      my($stat,$name,$lat,$long) = ($1,$2,$3,$4);
+      # cleanup
+      $name=~s/\s+/ /isg;
+      $name=trim($name);
+      # most/all are in NW quadrant of globe, but...
+      if ($lat=~s/S$//) {$lat*=-1;} else {$lat=~s/N$//;}
+      if ($long=~s/W$//) {$long*=-1;} else {$long=~s/E$//;}
+      $stathash{$stat}{name} = $name;
+      $stathash{$stat}{longitude} = $long;
+      $stathash{$stat}{latitude} = $lat;
     }
   }
 
-  return %rethash;
+  # TODO: consider using other data MOS provides (esp N/X X/N)
+
+  # convert MOS guidance headers to weather2.sql headers
+  # cloudcover not given for all reports; also, I haven't settled on
+  # consistent format
+  my(%convert) = ("TMP" => "temperature", "DPT" => "dewpoint", 
+		  "WDR" => "winddir", "WSP" => "windspeed", 
+		  "CLD" => "cloudcover");
+
+  # guidances are for 6h, so 1h cache is fine; and store since its important
+  my($out,$err,$res) = cache_command2("curl -o /var/tmp/mos-guidance.txt http://nws.noaa.gov/mdl/forecast/text/avnmav.txt", "age=3600");
+  my($all) = read_file("/var/tmp/mos-guidance.txt");
+
+  for $i (split(/\n\s*\n/, $all)) {
+    # first row has station time/date (add colon for str2time)
+    $i=~s/^\s*(.*?)\s+GFS MOS GUIDANCE\s+(.*?)\s+(\d\d)(.*? UTC)//;
+    my($stat,$date,$time,$inithour) = ($1, $2, "$3:$4",$3);
+    my($start) = str2time("$date $time");
+
+    # hash for rows
+    my(%hash) = ();
+    while ($i=~s/^\s*(\S+)\s*(.*?)$//m) {
+      @{$hash{$1}} = split(/\s+/, $2);
+    }
+
+    # TODO: error check (eg, "999")
+    # iterate along the hours
+    my(%rethash) = ();
+    for $j (0..$#{$hash{HR}}) {
+      # figure out ISO hour by looking at gap
+      my($gap);
+      if ($j==0) {
+	$gap = $hash{HR}[0] - $inithour;
+      } else {
+	$gap = $hash{HR}[$j] - $hash{HR}[$j-1];
+      }
+
+      if ($gap<0) {$gap+=24;}
+      $start += $gap*3600;
+
+      # build the hash for this station/time
+      $rethash{$stat}{$start}{type} = "MOS";
+      $rethash{$stat}{$start}{id} =  $stat;
+      $rethash{$stat}{$start}{time} = strftime("%Y-%m-%d %H:%M:%S",gmtime($start));
+      debug("$stat, $rethash{$stat}{$start}{time}");
+      for $k ("name", "latitude", "longitude") {
+	$rethash{$stat}{$start}{$k} = $stathash{$stat}{$k};
+      }
+
+      # and now the data
+      for $k (keys %convert) {
+	$rethash{$stat}{$start}{$convert{$k}} = @{$hash{$k}}[$j];
+      }
+
+      # except for this, data is already in correct units
+      $rethash{$stat}{$start}{winddir}*=10;
+      # TODO: add elevation from mos-guidance.html file (do we have this?)
+      # need to declare a hash here solely so I have ref to it
+      my(%rhash) = %{$rethash{$stat}{$start}};
+      push(@res, {%rhash});
+    }
+  }
+  return @res;
 }
 
 =item compute_upc_check_digit($upc)
@@ -3592,6 +3665,164 @@ MARK
   close(A);
   system("zip $tmpfile.kmz $tmpfile.kml");
   return "$tmpfile.kmz";
+}
+
+=item parse_metar($metar)
+
+Converts a METAR report into a hash
+
+=cut
+
+sub parse_metar {
+  my($a)=@_;
+
+  my(%b)=(); # to hold results
+  my(@clouds)=(); # to hold multiple clouds
+  my(@weather)=(); # multiple weathers
+  my(@leftover)=(); # anything i can't parse
+
+  # we want to store the full metar
+  $b{metar}=$a;
+
+  # fix things like "2 1/2SM" and "3/4SM", eval to avoid div by zero death
+  eval {$a=~s!(\d+)\s+(\d)/(\d)sm!eval($1+$2/$3)."SM"!ie};
+  eval {e$a=~s!(\d)/(\d)sm!eval($1/$2)."SM"!ie};
+
+  # split METAR by spaces
+  @b=split(/\s+/,$a);
+
+  # first field is always station
+  $b{code}=shift(@b);
+
+  # second field is ddhhmm in GMT
+  $aa=shift(@b);
+
+  if ($aa=~/(\d{2})(\d{2})(\d{2})z/i) {
+    ($day,$hour,$min)=($1,$2,$3);
+  } else {
+    return ("ERROR" => "INVALID TIME: $aa");
+  }
+
+  # need to figure out month and year (only really an issue at month change)
+
+  # current time/date (just need month and year)
+  my($ignore,$ignore,$ignore,$mday,$mon,$year) = gmtime();
+  # Perl bizzarely counts months 0..11, and year 0 is 1900
+  $mon++;
+  $year+=1900;
+
+  # if report date is in future, subtract one month
+  debug("CURRENT TIME: ",time());
+  debug("$year-$mon-$day $hour:$min");
+  debug("REPORT TIME:", str2time("$year-$mon-$day $hour:$min"));
+
+  if (str2time("$year-$mon-$day $hour:$min UTC") > time()) {
+    $mon--;
+    if ($mon==0) {$year--; $mon=12;}
+  }
+
+  # we will return time in sqlite3 format
+  $b{time} = "$year-$mon-$day $hour:$min";
+  debug("TIME: $b{time}");
+
+
+  # for convenience, note age of data (caller can toss old data)
+#  my($time) = str2time($b{time});
+#  $b{age} = time()-$time;
+#  debug("AGE: -> $b{age}");
+
+  # remaining fields may be in any order
+  for $i (@b) {
+
+    # wind direction/speed
+    if ($i=~/^(\d{3}|vrb)(\d{2})kt/i) {
+      ($b{winddir},$b{windspeed})=($1,$2);
+      next;
+    }
+
+    # wind direction/speed (gusting)
+    if ($i=~/^(\d{3}|vrb)(\d{2})g(\d{2})kt/i) {
+      ($b{winddir},$b{windspeed},$b{gust})=($1,$2,$3); 
+      next;
+    }
+
+    # visibility
+    if ($i=~s/sm$//i) {
+      $b{visibility}=$i;
+      next;
+    }
+
+    # temp/dew point in C (whole degrees)
+    # more than 3 digits = bad
+    if ($i=~m!^(M?\d{1,3})/(M?\d{1,3})$!) {
+      # if we already have a more accurate temperature from RMK, ignore this
+      if (exists $b{temperature}) {next;}
+
+      ($b{temperature},$b{dewpoint})=($1,$2);
+      if ($b{temperature}=~s/^m//i) {$b{temperature}*=-1;}
+      if ($b{dewpoint}=~s/^m//i) {$b{dewpoint}*=-1;}
+      next;
+    }
+
+    # some reports have temperature only, no dewpoint
+    if ($i=~m!^(M?\d{1,3})/$!) {
+      # if we already have a more accurate temperature from RMK, ignore this
+      if (exists $b{temperature}) {next;}
+
+      $b{temperature}=$1;
+      if ($b{temperature}=~s/^m//i) {$b{temperature}*=-1;}
+      next;
+    }
+
+    # RMK section sometimes has more accurate temperature and dewpoint
+    if ($i=~m!^t(\d)(\d{3})(\d)(\d{3})$!i) {
+      ($b{temperature},$b{dewpoint})=((-2*$1+1)*$2/10,(-2*$3+1)*$4/10);
+      next;
+    }
+
+    # Barometric pressure in inches
+    if ($i=~/^a(\d{4})/i) {
+      $b{pressure}=$1/100; 
+      next;
+    }
+
+    # Barometric pressure in millibars; we convert to inches for consistency
+    if ($i=~/q(\d+)/i) {
+      if (exists $b{pressure}) {next;}
+      $b{pressure}=$1/33.86388;
+      next;
+    }
+
+    # Note down how much cloud cover there is
+    if ($i=~/^(clr|few|sct|bkn|ovc)/i) {push(@clouds,$i); next;}
+
+    # signifigant weather
+    if ($i=~/^([\+\-]?)($abbrevs|)($abbrevs)$/i) {
+      # TODO: this returns "-RA", need to return "light rain"
+      push(@weather,$i);
+      next;
+    }
+
+    # Was this report automatically generated?
+    if ($i eq "AUTO") {$b{type}="AUTO"; next;}
+
+    # uninteresting stuff (data on sensors, sea-level pressure,
+    # non-aviation temperature, remarks separator); we preserve this
+    # in the METAR field (and leftover field) but don't break it out
+    # into separate fields
+
+    if ($i=~/^ao\d$/i || $i=~/^slp\d+$/i || $i=~/^4(\d{8})$/|| $i eq "RMK") {
+      next;
+    }
+
+    push(@leftover,$i);
+  }
+
+  # combine lists into strings
+  $b{cloudcover}=join(" ",@clouds);
+  $b{weather}=join(" ",@weather);
+  $b{leftover}=join(" ",@leftover);
+  return(%b);
 }
 
 # cleanup files created by my_tmpfile (unless --keeptemp set)

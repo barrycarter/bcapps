@@ -14,15 +14,15 @@ MAILTO="bcinfo3@barrycarter.info"
 # confirms that all daemons are running
 */10 * * * * /usr/local/bin/bc-daemon-checker.pl
 # keeps /tmp clean (I tend to create a lot of /tmp files)
-42 * * * * find /tmp -name 'cache*' -mmin +180 | xargs --no-run-if-empty rm
+42 1 * * * find /tmp -name 'cache*' -mmin +180 | xargs --no-run-if-empty rm
 # update database of files for locate
 0 2 * * * updatedb
 # remove cache files
-28 * * * * find /var/tmp/cache -type f -mtime +1 | xargs rm
+28 2 * * * find /var/tmp/cache -type f -mtime +1 | xargs rm
 # and radar
-04 * * * * find /var/tmp/radar -mtime +1 | xargs rm
+04 3 * * * find /var/tmp/radar -mtime +1 | xargs rm
 # this is really ugly (TODO: clean this up)
-54 * * * * find /sites/data/ -mtime +1 -name 'ABX*_N*.gif' | xargs rm
-59 * * * * find /sites/data/ -mtime +1 -name 'Conus*.gif' | xargs rm
+54 4 * * * find /sites/data/ -mtime +1 -name 'ABX*_N*.gif' | xargs rm
+59 5 * * * find /sites/data/ -mtime +1 -name 'Conus*.gif' | xargs rm
 # TODO: should really use tmpwatch here or access time instead of mtime...
-09 * * * * find /tmp/ -mtime +7 | xargs rm
+09 6 * * * find /tmp/ -mtime +7 | xargs rm
