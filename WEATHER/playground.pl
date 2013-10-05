@@ -2,74 +2,96 @@
 
 require "/usr/local/lib/bclib.pl";
 
-%hash = recent_forecast2();
+@l = recent_forecast2();
 
-debug(var_dump("hash",{%hash}));
+debug(var_dump("l",[@l]));
 
 sub recent_forecast2 {
+  # TODO: cleanup vars I no longer use
   my($options) = ();
   my($cur,$date,$time,$unix);
   my(@hrs,@realhours);
   my(%rethash);
 
-  # there does not appear to be a compressed form
-  # guidances are for 6h, so 1h cache is fine
-  my($out,$err,$res) = cache_command("curl http://nws.noaa.gov/mdl/forecast/text/avnmav.txt", "age=3600");
-
-  # TODO: can X/N sometimes be N/X (and does it give order of high/low?)
-
-  for $i (split(/\n/,$out)) {
-    # multiple spaces only for formatting, so I dont need them
-    # TODO: I might be wrong about this
-    $i=~s/\s+/ /isg;
-    # station name and date of "forecast"
-    if ($i=~/^\s*(.*?) GFS MOS GUIDANCE (.*?) (.*? UTC)/) {
-      # $cur needs to live outside this loop
-      ($cur, $date, $time) = ($1,$2,$3);
-      # add colon to time for str2time
-      $time=~s/^(\d\d)/$1:/;
-      $unix = str2time("$date $time");
-      # now strip UTC
-      $time=~s/\s*UTC//;
-      $rethash{$cur}{date} = $date;
-      $rethash{$cur}{time} = $time;
-      next;
-    }
-
-    # list of guidance hours (this doesn't really change per station, but...)
-    if ($i=~s/^\s*hr\s*//i) {
-      @realhours = ();
-      @hrs = split(/\s+/,$i);
-      # the guidance time is a psuedo-entry
-      unshift(@hrs, $time);
-      for $j (1..$#hrs) {
-	my($gap) = ($hrs[$j]-$hrs[$j-1])*3600;
-	if ($gap<0) {$gap+=86400;}
-	$unix += $gap;
-	$realhours[$j-1] = gmtime($unix);
-      }
-      next;
-    }
-
-    # list of other hourly data
-    if ($i=~s/^\s*(tmp|dpt|cld|wdr|wsp|poz|pos|typ)\s*//i) {
-      my($elt) = $1;
-      my(@vals) = split(/\s+/,$i);
-      for $j (1..$#realhours) {
-	$rethash{$cur}{$realhours[$j]}{$elt} = $vals[$j];}
-      next;
-    }
-
-    # TODO: split and return as list? determine hi from lo?
-    # TODO: deal w 999s here or elsewhere?
-    if ($i=~m%^\s*(X/N|N/X) (.*?)$%) {
-      $rethash{$cur}{dir} = $1;
-      $rethash{$cur}{hilo} = $2;
-      next;
+  # this is probably a bad way to do this (global %stathash)
+  unless (%stathash) {
+    # TODO: subroutinize this?
+    for $i (split(/\n/,read_file("/home/barrycarter/BCGIT/WEATHER/juststations.txt"))) {
+      $i=~/^(\S+)\s+(.{28})\s*(\S+)\s*(\S+)$/;
+      my($stat,$name,$lat,$long) = ($1,$2,$3,$4);
+      # cleanup
+      $name=~s/\s+/ /isg;
+      $name=trim($name);
+      # most/all are in NW quadrant of globe, but...
+      if ($lat=~s/S$//) {$lat*=-1;} else {$lat=~s/N$//;}
+      if ($long=~s/W$//) {$long*=-1;} else {$long=~s/E$//;}
+      $stathash{$stat}{name} = $name;
+      $stathash{$stat}{longitude} = $long;
+      $stathash{$stat}{latitude} = $lat;
     }
   }
 
-  return %rethash;
+  # TODO: consider using other data MOS provides (esp N/X X/N)
+
+  # convert MOS guidance headers to weather2.sql headers
+  # cloudcover not given for all reports; also, I haven't settled on
+  # consistent format
+  my(%convert) = ("TMP" => "temperature", "DPT" => "dewpoint", 
+		  "WDR" => "winddir", "WSP" => "windspeed", 
+		  "CLD" => "cloudcover");
+
+  # guidances are for 6h, so 1h cache is fine; and store since its important
+  my($out,$err,$res) = cache_command2("curl -o /var/tmp/mos-guidance.txt http://nws.noaa.gov/mdl/forecast/text/avnmav.txt", "age=3600");
+  my($all) = read_file("/var/tmp/mos-guidance.txt");
+
+  for $i (split(/\n\s*\n/, $all)) {
+    # first row has station time/date (add colon for str2time)
+    $i=~s/^\s*(.*?)\s+GFS MOS GUIDANCE\s+(.*?)\s+(\d\d)(.*? UTC)//;
+    my($stat,$date,$time,$inithour) = ($1, $2, "$3:$4",$3);
+    my($start) = str2time("$date $time");
+
+    # hash for rows
+    my(%hash) = ();
+    while ($i=~s/^\s*(\S+)\s*(.*?)$//m) {
+      @{$hash{$1}} = split(/\s+/, $2);
+    }
+
+    # TODO: error check (eg, "999")
+    # iterate along the hours
+    my(%rethash) = ();
+    for $j (0..$#{$hash{HR}}) {
+      # figure out ISO hour by looking at gap
+      my($gap);
+      if ($j==0) {
+	$gap = $hash{HR}[0] - $inithour;
+      } else {
+	$gap = $hash{HR}[$j] - $hash{HR}[$j-1];
+      }
+
+      if ($gap<0) {$gap+=24;}
+      $start += $gap*3600;
+
+      # build the hash for this station/time
+      $rethash{$stat}{$start}{type} = "MOS";
+      $rethash{$stat}{$start}{id} =  $stat;
+      $rethash{$stat}{$start}{time} = strftime("%Y-%m-%d %H:%M:%S",gmtime($start));
+      for $k ("name", "latitude", "longitude") {
+	$rethash{$stat}{$start}{$k} = $stathash{$stat}{$k};
+      }
+
+      # and now the data
+      for $k (keys %convert) {
+	$rethash{$stat}{$start}{$convert{$k}} = @{$hash{$k}}[$j];
+      }
+
+      # except for this, data is already in correct units
+      $rethash{$stat}{$start}{winddir}*=10;
+
+      # TODO: add elevation from mos-guidance.html file (do we have this?)
+    }
+    push(@res, {%rethash});
+  }
+  return @res;
 }
 
 die "TESTING";
