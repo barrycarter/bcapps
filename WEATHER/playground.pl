@@ -9,8 +9,6 @@ debug(var_dump("l",[@l]));
 sub recent_forecast2 {
   # TODO: cleanup vars I no longer use
   my($options) = ();
-  my($cur,$date,$time,$unix);
-  my(@hrs,@realhours);
   my(%rethash);
 
   # this is probably a bad way to do this (global %stathash)
@@ -75,6 +73,7 @@ sub recent_forecast2 {
       $rethash{$stat}{$start}{type} = "MOS";
       $rethash{$stat}{$start}{id} =  $stat;
       $rethash{$stat}{$start}{time} = strftime("%Y-%m-%d %H:%M:%S",gmtime($start));
+      debug("$stat, $rethash{$stat}{$start}{time}");
       for $k ("name", "latitude", "longitude") {
 	$rethash{$stat}{$start}{$k} = $stathash{$stat}{$k};
       }
@@ -86,10 +85,11 @@ sub recent_forecast2 {
 
       # except for this, data is already in correct units
       $rethash{$stat}{$start}{winddir}*=10;
-
       # TODO: add elevation from mos-guidance.html file (do we have this?)
+      # need to declare a hash here solely so I have ref to it
+      my(%rhash) = %{$rethash{$stat}{$start}};
+      push(@res, {%rhash});
     }
-    push(@res, {%rethash});
   }
   return @res;
 }
