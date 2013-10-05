@@ -104,14 +104,6 @@ for $i (@queries) {
 
 print "COMMIT;\n";
 
-# ugly function to round null to null
-sub round2 {
-  my($num,$digits) = @_;
-  # TODO: improve this to deal with other strings
-  if ($num eq "NULL") {return "NULL";}
-  return sprintf("%0.${digits}f", $num);
-}
-
 =item headers
 
 The list of data that buoy report provides that we do NOT use (from

@@ -3669,7 +3669,9 @@ MARK
 
 =item parse_metar($metar)
 
-Converts a METAR report into a hash
+Converts a METAR report into a hash (matches weather2.sql format)
+
+TODO: handle SLP
 
 =cut
 
@@ -3682,7 +3684,7 @@ sub parse_metar {
   my(@leftover)=(); # anything i can't parse
 
   # we want to store the full metar
-  $b{metar}=$a;
+  $b{observation}=$a;
 
   # fix things like "2 1/2SM" and "3/4SM", eval to avoid div by zero death
   eval {$a=~s!(\d+)\s+(\d)/(\d)sm!eval($1+$2/$3)."SM"!ie};
@@ -3692,7 +3694,7 @@ sub parse_metar {
   @b=split(/\s+/,$a);
 
   # first field is always station
-  $b{code}=shift(@b);
+  $b{id}=shift(@b);
 
   # second field is ddhhmm in GMT
   $aa=shift(@b);
@@ -3722,14 +3724,8 @@ sub parse_metar {
   }
 
   # we will return time in sqlite3 format
-  $b{time} = "$year-$mon-$day $hour:$min";
+  $b{time} = "$year-$mon-$day $hour:$min:00";
   debug("TIME: $b{time}");
-
-
-  # for convenience, note age of data (caller can toss old data)
-#  my($time) = str2time($b{time});
-#  $b{age} = time()-$time;
-#  debug("AGE: -> $b{age}");
 
   # remaining fields may be in any order
   for $i (@b) {
@@ -3748,7 +3744,8 @@ sub parse_metar {
 
     # visibility
     if ($i=~s/sm$//i) {
-      $b{visibility}=$i;
+      # we no longer assign visibility since its not in weather2.sql
+#      $b{visibility}=$i;
       next;
     }
 
@@ -3803,8 +3800,8 @@ sub parse_metar {
       next;
     }
 
-    # Was this report automatically generated?
-    if ($i eq "AUTO") {$b{type}="AUTO"; next;}
+    # Was this report automatically generated? (not used)
+#    if ($i eq "AUTO") {$b{type}="AUTO"; next;}
 
     # uninteresting stuff (data on sensors, sea-level pressure,
     # non-aviation temperature, remarks separator); we preserve this
@@ -3818,11 +3815,31 @@ sub parse_metar {
     push(@leftover,$i);
   }
 
-  # combine lists into strings
+  # combine lists into strings (but no leftover, we can't use it)
   $b{cloudcover}=join(" ",@clouds);
-  $b{weather}=join(" ",@weather);
-  $b{leftover}=join(" ",@leftover);
+  $b{events}=join(" ",@weather);
+#  $b{leftover}=join(" ",@leftover);
+
+
+  # convert units as needed
+  $b{windspeed} = round2(convert($b{windspeed},"kt","mph"));
+  $b{temperature} = round2(convert($b{temperature}, "c", "f"),1);
+  $b{dewpoint} = round2(convert($b{dewpoint}, "c", "f"),1);
+
   return(%b);
+}
+
+=item round2($num,$digits)
+
+Round $num to $digits digits, but preserve NULLs (empty = NULL)
+
+=cut
+
+sub round2 {
+  my($num,$digits) = @_;
+  # TODO: improve this to deal with other strings
+  if ($num eq "NULL" || $num eq "") {return "NULL";}
+  return sprintf("%0.${digits}f", $num);
 }
 
 # cleanup files created by my_tmpfile (unless --keeptemp set)
