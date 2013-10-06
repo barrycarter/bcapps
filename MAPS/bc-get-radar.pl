@@ -23,7 +23,7 @@ system("convert -comment '$res' $res /sites/data/$res; cp /sites/data/$res /site
 
 # I still feel bad about using a goto; <h>is there a support group?</h>
 RADAR:
-@sites = ("ABX");
+@sites = ("ABX", "IND", "IWX");
 @types = ("N0R","NCR","N0Z", "N0S", "N0V", "N1P", "NTP");
 
 # could make $i and $j args and parallelize that way?

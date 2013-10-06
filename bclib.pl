@@ -3671,7 +3671,7 @@ MARK
 
 Converts a METAR report into a hash (matches weather2.sql format)
 
-TODO: handle SLP
+TODO: handle SLP + maybe other fields
 
 =cut
 
