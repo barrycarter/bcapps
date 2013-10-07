@@ -29,3 +29,9 @@ close(A);
 system("cp /sites/DB/guidance.db /sites/DB/guidance.db.new");
 system("sqlite3 /sites/DB/guidance.db.new < /var/tmp/mos-queries.txt");
 system("mv /sites/DB/guidance.db /sites/DB/guidance.db.old; mv /sites/DB/guidance.db.new /sites/DB/guidance.db");
+
+# ultimately, all queries will be in /var/tmp/querys and handled by a
+# query gobbler; for now, this is redundant
+# NOTE: I really do want these in madis.db, not guidance.db
+my($qfile) = "/var/tmp/querys/madis-".`date +%Y%m%d.%H%M%S.%N`.$$;
+system("cp /var/tmp/mos-queries.txt $qfile");

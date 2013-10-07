@@ -2,10 +2,7 @@
 
 require "/usr/local/lib/bclib.pl";
 
-@res = recent_forecast();
-
-debug("foo");
-debug(hashlist2sqlite([@res], "guidance"));
+debug(get_raws_obs());
 
 die "TESTING";
 
@@ -49,17 +46,40 @@ sub get_raws_obs {
 
   # now look thru data
   for $i (@stns) {
+    my(%hash);
     my($data) = read_file($i);
     # get lat/lon/name/id
-    $data=~s/\={20,}\s*(.*?)(\r|\n)+.*\={20,}\s+//s;
+    $data=~s/^.*?\={20,}\s*(.*?)(\r|\n)+.*\={20,}\s+//s;
     my($meta) = $1;
-    # first 22 chars are name
-    $meta=~s/^(.{22})//;
-    my($name) = $1;
-    # rest don't have spaces, so...
-    my($day, $time, $temp, $dew, $wind) = 
+    # if there is absolutely no data, no point in doing more
+    unless ($data) {
+      warn("$i: NO DATA");
+      next;
+    }
 
-    debug("NAME: $name");
+    # first 23 chars are name (w/ spaces)
+    $meta=~s/^(.{23})//;
+    $hash{name} = $1;
+    # then id, elev, lat, lon (elev is in ft!)
+    my($lat,$lon);
+    ($hash{id},$hash{elev},$lat,$lon) = split(/\s+/, $meta);
+    # correct lat/lon
+    unless ($lat=~m/^(\d+):(\d+):(\d+)$/) {warn "BAD LAT: $lat";}
+    $hash{latitude} = $1+$2/60+$3/3600;
+
+    unless ($lon=~m/^(\d+):(\d+):(\d+)$/) {warn "BAD LON: $lon";}
+    # all longitudes are negative
+    $hash{longitude} = -1*($1+$2/60+$3/3600);
+
+    # of what remains first line is now current data
+    $data=~s/\n.*$//isg;
+    # fields we want start at col 25
+    my(@data) = split(/[\s\/]+/, substr($data,25));
+    debug("STAT: $i, DATA",@data);
+#    debug("$day, $time, $hash{temperature}, $hash{dewpoint}, $wind, $gust");
+    # rest don't have spaces, so...
+    my($day, $time, $temp, $dew, $wind) = ();
+
   }
 }
 
