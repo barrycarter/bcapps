@@ -27,7 +27,7 @@ for $i (@urls) {
   # TODO: age=900 bad for 10m METAR reports?
   # TODO: METAR reports in METAR.kmz should override others (which
   # they do since its last, but that seems dicey)
-  my($out,$err,$res) = cache_command2("curl -O $i","age=900");
+  my($out,$err,$res) = cache_command2("curl -O $i","age=300");
   if ((-M "$file.kmz" < -M "$file.kml") || !(-f "$file.kml")) {
     debug("$file.kmz is younger than $file.kml");
 #    system("unzip -jo $file.kmz; touch $file.kml");
@@ -72,7 +72,10 @@ for $i (@urls) {
 
         # switch between METAR.kmz and other files
     if ($report=~s%<name>(.{11}Z.*\=)</name>%%) {
-      %dbhash = parse_metar($1);
+      # don't wipe out existing entries (eg, lat/lon), just add
+      %dbhash2 = parse_metar($1);
+      for $j (keys %dbhash2) {$dbhash{$j} = $dbhash2{$j};}
+      $dbhash{type} = "METAR-10M";
     } elsif ($report=~s%<name>(.*?)\s+(.*)</name>%%) {
       ($dbhash{id}, $dbhash{name}) = ($1,$2);
     } else {

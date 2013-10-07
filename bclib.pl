@@ -3085,7 +3085,7 @@ sub recent_forecast {
   # this is probably a bad way to do this (global %stathash)
   unless (%stathash) {
     # TODO: subroutinize this?
-    for $i (split(/\n/,read_file("/home/barrycarter/BCGIT/WEATHER/juststations.txt"))) {
+    for $i (split(/\n/,read_file("/usr/local/etc/juststations.txt"))) {
       $i=~/^(\S+)\s+(.{28})\s*(\S+)\s*(\S+)$/;
       my($stat,$name,$lat,$long) = ($1,$2,$3,$4);
       # cleanup
