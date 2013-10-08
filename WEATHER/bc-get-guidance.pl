@@ -33,5 +33,6 @@ system("mv /sites/DB/guidance.db /sites/DB/guidance.db.old; mv /sites/DB/guidanc
 # ultimately, all queries will be in /var/tmp/querys and handled by a
 # query gobbler; for now, this is redundant
 # NOTE: I really do want these in madis.db, not guidance.db
-my($qfile) = "/var/tmp/querys/madis-".`date +%Y%m%d.%H%M%S.%N`.$$;
+my($qfile) = "/var/tmp/querys/madis-$$-".`date +%Y%m%d.%H%M%S.%N`;
+debug("QFILE: $qfile");
 system("cp /var/tmp/mos-queries.txt $qfile");

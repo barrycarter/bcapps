@@ -1,8 +1,10 @@
-#!/usr/bin/perl
+#!/usr/bin/perl -w
 
 require "/usr/local/lib/bclib.pl";
 
-debug(get_raws_obs());
+@res = get_raws_obs();
+debug("RES",@res);
+debug(hashlist2sqlite(\@res, "madis"));
 
 die "TESTING";
 
@@ -18,11 +20,19 @@ get_raws_obs();
 
 Obtain weather information from http://raws.wrh.noaa.gov/rawsobs.html
 
-/var/tmp/raws must exist and be write-able
+NOTE: Temperatures are in Farenheit and wind speeds are in mph <h>also
+known as the "good" or "correct" units</h>
+
+RAWS does not provide: pressure <h>("you can not handle
+PRESSURE!")</h>, cloudcover, events
+
+TODO: maybe use solar radiation readings (could be used to determine
+cloudcover maybe)
 
 =cut
 
 sub get_raws_obs {
+  my(@res);
   # chdir to correct directory
   dodie('chdir("/var/tmp/raws")');
   # index page almost never changes
@@ -60,9 +70,12 @@ sub get_raws_obs {
     # first 23 chars are name (w/ spaces)
     $meta=~s/^(.{23})//;
     $hash{name} = $1;
+    $hash{name}=~s/\s*$//isg;
     # then id, elev, lat, lon (elev is in ft!)
     my($lat,$lon);
-    ($hash{id},$hash{elev},$lat,$lon) = split(/\s+/, $meta);
+    ($hash{id},$hash{elevation},$lat,$lon) = split(/\s+/, $meta);
+    # using more familiar id here, overriding above
+    $hash{id} = $i;
     # correct lat/lon
     unless ($lat=~m/^(\d+):(\d+):(\d+)$/) {warn "BAD LAT: $lat";}
     $hash{latitude} = $1+$2/60+$3/3600;
@@ -73,13 +86,39 @@ sub get_raws_obs {
 
     # of what remains first line is now current data
     $data=~s/\n.*$//isg;
-    # fields we want start at col 25
-    my(@data) = split(/[\s\/]+/, substr($data,25));
-    debug("STAT: $i, DATA",@data);
-#    debug("$day, $time, $hash{temperature}, $hash{dewpoint}, $wind, $gust");
-    # rest don't have spaces, so...
-    my($day, $time, $temp, $dew, $wind) = ();
+    $hash{observation} = $data;
+    $hash{observation}=~s/\s+/ /isg;
+    my(@data) = column_data($data, [25,28,33,39,43,48,67,74]);
+    # remove spaces/slashes
+    for $j (@data) {$j=~s/[\s\/]//isg;}
+    my($day,$time,$jnk);
+    ($day,$time,$hash{temperature},$hash{dewpoint},$wind,$jnk,$gust) = @data;
 
+    # parse wind
+    unless ($wind=~/^(..)(..)$/) {warn "BAD WIND: $wind";}
+    $hash{winddir} = $1*10;
+    $hash{windspeed} = $2;
+    if ($gust=~/g(\d+)/) {$hash{gust} = $1;}
+
+    # parse time and date (don't need 00 minute)
+    $time=~/(\d{2})(\d{2})/||warn("BAD TIME: $time");
+    my($hr,$mi) = ($1, $2);
+    my($today) = strftime("%d", gmtime(time()));
+    if ($day <= $today+1) {
+      $hash{time} = strftime("%Y-%m-$day $hr:$mi:00", gmtime(time()));
+    } else {
+      my($year, $month) = split(/\-/, strftime("%Y-%m", gmtime(time())));
+      $month--;
+      if ($month < 0) {$year--; $month=12;}
+      $hash{time} = "$year-$month-$day $hr:$mi:00";
+    }
+
+    # push to result
+    push(@res, {%hash});
   }
+
+  return @res;
 }
+
+
 

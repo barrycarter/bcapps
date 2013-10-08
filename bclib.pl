@@ -3842,6 +3842,25 @@ sub round2 {
   return sprintf("%0.${digits}f", $num);
 }
 
+=item column_data($data, [@columns])
+
+Given a line of data and a list of column positions, return data
+corresponding to those columns
+
+=cut
+
+sub column_data {
+  my($data,$colref) = @_;
+  my(@cols) = @{$colref};
+  my(@res);
+
+  for $j (0..$#cols) {
+    push(@res,substr($data, $cols[$j], $cols[$j+1]-$cols[$j]));
+  }
+
+  return @res;
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
   debug("END: CLEANING UP TMP FILES");
