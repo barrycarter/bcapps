@@ -36,6 +36,8 @@ for $i (@urls) {
 
   # TODO: does this mean I parse the same file twice? blech!
   my($data) = read_file("$file.kml");
+  # some files have nulls in them for some bizarre reason
+  $data=~s/\0//isg;
   debug("FILE: $file.kml");
   # parse data
   # TODO: should I dl all first then parse?
@@ -70,10 +72,13 @@ for $i (@urls) {
       die "NO COORDS?: $report";
     }
 
-        # switch between METAR.kmz and other files
-    if ($report=~s%<name>(.{11}Z.*\=)</name>%%) {
+    # switch between METAR.kmz and other files
+    # TODO: this could actually be a check on the filename instead of
+    # convoluted test below
+    if ($report=~s%<name>(.{5}\d{6}Z.*)</name>%%) {
       # don't wipe out existing entries (eg, lat/lon), just add
       %dbhash2 = parse_metar($1);
+      debug("THIS IS METAR");
       for $j (keys %dbhash2) {$dbhash{$j} = $dbhash2{$j};}
       $dbhash{type} = "METAR-10M";
     } elsif ($report=~s%<name>(.*?)\s+(.*)</name>%%) {
@@ -114,6 +119,14 @@ print A "COMMIT;\n";
 # delete old reports + clean db
 print A "DELETE FROM madis_now WHERE timestamp < DATETIME(CURRENT_TIMESTAMP, '-3 hour');\n";
 print A "DELETE FROM madis WHERE timestamp < DATETIME(CURRENT_TIMESTAMP, '-24 hour');\n";
+
+# let METAR-10M trump ASOS
+# <h>the fact that this works proves sqlite3 > mysql</h>
+print A "DELETE FROM madis WHERE rowid IN (
+SELECT m1.rowid FROM madis m1 JOIN madis m2 ON (m1.type='ASOS'
+AND m2.type='METAR-10M' AND m1.id = m2.id AND m1.time = m2.time)
+);\n";
+
 print A "VACUUM;\n";
 
 close(A);
