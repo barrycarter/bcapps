@@ -12,4 +12,5 @@ frombbsss.txt lists 3884 METAR stations and 7664 non-METAR stations
 
 All of the METAR stations in frombbsss.txt are also in nsd_cccc.txt
 
-
+airports.dat obtained from
+https://raw.github.com/emper0r/IVAO-status/master/database/airports.dat

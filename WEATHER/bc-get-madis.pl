@@ -11,6 +11,15 @@
 require "/usr/local/lib/bclib.pl";
 dodie("chdir('/var/tmp')");
 
+# obtain METAR data for later use
+@minfo = sqlite3hashlist("SELECT * FROM stations","/sites/DB/stations.db");
+
+# TODO: this program is getting very cluttered, break this out?
+for $i (@minfo) {
+  # create hash mapping code to data
+  $minfo{$i->{metar}} = $i;
+}
+
 @urls = ("http://www.srh.noaa.gov/gis/kml/metar/tf.kmz",
 	 "http://www.srh.noaa.gov/gis/kml/raws/rawstf.kmz",
 	 "http://www.srh.noaa.gov/gis/kml/aprswxnet/aprstf.kmz",
@@ -78,6 +87,11 @@ for $i (@urls) {
     if ($report=~s%<name>(.{5}\d{6}Z.*)</name>%%) {
       # don't wipe out existing entries (eg, lat/lon), just add
       %dbhash2 = parse_metar($1);
+      unless ($minfo{$dbhash2{id}}) {
+	warn "UNKNOWN METAR: $dbhash2{id}";
+      }
+      $dbhash{elevation} = convert($minfo{$dbhash2{id}}{elevation},"m","ft");
+      $dbhash{name} = "$minfo{$dbhash2{id}}{city}, $minfo{$dbhash2{id}}{state}, $minfo{$dbhash2{id}}{country}";
       debug("THIS IS METAR");
       for $j (keys %dbhash2) {$dbhash{$j} = $dbhash2{$j};}
       $dbhash{type} = "METAR-10M";
@@ -124,6 +138,11 @@ print A "DELETE FROM madis WHERE timestamp < DATETIME(CURRENT_TIMESTAMP, '-24 ho
 # <h>the fact that this works proves sqlite3 > mysql</h>
 print A "DELETE FROM madis WHERE rowid IN (
 SELECT m1.rowid FROM madis m1 JOIN madis m2 ON (m1.type='ASOS'
+AND m2.type='METAR-10M' AND m1.id = m2.id AND m1.time = m2.time)
+);\n";
+
+print A "DELETE FROM madis_now WHERE rowid IN (
+SELECT m1.rowid FROM madis_now m1 JOIN madis_now m2 ON (m1.type='ASOS'
 AND m2.type='METAR-10M' AND m1.id = m2.id AND m1.time = m2.time)
 );\n";
 
