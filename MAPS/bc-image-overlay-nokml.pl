@@ -26,7 +26,7 @@ my($query) = $ENV{QUERY_STRING};
 $query=~s/[^a-z0-9_\.\=\&\,\-]//isg;
 # by making defaults come first, $query stuff will override
 # NOTE: default of entire world is REALLY ugly + doesn't work well (Mercator)
-$defaults = "center=0,0&zoom=2&maptypeid=HYBRID&s=-90&n=90&e=180&w=-180&keypos=LEFT_BOTTOM&opacity=0.5";
+$defaults = "center=0,0&zoom=2&maptypeid=HYBRID&s=-90&n=90&e=180&w=-180&keypos=LEFT_BOTTOM&opacity=0.5&rotateControl=true&scaleControl=true&overviewMapControl=true";
 my(%query) = str2hash("$defaults&$query");
 
 # image comments (if any)
@@ -74,7 +74,7 @@ var gl;
 function initialize() {
  var myLatLng = new google.maps.LatLng($query{center});
 
- var myOptions = {zoom: $query{zoom}, center: myLatLng, mapTypeId: google.maps.MapTypeId.$query{maptypeid}, scaleControl: true};
+ var myOptions = {zoom: $query{zoom}, center: myLatLng, mapTypeId: google.maps.MapTypeId.$query{maptypeid}, scaleControl: $query{scaleControl}, rotateControl: $query{rotateControl}, overviewMapControl: $query{overviewMapControl}};
 
  map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
 

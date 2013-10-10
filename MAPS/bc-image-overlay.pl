@@ -3,6 +3,8 @@
 # Given a KML on my server (bcinfo3), create google map with that KML
 # file, using randomization to prevent caching
 
+# TODO: allow scale/rotate/etc controls to be turned off
+
 # sample URL: http://test.bcinfo3.barrycarter.info/bc-image-overlay.pl?center=35.1,-106.55&zoom=13&maptypeid=HYBRID&url=conus.kml&refresh=60
 
 require "/usr/local/lib/bclib.pl";
@@ -11,7 +13,7 @@ require "/usr/local/lib/bclib.pl";
 my($query) = $ENV{QUERY_STRING};
 $query=~s/[^a-z0-9_\.\=\&\,\-]//isg;
 # by making defaults come first, $query stuff will override
-$defaults = "center=0,0&zoom=2&maptypeid=HYBRID";
+$defaults = "center=0,0&zoom=2&maptypeid=HYBRID&rotateControl=true&scaleControl=true&overviewMapControl=true";
 my(%query) = str2hash("$defaults&$query");
 
 # refresh header?
@@ -50,7 +52,10 @@ my($str) = << "MARK";
 <script type="text/javascript">
 function initialize() {
  var myLatLng = new google.maps.LatLng($query{center});
- var myOptions = {zoom: $query{zoom}, center: myLatLng, mapTypeId: google.maps.MapTypeId.$query{maptypeid}, scaleControl: true};
+ var myOptions = {zoom: $query{zoom}, center: myLatLng, mapTypeId: google.maps.MapTypeId.$query{maptypeid}, scaleControl: $query{scaleControl}, rotateControl: $query{rotateControl}, overviewMapControl: $query{overviewMapControl}};
+
+// var searchBox = new google.maps.places.SearchBox(input);
+
  var map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
  var kmlLayerOptions = {preserveViewport:true};
  var kmllayer = new google.maps.KmlLayer('$kmlurl',kmlLayerOptions);

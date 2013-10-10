@@ -76,7 +76,7 @@ for $i (@urls) {
 
     # special cases
     if ($report=~s%<coordinates>(.*?),\s*(.*?),\s*.*?</coordinates>%%im) {
-      ($dbhash{longitude}, $dbhash{latitude}) = ($1,$2)
+      ($dbhash{longitude}, $dbhash{latitude}) = ($1,$2);
     } else {
       die "NO COORDS?: $report";
     }
@@ -92,6 +92,7 @@ for $i (@urls) {
       }
       $dbhash{elevation} = convert($minfo{$dbhash2{id}}{elevation},"m","ft");
       $dbhash{name} = "$minfo{$dbhash2{id}}{city}, $minfo{$dbhash2{id}}{state}, $minfo{$dbhash2{id}}{country}";
+      debug("DIFFS",$minfo{$dbhash2{id}}{latitude}-$dbhash{latitude});
       debug("THIS IS METAR");
       for $j (keys %dbhash2) {$dbhash{$j} = $dbhash2{$j};}
       $dbhash{type} = "METAR-10M";
@@ -100,6 +101,14 @@ for $i (@urls) {
     } else {
       die "NO NAME?: $report";
     }
+
+    # repeated latlons = bad
+    if ($latlonseen{$dbhash{longitude}}{$dbhash{latitude}}) {
+      warn("LATLON FOR $dbhash{id} ($dbhash{longitude},$dbhash{latitude}) SEEN BEFORE: $latlonseen{$dbhash{longitude}{$dbhash{latitude}}}");
+    }
+
+    debug("ALPHA: $dbhash{longitude} $dbhash{latitude} -> $dbhash{id}");
+    $latlonseen{$dbhash{longitude}{$dbhash{latitude}}} = $dbhash{id};
 
     # cleanup
     $dbhash{name}=~s/\s+/ /isg;
