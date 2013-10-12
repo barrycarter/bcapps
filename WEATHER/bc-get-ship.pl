@@ -3,8 +3,8 @@
 # does what bc-get-buoy.pl does but for ships (starts out as a copy of
 # bc-get-buoy.pl)
 
-# specifically, writes to STDOUT SQL commands to populate weather.db
-# (does not actually run them)
+# specifically, writes SQL commands to populate madis.db to file where
+# bc-query-gobbler.pl will run them
 
 require "/usr/local/lib/bclib.pl";
 
@@ -16,13 +16,11 @@ my(@names) = ("time", "", "latitude", "longitude", "temperature",
 		"dewpoint", "winddir", "windspeed", "", "gust", "", "",
 		"pressure", "", "id");
 # get data
-my($out,$err,$res) = cache_command2("curl http://coolwx.com/buoydata/data/curr/all.html", "age=150");
-
-# this file is important enough to keep around
-write_file($out, "/var/tmp/coolwx.ship.txt");
+# TODO: maybe keep older versions briefly to check for errors?
+my($out,$err,$res) = cache_command2("curl -o /var/tmp/coolwx.ship.txt http://coolwx.com/buoydata/data/curr/all.html", "age=150");
 
 # split into lines
-my(@reports) = split(/\n/, $out);
+my(@reports) = split(/\n/, read_file("/var/tmp/coolwx.ship.txt"));
 
 for $i (@reports) {
   # ignore non-data lines
@@ -35,8 +33,8 @@ for $i (@reports) {
   $hash{type} = "SHIP";
   $hash{elevation} = "0";
 
-  # somewhat excessive here, but good to know what data is provided
-  for $j ("name", "cloudcover", "events") {$hash{$j} = "NULL";}
+  # somewhat excessive here, but good to know what data is not provided
+  for $j ("cloudcover", "events") {$hash{$j} = "NULL";}
 
   # split based on @cols
   for $j (0..$#cols) {
@@ -60,26 +58,34 @@ for $i (@reports) {
 
   $hash{pressure} = round2(convert($hash{pressure},"mb","in"),2);
 
+  # name is effectively id
+  $hash{name} = "SHIP-$hash{id}";
+
   debug("HASH", %hash);
   push(@res, {%hash});
 
 }
 
-@queries = hashlist2sqlite(\@res, "weather");
+@queries = hashlist2sqlite(\@res, "madis");
 
-# need to delete old entries from weather and weather_now (maybe)
-print "BEGIN;\n";
+my($daten) = `date +%Y%m%d.%H%M%S.%N`;
+chomp($daten);
+my($qfile) = "/var/tmp/querys/$daten-madis-get-ship-$$";
+open(A,">$qfile");
+
+# TODO: need to delete old entries from madis and madis_now (maybe)
+print A "BEGIN;\n";
 
 for $i (@queries) {
   # REPLACE if needed
   $i=~s/IGNORE/REPLACE/;
-  print "$i;\n";
-  # and now for weather_now
-  $i=~s/weather/weather_now/;
-  print "$i;\n";
+  print A "$i;\n";
+  # and now for madis_now
+  $i=~s/madis/madis_now/;
+  print A "$i;\n";
 }
 
-print "COMMIT;\n";
+print A "COMMIT;\n";
 
 # ugly function to round null to null
 sub round2 {

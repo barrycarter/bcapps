@@ -227,6 +227,9 @@ bc-gocomics-comments2.pl&
 bc-metar-db.pl&
 bc-get-radar.pl&
 bc-get-madis.pl &
+bc-get-buoy.pl &
+bc-get-ship.pl &
+bc-query-gobbler.pl &
 
 % other tasks
 

@@ -37,24 +37,21 @@ for $i (@urls) {
   # TODO: METAR reports in METAR.kmz should override others (which
   # they do since its last, but that seems dicey)
   my($out,$err,$res) = cache_command2("curl -O $i","age=300");
-  if ((-M "$file.kmz" < -M "$file.kml") || !(-f "$file.kml")) {
-    debug("$file.kmz is younger than $file.kml");
-#    system("unzip -jo $file.kmz; touch $file.kml");
-    system("unzip -c $file.kmz > $file.kml");
-  }
 
-  # TODO: does this mean I parse the same file twice? blech!
+  # if the KML file exists and is younger than the KMZ file, nothing to do
+  if (-f "$file.kml" && (-M "$file.kml" < -M "$file.kmz")) {next;}
+
+  # KMZ file is younger, so update KML file, read it, strip nulls
+  system("unzip -c $file.kmz > $file.kml");
   my($data) = read_file("$file.kml");
-  # some files have nulls in them for some bizarre reason
   $data=~s/\0//isg;
-  debug("FILE: $file.kml");
+
   # parse data
   # TODO: should I dl all first then parse?
 
   # build hash from each placemark
   while ($data=~s%<placemark>(.*?)</placemark>%%is) {
     my($report) = $1;
-    debug("REPORT: $report");
     # remove deadly quotation marks
     # <h>it sometimes bugs me that I use isg even for non-alpha chars</h>
     $report=~s/\"//isg;
@@ -78,7 +75,7 @@ for $i (@urls) {
     if ($report=~s%<coordinates>(.*?),\s*(.*?),\s*.*?</coordinates>%%im) {
       ($dbhash{longitude}, $dbhash{latitude}) = ($1,$2);
     } else {
-      die "NO COORDS?: $report";
+      warn("NO COORDS?: $report");
     }
 
     # switch between METAR.kmz and other files
@@ -99,7 +96,7 @@ for $i (@urls) {
     } elsif ($report=~s%<name>(.*?)\s+(.*)</name>%%) {
       ($dbhash{id}, $dbhash{name}) = ($1,$2);
     } else {
-      die "NO NAME?: $report";
+      warn("NO NAME?: $report");
     }
 
     # repeated latlons = bad
@@ -125,7 +122,10 @@ for $i (@urls) {
 
 my(@querys) = hashlist2sqlite(\@reports, "madis");
 
-open(A,">queries.txt");
+my($daten) = `date +%Y%m%d.%H%M%S.%N`;
+chomp($daten);
+my($qfile) = "/var/tmp/querys/$daten-madis-get-madis-$$";
+open(A,">$qfile");
 print A "BEGIN;\n";
 
 for $i (@querys) {
@@ -158,11 +158,6 @@ AND m2.type='METAR-10M' AND m1.id = m2.id AND m1.time = m2.time)
 print A "VACUUM;\n";
 
 close(A);
-
-# TODO: shouldn't tweak db in place?
-system("cp /sites/DB/madis.db /sites/DB/madis.db.new");
-system("sqlite3 /sites/DB/madis.db.new < queries.txt");
-system("mv /sites/DB/madis.db /sites/DB/madis.db.old; mv /sites/DB/madis.db.new /sites/DB/madis.db");
 
 in_you_endo();
 unless ($globopts{nodaemon}) {
