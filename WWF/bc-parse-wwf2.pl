@@ -7,6 +7,8 @@ require "/usr/local/lib/bclib.pl";
 
 $argv = join(" ",@ARGV);
 $filespec = "/mnt/sshfs/WWF/wwf*.html $argv";
+# testing below
+$filespec = "/home/barrycarter/Download/wwf*.html";
 debug("FILESPEC: $filespec");
 
 # TODO: really need to start getting rid of some files once game is

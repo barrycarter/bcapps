@@ -14,7 +14,7 @@ require "/usr/local/lib/bclib.pl";
 # TODO: use <h5>Your Move</h5> and playerData stuff
 
 # read/parse existing data
-@res = sqlite3hashlist("SELECT * FROM wwf", "/home/barrycarter/BCINFO/sites/DB/wwf.db");
+# @res = sqlite3hashlist("SELECT * FROM wwf", "/home/barrycarter/BCINFO/sites/DB/wwf.db");
 
 for $i (@res) {
   $gamedata{$i->{game}} = $i;
@@ -31,6 +31,9 @@ for $i (@res) {
 
 # reverse order should help speed things up
 @files = `ls -t /mnt/sshfs/WWF/wwf*.html /mnt/sshfs/WWF/wwf*.html.bz2`;
+
+# testing
+@files = `ls -t /home/barrycarter/Download/wwf*.html`;
 
 for $file (@files) {
   chomp($file);
@@ -52,7 +55,8 @@ for $file (@files) {
     $myname = $1;
   } else {
     # so far, all files have at least one of the two above
-    die "FILE $file has no user data";
+    warn "FILE $file has no user data";
+    next;
   }
 
   # all files have this
@@ -73,7 +77,7 @@ for $file (@files) {
     # try to get all the short form information at once
     # this is ugly but lets me test all elements at once
     unless ($data=~m%<li class="game (.*?)" data-game-id="(\d+)" data-opponent-id="(\d+)">.*?<div class="title">\s*(.*?)</div>\s*<span class="date">Started (.*?)</span><small>(.*?)</small>%s) {
-      die "BAD DATA: $data";
+      warn "BAD DATA: $data";
       next;
     }
 
@@ -356,7 +360,9 @@ MARK
 print A join(";\n",@queries),";\n";
 print A "COMMIT;\n";
 
-system("sqlite3 /home/barrycarter/BCINFO/sites/DB/wwf.db < /tmp/bcpwwf.sql");
+die "TESTING";
+
+# system("sqlite3 /home/barrycarter/BCINFO/sites/DB/wwf.db < /tmp/bcpwwf.sql");
 
 warn "Should not create db over again each time when live";
 

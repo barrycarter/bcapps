@@ -90,7 +90,7 @@ for $i (@urls) {
       unless ($minfo{$dbhash2{id}}) {
 	warn "UNKNOWN METAR: $dbhash2{id}";
       }
-      $dbhash{elevation} = convert($minfo{$dbhash2{id}}{elevation},"m","ft");
+      $dbhash{elevation} = round(convert($minfo{$dbhash2{id}}{elevation},"m","ft"));
       $dbhash{name} = "$minfo{$dbhash2{id}}{city}, $minfo{$dbhash2{id}}{state}, $minfo{$dbhash2{id}}{country}";
       debug("DIFFS",$minfo{$dbhash2{id}}{latitude}-$dbhash{latitude});
       debug("THIS IS METAR");

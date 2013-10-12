@@ -9,6 +9,9 @@
 require "/usr/local/lib/bclib.pl";
 $maindir = "/mnt/sshfs/ELEC2013-VLC";
 
+# if this directory doesn't exist, die
+unless (-d $maindir) {die "$maindir DOES NOT EXIST";}
+
 for $i (glob("$maindir/elec*.png")) {
   my($dev,$ino,$mode,$nlink,$uid,$gid,$rdev,$size,$atime,$mtime,$ctime,$blksize,$blocks)=stat($i);
   my($dir) = strftime("$maindir/%Y%m%d",localtime($mtime));

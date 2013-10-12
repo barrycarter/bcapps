@@ -34,9 +34,11 @@ sub dump_ls {
   # generate file lists from all machines (in parallel)
   local(*A);
   # on bcpc and bcmac, I *do* want to descend into other devices
+  warn "NOT STORING LS LOCALLY!";
+  # TODO: hardcoding here is bad
   my($str) = << "MARK";
-(ssh $secret{bcpc_user}\@bcpc "/usr/bin/find / -ls" > $dir/bcpc-files.txt) >&! $dir/bcpc-errs.txt; echo EOF >> $dir/bcpc-files.txt; bzip2 -f -v $dir/bcpc-files.txt
-(ssh root\@bcmac "/usr/bin/find / -ls" > $dir/bcmac-files.txt) >&! $dir/bcmac-errs.txt; echo EOF >> $dir/bcmac-files.txt; bzip2 -f -v $dir/bcmac-files.txt
+ssh $secret{bcpc_user}\@bcpc "/usr/bin/find / -ls > /cygdrive/c/bcpc-files.txt; echo EOF >> /cygdrive/c/bcpc-files.txt; bzip2 -f -v /cygdrive/c/bcpc-files.txt" >&! $dir/bcpc-errs.txt;
+ssh root\@bcmac "/usr/bin/find / -ls > /mnt/sshfs/bcmac-files.txt; echo EOF >> /mnt/sshfs/bcmac-files.txt; bzip2 -f -v /mnt/sshfs/bcmac-files.txt" >&! $dir/bcmac-errs.txt;
 (/usr/bin/find / -xdev -ls > $dir/bcunix-files.txt) >&! $dir/bcunix-errs.txt; echo EOF >> $dir/bcunix-files.txt; bzip2 -f -v $dir/bcunix-files.txt
 MARK
 ;
