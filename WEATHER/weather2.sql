@@ -21,9 +21,9 @@ CREATE TABLE madis (
  cloudcover TEXT,
  events TEXT,
  observation TEXT, -- the full text of the observation
- source TEXT -- the data source
+ source TEXT, -- the data source
  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
- comment
+ comments TEXT
 );
 
 CREATE TABLE madis_now AS SELECT * FROM madis WHERE 0=1;
