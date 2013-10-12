@@ -3204,7 +3204,9 @@ $options currently unused <h>but not for long!</h>
 
 sub arraywheaders2hashlist {
   my($arrayref, $index, $options) = @_;
+  debug("GOT:",@_);
   my(@arr) = @{$arrayref};
+  debug("ARR",@arr);
   my(@ret);
   my(%hash) = ();
   my(%hash2) = ();

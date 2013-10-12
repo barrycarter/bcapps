@@ -2,26 +2,52 @@
 
 # does what bc-get-buoy.pl does but for METAR
 
-# specifically, writes to STDOUT SQL commands to populate weather.db
-# (does not actually run them)
+# specifically, writes to file SQL commands to populate madis.db so
+# that bc-query-gobbler.pl can run them
 
 require "/usr/local/lib/bclib.pl";
 
-my($out,$err,$res) = cache_command2("curl http://weather.aero/dataserver_current/cache/metars.cache.csv.gz | gunzip | tail -n +6", "age=150");
+my($out,$err,$res) = cache_command2("curl http://weather.aero/dataserver_current/cache/metars.cache.csv.gz | gunzip", "age=150");
+
+# store unzipped results
+write_file($out, "/var/tmp/weather.aero.metars.txt");
 
 # HACK: csv() does not handle ",," well
 while ($out=~s/,,/, ,/isg) {}
+# get rid of everything to header line
+$out=~s/^.*raw_text/raw_text/isg;
 
-# get rid of leading blank lines
-$out=trim($out);
+# let arraywheaders2hashlist do the hard work
+for $i (split(/\n/,$out)) {
+  my(@csv) = csv($i);
+#  debug("CSV",@csv,[@csv]);
+  push(@res, [@csv]);
+}
 
-# this file is important enough to keep around
-write_file($out, "/var/tmp/weather.aero.metars.txt");
+debug("RES",var_dump("RES",[@res]));
+die "TESTING";
+@arr = map(push(@res,[csv($_)]), split(/\n/,$out));
+($lr) = arraywheaders2hashlist(\@arr);
+debug(unfold($lr[17]));
+die "TESTING";
 
-# fields that copy over with different names
-%convert = ("raw_text" => "observation", "station_id" => "id",
-	   "wind_dir_degrees" => "winddir", "wx_string" => "events");
-
+# the following list tells how to convert file fields to db fields. Format:
+# file_field:db_field:from_unit:to_unit:round_digits
+@convert = (
+ "raw_text:observation",
+ "station_id:id",
+ "wind_dir_degrees:winddir",
+ "wx_string:events",
+ "latitude:latitude",
+ "longitude:longitude",
+ "temp_c:temperature:c:f:1",
+ "dewpoint_c:dewpoint:c:f:1",
+ "altim_in_hg:pressure:::2",
+ "elevation_m:elevation:m:ft:0",
+ "wind_speed_kt:windspeed:kt:mph:1",
+ "wind_gust_kt:gust:kt:mph:1"
+);
+ 
 # the reports
 my(@res) = split(/\n/, $out);
 
@@ -77,7 +103,7 @@ for $i (@res) {
   push(@hashes, {%dbhash});
 }
 
-@queries = hashlist2sqlite(\@hashes, "weather");
+@queries = hashlist2sqlite(\@hashes, "madis");
 
 # need to delete old entries from weather and weather_now (maybe)
 print "BEGIN;\n";
@@ -87,7 +113,7 @@ for $i (@queries) {
   $i=~s/IGNORE/REPLACE/;
   print "$i;\n";
   # and now for weather_now
-  $i=~s/weather/weather_now/;
+  $i=~s/madis/madis_now/;
   print "$i;\n";
 }
 
