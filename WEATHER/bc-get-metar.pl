@@ -18,18 +18,8 @@ while ($out=~s/,,/, ,/isg) {}
 $out=~s/^.*raw_text/raw_text/isg;
 
 # let arraywheaders2hashlist do the hard work
-for $i (split(/\n/,$out)) {
-  my(@csv) = csv($i);
-#  debug("CSV",@csv,[@csv]);
-  push(@res, [@csv]);
-}
-
-debug("RES",var_dump("RES",[@res]));
-die "TESTING";
-@arr = map(push(@res,[csv($_)]), split(/\n/,$out));
-($lr) = arraywheaders2hashlist(\@arr);
-debug(unfold($lr[17]));
-die "TESTING";
+map(push(@res, [csv($_)]), split(/\n/,$out));
+($hlref) = arraywheaders2hashlist(\@res);
 
 # the following list tells how to convert file fields to db fields. Format:
 # file_field:db_field:from_unit:to_unit:round_digits
@@ -47,6 +37,28 @@ die "TESTING";
  "wind_speed_kt:windspeed:kt:mph:1",
  "wind_gust_kt:gust:kt:mph:1"
 );
+
+for $i (@{$hlref}) {
+  # the resulting hash
+  my(%hash) = ();
+
+  for $j (@convert) {
+    my($f1,$f2,$u1,$u2,$r) = split(/:/,$j);
+    # start by copying file field to hash field
+    $hash{$f2} = $i->{$f1};
+    # unit conversion
+    if ($u1 && $u2) {$hash{$f2} = convert($hash{$f2},$u1,$u2);}
+    # rounding
+    if (length($r)) {$hash{$f2} = round2($hash{$f2},$r);}
+    debug("ALPHA: $f2 -> $hash{$f2}");
+  }
+
+  debug("HASH",%hash);
+
+}
+
+
+die "TESTING";
  
 # the reports
 my(@res) = split(/\n/, $out);
