@@ -7,7 +7,8 @@
 
 require "/usr/local/lib/bclib.pl";
 
-my($out,$err,$res) = cache_command2("curl http://weather.aero/dataserver_current/cache/metars.cache.csv.gz | gunzip", "age=150");
+my($url) = "http://weather.aero/dataserver_current/cache/metars.cache.csv.gz";
+my($out,$err,$res) = cache_command2("curl $url | gunzip", "age=150");
 
 # store unzipped results
 write_file($out, "/var/tmp/weather.aero.metars.txt");
@@ -50,94 +51,42 @@ for $i (@{$hlref}) {
     if ($u1 && $u2) {$hash{$f2} = convert($hash{$f2},$u1,$u2);}
     # rounding
     if (length($r)) {$hash{$f2} = round2($hash{$f2},$r);}
-    debug("ALPHA: $f2 -> $hash{$f2}");
   }
 
-  debug("HASH",%hash);
+  # special cases
+  $hash{type} = "METAR-parsed";
+  $hash{source} = $url;
 
-}
+  # TODO: read name off METAR files, don't just set to station
+  $hash{name} = $hash{id};
+  $hash{time} = $i->{observation_time};
+  $hash{time}=~s/T/ /;
 
+  push(@hashes, {%hash});
 
-die "TESTING";
- 
-# the reports
-my(@res) = split(/\n/, $out);
-
-# header line
-@headers = csv(shift(@res));
-
-# go through data
-for $i (@res) {
-  my(@line) = csv($i);
-
-  my(%hash) = ();
-
-  for $j (0..$#headers) {
-    # remove the space I added above (sigh)
-    $line[$j]=~s/^\s*$//isg;
-    $hash{$headers[$j]} = $line[$j];
-  }
-  # ignore 0 lat/lon (no wstations there)
-  unless ($hash{latitude} || $hash{longitude}) {
-    debug("BAD LINE: $i");
-    next;
-  }
-
-  # create db hash from original hash
-  # all observations are METAR
-  $dbhash{type} = "METAR";
-
-  # fields we are aware of, but do not fill
-  # TODO: should be able to fill name?
-  for $j ("name") {$dbhash{$j} = "NULL";}
-
-  # copyovers
-  for $j ("latitude", "longitude") {$dbhash{$j} = $hash{$j};}
-
-  for $j (keys %convert) {$dbhash{$convert{$j}} = $hash{$j};}
-
-  # C to F
-  $dbhash{temperature} = round2(convert($hash{temp_c},"c","f"),1);
-  $dbhash{dewpoint} = round2(convert($hash{dewpoint_c},"c","f"),1);
-
-  # minor changes
-  $dbhash{time} = $hash{observation_time};
-  $dbhash{time}=~s/t/ /;
-  $dbhash{pressure} = round2($hash{altim_in_hg},2);
-
-  # meters to feet
-  $dbhash{elevation} = round2(convert($hash{elevation_m},"m","ft"),0);
-
-  # knots to mph
-  $dbhash{windspeed} = round2(convert($hash{wind_speed_kt},"kt","mph"),1);
-  $dbhash{gust} = round2(convert($hash{wind_gust_kt},"kt","mph"),1);
-
-  push(@hashes, {%dbhash});
 }
 
 @queries = hashlist2sqlite(\@hashes, "madis");
 
+my($daten) = `date +%Y%m%d.%H%M%S.%N`;
+chomp($daten);
+my($qfile) = "/var/tmp/querys/$daten-madis-get-metar-$$";
+open(A,">$qfile");
+
 # need to delete old entries from weather and weather_now (maybe)
-print "BEGIN;\n";
+print A "BEGIN;\n";
 
 for $i (@queries) {
   # REPLACE if needed
   $i=~s/IGNORE/REPLACE/;
-  print "$i;\n";
+  print A "$i;\n";
   # and now for weather_now
   $i=~s/madis/madis_now/;
-  print "$i;\n";
+  print A "$i;\n";
 }
 
-print "COMMIT;\n";
-
-# ugly function to round null to null
-sub round2 {
-  my($num,$digits) = @_;
-  # TODO: improve this to deal with other strings
-  if ($num eq "NULL") {return "NULL";}
-  return sprintf("%0.${digits}f", $num);
-}
+print A "COMMIT;\n";
+close(A);
 
 =item headers
 
