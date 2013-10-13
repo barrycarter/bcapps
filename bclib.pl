@@ -2172,7 +2172,7 @@ sub convert {
   my($quant, $from, $to) = @_;
   debug("CONVERT(",@_,")");
   # "MM" is null for buoy reports
-  if ($quant eq "NULL" || $quant eq "MM" || length($quant)==0) {return "NULL";}
+  if ($quant eq "NULL" || $quant eq "MM" || $quant=~/^\s*$/) {return "NULL";}
 
   # meters per second to knots
   if ($from eq "mps" && $to eq "kt") {return $quant*1.944;}
@@ -3085,6 +3085,8 @@ sub recent_forecast {
   # this is probably a bad way to do this (global %stathash)
   unless (%stathash) {
     # TODO: subroutinize this?
+    # TODO: add elevation
+    # TODO: maybe use DB here, not flat file
     for $i (split(/\n/,read_file("/usr/local/etc/juststations.txt"))) {
       $i=~/^(\S+)\s+(.{28})\s*(\S+)\s*(\S+)$/;
       my($stat,$name,$lat,$long) = ($1,$2,$3,$4);
@@ -3144,6 +3146,13 @@ sub recent_forecast {
       $rethash{$stat}{$start}{type} = "MOS";
       $rethash{$stat}{$start}{id} =  $stat;
       $rethash{$stat}{$start}{time} = strftime("%Y-%m-%d %H:%M:%S",gmtime($start));
+
+      # some fixed quantities
+      $rethash{$stat}{$start}{source} = "http://nws.noaa.gov/mdl/forecast/text/avnmav.txt";
+      for $k ("gust", "events", "pressure") {
+	$rethash{$stat}{$start}{$k}="NULL";
+      }
+
       debug("$stat, $rethash{$stat}{$start}{time}");
       for $k ("name", "latitude", "longitude") {
 	$rethash{$stat}{$start}{$k} = $stathash{$stat}{$k};
@@ -3821,7 +3830,13 @@ sub parse_metar {
 
   # combine lists into strings (but no leftover, we can't use it)
   $b{cloudcover}=join(" ",@clouds);
-  $b{events}=join(" ",@weather);
+
+  if (@weather) {
+    $b{events}=join(" ",@weather);
+  } else {
+    $b{events} = "NULL";
+  }
+
 #  $b{leftover}=join(" ",@leftover);
 
 

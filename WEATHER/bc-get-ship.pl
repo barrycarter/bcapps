@@ -63,6 +63,8 @@ for $i (@reports) {
   # name is effectively id
   $hash{name} = "SHIP-$hash{id}";
 
+  unless ($hash{winddir}) {$hash{winddir}="NULL";}
+
   debug("HASH", %hash);
   push(@res, {%hash});
 

@@ -7,6 +7,8 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# TODO: handle case of sky_cover occurring three times
+
 my($url) = "http://weather.aero/dataserver_current/cache/metars.cache.csv.gz";
 my($out,$err,$res) = cache_command2("curl $url | gunzip", "age=150");
 
@@ -48,6 +50,7 @@ for $i (@{$hlref}) {
     my($f1,$f2,$u1,$u2,$r) = split(/:/,$j);
     # start by copying file field to hash field
     $hash{$f2} = $i->{$f1};
+    debug("ALPHA: $f2 -> *$i->{$f1}*");
     # unit conversion
     if ($u1 && $u2) {$hash{$f2} = convert($hash{$f2},$u1,$u2);}
     # rounding
