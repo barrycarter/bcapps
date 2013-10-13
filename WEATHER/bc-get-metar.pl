@@ -7,6 +7,12 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# load METAR data from stations.db
+@res1 = sqlite3hashlist("SELECT * FROM stations","/sites/DB/stations.db");
+for $i (@res1) {$statinfo{$i->{metar}} = $i;}
+
+debug("TEST1");
+
 # TODO: handle case of sky_cover occurring three times
 
 my($url) = "http://weather.aero/dataserver_current/cache/metars.cache.csv.gz";
@@ -22,8 +28,9 @@ $out=~s/^.*raw_text/raw_text/isg;
 
 # let arraywheaders2hashlist do the hard work
 map(push(@res, [csv($_)]), split(/\n/,$out));
-debug(var_dump("RES",{@res}));
 ($hlref) = arraywheaders2hashlist(\@res);
+
+debug("TEST2");
 
 # the following list tells how to convert file fields to db fields. Format:
 # file_field:db_field:from_unit:to_unit:round_digits
@@ -50,7 +57,6 @@ for $i (@{$hlref}) {
     my($f1,$f2,$u1,$u2,$r) = split(/:/,$j);
     # start by copying file field to hash field
     $hash{$f2} = $i->{$f1};
-    debug("ALPHA: $f2 -> *$i->{$f1}*");
     # unit conversion
     if ($u1 && $u2) {$hash{$f2} = convert($hash{$f2},$u1,$u2);}
     # rounding
@@ -62,7 +68,11 @@ for $i (@{$hlref}) {
   $hash{source} = $url;
 
   # TODO: read name off METAR files, don't just set to station
-  $hash{name} = $hash{id};
+  # TODO: maybe compare csv lat/lon to db lat/lon
+  $hash{name} = "$statinfo{$hash{id}}{city}, $statinfo{$hash{id}}{state}, $statinfo{$hash{id}}{country}";
+  $hash{name}=~s/\s*,\s*,\s*/, /isg;
+  $hash{name}=~s/\s*,\s*/, /isg;
+  debug("ALPHA: $hash{id} -> $hash{name}");
   $hash{time} = $i->{observation_time};
   $hash{time}=~s/T/ /;
   $hash{time}=~s/Z//;

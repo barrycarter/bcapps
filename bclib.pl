@@ -471,7 +471,7 @@ sub sqlite3 {
   write_file(".timeout 15\n$query",$qfile);
   my($cmd) = "sqlite3 -batch -line $db < $qfile";
   my($out,$err,$res,$fname) = cache_command2($cmd,"nocache=1");
-  debug("OUT: $out, ERR: $err, RES: $res, FNAME: $fname");
+#  debug("OUT: $out, ERR: $err, RES: $res, FNAME: $fname");
 
   if ($res) {
     warnlocal("SQLITE3 returns $res: $out/$err, CMD: $cmd");
@@ -557,21 +557,19 @@ sub sqlite3cols {
   for $i (split(/\,/,$schema)) {
     # kill extraneous spaces and apos
     $i = trim($i);
-#    $i=~s/\'//isg;
-    debug("I: $i");
+#    debug("I: $i");
 
     if ($i=~/\'(.*?)\'/) {
       # special case for apostrophe quoted cols with no type
       $ret{$1} = "null";
     } elsif ($i=~/^\s*(.*?)\s+(.*)$/) {
     # for cols w/ types
-      debug("$1 -> $2");
+#      debug("$1 -> $2");
       $ret{$1} = $2;
     } elsif ($i=~/^\s*(\S*?)$/) {
-      debug("$1 -> null");
+#      debug("$1 -> null");
       $ret{$1} = "null";
     } else {
-      debug("BAD LINE: $i");
       warnlocal("BAD SCHEMA LINE: $i");
     }
   }

@@ -47,6 +47,9 @@ for $i (@{$hlref}) {
     if (length($r)) {$hash{$f2} = round2($hash{$f2},$r);}
   }
 
+  # ignore the "units" line
+  if ($hash{id} eq "#text") {next;}
+
   # special cases
   # TODO: we don't get the entire observation and thats actually kind of bad
 
