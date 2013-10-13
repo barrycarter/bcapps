@@ -18,7 +18,7 @@
 
 require "/usr/local/lib/bclib.pl";
 
-open(A,"db/nsd_cccc_annotated.txt");
+open(A,"/home/barrycarter/BCGIT/WEATHER/nsd_cccc_annotated.txt");
 
 while (<A>) {
   # hack to find my annotations
@@ -70,7 +70,7 @@ while (<A>) {
   ($x,$y,$z) = sph2xyz($flon,$flat,1,"degrees=1");
 
   # print in importable format (for sqlite3)
-  print join("\t", ($indi, $wmob, $wmos, $place, $state, $country, $flat, $flon, $elev, $x, $y, $z, $ann, "nsd_cccc.txt")),"\n";
+  print join("\t", ($indi, $wmob, $wmos, $place, $state, $country, $flat, $flon, $elev, $x, $y, $z, $ann, "http://weather.noaa.gov/data/nsd_cccc.txt")),"\n";
 }
 
 close(A);

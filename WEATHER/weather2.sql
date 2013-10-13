@@ -48,8 +48,6 @@ CREATE TABLE madis_now (
  comments TEXT
 );
 
-
-
 -- for madis, only one report from a given station at a given time
 CREATE UNIQUE INDEX i1 ON madis(type, id, time);
 

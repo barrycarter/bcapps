@@ -69,6 +69,7 @@ for $i (@{$hlref}) {
 
   # TODO: read name off METAR files, don't just set to station
   # TODO: maybe compare csv lat/lon to db lat/lon
+  unless ($statinfo{$hash{id}}) {warn "NO METAR INFO: $hash{id}";}
   $hash{name} = "$statinfo{$hash{id}}{city}, $statinfo{$hash{id}}{state}, $statinfo{$hash{id}}{country}";
   $hash{name}=~s/\s*,\s*,\s*/, /isg;
   $hash{name}=~s/\s*,\s*/, /isg;
