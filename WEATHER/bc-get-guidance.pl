@@ -11,7 +11,7 @@ require "/usr/local/lib/bclib.pl";
 # write queries to time-based file for bc-query-gobbler
 my($daten) = `date +%Y%m%d.%H%M%S.%N`;
 chomp($daten);
-my($qfile) = "/var/tmp/querys/$daten-madis-$$";
+my($qfile) = "/var/tmp/querys/$daten-madis-get-guidance-$$";
 
 open(A,">$qfile");
 print A "BEGIN;\n";
@@ -23,8 +23,7 @@ for $i (@querys) {
 }
 
 print A "COMMIT;\n";
-
-# delete old reports + clean db
-print A "DELETE FROM guidance WHERE timestamp < DATETIME(CURRENT_TIMESTAMP, '-3 hour');\n";
 print A "VACUUM;\n";
 close(A);
+
+

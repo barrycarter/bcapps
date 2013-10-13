@@ -74,7 +74,7 @@ chomp($daten);
 my($qfile) = "/var/tmp/querys/$daten-madis-get-metar-$$";
 open(A,">$qfile");
 
-# need to delete old entries from weather and weather_now (maybe)
+# TODO: need to delete old entries from madis and madis_now (maybe)
 print A "BEGIN;\n";
 
 for $i (@queries) {

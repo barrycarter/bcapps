@@ -12,12 +12,13 @@ require "/usr/local/lib/bclib.pl";
 @convert = (
  "LAT:latitude",
  "LON:longitude",
- "STN:id",
+ "#STN:id",
  "WDIR:winddir",
  "WSPD:windspeed:mps:mph:1",
  "GST:gust:mps:mph:1",
  "ATMP:temperature:c:f:1",
- "DEWP:dewpoint:c:f:1"
+ "DEWP:dewpoint:c:f:1",
+ "PRES:pressure:hpa:in:2"
 );
 
 # TODO: check for id conflict
@@ -25,21 +26,14 @@ require "/usr/local/lib/bclib.pl";
 # get data, split into lines
 # TODO: error check here and stop if $out is too small, $err exists,
 # $res is non-zero or something
-my($out,$err,$res) = cache_command2("curl http://www.ndbc.noaa.gov/data/latest_obs/latest_obs.txt", "age=150");
+$url = "http://www.ndbc.noaa.gov/data/latest_obs/latest_obs.txt";
+my($out,$err,$res) = cache_command2("curl $url", "age=150");
 # this file is important enough to keep around
 write_file($out, "/var/tmp/noaa.buoy.txt");
-debug("OUT: $out");
-
 map(push(@res, [split(/\s+/,$_)]), split(/\n/,$out));
 ($hlref) = arraywheaders2hashlist(\@res);
 
 for $i (@{$hlref}) {
-  debug("I: $i");
-
-  for $j (sort keys %{$i}) {
-    debug("BETA: $j");
-  }
-
   # the resulting hash
   my(%hash) = ();
 
@@ -53,84 +47,40 @@ for $i (@{$hlref}) {
     if (length($r)) {$hash{$f2} = round2($hash{$f2},$r);}
   }
 
-  debug("HASH",%hash);
-}
+  # special cases
+  # TODO: we don't get the entire observation and thats actually kind of bad
 
-die "TESTING";
+  $hash{type} = "BUOY-PARSED";
+  $hash{source} = $url;
 
+  $hash{time} = "$i->{YYYY}-$i->{MM}-$i->{DD} $->{hh}:$i->{mm}:00";
+  # sea level
+  $hash{elevation} = 0;
+  $hash{name} = "BUOY-$hash{id}";
 
-# find first nonblank line
-do {$headers = shift(@reports)} until $headers;
-# header line (remove '#' at start of line)
-$headers=~s/^\#//isg;
-@headers = split(/\s+/, $headers);
-# useless line (gives units of measurements)
-shift(@reports);
-
-# go through reports
-for $i (@reports) {
-
-  # the whole report
-  my(%dbhash) = ();
-  $dbhash{observation} = $i;
-
-  # set hash directly from data
-  my(%hash) = ();
-  @fields = split(/\s+/, $i);
-
-
-  # set hash from headers
-  for $j (0..$#headers) {
-    # remove the space I added above (sigh)
-    $fields[$j]=~s/^\s*$//isg;
-    $hash{$headers[$j]} = $fields[$j];
-  }
-
-  # all BUOY data here and elevation is 0
-  $dbhash{type} = "BUOY";
-  $dbhash{elevation} = 0;
-
-  # somewhat excessive here, but good to know what data is provided
-  for $j ("name", "cloudcover", "events") {$dbhash{$j} = "NULL";}
-
-  # the date (uses up many fields)
-  $dbhash{time} = "$hash{YYYY}-$hash{MM}-$hash{DD} $hash{hh}:$hash{mm}:00";
-
-  # pressure
-  $dbhash{pressure} = round2(convert($hash{PRES},"hpa","in"),2);
-
-  # set dbhash values that convert over
-  for $j (keys %convert) {$dbhash{$convert{$j}} = $hash{$j};}
-
-  # similar, but convert m/s to mph (accurate to nearest 10th only)
-  for $j (keys %convertms) {
-    $dbhash{$convertms{$j}} = round2(convert($hash{$j},"mps","mph"),1);
-  }
-
-  # similar, but convert C to F (to nearest 10th only)
-  for $j (keys %convertcf) {
-    $dbhash{$convertcf{$j}} = round2(convert($hash{$j},"c","f"),1);
-  }
-
-  # push this hash to results
-  push(@res, {%dbhash});
+  push(@hashlist,{%hash});
 }
 
 @queries = hashlist2sqlite(\@res, "madis");
+my($daten) = `date +%Y%m%d.%H%M%S.%N`;
+chomp($daten);
+my($qfile) = "/var/tmp/querys/$daten-madis-get-buoy-$$";
+open(A,">$qfile");
 
 # need to delete old entries from madis and madis_now (maybe)
-print "BEGIN;\n";
+print A "BEGIN;\n";
 
 for $i (@queries) {
   # REPLACE if needed
   $i=~s/IGNORE/REPLACE/;
-  print "$i;\n";
+  print A "$i;\n";
   # and now for madis_now
   $i=~s/madis/madis_now/;
-  print "$i;\n";
+  print A "$i;\n";
 }
 
-print "COMMIT;\n";
+print A "COMMIT;\n";
+close(A);
 
 =item headers
 

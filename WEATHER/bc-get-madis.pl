@@ -3,10 +3,7 @@
 # http://www.srh.noaa.gov/gis/kml/ lists many KMZ files which actually
 # contain current surface observations (in some cases, you have to
 # follow links); this program downloads those surface observations and
-# puts them in a db; it overrides most bc-get-[thing].pl programs in
-# this directory
-
-# --nodaemon: just run once, don't "daemonize"
+# writes queries to put them into madis.db
 
 require "/usr/local/lib/bclib.pl";
 dodie("chdir('/var/tmp')");
@@ -132,7 +129,7 @@ for $i (@querys) {
   # REPLACE if needed
   $i=~s/IGNORE/REPLACE/;
   print A "$i;\n";
-  # and now for weather_now
+  # and now for madis_now
   $i=~s/madis/madis_now/;
   print A "$i;\n";
 }
@@ -158,9 +155,3 @@ AND m2.type='METAR-10M' AND m1.id = m2.id AND m1.time = m2.time)
 print A "VACUUM;\n";
 
 close(A);
-
-in_you_endo();
-unless ($globopts{nodaemon}) {
-  sleep(60);
-  exec($0);
-}
