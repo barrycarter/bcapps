@@ -53,7 +53,7 @@ for $i (@{$hlref}) {
   $hash{type} = "BUOY-PARSED";
   $hash{source} = $url;
 
-  $hash{time} = "$i->{YYYY}-$i->{MM}-$i->{DD} $->{hh}:$i->{mm}:00";
+  $hash{time} = "$i->{YYYY}-$i->{MM}-$i->{DD} $i->{hh}:$i->{mm}:00";
   # sea level
   $hash{elevation} = 0;
   $hash{name} = "BUOY-$hash{id}";
@@ -61,7 +61,7 @@ for $i (@{$hlref}) {
   push(@hashlist,{%hash});
 }
 
-@queries = hashlist2sqlite(\@res, "madis");
+@queries = hashlist2sqlite(\@hashlist, "madis");
 my($daten) = `date +%Y%m%d.%H%M%S.%N`;
 chomp($daten);
 my($qfile) = "/var/tmp/querys/$daten-madis-get-buoy-$$";

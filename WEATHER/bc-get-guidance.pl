@@ -6,7 +6,7 @@
 require "/usr/local/lib/bclib.pl";
 
 @guidance = recent_forecast();
-@querys = hashlist2sqlite([@guidance],"guidance");
+@querys = hashlist2sqlite([@guidance],"madis");
 
 # write queries to time-based file for bc-query-gobbler
 my($daten) = `date +%Y%m%d.%H%M%S.%N`;

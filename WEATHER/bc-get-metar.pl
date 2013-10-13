@@ -62,6 +62,7 @@ for $i (@{$hlref}) {
   $hash{name} = $hash{id};
   $hash{time} = $i->{observation_time};
   $hash{time}=~s/T/ /;
+  $hash{time}=~s/Z//;
 
   push(@hashes, {%hash});
 

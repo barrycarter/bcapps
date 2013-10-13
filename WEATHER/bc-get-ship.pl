@@ -17,7 +17,8 @@ my(@names) = ("time", "", "latitude", "longitude", "temperature",
 		"pressure", "", "id");
 # get data
 # TODO: maybe keep older versions briefly to check for errors?
-my($out,$err,$res) = cache_command2("curl -o /var/tmp/coolwx.ship.txt http://coolwx.com/buoydata/data/curr/all.html", "age=150");
+$url = "http://coolwx.com/buoydata/data/curr/all.html";
+my($out,$err,$res) = cache_command2("curl -o /var/tmp/coolwx.ship.txt $url", "age=150");
 
 # split into lines
 my(@reports) = split(/\n/, read_file("/var/tmp/coolwx.ship.txt"));
@@ -32,6 +33,7 @@ for $i (@reports) {
   # type is always ship, and elevation is always 0
   $hash{type} = "SHIP";
   $hash{elevation} = "0";
+  $hash{source} = $url;
 
   # somewhat excessive here, but good to know what data is not provided
   for $j ("cloudcover", "events") {$hash{$j} = "NULL";}

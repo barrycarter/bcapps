@@ -3731,6 +3731,9 @@ sub parse_metar {
   # remaining fields may be in any order
   for $i (@b) {
 
+    # trim trailing equals
+    $i=~s/\=$//;
+
     # wind direction/speed
     if ($i=~/^(\d{3}|vrb)(\d{2})kt/i) {
       ($b{winddir},$b{windspeed})=($1,$2);
@@ -3787,7 +3790,7 @@ sub parse_metar {
     # Barometric pressure in millibars; we convert to inches for consistency
     if ($i=~/q(\d+)/i) {
       if (exists $b{pressure}) {next;}
-      $b{pressure}=$1/33.86388;
+      $b{pressure}=round2(convert($1,"mb","in"),2);
       next;
     }
 

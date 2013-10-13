@@ -53,6 +53,8 @@ for $i (@urls) {
     # <h>it sometimes bugs me that I use isg even for non-alpha chars</h>
     $report=~s/\"//isg;
     %dbhash = ();
+    # source data
+    $dbhash{source} = "$i";
 
     # report_tag:unit:db field
     for $j ("ELEV:FT:elevation", "TEMP:F:temperature", "DWPT:F:dewpoint",
