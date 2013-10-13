@@ -86,17 +86,9 @@ for $i (@queries) {
 }
 
 print A "COMMIT;\n";
-
-# ugly function to round null to null
-sub round2 {
-  my($num,$digits) = @_;
-  # TODO: improve this to deal with other strings
-  if ($num eq "NULL") {return "NULL";}
-  return sprintf("%0.${digits}f", $num);
-}
+close(A);
 
 # kludgey function to convert day/hour to timestamp
-
 sub ship2time {
   my(@now) = gmtime(time());
   # assumed given as "foo/bar";

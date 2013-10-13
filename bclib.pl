@@ -3534,7 +3534,7 @@ sub cache_command2 {
 
   # TODO: allow myself to add more tags without having to rewrite
   # below constantly?
-  unless ($cached=~m%^\s*<cmd>(.*?)</cmd>\s*<time>(.*?)</time>\s*<stdout>(.*?)</stdout>\s*<stderr>(.*?)</stderr>\s*<status>(.*?)</status>\s*$%s) {
+  unless ($cached=~m%^\s*<cmd>(.*?)</cmd>\s*<time>(.*?)</time>\s*<stdout>\n(.*?)\n</stdout>\s*<stderr>\n(.*?)\n</stderr>\s*<status>(.*?)</status>\s*$%s) {
     warn "BROKEN CACHE FILE: $file";
     return;
   }

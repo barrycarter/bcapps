@@ -20,6 +20,7 @@ $out=~s/^.*raw_text/raw_text/isg;
 
 # let arraywheaders2hashlist do the hard work
 map(push(@res, [csv($_)]), split(/\n/,$out));
+debug(var_dump("RES",{@res}));
 ($hlref) = arraywheaders2hashlist(\@res);
 
 # the following list tells how to convert file fields to db fields. Format:

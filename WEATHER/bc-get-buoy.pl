@@ -3,34 +3,62 @@
 # does pretty much what recent_weather_buoy() does, but tries to
 # comply to weather2.sql and do more error checking
 
-# specifically, writes to STDOUT SQL commands to populate weather.db
+# specifically, writes to STDOUT SQL commands to populate madis.db
 # (does not actually run them)
 
 require "/usr/local/lib/bclib.pl";
 
-# fields in buoy that convert directly to fields in weather.db TODO:
-# can buoy ids conflict with other IDSs (and is this a issue since we
-# also record type?)
+# see bc-get-metar.pl to see what this does
+@convert = (
+ "LAT:latitude",
+ "LON:longitude",
+ "STN:id",
+ "WDIR:winddir",
+ "WSPD:windspeed:mps:mph:1",
+ "GST:gust:mps:mph:1",
+ "ATMP:temperature:c:f:1",
+ "DEWP:dewpoint:c:f:1"
+);
 
-%convert = ("LAT" => "latitude", "LON" => "longitude", "STN" => "id", 
-	    "WDIR" => "winddir");
-
-# these fields must be converted from m/s to mph
-%convertms = ("WSPD" => "windspeed", "GST" => "gust");
-
-# these fields must be converted to Farenheit
-%convertcf = ("ATMP" => "temperature", "DEWP" => "dewpoint");
+# TODO: check for id conflict
 
 # get data, split into lines
-my($out,$err,$res) = cache_command2("curl http://www.ndbc.noaa.gov/data/latest_obs/latest_obs.txt", "age=150");
-
 # TODO: error check here and stop if $out is too small, $err exists,
 # $res is non-zero or something
-
+my($out,$err,$res) = cache_command2("curl http://www.ndbc.noaa.gov/data/latest_obs/latest_obs.txt", "age=150");
 # this file is important enough to keep around
 write_file($out, "/var/tmp/noaa.buoy.txt");
+debug("OUT: $out");
 
-my(@reports) = split(/\n/, $out);
+map(push(@res, [split(/\s+/,$_)]), split(/\n/,$out));
+($hlref) = arraywheaders2hashlist(\@res);
+
+for $i (@{$hlref}) {
+  debug("I: $i");
+
+  for $j (sort keys %{$i}) {
+    debug("BETA: $j");
+  }
+
+  # the resulting hash
+  my(%hash) = ();
+
+  for $j (@convert) {
+    my($f1,$f2,$u1,$u2,$r) = split(/:/,$j);
+    # start by copying file field to hash field
+    $hash{$f2} = $i->{$f1};
+    # unit conversion
+    if ($u1 && $u2) {$hash{$f2} = convert($hash{$f2},$u1,$u2);}
+    # rounding
+    if (length($r)) {$hash{$f2} = round2($hash{$f2},$r);}
+  }
+
+  debug("HASH",%hash);
+}
+
+die "TESTING";
+
+
 # find first nonblank line
 do {$headers = shift(@reports)} until $headers;
 # header line (remove '#' at start of line)
@@ -88,17 +116,17 @@ for $i (@reports) {
   push(@res, {%dbhash});
 }
 
-@queries = hashlist2sqlite(\@res, "weather");
+@queries = hashlist2sqlite(\@res, "madis");
 
-# need to delete old entries from weather and weather_now (maybe)
+# need to delete old entries from madis and madis_now (maybe)
 print "BEGIN;\n";
 
 for $i (@queries) {
   # REPLACE if needed
   $i=~s/IGNORE/REPLACE/;
   print "$i;\n";
-  # and now for weather_now
-  $i=~s/weather/weather_now/;
+  # and now for madis_now
+  $i=~s/madis/madis_now/;
   print "$i;\n";
 }
 
