@@ -2168,7 +2168,7 @@ This is just a hack function to convert weather data w/o losing "NULL"
 
 sub convert {
   my($quant, $from, $to) = @_;
-  debug("CONVERT(",@_,")");
+
   # "MM" is null for buoy reports
   if ($quant eq "NULL" || $quant eq "MM" || $quant=~/^\s*$/) {return "NULL";}
 
