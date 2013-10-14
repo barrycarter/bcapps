@@ -53,6 +53,9 @@ for $i (@urls) {
     # <h>it sometimes bugs me that I use isg even for non-alpha chars</h>
     $report=~s/\"//isg;
     %dbhash = ();
+    # full observation not given (except for METAR)
+    $dbhash{observation} = "(from KML file)";
+
     # source data
     $dbhash{source} = "$i";
 

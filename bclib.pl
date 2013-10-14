@@ -3929,12 +3929,19 @@ sub get_raws_obs {
       next;
     }
 
+    # fixed for RAWS
+    $hash{type} = "RAWS";
+
+    # info not provided
+    for $j ("pressure", "cloudcover", "events") {$hash{$j} = "NULL";}
+
     # first 23 chars are name (w/ spaces)
     $meta=~s/^(.{23})//;
     $hash{name} = $1;
     $hash{name}=~s/\s*$//isg;
     # then id, elev, lat, lon (elev is in ft!)
     my($lat,$lon);
+    # we do NOT use GOES ID
     ($hash{id},$hash{elevation},$lat,$lon) = split(/\s+/, $meta);
     # using more familiar id here, overriding above
     $hash{id} = $i;
