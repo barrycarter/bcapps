@@ -48,7 +48,7 @@ yum -y install perl-IO-Digest.noarch gcc "perl-Date*" socat nc gcc-c++
 yum -y install mysql mysql-server lighttpd-fastcgi fcgi libxml2 libxml2-devel
 : NOTE: readline does not work well wo ncurses
 yum -y install nano graphviz qhull zip strace xz ncurses ncurses-devel
-yum -y install readline readline-devel
+yum -y install readline readline-devel nagios-plugins 'nagios-plugins-*'
 
 % Perl modules (excluding those available via yum)
 
