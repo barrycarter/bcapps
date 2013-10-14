@@ -142,8 +142,8 @@ for $i (@querys) {
 print A "COMMIT;\n";
 
 # delete old reports + clean db
-print A "DELETE FROM madis_now WHERE timestamp < DATETIME(CURRENT_TIMESTAMP, '-3 hour');\n";
-print A "DELETE FROM madis WHERE timestamp < DATETIME(CURRENT_TIMESTAMP, '-24 hour');\n";
+print A "DELETE FROM madis_now WHERE MIN(time,timestamp) < DATETIME(CURRENT_TIMESTAMP, '-3 hour');\n";
+print A "DELETE FROM madis WHERE MIN(time,timestamp) < DATETIME(CURRENT_TIMESTAMP, '-24 hour');\n";
 
 # let METAR-10M trump ASOS
 # <h>the fact that this works proves sqlite3 > mysql</h>

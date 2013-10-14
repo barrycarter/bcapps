@@ -226,10 +226,7 @@ rpm --nodeps -e sqlite
 bc-gocomics-comments2.pl&
 bc-metar-db.pl&
 bc-get-radar.pl&
-bc-get-madis.pl &
-bc-get-buoy.pl &
-bc-get-ship.pl &
-bc-query-gobbler.pl &
+bc-get-all-weather.pl &
 
 % other tasks
 
@@ -238,6 +235,8 @@ mkdir /usr/share/desktop-directories/
 
 % 28 Sep 2013: hand installed coreutils 8.21 to get "sort -R" (cannot
 do "yum remove coreutils", since too many packages depend on it)
+
+% 14 Oct 2013: installing parallel
 
 
 

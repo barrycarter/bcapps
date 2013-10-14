@@ -1,0 +1,563 @@
+BIX1	0	Biloxi, Keesler Air Force Base, Navu	MS	United States	30.4019444444444	-88.9177777777778	735	http://weather.noaa.gov/data/nsd_cccc.txt
+BIX2	0	Biloxi, Keesler Air Force Base, Navu	MS	United States	30.4094444444444	-88.9188888888889	23	http://weather.noaa.gov/data/nsd_cccc.txt
+BIX3	0	Biloxi, Keesler Air Force Base, Navu	MS	United States	30.41	-88.9191666666667	23	http://weather.noaa.gov/data/nsd_cccc.txt
+CTPP	0	Camp Canargus		Haiti	18.5666666666667	-72.3166666666667	125	http://weather.noaa.gov/data/nsd_cccc.txt
+DIGA	65557	Gagnoa		Cote d'Ivoire	6.13333333333333	-5.95	673	http://weather.noaa.gov/data/nsd_cccc.txt
+EQYG	0	NSA Souda Bay		Greece	35.5333333333333	24.15	479	http://weather.noaa.gov/data/nsd_cccc.txt
+EQYN	0	Naples, Navsuppact		Italy	40.8833333333333	14.2833333333333	299	http://weather.noaa.gov/data/nsd_cccc.txt
+EQYR	0	Rota, Naval Station		Spain	36.65	-6.33333333333333	85	http://weather.noaa.gov/data/nsd_cccc.txt
+EQYS	0	Sigonella, NAS		Italy	37.4	14.9166666666667	82	http://weather.noaa.gov/data/nsd_cccc.txt
+FYWW	0	Windhoek, Town MET		Namibia	-22.5666666666667	17.1	5659	http://weather.noaa.gov/data/nsd_cccc.txt
+K03Y	0	Hallock	MN	United States	48.7833333333333	-96.95	820	http://weather.noaa.gov/data/nsd_cccc.txt
+K07G	0	Charlotte, Fitch H Beach Airport	MI	United States	42.5744444444444	-84.8113888888889	889	http://weather.noaa.gov/data/nsd_cccc.txt
+K0D1	0	South Haven, South Haven Area Regional Airport	MI	United States	42.3508333333333	-86.2561111111111	666	http://weather.noaa.gov/data/nsd_cccc.txt
+K14R	0	Caldwell, Caldwell Municipal Airport	TX	United States	30.5152777777778	-96.7038888888889	390	http://weather.noaa.gov/data/nsd_cccc.txt
+K17Y	0	Mc Gregor, Isedor Iverson Airport	MN	United States	46.6186111111111	-93.3097222222222	1227	http://weather.noaa.gov/data/nsd_cccc.txt
+K215	0	Rantoul, Frank Elliott Field Airport	IL	United States	40.2841666666667	-88.1341666666667	738	http://weather.noaa.gov/data/nsd_cccc.txt
+K2F8	0	Bastrop, Morehouse Memorial Airport	LA	United States	32.7558333333333	-91.8805555555555	167	http://weather.noaa.gov/data/nsd_cccc.txt
+K3B9	0	Chester, Chester Airport	CT	United States	41.3838888888889	-72.5058333333333	417	http://weather.noaa.gov/data/nsd_cccc.txt
+K3D4	0	Frankfort, Frankfort Dow Memorial Field Airport	MI	United States	44.625	-86.2005555555556	633	http://weather.noaa.gov/data/nsd_cccc.txt
+K5D3	0	Owosso, Owosso Community Airport	MI	United States	42.9927777777778	-84.1388888888889	735	http://weather.noaa.gov/data/nsd_cccc.txt
+K78N	0	Reidsville, Rockingham County NC Shiloh Airport	NC	United States	36.4372222222222	-79.8508333333333	692	http://weather.noaa.gov/data/nsd_cccc.txt
+KA21	0	Portage Glacier, Portage Visitor Center	AK	United States	60.7841666666667	-148.846111111111	102	http://weather.noaa.gov/data/nsd_cccc.txt
+KADQ	0	Kodiak, Kodiak Airport	AK	United States	57.7511111111111	-152.485555555556	72	http://weather.noaa.gov/data/nsd_cccc.txt
+KAKW	0	Klawock, Klawock Airport	AK	United States	55.5761111111111	-133.076111111111	49	http://weather.noaa.gov/data/nsd_cccc.txt
+KAMX	0	Miami Nexrad	FL	United States	25.6166666666667	-80.4166666666667	112	http://weather.noaa.gov/data/nsd_cccc.txt
+KANN	0	Annette, Annette Island Airport	AK	United States	55.0302777777778	-131.576111111111	118	http://weather.noaa.gov/data/nsd_cccc.txt
+KATX	0	Seattle NEXRAD	WA	United States	48.2	-122.5	607	http://weather.noaa.gov/data/nsd_cccc.txt
+KAWI	0	Wainwright, Wainwright Airport	AK	United States	70.6386111111111	-160.006666666667	30	http://weather.noaa.gov/data/nsd_cccc.txt
+KBET	0	Bethel, Bethel Airport	AK	United States	60.7858333333333	-161.826388888889	128	http://weather.noaa.gov/data/nsd_cccc.txt
+KBHX	0	Eureka NEXRAD	CA	United States	40.5	-124.3	2516	http://weather.noaa.gov/data/nsd_cccc.txt
+KBIG	0	Delta Junction / Ft. Greely, Allen Army Air Field	AK	United States	63.9936111111111	-145.6925	1276	http://weather.noaa.gov/data/nsd_cccc.txt
+KBLX	0	Billing Yell Nexrad	MT	United States	45.8538888888889	-108.606111111111	3661	http://weather.noaa.gov/data/nsd_cccc.txt
+KBTT	0	Bettles, Bettles Airport	AK	United States	66.9161111111111	-151.508888888889	643	http://weather.noaa.gov/data/nsd_cccc.txt
+KCCX	0	State College Nexrad	PA	United States	40.9166666666667	-78	2487	http://weather.noaa.gov/data/nsd_cccc.txt
+KCDV	0	Cordova, Smith Airport	AK	United States	60.4888888888889	-145.451111111111	39	http://weather.noaa.gov/data/nsd_cccc.txt
+KCWL	0	Calexico, Calexico International Airport	CA	United States	32.6694444444444	-115.513333333333	3	http://weather.noaa.gov/data/nsd_cccc.txt
+KD19	0	Luverne, Quentin Aanenson Field Airport	MN	United States	43.6211111111111	-96.2155555555556	1430	http://weather.noaa.gov/data/nsd_cccc.txt
+KDAX	0	Sacramento Nexrad	CA	United States	38.5	-121.683333333333	144	http://weather.noaa.gov/data/nsd_cccc.txt
+KDEE	0	Deering, Deering Airport	AK	United States	66.0705555555556	-162.758333333333	13	http://weather.noaa.gov/data/nsd_cccc.txt
+KDIX	0	Philadelphia NEXRAD	PA	United States	39.95	-74.4166666666667	230	http://weather.noaa.gov/data/nsd_cccc.txt
+KDMX	0	Des Moines Nexrad	IA	United States	41.7333333333333	-93.7166666666667	1056	http://weather.noaa.gov/data/nsd_cccc.txt
+KDTX	0	Detroit NEXRAD	MI	United States	42.7	-83.45	1184	http://weather.noaa.gov/data/nsd_cccc.txt
+KEAA	0	Eagle, Eagle Airport	AK	United States	64.7763888888889	-141.160555555556	879	http://weather.noaa.gov/data/nsd_cccc.txt
+KEAX	0	Pleasant NEXRAD	MO	United States	38.8166666666667	-94.2666666666667	1099	http://weather.noaa.gov/data/nsd_cccc.txt
+KENN	0	Nenana, Nenana Municipal Airport	AK	United States	64.5477777777778	-149.083888888889	361	http://weather.noaa.gov/data/nsd_cccc.txt
+KENX	0	Albany NEXRAD	NY	United States	42.6	-74.0666666666667	1906	http://weather.noaa.gov/data/nsd_cccc.txt
+KEPZ	72364	Santa Teresa	NM	United States	31.8666666666667	-106.7	4108	http://weather.noaa.gov/data/nsd_cccc.txt
+KESX	0	Las Vegas Nexrad	NV	United States	35.7166666666667	-114.9	4951	http://weather.noaa.gov/data/nsd_cccc.txt
+KEWX	0	San Antonio Nexrad	TX	United States	29.7	-98.0333333333333	732	http://weather.noaa.gov/data/nsd_cccc.txt
+KFCX	0	Roanoke NEXRAD	VA	United States	37.0166666666667	-80.2666666666667	2966	http://weather.noaa.gov/data/nsd_cccc.txt
+KFWD	72249	Fort Worth	TX	United States	32.8333333333333	-97.3	643	http://weather.noaa.gov/data/nsd_cccc.txt
+KGKN	0	Gulkana, Gulkana Airport	AK	United States	62.1602777777778	-145.4575	1578	http://weather.noaa.gov/data/nsd_cccc.txt
+KGSN	0	SAIPAN INTERNATIONAL AIRPORT 		NORTHERN MARIANA ISLAND	15.1166666666667	145.733333333333	217	http://weather.noaa.gov/data/nsd_cccc.txt
+KGVB	0	Bogalusa	LA	United States	30.8816666666667	-89.8622222222222	NULL	http://weather.noaa.gov/data/nsd_cccc.txt
+KHGX	0	Houston / Galviston Nexrad	TX	United States	29.4666666666667	-95.0833333333333	115	http://weather.noaa.gov/data/nsd_cccc.txt
+KHNS	0	Haines, Haines Airport	AK	United States	59.2438888888889	-135.509444444444	13	http://weather.noaa.gov/data/nsd_cccc.txt
+KHOM	0	Homer, Homer Airport	AK	United States	59.6425	-151.487222222222	75	http://weather.noaa.gov/data/nsd_cccc.txt
+KILI	0	Iliamna, Iliamna Airport	AK	United States	59.7491666666667	-154.909166666667	207	http://weather.noaa.gov/data/nsd_cccc.txt
+KINX	0	Tulsa Nexrad	OK	United States	36.1833333333333	-95.5666666666667	741	http://weather.noaa.gov/data/nsd_cccc.txt
+KKAL	0	Kaltag, Kaltag Airport	AK	United States	64.3241666666667	-158.733055555556	197	http://weather.noaa.gov/data/nsd_cccc.txt
+KKVL	0	Kivalina, Kivalina Airport	AK	United States	67.7311111111111	-164.5425	10	http://weather.noaa.gov/data/nsd_cccc.txt
+KLHD	0	Anchorage, Lake Hood Sea Plane Base	AK	United States	61.1780555555556	-149.963611111111	69	http://weather.noaa.gov/data/nsd_cccc.txt
+KLRX	0	Elko Nexrad	NV	United States	40.7388888888889	-116.802777777778	6624	http://weather.noaa.gov/data/nsd_cccc.txt
+KLTX	0	Wilmington Nexrad	NC	United States	33.9833333333333	-78.4333333333333	144	http://weather.noaa.gov/data/nsd_cccc.txt
+KMCG	0	McGrath, McGrath Airport	AK	United States	62.9561111111111	-155.605833333333	335	http://weather.noaa.gov/data/nsd_cccc.txt
+KMKK	0	Kaunakakai, Molokai Airport	HI	United States	21.1577777777778	-157.098611111111	453	http://weather.noaa.gov/data/nsd_cccc.txt
+KMMG	0	Matterhorn	LA	United States	28.7422222222222	-88.8255555555556	NULL	http://weather.noaa.gov/data/nsd_cccc.txt
+KMRI	0	Anchorage, Merrill Field	AK	United States	61.2169444444444	-149.855	135	http://weather.noaa.gov/data/nsd_cccc.txt
+KMRX	0	Morristown Nexrad	TN	United States	36.1666666666667	-83.4	1434	http://weather.noaa.gov/data/nsd_cccc.txt
+KMSX	0	Missoula NEXRAD	MT	United States	47.0333333333333	-113.983333333333	8041	http://weather.noaa.gov/data/nsd_cccc.txt
+KMUX	0	Monterey NEXRAD	CA	United States	37.1666666666667	-121.9	3550	http://weather.noaa.gov/data/nsd_cccc.txt
+KOAX	72558	Valley	NE	United States	41.3166666666667	-96.3666666666667	1148	http://weather.noaa.gov/data/nsd_cccc.txt
+KOHX	0	Nashville NEXRAD	TN	United States	36.75	-86.5666666666667	676	http://weather.noaa.gov/data/nsd_cccc.txt
+KPAQ	0	Palmer, Palmer Municipal Airport	AK	United States	61.5961111111111	-149.091666666667	230	http://weather.noaa.gov/data/nsd_cccc.txt
+KPBV	0	St. George Island, New St. George Airport	AK	United States	56.5769444444445	-169.663055555556	89	http://weather.noaa.gov/data/nsd_cccc.txt
+KPBZ	0	Pittsburgh Nexrad	PA	United States	40.5333333333333	-80.2166666666667	1266	http://weather.noaa.gov/data/nsd_cccc.txt
+KRAX	0	Raleigh NEXRAD	NC	United States	35.6666666666667	-78.5	463	http://weather.noaa.gov/data/nsd_cccc.txt
+KRGX	0	Reno NEXRAD	NV	United States	39.75	-119.466666666667	8399	http://weather.noaa.gov/data/nsd_cccc.txt
+KRTX	0	Portland NEXRAD	OR	United States	45.7166666666667	-122.966666666667	1686	http://weather.noaa.gov/data/nsd_cccc.txt
+KSNP	0	St. Paul Island, St. Paul Island Airport	AK	United States	57.1558333333333	-170.220833333333	43	http://weather.noaa.gov/data/nsd_cccc.txt
+KSOV	0	Seldovia, Seldovia Airport	AK	United States	59.4466666666667	-151.704444444444	26	http://weather.noaa.gov/data/nsd_cccc.txt
+KT08	0	Tomahawk, Tomahawk Regional Airport	WI	United States	45.4688888888889	-89.8055555555556	1486	http://weather.noaa.gov/data/nsd_cccc.txt
+KTAL	0	Tanana, Calhoun Memorial Airport	AK	United States	65.1744444444444	-152.106944444444	226	http://weather.noaa.gov/data/nsd_cccc.txt
+KTKA	0	Talkeetna, Talkeetna Airport	AK	United States	62.32	-150.095	358	http://weather.noaa.gov/data/nsd_cccc.txt
+KTLX	0	Oklahoma City Nexrad	OK	United States	35.3333333333333	-97.2833333333333	1109	http://weather.noaa.gov/data/nsd_cccc.txt
+KTWX	0	Topeka NEXRAD	KS	United States	39	-96.2333333333333	1414	http://weather.noaa.gov/data/nsd_cccc.txt
+KU59	0	Driggs, Driggs-Reed Memorial Airport	ID	United States	43.7416666666667	-111.097777777778	6227	http://weather.noaa.gov/data/nsd_cccc.txt
+KUEX	0	Grand Island Nexrad	NE	United States	40.3166666666667	-98.4333333333333	2054	http://weather.noaa.gov/data/nsd_cccc.txt
+KVLG	0	The Villages	FL	United States	28.9666666666667	-81.9666666666667	89	http://weather.noaa.gov/data/nsd_cccc.txt
+KVTX	0	Los Angeles Nexrad	CA	United States	34.4166666666667	-119.183333333333	2808	http://weather.noaa.gov/data/nsd_cccc.txt
+KW11	0	Menomonie, Menomonie Municipal Airport-Score Field	WI	United States	44.8922222222222	-91.8677777777778	896	http://weather.noaa.gov/data/nsd_cccc.txt
+KWDD	71273	Belle River		Canada	42.3	-82.7	604	http://weather.noaa.gov/data/nsd_cccc.txt
+KY68	0	Tracy, Tracy Municipal Airport	MN	United States	44.2488888888889	-95.6072222222222	1339	http://weather.noaa.gov/data/nsd_cccc.txt
+KYAK	0	Yakutat, Yakutat Airport	AK	United States	59.5102777777778	-139.662777777778	33	http://weather.noaa.gov/data/nsd_cccc.txt
+KYUK	0	YUKON RANGE R-2205	AK	UNITED STATES	64.7166666666667	-146.516666666667	1759	http://weather.noaa.gov/data/nsd_cccc.txt
+NEXC	0	Charleston, Navelexcen	SC	United States	32.9155555555556	-79.9791666666667	26	http://weather.noaa.gov/data/nsd_cccc.txt
+PAHD	70341	Homer / Municipal	AK	United States	59.6333333333333	-151.5	79	http://weather.noaa.gov/data/nsd_cccc.txt
+PAHS	0	Huslia, Huslia Airport	AK	United States	65.7	-156.383333333333	180	http://weather.noaa.gov/data/nsd_cccc.txt
+PASG	0	Skagway, Skagway Airport	AK	United States	59.4552777777778	-136.323055555556	43	http://weather.noaa.gov/data/nsd_cccc.txt
+PBTI	0	Barter Island Distant Early Warning 	AK	United States	70.1333333333333	-143.583333333333	7	http://weather.noaa.gov/data/nsd_cccc.txt
+SUMU	86580	Carrasco		Uruguay	-34.8333333333333	-56	105	http://weather.noaa.gov/data/nsd_cccc.txt
+UGGG	37549	Tbilisi		Georgia	41.6833333333333	44.95	1532	http://weather.noaa.gov/data/nsd_cccc.txt
+UMRR	26422	Riga		Latvia	56.9666666666667	24.05	23	http://weather.noaa.gov/data/nsd_cccc.txt
+WIKB	96087	Batan, Sumatra		Indonesia	1.11666666666667	104.116666666667	79	http://weather.noaa.gov/data/nsd_cccc.txt
+YBAM	94568	Amberley Aerodrome		Australia	-27.6333333333333	152.716666666667	89	http://weather.noaa.gov/data/nsd_cccc.txt
+YPAL	94802	Albany Airport		Australia	-34.9333333333333	117.8	233	http://weather.noaa.gov/data/nsd_cccc.txt
+YPCD	94653	Ceduna Airport		Australia	-32.1166666666667	133.7	75	http://weather.noaa.gov/data/nsd_cccc.txt
+YSWM	94776	Williamtown Aerodrome		Australia	-32.7833333333333	151.816666666667	30	http://weather.noaa.gov/data/nsd_cccc.txt
+PAFC	94776	ANCHORAGE/WFO	AK	US	61.1666666666667	-150.033333333333	157	http://www.rap.ucar.edu/weather/surface/stations.txt
+PAHG	94776	ANCHORAG/NIKISKI	AK	US	60.7333333333333	-151.35	243	http://www.rap.ucar.edu/weather/surface/stations.txt
+PZAN	94776	ANCHORAGE/ARTCC	AK	US	61.1666666666667	-149.983333333333	72	http://www.rap.ucar.edu/weather/surface/stations.txt
+PABC	94776	BETHEL/88D	AK	US	60.8	-161.883333333333	161	http://www.rap.ucar.edu/weather/surface/stations.txt
+PAFG	94776	FAIRBANKS/WFO	AK	US	64.8	-147.883333333333	459	http://www.rap.ucar.edu/weather/surface/stations.txt
+PAPD	94776	FRBNKS/PEDRO DOM	AK	US	65.0333333333333	-147.5	2592	http://www.rap.ucar.edu/weather/surface/stations.txt
+PAFN	94776	FUNTER BAY	AK	US	58.25	-134.9	30	http://www.rap.ucar.edu/weather/surface/stations.txt
+PAJK	94776	JUNEAU/WFO	AK	US	58.3666666666667	-134.566666666667	23	http://www.rap.ucar.edu/weather/surface/stations.txt
+PAKC	94776	KING SALMON/88D	AK	US	58.6833333333333	-156.633333333333	62	http://www.rap.ucar.edu/weather/surface/stations.txt
+PAIH	94776	MIDDLETON IS 88D	AK	US	59.4666666666667	-146.3	66	http://www.rap.ucar.edu/weather/surface/stations.txt
+PACG	94776	SITKA/BIORKA/88D	AK	US	56.85	-135.533333333333	207	http://www.rap.ucar.edu/weather/surface/stations.txt
+PZ74	94776	ALASKAN ARTCC	AK	US	60.15	-164.283333333333	3	http://www.rap.ucar.edu/weather/surface/stations.txt
+PZ76	94776	ALASKAN ARTCC	AK	US	65.25	-134.65	2123	http://www.rap.ucar.edu/weather/surface/stations.txt
+KEOX	94776	FT RUCKER 88D	AL	US	31.4666666666667	-85.4666666666667	433	http://www.rap.ucar.edu/weather/surface/stations.txt
+KHTX	94776	HYTOP/88D	AL	US	34.9333333333333	-86.0833333333333	1759	http://www.rap.ucar.edu/weather/surface/stations.txt
+KMXX	94776	MAXWELL AFB 88D	AL	US	32.5333333333333	-85.7833333333333	400	http://www.rap.ucar.edu/weather/surface/stations.txt
+KSJI	94776	SEMMNES VOR	AL	US	30.7333333333333	-88.3666666666667	207	http://www.rap.ucar.edu/weather/surface/stations.txt
+KVUZ	94776	VULCAN VOR	AL	US	33.6666666666667	-86.9	820	http://www.rap.ucar.edu/weather/surface/stations.txt
+KDQU	94776	DEQUEEN PROFILER	AR	US	34.1	-94.2833333333333	640	http://www.rap.ucar.edu/weather/surface/stations.txt
+KSRX	94776	SLATINGTON MTN.	AR	US	35.2833333333333	-94.3666666666667	640	http://www.rap.ucar.edu/weather/surface/stations.txt
+KRZC	94776	RAZORBACK VOR	AR	US	36.25	-94.1166666666667	1453	http://www.rap.ucar.edu/weather/surface/stations.txt
+KFSX	94776	COCONINO/FLAGSTF	AZ	US	34.5666666666667	-111.2	7418	http://www.rap.ucar.edu/weather/surface/stations.txt
+KPGS	94776	PEACH SPRING	AZ	US	35.6166666666667	-113.533333333333	4757	http://www.rap.ucar.edu/weather/surface/stations.txt
+KEMX	94776	PIMA COUNTY/88D	AZ	US	31.9	-110.633333333333	5203	http://www.rap.ucar.edu/weather/surface/stations.txt
+KDRK	94776	PRESCOTT(VOR)	AZ	US	34.7	-112.483333333333	5000	http://www.rap.ucar.edu/weather/surface/stations.txt
+KTBC	94776	TUBA CITY	AZ	US	36.1166666666667	-111.266666666667	5046	http://www.rap.ucar.edu/weather/surface/stations.txt
+KYUX	94776	YUMA/88D	AZ	US	32.5	-114.65	174	http://www.rap.ucar.edu/weather/surface/stations.txt
+KBZA	94776	YUMA (VOR)	AZ	US	32.7666666666667	-114.6	207	http://www.rap.ucar.edu/weather/surface/stations.txt
+KEHF	94776	BAKERSFIELD(VOR)	CA	US	35.4833333333333	-119.1	495	http://www.rap.ucar.edu/weather/surface/stations.txt
+KBBX	94776	BEALE/ORO DAM	CA	US	39.5	-121.633333333333	174	http://www.rap.ucar.edu/weather/surface/stations.txt
+KEYX	94776	EDWARDS AFB/88D	CA	US	35.1	-117.566666666667	2756	http://www.rap.ucar.edu/weather/surface/stations.txt
+KCZQ	94776	FRESNO(VOR)	CA	US	36.8833333333333	-119.816666666667	341	http://www.rap.ucar.edu/weather/surface/stations.txt
+KHEC	94776	HECTOR(VOR)	CA	US	34.8	-116.466666666667	2024	http://www.rap.ucar.edu/weather/surface/stations.txt
+KMZB	94776	MISSION BAY VOR	CA	US	32.7833333333333	-117.233333333333	39	http://www.rap.ucar.edu/weather/surface/stations.txt
+KVBX	94776	ORCUTT OIL/VBG	CA	US	34.8333333333333	-120.4	1224	http://www.rap.ucar.edu/weather/surface/stations.txt
+KPYE	94776	POINT REYES VOR	CA	US	38.0833333333333	-122.866666666667	1467	http://www.rap.ucar.edu/weather/surface/stations.txt
+KRSA	94776	SACRAMENTO/RFC	CA	US	38.5	-121.5	36	http://www.rap.ucar.edu/weather/surface/stations.txt
+KRZS	94776	SANTA BARB(VOR)	CA	US	34.5166666666667	-119.766666666667	3622	http://www.rap.ucar.edu/weather/surface/stations.txt
+KENI	94776	UKIAH(VOR)	CA	US	39.05	-123.266666666667	614	http://www.rap.ucar.edu/weather/surface/stations.txt
+KPAA	94776	POINT ARENA	CA	US	38.95	-123.266666666667	59	http://www.rap.ucar.edu/weather/surface/stations.txt
+KRIX	94776	MARCH AFB/88D	CA	US	33.55	-117.433333333333	1535	http://www.rap.ucar.edu/weather/surface/stations.txt
+KDVC	94776	DOVE CREEK	CO	US	37.8	-108.916666666667	6991	http://www.rap.ucar.edu/weather/surface/stations.txt
+KDBL	94776	RED TABLE VOR	CO	US	39.4333333333333	-106.9	11759	http://www.rap.ucar.edu/weather/surface/stations.txt
+KJNC	94776	GRAND JUNCTION	CO	US	39.0666666666667	-108.783333333333	7766	http://www.rap.ucar.edu/weather/surface/stations.txt
+KGJX	94776	GRAND JUNC/MESA	CO	US	39.0666666666667	-108.216666666667	9990	http://www.rap.ucar.edu/weather/surface/stations.txt
+KHBU	94776	GUNNISON(VOR)	CO	US	38.45	-107.033333333333	7674	http://www.rap.ucar.edu/weather/surface/stations.txt
+KCHE	94776	HAYDEN VOR	CO	US	40.4833333333333	-107.216666666667	7674	http://www.rap.ucar.edu/weather/surface/stations.txt
+KTBE	94776	TOBE/VOR	CO	US	37.2666666666667	-103.6	5732	http://www.rap.ucar.edu/weather/surface/stations.txt
+K4FC	94776	FRASER	CO	US	39.95	-105.833333333333	8560	http://www.rap.ucar.edu/weather/surface/stations.txt
+KFLA	94776	FLAGLER	CO	US	39.2833333333333	-103.066666666667	4944	http://www.rap.ucar.edu/weather/surface/stations.txt
+K5B3	94776	PUTNAM	CT	US	41.0666666666667	-73.6166666666667	299	http://www.rap.ucar.edu/weather/surface/stations.txt
+KDOX	94776	DOVER/ELLENDALE	DE	US	38.8333333333333	-75.4333333333333	49	http://www.rap.ucar.edu/weather/surface/stations.txt
+KEVX	94776	EGLIN AFB/88D	FL	US	30.5666666666667	-85.9166666666667	141	http://www.rap.ucar.edu/weather/surface/stations.txt
+KFLM	94776	FLAMINGO/MONROE	FL	US	25.1333333333333	-80.9166666666667	7	http://www.rap.ucar.edu/weather/surface/stations.txt
+KKEY	94776	KEY WEST	FL	US	24.55	-81.7833333333333	16	http://www.rap.ucar.edu/weather/surface/stations.txt
+KBYX	94776	KEY W/BOCA CHICA	FL	US	24.6	-81.7	7	http://www.rap.ucar.edu/weather/surface/stations.txt
+KMBF	94776	MIAMI BEACH	FL	US	25.7666666666667	-80.1333333333333	3	http://www.rap.ucar.edu/weather/surface/stations.txt
+KOCR	94776	OCEAN REEF	FL	US	25.3	-80.2666666666667	7	http://www.rap.ucar.edu/weather/surface/stations.txt
+KTDR	94776	TYNDALL DRONE	FL	US	30.05	-85.5166666666667	16	http://www.rap.ucar.edu/weather/surface/stations.txt
+KPZD	94776	PECAN (ALBANY)	GA	US	31.65	-84.3	279	http://www.rap.ucar.edu/weather/surface/stations.txt
+KATR	94776	ATLANTA/RFC	GA	US	33.3666666666667	-84.5666666666667	1024	http://www.rap.ucar.edu/weather/surface/stations.txt
+KVAX	94776	MOODY AFB/88D	GA	US	30.8833333333333	-83	177	http://www.rap.ucar.edu/weather/surface/stations.txt
+KALR	94776	ATLANTA RFC	GA	US	33.3666666666667	-84.5666666666667	814	http://www.rap.ucar.edu/weather/surface/stations.txt
+KODF	94776	TOCCOA VOR	GA	US	34.7	-83.3	1860	http://www.rap.ucar.edu/weather/surface/stations.txt
+PHWR	94776	HICKAM AWC	HI	US	21.3166666666667	-157.933333333333	13	http://www.rap.ucar.edu/weather/surface/stations.txt
+PHFO	94776	HONOLULU/WFO	HI	US	21.3166666666667	-157.916666666667	13	http://www.rap.ucar.edu/weather/surface/stations.txt
+PZHN	94776	HONOLULU/ARTCC	HI	US	21.3166666666667	-157.916666666667	13	http://www.rap.ucar.edu/weather/surface/stations.txt
+PHKP	94776	KAANAPALI	HI	US	20.9333333333333	-156.7	10	http://www.rap.ucar.edu/weather/surface/stations.txt
+PHAC	94776	KOKEE	HI	US	22.15	-159.65	4199	http://www.rap.ucar.edu/weather/surface/stations.txt
+KCBX	94776	ADA COUNTY/BOISE	ID	US	43.4833333333333	-116.233333333333	3061	http://www.rap.ucar.edu/weather/surface/stations.txt
+KDNJ	94776	MCCALL (VOR)	ID	US	44.7666666666667	-116.216666666667	7982	http://www.rap.ucar.edu/weather/surface/stations.txt
+KLKT	94776	SALMON/VOR	ID	US	45.0166666666667	-114.083333333333	9259	http://www.rap.ucar.edu/weather/surface/stations.txt
+KSFX	94776	SPRINGFIELD/PIH	ID	US	43.1	-112.683333333333	4475	http://www.rap.ucar.edu/weather/surface/stations.txt
+KMI1	94776	SAYLOR CREEK	ID	US	42.5	-115.5	3281	http://www.rap.ucar.edu/weather/surface/stations.txt
+KAXC	94776	DECATUR	IL	US	39.8333333333333	-88.85	679	http://www.rap.ucar.edu/weather/surface/stations.txt
+KILX	94776	LINCOLN	IL	US	40.15	-89.3333333333333	581	http://www.rap.ucar.edu/weather/surface/stations.txt
+KVWX	94776	EVANSVILLE	IN	US	38.2666666666667	-87.7166666666667	623	http://www.rap.ucar.edu/weather/surface/stations.txt
+K1II	94776	HIMSEL AAF	IN	US	39.3333333333333	-86.0333333333333	702	http://www.rap.ucar.edu/weather/surface/stations.txt
+KBVT	94776	LAFAYETTE VOR	IN	US	40.5666666666667	-87.0666666666667	597	http://www.rap.ucar.edu/weather/surface/stations.txt
+KPXV	94776	POCKET CITY VOR	IN	US	37.9333333333333	-87.7666666666667	384	http://www.rap.ucar.edu/weather/surface/stations.txt
+KTTH	94776	TERRE HAUTE VOR	IN	US	39.4833333333333	-87.25	587	http://www.rap.ucar.edu/weather/surface/stations.txt
+KJN8	94776	JENNINGS	KS	US	39.6833333333333	-100.3	2500	http://www.rap.ucar.edu/weather/surface/stations.txt
+KAL8	94776	NEW ALMELO	KS	US	39.6	-100.116666666667	2408	http://www.rap.ucar.edu/weather/surface/stations.txt
+KOSW	94776	OSWEGO/VOR	KS	US	37.15	-95.2	928	http://www.rap.ucar.edu/weather/surface/stations.txt
+KWK6	94776	WAKEENEY	KS	US	39.0333333333333	-99.8833333333333	2467	http://www.rap.ucar.edu/weather/surface/stations.txt
+KHD7	94776	HERNDON	KS	US	39.9166666666667	-100.833333333333	2671	http://www.rap.ucar.edu/weather/surface/stations.txt
+KHPX	94776	HOPKINTON/F CAMB	KY	US	36.7333333333333	-87.2833333333333	577	http://www.rap.ucar.edu/weather/surface/stations.txt
+KIIU	94776	LOUISVILLE VOR	KY	US	38.1	-85.5833333333333	719	http://www.rap.ucar.edu/weather/surface/stations.txt
+KLEV	94776	GRAND ISLE (VOR)	LA	US	29.1833333333333	-90.1	7	http://www.rap.ucar.edu/weather/surface/stations.txt
+KH02	94776	HIGH ISLAND 334A	LA	US	28.1	-93.4	98	http://www.rap.ucar.edu/weather/surface/stations.txt
+KHRV	94776	HARVEY/N ORLEANS	LA	US	29.85	-90	3	http://www.rap.ucar.edu/weather/surface/stations.txt
+KEIC	94776	SHREVEPORT(VOR)	LA	US	32.7666666666667	-93.8166666666667	262	http://www.rap.ucar.edu/weather/surface/stations.txt
+K4CO	94776	PHI OIL PLATF	LA	US	29.7833333333333	-93.1833333333333	3	http://www.rap.ucar.edu/weather/surface/stations.txt
+KG01	94776	GREEN CANYON 184	LA	US	27.9	-91.5	3	http://www.rap.ucar.edu/weather/surface/stations.txt
+KH18	94776	S. PASS BLK 62A	LA	US	28.9833333333333	-89.1333333333333	3	http://www.rap.ucar.edu/weather/surface/stations.txt
+K7W2	94776	VERMILLION	LA	US	28.5833333333333	-92.4666666666667	3	http://www.rap.ucar.edu/weather/surface/stations.txt
+KMPM	94776	MAIN PASS 299	LA	US	29.2666666666667	-88.7666666666667	3	http://www.rap.ucar.edu/weather/surface/stations.txt
+K9B4	94776	ASHBURNHAM	MA	US	42.65	-71.8666666666667	1191	http://www.rap.ucar.edu/weather/surface/stations.txt
+KWOR	94776	WORTHINGTON	MA	US	42.3833333333333	-72.9166666666667	1286	http://www.rap.ucar.edu/weather/surface/stations.txt
+KWNO	94776	CAMP SPRING/NCEP	MD	US	38.85	-76.9333333333333	164	http://www.rap.ucar.edu/weather/surface/stations.txt
+KWNH	94776	CAMP SPRINGS/HPC	MD	US	38.85	-76.9333333333333	164	http://www.rap.ucar.edu/weather/surface/stations.txt
+KWNM	94776	CAMP SPRINGS/MPC	MD	US	38.85	-76.9333333333333	164	http://www.rap.ucar.edu/weather/surface/stations.txt
+KWNC	94776	CAMP SPRINGS/CPC	MD	US	38.85	-76.9333333333333	164	http://www.rap.ucar.edu/weather/surface/stations.txt
+KWNB	94776	CAMP SPRINGS/DBC	MD	US	38.85	-76.9333333333333	164	http://www.rap.ucar.edu/weather/surface/stations.txt
+KENE	94776	KENNEBUNKPORT	ME	US	43.4333333333333	-70.6166666666667	404	http://www.rap.ucar.edu/weather/surface/stations.txt
+K47B	94776	EASTPORT	ME	US	44.9166666666667	-67	79	http://www.rap.ucar.edu/weather/surface/stations.txt
+KDXO	94776	DETROIT/VOR	MI	US	42.2166666666667	-83.3666666666667	705	http://www.rap.ucar.edu/weather/surface/stations.txt
+KAPX	94776	GAYLORD/ALPENA	MI	US	44.9	-84.7166666666667	1463	http://www.rap.ucar.edu/weather/surface/stations.txt
+KGIJ	94776	NILES VOR	MI	US	41.7666666666667	-86.3166666666667	876	http://www.rap.ucar.edu/weather/surface/stations.txt
+KASP	94776	OSCODA (VOR)	MI	US	44.45	-83.4	633	http://www.rap.ucar.edu/weather/surface/stations.txt
+KPMM	94776	PULLMAN VOR	MI	US	42.4666666666667	-86.1166666666667	699	http://www.rap.ucar.edu/weather/surface/stations.txt
+K3FM	94776	FREMONT	MI	US	43.4333333333333	-86	774	http://www.rap.ucar.edu/weather/surface/stations.txt
+K5D8	94776	MARSHALL	MI	US	42.25	-84.95	942	http://www.rap.ucar.edu/weather/surface/stations.txt
+KD92	94776	MONROE	MI	US	41.9333333333333	-83.4333333333333	614	http://www.rap.ucar.edu/weather/surface/stations.txt
+KMPX	94776	CHANHASSEN	MN	US	44.85	-93.5666666666667	945	http://www.rap.ucar.edu/weather/surface/stations.txt
+KMSR	94776	MINNEAPOLIS/RFC	MN	US	44.85	-93.5666666666667	840	http://www.rap.ucar.edu/weather/surface/stations.txt
+K27D	94776	CANBY/MYERS FLD	MN	US	44.7333333333333	-96.2666666666667	1191	http://www.rap.ucar.edu/weather/surface/stations.txt
+KODI	94776	NODINE VOR	MN	US	43.9166666666667	-91.4666666666667	1401	http://www.rap.ucar.edu/weather/surface/stations.txt
+K9MN	94776	ST MARY HOSPITAL	MN	US	44.0166666666667	-92.4833333333333	1165	http://www.rap.ucar.edu/weather/surface/stations.txt
+K85D	94776	BIGFORK	MN	US	47.7666666666667	-93.65	1348	http://www.rap.ucar.edu/weather/surface/stations.txt
+QASM	94776	AUSTIN	MN	US	43.6666666666667	-92.95	1198	http://www.rap.ucar.edu/weather/surface/stations.txt
+QBLM	94776	ALBERT LEA	MN	US	43.6333333333333	-93.3833333333333	1257	http://www.rap.ucar.edu/weather/surface/stations.txt
+QFCM	94776	PRESTON	MN	US	43.6666666666667	-92	1043	http://www.rap.ucar.edu/weather/surface/stations.txt
+QFMM	94776	ROCHESTER	MN	US	44.0166666666667	-92.4666666666667	997	http://www.rap.ucar.edu/weather/surface/stations.txt
+QGMM	94776	GRAND MEADOW	MN	US	43.7166666666667	-92.5	1322	http://www.rap.ucar.edu/weather/surface/stations.txt
+QHIM	94776	HILLS	MN	US	43.5166666666667	-96.3666666666667	1122	http://www.rap.ucar.edu/weather/surface/stations.txt
+QJAM	94776	ROCHESTER	MN	US	44.0666666666667	-92.4833333333333	1040	http://www.rap.ucar.edu/weather/surface/stations.txt
+QKGM	94776	ROCHESTER	MN	US	44.0333333333333	-92.4666666666667	1047	http://www.rap.ucar.edu/weather/surface/stations.txt
+QLEM	94776	LEROY	MN	US	43.5166666666667	-92.5166666666667	1289	http://www.rap.ucar.edu/weather/surface/stations.txt
+QMAM	94776	MADISON	MN	US	45.0166666666667	-96.1833333333333	1115	http://www.rap.ucar.edu/weather/surface/stations.txt
+QMOM	94776	WORTHINGTON	MN	US	43.6333333333333	-95.6333333333333	1585	http://www.rap.ucar.edu/weather/surface/stations.txt
+QMSM	94776	LUVERNE	MN	US	43.6666666666667	-96.2166666666667	1453	http://www.rap.ucar.edu/weather/surface/stations.txt
+QRCM	94776	LAMBERTON	MN	US	44.2333333333333	-95.2666666666667	1145	http://www.rap.ucar.edu/weather/surface/stations.txt
+QTMM	94776	WEST CONCORD	MN	US	44.1333333333333	-92.9	1270	http://www.rap.ucar.edu/weather/surface/stations.txt
+QWLM	94776	ROCHESTER	MN	US	43.9833333333333	-92.4333333333333	1024	http://www.rap.ucar.edu/weather/surface/stations.txt
+KNKA	94776	KANSAS CITY/COM	MO	US	39.1166666666667	-94.6	758	http://www.rap.ucar.edu/weather/surface/stations.txt
+KKCI	94776	KANSAS CITY/AWC	MO	US	39.2833333333333	-94.6666666666667	758	http://www.rap.ucar.edu/weather/surface/stations.txt
+KLSX	94776	ST CHARLES/88D	MO	US	38.7	-90.6833333333333	607	http://www.rap.ucar.edu/weather/surface/stations.txt
+K9K4	94776	WARRENSBURG SKYH	MO	US	38.7833333333333	-93.8	801	http://www.rap.ucar.edu/weather/surface/stations.txt
+KIGB	94776	BIGBEE	MS	US	33.4833333333333	-88.5	240	http://www.rap.ucar.edu/weather/surface/stations.txt
+KGWX	94776	COLUMBUS AFB/88D	MS	US	33.9	-88.3333333333333	476	http://www.rap.ucar.edu/weather/surface/stations.txt
+KDGX	94776	BRANDON/JACKSON	MS	US	32.2833333333333	-89.9833333333333	610	http://www.rap.ucar.edu/weather/surface/stations.txt
+KSQS	94776	SIDON VOR	MS	US	33.4666666666667	-90.2833333333333	138	http://www.rap.ucar.edu/weather/surface/stations.txt
+KYZO	94776	YAZOO CITY	MS	US	32.9	-90.3666666666667	118	http://www.rap.ucar.edu/weather/surface/stations.txt
+KQPR	94776	POWDER RIVER	MT	US	45.5333333333333	-104.866666666667	3169	http://www.rap.ucar.edu/weather/surface/stations.txt
+KFGF	94776	FARGO/GRAND FORK	ND	US	46.9	-96.8	899	http://www.rap.ucar.edu/weather/surface/stations.txt
+KMVX	94776	MAYVILLE/FARGO	ND	US	47.5333333333333	-97.3333333333333	988	http://www.rap.ucar.edu/weather/surface/stations.txt
+KMBX	94776	MCHENRY CY/MINOT	ND	US	48.4	-100.866666666667	1493	http://www.rap.ucar.edu/weather/surface/stations.txt
+KGID	94776	GRAND ISLAND/WFO	NE	US	40.9666666666667	-98.3166666666667	1847	http://www.rap.ucar.edu/weather/surface/stations.txt
+KGWC	94776	OFFUTT/AFWA	NE	US	41.1166666666667	-95.9166666666667	1047	http://www.rap.ucar.edu/weather/surface/stations.txt
+KOVR	94776	OMAHA VOR	NE	US	41.1666666666667	-95.7333333333333	1024	http://www.rap.ucar.edu/weather/surface/stations.txt
+KPWE	94776	PAWNEE CITY	NE	US	40.2	-96.2	1362	http://www.rap.ucar.edu/weather/surface/stations.txt
+KOBH	94776	WOLBACH (VOR)	NE	US	41.3833333333333	-98.35	2198	http://www.rap.ucar.edu/weather/surface/stations.txt
+KK46	94776	BLAIR MUNI	NE	US	41.4166666666667	-96.1166666666667	1299	http://www.rap.ucar.edu/weather/surface/stations.txt
+KNGR	94776	NORTH GROTON	NH	US	43.7666666666667	-71.8666666666667	1280	http://www.rap.ucar.edu/weather/surface/stations.txt
+KTMW	94776	TAMWORTH	NH	US	43.9	-71.3	791	http://www.rap.ucar.edu/weather/surface/stations.txt
+KCYN	94776	COYLE VOR	NJ	US	39.8166666666667	-74.4333333333333	230	http://www.rap.ucar.edu/weather/surface/stations.txt
+KSIE	94776	SEA ISLE VOR	NJ	US	39.1	-74.8	98	http://www.rap.ucar.edu/weather/surface/stations.txt
+KNBK	94776	NEW BRUNSWICK	NJ	US	40.4833333333333	-74.4333333333333	16	http://www.rap.ucar.edu/weather/surface/stations.txt
+KFDX	94776	CANNON AFB/88D	NM	US	34.6333333333333	-103.616666666667	4649	http://www.rap.ucar.edu/weather/surface/stations.txt
+KCME	94776	CHISUM/ROSWELL	NM	US	33.3333333333333	-104.616666666667	3773	http://www.rap.ucar.edu/weather/surface/stations.txt
+KCIM	94776	CIMARRON (VOR)	NM	US	36.4833333333333	-104.866666666667	7162	http://www.rap.ucar.edu/weather/surface/stations.txt
+KRSK	94776	RATTLESNAKE-FMN	NM	US	36.75	-108.1	5823	http://www.rap.ucar.edu/weather/surface/stations.txt
+KFTI	94776	FT UNION/VEGAS	NM	US	35.65	-105.133333333333	6870	http://www.rap.ucar.edu/weather/surface/stations.txt
+KM63	94776	MCGREGOR RANGE	NM	US	32.05	-106.15	4209	http://www.rap.ucar.edu/weather/surface/stations.txt
+KHDX	94776	W SANDS/HOLLOMAN	NM	US	33.0833333333333	-106.116666666667	4222	http://www.rap.ucar.edu/weather/surface/stations.txt
+XTAT	94776	TATUM NM 2SW	NM	US	33.2333333333333	-103.35	4019	http://www.rap.ucar.edu/weather/surface/stations.txt
+XDR1	94776	DORA 2SW	NM	US	33.9166666666667	-103.35	4321	http://www.rap.ucar.edu/weather/surface/stations.txt
+XNOR	94776	NORTHFIELD 1S	NM	US	34.2666666666667	-100.6	2090	http://www.rap.ucar.edu/weather/surface/stations.txt
+XHO1	94776	HOBBS 5NW	NM	US	32.7666666666667	-103.183333333333	3691	http://www.rap.ucar.edu/weather/surface/stations.txt
+KOAL	94776	COALDALE (VOR)	NV	US	38	-117.766666666667	5249	http://www.rap.ucar.edu/weather/surface/stations.txt
+KVEF	94776	LAS VEGAS/WFO	NV	US	36.05	-115.183333333333	2277	http://www.rap.ucar.edu/weather/surface/stations.txt
+KFMG	94776	RENO(VOR)	NV	US	39.5333333333333	-119.65	4403	http://www.rap.ucar.edu/weather/surface/stations.txt
+KILC	94776	WILSON CREEK	NV	US	38.25	-114.383333333333	9318	http://www.rap.ucar.edu/weather/surface/stations.txt
+KYUC	94776	YUCCA FLATS	NV	US	36.95	-116.033333333333	3930	http://www.rap.ucar.edu/weather/surface/stations.txt
+KALY	94776	ALBANY/WFO	NY	US	42.75	-73.8	289	http://www.rap.ucar.edu/weather/surface/stations.txt
+KTYX	94776	FORT DRUM/88D	NY	US	43.75	-75.6833333333333	1844	http://www.rap.ucar.edu/weather/surface/stations.txt
+KHNK	94776	HANCOCK VOR	NY	US	42.0666666666667	-75.3166666666667	2264	http://www.rap.ucar.edu/weather/surface/stations.txt
+KCOL	94776	COLDEN	NY	US	42.6666666666667	-78.6833333333333	1024	http://www.rap.ucar.edu/weather/surface/stations.txt
+KCOO	94776	COOPERSTOWN	NY	US	42.7	-74.9166666666667	1240	http://www.rap.ucar.edu/weather/surface/stations.txt
+KELB	94776	ELLENBURG DEPOT	NY	US	44.9	-73.8	860	http://www.rap.ucar.edu/weather/surface/stations.txt
+KOZX	94776	ONEONTA	NY	US	42.3833333333333	-75.15	1152	http://www.rap.ucar.edu/weather/surface/stations.txt
+KPIC	94776	PISECO LAKE	NY	US	43.45	-74.5333333333333	1729	http://www.rap.ucar.edu/weather/surface/stations.txt
+KSLD	94776	SLIDE MOUNTAIN	NY	US	41.9666666666667	-74.35	2001	http://www.rap.ucar.edu/weather/surface/stations.txt
+KSTM	94776	STORMVILLE	NY	US	41.5333333333333	-73.7333333333333	915	http://www.rap.ucar.edu/weather/surface/stations.txt
+KWRS	94776	WARSAW	NY	US	42.6833333333333	-78.2	1821	http://www.rap.ucar.edu/weather/surface/stations.txt
+KAPE	94776	APPLETON	OH	US	40.15	-82.5833333333333	1486	http://www.rap.ucar.edu/weather/surface/stations.txt
+KAIR	94776	BELLAIRE VOR	OH	US	40.0166666666667	-80.8166666666667	1411	http://www.rap.ucar.edu/weather/surface/stations.txt
+KFBC	94776	FLAG CITY	OH	US	41.0166666666667	-83.6666666666667	810	http://www.rap.ucar.edu/weather/surface/stations.txt
+KTIR	94776	WILMINGTON/RFC	OH	US	39.4166666666667	-83.8166666666667	1089	http://www.rap.ucar.edu/weather/surface/stations.txt
+KMMB	94776	MITBEE/GAGE	OK	US	36.3	-99.7666666666667	2192	http://www.rap.ucar.edu/weather/surface/stations.txt
+KWNS	94776	NORMAN/SPC	OK	US	35.2166666666667	-97.45	1171	http://www.rap.ucar.edu/weather/surface/stations.txt
+KVNX	94776	VANCE/KEGELMAN	OK	US	36.7333333333333	-98.1333333333333	1211	http://www.rap.ucar.edu/weather/surface/stations.txt
+K3CL	94776	CLATSOP SPIT	OR	US	46.2333333333333	-124.016666666667	30	http://www.rap.ucar.edu/weather/surface/stations.txt
+KOED	94776	MEDFORD(VOR)	OR	US	42.3833333333333	-122.866666666667	1299	http://www.rap.ucar.edu/weather/surface/stations.txt
+KPQR	94776	PORTLAND/WFO	OR	US	45.6	-122.6	23	http://www.rap.ucar.edu/weather/surface/stations.txt
+KDSD	94776	REDMOND(VOR)	OR	US	44.25	-121.3	3077	http://www.rap.ucar.edu/weather/surface/stations.txt
+KRRK	94776	ROOSTER ROCK	OR	US	45.55	-122.966666666667	164	http://www.rap.ucar.edu/weather/surface/stations.txt
+K2SL	94776	SEA LION CAVES	OR	US	44.1166666666667	-124.133333333333	397	http://www.rap.ucar.edu/weather/surface/stations.txt
+KNMW	94776	ASTORIA CG	OR	US	46.15	-123.883333333333	10	http://www.rap.ucar.edu/weather/surface/stations.txt
+KETX	94776	EAST TEXAS VOR	PA	US	40.5833333333333	-75.6833333333333	820	http://www.rap.ucar.edu/weather/surface/stations.txt
+KEWC	94776	ELLWOOD CITY VOR	PA	US	40.8333333333333	-80.2166666666667	1335	http://www.rap.ucar.edu/weather/surface/stations.txt
+KSLT	94776	SLATE RUN	PA	US	41.5	-77.9666666666667	2320	http://www.rap.ucar.edu/weather/surface/stations.txt
+KCTP	94776	STATE COLLEG/WFO	PA	US	40.85	-77.85	1276	http://www.rap.ucar.edu/weather/surface/stations.txt
+KRHA	94776	STATE COLLEG/RFC	PA	US	40.85	-77.85	1276	http://www.rap.ucar.edu/weather/surface/stations.txt
+KJVU	94776	ALLENTOWN QUEEN	PA	US	40.5666666666667	-75.4833333333333	400	http://www.rap.ucar.edu/weather/surface/stations.txt
+KHAW	94776	HAWLEY	PA	US	41.4833333333333	-75.1666666666667	879	http://www.rap.ucar.edu/weather/surface/stations.txt
+KIRQ	94776	COLLIERS VOR	SC	US	33.7166666666667	-82.1666666666667	482	http://www.rap.ucar.edu/weather/surface/stations.txt
+KXAA	94776	GRNVL/DNLDSN	SC	US	34.75	-82.3833333333333	1050	http://www.rap.ucar.edu/weather/surface/stations.txt
+KDPR	94776	DUPREE	SD	US	45.0666666666667	-101.7	2530	http://www.rap.ucar.edu/weather/surface/stations.txt
+KUNR	94776	RAPID CITY/WFO	SD	US	44.0666666666667	-103.2	3369	http://www.rap.ucar.edu/weather/surface/stations.txt
+KUDX	94776	RAPID/N UNDERWOD	SD	US	44.1333333333333	-102.833333333333	3015	http://www.rap.ucar.edu/weather/surface/stations.txt
+KPAC	94776	JCT SD44 US385	SD	US	44.1	-103.516666666667	4902	http://www.rap.ucar.edu/weather/surface/stations.txt
+KEL0	94776	ELLSWORTH I90	SD	US	44.1166666666667	-103.083333333333	3081	http://www.rap.ucar.edu/weather/surface/stations.txt
+KWTA	94776	WASTA I90	SD	US	44.0833333333333	-102.483333333333	2657	http://www.rap.ucar.edu/weather/surface/stations.txt
+KSL0	94776	SHERIDAN LAKE RD	SD	US	44.0333333333333	-103.433333333333	4849	http://www.rap.ucar.edu/weather/surface/stations.txt
+KED0	94776	EDGEMONT US18	SD	US	43.2833333333333	-103.883333333333	3727	http://www.rap.ucar.edu/weather/surface/stations.txt
+KNE0	94776	SD-WY BORDR US85	SD	US	44.1833333333333	-104.05	6365	http://www.rap.ucar.edu/weather/surface/stations.txt
+KGLV	94776	GLAD VLY SD20	SD	US	45.4	-101.783333333333	2470	http://www.rap.ucar.edu/weather/surface/stations.txt
+KBAT	94776	BATESLAND US18	SD	US	43.1333333333333	-102.1	3419	http://www.rap.ucar.edu/weather/surface/stations.txt
+KADR	94776	ANDOVER	SD	US	45.4333333333333	-97.9333333333333	1486	http://www.rap.ucar.edu/weather/surface/stations.txt
+KBVD	94776	BELVIDERE	SD	US	43.9	-101.133333333333	2388	http://www.rap.ucar.edu/weather/surface/stations.txt
+KBRA	94776	BRANDT	SD	US	44.6833333333333	-96.85	1850	http://www.rap.ucar.edu/weather/surface/stations.txt
+KCAC	94776	CACTUS FLATS	SD	US	43.8333333333333	-101.766666666667	2464	http://www.rap.ucar.edu/weather/surface/stations.txt
+KKAD	94776	KADOKA	SD	US	43.8666666666667	-101.833333333333	2510	http://www.rap.ucar.edu/weather/surface/stations.txt
+KFED	94776	FREDERICK	SD	US	45.9333333333333	-98.5666666666667	1401	http://www.rap.ucar.edu/weather/surface/stations.txt
+KHRD	94776	HARROLD	SD	US	44.5333333333333	-99.7	1795	http://www.rap.ucar.edu/weather/surface/stations.txt
+KHER	94776	HERRIED	SD	US	45.85	-100.1	1683	http://www.rap.ucar.edu/weather/surface/stations.txt
+KREL	94776	RELIANCE	SD	US	43.8666666666667	-99.5666666666667	1778	http://www.rap.ucar.edu/weather/surface/stations.txt
+KSUM	94776	SUMMIT	SD	US	45.3333333333333	-97.0833333333333	1991	http://www.rap.ucar.edu/weather/surface/stations.txt
+KTLS	94776	TOLSTOY	SD	US	45.2166666666667	-99.6666666666667	1955	http://www.rap.ucar.edu/weather/surface/stations.txt
+KVIC	94776	VICTOR	SD	US	45.9	-96.8666666666667	1079	http://www.rap.ucar.edu/weather/surface/stations.txt
+KVIV	94776	VIVIAN	SD	US	44.2333333333333	-100.366666666667	1929	http://www.rap.ucar.edu/weather/surface/stations.txt
+KGQO	94776	CHATTANOOGA VOR	TN	US	34.9666666666667	-85.15	689	http://www.rap.ucar.edu/weather/surface/stations.txt
+K3M3	94776	COLLEGEDALE	TN	US	35.05	-85.0166666666667	860	http://www.rap.ucar.edu/weather/surface/stations.txt
+KHMV	94776	HOLSTON MTN VOR	TN	US	36.4333333333333	-82.1333333333333	4321	http://www.rap.ucar.edu/weather/surface/stations.txt
+KVXV	94776	KNOXVILLE VOR	TN	US	35.9	-83.8833333333333	991	http://www.rap.ucar.edu/weather/surface/stations.txt
+KMEG	94776	MEMPHIS/WFO	TN	US	35.05	-90	331	http://www.rap.ucar.edu/weather/surface/stations.txt
+KCWK	94776	CENTEX (AUSTIN)	TX	US	30.3833333333333	-97.5333333333333	594	http://www.rap.ucar.edu/weather/surface/stations.txt
+KFWR	94776	FORT WORTH/RFC	TX	US	32.8333333333333	-97.3	692	http://www.rap.ucar.edu/weather/surface/stations.txt
+KT43	94776	INGLESIDE/TP MCC	TX	US	27.9166666666667	-97.2166666666667	20	http://www.rap.ucar.edu/weather/surface/stations.txt
+KWNJ	94776	JOHNSON SPACE C	TX	US	29.6333333333333	-95.2833333333333	118	http://www.rap.ucar.edu/weather/surface/stations.txt
+KDFX	94776	LAUGHLIN AFB/88D	TX	US	29.2666666666667	-100.283333333333	1132	http://www.rap.ucar.edu/weather/surface/stations.txt
+KLUB	94776	LUBBOCK/WFO	TX	US	33.65	-101.816666666667	3268	http://www.rap.ucar.edu/weather/surface/stations.txt
+KTTT	94776	MAVERICK (DFW)	TX	US	32.8666666666667	-97.0333333333333	541	http://www.rap.ucar.edu/weather/surface/stations.txt
+KDYX	94776	SHACKELFORD/DYES	TX	US	32.5333333333333	-99.25	1516	http://www.rap.ucar.edu/weather/surface/stations.txt
+KTXO	94776	TEXICO (VOR)	TX	US	34.5	-102.833333333333	4439	http://www.rap.ucar.edu/weather/surface/stations.txt
+KCRM	94776	CARMEN	TX	US	36.6	-98.6166666666667	656	http://www.rap.ucar.edu/weather/surface/stations.txt
+KT89	94776	CASTROVILLE MUNI	TX	US	29.35	-98.85	771	http://www.rap.ucar.edu/weather/surface/stations.txt
+KF12	94776	HENDERSON RUSK C	TX	US	32.15	-94.85	443	http://www.rap.ucar.edu/weather/surface/stations.txt
+KT47	94776	KICKAPOO	TX	US	33.85	-98.4833333333333	1001	http://www.rap.ucar.edu/weather/surface/stations.txt
+K5R3	94776	LAGO VISTA	TX	US	30.5	-97.9666666666667	1234	http://www.rap.ucar.edu/weather/surface/stations.txt
+KT86	94776	ZAPATA	TX	US	26.9666666666667	-99.25	423	http://www.rap.ucar.edu/weather/surface/stations.txt
+KICX	94776	CEDAR CITY/88D	UT	US	37.5833333333333	-112.866666666667	10600	http://www.rap.ucar.edu/weather/surface/stations.txt
+KMTU	94776	MYTON	UT	US	40.1333333333333	-110.116666666667	5331	http://www.rap.ucar.edu/weather/surface/stations.txt
+KCXX	94776	COLCHESTER/88D	VT	US	44.5166666666667	-73.1666666666667	318	http://www.rap.ucar.edu/weather/surface/stations.txt
+K8B3	94776	BALL MOUNTAIN	VT	US	43.1166666666667	-72.8	1132	http://www.rap.ucar.edu/weather/surface/stations.txt
+KVT1	94776	CANAAN	VT	US	44.9833333333333	-71.5	1040	http://www.rap.ucar.edu/weather/surface/stations.txt
+KJAY	94776	JAY PEAK	VT	US	44.9333333333333	-72.5333333333333	1877	http://www.rap.ucar.edu/weather/surface/stations.txt
+K6B8	94776	LYNDONVILLE	VT	US	44.5666666666667	-72.0166666666667	1191	http://www.rap.ucar.edu/weather/surface/stations.txt
+KPOW	94776	POWNAL	VT	US	42.7833333333333	-73.2166666666667	1142	http://www.rap.ucar.edu/weather/surface/stations.txt
+KSOL	94776	SOUTH LINCOLN	VT	US	44.0666666666667	-72.9666666666667	2021	http://www.rap.ucar.edu/weather/surface/stations.txt
+KVT2	94776	WEST BURKE	VT	US	44.65	-71.9833333333333	899	http://www.rap.ucar.edu/weather/surface/stations.txt
+KWDO	94776	WEST DOVER	VT	US	42.9333333333333	-72.85	1729	http://www.rap.ucar.edu/weather/surface/stations.txt
+KMNW	94776	WILMINGTON	VT	US	42.8666666666667	-72.1166666666667	1581	http://www.rap.ucar.edu/weather/surface/stations.txt
+KHUH	94776	WHATCOM (BLI)	WA	US	48.95	-122.583333333333	85	http://www.rap.ucar.edu/weather/surface/stations.txt
+KLGX	94776	GRAYS HARBOR	WA	US	47.1166666666667	-124.1	338	http://www.rap.ucar.edu/weather/surface/stations.txt
+KTOU	94776	TATOOSH/VOR	WA	US	48.3	-124.633333333333	1706	http://www.rap.ucar.edu/weather/surface/stations.txt
+K60S	94776	PEARSON/VANCOUVR	WA	US	45.6166666666667	-122.65	26	http://www.rap.ucar.edu/weather/surface/stations.txt
+K1YT	94776	YAGABOND AAF	WA	US	46.6666666666667	-120.45	1437	http://www.rap.ucar.edu/weather/surface/stations.txt
+KBAE	94776	MILWAUKEE VOR	WI	US	43.1166666666667	-88.2833333333333	676	http://www.rap.ucar.edu/weather/surface/stations.txt
+KC85	94776	BARABOO	WI	US	43.5333333333333	-89.7666666666667	981	http://www.rap.ucar.edu/weather/surface/stations.txt
+K3WO	94776	SHAWANO MUNI	WI	US	44.7833333333333	-88.5666666666667	814	http://www.rap.ucar.edu/weather/surface/stations.txt
+KBOY	94776	BOYSEN (VOR)	WY	US	43.4666666666667	-108.3	8258	http://www.rap.ucar.edu/weather/surface/stations.txt
+KDDY	94776	CASPER(VOR)	WY	US	43.0833333333333	-106.283333333333	5318	http://www.rap.ucar.edu/weather/surface/stations.txt
+K81V	94776	MOORCROFT	WY	US	44.2666666666667	-104.95	4268	http://www.rap.ucar.edu/weather/surface/stations.txt
+KTOW	94776	TOWER FALLS	WY	US	44.9	-110.383333333333	5906	http://www.rap.ucar.edu/weather/surface/stations.txt
+KWBC	94776	NWS HDQTRS	DC	US	38.85	-76.9333333333333	164	http://www.rap.ucar.edu/weather/surface/stations.txt
+CXMH	94776	MEDICINE HAT	AB	CA	50.0333333333333	-110.716666666667	2352	http://www.rap.ucar.edu/weather/surface/stations.txt
+CPBT	94776	BLOOD TRIBE AGDM	AB	CA	49.5666666666667	-113.05	3215	http://www.rap.ucar.edu/weather/surface/stations.txt
+CPEH	94776	ENCHANT AGDM	AB	CA	50.1833333333333	-112.433333333333	2628	http://www.rap.ucar.edu/weather/surface/stations.txt
+CPFI	94776	FINCASTLE AGDM	AB	CA	49.8	-112.033333333333	2733	http://www.rap.ucar.edu/weather/surface/stations.txt
+CPIR	94776	IRON SPRINGS	AB	CA	49.9	-112.733333333333	2815	http://www.rap.ucar.edu/weather/surface/stations.txt
+CPQL	94776	LETHBRIDGE DEMO	AB	CA	49.6833333333333	-112.75	2963	http://www.rap.ucar.edu/weather/surface/stations.txt
+CPRO	94776	ROSEMARY AGDM	AB	CA	50.8333333333333	-112.05	2343	http://www.rap.ucar.edu/weather/surface/stations.txt
+CPRY	94776	RAYMOND AGDM	AB	CA	49.4833333333333	-112.683333333333	3074	http://www.rap.ucar.edu/weather/surface/stations.txt
+CPST	94776	STRATHMORE AGDM	AB	CA	51.0333333333333	-113.283333333333	3173	http://www.rap.ucar.edu/weather/surface/stations.txt
+CPSV	94776	SEVEN PERSONS	AB	CA	49.9166666666667	-110.916666666667	2513	http://www.rap.ucar.edu/weather/surface/stations.txt
+CPXL	94776	BOW ISLAND AGDM	AB	CA	49.8666666666667	-111.383333333333	2621	http://www.rap.ucar.edu/weather/surface/stations.txt
+CERM	94776	EDMUNSTON	NB	CA	47.4166666666667	-68.3166666666667	505	http://www.rap.ucar.edu/weather/surface/stations.txt
+CACQ	94776	MIRAMICHI	NB	CA	47.0166666666667	-65.4666666666667	102	http://www.rap.ucar.edu/weather/surface/stations.txt
+CNGH	94776	GATESHEAD ISLAND	NT	CA	70.6333333333333	-100.266666666667	66	http://www.rap.ucar.edu/weather/surface/stations.txt
+CZVE	94776	CANADA/ARTCC	NT	CA	70.1666666666667	-124.683333333333	3	http://www.rap.ucar.edu/weather/surface/stations.txt
+CYLF	94776	LANSDOWNE HOUSE	ON	CA	52.2333333333333	-87.8833333333333	794	http://www.rap.ucar.edu/weather/surface/stations.txt
+CTRA	94776	RAWSON LAKE	ON	CA	49.6666666666667	-93.7333333333333	1427	http://www.rap.ucar.edu/weather/surface/stations.txt
+CVBI	94776	KENORA/ONT VOR	ON	CA	49.4666666666667	-94.0333333333333	1293	http://www.rap.ucar.edu/weather/surface/stations.txt
+CTAE	94776	ALFRED	ON	CA	45.55	-74.8833333333333	187	http://www.rap.ucar.edu/weather/surface/stations.txt
+CTAL	94776	ALEXANDRIA	ON	CA	45.3166666666667	-74.6166666666667	253	http://www.rap.ucar.edu/weather/surface/stations.txt
+CTCK	94776	MOOSE CREEK	ON	CA	45.25	-74.9666666666667	279	http://www.rap.ucar.edu/weather/surface/stations.txt
+CTCW	94776	CORNWALL	ON	CA	45.0333333333333	-74.6833333333333	190	http://www.rap.ucar.edu/weather/surface/stations.txt
+CTNK	94776	ALGONQUIN PARK	ON	CA	45.5333333333333	-78.2666666666667	1345	http://www.rap.ucar.edu/weather/surface/stations.txt
+CTWN	94776	WINCHESTER	ON	CA	45.05	-75.3333333333333	246	http://www.rap.ucar.edu/weather/surface/stations.txt
+CAHR	94776	HARRINGTON CDA	PE	CA	46.35	-63.1666666666667	174	http://www.rap.ucar.edu/weather/surface/stations.txt
+CMBB	94776	CHATHAM BROWNBRG	QC	CA	45.6166666666667	-74.4166666666667	246	http://www.rap.ucar.edu/weather/surface/stations.txt
+CMHN	94776	HARRINGTON	QC	CA	45.8	-74.65	551	http://www.rap.ucar.edu/weather/surface/stations.txt
+CMHB	94776	LOCHABER	QC	CA	45.6333333333333	-75.2	344	http://www.rap.ucar.edu/weather/surface/stations.txt
+CMWD	94776	RAWDON	QC	CA	46.0166666666667	-73.8166666666667	689	http://www.rap.ucar.edu/weather/surface/stations.txt
+CMLI	94776	SAINT LOUIS	QC	CA	45.8666666666667	-73	102	http://www.rap.ucar.edu/weather/surface/stations.txt
+CMBR	94776	BEAUHARNOS	QC	CA	45.3166666666667	-73.9166666666667	72	http://www.rap.ucar.edu/weather/surface/stations.txt
+CMCT	94776	ST CONSTANT	QC	CA	45.3333333333333	-73.5833333333333	128	http://www.rap.ucar.edu/weather/surface/stations.txt
+CMCW	94776	COVEY HILL	QC	CA	45.0166666666667	-73.8666666666667	860	http://www.rap.ucar.edu/weather/surface/stations.txt
+CMFM	94776	FORET MONTMORENC	QC	CA	47.3166666666667	-71.15	2205	http://www.rap.ucar.edu/weather/surface/stations.txt
+CMGB	94776	GRANBY	QC	CA	45.3666666666667	-72.7666666666667	282	http://www.rap.ucar.edu/weather/surface/stations.txt
+CMHW	94776	HOWICK	QC	CA	45.1666666666667	-73.8666666666667	138	http://www.rap.ucar.edu/weather/surface/stations.txt
+CMLA	94776	L ARTIFICE	QC	CA	45.0666666666667	-73.8333333333333	200	http://www.rap.ucar.edu/weather/surface/stations.txt
+CMPD	94776	PIEDMONT	QC	CA	45.8833333333333	-74.1	574	http://www.rap.ucar.edu/weather/surface/stations.txt
+CMPL	94776	ST POLYCARPE	QC	CA	45.3	-74.3	184	http://www.rap.ucar.edu/weather/surface/stations.txt
+CMRG	94776	ROUGEMONT	QC	CA	45.4166666666667	-73.05	177	http://www.rap.ucar.edu/weather/surface/stations.txt
+CMRI	94776	RIGAUD	QC	CA	45.4833333333333	-74.3	98	http://www.rap.ucar.edu/weather/surface/stations.txt
+CMRU	94776	RUSSELTOWN	QC	CA	45.05	-73.8	213	http://www.rap.ucar.edu/weather/surface/stations.txt
+CMRY	94776	RUISSEAU CRANB	QC	CA	45.1166666666667	-73.6833333333333	194	http://www.rap.ucar.edu/weather/surface/stations.txt
+CMSB	94776	ST SABINE	QC	CA	45.2166666666667	-73.0166666666667	161	http://www.rap.ucar.edu/weather/surface/stations.txt
+CMSC	94776	ST CELESTIN	QC	CA	46.2	-72.45	180	http://www.rap.ucar.edu/weather/surface/stations.txt
+CMSX	94776	ST M-D-NAPIERVIL	QC	CA	45.1833333333333	-73.6166666666667	194	http://www.rap.ucar.edu/weather/surface/stations.txt
+CMYT	94776	ST CHRYSOSTOME	QC	CA	45.1333333333333	-73.7666666666667	180	http://www.rap.ucar.edu/weather/surface/stations.txt
+MMZA	94776	GUADALUPE/ZACATE		MX	22.75	-102.5	7431	http://www.rap.ucar.edu/weather/surface/stations.txt
+PAGP	94776	PAGAN/N. MARIANA	UM	US	18	145.416666666667	7	http://www.rap.ucar.edu/weather/surface/stations.txt
+MLIP	94776	MILI/MARSHALL IS	MH	US	6	172	0	http://www.rap.ucar.edu/weather/surface/stations.txt
+UJAP	94776	UJAE ATOLL/MARSH		RU	8.91666666666667	165.75	7	http://www.rap.ucar.edu/weather/surface/stations.txt
+ENIP	94776	ENEWETAK/MARSHAL		NO	11.3666666666667	162.366666666667	7	http://www.rap.ucar.edu/weather/surface/stations.txt
+TSDM	94776	SANTO DOMINGO		DO	18.4666666666667	-69.8833333333333	46	http://www.rap.ucar.edu/weather/surface/stations.txt
+MCOL	94776	ANTIGUA/COOLIDG		AG	17.1166666666667	-61.7666666666667	33	http://www.rap.ucar.edu/weather/surface/stations.txt
+MGGI	94776	AURORA ARP		GT	14.5833333333333	-90.5166666666667	4885	http://www.rap.ucar.edu/weather/surface/stations.txt
+TRPA	94776	TEGUCIGALPA		HN	14.05	-87.2166666666667	3294	http://www.rap.ucar.edu/weather/surface/stations.txt
+MCGV	94776	GAVIOTAS		CO	4.53333333333333	-70.9166666666667	548	http://www.rap.ucar.edu/weather/surface/stations.txt
+MVCZ	94776	CARRIZAL		VE	9.41666666666667	-66.9166666666667	528	http://www.rap.ucar.edu/weather/surface/stations.txt
+MVMN	94776	MENE GRANDE		VE	9.81666666666667	-70.9166666666667	92	http://www.rap.ucar.edu/weather/surface/stations.txt
+MVPQ	94776	PORLAMAR DEL CA		VE	10.9166666666667	-63.9666666666667	62	http://www.rap.ucar.edu/weather/surface/stations.txt
+MVTR	94776	TEMBLADOR		VE	9.01666666666667	-62.6166666666667	98	http://www.rap.ucar.edu/weather/surface/stations.txt
+SEQM	94776	QUITO/NEW INTL		EC	-0.116666666666667	-78.35	7874	http://www.rap.ucar.edu/weather/surface/stations.txt
+SBER	94776	EIRUNEPE		BR	-6.66666666666667	-69.8666666666667	341	http://www.rap.ucar.edu/weather/surface/stations.txt
+SBFT	94776	FRONTEIRA		BR	-20.2833333333333	-49.1833333333333	1598	http://www.rap.ucar.edu/weather/surface/stations.txt
+SBLB	94776	ALBACORA P25 OIL		BR	-22.1	-39.9166666666667	33	http://www.rap.ucar.edu/weather/surface/stations.txt
+SBMM	94776	MARLIM P20 OIL		BR	-22.35	-40.0833333333333	33	http://www.rap.ucar.edu/weather/surface/stations.txt
+SBMZ	94776	PORTO DE MOZ		BR	-1.73333333333333	-52.25	56	http://www.rap.ucar.edu/weather/surface/stations.txt
+SBRG	94776	RIO GRANDE		BR	-32.0166666666667	-52.0833333333333	26	http://www.rap.ucar.edu/weather/surface/stations.txt
+SBUI	94776	CARAUARI		BR	-4.95	-66.9	266	http://www.rap.ucar.edu/weather/surface/stations.txt
+SBUY	94776	PORTO URUCU		BR	-4.88333333333333	-65.35	236	http://www.rap.ucar.edu/weather/surface/stations.txt
+SWPI	94776	PARINTINS		BR	-2.66666666666667	-56.7833333333333	89	http://www.rap.ucar.edu/weather/surface/stations.txt
+SCPQ	94776	MONOPULLI		CH	-42.3333333333333	-73.7166666666667	16	http://www.rap.ucar.edu/weather/surface/stations.txt
+BMKA	94776	MARRAK POINT		GL	63.4333333333333	-51.1833333333333	135	http://www.rap.ucar.edu/weather/surface/stations.txt
+ETGM	94776	MEPPEN (MIL)		DE	52.7166666666667	7.31666666666667	85	http://www.rap.ucar.edu/weather/surface/stations.txt
+ETNA	94776	AHLHORN (GER-AFB		DE	52.8833333333333	8.23333333333333	148	http://www.rap.ucar.edu/weather/surface/stations.txt
+EHFD	94776	F3-FB-1  SEA		NL	54.85	4.7	164	http://www.rap.ucar.edu/weather/surface/stations.txt
+ENHM	94776	HEIMDAL OILP		NO	59.5666666666667	2.23333333333333	33	http://www.rap.ucar.edu/weather/surface/stations.txt
+ENNE	94776	NORNE FPSO OILP		NO	66.0333333333333	8.08333333333333	33	http://www.rap.ucar.edu/weather/surface/stations.txt
+ENQR	94776	SNORRE B OILP		NO	61.35	2.21666666666667	33	http://www.rap.ucar.edu/weather/surface/stations.txt
+ENSE	94776	SNORRE A OILP		NO	61.45	2.15	33	http://www.rap.ucar.edu/weather/surface/stations.txt
+EPJS	94776	JEZOW SUDECKI		PL	50.9333333333333	15.7666666666667	1834	http://www.rap.ucar.edu/weather/surface/stations.txt
+LDWR	94776	SHIP C7M/MIKE		HR	66	2	0	http://www.rap.ucar.edu/weather/surface/stations.txt
+LGLX	94776	PIRAEUS		GR	37.9833333333333	23.5666666666667	7	http://www.rap.ucar.edu/weather/surface/stations.txt
+LGMR	94776	MARATHONAS		GR	38.15	24.0166666666667	16	http://www.rap.ucar.edu/weather/surface/stations.txt
+LGTY	94776	TYMBAKI		GR	35.0666666666667	24.7666666666667	23	http://www.rap.ucar.edu/weather/surface/stations.txt
+LIMM	94776	MILANO ACC/COM		IT	45.4333333333333	9.28333333333333	338	http://www.rap.ucar.edu/weather/surface/stations.txt
+LYOH	94776	OHRID		CS	41.1166666666667	20.8	2497	http://www.rap.ucar.edu/weather/surface/stations.txt
+LSZD	94776	LOCARNO/ASCONA		CH	46.15	8.78333333333333	1969	http://www.rap.ucar.edu/weather/surface/stations.txt
+LTCT	94776	IGDIR		TR	39.9833333333333	43.8666666666667	3104	http://www.rap.ucar.edu/weather/surface/stations.txt
+LTCU	94776	BINGOL		TR	38.8666666666667	40.5833333333333	3481	http://www.rap.ucar.edu/weather/surface/stations.txt
+LTCV	94776	SIRNAK		TR	37.3666666666667	42.0666666666667	2037	http://www.rap.ucar.edu/weather/surface/stations.txt
+DAEF	94776	TINFOUYE		DZ	28.4333333333333	7.55	1549	http://www.rap.ucar.edu/weather/surface/stations.txt
+DAEN	94776	RHOURD NOUSS		DZ	29.7333333333333	6.71666666666667	827	http://www.rap.ucar.edu/weather/surface/stations.txt
+HAAY	94776	ASMARA/YOHANNES		ET	15.2666666666667	38.9166666666667	7628	http://www.rap.ucar.edu/weather/surface/stations.txt
+FARP	94776	FARAULEP ISLAND		ZA	8.26666666666667	144.55	7	http://www.rap.ucar.edu/weather/surface/stations.txt
+FAWH	94776	J. G. STRIJDOM		ZA	-22.4666666666667	17.4666666666667	5577	http://www.rap.ucar.edu/weather/surface/stations.txt
+FDBB	94776	BIG BEND MET		SZ	-26.85	31.9166666666667	308	http://www.rap.ucar.edu/weather/surface/stations.txt
+FDJR	94776	JERICHO		SZ	-27.1666666666667	31.4333333333333	2300	http://www.rap.ucar.edu/weather/surface/stations.txt
+FDLM	94776	LOMAHASHA		SZ	-25.9833333333333	31.9833333333333	1870	http://www.rap.ucar.edu/weather/surface/stations.txt
+FDMY	94776	MAYIWANE		SZ	-25.8666666666667	31.5166666666667	1575	http://www.rap.ucar.edu/weather/surface/stations.txt
+FDND	94776	NDZEVANE		SZ	-26.9666666666667	31.9666666666667	679	http://www.rap.ucar.edu/weather/surface/stations.txt
+FDNY	94776	NYONYANE		SZ	-26.1166666666667	31.45	1050	http://www.rap.ucar.edu/weather/surface/stations.txt
+FDOT	94776	MOTI		SZ	-26.7	31.4333333333333	1119	http://www.rap.ucar.edu/weather/surface/stations.txt
+FDVV	94776	VUVULANE		SZ	-26.0666666666667	31.8833333333333	906	http://www.rap.ucar.edu/weather/surface/stations.txt
+FEFV	94776	BANGUI		CF	4.4	18.5166666666667	1201	http://www.rap.ucar.edu/weather/surface/stations.txt
+FLHN	94776	LIVINGSTONE NKUM		ZM	-17.8166666666667	25.8166666666667	3235	http://www.rap.ucar.edu/weather/surface/stations.txt
+FWLI	94776	LILONGWE INTL AR		MW	-13.7833333333333	33.7833333333333	4035	http://www.rap.ucar.edu/weather/surface/stations.txt
+FYND	94776	NOORDOEWER		NA	-28.75	17.6166666666667	492	http://www.rap.ucar.edu/weather/surface/stations.txt
+FYOH	94776	OKAHAO		NA	-17.8833333333333	15.0666666666667	3599	http://www.rap.ucar.edu/weather/surface/stations.txt
+FYRH	94776	REHOBETH		NA	-23.3166666666667	17.0833333333333	4528	http://www.rap.ucar.edu/weather/surface/stations.txt
+FYTE	94776	TERRACE BAY		NA	-19.9666666666667	13.0166666666667	16	http://www.rap.ucar.edu/weather/surface/stations.txt
+FYTN	94776	OTJINENE		NA	-21.1333333333333	18.7833333333333	1453	http://www.rap.ucar.edu/weather/surface/stations.txt
+EQBH	94776	CAMP BASTION		AF	31.8666666666667	64.2	2953	http://www.rap.ucar.edu/weather/surface/stations.txt
+EQCB	94776	KANDAHAR		AF	31.5166666666667	65.8666666666667	3314	http://www.rap.ucar.edu/weather/surface/stations.txt
+EQTK	94776	TARIN KOWT		AF	32.6	65.85	4452	http://www.rap.ucar.edu/weather/surface/stations.txt
+OIMQ	94776	KASMAR		IR	35.2333333333333	58.4666666666667	3740	http://www.rap.ucar.edu/weather/surface/stations.txt
+OPTA	94776	TARBELA DAM		PK	33.9833333333333	72.6	1115	http://www.rap.ucar.edu/weather/surface/stations.txt
+OYDM	94776	DHAMAR		YE	14.5333333333333	44.4333333333333	7956	http://www.rap.ucar.edu/weather/surface/stations.txt
+OYHJ	94776	HAJJAH		YE	15.7	43.6	5774	http://www.rap.ucar.edu/weather/surface/stations.txt
+OYIB	94776	IBB		YE	13.9666666666667	44.1666666666667	6299	http://www.rap.ucar.edu/weather/surface/stations.txt
+UIKW	94776	VITIM-IN-YAKUT		RU	59.45	112.566666666667	633	http://www.rap.ucar.edu/weather/surface/stations.txt
+UNCE	94776	NOVOKUZNETSK		RU	53.7166666666667	87.1666666666667	1010	http://www.rap.ucar.edu/weather/surface/stations.txt
+UNCL	94776	KOLPASHEVO-IN-T		RU	58.2833333333333	82.8666666666667	249	http://www.rap.ucar.edu/weather/surface/stations.txt
+UNKA	94776	ABAKAN		RU	53.75	91.4	804	http://www.rap.ucar.edu/weather/surface/stations.txt
+UNKI	94776	VANAVARA		RU	60.3166666666667	102.266666666667	853	http://www.rap.ucar.edu/weather/surface/stations.txt
+UNKK	94776	KRASNOJARSK		RU	56	92.8666666666667	909	http://www.rap.ucar.edu/weather/surface/stations.txt
+UNKT	94776	PODKAMENNAYA TU		RU	61.6	90	207	http://www.rap.ucar.edu/weather/surface/stations.txt
+USSI	94776	IVDEL-IN-SVERDL		RU	60.6666666666667	60.4166666666667	331	http://www.rap.ucar.edu/weather/surface/stations.txt
+ZSLC	94776	HUANGYAN		CN	28.4166666666667	122.366666666667	3	http://www.rap.ucar.edu/weather/surface/stations.txt
+RKTZ	94776	HAEMI		KR	36.3833333333333	126.333333333333	102	http://www.rap.ucar.edu/weather/surface/stations.txt
+RK13	94776	YANGGU (G-404)		KR	38.0833333333333	127.983333333333	656	http://www.rap.ucar.edu/weather/surface/stations.txt
+RPWW	94776	TANDAG/MINDANAO		PH	9.06666666666667	126.166666666667	16	http://www.rap.ucar.edu/weather/surface/stations.txt
+RPWX	94776	ILIGAN/MINDANAO		PH	8.15	124.216666666667	1299	http://www.rap.ucar.edu/weather/surface/stations.txt
+VGBG	94776	BOGRA		BD	24.85	89.3666666666667	66	http://www.rap.ucar.edu/weather/surface/stations.txt
+HKRO	94776	HONG KONG RO		HK	22.3166666666667	114.166666666667	217	http://www.rap.ucar.edu/weather/surface/stations.txt
+AAWR	94776	WOOMERA AERODRO		AU	-31.1333333333333	136.8	548	http://www.rap.ucar.edu/weather/surface/stations.txt
+AHPD	94776	PORT HEDLAND AR		AU	-20.3666666666667	118.616666666667	36	http://www.rap.ucar.edu/weather/surface/stations.txt
+APDN	94776	DARWIN (CIV/MIL		AU	-12.4	130.866666666667	98	http://www.rap.ucar.edu/weather/surface/stations.txt
+ASLH	94776	LORD HOWE ISLAND		AU	-31.5166666666667	159.066666666667	20	http://www.rap.ucar.edu/weather/surface/stations.txt
+EQYL	94776	LAJES AB		PT	38.7666666666667	-27.1	180	http://www.rap.ucar.edu/weather/surface/stations.txt
+EQYM	94776	MORON AB		ES	37.1666666666667	-5.61666666666667	285	http://www.rap.ucar.edu/weather/surface/stations.txt
+EQYZ	94776	ZARAGOZA AB NASA		ES	41.65	-1.5	2831	http://www.rap.ucar.edu/weather/surface/stations.txt
+EQKE	94776	KEFLAVIK NEMOD		IS	63.9833333333333	-22.6	171	http://www.rap.ucar.edu/weather/surface/stations.txt
+KQAS	94776	ESKAN VILLAGE		SA	24.5666666666667	46.85	30	http://www.rap.ucar.edu/weather/surface/stations.txt
+EQBR	94776	BASRAH AIR STN		IQ	30.55	47.65	66	http://www.rap.ucar.edu/weather/surface/stations.txt
+KQKA	94776	KANDAHAR AB		AF	31.5	65.8333333333333	3327	http://www.rap.ucar.edu/weather/surface/stations.txt
+KQSV	94776	FOB SHUKVANI		AF	32.1	64.8	3248	http://www.rap.ucar.edu/weather/surface/stations.txt
+EQDK	94776	KANDAHAR (OAKN)		AF	31.4666666666667	65.8166666666667	3314	http://www.rap.ucar.edu/weather/surface/stations.txt
+KQAZ	94776	CAMP ANACONDA		AF	32.95	66.6333333333333	6598	http://www.rap.ucar.edu/weather/surface/stations.txt
+KQTH	94776	THUMRAIT		OM	17.6666666666667	54.0166666666667	1526	http://www.rap.ucar.edu/weather/surface/stations.txt
+KQDD	94776	DIKHIL		DJ	11.1166666666667	42.3666666666667	1604	http://www.rap.ucar.edu/weather/surface/stations.txt
+KQEH	94776	JINBURYYONG RWS		KR	38.2	128.533333333333	318	http://www.rap.ucar.edu/weather/surface/stations.txt
+KQEI	94776	SINNAM RWS		KR	37.9666666666667	128.083333333333	640	http://www.rap.ucar.edu/weather/surface/stations.txt
+KQEJ	94776	BANGSAN RWS		KR	38.1166666666667	128.033333333333	722	http://www.rap.ucar.edu/weather/surface/stations.txt
+KQEL	94776	GAPYONG		KR	38.8666666666667	127.516666666667	180	http://www.rap.ucar.edu/weather/surface/stations.txt
+KQEN	94776	DAEGWALLYEONG RW		KR	37.6833333333333	128.766666666667	2753	http://www.rap.ucar.edu/weather/surface/stations.txt
+KQEP	94776	GWANGJUUP RWS		KR	37.3833333333333	127.3	240	http://www.rap.ucar.edu/weather/surface/stations.txt
+KQEQ	94776	MUNSAN RWS		KR	37.8833333333333	126.766666666667	112	http://www.rap.ucar.edu/weather/surface/stations.txt
+KQER	94776	GIMWA RWS		KR	38.25	127.416666666667	666	http://www.rap.ucar.edu/weather/surface/stations.txt
+KQES	94776	DAESAN RWS		KR	37.0166666666667	126.8	128	http://www.rap.ucar.edu/weather/surface/stations.txt
+KQET	94776	YEONGJU RWS		KR	36.8666666666667	128.55	705	http://www.rap.ucar.edu/weather/surface/stations.txt
+KQEV	94776	GONGJU RWS		KR	36.5	127.2	105	http://www.rap.ucar.edu/weather/surface/stations.txt
+KQEW	94776	SANGJU RWS		KR	36.4166666666667	128.15	299	http://www.rap.ucar.edu/weather/surface/stations.txt
+KQEX	94776	GUMI RWS		KR	36.1166666666667	128.366666666667	138	http://www.rap.ucar.edu/weather/surface/stations.txt
+KQEY	94776	GEUMSAN RWS		KR	36.1166666666667	127.483333333333	331	http://www.rap.ucar.edu/weather/surface/stations.txt
+KQFA	94776	CAMP STANLEY		KR	37.7166666666667	127.1	210	http://www.rap.ucar.edu/weather/surface/stations.txt
+KQFB	94776	MIRYANG		KR	35.65	128.733333333333	154	http://www.rap.ucar.edu/weather/surface/stations.txt
+KQFQ	94776	CAMP_RED_CLOUD		KR	37.75	127.033333333333	210	http://www.rap.ucar.edu/weather/surface/stations.txt
+KQFT	94776	YANGSU-RI		KR	37.6	127.35	95	http://www.rap.ucar.edu/weather/surface/stations.txt
+KQFU	94776	GWANGJEOK		KR	37.8166666666667	126.983333333333	249	http://www.rap.ucar.edu/weather/surface/stations.txt
+KQFV	94776	SACHANG		KR	38.0666666666667	127.516666666667	518	http://www.rap.ucar.edu/weather/surface/stations.txt
+KQFW	94776	HONGCHEON		KR	37.6833333333333	127.883333333333	807	http://www.rap.ucar.edu/weather/surface/stations.txt
+KQFX	94776	BURON		KR	37.2	127.75	308	http://www.rap.ucar.edu/weather/surface/stations.txt
+KQEA	94776	EDWIN ANDREWS AB		PH	6.93333333333333	122.066666666667	33	http://www.rap.ucar.edu/weather/surface/stations.txt
+KQUD	94776	ENTEBBE		UG	0.0666666666666667	32.45	3770	http://www.rap.ucar.edu/weather/surface/stations.txt
+KQVF	94776	MANDA BAY		KE	-2.15	40.9	49	http://www.rap.ucar.edu/weather/surface/stations.txt
+KQEB	94776	EMBAKASI		KE	-1.3	36.9166666666667	5358	http://www.rap.ucar.edu/weather/surface/stations.txt

@@ -18,6 +18,12 @@ for $i (@{$hlref}) {
   # ignore non-metar (for now?)
   # TODO: should I really ignore non-metar?
 
+  # duplicate/triplicate testing below
+#  unless ($i->{icao} eq "AYMD") {next;}
+#  debug(var_dump("i",$i));
+#  next;
+#  warn "TESTING";
+
   # ignore things without lat/lon too
   $err = 0;
   for $j ("icao", "lat_prp", "lon_prp") {
@@ -25,6 +31,10 @@ for $i (@{$hlref}) {
     if ($i->{$j}=~m/^[\'\s]*$/) {$err=1;}
   }
   if ($err) {next;}
+
+  # no duplicates
+  if ($seen{$i->{icao}}) {next;}
+  $seen{$i->{icao}} = 1;
 
   # cheat to make city look nicer
   $i->{city}=~s/\|(.*)$/ ($1)/;
@@ -41,6 +51,8 @@ for $i (@{$hlref}) {
   push(@l, "http://www.weathergraphics.com/identifiers/master-location-identifier-database-20130801.csv");
   print join("\t",@l),"\n";
 }
+
+warn "Run bc-parse-stations.pl after running this program";
 
 =item comment
 

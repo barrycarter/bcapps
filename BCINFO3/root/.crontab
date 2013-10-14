@@ -22,7 +22,7 @@ MAILTO="bcinfo3@barrycarter.info"
 # and radar
 04 3 * * * find /var/tmp/radar -mtime +1 | xargs rm
 # this is really ugly (TODO: clean this up)
-54 4 * * * find /sites/data/ -mtime +1 -name 'ABX*_N*.gif' | xargs rm
+54 4 * * * find /sites/data/ -mtime +1 -name '[A-Z][A-Z][A-Z]*_N??.gif' | xargs rm
 59 5 * * * find /sites/data/ -mtime +1 -name 'Conus*.gif' | xargs rm
 # TODO: below is really ugly, but avoids find command
 09 * * * * rm /var/tmp/querys/DONE/*

@@ -3931,6 +3931,7 @@ sub get_raws_obs {
 
     # fixed for RAWS
     $hash{type} = "RAWS";
+    $hash{source} = "http://raws.wrh.noaa.gov/rawsobs.html";
 
     # info not provided
     for $j ("pressure", "cloudcover", "events") {$hash{$j} = "NULL";}

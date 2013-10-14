@@ -1,45 +1,27 @@
 #!/bin/perl
 
 # Parses the latest version of
-# http://weather.noaa.gov/data/nsd_cccc.txt (they've made
-# changes/corrections) and puts it into station table
+# http://weather.noaa.gov/data/nsd_cccc.txt and 
+# http://www.rap.ucar.edu/weather/surface/stations.txt
+# but only after parsing MLI list which trumps these lists
 
 # -noprint: don't print anything (useful for debugging)
 
-# I've humorously annotated some entries, and am storing the
-# annotations in MIME64 (which means you can see them if you want, but
-# don't have to spoiled if you don't want to be; considered rot 13
-# too..)
-
-# 05 Apr 2012: Greg Thompson's
-# http://www.rap.ucar.edu/weather/surface/stations.txt includes METAR
-# stations that nsd_cccc.txt doesn't, so adding them as well (but only
-# when they don't appear in nsd_cccc.txt already)
-
 require "/usr/local/lib/bclib.pl";
+
+# which METAR are already in stations.db?
+@res = sqlite3hashlist("SELECT metar FROM stations","/sites/DB/stations.db");
+for $i (@res) {$seen{$i->{metar}}=1;}
 
 open(A,"/home/barrycarter/BCGIT/WEATHER/nsd_cccc_annotated.txt");
 
 while (<A>) {
-  # hack to find my annotations
-  chomp($_);
-  s/\r//isg;
-  if (s/\;\"(.*?)\"$//) {
-    $ann=$1;
-    $ann=encode_base64($ann);
-    $ann=~s/\s//isg;
-    debug("ANN: $ann");
-  } else {
-    $ann="";
-  }
-
-  # x1, x2 = unknown (to me)
+  # x1, x2 = useless to me
   my($indi,$wmob,$wmos,$place,$state,$country,$wmoregion,$lat,$lon,$x1,$x2,$elev) = split(/\;/, $_);
-
+  # seen by MLI? if so, ignore
+  if ($seen{$indi}) {next;}
   # record that we've seen this station
   $seen{$indi}=1;
-
-#  debug($wmob,$wmos,$indi,$place,$state,$country,$wmoregion,$lat,$lon,$x1,$x2,$elev);
 
   # convert lat to decimal (probably much better ways to do this!)
   if ($lat=~/^(\d{2})\-(\d{2})(N|S)/) {
@@ -64,20 +46,17 @@ while (<A>) {
   $flon=$lod+$lom/60+$los/3600;
   if ($lox eq "W") {$flon=-$flon;}
 
-  # 3D coords (earth radius = 1) [on the theory they might be helpful
-  # somewhere/somehow/someday]
-  # TODO: include elevation?
-  ($x,$y,$z) = sph2xyz($flon,$flat,1,"degrees=1");
+  # correct elevation, combo field for WMO
+  $elev = round2(convert($elev,"m","ft"));
+  $wmobs = $wmob*1000+$wmos;
 
   # print in importable format (for sqlite3)
-  print join("\t", ($indi, $wmob, $wmos, $place, $state, $country, $flat, $flon, $elev, $x, $y, $z, $ann, "http://weather.noaa.gov/data/nsd_cccc.txt")),"\n";
+  print join("\t", ($indi, $wmobs, $place, $state, $country, $flat, $flon, $elev, "http://weather.noaa.gov/data/nsd_cccc.txt")),"\n";
 }
 
 close(A);
 
-debug("PART TWO");
-
-# now, parse stations.txt
+# now, parse stations.txt (the UCAR list)
 # columns where data starts (not actually all data, just start/end cols I need)
 @cols = (0, 3, 20, 26, 32, 39, 47, 55, 61, 80, 99);
 open(A,"/home/barrycarter/BCGIT/WEATHER/stations.txt");
@@ -134,47 +113,30 @@ while (<A>) {
   $flon=$lod+$lom/60+$los/3600;
   if ($lox eq "W") {$flon=-$flon;}
 
-  # 3D coords (earth radius = 1) [on the theory they might be helpful
-  # somewhere/somehow/someday]
-  # TODO: include elevation?
-  ($x,$y,$z) = sph2xyz($flon,$flat,1,"degrees=1");
-
-  # if synop, split into wmob/wmos
-  if ($synop=~/^(..)(...)$/) {
-    ($wmob,$wmos) = ($1,$2);
-  } else {
-    ($wmob,$wmos) = ("","");
-  }
+  # correct elevation
+  $elev = round2(convert($elev,"m","ft"));
 
   # print in importable format (for sqlite3)
-  print join("\t", ($code, $wmob, $wmos, $name, $state, $country, $flat, $flon, $elev, $x, $y, $z, $ann, "http://www.rap.ucar.edu/weather/surface/stations.txt")),"\n";
+  print join("\t", ($code, $wmobs, $name, $state, $country, $flat, $flon, $elev, "http://www.rap.ucar.edu/weather/surface/stations.txt")),"\n";
 }
 
 close(A);
 
 =item schema
 
-CREATE TABLE stations (
+CREATE TABLE stations ( 
  metar TEXT,
- wmob INT,
- wmos INT,
- city TEXT,
- state TEXT,
- country TEXT,
- latitude DOUBLE,
- longitude DOUBLE,
+ wmobs INT, 
+ city TEXT, 
+ state TEXT, 
+ country TEXT, 
+ latitude DOUBLE, 
+ longitude DOUBLE, 
  elevation DOUBLE,
- x DOUBLE,
- y DOUBLE,
- z DOUBLE,
- humor TEXT,
- source TEXT
+ source TEXT 
 );
 
 CREATE INDEX i_metar ON stations(metar);
-CREATE INDEX i_x ON stations(x);
-CREATE INDEX i_y ON stations(y);
-CREATE INDEX i_z ON stations(z);
 
 .separator "\t"
 .import /path/to/output/of/this/program stations
