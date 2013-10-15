@@ -14,12 +14,18 @@ for $i (1..200) {
 }
 close(A);
 
-@good = `fgrep -h 'stn=' mnet*.html | fgrep '#33FF66'`;
+@good = `fgrep -h 'stn=' mnet*.html | fgrep '#33FF66' | sort | uniq`;
+# about 20K stations, so get in parallel
+open(A,"|parallel -j 10");
 
 for $i (@good) {
-  $i=~/stn=(.*?)"/;
-  debug($1);
+  $i=~/stn=(.*?)\"/;
+  my($stn) = $1;
+  if (-f $stn && -M $stn < 1/24.) {next;}
+  print A "curl -o $stn 'http://mesowest.utah.edu/cgi-bin/droman/meso_table_mesowest.cgi?stn=$stn&time=GMT'\n";
 }
+
+close(A);
 
 # "fgrep -h 'stn=' mnet*.html | sort | uniq | wc" shows about 40438
 # stations, not all active
