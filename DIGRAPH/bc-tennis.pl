@@ -58,12 +58,12 @@ sub statescore {
 
   # fill in hash for 0 and 1 values and recurse unless I already have them
   unless ($statehash{$x}{$y}{0}) {
-    $statehash{$x}{$y}{0} = nextscore($x,$y,0);
+    $statehash{$x}{$y}{0} = @{nextscore($x,$y,0)};
     statescore(nextscore($x,$y,0));
   }
 
   unless ($statehash{$x}{$y}{1}) {
-    $statehash{$x}{$y}{1} = nextscore($x,$y,1);
+    $statehash{$x}{$y}{1} = @{nextscore($x,$y,1)};
     statescore(nextscore($x,$y,1));
   }
 }
@@ -71,19 +71,10 @@ sub statescore {
 
 statescore(0,0);
 
-die "TESTING";
-
-@scores = (0,0);
-
-
-debug(nextscore(@scores,0));
-debug(nextscore(@scores,1));
-
-die "TESTING";
-
-while (@scores) {
-  push(@scores, nextscore(@scores,0));
-  push(@scores, nextscore(@scores,1));
-  debug("SCORES",@scores);
+for $i (keys %statehash) {
+  for $j (keys %{$statehash{$i}}) {
+    for $k (keys %{$statehash{$i}{$j}}) {
+      print "$i\t$j\t$k\t$statehash{$i}{$j}{$k}\n";
+    }
+  }
 }
-
