@@ -2,39 +2,83 @@
 
 # script to create state diagram for tennis game
 
+require '/home/barrycarter/BCGIT/bclib.rb'
+
 # scores:
 # 0 = 0
 # 1 = 15
 # 2 = 30
-# 3 = duece w disadvantage
+# 3 = deuce w disadvantage
 # 4 = 40 (or deuce)
 # 5 = deuce w advantage
 # 6 = 60 (victory)
 
-# if x has x points, y has y points, and n scores (n=0 -> x, n=1 ->y),
-# return next score in x,y format
+# GameState is a list; entry n = player n score (n=0|1)
 
-def nextscore(x,y,n)
-  # TODO: reference arguments by index? (could reduce these two lines to one)
+class GameState
+ def initialize(l) @l=l end
 
-  # 30 points or less just increases score
-  if n==0 && x<=2 then return [x+1,y] end
-  if n==1 && y<=2 then return [x,y+1] end
+ # the next state if nth player scores
+ def nextstate(n)
 
-  # if you have advantage and score, you win
-  if n==0 && x==5 then return [6,y] end
-  if n==1 && y==5 then return [x,6] end
+   # player with 0 or 15 or deuce advantage scores
+   if @l[n]<=1 || @l[n]==5 then
+     t = @l;
+     t[n]+=1;
+     return GameState.new(t) 
+   end
 
-  # if you have disadvantage and score, go to deuce
-  if n==0 && x==3 then return [4,4] end
-  if n==1 && y==3 then return [4,4] end
+   # player with 40 scores, other player has 30 or less
+   if @l[n]==4 && @l[1-n]<=2 then
+     t = @l;
+     t[n] = 6;
+     return GameState.new(t)
+   end
+
+   # player with 30 scores
+   if @l[n]==2 then
+     t = @l;
+     t[n] = 4;
+     return GameState.new(t)
+   end
+
+   # player with deuce disadvantage scores (yields deuce)
+   if @l[n]==3 then return GameState.new([4,4]) end
+
+   # during deuce, one player scores
+   if @l[n]==4 && @l[1-n]==4 then
+     t = @l;
+     t[n] = 5;
+     t[1-n] = 3;
+     return GameState.new(t)
+   end
+ end
+
+ # fill in given has with all possible future gamestates (using recursion)
+ def futurestates(hash)
+   # first for myself
+   # TODO: put in loop
+   hash[self][0] = self.nextstate(0)
+   hash[self][1] = self.nextstate(1)
+   # unless I am a final state, call myself on future states
+   if @l[0]==6 || @l[1]==6 then return end
+   self.trde("SELF")
+   self.nextstate(0).futurestates(hash)
+   self.nextstate(1).futurestates(hash)
+ end
 
 end
 
-print [0,1].each{|n| nextscore(0,0,n)}.inspect
 
-# print r.inspect;
-print "\n";
+
+# print GameState.new([4,2]).nextstate(1).inspect
+
+$DEBUG=1;
+hash = Hash.new(Hash.new)
+GameState.new([0,0]).futurestates(hash)
+
+
+
 
 
 
