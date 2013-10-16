@@ -1,0 +1,3 @@
+# text description of tennis game states
+x0y0,x,x15y0,x,x30y0,x,x40y0,x,x60y0
+x0y0,y,x0y15,y,x0y30,y,x0y40,y,x0y60
