@@ -6,5 +6,5 @@ def debug(s) if $DEBUG then $stderr.print("#{s}\n") end end
 
 # inline debugging for all objects
 class Object
-  def trde(s) debug("#{s}:#{self.inspect}"); self end
+  def td(s) debug("#{s}:#{self.inspect}"); self end
 end

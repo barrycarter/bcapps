@@ -20,24 +20,24 @@ class GameState
 
  # the next state if nth player scores
  def nextstate(n)
+   self.td("NEXTSTATE")
+   # store current state in array
+   t = @l.dup;
 
    # player with 0 or 15 or deuce advantage scores
    if @l[n]<=1 || @l[n]==5 then
-     t = @l;
      t[n]+=1;
      return GameState.new(t) 
    end
 
    # player with 40 scores, other player has 30 or less
    if @l[n]==4 && @l[1-n]<=2 then
-     t = @l;
      t[n] = 6;
      return GameState.new(t)
    end
 
    # player with 30 scores
    if @l[n]==2 then
-     t = @l;
      t[n] = 4;
      return GameState.new(t)
    end
@@ -47,7 +47,6 @@ class GameState
 
    # during deuce, one player scores
    if @l[n]==4 && @l[1-n]==4 then
-     t = @l;
      t[n] = 5;
      t[1-n] = 3;
      return GameState.new(t)
@@ -56,13 +55,15 @@ class GameState
 
  # fill in given has with all possible future gamestates (using recursion)
  def futurestates(hash)
+   # if I am a final state, do nothing
+   if @l[0]==6 || @l[1]==6 then return end
+   # if my hash states are already defined, do nothing
+#   if !(hash[self].empty?) then return end
    # first for myself
    # TODO: put in loop
    hash[self][0] = self.nextstate(0)
    hash[self][1] = self.nextstate(1)
-   # unless I am a final state, call myself on future states
-   if @l[0]==6 || @l[1]==6 then return end
-   self.trde("SELF")
+   hash[self].td("HATM")
    self.nextstate(0).futurestates(hash)
    self.nextstate(1).futurestates(hash)
  end
@@ -77,6 +78,7 @@ $DEBUG=1;
 hash = Hash.new(Hash.new)
 GameState.new([0,0]).futurestates(hash)
 
+hash.td("HASH")
 
 
 
