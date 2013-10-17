@@ -15,6 +15,14 @@ map(push(@res, [csv($_)]), @ls);
 ($hlref) = arraywheaders2hashlist(\@res);
 
 for $i (@{$hlref}) {
+
+  debug(var_dump("i",$i));
+
+  # if ICAO blank + stn_key is USaa(something), (something) is actual ICAO
+  if ($i->{icao}=~/^\s*$/ && $i->{stn_key}=~s/^USaa//) {
+    $i->{icao} = $i->{stn_key};
+  }
+
   # ignore non-metar (for now?)
   # TODO: should I really ignore non-metar?
 
@@ -30,7 +38,10 @@ for $i (@{$hlref}) {
     # just spaces and apostrophes
     if ($i->{$j}=~m/^[\'\s]*$/) {$err=1;}
   }
-  if ($err) {next;}
+  if ($err) {
+    debug("SKIPPING: $i->{icao} $i->{lat_prp} $i->{lon_prp}");
+    next;
+  }
 
   # no duplicates
   if ($seen{$i->{icao}}) {next;}

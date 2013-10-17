@@ -50,9 +50,9 @@ for $i (@ARGV) {
   }
 
   # print the diff and time of backup to .quikbak file
-  open(A,">>$target.quikbak")||die("Couldn't open $target.quikbak, $!");
+  open(A,">>$target.quikbak")||warn("Couldn't open $target.quikbak, $!");
   print A "! $mod\n$diff\n";
-  close(A)||die("Couldn't close $target.quikbak, $!");
+  close(A)||warn("Couldn't close $target.quikbak, $!");
 
   # now that we have the diff, copy over the current version
   safecopy($i,$target);
@@ -67,7 +67,7 @@ sub safecopy {
   # copy $i to $j
   my($res) = system("cp","-p",$i,$j);
   # die on failure
-  if ($res) {die("cp $i $j FAILED, $!");}
+  if ($res) {warn("cp $i $j FAILED, $!");}
   # make $j r--r--r--
   chmod(0444,$j);
 }
@@ -94,7 +94,7 @@ sub get_target {
     # given file in current directory
     $aa="$ENV{PWD}/$1";
   } else {
-    die("Can't find dir for $i");
+    warn("Can't find dir for $i");
   }
 
   if ($aa=~m%^/tmp/%) {warn("$i: tmp file"); return();}
