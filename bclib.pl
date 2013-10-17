@@ -3983,6 +3983,9 @@ sub get_raws_obs {
       $hash{time} = "$year-$month-$day $hr:$mi:00";
     }
 
+    # check for "MM" values (and convert to null)
+    for $j (keys %hash) {if ($hash{$j} eq "MM") {$hash{$j} = "NULL";}}
+
     # push to result
     push(@res, {%hash});
   }

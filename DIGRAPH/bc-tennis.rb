@@ -20,7 +20,6 @@ class GameState
 
  # the next state if nth player scores
  def nextstate(n)
-   self.td("NEXTSTATE")
    # store current state in array
    t = @l.dup;
 
