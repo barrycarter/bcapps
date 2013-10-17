@@ -3725,7 +3725,11 @@ sub parse_metar {
   }
 
   # combine lists into strings (but no leftover, we can't use it)
-  $b{cloudcover}=join(" ",@clouds);
+  if (@clouds) {
+    $b{cloudcover}=join(" ",@clouds);
+  } else {
+    $b{cloudcover} = "NULL";
+  }
 
   if (@weather) {
     $b{events}=join(" ",@weather);
@@ -3823,7 +3827,7 @@ sub get_raws_obs {
     my($meta) = $1;
     # if there is absolutely no data, no point in doing more
     unless ($data) {
-      warn("$i: NO DATA");
+      debug("$i: NO DATA");
       next;
     }
 
@@ -3866,7 +3870,7 @@ sub get_raws_obs {
     unless ($wind=~/^(..)(..)$/) {warn "BAD WIND: $wind";}
     $hash{winddir} = $1*10;
     $hash{windspeed} = $2;
-    if ($gust=~/g(\d+)/) {$hash{gust} = $1;}
+    if ($gust=~/g(\d+)/) {$hash{gust} = $1;} else {$hash{gust} = "NULL";}
 
     # parse time and date (don't need 00 minute)
     $time=~/(\d{2})(\d{2})/||warn("BAD TIME: $time");

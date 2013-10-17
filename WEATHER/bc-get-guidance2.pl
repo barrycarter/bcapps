@@ -59,6 +59,7 @@ for $i (split(/\n\s*\n/, $out)) {
     $start += $gap*3600;
 
     # build the hash for this station/time
+    $rethash{$stat}{$start}{observation} = "(from guidance file)";
     $rethash{$stat}{$start}{type} = "MOS";
     $rethash{$stat}{$start}{id} =  $stat;
     $rethash{$stat}{$start}{time} = strftime("%Y-%m-%d %H:%M:%S",gmtime($start));
@@ -66,11 +67,15 @@ for $i (split(/\n\s*\n/, $out)) {
     # some fixed quantities
     $rethash{$stat}{$start}{source} = "http://nws.noaa.gov/mdl/forecast/text/avnmav.txt";
 
+    $rethash{$stat}{$start}{name} = "$statinfo{$stat}{city}, $statinfo{$stat}{state}, $statinfo{$stat}{country}";
+    $rethash{$stat}{$start}{name}=~s/\s*,\s*,\s*/, /isg;
+    $rethash{$stat}{$start}{name}=~s/\s*,\s*/, /isg;
+
     for $k ("gust", "events", "pressure") {
       $rethash{$stat}{$start}{$k}="NULL";
     }
 
-    for $k ("name", "latitude", "longitude", "elevation") {
+    for $k ("latitude", "longitude", "elevation") {
       $rethash{$stat}{$start}{$k} = $statinfo{$stat}{$k};
     }
 
@@ -93,6 +98,7 @@ my($daten) = `date +%Y%m%d.%H%M%S.%N`;
 chomp($daten);
 my($qfile) = "/var/tmp/querys/$daten-madis-get-guidance-$$";
 open(A,">$qfile");
+print A "BEGIN;\n";
 
 for $i (@queries) {
   # REPLACE if needed

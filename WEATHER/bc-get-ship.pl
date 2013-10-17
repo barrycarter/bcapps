@@ -77,15 +77,11 @@ chomp($daten);
 my($qfile) = "/var/tmp/querys/$daten-madis-get-ship-$$";
 open(A,">$qfile");
 
-# TODO: need to delete old entries from madis and madis_now (maybe)
 print A "BEGIN;\n";
 
 for $i (@queries) {
   # REPLACE if needed
   $i=~s/IGNORE/REPLACE/;
-  print A "$i;\n";
-  # and now for madis_now
-  $i=~s/madis/madis_now/;
   print A "$i;\n";
 }
 

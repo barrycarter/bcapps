@@ -89,7 +89,7 @@ for $i (@urls) {
       unless ($minfo{$dbhash2{id}}) {
 	warn "UNKNOWN METAR: $dbhash2{id}";
       }
-      $dbhash{elevation} = round(convert($minfo{$dbhash2{id}}{elevation},"m","ft"));
+      $dbhash{elevation} = $minfo{$dbhash2{id}}{elevation};
       $dbhash{name} = "$minfo{$dbhash2{id}}{city}, $minfo{$dbhash2{id}}{state}, $minfo{$dbhash2{id}}{country}";
       debug("DIFFS",$minfo{$dbhash2{id}}{latitude}-$dbhash{latitude});
       debug("THIS IS METAR");
@@ -134,28 +134,25 @@ for $i (@querys) {
   # REPLACE if needed
   $i=~s/IGNORE/REPLACE/;
   print A "$i;\n";
-  # and now for madis_now
-  $i=~s/madis/madis_now/;
-  print A "$i;\n";
 }
 
 print A "COMMIT;\n";
 
 # delete old reports + clean db
-print A "DELETE FROM madis_now WHERE MIN(time,timestamp) < DATETIME(CURRENT_TIMESTAMP, '-3 hour');\n";
+# print A "DELETE FROM madis_now WHERE MIN(time,timestamp) < DATETIME(CURRENT_TIMESTAMP, '-3 hour');\n";
 print A "DELETE FROM madis WHERE MIN(time,timestamp) < DATETIME(CURRENT_TIMESTAMP, '-24 hour');\n";
 
 # let METAR-10M trump ASOS
 # <h>the fact that this works proves sqlite3 > mysql</h>
-print A "DELETE FROM madis WHERE rowid IN (
-SELECT m1.rowid FROM madis m1 JOIN madis m2 ON (m1.type='ASOS'
-AND m2.type='METAR-10M' AND m1.id = m2.id AND m1.time = m2.time)
-);\n";
+# print A "DELETE FROM madis WHERE rowid IN (
+# SELECT m1.rowid FROM madis m1 JOIN madis m2 ON (m1.type='ASOS'
+# AND m2.type='METAR-10M' AND m1.id = m2.id AND m1.time = m2.time)
+# );\n";
 
-print A "DELETE FROM madis_now WHERE rowid IN (
-SELECT m1.rowid FROM madis_now m1 JOIN madis_now m2 ON (m1.type='ASOS'
-AND m2.type='METAR-10M' AND m1.id = m2.id AND m1.time = m2.time)
-);\n";
+# print A "DELETE FROM madis_now WHERE rowid IN (
+# SELECT m1.rowid FROM madis_now m1 JOIN madis_now m2 ON (m1.type='ASOS'
+# AND m2.type='METAR-10M' AND m1.id = m2.id AND m1.time = m2.time)
+# );\n";
 
 print A "VACUUM;\n";
 

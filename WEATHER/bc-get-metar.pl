@@ -61,7 +61,7 @@ for $i (@{$hlref}) {
       next;
     }
 
-    warn("$i->{station_id}: filling in position info from db");
+    debug("$i->{station_id}: filling in position info from db");
     for $j ("latitude", "longitude", "elevation") {
       $i->{$j} = $statinfo{$i->{station_id}}{$j};
     }
@@ -85,6 +85,8 @@ for $i (@{$hlref}) {
     if ($u1 && $u2) {$hash{$f2} = convert($hash{$f2},$u1,$u2);}
     # rounding
     if (length($r)) {$hash{$f2} = round2($hash{$f2},$r);}
+    # empties
+    unless ($hash{$f2}=~/\S/) {$hash{$f2} = "NULL";}
   }
 
   # special cases
@@ -113,15 +115,11 @@ chomp($daten);
 my($qfile) = "/var/tmp/querys/$daten-madis-get-metar-$$";
 open(A,">$qfile");
 
-# TODO: need to delete old entries from madis and madis_now (maybe)
 print A "BEGIN;\n";
 
 for $i (@queries) {
   # REPLACE if needed
   $i=~s/IGNORE/REPLACE/;
-  print A "$i;\n";
-  # and now for weather_now
-  $i=~s/madis/madis_now/;
   print A "$i;\n";
 }
 

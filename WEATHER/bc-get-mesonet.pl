@@ -5,7 +5,29 @@
 
 require "/usr/local/lib/bclib.pl";
 
+my($url) = "http://mesowest.utah.edu/data/mesowest.out.gz";
+my($out,$err,$res) = cache_command2("curl $url | gunzip", "age=150");
+
+# store unzipped results
+write_file($out, "/var/tmp/mesowest.out");
+
+# get rid of header lines
+$out=~s/^.*?\n(\s*STN)/$1/s;
+$out=~s/^\s*/ /sg;
+map(push(@res, [split(/\s+/,$_)]), split(/\n/,$out));
+debug(var_dump("res0",$res[0]));
+debug(var_dump("res1",$res[1]));
+($hlref) = arraywheaders2hashlist(\@res);
+debug(var_dump("hlref",$hlref));
+
+
+
+
+die "TESTING";
+
+# routine below is too invasive + got me temp blocked
 dodie('chdir("/var/tmp/meso")');
+
 # there are about 200 of these, so we parallelize
 open(A,"|parallel -j 10");
 for $i (1..200) {
