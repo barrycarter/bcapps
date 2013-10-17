@@ -8,6 +8,7 @@ require "/usr/local/lib/bclib.pl";
 
 
 @ls=split(/\n/,read_file("master-location-identifier-database-20130801.csv"));
+# @ls=split(/\n/,read_file("/tmp/test.csv"));
 # get rid of useless lines
 for (1..4) {shift(@ls);}
 # array-ify
@@ -15,18 +16,23 @@ map(push(@res, [csv($_)]), @ls);
 ($hlref) = arraywheaders2hashlist(\@res);
 
 for $i (@{$hlref}) {
+  debug(var_dump("i",$i));
 
   # if ICAO blank, try to find it elsewhere
-  if ($i->{icao}=~/^\s*$/) {
-    if ($i->{icao_xref}) {
+  unless ($i->{icao}=~/\S/) {
+    if ($i->{icao_xref}=~/\S/) {
+      debug("CASE XREF");
       $i->{icao} = $i->{icao_xref};
     } elsif ($i->{stn_key}=~s/^USaa//) {
+      debug("CASE STNKEY");
       $i->{icao} = $i->{stn_key};
     } else {
       debug("LINE HAS NO ICAO");
       debug(var_dump("i",$i));
     }
   }
+
+  debug("ICAO: $i->{icao}");
 
   # ignore non-metar (for now?)
   # TODO: should I really ignore non-metar?
@@ -44,7 +50,7 @@ for $i (@{$hlref}) {
     if ($i->{$j}=~m/^[\'\s]*$/) {$err=1;}
   }
   if ($err) {
-    debug("SKIPPING: $i->{icao} $i->{lat_prp} $i->{lon_prp}");
+    debug("SKIPPING: ($i->{icao}) ($i->{lat_prp}) ($i->{lon_prp})");
     next;
   }
 

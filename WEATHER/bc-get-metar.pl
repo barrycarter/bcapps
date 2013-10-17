@@ -51,15 +51,16 @@ debug("TEST2");
 
 for $i (@{$hlref}) {
 
-  debug(var_dump("I",$i));
-  next;
-
-  # reject positionless data
+  # reject positionless data (unless we can get it from %statinfo hash
   if ($i->{latitude}=~/^\s*$/ || $i->{longitude}=~/^\s*$/) {
-    if ($statinfo{$i->{station_id}}) {
-      debug("$i->{station_id}: POSITIONLESS but exists in stations");
-    } else {
-      warn "$i->{station_id}: HOPELESS";
+    unless ($statinfo{$i->{station_id}}) {
+      warn("$i->{station_id}: no position data at all!");
+      next;
+    }
+
+    for $j ("latitude", "longitude", "elevation") {
+      warn("$i->{station_id}: filling in position info from db");
+      $i->{$j} = $statinfo{$i->{station_id}}{$j};
     }
   }
 
