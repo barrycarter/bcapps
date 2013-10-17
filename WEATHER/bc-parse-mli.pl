@@ -16,11 +16,16 @@ map(push(@res, [csv($_)]), @ls);
 
 for $i (@{$hlref}) {
 
-  debug(var_dump("i",$i));
-
-  # if ICAO blank + stn_key is USaa(something), (something) is actual ICAO
-  if ($i->{icao}=~/^\s*$/ && $i->{stn_key}=~s/^USaa//) {
-    $i->{icao} = $i->{stn_key};
+  # if ICAO blank, try to find it elsewhere
+  if ($i->{icao}=~/^\s*$/) {
+    if ($i->{icao_xref}) {
+      $i->{icao} = $i->{icao_xref};
+    } elsif ($i->{stn_key}=~s/^USaa//) {
+      $i->{icao} = $i->{stn_key};
+    } else {
+      debug("LINE HAS NO ICAO");
+      debug(var_dump("i",$i));
+    }
   }
 
   # ignore non-metar (for now?)

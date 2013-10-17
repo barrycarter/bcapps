@@ -50,6 +50,19 @@ debug("TEST2");
 );
 
 for $i (@{$hlref}) {
+
+  debug(var_dump("I",$i));
+  next;
+
+  # reject positionless data
+  if ($i->{latitude}=~/^\s*$/ || $i->{longitude}=~/^\s*$/) {
+    if ($statinfo{$i->{station_id}}) {
+      debug("$i->{station_id}: POSITIONLESS but exists in stations");
+    } else {
+      warn "$i->{station_id}: HOPELESS";
+    }
+  }
+
   # the resulting hash
   my(%hash) = ();
 
