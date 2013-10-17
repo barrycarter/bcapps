@@ -54,22 +54,21 @@ class GameState
 
  # fill in given has with all possible future gamestates (using recursion)
  def futurestates(hash)
-   # if I am a final state, do nothing
-   if @l[0]==6 || @l[1]==6 then return end
+   # if I am a final state, just return hash
+   if @l[0]==6 || @l[1]==6 then return hash end
    # if my hash states are already defined, do nothing
-#   if !(hash[self].empty?) then return end
+   hash[self].td("ME")
+   if (hash[self][0]) then return hash end
    # first for myself
    # TODO: put in loop
    hash[self][0] = self.nextstate(0)
    hash[self][1] = self.nextstate(1)
-   hash[self].td("HATM")
-   self.nextstate(0).futurestates(hash)
-   self.nextstate(1).futurestates(hash)
+   hash = hash.merge(self.nextstate(0).futurestates(hash))
+   hash = hash.merge(self.nextstate(1).futurestates(hash))
+   return hash
  end
 
 end
-
-
 
 # print GameState.new([4,2]).nextstate(1).inspect
 

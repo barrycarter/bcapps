@@ -37,6 +37,12 @@ for $i (@{$hlref}) {
   # the resulting hash
   my(%hash) = ();
 
+  # raw observation itself
+  $hash{observation} = join(", ",@{$i->{raw_array}});
+
+  # buoy reports do not provide cloudcover/events
+  for $j ("cloudcover", "events") {$hash{$j} = "NULL";}
+
   for $j (@convert) {
     my($f1,$f2,$u1,$u2,$r) = split(/:/,$j);
     # start by copying file field to hash field

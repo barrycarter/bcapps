@@ -3222,6 +3222,10 @@ sub arraywheaders2hashlist {
   # starting at first NONheader row
   for $i (1..$#arr) {
     my(%hash) = ();
+
+    # TODO: this is probably bad
+    $hash{raw_array} = $arr[$i];
+
     for $j (0..$len) {
       $hash{$arr[0][$j]} = $arr[$i][$j];
     }
