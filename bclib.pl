@@ -3080,25 +3080,23 @@ sub recent_forecast {
   my($options) = ();
   my(%rethash);
 
-  # this is probably a bad way to do this (global %stathash)
-  unless (%stathash) {
     # TODO: subroutinize this?
     # TODO: add elevation
     # TODO: maybe use DB here, not flat file
-    for $i (split(/\n/,read_file("/usr/local/etc/juststations.txt"))) {
-      $i=~/^(\S+)\s+(.{28})\s*(\S+)\s*(\S+)$/;
-      my($stat,$name,$lat,$long) = ($1,$2,$3,$4);
-      # cleanup
-      $name=~s/\s+/ /isg;
-      $name=trim($name);
-      # most/all are in NW quadrant of globe, but...
-      if ($lat=~s/S$//) {$lat*=-1;} else {$lat=~s/N$//;}
-      if ($long=~s/W$//) {$long*=-1;} else {$long=~s/E$//;}
-      $stathash{$stat}{name} = $name;
-      $stathash{$stat}{longitude} = $long;
-      $stathash{$stat}{latitude} = $lat;
-    }
+  for $i (split(/\n/,read_file("/usr/local/etc/juststations.txt"))) {
+    $i=~/^(\S+)\s+(.{28})\s*(\S+)\s*(\S+)$/;
+    my($stat,$name,$lat,$long) = ($1,$2,$3,$4);
+    # cleanup
+    $name=~s/\s+/ /isg;
+    $name=trim($name);
+    # most/all are in NW quadrant of globe, but...
+    if ($lat=~s/S$//) {$lat*=-1;} else {$lat=~s/N$//;}
+    if ($long=~s/W$//) {$long*=-1;} else {$long=~s/E$//;}
+    $stathash{$stat}{name} = $name;
+    $stathash{$stat}{longitude} = $long;
+    $stathash{$stat}{latitude} = $lat;
   }
+
 
   # TODO: consider using other data MOS provides (esp N/X X/N)
 

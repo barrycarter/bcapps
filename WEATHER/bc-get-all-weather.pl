@@ -4,7 +4,7 @@
 
 require "/usr/local/lib/bclib.pl";
 
-for $i ("madis","buoy","guidance","metar","ship","raws") {
+for $i ("madis","buoy","guidance2","metar","ship","raws") {
   debug("RUNNING: bc-get-$i.pl");
   system("bc-get-$i.pl");
   system("bc-query-gobbler.pl");
