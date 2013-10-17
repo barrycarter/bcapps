@@ -61,8 +61,8 @@ for $i (@{$hlref}) {
       next;
     }
 
+    warn("$i->{station_id}: filling in position info from db");
     for $j ("latitude", "longitude", "elevation") {
-      warn("$i->{station_id}: filling in position info from db");
       $i->{$j} = $statinfo{$i->{station_id}}{$j};
     }
   }
@@ -70,8 +70,10 @@ for $i (@{$hlref}) {
   # the resulting hash
   my(%hash) = ();
 
-  $hash{cloudcover} = join(" ",$i->{sky_cover1},$i->{sky_cover2},
-			   $i->{sky_cover3},$i->{sky_cover4});
+  # ugly way of combining sky_cover[1234]
+  my(%cover) = ();
+  for $j ("1".."4") {$cover{$i->{"sky_cover$j"}}=1;}
+  $hash{cloudcover} = join(" ",keys %cover);
   $hash{cloudcover} =~s/\s+/ /isg;
   $hash{cloudcover} = trim($hash{cloudcover});
 
