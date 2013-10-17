@@ -11,8 +11,6 @@ require "/usr/local/lib/bclib.pl";
 @res1 = sqlite3hashlist("SELECT * FROM stations","/sites/DB/stations.db");
 for $i (@res1) {$statinfo{$i->{metar}} = $i;}
 
-debug("TEST1");
-
 # TODO: handle case of sky_cover occurring three times
 
 my($url) = "http://weather.aero/dataserver_current/cache/metars.cache.csv.gz";
@@ -25,6 +23,9 @@ write_file($out, "/var/tmp/weather.aero.metars.txt");
 while ($out=~s/,,/, ,/isg) {}
 # get rid of everything to header line
 $out=~s/^.*raw_text/raw_text/isg;
+
+# multiple sky cover
+$out=~s/sky_cover/"sky_cover".++$n/iseg;
 
 # let arraywheaders2hashlist do the hard work
 map(push(@res, [csv($_)]), split(/\n/,$out));
@@ -51,6 +52,8 @@ debug("TEST2");
 
 for $i (@{$hlref}) {
 
+  debug(var_dump("i",$i));
+
   # reject positionless data (unless we can get it from %statinfo hash
   if ($i->{latitude}=~/^\s*$/ || $i->{longitude}=~/^\s*$/) {
     unless ($statinfo{$i->{station_id}}) {
@@ -66,6 +69,11 @@ for $i (@{$hlref}) {
 
   # the resulting hash
   my(%hash) = ();
+
+  $hash{cloudcover} = join(" ",$i->{sky_cover1},$i->{sky_cover2},
+			   $i->{sky_cover3},$i->{sky_cover4});
+  $hash{cloudcover} =~s/\s+/ /isg;
+  $hash{cloudcover} = trim($hash{cloudcover});
 
   for $j (@convert) {
     my($f1,$f2,$u1,$u2,$r) = split(/:/,$j);
