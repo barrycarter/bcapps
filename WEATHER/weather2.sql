@@ -26,6 +26,12 @@ CREATE TABLE madis (
  comments TEXT
 );
 
+-- SQLite3 won't let you add comments to added columns, but these are:
+-- parser = program that parsed this data
+-- autocomment = comments made by programs
+ALTER TABLE madis ADD parser TEXT;
+ALTER TABLE madis ADD autocomment TEXT;
+
 CREATE VIEW madis_now AS
 SELECT m.* FROM madis m JOIN (SELECT id, type, MAX(time) AS time FROM
 madis WHERE type NOT IN ('MOS') GROUP BY id, type ORDER BY RANDOM())
