@@ -14,6 +14,14 @@ unless (-d $maindir) {die "$maindir DOES NOT EXIST";}
 
 for $i (glob("$maindir/elec*.png")) {
   my($dev,$ino,$mode,$nlink,$uid,$gid,$rdev,$size,$atime,$mtime,$ctime,$blksize,$blocks)=stat($i);
+  # if size is 0, something is wrong
+  if ($size==0) {
+    write_file_new("$i: size 0", "/home/barrycarter/ERR/bcelecfix.err");
+    die "0 size file";
+  } else {
+    system("rm /home/barrycarter/ERR/bcelecfix.err");
+  }
+
   my($dir) = strftime("$maindir/%Y%m%d",localtime($mtime));
   unless (-d $dir) {system("mkdir $dir");}
   my($file) = strftime("elec%Y%m%d.%H%M%S.png",localtime($mtime));

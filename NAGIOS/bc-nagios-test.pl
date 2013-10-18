@@ -135,6 +135,22 @@ sub bc_head_size {
   return 2;
 }
 
+=item bc_404($file)
+
+Confirms that $file does not exist (not even as a directory, symlink, etc)
+
+=cut
+
+sub bc_404 {
+  my($file) = @_;
+  if (-e $file) {
+    print "$file exists, which is bad\n";
+    return 2;
+  }
+  print "No such file/directory: $file, which is good\n";
+  return 0;
+}
+
 =item bc_info_log($file)
 
 Confirms that the last entry in $file lighttpd log file (which I rsync

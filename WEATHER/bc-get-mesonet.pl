@@ -15,55 +15,61 @@ write_file($out, "/var/tmp/mesowest.out");
 $out=~s/^.*?\n(\s*STN)/$1/s;
 $out=~s/^\s*/ /sg;
 map(push(@res, [split(/\s+/,$_)]), split(/\n/,$out));
-debug(var_dump("res0",$res[0]));
-debug(var_dump("res1",$res[1]));
 ($hlref) = arraywheaders2hashlist(\@res);
-debug(var_dump("hlref",$hlref));
 
+# convert from mesowest headers to my own
+@convert = (
+ "STN:id",
+ "SLAT:latitude",
+ "SLON:longitude",
+ "SELV:elevation:m:ft:0",
+ "TMPF:temperature",
+ "SKNT:windspeed:kt:mph:1",
+ "DRCT:winddir",
+ "GUST:gust:kt:mph:1",
+ "ALTI:pressure",
+ "DWPF:dewpoint",
+ "WTHR:events"
+);
 
+# TODO: parse WTHR (base 80)
+# TODO: put station names in stations.db and then retrieve here
 
+for $i (@{$hlref}) {
 
-die "TESTING";
+  # the resulting hash
+  my(%hash) = ();
 
-# routine below is too invasive + got me temp blocked
-dodie('chdir("/var/tmp/meso")');
+  # TODO: improve this
+  $hash{type} = "MNET$i->{MNET}";
 
-# there are about 200 of these, so we parallelize
-open(A,"|parallel -j 10");
-for $i (1..200) {
-  if (-f "mnet-$i.html" && -M "mnet-$i.html" < 1/24.) {next;}
-  print A "curl -o mnet-$i.html 'http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?order=id&mnet=$i'\n";
+  # time (it's really YYYYMMDD)
+  $i->{"YYMMDD/HHMM"}=~/^(\d{4})(\d{2})(\d{2})\/(\d{2})(\d{2})$/ || warn ("BAD TIME: $i->{'YYMMDD/HHMM'}");
+  $hash->{time} = "$1-$2-$3 $4:$5:00";
+  # TODO: does meso data include cloudcover or only as part of weather?
+  $hash->{observation} = join(", ",$i->{raw_array});
+
+  for $j (@convert) {
+    my($f1,$f2,$u1,$u2,$r) = split(/:/,$j);
+    # start by copying file field to hash field
+    $hash{$f2} = $i->{$f1};
+    # unit conversion
+    if ($u1 && $u2) {$hash{$f2} = convert($hash{$f2},$u1,$u2);}
+    # rounding
+    if (length($r)) {$hash{$f2} = round2($hash{$f2},$r);}
+    # empties
+    if ($hash{$f2} == -9999) {$hash{$f2} = "NULL";}
+  }
+
+  debug(var_dump("hash",{%hash}));
 }
-close(A);
-
-@good = `fgrep -h 'stn=' mnet*.html | fgrep '#33FF66' | sort | uniq`;
-# about 20K stations, so get in parallel
-open(A,"|parallel -j 10");
-
-for $i (@good) {
-  $i=~/stn=(.*?)\"/;
-  my($stn) = $1;
-  if (-f $stn && -M $stn < 1/24.) {next;}
-  print A "curl -o $stn 'http://mesowest.utah.edu/cgi-bin/droman/meso_table_mesowest.cgi?stn=$stn&time=GMT'\n";
-}
-
-close(A);
-
-# "fgrep -h 'stn=' mnet*.html | sort | uniq | wc" shows about 40438
-# stations, not all active
-
-# "fgrep -h 'stn=' mnet*.html | fgrep -v '#FF' | sort | uniq | wc" shows about 27226 active
-
-# colors:
-# #33FF66 [green]
-# #FF6666 [red]
-# #FFFF66 [yellow]
 
 
-# http://mesowest.utah.edu/cgi-bin/droman/meso_base.cgi?stn=DPG14&time=GMT
-# (Sample url)
 
-# compare to http://raws.wrh.noaa.gov/cgi-bin/roman/raws_flat.cgi?stn=CRVC1 for NOAA
+
+
+
+
 
 
 
