@@ -16,32 +16,26 @@ for $i (@res) {$seen{$i->{metar}}=1;}
 open(A, "fgrep stn= /home/barrycarter/BCGIT/WEATHER/meso_station.cgi.html|");
 
 # cols where data is
-@cols = (74, 83, 119, 122, 134, 147, 158);
+@cols = (74, 83, 117, 122, 134, 147, 157);
 
 while (<A>) {
+  debug("THUNK: $_");
   my(@data) = column_data($_, [@cols]);
   # clean data
   for $i (@data) {
     $i=~s/<.*?>//isg;
-    $i=~s/ft//isg;
+    $i=~s/ft//sg;
+    $i=~s/\"//isg;
     $i = trim($i);
   }
 
   debug("DATA",@data);
   # print for stations.db
-  print join("\t", @data)."\n";
+  print join("\t", $data[0], "NULL", $data[1], $data[2], "US", $data[3],
+	    $data[4], $data[5], "http://mesowest.utah.edu/cgi-bin/droman/meso_station.cgi")."\n";
 }
 
-
-
-
-
-
-
-
 die "TESTING";
-
-
 
 open(A,"/home/barrycarter/BCGIT/WEATHER/nsd_cccc_annotated.txt");
 

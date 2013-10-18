@@ -5,6 +5,10 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# load stations.db data
+@res1 = sqlite3hashlist("SELECT * FROM stations","/sites/DB/stations.db");
+for $i (@res1) {$statinfo{$i->{metar}} = $i;}
+
 my($url) = "http://mesowest.utah.edu/data/mesowest.out.gz";
 my($out,$err,$res) = cache_command2("curl $url | gunzip", "age=150");
 
@@ -40,14 +44,19 @@ for $i (@{$hlref}) {
   # the resulting hash
   my(%hash) = ();
 
+  $hash{source} = "http://mesowest.utah.edu/data/mesowest.out.gz";
+
   # TODO: improve this
   $hash{type} = "MNET$i->{MNET}";
 
+  # TODO: possibly improve this
+  $hash{cloudcover} = "NULL";
+
   # time (it's really YYYYMMDD)
   $i->{"YYMMDD/HHMM"}=~/^(\d{4})(\d{2})(\d{2})\/(\d{2})(\d{2})$/ || warn ("BAD TIME: $i->{'YYMMDD/HHMM'}");
-  $hash->{time} = "$1-$2-$3 $4:$5:00";
+  $hash{time} = "$1-$2-$3 $4:$5:00";
   # TODO: does meso data include cloudcover or only as part of weather?
-  $hash->{observation} = join(", ",$i->{raw_array});
+  $hash{observation} = join(", ",@{$i->{raw_array}});
 
   for $j (@convert) {
     my($f1,$f2,$u1,$u2,$r) = split(/:/,$j);
@@ -61,9 +70,29 @@ for $i (@{$hlref}) {
     if ($hash{$f2} == -9999) {$hash{$f2} = "NULL";}
   }
 
-  debug(var_dump("hash",{%hash}));
+  $hash{name} = "$statinfo{$hash{id}}{city}, $statinfo{$hash{id}}{state}, $statinfo{$hash{id}}{country}";
+
+  push(@hashes, {%hash});
+
 }
 
+@queries = hashlist2sqlite(\@hashes, "madis");
+
+my($daten) = `date +%Y%m%d.%H%M%S.%N`;
+chomp($daten);
+my($qfile) = "/var/tmp/querys/$daten-madis-get-meso-$$";
+open(A,">$qfile");
+
+print A "BEGIN;\n";
+
+for $i (@queries) {
+  # REPLACE if needed
+  $i=~s/IGNORE/REPLACE/;
+  print A "$i;\n";
+}
+
+print A "COMMIT;\n";
+close(A);
 
 
 
