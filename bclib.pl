@@ -95,6 +95,18 @@ our(%globopts);
 our(%is_tempfile);
 our(%shared);
 
+# global options this library supports
+#
+# --debug: print debugging messages
+# --nocache: do not cache results
+# --tmpdir=x: use x as temporary directory when needed
+# --nowarn: if using warnlocal(), suppress warnings
+# --fake: do not actually post to WP, just fake it
+# --ignorelock: ignore any locks held by mylock()
+# --affirm: assume affirmative responses to anything affirm() asks
+# --keeptemp: keep temporary files
+# --xmessage: pop up xmessage after program ends
+
 # largest possible path
 $ENV{PATH} = "/opt/metaf2xml/bin/:/sw/bin/:/bin/:/usr/bin/:/usr/local/bin/:/usr/X11R6/bin/:/usr/lib/nagios/plugins:/usr/lib:/usr/sbin/:$ENV{HOME}/bin:$ENV{HOME}/PERL";
 
@@ -3895,10 +3907,37 @@ sub get_raws_obs {
   return @res;
 }
 
+=item xmessage($message, $bg)
+
+Shows a message in an Xwindow using xmessage + waits for reply (if $bg
+is set, do not wait for reply, and background xmessage)
+
+=cut
+
+sub xmessage {
+  my($msg,$bg) = @_;
+  my($BGCHAR);
+  my($tempfile)=my_tmpfile("xmess");
+  write_file("Message from $0 at ".`date`.$msg, $tempfile);
+  if ($bg) {$BGCHAR="&";}
+  my($ret)=system("xmessage -geometry 1024 -nearmouse -file $tempfile -buttons OK:0,BAD:2 -default OK 1> $tempfile.out 2> $tempfile.err $BGCHAR");
+  # don't kill temp file too fast
+  if ($bg) {sleep(1); return 0;}
+  # if not backgrounding, read result
+  if($ret || (-s "$tempfile.err")) {
+    my($aa)=read_file("$tempfile.err");
+    die("Got back non-zero $ret or non-empty STDERR ($aa) from xmessage");
+  }
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
   debug("END: CLEANING UP TMP FILES");
   local $?;
+
+  # if --xmessage set, alert user
+  if ($globopts{xmessage}) {xmessage("Program has ended",1);}
+
   if ($globopts{keeptemp}) {return;}
 
   for $i (sort keys %is_tempfile) {

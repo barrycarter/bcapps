@@ -5,6 +5,8 @@
 # TODO: this seems to keep changing, automate how to find it
 $scanner = "libusb:001:126";
 require "/usr/local/lib/bclib.pl";
+# scanning takes a while, so default alert me when done
+defaults("xmessage=1");
 my($out,$err,$res);
 
 for (;;) {

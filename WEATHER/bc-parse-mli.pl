@@ -64,6 +64,8 @@ for $i (@{$hlref}) {
   # most fields can be used as is (region -> state)
   @l = ();
   for $j ("icao", "wmo", "city", "region", "country", "lat_prp", "lon_prp") {
+    # if it has nothing but dashes/spaces, it's null
+    if ($i->{$j}=~/^[\s\-]*$/) {$i->{$j} = "NULL";}
     push(@l, $i->{$j});
   }
 
