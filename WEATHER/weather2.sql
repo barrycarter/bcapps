@@ -34,3 +34,19 @@ MIN(m.time,m.timestamp) > DATETIME(CURRENT_TIMESTAMP, '-3 hour');
 
 -- for madis, only one report from a given station at a given time
 CREATE UNIQUE INDEX i1 ON madis(type, id, time);
+
+-- below is in stations.db, but also in madis for joins
+CREATE TABLE stations ( 
+ metar TEXT,
+ wmobs INT, 
+ city TEXT, 
+ state TEXT, 
+ country TEXT, 
+ latitude DOUBLE, 
+ longitude DOUBLE, 
+ elevation DOUBLE,
+ source TEXT 
+);
+
+CREATE INDEX i_metar ON stations(metar);
+

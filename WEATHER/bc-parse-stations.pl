@@ -13,6 +13,36 @@ require "/usr/local/lib/bclib.pl";
 @res = sqlite3hashlist("SELECT metar FROM stations","/sites/DB/stations.db");
 for $i (@res) {$seen{$i->{metar}}=1;}
 
+open(A, "fgrep stn= /home/barrycarter/BCGIT/WEATHER/meso_station.cgi.html|");
+
+# cols where data is
+@cols = (74, 83, 119, 122, 134, 147, 158);
+
+while (<A>) {
+  my(@data) = column_data($_, [@cols]);
+  # clean data
+  for $i (@data) {
+    $i=~s/<.*?>//isg;
+    $i=~s/ft//isg;
+    $i = trim($i);
+  }
+
+  debug("DATA",@data);
+  # print for stations.db
+  print join("\t", @data)."\n";
+}
+
+
+
+
+
+
+
+
+die "TESTING";
+
+
+
 open(A,"/home/barrycarter/BCGIT/WEATHER/nsd_cccc_annotated.txt");
 
 while (<A>) {
