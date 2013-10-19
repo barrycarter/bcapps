@@ -218,10 +218,9 @@ MARK
 
 =item schema
 
-SQLite3 schema of tables <h>(sqlite3 is "strongly untyped?")</h>
+Schema of tables:
 
-CREATE TABLE requests ( -- stored query requests
- -- the db column below is redundant but Im ok with that
+CREATE TABLE requests (
  query TEXT, -- stored query in MIME64 format
  db TEXT, -- the database for the query
  md5 TEXT -- the query hash
