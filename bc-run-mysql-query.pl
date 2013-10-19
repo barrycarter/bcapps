@@ -1,7 +1,7 @@
 #!/usr/bin/perl -0777
 
-# run an arbitrary readonly SQL query webapp
-# v2 does NOT canonize the domain name, tries to derive it from HTTP_HOST
+# run an arbitrary readonly MySQL query webapp
+# starts off as a copy bc-run-sqlite3-query.pl
 # format: [rss|csv|].[query|"schema"].db.(db|database).other.stuff
 
 require "/usr/local/lib/bclib.pl";
@@ -41,6 +41,8 @@ if ($ENV{HTTP_HOST}=~/^schema\.([a-z]+)\.(db|database)\.(.*?)$/i) {
   # request for form only
   check_db($1);
   print "Content-type: text/html\n\n";
+  # lets me confirm at least the CGI is right
+  print "THIS IS MYSQL (or will be soon I hope)\n";
   form_request($1,"$2.$3");
 } elsif ($ENV{HTTP_HOST}=~/^(db|database)\.(.*?)$/i) {
   # request for list of dbs (currently not honored)
@@ -56,6 +58,7 @@ sub check_db {
   # doesnt exist
   unless (-f "$db.db") {
     print "Content-type: text/html\n\n";
+    print "THIS IS MYSQL";
     webdie("$db.db: no such file");
   }
 }
@@ -174,6 +177,7 @@ sub post_request {
   sqlite3("REPLACE INTO requests (query,db,md5) VALUES ('$iquery', '$db', '$queryhash')", "requests.db");
   if ($SQL_ERROR) {
     print "Content-type: text/html\n\n";
+    print "THIS IS POST\n";
     webdie("SQL ERROR (requests): $SQL_ERROR");
   }
   # and redirect

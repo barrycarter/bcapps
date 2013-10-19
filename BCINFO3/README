@@ -204,7 +204,11 @@ top
 chmod 755 / /etc /etc/mail
 
 % get db query runner to work
+
 ln -s /usr/local/bin/bc-run-sqlite3-query2.pl /sites/DB/index.pl
+mkdir /sites/MYSQL
+ln -s /usr/local/bin/bc-run-mysql-query.pl /sites/MYSQL/index.pl
+
 
 % TODO: change things like ns*.barrycarter.info to point to bcinfo3
 
