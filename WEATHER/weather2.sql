@@ -5,16 +5,16 @@
 -- don't include it below
 
 CREATE TABLE madis (
- type, -- type, as defined by MADIS
- id, -- id, as defined by MADIS
- name, -- descriptive name of station
+ type TEXT, -- type, as defined by MADIS
+ id INT, -- id, as defined by MADIS
+ name TEXT, -- descriptive name of station
  latitude DOUBLE, -- in decimal degrees -90..+90
  longitude DOUBLE, -- in decimal degrees -180..+180
  elevation DOUBLE, -- in feet above sealevel
  temperature DOUBLE, -- in degrees F
  dewpoint DOUBLE, -- in degrees F
  pressure DOUBLE, -- in inches of Hg (~30.00 is "normal")
- time, -- time of observation as "YYYY-MM-DD HH:MM:SS" UTC
+ time TEXT, -- time of observation as "YYYY-MM-DD HH:MM:SS" UTC
  winddir DOUBLE, -- wind direction, in degrees, 0..360
  windspeed DOUBLE, -- in miles per hour
  gust DOUBLE, -- gust speed in miles per hour
