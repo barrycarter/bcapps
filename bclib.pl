@@ -3809,7 +3809,8 @@ cloudcover maybe)
 
 sub get_raws_obs {
   my(@res);
-  # chdir to correct directory
+  # chdir to correct directory (creating it if needed, die if still no)
+  system("mkdir -p /var/tmp/raws");
   dodie('chdir("/var/tmp/raws")');
   # index page almost never changes
   my($out,$err,$res) = cache_command2("curl http://raws.wrh.noaa.gov/rawsobs.html", "age=86400");

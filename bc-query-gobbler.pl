@@ -5,6 +5,8 @@
 # "YYYYMMDD.HHMMSS.NNNNNNNNN-dbname-pid" where N* = time down to the
 # nanosecond; this trivial script processes those queries in time order
 
+# --vacuum: vacuum the database after running queries
+
 # NOTE: this only works if ALL programs using a given db use this method.
 
 # TODO: the "DONE" directory should be wiped regularly
@@ -22,7 +24,10 @@ for $i (sort(glob("*"))) {
 
   # TODO: in theory, could group all files for one db together
   # copy to new version, run queries, move back safely
-  system("cp /sites/DB/$db.db /sites/DB/$db.db.new; sqlite3 /sites/DB/$db.db.new < $i; mv /sites/DB/$db.db /sites/DB/$db.db.old; mv /sites/DB/$db.db.new /sites/DB/$db.db");
+  system("cp /sites/DB/$db.db /sites/DB/$db.db.new; sqlite3 /sites/DB/$db.db.new < $i");
+  if ($globopts{vacuum}) {system("echo 'VACUUM;' | sqlite3 /sites/DB/$db.db.new");}
+
+  system("mv /sites/DB/$db.db /sites/DB/$db.db.old; mv /sites/DB/$db.db.new /sites/DB/$db.db");
 
   # TODO: error check
   # move file to "DONE"

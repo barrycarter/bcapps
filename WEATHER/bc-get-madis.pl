@@ -154,6 +154,7 @@ print A "DELETE FROM madis WHERE MIN(time,timestamp) < DATETIME(CURRENT_TIMESTAM
 # AND m2.type='METAR-10M' AND m1.id = m2.id AND m1.time = m2.time)
 # );\n";
 
-print A "VACUUM;\n";
+# VACUUM now handled by query gobbler
+# print A "VACUUM;\n";
 
 close(A);

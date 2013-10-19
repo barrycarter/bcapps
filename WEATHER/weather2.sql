@@ -32,14 +32,19 @@ CREATE TABLE madis (
 ALTER TABLE madis ADD parser TEXT;
 ALTER TABLE madis ADD autocomment TEXT;
 
+-- for madis, only one report from a given station at a given time
+CREATE UNIQUE INDEX i1 ON madis(type, id, time);
+
+-- below help with sorting
+CREATE INDEX i2 ON madis(source);
+CREATE INDEX i3 ON madis(timestamp);
+CREATE INDEX i4 ON madis(id);
+
 CREATE VIEW madis_now AS
 SELECT m.* FROM madis m JOIN (SELECT id, type, MAX(time) AS time FROM
 madis WHERE type NOT IN ('MOS') GROUP BY id, type ORDER BY RANDOM())
 AS t ON (m.id = t.id AND m.type = t.type AND m.time = t.time) WHERE
 MIN(m.time,m.timestamp) > DATETIME(CURRENT_TIMESTAMP, '-3 hour');
-
--- for madis, only one report from a given station at a given time
-CREATE UNIQUE INDEX i1 ON madis(type, id, time);
 
 -- below is in stations.db, but also in madis for joins
 CREATE TABLE stations ( 
@@ -55,4 +60,8 @@ CREATE TABLE stations (
 );
 
 CREATE INDEX i_metar ON stations(metar);
+
+-- if unique index i1 breaks, this helps restore it
+SELECT m1.rowid FROM madis m1 JOIN madis m2 ON (m1.type = m2.type AND
+m1.id = m2.id AND m1.time = m2.time AND m1.rowid < m2.rowid);
 

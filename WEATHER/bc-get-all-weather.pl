@@ -7,7 +7,7 @@ require "/usr/local/lib/bclib.pl";
 for $i ("madis","buoy","guidance2","metar","ship","raws", "mesonet") {
   debug("RUNNING: bc-get-$i.pl");
   system("bc-get-$i.pl");
-  system("bc-query-gobbler.pl");
+  system("bc-query-gobbler.pl --vacuum");
 }
 
 sleep(60);
