@@ -8,8 +8,8 @@ require "/usr/local/lib/bclib.pl";
 
 # TODO: this is going to get ugly, but confirms I am running the right prog
 $globopts{debug} = 1;
-print "Content-type: text/html\n\n";
-webug("THIS IS MYSQL");
+# print "Content-type: text/html\n\n";
+# webug("THIS IS MYSQL");
 
 # TODO: sense I'm not handling the printing of content-type: text/html
 # optimally
@@ -81,7 +81,6 @@ sub schema_request {
 # request for query already in requests.db
 sub query_request {
   my($hash,$db,$tld,$rss) = @_;
-  webug("GOT",@_);
   # TODO: put requests table in an entirely different db for safety?
 #  my($query) = decode_base64(mysql("SELECT query FROM requests WHERE md5='$hash' AND db='$db'", "shared"));
   my($query) = decode_base64(mysqlval("SELECT query FROM requests WHERE md5='$hash' AND db='$db'", "shared"));
@@ -185,7 +184,6 @@ sub post_request {
   # query is now safe, add to requests.db (as base 64)
   my($iquery) = encode_base64($query);
   my($queryhash) = md5_hex($iquery);
-  webug("TESTING");
   mysql("REPLACE INTO requests (query,db,md5) VALUES ('$iquery', '$db', '$queryhash')", "shared");
   if ($SQL_ERROR) {
     print "Content-type: text/html\n\n";
@@ -251,14 +249,11 @@ sub mysql {
  # if $query doesnt have ";", add it, unless it starts with "."
   unless ($query=~/^\./ || $query=~/\;$/) {$query="$query;";}
   write_file($query,$qfile);
-  debug("WROTE: $query to $qfile");
   my($cmd) = "mysql -E $db < $qfile";
   my($out,$err,$res,$fname) = cache_command2($cmd,"nocache=1");
   # get rid of the row numbers + remove blank first line
   $out=~s/^\*+\s*\d+\. row\s*\*+$//img;
   $out=~s/^\n//s;
-
-  debug("OUT: $out, ERR: $err, RES: $res, FNAME: $fname");
 
   if ($res) {
     warnlocal("MYSQL returns $res: $out/$err, CMD: $cmd");
