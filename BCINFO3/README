@@ -238,5 +238,12 @@ do "yum remove coreutils", since too many packages depend on it)
 
 % 14 Oct 2013: installing parallel
 
+% 19 Oct 2013: attempting to use mysql instead of sqlite3 for shared
+db (danger!)
 
-
+CREATE DATABASE shared;
+\u shared
+; below in shell to get some useful data
+echo .dump | sqlite3 /sites/DB/stations.db > /tmp/mytake.txt
+bc-sqlite3dump2mysql.pl /tmp/mytake.txt > /tmp/mytake2.txt
+mysql shared < /tmp/mytake2.txt
