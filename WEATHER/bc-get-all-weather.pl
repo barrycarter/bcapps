@@ -4,7 +4,9 @@
 
 require "/usr/local/lib/bclib.pl";
 
-for $i ("madis","buoy","guidance2","metar","ship","raws", "mesonet") {
+# info in raws is also in mesonet, so pointless to run "raws"
+# for $i ("madis","buoy","guidance2","metar","ship","raws", "mesonet") {
+for $i ("madis","buoy","guidance2","metar","ship", "mesonet") {
   debug("RUNNING: bc-get-$i.pl");
   system("bc-get-$i.pl");
   system("bc-query-gobbler.pl --vacuum");
