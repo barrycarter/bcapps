@@ -6,6 +6,11 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# TODO: this is going to get ugly, but confirms I am running the right prog
+$globopts{debug} = 1;
+print "Content-type: text/html\n\n";
+webug("THIS IS MYSQL");
+
 # TODO: sense I'm not handling the printing of content-type: text/html
 # optimally
 
@@ -42,7 +47,6 @@ if ($ENV{HTTP_HOST}=~/^schema\.([a-z]+)\.(db|database)\.(.*?)$/i) {
   check_db($1);
   print "Content-type: text/html\n\n";
   # lets me confirm at least the CGI is right
-  print "THIS IS MYSQL (or will be soon I hope)\n";
   form_request($1,"$2.$3");
 } elsif ($ENV{HTTP_HOST}=~/^(db|database)\.(.*?)$/i) {
   # request for list of dbs (currently not honored)
@@ -55,10 +59,11 @@ exit();
 
 sub check_db {
   my($db) = @_;
+  # TODO: not this
+  return 1;
   # doesnt exist
   unless (-f "$db.db") {
     print "Content-type: text/html\n\n";
-    print "THIS IS MYSQL";
     webdie("$db.db: no such file");
   }
 }
@@ -174,6 +179,7 @@ sub post_request {
   # query is now safe, add to requests.db (as base 64)
   my($iquery) = encode_base64($query);
   my($queryhash) = md5_hex($iquery);
+  debug("TESTING");
   sqlite3("REPLACE INTO requests (query,db,md5) VALUES ('$iquery', '$db', '$queryhash')", "requests.db");
   if ($SQL_ERROR) {
     print "Content-type: text/html\n\n";
@@ -212,11 +218,45 @@ SQLite3 schema of tables <h>(sqlite3 is "strongly untyped?")</h>
 
 CREATE TABLE requests ( -- stored query requests
  -- the db column below is redundant but Im ok with that
- query, -- stored query in MIME64 format
- db, -- the database for the query
- md5 -- the query hash
+ query TEXT, -- stored query in MIME64 format
+ db TEXT, -- the database for the query
+ md5 TEXT -- the query hash
 );
 
-CREATE UNIQUE INDEX ui ON requests(md5);
+CREATE UNIQUE INDEX ui ON requests(md5(32));
 
 =cut
+
+# TODO: move these subroutines to bclib.pl when ready
+
+=item mysql($query,$db)
+
+Run the query $query on the mysql db $db and return results in raw format.
+
+=cut
+
+sub mysql {
+  my($query,$db) = @_;
+  my($qfile) = (my_tmpfile2());
+
+  # ugly use of global here
+  $SQL_ERROR = "";
+
+ # if $query doesnt have ";", add it, unless it starts with "."
+  unless ($query=~/^\./ || $query=~/\;$/) {$query="$query;";}
+  write_file($query,$qfile);
+  debug("WROTE: $query to $qfile");
+  my($cmd) = "mysql $db < $qfile";
+  my($out,$err,$res,$fname) = cache_command2($cmd,"nocache=1");
+  debug("OUT: $out, ERR: $err, RES: $res, FNAME: $fname");
+
+  if ($res) {
+    warnlocal("MYSQL returns $res: $out/$err, CMD: $cmd");
+    debug("DB is $db", `pwd`);
+    $SQL_ERROR = "$res: $out/$err FROM $cmd";
+    return "";
+  }
+  return $out;
+}
+
+

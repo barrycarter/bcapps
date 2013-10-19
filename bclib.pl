@@ -251,6 +251,18 @@ sub debug {
   }
 }
 
+=item webug(@list)
+
+Print debugging messages "Web style" if --debug given at command line
+
+=cut
+
+sub webug {
+  if($globopts{debug}) {
+    print STDOUT "<p><b>",join("\n",@_),"</b></p>\n";
+  }
+}
+
 =item dodie($perlcmd)
 
 Try to run Perl code $perlcmd, die if theres an error
