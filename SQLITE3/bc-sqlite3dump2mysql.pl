@@ -6,6 +6,6 @@
 # indexes on text columns will not convert over
 # typeless columns will also require editing
 
+print "BEGIN;\n";
 while (<>) {if (s/INSERT INTO \"(.*?)\"/INSERT INTO $1/) {print $_;}}
-
-
+print "COMMIT;\n";
