@@ -70,6 +70,7 @@ sub check_db {
 
 # this subroutines are specific to this program thus not well documented
 sub schema_request {
+  webug("SCHEMA_REQUEST");
   my($db,$tld) = @_;
   print "Content-type: text/plain\n\n";
   my($out,$err,$res) = cache_command2("echo '.schema' | sqlite3 $db.db");
@@ -80,7 +81,10 @@ sub schema_request {
 # request for query already in requests.db
 sub query_request {
   my($hash,$db,$tld,$rss) = @_;
-  my($query) = decode_base64(sqlite3val("SELECT query FROM requests WHERE md5='$hash' AND db='$db'", "requests.db"));
+  webug("GOT",@_);
+  # TODO: put requests table in an entirely different db for safety?
+#  my($query) = decode_base64(mysql("SELECT query FROM requests WHERE md5='$hash' AND db='$db'", "shared"));
+  my($query) = decode_base64(mysqlval("SELECT query FROM requests WHERE md5='$hash' AND db='$db'", "shared"));
 
   # no query returned?
   unless ($query) {
@@ -96,7 +100,8 @@ sub query_request {
   if ($rss=~/^csv$/) {$format="csv";} else {$format="html";}
 
   # avoid DOS by limiting cputime
-  my($out,$err,$res) = cache_command2("ulimit -t 5 && sqlite3 -$format -header $db.db < $tmp");
+  # TODO: allow non-html formats
+  my($out,$err,$res) = cache_command2("ulimit -t 5 && mysql -H shared < $tmp");
 
   # restore hyperlinks and quotes
   $out=~s/&lt;/</isg;
@@ -110,6 +115,7 @@ sub query_request {
     webdie("QUERY: $query<br>ERROR: $err<br>");
   }
 
+  debug("HALPH");
   # known good result; requesting rss?
   if ($rss=~/^rss$/i) {
     local(*A);
@@ -179,8 +185,8 @@ sub post_request {
   # query is now safe, add to requests.db (as base 64)
   my($iquery) = encode_base64($query);
   my($queryhash) = md5_hex($iquery);
-  debug("TESTING");
-  sqlite3("REPLACE INTO requests (query,db,md5) VALUES ('$iquery', '$db', '$queryhash')", "requests.db");
+  webug("TESTING");
+  mysql("REPLACE INTO requests (query,db,md5) VALUES ('$iquery', '$db', '$queryhash')", "shared");
   if ($SQL_ERROR) {
     print "Content-type: text/html\n\n";
     print "THIS IS POST\n";
@@ -193,7 +199,7 @@ sub post_request {
 # print the (trivial) form for queries
 sub form_request {
   my($db,$tld,$query,$queryhash) = @_;
-  debug("FORM_REQUEST($db,$tld,$queryhash)");
+  webug("FORM_REQUEST($db,$tld,$queryhash)");
   print << "MARK";
 <form method='POST' action='http://post.$db.$tld/'><table border>
 <tr><th>Enter query below (must start w/ SELECT):</th></tr>
@@ -246,8 +252,12 @@ sub mysql {
   unless ($query=~/^\./ || $query=~/\;$/) {$query="$query;";}
   write_file($query,$qfile);
   debug("WROTE: $query to $qfile");
-  my($cmd) = "mysql $db < $qfile";
+  my($cmd) = "mysql -E $db < $qfile";
   my($out,$err,$res,$fname) = cache_command2($cmd,"nocache=1");
+  # get rid of the row numbers + remove blank first line
+  $out=~s/^\*+\s*\d+\. row\s*\*+$//img;
+  $out=~s/^\n//s;
+
   debug("OUT: $out, ERR: $err, RES: $res, FNAME: $fname");
 
   if ($res) {
@@ -257,6 +267,25 @@ sub mysql {
     return "";
   }
   return $out;
+}
+
+=item mysqlval($query,$db)
+
+For queries that return a single row/column, return that row/column
+
+# TODO: this implementation is painfully ugly
+
+=cut
+
+sub mysqlval {
+  my($query,$db) = @_;
+  my(@res) = mysql($query,$db);
+  $res[0]=~s/^.*?:\s+//;
+  return $res[0];
+  # get rid of leading row of stars
+  # TODO: if I were really clever, I could combine the two lines below!
+  my(@temp) = values %{$res[0]};
+  return $temp[0];
 }
 
 
