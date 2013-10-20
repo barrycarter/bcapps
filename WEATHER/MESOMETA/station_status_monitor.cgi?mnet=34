@@ -1,0 +1,735 @@
+<table cellpadding="0" 
+	cellspacing="0" 
+	width="100%" 
+	style="font-size:85%;margin-left:-8px;border:0;">
+	<tr valign="bottom">
+		<td valign="bottom">
+			<img style="vertical-align:bottom;border:0;" src="/images/mesowest_static/mesowest_top.jpg" alt="mesowest logo red" />
+		</td>
+		<td>
+			<div align="right">
+				<a target="_top" 
+					href="my_login.cgi?came_from=">
+					Login
+				</a>
+				| 
+				<a target="_top" 
+					href="my_login.cgi?came_from=">
+					Create a User!
+				</a>
+				&nbsp;&nbsp;
+			</div>
+		</td>
+	</tr>
+</table>		
+
+<script type="text/javascript">
+  <!--
+    function submitit(masterform){
+      stateChoice = masterform.state.selectedIndex;
+        if(masterform.state.options[stateChoice].value == "null")
+          {
+            alert("You Must Select a Region");
+            return false;
+          }
+        return true;
+    }
+  //-->
+</script>
+
+<form onsubmit="return submitit(this)" 
+	target="_top" 
+	id="masterform" 
+	name="masterform" 
+	method="get" 
+	action="main_menu.cgi" 
+	style="margin:0;padding:0;">
+<div class="myBanner">
+<table width="" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+	<td width="150" nowrap="nowrap">
+      <a href="/" target="_top"><img src="/images/mesowest_static/mesowest_white_red_30.jpg" border="0" title="mesowest white red logo" alt="mesowest white red logo" style="vertical-align:bottom" /></a>
+    </td>
+    <td align="left" nowrap="nowrap">
+      	<label for="state"><small>Region</small></label>
+	<select name="state" id="state">
+        <option value="AKCC" >Alaska GCA</option>
+        <option value="NWCC" >Pacific Northwest GCA</option>
+        <option value="NOCC" >Northern California GCA</option>
+        <option value="SOCC" >Southern California GCA</option>
+        <option value="WBCC" >Western Great Basin GCA</option>
+        <option value="EBCC" >Eastern Great Basin GCA</option>
+        <option value="NRCC" >Northern Rockies GCA</option>
+        <option value="RMCC" >Rocky Mountain GCA</option>
+        <option value="SWCC" >Southwest GCA</option>
+        <option value="EACC" >Eastern GCA</option>
+        <option value="SACC" >Southern GCA</option>
+        <option value="AL" >ALABAMA</option>
+        <option value="BMX" >AL - Birmingham CWA</option>
+        <option value="BMXfwz" >AL - Birmingham FWZ</option>
+        <option value="HUN" >AL - Huntsville CWA</option>
+        <option value="MOB" >AL - Mobile/Pensacola CWA</option>
+        <option value="MOBfwz" >AL - Mobile/Pensacola FWZ</option>
+        <option value="AK" >ALASKA</option>
+        <option value="AFC" >AK - Anchorage CWA</option>
+        <option value="AFCfwz" >AK - Anchorage FWZ</option>
+        <option value="AFG" >AK - Fairbanks CWA</option>
+        <option value="AFGfwz" >AK - Fairbanks FWZ</option>
+        <option value="AJK" >AK - Juneau CWA</option>
+        <option value="AJKfwz" >AK - Juneau FWZ</option>
+        <option value="AZ" >ARIZONA</option>
+        <option value="FGZ" >AZ - Flagstaff CWA</option>
+        <option value="FGZfwz" >AZ - Flagstaff FWZ</option>
+        <option value="PSR" >AZ - Phoenix CWA</option>
+        <option value="PSRfwz" >AZ - Phoenix FWZ</option>
+        <option value="TWC" >AZ - Tucson CWA</option>
+        <option value="TWCfwz" >AZ - Tucson FWZ</option>
+        <option value="AR" >ARKANSAS</option>
+        <option value="LZK" >AR - Little Rock CWA</option>
+        <option value="LZKfwz" >AR - Little Rock FWZ</option>
+        <option value="CA" >CALIFORNIA</option>
+        <option value="EKA" >CA - Eureka CWA</option>
+        <option value="EKAfwz" >CA - Eureka FWZ</option>
+        <option value="LOX" >CA - Los Angeles/Oxnard CWA</option>
+        <option value="LOXfwz" >CA - Los Angeles/Oxnard FWZ</option>
+        <option value="STO" >CA - Sacramento CWA</option>
+        <option value="STOfwz" >CA - Sacramento FWZ</option>
+        <option value="SGX" >CA - San Diego CWA</option>
+        <option value="SGXfwz" >CA - San Diego FWZ</option>
+        <option value="MTR" >CA - San Francisco Bay Area/Monterey CWA</option>
+        <option value="MTRfwz" >CA - San Francisco Bay Area/Monterey FWZ</option>
+        <option value="HNX" >CA - San Joaquin Valley/Hanford CWA</option>
+        <option value="HNXfwz" >CA - San Joaquin Valley/Hanford FWZ</option>
+        <option value="CO" >COLORADO</option>
+        <option value="BOU" >CO - Denver/Boulder CWA</option>
+        <option value="BOUfwz" >CO - Denver/Boulder FWZ</option>
+        <option value="GJT" >CO - Grand Junction CWA</option>
+        <option value="GJTfwz" >CO - Grand Junction FWZ</option>
+        <option value="PUB" >CO - Pueblo CWA</option>
+        <option value="PUBfwz" >CO - Pueblo FWZ</option>
+        <option value="CT" >CONNECTICUT</option>
+        <option value="DE" >DELAWARE</option>
+        <option value="FL" >FLORIDA</option>
+        <option value="JAX" >FL - Jacksonville CWA</option>
+        <option value="JAXfwz" >FL - Jacksonville FWZ</option>
+        <option value="EYW" >FL - Key West CWA</option>
+        <option value="EYWfwz" >FL - Key West FWZ</option>
+        <option value="MLB" >FL - Melbourne CWA</option>
+        <option value="MLBfwz" >FL - Melbourne FWZ</option>
+        <option value="MFL" >FL - Miami/South Florida CWA</option>
+        <option value="MFLfwz" >FL - Miami/South Florida FWZ</option>
+        <option value="TAE" >FL - Tallahassee CWA</option>
+        <option value="TAEfwz" >FL - Tallahassee FWZ</option>
+        <option value="TBW" >FL - Tampa Bay CWA</option>
+        <option value="TBWfwz" >FL - Tampa Bay FWZ</option>
+        <option value="GA" >GEORGIA</option>
+        <option value="FFC" >GA - Peachtree City CWA</option>
+        <option value="FFCfwz" >GA - Peachtree City FWZ</option>
+        <option value="HI" >HAWAII</option>
+        <option value="HFO" >HI - Honolulu CWA</option>
+        <option value="HFOfwz" >HI - Honolulu FWZ</option>
+        <option value="ID" >IDAHO</option>
+        <option value="BOI" >ID - Boise CWA</option>
+        <option value="BOIfwz" >ID - Boise FWZ</option>
+        <option value="PIH" >ID - Pocatello CWA</option>
+        <option value="PIHfwz" >ID - Pocatello FWZ</option>
+        <option value="IL" >ILLINOIS</option>
+        <option value="ILX" >IL - Central Illinois CWA</option>
+        <option value="ILXfwz" >IL - Central Illinois FWZ</option>
+        <option value="LOT" >IL - Chicago CWA</option>
+        <option value="LOTfwz" >IL - Chicago FWZ</option>
+        <option value="IN" >INDIANA</option>
+        <option value="IND" >IN - Indianapolis CWA</option>
+        <option value="INDfwz" >IN - Indianapolis FWZ</option>
+        <option value="IWX" >IN - Northern Indiana CWA</option>
+        <option value="IWXfwz" >IN - Northern Indiana FWZ</option>
+        <option value="IA" >IOWA</option>
+        <option value="DMX" >IA - Des Moines CWA</option>
+        <option value="DMXfwz" >IA - Des Moines FWZ</option>
+        <option value="DVN" >IA - Quad Cities CWA</option>
+        <option value="DVNfwz" >IA - Quad Cities FWZ</option>
+        <option value="KS" >KANSAS</option>
+        <option value="DDC" >KS - Dodge City CWA</option>
+        <option value="DDCfwz" >KS - Dodge City FWZ</option>
+        <option value="GLD" >KS - Goodland CWA</option>
+        <option value="GLDfwz" >KS - Goodland FWZ</option>
+        <option value="TOP" >KS - Topeka CWA</option>
+        <option value="TOPfwz" >KS - Topeka FWZ</option>
+        <option value="ICT" >KS - Wichita CWA</option>
+        <option value="ICTfwz" >KS - Wichita FWZ</option>
+        <option value="KY" >KENTUCKY</option>
+        <option value="JKL" >KY - Jackson CWA</option>
+        <option value="JKLfwz" >KY - Jackson FWZ</option>
+        <option value="LMK" >KY - Louisville CWA</option>
+        <option value="LMKfwz" >KY - Louisville FWZ</option>
+        <option value="PAH" >KY - Paducah CWA</option>
+        <option value="PAHfwz" >KY - Paducah FWZ</option>
+        <option value="LA" >LOUISIANA</option>
+        <option value="LCH" >LA - Lake Charles CWA</option>
+        <option value="LCHfwz" >LA - Lake Charles FWZ</option>
+        <option value="LIX" >LA - New Orleans/Baton Rouge CWA</option>
+        <option value="LIXfwz" >LA - New Orleans/Baton Rouge FWZ</option>
+        <option value="SHV" >LA - Shreveport CWA</option>
+        <option value="SHVfwz" >LA - Shreveport FWZ</option>
+        <option value="ME" >MAINE</option>
+        <option value="CAR" >ME - Caribou CWA</option>
+        <option value="CARfwz" >ME - Caribou FWZ</option>
+        <option value="GYX" >ME - Portland CWA</option>
+        <option value="GYXfwz" >ME - Portland FWZ</option>
+        <option value="MD" >MARYLAND</option>
+        <option value="LWX" >MD - Baltimore/Washington D.C. CWA</option>
+        <option value="LWXfwz" >MD - Baltimore/Washington D.C. FWZ</option>
+        <option value="MA" >MASSACHUSETTS</option>
+        <option value="BOX" >MA - Boston CWA</option>
+        <option value="BOXfwz" >MA - Boston FWZ</option>
+        <option value="MI" >MICHIGAN</option>
+        <option value="DTX" >MI - Detroit CWA</option>
+        <option value="APX" >MI - Gaylord CWA</option>
+        <option value="APXfwz" >MI - Gaylord FWZ</option>
+        <option value="GRR" >MI - Grand Rapids CWA</option>
+        <option value="MQT" >MI - Marquette CWA</option>
+        <option value="MQTfwz" >MI - Marquette FWZ</option>
+        <option value="MN" >MINNESOTA</option>
+        <option value="DLH" >MN - Duluth CWA</option>
+        <option value="DLHfwz" >MN - Duluth FWZ</option>
+        <option value="MPX" >MN - Minneapolis CWA</option>
+        <option value="MPXfwz" >MN - Minneapolis FWZ</option>
+        <option value="MS" >MISSISSIPPI</option>
+        <option value="JAN" >MS - Jackson CWA</option>
+        <option value="JANfwz" >MS - Jackson FWZ</option>
+        <option value="MO" >MISSOURI</option>
+        <option value="EAX" >MO - Kansas City/Pleasant Hill CWA</option>
+        <option value="EAXfwz" >MO - Kansas City/Pleasant Hill FWZ</option>
+        <option value="SGF" >MO - Springfield CWA</option>
+        <option value="SGFfwz" >MO - Springfield FWZ</option>
+        <option value="LSX" >MO - St. Louis CWA</option>
+        <option value="LSXfwz" >MO - St. Louis FWZ</option>
+        <option value="MT" >MONTANA</option>
+        <option value="BYZ" >MT - Billings CWA</option>
+        <option value="BYZfwz" >MT - Billings FWZ</option>
+        <option value="GGW" >MT - Glasgow CWA</option>
+        <option value="GGWfwz" >MT - Glasgow FWZ</option>
+        <option value="TFX" >MT - Great Falls CWA</option>
+        <option value="TFXfwz" >MT - Great Falls FWZ</option>
+        <option value="MSO" >MT - Missoula CWA</option>
+        <option value="MSOfwz" >MT - Missoula FWZ</option>
+        <option value="NE" >NEBRASKA</option>
+        <option value="GID" >NE - Hastings CWA</option>
+        <option value="GIDfwz" >NE - Hastings FWZ</option>
+        <option value="LBF" >NE - North Platte CWA</option>
+        <option value="LBFfwz" >NE - North Platte FWZ</option>
+        <option value="OAX" >NE - Omaha CWA</option>
+        <option value="OAXfwz" >NE - Omaha FWZ</option>
+        <option value="NV" >NEVADA</option>
+        <option value="LKN" >NV - Elko CWA</option>
+        <option value="LKNfwz" >NV - Elko FWZ</option>
+        <option value="VEF" >NV - Las Vegas CWA</option>
+        <option value="VEFfwz" >NV - Las Vegas FWZ</option>
+        <option value="REV" >NV - Reno CWA</option>
+        <option value="REVfwz" >NV - Reno FWZ</option>
+        <option value="NH" >NEW HAMPSHIRE</option>
+        <option value="NJ" >NEW JERSEY</option>
+        <option value="NM" >NEW MEXICO</option>
+        <option value="ABQ" >NM - Albuquerque CWA</option>
+        <option value="ABQfwz" >NM - Albuquerque FWZ</option>
+        <option value="NY" >NEW YORK</option>
+        <option value="ALY" >NY - Albany CWA</option>
+        <option value="ALYfwz" >NY - Albany FWZ</option>
+        <option value="BGM" >NY - Binghamton CWA</option>
+        <option value="BGMfwz" >NY - Binghamton FWZ</option>
+        <option value="BUF" >NY - Buffalo CWA</option>
+        <option value="BUFfwz" >NY - Buffalo FWZ</option>
+        <option value="OKX" >NY - Upton CWA</option>
+        <option value="OKXfwz" >NY - Upton FWZ</option>
+        <option value="NC" >NORTH CAROLINA</option>
+        <option value="MHX" >NC - Morehead City CWA</option>
+        <option value="MHXfwz" >NC - Morehead City FWZ</option>
+        <option value="RAH" >NC - Raleigh/Durham CWA</option>
+        <option value="RAHfwz" >NC - Raleigh/Durham FWZ</option>
+        <option value="ILM" >NC - Wilmington CWA</option>
+        <option value="ILMfwz" >NC - Wilmington FWZ</option>
+        <option value="ND" >NORTH DAKOTA</option>
+        <option value="BIS" >ND - Bismarck CWA</option>
+        <option value="BISfwz" >ND - Bismarck FWZ</option>
+        <option value="FGF" >ND - Grand Forks CWA</option>
+        <option value="FGFfwz" >ND - Grand Forks FWZ</option>
+        <option value="OH" >OHIO</option>
+        <option value="CLE" >OH - Cleveland CWA</option>
+        <option value="CLEfwz" >OH - Cleveland FWZ</option>
+        <option value="ILN" >OH - Wilmington CWA</option>
+        <option value="ILNfwz" >OH - Wilmington FWZ</option>
+        <option value="OK" >OKLAHOMA</option>
+        <option value="OUN" >OK - Oklahoma City CWA</option>
+        <option value="OUNfwz" >OK - Oklahoma City FWZ</option>
+        <option value="TSA" >OK - Tulsa CWA</option>
+        <option value="TSAfwz" >OK - Tulsa FWZ</option>
+        <option value="OR" >OREGON</option>
+        <option value="MFR" >OR - Medford CWA</option>
+        <option value="MFRfwz" >OR - Medford FWZ</option>
+        <option value="PDT" >OR - Pendleton CWA</option>
+        <option value="PDTfwz" >OR - Pendleton FWZ</option>
+        <option value="PQR" >OR - Portland CWA</option>
+        <option value="PQRfwz" >OR - Portland FWZ</option>
+        <option value="PA" >PENNSYLVANIA</option>
+        <option value="PHI" >PA - Philadelphia/Mount Holly CWA</option>
+        <option value="PHIfwz" >PA - Philadelphia/Mount Holly FWZ</option>
+        <option value="PBZ" >PA - Pittsburgh CWA</option>
+        <option value="PBZfwz" >PA - Pittsburgh FWZ</option>
+        <option value="CTP" >PA - State College CWA</option>
+        <option value="CTPfwz" >PA - State College FWZ</option>
+        <option value="PR" >PUERTO RICO</option>
+        <option value="RI" >RHODE ISLAND</option>
+        <option value="SC" >SOUTH CAROLINA</option>
+        <option value="CHS" >SC - Charleston CWA</option>
+        <option value="CHSfwz" >SC - Charleston FWZ</option>
+        <option value="CAE" >SC - Columbia CWA</option>
+        <option value="CAEfwz" >SC - Columbia FWZ</option>
+        <option value="GSP" >SC - Greenville/Spartanburg CWA</option>
+        <option value="GSPfwz" >SC - Greenville/Spartanburg FWZ</option>
+        <option value="SD" >SOUTH DAKOTA</option>
+        <option value="ABR" >SD - Aberdeen CWA</option>
+        <option value="ABRfwz" >SD - Aberdeen FWZ</option>
+        <option value="UNR" >SD - Rapid City CWA</option>
+        <option value="UNRfwz" >SD - Rapid City FWZ</option>
+        <option value="FSD" >SD - Sioux Falls CWA</option>
+        <option value="FSDfwz" >SD - Sioux Falls FWZ</option>
+        <option value="TN" >TENNESSEE</option>
+        <option value="MEG" >TN - Memphis CWA</option>
+        <option value="MEGfwz" >TN - Memphis FWZ</option>
+        <option value="MRX" >TN - Morristown CWA</option>
+        <option value="MRXfwz" >TN - Morristown FWZ</option>
+        <option value="OHX" >TN - Nashville CWA</option>
+        <option value="OHXfwz" >TN - Nashville FWZ</option>
+        <option value="TX" >TEXAS</option>
+        <option value="AMA" >TX - Amarillo CWA</option>
+        <option value="AMAfwz" >TX - Amarillo FWZ</option>
+        <option value="EWX" >TX - Austin/San Antonio CWA</option>
+        <option value="EWXfwz" >TX - Austin/San Antonio FWZ</option>
+        <option value="BRO" >TX - Brownsville CWA</option>
+        <option value="BROfwz" >TX - Brownsville FWZ</option>
+        <option value="CRP" >TX - Corpus Christi CWA</option>
+        <option value="CRPfwz" >TX - Corpus Christi FWZ</option>
+        <option value="EPZ" >TX - El Paso CWA</option>
+        <option value="EPZfwz" >TX - El Paso FWZ</option>
+        <option value="FWD" >TX - Fort Worth CWA</option>
+        <option value="FWDfwz" >TX - Fort Worth FWZ</option>
+        <option value="HGX" >TX - Houston/Galveston CWA</option>
+        <option value="HGXfwz" >TX - Houston/Galveston FWZ</option>
+        <option value="LUB" >TX - Lubbock CWA</option>
+        <option value="LUBfwz" >TX - Lubbock FWZ</option>
+        <option value="MAF" >TX - Midland/Odessa CWA</option>
+        <option value="MAFfwz" >TX - Midland/Odessa FWZ</option>
+        <option value="SJT" >TX - San Angelo CWA</option>
+        <option value="SJTfwz" >TX - San Angelo FWZ</option>
+        <option value="UT" selected>UTAH</option>
+        <option value="SLC" >UT - Salt Lake City CWA</option>
+        <option value="SLCfwz" >UT - Salt Lake City FWZ</option>
+        <option value="VT" >VERMONT</option>
+        <option value="BTV" >VT - Burlington CWA</option>
+        <option value="BTVfwz" >VT - Burlington FWZ</option>
+        <option value="VA" >VIRGINIA</option>
+        <option value="RNK" >VA - Roanoke CWA</option>
+        <option value="RNKfwz" >VA - Roanoke FWZ</option>
+        <option value="AKQ" >VA - Wakefield CWA</option>
+        <option value="AKQfwz" >VA - Wakefield FWZ</option>
+        <option value="WA" >WASHINGTON</option>
+        <option value="SEW" >WA - Seattle CWA</option>
+        <option value="SEWfwz" >WA - Seattle FWZ</option>
+        <option value="OTX" >WA - Spokane CWA</option>
+        <option value="OTXfwz" >WA - Spokane FWZ</option>
+        <option value="WV" >WEST VIRGINIA</option>
+        <option value="RLX" >WV - Charleston CWA</option>
+        <option value="RLXfwz" >WV - Charleston FWZ</option>
+        <option value="WI" >WISCONSIN</option>
+        <option value="GRB" >WI - Green Bay CWA</option>
+        <option value="GRBfwz" >WI - Green Bay FWZ</option>
+        <option value="ARX" >WI - La Crosse CWA</option>
+        <option value="ARXfwz" >WI - La Crosse FWZ</option>
+        <option value="MKX" >WI - Milwaukee CWA</option>
+        <option value="MKXfwz" >WI - Milwaukee FWZ</option>
+        <option value="WY" >WYOMING</option>
+        <option value="CYS" >WY - Cheyenne CWA</option>
+        <option value="CYSfwz" >WY - Cheyenne FWZ</option>
+        <option value="RIW" >WY - Riverton CWA</option>
+        <option value="RIWfwz" >WY - Riverton FWZ</option>
+        <option value="AB" >ALBERTA</option>
+        <option value="BC" >BRITISH COLUMBIA</option>
+        <option value="MB" >MANITOBA</option>
+        <option value="NB" >NEW BRUNSWICK</option>
+        <option value="NF" >NEWFOUNDLAND</option>
+        <option value="NS" >NOVA SCOTIA</option>
+        <option value="NT" >NORTHWEST TERRITORIES</option>
+        <option value="NU" >NUNAVUT</option>
+        <option value="ON" >ONTARIO</option>
+        <option value="PE" >PRINCE EDWARD ISLAND</option>
+        <option value="QC" >QUEBEC</option>
+        <option value="SK" >SASKATCHEWAN</option>
+        <option value="YT" >YUKON</option>
+      </select>
+      </td>
+      <td nowrap="nowrap">
+        <label for="product"><small>Product</small></label>
+	<select name="product" id="product">
+          <option value="mesomap" >Surface Weather Maps</option>
+          <option value="summary" >Current Weather Summary</option>
+	  <option value="hrtrend" >Hourly Trend Monitor</option>
+          <option value="trend" >24-Hour Trend Monitor</option>
+          <option value="monitor" >Fire Weather Monitor</option>
+          <option value="mx_mn_temp" >5 Day Mx/Mn Temperature</option>
+          <option value="mx_mn_rh" >5 Day Mx/Mn RH</option>
+          <option value="mx_mn_sp" >5 Day Mx/Mn Speed</option>
+          <option value="mx_mn_gust" >5 Day Mx/Mn Gust</option>
+          <option value="precip_mon" >Precipitation Monitor</option>
+          <option value="precip_sum" >Precipitation Summary</option>
+        </select>
+      </td>
+      <td align="left" nowrap="nowrap"><input id="navgo" type="submit" value="Go" /></td>
+      <td align="right" width="100%" nowrap="nowrap">
+         <small><a href="/" target="_top">MesoWest</a></small> | 
+         <small><a href="/html/help/main_index.html" target="_top">Help</a></small> |
+         <small><a href="site_map.cgi" target="_blank">Site Map</a></small>
+      </td>
+  </tr>
+
+</table>
+<div style="height:3px;background:#990000;border-bottom:2px solid #333333;font-size:1px">&nbsp;</div>
+
+</div>
+
+</form>
+<html>
+<head>
+<title>MSI Daily Status Monitor</title>
+<link rel="stylesheet" type="text/css" href="/css/mesostyle.css" />
+<meta http-equiv="refresh" content="600; url=/cgi-bin/droman/station_status_monitor.cgi?order=id&mnet=34" />
+</head>
+<style type="text/css">
+table.newtable {
+border:3px solid #000000;
+background:#ECECEC;
+}
+td.newtable {
+border:1px solid black;
+}
+</style>
+<BODY BGCOLOR="white" TEXT="000000" LINK="#0000bb" VLINK="730000">
+<br>
+<b><font COLOR="#730000" SIZE=+3>Mesonet Station Daily Status Monitor - MSI</font></b>
+<br><br>
+The following interface displays information on current station status over the previous 10 days for the <b>Meteorological Solutions Inc. </b> network.
+<br><br>
+To view station status for a different mesonet, use the following menu selection (click <a href="/cgi-bin/droman/mnet_no.cgi" target="_blank">here</a> for a listing of mesonets).
+<br><br>
+<form>
+Mesonet Selection:<span style="padding-left:10px">
+<select name="mnet">
+         <option value="53">4UTAH</option>
+         <option value="107">AFGWFO</option>
+         <option value="11">AGRIMET</option>
+         <option value="136">AIRNOW</option>
+         <option value="179">AJKNDBC</option>
+         <option value="90">AKDOT</option>
+         <option value="65">APRSWXNET/CWOP</option>
+         <option value="9">AQ</option>
+         <option value="5">ARL FRD</option>
+         <option value="10">ARL SORD</option>
+         <option value="6">AVALANCHE</option>
+         <option value="21">AZ ALERT</option>
+         <option value="119">AZDOT</option>
+         <option value="39">AZMET</option>
+         <option value="31">BAMI</option>
+         <option value="115">BCHYDRO</option>
+         <option value="151">BPANET</option>
+         <option value="48">BTAVAL</option>
+         <option value="45">BWFO NWS</option>
+         <option value="137">CA HYDRO</option>
+         <option value="46">CAIC</option>
+         <option value="59">CALTRANS</option>
+         <option value="13">CAMPBELL</option>
+         <option value="14">CANADA</option>
+         <option value="57">CARB</option>
+         <option value="23">CBRFC</option>
+         <option value="140">CDEC</option>
+         <option value="63">CDOT</option>
+         <option value="127">CDPHE</option>
+         <option value="50">CEMP</option>
+         <option value="66">CIMIS</option>
+         <option value="177">CLNP</option>
+         <option value="30">CLR</option>
+         <option value="182">CNRA</option>
+         <option value="43">CNRFC</option>
+         <option value="94">CPCRC</option>
+         <option value="123">CRN</option>
+         <option value="176">CSCAN</option>
+         <option value="19">CUP</option>
+         <option value="126">DCEW</option>
+         <option value="155">DCNET</option>
+         <option value="158">DEDOT</option>
+         <option value="112">DEERVLY</option>
+         <option value="143">DEOS</option>
+         <option value="61">DOERD</option>
+         <option value="62">DRI</option>
+         <option value="44">DUDFCD</option>
+         <option value="3">DUGWAY</option>
+         <option value="145">EDW</option>
+         <option value="172">EKAWFO</option>
+         <option value="175">EPZWFO</option>
+         <option value="60">FAWN</option>
+         <option value="138">FGNet</option>
+         <option value="88">FGZWFO</option>
+         <option value="159">FLDOT</option>
+         <option value="84">GGWWFO</option>
+         <option value="68">GNP</option>
+         <option value="69">GPSMET</option>
+         <option value="52">GSE</option>
+         <option value="56">GTFWFO</option>
+         <option value="106">HADS</option>
+         <option value="130">HILL</option>
+         <option value="38">HMMN</option>
+         <option value="129">HNLWFO</option>
+         <option value="83">HNXWFO</option>
+         <option value="81">HPWREN</option>
+         <option value="91">IADOT</option>
+         <option value="160">ILDOT</option>
+         <option value="118">INDOT</option>
+         <option value="41">ITD</option>
+         <option value="42">KBCI</option>
+         <option value="20">KENNECOTT</option>
+         <option value="169">KSKTA</option>
+         <option value="47">KSL</option>
+         <option value="98">KYDOT</option>
+         <option value="148">KYMN</option>
+         <option value="51">LANL</option>
+         <option value="24">LAS VEGAS</option>
+         <option value="110">LKNWFO</option>
+         <option value="17">LOXWFO</option>
+         <option value="154">LSCNET</option>
+         <option value="147">MADIS MISC</option>
+         <option value="161">MAEOT</option>
+         <option value="95">MAMMOTH</option>
+         <option value="96">MARITIME</option>
+         <option value="120">MAWN</option>
+         <option value="152">MCDONALD</option>
+         <option value="27">MCSCN</option>
+         <option value="99">MDDOT</option>
+         <option value="135">ME-CAR-Meso</option>
+         <option value="97">MEDOT</option>
+         <option value="28">MEXICO</option>
+         <option value="93">MFRWFO</option>
+         <option value="162">MIDOT</option>
+         <option value="12">MISC</option>
+         <option value="100">MNDOT</option>
+         <option value="156">MOCOMAGNET</option>
+         <option value="163">MODOT</option>
+         <option value="157">MQTWFO</option>
+         <option selected="selected" value="34">MSI</option>
+         <option value="55">MSOWFO</option>
+         <option value="15">MT DOT</option>
+         <option value="128">MTRWFO</option>
+         <option value="108">NCAWOS</option>
+         <option value="101">NDDOT</option>
+         <option value="102">NEDOR</option>
+         <option value="131">NEMPPA</option>
+         <option value="105">NHDOT</option>
+         <option value="164">NJDOT</option>
+         <option value="109">NJNET</option>
+         <option value="150">NMAQ</option>
+         <option value="122">NOS-NWLON</option>
+         <option value="121">NOS-PORTS</option>
+         <option value="22">NV DOT</option>
+         <option value="37">NWAVAL</option>
+         <option value="72">NWS COOP</option>
+         <option value="1">NWS/FAA</option>
+         <option value="165">NYDOT</option>
+         <option value="124">ODA</option>
+         <option value="89">ODEQ</option>
+         <option value="49">ODOT</option>
+         <option value="103">OHDOT</option>
+         <option value="171">ORNL</option>
+         <option value="114">PAWS</option>
+         <option value="142">PCAPS</option>
+         <option value="111">PCMR</option>
+         <option value="54">PDTWFO</option>
+         <option value="82">PIHWFO</option>
+         <option value="92">PQRWFO</option>
+         <option value="2">RAWS</option>
+         <option value="18">REC</option>
+         <option value="146">RENO</option>
+         <option value="180">RIOMESA</option>
+         <option value="33">SARC</option>
+         <option value="113">SBCAPCD</option>
+         <option value="29">SCAN</option>
+         <option value="166">SCDOT</option>
+         <option value="133">SCHWEITZER</option>
+         <option value="167">SDDOT</option>
+         <option value="139">SDGE</option>
+         <option value="134">SEWWFO</option>
+         <option value="125">SFWMD</option>
+         <option value="85">SGXWFO</option>
+         <option value="58">SHASAVAL</option>
+         <option value="174">SJSUNET</option>
+         <option value="173">SLCCNET</option>
+         <option value="25">SNOTEL</option>
+         <option value="86">SNOWBIRD</option>
+         <option value="8">SNOWNET</option>
+         <option value="183">SRP</option>
+         <option value="87">SUNCREST</option>
+         <option value="168">TNDOT</option>
+         <option value="7">TOOELE</option>
+         <option value="32">UDWR</option>
+         <option value="64">UPR</option>
+         <option value="170">USARRAY</option>
+         <option value="117">USCG PUGET</option>
+         <option value="26">UTAH CLIMATE CENTER</option>
+         <option value="4">UTAH DOT</option>
+         <option value="153">UUNET</option>
+         <option value="104">VADOT</option>
+         <option value="178">VCAPCD</option>
+         <option value="132">VTRANS</option>
+         <option value="36">WA DOT</option>
+         <option value="40">WAAQ</option>
+         <option value="67">WHITEPINE</option>
+         <option value="181">WIAQ</option>
+         <option value="71">WIDOT</option>
+         <option value="144">WSMR</option>
+         <option value="70">WTEXAS</option>
+         <option value="141">WUNDERG</option>
+         <option value="149">WVDOT</option>
+         <option value="35">WX4U</option>
+         <option value="16">WY DOT</option>
+         <option value="116">YAKIMA</option>
+</select>
+<span style="padding-left:20px">
+<input type="hidden" name="order" value="id"/>
+<input type="submit" value="Change Mesonets"/>
+</form>
+The table displayed below contains the following column headers...
+<br><br>
+<b>Station ID:</b> The MesoWest station ID.  Clicking on a station ID will bring you to the Station Interface page with current observations if available.<br>
+<b>Station Name:</b> The full name of the station.<br>
+<b>State:</b> The state/province/territory the station resides in, if applicable.<br>
+<b>Status:</b> The MesoWest station status as described by the following row colors and descriptions...<br></p>
+<table class="newtable">
+	<tr>
+		<td bgcolor="#33FF66" width=600 class="newtable"><b>ACTIVE:</b> MesoWest has received at least one report from this station within the last 30 days</td>
+	</tr>
+	<tr>
+		<td bgcolor="#FFFF66" width=600 class="newtable"><b>UNKNOWN:</b> This station is either a new station or has an unknown status</td>
+	</tr>
+	<tr>
+		<td bgcolor="#FF6666" width=600 class="newtable"><b>INACTIVE:</b> MesoWest has not received a report from this station within the last 30 days</td>
+	</tr>
+</table>
+<br>
+<b>Dates:</b> The additional column headers then indicate the dates of the previous 10 days in chronological order.  For each station the following options are then listed in each row under the date columns...<br>
+<br>
+<table class="newtable">
+	<tr>
+		<td bgcolor="#33FF66" width=600 class="newtable"><b>Y:</b> Station has reported at least once on the date listed in the column header (UTC).</td>
+	</tr>
+	<tr>
+		<td bgcolor="#FF6666" width=600 class="newtable"><b>N:</b> Station did not report on the date listed in the column header (UTC).</td>
+	</tr>
+</table>
+<br>
+Some column names can be clicked, which will sort the table by the desired column.
+<br><br>
+<table class="newtable">
+	<tr>
+		<td align="left" class="newtable"><a href="/cgi-bin/droman/station_status_monitor.cgi?order=id&mnet=34"><b>Station ID</b></a></td>
+		<td align="left" class="newtable"><a href="/cgi-bin/droman/station_status_monitor.cgi?order=name&mnet=34"><b>Station Name</b></a></td>
+		<td align="center" class="newtable"><a href="/cgi-bin/droman/station_status_monitor.cgi?order=state&mnet=34"><b>State</b></a></td>
+		<td align="center" class="newtable"><a href="/cgi-bin/droman/station_status_monitor.cgi?order=status&mnet=34"><b>Status</b></a></td>
+		<td align="center" class="newtable" width=50><b>10/11</b></td>
+		<td align="center" class="newtable" width=50><b>10/12</b></td>
+		<td align="center" class="newtable" width=50><b>10/13</b></td>
+		<td align="center" class="newtable" width=50><b>10/14</b></td>
+		<td align="center" class="newtable" width=50><b>10/15</b></td>
+		<td align="center" class="newtable" width=50><b>10/16</b></td>
+		<td align="center" class="newtable" width=50><b>10/17</b></td>
+		<td align="center" class="newtable" width=50><b>10/18</b></td>
+		<td align="center" class="newtable" width=50><b>10/19</b></td>
+		<td align="center" class="newtable" width=50><b>10/20</b></td>
+	</tr>
+		<tr>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MSI01" target="_blank">MSI01</a></td>
+			<td class="newtable" bgcolor="#33FF66">Olympus Hills - MSI</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">UT</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+		<tr>
+		<tr>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MSI02" target="_blank">MSI02</a></td>
+			<td class="newtable" bgcolor="#33FF66">Olympus Cove - MSI</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">UT</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+		<tr>
+		<tr>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MSI03" target="_blank">MSI03</a></td>
+			<td class="newtable" bgcolor="#33FF66">West Jordan - MSI</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">UT</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+		<tr>
+</table>
+<br>
+<table border="0">
+<tr> 
+	<td>
+		<img src="/images/mesowest_static/gifs/bar.gif" width="600" height="10" title="line bar" alt="line bar" />
+	<br /> 
+		University of Utah <a href="http://mesowest.utah.edu" target="_parent">MesoWest</a>
+	</td>
+</tr>
+<tr> 
+	<td>
+		<font size="-2">Copyright &copy; 2002-2013 University of Utah. 
+		All Rights Reserved.
+	<br />
+		For Questions or Comments about this page or MesoWest contact 
+		<a href="mailto:atmos-mesowest@lists.utah.edu">atmos-mesowest@lists.utah.edu</a>
+	<br />
+		</font>
+	</td>
+</tr>
+</table>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-9976723-1");
+pageTracker._trackPageview();
+} catch(err) {}
+</script>
+</body>
+</html>
