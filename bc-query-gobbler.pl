@@ -5,7 +5,7 @@
 # "YYYYMMDD.HHMMSS.NNNNNNNNN-dbname-pid" where N* = time down to the
 # nanosecond; this trivial script processes those queries in time order
 
-# --vacuum: vacuum the database after running queries
+# --append: run commands in this file after each file
 
 # NOTE: this only works if ALL programs using a given db use this method.
 
@@ -29,7 +29,9 @@ for $i (sort(glob("*"))) {
   # experimentally, write data to MySQL db too
 #  system("bc-sqlite3dump2mysql.pl < $i | mysql shared");
 
-  if ($globopts{vacuum}) {system("echo 'VACUUM;' | sqlite3 /sites/DB/$db.db.new");}
+  if ($globopts{append}) {
+    system("sqlite3 /sites/DB/$db.db.new < $globopts{append}");
+  }
 
   system("mv /sites/DB/$db.db /sites/DB/$db.db.old; mv /sites/DB/$db.db.new /sites/DB/$db.db");
 
