@@ -38,16 +38,16 @@ CREATE UNIQUE INDEX i1 ON madis(type, id, time);
 -- for mysql only:
 -- CREATE UNIQUE INDEX i1 ON madis(type(50), id(50), time(50));
 
--- below help with sorting
-CREATE INDEX i2 ON madis(source);
-CREATE INDEX i3 ON madis(timestamp);
+-- below helps with sorting
 CREATE INDEX i4 ON madis(id);
 
+-- covering index for nagios query
+CREATE INDEX i5 ON madis(source,timestamp);
+
 CREATE VIEW madis_now AS
-SELECT m.* FROM madis m JOIN (SELECT id, type, MAX(time) AS time FROM
-madis WHERE type NOT IN ('MOS') GROUP BY id, type ORDER BY RANDOM())
-AS t ON (m.id = t.id AND m.type = t.type AND m.time = t.time) WHERE
-MIN(m.time,m.timestamp) > DATETIME(CURRENT_TIMESTAMP, '-3 hour');
+SELECT * FROM madis m WHERE time = 
+ (SELECT MAX(time) FROM madis WHERE id=m.id AND type=m.type)
+AND type NOT IN ('MOS') AND time > DATETIME(CURRENT_TIMESTAMP, '-3 hour');
 
 -- below is in stations.db, but also in madis for joins
 CREATE TABLE stations ( 

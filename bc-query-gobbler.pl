@@ -27,7 +27,7 @@ for $i (sort(glob("*"))) {
   system("cp /sites/DB/$db.db /sites/DB/$db.db.new; sqlite3 /sites/DB/$db.db.new < $i");
 
   # experimentally, write data to MySQL db too
-  system("bc-sqlite3dump2mysql.pl < $i | mysql shared");
+#  system("bc-sqlite3dump2mysql.pl < $i | mysql shared");
 
   if ($globopts{vacuum}) {system("echo 'VACUUM;' | sqlite3 /sites/DB/$db.db.new");}
 

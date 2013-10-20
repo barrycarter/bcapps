@@ -3,17 +3,25 @@
 # attempts to get data from all active mesonet stations (which
 # includes APRSWXNET and RAWS)
 
+# --useexisiting: use exisiting /var/tmp/mesowest.out, do not
+# download, even if file is "stale"
+
 require "/usr/local/lib/bclib.pl";
 
 # load stations.db data
 @res1 = sqlite3hashlist("SELECT * FROM stations","/sites/DB/stations.db");
 for $i (@res1) {$statinfo{$i->{metar}} = $i;}
 
-my($url) = "http://mesowest.utah.edu/data/mesowest.out.gz";
-my($out,$err,$res) = cache_command2("curl $url | gunzip", "age=150");
+my($url,$out,$err,$res);
 
-# store unzipped results
-write_file($out, "/var/tmp/mesowest.out");
+if ($globopts{useexisiting}) {
+  $out = read_file("/var/tmp/mesowest.out");
+} else {
+  $url = "http://mesowest.utah.edu/data/mesowest.out.gz";
+ ($out,$err,$res) = cache_command2("curl $url | gunzip", "age=150");
+  # store unzipped results
+  write_file($out, "/var/tmp/mesowest.out");
+}
 
 # get rid of header lines
 $out=~s/^.*?\n(\s*STN)/$1/s;
@@ -62,12 +70,15 @@ for $i (@{$hlref}) {
     my($f1,$f2,$u1,$u2,$r) = split(/:/,$j);
     # start by copying file field to hash field
     $hash{$f2} = $i->{$f1};
+    # empties
+    if ($hash{$f2} == -9999) {
+      $hash{$f2} = "NULL";
+      next;
+    }
     # unit conversion
     if ($u1 && $u2) {$hash{$f2} = convert($hash{$f2},$u1,$u2);}
     # rounding
     if (length($r)) {$hash{$f2} = round2($hash{$f2},$r);}
-    # empties
-    if ($hash{$f2} == -9999) {$hash{$f2} = "NULL";}
   }
 
   $hash{name} = "$statinfo{$hash{id}}{city}, $statinfo{$hash{id}}{state}, $statinfo{$hash{id}}{country}";
