@@ -1,0 +1,1771 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"></head><body bgcolor="white" link="#0000bb" text="000000" vlink="730000"><table style="font-size:85%;margin-left:-8px;border:0;" cellpadding="0" cellspacing="0" width="100%">
+	<tbody><tr valign="bottom">
+		<td valign="bottom">
+			<img style="vertical-align:bottom;border:0;" src="mnet_status_monitor.cgi_files/mesowest_top.jpg" alt="mesowest logo red">
+		</td>
+		<td>
+			<div align="right">
+				<a target="_top" href="http://mesowest.utah.edu/cgi-bin/droman/my_login.cgi?came_from=">
+					Login
+				</a>
+				| 
+				<a target="_top" href="http://mesowest.utah.edu/cgi-bin/droman/my_login.cgi?came_from=">
+					Create a User!
+				</a>
+				&nbsp;&nbsp;
+			</div>
+		</td>
+	</tr>
+</tbody></table>		
+
+<script type="text/javascript">
+  <!--
+    function submitit(masterform){
+      stateChoice = masterform.state.selectedIndex;
+        if(masterform.state.options[stateChoice].value == "null")
+          {
+            alert("You Must Select a Region");
+            return false;
+          }
+        return true;
+    }
+  //-->
+</script>
+
+<form onsubmit="return submitit(this)" target="_top" id="masterform" name="masterform" method="get" action="main_menu.cgi" style="margin:0;padding:0;">
+<div class="myBanner">
+<table border="0" cellpadding="0" cellspacing="0" width="">
+    <tbody><tr>
+	<td nowrap="nowrap" width="150">
+      <a href="http://mesowest.utah.edu/" target="_top"><img src="mnet_status_monitor.cgi_files/mesowest_white_red_30.jpg" title="mesowest white red logo" alt="mesowest white red logo" style="vertical-align:bottom" border="0"></a>
+    </td>
+    <td align="left" nowrap="nowrap">
+      	<label for="state"><small>Region</small></label>
+	<select name="state" id="state">
+        <option value="AKCC">Alaska GCA</option>
+        <option value="NWCC">Pacific Northwest GCA</option>
+        <option value="NOCC">Northern California GCA</option>
+        <option value="SOCC">Southern California GCA</option>
+        <option value="WBCC">Western Great Basin GCA</option>
+        <option value="EBCC">Eastern Great Basin GCA</option>
+        <option value="NRCC">Northern Rockies GCA</option>
+        <option value="RMCC">Rocky Mountain GCA</option>
+        <option value="SWCC">Southwest GCA</option>
+        <option value="EACC">Eastern GCA</option>
+        <option value="SACC">Southern GCA</option>
+        <option value="AL">ALABAMA</option>
+        <option value="BMX">AL - Birmingham CWA</option>
+        <option value="BMXfwz">AL - Birmingham FWZ</option>
+        <option value="HUN">AL - Huntsville CWA</option>
+        <option value="MOB">AL - Mobile/Pensacola CWA</option>
+        <option value="MOBfwz">AL - Mobile/Pensacola FWZ</option>
+        <option value="AK">ALASKA</option>
+        <option value="AFC">AK - Anchorage CWA</option>
+        <option value="AFCfwz">AK - Anchorage FWZ</option>
+        <option value="AFG">AK - Fairbanks CWA</option>
+        <option value="AFGfwz">AK - Fairbanks FWZ</option>
+        <option value="AJK">AK - Juneau CWA</option>
+        <option value="AJKfwz">AK - Juneau FWZ</option>
+        <option value="AZ">ARIZONA</option>
+        <option value="FGZ">AZ - Flagstaff CWA</option>
+        <option value="FGZfwz">AZ - Flagstaff FWZ</option>
+        <option value="PSR">AZ - Phoenix CWA</option>
+        <option value="PSRfwz">AZ - Phoenix FWZ</option>
+        <option value="TWC">AZ - Tucson CWA</option>
+        <option value="TWCfwz">AZ - Tucson FWZ</option>
+        <option value="AR">ARKANSAS</option>
+        <option value="LZK">AR - Little Rock CWA</option>
+        <option value="LZKfwz">AR - Little Rock FWZ</option>
+        <option value="CA">CALIFORNIA</option>
+        <option value="EKA">CA - Eureka CWA</option>
+        <option value="EKAfwz">CA - Eureka FWZ</option>
+        <option value="LOX">CA - Los Angeles/Oxnard CWA</option>
+        <option value="LOXfwz">CA - Los Angeles/Oxnard FWZ</option>
+        <option value="STO">CA - Sacramento CWA</option>
+        <option value="STOfwz">CA - Sacramento FWZ</option>
+        <option value="SGX">CA - San Diego CWA</option>
+        <option value="SGXfwz">CA - San Diego FWZ</option>
+        <option value="MTR">CA - San Francisco Bay Area/Monterey CWA</option>
+        <option value="MTRfwz">CA - San Francisco Bay Area/Monterey FWZ</option>
+        <option value="HNX">CA - San Joaquin Valley/Hanford CWA</option>
+        <option value="HNXfwz">CA - San Joaquin Valley/Hanford FWZ</option>
+        <option value="CO">COLORADO</option>
+        <option value="BOU">CO - Denver/Boulder CWA</option>
+        <option value="BOUfwz">CO - Denver/Boulder FWZ</option>
+        <option value="GJT">CO - Grand Junction CWA</option>
+        <option value="GJTfwz">CO - Grand Junction FWZ</option>
+        <option value="PUB">CO - Pueblo CWA</option>
+        <option value="PUBfwz">CO - Pueblo FWZ</option>
+        <option value="CT">CONNECTICUT</option>
+        <option value="DE">DELAWARE</option>
+        <option value="FL">FLORIDA</option>
+        <option value="JAX">FL - Jacksonville CWA</option>
+        <option value="JAXfwz">FL - Jacksonville FWZ</option>
+        <option value="EYW">FL - Key West CWA</option>
+        <option value="EYWfwz">FL - Key West FWZ</option>
+        <option value="MLB">FL - Melbourne CWA</option>
+        <option value="MLBfwz">FL - Melbourne FWZ</option>
+        <option value="MFL">FL - Miami/South Florida CWA</option>
+        <option value="MFLfwz">FL - Miami/South Florida FWZ</option>
+        <option value="TAE">FL - Tallahassee CWA</option>
+        <option value="TAEfwz">FL - Tallahassee FWZ</option>
+        <option value="TBW">FL - Tampa Bay CWA</option>
+        <option value="TBWfwz">FL - Tampa Bay FWZ</option>
+        <option value="GA">GEORGIA</option>
+        <option value="FFC">GA - Peachtree City CWA</option>
+        <option value="FFCfwz">GA - Peachtree City FWZ</option>
+        <option value="HI">HAWAII</option>
+        <option value="HFO">HI - Honolulu CWA</option>
+        <option value="HFOfwz">HI - Honolulu FWZ</option>
+        <option value="ID">IDAHO</option>
+        <option value="BOI">ID - Boise CWA</option>
+        <option value="BOIfwz">ID - Boise FWZ</option>
+        <option value="PIH">ID - Pocatello CWA</option>
+        <option value="PIHfwz">ID - Pocatello FWZ</option>
+        <option value="IL">ILLINOIS</option>
+        <option value="ILX">IL - Central Illinois CWA</option>
+        <option value="ILXfwz">IL - Central Illinois FWZ</option>
+        <option value="LOT">IL - Chicago CWA</option>
+        <option value="LOTfwz">IL - Chicago FWZ</option>
+        <option value="IN">INDIANA</option>
+        <option value="IND">IN - Indianapolis CWA</option>
+        <option value="INDfwz">IN - Indianapolis FWZ</option>
+        <option value="IWX">IN - Northern Indiana CWA</option>
+        <option value="IWXfwz">IN - Northern Indiana FWZ</option>
+        <option value="IA">IOWA</option>
+        <option value="DMX">IA - Des Moines CWA</option>
+        <option value="DMXfwz">IA - Des Moines FWZ</option>
+        <option value="DVN">IA - Quad Cities CWA</option>
+        <option value="DVNfwz">IA - Quad Cities FWZ</option>
+        <option value="KS">KANSAS</option>
+        <option value="DDC">KS - Dodge City CWA</option>
+        <option value="DDCfwz">KS - Dodge City FWZ</option>
+        <option value="GLD">KS - Goodland CWA</option>
+        <option value="GLDfwz">KS - Goodland FWZ</option>
+        <option value="TOP">KS - Topeka CWA</option>
+        <option value="TOPfwz">KS - Topeka FWZ</option>
+        <option value="ICT">KS - Wichita CWA</option>
+        <option value="ICTfwz">KS - Wichita FWZ</option>
+        <option value="KY">KENTUCKY</option>
+        <option value="JKL">KY - Jackson CWA</option>
+        <option value="JKLfwz">KY - Jackson FWZ</option>
+        <option value="LMK">KY - Louisville CWA</option>
+        <option value="LMKfwz">KY - Louisville FWZ</option>
+        <option value="PAH">KY - Paducah CWA</option>
+        <option value="PAHfwz">KY - Paducah FWZ</option>
+        <option value="LA">LOUISIANA</option>
+        <option value="LCH">LA - Lake Charles CWA</option>
+        <option value="LCHfwz">LA - Lake Charles FWZ</option>
+        <option value="LIX">LA - New Orleans/Baton Rouge CWA</option>
+        <option value="LIXfwz">LA - New Orleans/Baton Rouge FWZ</option>
+        <option value="SHV">LA - Shreveport CWA</option>
+        <option value="SHVfwz">LA - Shreveport FWZ</option>
+        <option value="ME">MAINE</option>
+        <option value="CAR">ME - Caribou CWA</option>
+        <option value="CARfwz">ME - Caribou FWZ</option>
+        <option value="GYX">ME - Portland CWA</option>
+        <option value="GYXfwz">ME - Portland FWZ</option>
+        <option value="MD">MARYLAND</option>
+        <option value="LWX">MD - Baltimore/Washington D.C. CWA</option>
+        <option value="LWXfwz">MD - Baltimore/Washington D.C. FWZ</option>
+        <option value="MA">MASSACHUSETTS</option>
+        <option value="BOX">MA - Boston CWA</option>
+        <option value="BOXfwz">MA - Boston FWZ</option>
+        <option value="MI">MICHIGAN</option>
+        <option value="DTX">MI - Detroit CWA</option>
+        <option value="APX">MI - Gaylord CWA</option>
+        <option value="APXfwz">MI - Gaylord FWZ</option>
+        <option value="GRR">MI - Grand Rapids CWA</option>
+        <option value="MQT">MI - Marquette CWA</option>
+        <option value="MQTfwz">MI - Marquette FWZ</option>
+        <option value="MN">MINNESOTA</option>
+        <option value="DLH">MN - Duluth CWA</option>
+        <option value="DLHfwz">MN - Duluth FWZ</option>
+        <option value="MPX">MN - Minneapolis CWA</option>
+        <option value="MPXfwz">MN - Minneapolis FWZ</option>
+        <option value="MS">MISSISSIPPI</option>
+        <option value="JAN">MS - Jackson CWA</option>
+        <option value="JANfwz">MS - Jackson FWZ</option>
+        <option value="MO">MISSOURI</option>
+        <option value="EAX">MO - Kansas City/Pleasant Hill CWA</option>
+        <option value="EAXfwz">MO - Kansas City/Pleasant Hill FWZ</option>
+        <option value="SGF">MO - Springfield CWA</option>
+        <option value="SGFfwz">MO - Springfield FWZ</option>
+        <option value="LSX">MO - St. Louis CWA</option>
+        <option value="LSXfwz">MO - St. Louis FWZ</option>
+        <option value="MT">MONTANA</option>
+        <option value="BYZ">MT - Billings CWA</option>
+        <option value="BYZfwz">MT - Billings FWZ</option>
+        <option value="GGW">MT - Glasgow CWA</option>
+        <option value="GGWfwz">MT - Glasgow FWZ</option>
+        <option value="TFX">MT - Great Falls CWA</option>
+        <option value="TFXfwz">MT - Great Falls FWZ</option>
+        <option value="MSO">MT - Missoula CWA</option>
+        <option value="MSOfwz">MT - Missoula FWZ</option>
+        <option value="NE">NEBRASKA</option>
+        <option value="GID">NE - Hastings CWA</option>
+        <option value="GIDfwz">NE - Hastings FWZ</option>
+        <option value="LBF">NE - North Platte CWA</option>
+        <option value="LBFfwz">NE - North Platte FWZ</option>
+        <option value="OAX">NE - Omaha CWA</option>
+        <option value="OAXfwz">NE - Omaha FWZ</option>
+        <option value="NV">NEVADA</option>
+        <option value="LKN">NV - Elko CWA</option>
+        <option value="LKNfwz">NV - Elko FWZ</option>
+        <option value="VEF">NV - Las Vegas CWA</option>
+        <option value="VEFfwz">NV - Las Vegas FWZ</option>
+        <option value="REV">NV - Reno CWA</option>
+        <option value="REVfwz">NV - Reno FWZ</option>
+        <option value="NH">NEW HAMPSHIRE</option>
+        <option value="NJ">NEW JERSEY</option>
+        <option value="NM">NEW MEXICO</option>
+        <option value="ABQ">NM - Albuquerque CWA</option>
+        <option value="ABQfwz">NM - Albuquerque FWZ</option>
+        <option value="NY">NEW YORK</option>
+        <option value="ALY">NY - Albany CWA</option>
+        <option value="ALYfwz">NY - Albany FWZ</option>
+        <option value="BGM">NY - Binghamton CWA</option>
+        <option value="BGMfwz">NY - Binghamton FWZ</option>
+        <option value="BUF">NY - Buffalo CWA</option>
+        <option value="BUFfwz">NY - Buffalo FWZ</option>
+        <option value="OKX">NY - Upton CWA</option>
+        <option value="OKXfwz">NY - Upton FWZ</option>
+        <option value="NC">NORTH CAROLINA</option>
+        <option value="MHX">NC - Morehead City CWA</option>
+        <option value="MHXfwz">NC - Morehead City FWZ</option>
+        <option value="RAH">NC - Raleigh/Durham CWA</option>
+        <option value="RAHfwz">NC - Raleigh/Durham FWZ</option>
+        <option value="ILM">NC - Wilmington CWA</option>
+        <option value="ILMfwz">NC - Wilmington FWZ</option>
+        <option value="ND">NORTH DAKOTA</option>
+        <option value="BIS">ND - Bismarck CWA</option>
+        <option value="BISfwz">ND - Bismarck FWZ</option>
+        <option value="FGF">ND - Grand Forks CWA</option>
+        <option value="FGFfwz">ND - Grand Forks FWZ</option>
+        <option value="OH">OHIO</option>
+        <option value="CLE">OH - Cleveland CWA</option>
+        <option value="CLEfwz">OH - Cleveland FWZ</option>
+        <option value="ILN">OH - Wilmington CWA</option>
+        <option value="ILNfwz">OH - Wilmington FWZ</option>
+        <option value="OK">OKLAHOMA</option>
+        <option value="OUN">OK - Oklahoma City CWA</option>
+        <option value="OUNfwz">OK - Oklahoma City FWZ</option>
+        <option value="TSA">OK - Tulsa CWA</option>
+        <option value="TSAfwz">OK - Tulsa FWZ</option>
+        <option value="OR">OREGON</option>
+        <option value="MFR">OR - Medford CWA</option>
+        <option value="MFRfwz">OR - Medford FWZ</option>
+        <option value="PDT">OR - Pendleton CWA</option>
+        <option value="PDTfwz">OR - Pendleton FWZ</option>
+        <option value="PQR">OR - Portland CWA</option>
+        <option value="PQRfwz">OR - Portland FWZ</option>
+        <option value="PA">PENNSYLVANIA</option>
+        <option value="PHI">PA - Philadelphia/Mount Holly CWA</option>
+        <option value="PHIfwz">PA - Philadelphia/Mount Holly FWZ</option>
+        <option value="PBZ">PA - Pittsburgh CWA</option>
+        <option value="PBZfwz">PA - Pittsburgh FWZ</option>
+        <option value="CTP">PA - State College CWA</option>
+        <option value="CTPfwz">PA - State College FWZ</option>
+        <option value="PR">PUERTO RICO</option>
+        <option value="RI">RHODE ISLAND</option>
+        <option value="SC">SOUTH CAROLINA</option>
+        <option value="CHS">SC - Charleston CWA</option>
+        <option value="CHSfwz">SC - Charleston FWZ</option>
+        <option value="CAE">SC - Columbia CWA</option>
+        <option value="CAEfwz">SC - Columbia FWZ</option>
+        <option value="GSP">SC - Greenville/Spartanburg CWA</option>
+        <option value="GSPfwz">SC - Greenville/Spartanburg FWZ</option>
+        <option value="SD">SOUTH DAKOTA</option>
+        <option value="ABR">SD - Aberdeen CWA</option>
+        <option value="ABRfwz">SD - Aberdeen FWZ</option>
+        <option value="UNR">SD - Rapid City CWA</option>
+        <option value="UNRfwz">SD - Rapid City FWZ</option>
+        <option value="FSD">SD - Sioux Falls CWA</option>
+        <option value="FSDfwz">SD - Sioux Falls FWZ</option>
+        <option value="TN">TENNESSEE</option>
+        <option value="MEG">TN - Memphis CWA</option>
+        <option value="MEGfwz">TN - Memphis FWZ</option>
+        <option value="MRX">TN - Morristown CWA</option>
+        <option value="MRXfwz">TN - Morristown FWZ</option>
+        <option value="OHX">TN - Nashville CWA</option>
+        <option value="OHXfwz">TN - Nashville FWZ</option>
+        <option value="TX">TEXAS</option>
+        <option value="AMA">TX - Amarillo CWA</option>
+        <option value="AMAfwz">TX - Amarillo FWZ</option>
+        <option value="EWX">TX - Austin/San Antonio CWA</option>
+        <option value="EWXfwz">TX - Austin/San Antonio FWZ</option>
+        <option value="BRO">TX - Brownsville CWA</option>
+        <option value="BROfwz">TX - Brownsville FWZ</option>
+        <option value="CRP">TX - Corpus Christi CWA</option>
+        <option value="CRPfwz">TX - Corpus Christi FWZ</option>
+        <option value="EPZ">TX - El Paso CWA</option>
+        <option value="EPZfwz">TX - El Paso FWZ</option>
+        <option value="FWD">TX - Fort Worth CWA</option>
+        <option value="FWDfwz">TX - Fort Worth FWZ</option>
+        <option value="HGX">TX - Houston/Galveston CWA</option>
+        <option value="HGXfwz">TX - Houston/Galveston FWZ</option>
+        <option value="LUB">TX - Lubbock CWA</option>
+        <option value="LUBfwz">TX - Lubbock FWZ</option>
+        <option value="MAF">TX - Midland/Odessa CWA</option>
+        <option value="MAFfwz">TX - Midland/Odessa FWZ</option>
+        <option value="SJT">TX - San Angelo CWA</option>
+        <option value="SJTfwz">TX - San Angelo FWZ</option>
+        <option value="UT" selected="selected">UTAH</option>
+        <option value="SLC">UT - Salt Lake City CWA</option>
+        <option value="SLCfwz">UT - Salt Lake City FWZ</option>
+        <option value="VT">VERMONT</option>
+        <option value="BTV">VT - Burlington CWA</option>
+        <option value="BTVfwz">VT - Burlington FWZ</option>
+        <option value="VA">VIRGINIA</option>
+        <option value="RNK">VA - Roanoke CWA</option>
+        <option value="RNKfwz">VA - Roanoke FWZ</option>
+        <option value="AKQ">VA - Wakefield CWA</option>
+        <option value="AKQfwz">VA - Wakefield FWZ</option>
+        <option value="WA">WASHINGTON</option>
+        <option value="SEW">WA - Seattle CWA</option>
+        <option value="SEWfwz">WA - Seattle FWZ</option>
+        <option value="OTX">WA - Spokane CWA</option>
+        <option value="OTXfwz">WA - Spokane FWZ</option>
+        <option value="WV">WEST VIRGINIA</option>
+        <option value="RLX">WV - Charleston CWA</option>
+        <option value="RLXfwz">WV - Charleston FWZ</option>
+        <option value="WI">WISCONSIN</option>
+        <option value="GRB">WI - Green Bay CWA</option>
+        <option value="GRBfwz">WI - Green Bay FWZ</option>
+        <option value="ARX">WI - La Crosse CWA</option>
+        <option value="ARXfwz">WI - La Crosse FWZ</option>
+        <option value="MKX">WI - Milwaukee CWA</option>
+        <option value="MKXfwz">WI - Milwaukee FWZ</option>
+        <option value="WY">WYOMING</option>
+        <option value="CYS">WY - Cheyenne CWA</option>
+        <option value="CYSfwz">WY - Cheyenne FWZ</option>
+        <option value="RIW">WY - Riverton CWA</option>
+        <option value="RIWfwz">WY - Riverton FWZ</option>
+        <option value="AB">ALBERTA</option>
+        <option value="BC">BRITISH COLUMBIA</option>
+        <option value="MB">MANITOBA</option>
+        <option value="NB">NEW BRUNSWICK</option>
+        <option value="NF">NEWFOUNDLAND</option>
+        <option value="NS">NOVA SCOTIA</option>
+        <option value="NT">NORTHWEST TERRITORIES</option>
+        <option value="NU">NUNAVUT</option>
+        <option value="ON">ONTARIO</option>
+        <option value="PE">PRINCE EDWARD ISLAND</option>
+        <option value="QC">QUEBEC</option>
+        <option value="SK">SASKATCHEWAN</option>
+        <option value="YT">YUKON</option>
+      </select>
+      </td>
+      <td nowrap="nowrap">
+        <label for="product"><small>Product</small></label>
+	<select name="product" id="product">
+          <option selected="selected" value="mesomap">Surface Weather Maps</option>
+          <option value="summary">Current Weather Summary</option>
+	  <option value="hrtrend">Hourly Trend Monitor</option>
+          <option value="trend">24-Hour Trend Monitor</option>
+          <option value="monitor">Fire Weather Monitor</option>
+          <option value="mx_mn_temp">5 Day Mx/Mn Temperature</option>
+          <option value="mx_mn_rh">5 Day Mx/Mn RH</option>
+          <option value="mx_mn_sp">5 Day Mx/Mn Speed</option>
+          <option value="mx_mn_gust">5 Day Mx/Mn Gust</option>
+          <option value="precip_mon">Precipitation Monitor</option>
+          <option value="precip_sum">Precipitation Summary</option>
+        </select>
+      </td>
+      <td align="left" nowrap="nowrap"><input id="navgo" value="Go" type="submit"></td>
+      <td align="right" nowrap="nowrap" width="100%">
+         <small><a href="http://mesowest.utah.edu/" target="_top">MesoWest</a></small> | 
+         <small><a href="http://mesowest.utah.edu/html/help/main_index.html" target="_top">Help</a></small> |
+         <small><a href="http://mesowest.utah.edu/cgi-bin/droman/site_map.cgi" target="_blank">Site Map</a></small>
+      </td>
+  </tr>
+
+</tbody></table>
+<div style="height:3px;background:#990000;border-bottom:2px solid #333333;font-size:1px">&nbsp;</div>
+
+</div>
+
+</form>
+
+
+<title>Mesonet Status Monitor</title>
+<link rel="stylesheet" type="text/css" href="mnet_status_monitor.cgi_files/mesostyle.css">
+<meta http-equiv="refresh" content="600; url=/cgi-bin/droman/mnet_status_monitor.cgi?order=id">
+
+<style type="text/css">
+table.newtable {
+border:3px solid #000000;
+background:#ECECEC;
+}
+td.newtable {
+border:1px solid black;
+}
+</style>
+
+<br>
+<b><font color="#730000" size="+3">MesoWest Mesonet Status Monitor</font></b>
+<br><br>
+The following table displays monitoring statistics from each individual mesonet.  Column headers refer to the following...
+<br><br>
+<b>MesoWest ID:</b> The mesonet ID utilized by MesoWest.<br>
+<b>Acronym:</b> The mesonet shortname/acronym utilized by MesoWest, 
+clicking on an acronym will display a graph of mesonet status over the 
+previous 5 days.<br>
+<b>Full Name:</b> The mesonet full name utilized by MesoWest, clicking 
+on the full name will display daily station status statistics for all 
+stations in that mesonet.<br>
+<b>Reporting:</b> The total number of stations in a mesonet that reported at least once within the "Time Period Checked".<br>
+<b>Active:</b> The total number of stations in a mesonet that have reported at least once within the last 30 days.<br>
+<b>Reporting %:</b> The fraction of "Reporting Stations" divided by "Active Stations", converted to a percentage value.<br>
+<b>Period Checked:</b> The time period of record examined before the 
+time listed by "Latest Update" at the top of the table.  Note that this 
+varies per mesonet.
+<br><br>
+Row colors for the table refer to the following thresholds...
+<br><br>
+<table class="newtable">
+	<tbody><tr>
+		<td class="newtable" align="center" bgcolor="#FF6666" width="250">Reporting Percentage: &lt;= 25%</td>
+		<td class="newtable" align="center" bgcolor="#FFFF66" width="250">Reporting Percentage: 25% - 75%</td>
+		<td class="newtable" align="center" bgcolor="#33FF66" width="250">Reporting Percentage: &gt;= 75%</td>
+		<td class="newtable" align="center" bgcolor="#66CCFF" width="300">New mesonet(s) or new station(s) added</td>
+	</tr>
+</tbody></table>
+<br>
+Please keep in mind that these are <b>current</b> statistics, so if a 
+mesonet is providing data with greater than expected latency (greater 
+than the "Period Checked"), it will appear offline in the table below.<br>
+To check this, simply click on the mesonet acronym in the table to view 
+daily station status, or go to any Station Interface page to view the 
+latest observations MesoWest has acquired.
+<br><br>
+Clicking on a column header name will sort the table by the selected column.
+<br><br>
+<table class="newtable">
+	<tbody><tr>
+		<th colspan="7"><font size="+1">Latest Update: 10-20-2013 23:00 UTC</font></th>
+	</tr>
+	<tr>
+		<td class="newtable" align="left"><a href="http://mesowest.utah.edu/cgi-bin/droman/mnet_status_monitor.cgi?order=id"><b>MesoWest ID</b></a></td>
+		<td class="newtable" align="left"><a href="http://mesowest.utah.edu/cgi-bin/droman/mnet_status_monitor.cgi?order=mname"><b>Acronym</b></a></td>
+		<td class="newtable" align="left"><a href="http://mesowest.utah.edu/cgi-bin/droman/mnet_status_monitor.cgi?order=longname"><b>Full Name</b></a></td>
+		<td class="newtable" align="center" width="80"><a href="http://mesowest.utah.edu/cgi-bin/droman/mnet_status_monitor.cgi?order=report"><b>Reporting</b></a></td>
+		<td class="newtable" align="center" width="80"><a href="http://mesowest.utah.edu/cgi-bin/droman/mnet_status_monitor.cgi?order=active"><b>Active</b></a></td>
+		<td class="newtable" align="center"><a href="http://mesowest.utah.edu/cgi-bin/droman/mnet_status_monitor.cgi?order=percent"><b>Reporting %</b></a></td>
+		<td class="newtable" align="center"><a href="http://mesowest.utah.edu/cgi-bin/droman/mnet_status_monitor.cgi?order=time"><b>Period Checked</b></a></td>
+	</tr>
+		<tr>
+			<td class="newtable" bgcolor="#33FF66">1</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/NWS_FAA.png" target="_blank" style="color: #000000">NWS/FAA</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=1" target="_blank" style="color: #000000">National Weather Service/Federal Aviation Administration</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">2197</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">2284</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">96.2 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">2</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/RAWS.png" target="_blank" style="color: #000000">RAWS</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=2" target="_blank" style="color: #000000">Interagency Remote Automatic Weather Stations</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">2085</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">2301</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">90.6 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 1.5 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">3</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/DUGWAY.png" target="_blank" style="color: #000000">DUGWAY</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=3" target="_blank" style="color: #000000">U.S. Army Dugway Proving Grounds</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">31</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">31</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 30 mins</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">4</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/UTAH_DOT.png" target="_blank" style="color: #000000">UTAH DOT</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=4" target="_blank" style="color: #000000">Utah Department of Transportation</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">81</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">87</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">93.1 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 1 hr</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">5</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/ARL_FRD.png" target="_blank" style="color: #000000">ARL FRD</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=5" target="_blank" style="color: #000000">NOAA Air Resources Laboratory Field Research Division</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">34</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">34</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 30 mins</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">6</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/AVALANCHE.png" target="_blank" style="color: #000000">AVALANCHE</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=6" target="_blank" style="color: #000000">Forest Service Avalanche Center</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">13</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">15</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">86.7 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">7</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/TOOELE.png" target="_blank" style="color: #000000">TOOELE</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=7" target="_blank" style="color: #000000">U.S. Army Deseret Chemical Depot, Tooele County</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">19</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">19</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">8</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/SNOWNET.png" target="_blank" style="color: #000000">SNOWNET</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=8" target="_blank" style="color: #000000">Snownet/Local Mesonet</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">30</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">31</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">96.8 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 1.5 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">9</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/AQ.png" target="_blank" style="color: #000000">AQ</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=9" target="_blank" style="color: #000000">Utah Department of Air Quality</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">20</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">21</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">95.2 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">10</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/ARL_SORD.png" target="_blank" style="color: #000000">ARL SORD</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=10" target="_blank" style="color: #000000">NOAA Air Resources Laboratory Special Operations and Resource Division</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">21</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">21</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 1 hr</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">11</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/AGRIMET.png" target="_blank" style="color: #000000">AGRIMET</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=11" target="_blank" style="color: #000000">U.S. Bureau of Reclamation</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">87</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">90</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">96.7 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 12 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">12</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/MISC.png" target="_blank" style="color: #000000">MISC</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=12" target="_blank" style="color: #000000">Miscellaneous</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">7</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">8</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">87.5 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">13</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/CAMPBELL.png" target="_blank" style="color: #000000">CAMPBELL</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=13" target="_blank" style="color: #000000">Campbell Scientific, Inc.</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">3</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">4</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">75.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">14</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/CANADA.png" target="_blank" style="color: #000000">CANADA</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=14" target="_blank" style="color: #000000">Environment Canada </a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">554</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">592</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">93.6 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">15</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/MT_DOT.png" target="_blank" style="color: #000000">MT DOT</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=15" target="_blank" style="color: #000000">Montana Department of Transportation</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">62</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">65</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">95.4 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 4 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">16</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/WY_DOT.png" target="_blank" style="color: #000000">WY DOT</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=16" target="_blank" style="color: #000000">Wyoming Department of Transportation</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">74</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">76</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">97.4 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 1 hr</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">17</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/LOXWFO.png" target="_blank" style="color: #000000">LOXWFO</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=17" target="_blank" style="color: #000000">Los Angeles/Oxnard Weather Forecast Office</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">22</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">26</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">84.6 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 3 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">20</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/KENNECOTT.png" target="_blank" style="color: #000000">KENNECOTT</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=20" target="_blank" style="color: #000000">Kennecott Utah Copper</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">7</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">7</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 3 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">21</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/AZ_ALERT.png" target="_blank" style="color: #000000">AZ ALERT</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=21" target="_blank" style="color: #000000">The Flood Control District of Maricopa County</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">39</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">39</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 1 hr</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">22</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/NV_DOT.png" target="_blank" style="color: #000000">NV DOT</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=22" target="_blank" style="color: #000000">Nevada Department of Transportation</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">83</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">92</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">90.2 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">23</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/CBRFC.png" target="_blank" style="color: #000000">CBRFC</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=23" target="_blank" style="color: #000000">Colorado Basin River Forecast Center</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">4</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">4</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 4 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">24</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/LAS_VEGAS.png" target="_blank" style="color: #000000">LAS VEGAS</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=24" target="_blank" style="color: #000000">Clark County Nevada Flood Control District</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">41</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">54</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">75.9 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 1 hr</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">25</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/SNOTEL.png" target="_blank" style="color: #000000">SNOTEL</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=25" target="_blank" style="color: #000000">Natural Resources Conservation Service</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">798</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">812</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">98.3 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 4 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">26</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/UTAH_CLIMATE_CENTER.png" target="_blank" style="color: #000000">UTAH CLIMATE CENTER</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=26" target="_blank" style="color: #000000">Utah Climate Center</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">3</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">3</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#FFFF66">27</td>
+			<td class="newtable" bgcolor="#FFFF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/MCSCN.png" target="_blank" style="color: #000000">MCSCN</a></td>
+			<td class="newtable" bgcolor="#FFFF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=27" target="_blank" style="color: #000000">Montana Counties Soil Climate Network</a></td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">8</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">15</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">53.3 %</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">Previous 24 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">28</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/MEXICO.png" target="_blank" style="color: #000000">MEXICO</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=28" target="_blank" style="color: #000000">Servicio Meteorologico Nacional (Mexico)</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">59</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">63</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">93.7 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 1.5 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">29</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/SCAN.png" target="_blank" style="color: #000000">SCAN</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=29" target="_blank" style="color: #000000">Soil Climate Analysis Network</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">135</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">154</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">87.7 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 6 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#FF6666">33</td>
+			<td class="newtable" bgcolor="#FF6666"><a href="http://mesowest.utah.edu/html/mesowest/monitor/SARC.png" target="_blank" style="color: #000000">SARC</a></td>
+			<td class="newtable" bgcolor="#FF6666"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=33" target="_blank" style="color: #000000">Southern Agricultural Research Center</a></td>
+			<td class="newtable" align="center" bgcolor="#FF6666">0</td>
+			<td class="newtable" align="center" bgcolor="#FF6666">1</td>
+			<td class="newtable" align="center" bgcolor="#FF6666"> 0.0 %</td>
+			<td class="newtable" align="center" bgcolor="#FF6666">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">34</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/MSI.png" target="_blank" style="color: #000000">MSI</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=34" target="_blank" style="color: #000000">Meteorological Solutions Inc. </a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">3</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">3</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 1 hr</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">36</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/WA_DOT.png" target="_blank" style="color: #000000">WA DOT</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=36" target="_blank" style="color: #000000">Washington Department of Transportation</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">107</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">113</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">94.7 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 3 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">37</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/NWAVAL.png" target="_blank" style="color: #000000">NWAVAL</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=37" target="_blank" style="color: #000000">Northwest Avalanche Center </a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">26</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">31</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">83.9 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 3 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">38</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/HMMN.png" target="_blank" style="color: #000000">HMMN</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=38" target="_blank" style="color: #000000">Hanford Meteorological Monitoring Network</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">23</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">25</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">92.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">39</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/AZMET.png" target="_blank" style="color: #000000">AZMET</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=39" target="_blank" style="color: #000000">The Arizona Meteorological Network</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">28</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">28</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 24 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">40</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/WAAQ.png" target="_blank" style="color: #000000">WAAQ</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=40" target="_blank" style="color: #000000">Washington State Department of Ecology Air Quality Network</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">14</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">15</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">93.3 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">41</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/ITD.png" target="_blank" style="color: #000000">ITD</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=41" target="_blank" style="color: #000000">Idaho Transportation Department</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">91</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">95</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">95.8 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#FFFF66">43</td>
+			<td class="newtable" bgcolor="#FFFF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/CNRFC.png" target="_blank" style="color: #000000">CNRFC</a></td>
+			<td class="newtable" bgcolor="#FFFF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=43" target="_blank" style="color: #000000">California Nevada River Forecast Center</a></td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">15</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">24</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">62.5 %</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">Previous 4 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">44</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/DUDFCD.png" target="_blank" style="color: #000000">DUDFCD</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=44" target="_blank" style="color: #000000">Denver Urban Drainage and Flood Control District</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">24</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">24</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 1 hr</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#FFFF66">45</td>
+			<td class="newtable" bgcolor="#FFFF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/BWFO_NWS.png" target="_blank" style="color: #000000">BWFO NWS</a></td>
+			<td class="newtable" bgcolor="#FFFF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=45" target="_blank" style="color: #000000">Boulder WFO National Weather Service </a></td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">3</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">6</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">50.0 %</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">46</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/CAIC.png" target="_blank" style="color: #000000">CAIC</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=46" target="_blank" style="color: #000000">Colorado Avalanche Information Center</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">9</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">11</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">81.8 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">47</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/KSL.png" target="_blank" style="color: #000000">KSL</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=47" target="_blank" style="color: #000000">KSL</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">1</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">1</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 30 mins</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">48</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/BTAVAL.png" target="_blank" style="color: #000000">BTAVAL</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=48" target="_blank" style="color: #000000">Bridger Teton National Forest Avalanche Center</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">10</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">11</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">90.9 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">49</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/ODOT.png" target="_blank" style="color: #000000">ODOT</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=49" target="_blank" style="color: #000000">Oregon Department of Transportation</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">70</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">78</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">89.7 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 1 hr</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">50</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/CEMP.png" target="_blank" style="color: #000000">CEMP</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=50" target="_blank" style="color: #000000">Community Environmental Monitoring Program</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">24</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">27</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">88.9 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 3 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">51</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/LANL.png" target="_blank" style="color: #000000">LANL</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=51" target="_blank" style="color: #000000">Los Alamos National Laboratory</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">5</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">5</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#FFFF66">54</td>
+			<td class="newtable" bgcolor="#FFFF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/PDTWFO.png" target="_blank" style="color: #000000">PDTWFO</a></td>
+			<td class="newtable" bgcolor="#FFFF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=54" target="_blank" style="color: #000000">Pendleton Weather Forecast Office</a></td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">16</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">22</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">72.7 %</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">Previous 1 hr</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">55</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/MSOWFO.png" target="_blank" style="color: #000000">MSOWFO</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=55" target="_blank" style="color: #000000">Missoula Weather Forecast Office</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">5</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">6</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">83.3 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 4 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">57</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/CARB.png" target="_blank" style="color: #000000">CARB</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=57" target="_blank" style="color: #000000">California Air Resources Board</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">159</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">175</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">90.9 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 4 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">58</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/SHASAVAL.png" target="_blank" style="color: #000000">SHASAVAL</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=58" target="_blank" style="color: #000000">Mt. Shasta Avalanche Center</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">4</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">4</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 6 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">59</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/CALTRANS.png" target="_blank" style="color: #000000">CALTRANS</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=59" target="_blank" style="color: #000000">California Department of Transportation</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">15</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">15</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 1 hr</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">60</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/FAWN.png" target="_blank" style="color: #000000">FAWN</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=60" target="_blank" style="color: #000000">Florida Automated Weather Network</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">34</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">35</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">97.1 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 1 hr</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">62</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/DRI.png" target="_blank" style="color: #000000">DRI</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=62" target="_blank" style="color: #000000">Desert Research Institute</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">71</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">94</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">75.5 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 4 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">63</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/CDOT.png" target="_blank" style="color: #000000">CDOT</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=63" target="_blank" style="color: #000000">Colorado Department of Transportation</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">67</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">73</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">91.8 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">64</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/UPR.png" target="_blank" style="color: #000000">UPR</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=64" target="_blank" style="color: #000000">Union Pacific Railroad</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">992</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">1293</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">76.7 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">65</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/CWOP.png" target="_blank" style="color: #000000">APRSWXNET/CWOP</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=65" target="_blank" style="color: #000000">Automatic Position Reporting System WX NET/Citizen Weather Observer Program</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">7245</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">8294</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">87.4 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">66</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/CIMIS.png" target="_blank" style="color: #000000">CIMIS</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=66" target="_blank" style="color: #000000">California Irrigation Management Information System</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">143</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">146</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">97.9 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 24 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">69</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/GPSMET.png" target="_blank" style="color: #000000">GPSMET</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=69" target="_blank" style="color: #000000">FSL Ground-Based GPS  </a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">29</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">35</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">82.9 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">70</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/WTEXAS.png" target="_blank" style="color: #000000">WTEXAS</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=70" target="_blank" style="color: #000000">West Texas Mesonet</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">58</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">59</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">98.3 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">71</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/WIDOT.png" target="_blank" style="color: #000000">WIDOT</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=71" target="_blank" style="color: #000000">Wisconsin Department of Transportation</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">48</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">52</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">92.3 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 4 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">72</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/NWS_COOP.png" target="_blank" style="color: #000000">NWS COOP</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=72" target="_blank" style="color: #000000">NWS Modernized Cooperative Observer Program - New England</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">49</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">53</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">92.5 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 1.5 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">81</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/HPWREN.png" target="_blank" style="color: #000000">HPWREN</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=81" target="_blank" style="color: #000000">High Performance Wireless Research and Education Network</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">15</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">16</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">93.8 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 30 mins</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">82</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/PIHWFO.png" target="_blank" style="color: #000000">PIHWFO</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=82" target="_blank" style="color: #000000">Pocatello/Idaho Falls Weather Forecast Office</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">1</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">1</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">83</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/HNXWFO.png" target="_blank" style="color: #000000">HNXWFO</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=83" target="_blank" style="color: #000000">Hanford Weather Forecast Office</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">6</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">6</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 1 hr</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">84</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/GGWWFO.png" target="_blank" style="color: #000000">GGWWFO</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=84" target="_blank" style="color: #000000">Glasgow Weather Forecast Office</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">20</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">26</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">76.9 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 3 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#FFFF66">85</td>
+			<td class="newtable" bgcolor="#FFFF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/SGXWFO.png" target="_blank" style="color: #000000">SGXWFO</a></td>
+			<td class="newtable" bgcolor="#FFFF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=85" target="_blank" style="color: #000000">San Diego Weather Forecast Office</a></td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">53</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">90</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">58.9 %</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#FF6666">86</td>
+			<td class="newtable" bgcolor="#FF6666"><a href="http://mesowest.utah.edu/html/mesowest/monitor/SNOWBIRD.png" target="_blank" style="color: #000000">SNOWBIRD</a></td>
+			<td class="newtable" bgcolor="#FF6666"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=86" target="_blank" style="color: #000000">Snowbird Ski and Summer Resort</a></td>
+			<td class="newtable" align="center" bgcolor="#FF6666">0</td>
+			<td class="newtable" align="center" bgcolor="#FF6666">2</td>
+			<td class="newtable" align="center" bgcolor="#FF6666"> 0.0 %</td>
+			<td class="newtable" align="center" bgcolor="#FF6666">Previous 4 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#FFFF66">88</td>
+			<td class="newtable" bgcolor="#FFFF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/FGZWFO.png" target="_blank" style="color: #000000">FGZWFO</a></td>
+			<td class="newtable" bgcolor="#FFFF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=88" target="_blank" style="color: #000000">Flagstaff Weather Forecast Office</a></td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">3</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">6</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">50.0 %</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">Previous 1 hr</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">89</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/ODEQ.png" target="_blank" style="color: #000000">ODEQ</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=89" target="_blank" style="color: #000000">Oregon Department of Environmental Quality</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">12</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">15</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">80.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 3 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">90</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/AKDOT.png" target="_blank" style="color: #000000">AKDOT</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=90" target="_blank" style="color: #000000">Alaska Department of Transportation</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">47</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">50</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">94.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">91</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/IADOT.png" target="_blank" style="color: #000000">IADOT</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=91" target="_blank" style="color: #000000">Iowa Department of Transportation</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">58</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">62</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">93.5 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 1 hr</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#FFFF66">92</td>
+			<td class="newtable" bgcolor="#FFFF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/PQRWFO.png" target="_blank" style="color: #000000">PQRWFO</a></td>
+			<td class="newtable" bgcolor="#FFFF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=92" target="_blank" style="color: #000000">Portland Weather Forecast Office</a></td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">17</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">24</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">70.8 %</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">93</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/MFRWFO.png" target="_blank" style="color: #000000">MFRWFO</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=93" target="_blank" style="color: #000000">Medford Weather Forecast Office</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">2</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">2</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">94</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/CPCRC.png" target="_blank" style="color: #000000">CPCRC</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=94" target="_blank" style="color: #000000">Columbia Plateau Conservation Research Center</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">4</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">5</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">80.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 4 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#FF6666">95</td>
+			<td class="newtable" bgcolor="#FF6666"><a href="http://mesowest.utah.edu/html/mesowest/monitor/MAMMOTH.png" target="_blank" style="color: #000000">MAMMOTH</a></td>
+			<td class="newtable" bgcolor="#FF6666"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=95" target="_blank" style="color: #000000">Mammoth Mountain Ski Area</a></td>
+			<td class="newtable" align="center" bgcolor="#FF6666">0</td>
+			<td class="newtable" align="center" bgcolor="#FF6666">1</td>
+			<td class="newtable" align="center" bgcolor="#FF6666"> 0.0 %</td>
+			<td class="newtable" align="center" bgcolor="#FF6666">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">96</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/MARITIME.png" target="_blank" style="color: #000000">MARITIME</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=96" target="_blank" style="color: #000000">Moored Buoys and CMAN</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">344</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">416</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">82.7 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#FFFF66">97</td>
+			<td class="newtable" bgcolor="#FFFF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/MEDOT.png" target="_blank" style="color: #000000">MEDOT</a></td>
+			<td class="newtable" bgcolor="#FFFF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=97" target="_blank" style="color: #000000">Maine Department of Transportation</a></td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">3</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">7</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">42.9 %</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">98</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/KYDOT.png" target="_blank" style="color: #000000">KYDOT</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=98" target="_blank" style="color: #000000">Kentucky Transportation Cabinet RWIS</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">34</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">37</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">91.9 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">99</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/MDDOT.png" target="_blank" style="color: #000000">MDDOT</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=99" target="_blank" style="color: #000000">Maryland Department of Transportation</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">2</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">2</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">100</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/MNDOT.png" target="_blank" style="color: #000000">MNDOT</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=100" target="_blank" style="color: #000000">Minnesota Department of Transportation</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">77</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">87</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">88.5 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">101</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/NDDOT.png" target="_blank" style="color: #000000">NDDOT</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=101" target="_blank" style="color: #000000">North Dakota Department of Transporatation</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">18</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">23</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">78.3 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">102</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/NEDOR.png" target="_blank" style="color: #000000">NEDOR</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=102" target="_blank" style="color: #000000">Nebraska Department of Roads</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">60</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">62</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">96.8 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">103</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/OHDOT.png" target="_blank" style="color: #000000">OHDOT</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=103" target="_blank" style="color: #000000">Ohio Department of Transportation</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">149</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">157</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">94.9 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">104</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/VADOT.png" target="_blank" style="color: #000000">VADOT</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=104" target="_blank" style="color: #000000">Virginia Department of Transportation</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">36</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">38</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">94.7 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">105</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/NHDOT.png" target="_blank" style="color: #000000">NHDOT</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=105" target="_blank" style="color: #000000">New Hampshire Department of Transportation</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">12</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">14</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">85.7 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">106</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/HADS.png" target="_blank" style="color: #000000">HADS</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=106" target="_blank" style="color: #000000">Hydrometeorological Automated Data System</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">5225</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">5341</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">97.8 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 4 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">107</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/AFGWFO.png" target="_blank" style="color: #000000">AFGWFO</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=107" target="_blank" style="color: #000000">Fairbanks Weather Forecast Office</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">12</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">12</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#FFFF66">108</td>
+			<td class="newtable" bgcolor="#FFFF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/NCAWOS.png" target="_blank" style="color: #000000">NCAWOS</a></td>
+			<td class="newtable" bgcolor="#FFFF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=108" target="_blank" style="color: #000000">MADIS Non-Commissioned AWOS</a></td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">85</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">119</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">71.4 %</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">109</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/NJNET.png" target="_blank" style="color: #000000">NJNET</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=109" target="_blank" style="color: #000000">New Jersey Weather and Climate Network</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">55</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">57</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">96.5 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">110</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/LKNWFO.png" target="_blank" style="color: #000000">LKNWFO</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=110" target="_blank" style="color: #000000">Elko Weather Forecast Office</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">2</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">2</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">111</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/PCMR.png" target="_blank" style="color: #000000">PCMR</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=111" target="_blank" style="color: #000000">Park City Mountain Resort</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">8</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">8</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 1 hr</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">112</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/DEERVLY.png" target="_blank" style="color: #000000">DEERVLY</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=112" target="_blank" style="color: #000000">Deer Valley Resort</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">7</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">7</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">113</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/SBCAPCD.png" target="_blank" style="color: #000000">SBCAPCD</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=113" target="_blank" style="color: #000000">Santa Barbara County Air Pollution Control District</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">14</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">15</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">93.3 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 1.5 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">115</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/BCHYDRO.png" target="_blank" style="color: #000000">BCHYDRO</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=115" target="_blank" style="color: #000000">BC Hydro</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">77</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">77</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 12 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">116</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/YAKIMA.png" target="_blank" style="color: #000000">YAKIMA</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=116" target="_blank" style="color: #000000">Bureau of Reclamation Yakima Project</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">7</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">7</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#FFFF66">118</td>
+			<td class="newtable" bgcolor="#FFFF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/INDOT.png" target="_blank" style="color: #000000">INDOT</a></td>
+			<td class="newtable" bgcolor="#FFFF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=118" target="_blank" style="color: #000000">Indiana Department of Transportation</a></td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">23</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">31</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">74.2 %</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">120</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/MAWN.png" target="_blank" style="color: #000000">MAWN</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=120" target="_blank" style="color: #000000">Enviro-weather/Michigan State University</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">66</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">66</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">121</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/NOS-PORTS.png" target="_blank" style="color: #000000">NOS-PORTS</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=121" target="_blank" style="color: #000000">National Ocean Service Physical Oceanographic Real-Time System</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">57</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">58</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">98.3 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">122</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/NOS-NWLON.png" target="_blank" style="color: #000000">NOS-NWLON</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=122" target="_blank" style="color: #000000">National Ocean Service Water Level Observation Network</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">199</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">201</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">99.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">123</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/CRN.png" target="_blank" style="color: #000000">CRN</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=123" target="_blank" style="color: #000000">Climate Reference Network </a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">189</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">190</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">99.5 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">125</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/SFWMD.png" target="_blank" style="color: #000000">SFWMD</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=125" target="_blank" style="color: #000000">South Florida Water Management District</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">25</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">25</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#FFFF66">126</td>
+			<td class="newtable" bgcolor="#FFFF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/DCEW.png" target="_blank" style="color: #000000">DCEW</a></td>
+			<td class="newtable" bgcolor="#FFFF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=126" target="_blank" style="color: #000000">Dry Creek Experimental Watershed</a></td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">2</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">3</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">66.7 %</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">Previous 12 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">127</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/CDPHE.png" target="_blank" style="color: #000000">CDPHE</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=127" target="_blank" style="color: #000000">Colorado Department of Public Health and Environment</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">12</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">13</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">92.3 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 4 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">128</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/MTRWFO.png" target="_blank" style="color: #000000">MTRWFO</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=128" target="_blank" style="color: #000000">Monterey Weather Forecast Office</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">30</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">31</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">96.8 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 12 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">129</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/HNLWFO.png" target="_blank" style="color: #000000">HNLWFO</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=129" target="_blank" style="color: #000000">Honolulu Weather Forecast Office</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">21</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">21</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">130</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/HILL.png" target="_blank" style="color: #000000">HILL</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=130" target="_blank" style="color: #000000">CH2M HILL Hill Air Force Base</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">2</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">2</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">131</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/NEMPPA.png" target="_blank" style="color: #000000">NEMPPA</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=131" target="_blank" style="color: #000000">Northeast Metro Pollution Prevention Alliance</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">3</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">4</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">75.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">132</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/VTRANS.png" target="_blank" style="color: #000000">VTRANS</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=132" target="_blank" style="color: #000000">Vermont Agency of Transportation</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">21</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">22</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">95.5 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">134</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/SEWWFO.png" target="_blank" style="color: #000000">SEWWFO</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=134" target="_blank" style="color: #000000">Seattle Weather Forecast Office</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">18</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">19</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">94.7 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">135</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/ME-CAR-Meso.png" target="_blank" style="color: #000000">ME-CAR-Meso</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=135" target="_blank" style="color: #000000">Caribou Weather Forecast Office</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">2</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">2</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">136</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/AIRNOW.png" target="_blank" style="color: #000000">AIRNOW</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=136" target="_blank" style="color: #000000">AIRNow</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">486</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">591</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">82.2 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 6 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#FFFF66">137</td>
+			<td class="newtable" bgcolor="#FFFF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/CA_HYDRO.png" target="_blank" style="color: #000000">CA HYDRO</a></td>
+			<td class="newtable" bgcolor="#FFFF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=137" target="_blank" style="color: #000000">CA HYDRO </a></td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">20</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">66</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">30.3 %</td>
+			<td class="newtable" align="center" bgcolor="#FFFF66">Previous 4 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">138</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/FGNet.png" target="_blank" style="color: #000000">FGNet</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=138" target="_blank" style="color: #000000">Utah Fruit Growers Weather Monitoring Network</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">16</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">17</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">94.1 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">139</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/SDGE.png" target="_blank" style="color: #000000">SDGE</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=139" target="_blank" style="color: #000000">San Diego Gas and Electric</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">138</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">139</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">99.3 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">140</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/CDEC.png" target="_blank" style="color: #000000">CDEC</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=140" target="_blank" style="color: #000000">California Department of Water Resources</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">5</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">6</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">83.3 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">143</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/DEOS.png" target="_blank" style="color: #000000">DEOS</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=143" target="_blank" style="color: #000000">Delaware Environmental Observing System</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">44</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">45</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">97.8 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">144</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/WSMR.png" target="_blank" style="color: #000000">WSMR</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=144" target="_blank" style="color: #000000">U.S. Army White Sands Missile Range</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">28</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">28</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">146</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/RENO.png" target="_blank" style="color: #000000">RENO</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=146" target="_blank" style="color: #000000">Reno Wind Demonstration Project</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">4</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">4</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">147</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/MADIS_MISC.png" target="_blank" style="color: #000000">MADIS MISC</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=147" target="_blank" style="color: #000000">MADIS Miscellaneous</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">21</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">23</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">91.3 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">149</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/WVDOT.png" target="_blank" style="color: #000000">WVDOT</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=149" target="_blank" style="color: #000000">West Virginia Department of Transportation</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">18</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">20</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">90.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">150</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/NMAQ.png" target="_blank" style="color: #000000">NMAQ</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=150" target="_blank" style="color: #000000">New Mexico Environment Department Air Monitoring Network</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">16</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">19</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">84.2 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 4 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">151</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/BPANET.png" target="_blank" style="color: #000000">BPANET</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=151" target="_blank" style="color: #000000">Bonneville Power Administration Network</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">20</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">20</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">152</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/MCDONALD.png" target="_blank" style="color: #000000">MCDONALD</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=152" target="_blank" style="color: #000000">The University of Texas at Austin McDonald Observatory</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">2</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">2</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">153</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/UUNET.png" target="_blank" style="color: #000000">UUNET</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=153" target="_blank" style="color: #000000">University of Utah MesoWest Mesonet</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">10</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">11</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">90.9 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">154</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/LSCNET.png" target="_blank" style="color: #000000">LSCNET</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=154" target="_blank" style="color: #000000">Lyndon State College</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">1</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">1</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 1 hr</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">155</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/DCNET.png" target="_blank" style="color: #000000">DCNET</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=155" target="_blank" style="color: #000000">DCNet</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">2</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">2</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">156</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/MOCOMAGNET.png" target="_blank" style="color: #000000">MOCOMAGNET</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=156" target="_blank" style="color: #000000">University of Missouri Extension Commercial Agriculture Automated Weather Network</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">18</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">19</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">94.7 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">157</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/MQTWFO.png" target="_blank" style="color: #000000">MQTWFO</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=157" target="_blank" style="color: #000000">Marquette Weather Forecast Office</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">6</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">8</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">75.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">158</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/DEDOT.png" target="_blank" style="color: #000000">DEDOT</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=158" target="_blank" style="color: #000000">Delaware Department of Transportation</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">16</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">16</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">160</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/ILDOT.png" target="_blank" style="color: #000000">ILDOT</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=160" target="_blank" style="color: #000000">Illinois Department of Transportation</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">41</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">45</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">91.1 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">162</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/MIDOT.png" target="_blank" style="color: #000000">MIDOT</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=162" target="_blank" style="color: #000000">Michigan Department of Transportation</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">24</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">24</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">165</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/NYDOT.png" target="_blank" style="color: #000000">NYDOT</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=165" target="_blank" style="color: #000000">New York State Department of Transportation</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">13</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">15</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">86.7 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">170</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/USARRAY.png" target="_blank" style="color: #000000">USARRAY</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=170" target="_blank" style="color: #000000">U.S. Transportable Array</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">449</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">475</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">94.5 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">171</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/ORNL.png" target="_blank" style="color: #000000">ORNL</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=171" target="_blank" style="color: #000000">Oak Ridge National Laboratory</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">10</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">10</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">172</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/EKAWFO.png" target="_blank" style="color: #000000">EKAWFO</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=172" target="_blank" style="color: #000000">Eureka Weather Forecast Office</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">1</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">1</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">174</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/SJSUNET.png" target="_blank" style="color: #000000">SJSUNET</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=174" target="_blank" style="color: #000000">San Jose State University</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">1</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">1</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">175</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/EPZWFO.png" target="_blank" style="color: #000000">EPZWFO</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=175" target="_blank" style="color: #000000">El Paso Weather Forecast Office</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">1</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">1</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">177</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/CLNP.png" target="_blank" style="color: #000000">CLNP</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=177" target="_blank" style="color: #000000">Crater Lake National Park</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">3</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">3</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 4 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">178</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/VCAPCD.png" target="_blank" style="color: #000000">VCAPCD</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=178" target="_blank" style="color: #000000">Ventura County Air Pollution Control District </a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">6</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">6</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">179</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/AJKNDBC.png" target="_blank" style="color: #000000">AJKNDBC</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=179" target="_blank" style="color: #000000">Alaska National Data Buoy Center</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">6</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">7</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">85.7 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">180</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/RIOMESA.png" target="_blank" style="color: #000000">RIOMESA</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=180" target="_blank" style="color: #000000">Rio Mesa Center - University of Utah</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">2</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">2</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">181</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/WIAQ.png" target="_blank" style="color: #000000">WIAQ</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=181" target="_blank" style="color: #000000">Wisconsin Air Quality</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">1</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">1</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">100.0 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">182</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/CNRA.png" target="_blank" style="color: #000000">CNRA</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=182" target="_blank" style="color: #000000">Canadian Natural Resource Agencies</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">290</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">297</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">97.6 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+		</tr><tr>
+			<td class="newtable" bgcolor="#33FF66">183</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/html/mesowest/monitor/SRP.png" target="_blank" style="color: #000000">SRP</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="http://mesowest.utah.edu/cgi-bin/droman/station_status_monitor.cgi?mnet=183" target="_blank" style="color: #000000">Salt River Project</a></td>
+			<td class="newtable" align="center" bgcolor="#33FF66">25</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">28</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">89.3 %</td>
+			<td class="newtable" align="center" bgcolor="#33FF66">Previous 2 hrs</td>
+		</tr><tr>
+</tr></tbody></table>
+<br>
+<table border="0">
+<tbody><tr> 
+	<td>
+		<img src="mnet_status_monitor.cgi_files/bar.gif" title="line bar" alt="line bar" height="10" width="600">
+	<br> 
+		University of Utah <a href="http://mesowest.utah.edu/" target="_parent">MesoWest</a>
+	</td>
+</tr>
+<tr> 
+	<td>
+		<font size="-2">Copyright © 2002-2013 University of Utah. 
+		All Rights Reserved.
+	<br>
+		For Questions or Comments about this page or MesoWest contact 
+		<a href="mailto:atmos-mesowest@lists.utah.edu">atmos-mesowest@lists.utah.edu</a>
+	<br>
+		</font>
+	</td>
+</tr>
+</tbody></table>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="mnet_status_monitor.cgi_files/ga.js" type="text/javascript"></script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-9976723-1");
+pageTracker._trackPageview();
+} catch(err) {}
+</script>
+
+
+
+</body></html>
