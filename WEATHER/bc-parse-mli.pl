@@ -49,6 +49,10 @@ for $i (@{$hlref}) {
     # just spaces and apostrophes
     if ($i->{$j}=~m/^[\'\s]*$/) {$err=1;}
   }
+
+  # impossible lat/lon
+  if (abs($i->{lat_prp})>90 || abs($i->{lon_prp})>180) {$err=1;}
+
   if ($err) {
     debug("SKIPPING: ($i->{icao}) ($i->{lat_prp}) ($i->{lon_prp})");
     next;
