@@ -46,6 +46,9 @@ for $i (@reports) {
     $hash{$names[$j]} = $item;
   }
 
+  # ignore impossibles
+  if (abs($hash{latitude})>90 || abs($hash{longitude})>180) {next;}
+
   # TODO: the "tough one" will be day/hour to full timestamp
   $hash{time} = ship2time($hash{time});
 

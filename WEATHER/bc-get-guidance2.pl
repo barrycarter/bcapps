@@ -29,10 +29,10 @@ for $i (split(/\n\s*\n/, $out)) {
 
   # hash for rows
     my(%hash) = ();
-    while ($i=~s/^\s*(\S+)\s*(.*?)$//m) {
+    while ($i=~s/^\s*(.{3})\s(.*?)$//m) {
       my($key,$vals) = ($1,$2);
-      # we need a leading space
-      $vals = " $vals";
+      # key "HR " is really "HR"
+      $key=~s/\s+$//isg;
       # 3 characters at a time...
       while ($vals=~s/(...)//) {
 	my($val) = $1;
@@ -40,6 +40,7 @@ for $i (split(/\n\s*\n/, $out)) {
 	if ($val == "99" && ($key eq "WDR" || $key eq "WSP")) {$val="NULL";}
 	# otherwise, 999 is null
 	if ($val == "999") {$val = "NULL";}
+	debug("$stat, $key -> *$val*");
 	push(@{$hash{$key}}, trim($val));
       }
     }

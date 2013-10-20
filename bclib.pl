@@ -2258,7 +2258,8 @@ sub hashlist2sqlite {
       # ignore blank keys (can't use them anyway)
       if ($j=~/^\s*$/) {next;}
       $iskey{$j} = 1;
-      push(@keys, "'$j'");
+      # mysql does not like apostrophes around column names
+      push(@keys, "$j");
       # strip newlines
       $hash{$j}=~s/\n//isg;
       push(@vals, "\"$hash{$j}\"");

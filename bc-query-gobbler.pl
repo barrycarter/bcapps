@@ -25,6 +25,10 @@ for $i (sort(glob("*"))) {
   # TODO: in theory, could group all files for one db together
   # copy to new version, run queries, move back safely
   system("cp /sites/DB/$db.db /sites/DB/$db.db.new; sqlite3 /sites/DB/$db.db.new < $i");
+
+  # experimentally, write data to MySQL db too
+  system("bc-sqlite3dump2mysql.pl < $i | mysql shared");
+
   if ($globopts{vacuum}) {system("echo 'VACUUM;' | sqlite3 /sites/DB/$db.db.new");}
 
   system("mv /sites/DB/$db.db /sites/DB/$db.db.old; mv /sites/DB/$db.db.new /sites/DB/$db.db");

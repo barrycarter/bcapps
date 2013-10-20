@@ -6,7 +6,7 @@
 
 CREATE TABLE madis (
  type TEXT, -- type, as defined by MADIS
- id INT, -- id, as defined by MADIS
+ id TEXT, -- id, as defined by MADIS
  name TEXT, -- descriptive name of station
  latitude DOUBLE, -- in decimal degrees -90..+90
  longitude DOUBLE, -- in decimal degrees -180..+180
@@ -34,6 +34,9 @@ ALTER TABLE madis ADD autocomment TEXT;
 
 -- for madis, only one report from a given station at a given time
 CREATE UNIQUE INDEX i1 ON madis(type, id, time);
+
+-- for mysql only:
+-- CREATE UNIQUE INDEX i1 ON madis(type(50), id(50), time(50));
 
 -- below help with sorting
 CREATE INDEX i2 ON madis(source);
