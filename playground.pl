@@ -29,6 +29,8 @@ $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 use GD;
 
+die "TSETING";
+
 sub foo {return $_[0];}
 print foo("bar");
 print &foo("bar");
