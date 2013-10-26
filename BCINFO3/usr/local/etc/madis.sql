@@ -23,21 +23,21 @@ DELETE FROM madis WHERE (winddir<0 OR winddir>360) AND winddir!='NULL';
 -- probably unnecessary...
 DELETE FROM madis WHERE ABS(latitude)>90 OR ABS(longitude)>180;
 
--- METAR-PARSED trumps METAR-10M and MNET1.00
--- TODO: this still allows for 2 reports, one METAR-10M and one MNET1.00
--- METAR-10M = http://wdssii.nssl.noaa.gov/realtime/metar/recent/METAR.kmz
--- METAR-parsed = http://weather.aero/dataserver_current/cache/metars.cache.csv.gz
--- MNET1.00 = http://mesowest.utah.edu/data/mesowest.out.gz
+-- METAR-PARSED trumps many things...
+-- TODO: this still allows for 2+ non-metars.cache-parsed reports
 
 DELETE FROM madis WHERE rowid IN (SELECT m1.rowid FROM madis m1 JOIN
-madis m2 ON (m1.id = m2.id AND m1.time = m2.time AND m1.source =
-'http://wdssii.nssl.noaa.gov/realtime/metar/recent/METAR.kmz' AND 
+madis m2 ON (m1.id = m2.id AND m1.time = m2.time AND m1.source IN
+('http://wdssii.nssl.noaa.gov/realtime/metar/recent/METAR.kmz',
+ 'http://mesowest.utah.edu/data/mesowest.out.gz',
+ 'http://www.srh.noaa.gov/gis/kml/metar/tf.kmz') AND
 m2.source='http://weather.aero/dataserver_current/cache/metars.cache.csv.gz'));
 
+-- Mesonet trumps /tf.kmz
 DELETE FROM madis WHERE rowid IN (SELECT m1.rowid FROM madis m1 JOIN
-madis m2 ON (m1.id = m2.id AND m1.time = m2.time AND m1.source =
-'http://mesowest.utah.edu/data/mesowest.out.gz' AND 
-m2.source='http://weather.aero/dataserver_current/cache/metars.cache.csv.gz'));
+madis m2 ON (m1.id = m2.id AND m1.time = m2.time AND m1.source IN
+('http://www.srh.noaa.gov/gis/kml/metar/tf.kmz') AND
+m2.source='http://mesowest.utah.edu/data/mesowest.out.gz'));
 
 -- after all these deletes, vacuum and analyze
 VACUUM;
