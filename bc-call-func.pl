@@ -21,6 +21,11 @@ for $i (@ARGV) {
     }
 }
 
-@res=&$func(@args);
+# quotify and combine
+for $i (@args) {$i="'$i'";}
+$args = join(",",@args);
+
+# @res=&$func(@args);
+@res = eval("$func($args)");
 
 print join(", ", @res),"\n";

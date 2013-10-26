@@ -49,7 +49,7 @@ $tax = 1.07;
 # probably between 1315 and 1355 based on my pictorial record,
 # assuming rounding to nearest number
 
-($time,$read) = ("2013-09-23", "69469");
+($time,$read) = ("2013-10-23", "70332");
 
 # same month last year (as target)
 # $lastyearcost = "103.15";

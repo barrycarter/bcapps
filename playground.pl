@@ -19,7 +19,6 @@ require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/BCGIT/bclib-playground.pl";
 # require "bc-astro-lib.pl";
 require "bc-weather-lib.pl";
-require "bc-kml-lib.pl";
 # starting to store all my private pws, etc, in a single file
 require "/home/barrycarter/bc-private.pl";
 use XML::Simple;
@@ -29,6 +28,22 @@ use XML::Bare;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 use GD;
+
+sub foo {return $_[0];}
+print foo("bar");
+print &foo("bar");
+
+printf("%s","hello\n");
+&printf("%s", "hello\n");
+
+die "TESTING";
+
+# fun with dates (1893481200 = 2030)
+for ($i=1383069600; $i< 1893481200; $i+=86400*7) {
+  print strftime("%Y%m%d\n", localtime($i));
+}
+
+die "TESTING";
 
 # perl pair oddness
 
