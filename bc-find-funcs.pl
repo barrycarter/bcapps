@@ -10,20 +10,17 @@ require "/usr/local/lib/bclib.pl";
 my($file) = @ARGV;
 $data = read_file($file);
 
-# builtin perl
-# for $i (split(/\n/, read_file("/home/barrycarter/BCGIT/perlfuncs.txt"))) {
-#   if ($i=~/\#/ || $i=~/^\s*$/) {next;}
-#   $defined{$i} = 1;
-# }
+# perl "constructs" that use ()
+%defined = list2hash("if", "for", "while", "elsif", "unless");
 
 # requires (by filename; requires by package handled differently)
-# TODO: include recursive requires
-
 do {
   $data=~s/require\s*\"(.*?)\"//;
   my($req) = $1;
   $data = "$data\n".read_file($req);
 } until ($data!~/require\s*\"(.*?)\"/);
+
+debug("DATE: $data");
 
 # kill comments
 $data=~s/\#.*$//mg;
@@ -59,7 +56,7 @@ for $i (keys %uses) {
 }
 
 # called functions
-while ($data=~s/(\S+?)\(.*?\)//s) {
+while ($data=~s/(\w+?)\([^\(\)]*?\)//s) {
   # this catches funcs and more
   my($func) = $1;
   debug("FUNC: $func");
@@ -75,7 +72,8 @@ while ($data=~s/(\S+?)\(.*?\)//s) {
 
 @missing = sort(minus(\@used, \@defined));
 
-debug("MISSING",@missing);
+print join("\n",@missing),"\n";
+
 
 
 
