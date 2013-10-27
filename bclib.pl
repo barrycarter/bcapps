@@ -23,6 +23,8 @@ push(@INC,"/home/barrycarter/BCGIT", "/usr/local/lib");
 # for X11 goodness (when starting Perl from nagios/cron or similar)
 $ENV{'DISPLAY'}=":0.0";
 
+
+
 # TODO: sort of bad to call this "abbrev" in global lib
 our(%ABBREV)=("BC" => lc("Patches"),
 	 "BL" => lc("Blowing"),
@@ -2308,7 +2310,7 @@ due to exec).
 
 =cut
 
-sub in_you_endo() {
+sub in_you_endo {
   my(@ENDS) = B::end_av->ARRAY;
   foreach $i (@ENDS) {
     $i->object_2svref->();
@@ -3482,7 +3484,7 @@ my_tmpfile() but uses sub directories to avoid overfilling /tmp
 
 =cut
 
-sub my_tmpfile2() {
+sub my_tmpfile2 {
   my($d1,$d2,$x);
   do {
     # pid and username helps prevent collision
