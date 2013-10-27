@@ -9,21 +9,24 @@ $Data::Dumper::Indent = 0;
 
 #$ENV{TZ}="UTC";
 
-%hash = suninfo(-106-35/60,75+0*35.1, str2time("Nov 15"));
+# %hash = suninfo(-106-35/60,75+0*35.1, str2time("Nov 15"));
+%hash = sunmooninfo(-106-35/60,35.1);
 
 for $i (keys %hash) {
-  print strftime("$i: %c\n",localtime($hash{$i}));
+  for $j (keys %{$hash{$i}}) {
+    print strftime("$i$j: %x %I:%M %p\n",localtime($hash{$i}{$j}));
+  }
 }
 
-=item suninfo($lon,$lat,$time=now)
+=item sunmooninfo($lon,$lat,$time=now)
 
-Return hash of info about the sun at $lon, $lat at time $time
+Return hash of info about the sun/moon at $lon, $lat at time $time
 
 =cut
 
-sub suninfo {
+sub sunmooninfo {
   my($lon,$lat,$time) = @_;
-  my(%sun); # return hash
+  my(%info); # return hash
   unless ($time) {$time=time();}
 
   # construct observer
@@ -34,15 +37,22 @@ sub suninfo {
   my($stat,$rst) = Astro::Nova::get_solar_rst_horizon($jd, $observer, -5/6.);
   debug("STAT1: $stat");
 
-  $sun{rise} = Astro::Nova::get_timet_from_julian($rst->get_rise());
-  $sun{set} = Astro::Nova::get_timet_from_julian($rst->get_set());
+  $info{sun}{rise} = Astro::Nova::get_timet_from_julian($rst->get_rise());
+  $info{sun}{set} = Astro::Nova::get_timet_from_julian($rst->get_set());
+  $info{sun}{transit} = Astro::Nova::get_timet_from_julian($rst->get_transit());
 
   ($stat,$rst) = Astro::Nova::get_solar_rst_horizon($jd, $observer, -6.);
   debug("STAT2: $stat");
-  $sun{dawn} = Astro::Nova::get_timet_from_julian($rst->get_rise());
-  $sun{dusk} = Astro::Nova::get_timet_from_julian($rst->get_set());
+  $info{sun}{dawn} = Astro::Nova::get_timet_from_julian($rst->get_rise());
+  $info{sun}{dusk} = Astro::Nova::get_timet_from_julian($rst->get_set());
 
-  return %sun;
+  ($stat,$rst) = Astro::Nova::get_lunar_rst($jd, $observer);
+  debug("STAT3: $stat");
+  $info{moon}{rise} = Astro::Nova::get_timet_from_julian($rst->get_rise());
+  $info{moon}{set} = Astro::Nova::get_timet_from_julian($rst->get_set());
+  $info{moon}{transit} = Astro::Nova::get_timet_from_julian($rst->get_transit());
+
+  return %info;
 }
 
 die "TESTING";
