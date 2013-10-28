@@ -1,5 +1,4 @@
 #!/bin/perl -w
-use strict;
-use warnings;
-use Strict::Subs;
-if (0) {no_such_func();}
+
+do "/usr/local/lib/perl5/site_perl/5.10.0/i386-linux-thread-multi/Astro/Nova.pm";
+print get_julian_from_timet(0);

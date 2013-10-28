@@ -83,6 +83,22 @@ for $i (@{$hlref}) {
 
   $hash{name} = "$statinfo{$hash{id}}{city}, $statinfo{$hash{id}}{state}, $statinfo{$hash{id}}{country}";
 
+  # warn of bad lat/lon (but use them anyway)
+  if (abs($hash{latitude}-$statinfo{$hash{id}}{latitude}) > .0051) {
+    warn "$hash{id}: latitude difference excessive; $hash{latitude} vs $statinfo{$hash{id}}{latitude}";
+  }
+
+  if (abs($hash{longitude}-$statinfo{$hash{id}}{longitude}) > .0051) {
+    warn "$hash{id}: longitude difference excessive; $hash{longitude} vs $statinfo{$hash{id}}{longitude}";
+  }
+
+  # if station latitude/longitude exist, use them
+  if ($statinfo{$hash{id}}) {
+    for $j ("latitude","longitude") {
+      $hash{$j} = $statinfo{$hash{id}}{$j};
+    }
+  }
+
   push(@hashes, {%hash});
 
 }

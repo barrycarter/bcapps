@@ -34,24 +34,20 @@ sub sunmooninfo {
   # jd2unix() would also do this
   my($jd) = Astro::Nova::get_julian_from_timet($time);
 
-  my($stat,$rst) = Astro::Nova::get_solar_rst_horizon($jd, $observer, -5/6.);
-  debug("STAT1: $stat");
+  my(%rst);
+  ($stat,$rst{sun})=Astro::Nova::get_solar_rst_horizon($jd, $observer, -5/6.);
+  ($stat,$rst{moon})=Astro::Nova::get_lunar_rst($jd, $observer);
 
-  $info{sun}{rise} = Astro::Nova::get_timet_from_julian($rst->get_rise());
-  $info{sun}{set} = Astro::Nova::get_timet_from_julian($rst->get_set());
-  $info{sun}{transit} = Astro::Nova::get_timet_from_julian($rst->get_transit());
+  for $i ("rise", "set", "transit") {
+    for $j ("sun", "moon") {
+      # hideous coding, hideous use of eval
+      $info{$j}{$i}=eval("Astro::Nova::get_timet_from_julian(\$rst{$j}->get_$i())");
+    }
+  }
 
-  ($stat,$rst) = Astro::Nova::get_solar_rst_horizon($jd, $observer, -6.);
-  debug("STAT2: $stat");
+  my($stat,$rst) = Astro::Nova::get_solar_rst_horizon($jd, $observer, -6.);
   $info{sun}{dawn} = Astro::Nova::get_timet_from_julian($rst->get_rise());
   $info{sun}{dusk} = Astro::Nova::get_timet_from_julian($rst->get_set());
-
-  ($stat,$rst) = Astro::Nova::get_lunar_rst($jd, $observer);
-  debug("STAT3: $stat");
-  $info{moon}{rise} = Astro::Nova::get_timet_from_julian($rst->get_rise());
-  $info{moon}{set} = Astro::Nova::get_timet_from_julian($rst->get_set());
-  $info{moon}{transit} = Astro::Nova::get_timet_from_julian($rst->get_transit());
-
   return %info;
 }
 

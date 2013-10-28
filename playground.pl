@@ -29,23 +29,6 @@ $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 use GD;
 
-# find all functions?
-my($data) = cmdfile();
-
-while ($data=~s/(\S+?)\(.*?\)//s) {
-  # this catches funcs and more
-  my($func) = $1;
-  # funcs must start with letter and contain only alpha chars
-  unless ($func=~/^[a-z]\w*$/i) {next;}
-  debug($func);
-}
-
-
-
-
-
-
-
 die "TSETING";
 
 sub foo {return $_[0];}

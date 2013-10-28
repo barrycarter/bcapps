@@ -11,41 +11,37 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# in order of most useful info (I think)
-nsd();
-mli();
-ucar();
+# because we get most of our data from mesonet, it comes first
 meso();
+nsd();
+ucar();
+# mli contains weird entries, so much come last
+mli();
 
 # fake subroutine so I can control order in which files are read
 sub meso {
   local(*A);
-  open(A, "fgrep stn= /home/barrycarter/BCGIT/WEATHER/meso_station.cgi.html|");
 
-  # cols where data is
-  @cols = (74, 83, 117, 122, 134, 147, 157);
+  # use csv file, it's more accurate than meso_station.cgi.html
+  open(A, "zcat /home/barrycarter/BCGIT/WEATHER/mesowest_link_csv.tbl.gz|");
+
+  # skip header line (this is cheating in some sense)
+  <A>;
 
   while (<A>) {
-    debug("THUNK: $_");
-    my(@data) = column_data($_, [@cols]);
-    # clean data
-    for $i (@data) {
-      $i=~s/<.*?>//isg;
-      $i=~s/ft//sg;
-      $i=~s/\"//isg;
-      $i = trim($i);
-    }
+    my(@data) = csv($_);
+    # get rid of backticks
+    map($_=trim($_), @data);
 
-    # global SEEN hash
+    # global seen hash
     if ($seen{$data[0]}) {next;}
     $seen{$data[0]} = 1;
-
-    # print for stations.db
-    print join("\t", $data[0], "NULL", $data[1], $data[2], "US", $data[3],
-	       $data[4], $data[5],
+    print join("\t", $data[0], "NULL", $data[2], $data[3], $data[4], $data[5],
+	       $data[6], $data[7],
 	       "http://mesowest.utah.edu/cgi-bin/droman/meso_station.cgi"),
 		 "\n";
   }
+
   close(A);
 }
 
