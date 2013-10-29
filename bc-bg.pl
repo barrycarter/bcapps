@@ -198,6 +198,10 @@ print A join("&lt;br&gt;\n", @rss),"\n";
 print A "</title></item></channel></rss>\n";
 close(A);
 
+# sometimes, report scrolls off screen; this sends EOF (in darker
+# color) so I know where report ends
+push(@fly, "string 0,0,255,0,$pos,medium,--EOF--");
+
 # send header and output to fly file
 # tried doing this w/ pipe but failed
 # setpixel below needed so bg color is black

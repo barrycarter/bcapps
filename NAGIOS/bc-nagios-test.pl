@@ -79,6 +79,40 @@ sub func {
   }
 }
 
+=item bc_check_url_sha1($url, $sha1)
+
+Confirm that the sha1 of the content of $url is $sha1 (useful to test
+binary files where searching for a string is impratical)
+
+=cut
+
+sub bc_check_url_sha1 {
+  my($url, $sha1) = @_;
+  # TODO: shorten this cache time
+  my($out,$err,$res) = cache_command2("curl $url","age=300");
+  # check for errors
+  if ($res) {
+    print "Error retrieving URL $url: $err\n";
+    return 2;
+  }
+  # empty (even without error)
+  unless ($out) {
+    print "URL is empty: $url\n";
+    return 2;
+  }
+
+  # and the check
+  my($sha) = sha1_hex($out);
+
+  unless ($sha eq $sha1) {
+    print "SHA($url) $sha does not match $sha1\n";
+    return 2;
+  }
+
+  print "SHA($url) matches: $sha\n";
+  return 0;
+}
+
 =item bc_check_files_age($files,$age)
 
 Given multiple files (as a file spec that ls can handle), check that

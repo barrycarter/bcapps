@@ -3,8 +3,8 @@
 # Pings potential scammers with traceable leonard.zeptowitz addresses
 
 require "/usr/local/lib/bclib.pl";
-$dir = "/home/barrycarter/BCGIT/419";
-dodie('chdir($dir)');
+$dir = "/home/barrycarter/BCGIT/419/";
+
 # gmail catcher addr
 $catch = "leonard.zeptowitz";
 $now = time();

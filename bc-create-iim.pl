@@ -20,7 +20,7 @@ require "/home/barrycarter/bc-private.pl";
 
 $macro = << "MARK";
 TAB T=1
-URL GOTO=http://www.ally.com/
+URL GOTO=https://secure.ally.com/allyWebClient/login.do
 TAG POS=1 TYPE=SPAN ATTR=TXT:log<SP>in
 TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:actionForm ATTR=ID:userNamePvtEncrypt CONTENT=$ally{username}
 TAG POS=1 TYPE=INPUT:BUTTON FORM=ID:noautocomplete ATTR=NAME:continue&&VALUE:Continue

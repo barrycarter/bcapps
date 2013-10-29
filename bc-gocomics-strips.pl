@@ -11,7 +11,7 @@ require "/usr/local/lib/bclib.pl";
 
 $strip = "pearlsbeforeswine";
 $workdir = "/var/tmp/gocomics/$strip";
-dodie('chdir("$workdir")');
+dodie("chdir('$workdir')");
 
 for $i (1980..2012) {
   for $j (1..12) {

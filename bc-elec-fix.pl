@@ -19,7 +19,7 @@ for $i (glob("$maindir/elec*.png")) {
     write_file_new("$i: size 0", "/home/barrycarter/ERR/bcelecfix.err");
     die "0 size file";
   } else {
-    system("rm /home/barrycarter/ERR/bcelecfix.err");
+    system("rm -f /home/barrycarter/ERR/bcelecfix.err");
   }
 
   my($dir) = strftime("$maindir/%Y%m%d",localtime($mtime));

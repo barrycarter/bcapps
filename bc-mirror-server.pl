@@ -9,8 +9,6 @@
 require "/usr/local/lib/bclib.pl";
 
 my($dir,$server) = @ARGV;
-warn "TESTING";
-$globopts{dryrun} = 1;
 
 unless ($dir=~m%^\/%) {die "dir must be full path, not $dir";}
 # strip trailing slashes
@@ -69,11 +67,3 @@ if ($res) {die "Command returned $res: $com";}
 unless ($globopts{dryrun}) {
   system("mv $mirfile $mirfile.old; mv $mirfile.new $mirfile");
 }
-
-
-
-
-
-
-
-
