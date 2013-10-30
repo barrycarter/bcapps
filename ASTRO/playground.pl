@@ -10,11 +10,11 @@ $Data::Dumper::Indent = 0;
 #$ENV{TZ}="UTC";
 
 # %hash = suninfo(-106-35/60,75+0*35.1, str2time("Nov 15"));
-%hash = sunmooninfo(-106-35/60,35.1,time()+12*3600);
+%hash = sunmooninfo(-106-35/60,35.1,time()-12*3600);
 
 for $i (keys %hash) {
   for $j (keys %{$hash{$i}}) {
-    print strftime("$i$j: %x %I:%M %p\n",localtime($hash{$i}{$j}));
+    print strftime("$i$j: %x %I:%M:%S %p\n",localtime($hash{$i}{$j}));
   }
 }
 

@@ -89,7 +89,7 @@ binary files where searching for a string is impratical)
 sub bc_check_url_sha1 {
   my($url, $sha1) = @_;
   # TODO: shorten this cache time
-  my($out,$err,$res) = cache_command2("curl $url","age=300");
+  my($out,$err,$res) = cache_command2("curl '$url'","age=300");
   # check for errors
   if ($res) {
     print "Error retrieving URL $url: $err\n";
