@@ -6,9 +6,14 @@ require "/usr/local/lib/bclib.pl";
 use Data::Dumper 'Dumper';
 $Data::Dumper::Indent = 0;
 
-debug(np_rise_set(0,80,time()));
+# TODO: move this back to bclib.pl once I get lib on prod machines
+use Astro::Nova qw(get_solar_equ_coords get_lunar_equ_coords get_hrz_from_equ
+		   get_solar_rst_horizon get_timet_from_julian
+		   get_julian_from_timet get_lunar_rst);
 
+# debug(np_rise_set(0,80,time(),"moon","rise",-1));
 
+debug(np_rise_set(-106.5,35.1,time(),"moon","rise",-1));
 
 =item np_rise_set($lon, $lat, $time=now, $obj="sun|moon", $which="rise|set", $dir="-1|1")
 
@@ -20,18 +25,25 @@ at $lon, $lat at time $time
 sub np_rise_set {
   my($lon, $lat, $time, $obj, $which, $dir) = @_;
   unless ($time) {$time = time();}
+  my($observer,$jd,$stat,$data);
+
+  # TODO: bad data can make this go into an infinite loop = bad!
 
   # for speed reasons, can not use sunmooninfo()
   # TODO: allow sunmooninfo to provide one or the other if desired
-  my($observer) = Astro::Nova::LnLatPosn->new("lng"=>$lon,"lat"=>$lat);
-  my($jd) = Astro::Nova::get_julian_from_timet($time);
-  my($stat, $data) = get_solar_rst_horizon($jd, $observer, -5/6.);
+  $observer = Astro::Nova::LnLatPosn->new("lng"=>$lon,"lat"=>$lat);
+  $jd = get_julian_from_timet($time);
+
+  if ($obj=~/sun/i) {
+    ($stat, $data) = get_solar_rst_horizon($jd, $observer, -5/6.);
+  } else {
+    ($stat, $data) = get_lunar_rst($jd, $observer);
+  }
 
   # insane values = no rise/set (beg/end unix time below)
-  while ($data->get_rise() < 2440587 || $data->get_rise() > 2465789) {
-    # TODO: can this be +1?
-    $jd+=.5;
-
+  while (eval("\$data->get_$which()")<2440587 || eval("\$data->get_$which()")>2465789) {
+    # TODO: can this be 1?
+    $jd = $jd + $dir/2.;
     ($stat, $data) = get_solar_rst_horizon($jd, $observer, -5/6.);
   }
 

@@ -15,8 +15,10 @@ use Statistics::Distributions qw(uprob udistr);
 use Math::Round;
 use Data::Dumper 'Dumper';
 use B;
-use Astro::Nova qw(get_solar_equ_coords get_lunar_equ_coords get_hrz_from_equ
-		   get_solar_rst_horizon get_timet_from_julian);
+# temporarily disabling to avoid errors on server sigh
+# use Astro::Nova qw(get_solar_equ_coords get_lunar_equ_coords get_hrz_from_equ
+#		   get_solar_rst_horizon get_timet_from_julian
+#		   get_julian_from_timet get_lunar_rst);
 require JSON;
 
 # include sublibs
@@ -24,8 +26,6 @@ push(@INC,"/home/barrycarter/BCGIT", "/usr/local/lib");
 
 # for X11 goodness (when starting Perl from nagios/cron or similar)
 $ENV{'DISPLAY'}=":0.0";
-
-
 
 # TODO: sort of bad to call this "abbrev" in global lib
 our(%ABBREV)=("BC" => lc("Patches"),
