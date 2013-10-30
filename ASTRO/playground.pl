@@ -6,13 +6,19 @@ require "/usr/local/lib/bclib.pl";
 use Data::Dumper 'Dumper';
 $Data::Dumper::Indent = 0;
 
-debug(sunrise_next(0,80,time()));
+debug(np_rise_set(0,80,time()));
 
 
 
-# TODO: extend!!!
-sub sunrise_next {
-  my($lon, $lat, $time) = @_;
+=item np_rise_set($lon, $lat, $time=now, $obj="sun|moon", $which="rise|set", $dir="-1|1")
+
+Gives the next/previous rise/set time of the sun/moon for an observer
+at $lon, $lat at time $time
+
+=cut
+
+sub np_rise_set {
+  my($lon, $lat, $time, $obj, $which, $dir) = @_;
   unless ($time) {$time = time();}
 
   # for speed reasons, can not use sunmooninfo()
@@ -21,14 +27,15 @@ sub sunrise_next {
   my($jd) = Astro::Nova::get_julian_from_timet($time);
   my($stat, $data) = get_solar_rst_horizon($jd, $observer, -5/6.);
 
-  # below includes case where get_rise < 0 meaning "no rise"
-  while ($stat!=0) {
+  # insane values = no rise/set (beg/end unix time below)
+  while ($data->get_rise() < 2440587 || $data->get_rise() > 2465789) {
     # TODO: can this be +1?
     $jd+=.5;
+
     ($stat, $data) = get_solar_rst_horizon($jd, $observer, -5/6.);
   }
 
-  debug(get_timet_from_julian($jd));
+  debug(get_timet_from_julian($data->get_rise()));
 }
 
 die "TESTING";
