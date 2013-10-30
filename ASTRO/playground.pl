@@ -6,30 +6,29 @@ require "/usr/local/lib/bclib.pl";
 use Data::Dumper 'Dumper';
 $Data::Dumper::Indent = 0;
 
-# libnova speed testing
+debug(sunrise_next(0,80,time()));
 
-# construct observer
-my($observer) = Astro::Nova::LnLatPosn->new("lng"=>-106,"lat"=>35);
-# jd2unix() would also do this
-my($jd) = Astro::Nova::get_julian_from_timet(time());
 
-for ($i=0; $i<200; $i++) {
-  ($stat,$rst{sun})=Astro::Nova::get_solar_rst_horizon($jd, $observer, -5/6.);
-#  $rst{sunpos} = get_solar_equ_coords($jd+86400*$i);
-#  $rst{sunaa} = get_hrz_from_equ($rst{sunpos}, $observer, $jd+86400*$i);
-  debug("PING");
-}
 
 # TODO: extend!!!
 sub sunrise_next {
-  my($lon, $lat, $time) = ();
+  my($lon, $lat, $time) = @_;
   unless ($time) {$time = time();}
 
+  # for speed reasons, can not use sunmooninfo()
+  # TODO: allow sunmooninfo to provide one or the other if desired
+  my($observer) = Astro::Nova::LnLatPosn->new("lng"=>$lon,"lat"=>$lat);
+  my($jd) = Astro::Nova::get_julian_from_timet($time);
+  my($stat, $data) = get_solar_rst_horizon($jd, $observer, -5/6.);
 
+  # below includes case where get_rise < 0 meaning "no rise"
+  while ($stat!=0) {
+    # TODO: can this be +1?
+    $jd+=.5;
+    ($stat, $data) = get_solar_rst_horizon($jd, $observer, -5/6.);
+  }
 
-
-
-
+  debug(get_timet_from_julian($jd));
 }
 
 die "TESTING";

@@ -15,7 +15,8 @@ use Statistics::Distributions qw(uprob udistr);
 use Math::Round;
 use Data::Dumper 'Dumper';
 use B;
-use Astro::Nova qw(get_solar_equ_coords get_lunar_equ_coords get_hrz_from_equ);
+use Astro::Nova qw(get_solar_equ_coords get_lunar_equ_coords get_hrz_from_equ
+		   get_solar_rst_horizon get_timet_from_julian);
 require JSON;
 
 # include sublibs
