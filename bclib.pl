@@ -4001,6 +4001,53 @@ sub sunmooninfo {
   return %info;
 }
 
+=item np_rise_set($lon, $lat, $time=now, $obj="sun|moon", $which="rise|set", $dir="-1|1")
+
+Gives the next/previous rise/set time of the sun/moon for an observer
+at $lon, $lat at time $time
+
+TODO: add various twilights
+
+=cut
+
+sub np_rise_set {
+  my($lon, $lat, $time, $obj, $which, $dir) = @_;
+  unless ($time) {$time = time();}
+  my($observer,$jd,$stat,$data,$eventtime,$tempfunc);
+
+  # for speed reasons, can not use sunmooninfo()
+  # TODO: allow sunmooninfo to provide one or the other if desired
+  $observer = Astro::Nova::LnLatPosn->new("lng"=>$lon,"lat"=>$lat);
+  $jd = get_julian_from_timet($time);
+
+  # the various twilights
+  if ($obj=~/astro/i) {
+    $tempfunc = sub {return get_solar_rst_horizon(@_,-18);}
+  } elsif ($obj=~/naut/i) {
+    $tempfunc = sub {return get_solar_rst_horizon(@_,-12);}
+  } elsif ($obj=~/civ/i) {
+    $tempfunc = sub {return get_solar_rst_horizon(@_,-6);}
+  } elsif ($obj=~/sun/i) {
+    $tempfunc = sub {return get_solar_rst_horizon(@_,-5/6);}
+  } elsif ($obj=~/moon/i) {
+    $tempfunc = sub {return get_lunar_rst(@_);}
+  } else {
+    warn "$obj not understood";
+    return;
+  }
+
+  # have to start 1 day in the wrong direction to avoid missing next set/etc
+  for (my($i)=$jd-$dir; $i<=2465789; $i+=$dir/2.) {
+    ($stat, $data) = &$tempfunc($i, $observer);
+    $eventtime = eval("\$data->get_$which()");
+    # eventtime must meet sorting criteria wo being insanely high/low
+    if ($dir==+1 && $eventtime>=$jd && $eventtime <= 2465789) {last;}
+    if ($dir==-1 && $eventtime<=$jd && $eventtime >= 2440587) {last;}
+  }
+
+  return get_timet_from_julian($eventtime);
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
   debug("END: CLEANING UP TMP FILES");

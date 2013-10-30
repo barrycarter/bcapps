@@ -6,78 +6,42 @@ require "/usr/local/lib/bclib.pl";
 use Data::Dumper 'Dumper';
 $Data::Dumper::Indent = 0;
 
-$foo = sub {return 5;};
-debug("FOO: $foo");
-
-
-
-
-
-
-
-die "TESTING";
-
 # debug(np_rise_set(0,80,time(),"moon","rise",-1));
 
 $lon = -106-39/60.;
-$lat = 35.1;
+$lat = 89.5;
+$time = time()+86400*15;
+
+# info I actually want
+
+my(%sunmooninfo) = sunmooninfo($lon,$lat,$time);
+
+for $i ("sun","moon","civ") {
+  if ($sunmooninfo{$i}{alt} > 0) {
+    # if sun/moon up give me previous rise + next set
+    my($lr) = np_rise_set($lon,$lat,$time,$i,"rise",-1);
+    my($ns) = np_rise_set($lon,$lat,$time,$i,"set",1);
+    print strftime("$i up\nRise: %c\n", localtime($lr));
+    print strftime("Set: %c\n\n", localtime($ns));
+  } else {
+    # otherwise, last set and next rise
+    my($ls) = np_rise_set($lon,$lat,$time,$i,"set",-1);
+    my($nr) = np_rise_set($lon,$lat,$time,$i,"rise",1);
+    print strftime("$i down\nSet: %c\n", localtime($ls));
+    print strftime("Rise: %c\n\n", localtime($nr));
+  }
+}
+
+debug(unfold(%sunmooninfo));
+
+die "TESTING";
 
 for $i (-1,1) {
   for $j ("moon", "sun", "civ", "naut", "astro") {
     for $k ("rise","set") {
-      print strftime("$j$k($i): %c\n",localtime(np_rise_set($lon,$lat,time(),$j,$k,$i)));
+      print strftime("$j$k ($i): %c\n",localtime(np_rise_set($lon,$lat,time(),$j,$k,$i)));
     }
   }
-}
-
-# debug(np_rise_set(-106.5,35.1,time(),"moon","rise",-1));
-
-=item np_rise_set($lon, $lat, $time=now, $obj="sun|moon", $which="rise|set", $dir="-1|1")
-
-Gives the next/previous rise/set time of the sun/moon for an observer
-at $lon, $lat at time $time
-
-TODO: add various twilights
-
-=cut
-
-sub np_rise_set {
-  my($lon, $lat, $time, $obj, $which, $dir) = @_;
-  unless ($time) {$time = time();}
-  my($observer,$jd,$stat,$data,$eventtime,$tempfunc);
-
-  # for speed reasons, can not use sunmooninfo()
-  # TODO: allow sunmooninfo to provide one or the other if desired
-  $observer = Astro::Nova::LnLatPosn->new("lng"=>$lon,"lat"=>$lat);
-  $jd = get_julian_from_timet($time);
-
-  # the various twilights
-  if ($obj=~/astro/i) {
-    $tempfunc = sub {return get_solar_rst_horizon(@_,-18);}
-  } elsif ($obj=~/naut/i) {
-    sub tempfunc {return get_solar_rst_horizon(@_,-12);}
-  } elsif ($obj=~/civ/i) {
-    sub tempfunc {return get_solar_rst_horizon(@_,-6);}
-  } elsif ($obj=~/sun/i) {
-    sub tempfunc {return get_solar_rst_horizon(@_,-5/6);}
-  } elsif ($obj=~/moon/i) {
-    sub tempfunc {return get_lunar_rst(@_);}
-  } else {
-    warn "$obj not understood";
-    return;
-  }
-
-  for (my($i)=$jd; $i<=2465789; $i+=$dir/2.) {
-    debug("I: $i, $observer->as_ascii()");
-    ($stat, $data) = &($tempfunc)($i, $observer);
-    $eventtime = eval("\$data->get_$which()");
-    # eventtime must meet sorting criteria wo being insanely high/low
-    if ($dir==+1 && $eventtime>=$jd && $eventtime <= 2465789) {last;}
-    if ($dir==-1 && $eventtime<=$jd && $eventtime >= 2440587) {last;}
-    debug("ET: $eventtime");
-  }
-
-  return get_timet_from_julian($eventtime);
 }
 
 die "TESTING";
