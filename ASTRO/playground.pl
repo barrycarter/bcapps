@@ -3,52 +3,71 @@
 # libnova playing
 
 require "/usr/local/lib/bclib.pl";
-use Astro::Nova;
 use Data::Dumper 'Dumper';
 $Data::Dumper::Indent = 0;
+
+# libnova speed testing
+
+# construct observer
+my($observer) = Astro::Nova::LnLatPosn->new("lng"=>-106,"lat"=>35);
+# jd2unix() would also do this
+my($jd) = Astro::Nova::get_julian_from_timet(time());
+
+for ($i=0; $i<200; $i++) {
+  ($stat,$rst{sun})=Astro::Nova::get_solar_rst_horizon($jd, $observer, -5/6.);
+#  $rst{sunpos} = get_solar_equ_coords($jd+86400*$i);
+#  $rst{sunaa} = get_hrz_from_equ($rst{sunpos}, $observer, $jd+86400*$i);
+  debug("PING");
+}
+
+# TODO: extend!!!
+sub sunrise_next {
+  my($lon, $lat, $time) = ();
+  unless ($time) {$time = time();}
+
+
+
+
+
+
+}
+
+die "TESTING";
 
 #$ENV{TZ}="UTC";
 
 # %hash = suninfo(-106-35/60,75+0*35.1, str2time("Nov 15"));
-%hash = sunmooninfo(-106-35/60,35.1,time()-12*3600);
+# %hash = sunmooninfo(-106-35/60,35.1,time()-12*3600);
+
+# high latitude sun/moon info
+%hash = testing(0,80,time());
 
 for $i (keys %hash) {
   for $j (keys %{$hash{$i}}) {
-    print strftime("$i$j: %x %I:%M:%S %p\n",localtime($hash{$i}{$j}));
+    print strftime("$i$j ($hash{$i}{$j}): %x %I:%M:%S %p\n",localtime($hash{$i}{$j}));
   }
 }
 
-=item sunmooninfo($lon,$lat,$time=now)
+# if sun is up, previous rise and next set; if down, previous set and next rise (wrapper around sunmooninfo)
 
-Return hash of info about the sun/moon at $lon, $lat at time $time
+sub testing {
+  my($lon, $lat, $time) = @_;
 
-=cut
+  my(%info) = sunmooninfo($lon,$lat,$time);
+  # variable for loop
+  my($timel) = $time;
 
-sub sunmooninfo {
-  my($lon,$lat,$time) = @_;
-  my(%info); # return hash
-  unless ($time) {$time=time();}
-
-  # construct observer
-  my($observer) = Astro::Nova::LnLatPosn->new("lng"=>$lon,"lat"=>$lat);
-  # jd2unix() would also do this
-  my($jd) = Astro::Nova::get_julian_from_timet($time);
-
-  my(%rst);
-  ($stat,$rst{sun})=Astro::Nova::get_solar_rst_horizon($jd, $observer, -5/6.);
-  ($stat,$rst{moon})=Astro::Nova::get_lunar_rst($jd, $observer);
-
-  for $i ("rise", "set", "transit") {
-    for $j ("sun", "moon") {
-      # hideous coding, hideous use of eval
-      $info{$j}{$i}=eval("Astro::Nova::get_timet_from_julian(\$rst{$j}->get_$i())");
+  # if sun is down, seek to next rise (which may already be in %info)
+  if ($info{sun}{alt} < 0) {
+    # negative results = no sun rise
+    while ($info{sun}{rise} < 0 || $info{sun}{rise} < $time) {
+      $timel += 12*3600; # TODO: could I get away with 24 here?
+      debug("TIMEL: $timel");
+      %info = sunmooninfo($lon,$lat,$timel);
     }
   }
 
-  my($stat,$rst) = Astro::Nova::get_solar_rst_horizon($jd, $observer, -6.);
-  $info{sun}{dawn} = Astro::Nova::get_timet_from_julian($rst->get_rise());
-  $info{sun}{dusk} = Astro::Nova::get_timet_from_julian($rst->get_set());
-  return %info;
+  debug(unfold(%info));
 }
 
 die "TESTING";

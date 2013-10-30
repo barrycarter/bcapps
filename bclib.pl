@@ -15,6 +15,7 @@ use Statistics::Distributions qw(uprob udistr);
 use Math::Round;
 use Data::Dumper 'Dumper';
 use B;
+use Astro::Nova qw(get_solar_equ_coords get_lunar_equ_coords get_hrz_from_equ);
 require JSON;
 
 # include sublibs
@@ -3944,6 +3945,60 @@ sub xmessage {
     my($aa)=read_file("$tempfile.err");
     die("Got back non-zero $ret or non-empty STDERR ($aa) from xmessage");
   }
+}
+
+=item sunmooninfo($lon,$lat,$time=now)
+
+Return hash of info about the sun/moon at $lon, $lat at time $time
+
+=cut
+
+sub sunmooninfo {
+  my($lon,$lat,$time) = @_;
+  my(%info); # return hash
+  unless ($time) {$time=time();}
+
+  # construct observer
+  my($observer) = Astro::Nova::LnLatPosn->new("lng"=>$lon,"lat"=>$lat);
+  # jd2unix() would also do this
+  my($jd) = Astro::Nova::get_julian_from_timet($time);
+
+  # to hold results
+  my(%rst);
+
+  # independent of $observer (next 2 lines)
+  $rst{sunpos} = get_solar_equ_coords($jd);
+  $rst{moonpos} = get_lunar_equ_coords($jd);
+  $rst{sunaa} = get_hrz_from_equ($rst{sunpos}, $observer, $jd);
+  $rst{moonaa} = get_hrz_from_equ($rst{moonpos}, $observer, $jd);
+
+  for $i ("ra", "dec") {
+    for $j ("sun", "moon") {
+      $info{$j}{$i} = eval("\$rst{${j}pos}->get_$i()");
+    }
+  }
+
+  # and the altaz
+  for $i ("alt", "az") {
+    for $j ("sun", "moon") {
+      $info{$j}{$i} = eval("\$rst{${j}aa}->get_$i()");
+    }
+  }
+
+  ($stat,$rst{sun})=Astro::Nova::get_solar_rst_horizon($jd, $observer, -5/6.);
+  ($stat,$rst{moon})=Astro::Nova::get_lunar_rst($jd, $observer);
+
+  for $i ("rise", "set", "transit") {
+    for $j ("sun", "moon") {
+      # hideous coding, hideous use of eval
+      $info{$j}{$i}=eval("Astro::Nova::get_timet_from_julian(\$rst{$j}->get_$i())");
+    }
+  }
+
+  my($stat,$rst) = Astro::Nova::get_solar_rst_horizon($jd, $observer, -6.);
+  $info{sun}{dawn} = Astro::Nova::get_timet_from_julian($rst->get_rise());
+  $info{sun}{dusk} = Astro::Nova::get_timet_from_julian($rst->get_set());
+  return %info;
 }
 
 # cleanup files created by my_tmpfile (unless --keeptemp set)
