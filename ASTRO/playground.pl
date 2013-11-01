@@ -8,7 +8,7 @@ $Data::Dumper::Indent = 0;
 
 # debug(np_rise_set(0,80,time(),"moon","rise",-1));
 
-$lon = -106-39/60.;
+$lon = 0.;
 $lat = 89.5;
 $time = time()+86400*15;
 
