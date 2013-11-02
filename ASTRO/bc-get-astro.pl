@@ -6,28 +6,30 @@
 # again when needed; unlike bc-get-weather.pl, uses Astro::Nova and
 # does better job with moon rise/set
 
+# --latitude: use this latitude (default: Albuquerque)
+# --longitude: use this longitude (default: Albuquerque)
+
 require "/usr/local/lib/bclib.pl";
-
-# my approximate latitude/longitude (if you type this into google
-# maps, you get an address; to emphasize, I do NOT live at that
-# address!)
-
-# TODO: let this be an option to the program?
-my($lng,$lat) = (-106.55, 35.1);
 
 # determine next minute
 my($nm) = 60*floor(time()/60)+60;
 
-%sm = sunmooninfo($lng,$lat,$nm);
+# lat/long
+defaults("longitude=-106.651138463684&latitude=35.0844869067959");
+my($lng, $lat) = ($globopts{longitude}, $globopts{latitude});
 
-# if the sun is above -6 degrees, we want start/end of "current"
-# twilight; otherwise, start/end of next twilight; same for naut/astro
+# current info (for next minute)
+%sm = sunmooninfo($lng,$lat,$nm);
 
 # TODO: this is inefficient, because I build the observer object
 # multiple times
 
-# altitudes for twilights
+# altitudes for twilights (-5/6 for parallax/refraction)
 %alts = ("astronomical"=>-18,"nautical"=>-12,"civil"=>-6,"sun"=>-5/6);
+
+# determine if we're in various twilights and whether sun is up;
+# if we are in a twilight (including sun up), give start/end time;
+# otherwise, give next day start/end time
 
 # order is important below to set $cur correctly
 for $i (sort {$alts{$a} <=> $alts{$b}} keys %alts) {
@@ -38,7 +40,7 @@ for $i (sort {$alts{$a} <=> $alts{$b}} keys %alts) {
     $cur = $i;
   } else {
     # not in this state? give next rise/set
-    push(@times, np_rise_set($lng, $lat, $nm, $i, "rise", -1));
+    push(@times, np_rise_set($lng, $lat, $nm, $i, "rise", 1));
   }
 
   # always give next "set"
@@ -58,9 +60,14 @@ if ($sm{moon}{alt} >= 0.125) {
 # always give next set
 push(@times, np_rise_set($lng, $lat, $nm, "moon", "set", +1));
 
+debug("BEFORE",@times);
+# round to nearest minute (so I know when to next call myself)
+map($_=floor(($_+30)/60)*60, @times);
+debug("AFTER",@times);
+
 # TODO: really cleanup section where I print stuff, ugly coding right now
 
-# what to print?
+# what to print in terms of sun/twilight
 if ($cur eq "sun") {
   $str = "DAYTIME";
 } elsif ($cur eq "") {
@@ -69,24 +76,39 @@ if ($cur eq "sun") {
   $str = uc($cur)." TWILIGHT";
 }
 
+# moon up or down?
 if ($moonup) {$str2 = "MOON UP";} else {$str2 = "MOON DOWN";}
 
 # solar elevation in degrees/minutes
-$el = sprintf("%d\xB0%0.2d'", floor($sm{sun}{alt}), $sm{sun}{alt}*60%60);
+$el = sprintf("%+d\xB0%0.2d'", floor($sm{sun}{alt}), $sm{sun}{alt}*60%60);
 
+# before converting times, figure out when to next call myself
+# (actually call a minute earlier)
+for $i (sort @times) {
+  debug("I: $i");
+  # ignore times before now
+  if ($i <= $nm) {next;}
+  # and take first time after that (round to previous minute)
+  $nt = $i;
+  last;
+}
 
-print "EL: $el\n";
-print "$str ($str2)\n";
+debug("GOT: $nt");
+
+# +30 for rounding, convert times to military time
+map($_=strftime("%H%M",localtime($_+30)), @times);
+
+print "$str ($el)\n";
+# sun rise + various twilights
+print "S:$times[6]-$times[7] ($times[4]-$times[5]/$times[2]-$times[3]/$times[0]-$times[1])\n";
+print "M:$times[8]-$times[9] ($str2)\n";
+# print "$str ($str2)\n";
+
 
 
 debug("$moonup/",@moon);
 debug("CUR: $cur");
 
-for $i (@times) {
-  # +30 for rounding
-  debug(strftime("%H:%M", localtime($i+30)));
-}
-
-debug(unfold(%sm));
-
+# when must I next be called (subtract one minute from that to be called early)
+debug($i);
 
