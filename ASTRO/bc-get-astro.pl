@@ -60,10 +60,24 @@ if ($sm{moon}{alt} >= 0.125) {
 # always give next set
 push(@times, np_rise_set($lng, $lat, $nm, "moon", "set", +1));
 
-debug("BEFORE",@times);
 # round to nearest minute (so I know when to next call myself)
 map($_=floor(($_+30)/60)*60, @times);
-debug("AFTER",@times);
+
+# before converting times, figure out when to next call myself
+# TODO: should this be grep and min?
+for $i (sort @times) {
+  # ignore times before now
+  if ($i <= $nm) {next;}
+  # and take first time after that (round to previous minute)
+  $nt = $i;
+  last;
+}
+
+# at job for my next call (need time in at's -t format)
+$attime = strftime("%Y%m%d%H%M", localtime($nt));
+open(A,"|at -t $attime");
+print A $0;
+close(A);
 
 # TODO: really cleanup section where I print stuff, ugly coding right now
 
@@ -81,19 +95,6 @@ if ($moonup) {$str2 = "MOON UP";} else {$str2 = "MOON DOWN";}
 
 # solar elevation in degrees/minutes
 $el = sprintf("%+d\xB0%0.2d'", floor($sm{sun}{alt}), $sm{sun}{alt}*60%60);
-
-# before converting times, figure out when to next call myself
-# (actually call a minute earlier)
-for $i (sort @times) {
-  debug("I: $i");
-  # ignore times before now
-  if ($i <= $nm) {next;}
-  # and take first time after that (round to previous minute)
-  $nt = $i;
-  last;
-}
-
-debug("GOT: $nt");
 
 # +30 for rounding, convert times to military time
 map($_=strftime("%H%M",localtime($_+30)), @times);
