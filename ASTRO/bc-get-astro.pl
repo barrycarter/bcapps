@@ -27,35 +27,57 @@ my($nm) = 60*floor(time()/60)+60;
 # multiple times
 
 # altitudes for twilights
-%alts = ("astro" => -18, "naut" => -12, "civ" => -6, "sun" => -5/6);
+%alts = ("astronomical"=>-18,"nautical"=>-12,"civil"=>-6,"sun"=>-5/6);
 
-for $i ("astro", "naut", "civ", "sun") {
+# order is important below to set $cur correctly
+for $i (sort {$alts{$a} <=> $alts{$b}} keys %alts) {
   if ($sm{sun}{alt} >= $alts{$i}) {
-    # if we are in this/higher state, give previous "rise", next "set"
+    # if we are in this/higher state, give previous "rise"
     push(@times, np_rise_set($lng, $lat, $nm, $i, "rise", -1));
-    push(@times, np_rise_set($lng, $lat, $nm, $i, "set", +1));
     # $cur will be highest state we've reached, empty for night
     $cur = $i;
   } else {
     # not in this state? give next rise/set
     push(@times, np_rise_set($lng, $lat, $nm, $i, "rise", -1));
-    # TODO: un-redundant line below
-    push(@times, np_rise_set($lng, $lat, $nm, $i, "set", +1));
   }
+
+  # always give next "set"
+  push(@times, np_rise_set($lng, $lat, $nm, $i, "set", +1));
 }
 
-# and moon
+# and moon (0.125 due to parallax + refraction)
 if ($sm{moon}{alt} >= 0.125) {
   # moon is up, give previous rise (always give next set)
-  push(@moon, np_rise_set($lng, $lat, $nm, "moon", "rise", -1));
+  push(@times, np_rise_set($lng, $lat, $nm, "moon", "rise", -1));
   $moonup = 1;
 } else {
   # give next rise
-  push(@moon, np_rise_set($lng, $lat, $nm, "moon", "rise", +1));
+  push(@times, np_rise_set($lng, $lat, $nm, "moon", "rise", +1));
 }
 
 # always give next set
-push(@moon, np_rise_set($lng, $lat, $nm, "moon", "set", +1));
+push(@times, np_rise_set($lng, $lat, $nm, "moon", "set", +1));
+
+# TODO: really cleanup section where I print stuff, ugly coding right now
+
+# what to print?
+if ($cur eq "sun") {
+  $str = "DAYTIME";
+} elsif ($cur eq "") {
+  $str = "NIGHT";
+} else {
+  $str = uc($cur)." TWILIGHT";
+}
+
+if ($moonup) {$str2 = "MOON UP";} else {$str2 = "MOON DOWN";}
+
+# solar elevation in degrees/minutes
+$el = sprintf("%d\xB0%0.2d'", floor($sm{sun}{alt}), $sm{sun}{alt}*60%60);
+
+
+print "EL: $el\n";
+print "$str ($str2)\n";
+
 
 debug("$moonup/",@moon);
 debug("CUR: $cur");
