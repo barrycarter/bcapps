@@ -6,6 +6,26 @@ require "/usr/local/lib/bclib.pl";
 use Data::Dumper 'Dumper';
 $Data::Dumper::Indent = 0;
 
+# linear regress date of new/etc moons ("good enough" for lunar phase calc?)
+
+@y = split(/\n/, read_file("/tmp/phases.txt"));
+@x = (0..$#y);
+
+debug(linear_regression(\@x,\@y));
+
+# 7.3823125330 between phases or 637831.802853671s, lc 1388570812.87346
+# full moons only: 1389850790.98776 2551297.36530609
+
+for $i (@y) {
+#  my($guess) = 1388570812.87346+$n*637831.802853671;
+  my($guess) = 1389850790.98776+$n*2551297.36530609;
+  print $i-$guess;
+  $n++;
+  print "\n";
+}
+
+die "TESTING";
+
 # debug(np_rise_set(0,80,time(),"moon","rise",-1));
 
 $lon = 0.;
