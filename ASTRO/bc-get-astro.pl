@@ -74,10 +74,10 @@ for $i (sort @times) {
 }
 
 # at job for my next call (need time in at's -t format)
-$attime = strftime("%Y%m%d%H%M", localtime($nt));
-open(A,"|at -t $attime");
-print A $0;
-close(A);
+# $attime = strftime("%Y%m%d%H%M", localtime($nt));
+# open(A,"|at -t $attime");
+# print A $0;
+# close(A);
 
 # TODO: really cleanup section where I print stuff, ugly coding right now
 
@@ -94,12 +94,13 @@ if ($cur eq "sun") {
 if ($moonup) {$str2 = "MOON UP";} else {$str2 = "MOON DOWN";}
 
 # solar elevation in degrees/minutes
-$el = sprintf("%+d\xB0%0.2d'", floor($sm{sun}{alt}), $sm{sun}{alt}*60%60);
+# TODO: THIS IS WRONG!!!! for negative values
+$el = sprintf("%+d\xB0%0.2d != %0.4f'", floor($sm{sun}{alt}), $sm{sun}{alt}*60%60, $sm{sun}{alt});
 
 # +30 for rounding, convert times to military time
-map($_=strftime("%H%M",localtime($_+30)), @times);
+map($_=strftime("%d:%H%M",localtime($_+30)), @times);
 
-print "$str ($el)\n";
+print "$str ($el [THIS IS WRONG])\n";
 # sun rise + various twilights
 print "S:$times[6]-$times[7] ($times[4]-$times[5]/$times[2]-$times[3]/$times[0]-$times[1])\n";
 print "M:$times[8]-$times[9] ($str2)\n";
