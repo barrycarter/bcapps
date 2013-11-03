@@ -8,11 +8,13 @@
 
 # --latitude: use this latitude (default: Albuquerque)
 # --longitude: use this longitude (default: Albuquerque)
+# --time: use this time (in Unix seconds) (default: current time)
 
 require "/usr/local/lib/bclib.pl";
 
 # determine next minute
-my($nm) = 60*floor(time()/60)+60;
+$time = $globopts{time} || time();
+my($nm) = 60*floor($time/60)+60;
 
 # lat/long
 defaults("longitude=-106.651138463684&latitude=35.0844869067959");
@@ -21,15 +23,15 @@ my($lng, $lat) = ($globopts{longitude}, $globopts{latitude});
 # current info (for next minute)
 %sm = sunmooninfo($lng,$lat,$nm);
 
-# TODO: this is inefficient, because I build the observer object
-# multiple times
-
 # altitudes for twilights (-5/6 for parallax/refraction)
 %alts = ("astronomical"=>-18,"nautical"=>-12,"civil"=>-6,"sun"=>-5/6);
 
 # determine if we're in various twilights and whether sun is up;
 # if we are in a twilight (including sun up), give start/end time;
 # otherwise, give next day start/end time
+
+# TODO: this is inefficient, because I build the observer object
+# multiple times
 
 # order is important below to set $cur correctly
 for $i (sort {$alts{$a} <=> $alts{$b}} keys %alts) {
@@ -61,17 +63,17 @@ if ($sm{moon}{alt} >= 0.125) {
 push(@times, np_rise_set($lng, $lat, $nm, "moon", "set", +1));
 
 # round to nearest minute (so I know when to next call myself)
-map($_=floor(($_+30)/60)*60, @times);
+# map($_=floor(($_+30)/60)*60, @times);
 
 # before converting times, figure out when to next call myself
 # TODO: should this be grep and min?
-for $i (sort @times) {
+# for $i (sort @times) {
   # ignore times before now
-  if ($i <= $nm) {next;}
+#  if ($i <= $nm) {next;}
   # and take first time after that (round to previous minute)
-  $nt = $i;
-  last;
-}
+#  $nt = $i;
+#  last;
+# }
 
 # at job for my next call (need time in at's -t format)
 # $attime = strftime("%Y%m%d%H%M", localtime($nt));
@@ -95,12 +97,12 @@ if ($moonup) {$str2 = "MOON UP";} else {$str2 = "MOON DOWN";}
 
 # solar elevation in degrees/minutes
 # TODO: THIS IS WRONG!!!! for negative values
-$el = sprintf("%+d\xB0%0.2d != %0.4f'", floor($sm{sun}{alt}), $sm{sun}{alt}*60%60, $sm{sun}{alt});
+$el = sprintf("(%s%d\xB0%0.2d'%0.2d'') (%0.4f)", dec2deg($sm{sun}{alt}), $sm{sun}{alt});
 
 # +30 for rounding, convert times to military time
-map($_=strftime("%d:%H%M",localtime($_+30)), @times);
+map($_=strftime("%H%M",localtime($_+30)), @times);
 
-print "$str ($el [THIS IS WRONG])\n";
+print "$str $el\n";
 # sun rise + various twilights
 print "S:$times[6]-$times[7] ($times[4]-$times[5]/$times[2]-$times[3]/$times[0]-$times[1])\n";
 print "M:$times[8]-$times[9] ($str2)\n";

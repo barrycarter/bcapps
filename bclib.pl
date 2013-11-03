@@ -4048,6 +4048,21 @@ sub np_rise_set {
   return get_timet_from_julian($eventtime);
 }
 
+=item dec2deg($deg)
+
+Convert $deg to sign (+ or -), degrees, minutes, seconds (return list
+of 4 items), such that degrees/minutes/seconds are all positive
+
+TODO: if ignoring seconds on return, minutes are rounded incorrectly
+
+=cut
+
+sub dec2deg {
+  my($deg) = @_;
+  return $deg>=0?"+":"-", floor(abs($deg)), floor(abs($deg)*60)%60,
+    round(abs($deg)*3600)%60;
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
   debug("END: CLEANING UP TMP FILES");
