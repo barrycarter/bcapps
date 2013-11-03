@@ -15,10 +15,28 @@ require "/usr/local/lib/bclib.pl";
 # determine next minute
 $time = $globopts{time} || time();
 my($nm) = 60*floor($time/60)+60;
+# in military time
+$now = strftime("%H%M", localtime($nm));
 
 # lat/long
 defaults("longitude=-106.651138463684&latitude=35.0844869067959");
 my($lng, $lat) = ($globopts{longitude}, $globopts{latitude});
+
+# lunar phase experiments below
+# my($observer) = Astro::Nova::LnLatPosn->new("lng"=>$lon,"lat"=>$lat);
+my($jd) = get_julian_from_timet($time);
+
+for $i (0..30) {
+  my($foo) = $jd+$i-64/1440;
+  $foo  = $jd + 13.5 + 13/30 + 2*$i/900;
+  print join("\t", $i, Astro::Nova::get_lunar_bright_limb($foo),
+	     Astro::Nova::get_lunar_phase($foo)),"\n";
+}
+
+die "TRESTING";
+
+
+
 
 # current info (for next minute)
 %sm = sunmooninfo($lng,$lat,$nm);
@@ -62,25 +80,6 @@ if ($sm{moon}{alt} >= 0.125) {
 # always give next set
 push(@times, np_rise_set($lng, $lat, $nm, "moon", "set", +1));
 
-# round to nearest minute (so I know when to next call myself)
-# map($_=floor(($_+30)/60)*60, @times);
-
-# before converting times, figure out when to next call myself
-# TODO: should this be grep and min?
-# for $i (sort @times) {
-  # ignore times before now
-#  if ($i <= $nm) {next;}
-  # and take first time after that (round to previous minute)
-#  $nt = $i;
-#  last;
-# }
-
-# at job for my next call (need time in at's -t format)
-# $attime = strftime("%Y%m%d%H%M", localtime($nt));
-# open(A,"|at -t $attime");
-# print A $0;
-# close(A);
-
 # TODO: really cleanup section where I print stuff, ugly coding right now
 
 # what to print in terms of sun/twilight
@@ -96,23 +95,12 @@ if ($cur eq "sun") {
 if ($moonup) {$str2 = "MOON UP";} else {$str2 = "MOON DOWN";}
 
 # solar elevation in degrees/minutes
-# TODO: THIS IS WRONG!!!! for negative values
 $el = sprintf("(%s%d\xB0%0.2d'%0.2d'') (%0.4f)", dec2deg($sm{sun}{alt}), $sm{sun}{alt});
 
 # +30 for rounding, convert times to military time
 map($_=strftime("%H%M",localtime($_+30)), @times);
 
-print "$str $el\n";
+print "$str $el ($now)\n";
 # sun rise + various twilights
 print "S:$times[6]-$times[7] ($times[4]-$times[5]/$times[2]-$times[3]/$times[0]-$times[1])\n";
 print "M:$times[8]-$times[9] ($str2)\n";
-# print "$str ($str2)\n";
-
-
-
-debug("$moonup/",@moon);
-debug("CUR: $cur");
-
-# when must I next be called (subtract one minute from that to be called early)
-debug($i);
-
