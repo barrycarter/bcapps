@@ -26,6 +26,15 @@ my($lng, $lat) = ($globopts{longitude}, $globopts{latitude});
 # my($observer) = Astro::Nova::LnLatPosn->new("lng"=>$lon,"lat"=>$lat);
 my($jd) = get_julian_from_timet($nm);
 
+# this is really ugly, though I've seen others use it to
+my($p1) = Astro::Nova::get_lunar_phase($jd-0.00001);
+my($p2) = Astro::Nova::get_lunar_phase($jd);
+
+# decrease = waxing, increase = waning
+$phase = ("new", "crescent", "quarter", "gibbous", "full")[(180-$p2)/36];
+# these are fly codes for up and down arrow
+if ($p2>$p1) {$direc = "\xb7"} else {$direc = "\x5e"}
+
 # for $i (0..30) {
 #  my($foo) = $jd+$i-64/1440;
 #  $foo  = $jd + 13.5 + 13/30 + 2*$i/900;
@@ -95,10 +104,13 @@ $el = sprintf("(%s%d\xB0%0.2d'%0.2d'') (%0.4f)", dec2deg($sm{sun}{alt}), $sm{sun
 # +30 for rounding, convert times to military time
 map($_=strftime("%H%M",localtime($_+30)), @times);
 
+# mostly testing
+my($moondeg) = sprintf("%s%d\xB0%0.2d'%0.2d''", dec2deg(180-$p2));
+
 $writestr = << "MARK";
 $str $el ($now)
 S:$times[6]-$times[7] ($times[4]-$times[5]/$times[2]-$times[3]/$times[0]-$times[1])
-M:$times[8]-$times[9] ($str2)
+M:$times[8]-$times[9] ($str2) ($direc$phase) ($moondeg)
 MARK
 ;
 

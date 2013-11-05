@@ -12,19 +12,35 @@ $maindir = "/mnt/sshfs/ELEC2013-VLC";
 # if this directory doesn't exist, die
 unless (-d $maindir) {die "$maindir DOES NOT EXIST";}
 
+# start/shutdown VLC/elecstart based on time of day
+my($out,$err,$res) = cache_command2("pgrep vlc");
+if ($out) {$vlc=1;}
+($out,$err,$res) = cache_command2("pgrep somagic-capture");
+if ($out) {$som=1;}
+my(%sm) = sunmooninfo();
+
+# if sun is down, terminate vlc and somagic-capture if both running
+if ($sm{sun}{alt}<=0 && $vlc && $som) {
+  # NOTE: this will kill any VLC I'm watching once, but I'm OK with that
+  system("sudo pkill -9 vlc somagic-capture");
+}
+
+# if sun is up, start vlc/somagic-capture if needed
+if ($sm{sun}{alt}>0 && (!$vlc || !$som)) {
+  # this is the elecstart alias
+  system("sudo pkill -9 vlc; sudo pkill -9 somagic-capture; sudo /bin/nice -n 19 somagic-capture | /bin/nice -n 19 vlc --demux rawvideo --rawvid-fps 15 --rawvid-width 720 --rawvid-height 576 --rawvid-chroma=UYVY file:///dev/stdin &");
+}
+
 for $i (glob("$maindir/elec*.png")) {
   my($dev,$ino,$mode,$nlink,$uid,$gid,$rdev,$size,$atime,$mtime,$ctime,$blksize,$blocks)=stat($i);
-  # if size is 0, something is wrong
-  if ($size==0) {
-    write_file_new("$i: size 0", "/home/barrycarter/ERR/bcelecfix.err");
-    die "0 size file";
-  } else {
-    system("rm -f /home/barrycarter/ERR/bcelecfix.err");
-  }
-
+  # if size is 0, something is wrong (but keep processing other files)
+  if ($size==0) {$erf=1; next;}
   my($dir) = strftime("$maindir/%Y%m%d",localtime($mtime));
   unless (-d $dir) {system("mkdir $dir");}
   my($file) = strftime("elec%Y%m%d.%H%M%S.png",localtime($mtime));
   system("mv $i $dir/$file");
 }
 
+# report error
+if ($erf) {$str="0 byte file in $maindir";}
+write_file_new($str, "/home/barrycarter/ERR/bcelecfix.err");

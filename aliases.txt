@@ -72,7 +72,8 @@ alias wwf "bzfgrep -ix \!* /home/barrycarter/BCGIT/WWF/wwf.txt.bz2"
 # take screenshots every minute
 # it took quite a bit of work to get the nice's below working properly
 # pkill -9 added since the somagic-capture process sometimes lingers
-alias elecstart "sudo pkill -9 somagic-capture; sudo /bin/nice -n 19 somagic-capture | /bin/nice -n 19 vlc --demux rawvideo --rawvid-fps 15 --rawvid-width 720 --rawvid-height 576 --rawvid-chroma=UYVY file:///dev/stdin &"
+# (and so can the vlc process sometimes)
+alias elecstart "sudo pkill -9 vlc; sudo pkill -9 somagic-capture; sudo /bin/nice -n 19 somagic-capture | /bin/nice -n 19 vlc --demux rawvideo --rawvid-fps 15 --rawvid-width 720 --rawvid-height 576 --rawvid-chroma=UYVY file:///dev/stdin &"
 
 # recollq output tends to scroll by
 alias recollq "recollq \!* | tee /var/tmp/bc-cmd-recollq.txt"
