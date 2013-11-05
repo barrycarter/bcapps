@@ -26,18 +26,19 @@ $now = strftime("%H%M%S", localtime($nm));
 # current info (for next minute)
 %sm = sunmooninfo($lng,$lat,$nm);
 
-debug("SM", unfold(%sm));
-
-# this is really ugly, though I've seen others use it to
-my($jd) = get_julian_from_timet($nm);
-my($p1) = Astro::Nova::get_lunar_phase($jd-0.00001);
-my($p2) = Astro::Nova::get_lunar_phase($jd);
-# decrease = waxing, increase = waning
-$phase = ("new", "crescent", "quarter", "gibbous", "full")[(180-$p2)/36];
+# determine moon phase from return info
+$phase = ("new", "crescent", "quarter", "gibbous", "full")[$sm{moon}{phase}/36];
 # these are fly codes for up and down arrow
-if ($p2>$p1) {$direc = "\xb7"} else {$direc = "\x5e"}
+if ($sm{moon}{dir}>0) {$mdir="\x5e"} else {$mdir="\xb7";}
 
-
+# determine closest lunar image for urc.gif (upper right hand corner)
+# if moon is waning, use 360-phase
+my($mimage) = $sm{moon}{phase};
+if ($sm{moon}{dir}<0) {$mimage = 360-$mimage;}
+# round to nearest even degree and fill to three places
+$file = sprintf("/home/barrycarter/BCGIT/images/MOON/m%0.3d.gif",round($mimage/2)*2);
+# copying each time here seems really really inefficient
+system("cp -f $file /home/barrycarter/ERR/urc.gif");
 
 # altitudes for twilights (-5/6 for parallax/refraction)
 %alts = ("astronomical"=>-18,"nautical"=>-12,"civil"=>-6,"sun"=>-5/6);
@@ -99,12 +100,12 @@ $el = sprintf("(%s%d\xB0%0.2d'%0.2d'') (%0.4f)", dec2deg($sm{sun}{alt}), $sm{sun
 map($_=strftime("%H%M",localtime($_+30)), @times);
 
 # mostly testing
-my($moondeg) = sprintf("%s%d\xB0%0.2d'%0.2d''", dec2deg(180-$p2));
+my($moondeg) = sprintf("%s%d\xB0%0.2d'%0.2d''", dec2deg($sm{moon}{phase}));
 
 $writestr = << "MARK";
 $str $el ($now)
 S:$times[6]-$times[7] ($times[4]-$times[5]/$times[2]-$times[3]/$times[0]-$times[1])
-M:$times[8]-$times[9] ($str2) ($direc$phase) ($moondeg)
+M:$times[8]-$times[9] ($str2) ($mdir$phase) ($moondeg)
 MARK
 ;
 
