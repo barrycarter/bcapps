@@ -69,9 +69,6 @@ $time=~s/^last updated on //isg;
 $time=~s/\s*[A-Z]+$//;
 $time=~s/^(.*?),\s*(.*?)$/$2, $1/;
 
-# get sunrise/set twilight from abqastro.db
-%sun = sunriseset();
-
 # wind and pressure (dir spdGgust (press))
 # treat no gust special
 unless ($json->{current_observation}->{wind_gust_mph}) {
@@ -111,12 +108,9 @@ $moonphase.=" (${mage}d;$pphase)";
 # how many days of forecast to print?
 $forecast = join("\n",@forecast[0..6]);
 
-$mrs = moonriseset();
-
 # print in order I want (even if I change mind later)
+# some astro functions absorbed by bc-get-astro.pl
 $str = << "MARK";
-S:$sun{SR}-$sun{SS} ($sun{CTS}-$sun{CTE})
-M:$mrs
 $moonphase
 \@$time
 $current

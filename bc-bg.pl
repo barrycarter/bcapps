@@ -27,35 +27,11 @@ push(@info,"______________________");
 $uptime = read_file("/proc/uptime");
 $uptime=~s/ .*$//;
 $uptime = convert_time($uptime, "%dd%Hh%Mm");
-debug("UPTIME: $uptime");
 
 # TODO: add locking so program doesn't run twice
 # TODO: add alarms (maybe)
 
-# This is REALLY REALLY REALLY ugly <h>also, it's ugly</h>
-# <h>Did I mention it's ugly?</h>
-# what event occurs next?
-# TODO: add time of when this event occurs to display?
-
-$nextev = sqlite3val("SELECT event FROM abqastro WHERE time >
-DATETIME('now','localtime') AND event NOT IN ('MR','MS', 'Last Quarter', 'First Quarter', 'New Moon', 'Full Moon') ORDER BY time
-LIMIT 1", "/home/barrycarter/BCGIT/db/abqastro.db");
-
-debug("NEXTEV: $nextev");
-
-# map event to time of day
-%map = (
-	"ATS" => "night",
-	"NTS" => "astronomical twilight",
-	"CTS" => "nautical twilight",
-	"SR" => "civil twilight",
-	"SS" => "daytime",
-	"CTE" => "civil twilight",
-	"NTE" => "nautical twilight",
-	"ATE" => "astronomical twilight"
-	);
-
-push(@info, uc($map{$nextev}));
+# "daytime" stuff now replaced by bc-get-astro.pl
 
 push(@info, "UPTIME: $uptime");
 

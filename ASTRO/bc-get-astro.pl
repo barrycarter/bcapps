@@ -12,11 +12,11 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# determine next minute
+# determine next minute and compute for MIDDLE of that minute
 $time = $globopts{time} || time();
-my($nm) = 60*floor($time/60)+60;
+my($nm) = 60*floor($time/60)+90;
 # in military time
-$now = strftime("%H%M", localtime($nm));
+$now = strftime("%H%M%S", localtime($nm));
 
 # lat/long
 defaults("longitude=-106.651138463684&latitude=35.0844869067959");
@@ -24,19 +24,14 @@ my($lng, $lat) = ($globopts{longitude}, $globopts{latitude});
 
 # lunar phase experiments below
 # my($observer) = Astro::Nova::LnLatPosn->new("lng"=>$lon,"lat"=>$lat);
-my($jd) = get_julian_from_timet($time);
+my($jd) = get_julian_from_timet($nm);
 
-for $i (0..30) {
-  my($foo) = $jd+$i-64/1440;
-  $foo  = $jd + 13.5 + 13/30 + 2*$i/900;
-  print join("\t", $i, Astro::Nova::get_lunar_bright_limb($foo),
-	     Astro::Nova::get_lunar_phase($foo)),"\n";
-}
-
-die "TRESTING";
-
-
-
+# for $i (0..30) {
+#  my($foo) = $jd+$i-64/1440;
+#  $foo  = $jd + 13.5 + 13/30 + 2*$i/900;
+#  print join("\t", $i, Astro::Nova::get_lunar_bright_limb($foo),
+#	     Astro::Nova::get_lunar_phase($foo)),"\n";
+# }
 
 # current info (for next minute)
 %sm = sunmooninfo($lng,$lat,$nm);
@@ -92,7 +87,7 @@ if ($cur eq "sun") {
 }
 
 # moon up or down?
-if ($moonup) {$str2 = "MOON UP";} else {$str2 = "MOON DOWN";}
+if ($moonup) {$str2 = "UP";} else {$str2 = "DOWN";}
 
 # solar elevation in degrees/minutes
 $el = sprintf("(%s%d\xB0%0.2d'%0.2d'') (%0.4f)", dec2deg($sm{sun}{alt}), $sm{sun}{alt});
@@ -100,7 +95,12 @@ $el = sprintf("(%s%d\xB0%0.2d'%0.2d'') (%0.4f)", dec2deg($sm{sun}{alt}), $sm{sun
 # +30 for rounding, convert times to military time
 map($_=strftime("%H%M",localtime($_+30)), @times);
 
-print "$str $el ($now)\n";
-# sun rise + various twilights
-print "S:$times[6]-$times[7] ($times[4]-$times[5]/$times[2]-$times[3]/$times[0]-$times[1])\n";
-print "M:$times[8]-$times[9] ($str2)\n";
+$writestr = << "MARK";
+$str $el ($now)
+S:$times[6]-$times[7] ($times[4]-$times[5]/$times[2]-$times[3]/$times[0]-$times[1])
+M:$times[8]-$times[9] ($str2)
+MARK
+;
+
+write_file_new($writestr, "/home/barrycarter/ERR/bcgetastro.inf");
+
