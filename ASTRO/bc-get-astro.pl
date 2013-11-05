@@ -9,8 +9,13 @@
 # --latitude: use this latitude (default: Albuquerque)
 # --longitude: use this longitude (default: Albuquerque)
 # --time: use this time (in Unix seconds) (default: current time)
+# --noprint: do not print to info file (useful for testing)
 
 require "/usr/local/lib/bclib.pl";
+
+# lat/long
+defaults("longitude=-106.651138463684&latitude=35.0844869067959");
+my($lng, $lat) = ($globopts{longitude}, $globopts{latitude});
 
 # determine next minute and compute for MIDDLE of that minute
 $time = $globopts{time} || time();
@@ -18,32 +23,21 @@ my($nm) = 60*floor($time/60)+90;
 # in military time
 $now = strftime("%H%M%S", localtime($nm));
 
-# lat/long
-defaults("longitude=-106.651138463684&latitude=35.0844869067959");
-my($lng, $lat) = ($globopts{longitude}, $globopts{latitude});
+# current info (for next minute)
+%sm = sunmooninfo($lng,$lat,$nm);
 
-# lunar phase experiments below
-# my($observer) = Astro::Nova::LnLatPosn->new("lng"=>$lon,"lat"=>$lat);
-my($jd) = get_julian_from_timet($nm);
+debug("SM", unfold(%sm));
 
 # this is really ugly, though I've seen others use it to
+my($jd) = get_julian_from_timet($nm);
 my($p1) = Astro::Nova::get_lunar_phase($jd-0.00001);
 my($p2) = Astro::Nova::get_lunar_phase($jd);
-
 # decrease = waxing, increase = waning
 $phase = ("new", "crescent", "quarter", "gibbous", "full")[(180-$p2)/36];
 # these are fly codes for up and down arrow
 if ($p2>$p1) {$direc = "\xb7"} else {$direc = "\x5e"}
 
-# for $i (0..30) {
-#  my($foo) = $jd+$i-64/1440;
-#  $foo  = $jd + 13.5 + 13/30 + 2*$i/900;
-#  print join("\t", $i, Astro::Nova::get_lunar_bright_limb($foo),
-#	     Astro::Nova::get_lunar_phase($foo)),"\n";
-# }
 
-# current info (for next minute)
-%sm = sunmooninfo($lng,$lat,$nm);
 
 # altitudes for twilights (-5/6 for parallax/refraction)
 %alts = ("astronomical"=>-18,"nautical"=>-12,"civil"=>-6,"sun"=>-5/6);
@@ -114,5 +108,6 @@ M:$times[8]-$times[9] ($str2) ($direc$phase) ($moondeg)
 MARK
 ;
 
-write_file_new($writestr, "/home/barrycarter/ERR/bcgetastro.inf");
-
+unless ($globopts{noprint}) {
+  write_file_new($writestr, "/home/barrycarter/ERR/bcgetastro.inf");
+}

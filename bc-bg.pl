@@ -178,6 +178,12 @@ close(A);
 # color) so I know where report ends
 push(@fly, "string 0,0,255,0,$pos,medium,--EOF--");
 
+# experimental: moon phase in upper right corner
+# TODO: maybe change bgcolor based on twilight? (urc = upper right corner)
+if (-f "/home/barrycarter/ERR/urc.gif") {
+  push(@fly, "copy 924,0,0,0,100,100,/home/barrycarter/ERR/urc.gif");
+}
+
 # send header and output to fly file
 # tried doing this w/ pipe but failed
 # setpixel below needed so bg color is black

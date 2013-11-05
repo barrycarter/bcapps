@@ -3966,9 +3966,16 @@ sub sunmooninfo {
   # to hold results
   my(%rst);
 
-  # independent of $observer (next 2 lines)
+  # independent of $observer (next few lines)
   $rst{sunpos} = get_solar_equ_coords($jd);
   $rst{moonpos} = get_lunar_equ_coords($jd);
+  # ugly way to get whether phase is increasing, but no other way?
+  my($p1) = get_lunar_phase($jd); 
+  my($p2) = get_lunar_phase($jd-1/100000.);
+  # I count phases "backwards"
+  $info{moon}{phase} = 180-$p1;
+  $info{moon}{dir}=($p2>$p1);
+
   $rst{sunaa} = get_hrz_from_equ($rst{sunpos}, $observer, $jd);
   $rst{moonaa} = get_hrz_from_equ($rst{moonpos}, $observer, $jd);
 
