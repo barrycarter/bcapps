@@ -29,7 +29,12 @@ $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 use GD;
 
-die "TSETING";
+# fun with dates (1893481200 = 2030)
+for ($i=1383782365; $i< 1893481200; $i+=86400*7) {
+  print strftime("%Y%m%d\n", localtime($i));
+}
+
+die "TESTING";
 
 sub foo {return $_[0];}
 print foo("bar");
@@ -37,13 +42,6 @@ print &foo("bar");
 
 printf("%s","hello\n");
 &printf("%s", "hello\n");
-
-die "TESTING";
-
-# fun with dates (1893481200 = 2030)
-for ($i=1383069600; $i< 1893481200; $i+=86400*7) {
-  print strftime("%Y%m%d\n", localtime($i));
-}
 
 die "TESTING";
 

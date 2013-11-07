@@ -52,7 +52,7 @@ MARK
 sub dump_other {
   local(*A);
   my($str) = << "MARK";
-mysqldump test > $dir/bcunix-mysql-test.txt; bzip2 -v -f $dir/bcunix-mysql-test.txt
+mysqldump --skip-extended-insert=yes test > $dir/bcunix-mysql-test.txt; bzip2 -v -f $dir/bcunix-mysql-test.txt
 rpm -qai > $dir/bcunix-rpmqai.txt; bzip2 -v -f $dir/bcunix-rpmqai.txt
 yum list > $dir/yumlist.txt ; bzip2 -v -f $dir/yumlist.txt
 pg_dumpall --host=/var/tmp > $dir/bcunix-pg-backup.txt; bzip2 -v -f $dir/bcunix-pg-backup.txt
@@ -69,10 +69,11 @@ sub dump_remote {
   local(*A);
   # TODO: update below when I start using bcinfo3
   my($str) = << "MARK";
-ssh -i /home/barrycarter/.ssh/id_rsa.bc root\@bcinfonew 'mysqldump wordpress' > $dir/bcinfonew-wordpress.txt; bzip2 -v -f $dir/bcinfonew-wordpress.txt
-ssh -i /home/barrycarter/.ssh/id_rsa.bc root\@bcinfo3 'mysqldump wordpress' > $dir/bcinfo3-wordpress.txt; bzip2 -v -f $dir/bcinfo3-wordpress.txt
-rsync -vtrlzo -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' root\@bcinfonew:/usr/share/wordpress root\@bcinfonew:/sites/DB/requests.db $dir/
-rsync -v "root\@bcmac:/Users/*/*" "root\@bcmac:/Users/*/.*" bcmac/
+ssh -i /home/barrycarter/.ssh/id_rsa.bc root\@bcinfonew 'mysqldump --skip-extended-insert=yes wordpress' > $dir/bcinfonew-wordpress.txt; bzip2 -v -f $dir/bcinfonew-wordpress.txt
+ssh -i /home/barrycarter/.ssh/id_rsa.bc root\@bcinfo3 'mysqldump --skip-extended-insert=yes wordpress' > $dir/bcinfo3-wordpress.txt; bzip2 -v -f $dir/bcinfo3-wordpress.txt
+rsync -trlzo -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' root\@bcinfonew:/usr/share/wordpress root\@bcinfonew:/sites/DB/requests.db $dir/
+rsync -trlzo -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' root\@bcinfo3:/sites/DB/requests.db $dir/bcinfo3-requests.db
+rsync "root\@bcmac:/Users/*/*" "root\@bcmac:/Users/*/.*" bcmac/
 MARK
 ;
   debug("STR: $str");

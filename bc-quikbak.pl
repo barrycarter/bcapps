@@ -36,7 +36,7 @@ for $i (@ARGV) {
   $targstamp = stardate($st[9]);
 
   if ($targstamp == $mod && !$globopts{nots}) {
-    warn("$i $target timestamps match, ignored");
+    debug("$i $target timestamps match, ignored");
     next;
   }
 

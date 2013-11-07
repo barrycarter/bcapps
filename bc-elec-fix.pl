@@ -17,16 +17,22 @@ my($out,$err,$res) = cache_command2("pgrep vlc");
 if ($out) {$vlc=1;}
 ($out,$err,$res) = cache_command2("pgrep somagic-capture");
 if ($out) {$som=1;}
-my(%sm) = sunmooninfo();
+my(%sm) = sunmooninfo(-106.651138463684,35.0844869067959);
+debug(unfold(%sm));
+
+debug("VLC: $vlc, SOM: $som, ALT: $sm{sun}{alt}");
 
 # if sun is down, terminate vlc and somagic-capture if both running
 if ($sm{sun}{alt}<=0 && $vlc && $som) {
+  debug("Sun is down, killing VLC/SOMAGIC");
   # NOTE: this will kill any VLC I'm watching once, but I'm OK with that
-  system("sudo pkill -9 vlc somagic-capture");
+  system("sudo pkill -9 vlc");
+  system("sudo pkill -9 somagic-capture");
 }
 
 # if sun is up, start vlc/somagic-capture if needed
 if ($sm{sun}{alt}>0 && (!$vlc || !$som)) {
+  debug("Sun is up, starting VLC/SOMAGIC");
   # this is the elecstart alias
   system("sudo pkill -9 vlc; sudo pkill -9 somagic-capture; sudo /bin/nice -n 19 somagic-capture | /bin/nice -n 19 vlc --demux rawvideo --rawvid-fps 15 --rawvid-width 720 --rawvid-height 576 --rawvid-chroma=UYVY file:///dev/stdin &");
 }

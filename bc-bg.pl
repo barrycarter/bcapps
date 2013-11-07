@@ -6,6 +6,9 @@
 
 require "/home/barrycarter/BCGIT/bclib.pl";
 
+# lock
+unless (mylock("bc-bg.pl","lock")) {die("Locked");}
+
 # need current time
 $now=time();
 chdir(tmpdir());
