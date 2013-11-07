@@ -19,10 +19,13 @@ crond
 # bc-metar-db.pl will probably go away soon
 <may>
 screen
+SCREEN
 emacs
 /usr/local/bin/bc-metar-db.pl
 </may>
 
 # these processes must die if they run over 5m
 <kill>
+php-cgi
+/usr/local/bin/bc-echo.pl
 </kill>

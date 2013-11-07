@@ -7,8 +7,6 @@ require "/usr/local/lib/bclib.pl";
 # this command really does all the work
 ($out,$err,$res) = cache_command2("ps -www -ax -eo 'pid etime rss vsz args'","age=30");
 
-debug("OUT: $out");
-
 @procs = split(/\n/,$out);
 shift(@procs); # ignore header line
 
