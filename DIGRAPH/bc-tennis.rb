@@ -69,12 +69,24 @@ class GameState
  end
 end
 
-# start with a new game
+# start with an array containing new game
 $DEBUG=1;
-g = GameState.new([0,0])
-g.td("GAME")
+games = [GameState.new([0,0])]
+hash = Hash.new
 
 
+while i=games.shift do
+#  if seen[i] then next end
+#  seen[i]=1
+  hash[i] = Hash.new
+  hash[i][0] = i.nextstate(0)
+  hash[i][1] = i.nextstate(1)
+  games.push(i.nextstate(0))
+  games.push(i.nextstate(1))
+#  games.td("GAMES")
+end
+
+hash.td("HASH")
 
 # print GameState.new([4,2]).nextstate(1).inspect
 # hash = Hash.new(Hash.new)
