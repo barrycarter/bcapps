@@ -1,66 +1,26 @@
 #!/bin/perl
 
-# Confirms daemons are running and prevents other programs from
-# running too long (eg, a long 'curl' run can hang a program waiting
-# for it to end; timed-run would be another solution)
-
-# Runs from cron (so doesn't need to be in @must below)
-
-# --nomail: dont send email
+# This is bc-daemon-checker.pl for bcinfo3 (writes to file, doesn't send mail)
 
 require "/usr/local/lib/bclib.pl";
 
 # this command really does all the work
-($out) = cache_command("ps -www -ax -eo 'pid etime rss vsz args'","age=30");
+($out,$err,$res) = cache_command2("ps -www -ax -eo 'pid etime rss vsz args'","age=30");
 
 @procs = split(/\n/,$out);
 shift(@procs); # ignore header line
 
-# TODO: turn this into an external file list or something
+# TODO: make this an argument, not fixed
+$all = read_file("/home/barrycarter/BCGIT/bcinfo3-procs.txt");
 
-# processes that MUST always be running (I should be able to trim
-# down this list?)
-
-# NOTE: full path varies because of the way these procs start
-
-# sshd dropped for dropbear 17 Dec 2012
-
-@must = (
-	 "init", "syslogd", "klogd", "/usr/sbin/dropbear", "ntpd",
-	 "/usr/libexec/mysqld", "/usr/libexec/postfix/master", "qmgr",
-	 "crond", "/usr/sbin/atd", "/sbin/mingetty",
-	 "/usr/local/bin/bc-voronoi-temperature.pl",
-	 "/usr/local/bin/bc-delaunay-temperature.pl",
-	 "/usr/local/bin/bc-metar-db.pl", 
-	 "/usr/local/bin/bc-gocomics-comments.pl",
-	 "/usr/sbin/lighttpd", "/usr/local/bin/php-cgi",
-	 "teenydns", "pickup", "/usr/bin/fail2ban-server"
-	);
-
-# processes that MAY run forever but aren't required to do so (choices
-# like /sbin/udevd are weird, but I don't really care if hotplug is
-# working?)
-
-# "sshd:" represents a specific login; the main daemon must always
-# run, but the client daemon doesn't have to always run (but can if it
-# wants)
-
-@may = (
-	"SCREEN", "screen", "-csh", "sh", "/bin/sh", "/sbin/udevd",
-	"/usr/libexec/gam_server", "sshd:", "-bin/tcsh",
-	"/usr/sbin/yum-updatesd", "/sites/TEST/bc-slow-cgi.pl"
-	);
-
-# Processes on this list must be killed if they run over 5m
-# <h>Right now, it's just you, curly!</h>
-@kill = (
-	 "curl"
-	 );
-
-# easier as hashes
-%must = list2hash(@must);
-%may = list2hash(@may);
-%kill = list2hash(@kill);
+# TODO: generalize this concept
+# TODO: allow comments in must/may/kill sections
+$all=~s%<must>(.*?)</must>%%;
+%must = list2hash(split(/\n/, $1));
+$all=~s%<may>(.*?)</may>%%;
+%may = list2hash(split(/\n/, $1));
+$all=~s%<kill>(.*?)</kill>%%;
+%kill = list2hash(split(/\n/, $1));
 
 for $i (@procs) {
   # cleanup proc line and split into fields
@@ -133,14 +93,7 @@ for $i (sort keys %MUST) {
   push(@err, "$i: not running, but is required");
 }
 
-# send me errors (if any)
-if (@err) {
-  $body = join("\n",@err);
-  # TODO: message should be host specific if run on multiple hosts
-  unless ($globopts{nomail}) {
-    sendmail("erf\@barrycarter.info", "error\@barrycarter.info", "Errors exist!", $body);
-  }
-}
-
-
-
+# write errors to file EVEN IF empty (since I plan to rsync error
+# file, and rsync won't remove deleted files except with special
+# option)
+write_file_new(join("\n",@err),"/home/barrycarter/ERR/bcinfo3.err");

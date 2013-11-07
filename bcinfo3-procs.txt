@@ -1,0 +1,28 @@
+# list of processes that MUST always be running, MAY run indefinitely,
+# and may NOT run forever; this is for bcinfo3
+
+<must>
+init
+syslogd
+/usr/sbin/dropbear
+xinetd
+crond
+/usr/local/bin/bc-get-all-weather.pl
+/usr/local/bin/bc-gocomics-comments2.pl
+/usr/local/bin//bc-query-gobbler.pl
+/usr/sbin/lighttpd
+/usr/local/bin/bc-get-radar.pl
+/usr/bin/mysqld_safe
+/usr/libexec/mysqld
+</must>
+
+# bc-metar-db.pl will probably go away soon
+<may>
+screen
+emacs
+/usr/local/bin/bc-metar-db.pl
+</may>
+
+# these processes must die if they run over 5m
+<kill>
+</kill>

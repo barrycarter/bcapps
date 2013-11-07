@@ -205,3 +205,6 @@ close(A);
 
 # also copy file since I will need it on other machines
 system("fly -q -i bg.fly -o bg.gif; xv +noresetroot -root -quit bg.gif; cp bg.gif /tmp/bgimage.gif");
+
+# unlock
+mylock("bc-bg.pl","unlock");
