@@ -57,7 +57,9 @@ alias nagiostest "echo 'this is obsolete; use nagtest instead'"
 alias bcinfo3 "screen -t BC3 ssh -i /home/barrycarter/.ssh/id_rsa.bc -tt root@bcinfo3 screen -d -R"
 
 # rsyncs to bcinfo3 (my new plugin is so awesome,I even sync it to my old site)
-alias bcinfo3sync "cd /home/barrycarter/BCGIT; \rsync -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' -Pvzrlpt *.pl */*.pl root@bcinfo3:/usr/local/bin/; \rsync -Pvzrlpt -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' /home/barrycarter/BCGIT/BCINFO3/ root@bcinfo3:/; \rsync -Pvzrlpt -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' /home/barrycarter/BCGIT/BCINFO3/sites/wordpress/wp-content/plugins/ root@bcinfo:/usr/share/wordpress/wp-content/plugins/"
+# alias bcinfo3sync "cd /home/barrycarter/BCGIT; \rsync -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' -Pvzrlpt *.pl */*.pl root@bcinfo3:/usr/local/bin/; \rsync -Pvzrlpt -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' /home/barrycarter/BCGIT/BCINFO3/ root@bcinfo3:/; \rsync -Pvzrlpt -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' /home/barrycarter/BCGIT/BCINFO3/sites/wordpress/wp-content/plugins/ root@bcinfo:/usr/share/wordpress/wp-content/plugins/"
+# testing replacement using bc-mirror-server
+alias bcinfo3sync "bc-mirror-server.pl /home/barrycarter/BCGIT/BCINFO3/ bcinfo3"
 
 # chmods all Perl scripts to +x (something I tend to be bad about)
 alias perlfix "find /home/barrycarter/PERL /home/barrycarter/BCGIT -iname '*.pl' | xargs chmod +x"

@@ -11,15 +11,15 @@ require "/usr/local/lib/bclib.pl";
 shift(@procs); # ignore header line
 
 # TODO: make this an argument, not fixed
-$all = read_file("/home/barrycarter/BCGIT/bcinfo3-procs.txt");
+$all = read_file("/home/barrycarter/BCGIT/BCINFO3/root/bcinfo3-procs.txt");
 
 # TODO: generalize this concept
 # TODO: allow comments in must/may/kill sections
-$all=~s%<must>(.*?)</must>%%;
+$all=~s%<must>(.*?)</must>%%is;
 %must = list2hash(split(/\n/, $1));
-$all=~s%<may>(.*?)</may>%%;
+$all=~s%<may>(.*?)</may>%%is;
 %may = list2hash(split(/\n/, $1));
-$all=~s%<kill>(.*?)</kill>%%;
+$all=~s%<kill>(.*?)</kill>%%is;
 %kill = list2hash(split(/\n/, $1));
 
 for $i (@procs) {

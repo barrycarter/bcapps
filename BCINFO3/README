@@ -252,3 +252,7 @@ CREATE DATABASE shared;
 echo .dump | sqlite3 /sites/DB/stations.db > /tmp/mytake.txt
 bc-sqlite3dump2mysql.pl /tmp/mytake.txt > /tmp/mytake2.txt
 mysql shared < /tmp/mytake2.txt
+
+% 07 Nov 2013: for error reporting
+
+mkdir -p /home/barrycarter/ERR/
