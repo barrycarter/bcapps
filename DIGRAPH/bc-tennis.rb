@@ -28,8 +28,8 @@ class GameState
    # store current state in array
    t = @l.dup;
 
-   # one player has won? nothing more to do
-   if @l[n]==6 then return nil end
+   # one player has won? nothing more to do, but return empty game
+   if (@l[0]==6 || @l[1]==6) then return 0 end
 
    # player with 0 or 15 or deuce advantage scores
    if @l[n]<=1 || @l[n]==5 then
@@ -71,20 +71,16 @@ hash = Hash.new
 seen = Hash.new
 
 while i=games.shift do
-  if i.nil?() then 
-    td("i is nil")
-    next
-  end
-  i.td("I")
+  if i==0 then next end
   # have we seen this game (ie, this pair of scores)
-#  if seen[i.l] then next else seen[i.l]=1 end
-#  td("NEXT STATES: #{i.l} -> #{i.nextstate(0).l}, #{i.nextstate(1).l}")
+  if seen[i.l] then next else seen[i.l]=1 end
+#  td("NEXT STATES: #{i.l} -> #{i.nextstate(0)}, #{i.nextstate(1)}")
   hash[i] = Hash.new
   hash[i][0] = i.nextstate(0)
   hash[i][1] = i.nextstate(1)
   games.push(i.nextstate(0))
   games.push(i.nextstate(1))
-  games.inspect.td("GAMES")
+#  games.inspect.td("GAMES")
 end
 
 print hash.keys.each{|i| i.inspect.td("I")}
