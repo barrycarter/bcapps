@@ -30,6 +30,9 @@ for $i (@procs) {
   $i=~s/\s+/ /isg;
   ($pid, $time, $rss, $vsz, $proc, $proc2, $proc3) = split(/\s+/,$i);
 
+  # bizarre error, 13:42 = newly created process
+  if ($time eq "13:42") {next;}
+
   # ignore [bracketed] processes (TODO: why?)
   if ($proc=~/^\[.*\]$/) {next;}
 
@@ -47,6 +50,8 @@ for $i (@procs) {
   # really ugly HACK: (for "perl -w") [can't even do -* because of -tcsh]
   if ($proc=~/^\-w$/) {$proc=$proc3;}
 
+  debug("PROC: $proc");
+  
   # can't do much w/ defunct procs
   if ($i=~/<defunct>/) {next;}
 
@@ -90,7 +95,7 @@ for $i (@procs) {
 
 # confirm all "must" processes are in fact running
 
-for $i (sort keys %MUST) {
+for $i (sort keys %must) {
   if ($isproc{$i}) {next;}
   push(@err, "$i: not running, but is required");
 }
