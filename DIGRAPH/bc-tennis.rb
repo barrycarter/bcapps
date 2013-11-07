@@ -18,10 +18,18 @@ require '/home/barrycarter/BCGIT/bclib.rb'
 class GameState
  def initialize(l) @l=l end
 
+ # TODO: genericize this
+ def l() @l end
+
+ def inspect() return @l end
+
  # the next state if nth player scores
  def nextstate(n)
    # store current state in array
    t = @l.dup;
+
+   # one player has won? nothing more to do
+   if @l[n]==6 then return nil end
 
    # player with 0 or 15 or deuce advantage scores
    if @l[n]<=1 || @l[n]==5 then
@@ -50,22 +58,9 @@ class GameState
      t[1-n] = 3;
      return GameState.new(t)
    end
- end
 
- # fill in given has with all possible future gamestates (using recursion)
- def futurestates(hash)
-   # if I am a final state, just return hash
-   if @l[0]==6 || @l[1]==6 then return hash end
-   # if my hash states are already defined, do nothing
-   hash[self].td("ME")
-   if (hash[self][0]) then return hash end
-   # first for myself
-   # TODO: put in loop
-   hash[self][0] = self.nextstate(0)
-   hash[self][1] = self.nextstate(1)
-   hash = hash.merge(self.nextstate(0).futurestates(hash))
-   hash = hash.merge(self.nextstate(1).futurestates(hash))
-   return hash
+   self.td("NO NEXT STATE?")
+
  end
 end
 
@@ -73,24 +68,29 @@ end
 $DEBUG=1;
 games = [GameState.new([0,0])]
 hash = Hash.new
-
+seen = Hash.new
 
 while i=games.shift do
-#  if seen[i] then next end
-#  seen[i]=1
+  if i.nil?() then 
+    td("i is nil")
+    next
+  end
+  i.td("I")
+  # have we seen this game (ie, this pair of scores)
+#  if seen[i.l] then next else seen[i.l]=1 end
+#  td("NEXT STATES: #{i.l} -> #{i.nextstate(0).l}, #{i.nextstate(1).l}")
   hash[i] = Hash.new
   hash[i][0] = i.nextstate(0)
   hash[i][1] = i.nextstate(1)
   games.push(i.nextstate(0))
   games.push(i.nextstate(1))
-#  games.td("GAMES")
+  games.inspect.td("GAMES")
 end
 
-hash.td("HASH")
+print hash.keys.each{|i| i.inspect.td("I")}
 
 # print GameState.new([4,2]).nextstate(1).inspect
 # hash = Hash.new(Hash.new)
-# GameState.new([0,0]).futurestates(hash)
 
 
 
