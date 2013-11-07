@@ -30,3 +30,5 @@ MAILTO="bcinfo3@barrycarter.info"
 09 6 * * * find /tmp/ -mtime +7 | xargs rm
 # MOS guidance
 52 * * * * /usr/local/bin/bc-get-guidance.pl
+# check that all daemons are running properly
+*/5 * * * * /usr/local/bin/bc-daemon-checker2.pl

@@ -19,15 +19,16 @@ $all = read_file("/home/barrycarter/BCGIT/BCINFO3/root/bcinfo3-procs.txt");
 
 # TODO: generalize this concept
 # TODO: allow comments in must/may/kill sections
-# the \n+ below eliminates empty lines
 $all=~s%<must>(.*?)</must>%%is;
-debug("1: $1");
-%must = list2hash(split(/\n+/, $1));
-debug("MUST",%must);
+%must = list2hash(split(/\n/, $1));
 $all=~s%<may>(.*?)</may>%%is;
-%may = list2hash(split(/\n+/, $1));
+%may = list2hash(split(/\n/, $1));
 $all=~s%<kill>(.*?)</kill>%%is;
-%kill = list2hash(split(/\n+/, $1));
+%kill = list2hash(split(/\n/, $1));
+# TODO: this is ugly
+delete $must{""};
+delete $may{""};
+delete $kill{""};
 
 for $i (@procs) {
   # cleanup proc line and split into fields
@@ -39,7 +40,7 @@ for $i (@procs) {
   if ($proc=~/^\[.*\]$/) {next;}
 
   # for perl/xargs/python/ruby/sh, the next non-option arg tells what the process really is
-  if ($proc=~m%/perl$%||$proc eq "xargs"||$proc=~m%/python$%||$proc=~m%(^|/)ruby$%||$proc=~m%^/bin/sh%) {
+  if ($proc=~m%/perl$%||$proc eq "xargs"||$proc=~m%/python$%||$proc=~m%(^|/)ruby$%||$proc=~m%^/bin/sh$%||$proc=~m%^\-csh$%) {
 
     # TODO: this is imperfect
     if ($proc2=~/^\-/) {
@@ -106,6 +107,9 @@ for $i (sort keys %must) {
   debug("KEY $i");
   push(@err, "$i: not running, but is required");
 }
+
+# HACK: tell where err is coming from
+map($_="bcinfo3: $_",@err);
 
 # write errors to file EVEN IF empty (since I plan to rsync error
 # file, and rsync won't remove deleted files except with special

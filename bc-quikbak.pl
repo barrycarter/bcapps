@@ -45,7 +45,7 @@ for $i (@ARGV) {
   unless ($diff) {
     # do copy over anyway, just to fix timestamp
     safecopy($i,$target);
-    warn("$i hasn't changed, ignored");
+    debug("$i hasn't changed, ignored");
     next;
   }
 

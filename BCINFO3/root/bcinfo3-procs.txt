@@ -17,11 +17,14 @@ crond
 </must>
 
 # bc-metar-db.pl will probably go away soon
+# udevd I can't seem to get rid of, but don't really care
 <may>
 screen
 SCREEN
 emacs
 /usr/local/bin/bc-metar-db.pl
+-bin/tcsh
+/sbin/udevd
 </may>
 
 # these processes must die if they run over 5m

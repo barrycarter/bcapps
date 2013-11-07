@@ -22,6 +22,9 @@ debug("CALLING dump_other()");
 dump_other();
 debug("CALLING dump_remote()");
 dump_remote();
+
+# TODO: tar the whole thing up, bzip it, and encrypt it
+
 # <h>thanks shoeshine boy, you're humble and loveable</h>
 debug("ALL FINISHED, SIR");
 

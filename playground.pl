@@ -30,7 +30,7 @@ require "bc-twitter.pl";
 use GD;
 
 # fun with dates (1893481200 = 2030)
-for ($i=1383782365; $i< 1893481200; $i+=86400*7) {
+for ($i=1384196400+86400; $i< 1893481200; $i+=86400*7) {
   print strftime("%Y%m%d\n", localtime($i));
 }
 

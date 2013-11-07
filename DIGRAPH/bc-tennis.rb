@@ -67,16 +67,20 @@ class GameState
    hash = hash.merge(self.nextstate(1).futurestates(hash))
    return hash
  end
-
 end
 
-# print GameState.new([4,2]).nextstate(1).inspect
-
+# start with a new game
 $DEBUG=1;
-hash = Hash.new(Hash.new)
-GameState.new([0,0]).futurestates(hash)
+g = GameState.new([0,0])
+g.td("GAME")
 
-hash.td("HASH")
+
+
+# print GameState.new([4,2]).nextstate(1).inspect
+# hash = Hash.new(Hash.new)
+# GameState.new([0,0]).futurestates(hash)
+
+
 
 
 
