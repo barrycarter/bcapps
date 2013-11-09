@@ -20,6 +20,28 @@ asym = List[2400, 2250, 2100, 2000, 1600, 1500, 1350, 1200]
 
 ns[sc_] = (asym + 19*sc)/20
 
+(* your next score estimation, given current score and prob of hit *)
+
+nse[sc_, p_] = Simplify[Total[dist[p]*ns[sc]]]
+
+(* your estimated "fixed" score given p chance of hit *)
+
+fixedscore[p_] := FixedPoint[nse[#,p]&, 2000]
+
+(* my high score of 2050 = 64% chance of winning volley *)
+fixedscore[.64]
+
+Table[{p,fixedscore[p]}, {p,.25,1,.05}] // TableForm
+
+
+FixedPoint[nse[#,.9]&, 2000]
+FixedPoint[nse[#,.1]&, 2000]
+
+Plot[FixedPoint[nse[#,p]&, 2000], {p,.1,1}]
+
+nse[2000,1]
+nse[2000,.5]
+nse[1990,.5]
 
 
 ListPlot[dist[.5], Joined->True]
