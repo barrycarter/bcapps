@@ -6,31 +6,21 @@ require "/usr/local/lib/bclib.pl";
 use Data::Dumper 'Dumper';
 $Data::Dumper::Indent = 0;
 
-# linear regress date of new/etc moons ("good enough" for lunar phase calc?)
-
-@y = split(/\n/, read_file("/tmp/phases.txt"));
-@x = (0..$#y);
-
-debug(linear_regression(\@x,\@y));
-
-# 7.3823125330 between phases or 637831.802853671s, lc 1388570812.87346
-# full moons only: 1389850790.98776 2551297.36530609
-
-for $i (@y) {
-#  my($guess) = 1388570812.87346+$n*637831.802853671;
-  my($guess) = 1389850790.98776+$n*2551297.36530609;
-  print $i-$guess;
-  $n++;
-  print "\n";
-}
-
-die "TESTING";
-
-# debug(np_rise_set(0,80,time(),"moon","rise",-1));
 
 $lon = 0.;
 $lat = 89.5;
-$time = time()+86400*15;
+$time = 1383918337;
+# julian
+$day = 2456605-60;
+$observer = Astro::Nova::LnLatPosn->new("lng"=>$lon,"lat"=>$lat);
+
+for ($i=$day; $i<$day+180; $i++) {
+  $rst = get_lunar_rst($i, $observer);
+  debug("RST: $rst");
+  debug("TIMES($i)", $rst->get_rise(), $rst->get_transit(), $rst->get_set());
+}
+
+die "TESTING";
 
 # info I actually want
 
@@ -56,6 +46,44 @@ debug(unfold(%sunmooninfo));
 
 die "TESTING";
 
+# why does libastro fail sometimes?
+# below chosen "randomly"
+$jd = 2456605;
+$lon = -106;
+$lat = 35;
+$observer = Astro::Nova::LnLatPosn->new("lng"=>$lon,"lat"=>$lat);
+debug("OBS:", $observer->as_ascii());
+$sunpos = get_solar_equ_coords($jd);
+$moonpos = get_lunar_equ_coords($jd);
+$rst = get_lunar_rst($jd,$observer);
+debug("RST",$rst->get_set());
+
+
+die "TESTING";
+
+# hideous way of seeing moon is waxing or waning
+
+# linear regress date of new/etc moons ("good enough" for lunar phase calc?)
+
+@y = split(/\n/, read_file("/tmp/phases.txt"));
+@x = (0..$#y);
+
+debug(linear_regression(\@x,\@y));
+
+# 7.3823125330 between phases or 637831.802853671s, lc 1388570812.87346
+# full moons only: 1389850790.98776 2551297.36530609
+
+for $i (@y) {
+#  my($guess) = 1388570812.87346+$n*637831.802853671;
+  my($guess) = 1389850790.98776+$n*2551297.36530609;
+  print $i-$guess;
+  $n++;
+  print "\n";
+}
+
+die "TESTING";
+
+# debug(np_rise_set(0,80,time(),"moon","rise",-1));
 for $i (-1,1) {
   for $j ("moon", "sun", "civ", "naut", "astro") {
     for $k ("rise","set") {

@@ -29,6 +29,20 @@ $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 use GD;
 
+# fun w/ tennis
+
+debug(tennis_probs(0.5));
+
+sub tennis_probs {
+  my($p) = @_;
+  my($q) = 1-$p;
+
+  return($p**4, 4*$q*$p**4, 10*$q**2*$p**4, (20*$p**5*$q**3)/(1-2*$p*$q),
+  (20*$q**5*$p**3)/(1-2*$p*$q), 10*$p**2*$q**4, 4*$p*$q**4, $q**4);
+}
+
+die "TESTING";
+
 # fun with dates (1893481200 = 2030)
 for ($i=1384196400+86400; $i< 1893481200; $i+=86400*7) {
   print strftime("%Y%m%d\n", localtime($i));
@@ -96,35 +110,6 @@ die "TESTING";
 my($file) = my_tmpfile2();
 debug("FILE: $file");
 write_file("hello",$file);
-
-=item my_tmpfile2()
-
-Returns a non-existant file in /var/tmp/xx/yy/ that can be used as a
-temp file (creates parent directories as needed). Similar to
-my_tmpfile() but uses sub directories to avoid overfilling /tmp
-
-=cut
-
-sub my_tmpfile2() {
-  my($d1,$d2,$x);
-  do {
-    # pid and username helps prevent collision
-    $x = sha1_hex(rand().$$.$ENV{USER});
-    # split into two levels of subdirs
-    $x=~m/^(..)(..)/;
-    ($d1,$d2) = ($1, $2);
-    # make sure dir exists
-    unless (-d "/var/tmp/cache/$d1/$d2") {
-      # use /tmp permissions/mode
-      system("mkdir -p /var/tmp/cache/$d1/$d2; chmod -f 1777 /var/tmp/cache/$d1 /var/tmp/cache/$d1/$d2");
-    }
-  } until (!(-f "/var/tmp/cache/$d1/$d2/$x"));
-  # mark as tempfile for later deletion + return
-  $is_tempfile{"/var/tmp/cache/$d1/$d2/$x"}=1;
-  return "/var/tmp/cache/$d1/$d2/$x";
-}
-
-die "TESTING";
 
 $res = sqlite3val("SELECT follow_reply FROM bc_multi_follow WHERE action='SOURCE_UNFOLLOWS_TARGET'","/usr/local/etc/bc-multi-follow.db");
 

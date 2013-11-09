@@ -32,7 +32,7 @@ if ($sm{sun}{alt}<=-6 && $vlc && $som) {
 }
 
 # if sun is up, start vlc/somagic-capture if needed
-if ($sm{sun}{alt}>6 && (!$vlc || !$som)) {
+if ($sm{sun}{alt}>-6 && (!$vlc || !$som)) {
   debug("Not dark, starting VLC/SOMAGIC");
   # this is the elecstart alias
   system("sudo pkill -9 vlc; sudo pkill -9 somagic-capture; sudo /bin/nice -n 19 somagic-capture | /bin/nice -n 19 vlc --demux rawvideo --rawvid-fps 15 --rawvid-width 720 --rawvid-height 576 --rawvid-chroma=UYVY file:///dev/stdin &");

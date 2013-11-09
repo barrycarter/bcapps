@@ -29,7 +29,7 @@ class GameState
    t = @l.dup;
 
    # one player has won? nothing more to do, but return empty game
-   if (@l[0]==6 || @l[1]==6) then return 0 end
+   if (@l[0]==6 || @l[1]==6) then return self end
 
    # player with 0 or 15 or deuce advantage scores
    if @l[n]<=1 || @l[n]==5 then
@@ -74,7 +74,7 @@ while i=games.shift do
   if i==0 then next end
   # have we seen this game (ie, this pair of scores)
   if seen[i.l] then next else seen[i.l]=1 end
-#  td("NEXT STATES: #{i.l} -> #{i.nextstate(0)}, #{i.nextstate(1)}")
+  td("NEXT STATES: #{i.l} -> #{i.nextstate(0).l}, #{i.nextstate(1).l}")
   hash[i] = Hash.new
   hash[i][0] = i.nextstate(0)
   hash[i][1] = i.nextstate(1)
@@ -83,7 +83,7 @@ while i=games.shift do
 #  games.inspect.td("GAMES")
 end
 
-print hash.keys.each{|i| i.inspect.td("I")}
+# print hash.keys.each{|i| print "#{i}, #{hash[i][0]}, #{hash[i][1]}\n"}
 
 # print GameState.new([4,2]).nextstate(1).inspect
 # hash = Hash.new(Hash.new)
