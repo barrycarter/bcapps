@@ -5,6 +5,33 @@ Export["/tmp/math.png",%, ImageSize->{800,600}]; Run["display /tmp/math.png&"]]
 
 <</home/barrycarter/BCGIT/bclib.m
 
+(* wii tennis stuff *)
+
+(* if you have p chance of winning volley, these are you changes of achieve various scores *)
+
+dist[p_] = List[p^4, 4*q*p^4, 10*q^2*p^4, (20*p^5*q^3)/(1-2*p*q),
+(20*q^5*p^3)/(1-2*p*q), 10*p^2*q^4, 4*p*q^4, q^4] /. q->1-p
+
+(* your next possible scores [wii tennis, elisa/sarah] given your current score *)
+
+(* the asymptotes *)
+
+asym = List[2400, 2250, 2100, 2000, 1600, 1500, 1350, 1200]
+
+ns[sc_] = (asym + 19*sc)/20
+
+
+
+ListPlot[dist[.5], Joined->True]
+
+ListPlot[dist[.3], Joined->True]
+
+ListPlot[dist[.7], Joined->True]
+
+
+
+
+
 (* http://stackoverflow.com/questions/13977107 *)
 
 (* fake multiply, etc?; f= addition, fm=minus, g= mult, gd=divide, h= expon *)

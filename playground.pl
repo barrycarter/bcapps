@@ -31,7 +31,15 @@ use GD;
 
 # fun w/ tennis
 
-debug(tennis_probs(0.5));
+debug(wii_tennis_ns(1900));
+
+die "TESTING";
+
+@l = tennis_probs(0.99);
+
+for $i (@l) {$tot+=$i;}
+
+debug("TOT: $tot",@l);
 
 sub tennis_probs {
   my($p) = @_;
@@ -40,6 +48,20 @@ sub tennis_probs {
   return($p**4, 4*$q*$p**4, 10*$q**2*$p**4, (20*$p**5*$q**3)/(1-2*$p*$q),
   (20*$q**5*$p**3)/(1-2*$p*$q), 10*$p**2*$q**4, 4*$p*$q**4, $q**4);
 }
+
+sub wii_tennis_ns {
+  my($cur) = @_;
+  my(@res);
+
+  # asymptotes per
+  # http://orden-y-concierto.blogspot.de/2013/04/wii-sports-tennis-skill-points-system.html
+  # for Elisa/Sarah
+  my(@asy) = (2400, 2250, 2100, 2000, 1600, 1500, 1350, 1200);
+
+  for $i (@asy) {push(@res, ($i+19*$cur)/20);}
+  return @res;
+}
+
 
 die "TESTING";
 
