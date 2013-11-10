@@ -7,7 +7,7 @@
 require "/home/barrycarter/BCGIT/bclib.pl";
 
 # lock
-unless (mylock("bc-bg.pl","lock")) {die("Locked");}
+unless (mylock("bc-bg.pl","murder")) {die("Locked");}
 
 # need current time
 $now=time();
@@ -136,6 +136,12 @@ $res = `head -$num /home/barrycarter/BCGIT/WWF/enable-random.txt | tail -1`;
 chomp($res);
 push(@info, "WOTM: $res");
 
+# experimental: moon phase in middle of screen
+# TODO: maybe change bgcolor based on twilight?
+if (-f "/home/barrycarter/ERR/urc.gif") {
+  push(@fly, "copy 472,334,0,0,100,100,/home/barrycarter/ERR/urc.gif");
+}
+
 # push output to .fly script
 # err gets pushed first (and in red), then info
 for $i (@err) {
@@ -180,12 +186,6 @@ close(A);
 # sometimes, report scrolls off screen; this sends EOF (in darker
 # color) so I know where report ends
 push(@fly, "string 0,0,255,0,$pos,medium,--EOF--");
-
-# experimental: moon phase in upper right corner
-# TODO: maybe change bgcolor based on twilight? (urc = upper right corner)
-if (-f "/home/barrycarter/ERR/urc.gif") {
-  push(@fly, "copy 924,0,0,0,100,100,/home/barrycarter/ERR/urc.gif");
-}
 
 # send header and output to fly file
 # tried doing this w/ pipe but failed

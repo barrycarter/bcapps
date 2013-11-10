@@ -2796,8 +2796,10 @@ sub mylock {
 
   # murder case
   if ($action eq "murder") {
-    # try to kill process, fail if cant
-    unless (kill_softly($text)) {return 0;}
+    if ($text) {
+      # try to kill process if it exts, fail if cant
+      unless (kill_softly($text)) {return 0;}
+    }
     # now, just a regular lock
     $action = "lock";
   }

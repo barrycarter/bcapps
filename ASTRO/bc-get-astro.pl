@@ -27,7 +27,7 @@ $now = strftime("%H%M%S", localtime($nm));
 %sm = sunmooninfo($lng,$lat,$nm);
 
 # determine moon phase from return info
-$phase = ("new", "crescent", "quarter", "gibbous", "full")[$sm{moon}{phase}/36];
+$phase = ("NEW", "CRES", "QUAR", "GIBB", "FULL")[$sm{moon}{phase}/36];
 # these are fly codes for up and down arrow
 if ($sm{moon}{dir}>0) {$mdir="\x5e"} else {$mdir="\xb7";}
 
@@ -94,7 +94,8 @@ if ($cur eq "sun") {
 if ($moonup) {$str2 = "UP";} else {$str2 = "DOWN";}
 
 # solar elevation in degrees/minutes
-$el = sprintf("(%s%d\xB0%0.2d'%0.2d'') (%0.4f)", dec2deg($sm{sun}{alt}), $sm{sun}{alt});
+# $el = sprintf("(%s%d\xB0%0.2d'%0.2d'') (%0.4f)", dec2deg($sm{sun}{alt}), $sm{sun}{alt});
+$el = sprintf("(%s%d\xB0%0.2d'%0.2d'')", dec2deg($sm{sun}{alt}));
 
 # +30 for rounding, convert times to military time
 map($_=strftime("%H%M",localtime($_+30)), @times);
@@ -105,7 +106,8 @@ my($moondeg) = sprintf("%s%d\xB0%0.2d'%0.2d''", dec2deg($sm{moon}{phase}));
 $writestr = << "MARK";
 $str $el ($now)
 S:$times[6]-$times[7] ($times[4]-$times[5]/$times[2]-$times[3]/$times[0]-$times[1])
-M:$times[8]-$times[9] ($str2) ($mdir$phase) ($moondeg)
+M:$times[8]-$times[9] ($str2)
+$mdir$phase ($moondeg)
 MARK
 ;
 
