@@ -2764,10 +2764,12 @@ sub rotdeg {
     return(rotrad($th*$PI/180,$ax));
 }
 
-=item mylock($name,$action)
+=item mylock($name,$action="lock|unlock|murder")
 
 Takes the lock $name if $action = "lock"; returns the lock $name if
 action = "unlock"
+
+If $action = "murder", kill the process currently holding the lock and take it
 
 returns 1 on success, 0 on failure (including case where lock already held)
 
@@ -2788,7 +2790,17 @@ NOTE: relies on /proc, which is terrible
 sub mylock {
   my($name,$action) = @_;
   my($lockdir) = "/usr/local/etc/locks";
-  my($text);
+  # reading this early (for a file that may not exist) is slightly ugly
+  # avoiding read_file to avoid no such file error(?)
+  my($text) = `cat $lockdir/$name 2> /dev/null`;
+
+  # murder case
+  if ($action eq "murder") {
+    # try to kill process, fail if cant
+    unless (kill_softly($text)) {return 0;}
+    # now, just a regular lock
+    $action = "lock";
+  }
 
   # global override (dangerous, assuming user knows what they're doing)
   if ($globopts{ignorelock}) {return 1;}
@@ -2796,16 +2808,8 @@ sub mylock {
   # if unlocking...
   if ($action eq "unlock") {
 
-    # first check if lockfile exists
-    unless (-f "$lockdir/$name") {
-      warnlocal("Lockfile $lockdir/$name doesn't exist [so no need to unlock]");
-      return 1;
-    }
-
     # check to see that I own lock file, then remove it
-    $text = read_file("$lockdir/$name");
     if ($text eq $$) {
-      # yes its my lock
       unlink("$lockdir/$name");
       return 1;
     }
@@ -2822,17 +2826,14 @@ sub mylock {
     return 1;
   }
 
-  # if locking...
+  # if locking or murdering...
   if ($action eq "lock") {
 
     # if lock doesn't exist, write my PID to it and return success
-    unless (-f "$lockdir/$name") {
+    unless ($text) {
       write_file($$,"$lockdir/$name");
       return 1;
     }
-
-    # lock exists, so read it
-    $text = read_file("$lockdir/$name");
 
     # do I own it?
     if ($text eq $$) {
@@ -4068,6 +4069,35 @@ sub dec2deg {
   my($deg) = @_;
   return $deg>=0?"+":"-", floor(abs($deg)), floor(abs($deg)*60)%60,
     round(abs($deg)*3600)%60;
+}
+
+=item kill_softly($pid)
+
+Attempts to kill $pid, normally at first, but using -9 if
+necessary. Returns 1 on success, 0 on failure (which can occur even
+with kill -9).
+
+NOTE: relies on /proc which is terrible
+
+=cut
+
+sub kill_softly {
+  my($pid) = @_;
+  my($sig);
+
+  for $i (0..6) {
+    # try killing
+    if ($i>=4) {$sig="-9";} else {$sig="";}
+    system("kill $sig $pid");
+    # worked?
+    unless (-d "/proc/$pid") {return 1;}
+    # if not, sleep 1s before next try
+    sleep(1);
+  }
+
+  # still alive?
+  if (-d "/proc/$pid") {return 0;}
+  return 1;
 }
 
 # cleanup files created by my_tmpfile (unless --keeptemp set)
