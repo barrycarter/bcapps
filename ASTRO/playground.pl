@@ -6,6 +6,26 @@ require "/usr/local/lib/bclib.pl";
 use Data::Dumper 'Dumper';
 $Data::Dumper::Indent = 0;
 
+use Astro::MoonPhase qw(phase phasehunt);
+$t = 1384063127.11639;
+print join("\n", phasehunt($t)),"\n";
+@arr = phase($t);
+print "$arr[2]\n";
+
+die "TESTING";
+
+for $i (0..140) {
+  $t = 1383483033+86400*$i/10;
+  %sm = sunmooninfo(-106,35, $t);
+  print "$i $sm{moon}{phase}\n";
+  push(@xs, $i);
+  push(@ys, $sm{moon}{phase});
+#  print $sm{moon}{phase}/$i,"\n";
+}
+
+debug(unfold(linear_regression(\@xs,\@ys)));
+
+die "TESTING";
 
 $lon = 0.;
 $lat = 89.5;

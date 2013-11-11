@@ -26,6 +26,11 @@ $now = strftime("%H%M%S", localtime($nm));
 # current info (for next minute)
 %sm = sunmooninfo($lng,$lat,$nm);
 
+# determine lunar age + nearest major phase
+$sydonic = 29.530589;
+# TODO: this is probably only accurate for waxing moon
+$mage = $sm{moon}{phase}*$sydonic/360;
+
 # determine moon phase from return info
 $phase = ("NEW", "CRES", "QUAR", "GIBB", "FULL")[$sm{moon}{phase}/36];
 # these are fly codes for up and down arrow
@@ -101,7 +106,7 @@ $el = sprintf("(%s%d\xB0%0.2d'%0.2d'')", dec2deg($sm{sun}{alt}));
 map($_=strftime("%H%M",localtime($_+30)), @times);
 
 # mostly testing
-my($moondeg) = sprintf("%s%d\xB0%0.2d'%0.2d''", dec2deg($sm{moon}{phase}));
+my($moondeg) = sprintf("(%0.2fd) %s%d\xB0%0.2d'%0.2d''", $mage, dec2deg($sm{moon}{phase}));
 
 $writestr = << "MARK";
 $str $el ($now)
