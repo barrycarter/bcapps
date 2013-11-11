@@ -1,5 +1,75 @@
 #!/bin/perl
 
+# renames (or confirms name of) many different types of bank/financial
+# files, using text version of their PDF files
+
+# TODO: check for missing statements, report first and last statements
+
+require "/usr/local/lib/bclib.pl";
+
+for $i (@ARGV) {
+  debug("I: $i");
+  unless (-f "$i.txt") {warn "NO TEXT VERSION: $i"; next;}
+  $all = read_file("$i.txt");
+
+  # centurylink
+  if ($all=~/CenturyLink/s) {
+    $fname = handle_centurylink($all);
+  } elsif ($all=~/www\.ally\.com/) {
+    $fname = handle_ally($all);
+  } elsif ($all=~/pnm\.com/i) {
+    $fname = handle_pnm($all);
+  } else {
+    warn "Cannot rename: $i";
+    next;
+  }
+
+  unless ($fname) {
+    warn "NO CONVERSION: $i";
+    next;
+  }
+
+  # if filename already correct, do nothing
+  if ($i eq $fname) {next;}
+  # otherwise, advise move
+  print "mv $i $fname\n";
+
+}
+
+
+sub handle_pnm {
+  my($all) = @_;
+  $all =~/([\d\/]+)\s+1 of/;
+  debug("1: $1");
+}
+
+sub handle_ally {
+  my($all) = @_;
+  my($date);
+
+  if ($all=~/Statement Period [\d\/]+\s+\-\s+([\d\/]+)/) {
+    $date = $1;
+  } elsif ($all=~/Statement Date\s+([\d\/]+)/) {
+    $date = $1;
+  } else {
+    warn "CANNOT PARSE!";
+    return;
+  }
+
+  # ally dates their statements one day ahead
+  return strftime("ally-%m-%d-%Y.pdf", gmtime(str2time($date)+86400));
+}
+
+sub handle_centurylink {
+  my($all) = @_;
+
+  $all=~/Billing Date (.*?)$/m;
+  my($date) = $1;
+  return strftime("centurylink-%m-%d-%Y.pdf", gmtime(str2time($date)));
+}
+
+die "TESTING";
+
 # renames bank of america pdf files based on account number and closing date
 # Account Number: [digits and spaces]
 # Statement Period 12-12-07 through 01-11-08 [latter date counts]
