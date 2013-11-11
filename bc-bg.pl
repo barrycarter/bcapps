@@ -206,5 +206,11 @@ close(A);
 # also copy file since I will need it on other machines
 system("fly -q -i bg.fly -o bg.gif; xv +noresetroot -root -quit bg.gif; cp bg.gif /tmp/bgimage.gif");
 
+# call bc-get-astro.pl for next minute (calling it after generatinv
+# the bg image avoids race condition); must restore timezone
+$ENV{TZ} = "MST7MDT";
+system("/home/barrycarter/BCGIT/ASTRO/bc-get-astro.pl");
+
 # unlock
 mylock("bc-bg.pl","unlock");
+

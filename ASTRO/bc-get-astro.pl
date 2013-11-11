@@ -23,13 +23,15 @@ my($nm) = 60*floor($time/60)+90;
 # in military time
 $now = strftime("%H%M%S", localtime($nm));
 
+my($mage, $nphase, $tnphase) = mooninfo($nm);
+$nphase = ("NM", "FQ", "FM", "LQ", "NM")[$nphase];
+# thing to print after moon phase
+# TODO: add forced sign below
+$mprint = sprintf("%0.2fd;$nphase%0.2fd", $mage, $tnphase);
+debug("M: $mprint");
+
 # current info (for next minute)
 %sm = sunmooninfo($lng,$lat,$nm);
-
-# determine lunar age + nearest major phase
-$sydonic = 29.530589;
-# TODO: this is probably only accurate for waxing moon
-$mage = $sm{moon}{phase}*$sydonic/360;
 
 # determine moon phase from return info
 $phase = ("NEW", "CRES", "QUAR", "GIBB", "FULL")[$sm{moon}{phase}/36];
@@ -106,13 +108,13 @@ $el = sprintf("(%s%d\xB0%0.2d'%0.2d'')", dec2deg($sm{sun}{alt}));
 map($_=strftime("%H%M",localtime($_+30)), @times);
 
 # mostly testing
-my($moondeg) = sprintf("(%0.2fd) %s%d\xB0%0.2d'%0.2d''", $mage, dec2deg($sm{moon}{phase}));
+my($moondeg) = sprintf("%s%d\xB0%0.2d'%0.2d''", dec2deg($sm{moon}{phase}));
 
 $writestr = << "MARK";
 $str $el ($now)
 S:$times[6]-$times[7] ($times[4]-$times[5]/$times[2]-$times[3]/$times[0]-$times[1])
 M:$times[8]-$times[9] ($str2)
-$mdir$phase ($moondeg)
+$mdir$phase ($mprint) [$moondeg]
 MARK
 ;
 

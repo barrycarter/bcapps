@@ -15,7 +15,7 @@
 push(@INC,"/home/barrycarter/BCGIT", "/usr/local/bin/");
 require "bclib.pl";
 require "bc-weather-lib.pl";
-require "bc-kml-lib.pl";
+# require "bc-kml-lib.pl";
 
 # all work in temporary-but-permanent directory
 dodie('chdir("/var/tmp/bcvtp")');

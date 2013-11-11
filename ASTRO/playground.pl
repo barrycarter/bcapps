@@ -17,47 +17,6 @@ print join("\n", phasehunt($t)),"\n";
 @arr = phase($t);
 print "$arr[2]\n";
 
-=item mooninfo($t)
-
-Return, in a hash, the moons age at time $t, the closest major phase,
-and the time to/from that major phase.
-
-Phases: 0 = new, 1 = first quarter, 2 = full, 3 = last quarter, 4 = new
-
-Astro::MoonPhase::phase() does NOT return the correct age
-
-=cut
-
-sub mooninfo {
-  my($t) = @_;
-  my(%rethash);
-
-  my(@phases) = phasehunt($t);
-  $rethash{age} = ($t-$phases[0])/86400;
-
-  # find what two phases I'm between
-  for $i (0..$#phases) {
-    if ($phases[$i] <= $t && $t <= $phases[$i+1]) {
-      $rethash{prevphase} = $i;
-      $rethash{nextphase} = $i+1;
-      last;
-    }
-  }
-
-  # and which one is closer
-  # TODO: can probably do below more efficiently
-  if (abs($phases[$rethash{prevphase}]-$t)<abs($phases[$rethash{nextphase}]-$t)) {
-    $rethash{nearphase} = $rethash{prevphase};
-    $rethash{phasedist} = ($t-$phases[$rethash{prevphase}])/86400;
-  } else {
-    $rethash{nearphase} = $rethash{nextphase};
-    $rethash{phasedist} = ($t-$phases[$rethash{nextphase}])/86400;
-  }
-
-  return %rethash;
-
-}
-
 die "TESTING";
 
 for $i (0..140) {

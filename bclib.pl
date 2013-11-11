@@ -18,6 +18,7 @@ use B;
 use Astro::Nova qw(get_solar_equ_coords get_lunar_equ_coords get_hrz_from_equ
 		   get_solar_rst_horizon get_timet_from_julian
 		   get_julian_from_timet get_lunar_rst get_lunar_phase);
+use Astro::MoonPhase qw(phase phasehunt);
 require JSON;
 
 # include sublibs
@@ -4100,6 +4101,30 @@ sub kill_softly {
   # still alive?
   if (-d "/proc/$pid") {return 0;}
   return 1;
+}
+
+=item mooninfo($t)
+
+Return, as a list, the moons age at time $t, the closest major phase,
+and the time to/from that major phase.
+
+Phases: 0 = new, 1 = first quarter, 2 = full, 3 = last quarter, 4 = new
+
+Astro::MoonPhase::phase() does NOT return the correct age
+
+=cut
+
+sub mooninfo {
+  my($t) = @_;
+  my(%rethash);
+
+  my(@phases) = phasehunt($t);
+  my($age) = ($t-$phases[0])/86400;
+
+  # closest phase
+  my(@phasedist) = sort {abs($phases[$a]-$t) <=> abs($phases[$b]-$t)} (0..4);
+
+  return ($t-$phases[0])/86400, $phasedist[0], ($t-$phases[$phasedist[0]])/86400;
 }
 
 # cleanup files created by my_tmpfile (unless --keeptemp set)
