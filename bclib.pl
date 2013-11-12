@@ -99,6 +99,9 @@ our(%globopts);
 our(%is_tempfile);
 our(%shared);
 
+our(@globopts) = ("debug", "nocache", "tmpdir", "nowarn", "fake", "ignorelock",
+		  "affirm", "keeptemp", "xmessage");
+
 # global options this library supports
 #
 # --debug: print debugging messages
@@ -4125,6 +4128,26 @@ sub mooninfo {
   my(@phasedist) = sort {abs($phases[$a]-$t) <=> abs($phases[$b]-$t)} (0..4);
 
   return ($t-$phases[0])/86400, $phasedist[0], ($t-$phases[$phasedist[0]])/86400;
+}
+
+=item option_check(\@list)
+
+Confirms that all global options are in @list (or are global options
+that this library understands
+
+=cut
+
+sub option_check {
+  my($listref) = @_;
+  my(@l) = @{$listref};
+  push(@l, @globopts);
+  my(%l) = list2hash(@l);
+
+  for $i (keys %globopts) {
+    unless ($l{$i}) {
+      die("OPTION NOT UNDERSTOOD: $i");
+    }
+  }
 }
 
 # cleanup files created by my_tmpfile (unless --keeptemp set)

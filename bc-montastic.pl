@@ -14,7 +14,7 @@ dodie('chdir("/var/tmp/montastic")');
 for $i (split(/\n/,read_file("$ENV{HOME}/montastic.txt"))) {
   if ($i=~/^\#/ || $i=~/^\s*$/) {next;}
   ($user,$pass) = split(":",$i);
-  push(@cmds, "curl -s -H 'Accept: application/xml' -u $user:$pass https://www.montastic.com/checkpoints/index > output-$user");
+  push(@cmds, "curl -s -H 'Accept: application/xml' -u $user:$pass https://www.montastic.com/checkpoints/index >! output-$user");
   push(@files, "output-$user");
 }
 
@@ -39,7 +39,9 @@ for $j (@files) {
     $res=~m%<url>(.*?)</url>%isg;
 
     # error!
-    push(@errors, "$1 [$j]");
+    $user = $j;
+    $user=~s/^output\-//;
+    push(@errors, "$1 [$user]");
   }
 }
 

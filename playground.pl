@@ -29,34 +29,8 @@ $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 use GD;
 
-=item kill_softly($pid)
 
-Attempts to kill $pid, normally at first, but using -9 if
-necessary. Returns 1 on success, 0 on failure (which can occur even
-with kill -9).
-
-NOTE: relies on /proc which is terrible
-
-=cut
-
-sub kill_softly {
-  my($pid) = @_;
-  my($sig);
-
-  for $i (0..6) {
-    # try killing
-    if ($i>=4) {$sig="-9";} else {$sig="";}
-    system("kill $sig $pid");
-    # worked?
-    unless (-d "/proc/$pid") {return 1;}
-    # if not, sleep 1s before next try
-    sleep(1);
-  }
-
-  # still alive?
-  if (-d "/proc/$pid") {return 0;}
-  return 1;
-}
+option_check(["foo","bar"]);
 
 die "TESTING";
 
