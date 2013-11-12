@@ -9,7 +9,7 @@ require "/usr/local/lib/bclib.pl";
 
 for $i (@ARGV) {
   debug("I: $i");
-  unless (-f "$i.txt") {warn "NO TEXT VERSION: $i"; next;}
+  unless (-f "$i.txt") {warnlocal("NO TEXT VERSION: $i"); next;}
   $all = read_file("$i.txt");
 
   # centurylink
@@ -19,13 +19,15 @@ for $i (@ARGV) {
     $fname = handle_ally($all);
   } elsif ($all=~/pnm\.com/i) {
     $fname = handle_pnm($all);
+  } elsif ($all=~/vanguard\.com/) {
+    $fname = handle_vanguard($all);
   } else {
-    warn "Cannot rename: $i";
+    warnlocal("Cannot rename: $i");
     next;
   }
 
   unless ($fname) {
-    warn "NO CONVERSION: $i";
+    warnlocal("NO CONVERSION: $i");
     next;
   }
 
@@ -36,11 +38,36 @@ for $i (@ARGV) {
 
 }
 
+sub handle_vanguard {
+  my($all) = @_;
+  my($date);
+
+  if ($all=~/(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)(.*?\d{4})\,*\s+year-to-date/im) {
+    $date = "$1$2";
+  } elsif ($all=~/ending balance on ([\d\/]+)/is) {
+    $date = $1;
+  } else {
+    warnlocal("CANNOT PARSE!");
+    return;
+  }
+
+  return strftime("vanguard-%m-%d-%Y.pdf", gmtime(str2time($date)));
+}
 
 sub handle_pnm {
   my($all) = @_;
-  $all =~/([\d\/]+)\s+1 of/;
-  debug("1: $1");
+  my($date);
+
+  if ($all =~/([\d\/]+)\s+1 of/) {
+    $date = $1;
+  } elsif ($all=~/Bill Date\s+(.*?)\s+/s) {
+    $date = $1;
+  } else {
+    warnlocal("CANNOT PARSE!");
+    return;
+  }
+
+  return strftime("PNM-%m-%d-%Y.pdf", gmtime(str2time($date)));
 }
 
 sub handle_ally {
@@ -52,7 +79,7 @@ sub handle_ally {
   } elsif ($all=~/Statement Date\s+([\d\/]+)/) {
     $date = $1;
   } else {
-    warn "CANNOT PARSE!";
+    warnlocal("CANNOT PARSE!");
     return;
   }
 
