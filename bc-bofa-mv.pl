@@ -9,18 +9,23 @@ require "/usr/local/lib/bclib.pl";
 
 for $i (@ARGV) {
   debug("I: $i");
+
+  # for vanguard, it might be possible to get directly from PDF
+  my($pdf) = read_file($i);
+
   unless (-f "$i.txt") {warnlocal("NO TEXT VERSION: $i"); next;}
   $all = read_file("$i.txt");
 
-  # centurylink
+  # switch based on pdf or txt contents
   if ($all=~/CenturyLink/s) {
     $fname = handle_centurylink($all);
   } elsif ($all=~/www\.ally\.com/) {
     $fname = handle_ally($all);
   } elsif ($all=~/pnm\.com/i) {
     $fname = handle_pnm($all);
-  } elsif ($all=~/vanguard\.com/) {
-    $fname = handle_vanguard($all);
+  } elsif ($pdf=~/^%%DOC.*RPSS\d+[A-Z]\d+/m) {
+    # TODO: are there non vanguard documents with the regex above?
+    $fname = handle_vanguard($pdf);
   } else {
     warnlocal("Cannot rename: $i");
     next;
@@ -33,13 +38,36 @@ for $i (@ARGV) {
 
   # if filename already correct, do nothing
   if ($i eq $fname) {next;}
+  # is someone else using this fname?
+  if (-f $fname) {
+    warn "can't mv $i $fname; target already exists";
+    next;
+  }
+  # do I plan to given someone else this filname already?
+  if ($target{$fname}) {
+    warn "can't mv $i $fname; already plan to move other file there";
+    next;
+  }
+  $target{$fname} = 1;
   # otherwise, advise move
-  print "mv $i $fname\n";
+  print "mv -i $i $fname\n";
 
 }
 
 sub handle_vanguard {
-  my($all) = @_;
+  my($pdf) = @_;
+
+  # look for odd code (must be caps)
+  unless ($pdf=~/^%%DOC.*RPSS\d+[A-Z](\d+)/m) {
+    warnlocal("NO MATCH IN $i");
+    return;
+  }
+
+  return strftime("vanguard-%m-%d-%Y.pdf", gmtime(str2time($1)+43200)); 
+
+return;
+
+
   my($date);
 
   if ($all=~/(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)(.*?\d{4})\,*\s+year-to-date/im) {
