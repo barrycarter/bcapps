@@ -80,3 +80,5 @@ alias elecstart "sudo pkill -9 vlc; sudo pkill -9 somagic-capture; sudo /bin/nic
 # recollq output tends to scroll by
 alias recollq "recollq \!* | tee /var/tmp/bc-cmd-recollq.txt"
 
+# seeing date to nanosecond isnt superuseful except when 'time' fails
+alias date 'date +"%a %b %d %H:%M:%S.%N %Z %Y"'
