@@ -14,7 +14,7 @@ alias nagclean "find /home/barrycarter/ERR -iname 'nagios.*.err' ! -newer /var/n
 # check all nagios services
 # <h>but mostly show off my insane shell alias</h>
 # TODO: make nagios do this at startup somehow?
-alias nagcheck "grep host_name /var/nagios/status.dat | sort | uniq | cut -d= -f 2 | xargs -I'{}' echo '['`date +%s`']' 'SCHEDULE_FORCED_HOST_SVC_CHECKS;{};'`date +%s` >> /var/nagios/rw/nagios.cmd"
+alias nagcheck "grep host_name /var/nagios/status.dat | sort | uniq | cut -d= -f 2 | xargs -I'{}' echo '['`date +%s`']' 'SCHEDULE_FORCED_HOST_SVC_CHECKS;{};'`\date +%s` >> /var/nagios/rw/nagios.cmd"
 
 # start nagios "my way" (sleep sadly needed since nagios doesn't die instantly)
 # <h>who needs /etc/init.d anyway!</h>
@@ -82,3 +82,6 @@ alias recollq "recollq \!* | tee /var/tmp/bc-cmd-recollq.txt"
 
 # seeing date to nanosecond isnt superuseful except when 'time' fails
 alias date 'date +"%a %b %d %H:%M:%S.%N %Z %Y"'
+
+# quick vnc to my Mac
+alias vnc-bcmac "\vncviewer -geometry 1024x768+3072+768 bcmac&"

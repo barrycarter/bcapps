@@ -11,6 +11,7 @@ use locale;
 # TODO: allow specification of how file is sorted (currently assumed default)
 # TODO: handle corner case of where first/last line matches
 # TODO: show all matches not just first found
+# TODO: in case of fail, show bracketing lines
 my($key, $file) = @ARGV;
 
 $size = -s $file;
@@ -18,37 +19,41 @@ $size = -s $file;
 open(A,$file);
 
 for (;;) {
+  # fail condition
+  if (abs($l-$r)<=1) {last;}
+
   # look between left and right
   $seek = round(($l+$r)/2);
-  debug("LRS: $l, $r, $seek");
   seek(A, $seek, SEEK_SET);
   # discard remainder of this line and pick next line
   <A>;
   $line = <A>;
 
   # if it matches, exit
-  debug("FOO",substr($line,0,length($key)));
   if (substr($line,0,length($key)) eq $key) {last;}
 
   # if not, change left/right range
   if ($key lt $line) {
-    debug("$key lt $line");
     $r = $seek;
   } else {
-    debug("$key gt $line");
     $l = $seek;
   }
 
-  if ($n++ > 25) {die "TESTING";}
+  debug("$l - $r ($seek), $line, $n");
+  if ($n++ > 30) {die "TESTING";}
 }
 
-debug("LINE: $line");
+print $line;
 
 =item unixsort(\@l, $options)
 
 Return the Unix sort of @l under given $options.
 
-Unix sorts differently than Perl!
+Unix sorts differently than Perl (sometimes)
 
 =cut
 
+sub unixsort {
+  my($listref, $options) = @_;
+  # TODO: write this function
+}

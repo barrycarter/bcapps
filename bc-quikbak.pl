@@ -97,7 +97,7 @@ sub get_target {
     warn("Can't find dir for $i");
   }
 
-  if ($aa=~m%^/tmp/%) {warn("$i: tmp file"); return();}
+  if ($aa=~m%^/tmp/%) {debug("$i: tmp file"); return();}
 
   # create directory in backup area if not already there
   unless (-d "$etcdir/$aa") {system("/bin/mkdir", "-p" ,"$etcdir/$aa");}

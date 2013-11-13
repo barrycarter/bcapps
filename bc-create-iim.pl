@@ -21,10 +21,10 @@ require "/home/barrycarter/bc-private.pl";
 $macro = << "MARK";
 TAB T=1
 URL GOTO=https://secure.ally.com/allyWebClient/login.do
-TAG POS=1 TYPE=SPAN ATTR=TXT:log<SP>in
+' TAG POS=1 TYPE=SPAN ATTR=TXT:log<SP>in
 TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:actionForm ATTR=ID:userNamePvtEncrypt CONTENT=$ally{username}
 TAG POS=1 TYPE=INPUT:BUTTON FORM=ID:noautocomplete ATTR=NAME:continue&&VALUE:Continue
-SET !ENCRYPTION NO
+' SET !ENCRYPTION NO
 TAG POS=1 TYPE=INPUT:PASSWORD FORM=NAME:actionForm ATTR=NAME:passwordPvtBlock CONTENT=$ally{password}
 TAG POS=1 TYPE=INPUT:SUBMIT FORM=ID:noautocomplete ATTR=NAME:button&&VALUE:log<SP>in
 URL GOTO=https://secure.ally.com/allyWebClient/downloadAccountActivity.do
