@@ -456,7 +456,8 @@ sub phase {
 	$MoonPar = $Mparallax / $MoonDFrac;
 
 	$pphase = $MoonPhase;
-	$mage = $Synmonth * (fixangle($MoonAge) / 360.0);
+	my(@phases) = phasehunt($pdate);
+	$mage = ($pdate-$phases[0])/86400.;
 	$dist = $MoonDist;
 	$angdia = $MoonAng;
 	$sudist = $SunDist;
