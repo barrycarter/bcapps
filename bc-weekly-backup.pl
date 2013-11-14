@@ -18,6 +18,7 @@ system("/usr/bin/renice 19 -p $$");
 
 debug("CALLING dump_ls()");
 dump_ls();
+die "TESTING";
 debug("CALLING dump_other()");
 dump_other();
 debug("CALLING dump_remote()");
@@ -33,6 +34,39 @@ debug("ALL FINISHED, SIR");
 # subroutinizing this, since it takes forever (and so its nice to test
 # without running this each time)
 sub dump_ls {
+  # below just for reading purposes, cleaned up and run later
+  my($bcpc_cmd) = << "MARK";
+/usr/bin/find / -ls > /cygdrive/c/bcpc-files.txt.new
+echo EOF >> /cygdrive/c/bcpc-files.txt.new
+mv /cygdrive/c/bcpc-files.txt.bz2 /cygdrive/c/bcpc-files.txt.old.bz2
+mv /cygdrive/c/bcpc-files.txt.new /cygdrive/c/bcpc-files.txt
+bzip2 -f -v /cygdrive/c/bcpc-files.txt
+MARK
+;
+
+  my($bcmac_cmd) = << "MARK";
+/usr/bin/find / -ls > /mnt/sshfs/bcmac-files.txt.new
+echo EOF >> /mnt/sshfs/bcmac-files.txt.new
+mv /mnt/sshfs/bcmac-files.txt.bz2 /mnt/sshfs/bcmac-files.txt.old.bz2
+mv /mnt/sshfs/bcmac-files.txt.new /mnt/sshfs/bcmac-files.txt
+bzip2 -f -v /mnt/sshfs/bcmac-files.txt
+MARK
+;
+
+  my($bcunix_cmd) = << "MARK";
+/usr/bin/find / -xdev -ls > $dir/bcunix-files.txt.new
+echo EOF >> $dir/bcunix-files.txt.new
+mv $dir/bcunix-files.txt.bz2 $dir/bcunix-files.txt.old.bz2
+mv $dir/bcunix-files.txt.new $dir/bcunix-files.txt
+bzip2 -f -v $dir/bcunix-files.txt
+MARK
+;
+
+
+  $bcpc_cmd=~s/\n/; /isg;
+  $bcmac_cmd=~s/\n/; /isg;
+  $bcunix_cmd=~s/\n/; /isg;
+
   # TODO: run these safer so I don't autoclobber existing versions
   # generate file lists from all machines (in parallel)
   local(*A);
@@ -40,9 +74,9 @@ sub dump_ls {
   warn "NOT STORING LS LOCALLY!";
   # TODO: hardcoding here is bad
   my($str) = << "MARK";
-ssh $secret{bcpc_user}\@bcpc "/usr/bin/find / -ls > /cygdrive/c/bcpc-files.txt; echo EOF >> /cygdrive/c/bcpc-files.txt; bzip2 -f -v /cygdrive/c/bcpc-files.txt" >&! $dir/bcpc-errs.txt;
-ssh root\@bcmac "/usr/bin/find / -ls > /mnt/sshfs/bcmac-files.txt; echo EOF >> /mnt/sshfs/bcmac-files.txt; bzip2 -f -v /mnt/sshfs/bcmac-files.txt" >&! $dir/bcmac-errs.txt;
-(/usr/bin/find / -xdev -ls > $dir/bcunix-files.txt) >&! $dir/bcunix-errs.txt; echo EOF >> $dir/bcunix-files.txt; bzip2 -f -v $dir/bcunix-files.txt
+ssh $secret{bcpc_user}\@bcpc "$bcpc_cmd" >&! $dir/bcpc-errs.txt;
+ssh root\@bcmac "$bcmac_cmd" >&! $dir/bcmac-errs.txt;
+$bcunix_cmd
 MARK
 ;
   debug("STR: $str");
@@ -71,6 +105,7 @@ MARK
 sub dump_remote {
   local(*A);
   # TODO: update below when I start using bcinfo3
+  # TODO: keep backup copies
   my($str) = << "MARK";
 ssh -i /home/barrycarter/.ssh/id_rsa.bc root\@bcinfonew 'mysqldump --skip-extended-insert=yes wordpress' > $dir/bcinfonew-wordpress.txt; bzip2 -v -f $dir/bcinfonew-wordpress.txt
 ssh -i /home/barrycarter/.ssh/id_rsa.bc root\@bcinfo3 'mysqldump --skip-extended-insert=yes wordpress' > $dir/bcinfo3-wordpress.txt; bzip2 -v -f $dir/bcinfo3-wordpress.txt

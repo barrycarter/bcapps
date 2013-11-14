@@ -26,6 +26,8 @@ for $i (@ARGV) {
   } elsif ($pdf=~/^%%DOC.*RPSS\d+[A-Z]\d+/m) {
     # TODO: are there non vanguard documents with the regex above?
     $fname = handle_vanguard($pdf);
+  } elsif ($all=~/PayPal Account ID/) {
+    $fname = handle_paypal($all);
   } else {
     warnlocal("Cannot rename: $i");
     next;
@@ -52,6 +54,19 @@ for $i (@ARGV) {
   # otherwise, advise move
   print "mv -i $i $fname\n";
 
+}
+
+sub handle_paypal {
+  my($all) = @_;
+
+  if ($all=~/Statement period:.*?\-\s*(.*)$/m) {
+    $date = $1;
+  } else {
+    warnlocal("CANNOT PARSE PAYPAL DATE");
+    return;
+  }
+
+  return strftime("paypal-%m-%d-%Y.pdf", gmtime(str2time($date)+43200));
 }
 
 sub handle_vanguard {
@@ -123,14 +138,9 @@ sub handle_centurylink {
   return strftime("centurylink-%m-%d-%Y.pdf", gmtime(str2time($date)));
 }
 
+# TODO: add bofa code from below
+# TODO: add gap checking code from below
 die "TESTING";
-
-# renames bank of america pdf files based on account number and closing date
-# Account Number: [digits and spaces]
-# Statement Period 12-12-07 through 01-11-08 [latter date counts]
-
-require "/usr/local/lib/bclib.pl";
-$ENV{TZ}="UTC";
 
 for $i (@ARGV) {
   my($acct,$date) = get_acct_date(join("\n",`pdftotext '$i' - 2> /dev/null`));

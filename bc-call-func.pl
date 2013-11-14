@@ -12,6 +12,7 @@ $func=shift(@ARGV)||die("Usage: $0 ...");
 
 # format: argument, file:filename (use contents as arugment), and - (use STDIN as argument)
 for $i (@ARGV) {
+  # TODO: might be better to assign a variable when using file/stdin
     if ($i=~/^file:(.*)/) {
 	push(@args,read_file($1));
     } elsif ($i eq "-") {
@@ -24,6 +25,7 @@ for $i (@ARGV) {
 # quotify and combine
 for $i (@args) {$i="'$i'";}
 $args = join(",",@args);
+debug("$func($args)");
 
 # @res=&$func(@args);
 @res = eval("$func($args)");
