@@ -8,6 +8,25 @@ $Data::Dumper::Indent = 0;
 
 use Astro::MoonPhase qw(phase phasehunt);
 
+# lunar elevation at 89.5,0 at given time
+sub fx {
+  my($t) = @_;
+  my($pos) = Astro::Nova::LnLatPosn->new("lng"=>0,"lat"=>89.5);
+  my($altaz) = get_hrz_from_equ(get_lunar_equ_coords($t), $pos, $t);
+  return $altaz->get_alt()-0.125;
+}
+
+debug(fx(2456623.83105469));
+
+my($res) = findroot(\&fx, 2456623, 2456624, .001);
+my($res2) = findmin(\&fx, 2456623, 2456624, .001);
+
+debug("RES: $res, RES: $res2");
+
+debug(fx($res2));
+
+die "TESTING";
+
 debug(mooninfo(time()));
 
 die "TESTING";

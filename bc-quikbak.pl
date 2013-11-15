@@ -82,7 +82,7 @@ sub get_target {
 
   # ignore emacs droppings, non-files, and non-existent files
   if ($i=~/~$/) {warn("$i: emacs backup"); return ();}
-  unless (-f $i) {warn("$i: not a file"); return();}
+  unless (-f $i) {debug("$i: not a file"); return();}
   unless (@x=stat($i)) {warn("$i: nostat, $!"); return();}
 
   # find canonical directory for file
