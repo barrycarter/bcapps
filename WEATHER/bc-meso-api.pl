@@ -28,10 +28,10 @@ my($token) = $1;
 # using start/end instead of latestobs as per peihong.zhu@utah.edu suggestion
 $url = "http://api.mesowest.net/stations?bbox=-180,-90,180,90&status=active&complete=1&start=$stime&end=$etime&json_format=2&vars=air_temp,dew_point_temperature,wind_speed,wind_direction,wind_gust,pressure,weather_cond_code,qc,remark,raw_ob,air_temp_high_6_hour,air_temp_low_6_hour,air_temp_high_24_hour,air_temp_low_24_hour,created_time_stamp,last_modified&token=$token";
 
-# ($out,$err,$res) = cache_command2("curl -o /var/tmp/mesoapi.txt '$url'", "age=3600");
-$out = read_file("/var/tmp/mesoapi.txt");
+($out,$err,$res) = cache_command2("curl -o /var/tmp/mesoapi.txt '$url'", "age=3600");
+# $out = read_file("/var/tmp/mesoapi.txt");
 # de-JSON-ify
-$json = JSON::from_json($out);
-$out = wrap($out,79);
-debug("OUT: $out, ERR: $err, RES: $res");
-debug(var_dump("json",$json));
+# $json = JSON::from_json($out);
+# $out = wrap($out,79);
+# debug("OUT: $out, ERR: $err, RES: $res");
+# debug(var_dump("json",$json));

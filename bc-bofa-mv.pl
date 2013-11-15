@@ -4,6 +4,9 @@
 # files, using text version of their PDF files
 
 # TODO: check for missing statements, report first and last statements
+# TODO: could really write this more generically with regexs in file
+
+
 
 require "/usr/local/lib/bclib.pl";
 
@@ -28,6 +31,8 @@ for $i (@ARGV) {
     $fname = handle_vanguard($pdf);
   } elsif ($all=~/PayPal Account ID/) {
     $fname = handle_paypal($all);
+  } elsif ($all=~/nmefcu/i) {
+    $fname = handle_nmefcu($all);
   } else {
     warnlocal("Cannot rename: $i");
     next;
@@ -54,6 +59,19 @@ for $i (@ARGV) {
   # otherwise, advise move
   print "mv -i $i $fname\n";
 
+}
+
+sub handle_nmefcu {
+  my($all) = @_;
+
+  # <h>Remember when THRU wasn't a word?</h>
+  if ($all=~/[\d\-]+\s*THRU\s*([\d\-]+)/) {
+    $date = $1;
+  } else {
+    warnlocal("CANNOT PARSE NMEFCU DATE");
+  }
+
+  return strftime("nmefcu-%m-%d-%Y.pdf", gmtime(str2time($date)+43200));
 }
 
 sub handle_paypal {
