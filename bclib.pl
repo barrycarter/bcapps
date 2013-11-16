@@ -4150,6 +4150,42 @@ sub option_check {
   }
 }
 
+=item bc_check_mount($fs)
+
+Checks that $fs is mounted (I know exchange.nagios.org has this, but
+using my own version).
+
+=cut
+
+sub bc_check_mount {
+  my($fs) = @_;
+
+  # stolen from bc-elec-snap which did this first
+  # get the devno for the root device
+  my($out, $err, $res) = cache_command("/usr/local/bin/stat / | grep -i device:");
+  unless ($out=~m%device: (.*?)\s+%i) {
+    print "ERR: could not stat /\n";
+    return 2;
+  }
+
+  my($devroot) = $1;
+  my($out, $err, $res) = cache_command("timed-run 60 /usr/local/bin/stat $fs | grep -i device:");
+  unless ($out=~m%device: (.*?)\s+%i) {
+    print "ERR: could not stat $fs, stdout/err is: $out/$err/$res\n";
+    return 2;
+  }
+
+  my($fsroot) = $1;
+
+  if ($devroot eq $fsroot) {
+    print "ERR: / and $fs have same device number, not mounted\n";
+    return 2;
+  }
+
+  debug("$devroot vs $fsroot");
+  return 0;
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
   debug("END: CLEANING UP TMP FILES");
