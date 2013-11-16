@@ -86,4 +86,7 @@ alias recollq "recollq \!* | tee /var/tmp/bc-cmd-recollq.txt"
 alias date 'date +"%a %b %d %H:%M:%S.%N %Z %Y"'
 
 # quick vnc to my Mac
-alias vnc-bcmac "\vncviewer -geometry 1024x768+3072+768 bcmac&"
+alias vnc-bcmac "\vncviewer -passwd /home/barrycarter/.vnc/passwd-bcmac -geometry 1024x768+3072+768 bcmac&"
+
+# no install script for ccextractor?
+alias ccextractor "/root/build/ccextractor.0.67/linux/ccextractor"
