@@ -6,9 +6,10 @@ require "/usr/local/lib/bclib.pl";
 use Data::Dumper 'Dumper';
 $Data::Dumper::Indent = 0;
 
-use Astro::Nova qw(get_solar_equ_coords get_lunar_equ_coords get_hrz_from_equ
-		   get_solar_rst_horizon get_timet_from_julian
-		   get_julian_from_timet get_lunar_rst get_lunar_phase);
+$observer = Astro::Nova::LnLatPosn->new("lng"=>-106,"lat"=>35);
+# debug($observer->get_lng());
+
+debug(get_body_rst_horizon2(2456614, $observer, \&get_lunar_equ_coords));
 
 =item get_body_rst_horizon2($jd, $observer, $get_body_equ_coords, $horizon)
 
@@ -16,10 +17,34 @@ For Julian day $jd and observer $observer, give the rise/set/transit
 times of body whose coordinates are given by the function
 $get_body_equ_coords; rise and set are computed relative to $horizon
 
+NOTE: $jd should be an integer
+TODO: what is get_dynamical_time_diff() and why do I need it?
+TODO: handle multiple rise/sets in a given day
+
 =cut
 
 sub get_body_rst_horizon2 {
   my($jd, $observer, $get_body_equ_coords, $horizon) = @_;
+
+  # body's ra/dec at $jd+.5
+  my($pos) = &$get_body_equ_coords($jd+.5);
+
+  # local siderial time at midday JD (midnight GMT, 5pm MST, 6pm MDT)
+  my($lst) = fmodp(get_apparent_sidereal_time($jd+.5)+$observer->get_lng()/15,24);
+  # approximate transit time of body (as fraction of day)
+  my($att) = fmodp(0.5+($pos->get_ra()/15-$lst)/24,1);
+
+  # function giving altitude of body for $observer at given time
+  my($f) = sub {get_hrz_from_equ(&$get_body_equ_coords($_[0]), $observer, $_[0])->get_alt()};
+  
+  for ($i=$jd; $i<$jd+1; $i+=0.01) {
+    debug($i,&$f($i));
+  }
+
+#  debug("LST: $lst, MP: ",$pos->get_ra()/15);
+  debug("ATT: $att");
+
+
 }
 
 die "TESTING";
