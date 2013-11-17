@@ -1715,10 +1715,10 @@ sub findroot {
 
 =item findmin (\&f,$a,$d,$e,$maxsteps=50)
 
-A non-calculus technique (the "interval technique", <h>formally known
-as "Caesar's divisa in partes tres" method</h>) to find the minimum of
-f [a one-argument function] on the interval [$a, $d] within $e,
-provided that:
+A non-calculus technique [ternary method] (the "interval technique",
+<h>formally known as "Caesar's divisa in partes tres" method</h>) to
+find the x value for the minimum of f [a one-argument function] on the
+interval [$a, $d] within $e (as measured in x, not f(x)), provided that:
 
   - f is continuous on [$a,$d]
   - f has a UNIQUE local minimum in [$a,$d]
