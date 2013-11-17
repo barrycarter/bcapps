@@ -6,6 +6,7 @@ require "/usr/local/lib/bclib.pl";
 use Data::Dumper 'Dumper';
 $Data::Dumper::Indent = 0;
 
+# TEST CODE
 $observer = Astro::Nova::LnLatPosn->new("lng"=>-106,"lat"=>35);
 $rst = get_body_rst_horizon2(2456614,$observer,\&get_lunar_equ_coords, 1/8.);
 debug($rst->get_rise(), $rst->get_transit(), $rst->get_set());
