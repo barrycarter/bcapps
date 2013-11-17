@@ -31,4 +31,5 @@ emacs
 <kill>
 php-cgi
 /usr/local/bin/bc-echo.pl
+curl
 </kill>

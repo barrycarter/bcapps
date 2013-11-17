@@ -6,7 +6,41 @@ require "/usr/local/lib/bclib.pl";
 use Data::Dumper 'Dumper';
 $Data::Dumper::Indent = 0;
 
-use Astro::MoonPhase qw(phase phasehunt);
+use Astro::Nova qw(get_solar_equ_coords get_lunar_equ_coords get_hrz_from_equ
+		   get_solar_rst_horizon get_timet_from_julian
+		   get_julian_from_timet get_lunar_rst get_lunar_phase);
+
+=item get_body_rst_horizon2($jd, $observer, $get_body_equ_coords, $horizon)
+
+For Julian day $jd and observer $observer, give the rise/set/transit
+times of body whose coordinates are given by the function
+$get_body_equ_coords; rise and set are computed relative to $horizon
+
+=cut
+
+sub get_body_rst_horizon2 {
+  my($jd, $observer, $get_body_equ_coords, $horizon) = @_;
+}
+
+die "TESTING";
+
+$observer = Astro::Nova::LnLatPosn->new("lng"=>-60,"lat"=>70);
+
+# for ($i=2456327.5; $i<2456329; $i+=.01) {
+for ($i=2456329; $i<=2456331; $i++) {
+  print "DAY: $i\n";
+  ($status,$rst) = get_lunar_rst($i, $observer);
+  print "STATUS: $status\n";
+
+  $rst->get_transit();
+
+  $rise = $rst->get_rise();
+  print "RISE: $rise\n";
+  $set = $rst->get_set();
+  print "SET: $set\n\n";
+}
+
+die "TESTING";
 
 # lunar elevation at 89.5,0 at given time
 sub fx {

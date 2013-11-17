@@ -16,14 +16,20 @@ for $i (split(/\n/, $data)) {
 }
 
 for $i (@ARGV) {
+  $disp = $i;
+  $disp=~s/^.*\///;
+
+  # ignore directories
+  unless (-f $i) {
+    warn("$disp: not a real file");
+    next;
+  }
+
   # require full path, but don't display it
   unless ($i=~/^\//) {
     warn ("NOT FULL PATH, IGNORING: $i");
     next;
   }
-
-  $disp = $i;
-  $disp=~s/^.*\///;
 
   if ($decided{$i}) {
     warn("STATUS($disp) already determined, skipping");
@@ -38,7 +44,7 @@ for $i (@ARGV) {
     $child = fork();
     # if I am the child, just vlc and exit
     unless ($child) {
-      exec("vlc \"$i\" >& /dev/null");
+      exec("vlc","--quiet", $i);
     }
   } else {
     print "Skipping...\n";

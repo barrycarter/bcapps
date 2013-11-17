@@ -37,11 +37,12 @@ for $j (@files) {
 
     # offending URL
     $res=~m%<url>(.*?)</url>%isg;
+    my($url) = $1;
 
     # error!
     $user = $j;
     $user=~s/^output\-//;
-    push(@errors, "$1 [$user]");
+    push(@errors, "$url [$user]");
   }
 }
 
