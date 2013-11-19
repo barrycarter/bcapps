@@ -15,7 +15,12 @@
 
 require "/usr/local/lib/bclib.pl";
 
-($tmp1, $tmp2) = (my_tmpfile("cityp"),my_tmpfile("cityq"));
+# search path for geonames2.db
+for $i ("/sites/DB/geonames2.db", "/mnt/sshfs/geonames2.db") {
+  if (-f $i) {$db = $i;}
+}
+
+($tmp1, $tmp2) = (my_tmpfile2("cityp"),my_tmpfile2("cityq"));
 
 for $i (@ARGV) {
   # lc everything
@@ -40,7 +45,7 @@ CREATE INDEX i_count ON match1(count);
 .separator \"\\t\"
 .import $tmp1 match1
 
-ATTACH DATABASE '/sites/DB/geonames2.db' AS geonames;
+ATTACH DATABASE '$db' AS geonames;
 
 SELECT m.orig AS cityq, gn1.geonameid, 
  gn1.asciiname AS city,
