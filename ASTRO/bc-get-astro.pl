@@ -28,10 +28,11 @@ $nphase = ("NM", "FQ", "FM", "LQ", "NM")[$nphase];
 # thing to print after moon phase
 # TODO: add forced sign below
 $mprint = sprintf("%0.2fd;$nphase%0.2fd", $mage, $tnphase);
-debug("M: $mprint");
 
 # current info (for next minute)
 %sm = sunmooninfo($lng,$lat,$nm);
+my($sid) = $sm{sidereal_time};
+my($sidp) = sprintf("LST: %dh%0.2dm", $sid, ($sid*60+.5)%60);
 
 # determine moon phase from return info
 $phase = ("NEW", "CRES", "QUAR", "GIBB", "FULL")[$sm{moon}{phase}/36];
@@ -41,9 +42,10 @@ if ($sm{moon}{dir}>0) {$mdir="\x5e"} else {$mdir="\xb7";}
 # determine closest lunar image for urc.gif (upper right hand corner)
 # if moon is waning, use 360-phase
 my($mimage) = $sm{moon}{phase};
-if ($sm{moon}{dir}<0) {$mimage = 360-$mimage;}
+unless ($sm{moon}{dir}) {$mimage = 360-$mimage;}
 # round to nearest even degree and fill to three places
 $file = sprintf("/home/barrycarter/BCGIT/images/MOON/m%0.3d.gif",round($mimage/2)*2);
+debug("FILE: $file");
 # copying each time here seems really really inefficient
 system("cp -f $file /home/barrycarter/ERR/urc.gif");
 
@@ -108,12 +110,14 @@ $el = sprintf("(%s%d\xB0%0.2d'%0.2d'')", dec2deg($sm{sun}{alt}));
 map($_=strftime("%H%M",localtime($_+30)), @times);
 
 # mostly testing
+unless ($sm{moon}{dir}) {$sm{moon}{phase}*=-1;}
 my($moondeg) = sprintf("%s%d\xB0%0.2d'%0.2d''", dec2deg($sm{moon}{phase}));
 
 $writestr = << "MARK";
 $str $el ($now)
 S:$times[6]-$times[7] ($times[4]-$times[5]/$times[2]-$times[3]/$times[0]-$times[1])
 M:$times[8]-$times[9] ($str2)
+$sidp
 $mdir$phase ($mprint) [$moondeg]
 MARK
 ;

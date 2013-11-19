@@ -37,6 +37,7 @@ for $i (@ARGV) {
   }
 
   $rep = get_response("PLAY?: $disp");
+  if ($rep=~/^q/i) {exit;}
 
   # TODO: allow file rating without mandatory watch
   if ($rep=~/^y$/i) {
@@ -52,6 +53,7 @@ for $i (@ARGV) {
   }
 
   $rep = get_response("(W)atched|(B)ad|(T)owatch list?");
+  if ($rep=~/^q/i) {exit;}
   debug("KILLING: $child");
   system("kill $child");
 

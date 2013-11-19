@@ -3969,7 +3969,10 @@ sub sunmooninfo {
   # construct observer
   my($observer) = Astro::Nova::LnLatPosn->new("lng"=>$lon,"lat"=>$lat);
   # jd2unix() would also do this
-  my($jd) = Astro::Nova::get_julian_from_timet($time);
+  my($jd) = get_julian_from_timet($time);
+
+  # sidereal time
+  $info{sidereal_time} = fmodp(get_apparent_sidereal_time($jd)+$lon/15,24);
 
   # to hold results
   my(%rst);
@@ -4000,19 +4003,19 @@ sub sunmooninfo {
     }
   }
 
-  ($stat,$rst{sun})=Astro::Nova::get_solar_rst_horizon($jd, $observer, -5/6.);
-  ($stat,$rst{moon})=Astro::Nova::get_lunar_rst($jd, $observer);
+  ($stat,$rst{sun})=get_solar_rst_horizon($jd, $observer, -5/6.);
+  ($stat,$rst{moon})=get_lunar_rst($jd, $observer);
 
   for $i ("rise", "set", "transit") {
     for $j ("sun", "moon") {
       # hideous coding, hideous use of eval
-      $info{$j}{$i}=eval("Astro::Nova::get_timet_from_julian(\$rst{$j}->get_$i())");
+      $info{$j}{$i}=eval("get_timet_from_julian(\$rst{$j}->get_$i())");
     }
   }
 
-  my($stat,$rst) = Astro::Nova::get_solar_rst_horizon($jd, $observer, -6.);
-  $info{sun}{dawn} = Astro::Nova::get_timet_from_julian($rst->get_rise());
-  $info{sun}{dusk} = Astro::Nova::get_timet_from_julian($rst->get_set());
+  my($stat,$rst) = get_solar_rst_horizon($jd, $observer, -6.);
+  $info{sun}{dawn} = get_timet_from_julian($rst->get_rise());
+  $info{sun}{dusk} = get_timet_from_julian($rst->get_set());
   return %info;
 }
 

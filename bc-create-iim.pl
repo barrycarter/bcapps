@@ -19,7 +19,8 @@ require "/home/barrycarter/bc-private.pl";
 # and change 'e*' if needed)
 
 $macro = << "MARK";
-TAB T=1
+TAB OPEN
+TAB T=2
 URL GOTO=https://secure.ally.com/allyWebClient/login.do
 ' TAG POS=1 TYPE=SPAN ATTR=TXT:log<SP>in
 TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:actionForm ATTR=ID:userNamePvtEncrypt CONTENT=$ally{username}
@@ -52,7 +53,7 @@ if ($globopts{norun}) {exit 0;}
 
 # run the macro
 # TODO: yes, this is a terrible place to keep my firefox
-($out, $err, $res) = cache_command("/root/build/firefox/firefox -remote 'openURL(http://run.imacros.net/?m=bc-create-ally.iim)'");
+($out, $err, $res) = cache_command("/root/build/firefox/firefox -remote 'openURL(http://run.imacros.net/?m=bc-create-ally.iim,new-tab)'");
 
 # not sure how long it takes to run above command, so wait until
 # trans*.ofx shows up in download directory (and is fairly recent)

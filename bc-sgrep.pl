@@ -44,6 +44,9 @@ for (;;) {
 }
 
 print $line;
+# print <A>;
+# print <A>;
+# print <A>;
 
 =item unixsort(\@l, $options)
 
