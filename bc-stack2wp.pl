@@ -7,7 +7,7 @@
 
 # NOTE: stack API results are gzip compressed
 
-require "bclib.pl";
+require "/usr/local/lib/bclib.pl";
 
 # work in my own directory
 chdir(tmpdir());
@@ -31,10 +31,11 @@ for $i (1..2) {
   ($out) = cache_command("curl 'http://stackauth.com/1.1/sites?page=$i&pagesize=100' | gunzip","age=86400");
   $json = JSON::from_json($out);
   %jhash = %{$json};
+  debug(var_dump("jhash", {%jhash}));
   push(@items, @{$jhash{items}});
 }
 
-debug("ITEMS",@items);
+# debug("ITEMS",@items);
 
 # get data I need
 for $i (@items) {
@@ -45,11 +46,13 @@ for $i (@items) {
   $site_url{$hash2{api_endpoint}} = $hash2{site_url};
 }
 
-debug("FARFA", %site);
+die "TESTING";
 
 # find all my ids
 
 $fname = cache_command("curl 'http://stackauth.com/1.1/users/$assoc_id/associated'","age=86400&retfile=1");
+
+debug("FNAME: $fname");
 
 # warn("Using hardcoded file, since API does not return stack overflow id");
 # kludge inside kludge: gunzip won't accept an uncompressed file
@@ -61,6 +64,8 @@ for $i (@items) {
   %hash = %{$i};
   debug("HASHALPHGA", %hash);
   debug("MAIN", %{$hash{main_site}});
+  debug("HASHXXX",%hash);
+  die "TESTING";
 
   # TODO: weird case, maybe fix later
   if ($hash{site_name} eq "Area 51") {next;}
