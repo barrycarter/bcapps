@@ -1,0 +1,6 @@
+# creates SQLite3 dumps so recollq can index the result (recollq does
+# not appear index sqlite3 files)
+imageOBJS=$(shell echo *.db | perl -pnle 's/\.db/.db.dump.bz2/isg')
+all: $(imageOBJS)
+%.db.dump.bz2: %.db
+	sqlite3 $< .dump | bzip2 > $@
