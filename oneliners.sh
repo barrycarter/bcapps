@@ -1,5 +1,11 @@
 # shell one liners
 
+# symlinks all sqlite dbs in all my firefox profiles and changes
+# extension to db (so Makefile.sqlite can handle them)
+\ls -1 ~/.mozilla/firefox/*/*.sqlite | perl -nle '$x=$_; s/^.*\/firefox\/+//; s/\.sqlite/.db/; s/\//-/isg; print "ln -s $x $_"'
+
+exit;
+
 # random lat/lon/alt in world [alt in m, others in degrees] for
 # stellarium/etc lunar testing
 
