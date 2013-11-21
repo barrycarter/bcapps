@@ -8,46 +8,61 @@ $Data::Dumper::Indent = 0;
 
 # TEST CODE
 $observer = Astro::Nova::LnLatPosn->new("lng"=>-106,"lat"=>35);
-$rst = get_body_rst_horizon2(2456614,$observer,\&get_lunar_equ_coords, 1/8.);
+$rst = get_body_rst_horizon3(2456614,$observer,\&get_lunar_equ_coords, 1/8.);
 debug($rst->get_rise(), $rst->get_transit(), $rst->get_set());
 
-=item get_body_rst_horizon2($jd, $observer, $get_body_equ_coords, $horizon)
+die "TESTING";
+
+=item get_body_rst_horizon($jd, $observer, $get_body_equ_coords, $horizon)
 
 For Julian day $jd and observer $observer, give the rise/set/transit
 times of body whose coordinates are given by the function
 $get_body_equ_coords; rise and set are computed relative to $horizon
 
-NOTE: $jd should be an integer
-TODO: assumes bodys elevation is fairly unimodal 
+NOTE: $jd is expected to be an integer, but routine prob works regardless
+TODO: assumes bodys elevation is fairly unimodal
 
 TODO: what is get_dynamical_time_diff() and why do I need it?
 TODO: handle multiple rise/sets in a given day
 
-TODO: this subroutine is slow; can speed up (at expense of accuracy)
-by tweaking findmax/findmin
-
 =cut
 
-sub get_body_rst_horizon2 {
+sub get_body_rst_horizon3 {
   my($jd, $observer, $get_body_equ_coords, $horizon) = @_;
   # thing Im going to return
   my($ret) = Astro::Nova::RstTime->new();
 
   # TODO: this should be a parameter or something (1/86400. = 1 sec)
-  my($precision) = 1/1440.;
+  my($precision) = 1/8640.;
 
-  # body's ra/dec at $jd+.5
+  # body's ra/dec at $jd+.5 (in degrees, not hours, for RA)
   my($pos) = &$get_body_equ_coords($jd+.5);
 
-  # local siderial time at midday JD (midnight GMT, 5pm MST, 6pm MDT)
-  my($lst) = fmodp(get_apparent_sidereal_time($jd+.5)+$observer->get_lng()/15,24);
+  # function that converts JD to local sidereal time in degrees 0..360
+  # (note that get_apparent_sidereal_time() returns hours, not degrees)
+  my($lst) = sub {fmodp(get_apparent_sidereal_time($_[0])*15+$observer->get_lng(),360)};
+
   # approximate transit/zenith time of body (as fraction of day)
-  my($att) = fmodp(0.5+($pos->get_ra()/15-$lst)/24,1);
+  # TODO: make more accurate by using sidereal, not calendar day?
+  my($att) = fmodp(($pos->get_ra()-&$lst($jd))/360,1);
   # fairly inaccurate (but that's OK) nadir time
   my($atn) = fmodp($att+.5,1);
+  debug("ATT: $att, ATN: $atn");
+  # objects hour angle in degrees at given time (from -180..180)
+  my($f) = sub {fmodn(&$get_body_equ_coords($_[0])->get_ra-&$lst($_[0]),360)};
+
+  debug("F:",&$f(2456614.80682168));
+
+  # find when hour angle is 0 (culmination/zenith), but only if today
+  my($s) = $jd + max($att-.25,0);
+  my($e) = $jd + min($att+.25,1);
+  debug(findroot2($f, $s, $e, $precision));
+
+  warn "TESTING";
+  return;
 
   # altitude of body (above horizon) for $observer at given time
-  my($f) = sub {get_hrz_from_equ(&$get_body_equ_coords($_[0]), $observer, $_[0])->get_alt()-$horizon};
+#  my($f) = sub {get_hrz_from_equ(&$get_body_equ_coords($_[0]), $observer, $_[0])->get_alt()-$horizon};
 
   # the max altitude should occur within 6h of the approximate transit
   # time, but disallow crossing the day line
@@ -90,6 +105,22 @@ sub get_body_rst_horizon2 {
 
   # TODO: I can return more here, including maxalt, minalt, nadir time, etc
   return $ret;
+}
+
+=item fmodn($num, $mod)
+
+Returns the same thing as fmod($num,$mod), result is between -$mod/2
+and +$mod/2
+
+=cut
+
+sub fmodn {
+  my($num,$mod) = @_;
+  my($res) = fmod($num,$mod);
+  # TODO: does this work if $mod is negative?
+  if ($res<-$mod/2) {return $res+$mod;}
+  if ($res>$mod/2) {return $res-$mod;}
+  return $res;
 }
 
 die "TESTING";

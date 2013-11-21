@@ -4190,6 +4190,76 @@ sub bc_check_mount {
   return 0;
 }
 
+
+=item findroot2(\&f, $le, $ri, $e, $options)
+
+Does what findroot() does but chooses more intelligent midpoints using
+"secant method" (plus minor coding improvements)
+
+Find where f [a one-argument function] reaches 0 (to an accuracy of
+$e) between $le and $ri. Stop if $opts{maxsteps} reached before specified
+accuracy. Options:
+
+delta: stop and return when the x difference reaches this value,
+regardless of difference if y value
+
+
+=cut
+
+sub findroot2 {
+  my($f,$le,$ri,$e,$options)=@_;
+  my(%opts) = parse_form("maxsteps=50&$options");
+  debug("MAX: $opts{maxsteps}");
+  my($steps,$mid,$fmid,$fle,$fri);
+
+  # loop "forever"
+  for (;;) {
+    # count steps; return what we have so far if too many
+    if ($steps++>$opts{maxsteps}) {
+      warnlocal("TOO MANY STEPS");
+      return $mid;
+    }
+
+    # value of the function at interval edges
+    # TODO: would caching f() be useful?
+    ($fle,$fri)=(&$f($le),&$f($ri));
+
+    # same sign on both sides of interval? bad!
+    if (signum($fle) == signum($fri)) {
+      warnlocal("INVALID BINARY SEARCH");
+      return();
+    }
+
+    # the weighted "midpoint" and function value
+    $mid = ($ri*$fle - $le*$fri)/($fle-$fri);
+    $fmid=&$f($mid);
+
+    debug("RANGE: $le/$mid/$ri");
+
+    # is x delta small?
+    if ($opts{delta}&&(abs($ri-$le)<$opts{delta})) {return $mid;}
+
+    # close enough? return midpoint
+    if (abs($fmid)<$e) {return($mid);}
+
+    # $mid now becomes either the right or left endpoint
+    if (signum($fmid) == signum($fle)) {$le = $mid;} else {$ri = $mid;}
+  }
+}
+
+=item signum($x)
+
+Returns whether x is positive, negative, or 0.
+
+=cut
+
+sub signum {
+  my($x) = @_;
+  if ($x>0) {return 1;}
+  if ($x<0) {return -1;}
+  return 0;
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
   debug("END: CLEANING UP TMP FILES");

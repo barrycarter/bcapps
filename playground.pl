@@ -31,27 +31,29 @@ use GD;
 
 $f = sub {return $_[0]**2-7};
 
-debug(findroot2($f, 0, 10, 0.01));
+debug(findroot2($f, 0, 10, 0.0000000000000001,"maxsteps=200"));
 
 die "TESTING";
 
-=item findroot2(\&f, $le, $ri, $e, $maxsteps=50, $options)
+=item findroot2(\&f, $le, $ri, $e, $options)
 
 Does what findroot() does but chooses more intelligent midpoints using
 "secant method" (plus minor coding improvements)
 
 Find where f [a one-argument function] reaches 0 (to an accuracy of
-$e) between $le and $ri. Stop if $maxsteps reached before specified
+$e) between $le and $ri. Stop if $opts{maxsteps} reached before specified
 accuracy. Options:
 
 delta: stop and return when the x difference reaches this value,
 regardless of difference if y value
 
+
 =cut
 
 sub findroot2 {
-  my($f,$le,$ri,$e,$maxsteps,$options)=@_;
+  my($f,$le,$ri,$e,$options)=@_;
   my(%opts) = parse_form("maxsteps=50&$options");
+  debug("MAX: $opts{maxsteps}");
   my($steps,$mid,$fmid,$fle,$fri);
 
   # loop "forever"
@@ -73,7 +75,7 @@ sub findroot2 {
     }
 
     # the weighted "midpoint" and function value
-    $mid = (abs($fle)*$le + abs($fri)*$ri)/(abs($fle)+abs($fri));
+    $mid = ($ri*$fle - $le*$fri)/($fle-$fri);
     $fmid=&$f($mid);
 
     debug("RANGE: $le/$mid/$ri");
