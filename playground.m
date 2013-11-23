@@ -825,7 +825,7 @@ ListPlot[Log[Take[fx2,50]],PlotRange->All]
 fx3 = Table[{i,fx2[[i]],convolve[i]},{i,1,50}]
 
 convolve[n_] := Sum[px2[[x]]*Cos[n*x], {x,1,Length[px2]}]
-Plot[convolve[n],{n,31,33}]
+Plot[convolve[n],{n,31,33}, PlotRange->All]
 
 
 

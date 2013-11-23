@@ -9,7 +9,7 @@ ArcTan[-Sin[lst-ra]*Cos[dec],Cos[lat]*Sin[dec]-Sin[lat]*Cos[dec]*Cos[lst-ra]]
 el[ra_,dec_,lst_,lat_] =
 ArcSin[Sin[lat]*Sin[dec]+Cos[lat]*Cos[dec]*Cos[lst-ra]];
 
-el[ra[t],dec[t],t,lat]
+elv[t_] = el[ra[t],dec[t],t,lat]
 
 D[%,t]
 

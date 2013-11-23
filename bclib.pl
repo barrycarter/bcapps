@@ -4208,6 +4208,7 @@ regardless of difference if y value
 
 sub findroot2 {
   my($f,$le,$ri,$e,$options)=@_;
+  debug("FINDROOT2($f,$le,$ri,$e,$options)");
   my(%opts) = parse_form("maxsteps=50&$options");
   debug("MAX: $opts{maxsteps}");
   my($steps,$mid,$fmid,$fle,$fri);
