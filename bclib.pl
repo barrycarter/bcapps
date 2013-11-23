@@ -4234,7 +4234,7 @@ sub findroot2 {
     $mid = ($ri*$fle - $le*$fri)/($fle-$fri);
     $fmid=&$f($mid);
 
-    debug("RANGE: $le/$mid/$ri");
+    debug("RANGE: $le->$fle, $mid->$fmid, $ri->$fri");
 
     # is x delta small?
     if ($opts{delta}&&(abs($ri-$le)<$opts{delta})) {return $mid;}

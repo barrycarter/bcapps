@@ -438,7 +438,7 @@ sub bc_check_domain_exp {
     # cache long time and sleep to avoid overwhelming servers
     my($out,$err,$res) = cache_command2("whois $i", "age=43200");
     # no expiration date?
-    unless ($out=~/^\s*(Expiration Date|Expires on|Domain Expiration Date|Registrar Expiration Date):\s*(.*?)$/m) {
+    unless ($out=~/^\s*(Expiration Date|Expires on|Domain Expiration Date|Registrar Expiration Date|Registrar Registration Expiration Date):\s*(.*?)$/m) {
       print "ERR: No expiration date found: $i\n";
       return 2;
     }

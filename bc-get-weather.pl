@@ -41,6 +41,7 @@ for $i (@{$json->{forecast}->{simpleforecast}->{forecastday}}) {
   $i->{conditions}=~s/chance of rain/RAIN?/isg;
   $i->{conditions}=~s/chance rain/RAIN?/isg;
   $i->{conditions}=~s/thunderstorm/TSTRM!/isg;
+  $i->{conditions}=~s/ice pellets/SLEET/isg;
 
   # want colons to line up!
   $i->{date}->{day}=~s/^(\d)$/0$1/;
