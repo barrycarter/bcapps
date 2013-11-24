@@ -6,12 +6,12 @@ require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/BCGIT/ASTRO/bc-astro-nova.pl";
 
 $observer = Astro::Nova::LnLatPosn->new("lng"=>0,"lat"=>70);
-$observer = Astro::Nova::LnLatPosn->new("lng"=>-106.5,"lat"=>35);
-$observer = Astro::Nova::LnLatPosn->new("lng"=>0,"lat"=>80);
+# $observer = Astro::Nova::LnLatPosn->new("lng"=>-106.5,"lat"=>35);
+# $observer = Astro::Nova::LnLatPosn->new("lng"=>0,"lat"=>80);
 # get_body_rst_horizon2(2456620, $observer, \&get_lunar_equ_coords, 0.125);
 
-# $rep = get_body_rst_horizon3(2456620, $observer, \&get_lunar_equ_coords, 0.125);
-$rep = get_body_rst_horizon3(2456620-33.5, $observer, \&get_solar_equ_coords, -5/6.);
+$rep = get_body_rst_horizon3(2456450.500000, $observer, \&get_lunar_equ_coords, 0.125);
+# $rep = get_body_rst_horizon3(2456620-33.5, $observer, \&get_solar_equ_coords, -5/6.);
 
 debug("REP!");
 debug($rep->get_rise());

@@ -4191,28 +4191,39 @@ sub bc_check_mount {
 }
 
 
-=item findroot2(\&f, $le, $ri, $e, $options)
+=item findroot2(\&g, $le, $ri, $e, $options)
 
-Does what findroot() does but chooses more intelligent midpoints using
-"secant method" (plus minor coding improvements)
+Does what findroot() does but chooses more intelligent midpoints
+optinally using "secant method" (plus minor coding improvements)
 
-Find where f [a one-argument function] reaches 0 (to an accuracy of
+Find where g [a one-argument function] reaches 0 (to an accuracy of
 $e) between $le and $ri. Stop if $opts{maxsteps} reached before specified
 accuracy. Options:
 
 delta: stop and return when the x difference reaches this value,
 regardless of difference if y value
 
+method:
+  - mid: use midpoint method (default [not always fastest, but no spec cases])
+  - weight: use weighted method
+  - weight2: use double weighted method
 
 =cut
 
 sub findroot2 {
-  my($f,$le,$ri,$e,$options)=@_;
+  my($g,$le,$ri,$e,$options)=@_;
   debug("FINDROOT2($f,$le,$ri,$e,$options)");
-  my(%opts) = parse_form("maxsteps=50&$options");
+  my(%opts) = parse_form("maxsteps=50&method=mid&$options");
   # TODO: not happy about this, but needed for real number equivalence?
   my($zeroval) = 5e-8;
   my($steps,$mid,$fmid,$fle,$fri);
+
+  # wrap g in a cache function
+  my(%cache);
+  my($f) = sub {
+    unless ($cache{$_[0]}) {$cache{$_[0]}=&$g($_[0])};
+    return $cache{$_[0]};
+  };
 
   # loop "forever"
   for (;;) {
@@ -4235,15 +4246,17 @@ sub findroot2 {
     # the "target" is the negative of the half smaller absolute value
     # for more rapid convergence
     my($target);
-    if (abs($fle) > abs($fri)) {
-      $target = $fri/-2.;
+    if (abs($fle) > abs($fri)) {$target = $fri/-2.;} else {$target = $fle/-2.;}
+
+    # determine midpoint based on method
+    if ($opts{method}=~/weight/) {
+      $mid = ($ri*$fle - $le*$fri)/($fle-$fri); 
+    } elsif ($opts{method}=~/weight2/) {
+      $mid = ($le*($target-$fri) + $ri*($fle-$target))/($fle-$fri);
     } else {
-      $target = $fle/-2.;
+      $mid = ($le+$ri)/2.;
     }
 
-    # the weighted "midpoint" and function value
-#    $mid = ($ri*$fle - $le*$fri)/($fle-$fri);
-    $mid = ($le*($target-$fri) + $ri*($fle-$target))/($fle-$fri);
     # however, if "midpoint" is $le or $ri, nudge it
     if (abs($mid-$le) < $zeroval) {$mid = $le+$zeroval;}
     if (abs($mid-$ri) < $zeroval) {$mid = $ri-$zeroval;}
