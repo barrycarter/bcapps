@@ -3,88 +3,22 @@
 # libnova playing
 
 require "/usr/local/lib/bclib.pl";
+require "/home/barrycarter/BCGIT/ASTRO/bc-astro-nova.pl";
 
-# $observer = Astro::Nova::LnLatPosn->new("lng"=>0,"lat"=>70);
+$observer = Astro::Nova::LnLatPosn->new("lng"=>0,"lat"=>70);
 $observer = Astro::Nova::LnLatPosn->new("lng"=>-106.5,"lat"=>35);
+$observer = Astro::Nova::LnLatPosn->new("lng"=>0,"lat"=>80);
 # get_body_rst_horizon2(2456620, $observer, \&get_lunar_equ_coords, 0.125);
 
-# $rep = get_body_rst_horizon2(2456620, $observer, \&get_lunar_equ_coords, 0.125);
+# $rep = get_body_rst_horizon3(2456620, $observer, \&get_lunar_equ_coords, 0.125);
+$rep = get_body_rst_horizon3(2456620-33, $observer, \&get_solar_equ_coords, -5/6.);
 
-debug(get_body_minmax_alt(2456620, $observer, \&get_lunar_equ_coords, -1));
+debug("REP!");
+debug($rep->get_rise());
+debug($rep->get_transit());
+debug($rep->get_set());
 
-die "TESTING";
-
-# note: RA in degrees, sidereal time in hours
-
-$jd = 2456373.00448956;
-$jd2 = 2456373.00496863;
-$observer = Astro::Nova::LnLatPosn->new("lng"=>0,"lat"=>70);
-$sc = get_solar_equ_coords($jd)->get_ra();
-$scd = get_solar_equ_coords($jd)->get_dec();
-$st = get_apparent_sidereal_time($jd);
-debug("$sc/$scd,$st");
-
-die "TESTING";
-
-
-for ($i=2456620-5; $i<=2456620+5; $i+=.01) {
-  # the derivative of altitude in 2 minutes
-  $delta = 1/86400.;
-  $m = (get_hrz_from_equ(get_lunar_equ_coords($i+$delta), $observer, $i+$delta)->get_alt() - get_hrz_from_equ(get_lunar_equ_coords($i-$delta), $observer, $i-$delta)->get_alt())/2/$delta;
-  $p = $i-2456620;
-  print "$p $m\n";
-}
-
-die "TESTING";
-
-# for $i (-100..100) {
-#   debug("SEQ", get_solar_equ_coords(2456373+$i/100)->get_ra());
-#   debug("SID", get_apparent_sidereal_time(2456373+$i/100));
-# }
-
-$ajd = get_hrz_from_equ(get_solar_equ_coords($jd), $observer, $jd)->get_alt();
-$ajd2 = get_hrz_from_equ(get_solar_equ_coords($jd2), $observer, $jd2)->get_alt();
-
-debug("$ajd vs $ajd2");
-
-die "TESTING";
-
-$f = sub {get_hrz_from_equ(get_solar_equ_coords($_[0]), $observer, $_[0])->get_alt()};
-
-for $i (-100..100) {
-  $val = &$f(2456373+$i/100);
-  debug("$i: $val");
-}
-
-$an = findmax($f, $jd-.1, $jd+.1, 1e-8);
-debug($an);
-
-$f = sub {fmodn(get_solar_equ_coords($_[0])->get_ra()-get_apparent_sidereal_time($_[0])*15,360)};
-
-$culm = findroot2($f, 2456373, 2456373.5, 0);
-
-debug($culm);
-
-
-
-die "TESTING";
-
-# die "TESTING";
-
-for $i (0..100) {
-  $val = &$f(2456373+$i/100);
-  debug("$i: $val", get_solar_equ_coords(2456373+$i/100)->get_ra(), get_apparent_sidereal_time(2456373+$i/100));
-}
-
-# die "TESTING";
-
-$coords = get_solar_equ_coords(2456373);
-
-# debug(&$f(2456373.00231004));
-debug(&$f(2456373.));
-debug(&$f(2456373.5));
-
-die "TESTING";
+die "TSETING";
 
 =item get_body_minmax_alt($jd, $observer, $get_body_equ_coords, $minmax=-1|1)
 
@@ -120,17 +54,22 @@ sub get_body_minmax_alt {
 
   # $ans may've slipped into next/previous day; if so, look at next/prev day
   if ($ans < $jd) {
-    $ans=findroot2($f,$jd+$att+3/4,$jd+$att+5/4,$precision);
+    $ans=findroot2($f,$jd+$att+3/4,$jd+$att+5/4,0,"delta=$precision");
   } elsif ($ans > $jd+1) {
-    $ans=findroot2($f,$jd+$att-5/4,$jd+$att-3/4,$precision);
+    $ans=findroot2($f,$jd+$att-5/4,$jd+$att-3/4,0,"delta=$precision");
   }
 
-  # if $ans in range now, return it
-  if ($ans>=$jd && $ans<=$jd+1) {return $ans;}
-
-  # if not, look at extrema points and return
+  # compare alt at ans to start/end alts
   my($salt) = get_hrz_from_equ(&$get_body_equ_coords($jd), $observer, $jd)->get_alt();
   my($ealt) = get_hrz_from_equ(&$get_body_equ_coords($jd+1), $observer, $jd+1)->get_alt();
+
+  # if $ans in range now, compare to $salt, $ealt
+  if ($ans>=$jd && $ans<=$jd+1) {
+    my($ansalt) = get_hrz_from_equ(&$get_body_equ_coords($ans), $observer, $ans)->get_alt();
+    if ($salt > $ansalt && $minmax==1) {return $salt;}
+    if ($ealt > $ansalt && $minmax==1) {return $ealt;}
+    
+    
 
   if ($salt > $ealt) {
     return $jd+(1-$minmax)/2;
@@ -139,7 +78,7 @@ sub get_body_minmax_alt {
   }
 }
 
-=item get_body_rst_horizon2($jd, $observer, $get_body_equ_coords, $horizon)
+=item get_body_rst_horizon3($jd, $observer, $get_body_equ_coords, $horizon)
 
 For Julian day $jd and observer $observer, give the rise/set/transit
 times of body whose coordinates are given by the function
@@ -157,178 +96,44 @@ by tweaking findmax/findmin
 
 =cut
 
-sub get_body_rst_horizon2 {
+sub get_body_rst_horizon3 {
   my($jd, $observer, $get_body_equ_coords, $horizon) = @_;
   # thing Im going to return
   my($ret) = Astro::Nova::RstTime->new();
+  # to the nearest second (sheesh)
+  my($precision) = 1/86400;
 
-  # TODO: this should be a parameter or something (1/86400. = 1 sec)
-  my($precision) = 1/1440.;
-
-  # body's ra/dec at $jd+.5
-  my($pos) = &$get_body_equ_coords($jd+.5);
-  debug("POS",$pos->get_ra(),$pos->get_dec());
-
-  # local siderial time at midday JD (midnight GMT, 5pm MST, 6pm MDT)
-  my($lst) = fmodp(get_apparent_sidereal_time($jd+.5)+$observer->get_lng()/15,24);
-  # approximate transit/zenith time of body (as fraction of day)
-  my($att) = fmodp(0.5+($pos->get_ra()/15-$lst)/24,1);
-  # fairly inaccurate (but that's OK) nadir time
-  my($atn) = fmodp($att+.5,1);
-  debug("ATT-ATN: $att-$atn");
-
-  # the psuedo first derivative of the body's elevation
-  my($delta) = 1/1440.;
-  my($f) = sub {(get_hrz_from_equ(&$get_body_equ_coords($_[0]+$delta), $observer, $_[0]+$delta)->get_alt() - get_hrz_from_equ(&$get_body_equ_coords($_[0]-$delta), $observer, $_[0]-$delta)->get_alt())/$delta/2};
-  # the psuedo first derivative of the body's elevation
-  # the max altitude occurs w/in 6 hours of approx transit time (but
-  # may spill over into next day, in which case we must recompute?)
-  my($s) = $jd + $att - 1/4;
-  my($e) = $jd + $att + 1/4;
-  debug("FINDING: maxtime/maxalt");
-  debug("SE: $s, $e");
-  debug("FSE:", &$f($s), &$f($e));
-  my($maxtime) = findroot2($f, $s, $e, $precision);
-
-  # case where maxtime is on wrong day
-  debug("MAXTIMEA: $maxtime");
-  if ($maxtime < $jd) {$maxtime = findroot2($f, $s+1, $e+1, $precision);}
-  if ($maxtime > $jd+1) {$maxtime = findroot2($f, $s-1, $e-1, $precision);}
-  debug("MAXTIMEB: $maxtime");
-
-  my($maxalt) = get_hrz_from_equ(&$get_body_equ_coords($maxtime), $observer, $maxtime)->get_alt()-$horizon;
-  debug("MAXTIME: $maxtime");
-
-  # same for min altitude
-  $s = $jd + $atn - 1/4;
-  $e = $jd + $atn + 1/4;
-  debug("FINDING: mintime/minalt");
-  my($mintime) = findroot2($f, $s, $e, $precision);
+  # find bodys min/max alt times and altitudes (above horizon) at those times
+  my($mintime) = get_body_minmax_alt($jd, $observer, $get_body_equ_coords, -1);
+  my($maxtime) = get_body_minmax_alt($jd, $observer, $get_body_equ_coords, +1);
   my($minalt) = get_hrz_from_equ(&$get_body_equ_coords($mintime), $observer, $mintime)->get_alt()-$horizon;
-  debug("MM: $mintime - $maxtime");
+  my($maxalt) = get_hrz_from_equ(&$get_body_equ_coords($maxtime), $observer, $maxtime)->get_alt()-$horizon;
+
+  debug("RANGE: $mintime,$maxtime,$minalt,$maxalt", get_hrz_from_equ(&$get_body_equ_coords($jd), $observer, $jd)->get_alt()-$horizon, get_hrz_from_equ(&$get_body_equ_coords($jd+1), $observer, $jd+1)->get_alt()-$horizon);
 
   # circumpolar conditions ($minalt/$maxalt gives elevation ABOVE horizon)
   if ($maxalt < 0) {return -1;}
   if ($minalt > 0) {return +1;}
 
-  # if $mintime < $maxtime, find rise efficiently, set inefficiently
-  my($rise,$set);
-  if ($mintime < $maxtime) {
-    debug("RISE1");
-    $rise = findroot2($f, $mintime, $maxtime, $precision);
-    # set may occur from start of day to nadir or zenith to end of day
-    # TODO: it can actually be BOTH!
-    $set = findroot2($f, $jd, $mintime, $precision);
-    # if that returned nothing...
-    unless ($set) {$set = findroot2($f, $maxtime, $jd+1, $precision);}
-  } else {
-    debug("SET1");
-    # if $maxtime < $mintime, find set efficiently, rise inefficiently
-    $set = findroot2($f, $maxtime, $mintime, $precision);
-    # rise is from start of day to zenith or from nadir to end of day
-    $rise = findroot2($f, $jd, $maxtime, $precision);
-    unless ($rise) {$rise = findroot2($f, $mintime, $jd+1, $precision);}
-  }
-
-  # TODO: this could be more efficient methinks
-  $ret->set_rise($rise);
-  $ret->set_set($set);
-  $ret->set_transit($maxtime);
-
-  # TODO: I can return more here, including maxalt, minalt, nadir time, etc
-  return $ret;
-}
-
-# TEST CODE
-$observer = Astro::Nova::LnLatPosn->new("lng"=>-106,"lat"=>35);
-$rst = get_body_rst_horizon3(2456614,$observer,\&get_lunar_equ_coords, 1/8.);
-debug($rst->get_rise(), $rst->get_transit(), $rst->get_set());
-
-die "TESTING";
-
-=item get_body_rst_horizon($jd, $observer, $get_body_equ_coords, $horizon)
-
-For Julian day $jd and observer $observer, give the rise/set/transit
-times of body whose coordinates are given by the function
-$get_body_equ_coords; rise and set are computed relative to $horizon
-
-NOTE: $jd is expected to be an integer, but routine prob works regardless
-TODO: assumes bodys elevation is fairly unimodal
-
-TODO: what is get_dynamical_time_diff() and why do I need it?
-TODO: handle multiple rise/sets in a given day
-
-=cut
-
-sub get_body_rst_horizon3 {
-  my($jd, $observer, $get_body_equ_coords, $horizon) = @_;
-  # thing Im going to return
-  my($ret) = Astro::Nova::RstTime->new();
-
-  # TODO: this should be a parameter or something (1/86400. = 1 sec)
-  my($precision) = 1/8640.;
-
-  # body's ra/dec at $jd+.5 (in degrees, not hours, for RA)
-  my($pos) = &$get_body_equ_coords($jd+.5);
-
-  # function that converts JD to local sidereal time in degrees 0..360
-  # (note that get_apparent_sidereal_time() returns hours, not degrees)
-  my($lst) = sub {fmodp(get_apparent_sidereal_time($_[0])*15+$observer->get_lng(),360)};
-
-  # approximate transit/zenith time of body (as fraction of day)
-  # TODO: make more accurate by using sidereal, not calendar day?
-  my($att) = fmodp(($pos->get_ra()-&$lst($jd))/360,1);
-  # fairly inaccurate (but that's OK) nadir time
-  my($atn) = fmodp($att+.5,1);
-  debug("ATT: $att, ATN: $atn");
-  # objects hour angle in degrees at given time (from -180..180)
-  my($f) = sub {fmodn(&$get_body_equ_coords($_[0])->get_ra-&$lst($_[0]),360)};
-
-  debug("F:",&$f(2456614.80682168));
-
-  # find when hour angle is 0 (culmination/zenith), but only if today
-  my($s) = $jd + max($att-.25,0);
-  my($e) = $jd + min($att+.25,1);
-  debug(findroot2($f, $s, $e, $precision));
-
-  warn "TESTING";
-  return;
-
-  # altitude of body (above horizon) for $observer at given time
-#  my($f) = sub {get_hrz_from_equ(&$get_body_equ_coords($_[0]), $observer, $_[0])->get_alt()-$horizon};
-
-  # the max altitude should occur within 6h of the approximate transit
-  # time, but disallow crossing the day line
-  my($s) = $jd + max($att-.25,0);
-  my($e) = $jd + min($att+.25,1);
-  my($maxtime) = findmax($f, $s, $e, $precision);
-  my($maxalt) = &$f($maxtime);
-
-  # same for min altitude
-  $s = $jd + max($atn-.25,0);
-  $e = $jd + min($atn+.25,1);
-  my($mintime) = findmin($f, $s, $e, $precision);
-  my($minalt) = &$f($mintime);
-
-  # circumpolar conditions (recall $f gives elevation ABOVE horizon)
-  if ($maxalt < 0) {return -1;}
-  if ($minalt > 0) {return +1;}
+  # bodys elevation at time t under given conditions
+  my($f) = sub {get_hrz_from_equ(&$get_body_equ_coords($_[0]), $observer, $_[0])->get_alt()-$horizon};
 
   # if $mintime < $maxtime, find rise efficiently, set inefficiently
   my($rise,$set);
   if ($mintime < $maxtime) {
-    $rise = findroot($f, $mintime, $maxtime, $precision);
+    $rise = findroot2($f, $mintime, $maxtime,0, "delta=$precision");
     # set may occur from start of day to nadir or zenith to end of day
     # TODO: it can actually be BOTH!
-    $set = findroot($f, $jd, $mintime, $precision);
+    $set = findroot2($f, $jd, $mintime,0, "delta=$precision");
+    debug("ALTSET", findroot2($f,$maxtime,$jd+1,0,"delta=$precision"));
     # if that returned nothing...
-    unless ($set) {$set = findroot($f, $maxtime, $jd+1, $precision);}
+    unless ($set) {$set = findroot2($f,$maxtime,$jd+1,0,"delta=$precision");}
   } else {
     # if $maxtime < $mintime, find set efficiently, rise inefficiently
-    $set = findroot($f, $maxtime, $mintime, $precision);
+    $set = findroot2($f, $maxtime, $mintime,0,"delta=$precision&comment=alpha");
     # rise is from start of day to zenith or from nadir to end of day
-    $rise = findroot($f, $jd, $maxtime, $precision);
-    unless ($rise) {$rise = findroot($f, $mintime, $jd+1, $precision);}
+    $rise = findroot2($f, $jd, $maxtime,0, "delta=$precision");
+    unless ($rise) {$rise = findroot2($f,$mintime,$jd+1,0,"delta=$precision");}
   }
 
   # TODO: this could be more efficient methinks
@@ -373,8 +178,6 @@ for ($i=2456329; $i<=2456331; $i++) {
   $set = $rst->get_set();
   print "SET: $set\n\n";
 }
-
-die "TESTING";
 
 # lunar elevation at 89.5,0 at given time
 sub fx {

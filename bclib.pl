@@ -4210,7 +4210,8 @@ sub findroot2 {
   my($f,$le,$ri,$e,$options)=@_;
   debug("FINDROOT2($f,$le,$ri,$e,$options)");
   my(%opts) = parse_form("maxsteps=50&$options");
-  debug("MAX: $opts{maxsteps}");
+  # TODO: not happy about this, but needed for real number equivalence?
+  my($zeroval) = 5e-8;
   my($steps,$mid,$fmid,$fle,$fri);
 
   # loop "forever"
@@ -4233,15 +4234,18 @@ sub findroot2 {
 
     # the weighted "midpoint" and function value
     $mid = ($ri*$fle - $le*$fri)/($fle-$fri);
+    # however, if "midpoint" is $le or $ri, nudge it
+    if (abs($mid-$le) < $zeroval) {$mid = $le+$zeroval;}
+    if (abs($mid-$ri) < $zeroval) {$mid = $ri-$zeroval;}
     $fmid=&$f($mid);
 
-    debug("RANGE: $le->$fle, $mid->$fmid, $ri->$fri");
+    debug("$le -> $fle, $mid -> $fmid, $ri -> $fri");
 
     # is x delta small?
     if ($opts{delta}&&(abs($ri-$le)<$opts{delta})) {return $mid;}
 
     # close enough? return midpoint
-    if (abs($fmid)<$e) {return($mid);}
+    if (abs($fmid)<$e) {return $mid;}
 
     # $mid now becomes either the right or left endpoint
     if (signum($fmid) == signum($fle)) {$le = $mid;} else {$ri = $mid;}
