@@ -28,6 +28,24 @@ use XML::Bare;
 $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 use GD;
+use Algorithm::GoldenSection;
+
+
+# $gs = Algorithm::GoldenSection->new( { function => sub { my $x = shift; my $b = $x * sin($x) - 2 * cos($x); return $b },
+# x_low => 4,
+# x_int => 4.7,} );
+
+$gs = Algorithm::GoldenSection->new({
+function => sub {$_[0]**2},
+x_low => 3,
+x_int => 10
+});
+
+
+my ($x_min, $f_min, $iterations) = $gs->minimise;
+print qq{\nMinimisation results: x a minimum = $x_min, function value at minimum = $f_min. Calculation took $iterations iterations};
+
+die "TESTING";
 
 $f = sub {return $_[0]**2-7};
 

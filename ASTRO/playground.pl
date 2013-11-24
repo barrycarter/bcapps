@@ -8,11 +8,9 @@ require "/usr/local/lib/bclib.pl";
 $observer = Astro::Nova::LnLatPosn->new("lng"=>-106.5,"lat"=>35);
 # get_body_rst_horizon2(2456620, $observer, \&get_lunar_equ_coords, 0.125);
 
-$rep = get_body_rst_horizon2(2456620, $observer, \&get_lunar_equ_coords, 0.125);
+# $rep = get_body_rst_horizon2(2456620, $observer, \&get_lunar_equ_coords, 0.125);
 
-debug($rep->get_rise());
-debug($rep->get_transit());
-debug($rep->get_set());
+debug(get_body_minmax_alt(2456620, $observer, \&get_lunar_equ_coords, -1));
 
 die "TESTING";
 
@@ -88,6 +86,58 @@ debug(&$f(2456373.5));
 
 die "TESTING";
 
+=item get_body_minmax_alt($jd, $observer, $get_body_equ_coords, $minmax=-1|1)
+
+Determine time body reaches minimum/maximum altitude for $observer
+between $jd and $jd+1, where bodys equitorial coordinates are given
+by $get_body_equ_coords, a function.
+
+Uses first derivative for efficiency, but allows for possibility that
+min/max altitude is reached at a boundary condition.
+
+=cut
+
+sub get_body_minmax_alt {
+  my($jd, $observer, $get_body_equ_coords, $minmax) = @_;
+
+  # body's ra/dec at $jd+.5
+  my($pos) = &$get_body_equ_coords($jd+.5);
+  # precision
+  my($precision) = 1/86400;
+
+  # local siderial time at midday JD (midnight GMT, 5pm MST, 6pm MDT)
+  my($lst) = fmodp(get_apparent_sidereal_time($jd+.5)+$observer->get_lng()/15,24);
+  # approximate transit/zenith or nadir time of body (as fraction of day)
+  my($att) = fmodp(1/4+$minmax/4+($pos->get_ra()/15-$lst)/24,1);
+
+  # the psuedo first derivative of the body's elevation
+  my($delta) = 1/86400.;
+  my($f) = sub {(get_hrz_from_equ(&$get_body_equ_coords($_[0]+$delta), $observer, $_[0]+$delta)->get_alt() - get_hrz_from_equ(&$get_body_equ_coords($_[0]-$delta), $observer, $_[0]-$delta)->get_alt())/$delta/2};
+
+  # TODO: can D[object elevation,t] be non-0 for 12h+ (retrograde?)
+  # the max altitude occurs w/in 6 hours of approx transit time
+  my($ans) = findroot2($f, $jd+$att-1/4, $jd+$att+1/4, $precision);
+
+  # $ans may've slipped into next/previous day; if so, look at next/prev day
+  if ($ans < $jd) {
+    $ans=findroot2($f,$jd+$att+3/4,$jd+$att+5/4,$precision);
+  } elsif ($ans > $jd+1) {
+    $ans=findroot2($f,$jd+$att-5/4,$jd+$att-3/4,$precision);
+  }
+
+  # if $ans in range now, return it
+  if ($ans>=$jd && $ans<=$jd+1) {return $ans;}
+
+  # if not, look at extrema points and return
+  my($salt) = get_hrz_from_equ(&$get_body_equ_coords($jd), $observer, $jd)->get_alt();
+  my($ealt) = get_hrz_from_equ(&$get_body_equ_coords($jd+1), $observer, $jd+1)->get_alt();
+
+  if ($salt > $ealt) {
+    return $jd+(1-$minmax)/2;
+  } else {
+    return $jd+($minmax+1)/2;
+  }
+}
 
 =item get_body_rst_horizon2($jd, $observer, $get_body_equ_coords, $horizon)
 
@@ -130,21 +180,28 @@ sub get_body_rst_horizon2 {
   # the psuedo first derivative of the body's elevation
   my($delta) = 1/1440.;
   my($f) = sub {(get_hrz_from_equ(&$get_body_equ_coords($_[0]+$delta), $observer, $_[0]+$delta)->get_alt() - get_hrz_from_equ(&$get_body_equ_coords($_[0]-$delta), $observer, $_[0]-$delta)->get_alt())/$delta/2};
-
-  # the max altitude should occur within 6h of the approximate transit
-  # time, but disallow crossing the day line
-  my($s) = $jd + max($att-.25,0);
-  my($e) = $jd + min($att+.25,1);
+  # the psuedo first derivative of the body's elevation
+  # the max altitude occurs w/in 6 hours of approx transit time (but
+  # may spill over into next day, in which case we must recompute?)
+  my($s) = $jd + $att - 1/4;
+  my($e) = $jd + $att + 1/4;
   debug("FINDING: maxtime/maxalt");
   debug("SE: $s, $e");
   debug("FSE:", &$f($s), &$f($e));
   my($maxtime) = findroot2($f, $s, $e, $precision);
+
+  # case where maxtime is on wrong day
+  debug("MAXTIMEA: $maxtime");
+  if ($maxtime < $jd) {$maxtime = findroot2($f, $s+1, $e+1, $precision);}
+  if ($maxtime > $jd+1) {$maxtime = findroot2($f, $s-1, $e-1, $precision);}
+  debug("MAXTIMEB: $maxtime");
+
   my($maxalt) = get_hrz_from_equ(&$get_body_equ_coords($maxtime), $observer, $maxtime)->get_alt()-$horizon;
   debug("MAXTIME: $maxtime");
 
   # same for min altitude
-  $s = $jd + max($atn-.25,0);
-  $e = $jd + min($atn+.25,1);
+  $s = $jd + $atn - 1/4;
+  $e = $jd + $atn + 1/4;
   debug("FINDING: mintime/minalt");
   my($mintime) = findroot2($f, $s, $e, $precision);
   my($minalt) = get_hrz_from_equ(&$get_body_equ_coords($mintime), $observer, $mintime)->get_alt()-$horizon;
