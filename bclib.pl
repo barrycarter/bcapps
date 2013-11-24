@@ -4232,8 +4232,18 @@ sub findroot2 {
       return();
     }
 
+    # the "target" is the negative of the half smaller absolute value
+    # for more rapid convergence
+    my($target);
+    if (abs($fle) > abs($fri)) {
+      $target = $fri/-2.;
+    } else {
+      $target = $fle/-2.;
+    }
+
     # the weighted "midpoint" and function value
-    $mid = ($ri*$fle - $le*$fri)/($fle-$fri);
+#    $mid = ($ri*$fle - $le*$fri)/($fle-$fri);
+    $mid = ($le*($target-$fri) + $ri*($fle-$target))/($fle-$fri);
     # however, if "midpoint" is $le or $ri, nudge it
     if (abs($mid-$le) < $zeroval) {$mid = $le+$zeroval;}
     if (abs($mid-$ri) < $zeroval) {$mid = $ri-$zeroval;}

@@ -11,7 +11,7 @@ $observer = Astro::Nova::LnLatPosn->new("lng"=>0,"lat"=>80);
 # get_body_rst_horizon2(2456620, $observer, \&get_lunar_equ_coords, 0.125);
 
 # $rep = get_body_rst_horizon3(2456620, $observer, \&get_lunar_equ_coords, 0.125);
-$rep = get_body_rst_horizon3(2456620-33, $observer, \&get_solar_equ_coords, -5/6.);
+$rep = get_body_rst_horizon3(2456620-33.5, $observer, \&get_solar_equ_coords, -5/6.);
 
 debug("REP!");
 debug($rep->get_rise());
@@ -59,23 +59,22 @@ sub get_body_minmax_alt {
     $ans=findroot2($f,$jd+$att-5/4,$jd+$att-3/4,0,"delta=$precision");
   }
 
-  # compare alt at ans to start/end alts
-  my($salt) = get_hrz_from_equ(&$get_body_equ_coords($jd), $observer, $jd)->get_alt();
-  my($ealt) = get_hrz_from_equ(&$get_body_equ_coords($jd+1), $observer, $jd+1)->get_alt();
+  # altitudes at various times (exclude $ans if its STILL out of range)
+  my(%alts);
 
-  # if $ans in range now, compare to $salt, $ealt
-  if ($ans>=$jd && $ans<=$jd+1) {
-    my($ansalt) = get_hrz_from_equ(&$get_body_equ_coords($ans), $observer, $ans)->get_alt();
-    if ($salt > $ansalt && $minmax==1) {return $salt;}
-    if ($ealt > $ansalt && $minmax==1) {return $ealt;}
-    
-    
-
-  if ($salt > $ealt) {
-    return $jd+(1-$minmax)/2;
-  } else {
-    return $jd+($minmax+1)/2;
+  for $i ($jd, $ans, $jd+1) {
+    if ($i>=$jd && $i<=$jd+1) {
+      debug("I: $i");
+      $alts{$i} = 
+	get_hrz_from_equ(&$get_body_equ_coords($i), $observer, $i)->get_alt();
+    }
   }
+
+  # sort hash by value
+  my(@l) = sort {$alts{$a} <=> $alts{$b}} (keys %alts);
+  # and return desired value
+  if ($minmax==-1) {return $l[0];}
+  if ($minmax==+1) {return $l[$#l];}
 }
 
 =item get_body_rst_horizon3($jd, $observer, $get_body_equ_coords, $horizon)
