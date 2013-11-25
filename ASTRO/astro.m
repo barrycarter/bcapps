@@ -2,57 +2,38 @@
  http://astronomy.stackexchange.com/questions/937/ and similar
  *)
 
-az[ra_,dec_,lst_,lat_] =
-ArcTan[-Sin[lst-ra]*Cos[dec],Cos[lat]*Sin[dec]-Sin[lat]*Cos[dec]*Cos[lst-ra]]
-;
+(* elevation of object given hour angle, declination, latitude *)
 
-el[ra_,dec_,lst_,lat_] =
-ArcSin[Sin[lat]*Sin[dec]+Cos[lat]*Cos[dec]*Cos[lst-ra]];
+elev[ha_,dec_,lat_] = 
+ArcSin[Sin[lat]*Sin[dec]+Cos[lat]*Cos[dec]*Cos[ha]];
 
-Plot[el[0,0+t/2,t,60 Degree],{t,0,2*Pi}]
-
-Plot[el[t/28.,0-t/8,t,80 Degree],{t,0,2*Pi}]
-
-D[el[ra,dec,lst,lat],lst]
+elev[c1+(27/28)*t, Cos[t+c2]/60, lat]
 
 
-elv[t_] = el[ra[t],dec[t],t,el3]
+elevdha[ha_,dec_,lat_] = D[elev[ha,dec,lat],ha]
+elevddec[ha_,dec_,lat_] = D[elev[ha,dec,lat],dec]
 
-el3[ha_,dec_,lat_,t_] =
-ArcSin[Sin[lat]*Sin[dec[t]]+Cos[lat]*Cos[dec[t]]*Cos[ha[t]]];
+D[elev[c+(30/31)*t, dec,lat],t]
 
-ArcSin[Sin[lat]*Sin[dec]+Cos[lat]*Cos[dec]*Cos[t]] /.
-{lat -> 70 Degree, dec -> 13 Degree}
-
-ArcSin[Sin[lat]*Sin[dec+2*t]+Cos[lat]*Cos[dec+2*t]*Cos[t]] /.
-{lat -> 70 Degree, dec -> 13 Degree}
-
-D[ArcSin[Sin[lat]*Sin[dec[t]]+Cos[lat]*Cos[dec[t]]*Cos[t]],t] /.
-{lat -> 80 Degree, dec[t] -> 23 Degree, dec'[t]->0}
-
-Plot[%,{t,0,2*Pi}]
-
-moved[ha_,dec_,lat_,t_] = Simplify[Numerator[D[el3[ha,dec,lat,t],t]]]
-
-% /. {ha'[t] -> t+1/30, dec'[t] -> 1/60}
+D[elev[c+(30/31)*t, dec,lat],t] /. lat -> 60 Degree
 
 
+Solve[D[elev[c+(30/31)*t, dec,lat],t]==1/60]
 
-D[%,t]
+Solve[elevdha[ha,dec,lat]==elevddec[ha,dec,lat]]
 
-el[ra,Pi/2-lat,lst,lat]
+Sin[ha] -> Cos[ha] Tan[dec] - Tan[lat]
 
+Solve[Sin[ha]==Cos[ha] Tan[dec] - Tan[lat]]
 
-D[el[ra,dec,lst,lat],lst] /. lst-ra -> Pi
+(* at ha==0, the above is just dec==+-lat *)
 
-el[dec_, lat_, ha_] = ArcSin[Sin[lat]*Sin[dec]+Cos[lat]*Cos[dec]*Cos[ha]];
+Solve[Sin[1] == Cos[1]*Tan[dec] - Tan[50. Degree]]
 
-el[Pi-lat,lat,ha] /. ha -> Pi
+(* a 75 degree object at 50 lat *)
 
-Solve[el[Pi-lat,lat,ha]==0, ha]
+Plot[elev[t,75 Degree,50 Degree],{t,0,2*Pi}]
+Plot[elevdha[ha,75 Degree,50 Degree], {ha,0,2*Pi}]
 
-
-D[el[dec,lat,ha],ha]
-
-D[el[dec,lat,ha],ha,ha]
+Plot[elev[t*(30/31),0,60 Degree],{t,0,2*Pi}]
 
