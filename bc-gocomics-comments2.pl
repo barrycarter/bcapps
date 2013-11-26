@@ -26,7 +26,7 @@ if ($globopts{file}) {
   ($page) = cache_command2("curl -H 'Accept: text/html' -A 'gocomics\@barrycarter.info' http://www.gocomics.com/comments/page/1", "age=60");
 }
 
-unless ($page) {die "Empty or nonexistent page";}
+unless ($page) {warn "Empty or nonexistent page";}
 #debug("PAGE: $page");
 
 # this appears to be better way to get comments

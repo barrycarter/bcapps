@@ -36,4 +36,6 @@ ArcSin[Sin[lat]*Sin[dec[t]]+Cos[lat]*Cos[dec[t]]*Cos[ha[t]]]
 elevdelta[t_, lat_] = D[elev[t,lat],t]
 
 (* since denominator can't be 0... *)
-Numerator[elevdelta[t,lat]]
+Numerator[elevdelta[t,lat]] // TeXForm
+
+
