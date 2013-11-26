@@ -3,6 +3,7 @@
 # Gets local weather from wunderground API solely to print on X root window
 # runs from cron every 10m
 # -show: print out string I send to file
+# -test: in testing mode, use cached data more
 
 push(@INC,"/usr/local/lib");
 require "bclib.pl";
@@ -22,14 +23,6 @@ $json = JSON::from_json($out);
 
 # <h>intermediate variables are for sissies!</h>
 for $i (@{$json->{forecast}->{simpleforecast}->{forecastday}}) {
-
-  # for now, only want today/tomorrow forecost
-  # testing it w/o limits
-#  if ($i->{period} > 2) {next;}
-
-  debug("ALPHA: ",$i->{date}->{weekday_short});
-
-  debug("PER: $i->{period}, $i->{date}->{day}");
 
   # to save screen "real estate", shorten some conditions
   # TODO: do this better
@@ -83,36 +76,12 @@ $wind = join("",
 	     $json->{current_observation}->{pressure_in}, "in)"
 );
 
-# more accurate lunar age, nearest phase
-($age, $nphase, $dist) = moon_age();
-
-# lunar phase (these are my own definitions)
-# <h>This code brought to you by the Insane School of Hideous Programming</h>
-$moonphase =("waxing new", "waxing crescent", "waxing quarter", "waxing gibbous", "waxing full", "waning full", "waning gibbous", "waning quarter", "waning crescent", "waning new")[5*$age/(29.530589/2)];
-
-# using arrows courtesy fly
-$moonphase=~s/waxing\s*/\x5e/isg;
-$moonphase=~s/waning\s*/\xb7/isg;
-
-# even shorter
-$moonphase=~s/(.)(.{4}).*$/$1.uc($2)/iseg;
-
-# age for printing
-$mage = sprintf("%0.2f",$age);
-
-# nearest phase for printing (remove all non caps)
-$nphase=~s/[^A-Z]//sg;
-$dist = sprintf("%0.2f",$dist);
-$pphase = "$nphase${dist}d";
-$moonphase.=" (${mage}d;$pphase)";
-
-# how many days of forecast to print?
+# moon info now printed by bc-get-astro, removed below
 $forecast = join("\n",@forecast[0..6]);
 
 # print in order I want (even if I change mind later)
 # some astro functions absorbed by bc-get-astro.pl
 $str = << "MARK";
-$moonphase
 \@$time
 $current
 $wind
@@ -126,68 +95,3 @@ if ($globopts{show}) {print $str;}
 
 # and write to info file
 write_file_new($str, "/home/barrycarter/ERR/forecast.inf");
-
-=item sunriseset()
-
-Determine today's sunrise/set and various twilight start/ends from abqastro.db
-
-TODO: extend this to arbitrary day?
-
-=cut
-
-sub sunriseset {
-  my($query) = "SELECT event, strftime('%H%M', time) AS time FROM abqastro WHERE DATE(time)=DATE('now','localtime') ORDER BY time";
-  my(%hash);
-  for $i (sqlite3hashlist($query, "/home/barrycarter/BCGIT/db/abqastro.db")) {
-    $hash{$i->{event}} = $i->{time};
-  }
-  return %hash;
-}
-
-=item moonriseset()
-
-For bc-get-weather, determine today's moon rise and following set
-time, with the following rules:
-
-  - If there is a moonrise today, use it.
-
-  - If there is no moonrise today, use yesterday's moonrise, but mark it as so
-
-  - Use the moonset following the moonrise above (not necessarily's today's moonset)
-
-  - If using tomorrow's moonset, mark it as so
-
-NOTE: cheating and using 'now' below, so this function does NOT work
-for times other than "now".
-
-=cut
-
-sub moonriseset {
-  my($rise,$set);
-  my(%date);
-  my(%hash);
-
-  # determine yyyy-mm-dd for today +- 1 day
-  for $i (-1..1) {
-    $date{$i} = strftime("%Y-%m-%d", localtime($now+$i*86400));
-  }
-
-  # find MR/MS for today +- 1 day
-  my($query) = "SELECT event, strftime('%Y-%m-%d', time) AS date, strftime('%H%M', time) AS time FROM abqastro WHERE event IN ('MR','MS') AND DATE(time) IN ('$date{-1}', '$date{0}', '$date{1}')";
-  my(@res) = sqlite3hashlist($query, "/home/barrycarter/BCGIT/db/abqastro.db");
-
-  # create hash from results
-  for $i (@res) {
-    debug("$i->{date}, $i->{event} -> $i->{time}");
-    $hash{$i->{date}}{$i->{event}} = $i->{time};
-  }
-
-  # if today's moon sets later than it rises, return rise/set
-  if ($hash{$date{0}}{MS} > $hash{$date{0}}{MR}) {
-    return "$hash{$date{0}}{MR}-$hash{$date{0}}{MS}";
-  }
-
-  # otherwise, return yesterday rise - today set, today rise - tomorrow set
-  return "\xb7$hash{$date{-1}}{MR}-$hash{$date{0}}{MS},$hash{$date{0}}{MR}-$hash{$date{1}}{MS}^";
-}
-

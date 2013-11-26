@@ -26,8 +26,12 @@ $now = strftime("%H%M%S", localtime($nm));
 my($mage, $nphase, $tnphase) = mooninfo($nm);
 $nphase = ("NM", "FQ", "FM", "LQ", "NM")[$nphase];
 # thing to print after moon phase
-# TODO: add forced sign below
-$mprint = sprintf("%0.2fd;$nphase%0.2fd", $mage, $tnphase);
+# TODO: this is ugly way to force sign printing
+if ($tnphase > 0) {
+  $mprint = sprintf("%0.2fd;$nphase+%0.2fd", $mage, $tnphase);
+} else {
+  $mprint = sprintf("%0.2fd;$nphase-%0.2fd", $mage, $tnphase);
+}
 
 # current info (for next minute)
 %sm = sunmooninfo($lng,$lat,$nm);

@@ -4,7 +4,7 @@
 # entries are "hhmmss" and finds the largest gaps
 
 require "/usr/local/lib/bclib.pl";
-my($all) = cmdfile();
+my($all,$name) = cmdfile();
 
 for $i (split(/\n/, $all)) {
   $i=~s/\s+.*$//;
@@ -20,10 +20,9 @@ for $i (split(/\n/, $all)) {
   $lasti = $i;
 }
 
-for $i (@gaps) {
-  debug("$i->{gap}, $i->{label}");
+for $i (sort {$b->{gap} <=> $a->{gap}} @gaps) {
+  print "$name: $i->{label} $i->{gap}\n";
 }
-
 
 
 

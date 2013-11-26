@@ -31,61 +31,6 @@ debug($rep->get_set());
 
 die "TSETING";
 
-=item get_usno_calendar($year, $longitude, $latitude, $type="[mscna]"
-
-Obtain the USNO moon/sun rise/set/twilight table for $year at
-$longitude, $latitude
-(http://aa.usno.navy.mil/data/docs/RS_OneYear.php).
-
-Placename is always blank, timezone is always GMT, no DST corrections.
-
-This is primarily to compare Astro::Nova to USNO, especially at
-extreme latitudes.
-
-$type is:
-
-m - moonrise/set
-s - sunrise/set
-c - civil twilight
-n - nautical twilight
-a - astronomical twilight
-
-=cut
-
-sub get_usno_calendar {
-  my($year, $longitude, $latitude, $type) = @_;
-
-  # converts $type to value of type for USNO
-  my(%convert)=("s"=>0,"m"=>1,"c"=>2,"n"=>3,"a"=>4);
-  unless (length($convert{$type})) {warn "$type not understood"; return;}
-
-  # if we have this cached return it
-  my($file) = "/usr/local/etc/astro/$year,$longitude,$latitude,$type";
-  if (-f $file) {return $file;}
-
-  # the post URL
-  my($url) = "http://aa.usno.navy.mil/cgi-bin/aa_rstablew.pl";
-
-  # xx0 = sign of longitude, xx1 = degrees of longitude, xx2 = minutes of long.
-  # yy[012] = same for latitude
-
-  # longitude string
-  my(@l) = dec2deg($longitude);
-  my($lnstring) = sprintf("xx0=%d&xx1=%d&xx2=%d", $l[0] eq "-"?-1:1, $l[1], $l[2]);
-
-  # latitude string
-  @l = dec2deg($latitude);
-  my($latstring) = sprintf("yy0=%d&yy1=%d&yy2=%d", $l[0] eq "-"?-1:1, $l[1], $l[2]);
-
-  # zz0 = sign of timezone, zz1 = value of timezone, xxy= year
-  # FFX=2: using second form on page; ZZZ=END (necessary)
-  my($str) = "FFX=2&xxy=$year&type=$convert{$type}&zz1=0&zz0=1&$lnstring&$latstring&ZZZ=END";
-
-  # its somewhat surprising that USNO accepts GET values, but they do
-  my($out,$err,$res) = cache_command2("curl -o $file '$url?$str'","age=86400");
-  return $file;
-}
-
 =item get_body_minmax_alt($jd, $observer, $get_body_equ_coords, $minmax=-1|1)
 
 Determine time body reaches minimum/maximum altitude for $observer
@@ -208,22 +153,6 @@ sub get_body_rst_horizon3 {
 
   # TODO: I can return more here, including maxalt, minalt, nadir time, etc
   return $ret;
-}
-
-=item fmodn($num, $mod)
-
-Returns the same thing as fmod($num,$mod), result is between -$mod/2
-and +$mod/2
-
-=cut
-
-sub fmodn {
-  my($num,$mod) = @_;
-  my($res) = fmod($num,$mod);
-  # TODO: does this work if $mod is negative?
-  if ($res<-$mod/2) {return $res+$mod;}
-  if ($res>$mod/2) {return $res-$mod;}
-  return $res;
 }
 
 die "TESTING";
