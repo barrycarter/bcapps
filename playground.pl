@@ -32,11 +32,109 @@ use Algorithm::GoldenSection;
 use Inline::Python;
 use FFI::Raw;
 
+cache_command2([\&cos, [1]]);
+
+die "TESTING";
+
+cache_perl_func(\&cos, [1]);
+
+=item cache_perl_func(\&f,\@args,$options)
+
+Given a reference to a function f and a reference to a list of
+arguments @args, evaluate f(@args), but cache the results. Similar to
+cache_command()/cache_command2() but for functions.
+
+Options:
+
+ salt=xyz: store results in file determined by hashing function w/ salt
+ (useful if running multiple instances of the same function)
+
+ age=n: if output file is less than n seconds old + no error, return cached
+
+ fake=1: dont run the command at all, just say what would be done
+
+NOTE: this replicates much of the functionality of Memoize, but with
+slight differences.
+
+=cut
+
+sub cache_perl_func {
+  my($f,$args,$options) = @_;
+  my($now) = time(); # useful to know when run above/beyond file timestamp
+  my($cached) = 0; # default: not cached
+  my(%opts) = parse_form($options);
+
+  # the (hopefully-but-not-always-unique) string defining this function call
+  my($cmd) = join("\n", "FUNCTION", (var_dump("f",$f), var_dump("args",$args)));
+  # filename
+  my($file) = sha1_hex("$opts{salt}$cmd$opts{salt}");
+  # split into two levels of subdirs
+  $file=~m/^(..)(..)/;
+  my($d1,$d2) = ($1, $2);
+  # put in /var/tmp/cache (add username to avoid collision)
+  $file = "/var/tmp/cache/$d1/$d2/$file-$ENV{USER}";
+  # make sure dir exists
+  unless (-d "/var/tmp/cache/$d1/$d2") {
+    # /tmp style directory
+    system("mkdir -p /var/tmp/cache/$d1/$d2; chmod -f 1777 /var/tmp/cache/$d1 /var/tmp/cache/$d1/$d2");
+  }
+
+  # TODO: slightly inefficient to compute this when unneeded
+  my($fileage) = (-M $file)*86400;
+
+  # TODO: using same global option for not caching system calls an functions
+  # calls = bad?
+  if ($globopts{nocache}) {
+    # if global nocache, then not cached
+    debug("--nocache, not cached");
+  } elsif (!(-f $file)) {
+    debug("$file does not exist, not cached");
+  } elsif ($opts{age}<=0) {
+    # setting age=-1 can be useful for testing (instead of just omitting age=)
+    debug("opts{age} < 0, not cached");
+  } elsif ($fileage > $opts{age}) {
+    debug("$file age $fileage > opts{age} $opts{age}, not cached");
+  } else {
+    debug("result cached in $file ($fileage <= $opts{age})");
+    $cached = 1;
+  }
+
+  unless ($cached) {
+    # if fake, just say command would be run
+    if ($opts{fake}) {return "NOT CACHED: $command";}
+    # otherwise, run command
+    my($res) = system("($command) 1> $file-out 2> $file-err");
+    my($stdout,$stderr) = (read_file("$file-out"), read_file("$file-err"));
+    # delete now unneeded files
+    unlink("$file-out","$file-err");
+    # write cached results to $file
+    write_file(join("\n", (
+			   "<cmd>$command</cmd>",
+			   "<time>$now</time>",
+			   "<stdout>", $stdout, "</stdout>",
+			   "<stderr>", $stderr, "</stderr>",
+			   "<status>$res</status>", "\n"
+			   )), $file);
+    # and return them
+    return $stdout, $stderr, $res;
+  }
+
+
+
+
+
+
+
+  debug($cmd);
+}
+
+die "TESTING";
+
 my($foo) = FFI::Raw->new
 ("/usr/lib/python2.6/site-packages/ephem/_libastro.so", 
-		    "actan", FFI::Raw::uint);
+		    "actan", FFI::Raw::double, FFI::Raw::double, FFI::Raw::struct);
 
-debug($foo->call());
+debug($foo->call(1.,2.));
 
 die "TESTING";
 

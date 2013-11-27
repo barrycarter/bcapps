@@ -3408,6 +3408,12 @@ sub cache_command2 {
 
   my(%opts) = parse_form($options);
 
+  # if $command is a listref, we are evaluating a Perl function
+  if (ref($command) eq "ARRAY") {
+    debug("$command is array, doing Perl function");
+    die "TESTING";
+  }
+
   # TODO: global nocache means don't *USE* cached results
   # TODO: local nocache would mean don't CREATE cached results
 
