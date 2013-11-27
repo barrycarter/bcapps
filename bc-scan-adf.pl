@@ -4,7 +4,8 @@
 
 # TODO: this seems to keep changing, automate how to find it (using sane-find-scanner?)
 # $scanner = "libusb:001:126";
-$scanner = "libusb:001:004";
+# $scanner = "libusb:001:004";
+$scanner = "libusb:002:006";
 require "/usr/local/lib/bclib.pl";
 # scanning takes a while, so default alert me when done
 defaults("xmessage=1");
@@ -18,6 +19,7 @@ for (;;) {
   my($cmd) = qq%sudo scanimage --mode Color -d 'hp5590:$scanner' --source "ADF" --resolution 300 > $date.ppm%;
   debug("CMD: $cmd");
   ($out,$err,$res) = cache_command2($cmd);
+  debug("OER: $out/$err/$res");
 
   # on failure, remove file + end loop
   # (otherwise, push to list of files-to-convert)
@@ -26,6 +28,8 @@ for (;;) {
     last;
   } else {
     push(@files, "$date.ppm");
+    debug("SLEEPING 5s");
+    sleep(5);
   }
 }
 

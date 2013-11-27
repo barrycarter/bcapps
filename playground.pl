@@ -29,6 +29,22 @@ $Data::Dumper::Indent = 0;
 require "bc-twitter.pl";
 use GD;
 use Algorithm::GoldenSection;
+use Inline::Python;
+
+
+print "9 + 16 = ", add(9, 16), "\n";
+print "9 - 16 = ", subtract(9, 16), "\n";
+
+use Inline Python => <<'END_OF_PYTHON_CODE';
+def add(x,y): 
+   return x + y
+
+def subtract(x,y):
+   return x - y
+
+END_OF_PYTHON_CODE
+
+die "TESTING";
 
 
 # $gs = Algorithm::GoldenSection->new( { function => sub { my $x = shift; my $b = $x * sin($x) - 2 * cos($x); return $b },
