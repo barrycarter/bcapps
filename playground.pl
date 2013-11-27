@@ -30,6 +30,15 @@ require "bc-twitter.pl";
 use GD;
 use Algorithm::GoldenSection;
 use Inline::Python;
+use FFI::Raw;
+
+my($foo) = FFI::Raw->new
+("/usr/lib/python2.6/site-packages/ephem/_libastro.so", 
+		    "actan", FFI::Raw::uint);
+
+debug($foo->call());
+
+die "TESTING";
 
 $o = new Observer();
 $s = new Sun();
