@@ -31,22 +31,25 @@ use GD;
 use Algorithm::GoldenSection;
 use Inline::Python;
 
-use Inline Python => <<'END_OF_PYTHON_CODE';
-import ephem;
-from ephem import Observer as Observer;
-from ephem import Sun as Sun;
-END_OF_PYTHON_CODE
-
 $o = new Observer();
 $s = new Sun();
+debug("S: $s and $o");
 $o->{date} = "2013/11/27 MST7MDT";
 $o->{lat} = "35.1";
 $o->{lon} = "-106.5";
 $o->{elevation} = 1528;
+$o->{pressure} = 0;
 debug($o,$s);
 debug($o->next_rising($s));
+$m = new Moon();
+debug("M: $m");
+# debug($o->next_rising($m));
 
-
+__END__
+__Python__
+from ephem import Observer as Observer;
+from ephem import Sun as Sun;
+from ephem import Moon as Moon;
 
 die "TESTING";
 
