@@ -31,20 +31,22 @@ use GD;
 use Algorithm::GoldenSection;
 use Inline::Python;
 
-# to avoid _Inline stuff lying around
-chdir("/tmp");
-
-print "9 + 16 = ", add(9, 16), "\n";
-print "9 - 16 = ", subtract(9, 16), "\n";
-
 use Inline Python => <<'END_OF_PYTHON_CODE';
-def add(x,y): 
-   return x + y
-
-def subtract(x,y):
-   return x - y
-
+import ephem;
+from ephem import Observer as Observer;
+from ephem import Sun as Sun;
 END_OF_PYTHON_CODE
+
+$o = new Observer();
+$s = new Sun();
+$o->{date} = "2013/11/27 MST7MDT";
+$o->{lat} = "35.1";
+$o->{lon} = "-106.5";
+$o->{elevation} = 1528;
+debug($o,$s);
+debug($o->next_rising($s));
+
+
 
 die "TESTING";
 
