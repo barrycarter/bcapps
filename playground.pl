@@ -31,6 +31,8 @@ use GD;
 use Algorithm::GoldenSection;
 use Inline::Python;
 
+# to avoid _Inline stuff lying around
+chdir("/tmp");
 
 print "9 + 16 = ", add(9, 16), "\n";
 print "9 - 16 = ", subtract(9, 16), "\n";
