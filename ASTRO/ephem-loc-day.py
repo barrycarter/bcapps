@@ -3,19 +3,28 @@
 # given the location and time, print various rise/set times (to be
 # called by a Perl program later)
 
-import ephem, sys
-from sys import argv
-from datetime import datetime, timedelta
+# Call as: $0 latitude longitude date(yyyy/mm/dd)
+# TODO: add elevation
 
-def nsrise(date, horizon, f, object, seek=1):
-    obs.date,obs.horizon = date,horizon
-    print "OBS",obs
-    try: return f(object)
-    except (ephem.AlwaysUpError, ephem.NeverUpError): return nsrise(date+timedelta(hours=12*seek), horizon, f, object, seek)
+import ephem;
+from sys import argv;
 
-obs = ephem.Observer()
+obs = ephem.Observer();
 obs.lat,obs.long,date,obs.pressure=argv[1],argv[2],argv[3],0
+obs.date = date;
 print obs
+
+for i in [ephem.Sun(), ephem.Moon()]:
+    for j in ["previous_rising"]:
+        m = getattr(obs, j)
+        print m(i)
+        
+
+
+sys.exit();
+
+obs.lat,obs.long,obs,date,obs.pressure=argv[1],argv[2],argv[3],argv[4],0;
+print obs;
 
 print "SR",nsrise(date,'-0:34',obs.previous_rising, ephem.Sun(),-1)
 print "SS",nsrise(date,'-0:34',obs.previous_setting, ephem.Sun(),-1)
