@@ -90,3 +90,6 @@ alias vnc-bcmac "\vncviewer -passwd /home/barrycarter/.vnc/passwd-bcmac -geometr
 
 # no install script for ccextractor?
 alias ccextractor "/root/build/ccextractor.0.67/linux/ccextractor"
+
+# show me my "at" jobs with some details
+alias atsee "sudo find /var/spool/at -maxdepth 1 -type f | fgrep -v '/.SEQ' | sudo xargs tail -n 1"

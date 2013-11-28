@@ -32,6 +32,29 @@ use Algorithm::GoldenSection;
 use Inline::Python;
 use FFI::Raw;
 
+$o = new Observer();
+$s = new Sun();
+debug("S: $s and $o");
+$o->{date} = "2013/11/27 MST7MDT";
+$o->{lat} = "35.1";
+$o->{lon} = "-106.5";
+$o->{elevation} = 1528;
+$o->{pressure} = 0;
+debug($o,$s);
+debug($o->next_rising($s));
+$m = new Moon();
+debug("M: $m");
+# debug($o->next_rising($m));
+
+__END__
+__Python__
+from ephem import Observer as Observer;
+from ephem import Sun as Sun;
+from ephem import _libastro.Moon as Moon;
+
+die "TESTING";
+
+
 cache_command2([\&cos, [1]]);
 
 die "TESTING";
@@ -137,29 +160,6 @@ my($foo) = FFI::Raw->new
 debug($foo->call(1.,2.));
 
 die "TESTING";
-
-$o = new Observer();
-$s = new Sun();
-debug("S: $s and $o");
-$o->{date} = "2013/11/27 MST7MDT";
-$o->{lat} = "35.1";
-$o->{lon} = "-106.5";
-$o->{elevation} = 1528;
-$o->{pressure} = 0;
-debug($o,$s);
-debug($o->next_rising($s));
-$m = new Moon();
-debug("M: $m");
-# debug($o->next_rising($m));
-
-__END__
-__Python__
-from ephem import Observer as Observer;
-from ephem import Sun as Sun;
-from ephem import Moon as Moon;
-
-die "TESTING";
-
 
 # $gs = Algorithm::GoldenSection->new( { function => sub { my $x = shift; my $b = $x * sin($x) - 2 * cos($x); return $b },
 # x_low => 4,
