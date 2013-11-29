@@ -5,6 +5,44 @@ Export["/tmp/math.png",%, ImageSize->{800,600}]; Run["display /tmp/math.png&"]]
 
 <</home/barrycarter/BCGIT/bclib.m
 
+(* Given a point x,y,z, if we rotate so the x axis points upwards and
+pretend the x axis is now the z-axis:
+
+x axis value becomes z axis value
+y axis value doesnt change
+z axis value becomes -x axis value
+
+(all rotations below chosen so that some axis remains positive in the
+"up" direction)
+
+*)
+
+(* two wrongs don't make a right, but three rights make a left... *)
+
+roty[{x_,y_,z_}] = {-z,y,x}
+unroty[{x_,y_,z_}] = roty[roty[roty[{x,y,z}]]]
+
+rotx[{x_,y_,z_}] = {x,-z,y}
+unrotx[{x_,y_,z_}] = rotx[rotx[rotx[{x,y,z}]]]
+
+rotz[{x_,y_,z_}] = {-y,x,z}
+unrotz[{x_,y_,z_}] = rotz[rotz[rotz[{x,y,z}]]]
+
+sph2xyz[{r_,th_,ph_}] = {r*Cos[ph]*Cos[th], r*Cos[ph]*Sin[th], r*Sin[ph]}
+xyz2sph[{x_,y_,z_}] = {Sqrt[x^2+y^2+z^2], ArcTan[x,y], ArcTan[Sqrt[x^2+y^2],z]}
+
+sph2xyz[xyz2sph[{x,y,z}]+{0,w,0}]
+
+xyz2sph[unrotx[sph2xyz[xyz2sph[rotx[{x,y,z}]]+{0,w,0}]]]
+
+
+
+
+
+
+
+
+
 (* wii tennis stuff *)
 
 (* if you have p chance of winning volley, these are you changes of achieve various scores *)
