@@ -4366,7 +4366,30 @@ sub fmodn {
   return $res;
 }
 
+=item unixsort($s1,$s2,$soptions)
 
+Sort strings $s1 and $s2 as they would be sorted by "sort $soptions"
+in Unix. Useful for bc-sgrep.pl when sorted file is not in 'locale'
+order. Returns -1, 0, 1, just as <=> or cmp would
+
+=cut
+
+sub unixsort {
+  my($s1,$s2,$soptions) = @_;
+  debug("unixsort($s1,$s2,$soptions)");
+  # special case
+  if ($s1 eq $s2) {return 0;}
+  chdir(tmpdir());
+  write_file("$s1\n$s2", "sortme");
+  system("sort $soptions sortme | head -1 > sortme-sorted");
+  # TODO: this is ugly
+  my($rf) = read_file("sortme-sorted");
+  chomp($rf);
+  if ($rf eq $s1) {return -1;}
+  if ($rf eq $s2) {return +1;}
+  warn("unixsort($s1,$s2) failed");
+  return NaN;
+}
 
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
