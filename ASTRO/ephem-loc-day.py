@@ -36,13 +36,15 @@ for i in ["Moon", "Mercury", "Venus", "Mars", "Jupiter", "Saturn"]:
 for h in ['-0:34', '-6:00', '-12:00', '-18:00']:
     obs.horizon = h
     for j in ["previous_rising", "previous_setting", "next_rising", "next_setting"]:
-        m = getattr(obs, j)
-        try:
-            s = m(ephem.Sun())
-        except(ephem.AlwaysUpError):
-            s = "ALWAYSUP"
-        except(ephem.NeverUpError):
-            s = "NEVERUP"
+        for k in ["00","12"]:
+            obs.date = date+" "+k+":00:00"
+            m = getattr(obs, j)
+            try:
+                s = m(ephem.Sun())
+            except(ephem.AlwaysUpError):
+                s = "ALWAYSUP"
+            except(ephem.NeverUpError):
+                s = "NEVERUP"
         print "Sun"+h,j,s
 
     
