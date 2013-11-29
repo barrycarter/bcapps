@@ -5,6 +5,7 @@
 
 # Call as: $0 longitude latitude date(yyyy/mm/dd)
 # TODO: add elevation
+# TODO: go further back and forward to avoid circumpolarity glitches
 
 import ephem;
 from sys import argv;

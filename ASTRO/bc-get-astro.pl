@@ -9,7 +9,7 @@
 # --latitude: use this latitude (default: Albuquerque)
 # --longitude: use this longitude (default: Albuquerque)
 # --time: use this time (in Unix seconds) (default: current time)
-# --noprint: do not print to info file (useful for testing)
+# --noprint: do not print to info file (useful for testing), do print to stdout
 
 require "/usr/local/lib/bclib.pl";
 
@@ -30,7 +30,7 @@ $nphase = ("NM", "FQ", "FM", "LQ", "NM")[$nphase];
 if ($tnphase > 0) {
   $mprint = sprintf("%0.2fd;$nphase+%0.2fd", $mage, $tnphase);
 } else {
-  $mprint = sprintf("%0.2fd;$nphase-%0.2fd", $mage, $tnphase);
+  $mprint = sprintf("%0.2fd;$nphase-%0.2fd", $mage, abs($tnphase));
 }
 
 # current info (for next minute)
@@ -128,4 +128,7 @@ MARK
 
 unless ($globopts{noprint}) {
   write_file_new($writestr, "/home/barrycarter/ERR/bcgetastro.inf");
+} else {
+  print $writestr;
 }
+

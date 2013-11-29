@@ -32,6 +32,42 @@ use Algorithm::GoldenSection;
 use Inline::Python;
 use FFI::Raw;
 
+# $ans = unixsort("10","9","-n");
+# $foo = ("10" cmp "9");
+# debug("ANS: $ans, FOO: $foo");
+# debug("PROG ENDS");
+
+@ans = sort {unixsort($a,$b,"")} ("9","10");
+debug(@ans);
+@ans = sort {unixsort($a,$b,"-n")} ("9","10");
+debug(@ans);
+
+=item unixsort($s1,$s2,$soptions)
+
+Sort strings $s1 and $s2 as they would be sorted by "sort $soptions"
+in Unix. Useful for bc-sgrep.pl when sorted file is not in 'locale'
+order. Returns -1, 0, 1, just as <=> or cmp would
+
+=cut
+
+sub unixsort {
+  my($s1,$s2,$soptions) = @_;
+  # special case
+  if ($s1 eq $s2) {return 0;}
+  chdir(tmpdir());
+  write_file("$s1\n$s2", "sortme");
+  system("sort $soptions sortme | head -1 > sortme-sorted");
+  # TODO: this is ugly
+  my($rf) = read_file("sortme-sorted");
+  chomp($rf);
+  if ($rf eq $s1) {return -1;}
+  if ($rf eq $s2) {return +1;}
+  warn("unixsort($s1,$s2) failed");
+  return NaN;
+}
+
+die "TESTING";
+
 $o = new Observer();
 $s = new Sun();
 debug("S: $s and $o");

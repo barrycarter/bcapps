@@ -668,7 +668,7 @@ sub tmpdir {
     } until (!(-f $file));
 
   mkdir($file);
-  push(@tmpdirs, $file);
+  $istmpdir{$file} = 1;
   # only create one tmpdir per program: lets subroutines call tmpdir w/o
   # fear of cluttering up /tmp
   $globopts{tmpdir} = $file;
@@ -2319,6 +2319,7 @@ due to exec).
 sub in_you_endo {
   my(@ENDS) = B::end_av->ARRAY;
   foreach $i (@ENDS) {
+    debug("in_you_endo()");
     $i->object_2svref->();
   }
 }
@@ -4386,10 +4387,12 @@ sub END {
     }
   }
 
-  for $i (@tmpdirs) {
+  for $i (keys %istmpdir) {
     debug("RM -R: $i");
     system("rm -r $i");
   }
+
+  debug("END ENDS");
 }
 
 # parse_form = alias for str2hash (but some of my code uses it)
