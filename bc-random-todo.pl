@@ -31,6 +31,7 @@ open(A,"tac /home/barrycarter/bc-todo-list.txt|");
 
 FILTER:
 while (<A>) {
+  chomp;
   m/^(\d{8})\.(\d{6})/ || die ("BAD LINE: $_");
   # TODO list is time ordered, so can bail once hitting too old event
   if ($now-str2time("$1 $2") > 86400*$globopts{days}) {last;}
@@ -50,5 +51,15 @@ while (<A>) {
 
   push(@list, $_);
 }
+
+@list = randomize(\@list);
+
+# to make this look more like my old version...
+
+# curses values for bold on/off and clear
+($clear,$bon,$boff)=("\e[H\e[J","\e[1m","\e[0m");
+printf("$clear${bon}Showing $globopts{n} of %d items$boff\n", $#list+1);
+print join("\n", @list[0..$globopts{n}-1]),"\n"x2;
+
 
 
