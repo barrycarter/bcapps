@@ -34,7 +34,13 @@ elev2[lat_,ha_] = Simplify[
 ArcSin[Sin[lat]*Sin[dec[ha]]+Cos[lat]*Cos[dec[ha]]*Cos[ha]]]
 
 delev2[lat_,ha_] = D[elev2[lat,ha],ha]
+
+FullSimplify[delev2[lat,ha], {-Pi/2 < lat, lat < Pi/2, ha > 0, ha < 2*Pi}]
+
+
 Numerator[delev2[lat,ha]]
+Solve[Numerator[delev2[lat,ha]]==0, Reals]
+
 Solve[delev2[lat,ha]==0]
 Solve[delev2[lat,ha]==0, lat]
 Solve[delev2[lat,ha]==0, Reals]

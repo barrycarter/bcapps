@@ -58,7 +58,7 @@ while (<A>) {
 
 # curses values for bold on/off and clear
 ($clear,$bon,$boff)=("\e[H\e[J","\e[1m","\e[0m");
-printf("$clear${bon}Showing $globopts{n} of %d items$boff\n", $#list+1);
+printf("$clear${bon}Showing $globopts{n} of %d items$boff\n\n", $#list+1);
 print join("\n", @list[0..$globopts{n}-1]),"\n"x2;
 
 

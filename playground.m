@@ -30,8 +30,21 @@ unrotz[{x_,y_,z_}] = rotz[rotz[rotz[{x,y,z}]]]
 
 sph2xyz[{th_,ph_}] = {Cos[ph]*Cos[th], Cos[ph]*Sin[th], Sin[ph]}
 xyz2sph[{x_,y_,z_}] = {ArcTan[x,y], ArcTan[Sqrt[1-z^2],z]}
+(* not 100% accurate below but testing *)
+xyz2sph[{x_,y_,z_}] = {ArcTan[y/x], ArcTan[z/Sqrt[1-z^2]]}
 
-xyz2sph[{x,y,z}]
+(* given a latitude, longitude (theta/phi), I want to add w (omega) in
+a given direction *)
+
+xyz2sph[unroty[sph2xyz[xyz2sph[roty[sph2xyz[{th,ph}]]]+{w,0}]]]
+
+thc = xyz2sph[unroty[sph2xyz[xyz2sph[roty[sph2xyz[{th,ph}]]]+{w,0}]]][[1]]
+phc = xyz2sph[unroty[sph2xyz[xyz2sph[roty[sph2xyz[{th,ph}]]]+{w,0}]]][[2]]
+
+FullSimplify[thc, {Member[ph,Reals], Member[th,Reals]}]
+FullSimplify[phc, {Member[ph,Reals], Member[th,Reals], -Pi < ph, ph < Pi}]
+
+
 
 
 (* wii tennis stuff *)
