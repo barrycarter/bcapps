@@ -17,7 +17,7 @@ obs.horizon='-0:34'
 
 # everything but the sun <h>(that's a song title, no?)</h>
 for i in ["Moon", "Mercury", "Venus", "Mars", "Jupiter", "Saturn"]:
-    for j in ["previous_rising", "previous_setting", "next_rising", "next_setting"]:
+    for j in ["previous_rising", "previous_setting", "next_rising", "next_setting", "next_transit", "previous_transit"]:
         for k in ["00","12"]:
             obs.date = date+" "+k+":00:00"
             obj = getattr(ephem,i)()

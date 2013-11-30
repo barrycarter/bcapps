@@ -26,10 +26,74 @@ elevation at latitude
 
 *)
 
+Solve[Sin[ha] == c1 + c2*Cos[ha],ha]
+
+Plot[Sin[x]+Cos[x]/10-.2,{x,0,2*Pi}]
+
+elev2[lat_,ha_] = Simplify[
+ArcSin[Sin[lat]*Sin[dec[ha]]+Cos[lat]*Cos[dec[ha]]*Cos[ha]]]
+
+delev2[lat_,ha_] = D[elev2[lat,ha],ha]
+Numerator[delev2[lat,ha]]
+Solve[delev2[lat,ha]==0]
+Solve[delev2[lat,ha]==0, lat]
+Solve[delev2[lat,ha]==0, Reals]
+
+elevt[lat_,t_] = Simplify[
+ArcSin[Sin[lat]*Sin[dec[t]]+Cos[lat]*Cos[dec[t]]*Cos[ha[t]]]]
+
+D[elevt[lat,t],t] /. ha'[t] -> n[t]*dec'[t]
+Reduce[%==0,Reals]
+Solve[%==0,Reals]
+Solve[%==0, {lat,dec[t],ha[t]}]
+Solve[D[elevt[lat,t],t]==0,{lat,dec[t],ha[t]}]
+D[elevt[lat,t],ha[t],dec[t]]
+
+
+
+elev[lat_,dec_,ha_] = Simplify[
+ArcSin[Sin[lat]*Sin[dec]+Cos[lat]*Cos[dec]*Cos[ha]]]
+
+deltadec[lat_,dec_,ha_] = Simplify[D[elev[lat,dec,ha],dec]]
+
+deltaha[lat_,dec_,ha_] = Simplify[D[elev[lat,dec,ha],ha]]
+
+deltadiv[lat_,dec_,ha_] = Simplify[deltadec[lat,dec,ha]/deltaha[lat,dec,ha]]*
+dec'[t]/ha'[t]
+
+D[deltadiv[lat,dec,ha],t]
+
+D[D[elev[lat,dec,ha],dec,ha]]
+D[D[elev[lat,dec,ha],ha,dec]]
+
+
+Solve[D[deltadiv[lat,dec,ha],ha]==0,Reals]
+
+Solve[deltadiv[lat,dec,ha]==1, Reals]
+
+rlat = Random[Real,{-90,90}]*Degree
+rdec = Random[Real,{-28,28}]*Degree
+
+Plot[deltadiv[rlat,rdec,ha],{ha,0,2*Pi}]
+
+Plot[deltadec[rlat,rdec,ha],{ha,0,2*Pi}]
+Plot[deltaha[rlat,rdec,ha],{ha,0,2*Pi}]
+Plot[elev[rlat,rdec,ha],{ha,0,2*Pi}]
+
+Plot[{elev[rlat,rdec,ha], elev[rlat,rdec-ha/72.,ha]},
+{ha,0,2*Pi}]
+
+Plot[{deltadec[rlat,rdec,ha],deltaha[rlat,rdec,ha]},{ha,0,2*Pi}]
+
+
+
+
 ha[t_] = (366.2425/365.2425*360-360/27.321582)*Degree*t
 dec[t_] = 28.58*Degree*Sin[2*Pi*(t/27.321582)]
 elev[t_,lat_] = 
 ArcSin[Sin[lat]*Sin[dec[t]]+Cos[lat]*Cos[dec[t]]*Cos[ha[t]]]
+
+D[elev[t,lat],t]
 
 (* The change in elevation at time t *)
 

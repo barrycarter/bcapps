@@ -28,19 +28,10 @@ unrotx[{x_,y_,z_}] = rotx[rotx[rotx[{x,y,z}]]]
 rotz[{x_,y_,z_}] = {-y,x,z}
 unrotz[{x_,y_,z_}] = rotz[rotz[rotz[{x,y,z}]]]
 
-sph2xyz[{r_,th_,ph_}] = {r*Cos[ph]*Cos[th], r*Cos[ph]*Sin[th], r*Sin[ph]}
-xyz2sph[{x_,y_,z_}] = {Sqrt[x^2+y^2+z^2], ArcTan[x,y], ArcTan[Sqrt[x^2+y^2],z]}
+sph2xyz[{th_,ph_}] = {Cos[ph]*Cos[th], Cos[ph]*Sin[th], Sin[ph]}
+xyz2sph[{x_,y_,z_}] = {ArcTan[x,y], ArcTan[Sqrt[1-z^2],z]}
 
-sph2xyz[xyz2sph[{x,y,z}]+{0,w,0}]
-
-xyz2sph[unrotx[sph2xyz[xyz2sph[rotx[{x,y,z}]]+{0,w,0}]]]
-
-
-
-
-
-
-
+xyz2sph[{x,y,z}]
 
 
 (* wii tennis stuff *)
