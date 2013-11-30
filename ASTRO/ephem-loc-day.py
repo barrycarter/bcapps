@@ -15,8 +15,7 @@ obs.long,obs.lat,date,obs.pressure=argv[1],argv[2],argv[3],0
 obs.date = date;
 obs.horizon='-0:34'
 
-# everything but the sun <h>(that's a song title, no?)</h>
-for i in ["Moon", "Mercury", "Venus", "Mars", "Jupiter", "Saturn"]:
+for i in ["Sun", "Moon", "Mercury", "Venus", "Mars", "Jupiter", "Saturn"]:
     for j in ["previous_rising", "previous_setting", "next_rising", "next_setting", "next_transit", "previous_transit"]:
         for k in ["00","12"]:
             obs.date = date+" "+k+":00:00"
@@ -32,8 +31,8 @@ for i in ["Moon", "Mercury", "Venus", "Mars", "Jupiter", "Saturn"]:
         
             print i,j,s
 
-# Sun at various heights, I don't use nautical or astro (yet)
-for h in ['-0:34', '-6:00', '-12:00', '-18:00']:
+# Twilights only
+for h in ['-6:00', '-12:00', '-18:00']:
     obs.horizon = h
     for j in ["previous_rising", "previous_setting", "next_rising", "next_setting"]:
         for k in ["00","12"]:
