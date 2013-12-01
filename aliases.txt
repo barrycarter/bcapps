@@ -98,3 +98,5 @@ alias atsee "sudo find /var/spool/at -maxdepth 1 -type f | fgrep -v '/.SEQ' | su
 # reality, this:
 alias xephem "pushd .; cd /usr/local/xephem; \xephem & popd"
 
+# update git stuff
+alias bcgit "pushd .; cd ~/BCGIT; git-pull -v; git add .; git commit; git-push  -v; popd"
