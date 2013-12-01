@@ -18,8 +18,11 @@
 # --n = how many items to show (default = 5)
 # --tags = "tag1,tag2,etc" which tags to exclude
 
+# --ignore = when plotting, ignore these many most recent days
+# (dividing by small numbers makes graph jump around), default 7
+
 require "/usr/local/lib/bclib.pl";
-defaults("days=365&n=5");
+defaults("days=365&n=5&ignore=7");
 
 $now = time();
 
@@ -28,13 +31,15 @@ for $i (split/\,/,$globopts{tags}) {$badtag{$i}=1;}
 debug("BADTAG",%badtag);
 
 open(A,"tac /home/barrycarter/bc-todo-list.txt|");
+open(B,">/tmp/gnuplot.txt");
 
 FILTER:
 while (<A>) {
   chomp;
   m/^(\d{8})\.(\d{6})/ || die ("BAD LINE: $_");
   # TODO list is time ordered, so can bail once hitting too old event
-  if ($now-str2time("$1 $2") > 86400*$globopts{days}) {last;}
+  my($age) = ($now-str2time("$1 $2"))/86400;
+  if ($age > $globopts{days}) {last;}
 
   # does first word end in colon?
   m/\S+\s+(\S+)/;
@@ -49,8 +54,13 @@ while (<A>) {
     }
   }
 
+  my($avg) = ++$n/$age;
+  print B "$age $avg\n";
+
   push(@list, $_);
 }
+
+close(B);
 
 @list = randomize(\@list);
 
