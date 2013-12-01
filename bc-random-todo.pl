@@ -59,7 +59,8 @@ while (<A>) {
 # curses values for bold on/off and clear
 ($clear,$bon,$boff)=("\e[H\e[J","\e[1m","\e[0m");
 printf("$clear${bon}Showing $globopts{n} of %d items$boff\n\n", $#list+1);
-print join("\n", @list[0..$globopts{n}-1]),"\n"x2;
+# the final sort here is so I see the randomly chosen entries in correct order
+print join("\n", sort(@list[0..$globopts{n}-1])),"\n"x2;
 
 
 

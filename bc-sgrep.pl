@@ -26,6 +26,7 @@ for (;;) {
   $seek = round(($l+$r)/2);
   seek(A, $seek, SEEK_SET);
   # discard remainder of this line and pick next line
+  # TODO: this doesn't actually do what I think it does
   <A>;
   $line = <A>;
 
@@ -44,19 +45,20 @@ for (;;) {
 }
 
 print $line;
-# print <A>;
-# print <A>;
-# print <A>;
 
-=item unixsort(\@l, $options)
+=item find_newline(\*A, $whence)
 
-Return the Unix sort of @l under given $options.
+Seeks filehandle A to a newline; the next newline if $whence=1, the
+previous newline if $whence=-1
 
-Unix sorts differently than Perl (sometimes)
+Will seek to start/end of file if there are no newlines in the
+indicated direction
 
 =cut
 
-sub unixsort {
-  my($listref, $options) = @_;
-  # TODO: write this function
+sub find_newline {
+  my($fh, $whence) = @_;
+  debug("FH: $fh");
 }
+
+

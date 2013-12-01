@@ -32,6 +32,37 @@ use Algorithm::GoldenSection;
 use Inline::Python;
 use FFI::Raw;
 
+
+open(A,$0);
+seek(A, 517, SEEK_SET);
+find_newline(\*A);
+
+=item find_newline(\*A, $whence)
+
+Seeks filehandle A to a newline; the next newline if $whence=1, the
+previous newline if $whence=-1
+
+Will seek to start/end of file if there are no newlines in the
+indicated direction
+
+=cut
+
+sub find_newline {
+  my($fh, $whence) = @_;
+  my($char);
+  while (read($fh,$char,1)) {
+    debug("CHAR: $char");
+    debug(tell($fh));
+  }
+
+  debug("NEXT",<$fh>);
+#  while (*$fh) {debug("FOO: $_");}
+  debug("FH: $fh");
+  while (<A>) {debug($_);}
+}
+
+die "TESTING";
+
 # $ans = unixsort("10","9","-n");
 # $foo = ("10" cmp "9");
 # debug("ANS: $ans, FOO: $foo");
