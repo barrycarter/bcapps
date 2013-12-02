@@ -32,4 +32,6 @@ emacs
 php-cgi
 /usr/local/bin/bc-echo.pl
 curl
+rm
+find
 </kill>

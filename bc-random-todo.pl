@@ -19,7 +19,8 @@
 # --tags = "tag1,tag2,etc" which tags to exclude
 
 # --ignore = when plotting, ignore these many most recent days
-# (dividing by small numbers makes graph jump around), default 7
+# (because averages tend to jump around with small denominators),
+# default 7
 
 require "/usr/local/lib/bclib.pl";
 defaults("days=365&n=5&ignore=7");
@@ -28,10 +29,9 @@ $now = time();
 
 # hash the tags <h>(why did I just think of twitter...)</h>
 for $i (split/\,/,$globopts{tags}) {$badtag{$i}=1;}
-debug("BADTAG",%badtag);
 
 open(A,"tac /home/barrycarter/bc-todo-list.txt|");
-open(B,">/tmp/gnuplot.txt");
+open(B,">/tmp/bcrtd.txt");
 
 FILTER:
 while (<A>) {
@@ -55,12 +55,19 @@ while (<A>) {
   }
 
   my($avg) = ++$n/$age;
-  print B "$age $avg\n";
+  push(@graph, "$age $avg");
+
+  # calculate max/min (later) avoiding too recent days
+  if ($age > $globopts{ignore}) {push(@avgs,$avg);}
 
   push(@list, $_);
 }
 
 close(B);
+
+($min,$max) = (min(@avgs),max(@avgs));
+
+die "TESITNG";
 
 @list = randomize(\@list);
 
