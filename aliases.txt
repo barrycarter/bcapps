@@ -83,7 +83,8 @@ alias elecstart "sudo pkill -9 vlc; sudo pkill -9 somagic-capture; sudo /bin/nic
 alias recollq "recollq \!* | tee /var/tmp/bc-cmd-recollq.txt"
 
 # seeing date to nanosecond isnt superuseful except when 'time' fails
-alias date 'date +"%a %b %d %H:%M:%S.%N %Z %Y"'
+# can't really alias date as it breaks things like +%s and -d
+alias daten 'date \!* +"%a %b %d %H:%M:%S.%N %Z %Y"'
 
 # quick vnc to my Mac
 alias vnc-bcmac "\vncviewer -passwd /home/barrycarter/.vnc/passwd-bcmac -geometry 1024x768+3072+768 bcmac&"
@@ -92,7 +93,8 @@ alias vnc-bcmac "\vncviewer -passwd /home/barrycarter/.vnc/passwd-bcmac -geometr
 alias ccextractor "/root/build/ccextractor.0.67/linux/ccextractor"
 
 # show me my "at" jobs with some details
-alias atsee "sudo find /var/spool/at -maxdepth 1 -type f | fgrep -v '/.SEQ' | sudo xargs tail -n 1"
+# TODO: this doesnt match up jobs to events
+alias atsee "atq; sudo find /var/spool/at -maxdepth 1 -type f | fgrep -v '/.SEQ' | sudo xargs tail -n 1"
 
 # in theory, xephem should work regardless of where it's started; in
 # reality, this:
@@ -100,3 +102,6 @@ alias xephem "pushd .; cd /usr/local/xephem; \xephem & popd"
 
 # update git stuff
 alias bcgit "pushd .; cd ~/BCGIT; git pull -v; git add .; git commit; git push  remotes master; popd"
+
+# hex2dec often needed
+alias hex2dec "bc-call-func.pl hex \!*"

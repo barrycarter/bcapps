@@ -18,6 +18,7 @@
 # --n = how many items to show (default = 5)
 # --tags = "tag1,tag2,etc" which tags to exclude
 
+# --plot: plot the number of items on my todo list per diem as function of time
 # --ignore = when plotting, ignore these many most recent days
 # (because averages tend to jump around with small denominators),
 # default 7
@@ -56,7 +57,7 @@ while (<A>) {
 
   my($avg) = ++$n/$age;
   # we need to put stuff around the graph, so don't actually print it here
-  push(@graph, "$age $avg");
+  print B "$age $avg\n";
 
   # calculate max/min (later) avoiding too recent days
   if ($age > $globopts{ignore}) {push(@avgs,$avg);}
@@ -78,7 +79,11 @@ printf("$clear${bon}Showing $globopts{n} of %d items$boff\n\n", $#list+1);
 # the final sort here is so I see the randomly chosen entries in correct order
 print join("\n", sort(@list[0..$globopts{n}-1])),"\n"x2;
 
-
-# TODO: only plot when requested, not everytime
+if ($globopts{plot}) {
+  open(C,">/tmp/bcrtdg.txt");
+  print C qq!plot [] [$min:$max] "/tmp/bcrtd.txt" with linespoints;\n!;
+  close(C);
+  system("gnuplot -persist /tmp/bcrtdg.txt");
+}
 
 
