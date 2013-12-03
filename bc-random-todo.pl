@@ -55,6 +55,7 @@ while (<A>) {
   }
 
   my($avg) = ++$n/$age;
+  # we need to put stuff around the graph, so don't actually print it here
   push(@graph, "$age $avg");
 
   # calculate max/min (later) avoiding too recent days
@@ -67,8 +68,6 @@ close(B);
 
 ($min,$max) = (min(@avgs),max(@avgs));
 
-die "TESITNG";
-
 @list = randomize(\@list);
 
 # to make this look more like my old version...
@@ -79,5 +78,7 @@ printf("$clear${bon}Showing $globopts{n} of %d items$boff\n\n", $#list+1);
 # the final sort here is so I see the randomly chosen entries in correct order
 print join("\n", sort(@list[0..$globopts{n}-1])),"\n"x2;
 
+
+# TODO: only plot when requested, not everytime
 
 

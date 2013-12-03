@@ -32,6 +32,13 @@ use Algorithm::GoldenSection;
 use Inline::Python;
 use FFI::Raw;
 
+@all = split(/\n/, read_file"/home/barrycarter/20131202/c.csv");
+
+
+
+
+
+die "TESTING";
 
 open(A,$0);
 seek(A, 517, SEEK_SET);
