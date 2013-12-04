@@ -8,13 +8,26 @@
 # user-specific mysql-like file
 
 require "/usr/local/lib/bclib.pl";
+dodie("chdir('/usr/local/etc/discogs')");
+
+debug("HELLO");
 
 (my($user)=@ARGV)||die("Usage: $0 username");
+my($out,$err,$res);
 
+debug("BETA");
 
-my($out,$err,$res) = cache_command2("curl http://api.discogs.com/users/$user/collection/folders/0/releases", "age=86400");
+debug("FILETEST", -f "user-$user-p1");
 
-my($userinfo) = JSON::from_json($out);
+# cache information as much as possible
+# TODO: caching here is a bad idea if user adds releases (but OK for testing)
+unless (-f "user-$user-p1" && !$globopts{nocache}) {
+  debug("running curl");
+  ($out,$err,$res) = cache_command2("curl -o user-$user-p1 'http://api.discogs.com/users/$user/collection/folders/0/releases?page=1&per_page=100'");
+}
+
+my($userinfo) = JSON::from_json(read_file("user-$user-p1"));
+
 # debug("USER",%user)
 debug(var_dump("user", $userinfo));
 
