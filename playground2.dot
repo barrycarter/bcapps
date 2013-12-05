@@ -1,5 +1,3 @@
-# forex crosses = acyclic of n strings?
-
 graph x {
  EUR -- USD
  GBP -- USD
@@ -8,8 +6,4 @@ graph x {
  EUR -- GBP
  EUR -- CHF
  CAD -- JPY 
- AUD -- JPY
- AUD -- USD
- EUR -- JPY
- GBP -- JPY
 }
