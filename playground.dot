@@ -1,0 +1,7 @@
+# forex crosses = acyclic of n strings?
+
+graph x {
+ "AUD" -- "JPY"
+ "AUD" -- "USD"
+ 
+}
