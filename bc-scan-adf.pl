@@ -5,7 +5,8 @@
 # TODO: this seems to keep changing, automate how to find it (using sane-find-scanner?)
 # $scanner = "libusb:001:126";
 # $scanner = "libusb:001:004";
-$scanner = "libusb:002:006";
+# $scanner = "libusb:002:006";
+$scanner = "libusb:001:003";
 require "/usr/local/lib/bclib.pl";
 # scanning takes a while, so default alert me when done
 defaults("xmessage=1");
