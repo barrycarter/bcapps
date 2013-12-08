@@ -142,9 +142,19 @@ the following:
   - "ON TURN 8, GIVE 100 SILVER TO PLAYER1"
   - "ON TURN 8, GIVE 500 ENERGY TO PLAYER1"
 
-This allows from some fairly complex bargains.
+This allows from some fairly complex bargains. Once Player 1 and
+Player 3 agree, the commands will be executed automatically.
+
+If it's impossible for either player to run the promised command on
+the current turn, the trade is canceled.
+
+If it becomes impossible for player X to run a promised command on a
+future turn, they can bargain with the other player. If this fails,
+player X is eliminated from the game, and his lands revert to unowned.
 
 Miscellaneous:
+
+  - Players start with 1000 gold, 1000 fuel, 50 YAMCs, 500 energy
 
   - There is no way to forcibly take land from another player. This is
   intentional.
