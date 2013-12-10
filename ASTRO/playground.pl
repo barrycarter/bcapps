@@ -4,6 +4,18 @@
 
 require "/usr/local/lib/bclib.pl";
 
+my($observer) = Astro::Nova::LnLatPosn->new("lng"=>0,"lat"=>35);
+
+
+for $i (0..1439) {
+  $t = 1386720000+713*60+60*$i;
+  $jd = get_julian_from_timet($t);
+  $az=get_hrz_from_equ(get_solar_equ_coords($jd), $observer, $jd)->get_az();
+  print "$az\n";
+}
+
+die "TESTING";
+
 for $i (1..100) {
   sleep(1);
   $randlat = rand(180)-90;

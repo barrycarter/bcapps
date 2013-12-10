@@ -38,6 +38,19 @@ if ($tnphase > 0) {
 my($sid) = $sm{sidereal_time};
 my($sidp) = sprintf("LST: %dh%0.2dm", $sid, ($sid*60+.5)%60);
 
+my($mst) = fmodp(12 + $sm{sidereal_time} - $sm{sun}{ra}/15, 24);
+my($mstp) = sprintf("MST %d:%0.2d", $mst, ($mst*60+.5)%60);
+debug($mstp);
+
+my($sdt) = fmodp($sm{sun}{az}/15-12,24);
+my($sdtp) = sprintf("SDT %d:%0.2d", $sdt, ($sdt*60+.5)%60);
+debug($sdtp);
+
+# (180 - (sunra-lst*15))/15 = mean sun time
+# sunaz /15+12-24 = sundial time
+
+debug("TEST:",$sm{sun}{ra},$sm{sun}{az},$sm{sidereal_time}*15);
+
 # determine moon phase from return info
 $phase = ("NEW", "CRES", "QUAR", "GIBB", "FULL")[$sm{moon}{phase}/36];
 # these are fly codes for up and down arrow
@@ -121,7 +134,7 @@ $writestr = << "MARK";
 $str $el ($now)
 S:$times[6]-$times[7] ($times[4]-$times[5]/$times[2]-$times[3]/$times[0]-$times[1])
 M:$times[8]-$times[9] ($str2)
-$sidp
+$sidp/$mstp/$sdtp
 $mdir$phase ($mprint) [$moondeg]
 MARK
 ;
