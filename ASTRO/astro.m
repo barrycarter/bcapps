@@ -108,4 +108,18 @@ elevdelta[t_, lat_] = D[elev[t,lat],t]
 (* since denominator can't be 0... *)
 Numerator[elevdelta[t,lat]] // TeXForm
 
+(* azimuth of a fixed ra/dec object at given hour angle *)
+
+az[ha_, dec_, lat_] = FullSimplify[
+ArcTan[Cos[lat]*Sin[dec]-Sin[lat]*Cos[dec]*Cos[ha],-Sin[ha]*Cos[dec]]]
+
+Plot[Mod[az[t,0,35*Degree],2*Pi],{t,-Pi,Pi}]
+
+t=N[Table[Mod[az[-Pi+2*Pi/1440*i,-20*Degree,35*Degree]/Degree,360],{i,0,1440}]]
+
+Take[t,10]
+
+
+
+
 

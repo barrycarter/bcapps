@@ -11,6 +11,7 @@ for $i (0..1439) {
   $t = 1386720000+713*60+60*$i;
   $jd = get_julian_from_timet($t);
   $az=get_hrz_from_equ(get_solar_equ_coords($jd), $observer, $jd)->get_az();
+#  $az = $az - $i/4;
   print "$az\n";
 }
 
