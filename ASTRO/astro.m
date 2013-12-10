@@ -111,13 +111,44 @@ Numerator[elevdelta[t,lat]] // TeXForm
 (* azimuth of a fixed ra/dec object at given hour angle *)
 
 az[ha_, dec_, lat_] = FullSimplify[
-ArcTan[Cos[lat]*Sin[dec]-Sin[lat]*Cos[dec]*Cos[ha],-Sin[ha]*Cos[dec]]]
+ArcTan[Cos[lat]*Sin[dec]-Sin[lat]*Cos[dec]*Cos[ha],-Sin[ha]*Cos[dec]]
+, Reals]
 
-Plot[Mod[az[t,0,35*Degree],2*Pi],{t,-Pi,Pi}]
+Plot[az[t,20*Degree,35*Degree],{t,0,2*Pi}]
 
-t=N[Table[Mod[az[-Pi+2*Pi/1440*i,-20*Degree,35*Degree]/Degree,360],{i,0,1440}]]
+daz[ha_,dec_,lat_] = FullSimplify[D[az[ha,dec,lat],ha],Reals]
 
-Take[t,10]
+ddaz[ha_,dec_,lat_] = FullSimplify[D[az[ha,dec,lat],ha,ha],Reals]
+
+Plot[daz[t,20*Degree,35*Degree],{t,0,2*Pi}]
+
+FullSimplify[daz[Pi/2,dec,lat], Reals]
+FullSimplify[daz[Pi,dec,lat], Reals]
+FullSimplify[daz[3*Pi/2,dec,lat], Reals]
+
+N[daz[Pi/2,-20*Degree,35*Degree]]
+
+Plot[{az[t,23*Degree,55*Degree],
+      az[t,23*Degree,45*Degree],
+      az[t,23*Degree,35*Degree],
+      az[t,23*Degree,25*Degree],
+      t-Pi},
+{t,0,2*Pi}]
+
+Plot[{az[t,-23*Degree,55*Degree],
+      az[t,-23*Degree,45*Degree],
+      az[t,-23*Degree,35*Degree],
+      az[t,-23*Degree,25*Degree],
+      t-Pi},
+{t,0,2*Pi}]
+
+Plot[{az[t,-0*Degree,55*Degree],
+      az[t,-0*Degree,45*Degree],
+      az[t,-0*Degree,35*Degree],
+      az[t,-0*Degree,25*Degree],
+      t-Pi},
+{t,0,2*Pi}]
+
 
 
 
