@@ -35,32 +35,47 @@ use FFI::Raw;
 # @all = split(/\n/, read_file"/home/barrycarter/20131202/c.csv");
 
 open(A,$0);
-seek(A, 517, SEEK_SET);
-find_newline(\*A);
+seek(A, 2, SEEK_SET);
+debug(find_newline(\*A));
 debug(tell(A));
+debug(find_newline(\*A));
+debug(tell(A));
+debug(find_newline(\*A));
+debug(tell(A));
+# debug(tell(A));
 
 
-=item find_newline(\*A, $whence)
+=item find_newline(\*A, $delim="\n")
 
-Seeks filehandle A to a newline; the next newline if $whence=1, the
-previous newline if $whence=-1
-
-Returns the text of the line it found
-
-Will seek to start/end of file if there are no newlines in the
-indicated direction
+Seeks backwards in filehandle A to find the start of the current line
+(as identified by delimiter $delim), returns that line, and seeks
+forward to next newline
 
 =cut
 
 sub find_newline {
-  my($fh, $whence) = @_;
-  my($char);
-  while (read($fh,$char,1) && $char ne "\n") {}
-#  return;
+  my($fh, $delim) = @_;
+  unless ($delim) {$delim="\n";}
+  my($char,@char);
 
-#  while (*$fh) {debug("FOO: $_");}
-#  debug("FH: $fh");
-#  while (<A>) {debug($_);}
+  debug("ALPHA",tell($fh));
+  # read backwards (TODO: this is inefficient?)
+  do {
+    read($fh,$char,1);
+    # TODO: why does SEEK_CUR not work below?
+    seek($fh,-2,1);
+  } until ($char eq $delim || tell($fh)==0);
+
+  # restore file position (unless we've hit start of file)
+  if (tell($fh)) {seek($fh,+2,1);}
+
+  # and now scan forwards
+  do {
+    read($fh,$char,1);
+    push(@char, $char);
+  } until ($char eq $delim);
+
+  return join("",@char);
 }
 
 die "TESTING";
