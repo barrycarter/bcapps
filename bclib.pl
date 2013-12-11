@@ -4391,6 +4391,38 @@ sub unixsort {
   return NaN;
 }
 
+=item current_line(\*A, $delim="\n")
+
+Seeks backwards in filehandle A to find the start of the current line
+(as identified by delimiter $delim), returns that line, and seeks
+forward to next delimiter
+
+=cut
+
+sub current_line {
+  my($fh, $delim) = @_;
+  unless ($delim) {$delim="\n";}
+  my($char,@char);
+
+  # read backwards (TODO: this is inefficient?)
+  do {
+    read($fh,$char,1);
+    # TODO: why does SEEK_CUR not work below?
+    seek($fh,-2,1);
+  } until ($char eq $delim || tell($fh)==0);
+
+  # restore file position (unless we've hit start of file)
+  if (tell($fh)) {seek($fh,+2,1);}
+
+  # and now scan forwards
+  do {
+    read($fh,$char,1);
+    push(@char, $char);
+  } until ($char eq $delim || eof($fh));
+
+  return join("",@char);
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
   debug("END: CLEANING UP TMP FILES");

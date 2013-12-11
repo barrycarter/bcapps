@@ -35,30 +35,25 @@ use FFI::Raw;
 # @all = split(/\n/, read_file"/home/barrycarter/20131202/c.csv");
 
 open(A,$0);
-seek(A, 2, SEEK_SET);
-debug(find_newline(\*A));
-debug(tell(A));
-debug(find_newline(\*A));
-debug(tell(A));
-debug(find_newline(\*A));
-debug(tell(A));
-# debug(tell(A));
 
+while (!eof(A)) {
+  debug(current_line(\*A,"\n"));
+  debug(tell(A));
+}
 
-=item find_newline(\*A, $delim="\n")
+=item current_line(\*A, $delim="\n")
 
 Seeks backwards in filehandle A to find the start of the current line
 (as identified by delimiter $delim), returns that line, and seeks
-forward to next newline
+forward to next delimiter
 
 =cut
 
-sub find_newline {
+sub current_line {
   my($fh, $delim) = @_;
   unless ($delim) {$delim="\n";}
   my($char,@char);
 
-  debug("ALPHA",tell($fh));
   # read backwards (TODO: this is inefficient?)
   do {
     read($fh,$char,1);
@@ -73,7 +68,7 @@ sub find_newline {
   do {
     read($fh,$char,1);
     push(@char, $char);
-  } until ($char eq $delim);
+  } until ($char eq $delim || eof($fh));
 
   return join("",@char);
 }
