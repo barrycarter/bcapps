@@ -4391,17 +4391,20 @@ sub unixsort {
   return NaN;
 }
 
-=item current_line(\*A, $delim="\n")
+=item current_line(\*A, $delim="\n", $whence=1)
 
 Seeks backwards in filehandle A to find the start of the current line
 (as identified by delimiter $delim), returns that line, and seeks
-forward to next delimiter
+forward to next delimiter.
+
+If $whence = -1, seek to previous delimiter
 
 =cut
 
 sub current_line {
-  my($fh, $delim) = @_;
+  my($fh, $delim, $whence) = @_;
   unless ($delim) {$delim="\n";}
+  unless ($whence) {$whence=1;}
   my($char,@char);
 
   # read backwards (TODO: this is inefficient?)
@@ -4411,14 +4414,21 @@ sub current_line {
     seek($fh,-2,1);
   } until ($char eq $delim || tell($fh)==0);
 
+  # store this in case $whence is -1 (0 if we've hit start of file)
+  my($pos) = 0;
   # restore file position (unless we've hit start of file)
-  if (tell($fh)) {seek($fh,+2,1);}
+  if (tell($fh)) {
+    $pos = tell($fh);
+    seek($fh,+2,1);
+}
 
   # and now scan forwards
   do {
     read($fh,$char,1);
     push(@char, $char);
   } until ($char eq $delim || eof($fh));
+
+  if ($whence==-1) {seek($fh,$pos,SEEK_SET);}
 
   return join("",@char);
 }

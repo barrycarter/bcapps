@@ -25,15 +25,14 @@ for (;;) {
   # look between left and right
   $seek = round(($l+$r)/2);
   seek(A, $seek, SEEK_SET);
-  # discard remainder of this line and pick next line
-  # TODO: this doesn't actually do what I think it does
-  <A>;
-  $line = <A>;
+  # get current line
+  $line = current_line(\*A,"\n",-1);
 
-  # if it matches, exit
+  # if it matches, exit (will print later)
   if (substr($line,0,length($key)) eq $key) {last;}
 
   # if not, change left/right range
+  # TODO: generalize this test
   if ($key lt $line) {
     $r = $seek;
   } else {
@@ -44,21 +43,8 @@ for (;;) {
   if ($n++ > 30) {die "TESTING";}
 }
 
-print $line;
-
-=item find_newline(\*A, $whence)
-
-Seeks filehandle A to a newline; the next newline if $whence=1, the
-previous newline if $whence=-1
-
-Will seek to start/end of file if there are no newlines in the
-indicated direction
-
-=cut
-
-sub find_newline {
-  my($fh, $whence) = @_;
-  debug("FH: $fh");
-}
-
+do {
+  print $line;
+  $line = current_line(\*A, "\n", -1);
+} until (substr($line,0,length($key)) ne $key);
 

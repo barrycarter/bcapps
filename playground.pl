@@ -35,42 +35,11 @@ use FFI::Raw;
 # @all = split(/\n/, read_file"/home/barrycarter/20131202/c.csv");
 
 open(A,$0);
+seek(A,517,SEEK_SET);
 
-while (!eof(A)) {
-  debug(current_line(\*A,"\n"));
+while (tell(A)>0) {
+  debug(current_line2(\*A,"\n",-1));
   debug(tell(A));
-}
-
-=item current_line(\*A, $delim="\n")
-
-Seeks backwards in filehandle A to find the start of the current line
-(as identified by delimiter $delim), returns that line, and seeks
-forward to next delimiter
-
-=cut
-
-sub current_line {
-  my($fh, $delim) = @_;
-  unless ($delim) {$delim="\n";}
-  my($char,@char);
-
-  # read backwards (TODO: this is inefficient?)
-  do {
-    read($fh,$char,1);
-    # TODO: why does SEEK_CUR not work below?
-    seek($fh,-2,1);
-  } until ($char eq $delim || tell($fh)==0);
-
-  # restore file position (unless we've hit start of file)
-  if (tell($fh)) {seek($fh,+2,1);}
-
-  # and now scan forwards
-  do {
-    read($fh,$char,1);
-    push(@char, $char);
-  } until ($char eq $delim || eof($fh));
-
-  return join("",@char);
 }
 
 die "TESTING";
