@@ -30,6 +30,7 @@ for (;;) {
   seek(A, $seek, SEEK_SET);
   # get current line
   $line = current_line(\*A,"\n");
+  debug("LINE: $line AT POS",tell(A));
 
   # if it matches, exit (will print later)
   # TODO: case insensitivity should be optional
@@ -46,23 +47,29 @@ for (;;) {
   debug("$l - $r ($seek), $line, $n");
 }
 
-# remember where we are
-my($pos) = tell(A);
+# move back two positions so we are just before newline
+# TODO: not crazy about code logic here; fix current_line()?
+my($pos) = max(tell(A)-2,0);
 
 # look at lines going forward
-do {
-  $line = current_line(\*A, "\n");
+while (lc(substr($line,0,length($key))) eq lc($key)) {
+  debug("PUSHING: $line");
   push(@for, $line);
-} until (lc(substr($line,0,length($key))) ne lc($key));
+  $line = current_line(\*A, "\n");
+}
 
 # reset to original position
 seek(A,$pos,SEEK_SET);
+$line = current_line(\*A,"\n",-1);
 
 # look at lines going backwards
-do {
-  $line = current_line(\*A, "\n",-1);
+while  (lc(substr($line,0,length($key))) eq lc($key)) {
+  debug("PUSHINGR: $line");
   push(@rev, $line);
-} until (lc(substr($line,0,length($key))) ne lc($key));
+  $line = current_line(\*A, "\n",-1);
+}
+
+# TODO: the original found $line will be repeated (or not?)
 
 debug("FOR",@for);
 debug("REV",@rev);
