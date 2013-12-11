@@ -20,31 +20,49 @@ open(A,$file);
 
 for (;;) {
   # fail condition
-  if (abs($l-$r)<=1) {last;}
+  if (abs($l-$r)<=1) {
+    debug("FAIL");
+    last;
+  }
 
   # look between left and right
   $seek = round(($l+$r)/2);
   seek(A, $seek, SEEK_SET);
   # get current line
-  $line = current_line(\*A,"\n",-1);
+  $line = current_line(\*A,"\n");
 
   # if it matches, exit (will print later)
-  if (substr($line,0,length($key)) eq $key) {last;}
+  # TODO: case insensitivity should be optional
+  if (lc(substr($line,0,length($key))) eq lc($key)) {last;}
 
   # if not, change left/right range
   # TODO: generalize this test
-  if ($key lt $line) {
+  if (lc($key) lt lc($line)) {
     $r = $seek;
   } else {
     $l = $seek;
   }
 
   debug("$l - $r ($seek), $line, $n");
-  if ($n++ > 30) {die "TESTING";}
 }
 
-do {
-  print $line;
-  $line = current_line(\*A, "\n", -1);
-} until (substr($line,0,length($key)) ne $key);
+# remember where we are
+my($pos) = tell(A);
 
+# look at lines going forward
+do {
+  $line = current_line(\*A, "\n");
+  push(@for, $line);
+} until (lc(substr($line,0,length($key))) ne lc($key));
+
+# reset to original position
+seek(A,$pos,SEEK_SET);
+
+# look at lines going backwards
+do {
+  $line = current_line(\*A, "\n",-1);
+  push(@rev, $line);
+} until (lc(substr($line,0,length($key))) ne lc($key));
+
+debug("FOR",@for);
+debug("REV",@rev);
