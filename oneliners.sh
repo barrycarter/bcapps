@@ -1,9 +1,13 @@
 # shell one liners
 
-# biggest map of USA google maps will give me (though I might end up
-# gluing smaller maps together)
+exit;
 
-curl -o maptest1.png 'http://maps.googleapis.com/maps/api/staticmap?center=40,-90&zoom=5&size=640x640&scale=2&maptype=roadmap&sensor=false'
+# biggest map of USA google maps will give me (though I might end up
+# gluing smaller maps together) [will actually probably use OSM maps]
+
+curl -o maptest10.png 'http://maps.googleapis.com/maps/api/staticmap?center=39,-111&zoom=5&size=640x640&scale=2&maptype=hybrid&sensor=false'
+
+curl -o maptest7.png 'http://maps.googleapis.com/maps/api/staticmap?center=37,-80.5&zoom=5&size=640x640&scale=2&maptype=roadmap&sensor=false'
 
 exit;
 

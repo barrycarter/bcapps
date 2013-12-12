@@ -262,4 +262,7 @@ http://wordpress.barrycarter.info/comment-subscriptions?srp=28560&sra=s
 is not working (and I don't think people get replies when they
 comment, or even when comment is approved)
 
+% installing openlayers (into /sites/test for now):
 
+curl -O http://openlayers.org/download/OpenLayers-2.13.1.tar.gz
+(then tar xvfz etc)
