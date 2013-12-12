@@ -21,8 +21,7 @@ open(A,$file);
 for (;;) {
   # fail condition
   if (abs($l-$r)<=1) {
-    debug("FAIL");
-    last;
+    die "FAILED";
   }
 
   # look between left and right
@@ -30,7 +29,6 @@ for (;;) {
   seek(A, $seek, SEEK_SET);
   # get current line
   $line = current_line(\*A,"\n");
-  debug("LINE: $line AT POS",tell(A));
 
   # if it matches, exit (will print later)
   # TODO: case insensitivity should be optional
@@ -44,7 +42,7 @@ for (;;) {
     $l = $seek;
   }
 
-  debug("$l - $r ($seek), $line, $n");
+#  debug("$l - $r ($seek), $line, $n");
 }
 
 # move back two positions so we are just before newline
@@ -53,10 +51,12 @@ my($pos) = max(tell(A)-2,0);
 
 # look at lines going forward
 while (lc(substr($line,0,length($key))) eq lc($key)) {
-  debug("PUSHING: $line");
+  chomp($line);
   push(@for, $line);
   $line = current_line(\*A, "\n");
 }
+
+debug("FOR FAIL: $line");
 
 # reset to original position
 seek(A,$pos,SEEK_SET);
@@ -64,12 +64,17 @@ $line = current_line(\*A,"\n",-1);
 
 # look at lines going backwards
 while  (lc(substr($line,0,length($key))) eq lc($key)) {
-  debug("PUSHINGR: $line");
+  chomp($line);
   push(@rev, $line);
   $line = current_line(\*A, "\n",-1);
 }
 
-# TODO: the original found $line will be repeated (or not?)
+debug("REV FAIL: $line");
 
-debug("FOR",@for);
-debug("REV",@rev);
+# print the lines (@rev in reverse order to preserve sorting)
+print join("\n",reverse(@rev)),"\n";
+print join("\n",@for),"\n";
+
+# TODO: the original found $line will be repeated (or not?)
+# debug("FOR",@for);
+# debug("REV",@rev);

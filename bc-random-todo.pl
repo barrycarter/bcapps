@@ -17,6 +17,7 @@
 # --days = how many days to go back (default = 365)
 # --n = how many items to show (default = 5)
 # --tags = "tag1,tag2,etc" which tags to exclude
+# --recent: just show the most recent entries in reverse order, no randomness
 
 # --plot: plot the number of items on my todo list per diem as function of time
 # --ignore = when plotting, ignore these many most recent days
@@ -68,6 +69,11 @@ while (<A>) {
 close(B);
 
 ($min,$max) = (min(@avgs),max(@avgs));
+
+if ($globopts{recent}) {
+  print join("\n",@list),"\n";
+  exit();
+}
 
 @list = randomize(\@list);
 

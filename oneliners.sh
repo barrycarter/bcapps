@@ -1,5 +1,12 @@
 # shell one liners
 
+# biggest map of USA google maps will give me (though I might end up
+# gluing smaller maps together)
+
+curl -o maptest1.png 'http://maps.googleapis.com/maps/api/staticmap?center=40,-90&zoom=5&size=640x640&scale=2&maptype=roadmap&sensor=false'
+
+exit;
+
 # symlinks all sqlite dbs in all my firefox profiles and changes
 # extension to db (so Makefile.sqlite can handle them)
 \ls -1 ~/.mozilla/firefox/*/*.sqlite | perl -nle '$x=$_; s/^.*\/firefox\/+//; s/\.sqlite/.db/; s/\//-/isg; print "ln -s $x $_"'
