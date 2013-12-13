@@ -149,8 +149,16 @@ Plot[{az[t,-0*Degree,55*Degree],
       t-Pi},
 {t,0,2*Pi}]
 
+(* ellipses *)
 
+(* instantaneous radius from center (not focus) of ellipse *)
 
+r[a_,b_,th_] = a*b/Sqrt[(b*Cos[th])^2+(a*Sin[th])^2]
 
+(* if f0 and f1 are foci, distance is constant *)
+
+Solve[a+f0 + a-f0 == Sqrt[f0^2+b^2] + Sqrt[f0^2+b^2], {f0,f1}]
+
+(* the foci are thus +-Sqrt[a^2-b^2] *)
 
 
