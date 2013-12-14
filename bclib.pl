@@ -4433,6 +4433,33 @@ sub current_line {
   return join("",@char);
 }
 
+=item find_attached_scanners()
+
+Return a hash of attached of scanners attached:
+
+$hash{vendor}{product} = USB address
+
+TODO: this is ugly, Id prefer to use vendor/product names, not ids,
+but not all my scanners have vendor/product names, sigh
+
+=cut
+
+sub find_attached_scanners {
+  my(@scanners) = `sudo sane-find-scanner | egrep -i '^found'`;
+  my(%hash);
+  for $i (@scanners) {
+    $i=~s/vendor=(\S+)//;
+    my($vendor) = $1;
+    $i=~s/product=(\S+)//;
+    my($product) = $1;
+    $i=~s/at (.*?)$//;
+    my($usb) = $1;
+    $hash{$vendor}{$product}=$usb;
+  }
+
+  return \%hash;
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
   debug("END: CLEANING UP TMP FILES");

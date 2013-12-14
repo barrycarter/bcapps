@@ -32,6 +32,12 @@ use Algorithm::GoldenSection;
 use Inline::Python;
 use FFI::Raw;
 
+debug(var_dump("fas",find_attached_scanners()));
+
+# debug("SCANNERS",@scanners);
+
+die "TESTING";
+
 # @all = split(/\n/, read_file"/home/barrycarter/20131202/c.csv");
 
 open(A,$0);

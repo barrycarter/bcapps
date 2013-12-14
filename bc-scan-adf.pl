@@ -2,12 +2,14 @@
 
 # scans images using my ADF scanner
 
-# TODO: this seems to keep changing, automate how to find it (using sane-find-scanner?)
-# $scanner = "libusb:001:126";
-# $scanner = "libusb:001:004";
-# $scanner = "libusb:002:006";
-$scanner = "libusb:001:003";
 require "/usr/local/lib/bclib.pl";
+
+# find USB address of my ADF scanner
+%scanners = %{find_attached_scanners()};
+# must quote these strings, otherwise interpreted as numbers
+$usb = $scanners{"0x03f0"}{"0x1205"};
+unless ($usb) {die "Scanner not attached";}
+
 # scanning takes a while, so default alert me when done
 defaults("xmessage=1");
 my($out,$err,$res);
@@ -17,7 +19,7 @@ for (;;) {
   my($date) = `date +%Y%m%d.%H%M%S.%N`;
   chomp($date);
   # TODO: allow end user to choose resolution (600x600 not always needed)
-  my($cmd) = qq%sudo scanimage --mode Color -d 'hp5590:$scanner' --source "ADF" --resolution 300 > $date.ppm%;
+  my($cmd) = qq%sudo scanimage --mode Color -d 'hp5590:$usb' --source "ADF" --resolution 300 > $date.ppm%;
   debug("CMD: $cmd");
   ($out,$err,$res) = cache_command2($cmd);
   debug("OER: $out/$err/$res");

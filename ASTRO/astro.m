@@ -153,7 +153,29 @@ Plot[{az[t,-0*Degree,55*Degree],
 
 (* instantaneous radius from center (not focus) of ellipse *)
 
-r[a_,b_,th_] = a*b/Sqrt[(b*Cos[th])^2+(a*Sin[th])^2]
+r[a_,b_,th_] = FullSimplify[a*b/Sqrt[(b*Cos[th])^2+(a*Sin[th])^2],Reals]
+dr[a_,b_,th_] = FullSimplify[D[r[a,b,th],th],Reals]
+area[a_,b_,th_] = FullSimplify[Integrate[r[a,b,th]*dr[a,b,th],th],Reals]
+
+Plot[area[2,1,th],{th,0,Pi/2}]
+
+(* difference between area of ellipse from center + from focus *)
+
+tri[a_,b_,th_] = FullSimplify[r[a,b,th]*Sin[th]*Sqrt[a^2-b^2]/2,Reals]
+
+(* area from focus *)
+
+focarea[a_,b_,th_] = FullSimplify[area[a,b,th]-tri[a,b,th],Reals]
+
+Plot[focarea[2,1,th],{th,0,2*Pi}]
+
+(* position when angle is theta *)
+
+posx[a_,b_,th_] = r[a,b,th]*Cos[th]
+posy[a_,b_,th_] = r[a,b,th]*Sin[th]
+
+ParametricPlot[{posx[2,1,t],posy[2,1,t]},{t,0,2*Pi}]
+ParametricPlot[{posx[2,1,t],posy[2,1,t]},{t,0,Pi}]
 
 (* if f0 and f1 are foci, distance is constant *)
 
@@ -161,4 +183,9 @@ Solve[a+f0 + a-f0 == Sqrt[f0^2+b^2] + Sqrt[f0^2+b^2], {f0,f1}]
 
 (* the foci are thus +-Sqrt[a^2-b^2] *)
 
+(* distance from right focus *)
+
+drf[a_,b_,th_] = Norm[{posx[a,b,th]-Sqrt[a^2+b^2], posy[a,b,th]}]
+
+Integrate[drf[a,b,th],th]
 
