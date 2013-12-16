@@ -196,11 +196,88 @@ y /. FullSimplify[Solve[Sqrt[x^2+y^2] + Sqrt[(x+a)^2+y^2] == a+2b, y]][[2]]
 
 y[x,2,1]
 
-Plot[y[x,2,1],{x,-3,1}, AspectRatio -> 3/8]
+(* a and b are not the minor/major axes, but... *)
 
-xtri[theta_,a_,b_] = x /. FullSimplify[Solve[y[x,a,b]==x*Tan[theta],x]][[1]]
+area[a_,b_] = Pi*(a+2b)/2*Sqrt[b]*Sqrt[a+b]
 
-Plot[x*Sin[40*Degree],{x,0,2}]
+Plot[y[x,2,1],{x,-3,1}, AspectRatio -> Automatic]
+
+xtri[theta_,a_,b_] =
+(x /. FullSimplify[Solve[y[x,a,b]==x*Tan[theta],x]][[1]])*If[theta>Pi/2,-1,1]
+
+
+
+(* area "swept out" given value of x *)
+
+(* this has no closed form *)
+
+area[x_,a_,b_] := x*y[x,a,b]/2 + NIntegrate[y[t,a,b],{t,x,b}]
+
+Plot[area[x,2,1],{x,-3,1}]
+
+x[area2_,a_,b_] := x/. FindRoot[area[x,a,b] == area2, {x,0,b}]
+
+Plot[x[a,2,1],{a,0,1}]
+
+Plot[x[a,2,1],{a,0,area[0,2,1]}]
+
+Plot[x[a,2,1]/Cos[Pi/2*a/area[0,2,1]],{a,0,area[0,2,1]}]
+
+
+
+
+
+
+
+
+
+
+(* nontriangular portion at angle theta *)
+
+Integrate[y[x,a,b],{x,xtri[theta,a,b],b}]
+
+(* triangular area *)
+
+xtri[theta,a,b]*y[xtri[theta,a,b],a,b]/2
+
+(* total area for specific ellipse *)
+
+ta[theta_,a_,b_] := NIntegrate[y[x,a,b],{x,xtri[theta,a,b],b}] +
+xtri[theta,a,b]*y[xtri[theta,a,b],a,b]/2 
+
+Plot[ta[theta,2,1],{theta,0,Pi/2}]
+Plot[theta*2*1/2,{theta,0,Pi/2}]
+
+(* difference between "average" area and true area *)
+
+Plot[ta[theta,2,1]-theta*2*1/2,{theta,0,Pi/2}]
+
+(* difference between true area + double triangle approx *)
+
+xtri[theta,a,b]*y[xtri[theta,a,b],a,b]/2 + 
+(b-xtri[theta,a,b])*y[xtri[theta,a,b],a,b]/2 
+
+b*y[xtri[theta,a,b],a,b]/2
+
+b*y[xtri[theta,a,b],a,b]/2 /. {b->1, a->2}
+
+Plot[%,{theta,0,Pi/2}]
+
+Plot[ta[theta,2,1] - b*y[xtri[theta,a,b],a,b]/2 /. {b->1, a->2}, 
+{theta,0,Pi/2}]
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
