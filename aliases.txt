@@ -112,4 +112,3 @@ alias hex2dec "bc-call-func.pl hex \!*"
 # brackets is a tag, but the top most used ones will be)
 # not working due to shell use of $
 alias todotags 'perl -nle "while (s/\[(.*?)\]//) {print $1}" /home/barrycarter/bc-todo-list.txt|sort|uniq -c|sort -nr'
-

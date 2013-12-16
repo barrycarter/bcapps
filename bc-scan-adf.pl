@@ -26,8 +26,9 @@ for (;;) {
 
   # on failure, remove file + end loop
   # (otherwise, push to list of files-to-convert)
+  # testing if rm step is wise
   if ($res) {
-    system("rm $date.ppm");
+#    system("rm $date.ppm");
     last;
   } else {
     push(@files, "$date.ppm");
@@ -46,9 +47,8 @@ sub fix_scanned_files {
   my(@files) = @_;
 
   for $i (@files) {
-    # first image (this is 8.5" x 22" [since both sides scanned] at 200dpi)
-    my($cmd1)="convert $i -geometry 1700x2200 -crop 1700x2200+0+0 -flip -flop $i.1.jpg";
-#    my($cmd2)="convert $i -geometry 1700x2200 -crop 1700x2200+0+2200 -flip -flop $i.2.jpg";
+    # scanned at 200 dpi, 8.5"x11"
+    my($cmd1)="convert $i -geometry 1700x2200 -crop 1700x2200+0+0 -flip -flop $i.jpg";
     system($cmd1);
   }
 }

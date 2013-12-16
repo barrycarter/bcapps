@@ -189,3 +189,19 @@ drf[a_,b_,th_] = Norm[{posx[a,b,th]-Sqrt[a^2+b^2], posy[a,b,th]}]
 
 Integrate[drf[a,b,th],th]
 
+(* different ellipses, foci at (0,0) and (-a,0), sum distance a+2b *)
+
+y[x_,a_,b_] = 
+y /. FullSimplify[Solve[Sqrt[x^2+y^2] + Sqrt[(x+a)^2+y^2] == a+2b, y]][[2]]
+
+y[x,2,1]
+
+Plot[y[x,2,1],{x,-3,1}, AspectRatio -> 3/8]
+
+xtri[theta_,a_,b_] = x /. FullSimplify[Solve[y[x,a,b]==x*Tan[theta],x]][[1]]
+
+Plot[x*Sin[40*Degree],{x,0,2}]
+
+
+
+
