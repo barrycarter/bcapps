@@ -219,9 +219,10 @@ x[area2_,a_,b_] := x/. FindRoot[area[x,a,b] == area2, {x,0,b}]
 
 Plot[x[a,2,1],{a,0,1}]
 
-Plot[x[a,2,1],{a,0,area[0,2,1]}]
+Plot[x[a,2,1],{a,0,2}]
 
-Plot[x[a,2,1]/Cos[Pi/2*a/area[0,2,1]],{a,0,area[0,2,1]}]
+Plot[x[a,2,1]/Cos[Pi*a/area[2,1]],{a,0,area[2,1]/2}]
+Plot[x[a,2,1],{a,0,area[2,1]/2}]
 
 
 
