@@ -175,6 +175,12 @@ allsops[s_,t_] := allsops[s,t] =
 
 t1 = N[Table[Cos[2*Pi*x/789],{x,1,10001}]]
 
+t1 = N[Table[Cos[2*Pi*x/10001*73],{x,1,10001}]]
+t1 = N[Table[Cos[2*Pi*x/10001*73.001],{x,1,10001}]]
+
+Take[Abs[Fourier[t1]],73]
+
+
 ac[n_] := Sum[t1[[i]]*t1[[i+n]],{i,1,Length[t1]-n}]
 
 t2 = Table[ac[n],{n,0,Length[t1],10}]
