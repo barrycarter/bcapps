@@ -178,8 +178,25 @@ t1 = N[Table[Cos[2*Pi*x/789],{x,1,10001}]]
 t1 = N[Table[Cos[2*Pi*x/10001*73],{x,1,10001}]]
 t1 = N[Table[Cos[2*Pi*x/10001*73.001],{x,1,10001}]]
 
-Take[Abs[Fourier[t1]],73]
+t1 = N[Table[Cos[2*Pi*x/10001*73.01],{x,1,10001}]]
+t1 = N[Table[Cos[2*Pi*x/10001*73.01]-Cos[2*Pi*x/10001*73],{x,1,10001}]]
 
+welch = 1 - (2 (Range[10001] - (10001 - 1)/2)/(10001 + 1))^2;
+fData = Append[Abs[Fourier[welch t1]]^2 / (Plus @@ (welch^2)), 0];
+fData = (fData + Reverse[fData])/2;
+fData = fData / (Plus @@ fData);
+
+t2 = Take[Abs[Fourier[t1]],73]
+t4 = Take[Abs[Fourier[t1]],{75,74+73}]
+
+ListPlot[t2, PlotRange->All]
+ListPlot[t4, PlotRange->All]
+
+t3 = Table[t2[[n]]*(74-n),{n,1,73}]
+t5 = Table[t4[[n]]*n,{n,1,73}]
+
+ListPlot[t3, PlotRange->All]
+ListPlot[t5, PlotRange->All]
 
 ac[n_] := Sum[t1[[i]]*t1[[i+n]],{i,1,Length[t1]-n}]
 
@@ -2063,3 +2080,6 @@ g[x_,y_,z_] = f[f[x,y],z]-f[x,f[y,z]]
 
 g[x,y,z] /. {x->r*Cos[th]*Cos[ph], y->r*Sin[th]*Cos[ph], z->r*Sin[ph]}
 Simplify[%,Member[{th,ph,r},Reals]]
+
+t4 = N[Table[Sin[3.17*2*Pi*x/200+.9752], {x,1,200}]]
+
