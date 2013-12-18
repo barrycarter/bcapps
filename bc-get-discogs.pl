@@ -8,16 +8,13 @@
 # user-specific mysql-like file
 
 require "/usr/local/lib/bclib.pl";
+use JSON::GRDDL;
 dodie("chdir('/usr/local/etc/discogs')");
 
-debug("HELLO");
+my $grddl = JSON::GRDDL->new;
 
 (my($user)=@ARGV)||die("Usage: $0 username");
 my($out,$err,$res);
-
-debug("BETA");
-
-debug("FILETEST", -f "user-$user-p1");
 
 # cache information as much as possible
 # TODO: caching here is a bad idea if user adds releases (but OK for testing)
@@ -40,8 +37,17 @@ for $i (2..$userinfo->{pagination}{pages}) {
 # now, go through the pages (including page 1)
 for $i (1..$userinfo->{pagination}{pages}) {
   my($json) = JSON::from_json(read_file("user-$user-p$i"));
-  debug(var_dump("json",$json));
+  debug($grddl->data($json,""));
+  die "TESTING";
+  for $j (@{$json->{releases}}) {
+    # TODO: deal with non-basic_information fields
+    # note other fields for artists appear to be unused or redundant
+    for $k (keys %{$j}) {
+      debug(var_dump("k",$k));
+    }
+  }
 }
+
 
 
 die "TESTING";
