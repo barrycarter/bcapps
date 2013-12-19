@@ -8,10 +8,7 @@
 # user-specific mysql-like file
 
 require "/usr/local/lib/bclib.pl";
-use JSON::GRDDL;
 dodie("chdir('/usr/local/etc/discogs')");
-
-my $grddl = JSON::GRDDL->new;
 
 (my($user)=@ARGV)||die("Usage: $0 username");
 my($out,$err,$res);
@@ -37,7 +34,7 @@ for $i (2..$userinfo->{pagination}{pages}) {
 # now, go through the pages (including page 1)
 for $i (1..$userinfo->{pagination}{pages}) {
   my($json) = JSON::from_json(read_file("user-$user-p$i"));
-  debug($grddl->data($json,""));
+  hash2rdf($json,$user);
   die "TESTING";
   for $j (@{$json->{releases}}) {
     # TODO: deal with non-basic_information fields
@@ -48,10 +45,36 @@ for $i (1..$userinfo->{pagination}{pages}) {
   }
 }
 
+=item hash2rdf($ref,$name)
+
+Given a scalar/array/hash reference named $name, returns RDF triplets
+recursively
+
+Pretty much does what unfold() does, only in RDF
+
+=cut
+
+sub hash2rdf {
+  my($ref,$name) = @_;
+  debug("REF: $ref");
+
+  if (ref($ref) eq "ARRAY") {
+    for $i (0..$#{ref}) {
+      debug("$name/$i/",hash2rdf(@$ref[$i]));
+      return;
+    }
+  }
+
+  if (ref($ref) eq "HASH") {
+    for $i (keys %{$ref}) {
+      debug("$name/$i/",hash2rdf($ref->{$i}));
+      return;
+    }
+  }
+
+  # all other cases
+  return $ref;
 
 
-die "TESTING";
 
-# debug("USER",%user)
-debug(var_dump("user", $userinfo));
-
+}
