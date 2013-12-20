@@ -10,6 +10,12 @@
 require "/usr/local/lib/bclib.pl";
 dodie("chdir('/usr/local/etc/discogs')");
 
+hash2rdf([0,1,2,3],"foo");
+
+debug(var_dump("triplets",@triplets));
+
+die "TESTING";
+
 (my($user)=@ARGV)||die("Usage: $0 username");
 my($out,$err,$res);
 
@@ -56,24 +62,34 @@ Pretty much does what unfold() does, only in RDF
 
 sub hash2rdf {
   my($ref,$name) = @_;
-  debug("REF: $ref");
+  debug("hash2rdf($ref,$name)");
+  # TODO: making $hash2rdf_count global is bad
+  # things to return
+  # TODO: making @triplets global is unacceptably bad (but just testing now)
+  # may do pass-by-var for both?
+  # my(@triplets);
 
   if (ref($ref) eq "ARRAY") {
-    for $i (0..$#{ref}) {
-      debug("$name/$i/",hash2rdf(@$ref[$i]));
-      return;
+    for $i (0..$#{$ref}) {
+      if (ref(@$ref[$i]) eq "SCALAR") {
+	# if the element is a scalar, we have our triplet
+	push(@triplets, [$name,$i,@$ref[$i]]);
+      } else {
+	# if not we assign the element a ref value and recurse
+	$hash2rdf_count;
+	push(@triplets, [$name,$i,"REF$hash2rdf_count"]);
+	hash2rdf("REF$hash2rdf_count", \@$ref[$i]);
+      }
     }
+    return;
   }
 
   if (ref($ref) eq "HASH") {
-#    debug("ALPHA",unfold($ref));
-    debug("HASH:",%$ref);
-    debug("KEYS:",keys %$ref);
     for $i (keys %$ref) {
       debug("I: $i");
       debug("KEY: $name/$i/",hash2rdf($ref->{$i}));
-      return;
     }
+    return;
   }
 
   # all other cases
