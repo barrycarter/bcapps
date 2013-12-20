@@ -111,4 +111,6 @@ alias hex2dec "bc-call-func.pl hex \!*"
 # find most frequently used tags in my todo list (not everything in
 # brackets is a tag, but the top most used ones will be)
 # not working due to shell use of $
-alias todotags 'perl -nle "while (s/\[(.*?)\]//) {print $1}" /home/barrycarter/bc-todo-list.txt|sort|uniq -c|sort -nr'
+# fixed to not use shell
+# alias todotags "perl -nle 'while (s/\[(.*?)\]//) {print \"$1\"}' /home/barrycarter/bc-todo-list.txt|sort|uniq -c|sort -nr"
+alias todotags "bc-todotags.pl '\[(.*?)\]' < ~/bc-todo-list.txt | sort | uniq -c | sort -nr | less"
