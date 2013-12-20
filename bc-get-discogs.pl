@@ -66,8 +66,12 @@ sub hash2rdf {
   }
 
   if (ref($ref) eq "HASH") {
-    for $i (keys %{$ref}) {
-      debug("$name/$i/",hash2rdf($ref->{$i}));
+#    debug("ALPHA",unfold($ref));
+    debug("HASH:",%$ref);
+    debug("KEYS:",keys %$ref);
+    for $i (keys %$ref) {
+      debug("I: $i");
+      debug("KEY: $name/$i/",hash2rdf($ref->{$i}));
       return;
     }
   }
