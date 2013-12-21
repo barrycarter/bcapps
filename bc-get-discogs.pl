@@ -61,7 +61,7 @@ Pretty much does what unfold() does, only in RDF
 
 sub hash2rdf {
   my($ref,$name) = @_;
-  debug("hash2rdf($ref,$name)");
+  debug("hash2rdf($ref,$name), ");
   # name that each reference will give itself
   my($mi);
   # TODO: making $hash2rdf_count global is bad
@@ -70,11 +70,13 @@ sub hash2rdf {
   # may do pass-by-var for both?
   # my(@triplets);
 
-  if (ref($ref) eq "ARRAY") {
+  if (UNIVERSAL::isa($ref,"ARRAY")) {
+    debug("ARRAY: $ref");
     # give myself a name
     $mi = "REF".++$hash2rdf_count;
     # push triplets for my children
     for $i (0..$#{$ref}) {
+      debug("ELT: ",\@$ref[$i]);
       push(@triplets, [$mi, $i, hash2rdf(\@$ref[$i])]);
     }
     # return the name I gave myself
