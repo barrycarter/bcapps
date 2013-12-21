@@ -10,11 +10,9 @@
 require "/usr/local/lib/bclib.pl";
 dodie("chdir('/usr/local/etc/discogs')");
 
-hash2rdf([0,1,2,3],"foo");
-
-debug(var_dump("triplets",@triplets));
-
-die "TESTING";
+# hash2rdf([0,1,2,3],"foo");
+# debug(var_dump("triplets",\@triplets));
+# die "TESTING";
 
 (my($user)=@ARGV)||die("Usage: $0 username");
 my($out,$err,$res);
@@ -41,6 +39,7 @@ for $i (2..$userinfo->{pagination}{pages}) {
 for $i (1..$userinfo->{pagination}{pages}) {
   my($json) = JSON::from_json(read_file("user-$user-p$i"));
   hash2rdf($json,$user);
+  debug(var_dump("trip",\@triplets));
   die "TESTING";
   for $j (@{$json->{releases}}) {
     # TODO: deal with non-basic_information fields
@@ -63,6 +62,8 @@ Pretty much does what unfold() does, only in RDF
 sub hash2rdf {
   my($ref,$name) = @_;
   debug("hash2rdf($ref,$name)");
+  # name that each reference will give itself
+  my($mi);
   # TODO: making $hash2rdf_count global is bad
   # things to return
   # TODO: making @triplets global is unacceptably bad (but just testing now)
@@ -70,31 +71,25 @@ sub hash2rdf {
   # my(@triplets);
 
   if (ref($ref) eq "ARRAY") {
+    # give myself a name
+    $mi = "REF".++$hash2rdf_count;
+    # push triplets for my children
     for $i (0..$#{$ref}) {
-      if (ref(@$ref[$i]) eq "SCALAR") {
-	# if the element is a scalar, we have our triplet
-	push(@triplets, [$name,$i,@$ref[$i]]);
-      } else {
-	# if not we assign the element a ref value and recurse
-	$hash2rdf_count;
-	push(@triplets, [$name,$i,"REF$hash2rdf_count"]);
-	hash2rdf("REF$hash2rdf_count", \@$ref[$i]);
-      }
+      push(@triplets, [$mi, $i, hash2rdf(\@$ref[$i])]);
     }
-    return;
+    # return the name I gave myself
+    return $mi;
   }
 
   if (ref($ref) eq "HASH") {
+    # give myself a name
+    $mi = "REF".++$hash2rdf_count;
     for $i (keys %$ref) {
-      debug("I: $i");
-      debug("KEY: $name/$i/",hash2rdf($ref->{$i}));
+      push(@triplets, [$mi, $i, hash2rdf($ref->{$i})]);
     }
-    return;
+    return $mi;
   }
 
-  # all other cases
-  return $ref;
-
-
-
+  # all other cases, return what I point to
+  return $$ref;
 }
