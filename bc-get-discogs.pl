@@ -39,15 +39,13 @@ for $i (2..$userinfo->{pagination}{pages}) {
 for $i (1..$userinfo->{pagination}{pages}) {
   my($json) = JSON::from_json(read_file("user-$user-p$i"));
   hash2rdf($json,$user);
-  debug(var_dump("trip",\@triplets));
-  die "TESTING";
-  for $j (@{$json->{releases}}) {
-    # TODO: deal with non-basic_information fields
-    # note other fields for artists appear to be unused or redundant
-    for $k (keys %{$j}) {
-      debug(var_dump("k",$k));
-    }
-  }
+}
+
+# triplets printing (as test)
+
+for $i (@triplets) {
+  my(@l) = @{$i};
+  print join("\t", @l),"\n";
 }
 
 =item hash2rdf($ref,$name)
@@ -62,36 +60,67 @@ Pretty much does what unfold() does, only in RDF
 sub hash2rdf {
   my($ref,$name) = @_;
   debug("hash2rdf($ref,$name), ");
+  my($type) = ref($ref);
   # name that each reference will give itself
   my($mi);
+  debug("TYPE($ref): $type");
   # TODO: making $hash2rdf_count global is bad
   # things to return
   # TODO: making @triplets global is unacceptably bad (but just testing now)
   # may do pass-by-var for both?
   # my(@triplets);
 
-  if (UNIVERSAL::isa($ref,"ARRAY")) {
+  # if no type at all, just return self
+  unless ($type) {return $ref;}
+
+  if ($type eq "ARRAY") {
     debug("ARRAY: $ref");
     # give myself a name
     $mi = "REF".++$hash2rdf_count;
+    # interim var
+    my(@l) = @{$ref};
     # push triplets for my children
-    for $i (0..$#{$ref}) {
-      debug("ELT: ",\@$ref[$i]);
-      push(@triplets, [$mi, $i, hash2rdf(\@$ref[$i])]);
+    for $i (0..$#l) {
+      debug("ELT: ",$l[$i]);
+      push(@triplets, [$mi, $i, hash2rdf($l[$i])]);
     }
     # return the name I gave myself
     return $mi;
   }
 
-  if (ref($ref) eq "HASH") {
+  if ($type eq "HASH") {
+    debug("HASH: $ref");
     # give myself a name
     $mi = "REF".++$hash2rdf_count;
-    for $i (keys %$ref) {
-      push(@triplets, [$mi, $i, hash2rdf($ref->{$i})]);
+    # interim var
+    my(%h) = %$ref;
+    for $i (keys %h) {
+      push(@triplets, [$mi, $i, hash2rdf($h{$i})]);
     }
     return $mi;
   }
-
-  # all other cases, return what I point to
-  return $$ref;
 }
+
+=item schema
+
+; where dump.txt is output of this program
+DROP TABLE IF EXISTS rdf;
+CREATE TABLE rdf (hash, key, val);
+CREATE INDEX i1 ON rdf(hash);
+CREATE INDEX i2 ON rdf(key);
+CREATE INDEX i3 ON rdf(val);
+.separator "\t"
+.import dump.txt rdf
+
+; useful queries
+SELECT r1.key, r2.key, r3.key, r4.key, r5.key, r6.key, r6.val FROM rdf r1 
+JOIN rdf r2 ON (r1.val = r2.hash)
+JOIN rdf r3 ON (r2.val = r3.hash)
+JOIN rdf r4 ON (r3.val = r4.hash)
+JOIN rdf r5 ON (r4.val = r5.hash)
+JOIN rdf r6 ON (r5.val = r6.hash)
+WHERE r1.hash='REF1' AND r1.key='releases' ORDER BY r2.key+0
+;
+
+
+=cut
