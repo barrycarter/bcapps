@@ -35,7 +35,7 @@ for $i (2..$userinfo->{pagination}{pages}) {
 for $i (1..$userinfo->{pagination}{pages}) {
   my($json) = JSON::from_json(read_file("user-$user-p$i"));
   # add to RDF triplets
-  hash2rdf($json);
+  hash2rdf($json,$user);
 
   # record release ids
   for $j (@{$json->{releases}}) {$relid{$j->{basic_information}{id}}=1;}
@@ -52,7 +52,7 @@ for $i (keys %relid) {
   # and parse
   my($json) = JSON::from_json(read_file("release-$i"));
   debug("JSON: $json");
-  hash2rdf($json);
+  hash2rdf($json,"releases-$i");
 }
 
 # triplets printing (as test)
@@ -62,23 +62,25 @@ for $i (@triplets) {
   print join("\t", @l),"\n";
 }
 
-=item hash2rdf($ref)
+=item hash2rdf($ref,$name="")
 
 Given a scalar/array/hash reference $ref, returns RDF triplets recursively.
+
+If $name is given, assigns name $name to $ref. Otherwise, creates a name
 
 Pretty much does what unfold() does, only in RDF
 
 =cut
 
 sub hash2rdf {
-  my($ref) = @_;
+  my($ref,$name) = @_;
   my($type) = ref($ref);
 
   # if no type at all, just return self
   unless ($type) {return $ref;}
 
-  # name I will give $ref
-  my($mi) = "REF".++$hash2rdf_count;
+  # name I will give $ref if not given
+  unless ($name) {$name = "REF".++$hash2rdf_count;}
   # TODO: making $hash2rdf_count global is bad
   # TODO: making @triplets global is unacceptably bad (but just testing now)
   # my(@triplets);
@@ -88,16 +90,16 @@ sub hash2rdf {
     # interim var
     my(@l) = @{$ref};
     # push triplets for my children
-    for $i (0..$#l) {push(@triplets, [$mi, $i, hash2rdf($l[$i])]);}
+    for $i (0..$#l) {push(@triplets, [$name, $i, hash2rdf($l[$i])]);}
     # return the name I gave myself
-    return $mi;
+    return $name;
   }
 
   if ($type eq "HASH") {
     # interim var
     my(%h) = %$ref;
-    for $i (keys %h) {push(@triplets, [$mi, $i, hash2rdf($h{$i})]);}
-    return $mi;
+    for $i (keys %h) {push(@triplets, [$name, $i, hash2rdf($h{$i})]);}
+    return $name;
   }
 
   # hopefully it's referring to a scalar at this point!
