@@ -10,10 +10,6 @@
 require "/usr/local/lib/bclib.pl";
 dodie("chdir('/usr/local/etc/discogs')");
 
-# hash2rdf([0,1,2,3],"foo");
-# debug(var_dump("triplets",\@triplets));
-# die "TESTING";
-
 (my($user)=@ARGV)||die("Usage: $0 username");
 my($out,$err,$res);
 
@@ -38,7 +34,25 @@ for $i (2..$userinfo->{pagination}{pages}) {
 # now, go through the pages (including page 1)
 for $i (1..$userinfo->{pagination}{pages}) {
   my($json) = JSON::from_json(read_file("user-$user-p$i"));
-  hash2rdf($json,$user);
+  # add to RDF triplets
+  hash2rdf($json);
+
+  # record release ids
+  for $j (@{$json->{releases}}) {$relid{$j->{basic_information}{id}}=1;}
+}
+
+# get release info (unless we have it)
+for $i (keys %relid) {
+  # intentionally ignoring nocache here, could be dangerous
+  unless (-f "release-$i") {
+    ($out,$err,$res) = cache_command2("curl -o release-$i 'http://api.discogs.com/releases/$i'");
+    sleep(1);
+  }
+
+  # and parse
+  my($json) = JSON::from_json(read_file("release-$i"));
+  debug("JSON: $json");
+  hash2rdf($json);
 }
 
 # triplets printing (as test)
@@ -48,57 +62,46 @@ for $i (@triplets) {
   print join("\t", @l),"\n";
 }
 
-=item hash2rdf($ref,$name)
+=item hash2rdf($ref)
 
-Given a scalar/array/hash reference named $name, returns RDF triplets
-recursively
+Given a scalar/array/hash reference $ref, returns RDF triplets recursively.
 
 Pretty much does what unfold() does, only in RDF
 
 =cut
 
 sub hash2rdf {
-  my($ref,$name) = @_;
-  debug("hash2rdf($ref,$name), ");
+  my($ref) = @_;
   my($type) = ref($ref);
-  # name that each reference will give itself
-  my($mi);
-  debug("TYPE($ref): $type");
-  # TODO: making $hash2rdf_count global is bad
-  # things to return
-  # TODO: making @triplets global is unacceptably bad (but just testing now)
-  # may do pass-by-var for both?
-  # my(@triplets);
 
   # if no type at all, just return self
   unless ($type) {return $ref;}
 
+  # name I will give $ref
+  my($mi) = "REF".++$hash2rdf_count;
+  # TODO: making $hash2rdf_count global is bad
+  # TODO: making @triplets global is unacceptably bad (but just testing now)
+  # my(@triplets);
+
+
   if ($type eq "ARRAY") {
-    debug("ARRAY: $ref");
-    # give myself a name
-    $mi = "REF".++$hash2rdf_count;
     # interim var
     my(@l) = @{$ref};
     # push triplets for my children
-    for $i (0..$#l) {
-      debug("ELT: ",$l[$i]);
-      push(@triplets, [$mi, $i, hash2rdf($l[$i])]);
-    }
+    for $i (0..$#l) {push(@triplets, [$mi, $i, hash2rdf($l[$i])]);}
     # return the name I gave myself
     return $mi;
   }
 
   if ($type eq "HASH") {
-    debug("HASH: $ref");
-    # give myself a name
-    $mi = "REF".++$hash2rdf_count;
     # interim var
     my(%h) = %$ref;
-    for $i (keys %h) {
-      push(@triplets, [$mi, $i, hash2rdf($h{$i})]);
-    }
+    for $i (keys %h) {push(@triplets, [$mi, $i, hash2rdf($h{$i})]);}
     return $mi;
   }
+
+  # hopefully it's referring to a scalar at this point!
+  return $$ref;
 }
 
 =item schema
