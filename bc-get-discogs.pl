@@ -31,12 +31,9 @@ for $i (2..$userinfo->{pagination}{pages}) {
   }
 }
 
-# now, go through the pages (including page 1)
+# now, go through the pages (including page 1) + record releases
 for $i (1..$userinfo->{pagination}{pages}) {
   my($json) = JSON::from_json(read_file("user-$user-p$i"));
-  # add to RDF triplets
-  hash2rdf($json,$user);
-
   # record release ids
   for $j (@{$json->{releases}}) {$relid{$j->{basic_information}{id}}=1;}
 }
@@ -51,9 +48,11 @@ for $i (keys %relid) {
 
   # and parse
   my($json) = JSON::from_json(read_file("release-$i"));
-  debug("JSON: $json");
-  hash2rdf($json,"releases-$i");
+  push(@releases, $json);
 }
+
+# pushing releases gives us a "root"
+hash2rdf(\@releases, "root");
 
 # triplets printing (as test)
 
@@ -76,8 +75,12 @@ sub hash2rdf {
   my($ref,$name) = @_;
   my($type) = ref($ref);
 
-  # if no type at all, just return self
-  unless ($type) {return $ref;}
+  # if no type at all, just return self (after cleanup)
+  unless ($type) {
+    $ref=~s/\n/\r/isg;
+    $ref=~s/\"/\\"/isg;
+    return $ref;
+  }
 
   # name I will give $ref if not given
   unless ($name) {$name = "REF".++$hash2rdf_count;}
@@ -118,14 +121,15 @@ CREATE INDEX i3 ON rdf(val);
 .import dump.txt rdf
 
 ; useful queries
-SELECT r1.key, r2.key, r3.key, r4.key, r5.key, r6.key, r6.val FROM rdf r1 
-JOIN rdf r2 ON (r1.val = r2.hash)
-JOIN rdf r3 ON (r2.val = r3.hash)
-JOIN rdf r4 ON (r3.val = r4.hash)
-JOIN rdf r5 ON (r4.val = r5.hash)
-JOIN rdf r6 ON (r5.val = r6.hash)
-WHERE r1.hash='REF1' AND r1.key='releases' ORDER BY r2.key+0
-;
 
+SELECT r1.key AS f1,
+ IFNULL(r2.key,r1.val) AS f2,
+ IFNULL(r3.key,r2.val) AS f3,
+ IFNULL(r4.key,r3.val) AS f4,
+ r4.val FROM rdf r1
+ LEFT JOIN rdf r2 ON (r1.val=r2.hash)
+ LEFT JOIN rdf r3 ON (r2.val=r3.hash)
+ LEFT JOIN rdf r4 ON (r3.val=r4.hash)
+WHERE r1.hash='root' AND f2='title';
 
 =cut
