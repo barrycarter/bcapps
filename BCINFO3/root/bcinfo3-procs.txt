@@ -36,4 +36,5 @@ php-cgi
 curl
 rm
 find
+sqlite3
 </kill>

@@ -67,7 +67,7 @@ Given a scalar/array/hash reference $ref, returns RDF triplets recursively.
 
 If $name is given, assigns name $name to $ref. Otherwise, creates a name
 
-Pretty much does what unfold() does, only in RDF
+Pretty much does what var_dump() does, only in RDF
 
 =cut
 
