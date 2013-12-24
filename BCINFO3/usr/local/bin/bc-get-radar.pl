@@ -1,6 +1,6 @@
 #!/bin/perl
 
-# obtains radar images for Albuquerque and comments them with timestamp
+# obtains radar images for Albuquerque+ and comments them with timestamp
 # --nodaemon: don't "daemonize", end up after one run
 
 # NOTE: there are about 219 radar stations listed by radar.weather.gov
@@ -68,7 +68,7 @@ sub get_current_radar {
   # obtain site index (upto 1m old)
   # TODO: putting this in file (for debugging) is ugly
   # TODO: allow parallelizing this, one at a time may be too slow
-  my($out,$err,$res) = cache_command2("curl -o /var/tmp/radar/$station-$type.out http://radar.weather.gov/ridge/RadarImg/$type/$station/","age=60");
+  my($out,$err,$res) = cache_command2("curl http://radar.weather.gov/ridge/RadarImg/$type/$station/","age=60&cachefile=/var/tmp/radar/$station-$type.out");
   $out = read_file("/var/tmp/radar/$station-$type.out");
 
   # look for hrefs sort by time reversed

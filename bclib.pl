@@ -3392,12 +3392,13 @@ was run recently, return cached output. $options:
 
  fake=1: dont run the command at all, just say what would be done
 
+ cachefile=x: use x as cachefile; dont use hash to determine cachefile name
+
 # retry=n: retry command n times if it fails (returns non-0)
 # sleep=n: sleep n seconds between retries
  # TODO: documentation for nocache below is wrong
 # nocache=1: dont really cache the results (also global --nocache)
 # retfile=1: return the filename where output is cached, not output itself
-# cachefile=x: use x as cachefile; dont use hash to determine cachefile name
 # ignoreerror: assume return code from command is 0, even if its not
 
 =cut
@@ -3406,6 +3407,7 @@ sub cache_command2 {
   my($command,$options) = @_;
   my($now) = time(); # useful to know when run above/beyond file timestamp
   my($cached) = 0; # default: not cached
+  my($file); # output file
 
   my(%opts) = parse_form($options);
 
@@ -3418,17 +3420,21 @@ sub cache_command2 {
   # TODO: global nocache means don't *USE* cached results
   # TODO: local nocache would mean don't CREATE cached results
 
-  # determine "name" of tmpfile
-  my($file) = sha1_hex("$opts{salt}$command$opts{salt}");
-  # split into two levels of subdirs
-  $file=~m/^(..)(..)/;
-  my($d1,$d2) = ($1, $2);
-  # put in /var/tmp/cache (add username to avoid collision)
-  $file = "/var/tmp/cache/$d1/$d2/$file-$ENV{USER}";
-  # make sure dir exists
-  unless (-d "/var/tmp/cache/$d1/$d2") {
-    # /tmp style directory
-    system("mkdir -p /var/tmp/cache/$d1/$d2; chmod -f 1777 /var/tmp/cache/$d1 /var/tmp/cache/$d1/$d2");
+  if ($opts{cachefile}) {
+    $file = $opts{cachefile};
+  } else {
+    # determine "name" of tmpfile
+    $file = sha1_hex("$opts{salt}$command$opts{salt}");
+    # split into two levels of subdirs
+    $file=~m/^(..)(..)/;
+    my($d1,$d2) = ($1, $2);
+    # put in /var/tmp/cache (add username to avoid collision)
+    $file = "/var/tmp/cache/$d1/$d2/$file-$ENV{USER}";
+    # make sure dir exists
+    unless (-d "/var/tmp/cache/$d1/$d2") {
+      # /tmp style directory
+      system("mkdir -p /var/tmp/cache/$d1/$d2; chmod -f 1777 /var/tmp/cache/$d1 /var/tmp/cache/$d1/$d2");
+    }
   }
 
   # TODO: slightly inefficient to compute this when unneeded
@@ -3462,6 +3468,7 @@ sub cache_command2 {
     unlink("$file-out","$file-err");
     # write cached results to $file
     write_file(join("\n", (
+			   "<caller>$0</caller>",
 			   "<cmd>$command</cmd>",
 			   "<time>$now</time>",
 			   "<stdout>", $stdout, "</stdout>",
