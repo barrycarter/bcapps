@@ -80,7 +80,7 @@ sub get_current_radar {
     # if we already have this one and its over the dreaded 331 bytes, return it
     if (-f "/var/tmp/radar/$i" && -s "/var/tmp/radar/$i" > 331) {return $i;}
     # we don't have it, so try to get it
-    ($out,$err,$res) = cache_command2("curl -o /var/tmp/radar/$i http://radar.weather.gov/ridge/RadarImg/$type/$station/$i");
+    ($out,$err,$res) = cache_command2("curl http://radar.weather.gov/ridge/RadarImg/$type/$station/$i","cachefile=/var/tmp/radar/$i");
     debug("/var/tmp/radar/$i hopefully written");
     # if we have it now, return it
     if (-f "/var/tmp/radar/$i" && -s "/var/tmp/radar/$i" > 331) {return $i;}
