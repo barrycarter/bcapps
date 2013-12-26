@@ -114,6 +114,34 @@ az[ha_, dec_, lat_] = FullSimplify[
 ArcTan[Cos[lat]*Sin[dec]-Sin[lat]*Cos[dec]*Cos[ha],-Sin[ha]*Cos[dec]]
 , Reals]
 
+el[ha_,dec_,lat_] = FullSimplify[
+ArcSin[Sin[lat]*Sin[dec]+Cos[lat]*Cos[dec]*Cos[ha]]]
+
+(* gnomon position *)
+
+Plot[az[ha,23*Degree,35*Degree],{ha,0,2*Pi}]
+Plot[az[ha,0*Degree,35*Degree],{ha,0,2*Pi}]
+Plot[az[ha,-23*Degree,35*Degree],{ha,0,2*Pi}]
+
+
+x[ha_,dec_,lat_] = FullSimplify[Cot[el[ha,dec,lat]]*Cos[az[ha,dec,lat]+Pi]]
+y[ha_,dec_,lat_] = FullSimplify[Cot[el[ha,dec,lat]]*Sin[az[ha,dec,lat]+Pi]]
+
+ParametricPlot[{x[ha,23 Degree,35 Degree], y[ha, 23 Degree, 35 Degree]},
+ {ha,0,Pi/4}, PlotRange -> {{-5,5},{-5,5}}]
+
+ParametricPlot[{x[ha,23 Degree,35 Degree], y[ha, 23 Degree, 35 Degree]},
+ {ha,-Pi/2,Pi/2}]
+
+ParametricPlot[{x[ha,-23 Degree,35 Degree], y[ha, -23 Degree, 35 Degree]},
+ {ha,-Pi/4,Pi/4}]
+
+
+
+
+
+
+
 Plot[az[t,20*Degree,35*Degree],{t,0,2*Pi}]
 
 daz[ha_,dec_,lat_] = FullSimplify[D[az[ha,dec,lat],ha],Reals]
@@ -266,20 +294,3 @@ Plot[%,{theta,0,Pi/2}]
 
 Plot[ta[theta,2,1] - b*y[xtri[theta,a,b],a,b]/2 /. {b->1, a->2}, 
 {theta,0,Pi/2}]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -31,6 +31,31 @@ use GD;
 use Algorithm::GoldenSection;
 use Inline::Python;
 use FFI::Raw;
+use v5.10;
+# use feature 'state';
+
+foobar();
+foobar();
+foobar();
+foobar();
+foobar();
+
+say "say say what you want";
+
+sub foobar {
+  state $x;
+  $x++;
+  debug("X: $x");
+}
+
+
+# $foo = "bar";
+
+$foo //= "foo";
+
+debug($foo);
+
+die "TESTING";
 
 debug(var_dump("fas",find_attached_scanners()));
 
