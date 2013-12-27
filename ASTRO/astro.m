@@ -117,12 +117,34 @@ ArcTan[Cos[lat]*Sin[dec]-Sin[lat]*Cos[dec]*Cos[ha],-Sin[ha]*Cos[dec]]
 el[ha_,dec_,lat_] = FullSimplify[
 ArcSin[Sin[lat]*Sin[dec]+Cos[lat]*Cos[dec]*Cos[ha]]]
 
+(* in degrees and hours *)
+
+az2[ha_,dec_,lat_] = az[ha/24*2*Pi, dec*Degree, lat*Degree]/Degree
+el2[ha_,dec_,lat_] = el[ha/24*2*Pi, dec*Degree, lat*Degree]/Degree
+
+Table[{az2[ha,0,35],el2[ha,0,35]},{ha,0,24,0.5}]
+Table[{az2[ha,23,35],el2[ha,0,35]},{ha,0,24,0.5}]
+
+Table[{x[ha,23*Degree,35*Degree], y[ha,23*Degree,35*Degree]}, 
+ {ha,0,2*Pi,0.1}]
+
+Plot[{az[ha,23*Degree,35*Degree],
+      az[ha,0*Degree,35*Degree],
+      az[ha,-23*Degree,35*Degree]},
+{ha,0,2*Pi}]
+
+
+Plot[{az2[ha,23,35],
+      az2[ha,0,35],
+      az2[ha,-23,35]
+}, {ha,0,24}]
+
+Plot[{el2[ha,23,35],
+      el2[ha,0,35],
+      el2[ha,-23,35]
+}, {ha,0,24}]
+
 (* gnomon position *)
-
-Plot[az[ha,23*Degree,35*Degree],{ha,0,2*Pi}]
-Plot[az[ha,0*Degree,35*Degree],{ha,0,2*Pi}]
-Plot[az[ha,-23*Degree,35*Degree],{ha,0,2*Pi}]
-
 
 x[ha_,dec_,lat_] = FullSimplify[Cot[el[ha,dec,lat]]*Cos[az[ha,dec,lat]+Pi]]
 y[ha_,dec_,lat_] = FullSimplify[Cot[el[ha,dec,lat]]*Sin[az[ha,dec,lat]+Pi]]
