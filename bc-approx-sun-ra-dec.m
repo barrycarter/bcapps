@@ -39,12 +39,37 @@ Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 (* TODO: use Unix command to choose every 10th line, not Mathematica *)
 
 p0 = planet199;
+Clear[planet199];
 p1 = p0[[1;;Length[p0];;10]];
 Clear[p0];
-Clear[planet199];
 px = Table[x[[3]],{x,p1}];
 py = Table[x[[4]],{x,p1}];
 pz = Table[x[[5]],{x,p1}];
+
+(* pfx = Fourier[px]; *)
+
+ListPlot[Log[Abs[Take[pfx,100]]], PlotRange->All]
+
+(* 34 is max *)
+
+(* and has abs 6.89718*10^9 and arg -3.0011 *)
+
+
+
+
+pxi = Interpolation[px, InterpolationOrder -> 3]
+
+(* pfi = FourierTransform[pxi[t],t,w] *)
+
+pfi[w_] := NIntegrate[Exp[I*w*t]*pxi[t], {t,1,Length[px]}]
+
+N[Abs[pfi[30]]]
+
+Table[N[Abs[pfi[t]]],{t,30}]
+
+Plot[N[Abs[pfi[t]]],{t,30,40}]
+
+ListPlot[Take[Abs[pfx],200], PlotRange->All]
 
 pxsample = px[[1;;Length[px];;1400]]
 
