@@ -2083,3 +2083,14 @@ Simplify[%,Member[{th,ph,r},Reals]]
 
 t4 = N[Table[Sin[3.17*2*Pi*x/200+.9752], {x,1,200}]]
 
+(* partial transforms *)
+
+t4 = N[Table[Sin[1/3.17*2*Pi*x/2000+.9752], {x,1,2000}]]
+t5 = Fourier[t4]
+ListPlot[Abs[Take[t5,20]], PlotRange->All]
+
+Plot[superfour[t4,2][x],{x,1,2000}]
+Plot[superfour[t4,3][x],{x,1,2000}]
+
+
+

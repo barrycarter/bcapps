@@ -46,6 +46,11 @@ px = Table[x[[3]],{x,p1}];
 py = Table[x[[4]],{x,p1}];
 pz = Table[x[[5]],{x,p1}];
 
+pfx[x_] = superfour[px,4][x]
+diffs = Table[px[[i]]-pfx[i],{i,1,Length[px]}];
+divs = Table[px[[i]]/pfx[i],{i,1,Length[px]}];
+
+
 (* pfx = Fourier[px]; *)
 
 ListPlot[Log[Abs[Take[pfx,100]]], PlotRange->All]
@@ -54,7 +59,7 @@ ListPlot[Log[Abs[Take[pfx,100]]], PlotRange->All]
 
 (* and has abs 6.89718*10^9 and arg -3.0011 *)
 
-
+superfour[px,4]
 
 
 pxi = Interpolation[px, InterpolationOrder -> 3]
