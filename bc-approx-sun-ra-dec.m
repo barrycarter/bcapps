@@ -45,11 +45,57 @@ Clear[p0];
 px = Table[x[[3]],{x,p1}];
 py = Table[x[[4]],{x,p1}];
 pz = Table[x[[5]],{x,p1}];
+pdist = Sqrt[px^2+py^2+pz^2];
+pang = ArcSin[pz/pdist];
 
-pfx[x_] = superfour[px,4][x]
+pix[t_] = Interpolation[px][t]
+piy[t_] = Interpolation[py][t]
+piz[t_] = Interpolation[pz][t]
+
+pfx[t_] = superfour[px,25][t]
+diffies = Table[pfx[t]-px[[t]],{t,1,Length[px]}];
+ListPlot[diffies]
+diffi[t_] = Interpolation[diffies][t]
+
+Plot[diffi'[t]/diffi'''[t], {t,0,Length[px]}]
+
+pidx[t_] = D[pix[t],t]
+piddx[t_] = D[pix[t],t,t]
+
+Plot[pix[t]/piddx[t],{t,0,Length[px]}]
+
+
+pfx[t_] = superfour[px,4][t]
+pfy[t_] = superfour[py,4][t]
+pfz[t_] = superfour[pz,4][t]
+pfdist[t_] = superfour[pdist, 4][t]
+pfang[t_] = superfour[pang,4][t]
+
+
+dist[t_] = Sqrt[pfx[t]^2 + pfy[t]^2 + pfz[t]^2]
+
+Plot[dist[t], {t,0,Length[px]}]
+
+ParametricPlot[{pfx[t],pfy[t]},{t,0,88*24}]
+
 diffs = Table[px[[i]]-pfx[i],{i,1,Length[px]}];
 divs = Table[px[[i]]/pfx[i],{i,1,Length[px]}];
 
+(* largest periods from above:
+
+87.964d = orbit of mercury (5.6469*10^7)
+43.983d = half orbit of mercury [ellipse?] (5.71583*10^6)
+29.2204d = third orbit of mercury [ellipse?] (708012)
+2922d = 8y (almost exact) = ??? (516427)
+
+*)
+
+x[t_] = Sum[Cos[n*t+1/n]*4^-n,{n,1,Infinity}]
+y[t_] = Sum[Sin[n*t+1/n]*4^-n,{n,1,Infinity}]
+
+ParametricPlot[{x[t],y[t]}, {t,0,2*Pi}]
+
+ParametricPlot[{2*Cos[x], Sin[x]},{x,0,2*Pi}]
 
 (* pfx = Fourier[px]; *)
 

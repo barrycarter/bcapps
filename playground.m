@@ -2086,11 +2086,23 @@ t4 = N[Table[Sin[3.17*2*Pi*x/200+.9752], {x,1,200}]]
 (* partial transforms *)
 
 t4 = N[Table[Sin[1/3.17*2*Pi*x/2000+.9752], {x,1,2000}]]
+t8[t_] = Interpolation[t4][t]
+t9[t_] = D[t8[t],t,t]
+t6 = Table[t4[[i]]-t4[[i-1]], {i,2,Length[t4]}]
+t7 = Table[t6[[i]]-t6[[i-1]], {i,2,Length[t6]}]
+
+
 t5 = Fourier[t4]
 ListPlot[Abs[Take[t5,20]], PlotRange->All]
 
 Plot[superfour[t4,2][x],{x,1,2000}]
 Plot[superfour[t4,3][x],{x,1,2000}]
 
+f[x_] = a + b*Cos[c*x-d]
+
+f[x]/D[f[x],x,x]
+
+D[f[x],x,x]/D[f[x],x,x,x,x]
+D[f[x],x]/D[f[x],x,x,x]
 
 
