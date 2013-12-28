@@ -128,7 +128,7 @@ Trading with other players:
 The game will support basic trades of resources, but also more
 sophisticated trades. A simple example:
 
-Player 1: I will "GIVE 200 SILVER TO PLAYER3" if Player3 w ill "GIVE
+Player 1: I will "GIVE 200 SILVER TO PLAYER3" if Player3 will "GIVE
 20 GOLD TO PLAYER1"
 
 In other words, player 1 promises to run a command if player 3 agrees

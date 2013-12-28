@@ -3487,6 +3487,9 @@ sub cache_command2 {
   # read/parse/return cached value
   my($cached) = read_file($file);
 
+  # TODO: this is seriously hacky and must stop
+  $cached=~s%^<caller>.*?</caller>\s*%%isg;
+
   # TODO: allow myself to add more tags without having to rewrite
   # below constantly?
   unless ($cached=~m%^\s*<cmd>(.*?)</cmd>\s*<time>(.*?)</time>\s*<stdout>\n(.*?)\n</stdout>\s*<stderr>\n(.*?)\n</stderr>\s*<status>(.*?)</status>\s*$%s) {
