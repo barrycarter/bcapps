@@ -32,13 +32,13 @@ Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
 (* planet xyz position data *)
 
-<<"!bzcat /home/barrycarter/20110916/final-pos-500-0-399.txt.bz2";
+<<"!bzcat /home/barrycarter/20110916/final-pos-500-0-199.txt.bz2";
 
 (* planet199 is unmanagely large at 700K+ entries at least on my machine *)
 
 (* TODO: use Unix command to choose every 10th line, not Mathematica *)
 
-p0 = planet399;
+p0 = planet199;
 Clear[planet199];
 p1 = p0[[1;;Length[p0];;10]];
 Clear[p0];

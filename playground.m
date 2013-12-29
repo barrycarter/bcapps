@@ -2119,10 +2119,12 @@ Plot[Cos[50*x]*Cos[x/2],{x,0,2*Pi}]
 a1 = Table[Cos[50*(x-1.1)]*Cos[13*(x-2.7)],{x,0,10*Pi,.01}];
 ListPlot[Abs[Take[Fourier[a1],1000]], PlotRange->All]
 
+(* trying to figure out http://reference.wolfram.com/mathematica/ref/Fourier.html *)
+
+data = Table[N[753 + 919*Sin[x/623 - 125]], {x, 1, 7829}];
 
 
+f2[x_] = Interpolation[data][x]
 
-
-
-
-
+f1[x_] = m + b*Cos[freq*2*Pi/n*x-d]
+diffs = Table[data[[i]] - f1[i], {i,1,Length[data]}]

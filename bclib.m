@@ -12,41 +12,24 @@ ecliptic = ArcSin[0.397776995]
 mecliptic = {{1,0,0}, {0, Cos[ecliptic], -Sin[ecliptic]},
  {0, Sin[ecliptic], Cos[ecliptic]}}
 
-(* given a collection of data, return the cosine-ish function that
- approximates it, where the period is NOT necessarily a divisor of the number of data. From
-http://stackoverflow.com/questions/4463481/continuous-fourier-transform-on-discrete-data-using-mathematica
-*)
+(* From http://reference.wolfram.com/mathematica/ref/Fourier.html
+under Applications/Frequency Identification, modified for
+non-zero-mean data *)
 
-superfourier[data_] :=Module[
- {pdata, n, f, pos, fr, frpos, freq, phase, coeff, estmean},
- pdata = data;
+superfourier[data_] := Module[{n,m,pdata,f,pos,frpos,freq,phase,b,d},
  n = Length[data];
+ m = Mean[data];
+ pdata = data-m;
  f = Abs[Fourier[pdata]];
- pos = Ordering[-f, 1][[1]] - 1;
- fr = Abs[Fourier[pdata*Exp[2*Pi*I*pos*Range[0,n-1]/n], 
-      FourierParameters -> {0, 2/n}]];
+ pos = Ordering[-f, 1][[1]];
+ fr = Abs[Fourier[pdata*Exp[2*Pi*I*(pos-2)*N[Range[0, n - 1]]/n],
+ FourierParameters -> {0, 2/n}]];
  frpos = Ordering[-fr, 1][[1]];
- freq = (pos + 2*(frpos - 1)/n);
- phase = Sum[Exp[freq*2*Pi*I*x/n]*pdata[[x]], {x,1,n}];
- coeff =  N[{Mean[data], 2*Abs[phase]/n, freq*2*Pi/n, Arg[phase]}];
- estmean = Sum[coeff[[2]]*Cos[coeff[[3]]*x - coeff[[4]]],{x,1,n}]/n;
- Function[x, Evaluate[coeff[[1]] - estmean +
-  coeff[[2]]*Cos[coeff[[3]]*x - coeff[[4]]]]]
-]
-
-superfourier2[data_] :=Module[
- {pdata, n, f, pos, fr, frpos, freq, phase, coeff},
- pdata = data;
- n = Length[data];
- f = Abs[Fourier[pdata]];
- pos = Ordering[-f, 1][[1]] - 1;
- fr = Abs[Fourier[pdata*Exp[2*Pi*I*pos*Range[0,n-1]/n], 
-      FourierParameters -> {0, 2/n}]];
- frpos = Ordering[-fr, 1][[1]];
- freq = (pos + 2*(frpos - 1)/n);
- phase = Sum[Exp[freq*2*Pi*I*x/n]*pdata[[x]], {x,1,n}];
- coeff =  N[{Mean[data], 2*Abs[phase]/n, freq*2*Pi/n, Arg[phase]}];
- Function[x, Evaluate[coeff[[1]] + coeff[[2]]*Cos[coeff[[3]]*x - coeff[[4]]]]]
+ freq = N[(pos - 2 + 2*(frpos - 1)/n)];
+ phase = Sum[Exp[freq*2*Pi*I*x/n]*data[[x]], {x,1,n}];
+ b = N[2*Abs[phase]/n];
+ d = N[Arg[phase]];
+ Function[x, Evaluate[m + b*Cos[freq*2*Pi/n*x-d]]]
 ]
 
 (* given data and a function that approximates that data, find an even
