@@ -32,13 +32,13 @@ Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
 (* planet xyz position data *)
 
-<<"!bzcat /home/barrycarter/20110916/final-pos-500-0-199.txt.bz2";
+<<"!bzcat /home/barrycarter/20110916/final-pos-500-0-399.txt.bz2";
 
 (* planet199 is unmanagely large at 700K+ entries at least on my machine *)
 
 (* TODO: use Unix command to choose every 10th line, not Mathematica *)
 
-p0 = planet199;
+p0 = planet399;
 Clear[planet199];
 p1 = p0[[1;;Length[p0];;10]];
 Clear[p0];
@@ -48,16 +48,24 @@ pz = Table[x[[5]],{x,p1}];
 pdist = Sqrt[px^2+py^2+pz^2];
 pang = ArcSin[pz/pdist];
 
+pxderv = Table[px[[i]]-px[[i-1]], {i,2,Length[px]}];
+pxdervd = Table[pxderv[[i]]-pxderv[[i-1]], {i,2,Length[pxderv]}];
+
+
+pfdist[t_] = superfour[pdist,2][t]
+pid[t_] = Interpolation[pdist][t]
+
 pix[t_] = Interpolation[px][t]
 piy[t_] = Interpolation[py][t]
 piz[t_] = Interpolation[pz][t]
 
-pfx[t_] = superfour[px,25][t]
+pfx[t_] = superfour[px,10][t]
 diffies = Table[pfx[t]-px[[t]],{t,1,Length[px]}];
-ListPlot[diffies]
+ListPlot[Take[diffies,365*24*5]]
 diffi[t_] = Interpolation[diffies][t]
+Plot[diffi[t],{t,1,88*24}]
 
-Plot[diffi'[t]/diffi'''[t], {t,0,Length[px]}]
+Plot[diffi'[t]/diffi'''[t], {t,0,Length[px]}, PlotRange->All]
 
 pidx[t_] = D[pix[t],t]
 piddx[t_] = D[pix[t],t,t]

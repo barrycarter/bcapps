@@ -2105,4 +2105,24 @@ f[x]/D[f[x],x,x]
 D[f[x],x,x]/D[f[x],x,x,x,x]
 D[f[x],x]/D[f[x],x,x,x]
 
+(* enveloping functions *)
+
+g[x_] = (a + b*Cos[c*x-d])*(f + g*Cos[h*x-j])
+
+g'[x]
+g[x]/g''[x]
+
+g[x_] = Cos[x]*Cos[x*9.315-1]
+
+Plot[Cos[50*x]*Cos[x/2],{x,0,2*Pi}]
+
+a1 = Table[Cos[50*(x-1.1)]*Cos[13*(x-2.7)],{x,0,10*Pi,.01}];
+ListPlot[Abs[Take[Fourier[a1],1000]], PlotRange->All]
+
+
+
+
+
+
+
 
