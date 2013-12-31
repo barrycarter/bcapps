@@ -59,7 +59,7 @@ pix[t_] = Interpolation[px][t]
 piy[t_] = Interpolation[py][t]
 piz[t_] = Interpolation[pz][t]
 
-pfx[t_] = superfour[px,10][t]
+pfx[t_] = superfour[px,2][t]
 diffies = Table[pfx[t]-px[[t]],{t,1,Length[px]}];
 ListPlot[Take[diffies,365*24*5]]
 diffi[t_] = Interpolation[diffies][t]

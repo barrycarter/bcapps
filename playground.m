@@ -2128,3 +2128,26 @@ f2[x_] = Interpolation[data][x]
 
 f1[x_] = m + b*Cos[freq*2*Pi/n*x-d]
 diffs = Table[data[[i]] - f1[i], {i,1,Length[data]}]
+
+ArcCos[(Cos[n*x+a]+Cos[n*x+b])/2/n]
+
+Solve[Cos[n*x+a]+Cos[n*x+b] == d*Cos[n*x+c], x, c]
+
+Cos[3*x + Pi/15] + Cos[3*x + Pi/10]
+
+Plot[ArcCos[(Cos[3*x + Pi/5] + Cos[3*x + Pi/6])/2], {x,0,2*Pi}]
+
+Maximize[Cos[3*x+0.72]+Cos[3*x+0.41],x]
+
+normal maxed at -.72/3 or -phase/mult
+
+Plot[Cos[3*x+0.72]+Cos[3*x+0.41] - Cos[3*x+0.355125],{x,0,2*Pi}]
+
+Im[FourierTransform[Cos[n*x+a]+Cos[n*x+b],x,t]]
+
+guess: average of the phase shift (yes it is)
+
+
+
+
+
