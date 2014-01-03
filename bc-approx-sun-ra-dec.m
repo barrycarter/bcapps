@@ -43,6 +43,33 @@ pz = Table[x[[5]],{x,p1}];
 pdist = Sqrt[px^2+py^2+pz^2];
 pang = ArcSin[pz/pdist];
 
+(* find the peak of the continous Fourier transform between 0 and 1 by
+setting psuedo-derivative equal to 0 after subtracting off the biggest
+Fourier term *)
+
+f[x_] := Abs[cft[superleft[pdist,1],x]]
+g[x_] := fakederv[f,x,.001]
+xroot = findroot2[g,0,1,.0001]
+yroot = cft[superleft[pdist,1],xroot]
+
+mult = Abs[yroot]/Sqrt[Length[pdist]]*2
+arg = Arg[yroot]
+freq = 2*Pi*xroot/Length[pdist]
+
+h[x_] = mult*Cos[freq*x-arg]
+
+Plot[h[x],{x,1,Length[pdist]}]
+
+residuals = superleft[pdist,1]/Table[h[x],{x,1,Length[pdist]}];
+
+
+
+Abs[yroot]*Cos[2*Pi*x*xroot/Length[pdist]-Arg[yroot]],{x,1,Length[pdist]}]
+
+temp = Fourier[Table[3*Cos[2*x-Pi/7],{x,0,2*Pi,.001}]]
+
+(* Abs[temp[[3]]]/Sqrt[Length[temp]]*2==3, Arg[temp[[3]]]==Pi/7 *)
+
 temp1 = superleft[pdist,1];
 tempf[x_] := Abs[cft[temp1,x]]
 tempg[x_] := fakederv[tempf, x, .01]
