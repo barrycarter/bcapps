@@ -60,5 +60,19 @@ difference[l_] := Table[l[[i]] - l[[i-1]], {i,2,Length[l]}]
 cft[l_,s_] := cft[l,s] = 
 Sum[l[[x]]*Exp[2*Pi*I*(x-1)*(s-1)/Length[l]],{x,1,Length[l]}]/Sqrt[Length[l]];
 
-
+(* findroot using binary method, which Mathematica can't do??? *)
+findroot2[f_, a_, b_, delta_] := Module[{mid,fa,fb,fmid},
+ mid = (a+b)/2;
+ If[Abs[a-b]<delta,Return[mid]];
+ (* solely to avoid recomputation *)
+ fa = f[a];
+ fb = f[b];
+ fmid = f[mid];
+ (* corner case *)
+ If[Sign[fmid]==0,Return[mid]];
+ If[Sign[fa]==Sign[fb],Return["error"]];
+ If[Sign[fmid]==Sign[fa], Return[findroot2[f,mid,b,delta]]];
+ If[Sign[fmid]==Sign[fb], Return[findroot2[f,a,mid,delta]]];
+ Return["error"];
+]
 

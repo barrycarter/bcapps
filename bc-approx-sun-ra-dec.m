@@ -25,11 +25,6 @@ Despite this, it ultimately comes up w/ the right answers
 
 *)
 
-(* work around "new" graphics handling in Mathematica 7 *)
-
-showit := Module[{},
-Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
-
 (* planet xyz position data *)
 
 <<"!bzcat /home/barrycarter/20110916/final-pos-500-0-199.txt.bz2";
@@ -40,9 +35,6 @@ Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
 p0 = planet199;
 Clear[planet199];
-
-(* note: this is usually 10; using 100 for testing *)
-
 p1 = p0[[1;;Length[p0];;10]];
 Clear[p0];
 px = Table[x[[3]],{x,p1}];
@@ -51,11 +43,15 @@ pz = Table[x[[5]],{x,p1}];
 pdist = Sqrt[px^2+py^2+pz^2];
 pang = ArcSin[pz/pdist];
 
-temp1 = superleft[pdist,5];
-temp = Table[{x,Abs[cft[temp1,x]]},{x,0,1,.1}]
-
+temp1 = superleft[pdist,1];
 tempf[x_] := Abs[cft[temp1,x]]
 tempg[x_] := fakederv[tempf, x, .01]
+
+Plot[tempg[x],{x,.2,.3}]
+
+FindRoot[tempg[x],{x,.2,.3}]
+FindRoot[tempg[x],{x,.2,.3},StepMonitor->Print[x]]
+
 
 Table[{x,tempg[x]},{x,.2,.3,.01}]
 Table[{x,tempg[x]},{x,.26,.27,.001}]
