@@ -53,10 +53,10 @@ superfour[pdist,1]
 setting psuedo-derivative equal to 0 after subtracting off the biggest
 Fourier term *)
 
-f[x_] := Abs[cft[superleft[pdist,1],x]]
-g[x_] := fakederv[f,x,.001]
+f[x_] := Abs[cft[superleft[pdist,4],x]]
+g[x_] := g[x] = fakederv[f,x,.001]
 ListPlot[Table[g[x],{x,.1,.9,.05}]]
-xroot = findroot2[g,0.9,1.1,.01]
+xroot = findroot2[g,0.1,0.9,.01]
 yroot = cft[superleft[pdist,1],xroot]
 
 mult = Abs[yroot]/Sqrt[Length[pdist]]*2
@@ -67,7 +67,7 @@ h[x_] = mult*Cos[freq*x-arg]
 
 Plot[h[x],{x,1,Length[pdist]}]
 
-residuals = superleft[pdist,1]/Table[h[x],{x,1,Length[pdist]}];
+residuals = superleft[pdist,4]-Table[h[x],{x,1,Length[pdist]}];
 
 
 
