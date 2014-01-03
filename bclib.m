@@ -43,6 +43,22 @@ refine[data_, f_] := Module[{t},
 (* multi-level approximations using superfourier and refine *)
 
 superfour[data_, 0] = 0 &
-superfour[data_, n_] := superfour[data, n] = refine[data,superfour[data,n-1]]
+superfour[data_, n_] := superfour[data, n] = refine[data,superfour[data,n-1]];
 superleft[data_, n_] := 
- Table[superfour[data,n][x] - data[[x]], {x,1,Length[data]}]
+ Table[superfour[data,n][x] - data[[x]], {x,1,Length[data]}];
+
+(* approximate derivative using definition *)
+
+fakederv[f_,x_,delta_] = (f[x+delta/2]-f[x-delta/2])/delta;
+
+(* list difference *)
+
+difference[l_] := Table[l[[i]] - l[[i-1]], {i,2,Length[l]}]
+
+(* continuous Fourier transform with memory *)
+
+cft[l_,s_] := cft[l,s] = 
+Sum[l[[x]]*Exp[2*Pi*I*(x-1)*(s-1)/Length[l]],{x,1,Length[l]}]/Sqrt[Length[l]];
+
+
+

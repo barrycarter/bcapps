@@ -40,6 +40,9 @@ Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
 p0 = planet199;
 Clear[planet199];
+
+(* note: this is usually 10; using 100 for testing *)
+
 p1 = p0[[1;;Length[p0];;10]];
 Clear[p0];
 px = Table[x[[3]],{x,p1}];
@@ -47,6 +50,52 @@ py = Table[x[[4]],{x,p1}];
 pz = Table[x[[5]],{x,p1}];
 pdist = Sqrt[px^2+py^2+pz^2];
 pang = ArcSin[pz/pdist];
+
+temp1 = superleft[pdist,5];
+temp = Table[{x,Abs[cft[temp1,x]]},{x,0,1,.1}]
+
+tempf[x_] := Abs[cft[temp1,x]]
+tempg[x_] := fakederv[tempf, x, .01]
+
+Table[{x,tempg[x]},{x,.2,.3,.01}]
+Table[{x,tempg[x]},{x,.26,.27,.001}]
+Table[{x,tempg[x]},{x,.265,.266,.0001}]
+Table[{x,tempg[x]},{x,.2654,.2655,.00001}]
+Table[{x,tempg[x]},{x,.26542,.26543,.000001}]
+Table[{x,tempg[x]},{x,.265421,.265422,.0000001}]
+
+
+
+
+FindRoot[tempg[x],{x,.2,.3}]
+
+
+fakederv[x_] := (Abs[cft[superleft[pdist,1],x+.05]] -
+Abs[cft[superleft[pdist,1],x-.05]])*10
+
+tempa = DiscreteWaveletTransform[pdist];
+tempb = tempa[All,"Values"];
+
+tempa = ContinuousWaveletTransform[pdist];
+WaveletScalogram[tempa]
+
+tempb = ContinuousWaveletTransform[superleft[pdist,1]];
+WaveletScalogram[tempb]
+
+NMaximize[Abs[cft[superleft[pdist, 1], x]], {x, 0.1, 0.3}]
+
+Integrate[f[x]*Exp[2*Pi*I*x*f],x]
+
+tempc[w_] := N[FourierTransform[pid[t],t,w]]
+
+temp = Table[{x,Abs[cft[px,x]]},{x,0,0.1,.01}]
+temp = Table[{x,Abs[cft[px,x]]},{x,0,50}]
+temp = Table[{x,Abs[cft[px,x]]},{x,0,2,.1}]
+
+temp = Table[{x,Abs[cft[superleft[px,3],x]]},{x,0,0.2,.01}]
+
+ListPlot[ArcCos[px/Max[Abs[px]]]]
+
 
 pxderv = Table[px[[i]]-px[[i-1]], {i,2,Length[px]}];
 pxdervd = Table[pxderv[[i]]-pxderv[[i-1]], {i,2,Length[pxderv]}];
