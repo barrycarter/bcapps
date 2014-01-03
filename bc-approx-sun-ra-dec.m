@@ -43,13 +43,20 @@ pz = Table[x[[5]],{x,p1}];
 pdist = Sqrt[px^2+py^2+pz^2];
 pang = ArcSin[pz/pdist];
 
+(* the derivative of pdist, to remove constant term *)
+
+pdistd = difference[pdist];
+
+superfour[pdist,1]
+
 (* find the peak of the continous Fourier transform between 0 and 1 by
 setting psuedo-derivative equal to 0 after subtracting off the biggest
 Fourier term *)
 
 f[x_] := Abs[cft[superleft[pdist,1],x]]
 g[x_] := fakederv[f,x,.001]
-xroot = findroot2[g,0,1,.0001]
+ListPlot[Table[g[x],{x,.1,.9,.05}]]
+xroot = findroot2[g,0.9,1.1,.01]
 yroot = cft[superleft[pdist,1],xroot]
 
 mult = Abs[yroot]/Sqrt[Length[pdist]]*2
