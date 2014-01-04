@@ -1,9 +1,77 @@
-(* playground for Mathematica *)
+(* graphing various functions for Fourier type analysis thingy *)
 
-showit := Module[{}, 
-Export["/tmp/math.png",%, ImageSize->{800,600}]; Run["display /tmp/math.png&"]]
+a = Table[N[753 + 919*Sin[x/62.3 - 125]], {x, 1, 10000}];
+b = Fourier[a];
+Total[Table[i*Abs[b[[i]]]^2,{i,2,1000}]]
+Total[Table[Abs[b[[i]]]^2,{i,2,1000}]]
 
-<</home/barrycarter/BCGIT/bclib.m
+c = Table[i*Abs[b[[i]]],{i,2,Length[a/2]}]
+b = Fourier[Take[a,{1,9984}]];
+
+ListPlot[Table[{i,Abs[b[[i]]]},{i,2,30}], PlotRange->All, PlotJoined-> True]
+
+b = Flatten[{a,Reverse[a],a,Reverse[a]}];
+
+ListPlot[Take[Abs[Fourier[b]],{80,120}], PlotRange->All, PlotJoined-> True]
+
+
+
+
+
+a = Table[Cos[40*x]*Cos[2*x],{x,0,2*Pi,.0001}];
+(* a has length 62832 *)
+c = Fourier[a];
+
+(* coefficients 39 and 43 are really high and equal at 62.275 + ~0 I *)
+
+a = Table[Cos[40*x]*Cos[3*x],{x,0,2*Pi,.0001}];
+c = Fourier[a];
+
+(* 38 and 44 high about same value *)
+
+a = Table[Cos[1/5*x]*Cos[10*x],{x,0,2*Pi,.01}];
+ListPlot[Take[Abs[Fourier[a]],25],PlotJoined->True,PlotRange->All]
+ListPlot[Take[Abs[Fourier[a^2]],25],PlotJoined->True,PlotRange->All]
+ListPlot[Take[Abs[Fourier[a^3]],50],PlotJoined->True,PlotRange->All]
+ListPlot[Take[Abs[Fourier[a^4]],25],PlotJoined->True,PlotRange->All]
+ListPlot[Take[Abs[Fourier[Sqrt[a]]],25],PlotJoined->True,PlotRange->All]
+b = Table[superfour[a,2][t],{t,1,Length[a]}];
+c = Table[superfour[b,1][t],{t,1,Length[a]}];
+ListPlot[{a,b},PlotJoined->True]
+
+
+
+ListPlot[a, PlotJoined->True]
+showit
+
+ListPlot[HilbertFilter[a,Pi/10], PlotJoined->True]
+
+c = Fourier[a];
+cft[a,10.8]
+ListPlot[Take[Abs[c],50],PlotRange->All]
+ListPlot[Table[{x,Abs[cft[a,x]]},{x,10,12,.1}]]
+
+FourierTransform[Cos[1/5*x]*Cos[10*x],x,t]
+ListPlot[HilbertFilter[a,0]]
+ListPlot[HilbertFilter[a,Pi*.1]]
+ListPlot[HilbertFilter[a,Pi]]
+ListPlot[HilbertFilter[a,Pi]]
+ListPlot[HilbertFilter[a,Pi]]
+ListPlot[HilbertFilter[a,Pi]]
+
+
+
+ListPlot[Take[Abs[c],50],PlotRange->All]
+b = Sqrt[a*Reverse[a]];
+ListPlot[b]
+showit
+
+
+FourierTransform[Cos[x]*Cos[5-x],x,t]
+
+Plot[Cos[x]*Cos[5-x],{x,0,2*Pi}]
+
+
 
 (* Given a point x,y,z, if we rotate so the x axis points upwards and
 pretend the x axis is now the z-axis:
@@ -2098,7 +2166,9 @@ ListPlot[Abs[Take[t5,20]], PlotRange->All]
 Plot[superfour[t4,2][x],{x,1,2000}]
 Plot[superfour[t4,3][x],{x,1,2000}]
 
-f[x_] = a + b*Cos[c*x-d]
+f[x_] = a + b*Cos[c*x-d] + e*Cos[f*x-g]
+
+g[x_] = f'[x]/f'''[x]
 
 f[x]/D[f[x],x,x]
 
@@ -2108,6 +2178,8 @@ D[f[x],x]/D[f[x],x,x,x]
 (* enveloping functions *)
 
 g[x_] = (a + b*Cos[c*x-d])*(f + g*Cos[h*x-j])
+
+g'[x]/g'''[x]
 
 g'[x]
 g[x]/g''[x]

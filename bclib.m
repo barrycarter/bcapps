@@ -3,6 +3,10 @@
 showit := Module[{},
 Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
+(* another mathematica "fix" that breaks things *)
+Unprotect[PlotJoined]
+PlotJoined := Joined
+
 (* this is a 'clean' library w/ no experiments that can be loaded using << *)
 
 (* obliquity of ecliptic and formula converting horizons-based XYZ from barycenter to RA/DEC *)
