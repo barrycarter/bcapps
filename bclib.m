@@ -8,10 +8,6 @@ showit := Module[{file},
  Run["display "<>file<>"&"];
 ];
 
-
-showit := Module[{},
-Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
-
 (* another mathematica "fix" that breaks things *)
 Unprotect[PlotJoined]
 PlotJoined := Joined
