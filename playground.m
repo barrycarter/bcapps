@@ -5,6 +5,20 @@ b = Fourier[a];
 Total[Table[i*Abs[b[[i]]]^2,{i,2,1000}]]
 Total[Table[Abs[b[[i]]]^2,{i,2,1000}]]
 
+f[x_] = a*Cos[b-c*x] + d*Cos[e-c*x]
+
+g[t_] = FourierTransform[f[x],x,t]
+
+FullSimplify[g[c],Reals] /. {DiracDelta[c]->0, DiracDelta[0]->1}
+
+(* leaves a*E**(I*b) + d*E**(I*e) *)
+
+Solve[c1*Cos[c2-c3*x] + c4*Cos[c5-c3*x] == c6*Cos[c7-c3*x],
+ {c6,c7}, Reals]
+
+
+Maximize[f[x],x]
+
 c = Table[i*Abs[b[[i]]],{i,2,Length[a/2]}]
 b = Fourier[Take[a,{1,9984}]];
 

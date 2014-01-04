@@ -1,5 +1,14 @@
 (* work around "new and improved" graphics handling in Mathematica 7+ *)
 
+(* keep files around just in case I need them again *)
+
+showit := Module[{file},
+ file = "/tmp/math"<>ToString[RunThrough["date +%Y%m%d%H%M%S", ""]]<>".jpg";
+ Export[file ,%, ImageSize->{800,600}];
+ Run["display "<>file<>"&"];
+];
+
+
 showit := Module[{},
 Export["/tmp/math.jpg",%, ImageSize->{800,600}]; Run["display /tmp/math.jpg&"]]
 
