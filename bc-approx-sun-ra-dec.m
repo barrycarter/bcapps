@@ -27,14 +27,14 @@ Despite this, it ultimately comes up w/ the right answers
 
 (* planet xyz position data *)
 
-<<"!bzcat /home/barrycarter/20110916/final-pos-500-0-199.txt.bz2";
+<<"!bzcat /home/barrycarter/20110916/final-pos-500-0-299.txt.bz2";
 
-(* planet199 is unmanagely large at 700K+ entries at least on my machine *)
+(* planetx99 is unmanagely large at 700K+ entries at least on my machine *)
 
 (* TODO: use Unix command to choose every 10th line, not Mathematica *)
 
-p0 = planet199;
-Clear[planet199];
+p0 = planet299;
+Clear[planet299];
 p1 = p0[[1;;Length[p0];;10]];
 Clear[p0];
 px = Table[x[[3]],{x,p1}];
@@ -42,6 +42,43 @@ py = Table[x[[4]],{x,p1}];
 pz = Table[x[[5]],{x,p1}];
 pdist = Sqrt[px^2+py^2+pz^2];
 pang = ArcSin[pz/pdist];
+
+a0[t_] = superfour[superleft[pdist,1],1][t]
+a1 = Table[a0[t],{t,1,Length[pdist]}];
+ListPlot[{a1, superleft[pdist,1]}]
+
+a2 = difference[superleft[pdist,1]];
+a3 = difference[a2];
+a4 = difference[a3];
+
+a5 = Log[Abs[Take[a2,{2,Length[a2]-1}]/a4]];
+
+a6[x_] = c1 + c2*Cos[c3*x-c4]
+
+a7[x_] = c2*Cos[c3*x-c4] + c5*Cos[c6*x-c7]
+a8[t_] = FourierTransform[a7[x],x,t]
+
+p1 = a8[c3] /. {DiracDelta[0] -> 1, DiracDelta[_] -> 0}
+p2 = a8[c6] /. {DiracDelta[0] -> 1, DiracDelta[_] -> 0}
+
+f[x] /. DSolve[f''[x] == -c*f[x], f[x], x][[1]]
+
+Plot[3*Cos[2*x] + 5*Cos[3*x],{x,0,2*Pi}]
+
+a10[x_] = d1*Cos[d2*x+d3]*Cos[d4*x+d5];
+a9[t_] = FourierTransform[a10[x],x,t];
+
+q1 = a9[d2+d4] /. {DiracDelta[0] -> 1, DiracDelta[_] -> 0}
+q2 = a9[d2-d4] /. {DiracDelta[0] -> 1, DiracDelta[_] -> 0}
+
+q1 /. Solve[{d2+d4==c3, d2-d4==c6},{d2,d4}][[1]]
+
+a10[x] /. 
+ Solve[{p1==q1, p2==q2, d2+d4==c3, d2-d4==c6, d3==0}, {d1,d2,d3,d4,d5}][[1]]
+
+
+
+
 
 temp = superleft[pdist,1]*Reverse[superleft[pdist,1]];
 

@@ -39,7 +39,7 @@ my($sid) = $sm{sidereal_time};
 my($sidp) = sprintf("LST: %dh%0.2dm", $sid, ($sid*60+.5)%60);
 
 my($mst) = fmodp(12 + $sm{sidereal_time} - $sm{sun}{ra}/15, 24);
-my($mstp) = sprintf("MST %d:%0.2d", $mst, ($mst*60+.5)%60);
+my($mstp) = sprintf("solar %d:%0.2d", $mst, ($mst*60+.5)%60);
 debug($mstp);
 
 my($sdt) = fmodp($sm{sun}{az}/15-12,24);
@@ -130,11 +130,13 @@ map($_=strftime("%H%M",localtime($_+30)), @times);
 unless ($sm{moon}{dir}) {$sm{moon}{phase}*=-1;}
 my($moondeg) = sprintf("%s%d\xB0%0.2d'%0.2d''", dec2deg($sm{moon}{phase}));
 
+# removed $sdtp because value is invalid
+
 $writestr = << "MARK";
 $str $el ($now)
 S:$times[6]-$times[7] ($times[4]-$times[5]/$times[2]-$times[3]/$times[0]-$times[1])
 M:$times[8]-$times[9] ($str2)
-$sidp/$mstp/$sdtp
+$sidp/$mstp
 $mdir$phase ($mprint) [$moondeg]
 MARK
 ;

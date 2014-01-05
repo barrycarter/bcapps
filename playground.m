@@ -1,11 +1,57 @@
+(* generalized sum/product rule for cosines *)
+
+f[x_] = c1*Cos[c2*x-c3] + c4*Cos[c5*x-c6];
+
+(* note that phase of one variable is irrelevant *)
+g[x_] = d1*Cos[(c2+c5)/2*x-d2]*Cos[(c2-c5)/2*x-d3];
+
+(* f's FourierTransform is only non-0 at c2 and c5 *)
+
+fc2=FourierTransform[f[x],x,t] /. t->c2 /. {DiracDelta[0]->1,DiracDelta[_]->0}
+fc5=FourierTransform[f[x],x,t] /. t->c5 /. {DiracDelta[0]->1,DiracDelta[_]->0}
+
+(* g's FourierTransform is only non-0 at d2+-d3 *)
+
+gp=FourierTransform[g[x],x,t]/.t->d2+d3/.{DiracDelta[0]->1,DiracDelta[_]->0}
+gn=FourierTransform[g[x],x,t]/.t->d2-d3/.{DiracDelta[0]->1,DiracDelta[_]->0}
+
+(* above requires d2=(c2+c5)/2, d3=(c2-c5)/2 *)
+
+h[x_, c1_, c2_, c3_, c4_, c5_, c6_] = 
+g[x]/.Solve[{fc2==gp, fc5==gn, d2+d3==c2, d2-d3==c5}, {d1,d2,d3,d4}][[1]]
+
+
+
+gp /. {d2->(c2+c5)/2, d3->(c2-c5)/2}
+
+
 (* graphing various functions for Fourier type analysis thingy *)
 
 a = Table[N[753 + 919*Sin[x/62.3 - 125]], {x, 1, 10000}];
 b = Fourier[a];
+c = Table[superfour[a,2][t],{t,1,10000}];
+d = Table[superfour[c,2][t], {t,1,10000}];
+
+ListPlot[a-d]
+ListPlot[a-c]
+ListPlot[c-d]
+
+f = Interpolation[a];
+
+g[t_] = Integrate[f[x]*Cos[t*x],{x,1,10000}]
+
+Plot[g[t],{t,0,1}]
+
+
+
+
 Total[Table[i*Abs[b[[i]]]^2,{i,2,1000}]]
 Total[Table[Abs[b[[i]]]^2,{i,2,1000}]]
 
 f[x_] = a*Cos[b-c*x] + d*Cos[e-c*x]
+
+f'[x]
+
 
 g[t_] = FourierTransform[f[x],x,t]
 
