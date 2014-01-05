@@ -7,8 +7,24 @@ g[x_] = d1*Cos[(c2+c5)/2*x-d2]*Cos[(c2-c5)/2*x-d3];
 
 (* f's FourierTransform is only non-0 at c2 and c5 *)
 
+Solve[{
+ c1*Cos[c3] == d1*Cos[d2 + d3]/2,
+ c4*Cos[c6] == d1*Cos[d2 - d3]/2,
+ c1*Sin[c3] == d1*Sin[d2 + d3]/2,
+ c4*Sin[c6] == d1*Sin[d2 - d3]/2
+}, {d1,d2,d3}
+]
+
+
+
+
 fc2=FourierTransform[f[x],x,t] /. t->c2 /. {DiracDelta[0]->1,DiracDelta[_]->0}
 fc5=FourierTransform[f[x],x,t] /. t->c5 /. {DiracDelta[0]->1,DiracDelta[_]->0}
+
+gp=FourierTransform[g[x],x,t]/.t->c2/.{DiracDelta[0]->1,DiracDelta[_]->0}
+gn=FourierTransform[g[x],x,t]/.t->c5/.{DiracDelta[0]->1,DiracDelta[_]->0}
+
+Solve[{gp==fc2, gn==fc5}, Reals]
 
 (* g's FourierTransform is only non-0 at d2+-d3 *)
 
