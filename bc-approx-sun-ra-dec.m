@@ -43,6 +43,8 @@ pz = Table[x[[5]],{x,p1}];
 pdist = Sqrt[px^2+py^2+pz^2];
 pang = ArcSin[pz/pdist];
 
+a12 = Table[Cos[0.00010732*t]*Cos[0.00112922*t-1.625],{t,1,Length[pdist]}];
+
 a0[t_] = superfour[superleft[pdist,1],1][t]
 a1 = Table[a0[t],{t,1,Length[pdist]}];
 ListPlot[{a1, superleft[pdist,1]}]

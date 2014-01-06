@@ -1,3 +1,35 @@
+f1[x_] := Abs[cft[pdist-Mean[pdist],x]];
+f2[x_] := fakederv[f1,x,0.001];
+findroot2[f2,11+.002,12,.0001]
+
+Table[{x,f2[x]},{x,11,13,.25}]
+Table[{x,f1[x]},{x,11,13,.025}]
+ListPlot[%,PlotJoined->True]
+showit
+
+FindFit[superleft[pdist,1], 
+ d1*Cos[(0.00115699+e)*x-d3]*Cos[(0.00115699-e)*x-d5], 
+ {{d1,Mean[Abs[superleft[pdist,1]]]*2},{d3,0},{d5,0},{e,0}}, x]
+
+FindFit[superleft[pdist,1], 
+ d1*Cos[d2*x-d3]*Cos[d4*x-d5], 
+ {{d1,Mean[Abs[superleft[pdist,1]]]*2},{d3,0},{d5,0},{d2,0.00115699*2},d4}, x]
+
+FindFit[superleft[pdist,1], 
+ 314975*Cos[d2*x-d3]*Cos[d4*x-d5], 
+ {{d3,0},{d5,0},{d2,0.00115699*2},{d4,0}}, x]
+
+FindFit[superleft[pdist,1], 
+d1*Cos[d3]*Cos[d5]*Cos[d2*x]*Cos[d4*x] + d1*Cos[d5]*Cos[d4*x]*Sin[d3]*
+  Sin[d2*x] + d1*Cos[d3]*Cos[d2*x]*Sin[d5]*Sin[d4*x] + 
+ d1*Sin[d3]*Sin[d5]*Sin[d2*x]*Sin[d4*x]
+,
+ {{d1,Mean[Abs[superleft[pdist,1]]]*2},{d3,0},{d5,0},{d2,0.00115699*2},d4}, x]
+
+
+
+
+
 (* generalized sum/product rule for cosines *)
 
 f[x_] = c1*Cos[c2*x-c3] + c4*Cos[c5*x-c6];
@@ -14,9 +46,6 @@ Solve[{
  c4*Sin[c6] == d1*Sin[d2 - d3]/2
 }, {d1,d2,d3}
 ]
-
-
-
 
 fc2=FourierTransform[f[x],x,t] /. t->c2 /. {DiracDelta[0]->1,DiracDelta[_]->0}
 fc5=FourierTransform[f[x],x,t] /. t->c5 /. {DiracDelta[0]->1,DiracDelta[_]->0}
@@ -911,6 +940,7 @@ for 65N: (diffs up to 20m, "sin(5x)" pattern is strong)
 
 (* -9999 = temp unknown  and drops nulls *)
 data = Select[data, #[[5]] > -9999 &];
+data = Table[i[[5]], {i,data}]
 
 (* closer to the way we need it *)
 data2 = Table[{ {x[[2]],x[[3]],x[[4]]}, {x[[1]],x[[5]]}}, {x,data}];

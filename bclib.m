@@ -70,13 +70,14 @@ cft[l_,s_] := cft[l,s] =
 Sum[l[[x]]*Exp[2*Pi*I*(x-1)*(s-1)/Length[l]],{x,1,Length[l]}]/Sqrt[Length[l]];
 
 (* findroot using binary method, which Mathematica can't do??? *)
+(* using N throughout for speed *)
 findroot2[f_, a_, b_, delta_] := Module[{mid,fa,fb,fmid},
- mid = (a+b)/2;
+ mid = N[(a+b)/2];
  If[Abs[a-b]<delta,Return[mid]];
  (* solely to avoid recomputation *)
- fa = f[a];
- fb = f[b];
- fmid = f[mid];
+ fa = N[f[a]];
+ fb = N[f[b]];
+ fmid = N[f[mid]];
  (* corner case *)
  If[Sign[fmid]==0,Return[mid]];
  If[Sign[fa]==Sign[fb],Return["error"]];
