@@ -21,11 +21,17 @@ ecliptic = ArcSin[0.397776995]
 mecliptic = {{1,0,0}, {0, Cos[ecliptic], -Sin[ecliptic]},
  {0, Sin[ecliptic], Cos[ecliptic]}}
 
-(* From http://reference.wolfram.com/mathematica/ref/Fourier.html
-under Applications/Frequency Identification, modified for
-non-zero-mean data *)
+(*
 
-superfourier[data_] := Module[{n,m,pdata,f,fr,pos,frpos,freq,phase,b,d},
+From http://reference.wolfram.com/mathematica/ref/Fourier.html under
+Applications/Frequency Identification, modified for non-zero-mean data.
+
+If mode=1, return coefficients as a list, not a function
+
+*)
+
+superfourier[data_,mode_:0] :=
+Module[{n,m,pdata,f,fr,pos,frpos,freq,phase,b,d},
  n = Length[data];
  m = Mean[data];
  pdata = data-m;
@@ -35,14 +41,19 @@ superfourier[data_] := Module[{n,m,pdata,f,fr,pos,frpos,freq,phase,b,d},
  FourierParameters -> {0, 2/n}]];
  frpos = Ordering[-fr, 1][[1]];
  freq = N[(pos - 2 + 2*(frpos - 1)/n)];
- phase = Sum[Exp[freq*2*Pi*I*x/n]*data[[x]], {x,1,n}];
+ phase = Sum[Exp[freq*2*Pi*I*x/n]*pdata[[x]], {x,1,n}];
  b = N[2*Abs[phase]/n];
  d = N[Arg[phase]];
+ If[mode==1,Return[{m,b,-freq*2*Pi/n,d}]];
  Function[x, Evaluate[m + b*Cos[freq*2*Pi/n*x-d]]]
 ]
 
-(* given data and a function that approximates that data, find an even
-better approximation, using superfourier *)
+(* 
+
+Given data and a function that approximates that data, find an even
+better approximation, using superfourier
+
+*)
 
 refine[data_, f_] := Module[{t},
  t = Table[data[[x]]- f[x], {x,1,Length[data]}];

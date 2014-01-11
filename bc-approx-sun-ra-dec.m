@@ -42,17 +42,44 @@ superfour[pdist,1]
 
 (* know the period, we define some functions *)
 
+(* a5[10] and f1[10][x] sync *)
+
 f1[n_] = Function[x,f0[x+1+2111.9*n]]
+
+f7[x_] = (x-1)/1023*2111.9+1
 
 Plot[f1[0][x],{x,0,2111.9}]
 
 Table[f1[n][x],{n,0,Length[pdist]/2111.9-1}]
 
+a5[n_] = Transpose[sample[f1[n],0,2111.9,1024]][[2]];
+
+
 a1 = Table[Transpose[sample[f1[n],0,2111.9,1024]][[2]],
 {n,0,Length[pdist]/2111.9-1}];
 
-a2 = Table[superfour[n,1],{n,a1}]
-a3 = Table[f[x],{f,a2}]
+a2 = Transpose[Table[superfourier[n,1],{n,a1}]]
+
+(* correction to frequency: multiply by 1024/2111.9 *)
+
+a2[[3]] = a2[[3]]*1024/2111.9;
+
+(* correction to phase??? *)
+
+a2[[4]] = a2[[4]]*1024/2111.9;
+
+a3 = Table[superfour[a,1][x],{a,a2}]
+
+h[x_] = a3[[1]] + a3[[2]]*Cos[a3[[3]]*x + a3[[4]]]
+
+f[x_] = a3[[1]] + a3[[2]]*Cos[a3[[3]]*((x-1)*2111.9 + 1) + a3[[4]]]
+
+(* f looks fine, shape wise *)
+
+g[x_] = f[(x-1)/2111.9+1]
+
+Table[pdist[[i]]-g[i/2],{i,1,Length[pdist]}]
+
 
 (* extracting terms from what superfour returns:
 
@@ -69,6 +96,18 @@ means = Table[a2[[n,2,1]],{n,1,Length[a2]}]
 amps = Table[a2[[n,2,2,1]],{n,1,Length[a2]}]
 phases = Table[a2[[n,2,2,2,1,1]],{n,1,Length[a2]}]
 freqs = Table[a2[[n,2,2,2,1,2,1]],{n,1,Length[a2]}]
+
+(* converts 1 to 33 to 1 to 67581.8, the part of the list we have estimate *)
+
+f5[x_] = (x-1)*2111.9 + 1
+
+f2[x_] = superfour[means,1][x] + 
+ superfour[amps,1][x]*Cos[superfour[phases,1][x] +
+ superfour[freqs,1][x]*(f5[x])]
+
+
+
+
 
 
 f2[x_] = 5.9098661146211445*^7 + 157420.07418009013*
