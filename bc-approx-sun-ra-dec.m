@@ -25,23 +25,105 @@ Despite this, it ultimately comes up w/ the right answers
 
 *)
 
-(* planet xyz position data *)
+(* planet xyz position data, every 10th line only for now *)
 
-<<"!bzcat /home/barrycarter/DATA/final-pos-500-0-199.txt.bz2";
+<<"/home/barrycarter/DATA/199-mini.txt"
 
-(* planetx99 is unmanagely large at 700K+ entries at least on my machine *)
-
-(* TODO: use Unix command to choose every 10th line, not Mathematica *)
-
-p0 = planet199;
-Clear[planet199];
-p1 = p0[[1;;Length[p0];;10]];
-Clear[p0];
+p1 = planet199;
 px = Table[x[[3]],{x,p1}];
 py = Table[x[[4]],{x,p1}];
 pz = Table[x[[5]],{x,p1}];
 pdist = Sqrt[px^2+py^2+pz^2];
 pang = ArcSin[pz/pdist];
+
+f0 = Interpolation[pdist]
+
+superfour[pdist,1]
+
+(* know the period, we define some functions *)
+
+f1[n_] = Function[x,f0[x+1+2111.9*n]]
+
+Plot[f1[0][x],{x,0,2111.9}]
+
+Table[f1[n][x],{n,0,Length[pdist]/2111.9-1}]
+
+a1 = Table[Transpose[sample[f1[n],0,2111.9,1024]][[2]],
+{n,0,Length[pdist]/2111.9-1}];
+
+a2 = Table[superfour[n,1],{n,a1}]
+a3 = Table[f[x],{f,a2}]
+
+(* extracting terms from what superfour returns:
+
+[[2,1]] is the constant term [aka mean]
+[[2,2,1]] is the amplitude
+[[2,2,2,1,1]] is the phase shift
+[[2,2,2,1,2,1]] is the freq multiplier
+
+TODO: this is almost definitely the wrong way to extract these
+
+ *)
+
+means = Table[a2[[n,2,1]],{n,1,Length[a2]}]
+amps = Table[a2[[n,2,2,1]],{n,1,Length[a2]}]
+phases = Table[a2[[n,2,2,2,1,1]],{n,1,Length[a2]}]
+freqs = Table[a2[[n,2,2,2,1,2,1]],{n,1,Length[a2]}]
+
+
+f2[x_] = 5.9098661146211445*^7 + 157420.07418009013*
+  Cos[1.0665587845114386 - 0.13847240346401293*x] + 
+ (2.1093957681357905*^7 + 6.817254377756953*^6*
+    Cos[2.6001789885745974 - 0.16155113737468174*x])*
+  Cos[2.3320744633974773 - 0.005533443481300548*x + 
+    0.8129172267000655*Cos[2.769057777981352 - 0.16155113737468174*x] + 
+    0.0008618055381934119*x*Cos[2.775733748081489 + 0.20770860519601939*x]]
+
+
+ParametricPlot[{Mod[x,2111.9],f0[x]},{x,1,Length[pdist]},AspectRatio->1]
+
+superfour[Tranpose[sample[f0,1,2112.9,1024]][[2]],1]
+
+
+
+(* partition into "best" period, 2112h *)
+
+(* TODO: allow for fractional periods using resampling *)
+
+a0 = Partition[pdist,2112];
+
+Table[superfour[a0[[i]],1][x],{i,1,Length[a0]}]
+
+(* this shows we made a good choice with 2112 *)
+ListPlot[a0]
+
+(* the mean of each cycle changes slightly *)
+a2 = Map[Mean,a0]
+
+(* we can compensate *)
+f1[x_] = Mean[a2]+superfour[a2-Mean[a2],1][x/2112]
+
+(* and the amplitude of each cycle changes slightly *)
+a3 = (Map[Max,a0] - Map[Min,a0])/2
+
+(* compensating *)
+f2[x_] = Mean[a3]+superfour[a3-Mean[a3],1][x/2112]
+
+Plot[f1[x],{x,1,Length[pdist]}]
+
+Plot[{f1[x]-f2[x]},{x,1,Length[pdist]}]
+
+
+(* now, we partition the residuals *)
+a1 = Partition[superleft[pdist,1],2112];
+ListPlot[a1]
+
+(* the amplitude changes a lot! *)
+Map[Mean,a1]-Mean[Map[Mean,a1]]
+
+
+
+
 
 (* let's look at the coeffs themselves? *)
 

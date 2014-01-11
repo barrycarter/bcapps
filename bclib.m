@@ -25,7 +25,7 @@ mecliptic = {{1,0,0}, {0, Cos[ecliptic], -Sin[ecliptic]},
 under Applications/Frequency Identification, modified for
 non-zero-mean data *)
 
-superfourier[data_] := Module[{n,m,pdata,f,pos,frpos,freq,phase,b,d},
+superfourier[data_] := Module[{n,m,pdata,f,fr,pos,frpos,freq,phase,b,d},
  n = Length[data];
  m = Mean[data];
  pdata = data-m;
@@ -85,4 +85,7 @@ findroot2[f_, a_, b_, delta_] := Module[{mid,fa,fb,fmid},
  If[Sign[fmid]==Sign[fb], Return[findroot2[f,a,mid,delta]]];
  Return["error"];
 ]
+
+(* return a table that samples f at n different points between a and b *)
+sample[f_,a_,b_,n_] := Table[{x,f[x]},{x,a,b,(b-a)/(n-1)}]
 
