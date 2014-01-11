@@ -1,3 +1,19 @@
+(* ellipses, more *)
+
+(* given an ellipse with two foci in 3d *)
+
+f1 = {x0,y0,z0};
+f2 = {x1,y1,z1};
+
+FullSimplify[Solve[Norm[{x,y,z}-f1]+Norm[{x,y,z}-f2]==c,{x,y,z}],Reals]
+
+
+
+
+
+
+
+
 (* Mathematica versions of some astro formulas to resolve:
  http://astronomy.stackexchange.com/questions/937/ and similar
  *)

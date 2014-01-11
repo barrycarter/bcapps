@@ -27,14 +27,14 @@ Despite this, it ultimately comes up w/ the right answers
 
 (* planet xyz position data *)
 
-<<"!bzcat /home/barrycarter/20110916/final-pos-500-0-299.txt.bz2";
+<<"!bzcat /home/barrycarter/DATA/final-pos-500-0-199.txt.bz2";
 
 (* planetx99 is unmanagely large at 700K+ entries at least on my machine *)
 
 (* TODO: use Unix command to choose every 10th line, not Mathematica *)
 
-p0 = planet299;
-Clear[planet299];
+p0 = planet199;
+Clear[planet199];
 p1 = p0[[1;;Length[p0];;10]];
 Clear[p0];
 px = Table[x[[3]],{x,p1}];
@@ -42,6 +42,51 @@ py = Table[x[[4]],{x,p1}];
 pz = Table[x[[5]],{x,p1}];
 pdist = Sqrt[px^2+py^2+pz^2];
 pang = ArcSin[pz/pdist];
+
+(* let's look at the coeffs themselves? *)
+
+a0 = superfour[pdist,50]
+a0 = superfour[px,1]
+
+ListPlot[Take[Log[Abs[Fourier[pdist]]],100],PlotRange->All]
+
+Sort[Table[a0[[2,n,1]],{n,2,51}]]
+
+(* period of superleft[pdist,1] is 1055.94 samples/period or 66.4139
+periods in sample, 2137ish for superleft[pdist,2] *)
+
+a1 = Partition[superleft[px,2],2111]
+a1 = Partition[superleft[px,2],704];
+ListPlot[a1]
+showit
+
+Map[Mean,a1]
+
+a2 = Partition[superleft[px,0], 2111];
+ListPlot[a2]
+showit
+
+
+
+Map[Mean,Abs[Partition[superleft[px,2],704]]]
+Length[Mean[Partition[superleft[px,2],704]]]
+Mean[Partition[superleft[px,2],704]]
+
+
+a13 = Sqrt[Mean[Partition[superleft[pdist,1]^2,1056]]]
+a13 = Sqrt[Mean[Partition[superleft[pdist,2]^2,2136]]]
+a13 = Sqrt[Mean[Partition[superleft[pdist,2]^2,2137]]]
+Fourier[a13]
+
+f14 = Interpolation[a13]
+f15 = Interpolation[superleft[pdist,1]]
+f15 = Interpolation[superleft[pdist,2]]
+
+Plot[f15[x]/f14[1056/70129*x],{x,1,Length[pdist]}]
+
+
+
+
 
 a12 = Table[Cos[0.00010732*t]*Cos[0.00112922*t-1.625],{t,1,Length[pdist]}];
 
