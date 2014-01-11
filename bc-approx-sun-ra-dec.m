@@ -62,9 +62,21 @@ showit
 
 Map[Mean,a1]
 
-a2 = Partition[superleft[px,0], 2111];
+a2 = Partition[superleft[px,2], 2111];
 ListPlot[a2]
 showit
+
+ListPlot[{Map[Max,a2],Map[Min,a2]}]
+
+a4 = Map[Mean,a2]
+
+a5 = Interpolation[a4]
+
+a6 = Interpolation[superleft[px,2]]
+
+Plot[{a6[x],a5[x/Length[px]*Length[a4]]}, {x,1,Length[px]}]
+Plot[a6[x]-a5[x/Length[px]*Length[a4]], {x,1,Length[px]}]
+
 
 
 
