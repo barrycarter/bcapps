@@ -940,7 +940,8 @@ for 65N: (diffs up to 20m, "sin(5x)" pattern is strong)
 
 (* -9999 = temp unknown  and drops nulls *)
 data = Select[data, #[[5]] > -9999 &];
-data = Table[i[[5]], {i,data}]
+data = Table[i[[5]], {i,data}];
+
 
 (* closer to the way we need it *)
 data2 = Table[{ {x[[2]],x[[3]],x[[4]]}, {x[[1]],x[[5]]}}, {x,data}];

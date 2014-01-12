@@ -1,4 +1,4 @@
-(* 
+ODOD(* 
 
 DO NOT "<<" this file; it's more of a cut-and-paste sort of thing
 
@@ -25,6 +25,53 @@ Despite this, it ultimately comes up w/ the right answers
 
 *)
 
+(* Given data, return a 'meta-Fourier' function matching it *)
+
+hyperfourier[data_] := Module[
+ {f0, period, t1, t2, sampsize, phases, freqs, convert},
+
+ (* TODO: let sampsize be a parameter *)
+ sampsize = 1024;
+
+ (* interpolate the function *)
+ f0 = Interpolation[data];
+
+ (* find the data's primary period *)
+ period = Abs[2*Pi/superfourier[data,1][[3]]];
+
+ (* resample the data to apply Fourier *)
+ t1 = Table[Transpose[sample[f0,period*(n-1)+1, period*n+1, sampsize]][[2]], 
+ {n,1,Floor[Length[data]/period]}];
+
+ (* obtain the fourier paramaters for each chunk *)
+ t2 = Transpose[Table[superfourier[i,1],{i,t1}]];
+
+ (* determine frequencies + phases by applying corrections *)
+ freqs = t2[[3]]*(sampsize-1)/period;
+
+ (* TODO: improve phase calculations here; subtract off line? *)
+ phases = Table[t2[[4,i]]+t2[[3,i]]/period*
+ (1 + (-1 + period) sampsize + i (period - period sampsize)),
+ {i,1,Floor[Length[pdist]/period]}];
+
+ (* convert t1 coefficients to actual x coordinates *)
+ convert[x_] = (-2+period+2*x)/2/period;
+
+ (* now, Fourier estimate mean, amplitude, frequencies and phases *)
+ mean[x_] = superfour[t2[[1]],1][convert[x]];
+ amp[x_] = superfour[t2[[2]],1][convert[x]];
+ freq[x_] = superfour[freqs,1][convert[x]];
+ phase[x_] = superfour[phases,1][convert[x]];
+
+ (* and return the function *)
+ Function[x, mean[x] + amp[x]*Cos[x*freq[x] + phase[x]]]
+]
+
+
+
+
+
+
 (* planet xyz position data, every 10th line only for now *)
 
 <<"/home/barrycarter/DATA/199-mini.txt"
@@ -36,9 +83,6 @@ pz = Table[x[[5]],{x,p1}];
 pdist = Sqrt[px^2+py^2+pz^2];
 pang = ArcSin[pz/pdist];
 
-(* sample size *)
-sampsize = 1024;
-
 (* interpolate the function *)
 
 f0 = Interpolation[pdist];
@@ -47,6 +91,9 @@ f0 = Interpolation[pdist];
 
 period = Abs[2*Pi/superfourier[pdist,1][[3]]]
 
+(* sample size *)
+sampsize = Round[period]*2;
+
 (* list chunks *)
 
 (* todo: do NOT omit the last "incomplete" chunk *)
@@ -54,7 +101,7 @@ period = Abs[2*Pi/superfourier[pdist,1][[3]]]
 t1 = Table[Transpose[sample[f0,period*(n-1)+1, period*n+1, sampsize]][[2]], 
 {n,1,Floor[Length[pdist]/period]}];
 
-ListPlot[t1[[1]]]
+ListPlot[t1]
 
 Plot[{Interpolation[t1[[1]]][x],superfour[t1[[1]],1][x]},{x,1,1024}]
 
