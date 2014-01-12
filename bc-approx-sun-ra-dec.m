@@ -36,7 +36,92 @@ pz = Table[x[[5]],{x,p1}];
 pdist = Sqrt[px^2+py^2+pz^2];
 pang = ArcSin[pz/pdist];
 
+(* interpolate the function *)
+
 f0 = Interpolation[pdist]
+
+(* find the period *)
+
+period = Abs[2*Pi/superfourier[pdist,1][[3]]]
+
+(* list chunks *)
+
+(* todo: do NOT omit the last "incomplete" chunk *)
+
+t1 = Table[Transpose[sample[f0,period*n+1, period*(n+1)+1, 1024]][[2]], 
+{n,0,Floor[Length[pdist]/period]-1}]
+
+(* function that converts sampled function x to true function x *)
+f1[x_] = period/1023*(x-1) + 1
+
+(* obtain the Fourier coefficients for each period *)
+
+t2 = Transpose[Table[superfourier[i,1],{i,t1}]]
+
+(* fix the frequency *)
+
+freqs = t2[[3]]*1023/period
+
+(* final function? *)
+
+f2[x_] = superfour[t2[[1]],1][x/period] + superfour[t2[[2]],1][x/period] *
+ Cos[superfour[freqs,1][x/period]*x + superfour[t2[[4]],1][x/period]]
+
+Plot[{f2[x],f0[x]},{x,1,period+1}]
+
+ftest[x_] = t2[[1,1]] + t2[[2,1]]*Cos[freqs[[1]]*x + t2[[4,1]]]
+
+Plot[{ftest[x],f0[x]},{x,1,period+1}]
+
+ftest2[x_] = t2[[1,1]]+t2[[2,1]]*Cos[superfour[freqs,1][x/period]*x+t2[[4,1]]]
+
+Plot[{ftest2[x],f0[x]},{x,1,period+1}]
+
+orig[x_] = 5.9116018609681964*^7 + 1.1501735723131603*^7*
+Cos[2.1432646522503234 - 0.002975140780890627*x]
+
+Plot[{f0[x]-orig[x]},{x,1,Length[pdist]}]
+Plot[{f0[x]-orig[x]},{x,15*period+1,16*period+1}]
+
+mod1[x_] = superfour[t2[[1]],1][x/period] + 1.1501735723131603*^7*
+Cos[2.1432646522503234 - 0.002975140780890627*x]
+
+Plot[{f0[x]-mod1[x]},{x,1,Length[pdist]}]
+Plot[{f0[x]-mod1[x]},{x,15*period+1,16*period+1}]
+Plot[{orig[x]-mod1[x]},{x,15*period+1,16*period+1}]
+Plot[{orig[x]-mod1[x]},{x,1,period+1}]
+Plot[{orig[x]-mod1[x]},{x,1,Length[pdist]}]
+
+mod2[x_] = superfour[t2[[1]],1][x/period] + superfour[t2[[2]],1][x/period]*
+Cos[2.1432646522503234 - 0.002975140780890627*x]
+
+Plot[{f0[x]-mod2[x]},{x,1,Length[pdist]}]
+Plot[{f0[x]-mod2[x]},{x,15*period+1,16*period+1}]
+Plot[{f0[x]-mod2[x]},{x,1,period+1}]
+Plot[{f0[x]-orig[x]},{x,1,period+1}]
+Plot[{orig[x]-mod2[x]},{x,15*period+1,16*period+1}]
+Plot[{orig[x]-mod2[x]},{x,1,period+1}]
+Plot[{orig[x]-mod2[x]},{x,1,Length[pdist]}]
+
+mod3[x_] = superfour[t2[[1]],1][x/period] + superfour[t2[[2]],1][x/period]*
+Cos[2.1432646522503234 - 0.002975140780890627*x]
+
+phase = Table[t2[[4,i]]/f1[t2[[4,i]]/t2[[3,i]]], {i,1,Length[t2[[4]]]}]
+
+(* and the frequency *)
+
+freqs = 
+
+,{n,0,Floor[Length[pdist]/period]-1}]
+
+Table[{period*n+1, period*(n+1)+1},
+
+(* sample the function 1024 times on one period *)
+
+Transpose[sample[f0,1,1+period,1024]][[2]]
+
+(* and its inverse *)
+f2[x_] = InverseFunction[f1][x]
 
 superfour[pdist,1]
 
