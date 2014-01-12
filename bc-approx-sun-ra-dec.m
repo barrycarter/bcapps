@@ -54,11 +54,65 @@ period = Abs[2*Pi/superfourier[pdist,1][[3]]]
 t1 = Table[Transpose[sample[f0,period*(n-1)+1, period*n+1, sampsize]][[2]], 
 {n,1,Floor[Length[pdist]/period]}];
 
+ListPlot[t1[[1]]]
+
+Plot[{Interpolation[t1[[1]]][x],superfour[t1[[1]],1][x]},{x,1,1024}]
+
+Plot[{superfour[pdist,1][f4[1][x]],superfour[t1[[1]],1][x]},{x,1,1024}]
+
+t6 = Transpose[sample[f0,1,period+1,sampsize]][[2]]
+
+t7 = superfour[Take[pdist,{1,Round[period]}],1]
+
+
+
+
+
+(* obtain the Fourier coefficients for each period *)
+
+t2 = Transpose[Table[superfourier[i,1],{i,t1}]]
+
+(* fix frequencies and phase shifts *)
+
+freqs = t2[[3]]*(sampsize-1)/period;
+
+phases = Table[t2[[4,i]]+t2[[3,i]]/period*
+(1 + (-1 + period) sampsize + i (period - period sampsize)),
+{i,1,Floor[Length[pdist]/period]}]
+
+(* converting fourier coefficients x value to true x value *)
+
+f7[n_] = FullSimplify[((period*(n-1)+1) + (period*n+1))/2,Reals]
+
+f8[x_] = FullSimplify[InverseFunction[f7][x],Reals]
+
+mean[x_] = superfour[t2[[1]],1][f8[x]];
+amp[x_] = superfour[t2[[2]],1][f8[x]];
+freq[x_] = superfour[freqs,1][f8[x]];
+phase[x_] = superfour[phases,1][f8[x]];
+
+f10[x_] =  mean[x] + amp[x]*Cos[x*freq[x] + 2.14326]
+f10[x_] =  mean[x] + amp[x]*Cos[-x*0.00297514 + 2.14326]
+f10[x_] =  mean[x] + 1.15017*10^7*Cos[-x*0.00297514 + 2.14326]
+
+f10[x_] =  5.9116018609681964*^7 + 1.1501735723131603*^7*
+ Cos[-x*0.002975140780890627 + 2.1432646522503234]
+
+f10[x_] =  mean[x] + 1.1501735723131603*^7*
+ Cos[-x*0.002975140780890627 + 2.1432646522503234]
+
+f10[x_] =  mean[x] + amp[x]*
+ Cos[x*freq[x] + 2.1432646522503234]
+
+
+f10[x_] =  mean[x] + amp[x]*Cos[x*freq[x] + phase[x]]
+
+
+
 (* below is:
 
 superfour[t1[[3]],1][x]
 Simplify[superfour[t1[[3]],1][f5[3][x]]]                              
-
 
 *)
 
@@ -80,9 +134,8 @@ Cos[12.9612 - 0.00265876 x]
 
 
 
-(* obtain the Fourier coefficients for each period *)
 
-t2 = Transpose[Table[superfourier[i,1],{i,t1}]]
+
 
 (* fix the phases; MUST be done BEFORE fixing the freqs? *)
 
@@ -114,12 +167,6 @@ Round[period*n+1]}], 1][f5[n][x]]
 
 f11[x_,n_] := superfour[Take[pdist, {Round[period*(n-1)+1],
 Round[period*n+1]}], 1][x-period+1]
-
-(* converting fourier coefficients x value to true x value *)
-
-f7[n_] = FullSimplify[((period*(n-1)+1) + (period*n+1))/2,Reals]
-
-f8[x_] = FullSimplify[InverseFunction[f7][x],Reals]
 
 Plot[{f1[x,7],f2[x,7]},{x,6*period+1,7*period+1}]
 
