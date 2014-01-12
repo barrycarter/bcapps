@@ -36,9 +36,12 @@ pz = Table[x[[5]],{x,p1}];
 pdist = Sqrt[px^2+py^2+pz^2];
 pang = ArcSin[pz/pdist];
 
+(* sample size *)
+sampsize = 1024;
+
 (* interpolate the function *)
 
-f0 = Interpolation[pdist]
+f0 = Interpolation[pdist];
 
 (* find the period *)
 
@@ -48,19 +51,34 @@ period = Abs[2*Pi/superfourier[pdist,1][[3]]]
 
 (* todo: do NOT omit the last "incomplete" chunk *)
 
-t1 = Table[Transpose[sample[f0,period*n+1, period*(n+1)+1, 1024]][[2]], 
-{n,0,Floor[Length[pdist]/period]-1}]
-
-(* function that converts sampled function x to true function x *)
-f1[x_] = period/1023*(x-1) + 1
+t1 = Table[Transpose[sample[f0,period*n+1, period*(n+1)+1, sampsize]][[2]], 
+{n,0,Floor[Length[pdist]/period]-1}];
 
 (* obtain the Fourier coefficients for each period *)
 
 t2 = Transpose[Table[superfourier[i,1],{i,t1}]]
 
+(* fix the phases; MUST be done BEFORE fixing the freqs? *)
+
+phases = Table[t2[[4,n]] + (t2[[3,n]]*(1 + period + (n-1)*period - (1
++ (n-1)*period)*sampsize))/period, {n,1,Floor[Length[pdist]/period]}];
+
 (* fix the frequency *)
 
-freqs = t2[[3]]*1023/period
+freqs = t2[[3]]*(sampsize-1)/period;
+
+
+f1[x_,n_] := t2[[1,n]] + t2[[2,n]]*Cos[freqs[[n]]*x+phases[[n]]]
+
+f2[x_,n_] := superfour[Take[pdist, {Round[period*n+1],
+Round[period*(n+1)+1]}], 1][x]
+
+
+Plot[{f1[x,7],f2[x,7]},{x,7*period+1,8*period+1}]
+
+
+
+
 
 (* final function? *)
 
