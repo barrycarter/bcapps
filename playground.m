@@ -491,6 +491,18 @@ f1 = Abs[Fourier[t1]]
 (* hourly data averages *)
 
 <<"!bzcat /home/barrycarter/BCGIT/db/abqhourly.m.bz2"
+data = Select[Table[x[[5]],{x,data}], # > -9999&];
+f1[x_] = hyperfourier[data][x]
+
+Plot[f1[x],{x,1,Length[data]}]
+
+f[x_] = hyperfourier[superleft[data,1]][x]
+f[x_] = calmfourier[superleft[data,1]][x]
+
+
+
+
+
 data2 = Gather[data, (#1[[2]] == #2[[2]] && #1[[3]] == #2[[3]] &&
 #1[[4]] == #2[[4]]) &]
 

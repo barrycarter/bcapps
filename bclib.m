@@ -127,7 +127,7 @@ hyperfourier[data_] := Module[
  (* TODO: improve phase calculations here; subtract off line? *)
  phases = Table[t2[[4,i]]+t2[[3,i]]/period*
  (1 + (-1 + period) sampsize + i (period - period sampsize)),
- {i,1,Floor[Length[pdist]/period]}];
+ {i,1,Floor[Length[data]/period]}];
 
  (* convert t1 coefficients to actual x coordinates *)
  convert[x_] = (-2+period+2*x)/2/period;
@@ -172,7 +172,7 @@ calmfourier[data_] := Module[
  (* TODO: improve phase calculations here; subtract off line? *)
  phases = Mod[Table[t2[[4,i]]+t2[[3,i]]/period*
  (1 + (-1 + period) sampsize + i (period - period sampsize)),
- {i,1,Floor[Length[pdist]/period]}],2*Pi];
+ {i,1,Floor[Length[data]/period]}],2*Pi];
 
  (* convert t1 coefficients to actual x coordinates *)
  convert[x_] = (-2+period+2*x)/2/period;

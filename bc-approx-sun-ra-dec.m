@@ -36,7 +36,56 @@ pz = Table[x[[5]],{x,p1}];
 pdist = Sqrt[px^2+py^2+pz^2];
 pang = ArcSin[pz/pdist];
 
-f0 = Interpolation[pdist]
+f0 = Interpolation[px]
+f1[x_] = calmfourier[px][x]
+Plot[{f1[x],f0[x]},{x,1,Length[px]}]
+showit
+Plot[{f1[x]-f0[x]},{x,1,Length[px]}]
+showit
+r1 = Table[f1[x]-px[[x]],{x,1,Length[px]}];
+
+f2[x_] = calmfourier[r1][x]
+Plot[{f1[x]-f0[x],f2[x]},{x,1,Length[px]}]
+showit
+Plot[{f1[x]-f0[x]-f2[x]},{x,1,Length[px]}]
+showit
+r2 = Table[f1[x]-px[[x]]-f2[x],{x,1,Length[px]}];
+
+f3[x_] = calmfourier[r2][x]
+Plot[{f1[x]-f0[x]-f2[x],f3[x]},{x,1,Length[px]}]
+showit
+Plot[{f1[x]-f0[x]-f2[x]-f3[x]},{x,1,Length[px]}]
+showit
+r3 = Table[f1[x]-px[[x]]-f2[x]-f3[x],{x,1,Length[px]}];
+
+f4[x_] = calmfourier[r3][x]
+Plot[{f1[x]-f0[x]-f2[x]-f3[x],f4[x]},{x,1,Length[px]}]
+showit
+Plot[{f1[x]-f0[x]-f2[x]-f3[x]-f4[x]},{x,1,Length[px]}]
+showit
+r4 = Table[f1[x]-px[[x]]-f2[x]-f3[x]-f4[x],{x,1,Length[px]}];
+
+r5 = superleft[px,2];
+ListPlot[r5]
+showit
+g1[x_] = calmfourier[r5][x]
+
+r6 = Table[g1[x],{x,1,Length[pdist]}];
+ListPlot[r5-r6]
+showit
+
+r7 = r5-r6;
+
+
+
+
+
+
+
+
+
+
+
 
 fourcoff[a_,b_,c_,d_] = Function[x,a + b*Cos[c*x+d]];
 
