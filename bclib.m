@@ -103,7 +103,7 @@ sample[f_,a_,b_,n_] := Table[{x,f[x]},{x,a,b,(b-a)/(n-1)}]
 (* Given data, return a 'meta-Fourier' function matching it *)
 
 hyperfourier[data_] := Module[
- {f0, period, t1, t2, sampsize, phases, freqs, convert},
+ {f0, period, t1, t2, sampsize, phases, freqs, convert, mean, amp, freq, phase},
 
  (* TODO: let sampsize be a parameter *)
  sampsize = 1024;
@@ -145,7 +145,7 @@ hyperfourier[data_] := Module[
 (* similar to hyperfourier, but keeps frequence constant *)
 
 calmfourier[data_] := Module[
- {f0, period, t1, t2, sampsize, phases, freqs, convert},
+ {f0, period, t1, t2, sampsize, phases, freqs, convert, mean, amp, freq, phase},
 
  (* TODO: let sampsize be a parameter *)
  sampsize = 1024;

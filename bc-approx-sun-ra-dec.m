@@ -36,6 +36,19 @@ pz = Table[x[[5]],{x,p1}];
 pdist = Sqrt[px^2+py^2+pz^2];
 pang = ArcSin[pz/pdist];
 
+f0 = Interpolation[pdist]
+
+fourcoff[a_,b_,c_,d_] = Function[x,a + b*Cos[c*x+d]];
+
+f[x_] = FullSimplify[fourcoff[a1,a2,a3,a4][x] + fourcoff[b1,b2,b3,b4][x]*
+Cos[fourcoff[c1,c2,c3,c4][x] + fourcoff[d1,d2,d3,d4][x]], Reals]
+
+l = {a1,a2,a3,a4,b1,b2,b3,b4,c1,c2,c3,c4,d1,d2,d3,d4}
+
+g[x_] = f[x] /. FindFit[pdist, f[x], l, x]
+
+Plot[{g[x],f0[x]},{x,1,Length[pdist]}]
+
 (* this time, only change mean + amp, not phase/etc *)
 
 f0 = Interpolation[pdist]
