@@ -118,7 +118,7 @@ hyperfourier[data_] := Module[
  t1 = Table[Transpose[sample[f0,period*(n-1)+1, period*n+1, sampsize]][[2]], 
  {n,1,Floor[Length[data]/period]}];
 
- (* obtain the fourier paramaters for each chunk *)
+ (* obtain the fourier parameters for each chunk *)
  t2 = Transpose[Table[superfourier[i,1],{i,t1}]];
 
  (* determine frequencies + phases by applying corrections *)
@@ -141,4 +141,51 @@ hyperfourier[data_] := Module[
  (* and return the function *)
  Function[x, mean[x] + amp[x]*Cos[x*freq[x] + phase[x]]]
 ]
+
+(* similar to hyperfourier, but keeps frequence constant *)
+
+calmfourier[data_] := Module[
+ {f0, period, t1, t2, sampsize, phases, freqs, convert},
+
+ (* TODO: let sampsize be a parameter *)
+ sampsize = 1024;
+
+ (* interpolate the function *)
+ f0 = Interpolation[data];
+
+ (* find the data's primary period *)
+ period = Abs[2*Pi/superfourier[data,1][[3]]];
+
+ (* resample the data to apply Fourier *)
+ t1 = Table[Transpose[sample[f0,period*(n-1)+1, period*n+1, sampsize]][[2]], 
+ {n,1,Floor[Length[data]/period]}];
+
+ (* obtain the best fit parameters for each chunk *)
+ t2 = Transpose[Table[{a,b,2*Pi/(sampsize-1),c} /. 
+ FindFit[t, a+b*Cos[2*Pi*(x-1)/(sampsize-1)+c], {a,b,c}, x],
+ {t,t1}
+]];
+
+ (* determine frequencies + phases by applying corrections *)
+ freqs = t2[[3]]*(sampsize-1)/period;
+
+ (* TODO: improve phase calculations here; subtract off line? *)
+ phases = Mod[Table[t2[[4,i]]+t2[[3,i]]/period*
+ (1 + (-1 + period) sampsize + i (period - period sampsize)),
+ {i,1,Floor[Length[pdist]/period]}],2*Pi];
+
+ (* convert t1 coefficients to actual x coordinates *)
+ convert[x_] = (-2+period+2*x)/2/period;
+
+ (* now, Fourier estimate mean, amplitude, frequencies and phases *)
+ mean[x_] = superfour[t2[[1]],1][convert[x]];
+ amp[x_] = superfour[t2[[2]],1][convert[x]];
+ freq[x_] = superfour[freqs,1][convert[x]];
+ phase[x_] = superfour[phases,1][convert[x]];
+
+ (* and return the function *)
+ Function[x, mean[x] + amp[x]*Cos[x*freq[x] + phase[x]]]
+]
+
+
 
