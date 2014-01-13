@@ -36,6 +36,47 @@ pz = Table[x[[5]],{x,p1}];
 pdist = Sqrt[px^2+py^2+pz^2];
 pang = ArcSin[pz/pdist];
 
+(* this time, only change mean + amp, not phase/etc *)
+
+f0 = Interpolation[pdist]
+
+coeff = superfourier[pdist,1];
+period = Abs[2*Pi/coeff[[3]]];
+phase = coeff[[4]];
+
+means = Table[NIntegrate[f0[x],{x,period*(n-1)+1, period*n+1}],
+{n,1,Floor[Length[pdist]/period]}]/period
+
+amps = Sqrt[Table[NIntegrate[(f0[x]-means[[n]])^2,
+ {x,period*(n-1)+1, period*n+1}],
+{n,1,Floor[Length[pdist]/period]}]/(period/2)]
+
+convert[x_] = (-2+period+2*x)/2/period;
+
+mean[x_] = superfour[means,1][convert[x]];
+amp[x_] = superfour[amps,1][convert[x]];
+
+f[x_] = mean[x] + amp[x]*Cos[-2*Pi/period*x + phase];
+
+r1 = Table[pdist[[i]]-f[i],{i,1,Length[pdist]}];
+
+
+
+ListPlot[r1]
+
+g[x_] = calmfourier[r1][x]
+
+r2 = Table[pdist[[i]]-f[i]-g[i],{i,1,Length[pdist]}];
+
+h[x_] = calmfourier[r2][x]
+
+r3 = Table[pdist[[i]]-f[i]-g[i]-h[i],{i,1,Length[pdist]}];
+
+j[x_] = calmfourier[r3][x]
+
+r4 = Table[pdist[[i]]-f[i]-g[i]-h[i]-j[i],{i,1,Length[pdist]}];
+
+
 (* interpolate the function *)
 
 f0 = Interpolation[pdist];
