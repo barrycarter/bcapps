@@ -1,3 +1,39 @@
+(* hourly average temps, in Farenheit *)
+
+<</home/barrycarter/BCGIT/db/abq-hourly-avg.txt
+
+(* I know this is one period of data, so ... *)
+
+fit[x_] = a+b*Cos[2*Pi*(x-1)/Length[data] +d]
+f[x_] = fit[x] /. FindFit[data, fit[x], {a,b,d}, x]
+
+(* residuals, ie, daily temperature variance *)
+
+r1 = Table[data[[i]]-f[i],{i,1,Length[data]}]
+ListPlot[r1,PlotJoined->True]
+
+r7 = superleft[r1,1]
+
+g5[x_] = hyperfourier[r7][x]
+g6[x_] = calmfourier[r7][x]
+
+
+r6 = Table[r7[[i]]-g5[i], {i,1, Length[data]}]
+r8 = Table[r7[[i]]-g6[i], {i,1, Length[data]}]
+
+g[x_] = hyperfourier[r1][x]
+g2[x_] = calmfourier[r1][x]
+
+r2 = Table[data[[i]]-f[i]-g[i], {i,1,Length[data]}]
+r3 = Table[data[[i]]-f[i]-g2[i], {i,1,Length[data]}]
+
+g3[x_] = calmfourier[r3][x]
+g4[x_] = hyperfourier[r3][x]
+
+r4 = Table[data[[i]]-f[i]-g2[i]-g3[i], {i,1,Length[data]}]
+r5 = Table[data[[i]]-f[i]-g2[i]-g4[i], {i,1,Length[data]}]
+
+
 f1[x_] := Abs[cft[pdist-Mean[pdist],x]];
 f2[x_] := fakederv[f1,x,0.001];
 findroot2[f2,11+.002,12,.0001]
@@ -491,20 +527,22 @@ f1 = Abs[Fourier[t1]]
 (* hourly data averages *)
 
 <<"!bzcat /home/barrycarter/BCGIT/db/abqhourly.m.bz2"
-data = Select[Table[x[[5]],{x,data}], # > -9999&];
-f1[x_] = hyperfourier[data][x]
-
-Plot[f1[x],{x,1,Length[data]}]
-
-f[x_] = hyperfourier[superleft[data,1]][x]
-f[x_] = calmfourier[superleft[data,1]][x]
-
-
-
-
 
 data2 = Gather[data, (#1[[2]] == #2[[2]] && #1[[3]] == #2[[3]] &&
 #1[[4]] == #2[[4]]) &]
+
+
+(* below messes up hourly data *)
+data = Select[Table[x[[5]],{x,data}], # > -9999&];
+
+f0[x_] = Interpolation[data]
+f1[x_] = hyperfourier[data][x]
+f2[x_] = calmfourier[data][x]
+
+Plot[f1[x],{x,1,Length[data]}]
+
+f3[x_] = hyperfourier[superleft[data,1]][x]
+f4[x_] = calmfourier[superleft[data,1]][x]
 
 (* another shot at polar transforms *)
 
