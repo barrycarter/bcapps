@@ -1,1 +1,4 @@
 The null db is literally an empty file.
+
+I've symlinked some other DBs, but not adding them to git to save space.
+

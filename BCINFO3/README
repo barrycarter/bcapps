@@ -266,3 +266,7 @@ comment, or even when comment is approved)
 
 curl -O http://openlayers.org/download/OpenLayers-2.13.1.tar.gz
 (then tar xvfz etc)
+
+%% TODO: make these startup procs start automatically (manual for now)
+
+mount -t tmpfs none /mnt/ -o size=3072m
