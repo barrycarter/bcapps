@@ -24,16 +24,21 @@ for $i (sort(glob("*"))) {
 
   # TODO: in theory, could group all files for one db together
   # copy to new version, run queries, move back safely
-  system("cp /sites/DB/$db.db /sites/DB/$db.db.new; sqlite3 /sites/DB/$db.db.new < $i");
+
+  # /var/tmp/querys is now on RAMDISK, so copying db locally to avoid
+  # disk throttling
+
+  system("cp /sites/DB/$db.db $db.db.new; sqlite3 $db.db.new < $i");
 
   # experimentally, write data to MySQL db too
 #  system("bc-sqlite3dump2mysql.pl < $i | mysql shared");
 
   if ($globopts{append}) {
-    system("sqlite3 /sites/DB/$db.db.new < $globopts{append}");
+    system("sqlite3 $db.db.new < $globopts{append}");
   }
 
-  system("mv /sites/DB/$db.db /sites/DB/$db.db.old; mv /sites/DB/$db.db.new /sites/DB/$db.db");
+  # mv cross sytem boundaries is not instant, so must do it this way
+  system("cp $db.db.new /sites/DB/; mv /sites/DB/$db.db /sites/DB/$db.db.old; mv /sites/DB/$db.db.new /sites/DB/$db.db");
 
   # TODO: error check
   # move file to "DONE"

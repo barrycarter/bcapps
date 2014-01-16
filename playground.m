@@ -2,6 +2,27 @@
 
 <</home/barrycarter/BCGIT/db/abq-hourly-avg.txt
 
+(* our extrema occur near 0000 GMT, which creates issues, so... *)
+
+data = RotateLeft[data,6];
+
+daily = Partition[data,24];
+
+(* fit for a given day *)
+
+fit[x_] = a+b*Cos[2*Pi*(x-1)/24 +d]
+f[data_] := {a,b,d} /. FindFit[data, fit[x], {{a,Mean[data]},b,d}, x]
+
+t1 = Transpose[Table[f[data],{data,daily}]]
+
+avg = t1[[1]]
+amp = t1[[2]]
+shift = t1[[3]]
+
+
+
+
+
 (* I know this is one period of data, so ... *)
 
 fit[x_] = a+b*Cos[2*Pi*(x-1)/Length[data] +d]

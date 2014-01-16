@@ -49,7 +49,7 @@ yum -y install mysql mysql-server lighttpd-fastcgi fcgi libxml2 libxml2-devel
 : NOTE: readline does not work well wo ncurses
 yum -y install nano graphviz qhull zip strace xz ncurses ncurses-devel
 yum -y install readline readline-devel nagios-plugins 'nagios-plugins-*'
-yum -y install perl-Perl-Critic "perl-ExtUtils-*"
+yum -y install perl-Perl-Critic "perl-ExtUtils-*" inotify-tools
 
 % Perl modules (excluding those available via yum)
 
@@ -269,4 +269,5 @@ curl -O http://openlayers.org/download/OpenLayers-2.13.1.tar.gz
 
 %% TODO: make these startup procs start automatically (manual for now)
 
-mount -t tmpfs none /mnt/ -o size=3072m
+mount -t tmpfs none /mnt/ramdisk -o size=4096m
+
