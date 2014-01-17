@@ -36,6 +36,20 @@ pz = Table[x[[5]],{x,p1}];
 pdist = Sqrt[px^2+py^2+pz^2];
 pang = ArcSin[pz/pdist];
 
+period = Abs[2*Pi/superfourier[pdist,1][[3]]]
+f0 = Interpolation[pdist]
+list = Transpose[sample[f0, period+1, 2*period+1,1024]][[2]];
+a0 = FourierDCT[list,2];
+a2 = Take[Table[{i,a0[[i]]}, {i, Reverse[Ordering[Abs[a0]]]}],4];
+a3 = Table[0,{i,Length[list]}];
+Table[a3[[i[[1]]]] = i[[2]], {i,a2}];
+a4 = FourierDCT[a3,3];
+ListPlot[{a4-list},PlotRange->All]
+showit
+Total[Abs[a4-list]]/Length[list]
+
+
+
 f21[x_] = 7*Cos[3*x] + Cos[4*x]
 
 f20[n_] = Integrate[Cos[n*x]*(f21[x]),{x,0,2*Pi}]

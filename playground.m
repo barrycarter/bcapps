@@ -2,6 +2,24 @@
 
 <</home/barrycarter/BCGIT/db/abq-hourly-avg.txt
 
+a0 = FourierDCT[data]
+ListPlot[a0,PlotRange->All,PlotJoined->True]
+
+a1 = FourierDCT[PadRight[Take[FourierDCT[data],1000],Length[data]],3]
+
+a2 = Take[Table[{i,a0[[i]]}, {i, Reverse[Ordering[Abs[a0]]]}],20]
+
+a3 = Table[0,{i,Length[data]}]
+
+(* should probably be a for loop *)
+Table[a3[[i[[1]]]] = i[[2]], {i,a2}]
+
+ListPlot[{FourierDCT[a3,3],data}]
+
+
+ListPlot[{a1,data},PlotJoined->True]
+
+
 (* our extrema occur near 0000 GMT, which creates issues, so... *)
 
 data = RotateLeft[data,6];
@@ -24,12 +42,24 @@ a1 = FourierDCT[PadRight[Take[FourierDCT[amp],5],366],3]
 a2 = FourierDST[PadRight[Take[FourierDST[amp],5],366],3]
 ListPlot[{a1,a2,amp}]
 
-
-
 avg = t1[[1]]
 favg[x_] = Interpolation[avg][x]
 amp = t1[[2]]
 shift = Mod[t1[[3]],24]
+
+a0 = FourierDCT[avg,2]
+a2 = Take[Table[{i,a0[[i]]}, {i, Reverse[Ordering[Abs[a0]]]}],2]
+
+a3 = Table[0,{i,Length[avg]}] 
+ 
+(* should probably be a for loop *) 
+Table[a3[[i[[1]]]] = i[[2]], {i,a2}] 
+
+a4 = FourierDCT[a3,3]
+ListPlot[{a4-avg}]
+showit
+Total[Abs[a4-avg]]/Length[avg]
+
 
 f21 = Fourier[avg, FourierParameters -> {-1,1}]
 f20 = Take[f21,366/2]
@@ -318,12 +348,60 @@ unrotz[{x_,y_,z_}] = rotz[rotz[rotz[{x,y,z}]]]
 sph2xyz[{th_,ph_}] = {Cos[ph]*Cos[th], Cos[ph]*Sin[th], Sin[ph]}
 xyz2sph[{x_,y_,z_}] = {ArcTan[x,y], ArcTan[Sqrt[1-z^2],z]}
 (* not 100% accurate below but testing *)
-xyz2sph[{x_,y_,z_}] = {ArcTan[y/x], ArcTan[z/Sqrt[1-z^2]]}
+xyz2sph[{x_,y_,z_}] = {ArcTan[x,y], ArcTan[Sqrt[1-z^2],z]}
 
 (* given a latitude, longitude (theta/phi), I want to add w (omega) in
 a given direction *)
 
 xyz2sph[unroty[sph2xyz[xyz2sph[roty[sph2xyz[{th,ph}]]]+{w,0}]]]
+xyz2sph[unrotz[sph2xyz[xyz2sph[rotz[sph2xyz[{th,ph}]]]+{w,0}]]]
+xyz2sph[unrotx[sph2xyz[xyz2sph[rotx[sph2xyz[{th,ph}]]]+{w,0}]]]
+
+FullSimplify[xyz2sph[unrotz[sph2xyz[xyz2sph[rotz[sph2xyz[{th,ph}]]]+{w,0}]]],
+ {Member[ph,Reals], Member[th,Reals], -Pi/2 < ph, ph < Pi/2, -Pi < w, w < Pi,
+  -Pi < th +w , th +w < Pi
+}]
+
+FullSimplify[xyz2sph[unroty[sph2xyz[xyz2sph[roty[sph2xyz[{th,ph}]]]+{w,0}]]],
+ {Member[ph,Reals], Member[th,Reals], -Pi/2 < ph, ph < Pi/2, -Pi < w, w < Pi,
+  -Pi < th +w , th +w < Pi
+}]
+
+FullSimplify[xyz2sph[unrotx[sph2xyz[xyz2sph[rotx[sph2xyz[{th,ph}]]]+{w,0}]]],
+ {Member[ph,Reals], Member[th,Reals], -Pi/2 < ph, ph < Pi/2, -Pi < w, w < Pi,
+  -Pi < th +w , th +w < Pi
+}]
+
+(* around z axis first [testing] *)
+rot[{th_,ph_},w_] = 
+ xyz2sph[unrotz[sph2xyz[xyz2sph[rotz[sph2xyz[{th,ph}]]]+{w,0}]]]-{th,ph}
+
+rotx[{th_,ph_},w_] = 
+ xyz2sph[unrotx[sph2xyz[xyz2sph[rotx[sph2xyz[{th,ph}]]]+{w,0}]]]-{th,ph}
+
+roty[{th_,ph_},w_] = 
+ xyz2sph[unroty[sph2xyz[xyz2sph[roty[sph2xyz[{th,ph}]]]+{w,0}]]]-{th,ph}
+
+VectorPlot[roty[{th,ph},10*Degree], {th,-Pi,Pi}, {ph,-Pi/2,Pi/2}]
+
+StreamPlot[roty[{th,ph},1*Degree], {th,-Pi,Pi}, {ph,-Pi/2,Pi/2}]
+
+rotp[x_,y_,w_] = {Cos[w + ArcTan[x, y]], Sin[w + ArcTan[x, y]]}*Norm[{x,y}]
+
+StreamPlot[rotp[x,y,1*Degree]-{x,y}, {x,-Pi,Pi}, {y,-Pi/2,Pi/2},
+AspectRatio -> Automatic]
+
+StreamPlot[roty[{th,ph},1*Degree], {th,-Pi,Pi}, {ph,-Pi/2,Pi/2},
+AspectRatio -> Automatic]
+
+StreamPlot[rotp[th,ph,1*Degree]-{th,ph}-roty[{th,ph},1*Degree],
+{th,-Pi,Pi}, {ph,-Pi/2,Pi/2}, AspectRatio -> Automatic]
+
+StreamPlot[{rotp[th,ph,1*Degree]-{th,ph}, roty[{th,ph},1*Degree]},
+{th,-Pi/2,Pi/2}, {ph,-Pi/4,Pi/4}, AspectRatio -> Automatic]
+
+
+
 
 thc = xyz2sph[unroty[sph2xyz[xyz2sph[roty[sph2xyz[{th,ph}]]]+{w,0}]]][[1]]
 phc = xyz2sph[unroty[sph2xyz[xyz2sph[roty[sph2xyz[{th,ph}]]]+{w,0}]]][[2]]
