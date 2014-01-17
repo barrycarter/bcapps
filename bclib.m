@@ -187,5 +187,19 @@ calmfourier[data_] := Module[
  Function[x, mean[x] + amp[x]*Cos[x*freq[x] + phase[x]]]
 ]
 
+(* generalized inverse discrete fourier transform, per
+http://reference.wolfram.com/mathematica/tutorial/FourierTransforms.html; unlike InverseFourier, this works symbolically too
+*)
 
+gidft[list_, r_, a_:0, b_:1] := 
+Sum[list[[s]]*Exp[-2*Pi*I*b*(r-1)*(s-1)/Length[list]], {s,1,Length[list]}]/
+Length[list]^((1+a)/2)
+
+(* Generalized discrete Fourier transform, per
+http://reference.wolfram.com/mathematica/tutorial/FourierTransforms.html
+*)
+
+gdft[list_, s_, a_:0, b_:1] :=
+Sum[list[[r]]*Exp[2*Pi*I*b*(r-1)*(s-1)/Length[list]], {r,1,Length[list]}]/
+Length[list]^((1-a)/2)
 

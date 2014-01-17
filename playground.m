@@ -10,14 +10,71 @@ daily = Partition[data,24];
 
 (* fit for a given day *)
 
-fit[x_] = a+b*Cos[2*Pi*(x-1)/24 +d]
-f[data_] := {a,b,d} /. FindFit[data, fit[x], {{a,Mean[data]},b,d}, x]
+fit[x_,n_] = a+b*Cos[2*Pi*(x+d)/n]
+f[data_] := {a,b,d} /. FindFit[data, fit[x,24], {{a,Mean[data]},b,d}, x]
 
 t1 = Transpose[Table[f[data],{data,daily}]]
 
+FourierDCT[PadRight[Take[FourierDCT[avg],10],366],3]
+FourierDST[PadRight[Take[FourierDST[avg],10],366],3]
+
+FourierDCT[PadRight[Take[FourierDCT[amp],6],366],3]
+
+a1 = FourierDCT[PadRight[Take[FourierDCT[amp],5],366],3]
+a2 = FourierDST[PadRight[Take[FourierDST[amp],5],366],3]
+ListPlot[{a1,a2,amp}]
+
+
+
 avg = t1[[1]]
+favg[x_] = Interpolation[avg][x]
 amp = t1[[2]]
-shift = t1[[3]]
+shift = Mod[t1[[3]],24]
+
+f21 = Fourier[avg, FourierParameters -> {-1,1}]
+f20 = Take[f21,366/2]
+
+f22[x_] = Total[Table[
+ 2*Abs[f20[[i]]]*Cos[2*Pi*(i-1)*x-Arg[f20[[i]]]], {i, 1, Length[f20]}]
+] - f20[[1]]
+
+Table[f22[(x-1)/365]-avg[[x]], {x,1,366}]
+
+Plot[{f22[x]-favg[x*365]},{x,0,1}]
+
+t7 = N[Transpose[sample[5*Cos[#] + 3*Cos[2*#] &,0,2*Pi,1000]][[2]]]
+
+Abs[Take[Fourier[t7, FourierParameters -> {-1,1}], 20]]
+
+
+(* since all below are integral, can use direct Fourier analysis! *)
+
+f0[x_] = fit[x,366] /. FindFit[avg, fit[x,366], {a,b,d}, x]
+t3 = Table[avg[[i]]-f0[i],{i,1,366}];
+
+f1[x_] = fit[x,366/2] /. FindFit[t3, fit[x,366/2], {a,b,d}, x]
+t4 = Table[avg[[i]]-f0[i]-f1[i],{i,1,366}];
+
+f2[x_] = fit[x,366/3] /. FindFit[t4, fit[x,366/3], {a,b,d}, x]
+t5 = Table[avg[[i]]-f0[i]-f1[i]-f2[i],{i,1,366}];
+
+
+
+g[x_] = calmfourier[superleft[avg,1]][x];
+h[x_] = Interpolation[superleft[avg,1]][x]
+j[x_] = hyperfourier[superleft[avg,1]][x];
+
+Plot[{g[x],h[x],j[x]}, {x,1,366}]
+
+f2[x_] = 
+a+b*Cos[2*Pi*(x+d)/366] /. FindFit[avg, a+b*Cos[2*Pi*(x+d)/366], {a,b,d}, x]
+
+Plot[{f2[x],favg[x]}, {x,1,366}]
+
+t2 = Table[f2[x]-favg[x],{x,1,366}]
+
+
+
 
 
 

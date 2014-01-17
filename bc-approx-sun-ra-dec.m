@@ -1,4 +1,4 @@
-ODOD(* 
+(* 
 
 DO NOT "<<" this file; it's more of a cut-and-paste sort of thing
 
@@ -35,6 +35,12 @@ py = Table[x[[4]],{x,p1}];
 pz = Table[x[[5]],{x,p1}];
 pdist = Sqrt[px^2+py^2+pz^2];
 pang = ArcSin[pz/pdist];
+
+f21[x_] = 7*Cos[3*x] + Cos[4*x]
+
+f20[n_] = Integrate[Cos[n*x]*(f21[x]),{x,0,2*Pi}]
+
+Plot[f20[n],{n,0,6}]
 
 f0 = Interpolation[px]
 f1[x_] = calmfourier[px][x]

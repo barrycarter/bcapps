@@ -32,6 +32,7 @@ emacs
 # these processes must die if they run over 5m
 <kill>
 php-cgi
+/usr/local/bin/php-cgi
 /usr/local/bin/bc-echo.pl
 curl
 rm

@@ -226,8 +226,10 @@ rpm --nodeps -e sqlite
 
 % TODO: start rsyncing bcinfo3 logs as well
 
-% TODO: determine startup procedure
+%% TODO: make startup procedure automatic
 
+mount -t tmpfs none /mnt/ramdisk -o size=4096m
+mkdir /mnt/ramdisk/querys
 bc-gocomics-comments2.pl&
 bc-metar-db.pl&
 bc-get-radar.pl&
@@ -266,8 +268,4 @@ comment, or even when comment is approved)
 
 curl -O http://openlayers.org/download/OpenLayers-2.13.1.tar.gz
 (then tar xvfz etc)
-
-%% TODO: make these startup procs start automatically (manual for now)
-
-mount -t tmpfs none /mnt/ramdisk -o size=4096m
 
