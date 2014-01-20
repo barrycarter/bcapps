@@ -37,6 +37,13 @@ for $i (sort(glob("*"))) {
     system("sqlite3 $db.db.new < $globopts{append}");
   }
 
+  # integrity check
+  my($res) = system("sqlite3 $db.db.new 'pragma integrity_check'");
+  if ($res) {
+    warn "$db.db.new corrupt, ignoring";
+    next;
+  }
+
   # mv cross sytem boundaries is not instant, so must do it this way
   system("cp $db.db.new /sites/DB/; mv /sites/DB/$db.db /sites/DB/$db.db.old; mv /sites/DB/$db.db.new /sites/DB/$db.db");
 
