@@ -1,6 +1,8 @@
 # list of processes that MUST always be running, MAY run indefinitely,
 # and may NOT run forever; this is for bcinfo3
 
+# TODO: add time limits, not just hard kill after 300s
+
 # note: bc-query-gobbler is NOT a daemon, so need not always be running
 
 <must>

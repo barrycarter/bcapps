@@ -41,8 +41,12 @@ for $i (sort(glob("*"))) {
   my($res) = system("sqlite3 $db.db.new 'pragma integrity_check'");
   if ($res) {
     warn "$db.db.new corrupt, ignoring";
+    write_file("$db corrupt", "/home/barrycarter/ERR/bcinfo3.$db.err");
     next;
   }
+
+  # db not corrupt, so erase any previous errors
+  write_file("", "/home/barrycarter/ERR/bcinfo3.$db.err");
 
   # mv cross sytem boundaries is not instant, so must do it this way
   system("cp $db.db.new /sites/DB/; mv /sites/DB/$db.db /sites/DB/$db.db.old; mv /sites/DB/$db.db.new /sites/DB/$db.db");

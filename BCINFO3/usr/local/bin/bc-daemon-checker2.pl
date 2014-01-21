@@ -85,8 +85,9 @@ for $i (@procs) {
   $sec-=822;
 
   # any process permitted to run up to 5m
+  # bumped to 10m on 20 Jan 2014
   # TODO: specific limits for procs where 5m is wrong
-  if ($sec<=300) {next;}
+  if ($sec<=600) {next;}
 
   # if I'm allowed to kill this process, do so now
   if ($kill{$proc}) {
