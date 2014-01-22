@@ -27,7 +27,11 @@ system("/usr/bin/renice 19 -p $$");
 # <h>love was such an easy game to play</h>
 $yest = stardate(time()-86400);
 
-open(A,">/var/tmp/metar-db-queries.txt")||warn("Can't open file, $!");
+my($daten) = `date +%Y%m%d.%H%M%S.%N`;
+chomp($daten);
+my($qfile) = "/var/tmp/querys/$daten-metarnew-get-metar-db-$$";
+
+open(A,">$qfile")||warn("Can't open file, $!");
 
 # prevent stale stations from having current cached data + start
 # transaction + delete old data from main dbs, including data with bad
@@ -51,12 +55,11 @@ MARK
 ;
 close(A);
 
+# call query gobbler and respawn
+
+system("bc-query-gobbler.pl");
+
 #<h>TODO: work in a buoy-yah pun somehow</h>
-
-# run command + rsync
-# 30 Jan 2012: changed back to running on local machine, so copy/change/move
-
-system("cp /sites/DB/metarnew.db .; sqlite3 metarnew.db < /var/tmp/metar-db-queries.txt; mv /sites/DB/metarnew.db /sites/DB//metarnew.db.old; mv metarnew.db /sites/DB");
 
 # NOTE: could also run this as cron job (and maybe should?)
 in_you_endo();

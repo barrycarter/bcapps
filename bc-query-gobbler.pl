@@ -13,6 +13,9 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# this program is intended to avoid race conditions, so must only run once
+unless (mylock("bc-query-gobbler.pl","lock")) {exit(0);}
+
 dodie('chdir("/var/tmp/querys")');
 
 for $i (sort(glob("*"))) {
@@ -28,13 +31,13 @@ for $i (sort(glob("*"))) {
   # /var/tmp/querys is now on RAMDISK, so copying db locally to avoid
   # disk throttling
 
-  system("cp /sites/DB/$db.db $db.db.new; sqlite3 -n 19 $db.db.new < $i > $i.err");
+  system("cp /sites/DB/$db.db $db.db.new; sqlite3 -n 19 $db.db.new < $i 1> $db.out 2> $db.error");
 
   # experimentally, write data to MySQL db too
 #  system("bc-sqlite3dump2mysql.pl < $i | mysql shared");
 
   if ($globopts{append}) {
-    system("sqlite3 -n 19 $db.db.new < $globopts{append}");
+    system("nice -n 19 sqlite3 $db.db.new < $globopts{append}");
   }
 
   # integrity check

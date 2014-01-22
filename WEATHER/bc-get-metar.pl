@@ -57,7 +57,8 @@ for $i (@{$hlref}) {
   # reject positionless data (unless we can get it from %statinfo hash
   if ($i->{latitude}=~/^\s*$/ || $i->{longitude}=~/^\s*$/) {
     unless ($statinfo{$i->{station_id}}) {
-      warn("$i->{station_id}: no position data at all!");
+      # TODO: restore this warning!
+#      warn("$i->{station_id}: no position data at all!");
       next;
     }
 
