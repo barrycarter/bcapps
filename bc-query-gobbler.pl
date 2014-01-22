@@ -28,13 +28,13 @@ for $i (sort(glob("*"))) {
   # /var/tmp/querys is now on RAMDISK, so copying db locally to avoid
   # disk throttling
 
-  system("cp /sites/DB/$db.db $db.db.new; sqlite3 $db.db.new < $i");
+  system("cp /sites/DB/$db.db $db.db.new; sqlite3 -n 19 $db.db.new < $i > $i.err");
 
   # experimentally, write data to MySQL db too
 #  system("bc-sqlite3dump2mysql.pl < $i | mysql shared");
 
   if ($globopts{append}) {
-    system("sqlite3 $db.db.new < $globopts{append}");
+    system("sqlite3 -n 19 $db.db.new < $globopts{append}");
   }
 
   # integrity check

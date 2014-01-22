@@ -5,7 +5,8 @@
 
 # $scanner = "hp5590:libusb:002:006";
 # $scanner = "hp5590:libusb:001:003";
-$scanner = "hpaio:libusb:001:004";
+# $scanner = "hpaio:libusb:001:004";
+$scanner = "hp5590:libusb:001:004";
 my($date) = `date +%Y%m%d.%H%M%S.%N`;
 chomp($date);
 # system("sudo scanimage --mode Color -d $scanner --resolution 600 > $date.ppm");
