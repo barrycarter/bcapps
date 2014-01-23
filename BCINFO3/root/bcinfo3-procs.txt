@@ -13,6 +13,7 @@ xinetd
 crond
 /usr/local/bin/bc-get-all-weather.pl
 /usr/local/bin/bc-gocomics-comments2.pl
+/usr/local/bin/bc-metar-db.pl
 /usr/sbin/lighttpd
 /usr/local/bin/bc-get-radar.pl
 /usr/bin/mysqld_safe
@@ -25,7 +26,6 @@ crond
 screen
 SCREEN
 emacs
-/usr/local/bin/bc-metar-db.pl
 -bin/tcsh
 /sbin/udevd
 /usr/local/bin//bc-query-gobbler.pl

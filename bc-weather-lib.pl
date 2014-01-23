@@ -111,6 +111,7 @@ sub recent_weather {
       next;
     }
 
+    debug("GOOD LINE: $i");
     push(@hashes, {%hash});
   }
 

@@ -5,6 +5,7 @@
 
 require "/usr/local/lib/bclib.pl";
 require "/usr/local/lib/bc-weather-lib.pl";
+option_check(["nodaemon"]);
 
 # in correct dir
 dodie('chdir("/var/tmp")');
@@ -22,6 +23,10 @@ system("/usr/bin/renice 19 -p $$");
 	   hashlist2sqlite(\@sreports, "ship"),
 	   hashlist2sqlite(\@sreports, "ship_now")
 );
+
+debug(var_dump("reports",@reports));
+debug(hashlist2sqlite(\@reports, "metar"));
+die "TESTING";
 
 # the "stardate" 24 hours ago (so I can kill off old BUOY reports)
 # <h>love was such an easy game to play</h>
@@ -55,19 +60,20 @@ MARK
 ;
 close(A);
 
-# call query gobbler and respawn
-
-system("bc-query-gobbler.pl");
-
 #<h>TODO: work in a buoy-yah pun somehow</h>
 
 # NOTE: could also run this as cron job (and maybe should?)
 in_you_endo();
 
 unless ($globopts{nodaemon}) {
+  # call query gobbler and respawn
+  system("bc-query-gobbler.pl");
   sleep(60);
   exec($0);
+} else {
+  warn("In --nodaemon mode, not running bc-query-gobbler.pl");
 }
+
 
 =item schema
 
