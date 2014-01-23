@@ -26,7 +26,6 @@ system("/usr/bin/renice 19 -p $$");
 
 debug(var_dump("reports",@reports));
 debug(hashlist2sqlite(\@reports, "metar"));
-die "TESTING";
 
 # the "stardate" 24 hours ago (so I can kill off old BUOY reports)
 # <h>love was such an easy game to play</h>

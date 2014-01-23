@@ -64,7 +64,7 @@ for $i (sort(glob("*"))) {
   write_file("", "/home/barrycarter/ERR/bcinfo3.$db.err");
 
   # mv cross sytem boundaries is not instant, so must do it this way
-  $cmd = "cp $db.db.new /sites/DB/; mv /sites/DB/$db.db /sites/DB/$db.db.old; mv /sites/DB/$db.db.new /sites/DB/$db.db";
+  $cmd = "mv $db.db.new /sites/DB/; mv /sites/DB/$db.db /sites/DB/$db.db.old; mv /sites/DB/$db.db.new /sites/DB/$db.db";
   debug("RUNNING: $cmd");
   system($cmd);
 

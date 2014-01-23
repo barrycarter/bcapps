@@ -1318,7 +1318,7 @@ Solve[humid[t,d]==h, d]
 (* the two body problem? *)
 
 DSolve[{
- d2[t] == (x1[t]-x0[t])^2 + (y1[t]-y0[t])^2 + (z1[t]-z0[t])^2,
+ d2[t] == (x1[t]-x0[t])^3/2 + (y1[t]-y0[t])^3/2 + (z1[t]-z0[t])^3/2,
  D[x0[t], t,t] == (x1[t]-x0[t])/d2[t],
  D[y0[t], t,t] == (y1[t]-y0[t])/d2[t],
  D[z0[t], t,t] == (z1[t]-z0[t])/d2[t],

@@ -2270,6 +2270,7 @@ sub hashlist2sqlite {
       push(@keys, "$j");
       # strip newlines
       $hash{$j}=~s/\n//isg;
+      $hash{$j}=~s/\"/&quot;/isg;
       push(@vals, "\"$hash{$j}\"");
     }
 

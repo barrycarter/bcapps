@@ -83,7 +83,7 @@ sub recent_weather {
   my($options) = @_;
   my(@headers);
   my(@hashes);
-  my($res) = cache_command("curl http://weather.aero/dataserver_current/cache/metars.cache.csv.gz | gunzip | tail -n +6", "age=150");
+  my($res) = cache_command("curl http://weather.aero/dataserver1_4/cache/metars.cache.csv.gz | gunzip | tail -n +6", "age=150");
 
   # HACK: csv() does not handle ",," well
   while ($res=~s/,,/, ,/isg) {}
