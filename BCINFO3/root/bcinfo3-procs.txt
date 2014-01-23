@@ -32,6 +32,7 @@ emacs
 </may>
 
 # these processes must die if they run over 5m
+# sh is a dangerous choice here, but probably all perl subprocs
 <kill>
 php-cgi
 /usr/local/bin/php-cgi
@@ -40,4 +41,5 @@ curl
 rm
 find
 sqlite3
+sh
 </kill>

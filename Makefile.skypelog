@@ -4,4 +4,4 @@ imageOBJS=$(shell echo *.dbb | perl -nle 's/\.dbb/.dbb.txt/isg; print $_')
 all: $(imageOBJS)
 
 %.dbb.txt: %.dbb
-	skypelog $< > $@
+	/home/barrycarter/bin/skypelog $< > $@

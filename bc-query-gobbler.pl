@@ -31,7 +31,7 @@ for $i (sort(glob("*"))) {
   # /var/tmp/querys is now on RAMDISK, so copying db locally to avoid
   # disk throttling
 
-  system("cp /sites/DB/$db.db $db.db.new; sqlite3 -n 19 $db.db.new < $i 1> $db.out 2> $db.error");
+  system("cp /sites/DB/$db.db $db.db.new; nice -n 19 sqlite3 $db.db.new < $i 1> $db.out 2> $db.error");
 
   # experimentally, write data to MySQL db too
 #  system("bc-sqlite3dump2mysql.pl < $i | mysql shared");
