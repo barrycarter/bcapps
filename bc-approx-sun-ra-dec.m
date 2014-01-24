@@ -30,6 +30,25 @@ Despite this, it ultimately comes up w/ the right answers
 <<"/home/barrycarter/DATA/199-mini.txt"
 
 p1 = planet199;
+p2 = Table[{x[[2]],{x[[3]],x[[4]],x[[5]]}}, {x,p1}];
+f0 = Interpolation[p2]
+
+f1[x_] = Table[superfour[Transpose[Transpose[p2][[2]]][[i]],2][x],{i,1,3}]
+
+(* 1 -> p2[[1]], Length[p2] -> p2[[-1]] *)
+
+ftemp[t_] = (t-p2[[1,1]])/(p2[[-1,1]]-p2[[1,1]])*(Length[p2]-1)+1
+
+f2[x_] = f1[ftemp[x]]
+
+ParametricPlot3D[f2[t]-f0[t],{t,p2[[1,1]],p2[[-1,1]]}]
+ParametricPlot3D[f2[t]-f0[t],{t,p2[[1,1]],p2[[1,1]]+24}]
+
+
+
+ParametricPlot3D[f1[x],{x,1,Length[p2]}]
+
+
 px = Table[x[[3]],{x,p1}];
 py = Table[x[[4]],{x,p1}];
 pz = Table[x[[5]],{x,p1}];

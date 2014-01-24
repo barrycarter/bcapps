@@ -15,19 +15,19 @@ mercury:
    1.805852832680460E+07 -6.530526643790466E+07 -6.965277303166512E+06
    3.720566883318558E+01  1.543463942254890E+01 -2.152095747620236E+00
 
-(* TODO: below sets t0 globally, which is bad *)
+*)
 
+(* TODO: below sets t0 globally, which is bad *)
 NDSolve[{
  t0 = 0;
  (* below is km^3 per kg per s^2 *)
  g = 6.67384*10^-20;
  (* mass of Mercury (irrelevant) + sun, in kg *)
  mm = 328.5*10^21;
- ms = 1.9898*10^30;
+ ms = 1.98855*10^30*1.0014;
  pull = g*ms;
  merc[t0] == {1.805852832680460*10^07, -6.530526643790466*10^07, 
               -6.965277303166512*10^06},
- (* converting km/s to km/day *)
  merc'[t0] == {3.720566883318558*10^01, 1.543463942254890*10^01,
                -2.152095747620236*10^00},
  merc''[t] == -pull/Norm[merc[t]]^3*merc[t]
@@ -35,7 +35,9 @@ NDSolve[{
 orbit[t_] = merc[t] /. %[[1]]
 
 (* fx = from planet199, 26305 = start of 2014, as above (not quite)
-Plot[{orbit[t][[1]], fx[26305+t/3600]}, {t,0,86400*90}]
+Plot[{orbit[t*86400][[1]], f0[2456658.5+t][[1]]}, {t,0,365*4}]
+Plot[{orbit[t*86400][[2]], f0[2456658.5+t][[2]]}, {t,0,365*4}]
+Plot[{orbit[t*86400][[3]], f0[2456658.5+t][[3]]}, {t,0,365*4}]
 
 distance[x1_, y1_, x2_, y2_] = Sqrt[(x1-x2)^2 + (y1-y2)^2];
 f[x1_, y1_, x2_, y2_, m1_, m2_, g_] = g*m1*m2/distance[x1,y1,x2,y2]^2
