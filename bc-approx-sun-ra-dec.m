@@ -28,10 +28,17 @@ Despite this, it ultimately comes up w/ the right answers
 (* planet xyz position data, every 10th line only for now *)
 
 <<"/home/barrycarter/DATA/199-mini.txt"
-
 p1 = planet199;
 p2 = Table[{x[[2]],{x[[3]],x[[4]],x[[5]]}}, {x,p1}];
 f0 = Interpolation[p2]
+f3[t_] = 2*(t-p2[[1,1]])/(p2[[-1,1]]-p2[[1,1]])-1;
+
+f4[t_] = f0[f3[t]]
+
+
+
+
+
 
 f1[x_] = Table[superfour[Transpose[Transpose[p2][[2]]][[i]],2][x],{i,1,3}]
 
