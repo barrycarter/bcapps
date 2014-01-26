@@ -30,7 +30,64 @@ Despite this, it ultimately comes up w/ the right answers
 <<"/home/barrycarter/DATA/199-mini.txt"
 p1 = planet199;
 p2 = Table[{x[[2]],{x[[3]],x[[4]],x[[5]]}}, {x,p1}];
-f0 = Interpolation[p2]
+
+f7[n_] = (n-1)/(Length[p2])*2 - 1 + 1/Length[p2] 
+
+(* Compute the nth Chebyshev coefficient for a given list *)
+
+chebycoeff[data_, n_] := chebycoeff[data,n] = Module[{f1,t},
+ (* convert list to -1, 1 interval *)
+ f1[x_] =  (x-1)/(Length[data])*2 - 1 + 1/Length[data];
+ (* return sum over data *)
+ t = Sum[ChebyshevT[n,f1[x]]*data[[x]]/Sqrt[1-f1[x]^2],{x,1,Length[data]}];
+ (* adjust sum by dx *)
+ 2*t/Length[data]
+]
+
+chebycoeff[data_, n_] := chebycoeff[data,n] = Module[{f1,t},
+ (* convert list to -1, 1 interval *)
+ f1[x_] =  (x-1)/(Length[data])*2 - 1 + 1/Length[data];
+ (* return sum over data *)
+ t = Sum[ChebyshevT[n,f1[x]]*data[[x]],{x,1,Length[data]}];
+ (* adjust sum by dx *)
+ 2*t/Length[data]
+]
+
+t2 = Table[chebycoeff[xs,n],{n,0,44}]
+Sum[t2[[i]]*ChebyshevT[i-1,x],{i,1,Length[t2]}]
+Plot[%,{x,-1,1}]
+showit
+
+
+xs = Table[data[[2,1]],{data,p2}]
+
+t2 = Table[chebycoeff[xs,n],{n,0,40}]
+
+
+
+f7[x]]*p2[[x,2,1]]/Sqrt[1-x^2],
+{x,1,Length[p2]}], {n,0,20}]
+
+
+
+
+
+
+t = Table[Sum[
+ ChebyshevT[n,f7[x]]*p2[[x,2,1]]/Sqrt[1-x^2],
+{x,1,Length[p2]}], {n,0,20}]
+
+f0[x_] = Interpolation[p2][x]
+
+f5[t_] = (t+1)*(p2[[-1,1]]-p2[[1,1]])/2 + p2[[1,1]]
+f6[t_] := Flatten[Take[f0[f5[t]],1],1]
+
+Plot[f6[t],{t,-1,1}]
+
+Integrate[ChebyshevT[2,x]*f6[x],{x,-1,1}]
+
+
+
 f3[t_] = 2*(t-p2[[1,1]])/(p2[[-1,1]]-p2[[1,1]])-1;
 
 f4[t_] = f0[f3[t]]

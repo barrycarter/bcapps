@@ -1,6 +1,9 @@
 This directory contains "important" /tmp files that I tend to use often:
 
 stations.txt: tab separated list of weather stations to populate the
-stations table in geonames.db
+stations table in metarnew.db
 
+stations-for-metarnew.txt.bz2: bzip2 compressed INSERT statement for
+older version of metarnew.db that I still hvae hanging around (but
+need to get rid of )
 

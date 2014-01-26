@@ -230,7 +230,9 @@ rpm --nodeps -e sqlite
 
 mount -t tmpfs none /mnt/ramdisk -o size=4096m
 mkdir /mnt/ramdisk/querys
-mkdir /mnt/ramdisk/querys/DONE/
+mkdir /var/tmp/DONE
+: this keeps finished queryfiles out of memory
+ln -s /var/tmp/DONE /mnt/ramdisk/querys/
 bc-gocomics-comments2.pl&
 bc-metar-db.pl&
 bc-get-radar.pl&

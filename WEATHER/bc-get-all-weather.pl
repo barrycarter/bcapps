@@ -9,7 +9,7 @@ require "/usr/local/lib/bclib.pl";
 for $i ("madis","buoy","guidance2","metar","ship", "mesonet") {
   debug("RUNNING: bc-get-$i.pl");
   system("bc-get-$i.pl");
-  system("bc-query-gobbler.pl --append=/usr/local/etc/madis.sql");
+  system("bc-query-gobbler.pl madis --append=/usr/local/etc/madis.sql");
 }
 
 sleep(60);

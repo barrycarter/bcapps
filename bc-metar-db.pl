@@ -66,7 +66,7 @@ in_you_endo();
 
 unless ($globopts{nodaemon}) {
   # call query gobbler and respawn
-  system("bc-query-gobbler.pl");
+  system("bc-query-gobbler.pl metarnew");
   sleep(60);
   exec($0);
 } else {

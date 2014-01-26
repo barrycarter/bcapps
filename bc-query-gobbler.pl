@@ -3,7 +3,8 @@
 # To prevent race conditions, some of my programs will now write
 # queries to /var/tmp/queries with filename
 # "YYYYMMDD.HHMMSS.NNNNNNNNN-dbname-pid" where N* = time down to the
-# nanosecond; this trivial script processes those queries in time order
+# nanosecond; this trivial script processes those queries in time
+# order (for a given db, to avoid one db update delaying another)
 
 # --append: run commands in this file after each file
 
@@ -12,21 +13,18 @@
 # TODO: the "DONE" directory should be wiped regularly
 
 require "/usr/local/lib/bclib.pl";
+my($db)=shift||die("Usage: $0 name_of_db_without_.db");
 
 # this program is intended to avoid race conditions, so must only run once
-unless (mylock("bc-query-gobbler.pl","lock")) {exit(0);}
+unless (mylock("bc-query-gobbler-$db.pl","lock")) {exit(0);}
 
 dodie('chdir("/var/tmp/querys")');
 
-for $i (sort(glob("*"))) {
+for $i (sort(glob("*$db*"))) {
 
-  # ignore the DONE directory
-  if ($i eq "DONE") {next;}
+  unless ($i=~/^\d{8}\.\d{6}\.\d{9}\-$db/) {next;}
+  debug("PROCESSING: $i");
 
-  # ignore the out/err/new files I create
-  if ($i=~/(out|err|new)$/i) {next;}
-
-  debug("FILE: $i");
   # find db
   $i=~/^[\d\.]+\-([a-z]+)/||warn("BAD I: $i");
   my($db) = $1;
@@ -65,11 +63,10 @@ for $i (sort(glob("*"))) {
 
   # mv cross sytem boundaries is not instant, so must do it this way
   $cmd = "mv $db.db.new /sites/DB/; mv /sites/DB/$db.db /sites/DB/$db.db.old; mv /sites/DB/$db.db.new /sites/DB/$db.db";
-  debug("RUNNING: $cmd");
+debug("RUNNING: $cmd");
   system($cmd);
 
   # TODO: error check
   # move file to "DONE"
   system("mv $i DONE");
 }
-
