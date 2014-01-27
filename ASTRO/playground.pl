@@ -4,6 +4,51 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# chebyshev
+
+open(A,"bzcat /home/barrycarter/BCGIT/ASTRO/ascp1950.430.bz2|");
+
+while (<A>) {
+  # strip leading spaces and split into fields
+  s/^\s+//isg;
+  @fields = split(/\s+/, $_);
+
+  # if this line has two integers, it's a section boundary
+  # which means next line will be date spec
+  if ($#fields==1 && $fields[0]=~/^\d+$/ && $fields[1]=~/^\d+$/) {
+    $bound = 1;
+
+    # TESTING ONLY: if we hit a boundary and have @coeffs, drop out of loop
+    if ($#coeffs>2) {last;}
+
+    next;
+  }
+
+  # if we just hit a boundary, get date spec
+  if ($bound) {
+    ($sdate, $edate) = @fields;
+    # convert from Fortran to Perl
+    $sdate=~s/^(.*?)D(.*)$/$1*10**$2/e;
+    $edate=~s/^(.*?)D(.*)$/$1*10**$2/e;
+    # indicate we are no longer at a boundary
+    $bound = 0;
+    # and store the third item in this row which is the first coefficient
+    @coeff = $fields[2];
+    next;
+  }
+
+  # debug("IGNORING: $sdate-$edate");
+  # this is 2011-01-01 00:54:00 GMT, close to earliest time I have data for
+  if ($edate <= 2455562.5375000000) {next;}
+
+  push(@coeffs, @fields);
+  debug("$sdate-$edate");
+}
+
+debug(@coeffs);
+
+die "TESTING";
+
 my($observer) = Astro::Nova::LnLatPosn->new("lng"=>0,"lat"=>35);
 
 
