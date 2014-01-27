@@ -24,28 +24,53 @@ while (<A>) {
     next;
   }
 
+  # convert from Fortran to Perl
+  for $i (@fields) {$i=~s/^(.*?)D(.*)$/$1*10**$2/e;}
+
   # if we just hit a boundary, get date spec
   if ($bound) {
     ($sdate, $edate) = @fields;
-    # convert from Fortran to Perl
-    $sdate=~s/^(.*?)D(.*)$/$1*10**$2/e;
-    $edate=~s/^(.*?)D(.*)$/$1*10**$2/e;
     # indicate we are no longer at a boundary
     $bound = 0;
     # and store the third item in this row which is the first coefficient
-    @coeff = $fields[2];
+    @coeffs = $fields[2];
     next;
   }
 
   # debug("IGNORING: $sdate-$edate");
   # this is 2011-01-01 00:54:00 GMT, close to earliest time I have data for
-  if ($edate <= 2455562.5375000000) {next;}
+  if ($sdate <= 2455562.5375000000) {next;}
 
+#  debug("THUNK: $_","FIELDS",@fields);
   push(@coeffs, @fields);
-  debug("$sdate-$edate");
 }
 
-debug(@coeffs);
+debug("$sdate-$edate");
+
+# the first chunk is: 2455568.5-2455600.5
+
+
+# the first 14 coeffs are the x coordinate of mercury for first 8 days
+for $i (0..13) {
+  push(@sum, sprintf("%f*ChebyshevT[$i,x]",$coeffs[$i]));
+}
+
+# the coeffs from 14-27 and 28-41 and y and z mercury coords first 8 days
+# below are coeffs for x position mercury next 8 days
+for $i (42..42+13) {
+  $j = $i-42;
+  push(@sum2, sprintf("%f*ChebyshevT[$j,x]",$coeffs[$i]));
+}
+
+print join("+\n", @sum),"\n";
+print "\n\n";
+print join("+\n", @sum2),"\n";
+
+die "TESTING";
+
+for $i (@coeffs) {
+  debug(sprintf("%f",$i));
+}
 
 die "TESTING";
 
