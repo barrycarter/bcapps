@@ -1,6 +1,142 @@
+(* merc orbit again *)
+
+f1[x_] = -58530838.674342*ChebyshevT[0,x]+
+1206238.210822*ChebyshevT[1,x]+
+999294.823938*ChebyshevT[2,x]+
+-28113.498473*ChebyshevT[3,x]+
+-272.722636*ChebyshevT[4,x]+
+56.342058*ChebyshevT[5,x]+
+-4.283451*ChebyshevT[6,x]+
+0.195789*ChebyshevT[7,x]+
+-0.004699*ChebyshevT[8,x]+
+-0.000192*ChebyshevT[9,x]+
+0.000033*ChebyshevT[10,x]+
+-0.000002*ChebyshevT[11,x]+
+0.000000*ChebyshevT[12,x]+
+-0.000000*ChebyshevT[13,x];
+
+
+f2[x_] = -49206237.094725*ChebyshevT[0,x]+
+7834232.176761*ChebyshevT[1,x]+
+659142.610233*ChebyshevT[2,x]+
+-27513.436970*ChebyshevT[3,x]+
+175.954246*ChebyshevT[4,x]+
+1.321026*ChebyshevT[5,x]+
+-0.961817*ChebyshevT[6,x]+
+0.055457*ChebyshevT[7,x]+
+-0.002719*ChebyshevT[8,x]+
+0.000097*ChebyshevT[9,x]+
+-0.000002*ChebyshevT[10,x]+
+-0.000000*ChebyshevT[11,x]+
+0.000000*ChebyshevT[12,x]+
+-0.000000*ChebyshevT[13,x];
+
+h[x_] := If[x<0,f1[x*2+1],f2[x*2-1]]
+
+mm[x_] = MiniMaxApproximation[h[x],{x,{-1,1},3,2}][[2,1]]
+
+mm[x_] = MiniMaxApproximation[h[x],{x,{-1,1},3,4}][[2,1]]
+
+
+
+
+
+tab = Table[c[i],{i,0,5}]
+poly[x_] = Sum[tab[[i]]*x^(i-1),{i,1,Length[tab]}]
+f = Integrate[(f1[x]-poly[x])^2,{x,-1,1}]
+
+Minimize[f,tab]
+
+f1[x]-poly[x]
+
+mmlist = EconomizedRationalApproximation[f1[x], {x, {-1, 1}, 1, 2}]
+
+
+
+
+
+
+(* TODO: below doesn't work for 0th coeff, actual value is half of result *)
+
+coeff1[n_] := 2/Pi*Integrate[f1[x]/Sqrt[1-x^2]*ChebyshevT[n,x],{x,-1,1}]
+coeff2[n_] := 2/Pi*Integrate[f2[x]/Sqrt[1-x^2]*ChebyshevT[n,x],{x,-1,1}]
+
+coeff3[n_] := 2/Pi*Integrate[h[x]/Sqrt[1-x^2]*ChebyshevT[n,x],{x,-1,1}]
+
+f3[x_] = Sum[coeff3[n]*ChebyshevT[n,x],{n,0,13}] - coeff3[0]/2
+
+(* now suppose I only had 5 coeffs each *)
+
+f1[x_] = -58530838.674342*ChebyshevT[0,x]+
+1206238.210822*ChebyshevT[1,x]+
+999294.823938*ChebyshevT[2,x]+
+-28113.498473*ChebyshevT[3,x]+
+-272.722636*ChebyshevT[4,x]+
+56.342058*ChebyshevT[5,x];
+
+f2[x_] = -49206237.094725*ChebyshevT[0,x]+
+7834232.176761*ChebyshevT[1,x]+
+659142.610233*ChebyshevT[2,x]+
+-27513.436970*ChebyshevT[3,x]+
+175.954246*ChebyshevT[4,x]+
+1.321026*ChebyshevT[5,x];
+
+h[x_] = If[x<0,f1[x*2+1],f2[x*2-1]]
+
+coeff3[n_] := 2/Pi*Integrate[h[x]/Sqrt[1-x^2]*ChebyshevT[n,x],{x,-1,1}]
+
+f3[x_] = Sum[coeff3[n]*ChebyshevT[n,x],{n,0,5}] - coeff3[0]/2
+
+
+
+
 (* hourly average temps, in Farenheit *)
 
 <</home/barrycarter/BCGIT/db/abq-hourly-avg.txt
+
+
+Plot[ChebyshevT[5,x],{x,-1,1}]
+
+(* convert -1,0 interval to -1,1 *)
+
+f[x_] = 2*x+1
+
+(* same for 0,1 to -1,1 *)
+
+g[x_] = 2*x-1
+
+Plot[ChebyshevT[5,f[x]],{x,-1,0}]
+Plot[ChebyshevT[5,g[x]],{x,0,1}]
+
+f[n_]:=f[n]=Integrate[ChebyshevT[5,2*x]/Sqrt[1-x^2]*ChebyshevT[n,x],
+ {x,-1/2,1/2}]
+
+
+
+Sum[chebycoeff[data,n]*ChebyshevT[n,x],{n,1,300}]
+
+f[x_] = Sin[Pi*x-1.04];
+
+tab = Table[f[x],{x,-1,1,.001}];
+
+cheb[n_] := 2/Pi*NIntegrate[f[x]*ChebyshevT[n,x]/Sqrt[1-x^2],{x,-1,1}]
+
+g[x_] = (x-1)/Length[tab]*2 - 1 + 1/Length[tab]
+
+cheb2[n_] := 2/Length[tab]*2/Pi*
+ Sum[tab[[i]]/Sqrt[1-g[i]^2]*ChebyshevT[n,g[i]], {i, 1, Length[tab]}]
+
+cheb2g[x_] = Sum[cheb2[n]*ChebyshevT[n,x],{n,0,10}];
+chebg[x_] = Sum[cheb[n]*ChebyshevT[n,x],{n,0,10}];
+
+Plot[{f[x],chebg[x],cheb2g[x]},{x,-1,1}]
+
+
+Table[{cheb[n],cheb2[n]},{n,0,10}]
+
+tab2 = Table[{g[x],tab[[x]]},{x,1,Length[tab]}]
+
+tab2 = Table[{g[x],tab[[x]]},{x,1,Length[tab]}]
 
 f3[n_] := 2/Pi*NIntegrate[Sin[x]*ChebyshevT[n,x]/Sqrt[1-x^2],{x,-1,1}]
 

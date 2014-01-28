@@ -1,3 +1,5 @@
+<< FunctionApproximations`
+
 (* work around "new and improved" graphics handling in Mathematica 7+ *)
 
 (* keep files around just in case I need them again *)

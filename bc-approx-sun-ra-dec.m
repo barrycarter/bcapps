@@ -31,26 +31,19 @@ Despite this, it ultimately comes up w/ the right answers
 p1 = planet199;
 p2 = Table[{x[[2]],{x[[3]],x[[4]],x[[5]]}}, {x,p1}];
 
+
+
 f7[n_] = (n-1)/(Length[p2])*2 - 1 + 1/Length[p2] 
 
 (* Compute the nth Chebyshev coefficient for a given list *)
 
-chebycoeff[data_, n_] := chebycoeff[data,n] = Module[{f1,t},
+chebycoeff[data_, n_] := chebycoeff[data,n] = Module[{f,t},
  (* convert list to -1, 1 interval *)
- f1[x_] =  (x-1)/(Length[data])*2 - 1 + 1/Length[data];
+ f[x_] =  (x-1)/(Length[data])*2 - 1 + 1/Length[data];
  (* return sum over data *)
- t = Sum[ChebyshevT[n,f1[x]]*data[[x]]/Sqrt[1-f1[x]^2],{x,1,Length[data]}];
+ t = Sum[ChebyshevT[n,f[x]]*data[[x]]/Sqrt[1-f[x]^2],{x,1,Length[data]}];
  (* adjust sum by dx *)
- 2/Pi*2*t/Length[data]
-]
-
-chebycoeff[data_, n_] := chebycoeff[data,n] = Module[{f1,t},
- (* convert list to -1, 1 interval *)
- f1[x_] =  (x-1)/(Length[data])*2 - 1 + 1/Length[data];
- (* return sum over data *)
- t = Sum[ChebyshevT[n,f1[x]]*data[[x]],{x,1,Length[data]}];
- (* adjust sum by dx *)
- 2*t/Length[data]
+ 2/Pi*2/Length[data]*t
 ]
 
 t2 = Table[chebycoeff[xs,n],{n,0,44}]
@@ -62,6 +55,8 @@ showit
 xs = Table[data[[2,1]],{data,p2}]
 
 t2 = Table[chebycoeff[xs,n],{n,0,40}]
+
+
 
 
 
@@ -117,7 +112,40 @@ px = Table[x[[3]],{x,p1}];
 py = Table[x[[4]],{x,p1}];
 pz = Table[x[[5]],{x,p1}];
 pdist = Sqrt[px^2+py^2+pz^2];
+f0[x_] = Interpolation[pdist][x*70128]
+f1[x_] = calmfourier[pdist][x]
 pang = ArcSin[pz/pdist];
+
+MiniMaxApproximation[f0[x], {x,{0,1}, 5, 17}]
+
+GeneralRationalApproximation[{x,f0[x]}, {x,{0,1}, 5, 5}]
+
+pdist1p = Take[pdist,2112]
+
+diff[0] = pdist1p
+diff[n_] := diff[n] = difference[diff[n-1]]
+
+data = Take[pdist,2112];
+powers = Table[(x/Length[data])^n,{n,0,50}]
+f2[x_] = Fit[data,powers,x]
+d2 = Table[f2[x]-data[[x]],{x,1,Length[data]}];
+ListPlot[d2,PlotRange->All]
+
+f3[x_] = Sum[Mean[diff[i]]*(x/Length[diff[i]])^i/i!,{i,0,10}]
+
+
+
+pdist1pf = Interpolation[pdist1p]
+
+f8[x_] = (x-1)/2112*2 - 1 + 1/2112
+f9[x_] = (1+2112*(1+x))/2
+
+Plot[{
+ Sum[chebycoeff[pdist1p,n]*ChebyshevT[n,x],{n,0,5}],
+ pdist1pf[f9[x]]}
+,{x,-1,1}]
+
+
 
 period = Abs[2*Pi/superfourier[pdist,1][[3]]]
 f0 = Interpolation[pdist]
