@@ -41,7 +41,7 @@ chebycoeff[data_, n_] := chebycoeff[data,n] = Module[{f1,t},
  (* return sum over data *)
  t = Sum[ChebyshevT[n,f1[x]]*data[[x]]/Sqrt[1-f1[x]^2],{x,1,Length[data]}];
  (* adjust sum by dx *)
- 2*t/Length[data]
+ 2/Pi*2*t/Length[data]
 ]
 
 chebycoeff[data_, n_] := chebycoeff[data,n] = Module[{f1,t},

@@ -10,7 +10,7 @@ debug(f16218d("-0.7911704670057320D+06"));
 
 
 
-# converts a 12-digit integer to a string of 5 bytes (not useful in
+# converts a 12-digit string of digits to a string of 5 bytes (not useful in
 # general, just for this program)
 
 sub d122b5 {
@@ -35,17 +35,10 @@ sub f162d18 {
 
   # extract signs, mantissa and exponent
   my($s1,$ma,$s2,$ex) = ($1,$2,$3,$4);
-  debug("$s1,$ma,$s2,$ex , $s1$s2");
 
   # 16 digits of mantissa + exponent + 0, 25, 50, 75
-  # if $s1 is positive, it's blank
-  if ("$s1$s2" eq "+") {
-    $ex+=75;
-  } elsif ("$s1$s2" eq "-") {
-    $ex+=50;
-  } elsif ("$s1$s2" eq "-+") {
-    $ex+=25;
-  }
-
+  # add 50 if $s1 is negative, another 25 if $s2 is
+  if ($s1 eq "-") {$ex+=50;}
+  if ($s2 eq "-") {$ex+=25;}
   return "$ma$ex";
 }

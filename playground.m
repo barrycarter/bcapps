@@ -2,6 +2,89 @@
 
 <</home/barrycarter/BCGIT/db/abq-hourly-avg.txt
 
+f3[n_] := 2/Pi*NIntegrate[Sin[x]*ChebyshevT[n,x]/Sqrt[1-x^2],{x,-1,1}]
+
+Table[f3[n],{n,0,3}]
+
+(* result is {0., 0.880101, 0., -0.0391267} *)
+
+f7[x_] = Sum[f3[i]*ChebyshevT[i,x], {i,0,3}]
+
+tab = Table[Sin[x],{x,-1,1,0.01}]
+
+f8[x_] = (x-1)/Length[tab]*2 - 1 + 1/Length[tab]
+
+FullSimplify[(x-1)/t*2 - 1 + 1/t,Reals]
+
+
+f9[x_] = (1+Length[tab]*(1+x))/2
+
+f10 = Interpolation[tab]
+
+f11[x_] = f10[f9[x]]
+
+f12[n_] := 2/Pi*NIntegrate[f11[x]*ChebyshevT[n,x]/Sqrt[1-x^2],{x,-1,1}]
+
+f13[x_] = Sum[f12[i]*ChebyshevT[i,x], {i,0,3}]
+
+f14[n_] := 2/Length[tab]*2/Pi*Sum[tab[[i]]*Sqrt[1-f8[i]^2]*ChebyshevT[n,f8[i]],
+ {i, 1, Length[tab]}]
+
+Table[f3[n],{n,0,3}]
+Table[f14[n],{n,0,3}]
+
+
+
+[Sin[x]*ChebyshevT[n,x]/Sqrt[1-x^2],{x,-1,1}]
+
+
+
+f4[n_] = Integrate[ChebyshevT[n,x]^2,{x,-1,1}]
+f5[n_] = Integrate[ChebyshevT[n,x]^2/Sqrt[1-x^2],{x,-1,1}]
+
+f6[n_] = Integrate[Sin[Pi*x]*ChebyshevT[n,x]/Sqrt[1-x^2],{x,-1,1}]
+
+a6 = Table[N[f6[n]],{n,0,9}]
+
+Sum[a6[[i]]*ChebyshevT[i-1,x],{i,1,10}]
+Sum[a6[[i]]*ChebyshevT[i-1,x],{i,1,4}]
+
+
+
+a0 = Table[N[f3[n]],{n,0,9}]
+
+Sum[a0[[i]]*ChebyshevT[i-1,x],{i,1,10}]
+
+Sum[a0[[i]]*ChebyshevT[i-1,x],{i,1,3}]
+
+
+
+
+Table[f4[n],{n,0,9}]
+Table[f5[n],{n,0,9}]
+
+
+
+d[x_] = Interpolation[data][x]
+
+f[x_] = (x+1)*(Length[data]-1)/2+1
+
+f2[x_] = 2*(x-1)/(Length[data]-1)-1
+
+s[n_] := s[n] = Sum[data[[i]]*ChebyshevT[f2[i],n], {i, 1, Length[data]}]
+
+a3 = Table[s[n],{n,0,1600}]
+
+g[x_] = d[f[x]]
+
+Table[data[[x]]*ChebyshevT[2,f[x]], {x,1,Length[data]}]
+
+a0 = Table[g[Cos[x]],{x,0,Pi,.01}]
+Fourier[a0, FourierParameters->{-1,1}]
+a1 = Abs[Take[Fourier[a0, FourierParameters -> {-1,1}],{1,20}]]
+
+Sum[a1[[i]]*ChebyshevT[i-1,x],{i,1,Length[a1]}]
+
 a0 = FourierDCT[data]
 ListPlot[a0,PlotRange->All,PlotJoined->True]
 
