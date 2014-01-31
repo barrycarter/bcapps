@@ -4,8 +4,18 @@
 # cloudconf.py correctly for any of this to work)
 
 # from __future__ import print_function
-import cloud
-import os
+# import cloud
+# import os
+
+import de421
+from jplephem import Ephemeris
+
+eph = Ephemeris(de421)
+x, y, z = eph.position('mars', 2444391.5);
+print x,y,z
+
+exit()
+
 # from array import *
 
 # cloud.shell.execute("date +%s")

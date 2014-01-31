@@ -34,6 +34,29 @@ use FFI::Raw;
 use v5.10;
 # use feature 'state';
 
+$BZIP2 = "1AY&SY";
+
+open(A,"/home/barrycarter/BCGIT/ASTRO/ascp1950.430.bz2");
+seek(A,4792800,0);
+# bzip2 blocks never exceed this size??
+read(A,$buf,2**21);
+
+$buf=~s/^.*?$BZIP2//;
+
+debug("BUF SIZE:", length($buf));
+
+
+
+
+
+
+
+
+
+
+
+die "TESTING";
+
 foobar();
 foobar();
 foobar();
