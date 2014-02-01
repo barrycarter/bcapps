@@ -7,12 +7,25 @@
 # import cloud
 # import os
 
+# from skyfield.api import *
 import de421
 from jplephem import Ephemeris
-
 eph = Ephemeris(de421)
-x, y, z = eph.position('mars', 2444391.5);
-print x,y,z
+# x, y, z = eph.position('saturn', 2456658.500000000);
+# x, y, z = eph.position('mars', 2456658.500000000);
+# x, y, z = eph.position('mercury', 2414992.5+8);
+
+for t in range(1,3660):
+    t0 = 2456658.500000000+t/10.
+    x, y, z = eph.position('mercury', t0);
+    print t0,z[0],"\n"
+
+exit()
+
+jd = JulianDate(utc=(2014,1,1))
+print saturn(jd).position.km
+# print jupiter(JulianDate(ut1=(2444270.503704))).position.km
+
 
 exit()
 

@@ -1,6 +1,6 @@
 << FunctionApproximations`
 
-<<JavaGraphics`
+(* <<JavaGraphics` *)
 
 (* work around "new and improved" graphics handling in Mathematica 7+ *)
 

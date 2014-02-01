@@ -15,7 +15,6 @@ f1[x_] = -58530838.674342*ChebyshevT[0,x]+
 0.000000*ChebyshevT[12,x]+
 -0.000000*ChebyshevT[13,x];
 
-
 f2[x_] = -49206237.094725*ChebyshevT[0,x]+
 7834232.176761*ChebyshevT[1,x]+
 659142.610233*ChebyshevT[2,x]+
@@ -32,6 +31,38 @@ f2[x_] = -49206237.094725*ChebyshevT[0,x]+
 -0.000000*ChebyshevT[13,x];
 
 h[x_] := If[x<0,f1[x*2+1],f2[x*2-1]]
+
+coeff[n_] := 2/Pi*Integrate[h[x]/Sqrt[1-x^2]*ChebyshevT[n,x],{x,-1,1}]
+
+f1[x_] = Sum[a[n]*ChebyshevT[n,x],{n,0,5}]
+f2[x_] = Sum[b[n]*ChebyshevT[n,x],{n,0,5}]
+
+coeff[n_] := coeff[n] = 2/Pi*(
+ Integrate[f1[x*2+1]/Sqrt[1-x^2]*ChebyshevT[n,x],{x,-1,0}] +
+ Integrate[f2[x*2-1]/Sqrt[1-x^2]*ChebyshevT[n,x],{x,0,1}]
+)
+
+Table[D[coeff[i], a[0]],{i,0,7}] 
+
+Table[D[coeff[i], a[1]],{i,0,7}] 
+
+Table[D[coeff[i], a[2]],{i,0,7}] 
+
+Table[D[coeff[i], a[3]],{i,0,7}] 
+
+Table[D[coeff[i], a[4]],{i,0,7}] 
+
+Table[D[coeff[i], a[5]],{i,0,7}] 
+
+Table[D[coeff[i],a[j]],{i,0,7},{j,0,5}]
+
+
+D[coeff[2],a[0]]
+
+FullSimplify[coeff[0] /. f1[1] -> f2[-1], Reals]
+
+
+
 
 mm[x_] = MiniMaxApproximation[h[x],{x,{-1,1},3,2}][[2,1]]
 
