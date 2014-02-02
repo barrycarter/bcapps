@@ -13,18 +13,39 @@ require "/usr/local/lib/bclib.pl";
 	    "moongeo:441:13:8", "sun:753:11:2");
 
 open(A,"bzcat /home/barrycarter/BCGIT/ASTRO/ascp1950.430.bz2|");
+# only the year 2014 (for now), which starts at...
+read(A, $disc, 26873*768);
 
 # will end with explicit exit
 for (;;) {
   my($buf);
+
   # file is very well formatted, each 26873 bytes is one section
   read(A, $buf, 26873);
   # split into numbers
   my(@nums) = split(/\s+/s, $buf);
+  # convert to Perl
+  map(s/^(.*?)D(.*)$/$1*10**$2/e, @nums);
+
   # first four: section number, number of data points, julian start, julia end
   my($bl, $sn, $nd, $js, $je) = splice(@nums,0,5);
-  debug("ALPHA: $sn, $nd, $js, $je");
-  debug("NUMS",@nums);
-}
+  debug("$js - $je");
+  # length of interval
+  my($in) = $je-$js;
 
+  # and now the planet list
+  for $i (@planets) {
+    # I don't actually use $spos, since I'm splicing
+    my($pl, $spos, $ncoeff, $sects) = split(/:/, $i);
+    # days per interval
+    my($days) = $in/$sects;
+    # loop through each section
+    for $j (1..$sects) {
+      for $k ("x","y","z") {
+	@coeffs = splice(@nums,0,$ncoeff);
+	debug("J: $j, K: $k, COEFFS",@coeffs);
+      }
+    }
+  }
+}
 
