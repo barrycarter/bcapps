@@ -52,9 +52,12 @@ shift(@procs); # ignore header line
 	);
 
 # Processes on this list must be killed if they run over 5m
-# <h>Right now, it's just you, curly!</h>
+# the "bcinfo3" ones are special cases because I'm migrating my site
 @kill = (
-	 "curl"
+	 "curl",
+	 "/sites/TEST/BCINFO3/usr/local/bin/bc-metar-db.pl",
+	 "/sites/TEST/BCINFO3/usr/local/bin/bc-get-all-weather.pl",
+	 "/sites/TEST/BCINFO3/usr/local/bin/bc-gocomics-comments2.pl"
 	 );
 
 # easier as hashes

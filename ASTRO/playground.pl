@@ -49,6 +49,9 @@ debug("$sdate-$edate");
 
 # the first chunk is: 2455568.5-2455600.5
 
+debug($#coeffs);
+
+die "TESTING";
 
 # the first 14 coeffs are the x coordinate of mercury for first 8 days
 for $i (0..13) {
