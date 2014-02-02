@@ -1,46 +1,47 @@
+(* solving http://math.stackexchange.com/questions/6195  *)
+
+ex[n_] = Sum[k*Binomial[n,k]/2^n, {k,0,n}]/n
+
+ex2[n_] = Sum[(5+k)*Binomial[n,k]/2^n, {k,0,n}]/(n+8)
+
 (* merc orbit again *)
 
-f1[x_] = -58530838.674342*ChebyshevT[0,x]+
-1206238.210822*ChebyshevT[1,x]+
-999294.823938*ChebyshevT[2,x]+
--28113.498473*ChebyshevT[3,x]+
--272.722636*ChebyshevT[4,x]+
-56.342058*ChebyshevT[5,x]+
--4.283451*ChebyshevT[6,x]+
-0.195789*ChebyshevT[7,x]+
--0.004699*ChebyshevT[8,x]+
--0.000192*ChebyshevT[9,x]+
-0.000033*ChebyshevT[10,x]+
--0.000002*ChebyshevT[11,x]+
-0.000000*ChebyshevT[12,x]+
--0.000000*ChebyshevT[13,x];
+<< /home/barrycarter/BCGIT/MATHEMATICA/cheb1.m
 
-f2[x_] = -49206237.094725*ChebyshevT[0,x]+
-7834232.176761*ChebyshevT[1,x]+
-659142.610233*ChebyshevT[2,x]+
--27513.436970*ChebyshevT[3,x]+
-175.954246*ChebyshevT[4,x]+
-1.321026*ChebyshevT[5,x]+
--0.961817*ChebyshevT[6,x]+
-0.055457*ChebyshevT[7,x]+
--0.002719*ChebyshevT[8,x]+
-0.000097*ChebyshevT[9,x]+
--0.000002*ChebyshevT[10,x]+
--0.000000*ChebyshevT[11,x]+
-0.000000*ChebyshevT[12,x]+
--0.000000*ChebyshevT[13,x];
+c1 = {-58530838.674342, 1206238.210822, 999294.823938, -28113.498473,
+-272.722636, 56.342058, -4.283451, 0.195789, -0.004699, -0.000192,
+0.000033, -0.000002, 0.000000, -0.000000}
+
+f1[x_] = Sum[c1[[i]]*ChebyshevT[i-1,x],{i,1,Length[c1]}]
+
+c2 = {-49206237.094725, 7834232.176761, 659142.610233, -27513.436970,
+175.954246, 1.321026, -0.961817, 0.055457, -0.002719, 0.000097,
+-0.000002, -0.000000, 0.000000, -0.000000}
+
+f2[x_] =  Sum[c2[[i]]*ChebyshevT[i-1,x],{i,1,Length[c2]}]
+
+a[i_] := c1[[i+1]]
+b[i_] := c2[[i+1]]
+a[14] = 0
+b[14] = 0
 
 h[x_] := If[x<0,f1[x*2+1],f2[x*2-1]]
 
+f3[x_] = Sum[cheb1[[i]]*ChebyshevT[i-1,x], {i,1,14}] - cheb1[[1]]/2
+
+
+
 coeff[n_] := 2/Pi*Integrate[h[x]/Sqrt[1-x^2]*ChebyshevT[n,x],{x,-1,1}]
 
-f1[x_] = Sum[a[n]*ChebyshevT[n,x],{n,0,5}]
-f2[x_] = Sum[b[n]*ChebyshevT[n,x],{n,0,5}]
+f1[x_] = Sum[a[n]*ChebyshevT[n,x],{n,0,14}]
+f2[x_] = Sum[b[n]*ChebyshevT[n,x],{n,0,14}]
 
 coeff[n_] := coeff[n] = 2/Pi*(
  Integrate[f1[x*2+1]/Sqrt[1-x^2]*ChebyshevT[n,x],{x,-1,0}] +
  Integrate[f2[x*2-1]/Sqrt[1-x^2]*ChebyshevT[n,x],{x,0,1}]
 )
+
+
 
 Table[D[coeff[i], a[0]],{i,0,7}] 
 
