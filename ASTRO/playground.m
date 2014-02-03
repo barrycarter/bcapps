@@ -45,6 +45,16 @@ j[t_] = Sum[t2[[i]]*ChebyshevT[i-1,t],{i,1,Length[t2]}]
 
 chebcoff[n_] := PadRight[Take[mercury[x][n], {3,16}],15]
 
+(* combining in pairs *)
+
+t3 = Map[list2cheb,Take[Table[cheb1[chebcoff[i],chebcoff[i+1]],14],{i,1,47,2}]]
+
+k[t_] = Piecewise[
+Table[{t3[[i]][f1[t,mercury[x][i][[1]],mercury[x][i+1][[2]]]], 
+ mercury[x][i][[1]] <= t <= mercury[x][i+1][[2]]}, {i,1,Length[t3]}]
+]
+
+
 (* intentionally chopping at 14, though cheb1 gives 30 *)
 
 test1[x_] = list2cheb[Take[cheb1[chebcoff[1],chebcoff[2]],14]]

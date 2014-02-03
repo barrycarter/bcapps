@@ -426,4 +426,6 @@ TODO: move this to main lib?
 
 *)
 
-list2cheb[data_] := Sum[data[[i]]*ChebyshevT[i-1,x],{i,1,Length[data]}]
+list2cheb[data_] :=
+Function[x,Sum[data[[i]]*ChebyshevT[i-1,x],{i,1,Length[data]}]]
+
