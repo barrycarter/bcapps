@@ -13,8 +13,6 @@ require "/usr/local/lib/bclib.pl";
 	    "moongeo:441:13:8", "sun:753:11:2");
 
 open(A,"bzcat /home/barrycarter/BCGIT/ASTRO/ascp1950.430.bz2|");
-# only the year 2014 (for now), which starts at...
-read(A, $disc, 26873*768);
 
 # will end with explicit exit
 for (;;) {
@@ -24,11 +22,16 @@ for (;;) {
   read(A, $buf, 26873);
   # split into numbers
   my(@nums) = split(/\s+/s, $buf);
-  # convert to Perl
-  map(s/^(.*?)D(.*)$/$1*10**$2/e, @nums);
+  # convert to Perl (16 digit precision, -10 lowest mantissa +4 for safety)
+  map(s/^(.*?)D(.*)$/sprintf("%.30f",$1*10**$2)/e, @nums);
+#  map(s/^(.*?)D(.*)$/$1*10^$2/, @nums);
 
   # first four: section number, number of data points, julian start, julia end
   my($bl, $sn, $nd, $js, $je) = splice(@nums,0,5);
+
+  # only 2014 for now (2456658.5 - 2456658.5+365)
+  if ($je < 2456658.5) {next;}
+  if ($js > 2456658.5+365) {last;}
   debug("$js - $je");
   # length of interval
   my($in) = $je-$js;
@@ -41,9 +44,15 @@ for (;;) {
     my($days) = $in/$sects;
     # loop through each section
     for $j (1..$sects) {
+      # nth set of coefficients for this planet
+      $coeffset{$pl}++;
       for $k ("x","y","z") {
 	@coeffs = splice(@nums,0,$ncoeff);
-	debug("J: $j, K: $k, COEFFS",@coeffs);
+	# TODO: only printing mercury x for now (mathematica stuff)
+	if ($k eq "x" && $pl eq "mercury") {
+	  $list = join(", ",@coeffs);
+	  print "$pl\[$k\][$coeffset{$pl}] = {$list};\n";
+	}
       }
     }
   }
