@@ -11,10 +11,10 @@
 import de421
 from jplephem import Ephemeris
 eph = Ephemeris(de421)
-x, y, z = eph.position('saturn', 2456656.501)
+# x, y, z = eph.position('saturn', 2456656.501)
 # x, y, z = eph.position('mars', 2456658.500000000);
 # x, y, z = eph.position('mercury', 2414992.5);
-
+x, y, z = eph.position('mercury', 2456656.5+2)
 print x,y,z
 
 exit()

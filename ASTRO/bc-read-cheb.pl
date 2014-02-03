@@ -50,7 +50,8 @@ for (;;) {
 	@coeffs = splice(@nums,0,$ncoeff);
 	# TODO: only printing mercury x for now (mathematica stuff)
 	if ($k eq "x" && $pl eq "mercury") {
-	  $list = join(", ",@coeffs);
+	  # now including start/end dates
+	  $list = join(", ",($js+$days*($j-1), $js+$days*$j, @coeffs));
 	  print "$pl\[$k\][$coeffset{$pl}] = {$list};\n";
 	}
       }
