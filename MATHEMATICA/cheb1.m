@@ -420,3 +420,10 @@ a[[2]]/29 + (-43*(231543813826325*a[[3]] + 208981688240325*a[[4]] +
 9764457633691120*b[[13]] + 12691361134532145*b[[14]] -
 28633834568768100*b[[15]]))/ 294362129962575675))/Pi} ;
 
+(* converts list to Chebyshev polynomial
+
+TODO: move this to main lib?
+
+*)
+
+list2cheb[data_] := Sum[data[[i]]*ChebyshevT[i-1,x],{i,1,Length[data]}]
