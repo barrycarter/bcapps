@@ -8,11 +8,9 @@ jde = mercury[x][48][[2]]
 
 (* the first 2 list elts are start/end Julian date *)
 
-tab0 = Table[
-Sum[mercury[x][i][[n]]*ChebyshevT[n-3,t], {n,3,Length[mercury[x][i]]}],
+tab = Table[Function[t,Evaluate[
+Sum[mercury[x][i][[n]]*ChebyshevT[n-3,t], {n,3,Length[mercury[x][i]]}]]],
 {i,1,48}]
-
-tab = Table[Function[t,Evaluate[tab0[[i]]]],{i,1,Length[tab0]}]
 
 (* trivial function that converts a number from [s,e] to [-1,1] *)
 f1[t_,s_,e_] = 2*(t-s)/(e-s)-1
