@@ -24,19 +24,6 @@ Table[{tab[[i]][f1[t,mercury[x][i][[1]],mercury[x][i][[2]]]],
 
 Plot[g[t],{t,jds,jde}]
 
-Plot[g[f2[t,jds,jde]], {t,-1,1}]
-
-h[t_] = g[f2[t,jds,jde]]
-
-coeff[n_] := coeff[n] =
-2/Pi*NIntegrate[g[f2[x,jds,jde]]/Sqrt[1-x^2]*ChebyshevT[n,x],{x,-1,1}]
-
-t2 = Table[coeff[n],{n,0,39}]
-
-Sum[t2[[i]]*ChebyshevT[i-1,x],{i,1,Length[t2]}]
-
-j[t_] = Sum[t2[[i]]*ChebyshevT[i-1,t],{i,1,Length[t2]}]
-
 <</home/barrycarter/BCGIT/MATHEMATICA/cheb1.m
 
 (* coeffs stretched to length 15 (my fault when writing cheb1) *)
@@ -45,13 +32,16 @@ chebcoff[n_] := PadRight[Take[mercury[x][n], {3,16}],15]
 
 (* combining in pairs *)
 
-t3 = Map[list2cheb,Take[Table[cheb1[chebcoff[i],chebcoff[i+1]],14],{i,1,47,2}]]
+t3 = Table[Take[cheb1[chebcoff[i],chebcoff[i+1]],14],{i,1,47,2}]
 
-k[t_] = Piecewise[
-Table[{t3[[i]][f1[t,mercury[x][i][[1]],mercury[x][i+1][[2]]]], 
- mercury[x][i][[1]] <= t <= mercury[x][i+1][[2]]}, {i,1,Length[t3]}]
-]
+t4 = Table[{list2cheb[t3[[i]]][
+ f1[t, mercury[x][i*2-1][[1]], mercury[x][i*2][[2]]]
+],
+ mercury[x][i*2-1][[1]] <= t <= mercury[x][i*2][[2]]}, {i,1,Length[t3]}]
 
+k[t_] = Piecewise[t4]
+
+Plot[k[t]-g[t],{t,jds,jde},PlotRange->All]
 
 (* intentionally chopping at 14, though cheb1 gives 30 *)
 
