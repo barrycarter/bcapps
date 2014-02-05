@@ -1,3 +1,23 @@
+(* parametric ellipse *)
+
+a = 5; b = 1;
+x[t_] = a*Cos[t]
+y[t_] = b*Sin[t]
+
+ParametricPlot[{x[t],y[t]},{t,0,2*Pi}]
+
+d[t_] = Sqrt[((x[t]-x0)^2 + (y[t]-y0)^2)] + Sqrt[((x[t]-x1)^2 + (y[t]-y1)^2)]
+
+d[t] /. {x1 -> -x0, y0 -> 0, y1 -> 0}
+
+
+
+
+
+
+ParametricPlot[{x[t],y[t]},{t,0,2*Pi},AspectRatio->Automatic]
+
+
 (* based on the output of bc-read-cheb.pl for mercury x values 2014 *)
 
 (* this is the file with the output of bc-read-cheb.pl *)
@@ -11,6 +31,16 @@ jde = mercury[x][48][[2]]
 tab = Table[Function[t,Evaluate[
 Sum[mercury[x][i][[n]]*ChebyshevT[n-3,t], {n,3,Length[mercury[x][i]]}]]],
 {i,1,48}]
+
+(* continous Fourier? *)
+
+f3[k_] = Integrate[tab[[1]][t]*Exp[2*Pi*I*k*t],{t,-1,1}]
+maxk = k /. Maximize[Abs[f3[k]],k][[2]]
+
+
+
+Plot[tab[[1]][t]/Cos[
+
 
 (* trivial function that converts a number from [s,e] to [-1,1] *)
 f1[t_,s_,e_] = 2*(t-s)/(e-s)-1

@@ -859,7 +859,7 @@ Sum[Cos[n*x]/n,{n,1,100}]
 
 y[x_] = y /.  Solve[Sqrt[x^2+y^2] + Sqrt[(x+1)^2+y^2] == 3, y][[2,1]]
 
-Plot[y[x], {x,-2,1}, AspectRatio->Fixed]
+Plot[y[x], {x,-2,1}, AspectRatio->Automatic]
 
 (* area carved out at x *)
 area[x_] := NIntegrate[y[t],{t,x,1}] + x*y[x]/2
@@ -1706,9 +1706,9 @@ y[x_, a_, qr_] = y /.
  Solve[{Sqrt[(x+a-qr)^2 + y^2] + 
         Sqrt[(x-a+qr)^2 + y^2] == 2*a}, {y}][[2,1]]
 
-Plot[y[x,3,2],{x,-5,5}]
+Plot[y[x,3,2],{x,-5,5},AspectRatio->Automatic]
 
-Plot[y[x,5,2],{x,-5,5}]
+Plot[y[x,5,2],{x,-5,5},AspectRatio->Automatic]
 
 Graphics[Plot[y[x,3,2],{x,-5,5}], Text["hello",{1,3}]]
 
