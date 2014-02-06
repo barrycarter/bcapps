@@ -32,7 +32,63 @@ use Algorithm::GoldenSection;
 use Inline::Python;
 use FFI::Raw;
 use v5.10;
-# use feature 'state';
+
+$all = read_file("/home/barrycarter/BCGIT/ASTRO/ascp1950.430.bz2.tab");
+debug("ALL: $all");
+for $i (split(/\n/,$all)) {
+  ($i=~/^(\d+)\s+/) || die "BAD!";
+  push(@list, $1);
+}
+
+$res = 
+bzip2seek("/home/barrycarter/BCGIT/ASTRO/ascp1950.430.bz2",11280851,100,\@list);
+
+debug(length($res));
+
+# debug("LIST",@list);
+
+die "TESTING";
+
+=item bzip2seek($file, $start, $len, \@list)
+
+Thin wrapper around seek-bunzip.
+
+Given a bzip2'd file $file, return the $len bytes starting at byte
+$start in the original file.
+
+@list is the first column of what "bzip-table" generates for the bzip2'd file
+
+=cut
+
+sub bzip2seek {
+  my($file, $start, $len, $listref) = @_;
+  my(@list) = @{$listref};
+  my($si, $ei, $str);
+
+  # figure out which chunks I'll need to read
+  for $i (0..$#list) {
+    if ($start >= $list[$i]) {$si = $i;}
+    if ($start+$len-1 >= $list[$i]) {$ei = $i;}
+  }
+
+  # and read them
+  for $i ($si..$ei) {
+    debug("CHUNK: $i");
+    my($cmd) = "seek-bunzip $list[$i] < $file";
+    debug("CMD: $cmd");
+    my($out, $err, $res) = cache_command2("seek-bunzip $list[$i] < $file");
+    debug("OUT:",length($out));
+    $str.=$out;
+  }
+
+  # and give user part they want
+  debug("RETURNING: $start, $list[$si], LEN:",length($str));
+  return substr($str, $start-$list[$si], $len);
+}
+
+
+
+die "TESTING";
 
 $BZIP2 = "1AY&SY";
 
@@ -44,15 +100,6 @@ read(A,$buf,2**21);
 $buf=~s/^.*?$BZIP2//;
 
 debug("BUF SIZE:", length($buf));
-
-
-
-
-
-
-
-
-
 
 
 die "TESTING";
@@ -126,12 +173,6 @@ debug($o->next_rising($s));
 $m = new Moon();
 debug("M: $m");
 # debug($o->next_rising($m));
-
-__END__
-__Python__
-from ephem import Observer as Observer;
-from ephem import Sun as Sun;
-from ephem import _libastro.Moon as Moon;
 
 die "TESTING";
 

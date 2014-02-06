@@ -116,7 +116,7 @@ Simplify[orthocenter[z], {Im[z]>0,Re[z]>0}]
 
 Simplify[Cot[Arg[z]], {Im[z]>0, Re[z]>0}]
 
-(* below is testing only, Cot + Tan aren't always inverse functions *)
+(* below is testing only, Cot + Tan arent always inverse functions *)
 
 orthocenter[z] //. {Arg[z_] -> Tan[Im[z]/Re[z]], Cot[Tan[z_]] -> z}
 

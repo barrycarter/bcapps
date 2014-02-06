@@ -31,6 +31,26 @@ Despite this, it ultimately comes up w/ the right answers
 p1 = planet199;
 p2 = Table[{x[[2]],{x[[3]],x[[4]],x[[5]]}}, {x,p1}];
 
+p2 = Take[p2,4000]
+
+(* angle between vectors *)
+angle[u_, v_] = ArcCos[u.v/Norm[u]/Norm[v]]
+
+(* dtheta *)
+
+angle[p2[[7]][[2]], p2[[6]][[2]]]
+
+(* area swept out between two vectors [approx] *)
+
+area[u_,v_] = (Norm[u]+Norm[v])/2 * angle[u,v]
+
+ta = Table[angle[p2[[i]][[2]], p2[[i-1]][[2]]] , {i,2,Length[p2]}]
+tr = Table[Norm[p2[[i]][[2]]], {i,2,Length[p2]}]
+
+Table[area[p2[[i]][[2]], p2[[i-1]][[2]]] , {i,2,Length[p2]}]
+
+
+
 
 
 f7[n_] = (n-1)/(Length[p2])*2 - 1 + 1/Length[p2] 
