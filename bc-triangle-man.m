@@ -30,7 +30,6 @@ lena[z_] = Abs[1-z]
 (* general helpful formulas *)
 
 (* parametric equation of line in complex plane given two points *)
-
 line[z1_,z2_] = Function[z1 + #1*(z2-z1)]
 
 (* length of line segment, assuming t=0,1 are endpoints *)

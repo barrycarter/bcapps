@@ -4,81 +4,62 @@
 
 test1 = {6.8466 + 0.337819*I, 8.06793 + 5.60294*I, 5.18765 + 0.631612*I}
 
+(* generic formulas for lines in complex space *)
+
+(* parametric equation of line in complex plane given two points *)
+line[z1_,z2_] = Function[z1 + #1*(z2-z1)]
+
+(* intersection of two lines defined by four points *)
+
+d1[t_,u_] = Norm[line[z1,z2][t] - line[z3,z4][u]]
+
+Solve[line[z1,z2][t] == line[z3,z4][u], {}, 
+ {Member[u,Reals],Member[t,Reals]}]
+
+Solve[line[z1,z2][t] == line[z3,z4][u], {u,t}, Reals]
+
 (* form for plotting; yes, there are better ways to do this; note that a is repeated to get complete triangle *)
 
 plotform[{a_,b_,c_}]={{Re[a],Im[a]},{Re[b],Im[b]},{Re[c],Im[c]},{Re[a],Im[a]}}
 
 plot[t_] := ListPlot[plotform[t],
- PlotRange->All,PlotJoined->True,AspectRatio->Automatic]
+ PlotRange->All,PlotJoined->True,AspectRatio->Automatic,AxesOrigin->{0,0}]
 
-(* transform triangle by translation t *)
-transformt[{a_,b_,c_}, t_] = {a + t, b + t, c + t};
+(* transformation converting a,b,c to 0,1,something , when applied to arb p *)
 
-(* rotate a complex number about origin by r radians *)
-transformr[z_, r_] = Exp[I*(Arg[z]+r)]*Abs[z]
-
-(* transform triangle by rotation r radians around origin *)
-transformr[{a_,b_,c_}, r_] = {transformr[a,r],transformr[b,r],transformr[c,r]}
-
-(* scale a triangle compared to origin *)
-
-transforms[{a_,b_,c_}, s_] = {a*s,b*s,c*s}
-
-(* transformation converting a,b,c to 0,1,[point], when applied to arb point *)
-
-standardize[p_, {a_,b_,c_}] = transformr[p-a, -Arg[b-a]]/Abs[b-a]
+standardize[p_, {a_,b_,c_}] = (a-p)/(a-b)
 
 (* reverse transformation *)
 
-revert[p_, {a_,b_,c_}] = transformr[p*Abs[b-a], Arg[b-a]] + a
+revert[p_, {a_,b_,c_}] = a-p*(a-b)
 
 (* angles don't change under standardize *)
 
-angles[{a_,b_,c_}] = {Arg[standardize[c,{a,b,c}]], 
- -Arg[1-standardize[c,{a,b,c}]],  
- Pi + Arg[1-standardize[c,{a,b,c}]] - Arg[standardize[c,{a,b,c}]]}
-
-
-
-
-
-
-
-
-(* transform triangle to "standard form" (two points transform to 0
-and 1, other dets triangle) *)
-
-t1 = transformt[test1, -test1[[1]]]
-t2 = transformr[t1, -Arg[t1[[2]]]]
-t3 = transforms[t2, 1/Abs[t2[[2]]]]
-
-transformt[{a,b,c}, -a]
-transformr[%, -Arg[%[[2]]]]
-transforms[%, 1/Abs[%[[2]]]]
-
-plot[transformt[test1,-test1[[1]]]]
-
-transformr[test1,-Arg[test1[[1]]]]
-
-(* vectors representing the sides *)
-
-vectors[{a_,b_,c_}] = {b-c, c-a, a-b}
+angles[{a_,b_,c_}] = {Arg[(a-c)/(a-b)], -Arg[(c-b)/(a-b)],
+Pi+Arg[(c-b)/(a-b)]-Arg[(a-c)/(a-b)]}
 
 (* side lengths, in order *)
 
-lengths[tri_] = Abs[vectors[tri]]
+lengths[{a_,b_,c_}] = Map[Norm,{b-c,c-a,a-b}]
 
-(* dot product when imaginary numbers are vectors *)
+(* TODO: for formulas below, provide derivation not just results *)
 
-dot[x_,y_] = Re[x]*Re[y] + Im[x]*Im[y]
+(* TODO: this is ugly, find better form? *)
 
-(* and angle *)
+intersectlines[z1_, z2_, z3_, z4_] =
+  (z2*(-z3 + z4)*Conjugate[z1] + z1*(z3 - z4)*Conjugate[z2] + 
+  (z1 - z2)*(z4*Conjugate[z3] - z3*Conjugate[z4]))/
+  (-((z3 - z4)*(Conjugate[z1] - Conjugate[z2])) + 
+  (z1 - z2)*(Conjugate[z3] - Conjugate[z4]))
 
-angle[x_,y_] = ArcCos[dot[x,y]/Abs[x]/Abs[y]]
+(* Given two points forming a line, form the perpendicular line through p *)
 
-(* the angles [in order A B C] *)
+perpin[z1_, z2_, p_] = Function[t, p + t - I t Cot[Arg[z1 - z2]]]
 
-angles[tri_] = angle[vectors[tri]]
+(* the altitudes *)
 
-test1p = plot[test1]
+d1 = perpin[test1[[3]], test1[[1]], test1[[2]]]
+
+Show[{plot[test1], ParametricPlot[{Re[d1[t]],Im[d1[t]]}, {t,-1,0}]}]
+
 
