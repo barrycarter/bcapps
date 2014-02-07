@@ -4,11 +4,46 @@
 
 test1 = {3.49053 + 8.4664 I, 1.23971 + 1.47722 I, 8.58063 + 4.85151 I}
 
+(* TODO: area, incenter, circumcenter; circles like incircle; add
+labels; side alignment/order *)
+
 (* plotting *)
 
 (* solely for plotting, convert complex number to pair *)
 
 topair[z_] = {Re[z],Im[z]}
+SetAttributes[topair, Listable]
+
+plotpoint[z_,extra_:{}]:=Graphics[Join[extra, {Point[topair[z]]}]]
+
+(* plot "anything", failed *)
+
+superplot[obj_, type_, extra_:{}] := Module[{xy},
+(* xy = Map[topair, {obj}, 2]; *)
+ Graphics[type[topair[obj]]]
+(* Graphics[Flatten[{extra, type[xy]},1]] *)
+]
+
+(* line segments that make up this triangle *)
+
+segments[{a_,b_,c_}] = {{a,b},{b,c},{c,a}}
+
+superplot[segments[test1], Polygon]
+
+superplot[segments[test1], Line]
+
+superplot[test1,Polygon, {Hue[1], Hue[.5]}]
+
+superplot[test1,Point]
+
+superplot[test1,Line]
+
+
+
+
+(* plot a single point *)
+
+plotpoint[z_, style_:{}] := Graphics[Flatten[{style, Point[topair[z]]}, 1]]
 
 (* plotting a line (segment) between two points in the complex plane *)
 
@@ -23,6 +58,39 @@ plotlines[list_,style_:{}] := Show[Table[Apply[plotline,{i,style}],{i,list}]]
 
 plottri[{a_,b_,c_},style_:{}] := plotlines[{{a,b},{b,c},{c,a}}, style]
 
+(* slope of a complex line *)
+
+line2slope[{a_,b_}] = (Im[b]-Im[a])/(Re[b]-Re[a])
+
+(* given slope and point, construct line of arb length *)
+
+slope2line[m_, p_] = {p, p+I*m+1}
+
+(* perpendicular to a,b through p even if p is on a,b *)
+
+perpin2[{a_,b_}, p_] = slope2line[-1/line2slope[{a,b}], p]
+
+(* point where two lines intersect [TODO: UGLY!] *)
+
+intersection[{z1_,z2_},{z3_,z4_}] = z1 + (z2-z1)*
+(t /. Flatten[Solve[{
+ Re[z1] + t*(Re[z2] - Re[z1]) ==  Re[z3] + u*(Re[z4] - Re[z3]),
+ Im[z1] + t*(Im[z2] - Im[z1]) ==  Im[z3] + u*(Im[z4] - Im[z3])},
+{t,u}]])
+
+
+
+perbis[{a_,b_,c_}] = {perpin2[{a,b},(a+b)/2], perpin2[{b,c}, (b+c)/2],
+ perpin2[{a,c}, (a+c)/2]}
+
+Show[{
+plottri[test1],
+plotlines[perbis[test1], {Black}]
+}]
+
+Reduce[Re[p0+m1*t] == Re[p1+m2*u], {u,t}]
+
+
 (* altitudes (TODO: move this to main section later) *)
 
 alts[{a_,b_,c_}] = {perpin[{a,c},b], perpin[{b,c},a], perpin[{a,b},c]}
@@ -33,7 +101,7 @@ medians[{a_,b_,c_}] = {{a,(b+c)/2}, {b,(a+c)/2}, {c,(a+b)/2}}
 
 (* below fails because its a single point *)
 
-perbis[{a_,b_,c_}] = perpin[{a,b},(a+b)/2]
+
 
 Show[{
 plottri[test1],
