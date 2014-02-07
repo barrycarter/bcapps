@@ -1,10 +1,71 @@
 (* Revision of bc-triangle-man.m for arbitrary triangle with vertexs a b c *)
 
-(* reference/sample triangle *)
+(* reference/sample triangle [changed to be acute later] *)
 
-test1 = {6.8466 + 0.337819*I, 8.06793 + 5.60294*I, 5.18765 + 0.631612*I}
+test1 = {3.49053 + 8.4664 I, 1.23971 + 1.47722 I, 8.58063 + 4.85151 I}
+
+(* plotting *)
+
+(* solely for plotting, convert complex number to pair *)
+
+topair[z_] = {Re[z],Im[z]}
+
+(* plotting a line (segment) between two points in the complex plane *)
+
+plotline[{z1_,z2_},style_:{}] := ParametricPlot[topair[z1+t*(z2-z1)], {t,0,1},
+AspectRatio->Automatic, AxesOrigin->{0,0}, PlotRange->All, PlotStyle->style]
+
+(* plotting multiple lines *)
+
+plotlines[list_,style_:{}] := Show[Table[Apply[plotline,{i,style}],{i,list}]]
+
+(* plotting a triangle *)
+
+plottri[{a_,b_,c_},style_:{}] := plotlines[{{a,b},{b,c},{c,a}}, style]
+
+(* altitudes (TODO: move this to main section later) *)
+
+alts[{a_,b_,c_}] = {perpin[{a,c},b], perpin[{b,c},a], perpin[{a,b},c]}
+
+(* medians (TODO: move to main section later) *)
+
+medians[{a_,b_,c_}] = {{a,(b+c)/2}, {b,(a+c)/2}, {c,(a+b)/2}}
+
+(* below fails because its a single point *)
+
+perbis[{a_,b_,c_}] = perpin[{a,b},(a+b)/2]
+
+Show[{
+plottri[test1],
+plotlines[alts[test1], {Black}],
+plotlines[medians[test1], {Red}]
+}]
+
+{plotline[perpin[Take[test1,2], test1[[3]]]],
+plotline[Take[test1,2]]}
+
+
+
+ParametricPlot[topair[test1[[1]]+t*(test1[[2]]-test1[[1]])], {t,0,1}]
+
+
 
 (* generic formulas for lines in complex space *)
+
+(* function sending z1 to 0, z2 to 1, when applied to arb p + inverse *)
+tonorm[z1_, z2_, p_] = (p-z1)/(z2-z1)
+fromnorm[z1_, z2_, p_] = z1 + p*(z2-z1)
+
+(* to find line perpendicular to line thru z1 z2, and thru p, we go to
+and then from "normal" form above; line = two points *)
+
+perpin[{z1_, z2_}, p_] = {fromnorm[z1, z2, Re[tonorm[z1,z2,p]]], p}
+
+perpin[test1[[1]], test1[[2]], test1[[3]]]
+
+
+
+
 
 (* parametric equation of line in complex plane given two points *)
 line[z1_,z2_] = Function[z1 + #1*(z2-z1)]
