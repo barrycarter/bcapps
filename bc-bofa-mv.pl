@@ -6,8 +6,6 @@
 # TODO: check for missing statements, report first and last statements
 # TODO: could really write this more generically with regexs in file
 
-
-
 require "/usr/local/lib/bclib.pl";
 
 for $i (@ARGV) {
@@ -63,6 +61,9 @@ for $i (@ARGV) {
 
 sub handle_nmefcu {
   my($all) = @_;
+
+  # \xe2\x88\x92 now means "-", apparently
+  $all=~s/\xe2\x88\x92/-/isg;
 
   # <h>Remember when THRU wasn't a word?</h>
   if ($all=~/[\d\-]+\s*THRU\s*([\d\-]+)/) {
