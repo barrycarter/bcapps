@@ -59,11 +59,22 @@ dot[z1_, z2_] = Re[z1]*Re[z2] + Im[z1]*Im[z2]
 (* cosine, as dot product over product of lengths *)
 cos[z1_, z2_] = dot[z1,z2]/Norm[z1]/Norm[z2]
 
+(* given a formula to generate a point in the 0,1,z space, generate
+the lines that connect the equivalent points to B and then C *)
+
+translates[f_] := FullSimplify[{
+ {0,f[z]}, {1,fromnorm[1,z,f[tonorm[1,z,0]]]}, 
+ {z,fromnorm[z,0,f[tonorm[z, 0, 1]]]}}]
 
 (******** FUNCTIONS ON BASE TRIANGLE AND VARIANTS ********)
 
+(* the translation of test1 *)
+
+test2 = {0,1,tonorm[test1[[1]], test1[[2]], test1[[3]]]}
+
 (* medians, in order *)
 
+base1midpoint[z_] = (1+z)/2
 base1medians[z_] = {{0,(1+z)/2}, {1,z/2}, {z, 1/2}}
 base1centroid[z_] = (1+z)/3
 
@@ -75,6 +86,7 @@ base1fakeperps[z_] = {perpin2[{1,z},(1+z)/2], perpin2[{0,z}, z/2],
 base1circumcenter[z_] = intersection[perpin2[{1,z},(1+z)/2],{1/2, 1/2+I}]
 
 (* altitudes and orthocenter, in order *)
+base1altitude[z_] = perpin[{1,z}, 0][[1]]
 base1altitudes[z_] = {perpin[{1,z},0], perpin[{0,z}, 1], perpin[{0,1},z]}
 base1orthocenter[z_] = intersection[perpin[{1,z},0], perpin[{0,z}, 1]]
 
