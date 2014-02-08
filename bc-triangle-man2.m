@@ -44,22 +44,79 @@ perpin[{z1_, z2_}, p_] = {fromnorm[z1, z2, Re[tonorm[z1,z2,p]]], p}
 (* perpendicular to a,b through p even if p is on a,b *)
 perpin2[{a_,b_}, p_] = slope2line[-1/line2slope[{a,b}], p]
 
+(* given a list of lines, return their lengths (norms) *)
+norms[list_] := Table[Norm[i[[2]]-i[[1]]], {i,list}]
+
+(* given a list of lines, return mutual intersections [in hope of
+finding simplest form for various triangle centers] *)
+
+intersects[list_] := Flatten[FullSimplify[Table[intersection[
+ list[[i]],list[[j]]], {i,1,Length[list]},{j,i+1,Length[list]}]]]
+
+(* psuedo dot product of two complex numbers *)
+dot[z1_, z2_] = Re[z1]*Re[z2] + Im[z1]*Im[z2]
+
+(* cosine, as dot product over product of lengths *)
+cos[z1_, z2_] = dot[z1,z2]/Norm[z1]/Norm[z2]
+
+
+(******** FUNCTIONS ON BASE TRIANGLE AND VARIANTS ********)
+
+(* medians, in order *)
+
+base1medians[z_] = {{0,(1+z)/2}, {1,z/2}, {z, 1/2}}
+base1centroid[z_] = (1+z)/3
+
+(* perpendicular bisectors, in order, arb length; third case is
+special since perpendicular bisector has inifinite slope *)
+
+base1fakeperps[z_] = {perpin2[{1,z},(1+z)/2], perpin2[{0,z}, z/2],
+ {1/2, 1/2+I}}
+base1circumcenter[z_] = intersection[perpin2[{1,z},(1+z)/2],{1/2, 1/2+I}]
+
+(* altitudes and orthocenter, in order *)
+base1altitudes[z_] = {perpin[{1,z},0], perpin[{0,z}, 1], perpin[{0,1},z]}
+base1orthocenter[z_] = intersection[perpin[{1,z},0], perpin[{0,z}, 1]]
+
+(* angle bisectors and incenter *)
+
+cos[z,1]
+
+
+(* angle bisector/trisector/etc at origin of 0,1,z *)
+
+intersection[{0, 1+I*Tan[Arg[z]/2]}, {1,z}]
+intersection[{0, 1+I*Tan[Arg[z]/3]}, {1,z}]
+intersection[{0, 1+I*Tan[Arg[z]/4]}, {1,z}]
+
+
+
+
+(* intersection of the perpendicular bisector with opposite sides *)
+
+intersection[{1/2, 1/2+I}, {0,c}]
+intersection[{1/2, 1/2+I}, {1,c}]
+
+
+
+fromnorm[a,b,1/2]
+
 (*********** ACTUAL FUNCTIONS **********)
 
 (* line segments that make up this triangle *)
 segments[{a_,b_,c_}] = {{a,b},{b,c},{c,a}}
 
 (* altitudes *)
-alts[{a_,b_,c_}] = {perpin[{a,c},b], perpin[{b,c},a], perpin[{a,b},c]}
+alts[{a_,b_,c_}] = {perpin[{b,c},a], perpin[{a,c},b], perpin[{a,b},c]}
 
-(* medians (TODO: move to main section later) *)
+(* orthocenter *)
+orthocenter[{a_,b_,c_}] = intersection[alts[{a,b,c}][[1]], alts[{a,b,c}][[2]]]
+
+(* medians *)
 medians[{a_,b_,c_}] = {{a,(b+c)/2}, {b,(a+c)/2}, {c,(a+b)/2}}
 
 (* centroid *)
 centroid[{a_,b_,c_}] = Mean[{a,b,c}]
-
-(* orthocenter *)
-orthocenter[{a_,b_,c_}] = intersection[alts[{a,b,c}][[1]], alts[{a,b,c}][[2]]]
 
 (* if we map AB to 0,1 Arg[c] gives us the angle *)
 angles[{a_,b_,c_}] = Arg[{tonorm[a,b,c], tonorm[b,c,a], tonorm[c,a,b]}]
