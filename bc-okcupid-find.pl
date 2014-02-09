@@ -13,14 +13,22 @@ require "/usr/local/lib/bclib.pl";
 ($text,$file) = cmdfile();
 
 # <div class="match row..."> splits rows
-@matches = split(/<div class=\"match_row/is, $text);
+# @matches = split(/<div class=\"match_row/is, $text);
+# later it's div id="usr-[name]...
+@matches = split(/<div id=\"usr\-/is, $text);
 
 for $i (@matches) {
-  if ($i=~/your rating of (her|him)/i) {next;}
-  $i=~/id=\"usr-(.*?)"/;
+  # ignore the wrapper (need main section)
+  if ($i=~/^[a-z0-9]+\-wrapper/) {next;}
+  # already rated?
+  if ($i=~/flat_stars\s+show/is) {next;}
+  # can't obtain username?
+  unless ($i=~/^([a-z0-9_]+?)\"/i) {next;}
   print "/root/build/firefox/firefox -remote 'openURL(http://www.okcupid.com/profile/$1)'; sleep 2\n";
 }
 
-# debug($text);
+# later:
+# class="star-rating match_card_rating flat_stars"> = not rated
+# class="star-rating match_card_rating flat_stars show  " = rated
 
 # <div class="match_row

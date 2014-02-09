@@ -7,7 +7,11 @@ test1 = {3.49053 + 8.4664 I, 1.23971 + 1.47722 I, 8.58063 + 4.85151 I}
 (* TODO: area, incenter, circumcenter; circles like incircle; add
 labels; side alignment/order *)
 
+(* TODO: Abs is listable, and same as Norm? *)
+
 (************ PLOTTING SECTION **********)
+
+(* <h>We take the golden an, give it to Stan...</h> *)
 
 (* for plotting, convert complex number to pair *)
 
@@ -44,25 +48,27 @@ perpin[{z1_, z2_}, p_] = {fromnorm[z1, z2, Re[tonorm[z1,z2,p]]], p}
 (* perpendicular to a,b through p even if p is on a,b *)
 perpin2[{a_,b_}, p_] = slope2line[-1/line2slope[{a,b}], p]
 
-(* given a list of lines, return their lengths (norms) *)
-norms[list_] := Table[Norm[i[[2]]-i[[1]]], {i,list}]
+(* given a list of lines, return their lengths (abs values) *)
+norms[list_] := Table[Abs[i[[2]]-i[[1]]], {i,list}]
 
 (* given a list of lines, return mutual intersections [in hope of
 finding simplest form for various triangle centers] *)
 
-intersects[list_] := Flatten[FullSimplify[Table[intersection[
+(* TODO: restore FullSimplify, currently replace w Identity *)
+intersects[list_] := Flatten[Identity[Table[intersection[
  list[[i]],list[[j]]], {i,1,Length[list]},{j,i+1,Length[list]}]]]
 
 (* psuedo dot product of two complex numbers *)
 dot[z1_, z2_] = Re[z1]*Re[z2] + Im[z1]*Im[z2]
 
 (* cosine, as dot product over product of lengths *)
-cos[z1_, z2_] = dot[z1,z2]/Norm[z1]/Norm[z2]
+cos[z1_, z2_] = dot[z1,z2]/Abs[z1]/Abs[z2]
 
 (* given a formula to generate a point in the 0,1,z space, generate
 the lines that connect the equivalent points to B and then C *)
 
-translates[f_] := FullSimplify[{
+(* TODO: restore FullSimplify, currently replace w Identity *)
+translates[f_] := Identity[{
  {0,f[z]}, {1,fromnorm[1,z,f[tonorm[1,z,0]]]}, 
  {z,fromnorm[z,0,f[tonorm[z, 0, 1]]]}}]
 
@@ -74,9 +80,18 @@ test2 = {0,1,tonorm[test1[[1]], test1[[2]], test1[[3]]]}
 
 (* medians, in order *)
 
-base1midpoint[z_] = (1+z)/2
-base1medians[z_] = {{0,(1+z)/2}, {1,z/2}, {z, 1/2}}
-base1centroid[z_] = (1+z)/3
+(* if A is at 0, this is midpoint of the opposite side *)
+(* find the medians/centroid using one midpoint and translates[] *)
+
+basemidpoint[z_] = (1+z)/2
+basemedians[z_] = translates[basemidpoint]
+basecentroid[z_] = intersects[basemedians[z]]
+
+(* altitudes and orthocenter, in order, as above *)
+
+basealtitude[z_] = perpin[{1,z}, 0][[1]]
+basealtitudes[z_] = translates[basealtitude]
+baseorthocenter[z_] = intersects[basealtitudes[z]]
 
 (* perpendicular bisectors, in order, arb length; third case is
 special since perpendicular bisector has inifinite slope *)
@@ -85,21 +100,33 @@ base1fakeperps[z_] = {perpin2[{1,z},(1+z)/2], perpin2[{0,z}, z/2],
  {1/2, 1/2+I}}
 base1circumcenter[z_] = intersection[perpin2[{1,z},(1+z)/2],{1/2, 1/2+I}]
 
-(* altitudes and orthocenter, in order *)
-base1altitude[z_] = perpin[{1,z}, 0][[1]]
-base1altitudes[z_] = {perpin[{1,z},0], perpin[{0,z}, 1], perpin[{0,1},z]}
-base1orthocenter[z_] = intersection[perpin[{1,z},0], perpin[{0,z}, 1]]
+(* angle bisectors and incenter, in order, same technique as above *)
 
-(* angle bisectors and incenter *)
+basebisector[z_] = intersection[{0, 1+I*Tan[Arg[z]/2]}, {1,z}]
+basebisectors[z_] = translates[basebisector]
+baseincenter[z_] = intersects[translates[basebisector]]
 
-cos[z,1]
+basetrisector[z_] = intersection[{0, 1+I*Tan[Arg[z]/3]}, {1,z}]
+basetrisectors[z_] = translates[basetrisector]
+
+(* perpendicular bisector for some triangles *)
+(* TODO: find the shorter one *)
+(* can't use translates trick here, neither point is a vertex *)
+
+baseperps[z_] = intersection[{0,1},perpin2[{1,c},(1+c)/2]]
+
+(* calculating the area in multiple ways *)
+
+basearea[z_] = Im[z]/2
+
+1/2*norms[basealtitudes[z]][[1]]*Abs[z-1]
+1/2*norms[basealtitudes[z]][[3]]
+1/2*norms[basealtitudes[z]][[2]]*Abs[z]
+1/2*norms[basealtitudes[z]][[2]]*Abs[z]
 
 
-(* angle bisector/trisector/etc at origin of 0,1,z *)
 
-intersection[{0, 1+I*Tan[Arg[z]/2]}, {1,z}]
-intersection[{0, 1+I*Tan[Arg[z]/3]}, {1,z}]
-intersection[{0, 1+I*Tan[Arg[z]/4]}, {1,z}]
+
 
 
 
@@ -155,6 +182,22 @@ incenter[{a_,b_,c_}] = intersection[bisectors[{a,b,c}][[1]],
 
 (********* PLAYGROUND ********)
 
+Show[{
+superplot[segments[test2], Line],
+superplot[basemedians[test2[[3]]], Line, {Hue[0]}],
+superplot[basealtitudes[test2[[3]]], Line, {Hue[5/8]}],
+superplot[basebisectors[test2[[3]]], Line, {Hue[6/8]}],
+superplot[basetrisectors[test2[[3]]], Line, {Hue[7/8]}]
+}]
+
+Show[{
+superplot[segments[test2], Line],
+superplot[basebisectors[test2[[3]]], Line, {Hue[6/8]}],
+superplot[basetrisectors[test2[[3]]], Line, {Hue[7/8]}]
+}]
+
+
+
 fromnorm[a,b,1/2]
 
 Show[{
@@ -184,18 +227,6 @@ Show[{
 superplot[segments[test1], Line],
 superplot[f2[test1], Line]
 }]
-
-
-
-
-(* angles don't change under standardize *)
-
-angles[{a_,b_,c_}] = {Arg[(a-c)/(a-b)], -Arg[(c-b)/(a-b)],
-Pi+Arg[(c-b)/(a-b)]-Arg[(a-c)/(a-b)]}
-
-(* side lengths, in order *)
-
-lengths[{a_,b_,c_}] = Map[Norm,{b-c,c-a,a-b}]
 
 (* TODO: for formulas below, provide derivation not just results *)
 
