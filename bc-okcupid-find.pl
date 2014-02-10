@@ -19,11 +19,11 @@ require "/usr/local/lib/bclib.pl";
 
 for $i (@matches) {
   # ignore the wrapper (need main section)
-  if ($i=~/^[a-z0-9]+\-wrapper/) {next;}
+  if ($i=~/^[a-z_\-0-9]+\-wrapper/i) {next;}
   # already rated?
   if ($i=~/flat_stars\s+show/is) {next;}
   # can't obtain username?
-  unless ($i=~/^([a-z0-9_]+?)\"/i) {next;}
+  unless ($i=~/^([a-z\-0-9_]+?)\"/i) {next;}
   print "/root/build/firefox/firefox -remote 'openURL(http://www.okcupid.com/profile/$1)'; sleep 2\n";
 }
 

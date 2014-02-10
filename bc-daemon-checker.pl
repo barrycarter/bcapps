@@ -57,7 +57,8 @@ shift(@procs); # ignore header line
 	 "curl",
 	 "/sites/TEST/BCINFO3/usr/local/bin/bc-metar-db.pl",
 	 "/sites/TEST/BCINFO3/usr/local/bin/bc-get-all-weather.pl",
-	 "/sites/TEST/BCINFO3/usr/local/bin/bc-gocomics-comments2.pl"
+	 "/sites/TEST/BCINFO3/usr/local/bin/bc-gocomics-comments2.pl",
+	 "/sites/TEST/ASTRO/bc-read-cheb.pl"
 	 );
 
 # easier as hashes
