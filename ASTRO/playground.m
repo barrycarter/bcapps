@@ -4,10 +4,24 @@ a = 1.1; b = 1;
 
 (* TODO: assuming a and b are global below, fix *)
 
-(* x and y pos at time t *)
+(* x and y pos at time t, increases linearlly with angle *)
 
 x[t_] = a*Cos[t]
 y[t_] = b*Sin[t]
+
+(* polar coordinates area from origin *)
+
+parea[t_] = Integrate[(x[theta]^2+y[theta]^2)/2, {theta,0,t}]
+
+(* area from focus is area from center minus triangle *)
+
+area[t_] = parea[t] - y[t]*Sqrt[a^2-b^2]/2
+
+r*Sin[theta] == Exp[(-r*Cos[theta])^2]
+
+Log[r] + Log[Sin[theta]] == (-r*Cos[theta])^2
+
+
 
 (* t, given x or y [top half of ellipse only] *)
 

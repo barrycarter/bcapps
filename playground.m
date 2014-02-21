@@ -1,3 +1,15 @@
+(* best fit ellipse thoughts *)
+
+dist[t_] = Sqrt[(x[t]-x0)^2 + (y[t]-y0)^2 + (z[t]-z0)^2] +
+Sqrt[(x[t]-x1)^2 + (y[t]-y1)^2 + (z[t]-z1)^2]
+
+(* derv should be constant *)
+
+FullSimplify[dist'[t]]
+
+
+
+
 (* solving http://math.stackexchange.com/questions/6195  *)
 
 ex[n_] = Sum[k*Binomial[n,k]/2^n, {k,0,n}]/n
