@@ -1,6 +1,6 @@
 (* parametric ellipse *)
 
-a = 1.1; b = 1;
+a = 2; b = 1;
 
 (* TODO: assuming a and b are global below, fix *)
 
@@ -9,6 +9,21 @@ a = 1.1; b = 1;
 x[t_] = a*Cos[t]
 y[t_] = b*Sin[t]
 
+(* +-Sqrt[3] are really focii? yup! *)
+
+Sqrt[(x[t]-Sqrt[3])^2 + y[t]^2] + Sqrt[(x[t]+Sqrt[3])^2 + y[t]^2]
+
+
+(* try drawing the problem out a bit *)
+
+g1 = ParametricPlot[{x[t],y[t]},{t,0,2*Pi}]
+
+g2 = Labeled[Point[{{0,0}, {Sqrt[3],0}, {-Sqrt[3],0}}], "foo"]
+
+g3 = Labeled[Point[{0,0}], Text["foo"]]
+
+Show[g1,Graphics[g2]]
+
 (* polar coordinates area from origin *)
 
 parea[t_] = Integrate[(x[theta]^2+y[theta]^2)/2, {theta,0,t}]
@@ -16,6 +31,8 @@ parea[t_] = Integrate[(x[theta]^2+y[theta]^2)/2, {theta,0,t}]
 (* area from focus is area from center minus triangle *)
 
 area[t_] = parea[t] - y[t]*Sqrt[a^2-b^2]/2
+
+(* below is unrelated *)
 
 r*Sin[theta] == Exp[(-r*Cos[theta])^2]
 
