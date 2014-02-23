@@ -9,8 +9,6 @@ a = 2; b = 1;
 x[t_] = a*Cos[t]
 y[t_] = b*Sin[t]
 
-(* let's look at theta compared to t for t = Pi/3 [theta wont be] *)
-
 (* the ellipse, top right part *)
 g1 = ParametricPlot[{x[t],y[t]},{t,0,Pi/2}]
 
@@ -32,26 +30,48 @@ g2 = {
  Text[Style["\[Theta]", FontSize->25], {0.2,0.05}, {-1,-1}]
 } 
  
-Show[g1,Graphics[g2]]
+(* area from focus *)
+g3 = {
+ Line[{{0,0},{x[samp],y[samp]}}],
+ Circle[{0,0}, 2/10, {0, ArcTan[x[samp],y[samp]]}],
+ Dashing[0.01],
+ Line[{{0,0},{x[samp],y[samp]}}], 
+ Dashing[0.01], 
+ Line[{{x[samp],0},{x[samp],y[samp]}}], 
+ Line[{{0,y[samp]},{x[samp],y[samp]}}],
+ Text[Style["b*Sin[t]", FontSize->25], {x[samp], y[samp]/2}, {-1.1,0}],
+ Text[Style["a*Cos[t]", FontSize->25], {x[samp]/2, y[samp]}, {0,-1.1}],
+ Text[Style["\[Theta]", FontSize->25], {0.2,0.05}, {-1,-1}]
+} 
+ 
+Show[g1,Graphics[g3]]
 showit
 
-(* we see than tan(theta) = (b*Sin[t])/(a*Cos[t]), solving for theta *)
+(* we see than tan(theta) = (b*Sin[t])/(a*Cos[t]), solving for t *)
 
 (* Mathematica solves below poorly, so doing my own formula *)
 
-(* Solve[Tan[theta] == (b*Sin[t])/(a*Cos[t]), theta] *)
+(* Solve[Tan[theta] == (b*Sin[t])/(a*Cos[t]), t] *)
 
-theta[t_] = ArcTan[b/a*Tan[t]]
+t[theta_] = ArcTan[a*Tan[theta]/b]
 
 (* We can now reparametrize *)
-x[theta_] = a*Cos[theta[t]]
-y[theta_] = b*Sin[theta[t]]
+x[theta_] = a*Cos[t[theta]]
+y[theta_] = b*Sin[t[theta]]
+
+(* We now have y[theta]/x[theta] == Tan[theta], as desired *)
 
 (* the radius squared at theta *)
 r2[theta_] = x[theta]^2 + y[theta]^2
 
+(* this takes forever to compute, so hardcoding it after getting result *)
+
+(* parea[theta_] = Integrate[r2[x]/2,{x,0,theta}] *)
+
+parea[theta_] = a*b*ArcTan[a*Tan[theta]/b]/2
+
 a = 2; b = 1;
-ParametricPlot[{x[t],y[t]},{t,0,Pi/2}]
+ParametricPlot[{x[t],y[t]} /. {a->2,b->1},{t,0,Pi/2}]
 
 
 
