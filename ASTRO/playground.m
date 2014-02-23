@@ -32,6 +32,8 @@ parea[t_] = Integrate[(x[theta]^2+y[theta]^2)/2, {theta,0,t}]
 
 area[t_] = parea[t] - y[t]*Sqrt[a^2-b^2]/2
 
+Normal[InverseSeries[Series[parea[t], {t,0,15}]]]
+
 (* below is unrelated *)
 
 r*Sin[theta] == Exp[(-r*Cos[theta])^2]
