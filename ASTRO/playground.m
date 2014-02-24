@@ -8,6 +8,8 @@ a = 2; b = 1;
 
 x[t_] = a*Cos[t]
 y[t_] = b*Sin[t]
+focus[a_,b_] = Sqrt[a^2-b^2]
+
 
 (* the ellipse, top right part *)
 g1 = ParametricPlot[{x[t],y[t]},{t,0,Pi/2}]
@@ -29,19 +31,20 @@ g2 = {
  Text[Style["a*Cos[t]", FontSize->25], {x[samp]/2, y[samp]}, {0,-1.1}],
  Text[Style["\[Theta]", FontSize->25], {0.2,0.05}, {-1,-1}]
 } 
+
+
+Graphics[TeXForm[Text[Style["b*Sin[t]", FontSize->25]], {0,0}, {-1.1,0}]]
  
-(* area from focus *)
+(* area from focus, less eccentric ellipse here *)
 g3 = {
- Line[{{0,0},{x[samp],y[samp]}}],
- Circle[{0,0}, 2/10, {0, ArcTan[x[samp],y[samp]]}],
- Dashing[0.01],
- Line[{{0,0},{x[samp],y[samp]}}], 
+ Line[{{focus[a,b],0},{x[samp],y[samp]}}],
+ Circle[{focus[a,b],0}, 1/20, {0, ArcTan[x[samp]-focus[a,b],y[samp]]}],
  Dashing[0.01], 
  Line[{{x[samp],0},{x[samp],y[samp]}}], 
  Line[{{0,y[samp]},{x[samp],y[samp]}}],
  Text[Style["b*Sin[t]", FontSize->25], {x[samp], y[samp]/2}, {-1.1,0}],
  Text[Style["a*Cos[t]", FontSize->25], {x[samp]/2, y[samp]}, {0,-1.1}],
- Text[Style["\[Theta]", FontSize->25], {0.2,0.05}, {-1,-1}]
+ Text[Style["\[Theta]", FontSize->25], {focus[a,b],0.05}, {-1,-1}]
 } 
  
 Show[g1,Graphics[g3]]
