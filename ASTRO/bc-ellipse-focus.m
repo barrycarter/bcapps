@@ -73,6 +73,5 @@ parea[theta_] = Integrate[FullSimplify[r2[x]/2],{x,0,theta}] *)
 
 parea[theta_] = a*b*ArcTan[a*Tan[theta]/b]/2
 
-
-
+Graphics[Text[Style["Sqrt[a^2-b^2]", FontSize->25], {0,0}]]
 
