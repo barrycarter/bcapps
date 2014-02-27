@@ -1,7 +1,3 @@
-(* THIS STARTS OUT AS AN EXACT COPY OF bc-ellipse-center.m AND
-DOES NOT CURRENTLY CALCULATE AREA FROM FOCUS; I WILL REMOVE THIS NOTE
-WHEN IT DOES *)
-
 (* default values when we don't supply a and b *)
 a0 = 11/10; b0 = 1;
 
