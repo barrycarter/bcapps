@@ -35,7 +35,7 @@ my($daten) = `date +%Y%m%d.%H%M%S.%N`;
 chomp($daten);
 my($qfile) = "/var/tmp/querys/$daten-metarnew-get-metar-db-$$";
 
-open(A,">$qfile")||warn("Can't open file, $!");
+open(A,">$qfile")||warn("Can't open file $qfile, $!");
 
 # prevent stale stations from having current cached data + start
 # transaction + delete old data from main dbs, including data with bad
