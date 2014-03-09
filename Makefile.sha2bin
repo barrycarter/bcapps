@@ -1,7 +1,7 @@
 # converts everything in /usr/local/etc/sha/ to actual files in /usr/local/etc/sha/DECODED
 # run as "make -i" to ignore errors (some files are broken)
-imageOBJS=$(shell echo *.bz2 | perl -nle 's/\.bz2/.bz2.dec/isg; print "DECODED/$_"')
+imageOBJS=$(shell echo *.bz2 | perl -pnle 's/\.bz2/.bz2.dec/isg')
 all: $(imageOBJS)
 
 %.bz2.dec: %.bz2
-	bzcat $< | base64 -i -d - > DECODED/$@
+	bzcat $< | base64 -i -d - > DECODED/$@; ln -s DECODED/$@ .

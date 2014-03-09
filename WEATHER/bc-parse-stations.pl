@@ -11,12 +11,12 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# because we get most of our data from mesonet, it comes first
+# mli contains weird entries, so must go first
+mli();
+# because we get most of our data from mesonet, it comes next
 meso();
 nsd();
 ucar();
-# mli contains weird entries, so much come last
-mli();
 
 # fake subroutine so I can control order in which files are read
 sub meso {
@@ -29,6 +29,8 @@ sub meso {
   <A>;
 
   while (<A>) {
+    # convert quotation marks
+    s/\"/&quot;/isg;
     my(@data) = csv($_);
     # get rid of backticks
     map($_=trim($_), @data);
@@ -166,7 +168,7 @@ sub ucar {
 
 sub mli {
 
-  @ls=split(/\n/,read_file("master-location-identifier-database-20130801.csv"));
+  @ls=split(/\n/,read_file("/home/barrycarter/BCGIT/WEATHER/master-location-identifier-database-20130801.csv"));
   # get rid of useless lines
   for (1..4) {shift(@ls);}
   # array-ify
