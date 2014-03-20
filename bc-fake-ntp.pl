@@ -48,9 +48,13 @@ $newtickx=max(min($newtickx,11000),9000);
 $newtick=int($newtickx);
 $newfreq=int(($newtickx-$newtick)*6553600+.5);
 
-$ac="adjtimex --tick $newtick --freq $newfreq";
+$ac="/sbin/adjtimex --tick $newtick --freq $newfreq";
 # die "TESTING: $ac";
 open(A,">>/root/adjtimex.txt");
 print A "$now $curoffset $newtick $newfreq\n";
 close(A);
-system($ac);
+
+($out, $err, $res) = cache_command($ac);
+
+debug("OUT: $out, ERR: $err, RES: $res");
+

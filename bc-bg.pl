@@ -9,16 +9,41 @@ require "/home/barrycarter/BCGIT/bclib.pl";
 # lock
 unless (mylock("bc-bg.pl","murder")) {die("Locked");}
 
+# no X server? die instantly (really only useful for massive rebooting
+# and errors early May 2007)
+if (system("xset q 1> /dev/null 2> /dev/null")) {exit(0);}
+
+# TODO: make this not chvt each time (if already in correct state)
+$loadavg = read_file("/proc/loadavg");
+chomp($loadavg);
+$loadavg=~s/\s.*$//;
+# drop to text terminal if loadavg goes past 10 (will lower loadavg
+# and let me kill bad procs)
+if ($loadavg>10) {
+  system("sudo chvt 1");
+  die("LOAD TOO HIGH");
+}
+
+system("sudo chvt 7");
+
+# if the loadavg increases to 40+ (and this program somehow still
+# manages to run), kill off unimportant procs
+if ($loadavg>40) {
+  for $i ("convert", "xwd", "curl", "grep", "sshfs", "find", "bc-xwd.pl",
+	  "bc-elec-snap.pl", "recollindex") {
+    system("sudo pkill -9 $i");
+  }
+  die("LOAD FAR TOO HIGH");
+}
+
+
+
 # need current time
 $now=time();
 chdir(tmpdir());
 
 # shade of blue I want to use
 $blue = "128,128,255";
-
-# no X server? die instantly (really only useful for massive rebooting
-# and errors early May 2007)
-if (system("xset q 1> /dev/null 2> /dev/null")) {exit(0);}
 
 # HACK: leave n top lines blank for apps that "nest" there
 # push(@info,"","","");
@@ -36,7 +61,7 @@ $uptime = convert_time($uptime, "%dd%Hh%Mm");
 
 # "daytime" stuff now replaced by bc-get-astro.pl
 
-push(@info, "UPTIME: $uptime");
+push(@info, "UPTIME: $uptime (CPU: $loadavg)");
 
 # @info = stuff we print (to top left corner)
 # local and GMT time

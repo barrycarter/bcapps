@@ -1,3 +1,12 @@
+(* average ages *)
+
+(* a = average age, n = population, a*n = total age *)
+
+birth = a*n/(n+1)- a
+
+death = (a*n-x)/(n-1) - a 
+
+
 (* best fit ellipse thoughts *)
 
 dist[t_] = Sqrt[(x[t]-x0)^2 + (y[t]-y0)^2 + (z[t]-z0)^2] +
