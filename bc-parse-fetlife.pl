@@ -18,6 +18,10 @@ for $i (randomize(\@files)) {
   $title = $1;
   if ($title eq "Home - FetLife") {next;}
 
+  # wipe out variables
+  %data = ();
+  ($name, $age, $gender, $role, $location, $user) = ();
+
   # user number is only in filename
   $i=~/\/user(\d+)\.html$/;
   ($user) = $1;
