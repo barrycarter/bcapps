@@ -39,6 +39,7 @@ for $i (randomize(\@files)) {
   ($user) = $1;
 
   # name, age, and orientation/gender
+  # I have confirmed names never have spaces
   $all=~s%<h2 class="bottom">(.*?)\s*<span class="small quiet">(\d+)(.*)\s+(.*?)</span></h2>%%;
   ($name, $age, $gender, $role) = ($1, $2, $3, $4);
 
@@ -91,14 +92,20 @@ for $i (randomize(\@files)) {
          '$data{orientation}', '$data{active}');\n";
 
   # latest activity (just want to know when user was last active)
+  $latest = "";
   $all=~s%<ul id="mini_feed">(.*?)</ul>%%is;
   $activity = $1;
-  debug("ACT: $activity");
+#  debug("ACT: $activity");
   while ($activity=~s%<li>\s*(.*?)\s*</li>%%s) {
     $act = $1;
-    # make sure actor matches user
-    $act=~s/\s+.*$//s;
-    unless ($act eq $name) {die "$user, $act, $name";}
+    # find actor and date of event (most recent first)
+    $act=~s%^(.*?)\s+%%s;
+    $actor = $1;
+    $act=~s%<span class="quiet small">(.*?)</span>%%s;
+    $date = $1;
+    # if actor and name match, we're done
+    if ($actor eq $name) {$latest = $date; last;}
+    warn("BADACT: $user,$name,$actor,$date");
   }
 
   # other frequently used fields, "relationship status" and "D/s
