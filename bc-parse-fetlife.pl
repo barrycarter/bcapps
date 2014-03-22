@@ -72,9 +72,15 @@ for $i (randomize(\@files)) {
 
   # split the "into" and "curiousabout" lists
   for $j ("into", "curiousabout") {
+    # ones where role is indicated
     while ($data{$j}=~s%<a href="/fetishes/\d+">([^>]*?)</a> <span class="quiet smaller">(.*?)</span>%%) {
       print "INSERT INTO fetishes (user, type, fetish, role) VALUES
            ($user, '$j', '$1', '$2');\n";
+    }
+    # ones where role is NOT indicated
+    while ($data{$j}=~s%<a href="/fetishes/\d+">([^>]*?)</a>%%) {
+      print "INSERT INTO fetishes (user, type, fetish, role) VALUES
+           ($user, '$j', '$1', 'NA');\n";
     }
   }
 
@@ -83,6 +89,17 @@ for $i (randomize(\@files)) {
          orientation, active)
          VALUES ('$name', '$age', '$gender', '$role', '$location', $user,
          '$data{orientation}', '$data{active}');\n";
+
+  # latest activity (just want to know when user was last active)
+  $all=~s%<ul id="mini_feed">(.*?)</ul>%%is;
+  $activity = $1;
+  debug("ACT: $activity");
+  while ($activity=~s%<li>\s*(.*?)\s*</li>%%s) {
+    $act = $1;
+    # make sure actor matches user
+    $act=~s/\s+.*$//s;
+    unless ($act eq $name) {die "$user, $act, $name";}
+  }
 
   # other frequently used fields, "relationship status" and "D/s
   # relationship status", are multivalued
