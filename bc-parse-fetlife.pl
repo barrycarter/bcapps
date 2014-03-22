@@ -7,6 +7,18 @@ require "/usr/local/lib/bclib.pl";
 # fixed random seed (we need predictability while testing)
 srand(20140321);
 
+# print the schema
+print << "MARK";
+DROP TABLE IF EXISTS kinksters;
+DROP TABLE IF EXISTS fetishes;
+CREATE TABLE kinksters (name, age INT, gender, role, location, user INT,
+ orientation, active);
+CREATE TABLE fetishes (user INT, type, fetish, role);
+VACUUM;
+BEGIN TRANSACTION;
+MARK
+;
+
 @files = glob("/home/barrycarter/20140321/user*.html");
 
 for $i (randomize(\@files)) {
@@ -20,7 +32,7 @@ for $i (randomize(\@files)) {
 
   # wipe out variables
   %data = ();
-  ($name, $age, $gender, $role, $location, $user) = ();
+  ($name, $age, $gender, $role, $location, $user, $fetishes) = ();
 
   # user number is only in filename
   $i=~/\/user(\d+)\.html$/;
@@ -42,31 +54,42 @@ for $i (randomize(\@files)) {
 
   # table fields with headers/colons
   while ($all=~s%<tr>\s*<th[^>]*>(.*?)</th>\s*<td>(.*?)</td>\s*</tr>%%is) {
-    ($key, $val) = ($1,$2);
+    ($key, $val) = (lc($1),$2);
     $key=~s/:\s*$//isg;
     $key=~s/\s//isg;
+    $val=~s/\'//isg;
     $data{$key} = $val;
-    debug("KEY: $key");
   }
 
-  debug("VAL",%data);
+  # list of fetishes
+  while ($all=~s%<p><span class="quiet"><em>(.*?)</em>(.*?)</p>%%is) {
+    ($key, $val) = (lc($1),$2);
+    $key=~s/:\s*$//isg;
+    $key=~s/\s//isg;
+    $val=~s/\'//isg;
+    $data{$key} = $val;
+  }
 
-  print join("\t", ($name, $age, $gender, $role, $location, $user,
-		    $data{orientation}, $data{active})),"\n";
+  # split the "into" and "curiousabout" lists
+  for $j ("into", "curiousabout") {
+    while ($data{$j}=~s%<a href="/fetishes/\d+">([^>]*?)</a> <span class="quiet smaller">(.*?)</span>%%) {
+      print "INSERT INTO fetishes (user, type, fetish, role) VALUES
+           ($user, '$j', '$1', '$2');\n";
+    }
+  }
+
+  # need '' around age in case its blank
+  print "INSERT INTO kinksters (name, age, gender, role, location, user,
+         orientation, active)
+         VALUES ('$name', '$age', '$gender', '$role', '$location', $user,
+         '$data{orientation}', '$data{active}');\n";
 
   # other frequently used fields, "relationship status" and "D/s
   # relationship status", are multivalued
 
 }
 
-=item schema
-
-CREATE TABLE kinksters (name, age INT, gender, role, location, user INT,
- orientation, active);
-.separator "\t"
-.import (output) kinksters
-
-=cut
+print "COMMIT;\n";
 
 die "TESTING";
 
