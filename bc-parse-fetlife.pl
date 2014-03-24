@@ -12,7 +12,7 @@ print << "MARK";
 DROP TABLE IF EXISTS kinksters;
 DROP TABLE IF EXISTS fetishes;
 CREATE TABLE kinksters (name, age INT, gender, role, location, user INT,
- orientation, active);
+ orientation, active, latest);
 CREATE TABLE fetishes (user INT, type, fetish, role);
 VACUUM;
 BEGIN TRANSACTION;
@@ -85,28 +85,24 @@ for $i (randomize(\@files)) {
     }
   }
 
-  # need '' around age in case its blank
-  print "INSERT INTO kinksters (name, age, gender, role, location, user,
-         orientation, active)
-         VALUES ('$name', '$age', '$gender', '$role', '$location', $user,
-         '$data{orientation}', '$data{active}');\n";
-
-  # latest activity (just want to know when user was last active)
-  $latest = "";
+  # latest activity (just want to know when user was last active, only
+  # need most recent activity, not all)
   $all=~s%<ul id="mini_feed">(.*?)</ul>%%is;
   $activity = $1;
-#  debug("ACT: $activity");
-  while ($activity=~s%<li>\s*(.*?)\s*</li>%%s) {
-    $act = $1;
-    # find actor and date of event (most recent first)
-    $act=~s%^(.*?)\s+%%s;
-    $actor = $1;
-    $act=~s%<span class="quiet small">(.*?)</span>%%s;
-    $date = $1;
-    # if actor and name match, we're done
-    if ($actor eq $name) {$latest = $date; last;}
-    warn("BADACT: $user,$name,$actor,$date");
-  }
+  $activity=~s%<li>\s*(.*?)\s*</li>%%s;
+  $act = $1;
+  # find date of last activity
+  $act=~s%<span class="quiet small">(.*?)</span>%%s;
+  $date = $1;
+  # some dates are hyperlinked, sigh
+  $date=~s/<(.*?)>//isg;
+
+  # need '' around age in case its blank
+  # TODO: change date from weird format to better format
+  print "INSERT INTO kinksters (name, age, gender, role, location, user,
+         orientation, active, latest)
+         VALUES ('$name', '$age', '$gender', '$role', '$location', $user,
+         '$data{orientation}', '$data{active}', '$date');\n";
 
   # other frequently used fields, "relationship status" and "D/s
   # relationship status", are multivalued
@@ -115,28 +111,15 @@ for $i (randomize(\@files)) {
 
 print "COMMIT;\n";
 
-die "TESTING";
+=item views
 
-# test file (not anyone I know)
-$all = read_file("/home/barrycarter/20140321/user1861827.html");
+Useful view:
 
-# debug($all);
-
-# name and orientation/gender
-$all=~s%<h2 class="bottom">(.*?)</h2>%%s;
-$val{extra} = $1;
-
-# latest activity (useful to see when user was last active)
-$all=~s%<h3 class="bottom">Latest activity</h3>(.*?)<h3 class="bottom">Fetishes </h3>(.*?)%%;
-
-debug("VAL",%val);
-
-
-die "TESTING";
-
-# kinkster (user) name
-$all=~s%<title>(.*?)\s+\-\s*kinksters\s*\-\s*fetlife</title>%%is || warn("NO NAME: $all");
+CREATE VIEW recent AS SELECT * FROM kinksters WHERE latest LIKE '%minute%'
+OR latest LIKE '%hour%' OR latest LIKE '%day%';
 
 
 
-debug($1);
+
+
+=cut
