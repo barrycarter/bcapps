@@ -115,11 +115,10 @@ print "COMMIT;\n";
 
 Useful view:
 
-CREATE VIEW recent AS SELECT * FROM kinksters WHERE latest LIKE '%minute%'
-OR latest LIKE '%hour%' OR latest LIKE '%day%';
+DROP VIEW IF EXISTS recent;
 
-
-
-
+CREATE VIEW recent AS SELECT * FROM kinksters WHERE latest LIKE
+'%minute%' OR latest LIKE '%hour%' OR latest LIKE '%day%' OR (latest
+LIKE '%month%' AND latest NOT LIKE '%months%');
 
 =cut
