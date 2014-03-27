@@ -26,6 +26,7 @@ MARK
 ;
 
 for $i (sort keys %user) {
+  debug("I: $i");
   push(@str,"str.replace(/$i/gi,'XXX-$i-XXX')");
 }
 

@@ -1,5 +1,14 @@
 # shell one liners
 
+# from http://www.okcupid.com/messages?folder=2 prints users I've sent
+# mail to (note: be sure to scroll all the way down, and repeat if
+# there are multiple pages); 
+# sample usage: 
+# ~/BCGIT/oneliners.sh < ~/Download/messages.html | tee ~/okcupid-barrycarter-hide-sent.txt
+# where ~ is /home/barrycarter
+
+perl -anle 'if (m%/profile/(.*?)\?cf=messages%) {print $1;}' | sort | uniq
+
 exit;
 
 # biggest map of USA google maps will give me (though I might end up
