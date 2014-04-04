@@ -1,3 +1,9 @@
 # ultimately creates a greasemonkey file that marks users I've already
-# contacted on okcupid OR have decided not to contact. Files:
-#manual.txt 
+# contacted on okcupid (I use okcupid's "hide" feature for users I
+# don't want to contact. Files:
+# sent.txt: existing list of users to whom I've sent mail (must exist)
+# /home/barrycarter/Download/messages.html: latest download of:
+# http://www.okcupid.com/messages?folder=2 (scroll to bottom before saving)
+# (run multiple times for each page if multiple pages)
+sent.txt: /home/barrycarter/Download/messages.html Makefile
+	bc-quikbak.pl sent.txt; mv sent.txt sent.txt.old; perl -nle 'if (m%/profile/(.*?)\?cf=messages%) {print $1;}' /home/barrycarter/Download/messages.html > sent.txt.new; sort sent.txt.old sent.txt.new | uniq > sent.txt
