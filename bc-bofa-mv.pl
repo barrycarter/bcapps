@@ -65,8 +65,11 @@ sub handle_nmefcu {
   # \xe2\x88\x92 now means "-", apparently
   $all=~s/\xe2\x88\x92/-/isg;
 
-  # <h>Remember when THRU wasn't a word?</h>
-  if ($all=~/[\d\-]+\s*THRU\s*([\d\-]+)/) {
+  # new format ~ Mar 2014
+  if ($all=~/ending date: ([\d\-]+)/is) {
+    $date = $1;
+  } elsif ($all=~/[\d\-]+\s*THRU\s*([\d\-]+)/) {
+    # <h>Remember when THRU wasn't a word?</h>
     $date = $1;
   } else {
     warnlocal("CANNOT PARSE NMEFCU DATE");
