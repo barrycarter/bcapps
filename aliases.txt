@@ -114,3 +114,6 @@ alias hex2dec "bc-call-func.pl hex \!*"
 # fixed to not use shell
 # alias todotags "perl -nle 'while (s/\[(.*?)\]//) {print \"$1\"}' /home/barrycarter/bc-todo-list.txt|sort|uniq -c|sort -nr"
 alias todotags "bc-todotags.pl '\[(.*?)\]' < ~/bc-todo-list.txt | sort | uniq -c | sort -nr | less"
+
+# hideously ugly and applicable only to me, this resets my USB bus
+alias usbreset "echo 0000:00:1d.0 >! /sys/bus/pci/drivers/ehci_hcd/unbind; echo 0000:00:1a.0 >! /sys/bus/pci/drivers/ehci_hcd/unbind; echo 0000:00:1d.0 >! /sys/bus/pci/drivers/ehci_hcd/bind; echo 0000:00:1d.0 >! /sys/bus/pci/drivers/ehci_hcd/bind;"
