@@ -30,6 +30,8 @@ if ($ENV{HTTP_HOST} eq "u.94y.info") {
   print "Location: http://wordpress.barrycarter.info/index.php/free-open-source-perl-script-to-increase-twitter-followers/";
 } elsif ($ENV{HTTP_HOST} eq "lt.u.94y.info") {
   print "Location: http://wordpress.barrycarter.info/index.php/track-albuquerque-lightning-july-16th-20th/";
+} elsif ($ENV{HTTP_HOST} eq "pbs.u.94y.info") {
+  print "Location: http://wordpress.barrycarter.info/index.php/2014/04/23/pearls-before-swine-comments";
 } else {
   # do nothing
 }
