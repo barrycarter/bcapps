@@ -1,0 +1,43 @@
+A more formal attempt at creating a meta-wiki for mediawiki
+
+Sample:
+
+Old format:
+
+[[Rho]] [[Rho!!comes before [[Sigma]], which [[Sigma!! comes before [[preceeds::Tau]], which [[Tau!! comes before [[preceeds::Upsilon]], which [[Upsilon!! comes before [[preceeds::Phi]], which [[Phi!! comes before [[preceeds::Chi]], which [[Chi!! comes before [[preceeds::Psi]], which [[Psi!! comes before [[preceeds::Omega]]]]]]]]]]]]]]]]. Test of deep nesting
+
+New format:
+
+<add page="Greek letters">
+
+[[Rho]]
+
+<add page="Rho">
+
+comes before [[Sigma]]. which
+
+<add page="Sigma">
+
+comes before [[preceeds::Tau]], which
+
+<add page="Tau">
+
+comes before [[[[preceeds::Upsilon]], which
+
+<add page="Upsilon">
+
+comes before [[preceeds::Phi]], which
+
+<add page="Phi">
+
+comes before [[preceeds::Chi]], which
+
+<add page="Chi">
+
+comes before [[preceeds::Psi]] which
+
+<add page="Psi">
+
+comes before [[preceeds::Omega]]
+
+</add></add></add></add></add></add></add>

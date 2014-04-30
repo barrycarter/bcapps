@@ -1,0 +1,38 @@
+-- the schema of gocomics.db (denormalized for BCINFO3, converted to mysql)
+
+CREATE TABLE comments ( 
+ commentid INTEGER PRIMARY KEY, -- the comment id
+ commentor TEXT, -- commentor name
+ commentorid INT, -- id of commentor 
+ strip TEXT, -- name of strip being commented on
+ stripid TEXT, -- short name of strip being commented on
+ year INT, -- year of strip being commented on 
+ month INT, -- month 
+ date INT, -- date 
+ body TEXT, -- body of comment 
+ time TEXT, -- gocomics short form of time
+ unixtime INT, -- time comment added to db
+ timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
+);
+
+-- this Unix command lets me use sqlite3 INSERT commands in MySQL
+-- sed 's/INSERT OR IGNORE INTO/REPLACE INTO/' 10000-out.sql | mysql gocomics
+
+CREATE INDEX i1 ON comments(timestamp);
+CREATE INDEX i2 ON comments(stripid);
+CREATE INDEX i3 ON comments(commentid);
+CREATE INDEX i4 ON comments(commentor);
+CREATE INDEX i5 ON comments(year);
+CREATE INDEX i6 ON comments(month);
+CREATE INDEX i7 ON comments(date);
+
+-- added below 25 Aug 2013 purely for speed (even with indexes above,
+-- can be too slow); this column is redundant
+
+ALTER TABLE comments ADD url;
+UPDATE comments SET url =
+'http://gocomics.com/'||stripid||'/'||year||'/'||month||'/'||date;
+CREATE INDEX i8 ON comments(url);
+
+-- TODO: consider dropping other indexes that are less useful
+

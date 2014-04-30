@@ -1,0 +1,6 @@
+Pearls Before Swine tests (text like this, outside of any "add" block,
+does not appear anywhere).
+
+<add page="29 Apr 2014">
+
+[[has
