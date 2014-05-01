@@ -11,7 +11,8 @@ CREATE TABLE comments (
  date INT, -- date 
  body TEXT, -- body of comment 
  time TEXT, -- gocomics short form of time
- unixtime INT, -- time comment added to db
+ unixtime INT, -- time comment added to db,
+ url TEXT,
  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
 );
 

@@ -1,3 +1,18 @@
+(* birthday "paradox" *)
+
+f[n_,p_] = FullSimplify[Product[n-i,{i,1,p-1}]/n^(p-1),Integers]
+
+lf[n_,p_] = LogGamma[1+n]-p*Log[n]-LogGamma[1+n-p]
+
+Solve[lf[n,p]==Log[1/2],p,Reals]
+
+Solve[f[n,p]==1/2,p,Integers]
+
+Log[f[n,p]]
+
+Solve[Product[(n-i)/n, {i,1,p}]== 1/2, p]
+
+
 (* average ages *)
 
 (* a = average age, n = population, a*n = total age *)
