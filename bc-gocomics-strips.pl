@@ -10,10 +10,10 @@
 require "/usr/local/lib/bclib.pl";
 
 $strip = "pearlsbeforeswine";
-$workdir = "/var/tmp/gocomics/$strip";
+$workdir = "/mnt/extdrive/GOCOMICS/$strip";
 dodie("chdir('$workdir')");
 
-for $i (1980..2012) {
+for $i (2002..2014) {
   for $j (1..12) {
     # for which days this month are comics available?
 
@@ -36,6 +36,7 @@ if (@commands) {
 
 for $i (glob "days-for-*") {
   $all = read_file($i);
+  debug("$i: $all");
   # remove brackets and quotes, split into days
   $all=~s/[\[\]\"]//isg;
   push(@days,split(/\,/,$all));
@@ -63,6 +64,10 @@ if (@commands2) {
 # now, look inside files for image
 
 for $i (glob "page-*") {
+
+  # if I already have the GIF, ignore
+  if (-f "$i.gif") {next;}
+
   $all = read_file($i);
 
   # look for the image
@@ -78,18 +83,21 @@ for $i (glob "page-*") {
 #    unless ($src=~/cdn\.svcs\.c2\.uclick\.com/) {next;}
     unless ($src=~/^http:..assets\.amuniversal\.com/) {next;}
 
-    # I think all pearlsbeforeswine has a 900 version
-    unless ($src=~/width\=900/) {next;}
+    # remove size tag from src (we'll add our own later)
+    $src=~s/\?.*$//;
 
-    unless (-f "$i.gif") {
-      debug("ADDING: $i.gif");
-      push(@commands3, "curl -o $i.gif -A 'Chaci Arcola' '$src'");
-    }
+    # create hash to avoid dupes (yes, the whole command)
+    $images{"curl -o $i.gif -A 'Chaci Arcola' '$src?width=1500'"} = 1;
+
+    # I think all pearlsbeforeswine have a width=900 version
+    # I am wrong about this
+    # unless ($src=~/width\=900/) {next;}
   }
 }
 
-if (@commands3) {
-  write_file(join("\n",@commands3), "runme3.sh");
+
+if (%images) {
+  write_file(join("\n",keys %images), "runme3.sh");
   # /var/tmp/gocomics is sshfs-mounted, so don't want to run parallel here
   die "TESTING";
   system("parallel -j 20 < runme3.sh");
