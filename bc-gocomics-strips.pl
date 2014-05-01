@@ -83,15 +83,13 @@ for $i (glob "page-*") {
 #    unless ($src=~/cdn\.svcs\.c2\.uclick\.com/) {next;}
     unless ($src=~/^http:..assets\.amuniversal\.com/) {next;}
 
-    # remove size tag from src (we'll add our own later)
-    $src=~s/\?.*$//;
+    # I think all pearlsbeforeswine have a width version (not necessarily 900)
+    # the nonwidth version does not zoom properly
+    unless ($src=~s/\?width\=.*$//) {next;}
 
     # create hash to avoid dupes (yes, the whole command)
-    $images{"curl -o $i.gif -A 'Chaci Arcola' '$src?width=1500'"} = 1;
+    $images{"curl -o $i.gif -A 'gocomics\@barrycarter.info' '$src?width=1500'"} = 1;
 
-    # I think all pearlsbeforeswine have a width=900 version
-    # I am wrong about this
-    # unless ($src=~/width\=900/) {next;}
   }
 }
 
