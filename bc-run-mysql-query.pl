@@ -8,75 +8,81 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# TODO: sense I'm not handling the printing of content-type: text/html
-# optimally
+# forces "readonly" user where not otherwise specified
+$ENV{USER} = "readonly";
+
+# TODO: I'm not handling the printing of content-type: text/html optimally?
+print "Content-type: text/html\n\n";
+
+# TODO: stop doing this
+$globopts{debug}=1;
+
+# TODO: ugly way to stop 'requests' queries (maybe too ugly)
+if ($ENV{HTTP_HOST}=~/request/i) {
+  webdie("Hostname cannot contain phrase 'request': you cannot query the requests table");
+}
 
 # TODO: SECURITY!!!
 # check to see if db exists
 # TODO: add non-redundant error checking
 # parse hostname ($tld includes ".db." part)
-if ($ENV{HTTP_HOST}=~/^schema\.([a-z]+)\.(db|database)\.(.*?)$/i) {
+if ($ENV{HTTP_HOST}=~/^schema\.([a-z_]+)\.(db|database)\.(.*?)$/i) {
   # schema request($database, $tld)
   check_db($1);
   schema_request($1,"$2.$3");
-} elsif ($ENV{HTTP_HOST}=~/^rss\.([0-9a-f]+)\.([a-z]+)\.(db|database)\.(.*?)$/i) {
+} elsif ($ENV{HTTP_HOST}=~/^rss\.([0-9a-f]+)\.([a-z_]+)\.(db|database)\.(.*?)$/i) {
   # request for RSS (same subroutine as request for query)
   check_db($2);
   query_request($1,$2,"$3.$4", "rss");
-} elsif ($ENV{HTTP_HOST}=~/^csv\.([0-9a-f]+)\.([a-z]+)\.(db|database)\.(.*?)$/i) {
+} elsif ($ENV{HTTP_HOST}=~/^csv\.([0-9a-f]+)\.([a-z_]+)\.(db|database)\.(.*?)$/i) {
   # request for CSV (same subroutine as request for query)
   check_db($2);
   query_request($1,$2,"$3.$4", "csv");
-} elsif ($ENV{HTTP_HOST}=~/^([0-9a-f]+)\.([a-z]+)\.(db|database)\.(.*?)$/i) {
+} elsif ($ENV{HTTP_HOST}=~/^([0-9a-f]+)\.([a-z_]+)\.(db|database)\.(.*?)$/i) {
   # request for existing query
   check_db($2);
   query_request($1,$2,"$3.$4");
-} elsif ($ENV{HTTP_HOST}=~/^post\.([a-z]+)\.(db|database)\.(.*?)$/i) {
+} elsif ($ENV{HTTP_HOST}=~/^post\.([a-z_]+)\.(db|database)\.(.*?)$/i) {
   # posting a new query
   check_db($1);
   post_request($1,"$2.$3");
-} elsif ($ENV{HTTP_HOST}=~/^([a-z]+)\.(db|database)\.(.*?)$/i) {
+} elsif ($ENV{HTTP_HOST}=~/^([a-z_]+)\.(db|database)\.(.*?)$/i) {
   # request for form only
   check_db($1);
-  print "Content-type: text/html\n\n";
   # lets me confirm at least the CGI is right
   form_request($1,"$2.$3");
 } elsif ($ENV{HTTP_HOST}=~/^(db|database)\.(.*?)$/i) {
   # request for list of dbs (currently not honored)
   dblist_request("$1.$2");
 } else {
-  print "Content-type: text/html\n\nHostname $ENV{HTTP_HOST} not understood";
+  print "Hostname $ENV{HTTP_HOST} not understood";
 }
 
 exit();
 
 sub check_db {
   my($db) = @_;
-  # TODO: not this (but if all tables are in one db, maybe..)
-  return 1;
-  # doesnt exist
-  unless (-f "$db.db") {
-    print "Content-type: text/html\n\n";
-    webdie("$db.db: no such file");
+  unless ($db=~/^[a-z_]+_shared$/i) {
+    webdie("DB name MUST end with _shared and contain only alpha characters");
   }
+  my($res) = mysqlval("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '$db'");
+  unless ($res eq $db) {webdie("No such database: $db");}
+  # technically don't need to return anything, would've died if bad
+  return 1;
 }
 
 # this subroutines are specific to this program thus not well documented
 sub schema_request {
-  webug("SCHEMA_REQUEST");
   my($db,$tld) = @_;
-  print "Content-type: text/plain\n\n";
-  my($out,$err,$res) = cache_command2("echo '.schema' | sqlite3 $db.db");
-  if ($res) {webdie("SCHEMA ERROR: $err");}
-  print $out;
+  my($out,$err,$res) = cache_command2("mysqldump --no-data --compact $db | egrep -v '^/'");
+  if ($res) {webdie("Error getting schema: $res");}
+  print "<pre>\n$out</pre>\n";
 }
 
-# request for query already in requests.db
+# request for query already in requests.requests
 sub query_request {
   my($hash,$db,$tld,$rss) = @_;
-  # TODO: put requests table in an entirely different db for safety?
-#  my($query) = decode_base64(mysql("SELECT query FROM requests WHERE md5='$hash' AND db='$db'", "shared"));
-  my($query) = decode_base64(mysqlval("SELECT query FROM requests WHERE md5='$hash' AND db='$db'", "shared"));
+  my($query) = decode_base64(mysqlval("SELECT query FROM requests WHERE md5='$hash' AND db='$db'", "requests"));
 
   # no query returned?
   unless ($query) {
@@ -93,7 +99,7 @@ sub query_request {
 
   # avoid DOS by limiting cputime
   # TODO: allow non-html formats
-  my($out,$err,$res) = cache_command2("ulimit -t 5 && mysql -H shared < $tmp");
+  my($out,$err,$res) = cache_command2("ulimit -t 5 && mysql -H $db < $tmp");
 
   # restore hyperlinks and quotes
   $out=~s/&lt;/</isg;
@@ -103,11 +109,9 @@ sub query_request {
 
   # error?
   if ($res) {
-    print "Content-type: text/html\n\n";
     webdie("QUERY: $query<br>ERROR: $err<br>");
   }
 
-  debug("HALPH");
   # known good result; requesting rss?
   if ($rss=~/^rss$/i) {
     local(*A);
@@ -126,7 +130,7 @@ sub query_request {
 <title>$query</title>
 
 NOTE: This page is experimental. Bug reports to
-carter.barry\@gmail.com. Query language is SQLite3.<p>
+carter.barry\@gmail.com. Query language is MySQL.<p>
 
 Prepend rss. to the URL for an RSS feed, csv. to the URL for CSV output.<p>
 
@@ -177,10 +181,8 @@ sub post_request {
   # query is now safe, add to requests.db (as base 64)
   my($iquery) = encode_base64($query);
   my($queryhash) = md5_hex($iquery);
-  mysql("REPLACE INTO requests (query,db,md5) VALUES ('$iquery', '$db', '$queryhash')", "shared");
+  mysql("REPLACE INTO requests (query,db,md5) VALUES ('$iquery', '$db', '$queryhash')", "requests");
   if ($SQL_ERROR) {
-    print "Content-type: text/html\n\n";
-    print "THIS IS POST\n";
     webdie("SQL ERROR (requests): $SQL_ERROR");
   }
   # and redirect
@@ -211,8 +213,10 @@ MARK
 
 =item schema
 
-Schema of tables and users:
+Schema of tables and users (keep requests in an unshared db intentionally):
 
+CREATE DATABASE requests;
+\u requests
 CREATE TABLE requests (
  query TEXT, -- stored query in MIME64 format
  db TEXT, -- the database for the query
@@ -248,7 +252,7 @@ sub mysql {
   my($out,$err,$res,$fname) = cache_command2($cmd,"nocache=1");
   # get rid of the row numbers + remove blank first line
   $out=~s/^\*+\s*\d+\. row\s*\*+$//img;
-  $out=~s/^\n//s;
+  $out = trim($out);
 
   if ($res) {
     warnlocal("MYSQL returns $res: $out/$err, CMD: $cmd");
