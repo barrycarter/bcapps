@@ -9,7 +9,7 @@
 require "/usr/local/lib/bclib.pl";
 
 # forces "readonly" user where not otherwise specified
-$ENV{USER} = "readonly";
+$ENV{MYSQL_USER} = "readonly";
 
 # TODO: stop doing this
 $globopts{debug}=1;
@@ -180,10 +180,11 @@ sub post_request {
   }
 
   # safety checks
-  unless ($query=~/^select/i) {
-    print "Content-type: text/html\n\n";
-    webdie("Query doesn't start w SELECT: $query");
-  }
+  # TODO: restore this!
+#  unless ($query=~/^select/i) {
+#    print "Content-type: text/html\n\n";
+#    webdie("Query doesn't start w SELECT: $query");
+#  }
   # permitted characters (is this going to end up being everything?)
   if ($query=~/([^a-z0-9_: \(\)\,\*\<\>\"\'\=\.\/\?\|\!\+\-\%\\])/i) {
     print "Content-type: text/html\n\n";
