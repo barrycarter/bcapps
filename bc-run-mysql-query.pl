@@ -11,19 +11,16 @@ require "/usr/local/lib/bclib.pl";
 # forces "readonly" user where not otherwise specified
 $ENV{USER} = "readonly";
 
-# TODO: I'm not handling the printing of content-type: text/html optimally?
-print "Content-type: text/html\n\n";
-
 # TODO: stop doing this
 $globopts{debug}=1;
 
 # TODO: ugly way to stop 'requests' queries (maybe too ugly)
 if ($ENV{HTTP_HOST}=~/request/i) {
+  print "Content-type: text/html\n\n";
   webdie("Hostname cannot contain phrase 'request': you cannot query the requests table");
 }
 
-# TODO: SECURITY!!!
-# check to see if db exists
+# TODO: SECURITY!!! (defeat dbname.tablename notation)
 # TODO: add non-redundant error checking
 # parse hostname ($tld includes ".db." part)
 if ($ENV{HTTP_HOST}=~/^schema\.([a-z_]+)\.(db|database)\.(.*?)$/i) {
@@ -55,6 +52,7 @@ if ($ENV{HTTP_HOST}=~/^schema\.([a-z_]+)\.(db|database)\.(.*?)$/i) {
   # request for list of dbs (currently not honored)
   dblist_request("$1.$2");
 } else {
+  print "Content-type: text/html\n\n";
   print "Hostname $ENV{HTTP_HOST} not understood";
 }
 
@@ -63,10 +61,14 @@ exit();
 sub check_db {
   my($db) = @_;
   unless ($db=~/^[a-z_]+_shared$/i) {
+    print "Content-type: text/html\n\n";
     webdie("DB name MUST end with _shared and contain only alpha characters");
   }
   my($res) = mysqlval("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '$db'");
-  unless ($res eq $db) {webdie("No such database: $db");}
+  unless ($res eq $db) {
+    print "Content-type: text/html\n\n";
+    webdie("No such database: $db");
+  }
   # technically don't need to return anything, would've died if bad
   return 1;
 }
@@ -75,8 +77,12 @@ sub check_db {
 sub schema_request {
   my($db,$tld) = @_;
   my($out,$err,$res) = cache_command2("mysqldump --no-data --compact $db | egrep -v '^/'");
-  if ($res) {webdie("Error getting schema: $res");}
-  print "<pre>\n$out</pre>\n";
+  if ($res) {
+    print "Content-type: text/html\n\n";
+    webdie("Error getting schema: $res");
+  }
+  print "Content-type: text/plain\n\n";
+  print $out;
 }
 
 # request for query already in requests.requests
@@ -86,6 +92,7 @@ sub query_request {
 
   # no query returned?
   unless ($query) {
+    print "Content-type: text/html\n\n";
     webdie("$db exists, but no query with hash $hash. Try http://$db.$tld/");
   }
 
@@ -109,6 +116,7 @@ sub query_request {
 
   # error?
   if ($res) {
+    print "Content-type: text/html\n\n";
     webdie("QUERY: $query<br>ERROR: $err<br>");
   }
 
@@ -172,9 +180,13 @@ sub post_request {
   }
 
   # safety checks
-  unless ($query=~/^select/i) {webdie("Query doesn't start w SELECT: $query");}
+  unless ($query=~/^select/i) {
+    print "Content-type: text/html\n\n";
+    webdie("Query doesn't start w SELECT: $query");
+  }
   # permitted characters (is this going to end up being everything?)
   if ($query=~/([^a-z0-9_: \(\)\,\*\<\>\"\'\=\.\/\?\|\!\+\-\%\\])/i) {
+    print "Content-type: text/html\n\n";
     webdie("Query contains illegal character '$1': $query");
   }
 
@@ -183,6 +195,7 @@ sub post_request {
   my($queryhash) = md5_hex($iquery);
   mysql("REPLACE INTO requests (query,db,md5) VALUES ('$iquery', '$db', '$queryhash')", "requests");
   if ($SQL_ERROR) {
+    print "Content-type: text/html\n\n";
     webdie("SQL ERROR (requests): $SQL_ERROR");
   }
   # and redirect
