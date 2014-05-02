@@ -1,24 +1,17 @@
 #!/usr/bin/perl -0777
 
+# during testing, this works: http://stations.db.mydev/ (courtesy dnsmasq)
+
 # run an arbitrary readonly MySQL query webapp
 # starts off as a copy bc-run-sqlite3-query.pl
 # format: [rss|csv|].[query|"schema"].db.(db|database).other.stuff
 
 require "/usr/local/lib/bclib.pl";
 
-# TODO: this is going to get ugly, but confirms I am running the right prog
-$globopts{debug} = 1;
-# print "Content-type: text/html\n\n";
-# webug("THIS IS MYSQL");
-
 # TODO: sense I'm not handling the printing of content-type: text/html
 # optimally
 
-# where the dbs are <h>(sadly, /sites/GIRLS/ does not work as well...)</h>
-# this is a really ugly hack so I can run on my home machine
-@dirpath = ("/home/barrycarter/LOCALHOST/20121228/DB", "/sites/DB");
-for $i (@dirpath) {if (-d $i) {chdir($i); last;}}
-
+# TODO: SECURITY!!!
 # check to see if db exists
 # TODO: add non-redundant error checking
 # parse hostname ($tld includes ".db." part)
@@ -59,7 +52,7 @@ exit();
 
 sub check_db {
   my($db) = @_;
-  # TODO: not this
+  # TODO: not this (but if all tables are in one db, maybe..)
   return 1;
   # doesnt exist
   unless (-f "$db.db") {
@@ -144,7 +137,7 @@ To edit query (or if query above is munged), see textbox at bottom of page<p>
 Empty result may indicate error: I'm not sure why my error checking
 code isn't working.<p>
 
-<a href="https://github.com/barrycarter/bcapps/blob/master/bc-run-sqlite3-query2.pl" target="_blank">Source code</a>
+<a href="https://github.com/barrycarter/bcapps/blob/master/bc-run-mysql-query.pl" target="_blank">Source code</a>
 
 <p><table border>
 $out
@@ -218,7 +211,7 @@ MARK
 
 =item schema
 
-Schema of tables:
+Schema of tables and users:
 
 CREATE TABLE requests (
  query TEXT, -- stored query in MIME64 format
@@ -228,25 +221,28 @@ CREATE TABLE requests (
 
 CREATE UNIQUE INDEX ui ON requests(md5(32));
 
+-- TODO: change "test" to the db Ill actually want to use
+CREATE USER readonly;
+GRANT SELECT ON test TO readonly;
+
 =cut
 
 # TODO: move these subroutines to bclib.pl when ready
 
-=item mysql($query,$db)
+=item mysql($query,$db,$user="")
 
-Run the query $query on the mysql db $db and return results in raw format.
+Run the query $query on the mysql db $db as user $user and return
+results in "raw" format.
 
 =cut
 
 sub mysql {
-  my($query,$db) = @_;
+  my($query,$db,$user) = @_;
   my($qfile) = (my_tmpfile2());
 
   # ugly use of global here
   $SQL_ERROR = "";
 
- # if $query doesnt have ";", add it, unless it starts with "."
-  unless ($query=~/^\./ || $query=~/\;$/) {$query="$query;";}
   write_file($query,$qfile);
   my($cmd) = "mysql -E $db < $qfile";
   my($out,$err,$res,$fname) = cache_command2($cmd,"nocache=1");
