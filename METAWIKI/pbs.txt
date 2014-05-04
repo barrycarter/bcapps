@@ -1,6 +1,7 @@
-Pearls Before Swine tests (text like this, outside of any "add" block,
-does not appear anywhere).
+Pearls Before Swine tests (pretty much redoing this to be specific to PeBeSw)
 
-<add page="29 Apr 2014">
+2002-01-07 [[character+first_appearance::Rat+Pig]]
+2002-01-12 [[event::[[Pig]] confirms he cannibalisticly  eats {wp:bacon} (he later confirms he also eats other types of {{wp:pork}})]]
+2002-01-13 [[event::[[Pig]] confirms he won't eat dead family members]]
+2002-01-19 [[first_appearance::Goat]]
 
-[[has

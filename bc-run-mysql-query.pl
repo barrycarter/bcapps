@@ -8,9 +8,6 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# forces "readonly" user where not otherwise specified
-$ENV{MYSQL_USER} = "readonly";
-
 # TODO: stop doing this
 $globopts{debug}=1;
 
@@ -247,22 +244,25 @@ GRANT SELECT ON test TO readonly;
 
 # TODO: move these subroutines to bclib.pl when ready
 
-=item mysql($query,$db,$user="")
+=item mysql($query,$db,$user="readonly")
 
 Run the query $query on the mysql db $db as user $user and return
 results in "raw" format.
+
+TODO: remove the hardcoded 'readonly' before generalizing this function
 
 =cut
 
 sub mysql {
   my($query,$db,$user) = @_;
+  unless ($user) {$user = "readonly";}
   my($qfile) = (my_tmpfile2());
 
   # ugly use of global here
   $SQL_ERROR = "";
 
   write_file($query,$qfile);
-  my($cmd) = "mysql -E $db < $qfile";
+  my($cmd) = "mysql -u $user -E $db < $qfile";
   my($out,$err,$res,$fname) = cache_command2($cmd,"nocache=1");
   # get rid of the row numbers + remove blank first line
   $out=~s/^\*+\s*\d+\. row\s*\*+$//img;
