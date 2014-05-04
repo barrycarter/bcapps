@@ -8,6 +8,9 @@ pages that link to [[Pig]] = Pig's appearances and mentions
 Talk::x special format for talk pages
 zebra_deaths:= -> category:Zebra deaths
 Angry Bob -> category:Rat writes???
+Family circus mention/Dilbert mention -> Other comic strip mention?
+husband -> relative
+multiple story lines in one strip
 
 2002-01-07 [[first_appearance::Rat+Pig]]
 2002-01-12 [[event::[[Pig]] confirms he cannibalisticly  eats {wp:bacon} (he later confirms he also eats other types of {{wp:pork}})]]
@@ -30,7 +33,7 @@ Angry Bob -> category:Rat writes???
 2002-03-31 [[category::Who's On First]]
 2002-04-03 [[description::[[Pig]] writes to {{wp:Bob Dole}}]] [[category::Pig writes]]
 2002-04-07 [[description::[[Pig]] establishes the [[first_appearance::Fruit Buddies]], [[Rat]] eats [[deaths::Georgie Grape]]]]
-2002-04-09 [[description::[[Rat]] eats and kills [[deaths::Orange]], a member of the [[Fruit Buddies]]]
+2002-04-09 [[description::[[Rat]] eats and kills [[deaths::Orange]], a member of the [[Fruit Buddies]]]]
 2002-04-11 [[description::[[Petey Potato]] joins the [[Fruit Buddies]]]]
 2002-04-12 [[deaths::Annie Apple+Banana]]
 Talk::2002-04-12 Deaths::I can't tell if Rat killed the other Fruit Buddies as well
@@ -60,6 +63,52 @@ Talk::2002-04-12 Deaths::I can't tell if Rat killed the other Fruit Buddies as w
 2002-09-10 [[zebra_deaths:=1]]
 2002-09-15 [[first_mention::Angry Bob]] [[category:Rat writes]]
 2002-09-22 [[event::[[Angry Bob]] [[un-dies]]]] [[category:Rat writes]]
+2002-09-25 [[category:Dilbert mention]]
+2002-09-29 [[character::Angry Bob]]
+2002-09-30 [[first_appearance::Dryer Bob+Washer Pat]]
+2002-10-04 [[first_appearance::Blender]] [[first_mention::Toaster]]
+2002-10-06 [[mention:Angry Bob]] [[category:Rat writes]]
+2002-10-07 [[first_appearance::Nikos Papandropoulos|Niko]]
+Niko [[description::[[Pig]]'s {wp:guardian angel}, aka Nikos Papandropoulos, an escaped mental patient]]
+Nikos Papandropoulos [[redirect::Niko]]
+2002-10-17 [[event::[[Zebra]]'s [[Cousin Burt]] is killed by [[crocodiles]]]] [[zebra_deaths:=1]]
+2002-10-21 [[first_appearance::John (bathroom sign)]]
+2002-10-23 [[first-appearance::Hedda (bathroom sign)]]
+Hedda (bathroom sign) [[husband::Wheelchair (sign)]]
+2002-10-27 [[description::[[Zebra]] mails the [[lions]]]]
+2002-10-24-2002-10-26,2002-10-28-2002-11-06 [[category:Rat runs for city council]]
+2002-11-07 [[first_appearance+deaths::Sammy Slug]]
+2002-11-18-2002-11-23 [[category:Box Me In]]
+2002-12-01 [[description::With [[category::Out of Character|uncharacteristic]] generosity, [[Rat]] gives $200 to a pizza delivery boy wearing a replica of the {wp:Leaning Tower of Pisa}, attracting other costumed characters]]
+2002-12-04 [[description::[[Pig]] meets [[character::Chuckie Sheep]], an [[first_mention::non-anthropomorphic animal]]]]
+2002-12-16 [[first_appearance::Stevie Salmon]] [[deaths:Cousin Bob]]
+2002-12-22 [[notes::Character resembling {wp:Dilbert}'s Boss appears in panel 3]]
+2002-12-29 [[description::[[Zebra]] writes to the [[lions]]]]
+2002-12-31 [[category:Third Wall]]
+2014-01-01 [[newspaper_mentions::Buffalo News+Las Vegas Sun]]
+2014-01-17 [[first_appearance::Vigilante Deer]]
+2014-01-22 [[character::Penguins]]
+2014-01-23 [[mention::Staci Pastis]]
+2014-01-26 [[character::Danny Donkey]] [[category:Rat writes]]
+2014-01-28 [[character::Guard Duck]]
+Little Guard Duck [[redirect::Guard Duck]]
+LGD [[redirect::Guard Duck]]
+Guard Duck [[aka::LGD+Little Guard Duck]]
+2014-01-23 [[event::[[Staci Pastis]] throws [[Stephan Pastis]] out of the house]]
+2014-01-23-2014-01-24,2014-01-28-2014-02-01,2014-02-16,2014-02-25 [[category:Staci Throws Stephan Out]]
+2014-02-03-2014-02-05 [[category::Rat works for the NSA]]
+2014-02-11 [[description::[[Goat]] [[category::Out of Character|uncharacteristically]] pranks [[Rat]]]]
+2014-02-12 [[category:Third Wall]]
+2014-02-17 [[category:Shaggy Dog]]
+2014-02-18- [[category:Breaking Bad]]
+2014-02-19-2014-02-21,2014-02-24,2014-02-25 [[category:Rat is a doctor]]
+2014-02-23 [[notes::Parodies Arizona's {wp:Proposition 200}, which *requires* (not just allows) police to check the immigration status of anyone stopped for any legitimate reason (eg, a traffic violation). It does *not* allow police to stop people solely because they appear to be illegal immigrants]]
+
+
+
+
+
+
 
 
 
@@ -76,4 +125,4 @@ TODO: confirm "pig writes" category (make sure all Pig writes are in there); spe
 
 undies != underwear, so maybe un-dies?
 
-
+list zebra relatives?
