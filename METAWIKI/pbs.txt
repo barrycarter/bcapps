@@ -1,7 +1,79 @@
 Pearls Before Swine tests (pretty much redoing this to be specific to PeBeSw)
 
-2002-01-07 [[character+first_appearance::Rat+Pig]]
+# Notes:
+
+first_appearance -> character
+pages that link to [[Pig]] = Pig's appearances and mentions
+[[x::y]] automatically links to y
+Talk::x special format for talk pages
+zebra_deaths:= -> category:Zebra deaths
+Angry Bob -> category:Rat writes???
+
+2002-01-07 [[first_appearance::Rat+Pig]]
 2002-01-12 [[event::[[Pig]] confirms he cannibalisticly  eats {wp:bacon} (he later confirms he also eats other types of {{wp:pork}})]]
 2002-01-13 [[event::[[Pig]] confirms he won't eat dead family members]]
 2002-01-19 [[first_appearance::Goat]]
+2002-01-21 [[event::[[Rat]]'s poem mentions {{wp:zebra|zebras}}, but [[Zebra]] has not yet appeared in the strip]]
+2002-01-22 [[description::[[Rat]] gets a job [[category::Rat writes|writing]] {{wp:greeting cards}}]]
+2002-01-28 [[description::[[Pig]] gets a job as {{wp:funeral director}} at [[Happy Homes Mortuary]]]]
+2002-02-04 [[first_appearance::Zebra]]
+2002-02-05 [[first_appearance::crocodiles]] [[first_mention::lions]]
+2002-02-07 [[event::[[Zebra]]'s [[deaths::Uncle Gus]] dies]] [[zebra_deaths:=1]]
+2002-02-10 [[description::[[Zebra]] mails the [[lions]]]]
+2002-02-18 [[description::[[Pig]] writes to {{wp:Jesse Jackson}}]] [[category::Pig writes]]
+2002-02-20 [[first_mention::hyenas]]
+2002-02-27 [[first_mention::cheetahs]] [[zebra_deaths:=1]]
+2002-03-02 [[description::[[Rat]] confuses {{wp:Gutenberg Bible}}s with {{wp::Gideon Bible}}s]]
+2002-03-24 [[description::[[Zebra]] writes to the [[first_mention::antelopes]]]]
+2002-03-27 [[description::[[Zebra]]'s [[deaths::Cousin Bert]] sacrifices himself to the [[Lions]]]] [[zebra_deaths:=1]]
+2002-03-29 [[description::[[Rat]] considers becoming an {{wp:attorney}}, subtly mentioning [[Stephan Pastis]]' former career]]
+2002-03-31 [[category::Who's On First]]
+2002-04-03 [[description::[[Pig]] writes to {{wp:Bob Dole}}]] [[category::Pig writes]]
+2002-04-07 [[description::[[Pig]] establishes the [[first_appearance::Fruit Buddies]], [[Rat]] eats [[deaths::Georgie Grape]]]]
+2002-04-09 [[description::[[Rat]] eats and kills [[deaths::Orange]], a member of the [[Fruit Buddies]]]
+2002-04-11 [[description::[[Petey Potato]] joins the [[Fruit Buddies]]]]
+2002-04-12 [[deaths::Annie Apple+Banana]]
+Talk::2002-04-12 Deaths::I can't tell if Rat killed the other Fruit Buddies as well
+2002-04-14 [[description::[[Rat]] kills of [[Pig]]'s potato friends, presumably including [[deaths::Petey Potato]]]]
+2002-04-16 [[description::[[Zebra]]'s herd try coating themselves with lotion to slip out of the [[lions]] grasp]]
+2002-04-19 [[description::[[Pig]] writes to {{wp:Fidel Castro}}]] [[category::Pig writes]]
+2002-05-03 [[category:Third Wall]]
+2002-05-08 [[category::Who's On First]]
+2002-05-14 [[deaths::Cousin Lou]] [[zebra_deaths:=1]]
+2002-05-15 [[first_appearance::Cow]]
+2002-05-22 [[mention:Aunt Leah]]
+2002-05-31 [[description::[[Pig]] writes to {{wp:Julia Roberts}}]] [[category::Pig writes]]
+2002-06-03-2002-06-07 [[category::Rat is a marriage counselor]]
+2002-06-10-2002-06-15 [[category::Pig talks to his reflection]]
+2002-06-17-2002-06-20,2002-06-23,2002-06-30 [[category::Rat is a stockbroker]]
+2002-07-02 [[mention::Stephan Pastis]]
+2002-07-07-2002-07-12 [[category::Rat writes Bildert]] [[category::Rat writes]]
+2002-07-17 [[category::Family Circus mention]]
+2002-07-18 [[zebra_deaths:=1]]
+2002-07-22 [[first_appearance::Pigita]]
+2002-08-12 [[category:Zebra deaths]]
+2002-08-19 [[first_appearance::Farina]]
+2002-08-23 [[event::[[Rat]]'s first official date with [[Farina]]]]
+2002-08-30 [[description::[[Farina]] breaks up with [[Rat]]]]
+2002-09-04 [[character::crocodiles]]
+2002-09-09 [[description::[[Pig]] starts a club: [[Super Terrific Dudes]], whose acronym is unfortunately {{wp:STD}}]]
+2002-09-10 [[zebra_deaths:=1]]
+2002-09-15 [[first_mention::Angry Bob]] [[category:Rat writes]]
+2002-09-22 [[event::[[Angry Bob]] [[un-dies]]]] [[category:Rat writes]]
+
+
+
+# below this line, non date pages, which I may need to check more carefully
+Fruit Buddies [[members::Annie Apple+Georgie Grape+Banana+Pear+Orange+Petey Potato]]
+
+# just general notes that will have to be added by hand
+
+zebra herd uses butter + lotion to escape lions, similar jokes
+cow/bull meaning elephants/cattle joke repeat (2002-06-01 is one)
+zebras playing dead: 2002-07-06 and others
+
+TODO: confirm "pig writes" category (make sure all Pig writes are in there); special for THRU in date
+
+undies != underwear, so maybe un-dies?
+
 
