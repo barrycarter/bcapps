@@ -39,8 +39,6 @@ sub parse_text {
   $body=~s/$dlb($cc+)$drb/\001$1\002/sg;
   debug("BODY: $body");
 
-  # parse the body
-#  while ($body=~s/\[\[([^\[\]:]*?)::(.*?)\]\]//) {
   while ($body=~s/$dlb($cc*?)::($cc*?)$drb//) {
     debug("CHOMP: $1,$2");
   }
