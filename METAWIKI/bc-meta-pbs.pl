@@ -54,6 +54,7 @@ sub parse_text {
   # keep things like [[Pig]] as is, but tokenize so they won't bother us
   # TODO: undo this before final wiki printing
   $body=~s/$dlb($cc+)$drb/\001$1\002/sg;
+  debug("BODY: $body");
 
   # semantic triple
   while ($body=~s/$dlb($cc*?)::($cc*?)$drb//) {
@@ -98,6 +99,7 @@ sub parse_date_range {
   for $i (str2time($st)/86400..str2time($en)/86400) {
     push(@ret, strftime("%Y-%m-%d", gmtime($i*86400)));
   }
+  if ($#ret>10) {warn "$st-$en: more than 10 or more, probably an error";}
   return @ret;
 }
 
