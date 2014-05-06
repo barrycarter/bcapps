@@ -29,6 +29,10 @@ for $i (split(/\n/, $data)) {
   parse_text($source,$body);
 }
 
+# dumps dates for testing
+print join("\n", sort keys %triple),"\n";
+die "TESTING";
+
 # now, adding stuff to pages from the established triples
 for $i (keys %triple) {
   for $j (keys %{$triple{$i}}) {
@@ -40,24 +44,27 @@ for $i (keys %triple) {
 
 sub parse_text {
   my($source,$body) = @_;
+  debug("SOURCE: $source");
   # return triplets
   my(@trip) = ();
   # source may contain multiple pages
   my(@source) = parse_source($source);
+  debug("SOURCE",@source);
 
   # keep things like [[Pig]] as is, but tokenize so they won't bother us
   # TODO: undo this before final wiki printing
   $body=~s/$dlb($cc+)$drb/\001$1\002/sg;
 
   # semantic triple
-  for $source (@source) {
-    while ($body=~s/$dlb($cc*?)::($cc*?)$drb//) {
-      # relation and value
-      my($relation,$value) = ($1,$2);
-      # either of these can be multiple
-      for $i (split(/\+/, $relation)) {
-	for $j (split(/\+/, $value)) {
+  while ($body=~s/$dlb($cc*?)::($cc*?)$drb//) {
+    # relation and value
+    my($relation,$value) = ($1,$2);
+    # either of these can be multiple
+    for $i (split(/\+/, $relation)) {
+      for $j (split(/\+/, $value)) {
+	for $source (@source) {
 	  # TODO: allow non-1 values to set order
+	  debug("SETTING: triple($source)");
 	  $triple{$source}{$i}{$j} = 1;
 	}
       }
