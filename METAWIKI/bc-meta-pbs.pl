@@ -14,7 +14,6 @@ $cc = "[^\\[\\]:]";
 # double left and right bracket
 $dlb = "\\[\\[";
 $drb = "\\]\\]";
-debug("CC1: $cc,$dlb,$drb");
 
 my($data) = read_file("/home/barrycarter/BCGIT/METAWIKI/pbs.txt");
 $data=~s%^.*?<data>(.*?)</data>.*$%$1%s;
@@ -30,34 +29,34 @@ for $i (split(/\n/, $data)) {
 }
 
 # dumps dates for testing
-print join("\n", sort keys %triple),"\n";
-die "TESTING";
+# print join("\n", sort keys %triple),"\n";
 
 # now, adding stuff to pages from the established triples
 for $i (keys %triple) {
   for $j (keys %{$triple{$i}}) {
     for $k (keys %{$triple{$i}{$j}}) {
-      debug("$i, $j, $k, $triple{$i}{$j}{$k}");
+      # restore [[this]]
+      $k=~s/\001/[[/isg;
+      $k=~s/\002/]]/isg;
+      print "$i\t$j\t$k\n";
     }
   }
 }
 
 sub parse_text {
   my($source,$body) = @_;
-  debug("SOURCE: $source");
+  debug("START: $source/$body");
   # return triplets
   my(@trip) = ();
   # source may contain multiple pages
   my(@source) = parse_source($source);
-  debug("SOURCE",@source);
 
   # keep things like [[Pig]] as is, but tokenize so they won't bother us
   # TODO: undo this before final wiki printing
   $body=~s/$dlb($cc+)$drb/\001$1\002/sg;
-  debug("BODY: $body");
 
   # semantic triple
-  while ($body=~s/$dlb($cc*?)::($cc*?)$drb//) {
+  while ($body=~s/$dlb($cc*?)::($cc*?)$drb/$2/) {
     # relation and value
     my($relation,$value) = ($1,$2);
     # either of these can be multiple
@@ -65,12 +64,12 @@ sub parse_text {
       for $j (split(/\+/, $value)) {
 	for $source (@source) {
 	  # TODO: allow non-1 values to set order
-	  debug("SETTING: triple($source)");
 	  $triple{$source}{$i}{$j} = 1;
 	}
       }
     }
   }
+  debug("SOURCE: $source/$body");
 }
 
 # convert things like
