@@ -29,7 +29,8 @@ for $i (split(/\n/, $data)) {
 }
 
 # dumps dates for testing
-# print join("\n", sort keys %triple),"\n";
+print join("\n", sort keys %triple),"\n";
+die "TESTING";
 
 # now, adding stuff to pages from the established triples
 for $i (keys %triple) {
@@ -38,7 +39,7 @@ for $i (keys %triple) {
       # restore [[this]]
       $k=~s/\001/[[/isg;
       $k=~s/\002/]]/isg;
-      print "$i\t$j\t$k\n";
+#      print "$i\t$j\t$k\n";
     }
   }
 }
@@ -102,4 +103,29 @@ sub parse_date_range {
   return @ret;
 }
 
+=item parse_semantic($source, $string)
+
+Given a $source of data and a string like "[[x::y]]" (with several
+variants), return semantic triples and a string. This function is
+called recursively.
+
+$string must NOT have nested "[[]]" constructions.
+
+Plus signs like [[x+y::...]] are treated like [[x::...]], [[y::...]] 
+and return a list of triples and strings
+
+Details:
+
+[[x::y]] - return triple [$source,x,y] and string [[y]]
+[[x::y|z]] return triple [$source,x,y] and string [[y|z]]
+[[x:=y]] - return triple [$source,x,y] and string y
+[[x:=y|z]] - return triple [$source,x,y] and string z
+
+[[x::y::z]] - return triples [$x,$y,$z] and [$f,source,$source] where
+$f represents the triple [[x::y::z]], and string [[z]]
+
+(this function is specific to this program, but may be generalized, so
+I am perldocing it)
+
+=cut
 
