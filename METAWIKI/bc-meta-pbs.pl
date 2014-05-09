@@ -9,11 +9,15 @@
 require "/usr/local/lib/bclib.pl";
 
 # shortcuts just to make code look nicer
-# character class excluding colons and brackets
-$cc = "[^\\[\\]:]";
+# character class excluding brackets
+$cc = "[^\\[\\]]";
 # double left and right bracket
 $dlb = "\\[\\[";
 $drb = "\\]\\]";
+
+parse_semantic("2007-07-23", "[[character::Pig+Rat+Connie]] [[Connie::aka::Connie the Judgmental Cow]]");
+
+die "TESTING";
 
 my($data) = read_file("/home/barrycarter/BCGIT/METAWIKI/pbs.txt");
 $data=~s%^.*?<data>(.*?)</data>.*$%$1%s;
@@ -107,15 +111,15 @@ sub parse_date_range {
 
 Given a $source of data and a string like "[[x::y]]" (with several
 variants), return semantic triples and a string. This function is
-called recursively.
-
-$string must NOT have nested "[[]]" constructions.
+called recursively, so $string may have nested "[[]]" constructions
+($source may not, however)
 
 Plus signs like [[x+y::...]] are treated like [[x::...]], [[y::...]] 
 and return a list of triples and strings
 
 Details:
 
+[[x]] - return [[x]] (but convert [[ and ]] to avoid recursion)
 [[x::y]] - return triple [$source,x,y] and string [[y]]
 [[x::y|z]] return triple [$source,x,y] and string [[y|z]]
 [[x:=y]] - return triple [$source,x,y] and string y
@@ -129,3 +133,40 @@ I am perldocing it)
 
 =cut
 
+sub parse_semantic {
+  my($source, $string) = @_;
+  # list of lists I will need to handle a+b+c and so on
+  my(@lol);
+  # hash to hold print val of x
+  my(%pval);
+  debug("parse_semantic($source, $string)");
+
+  # recursion (the while condition does all the work, no while body)
+  while ($string=~s/$dlb(.*?)$drb/parse_semantic($source,$1)/iseg) {}
+
+  # split on double colons
+  my(@list) = split(/::/, $string);
+
+  # no double colons? return as is, no triples created
+  if ($#list==-1) {return $string;}
+
+  # each key/val can be multivalued, so create list of lists
+  map(push(@lol, [split(/\+/,$_)]), @list);
+
+  # print val of each element (same as element except with |)
+  for $i (@list) {
+    if ($i=~s/\|(.*)$//) {$pval{$i} = $1;} else {$pval{$i} = $i;}
+  }
+
+  # one double colon? create semantic triple [$source,$key,$val] allowing for |
+  if ($#list==0) {
+    debug("LOL", @{$lol[0]});
+    for $i (@$lol[0]) {
+      for $j (@$lol[1]) {
+	debug("IJ: $i, $j");
+      }
+    }
+  }
+
+  return "TESTING";
+}
