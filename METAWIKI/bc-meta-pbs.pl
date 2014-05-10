@@ -15,19 +15,8 @@ $cc = "[^\\[\\]]";
 $dlb = "\\[\\[";
 $drb = "\\]\\]";
 
-parse_semantic("2007-07-23", "[[character::Pig+Rat+Connie]] [[Connie::aka::Connie the Judgmental Cow]]");
-
-for $i (keys %triples) {
-  for $j (keys %{$triples{$i}}) {
-    for $k (keys %{$triples{$i}{$j}}) {
-      debug("IJK: $i, $j, $k");
-    }
-  }
-}
-
-# debug("TRIPLES",unfold(\%triples), "/TRIPLES");
-
-die "TESTING";
+# parse_semantic("2007-07-23", "[[character::Pig+Rat+Connie]] [[Connie::aka::Connie the Judgmental Cow]]");
+# parse_semantic("2013-10-02", "[[storyline::[[Goat]] travels to {{wp|Paris}}]]");
 
 my($data) = read_file("/home/barrycarter/BCGIT/METAWIKI/pbs.txt");
 $data=~s%^.*?<data>(.*?)</data>.*$%$1%s;
@@ -39,11 +28,19 @@ for $i (split(/\n/, $data)) {
   # split line into source page and then body
   $i=~/^(.*?)\s*($dlb.*)$/;
   my($source, $body) = ($1,$2);
-  parse_text($source,$body);
+  parse_semantic($source,$body);
+}
+
+for $i (keys %triples) {
+  for $j (keys %{$triples{$i}}) {
+    for $k (keys %{$triples{$i}{$j}}) {
+      print "$i,$j,$k\n";
+    }
+  }
 }
 
 # dumps dates for testing
-print join("\n", sort keys %triple),"\n";
+# print join("\n", sort keys %triple),"\n";
 die "TESTING";
 
 # now, adding stuff to pages from the established triples
@@ -147,6 +144,7 @@ TODO: this currently creates a GLOBAL hash, instead of returning a list
 
 sub parse_semantic {
   my($source, $string) = @_;
+  debug("parse_semantic($source, $string)");
   # list of lists I will need to handle a+b+c and so on
   my(@lol);
   # hash to hold print val of x
@@ -157,13 +155,13 @@ sub parse_semantic {
   debug("SOURCE: $source, DATES",@dates,"/DATES");
 
   # recursion (the while condition does all the work, no while body)
-  while ($string=~s/$dlb(.*?)$drb/parse_semantic($source,$1)/iseg) {}
+  while ($string=~s/$dlb($cc*?)$drb/parse_semantic($source,$1)/iseg) {}
 
   # split on double colons
   my(@list) = split(/::/, $string);
 
-  # no double colons? return as is, no triples created
-  if (scalar @list <= 1) {return $string;}
+  # no double colons? return as is w/ specialized brackets, no triples created
+  if (scalar @list <= 1) {return "\001$string\002";}
 
   # each key/val can be multivalued, so create list of lists
   map(push(@lol, [split(/\+/,$_)]), @list);
