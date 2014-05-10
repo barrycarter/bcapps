@@ -34,10 +34,42 @@ for $i (split(/\n/, $data)) {
 for $i (keys %triples) {
   for $j (keys %{$triples{$i}}) {
     for $k (keys %{$triples{$i}{$j}}) {
-      print "$i,$j,$k\n";
+
+      # currently only handling "storylines"
+      if ($j eq "storyline") {
+	$storylines{$k}{$i} = 1;
+      }
     }
   }
 }
+
+# create sorted list of dates for each storyline
+for $i (keys %storylines) {
+  @{$dates{$i}} = sort(keys %{$storylines{$i}});
+}
+
+# sort storylines by earliest date w/ given storyline
+@storylines = sort {$dates{$a}[0] <=> $dates{$b}[0]} (keys %storylines);
+
+# and print...
+for $i (@storylines) {
+  # dates
+  @dates = @{$dates{$i}};
+
+  # restore brackets
+  $i=~s/\001/[[/isg;
+  $i=~s/\002/]]/isg;
+
+  # the storyline
+  print "* $i\n";
+
+  # and its dates
+  for $j (@dates) {
+    print "** $j\n";
+  }
+}
+
+debug(@storylines);
 
 # dumps dates for testing
 # print join("\n", sort keys %triple),"\n";
@@ -53,35 +85,6 @@ for $i (keys %triple) {
 #      print "$i\t$j\t$k\n";
     }
   }
-}
-
-sub parse_text {
-  my($source,$body) = @_;
-  debug("START: $source/$body");
-  # return triplets
-  my(@trip) = ();
-  # source may contain multiple pages
-  my(@source) = parse_source($source);
-
-  # keep things like [[Pig]] as is, but tokenize so they won't bother us
-  # TODO: undo this before final wiki printing
-  $body=~s/$dlb($cc+)$drb/\001$1\002/sg;
-
-  # semantic triple
-  while ($body=~s/$dlb($cc*?)::($cc*?)$drb/$2/) {
-    # relation and value
-    my($relation,$value) = ($1,$2);
-    # either of these can be multiple
-    for $i (split(/\+/, $relation)) {
-      for $j (split(/\+/, $value)) {
-	for $source (@source) {
-	  # TODO: allow non-1 values to set order
-	  $triple{$source}{$i}{$j} = 1;
-	}
-      }
-    }
-  }
-  debug("SOURCE: $source/$body");
 }
 
 # convert things like
@@ -152,7 +155,6 @@ sub parse_semantic {
 
   # parse the dates
   my(@dates) = parse_source($source);
-  debug("SOURCE: $source, DATES",@dates,"/DATES");
 
   # recursion (the while condition does all the work, no while body)
   while ($string=~s/$dlb($cc*?)$drb/parse_semantic($source,$1)/iseg) {}
@@ -165,8 +167,6 @@ sub parse_semantic {
 
   # each key/val can be multivalued, so create list of lists
   map(push(@lol, [split(/\+/,$_)]), @list);
-  debug("LIST",@list,"/LIST");
-  debug("LOL",unfold($lol[1]),"/LOL");
 
   # print val of each element (same as element except with |)
   for $i (@list) {
