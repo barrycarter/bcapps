@@ -17,6 +17,16 @@ $drb = "\\]\\]";
 
 parse_semantic("2007-07-23", "[[character::Pig+Rat+Connie]] [[Connie::aka::Connie the Judgmental Cow]]");
 
+for $i (keys %triples) {
+  for $j (keys %{$triples{$i}}) {
+    for $k (keys %{$triples{$i}{$j}}) {
+      debug("IJK: $i, $j, $k");
+    }
+  }
+}
+
+# debug("TRIPLES",unfold(\%triples), "/TRIPLES");
+
 die "TESTING";
 
 my($data) = read_file("/home/barrycarter/BCGIT/METAWIKI/pbs.txt");
@@ -131,6 +141,8 @@ $f represents the triple [[x::y::z]], and string [[z]]
 (this function is specific to this program, but may be generalized, so
 I am perldocing it)
 
+TODO: this currently creates a GLOBAL hash, instead of returning a list
+
 =cut
 
 sub parse_semantic {
@@ -139,7 +151,10 @@ sub parse_semantic {
   my(@lol);
   # hash to hold print val of x
   my(%pval);
-  debug("parse_semantic($source, $string)");
+
+  # parse the dates
+  my(@dates) = parse_source($source);
+  debug("SOURCE: $source, DATES",@dates,"/DATES");
 
   # recursion (the while condition does all the work, no while body)
   while ($string=~s/$dlb(.*?)$drb/parse_semantic($source,$1)/iseg) {}
@@ -148,10 +163,12 @@ sub parse_semantic {
   my(@list) = split(/::/, $string);
 
   # no double colons? return as is, no triples created
-  if ($#list==-1) {return $string;}
+  if (scalar @list <= 1) {return $string;}
 
   # each key/val can be multivalued, so create list of lists
   map(push(@lol, [split(/\+/,$_)]), @list);
+  debug("LIST",@list,"/LIST");
+  debug("LOL",unfold($lol[1]),"/LOL");
 
   # print val of each element (same as element except with |)
   for $i (@list) {
@@ -159,14 +176,33 @@ sub parse_semantic {
   }
 
   # one double colon? create semantic triple [$source,$key,$val] allowing for |
-  if ($#list==0) {
-    debug("LOL", @{$lol[0]});
-    for $i (@$lol[0]) {
-      for $j (@$lol[1]) {
-	debug("IJ: $i, $j");
+  if (scalar @list == 2) {
+    for $i (@{$lol[0]}) {
+      for $j (@{$lol[1]}) {
+	for $k (@dates) {
+	  # TODO: currently, a GLOBAL hash to hold triples
+	  $triples{$k}{$i}{$j}=1;
+	}
       }
     }
+    return "[[$pval{$list[1]}]]";
   }
 
-  return "TESTING";
+  # only remaining legit case
+  if (scalar @list == 3) {
+    for $i (@{$lol[0]}) {
+      for $j (@{$lol[1]}) {
+	for $k (@{$lol[2]}) {
+	  if (scalar @dates != 1) {warn("DATELIST SHOULD BE 1 element only");}
+	  for $l (@dates) {
+	    # TODO: currently, a GLOBAL hash to hold triples
+	    $triples{$i}{$j}{$k}=1;
+	    $triples{"$i~$j~$k",}{"source"}{$l} = 1;
+	  }
+	}
+      }
+    }
+    return "[[$pval{$list[3]}]]";
+  }
 }
+
