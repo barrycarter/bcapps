@@ -63,10 +63,11 @@ if (@commands2) {
 
 # now, look inside files for image
 
-for $i (glob "page-*") {
+for $i (glob "page-2[0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]") {
+  debug("I: $i");
 
   # if I already have the GIF, ignore
-  if (-f "$i.gif") {next;}
+#  if (-f "$i.gif") {next;}
 
   $all = read_file($i);
 

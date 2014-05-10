@@ -15,8 +15,14 @@ $cc = "[^\\[\\]]";
 $dlb = "\\[\\[";
 $drb = "\\]\\]";
 
-# parse_semantic("2007-07-23", "[[character::Pig+Rat+Connie]] [[Connie::aka::Connie the Judgmental Cow]]");
-# parse_semantic("2013-10-02", "[[storyline::[[Goat]] travels to {{wp|Paris}}]]");
+# links to high-res version of each strip (from the shell script I
+# used to get them in the first place)
+for $i (split(/\n/, read_file("/mnt/extdrive/GOCOMICS/pearlsbeforeswine/runme3.sh"))) {
+  $i=~s%page-(.*?)\.gif.*\'(http://.*?)\'%%;
+  $link{$1}=$2;
+}
+
+debug($link{"2011-12-06"});
 
 my($data) = read_file("/home/barrycarter/BCGIT/METAWIKI/pbs.txt");
 $data=~s%^.*?<data>(.*?)</data>.*$%$1%s;
@@ -34,14 +40,35 @@ for $i (split(/\n/, $data)) {
 for $i (keys %triples) {
   for $j (keys %{$triples{$i}}) {
     for $k (keys %{$triples{$i}{$j}}) {
+      # genercize, group by type of relation, not date
+      $rdf{$j}{$k}{$i} = 1;
+
 #      print "$i,$j,$k\n";
+
       # currently only handling "storylines"
+      # TODO: change this to use more general jki format, not specific hash
       if ($j eq "storyline") {
 	$storylines{$k}{$i} = 1;
+	next;
       }
     }
   }
 }
+
+# debug(unfold({%rdf}));
+
+# newspaper mentions
+for $i (sort keys %{$rdf{newspaper_mentions}}) {
+  # dates on which $i is mentioned
+  @dates = sort keys %{$rdf{newspaper_mentions}{$i}};
+  debug("DATES",@dates);
+  # TODO: find high resolution link for dates
+  # printable format + glue with commas
+  map($_="{#NewWindowLink: $LINKNOTYET | $link{$_} | ".strftime("%d %b %Y (%a)",gmtime(str2time($_))), @dates);
+  debug($i,@dates);
+}
+
+die "TESTING";
 
 # create sorted list of dates for each storyline
 for $i (keys %storylines) {
@@ -149,7 +176,7 @@ TODO: this currently creates a GLOBAL hash, instead of returning a list
 
 sub parse_semantic {
   my($source, $string) = @_;
-  debug("parse_semantic($source, $string)");
+#  debug("parse_semantic($source, $string)");
   # list of lists I will need to handle a+b+c and so on
   my(@lol);
   # hash to hold print val of x
