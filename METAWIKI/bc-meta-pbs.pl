@@ -34,13 +34,16 @@ for $i (split(/\n/, $data)) {
   parse_semantic($source,$body);
 }
 
+# open files for writing (currently all /var/tmp/)
+open(A,">/var/tmp/bc-pbs-triples.txt");
+
 for $i (keys %triples) {
   for $j (keys %{$triples{$i}}) {
     for $k (keys %{$triples{$i}{$j}}) {
       # genercize, group by type of relation, not date
       $rdf{$j}{$k}{$i} = 1;
 
-#      print "$i,$j,$k\n";
+      print A "$i,$j,$k\n";
 
       # currently only handling "storylines"
       # TODO: change this to use more general jki format, not specific hash
