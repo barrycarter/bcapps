@@ -55,8 +55,10 @@ for $i (keys %triples) {
   }
 }
 
-# debug(unfold({%rdf}));
+close(A);
 
+
+open(B,">/var/tmp/bc-pbs-newspaper.txt");
 # newspaper mentions
 for $i (sort keys %{$rdf{newspaper_mentions}}) {
   # dates on which $i is mentioned
@@ -65,11 +67,12 @@ for $i (sort keys %{$rdf{newspaper_mentions}}) {
   # TODO: find high resolution link for dates
   # printable format + glue with commas
   map($_="{{#NewWindowLink: $link{$_} | ".strftime("%d %b %Y (%a)}}",gmtime(str2time($_))), @dates);
-  print "* $i: ",join(", ",@dates),"\n";
+  print B "* $i: ",join(", ",@dates),"\n";
 }
 
-die "TESTING";
+close(B);
 
+open(C,">/var/tmp/bc-pbs-storylines.txt");
 # create sorted list of dates for each storyline
 for $i (keys %storylines) {
   @{$dates{$i}} = sort(keys %{$storylines{$i}});
@@ -88,17 +91,18 @@ for $i (@storylines) {
   $i=~s/\002/]]/isg;
 
   # the storyline
-  print "* $i\n";
+  print C "* $i\n";
 
   # and its dates
   for $j (@dates) {
     my($pdate, $link) = date2prli($j);
-    print "** {{#NewWindowLink: $link | $pdate}}\n";
+    print C "** {{#NewWindowLink: $link | $pdate}}\n";
   }
 
-  print "\n";
+  print C "\n";
 }
 
+close(C);
 
 # given a date like "2000-01-01", return "printable" format and direct
 # link to PBS comic
