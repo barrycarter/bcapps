@@ -2162,19 +2162,19 @@ sub write_wiki_page {
   # authenticate to wiki (but cache, so not doing this constantly)
 
   # get token and sessionid and cookie prefix
-  my($out, $err, $res) = cache_command("curl -b  $cookiefile -c $cookiefile '$wiki' -d 'action=login&lgname=$user&lgpassword=$pass&format=xml'", "age=3600");
+  my($out, $err, $res) = cache_command("curl -L -b  $cookiefile -c $cookiefile '$wiki' -d 'action=login&lgname=$user&lgpassword=$pass&format=xml'", "age=3600");
    debug("FIRST: $out");
   # hashify results
   $out=~s/(\S+)=\"(.*?)\"/$hash{$1}=urlencode($2)/iseg;
 
   # and use it to login
-  my($log_res) = cache_command("curl -b $cookiefile -c $cookiefile '$wiki' -d 'action=login&lgname=$user&lgpassword=$pass&lgtoken=$hash{token}&format=xml'", "age=3600");
+  my($log_res) = cache_command("curl -L -b $cookiefile -c $cookiefile '$wiki' -d 'action=login&lgname=$user&lgpassword=$pass&lgtoken=$hash{token}&format=xml'", "age=3600");
    debug("SECONE: $out");
 
 
   # now obtain token for page itself
   # TODO: requesting tokens 1-page-at-a-time is probably bad
-  my($out, $err, $res) = cache_command("curl -b $cookiefile -c $cookiefile '$wiki?action=query&prop=info&intoken=edit&titles=$page&format=xml'", "age=3600");
+  my($out, $err, $res) = cache_command("curl -L -b $cookiefile -c $cookiefile '$wiki?action=query&prop=info&intoken=edit&titles=$page&format=xml'", "age=3600");
    debug("THIRD: $out");
   # hashify
   $out=~s/(\S+)=\"(.*?)\"/$hash{$1}=urlencode($2)/iseg;
@@ -2185,7 +2185,7 @@ sub write_wiki_page {
   write_file("action=edit&title=$page&text=$newcontent&comment=$comment&token=$hash{edittoken}&format=xml", $tmpfile);
 
   # can't cache this command, but using cache_command to get vals
-  return cache_command("curl -b $cookiefile -c $cookiefile '$wiki' -d \@$tmpfile");
+  return cache_command("curl -L -b $cookiefile -c $cookiefile '$wiki' -d \@$tmpfile");
 }
 
 =item convert($quant, $from, $to)

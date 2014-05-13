@@ -33,6 +33,10 @@ use Inline::Python;
 use FFI::Raw;
 use v5.10;
 
+write_wiki_page("pearlsbeforeswine.wikia.com", "Test Page 1", "test of remote thingy", "ignore this", $wikia{user}, $wikia{pass});
+
+die "TESTING";
+
 $all = read_file("/home/barrycarter/BCGIT/ASTRO/ascp1950.430.bz2.tab");
 debug("ALL: $all");
 for $i (split(/\n/,$all)) {
