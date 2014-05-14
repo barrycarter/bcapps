@@ -45,6 +45,10 @@ for $i (sort keys %triples) {
       # genercize, group by type of relation, not date
       $rdf{$j}{$k}{$i} = 1;
 
+      # restore [[ and ]] for printing
+      $k=~s/\001/[[/isg;
+      $k=~s/\002/]]/isg;
+
       print A "$i,$j,$k\n";
       print B "$j,$k\n";
 
