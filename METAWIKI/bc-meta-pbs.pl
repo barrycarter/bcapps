@@ -38,12 +38,15 @@ for $i (split(/\n/, $data)) {
 open(A,">/var/tmp/bc-pbs-triples.txt");
 
 for $i (sort keys %triples) {
+  # write caption files for feh
+  open(B,">/mnt/extdrive/GOCOMICS/pearlsbeforeswine/page-$i.gif.txt");
   for $j (keys %{$triples{$i}}) {
     for $k (keys %{$triples{$i}{$j}}) {
       # genercize, group by type of relation, not date
       $rdf{$j}{$k}{$i} = 1;
 
       print A "$i,$j,$k\n";
+      print B "$j,$k\n";
 
       # currently only handling "storylines"
       # TODO: change this to use more general jki format, not specific hash
@@ -53,6 +56,7 @@ for $i (sort keys %triples) {
       }
     }
   }
+  close(B);
 }
 
 close(A);
