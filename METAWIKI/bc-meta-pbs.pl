@@ -32,6 +32,9 @@ for $i (split(/\n/, $data)) {
   # ignore blanks and comments
   if ($i=~/^\#/ || $i=~/^\s*$/) {next;}
 
+  # warn if the line contains a single colon (but keep parsing it)
+  if ($i=~/[^:]:[^:]/) {warn "BAD LINE: $i";}
+
   # split line into source page and then body
   $i=~/^(.*?)\s*($dlb.*)$/;
   my($source, $body) = ($1,$2);
@@ -58,8 +61,15 @@ for $i (sort keys %triples) {
       $rdf{$j}{$k}{$i} = 1;
 
       # restore [[ and ]] for printing
-      $k=~s/\001/[[/isg;
-      $k=~s/\002/]]/isg;
+      $k=~s/\001/[\[/isg;
+      $k=~s/\002/]\]/isg;
+
+      # check for dupes
+      if ($seen{"$i~$j~$k"}) {
+	warn("$i~$j~$k exists twice");
+	next;
+      }
+      $seen{"$i~$j~$k"} = 1;
 
       print A "$i,$j,$k\n";
       print B "$j,$k\n";
