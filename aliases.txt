@@ -122,3 +122,5 @@ alias usbreset "echo 0000:00:1d.0 >! /sys/bus/pci/drivers/ehci_hcd/unbind; echo 
 # modifications specific to me (-p below slows things down too much?)
 alias feh "feh -p -. -x --draw-tinted -K . -G \!*"
 # alias feh "feh -. -x --draw-tinted -K . -G \!*"
+
+alias waitpid bc-waitpid.pl

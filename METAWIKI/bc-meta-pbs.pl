@@ -15,6 +15,10 @@ $cc = "[^\\[\\]]";
 $dlb = "\\[\\[";
 $drb = "\\]\\]";
 
+
+# parse_semantic("2003-09-29", "[[first_appearance::[[Rat::dates::[[Connie::aka::Controlling Connie|Connie]]]]]]");
+# die "TESTING";
+
 # links to high-res version of each strip
 for $i (split(/\n/, read_file("/home/barrycarter/BCGIT/METAWIKI/largeimagelinks.txt"))) {
   $i=~s/^(.*?)\s+(.*)$//;
@@ -40,7 +44,12 @@ system("rm /mnt/extdrive/GOCOMICS/pearlsbeforeswine/page-*.gif.txt");
 # open files for writing (currently all /var/tmp/)
 open(A,">/var/tmp/bc-pbs-triples.txt");
 
+warn "Ignoring non-date annotations";
+
 for $i (sort keys %triples) {
+  # ignore non-dates
+  unless ($i=~/^\d/) {next;}
+
   # write caption files for feh
   open(B,">/mnt/extdrive/GOCOMICS/pearlsbeforeswine/page-$i.gif.txt");
   for $j (keys %{$triples{$i}}) {
@@ -191,7 +200,8 @@ TODO: this currently creates a GLOBAL hash, instead of returning a list
 
 sub parse_semantic {
   my($source, $string) = @_;
-#  debug("parse_semantic($source, $string)");
+  debug("parse_semantic($source, $string)");
+
   # list of lists I will need to handle a+b+c and so on
   my(@lol);
   # hash to hold print val of x
@@ -205,6 +215,7 @@ sub parse_semantic {
 
   # split on double colons
   my(@list) = split(/::/, $string);
+  debug("SIZE/LIST",scalar @list,@list);
 
   # no double colons? return as is w/ specialized brackets, no triples created
   if (scalar @list <= 1) {return "\001$string\002";}
@@ -216,6 +227,8 @@ sub parse_semantic {
   for $i (@list) {
     if ($i=~s/\|(.*)$//) {$pval{$i} = $1;} else {$pval{$i} = $i;}
   }
+
+  debug("PVAL",%pval);
 
   # one double colon? create semantic triple [$source,$key,$val] allowing for |
   if (scalar @list == 2) {
@@ -232,10 +245,11 @@ sub parse_semantic {
 
   # only remaining legit case
   if (scalar @list == 3) {
+    debug("LOL", unfold(@lol));
     for $i (@{$lol[0]}) {
       for $j (@{$lol[1]}) {
 	for $k (@{$lol[2]}) {
-	  if (scalar @dates != 1) {warn("DATELIST($string) SHOULD BE 1 element only, not@dates");}
+	  if (scalar @dates != 1) {warn("DATELIST($string) SHOULD BE 1 element only, not @dates");}
 	  for $l (@dates) {
 	    # TODO: currently, a GLOBAL hash to hold triples
 	    $triples{$i}{$j}{$k}=1;
@@ -244,7 +258,8 @@ sub parse_semantic {
 	}
       }
     }
-    return "[[$pval{$list[3]}]]";
+    debug("RETURNING $pval{$list[2]} (in brackets)");
+    return "[[$pval{$list[2]}]]";
   }
 }
 
