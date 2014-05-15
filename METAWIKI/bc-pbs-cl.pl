@@ -2,7 +2,7 @@
 
 # I am using feh's caption feature to rapidly list characters
 # appearing in each Pearls Before Swine strip; this script parses
-# those caption files and outputs semantic triples
+# those caption files and outputs semantic triples to pbs-cl.txt
 
 require "/usr/local/lib/bclib.pl";
 
@@ -13,6 +13,8 @@ require "/usr/local/lib/bclib.pl";
 	 "z" => "[[character::Zebra]]",
 	 "P" => "[[mention::Pig]]"
 	 );
+
+open(A,">/home/barrycarter/BCGIT/METAWIKI/pbs-cl.txt");
 
 # where these special captions are (not in the main PBS directory!)
 for $i (glob "/mnt/extdrive/GOCOMICS/pearlsbeforeswine/CHARLIST/*.txt") {
@@ -28,6 +30,7 @@ for $i (glob "/mnt/extdrive/GOCOMICS/pearlsbeforeswine/CHARLIST/*.txt") {
   $date = $1;
 
   # and print
-  print join(" ",$date,@data),"\n";
+  print A join(" ",$date,@data),"\n";
 }
 
+close(A);

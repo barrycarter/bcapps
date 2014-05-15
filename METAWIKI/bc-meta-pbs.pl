@@ -28,6 +28,9 @@ for $i (split(/\n/, read_file("/home/barrycarter/BCGIT/METAWIKI/largeimagelinks.
 my($data) = read_file("/home/barrycarter/BCGIT/METAWIKI/pbs.txt");
 $data=~s%^.*?<data>(.*?)</data>.*$%$1%s;
 
+# and the data from pbs-cl.txt
+$data = "$data\n".read_file("/home/barrycarter/BCGIT/METAWIKI/pbs-cl.txt");
+
 for $i (split(/\n/, $data)) {
   # ignore blanks and comments
   if ($i=~/^\#/ || $i=~/^\s*$/) {next;}
