@@ -119,5 +119,6 @@ alias todotags "bc-todotags.pl '\[(.*?)\]' < ~/bc-todo-list.txt | sort | uniq -c
 alias usbreset "echo 0000:00:1d.0 >! /sys/bus/pci/drivers/ehci_hcd/unbind; echo 0000:00:1a.0 >! /sys/bus/pci/drivers/ehci_hcd/unbind; echo 0000:00:1a.0 >! /sys/bus/pci/drivers/ehci_hcd/bind; echo 0000:00:1d.0 >! /sys/bus/pci/drivers/ehci_hcd/bind;"
 
 # makes feh draw darker (more readable) captions and other
-# modifications specific to me
+# modifications specific to me (-p below slows things down too much?)
 alias feh "feh -p -. -x --draw-tinted -K . -G \!*"
+# alias feh "feh -. -x --draw-tinted -K . -G \!*"

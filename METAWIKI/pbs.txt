@@ -129,7 +129,8 @@ disclaim: based on gocomics website only
 2003-06-09-2003-06-14,2003-06-16,2003-06-17,2008-12-08-2008-12-12,2008-12-15-2008-12-17,2008-12-20,2008-12-22,2008-12-26,2008-12-27 [[storyline::The 'Pearls' Nuclear Missile Crisis]]
 2003-06-25 [[notes::We learn that [[Pig]] has 6 siblings, ie, [[Farina]] and 5 others (unless Farina came from a separate litter?)]]
 2003-08-01,2003-08-02 [[storyline::[[Pig]] grows breasts]]
-2003-08-03,2004-01-18,2004-04-18,2004-10-10,2005-11-13,2006-03-26,2004-01-04,2004-01-11,2005-02-27,2006-10-15 [[storyline::The Adventures of Angry Bob]]
+2003-08-03,2004-01-18,2004-04-18,2004-10-10,2005-11-13,2006-03-26,2004-01-04,2004-01-11,2005-02-27,2006-10-15,2003-02-07 [[storyline::The Adventures of Angry Bob]]
+2003-02-03-2003-02-08 [[storyline::[[Pig]] the janitor]]
 2005-01-04 [[first_mention::Zeba Zeba Eata]]
 2005-02-28-2005-03-04 [[storyline::[[Pig]] wears an oven mitt]]
 2004-01-12-2004-01-16 [[storyline::[[Pig]] rescue's [[Safari Bob]]'s mounted animal heads]]
@@ -165,7 +166,7 @@ disclaim: based on gocomics website only
 2004-04-12-2004-04-16 [[storyline::[[Rat]]'s Tax Audit]]
 2004-04-26,2004-04-27 [[cameo::Earl+Mooch]]
 2004-04-28 [[cameo::Earl+Mooch+Darryl MacPherson]]
-2004-05-07,2007-05-23,2010-08-07,2002-05-25 [[category::Pig's Cheese Fetish]]
+2004-05-07,2007-05-23,2010-08-07,2002-05-25,2014-04-07 [[category::Pig's Cheese Fetish]]
 2004-05-10 [[description::[[character::Pig]] digs a hole to [[Kukistan]], noting to [[character::Rat]] that author [[Stephan Pastis]] originally named a real country, but changed it for fear of reprisals]] [[notes::If Pig really were to dig a hole through the center of the Earth, he would end up in the ocean west of Australia (the entire US's antipode is there)]]
 2004-05-10-2004-05-15 [[storyline::[[Kukistan]]]]
 2004-05-17-2004-05-21 [[storyline::[[Rat]]'s "mallet o' understanding"]]
@@ -219,6 +220,7 @@ disclaim: based on gocomics website only
 2005-01-31-2005-02-05 [[storyline::sentient bowling pins]]
 2004-11-29-2004-12-04 [[storyline::[[Rat]] visits Scott Adams (Dilbert)]]
 2004-12-20-2004-12-25 [[storyline::Protest against big box stores]]
+2003-01-17 [[event::[[Rat]] un-dies]]
 2003-02-03 [[notes::The painting [[character::Pig]] destroys is Rembrandt's {{wp|The Night Watch}}, a pun, since Pig is working the night watch]]
 2005-03-07-2005-03-11 [[storyline::National Registry of Sand]]
 2005-04-02 [[zebra_deaths::1]]
@@ -269,7 +271,7 @@ disclaim: based on gocomics website only
 2006-02-26 [[deaths::Bob 8 (crocodile)+Floyd]] [[crocodile_deaths::2]]
 2006-03-16 [[deaths::[[Larry::brother::Jimmy]]]] [[Jimmy::species::crocodile]] [[crocodile_deaths::1]]
 2006-04-02 [[newspaper_mentions::The Times]]
-2006-04-06 [[notes::The [[character::crocs]] show unusual interest in [[character::Farina]], but rarely show interesting in eating [[Pig]]]]
+2006-04-06 [[notes::The [[character::crocs]] show unusual interest in [[character::Farina]], but rarely show interesting in eating [[Pig]]]] [[character::Rat]]
 2008-08-03 [[notes::The crocs show extreme interest in eating [[Pig]] in this strip, but never again, except possibly in [[references::2006-04-06]]]]
 2008-08-03-2008-08-05,2008-08-07 [[storyline::[[Crocs]] want to eat [[Pig]]]]
 2006-04-09 [[character::Pig+Rat+Neighbor Tim]]
@@ -312,6 +314,7 @@ disclaim: based on gocomics website only
 2006-12-17 [[description::[[character::Rat+Goat+Larry+Zebra+LGD]] pose for [[character::Pig]]'s Christmas card photo. When a [[character::Santa's Elf]] comes down the chimney, [[deaths::Santa's Elf|Larry eats him]]]]
 2006-12-31 [[character::LGD+Pig+Stephan Pastis+[[first_appearance::Maura]]+Rat]]
 2006-12-31-2007-01-05 [[storyline::[[LGD]] and [[Maura]]]]
+2007-01-06,2007-01-27 [[storyline::[[Rat]] tries to buy a gun]]
 2007-01-05 [[character::Maura]] migrates, breaking up with [[character::LGD]] [[breakup::Maura::LGD]]
 2007-01-09 [[first_appearance::Ataturk]]
 2007-01-10 [[character::Rat+Pig+Ataturk]] [[Ataturk::species::llama]]
@@ -387,7 +390,8 @@ disclaim: based on gocomics website only
 2008-03-27 [[cameo::Ted Forth]]
 2008-03-31 [[Patti::sister::Penny]] [[Penny::husband::Pete]]
 2008-04-03 [[deaths::Bob 5 (crocodile)]] [[crocodile_deaths::1]]
-2008-04-14-2008-04-18 [[storyline::[[Eet a Zeeb]] and mole conferences]]
+2008-04-14-2008-04-18 [[storyline::[[Eetazeeb]] and mole conferences]]
+2008-03-20,2008-03-21,2008-03-23-2008-03-25,2008-04-09 [[storyline::[[Eetazeeb]]]]
 2008-04-20 [[cameo::Stewie]]
 2008-05-05-2008-05-07 [[storyline::Pig's Cereal Nightmares]]
 2008-06-09,2008-06-10,2008-06-13,2008-06-14 [[storyline::The [[Zebra]]/[[Croc]] mediation]]
@@ -398,17 +402,22 @@ disclaim: based on gocomics website only
 2008-11-17 [[character::Rat+Pig+Andy]]
 2008-11-21 [[newspaper_mentions::Cincinnati Enquirer+Dayton Daily News+Napa Valley R?+Baltimore Sun]]
 2008-11-26-2008-11-28 [[storyline::butterfly thief]]
-2009-01-04 [[event::[[character::Maura]] returns to [[character::LGD]]]]
-2009-01-13 [[newspaper_mentions:???+Durham Sen+Charlotte Observer]]
-2006-08-06,2006-09-03,2009-01-18,2010-08-29,2008-03-30,2010-01-24,2010-01-27,2007-10-16,2008-08-17,2009-05-31,2007-11-18,2014-01-26 [[storyline::[[Danny Donkey]]]]
+2008-12-28 [[event::[[character::Maura]] returns to [[character::LGD]]]]
+2009-01-13 [[newspaper_mentions::???+Durham Sen+Charlotte Observer]]
+2006-08-06,2006-09-03,2009-01-18,2010-08-29,2008-03-30,2010-01-24,2010-01-27,2007-10-16,2008-08-17,2009-05-31,2007-11-18,2014-01-26,2010-05-09,2009-03-08,2012-04-15 [[storyline::[[Danny Donkey]]]]
+2009-05-05 [[newspaper_mentions::St. Louis Post ???+Quad City Times]]
+2010-04-12 [[character::Rat+Pig+Beanie the Bear]]
+2010-04-13 [[character::Rat+Pig+Andy the Aardvark]]
+2010-04-14 [[character::Rat+Pig+Neighbor Alan]]
+2010-04-19-2010-04-24 [[storyline::[[Zebra]]'s skylight]]
 2013-12-18 [[cameo::Hobbes (Calvin and Hobbes)]]
 2006-08-13-2006-08-17 [[storyline::Comic strip characters age normally]]
 2006-08-18 [[character::Rat+Pig+[[first_appearance::Ollie]]]] [[Ollie::species::penguin]]
 2006-08-21,2006-08-22,2006-08-25,2006-08-26,2006-08-28 [[storyline::[[Crocs]] attend college]]
 2006-08-30 [[storyline::[[Pig]] locks [[LGD]] in the clothes hamper]]
-2009-01-19-2009-01-23,2009-01-25,2009-04-13 [[storyline::Fantastic Four]]
+2009-01-19-2009-01-23,2009-01-25,2009-02-02,2009-04-13 [[storyline::Fantastic Four]]
 2009-01-28 [[character::Maura+LGD+Snuffles]]
-2009-01-30 [[storyline::[[character::LGD]] rejects [[character::Snuffles]] for [[character::Maura]]]]
+2008-12-28,2009-01-04,2009-01-11,2009-01-26-2009-01-30,2009-02-03-2009-02-06 [[storyline::[[character::LGD]] rejects [[character::Snuffles]] for [[character::Maura]]]]
 2009-02-09 [[newspaper_mentions::Boston Herald]]
 2009-03-03 [[deaths::Bob 6 (crocodile)]] [[crocodile_deaths::1]]
 2009-03-14 [[character::Rat+Zebra+[[Zebra::cousin::Squidmo]]]]
@@ -515,6 +524,7 @@ disclaim: based on gocomics website only
 2011-08-24 [[description::[[character::Melvin]] straps a bomb to himself to blow up [[Zebra]]'s wall]]
 2011-09-23 [[newspaper_mentions::Des Moines Register]]
 2011-09-24 [[character::Pig+Goat+Timbo the Tortoise]]
+2012-04-11-2012-04-14 [[storyline::[[Larry]]'s {{wp|Godfather}}-style hit on [[Zebra]]]]
 2011-09-25 [[description::After watching a documentary on the dart frog, [[character::Zebra]], with [[category:Out of Character|uncharacteristic]] foolishness, dresses in a bright outfit to fool [[character::Larry]] and [[character::Larry's wife|his wife]]]]
 2011-09-27 [[newspaper_mentions::Seattle Times]]
 2011-10-03-2011-10-07,2012-02-26 [[storyline::Garbanzo Bean Day]]
@@ -575,6 +585,8 @@ disclaim: based on gocomics website only
 2005-12-11 [[notes::[[Larry]]'s mother seems to age a lot between now and [[references::2012-09-04]]]]
 2011-04-20 [[notes::It's a little hard to read, but [[Rat]]'s shield reads "MOER ROOMETH"]]
 2012-10-23 [[Lemmings' Leap::aka::Lemming's Leap]]
+2006-09-10 [[crocodile_deaths::1]]
+2004-09-06-2004-09-10 [[storyline::[[Rat]]'s beer rocket]]
 2012-10-26 [[Lemming Leap::aka::Lemming Leap]]
 2012-11-05 [[deaths::Arnie Armadillo]]
 2012-11-07,2011-12-06 [[newspaper_mentions::The Times]]
@@ -648,6 +660,7 @@ disclaim: based on gocomics website only
 2014-01-17,2014-01-19,2014-01-20 [[storyline::Vigilante Deer]]
 2014-01-22 [[character::Penguins]]
 2014-01-23 [[event::[[Staci Pastis]] throws [[Stephan Pastis]] out of the house]]
+2010-04-22-2010-04-24,2010-04-26-2010-04-29 [[storyline::[[Crocs]] in [[Zebra]]'s house]]
 2014-01-23 [[mention::Staci Pastis]]
 2014-01-23-2014-01-24,2014-01-28-2014-02-01,2014-02-16,2014-02-25 [[storyline::Staci Throws Stephan Out]]
 2014-01-26 [[character::Danny Donkey]] [[category::Rat writes]]
@@ -665,7 +678,8 @@ disclaim: based on gocomics website only
 2014-02-27 [[character:Jeff|Jef]]
 2014-03-02 [[category::Rat writes]] [[character::Elly Elephant]] [[notes::This strip includes no "standard" Pearls characters; normally, Rat's writings have Rat at the beginning or the end]]
 2012-06-17 [[character::Rat+Pig+[[first_appearance::Hannah Hippo]]]]
-2013-07-09,2014-03-05 [[character::Lemmings]]
+2013-07-09,2014-03-05,2012-10-19 [[character::Lemmings]]
+2009-02-15 [[event::[[Larry]]'s 40th birthday]]
 2014-03-07 [[Lemming Leap::aka::Lemmings' LEAP]] [[notes::The ever-changing Lemmings' LEAP sign now has a skull and crossbones]]
 2014-03-08 [[notes::[[Goat]], whose real name is Paris, visits {{wp|Paris}}]]
 2011-02-14,2011-02-15,2011-05-04-2011-05-06 [[storyline::Hosanna]]
@@ -694,16 +708,19 @@ Talk::2002-04-12 Deaths::I can't tell if Rat killed the other Fruit Buddies as w
 2010-09-11 [[character::Pig+Sammy the Steelhead+Freddie the Salmon]]
 2011-10-26 [[newspaper_mentions::Arizona Daily ???+Incarman's??? ???+Press ???]]
 2010-01-11-2010-01-13,2010-01-15,2010-01-16,2010-01-18, [[storyline::rare bird on [[Larry]]'s head]]
-
+2006-04-03-2006-04-05 [[character::Rat+Farina]]
+2012-04-17-2012-04-19 [[storyline::{{wp|Kleenex}} box mystery]]
 </data>
 
 # lines that don't parse well:
 
 2003-09-29 [[first_appearance::[[Rat::dates::[[Connie::aka::Controlling Connie|Connie]]]]]]
 
+# eetazeeb conference is part of larger eetazeeb storyline
+
 # 2005-01-04: first appearance crocs? new neighbors?
 
-# 2002-12-21 angel wings bell vs pig gets hit in the head one
+# 2002-12-21 angel wings bell vs pig gets hit in the head one ie 2011-12-19
 
 # the tree croc + treehouse storylines merge into each other, note this somehow
 
@@ -807,3 +824,7 @@ TODO: confirm "pig writes" category (make sure all Pig writes are in there); spe
 undies != underwear, so maybe un-dies?
 
 list zebra relatives?
+
+# 2012-04-22 color separation parody
+
+# is mikey the mole the mole pig has removed?
