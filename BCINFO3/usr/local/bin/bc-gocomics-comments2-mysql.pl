@@ -93,8 +93,8 @@ close(A);
 # system("sqlite3 /tmp/gocomics.db < /var/tmp/gocomics-queries.txt");
 # die "TESTING";
 
-# playing it safe
-system("cd /var/tmp; cp /sites/DB/$globopts{db}.db .; sqlite3 $globopts{db}.db < gocomics-queries.txt; mv /sites/DB/$globopts{db}.db /sites/DB/$globopts{db}.db.old; mv $globopts{db}.db /sites/DB/");
+# playing it safe (pointless in mysql mode)
+# system("cd /var/tmp; cp /sites/DB/$globopts{db}.db .; sqlite3 $globopts{db}.db < gocomics-queries.txt; mv /sites/DB/$globopts{db}.db /sites/DB/$globopts{db}.db.old; mv $globopts{db}.db /sites/DB/");
 
 # psuedo-daemonize (unless file mode)
 if ($globopts{file}) {exit(0);}
