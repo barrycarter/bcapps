@@ -4,15 +4,16 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# TODO: still missing several lines due to alternate regexs
+
 for $i (glob "/home/barrycarter/20140518/pearlpig_*") {
   # determine start date from file name
   unless ($i=~/pearlpig_(\d{4})_(\d{2})/) {die "BAD FILE: $i"}
   $date = "$1-$2-01";
-
+  debug("FILE: $i");
   $all = read_file($i);
 
   # capture lines of interest
-  @text = ();
   for $j (split(/\n/, $all)) {
 
     # kill of chinese character lines here
@@ -40,10 +41,17 @@ for $i (glob "/home/barrycarter/20140518/pearlpig_*") {
       $date = $text;
       next;
     }
-    push(@text,"$date:$text");
+    # text by date
+    push(@{$text{$date}},$text);
   }
+}
 
-  print join("\n", @text),"\n";
+for $i (keys %text) {
+  # join by newline
+  $text = join("\n", @{$text{$i}})."\n";
+  # and write to file (so I can test w feh)
+  # filename is chosen for compatibility w/ way I have GIFs stored
+  write_file($text, "/mnt/extdrive/GOCOMICS/pearlsbeforeswine/TRANSCRIPTS/page-$i.gif.txt");
 }
 
 # this routine is program-specific
