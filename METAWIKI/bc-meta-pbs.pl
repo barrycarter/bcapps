@@ -15,10 +15,6 @@ $cc = "[^\\[\\]]";
 $dlb = "\\[\\[";
 $drb = "\\]\\]";
 
-
-# parse_semantic("2003-09-29", "[[first_appearance::[[Rat::dates::[[Connie::aka::Controlling Connie|Connie]]]]]]");
-# die "TESTING";
-
 # links to high-res version of each strip
 for $i (split(/\n/, read_file("/home/barrycarter/BCGIT/METAWIKI/largeimagelinks.txt"))) {
   $i=~s/^(.*?)\s+(.*)$//;
@@ -43,6 +39,28 @@ for $i (split(/\n/, $data)) {
   my($source, $body) = ($1,$2);
   parse_semantic($source,$body);
 }
+
+# this is probably bad
+open(A,"|mysql test 1> /tmp/myout.txt 2> /tmp/myerr.txt");
+# open(A,">/tmp/mysql.txt");
+print A "BEGIN; DELETE FROM triples;\n";
+
+for $i (sort keys %triples) {
+  for $j (keys %{$triples{$i}}) {
+    for $k (keys %{$triples{$i}{$j}}) {
+      # restore [[ and ]] for printing and fix apos
+      $k=~s/\001/\[\[/isg;
+      $k=~s/\002/\]\]/isg;
+      $k=~s/\'/\\'/isg;
+      print A "INSERT INTO triples VALUES ('$i','$j','$k');\n";
+    }
+  }
+}
+
+print A "COMMIT;\n";
+close(A);
+
+die "TESTING";
 
 # this is ugly, but necessary, to remove .txt files that should no longer exist
 system("rm /mnt/extdrive/GOCOMICS/pearlsbeforeswine/page-*.gif.txt");
@@ -77,12 +95,6 @@ for $i (sort keys %triples) {
       print A "$i,$j,$k\n";
       print B "$j,$k\n";
 
-      # currently only handling "storylines"
-      # TODO: change this to use more general jki format, not specific hash
-      if ($j eq "storyline") {
-	$storylines{$k}{$i} = 1;
-	next;
-      }
     }
   }
   close(B);
@@ -90,6 +102,9 @@ for $i (sort keys %triples) {
 
 close(A);
 
+debug("ASH:",keys %{$rdf{storyline}});
+
+die "TESTING";
 
 open(B,">/var/tmp/bc-pbs-newspaper.txt");
 # newspaper mentions
@@ -107,9 +122,12 @@ close(B);
 
 open(C,">/var/tmp/bc-pbs-storylines.txt");
 # create sorted list of dates for each storyline
-for $i (keys %storylines) {
+for $i (keys %{$rdf{storylines}}) {
+  debug("I: $i");
   @{$dates{$i}} = sort(keys %{$storylines{$i}});
 }
+
+die "TESTING";
 
 # sort storylines by earliest date w/ given storyline
 @storylines = sort {$dates{$a}[0] cmp $dates{$b}[0]} (keys %storylines);
@@ -213,7 +231,7 @@ TODO: this currently creates a GLOBAL hash, instead of returning a list
 
 sub parse_semantic {
   my($source, $string) = @_;
-  debug("parse_semantic($source, $string)");
+#  debug("parse_semantic($source, $string)");
 
   # list of lists I will need to handle a+b+c and so on
   my(@lol);
@@ -228,7 +246,6 @@ sub parse_semantic {
 
   # split on double colons
   my(@list) = split(/::/, $string);
-  debug("SIZE/LIST",scalar @list,@list);
 
   # no double colons? return as is w/ specialized brackets, no triples created
   if (scalar @list <= 1) {return "\001$string\002";}
@@ -240,8 +257,6 @@ sub parse_semantic {
   for $i (@list) {
     if ($i=~s/\|(.*)$//) {$pval{$i} = $1;} else {$pval{$i} = $i;}
   }
-
-  debug("PVAL",%pval);
 
   # one double colon? create semantic triple [$source,$key,$val] allowing for |
   if (scalar @list == 2) {
@@ -258,7 +273,6 @@ sub parse_semantic {
 
   # only remaining legit case
   if (scalar @list == 3) {
-    debug("LOL", unfold(@lol));
     for $i (@{$lol[0]}) {
       for $j (@{$lol[1]}) {
 	for $k (@{$lol[2]}) {
@@ -271,10 +285,23 @@ sub parse_semantic {
 	}
       }
     }
-    debug("RETURNING $pval{$list[2]} (in brackets)");
+#    debug("RETURNING $pval{$list[2]} (in brackets)");
     return "[[$pval{$list[2]}]]";
   }
 }
+
+=item schema
+
+This is the schema of the mysql db that should already exist:
+
+DROP TABLE IF EXISTS triples;
+-- val and value and mysql reserved words?
+CREATE TABLE triples (source TEXT, k TEXT, v TEXT);
+CREATE INDEX i1 ON triples(source(20));
+CREATE INDEX i2 ON triples(k(20));
+CREATE INDEX i3 ON triples(v(20));
+
+=cut
 
 =item headertext
 

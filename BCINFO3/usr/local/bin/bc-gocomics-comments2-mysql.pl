@@ -100,3 +100,5 @@ close(A);
 if ($globopts{file}) {exit(0);}
 sleep(150);
 exec($0);
+
+# TODO: dump table definitions incl indexes
