@@ -7,7 +7,7 @@
 require "/usr/local/lib/bclib.pl";
 
 # does not work with sh for some reason
-$ENV{SHELL} = "tcsh";
+# $ENV{SHELL} = "tcsh";
 
 for $i (glob ("/home/barrycarter/.Skype/*/")) {
   print STDERR "I: $i\n";
