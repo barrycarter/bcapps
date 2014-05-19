@@ -33,7 +33,7 @@ use Inline::Python;
 use FFI::Raw;
 use v5.10;
 
-write_wiki_page("pearlsbeforeswine.wikia.com", "Test Page 1", "test of remote thingy", "ignore this", $wikia{user}, $wikia{pass});
+write_wiki_page("http://pearlsbeforeswine.wikia.com/api.php", "Test Page 1", "test of remote thingy", "ignore this", $wikia{user}, $wikia{pass});
 
 die "TESTING";
 

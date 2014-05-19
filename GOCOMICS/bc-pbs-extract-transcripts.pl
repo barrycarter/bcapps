@@ -6,22 +6,38 @@ require "/usr/local/lib/bclib.pl";
 
 # TODO: still missing several lines due to alternate regexs
 
-for $i (glob "/home/barrycarter/20140518/pearlpig_*") {
+# problem files:
+# /home/barrycarter/20140518/pearlpig_2006_12
+
+# for $i (glob "/home/barrycarter/20140518/pearlpig_*") {
+warn "TESTING";
+for $i (glob "/home/barrycarter/20140518/pearlpig_2006_12") {
   # determine start date from file name
   unless ($i=~/pearlpig_(\d{4})_(\d{2})/) {die "BAD FILE: $i"}
   $date = "$1-$2-01";
   debug("FILE: $i");
   $all = read_file($i);
 
+  # kill off scripts
+#  $all=~s/<script.*?<\/script>//sg;
+
+  # testing below (still not getting all transcripts)
+#  $all= cleanup_text($all);
+#  $all=~s/\s+\n\s+/\n/sg;
+#  debug($all);
+# die "TESTING";
+
   # capture lines of interest
   for $j (split(/\n/, $all)) {
 
     # kill of chinese character lines here
-    if ($j=~/color: gray/) {next;}
+    if ($j=~/color: gray/) {debug("IGNORING: $j"); next;}
 
     # kill of uninteresting lines here
-    unless ($j=~s/<div style="line-height: 150%">(.*?)<\/div>// ||
-	$j=~s/<span style="color: #00afe1">(.*?)<\/span>//) {
+    unless ($j=~s/<div style=\"line-height: 150%(.*?)// ||
+	    $j=~s/<span style="color: #00afe1">(.*?)<\/span>// ||
+	    $j=~s/^(.*<i><u>.*)$//
+) {
       # even though we ignore $j, let's clean it up and look at it to
       # make sure we're not ignoring anything important
       $j = cleanup_text($j);
@@ -66,7 +82,7 @@ sub cleanup_text {
   $text=~s/&[lr]squo;/\'/g;
   # remove HTML tags and unprintables
   $text=~s/<.*?>//g;
-  $text=~s/[^ -~]//g;
+  $text=~s/[^[:print:]\s]//g;
   return $text;
 }
 
