@@ -33,7 +33,49 @@ use Inline::Python;
 use FFI::Raw;
 use v5.10;
 
-write_wiki_page("http://pearlsbeforeswine.wikia.com/api.php", "Test Page 1", "test of remote thingy", "ignore this", $wikia{user}, $wikia{pass});
+write_wiki_page("http://pearls-before-swine-bc.wikia.com/api.php", "Mediawiki:zonk0", "<img src='http://assets.amuniversal.com/e553d9009ab3012e2f8200163e41dd5b?width=300' />", "low resolution image", $wikia{user}, $wikia{pass});
+
+die "TESTING";
+
+my($token) = get_wiki_token("http://pearls-before-swine-bc.wikia.com/api.php", $wikia{user}, $wikia{pass});
+debug("TOKEN: $token");
+
+my($cmd) = "curl -L 'http://pearls-before-swine-bc.wikia.com/api.php' -d 'action=upload&filename=remote.png&file=\@/mnt/extdrive/GOCOMICS/pearlsbeforeswine/300/page-2003-12-24.gif&token=$token'";
+
+system($cmd);
+
+debug($cmd);
+
+=item get_wiki_token($wiki, $user="", $pass="")
+
+Obtain an edit token for the Main Page of $wiki with username $user
+and password $pass (w/ intent to upload files)
+
+=cut
+
+sub get_wiki_token {
+  my($wiki, $user, $pass)= @_;
+
+  # cookie file must be consistent, so I can cache
+  my($cookiefile) = "/var/tmp/".sha1_hex("$user-$wiki");
+
+  # authenticate to wiki (but cache, so not doing this constantly)
+  # get token and sessionid and cookie prefix
+  my($out, $err, $res) = cache_command2("curl -L -b  $cookiefile -c $cookiefile '$wiki' -d 'action=login&lgname=$user&lgpassword=$pass&format=xml'", "age=3600");
+  debug("ALPHA: $out");
+  unless($out=~/token=\"(.*?)\"/) {warn "BAD TOKEN"; return;}
+  debug("TOKEN: $1");
+  # and use it to login
+  ($out,$err,$res) = cache_command2("curl -L -b $cookiefile -c $cookiefile '$wiki' -d 'action=login&lgname=$user&lgpassword=$pass&lgtoken=$1&format=xml'", "age=3600");
+  debug("COOKEFIE: $cookiefile");
+  debug("BETA: $out");
+  # now obtain token any page
+  # TODO: requesting tokens 1-page-at-a-time is probably bad
+  ($out, $err, $res) = cache_command2("curl -L -b $cookiefile -c $cookiefile '$wiki?action=query&prop=info&intoken=edit&titles=Main+Page&format=xml'", "age=3600");
+  debug("GAMMA: $out");
+  unless ($out=~/edittoken=\"(.*?)\"/) {warn "BAD TOKEN"; return;}
+  return $1;
+}
 
 die "TESTING";
 
