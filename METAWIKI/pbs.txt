@@ -328,6 +328,8 @@ disclaim: based on gocomics website only
 2006-12-31 [[character::LGD+Pig+Stephan Pastis+[[first_appearance::Maura]]+Rat]]
 2006-12-31-2007-01-05 [[storyline::[[LGD]] and [[Maura]]]]
 2005-08-27,2006-12-28-2006-12-30,2007-01-06,2007-01-27 [[storyline::[[Rat]] tries to buy a gun]]
+2008-09-08-2008-09-13 [[storyline::[[Rat]] attacks {{wp|Cuba}}]]
+2008-09-13 [[cameo::Cathy]]
 2005-08-27 [[notes::Today's strip and [[references::2006-12-28]]'s strip are virtually identical]]
 2007-01-05 [[character::Maura]] migrates, breaking up with [[character::LGD]] [[breakup::Maura::LGD]]
 2007-01-09 [[first_appearance::Ataturk]]
@@ -384,6 +386,7 @@ disclaim: based on gocomics website only
 2007-09-30-2007-10-03 [[storyline::[[Crocs]] purchase [[Snuffles]] to kill [[Zebra]]]]
 2007-10-12 [[notes::We learn [[Larry]] attended [[San Marino High School]] (just like [[Stephan Pastis]])]]
 2007-10-15 [[first_appearance::Steve+Orville]] [[Steve+Orville::species::hamster]]
+2008-09-24 [[event::We learn that [[Steve]] and [[Orville]] from [[references::2007-10-15]] have died, though we don't know exactly when]]
 2007-10-15,2007-10-16,2007-10-18,2007-10-19 [[storyline::[[Steve]] and [[Orville]]]]
 2007-10-28 [[cameo::Linus (Peanuts)]]
 2007-10-31 [[event::A [[character::crocs|crocodile]] successfully attacks [[character::Zebra]], albeit not fatally]]
@@ -512,6 +515,7 @@ disclaim: based on gocomics website only
 2010-07-11 [[crocodile_deaths::1]]
 2010-07-13 [[event::[[character::Officer Potus]] accidentally squishes and kills [[deaths::Sweet Fanny]]]] [[character::Zebra+Pig]]
 2010-07-26 [[newspaper_mentions::Buffalo News+Louisville Courier+Commstcipe??? Appeal]]
+2008-09-23 [[newspaper_mentions::Hartford Courant+Indianapolis Star]]
 2010-08-12 [[notes::[[Rat]] and [[Stephan]] seem horrified by the [[fanny rub]] greeting, but [[Larry]] later calls the very similar [[ba-donk-a-donk rub]] "ulteemate greeting of frendsheep" ([[references::2012-01-25]])]]
 2010-08-21 [[deaths::Willy the Woodpecker]]
 2010-08-22 [[deaths::[[Larry::cousin::Cousin Nick]]]] [[crocodile_deaths::1]]
@@ -534,11 +538,11 @@ disclaim: based on gocomics website only
 2011-04-19 [[notes::[[character::Pig]] tells [[character::Goat]] that Pig's [[mention::Aunt Vivian]] would never fit in a {{wp|vivarium}}. However, [[references::2011-02-17]] shows us that Aunt Vivian is now a ham, so she actually may fit. Of course, Pig may be talking about another Aunt Vivian, or the vivarium is even smaller than a ham.]] [[notes::The vivarium's price appears to be $1700 or possibly $17.00]]
 2011-07-07-2011-07-09,2011-07-14 [[storyline::Beer-can-shaped aliens]]
 2011-07-11-2011-07-14 [[storyline::[[Pig]]'s Great Space Journey]]
-2011-07-18-2011-07-22,2011-07-24,2011-07-26-2011-07-30,2011-09-06,2011-08-01-2011-08-06,2011-08-08-2011-08-11 [[storyline::[[Rat]] supports overthrowing the government, landing [[Stephan Pastis]] in jail]]
+2011-07-18-2011-07-22,2011-07-24,2011-07-26-2011-07-30,2011-09-06,2011-08-01-2011-08-06,2011-08-08-2011-08-11,2011-09-06 [[storyline::[[Rat]] supports overthrowing the government, landing [[Stephan Pastis]] in jail]]
 2011-08-12,2011-08-13,2011-08-15-2011-08-17,2011-08-22-2011-08-26,2011-08-29,2011-08-30,2011-09-04-2011-09-06 [[storyline::[[Zebra]] builds a wall as protection against the [[crocodiles]]]]
 2009-08-02 [[character::Rat+Pig+Professor Bob]]
 2011-05-12-2011-05-14,2011-05-16-2011-05-18 [[storyline::[[Larry]] the tree croc]]
-2011-05-16-2011-05-18,2011-05-20,2011-05-23,2011-05-26,2011-05-27,2011-06-06,2011-06-07,2011-06-09,2011-06-13-2011-06-15 [[storyline::[[Larry]] and the treehouse]]
+2011-05-16-2011-05-18,2011-05-20,2011-05-23,2011-05-26,2011-05-27,2011-06-06,2011-06-07,2011-06-09,2011-06-13-2011-06-15,2011-08-13 [[storyline::[[Larry]] and the treehouse]]
 2011-08-24 [[description::[[character::Melvin]] straps a bomb to himself to blow up [[Zebra]]'s wall]]
 2011-09-23 [[newspaper_mentions::Des Moines Register]]
 2011-09-24 [[character::Pig+Goat+Timbo the Tortoise]]
@@ -751,9 +755,14 @@ Talk::2002-04-12 Deaths::I can't tell if Rat killed the other Fruit Buddies as w
 2006-04-03-2006-04-05 [[character::Rat+Farina]]
 2012-04-17-2012-04-19 [[storyline::{{wp|Kleenex}} box mystery]]
 2002-01-08-2002-01-12,2002-01-14-2002-01-17,2002-01-19,2002-01-24-2002-01-31 [[character::Rat+Pig]]
+2011-09-06 [[notes::[[character::Stephan Pastis]]' prisoner number is 1166163, which does not appear to be a reference to anything]]
+2011-08-11 [[cameo::Andy Bear (Pluggers)]]
+2011-08-12 [[cameo::Charlie Brown (Peanuts)+Linus (Peanuts)]]
 </data>
 
 # lines that don't parse well:
+
+2005-08-08 [[deaths::[[Pig::cousin::Josh+Ben]]+[[Pig::uncle::Uncle Mike]]]]
 
 2003-09-29 [[first_appearance::[[Rat::dates::[[Connie::aka::Controlling Connie|Connie]]]]]]
 
@@ -823,7 +832,13 @@ Talk::2002-04-12 Deaths::I can't tell if Rat killed the other Fruit Buddies as w
 
 # 2004-09-13 atlas carries world contradicting celestial sphere in other strip, 2010-01-10
 
-# 2011-09-06: map of town
+# 2011-09-05: map of town
+
+2011-09-05 who are bob and patty... not larry?
+
+2011-09-06 no way actual vote
+
+
 
 # when putting char in strip, correct to canon name?
 
