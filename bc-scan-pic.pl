@@ -3,7 +3,12 @@
 # quick and dirty wrapper to scanimage: takes a 300 dpi full page scan
 # and outputs it to a unique file in the current directory
 
+# TODO: merge this into bc-scan-adf.pl
+
 require "/usr/local/lib/bclib.pl";
+
+# scanning takes a while, so default alert me when done
+defaults("xmessage=1");
 
 # find USB address of my ADF scanner
 %scanners = %{find_attached_scanners()};

@@ -17,9 +17,9 @@ for $i (split(/\n/, read_file("/home/barrycarter/BCGIT/METAWIKI/largeimagelinks.
 }
 
 for $i (sort keys %link) {
-#  unless ($i=~/^2002-01-/) {die "TESTING";}
   write_wiki_page("http://pearls-before-swine-bc.wikia.com/api.php", "Mediawiki:$i", "<img src='$link{$i}' />", "$i strip (low resolution/fair use)", $wikia{user}, $wikia{pass});
   debug("$i: $link{$i}");
-  die "TESTING";
 }
+
+
 
