@@ -45,6 +45,7 @@ disclaim: based on gocomics website only
 2002-04-07 [[description::[[Pig]] establishes the [[first_appearance::Fruit Buddies]], [[Rat]] eats [[deaths::Georgie Grape]]]]
 2002-04-09 [[description::[[Rat]] eats and kills [[deaths::Orange]], a member of the [[Fruit Buddies]]]]
 2002-04-11 [[description::[[Petey Potato]] joins the [[Fruit Buddies]]]]
+2002-04-07-2002-04-12,2002-04-14 [[storyline::[[Fruit Buddies]]]]
 2002-04-12 [[deaths::Annie Apple+Banana]]
 2002-04-14 [[description::[[Rat]] kills of [[Pig]]'s potato friends, presumably including [[deaths::Petey Potato]]]]
 2002-04-16 [[description::[[Zebra]]'s herd try coating themselves with lotion to slip out of the [[lions]] grasp]]
@@ -61,6 +62,8 @@ disclaim: based on gocomics website only
 2002-07-02 [[mention::Stephan Pastis]]
 2002-07-07-2002-07-12 [[category::Rat writes Bildert]] [[category::Rat writes]]
 2002-07-17,2014-04-08,2013-05-22,2012-06-24,2012-06-28,2005-07-01,2006-08-15,2006-08-13,2009-02-19,2003-05-12,2003-05-13,2003-05-17,2011-10-15 [[category::Family Circus mention]]
+2009-10-11 [[cameo::Dolly (Family Circus)+Jeffy (Family Circus)+Bil (Family Circus)]]
+2008-07-01 [[newspaper_mention::Washington Post]]
 2002-07-18 [[description::[[character::crocodiles]] kill [[character::Zebra]]'s date]] [[zebra_deaths::1]]
 2002-07-18 [[zebra_deaths::1]]
 2002-07-22 [[first_appearance::Pigita]]
@@ -95,7 +98,7 @@ disclaim: based on gocomics website only
 2002-11-18-2002-11-23 [[category::Box Me In]]
 2002-12-01 [[description::With [[category::Out of Character|uncharacteristic]] generosity, [[Rat]] gives $200 to a pizza delivery boy wearing a replica of the {{wp|Leaning Tower of Pisa}}, attracting other costumed characters]]
 2002-12-04 [[description::[[Pig]] meets [[character::Chuckie Sheep]], an [[first_mention::non-anthropomorphic animal]]]]
-2002-12-04-2002-12-06,2002-12-08 [[storyline::Chuckie the non-anthropomorphic sheep]]
+2002-12-04-2002-12-06,2002-12-08,2005-12-28 [[storyline::Chuckie the non-anthropomorphic sheep]]
 2002-12-16 [[first_appearance::Stevie Salmon]] [[deaths::Cousin Bob]]
 2002-12-22 [[notes::Character resembling {{wp|Dilbert}}'s Boss appears in panel 3]]
 2002-12-29 [[description::[[Zebra]] writes to the [[lions]]]]
@@ -120,7 +123,7 @@ disclaim: based on gocomics website only
 2003-05-21 [[notes::One of the ads reads "PASTIS is a Handsome Man" and another reads "PASTIS needs help" and a third reads "PEARLS strips. Gd cond. Very rare. 2002-2003 $9,000 ea. 555-555-1000"]]
 2003-05-22 [[cameo::Bucky Cat+Satchel Pooch]]
 2003-05-23 [[cameo::Garfield]]
-2003-05-25,2010-07-25 [[category::Serious strips]]
+2003-05-25,2010-07-25,2002-09-11 [[category::Serious strips]]
 2010-07-25 [[character::Pig+Rat+Danny Donkey+Zebra+Larry+LGD+Snuffles+Stephan Pastis+Goat]]
 2009-10-14-2009-10-16,2009-10-19,2009-10-22 [[storyline::[[Larry]] placed in a zoo]]
 2013-02-09 [[newspaper_mentions::Standard ???+??? Daily News]]
@@ -178,7 +181,7 @@ disclaim: based on gocomics website only
 2004-06-07-2004-06-12,2004-06-14-2004-06-19 [[storyline::[[character::Ms. Bootyworth]]]]
 2004-06-20 [[deaths::Cousin Vinnie]] [[zebra_deaths::1]]
 2004-06-27 [[newspaper_mentions::San Francisco Chronicle]]
-2004-07-05-2004-07-07,2004-09-03,2004-10-11,2004-10-13,2004-12-10,2004-12-11 [[storyline::[[character::Alphonse]]
+2004-07-05-2004-07-07,2004-09-03,2004-10-11,2004-10-13,2004-12-10,2004-12-11 [[storyline::[[character::Alphonse]]]]
 2004-07-06 [[Alphonse::nickname::The Needy Porcupine]]]]
 2004-07-10 [[deaths::Zebra's brother]] [[zebra_deaths::1]]
 2004-07-12-2004-07-17,2004-07-19,2004-07-20 [[storyline::Dumb Guys Convention]]
@@ -263,17 +266,21 @@ disclaim: based on gocomics website only
 2005-11-04 [[description::[[character::Frankie's Mom]] worries that [[Franky]] isn't catching his own food. A pizza delivery guy confirms that he delivers pizza daily, and sends greetings to Frankie's roommates, [[character::Bob+Fred+Jojo]]]] [[notes::[[Frankie]] acts a lot like [[Larry]]]]
 2005-11-26 [[newspaper_mentions::Morning News]]
 2005-12-07 [[character::Pig+Neighbor John+Skippy]]
-2005-12-16 [[character::John+Jennifer+Whale]]
-
+2005-12-16 [[character::John (seal)+Jennifer (seal)+Whale]]
+2005-12-13 [[character::John (seal)+Jennifer (seal)+Whale]]
+2005-12-26-2005-12-30 [[storyline::Letter short ges]]
+2005-12-30 [[cameo::B.C. (B.C.)+The Fat Broad (B.C.)]]
 2005-12-24 [[character::Pig+Rat+Darby Nut+Scottie Nut+Friedrich]] [[Freidrich::species::nutcracker]]
-2006-01-04 [[character::Johnny Seal]]
+2006-01-04 [[character::Johnny (seal)+Rat+Whale+Pig]]
+2006-01-18-2006-01-20 [[storyline::[[Pig]]'s produce]]
+2006-01-23,2006-01-25,2006-01-30 [[storyline::Five Dentists]]
 2006-02-05 [[Pig+Rat::address::809 Bradbury]] [[character::Bluebird of Happiness]]
 2005-11-14,2006-02-06-2006-02-09,2006-05-08-2006-05-13,2011-04-06-2011-04-08 [[storyline::[[Annie May]], [[Pig]]'s sea anemone enemy]]
 2006-05-13 [[deaths::Whale]]
 2006-05-16-2006-05-18 [[storyline::[[LGD]]'s anger management problem]]
 2006-02-07 [[mention::Annie May]] [[Annie May::species::sea anemone]]
 2006-02-10 [[character::John+Jennifer+Whale]] [[John+Jennifer::species::seal]]
-2006-02-15 [[notes::One of the "sleeping" people appears to be [[Stephan Pastis]]]]
+2006-02-15 [[notes::One of the "sleeping" people appears to be [[Stephan Pastis]]]] [[human_deaths::3]]
 2006-02-26 [[deaths::Bob 8 (crocodile)+Floyd]] [[crocodile_deaths::2]]
 2006-03-16 [[deaths::[[Larry::brother::Jimmy]]]] [[Jimmy::species::crocodile]] [[crocodile_deaths::1]]
 2006-04-02 [[newspaper_mentions::The Times]]
@@ -300,7 +307,8 @@ disclaim: based on gocomics website only
 2006-11-13-2006-11-18,2006-04-24-2006-04-26 [[storyline::Comic strip alignment errors]]
 2006-05-24 [[description::[[Pig]] admits he's never kissed [[Pigita]]]]
 2006-05-29-2006-05-31 [[storyline::[[Rat]], the oil company CEO]]
-2006-06-06,2006-06-08,2007-10-08-2007-10-11,2006-04-13,2006-07-19,2008-10-13,2006-07-21,2006-02-17,2005-11-07,2006-03-14,2006-02-21 [[storyline::Pig plays with Viking figures]]
+2006-06-06,2006-06-08,2007-10-08-2007-10-11,2006-04-13,2006-07-19,2008-10-13,2006-07-21,2006-02-17,2005-11-07,2006-03-14,2006-02-21,2014-05-19 [[storyline::Pig plays with Viking figures]]
+2006-02-12 [[deaths::Clarence (crocodile)]] [[crocodile_deaths::1]]
 2005-04-11-2005-04-15 [[storyline::[[Rat]], the life coach]]
 2004-04-19-2004-04-23 [[storyline::Electronics store salesmen]]
 2006-06-26 [[character::mini Newt Gingrich+Rat+Pig]]
@@ -323,7 +331,7 @@ disclaim: based on gocomics website only
 2008-10-03 [[notes::One of the possible defendants is [[Stephan Pastis]] himself; the others are {{wp|Bill Gates}}, {{wp|Larry Ellison}}, {{wp|Donald Trump}}, {{wp|Warren Buffett}}, and the rest appear to be {{wp|Tuckerization}}]]
 2006-11-30 [[newspaper_mentions::Indianapolis Star+Baltimore Sun+Worcester Telegram and Gazette]]
 2006-12-17 [[description::[[character::Rat+Goat+Larry+Zebra+LGD]] pose for [[character::Pig]]'s Christmas card photo. When a [[character::Santa's Elf]] comes down the chimney, [[deaths::Santa's Elf|Larry eats him]]]]
-2007-12-02 [[storyline::[[Christmas Tree Girl]]]]
+2007-12-02-2007-12-05 [[storyline::[[Christmas Tree Girl]]]]
 2006-12-26 [[notes::Is this the baby that later become's [[Rat]]'s bookie?]]
 2006-12-31 [[character::LGD+Pig+Stephan Pastis+[[first_appearance::Maura]]+Rat]]
 2006-12-31-2007-01-05 [[storyline::[[LGD]] and [[Maura]]]]
@@ -355,7 +363,7 @@ disclaim: based on gocomics website only
 2007-06-06 [[deaths::George]] [[George::species::antelope]]
 2007-06-16 [[first_appearance::Andy]]
 2007-06-18 [[newspaper_mentions::Herald Sun]]
-2007-06-18,2007-06-19 [[storyline::[[Rat]] works as a clown]]
+2007-06-18,2007-06-19,2007-12-03,2007-12-04 [[storyline::[[Rat]] works as a clown]]
 2007-06-22 [[newspaper_mentions::Washington Post]]
 2007-06-25,2007-06-26,2007-06-29,2007-06-30,2007-07-02,2007-07-06,2007-07-09,2007-07-12 [[storyline::[[Rat]] writes a tabloid]]
 2007-07-01 [[character::Cousin Joyce]] [[zebra_deaths::1]]
@@ -369,7 +377,7 @@ disclaim: based on gocomics website only
 2009-02-24 [[newspaper_mentions::Quad City Times]]
 2007-07-31,2007-08-01,2007-08-12-2007-08-18,2007-08-20,2007-08-21 [[storyline::[[Rat]] the lawyer]]
 2007-08-04 [[newspaper_mentions::The Chronicle]]
-2007-08-09,2007-08-10,2007-09-14 [[storyline::Ego-Man]]
+2007-08-09,2007-08-10,2007-09-14,2007-12-06,2007-12-07 [[storyline::Ego-Man]]
 2007-08-12 [[description::The [[character::crocodiles]], represented by [[character::Rat]] sue [[character::Zebra]]]] [[character::Goat]] [[storyline::Crocs sue Zebra]]
 2007-08-13-2007-08-18,2007-08-20,2007-08-21,2007-08-24,2007-08-25,2007-09-10,2007-09-11 [[storyline::Crocs sue Zebra]]
 2007-08-22,2007-08-23,2007-08-29-2007-08-31 [[storyline::[[Rat]] travels to Florida to find [[Farina]]]]
@@ -424,8 +432,9 @@ disclaim: based on gocomics website only
 2008-10-27 [[notes::This gag (arms stretching until feet touch the ground) has also been used in {{wp|Garfield}}]]
 2008-12-28 [[event::[[character::Maura]] returns to [[character::LGD]]]]
 2008-10-28 [[character::Pig+Fred (fox)+Zebra]] [[Fred (fox)::aka::Fred the {{wp|fennec Fox}}]]
-2009-01-13 [[newspaper_mentions::???+Durham Sen+Charlotte Observer]]
-2006-08-06,2006-09-03,2009-01-18,2010-08-29,2008-03-30,2010-01-24,2010-01-27,2007-10-16,2008-08-17,2009-05-31,2007-11-18,2014-01-26,2010-05-09,2009-03-08,2012-04-15,2008-06-29 [[storyline::[[Danny Donkey]]]]
+2009-01-13 [[newspaper_mentions::Raleigh ???+Durham Sen+Charlotte Observer]]
+2006-08-06,2006-09-03,2009-01-18,2010-08-29,2008-03-30,2010-01-24,2010-01-27,2007-10-16,2008-08-17,2009-05-31,2007-11-18,2014-01-26,2010-05-09,2009-03-08,2012-04-15,2008-06-29,2013-07-21,2006-10-08,2006-04-16 [[storyline::[[Danny Donkey]]]]
+2006-06-11 [[notes::{{wp|Tramp stamp}}]]
 2009-05-05 [[newspaper_mentions::St. Louis Post ???+Quad City Times]]
 2010-04-12 [[character::Rat+Pig+Beanie the Bear]]
 2010-04-13 [[character::Rat+Pig+Andy the Aardvark]]
@@ -441,7 +450,7 @@ disclaim: based on gocomics website only
 2008-12-28,2009-01-04,2009-01-11,2009-01-26-2009-01-30,2009-02-03-2009-02-06 [[storyline::[[character::LGD]] rejects [[character::Snuffles]] for [[character::Maura]]]]
 2009-02-09 [[newspaper_mentions::Boston Herald]]
 2009-03-03 [[deaths::Bob 6 (crocodile)]] [[crocodile_deaths::1]]
-2009-03-14 [[character::Rat+Zebra+[[Zebra::cousin::Squidmo]]]]
+2009-03-14 [[character::Rat+Zebra+[[Zebra::cousin::Squidmo (zebra)]]]]
 2009-03-25 [[newspaper_mentions::Houston Chronicle]]
 2009-04-03,2009-04-04,2009-04-06-2009-04-16 [[storyline::[[Larry's wife]] kidnapped by [[Zebra]]]]
 2009-04-11 [[deaths::Stapler Head]]
@@ -483,7 +492,7 @@ disclaim: based on gocomics website only
 2009-09-28,2009-12-12-2009-12-16 [[storyline::Pantless Ziggy]]
 2010-01-02 [[newspaper_mentions::Seattle Times+Reno Gazette+Tacoma News ???]]
 2010-01-04,2010-01-05,2010-01-07,2010-01-29 [[storyline::[[Ratopia]]]]
-2010-01-08,2010-01-09,2010-01-03,2010-01-06 [[storyline::Google as God]]
+2009-10-21,2010-01-08,2010-01-09,2010-01-03,2010-01-06 [[storyline::Google as God]]
 2010-01-10 [[character::Goat+Snuffles+LGD]]
 2010-01-19 [[first_appearance::Katie]] [[Katie::aka::Drama Cow]]
 2010-01-19-2010-01-23,2010-01-25,2010-01-26,2010-01-29 [[storyline::[[character::Drama Cow]]]]
@@ -493,6 +502,9 @@ disclaim: based on gocomics website only
 2010-02-09 [[character::Lucky]] [[Lucky::species::lion]] [[Max+Zach::cousin::Lucky]]
 2010-02-11 [[character::Jenny Jellyfish]]
 2010-02-22 [[character::Rat+Pig+Uni]] [[Uni::species::unicorn]]
+2006-04-28,2006-04-29 [[storyline::[[Pig]] tries to meet the {{wp|UPS}} girl]]
+2013-03-14 [[newspaper_mentions::The Times]]
+2002-08-21 [[storyline::[[Rat]] and [[Farina]]]]
 2010-03-01-2010-03-06 [[storyline::[[Rat]]'s "Friendly Greeter" Job]]
 2010-03-06 [[notes::The face on [[Rat]]'s table changes from a smile in panel 1 to a frown in panel 3, with a slight frown in panel 2]]
 2010-03-07 [[cameo::Snuffy Smith]]
@@ -506,6 +518,9 @@ disclaim: based on gocomics website only
 2010-06-14,2010-06-15,2010-06-18,2010-06-22,2010-06-23, [[storyline::[[Larry]] returns to fourth grade]]
 2010-06-20 [[crocodile_deaths::1]] [[notes::We learn there are 18 crocodiles remianing in the frat house]]
 2010-06-24,2010-06-08 [[character::Zebra+Officer Potus]]
+2010-06-06-2010-06-08,2010-06-10,2010-06-20,2010-06-21,2010-06-24,2010-06-25 [[character::Officer Potus]]
+2011-02-07 [[notes::possible homage to {{wp|Dick Tracy}}]]
+2010-06-12 [[character::Pig+Rat+Jacko the fire-breathing dragon]]
 2010-06-28 [[storyline::[[Pig]]'s stalker [[first_appearance::Sweet Fanny]]]]
 2010-06-29,2010-07-01,2010-07-02,2010-07-07,2010-07-08,2010-07-13,2010-07-14 [[storyline::[[Pig]]'s stalker [[Sweet Fanny]]]]
 2010-07-03 [[newspaper_mentions::Buffalo News]]
@@ -536,6 +551,7 @@ disclaim: based on gocomics website only
 2011-02-17 [[character::Aunt Vivian+Rat+Pig]] [[description::[[Pig]] is visited by his [[Aunt Vivian]]'s ghostly ham]]
 2011-03-09 [[character::Donny the Dung Beetle]]
 2011-04-19 [[notes::[[character::Pig]] tells [[character::Goat]] that Pig's [[mention::Aunt Vivian]] would never fit in a {{wp|vivarium}}. However, [[references::2011-02-17]] shows us that Aunt Vivian is now a ham, so she actually may fit. Of course, Pig may be talking about another Aunt Vivian, or the vivarium is even smaller than a ham.]] [[notes::The vivarium's price appears to be $1700 or possibly $17.00]]
+2003-04-15 [[storyline::[[Rat]] the telemarketer]]
 2011-07-07-2011-07-09,2011-07-14 [[storyline::Beer-can-shaped aliens]]
 2011-07-11-2011-07-14 [[storyline::[[Pig]]'s Great Space Journey]]
 2011-07-18-2011-07-22,2011-07-24,2011-07-26-2011-07-30,2011-09-06,2011-08-01-2011-08-06,2011-08-08-2011-08-11,2011-09-06 [[storyline::[[Rat]] supports overthrowing the government, landing [[Stephan Pastis]] in jail]]
@@ -678,7 +694,7 @@ disclaim: based on gocomics website only
 2013-10-03,2013-10-04 [[storyline::[[Rat]] controls government drones]]
 2013-10-07 [[character::Morty]]
 2013-10-17 [[character::Saul+Morty]] [[notes::[[Morty]] and [[Saul]] are a possible reference to comedian {{wp|Mort Saul}}]]
-2013-10-20-2013-10-25 [[storyline::[[Cubby]]]]
+2003-10-20-2003-10-25 [[storyline::[[Cubby]]]]
 2005-02-07-2005-02-12 [[storyline::[[Rat]] the waiter]]
 2013-11-04 [[first_mention::Clarabell Cow]]
 2013-11-05 [[first_named+first_appearance::Clarabell Cow]]
@@ -690,22 +706,26 @@ disclaim: based on gocomics website only
 2013-12-01 [[character::Wanda+Uncle Jerry+Uncle Greg+Uncle Mark+Uncle Dan]]
 2005-07-15 [[notes::In panels 1 and 3, some of the pickles jars have labels other than "pickles". The only ones I could make out are "Craves"? and "Dive up?"]]
 2013-12-04 [[Pig::aunt::Aunt Toody 2]]
+2013-12-04 [[notes::[[Pig]]'s [[Aunt Toody]] died in the [[references::2005-08-01]] strip, so this must be a different Aunt Toody]]
 2013-12-14 [[Lemming Leap::aka::Lemmings LEAP]]
 2013-12-16 [[reference::Calvin and Hobbes]]
 2013-12-20 [[deaths::Fred (penguin)]] [[notes::Fred misquotes {{wp|William Congreve}}; the correct word is "breast", not "beast"]]
 2014-01-01 [[newspaper_mentions::Buffalo News+Las Vegas Sun]]
 2014-01-17 [[first_appearance::Vigilante Deer]]
 2014-01-17,2014-01-19,2014-01-20 [[storyline::Vigilante Deer]]
-2014-01-22 [[character::Penguins]]
+2013-12-02,2013-12-03,2013-12-10,2014-01-22,2013-10-22 [[character::Penguins]]
 2014-01-23 [[event::[[Staci Pastis]] throws [[Stephan Pastis]] out of the house]]
+2014-05-21-2014-05-23 [[storyline::[[Stephan Pastis]] lives with [[Pig]] and [[Rat]]]]
 2010-04-22-2010-04-24,2010-04-26-2010-04-29 [[storyline::[[Crocs]] in [[Zebra]]'s house]]
 2014-01-23 [[mention::Staci Pastis]]
 2014-01-23-2014-01-24,2014-01-28-2014-02-01,2014-02-16,2014-02-25 [[storyline::Staci Throws Stephan Out]]
-2014-01-26 [[character::Danny Donkey]] [[category::Rat writes]]
+2006-05-16 [[deaths::Jason (human)]] [[human_deaths::1]]
 2014-01-28 [[character::Guard Duck]]
+2006-05-25-2006-05-27 [[storyling::Egos]]
+2006-05-27 [[notes::[[character::Pig]] [[category::Out of Character|uncharacteristically]] avenges his ego's death by intentionally and insultingly squishing [[character::Rat]]'s ego]]
 2014-02-03-2014-02-05 [[storyline::Rat works for the NSA]]
 2014-02-11 [[description::[[Goat]] [[category::Out of Character|uncharacteristically]] pranks [[Rat]]]]
-2014-02-12,2013-05-10,2012-04-22,2012-05-27,2012-06-24,2012-08-02,2012-08-07,2012-08-26,2012-11-16,2010-07-28,2006-10-16,2006-04-24,2007-07-13,2007-05-05,2006-11-14,2003-10-12,2004-06-21,2004-11-25,2004-06-22,2010-11-22,2004-01-03,2011-12-14,2009-03-17,2005-12-28,2010-08-02,2006-11-13,2004-03-08-2004-03-13 [[category::Third Wall]]
+2014-02-12,2013-05-10,2012-04-22,2012-05-27,2012-06-24,2012-08-02,2012-08-07,2012-08-26,2012-11-16,2010-07-28,2006-10-16,2006-04-24,2007-07-13,2007-05-05,2006-11-14,2003-10-12,2004-06-21,2004-11-25,2004-06-22,2010-11-22,2004-01-03,2011-12-14,2009-03-17,2005-12-28,2010-08-02,2006-11-13,2004-03-08-2004-03-13,2010-11-17 [[category::Third Wall]]
 2004-03-14 [[mention::Larry (lion)]]
 2009-03-13 [[newspaper_mentions::Durham Sun]]
 2004-03-17-2004-03-20 [[storyline::Ho Chi Minh]]
@@ -719,7 +739,11 @@ disclaim: based on gocomics website only
 2014-02-27 [[character::Jeff|Jef]]
 2014-03-02 [[category::Rat writes]] [[character::Elly Elephant]] [[notes::This strip includes no "standard" Pearls characters; normally, Rat's writings have Rat at the beginning or the end]]
 2012-06-17 [[character::Rat+Pig+[[first_appearance::Hannah Hippo]]]]
-2013-07-09,2014-03-05,2012-10-19 [[character::Lemmings]]
+2013-06-09,2013-07-09,2013-12-14,2014-03-05,2012-10-19,2014-03-17 [[storyline::Lemmings Leap]]
+2014-05-04 [[newspaper_mentions:???+L.A. Times]] [[deaths::Bob 12 (crocodile)]] [[crocodile_deaths::1]]
+2013-12-16-2013-12-19 [[storyline::{{wp|Calvin and Hobbes}} characters today]]
+2014-05-05,2014-05-06,2014-05-11 [[storyline::Mosquito in amber]]
+
 2009-02-15 [[event::[[Larry]]'s 40th birthday]]
 2014-03-07 [[Lemming Leap::aka::Lemmings' LEAP]] [[notes::The ever-changing Lemmings' LEAP sign now has a skull and crossbones]]
 2014-03-08 [[notes::[[Goat]], whose real name is Paris, visits {{wp|Paris}}]]
@@ -732,7 +756,13 @@ disclaim: based on gocomics website only
 2014-04-23-2014-04-25,2012-03-22 [[storyline::Pig's Cheese Religion]]
 2014-04-27,2014-04-30 [[category::Rat writes]]
 2014-04-29 [[character::Holly Hippo]]
+2014-05-12-2014-05-17 [[storyline::Comic strip week on {{wp|Wheel of Fortune}}]]
 2014-05-12 [[cameo::Andy Capp]]
+2014-05-13 [[cameo::Andy Capp+B.C. (B.C.)]]
+2014-05-14 [[character::Rat+Pig+Larry]]
+2014-05-15 [[cameo::Andy Capp+B.C. (B.C.)]]
+2014-05-16 [[cameo::Andy Capp+B.C. (B.C.)]] [[character::Larry+Stephan Pastis]]
+2014-05-17 [[cameo::Andy Capp]] [[character::Larry]]
 Danny Donkey [[notes::appears to be both a fictional character for [[Rat]] and a real character in the strip]]
 Fantastic Four [[members::[[Bob::aka::Paper Jam Boy]]+[[Fred::aka::Stapler Head]]+[[Frank::aka::Doorstoppo]]]]
 Guard Duck [[aka::LGD+Little Guard Duck]]
@@ -758,6 +788,11 @@ Talk::2002-04-12 Deaths::I can't tell if Rat killed the other Fruit Buddies as w
 2011-09-06 [[notes::[[character::Stephan Pastis]]' prisoner number is 1166163, which does not appear to be a reference to anything]]
 2011-08-11 [[cameo::Andy Bear (Pluggers)]]
 2011-08-12 [[cameo::Charlie Brown (Peanuts)+Linus (Peanuts)]]
+2002-05-17 [[notes::Clever as he is, I'm surprised [[character::Rat]] wouldn't simply request more wishes]]
+2005-02-14-2005-02-17 [[storyline::[[Rat]] sells {{wp|Valentine's Day}} gifts]]
+2009-05-06 [[notes::[[character::Pig]] either has a really large bathtub, or the {{wp|great white shark}} is just a baby. Mature great whites are at least 11.5 feet long, while a bathtub is usually only about 6-7 feet]]
+2009-04-28 [[cameo::Dennis (Dennis the Menace)]]
+
 </data>
 
 # lines that don't parse well:
@@ -807,7 +842,7 @@ Talk::2002-04-12 Deaths::I can't tell if Rat killed the other Fruit Buddies as w
 
 # TODO: find hyenas full names (not just hy and hy)
 
-# 2010-09-05 "living one" punchline comes from ... ?
+# 2010-09-05 "living one" punchline comes from ... ? 2002-01-31
 
 # 2003-11-15 organ donor (vs later knows what it means?)
 
@@ -817,6 +852,8 @@ Talk::2002-04-12 Deaths::I can't tell if Rat killed the other Fruit Buddies as w
 
 # find strip where unicorns dont exist vs 2010-02-22 (2009-08-15 don't exist)
 # 2010-09-15 implies unicorns are fictional
+
+# angry bob appearances also count as storyline
 
 # zebra niece = Joy?
 
@@ -871,7 +908,7 @@ Fruit Buddies [[members::Annie Apple+Georgie Grape+Banana+Pear+Orange+Petey Pota
 
 zebra herd uses butter (2002-04-02) + lotion (2002-04-16) to escape lions, similar jokes
 
-cow/bull meaning elephants/cattle joke repeat (2002-06-01 is one)
+cow/bull meaning elephants/cattle joke repeat (2002-06-01 is one) 2002-04-26 is another
 
 zebras playing dead: 2002-07-06 and others
 
@@ -884,3 +921,11 @@ list zebra relatives?
 # 2012-04-22 color separation parody
 
 # is mikey the mole the mole pig has removed?
+
+# penguins + polar bear storyline -> character::penguins
+
+# 2013-07-21 (sunday) green beer cans (sometimes yellow in retro-colored)
+
+# 2006-01-21 both larry + bob (zze) are next door neighbors
+
+# other bluebird of happiness?

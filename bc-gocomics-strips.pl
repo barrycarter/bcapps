@@ -7,6 +7,11 @@
 
 # NOTE: this is VERY similar to bc-get-peanuts.pl
 
+# one liner to obtain strips 2014-05-02+ (different format) after
+# dl'ing page data (pipe to sh or parallel):
+# grep src= page-2014-05-* | grep assets\.amuniversal | grep div | fgrep -v 'width=900' | perl -nle 's/^(.*?)://; $date=$1; /src="([^"]*?)" \/>/; $url = $1; print "curl -o $date.gif \47$url?width=1500\47"'
+
+
 require "/usr/local/lib/bclib.pl";
 
 $strip = "pearlsbeforeswine";
@@ -67,8 +72,9 @@ for $i (glob "page-2[0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]") {
   debug("I: $i");
 
   # if I already have the GIF, ignore
-#  if (-f "$i.gif") {next;}
+  if (-f "$i.gif") {next;}
 
+  debug("NOGIF: $i");
   $all = read_file($i);
 
   # look for the image
@@ -83,6 +89,8 @@ for $i (glob "page-2[0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]") {
     # slightly different assets server for pearlsbeforeswine
 #    unless ($src=~/cdn\.svcs\.c2\.uclick\.com/) {next;}
     unless ($src=~/^http:..assets\.amuniversal\.com/) {next;}
+
+    debug("SRC: $src");
 
     # I think all pearlsbeforeswine have a width version (not necessarily 900)
     # the nonwidth version does not zoom properly

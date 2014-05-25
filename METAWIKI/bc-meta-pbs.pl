@@ -60,7 +60,7 @@ for $i (sort keys %triples) {
 print A "COMMIT;\n";
 close(A);
 
-die "TESTING";
+# die "TESTING";
 
 # this is ugly, but necessary, to remove .txt files that should no longer exist
 system("rm /mnt/extdrive/GOCOMICS/pearlsbeforeswine/page-*.gif.txt");
@@ -127,7 +127,7 @@ for $i (keys %{$rdf{storylines}}) {
   @{$dates{$i}} = sort(keys %{$storylines{$i}});
 }
 
-die "TESTING";
+# die "TESTING";
 
 # sort storylines by earliest date w/ given storyline
 @storylines = sort {$dates{$a}[0] cmp $dates{$b}[0]} (keys %storylines);
