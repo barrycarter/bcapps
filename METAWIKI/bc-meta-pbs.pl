@@ -89,8 +89,6 @@ for $i (@storylines) {
 
 close(A);
 
-die "TESTING";
-
 # die "TESTING";
 
 # this is ugly, but necessary, to remove .txt files that should no longer exist
