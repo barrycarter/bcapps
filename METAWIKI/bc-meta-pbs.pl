@@ -41,17 +41,29 @@ for $i (split(/\n/, $data)) {
 }
 
 # this is probably bad
-open(A,"|mysql test 1> /tmp/myout.txt 2> /tmp/myerr.txt");
+open(A,"|sqlite3 /tmp/pbs-triples.db 1>/tmp/pbs-myout.txt 2>/tmp/pbs-myerr.txt");
 # open(A,">/tmp/mysql.txt");
-print A "BEGIN; DELETE FROM triples;\n";
+print A << "MARK";
+DROP TABLE IF EXISTS triples;
+CREATE TABLE triples (source, k, v);
+CREATE INDEX i1 ON triples(source);
+CREATE INDEX i2 ON triples(k);
+CREATE INDEX i3 ON triples(v);
+BEGIN;
+DELETE FROM triples;
+MARK
+;
 
 for $i (sort keys %triples) {
+  # TODO: ignoring nondates for now (really really bad)
+  unless ($i=~/^\d{4}/) {next;}
   for $j (keys %{$triples{$i}}) {
     for $k (keys %{$triples{$i}{$j}}) {
       # restore [[ and ]] for printing and fix apos
       $k=~s/\001/\[\[/isg;
       $k=~s/\002/\]\]/isg;
-      $k=~s/\'/\\'/isg;
+      $k=~s/\'/&\#39;/isg;
+#      debug("INSERT INTO triples VALUES ('$i','$j','$k');");
       print A "INSERT INTO triples VALUES ('$i','$j','$k');\n";
     }
   }
@@ -59,6 +71,25 @@ for $i (sort keys %triples) {
 
 print A "COMMIT;\n";
 close(A);
+
+# putting data into a db and immediately extracting it seems useless
+# but hopefully isn't
+
+my(@storylines) = sqlite3hashlist("SELECT v, GROUP_CONCAT(source) AS dates FROM triples WHERE k='storyline' GROUP BY v ORDER BY MIN(source)", "/tmp/pbs-triples.db");
+
+# where the storylines go
+open(A,">/usr/local/etc/metawiki/pbs/Storylines.mw");
+
+for $i (@storylines) {
+  print A "* $i->{v}\n";
+  for $j (split(/\,/, $i->{dates})) {
+    print A ":: ",pbs_table_date($j),"<br />\n";
+  }
+}
+
+close(A);
+
+die "TESTING";
 
 # die "TESTING";
 
@@ -154,6 +185,16 @@ for $i (@storylines) {
 }
 
 close(C);
+
+# creates the table used to display a given strip (overrides date2prli)
+
+sub pbs_table_date {
+  my($date) = @_;
+  unless ($date=~m/^(\d{4})\-(\d{2})\-(\d{2})$/) {warn "BAD DATE: $date";}
+  my($link) = "http://www.gocomics.com/pearlsbeforeswine/$1/$2/$3";
+  my($pdate) =  strftime("%d %b %Y (%A)", gmtime(str2time($date)));
+  return "<table border><tr><th>$pdate</th></tr><tr><th>{{#NewWindowLink: $link | <verbatim>$date</verbatim>}}</th></tr></table>";
+}
 
 # given a date like "2000-01-01", return "printable" format and direct
 # link to PBS comic

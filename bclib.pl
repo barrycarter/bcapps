@@ -372,24 +372,39 @@ sub write_file {
     unless (-d $dir) {system("mkdir -p $dir");}
   }
 
+  # TODO: return fail value if file cant be written
   open(A,">$file")||warnlocal("Can't open $file, $!");
   print A $string;
   close(A);
 }
 
-=item write_file_new($string, $file)
+=item write_file_new($string, $file, $options)
 
 Write $string to $file.new, then move $file to $file.old and $file.new
-to $file (so that $file is never unreadable?)
+to $file (so that $file is never unreadable?). Options:
+
+diff=1: compare the new file and the existing file and do not
+overwrite if they are already identical (useful for preserving
+timestamps)
+
+TODO: make this fail gracefully if .new cant be written
+
+TODO: allow for .new file to be in a different (temp?) directory in
+case writing files to current directory is bad idea
 
 =cut
 
 sub write_file_new {
-  my($string, $file) = @_;
-  local(*A);
-  open(A,">$file.new")||warnlocal("Can't open $file.new, $!");
-  print A $string;
-  close(A);
+  my($string, $file, $options) = @_;
+  my(%opts) = parse_form($options);
+  write_file($string,"$file.new");
+  if ($opts{diff}) {
+    my($res) = system("diff $file $file.new");
+    unless ($res) {
+      debug("$file and $file.new already identical");
+      return;
+    }
+  }
   system("mv $file $file.old; mv $file.new $file");
 }
 

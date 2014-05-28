@@ -26,6 +26,8 @@
 
 require "/usr/local/lib/bclib.pl";
 defaults("days=365&n=5&ignore=7");
+option_check(["days", "n", "tags", "recent", "plot", "ignore"]);
+if (@ARGV) {die "This program takes no args";}
 
 $now = time();
 
