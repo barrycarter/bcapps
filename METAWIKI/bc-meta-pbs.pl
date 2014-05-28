@@ -78,18 +78,20 @@ close(A);
 my(@storylines) = sqlite3hashlist("SELECT v, GROUP_CONCAT(source) AS dates FROM triples WHERE k='storyline' GROUP BY v ORDER BY MIN(source)", "/tmp/pbs-triples.db");
 
 # where the storylines go
-open(A,">/usr/local/etc/metawiki/pbs/Storylines.mw");
+@storylinesmw = ();
 
 for $i (@storylines) {
   print A "* $i->{v}\n";
   for $j (split(/\,/, $i->{dates})) {
-    print A ":: ",pbs_table_date($j),"<br />\n";
+    push(@storylinesmw, ":: ",pbs_table_date($j),"<br />");
   }
 }
 
-close(A);
+$storylinesmw = join("\n", @storylinesmw)."\n";
 
-# die "TESTING";
+write_file_new($storylinesmw, "/usr/local/etc/metawiki/pbs/Storylines.mw", "diff=1");
+
+die "TESTING";
 
 # this is ugly, but necessary, to remove .txt files that should no longer exist
 system("rm /mnt/extdrive/GOCOMICS/pearlsbeforeswine/page-*.gif.txt");
