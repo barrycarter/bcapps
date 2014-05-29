@@ -8,8 +8,7 @@
 
 require "/usr/local/lib/bclib.pl";
 
-debug("RES",pbs_croc_deaths());
-print pbs_croc_deaths();
+pbs_croc_deaths();
 die "TESTING";
 
 # shortcuts just to make code look nicer
@@ -316,6 +315,9 @@ sub parse_semantic {
 sub pbs_croc_deaths {
   # the return array (joined to create the return string)
   my(@ret) = ("<table border><tr><th>Strip</th><th>Names</th><th>Number</th><th>Running Total</th></tr>");
+  # running total
+  my($rtot);
+
   # This query cheats in many ways; eg, it assumes ALL deaths on a
   # given day are of the same species
   my($query) = << "MARK";
@@ -327,10 +329,15 @@ MARK
 ;
   my(@res) = sqlite3hashlist($query,"/tmp/pbs-triples.db");
   for $i (@res) {
-    push(@ret, "<tr><td>".pbs_table_date($i->{source})."</td><td>$i->{names}</td><td>$i->{num}</td><td>running total</td></tr>");
+    # running total
+    $rtot += $i->{num};
+    # TODO: cleanup names, especially if multiple and be sure to link
+
+    push(@ret, "<tr><td>".pbs_table_date($i->{source})."</td><td>$i->{names}</td><td>$i->{num}</td><td>$rtot</td></tr>");
   }
   push(@ret,"</table>");
-  return join("\n",@ret);
+
+  write_file_new(join("\n",@ret)."\n", "/usr/local/etc/metawiki/pbs/Crocodile_Deaths.mw", "diff=1");
 }
 
 

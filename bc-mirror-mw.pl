@@ -7,6 +7,9 @@
 require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
 
+# while testing, dryrun is assumed (unless --realsies)
+unless ($globopts{realsies}) {$globopts{dryrun}=1;}
+
 # directory where the mediawiki files are kept
 $mwdir = "/usr/local/etc/metawiki/pbs/";
 
@@ -33,18 +36,19 @@ system("touch $mirfile.new");
 
 for $i (@mirror) {
   chomp($i);
-  # todo: handle dry run
-  debug("Writing $i to wikia");
   # the name of the page strips off the .mw and path
   # the .mw is a tribute to wikipediafs, I probably don't need it
   my($pagename) = $i;
   $pagename=~s/\.mw$//;
   $pagename=~s/^.*\///;
-  # TODO: add comment pointing back to git project
-  write_wiki_page($apiep, $pagename, read_file($i), '', $wikia{user}, $wikia{pass});
-}
+  debug("Writing: $pagename");
 
-die "TESTING";
+  # if dry run, don't actually write page
+  unless ($globopts{dryrun}) {
+    # TODO: add comment pointing back to git project
+    write_wiki_page($apiep, $pagename, read_file($i), '', $wikia{user}, $wikia{pass});
+  }
+}
 
 # assumed success here (unless dry run)
 unless ($globopts{dryrun}) {
