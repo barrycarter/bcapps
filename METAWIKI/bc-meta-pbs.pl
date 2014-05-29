@@ -194,8 +194,8 @@ sub pbs_table_date {
   my($pdate) =  strftime("%d %b %Y (%A)", gmtime(str2time($date)));
   return << "MARK";
 <table border>
-<tr><th><span title="On this wiki">{{#NewWindowLink: $date | $pdate}}</span></th></tr>
-<tr><th><span title="On gocomics.com">{{#NewWindowLink: $link | <verbatim>$date</verbatim>}}</span></th></tr>
+<tr><th>{{#NewWindowLink: $date | $pdate}}</th></tr>
+<tr><th>{{#NewWindowLink: $link | <verbatim>$date</verbatim>}}</th></tr>
 <tr><th>{{#NewWindowLink: $link{$date} | (highest resolution)}}</th></tr>
 </table>
 MARK
@@ -345,7 +345,7 @@ sub pbs_species_deaths {
   my($species) = @_;
 
   # the return array (joined to create the return string)
-  my(@ret) = ("<table border><tr><th>Strip</th><th>Names</th><th>Number</th><th>Running Total</th></tr>");
+  my(@ret) = ("<table border><tr><th>Strip</th><th>Details</th></tr>");
   # running total
   my($rtot);
 
@@ -362,9 +362,20 @@ MARK
   for $i (@res) {
     # running total
     $rtot += $i->{num};
-    # TODO: cleanup names, especially if multiple and be sure to link
 
-    push(@ret, "<tr><td>".pbs_table_date($i->{source})."</td><td>$i->{names}</td><td>$i->{num}</td><td>$rtot</td></tr>");
+    # remove all brackets from names
+    $i->{names}=~s/[\[\]]//g;
+    # list of names
+    my(@names) = split(/\,/,$i->{names});
+    # add brackets to all
+    map($_="[[$_]]", @names);
+    # and join with comma space
+    my($names) = join(", ",@names);
+    # TODO: handle case where one name known, other not
+    # TODO: handle case where names not known
+
+    push(@ret, "<tr><td>".pbs_table_date($i->{source})."</td>
+<td>Who: $names<br>How many: $i->{num}<br>Running Total: $rtot</td></tr>");
   }
   push(@ret,"</table>");
 
