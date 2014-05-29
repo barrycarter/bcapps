@@ -399,7 +399,7 @@ sub write_file_new {
   my(%opts) = parse_form($options);
   write_file($string,"$file.new");
   if ($opts{diff}) {
-    my($res) = system("diff $file $file.new");
+    my($res) = system("cmp $file $file.new");
     unless ($res) {
       debug("$file and $file.new already identical");
       return;

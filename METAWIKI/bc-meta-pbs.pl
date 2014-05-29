@@ -81,10 +81,11 @@ my(@storylines) = sqlite3hashlist("SELECT v, GROUP_CONCAT(source) AS dates FROM 
 @storylinesmw = ();
 
 for $i (@storylines) {
-  print A "* $i->{v}\n";
+  push(@storylinesmw, "* $i->{v}");
   for $j (split(/\,/, $i->{dates})) {
-    push(@storylinesmw, ":: ",pbs_table_date($j),"<br />");
+    push(@storylinesmw, ":: ".pbs_table_date($j)."<br />");
   }
+  push(@storylinesmw, "");
 }
 
 $storylinesmw = join("\n", @storylinesmw)."\n";

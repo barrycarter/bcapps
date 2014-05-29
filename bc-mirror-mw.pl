@@ -5,6 +5,7 @@
 # (should be generalized to work w/ wikis in general)
 
 require "/usr/local/lib/bclib.pl";
+require "/home/barrycarter/bc-private.pl";
 
 # directory where the mediawiki files are kept
 $mwdir = "/usr/local/etc/metawiki/pbs/";
@@ -13,7 +14,7 @@ $mwdir = "/usr/local/etc/metawiki/pbs/";
 $apiep = "http://pearls-before-swine-bc.wikia.com/api.php";
 
 # the lastmirror file for PBS-BC metawiki
-my($mirfile) = "/usr/local/etc/bcmirror/metawiki/lastmirror.pbs";
+$mirfile = "/usr/local/etc/bcmirror/metawiki/lastmirror.pbs";
 
 # TODO: check to see if user really needs to "mkdir" or not
 unless (-f $mirfile) {
@@ -27,18 +28,23 @@ system("touch $mirfile.new");
 
 # find all files newer than last mirror in source directory
 # these will all be at the top level for now
-@mirror = `find $mwdir -type f -iname '*.mw' -newer $mirfile`;
+# some .mw files are symlinked to my git
+@mirror = `find $mwdir -type f -follow -iname '*.mw' -newer $mirfile`;
 
 for $i (@mirror) {
+  chomp($i);
   # todo: handle dry run
   debug("Writing $i to wikia");
-  # the name of the page strips off the .mw
+  # the name of the page strips off the .mw and path
   # the .mw is a tribute to wikipediafs, I probably don't need it
   my($pagename) = $i;
   $pagename=~s/\.mw$//;
+  $pagename=~s/^.*\///;
   # TODO: add comment pointing back to git project
-  debug("write_wiki_page($apiep, $pagename, read_file($i), '', $wikia{user}, $wikia{pass})");
+  write_wiki_page($apiep, $pagename, read_file($i), '', $wikia{user}, $wikia{pass});
 }
+
+die "TESTING";
 
 # assumed success here (unless dry run)
 unless ($globopts{dryrun}) {
