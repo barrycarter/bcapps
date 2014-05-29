@@ -17,20 +17,12 @@ $drb = "\\]\\]";
 
 # run subroutines to do stuff
 pbs_parse_data();
+for $i ("crocodile", "penguin", "human", "antelope", "zebra") {
+  pbs_species_deaths($i);
+}
+die "TESTING";
 pbs_date_pages();
 die "TESTING";
-pbs_species_deaths("crocodile");
-pbs_species_deaths("penguin");
-pbs_species_deaths("human");
-pbs_species_deaths("antelope");
-pbs_species_deaths("zebra");
-die "TESTING";
-
-# links to high-res version of each strip
-for $i (split(/\n/, read_file("/home/barrycarter/BCGIT/METAWIKI/largeimagelinks.txt"))) {
-  $i=~s/^(.*?)\s+(.*)$//;
-  $link{$1}=$2;
-}
 
 # putting data into a db and immediately extracting it seems useless
 # but hopefully isn't
@@ -122,7 +114,6 @@ for $i (keys %{$rdf{storylines}}) {
 # creates many pages with notes (per-strip pages)
 sub pbs_date_pages {
   for $i (sqlite3hashlist("SELECT source, GROUP_CONCAT(v) AS notes FROM triples WHERE k='notes' GROUP BY source", "/tmp/pbs-triples.db")) {
-    if (++$count>5) {die "TESTING";}
     # write the strip and the notes
     my($str) = pbs_table_date($i->{source})."\n\n== Notes ==\n\n$i->{notes}\n";
     write_file_new($str, "/usr/local/etc/metawiki/pbs/$i->{source}.mw", "diff=1");
@@ -131,9 +122,16 @@ sub pbs_date_pages {
 
 # parses the data in pbs.txt and pbs-cl.txt and creates
 # /tmp/pbs-triples.db, which is required by other subroutines
+# also creates the (sadly global) %link hash
 # TODO: %triples is a global variable, which is probably bad
 
 sub pbs_parse_data {
+  # links to high-res version of each strip
+  for $i (split(/\n/, read_file("/home/barrycarter/BCGIT/METAWIKI/largeimagelinks.txt"))) {
+    $i=~s/^(.*?)\s+(.*)$//;
+    $link{$1}=$2;
+  }
+
   my($data) = read_file("/home/barrycarter/BCGIT/METAWIKI/pbs.txt");
   $data=~s%^.*?<data>(.*?)</data>.*$%$1%s;
 
@@ -194,7 +192,14 @@ sub pbs_table_date {
   unless ($date=~m/^(\d{4})\-(\d{2})\-(\d{2})$/) {warn "BAD DATE: $date";}
   my($link) = "http://www.gocomics.com/pearlsbeforeswine/$1/$2/$3";
   my($pdate) =  strftime("%d %b %Y (%A)", gmtime(str2time($date)));
-  return "<table border><tr><th>$pdate</th></tr><tr><th>{{#NewWindowLink: $link | <verbatim>$date</verbatim>}}</th></tr></table>";
+  return << "MARK";
+<table border>
+<tr><th><span title="On this wiki">{{#NewWindowLink: $date | $pdate}}</span></th></tr>
+<tr><th><span title="On gocomics.com">{{#NewWindowLink: $link | <verbatim>$date</verbatim>}}</span></th></tr>
+<tr><th>{{#NewWindowLink: $link{$date} | (highest resolution)}}</th></tr>
+</table>
+MARK
+;
 }
 
 # given a date like "2000-01-01", return "printable" format and direct
