@@ -8,9 +8,6 @@
 
 require "/usr/local/lib/bclib.pl";
 
-pbs_croc_deaths();
-die "TESTING";
-
 # shortcuts just to make code look nicer
 # character class excluding brackets
 $cc = "[^\\[\\]]";
@@ -18,62 +15,22 @@ $cc = "[^\\[\\]]";
 $dlb = "\\[\\[";
 $drb = "\\]\\]";
 
+# run subroutines to do stuff
+pbs_parse_data();
+pbs_date_pages();
+die "TESTING";
+pbs_species_deaths("crocodile");
+pbs_species_deaths("penguin");
+pbs_species_deaths("human");
+pbs_species_deaths("antelope");
+pbs_species_deaths("zebra");
+die "TESTING";
+
 # links to high-res version of each strip
 for $i (split(/\n/, read_file("/home/barrycarter/BCGIT/METAWIKI/largeimagelinks.txt"))) {
   $i=~s/^(.*?)\s+(.*)$//;
   $link{$1}=$2;
 }
-
-my($data) = read_file("/home/barrycarter/BCGIT/METAWIKI/pbs.txt");
-$data=~s%^.*?<data>(.*?)</data>.*$%$1%s;
-
-# and the data from pbs-cl.txt
-$data = "$data\n".read_file("/home/barrycarter/BCGIT/METAWIKI/pbs-cl.txt");
-
-for $i (split(/\n/, $data)) {
-  # ignore blanks and comments
-  if ($i=~/^\#/ || $i=~/^\s*$/) {next;}
-
-  # warn if the line contains a single colon (but keep parsing it)
-  if ($i=~/[^:]:[^:]/) {warn "BAD LINE: $i";}
-
-  # split line into source page and then body
-  $i=~/^(.*?)\s*($dlb.*)$/;
-  my($source, $body) = ($1,$2);
-  parse_semantic($source,$body);
-}
-
-# this is probably bad
-open(A,"|sqlite3 /tmp/pbs-triples.db 1>/tmp/pbs-myout.txt 2>/tmp/pbs-myerr.txt");
-# open(A,">/tmp/mysql.txt");
-print A << "MARK";
-DROP TABLE IF EXISTS triples;
-CREATE TABLE triples (source, k, v);
-CREATE INDEX i1 ON triples(source);
-CREATE INDEX i2 ON triples(k);
-CREATE INDEX i3 ON triples(v);
-BEGIN;
-DELETE FROM triples;
-MARK
-;
-
-for $i (sort keys %triples) {
-  # TODO: ignoring nondates for now (really really bad)
-  unless ($i=~/^\d{4}/) {next;}
-  for $j (keys %{$triples{$i}}) {
-    for $k (keys %{$triples{$i}{$j}}) {
-      # restore [[ and ]] for printing and fix apos
-      $k=~s/\001/\[\[/isg;
-      $k=~s/\002/\]\]/isg;
-      $k=~s/\'/&\#39;/isg;
-#      debug("INSERT INTO triples VALUES ('$i','$j','$k');");
-      print A "INSERT INTO triples VALUES ('$i','$j','$k');\n";
-    }
-  }
-}
-
-print A "COMMIT;\n";
-close(A);
 
 # putting data into a db and immediately extracting it seems useless
 # but hopefully isn't
@@ -162,7 +119,73 @@ for $i (keys %{$rdf{storylines}}) {
   @{$dates{$i}} = sort(keys %{$storylines{$i}});
 }
 
-# die "TESTING";
+# creates many pages with notes (per-strip pages)
+sub pbs_date_pages {
+  for $i (sqlite3hashlist("SELECT source, GROUP_CONCAT(v) AS notes FROM triples WHERE k='notes' GROUP BY source", "/tmp/pbs-triples.db")) {
+    if (++$count>5) {die "TESTING";}
+    # write the strip and the notes
+    my($str) = pbs_table_date($i->{source})."\n\n== Notes ==\n\n$i->{notes}\n";
+    write_file_new($str, "/usr/local/etc/metawiki/pbs/$i->{source}.mw", "diff=1");
+  }
+}
+
+# parses the data in pbs.txt and pbs-cl.txt and creates
+# /tmp/pbs-triples.db, which is required by other subroutines
+# TODO: %triples is a global variable, which is probably bad
+
+sub pbs_parse_data {
+  my($data) = read_file("/home/barrycarter/BCGIT/METAWIKI/pbs.txt");
+  $data=~s%^.*?<data>(.*?)</data>.*$%$1%s;
+
+  # and the data from pbs-cl.txt
+  $data = "$data\n".read_file("/home/barrycarter/BCGIT/METAWIKI/pbs-cl.txt");
+
+  # parse the data
+  for $i (split(/\n/, $data)) {
+    # ignore blanks and comments
+    if ($i=~/^\#/ || $i=~/^\s*$/) {next;}
+
+    # warn if the line contains a single colon (but keep parsing it)
+    if ($i=~/[^:]:[^:]/) {warn "BAD LINE: $i";}
+
+    # split line into source page and then body
+    $i=~/^(.*?)\s*($dlb.*)$/;
+    my($source, $body) = ($1,$2);
+    parse_semantic($source,$body);
+  }
+
+  local(*A);
+  # create empty db (being this direct this is probably bad)
+  open(A,"|sqlite3 /tmp/pbs-triples.db 1>/tmp/pbs-myout.txt 2>/tmp/pbs-myerr.txt");
+  # open(A,">/tmp/mysql.txt");
+  print A << "MARK";
+DROP TABLE IF EXISTS triples;
+CREATE TABLE triples (source, k, v);
+CREATE INDEX i1 ON triples(source);
+CREATE INDEX i2 ON triples(k);
+CREATE INDEX i3 ON triples(v);
+BEGIN;
+DELETE FROM triples;
+MARK
+;
+  # now insert the data
+  for $i (sort keys %triples) {
+    # TODO: ignoring nondates for now (really really bad)
+    unless ($i=~/^\d{4}/) {next;}
+    for $j (keys %{$triples{$i}}) {
+      for $k (keys %{$triples{$i}{$j}}) {
+	# restore [[ and ]] for printing and fix apos
+	$k=~s/\001/\[\[/isg;
+	$k=~s/\002/\]\]/isg;
+	$k=~s/\'/&\#39;/isg;
+	print A "INSERT INTO triples VALUES ('$i','$j','$k');\n";
+      }
+    }
+  }
+
+  print A "COMMIT;\n";
+  close(A);
+}
 
 # creates the table used to display a given strip (overrides date2prli)
 
@@ -312,7 +335,10 @@ sub parse_semantic {
 # breaking this up into one subroutine per page (or so) is a bad idea,
 # but really useful for testing
 
-sub pbs_croc_deaths {
+sub pbs_species_deaths {
+  # probably only useful for zebra and crocodile...
+  my($species) = @_;
+
   # the return array (joined to create the return string)
   my(@ret) = ("<table border><tr><th>Strip</th><th>Names</th><th>Number</th><th>Running Total</th></tr>");
   # running total
@@ -324,7 +350,7 @@ sub pbs_croc_deaths {
 SELECT t1.source, t1.v AS num, GROUP_CONCAT(t2.v) AS names 
  FROM triples t1 LEFT JOIN triples t2 ON 
  (t1.source = t2.source AND t2.k='deaths')
-WHERE t1.k = 'crocodile_deaths' GROUP BY t1.source, t1.v ORDER BY t1.source;
+WHERE t1.k = '${species}_deaths' GROUP BY t1.source, t1.v ORDER BY t1.source;
 MARK
 ;
   my(@res) = sqlite3hashlist($query,"/tmp/pbs-triples.db");
@@ -337,11 +363,9 @@ MARK
   }
   push(@ret,"</table>");
 
-  write_file_new(join("\n",@ret)."\n", "/usr/local/etc/metawiki/pbs/Crocodile_Deaths.mw", "diff=1");
+  my($ucspec) = ucfirst($species);
+  write_file_new(join("\n",@ret)."\n", "/usr/local/etc/metawiki/pbs/${ucspec}_Deaths.mw", "diff=1");
 }
-
-
-
 
 =item schema
 
