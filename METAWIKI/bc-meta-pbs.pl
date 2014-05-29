@@ -8,6 +8,10 @@
 
 require "/usr/local/lib/bclib.pl";
 
+debug("RES",pbs_croc_deaths());
+print pbs_croc_deaths();
+die "TESTING";
+
 # shortcuts just to make code look nicer
 # character class excluding brackets
 $cc = "[^\\[\\]]";
@@ -161,32 +165,6 @@ for $i (keys %{$rdf{storylines}}) {
 
 # die "TESTING";
 
-# sort storylines by earliest date w/ given storyline
-@storylines = sort {$dates{$a}[0] cmp $dates{$b}[0]} (keys %storylines);
-
-# and print...
-for $i (@storylines) {
-  # dates
-  @dates = @{$dates{$i}};
-
-  # restore brackets
-  $i=~s/\001/[[/isg;
-  $i=~s/\002/]]/isg;
-
-  # the storyline
-  print C "* $i\n";
-
-  # and its dates
-  for $j (@dates) {
-    my($pdate, $link) = date2prli($j);
-    print C "** {{#NewWindowLink: $link | $pdate}}\n";
-  }
-
-  print C "\n";
-}
-
-close(C);
-
 # creates the table used to display a given strip (overrides date2prli)
 
 sub pbs_table_date {
@@ -331,6 +309,32 @@ sub parse_semantic {
     return "[[$pval{$list[2]}]]";
   }
 }
+
+# breaking this up into one subroutine per page (or so) is a bad idea,
+# but really useful for testing
+
+sub pbs_croc_deaths {
+  # the return array (joined to create the return string)
+  my(@ret) = ("<table border><tr><th>Strip</th><th>Names</th><th>Number</th><th>Running Total</th></tr>");
+  # This query cheats in many ways; eg, it assumes ALL deaths on a
+  # given day are of the same species
+  my($query) = << "MARK";
+SELECT t1.source, t1.v AS num, GROUP_CONCAT(t2.v) AS names 
+ FROM triples t1 LEFT JOIN triples t2 ON 
+ (t1.source = t2.source AND t2.k='deaths')
+WHERE t1.k = 'crocodile_deaths' GROUP BY t1.source, t1.v ORDER BY t1.source;
+MARK
+;
+  my(@res) = sqlite3hashlist($query,"/tmp/pbs-triples.db");
+  for $i (@res) {
+    push(@ret, "<tr><td>".pbs_table_date($i->{source})."</td><td>$i->{names}</td><td>$i->{num}</td><td>running total</td></tr>");
+  }
+  push(@ret,"</table>");
+  return join("\n",@ret);
+}
+
+
+
 
 =item schema
 
