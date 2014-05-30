@@ -372,7 +372,7 @@ MARK
     # and join with comma space
     my($names) = join(", ",@names);
     # TODO: handle case where one name known, other not
-    # TODO: handle case where names not known
+    unless ($names) {$names = "[unknown]";}
 
     push(@ret, "<tr><td>".pbs_table_date($i->{source})."</td>
 <td>Who: $names<br>How many: $i->{num}<br>Running Total: $rtot</td></tr>");
