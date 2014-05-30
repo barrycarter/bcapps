@@ -90,19 +90,11 @@ debug("ASH:",keys %{$rdf{storyline}});
 
 die "TESTING";
 
-open(B,">/var/tmp/bc-pbs-newspaper.txt");
-# newspaper mentions
-for $i (sort keys %{$rdf{newspaper_mentions}}) {
-  # dates on which $i is mentioned
-  @dates = sort keys %{$rdf{newspaper_mentions}{$i}};
-  debug("DATES",@dates);
-  # TODO: find high resolution link for dates
-  # printable format + glue with commas
-  map($_="{{#NewWindowLink: $link{$_} | ".strftime("%d %b %Y (%a)}}",gmtime(str2time($_))), @dates);
-  print B "* $i: ",join(", ",@dates),"\n";
+# signifigant events
+sub pbs_sig_events {
+  my(@ret);
+#  for $i (sqlite3hashlist("SELECT 
 }
-
-close(B);
 
 # creates the "newspaper mentions" page
 sub pbs_newspaper_mentions {
@@ -303,7 +295,9 @@ sub parse_semantic {
   my(@list) = split(/::/, $string);
 
   # no double colons? return as is w/ specialized brackets, no triples created
-  if (scalar @list <= 1) {return "\001$string\002";}
+#  if (scalar @list <= 1) {return "\001$string\002";}
+  # TESTING!!!!
+  if (scalar @list <= 1) {return $string;};
 
   # each key/val can be multivalued, so create list of lists
   map(push(@lol, [split(/\+/,$_)]), @list);
