@@ -17,14 +17,14 @@ $drb = "\\]\\]";
 
 # run subroutines to do stuff
 pbs_parse_data();
+pbs_date_pages();
+die "TESTING";
 pbs_newspaper_mentions();
 die "TESTING";
 pbs_annotations();
 for $i ("crocodile", "penguin", "human", "antelope", "zebra") {
   pbs_species_deaths($i);
 }
-die "TESTING";
-pbs_date_pages();
 die "TESTING";
 
 # putting data into a db and immediately extracting it seems useless
@@ -128,13 +128,18 @@ sub pbs_annotations {
   }
 }
 
-# creates many pages with notes (per-strip pages)
+# creates many pages with notes (per-strip pages) + Observations page
+# TODO: temporarily turned off the per-date pages (too many pages?)
 sub pbs_date_pages {
+  my(@obs) = ("<table border>");
   for $i (sqlite3hashlist("SELECT source, GROUP_CONCAT(v) AS notes FROM triples WHERE k='notes' GROUP BY source", "/tmp/pbs-triples.db")) {
+    # for the Observations page
+    push(@obs, "<tr><th>",pbs_table_date($i->{source}),"</th><td>$i->{notes}</td></tr>");
     # write the strip and the notes
-    my($str) = pbs_table_date($i->{source})."\n\n== Notes ==\n\n$i->{notes}\n";
-    write_file_new($str, "/usr/local/etc/metawiki/pbs/$i->{source}.mw", "diff=1");
+#   my($str) = pbs_table_date($i->{source})."\n\n== Notes ==\n\n$i->{notes}\n";
+#   write_file_new($str, "/usr/local/etc/metawiki/pbs/$i->{source}.mw", "diff=1");
   }
+  write_file_new(join("\n",@obs)."\n</table>\n", "/usr/local/etc/metawiki/pbs/Observations.mw");
 }
 
 # parses the data in pbs.txt and pbs-cl.txt and creates
