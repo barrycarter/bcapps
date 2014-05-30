@@ -165,6 +165,9 @@ sub pbs_parse_data {
     # ignore blanks and comments
     if ($i=~/^\#/ || $i=~/^\s*$/) {next;}
 
+    # fix wp template
+    $i=~s/\{\{wp\|(.*?)\}\}/"{{wp|".fix_wp_template($1)."}}"/iseg;
+
     # warn if the line contains a single colon (but keep parsing it)
     if ($i=~/[^:]:[^:]/) {warn "BAD LINE: $i";}
 
@@ -384,6 +387,21 @@ MARK
 
   my($ucspec) = ucfirst($species);
   write_file_new(join("\n",@ret)."\n", "/usr/local/etc/metawiki/pbs/${ucspec}_Deaths.mw", "diff=1");
+}
+
+# kludge fix for wikipedia templates (I use them wrong in pbs.txt)
+# from {{wp|foo|bar}}, this function gets "foo|bar"
+sub fix_wp_template {
+  my($str) = @_;
+  my($link, $text) = split(/\|/, $str);
+  # if link has no spaces, do nothing (otherwise, replace with _)
+  unless ($link=~s/\s/_/g) {return $str;}
+  # if there's already text, do nothing more
+  if ($text) {return "$link|$text";}
+  # no text? add some
+  $text = $link;
+  $text=~s/_/ /isg;
+  return "$link|$text";
 }
 
 =item headertext
