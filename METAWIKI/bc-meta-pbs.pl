@@ -165,11 +165,13 @@ sub pbs_parse_data {
     # ignore blanks and comments
     if ($i=~/^\#/ || $i=~/^\s*$/) {next;}
 
-    # fix wp template
-    $i=~s/\{\{wp\|(.*?)\}\}/"{{wp".fix_wp_template($1)."}}"/iseg;
-
     # warn if the line contains a single colon (but keep parsing it)
     if ($i=~/[^:]:[^:]/) {warn "BAD LINE: $i";}
+
+    # fix wp template
+    debug("PRE: $i");
+    $i=~s/\{\{wp\|(.*?)\}\}/"{{#NewWindowLink: http:\/\/en.wikipedia.org\/wiki\/".fix_wp_template($1)."}}"/iseg;
+    debug("POST: $i");
 
     # split line into source page and then body
     $i=~/^(.*?)\s*($dlb.*)$/;
@@ -394,13 +396,10 @@ MARK
 sub fix_wp_template {
   my($str) = @_;
   my($link, $text) = split(/\|/, $str);
-  # if link has no spaces, do nothing (otherwise, replace with _)
-  unless ($link=~s/\s/_/g) {return $str;}
-  # if there's already text, do nothing more
-  if ($text) {return "$link|$text";}
-  # no text? add some
-  $text = $link;
-  $text=~s/_/ /isg;
+  # if there is no text, set it to the link (before despacing the link)
+  unless ($text) {$text=$link;}
+  # remove link spaces
+  $link=~s/\s/_/g;
   return "$link|$text";
 }
 
