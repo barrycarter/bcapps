@@ -166,7 +166,7 @@ sub pbs_parse_data {
     if ($i=~/^\#/ || $i=~/^\s*$/) {next;}
 
     # fix wp template
-    $i=~s/\{\{wp\|(.*?)\}\}/"{{wp|".fix_wp_template($1)."}}"/iseg;
+    $i=~s/\{\{wp\|(.*?)\}\}/"{{wp".fix_wp_template($1)."}}"/iseg;
 
     # warn if the line contains a single colon (but keep parsing it)
     if ($i=~/[^:]:[^:]/) {warn "BAD LINE: $i";}
