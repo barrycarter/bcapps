@@ -561,7 +561,7 @@ disclaim: based on gocomics website only
 2010-01-19 [[first_appearance::Katie]] [[Katie::aka::Drama Cow]]
 2010-01-19-2010-01-23,2010-01-25,2010-01-26,2010-01-29 [[storyline::[[character::Drama Cow]]]]
 2010-01-30 [[storyline::Google as God+[[character::Drama Cow]]+[[character::LGD]] rejects [[character::Snuffles]] for [[character::Maura]]]]
-2010-02-02 [[character::Rat+Pig+Timmy Swan+Tammy Swan]]
+2010-02-02 [[character::Rat+Pig+Timmy (swan)+Tammy (swan)]]
 2010-02-03 [[newspaper_mentions::The Times+The Post]]
 2010-02-09 [[character::Lucky (lion)]] [[Max (lion)+Zach (lion)::cousin::Lucky (lion)]]
 2010-02-08 [[character::Lucky (lion)+Pig+Rat+Zebra]]
@@ -615,6 +615,7 @@ disclaim: based on gocomics website only
 2010-09-12 [[first_appearance+death::Coco (caiman)]] [[Coco (caiman)::species::caiman]] [[notes::The title of the movie poster is Jaws 7 in the 1st panel, Jaws 8 in the 3rd panel, and unreadable in the other panels; the tagline is "because we're all out of new ideas" in panel 1, "because we're STILL out of new ideas" in panel 3, "because we're flat out desperate" in panel 4, and mostly unreadable in panel 6]]
 2006-06-07-2006-06-09 [[storyline::[[Rat]], movie reviewer]]
 2010-09-19 [[cameo::Hagar (Hagar the Horrible)+Helga (Hagar the Horrible)]]
+2010-06-25 [[cameo::Billy (Family Circus)]]
 2010-10-01 [[crocodile_deaths::1]]
 2010-10-11-2010-10-17 [[storyline::[[Larry]] on {{wp|Celebrity Jeopardy}}]]
 2002-01-13 [[deaths::[[Pig::aunt::Vivian (pig)]]]] [[pig_deaths::1]]
@@ -850,7 +851,7 @@ disclaim: based on gocomics website only
 2009-03-09,2009-03-10,2009-03-12 [[storyline::[[Rat]] duels]]
 2009-03-03,2009-03-05-2009-03-07 [[storyline::{{wp|ninja}} crocs]]
 2009-03-02 [[notes::The {{wp|hippo}} in this strip does not appear to be [[Hannah (hippo)]] nor [[Holly (hippo)]] nor [[Henry (hippo)]] (the last of which is fictional)]]
-2013-06-09,2013-07-09,2013-12-14,2014-03-05,2012-10-19,2014-03-17,2013-02-19,2012-10-20,2012-10-23,2012-10-26,2013-07-19,2013-08-05 [[storyline::[[Lemmings Leap]]]]
+2013-06-09,2013-07-09,2013-12-14,2014-03-05,2012-10-19,2014-03-17,2013-02-19,2012-10-20,2012-10-23,2012-10-26,2013-07-19,2013-08-05,2013-02-05 [[storyline::[[Lemmings Leap]]]]
 2012-12-08 [[notes::This is also known as an {{wp|Alphonse-Gaston}} moment]]
 2009-09-08,2009-09-09,2009-09-11 [[storyline::feral ballerina]]
 2013-07-22-2013-07-24 [[storyline::[[Rat]] takes the {{wp|subway}}]]
@@ -921,7 +922,7 @@ Talk::2002-04-12 Deaths::I can't tell if Rat killed the other Fruit Buddies as w
 2006-06-18 [[deaths::Bob 2 (crocodile)]] [[crocodile_deaths::1]]
 2009-02-19 [[cameo::Jeffy (Family Circus)]]
 2008-12-13 [[notes::[[character::Goat]] is reading {{wp|Master of the Senate}} by {{wp|Robert Caro|Caro}}]]
-
+2003-07-07,2003-07-08 [[storyline::[[Rat]] writes to {{wp|Chirac}}]]
 </data>
 
 # lines that don't parse well:
@@ -1091,3 +1092,5 @@ list zebra relatives?
 # rats diary not happy 2010-03-16 vs awesome ('good month so far') on other day, not necessarily contradiction
 
 # russian hat appearances: 2008-10-19
+
+# maracas pig shakes w chuckie too: 2010-06-30
