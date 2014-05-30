@@ -17,15 +17,15 @@ $drb = "\\]\\]";
 
 # run subroutines to do stuff
 pbs_parse_data();
+pbs_storylines();
+die "TESTING";
 pbs_date_pages();
-die "TESTING";
 pbs_newspaper_mentions();
-die "TESTING";
 pbs_annotations();
 for $i ("crocodile", "penguin", "human", "antelope", "zebra") {
   pbs_species_deaths($i);
 }
-die "TESTING";
+
 
 # putting data into a db and immediately extracting it seems useless
 # but hopefully isn't
@@ -90,7 +90,18 @@ debug("ASH:",keys %{$rdf{storyline}});
 
 die "TESTING";
 
-# signifigant events
+# note the same storylines page I created earlier, this one is a table
+sub pbs_storylines {
+  warn("LIMITING FOR TESTS!");
+  my(@ret) = ("{| class='sortable' border='1' cellpadding='7'","!Storyline","!Start","!End","!Strips", "!Dates");
+  for $i (sqlite3hashlist("SELECT v, MIN(source) AS mindate, MAX(source) AS maxdate, COUNT(*) AS count, GROUP_CONCAT(source) AS dates FROM triples WHERE k='storyline' GROUP BY v ORDER BY mindate", "/tmp/pbs-triples.db")) {
+    push(@ret, "|-", "|$i->{v}", "|$i->{mindate}", "|$i->{maxdate}", "|$i->{count}","|$i->{dates}");
+  }
+  push(@ret, "|}");
+    write_file_new(join("\n",@ret), "/usr/local/etc/metawiki/pbs/Storylines.mw", "diff=1");
+}
+
+# significant events
 sub pbs_sig_events {
   my(@ret);
 #  for $i (sqlite3hashlist("SELECT 
@@ -295,9 +306,9 @@ sub parse_semantic {
   my(@list) = split(/::/, $string);
 
   # no double colons? return as is w/ specialized brackets, no triples created
-#  if (scalar @list <= 1) {return "\001$string\002";}
+  if (scalar @list <= 1) {return "\001$string\002";}
   # TESTING!!!!
-  if (scalar @list <= 1) {return $string;};
+#  if (scalar @list <= 1) {return $string;};
 
   # each key/val can be multivalued, so create list of lists
   map(push(@lol, [split(/\+/,$_)]), @list);
