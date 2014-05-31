@@ -209,7 +209,7 @@ sub pbs_parse_data {
 
   local(*A);
   # create empty db (being this direct this is probably bad)
-  open(A,"|sqlite3 /tmp/pbs-triples.db 1>/tmp/pbs-myout.txt 2>/tmp/pbs-myerr.txt");
+  open(A,"|tee /tmp/debug.txt|sqlite3 /tmp/pbs-triples.db 1>/tmp/pbs-myout.txt 2>/tmp/pbs-myerr.txt");
   # open(A,">/tmp/mysql.txt");
   print A << "MARK";
 DROP TABLE IF EXISTS triples;
@@ -224,13 +224,21 @@ MARK
   # now insert the data
   for $i (sort keys %triples) {
     # TODO: ignoring nondates for now (really really bad)
-    unless ($i=~/^\d{4}/) {next;}
+#    unless ($i=~/^\d{4}/) {next;}
     for $j (keys %{$triples{$i}}) {
       for $k (keys %{$triples{$i}{$j}}) {
+	# will this work?
+	for $l ($i,$j,$k) {
+	  # restore [[ and ]] for printing and fix apos
+	  $l=~s/\001/\[\[/isg;
+	  $l=~s/\002/\]\]/isg;
+	  $l=~s/\'/&\#39;/isg;
+	}
+
 	# restore [[ and ]] for printing and fix apos
-	$k=~s/\001/\[\[/isg;
-	$k=~s/\002/\]\]/isg;
-	$k=~s/\'/&\#39;/isg;
+#	$k=~s/\001/\[\[/isg;
+#	$k=~s/\002/\]\]/isg;
+#	$k=~s/\'/&\#39;/isg;
 	print A "INSERT INTO triples VALUES ('$i','$j','$k');\n";
       }
     }
@@ -314,7 +322,7 @@ TODO: this currently creates a GLOBAL hash, instead of returning a list
 
 sub parse_semantic {
   my($source, $string) = @_;
-#  debug("parse_semantic($source, $string)");
+  debug("parse_semantic($source, $string)");
 
   # list of lists I will need to handle a+b+c and so on
   my(@lol);
