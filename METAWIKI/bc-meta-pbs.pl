@@ -17,16 +17,15 @@ $drb = "\\]\\]";
 
 # run subroutines to do stuff
 pbs_parse_data();
-pbs_storylines();
-die "TESTING";
-pbs_date_pages();
-pbs_newspaper_mentions();
+pbs_characters();
 pbs_annotations();
+pbs_storylines();
 for $i ("crocodile", "penguin", "human", "antelope", "zebra") {
   pbs_species_deaths($i);
 }
-
-
+pbs_newspaper_mentions();
+die "TESTING";
+pbs_date_pages();
 # putting data into a db and immediately extracting it seems useless
 # but hopefully isn't
 
@@ -90,15 +89,41 @@ debug("ASH:",keys %{$rdf{storyline}});
 
 die "TESTING";
 
-# note the same storylines page I created earlier, this one is a table
-sub pbs_storylines {
-  warn("LIMITING FOR TESTS!");
-  my(@ret) = ("{| class='sortable' border='1' cellpadding='7'","!Storyline","!Start","!End","!Strips", "!Dates");
-  for $i (sqlite3hashlist("SELECT v, MIN(source) AS mindate, MAX(source) AS maxdate, COUNT(*) AS count, GROUP_CONCAT(source) AS dates FROM triples WHERE k='storyline' GROUP BY v ORDER BY mindate", "/tmp/pbs-triples.db")) {
-    push(@ret, "|-", "|$i->{v}", "|$i->{mindate}", "|$i->{maxdate}", "|$i->{count}","|$i->{dates}");
+sub pbs_characters {
+  my(@ret) = ("{| class='sortable' border='1' cellpadding='7'","!Name","!First","!#");
+  # TODO: add akas for name
+  for $i (sqlite3hashlist("SELECT REPLACE(REPLACE(v,'[',''),']','') AS name,
+ MIN(source) AS first, COUNT(*) AS count FROM triples
+ WHERE k IN ('character', 'deaths', 'first_appearance', 'first_mention')
+GROUP BY name ORDER BY name", "/tmp/pbs-triples.db")) {
+    push(@ret, "|-", "|[[$i->{name}]]", "|[[$i->{first}]]", "|$i->{count}");
   }
   push(@ret, "|}");
-    write_file_new(join("\n",@ret), "/usr/local/etc/metawiki/pbs/Storylines.mw", "diff=1");
+  write_file_new(join("\n",@ret), "/usr/local/etc/metawiki/pbs/Characters.mw", "diff=1");
+
+}
+
+# note the same storylines page I created earlier, this one is a table
+sub pbs_storylines {
+  my(@ret) = ("{| class='sortable' border='1' cellpadding='7'","!Storyline","!Start","!End","!Strips");
+  for $i (sqlite3hashlist("SELECT v, MIN(source) AS mindate, MAX(source) AS maxdate, COUNT(*) AS count, GROUP_CONCAT(source) AS dates FROM triples WHERE k='storyline' GROUP BY v ORDER BY mindate", "/tmp/pbs-triples.db")) {
+
+    # TODO: create page for each storyline w list of strips (similar
+    # to my old Storylines page:
+    # http://pearls-before-swine-bc.wikia.com/wiki/Storylines?oldid=8568
+
+    # the page name is the storyline name cleaned up
+    my($pagename) = $i->{v};
+    # TODO: need to get rid of "new window link" stuff too, harder
+    $pagename=~s/[\[\]]//isg;
+    debug("PN: $pagename");
+    $pagename=~s/\{\{\#NewWindowLink:\s+.*?\|(.*?)\}\}/$1/isg;
+    debug("PNB: $pagename");
+
+    push(@ret, "|-", "|$i->{v} ([[$pagename|link]])", "|$i->{mindate}", "|$i->{maxdate}", "|$i->{count}");
+  }
+  push(@ret, "|}");
+  write_file_new(join("\n",@ret), "/usr/local/etc/metawiki/pbs/Storylines.mw", "diff=1");
 }
 
 # significant events
@@ -172,9 +197,9 @@ sub pbs_parse_data {
     if ($i=~/[^:]:[^:]/) {warn "BAD LINE: $i";}
 
     # fix wp template
-    debug("PRE: $i");
+#    debug("PRE: $i");
     $i=~s/\{\{wp\|(.*?)\}\}/"{{#NewWindowLink: http:\/\/en.wikipedia.org\/wiki\/".fix_wp_template($1)."}}"/iseg;
-    debug("POST: $i");
+#    debug("POST: $i");
 
     # split line into source page and then body
     $i=~/^(.*?)\s*($dlb.*)$/;
