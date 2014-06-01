@@ -92,11 +92,13 @@ die "TESTING";
 sub pbs_characters {
   my(@ret) = ("{| class='sortable' border='1' cellpadding='7'","!Name","!First","!#");
   # TODO: add akas for name
+#  warn "LIMIT!";
   for $i (sqlite3hashlist("SELECT REPLACE(REPLACE(v,'[',''),']','') AS name,
  MIN(source) AS first, COUNT(*) AS count FROM triples
  WHERE k IN ('character', 'deaths', 'first_appearance', 'first_mention')
 GROUP BY name ORDER BY name", "/tmp/pbs-triples.db")) {
-    push(@ret, "|-", "|[[$i->{name}]]", "|[[$i->{first}]]", "|$i->{count}");
+#    push(@ret, "|-", "|[[$i->{name}]]", "|[[$i->{first}]]", "|$i->{count}");
+    push(@ret, "|-", "|[[$i->{name}]]", "|data-sort-value=$i->{first}|".pbs_table_date($i->{first}), "|$i->{count}");
   }
   push(@ret, "|}");
   write_file_new(join("\n",@ret), "/usr/local/etc/metawiki/pbs/Characters.mw", "diff=1");
@@ -150,7 +152,7 @@ sub pbs_newspaper_mentions {
 sub pbs_annotations {
   # ugly but needed (remove txt files created earlier by mistake)
   system("rm /mnt/extdrive/GOCOMICS/pearlsbeforeswine/page-*.gif.txt");
-  for $i (sqlite3hashlist('SELECT source, GROUP_CONCAT(k||","||v,"<CR>") AS data FROM triples GROUP BY source', "/tmp/pbs-triples.db")) {
+  for $i (sqlite3hashlist('SELECT source, GROUP_CONCAT(k||","||v,"<CR>") AS data FROM triples WHERE source LIKE "2%" GROUP BY source', "/tmp/pbs-triples.db")) {
     $i->{data}=~s/<CR>/\n/isg;
     write_file($i->{data}, "/mnt/extdrive/GOCOMICS/pearlsbeforeswine/page-$i->{source}.gif.txt");
   }
