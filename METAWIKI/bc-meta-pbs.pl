@@ -15,6 +15,11 @@ $cc = "[^\\[\\]]";
 $dlb = "\\[\\[";
 $drb = "\\]\\]";
 
+# parse_semantic("2007-04-16","[[storyline::[[character::Junior]] dates [[character::[[Zebra::niece::Joy]]]]]]");
+# parse_semantic("2007-04-16","[[character::[[Zebra::niece::Joy]]]]]]");
+# debug(unfold({%triples}));
+# parse_semantic("2014-03-07", "[[character::Rat+Pig+[[deaths::Bob (lemming)]]]]");
+
 # run subroutines to do stuff
 pbs_parse_data();
 pbs_characters();
@@ -93,10 +98,11 @@ sub pbs_characters {
   my(@ret) = ("{| class='sortable' border='1' cellpadding='7'","!Name","!First","!#");
   # TODO: add akas for name
 #  warn "LIMIT!";
-  for $i (sqlite3hashlist("SELECT REPLACE(REPLACE(v,'[',''),']','') AS name,
+  # TODO: use of 'deaths' to mean 'character' below is a kludge
+  for $i (sqlite3hashlist("SELECT v AS name,
  MIN(source) AS first, COUNT(*) AS count FROM triples
- WHERE k IN ('character', 'deaths', 'first_appearance', 'first_mention')
-GROUP BY name ORDER BY name", "/tmp/pbs-triples.db")) {
+ WHERE k IN ('character', 'deaths') GROUP BY name ORDER BY name", 
+ "/tmp/pbs-triples.db")) {
 #    push(@ret, "|-", "|[[$i->{name}]]", "|[[$i->{first}]]", "|$i->{count}");
     push(@ret, "|-", "|[[$i->{name}]]", "|data-sort-value=$i->{first}|".pbs_table_date($i->{first}), "|$i->{count}");
   }
@@ -359,11 +365,13 @@ sub parse_semantic {
       for $j (@{$lol[1]}) {
 	for $k (@dates) {
 	  # TODO: currently, a GLOBAL hash to hold triples
+	  debug("TRIPLE (one double colon): $k,$i,$j");
 	  $triples{$k}{$i}{$j}=1;
 	}
       }
     }
-    return "[[$pval{$list[1]}]]";
+    debug("RETURNING (one double colon) [[$pval{$list[1]}]]");
+    return $pval{$list[1]};
   }
 
   # only remaining legit case
@@ -374,6 +382,7 @@ sub parse_semantic {
 	  if (scalar @dates != 1) {warn("DATELIST($string) SHOULD BE 1 element only, not @dates");}
 	  for $l (@dates) {
 	    # TODO: currently, a GLOBAL hash to hold triples
+	    debug("TRIPLE: $i,$j,$k");
 	    $triples{$i}{$j}{$k}=1;
 	    $triples{"$i~$j~$k",}{"source"}{$l} = 1;
 	  }
@@ -381,7 +390,8 @@ sub parse_semantic {
       }
     }
 #    debug("RETURNING $pval{$list[2]} (in brackets)");
-    return "[[$pval{$list[2]}]]";
+    debug("RETURNING [[$pval{$list[2]}]]");
+    return $pval{$list[2]};
   }
 }
 
