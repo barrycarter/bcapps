@@ -20,6 +20,10 @@ $drb = "\\]\\]";
 # debug(unfold({%triples}));
 # parse_semantic("2014-03-07", "[[character::Rat+Pig+[[deaths::Bob (lemming)]]]]");
 
+
+pbs_characters2();
+die "TESTING";
+
 # run subroutines to do stuff
 pbs_parse_data();
 pbs_characters();
@@ -29,7 +33,6 @@ for $i ("crocodile", "penguin", "human", "antelope", "zebra") {
   pbs_species_deaths($i);
 }
 pbs_newspaper_mentions();
-die "TESTING";
 pbs_date_pages();
 # putting data into a db and immediately extracting it seems useless
 # but hopefully isn't
@@ -93,6 +96,35 @@ close(A);
 debug("ASH:",keys %{$rdf{storyline}});
 
 die "TESTING";
+
+# pbs_characters2() gets a lot more info on characters (and will ultimately replace pbs_characters()
+
+sub pbs_characters2 {
+  # this query gets all info on characters, one per line
+  my($query) = << "MARK";
+SELECT name, GROUP_CONCAT(anno, ":::") AS annos FROM (
+
+SELECT v AS name, k||"::"||GROUP_CONCAT(source)||"::reverse" AS anno
+FROM triples WHERE v IN (
+SELECT DISTINCT(v) FROM triples WHERE k IN ('character', 'deaths')
+) GROUP BY v, k
+
+UNION
+
+SELECT source AS name, k||"::"||GROUP_CONCAT(v)||"::forward" AS anno
+FROM triples WHERE source IN (
+SELECT DISTINCT(v) FROM triples WHERE k IN ('character', 'deaths')
+) GROUP BY source, k
+) GROUP BY name;
+MARK
+;
+  my(@res) = sqlite3hashlist($query, "/tmp/pbs-triples.db");
+  for $i (@res) {
+    for $j (split(/:::/, $i->{annos})) {
+      debug("LINE: I: $i->{name}, J: $j");
+    }
+  }
+}
 
 sub pbs_characters {
   my(@ret) = ("{| class='sortable' border='1' cellpadding='7'","!Name","!First","!#");
