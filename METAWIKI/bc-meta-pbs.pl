@@ -21,11 +21,11 @@ $drb = "\\]\\]";
 # parse_semantic("2014-03-07", "[[character::Rat+Pig+[[deaths::Bob (lemming)]]]]");
 
 
+pbs_parse_data();
 pbs_characters2();
 die "TESTING";
 
 # run subroutines to do stuff
-pbs_parse_data();
 pbs_characters();
 pbs_annotations();
 pbs_storylines();
