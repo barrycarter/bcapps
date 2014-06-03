@@ -17,17 +17,17 @@ $drb = "\\]\\]";
 
 pbs_parse_data();
 pbs_characters2();
+pbs_date_pages();
 die "TESTING";
+pbs_annotations();
 
 # run subroutines to do stuff
 pbs_characters();
-pbs_annotations();
 pbs_storylines();
 for $i ("crocodile", "penguin", "human", "antelope", "zebra") {
   pbs_species_deaths($i);
 }
 pbs_newspaper_mentions();
-pbs_date_pages();
 # putting data into a db and immediately extracting it seems useless
 # but hopefully isn't
 
@@ -521,7 +521,7 @@ Last/most recent appearance
 
 number appearances
 
-Death date: [also determine species and put on appropriate "species death" page]
+Death date: [also determine species and put on appropriate "species death" page] (and "killed_by" or "kills")
 
 Rebirth date (if applicable):
 
@@ -529,7 +529,10 @@ Aliases:
 
 Species: (more accurately, "type")
 
-Relatives: cousin, uncle, aunt, husband, brother
+Relatives: cousin, uncle, aunt, husband, brother, ex-husband (and also "cousin of..." and stuff like that), grandfather, mother, niece, sister, son, wife
 
-Relations (not relatives): neighbor
+Relations (not relatives): neighbor, girlfriend
 
+Hired:
+
+Fired:

@@ -392,7 +392,7 @@ disclaim: based on gocomics website only
 2006-01-18-2006-01-20 [[storyline::[[character::Pig]]'s produce]]
 2006-01-23,2006-01-25,2006-01-30 [[storyline::[[character::Five Dentists]]]]
 2006-02-05 [[Pig+Rat::address::809 Bradbury]] [[character::Bluebird of Happiness]]
-2004-07-04,2006-02-05 [[notes::[[2004-07-04]] gives [[Pig]] and [[Rat]]'s address as "803 Hearst", whereas [[2006-02-05]] gives their address as "803 Hearst" (perhaps they moved)]]
+2004-07-04,2006-02-05 [[notes::[[2004-07-04]] gives [[Pig]] and [[Rat]]'s address as "803 Hearst", whereas [[2006-02-05]] gives their address as "809 Bradbury" (perhaps they moved)]]
 2005-11-14,2006-02-06-2006-02-09,2006-05-08-2006-05-13,2011-04-06-2011-04-08 [[storyline::[[character::Annie May]], [[character::Pig]]'s sea anemone enemy]]
 2006-05-13 [[deaths::Whale]]
 2006-05-16-2006-05-18 [[storyline::[[character::Guard Duck]]'s anger management problem]]
@@ -411,7 +411,6 @@ disclaim: based on gocomics website only
 2004-05-09 [[character::[[Stephan Pastis::neighbor::Nunzio J. Panagetti (human)]]]]
 2002-08-25 [[character::Goat+Rat+Pig+Roland (human)+Pepe (human)]]
 2006-04-02 [[newspaper_mentions::The Times]]
-2006-04-06 [[notes::The [[character::crocs]] show unusual interest in [[character::Farina]], but rarely show interesting in eating [[Pig]]]] [[character::Rat]]
 2006-04-06,2008-08-03 [[notes::The crocs show interest in eating [[Farina]] on [[2006-04-06]] and [[Pig]] for about a week starting on [[2008-08-03]], but never during the rest of the strip. Do they view [[Zebra]] as an easier target because he lives next door (whereas Pig lives in "a building close to us"), or does Zebra meat taste better than bacon? (impossible!)]]
 2008-08-03-2008-08-05,2008-08-07 [[storyline::[[character::Crocs]] want to eat [[character::Pig]]]]
 2006-04-09 [[character::Pig+Rat+[[Pig+Rat::neighbor::Tim (human)]]]]
@@ -850,7 +849,7 @@ disclaim: based on gocomics website only
 2011-05-09 [[newspaper_mentions::The Standard Examiner+Lewiston Tribune+Santa Rosa Press Democrat]]
 2012-09-03 [[event::Jeff changes his name to [[character::Jef]]]]
 2012-09-04-2012-09-07,2012-09-09 [[storyline::[[character::Larry]]'s parents come for a visit]]
-2005-05-13,2005-12-11,2012-09-04 [[notes::[[character::Larry's mother]] dies on [[2005-05-13]], only to reappear on [[2005-12-11]]. She also appears to age greatly between [[2005-12-11]] and 2012-09-04]]
+2005-05-13,2005-12-11,2012-09-04 [[notes::[[character::Larry's mother]] dies on [[2005-05-13]], only to reappear on [[2005-12-11]]. She also appears to age greatly between [[2005-12-11]] and [[2012-09-04]]]]
 2005-12-09 [[newspaper_mentions::Times News]]
 2011-04-20 [[notes::It's a little hard to read, but [[Rat]]'s shield reads "MORE ROOMETH"]]
 2011-03-28 [[cameo::{{wp|Smokey the Bear}}]]
@@ -1166,7 +1165,7 @@ disclaim: based on gocomics website only
 2007-02-18 [[character::Rat+Pig+Stephan Pastis+Ray (human)+[[Ray (human)::brother::Hugh (human)]]]]
 2007-02-24 [[notes::The paper's headline is "Amend Quits, World Mourns" in the first two panels and "Quincy A Mess" in the third panel]] [[cameo::Quincy (Foxtrot)+Andrea Fox (Foxtrot)]]
 2014-03-30 [[character::Goat+Rat+Willy 2 (human)]] [[Willy 2 (human)::aka::Willy the Word Decider]]
-2014-06-02 [[character::Rat+Stephan Pastis+Libby (human)]]
+2014-06-02,2014-06-03 [[character::Rat+Stephan Pastis+Libby (human)]]
 </data>
 
 # the following lines need to be associated with a date
