@@ -15,12 +15,6 @@ $cc = "[^\\[\\]]";
 $dlb = "\\[\\[";
 $drb = "\\]\\]";
 
-# parse_semantic("2007-04-16","[[storyline::[[character::Junior]] dates [[character::[[Zebra::niece::Joy]]]]]]");
-# parse_semantic("2007-04-16","[[character::[[Zebra::niece::Joy]]]]]]");
-# debug(unfold({%triples}));
-# parse_semantic("2014-03-07", "[[character::Rat+Pig+[[deaths::Bob (lemming)]]]]");
-
-
 pbs_parse_data();
 pbs_characters2();
 die "TESTING";
@@ -261,6 +255,7 @@ BEGIN;
 DELETE FROM triples;
 MARK
 ;
+
   # now insert the data
   for $i (sort keys %triples) {
     # TODO: ignoring nondates for now (really really bad)
@@ -362,7 +357,7 @@ TODO: this currently creates a GLOBAL hash, instead of returning a list
 
 sub parse_semantic {
   my($source, $string) = @_;
-  debug("parse_semantic($source, $string)");
+#  debug("parse_semantic($source, $string)");
 
   # list of lists I will need to handle a+b+c and so on
   my(@lol);
@@ -397,12 +392,12 @@ sub parse_semantic {
       for $j (@{$lol[1]}) {
 	for $k (@dates) {
 	  # TODO: currently, a GLOBAL hash to hold triples
-	  debug("TRIPLE (one double colon): $k,$i,$j");
+#	  debug("TRIPLE (one double colon): $k,$i,$j");
 	  $triples{$k}{$i}{$j}=1;
 	}
       }
     }
-    debug("RETURNING (one double colon) [[$pval{$list[1]}]]");
+#    debug("RETURNING (one double colon) [[$pval{$list[1]}]]");
     return $pval{$list[1]};
   }
 
@@ -414,15 +409,15 @@ sub parse_semantic {
 	  if (scalar @dates != 1) {warn("DATELIST($string) SHOULD BE 1 element only, not @dates");}
 	  for $l (@dates) {
 	    # TODO: currently, a GLOBAL hash to hold triples
-	    debug("TRIPLE: $i,$j,$k");
+#	    debug("TRIPLE: $i,$j,$k");
 	    $triples{$i}{$j}{$k}=1;
-	    $triples{"$i~$j~$k",}{"source"}{$l} = 1;
+	    $triples{"$i~$j~$k"}{"source"}{$l} = 1;
 	  }
 	}
       }
     }
 #    debug("RETURNING $pval{$list[2]} (in brackets)");
-    debug("RETURNING [[$pval{$list[2]}]]");
+#    debug("RETURNING [[$pval{$list[2]}]]");
     return $pval{$list[2]};
   }
 }
@@ -515,3 +510,26 @@ If you are interested in contributing to this project or are curious about it, p
 This page is experimental: expect errors and incomplete data.
 
 =cut
+
+=item comments
+
+Data we want per-character  (not necess in order; some of these columns should be sortable):
+
+First appearance
+
+Last/most recent appearance
+
+number appearances
+
+Death date: [also determine species and put on appropriate "species death" page]
+
+Rebirth date (if applicable):
+
+Aliases:
+
+Species: (more accurately, "type")
+
+Relatives: cousin, uncle, aunt, husband, brother
+
+Relations (not relatives): neighbor
+
