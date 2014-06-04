@@ -4,7 +4,6 @@ TODO: Guidelines for editing this file:
 
 # Notes:
 
-first_appearance -> character
 pages that link to [[Pig]] = Pig's appearances and mentions
 [[x::y]] automatically links to y
 Talk::x special format for talk pages
@@ -60,12 +59,16 @@ disclaim: based on gocomics website only
 2002-05-08 [[category::Who's On First]]
 2002-05-14 [[character::[[deaths::[[Zebra::cousin::Lou (zebra)]]]]]] [[zebra_deaths::1]]
 2005-06-23 [[character::Larry+Zebra+[[Larry::cousin::Lou (crocodile)]]]] 
-2005-06-23,2005-05-14,2007-07-21,2011-09-20 [[notes::There are four "Cousin Lou"s. Two of [[Zebra]]'s in [[2005-05-14]] and [[2007-07-21]], [[Pig]]'s in [[2011-09-20]], and [[Larry]]'s in [[2005-06-23]]]]
+2005-06-23,2005-05-14,2007-07-21,2011-09-20 [[notes::There are four "Cousin Lou"s. Two of [[Zebra]]'s in [[2005-05-14]] and [[2007-07-21]], [[Pig]]'s in [[2011-09-20]], and [[Larry]]'s in [[2005-06-23]]]] [[group::Cousin Lou]]
 2006-02-19 [[notes::[[character::Zebra]]'s letter to the [[character::lions]] has the return address "Zebra" with the mailing address "The Lions" and three stamps. The return envelope has one (canceled) stamp with return address "Da Lions" and mailing address "Zeeba". This suggests the lions also refer to Zebra as "Zeeba", not just the crocs]]
 2012-09-17,2012-09-18,2012-09-20,2012-09-26,2012-09-29 [[storyline::[[character::Snuffles]] and the new kitty]]
 2010-03-10 [[character::Pig+Rat]] [[Pig::aka::Lightnin' Pigkins]]
 2011-09-20 [[character::Goat+Pig+[[deaths::[[Pig::cousin::Lou (pig)]]]]]]
 2002-05-15 [[character::Pig+Anonymous (cow)]]
+2002-05-21 [[character::Anonyomous (cow)]]
+2002-06-09 [[character::Georgios (human)+Yanni (human)]] [[notes::"Yasou" is a traditional Greek greeting]]
+2002-06-20 [[character::Larry (monkey)]]
+2002-06-29 [[character::Bailey (human)]]
 2005-06-27-2005-07-02 [[storyline::{{wp|Osama Bin Laden}} visits {{wp|The Family Circus}}]]
 2002-05-22 [[character::[[Zebra::aunt::Leah (zebra)]]]]
 2002-05-31 [[description::[[Pig]] writes to {{wp|Julia Roberts}}]]
@@ -109,7 +112,7 @@ disclaim: based on gocomics website only
 2002-10-24-2002-10-26,2002-10-28-2002-11-06 [[storyline::[[character::Rat]] runs for city council]]
 2002-10-27 [[description::[[Zebra]] mails the [[lions]]]]
 2014-01-07 [[notes::It's somewhat surprising that the black dots even cover the oceans; either [[Rat]] is using really large dots, or believes there are people living in the ocean]]
-2002-11-07 [[first_appearance+deaths::Sammy (slug)]]
+2002-11-07 [[character::Pig+[[Pig::kills::[[deaths::Sammy (slug)]]]]]]
 2011-10-15 [[cameo::Alice Otterloop (Cul de Sac)+Jeffy (Family Circus)]]
 2002-11-18-2002-11-23 [[storyline::[[Box Me In]]]]
 2002-12-01 [[description::With [[category::Out of Character|uncharacteristic]] generosity, [[Rat]] gives $200 to a pizza delivery boy wearing a replica of the {{wp|Leaning Tower of Pisa}}, attracting other costumed characters]]
@@ -410,6 +413,7 @@ disclaim: based on gocomics website only
 2006-03-16 [[deaths::[[Larry::brother::Jimmy (crocodile)]]]] [[crocodile_deaths::1]]
 2004-05-09 [[character::[[Stephan Pastis::neighbor::Nunzio J. Panagetti (human)]]]]
 2002-08-25 [[character::Goat+Rat+Pig+Roland (human)+Pepe (human)]]
+2002-03-13 [[character::Pig+Rat+[[deaths::Pepe (dog)]]]]
 2006-04-02 [[newspaper_mentions::The Times]]
 2006-04-06,2008-08-03 [[notes::The crocs show interest in eating [[Farina]] on [[2006-04-06]] and [[Pig]] for about a week starting on [[2008-08-03]], but never during the rest of the strip. Do they view [[Zebra]] as an easier target because he lives next door (whereas Pig lives in "a building close to us"), or does Zebra meat taste better than bacon? (impossible!)]]
 2008-08-03-2008-08-05,2008-08-07 [[storyline::[[character::Crocs]] want to eat [[character::Pig]]]]
@@ -727,13 +731,14 @@ disclaim: based on gocomics website only
 2010-09-03 [[crocodile_deaths::1]]
 2010-09-06,2010-10-02,2010-10-07-2010-10-10 [[storyline::Cathy Guisewite retires]] [[cameo::Cathy]]
 2005-01-09 [[cameo::Cathy (Cathy)]]
-2010-09-12 [[first_appearance+deaths::Coco (caiman)]] [[notes::The title of the movie poster is Jaws 7 in the 1st panel, Jaws 8 in the 3rd panel, and unreadable in the other panels; the tagline is "because we're all out of new ideas" in panel 1, "because we're STILL out of new ideas" in panel 3, "because we're flat out desperate" in panel 4, and mostly unreadable in panel 6]]
+2010-09-12 [[character+deaths::Coco (caiman)]] [[notes::The title of the movie poster is Jaws 7 in the 1st panel, Jaws 8 in the 3rd panel, and unreadable in the other panels; the tagline is "because we're all out of new ideas" in panel 1, "because we're STILL out of new ideas" in panel 3, "because we're flat out desperate" in panel 4, and mostly unreadable in panel 6]]
 2006-06-07-2006-06-09 [[storyline::[[character::Rat]], movie reviewer]]
 2010-09-19 [[cameo::Hagar (Hagar the Horrible)+Helga (Hagar the Horrible)]]
 2010-06-25 [[cameo::Billy (Family Circus)]]
 2010-10-01 [[crocodile_deaths::1]]
 2010-10-11-2010-10-17 [[storyline::[[character::Larry]] on {{wp|Celebrity Jeopardy}}]]
-2002-01-13 [[deaths::[[Pig::aunt::Vivian (pig)]]]] [[pig_deaths::1]]
+2002-01-13 [[character::Pig+[[Pig::cousin::Frankie (pig)]]+[[Pig::uncle::George(pig)]]+[[deaths::[[Pig::aunt::Vivian (pig)]]]]]] [[pig_deaths::1]]
+2002-01-15 [[deaths::[[Rat::father::Anonymous (rat)]]]]
 2010-11-02,2010-11-03 [[character::Stevie Stenographer (human)]]
 2002-12-17 [[character::Rat+Stevie (salmon)]]
 2010-11-04 [[newspaper_mentions::Daily Herald]]
@@ -806,6 +811,8 @@ disclaim: based on gocomics website only
 2012-03-18 [[deaths::Bob 13 (crocodile)]] [[crocodile_deaths::1]]
 2012-03-24 [[newspaper_mentions::The Daily Times]]
 2012-03-31 [[notes::The baseball and the blocks exchange positions in [[Pig]]'s thought bubble between panels 2 and 3]]
+2002-01-25 [[character::Rat+Pig+Betsy (human)]]
+2002-01-130 [[character::Rat+Pig+Harry (human)]]
 2008-10-07,2008-10-08,2008-10-10,2008-10-11,2008-10-13-2008-10-18,2008-10-20-2008-10-25 [[storyline::[[character::Rat]]'s softball team]]
 2008-07-02-2008-07-04 [[storyline::[[character::Rat]] writes epitaphs]]
 2008-07-07-2008-07-12 [[storyline::A character must die]]
@@ -843,7 +850,10 @@ disclaim: based on gocomics website only
 2005-07-27 [[character::Pig+Jimmy (crab)]]
 2006-03-08,2006-03-11,2006-03-12,2006-03-17 [[storyline::[[character::Dog O' Abject Despondency]]]]
 2006-03-17 [[character::Goat+Rat+Dolores (cat)]] [[Dolores (cat)::aka::Dolores the apathetic cat o' joy]]
-2006-03-20-2006-03-25, [[storyline::[[character::Rat]] babysites the Baby Blues kids]]
+2006-03-20-2006-03-25 [[storyline::[[character::Rat]] babysites the Baby Blues kids]]
+2006-03-01 [[notes::The first three menu items are "hamburger", "double burger", and "triple burger". I can't read the prices or any of the other entries. "Fries + a drink" "Add $1.29" at the bottom"]]
+2006-03-24 [[character::Jerry (crocodile)+Rick (crocodile)]]
+2006-03-25 [[deaths::[[character::Jerry (crocodile)+Rick (crocodile)]]]] [[crocodile_deaths::2]]
 2005-07-28 [[deaths::Jimmy (crab)]]
 2005-09-30 [[antelope_deaths::1]]
 2011-05-09 [[newspaper_mentions::The Standard Examiner+Lewiston Tribune+Santa Rosa Press Democrat]]
@@ -1089,7 +1099,7 @@ disclaim: based on gocomics website only
 2004-06-28 [[notes::There are 8 planets on the table, or 9 planets total, since this strip was written before Pluto was re-classified as a non-planet]]
 2002-02-08 [[character::Rat+Goat+Lutzmans (human)]]
 2008-10-01 [[newspaper_mentions::Chicago Sun-Times]]
-2014-05-30,2013-12-31,2013-10-16,2013-08-31,2013-08-01,2013-07-10,2013-05-12,2013-03-29,2013-03-15,2013-03-01,2013-01-30,2013-01-22,2013-01-20,2012-12-30,2013-01-01,2013-02-13,2007-04-30,2006-10-17,2006-09-23,2006-05-15,2005-11-18,2005-11-19,2005-09-25,2005-04-04,2004-05-01,2004-03-04,2003-12-16,2002-02-09,2002-10-18,2003-01-27,2003-04-07,2003-08-05 [[meta::keeping all human Bob/neighbor Bob references here so I can sort them out later]]
+2002-07-16,2014-05-30,2013-12-31,2013-10-16,2013-08-31,2013-08-01,2013-07-10,2013-05-12,2013-03-29,2013-03-15,2013-03-01,2013-01-30,2013-01-22,2013-01-20,2012-12-30,2013-01-01,2013-02-13,2007-04-30,2006-10-17,2006-09-23,2006-05-15,2005-11-18,2005-11-19,2005-09-25,2005-04-04,2004-05-01,2004-03-04,2003-12-16,2002-02-09,2002-10-18,2003-01-27,2003-04-07,2003-08-05 [[meta::keeping all human Bob/neighbor Bob references here so I can sort them out later]]
 2013-09-29 [[character::Pig+Rat+Kevin (human)]]
 2013-08-23 [[character::Pig+Goat+[[Goat::neighbor::Smith (human)]]]]
 2013-01-20 [[character::Pig+Gina (human)]]
@@ -1123,6 +1133,7 @@ disclaim: based on gocomics website only
 2012-05-03 [[character::Stephan Pastis+Pig+Les Abell (human)]]
 2012-11-11 [[character::Pig+[[Rat+Pig::neighbor::Betty (human)]]]]
 2005-05-09 [[character::Pig+Rat+Billy (human)+Betty 2 (human)+Bobby (human)]]
+2002-08-09 [[character::Billy (human)+Rat+Goat]]
 2005-05-10 [[character::Goat+Zebra+Rat+Skippy (human)]]
 2005-05-11 [[character::Rat+James Thornton (human)+Spiro (human)]]
 2003-10-29-2003-10-31 [[storyline::[[character::Pig]] attends a costume party as a blindfolded hostage]]
@@ -1166,6 +1177,13 @@ disclaim: based on gocomics website only
 2007-02-24 [[notes::The paper's headline is "Amend Quits, World Mourns" in the first two panels and "Quincy A Mess" in the third panel]] [[cameo::Quincy (Foxtrot)+Andrea Fox (Foxtrot)]]
 2014-03-30 [[character::Goat+Rat+Willy 2 (human)]] [[Willy 2 (human)::aka::Willy the Word Decider]]
 2014-06-02,2014-06-03 [[character::Rat+Stephan Pastis+Libby (human)]]
+2002-01-07 [[character::Rat+Pig+[[deaths::Pinkett]]]]
+2002-04-13 [[character::John Butterweed (human)+Betty Butterweed (human)]]
+2002-04-21 [[character::Dirk (human)+Myrna (human)+Fred (human)]]
+2002-07-30 [[character::Fred (human)]]
+2002-07-31 [[character::Myra Hertz (human)]] [[location::Waffle Barn]]
+2005-05-19 [[notes::This implies that Pig and Rat live in or near Albany, NY]]
+2002-05-20 [[character::Sally (human)]] [[Sally (human)::aka::Fast Sally]]
 </data>
 
 # the following lines need to be associated with a date
@@ -1252,7 +1270,7 @@ Talk::2002-04-12 Deaths::I can't tell if Rat killed the other Fruit Buddies as w
 
 # dilbert mention -> alternate strip mention -> third wall?
 
-# 2007-03-03 explicit mention re "why do we need clothes"
+# 2007-03-03 explicit mention re "why do we need clothes" (vs hamper later)
 
 # grater news (2012-06-18) repeats grate news joke, 2012-05-25 grate news, 2004-05-07 (cheese grater, not a great/grate joke), 
 
@@ -1335,7 +1353,7 @@ list zebra relatives? (for all chars)
 # 2003-05-02 pig misunderstands irony in another strip too
 
 # 2008-07-30 milk carton, in other strip, pig thinks its a game ('have
-# you seen...')
+# you seen...'), 2002-05-05
 
 # yo mama/yoyo ma joke on 2013-11-08 and other (hula hoop papa), 2003-07-05
 
@@ -1371,7 +1389,7 @@ list zebra relatives? (for all chars)
 
 # 2003-03-04 vs junior/joy
 
-# pig is member of cult pig 2003-07-06 kicked out later for eating bacon
+# pig is member of cult pig 2003-07-06 kicked out later for eating bacon (2002-01-12 kicked out)
 
 # pig knows what dentist reminders are 2004-06-03 but not later
 
@@ -1391,6 +1409,8 @@ list zebra relatives? (for all chars)
 
 # 2006-01-10 rat cal marking similar to lucy/peanuts
 
+# 2002-03-01 "little too content" also from peanuts
+
 # 2006-01-26 Bob vs Larry ["Sincerly" misspelled, but that's expected]
 
 # 2006-07-14: fettucini alfredo vs tofu cow; also, billy is named here; tofu cow 2007-02-25
@@ -1402,3 +1422,7 @@ list zebra relatives? (for all chars)
 # 2006-12-03 LGD doesn't know parents vs writing his pa earlier?
 
 # 2007-01-13 same night stand that later tries to escape?, 2007-05-11
+
+# 2011-11-09 rat say lottery is tax, but also his retirement plan?
+
+# 2002-08-01 rat doesnt know crosbys dead but chastises pig for writing about other dead famous guy

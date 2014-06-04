@@ -18,15 +18,15 @@ $drb = "\\]\\]";
 pbs_parse_data();
 pbs_characters2();
 pbs_date_pages();
+for $i ("crocodile", "penguin", "human", "antelope", "zebra") {
+  pbs_species_deaths($i);
+}
 die "TESTING";
 pbs_annotations();
 
 # run subroutines to do stuff
 pbs_characters();
 pbs_storylines();
-for $i ("crocodile", "penguin", "human", "antelope", "zebra") {
-  pbs_species_deaths($i);
-}
 pbs_newspaper_mentions();
 # putting data into a db and immediately extracting it seems useless
 # but hopefully isn't
