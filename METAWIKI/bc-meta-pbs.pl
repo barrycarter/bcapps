@@ -18,8 +18,20 @@ $drb = "\\]\\]";
 %rel = list2hash(split(/,\s+/, "cousin, uncle, aunt, husband, brother, ex-husband, grandfather, mother, niece, sister, son, wife"));
 
 pbs_parse_data();
-pbs_characters2();
+%data = pbs_all();
+
+# TODO: this seems redundant
+for $i (keys %data) {
+  for $j (keys %{$data{$i}}) {
+    # only death for now
+    unless ($j eq "deaths") {next;}
+    my(@temp) = keys %{$data{$i}{species}};
+    debug("$i/$j/$temp[0]");
+  }
+}
+
 die "TESTING";
+pbs_characters2();
 pbs_date_pages();
 for $i ("crocodile", "penguin", "human", "antelope", "zebra") {
   pbs_species_deaths($i);
@@ -93,6 +105,80 @@ debug("ASH:",keys %{$rdf{storyline}});
 
 die "TESTING";
 
+# yet another subroutine, this one attempts to handle ALL triples
+# properly (it takes the triples and creates hashes that are hopefully
+# more useful)
+
+sub pbs_all {
+  # the hash we'll return
+  my(%data);
+  # the order by RANDOM() is for testing, so errors show up faster
+  for $i (sqlite3hashlist("SELECT * FROM triples ORDER BY RANDOM()", "/tmp/pbs-triples.db")) {
+    # TODO: I'm not crazy about this massive 'switch' statement
+    my($source, $k, $v) = ($i->{source}, $i->{k}, $i->{v});
+
+    # ignore meta triples, they are internal
+    if ($k eq "meta") {next;}
+
+    # for now, we ignore source triples
+    if ($k eq "source") {next;}
+
+    # TODO: ignoring cameos for now, but we will want these later
+    if ($k eq "cameo") {next;}
+
+    # TODO: should not ignore this long term
+    if ($k eq "newspaper_mentions") {next;}
+
+    # for characters, record appearance
+    if ($k eq "character") {
+      $data{$v}{appearance}{$source} = 1;
+      $data{$source}{characters}{$v} = 1;
+
+      # is this character's species part of his name?
+      # but ignore if already specified
+      if (!keys %{$data{$v}{species}} && $v=~m/\((.*?)\)/) {
+	$data{$v}{species}{$1}=1;
+      }
+      next;
+    }
+
+    # for storyline/categories, record strips in storyline/category
+    if ($k eq "storyline" || $k eq "category") {
+      $data{$k}{$v}{$source} = 1;
+      $data{$source}{$k}{$v} = 1;
+      next;
+    }
+
+    # notes
+    if ($k eq "notes") {
+      $data{$source}{notes}{$v} = 1;
+      next;
+    }
+
+    # relatives
+    if ($rel{$k}) {
+      $data{$source}{relative}{$v} = $k;
+      # and reverse
+      $data{$v}{relative}{$source} = "$k of";
+      next;
+    }
+
+    # deaths
+    if ($k eq "deaths") {
+      # a death is an appearance <h>(or a disappearance, ha!)</h>
+      $data{$v}{appearance}{$source} = 1;
+      $data{$source}{characters}{$v} = 1;
+      $data{$v}{deaths}{$source} = 1;
+      next;
+    }
+
+    # species
+    if ($k eq "species") {$data{$source}{species}{$v}=1; next;}
+  }
+
+  return %data;
+}
+
 # pbs_characters2() gets a lot more info on characters (and will ultimately replace pbs_characters()
 
 sub pbs_characters2 {
@@ -142,7 +228,7 @@ MARK
     }
   }
 
-  debug("INFO",unfold({%info}));
+#  debug("INFO",unfold({%info}));
 
 }
 
@@ -432,7 +518,8 @@ sub parse_semantic {
     for $i (@{$lol[0]}) {
       for $j (@{$lol[1]}) {
 	for $k (@{$lol[2]}) {
-	  if (scalar @dates != 1) {warn("DATELIST($string) SHOULD BE 1 element only, not @dates");}
+	  # this doesnt really hurt anything so suppressing warning
+#	  if (scalar @dates != 1) {warn("DATELIST($string) SHOULD BE 1 element only, not @dates");}
 	  for $l (@dates) {
 	    # TODO: currently, a GLOBAL hash to hold triples
 #	    debug("TRIPLE: $i,$j,$k");

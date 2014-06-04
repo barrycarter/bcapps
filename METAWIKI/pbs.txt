@@ -2,6 +2,8 @@ Pearls Before Swine tests (pretty much redoing this to be specific to PeBeSw)
 
 TODO: Guidelines for editing this file:
 
+  - use &#58; for colons in text
+
 # Notes:
 
 pages that link to [[Pig]] = Pig's appearances and mentions
@@ -39,7 +41,7 @@ disclaim: based on gocomics website only
 2002-02-20 [[character::hyenas]]
 2002-02-27 [[deaths::George (zebra)]] [[character::cheetahs]] [[zebra_deaths::1]]
 2002-03-02 [[description::[[Rat]] confuses {{wp|Gutenberg Bible}}s with {{wp|Gideon Bible}}s]]
-2002-03-04 [[notes::[[character::Rat]] is careful to use the phrase "ant habitat" instead of the trademarked "Ant Farm(tm)", a distinction that forced Dilbert to print a retraction: http://dilbert.com/strips/comic/1995-12-30/]]
+2002-03-04 [[notes::[[character::Rat]] is careful to use the phrase "ant habitat" instead of the trademarked "Ant Farm(tm)", a distinction that forced Dilbert to print a retraction&#58; http&#58;//dilbert.com/strips/comic/1995-12-30/]]
 2002-03-04-2002-03-06 [[storyline::Ant habitat]]
 2002-03-11-2002-03-16 [[storyline::[[character::Rat]]'s Cap o' Immortality]]
 2002-03-24 [[description::[[Zebra]] writes to the [[character::antelopes]]]]
@@ -336,7 +338,7 @@ disclaim: based on gocomics website only
 2005-06-16 [[crocodile_deaths::1]]
 2005-06-17 [[newspaper_mentions::The Sun-Times]]
 2005-06-24,2005-06-25 [[storyline::[[character::Pig]] sits in a tree]]
-2005-06-25 [[character::Rat+Pig+[[Pig::mom::Anonymous (pig)]]]] [[meta::Not crazy about calling Pig's mom "anonymous", but I don't think we ever learn her actual name]]
+2005-06-25 [[character::Rat+Pig+[[Pig::mother::Anonymous (pig)]]]] [[meta::Not crazy about calling Pig's mom "anonymous", but I don't think we ever learn her actual name]]
 2005-07-10 [[crocodile_deaths::2]] [[notes::This strip implies Larry's wife is named Debbie, not Patty; does Zebra have two sets of crocodile neighbors during the strip's run (in which case this may not be Larry)?]]
 2005-07-11 [[character::Bob (antelope)+Zebra+Crocs]]
 2005-07-12 [[deaths::[[Larry::cousin::Jeemy (crocodile)]]]] [[crocodile_deaths::1]] [[antelope_deaths::1]]
@@ -452,7 +454,7 @@ disclaim: based on gocomics website only
 2005-11-09 [[zebra_deaths::1]]
 2006-07-10-2006-07-12,2006-07-18,2006-07-20,2011-06-01-2011-06-03,2011-10-04,2008-11-10,2008-11-11,2007-03-23,2006-11-05,2006-09-11,2006-12-02,2006-09-25,2011-05-31,2007-03-20,2007-03-21,2006-09-12,2007-02-16,2007-01-29,2006-12-13,2011-06-05,2006-08-07-2006-08-09,2006-09-29 [[storyline::[[character::Rat]] works at [[location::Joe's Roastery]]]]
 2003-06-19 [[character::Rat+Pig+[[Rat+Pig::neighbor::Joey (human)]]]]
-2013-05-16 [[notes::"Ruth" actually is a word, although it's a noun whose adjective form is "ruthful": {{wi|ruth}}]]
+2013-05-16 [[notes::"Ruth" actually is a word, although it's a noun whose adjective form is "ruthful"&#58; {{wi|ruth}}]]
 2011-11-04 [[event::[[Rat]] quits [[Joe's Roastery]]]]
 2011-06-20 [[newspaper_mentions::The Post Times+The Post-Times]]
 2004-03-17 [[newspaper_mentions::The Times]]
@@ -640,7 +642,7 @@ disclaim: based on gocomics website only
 2009-06-06 [[notes::[[Patty (crocodile)]]'s hammer is stylistically identical to the hammer from {{wp|Donkey Kong}}, the first game in the Mario series]]
 2009-06-09-2009-06-11 [[storyline::[[character::Rat]], the book editor]]
 2009-06-22-2009-06-24,2009-07-01-2009-07-03 [[storyline::[[character::Rat]], the {{wp|Pied Piper}}]]
-2009-06-26 [[notes::The real reason: {{wp|Sneezing#Common_verbal_responses_to_a_sneeze}}]]
+2009-06-26 [[notes::The real reason&#58; {{wp|Sneezing#Common_verbal_responses_to_a_sneeze}}]]
 2008-11-18-2008-11-20 [[storyline::[[character::Rat]] as corporate counsel]] [[meta::Subcategory of rat the lawyer?]]
 2009-06-27 [[notes::[[character::Rat]] says that [[character::Pig]] has no hair. Rat's probably referring to scalp hair. As a mammal, Pig is covered with hair]]
 2009-07-02 [[notes::[[Zebra]] has a 5-o-clock shadow, even though he's already covered with hair]]
@@ -801,7 +803,7 @@ disclaim: based on gocomics website only
 2012-02-16 [[category::Out of Character]]
 2012-02-19 [[character::Zebra+[[character::Virginia (zebra)+Plaid (zebra)]]]]
 2012-02-19-2012-02-23,2012-02-25 [[storyline::[[character::Plaid (zebra)]]]]
-2012-02-19 [[notes::[[Plaid (zebra)]]'s stripes are in color here, but are black-and-white in the retroactively-colored daily strips: [[references::2012-02-21]] and [[references::2012-02-22]]]]
+2012-02-19 [[notes::[[Plaid (zebra)]]'s stripes are in color here, but are black-and-white in the retroactively-colored daily strips&#58; [[references::2012-02-21]] and [[references::2012-02-22]]]]
 2007-04-12-2007-04-14 [[storyline::[[character::sumo squirrels]]]]
 2007-04-12,2005-08-10 [[notes::The [[sumo squirrels]] from [[2007-04-12]] appear to be unrelated to the [[apocalyptic squirrels]] from [[2005-08-10]]]]
 2012-03-01 [[character::Tina (turtle)+[[Tina Turtle::husband::Timmy (turtle)]]]]
@@ -1086,7 +1088,7 @@ disclaim: based on gocomics website only
 2009-05-14 [[character::Emilio (crocodile)]]
 2005-10-06 [[character::Pig+Guard Duck+[[Rat+Pig::neighbor::Emilio (human)]]]]
 2009-05-17 [[zebra_deaths::1]]
-2009-05-20 [[notes::A note between panels 2 and 3 reads "HINT: read strip from right to left"]]
+2009-05-20 [[notes::A note between panels 2 and 3 reads "HINT&#58; read strip from right to left"]]
 2004-02-02 [[cameo::Mike Doonesbury (Doonesbury)]]
 2007-03-06 [[character::Pig+Timmy (anteater)]]
 2006-06-17 [[notes::Homage to {{wp|Heart of Darkness}}]]
@@ -1148,7 +1150,7 @@ disclaim: based on gocomics website only
 2009-08-10-2009-08-12 [[storyline::[[character::Pig]]'s "Internet Happy Box"]]
 2005-05-07 [[notes::Possible reference to the expression "putting lipstick on a pig"]]
 2006-06-15,2009-02-01 [[notes::On [[2006-06-15]], [[2006-06-15::character::Stephan Pastis]]' {{wp|Liquid Paper}} "error" prevents us from learning the croc's language. On [[2009-02-01]], we learn that it's [[Croc-ese]]]]
-2008-10-19,2009-07-08,2008-08-06,2008-07-22,2010-09-03,2011-05-17,2012-05-13,2009-03-01,2012-06-19,2009-12-20,2011-12-27 [[notes::A brown furry cap, apparently unrelated to any plotline, appears in several strips: [[2008-10-19]], [[2009-07-08]], [[2008-08-06]], [[2008-07-22]], [[2010-09-03]], [[2011-05-17]], [[2012-05-13]], [[2009-03-01]], [[2012-06-19]], [[2009-12-20]], [[2011-12-27]]]]
+2008-10-19,2009-07-08,2008-08-06,2008-07-22,2010-09-03,2011-05-17,2012-05-13,2009-03-01,2012-06-19,2009-12-20,2011-12-27 [[notes::A brown furry cap, apparently unrelated to any plotline, appears in several strips&#58; [[2008-10-19]], [[2009-07-08]], [[2008-08-06]], [[2008-07-22]], [[2010-09-03]], [[2011-05-17]], [[2012-05-13]], [[2009-03-01]], [[2012-06-19]], [[2009-12-20]], [[2011-12-27]]]]
 2008-10-11,2012-04-26 [[notes::The moles in [[2008-10-11]] and [[Mikey (mole)]] in [[2012-04-26]] look quite different. Pastis normally draws animals of the same "type" in the same way (moles actually constitute an entire family of animals, not just a specific species)]]
 2013-01-21,2012-04-26 [[notes::The mole [[character::Pig]] has removed on [[2013-01-21]] looks similar to [[Mikey (mole)]] from [[2012-04-26]] but is actually lighter in color and has pink near his nose]]
 2002-04-26,2002-06-01 [[notes::On [[2004-04-26]], [[Pig]] confuses "elephant cows" and "cattle cows". [[Rat]] similarly confuses "elephant bulls" with "cattle bulls" on [[2002-06-01]]]]
