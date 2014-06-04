@@ -14,14 +14,16 @@ $cc = "[^\\[\\]]";
 # double left and right bracket
 $dlb = "\\[\\[";
 $drb = "\\]\\]";
+# things that are considered relations (not necessarily relatives)
+%rel = list2hash(split(/,\s+/, "cousin, uncle, aunt, husband, brother, ex-husband, grandfather, mother, niece, sister, son, wife"));
 
 pbs_parse_data();
 pbs_characters2();
+die "TESTING";
 pbs_date_pages();
 for $i ("crocodile", "penguin", "human", "antelope", "zebra") {
   pbs_species_deaths($i);
 }
-die "TESTING";
 pbs_annotations();
 
 # run subroutines to do stuff
@@ -115,9 +117,33 @@ MARK
   my(@res) = sqlite3hashlist($query, "/tmp/pbs-triples.db");
   for $i (@res) {
     for $j (split(/:::/, $i->{annos})) {
-      debug("LINE: I: $i->{name}, J: $j");
+      my($anno, $data, $dir) = split(/::/, $j);
+      # TODO: really not happy w the way I am doing this; seems wrong somehow
+
+      # note first/most recent and number of appearances
+      if ($anno eq "character") {
+	my(@app) = sort(split(/\,/,$data));
+	$info{$i->{name}}{first_appearance} = $app[0];
+	$info{$i->{name}}{latest_appearance} = $app[-1];
+	$info{$i->{name}}{number_appearances} = scalar @app;
+	next;
+      }
+
+      if ($rel{$anno}) {
+	# TODO: need to figure out reverse forward here
+	if ($dir eq "forward") {
+	  $info{$i->{name}}{relations}{ucfirst("$anno: $data")}=1;
+	} else {
+	  $info{$i->{name}}{relations}{ucfirst("$anno of: $data")}=1;
+	}
+	next;
+      }
+      warn("$anno not understood");
     }
   }
+
+  debug("INFO",unfold({%info}));
+
 }
 
 sub pbs_characters {
