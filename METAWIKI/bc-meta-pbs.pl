@@ -30,13 +30,13 @@ for $i (keys %data) {
   }
 }
 
+pbs_annotations();
 die "TESTING";
 pbs_characters2();
 pbs_date_pages();
 for $i ("crocodile", "penguin", "human", "antelope", "zebra") {
   pbs_species_deaths($i);
 }
-pbs_annotations();
 
 # run subroutines to do stuff
 pbs_characters();
