@@ -18,7 +18,12 @@ $drb = "\\]\\]";
 %rel = list2hash(split(/,\s+/, "cousin, uncle, aunt, husband, brother, ex-husband, grandfather, mother, niece, sister, son, wife"));
 
 pbs_parse_data();
+pbs_characters2();
+die "TESTING";
+
+
 %data = pbs_all();
+
 
 # TODO: this seems redundant
 for $i (keys %data) {
@@ -31,17 +36,15 @@ for $i (keys %data) {
 }
 
 pbs_annotations();
-die "TESTING";
-pbs_characters2();
+pbs_newspaper_mentions();
+pbs_characters();
 pbs_date_pages();
 for $i ("crocodile", "penguin", "human", "antelope", "zebra") {
   pbs_species_deaths($i);
 }
 
 # run subroutines to do stuff
-pbs_characters();
 pbs_storylines();
-pbs_newspaper_mentions();
 # putting data into a db and immediately extracting it seems useless
 # but hopefully isn't
 
@@ -186,25 +189,50 @@ sub pbs_all {
 # pbs_characters2() gets a lot more info on characters (and will ultimately replace pbs_characters()
 
 sub pbs_characters2 {
-  # this query gets all info on characters, one per line
+  my(%noncharkey);
+  # noncharacter keys
+  for $i ('storyline', 'source', 'newspaper_mentions', 'notes', 'category', 'meta', 'cameo', 'event') {$noncharkey{$i}=1;}
+
+  for $i (sort keys %triples) {
+    # ignoring dates
+    if ($i=~/^2/) {next;}
+    # and non char keys
+    for $j (keys %{$triples{$i}}) {
+      debug("I: $i, J: $j");
+    }
+  }
+  die "TESTING";
+
+  # the 2nd part of this query should yield nothing new (but just in case...)
   my($query) = << "MARK";
-SELECT name, GROUP_CONCAT(anno, ":::") AS annos FROM (
-
-SELECT v AS name, k||"::"||GROUP_CONCAT(source)||"::reverse" AS anno
-FROM triples WHERE v IN (
-SELECT DISTINCT(v) FROM triples WHERE k IN ('character', 'deaths')
-) GROUP BY v, k
-
+SELECT DISTINCT(v) AS name FROM triples  
+WHERE k NOT LIKE '%_deaths' AND k NOT IN 
+  ('storyline', 'notes', 'source', 'category', 'newspaper_mentions', 
+   'cameo', 'description', 'aka', 'location', 'event', 
+   'meta', 'references', 'address', 'redirect', 'residence', 
+   'species', 'reference', 'mention')
 UNION
-
-SELECT source AS name, k||"::"||GROUP_CONCAT(v)||"::forward" AS anno
-FROM triples WHERE source IN (
-SELECT DISTINCT(v) FROM triples WHERE k IN ('character', 'deaths')
-) GROUP BY source, k
-) GROUP BY name;
+SELECT DISTINCT(source) AS name FROM triples
+WHERE source NOT LIKE '2%' AND k NOT IN ('source');
 MARK
 ;
+
   my(@res) = sqlite3hashlist($query, "/tmp/pbs-triples.db");
+
+  # create hash whose keys are characters
+  my(%chars);
+  for $i (@res) {$chars{$i->{name}}=1;}
+
+  # data, one character at a time
+  # TODO: handle lowercase "characters"
+  for $i (sort keys %chars) {
+    debug("TRIP($i)", $triples{$i});
+}
+
+#  debug(%chars);
+  die "TESTING";
+
+
   for $i (@res) {
     for $j (split(/:::/, $i->{annos})) {
       my($anno, $data, $dir) = split(/::/, $j);
@@ -511,7 +539,8 @@ sub parse_semantic {
 	for $k (@dates) {
 	  # TODO: currently, a GLOBAL hash to hold triples
 #	  debug("TRIPLE (one double colon): $k,$i,$j");
-	  $triples{$k}{$i}{$j}=1;
+	  $triples{$k}{forward}{$i}{$j}=1;
+	  $triples{$j}{reverse}{$i}{$k}=1;
 	}
       }
     }
@@ -529,8 +558,10 @@ sub parse_semantic {
 	  for $l (@dates) {
 	    # TODO: currently, a GLOBAL hash to hold triples
 #	    debug("TRIPLE: $i,$j,$k");
-	    $triples{$i}{$j}{$k}=1;
-	    $triples{"$i~$j~$k"}{"source"}{$l} = 1;
+	    $triples{$i}{forward}{$j}{$k}=1;
+	    $triples{$k}{reverse}{$j}{$i}=1;
+	    # TODO: restore source triples?
+#	    $triples{"$i~$j~$k"}{"source"}{$l} = 1;
 	  }
 	}
       }
