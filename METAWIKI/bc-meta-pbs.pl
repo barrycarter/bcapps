@@ -135,10 +135,14 @@ sub pbs_all {
       $data{$source}{characters}{$v} = 1;
 
       # is this character's species part of his name?
-      # but ignore if already specified
-      if (!keys %{$data{$v}{species}} && $v=~m/\((.*?)\)/) {
+      # do this even if character has another explicit species
+      if ($v=~m/\s+\((.*?)\)$/) {
+	debug("SETTING: $v/species/$1");
 	$data{$v}{species}{$1}=1;
+      } else {
+	debug("NOT SETTING: $source/$k/$v");
       }
+
       next;
     }
 
@@ -391,6 +395,8 @@ MARK
     }
   }
 
+  # TODO: not really happy about this kludge (plus it creates duplicates)
+  print A "INSERT INTO triples SELECT source,'character',v FROM triples WHERE k='deaths';";
   print A "COMMIT;\n";
   close(A);
 }
@@ -649,3 +655,5 @@ Relations (not relatives): neighbor, girlfriend
 Hired:
 
 Fired:
+
+=cut
