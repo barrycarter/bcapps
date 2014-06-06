@@ -190,26 +190,13 @@ sub pbs_all {
 
 sub pbs_characters2 {
   # TODO: make sure this query gets all characters
-  my($query) = << "MARK";
-
-CREATE TEMPORARY TABLE t1 AS SELECT DISTINCT v AS char FROM triples
-WHERE k IN ('character', 'deaths') ORDER BY v;
-
-SELECT source AS char, k AS rel, v AS target ,"forward" AS dir
-FROM triples WHERE source IN (SELECT char FROM t1)
-UNION
-SELECT v AS char, k AS rel, source AS target,"reverse" AS dir
-FROM triples WHERE v IN (SELECT char FROM t1)
-ORDER BY char;
-MARK
-;
+  my($query) = "SELECT DISTINCT v AS char FROM triples WHERE k IN ('character', 'deaths') AND dir = 'forward' ORDER BY v";
 
   for $i (sqlite3hashlist($query, "/tmp/pbs-triples.db")) {
     # the character name
     my($char) = $i->{char};
 
-    # and what we know about him
-    debug("NAME: $char");
+    debug("CHAR: $char","UNFOLD",unfold($triples{$char}));
   }
 
   die "TESTING";
