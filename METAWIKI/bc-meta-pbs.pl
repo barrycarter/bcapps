@@ -15,7 +15,7 @@ $cc = "[^\\[\\]]";
 $dlb = "\\[\\[";
 $drb = "\\]\\]";
 # things that are considered relations (not necessarily relatives)
-%rel = list2hash(split(/,\s+/, "cousin, uncle, aunt, husband, brother, ex-husband, grandfather, mother, niece, sister, son, wife, neighbor"));
+%rel = list2hash(split(/,\s+/, "cousin, uncle, aunt, husband, brother, ex-husband, grandfather, mother, niece, sister, son, wife, neighbor, girlfriend"));
 
 pbs_parse_data();
 pbs_characters2();
@@ -190,21 +190,25 @@ sub pbs_all {
 
 sub pbs_characters2 {
   # the table we will print
-  my(@ret) = ("{| class='sortable' border='1' cellpadding='7'","!Name","!First Appearance","!Most Recent Appearance","!Number of Appearances", "!Species", "!Connections", "!Aliases");
+  my(@ret) = ("{| class='sortable' border='1' cellpadding='7'","!Name","!1st","!Latest","!#", "!Species", "!Connections", "!Aliases");
 
   # TODO: make sure this query gets all characters
   my($query) = "SELECT DISTINCT v AS char FROM triples WHERE k IN ('character', 'deaths') AND dir = 'forward' ORDER BY v";
 
   for $i (sqlite3hashlist($query, "/tmp/pbs-triples.db")) {
 
-    if (++$count>20) {warn "TESTING"; last;}
+#    if (++$count>20) {warn "TESTING"; last;}
 
     # the character name
     my($char) = $i->{char};
 
     # appearances
-    my(@apps) = sort (keys %{$triples{$char}{character}},
-		      keys %{$triples{$char}{deaths}});
+    my(@apps) = (keys %{$triples{$char}{character}}, keys %{$triples{$char}{deaths}});
+    # kill off dupes + sort (should be a better way to uniq a list?)
+    my(%apphash) = list2hash(@apps);
+    @apps = sort keys %apphash;
+    debug("APPS",@apps);
+
 
     # first/last/number
     my($fapp) = $apps[0];
@@ -232,16 +236,16 @@ sub pbs_characters2 {
     }
 
     my(@rels) = ();
-    for $j (sort keys %rels) {push(@rels, "* $rels{$j}");}
+    for $j (sort keys %rels) {push(@rels, "$rels{$j}");}
     if (@rels) {debug("RELS($char)",@rels);}
+    map($_="[[$_]]", @aka);
 
     # aliases
     my(@aka) = sort keys %{$triples{$char}{aka}};
-    map($_="* $_", @aka);
 
     # TODO: add profession, deaths
 
-    push(@ret, "|-", "|[[$char]]", "|data-sort-value=$fapp|".pbs_table_date2($fapp), "|data-sort-value=$lapp|".pbs_table_date2($lapp), "|$napp", "|$species[0]", "|",join("\n",@rels),"|",join("\n",@aka));
+    push(@ret, "|-", "|[[$char]]", "|data-sort-value=$fapp|".pbs_table_date($fapp), "|data-sort-value=$lapp|".pbs_table_date($lapp), "|$napp", "|$species[0]", "|",join("<br>\n",@rels),"|",join("<br>\n",@aka));
 
   }
 
@@ -434,7 +438,7 @@ sub pbs_table_date2 {
   my($date) = @_;
   unless ($date=~m/^(\d{4})\-(\d{2})\-(\d{2})$/) {warn "BAD DATE: $date";}
   my($link) = "http://www.gocomics.com/pearlsbeforeswine/$1/$2/$3";
-  my($pdate) =  strftime("+%Y-%m-%d [%a]", gmtime(str2time($date)));
+  my($pdate) =  strftime("%Y-%m-%d [%a]", gmtime(str2time($date)));
   # NOTE: this must be one single line for formatting reasons (wikia)
   return << "MARK";
 {{#NewWindowLink: $link | $pdate}}

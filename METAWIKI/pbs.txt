@@ -577,7 +577,7 @@ disclaim: based on gocomics website only
 2007-11-06 [[character::Larry+[[Larry::cousin::Dena (crocodile)]]+[[deaths::[[Dena (crocodile)::husband::Nick (crocodile)]]]]]] [[crocodile_deaths::1]]
 2007-11-26 [[notes::[[Andy]] is reading "Lovely Planet"]]
 2007-11-11-2007-11-14,2007-11-16,2007-11-25,2007-12-09 [[storyline::[[character::Pig]]'s brain leaves]]
-2007-12-11 [[description::[[character::Junior]] runs away to be with [[character::Joy]]]] [[Joy::species::Zebra]]
+2007-12-11 [[description::[[character::Junior]] runs away to be with [[character::Joy]]]] [[Joy::species::zebra]]
 2007-12-20 [[character::[[Zebra::brother::Peter (zebra)]]+Zebra+Larry+Junior+Joy]] [[meta::Since Joy (Zebra's niece) refers to Peter as uncle, I've listed him as Zebra's brother, although he may be a brother-in-law or no relation at all]]
 2008-02-06 [[deaths::Bob 04 (crocodile)]] [[crocodile_deaths::1]]
 2008-02-11 [[character::[[Andy::girlfriend::Olive (dog)]]]]
