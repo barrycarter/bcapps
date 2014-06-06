@@ -15,7 +15,7 @@ $cc = "[^\\[\\]]";
 $dlb = "\\[\\[";
 $drb = "\\]\\]";
 # things that are considered relations (not necessarily relatives)
-%rel = list2hash(split(/,\s+/, "cousin, uncle, aunt, husband, brother, ex-husband, grandfather, mother, niece, sister, son, wife"));
+%rel = list2hash(split(/,\s+/, "cousin, uncle, aunt, husband, brother, ex-husband, grandfather, mother, niece, sister, son, wife, neighbor"));
 
 pbs_parse_data();
 pbs_characters2();
@@ -193,10 +193,53 @@ sub pbs_characters2 {
   my($query) = "SELECT DISTINCT v AS char FROM triples WHERE k IN ('character', 'deaths') AND dir = 'forward' ORDER BY v";
 
   for $i (sqlite3hashlist($query, "/tmp/pbs-triples.db")) {
+
     # the character name
     my($char) = $i->{char};
 
-    debug("CHAR: $char","UNFOLD",unfold($triples{$char}));
+    # appearances
+    my(@apps) = sort (keys %{$triples{$char}{character}},
+		      keys %{$triples{$char}{deaths}});
+
+    # first/last/number
+    my($fapp) = $apps[0];
+    my($lapp) = $apps[-1];
+    my($napp) = scalar @apps;
+
+    # species given directly on indirectly
+    my(@species) = keys %{$triples{$char}{species}};
+    unless (@species) {if ($char=~/\((.*?)\)$/) {push(@species,$1);}}
+    unless (scalar @species == 1) {
+      warn("$char has <> 1 species",@species);
+    }
+
+    # connections (including relatives)
+    my(%rels) = ();
+    for $j (keys %rel) {
+      # we need the pure name for sorting by name, thus a hash
+      for $k (keys %{$triples{$char}{$j}}) {
+	if ($triples{$char}{$j}{$k} eq "forward") {
+	  $rels{$k} = "[[$k]] ($j)";
+	} else {
+	  $rels{$k} = "$j of [[$k]]";
+	}
+      }
+    }
+
+    my(@rels) = ();
+    for $j (sort keys %rels) {push(@rels, $rels{$j});}
+    if (@rels) {debug("RELS($char)",@rels);}
+
+    # aliases
+    my(@aka) = sort keys %{$triples{$char}{aka}};
+    if (@aka) {debug("AKA $char",@aka);}
+
+    # TODO: add profession, deaths, 
+
+#    debug("$char: $fapp/$lapp/$napp/$species[0]");
+
+
+#    debug("CHAR: $char","UNFOLD",unfold($triples{$char}));
   }
 
   die "TESTING";

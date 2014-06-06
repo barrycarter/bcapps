@@ -207,7 +207,7 @@ disclaim: based on gocomics website only
 2003-09-04 [[character::Helen (monkey)]]
 2011-04-10 [[deaths::Fred (crocodile)]] [[crocodile_deaths::1]]
 2003-09-08 [[character::Rat+Pig+Fredo (piggy bank)+Fredo's wife (piggy bank)]]
-2011-05-28 [[character::Rat+pig+Medusa (god)]]
+2011-05-28 [[character::Rat+Pig+Medusa (god)]]
 2003-09-29 [[character::[[Rat::dates::Connie (rat)]]]] [[Connie (rat)::aka::Controlling Connie]]
 2005-07-03 [[character::Rat+Connie (human)+Jerry (human)+Nick 2 (human)]]
 2006-03-28 [[character::Pig+Rat+Rene (human)+Monique (human)]]
