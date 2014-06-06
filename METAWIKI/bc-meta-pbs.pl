@@ -189,6 +189,31 @@ sub pbs_all {
 # pbs_characters2() gets a lot more info on characters (and will ultimately replace pbs_characters()
 
 sub pbs_characters2 {
+  # TODO: make sure this query gets all characters
+  my($query) = << "MARK";
+
+CREATE TEMPORARY TABLE t1 AS SELECT DISTINCT v AS char FROM triples
+WHERE k IN ('character', 'deaths') ORDER BY v;
+
+SELECT source AS char, k AS rel, v AS target ,"forward" AS dir
+FROM triples WHERE source IN (SELECT char FROM t1)
+UNION
+SELECT v AS char, k AS rel, source AS target,"reverse" AS dir
+FROM triples WHERE v IN (SELECT char FROM t1)
+ORDER BY char;
+MARK
+;
+
+  for $i (sqlite3hashlist($query, "/tmp/pbs-triples.db")) {
+    # the character name
+    my($char) = $i->{char};
+
+    # and what we know about him
+    debug("NAME: $char");
+  }
+
+  die "TESTING";
+
   my(%noncharkey);
   # noncharacter keys
   for $i ('storyline', 'source', 'newspaper_mentions', 'notes', 'category', 'meta', 'cameo', 'event') {$noncharkey{$i}=1;}
@@ -389,7 +414,7 @@ sub pbs_parse_data {
   # open(A,">/tmp/mysql.txt");
   print A << "MARK";
 DROP TABLE IF EXISTS triples;
-CREATE TABLE triples (source, k, v);
+CREATE TABLE triples (source, k, v, dir);
 CREATE INDEX i1 ON triples(source);
 CREATE INDEX i2 ON triples(k);
 CREATE INDEX i3 ON triples(v);
@@ -416,13 +441,14 @@ MARK
 #	$k=~s/\001/\[\[/isg;
 #	$k=~s/\002/\]\]/isg;
 #	$k=~s/\'/&\#39;/isg;
-	print A "INSERT INTO triples VALUES ('$i','$j','$k');\n";
+	print A "INSERT INTO triples VALUES ('$i','$j','$k',
+'$triples{$i}{$j}{$k}');\n";
       }
     }
   }
 
   # TODO: not really happy about this kludge (plus it creates duplicates)
-  print A "INSERT INTO triples SELECT source,'character',v FROM triples WHERE k='deaths';";
+#  print A "INSERT INTO triples SELECT source,'character',v FROM triples WHERE k='deaths';";
   print A "COMMIT;\n";
   close(A);
 }
@@ -556,8 +582,8 @@ sub parse_semantic {
 	  for $l (@dates) {
 	    # TODO: currently, a GLOBAL hash to hold triples
 #	    debug("TRIPLE: $i,$j,$k");
-	    $triples{$i}{forward}{$j}{$k}=1;
-	    $triples{$k}{reverse}{$j}{$i}=1;
+	    $triples{$i}{$j}{$k}="forward";
+	    $triples{$k}{$j}{$i}="reverse";
 	    # TODO: restore source triples?
 #	    $triples{"$i~$j~$k"}{"source"}{$l} = 1;
 	  }
