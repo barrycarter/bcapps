@@ -537,8 +537,8 @@ sub parse_semantic {
 	for $k (@dates) {
 	  # TODO: currently, a GLOBAL hash to hold triples
 #	  debug("TRIPLE (one double colon): $k,$i,$j");
-	  $triples{$k}{forward}{$i}{$j}=1;
-	  $triples{$j}{reverse}{$i}{$k}=1;
+	  $triples{$k}{$i}{$j}="forward";
+	  $triples{$j}{$i}{$k}="reverse";
 	}
       }
     }
