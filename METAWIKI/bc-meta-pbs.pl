@@ -189,10 +189,15 @@ sub pbs_all {
 # pbs_characters2() gets a lot more info on characters (and will ultimately replace pbs_characters()
 
 sub pbs_characters2 {
+  # the table we will print
+  my(@ret) = ("{| class='sortable' border='1' cellpadding='7'","!Name","!First Appearance","!Most Recent Appearance","!Number of Appearances", "!Species", "!Connections", "!Aliases");
+
   # TODO: make sure this query gets all characters
   my($query) = "SELECT DISTINCT v AS char FROM triples WHERE k IN ('character', 'deaths') AND dir = 'forward' ORDER BY v";
 
   for $i (sqlite3hashlist($query, "/tmp/pbs-triples.db")) {
+
+    if (++$count>20) {warn "TESTING"; last;}
 
     # the character name
     my($char) = $i->{char};
@@ -227,94 +232,21 @@ sub pbs_characters2 {
     }
 
     my(@rels) = ();
-    for $j (sort keys %rels) {push(@rels, $rels{$j});}
+    for $j (sort keys %rels) {push(@rels, "* $rels{$j}");}
     if (@rels) {debug("RELS($char)",@rels);}
 
     # aliases
     my(@aka) = sort keys %{$triples{$char}{aka}};
-    if (@aka) {debug("AKA $char",@aka);}
+    map($_="* $_", @aka);
 
-    # TODO: add profession, deaths, 
+    # TODO: add profession, deaths
 
-#    debug("$char: $fapp/$lapp/$napp/$species[0]");
+    push(@ret, "|-", "|[[$char]]", "|data-sort-value=$fapp|".pbs_table_date2($fapp), "|data-sort-value=$lapp|".pbs_table_date2($lapp), "|$napp", "|$species[0]", "|",join("\n",@rels),"|",join("\n",@aka));
 
-
-#    debug("CHAR: $char","UNFOLD",unfold($triples{$char}));
   }
 
-  die "TESTING";
-
-  my(%noncharkey);
-  # noncharacter keys
-  for $i ('storyline', 'source', 'newspaper_mentions', 'notes', 'category', 'meta', 'cameo', 'event') {$noncharkey{$i}=1;}
-
-  for $i (sort keys %triples) {
-    # ignoring dates
-    if ($i=~/^2/) {next;}
-    debug("POTENTIAL CHARACTER: $i");
-  }
-
-  die "TESTING";
-
-  # the 2nd part of this query should yield nothing new (but just in case...)
-  my($query) = << "MARK";
-SELECT DISTINCT(v) AS name FROM triples  
-WHERE k NOT LIKE '%_deaths' AND k NOT IN 
-  ('storyline', 'notes', 'source', 'category', 'newspaper_mentions', 
-   'cameo', 'description', 'aka', 'location', 'event', 
-   'meta', 'references', 'address', 'redirect', 'residence', 
-   'species', 'reference', 'mention')
-UNION
-SELECT DISTINCT(source) AS name FROM triples
-WHERE source NOT LIKE '2%' AND k NOT IN ('source');
-MARK
-;
-
-  my(@res) = sqlite3hashlist($query, "/tmp/pbs-triples.db");
-
-  # create hash whose keys are characters
-  my(%chars);
-  for $i (@res) {$chars{$i->{name}}=1;}
-
-  # data, one character at a time
-  # TODO: handle lowercase "characters"
-  for $i (sort keys %chars) {
-    debug("TRIP($i)", $triples{$i});
-}
-
-#  debug(%chars);
-  die "TESTING";
-
-
-  for $i (@res) {
-    for $j (split(/:::/, $i->{annos})) {
-      my($anno, $data, $dir) = split(/::/, $j);
-      # TODO: really not happy w the way I am doing this; seems wrong somehow
-
-      # note first/most recent and number of appearances
-      if ($anno eq "character") {
-	my(@app) = sort(split(/\,/,$data));
-	$info{$i->{name}}{first_appearance} = $app[0];
-	$info{$i->{name}}{latest_appearance} = $app[-1];
-	$info{$i->{name}}{number_appearances} = scalar @app;
-	next;
-      }
-
-      if ($rel{$anno}) {
-	# TODO: need to figure out reverse forward here
-	if ($dir eq "forward") {
-	  $info{$i->{name}}{relations}{ucfirst("$anno: $data")}=1;
-	} else {
-	  $info{$i->{name}}{relations}{ucfirst("$anno of: $data")}=1;
-	}
-	next;
-      }
-      warn("$anno not understood");
-    }
-  }
-
-#  debug("INFO",unfold({%info}));
-
+  push(@ret, "|}");
+  write_file_new(join("\n",@ret), "/usr/local/etc/metawiki/pbs/Characters2.mw", "diff=1");
 }
 
 sub pbs_characters {
@@ -496,6 +428,20 @@ sub pbs_table_date {
 MARK
 ;
 }
+
+# version 2 simpler (hoping to do popup, but nothing for now
+sub pbs_table_date2 {
+  my($date) = @_;
+  unless ($date=~m/^(\d{4})\-(\d{2})\-(\d{2})$/) {warn "BAD DATE: $date";}
+  my($link) = "http://www.gocomics.com/pearlsbeforeswine/$1/$2/$3";
+  my($pdate) =  strftime("+%Y-%m-%d [%a]", gmtime(str2time($date)));
+  # NOTE: this must be one single line for formatting reasons (wikia)
+  return << "MARK";
+{{#NewWindowLink: $link | $pdate}}
+MARK
+;
+}
+
 
 # convert things like
 # 2013-04-17-2013-04-19,2013-04-22,2013-04-23,2013-04-30,2013-05-01,2013-05-06-2013-05-08,2013-05-13-2013-05-15,2013-05-20-2013-05-22,2013-05-24,2013-05-29
