@@ -36,7 +36,7 @@ disclaim: based on gocomics website only
 2010-12-13 [[character::Rat+Pig+Gus (human)]]
 2002-02-10 [[description::[[Zebra]] mails the [[lions]]]]
 2002-02-18 [[description::[[Pig]] writes to {{wp|Jesse Jackson}}]] [[category::Pig writes]]
-2002-02-18,2003-01-25,2004-09-04,2002-04-19,2002-04-03,2002-05-31,2006-07-28,2003-02-10,2005-05-20,2003-11-29,2005-12-12,2003-09-22-2003-09-26,2006-01-03,2004-05-22 [[storyline::[[character::Pig]] writes to famous people]]
+2003-11-29,2002-02-18,2003-01-25,2004-09-04,2002-04-19,2002-04-03,2002-05-31,2006-07-28,2003-02-10,2005-05-20,2003-11-29,2005-12-12,2003-09-22-2003-09-26,2006-01-03,2004-05-22 [[storyline::[[character::Pig]] writes to famous people]]
 2002-02-24 [[character::Pig+Rat+Morton (ladybug)]]
 2003-01-02 [[character::Pig+Rat+Sammy (human)+[[deaths::Vinnie (human)]]]] [[human_deaths::1]]
 2002-02-20 [[character::hyenas]]
@@ -244,7 +244,9 @@ disclaim: based on gocomics website only
 2004-04-26,2004-04-27 [[cameo::Earl+Mooch]]
 2004-04-28 [[cameo::Earl+Mooch+Darryl MacPherson]]
 2004-04-26-2004-04-30 [[storyline::[[character::Rat]] in Comics Re-education Camp]]
-2004-05-07,2007-05-23,2010-08-07,2002-05-25,2014-04-07,2012-06-18,2012-05-11,2013-03-06,2003-10-31 [[category::Pig's Cheese Fetish]]
+2004-05-07,2007-05-23,2010-08-07,2002-05-25,2014-04-07,2012-06-18,2012-05-11,2013-03-06,2003-10-31,2009-01-07 [[category::Pig's Cheese Fetish]]
+2009-01-07 [[Rat::aka::Frank Lloyd Rat]]
+2009-01-13 [[character::Rat+Goat+Tiny (elephant)]]
 2007-12-26 [[notes::[[character::Pig]] is reading "Rome", but the author name is indiscernable]]
 2003-12-28 [[notes::This strip has no characters]]
 2004-01-29-2004-01-31 [[storyline::[[character::Pig]]'s {{wp|ISP}} date]]
@@ -465,6 +467,7 @@ disclaim: based on gocomics website only
 2006-06-29 [[deaths::mini Newt Gingrich]] [[human_deaths::1]]
 2006-06-27 [[newspaper_mentions::Sun Sent Here?]]
 2005-11-27,2006-07-08 [[storyline::[[character::Zebra]] and friends threaten to eat [[character::Larry]]]]
+2005-11-27 [[character::Gene (zebra)]]
 2005-11-09 [[zebra_deaths::1]]
 2006-07-10-2006-07-12,2006-07-18,2006-07-20,2011-06-01-2011-06-03,2011-10-04,2008-11-10,2008-11-11,2007-03-23,2006-11-05,2006-09-11,2006-12-02,2006-09-25,2011-05-31,2007-03-20,2007-03-21,2006-09-12,2007-02-16,2007-01-29,2006-12-13,2011-06-05,2006-08-07-2006-08-09,2006-09-29 [[storyline::[[character::Rat]] works at [[location::Joe's Roastery]]]]
 2003-06-19 [[character::Rat+Pig+[[Rat+Pig::neighbor::Joey (human)]]]]
@@ -703,6 +706,7 @@ disclaim: based on gocomics website only
 2010-02-21 [[character::Petey (peacock)]]
 2010-02-14-2010-02-17 [[storyline::[[character::Patty (crocodile)]] kicks [[character::Larry]] out]]
 2010-02-11 [[character::Jenny (jellyfish)]]
+2014-02-05 [[character::Jenny (goat)]]
 2010-02-22 [[character::Rat+Pig+Uni (unicorn)]]
 2006-04-28,2006-04-29 [[storyline::[[character::Pig]] tries to meet the {{wp|UPS}} girl]]
 2013-03-14 [[newspaper_mentions::The Times]]
@@ -906,7 +910,7 @@ disclaim: based on gocomics website only
 2013-01-10,2013-01-11,2013-01-15,2013-01-16,2013-01-18,2013-01-25,2013-01-26,2013-01-28,2013-01-29,2013-01-31,2013-02-03 [[storyline::[[character::Larry]] "dies"]]
 2013-01-14 [[category::Serious strips]] [[notes::Pays tribute to children killed in the {{wp|Sandy Hook Elementary School shooting}}]]
 2006-05-28,2010-02-07 [[category::Serious strips]]
-2013-02-11 [[character::Gomer (goldfish)]]
+2013-02-24,2013-02-11 [[character::Gomer (goldfish)]]
 2013-02-15 [[category::Panelwalking]]
 2013-02-16 [[mentioned::Bob (human)]]
 2005-08-14 [[character::Bob (human)]]
@@ -1193,7 +1197,7 @@ disclaim: based on gocomics website only
 2009-08-10-2009-08-12 [[storyline::[[character::Pig]]'s "Internet Happy Box"]]
 2005-05-07 [[notes::Possible reference to the expression "putting lipstick on a pig"]]
 2006-06-15,2009-02-01 [[notes::On [[2006-06-15]], [[2006-06-15::character::Stephan Pastis]]' {{wp|Liquid Paper}} "error" prevents us from learning the croc's language. On [[2009-02-01]], we learn that it's [[Croc-ese]]]]
-2012-01-25,2011-03-29,2010-03-06,2008-10-19,2009-07-08,2008-08-06,2008-07-22,2010-09-03,2011-05-17,2012-05-13,2009-03-01,2012-06-19,2009-12-20,2011-12-27,2009-02-06,2011-06-07 [[notes::A brown furry cap, apparently unrelated to any plotline, appears in several strips&#58; [[2008-10-19]], [[2009-07-08]], [[2008-08-06]], [[2008-07-22]], [[2010-09-03]], [[2011-05-17]], [[2012-05-13]], [[2009-03-01]], [[2012-06-19]], [[2009-12-20]], [[2011-12-27]]]] [[meta::update this list to reflect source list]]
+2009-11-14,2009-01-27,2012-01-25,2011-03-29,2010-03-06,2008-10-19,2009-07-08,2008-08-06,2008-07-22,2010-09-03,2011-05-17,2012-05-13,2009-03-01,2012-06-19,2009-12-20,2011-12-27,2009-02-06,2011-06-07 [[notes::A brown furry cap, apparently unrelated to any plotline, appears in several strips&#58; [[2008-10-19]], [[2009-07-08]], [[2008-08-06]], [[2008-07-22]], [[2010-09-03]], [[2011-05-17]], [[2012-05-13]], [[2009-03-01]], [[2012-06-19]], [[2009-12-20]], [[2011-12-27]]]] [[meta::update this list to reflect source list]]
 2008-10-11,2012-04-26 [[notes::The moles in [[2008-10-11]] and [[Mikey (mole)]] in [[2012-04-26]] look quite different. Pastis normally draws animals of the same "type" in the same way (moles actually constitute an entire family of animals, not just a specific species)]]
 2003-10-06 [[character::Rat+Hope (fish)+Truth (fish)+Reality (fish)+Dreams (fish)+Dignity (fish)+Love (fish)+Lust (fish)]]
 2003-10-07 [[character::Rat+[[deaths::Hope (fish)+Dreams (fish)]]]]
@@ -1247,6 +1251,10 @@ disclaim: based on gocomics website only
 2004-10-01 [[character::Pepe (parrot)]]
 2011-06-28 [[character::Goat+Pig+Brian (human)]]
 2013-03-21 [[newspaper_mentions::Columbus Dispatch]]
+2004-06-15 [[character::Pig+Ms. Bootyworth (bottle)+Larry (oregano bottle)]]
+2009-04-13 [[Guard Duck::aka::The Waterfowler]]
+2005-10-25 [[character::Wee Bear+{{wp|Willie Mays}}]]
+2005-01-23 [[character::Pig+Goat+[[deaths::Rat]]]]
 </data>
 
 # the following lines need to be associated with a date
@@ -1501,3 +1509,8 @@ list zebra relatives? (for all chars)
 # 2009-10-16 larry spells name vs can't spell it on jeoaprdy
 
 # 2007-11-28 does goat ever wear glasses again?
+
+# 2005-01-23 rat never smiled, but he prob has
+
+# 2011-02-08 transcribe 
+

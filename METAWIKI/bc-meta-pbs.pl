@@ -196,11 +196,9 @@ sub pbs_characters2 {
   for $i (sort keys %triples) {
     # ignoring dates
     if ($i=~/^2/) {next;}
-    # and non char keys
-    for $j (keys %{$triples{$i}}) {
-      debug("I: $i, J: $j");
-    }
+    debug("POTENTIAL CHARACTER: $i");
   }
+
   die "TESTING";
 
   # the 2nd part of this query should yield nothing new (but just in case...)
