@@ -19,6 +19,7 @@ $drb = "\\]\\]";
 
 pbs_parse_data();
 pbs_characters2();
+pbs_annotations();
 die "TESTING";
 
 
@@ -35,7 +36,6 @@ for $i (keys %data) {
   }
 }
 
-pbs_annotations();
 pbs_newspaper_mentions();
 pbs_characters();
 pbs_date_pages();
@@ -215,6 +215,11 @@ sub pbs_characters2 {
     my($lapp) = $apps[-1];
     my($napp) = scalar @apps;
 
+    if ($napp==1) {
+      warn "Skipping: $char (only 1 app)";
+      next;
+    }
+
     # species given directly on indirectly
     my(@species) = keys %{$triples{$char}{species}};
     unless (@species) {if ($char=~/\((.*?)\)$/) {push(@species,$1);}}
@@ -354,7 +359,8 @@ sub pbs_parse_data {
   $data=~s%^.*?<data>(.*?)</data>.*$%$1%s;
 
   # and the data from pbs-cl.txt
-  $data = "$data\n".read_file("/home/barrycarter/BCGIT/METAWIKI/pbs-cl.txt");
+  warn "Skipping pbs-cl.txt";
+#  $data = "$data\n".read_file("/home/barrycarter/BCGIT/METAWIKI/pbs-cl.txt");
 
   # parse the data
   for $i (split(/\n/, $data)) {
