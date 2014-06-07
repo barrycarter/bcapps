@@ -230,7 +230,7 @@ sub pbs_characters2 {
 	if ($triples{$char}{$j}{$k} eq "forward") {
 	  $rels{$k} = "[[$k]] ($j)";
 	} else {
-	  $rels{$k} = "$j of [[$k]]";
+	  $rels{$k} = "[[$k]]'s $j";
 	}
       }
     }
@@ -238,14 +238,15 @@ sub pbs_characters2 {
     my(@rels) = ();
     for $j (sort keys %rels) {push(@rels, "$rels{$j}");}
     if (@rels) {debug("RELS($char)",@rels);}
-    map($_="[[$_]]", @aka);
 
     # aliases
     my(@aka) = sort keys %{$triples{$char}{aka}};
+    # TODO: rm wp links
+    map($_="[[$_]]", @aka);
 
     # TODO: add profession, deaths
 
-    push(@ret, "|-", "|[[$char]]", "|data-sort-value=$fapp|".pbs_table_date($fapp), "|data-sort-value=$lapp|".pbs_table_date($lapp), "|$napp", "|$species[0]", "|",join("<br>\n",@rels),"|",join("<br>\n",@aka));
+    push(@ret, "|-", "|[[$char]]", "|data-sort-value=$fapp|".pbs_table_date2($fapp), "|data-sort-value=$lapp|".pbs_table_date2($lapp), "|$napp", "|$species[0]", "|",join("<br>\n",@rels),"|",join("<br>\n",@aka));
 
   }
 
@@ -441,7 +442,8 @@ sub pbs_table_date2 {
   my($pdate) =  strftime("%Y-%m-%d [%a]", gmtime(str2time($date)));
   # NOTE: this must be one single line for formatting reasons (wikia)
   return << "MARK";
-{{#NewWindowLink: $link | $pdate}}
+{{#NewWindowLink: $link | $pdate}}<br>
+{{#NewWindowLink: $link{$date} | (highest resolution)}}
 MARK
 ;
 }
