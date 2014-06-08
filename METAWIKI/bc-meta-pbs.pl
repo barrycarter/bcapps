@@ -18,9 +18,10 @@ $drb = "\\]\\]";
 %rel = list2hash(split(/,\s+/, "cousin, uncle, aunt, husband, brother, ex-husband, grandfather, mother, niece, sister, son, wife, neighbor, girlfriend"));
 
 pbs_parse_data();
+debug("DATA",unfold(pbs_all()));
+die "TESTING";
 pbs_characters2();
 pbs_annotations();
-die "TESTING";
 
 
 %data = pbs_all();
@@ -115,10 +116,65 @@ die "TESTING";
 sub pbs_all {
   # the hash we'll return
   my(%data);
-  # the order by RANDOM() is for testing, so errors show up faster
-  for $i (sqlite3hashlist("SELECT * FROM triples ORDER BY RANDOM()", "/tmp/pbs-triples.db")) {
-    # TODO: I'm not crazy about this massive 'switch' statement
+  warn "TESTING";
+
+  # because species and aka are overrides, they must come first
+  for $i (sqlite3hashlist("
+SELECT * FROM triples ORDER BY 
+ REPLACE(REPLACE(k,'species','aaa'), 'aka', 'aaa')
+", "/tmp/pbs-triples.db")) {
     my($source, $k, $v) = ($i->{source}, $i->{k}, $i->{v});
+    debug("LINE: $source/$k/$v");
+
+    # species
+    if ($k eq "species") {$data{$source}{species}{$v}=1; next;}
+
+    # aka (need canon name)
+    if ($k eq "aka") {
+      debug("AKA");
+      $data{$source}{alias}{$v} = 1;
+      $data{$v}{canon} = $source;
+      debug("data $v canon: $source");
+      next;
+    }
+
+    # TODO: I'm not crazy about this massive 'switch' statement
+    if ($k eq "character") {
+      debug("CHAR!");
+
+      # canonize character name (continue)
+      debug("V before: $v, $data{$v}{canon}");
+      if ($data{$v}{canon}) {$v = $data{$v}{canon};}
+      debug("V afore: $v");
+
+      # if character name (after canonization is "string date string"
+      # canonize further (and continue)
+      if ($v=~/^(.*?)\s+(\d{8})\s+(.*)$/) {
+	my($main, $date, $rest) = ($1, $2, $3);
+	$count{$v}++;
+	$data{$v}{canon} = "$main $count{$v} $rest";
+	$v = $data{$v}{canon};
+      }
+
+      debug("CHAR NAME: $v");
+
+      # build the list of dates the character appears in
+      $data{$v}{appears_in}{$source} = 1;
+      # and the list of characters in a given strip
+      $data{$source}{character}{$v} = 1;
+      next;
+    }
+
+    # for storyline/categories, record strips in storyline/category
+    if ($k eq "storyline" || $k eq "category") {
+      $data{$k}{$v}{$source} = 1;
+      $data{$source}{$k}{$v} = 1;
+      next;
+    }
+
+    
+
+    warn("TESTING");next;
 
     # ignore meta triples, they are internal
     if ($k eq "meta") {next;}
@@ -149,13 +205,6 @@ sub pbs_all {
       next;
     }
 
-    # for storyline/categories, record strips in storyline/category
-    if ($k eq "storyline" || $k eq "category") {
-      $data{$k}{$v}{$source} = 1;
-      $data{$source}{$k}{$v} = 1;
-      next;
-    }
-
     # notes
     if ($k eq "notes") {
       $data{$source}{notes}{$v} = 1;
@@ -179,8 +228,6 @@ sub pbs_all {
       next;
     }
 
-    # species
-    if ($k eq "species") {$data{$source}{species}{$v}=1; next;}
   }
 
   return %data;
@@ -492,7 +539,7 @@ variants), return semantic triples and a string. This function is
 called recursively, so $string may have nested "[[]]" constructions
 ($source may not, however)
 
-Plus signs like [[x+y::...]] are treated like [[x::...]], [[y::...]] 
+Plus signs like [[x+y::...]] are treated like [[x::...]], [[y::...]]
 and return a list of triples and strings
 
 Details:
@@ -552,7 +599,7 @@ sub parse_semantic {
 	  # TODO: currently, a GLOBAL hash to hold triples
 #	  debug("TRIPLE (one double colon): $k,$i,$j");
 	  $triples{$k}{$i}{$j}="forward";
-	  $triples{$j}{$i}{$k}="reverse";
+#	  $triples{$j}{$i}{$k}="reverse";
 	}
       }
     }
@@ -571,9 +618,9 @@ sub parse_semantic {
 	    # TODO: currently, a GLOBAL hash to hold triples
 #	    debug("TRIPLE: $i,$j,$k");
 	    $triples{$i}{$j}{$k}="forward";
-	    $triples{$k}{$j}{$i}="reverse";
+#	    $triples{$k}{$j}{$i}="reverse";
 	    # TODO: restore source triples?
-#	    $triples{"$i~$j~$k"}{"source"}{$l} = 1;
+	    $triples{"$i~$j~$k"}{"source"}{$l} = 1;
 	  }
 	}
       }
@@ -698,5 +745,62 @@ Relations (not relatives): neighbor, girlfriend
 Hired:
 
 Fired:
+
+=cut
+
+=item comments
+
+The most frequently appearing tags:
+
+character|6330
+storyline|3702
+notes|490
+category|326
+deaths|312
+newspaper_mentions|266
+meta|206
+cameo|188
+aka|130
+description|106
+location|96
+neighbor|68
+profession|68
+cousin|60
+species|52
+crocodile_deaths|42
+zebra_deaths|38
+event|28
+uncle|26
+friend|20
+husband|16
+aunt|12
+penguin_deaths|12
+rebirths|10
+antelope_deaths|8
+group|8
+mother|7
+brother|6
+dates|6
+kills|6
+members|6
+wife|6
+address|4
+father|4
+human_deaths|4
+neigbhor|4
+pet|4
+references|4
+residence|4
+Bob 20050223 (human)|2
+Cliff (man-sheep)|2
+armadillo_deaths|2
+boss|2
+dolphin_deaths|2
+ex-husband|2
+fires|2
+girlfriend|2
+grandfather|2
+half-brother|2
+hamster_deaths|2
 
 =cut

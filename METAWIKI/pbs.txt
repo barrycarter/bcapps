@@ -1188,7 +1188,7 @@ MULTIREF [[title::[[Pig]]'s Uncle [[George (pig)]]]] [[notes::On [[2004-12-05]],
 2013-08-31 [[character::Pig+Rat+Bob 20130831 (human)]] [[Bob 20130831 (human)::aka::Facebook Bob]]
 2013-12-31 [[character::Rat+Pig+Goat+Bob 20131231 (human)]] [[Bob 20131231 (human)::aka::Gay Bob]]
 2009-01-24 [[character::Rat+Pig+[[Pig::friend::Bob 20090124 (human)]]]] [[Bob 20090124 (human)::profession::construction]]
-2005-02-23 [[character::[[Pig+Rat::neighbor::Neighbor Bob]]+[[Neighbor Bob::half-brother::Phil (half-human)]]]] [[Bob 20050221 (human)::aka:Neighbor Bob]]
+2005-02-23 [[character::[[Pig+Rat::neighbor::Neighbor Bob]]+[[Neighbor Bob::half-brother::Phil (half-human)]]]] [[Bob 20050221 (human)::aka::Neighbor Bob]]
 2008-10-05 [[meta::I'm assuming Rat's reference to the dog as "Fido" is derogatory and not the dog's actual name]]
 2007-06-14 [[notes::The title of [[character::Zebra]]'s book reads "The Seat of", so it's probably "The Seat of the Soul" by {{wp|Gary Zukav}}]]
 2006-06-12 [[notes::The writing on Guard Duck's gun appears to read "THE LISA"]]
