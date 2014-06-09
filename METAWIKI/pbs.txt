@@ -423,7 +423,7 @@ disclaim: based on gocomics website only
 2005-12-07 [[character::Pig+[[Pig+Rat::neighbor::John (human)]]+[[John (human)::pet::Skippy 20051207 (dog)]]]] [[Skippy 20051207 (dog)::notes::Not to be confused with Skippy from [[2003-05-03]]; the former is a weiner dog]]
 2003-06-01 [[character::John (human)+Stephan Pastis+Andy 20030601 (dog)]] [[notes::Is John's dog Andy later incorporated into the strip as Andy, the oft-chained dog?]] [[meta::Even though there is no other "Andy (dog)", I'm calling this one "Andy 2" to avoid confusion with "Andy", who is a dog, but I don't refer to him as "Andy (dog)" (because he's a semi-major character); this is probably John Patzakis (2005-07-31)]]
 2004-06-01 [[character::Rat+Pig+John (human)]] [[meta::This may or may not be the same John mentioned in earlier strips, including the one that's Stephan's neighbor (not Rat and Pig's neighbor)]]
-2003-11-30 [[character::Marge (human)+George (human)+Bob (human)+Skippy (dog)+Rat+Pig]]
+2003-11-30 [[character::[[Rat+Pig::neighbor::Marge (human)+George (human)+Neighbor Bob+Skippy (dog)]]+Rat+Pig]]
 2003-06-07 [[character::Rat+Pig+Hudson (human)+Brown (human)]] [[meta::When using last names for humans, should I add "Mr" or something?]]
 2003-11-30,2005-12-07 [[notes::The Skippy from [[2003-11-30]] and [[2005-12-07]] could theoretically be the same Skippy, assuming Bob gave/sold him to John]]
 2012-11-15 [[character::Rat+Pig+Skippy (scorpion)]]

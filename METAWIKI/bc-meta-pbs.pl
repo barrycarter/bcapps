@@ -14,8 +14,11 @@ $cc = "[^\\[\\]]";
 # double left and right bracket
 $dlb = "\\[\\[";
 $drb = "\\]\\]";
+
 # things that are considered relations (not necessarily relatives)
-%rel = list2hash(split(/,\s+/, "cousin, uncle, aunt, husband, brother, ex-husband, grandfather, mother, niece, sister, son, wife, neighbor, girlfriend"));
+%rel = list2hash(split(/,\s+/, "cousin, uncle, aunt, husband, brother,
+ex-husband, grandfather, mother, niece, sister, son, wife, neighbor,
+girlfriend, boss, friend, father, half-brother, pet"));
 
 pbs_parse_data();
 debug("DATA",unfold(pbs_all()));
@@ -126,42 +129,61 @@ SELECT * FROM triples ORDER BY
     my($source, $k, $v) = ($i->{source}, $i->{k}, $i->{v});
     debug("LINE: $source/$k/$v");
 
-    # species
-    if ($k eq "species") {$data{$source}{species}{$v}=1; next;}
+    # species/profession
+    if ($k eq "species" || $k eq "profession") {
+      $data{$source}{species}{$v}=1;
+      next;
+    }
 
     # aka (need canon name)
     if ($k eq "aka") {
-      debug("AKA");
       $data{$source}{alias}{$v} = 1;
       $data{$v}{canon} = $source;
-      debug("data $v canon: $source");
       next;
     }
 
     # TODO: I'm not crazy about this massive 'switch' statement
-    if ($k eq "character") {
-      debug("CHAR!");
+    if ($k eq "character" || $k eq "deaths") {
 
       # canonize character name (continue)
-      debug("V before: $v, $data{$v}{canon}");
       if ($data{$v}{canon}) {$v = $data{$v}{canon};}
-      debug("V afore: $v");
 
       # if character name (after canonization is "string date string"
       # canonize further (and continue)
-      if ($v=~/^(.*?)\s+(\d{8})\s+(.*)$/) {
+      if ($v=~/^(.*?)\s+(\d{8})\s*(.*)$/) {
 	my($main, $date, $rest) = ($1, $2, $3);
 	$count{$v}++;
 	$data{$v}{canon} = "$main $count{$v} $rest";
 	$v = $data{$v}{canon};
       }
 
-      debug("CHAR NAME: $v");
-
       # build the list of dates the character appears in
       $data{$v}{appears_in}{$source} = 1;
       # and the list of characters in a given strip
       $data{$source}{character}{$v} = 1;
+
+      # if the character doesn't already have a species, we assign it here
+      unless ($data{$v}{species}) {
+	if ($v=~m/\s+\((.*?)\)$/) {
+	  $data{$v}{species}{$1}=1;
+	} else {
+	  $data{$v}{species}{unknown} = 1;
+	}
+      }
+
+      # assuming only one species here
+      # TODO: this seems hideously redundant
+      my(@species) = keys %{$data{$v}{species}};
+      my($species) = $species[0];
+
+      # if this is NOT a death, we stop here
+      if ($k eq "character") {next;}
+
+      # note character death on both character and date
+      $data{$v}{death}{$source} = 1;
+      $data{$source}{deaths}{$v} = 1;
+      # and species death for day (perhaps multiple)
+      $data{$species}{death}{$source} += 1;
       next;
     }
 
@@ -172,9 +194,15 @@ SELECT * FROM triples ORDER BY
       next;
     }
 
-    
+    # for notes, just note the notes in the data
+    if ($k eq "notes") {$data{$source}{notes}{$v} = 1; next;}
 
-    warn("TESTING");next;
+    # newspaper mentions by day and paper
+    if ($k eq "newspaper_mentions") {
+      $data{$source}{newspaper_mentions}{$v} = 1;
+      $data{$v}{mentioned_on}{$source} = 1;
+      next;
+    }
 
     # ignore meta triples, they are internal
     if ($k eq "meta") {next;}
@@ -184,6 +212,35 @@ SELECT * FROM triples ORDER BY
 
     # TODO: ignoring cameos for now, but we will want these later
     if ($k eq "cameo") {next;}
+
+    # note description as part of day
+    if ($k eq "description") {
+      $data{$source}{description}{$v} = 1;
+      next;
+    }
+
+    debug("K: $k");
+
+    # relations (relatives, neighbors, etc)
+    if ($rel{$k}) {
+      $data{$source}{relative}{"$k $v"} = 1;
+      $data{$v}{relative}{"$source's $k"} = 1;
+      next;
+    }
+
+    # unnamed species death
+    debug("K BERFORE: $k");
+    if ($k=~/^(.*?)_deaths$/) {
+      debug("DEATH: $k");
+      my($species) = $1;
+      unless ($v=~/\+/) {warn "Extra species death does not start with +";}
+      $data{$species}{death}{$source} += $v;
+      $data{$source}{deaths}{"Anonymous $species"};
+      next;
+    }
+
+    debug("UNHANDLED: $k");
+    next;
 
     # TODO: should not ignore this long term
     if ($k eq "newspaper_mentions") {next;}
