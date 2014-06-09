@@ -21,10 +21,10 @@ ex-husband, grandfather, mother, niece, sister, son, wife, neighbor,
 girlfriend, boss, friend, father, half-brother, pet"));
 
 pbs_parse_data();
+pbs_annotations();
 debug("DATA",unfold(pbs_all()));
 die "TESTING";
 pbs_characters2();
-pbs_annotations();
 
 
 %data = pbs_all();
