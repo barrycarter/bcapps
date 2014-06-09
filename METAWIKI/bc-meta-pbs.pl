@@ -233,7 +233,7 @@ SELECT * FROM triples ORDER BY
     if ($k=~/^(.*?)_deaths$/) {
       debug("DEATH: $k");
       my($species) = $1;
-      unless ($v=~/\+/) {warn "Extra species death does not start with +";}
+      unless ($v=~s/^\#//) {warn "Extra species death does not start with #";}
       $data{$species}{death}{$source} += $v;
       $data{$source}{deaths}{"Anonymous $species"};
       next;
@@ -619,7 +619,7 @@ TODO: this currently creates a GLOBAL hash, instead of returning a list
 
 sub parse_semantic {
   my($source, $string) = @_;
-#  debug("parse_semantic($source, $string)");
+  debug("parse_semantic($source, $string)");
 
   # list of lists I will need to handle a+b+c and so on
   my(@lol);
