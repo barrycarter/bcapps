@@ -18,17 +18,14 @@ $drb = "\\]\\]";
 # things that are considered relations (not necessarily relatives)
 %rel = list2hash(split(/,\s+/, "cousin, uncle, aunt, husband, brother,
 ex-husband, grandfather, mother, niece, sister, son, wife, neighbor,
-girlfriend, boss, friend, father, half-brother, pet"));
+girlfriend, boss, friend, father, half-brother, pet, roommate, date"));
 
 pbs_parse_data();
-pbs_annotations();
-debug("DATA",unfold(pbs_all()));
-die "TESTING";
-pbs_characters2();
-
-
 %data = pbs_all();
-
+pbs_species_deaths2();
+die "TESTING";
+pbs_annotations();
+pbs_characters2();
 
 # TODO: this seems redundant
 for $i (keys %data) {
@@ -124,14 +121,18 @@ sub pbs_all {
   # because species and aka are overrides, they must come first
   for $i (sqlite3hashlist("
 SELECT * FROM triples ORDER BY 
- REPLACE(REPLACE(k,'species','aaa'), 'aka', 'aaa')
+ REPLACE(REPLACE(k,'species','aaa'), 'aka', 'aaa'), source
 ", "/tmp/pbs-triples.db")) {
     my($source, $k, $v) = ($i->{source}, $i->{k}, $i->{v});
     debug("LINE: $source/$k/$v");
 
+    # canonize $source and $v (repeatedly if needed)
+    while ($data{$v}{canon}) {$v = $data{$v}{canon};}
+    while ($data{$source}{canon}) {$source = $data{$source}{canon};}
+
     # species/profession
     if ($k eq "species" || $k eq "profession") {
-      $data{$source}{species}{$v}=1;
+      $data{$source}{$k}{$v}=1;
       next;
     }
 
@@ -145,15 +146,15 @@ SELECT * FROM triples ORDER BY
     # TODO: I'm not crazy about this massive 'switch' statement
     if ($k eq "character" || $k eq "deaths") {
 
-      # canonize character name (continue)
-      if ($data{$v}{canon}) {$v = $data{$v}{canon};}
+      # canonize character name using multiple follows if needed (and continue)
 
       # if character name (after canonization is "string date string"
       # canonize further (and continue)
       if ($v=~/^(.*?)\s+(\d{8})\s*(.*)$/) {
 	my($main, $date, $rest) = ($1, $2, $3);
-	$count{$v}++;
-	$data{$v}{canon} = "$main $count{$v} $rest";
+#	debug("MAIN: $main/$date/$rest, V: $v, KEY: $main $rest");
+	$data{$v}{canon} = "$main ".++$count{"$main $rest"}." $rest";
+	debug("CHAR CHANGE: $v -> $data{$v}{canon}");
 	$v = $data{$v}{canon};
       }
 
@@ -168,6 +169,7 @@ SELECT * FROM triples ORDER BY
 	  $data{$v}{species}{$1}=1;
 	} else {
 	  $data{$v}{species}{unknown} = 1;
+	  debug("UNKNOWN SPECIES: $v");
 	}
       }
 
@@ -182,8 +184,12 @@ SELECT * FROM triples ORDER BY
       # note character death on both character and date
       $data{$v}{death}{$source} = 1;
       $data{$source}{deaths}{$v} = 1;
-      # and species death for day (perhaps multiple)
+      # and number of species death for day (perhaps multiple)
       $data{$species}{death}{$source} += 1;
+      # who of this species died today?
+      $data{$source}{deaths}{$species}{$v} = 1;
+      # record this is a species that has died at some point
+      $data{dead_species_q}{$species} = 1;
       next;
     }
 
@@ -236,6 +242,7 @@ SELECT * FROM triples ORDER BY
       unless ($v=~s/^\#//) {warn "Extra species death does not start with #";}
       $data{$species}{death}{$source} += $v;
       $data{$source}{deaths}{"Anonymous $species"};
+      $data{$source}{deaths}{$species}{"Anonymous $species"} = 1;
       next;
     }
 
@@ -288,6 +295,25 @@ SELECT * FROM triples ORDER BY
   }
 
   return %data;
+}
+
+# create all species death pages using improved version of pbs_all above
+
+sub pbs_species_deaths2 {
+  # which species have died at least once?
+  for $i (sort keys %{$data{dead_species_q}}) {
+    # reset running total
+    my($runtot) = 0;
+    # the days this species died
+    for $j (sort keys %{$data{$i}{death}}) {
+      # how many
+      my($deaths) = $data{$i}{death}{$j};
+      $runtot += $deaths;
+      # who of this species died on this day
+      my(@k) = sort keys %{$data{$j}{deaths}{$i}};
+      debug("($i,$j) $deaths ($runtot total): DIERS", @k);
+    }
+  }
 }
 
 # pbs_characters2() gets a lot more info on characters (and will ultimately replace pbs_characters()
@@ -619,7 +645,7 @@ TODO: this currently creates a GLOBAL hash, instead of returning a list
 
 sub parse_semantic {
   my($source, $string) = @_;
-  debug("parse_semantic($source, $string)");
+#  debug("parse_semantic($source, $string)");
 
   # list of lists I will need to handle a+b+c and so on
   my(@lol);
