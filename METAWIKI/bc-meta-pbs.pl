@@ -22,11 +22,10 @@ girlfriend, boss, friend, father, half-brother, pet, roommate, date"));
 
 pbs_parse_data();
 %data = pbs_all();
-pbs_characters3();
+pbs_characters();
+pbs_species_deaths();
 die "TESTING";
-pbs_species_deaths2();
 pbs_annotations();
-pbs_characters2();
 
 # TODO: this seems redundant
 for $i (keys %data) {
@@ -39,11 +38,7 @@ for $i (keys %data) {
 }
 
 pbs_newspaper_mentions();
-pbs_characters();
 pbs_date_pages();
-for $i ("crocodile", "penguin", "human", "antelope", "zebra") {
-  pbs_species_deaths($i);
-}
 
 # run subroutines to do stuff
 pbs_storylines();
@@ -306,7 +301,7 @@ SELECT * FROM triples ORDER BY
 
 # create all species death pages using improved version of pbs_all above
 
-sub pbs_species_deaths2 {
+sub pbs_species_deaths {
   # which species have died at least once?
   for $i (sort keys %{$data{dead_species_q}}) {
     # reset running total and page
@@ -334,7 +329,7 @@ sub pbs_species_deaths2 {
   }
 }
 
-sub pbs_characters3 {
+sub pbs_characters {
   # TODO: add death/rebirth and latest appearance?
   my(@page) = ("{| class='sortable' border='1' cellpadding='7'","!Name","!1st","!#", "!Species", "!Connections", "!Aliases", "!Notes");
   for $i (sort keys %{$data{character_q}}) {
@@ -359,96 +354,6 @@ sub pbs_characters3 {
 #  }
 #  push(@page, "</table>");
   write_file_new(join("\n",@page)."\n", "/usr/local/etc/metawiki/pbs/Characters.mw", "diff=1");
-}
-
-# pbs_characters2() gets a lot more info on characters (and will ultimately replace pbs_characters()
-
-sub pbs_characters2 {
-  # the table we will print
-  my(@ret) = ("{| class='sortable' border='1' cellpadding='7'","!Name","!1st","!Latest","!#", "!Species", "!Connections", "!Aliases");
-
-  # TODO: make sure this query gets all characters
-  my($query) = "SELECT DISTINCT v AS char FROM triples WHERE k IN ('character', 'deaths') AND dir = 'forward' ORDER BY v";
-
-  for $i (sqlite3hashlist($query, "/tmp/pbs-triples.db")) {
-
-#    if (++$count>20) {warn "TESTING"; last;}
-
-    # the character name
-    my($char) = $i->{char};
-
-    # appearances
-    my(@apps) = (keys %{$triples{$char}{character}}, keys %{$triples{$char}{deaths}});
-    # kill off dupes + sort (should be a better way to uniq a list?)
-    my(%apphash) = list2hash(@apps);
-    @apps = sort keys %apphash;
-    debug("APPS",@apps);
-
-
-    # first/last/number
-    my($fapp) = $apps[0];
-    my($lapp) = $apps[-1];
-    my($napp) = scalar @apps;
-
-    if ($napp==1) {
-      warn "Skipping: $char (only 1 app)";
-      next;
-    }
-
-    # species given directly on indirectly
-    my(@species) = keys %{$triples{$char}{species}};
-    unless (@species) {if ($char=~/\((.*?)\)$/) {push(@species,$1);}}
-    unless (scalar @species == 1) {
-      warn("$char has <> 1 species",@species);
-    }
-
-    # connections (including relatives)
-    my(%rels) = ();
-    for $j (keys %rel) {
-      # we need the pure name for sorting by name, thus a hash
-      for $k (keys %{$triples{$char}{$j}}) {
-	if ($triples{$char}{$j}{$k} eq "forward") {
-	  $rels{$k} = "[[$k]] ($j)";
-	} else {
-	  $rels{$k} = "[[$k]]'s $j";
-	}
-      }
-    }
-
-    my(@rels) = ();
-    for $j (sort keys %rels) {push(@rels, "$rels{$j}");}
-    if (@rels) {debug("RELS($char)",@rels);}
-
-    # aliases
-    my(@aka) = sort keys %{$triples{$char}{aka}};
-    # TODO: rm wp links
-    map($_="[[$_]]", @aka);
-
-    # TODO: add profession, deaths
-
-    push(@ret, "|-", "|[[$char]]", "|data-sort-value=$fapp|".pbs_table_date2($fapp), "|data-sort-value=$lapp|".pbs_table_date2($lapp), "|$napp", "|$species[0]", "|",join("<br>\n",@rels),"|",join("<br>\n",@aka));
-
-  }
-
-  push(@ret, "|}");
-  write_file_new(join("\n",@ret), "/usr/local/etc/metawiki/pbs/Characters2.mw", "diff=1");
-}
-
-sub pbs_characters {
-  my(@ret) = ("{| class='sortable' border='1' cellpadding='7'","!Name","!First","!#");
-  # TODO: add akas for name
-#  warn "LIMIT!";
-  # TODO: use of 'deaths' to mean 'character' below is a kludge
-  for $i (sqlite3hashlist("SELECT v AS name,
- MIN(source) AS first, COUNT(*) AS count FROM triples
- WHERE k IN ('character', 'deaths') GROUP BY name ORDER BY name", 
- "/tmp/pbs-triples.db")) {
-#    push(@ret, "|-", "|[[$i->{name}]]", "|[[$i->{first}]]", "|$i->{count}");
-    push(@ret, "|-", "|[[$i->{name}]]", "|data-sort-value=$i->{first}|".pbs_table_date($i->{first}), "|$i->{count}");
-  }
-  push(@ret, "|}");
-  write_file_new(join("\n",@ret), "/usr/local/etc/metawiki/pbs/Characters.mw", "diff=1");
-
 }
 
 # note the same storylines page I created earlier, this one is a table
@@ -759,52 +664,6 @@ sub parse_semantic {
   }
 }
 
-# breaking this up into one subroutine per page (or so) is a bad idea,
-# but really useful for testing
-
-sub pbs_species_deaths {
-  # probably only useful for zebra and crocodile...
-  my($species) = @_;
-
-  # the return array (joined to create the return string)
-  my(@ret) = ("<table border><tr><th>Strip</th><th>Details</th></tr>");
-  # running total
-  my($rtot);
-
-  # This query cheats in many ways; eg, it assumes ALL deaths on a
-  # given day are of the same species
-  my($query) = << "MARK";
-SELECT t1.source, t1.v AS num, GROUP_CONCAT(t2.v) AS names 
- FROM triples t1 LEFT JOIN triples t2 ON 
- (t1.source = t2.source AND t2.k='deaths')
-WHERE t1.k = '${species}_deaths' GROUP BY t1.source, t1.v ORDER BY t1.source;
-MARK
-;
-  my(@res) = sqlite3hashlist($query,"/tmp/pbs-triples.db");
-  for $i (@res) {
-    # running total
-    $rtot += $i->{num};
-
-    # remove all brackets from names
-    $i->{names}=~s/[\[\]]//g;
-    # list of names
-    my(@names) = split(/\,/,$i->{names});
-    # add brackets to all
-    map($_="[[$_]]", @names);
-    # and join with comma space
-    my($names) = join(", ",@names);
-    # TODO: handle case where one name known, other not
-    unless ($names) {$names = "[unknown]";}
-
-    push(@ret, "<tr><td>".pbs_table_date($i->{source})."</td>
-<td>Who: $names<br>How many: $i->{num}<br>Running Total: $rtot</td></tr>");
-  }
-  push(@ret,"</table>");
-
-  my($ucspec) = ucfirst($species);
-  write_file_new(join("\n",@ret)."\n", "/usr/local/etc/metawiki/pbs/${ucspec}_Deaths.mw", "diff=1");
-}
-
 # kludge fix for wikipedia templates (I use them wrong in pbs.txt)
 # from {{wp|foo|bar}}, this function gets "foo|bar"
 sub fix_wp_template {
@@ -852,83 +711,14 @@ This page is experimental: expect errors and incomplete data.
 
 Data we want per-character  (not necess in order; some of these columns should be sortable):
 
-First appearance
-
 Last/most recent appearance
-
-number appearances
 
 Death date: [also determine species and put on appropriate "species death" page] (and "killed_by" or "kills")
 
 Rebirth date (if applicable):
 
-Aliases:
-
-Species: (more accurately, "type")
-
-Relatives: cousin, uncle, aunt, husband, brother, ex-husband (and also "cousin of..." and stuff like that), grandfather, mother, niece, sister, son, wife
-
-Relations (not relatives): neighbor, girlfriend
-
 Hired:
 
 Fired:
-
-=cut
-
-=item comments
-
-The most frequently appearing tags:
-
-character|6330
-storyline|3702
-notes|490
-category|326
-deaths|312
-newspaper_mentions|266
-meta|206
-cameo|188
-aka|130
-description|106
-location|96
-neighbor|68
-profession|68
-cousin|60
-species|52
-crocodile_deaths|42
-zebra_deaths|38
-event|28
-uncle|26
-friend|20
-husband|16
-aunt|12
-penguin_deaths|12
-rebirths|10
-antelope_deaths|8
-group|8
-mother|7
-brother|6
-dates|6
-kills|6
-members|6
-wife|6
-address|4
-father|4
-human_deaths|4
-neigbhor|4
-pet|4
-references|4
-residence|4
-Bob 20050223 (human)|2
-Cliff (man-sheep)|2
-armadillo_deaths|2
-boss|2
-dolphin_deaths|2
-ex-husband|2
-fires|2
-girlfriend|2
-grandfather|2
-half-brother|2
-hamster_deaths|2
 
 =cut
