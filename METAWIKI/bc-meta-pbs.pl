@@ -171,7 +171,7 @@ SELECT * FROM triples ORDER BY
 
       # if the character doesn't already have a species, we assign it here
       unless ($data{$v}{species}) {
-	if ($v=~m/\s+\((.*?)\)$/) {
+	if ($v=~m/\s+\((.*?)\)[\s\d]*$/) {
 	  $data{$v}{species}{$1}=1;
 	} else {
 	  $data{$v}{species}{unknown} = 1;
@@ -236,10 +236,8 @@ SELECT * FROM triples ORDER BY
     # relations (relatives, neighbors, etc)
     if ($rel{$k}) {
       debug("REL: $source/$k/$v");
-      $data{$source}{relative}{"$v ($k)"} = 1;
-      $data{$v}{relative}{"${source}'s $k"} = 1;
-      debug("SET: $source/relative/$v ($k)");
-      debug("SET: $v/relative/${source}'s $k");
+      $data{$source}{relative}{"[[$v]] ($k)"} = 1;
+      $data{$v}{relative}{"[[${source}]]'s $k"} = 1;
       next;
     }
 
@@ -337,18 +335,30 @@ sub pbs_species_deaths2 {
 }
 
 sub pbs_characters3 {
-  my(@page) = ("<table border>");
+  # TODO: add death/rebirth and latest appearance?
+  my(@page) = ("{| class='sortable' border='1' cellpadding='7'","!Name","!1st","!#", "!Species", "!Connections", "!Aliases", "!Notes");
   for $i (sort keys %{$data{character_q}}) {
-    push(@page,"<tr><th>$i</th><td>");
-    for $j (sort keys %{$data{$i}}) {
-      my($vals) = join(", ",sort keys %{$data{$i}{$j}});
-      push(@page, "$j: $vals<br>");
-      debug("CHAR: $i/$j/$vals");
-    }
-    push(@page,"</td></tr>");
+    my(@apps) = sort keys %{$data{$i}{appears_in}};
+    my($first, $num) = ($apps[0], scalar @apps);
+    # maybe need species2 or subspecies or something to distinguish multis?
+    my($species) = join("<br>\n", keys %{$data{$i}{species}});
+    my($connections) = join("<br>\n", sort keys %{$data{$i}{relative}});
+    debug("ALPHA: $i, $connections");
+    my($alias) = join("<br>\n", sort keys %{$data{$i}{alias}});
+    my($notes) = join("<br>\n", sort keys %{$data{$i}{notes}});
+    debug("AKA: $aka");
+    push(@page,"|-", "|[[$i]]", "|".pbs_table_date($first), "|$num", "|$species", "|$connections", "|$alias", "|$notes");
   }
-  push(@page, "</table>");
-  write_file_new(join("\n",@page)."\n", "/tmp/chartest.html", "diff=1");
+
+#    for $j (sort keys %{$data{$i}}) {
+#      my($vals) = join(", ",sort keys %{$data{$i}{$j}});
+#      push(@page, "$j: $vals<br>");
+#      debug("CHAR: $i/$j/$vals");
+#    }
+#    push(@page,"</td></tr>");
+#  }
+#  push(@page, "</table>");
+  write_file_new(join("\n",@page)."\n", "/usr/local/etc/metawiki/pbs/Characters.mw", "diff=1");
 }
 
 # pbs_characters2() gets a lot more info on characters (and will ultimately replace pbs_characters()
