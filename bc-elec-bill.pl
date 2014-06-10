@@ -27,10 +27,10 @@ system("sort -n $elecfile -o $elecfile");
 # http://www.pnm.com/regulatory/electricity_legacy.htm (for July)
 # TODO: this doesn't need to be a constant
 
-# @tiers = ([450, 0.0906237], [450, 0.1373455], [+Infinity, 0.1576960]);
+@tiers = ([450, 0.0906237], [450, 0.1373455], [+Infinity, 0.1576960]);
 
 # non-summer rates below
-@tiers = ([450, 0.0906237], [450, 0.1185101], [+Infinity, 0.1283520]);
+# @tiers = ([450, 0.0906237], [450, 0.1185101], [+Infinity, 0.1283520]);
 
 # apply NM sales tax of 7% and fuel cost/Palo Verde adjustments
  for $i (@tiers) {
@@ -49,7 +49,7 @@ $tax = 1.07;
 # probably between 1315 and 1355 based on my pictorial record,
 # assuming rounding to nearest number
 
-($time,$read) = ("2014-02-20", "74156");
+($time,$read) = ("2014-05-21", "76598");
 
 # same month last year (as target)
 # $lastyearcost = "103.15";

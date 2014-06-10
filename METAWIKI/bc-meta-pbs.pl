@@ -22,8 +22,9 @@ girlfriend, boss, friend, father, half-brother, pet, roommate, date"));
 
 pbs_parse_data();
 %data = pbs_all();
-pbs_species_deaths2();
+pbs_characters3();
 die "TESTING";
+pbs_species_deaths2();
 pbs_annotations();
 pbs_characters2();
 
@@ -120,8 +121,8 @@ sub pbs_all {
 
   # because species and aka are overrides, they must come first
   for $i (sqlite3hashlist("
-SELECT * FROM triples ORDER BY 
- REPLACE(REPLACE(k,'species','aaa'), 'aka', 'aaa'), source
+SELECT * FROM triples ORDER BY
+ CASE k WHEN 'species' THEN '' WHEN 'aka' THEN '' ELSE v END
 ", "/tmp/pbs-triples.db")) {
     my($source, $k, $v) = ($i->{source}, $i->{k}, $i->{v});
     debug("LINE: $source/$k/$v");
@@ -131,6 +132,7 @@ SELECT * FROM triples ORDER BY
     while ($data{$source}{canon}) {$source = $data{$source}{canon};}
 
     # species/profession
+    # TODO: if something has a species/profession, it's necessarily a character?
     if ($k eq "species" || $k eq "profession") {
       $data{$source}{$k}{$v}=1;
       next;
@@ -153,7 +155,9 @@ SELECT * FROM triples ORDER BY
       if ($v=~/^(.*?)\s+(\d{8})\s*(.*)$/) {
 	my($main, $date, $rest) = ($1, $2, $3);
 #	debug("MAIN: $main/$date/$rest, V: $v, KEY: $main $rest");
-	$data{$v}{canon} = "$main ".++$count{"$main $rest"}." $rest";
+#	$data{$v}{canon} = "$main ".++$count{"$main $rest"}." $rest";
+	# TODO: this format sorts better, but may break other stuff?
+	$data{$v}{canon} = "$main $rest ".sprintf("%0.2d",++$count{"$main $rest"});
 	debug("CHAR CHANGE: $v -> $data{$v}{canon}");
 	$v = $data{$v}{canon};
       }
@@ -162,6 +166,8 @@ SELECT * FROM triples ORDER BY
       $data{$v}{appears_in}{$source} = 1;
       # and the list of characters in a given strip
       $data{$source}{character}{$v} = 1;
+      # identify as character
+      $data{character_q}{$v} = 1;
 
       # if the character doesn't already have a species, we assign it here
       unless ($data{$v}{species}) {
@@ -229,8 +235,11 @@ SELECT * FROM triples ORDER BY
 
     # relations (relatives, neighbors, etc)
     if ($rel{$k}) {
-      $data{$source}{relative}{"$k $v"} = 1;
-      $data{$v}{relative}{"$source's $k"} = 1;
+      debug("REL: $source/$k/$v");
+      $data{$source}{relative}{"$v ($k)"} = 1;
+      $data{$v}{relative}{"${source}'s $k"} = 1;
+      debug("SET: $source/relative/$v ($k)");
+      debug("SET: $v/relative/${source}'s $k");
       next;
     }
 
@@ -302,8 +311,9 @@ SELECT * FROM triples ORDER BY
 sub pbs_species_deaths2 {
   # which species have died at least once?
   for $i (sort keys %{$data{dead_species_q}}) {
-    # reset running total
+    # reset running total and page
     my($runtot) = 0;
+    my(@page) = ("<table border><tr><th>Strip</th><th>Details</th></tr>");
     # the days this species died
     for $j (sort keys %{$data{$i}{death}}) {
       # how many
@@ -311,9 +321,34 @@ sub pbs_species_deaths2 {
       $runtot += $deaths;
       # who of this species died on this day
       my(@k) = sort keys %{$data{$j}{deaths}{$i}};
-      debug("($i,$j) $deaths ($runtot total): DIERS", @k);
+      # this is imperfect because it includes the anonymous characters
+      map($_="[[$_]]", @k);
+      my($names) = join(", ",@k);
+      push(@page, "<tr><td>".pbs_table_date($j)."</td><td>Who: $names<br>How many: $deaths<br>Running Total: $runtot</td></tr>");
+#      debug("($i,$j) $deaths ($runtot total): DIERS", @k);
     }
+    push(@page, "</table>");
+    # dont create pages for species that die infrequently
+    # TODO: make this limit less arbitrary
+    if ($runtot <= 8) {next;}
+    debug("RUNTOT($i): $runtot");
+    write_file_new(join("\n",@page)."\n", "/usr/local/etc/metawiki/pbs/".ucfirst($i)."_Deaths.mw", "diff=1");
   }
+}
+
+sub pbs_characters3 {
+  my(@page) = ("<table border>");
+  for $i (sort keys %{$data{character_q}}) {
+    push(@page,"<tr><th>$i</th><td>");
+    for $j (sort keys %{$data{$i}}) {
+      my($vals) = join(", ",sort keys %{$data{$i}{$j}});
+      push(@page, "$j: $vals<br>");
+      debug("CHAR: $i/$j/$vals");
+    }
+    push(@page,"</td></tr>");
+  }
+  push(@page, "</table>");
+  write_file_new(join("\n",@page)."\n", "/tmp/chartest.html", "diff=1");
 }
 
 # pbs_characters2() gets a lot more info on characters (and will ultimately replace pbs_characters()
