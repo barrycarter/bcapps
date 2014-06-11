@@ -355,9 +355,8 @@ sub pbs_storylines {
     my($pagename) = $i;
     $pagename=~s/[\[\]]//isg;
     $pagename=~s/\{\{\#NewWindowLink:\s+.*?\|(.*?)\}\}/$1/isg;
-
     # and list
-    push(@page, "|-", "|$i ([[$pagename|link]])", "|$dates[0]", "|$dates[-1]", "|".scalar @dates);
+    push(@page, "|-", "|$i ([[$pagename|link]])", "|".pbs_table_date($dates[0]), "|".pbs_table_date($dates[-1]), "|".scalar @dates);
   }
 
   write_file_new(join("\n",@page), "/usr/local/etc/metawiki/pbs/Storylines.mw", "diff=1");
