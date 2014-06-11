@@ -22,6 +22,7 @@ girlfriend, boss, friend, father, half-brother, pet, roommate, date"));
 
 pbs_parse_data();
 %data = pbs_all();
+pbs_storylines();
 pbs_characters();
 pbs_species_deaths();
 die "TESTING";
@@ -41,7 +42,6 @@ pbs_newspaper_mentions();
 pbs_date_pages();
 
 # run subroutines to do stuff
-pbs_storylines();
 # putting data into a db and immediately extracting it seems useless
 # but hopefully isn't
 
@@ -336,29 +336,33 @@ sub pbs_characters {
     my(@apps) = sort keys %{$data{$i}{appears_in}};
     my($first, $num) = ($apps[0], scalar @apps);
     # maybe need species2 or subspecies or something to distinguish multis?
-    my($species) = join("<br>\n", keys %{$data{$i}{species}});
-    my($connections) = join("<br>\n", sort keys %{$data{$i}{relative}});
-    debug("ALPHA: $i, $connections");
-    my($alias) = join("<br>\n", sort keys %{$data{$i}{alias}});
-    my($notes) = join("<br>\n", sort keys %{$data{$i}{notes}});
-    debug("AKA: $aka");
-    push(@page,"|-", "|[[$i]]", "|".pbs_table_date($first), "|$num", "|$species", "|$connections", "|$alias", "|$notes");
+    # use hash to shorten code
+    my(%hash) = ();
+    for $j (sort keys %{$data{$i}}) {
+      $hash{$j} = join("<br>\n", sort keys %{$data{$i}{$j}});
+    }
+    push(@page,"|-", "|[[$i]]", "|".pbs_table_date($first), "|$num", "|$hash{species}", "|$hash{relative}", "|$hash{alias}", "|$hash{notes}");
   }
-
-#    for $j (sort keys %{$data{$i}}) {
-#      my($vals) = join(", ",sort keys %{$data{$i}{$j}});
-#      push(@page, "$j: $vals<br>");
-#      debug("CHAR: $i/$j/$vals");
-#    }
-#    push(@page,"</td></tr>");
-#  }
-#  push(@page, "</table>");
   write_file_new(join("\n",@page)."\n", "/usr/local/etc/metawiki/pbs/Characters.mw", "diff=1");
 }
 
 # note the same storylines page I created earlier, this one is a table
 sub pbs_storylines {
-  my(@ret) = ("{| class='sortable' border='1' cellpadding='7'","!Storyline","!Start","!End","!Strips");
+  my(@page) = ("{| class='sortable' border='1' cellpadding='7'","!Storyline","!First","!Last","!Strips");
+  for $i (sort keys %{$data{storyline}}) {
+    my(@dates) = sort keys %{$data{storyline}{$i}};
+    # cleanup page name for linking
+    my($pagename) = $i;
+    $pagename=~s/[\[\]]//isg;
+    $pagename=~s/\{\{\#NewWindowLink:\s+.*?\|(.*?)\}\}/$1/isg;
+
+    # and list
+    push(@page, "|-", "|$i ([[$pagename|link]])", "|$dates[0]", "|$dates[-1]", "|".scalar @dates);
+  }
+
+  write_file_new(join("\n",@page), "/usr/local/etc/metawiki/pbs/Storylines.mw", "diff=1");
+
+  die "TESTING"; # old code follows
   for $i (sqlite3hashlist("SELECT v, MIN(source) AS mindate, MAX(source) AS maxdate, COUNT(*) AS count, GROUP_CONCAT(source) AS dates FROM triples WHERE k='storyline' GROUP BY v ORDER BY mindate", "/tmp/pbs-triples.db")) {
 
     # TODO: create page for each storyline w list of strips (similar
@@ -376,7 +380,6 @@ sub pbs_storylines {
     push(@ret, "|-", "|$i->{v} ([[$pagename|link]])", "|$i->{mindate}", "|$i->{maxdate}", "|$i->{count}");
   }
   push(@ret, "|}");
-  write_file_new(join("\n",@ret), "/usr/local/etc/metawiki/pbs/Storylines.mw", "diff=1");
 }
 
 # significant events
@@ -613,8 +616,6 @@ sub parse_semantic {
 
   # no double colons? return as is w/ specialized brackets, no triples created
   if (scalar @list <= 1) {return "\001$string\002";}
-  # TESTING!!!!
-#  if (scalar @list <= 1) {return $string;};
 
   # each key/val can be multivalued, so create list of lists
   map(push(@lol, [split(/\+/,$_)]), @list);
@@ -630,14 +631,11 @@ sub parse_semantic {
       for $j (@{$lol[1]}) {
 	for $k (@dates) {
 	  # TODO: currently, a GLOBAL hash to hold triples
-#	  debug("TRIPLE (one double colon): $k,$i,$j");
-	  $triples{$k}{$i}{$j}="forward";
-#	  $triples{$j}{$i}{$k}="reverse";
+	  $triples{$k}{$i}{$j}=1;
 	}
       }
     }
-#    debug("RETURNING (one double colon) [[$pval{$list[1]}]]");
-    return $pval{$list[1]};
+    return "\001$pval{$list[1]}\002";
   }
 
   # only remaining legit case
@@ -645,22 +643,15 @@ sub parse_semantic {
     for $i (@{$lol[0]}) {
       for $j (@{$lol[1]}) {
 	for $k (@{$lol[2]}) {
-	  # this doesnt really hurt anything so suppressing warning
-#	  if (scalar @dates != 1) {warn("DATELIST($string) SHOULD BE 1 element only, not @dates");}
 	  for $l (@dates) {
 	    # TODO: currently, a GLOBAL hash to hold triples
-#	    debug("TRIPLE: $i,$j,$k");
-	    $triples{$i}{$j}{$k}="forward";
-#	    $triples{$k}{$j}{$i}="reverse";
-	    # TODO: restore source triples?
+	    $triples{$i}{$j}{$k}=1;
 	    $triples{"$i~$j~$k"}{"source"}{$l} = 1;
 	  }
 	}
       }
     }
-#    debug("RETURNING $pval{$list[2]} (in brackets)");
-#    debug("RETURNING [[$pval{$list[2]}]]");
-    return $pval{$list[2]};
+    return "\001$pval{$list[2]}\002";
   }
 }
 
