@@ -347,7 +347,7 @@ sub pbs_characters {
     for $j (sort keys %{$data{$i}}) {
       $hash{$j} = join(", ", sort keys %{$data{$i}{$j}});
     }
-    push(@page,"|-", "|[[$i]]", "|".pbs_table_date($first), "|$num", "|$hash{species}", "|$hash{relative}", "|$hash{alias}", "|$hash{notes}");
+    push(@page,"|-", "|[[$i]]", "|data-sort-value=$first|".pbs_table_date($first), "|$num", "|$hash{species}", "|$hash{relative}", "|$hash{alias}", "|$hash{notes}");
   }
   debug("ABOUT TO WRITE Characters.mw");
   write_file_new(join("\n",@page)."\n", "/usr/local/etc/metawiki/pbs/Characters.mw", "diff=1");
@@ -363,7 +363,7 @@ sub pbs_storylines {
     $pagename=~s/[\[\]]//isg;
     $pagename=~s/\{\{\#NewWindowLink:\s+.*?\|(.*?)\}\}/$1/isg;
     # and list
-    push(@page, "|-", "|$i ([[$pagename|link]])", "|".pbs_table_date($dates[0]), "|".pbs_table_date($dates[-1]), "|".scalar @dates);
+    push(@page, "|-", "|$i ([[$pagename|link]])", "|data-sort-value=$dates[0]|".pbs_table_date($dates[0]), "|data-sort-value=$dates[-1]|".pbs_table_date($dates[-1]), "|".scalar @dates);
   }
 
   write_file_new(join("\n",@page), "/usr/local/etc/metawiki/pbs/Storylines.mw", "diff=1");
@@ -449,8 +449,8 @@ sub pbs_parse_data {
   $data=~s%^.*?<data>(.*?)</data>.*$%$1%s;
 
   # and the data from pbs-cl.txt
-  warn "Skipping pbs-cl.txt";
-#  $data = "$data\n".read_file("/home/barrycarter/BCGIT/METAWIKI/pbs-cl.txt");
+#  warn "Skipping pbs-cl.txt";
+  $data = "$data\n".read_file("/home/barrycarter/BCGIT/METAWIKI/pbs-cl.txt");
 
   # parse the data
   for $i (split(/\n/, $data)) {

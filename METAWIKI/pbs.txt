@@ -247,7 +247,7 @@ MULTIREF [[title::Dead celebrities]] [[notes::On [[2002-08-01]], [[Rat]] doesn't
 2003-09-15-2003-09-17 [[storyline::[[character::Pig]] plays {{wp|touch football}}]]
 2003-09-04 [[character::Helen (monkey)]]
 2011-04-10 [[deaths::Fred 20110410 (crocodile)]]
-2011-05-28 [[character::Rat+Pig+Medusa (god)]]
+2011-05-28 [[character::Rat+Pig+Medusa (deity)]]
 2003-09-12 [[character::Pig+Rat+Fredo's wife (piggybank)+[[deaths::Fredo (piggybank)]]]]
 2003-09-29 [[character::[[Rat::date::Connie (rat)]]]] [[Connie (rat)::aka::Controlling Connie]]
 2005-07-03 [[character::Rat+Connie (human)+Jerry (human)+Nick 20050703 (human)]]
@@ -285,7 +285,7 @@ MULTIREF [[title::Dead celebrities]] [[notes::On [[2002-08-01]], [[Rat]] doesn't
 2004-04-26,2004-04-27 [[cameo::Earl+Mooch]]
 2004-04-28 [[cameo::Earl+Mooch+Darryl MacPherson]]
 2004-04-26-2004-04-30 [[storyline::[[character::Rat]] in Comics Re-education Camp]]
-2004-05-07,2007-05-23,2010-08-07,2002-05-25,2014-04-07,2012-06-18,2012-05-11,2013-03-06,2003-10-31,2009-01-07 [[category::Pig's Cheese Fetish]]
+2004-05-07,2007-05-23,2010-08-07,2002-05-25,2014-04-07,2012-06-18,2012-05-11,2013-03-06,2003-10-31,2009-01-07,2011-05-02 [[category::Pig's Cheese Fetish]]
 2009-01-07 [[Rat::aka::Frank Lloyd Rat]]
 2009-01-13 [[character::Rat+Goat+Tiny (elephant)]]
 2007-12-26 [[notes::[[character::Pig]] is reading "Rome", but the author name is indiscernable]]
@@ -1145,6 +1145,7 @@ MULTIREF [[notes::On [[2012-10-19]] (also [[noref::2013-02-19]], [[noref::2013-0
 2013-06-08 [[character::Fred 20130608 (lemming)]] [[notes::The expression "you really need to start coming to meetings" is particularly funny, since the lemmings are killing themselves and there will be no more meetings]]
 2012-10-23 [[character::Fred 20121023 (lemming)]]
 2010-10-04 [[character::Rat+Pig+Timmy (housefly)]]
+
 2012-04-03 [[character::Pig+Rat+Timmy 20120403 (human)]]
 2005-09-25 [[character::Pig+Goat+[[Neighbor Bob::son::Timmy 20050925 (human)]]]]
 2012-04-04 [[character::Snuffles+Guard Duck+Zebra+Bootsies (cat)]]
@@ -1417,6 +1418,7 @@ MULTIREF [[title::Dictionary Editing]] [[notes::On [[2011-01-27]], [[Rat]] takes
 2011-08-20 [[character::Pig+Neighbor Bob]]
 2014-05-09 [[character::Pig+Rat+Comic Strip Censor]]
 2014-05-20 [[character::Goat+Rat+Comic Strip Censor+Comic Strip Censor 2]]
+2011-05-23 [[character::Timmy (human)+Larry]] [[Timmy (human)::profession::Secretary of the Treasury (treehouse)]] [[Larry::aka::Meester Guy So Powerful It No Even Funny]]
 </data>
 
 # the following lines need improvement
@@ -1631,7 +1633,7 @@ undies != underwear, so maybe un-dies? (using rebirth)
 
 # 2007-01-13 same night stand that later tries to escape?, 2007-05-11
 
-# 2011-11-09 (wrong date) rat say lottery is tax, but also his retirement plan? 2005-12-19 is another one
+# 2011-05-09 (wrong date) rat say lottery is tax, but also his retirement plan? 2005-12-19 is another one
 
 # 2005-10-23 similar to zeebachef tear down wall 2011-08-17
 
@@ -1664,3 +1666,7 @@ undies != underwear, so maybe un-dies? (using rebirth)
 # zeebs4life@gmail.com ratgreatness@gmail.com 2011-09-18
 
 # 2012-04-01: smashing into glass vs bent snouts
+
+# 2011-05-19 pig sees snuggie, unexcited, later "nobel prize", 2011-05-21 so ok
+
+# the missing strips

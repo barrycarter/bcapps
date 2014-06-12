@@ -11,14 +11,16 @@ require "/home/barrycarter/bc-private.pl";
 
 # unhappy w code duplication here...
 # links to high-res version of each strip
-for $i (split(/\n/, read_file("/home/barrycarter/BCGIT/METAWIKI/largeimagelinks.txt"))) {
+# more.txt is a hack to get new strips
+# for $i (split(/\n/, read_file("/home/barrycarter/BCGIT/METAWIKI/largeimagelinks.txt"))) {
+for $i (split(/\n/, read_file("/tmp/more.txt"))) {
   $i=~s/^(.*?)\s+(.*)1500$//||warn("BAD LINE: $i");
   $link{$1}="${2}300";
 }
 
 for $i (sort keys %link) {
-  write_wiki_page("http://pearls-before-swine-bc.wikia.com/api.php", "Mediawiki:$i", "<img src='$link{$i}' />", "$i strip (low resolution/fair use)", $wikia{user}, $wikia{pass});
   debug("$i: $link{$i}");
+  write_wiki_page("http://pearls-before-swine-bc.wikia.com/api.php", "Mediawiki:$i", "<img src='$link{$i}' />", "$i strip (low resolution/fair use)", $wikia{user}, $wikia{pass});
 }
 
 
