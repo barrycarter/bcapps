@@ -6,6 +6,7 @@
 
 require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
+option_check(["realsies","dryrun"]);
 
 # while testing, dryrun is assumed (unless --realsies)
 unless ($globopts{realsies}) {$globopts{dryrun}=1;}

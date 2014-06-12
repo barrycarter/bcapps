@@ -25,8 +25,8 @@ pbs_parse_data();
 pbs_storylines();
 pbs_characters();
 pbs_species_deaths();
-die "TESTING";
 pbs_annotations();
+die "TESTING";
 
 # TODO: this seems redundant
 for $i (keys %data) {
@@ -114,6 +114,7 @@ sub pbs_all {
   my(%data);
   warn "TESTING";
 
+  # TODO: do I really need an sqlite3 db at all now?
   # because species and aka are overrides, they must come first
   for $i (sqlite3hashlist("
 SELECT * FROM triples ORDER BY
@@ -123,8 +124,12 @@ SELECT * FROM triples ORDER BY
     debug("LINE: $source/$k/$v");
 
     # canonize $source and $v (repeatedly if needed)
-    while ($data{$v}{canon}) {$v = $data{$v}{canon};}
-    while ($data{$source}{canon}) {$source = $data{$source}{canon};}
+    # do not canonize storylines
+    # TODO: this will still create a conflict for storylines named for chars
+    unless ($k eq "storyline") {
+      while ($data{$v}{canon}) {$v = $data{$v}{canon};}
+      while ($data{$source}{canon}) {$source = $data{$source}{canon};}
+    }
 
     # species/profession
     # TODO: if something has a species/profession, it's necessarily a character?
@@ -196,6 +201,7 @@ SELECT * FROM triples ORDER BY
 
     # for storyline/categories, record strips in storyline/category
     if ($k eq "storyline" || $k eq "category") {
+      debug("skv: $source/$k/$v");
       $data{$k}{$v}{$source} = 1;
       $data{$source}{$k}{$v} = 1;
       next;
@@ -339,10 +345,11 @@ sub pbs_characters {
     # use hash to shorten code
     my(%hash) = ();
     for $j (sort keys %{$data{$i}}) {
-      $hash{$j} = join("<br>\n", sort keys %{$data{$i}{$j}});
+      $hash{$j} = join(", ", sort keys %{$data{$i}{$j}});
     }
     push(@page,"|-", "|[[$i]]", "|".pbs_table_date($first), "|$num", "|$hash{species}", "|$hash{relative}", "|$hash{alias}", "|$hash{notes}");
   }
+  debug("ABOUT TO WRITE Characters.mw");
   write_file_new(join("\n",@page)."\n", "/usr/local/etc/metawiki/pbs/Characters.mw", "diff=1");
 }
 
@@ -361,7 +368,8 @@ sub pbs_storylines {
 
   write_file_new(join("\n",@page), "/usr/local/etc/metawiki/pbs/Storylines.mw", "diff=1");
 
-  die "TESTING"; # old code follows
+  return; # old code follows
+
   for $i (sqlite3hashlist("SELECT v, MIN(source) AS mindate, MAX(source) AS maxdate, COUNT(*) AS count, GROUP_CONCAT(source) AS dates FROM triples WHERE k='storyline' GROUP BY v ORDER BY mindate", "/tmp/pbs-triples.db")) {
 
     # TODO: create page for each storyline w list of strips (similar
@@ -465,7 +473,7 @@ sub pbs_parse_data {
 
   local(*A);
   # create empty db (being this direct this is probably bad)
-  open(A,"|tee /tmp/debug.txt|sqlite3 /tmp/pbs-triples.db 1>/tmp/pbs-myout.txt 2>/tmp/pbs-myerr.txt");
+  open(A,"|tee /tmp/triples.txt|sqlite3 /tmp/pbs-triples.db 1>/tmp/pbs-myout.txt 2>/tmp/pbs-myerr.txt");
   # open(A,">/tmp/mysql.txt");
   print A << "MARK";
 DROP TABLE IF EXISTS triples;
@@ -634,7 +642,8 @@ sub parse_semantic {
 	}
       }
     }
-    return "\001$pval{$list[1]}\002";
+#    return "\001$pval{$list[1]}\002";
+    return $pval{$list[1]};
   }
 
   # only remaining legit case
@@ -650,7 +659,8 @@ sub parse_semantic {
 	}
       }
     }
-    return "\001$pval{$list[2]}\002";
+#    return "\001$pval{$list[2]}\002";
+    return $pval{$list[2]};
   }
 }
 

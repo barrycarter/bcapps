@@ -7,6 +7,11 @@
 # ~/BCGIT/oneliners.sh < ~/Download/messages.html | tee ~/okcupid-barrycarter-hide-sent.txt
 # where ~ is /home/barrycarter
 
+# list sundays for Pearls Before Swine
+perl -le 'use Date::Parse; use POSIX; $st = str2time("2002-01-13"); for $i (1..52*13) {$st+=86400*7; print strftime("page-%Y-%m-%d.gif", gmtime($st))}'
+
+exit;
+
 perl -anle 'if (m%/profile/(.*?)\?cf=messages%) {print $1;}' | sort | uniq
 
 exit;
