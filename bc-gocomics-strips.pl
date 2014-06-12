@@ -72,7 +72,7 @@ for $i (glob "page-2[0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]") {
   debug("I: $i");
 
   # if I already have the GIF, ignore
-  if (-f "$i.gif") {next;}
+#  if (-f "$i.gif") {next;}
 
   debug("NOGIF: $i");
   $all = read_file($i);
@@ -81,20 +81,30 @@ for $i (glob "page-2[0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]") {
   while ($all=~s/(<img[^>]*?>)//is) {
     $img = $1;
 #    debug("FOUND: $img");
-    # see bc-get-peanuts.pl for more details on the below
-    # look for src
+
+    # look at alt and src
+    unless ($img=~/alt="(.*?)"/) {$alt=""; next;}
+    $alt = $1;
     unless ($img=~/src="(.*?)"/) {next;}
     $src = $1;
 
+    # unless they match (up to case), continue
+    unless (lc($src) eq lc("http://assets.amuniversal.com/$alt")) {next;}
+
+#    debug("ALT: $alt, SRC: $src");
+
     # slightly different assets server for pearlsbeforeswine
 #    unless ($src=~/cdn\.svcs\.c2\.uclick\.com/) {next;}
-    unless ($src=~/^http:..assets\.amuniversal\.com/) {next;}
+#    unless ($src=~/^http:..assets\.amuniversal\.com/) {next;}
 
-    debug("SRC: $src");
+#    debug("SRC: $src");
+
+    # just to update largeimagelinks.txt
+    print "$i $src?width=1500\n";
 
     # I think all pearlsbeforeswine have a width version (not necessarily 900)
     # the nonwidth version does not zoom properly
-    unless ($src=~s/\?width\=.*$//) {next;}
+#    unless ($src=~s/\?width\=.*$//) {next;}
 
     # create hash to avoid dupes (yes, the whole command)
     $images{"curl -o $i.gif -A 'gocomics\@barrycarter.info' '$src?width=1500'"} = 1;
@@ -104,7 +114,7 @@ for $i (glob "page-2[0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]") {
 
 
 if (%images) {
-  write_file(join("\n",keys %images), "runme3.sh");
+  write_file(join("\n",sort keys %images), "runme3.sh");
   # /var/tmp/gocomics is sshfs-mounted, so don't want to run parallel here
   die "TESTING";
   system("parallel -j 20 < runme3.sh");
