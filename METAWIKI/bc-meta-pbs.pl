@@ -368,8 +368,11 @@ sub pbs_characters {
       $hash{$j} = join(", ", sort keys %{$data{$i}{$j}});
     }
 
+    my(%used_keys) = ();
     # for relations, we really do want one per line
-    $hash{relative}=~s/, /<br \/>\n/g;
+    debug("EPSILON: $i *$hash{relative}*", length($hash{relative}));
+#    $hash{relative}=~s/, /<br \/>\n/g;
+    debug("GAMMA: $i *$hash{relative}*", length($hash{relative}));
 
     my(@table) = ("<table border width=100%>",
 		  "<tr><th>Name:</th><td>[[$i]]</td></tr>",
@@ -379,28 +382,41 @@ sub pbs_characters {
 		  );
 
     # we no longer need "appears_in"
-    delete $hash{appears_in};
+    $used_keys{appears_in} = 1;
 
-    # others, if they exist
-    for $j ("death", "rebirth", "species", "relative", "profession", "alias", 
-	    "subspecies", "description", "notes") {
-      if ($hash{$j}) {
-	if ($j eq "death" || $j eq "rebirth") {$hash{$j} = "[[$hash{$j}]]";}
-	push(@table, "<tr><th>".ucfirst($j)."</th><td>$hash{$j}</td></tr>");
+    # others, if they exist (need killed_by as inverse of "kills")
+    for $j ("death", "rebirth", "kills", "species", "relative", "profession",
+	    "alias", "subspecies", "description", "notes") {
+      # early exit if no value
+      unless ($hash{$j}) {next;}
+
+      debug("DELTA: hash of $j passed for $i: *$hash{$j}*");
+
+      debug("HASH{$j}: *$hash{$j}*");
+
+      # link to target
+      my($printval) = $hash{$j};
+      if ($j eq "death"||$j eq "rebirth"||$j eq "kills") {
+	$printval= "[[$printval]]";
       }
-      # we no longer need this key
-      delete $hash{$j};
+
+      #in all cases...
+      push(@table, "<tr><th>".ucfirst($j)."</th><td>$printval</td></tr>");
+
+      # note that we've used this key
+      $used_keys{$j} = 1;
     }
+
+    debug("KEYS FOR $i", sort keys %hash);
 
     # the keys we haven't used
     for $j (sort keys %hash) {
+      if ($used_keys{$j}) {next;}
       push(@table, "<tr><th>".ucfirst($j)." (extra):</th><td>$hash{$j}</td></tr>");
     }
 
     my($table) = join("\n", @table)."</table>\n";
 
-#    push(@page,"|-", "|[[$i]]", "|data-sort-value=$first|".pbs_table_date($first), "|$num", "|$hash{species}", "|$hash{relative}", "|$hash{alias}", "|$hash{notes}", "|$extra");
-#    push(@page,"|-", "|[[$i]]", "|data-sort-value=$first|", "|$num", "|$hash{species}", "|$hash{relative}", "|$hash{alias}", "|$hash{notes}", "|$extra");
     push(@page,"|-", "|".pbs_table_date($first), "|$table", 
 	 "|data-sort-value=$i|", "|data-sort-value=$first|",
 	 "|data-sort-value=$latest|", "|data-sort-value=$num|",
