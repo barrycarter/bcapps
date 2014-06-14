@@ -146,7 +146,7 @@ SELECT * FROM triples ORDER BY
     }
 
     # TODO: I'm not crazy about this massive 'switch' statement
-    if ($k eq "character" || $k eq "deaths") {
+    if ($k eq "character" || $k eq "deaths" || $k eq "rebirths") {
 
       # canonize character name using multiple follows if needed (and continue)
 
@@ -186,6 +186,14 @@ SELECT * FROM triples ORDER BY
 
       # if this is NOT a death, we stop here
       if ($k eq "character") {next;}
+
+      # for rebirths
+      if ($k eq "rebirths") {
+	# note character rebirth on both character and date
+	$data{$v}{rebirth}{$source} = 1;
+	$data{$source}{rebirths}{$v} = 1;
+	next;
+      }
 
       # note character death on both character and date
       $data{$v}{death}{$source} = 1;
@@ -255,6 +263,8 @@ SELECT * FROM triples ORDER BY
     }
 
     debug("UNHANDLED: $k");
+    # TODO: this is just a default for now
+    $data{$source}{$k}{$v} = 1;
     next;
 
     # TODO: should not ignore this long term
@@ -337,17 +347,67 @@ sub pbs_species_deaths {
 
 sub pbs_characters {
   # TODO: add death/rebirth and latest appearance?
-  my(@page) = ("{| class='sortable' border='1' cellpadding='7'","!Name","!1st","!#", "!Species", "!Connections", "!Aliases", "!Notes");
+#  my(@page) = ("{| class='sortable' border='1' cellpadding='7'","!Name","!1st","!#", "!Species", "!Connections", "!Aliases", "!Notes", "!Extra");
+  my(@page) = ("{| class='sortable' border='1' cellpadding='7'", 
+	       "!First","!Data",
+	       "!<span title='Sort by name'>.</span>",
+	       "!<span title='Sort by first appearance'>.</span>",
+	       "!<span title='Sort by latest appearance'>.</span>",
+	       "!<span title='Sort by number of appearances'>.</span>",
+	       "!<span title='Sort by species'>.</span>",
+	       "!<span title='Sort by profession'>.</span>",
+	       "!<span title='Sort by date of death'>.</span>"
+	       );
   for $i (sort keys %{$data{character_q}}) {
     my(@apps) = sort keys %{$data{$i}{appears_in}};
-    my($first, $num) = ($apps[0], scalar @apps);
+    my($first, $num, $latest) = ($apps[0], scalar @apps, $apps[-1]);
     # maybe need species2 or subspecies or something to distinguish multis?
     # use hash to shorten code
     my(%hash) = ();
     for $j (sort keys %{$data{$i}}) {
       $hash{$j} = join(", ", sort keys %{$data{$i}{$j}});
     }
-    push(@page,"|-", "|[[$i]]", "|data-sort-value=$first|".pbs_table_date($first), "|$num", "|$hash{species}", "|$hash{relative}", "|$hash{alias}", "|$hash{notes}");
+
+    # for relations, we really do want one per line
+    $hash{relative}=~s/, /<br \/>\n/g;
+
+    my(@table) = ("<table border width=100%>",
+		  "<tr><th>Name:</th><td>[[$i]]</td></tr>",
+		  "<tr><th>First Appearance:</th><td>[[$first]]</td></tr>",
+		  "<tr><th>Latest Appearance:</th><td>[[$latest]]</td></tr>",
+		  "<tr><th>Number of Appearances:</th><td>$num</td></tr>"
+		  );
+
+    # we no longer need "appears_in"
+    delete $hash{appears_in};
+
+    # others, if they exist
+    for $j ("death", "rebirth", "species", "relative", "profession", "alias", 
+	    "subspecies", "description", "notes") {
+      if ($hash{$j}) {
+	if ($j eq "death" || $j eq "rebirth") {$hash{$j} = "[[$hash{$j}]]";}
+	push(@table, "<tr><th>".ucfirst($j)."</th><td>$hash{$j}</td></tr>");
+      }
+      # we no longer need this key
+      delete $hash{$j};
+    }
+
+    # the keys we haven't used
+    for $j (sort keys %hash) {
+      push(@table, "<tr><th>".ucfirst($j)." (extra):</th><td>$hash{$j}</td></tr>");
+    }
+
+    my($table) = join("\n", @table)."</table>\n";
+
+#    push(@page,"|-", "|[[$i]]", "|data-sort-value=$first|".pbs_table_date($first), "|$num", "|$hash{species}", "|$hash{relative}", "|$hash{alias}", "|$hash{notes}", "|$extra");
+#    push(@page,"|-", "|[[$i]]", "|data-sort-value=$first|", "|$num", "|$hash{species}", "|$hash{relative}", "|$hash{alias}", "|$hash{notes}", "|$extra");
+    push(@page,"|-", "|".pbs_table_date($first), "|$table", 
+	 "|data-sort-value=$i|", "|data-sort-value=$first|",
+	 "|data-sort-value=$latest|", "|data-sort-value=$num|",
+	 "|data-sort-value=$hash{species}|",
+	 "|data-sort-value=$hash{profession}|",
+	 "|data-sort-value=$hash{death}|"
+	 );
   }
   debug("ABOUT TO WRITE Characters.mw");
   write_file_new(join("\n",@page)."\n", "/usr/local/etc/metawiki/pbs/Characters.mw", "diff=1");
