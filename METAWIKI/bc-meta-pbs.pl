@@ -346,22 +346,20 @@ sub pbs_species_deaths {
 }
 
 sub pbs_characters {
-  # TODO: add death/rebirth and latest appearance?
-#  my(@page) = ("{| class='sortable' border='1' cellpadding='7'","!Name","!1st","!#", "!Species", "!Connections", "!Aliases", "!Notes", "!Extra");
   my(@page) = ("{| class='sortable' border='1' cellpadding='7'", 
 	       "!First","!Data",
-	       "!<span title='Sort by name'>.</span>",
-	       "!<span title='Sort by first appearance'>.</span>",
-	       "!<span title='Sort by latest appearance'>.</span>",
-	       "!<span title='Sort by number of appearances'>.</span>",
-	       "!<span title='Sort by species'>.</span>",
-	       "!<span title='Sort by profession'>.</span>",
-	       "!<span title='Sort by date of death'>.</span>"
+	       "!<span title='Sort by name'>#</span>",
+	       "!<span title='Sort by first appearance'>#</span>",
+	       "!<span title='Sort by latest appearance'>#</span>",
+	       "!<span title='Sort by number of appearances'>#</span>",
+	       "!<span title='Sort by species'>#</span>",
+	       "!<span title='Sort by profession'>#</span>",
+	       "!<span title='Sort by date of death'>#</span>",
+	       "!<span title='Sort quasi-randomly'>#</span>"
 	       );
   for $i (sort keys %{$data{character_q}}) {
     my(@apps) = sort keys %{$data{$i}{appears_in}};
     my($first, $num, $latest) = ($apps[0], scalar @apps, $apps[-1]);
-    # maybe need species2 or subspecies or something to distinguish multis?
     # use hash to shorten code
     my(%hash) = ();
     for $j (sort keys %{$data{$i}}) {
@@ -369,10 +367,6 @@ sub pbs_characters {
     }
 
     my(%used_keys) = ();
-    # for relations, we really do want one per line
-    debug("EPSILON: $i *$hash{relative}*", length($hash{relative}));
-#    $hash{relative}=~s/, /<br \/>\n/g;
-    debug("GAMMA: $i *$hash{relative}*", length($hash{relative}));
 
     my(@table) = ("<table border width=100%>",
 		  "<tr><th>Name:</th><td>[[$i]]</td></tr>",
@@ -390,24 +384,22 @@ sub pbs_characters {
       # early exit if no value
       unless ($hash{$j}) {next;}
 
-      debug("DELTA: hash of $j passed for $i: *$hash{$j}*");
-
-      debug("HASH{$j}: *$hash{$j}*");
-
-      # link to target
       my($printval) = $hash{$j};
+
+      # link to target for these keys
       if ($j eq "death"||$j eq "rebirth"||$j eq "kills") {
 	$printval= "[[$printval]]";
       }
 
-      #in all cases...
+      # use newlines instead of commas for printing?
+      $printval=~s/, /<br \/>\n/g;
+
+      # in all cases...
       push(@table, "<tr><th>".ucfirst($j)."</th><td>$printval</td></tr>");
 
       # note that we've used this key
       $used_keys{$j} = 1;
     }
-
-    debug("KEYS FOR $i", sort keys %hash);
 
     # the keys we haven't used
     for $j (sort keys %hash) {
@@ -422,7 +414,8 @@ sub pbs_characters {
 	 "|data-sort-value=$latest|", "|data-sort-value=$num|",
 	 "|data-sort-value=$hash{species}|",
 	 "|data-sort-value=$hash{profession}|",
-	 "|data-sort-value=$hash{death}|"
+	 "|data-sort-value=$hash{death}|",
+	 "|data-sort-value=".rand()."|"
 	 );
   }
   debug("ABOUT TO WRITE Characters.mw");

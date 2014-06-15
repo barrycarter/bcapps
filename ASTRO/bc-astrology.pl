@@ -12,8 +12,11 @@ my(@consts) = split(/\//, "Aries/Taurus/Gemini/Cancer/Leo/Virgo/Libra/Scorpio/Sa
 
 # derivative of ecliptic longitude also needed (signum only)
 
-$jd = get_julian_from_timet(str2time("2014-01-01 00:00:00 UTC"));
-$jd = 2456658.500000;
+# $jd = get_julian_from_timet(str2time("2014-01-01 00:00:00 UTC"));
+# $jd = 2456658.500000-720-144*2-14;
+
+$jd = get_julian_from_timet(time())-16.32*366;
+
 debug("JD: $jd");
 
 for $i ((split(/\|/, "solar|lunar|mercury|venus|mars|jupiter|saturn|uranus|neptune|pluto"))) {
