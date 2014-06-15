@@ -455,7 +455,7 @@ MULTIREF [[title::Dentist reminder cards]] [[notes::In [[2004-06-03]], [[Pig]] u
 2009-04-23 [[character::Guard Duck+Bob 20090423 (human)]]
 2009-05-18 [[notes::Vaguely reminscent of {{wp|Charlotte's Web}}]]
 2009-05-23 [[character::Goat+Rat+Fluffles (poodle)]] [[Fluffles (poodle)::aka::L'il Fluffles]]
-MULTIREF [[title::Society of Cultured Pigs]] [[[[Pig]] gets thrown out of the Society of Cultured Pigs sometime before [[2002-01-12]], but is seen attending a meetig on [[2003-07-06]] (maybe they re-instated him?)]]
+MULTIREF [[title::Society of Cultured Pigs]] [[notes::[[Pig]] gets thrown out of the Society of Cultured Pigs sometime before [[2002-01-12]], but is seen attending a meetig on [[2003-07-06]] (maybe they re-instated him?)]]
 2004-06-01 [[character::Rat+Pig+John (human)]] [[meta::This may or may not be the same John mentioned in earlier strips, including the one that's Stephan's neighbor (not Rat and Pig's neighbor)]]
 2003-11-30 [[character::[[Rat+Pig::neighbor::Marge (human)+George (human)+Neighbor Bob+Skippy (dog)]]+Rat+Pig]] [[George (human)::aka::Neighbor George]]
 2008-01-16 [[character::Pig+George (human)]]
@@ -477,7 +477,7 @@ MULTIREF [[title::Society of Cultured Pigs]] [[[[Pig]] gets thrown out of the So
 2006-01-18-2006-01-20 [[storyline::[[character::Pig]]'s produce]]
 2006-01-23,2006-01-25,2006-01-30 [[storyline::[[character::Five Dentists]]]] [[Five Dentists::species::human (group)]]
 2006-02-05 [[Pig+Rat::address::809 Bradbury]] [[character::Pig+Joseph C Sklabonsky (human)+Bluebird of Happiness 20060205 (bird)]] [[notes::Joseph C Sklabonsky (human)::notes::Species unspecified, assumed human]]
-MULTIREF [[title::Bluebird of Happiness]] [[On [[2005-03-31]], Pig accidentally kills a Bluebird of Happiness, and hopes there are two of them. On [[2006-02-05]], he discovers this is true, although the second one is intended for someone else]]
+MULTIREF [[title::Bluebird of Happiness]] [[notes::On [[2005-03-31]], Pig accidentally kills a Bluebird of Happiness, and hopes there are two of them. On [[2006-02-05]], he discovers this is true, although the second one is intended for someone else]]
 2004-07-04,2006-02-05 [[notes::[[2004-07-04]] gives [[Pig]] and [[Rat]]'s address as "803 Hearst", whereas [[2006-02-05]] gives their address as "809 Bradbury" (perhaps they moved)]]
 2005-11-14,2006-02-06-2006-02-09,2006-05-08-2006-05-13,2011-04-06-2011-04-08 [[storyline::[[character::Annie May]], [[character::Pig]]'s sea anemone enemy]]
 2006-05-13 [[deaths::Whale]]
@@ -564,7 +564,7 @@ MULTIREF [[title::Rat's guilt]] [[notes::On [[2014-06-09]], Rat says he feels gu
 2006-12-17 [[description::[[character::Rat+Goat+Larry+Zebra+Guard Duck]] pose for [[character::Pig]]'s Christmas card photo. When a [[Larry::kills::[[character::[[deaths::Santa's Elf (elf)]]]]]] comes down the chimney, Larry eats him]]]]
 2007-12-02-2007-12-05,2008-12-31 [[storyline::[[character::Christmas Tree Girl (rat)]]]]
 2006-12-26 [[notes::Is this the baby that later become's [[Rat]]'s bookie?]]2006-12-31 [[character::Guard Duck+Pig+Stephan Pastis+[[character::Maura]]+Rat]]
-2006-12-31-2007-01-05,2007-01-23,2007-01-24,2007-02-14 [[storyline::[[character::Guard Duck]] and [[character::Maura]]]]
+2008-07-28,2006-12-31-2007-01-05,2007-01-23,2007-01-24,2007-02-14 [[storyline::[[character::Guard Duck]] and [[character::Maura]]]]
 2007-01-21 [[character::Doomsday (dog)]] [[Doomsday (dog)::aka::Doomsday the Wonder Dog]]
 2005-08-27,2006-12-28-2006-12-30,2007-01-06,2007-01-27 [[storyline::[[character::Rat]] tries to buy a gun]]
 2008-09-08-2008-09-13 [[storyline::[[character::Rat]] attacks {{wp|Cuba}}]]
@@ -746,7 +746,7 @@ MULTIREF [[title::Rat's guilt]] [[notes::On [[2014-06-09]], Rat says he feels gu
 2009-06-02 [[character::Rat+Pig+[[character::Jef]]]] [[Jef::species::human]] [[Jef::subspecies::cyclist]]
 2013-08-25 [[character::Pig+Goat+Rat+[[Pig::friend::Patty (human)]]]]
 2013-04-07,2013-01-13 [[character::Pig+Jef]]
-2012-02-29,2012-02-08,2012-02-13 [[storyline::[[character::Jef]]]]
+2014-02-28,2012-02-29,2012-02-08,2012-02-13 [[storyline::[[character::Jef]]]]
 2009-06-06 [[notes::[[Patty (crocodile)]]'s hammer is stylistically identical to the hammer from {{wp|Donkey Kong}}, the first game in the Mario series]]
 2009-06-09-2009-06-11 [[storyline::[[character::Rat]], the book editor]]
 2009-06-22-2009-06-24,2009-07-01-2009-07-03 [[storyline::[[character::Rat]], the {{wp|Pied Piper}}]]
@@ -1166,7 +1166,7 @@ MULTIREF [[title::[[[[Larry]]'s mother]]]] [[notes::Larry's mother dies on [[200
 2009-03-09,2009-03-10,2009-03-12 [[storyline::[[character::Rat]] duels]]
 2009-03-03,2009-03-05-2009-03-07 [[storyline::{{wp|ninja}} [[character::Crocs]]]]
 2009-03-02 [[Anonymous (hippo)::notes::Does not appear to be [[Hannah (hippo)]] nor [[Holly (hippo)]] nor [[Henry (hippo)]] (the last of which is fictional)]]
-MULTIREF [[notes::On [[2012-10-19]] (also [[noref::2013-02-19]], [[noref::2013-06-09]], [[noref::2014-03-05]], and [[noref::2014-03-17]]), there is no sign next to [[location::Lemmings Leap]].  On [[2012-10-20]] the sign reads "LEMMING LEAP". On [[2013-08-05]], it reads the same, but the lettering is now red. By [[2012-10-23]], it's changed to "Lemming's Leap" (which implies it belongs to a single lemming). On [[2012-10-26]] (also [[noref::2014-04-16]], it's "Lemming Leap" (no apostrophe). On [[2013-02-05]] (also [[noref::2013-02-21]], [[noref::2013-06-03]], [[noref::2013-06-08]], and [[noref::2013-07-19]]) it's "LEMMINGS' LEAP" (implying belongs to many lemmings). On [[2013-02-07]], it's "Lemmings' LEAP" (first word in lower-case). The wording is the same on [[2014-03-07]], but the sign now also has a skull and crossbones. On [[2013-07-09]] it's "LEMMINGS' Leap" (second word in lower-case). On [[2013-12-14]], it's "Lemmings LEAP" (plural without apostrophe)]]
+MULTIREF [[title::Lemmings Leap]] [[notes::On [[2012-10-19]] (also [[noref::2013-02-19]], [[noref::2013-06-09]], [[noref::2014-03-05]], and [[noref::2014-03-17]]), there is no sign next to [[location::Lemmings Leap]].  On [[2012-10-20]] the sign reads "LEMMING LEAP". On [[2013-08-05]], it reads the same, but the lettering is now red. By [[2012-10-23]], it's changed to "Lemming's Leap" (which implies it belongs to a single lemming). On [[2012-10-26]] (also [[noref::2014-04-16]]), it's "Lemming Leap" (no apostrophe). On [[2013-02-05]] (also [[noref::2013-02-21]], [[noref::2013-06-03]], [[noref::2013-06-08]], and [[noref::2013-07-19]]) it's "LEMMINGS' LEAP" (implying belongs to many lemmings). On [[2013-02-07]], it's "Lemmings' LEAP" (first word in lower-case). The wording is the same on [[2014-03-07]], but the sign now also has a skull and crossbones. On [[2013-07-09]] it's "LEMMINGS' Leap" (second word in lower-case). On [[2013-12-14]], it's "Lemmings LEAP" (plural without apostrophe)]]
 2013-06-03 [[deaths::[[character::Bob 20121026 (lemming)]]]] [[Bob 20121026 (lemming)::notes::Bob didn't jump/die on [[2012-10-26]], but does so on 2013-06-03]]
 2013-07-19 [[character::Fred 20130719 (lemming)+[[deaths::Bob 20130719 (lemming)]]]]
 2013-08-21,2013-06-03,2013-06-09,2013-07-09,2013-12-14,2014-03-05,2012-10-19,2014-03-17,2013-02-19,2012-10-20,2012-10-23,2012-10-26,2013-07-19,2013-08-05,2013-02-05,2014-03-07,2014-03-19,2014-03-23,2014-04-22,2013-02-21,2013-04-16,2013-06-08,2014-04-16,2013-02-07 [[storyline::[[character::Lemmings]]]] [[Lemmings::species::lemming (group)]]
@@ -1360,7 +1360,7 @@ MULTIREF [[notes::On [[2012-10-19]] (also [[noref::2013-02-19]], [[noref::2013-0
 2005-05-07 [[notes::Possible reference to the expression "putting lipstick on a pig"]]
 2006-06-15,2009-02-01 [[notes::On [[2006-06-15]], [[2006-06-15::character::Stephan Pastis]]' {{wp|Liquid Paper}} "error" prevents us from learning the croc's language. On [[2009-02-01]], we learn that it's [[Croc-ese]]]]
 2014-01-19,2009-11-14,2009-01-27,2012-01-25,2011-03-29,2010-03-06,2008-10-19,2009-07-08,2008-08-06,2008-07-22,2010-09-03,2011-05-17,2012-05-13,2009-03-01,2012-06-19,2009-12-20,2011-12-27,2009-02-06,2011-06-07 [[notes::A brown furry cap, apparently unrelated to any plotline, appears in several strips&#58; [[2008-10-19]], [[2009-07-08]], [[2008-08-06]], [[2008-07-22]], [[2010-09-03]], [[2011-05-17]], [[2012-05-13]], [[2009-03-01]], [[2012-06-19]], [[2009-12-20]], [[2011-12-27]]]] [[meta::update this list to reflect source list]]
-MULTIREF [[title::Furry Brown Cap]] [[notes::A furry brown cap, apparently unrelated to any plotline, appears in several strips: [[2009-11-14]], [[2009-01-27]], [[2012-01-25]], [[2011-03-29]], [[2010-03-06]], [[2008-10-19]], [[2009-07-08]], [[2008-08-06]], [[2008-07-22]], [[2010-09-03]], [[2011-05-17]], [[2012-05-13]], [[2009-03-01]], [[2012-06-19]], [[2009-12-20]], [[2011-12-27]], [[2009-02-06]], [[2011-06-07]]]], [[2010-04-04]] [[2010-04-27]]
+MULTIREF [[title::Furry Brown Cap]] [[notes::A furry brown cap, apparently unrelated to any plotline, appears in several strips: [[2009-11-14]], [[2009-01-27]], [[2012-01-25]], [[2011-03-29]], [[2010-03-06]], [[2008-10-19]], [[2009-07-08]], [[2008-08-06]], [[2008-07-22]], [[2010-09-03]], [[2011-05-17]], [[2012-05-13]], [[2009-03-01]], [[2012-06-19]], [[2009-12-20]], [[2011-12-27]], [[2009-02-06]], [[2011-06-07]], [[2010-04-04]] [[2010-04-27]] ]]
 2008-10-11,2012-04-26 [[notes::The moles in [[2008-10-11]] and [[Mikey (mole)]] in [[2012-04-26]] look quite different. Pastis normally draws animals of the same "type" in the same way (moles actually constitute an entire family of animals, not just a specific species)]]
 2010-04-15 [[character::Pig+Rat+Mr Pitters (teddy bear)+Tubey (pillow)]]
 2010-12-12 [[character::Rat+Goat+Pig+Zebra]] [[newspaper_mentions::Denver Post]]
@@ -1770,3 +1770,5 @@ undies != underwear, so maybe un-dies? (using rebirth)
 2006-07-22 rat doesnt know senate but runs for it later
 
 # hockey thing is dallas stars http://assets.amuniversal.com/eddeab30a3cf01319788005056a9545d?width=1500
+
+# 2013-05-11 vs bumper stickers

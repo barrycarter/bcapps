@@ -21,12 +21,12 @@ ex-husband, grandfather, mother, niece, sister, son, wife, neighbor,
 girlfriend, boss, friend, father, half-brother, pet, roommate, date"));
 
 pbs_parse_data();
+die "TESTING";
 %data = pbs_all();
 pbs_storylines();
 pbs_characters();
 pbs_species_deaths();
 pbs_annotations();
-die "TESTING";
 
 # TODO: this seems redundant
 for $i (keys %data) {
@@ -104,6 +104,39 @@ close(A);
 debug("ASH:",keys %{$rdf{storyline}});
 
 die "TESTING";
+
+# special case for MULTIREF
+
+sub parse_multiref {
+  my($body) = @_;
+  # sort of a hack, since I use same format as for triples
+  $body=~s/^\s*\[\[title::(.*?)\]\]\s*\[\[notes::(.*?)\]\]\s*$//;
+  my($title, $notes) = ($1,$2);
+  # correct title to be filename
+#  $title=~s/ /_/g;
+
+  # TODO: work on below
+  # title can have spaces, but not links
+  $title=~s/[\[\]]//g;
+
+  debug("TITLE: $title");
+
+  # references which strips
+  my(@dates) = ($notes=~m/\[\[(\d{4}-\d{2}-\d{2})\]\]/g);
+
+  # get rid of the noref:: (which means: don't show that strip)
+  $notes=~s/noref:://g;
+
+  # notes and list of strips
+  my(@doc) = "$notes\n";
+
+  for $i (@dates) {
+    push(@doc, ":: ".pbs_table_date($i));
+  }
+  push(@doc, "[[Category:Continuity]]");
+
+  write_file_new(join("\n",@doc)."\n", "/usr/local/etc/metawiki/pbs/$title.mw");
+}
 
 # yet another subroutine, this one attempts to handle ALL triples
 # properly (it takes the triples and creates hashes that are hopefully
@@ -530,13 +563,12 @@ sub pbs_parse_data {
     if ($i=~/[^:]:[^:]/) {warn "BAD LINE: $i";}
 
     # fix wp template
-#    debug("PRE: $i");
     $i=~s/\{\{wp\|(.*?)\}\}/"{{#NewWindowLink: http:\/\/en.wikipedia.org\/wiki\/".fix_wp_template($1)."}}"/iseg;
-#    debug("POST: $i");
 
     # split line into source page and then body
     $i=~/^(.*?)\s*($dlb.*)$/;
     my($source, $body) = ($1,$2);
+    if ($source eq "MULTIREF") {parse_multiref($body); next;}
     parse_semantic($source,$body);
   }
 

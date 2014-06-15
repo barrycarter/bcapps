@@ -393,6 +393,9 @@ TODO: make this fail gracefully if .new cant be written
 TODO: allow for .new file to be in a different (temp?) directory in
 case writing files to current directory is bad idea
 
+TODO: This won't work for files that have quotation marks, but those
+are hopefully rare
+
 =cut
 
 sub write_file_new {
@@ -400,13 +403,13 @@ sub write_file_new {
   my(%opts) = parse_form($options);
   write_file($string,"$file.new");
   if ($opts{diff}) {
-    my($res) = system("cmp $file $file.new");
+    my($res) = system("cmp \"$file\" \"$file.new\"");
     unless ($res) {
       debug("$file and $file.new already identical");
       return;
     }
   }
-  system("mv $file $file.old; mv $file.new $file");
+  system("mv \"$file\" \"$file.old\"; mv \"$file.new\" \"$file\"");
 }
 
 =item append_file($string, $file)
