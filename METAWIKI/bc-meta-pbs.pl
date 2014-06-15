@@ -21,9 +21,9 @@ ex-husband, grandfather, mother, niece, sister, son, wife, neighbor,
 girlfriend, boss, friend, father, half-brother, pet, roommate, date"));
 
 pbs_parse_data();
+pbs_storylines();
 die "TESTING";
 %data = pbs_all();
-pbs_storylines();
 pbs_characters();
 pbs_species_deaths();
 pbs_annotations();
@@ -104,8 +104,6 @@ close(A);
 debug("ASH:",keys %{$rdf{storyline}});
 
 die "TESTING";
-
-# special case for MULTIREF
 
 sub parse_multiref {
   my($body) = @_;
@@ -466,6 +464,9 @@ sub pbs_storylines {
     $pagename=~s/\{\{\#NewWindowLink:\s+.*?\|(.*?)\}\}/$1/isg;
     # and list
     push(@page, "|-", "|$i ([[$pagename|link]])", "|data-sort-value=$dates[0]|".pbs_table_date($dates[0]), "|data-sort-value=$dates[-1]|".pbs_table_date($dates[-1]), "|".scalar @dates);
+
+    # now to create the page itself..
+    debug("PAGENAME: $pagename");
   }
 
   write_file_new(join("\n",@page), "/usr/local/etc/metawiki/pbs/Storylines.mw", "diff=1");
