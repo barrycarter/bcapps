@@ -21,9 +21,9 @@ ex-husband, grandfather, mother, niece, sister, son, wife, neighbor,
 girlfriend, boss, friend, father, half-brother, pet, roommate, date"));
 
 pbs_parse_data();
+%data = pbs_all();
 pbs_storylines();
 die "TESTING";
-%data = pbs_all();
 pbs_characters();
 pbs_species_deaths();
 pbs_annotations();
@@ -110,8 +110,6 @@ sub parse_multiref {
   # sort of a hack, since I use same format as for triples
   $body=~s/^\s*\[\[title::(.*?)\]\]\s*\[\[notes::(.*?)\]\]\s*$//;
   my($title, $notes) = ($1,$2);
-  # correct title to be filename
-#  $title=~s/ /_/g;
 
   # TODO: work on below
   # title can have spaces, but not links
@@ -457,39 +455,30 @@ sub pbs_characters {
 sub pbs_storylines {
   my(@page) = ("{| class='sortable' border='1' cellpadding='7'","!Storyline","!First","!Last","!Strips");
   for $i (sort keys %{$data{storyline}}) {
+    debug("I: $i");
     my(@dates) = sort keys %{$data{storyline}{$i}};
     # cleanup page name for linking
     my($pagename) = $i;
     $pagename=~s/[\[\]]//isg;
     $pagename=~s/\{\{\#NewWindowLink:\s+.*?\|(.*?)\}\}/$1/isg;
+    $pagename=~s/&\#39;/\'/g;
+
     # and list
     push(@page, "|-", "|$i ([[$pagename|link]])", "|data-sort-value=$dates[0]|".pbs_table_date($dates[0]), "|data-sort-value=$dates[-1]|".pbs_table_date($dates[-1]), "|".scalar @dates);
 
     # now to create the page itself..
     debug("PAGENAME: $pagename");
+    my(@doc);
+
+    for $i (@dates) {
+      push(@doc, ":: ".pbs_table_date($i));
+    }
+  push(@doc, "[[Category:Storyline]]");
+
+  write_file_new(join("\n",@doc)."\n", "/usr/local/etc/metawiki/pbs/$pagename.mw");
   }
 
   write_file_new(join("\n",@page), "/usr/local/etc/metawiki/pbs/Storylines.mw", "diff=1");
-
-  return; # old code follows
-
-  for $i (sqlite3hashlist("SELECT v, MIN(source) AS mindate, MAX(source) AS maxdate, COUNT(*) AS count, GROUP_CONCAT(source) AS dates FROM triples WHERE k='storyline' GROUP BY v ORDER BY mindate", "/tmp/pbs-triples.db")) {
-
-    # TODO: create page for each storyline w list of strips (similar
-    # to my old Storylines page:
-    # http://pearls-before-swine-bc.wikia.com/wiki/Storylines?oldid=8568
-
-    # the page name is the storyline name cleaned up
-    my($pagename) = $i->{v};
-    # TODO: need to get rid of "new window link" stuff too, harder
-    $pagename=~s/[\[\]]//isg;
-    debug("PN: $pagename");
-    $pagename=~s/\{\{\#NewWindowLink:\s+.*?\|(.*?)\}\}/$1/isg;
-    debug("PNB: $pagename");
-
-    push(@ret, "|-", "|$i->{v} ([[$pagename|link]])", "|$i->{mindate}", "|$i->{maxdate}", "|$i->{count}");
-  }
-  push(@ret, "|}");
 }
 
 # significant events
@@ -602,10 +591,6 @@ MARK
 	  $l=~s/\'/&\#39;/isg;
 	}
 
-	# restore [[ and ]] for printing and fix apos
-#	$k=~s/\001/\[\[/isg;
-#	$k=~s/\002/\]\]/isg;
-#	$k=~s/\'/&\#39;/isg;
 	print A "INSERT INTO triples VALUES ('$i','$j','$k',
 '$triples{$i}{$j}{$k}');\n";
       }

@@ -3,7 +3,7 @@
 # Reads Commodore floppy disk data in .D64 format
 # TODO: does not work very well at the moment
 
-require "bclib.pl";
+require "/usr/local/lib/bclib.pl";
 
 # read the .D64 file
 ($all,$file) = cmdfile();
@@ -16,6 +16,7 @@ for (;;) {
 
   # read the current block
   $block = read_chunk($all,$track,$sector);
+  write_file($block,"/tmp/test1.txt");
 
   # first two bytes x,y say "block continued on track x, sector y"
   # if x is 0, y gives number of bytes in this sector that are valid
