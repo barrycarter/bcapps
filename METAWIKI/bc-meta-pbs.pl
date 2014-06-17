@@ -18,7 +18,8 @@ $drb = "\\]\\]";
 # things that are considered relations (not necessarily relatives)
 %rel = list2hash(split(/,\s+/, "cousin, uncle, aunt, husband, brother,
 ex-husband, grandfather, mother, niece, sister, son, wife, neighbor,
-girlfriend, boss, friend, father, half-brother, pet, roommate, date"));
+girlfriend, boss, friend, father, half-brother, pet, roommate, date,
+grandmother"));
 
 pbs_parse_data();
 %data = pbs_all();
@@ -111,6 +112,16 @@ sub parse_multiref {
   $body=~s/^\s*\[\[title::(.*?)\]\]\s*\[\[notes::(.*?)\]\]\s*$//;
   my($title, $notes) = ($1,$2);
 
+  # parse notes for triples
+  debug("NOTES PRE: $notes");
+  $notes = parse_semantic("MULTIREF", $notes);
+  debug("NOTES POST: $notes");
+  # trim first and last double bracks
+  $notes=~s/^\001//;
+  $notes=~s/\002$//;
+  $notes=~s/\001/\[\[/isg;
+  $notes=~s/\002/\]\]/isg;
+
   # TODO: work on below
   # title can have spaces, but not links
   $title=~s/[\[\]]//g;
@@ -131,7 +142,7 @@ sub parse_multiref {
   }
   push(@doc, "[[Category:Continuity]]");
 
-  write_file_new(join("\n",@doc)."\n", "/usr/local/etc/metawiki/pbs/$title.mw");
+  write_file_new(join("\n",@doc)."\n", "/usr/local/etc/metawiki/pbs/$title.mw", "diff=1");
 }
 
 # yet another subroutine, this one attempts to handle ALL triples
@@ -375,6 +386,7 @@ sub pbs_species_deaths {
 }
 
 sub pbs_characters {
+  # note: removed random sorting, created a new page each time which is bad
   my(@page) = ("{| class='sortable' border='1' cellpadding='7'", 
 	       "!First","!Data",
 	       "!<span title='Sort by name'>#</span>",
@@ -383,8 +395,7 @@ sub pbs_characters {
 	       "!<span title='Sort by number of appearances'>#</span>",
 	       "!<span title='Sort by species'>#</span>",
 	       "!<span title='Sort by profession'>#</span>",
-	       "!<span title='Sort by date of death'>#</span>",
-	       "!<span title='Sort quasi-randomly'>#</span>"
+	       "!<span title='Sort by date of death'>#</span>"
 	       );
   for $i (sort keys %{$data{character_q}}) {
     my(@apps) = sort keys %{$data{$i}{appears_in}};
@@ -443,8 +454,7 @@ sub pbs_characters {
 	 "|data-sort-value=$latest|", "|data-sort-value=$num|",
 	 "|data-sort-value=$hash{species}|",
 	 "|data-sort-value=$hash{profession}|",
-	 "|data-sort-value=$hash{death}|",
-	 "|data-sort-value=".rand()."|"
+	 "|data-sort-value=$hash{death}|"
 	 );
   }
   debug("ABOUT TO WRITE Characters.mw");
@@ -462,6 +472,7 @@ sub pbs_storylines {
     $pagename=~s/[\[\]]//isg;
     $pagename=~s/\{\{\#NewWindowLink:\s+.*?\|(.*?)\}\}/$1/isg;
     $pagename=~s/&\#39;/\'/g;
+#    $pagename=~s/\"/&\#quot;/g;
     # to avoid subdirectory implication
     $pagename=~s/\//&\#47;/g;
 
@@ -477,7 +488,7 @@ sub pbs_storylines {
     }
   push(@doc, "[[Category:Storyline]]");
 
-  write_file_new(join("\n",@doc)."\n", "/usr/local/etc/metawiki/pbs/$pagename.mw");
+  write_file_new(join("\n",@doc)."\n", "/usr/local/etc/metawiki/pbs/$pagename.mw", "diff=1");
   }
 
   write_file_new(join("\n",@page), "/usr/local/etc/metawiki/pbs/Storylines.mw", "diff=1");
@@ -524,7 +535,7 @@ sub pbs_date_pages {
 #   my($str) = pbs_table_date($i->{source})."\n\n== Notes ==\n\n$i->{notes}\n";
 #   write_file_new($str, "/usr/local/etc/metawiki/pbs/$i->{source}.mw", "diff=1");
   }
-  write_file_new(join("\n",@obs)."\n</table>\n", "/usr/local/etc/metawiki/pbs/Observations.mw");
+  write_file_new(join("\n",@obs)."\n</table>\n", "/usr/local/etc/metawiki/pbs/Observations.mw", "diff=1");
 }
 
 # parses the data in pbs.txt and pbs-cl.txt and creates
