@@ -296,7 +296,7 @@ MULTIREF [[title::Dead celebrities]] [[notes::On [[2002-08-01]], [[Rat]] doesn't
 2004-04-26,2004-04-27 [[cameo::Earl+Mooch]]
 2004-04-28 [[cameo::Earl+Mooch+Darryl MacPherson]]
 2004-04-26-2004-04-30 [[storyline::[[character::Rat]] in Comics Re-education Camp]]
-2004-05-07,2007-05-23,2010-08-07,2002-05-25,2014-04-07,2012-06-18,2012-05-11,2013-03-06,2003-10-31,2009-01-07,2011-05-02 [[category::Pig's Cheese Fetish]]
+MULTIREF [[title::Pig's Cheese Fetish]] [[notes::Pig seems to have an unusual obsession with cheese. On [[2002-05-25]], he describes heaven as "finding a cheese basket on your doorstep. On [[2003-10-31]], one of his charades guesses is cheese (another guess, "monkey", also appears to be an object of fascination for Pig). On [[2004-05-07]], he refers to (and is fascinated by) a grater as "cheese grater" (even though it can grate many other things). On [[2007-05-23]], he invents "cheese sneakers". On [[2009-01-07]], Rat designs a building made of cheese (which Pig says could be "hard to build"), an indirect reference.  On [[2010-08-07]], he (and Rat) are obsessed with free cheese samples. On [[2011-05-02]], Pig describes his cheese's expiration date as an "event". On [[2012-05-11]], we learn that Pig visit a speciality cheese store (possible nod to Monty Python here). On [[2012-06-18]], Pig obtains a new grater, which he again uses to grate (shred) some cheese. On [[2013-03-06]], we learn that Pig regularly eats fried cheese sticks, cheeseburgers, and chili cheese fries. On [[2014-04-07]], he tells Pigita he prefers eating cheese over shelter.]]
 2009-01-07 [[Rat::aka::Frank Lloyd Rat]] [[Rat::profession::architect]]
 2009-01-13 [[character::Rat+Goat+Tiny (elephant)]]
 2007-12-26 [[notes::[[character::Pig]] is reading "Rome", but the author name is indiscernable]]
@@ -410,7 +410,7 @@ MULTIREF [[title::Atlas]] [[notes::[[2004-09-13]] shows [[Atlas]] carrying the w
 2005-06-17 [[newspaper_mentions::The Sun-Times]]
 2005-06-24,2005-06-25 [[storyline::[[character::Pig]] sits in a tree]]
 2005-06-25 [[character::Rat+Pig+[[Pig::mother::Pig's mother (pig)]]]]
-2005-07-10 [[crocodile_deaths::#2]] [[notes::This strip implies Larry's wife is named Debbie, not Patty; does Zebra have two sets of crocodile neighbors during the strip's run (in which case this may not be Larry)?]]
+2005-07-10 [[crocodile_deaths::#2]] [[notes::This strip implies Larry's wife is named Debbie, not Patty; does Zebra have two sets of crocodile neighbors during the strip's run (in which case this may not be Larry)?]] [[character::Zebra+Larry+[[Larry::wife::Debbie (crocodile)]]]]
 2005-07-11 [[character::Bob (antelope)+Zebra+Crocs]] [[Crocs::aka::Hendersons+Hendasunns]]
 2005-07-12 [[deaths::[[Larry::cousin::Jeemy (crocodile)]]]] [[antelope_deaths::#1]]
 2005-08-01 [[deaths::Toody (pig)]] [[Pig::aunt::Toody (pig)]]
@@ -1489,12 +1489,11 @@ MULTIREF [[title::Dictionary Editing]] [[notes::On [[2011-01-27]], [[Rat]] takes
 2007-01-30 [[Rat::aka::Jack Pitt+The Pittster]]
 2007-02-05 [[Crocs::profession::greeting card writer]] [[Crocs::address::{{wp|Kansas City}}]]
 2014-06-15 [[character::Rat+Fred 20140615 (human)]]
+MULTIREF [[title::Larry's wife]] [[notes::On [[2005-06-14]], Larry's wife is [[Larry::wife::Frieda (crocodile)]], on [[2005-07-10]], her name is [[Larry::wife::Debbie (crocodile)]], and by [[2008-04-10]] (and probably earlier), it's Patty. This isn't necessarily a contradiction, however. Larry mentioned his marriage to Frieda was "on the rocks", so maybe they divorced and he then married Debbie. After callously and cold-bloodedly (ha ha) killing 2 of their children, it's possible Debbie left him, and Patty is his third wife]]
+MULTIREF [[title::Pig's monkey]] [[notes::Pig seems to have an unusual connection to monkeys. On [[2002-09-27]], one threatens to bite off his ears. On [[2002-11-17]], his mother calls him a "monkeybrain". On [[2003-01-24]], similarly to 2002-09-27, another fortune cookie tells Pig he will be "monkey food". On [[2003-10-31]], one of Pig's charades guesses is "monkey" (another is "cheese", another item that appears to fascinate pig). On [[2004-01-28]], Pig talks about egging monkeys. The reference appears to be coincidental, but may have deeper meaning. On [[2008-05-09]], Rat sends Pig a telegram via monkey (again somewhat coincidental, though possibly Rat's attempt to scare Pig). On [[2009-06-30]], Pig wears monkey underwear (the monkey looks curiously like {{wp|Curious George}}). On [[2009-09-20]], Pig orders a monkey-in-a-box (he's apparently gotten over the fortune cookie warnings). On [[2009-10-13]], he dresses up as a [[Pig::aka::Monkeypig]]. On [[2013-07-20]], he takes ice cream "as a gibbon". Of course, gibbons are apes, not monkeys (as my favorite Librarian would be quick to remind me), but it's in the same general theme.]]
 </data>
 
 # the following lines need improvement
-
-# MULTIREF [[title::[[Larry]]'s wife]] [[notes::On [[2005-06-14]], Larry's wife is [[Freida (crocodile)]]. On [[2005-07-10]], it's [[Debbie (crocodile)]], and by [[need def ref for Patty]]
-
 
 # the following lines are incorrect and need to be checked
 
@@ -1517,8 +1516,6 @@ Talk::2002-04-12 Deaths::I can't tell if Rat killed the other Fruit Buddies as w
 # TODO: currently using 'deaths' to mean 'character', but really shouldn't
 
 # if someone is brother/etc of another, it counts as character
-
-# need to find definitive patty ref for below (ideally earliest one; note-- marriage on rocks + cold-bloodedly (haha) eating kids -> 2 divorces?) (2008-04-10 is one such)
 
 # page on bob deaths multi-species
 
@@ -1671,8 +1668,6 @@ undies != underwear, so maybe un-dies? (using rebirth)
 
 # 2011-02-04 vs toastmasters, 2012-05-07
 
-# 2003-01-24 pig and monkeys (dressed up as monkey boy, takes it as a gibbon), 2002-09-27, 2002-11-12, 2002-11-17, 2003-01-24, 2003-05-28, 2003-08-12, 2003-08-26, 2004-01-28, 2004-03-24 (no Pig though), 2013-07-20, 2004-09-29, 2009-06-30, 2008-05-09, 2003-10-31, 2004-01-18, 2004-02-29, 2009-09-20, 2009-10-13, 2006-12-16
-
 # mark twain 2002-11-27 (and later Cubs ref), 2003-03-23
 
 # 2002-01-20 scream painting later sold by rat? 2004-09-25
@@ -1772,3 +1767,5 @@ undies != underwear, so maybe un-dies? (using rebirth)
 # hockey thing is dallas stars http://assets.amuniversal.com/eddeab30a3cf01319788005056a9545d?width=1500
 
 # 2013-05-11 vs bumper stickers
+
+# 2006-11-19 more cheese

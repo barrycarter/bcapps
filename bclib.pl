@@ -374,9 +374,10 @@ sub write_file {
   }
 
   # TODO: return fail value if file cant be written
-  open(A,">$file")||warnlocal("Can't open $file, $!");
+  # quoting file name to be safe
+  open(A, ">$file")||warnlocal("WRITE_FILE() can't open $file, $!");
   print A $string;
-  close(A);
+  close(A)||warnlocal("WRITE_FILE() can't close $file, $!");
 }
 
 =item write_file_new($string, $file, $options)
@@ -393,7 +394,7 @@ TODO: make this fail gracefully if .new cant be written
 TODO: allow for .new file to be in a different (temp?) directory in
 case writing files to current directory is bad idea
 
-TODO: This won't work for files that have quotation marks, but those
+TODO: This wont work for files that have quotation marks, but those
 are hopefully rare
 
 =cut
@@ -401,13 +402,21 @@ are hopefully rare
 sub write_file_new {
   my($string, $file, $options) = @_;
   my(%opts) = parse_form($options);
+  debug("WRITING STRING to $file.new");
   write_file($string,"$file.new");
+  debug("DONE WRITING STRING TO $file.new");
   if ($opts{diff}) {
-    my($res) = system("cmp \"$file\" \"$file.new\"");
+#    my($res) = system("cmp \"$file\" \"$file.new\" 1> /tmp/cmp.out 2> /tmp/cmp.err");
+    debug("APPLYING DIFF($file)");
+    my($out,$err,$res) = cache_command2("cmp \"$file\" \"$file.new\" 1> /tmp/cmp.out 2> /tmp/cmp.err", "nocache=1");
+    debug("OUT: $out, ERR: $err, RES: $res");
     unless ($res) {
       debug("$file and $file.new already identical");
+      system("rm \"$file.new\"");
       return;
     }
+
+    debug("$file and $file.new different, overwriting");
   }
   system("mv \"$file\" \"$file.old\"; mv \"$file.new\" \"$file\"");
 }

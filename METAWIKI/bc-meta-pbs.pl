@@ -23,10 +23,10 @@ girlfriend, boss, friend, father, half-brother, pet, roommate, date"));
 pbs_parse_data();
 %data = pbs_all();
 pbs_storylines();
-die "TESTING";
 pbs_characters();
 pbs_species_deaths();
 pbs_annotations();
+die "TESTING";
 
 # TODO: this seems redundant
 for $i (keys %data) {
@@ -462,6 +462,8 @@ sub pbs_storylines {
     $pagename=~s/[\[\]]//isg;
     $pagename=~s/\{\{\#NewWindowLink:\s+.*?\|(.*?)\}\}/$1/isg;
     $pagename=~s/&\#39;/\'/g;
+    # to avoid subdirectory implication
+    $pagename=~s/\//&\#47;/g;
 
     # and list
     push(@page, "|-", "|$i ([[$pagename|link]])", "|data-sort-value=$dates[0]|".pbs_table_date($dates[0]), "|data-sort-value=$dates[-1]|".pbs_table_date($dates[-1]), "|".scalar @dates);
@@ -610,14 +612,24 @@ sub pbs_table_date {
   unless ($date=~m/^(\d{4})\-(\d{2})\-(\d{2})$/) {warn "BAD DATE: $date";}
   my($link) = "http://www.gocomics.com/pearlsbeforeswine/$1/$2/$3";
   my($pdate) =  strftime("%d %b %Y (%A)", gmtime(str2time($date)));
+
+  # notes for this strip
+  my($notes) = join(". ",sort keys %{$data{$date}{notes}});
+  # remove wp links
+  $notes=~s/\{\{\#NewWindowLink:\s+.*?\|(.*?)\}\}/$1/isg;
+  # fix up quotation marks
+  $notes=~s/\"/&quot;/isg;
+
   # NOTE: this must be one single line for formatting reasons (wikia)
   return << "MARK";
-<table border><tr><th>{{#NewWindowLink: $date | $pdate}}</th></tr><tr><th>{{#NewWindowLink: $link | <verbatim>$date</verbatim>}}</th></tr><tr><th>{{#NewWindowLink: $link{$date} | (highest resolution)}}</th></tr></table>
+<table border><tr><th>{{#NewWindowLink: $date | $pdate}}</th></tr><tr><th title="$notes">{{#NewWindowLink: $link | <verbatim>$date</verbatim>}}</th></tr><tr><th>{{#NewWindowLink: $link{$date} | (highest resolution)}}</th></tr></table>
 MARK
 ;
 }
 
 # version 2 simpler (hoping to do popup, but nothing for now
+# TODO: merge this as an option to above
+
 sub pbs_table_date2 {
   my($date) = @_;
   unless ($date=~m/^(\d{4})\-(\d{2})\-(\d{2})$/) {warn "BAD DATE: $date";}
