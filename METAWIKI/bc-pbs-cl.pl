@@ -14,12 +14,15 @@ require "/usr/local/lib/bclib.pl";
 	 "P" => "[[character::Pig]]",
 	 "pastis" => "[[character::Stephan Pastis]]",
 	 "max" => "[[character::Max (lion)]]",
-	 "patty" => "[[character::Patty (crocodile)]]"
+	 "patty" => "[[character::Patty (crocodile)]]",
+	 "zach" => "[[character::Zach (lion)]]",
+	 "kiki" => "[[character::Kiki (lion)]]",
+	 "gigi" => "[[character::Gigi (lion)]]",
 	 );
 
 # when using slash mode...
 for $i ("pig", "rat", "zebra", "goat", "farina", "pigita", "larry", "junior",
-       "guard duck", "snuffles") {
+       "guard duck", "snuffles", "andy") {
   $full{$i} = "[[character::".ucfirst($i)."]]";
   $full{ucfirst($i)} = "[[character::".ucfirst($i)."]]";
 }
