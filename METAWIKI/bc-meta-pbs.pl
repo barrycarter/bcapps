@@ -23,11 +23,12 @@ grandmother"));
 
 pbs_parse_data();
 %data = pbs_all();
+pbs_newspaper_mentions();
+die "TESTING";
 pbs_storylines();
 pbs_characters();
 pbs_species_deaths();
 pbs_annotations();
-die "TESTING";
 
 # TODO: this seems redundant
 for $i (keys %data) {
@@ -39,7 +40,6 @@ for $i (keys %data) {
   }
 }
 
-pbs_newspaper_mentions();
 pbs_date_pages();
 
 # run subroutines to do stuff
@@ -260,8 +260,8 @@ SELECT * FROM triples ORDER BY
 
     # newspaper mentions by day and paper
     if ($k eq "newspaper_mentions") {
-      $data{$source}{newspaper_mentions}{$v} = 1;
-      $data{$v}{mentioned_on}{$source} = 1;
+      $data{newspaper_mentions}{$source}{$v} = 1;
+      $data{mentioned_on}{$v}{$source} = 1;
       next;
     }
 
@@ -379,8 +379,8 @@ sub pbs_species_deaths {
     push(@page, "</table>");
     # dont create pages for species that die infrequently
     # TODO: make this limit less arbitrary
-    if ($runtot <= 8) {next;}
     debug("RUNTOT($i): $runtot");
+    if ($runtot <= 8) {next;}
     write_file_new(join("\n",@page)."\n", "/usr/local/etc/metawiki/pbs/".ucfirst($i)."_Deaths.mw", "diff=1");
   }
 }
@@ -502,6 +502,33 @@ sub pbs_sig_events {
 
 # creates the "newspaper mentions" page
 sub pbs_newspaper_mentions {
+
+  # per day
+  my(@per_day) = ("<table border>");
+  for $i (sort keys %{$data{newspaper_mentions}}) {
+    # list of papers for this day
+    my($paps) = join("<br>\n",sort keys %{$data{newspaper_mentions}{$i}});
+    push(@per_day, "<tr><th>",pbs_table_date($i),"</th><td>$paps</td></tr>");
+  }
+  my($per_day) = join("\n", @per_day)."\n</table>\n";
+  write_file_new(join("\n",@per_day), "/usr/local/etc/metawiki/pbs/Newspaper_Mentions (by day).mw", "diff=1");
+
+  # and per paper
+  my(@per_paper) = ();
+  for $i (sort keys %{$data{mentioned_on}}) {
+    push(@per_paper, "* $i");
+    for $j (sort keys %{$data{mentioned_on}{$i}}) {
+      push(@per_paper, ":: ".pbs_table_date($j)."<br />");
+    }
+    push(@per_paper,"");
+  }
+  push(@per_paper, "");
+  write_file_new(join("\n",@per_paper), "/usr/local/etc/metawiki/pbs/Newspaper_Mentions (by paper).mw", "diff=1");
+
+  return;
+
+
+  # old code starts here
   my(@ret);
   for $i (sqlite3hashlist("SELECT v, GROUP_CONCAT(source) AS dates FROM triples WHERE k='newspaper_mentions' GROUP BY v ORDER BY v","/tmp/pbs-triples.db")) {
     push(@ret, "* $i->{v}");

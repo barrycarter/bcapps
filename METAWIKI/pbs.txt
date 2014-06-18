@@ -127,7 +127,7 @@ disclaim: based on gocomics website only
 2002-07-18 [[zebra_deaths::#1]]
 2002-07-22 [[character::Pigita]] [[Pigita::species::pig]]
 2007-07-17 [[character::Not Me You Moron (ghost)]]
-2010-12-29,2012-12-29,2009-05-28,2009-02-08,2009-02-13,2009-01-05,2008-11-08,2008-07-21,2008-02-05,2006-10-16,2006-08-29,2005-10-13,2006-01-25,2005-04-08,2005-04-10,2004-12-12,2004-06-02,2004-06-16-2004-06-19,2004-05-31,2004-04-20,2004-03-30,2004-04-03,2004-03-25,2004-03-18,2003-09-14,2003-06-05,2003-05-19,2002-07-22,2002-07-23,2002-07-28,2002-08-04,2002-08-18,2006-08-29 [[storyline::[[character::Pig]] and [[character::Pigita]]]]
+2010-09-13,2010-05-13,2010-04-08,2010-04-01,2010-03-11,2010-07-01,2010-07-02,2007-09-06,2010-12-29,2012-12-29,2009-05-28,2009-02-08,2009-02-13,2009-01-05,2008-11-08,2008-07-21,2008-02-05,2006-10-16,2006-08-29,2005-10-13,2006-01-25,2005-04-08,2005-04-10,2004-12-12,2004-06-02,2004-06-16-2004-06-19,2004-05-31,2004-04-20,2004-03-30,2004-04-03,2004-03-25,2004-03-18,2003-09-14,2003-06-05,2003-05-19,2002-07-22,2002-07-23,2002-07-28,2002-08-04,2002-08-18,2006-08-29 [[storyline::[[character::Pig]] and [[character::Pigita]]]]
 2010-12-02 [[notes::The microphones read, unsurprisingly, FOX, CNN, NBC, and CBS]]
 2009-02-18 [[notes::[[character::Rat]] is wearing an {{wp|Dallas Stars}} shirt]]
 2007-11-08 [[notes::[[character::Goat]]'s ticket reads "Ticket $250"]]
@@ -334,6 +334,7 @@ MULTIREF [[title::Pig's Cheese Fetish]] [[notes::Pig seems to have an unusual ob
 2004-05-17-2004-05-21 [[storyline::[[character::Rat]]'s 'mallet o' understanding']] [[meta::I can't seem to use both sorts of quotes easily]]
 2013-04-20 [[notes::[[character::Rat]]'s 'mallet o' understanding' (from [[2004-05-17]]) returns!]]
 2004-05-24-2004-05-29 [[storyline::The Great Pearls Lockout]]
+2011-03-24 [[Pig::aka::The Great Pigini]]
 2004-05-29 [[cameo::Dennis Mitchell (Dennis the Menace)+Sarge (Beetle Bailey)+Jeffy (Family Circus)]]
 2004-06-06 [[deaths::[[Zebra::cousin::Eddie (zebra)]]]]
 2011-10-08 [[character::Rat+Pig+Eddie (exclamation point)+Becky (human)]]
@@ -582,7 +583,7 @@ MULTIREF [[title::Rat's guilt]] [[notes::On [[2014-06-09]], Rat says he feels gu
 2006-09-18 [[character::Junior]]
 2006-10-11,2006-10-12,2006-10-20,2006-10-21 [[storyline::[[character::Zebra]] tries to sell his house]] [[character::Jane 20061011 (human)]] [[Jane 20061011 (human)::profession::real estate agent]]
 2006-11-01-2006-11-04,2006-11-06,2006-11-07 [[storyline::[[character::Rat]] runs for Mayor]]
-2006-11-03 [[newspaper_mentions::Miami Herald]]
+2006-11-03 [[newspaper_mentions::Miami Herald+Palm Beach Post]]
 2006-11-10,2006-11-11 [[character::Pig+Rat+Tedford (bear)]] [[Tedford (bear)::aka::The All-Knowing Bear]]
 2006-11-19,2011-09-29,2011-10-02 [[storyline::[[character::Pig]] writes fiction]]
 2006-11-27-2006-12-01,2006-12-04-2006-12-07,2006-11-30 [[storyline::[[character::Crocs]] visit sensitive readers]]
@@ -662,6 +663,7 @@ MULTIREF [[title::Rat's guilt]] [[notes::On [[2014-06-09]], Rat says he feels gu
 2007-09-02 [[character::Hyenas]] [[Hyenas::species::hyena (group)]] [[meta::need to distinguish these hyenas from Hy and Hy]]
 2007-09-04,2007-09-05,2007-09-09-2007-09-15 [[storyline::Family Circus invades Pearls Before Swine]]
 2007-09-17-2007-09-21,2007-09-24-2007-09-26 [[storyline::[[character::Goat]] returns home to see his family]]
+2007-09-19,2007-09-21,2007-09-24-2007-09-26 [[character::Goat's mother (goat)]]
 2007-09-18 [[newspaper_mentions::Los Angeles Times]]
 2007-09-20 [[character::Goat+[[Goat::mother::Goat's mother (goat)]]]] [[meta::Note silliness that occurs in relatives when I name characters like this]]
 2007-09-21 [[Goat::aka::Paris]]
@@ -727,12 +729,13 @@ MULTIREF [[title::Rat's guilt]] [[notes::On [[2014-06-09]], Rat says he feels gu
 2005-12-21-2005-12-23 [[storyline::[[character::Rat]] writes horoscopes]]
 2008-10-28 [[character::Pig+Fred (fox)+Zebra]] [[Fred (fox)::aka::Fred the {{wp|fennec Fox}}]]
 2009-01-13 [[newspaper_mentions::Raleigh ???+Durham Sen+Charlotte Observer]]
-2006-08-06,2006-09-03,2009-01-18,2010-08-29,2008-03-30,2010-01-24,2010-01-27,2007-10-16,2008-08-17,2009-05-31,2007-11-18,2014-01-26,2010-05-09,2009-03-08,2012-04-15,2008-06-29,2013-07-21,2006-10-08,2006-04-16,2008-11-30,2006-10-02,2006-10-03,2006-10-05,2006-10-06,2007-10-07,2012-07-22,2006-10-31,2007-04-29,2007-07-01,2009-11-08,2006-09-30,2006-09-28 [[storyline::[[character::Danny Donkey]]]]
+2006-08-06,2006-09-03,2009-01-18,2010-08-29,2008-03-30,2010-01-24,2007-10-16,2008-08-17,2009-05-31,2007-11-18,2014-01-26,2010-05-09,2009-03-08,2012-04-15,2008-06-29,2013-07-21,2006-10-08,2006-04-16,2008-11-30,2006-10-02,2006-10-03,2006-10-05,2006-10-06,2007-10-07,2012-07-22,2006-10-31,2007-04-29,2007-07-01,2009-11-08,2006-09-30,2006-09-28 [[storyline::[[character::Danny Donkey]]]]
 2006-07-31,2006-08-01,2006-08-03 [[storyline::[[character::Pig]] wears an {{wp|Elizabethan collar}}]]
 2013-11-01 [[character::Pig+Goat+Elizabeth (human)]]
 2007-09-08 [[character::Pig+Rat+Timmy (zombie)]]
 2008-01-31 [[notes::How tight is the bubble wrap and how can [[character::Rat]] breathe?]]
 2007-09-27-2007-09-29 [[storyline::[[character::Rat]], Justice of the Peace]]
+2007-09-28 [[character::Bobo (elephant)]]
 2008-01-22 [[character::Rat+[[deaths::Bob 20080122 (human)]]]] [[Bob 20080122 (human)::religion::Atheism]] [[Bob 20080122 (human)::profession::unemployed]]
 2008-01-30 [[character::Pig+Zebra+Bob 20080130 (human)]] [[Bob 20080130 (human)::subspecies::mini]]
 2008-08-11,2008-08-12,2008-08-15 [[storyline::[[character::Pig]] on the Olympic Gymnastic Team]]
@@ -764,7 +767,7 @@ MULTIREF [[title::Rat's guilt]] [[notes::On [[2014-06-09]], Rat says he feels gu
 2009-01-22 [[Frank 20090122 (crocodile)::aka::Doorstoppo]] [[Doorstoppo::profession::superhero]]
 2009-04-05 [[character::Larry+Junior+Vinson (human)]] [[Vinson (human)::profession::principal]]
 2009-01-28 [[character::Maura+Guard Duck+Snuffles]]
-2008-12-28,2009-01-04,2009-01-11,2009-01-26-2009-01-30,2009-02-03-2009-02-06 [[storyline::[[character::Guard Duck]] rejects [[character::Snuffles]] for [[character::Maura]]]]
+2010-01-26,2008-12-28,2009-01-04,2009-01-11,2009-01-26-2009-01-30,2009-02-03-2009-02-06 [[storyline::[[character::Guard Duck]] rejects [[character::Snuffles]] for [[character::Maura]]]]
 2009-02-09 [[newspaper_mentions::Boston Herald]]
 2009-03-03 [[deaths::Bob 20090303 (crocodile)]]
 2009-03-14 [[character::Rat+Zebra+[[Zebra::cousin::Squidmo (zebra)]]]]
@@ -825,7 +828,7 @@ MULTIREF [[title::Pearls without [[Pig]]]] [[notes::The "Pearls without Pig" on 
 2009-10-21,2010-01-08,2010-01-09,2010-01-03,2010-01-06 [[storyline::Google as God]]
 2010-01-10 [[character::Goat+Snuffles+Guard Duck]]
 2010-01-19 [[character::Katie (cow)]] [[Katie (cow)::aka::Drama Cow]]
-2010-01-19-2010-01-23,2010-01-25,2010-01-26,2010-01-29 [[storyline::Drama Cow]] [[character::Katie (cow)]]
+2010-01-27,2010-01-19-2010-01-23,2010-01-25,2010-01-26,2010-01-29 [[storyline::Drama Cow]] [[character::Katie (cow)]]
 2010-01-30 [[storyline::Google as God+[[character::Drama Cow]]+[[character::Guard Duck]] rejects [[character::Snuffles]] for [[character::Maura]]]]
 2010-02-02 [[character::Rat+Pig+Timmy (swan)+Tammy (swan)]]
 2010-02-03 [[newspaper_mentions::The Times+The Post]]
@@ -834,7 +837,7 @@ MULTIREF [[title::Pearls without [[Pig]]]] [[notes::The "Pearls without Pig" on 
 2010-02-08-2010-02-09,2010-02-13,2010-02-20 [[storyline::[[character::Lucky (lion)]]]]
 2010-02-21 [[character::Petey (peacock)]]
 2010-02-14-2010-02-17 [[storyline::[[character::Patty (crocodile)]] kicks [[character::Larry]] out]]
-2010-02-11 [[character::Jenny (jellyfish)]]
+2010-02-11,2010-02-12 [[character::[[Pig::friend::Jenny (jellyfish)]]]]
 2014-02-05 [[character::Jenny (goat)]]
 2010-02-22 [[character::Rat+Pig+Uni (unicorn)]]
 2006-04-28,2006-04-29 [[storyline::[[character::Pig]] tries to meet the {{wp|UPS}} girl]]
@@ -854,16 +857,17 @@ MULTIREF [[title::Pearls without [[Pig]]]] [[notes::The "Pearls without Pig" on 
 2005-08-18 [[hamster_deaths::#unknown]]
 2010-05-17 [[newspaper_mentions::Hartford Cou???+Santa Rosa Press Democrat+Arizona Republic]]
 2008-12-08 [[newspaper_mentions::Santa Rosa Press Democrat]]
-2008-12-18,2008-12-19 [[character::Pippy (prairie dog)]] [[Pippy (prairie dog)::aka::Father Pippy the Prairie Dog preacher]]
+2008-12-18,2008-12-19 [[character::Pippy (prairie dog)]] [[Pippy (prairie dog)::aka::Father Pippy the Prairie Dog preacher]] [[Pippy (prairie dog)::profession::preacher]]
 2010-05-25 [[newspaper_mentions::New York Daily News+Albany Times Union]]
-2010-05-18 [[deaths::J. Rutherford (shrimp)]]
+2010-05-18 [[character::Pig+Goat+[[Pig::kills::[[deaths::J. Rutherford (shrimp)]]]]
+2010-05-27 [[character::Pig+Rat+Bigfoot]]
 2010-06-02-2010-06-05 [[storyline::[[character::Rat]]'s {{wp|Civil War}} re-enactment]]
-2010-06-14,2010-06-15,2010-06-18,2010-06-22,2010-06-23, [[storyline::[[character::Larry]] returns to fourth grade]]
+2010-06-14,2010-06-15,2010-06-18,2010-06-22,2010-06-23,2010-07-09 [[storyline::[[character::Larry]] returns to fourth grade]]
 2010-06-20 [[crocodile_deaths::#1]] [[notes::We learn there are 18 crocodiles remianing in the frat house]]
 2010-06-24,2010-06-08 [[character::Zebra+Potus (elephant)]]
 2010-06-06-2010-06-08,2010-06-10,2010-06-20,2010-06-21,2010-06-24,2010-06-25,2010-12-04 [[character::Potus (elephant)]]
 2011-02-07 [[notes::possible homage to {{wp|Dick Tracy}}]]
-2010-06-12 [[character::Pig+Rat+Jacko (dragon)]] [[Jacko (dragon)::aka::Jacko, the Fire-Breathing Dragon]]
+2010-06-12 [[character::Pig+Rat+[[Pig::friend::Jacko (dragon)]]]] [[Jacko (dragon)::aka::Jacko, the Fire-Breathing Dragon]]
 2010-06-28 [[storyline::[[character::Pig]]'s stalker [[character::Sweet Fanny (sheep)]]]]
 2010-06-29,2010-07-01,2010-07-02,2010-07-07,2010-07-08,2010-07-13,2010-07-14 [[storyline::[[character::Pig]]'s stalker [[character::Sweet Fanny (sheep)]]]]
 2010-07-03 [[newspaper_mentions::Buffalo News]]
@@ -897,7 +901,7 @@ MULTIREF [[title::Pearls without [[Pig]]]] [[notes::The "Pearls without Pig" on 
 2002-01-13 [[character::Pig+[[Pig::cousin::Frankie (pig)]]+[[Pig::uncle::George (pig)]]+[[deaths::[[Pig::aunt::Vivian (pig)]]]]]]
 MULTIREF [[title::[[Larry]] spells his name]] [[notes::On [[2009-10-16]], Larry writes a sign "Watch Larry chug a BEER! (one dollar)", but, a year later, on [[2010-10-11]], his Celebrity Jeopardy placard reads "Mee no kan spel nayme" (perhaps all that beer killed off his spelling skill brain cells?)]]
 2002-01-15 [[deaths::[[Rat::father::Rat's father (rat)]]]]
-2010-11-02,2010-11-03 [[character::Stevie Stenographer (human)]]
+2010-11-02,2010-11-03 [[character::Stevie Stenographer (human)]] [[Stevie Stenographer (human)::profession::stenographer]]
 2002-12-17 [[character::Rat+Stevie (salmon)]]
 2010-11-04 [[newspaper_mentions::Daily Herald]]
 2010-11-19 [[newspaper_mentions::Washington Post]]
@@ -917,9 +921,10 @@ MULTIREF [[title::Ebony and Ivory]] [[notes::The crocs refer to [[Zebra]] as "Eb
 2009-07-06,2009-07-07,2009-07-09,2009-07-10 [[storyline::[[character::Mr Heebie Jeebie (paper bag)]]]]
 2013-04-24-2013-04-26,2013-05-02,2013-05-03,2013-05-09,2013-05-17,2013-05-23 [[storyline::[[character::Baby Johnson (human)]], [[Baby Johnson (human)::profession::bookie]]]]
 2005-10-03 [[character::Pig+Guard Duck+[[deaths::Chuck 20051003 (human)]]]] [[Rat+Pig::neighbor::Chuck 20051003 (human)]] [[Chuck 20051003 (human)::aka::Neighbor Chuck]]
-2011-03-09,2011-03-10 [[character::Donny (dung beetle)]] [[notes::The {{wp|Scarabaeus sacer}} is a species of {{wp|dung beetle}} that was indeed held sacred by ancient Egyptians. So, Donny may not be lying about being held sacred (unless he's a different type of dung beetle), although he is lying about not being a dung beetle]]
+2011-03-09,2011-03-10 [[character::Pig+Pigita+Donny (dung beetle)]] [[notes::The {{wp|Scarabaeus sacer}} is a species of {{wp|dung beetle}} that was indeed held sacred by ancient Egyptians. So, Donny may not be lying about being held sacred (unless he's a different type of dung beetle), although he is lying about not being a dung beetle]]
 2010-11-15 [[character::Pig+Rat+Donny (dung beetle)]]
 2010-11-16 [[character::Goat+Rat+Donny (dung beetle)]]
+2009-09-28 [[newspaper_mentions::Wisconsin State Superior?]]
 2011-03-07 [[character::Larry+Danny (gopher)]]
 2013-02-20 [[character::Pig+Goat+[[Pig::friend::Dave 20130220 (human)]]]] [[Dave 20130220 (human)::profession::cable installer]]
 2011-12-07 [[character::Pig+Rat+[[Pig::friend::Bob 20111207 (human)]]]] [[Bob 20111207 (human)::profession::mechanical engineer]]
@@ -1131,7 +1136,7 @@ MULTIREF [[title::[[[[Larry]]'s mother]]]] [[notes::Larry's mother dies on [[200
 2013-11-15 [[newspaper_mentions::Salt Lake ???]]
 2013-11-24-2013-11-26,2013-12-01 [[storyline::[[character::Rat]]'s family Thanksgiving dinner]]
 2013-12-01 [[character::Wanda (human)+Jerry (rat)+Greg (rat)+Mark (rat)+Dan (rat)]] [[Rat::uncle::Jerry (rat)+Greg (rat)+Mark (rat)+Dan (rat)]]
-2013-11-25 [[character::Rat+Wanda (human)]]
+2013-11-25 [[character::Rat+Wanda (human)]] [[Wanda (human)::profession::masseuse]]
 2005-04-06 [[character::Pig+Rat+[[Pig::friend::Dan 20050406 (human)]]]]
 2008-06-28 [[character::Pig+Dan 20080628 (human)]]
 2003-01-19 [[character::Rat+Pig+Dan 20030119 (human)+[[Dan 20030119 (human)::wife::Stephanie (human)]]]] [[Dan 20030119 (human)::profession::florist]]
@@ -1184,7 +1189,6 @@ MULTIREF [[title::[[[[Larry]]'s mother]]]] [[notes::Larry's mother dies on [[200
 2009-09-04 [[character::Pig+Rat+[[Pig::friend::Blackbeard (human)]]]]
 2011-12-26 [[character::Rat+Pig+Spectral Tortoise O' Perspective (tortoise)]]
 2004-03-17-2004-03-20 [[storyline::{{wp|Ho Chi Minh}}]]
-
 2009-03-23 [[newspaper_mentions::The Miami Herald+The Palm Beach Post]]
 2014-02-17,2014-03-14,2014-03-18,2014-04-06,2013-03-21,2013-03-31,2013-04-04,2013-04-21,2013-05-26,2013-06-14,2013-06-30,2013-08-04,2013-08-25,2013-09-01,2013-09-03,2013-10-06,2013-11-11,2013-11-18,2013-12-29,2012-01-08,2012-04-08,2012-05-08,2012-07-08,2012-08-27,2012-10-04,2012-10-07,2012-11-26,2007-10-14,2011-07-31,2010-12-05,2010-08-15,2009-09-27,2003-01-19,2004-03-29,2005-04-10,2009-12-06,2011-01-30,2009-06-14,2004-03-02,2011-04-08,2008-05-25,2004-01-06,2010-11-07,2008-10-26,2008-06-15,2009-08-23,2004-04-03,2008-07-27,2004-03-23,2007-02-18 [[category::Shaggy Dog]]
 2012-10-07 [[character::Pig+Rat+Stephan Pastis+Joe 20121007 (human)]] [[Joe 20121007 (human)::profession::doctor]] [[Joe 20121007 (human)::aka::Country Doctor Joe]]
@@ -1274,7 +1278,7 @@ MULTIREF [[title::Lemmings Leap]] [[notes::On [[2012-10-19]] (also [[noref::2013
 2011-07-23 [[character::Goat+Pig+Pluto (planet)]] [[notes::Perhaps parodying himself for drawing rats and pigs the same size, Pastis shows {{wp|Pluto}} (diameter of over 1400 miles) as being smaller than both Pig and Goat]]
 2011-07-13 [[character::Pig+Guard Duck+Pluto (planet)]] [[Pluto (planet)::subspecies::dwarf]]
 2011-10-26 [[newspaper_mentions::Arizona Daily ???+Incarman's??? ???+Press ???]]
-2010-01-11-2010-01-13,2010-01-15,2010-01-16,2010-01-18, [[storyline::Socorro mockingbird on [[character::Larry]]'s head]]
+2010-01-27,2010-01-11-2010-01-13,2010-01-15,2010-01-16,2010-01-18, [[storyline::Socorro mockingbird on [[character::Larry]]'s head]]
 2006-04-03-2006-04-05 [[character::Rat+Farina]]
 2012-04-17-2012-04-19 [[storyline::{{wp|Kleenex}} box mystery]]
 2002-01-08-2002-01-12,2002-01-14-2002-01-17,2002-01-19,2002-01-24-2002-01-31 [[character::Rat+Pig]]
@@ -1382,7 +1386,7 @@ MULTIREF [[title::Lemmings Leap]] [[notes::On [[2012-10-19]] (also [[noref::2013
 2005-05-11 [[character::Rat+James Thornton (human)+Spiro (human)]] [[Spiro (human)::profession::speed bump+student]]
 2011-11-06 [[character::Goat+Pig+James (human)]] [[James (human)::profession::butler]]
 2003-10-29-2003-10-31 [[storyline::[[character::Pig]] attends a costume party as a blindfolded hostage]]
-2013-07-02,2013-07-03 [[character::Goat+Zebra+Shlomo (human)+Ivan (human)]]
+2013-07-02,2013-07-03 [[character::Goat+Zebra+Shlomo (human)+Ivan (human)]] [[Ivan (human)+Shlomo (human)::profession::violinist]]
 2008-03-17 [[Rat::aka::Ratimus Studimus Maximus]] [[Pig::aka::Pigimus Fatimus]]
 2007-03-11 [[character::Rat+Pig+[[deaths::Euripedes (frog)]]]] [[Euripedes (frog)::aka::Euripedes the One-Eyed Frog]]
 2006-01-02,2006-01-05,2006-01-12 [[storyline::[[character::Rat]] makes {{wp|gingerbread men}}]]
@@ -1398,7 +1402,7 @@ MULTIREF [[title::Lemmings Leap]] [[notes::On [[2012-10-19]] (also [[noref::2013
 2005-05-07 [[notes::Possible reference to the expression "putting lipstick on a pig"]]
 2006-06-15,2009-02-01 [[notes::On [[2006-06-15]], [[2006-06-15::character::Stephan Pastis]]' {{wp|Liquid Paper}} "error" prevents us from learning the croc's language. On [[2009-02-01]], we learn that it's [[Croc-ese]]]]
 2014-01-19,2009-11-14,2009-01-27,2012-01-25,2011-03-29,2010-03-06,2008-10-19,2009-07-08,2008-08-06,2008-07-22,2010-09-03,2011-05-17,2012-05-13,2009-03-01,2012-06-19,2009-12-20,2011-12-27,2009-02-06,2011-06-07 [[notes::A brown furry cap, apparently unrelated to any plotline, appears in several strips&#58; [[2008-10-19]], [[2009-07-08]], [[2008-08-06]], [[2008-07-22]], [[2010-09-03]], [[2011-05-17]], [[2012-05-13]], [[2009-03-01]], [[2012-06-19]], [[2009-12-20]], [[2011-12-27]]]] [[meta::update this list to reflect source list]]
-MULTIREF [[title::Furry Brown Cap]] [[notes::A furry brown cap, apparently unrelated to any plotline, appears in several strips: [[2009-11-14]], [[2009-01-27]], [[2012-01-25]], [[2011-03-29]], [[2010-03-06]], [[2008-10-19]], [[2009-07-08]], [[2008-08-06]], [[2008-07-22]], [[2010-09-03]], [[2011-05-17]], [[2012-05-13]], [[2009-03-01]], [[2012-06-19]], [[2009-12-20]], [[2011-12-27]], [[2009-02-06]], [[2011-06-07]], [[2010-04-04]] [[2010-04-27]] ]]
+MULTIREF [[title::Furry Brown Cap]] [[notes::A furry brown cap, apparently unrelated to any plotline, appears in several strips: [[2009-11-14]], [[2009-01-27]], [[2012-01-25]], [[2011-03-29]], [[2010-03-06]], [[2008-10-19]], [[2009-07-08]], [[2008-08-06]], [[2008-07-22]], [[2010-09-03]], [[2011-05-17]], [[2012-05-13]], [[2009-03-01]], [[2012-06-19]], [[2009-12-20]], [[2011-12-27]], [[2009-02-06]], [[2011-06-07]], [[2010-04-04]], [[2010-04-27]], [[2010-03-25]], [[2010-03-26]] [[2010-03-27]]]] [[meta::put these in order]]
 2008-10-11,2012-04-26 [[notes::The moles in [[2008-10-11]] and [[Mikey (mole)]] in [[2012-04-26]] look quite different. Pastis normally draws animals of the same "type" in the same way (moles actually constitute an entire family of animals, not just a specific species)]]
 2010-04-15 [[character::Pig+Rat+Mr Pitters (teddy bear)+Tubey (pillow)]]
 2010-12-12 [[character::Rat+Goat+Pig+Zebra]] [[newspaper_mentions::Denver Post]]
@@ -1536,6 +1540,12 @@ MULTIREF [[title::Pig's monkey]] [[notes::Pig seems to have an unusual connectio
 2005-03-06 [[character::Pig+Zebra+The Speed Demon (zebra)+The Mighty Hercules (zebra)+Food (zebra)]]
 2013-11-21 [[Zebra::profession::video game designer]]
 2012-08-19 [[notes::[[character::Pig]]'s Post-It(tm) appears to read "2", not "1", in the 5th panel]]
+2010-01-19 [[notes::Drama Cow's speech bubble reads "Aaaaaugh..ohmygawd..I couldn't believe it.. I'm talking to him and ugggghh.. I'm so angry.. I mean ughh.. like, get over yourself... okay... like seriously... I am so over him... okay? .. I'm done... done...I'm just not gonna deal...I mean who do they think they are talking to me like that"]]
+2010-01-20 [[notes::Drama Cow's speech bubble reads "so why am I always the one who says anything about that @*#@*@? I mean, like please I'm done, okay, he can just do it himself, because I am like, so over him, that, @*#@*#, I'm just not going to take ???"]]
+2010-01-21 [[notes::Drama Cow's partially obscured speech bubble reads "I just [...] [b]elieve that after all that I done for him he c[...] d you want to know something?! The stupid the[...] wasn't even my shoe! I was like, why are you accusing me, okay? I mean I am so done with that stupid noooooooooo"]]
+2010-01-23 [[character::Rat+Pig+Neighbor Bob+Guard Duck]]
+2010-01-25 [[Snuffles::aka::HeliKitty]]
+2010-03-31 [[Pig::aka::Bouncy Butt]]
 </data>
 
 # the following lines need improvement
@@ -1813,13 +1823,13 @@ undies != underwear, so maybe un-dies? (using rebirth)
 
 # 2013-05-11 vs bumper stickers
 
-# 2006-11-19 more cheese
+# 2006-11-19 more cheese, 2010-09-20 too (maybe combine into cheese fascination/religion)
 
-# 2009-12-31 (jebediah angel vs rats angels/devils)
+# 2009-12-31 (jebediah angel vs rats angels/devils) 2010-01-01 (so next day)
 
 # 2008-09-26 elevator vs all buildings in town are tiny? (map)
 
-# 2006-12-16 security monkey, 2012-10-06 befriend chimp cheapo charlie
+# 2006-12-16 security monkey, 2012-10-06 befriend chimp cheapo charlie, 2010-07-20 monkey pjs as magipants (were underwear?)
 
 # warning about using print valiant is where (king features syndicate)
 
@@ -1827,7 +1837,7 @@ undies != underwear, so maybe un-dies? (using rebirth)
 
 # 2012-08-16 dinky also not a javelin?
 
-# 2012-08-30 friend bouncer vs bouncy butt superpower
+# 2012-08-30 friend bouncer vs bouncy butt superpower 2010-03-30, 2010-03-31<
 
 # 2012-11-26 sari=sorry plus pig saying it earlier
 
@@ -1835,4 +1845,5 @@ undies != underwear, so maybe un-dies? (using rebirth)
 
 # 2011-01-12 jeffy dont fear death (also a comic strip w this punchline? when comic characters act their age?)
 
+# 2007-09-01 tshirts
 
