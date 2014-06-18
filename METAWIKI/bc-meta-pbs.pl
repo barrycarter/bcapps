@@ -24,11 +24,11 @@ grandmother"));
 pbs_parse_data();
 %data = pbs_all();
 pbs_newspaper_mentions();
-die "TESTING";
 pbs_storylines();
 pbs_characters();
 pbs_species_deaths();
 pbs_annotations();
+die "TESTING";
 
 # TODO: this seems redundant
 for $i (keys %data) {

@@ -11,19 +11,59 @@ require "/usr/local/lib/bclib.pl";
 	 "r" => "[[character::Rat]]",
 	 "g" => "[[character::Goat]]",
 	 "z" => "[[character::Zebra]]",
-	 "P" => "[[mention::Pig]]"
+	 "P" => "[[character::Pig]]",
+	 "pastis" => "[[character::Stephan Pastis]]",
+	 "max" => "[[character::Max (lion)]]",
+	 "patty" => "[[character::Patty (crocodile)]]"
 	 );
+
+# when using slash mode...
+for $i ("pig", "rat", "zebra", "goat", "farina", "pigita", "larry", "junior",
+       "guard duck", "snuffles") {
+  $full{$i} = "[[character::".ucfirst($i)."]]";
+  $full{ucfirst($i)} = "[[character::".ucfirst($i)."]]";
+}
+
+# "done" is special case for slash mode meaning "list of chars is
+# complete", currently unused
+$full{done} = "[[char_list_complete::1]]";
+
+# similar for unnamed/anon
+$full{anon} = "[[null::null]]";
+$full{unnamed} = "[[null::null]]";
+$full{other} = "[[null::null]]";
 
 open(A,">/home/barrycarter/BCGIT/METAWIKI/pbs-cl.txt");
 
 # where these special captions are (not in the main PBS directory!)
 for $i (glob "/mnt/extdrive/GOCOMICS/pearlsbeforeswine/CHARLIST/*.txt") {
+  $all = read_file($i);
+  $all = trim($all);
 
+  # if entire file is a single character, hack
+  if ($full{$all}) {$all="$all/";}
+
+#  debug("ALL: $all");
+
+  # if I use "/" anywhere in line, I'm using that as separator
   # characters appearing in this strip
-  @data = split(//,read_file($i));
+  if ($all=~/\//) {
+    @data = split(/\//, $all);
+    $slashmode = 1;
+  } else {
+    @data = split(//,$all);
+    $slashmode = 0;
+  }
 
   # convert to full form
-  for $j (@data) {$j = $full{$j};}
+  for $j (@data) {
+    if ($full{$j}) {
+      $j = $full{$j};
+    } else {
+      warn("NO FULL FORM ($i): $j (that might be ok though)");
+      $j = "";
+    }
+  }
 
   # date of this strip
   $i=~/(\d{4}-\d{2}-\d{2})/ || warn("BAD FILE: $i");
