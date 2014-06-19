@@ -74,7 +74,7 @@ disclaim: based on gocomics website only
 2002-02-18 [[description::[[Pig]] writes to {{wp|Jesse Jackson}}]]
 2010-12-20 [[notes::[[Larry]]'s beer can reads "BEER" in the first panel, "BIRA" in the second panel, and "BIRRA" (two R's) in the third panel]]
 2012-12-21 [[character::Junior+Patty+Larry]] [[Larry::profession::Santa's Elf]]
-2003-11-29,2002-02-18,2003-01-25,2004-09-04,2002-04-19,2002-04-03,2002-05-31,2006-07-28,2003-02-10,2005-05-20,2003-11-29,2005-12-12,2003-09-22-2003-09-26,2006-01-03,2004-05-22 [[storyline::[[character::Pig]] writes to famous people]]
+2004-01-17,2003-11-29,2002-02-18,2003-01-25,2004-09-04,2002-04-19,2002-04-03,2002-05-31,2006-07-28,2003-02-10,2005-05-20,2003-11-29,2005-12-12,2003-09-22-2003-09-26,2006-01-03,2004-05-22 [[storyline::[[character::Pig]] writes to famous people]]
 2002-02-24 [[character::Pig+Rat+Morton (ladybug)]]
 2003-01-02 [[character::Pig+Rat+Sammy (human)+[[deaths::Vinnie (human)]]]]
 2002-02-20 [[character::Hyenas]] [[Hyenas::species::hyena (group)]]
@@ -127,7 +127,7 @@ disclaim: based on gocomics website only
 2002-07-18 [[zebra_deaths::#1]]
 2002-07-22 [[character::Pigita]] [[Pigita::species::pig]]
 2007-07-17 [[character::Not Me You Moron (ghost)]]
-2003-10-18,2012-08-05,2014-03-29,2008-06-21,2003-07-01,2007-12-30,2009-11-19,2007-05-29,2012-11-04,2010-09-13,2010-05-13,2010-04-08,2010-04-01,2010-03-11,2010-07-01,2010-07-02,2007-09-06,2010-12-29,2012-12-29,2009-05-28,2009-02-08,2009-02-13,2009-01-05,2008-11-08,2008-07-21,2008-02-05,2006-10-16,2006-08-29,2005-10-13,2006-01-25,2005-04-08,2005-04-10,2004-12-12,2004-06-02,2004-06-16-2004-06-19,2004-05-31,2004-04-20,2004-03-30,2004-04-03,2004-03-25,2004-03-18,2003-09-14,2003-06-05,2003-05-19,2002-07-22,2002-07-23,2002-07-28,2002-08-04,2002-08-18,2006-08-29 [[storyline::[[character::Pig]] and [[character::Pigita]]]]
+2013-11-20,2007-12-24,2011-11-24,2009-07-11,2011-07-03,2003-10-18,2012-08-05,2014-03-29,2008-06-21,2003-07-01,2007-12-30,2009-11-19,2007-05-29,2012-11-04,2010-09-13,2010-05-13,2010-04-08,2010-04-01,2010-03-11,2010-07-01,2010-07-02,2007-09-06,2010-12-29,2012-12-29,2009-05-28,2009-02-08,2009-02-13,2009-01-05,2008-11-08,2008-07-21,2008-02-05,2006-10-16,2006-08-29,2005-10-13,2006-01-25,2005-04-08,2005-04-10,2004-12-12,2004-06-02,2004-06-16-2004-06-19,2004-05-31,2004-04-20,2004-03-30,2004-04-03,2004-03-25,2004-03-18,2003-09-14,2003-06-05,2003-05-19,2002-07-22,2002-07-23,2002-07-28,2002-08-04,2002-08-18,2006-08-29 [[storyline::[[character::Pig]] and [[character::Pigita]]]]
 2006-07-06 [[notes::The can Pig is drinking reads "POP" (not "BEER")]]
 2010-12-02 [[notes::The microphones read, unsurprisingly, FOX, CNN, NBC, and CBS]]
 2009-02-18 [[notes::[[character::Rat]] is wearing an {{wp|Dallas Stars}} shirt]]
@@ -320,6 +320,7 @@ MULTIREF [[title::Dead celebrities]] [[notes::On [[2002-08-01]], [[Rat]] doesn't
 2004-04-28 [[cameo::Earl+Mooch+Darryl MacPherson]]
 2004-04-26-2004-04-30 [[storyline::[[character::Rat]] in Comics Re-education Camp]]
 MULTIREF [[title::Pig's Cheese Fetish]] [[notes::Pig seems to have an unusual obsession with cheese. On [[2002-05-25]], he describes heaven as "finding a cheese basket on your doorstep. On [[2003-10-31]], one of his charades guesses is cheese (another guess, "monkey", also appears to be an object of fascination for Pig). On [[2004-05-07]], he refers to (and is fascinated by) a grater as "cheese grater" (even though it can grate many other things). On [[2007-05-23]], he invents "cheese sneakers". On [[2009-01-07]], Rat designs a building made of cheese (which Pig says could be "hard to build"), an indirect reference.  On [[2010-08-07]], he (and Rat) are obsessed with free cheese samples. On [[2011-05-02]], Pig describes his cheese's expiration date as an "event". On [[2012-05-11]], we learn that Pig visit a speciality cheese store (possible nod to Monty Python here). On [[2012-06-18]], Pig obtains a new grater, which he again uses to grate (shred) some cheese. On [[2013-03-06]], we learn that Pig regularly eats fried cheese sticks, cheeseburgers, and chili cheese fries. On [[2014-04-07]], he tells Pigita he prefers eating cheese over shelter.]]
+2012-05-11 [[character::Goat+Pig+[[Goat::friend::Chris (human)]]]]
 2009-01-07 [[Rat::aka::Frank Lloyd Rat]] [[Rat::profession::architect]]
 2009-01-13 [[character::Rat+Goat+Tiny (elephant)]]
 2007-12-26 [[notes::[[character::Pig]] is reading "Rome", but the author name is indiscernable]]
@@ -388,7 +389,7 @@ MULTIREF [[title::Atlas]] [[notes::[[2004-09-13]] shows [[Atlas]] carrying the w
 2004-10-18-2004-10-22 [[storyline::Road signs]]
 2004-10-20 [[character::Pig+RR (sign)+Danger High Voltage (sign)+Icy (sign)+Dead End (sign)]]
 2004-10-22 [[character::Pig+RR (sign)+Danger High Voltage (sign)+Jimmy (sign)]]
-2004-10-18 [[character::Pig+RR (sign)+Danger High Voltage (sign)+Slow Xing (sign)+Soft Shoulder (sign)]] [[RR (sign)::aka::Larry]] [[Slow Xing (sign)::aka::Ernie]] [[Soft Shoulder (sign)::aka::Clarence]] [[meta::may need to reverse these so things like Ernie are name, and rest is aka]]
+2004-10-18 [[character::Pig+RR (sign)+Danger High Voltage (sign)+Slow Xing (sign)+Soft Shoulder (sign)]] [[RR (sign)::aka::Larry (sign)]] [[Slow Xing (sign)::aka::Ernie]] [[Soft Shoulder (sign)::aka::Clarence]] [[meta::may need to reverse these so things like Ernie are name, and rest is aka]]
 2004-10-23-2004-10-30,2004-11-01,2004-11-02 [[storyline::[[character::Rat]] runs for President (2004)]]
 2012-10-28-2012-11-03,2012-11-05-2012-11-07 [[storyline::[[character::Rat]] runs for President (2012)]]
 2004-11-13 [[zebra_deaths::#1]]
@@ -421,6 +422,7 @@ MULTIREF [[title::Atlas]] [[notes::[[2004-09-13]] shows [[Atlas]] carrying the w
 2009-09-20 [[character::Rat+Pig+Mopey (monkey)]]
 2011-09-12-2011-09-14 [[storyline::[[character::Pig]]'s MagiPants]]
 2005-01-31-2005-02-05 [[storyline::Sentient bowling pins]]
+2005-02-06 [[character::Rat+Pig+Bob 20050206 (human)+Dave 20050206 (human)]] [[Bob 20050206 (human)+Dave 20050206 (human)::profession::sportscaster]] [[meta::FCC because of "gomate" or bob curse?]]
 2007-04-06 [[character::Pig+Rat+Timmy (owl)]]
 2004-11-29-2004-12-04 [[storyline::[[character::Rat]] visits Scott Adams (Dilbert)]]
 2004-12-20-2004-12-25 [[storyline::Protest against big box stores]]
@@ -543,7 +545,7 @@ MULTIREF [[title::Rat's guilt]] [[notes::On [[2014-06-09]], Rat says he feels gu
 2002-03-13 [[character::Pig+Rat+[[deaths::Pepe (dog)]]]]
 2003-02-08 [[character::Pig+Pepe 20030208 (human)]] [[Pepe 20030208 (human)::profession::janitor]] [[Pepe 20030208 (human)::aka::Pepe the Night Janitor]]
 2006-04-02 [[newspaper_mentions::The Times]]
-2006-04-06,2008-08-03 [[notes::The crocs show interest in eating [[Farina]] on [[2006-04-06]] and [[Pig]] for about a week starting on [[2008-08-03]], but never during the rest of the strip. Do they view [[Zebra]] as an easier target because he lives next door (whereas Pig lives in "a building close to us"), or does Zebra meat taste better than bacon? (impossible!)]]
+2006-04-06,2008-08-03 [[notes::The crocs show interest in eating [[Farina]] on [[2006-04-06]] and [[Pig]] for about a week starting on [[2008-08-03]], but never during the rest of the strip. Do they view [[Zebra]] as an easier target because he lives next door (whereas Pig lives in "a building close to us"), or does Zebra meat taste better than bacon? (impossible!)]] [[meta::But [[2010-07-05]] suggests this]]
 2008-08-03-2008-08-05,2008-08-07 [[storyline::[[character::Crocs]] want to eat [[character::Pig]]]]
 2006-04-09 [[character::Pig+Rat+[[Pig+Rat::neighbor::Neighbor Tim]]]] [[Tim 20060409 (human)::aka::Neighbor Tim]]
 2008-02-27 [[character::Pig+Rat+Neighbor Tim]]
@@ -592,6 +594,7 @@ MULTIREF [[title::Rat's guilt]] [[notes::On [[2014-06-09]], Rat says he feels gu
 2006-07-29 [[character::Pufferfish (pufferfish family)]]
 2006-09-06-2006-09-08 [[storyline::[[character::Meerkats]]]] [[Meerkats::species::meerkat (group)]]
 2006-09-18 [[character::Junior]]
+2006-07-14 [[Junior::aka::Billy]]
 2006-10-11,2006-10-12,2006-10-20,2006-10-21 [[storyline::[[character::Zebra]] tries to sell his house]] [[character::Jane 20061011 (human)]] [[Jane 20061011 (human)::profession::real estate agent]]
 2006-11-01-2006-11-04,2006-11-06,2006-11-07 [[storyline::[[character::Rat]] runs for Mayor]]
 2006-11-03 [[newspaper_mentions::Miami Herald+Palm Beach Post]]
@@ -707,7 +710,7 @@ MULTIREF [[title::Rat's guilt]] [[notes::On [[2014-06-09]], Rat says he feels gu
 2008-02-11-2008-02-13,2008-04-26,2008-04-27,2008-03-09 [[storyline::[[character::Andy]] and [[character::Olive (dog)]]]]
 2008-02-23 [[character::Rat+Pig+Dingo Boy]] [[Dingo Boy::notes::Although Dingo Boy was only *raised* by wolves, he appears to have a tail and pointed ears, suggesting that he's not human]]
 2008-02-14 [[character::Pig+Guard Duck+Zebra+Goat+Danny Donkey+Rat]]
-2008-02-18 [[character::Gigi (lion)+Kiki (lion)]] [[notes::Although it pervades all Pearls strips, it's unusually noticeable here that rat is about the same size as a lion]]
+2008-02-18 [[character::Rat+Max(lion)+Gigi (lion)+Kiki (lion)]] [[notes::Although it pervades all Pearls strips, it's unusually noticeable here that rat is about the same size as a lion]]
 2008-02-18 [[Max (lion)+Zach (lion)::wife::Gigi (lion)+Kiki (lion)]] [[Gigi (lion)+Kiki (lion)::notes::The [[2008-02-18]] strip notes that both Max and Zach "hookup" with both Gigi and Kiki, so I'm assuming lions are bigamous, and that the "new wives" described on [[2008-02-19]] are wives of both male lions]]
 2008-02-26 [[antelope_deaths::#1]]
 2008-03-03,2008-03-04,2008-03-07,2008-03-11,2008-03-12,2008-03-14,2008-03-26-2008-03-28,2008-04-14,2008-04-15,2008-04-19 [[storyline::[[character::Rat]] works as a concierge]]
@@ -784,6 +787,7 @@ MULTIREF [[title::Rat's guilt]] [[notes::On [[2014-06-09]], Rat says he feels gu
 2009-03-03 [[deaths::Bob 20090303 (crocodile)]]
 2009-03-14 [[character::Rat+Zebra+[[Zebra::cousin::Squidmo (zebra)]]]]
 2009-03-25 [[newspaper_mentions::Houston Chronicle]]
+2009-03-28 [[Pig::profession::sign holder+pole]]
 2010-03-18 [[newspaper_mentions::The Houston Chronicle+Denver Post+Akron Beacon Journal]]
 2009-04-03,2009-04-04,2009-04-06-2009-04-16 [[storyline::[[character::Patty (crocodile)]] kidnapped by [[character::Zebra]]]]
 2009-04-11 [[deaths::Stapler Head]]
@@ -1090,14 +1094,16 @@ MULTIREF [[title::[[[[Larry]]'s mother]]]] [[notes::Larry's mother dies on [[200
 2013-03-04 [[character::Armando (armadillo)]] [[meta::Assuming this is Armando, although he doesn't get a name until Monday]]
 2013-03-07 [[character::Armando (armadillo)+[[deaths::Lupe (armadillo)]]]]
 2013-03-30 [[character::Goat+Armando (armadillo)]]
+2013-03-19 [[Pig+Goat+[[Pig+Rat::neighbor::Armando (armadillo)]]]]
 2003-06-15 [[notes::The first two items on the menu appear to be "trollop taco" (rollup taco?) and "felnian? taco"; the last item reads "by Stephan Pastis". The other items are ones you'd expect to find at a taco restaurant]]
 2003-06-20 [[character::Pig+Rat+Bob 20030620 (human)]]
 2013-03-11,2013-03-12 [[character::Mahathma Gandhi (human)]]
 2013-03-02 [[newspaper_mentions::Santa Rosa Press ???+The Family Coast? ???+Spemon's? ???]]
 2013-03-14 [[character::Snuffles]]
 2013-03-19 [[armadillo_deaths::#5]]
-2013-03-23 [[character::Alfie (armadillo)]]
+2013-03-23 [[character::Goat+Armando (armadillo)+[[deaths::Alfie (armadillo)]]]]
 2013-03-24 [[character::Goat+Pig+Neighbor Bob]]
+2013-03-26 [[character::Pig+Armando (armadillo)]] [[armadillo_deaths::#1]] [[meta::second wife, Lupe = first?]]
 2013-04-10-2013-04-13 [[storyline::[[character::Monopoly tokens]]]]
 2013-04-17-2013-04-19,2013-04-22,2013-04-23,2013-04-30,2013-05-01,2013-05-06-2013-05-08,2013-05-13-2013-05-15,2013-05-20-2013-05-22,2013-05-24,2013-05-29,2013-05-30,2013-05-31 [[storyline::[[character::Zebra]]'s Bad Vacation]]
 2013-04-24 [[character::Baby Johnson (human)]] [[meta::I am being inconsitent by referring to Baby Johnson without a first name]]
@@ -1158,7 +1164,7 @@ MULTIREF [[title::[[[[Larry]]'s mother]]]] [[notes::Larry's mother dies on [[200
 2003-02-16 [[character::Pig+Conley (human)]] [[Conley (human)::aka::Professor Conley]] [[Professor Conley::profession::professor]]
 2008-06-22 [[character::Zebra+Larry]] [[squirrel_deaths::#1]]
 2007-05-25 [[character::Dan 20070525 (human)+Jane 20070525 (human)+Rat+Pig]] [[Dan 20070525 (human)+Jane 20070525 (human)+Crocs::profession::newscaster]]
-
+2006-02-28 [[character::Zebra+Pig+Larry+Dan (crocodile)]]
 2005-07-06 [[notes::In panels 1 and 3, some of the pickles jars have labels other than "pickles". The only ones I could make out are "Craves"? and "Dive up?"]]
 2013-12-04 [[character::[[Pig::aunt::Toody 20131204 (pig)]]]]
 2005-08-01,2013-12-04 [[notes::[[Pig]]'s aunt [[Toody (pig)]] dies in [[2005-08-01]], so the one in [[2013-12-04]] must be a second Aunt Toody]]
@@ -1571,6 +1577,7 @@ MULTIREF [[title::Pig's monkey]] [[notes::Pig seems to have an unusual connectio
 2010-03-31 [[Pig::aka::Bouncy Butt]]
 2008-05-23 [[Pig::aka::Doobie Kajoobie]]
 2004-05-28 [[character::Rita (human)]]
+2009-08-05 [[notes::[[character::Stephan Pastis]]' cup reads "F MINUS"]]
 </data>
 
 # the following lines need improvement
@@ -1862,7 +1869,7 @@ undies != underwear, so maybe un-dies? (using rebirth)
 
 # 2012-08-16 dinky also not a javelin?
 
-# 2012-08-30 friend bouncer vs bouncy butt superpower 2010-03-30, 2010-03-31<
+# 2012-08-30 friend bouncer vs bouncy butt superpower 2010-03-30, 2010-03-31
 
 # 2012-11-26 sari=sorry plus pig saying it earlier
 
@@ -1874,7 +1881,7 @@ undies != underwear, so maybe un-dies? (using rebirth)
 
 # more dentist 2009-09-17
 
-# 2007-06-11 only appearance of max/zach's wives (not kiki/gigi)
+# 2007-06-11 only appearance of max/zach's wives (not kiki/gigi) [kiki/gig in 2008-03-08]
 
 # 2005-09-22 parodies what strip? 2003-12-23?
 
@@ -1888,4 +1895,13 @@ undies != underwear, so maybe un-dies? (using rebirth)
 # also not wearing uniform in actual prison
 
 # 2003-06-25 no ratlets for rat? (rats born in litter too)
+
+# 2008-07-08 larry wants to eat jeffy (As before)
+
+# 2007-11-04 rat ipod not listening vs pretty girl doing it later
+
+# 2006-08-02 "look for cc at front of line" similar to terrace pushoff
+# (also human deaths 1)
+
+# 2009-08-05 rat smokes
 
