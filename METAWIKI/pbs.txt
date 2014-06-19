@@ -127,7 +127,7 @@ disclaim: based on gocomics website only
 2002-07-18 [[zebra_deaths::#1]]
 2002-07-22 [[character::Pigita]] [[Pigita::species::pig]]
 2007-07-17 [[character::Not Me You Moron (ghost)]]
-2012-08-05,2014-03-29,2008-06-21,2003-07-01,2007-12-30,2009-11-19,2007-05-29,2012-11-04,2010-09-13,2010-05-13,2010-04-08,2010-04-01,2010-03-11,2010-07-01,2010-07-02,2007-09-06,2010-12-29,2012-12-29,2009-05-28,2009-02-08,2009-02-13,2009-01-05,2008-11-08,2008-07-21,2008-02-05,2006-10-16,2006-08-29,2005-10-13,2006-01-25,2005-04-08,2005-04-10,2004-12-12,2004-06-02,2004-06-16-2004-06-19,2004-05-31,2004-04-20,2004-03-30,2004-04-03,2004-03-25,2004-03-18,2003-09-14,2003-06-05,2003-05-19,2002-07-22,2002-07-23,2002-07-28,2002-08-04,2002-08-18,2006-08-29 [[storyline::[[character::Pig]] and [[character::Pigita]]]]
+2003-10-18,2012-08-05,2014-03-29,2008-06-21,2003-07-01,2007-12-30,2009-11-19,2007-05-29,2012-11-04,2010-09-13,2010-05-13,2010-04-08,2010-04-01,2010-03-11,2010-07-01,2010-07-02,2007-09-06,2010-12-29,2012-12-29,2009-05-28,2009-02-08,2009-02-13,2009-01-05,2008-11-08,2008-07-21,2008-02-05,2006-10-16,2006-08-29,2005-10-13,2006-01-25,2005-04-08,2005-04-10,2004-12-12,2004-06-02,2004-06-16-2004-06-19,2004-05-31,2004-04-20,2004-03-30,2004-04-03,2004-03-25,2004-03-18,2003-09-14,2003-06-05,2003-05-19,2002-07-22,2002-07-23,2002-07-28,2002-08-04,2002-08-18,2006-08-29 [[storyline::[[character::Pig]] and [[character::Pigita]]]]
 2006-07-06 [[notes::The can Pig is drinking reads "POP" (not "BEER")]]
 2010-12-02 [[notes::The microphones read, unsurprisingly, FOX, CNN, NBC, and CBS]]
 2009-02-18 [[notes::[[character::Rat]] is wearing an {{wp|Dallas Stars}} shirt]]
@@ -1551,7 +1551,8 @@ MULTIREF [[title::Dictionary Editing]] [[notes::On [[2011-01-27]], [[Rat]] takes
 2008-05-03 [[Rat::aka::Ratistotle]]
 2008-09-19 [[Larry::aka::Pirate Guy]]
 2007-08-07 [[character::Rat+Pig+Sam (pigeon)]]
-2007-01-22 [[character::Rag+Goat+Pig+Jimmy (human)]] [[Jimmy (human)::profession::student]]
+2007-01-22 [[character::Rag+Goat+Pig+Jimmy 20070122 (human)]] [[Jimmy 20070122 (human)::profession::student]]
+2004-09-18 [[character::Zebra+Pig+Jimmy 20040918 (human)]]
 2007-01-28 [[character::Zebra+Goat+Pig+Rat+Neighbor Bob]]
 2007-01-30 [[Rat::aka::Jack Pitt+The Pittster]]
 2007-02-05 [[Crocs::profession::greeting card writer]] [[Crocs::address::{{wp|Kansas City}}]]
@@ -1845,7 +1846,7 @@ undies != underwear, so maybe un-dies? (using rebirth)
 
 # hockey thing is dallas stars http://assets.amuniversal.com/eddeab30a3cf01319788005056a9545d?width=1500
 
-# 2013-05-11 vs bumper stickers
+# 2013-05-11 open letters vs bumper stickers
 
 # 2006-11-19 more cheese, 2010-09-20 too (maybe combine into cheese fascination/religion)
 
@@ -1857,7 +1858,7 @@ undies != underwear, so maybe un-dies? (using rebirth)
 
 # warning about using print valiant is where (king features syndicate)
 
-# 2012-08-12 polka follows up on fairly older joke
+# 2012-08-12 polka follows up on fairly older joke 2012-06-21
 
 # 2012-08-16 dinky also not a javelin?
 
@@ -1875,7 +1876,7 @@ undies != underwear, so maybe un-dies? (using rebirth)
 
 # 2007-06-11 only appearance of max/zach's wives (not kiki/gigi)
 
-# 2005-09-22 parodies what strip?
+# 2005-09-22 parodies what strip? 2003-12-23?
 
 # 2012-03-21 references back to ? (dunk rye)
 
@@ -1886,4 +1887,5 @@ undies != underwear, so maybe un-dies? (using rebirth)
 # 2013-06-11 pastis prisoner number ends in 61324 not other number,
 # also not wearing uniform in actual prison
 
+# 2003-06-25 no ratlets for rat? (rats born in litter too)
 

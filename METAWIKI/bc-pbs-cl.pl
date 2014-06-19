@@ -63,7 +63,7 @@ for $i (glob "/mnt/extdrive/GOCOMICS/pearlsbeforeswine/CHARLIST/*.txt") {
     if ($full{$j}) {
       $j = $full{$j};
     } else {
-      warn("NO FULL FORM ($i): $j (that might be ok though)");
+      $nofullform{lc($j)} = 1;
       $j = "";
     }
   }
@@ -77,3 +77,8 @@ for $i (glob "/mnt/extdrive/GOCOMICS/pearlsbeforeswine/CHARLIST/*.txt") {
 }
 
 close(A);
+
+if (%nofullform) {
+  warn("NOFULLFORM:\n", join("\n", sort keys %nofullform));
+}
+
