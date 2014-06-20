@@ -18,11 +18,13 @@ require "/usr/local/lib/bclib.pl";
 	 "zach" => "[[character::Zach (lion)]]",
 	 "kiki" => "[[character::Kiki (lion)]]",
 	 "gigi" => "[[character::Gigi (lion)]]",
+	 # special case for Guard Duck to upcase "Duck"
+	 "guard duck" => "[[character::Guard Duck]]"
 	 );
 
 # when using slash mode...
 for $i ("pig", "rat", "zebra", "goat", "farina", "pigita", "larry", "junior",
-       "guard duck", "snuffles", "andy") {
+       "snuffles", "andy") {
   $full{$i} = "[[character::".ucfirst($i)."]]";
   $full{ucfirst($i)} = "[[character::".ucfirst($i)."]]";
 }
