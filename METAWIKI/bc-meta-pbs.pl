@@ -22,13 +22,13 @@ girlfriend, boss, friend, father, half-brother, pet, roommate, date,
 grandmother"));
 
 pbs_parse_data();
+die "TESTING";
 %data = pbs_all();
 pbs_newspaper_mentions();
 pbs_storylines();
 pbs_characters();
 pbs_species_deaths();
 pbs_annotations();
-die "TESTING";
 
 # TODO: this seems redundant
 for $i (keys %data) {
@@ -171,10 +171,10 @@ SELECT * FROM triples ORDER BY
       while ($data{$source}{canon}) {$source = $data{$source}{canon};}
     }
 
-    # species/profession
-    # TODO: if something has a species/profession, it's necessarily a character?
+    # species/profession (also means $v is a character)
     if ($k eq "species" || $k eq "profession") {
       $data{$source}{$k}{$v}=1;
+      $data{character_q}{$v} = 1;
       next;
     }
 
@@ -188,14 +188,11 @@ SELECT * FROM triples ORDER BY
     # TODO: I'm not crazy about this massive 'switch' statement
     if ($k eq "character" || $k eq "deaths" || $k eq "rebirths") {
 
-      # canonize character name using multiple follows if needed (and continue)
-
       # if character name (after canonization is "string date string"
       # canonize further (and continue)
       if ($v=~/^(.*?)\s+(\d{8})\s*(.*)$/) {
 	my($main, $date, $rest) = ($1, $2, $3);
 #	debug("MAIN: $main/$date/$rest, V: $v, KEY: $main $rest");
-#	$data{$v}{canon} = "$main ".++$count{"$main $rest"}." $rest";
 	# TODO: this format sorts better, but may break other stuff?
 	$data{$v}{canon} = "$main $rest ".sprintf("%0.2d",++$count{"$main $rest"});
 	debug("CHAR CHANGE: $v -> $data{$v}{canon}");
@@ -306,52 +303,7 @@ SELECT * FROM triples ORDER BY
     # TODO: this is just a default for now
     $data{$source}{$k}{$v} = 1;
     next;
-
-    # TODO: should not ignore this long term
-    if ($k eq "newspaper_mentions") {next;}
-
-    # for characters, record appearance
-    if ($k eq "character") {
-      $data{$v}{appearance}{$source} = 1;
-      $data{$source}{characters}{$v} = 1;
-
-      # is this character's species part of his name?
-      # do this even if character has another explicit species
-      if ($v=~m/\s+\((.*?)\)$/) {
-	debug("SETTING: $v/species/$1");
-	$data{$v}{species}{$1}=1;
-      } else {
-	debug("NOT SETTING: $source/$k/$v");
-      }
-
-      next;
-    }
-
-    # notes
-    if ($k eq "notes") {
-      $data{$source}{notes}{$v} = 1;
-      next;
-    }
-
-    # relatives
-    if ($rel{$k}) {
-      $data{$source}{relative}{$v} = $k;
-      # and reverse
-      $data{$v}{relative}{$source} = "$k of";
-      next;
-    }
-
-    # deaths
-    if ($k eq "deaths") {
-      # a death is an appearance <h>(or a disappearance, ha!)</h>
-      $data{$v}{appearance}{$source} = 1;
-      $data{$source}{characters}{$v} = 1;
-      $data{$v}{deaths}{$source} = 1;
-      next;
-    }
-
   }
-
   return %data;
 }
 
@@ -846,16 +798,6 @@ This page is experimental: expect errors and incomplete data.
 
 =item comments
 
-Data we want per-character  (not necess in order; some of these columns should be sortable):
-
-Last/most recent appearance
-
-Death date: [also determine species and put on appropriate "species death" page] (and "killed_by" or "kills")
-
-Rebirth date (if applicable):
-
-Hired:
-
-Fired:
+Do we want hired/fired date for characters?
 
 =cut

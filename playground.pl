@@ -33,6 +33,10 @@ use Inline::Python;
 use FFI::Raw;
 use v5.10;
 
+write_wiki_page("http://pebesw.referata.com/w/api.php", "Sandbox", "I am putting some sand in my sandbox", "dusty!", $private{referata}{user}, $private{referata}{pass});
+
+die "TESTING";
+
 write_wiki_page("http://pearls-before-swine-bc.wikia.com/api.php", "Mediawiki:zonk0", "<img src='http://assets.amuniversal.com/e553d9009ab3012e2f8200163e41dd5b?width=300' />", "low resolution image", $wikia{user}, $wikia{pass});
 
 die "TESTING";
