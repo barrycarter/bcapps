@@ -4,15 +4,16 @@
 
 require "/usr/local/lib/bclib.pl";
 
+dodie('chdir("/home/barrycarter/BCGIT/METAWIKI")');
+
 # relations I'm ignoring for now (null/meta = ignore forever)
 my(%ignore) = list2hash("null", "meta", "char_list_complete", "source",
-		    "notes", "description" , "noref", "cameo", "category",
-		   "reference", "event", "religion", "orientation", 
-		    "mention", "references", "half-brother", "fires",
-		    "ex-husband"
-		   );
+			"noref", "cameo", "category");
 
-dodie('chdir("/home/barrycarter/BCGIT/METAWIKI")');
+# the following are considered "properties", and not links
+my(%props) = list2hash("notes", "description", "event");
+
+# TODO: category is doubly special
 
 # below forces creation/recency of pbs-triples.db
 system("make");
@@ -48,6 +49,8 @@ my(%map) = (
 	    "wife" => ["has_wife", "has_husband"],
 	    "girlfriend" => ["has_girlfriend", "has_boyfriend"],
 	    "boyfriend" => ["has_boyfriend", "has_girlfriend"],
+	    "ex-husband" => ["had_husband", "had_wife"],
+	    "half-brother" => ["has_half_brother", "has_half_sibling"],
 	    # no generic term for niece/nephew?
 	    "uncle" => ["has_uncle", "uncle_of"],
 	    "niece" => ["has_niece", "has_uncle"],
@@ -66,7 +69,10 @@ my(%map) = (
 	    "member" => ["member_of", "has_member"],
 	    "members" => ["has_member", "member_of"],
 	    "son" => ["has_son", "has_parent"],
-	    "coworker" => ["has_coworker", "has_coworker"]
+	    "coworker" => ["has_coworker", "has_coworker"],
+	    "fires" => ["fires", "fired_by"],
+	    "religion" => ["has_religion", "has_follower"],
+	    "orientation" => ["has_sexual_orientation", "has_member"]
 );
 
 # debug($map{character}[0]);
@@ -83,6 +89,12 @@ for $i (sqlite3hashlist("SELECT * FROM triples", "/tmp/pbs-triples.db")) {
     next;
   }
 
+  # props are unidirectional
+  if ($props{$k}) {
+    $hash{$source}{$k}{$v} = 1;
+    next;
+  }
+
   warn("NOT UNDERSTOOD: $k: $source -> $v");
 }
 
@@ -94,7 +106,7 @@ for $i (sqlite3hashlist("SELECT * FROM triples", "/tmp/pbs-triples.db")) {
 
 for $i (sort keys %hash) {
 
-  if (++$count>5) {die "TESTING";}
+  if (++$count>10) {die "TESTING";}
 
   unless ($i=~/^\d{4}\-/) {next;}
 
@@ -106,10 +118,27 @@ for $i (sort keys %hash) {
   # no need to publish the image URL?
   delete $hash{$i}{image_url};
 
+  # extra categories (if any)
+  # TODO: bad placement for categories, put at bottom?
+  for $j (sort keys %{$hash{$i}{category}}) {
+    print A "[[Category: $j]]\n";
+  }
+  delete $hash{$i}{category};
+
   for $j (sort keys %{$hash{$i}}) {
-    for $k (sort keys %{$hash{$i}{$j}}) {
+    my(@keys) = sort keys %{$hash{$i}{$j}};
+
+    # if this is a property, print it out, don't create triple
+    if ($props{$j}) {
+      print A "== ".ucfirst($j)." ==\n";
+      print A join("\n",@keys),"\n";
+      next;
+    }
+
+    for $k (@keys) {
       debug("$i, $j, $k");
-      print A "[[${j}::$k]]\n";
+      # print nothing
+      print A "[[${j}::$k| ]]\n";
     }
   }
 
@@ -146,7 +175,12 @@ sub pbs_table_date {
   my($image) = "{{#widget:Thumbnail|hash=$thumb}}";
 
   return << "MARK";
-<table border><tr><th>[$date | $pdate]</th></tr><tr><th title="$notes">[$link | $image]</th></tr><tr><th>[$hash[0] | (highest resolution)]</th></tr></table>
+<table border>
+<tr><th>{{#widget:Extlink|url=http://pearlsbeforeswine.referata.com/w/index.php?title=$date|text=$pdate}}</th></tr>
+<tr><th>{{#widget:LinkedThumbnail|url=$link|hash=$thumb}}
+</th></tr>
+<tr><th>{{#widget:Extlink|url=$hash[0]|text=highest resolution}}
+</th></tr></table>
 MARK
 ;
 

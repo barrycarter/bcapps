@@ -124,3 +124,6 @@ alias usbreset "echo 0000:00:1d.0 >! /sys/bus/pci/drivers/ehci_hcd/unbind; echo 
 alias feh "feh -. -x --draw-tinted -K . -G \!*"
 
 alias waitpid bc-waitpid.pl
+
+# can add --realsies to below when desired
+alias mirror-referata "bc-mirror-mw.pl --debug --dir=pbs-referata --api=http://pearlsbeforeswine.referata.com/w/api.php \!*"

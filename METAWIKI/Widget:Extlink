@@ -1,1 +1,1 @@
-<a href="<!--{$url}-->" target="_blank"><!--{$text}--></a>
+<a class="external free" href="<!--{$url}-->" target="_blank"><!--{$text}--></a>
