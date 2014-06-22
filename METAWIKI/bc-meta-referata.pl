@@ -110,6 +110,7 @@ for $i (sort keys %hash) {
 
   unless ($i=~/^\d{4}\-/) {next;}
 
+  # TODO: DO NOT REWRITE EVERY SINGLE TIME (diffs only)
   # the page
   open(A,">/usr/local/etc/metawiki/pbs-referata/$i.mw");
 
@@ -146,6 +147,7 @@ for $i (sort keys %hash) {
   }
 
   print A "\n[[Category: Strips]]\n";
+  print A "__SHOWFACTBOX__\n";
   close(A);
 }
 
@@ -179,7 +181,7 @@ sub pbs_table_date {
 
   return << "MARK";
 <table border>
-<tr><th>{{#widget:Extlink|url=http://pearlsbeforeswine.referata.com/w/index.php?title=$date|text=$pdate}}</th></tr>
+<tr><th>{{WikiLink|$date|$pdate}}</th></tr>
 <tr><th>{{#widget:LinkedThumbnail|url=$link|hash=$thumb}}
 </th></tr>
 <tr><th>{{#widget:Extlink|url=$hash[0]|text=highest resolution}}

@@ -545,7 +545,7 @@ sub pbs_parse_data {
     if ($i=~/[^:]:[^:]/) {warn "BAD LINE: $i";}
 
     # fix wp template
-    $i=~s/\{\{wp\|(.*?)\}\}/"{{#NewWindowLink: http:\/\/en.wikipedia.org\/wiki\/".fix_wp_template($1)."}}"/iseg;
+#    $i=~s/\{\{wp\|(.*?)\}\}/"{{#NewWindowLink: http:\/\/en.wikipedia.org\/wiki\/".fix_wp_template($1)."}}"/iseg;
 
     # split line into source page and then body
     $i=~/^(.*?)\s*($dlb.*)$/;

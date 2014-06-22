@@ -1,1 +1,1 @@
-<a href="/wiki/<!--{$page}-->" target="_blank" title="<!--{$page}-->"><!--{$page}--></a>
+<a href="/wiki/<!--{$title}-->" target="_blank" title="<!--{$title}-->"><!--{$text}--></a>
