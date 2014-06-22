@@ -128,10 +128,13 @@ for $i (sort keys %hash) {
   for $j (sort keys %{$hash{$i}}) {
     my(@keys) = sort keys %{$hash{$i}{$j}};
 
+    # no keys? <h>no justice</h> ignore
+    unless (@keys) {next;}
+
     # if this is a property, print it out, don't create triple
     if ($props{$j}) {
-      print A "== ".ucfirst($j)." ==\n";
-      print A join("\n",@keys),"\n";
+      print A "== ".ucfirst($j)." ==\n\n";
+      print A join("\n",@keys),"\n\n";
       next;
     }
 
