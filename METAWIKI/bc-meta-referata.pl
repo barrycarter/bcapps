@@ -122,7 +122,7 @@ for $i (sort keys %hash) {
 
   # semantical table
   # TODO: using "semantical" for testing, change to "semantic"
-  my(@table) = "<table border><tr><th colspan=2>Semantical information</th></tr>";
+  my(@table) = "<table border><tr><th colspan=2>Semantic Information</th></tr>";
 
   # extra categories (if any)
   # TODO: bad placement for categories, put at bottom?
@@ -145,8 +145,12 @@ for $i (sort keys %hash) {
     }
 
     # turn keys into useful semantic information
-    my($keys) = join(", ",map($_="[[${j}::$_]]", @keys));
+    for $k (@keys) {
+      $k=~s/\{\{wp\|(.*?)\}\}/$1/g;
+      $k="[[${j}::$k]]";
+    }
 
+    my($keys) = join(", ",@keys);
     push(@table,"<tr><th>$j</th><td>$keys</td></tr>");
   }
 
