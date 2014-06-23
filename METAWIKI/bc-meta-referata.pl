@@ -85,11 +85,13 @@ my(%prettyprint) = (
 		    "in_storyline" => "Storyline(s)",
 		    "notes" => "Notes",
 		    "description" => "Description",
-		    "event" => "Events"
+		    "event" => "Events",
 		    "" => ""
 		    );
 
-for $i (sqlite3hashlist("SELECT * FROM triples", "/tmp/pbs-triples.db")) {
+warn "TESTING";
+
+for $i (sqlite3hashlist("SELECT * FROM triples WHERE source='2002-01-07'", "/tmp/pbs-triples.db")) {
   my($source, $k, $v) = ($i->{source}, $i->{k}, $i->{v});
 
   # TODO: ignoring deaths for now
@@ -126,20 +128,23 @@ sub pbs_date_strips {
   for $l (0..$#strips) {
     $i = $strips[$l];
 
+    if ($l > 20) {die "TESTING";}
+
     # the big table (containing date table and semantic annotations)
-    my(@bigtable) = ("<table width=100%><tr><th>", pbs_table_date($i),
+    my(@table) = ("<table width=100%><tr><th>", pbs_table_date($i),
 		     "</th><td align=right valign=top>");
     # don't publish the image URL directly
     delete $hash{$i}{image_url};
 
     # the semantic information table (row 1, column 2 of big table)
-    my(@smalltable) = "<table border><tr><th colspan=2>Semantic Information</th></tr>";
+    push(@table, "<table border><tr><th colspan=2>Semantic Information</th></tr>");
 
     # the categories (we dont print them yet, and "strips" is always one)
     # strips is always last one, despite sorting
     my(@cats) = (sort keys %{$hash{$i}{category}}, "strips");
+    map("$_=[[Category:$_]]", @cats);
 
-    # the portion of the page that is outside of any table
+    # the portion of the page below the main table, above cat list
     my(@outer);
 
     # since we list categories at bottom of page, they are not in info
@@ -148,8 +153,12 @@ sub pbs_date_strips {
 
     # the other properties for this strip
     for $j (sort keys %{$hash{$i}}) {
+
+      debug("HASH($i)($j): $hash{$i}{$j}");
+
       # the values for this key
       my(@keys) = sort keys %{$hash{$i}{$j}};
+      debug("KEYS",@keys);
 
       # this should never happen
       unless (@keys) {
@@ -175,21 +184,27 @@ sub pbs_date_strips {
       my($keys) = join("<br>\n",@keys);
 
       # and put into semantic (small) table and end small table
-      push(@smalltable, "<tr><th>$prettyprint{$j}</th><td>$keys</td></tr></table>");
+      push(@table, "<tr><th>$prettyprint{$j}</th><td>$keys</td></tr></table>");
 
       # end cell that contains semantic table and also outer table itself
-      push(@bigtable, "</td></tr></table>");
+      push(@table, "</td></tr></table>");
 
       # print to file
       open(A, ">$etcdir/$i.mw.new");
-#      print A join("\n"
+      # the table
+      print A join("\n", @table);
+      # below the table
+      print A join("\n", @outer);
+      # the categories
+      print A join("\n", @cats);
+      # and done
+      close(A);
 
-
-
-
-  debug("STRIPS",@strips);
+      # only replace existing file if changed
+      mv_after_diff("$etcdir/$i.mw.new");
+    }
+  }
 }
-
 
 # create the per-day strips
 # TODO: category: strip, table at top, notes/description are
