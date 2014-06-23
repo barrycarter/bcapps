@@ -5,12 +5,14 @@
 require "/usr/local/lib/bclib.pl";
 
 dodie('chdir("/home/barrycarter/BCGIT/METAWIKI")');
+my($etcdir) = "/usr/local/etc/metawiki/pbs-referata";
 
 # relations I'm ignoring for now (null/meta = ignore forever)
 my(%ignore) = list2hash("null", "meta", "char_list_complete", "source",
 			"noref", "cameo", "category");
 
 # the following are considered "properties", and not links
+# TODO: event should probably be noted semantically
 my(%props) = list2hash("notes", "description", "event");
 
 # TODO: category is doubly special
@@ -25,7 +27,8 @@ for $i (split(/\n/, read_file("largeimagelinks.txt"))) {
   $hash{$1}{image_url}{$2}=1;
 }
 
-# the forward and reverse mappings of k
+# the forward and reverse mappings of k, plus the prettyprint version
+# (currently only for forward version)
 
 # assuming friendship/cousin is symmetric, possibly not always true
 # (for cousins, reverse could be "great uncle" or something weird?)
@@ -75,7 +78,16 @@ my(%map) = (
 	    "orientation" => ["has_sexual_orientation", "has_member"]
 );
 
-# debug($map{character}[0]);
+# defines the pretty prints of SOME of the semantic relations above
+my(%prettyprint) = (
+		    "has_character" => "Character(s)",
+		    "has_death" => "Death(s)",
+		    "in_storyline" => "Storyline(s)",
+		    "notes" => "Notes",
+		    "description" => "Description",
+		    "event" => "Events"
+		    "" => ""
+		    );
 
 for $i (sqlite3hashlist("SELECT * FROM triples", "/tmp/pbs-triples.db")) {
   my($source, $k, $v) = ($i->{source}, $i->{k}, $i->{v});
@@ -98,6 +110,87 @@ for $i (sqlite3hashlist("SELECT * FROM triples", "/tmp/pbs-triples.db")) {
   warn("NOT UNDERSTOOD: $k: $source -> $v");
 }
 
+pbs_date_strips();
+die "TESTING";
+
+# the date strips (assumes %hash has been created/filled in)
+
+sub pbs_date_strips {
+  my(%is_strip);
+
+  # TODO: there must be a better way to do this?
+  for $i (keys %hash) {if ($i=~/^\d{4}\-\d{2}\-\d{2}$/) {$is_strip{$i}=1;}}
+  my(@strips) = sort keys %is_strip;
+
+  # use indexs so I can do "next" and "prev"
+  for $l (0..$#strips) {
+    $i = $strips[$l];
+
+    # the big table (containing date table and semantic annotations)
+    my(@bigtable) = ("<table width=100%><tr><th>", pbs_table_date($i),
+		     "</th><td align=right valign=top>");
+    # don't publish the image URL directly
+    delete $hash{$i}{image_url};
+
+    # the semantic information table (row 1, column 2 of big table)
+    my(@smalltable) = "<table border><tr><th colspan=2>Semantic Information</th></tr>";
+
+    # the categories (we dont print them yet, and "strips" is always one)
+    # strips is always last one, despite sorting
+    my(@cats) = (sort keys %{$hash{$i}{category}}, "strips");
+
+    # the portion of the page that is outside of any table
+    my(@outer);
+
+    # since we list categories at bottom of page, they are not in info
+    # box (although I suppose they could be)
+    delete $hash{$i}{category};
+
+    # the other properties for this strip
+    for $j (sort keys %{$hash{$i}}) {
+      # the values for this key
+      my(@keys) = sort keys %{$hash{$i}{$j}};
+
+      # this should never happen
+      unless (@keys) {
+	warn("$i/$j exists, but has no keys?");
+	next;
+      }
+
+      # if $j is a property (not a relation), print it outside any table
+      if ($props{$j}) {
+	push(@outer,  "== $prettyprint{$j} ==\n");
+	push(@outer, join("\n",@keys), "\n");
+	next;
+      }
+
+      # $j is a true relation, not just a property
+      # turn keys into useful semantic information
+      for $k (@keys) {
+	$k=~s/\{\{wp\|(.*?)\}\}/$1/g;
+	$k="[[${j}::$k]]";
+      }
+
+      # join for printing
+      my($keys) = join("<br>\n",@keys);
+
+      # and put into semantic (small) table and end small table
+      push(@smalltable, "<tr><th>$prettyprint{$j}</th><td>$keys</td></tr></table>");
+
+      # end cell that contains semantic table and also outer table itself
+      push(@bigtable, "</td></tr></table>");
+
+      # print to file
+      open(A, ">$etcdir/$i.mw.new");
+#      print A join("\n"
+
+
+
+
+  debug("STRIPS",@strips);
+}
+
+
 # create the per-day strips
 # TODO: category: strip, table at top, notes/description are
 # important, maybe more
@@ -110,19 +203,8 @@ for $i (sort keys %hash) {
 
   unless ($i=~/^\d{4}\-/) {next;}
 
-  # TODO: DO NOT REWRITE EVERY SINGLE TIME (diffs only)
-  # the page
-  open(A,">/usr/local/etc/metawiki/pbs-referata/$i.mw.new");
-
-  # the table
-  print A "<table width=100%><tr><th>",pbs_table_date($i);
-  print A "</th><td align=right valign=top>\n";
-  # no need to publish the image URL?
-  delete $hash{$i}{image_url};
-
   # semantical table
   # TODO: using "semantical" for testing, change to "semantic"
-  my(@table) = "<table border><tr><th colspan=2>Semantic Information</th></tr>";
 
   # extra categories (if any)
   # TODO: bad placement for categories, put at bottom?
@@ -150,8 +232,8 @@ for $i (sort keys %hash) {
       $k="[[${j}::$k]]";
     }
 
-    my($keys) = join(", ",@keys);
-    push(@table,"<tr><th>$j</th><td>$keys</td></tr>");
+    my($keys) = join("<br>\n",@keys);
+    push(@table,"<tr><th>$prettyprint{$j}</th><td>$keys</td></tr>");
   }
 
   push(@table,"</table>","</td></tr></table>");
@@ -159,7 +241,7 @@ for $i (sort keys %hash) {
 
   print A join("\n",@table),"\n";
 
-  print A "<table width=100%><tr><td>&lt;&lt; PREV</td><td align=right>NEXT &gt;&gt;</td></tr></table>\n";
+  print A "<table width=100%><tr><td>&lt;&lt; PREV (not working)</td><td align=right>NEXT (not working) &gt;&gt;</td></tr></table>\n";
 
   print A "\n[[Category: Strips]]\n";
   close(A);
@@ -200,12 +282,6 @@ sub pbs_table_date {
 </th></tr>
 <tr><th>{{#widget:Extlink|url=$hash[0]|text=highest resolution}}
 </th></tr></table>
-MARK
-;
-
-  # NOTE: this must be one single line for formatting reasons (wikia)
-  return << "MARK";
-<table border><tr><th>{{#NewWindowLink: $date | $pdate}}</th></tr><tr><th title="$notes">{{#NewWindowLink: $link | $image</th></tr><tr><th>{{#NewWindowLink: $link{$date} | (highest resolution)}}</th></tr></table>
 MARK
 ;
 }
