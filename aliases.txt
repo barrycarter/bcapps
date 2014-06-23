@@ -127,3 +127,4 @@ alias waitpid bc-waitpid.pl
 
 # can add --realsies to below when desired
 alias mirror-referata "bc-mirror-mw.pl --debug --dir=pbs-referata --api=http://pearlsbeforeswine.referata.com/w/api.php \!*"
+alias mirror-wikia "bc-mirror-mw.pl --debug --dir=pbs --api=http://pearls-before-swine-bc.wikia.com/api.php \!*"

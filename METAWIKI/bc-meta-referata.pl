@@ -89,9 +89,7 @@ my(%prettyprint) = (
 		    "" => ""
 		    );
 
-warn "TESTING";
-
-for $i (sqlite3hashlist("SELECT * FROM triples WHERE source='2002-01-07'", "/tmp/pbs-triples.db")) {
+for $i (sqlite3hashlist("SELECT * FROM triples", "/tmp/pbs-triples.db")) {
   my($source, $k, $v) = ($i->{source}, $i->{k}, $i->{v});
 
   # TODO: ignoring deaths for now
@@ -128,7 +126,7 @@ sub pbs_date_strips {
   for $l (0..$#strips) {
     $i = $strips[$l];
 
-    if ($l > 20) {die "TESTING";}
+#    if ($l > 200) {die "TESTING";}
 
     # the big table (containing date table and semantic annotations)
     my(@table) = ("<table width=100%><tr><th>", pbs_table_date($i),
@@ -142,7 +140,7 @@ sub pbs_date_strips {
     # the categories (we dont print them yet, and "strips" is always one)
     # strips is always last one, despite sorting
     my(@cats) = (sort keys %{$hash{$i}{category}}, "strips");
-    map("$_=[[Category:$_]]", @cats);
+    map($_="[[Category:$_]]", @cats);
 
     # the portion of the page below the main table, above cat list
     my(@outer);
@@ -154,17 +152,12 @@ sub pbs_date_strips {
     # the other properties for this strip
     for $j (sort keys %{$hash{$i}}) {
 
-      debug("HASH($i)($j): $hash{$i}{$j}");
-
       # the values for this key
       my(@keys) = sort keys %{$hash{$i}{$j}};
-      debug("KEYS",@keys);
 
-      # this should never happen
-      unless (@keys) {
-	warn("$i/$j exists, but has no keys?");
-	next;
-      }
+      # not sure why this happens, but ignore it quietly
+      # TODO: look into this Perl oddness
+      unless (@keys) {next;}
 
       # if $j is a property (not a relation), print it outside any table
       if ($props{$j}) {
@@ -184,25 +177,43 @@ sub pbs_date_strips {
       my($keys) = join("<br>\n",@keys);
 
       # and put into semantic (small) table and end small table
-      push(@table, "<tr><th>$prettyprint{$j}</th><td>$keys</td></tr></table>");
+      push(@table, "<tr><th>$prettyprint{$j}</th><td>$keys</td></tr>");
+    }
 
       # end cell that contains semantic table and also outer table itself
-      push(@table, "</td></tr></table>");
+      push(@table, "</table></td></tr></table>");
+
+      # links to next and previous strips
+
+      my($strip) = $strips[$l-1];
+      my($date) = strftime("%d %b %Y (%A)", gmtime(str2time($strip)));
+      my($prev) = "{{WikiLink|$strip|<< $date}}";
+      my($prev) = "[[$strip|<< $date]]";
+
+      $strip = $strips[$l+1];
+      $date = strftime("%d %b %Y (%A)", gmtime(str2time($strip)));
+      my($next) = "{{WikiLink|$strip|$date >>}}";
+      my($next) = "[[$strip|$date >>]]";
+
+      # special cases
+      if ($l==0) {$prev="<b>No previous strip</b>";}
+      if ($l==$#strips) {$next="<b>No next strip</b>";}
 
       # print to file
       open(A, ">$etcdir/$i.mw.new");
       # the table
-      print A join("\n", @table);
+      print A join("\n", @table),"\n";
       # below the table
-      print A join("\n", @outer);
+      print A join("\n", @outer),"\n";
       # the categories
-      print A join("\n", @cats);
+      print A join("\n", @cats),"\n";
+      # the prev/next bar
+      print A "<table width=100%><tr><td>$prev</td><td align=right>$next</td></tr></table>\n";
       # and done
       close(A);
 
       # only replace existing file if changed
-      mv_after_diff("$etcdir/$i.mw.new");
-    }
+      mv_after_diff("$etcdir/$i.mw");
   }
 }
 
@@ -272,11 +283,11 @@ sub pbs_table_date {
   my($pdate) =  strftime("%d %b %Y (%A)", gmtime(str2time($date)));
 
   # notes for this strip
-  my($notes) = join(". ",sort keys %{$hash{$date}{notes}});
+#  my($notes) = join(". ",sort keys %{$hash{$date}{notes}});
   # remove wp links
-  $notes=~s/\{\{\#NewWindowLink:\s+.*?\|(.*?)\}\}/$1/isg;
+#  $notes=~s/\{\{\#NewWindowLink:\s+.*?\|(.*?)\}\}/$1/isg;
   # fix up quotation marks
-  $notes=~s/\"/&quot;/isg;
+#  $notes=~s/\"/&quot;/isg;
 
   # the image itself
   my(@hash) = keys %{$hash{$date}{image_url}};
