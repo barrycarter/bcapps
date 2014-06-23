@@ -18,6 +18,19 @@ SELECT DISTINCT("page-"||source||".gif") FROM triples
 SELECT DISTINCT("page-"||source||".gif") FROM triples
  WHERE k="character" AND v="Zebra";
 
+.output /tmp/pbs-with-lemmings.txt
+SELECT DISTINCT("page-"||source||".gif") FROM triples
+ WHERE k="character" AND v="Lemmings";
+
+.output /tmp/pbs-with-larry.txt
+SELECT DISTINCT("page-"||source||".gif") FROM triples
+ WHERE k="character" AND v="Larry";
+
+.output /tmp/pbs-with-lgd.txt
+SELECT DISTINCT("page-"||source||".gif") FROM triples
+ WHERE k="character" AND v="Guard Duck";
+
+
 
 
 

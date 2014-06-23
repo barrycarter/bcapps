@@ -22,13 +22,13 @@ girlfriend, boss, friend, father, half-brother, pet, roommate, date,
 grandmother"));
 
 pbs_parse_data();
-die "TESTING";
 %data = pbs_all();
 pbs_newspaper_mentions();
 pbs_storylines();
 pbs_characters();
 pbs_species_deaths();
 pbs_annotations();
+die "TESTING";
 
 # TODO: this seems redundant
 for $i (keys %data) {
