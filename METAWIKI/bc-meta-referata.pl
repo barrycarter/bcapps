@@ -114,14 +114,15 @@ for $i (sort keys %hash) {
   # the page
   open(A,">/usr/local/etc/metawiki/pbs-referata/$i.mw.new");
 
-  # semantical table
-  # TODO: using "semantical" for testing, change to "semantic"
-  my(@table) = "<table border>";
-
   # the table
-  print A pbs_table_date($i),"\n";
+  print A "<table width=100%><tr><th>",pbs_table_date($i);
+  print A "</th><td align=right valign=top>\n";
   # no need to publish the image URL?
   delete $hash{$i}{image_url};
+
+  # semantical table
+  # TODO: using "semantical" for testing, change to "semantic"
+  my(@table) = "<table border><tr><th colspan=2>Semantical information</th></tr>";
 
   # extra categories (if any)
   # TODO: bad placement for categories, put at bottom?
@@ -143,22 +144,20 @@ for $i (sort keys %hash) {
       next;
     }
 
-    push(@table,"<tr><th>$j</th><td>");
+    # turn keys into useful semantic information
+    my($keys) = join(", ",map($_="[[${j}::$_]]", @keys));
 
-    for $k (@keys) {
-      debug("$i, $j, $k");
-      # print nothing
-#      print A "[[${j}::$k| ]]\n";
-      push(@table,"[[${j}::$k]]");
-    }
-    push(@table,"</td></tr>");
+    push(@table,"<tr><th>$j</th><td>$keys</td></tr>");
   }
 
-  push(@table,"</table>");
-  print A "\n[[Category: Strips]]\n";
+  push(@table,"</table>","</td></tr></table>");
 #  print A "__SHOWFACTBOX__\n";
 
   print A join("\n",@table),"\n";
+
+  print A "<table width=100%><tr><td>&lt;&lt; PREV</td><td align=right>NEXT &gt;&gt;</td></tr></table>\n";
+
+  print A "\n[[Category: Strips]]\n";
   close(A);
   mv_after_diff("/usr/local/etc/metawiki/pbs-referata/$i.mw");
 }
