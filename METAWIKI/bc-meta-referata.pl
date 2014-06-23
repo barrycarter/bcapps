@@ -110,8 +110,17 @@ for $i (sqlite3hashlist("SELECT * FROM triples", "/tmp/pbs-triples.db")) {
   warn("NOT UNDERSTOOD: $k: $source -> $v");
 }
 
-pbs_date_strips();
+pbs_character_pages();
 die "TESTING";
+pbs_date_strips();
+
+# the character pages (assumes %hash has been created/filled in)
+
+sub pbs_character_pages {
+  for $i (keys %hash) {
+    debug("I: $i");
+  }
+}
 
 # the date strips (assumes %hash has been created/filled in)
 

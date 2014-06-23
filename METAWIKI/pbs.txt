@@ -30,7 +30,7 @@ Guidelines for editing this file:
 
   - use &#58; for colons in text
 
-TODO:
+TODO (global todo's not specific to a given strip):
 
   - handle MULTIREF pages
 
@@ -38,6 +38,27 @@ TODO:
 
   - removing _deaths count where species of death is already given,
   tweak program to fix
+
+  - port to referata.com (in progress), since wikia.com no longer
+  offers SMW, even on request
+
+  - Make sure characters like Bippy, Pigita, Jef are synchronous (or
+  nearly so) with their storylines
+
+  - Currently "character" means a character appearance or
+  mention/reference. Consider distinguishing this further:
+  on-camera/off-camera role, speaking/non-speaking role, reference
+  only, implicit reference (eg, referenced because of storyline, but
+  not directly involved in specific strip)
+
+  - Consider (loosely) annotating on a panel-by-panel basis, not just
+  strip-by-strip
+
+  - Consider special format for Characters page if character has only
+  one appearance
+
+  - If I don't create individual character pages, consider using "a
+  name" to link between characters
 
 # Notes:
 
@@ -1940,3 +1961,13 @@ undies != underwear, so maybe un-dies? (using rebirth)
 # 2009-12-31 unusually thin characters
 
 # 2006-08-06 katie cow later drama cow
+
+# when i put larry in pbs-cl.txt make sure its really him and not one
+# of the zze crocs
+
+# note strips that have multiple storylines, they are vaguely more interesting
+
+# check all elly elephant strips for henry hippo 
+
+# elly elephant not stephans character but tells rat "stop doing stuff
+# to MY character"
