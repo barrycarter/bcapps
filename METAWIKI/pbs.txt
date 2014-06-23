@@ -42,14 +42,43 @@ TODO (global todo's not specific to a given strip):
   - port to referata.com (in progress), since wikia.com no longer
   offers SMW, even on request
 
+  - Distinguish between storylines and characters: for example, Atlas
+  is currently both
+
+  - Character multiple deaths/rebirths currently not handled properly
+
+  - Bob (human) 21 should have alias Neighbor Bob, but does not
+
+  - For repeat characters (eg, "Fred (human) 5"), make sure name
+  matches initial appearance
+
+  - Consider using "hovertext" ("a title") to show notes for
+  thumbnailed strips (currently doing this, but consider if I want to
+  keep it)
+
+  - Use limited transitivity for sanity checking; eg, if
+  "source::kills::target", make sure target has death date
+  
+  - Commas in descriptions (like for "Dingo Boy") are creating <br>
+  where not needed
+
   - Make sure characters like Bippy, Pigita, Jef are synchronous (or
   nearly so) with their storylines
+
+  - Make sure most links open in new page/tab
 
   - Currently "character" means a character appearance or
   mention/reference. Consider distinguishing this further:
   on-camera/off-camera role, speaking/non-speaking role, reference
   only, implicit reference (eg, referenced because of storyline, but
   not directly involved in specific strip)
+
+  - Consider making the first appearance of a "major" character (one
+  that appears more than 20 times?) an "event"
+
+  - Pages referenced by MULTIREF should have a backlink to the MULTIREF page
+
+  - Insure semantic triples inside MULTIREF are parsed and processed
 
   - Consider (loosely) annotating on a panel-by-panel basis, not just
   strip-by-strip
@@ -60,6 +89,57 @@ TODO (global todo's not specific to a given strip):
   - If I don't create individual character pages, consider using "a
   name" to link between characters
 
+  - Do more error checking on date ranges (eg, first-last where last < first)
+
+  - Maybe create a "Species Death" dropdown with all "deaths" pages listed, perhaps in order of number of deaths
+
+  - Consider error-checking where I have "Fred 1" (and there's only
+  one Fred) or "Fred (human)" (when there are no other characters
+  named Fred, regardless of species)
+
+  - Check for things like "Name 12345678" as erroneous version of
+  "Name 12345678 (species)"
+
+  - Consider transcluding or interwiki linking to existing PBS wiki on
+  wikia (harder if I'm on referata though?)
+
+  - Consider including anonymous characters, but perhaps only "important" ones
+
+  - Vette character list, especially for characters who appear 2-3
+  times, to make sure I haven't combined characters
+
+  - Find a better way of determining which entities (source/v values)
+  are characters (eg, anything with any sort of relative, but perhaps
+  more explicit)
+
+  - Include thumbnails for Get Fuzzy strips where Get Fuzzy parallels PBS
+
+  - Disclaim that all info is based on gocomics.com site (not
+  newspaper comics) and that I make mistakes and data is incomplete
+
+  - Use CSS (or just program) to remind people not to edit wiki
+  directly (however, referata.com enforces this anyway)
+
+  - Sanity check: most characters should not die more than once
+
+  - Include "fair use" disclaimer for thumbnails (gocomics.com is
+  aware I am using these, but does not approve)
+
+  - Decide what [[foo::bar::A+B+C+D]] should return (comma-separated list?)
+
+  - wp template (wikipedia) not working on wikia.com version
+
+  - Try to find more PBS transcripts, above/beyond the ones I've already found
+
+  - Ask IPL (for example) "in which PBS strips has Pig appeared"
+  and/or how to do this kind of research in general
+
+  - Make sure my list of GIFs is complete, except for missing 7 days
+  or so that isn't even on gocomics.com site
+
+  - On newspapers page, note that some newspapers are
+  fictious/generic, not always papers in which PBS appears
+ 
 # Notes:
 
 pages that link to [[Pig]] = Pig's appearances and mentions
@@ -1971,3 +2051,8 @@ undies != underwear, so maybe un-dies? (using rebirth)
 
 # elly elephant not stephans character but tells rat "stop doing stuff
 # to MY character"
+
+# fix leonard (bear suit) to be leonard (human)
+
+# find where Pastis changes his email address and which addresses he uses
+
