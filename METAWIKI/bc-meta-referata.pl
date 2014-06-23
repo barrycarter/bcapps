@@ -106,13 +106,17 @@ for $i (sqlite3hashlist("SELECT * FROM triples", "/tmp/pbs-triples.db")) {
 
 for $i (sort keys %hash) {
 
-  if (++$count>10) {die "TESTING";}
+  if (++$count>20) {die "TESTING";}
 
   unless ($i=~/^\d{4}\-/) {next;}
 
   # TODO: DO NOT REWRITE EVERY SINGLE TIME (diffs only)
   # the page
-  open(A,">/usr/local/etc/metawiki/pbs-referata/$i.mw");
+  open(A,">/usr/local/etc/metawiki/pbs-referata/$i.mw.new");
+
+  # semantical table
+  # TODO: using "semantical" for testing, change to "semantic"
+  my(@table) = "<table border>";
 
   # the table
   print A pbs_table_date($i),"\n";
@@ -139,18 +143,25 @@ for $i (sort keys %hash) {
       next;
     }
 
+    push(@table,"<tr><th>$j</th><td>");
+
     for $k (@keys) {
       debug("$i, $j, $k");
       # print nothing
-      print A "[[${j}::$k| ]]\n";
+#      print A "[[${j}::$k| ]]\n";
+      push(@table,"[[${j}::$k]]");
     }
+    push(@table,"</td></tr>");
   }
 
+  push(@table,"</table>");
   print A "\n[[Category: Strips]]\n";
-  print A "__SHOWFACTBOX__\n";
-  close(A);
-}
+#  print A "__SHOWFACTBOX__\n";
 
+  print A join("\n",@table),"\n";
+  close(A);
+  mv_after_diff("/usr/local/etc/metawiki/pbs-referata/$i.mw");
+}
 
 # creates the table used to display a given strip (referata version)
 
@@ -196,7 +207,34 @@ MARK
 ;
 }
 
+# TODO: move this to bclib.pl
 
+=item mv_after_diff($source, $options)
+
+Move $source.new to $source and $source to $source.old; however, if
+$source.new and $source are already identical (per cmp), do
+nothing. $options currently unused.
+
+TODO: add rm=1 option to remove .new file in case of equality (but
+safer to keep it around "just in case")
+
+TODO: This wont work for files that have quotation marks, but those
+are hopefully rare
+
+=cut
+
+sub mv_after_diff {
+  my($source, $options) = @_;
+  my($out,$err,$res) = cache_command2("cmp \"$source\" \"$source.new\" 1> /tmp/cmp.out 2> /tmp/cmp.err", "nocache=1");
+    debug("OUT: $out, ERR: $err, RES: $res");
+    unless ($res) {
+      debug("$source and $source.new already identical");
+      return;
+    }
+
+  debug("$source and $source.new different, overwriting");
+  system("mv \"$source\" \"$source.old\"; mv \"$source.new\" \"$source\"");
+}
 
 =item comment
 

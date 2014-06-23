@@ -61,7 +61,7 @@ disclaim: based on gocomics website only
 2002-01-13 [[event::[[Pig]] confirms he won't eat dead family members]]
 2002-01-18 [[character::Goat]] [[notes::Although this is [[Goat]]'s first appearance, he and [[Rat]] seem to already know each other fairly well]] [[Goat::species::goat]]
 2002-01-21 [[event::[[Rat]]'s poem mentions {{wp|zebras}}, but [[Zebra]] has not yet appeared in the strip]]
-2011-01-24,2011-01-25,2002-01-22,2004-11-11,2004-11-12 [[storyline::[[Rat]] writes {{wp|greeting cards}}]]
+2011-01-24,2011-01-25,2002-01-22,2004-11-11,2004-11-12 [[storyline::[[character::Rat]] writes {{wp|greeting cards}}]]
 2011-01-26 [[character::Zebra+[[deaths::Bob 20110126 (crocodile)]]+Floyd 20110126 (crocodile)+Burt 20110126 (crocodile)]] [[meta::Both Floyd and Burt might be same as earlier nondead ones]]
 2004-11-10 [[notes::The signs read "[[Leonard (bear suit)::aka::Tatulli]], The Self-Esteem-Building-Bear" and "Coco, The Peace and Harmony-Loving Bear". Additionally, the hyphen between "Building" and "Bear" in Leonard's sign is superfluous.]]
 2011-01-30 [[character::Rat+Pig+Bob 20110130 (human)]]
