@@ -8,89 +8,32 @@ dodie('chdir("/home/barrycarter/BCGIT/METAWIKI")');
 my($etcdir) = "/usr/local/etc/metawiki/pbs-referata";
 
 # relations I'm ignoring for now (null/meta = ignore forever)
+# NOTE: category is doubly special
 my(%ignore) = list2hash("null", "meta", "char_list_complete", "source",
 			"noref", "cameo", "category");
-
-# the following are considered "properties", and not links
-# TODO: event should probably be noted semantically
-my(%props) = list2hash("notes", "description", "event");
-
-# TODO: category is doubly special
-
-# below forces creation/recency of pbs-triples.db
-# disabled later, since I can/should run "make" when needed
-# system("make");
 
 my(%hash);
 # get large image links (hack for now)
 for $i (split(/\n/, read_file("largeimagelinks.txt"))) {
   $i=~s/^(.*?)\s+(.*)$//;
   $hash{$1}{image_url}{$2}=1;
+  # this is ugly, not all strips have annotations
+  $hash{strip}{$1} = 1;
+
 }
 
-# hash1 contains the forward and reverse mappings of k, followed by
-# the mapping type (which is added below the hash)
+# load meta data (TODO: this is cheating, only one section so far)
+for $i (`egrep -v '<|#|^\$' pbs-meta.txt`) {
+  chomp($i);
+  my(@data) = split(/\, /, $i);
+  $meta{$data[0]} = [@data];
 
-my(%hash1) = 
-(
- "neighbor" => ["has_neighbor", "has_neighbor"],
- # assuming friendship/cousin symmetric, possibly not always true
- # (for cousins, reverse could be "great uncle" or something odd?)
- "cousin" => ["has_cousin", "has_cousin"],
- "friend" => ["has_friend", "has_friend"],
- # <h>No gay marriage: it screws up semantic transitivity!</h>
- "husband" => ["has_husband", "has_wife"],
- "wife" => ["has_wife", "has_husband"],
- "girlfriend" => ["has_girlfriend", "has_boyfriend"],
- "boyfriend" => ["has_boyfriend", "has_girlfriend"],
- "ex-husband" => ["had_husband", "had_wife"],
- "half-brother" => ["has_half_brother", "has_half_sibling"],
- # no generic term for niece/nephew? 
- "uncle" => ["has_uncle", "uncle_of"],
- "niece" => ["has_niece", "niece_of"],
- "aunt" => ["has_aunt", "aunt_of"],
- "date" => ["dates", "dates"],
- "boss" => ["employee_of", "boss_of"],
- "brother" => ["has_brother", "has_sibling"],
- "sister" => ["has_sister", "has_sibling"],
- "grandmother" => ["has_grandmother", "has_grandchild"],
- "grandfather" => ["has_grandfather", "has_grandchild"],
- "pet" => ["has_pet", "pet_of"],
- "mother" => ["has_mother", "has_child"],
- "father" => ["has_father", "has_child"],
- "roommate" => ["has_roommate", "has_roommate"],
- "kills" => ["kills", "killed_by"],
- "son" => ["has_son", "has_parent"],
- "coworker" => ["has_coworker", "has_coworker"],
- "fires" => ["fires", "fired_by"]
-);
-
-# if you are on either side of one of the above keywords, you are a character
-for $i (keys %hash1) {push(@{$hash1{$i}}, "character:character");}
-
-# relations that map other things to other things ("*" = wildcard)
-my(%hash2) = 
-(
- "aka" => ["alias", "canon", "character:string"],
- "character" => ["has_character", "appears_in", "strip:character"],
- "storyline" => ["in_storyline", "has_strip", "strip:storyline"],
- "deaths" => ["has_death", "dies_on", "strip:character"],
- "rebirths" => ["has_undeath", "un_dies_on", "strip:character"],
- "newspaper_mentions" => ["mentions_paper", "mentioned_on", "strip:newspaper"],
- "profession" => ["has_profession", "has_member", "character:profession"],
- "species" => ["has_species", "has_member", "character:species"],
- "subspecies" => ["has_subspecies", "has_member", "character:subspecies"],
- "location" => ["has_location", "has_resident", "*:location"],
- "member" => ["member_of", "has_member", "*:group"],
- "members" => ["has_member", "member_of", "group:*"],
- "religion" => ["has_religion", "has_follower", "character:religion"],
- "orientation" => ["has_sexual_orientation", "has_member", "character:orientation"]
-);
-
-# add relations to map
-# TODO: above is ugly and I sense I'm not fulling understanding something
-for $i (keys %hash1) {$map{$i} = $hash1{$i};}
-for $i (keys %hash2) {$map{$i} = $hash2{$i};}
+  # if the result type is string, mark this as a "property" not "relation"
+  if ($data[4] eq "string") {
+    debug("SETTING $data[1] type to prop");
+    $meta{$data[1]}{type} = "property";
+  }
+}
 
 # defines the pretty prints of SOME of the semantic relations above
 my(%prettyprint) = 
@@ -106,40 +49,27 @@ my(%prettyprint) =
 
 for $i (sqlite3hashlist("SELECT * FROM triples", "/tmp/pbs-triples.db")) {
   my($source, $k, $v) = ($i->{source}, $i->{k}, $i->{v});
+  debug("$source/$k/$v");
 
   # TODO: ignoring deaths for now
   if ($ignore{$k} || $k=~/_deaths$/) {next;}
 
-  if ($map{$k}) {
-    $hash{$source}{$map{$k}[0]}{$v} = 1;
-    $hash{$v}{$map{$k}[1]}{$k} = 1;
+  my($ignore, $for, $rev, $stype, $ttype) = @{$meta{$k}};
 
-    my($type1,$type2) = split(/:/, $map{$k}[2]);
+  unless ($for) {warn "NO FORWARD MAPPING FOR: $k"; next;}
 
-    # assign $source and $v to appropriate type
-    # NOTE: collisions possible but hopefully unlikely
-    $hash{$type1}{$source} = 1;
-    $hash{$type2}{$v} = 1;
-    next;
-  }
+  # forward and reverse mappings (not explicitly separating properties
+  # and relations, but the target type of a property will be string)
 
-  # props are unidirectional
-  if ($props{$k}) {
-    $hash{$source}{$k}{$v} = 1;
-    next;
-  }
-
-  warn("NOT UNDERSTOOD: $k: $source -> $v");
+  $hash{$source}{$for}{$v} = 1;
+  $hash{$v}{$rev}{$k} = 1;
+  $hash{$stype}{$source} = 1;
+  $hash{$ttype}{$v} = 1;
 }
 
-# attempt to determine entity type for each object
-
-# TODO: there appears to be something seriously wrong here, this
-# should be way more obvious
-
-pbs_character_pages();
-die "TESTING";
 pbs_date_strips();
+die "TESTING";
+pbs_character_pages();
 
 # the character pages (assumes %hash has been created/filled in)
 
@@ -152,18 +82,22 @@ sub pbs_character_pages {
 # the date strips (assumes %hash has been created/filled in)
 
 sub pbs_date_strips {
-  # TODO: use $hash{strip} instead
-  my(%is_strip);
-
-  # TODO: there must be a better way to do this?
-  for $i (keys %hash) {if ($i=~/^\d{4}\-\d{2}\-\d{2}$/) {$is_strip{$i}=1;}}
-  my(@strips) = sort keys %is_strip;
+  my(@strips) = sort keys %{$hash{strip}};
 
   # use indexs so I can do "next" and "prev"
   for $l (0..$#strips) {
     $i = $strips[$l];
 
-#    if ($l > 200) {die "TESTING";}
+    if ($l > 20) {die "TESTING";}
+
+    # hidden properties (required for templating results)
+    unless ($i=~m/^(\d{4})\-(\d{2})\-(\d{2})$/){warn "BAD DATE: $i"; return;}
+    my($link) = "http://www.gocomics.com/pearlsbeforeswine/$1/$2/$3";
+    my(@hash) = keys %{$hash{$i}{image_url}};
+    $hash[0]=~s/^.*?([^\/]*?)\?width\=/$1/;
+    my($pdate) =  strftime("%d %b %Y (%A)", gmtime(str2time($i)));
+    my(@hidden) = ("[[has_link::$link| ]]", "[[has_date::$i| ]]",
+		   "[[has_pdate::$pdate| ]]", "[[has_hash::$hash[0]| ]]");
 
     # the big table (containing date table and semantic annotations)
     my(@table) = ("<table width=100%><tr><th>", pbs_table_date($i),
@@ -189,6 +123,8 @@ sub pbs_date_strips {
     # the other properties for this strip
     for $j (sort keys %{$hash{$i}}) {
 
+      debug("J: $j, $meta{$j}{type}");
+
       # the values for this key
       my(@keys) = sort keys %{$hash{$i}{$j}};
 
@@ -197,7 +133,7 @@ sub pbs_date_strips {
       unless (@keys) {next;}
 
       # if $j is a property (not a relation), print it outside any table
-      if ($props{$j}) {
+      if ($meta{$j}{type} eq "property") {
 	push(@outer,  "== $prettyprint{$j} ==\n");
 	push(@outer, join("\n",@keys), "\n");
 	next;
@@ -242,10 +178,12 @@ sub pbs_date_strips {
       print A join("\n", @table),"\n";
       # below the table
       print A join("\n", @outer),"\n";
+      # the prev/next bar
+    print A "<table width=100%><tr><td>$prev</td><td align=right>$next</td></tr></table>\n";
+    # hidden props
+    print A join("\n", @hidden),"\n";
       # the categories
       print A join("\n", @cats),"\n";
-      # the prev/next bar
-      print A "<table width=100%><tr><td>$prev</td><td align=right>$next</td></tr></table>\n";
       # and done
       close(A);
 
@@ -254,62 +192,8 @@ sub pbs_date_strips {
   }
 }
 
-# create the per-day strips
-# TODO: category: strip, table at top, notes/description are
-# important, maybe more
 # TODO: species determination
 # TODO: character renumbering
-
-for $i (sort keys %hash) {
-
-  if (++$count>20) {die "TESTING";}
-
-  unless ($i=~/^\d{4}\-/) {next;}
-
-  # semantical table
-  # TODO: using "semantical" for testing, change to "semantic"
-
-  # extra categories (if any)
-  # TODO: bad placement for categories, put at bottom?
-  for $j (sort keys %{$hash{$i}{category}}) {
-    print A "[[Category: $j]]\n";
-  }
-  delete $hash{$i}{category};
-
-  for $j (sort keys %{$hash{$i}}) {
-    my(@keys) = sort keys %{$hash{$i}{$j}};
-
-    # no keys? <h>no justice</h> ignore
-    unless (@keys) {next;}
-
-    # if this is a property, print it out, don't create triple
-    if ($props{$j}) {
-      print A "== ".ucfirst($j)." ==\n\n";
-      print A join("\n",@keys),"\n\n";
-      next;
-    }
-
-    # turn keys into useful semantic information
-    for $k (@keys) {
-      $k=~s/\{\{wp\|(.*?)\}\}/$1/g;
-      $k="[[${j}::$k]]";
-    }
-
-    my($keys) = join("<br>\n",@keys);
-    push(@table,"<tr><th>$prettyprint{$j}</th><td>$keys</td></tr>");
-  }
-
-  push(@table,"</table>","</td></tr></table>");
-#  print A "__SHOWFACTBOX__\n";
-
-  print A join("\n",@table),"\n";
-
-  print A "<table width=100%><tr><td>&lt;&lt; PREV (not working)</td><td align=right>NEXT (not working) &gt;&gt;</td></tr></table>\n";
-
-  print A "\n[[Category: Strips]]\n";
-  close(A);
-  mv_after_diff("/usr/local/etc/metawiki/pbs-referata/$i.mw");
-}
 
 # creates the table used to display a given strip (referata version)
 
@@ -335,6 +219,8 @@ sub pbs_table_date {
 
   $hash[0]=~/([^\/]*?)\?width\=/;
   my($thumb) = $1;
+
+  return "{{DateTable|$date|$pdate|$link|$thumb}}";
 
   my($image) = "{{#widget:Thumbnail|hash=$thumb}}";
 

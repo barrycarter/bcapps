@@ -139,6 +139,8 @@ TODO (global todo's not specific to a given strip):
 
   - On newspapers page, note that some newspapers are
   fictious/generic, not always papers in which PBS appears
+
+  - Look into ListWidget to show semantic queries better
  
 # Notes:
 
@@ -1081,7 +1083,7 @@ MULTIREF [[title::Ebony and Ivory]] [[notes::The crocs refer to [[Zebra]] as "Eb
 MULTIREF [[title::Tree Croc]] [[notes::On [[2007-01-07]], Larry poses as a "tree-climbing assassin monkey"; he does the same thing starting [[2011-05-12]], but now calls himself a "tree croc" instead]]
 2011-05-16-2011-05-18,2011-05-20,2011-05-23,2011-05-26,2011-05-27,2011-06-06,2011-06-07,2011-06-09,2011-06-13-2011-06-15,2011-08-13 [[storyline::[[character::Larry]] and the treehouse]]
 2011-08-24-2011-08-26,2011-08-29,2011-08-30,2011-09-04-2011-09-06 [[description::[[character::Melvin (crocodile)]] straps a bomb to himself to blow up [[Zebra]]'s wall]]
-2011-09-011 [[character::Rat+Goat+Pig]] [[Rat::aka::Master Linguist Rat]]
+2011-09-11 [[character::Rat+Goat+Pig]] [[Rat::aka::Master Linguist Rat]]
 2008-04-18 [[character::[[deaths::Melvin (mole)]]]]
 2011-08-10 [[notes::Stephan's trial is in "Courtroom 17"]]
 2011-09-23 [[newspaper_mentions::Des Moines Register]]

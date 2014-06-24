@@ -1,0 +1,6 @@
+<table border>
+<tr><th>{{WikiLink|{{{1}}}|{{{2}}}}}</th></tr>
+<tr><th>{{#widget:LinkedThumbnail|url={{{3}}}|hash={{{4}}}}}
+</th></tr>
+<tr><th>{{#widget:Extlink|url=http://assets.amuniversal.com/{{{4}}}?width=1500|text=highest resolution}}
+</th></tr></table>

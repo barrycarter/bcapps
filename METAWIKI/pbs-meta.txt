@@ -1,0 +1,59 @@
+<relations>
+
+# this section contains the relations I use in pbs.txt. For example,
+# if I say "[[Dilbert::boss::PHB]] it means that Dilbert's boss is the
+# PHB. Thus, Dilbert is "employee_of" PHB, and PHB is "boss_of"
+# Dilbert. Further if [[x::boss::y]], both x and y must be characters
+
+# the character:character relations (most common type)
+aunt, has_aunt, aunt_of, character, character
+boss, employee_of, boss_of, character, character
+boyfriend, has_boyfriend, has_girlfriend, character, character
+brother, has_brother, has_sibling, character, character
+cousin, has_cousin, has_cousin, character, character
+coworker, has_coworker, has_coworker, character, character
+date, dates, dates, character, character
+ex-husband, had_husband, had_wife, character, character
+father, has_father, has_child, character, character
+fires, fires, fired_by, character, character
+friend, has_friend, has_friend, character, character
+girlfriend, has_girlfriend, has_boyfriend, character, character
+grandfather, has_grandfather, has_grandchild, character, character
+grandmother, has_grandmother, has_grandchild, character, character
+half-brother, has_half_brother, has_half_sibling, character, character
+husband, has_husband, has_wife, character, character
+kills, kills, killed_by, character, character
+mother, has_mother, has_child, character, character
+neighbor, has_neighbor, has_neighbor, character, character
+niece, has_niece, niece_of, character, character
+pet, has_pet, pet_of, character, character
+roommate, has_roommate, has_roommate, character, character
+sister, has_sister, has_sibling, character, character
+son, has_son, has_parent, character, character
+uncle, has_uncle, uncle_of, character, character
+wife, has_wife, has_husband, character, character
+
+# other relations
+# * = any type
+# string = plain text string, not an entity
+
+aka, alias, canon, character, string
+character, has_character, appears_in, strip, character
+deaths, has_death, dies_on, strip, character
+location, has_location, has_resident, *, location
+member, member_of, has_member, *, group
+members, has_member, member_of, group, *
+newspaper_mentions, mentions_paper, mentioned_on, strip, newspaper
+orientation, has_sexual_orientation, has_member, character, orientation
+profession, has_profession, has_member, character, profession
+rebirths, has_undeath, un_dies_on, strip, character
+religion, has_religion, has_follower, character, religion
+species, has_species, has_member, character, species
+storyline, in_storyline, has_strip, strip, storyline
+subspecies, has_subspecies, has_member, character, subspecies
+
+notes, has_notes, applies_to, *, string
+description, has_description, applies_to, *, string
+event, has_event, occurs_on, strip, string
+
+</relations>
