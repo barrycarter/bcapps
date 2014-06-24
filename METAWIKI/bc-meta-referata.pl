@@ -2,6 +2,9 @@
 
 # potentially better way of parsing stuff (ultimately for referata.com)
 
+# TODO: download auto-generated form stuff (like Template:Strip) from
+# referata.com
+
 require "/usr/local/lib/bclib.pl";
 
 dodie('chdir("/home/barrycarter/BCGIT/METAWIKI")');
@@ -90,6 +93,15 @@ sub pbs_date_strips {
 
     if ($l > 20) {die "TESTING";}
 
+    debug("{{strip");
+    for $j (sort keys %{$hash{$i}}) {
+      my($keys) = join(", ",sort keys %{$hash{$i}{$j}});
+      debug("|$j=$keys");
+    }
+    debug("}}");
+
+    die "TESTING";
+
     # hidden properties (required for templating results)
     unless ($i=~m/^(\d{4})\-(\d{2})\-(\d{2})$/){warn "BAD DATE: $i"; return;}
     my($link) = "http://www.gocomics.com/pearlsbeforeswine/$1/$2/$3";
@@ -106,7 +118,7 @@ sub pbs_date_strips {
     delete $hash{$i}{image_url};
 
     # the semantic information table (row 1, column 2 of big table)
-    push(@table, "<table border><tr><th colspan=2>Semantic Information</th></tr>");
+#    push(@table, "<table border><tr><th colspan=2>Semantic Information</th></tr>");
 
     # the categories (we dont print them yet, and "strips" is always one)
     # strips is always last one, despite sorting
@@ -143,18 +155,22 @@ sub pbs_date_strips {
       # turn keys into useful semantic information
       for $k (@keys) {
 	$k=~s/\{\{wp\|(.*?)\}\}/$1/g;
-	$k="[[${j}::$k]]";
+#	$k="[[${j}::$k]]";
       }
 
       # join for printing
-      my($keys) = join("<br>\n",@keys);
+#      my($keys) = join("<br>\n",@keys);
+      my($keys) = join(", ",@keys);
 
       # and put into semantic (small) table and end small table
-      push(@table, "<tr><th>$prettyprint{$j}</th><td>$keys</td></tr>");
+#      push(@table, "<tr><th>$prettyprint{$j}</th><td>$keys</td></tr>");
+      push(@table, "|$j=$keys");
     }
 
       # end cell that contains semantic table and also outer table itself
-      push(@table, "</table></td></tr></table>");
+#      push(@table, "</table></td></tr></table>");
+
+    debug("TABLE",@table);
 
       # links to next and previous strips
 
@@ -220,7 +236,8 @@ sub pbs_table_date {
   $hash[0]=~/([^\/]*?)\?width\=/;
   my($thumb) = $1;
 
-  return "{{DateTable|$date|$pdate|$link|$thumb}}";
+  # the first parameter is intentionally blank below
+  return "{{DateTable| |$date|$pdate|$link|$thumb}}";
 
   my($image) = "{{#widget:Thumbnail|hash=$thumb}}";
 

@@ -1,6 +1,9 @@
+<noinclude>There is intentionally no parameter 1 below because
+mediawiki escapes it oddly in a way I can't use</noinclude>
+
 <table border>
-<tr><th>{{WikiLink|{{{1}}}|{{{2}}}}}</th></tr>
-<tr><th>{{#widget:LinkedThumbnail|url={{{3}}}|hash={{{4}}}}}
+<tr><th>{{WikiLink|{{{2}}}|{{{3}}}}}</th></tr>
+<tr><th>{{#widget:LinkedThumbnail|url={{{4}}}|hash={{{5}}}}}
 </th></tr>
-<tr><th>{{#widget:Extlink|url=http://assets.amuniversal.com/{{{4}}}?width=1500|text=highest resolution}}
+<tr><th>{{#widget:Extlink|url=http://assets.amuniversal.com/{{{5}}}?width=1500|text=highest resolution}}
 </th></tr></table>
