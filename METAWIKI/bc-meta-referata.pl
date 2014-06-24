@@ -47,10 +47,10 @@ my(%hash1) =
  "half-brother" => ["has_half_brother", "has_half_sibling"],
  # no generic term for niece/nephew? 
  "uncle" => ["has_uncle", "uncle_of"],
- "niece" => ["has_niece", "has_uncle"],
+ "niece" => ["has_niece", "niece_of"],
  "aunt" => ["has_aunt", "aunt_of"],
  "date" => ["dates", "dates"],
- "boss" => ["boss_of", "employee_of"],
+ "boss" => ["employee_of", "boss_of"],
  "brother" => ["has_brother", "has_sibling"],
  "sister" => ["has_sister", "has_sibling"],
  "grandmother" => ["has_grandmother", "has_grandchild"],
