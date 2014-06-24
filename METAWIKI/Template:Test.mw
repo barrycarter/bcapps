@@ -1,11 +1,11 @@
 <table border>
-<tr><th>1</th><td>{{{1}}}</td>
-<tr><th>2</th><td>{{{2}}}</td>
-<tr><th>3</th><td>{{{3}}}</td>
-<tr><th>4</th><td>{{{4}}}</td>
-<tr><th>5</th><td>{{{5}}}</td>
-<tr><th>6</th><td>{{{6}}}</td>
-<tr><th>7</th><td>{{{7}}}</td>
-<tr><th>8</th><td>{{{8}}}</td>
-<tr><th>9</th><td>{{{9}}}</td>
+<tr><th>1</th><td>{{{1}}}</td></tr>
+<tr><th>2</th><td>{{{2}}}</td></tr>
+<tr><th>3</th><td>{{{3}}}</td></tr>
+<tr><th>4</th><td>{{{4}}}</td></tr>
+<tr><th>5</th><td>{{{5}}}</td></tr>
+<tr><th>6</th><td>{{{6}}}</td></tr>
+<tr><th>7</th><td>{{{7}}}</td></tr>
+<tr><th>8</th><td>{{{8}}}</td></tr>
+<tr><th>9</th><td>{{{9}}}</td></tr>
 </table>
