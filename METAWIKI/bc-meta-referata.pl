@@ -94,7 +94,7 @@ sub pbs_date_strips {
     unless ($i=~m/^(\d{4})\-(\d{2})\-(\d{2})$/){warn "BAD DATE: $i"; return;}
     my($link) = "http://www.gocomics.com/pearlsbeforeswine/$1/$2/$3";
     my(@hash) = keys %{$hash{$i}{image_url}};
-    $hash[0]=~s/^.*?([^\/]*?)\?width\=/$1/;
+    $hash[0]=~s/^.*?([^\/]*?)\?width\=.*$/$1/;
     my($pdate) =  strftime("%d %b %Y (%A)", gmtime(str2time($i)));
     my(@hidden) = ("[[has_link::$link| ]]", "[[has_date::$i| ]]",
 		   "[[has_pdate::$pdate| ]]", "[[has_hash::$hash[0]| ]]");
