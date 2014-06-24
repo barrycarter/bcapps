@@ -18,7 +18,8 @@ my(%props) = list2hash("notes", "description", "event");
 # TODO: category is doubly special
 
 # below forces creation/recency of pbs-triples.db
-system("make");
+# disabled later, since I can/should run "make" when needed
+# system("make");
 
 my(%hash);
 # get large image links (hack for now)
@@ -27,67 +28,81 @@ for $i (split(/\n/, read_file("largeimagelinks.txt"))) {
   $hash{$1}{image_url}{$2}=1;
 }
 
-# the forward and reverse mappings of k, plus the prettyprint version
-# (currently only for forward version)
+# hash1 contains the forward and reverse mappings of k, followed by
+# the mapping type (which is added below the hash)
 
-# assuming friendship/cousin is symmetric, possibly not always true
-# (for cousins, reverse could be "great uncle" or something weird?)
-
-my(%map) = (
-	    "character" => ["has_character", "appears_in"],
-	    "storyline" => ["in_storyline", "has_strip"],
-	    "deaths" => ["has_death", "dies_on"],
-	    "rebirths" => ["has_undeath", "un_dies_on"],
-	    "newspaper_mentions" => ["mentions_paper", "mentioned_on"],
-	    "aka" => ["alias", "canon"],
-	    "profession" => ["has_profession", "has_member"],
-	    "neighbor" => ["has_neighbor", "has_neighbor"],
-	    "cousin" => ["has_cousin", "has_cousin"],
-	    "friend" => ["has_friend", "has_friend"],
-	    "species" => ["has_species", "has_member"],
-	    "subspecies" => ["has_subspecies", "has_member"],
-	    "location" => ["has_location", "has_resident"],
-	    # <h>No to gay marriage: it screws up semantic transitivity!</h>
-	    "husband" => ["has_husband", "has_wife"],
-	    "wife" => ["has_wife", "has_husband"],
-	    "girlfriend" => ["has_girlfriend", "has_boyfriend"],
-	    "boyfriend" => ["has_boyfriend", "has_girlfriend"],
-	    "ex-husband" => ["had_husband", "had_wife"],
-	    "half-brother" => ["has_half_brother", "has_half_sibling"],
-	    # no generic term for niece/nephew?
-	    "uncle" => ["has_uncle", "uncle_of"],
-	    "niece" => ["has_niece", "has_uncle"],
-	    "aunt" => ["has_aunt", "aunt_of"],
-	    "date" => ["dates", "dates"],
-	    "boss" => ["boss_of", "employee_of"],
-	    "brother" => ["has_brother", "has_sibling"],
-	    "sister" => ["has_sister", "has_sibling"],
-	    "grandmother" => ["has_grandmother", "has_grandchild"],
-	    "grandfather" => ["has_grandfather", "has_grandchild"],
-	    "pet" => ["has_pet", "pet_of"],
-	    "mother" => ["has_mother", "has_child"],
-	    "father" => ["has_father", "has_child"],
-	    "roommate" => ["has_roommate", "has_roommate"],
-	    "kills" => ["kills", "killed_by"],
-	    "member" => ["member_of", "has_member"],
-	    "members" => ["has_member", "member_of"],
-	    "son" => ["has_son", "has_parent"],
-	    "coworker" => ["has_coworker", "has_coworker"],
-	    "fires" => ["fires", "fired_by"],
-	    "religion" => ["has_religion", "has_follower"],
-	    "orientation" => ["has_sexual_orientation", "has_member"]
+my(%hash1) = 
+(
+ "neighbor" => ["has_neighbor", "has_neighbor"],
+ # assuming friendship/cousin symmetric, possibly not always true
+ # (for cousins, reverse could be "great uncle" or something odd?)
+ "cousin" => ["has_cousin", "has_cousin"],
+ "friend" => ["has_friend", "has_friend"],
+ # <h>No gay marriage: it screws up semantic transitivity!</h>
+ "husband" => ["has_husband", "has_wife"],
+ "wife" => ["has_wife", "has_husband"],
+ "girlfriend" => ["has_girlfriend", "has_boyfriend"],
+ "boyfriend" => ["has_boyfriend", "has_girlfriend"],
+ "ex-husband" => ["had_husband", "had_wife"],
+ "half-brother" => ["has_half_brother", "has_half_sibling"],
+ # no generic term for niece/nephew? 
+ "uncle" => ["has_uncle", "uncle_of"],
+ "niece" => ["has_niece", "has_uncle"],
+ "aunt" => ["has_aunt", "aunt_of"],
+ "date" => ["dates", "dates"],
+ "boss" => ["boss_of", "employee_of"],
+ "brother" => ["has_brother", "has_sibling"],
+ "sister" => ["has_sister", "has_sibling"],
+ "grandmother" => ["has_grandmother", "has_grandchild"],
+ "grandfather" => ["has_grandfather", "has_grandchild"],
+ "pet" => ["has_pet", "pet_of"],
+ "mother" => ["has_mother", "has_child"],
+ "father" => ["has_father", "has_child"],
+ "roommate" => ["has_roommate", "has_roommate"],
+ "kills" => ["kills", "killed_by"],
+ "son" => ["has_son", "has_parent"],
+ "coworker" => ["has_coworker", "has_coworker"],
+ "fires" => ["fires", "fired_by"]
 );
 
+# if you are on either side of one of the above keywords, you are a character
+for $i (keys %hash1) {push(@{$hash1{$i}}, "character:character");}
+
+# relations that map other things to other things ("*" = wildcard)
+my(%hash2) = 
+(
+ "aka" => ["alias", "canon", "character:string"],
+ "character" => ["has_character", "appears_in", "strip:character"],
+ "storyline" => ["in_storyline", "has_strip", "strip:storyline"],
+ "deaths" => ["has_death", "dies_on", "strip:character"],
+ "rebirths" => ["has_undeath", "un_dies_on", "strip:character"],
+ "newspaper_mentions" => ["mentions_paper", "mentioned_on", "strip:newspaper"],
+ "profession" => ["has_profession", "has_member", "character:profession"],
+ "species" => ["has_species", "has_member", "character:species"],
+ "subspecies" => ["has_subspecies", "has_member", "character:subspecies"],
+ "location" => ["has_location", "has_resident", "*:location"],
+ "member" => ["member_of", "has_member", "*:group"],
+ "members" => ["has_member", "member_of", "group:*"],
+ "religion" => ["has_religion", "has_follower", "character:religion"],
+ "orientation" => ["has_sexual_orientation", "has_member", "character:orientation"]
+);
+
+# add relations to map
+# TODO: above is ugly and I sense I'm not fulling understanding something
+for $i (keys %hash1) {$map{$i} = $hash1{$i};}
+for $i (keys %hash2) {$map{$i} = $hash2{$i};}
+
 # defines the pretty prints of SOME of the semantic relations above
-my(%prettyprint) = (
-		    "has_character" => "Character(s)",
-		    "has_death" => "Death(s)",
-		    "in_storyline" => "Storyline(s)",
-		    "notes" => "Notes",
-		    "description" => "Description",
-		    "event" => "Events",
-		    "" => ""
-		    );
+my(%prettyprint) = 
+(
+ "has_character" => "Character(s)",
+ "has_death" => "Death(s)",
+ "in_storyline" => "Storyline(s)",
+ "notes" => "Notes",
+ "description" => "Description",
+ "event" => "Events",
+ "" => ""
+);
 
 for $i (sqlite3hashlist("SELECT * FROM triples", "/tmp/pbs-triples.db")) {
   my($source, $k, $v) = ($i->{source}, $i->{k}, $i->{v});
@@ -98,6 +113,13 @@ for $i (sqlite3hashlist("SELECT * FROM triples", "/tmp/pbs-triples.db")) {
   if ($map{$k}) {
     $hash{$source}{$map{$k}[0]}{$v} = 1;
     $hash{$v}{$map{$k}[1]}{$k} = 1;
+
+    my($type1,$type2) = split(/:/, $map{$k}[2]);
+
+    # assign $source and $v to appropriate type
+    # NOTE: collisions possible but hopefully unlikely
+    $hash{$type1}{$source} = 1;
+    $hash{$type2}{$v} = 1;
     next;
   }
 
@@ -110,6 +132,11 @@ for $i (sqlite3hashlist("SELECT * FROM triples", "/tmp/pbs-triples.db")) {
   warn("NOT UNDERSTOOD: $k: $source -> $v");
 }
 
+# attempt to determine entity type for each object
+
+# TODO: there appears to be something seriously wrong here, this
+# should be way more obvious
+
 pbs_character_pages();
 die "TESTING";
 pbs_date_strips();
@@ -117,7 +144,7 @@ pbs_date_strips();
 # the character pages (assumes %hash has been created/filled in)
 
 sub pbs_character_pages {
-  for $i (keys %hash) {
+  for $i (keys %{$hash{character}}) {
     debug("I: $i");
   }
 }
@@ -125,6 +152,7 @@ sub pbs_character_pages {
 # the date strips (assumes %hash has been created/filled in)
 
 sub pbs_date_strips {
+  # TODO: use $hash{strip} instead
   my(%is_strip);
 
   # TODO: there must be a better way to do this?
