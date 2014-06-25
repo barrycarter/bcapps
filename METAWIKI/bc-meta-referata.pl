@@ -32,13 +32,12 @@ for $i (`egrep -v '<|#|^\$' pbs-meta.txt`) {
 
 for $i (sqlite3hashlist("SELECT * FROM triples", "/tmp/pbs-triples.db")) {
   my($source, $k, $v) = ($i->{source}, $i->{k}, $i->{v});
-  debug("$source/$k/$v");
+#  debug("$source/$k/$v");
 
   # TODO: ignoring deaths for now
   if ($ignore{$k} || $k=~/_deaths$/) {next;}
 
   my($ignore, $for, $rev, $stype, $ttype) = @{$meta{$k}};
-  debug("FOR: $for");
 
   unless ($for) {warn "NO FORWARD MAPPING FOR: $k"; next;}
 
@@ -47,12 +46,18 @@ for $i (sqlite3hashlist("SELECT * FROM triples", "/tmp/pbs-triples.db")) {
 
   $hash{$source}{$for}{$v} = 1;
   $hash{$v}{$rev}{$k} = 1;
-  $hash{$stype}{$source} = 1;
-  $hash{$ttype}{$v} = 1;
+  $hash{type}{$stype}{$source} = 1;
+  $hash{type}{$ttype}{$v} = 1;
 }
 
-pbs_date_strips();
+for $i (sort keys %{$hash{type}}) {
+  my(@keys) = sort keys %{$hash{type}{$i}};
+  debug("TYPE: $i, KEYS: ".scalar @keys);
+}
+
+
 die "TESTING";
+pbs_date_strips();
 pbs_character_pages();
 
 # the character pages (assumes %hash has been created/filled in)
