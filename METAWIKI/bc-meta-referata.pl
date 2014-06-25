@@ -32,7 +32,7 @@ for $i (`egrep -v '<|#|^\$' pbs-meta.txt`) {
 
 for $i (sqlite3hashlist("SELECT * FROM triples", "/tmp/pbs-triples.db")) {
   my($source, $k, $v) = ($i->{source}, $i->{k}, $i->{v});
-#  debug("$source/$k/$v");
+  debug("$source/$k/$v");
 
   # TODO: ignoring deaths for now
   if ($ignore{$k} || $k=~/_deaths$/) {next;}
@@ -45,22 +45,38 @@ for $i (sqlite3hashlist("SELECT * FROM triples", "/tmp/pbs-triples.db")) {
   # and relations, but the target type of a property will be string)
 
   $hash{$source}{$for}{$v} = 1;
-  $hash{$v}{$rev}{$k} = 1;
-  $hash{type}{$stype}{$source} = 1;
-  $hash{type}{$ttype}{$v} = 1;
+  $hash{$v}{$rev}{$source} = 1;
+  $hash{$source}{type}{$stype} = 1;
+  $hash{$v}{type}{$ttype} = 1;
 }
 
-for $i (sort keys %{$hash{type}}) {
-  for $j (sort keys %{$hash{type}{$i}}) {
-    # TODO: check for duplicates here
-    debug("WRITE TO PAGE: $j WITH TEMPLATE $i");
-    for $k (sort keys %{$hash{$j}}) {
-      my($keys) = join(", ",sort keys %{$hash{$j}{$k}});
-      debug("ALPHA: $i/$j/$k");
+warn "NUKING MOST TYPES FOR NOW";
+
+for $i (sort keys %hash) {
+  # remove the wildcard type (if it exists) and the string "non type"
+  delete $hash{$i}{type}{"*"};
+  delete $hash{$i}{type}{string};
+
+  my(@types) = keys %{$hash{$i}{type}};
+  if (scalar @types == 0) {warn "NO TYPES FOR: $i"; next;}
+  if (scalar @types > 1) {warn "MULTIPLE TYPES FOR: $i",@types; next;}
+  unless ($types[0] eq "character") {next;}
+
+  # remove templating from object name (only ok in strings)
+  $i=~s/\{\{(.*?)\|(.*?)\}\}/$2/isg;
+
+  open(A,">$etcdir/$i.mw.new");
+  print A "{{$types[0]\n";
+    for $j (sort keys %{$hash{$i}}) {
+      my($keys) = join(", ",sort keys %{$hash{$i}{$j}});
+      print A "|$j=$keys\n";
     }
-  }
-}
 
+  print A "}}\n";
+  close(A);
+
+  mv_after_diff("$etcdir/$i.mw");
+}
 
 die "TESTING";
 pbs_date_strips();
@@ -100,7 +116,7 @@ sub pbs_date_strips {
     }
 
     print A "}}\n";
-
+    close(A);
     mv_after_diff("$etcdir/$i.mw");
   }
 }

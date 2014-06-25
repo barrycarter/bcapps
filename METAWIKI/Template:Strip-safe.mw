@@ -1,33 +1,47 @@
 {{{!}} class="wikitable"
 {{!}}-
+
 ! colspan="2" {{!}} {{DateTable|{{{has_date|}}}|{{{has_hash|}}}}}
+
 {{#if: {{{has_character|}}} | {{!}}-
 ! Character(s)
 {{!}} {{#arraymap: {{{has_character|}}}|,|x|[[has_character::x]]}}}}
-{{#if: {{{has_birthday|}}} | 
+
+{{#if: {{{has_birthday|}}} |
 {{!}}-
-! Character(s)
-{{!}} {{#arraymap: {{{has_birthday|}}}|,|x|[[has_birthday::x]]}}}}
+! Birthday(s)
+{{!}} {{#arraymap: {{{has_birthday|}}}|,|x|[[has_birthday::x]]}}
+
 {{#if: {{{has_death|}}} | 
 {{!}}-
-! Character(s)
+! Death(s)
 {{!}} {{#arraymap: {{{has_death|}}}|,|x|[[has_death::x]]}}}}
+
 {{#if: {{{has_cameo|}}} | 
 {{!}}-
-! Character(s)
+! Cameo(s)
 {{!}} {{#arraymap: {{{has_cameo|}}}|,|x|[[has_cameo::x]]}}}}
+
 {{#if: {{{in_storyline|}}} | 
 {{!}}-
-! Character(s)
+! Storyline(s)
 {{!}} {{#arraymap: {{{in_storyline|}}}|,|x|[[in_storyline::x]]}}}}
+
 {{#if: {{{mentions_paper|}}} | 
 {{!}}-
-! Character(s)
+! <span title="Use highest resolution to see smaller newspaper titles">Newspaper Mention(s)</span>
 {{!}} {{#arraymap: {{{mentions_paper|}}}|,|x|[[mentions_paper::x]]}}}}
+
 {{#if: {{{has_event|}}} | 
 {{!}}-
-! Character(s)
+! Event(s)
 {{!}} {{#arraymap: {{{has_event|}}}|,|x|[[has_event::x]]}}}}
+
+{{#if: {{{has_meta|}}} | 
+{{!}}-
+! Meta Note(s)
+{{!}} {{#arraymap: {{{has_meta|}}}|,|x|[[has_meta::x]]}}}}
+
 {{!}}}
 
 {{#if: {{{has_notes|}}} | == Notes ==

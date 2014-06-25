@@ -1,13 +1,18 @@
 {{{!}} class="wikitable"
 {{!}}-
 ! colspan="2" {{!}} {{DateTable|{{{has_date|}}}|{{{has_hash|}}}}}
-{{#if: {{{has_character|}}} | {{!}}-
+{{#if: {{{has_character|}}} |
+{{!}}-
 ! Character(s)
-{{!}} {{#arraymap: {{{has_character|}}}|,|x|[[has_character::x]]}}}}
-{{#if: {{{has_birthday|}}} | {{!}}-
+{{!}} {{#arraymap: {{{has_character|}}}|,|x|[[has_character::x]]}}
+}}{{#if: {{{has_birthday|}}} |
+{{!}}-
 ! Birthday(s)
-{{!}} {{#arraymap: {{{has_birthday|}}}|,|x|[[has_birthday::x]]}}}}
-{{#if: {{{has_death|}}} | {{!}}-
+{{!}} {{#arraymap: {{{has_birthday|}}}|,|x|[[has_birthday::x]]}}
+}}{{#if: {{{has_death|}}} |
+{{!}}-
 ! Death(s)
-{{!}} {{#arraymap: {{{has_death|}}}|,|x|[[has_death::x]]}}}}
+{{!}} {{#arraymap: {{{has_death|}}}|,|x|[[has_death::x]]}}
+}}
 {{!}}}
+
