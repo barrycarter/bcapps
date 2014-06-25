@@ -1,8 +1,8 @@
 <table border class="wikitable">
 
-<tr><th>Thumbnail</th><td>
+<tr><th colspan=2>
 {{DateTable| |{{{has_date|}}}|{{{has_pdate|}}}|{{{has_link|}}}|{{{has_hash|}}}}}
-</td></tr>
+</th></tr>
 
 {{#if: {{{has_character|}}} | 
 <tr><th>Character(s)</th><td>{{#arraymap: {{{has_character|}}}|,|x|[[has_character::x]]}}</td></tr>
@@ -17,5 +17,8 @@
 | }}
 
 </table>
+
+<table width=100%><tr><td>{{{prev|}}</td>
+<td align=right>{{next|}}</td></tr></table>
 
 [[Category:Strips]]

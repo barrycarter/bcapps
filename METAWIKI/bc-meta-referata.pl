@@ -105,6 +105,24 @@ sub pbs_date_strips {
     print A "|has_hash=$hash[0]\n";
     print A "|has_pdate=",strftime("%d %b %Y (%A)", gmtime(str2time($i)));
 
+    # prev and next
+    # TODO: compact this code A LOT
+    my($strip) = $strips[$l-1];
+    my($date) = strftime("%d %b %Y (%A)", gmtime(str2time($strip)));
+    my($prev) = "{{WikiLink|$strip|<< $date}}";
+    my($prev) = "[[$strip|<< $date]]";
+
+    $strip = $strips[$l+1];
+    $date = strftime("%d %b %Y (%A)", gmtime(str2time($strip)));
+    my($next) = "{{WikiLink|$strip|$date >>}}";
+    my($next) = "[[$strip|$date >>]]";
+
+    # special cases
+    if ($l==0) {$prev="<b>No previous strip</b>";}
+    if ($l==$#strips) {$next="<b>No next strip</b>";}
+
+    print A "|prev=$prev\n|next=$next\n";
+
     for $j (sort keys %{$hash{$i}}) {
       my($keys) = join(", ",sort keys %{$hash{$i}{$j}});
       print A "|$j=$keys\n";
@@ -188,20 +206,6 @@ sub pbs_date_strips {
     debug("TABLE",@table);
 
       # links to next and previous strips
-
-      my($strip) = $strips[$l-1];
-      my($date) = strftime("%d %b %Y (%A)", gmtime(str2time($strip)));
-      my($prev) = "{{WikiLink|$strip|<< $date}}";
-      my($prev) = "[[$strip|<< $date]]";
-
-      $strip = $strips[$l+1];
-      $date = strftime("%d %b %Y (%A)", gmtime(str2time($strip)));
-      my($next) = "{{WikiLink|$strip|$date >>}}";
-      my($next) = "[[$strip|$date >>]]";
-
-      # special cases
-      if ($l==0) {$prev="<b>No previous strip</b>";}
-      if ($l==$#strips) {$next="<b>No next strip</b>";}
 
       # print to file
       open(A, ">$etcdir/$i.mw.new");
