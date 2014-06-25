@@ -51,8 +51,14 @@ for $i (sqlite3hashlist("SELECT * FROM triples", "/tmp/pbs-triples.db")) {
 }
 
 for $i (sort keys %{$hash{type}}) {
-  my(@keys) = sort keys %{$hash{type}{$i}};
-  debug("TYPE: $i, KEYS: ".scalar @keys);
+  for $j (sort keys %{$hash{type}{$i}}) {
+    # TODO: check for duplicates here
+    debug("WRITE TO PAGE: $j WITH TEMPLATE $i");
+    for $k (sort keys %{$hash{$j}}) {
+      my($keys) = join(", ",sort keys %{$hash{$j}{$k}});
+      debug("ALPHA: $i/$j/$k");
+    }
+  }
 }
 
 
