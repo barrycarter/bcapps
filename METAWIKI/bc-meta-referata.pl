@@ -93,14 +93,29 @@ sub pbs_date_strips {
 
     if ($l > 20) {die "TESTING";}
 
-    debug("{{strip");
+    open(A, ">$etcdir/$i.mw.new");
+    print A "{{strip\n";
+
+    # indirect information
+    print A "|has_date=$i\n";
+    unless ($i=~m/^(\d{4})\-(\d{2})\-(\d{2})$/){warn "BAD DATE: $i"; return;}
+    print A "|has_link=http://www.gocomics.com/pearlsbeforeswine/$1/$2/$3\n";
+    my(@hash) = keys %{$hash{$i}{image_url}};
+    $hash[0]=~s/^.*?([^\/]*?)\?width\=.*$/$1/;
+    print A "|has_hash=$hash[0]\n";
+    print A "|has_pdate=",strftime("%d %b %Y (%A)", gmtime(str2time($i)));
+
     for $j (sort keys %{$hash{$i}}) {
       my($keys) = join(", ",sort keys %{$hash{$i}{$j}});
-      debug("|$j=$keys");
+      print A "|$j=$keys\n";
     }
-    debug("}}");
 
-    die "TESTING";
+    print A "}}\n";
+
+    mv_after_diff("$etcdir/$i.mw");
+
+    warn "TESTING";
+    next;
 
     # hidden properties (required for templating results)
     unless ($i=~m/^(\d{4})\-(\d{2})\-(\d{2})$/){warn "BAD DATE: $i"; return;}

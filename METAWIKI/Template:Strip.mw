@@ -1,0 +1,21 @@
+<table border class="wikitable">
+
+<tr><th>Thumbnail</th><td>
+{{DateTable| |{{{has_date|}}}|{{{has_pdate|}}}|{{{has_link|}}}|{{{has_hash|}}}}}
+</td></tr>
+
+{{#if: {{{has_character|}}} | 
+<tr><th>Character(s)</th><td>{{#arraymap: {{{has_character|}}}|,|x|[[has_character::x]]}}</td></tr>
+| }}
+
+{{#if: {{{has_death|}}} | 
+<tr><th>Death(s)</th><td>{{#arraymap: {{{has_death|}}}|,|x|[[has_death::x]]}}</td></tr>
+| }}
+
+{{#if: {{{in_storyline|}}} | 
+<tr><th>Storyline(s)</th><td>{{#arraymap: {{{in_storyline|}}}|,|x|[[in_storyline::x]]}}</td></tr>
+| }}
+
+</table>
+
+[[Category:Strips]]
