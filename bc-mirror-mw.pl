@@ -43,7 +43,7 @@ system("touch $mirfile.new");
 # find all files newer than last mirror in source directory
 # these will all be at the top level for now
 # some .mw files are symlinked to my git
-@mirror = `find $mwdir -type f -follow -iname '*.mw' -newer $mirfile`;
+@mirror = `find $mwdir -maxdepth 1 -type f -follow -iname '*.mw' -newer $mirfile`;
 
 for $i (@mirror) {
   chomp($i);

@@ -15,14 +15,10 @@ my($etcdir) = "/usr/local/etc/metawiki/pbs-referata";
 my(%ignore) = list2hash("null", "meta", "char_list_complete", "source",
 			"noref", "cameo", "category");
 
-my(%hash);
 # get large image links (hack for now)
 for $i (split(/\n/, read_file("largeimagelinks.txt"))) {
-  $i=~s/^(.*?)\s+(.*)$//;
-  $hash{$1}{image_url}{$2}=1;
-  # this is ugly, not all strips have annotations
-  $hash{strip}{$1} = 1;
-
+  $i=~s/^(.*?)\s+.*?\/([0-9a-f]+)\?.*$//;
+  $imagehash{$1} = $2;
 }
 
 # load meta data (TODO: this is cheating, only one section so far)
@@ -32,23 +28,11 @@ for $i (`egrep -v '<|#|^\$' pbs-meta.txt`) {
   $meta{$data[0]} = [@data];
 
   # if the result type is string, mark this as a "property" not "relation"
-  if ($data[4] eq "string") {
-    debug("SETTING $data[1] type to prop");
-    $meta{$data[1]}{type} = "property";
-  }
+#  if ($data[4] eq "string") {
+#    debug("SETTING $data[1] type to prop");
+#    $meta{$data[1]}{type} = "property";
+#  }
 }
-
-# defines the pretty prints of SOME of the semantic relations above
-my(%prettyprint) = 
-(
- "has_character" => "Character(s)",
- "has_death" => "Death(s)",
- "in_storyline" => "Storyline(s)",
- "notes" => "Notes",
- "description" => "Description",
- "event" => "Events",
- "" => ""
-);
 
 for $i (sqlite3hashlist("SELECT * FROM triples", "/tmp/pbs-triples.db")) {
   my($source, $k, $v) = ($i->{source}, $i->{k}, $i->{v});
@@ -91,37 +75,12 @@ sub pbs_date_strips {
   for $l (0..$#strips) {
     $i = $strips[$l];
 
-    if ($l > 20) {die "TESTING";}
-
     open(A, ">$etcdir/$i.mw.new");
     print A "{{strip\n";
-
-    # indirect information
-    print A "|has_date=$i\n";
-    unless ($i=~m/^(\d{4})\-(\d{2})\-(\d{2})$/){warn "BAD DATE: $i"; return;}
-    print A "|has_link=http://www.gocomics.com/pearlsbeforeswine/$1/$2/$3\n";
-    my(@hash) = keys %{$hash{$i}{image_url}};
-    $hash[0]=~s/^.*?([^\/]*?)\?width\=.*$/$1/;
-    print A "|has_hash=$hash[0]\n";
-    print A "|has_pdate=",strftime("%d %b %Y (%A)", gmtime(str2time($i)));
-
-    # prev and next
-    # TODO: compact this code A LOT
-    my($strip) = $strips[$l-1];
-    my($date) = strftime("%d %b %Y (%A)", gmtime(str2time($strip)));
-    my($prev) = "{{WikiLink|$strip|<< $date}}";
-    my($prev) = "[[$strip|<< $date]]";
-
-    $strip = $strips[$l+1];
-    $date = strftime("%d %b %Y (%A)", gmtime(str2time($strip)));
-    my($next) = "{{WikiLink|$strip|$date >>}}";
-    my($next) = "[[$strip|$date >>]]";
-
-    # special cases
-    if ($l==0) {$prev="<b>No previous strip</b>";}
-    if ($l==$#strips) {$next="<b>No next strip</b>";}
-
-    print A "|prev=$prev\n|next=$next\n";
+    print A "|has_date=$i\n|has_hash=$imagehash{$i}\n";
+    # TODO: this is currently a circular list (which is cute), but
+    # probably shouldn't be
+    print A "|has_prev=$strips[$l-1]\n|has_next=$strips[$l+1]\n";
 
     for $j (sort keys %{$hash{$i}}) {
       my($keys) = join(", ",sort keys %{$hash{$i}{$j}});
@@ -131,149 +90,15 @@ sub pbs_date_strips {
     print A "}}\n";
 
     mv_after_diff("$etcdir/$i.mw");
-
-    warn "TESTING";
-    next;
-
-    # hidden properties (required for templating results)
-    unless ($i=~m/^(\d{4})\-(\d{2})\-(\d{2})$/){warn "BAD DATE: $i"; return;}
-    my($link) = "http://www.gocomics.com/pearlsbeforeswine/$1/$2/$3";
-    my(@hash) = keys %{$hash{$i}{image_url}};
-    $hash[0]=~s/^.*?([^\/]*?)\?width\=.*$/$1/;
-    my($pdate) =  strftime("%d %b %Y (%A)", gmtime(str2time($i)));
-    my(@hidden) = ("[[has_link::$link| ]]", "[[has_date::$i| ]]",
-		   "[[has_pdate::$pdate| ]]", "[[has_hash::$hash[0]| ]]");
-
-    # the big table (containing date table and semantic annotations)
-    my(@table) = ("<table width=100%><tr><th>", pbs_table_date($i),
-		     "</th><td align=right valign=top>");
-    # don't publish the image URL directly
-    delete $hash{$i}{image_url};
-
-    # the semantic information table (row 1, column 2 of big table)
-#    push(@table, "<table border><tr><th colspan=2>Semantic Information</th></tr>");
-
-    # the categories (we dont print them yet, and "strips" is always one)
-    # strips is always last one, despite sorting
-    my(@cats) = (sort keys %{$hash{$i}{category}}, "strips");
-    map($_="[[Category:$_]]", @cats);
-
-    # the portion of the page below the main table, above cat list
-    my(@outer);
-
-    # since we list categories at bottom of page, they are not in info
-    # box (although I suppose they could be)
-    delete $hash{$i}{category};
-
-    # the other properties for this strip
-    for $j (sort keys %{$hash{$i}}) {
-
-      debug("J: $j, $meta{$j}{type}");
-
-      # the values for this key
-      my(@keys) = sort keys %{$hash{$i}{$j}};
-
-      # not sure why this happens, but ignore it quietly
-      # TODO: look into this Perl oddness
-      unless (@keys) {next;}
-
-      # if $j is a property (not a relation), print it outside any table
-      if ($meta{$j}{type} eq "property") {
-	push(@outer,  "== $prettyprint{$j} ==\n");
-	push(@outer, join("\n",@keys), "\n");
-	next;
-      }
-
-      # $j is a true relation, not just a property
-      # turn keys into useful semantic information
-      for $k (@keys) {
-	$k=~s/\{\{wp\|(.*?)\}\}/$1/g;
-#	$k="[[${j}::$k]]";
-      }
-
-      # join for printing
-#      my($keys) = join("<br>\n",@keys);
-      my($keys) = join(", ",@keys);
-
-      # and put into semantic (small) table and end small table
-#      push(@table, "<tr><th>$prettyprint{$j}</th><td>$keys</td></tr>");
-      push(@table, "|$j=$keys");
-    }
-
-      # end cell that contains semantic table and also outer table itself
-#      push(@table, "</table></td></tr></table>");
-
-    debug("TABLE",@table);
-
-      # links to next and previous strips
-
-      # print to file
-      open(A, ">$etcdir/$i.mw.new");
-      # the table
-      print A join("\n", @table),"\n";
-      # below the table
-      print A join("\n", @outer),"\n";
-      # the prev/next bar
-    print A "<table width=100%><tr><td>$prev</td><td align=right>$next</td></tr></table>\n";
-    # hidden props
-    print A join("\n", @hidden),"\n";
-      # the categories
-      print A join("\n", @cats),"\n";
-      # and done
-      close(A);
-
-      # only replace existing file if changed
-      mv_after_diff("$etcdir/$i.mw");
   }
 }
 
 # TODO: species determination
 # TODO: character renumbering
 
-# creates the table used to display a given strip (referata version)
-
-sub pbs_table_date {
-  my($date) = @_;
-  unless ($date=~m/^(\d{4})\-(\d{2})\-(\d{2})$/) {warn "BAD DATE: $date";}
-  my($link) = "http://www.gocomics.com/pearlsbeforeswine/$1/$2/$3";
-  my($pdate) =  strftime("%d %b %Y (%A)", gmtime(str2time($date)));
-
-  # notes for this strip
-#  my($notes) = join(". ",sort keys %{$hash{$date}{notes}});
-  # remove wp links
-#  $notes=~s/\{\{\#NewWindowLink:\s+.*?\|(.*?)\}\}/$1/isg;
-  # fix up quotation marks
-#  $notes=~s/\"/&quot;/isg;
-
-  # the image itself
-  my(@hash) = keys %{$hash{$date}{image_url}};
-  unless (@hash) {
-    warn "NO IMAGE URL FOR $date";
-    return;
-  }
-
-  $hash[0]=~/([^\/]*?)\?width\=/;
-  my($thumb) = $1;
-
-  # the first parameter is intentionally blank below
-  return "{{DateTable| |$date|$pdate|$link|$thumb}}";
-
-  my($image) = "{{#widget:Thumbnail|hash=$thumb}}";
-
-  return << "MARK";
-<table border>
-<tr><th>{{WikiLink|$date|$pdate}}</th></tr>
-<tr><th>{{#widget:LinkedThumbnail|url=$link|hash=$thumb}}
-</th></tr>
-<tr><th>{{#widget:Extlink|url=$hash[0]|text=highest resolution}}
-</th></tr></table>
-MARK
-;
-}
+=item mv_after_diff($source, $options)
 
 # TODO: move this to bclib.pl
-
-=item mv_after_diff($source, $options)
 
 Move $source.new to $source and $source to $source.old; however, if
 $source.new and $source are already identical (per cmp), do

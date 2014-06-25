@@ -1,7 +1,7 @@
 <table border class="wikitable">
 
 <tr><th colspan=2>
-{{DateTable| |{{{has_date|}}}|{{{has_pdate|}}}|{{{has_link|}}}|{{{has_hash|}}}}}
+{{DateTable|{{{has_date|}}}|{{{has_hash|}}}}}
 </th></tr>
 
 {{#if: {{{has_character|}}} | 
@@ -18,7 +18,26 @@
 
 </table>
 
-<table width=100%><tr><td>{{{prev|}}</td>
-<td align=right>{{next|}}</td></tr></table>
+{{#if: {{{has_notes|}}} |
+== Notes ==
+
+{{#arraymap: {{{has_notes|}}}|<br>\n|x|[[has_notes::x]]}}
+
+
+| }}
+
+{{#if: {{{has_description|}}} |
+== Description ==
+
+{{#arraymap: {{{has_description|}}}|<br>\n|x|[[has_description::x]]}}
+
+
+| }}
+
+<table width=100%><tr><td>
+[[{{{has_prev|}}}| &lt;&lt; {{#time: d M Y (l)|{{{has_prev|}}}}}]]
+</td><td align=right>
+[[{{{has_next|}}}|{{#time: d M Y (l)|{{{has_next|}}}}} &gt;&gt;]]
+</td></tr></table>
 
 [[Category:Strips]]

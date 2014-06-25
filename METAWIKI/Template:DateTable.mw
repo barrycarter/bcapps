@@ -1,9 +1,13 @@
-<noinclude>There is intentionally no parameter 1 below because
-mediawiki escapes it oddly in a way I can't use</noinclude>
+<noinclude>
+
+Parameter 1: date, like 2003-05-15
+Parameter 2: hash of image on gocomics site, like 0163f6c03fcf012f2fd000163e41dd5b
+
+</noinclude>
 
 <table border>
-<tr><th>{{WikiLink|{{{2}}}|{{{3}}}}}</th></tr>
-<tr><th>{{#widget:LinkedThumbnail|url={{{4}}}|hash={{{5}}}}}
+<tr><th>{{WikiLink|{{{1}}}|{{#time: d M Y (l)|{{{1}}}}}}}</th></tr>
+<tr><th>{{#widget:LinkedThumbnail|url=http://www.gocomics.com/pearlsbeforeswine/{{#time: Y/m/d | {{{1}}}}}|hash={{{2}}}}}
 </th></tr>
-<tr><th>{{#widget:Extlink|url=http://assets.amuniversal.com/{{{5}}}?width=1500|text=highest resolution}}
+<tr><th>{{#widget:Extlink|url=http://assets.amuniversal.com/{{{2}}}?width=1500|text=highest resolution}}
 </th></tr></table>
