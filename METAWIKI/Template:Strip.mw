@@ -1,37 +1,30 @@
 <table border class="wikitable">
+<tr><th colspan=2>{{DateTable|{{{has_date|}}}|{{{has_hash|}}}}}</th></tr>
 
-<tr><th colspan=2>
-{{DateTable|{{{has_date|}}}|{{{has_hash|}}}}}
-</th></tr>
+{{#if: {{{has_character|}}} | <tr><th>Character(s)</th><td>{{#arraymap: {{{has_character|}}}|,|x|[[has_character::x]]}}</td></tr>}}
 
-{{#if: {{{has_character|}}} | 
-<tr><th>Character(s)</th><td>{{#arraymap: {{{has_character|}}}|,|x|[[has_character::x]]}}</td></tr>
-| }}
+{{#if: {{{has_birthday|}}} | <tr><th>Birthday(s)</th><td>{{#arraymap: {{{has_birthday|}}}|,|x|[[has_birthday::x]]}}</td></tr>}}
 
-{{#if: {{{has_death|}}} | 
-<tr><th>Death(s)</th><td>{{#arraymap: {{{has_death|}}}|,|x|[[has_death::x]]}}</td></tr>
-| }}
+{{#if: {{{has_death|}}} | <tr><th>Death(s)</th><td>{{#arraymap: {{{has_death|}}}|,|x|[[has_death::x]]}}</td></tr>}}
 
-{{#if: {{{in_storyline|}}} | 
-<tr><th>Storyline(s)</th><td>{{#arraymap: {{{in_storyline|}}}|,|x|[[in_storyline::x]]}}</td></tr>
-| }}
+{{#if: {{{has_cameo|}}} | <tr><th>Cameo(s)</th><td>{{#arraymap: {{{has_cameo|}}}|,|x|[[has_cameo::x]]}}</td></tr>}}
+
+{{#if: {{{in_storyline|}}} | <tr><th>Storyline(s)</th><td>{{#arraymap: {{{in_storyline|}}}|,|x|[[in_storyline::x]]}}</td></tr>}}
+
+{{#if: {{{mentions_paper|}}} | <tr><th><span title="Use highest resolution to see smaller newspaper titles">Newspaper Mention(s)</span></th><td>{{#arraymap: {{{mentions_paper|}}}|,|x|[[mentions_paper::x]]}}</td></tr>}}
+
+{{#if: {{{has_event|}}} | <tr><th>Event(s)</th><td>{{#arraymap: {{{has_event|}}}|,|x|[[has_event::x]]}}</td></tr>}}
+
+{{#if: {{{has_meta|}}} | <tr><th>Meta Note(s)</th><td>{{#arraymap: {{{has_meta|}}}|,|x|[[has_meta::x]]}}</td></tr>}}
 
 </table>
 
-{{#if: {{{has_notes|}}} |
-== Notes ==
-
+{{#if: {{{has_notes|}}} | == Notes ==
 {{#arraymap: {{{has_notes|}}}|<br>\n|x|[[has_notes::x]]}}
-
-
 | }}
 
-{{#if: {{{has_description|}}} |
-== Description ==
-
+{{#if: {{{has_description|}}} | == Description ==
 {{#arraymap: {{{has_description|}}}|<br>\n|x|[[has_description::x]]}}
-
-
 | }}
 
 <table width=100%><tr><td>
@@ -39,5 +32,7 @@
 </td><td align=right>
 [[{{{has_next|}}}|{{#time: d M Y (l)|{{{has_next|}}}}} &gt;&gt;]]
 </td></tr></table>
+
+{{#arraymap:{{{has_category|}}}|,|x|[[Category:x]]|&#32;}}
 
 [[Category:Strips]]

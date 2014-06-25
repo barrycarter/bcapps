@@ -469,7 +469,7 @@ MULTIREF [[title::Pig's Cheese Fetish]] [[notes::Pig seems to have an unusual ob
 2004-07-05-2004-07-07,2004-09-03,2004-10-11,2004-10-13,2004-12-10,2004-12-11 [[storyline::[[character::Alphonse (porcupine)]]]]
 2004-07-06 [[Alphonse (porcupine)::aka::The Needy Porcupine]]]]
 2011-01-10 [[character::Pig+Rat+Ned (human)]] [[Ned (human)::aka::The Negative Guy+Negative Ned]]
-2011-01-11 [[character::Rat+Goat+Pig+Guard Duck+Negative Ned]] [[event::[[Pig]]'s birthday]] [[notes::As expected, [[Negative Ned]]'s party hat has a frowny face, while the others have a smiley face]]
+2011-01-11 [[character::Rat+Goat+Pig+Guard Duck+Negative Ned]] [[birthday::Pig]] [[notes::As expected, [[Negative Ned]]'s party hat has a frowny face, while the others have a smiley face]]
 2011-01-02 [[notes::[[character::Pig]]'s briefcase reads "Pittsburgh or bust"]]
 2004-07-10 [[deaths::Zebra's brother (zebra)]]
 2004-07-12-2004-07-17,2004-07-19,2004-07-20 [[storyline::Dumb Guys Convention]]
@@ -1130,6 +1130,7 @@ MULTIREF [[title::Plaid's stripes]] [[notes::[[Plaid (zebra)]]'s stripes are in 
 2012-03-24 [[newspaper_mentions::The Daily Times]]
 2012-03-31 [[notes::The baseball and the blocks exchange positions in [[Pig]]'s thought bubble between panels 2 and 3]]
 2002-01-25 [[character::Rat+Pig+Betsy (human)]] [[Betsy (human)::profession::waitress]]
+2002-01-29 [[character::[[deaths::Bob 20020129 (human)]]]] [[Bob 20020129 (human)::aka::Fred]]
 2002-01-30 [[character::Rat+Pig+Harry (human)]]
 2008-10-07,2008-10-08,2008-10-10,2008-10-11,2008-10-13-2008-10-18,2008-10-20-2008-10-25 [[storyline::[[character::Rat]]'s softball team]]
 2008-07-02-2008-07-04 [[storyline::[[character::Rat]] writes epitaphs]]
@@ -1388,6 +1389,7 @@ MULTIREF [[title::Lemmings Leap]] [[notes::On [[2012-10-19]] (also [[noref::2013
 2013-12-16-2013-12-19 [[storyline::{{wp|Calvin and Hobbes}} characters today]]
 2014-05-05,2014-05-06,2014-05-11 [[storyline::Mosquito in amber]]
 2009-02-15-2009-02-17 [[storyline::[[character::Larry]]'s 40th birthday]]
+2009-02-16 [[birthday::Larry]]
 2003-08-29 [[notes::Gnu is just another word for {{wp|wildebeest}}, so Wanda's ex calls himself "gnu" just for "gnus"/"news" puns]]
 2014-03-08 [[notes::[[Goat]], whose real name is Paris, visits {{wp|Paris}}]]
 2011-02-14,2011-02-15,2011-05-04-2011-05-06 [[storyline::[[character::Hosanna (mop)]]]]
@@ -1554,7 +1556,7 @@ MULTIREF [[title::Lemmings Leap]] [[notes::On [[2012-10-19]] (also [[noref::2013
 2014-01-19,2009-11-14,2009-01-27,2012-01-25,2011-03-29,2010-03-06,2008-10-19,2009-07-08,2008-08-06,2008-07-22,2010-09-03,2011-05-17,2012-05-13,2009-03-01,2012-06-19,2009-12-20,2011-12-27,2009-02-06,2011-06-07 [[notes::A brown furry cap, apparently unrelated to any plotline, appears in several strips&#58; [[2008-10-19]], [[2009-07-08]], [[2008-08-06]], [[2008-07-22]], [[2010-09-03]], [[2011-05-17]], [[2012-05-13]], [[2009-03-01]], [[2012-06-19]], [[2009-12-20]], [[2011-12-27]]]] [[meta::update this list to reflect source list]]
 2005-06-03 [[Rat::aka::Reflecto-Man]]
 MULTIREF [[title::Furry Brown Cap]] [[notes::A furry brown cap, apparently unrelated to any plotline, appears in several strips: [[2009-11-14]], [[2009-01-27]], [[2012-01-25]], [[2011-03-29]], [[2010-03-06]], [[2008-10-19]], [[2009-07-08]], [[2008-08-06]], [[2008-07-22]], [[2010-09-03]], [[2011-05-17]], [[2012-05-13]], [[2009-03-01]], [[2012-06-19]], [[2009-12-20]], [[2011-12-27]], [[2009-02-06]], [[2011-06-07]], [[2010-04-04]], [[2010-04-27]], [[2010-03-25]], [[2010-03-26]] [[2010-03-27]]]]
-2008-02-20 [[event::[[character::Zebra]]'s birthday]]
+2008-02-20 [[event::[[character::Zebra]]'s birthday]] [[birthday::Zebra]]
 2008-10-11,2012-04-26 [[notes::The moles in [[2008-10-11]] and [[Mikey (mole)]] in [[2012-04-26]] look quite different. Pastis normally draws animals of the same "type" in the same way (moles actually constitute an entire family of animals, not just a specific species)]]
 2010-04-15 [[character::Pig+Rat+Mr Pitters (teddy bear)+Tubey (pillow)]]
 2011-12-04 [[character::Mr Pitters (teddy bear)]]
@@ -1624,7 +1626,7 @@ MULTIREF [[title::Furry Brown Cap]] [[notes::A furry brown cap, apparently unrel
 2009-11-06 [[character::Pig+Rat+Tooth Fairy (deity)]]
 2012-01-05,2012-01-06 [[character::Pig+Rat+Mr. Buffalo Head (buffalo)]] [[Mr. Buffalo Head (buffalo)::aka::Mounted Buffalo Head of Regret]]
 2012-01-22 [[character::Stephan Pastis+John Glynn+Rat]] [[John Glynn::species::human]]
-2011-02-26 [[event::[[character::Stephan Pastis]]' birthday]]
+2011-02-26 [[event::[[character::Stephan Pastis]]' birthday]] [[birthday::Stephan Pastis]]
 2007-07-10 [[character::Rat+Pig+Clarence (speaker)]]
 2009-07-27 [[notes::[[character::Stephan Pastis]]' coffee reads "Calisto Roast"]]
 2008-07-27 [[character::Pig+Rat+Stephan Pastis+Crumb (human)]]
@@ -1710,10 +1712,8 @@ MULTIREF [[title::Pig's monkey]] [[notes::Pig seems to have an unusual connectio
 2013-02-04 [[Pig::aka::Fatty+Tubby]]
 2013-02-28 [[character::Rat+Lil Rat (rat)+Pig]]
 2012-05-19 [[character::Mister Muffatoni (puppet)]] [[notes::the "puppet on a stick" may be a reference to Jeff Dunham's {{wp|Jose Jalapeno on a Stick}}]]
-2012-06-09 [[event::[[character::Goat]]'s birthday]]
+2012-06-09 [[birthday::Goat]]
 </data>
-
-# the following lines need improvement
 
 # the following lines are incorrect and need to be checked
 
@@ -1733,7 +1733,7 @@ Niko (angel) [[description::[[Pig]]'s {{wp|guardian angel}}, aka [[Niko (angel):
 Nikos Papandropoulos [[aka::Niko]]
 Talk::2002-04-12 Deaths::I can't tell if Rat killed the other Fruit Buddies as well
 
-# TODO: currently using 'deaths' to mean 'character', but really shouldn't
+# TODO: currently using 'deaths' to mean 'character', but really shouldn't (need to add this to has_character list too)
 
 # if someone is brother/etc of another, it counts as character
 
@@ -1840,7 +1840,7 @@ undies != underwear, so maybe un-dies? (using rebirth)
 
 # mini newt storyline similar to newt not a reptile
 
-# 2004-03-05 "sole" joke repeats death doing same thing
+# 2004-03-05 "sole" joke repeats death doing same thing and early 2002 strip too
 
 # rats diary not happy 2010-03-16 vs awesome ('good month so far') on other day, not necessarily contradiction, 2011-10-22 (also 30 days, so running month)
 
@@ -1916,7 +1916,8 @@ undies != underwear, so maybe un-dies? (using rebirth)
 
 # 2006-10-04 pig mom writes letters + comes over daily?
 
-# 2006-12-03 LGD doesn't know parents vs writing his pa earlier?<
+# 2006-12-03 LGD doesn't know parents vs writing his pa earlier?
+
 # 2007-01-13 same night stand that later tries to escape?, 2007-05-11
 
 # 2011-05-09 rat say lottery is tax, but also his retirement plan? 2005-12-19 is another one
@@ -2058,3 +2059,4 @@ undies != underwear, so maybe un-dies? (using rebirth)
 
 # find where Pastis changes his email address and which addresses he uses
 
+# opposite day similar to 05 Feb 2012 (Sunday) (goat hits rat)

@@ -10,10 +10,12 @@ require "/usr/local/lib/bclib.pl";
 dodie('chdir("/home/barrycarter/BCGIT/METAWIKI")');
 my($etcdir) = "/usr/local/etc/metawiki/pbs-referata";
 
+# predictable randomization
+srand(20140625);
+
 # relations I'm ignoring for now (null/meta = ignore forever)
 # NOTE: category is doubly special
-my(%ignore) = list2hash("null", "meta", "char_list_complete", "source",
-			"noref", "cameo", "category");
+my(%ignore) = list2hash("null", "char_list_complete", "source", "noref");
 
 # get large image links (hack for now)
 for $i (split(/\n/, read_file("largeimagelinks.txt"))) {
@@ -26,12 +28,6 @@ for $i (`egrep -v '<|#|^\$' pbs-meta.txt`) {
   chomp($i);
   my(@data) = split(/\, /, $i);
   $meta{$data[0]} = [@data];
-
-  # if the result type is string, mark this as a "property" not "relation"
-#  if ($data[4] eq "string") {
-#    debug("SETTING $data[1] type to prop");
-#    $meta{$data[1]}{type} = "property";
-#  }
 }
 
 for $i (sqlite3hashlist("SELECT * FROM triples", "/tmp/pbs-triples.db")) {
@@ -42,6 +38,7 @@ for $i (sqlite3hashlist("SELECT * FROM triples", "/tmp/pbs-triples.db")) {
   if ($ignore{$k} || $k=~/_deaths$/) {next;}
 
   my($ignore, $for, $rev, $stype, $ttype) = @{$meta{$k}};
+  debug("FOR: $for");
 
   unless ($for) {warn "NO FORWARD MAPPING FOR: $k"; next;}
 
@@ -73,6 +70,10 @@ sub pbs_date_strips {
 
   # use indexs so I can do "next" and "prev"
   for $l (0..$#strips) {
+
+    # randomization of sorts
+#    if (rand()>.01) {next;}
+
     $i = $strips[$l];
 
     open(A, ">$etcdir/$i.mw.new");
@@ -127,18 +128,18 @@ sub mv_after_diff {
 
 =item comment
 
-k frequency:
+k frequency: (H prefix = handled by template)
 
-3986|character
-1907|storyline
+H 3986|character
+H 1907|storyline
 765|source
-278|notes
-167|deaths
-165|category
-137|newspaper_mentions
-122|meta
+H 278|notes
+H 167|deaths
+H 165|category
+H 137|newspaper_mentions
+H 122|meta
 117|aka
-97|cameo
+H 97|cameo
 95|profession
 57|description
 53|neighbor

@@ -51,9 +51,17 @@ religion, has_religion, has_follower, character, religion
 species, has_species, has_member, character, species
 storyline, in_storyline, has_strip, strip, storyline
 subspecies, has_subspecies, has_member, character, subspecies
+# birthday = anniversary of birth, so caution
+birthday, has_birthday, birthday_is, strip, character
 
 notes, has_notes, applies_to, *, string
 description, has_description, applies_to, *, string
 event, has_event, occurs_on, strip, string
+
+category, has_category, has_strip, *, string
+meta, has_meta, applies_to, *, string
+
+# are cameos actually characters?
+cameo, has_cameo, appears_in, strip, string
 
 </relations>

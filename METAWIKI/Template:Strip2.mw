@@ -1,0 +1,59 @@
+{{{!}} class="wikitable"
+
+{{!}}-
+! colspan="2" {{!}} {{DateTable|{{{has_date|}}}|{{{has_hash|}}}}}
+
+{{#if: {{{has_character|}}} | 
+{{!}}-
+! Character(s)
+{{!}} {{#arraymap: {{{has_character|}}}|,|x|[[has_character::x]]}}}}
+
+{{#if: {{{has_birthday|}}} | 
+{{!}}-
+! Character(s)
+{{!}} {{#arraymap: {{{has_birthday|}}}|,|x|[[has_birthday::x]]}}}}
+
+{{#if: {{{has_death|}}} | 
+{{!}}-
+! Character(s)
+{{!}} {{#arraymap: {{{has_death|}}}|,|x|[[has_death::x]]}}}}
+
+{{#if: {{{has_cameo|}}} | 
+{{!}}-
+! Character(s)
+{{!}} {{#arraymap: {{{has_cameo|}}}|,|x|[[has_cameo::x]]}}}}
+
+{{#if: {{{in_storyline|}}} | 
+{{!}}-
+! Character(s)
+{{!}} {{#arraymap: {{{in_storyline|}}}|,|x|[[in_storyline::x]]}}}}
+
+{{#if: {{{mentions_paper|}}} | 
+{{!}}-
+! Character(s)
+{{!}} {{#arraymap: {{{mentions_paper|}}}|,|x|[[mentions_paper::x]]}}}}
+
+{{#if: {{{has_event|}}} | 
+{{!}}-
+! Character(s)
+{{!}} {{#arraymap: {{{has_event|}}}|,|x|[[has_event::x]]}}}}
+
+{{!}}}
+
+{{#if: {{{has_notes|}}} | == Notes ==
+{{#arraymap: {{{has_notes|}}}|<br>\n|x|[[has_notes::x]]}}
+| }}
+
+{{#if: {{{has_description|}}} | == Description ==
+{{#arraymap: {{{has_description|}}}|<br>\n|x|[[has_description::x]]}}
+| }}
+
+<table width=100%><tr><td>
+[[{{{has_prev|}}}| &lt;&lt; {{#time: d M Y (l)|{{{has_prev|}}}}}]]
+</td><td align=right>
+[[{{{has_next|}}}|{{#time: d M Y (l)|{{{has_next|}}}}} &gt;&gt;]]
+</td></tr></table>
+
+{{#arraymap:{{{has_category|}}}|,|x|[[Category:x]]|&#32;}}
+
+[[Category:Strips]]
