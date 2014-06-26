@@ -1,0 +1,3 @@
+<table class="wikitable">
+{{#if: {{{a|}}} | <tr><th>A</th><td>{{#arraymap: {{{a|}}}|,|x|[[a::x]]}}</td></tr>}}{{#if: {{{b|}}} | <tr><th>B</th><td>{{#arraymap: {{{b|}}}|,|x|[[b::x]]}}</td></tr>}}{{#if: {{{c|}}} | <tr><th>C</th><td>{{#arraymap: {{{c|}}}|,|x|[[c::x]]}}</td></tr>}}
+</table>

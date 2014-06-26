@@ -1,44 +1,34 @@
 {{{!}} class="wikitable"
 {{!}}-
-
 ! colspan="2" {{!}} {{DateTable|{{{has_date|}}}|{{{has_hash|}}}}}
-
 {{#if: {{{has_character|}}} |
 {{!}}-
 ! Character(s)
-{{!}} {{#arraymap: {{{has_character|}}}|,|x|[[has_character::x]]}}}}
-
-{{#if: {{{has_birthday|}}} |
+{{!}} {{#arraymap: {{{has_character|}}}|,|x|[[has_character::x]]}}
+}}{{#if: {{{has_birthday|}}} |
 {{!}}-
 ! Birthday(s)
 {{!}} {{#arraymap: {{{has_birthday|}}}|,|x|[[has_birthday::x]]}}
-
-{{#if: {{{has_death|}}} | 
+}}{{#if: {{{has_death|}}} |
 {{!}}-
 ! Death(s)
-{{!}} {{#arraymap: {{{has_death|}}}|,|x|[[has_death::x]]}}}}
-
-{{#if: {{{has_cameo|}}} | 
+{{!}} {{#arraymap: {{{has_death|}}}|,|x|[[has_death::x]]}}
+}}{{#if: {{{has_cameo|}}} |
 {{!}}-
 ! Cameo(s)
-{{!}} {{#arraymap: {{{has_cameo|}}}|,|x|[[has_cameo::x]]}}}}
-
-{{#if: {{{in_storyline|}}} | 
+{{!}} {{#arraymap: {{{has_cameo|}}}|,|x|[[has_cameo::x]]}}
+}}{{#if: {{{in_storyline|}}} |
 {{!}}-
 ! Storyline(s)
-{{!}} {{#arraymap: {{{in_storyline|}}}|,|x|[[in_storyline::x]]}}}}
-
-{{#if: {{{mentions_paper|}}} | 
+{{!}} {{#arraymap: {{{in_storyline|}}}|,|x|[[in_storyline::x]]}}
+}}{{#if: {{{mentions_paper|}}} |
 {{!}}-
 ! <span title="Use highest resolution to see smaller newspaper titles">Newspaper Mention(s)</span>
-{{!}} {{#arraymap: {{{mentions_paper|}}}|,|x|[[mentions_paper::x]]}}}}
-
-{{#if: {{{has_event|}}} | 
+{{!}} {{#arraymap: {{{mentions_paper|}}}|,|x|[[mentions_paper::x]]}}
+}}{{#if: {{{has_event|}}} |
 {{!}}-
 ! Event(s)
-{{!}} {{#arraymap: {{{has_event|}}}|,|x|[[has_event::x]]}}}}
-
-{{#if: {{{has_meta|}}} | 
+{{!}} {{#arraymap: {{{has_event|}}}|,|x|[[has_event::x]]}}}}{{#if: {{{has_meta|}}} |
 {{!}}-
 ! Meta Note(s)
 {{!}} {{#arraymap: {{{has_meta|}}}|,|x|[[has_meta::x]]}}}}
@@ -52,6 +42,10 @@
 {{#if: {{{has_description|}}} | == Description ==
 {{#arraymap: {{{has_description|}}}|<br>\n|x|[[has_description::x]]}}
 | }}
+
+
+
+[[has_hash:{{{has_hash}}}| ]]
 
 {{#arraymap:{{{has_category|}}}|,|x|[[Category:x]]|&#32;}}
 
