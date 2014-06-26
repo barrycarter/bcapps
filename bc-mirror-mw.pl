@@ -6,7 +6,6 @@
 # http://pearls-before-swine-bc.wikia.com/
 # (should be generalized to work w/ wikis in general)
 
-
 require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
 option_check(["realsies","dryrun","dir","api"]);

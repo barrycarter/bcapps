@@ -5,3 +5,6 @@
 # creation
 
 require "/usr/local/lib/bclib.pl";
+
+
+# for strips only (and only the table part)

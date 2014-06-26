@@ -20,8 +20,22 @@ my(%ignore) = list2hash("null", "char_list_complete", "source", "noref");
 # get large image links (hack for now)
 for $i (split(/\n/, read_file("largeimagelinks.txt"))) {
   $i=~s/^(.*?)\s+.*?\/([0-9a-f]+)\?.*$//;
-  $imagehash{$1} = $2;
+  my($strip, $hash) = ($1, $2);
+  $hash{$strip}{hash}{$hash} = 1;
+  $hash{$strip}{type}{strip} = 1;
 }
+
+# HACK: assign next/prev to images
+my(@strips) = sort keys %hash;
+
+for $i (0..$#strips) {
+  $hash{$strips[$i]}{prev}{$strips[$i-1]} = 1;
+  $hash{$strips[$i]}{next} {$strips[$i+1]} = 1;
+}
+
+# and kill corner cases
+delete $hash{$strips[0]}{prev};
+delete $hash{$strips[$#strips]}{next};
 
 # load meta data (TODO: this is cheating, only one section so far)
 for $i (`egrep -v '<|#|^\$' pbs-meta.txt`) {
@@ -44,23 +58,27 @@ for $i (sqlite3hashlist("SELECT * FROM triples", "/tmp/pbs-triples.db")) {
   # forward and reverse mappings (not explicitly separating properties
   # and relations, but the target type of a property will be string)
 
-  $hash{$source}{$for}{$v} = 1;
-  $hash{$v}{$rev}{$source} = 1;
+  $hash{$source}{$k}{$v} = 1;
+  # NOT doing reverse annos (but am doing types)
+#  $hash{$v}{$rev}{$source} = 1;
   $hash{$source}{type}{$stype} = 1;
   $hash{$v}{type}{$ttype} = 1;
 }
 
-warn "NUKING MOST TYPES FOR NOW";
+warn "IGNORING MOST TYPES FOR NOW";
 
 for $i (sort keys %hash) {
   # remove the wildcard type (if it exists) and the string "non type"
-  delete $hash{$i}{type}{"*"};
-  delete $hash{$i}{type}{string};
+#  delete $hash{$i}{type}{"*"};
+#  delete $hash{$i}{type}{string};
+
+  # all pages know their own title (TODO: do this earlier?)
+  $hash{$i}{title}{$i} = 1;
 
   my(@types) = keys %{$hash{$i}{type}};
   if (scalar @types == 0) {warn "NO TYPES FOR: $i"; next;}
   if (scalar @types > 1) {warn "MULTIPLE TYPES FOR: $i",@types; next;}
-  unless ($types[0] eq "character") {next;}
+  unless ($types[0] eq "character" || $types[0] eq "strip") {next;}
 
   # remove templating from object name (only ok in strings)
   $i=~s/\{\{(.*?)\|(.*?)\}\}/$2/isg;
