@@ -1,0 +1,17 @@
+<table class="wikitable">
+
+<tr><th>Name</th><td>{{{title|}}}</td></tr>
+
+<tr><th>First Appearance</th><td>{{#ask: [[Category:Strips]] [[character::{{{title|}}}]] | order=ASC | limit=1 | searchlabel=}}</td>
+
+{{#if: {{{species|}}} | <tr><th>Species</th><td>
+{{#arraymap: {{{species|}}}|,|x|[[species::x]]}}</td></tr>}}
+
+{{#if: {{{profession|}}} | <tr><th>Profession(s)</th><td>
+{{#arraymap: {{{profession|}}}|,|x|[[profession::x]]}}</td></tr>}}
+
+{{#if: {{{aka|}}} | <tr><th>Alias(es)</th><td>
+{{#arraymap: {{{aka|}}}|,|x|[[aka::x]]}}</td></tr>}}
+
+</table>
+
