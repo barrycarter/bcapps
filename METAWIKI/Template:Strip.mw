@@ -3,7 +3,8 @@
 
 ! colspan="2" {{!}} {{DateTable|{{{has_date|}}}|{{{has_hash|}}}}}
 
-{{#if: {{{has_character|}}} | {{!}}-
+{{#if: {{{has_character|}}} |
+{{!}}-
 ! Character(s)
 {{!}} {{#arraymap: {{{has_character|}}}|,|x|[[has_character::x]]}}}}
 
