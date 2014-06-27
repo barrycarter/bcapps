@@ -216,7 +216,7 @@ disclaim: based on gocomics website only
 2002-06-29 [[character::Bailey (human)]]
 2005-06-27-2005-07-02 [[storyline::{{wp|Osama Bin Laden}} visits {{wp|The Family Circus}}]]
 2002-05-22 [[character::[[Zebra::aunt::Leah (zebra)]]]]
-2010-01-16 [[character::Patty (crocodile)+Leah (crocodile)]]
+2010-01-16 [[character::Patty+Leah (crocodile)]]
 2002-05-31 [[description::[[Pig]] writes to {{wp|Julia Roberts}}]]
 2002-06-03-2002-06-07,2003-03-14,2003-03-16 [[storyline::[[character::Rat]] is a marriage counselor]]
 2002-06-10-2002-06-15 [[storyline::[[character::Pig]] talks to his reflection]]
@@ -825,8 +825,8 @@ MULTIREF [[title::Rat's guilt]] [[notes::On [[2014-06-09]], Rat says he feels gu
 2007-10-31 [[event::A [[character::Crocs]] successfully attacks [[character::Zebra]], albeit not fatally]] [[meta::fix this, I need pipe notation]]
 2007-11-04 [[newspaper_mentions::Beacon Sun?+Columbus Dispatch+Columbus Post]]
 2007-11-06 [[character::Larry+[[deaths::[[Dena (crocodile)::husband::Nick (crocodile)]]]]]]
-2007-11-06 [[character::Larry+Patty (crocodile)+Max (lion)+Zach (lion)+[[Larry::cousin::Dena (crocodile)]]+Nick (crocodile)]]
-2008-04-10 [[character::Larry+Junior+[[Larry::wife::Patty (crocodile)]]]]
+2007-11-06 [[character::Larry+Patty+Max (lion)+Zach (lion)+[[Larry::cousin::Dena (crocodile)]]+Nick (crocodile)]]
+2008-04-10 [[character::Larry+Junior+[[Larry::wife::Patty]]]]
 2007-11-26 [[notes::[[Andy]] is reading "Lovely Planet"]]
 2007-11-11-2007-11-14,2007-11-16,2007-11-25,2007-12-09 [[storyline::[[character::Pig]]'s brain leaves]]
 2007-12-11 [[description::[[character::Junior]] runs away to be with [[character::Joy]]]] [[Joy::species::zebra]]
@@ -847,7 +847,7 @@ MULTIREF [[title::Rat's guilt]] [[notes::On [[2014-06-09]], Rat says he feels gu
 2008-03-16 [[crocodile_deaths::#1]]
 2008-03-26 [[cameo::Darryl MacPherson]]
 2008-03-27 [[cameo::Ted Forth (Sally Forth)]]
-2008-03-31 [[character::Larry+Timmy (squirrel)+Patty (crocodile)+[[Patty (crocodile)::sister::Penny (crocodile)]]+[[Penny (crocodile)::husband::Pete (crocodile)]]]] [[Timmy (squirrel)::aka::Timmy Da Terror of da Trees]]
+2008-03-31 [[character::Larry+Timmy (squirrel)+Patty+[[Patty::sister::Penny (crocodile)]]+[[Penny (crocodile)::husband::Pete (crocodile)]]]] [[Timmy (squirrel)::aka::Timmy Da Terror of da Trees]]
 2005-05-21 [[character::Pig+Pete (praying mantis)]]
 2008-05-18 [[character::Larry+Bob n (crocodile)]]
 2008-12-21 [[character::Pig+Rat]]
@@ -907,9 +907,9 @@ MULTIREF [[title::Rat's guilt]] [[notes::On [[2014-06-09]], Rat says he feels gu
 2005-12-15 [[character::Pig+[[Pig+Rat::neighbor::Vinnie 20051215 (human)]]]] [[Vinnie 20051215 (human)::aka::Neighbor Vinnie]]
 2006-08-21,2006-08-22,2006-08-25,2006-08-26,2006-08-28 [[storyline::[[character::Crocs]] attend college]]
 2006-08-30 [[storyline::[[character::Pig]] locks [[character::Guard Duck]] in the clothes hamper]]
-2009-01-19-2009-01-23,2009-01-25,2009-02-02,2009-04-09-2009-04-13,2009-04-15 [[storyline::[[character::Fantastic Four]]]] [[Fantastic Four::species::crocodile (group)]]
+2009-01-19-2009-01-23,2009-01-25,2009-02-02,2009-04-09-2009-04-13,2009-04-15 [[storyline::[[character::Fantastic Four]]]] [[Fantastic Four::species::crocodile (group)]] [[meta::Fantastic Four actually a group, not a character]]
 2009-01-21 [[Bob 20090121 (crocodile)::aka::Paper Jam Boy]], [[Fred 20090121 (crocodile)::aka::Stapler Head]] [[Paper Jam Boy+Stapler Head::profession::superhero]] [[Fantastic Four::aka::Fanntasteek 4]]
-2009-01-25 [[character::Larry+Patty (crocodile)+[[deaths::Paper Jam Boy]]]]
+2009-01-25 [[character::Larry+Patty+[[deaths::Paper Jam Boy]]]]
 2009-01-22 [[Frank 20090122 (crocodile)::aka::Doorstoppo]] [[Doorstoppo::profession::superhero]]
 2009-03-07 [[character::Larry+Frank 20090307 (crocodile)]]
 2009-03-18 [[character::Larry]]
@@ -922,7 +922,7 @@ MULTIREF [[title::Rat's guilt]] [[notes::On [[2014-06-09]], Rat says he feels gu
 2009-03-25 [[newspaper_mentions::Houston Chronicle]]
 2009-03-28 [[Pig::profession::sign holder+pole]]
 2010-03-18 [[newspaper_mentions::The Houston Chronicle+Denver Post+Akron Beacon Journal]]
-2009-04-03,2009-04-04,2009-04-06-2009-04-16 [[storyline::[[character::Patty (crocodile)]] kidnapped by [[character::Zebra]]]]
+2009-04-03,2009-04-04,2009-04-06-2009-04-16 [[storyline::[[character::Patty]] kidnapped by [[character::Zebra]]]]
 2009-04-11 [[deaths::Stapler Head]]
 2009-04-12 [[deaths::Doorstoppo]]
 2009-06-02 [[character::Rat+Pig+[[character::[[Pig::friend::Jef]]]]]] [[Jef::species::human]] [[Jef::subspecies::cyclist]]
@@ -935,7 +935,7 @@ MULTIREF [[title::Rat's guilt]] [[notes::On [[2014-06-09]], Rat says he feels gu
 2014-06-25 [[newspaper_mentions::The Times]] [[character::Rat+Goat+Fred 20140625 (human)]]
 2013-01-21 [[notes::[[character::Pig]]'s mole vanishes by panel 3 (so, apparently, removing the other mole somehow worked!)]]
 2012-09-07 [[notes::Some of the beer packs don't have the word "BEER" on the side]]
-2009-06-06 [[notes::[[Patty (crocodile)]]'s hammer is stylistically identical to the hammer from {{wp|Donkey Kong}}, the first game in the Mario series]]
+2009-06-06 [[notes::[[Patty]]'s hammer is stylistically identical to the hammer from {{wp|Donkey Kong}}, the first game in the Mario series]]
 2009-06-09-2009-06-11 [[storyline::[[character::Rat]], the book editor]]
 2009-06-22-2009-06-24,2009-07-01-2009-07-03 [[storyline::[[character::Rat]], the {{wp|Pied Piper}}]]
 2009-06-26 [[notes::The real reason&#58; {{wp|Sneezing#Common_verbal_responses_to_a_sneeze}}]]
@@ -989,7 +989,7 @@ MULTIREF [[title::Pearls without [[Pig]]]] [[notes::The "Pearls without Pig" on 
 2010-02-08 [[character::Lucky (lion)+Pig+Rat+Zebra]]
 2010-02-08-2010-02-09,2010-02-13,2010-02-20 [[storyline::[[character::Lucky (lion)]]]]
 2010-02-21 [[character::Petey (peacock)]]
-2010-02-14-2010-02-17 [[storyline::[[character::Patty (crocodile)]] kicks [[character::Larry]] out]]
+2010-02-14-2010-02-17 [[storyline::[[character::Patty]] kicks [[character::Larry]] out]]
 2010-02-11,2010-02-12 [[character::[[Pig::friend::Jenny (jellyfish)]]]]
 2014-02-05 [[character::Jenny (goat)]]
 2010-02-22 [[character::Rat+Pig+Uni (unicorn)]]
@@ -1125,7 +1125,7 @@ MULTIREF [[title::Tree Croc]] [[notes::On [[2007-01-07]], Larry poses as a "tree
 2011-09-23 [[newspaper_mentions::Des Moines Register]]
 2011-09-24 [[character::Pig+Goat+Timbo (tortoise)]]
 2012-04-11-2012-04-14 [[storyline::[[character::Larry]]'s {{wp|Godfather}}-style hit on [[character::Zebra]]]]
-2011-09-25 [[description::After watching a documentary on the {{wp|dart frog}}, [[character::Zebra]], with uncharacteristic foolishness, dresses in a bright outfit to fool [[character::Larry]] and [[character::Patty (crocodile)]]]] [[category::Out of Character]]
+2011-09-25 [[description::After watching a documentary on the {{wp|dart frog}}, [[character::Zebra]], with uncharacteristic foolishness, dresses in a bright outfit to fool [[character::Larry]] and [[character::Patty]]]] [[category::Out of Character]]
 2011-09-27 [[newspaper_mentions::Seattle Times]]
 2004-10-19 [[character::Pig+Danger High Voltage (sign)+No Thru Traffic (sign)+Slow (sign)]] [[Slow (sign)::aka::Hal]] [[No Thru Traffic::aka::George]] [[notes::"I is smart, George" is a reference to {{wp|Of Mice and Men}}]]
 2012-02-26,2011-10-03-2011-10-07 [[storyline::[[Garbanzo Bean Day]]]]
@@ -1217,7 +1217,7 @@ MULTIREF [[title::Plaid's stripes]] [[notes::[[Plaid (zebra)]]'s stripes are in 
 2012-09-03 [[event::Jeff changes his name to [[character::Jef]]]]
 2012-09-04-2012-09-07,2012-09-09 [[storyline::[[character::Larry]]'s parents come for a visit]]
 2012-09-04 [[character::Zebra+Goat+Larry's mother (crocodile)+Larry's father (crocodile)]]
-2012-09-09 [[character::Larry+Patty (crocodile)+Larry's mother (crocodile)+Larry's father (crocodile)]]
+2012-09-09 [[character::Larry+Patty+Larry's mother (crocodile)+Larry's father (crocodile)]]
 2005-05-13,2005-12-11,2012-09-04 [[character::Larry's mother (crocodile)]]
 MULTIREF [[title::[[[[Larry]]'s mother]]]] [[notes::Larry's mother dies on [[2005-05-13]], but re-appears on [[2005-12-11]]. She also appears to have aged greatly when we see her on [[2012-09-04]]]]
 2005-12-09 [[newspaper_mentions::Times News]]
@@ -1303,7 +1303,7 @@ MULTIREF [[title::[[[[Larry]]'s mother]]]] [[notes::Larry's mother dies on [[200
 2013-09-25,2013-07-25,2013-09-20,2013-09-24 [[notes::[[character::Gomer (goldfish)]] apparently survives his accident on [[2013-09-20]], since we see him again on [[2013-09-24]]]]
 2013-09-26,2013-09-27,2013-10-01,2013-10-09,2013-10-10,2013-12-20 [[penguin_deaths::#1]]
 2013-09-28 [[character::Snuffles]] [[notes::The barbed wire from [[2013-09-26]] apparently didn't protect [[character::Gomer (goldfish)]], but he apparently survived anyway as we see him again on [[2014-06-23]]]]
-2012-05-14 [[Patty (crocodile)::aka::Ms Larry]]
+2012-05-14 [[Patty::aka::Ms Larry]]
 2013-10-02 [[storyline::[[character::Goat]] travels to {{wp|Paris}}]]
 2013-10-03,2013-10-04 [[storyline::[[character::Rat]] controls government drones]]
 2013-10-07 [[character::Morty (penguin)+George (bird)]]
@@ -1321,6 +1321,7 @@ MULTIREF [[title::[[[[Larry]]'s mother]]]] [[notes::Larry's mother dies on [[200
 2013-11-24-2013-11-26,2013-12-01 [[storyline::[[character::Rat]]'s family Thanksgiving dinner]]
 2013-12-01 [[character::Wanda (human)+Jerry (rat)+Greg (rat)+Mark (rat)+Dan (rat)]] [[Rat::uncle::Jerry (rat)+Greg (rat)+Mark (rat)+Dan (rat)]]
 2013-11-25 [[character::Rat+Wanda (human)]] [[Wanda (human)::profession::masseuse]]
+2013-11-26 [[character::Rat+Wanda (human)]]
 2005-04-06 [[character::Pig+Rat+[[Pig::friend::Dan 20050406 (human)]]]]
 2008-06-28 [[character::Pig+Dan 20080628 (human)]]
 2003-01-19 [[character::Rat+Pig+Dan 20030119 (human)+[[Dan 20030119 (human)::wife::Stephanie (human)]]]] [[Dan 20030119 (human)::profession::florist]]
@@ -1479,7 +1480,7 @@ MULTIREF [[title::Lemmings Leap]] [[notes::On [[2012-10-19]] (also [[noref::2013
 2004-01-19-2004-01-24 [[storyline::[[character::Pig]] and [[character::Rat]]'s apocalyptic refrigerator]]
 2009-04-30,2009-05-01,2009-05-03,2009-05-04,2009-05-10 [[storyline::[[character::Rat]], newspaper owner]]
 2009-05-12 [[character::Zebra+Larry+Emilio (crocodile)]] [[Emilio (crocodile)::aka::Jaws]]
-2009-05-13 [[character::Patty (crocodile)+Larry+Emilio (crocodile)]]
+2009-05-13 [[character::Patty+Larry+Emilio (crocodile)]]
 2009-05-14 [[character::Emilio (crocodile)]]
 2005-10-06 [[character::Pig+Guard Duck+[[Rat+Pig::neighbor::Emilio (human)]]]]
 2009-05-17 [[zebra_deaths::#1]]
@@ -1492,7 +1493,7 @@ MULTIREF [[title::Lemmings Leap]] [[notes::On [[2012-10-19]] (also [[noref::2013
 2009-02-19 [[cameo::Jeffy (Family Circus)]]
 2008-12-13 [[notes::[[character::Goat]] is reading {{wp|Master of the Senate}} by {{wp|Robert Caro|Caro}}]]
 2008-12-22 [[character::Jim 20081222 (human)]] [[Jim 20081222 (human)::profession::border crossing guard]] [[meta::probably no such thing, illegal to block citizens from entering states?]]
-2007-11-24 [[character::Patty (crocodile)+Larry+Carol (crocodile)+[[Carol (crocodile)::husband::Ed (crocodile)]]]]
+2007-11-24 [[character::Patty+Larry+Carol (crocodile)+[[Carol (crocodile)::husband::Ed (crocodile)]]]]
 2003-07-07,2003-07-08 [[storyline::[[character::Rat]] writes to {{wp|Chirac}}]]
 2003-07-10 [[character::Rat+Pig+[[Rat::cousin::Gene (rat)]]]]
 2004-06-28 [[notes::There are 8 planets on the table, or 9 planets total, since this strip was written before Pluto was re-classified as a non-planet]]
@@ -1514,7 +1515,7 @@ MULTIREF [[title::Lemmings Leap]] [[notes::On [[2012-10-19]] (also [[noref::2013
 2012-12-30 [[character::Pig+Goat+[[Goat::friend::Bob 20121230 (human)]]]] [[Bob 20121230 (human)::profession::coach]] [[Bob 20121230 (human)::aka::Coach Bob]]
 2013-03-15 [[character::Rat+Goat+[[Goat::friend::Bob 20130315 (human)]]]] [[Bob 20130315 (human)::aka::George]]
 2002-07-16 [[Neighbor Bob::profession::pilot]]
-2013-08-01 [[character::Larry+Patty (crocodile)+[[Larry::boss::Bob 20130801 (human)]]]] [[Bob 20130801 (human)::profession::pet store manager]]
+2013-08-01 [[character::Larry+Patty+[[Larry::boss::Bob 20130801 (human)]]]] [[Bob 20130801 (human)::profession::pet store manager]]
 2013-08-31 [[character::Pig+Rat+Bob 20130831 (human)]] [[Bob 20130831 (human)::aka::Facebook Bob]]
 2013-12-31 [[character::Rat+Pig+Goat+Bob 20131231 (human)]] [[Bob 20131231 (human)::orientation::gay]]
 2009-01-24 [[character::Rat+Pig+[[Pig::friend::Bob 20090124 (human)]]]] [[Bob 20090124 (human)::profession::construction]]
@@ -1522,13 +1523,14 @@ MULTIREF [[title::Lemmings Leap]] [[notes::On [[2012-10-19]] (also [[noref::2013
 2012-08-08 [[character::Pig+Neighbor Bob]]
 2008-10-05 [[meta::I'm assuming Rat's reference to the dog as "Fido" is derogatory and not the dog's actual name]]
 2007-06-14 [[notes::The title of [[character::Zebra]]'s book reads "The Seat of", so it's probably "The Seat of the Soul" by {{wp|Gary Zukav}}]]
+2006-07-18 [[character::Gary (human)]] [[Gary (human)::profession::manager]]
 2006-06-12 [[notes::The writing on Guard Duck's gun appears to read "THE LISA"]]
 2007-06-02 [[character::Goat+Rat]] [[Rat::aka::GigantoBrain]]
 2007-06-08,2007-06-14,2008-07-18 [[storyline::[[character::Zebra]] appears weak to female lions]]
 2008-07-01 [[character::Pig+Goat+Ling Ling (panda)+Ping Ping (panda)]] [[meta::WP references to these famous pandas?]]
 2005-02-01,2005-02-02 [[character::Tony (bowling pin)]]
 2011-11-02,2007-05-09,2008-07-13,2006-01-29,2006-06-16,2006-09-09,2007-11-28 [[storyline::[[character::Goat]] writes a {{wp|blog}}]]
-2006-06-10 [[character::Patty (crocodile)+Larry+Edward (crocodile)]]
+2006-06-10 [[character::Patty+Larry+Edward (crocodile)]]
 2012-11-22 [[notes::One beer can reads "BREW" and other reads "SKI". Additionally, the second can must be printed backwards; otherwise, the "SKI" would be upside down]] [[character::Pig+Hops (bunny)]]
 2010-02-11 [[notes::A discarded tissue appears below [[character::Pig]]'s pillow in panel 2; a second discarded tissue appears in panel 3]] [[character::Goat]]
 2013-09-29 [[character::Pig+Rat+Kevin (human)]] [[Kevin (human)::profession::chef]]
@@ -1564,7 +1566,7 @@ MULTIREF [[title::Lemmings Leap]] [[notes::On [[2012-10-19]] (also [[noref::2013
 2005-01-26 [[character::Pig+Justin (human)]]
 2004-08-01 [[character::Rat+Karen (human)+[[deaths::[[Karen (human)::cousin::Bob 20040801 (human)]]]]]]
 2012-05-03 [[character::Stephan Pastis+Pig+Les Abell (human)]]
-2004-08-15 [[notes::The small yellow banners the peas are holding read "GREEN" and "POWER!"]]
+2004-08-15 [[notes::The small yellow banners the peas are holding in the last panel read "GREEN" and "POWER!"]]
 2012-11-11 [[character::Pig+[[Rat+Pig::neighbor::Betty 20121111 (human)]]]]
 2005-05-09 [[character::Pig+Rat+Billy 20050509 (human)+Betty 20050509 (human)+Bobby (human)]] [[Billy 20050509 (human)+Betty 20050509 (human)::profession::student+snowshoe]] [[Bobby (human)::profession::student+weather vane]]
 2012-09-28 [[character::Pig+Goat+Bobby (blow-up fish)]]
@@ -1691,7 +1693,7 @@ MULTIREF [[title::Dictionary Editing]] [[notes::On [[2011-01-27]], [[Rat]] takes
 2007-11-29 [[character::Zebra+Larry+Bob n (crocodile)]] [[Larry::aka::Skullhead Doom Guy]]
 2013-07-07 [[character::Zebra+Bob n (crocodile)]] [[Bob n (crocodile)::aka::Hot Chik]]
 2005-05-24 [[character::Pig+Joannie (yoyo)+Jim (yoyo)]] [[Joannie (yoyo)::aka::Joan]]
-2007-01-25 [[character::Larry+Patty (crocodile)+Zebra+Junior]] [[notes::Junior's helmet reads "Cal"]]
+2007-01-25 [[character::Larry+Patty+Zebra+Junior]] [[notes::Junior's helmet reads "Cal"]]
 2002-04-07 [[character::Rat+Pig+Annie (apple)]]
 2009-11-01 [[character::Stephan Pastis+Patti Pastis+Rat+Pig]]
 2009-11-15 [[character::Rat+Smith 20091115 (human)]] [[Smith 20091115 (human)::profession::dentist]]
@@ -1721,6 +1723,7 @@ MULTIREF [[title::Dictionary Editing]] [[notes::On [[2011-01-27]], [[Rat]] takes
 2011-06-17 [[character::Rat+Pig+Neighbor Bob]]
 2011-06-25 [[character::Pig+Rat+[[Pig+Rat::neighbor::Clive Richardson (human)]]]]
 2011-07-25 [[character::Pig+Neighbor Bob+Vito (frog)]] [[Vito (frog)::aka::Guard Frog]]
+2011-07-19 [[character::Pig]]
 2011-07-29 [[character::Pig+Stephan Pastis+Vito (frog)]]
 2010-12-11 [[newspaper_mentions::The Daily Press]]
 2010-06-16 [[notes::[[character::Goat]]'s book reads "Genghis Khan"]]
@@ -1761,7 +1764,7 @@ MULTIREF [[title::Pig's monkey]] [[notes::Pig seems to have an unusual connectio
 
 # the following lines are incorrect and need to be checked
 
-# 2007-01-24 [[character::Patty (crocodile)+Larry+Bob n (crocodile)+Floyd (crocodile)]] [[meta::original Floyd (crocodile) died on 2006-02-26, so this must be #2]]
+# 2007-01-24 [[character::Patty+Larry+Bob n (crocodile)+Floyd (crocodile)]] [[meta::original Floyd (crocodile) died on 2006-02-26, so this must be #2]]
 
 # 2004-10-25 [[character::Pig+Rat+Johnson (human)]] [[notes::Is [[Baby Johnson (bookie)]] the future child of these Johnsons?]]
 
@@ -1960,7 +1963,7 @@ undies != underwear, so maybe un-dies? (using rebirth)
 
 # 2006-10-04 pig mom writes letters + comes over daily?
 
-# 2006-12-03 LGD doesn't know parents vs writing his pa earlier?
+# 2006-12-03 LGD doesn't know parents vs writing his pa earlier? 2006-06-24
 
 # 2007-01-13 same night stand that later tries to escape?, 2007-05-11
 
@@ -2112,3 +2115,16 @@ undies != underwear, so maybe un-dies? (using rebirth)
 # pig eating animal crackers vs goldfish and elephant may become a storyline
 
 # do characters need genders too
+
+# calendar widget to let people choose strips instead of just next/prev?
+
+# pig's bad fortune cookies = storyline?
+
+# second size of thumbnail (eg, 100) for other purposes
+
+# look into filtered format (so people can see strips w and wo
+# specific characters)
+
+# guard duck and maura storyline is seriously incomplete
+
+# maybe no appearances section if only 1 appearance?

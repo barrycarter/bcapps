@@ -37,7 +37,7 @@ wife, has_wife, has_husband, character, character
 # * = any type
 # string = plain text string, not an entity
 
-aka, alias, canon, character, string
+aka, alias, canon, character, alias
 character, has_character, appears_in, strip, character
 deaths, has_death, dies_on, strip, character
 location, has_location, has_resident, *, location

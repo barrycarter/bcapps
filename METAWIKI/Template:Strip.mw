@@ -6,9 +6,9 @@
 <tr><th>Death(s)</th><td>{{#arraymap: {{{death|}}}|,|x|[[death::x]]}}</td></tr>}}{{#if: {{{cameo|}}} |
 <tr><th>Cameo(s)</th><td>{{#arraymap: {{{cameo|}}}|,|x|[[cameo::x]]}}</td></tr>}}{{#if: {{{storyline|}}} |
 <tr><th>Storyline(s)</th><td>{{#arraymap: {{{storyline|}}}|,|x|[[storyline::x]]}}</td></tr>}}{{#if: {{{newspaper|}}} |
-<tr><th>Newspaper(s)</th><td>{{#arraymap: {{{newspaper|}}}|,|x|[[newspaper::x]]}}</td></tr>}}{{#if: {{{event|}}} |
+<tr><th>Newspaper Mention(s)</th><td>{{#arraymap: {{{newspaper|}}}|,|x|[[newspaper::x]]}}</td></tr>}}{{#if: {{{event|}}} |
 <tr><th>Event(s)</th><td>{{#arraymap: {{{event|}}}|,|x|[[event::x]]}}</td></tr>}}{{#if: {{{meta|}}} |
-<tr><th>Meta(s)</th><td>{{#arraymap: {{{meta|}}}|,|x|[[meta::x]]}}</td></tr>}}
+<tr><th>Meta Note(s)</th><td>{{#arraymap: {{{meta|}}}|,|x|[[meta::x]]}}</td></tr>}}
 </table>
 
 {{#if: {{{notes|}}} | == Notes ==
@@ -20,7 +20,14 @@
 | }}
 
 [[hash::{{{hash|}}}| ]]
+[[title::{{{title|}}}| ]]
+
+<table width=100%><tr><td>
+<< [[{{{prev|}}}|{{#time: d M Y (l)|{{{prev|}}}}}]]</td>
+<td align=right>[[{{{next|}}}|{{#time: d M Y (l)|{{{next|}}}}}]] >></td>
+</tr></table>
 
 {{#arraymap:{{{category|}}}|,|x|[[Category:x]]|&#32;}}
 
 [[Category:Strips]]
+

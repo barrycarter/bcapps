@@ -11,6 +11,9 @@
 {{#if: {{{species|}}} | <tr><th>Species</th><td>
 {{#arraymap: {{{species|}}}|,|x|[[species::x]]}}</td></tr>}}
 
+{{#if: {{{subspecies|}}} | <tr><th>Subspecies</th><td>
+{{#arraymap: {{{subspecies|}}}|,|x|[[subspecies::x]]}}</td></tr>}}
+
 {{#if: {{{profession|}}} | <tr><th>Profession(s)</th><td>
 {{#arraymap: {{{profession|}}}|,|x|[[profession::x]]}}</td></tr>}}
 
@@ -27,9 +30,8 @@
 {{#arraymap: {{{description|}}}|<br>\n|x|[[description::x]]}}
 | }}
 
-<a name="appearances">
 == Appearances ==
 
-{{#ask: [[Category:Strips]] [[character::{{{title|}}}]] | ?hash | order=ASC | format=template | limit=20 | sep=<br><br> | link=none | template=DateTable}}
+{{#ask: [[Category:Strips]] [[character::{{{title|}}}]] | ?hash | order=ASC | format=template | limit=20 | sep=<br><br> | link=none | template=DateTable | searchlabel = ... more ...}}
 
 [[Category:Characters]]

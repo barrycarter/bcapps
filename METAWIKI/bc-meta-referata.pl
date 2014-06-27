@@ -83,7 +83,8 @@ for $i (sort keys %hash) {
   if (scalar @types == 0) {warn "NO TYPES FOR: $i"; next;}
   if (scalar @types > 1) {warn "MULTIPLE TYPES FOR: $i",@types; next;}
 #  unless ($types[0] eq "character" || $types[0] eq "strip") {next;}
-  unless ($types[0] eq "character") {next;}
+#  unless ($types[0] eq "strip") {next;}
+  unless ($types[0] eq "group") {next;}
 
   # remove templating from object name (only ok in strings)
   $i=~s/\{\{(.*?)\|(.*?)\}\}/$2/isg;
