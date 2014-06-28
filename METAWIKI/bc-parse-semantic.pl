@@ -74,11 +74,8 @@ sub parse_semantic {
 	  # replace the \003 we created earlier
 	  # TODO: this won't work if $k has plusses, undefined behavior
 	  debug("ALPHA: $string vs $k");
-	  $string=~s/\003/[[$k]]/;
+	  $string=~s/\003/\001$k\002/;
 	  debug("BETA: $string vs $k");
-	  # and the brackets
-	  $string=~s/\001/[/g;
-	  $string=~s/\002/]/g;
 	  debug("STRING BOT (IN $i/$j/$k): $string");
 	}
 	debug("STRING BOT (end $i/$j): $string");
