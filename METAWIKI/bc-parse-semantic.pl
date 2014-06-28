@@ -54,7 +54,6 @@ sub parse_semantic {
   # parse anything with double colons (\001 is a marker to replace later)
 #  while ($string=~s/\[\[([^\[\]]+?::[\[\]]+?)\]\]/\003/) {
   while ($string=~s/\[\[([^\[\]]+?::[^\[\]]+?)\]\]/\003/) {
-    debug("STRING TOP: $string");
     # determine the source, relation, and target
     my(@l) = split(/::/, $1);
     # if only two long, date is the implicit first parameter
@@ -65,6 +64,8 @@ sub parse_semantic {
     for $i (split(/\+/, $l[0])) {
       for $j (split(/\+/, $l[1])) {
 	for $k (split(/\+/, $l[2])) {
+	  # restore thing we changed earlier, but wo brackets
+	  $string=~s/\003/\001$k\002/;
 	  # restore brackets to $k
 	  $k=~s/\001/[[/g;
 	  $k=~s/\002/]]/g;
@@ -73,16 +74,9 @@ sub parse_semantic {
 #	  $k=~s/^.*?\|//;
 	  # replace the \003 we created earlier
 	  # TODO: this won't work if $k has plusses, undefined behavior
-	  debug("ALPHA: $string vs $k");
-	  $string=~s/\003/\001$k\002/;
-	  debug("BETA: $string vs $k");
-	  debug("STRING BOT (IN $i/$j/$k): $string");
 	}
-	debug("STRING BOT (end $i/$j): $string");
       }
-      debug("STRING BOT (end $i): $string");
     }
-    debug("STRING BOT (end all): $string");
   }
   debug("STRING (after while): $string");
 }

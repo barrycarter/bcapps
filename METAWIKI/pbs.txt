@@ -1257,7 +1257,7 @@ MULTIREF [[title::[[[[Larry]]'s mother]]]] [[notes::Larry's mother dies on [[200
 2013-03-04 [[character::Armando (armadillo)]] [[meta::Assuming this is Armando, although he doesn't get a name until Monday]]
 2013-03-07 [[character::Armando (armadillo)+[[deaths::[[Armando (armadillo)::wife::Lupe (armadillo)]]]]]]
 2013-03-30 [[character::Goat+Armando (armadillo)]]
-2013-03-19 [[Pig+Goat+[[Pig+Rat::neighbor::Armando (armadillo)]]]]
+2013-03-19 [[character::Pig+Goat+[[Pig+Rat::neighbor::Armando (armadillo)]]]]
 2003-06-15 [[notes::The first two items on the menu appear to be "trollop taco" (rollup taco?) and "felnian? taco"; the last item reads "by Stephan Pastis". The other items are ones you'd expect to find at a taco restaurant]]
 2003-06-20 [[character::Pig+Rat+Bob 20030620 (human)]]
 2013-03-11,2013-03-12 [[character::Mahathma Gandhi (human)]]
