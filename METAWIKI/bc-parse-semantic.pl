@@ -75,7 +75,7 @@ sub parse_semantic {
 
   # temporarily replace colonless [[foo]] to avoid parsing issues
   $string=~s/\[\[([^:\[\]]+)\]\]/\001$1\002/g;
-  debug("ALPHA: $string");
+#  debug("ALPHA: $string");
 
   # parse anything with double colons (\001 is a marker to replace later)
   while ($string=~s/\[\[([^\[\]]+?::[^\[\]]+?)\]\]/\003/) {
@@ -84,15 +84,15 @@ sub parse_semantic {
     # if only two long, date is the implicit first parameter
     if (scalar @l == 2) {unshift(@l, $dates);}
 
-    debug("BETA",@l);
+#    debug("BETA",@l);
     # each element of @l can have +s
     for $i (split(/\+/, $l[0])) {
       for $j (split(/\+/, $l[1])) {
 	for $k (split(/\+/, $l[2])) {
 	  # restore thing we changed earlier, but wo brackets
-	  debug("GAMMA: $string");
+#	  debug("GAMMA: $string");
 	  $string=~s/\003/$k/;
-	  debug("DELTA: $string");
+#	  debug("DELTA: $string");
 	  # restore brackets to $k
 	  $k=~s/\001/[[/g;
 	  $k=~s/\002/]]/g;

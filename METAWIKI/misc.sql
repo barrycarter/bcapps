@@ -29,6 +29,28 @@ INSERT INTO relations VALUES ('roommate');
 INSERT INTO relations VALUES ('date');
 INSERT INTO relations VALUES ('grandmother');
 
+-- source/deaths/target -> source/character/target (same datasource)
+
+INSERT OR IGNORE INTO triples
+SELECT source,'character',target,datasource FROM triples WHERE k='character';
+
+-- source/(social relation)/target means both source and target
+-- "appear in" datasource
+
+SELECT datasource, 'character', source FROM triples WHERE 
+ k IN (SELECT * FROM relations);
+
+SELECT datasource, 'character', target FROM triples WHERE 
+ k IN (SELECT * FROM relations);
+
+
+
+
+
+
+
+
+
 -- class determination
 
 -- if source/character/target target is a character
