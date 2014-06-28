@@ -634,16 +634,27 @@ MARK
 }
 
 
-# convert things like
-# 2013-04-17-2013-04-19,2013-04-22,2013-04-23,2013-04-30,2013-05-01,2013-05-06-2013-05-08,2013-05-13-2013-05-15,2013-05-20-2013-05-22,2013-05-24,2013-05-29
-# to a list of source pages
-sub parse_source {
+=item parse_date_list($string)
+
+TODO: move this to bclib
+
+Given a string like "2013-04-17-2013-04-19, 2013-04-22, 2013-04-23,
+2013-04-30, 2013-05-01, 2013-05-06-2013-05-08, 2013-05-13-2013-05-15,
+2013-05-20-2013-05-22, 2013-05-24, 2013-05-29", return a list of dates.
+
+= cut
+
+sub parse_date_list {
   my($source) = @_;
   my(@ret);
 
   for $i (split(/\,/,$source)) {
     # if source is date range (2002-06-03-2002-06-07), parse further
     if ($i=~/^(\d{4}-\d{2}-\d{2})\-(\d{4}-\d{2}-\d{2})$/) {
+  for $j (str2time($st)/86400..str2time($en)/86400) {
+    push(@ret, strftime("%Y-%m-%d", gmtime($j*86400)));
+  }
+
       push(@ret, parse_date_range($1,$2));
     } else {
       push(@ret, $i);
