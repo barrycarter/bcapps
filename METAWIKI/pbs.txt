@@ -2128,3 +2128,10 @@ undies != underwear, so maybe un-dies? (using rebirth)
 # guard duck and maura storyline is seriously incomplete
 
 # maybe no appearances section if only 1 appearance?
+
+# character list characters should open in new window
+
+# character list heads should read "number appearances, etc"
+
+# character list should include profession and maybe a few other fields
+
