@@ -842,7 +842,7 @@ MULTIREF [[title::Rat's guilt]] [[notes::On [[2014-06-09]], Rat says he feels gu
 2008-02-18 [[Max (lion)+Zach (lion)::wife::Gigi (lion)+Kiki (lion)]] [[Gigi (lion)+Kiki (lion)::notes::The [[2008-02-18]] strip notes that both Max and Zach "hookup" with both Gigi and Kiki, so I'm assuming lions are bigamous, and that the "new wives" described on [[2008-02-19]] are wives of both male lions]]
 2008-02-26 [[antelope_deaths::#1]]
 2008-03-03,2008-03-04,2008-03-07,2008-03-11,2008-03-12,2008-03-14,2008-03-26-2008-03-28,2008-04-14,2008-04-15,2008-04-19 [[storyline::[[character::Rat]] works as a concierge]]
-2008-02-25,2008-02-26,2008-03-10,2008-03-06,2008-03-10 [[character::Hy 1 (hyena) + Hy 2 (hyena)+Zebra]] [[Hyenas+Hy 1 (hyena)+Hy 2 (hyena)::notes::Zebra's neighboring hyenas, Hy 1 and Hy 2, should not be confused with the remote hyenas that Zebra has never met in person]]
+2008-02-25,2008-02-26,2008-03-10,2008-03-06,2008-03-10 [[character::Hy 1 (hyena) +Hy 2 (hyena)+Zebra]] [[Hyenas+Hy 1 (hyena)+Hy 2 (hyena)::notes::Zebra's neighboring hyenas, Hy 1 and Hy 2, should not be confused with the remote hyenas that Zebra has never met in person]]
 2008-03-05 [[character::Pig+Zebra+Hy 1 (hyena)+Hy 2 (hyena)]]
 2008-03-16 [[crocodile_deaths::#1]]
 2008-03-26 [[cameo::Darryl MacPherson]]

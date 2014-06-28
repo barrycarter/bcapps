@@ -8,13 +8,38 @@ require "/usr/local/lib/bclib.pl";
 
 my($metadir) = "/home/barrycarter/BCGIT/METAWIKI";
 
+# debug(unfold(parse_semantic("2003-12-14", "[[character::Whale 20031214 (whale)+[[deaths::Skippy (seal)]]]] [[Whale 20031214 (whale)+Whale::notes::Assuming the whales from [[2003-12-14]] and [[2005-12-13]] are different]]")));
+
+my(@triples);
 for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
   # TODO: multirefs!
   # below allows for multiple dates
   unless ($i=~/^([\d\-,]+)\s+(.*)$/) {next;}
-  debug("I: $i");
-  parse_semantic($1, $2);
+  push(@triples, parse_semantic($1, $2));
 }
+
+# once again excessively terse
+  open(A,"|tee /tmp/triples2.txt|sqlite3 /usr/local/etc/metawiki/pbs/pbs-triples.db 1>/tmp/pbs2-myout.txt 2>/tmp/pbs2-myerr.txt");
+  # open(A,">/tmp/mysql.txt");
+  print A << "MARK";
+DROP TABLE IF EXISTS triples;
+CREATE TABLE triples (source, k, target, datasource);
+CREATE INDEX i1 ON triples(source);
+CREATE INDEX i2 ON triples(k);
+CREATE INDEX i3 ON triples(target);
+-- prevent duplicates, which lets me be sloppy w cleanup queries
+CREATE UNIQUE INDEX i4 ON triples(source,k,target);
+BEGIN;
+MARK
+;
+
+for $i (@triples) {
+  for $j (@$i) {$j=~s/\'/&\#39;/g; $j="'$j'";}
+  print A "INSERT OR IGNORE INTO triples VALUES (",join(", ",@$i),");\n";
+}
+
+print A "COMMIT;\n";
+close(A);
 
 =item parse_semantic($dates, $string)
 
@@ -30,55 +55,59 @@ and return a list of triples and strings
 Details:
 
 [[x::y]] - return triple [$dates,x,y] and string [[y]]
-[[x::y|z]] return triple [$dates,x,y] and string [[y|z]]
 [[x::y::z]] - return triple [$x,$y,$z] and string [[z]]
-[[x::y::z|w]] - return triple [$x,$y,$z] and string [[z|w]]
 
 In ALL cases, return "source=$dates" as the 4th parameter
+
+NOTE: Alternation (the value of y or z being "foo|bar") is handled
+automatically
+
+TODO: if last parameter has plusses, it cannot be used by other triples
 
 =cut
 
 sub parse_semantic {
   my($dates, $string) = @_;
-
-  # list of lists I will need to handle a+b+c and so on
-  my(@lol);
+  my(@lol); # the return value
 
   # parse the dates and put them in the same "+" format I use for other lists
   $dates = join("+",parse_date_list($dates));
 
   # temporarily replace colonless [[foo]] to avoid parsing issues
   $string=~s/\[\[([^:\[\]]+)\]\]/\001$1\002/g;
-  debug("POST: $string");
+  debug("ALPHA: $string");
 
   # parse anything with double colons (\001 is a marker to replace later)
-#  while ($string=~s/\[\[([^\[\]]+?::[\[\]]+?)\]\]/\003/) {
   while ($string=~s/\[\[([^\[\]]+?::[^\[\]]+?)\]\]/\003/) {
     # determine the source, relation, and target
     my(@l) = split(/::/, $1);
     # if only two long, date is the implicit first parameter
     if (scalar @l == 2) {unshift(@l, $dates);}
-    debug("PRESPLIT: ".join(", ",@l));
 
+    debug("BETA",@l);
     # each element of @l can have +s
     for $i (split(/\+/, $l[0])) {
       for $j (split(/\+/, $l[1])) {
 	for $k (split(/\+/, $l[2])) {
 	  # restore thing we changed earlier, but wo brackets
-	  $string=~s/\003/\001$k\002/;
+	  debug("GAMMA: $string");
+	  $string=~s/\003/$k/;
+	  debug("DELTA: $string");
 	  # restore brackets to $k
 	  $k=~s/\001/[[/g;
 	  $k=~s/\002/]]/g;
-	  debug("TRIP: $i,$j,$k");
-	  # the last element is the only one that can have "|"
-#	  $k=~s/^.*?\|//;
-	  # replace the \003 we created earlier
+	  # if $i is itself a date, no need to add dates
+	  if ($i=~/^\d{4}\-\d{2}\-\d{2}$/) {
+	    push(@lol, [$i,$j,$k,"SELF"]);
+	  } else {
+	    push(@lol, [$i,$j,$k,$dates]);
+	  }
 	  # TODO: this won't work if $k has plusses, undefined behavior
 	}
       }
     }
   }
-  debug("STRING (after while): $string");
+  return @lol;
 }
 
 =item parse_date_list($string)
@@ -107,4 +136,3 @@ sub parse_date_list {
   }
   return @ret;
 }
-

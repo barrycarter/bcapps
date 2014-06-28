@@ -1,5 +1,59 @@
 -- Miscellaneous helpful SQLite3 queries on /tmp/pbs-triples.db
 
+-- List of mathematical relations that are considered "social
+-- relations", meaning that both sides of the relation are
+-- characters. Only need this temporarily
+
+CREATE TEMPORARY TABLE relations (relation);
+
+INSERT INTO relations VALUES ('cousin');
+INSERT INTO relations VALUES ('uncle');
+INSERT INTO relations VALUES ('aunt');
+INSERT INTO relations VALUES ('husband');
+INSERT INTO relations VALUES ('brother');
+INSERT INTO relations VALUES ('ex-husband');
+INSERT INTO relations VALUES ('grandfather');
+INSERT INTO relations VALUES ('mother');
+INSERT INTO relations VALUES ('niece');
+INSERT INTO relations VALUES ('sister');
+INSERT INTO relations VALUES ('son');
+INSERT INTO relations VALUES ('wife');
+INSERT INTO relations VALUES ('neighbor');
+INSERT INTO relations VALUES ('girlfriend');
+INSERT INTO relations VALUES ('boss');
+INSERT INTO relations VALUES ('friend');
+INSERT INTO relations VALUES ('father');
+INSERT INTO relations VALUES ('half-brother');
+INSERT INTO relations VALUES ('pet');
+INSERT INTO relations VALUES ('roommate');
+INSERT INTO relations VALUES ('date');
+INSERT INTO relations VALUES ('grandmother');
+
+-- class determination
+
+-- if source/character/target target is a character
+
+INSERT OR IGNORE INTO triples
+SELECT target, 'class', 'character', '' FROM triples WHERE k = 'character';
+
+-- if source/(social relation)/target both source/target are characters
+
+INSERT OR IGNORE INTO triples
+SELECT target, 'class', 'character', '' FROM triples WHERE k IN
+ (SELECT * FROM relations);
+
+INSERT OR IGNORE INTO triples
+SELECT source, 'class', 'character', '' FROM triples WHERE k IN
+ (SELECT * FROM relations);
+
+
+
+
+
+
+
+
+
 -- all strips where Rat appears; the inverse of this (via fgrep -vf) =
 -- where Rat does not appear, or, more likely, where I haven't created a
 -- character list yet
