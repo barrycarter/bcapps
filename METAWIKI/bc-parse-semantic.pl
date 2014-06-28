@@ -11,14 +11,10 @@ my($metadir) = "/home/barrycarter/BCGIT/METAWIKI";
 for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
   # TODO: multirefs!
   # below allows for multiple dates
-  unless ($i=~/^([\d\-,]+)\s+(.*?)/) {next;}
+  unless ($i=~/^([\d\-,]+)\s+(.*)$/) {next;}
   debug("I: $i");
   parse_semantic($1, $2);
 }
-
-# debug("DATA",@data);
-
-die "TESTING";
 
 =item parse_semantic($dates, $string)
 
@@ -58,13 +54,40 @@ sub parse_semantic {
   # parse anything with double colons (\001 is a marker to replace later)
 #  while ($string=~s/\[\[([^\[\]]+?::[\[\]]+?)\]\]/\003/) {
   while ($string=~s/\[\[([^\[\]]+?::[^\[\]]+?)\]\]/\003/) {
+    debug("STRING TOP: $string");
     # determine the source, relation, and target
     my(@l) = split(/::/, $1);
     # if only two long, date is the implicit first parameter
     if (scalar @l == 2) {unshift(@l, $dates);}
-    debug("TRIP: ".join(", ",@l));
-  }
+    debug("PRESPLIT: ".join(", ",@l));
 
+    # each element of @l can have +s
+    for $i (split(/\+/, $l[0])) {
+      for $j (split(/\+/, $l[1])) {
+	for $k (split(/\+/, $l[2])) {
+	  # restore brackets to $k
+	  $k=~s/\001/[[/g;
+	  $k=~s/\002/]]/g;
+	  debug("TRIP: $i,$j,$k");
+	  # the last element is the only one that can have "|"
+#	  $k=~s/^.*?\|//;
+	  # replace the \003 we created earlier
+	  # TODO: this won't work if $k has plusses, undefined behavior
+	  debug("ALPHA: $string vs $k");
+	  $string=~s/\003/[[$k]]/;
+	  debug("BETA: $string vs $k");
+	  # and the brackets
+	  $string=~s/\001/[/g;
+	  $string=~s/\002/]/g;
+	  debug("STRING BOT (IN $i/$j/$k): $string");
+	}
+	debug("STRING BOT (end $i/$j): $string");
+      }
+      debug("STRING BOT (end $i): $string");
+    }
+    debug("STRING BOT (end all): $string");
+  }
+  debug("STRING (after while): $string");
 }
 
 =item parse_date_list($string)
@@ -84,7 +107,7 @@ sub parse_date_list {
   for $i (split(/\,/,$datelist)) {
     # if datelist is date range (2002-06-03-2002-06-07), parse further
     if ($i=~/^(\d{4}-\d{2}-\d{2})\-(\d{4}-\d{2}-\d{2})$/) {
-      for $j (str2time($st)/86400..str2time($en)/86400) {
+      for $j (str2time($1)/86400..str2time($2)/86400) {
 	push(@ret, strftime("%Y-%m-%d", gmtime($j*86400)));
       }
     } else {
