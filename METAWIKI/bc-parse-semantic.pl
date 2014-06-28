@@ -10,6 +10,10 @@ my($metadir) = "/home/barrycarter/BCGIT/METAWIKI";
 
 # debug(unfold(parse_semantic("2003-12-14", "[[character::Whale 20031214 (whale)+[[deaths::Skippy (seal)]]]] [[Whale 20031214 (whale)+Whale::notes::Assuming the whales from [[2003-12-14]] and [[2005-12-13]] are different]]")));
 
+# debug(unfold(parse_semantic("2003-12-14-2004-01-14", "[[character::Bob+[[Bob::cousin::Lou]]]]")));
+
+# die "TESTING";
+
 my(@triples);
 for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
   # TODO: multirefs!
@@ -71,7 +75,10 @@ sub parse_semantic {
   my(@lol); # the return value
 
   # parse the dates and put them in the same "+" format I use for other lists
-  $dates = join("+",parse_date_list($dates));
+  # hash lets me check for non-date annotations
+  my(@dates) = parse_date_list($dates);
+  my(%dates) = list2hash(@dates);
+  $dates = join("+",@dates);
 
   # temporarily replace colonless [[foo]] to avoid parsing issues
   $string=~s/\[\[([^:\[\]]+)\]\]/\001$1\002/g;
@@ -89,6 +96,11 @@ sub parse_semantic {
     for $i (split(/\+/, $l[0])) {
       for $j (split(/\+/, $l[1])) {
 	for $k (split(/\+/, $l[2])) {
+	  # multiple dates for a non-date annotation (non-self-anno)
+	  if (!$dates{$i} && scalar(@dates)>1) {
+	    warn("MULTIPLY SOURCED NON-DATE ANNO: $i/$j/$k/$dates");
+	  }
+	  debug("TRIPLE: $i/$j/$k/$dates");
 	  # restore thing we changed earlier, but wo brackets
 #	  debug("GAMMA: $string");
 	  $string=~s/\003/$k/;
