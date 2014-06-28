@@ -22,6 +22,21 @@ for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
   push(@triples, parse_semantic($1, $2));
 }
 
+# load meta data (TODO: this is cheating, only one section so far)
+for $i (`egrep -v '<|#|^\$' pbs-meta.txt`) {
+  chomp($i);
+  my(@data) = split(/\, /, $i);
+  $meta{$data[0]} = [@data];
+}
+
+# additional triples based on meta information
+for $i (@triples) {
+  my($source, $k, $target, $datasource) = @$i;
+  unless ($meta{$k}) {warn "NO MAPPING FOR $k!"; next;}
+}
+
+die "TESTING";
+
 # once again excessively terse
   open(A,"|tee /tmp/triples2.txt|sqlite3 /usr/local/etc/metawiki/pbs/pbs-triples.db 1>/tmp/pbs2-myout.txt 2>/tmp/pbs2-myerr.txt");
   # open(A,">/tmp/mysql.txt");
@@ -31,8 +46,9 @@ CREATE TABLE triples (source, k, target, datasource);
 CREATE INDEX i1 ON triples(source);
 CREATE INDEX i2 ON triples(k);
 CREATE INDEX i3 ON triples(target);
+CREATE INDEX i4 ON triples(datasource);
 -- prevent duplicates, which lets me be sloppy w cleanup queries
-CREATE UNIQUE INDEX i4 ON triples(source,k,target);
+CREATE UNIQUE INDEX i5 ON triples(source,k,target,datasource);
 BEGIN;
 MARK
 ;
@@ -96,11 +112,7 @@ sub parse_semantic {
     for $i (split(/\+/, $l[0])) {
       for $j (split(/\+/, $l[1])) {
 	for $k (split(/\+/, $l[2])) {
-	  # multiple dates for a non-date annotation (non-self-anno)
-	  if (!$dates{$i} && scalar(@dates)>1) {
-	    warn("MULTIPLY SOURCED NON-DATE ANNO: $i/$j/$k/$dates");
-	  }
-	  debug("TRIPLE: $i/$j/$k/$dates");
+#	  debug("TRIPLE: $i/$j/$k/$dates");
 	  # restore thing we changed earlier, but wo brackets
 #	  debug("GAMMA: $string");
 	  $string=~s/\003/$k/;
@@ -108,13 +120,14 @@ sub parse_semantic {
 	  # restore brackets to $k
 	  $k=~s/\001/[[/g;
 	  $k=~s/\002/]]/g;
-	  # if $i is itself a date, no need to add dates
-	  if ($i=~/^\d{4}\-\d{2}\-\d{2}$/) {
-	    push(@lol, [$i,$j,$k,"SELF"]);
-	  } else {
-	    push(@lol, [$i,$j,$k,$dates]);
+	  # if $i is one of the dates source is "SELF"
+	  for $l (@dates) {
+	    if ($dates{$i}) {
+	      push(@lol, [$i,$j,$k,"SELF"]);
+	    } else {
+	      push(@lol, [$i,$j,$k,$l]);
+	    }
 	  }
-	  # TODO: this won't work if $k has plusses, undefined behavior
 	}
       }
     }

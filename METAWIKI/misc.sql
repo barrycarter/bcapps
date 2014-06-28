@@ -28,19 +28,27 @@ INSERT INTO relations VALUES ('pet');
 INSERT INTO relations VALUES ('roommate');
 INSERT INTO relations VALUES ('date');
 INSERT INTO relations VALUES ('grandmother');
+INSERT INTO relations VALUES ('boyfriend');
+INSERT INTO relations VALUES ('coworker');
+INSERT INTO relations VALUES ('fires');
+INSERT INTO relations VALUES ('kills');
 
 -- source/deaths/target -> source/character/target (same datasource)
 
 INSERT OR IGNORE INTO triples
-SELECT source,'character',target,datasource FROM triples WHERE k='character';
+SELECT source,'character',target,datasource FROM triples WHERE 
+ k IN ('deaths', 'birthday', 
 
 -- source/(social relation)/target means both source and target
 -- "appear in" datasource
 
-SELECT datasource, 'character', source FROM triples WHERE 
- k IN (SELECT * FROM relations);
+INSERT OR IGNORE INTO triples
+SELECT datasource, 'character', source, 'RELATION' FROM triples WHERE 
+ k IN (SELECT * FROM relations) 
+ OR k IN ('profession', 'species', 'subspecies');
 
-SELECT datasource, 'character', target FROM triples WHERE 
+INSERT OR IGNORE INTO triples
+SELECT datasource, 'character', target, 'RELATION' FROM triples WHERE 
  k IN (SELECT * FROM relations);
 
 
