@@ -8,99 +8,64 @@ require "/usr/local/lib/bclib.pl";
 
 my($metadir) = "/home/barrycarter/BCGIT/METAWIKI";
 
-my(@data) = `cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`;
+for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
+  # TODO: multirefs!
+  # below allows for multiple dates
+  unless ($i=~/^([\d\-,]+)\s+(.*?)/) {next;}
+  debug("I: $i");
+  parse_semantic($1, $2);
+}
 
-debug("DATA",@data);
+# debug("DATA",@data);
 
 die "TESTING";
 
-=item parse_semantic($source, $string)
+=item parse_semantic($dates, $string)
 
-Given a $source of data and a string like "[[x::y]]" (with several
+Given $dates and a string like "[[x::y]]" (with several
 variants), return semantic triples (including a 4th 'extra' field to
 represent Semantic Internal Objects) and a string.
 
-$string may have nested "[[x::y]]" constructions ($source, however, may not)
+$string may have nested "[[x::y]]" constructions ($dates, however, may not)
 
 Plus signs like [[x+y::...]] are treated like [[x::...]], [[y::...]]
 and return a list of triples and strings
 
 Details:
 
-[[x::y]] - return triple [$source,x,y] and string [[y]]
-[[x::y|z]] return triple [$source,x,y] and string [[y|z]]
+[[x::y]] - return triple [$dates,x,y] and string [[y]]
+[[x::y|z]] return triple [$dates,x,y] and string [[y|z]]
 [[x::y::z]] - return triple [$x,$y,$z] and string [[z]]
 [[x::y::z|w]] - return triple [$x,$y,$z] and string [[z|w]]
 
-In ALL cases, return "source=$source" as the 4th parameter
+In ALL cases, return "source=$dates" as the 4th parameter
 
 =cut
 
 sub parse_semantic {
-  my($source, $string) = @_;
+  my($dates, $string) = @_;
 
   # list of lists I will need to handle a+b+c and so on
   my(@lol);
-  # hash to hold print val of x
-  my(%pval);
 
-  # parse the dates
-  my(@dates) = parse_date_list($source);
+  # parse the dates and put them in the same "+" format I use for other lists
+  $dates = join("+",parse_date_list($dates));
 
-  # parse "[[...::...::...]]" (two sets of double colons)
-  while ($string=~s/\[\[(.*?)::(.*?)::(.*?)\]\]//) {
-    debug("GOT: $1");
+  # temporarily replace colonless [[foo]] to avoid parsing issues
+  $string=~s/\[\[([^:\[\]]+)\]\]/\001$1\002/g;
+  debug("POST: $string");
+
+  # parse anything with double colons (\001 is a marker to replace later)
+#  while ($string=~s/\[\[([^\[\]]+?::[\[\]]+?)\]\]/\003/) {
+  while ($string=~s/\[\[([^\[\]]+?::[^\[\]]+?)\]\]/\003/) {
+    # determine the source, relation, and target
+    my(@l) = split(/::/, $1);
+    # if only two long, date is the implicit first parameter
+    if (scalar @l == 2) {unshift(@l, $dates);}
+    debug("TRIP: ".join(", ",@l));
   }
 
 }
-
-=item comment
-
-COMMENTED OUT CODE
-    # split on double colons
-    my(@list) = split(/::/, $string);
-
-    # each key/val can be multivalued, so create list of lists
-    map(push(@lol, [split(/\+/,$_)]), @list);
-
-    # print val of each element (same as element except with |)
-    for $i (@list) {
-    if ($i=~s/\|(.*)$//) {$pval{$i} = $1;} else {$pval{$i} = $i;}
-  }
-
-  # one double colon? create semantic triple [$source,$key,$val] allowing for |
-  if (scalar @list == 2) {
-    for $i (@{$lol[0]}) {
-      for $j (@{$lol[1]}) {
-	for $k (@dates) {
-	  # TODO: currently, a GLOBAL hash to hold triples
-	  $triples{$k}{$i}{$j}=1;
-	}
-      }
-    }
-#    return "\001$pval{$list[1]}\002";
-    return $pval{$list[1]};
-  }
-
-  # only remaining legit case
-  if (scalar @list == 3) {
-    for $i (@{$lol[0]}) {
-      for $j (@{$lol[1]}) {
-	for $k (@{$lol[2]}) {
-	  for $l (@dates) {
-	    # TODO: currently, a GLOBAL hash to hold triples
-	    $triples{$i}{$j}{$k}=1;
-	    $triples{"$i~$j~$k"}{"source"}{$l} = 1;
-	  }
-	}
-      }
-    }
-#    return "\001$pval{$list[2]}\002";
-    return $pval{$list[2]};
-  }
-}
-
-=cut
 
 =item parse_date_list($string)
 
@@ -110,14 +75,14 @@ Given a string like "2013-04-17-2013-04-19, 2013-04-22, 2013-04-23,
 2013-04-30, 2013-05-01, 2013-05-06-2013-05-08, 2013-05-13-2013-05-15,
 2013-05-20-2013-05-22, 2013-05-24, 2013-05-29", return a list of dates.
 
-= cut
+=cut
 
 sub parse_date_list {
-  my($source) = @_;
+  my($datelist) = @_;
   my(@ret);
 
-  for $i (split(/\,/,$source)) {
-    # if source is date range (2002-06-03-2002-06-07), parse further
+  for $i (split(/\,/,$datelist)) {
+    # if datelist is date range (2002-06-03-2002-06-07), parse further
     if ($i=~/^(\d{4}-\d{2}-\d{2})\-(\d{4}-\d{2}-\d{2})$/) {
       for $j (str2time($st)/86400..str2time($en)/86400) {
 	push(@ret, strftime("%Y-%m-%d", gmtime($j*86400)));
@@ -128,3 +93,4 @@ sub parse_date_list {
   }
   return @ret;
 }
+
