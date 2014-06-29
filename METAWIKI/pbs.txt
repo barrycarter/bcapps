@@ -2135,3 +2135,4 @@ undies != underwear, so maybe un-dies? (using rebirth)
 
 # character list should include profession and maybe a few other fields
 
+# genders for all characters just to make relations work out?

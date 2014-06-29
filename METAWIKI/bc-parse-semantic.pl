@@ -14,28 +14,71 @@ my($metadir) = "/home/barrycarter/BCGIT/METAWIKI";
 
 # die "TESTING";
 
-my(@triples);
+# load meta data (TODO: this is cheating, only one section so far)
+for $i (`egrep -v '^<|^#|^\$' $metadir/pbs-meta.txt`) {
+  chomp($i);
+  my(@data) = split(/\,\s*/, $i);
+  $meta{$data[0]} = [@data];
+  unless (scalar @data == 4) {warn "LINE HAS !=4 elts: $i";}
+}
+
+my(%triples);
+
+# imagehashes
+for $i (split(/\n/, read_file("largeimagelinks.txt"))) {
+  $i=~s/^(.*?)\s+.*?\/([0-9a-f]+)\?.*$//;
+  my($strip, $hash) = ($1, $2);
+  $triples{$strip}{hash}{$hash}{largeimagelinks} = 1;
+  $triples{strip}{class_member}{$strip}{largeimagelinks} = 1;
+}
+
 for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
   # TODO: multirefs!
   # below allows for multiple dates
   unless ($i=~/^([\d\-,]+)\s+(.*)$/) {next;}
-  push(@triples, parse_semantic($1, $2));
+
+  # create hash from triples
+  for $j (parse_semantic($1, $2)) {
+    map(s/\'/&\#39;/g, @$j);
+    my($source, $k, $target, $datasource) = @$j;
+    # the hash of triples
+    $triples{$source}{$k}{$target}{$datasource} = 1;
+
+    # determine relation type
+    unless ($meta{$k}) {warn "NO MAPPING FOR: $k"; next;}
+    my($for, $rev, $stype, $ttype) = @{$meta{$k}};
+
+    # classes for source and target...
+    $triples{$stype}{class_member}{$source}{RELATION} = 1;
+    $triples{$ttype}{class_member}{$target}{RELATION} = 1;
+
+    # for character to character relations...
+    if ($stype eq "character" && $ttype eq "character") {
+
+      # delete the original relation (we'll never use it)
+      delete $triples{$source}{$k}{$target}{$datasource};
+
+      # create this as a 2 directional relation for both characters
+      $triples{$source}{relative}{"$target ($for)"} = 1;
+      $triples{$target}{relative}{"$source ($rev)"} = 1;
+
+      # both characters are considered to "appear in" this strip
+      $triples{$datasource}{character}{$source} = 1;
+      $triples{$datasource}{character}{$target} = 1;
+
+      next;
+    }
+
+    # if either one is a character... (do this and keep going)
+    if ($stype eq "character") {$triples{$datasource}{character}{$source} = 1;}
+    if ($ttype eq "character") {$triples{$datasource}{character}{$target} = 1;}
+
+  }
 }
 
-# load meta data (TODO: this is cheating, only one section so far)
-for $i (`egrep -v '<|#|^\$' pbs-meta.txt`) {
-  chomp($i);
-  my(@data) = split(/\, /, $i);
-  $meta{$data[0]} = [@data];
-}
-
-# additional triples based on meta information
-for $i (@triples) {
-  my($source, $k, $target, $datasource) = @$i;
-  unless ($meta{$k}) {warn "NO MAPPING FOR $k!"; next;}
-}
-
-die "TESTING";
+# "string" and "*" are useless types
+delete $triples{string};
+delete $triples{"*"};
 
 # once again excessively terse
   open(A,"|tee /tmp/triples2.txt|sqlite3 /usr/local/etc/metawiki/pbs/pbs-triples.db 1>/tmp/pbs2-myout.txt 2>/tmp/pbs2-myerr.txt");
@@ -53,9 +96,14 @@ BEGIN;
 MARK
 ;
 
-for $i (@triples) {
-  for $j (@$i) {$j=~s/\'/&\#39;/g; $j="'$j'";}
-  print A "INSERT OR IGNORE INTO triples VALUES (",join(", ",@$i),");\n";
+for $i (sort keys %triples) {
+  for $j (sort keys %{$triples{$i}}) {
+    for $k (sort keys %{$triples{$i}{$j}}) {
+      for $l (sort keys %{$triples{$i}{$j}{$k}}) {
+	print A "INSERT OR IGNORE INTO triples VALUES('$i','$j','$k','$l');\n";
+      }
+    }
+  }
 }
 
 print A "COMMIT;\n";

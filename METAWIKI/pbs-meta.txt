@@ -6,62 +6,65 @@
 # Dilbert. Further if [[x::boss::y]], both x and y must be characters
 
 # the character:character relations (most common type)
-aunt, has_aunt, aunt_of, character, character
-boss, employee_of, boss_of, character, character
-boyfriend, has_boyfriend, has_girlfriend, character, character
-brother, has_brother, has_sibling, character, character
-cousin, has_cousin, has_cousin, character, character
-coworker, has_coworker, has_coworker, character, character
-date, dates, dates, character, character
-ex-husband, had_husband, had_wife, character, character
-father, has_father, has_child, character, character
-fires, fires, fired_by, character, character
-friend, has_friend, has_friend, character, character
-girlfriend, has_girlfriend, has_boyfriend, character, character
-grandfather, has_grandfather, has_grandchild, character, character
-grandmother, has_grandmother, has_grandchild, character, character
-half-brother, has_half_brother, has_half_sibling, character, character
-husband, has_husband, has_wife, character, character
-kills, kills, killed_by, character, character
-mother, has_mother, has_child, character, character
-neighbor, has_neighbor, has_neighbor, character, character
-niece, has_niece, niece_of, character, character
-pet, has_pet, pet_of, character, character
-roommate, has_roommate, has_roommate, character, character
-sister, has_sister, has_sibling, character, character
-son, has_son, has_parent, character, character
-uncle, has_uncle, uncle_of, character, character
-wife, has_wife, has_husband, character, character
+# the reverse terms are male/female/neuter
+aunt, nephew/niece/nibling, character, character
+uncle, nephew/niece/nibling, character, character
+boss, employee, character, character
+boyfriend, girlfriend, character, character
+brother, brother/sister/sibling, character, character
+sister, brother/sister/sibling, character, character
+cousin, cousin, character, character
+coworker, coworker, character, character
+date, date, character, character
+ex-husband, ex-wife, character, character
+father, son/daughter/child, character, character
+mother, son/daughter/child, character, character
+# fires, fires, fired_by, character, character
+friend, friend, character, character
+girlfriend, boyfriend, character, character
+grandfather, grandson/granddaughter/grandchild, character, character
+grandmother, grandson/granddaughter/grandchild, character, character
+half-brother, half-brother/half-sister/half-sibling, character, character
+husband, wife, character, character
+# kills, kills, killed_by, character, character
+neighbor, neighbor, character, character
+niece, uncle/aunt/pibling, character, character
+pet, master, character, character
+roommate, roommate, character, character
+son, father/mother/parent, character, character
+wife, husband, character, character
 
 # other relations
 # * = any type
 # string = plain text string, not an entity
 
-aka, alias, canon, character, alias
-character, has_character, appears_in, strip, character
-deaths, has_death, dies_on, strip, character
-location, has_location, has_resident, *, location
-member, member_of, has_member, *, group
-members, has_member, member_of, group, *
-newspaper_mentions, mentions_paper, mentioned_on, strip, newspaper
-orientation, has_sexual_orientation, has_member, character, orientation
-profession, has_profession, has_member, character, profession
-rebirths, has_undeath, un_dies_on, strip, character
-religion, has_religion, has_follower, character, religion
-species, has_species, has_member, character, species
-storyline, in_storyline, has_strip, strip, storyline
-subspecies, has_subspecies, has_member, character, subspecies
+# we don't use the reverse relations here so I leave them blank
+
+aka, , character, alias
+character, , strip, character
+deaths, , strip, character
+location, , *, location
+member, , *, group
+members, , group, *
+newspaper_mentions, , strip, newspaper
+orientation, , character, string
+profession, , character, string
+rebirths, , strip, character
+religion, , character, string
+species, , character, string
+storyline, , strip, storyline
+subspecies, , character, string
 # birthday = anniversary of birth, so caution
-birthday, has_birthday, birthday_is, strip, character
+birthday, , strip, character
 
-notes, has_notes, applies_to, *, string
-description, has_description, applies_to, *, string
-event, has_event, occurs_on, strip, string
+notes, , *, string
+description, , *, string
+event, , strip, string
 
-category, has_category, has_strip, *, string
-meta, has_meta, applies_to, *, string
+category, , *, string
+meta, , *, string
 
 # are cameos actually characters?
-cameo, has_cameo, appears_in, strip, string
+cameo, , strip, character
 
 </relations>
