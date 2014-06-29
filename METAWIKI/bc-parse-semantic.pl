@@ -23,13 +23,14 @@ for $i (`egrep -v '^<|^#|^\$' $metadir/pbs-meta.txt`) {
 }
 
 my(%triples);
+my(%queries);
 
 # imagehashes
 for $i (split(/\n/, read_file("largeimagelinks.txt"))) {
   $i=~s/^(.*?)\s+.*?\/([0-9a-f]+)\?.*$//;
   my($strip, $hash) = ($1, $2);
   $triples{$strip}{hash}{$hash}{largeimagelinks} = 1;
-  $triples{strip}{class_member}{$strip}{largeimagelinks} = 1;
+  $triples{$strip}{class}{strip}{largeimagelinks} = 1;
 }
 
 for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
@@ -49,8 +50,8 @@ for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
     my($for, $rev, $stype, $ttype) = @{$meta{$k}};
 
     # classes for source and target...
-    $triples{$stype}{class_member}{$source}{RELATION} = 1;
-    $triples{$ttype}{class_member}{$target}{RELATION} = 1;
+    $triples{$source}{class}{$stype}{RELATION} = 1;
+    $triples{$target}{class}{$ttype}{RELATION} = 1;
 
     # for character to character relations...
     if ($stype eq "character" && $ttype eq "character") {
@@ -72,6 +73,26 @@ for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
     # if either one is a character... (do this and keep going)
     if ($stype eq "character") {$triples{$datasource}{character}{$source} = 1;}
     if ($ttype eq "character") {$triples{$datasource}{character}{$target} = 1;}
+
+    # for aliases, canonize
+    if ($k eq "aka") {
+      # queries to normalize source/target
+      my($queries) = << "MARK";
+UPDATE OR IGNORE triples SET source='$source' WHERE source='$target'
+AND NOT (k='class' AND target='alias');
+
+DELETE FROM triples WHERE source='$target'
+ AND NOT (k='class' AND target='alias');
+
+UPDATE OR IGNORE
+ triples SET target='$source' WHERE target='$target' AND k NOT IN ('aka');
+
+DELETE FROM triples WHERE target='$target' AND k NOT IN ('aka');
+MARK
+;
+      $queries{$queries} = 1;
+      next;
+    }
 
   }
 }
@@ -104,6 +125,14 @@ for $i (sort keys %triples) {
       }
     }
   }
+}
+
+# commit queries above and start new batch
+print A "COMMIT;\nBEGIN;";
+
+# the queries from the parsing
+for $i (keys %queries) {
+  print A $i;
 }
 
 print A "COMMIT;\n";
