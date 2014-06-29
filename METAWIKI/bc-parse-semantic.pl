@@ -56,12 +56,34 @@ for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
     $triples{$source}{$k}{$target} = $datasource;
 
     # determine relation type
-    unless ($meta{$k}) {warn "NO MAPPING FOR: $k"; next;}
-    my($for, $rev, $stype, $ttype) = @{$meta{$k}};
+    my($for, $rev, $stype, $ttype) = ("?", "?", "?", "?");
+    if ($meta{$k}) {($for, $rev, $stype, $ttype) = @{$meta{$k}};}
 
     # classes for source and target...
     $triples{$source}{class}{$stype} = "$datasource (source of $k)";
     $triples{$target}{class}{$ttype} = "$datasource (target of $k)";
+
+    # special things for characters
+    # TODO: for $ttype too!
+    if ($stype eq "character") {
+
+      # the character appears in $datasource
+      $triples{$datasource}{character}{$source} = "$datasource ($k imply)";
+
+      # if the character has parens in name and no species...
+      if (!(exists $triples{$source}{species}) && $source=~/\((.*?)\)$/) {
+	$triples{$source}{species}{$1} = "NAME2SPECIES";
+      }
+
+      # if the character has a "date like" name, give him alias
+      if ($source=~/^(.*?) (\d{8}) \((.*?)\)/) {
+	my($name, $date, $species) = ($1, $2, $3);
+	# how many times have we seen this name/species combo?
+	$triples{$source}{aka}{"$name ($species) #".++$times{$name}{$species}} = "NAME2NUMBER";
+      }
+    }
+
+    # TODO: below is now semi-messed up
 
     # for character to character relations...
     if ($stype eq "character" && $ttype eq "character") {
@@ -81,9 +103,6 @@ for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
     }
 
     # if either one is a character... (do this and keep going)
-    if ($stype eq "character") {
-      $triples{$datasource}{character}{$source} = "$datasource ($k imply)";
-    }
     if ($ttype eq "character") {
       $triples{$datasource}{character}{$target} = "$datasource ($k imply)";
     }
@@ -154,6 +173,8 @@ print A "COMMIT;\n";
 print A "DELETE FROM triples WHERE k='class' AND target IN ('*', 'string');\n";
 
 close(A);
+
+die "TESTING";
 
 # write some other ANNOS
 my($query) = << "MARK";

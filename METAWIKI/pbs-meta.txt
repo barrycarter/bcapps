@@ -33,6 +33,9 @@ pet, master, character, character
 roommate, roommate, character, character
 son, father/mother/parent, character, character
 wife, husband, character, character
+killee, killer, character, character
+# this one is a stretch
+ex-employee, ex-employer, character, character
 
 # other relations
 # * = any type
@@ -66,5 +69,23 @@ meta, , *, string
 
 # are cameos actually characters?
 cameo, , strip, character
+
+# actually maps strip to binary
+char_list_complete, , strip, string
+
+# not crazy about creating this for every death type
+# actually maps strip to integer
+
+antelope_deaths, , strip, string
+armadillo_deaths, , strip, string
+crocodile_deaths, , strip, string
+dolphin_deaths, , strip, string
+hamster_deaths, , strip, string
+human_deaths, , strip, string
+penguin_deaths, , strip, string
+pig_deaths, , strip, string
+rat_deaths, , strip, string
+squirrel_deaths, , strip, string
+zebra_deaths, , strip, string
 
 </relations>

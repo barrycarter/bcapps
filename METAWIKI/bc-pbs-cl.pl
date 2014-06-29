@@ -18,16 +18,14 @@ require "/usr/local/lib/bclib.pl";
 	 "zach" => "[[character::Zach (lion)]]",
 	 "kiki" => "[[character::Kiki (lion)]]",
 	 "gigi" => "[[character::Gigi (lion)]]",
-	 # special case for Guard Duck to upcase "Duck"
-	 "guard duck" => "[[character::Guard Duck]]"
 	 );
 
 # when using slash mode...
-for $i ("pig", "rat", "zebra", "goat", "farina", "pigita", "larry", "junior",
-       "snuffles", "andy") {
-  $full{$i} = "[[character::".ucfirst($i)."]]";
-  $full{ucfirst($i)} = "[[character::".ucfirst($i)."]]";
-}
+# for $i ("pig", "rat", "zebra", "goat", "farina", "pigita", "larry", "junior",
+#       "snuffles", "andy") {
+#  $full{$i} = "[[character::".ucfirst($i)."]]";
+#  $full{ucfirst($i)} = "[[character::".ucfirst($i)."]]";
+# }
 
 # "done" is special case for slash mode meaning "list of chars is
 # complete", currently unused
@@ -65,8 +63,10 @@ for $i (glob "/mnt/extdrive/GOCOMICS/pearlsbeforeswine/CHARLIST/*.txt") {
     if ($full{$j}) {
       $j = $full{$j};
     } else {
+      # guess at full form
       $nofullform{lc($j)} = 1;
-      $j = "";
+      $j =~ s/(\w+)/\u$1/g;
+      $j = "[[character::$j]]";
     }
   }
 
@@ -84,3 +84,154 @@ if (%nofullform) {
   warn("NOFULLFORM:\n", join("\n", sort keys %nofullform));
 }
 
+=item comment
+
+No full forms:
+
+alien
+alphonse
+angry bob
+ataturk
+b
+baby johnson
+bait club
+barbara bush
+bennie
+bert
+biff
+billy
+bippy
+blackbeard
+bootyworth
+bucky
+burt
+calvin
+cartooncritic2544
+cathy
+catsup
+chuckie
+cindy
+comic police*2
+comic strip censor
+connie
+cookie monster
+crocodiles
+cubby
+danny donket
+danny donkey
+death
+deaths
+dickie
+dinky
+dolly
+dolphins
+drama cow
+e
+eddie
+elly
+elly elephant
+ernie
+estate agent
+fantastic four
+fat fred
+feral
+feral ballerina
+freddy
+fredo
+fredo's wife
+frieda
+fruit buddies
+gandhi
+garfield
+gloria steinem
+gomer
+gophers
+grover
+gus
+gw
+hagar
+hamsters
+heebie
+helga
+henry hippo
+hippo
+hobbes
+holly
+hops
+hosanna
+hyenas
+jef
+jeffy
+jennifer
+jenny
+jimmy
+john
+johnson
+jojo
+joy
+katharine hepburn
+kiko
+larrylion
+lemmings
+leonard
+libby
+lincoln
+linus
+lucky
+man on the moon
+marshmallows
+maura
+meerkats
+melvin
+moe
+monopoly tokens
+mr pitters
+neighbor bob
+neighbor fred
+newt
+newt gingrich
+olive
+oscar
+pepe
+petey
+phil
+pig's brain
+pig's dad
+pig's mom
+pippy
+pit
+plaid
+potus
+rita rabbit
+roadrunners
+roland
+safari bob
+satan
+satchel
+signs
+skippy
+snuffes
+stacy
+stevie stenographer
+sumo squirrels
+timmy
+tina
+toby
+toody
+tooty
+trixie
+unnamed human
+viking figures
+viking fitures
+vinnie
+wee bear
+weebar
+weebear
+whale
+wii
+wilhelm
+willie mays
+xmas tree girl
+zze
+
+=cut

@@ -1,8 +1,6 @@
 -- Miscellaneous helpful SQLite3 queries on /tmp/pbs-triples.db
 
--- List of mathematical relations that are considered "social
--- relations", meaning that both sides of the relation are
--- characters. Only need this temporarily
+-- The values of k for which both sides are characters
 
 CREATE TEMPORARY TABLE relations (relation);
 
