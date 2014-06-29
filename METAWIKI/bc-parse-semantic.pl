@@ -64,68 +64,34 @@ for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
     $triples{$target}{class}{$ttype} = "$datasource (target of $k)";
 
     # special things for characters
-    # TODO: for $ttype too!
-    if ($stype eq "character") {
+    for $l ($source, $target) {
+      unless ($triples{$l}{class}{character}) {next;}
 
       # the character appears in $datasource
-      $triples{$datasource}{character}{$source} = "$datasource ($k imply)";
+      $triples{$datasource}{character}{$l} = "$datasource ($k imply)";
 
       # if the character has parens in name and no species...
-      if (!(exists $triples{$source}{species}) && $source=~/\((.*?)\)$/) {
-	$triples{$source}{species}{$1} = "NAME2SPECIES";
+      if (!(exists $triples{$l}{species}) && $l=~/\((.*?)\)$/) {
+	$triples{$l}{species}{$1} = "NAME2SPECIES";
       }
 
       # if the character has a "date like" name, give him alias
-      if ($source=~/^(.*?) (\d{8}) \((.*?)\)/) {
+      if ($l=~/^(.*?) (\d{8}) \((.*?)\)/) {
 	my($name, $date, $species) = ($1, $2, $3);
 	# how many times have we seen this name/species combo?
-	$triples{$source}{aka}{"$name ($species) #".++$times{$name}{$species}} = "NAME2NUMBER";
+	$triples{$le}{aka}{"$name ($species) #".++$times{$name}{$species}} = "NAME2NUMBER";
       }
     }
 
-    # TODO: below is now semi-messed up
-
-    # for character to character relations...
+    # for character to character relations, we do more
     if ($stype eq "character" && $ttype eq "character") {
-
-      # delete the original relation (we'll never use it)
-#      delete $triples{$source}{$k}{$target};
-
       # create this as a 2 directional relation for both characters
       $triples{$source}{relative}{"$target ($for)"}="$datasource ($for/$rev)";
       $triples{$target}{relative}{"$source ($rev)"}="$datasource ($for/$rev)";
-
-      # both characters are considered to "appear in" this strip
-      $triples{$datasource}{character}{$source} = "$datasource ($k imply)";
-      $triples{$datasource}{character}{$target} = "$datasource ($k imply)";
-
-      next;
     }
 
-    # if either one is a character... (do this and keep going)
-    if ($ttype eq "character") {
-      $triples{$datasource}{character}{$target} = "$datasource ($k imply)";
-    }
-
-    # for aliases, canonize
-    if ($k eq "aka") {
-      # queries to normalize source/target
-      my($queries) = << "MARK";
-UPDATE OR IGNORE triples SET source='$source' WHERE source='$target'
-AND NOT (k='class' AND target='alias');
-
-DELETE FROM triples WHERE source='$target'
- AND NOT (k='class' AND target='alias');
-
-UPDATE OR IGNORE
- triples SET target='$source' WHERE target='$target' AND k NOT IN ('aka');
-
-DELETE FROM triples WHERE target='$target' AND k NOT IN ('aka');
-MARK
-;
-      $queries{$queries} = 1;
-      next;
-    }
+    # for aliases, canonize and handle later
+    if ($k eq "aka") {$canon{$target} = $source;}
   }
 }
 
