@@ -4,6 +4,20 @@
 
 # PBS is "test case" but this "should" work w/ anything
 
+# Problems w/ using just pure generated triples:
+
+# [[date::deaths::some_character]] =>
+# [[date::character::some_character]] (for example)
+
+# [[char1::relation::char2]] => [[sourcedate::charater:char1+char2]]
+
+# [[char1::sister::char2]] => [[char1::relative::char2 (sister)]] for example
+
+# [[alias::relation::foo]] => [[character::relation::foo]] (ie,
+# aliases must be canonized except for [[character::aka::alias]]
+
+# "name date (species)" should have alias "name canon_number (species)"
+
 require "/usr/local/lib/bclib.pl";
 
 my($metadir) = "/home/barrycarter/BCGIT/METAWIKI";
@@ -43,6 +57,7 @@ for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
     map(s/\'/&\#39;/g, @$j);
     my($source, $k, $target, $datasource) = @$j;
     # the hash of triples
+    debug("RET: $source, $k, $target, $datasource");
     $triples{$source}{$k}{$target}{$datasource} = 1;
 
     # determine relation type
@@ -60,19 +75,24 @@ for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
       delete $triples{$source}{$k}{$target}{$datasource};
 
       # create this as a 2 directional relation for both characters
-      $triples{$source}{relative}{"$target ($for)"} = 1;
-      $triples{$target}{relative}{"$source ($rev)"} = 1;
+      $triples{$source}{relative}{"$target ($for)"}{$datasource} = 1;
+      $triples{$target}{relative}{"$source ($rev)"}{$datasource} = 1;
 
       # both characters are considered to "appear in" this strip
-      $triples{$datasource}{character}{$source} = 1;
-      $triples{$datasource}{character}{$target} = 1;
+      $triples{$datasource}{character}{$source}{$datasource} = 1;
+      $triples{$datasource}{character}{$target}{$datasource} = 1;
 
       next;
     }
 
     # if either one is a character... (do this and keep going)
-    if ($stype eq "character") {$triples{$datasource}{character}{$source} = 1;}
-    if ($ttype eq "character") {$triples{$datasource}{character}{$target} = 1;}
+    if ($stype eq "character") {
+      $triples{$datasource}{character}{$source}{$datasource} = 1;
+    }
+    if ($ttype eq "character") {
+      $triples{$datasource}{character}{$target}{$datasource} = 1;
+    }
+
 
     # for aliases, canonize
     if ($k eq "aka") {
@@ -93,13 +113,14 @@ MARK
       $queries{$queries} = 1;
       next;
     }
-
   }
 }
 
 # "string" and "*" are useless types
-delete $triples{string};
-delete $triples{"*"};
+# delete $triples{string};
+# delete $triples{"*"};
+
+debug("TRIPLES:", keys %{$triples{'2002-01-07'}{character}{Pig}});
 
 # once again excessively terse
   open(A,"|tee /tmp/triples2.txt|sqlite3 /usr/local/etc/metawiki/pbs/pbs-triples.db 1>/tmp/pbs2-myout.txt 2>/tmp/pbs2-myerr.txt");
@@ -127,8 +148,11 @@ for $i (sort keys %triples) {
   }
 }
 
+close(A); die "TESTING";
+
 # commit queries above and start new batch
 print A "COMMIT;\nBEGIN;";
+
 
 # the queries from the parsing
 for $i (keys %queries) {
@@ -137,6 +161,21 @@ for $i (keys %queries) {
 
 print A "COMMIT;\n";
 close(A);
+
+# write some other ANNOS
+my($query) = << "MARK";
+SELECT ds, GROUP_CONCAT("[["||ds||"::"||k||"::"||target||"]]") FROM
+(SELECT source, k, target, 
+ CASE WHEN datasource='SELF' THEN source ELSE datasource END AS ds
+FROM triples)
+WHERE ds NOT IN ('largeimagelinks', 'RELATION')
+GROUP BY ds;
+MARK
+;
+
+for $i (sqlite3hashlist($query, "/usr/local/etc/metawiki/pbs/pbs-triples.db")) {
+  debug("I: $i->{ds}");
+}
 
 =item parse_semantic($dates, $string)
 
@@ -189,7 +228,6 @@ sub parse_semantic {
     for $i (split(/\+/, $l[0])) {
       for $j (split(/\+/, $l[1])) {
 	for $k (split(/\+/, $l[2])) {
-#	  debug("TRIPLE: $i/$j/$k/$dates");
 	  # restore thing we changed earlier, but wo brackets
 #	  debug("GAMMA: $string");
 	  $string=~s/\003/$k/;
@@ -198,10 +236,12 @@ sub parse_semantic {
 	  $k=~s/\001/[[/g;
 	  $k=~s/\002/]]/g;
 	  # if $i is one of the dates source is "SELF"
-	  for $l (@dates) {
-	    if ($dates{$i}) {
-	      push(@lol, [$i,$j,$k,"SELF"]);
-	    } else {
+	  if ($dates{$i}) {
+	    debug("TRIPLE (SELF): $i/$j/$k/$i");
+	    push(@lol, [$i,$j,$k,$i]);
+	  } else {
+	    for $l (@dates) {
+	      debug("TRIPLE (MULTI): $i/$j/$k/$l");
 	      push(@lol, [$i,$j,$k,$l]);
 	    }
 	  }
