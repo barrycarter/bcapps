@@ -1680,6 +1680,7 @@ MULTIREF [[title::Furry Brown Cap]] [[notes::A furry brown cap, apparently unrel
 2003-05-18 [[character::Lepidus Souzaranti (bug)]] [[Lepidus Souzaranti (bug)::notes::Lepidus Souzaranti is actually a species, not a name]]
 2013-01-06 [[character::Stephan Pastis+Rat+E.O.R (human)]] [[E.O.R.::aka::Easily Offended Reader+Eeyore]] [[E.O.R.::subspecies::critic]]
 2009-10-25 [[character::Rat+Pig+Mike (bull)+Chip (bull)]]
+2009-10-29 [[Rat::aka::Raterpillar]]
 2005-03-31 [[character::Pig+Rat+[[deaths::Bluebird of Happiness 20050331 (bird)]]]]
 2004-02-22 [[character::Pig+Rat+Mr. Happiness (deity)]]
 2008-05-11 [[character::Pig+Rat+Mr. Happiness (deity)]] [[Mr. Happiness (deity)::notes::The Mr. Happiness from [[2004-02-22]] and [[2008-05-11]] aren't identical, but look close enough to be the same entity]]
