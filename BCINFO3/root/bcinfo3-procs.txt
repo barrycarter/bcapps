@@ -33,7 +33,10 @@ emacs
 
 # these processes must die if they run over 5m
 # sh is a dangerous choice here, but probably all perl subprocs
+# /sbin/mingetty added 1 Jul 2014, not sure why I need it though (it
+# probably shouldn't start at all in the first place)
 <kill>
+/sbin/mingetty
 php-cgi
 /usr/local/bin/php-cgi
 /usr/local/bin/bc-echo.pl

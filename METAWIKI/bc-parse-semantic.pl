@@ -16,7 +16,8 @@
 # [[alias::relation::foo]] => [[character::relation::foo]] (ie,
 # aliases must be canonized except for [[character::aka::alias]]
 
-# "name date (species)" should have alias "name canon_number (species)"
+# "name date (species)" should have alias "name canon_number
+# (species)" and insure date is first appearance
 
 require "/usr/local/lib/bclib.pl";
 
@@ -51,9 +52,12 @@ for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
   for $j (parse_semantic($1, $2)) {
     map(s/\'/&\#39;/g, @$j);
     my($source, $k, $target, $datasource) = @$j;
-    # the hash of triples
-#    debug("RET: $source, $k, $target, $datasource");
+
+    # the hash of triples (we mostly don't the reverse annos, but put
+    # them in anyway)
     $triples{$source}{$k}{$target} = $datasource;
+    $triples{$target}{"-$k"}{$source} = $datasource;
+    debug("FOO",keys %{$triples{$target}});
 
     # determine relation type
     my($for, $rev, $stype, $ttype) = ("?", "?", "?", "?");
@@ -70,18 +74,16 @@ for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
       # the character appears in $datasource
       $triples{$datasource}{character}{$l} = "$datasource ($k imply)";
 
-      # if the character has parens in name and no species...
-      if (!(exists $triples{$l}{species}) && $l=~/\((.*?)\)$/) {
-	$triples{$l}{species}{$1} = "NAME2SPECIES";
-      }
+      # if the character has parens in name and no species, tag for add step
+      if ($l=~/\(.*?\)$/) {$specname{$l} = 1;}
 
-      # if the character has a "date like" name, give him alias
-      if ($l=~/^(.*?) (\d{8}) \((.*?)\)/) {
-	my($name, $date, $species) = ($1, $2, $3);
-	# how many times have we seen this name/species combo?
-	$triples{$le}{aka}{"$name ($species) #".++$times{$name}{$species}} = "NAME2NUMBER";
-      }
+      # if the character has a "date like" name, tag for addl step
+      # TODO: make sure date is actual first appearance
+      if ($l=~/^.*? \d{8} \(.*?\)/) {$datename{$l}=1;}
     }
+
+    # if this is an alias, tag for later canonization
+    if ($k eq "aka") {$canon{$target} = $source;}
 
     # for character to character relations, we do more
     if ($stype eq "character" && $ttype eq "character") {
@@ -89,10 +91,31 @@ for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
       $triples{$source}{relative}{"$target ($for)"}="$datasource ($for/$rev)";
       $triples{$target}{relative}{"$source ($rev)"}="$datasource ($for/$rev)";
     }
-
-    # for aliases, canonize and handle later
-    if ($k eq "aka") {$canon{$target} = $source;}
   }
+}
+
+# handle species names
+for $i (sort keys %specname) {
+  if ($triples{$i}{species}) {
+    debug("$i already has species");
+  } else {
+    $i=~m/\((.*?)\)$/;
+    $triples{$i}{species}{$1} = "NAME2SPEC";
+  }
+}
+
+# handle numbered names (sorting IS important here, earlier ones get first #s)
+for $i (sort keys %datename) {
+  $i=~/^(.*?)\s+(\d{8})\s+\((.*?)\)$/;
+  my($name, $date, $species) = ($1, $2, $3);
+  # how many times have we seen this name/species combo?
+  my($aka) = "$name ($species) #".++$times{$name}{$species};
+  debug("$i aka $aka");
+  $triples{$aka}{aka}{$i} = "DATE2NAME";
+}
+
+for $i (sort keys %canon) {
+  debug("CANON: $i -> $canon{$i} -> $canon{$canon{$i}}");
 }
 
 # "string" and "*" are useless types
