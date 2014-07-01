@@ -53,11 +53,8 @@ for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
     map(s/\'/&\#39;/g, @$j);
     my($source, $k, $target, $datasource) = @$j;
 
-    # the hash of triples (we mostly don't the reverse annos, but put
-    # them in anyway)
+    # the hash of triples
     $triples{$source}{$k}{$target} = $datasource;
-    $triples{$target}{"-$k"}{$source} = $datasource;
-#    debug("FOO",keys %{$triples{$target}});
 
     # determine relation type
     my($for, $rev, $stype, $ttype) = ("?", "?", "?", "?");
@@ -72,7 +69,7 @@ for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
       unless ($triples{$l}{class}{character}) {next;}
 
       # the character appears in $datasource
-      $triples{$datasource}{character}{$l} = "$datasource ($source::$k::$target)";
+      $triples{$datasource}{character}{$l}="$datasource ($source::$k::$target)";
 
       # if the character has parens in name and no species, note species
       # (note that a species triple will correctly override this)
@@ -96,6 +93,77 @@ for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
     }
   }
 }
+
+# create reverse triples for everything
+for $i (keys %triples) {
+  for $j (keys %{$triples{$i}}) {
+    for $k (keys %{$triples{$i}{$j}}) {
+      $triples{$k}{"-$j"}{$i} = $triples{$i}{$j}{$k};
+    }
+  }
+}
+
+# handle aliases that have non-trivial triples
+for $i (sort keys %canon) {
+  # if this alias isn't posing as a character, do nothing
+  unless ($triples{$i}{class}{character}) {next;}
+  debug("C: $i -> $canon{$i}");
+  # find canon name
+  my(@canon) = sort keys %{$triples{$i}{"-aka"}};
+  if (scalar @canon >=2) {warn "WARNING: More than one canon name: $i";}
+  my($canon) = $canon[0];
+
+  # we no longer need "-aka" or the "character" class
+  delete $triples{$i}{"-aka"};
+  delete $triples{$i}{class}{character};
+
+  # and reassign properties
+  for $j (sort keys %{$triples{$i}}) {
+    # "alias" class remains with the actual alias
+    if ($j eq "class") {next;}
+
+    # j2 is unsigned version of j
+    my($j2) = $j;
+    $j2=~s/^\-//;
+
+    for $k (sort keys %{$triples{$i}{$j}}) {
+
+      # if $j is a negative relation ($dir is true), backwards assign
+      # in both cases assign, the negative relations too
+      if ($j=~/^\-/) {
+	debug("NEG+: $k/$j2/$canon $canon/-$j2/$k",
+	      "NEG-: $k/$j2/$i, $i/-$j2/$k");
+	$triples{$k}{$j2}{$canon} = $triples{$k}{$j2}{$i};
+	$triples{$canon}{"-$j2"}{$k} = $triples{$k}{$j2}{$i};
+	# and delete originals
+	delete $triples{$k}{$j2}{$i};
+	delete $triples{$i}{"-$j2"}{$k};
+      } else {
+	debug("POS+: $canon/$j/$k $k/-$j/$canon",
+	      "POS-: $i/$j/$k $k/-$j/$i");
+	# if $j is a forward relation, assign it to the canon
+	$triples{$canon}{$j}{$k} = $triples{$i}{$j}{$k};
+	$triples{$k}{"-$j"}{$canon} = $triples{$i}{$j}{$k};
+	# and delete from the alias
+	delete $triples{$i}{$j}{$k};
+	delete $triples{$k}{"-$j"}{$i};
+      }
+    }
+  }
+}
+
+# do something similar for "date names"
+# since this comes after aka normalization, we can also do a "first date" check
+for $i (sort keys %datename) {
+  $i=~/\s+(\d{4})(\d{2})(\d{2})/;
+  my($date) = "$1-$2-$3";
+
+  # first appearance of character
+  my(@apps) = sort keys %{$triples{$i}{"-character"}};
+  unless ($date eq $apps[0]) {warn "WARNING: $i: $date != $apps[0])";}
+}
+
+die "TESTING";
 
 # post processing steps on the triple
 warn "TESTING";
