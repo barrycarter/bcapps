@@ -23,6 +23,9 @@ require "/usr/local/lib/bclib.pl";
 
 my($metadir) = "/home/barrycarter/BCGIT/METAWIKI";
 
+my(%triples);
+my(%queries);
+
 # load meta data (TODO: this is cheating, only one section so far)
 for $i (`egrep -v '^<|^#|^\$' $metadir/pbs-meta.txt`) {
   chomp($i);
@@ -30,9 +33,6 @@ for $i (`egrep -v '^<|^#|^\$' $metadir/pbs-meta.txt`) {
   $meta{$data[0]} = [@data];
   unless (scalar @data == 4) {warn "LINE HAS !=4 elts: $i";}
 }
-
-my(%triples);
-my(%queries);
 
 # imagehashes
 for $i (split(/\n/, read_file("largeimagelinks.txt"))) {
@@ -57,25 +57,28 @@ for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
     # them in anyway)
     $triples{$source}{$k}{$target} = $datasource;
     $triples{$target}{"-$k"}{$source} = $datasource;
-    debug("FOO",keys %{$triples{$target}});
+#    debug("FOO",keys %{$triples{$target}});
 
     # determine relation type
     my($for, $rev, $stype, $ttype) = ("?", "?", "?", "?");
     if ($meta{$k}) {($for, $rev, $stype, $ttype) = @{$meta{$k}};}
 
     # classes for source and target...
-    $triples{$source}{class}{$stype} = "$datasource (source of $k)";
-    $triples{$target}{class}{$ttype} = "$datasource (target of $k)";
+    $triples{$source}{class}{$stype} = "$datasource ($source::$k::$target)";
+    $triples{$target}{class}{$ttype} = "$datasource ($source::$k::$target)";
 
     # special things for characters
     for $l ($source, $target) {
       unless ($triples{$l}{class}{character}) {next;}
 
       # the character appears in $datasource
-      $triples{$datasource}{character}{$l} = "$datasource ($k imply)";
+      $triples{$datasource}{character}{$l} = "$datasource ($source::$k::$target)";
 
-      # if the character has parens in name and no species, tag for add step
-      if ($l=~/\(.*?\)$/) {$specname{$l} = 1;}
+      # if the character has parens in name and no species, note species
+      # (note that a species triple will correctly override this)
+      if ($l=~/\(.*?\)$/ && !$triples{$l}{species}) {
+	$triples{$l}{species}{$1} = "NAME2SPECIES";
+      }
 
       # if the character has a "date like" name, tag for addl step
       # TODO: make sure date is actual first appearance
@@ -94,15 +97,82 @@ for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
   }
 }
 
-# handle species names
-for $i (sort keys %specname) {
-  if ($triples{$i}{species}) {
-    debug("$i already has species");
-  } else {
-    $i=~m/\((.*?)\)$/;
-    $triples{$i}{species}{$1} = "NAME2SPEC";
+# post processing steps on the triple
+warn "TESTING";
+for $i (sort keys %triples) {
+
+  # if character...
+  if ($triples{$i}{class}{character}) {
+
+    # is this an alias posing as a character?
+    if ($triples{$i}{class}{alias}) {
+
+      # find canon name
+      my(@canon) = sort keys %{$triples{$i}{"-aka"}};
+      if (scalar @canon >=2) {warn "WARNING: More than one canon name: $i";}
+      my($canon) = $canon[0];
+
+      # we no longer need "-aka" or the "character" class
+      delete $triples{$i}{"-aka"};
+      delete $triples{$i}{class}{character};
+
+      # and reassign properties
+      for $j (sort keys %{$triples{$i}}) {
+	# "alias" class remains with the actual alias
+	if ($j eq "class") {next;}
+
+	# j2 is unsigned version of j
+	my($j2) = $j;
+	$j2=~s/^\-//;
+
+	for $k (sort keys %{$triples{$i}{$j}}) {
+
+	  # if $j is a negative relation ($dir is true), backwards assign
+	  if ($j=~/^\-/) {
+	    debug("NEGADD: $k/$j2/$canon, DELETE: $k/$j2/$i");
+	    $triples{$k}{$j2}{$canon} = $triples{$k}{$j2}{$i};
+	    # and delete original
+	    delete $triples{$k}{$j}{$i};
+	  } else {
+	    debug("POSADD: $canon/$j/$k, DELETE: $i/$j/$k");
+	    # if $j is a forward relation, assign it to the canon
+	    $triples{$canon}{$j}{$k} = $triples{$i}{$j}{$k};
+	    # and delete from the alias
+	    delete $triples{$i}{$j}{$k};
+	  }
+	}
+      }
+    }
   }
 }
+
+# debug("TRIPLES",unfold({%triples}));
+
+=item comment
+
+    # if this is a "date name", fix it and reassign properties
+    if ($i=~/^(.*?)\s+(\d{8})\s+\((.*?)\)$/) {
+      my($name, $date, $species) = ($1, $2, $3);
+      # how many times have we seen this name/species combo?
+      my($newname) = "$name ($species) #".++$times{$name}{$species};
+      # reassign properties to newname
+      $triples{$newname} = $triples{$i};
+      # TODO: this probably doesnt do what I want
+      delete $triples{$i};
+      # and remember oldname
+      $triples{$newname}{reference_name}{$i} = "DATEDNAME";
+      # let SQL handle the targets
+      $queries{"UPDATE triples SET target='$newname' WHERE target='$i';"}=1;
+    }
+  }
+}
+
+=cut
+
+debug("QUERIES:",unfold(%queries));
+# debug("TRIPLES:",unfold(%triples));
+
+die "TESTING";
 
 # handle numbered names (sorting IS important here, earlier ones get first #s)
 for $i (sort keys %datename) {
@@ -114,7 +184,9 @@ for $i (sort keys %datename) {
   $triples{$aka}{aka}{$i} = "DATE2NAME";
 }
 
+# handle aliases
 for $i (sort keys %canon) {
+  debug("I: $i",unfold($triples{$i}));
   debug("CANON: $i -> $canon{$i} -> $canon{$canon{$i}}");
 }
 
@@ -239,11 +311,11 @@ sub parse_semantic {
 	  $k=~s/\002/]]/g;
 	  # if $i is one of the dates source is "SELF"
 	  if ($dates{$i}) {
-	    debug("TRIPLE (SELF): $i/$j/$k/$i");
+	    # debug("TRIPLE (SELF): $i/$j/$k/$i");
 	    push(@lol, [$i,$j,$k,$i]);
 	  } else {
 	    for $l (@dates) {
-	      debug("TRIPLE (MULTI): $i/$j/$k/$l");
+	      # debug("TRIPLE (MULTI): $i/$j/$k/$l");
 	      push(@lol, [$i,$j,$k,$l]);
 	    }
 	  }
