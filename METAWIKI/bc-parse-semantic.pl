@@ -43,6 +43,11 @@ for $i (split(/\n/, read_file("largeimagelinks.txt"))) {
 }
 
 for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
+
+  if ($i=~s/\*(.*?)\*//) {
+    debug("REMOVING: $1");
+  }
+
   # TODO: multirefs!
   # TODO: *_deaths
   # below allows for multiple dates
@@ -192,7 +197,7 @@ for $i (sort keys %datename) {
 for $i (keys %times) {
   for $j (keys %{$times{$i}}) {
     if ($times{$i}{$j} == 1) {
-      warn("$i $j occurs only once, numbering unneeded?");
+      warn("WARNING: $i $j occurs only once, numbering unneeded?");
     }
   }
 }
@@ -210,13 +215,16 @@ for $i (sort keys %triples) {
 
   if (scalar @classes >= 2) {
     warn("WARNING: $i appears in multiple classes:".join(", ",@classes));
+    next;
   }
 
   my($class) = shift(@classes);
-  # ignore things whose class is * or string
-#  if ($class eq "*" || $class eq "string") {next;}
 
-  # otherwise, parse further
+  # error check
+  if ($class eq "character" && !$triples{$i}{species}) {
+    warn "WARNING: $i: no species";
+  }
+
   for $j (sort keys %{$triples{$i}}) {
     # ignore negative relations
     if ($j=~/^\-/) {next;}
