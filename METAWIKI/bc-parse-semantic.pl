@@ -94,9 +94,12 @@ for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
   }
 }
 
+
 # create reverse triples for everything
 for $i (keys %triples) {
   for $j (keys %{$triples{$i}}) {
+    # ignore if already reversed
+    if ($j=~/^\-/) {next;}
     for $k (keys %{$triples{$i}{$j}}) {
       $triples{$k}{"-$j"}{$i} = $triples{$i}{$j}{$k};
     }
@@ -155,12 +158,31 @@ for $i (sort keys %canon) {
 # do something similar for "date names"
 # since this comes after aka normalization, we can also do a "first date" check
 for $i (sort keys %datename) {
-  $i=~/\s+(\d{4})(\d{2})(\d{2})/;
-  my($date) = "$1-$2-$3";
+  $i=~/(^.*?)\s+(\d{4})(\d{2})(\d{2})\s*(.*?)$/;
+  my($base, $date, $species) = ($1, "$2-$3-$4", $5);
+#  debug("DBS: $base/$date/$species");
 
   # first appearance of character
   my(@apps) = sort keys %{$triples{$i}{"-character"}};
   unless ($date eq $apps[0]) {warn "WARNING: $i: $date != $apps[0])";}
+
+  # canonize name
+  my($newname) = "$base $species #".++$times{$base}{$species};
+  debug("RENAME: $i -> $newname");
+
+  # and reassign as I did for aliases
+  for $j (sort keys %{$triples{$i}}) {
+    debug("ALPHA: $i/$j");
+  }
+
+}
+
+for $i (keys %times) {
+  for $j (keys %{$times{$i}}) {
+    if ($times{$i}{$j} == 1) {
+      warn("$i $j occurs only once, numbering unneeded?");
+    }
+  }
 }
 
 die "TESTING";
