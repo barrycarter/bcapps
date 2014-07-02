@@ -88,4 +88,6 @@ rat_deaths, , strip, string
 squirrel_deaths, , strip, string
 zebra_deaths, , strip, string
 
+null, , null, null
+
 </relations>

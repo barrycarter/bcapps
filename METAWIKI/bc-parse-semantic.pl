@@ -60,12 +60,21 @@ for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
     my($for, $rev, $stype, $ttype) = ("?", "?", "?", "?");
     if ($meta{$k}) {($for, $rev, $stype, $ttype) = @{$meta{$k}};}
 
-    # classes for source and target...
-    $triples{$source}{class}{$stype} = "$datasource ($source::$k::$target)";
-    $triples{$target}{class}{$ttype} = "$datasource ($source::$k::$target)";
+    if ($for eq "?") {debug("NO META: $source/$k/$target");}
 
-    # special things for characters
+    # classes for source and target...
+
+    unless ($stype eq "*" || $stype eq "string" || $stype eq "null") {
+      $triples{$source}{class}{$stype} = "$datasource ($source::$k::$target)";
+    }
+
+    unless ($ttype eq "*" || $ttype eq "string" || $stype eq "null") {
+      $triples{$target}{class}{$ttype} = "$datasource ($source::$k::$target)";
+    }
+
     for $l ($source, $target) {
+
+      # special things for characters
       unless ($triples{$l}{class}{character}) {next;}
 
       # the character appears in $datasource
@@ -73,7 +82,7 @@ for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
 
       # if the character has parens in name and no species, note species
       # (note that a species triple will correctly override this)
-      if ($l=~/\(.*?\)$/ && !$triples{$l}{species}) {
+      if ($l=~/\((.*?)\)$/ && !$triples{$l}{species}) {
 	$triples{$l}{species}{$1} = "NAME2SPECIES";
       }
 
@@ -172,7 +181,10 @@ for $i (sort keys %datename) {
 
   # and reassign as I did for aliases
   for $j (sort keys %{$triples{$i}}) {
-    debug("ALPHA: $i/$j");
+    for $k (sort keys %{$triples{$i}{$j}}) {
+      $triples{$newname}{$j}{$k} = $triples{$i}{$j}{$k};
+      delete $triples{$i}{$j}{$k};
+    }
   }
 
 }
@@ -185,106 +197,35 @@ for $i (keys %times) {
   }
 }
 
-die "TESTING";
-
-# post processing steps on the triple
-warn "TESTING";
+# and now look at the triples for "real"
 for $i (sort keys %triples) {
+  
+  # determine class for this entity
+  my(@classes) = sort keys %{$triples{$i}{class}};
 
-  # if character...
-  if ($triples{$i}{class}{character}) {
+  if (scalar @classes == 0) {
+    debug("NO CLASSES: $i");
+    next;
+  }
 
-    # is this an alias posing as a character?
-    if ($triples{$i}{class}{alias}) {
+  if (scalar @classes >= 2) {
+    warn("WARNING: $i appears in multiple classes:".join(", ",@classes));
+  }
 
-      # find canon name
-      my(@canon) = sort keys %{$triples{$i}{"-aka"}};
-      if (scalar @canon >=2) {warn "WARNING: More than one canon name: $i";}
-      my($canon) = $canon[0];
+  my($class) = shift(@classes);
+  # ignore things whose class is * or string
+#  if ($class eq "*" || $class eq "string") {next;}
 
-      # we no longer need "-aka" or the "character" class
-      delete $triples{$i}{"-aka"};
-      delete $triples{$i}{class}{character};
-
-      # and reassign properties
-      for $j (sort keys %{$triples{$i}}) {
-	# "alias" class remains with the actual alias
-	if ($j eq "class") {next;}
-
-	# j2 is unsigned version of j
-	my($j2) = $j;
-	$j2=~s/^\-//;
-
-	for $k (sort keys %{$triples{$i}{$j}}) {
-
-	  # if $j is a negative relation ($dir is true), backwards assign
-	  if ($j=~/^\-/) {
-	    debug("NEGADD: $k/$j2/$canon, DELETE: $k/$j2/$i");
-	    $triples{$k}{$j2}{$canon} = $triples{$k}{$j2}{$i};
-	    # and delete original
-	    delete $triples{$k}{$j}{$i};
-	  } else {
-	    debug("POSADD: $canon/$j/$k, DELETE: $i/$j/$k");
-	    # if $j is a forward relation, assign it to the canon
-	    $triples{$canon}{$j}{$k} = $triples{$i}{$j}{$k};
-	    # and delete from the alias
-	    delete $triples{$i}{$j}{$k};
-	  }
-	}
-      }
-    }
+  # otherwise, parse further
+  for $j (sort keys %{$triples{$i}}) {
+    # ignore negative relations
+    if ($j=~/^\-/) {next;}
+    my($ks) = join(", ", sort keys %{$triples{$i}{$j}});
+    debug("FINAL: $i/$j/$ks");
   }
 }
-
-# debug("TRIPLES",unfold({%triples}));
-
-=item comment
-
-    # if this is a "date name", fix it and reassign properties
-    if ($i=~/^(.*?)\s+(\d{8})\s+\((.*?)\)$/) {
-      my($name, $date, $species) = ($1, $2, $3);
-      # how many times have we seen this name/species combo?
-      my($newname) = "$name ($species) #".++$times{$name}{$species};
-      # reassign properties to newname
-      $triples{$newname} = $triples{$i};
-      # TODO: this probably doesnt do what I want
-      delete $triples{$i};
-      # and remember oldname
-      $triples{$newname}{reference_name}{$i} = "DATEDNAME";
-      # let SQL handle the targets
-      $queries{"UPDATE triples SET target='$newname' WHERE target='$i';"}=1;
-    }
-  }
-}
-
-=cut
-
-debug("QUERIES:",unfold(%queries));
-# debug("TRIPLES:",unfold(%triples));
 
 die "TESTING";
-
-# handle numbered names (sorting IS important here, earlier ones get first #s)
-for $i (sort keys %datename) {
-  $i=~/^(.*?)\s+(\d{8})\s+\((.*?)\)$/;
-  my($name, $date, $species) = ($1, $2, $3);
-  # how many times have we seen this name/species combo?
-  my($aka) = "$name ($species) #".++$times{$name}{$species};
-  debug("$i aka $aka");
-  $triples{$aka}{aka}{$i} = "DATE2NAME";
-}
-
-# handle aliases
-for $i (sort keys %canon) {
-  debug("I: $i",unfold($triples{$i}));
-  debug("CANON: $i -> $canon{$i} -> $canon{$canon{$i}}");
-}
-
-# "string" and "*" are useless types
-# delete $triples{string};
-# delete $triples{"*"};
-
-# debug("TRIPLES:", keys %{$triples{'2002-01-07'}{character}{Pig}});
 
 # once again excessively terse
   open(A,"|tee /tmp/triples2.txt|sqlite3 /usr/local/etc/metawiki/pbs/pbs-triples.db 1>/tmp/pbs2-myout.txt 2>/tmp/pbs2-myerr.txt");
