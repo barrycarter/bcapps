@@ -150,8 +150,6 @@ sub pbs_date_strips {
 
 =item mv_after_diff($source, $options)
 
-# TODO: move this to bclib.pl
-
 Move $source.new to $source and $source to $source.old; however, if
 $source.new and $source are already identical (per cmp), do
 nothing. $options currently unused.

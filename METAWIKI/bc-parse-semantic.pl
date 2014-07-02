@@ -186,7 +186,7 @@ for $i (sort keys %datename) {
   unless ($date eq $apps[0]) {warn "WARNING: $i: $date != $apps[0])";}
 
   # canonize name
-  my($newname) = "$base $species #".++$times{$base}{$species};
+  my($newname) = "$base $species #".sprintf("%0.2d",++$times{$base}{$species});
   debug("RENAME: $i -> $newname");
 
   # and reassign as I did for aliases
@@ -210,6 +210,12 @@ for $i (keys %times) {
 # and now look at the triples for "real"
 for $i (sort keys %triples) {
 
+  # insane page name?
+  if ($i=~/[\[\{\]\}]/) {
+    warn "WARNING: BAD PAGE NAME: $i";
+    next;
+  }
+
   # determine class for this entity
   my(@classes) = sort keys %{$triples{$i}{class}};
 
@@ -224,12 +230,13 @@ for $i (sort keys %triples) {
   }
 
   my($class) = shift(@classes);
-  open(A,">$pagedir/$i.mw");
+  open(A,">$pagedir/$i.mw.new");
   print A "{{$class\n|title=$i\n";
 
   # error check
   if ($class eq "character" && !$triples{$i}{species}) {
-    warn "WARNING: $i: no species";
+    warn "WARNING: $i: no species (so probably an error)";
+    next;
   }
 
   for $j (sort keys %{$triples{$i}}) {
@@ -241,6 +248,7 @@ for $i (sort keys %triples) {
 
   print A "}}\n";
   close(A);
+  mv_after_diff("$i.mw");
 }
 
 =item parse_semantic($dates, $string)
