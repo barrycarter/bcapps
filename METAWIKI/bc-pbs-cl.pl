@@ -20,13 +20,6 @@ require "/usr/local/lib/bclib.pl";
 	 "gigi" => "[[character::Gigi (lion)]]",
 	 );
 
-# when using slash mode...
-# for $i ("pig", "rat", "zebra", "goat", "farina", "pigita", "larry", "junior",
-#       "snuffles", "andy") {
-#  $full{$i} = "[[character::".ucfirst($i)."]]";
-#  $full{ucfirst($i)} = "[[character::".ucfirst($i)."]]";
-# }
-
 # "done" is special case for slash mode meaning "list of chars is
 # complete", currently unused
 $full{done} = "[[char_list_complete::1]]";
@@ -43,10 +36,13 @@ for $i (glob "/mnt/extdrive/GOCOMICS/pearlsbeforeswine/CHARLIST/*.txt") {
   $all = read_file($i);
   $all = trim($all);
 
+  # text in stars *like this* are my notes to myself
+  $all=~s/\*(.*?)\*//g;
+
   # if entire file is a single character, hack
   if ($full{$all}) {$all="$all/";}
 
-#  debug("ALL: $all");
+  debug("ALL: $all");
 
   # if I use "/" anywhere in line, I'm using that as separator
   # characters appearing in this strip

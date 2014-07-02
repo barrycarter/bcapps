@@ -22,9 +22,9 @@
 require "/usr/local/lib/bclib.pl";
 
 my($metadir) = "/home/barrycarter/BCGIT/METAWIKI";
+my($pagedir) = "/usr/local/etc/metawiki/pbs3";
 
 my(%triples);
-my(%queries);
 
 # load meta data (TODO: this is cheating, only one section so far)
 for $i (`egrep -v '^<|^#|^\$' $metadir/pbs-meta.txt`) {
@@ -34,19 +34,21 @@ for $i (`egrep -v '^<|^#|^\$' $metadir/pbs-meta.txt`) {
   unless (scalar @data == 4) {warn "LINE HAS !=4 elts: $i";}
 }
 
-# imagehashes
-for $i (split(/\n/, read_file("largeimagelinks.txt"))) {
+# imagehashes and prev/next link (assumes largeimagelinks.txt is sorted)
+# TODO: confirm largeimagelinks.txt is sorted (sort -c?)
+for $i (split(/\n/, read_file("$metadir/largeimagelinks.txt"))) {
   $i=~s/^(.*?)\s+.*?\/([0-9a-f]+)\?.*$//;
   my($strip, $hash) = ($1, $2);
   $triples{$strip}{hash}{$hash} = "largeimagelinks";
   $triples{$strip}{class}{strip} = "largeimagelinks";
+  # record my previous strip
+  $triples{$strip}{prev}{$prevstrip} = "largeimagelinks";
+  # and previous strips next strip
+  $triples{$prevstrip}{next}{$strip} = "largeimagelinks";
+  $prevstrip = $strip;
 }
 
 for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
-
-  if ($i=~s/\*(.*?)\*//) {
-    debug("REMOVING: $1");
-  }
 
   # TODO: multirefs!
   # TODO: *_deaths
@@ -119,6 +121,9 @@ for $i (keys %triples) {
     }
   }
 }
+
+# TODO: handle characters that are storylines (ie, they have both
+# classes and dates match exactly)
 
 # handle aliases that have non-trivial triples
 for $i (sort keys %canon) {
@@ -204,7 +209,7 @@ for $i (keys %times) {
 
 # and now look at the triples for "real"
 for $i (sort keys %triples) {
-  
+
   # determine class for this entity
   my(@classes) = sort keys %{$triples{$i}{class}};
 
@@ -219,6 +224,8 @@ for $i (sort keys %triples) {
   }
 
   my($class) = shift(@classes);
+  open(A,">$pagedir/$i.mw");
+  print A "{{$class\n|title=$i\n";
 
   # error check
   if ($class eq "character" && !$triples{$i}{species}) {
@@ -229,65 +236,11 @@ for $i (sort keys %triples) {
     # ignore negative relations
     if ($j=~/^\-/) {next;}
     my($ks) = join(", ", sort keys %{$triples{$i}{$j}});
-    debug("FINAL: $i/$j/$ks");
+    print A "|$j=$ks\n";
   }
-}
 
-die "TESTING";
-
-# once again excessively terse
-  open(A,"|tee /tmp/triples2.txt|sqlite3 /usr/local/etc/metawiki/pbs/pbs-triples.db 1>/tmp/pbs2-myout.txt 2>/tmp/pbs2-myerr.txt");
-  # open(A,">/tmp/mysql.txt");
-  print A << "MARK";
-DROP TABLE IF EXISTS triples;
-CREATE TABLE triples (source, k, target, datasource);
-CREATE INDEX i1 ON triples(source);
-CREATE INDEX i2 ON triples(k);
-CREATE INDEX i3 ON triples(target);
-CREATE INDEX i4 ON triples(datasource);
--- data is single sourced only
-CREATE UNIQUE INDEX i5 ON triples(source,k,target);
-BEGIN;
-MARK
-;
-
-for $i (sort keys %triples) {
-  for $j (sort keys %{$triples{$i}}) {
-    for $k (sort keys %{$triples{$i}{$j}}) {
-      print A "INSERT OR IGNORE INTO triples VALUES('$i','$j','$k','$triples{$i}{$j}{$k}');\n";
-    }
-  }
-}
-
-# commit queries above and start new batch
-print A "COMMIT;\nBEGIN;";
-
-# the queries from the parsing
-for $i (keys %queries) {
-  print A $i;
-}
-
-print A "COMMIT;\n";
-
-# TODO: put this in misc.sql
-print A "DELETE FROM triples WHERE k='class' AND target IN ('*', 'string');\n";
-
-close(A);
-
-die "TESTING";
-
-# write some other ANNOS
-my($query) = << "MARK";
-SELECT SUBSTR(datasource,1,10) AS ds,
- GROUP_CONCAT("[["||source||"::"||k||"::"||target||"]]", "NEWLINE") AS data
-FROM triples GROUP BY ds ORDER BY ds;
-MARK
-;
-
-for $i (sqlite3hashlist($query, "/usr/local/etc/metawiki/pbs/pbs-triples.db")) {
-  debug("SOURCE: $i->{ds}");
-  $i->{data}=~s/NEWLINE/\n/g;
-  write_file($i->{data}, "/mnt/extdrive/GOCOMICS/pearlsbeforeswine/page-$i->{ds}.gif.txt");
+  print A "}}\n";
+  close(A);
 }
 
 =item parse_semantic($dates, $string)

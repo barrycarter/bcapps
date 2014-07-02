@@ -1635,7 +1635,7 @@ Runs the XMLRPC $method on $site, using @params as the parameters
 
 $site is the XMLRPC endpoint (eg, http://wordpress.barrycarter.info/xmlrpc.php)
 
-@params are in the format "value:type" [currently can't pass values
+@params are in the format "value:type" [currently cant pass values
 with colons in them... \: does NOT work as escape <h>though it does
 make a cute emoticon</h>]
 
@@ -2185,18 +2185,18 @@ sub write_wiki_page {
   my(%hash);
 
   # cookie file must be consistent, so I can cache
-  my($cookiefile) = "/tmp/".sha1_hex("$user-$wiki");
+  my($cookiefile) = "/var/tmp/".sha1_hex("$user-$wiki");
 
   # authenticate to wiki (but cache, so not doing this constantly)
 
   # get token and sessionid and cookie prefix
-  my($out, $err, $res) = cache_command("curl -L -b  $cookiefile -c $cookiefile '$wiki' -d 'action=login&lgname=$user&lgpassword=$pass&format=xml'", "age=3600");
+  my($out, $err, $res) = cache_command2("curl -L -b  $cookiefile -c $cookiefile '$wiki' -d 'action=login&lgname=$user&lgpassword=$pass&format=xml'", "age=3600");
    debug("FIRST: $out");
   # hashify results
   $out=~s/(\S+)=\"(.*?)\"/$hash{$1}=urlencode($2)/iseg;
 
   # and use it to login
-  my($log_res) = cache_command("curl -L -b $cookiefile -c $cookiefile '$wiki' -d 'action=login&lgname=$user&lgpassword=$pass&lgtoken=$hash{token}&format=xml'", "age=3600");
+  my($log_res) = cache_command2("curl -L -b $cookiefile -c $cookiefile '$wiki' -d 'action=login&lgname=$user&lgpassword=$pass&lgtoken=$hash{token}&format=xml'", "age=3600");
    debug("SECONE: $out");
 
 
@@ -2208,7 +2208,7 @@ sub write_wiki_page {
   $out=~s/(\S+)=\"(.*?)\"/$hash{$1}=urlencode($2)/iseg;
 
   # write newcontent to file (might be too long for command line)
-  my($tmpfile) = "/tmp/".sha1_hex("$user-$wiki-$page");
+  my($tmpfile) = "/var/tmp/".sha1_hex("$user-$wiki-$page");
   # Could use multiple -d's to curl, but below is probably easier
   write_file("action=edit&title=$page&text=$newcontent&comment=$comment&token=$hash{edittoken}&format=xml", $tmpfile);
 
