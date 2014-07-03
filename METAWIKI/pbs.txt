@@ -838,7 +838,7 @@ MULTIREF [[title::Rat's guilt]] [[notes::On [[2014-06-09]], Rat says he feels gu
 2008-02-11-2008-02-13,2008-04-26,2008-04-27,2008-03-09 [[storyline::[[character::Andy]] and [[character::Olive (dog)]]]]
 2008-02-23 [[character::Rat+Pig+Dingo Boy]] [[Dingo Boy::notes::Although Dingo Boy was only *raised* by wolves, he appears to have a tail and pointed ears, suggesting that he's not human]]
 2008-02-14 [[character::Pig+Guard Duck+Zebra+Goat+Danny Donkey+Rat]]
-2008-02-18 [[character::Rat+Max(lion)+Gigi (lion)+Kiki (lion)]] [[notes::Although it pervades all Pearls strips, it's unusually noticeable here that rat is about the same size as a lion]]
+2008-02-18 [[character::Rat+Max (lion)+Gigi (lion)+Kiki (lion)]] [[notes::Although it pervades all Pearls strips, it's unusually noticeable here that rat is about the same size as a lion]]
 2008-02-18 [[Max (lion)+Zach (lion)::wife::Gigi (lion)+Kiki (lion)]] [[Gigi (lion)+Kiki (lion)::notes::The [[2008-02-18]] strip notes that both Max and Zach "hookup" with both Gigi and Kiki, so I'm assuming lions are bigamous, and that the "new wives" described on [[2008-02-19]] are wives of both male lions]]
 2008-02-26 [[antelope_deaths::#1]]
 2008-03-03,2008-03-04,2008-03-07,2008-03-11,2008-03-12,2008-03-14,2008-03-26-2008-03-28,2008-04-14,2008-04-15,2008-04-19 [[storyline::[[character::Rat]] works as a concierge]]
@@ -2144,5 +2144,22 @@ undies != underwear, so maybe un-dies? (using rebirth)
 # him"?, 2014-06-21
 
 # 2010-04-22 count crocs here to figure out how many die later
+
+# characters with 0 datecounts are a mistake
+
+# on characterlist and storylines pages, should open in new link
+
+# speed up the attr thing by looking at all files or something
+
+# storyline larry on celebrity jeopardy has encoded content as may others
+
+# lulu pig aka wendy
+
+# not a species if species name is capitalized
+
+# typo in 2008-02-18.mw no space between max and lion
+
+# fix {{wp|foo}} links to [[foo::flag::wp]]
+
 
 

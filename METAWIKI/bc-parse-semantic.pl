@@ -248,7 +248,7 @@ for $i (sort keys %triples) {
 
   print A "}}\n";
   close(A);
-  mv_after_diff("$i.mw");
+  mv_after_diff("$pagedir/$i.mw");
 }
 
 =item parse_semantic($dates, $string)

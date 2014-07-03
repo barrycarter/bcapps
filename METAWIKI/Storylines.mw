@@ -1,1 +1,1 @@
-{{#ask: [[Category:Storylines]] | ?datemin | ?datemax | ?datecount | limit = 100000}}
+{{#ask: [[Category:Storylines]] | ?datemin=Start | ?datemax=End | ?datecount=# Strips | limit = 100000}}
