@@ -1,7 +1,7 @@
 <table border class="wikitable">
 <tr><th colspan=2>{{DateTable|{{{title|}}}|{{{hash|}}}}}</th></tr>
 {{#if: {{{character|}}} |
-<tr><th>[[Character List|Character(s)]]</th><td>{{#arraymap: {{{character|}}}|,|x|[[character::x]]}}</td></tr>}}{{#if: {{{birthday|}}} |
+<tr><th>[[Character List|Character(s)]]</th><td>{{#arraymap: {{{character|}}}|,|x|{{Test3|character|x}}}}</td></tr>}}{{#if: {{{birthday|}}} |
 <tr><th>Birthday(s)</th><td>{{#arraymap: {{{birthday|}}}|,|x|[[birthday::x]]}}</td></tr>}}{{#if: {{{death|}}} |
 <tr><th>Death(s)</th><td>{{#arraymap: {{{deaths|}}}|,|x|[[deaths::x]]}}</td></tr>}}{{#if: {{{cameo|}}} |
 <tr><th>Cameo(s)</th><td>{{#arraymap: {{{cameo|}}}|,|x|[[cameo::x]]}}</td></tr>}}{{#if: {{{storyline|}}} |
