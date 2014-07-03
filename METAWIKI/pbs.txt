@@ -448,7 +448,7 @@ MULTIREF [[title::Pig's Cheese Fetish]] [[notes::Pig seems to have an unusual ob
 2013-11-02 [[character::Rat+Goat+Bill 20131102 (human)]] [[Bill 20131102 (human)::profession::coordinator]]
 2011-01-21 [[character::Rat+Pig+Stephan Pastis+Merle Mallofinsky (human)+Ethel Mallofinsky (human)]]
 2009-11-27-2009-11-29 [[storyline::[[character::Pig]]'s magnetic letters]]
-2012-06-26,2012-06-27,2012-06-29,2012-07-09,2012-07-13,2012-08-16,2012-08-22 [[storyline::[[character::Dinky (duckling)]] abandoned]]
+2012-06-26,2012-06-27,2012-06-29,2012-07-09,2012-07-13,2012-08-16,2012-08-22 [[storyline::[[character::Dinky (duckling)]] abandoned]] [[Dinky (duckling)::aka::Dinky]]
 2004-05-10 [[description::[[character::Pig]] digs a hole to [[Kukistan]], noting to [[character::Rat]] that author [[Stephan Pastis]] originally named a real country, but changed it for fear of reprisals]] [[notes::If Pig really were to dig a hole through the center of the Earth, he would end up in the ocean west of Australia (the entire US's antipode is there)]]
 2004-05-14 [[notes::This strip implies that Kukistan is actually {{wp|Red China}}]]
 2004-05-10-2004-05-15 [[storyline::[[Kukistan]]]]
@@ -2161,5 +2161,5 @@ undies != underwear, so maybe un-dies? (using rebirth)
 
 # fix {{wp|foo}} links to [[foo::flag::wp]]
 
-
+# 2013-08-12 comics police vs 2014-03-28 (censors call themselves police)
 

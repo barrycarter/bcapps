@@ -14,6 +14,16 @@ defaults("dryrun=1");
 # TODO: subroutine for required options?
 unless ($apiep = $globopts{api}){die "$0 --api required";}
 
+my($tmpfile) = my_tmpfile2();
+open(A, "|xargs -0 lsattr -v > $tmpfile");
+print A join("\0", @ARGV);
+close(A);
+
+for $i (split(/\n/, read_file($tmpfile))) {
+  $i=~/^(\d+)\s+.*?\s+(.*)$/;
+  $ver{$2}=$1;
+}
+
 # look at files on command line
 for $pagename (@ARGV) {
 
@@ -25,8 +35,7 @@ for $pagename (@ARGV) {
   }
 
   # TODO: this is insanely inefficient, do a global lsattr or stat
-  my($ver) = `lsattr -v \"$pagename.mw\"`;
-  $ver=~s/\s+.*$//s;
+  my($ver) = $ver{"$pagename.mw"};
   my($dev,$ino,$mode,$nlink,$uid,$gid,$rdev,$size,$atime,$mtime,$ctime,$blksize,$blocks)=stat("$pagename.mw");
 
   # already mirrored

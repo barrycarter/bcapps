@@ -89,7 +89,7 @@ for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
 
       # if the character has parens in name and no species, note species
       # (note that a species triple will correctly override this)
-      if ($l=~/\((.*?)\)$/ && !$triples{$l}{species}) {
+      if ($l=~/\(([^A-Z]*?)\)$/ && !$triples{$l}{species}) {
 	$triples{$l}{species}{$1} = "NAME2SPECIES";
       }
 
@@ -196,7 +196,6 @@ for $i (sort keys %datename) {
       delete $triples{$i}{$j}{$k};
     }
   }
-
 }
 
 for $i (keys %times) {
