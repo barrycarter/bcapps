@@ -11,6 +11,7 @@
 # dl'ing page data (pipe to sh or parallel):
 # grep src= page-2014-05-* | grep assets\.amuniversal | grep div | fgrep -v 'width=900' | perl -nle 's/^(.*?)://; $date=$1; /src="([^"]*?)" \/>/; $url = $1; print "curl -o $date.gif \47$url?width=1500\47"'
 
+# tweaking the above can also update largeimagelinks.txt
 
 require "/usr/local/lib/bclib.pl";
 

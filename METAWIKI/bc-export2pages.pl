@@ -16,6 +16,10 @@ while ($all=~s%<page>(.*?)</page>%%s) {
   my($title) = $1;
   debug("WRITING: $title");
   write_file("$text\n", "$pagedir/$title.mw");
-}
 
+  # this is a major hack so bc-mirror-mw-attr.pl doesn't mirror these
+  # files back to the wiki (since they are known current)
+  my($dev,$ino,$mode,$nlink,$uid,$gid,$rdev,$size,$atime,$mtime,$ctime,$blksize,$blocks)=stat("$pagedir/$title.mw");
+  system("chattr -v $mtime \"$pagedir/$title.mw\"");
+}
 

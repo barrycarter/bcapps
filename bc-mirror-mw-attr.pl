@@ -12,6 +12,9 @@ require "/home/barrycarter/bc-private.pl";
 defaults("dryrun=1");
 
 # TODO: this is a total hack for stuff I keep forgetting to do
+
+# TODO: this doesnt work for new files, since the glob takes place at
+# shell level, yikes
 system("rsync -Pavz /home/barrycarter/BCGIT/METAWIKI/*.mw /usr/local/etc/metawiki/pbs3/");
 
 # TODO: subroutine for required options?

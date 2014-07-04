@@ -291,7 +291,7 @@ disclaim: based on gocomics website only
 2013-12-18 [[notes::The ticker text reads "PASTIS IRRITATES MILLIONS WITH CALVIN AND HOBBES PARODY STRIP. PASTIS"]]
 2002-11-18-2002-11-23 [[storyline::[[Box Me In]]]]
 2002-12-01 [[description::With [[category::Out of Character|uncharacteristic]] generosity, [[Rat]] gives $200 to a pizza delivery boy wearing a replica of the {{wp|Leaning Tower of Pisa}}, attracting other costumed characters]]
-2002-12-04 [[description::[[Pig]] meets [[character::[[Goat::friend::Chuckie (sheep)]]]], a non-anthropomorphic animal]]
+2002-12-04 [[description::[[Pig]] meets [[character::[[Goat::friend::Chuckie (sheep)]]]], a non-anthropomorphic animal]] [[Chuckie (sheep)::aka::Chuckie]]
 2006-12-31 [[notes::Stephan Pastis says he can't allow a non-anthropomorphic animal in the strip, perhaps forgetting about [[Chuckie (sheep)]], who was introduced way back on [[2003-10-12]]]]
 2003-10-12,2002-12-04-2002-12-06,2002-12-08,2005-12-28,2003-03-15,2003-04-30 [[storyline::[[character::Chuckie (sheep)]] the non-anthropomorphic sheep]]
 2003-05-24 [[character::Pig+Amy (pig)+Rat]] [[Amy (pig)::profession::telegraph operator]]
@@ -336,7 +336,14 @@ MULTIREF [[title::Dead celebrities]] [[notes::On [[2002-08-01]], [[Rat]] doesn't
 2013-10-14 [[character::Rat+Goat+Comic Strip Censor+Comic Strip Censor 2+Dr. Donkey (ass)]] [[Comic Strip Censor 2::species::human]] [[Comic Strip Censor 2::subspecies::censor]]
 2009-10-14-2009-10-16,2009-10-19,2009-10-22 [[storyline::[[character::Larry]] placed in a zoo]]
 2013-02-09 [[newspaper_mentions::Standard ???+??? Daily News]]
-2003-05-26 [[description::[[character::Rat]] kills [[deaths::[[Rat::killee::Father Time (deity)]]]]]]
+2003-05-26 [[description::[[character::Rat]] kills [[deaths::[[Rat::killee::Father Time 2003 (deity)]]]]]]
+2014-06-30 [[character::Pig+Rat+Father Time 2014]]
+2014-07-01 [[character::Pig+Goat+Rat+Stephan Pastis]] [[Category::Shaggy Dog]]
+2014-07-02 [[character::Rat+Goat]]
+2014-07-03 [[character::Larry+Trudy (human)+Fred 20140703 (crocodile)]]
+2014-07-04 [[character::Pig+Rat+[[Pig+Rat::neighbor::Abby (human)]]+[[Abby (human)::sister::Cass (human)]]]]
+2012-02-22-2012-02-24 [[character::Bob n (crocodile)+Burt 20120222 (crocodile)]]
+MULTIREF [[title::Father Time's Death]] [[notes::The [[Father Time 2003]] from [[2003-05-26]] asked Rat to kill him in late May. The [[Father Time 2014]] from [[2014-06-30]] apparently wants to continue living]]
 2003-06-04 [[meta::this mentions albuquerque, need to do something easter eggy here]]
 2012-10-08,2012-10-09,2012-10-11,2012-10-14,2012-10-15 [[storyline::[[character::Guard Duck]]'s etiquette program]]
 2003-06-09-2003-06-14,2003-06-16,2003-06-17 [[storyline::[[Rat]] and [[Pig]] buy a nuclear missile]]
@@ -407,7 +414,7 @@ MULTIREF [[title::Anti-social iPods]] [[notes::On [[2007-11-04]], [[Pig]] realiz
 2003-09-08-2003-09-12 [[storyline::Piggybanks]] [[character::Fredo (piggybank)+Fredo's wife (piggybank)]]
 2003-10-14 [[deaths::Johnny Mallard (duck)]]
 2003-10-18 [[notes::The {{wp|tally marks}} on [[Pig]]'s wall suggest he has been confined for 33 days (or 33 units of some time interval)]]
-2003-10-23,2003-10-24 [[deaths::Cubby (fly)]] [[character::Trixie (human)+Stephan Pastis]] [[Trixie (human)::profession::stripper]] [[notes::A gravestone in panel 1 reads "Pastis", and a gravestone in panel 2 reads "Tooty"]]
+2003-10-23,2003-10-24 [[deaths::Cubby (fly)]] [[character::Trixie (human)+Stephan Pastis]] [[Trixie (human)::profession::stripper]] [[notes::A gravestone in panel 1 reads "[[Pastis]]", and a gravestone in panel 2 reads "[[Tooty]]"]] [[Trixie (human)::aka::Trixie]]
 2003-11-10-2003-11-14 [[storyline::[[character::Pig]] seeks out {{wp|Peanuts}} characters]]
 2003-11-17-2003-11-22 [[storyline::[[character::Rat]] works at an Information Desk]]
 2003-12-01-2003-12-06,2003-12-08-2003-12-11 [[storyline::[[character::Pig]] visits a slaughterhouse]]
@@ -451,7 +458,11 @@ MULTIREF [[title::Pig's Cheese Fetish]] [[notes::Pig seems to have an unusual ob
 2013-11-02 [[character::Rat+Goat+Bill 20131102 (human)]] [[Bill 20131102 (human)::profession::coordinator]]
 2011-01-21 [[character::Rat+Pig+Stephan Pastis+Merle Mallofinsky (human)+Ethel Mallofinsky (human)]]
 2009-11-27-2009-11-29 [[storyline::[[character::Pig]]'s magnetic letters]]
+2009-11-27 [[character::Rat+O (letter)+A (letter)+D (letter)+L (letter)+P (letter)+X (letter)+I (letter)+C (letter)+T (letter)+F (letter)+K (letter)+L (letter)]]
 2012-06-26,2012-06-27,2012-06-29,2012-07-09,2012-07-13,2012-08-16,2012-08-22 [[storyline::[[character::Dinky (duckling)]] abandoned]] [[Dinky (duckling)::aka::Dinky]]
+2009-11-28 [[character::X (letter)]]
+2009-11-29 [[character::Rat+I (letter)+O (letter)+A (letter)+D (letter)+E (letter)+P (letter)+X (letter)+Y (letter)+L (letter)+C (letter)+T (letter)+F (letter)+K (letter)+V (letter)]]
+MULTIREF [[title::Pig's Letters]] [[notes::The arrangement of Pig's letters on [[2009-11-27]] and [[2009-11-29]] are very similar, but not 100% identical]]
 2004-05-10 [[description::[[character::Pig]] digs a hole to [[Kukistan]], noting to [[character::Rat]] that author [[Stephan Pastis]] originally named a real country, but changed it for fear of reprisals]] [[notes::If Pig really were to dig a hole through the center of the Earth, he would end up in the ocean west of Australia (the entire US's antipode is there)]]
 2004-05-14 [[notes::This strip implies that Kukistan is actually {{wp|Red China}}]]
 2004-05-10-2004-05-15 [[storyline::[[Kukistan]]]]
@@ -473,7 +484,7 @@ MULTIREF [[title::Pig's Cheese Fetish]] [[notes::Pig seems to have an unusual ob
 2004-06-20 [[deaths::[[Zebra::cousin::Vinnie (zebra)]]]] [[notes::"Cousin Vinnie" may be a reference to {{wp|My Cousin Vinnie}}]]
 2004-06-27 [[newspaper_mentions::San Francisco Chronicle]]
 2004-07-05-2004-07-07,2004-09-03,2004-10-11,2004-10-13,2004-12-10,2004-12-11 [[storyline::[[character::Alphonse (porcupine)]]]]
-2004-07-06 [[Alphonse (porcupine)::aka::The Needy Porcupine]]]]
+2004-07-06 [[Alphonse (porcupine)::aka::The Needy Porcupine+Alphonse]]]]
 2011-01-10 [[character::Pig+Rat+Ned (human)]] [[Ned (human)::aka::The Negative Guy+Negative Ned]]
 2011-01-11 [[character::Rat+Goat+Pig+Guard Duck+Negative Ned]] [[birthday::Pig]] [[notes::As expected, [[Negative Ned]]'s party hat has a frowny face, while the others have a smiley face]]
 2011-01-02 [[notes::[[character::Pig]]'s briefcase reads "Pittsburgh or bust"]]
@@ -529,8 +540,8 @@ MULTIREF [[title::Atlas]] [[notes::[[2004-09-13]] shows [[Atlas]] carrying the w
 2004-12-27-2005-01-01 [[storyline::[[character::Rat]] sells beefie babies]]
 2005-04-17,2005-01-02,2005-01-09,2005-01-16,2005-02-13,2005-03-21,2005-03-22 [[storyline::[[character::Dickie (cockroach)]]]]
 2005-04-17 [[character::Larry 20050417 (human)]] [[Larry 20050417 (human)::profession::newspaper worker]]
-2005-05-15 [[character::Larry+Zebra+{{wp|Charles Darwin}}]]
-2005-01-02 [[Dickie (cockroach)::aka::The Cockroach You Love To Love]]
+2005-05-15 [[character::Larry+Zebra]] [[cameo::{{wp|Charles Darwin}}]]
+2005-01-02 [[Dickie (cockroach)::aka::The Cockroach You Love To Love+Dickie]]
 2005-01-03 [[character::Zeba Zeba Eata]]
 2005-01-13-2005-01-15 [[storyline::[[character::Man on the Moon (human)]]]]
 2011-12-17 [[character::Pig+Stacey (human)]] [[Stacey (human)::aka::Steyci]] [[category::Third Wall]]
@@ -744,8 +755,7 @@ MULTIREF [[title::Rat's guilt]] [[notes::On [[2014-06-09]], Rat says he feels gu
 2007-01-05 [[event::[[character::Maura]] migrates, breaking up with [[character::Guard Duck]]]] [[Maura::species::duck]]
 2007-01-09 [[character::Ataturk (llama)]]
 2007-01-10 [[character::Rat+Pig+Ataturk (llama)]]
-2007-01-15-2007-01-19 [[storyline::{{wp|Abraham Lincoln}} visit]]
-2004-11-05 [[character::Pig+Rat+Colin (human)]]
+2007-01-15-2007-01-19 [[storyline::{{wp|Abraham Lincoln}} visit]]2004-11-05 [[character::Pig+Rat+Colin (human)]]
 2007-01-24 [[event::[[character::Guard Duck]] kills [[deaths::[[Guard Duck::killee::Frank 20070124 (crocodile)]]]]]]
 2007-02-26 [[crocodile_deaths::#1]]
 2007-02-28 [[crocodile_deaths::#1]]
@@ -937,6 +947,9 @@ MULTIREF [[title::Too Many Words]] [[notes::On [[2004-09-20]], [[Stephan Pastis]
 2012-11-30 [[notes::In panel 1, the background picture is of pig and rat; in panel 2, it's of pig and guard duck]]
 2014-06-24 [[character::Rat+Goat]]
 2014-06-25 [[newspaper_mentions::The Times]] [[character::Rat+Goat+Fred 20140625 (human)]] [[Fred 20140615 (human)+Fred 20140625 (human)::notes::[[Fred 20140615 (human)]] and [[Fred 20140625 (human)]] look somewhat similar, but different enough that I'm listing them as two separate people]]
+2014-06-27 [[character::Rat+Goat]]
+2014-06-28 [[character::Rat+Pig]]
+2014-06-29 [[character::Rat]] [[cameo::{{wp|Paul Stanley}}]]
 2013-01-21 [[notes::[[character::Pig]]'s mole vanishes by panel 3 (so, apparently, removing the other mole somehow worked!)]]
 2012-09-07 [[notes::Some of the beer packs don't have the word "BEER" on the side]]
 2009-06-06 [[notes::[[Patty]]'s hammer is stylistically identical to the hammer from {{wp|Donkey Kong}}, the first game in the Mario series]]
@@ -977,7 +990,7 @@ MULTIREF [[title::Pearls without [[Pig]]]] [[notes::The "Pearls without Pig" on 
 2009-11-16,2009-11-17 [[storyline::[[character::Rat]]'s Late Night Radio Show]]
 2009-11-18 [[storyline::Rat's Late Night Radio Show+Guard Duck Hates Cows]]
 2009-11-24 [[newspaper_mentions::Business Week|Business Week (magazine)]]
-2009-11-30-2009-12-03,2009-12-10 [[storyline::[[character::Bippy (character)]]]]
+2009-11-30-2009-12-03,2009-12-10 [[storyline::[[character::Bippy (character)]]]] [[Bippy (character)::aka::Bippy]]
 2009-12-01 [[character::Bippy (character)+Rat+Pig+Stephan Pastis]]
 2009-09-28,2009-12-12-2009-12-16 [[storyline::Pantless Ziggy]]
 2010-01-02 [[newspaper_mentions::Seattle Times+Reno Gazette+Tacoma News ???]]
@@ -1015,7 +1028,7 @@ MULTIREF [[title::Pearls without [[Pig]]]] [[notes::The "Pearls without Pig" on 
 2005-08-18 [[hamster_deaths::#unknown]]
 2010-05-17 [[newspaper_mentions::Hartford Cou???+Santa Rosa Press Democrat+Arizona Republic]]
 2008-12-08 [[newspaper_mentions::Santa Rosa Press Democrat]]
-2008-12-18,2008-12-19 [[character::Pippy (prairie dog)]] [[Pippy (prairie dog)::aka::Father Pippy the Prairie Dog preacher]] [[Pippy (prairie dog)::profession::preacher]]
+2008-12-18,2008-12-19 [[character::Pippy (prairie dog)]] [[Pippy (prairie dog)::aka::Father Pippy the Prairie Dog preacher+Pippy]] [[Pippy (prairie dog)::profession::preacher]]
 2010-05-25 [[newspaper_mentions::New York Daily News+Albany Times Union]]
 2010-05-18 [[character::Pig+Goat+[[Pig::killee::[[deaths::J. Rutherford (shrimp)]]]]]]
 2010-05-27 [[character::Pig+Rat+Bigfoot]]
@@ -1023,7 +1036,7 @@ MULTIREF [[title::Pearls without [[Pig]]]] [[notes::The "Pearls without Pig" on 
 2010-06-14,2010-06-15,2010-06-18,2010-06-22,2010-06-23,2010-07-09 [[storyline::[[character::Larry]] returns to fourth grade]]
 2010-06-20 [[crocodile_deaths::#1]] [[notes::We learn there are 18 crocodiles remianing in the frat house]]
 2010-06-24,2010-06-08 [[character::Zebra+Potus (elephant)]]
-2010-06-06-2010-06-08,2010-06-10,2010-06-20,2010-06-21,2010-06-24,2010-06-25,2010-12-04 [[character::Potus (elephant)]]
+2010-06-06-2010-06-08,2010-06-10,2010-06-20,2010-06-21,2010-06-24,2010-06-25,2010-12-04 [[character::Potus (elephant)]] [[Potus (elephant)::aka::Potus]]
 2011-02-07 [[notes::possible homage to {{wp|Dick Tracy}}]]
 2010-06-12 [[character::Pig+Rat+[[Pig::friend::Jacko (dragon)]]]] [[Jacko (dragon)::aka::Jacko, the Fire-Breathing Dragon]]
 2010-06-28 [[storyline::[[character::Pig]]'s stalker [[character::Sweet Fanny (sheep)]]]]
@@ -1091,7 +1104,7 @@ MULTIREF [[title::[[Pig]]'s Uncle [[George (pig)]]]] [[notes::On [[2004-12-05]],
 MULTIREF [[title::Ebony and Ivory]] [[notes::The crocs refer to [[Zebra]] as "Ebony and Ivory" on [[2008-07-15]] and [[Max (lion)]] and [[Zach (lion)]] do the same just 3 days later on [[2008-07-18]] (maybe they heard the crocs singing)]]
 2011-02-16 [[newspaper_mentions::Daily News]]
 2011-02-08 [[notes::Pig's sign reads "Buy Danny Donkey Beer. It's a great beer and you'll really like the taste. It's also refreshing and goes down easy on a hot summer's day. It's cheap too. And the label is pretty great too. And it comes in those handy little cardboard six-packs that have those little handles on them that make the beer easier to carry around. And if you buy the beer, you'll probably make more friends because that's just the kind of beer it is. So that's about all I have to say about Danny Donkey beer, except for the fact that it goes really good with chips, pretzels, crackers, cheese, pizza, burritos, tacos, pasta, hamburgers, and hot dogs. I really like hot dogs. It also goes really well with my friend Stephan's blog. You should read it. It's at www.stephanpastis.wordpress.com. Or even better, go be one of his friends on Facebook. His Facebook page is http://www.facebook.com/pages/Stephan-Pastis/132583843763?created. Stephan's a pretty good guy. I'd promote his books too, but I'm probably getting pretty far from my original topic, that being Danny Donkey beer, which tastes really great and is less filling. So if you want to be(COVERED) and have lots of friends and have all the girls like you, drink Da(COVERED)and you'll never regret it. Take care and have a nice day (COVERED) driving on this fine morning, or afternoon, or night, or (COVERED) maybe."]]
-2012-06-03,2009-07-26,2009-07-05,2012-01-01,2009-09-13,2012-02-12,2011-02-06,2009-10-18,2013-05-19,2008-12-14 [[storyline::[[character::Elly (elephant)]]]]
+2012-06-03,2009-07-26,2009-07-05,2012-01-01,2009-09-13,2012-02-12,2011-02-06,2009-10-18,2013-05-19,2008-12-14 [[storyline::[[character::Elly (elephant)]]]] [[Elly (elephant)::aka::Elly Elephant+Elly]]
 2003-03-02 [[character::Pig+Rat+Jacques (human)+Tony (human)+Yanni (human)+Eagle Cloud (human)]] [[Eagle Cloud (human)::profession::Indian chief]] [[Yanni (human)::notes::The Yanni from [[2002-06-09]] and [[2003-03-02]] appear to be the same person]]
 2012-01-17-2012-01-20,2012-01-22-2012-01-24 [[storyline::Airlines lose [[character::Stephan Pastis]]' luggage, including [[character::Rat]]]]
 2012-01-17 [[notes::Unless Pastis was flying in his underwear, the airlines somehow managed to lose the clothes he was wearing]]
@@ -1154,7 +1167,7 @@ MULTIREF [[title::Pig's Bucket List]] [[notes::[[character::Pig]] doesn't know w
 2012-02-07 [[character::Rat+Goat+Roadrunners]]
 2012-02-10 [[character::Pig+Rat+Roadrunners]]
 2012-02-16 [[category::Out of Character]]
-2012-02-19 [[character::Zebra+[[character::Virginia (zebra)+Plaid (zebra)]]]]
+2012-02-19 [[character::Zebra+[[character::Virginia (zebra)+Plaid (zebra)]]]] [[Plaid (zebra)::aka::Plaid]]
 2012-02-19-2012-02-23,2012-02-25 [[storyline::[[character::Plaid (zebra)]]]]
 2012-02-19 [[notes::[[Plaid (zebra)]]'s stripes are in color here, but are black-and-white in the retroactively-colored daily strips&#58; [[2012-02-21]] and [[2012-02-22]]]] [[meta::this needs to be a multiref!]]
 MULTIREF [[title::Plaid's stripes]] [[notes::[[Plaid (zebra)]]'s stripes are in color on [[2012-02-19]], but are black-and-white in the retroactively-colored daily strips&#58; [[2012-02-21]] and [[2012-02-22]]]]
@@ -1375,7 +1388,7 @@ MULTIREF [[title::[[[[Larry]]'s mother]]]] [[notes::Larry's mother dies on [[200
 2011-01-06 [[character::Pig+Rhonda (robin)]] [[meta::same as earlier Rhonda robin? Looks different]]
 2011-01-07-2011-01-09 [[storyline::[[Rat::aka::Diogerat]]]]
 2005-04-25,2005-04-26 [[storyline::[[character::Rat]] and [[character::Pig]] debate]]
-2009-08-24-2009-08-27 [[storyline::[[character::Blackbeard (human)]], dry cleaner]] [[Blackbeard (human)::profession::dry cleaner+pirate]]
+2009-08-24-2009-08-27 [[storyline::[[character::Blackbeard (human)]], dry cleaner]] [[Blackbeard (human)::profession::dry cleaner+pirate]] [[Blackbeard (human)::aka::Blackbeard]] [[meta::For stuff like this, Blackbeard should be the name w/ a separate species designation?]]
 2009-09-04 [[character::Pig+Rat+[[Pig::friend::Blackbeard (human)]]]]
 2011-12-26 [[character::Rat+Pig+Spectral Tortoise O' Perspective (tortoise)]]
 2004-03-17-2004-03-20 [[storyline::{{wp|Ho Chi Minh}}]]
@@ -1662,14 +1675,16 @@ MULTIREF [[title::Furry Brown Cap]] [[notes::A furry brown cap, apparently unrel
 2013-06-12 [[cameo::Steve Dallas (Bloom County)]]
 2013-02-02 [[notes::The lettering on the beer can reads "Beer" and isn't in all capitals like it is in most other strips]]
 2004-07-18,2004-12-17 [[notes::[[character::Goat]] implies the {{wp|United States}} is a democracy, but it's actually a republic. Of course, in the PBS world, the United States may actually be a democracy]]
+MULTIREF [[title::A Republic, not a Democracy]] [[notes::On [[2004-07-18]], [[Goat]] states "we live in a democracy" (and implies it again on [[2004-12-17]]), but, as [[Rat]] correctly notes on [[2013-09-29]], the {{wp|United States}} is a {{wp|republic}}, not a {{wp|democracy}}]]
 2009-10-14 [[Larry::aka::Crocus Lazybuttus]]
+MULTIREF [[title::Rat's Senate]] [[notes::On [[2006-07-22]], [[Rat]] doesn't know what the {{wp|Senate}} is (though he might just be joking), but by [[2010-10-19]], he actually runs for Senate]]
 2004-09-30 [[character::Gigi (cat)]]
 2004-10-01 [[character::Pepe (parrot)]]
 2011-06-28 [[character::Goat+Pig+Brian (human)]] [[Brian (human)::profession::cosmologist]] [[notes::The cosmologist/cosmetologist joke was also used in the first episode of the TV show {{wp|Community}}]]
 2013-03-21 [[newspaper_mentions::Columbus Dispatch]]
 2004-06-15 [[character::Pig+Ms. Bootyworth (bottle)+Larry (oregano bottle)]]
 2009-04-13 [[Guard Duck::aka::The Waterfowler]]
-2005-10-25 [[character::Wee Bear (bear)+{{wp|Willie Mays}}]]
+2005-10-25 [[character::Wee Bear (bear)]] [[cameo::{{wp|Willie Mays}}]]
 2005-01-23 [[character::Pig+Goat+[[deaths::Rat]]]]
 2009-11-06 [[character::Pig+Rat+Tooth Fairy (deity)]]
 2012-01-05,2012-01-06 [[character::Pig+Rat+Mr. Buffalo Head (buffalo)]] [[Mr. Buffalo Head (buffalo)::aka::Mounted Buffalo Head of Regret]]
@@ -1748,7 +1763,7 @@ MULTIREF [[title::Dictionary Editing]] [[notes::On [[2011-01-27]], [[Rat]] takes
 MULTIREF [[title::Larry's wife]] [[notes::On [[2005-06-14]], Larry's wife is [[Larry::wife::Frieda (crocodile)]], on [[2005-07-10]], her name is [[Larry::wife::Debbie (crocodile)]], and by [[2008-04-10]] (and probably earlier), it's Patty. This isn't necessarily a contradiction, however. Larry mentioned his marriage to Frieda was "on the rocks", so maybe they divorced and he then married Debbie. After callously and cold-bloodedly (ha ha) killing 2 of their children, it's possible Debbie left him, and Patty is his third wife]]
 MULTIREF [[title::Pig's Irony]] [[notes::On [[2003-05-02]], [[Pig]] confuses "irony" with a {{wp|Clothes iron}}, and, on [[2010-06-01]], he confuses it with the metal {{wp|Iron}}]]
 MULTIREF [[title::Pig For Sale]] [[notes::On [[2002-02-19]], [[Rat]] tries to sell [[Pig]] on an online auction site. On [[2005-05-26]], he sells Pig to gypsies. On [[2005-12-31]], he pawns Pig, and on [[2012-06-16]], he tries to give Pig away for free. Apparently, none of these attempts actually succeed]]
-MULTIREF [[title::Pig's monkey]] [[notes::Pig seems to have an unusual connection to monkeys. On [[2002-09-27]], one threatens to bite off his ears. On [[2002-11-17]], his mother calls him a "monkeybrain". On [[2003-01-24]], similarly to 2002-09-27, another fortune cookie tells Pig he will be "monkey food". On [[2003-10-31]], one of Pig's charades guesses is "monkey" (another is "cheese", another item that appears to fascinate pig). On [[2004-01-28]], Pig talks about egging monkeys. The reference appears to be coincidental, but may have deeper meaning. On [[2006-12-16]], Pig gets a "security monkey" (perhaps assuming a toy monkey is safe despite the earlier fortune cookie warnings). On [[2008-05-09]], Rat sends Pig a telegram via monkey (again somewhat coincidental, though possibly Rat's attempt to scare Pig). On [[2009-06-30]], Pig wears monkey underwear (the monkey looks curiously like {{wp|Curious George}}). On [[2009-09-20]], Pig orders a monkey-in-a-box (he's apparently gotten over the fortune cookie warnings). On [[2009-10-13]], he dresses up as a [[Pig::aka::Monkeypig]]. On [[2010-07-20]], he wears monkey pajama bottoms as "magic pants" (which look virtually identical to his monkey underwear from 2009-06-30. On [[2012-02-09]], he wants to groom [[Pigita]] "just like monkeys" (again, possibly just an incidental reference). On [[2012-10-06]], he refers to a chimp as his friend. On [[2013-07-20]], he takes ice cream "as a gibbon". Of course, chimps and gibbons are apes, not monkeys (as my favorite Librarian would be quick to remind me), but it's in the same general theme.]]
+MULTIREF [[title::Pig's monkey]] [[notes::Pig seems to have an unusual connection to monkeys. On [[2002-09-27]], one threatens to bite off his ears. On [[2002-11-17]], his mother calls him a "monkeybrain". On [[2003-01-24]], similarly to 2002-09-27, another fortune cookie tells Pig he will be "monkey food". On [[2003-10-31]], one of Pig's charades guesses is "monkey" (another is "cheese", another item that appears to fascinate pig). On [[2004-01-28]], Pig talks about egging monkeys. The reference appears to be coincidental, but may have deeper meaning. On [[2006-12-16]], Pig gets a "security monkey" (perhaps assuming a toy monkey is safe despite the earlier fortune cookie warnings). On [[2008-05-09]], Rat sends Pig a telegram via monkey (again somewhat coincidental, though possibly Rat's attempt to scare Pig). On [[2009-06-30]], Pig wears monkey underwear (the monkey looks curiously like {{wp|Curious George}}). On [[2009-09-20]], Pig orders a monkey-in-a-box (he's apparently gotten over the fortune cookie warnings). On [[2009-10-13]], he dresses up as a [[Pig::aka::Monkeypig]]. On [[2010-07-20]], he wears monkey pajama bottoms as "magic pants" (which look virtually identical to his monkey underwear from 2009-06-30). On [[2012-02-09]], he wants to groom [[Pigita]] "just like monkeys" (again, possibly just an incidental reference). On [[2012-10-06]], he refers to a chimp as his friend. On [[2013-07-20]], he takes ice cream "as a gibbon". Of course, chimps and gibbons are apes, not monkeys (as my favorite Librarian would be quick to remind me), but it's in the same general theme.]]
 2002-11-17 [[Pig::aka::MonkeyBrain]]
 2005-03-06 [[character::Pig+Zebra+The Speed Demon (zebra)+The Mighty Hercules (zebra)+Food (zebra)]]
 2013-11-21 [[Zebra::profession::video game designer]]
@@ -1774,6 +1789,9 @@ MULTIREF [[title::Piracy warning]] [[notes::On [[2009-09-04]], Pig asks Rat to f
 MULTIREF [[title::Sawing Women]] [[notes::On [[2011-03-24]], Pig offers to saw someone in half as part of a magic trick. On [[2013-10-26]], Pig believes it's murder and should be illegal. Is it possible Pig did the trick wrong and actually killed someone?]]
 MULTIREF [[title::Rat's Awesome Happiness]] [[notes::On [[2010-03-16]], Rat notes he hasn't been happy for at least 10 days in a row. On [[2011-10-22]], he notes that he *has* been awesome for at least 30 days in a row. This isn't necessarily a contradiction: it's possible that Rat's awesomeness doesn't make him happy and/or that Rat was just having a bad month in March]]
 MULTIREF [[title::Pig's Garage Sale]] [[notes::On [[2004-03-06]], Pig doesn't know what a garage sale is, but figures it out by [[2010-03-17]], when he tolds one himself]]
+MULTIREF [[title::Guard Duck's Parents]] [[notes::On [[2006-06-24]], we see [[Guard Duck]] writing his father, but on [[2006-12-03]], he says he never knew his parents]]
+MULTIREF [[title::Rat and the Lottery]] [[notes::On [[2005-12-19]], [[Rat]] says his retirement plan is the lottery. By [[2011-05-09]], he understand it's "a tax on people who can't do math"]]
+0000-00-00 [[meta::This is for "obvious" stuff, but is probably a bad idea]] [[Rat+Pig+Goat+Zebra+Larry+Stephan Pastis+Guard Duck+Junior+Max (lion)::gender::male]] [[Pigita+Patty (crocodile)+Farina+Maura+Joy+Annie May+Jennifer (seal)+Katie (cow)+Sweet Fanny (sheep)+Libby (human)+Vivian (pig)+Cindy (rat)+Connie (cow)+Wanda (human)::gender::female]]
 </data>
 
 # the following lines are incorrect and need to be checked
@@ -1916,7 +1934,7 @@ undies != underwear, so maybe un-dies? (using rebirth)
 
 # 2011-10-25 rat also dates human girl
 
-# TODO: democracy vs republic
+# TODO: democracy vs republic (some done)
 
 # 2011-02-04 vs toastmasters, 2012-05-07
 
@@ -1946,11 +1964,7 @@ undies != underwear, so maybe un-dies? (using rebirth)
 
 # 2006-10-04 pig mom writes letters + comes over daily?
 
-# 2006-12-03 LGD doesn't know parents vs writing his pa earlier? 2006-06-24
-
 # 2007-01-13 same night stand that later tries to escape?, 2007-05-11
-
-# 2011-05-09 rat say lottery is tax, but also his retirement plan? 2005-12-19 is another one
 
 # 2005-10-23 similar to zeebachef tear down wall 2011-08-17
 
@@ -1967,8 +1981,6 @@ undies != underwear, so maybe un-dies? (using rebirth)
 # rat vs expressions/euphimisms = storyline? 2005-12-08
 
 # !!!! 2011-11-30 vs exclam point as character later 2011-10-08
-
-# 2013-09-29 rat correctly says republic
 
 # 2010-01-13 red furry cap
 
@@ -1993,7 +2005,7 @@ undies != underwear, so maybe un-dies? (using rebirth)
 
 # 2010-09-10 red's gold camaro (itself a wow) vs road rage w/o car 2005-06-04
 
-# 2012-02-04 and 2012-02-07 identical?
+# 2012-02-04 and 2012-02-07 identical? (w different shading)
 
 # 2013-07-16 grandma passing joke again
 
@@ -2008,8 +2020,6 @@ undies != underwear, so maybe un-dies? (using rebirth)
 # 2007-04-21 goat's goldfish not gomer?
 
 # 2006-03-06 stole wallet vs give me back my wallet 2006-12-25
-
-2006-07-22 rat doesnt know senate but runs for it later 2010-10-19
 
 # hockey thing is dallas stars http://assets.amuniversal.com/eddeab30a3cf01319788005056a9545d?width=1500
 
@@ -2135,3 +2145,7 @@ undies != underwear, so maybe un-dies? (using rebirth)
 # still need [[x:y:a+b+c]] to return something reasonable, it does come up
 
 # some characters should be listed with their better known aliases
+
+# at some point, need to delete pages that no longer exist
+
+# Inter WIKI a links from this PBS to the other one (wikia)

@@ -3,9 +3,14 @@
 # suck down a wiki and maintain it efficiently using MediaWiki api.php
 # TODO: check for </api> at end of pages to ensure complete load
 
-require "bclib.pl";
+require "/usr/local/lib/bclib.pl";
 # where I store my wikis
 $wikiroot = "/usr/local/etc/wiki";
+
+# TODO: do not hard code this!
+warn "HARDCODING!";
+
+$apiep = "http://pbs3.referata.com/w/api.php";
 
 grab_all($ARGV[0]);
 
@@ -44,16 +49,20 @@ sub grab {
   my(@result);
 
   # get info on the first 500 pages
-  my($url) = "http://$wiki/api.php?action=query&generator=allpages&gaplimit=500&prop=revisions&rvprop=timestamp|user&format=xml&gapnamespace=$ns";
+#  my($url) = "$apiep?action=query&generator=allpages&gaplimit=500&prop=revisions&rvprop=timestamp|user&format=xml&gapnamespace=$ns";
+  my($url) = "$apiep?action=query&generator=allpages&gaplimit=500&prop=revisions&rvprop=timestamp|user&format=xml&namespace=$ns";
   # NOTE: setting age= semi-arbitrarily for now
   my($res)=cache_command("curl -s -m 300 '$url'","age=3600&retfile=1");
   my(@res) = ($res); # the files that hold list of pages
+  debug("RES: $res");
 
   # find the continuation point, repeat until done
   for (;;) {
     my($all) = read_file($res);
+    debug("ALL: $all");
     # end of page list? 
-    unless ($all =~ /<allpages gapfrom="(.*?)"/) {last;}
+#    unless ($all =~ /<allpages gapfrom="(.*?)"/) {last;}
+    unless ($all =~ /<allpages gapcontinue="(.*?)"/) {last;}
     my($gapfrom) = urlencode($1);
     debug("PAGE: $gapfrom");
     # not end of page list, so grab more pages (names only)
@@ -125,7 +134,7 @@ sub get_page {
 
   # URL encode and grab
   $page = urlencode($page);
-  my($url) = "http://$wiki/api.php?action=query&prop=revisions|imageinfo&titles=$page&rvprop=timestamp|content&iiprop=url&format=xml";
+  my($url) = "$apiep?action=query&prop=revisions|imageinfo&titles=$page&rvprop=timestamp|content&iiprop=url&format=xml";
 
   # set timestamp, and keep at least one older version
   $timestamp=~s/t/ /isg; # convert wiki timestamp to touch timestamp
@@ -219,7 +228,7 @@ Returns $wiki's namespaces
 sub namespaces {
     my($wiki) = @_;
     my(@result);
-    my($url) = "$wiki/api.php?action=query&meta=siteinfo&siprop=namespaces&format=xml";
+    my($url) = "$apiep?action=query&meta=siteinfo&siprop=namespaces&format=xml";
     my($res)=cache_command("curl -s -m 300 '$url'","age=3600");
     @res= ($res=~/<ns id="([^\"]*)"/isg);
     return @res;

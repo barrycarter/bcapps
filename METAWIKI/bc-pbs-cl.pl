@@ -18,6 +18,21 @@ require "/usr/local/lib/bclib.pl";
 	 "zach" => "[[character::Zach (lion)]]",
 	 "kiki" => "[[character::Kiki (lion)]]",
 	 "gigi" => "[[character::Gigi (lion)]]",
+	 "tooty" => "[[character::Tooty (gingerbread man)]]",
+	 "zze" => "[[character::ZZE]]",
+	 "xmas tree girl" => "[[character::Christmas Tree Girl (rat)]]",
+	 "bootyworth" => "[[character::Ms. Bootyworth (bottle)]]",
+	 "lincoln" => "[[cameo::{{wp|Abraham Lincoln}}]]",
+	 "gomer" => "[[character::Gomer (goldfish)]]",
+	 "jeffy" => "[[cameo::Jeffy (Family Circus)]]",
+	 "cubby" => "[[character::Cubby (fly)]]",
+	 "toby" => "[[character::Toby (turtle)]]",
+	 "baby johnson" => "[[character::Baby Johnson (human)]]",
+	 "weebear" => "[[character::Wee Bear]]",
+	 "rita rabbit" => "[[character::Rita (rabbit)]]",
+	 "tina" => "[[character::Tina (turtle)]]",
+	 "timmy" => "[[character::Timmy (turtle)]]",
+	 "lucky" => "[[character::Lucky (lion)]]",
 	 );
 
 # "done" is special case for slash mode meaning "list of chars is
@@ -28,6 +43,14 @@ $full{done} = "[[char_list_complete::1]]";
 $full{anon} = "[[null::null]]";
 $full{unnamed} = "[[null::null]]";
 $full{other} = "[[null::null]]";
+
+# the following need to be recognized as full
+for $i ("zebra", "pig", "rat", "goat", "larry", "guard duck", "junior",
+       "snuffles", "pigita") {
+  $uc = $i;
+  $uc =~ s/(\w+)/\u$1/g;
+  $full{$i} = "[[character::$uc]]";
+}
 
 open(A,">/home/barrycarter/BCGIT/METAWIKI/pbs-cl.txt");
 

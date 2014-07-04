@@ -53,7 +53,6 @@ for $i (split(/\n/, read_file("$metadir/largeimagelinks.txt"))) {
 
 for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
 
-  # TODO: multirefs!
   # TODO: *_deaths
   # below allows for multiple dates
 
@@ -69,14 +68,19 @@ for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
     map(s/\'/&\#39;/g, @$j);
     my($source, $k, $target, $datasource) = @$j;
 
-    # the hash of triples
-    $triples{$source}{$k}{$target} = $datasource;
-
     # determine relation type
     my($for, $rev, $stype, $ttype) = ("?", "?", "?", "?");
     if ($meta{$k}) {($for, $rev, $stype, $ttype) = @{$meta{$k}};}
-
     if ($for eq "?") {debug("NO META: $source/$k/$target");}
+
+    # templates inside certain types disallowed
+    # TODO: handle this much more generically
+    unless ($k eq "notes" || $k eq "description") {
+      $target=~s/\{\{(.*?)\|(.*?)\}\}/$2/g;
+    }
+
+    # the hash of triples
+    $triples{$source}{$k}{$target} = $datasource;
 
     # classes for source and target...
 
@@ -254,8 +258,10 @@ for $i (@diffs) {
     $cmd = "mv \"$pagedir/NEW/$1\" $pagedir";
   } elsif ($i=~m%Only in $pagedir: (.*)$%) {
     $cmd = "echo ignoring \"$1\"";
+  } elsif ($i=~m%^Files (.*?) and (.*?) differ$%) {
+    $cmd = "mv \"$1\" $pagedir/OLD; mv \"$2\" $pagedir";
   } else {
-    debug("ZOINKS! PANIC ($i)");
+    die "BAD DIFF OUTPUT: $i";
   }
 
   debug("RUNNING: $cmd");
