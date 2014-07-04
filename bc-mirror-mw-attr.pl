@@ -11,6 +11,9 @@ require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
 defaults("dryrun=1");
 
+# TODO: this is a total hack for stuff I keep forgetting to do
+system("rsync -Pavz /home/barrycarter/BCGIT/METAWIKI/*.mw /usr/local/etc/metawiki/pbs3/");
+
 # TODO: subroutine for required options?
 unless ($apiep = $globopts{api}){die "$0 --api required";}
 unless (@ARGV) {die "Usage: $0 <files>";}

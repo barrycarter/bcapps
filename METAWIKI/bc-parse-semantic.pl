@@ -24,9 +24,10 @@ require "/usr/local/lib/bclib.pl";
 my($metadir) = "/home/barrycarter/BCGIT/METAWIKI";
 my($pagedir) = "/usr/local/etc/metawiki/pbs3";
 
-my(%triples);
+# faster diff
+for $i ("OLD", "NEW") {system("mkdir -p $pagedir/$i");}
 
-# parse_multiref("MULTIREF [[title::Furry Brown Cap]] [[notes::A furry brown cap, apparently unrelated to any plotline, appears in several strips: [[2009-11-14]], [[2009-01-27]], [[2012-01-25]], [[2011-03-29]], [[2010-03-06]], [[2008-10-19]], [[2009-07-08]], [[2008-08-06]], [[2008-07-22]], [[2010-09-03]], [[2011-05-17]], [[2012-05-13]], [[2009-03-01]], [[2012-06-19]], [[2009-12-20]], [[2011-12-27]], [[2009-02-06]], [[2011-06-07]], [[2010-04-04]], [[2010-04-27]], [[2010-03-25]], [[2010-03-26]] [[2010-03-27]]]]");
+my(%triples);
 
 # load meta data (TODO: this is cheating, only one section so far)
 for $i (`egrep -v '^<|^#|^\$' $metadir/pbs-meta.txt`) {
@@ -110,11 +111,16 @@ for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
     # if this is an alias, tag for later canonization
     if ($k eq "aka") {$canon{$target} = $source;}
 
-    # for character to character relations, we do more
+    # TODO: we can't do this too early, it breaks things
+    # for character to character relationships, we do more
     if ($stype eq "character" && $ttype eq "character") {
       # create this as a 2 directional relation for both characters
-      $triples{$source}{relative}{"$target ($for)"}="$datasource ($for/$rev)";
-      $triples{$target}{relative}{"$source ($rev)"}="$datasource ($for/$rev)";
+      # using relationships as values (instead of sources) is cheating,
+      # but works well for renaming relationships later
+      $triples{$source}{relationship}{$target} = $for;
+      $triples{$target}{relationship}{$source} = $rev;
+      $has_relation{$source} = 1;
+      $has_relation{$target} = 1;
     }
   }
 }
@@ -138,48 +144,15 @@ for $i (sort keys %canon) {
   # if this alias isn't posing as a character, do nothing
   unless ($triples{$i}{class}{character}) {next;}
   debug("C: $i -> $canon{$i}");
-  # find canon name
-  my(@canon) = sort keys %{$triples{$i}{"-aka"}};
-  if (scalar @canon >=2) {warn "WARNING: More than one canon name: $i";}
-  my($canon) = $canon[0];
 
-  # we no longer need "-aka" or the "character" class
-  delete $triples{$i}{"-aka"};
-  delete $triples{$i}{class}{character};
+  rename_entity($i, $canon{$i});
 
-  # and reassign properties
-  for $j (sort keys %{$triples{$i}}) {
-    # "alias" class remains with the actual alias
-    if ($j eq "class") {next;}
+  # the above overdoes it, so we fix
+  $triples{$canon{$i}}{aka}{$i} = "AKA";
+  delete $triples{$i}{aka};
 
-    # j2 is unsigned version of j
-    my($j2) = $j;
-    $j2=~s/^\-//;
-
-    for $k (sort keys %{$triples{$i}{$j}}) {
-
-      # if $j is a negative relation ($dir is true), backwards assign
-      # in both cases assign, the negative relations too
-      if ($j=~/^\-/) {
-	debug("NEG+: $k/$j2/$canon $canon/-$j2/$k",
-	      "NEG-: $k/$j2/$i, $i/-$j2/$k");
-	$triples{$k}{$j2}{$canon} = $triples{$k}{$j2}{$i};
-	$triples{$canon}{"-$j2"}{$k} = $triples{$k}{$j2}{$i};
-	# and delete originals
-	delete $triples{$k}{$j2}{$i};
-	delete $triples{$i}{"-$j2"}{$k};
-      } else {
-	debug("POS+: $canon/$j/$k $k/-$j/$canon",
-	      "POS-: $i/$j/$k $k/-$j/$i");
-	# if $j is a forward relation, assign it to the canon
-	$triples{$canon}{$j}{$k} = $triples{$i}{$j}{$k};
-	$triples{$k}{"-$j"}{$canon} = $triples{$i}{$j}{$k};
-	# and delete from the alias
-	delete $triples{$i}{$j}{$k};
-	delete $triples{$k}{"-$j"}{$i};
-      }
-    }
-  }
+  $triples{$i}{class}{alias} = "AKA";
+  delete $triples{$canon{$i}}{class}{alias};
 }
 
 # do something similar for "date names"
@@ -197,15 +170,10 @@ for $i (sort keys %datename) {
   my($newname) = "$base $species #".sprintf("%0.2d",++$times{$base}{$species});
   debug("RENAME: $i -> $newname");
 
-  # and reassign as I did for aliases
-  for $j (sort keys %{$triples{$i}}) {
-    for $k (sort keys %{$triples{$i}{$j}}) {
-      debug("ALPHA+: $newname/$j/$k");
-      debug("ALPHA-: $i/$j/$k");
-      $triples{$newname}{$j}{$k} = $triples{$i}{$j}{$k};
-      delete $triples{$i}{$j}{$k};
-    }
-  }
+  rename_entity($i, $newname);
+  # so we can link back to pbs.txt
+  $triples{$newname}{reference_name}{$i} = "REFERENCE";
+
 }
 
 for $i (keys %times) {
@@ -213,6 +181,21 @@ for $i (keys %times) {
     if ($times{$i}{$j} == 1) {
       warn("WARNING: $i $j occurs only once, numbering unneeded?");
     }
+  }
+}
+
+# fix character to character relationships (must come after aka/date
+# stuff above)
+# TODO: allow for gender
+for $i (sort keys %has_relation) {
+  for $j (sort keys %{$triples{$i}{relationship}}) {
+    my($rel) = $triples{$i}{relationship}{$j};
+    # for now, use gender neuter form
+    $rel=~s/.*\///;
+    # delete this generic relation
+    delete $triples{$i}{relationship}{$j};
+    # and replace it with parenthesized relation
+    $triples{$i}{relationship}{"[[$j]] ($rel)"} = "RELATIONSHIP";
   }
 }
 
@@ -239,14 +222,15 @@ for $i (sort keys %triples) {
   }
 
   my($class) = shift(@classes);
-  open(A,">$pagedir/$i.mw.new");
-  print A "{{$class\n|title=$i\n";
 
   # error check
   if ($class eq "character" && !$triples{$i}{species}) {
     warn "WARNING: $i: no species (so probably an error)";
     next;
   }
+
+  open(A,">$pagedir/NEW/$i.mw");
+  print A "{{$class\n|title=$i\n";
 
   for $j (sort keys %{$triples{$i}}) {
     # ignore negative relations
@@ -257,7 +241,25 @@ for $i (sort keys %triples) {
 
   print A "}}\n";
   close(A);
-  mv_after_diff("$pagedir/$i.mw");
+}
+
+my(@diffs) = `diff -qr $pagedir $pagedir/NEW`;
+
+for $i (@diffs) {
+  chomp($i);
+  my($cmd);
+
+  # only in NEW? (then yes, do copy)
+  if ($i=~m%Only in $pagedir/NEW: (.*)$%) {
+    $cmd = "mv \"$pagedir/NEW/$1\" $pagedir";
+  } elsif ($i=~m%Only in $pagedir: (.*)$%) {
+    $cmd = "echo ignoring \"$1\"";
+  } else {
+    debug("ZOINKS! PANIC ($i)");
+  }
+
+  debug("RUNNING: $cmd");
+  system($cmd);
 }
 
 =item parse_semantic($dates, $string)
@@ -379,3 +381,35 @@ sub parse_multiref {
   $triples{$hash{title}}{class}{continuity} = "MULTIREF";
   $triples{$hash{title}}{notes}{$hash{notes}} = "MULTIREF";
 }
+
+# carefully renames an entity in triples
+# TODO: triples should not be global!
+sub rename_entity {
+  my($oldname, $newname) = @_;
+
+  # everything assigned to the oldname is now assigned to the newname
+  for $i (sort keys %{$triples{$oldname}}) {
+    for $j (sort keys %{$triples{$oldname}{$i}}) {
+
+      # assign oldname values to newname
+      $triples{$newname}{$i}{$j} = $triples{$oldname}{$i}{$j};
+      delete $triples{$oldname}{$i}{$j};
+      debug("RI+ $newname/$i/$j","RI- $oldname/$i/$j");
+
+      if ($i=~/^\-/) {
+	# if $i is "negative", also fix target -> source relations
+	my($irev) = substr($i,1);
+	$triples{$j}{$irev}{$newname} = $triples{$j}{$irev}{$oldname};
+	delete $triples{$j}{$irev}{$oldname};
+	debug("RI+ $j/$irev/$newname","RI- $j/$irev/$oldname");
+      } else {
+	# if $i is "positive" fix target negative-relation source relations
+	$triples{$j}{"-$i"}{$newname} = $triples{$j}{"-$i"}{$oldname};
+	delete $triples{$j}{"-$i"}{$oldname};
+	debug("RI+ $j/-$i/$newname","RI- $j/-$i/$oldname");
+      }
+    }
+  }
+}
+
+
