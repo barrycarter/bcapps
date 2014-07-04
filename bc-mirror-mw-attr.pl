@@ -13,6 +13,7 @@ defaults("dryrun=1");
 
 # TODO: subroutine for required options?
 unless ($apiep = $globopts{api}){die "$0 --api required";}
+unless (@ARGV) {die "Usage: $0 <files>";}
 
 my($tmpfile) = my_tmpfile2();
 open(A, "|xargs -0 lsattr -v > $tmpfile");

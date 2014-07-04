@@ -26,6 +26,8 @@ my($pagedir) = "/usr/local/etc/metawiki/pbs3";
 
 my(%triples);
 
+# parse_multiref("MULTIREF [[title::Furry Brown Cap]] [[notes::A furry brown cap, apparently unrelated to any plotline, appears in several strips: [[2009-11-14]], [[2009-01-27]], [[2012-01-25]], [[2011-03-29]], [[2010-03-06]], [[2008-10-19]], [[2009-07-08]], [[2008-08-06]], [[2008-07-22]], [[2010-09-03]], [[2011-05-17]], [[2012-05-13]], [[2009-03-01]], [[2012-06-19]], [[2009-12-20]], [[2011-12-27]], [[2009-02-06]], [[2011-06-07]], [[2010-04-04]], [[2010-04-27]], [[2010-03-25]], [[2010-03-26]] [[2010-03-27]]]]");
+
 # load meta data (TODO: this is cheating, only one section so far)
 for $i (`egrep -v '^<|^#|^\$' $metadir/pbs-meta.txt`) {
   chomp($i);
@@ -53,7 +55,13 @@ for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
   # TODO: multirefs!
   # TODO: *_deaths
   # below allows for multiple dates
-  unless ($i=~/^([\d\-,]+)\s+(.*)$/) {next;}
+
+  if ($i=~/^MULTIREF/) {parse_multiref($i); next;}
+
+  unless ($i=~/^([\d\-,]+)\s+(.*)$/) {
+    debug("IGNORING: $i");
+    next;
+  }
 
   # create hash from triples
   for $j (parse_semantic($1, $2)) {
@@ -91,6 +99,7 @@ for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
       # (note that a species triple will correctly override this)
       if ($l=~/\(([^A-Z]*?)\)$/ && !$triples{$l}{species}) {
 	$triples{$l}{species}{$1} = "NAME2SPECIES";
+	debug("NAME2SPECIES: $l -> $1");
       }
 
       # if the character has a "date like" name, tag for addl step
@@ -109,7 +118,6 @@ for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
     }
   }
 }
-
 
 # create reverse triples for everything
 for $i (keys %triples) {
@@ -192,6 +200,8 @@ for $i (sort keys %datename) {
   # and reassign as I did for aliases
   for $j (sort keys %{$triples{$i}}) {
     for $k (sort keys %{$triples{$i}{$j}}) {
+      debug("ALPHA+: $newname/$j/$k");
+      debug("ALPHA-: $i/$j/$k");
       $triples{$newname}{$j}{$k} = $triples{$i}{$j}{$k};
       delete $triples{$i}{$j}{$k};
     }
@@ -350,4 +360,22 @@ sub parse_date_list {
     }
   }
   return @ret;
+}
+
+sub parse_multiref {
+  my($multiref) = @_;
+  my(%hash);
+  for $i (parse_semantic("MULTIREF", $multiref)) {$hash{$i->[1]}= $i->[2];}
+
+  # which dates are referenced?
+  for $i ($hash{notes}=~m/\[\[(\d{4}-\d{2}-\d{2})\]\]/g) {
+    $triples{$hash{title}}{dates}{$i} = "MULTIREF";
+  }
+
+  # get rid of the noref:: (which means: don't show that strip, but mention it)
+  $hash{notes}=~s/noref:://g;
+
+  # TODO: use of global here is ugly!
+  $triples{$hash{title}}{class}{continuity} = "MULTIREF";
+  $triples{$hash{title}}{notes}{$hash{notes}} = "MULTIREF";
 }

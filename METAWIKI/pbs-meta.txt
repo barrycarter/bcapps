@@ -68,7 +68,7 @@ category, , *, string
 meta, , *, string
 
 # are cameos actually characters?
-cameo, , strip, character
+cameo, , strip, cameo
 
 # actually maps strip to binary
 char_list_complete, , strip, string

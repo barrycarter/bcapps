@@ -171,7 +171,7 @@ disclaim: based on gocomics website only
 2010-03-17 [[character::Pig+Guard Duck+Neighbor Bob]] [[notes::The price tag on the lamp reads "$5"]]
 2002-01-28 [[description::[[Pig]] gets a job as {{wp|funeral director}} at [[location::Happy Homes Mortuary]]]]
 2002-02-04 [[character::Zebra]] [[Zebra::species::zebra]]
-2002-02-05 [[character::Crocs]] [[character::Lions]] [[Lions::notes::These are unnamed remote lions, not to be confused with [[Max (lion)]] and [[Zach (lion)]]]] [[Lions::species::lion (group)]]
+2002-02-05 [[character::Crocodiles]] [[character::Lions]] [[Lions::notes::These are unnamed remote lions, not to be confused with [[Max (lion)]] and [[Zach (lion)]]]] [[Lions::species::lion (group)]] [[Crocodiles::notes::These are unnamed remote crocodiles, not to be confused with [[ZZE]] or [[Larry]], both who live next door to [[Zebra]]]]
 2002-02-07 [[character::Rat+Zebra+[[deaths::[[Zebra::uncle::Gus (zebra)]]]]]]
 2010-12-13,2010-12-14 [[character::Rat+Pig+Gus 20101213 (human)]] [[Gus 20101213 (human)::aka::Father Gus]] [[Father Gus::profession::priest]]
 2002-02-18 [[description::[[Pig]] writes to {{wp|Jesse Jackson}}]]
@@ -226,7 +226,7 @@ disclaim: based on gocomics website only
 2002-07-17,2014-04-08,2013-05-22,2012-06-24,2012-06-28,2005-07-01,2006-08-15,2006-08-13,2009-02-19,2003-05-12,2003-05-13,2003-05-17,2011-10-15,2005-06-30 [[category::Family Circus mention]]
 2009-10-11 [[cameo::Dolly (Family Circus)+Jeffy (Family Circus)+Bil (Family Circus)]]
 2008-07-01 [[newspaper_mentions::Washington Post]]
-2002-07-18 [[description::[[character::Crocs]] kill [[character::Zebra]]'s date]] [[zebra_deaths::#1]]
+2002-07-18 [[description::[[character::Crocodiles]] kill [[character::Zebra]]'s date]] [[zebra_deaths::#1]]
 2002-07-18 [[zebra_deaths::#1]]
 2002-07-22 [[character::Pigita]] [[Pigita::species::pig]]
 2007-07-17 [[character::Not Me You Moron (ghost)]]
@@ -563,7 +563,7 @@ MULTIREF [[title::Atlas]] [[notes::[[2004-09-13]] shows [[Atlas]] carrying the w
 2005-06-24,2005-06-25 [[storyline::[[character::Pig]] sits in a tree]]
 2005-06-25 [[character::Rat+Pig+[[Pig::mother::Pig's mother (pig)]]]]
 2005-07-10 [[crocodile_deaths::#2]] [[notes::This strip implies Larry's wife is named Debbie, not Patty; does Zebra have two sets of crocodile neighbors during the strip's run (in which case this may not be Larry)?]] [[character::Zebra+Larry+[[Larry::wife::Debbie (crocodile)]]]]
-2005-07-11 [[character::Bob (antelope)+Zebra+Crocs]] [[Crocs::aka::Hendersons+Hendasunns]]
+2005-07-11 [[character::Bob (antelope)+Zebra+ZZE]] [[ZZE::aka::Hendersons+Hendasunns]]
 2005-07-12 [[deaths::[[Larry::cousin::Jeemy (crocodile)]]]] [[antelope_deaths::#1]]
 2005-08-01 [[deaths::Aunt Toody]] [[Toody 20050801 (pig)::aka::Aunt Toody]] [[Pig::aunt::Aunt Toody]]
 2005-08-02 [[description::[[character::Fat Fred (crocodile)]], hired to move [[character::crocodiles]] from the Frat House, appears to be a cannibal]] [[Fred 20050802 (crocodile)::aka::Fat Fred (crocodile)]]
@@ -667,7 +667,7 @@ MULTIREF [[title::Rat's guilt]] [[notes::On [[2014-06-09]], Rat says he feels gu
 2003-02-08 [[character::Pig+Pepe 20030208 (human)]] [[Pepe 20030208 (human)::profession::janitor]] [[Pepe 20030208 (human)::aka::Pepe the Night Janitor]]
 2006-04-02 [[newspaper_mentions::The Times]]
 2006-04-06,2008-08-03 [[notes::The crocs show interest in eating [[Farina]] on [[2006-04-06]] and [[Pig]] for about a week starting on [[2008-08-03]], but never during the rest of the strip. Do they view [[Zebra]] as an easier target because he lives next door (whereas Pig lives in "a building close to us"), or does Zebra meat taste better than bacon? (impossible!)]] [[meta::But [[2010-07-05]] suggests this]]
-2008-08-03-2008-08-05,2008-08-07 [[storyline::[[character::Crocs]] want to eat [[character::Pig]]]]
+2008-08-03-2008-08-05,2008-08-07 [[storyline::[[character::ZZE]] want to eat [[character::Pig]]]]
 2006-04-09 [[character::Pig+Rat+[[Pig+Rat::neighbor::Neighbor Tim]]]] [[Tim 20060409 (human)::aka::Neighbor Tim]]
 2008-02-27 [[character::Pig+Rat+Neighbor Tim]]
 2006-04-10 [[character::Rat+Farina]] [[cameo::Dilbert]]
@@ -724,7 +724,7 @@ MULTIREF [[title::Rat's guilt]] [[notes::On [[2014-06-09]], Rat says he feels gu
 2006-11-03 [[newspaper_mentions::Miami Herald+Palm Beach Post]]
 2006-11-10,2006-11-11 [[character::Pig+Rat+Tedford (bear)]] [[Tedford (bear)::aka::The All-Knowing Bear]]
 2006-11-19,2011-09-29,2011-10-02 [[storyline::[[character::Pig]] writes fiction]]
-2006-11-27-2006-12-01,2006-12-04-2006-12-07,2006-11-30 [[storyline::[[character::Crocs]] visit sensitive readers]]
+2006-11-27-2006-12-01,2006-12-04-2006-12-07,2006-11-30 [[storyline::[[character::ZZE]] visit sensitive readers]]
 2008-10-03 [[notes::One of the possible defendants is [[Stephan Pastis]] himself; the others are {{wp|Bill Gates}}, {{wp|Larry Ellison}}, {{wp|Donald Trump}}, {{wp|Warren Buffett}}, and the rest appear to be {{wp|Tuckerization}}]]
 2006-11-30 [[newspaper_mentions::Indianapolis Star+Baltimore Sun+Worcester Telegram and Gazette]]
 2004-11-28 [[character::Anap (parakeet)+Peev (parakeet)+Rat+Pig]]
@@ -796,7 +796,7 @@ MULTIREF [[title::Rat's guilt]] [[notes::On [[2014-06-09]], Rat says he feels gu
 2007-08-04 [[newspaper_mentions::The Chronicle]]
 2007-08-09,2007-08-10,2007-09-14,2007-12-06,2007-12-07 [[storyline::[[Rat::aka::Ego-Man]]]] [[character::Rat]]
 2007-08-12 [[description::The [[character::crocodiles]], represented by [[character::Rat]] sue [[character::Zebra]]]] [[character::Goat]]
-2007-08-12-2007-08-18,2007-08-20,2007-08-21,2007-08-24,2007-08-25,2007-09-10,2007-09-11 [[storyline::[[character::Crocs]] sue [[character::Zebra]]]]
+2007-08-12-2007-08-18,2007-08-20,2007-08-21,2007-08-24,2007-08-25,2007-09-10,2007-09-11 [[storyline::[[character::ZZE]] sue [[character::Zebra]]]]
 2011-05-01,2007-08-12 [[notes::This lawsuit on [[2011-05-01]] appears unrelated to the lawsuit starting [[2007-08-12]]]]
 2007-08-22,2007-08-23,2007-08-29-2007-08-31 [[storyline::[[character::Rat]] travels to Florida to find [[character::Farina]]]]
 2007-08-26 [[crocodile_deaths::#1]]
@@ -810,7 +810,7 @@ MULTIREF [[title::Rat's guilt]] [[notes::On [[2014-06-09]], Rat says he feels gu
 2007-09-21 [[Goat::aka::Paris]]
 2007-09-25 [[character::Goat+Goat's mother (goat)+[[Goat::uncle::Ted (goat)]]]]
 2007-09-30 [[character::Snuffles]] [[Snuffles::species::cat]]
-2007-09-30-2007-10-03 [[storyline::[[character::Crocs]] purchase [[character::Snuffles]] to kill [[character::Zebra]]]]
+2007-09-30-2007-10-03 [[storyline::[[character::ZZE]] purchase [[character::Snuffles]] to kill [[character::Zebra]]]]
 2007-10-22-2007-10-24 [[storyline::[[character::Rat]] rules over {{wp|Fischer-Price}} people]]
 2005-02-21 [[character::Pig+Neighbor Bob+Phil (half-human)]]
 2007-06-19 [[character::Rat+[[Rat::boss::Phil 20070619 (human)]]]]
@@ -822,7 +822,7 @@ MULTIREF [[title::Rat's guilt]] [[notes::On [[2014-06-09]], Rat says he feels gu
 2008-09-24 [[deaths::Steve (hamster)+Orville (hamster)]]
 2007-10-15,2007-10-16,2007-10-18,2007-10-19 [[storyline::[[character::Steve (hamster)]] and [[character::Orville (hamster)]]]]
 2007-10-28 [[cameo::Linus (Peanuts)]]
-2007-10-31 [[event::A [[character::Crocs]] successfully attacks [[character::Zebra]], albeit not fatally]] [[meta::fix this, I need pipe notation]]
+2007-10-31 [[event::A [[character::ZZE]] successfully attacks [[character::Zebra]], albeit not fatally]] [[meta::fix this, I need pipe notation]]
 2007-11-04 [[newspaper_mentions::Beacon Sun?+Columbus Dispatch+Columbus Post]]
 2007-11-06 [[character::Larry+[[deaths::[[Dena (crocodile)::husband::Nick 20071106 (crocodile)]]]]]]
 2007-11-06 [[character::Larry+Patty+Max (lion)+Zach (lion)+[[Larry::cousin::Dena (crocodile)]]+Nick (crocodile)]]
@@ -857,7 +857,7 @@ MULTIREF [[title::Rat's guilt]] [[notes::On [[2014-06-09]], Rat says he feels gu
 2008-12-21,2008-12-23-2008-12-25,2008-12-27 [[storyline::[[character::Mole-in-the-ground]]]] [[Mole-in-the-ground::aka::Father Mole-in-the-ground]] [[Mole-in-the-ground::profession::priest]] [[Mole-in-the-ground::species::mole]]
 2008-04-20 [[cameo::Stewie]]
 2008-05-05-2008-05-07 [[storyline::[[character::Pig]]'s Cereal Nightmares]]
-2008-06-09,2008-06-10,2008-06-13,2008-06-14 [[storyline::The [[character::Zebra]]/[[character::Crocs]] mediation]]
+2008-06-09,2008-06-10,2008-06-13,2008-06-14 [[storyline::The [[character::Zebra]]/[[character::ZZE]] mediation]]
 2010-06-06-2010-06-08,2010-06-10,2010-06-20,2010-06-21,2010-06-24,2010-06-25 [[storyline::Officer [[character::Potus (elephant)]] negotiates compromise between [[character::Zebra]] and his crocodile neighbors]]
 2008-06-12 [[newspaper_mentions::Ventura County ???]]
 2008-08-22 [[notes::In "tribute to George Herriman (1880-1944)", the background changes considerably between panels]]
@@ -905,7 +905,7 @@ MULTIREF [[title::Rat's guilt]] [[notes::On [[2014-06-09]], Rat says he feels gu
 2004-02-13 [[character::Pig+Luigi (human)]]
 2004-02-14 [[character::Pig+Luigi (human)+Vinnie 20040214 (human)]]
 2005-12-15 [[character::Pig+[[Pig+Rat::neighbor::Vinnie 20051215 (human)]]]] [[Vinnie 20051215 (human)::aka::Neighbor Vinnie]]
-2006-08-21,2006-08-22,2006-08-25,2006-08-26,2006-08-28 [[storyline::[[character::Crocs]] attend college]]
+2006-08-21,2006-08-22,2006-08-25,2006-08-26,2006-08-28 [[storyline::[[character::ZZE]] attend college]]
 2006-08-30 [[storyline::[[character::Pig]] locks [[character::Guard Duck]] in the clothes hamper]]
 2009-01-19-2009-01-23,2009-01-25,2009-02-02,2009-04-09-2009-04-13,2009-04-15 [[storyline::[[character::Fantastic Four]]]] [[Fantastic Four::species::crocodile (group)]] [[meta::Fantastic Four actually a group, not a character]]
 2009-01-21 [[Bob 20090121 (crocodile)::aka::Paper Jam Boy]], [[Fred 20090121 (crocodile)::aka::Stapler Head]] [[Paper Jam Boy+Stapler Head::profession::superhero]] [[Fantastic Four::aka::Fanntasteek 4]]
@@ -1134,7 +1134,7 @@ MULTIREF [[title::Tree Croc]] [[notes::On [[2007-01-07]], Larry poses as a "tree
 2011-10-21 [[character::Pig+Goat+Stephan Pastis]]
 2011-10-23 [[deaths::Bob 20111023 (crocodile)]]
 2011-12-16 [[deaths::Bob 20111216 (crocodile)]]
-2011-12-23,2013-11-27 [[notes::[[character::Pig]] doesn't know what a {{wp|bucket list}} is on [[2011-12-23]], but learns by [[2013-11-27]]]]
+MULTIREF [[title::Pig's Bucket List]] [[notes::[[character::Pig]] doesn't know what a {{wp|bucket list}} is on [[2011-12-23]], but learns by [[2013-11-27]]]]
 2011-12-29 [[crocodile_deaths::#1]]
 2011-12-25 [[category::Serious strips]] [[notes::Tribute to {{wp|Bil Keane}}, 1922-2011]]
 2012-01-01 [[character::Henry (hippo)]] [[notes::The banana in the background image changes direction in panel 7]] [[category::Rat writes]]
@@ -1295,7 +1295,7 @@ MULTIREF [[title::[[[[Larry]]'s mother]]]] [[notes::Larry's mother dies on [[200
 2010-03-16 [[notes::The beer can reads "BIRO" in panel 2]]
 2013-09-04 [[character::Female Penguin]] [[Female Penguin::species::penguin]] [[meta::if I'm going to treat her as a separate character, update character lists for where she appears]]
 2013-09-04-2013-09-06,2013-09-10-2013-09-11,2013-09-18,2013-09-19,2013-09-26-2013-09-27,2013-10-01,2013-10-09,2013-10-10,2013-10-25,2013-12-20 [[storyline::[[character::Penguins]] and [[character::Polar Bear]]]] [[meta::Does the polar bear ever get a name?]] [[Polar Bear::species::polar bear]] [[Penguins::species::penguin (group)]]
-2013-10-25,2013-10-28-2013-10-30 [[storyline::[[character::Crocs]] adopt [[character::Penguins]]]] [[Crocs::species::crocodile (group)]]
+2013-10-25,2013-10-28-2013-10-30 [[storyline::[[character::ZZE]] adopt [[character::Penguins]]]] [[ZZE::species::crocodile (group)]]
 2005-11-22 [[character::Pig+Doris (swordfish)]]
 2012-06-06,2012-06-07,2014-01-09,2014-01-10 [[storyline::[[character::Rat]]'s [[character::[[Rat::pet::person pet (human)]]]]]]
 2013-09-15,2013-09-16,2013-09-22,2013-09-23 [[storyline::[[character::Rat]] coaches girls' basketball]]
@@ -1327,7 +1327,7 @@ MULTIREF [[title::[[[[Larry]]'s mother]]]] [[notes::Larry's mother dies on [[200
 2003-01-19 [[character::Rat+Pig+Dan 20030119 (human)+[[Dan 20030119 (human)::wife::Stephanie (human)]]]] [[Dan 20030119 (human)::profession::florist]]
 2003-02-16 [[character::Pig+Conley (human)]] [[Conley (human)::aka::Professor Conley]] [[Professor Conley::profession::professor]]
 2008-06-22 [[character::Zebra+Larry]] [[squirrel_deaths::#1]]
-2007-05-25 [[character::Dan 20070525 (human)+Jane 20070525 (human)+Rat+Pig]] [[Dan 20070525 (human)+Jane 20070525 (human)+Crocs::profession::newscaster]]
+2007-05-25 [[character::Dan 20070525 (human)+Jane 20070525 (human)+Rat+Pig]] [[Dan 20070525 (human)+Jane 20070525 (human)+ZZE::profession::newscaster]]
 2006-02-28 [[character::Zebra+Pig+Larry+Dan (crocodile)]]
 2005-07-06 [[notes::In panels 1 and 3, some of the pickles jars have labels other than "pickles". The only ones I could make out are "Craves"? and "Dive up?"]]
 2013-12-04 [[character::[[Pig::aunt::Aunt Toody II]]]] [[Toody 20131204 (pig)::aka::Aunt Toody II]] [[Aunt Toody+Aunt Toody II::notes::[[Pig]]'s Aunt Toody dies on [[2005-08-01]], so the "Aunt Toody" in [[2013-12-04]] must be a second Aunt Toody, dubbed [[Aunt Toody II]]]]
@@ -1345,7 +1345,9 @@ MULTIREF [[title::[[[[Larry]]'s mother]]]] [[notes::Larry's mother dies on [[200
 2014-05-21-2014-05-23 [[storyline::[[character::Stephan Pastis]] lives with [[character::Pig]] and [[character::Rat]]]]
 2014-05-23 [[character::Staci Pastis]]
 2014-05-26,2014-05-27 [[newspaper_mentions::Star Tribune]]
-2010-04-22-2010-04-24,2010-04-26-2010-04-29 [[storyline::[[character::Crocs]] in [[character::Zebra]]'s house]]
+2010-04-22-2010-04-24,2010-04-26-2010-04-29 [[storyline::[[character::ZZE]] in [[character::Zebra]]'s house]]
+2010-04-22 [[description::Seven members of [[character::ZZE]] enter [[character::Zebra]]'s house by accidentally breaking his skylight]]
+2010-04-29 [[crocodile_deaths::#7]] [[meta::Assuming the 7 ZZE members who entered the house on 2010-04-22 all died when struck by the Tomahawk missiles. In reality, some may have escaped]]
 2014-01-23 [[character::Staci Pastis]]
 2014-01-23-2014-01-24,2014-01-28-2014-02-01,2014-02-16,2014-02-25 [[storyline::[[character::Staci Pastis]] throws [[character::Stephan Pastis]] Out]]
 2014-02-16 [[cameo::Cathy (Cathy)]]
@@ -1357,7 +1359,7 @@ MULTIREF [[title::[[[[Larry]]'s mother]]]] [[notes::Larry's mother dies on [[200
 2014-02-11 [[description::[[Goat]] uncharacteristically pranks [[Rat]]]] [[category::Out of Character]]
 2014-02-12,2013-05-10,2012-04-22,2012-05-27,2012-06-24,2012-08-02,2012-08-07,2012-08-26,2012-11-16,2010-07-28,2006-10-16,2006-04-24,2007-07-13,2007-05-05,2006-11-14,2003-10-12,2004-06-21,2004-11-25,2004-06-22,2010-11-22,2004-01-03,2011-12-14,2009-03-17,2005-12-28,2010-08-02,2006-11-13,2004-03-08-2004-03-13,2010-11-17,2003-06-24,2012-04-02,2004-11-04,2011-10-26,2011-10-10,2010-08-25,2004-04-09,2006-04-14,2010-03-15,2003-07-13,2003-09-01 [[category::Third Wall]]
 2008-08-18-2008-08-21 [[storyline::[[Rat::aka::Ernest Heming[[character::Rat]]]]]]
-2008-08-25-2008-08-30 [[storyline::[[character::Crocs]] use sewers to enter [[character::Zebra]]'s house]]
+2008-08-25-2008-08-30 [[storyline::[[character::ZZE]] use sewers to enter [[character::Zebra]]'s house]]
 2011-10-26 [[cameo::Jeffy (Family Circus)]]
 2011-12-04 [[newspaper_mentions::The Daily Times]]
 2011-12-11 [[deaths::[[Zebra::cousin::Dean (zebra)]]+[[Zebra::uncle::Steve (zebra)+Pete (zebra)]]]]
@@ -1391,7 +1393,7 @@ MULTIREF [[title::[[[[Larry]]'s mother]]]] [[notes::Larry's mother dies on [[200
 2012-06-17 [[character::Rat+Pig+[[character::Hannah (hippo)]]]]
 2009-03-02,2009-03-04,2009-03-07 [[storyline::[[character::Anonymous (hippo)]] hugs]]
 2009-03-09,2009-03-10,2009-03-12 [[storyline::[[character::Rat]] duels]]
-2009-03-03,2009-03-05-2009-03-07 [[storyline::{{wp|Ninja}} [[character::Crocs]]]]
+2009-03-03,2009-03-05-2009-03-07 [[storyline::{{wp|Ninja}} [[character::ZZE]]]]
 2009-03-02 [[Anonymous (hippo)::notes::Does not appear to be [[Hannah (hippo)]] nor [[Holly (hippo)]] nor [[Henry (hippo)]] (the last of which is fictional)]]
 MULTIREF [[title::Lemmings Leap]] [[notes::On [[2012-10-19]] (also [[noref::2013-02-19]], [[noref::2013-06-09]], [[noref::2014-03-05]], and [[noref::2014-03-17]]), there is no sign next to [[location::Lemmings Leap]].  On [[2012-10-20]] the sign reads "LEMMING LEAP". On [[2013-08-05]], it reads the same, but the lettering is now red. By [[2012-10-23]], it's changed to "Lemming's Leap" (which implies it belongs to a single lemming). On [[2012-10-26]] (also [[noref::2014-04-16]]), it's "Lemming Leap" (no apostrophe). On [[2013-02-05]] (also [[noref::2013-02-21]], [[noref::2013-06-03]], [[noref::2013-06-08]], and [[noref::2013-07-19]]) it's "LEMMINGS' LEAP" (implying belongs to many lemmings). On [[2013-02-07]], it's "Lemmings' LEAP" (first word in lower-case). The wording is the same on [[2014-03-07]], but the sign now also has a skull and crossbones. On [[2013-07-09]] it's "LEMMINGS' Leap" (second word in lower-case). On [[2013-12-14]], it's "Lemmings LEAP" (plural without apostrophe)]]
 2013-06-03 [[deaths::[[character::Bob 20121026 (lemming)]]]] [[Bob 20121026 (lemming)::notes::Bob didn't jump/die on [[2012-10-26]], but does so on 2013-06-03]]
@@ -1620,13 +1622,13 @@ MULTIREF [[title::Furry Brown Cap]] [[notes::A furry brown cap, apparently unrel
 2004-10-03 [[character::Rat+Pig]] [[notes::Assuming Rat is referring to spray cheese, he makes the common mistake of confusing {{wp|Easy Cheese}} (a spray cheese) with {{wp|Cheez Whiz}} (a cheese spread). Of course, Rat *actually* says "Cheese-Whiz", which I suppose could be a spray cheese in the PBS world]]
 2005-01-28 [[character::Pig+Al (human)]] [[Al (human)::location::{{wp|Denver}}]]
 2005-10-12 [[character::Pig+Guard Duck+[[Pig+Rat::neighbor::Ron (human)]]]]
-2006-01-11,2006-01-16,2006-01-17 [[storyline::[[character::Crocs]] attack lawn decorations]]
+2006-01-11,2006-01-16,2006-01-17 [[storyline::[[character::ZZE]] attack lawn decorations]]
 2006-01-22 [[character::Ernie (human)+Pig]]
 2006-08-23 [[character::Pig+Guard Duck+Smitty (human)]]
 2006-08-24 [[character::Guard Duck+Pig+Foggini (human)]] [[notes::The eggs people eat do not contain fetuses (and are usually chicken eggs to boot). A more accurate metaphor would be throwing a menstruating woman's effluvia]] 
 2006-09-01 [[Rat::aka::Chi Chi Peron]]
 2006-01-13 [[Rat::aka::John McEnrat]]
-2006-01-27 [[Crocs::profession::taxi driver]]
+2006-01-27 [[ZZE::profession::taxi driver]]
 2006-10-14 [[character::Goat+Rat+Cliff (man-sheep)]] [[Cliff (man-sheep)::aka::Angry-Cliff the Man-Sheep]]
 2006-12-09 [[character::Rat+Zebra+Larry (bird)+Bob 20061209 (bird)]] [[notes::Larry, the bird, is probably not a reference to {{wp|Larry Bird}}. The fraternity name appears to be "delta epsilon pi"]]
 2006-12-19 [[notes::This is one of the few times [[character::Guard Duck]] recommends retreating, not attacking]]
@@ -1737,7 +1739,7 @@ MULTIREF [[title::Dictionary Editing]] [[notes::On [[2011-01-27]], [[Rat]] takes
 2004-09-18 [[character::Zebra+Pig+Jimmy 20040918 (human)]]
 2007-01-28 [[character::Zebra+Goat+Pig+Rat+Neighbor Bob]]
 2007-01-30 [[Rat::aka::Jack Pitt+The Pittster]]
-2007-02-05 [[Crocs::profession::greeting card writer]] [[Crocs::location::{{wp|Kansas City}}]]
+2007-02-05 [[ZZE::profession::greeting card writer]] [[ZZE::location::{{wp|Kansas City}}]]
 2014-06-15 [[character::Rat+Fred 20140615 (human)]]
 MULTIREF [[title::Larry's wife]] [[notes::On [[2005-06-14]], Larry's wife is [[Larry::wife::Frieda (crocodile)]], on [[2005-07-10]], her name is [[Larry::wife::Debbie (crocodile)]], and by [[2008-04-10]] (and probably earlier), it's Patty. This isn't necessarily a contradiction, however. Larry mentioned his marriage to Frieda was "on the rocks", so maybe they divorced and he then married Debbie. After callously and cold-bloodedly (ha ha) killing 2 of their children, it's possible Debbie left him, and Patty is his third wife]]
 MULTIREF [[title::Pig's monkey]] [[notes::Pig seems to have an unusual connection to monkeys. On [[2002-09-27]], one threatens to bite off his ears. On [[2002-11-17]], his mother calls him a "monkeybrain". On [[2003-01-24]], similarly to 2002-09-27, another fortune cookie tells Pig he will be "monkey food". On [[2003-10-31]], one of Pig's charades guesses is "monkey" (another is "cheese", another item that appears to fascinate pig). On [[2004-01-28]], Pig talks about egging monkeys. The reference appears to be coincidental, but may have deeper meaning. On [[2008-05-09]], Rat sends Pig a telegram via monkey (again somewhat coincidental, though possibly Rat's attempt to scare Pig). On [[2009-06-30]], Pig wears monkey underwear (the monkey looks curiously like {{wp|Curious George}}). On [[2009-09-20]], Pig orders a monkey-in-a-box (he's apparently gotten over the fortune cookie warnings). On [[2009-10-13]], he dresses up as a [[Pig::aka::Monkeypig]]. On [[2013-07-20]], he takes ice cream "as a gibbon". Of course, gibbons are apes, not monkeys (as my favorite Librarian would be quick to remind me), but it's in the same general theme.]]
@@ -1761,6 +1763,10 @@ MULTIREF [[title::Pig's monkey]] [[notes::Pig seems to have an unusual connectio
 2006-12-04 [[character::Ethel (human)]]
 2006-12-05 [[character::Bob n (crocodile)+Jimmy 20061205 (crocodile)]]
 2006-12-06 [[character::Bob n (crocodile)]]
+MULTIREF [[title::Repeat joke]] [[notes::The joke Pastis intentionally repeats on [[2010-09-05]] comes from [[2002-01-31]]]]
+MULTIREF [[title::Piracy warning]] [[notes::On [[2009-09-04]], Pig asks Rat to forward through the FBI anti-piracy warning, but Rat doesn't. On [[2010-11-27]], Pig learns it is impossible to do so]]
+MULTIREF [[title::Sawing Women]] [[notes::On [[2011-03-24]], Pig offers to saw someone in half as part of a magic trick. On [[2013-10-26]], Pig believes it's murder and should be illegal. Is it possible Pig did the trick wrong and actually killed someone?]]
+MULTIREF [[title::Rat's Awesome Happiness]] [[notes::On [[2010-03-16]], Rat notes he hasn't been happy for at least 10 days in a row. On [[2011-10-22]], he notes that he *has* been awesome for at least 30 days in a row. This isn't necessarily a contradiction: it's possible that Rat's awesomeness doesn't make him happy and/or that Rat was just having a bad month in March]]
 </data>
 
 # the following lines are incorrect and need to be checked
@@ -1814,10 +1820,6 @@ Talk::2002-04-12 Deaths::I can't tell if Rat killed the other Fruit Buddies as w
 
 # TODO: find hyenas full names (not just hy and hy)
 
-# 2010-09-05 "living one" punchline comes from ... ? 2002-01-31
-
-# 2009-09-04 pig wants to ff thru piracy warning, but in other strip learns that's impossible, 2010-11-27
-
 # get fuzzy parallel
 
 # angry bob appearances also count as storyline
@@ -1842,7 +1844,8 @@ Talk::2002-04-12 Deaths::I can't tell if Rat killed the other Fruit Buddies as w
 
 # 2007-03-03 explicit mention re "why do we need clothes" (vs hamper later)
 
-# grater news (2012-06-18) repeats grate news joke, 2012-05-25 grate news, 2004-05-07 (cheese grater, not a great/grate joke), 
+# grater news (2012-06-18) repeats grate news joke, 2012-05-25 grate
+# news, 2004-05-07 (cheese grater, not a great/grate joke),
 
 # 2006-06-18 crocs can't swim, but can at end of pied piper storyline
 
@@ -1851,8 +1854,6 @@ Talk::2002-04-12 Deaths::I can't tell if Rat killed the other Fruit Buddies as w
 # big gap in Pig cheese religion
 
 # 2013-12-20: polar bear attack after polar bear knows to not live at south pole?
-
-# 2013-11-27: pig understand what bucket list means, other time he doesn't (2011-12-23)
 
 # find danny donkey contra: 2013-07-21 shows him as rat char
 
@@ -1882,15 +1883,11 @@ undies != underwear, so maybe un-dies? (using rebirth)
 
 # comic strip censor -> third wall
 
-# 2013-10-26 saw woman in half vs when pig does it (magic happens: 2011-03-24) (maybe that's why he wants it illegal?)
-
 # larry wife also named 2005-07-10 debbie?
 
 # mini newt storyline similar to newt not a reptile
 
 # 2004-03-05 "sole" joke repeats death doing same thing and early 2002 strip too
-
-# rats diary not happy 2010-03-16 vs awesome ('good month so far') on other day, not necessarily contradiction, 2011-10-22 (also 30 days, so running month)
 
 # maracas pig shakes w chuckie too: 2010-06-30
 
@@ -2169,10 +2166,10 @@ undies != underwear, so maybe un-dies? (using rebirth)
 
 # can i replace default category pages with my own 
 
-# 2004-12-17 notes error 
-
 # Fred 20051104 listed on 2005-11-04 
 
 # maybe create a birthdays page that mimics the character and
 # storylines pages (or as events)
+
+# look thru git history... did I lose some lines in this file?
 
