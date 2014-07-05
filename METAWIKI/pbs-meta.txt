@@ -32,6 +32,7 @@ niece, uncle/aunt/pibling, character, character
 pet, master, character, character
 roommate, roommate, character, character
 son, father/mother/parent, character, character
+daughter, father/mother/parent, character, character
 wife, husband, character, character
 killee, killer, character, character
 # this one is a stretch
@@ -52,9 +53,11 @@ members, , group, *
 newspaper_mentions, , strip, newspaper
 orientation, , character, string
 profession, , character, string
+hobby, , character, string
 rebirths, , strip, character
 religion, , character, string
 species, , character, string
+gender, , character, string
 storyline, , strip, storyline
 subspecies, , character, string
 # birthday = anniversary of birth, so caution
@@ -87,6 +90,9 @@ pig_deaths, , strip, string
 rat_deaths, , strip, string
 squirrel_deaths, , strip, string
 zebra_deaths, , strip, string
+
+book, , strip, book
+isbn, , book, string
 
 null, , null, null
 

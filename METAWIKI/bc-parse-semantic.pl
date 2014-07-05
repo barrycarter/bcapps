@@ -170,8 +170,8 @@ for $i (sort keys %datename) {
   my(@apps) = sort keys %{$triples{$i}{"-character"}};
   unless ($date eq $apps[0]) {warn "WARNING: $i: $date != $apps[0])";}
 
-  # canonize name
-  my($newname) = "$base $species #".sprintf("%0.2d",++$times{$base}{$species});
+  # canonize name (cannot use "#" directly, browsers interpret it)
+  my($newname) = "$base $species &#65283;".sprintf("%0.2d",++$times{$base}{$species});
   debug("RENAME: $i -> $newname");
 
   rename_entity($i, $newname);
@@ -203,17 +203,30 @@ for $i (sort keys %has_relation) {
   }
 }
 
+  # create empty db (being this direct this is probably bad)
+  open(B,"|tee /tmp/triples.txt|sqlite3 /tmp/pbs-triples.db 1>/tmp/pbs-myout.txt 2>/tmp/pbs-myerr.txt");
+  # open(A,">/tmp/mysql.txt");
+  print B << "MARK";
+DROP TABLE IF EXISTS triples;
+CREATE TABLE triples (source, k, target, datasource);
+CREATE INDEX i1 ON triples(source);
+CREATE INDEX i2 ON triples(k);
+CREATE INDEX i3 ON triples(target);
+BEGIN;
+MARK
+;
+
 # and now look at the triples for "real"
 for $i (sort keys %triples) {
+
+  # determine class for this entity
+  my(@classes) = sort keys %{$triples{$i}{class}};
 
   # insane page name?
   if ($i=~/[\[\{\]\}]/) {
     warn "WARNING: BAD PAGE NAME: $i";
     next;
   }
-
-  # determine class for this entity
-  my(@classes) = sort keys %{$triples{$i}{class}};
 
   if (scalar @classes == 0) {
     debug("NO CLASSES: $i");
@@ -239,13 +252,27 @@ for $i (sort keys %triples) {
   for $j (sort keys %{$triples{$i}}) {
     # ignore negative relations
     if ($j=~/^\-/) {next;}
-    my($ks) = join(", ", sort keys %{$triples{$i}{$j}});
+    my(@ks) = sort keys %{$triples{$i}{$j}};
+
+    # just for sqlite3
+    for $k (@ks) {
+      $pi = $i; $pj = $j; $pk = $k;
+      $pi=~s/\'/''/g;
+      $pj=~s/\'/''/g;
+      $pk=~s/\'/''/g;
+      print B "INSERT INTO triples VALUES ('$pi', '$pj', '$pk', '$triples{$i}{$j}{$k}');\n";
+    }
+
+    my($ks) = join(", ", @ks);
     print A "|$j=$ks\n";
   }
 
   print A "}}\n";
   close(A);
 }
+
+print B "COMMIT;\n";
+close(B);
 
 my(@diffs) = `diff -qr $pagedir $pagedir/NEW`;
 

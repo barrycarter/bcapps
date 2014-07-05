@@ -642,7 +642,7 @@ Given a string like "2013-04-17-2013-04-19, 2013-04-22, 2013-04-23,
 2013-04-30, 2013-05-01, 2013-05-06-2013-05-08, 2013-05-13-2013-05-15,
 2013-05-20-2013-05-22, 2013-05-24, 2013-05-29", return a list of dates.
 
-= cut
+=cut
 
 sub parse_date_list {
   my($source) = @_;
@@ -713,7 +713,8 @@ sub parse_semantic {
   my(%pval);
 
   # parse the dates
-  my(@dates) = parse_source($source);
+#  my(@dates) = parse_source($source);
+  my(@dates) = parse_date_list($source);
 
   # recursion (the while condition does all the work, no while body)
   while ($string=~s/$dlb($cc*?)$drb/parse_semantic($source,$1)/iseg) {}

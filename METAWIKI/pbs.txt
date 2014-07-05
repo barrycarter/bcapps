@@ -32,25 +32,21 @@ Guidelines for editing this file:
 
 TODO (global todo's not specific to a given strip):
 
-  - handle MULTIREF pages
+  - hash marks (number sign!) is broken due to browser interpretation
 
   - Pig + Rat's human neighbors automatically "::aka::Neighbor x"
 
   - removing _deaths count where species of death is already given,
   tweak program to fix
 
-  - port to referata.com (in progress), since wikia.com no longer
-  offers SMW, even on request
-
   - Distinguish between storylines and characters: for example, Atlas
   is currently both
 
   - Character multiple deaths/rebirths currently not handled properly
 
-  - Bob (human) 21 should have alias Neighbor Bob, but does not
+  - "deaths" should only show when there actually is one (Character template)
 
-  - For repeat characters (eg, "Fred (human) 5"), make sure name
-  matches initial appearance
+  - Bob (human) 21 should have alias Neighbor Bob, but does not
 
   - Consider using "hovertext" ("a title") to show notes for
   thumbnailed strips (currently doing this, but consider if I want to
@@ -141,6 +137,14 @@ TODO (global todo's not specific to a given strip):
   fictious/generic, not always papers in which PBS appears
 
   - Look into ListWidget to show semantic queries better
+
+  - Lenny species = dog, not labrador (program error)
+
+  - Tim (human) #03 should not be a self-alias
+
+  - Error check: 8 numbers in name, but not species?
+
+  - Link storylines together when they relate to each other or flow into each other
  
 # Notes:
 
@@ -338,7 +342,7 @@ MULTIREF [[title::Dead celebrities]] [[notes::On [[2002-08-01]], [[Rat]] doesn't
 2013-02-09 [[newspaper_mentions::Standard ???+??? Daily News]]
 2003-05-26 [[description::[[character::Rat]] kills [[deaths::[[Rat::killee::Father Time 2003 (deity)]]]]]]
 2014-06-30 [[character::Pig+Rat+Father Time 2014]]
-2014-07-01 [[character::Pig+Goat+Rat+Stephan Pastis]] [[Category::Shaggy Dog]]
+2014-07-01 [[character::Pig+Goat+Rat+Stephan Pastis]] [[category::Shaggy Dog]]
 2014-07-02 [[character::Rat+Goat]]
 2014-07-03 [[character::Larry+Trudy (human)+Fred 20140703 (crocodile)]]
 2014-07-04 [[character::Pig+Rat+[[Pig+Rat::neighbor::Abby (human)]]+[[Abby (human)::sister::Cass (human)]]]]
@@ -432,10 +436,13 @@ MULTIREF [[title::Anti-social iPods]] [[notes::On [[2007-11-04]], [[Pig]] realiz
 2012-08-27 [[character::Pig+Goat+Stephan Pastis+Lundquist (human)]] [[Lundquist (human)::profession::professor+linguist]]
 2004-03-01 [[character::Satan+Rat+Pig]] [[Satan::species::deity]]
 2004-03-01-2004-03-05 [[storyline::[[character::Satan]]]]
-2004-03-02 [[character::Pig+Satan+Thomas Good (human)+Chin Brothers (human)]] [[Thomas Good (human)::profession::asphalt specialist]] [[Chin Brothers::profession::asphalt designers]]
+MULTIREF [[title::Rat and Annie May]] [[notes::On [[2005-11-14]], [[Rat]] meets [[Annie May]] ([[Pig]]'s sea anemone enemy), but on [[2006-02-06]] calls Pig delusional for being scared of Annie May, and, on [[2006-02-07]], Rat refers to Annie May as "fictional".]]
+2004-03-02 [[character::Pig+Satan+Thomas Good (human)+Chin Brothers (human)]] [[Thomas Good (human)::profession::asphalt specialist]] [[Chin Brothers (human)::profession::asphalt designers]]
 2004-04-04 [[character::[[Rat::date::Ivona (rat)]]+Rat+Goat+Zebra+Pig+Stephan Pastis]] [[cameo::Hagar]]
 2004-02-19-2004-02-21,2006-10-23-2006-10-25 [[storyline::[[character::Rat]], far right folk singer]]
+2006-02-09 [[deaths::Annie May]] [[meta::I consider this to be Annie May's death, although she later "returns" as two separate anemones]]
 2011-12-09 [[notes::The handle of [[character::Pig]]'s red cup flips beteween panels 2 and 3, even though Pig is holding a box with two hands. [[character::Goat]]'s cup's handle also changes direction (in panel 2), but this might just be Goat taking a sip of beverage]]
+2006-02-06 [[notes::[[character::Pig]] twice refers to [[character::Annie May]] as "he", suggesting Annie May is male, but Annie May is a female name. It's possible Pig has two separate sea anemone enemies, or that Annie May is one of the {{wp|hermaphrodite}} species of sea anemone.]] [[Annie May::gender::female]]
 2007-05-12 [[character::Pig+Pig's Night Stand (nightstand)]]
 2009-06-28 [[character::Pig+Rat+Humpty Dumpty]]
 2009-06-29 [[character::Pig+Rat+Zebra+Humpty Dumpty]]
@@ -631,8 +638,8 @@ MULTIREF [[title::Society of Cultured Pigs]] [[notes::[[Pig]] gets thrown out of
 2003-11-30,2005-12-07 [[notes::The Skippy from [[2003-11-30]] and [[2005-12-07]] could theoretically be the same Skippy, assuming Bob gave/sold him to John]]
 2012-11-15 [[character::Rat+Pig+Skippy (scorpion)]]
 2005-12-16 [[character::John (seal)+Jennifer (seal)+Whale]] [[Whale::species::whale]]
-2005-12-13 [[character::John (seal)+Jennifer (seal)+Whale]] [[Whale 20051213::aka::Whale]]
-2006-02-10,2006-02-11,2006-03-03,2006-03-07,2006-05-02,2006-05-04,2006-04-27,2006-04-14,2006-04-07 [[storyline::[[character::Whale]] at [[character::John (seal)+[[John (seal)::wife::Jennifer (seal)]]]] window]]
+2005-12-13 [[character::John (seal)+Jennifer (seal)+Whale]] [[Whale 20051213 (whale)::aka::Whale]] [[Whale 20031214 (whale)+Whale::notes::Assuming the whales from [[2003-12-14]] and [[2005-12-13]] are different]]
+2006-02-10,2006-02-11,2006-03-03,2006-03-07,2006-05-02,2006-05-04,2006-04-27,2006-04-14,2006-04-07 [[storyline::[[character::Whale]] at [[character::John (seal)]] and [[character::[[John (seal)::wife::Jennifer (seal)]]]]'s window]]
 2006-03-01 [[character::Whale]]
 2004-06-06,2004-06-13,2004-06-20 [[storyline::[[character::Zebra]] writes to [[crocodiles (remote)]]]]
 2005-12-26-2005-12-30 [[storyline::Letter short ges]]
@@ -648,6 +655,11 @@ MULTIREF [[title::Society of Cultured Pigs]] [[notes::[[Pig]] gets thrown out of
 MULTIREF [[title::Bluebird of Happiness]] [[notes::On [[2005-03-31]], Pig accidentally kills a Bluebird of Happiness, and hopes there are two of them. On [[2006-02-05]], he discovers this is true, although the second one is intended for someone else]]
 2004-07-04,2006-02-05 [[notes::[[2004-07-04]] gives [[Pig]] and [[Rat]]'s address as "803 Hearst", whereas [[2006-02-05]] gives their address as "809 Bradbury" (perhaps they moved)]]
 2005-11-14,2006-02-06-2006-02-09,2006-05-08-2006-05-13,2011-04-06-2011-04-08 [[storyline::[[character::Annie May]], [[character::Pig]]'s sea anemone enemy]]
+2006-05-08 [[character::Pig+Rat+[[Annie May::daughter::Annette O' Meade (sea anemone)+Ann (sea anemone)]]]] [[Ann (sea anemone)::profession::maid]] [[meta::Does sea anemones have colons?]]
+2006-05-09 [[character::Pig+Annette O' Meade (sea anemone)+Ann (sea anemone)]]
+2006-05-10 [[character::Mr Pitters+Pig+Annette O' Meade (sea anemone)]] [[meta::It's impossibly to tell if this is Annette or Ann, so I've simply chosen the one that was introduced first]]
+2006-05-11 [[character::Pig+Rat]]
+2006-05-13 [[character::Rat+Alphonse+Chuckie (sheep)+Zebra+Whale+Annette O' Meade (sea anemone)+Ann (sea anemone)+Iceman]] [[Annette O' Meade (sea anemone)::aka::Devil Dog]]
 2006-05-13 [[deaths::Whale]]
 2006-05-16-2006-05-18 [[storyline::[[character::Guard Duck]]'s anger management problem]]
 2006-02-07 [[character::Annie May]] [[Annie May::species::sea anemone]]
@@ -719,7 +731,7 @@ MULTIREF [[title::Rat's guilt]] [[notes::On [[2014-06-09]], Rat says he feels gu
 2010-04-30 [[notes::Most emails containing trojans don't *announce* they contain trojans]]
 2006-06-29 [[deaths::Mini Newt Gingrich]]
 2006-06-27 [[newspaper_mentions::Sun Sent Here?]]
-2005-11-27,2006-07-08 [[storyline::[[character::Zebra]] and friends threaten to eat [[character::Larry]]]]
+2005-11-27,2006-07-08 [[storyline::[[character::Zebra]] and friends threaten to eat [[character::Larry]]]] [[meta::Something wrong here, the two strips are too far apart]]
 2005-11-27 [[character::Gene (zebra)]]
 2005-11-09 [[zebra_deaths::#1]]
 2006-07-10-2006-07-12,2006-07-18,2006-07-20,2011-06-01-2011-06-03,2011-10-04,2008-11-10,2008-11-11,2007-03-23,2006-11-05,2006-09-11,2006-12-02,2006-09-25,2011-05-31,2007-03-20,2007-03-21,2006-09-12,2007-02-16,2007-01-29,2006-12-13,2011-06-05,2006-08-07-2006-08-09,2006-09-29 [[storyline::[[character::Rat]] works at [[location::Joe's Roastery]]]]
@@ -827,7 +839,7 @@ MULTIREF [[title::Rat's guilt]] [[notes::On [[2014-06-09]], Rat says he feels gu
 2007-10-22-2007-10-24 [[storyline::[[character::Rat]] rules over {{wp|Fischer-Price}} people]]
 2005-02-21 [[character::Pig+Neighbor Bob+Phil (half-human)]]
 2007-06-19 [[character::Rat+[[Rat::boss::Phil 20070619 (human)]]]]
-2006-12-27 [[character::Pig+Neighbor Phil]] [[Phil 20061227 (human)::aka::Neighbor Phil]]
+2006-12-27 [[character::Pig+Neighbor Phil]] [[Phil 20061227 (human)::aka::Neighbor Phil]] [[Neighbor Phil::hobby::falconing]]
 2004-04-11 [[character::Zebra+Pig+Rat+Martin Figowitz (human)]] [[Martin Figowitz (human)::profession::Olympic hopeful]]
 2004-04-19 [[character::Pig+Rat+Bob 20040419 (human)]] [[Bob 20040419 (human)::profession::electronic store salesman]]
 2007-10-12 [[notes::We learn [[Larry]] attended {{wp|San Marino High School}} (just like [[Stephan Pastis]])]]
@@ -1023,7 +1035,7 @@ MULTIREF [[title::Pearls without [[Pig]]]] [[notes::The "Pearls without Pig" on 
 2010-03-07 [[cameo::Snuffy Smith]]
 2010-03-11 [[newspaper_mentions::The Post]]
 2010-03-25-2010-03-27 [[description::[[Bob n (crocodile)]] gets "newtered"]]
-2003-12-14 [[character::Whale 20031214 (whale)+[[deaths::Skippy (seal)]]]] [[Whale 20031214 (whale)+Whale::notes::Assuming the whales from [[2003-12-14]] and [[2005-12-13]] are different]]
+2003-12-14 [[character::Whale 20031214 (whale)+[[deaths::Skippy (seal)]]]]
 2010-04-11 [[notes::This strip contains an unintentional color separation issue,which [[Stephan Pastis]] parodies later]]
 2005-08-18 [[hamster_deaths::#unknown]]
 2010-05-17 [[newspaper_mentions::Hartford Cou???+Santa Rosa Press Democrat+Arizona Republic]]
@@ -1792,6 +1804,28 @@ MULTIREF [[title::Pig's Garage Sale]] [[notes::On [[2004-03-06]], Pig doesn't kn
 MULTIREF [[title::Guard Duck's Parents]] [[notes::On [[2006-06-24]], we see [[Guard Duck]] writing his father, but on [[2006-12-03]], he says he never knew his parents]]
 MULTIREF [[title::Rat and the Lottery]] [[notes::On [[2005-12-19]], [[Rat]] says his retirement plan is the lottery. By [[2011-05-09]], he understand it's "a tax on people who can't do math"]]
 0000-00-00 [[meta::This is for "obvious" stuff, but is probably a bad idea]] [[Rat+Pig+Goat+Zebra+Larry+Stephan Pastis+Guard Duck+Junior+Max (lion)::gender::male]] [[Pigita+Patty (crocodile)+Farina+Maura+Joy+Annie May+Jennifer (seal)+Katie (cow)+Sweet Fanny (sheep)+Libby (human)+Vivian (pig)+Cindy (rat)+Connie (cow)+Wanda (human)::gender::female]]
+2001-12-31-2002-10-06 [[book::Pearls Before Swine: BLTs Taste So Darn Good]] [[Pearls Before Swine: BLTs Taste So Darn Good::isbn::0740734377]]
+2002-10-07-2003-07-13 [[book::This Little Piggy Stayed Home]] [[This Little Piggy Stayed Home::isbn::0740738135]]
+2003-07-14-2004-04-18 [[book::Nighthogs]] [[Nighthogs::isbn::0740750097]]
+2004-04-19-2005-01-23 [[book::The Ratvolution Will Not Be Televised]] [[The Ratvolution Will Not Be Televised::isbn::0740756745]]
+2005-01-24-2005-10-30 [[book::Da Brudderhood of Zeeba Zeeba Eata]] [[Da Brudderhood of Zeeba Zeeba Eata::isbn::0740768018]]
+2005-10-31-2006-08-06 [[book::The Sopratos]] [[The Sopratos::isbn::0740768476]]
+2006-08-07-2007-05-13 [[book::Macho Macho Animals]] [[Macho Macho Animals::isbn::0740773690]]
+2007-05-14-2008-02-16 [[book::The Saturday Evening Pearls]] [[The Saturday Evening Pearls::isbn::0740773917]]
+2008-02-17-2008-11-16 [[book::50,000,000 Pearls Fans Can't Be Wrong]] [[50,000,000 Pearls Fans Can't Be Wrong::isbn::0740791419]]
+2008-11-17-2009-08-23 [[book::When Pigs Fly]] [[When Pigs Fly::isbn::0740797379]]
+2009-08-24-2010-05-23 [[book::Larry in Wonderland]] [[Larry in Wonderland::isbn::1449408176]]
+2010-05-24-2011-02-27 [[book::Because Sometimes You Just Gotta Draw a Cover with Your Left Hand]] [[Because Sometimes You Just Gotta Draw a Cover with Your Left Hand::isbn::1449410235]]
+2011-02-28-2011-12-04 [[book::Unsportsmanlike Conduct]] [[Unsportsmanlike Conduct::isbn::9781449427740]]
+2011-12-05-2012-09-03 [[book::Rat's Wars]] [[Rat's Wars::isbn::9781449429362]]
+2001-12-31-2003-07-13 [[book::Sgt. Piggy's Lonely Hearts Club Comic]] [[Sgt. Piggy's Lonely Hearts Club Comic::isbn::0740748076]]
+2003-07-14-2005-01-23 [[book::Lions and Tigers and Crocs, Oh My!]] [[Lions and Tigers and Crocs, Oh My!::isbn::0740761552]]
+2005-01-24-2006-08-05 [[book::The Crass Menagerie]] [[The Crass Menagerie::isbn::0740771000]]
+2006-08-06-2008-02-16 [[book::Pearls Sells Out]] [[Pearls Sells Out::isbn::0740773968]]
+2008-02-17-2009-08-23 [[book::Pearls Blows Up]] [[Pearls Blows Up::isbn::1449401066]]
+2009-08-24-2011-02-27 [[book::Pearls Freaks the #*%# Out]] [[Pearls Freaks the #*%# Out::isbn::1449423027]] [[meta::will need to fix hash marks here]]
+2011-02-28-2012-09-03 [[book::Pearls Falls Fast]] [[Pearls Falls Fast::isbn::9781449446598]]
+2014-07-05 [[character::Rat+Goat+Neighbor Phil]] [[Neighbor Phil::profession::coroner]] [[meta::Technically, Phil is just LOOKING for a coroners job, but I'm listing it as his profession anyway]]
 </data>
 
 # the following lines are incorrect and need to be checked

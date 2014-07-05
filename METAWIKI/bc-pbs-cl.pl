@@ -46,7 +46,7 @@ $full{other} = "[[null::null]]";
 
 # the following need to be recognized as full
 for $i ("zebra", "pig", "rat", "goat", "larry", "guard duck", "junior",
-       "snuffles", "pigita") {
+       "snuffles", "pigita", "abraham lincoln") {
   $uc = $i;
   $uc =~ s/(\w+)/\u$1/g;
   $full{$i} = "[[character::$uc]]";
