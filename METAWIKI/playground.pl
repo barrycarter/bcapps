@@ -2,24 +2,30 @@
 
 require "/usr/local/lib/bclib.pl";
 
-for $i (split(/\n/, read_file("/home/barrycarter/BCGIT/METAWIKI/pbs.txt"))) {
+chdir("/home/barrycarter/BCGIT/METAWIKI/");
+
+# this is fairly insane
+open(A, "| sort | uniq | tee /tmp/triptake.txt");
+
+for $i (`cat pbs.txt pbs-cl.txt | egrep -v '^#|^\$'`) {
   $i=~s/^(\S+)\s+//;
   my(@dates) = parse_date_list($1);
   while ($i=~s/\[\[([^\[\]]*?)\]\]/\001/) {
     my(@triple) = split(/::/, $1);
-    if (scalar @triple==2) {
-      for $j (@dates) {
-	print "$j|".join("|",@triple)."|\n";
+    for $j (@dates) {
+      if (scalar @triple==2) {
+	print A "$j|".join("|",@triple)."|\n";
+      }  elsif (scalar @triple==3) {
+	print A join("|",@triple)."|$j\n";
+      } else {
+	warn("WTF",@triple);
       }
-    } elsif (scalar @triple==3) {
-      print join("|",@triple)."|$j\n";
-    } else {
-      warn("WTF",@triple);
     }
-
     $i=~s/\001/$triple[-1]/;
   }
 }
+
+close(A);
 
 =item parse_date_list($string)
 
