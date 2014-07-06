@@ -9,17 +9,15 @@ open(A, "| sort | uniq | tee /tmp/triptake.txt");
 
 for $i (`cat pbs.txt pbs-cl.txt | egrep -v '^#|^\$'`) {
   $i=~s/^(\S+)\s+//;
-  my(@dates) = parse_date_list($1);
+  my($dates) = $1;
   while ($i=~s/\[\[([^\[\]]*?)\]\]/\001/) {
     my(@triple) = split(/::/, $1);
-    for $j (@dates) {
-      if (scalar @triple==2) {
-	print A "$j|".join("|",@triple)."|\n";
-      }  elsif (scalar @triple==3) {
-	print A join("|",@triple)."|$j\n";
-      } else {
-	warn("WTF",@triple);
-      }
+    if (scalar @triple==2) {
+      print A "$dates|".join("|",@triple)."|\n";
+    }  elsif (scalar @triple==3) {
+      print A join("|",@triple)."|$dates\n";
+    } else {
+      warn("WTF",@triple);
     }
     $i=~s/\001/$triple[-1]/;
   }
