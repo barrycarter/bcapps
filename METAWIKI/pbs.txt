@@ -1583,6 +1583,7 @@ MULTIREF [[title::Lemmings Leap]] [[notes::On [[2012-10-19]] (also [[noref::2013
 2005-08-09 [[character::Pig+Rat+[[Pig+Rat::neighbor::Neighbor Ted 2]]]] [[Ted 20050809 (human)::aka::Neighbor Ted 2]] [[Neighbor Ted+Neighbor Ted 2::notes::The neighbor Ted in [[2005-07-29]] and the neighbor Ted in [[2005-08-09]] appear to be two entirely different people]] [[Neighbor Ted 2::profession::big game hunter]]
 2004-07-19 [[character::Ted 20040719 (human)+Bob 20040719 (human)]] [[Bob 20040719 (human)+Ted 20040719 (human)::profession::dumb guy]]
 2004-07-13 [[human_deaths::#1]]
+2014-07-06 [[character::Rat+Rat's mother (rat)+Pig]]
 2012-01-28 [[character::Goat+Rat+[[Goat::friend::Jim 20120128 (human)]]]] [[Jim 20120128 (human)::profession::golfer]]
 2005-07-13 [[character::Pig+[[Pig+Rat::neighbor::Jim 20050713 (human)]]]] [[Jim 20050713 (human)::aka::Neighbor Jim+Jim the Grapefruit]]
 2005-07-22 [[character::Pig+Rat+Carmen Mirandawarning (human)]]
