@@ -102,6 +102,7 @@ for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
 
       # if the character has parens in name and no species, note species
       # (note that a species triple will correctly override this)
+      # TODO: this is invalid, since we don't know that species come first
       if ($l=~/\(([^A-Z]*?)\)$/ && !$triples{$l}{species}) {
 	$triples{$l}{species}{$1} = "NAME2SPECIES";
 	debug("NAME2SPECIES: $l -> $1");
@@ -444,5 +445,3 @@ sub rename_entity {
     }
   }
 }
-
-

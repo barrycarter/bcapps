@@ -32,17 +32,16 @@ Guidelines for editing this file:
 
 TODO (global todo's not specific to a given strip):
 
-  - hash marks (number sign!) is broken due to browser interpretation
-
-  - Pig + Rat's human neighbors automatically "::aka::Neighbor x"
-
-  - removing _deaths count where species of death is already given,
-  tweak program to fix
+  - Pig + Rat's human neighbors automatically "::aka::Neighbor x"?
 
   - Distinguish between storylines and characters: for example, Atlas
-  is currently both
+  is currently both (character_is_storyline::1, but then need to
+  decide on which template to use?)
 
   - Character multiple deaths/rebirths currently not handled properly
+
+  - Make sure characters like Bippy, Pigita, Jef are synchronous (or
+  nearly so) with their storylines
 
   - "deaths" should only show when there actually is one (Character template)
 
@@ -55,11 +54,8 @@ TODO (global todo's not specific to a given strip):
   - Use limited transitivity for sanity checking; eg, if
   "source::kills::target", make sure target has death date
   
-  - Commas in descriptions (like for "Dingo Boy") are creating <br>
-  where not needed
-
-  - Make sure characters like Bippy, Pigita, Jef are synchronous (or
-  nearly so) with their storylines
+  - Commas in descriptions (like for "Dingo Boy") are creating <br> 
+  where not needed (try &#44; instead?)
 
   - Make sure most links open in new page/tab
 
@@ -529,7 +525,7 @@ MULTIREF [[title::Atlas]] [[notes::[[2004-09-13]] shows [[Atlas]] carrying the w
 2004-10-18 [[character::Pig+RR (sign)+Danger High Voltage (sign)+Slow Xing (sign)+Soft Shoulder (sign)]] [[RR (sign)::aka::Larry (sign)]] [[Slow Xing (sign)::aka::Ernie]] [[Soft Shoulder (sign)::aka::Clarence]] [[meta::may need to reverse these so things like Ernie are name, and rest is aka]]
 2004-10-23-2004-10-30,2004-11-01,2004-11-02 [[storyline::[[character::Rat]] runs for President (2004)]]
 2012-10-28-2012-11-03,2012-11-05-2012-11-07 [[storyline::[[character::Rat]] runs for President (2012)]]
-2004-11-13 [[zebra_deaths::#1]]
+2004-11-13 [[zebra_deaths::#1]] [[character::Crocodiles]]
 2004-11-22 [[cameo::Walter Duncan+Connie Duncan]]
 2004-11-22-2004-11-27 [[storyline::[[character::Rat]] enters other comic strips]]
 2004-11-23 [[cameo::Andrea Fox (Fox Trot)+Roger Fox (Fox Trot)]]
@@ -610,7 +606,7 @@ MULTIREF [[title::Atlas]] [[notes::[[2004-09-13]] shows [[Atlas]] carrying the w
 2005-07-20 [[notes::The chicken eggs served in restaurants and made into omelettes are unfertilized, and do not contain life, not even fetal life.]]
 2005-10-14 [[description::[[character::Jojo (crocodile)]] attempts to eat [[character::Guard Duck]], resulting in [[deaths::Jojo (crocodile)]]'s death]]
 2005-10-17 [[character::Wee Bear (bear)+Pig+Rat]]
-2005-10-17-2005-10-22,2005-10-24-2005-10-26 [[storyline::[[Pearls' journey across America]]]]
+2005-10-17-2005-10-22,2005-10-24-2005-10-26 [[storyline::Pearls' journey across America]]
 2005-10-26 [[character::Pig+Rat+Wee Bear (bear)]]
 2005-10-19 [[character::Pig+Rat+Wee Bear (bear)]]
 2011-03-15 [[deaths::Bob 20110315 (crocodile)]]
@@ -767,7 +763,8 @@ MULTIREF [[title::Rat's guilt]] [[notes::On [[2014-06-09]], Rat says he feels gu
 2007-01-05 [[event::[[character::Maura]] migrates, breaking up with [[character::Guard Duck]]]] [[Maura::species::duck]]
 2007-01-09 [[character::Ataturk (llama)]]
 2007-01-10 [[character::Rat+Pig+Ataturk (llama)]]
-2007-01-15-2007-01-19 [[storyline::{{wp|Abraham Lincoln}} visit]]2004-11-05 [[character::Pig+Rat+Colin (human)]]
+2007-01-15-2007-01-19 [[storyline::{{wp|Abraham Lincoln}} visit]]
+2004-11-05 [[character::Pig+Rat+Colin (human)]]
 2007-01-24 [[event::[[character::Guard Duck]] kills [[deaths::[[Guard Duck::killee::Frank 20070124 (crocodile)]]]]]]
 2007-02-26 [[crocodile_deaths::#1]]
 2007-02-28 [[crocodile_deaths::#1]]
@@ -912,7 +909,7 @@ MULTIREF [[title::Too Many Words]] [[notes::On [[2004-09-20]], [[Stephan Pastis]
 2008-01-30 [[character::Pig+Zebra+Bob 20080130 (human)]] [[Bob 20080130 (human)::subspecies::mini]]
 2008-08-11,2008-08-12,2008-08-15 [[storyline::[[character::Pig]] on the Olympic Gymnastic Team]]
 2010-04-25 [[character::Pig+Stephan Pastis]] [[Pig::aka::Gym Sock Nose Guy]]
-2010-04-25,2010-05-02,2010-05-03 [[storyline::[[Gym Sock Nose Guy]]]]
+2010-04-25,2010-05-02,2010-05-03 [[storyline::[[character::Gym Sock Nose Guy]]]]
 2010-05-02 [[character::Rat+Stephan Pastis+Pig]]
 2008-12-02-2008-12-05 [[storyline::[[character::Guard Duck]] tries {{wp|civil disobedience}}]]
 2006-06-11 [[notes::{{wp|Tramp stamp}}]]
@@ -1580,9 +1577,12 @@ MULTIREF [[title::Lemmings Leap]] [[notes::On [[2012-10-19]] (also [[noref::2013
 2011-11-17-2011-11-19 [[storyline::[[character::Rat]]'s conscience in a trunk]]
 2008-05-09 [[character::Rat+Pig+Timmy (monkey)]] [[Timmy (monkey)::aka::Timmy the Telegram-Toting Monkey]]
 2010-11-24-2010-11-26 [[storyline::[[character::Rat]] the therapist]]
+2010-11-24 [[character::Rat+Pig+Goat+Guard Duck]]
+2010-11-26 [[character::Rat+Johnson 20101126 (human)]]
 2005-07-29 [[character::Pig+[[Pig+Rat::neighbor::Neighbor Ted]]]] [[Ted 20050729 (human)::aka::Neighbor Ted]] [[Neighbor Ted::profession::personal trainer]]
 2005-08-09 [[character::Pig+Rat+[[Pig+Rat::neighbor::Neighbor Ted 2]]]] [[Ted 20050809 (human)::aka::Neighbor Ted 2]] [[Neighbor Ted+Neighbor Ted 2::notes::The neighbor Ted in [[2005-07-29]] and the neighbor Ted in [[2005-08-09]] appear to be two entirely different people]] [[Neighbor Ted 2::profession::big game hunter]]
 2004-07-19 [[character::Ted 20040719 (human)+Bob 20040719 (human)]] [[Bob 20040719 (human)+Ted 20040719 (human)::profession::dumb guy]]
+2004-07-13 [[human_deaths::#1]]
 2012-01-28 [[character::Goat+Rat+[[Goat::friend::Jim 20120128 (human)]]]] [[Jim 20120128 (human)::profession::golfer]]
 2005-07-13 [[character::Pig+[[Pig+Rat::neighbor::Jim 20050713 (human)]]]] [[Jim 20050713 (human)::aka::Neighbor Jim+Jim the Grapefruit]]
 2005-07-22 [[character::Pig+Rat+Carmen Mirandawarning (human)]]
@@ -1687,7 +1687,7 @@ MULTIREF [[title::Furry Brown Cap]] [[notes::A furry brown cap, apparently unrel
 2013-06-12 [[cameo::Steve Dallas (Bloom County)]]
 2013-02-02 [[notes::The lettering on the beer can reads "Beer" and isn't in all capitals like it is in most other strips]]
 2004-07-18,2004-12-17 [[notes::[[character::Goat]] implies the {{wp|United States}} is a democracy, but it's actually a republic. Of course, in the PBS world, the United States may actually be a democracy]]
-MULTIREF [[title::A Republic, not a Democracy]] [[notes::On [[2004-07-18]], [[Goat]] states "we live in a democracy" (and implies it again on [[2004-12-17]]), but, as [[Rat]] correctly notes on [[2013-09-29]], the {{wp|United States}} is a {{wp|republic}}, not a {{wp|democracy}}]]
+MULTIREF [[title::A Republic, not a Democracy]] [[notes::On [[2004-07-18]], [[Goat]] states "we live in a democracy" (and implies it again on [[2004-12-17]]), and [[Pig]] implies the same thing on [[2010-11-01]], but, as [[Rat]] correctly notes on [[2013-09-29]], the {{wp|United States}} is a {{wp|republic}}, not a {{wp|democracy}}]]
 2009-10-14 [[Larry::aka::Crocus Lazybuttus]]
 MULTIREF [[title::Rat's Senate]] [[notes::On [[2006-07-22]], [[Rat]] doesn't know what the {{wp|Senate}} is (though he might just be joking), but by [[2010-10-19]], he actually runs for Senate]]
 2004-09-30 [[character::Gigi (cat)]]
