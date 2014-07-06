@@ -4,25 +4,41 @@ require "/usr/local/lib/bclib.pl";
 
 chdir("/home/barrycarter/BCGIT/METAWIKI/");
 
-# this is fairly insane
-open(A, "| sort | uniq | tee /tmp/triptake.txt");
-
 for $i (`cat pbs.txt pbs-cl.txt | egrep -v '^#|^\$'`) {
+  $i=~s/\'/&\#39\;/g;
+  $i=~s/,/&\#44\;/g;
+  debug("I: $i");
   $i=~s/^(\S+)\s+//;
   my($dates) = $1;
   while ($i=~s/\[\[([^\[\]]*?)\]\]/\001/) {
     my(@triple) = split(/::/, $1);
     if (scalar @triple==2) {
-      print A "$dates|".join("|",@triple)."|\n";
+      push(@triples, [$dates, @triple]);
     }  elsif (scalar @triple==3) {
-      print A join("|",@triple)."|$dates\n";
+      push(@triples, [@triple, $dates]);
     } else {
-      warn("WTF",@triple);
+      # do nothing
     }
     $i=~s/\001/$triple[-1]/;
   }
 }
 
+open(A,"| tee /tmp/pbs-simple.txt |sqlite3 /tmp/pbs-simple.db");
+print A << "MARK";
+DROP TABLE IF EXISTS triples;
+CREATE TABLE triples (source, relation, target, datasource);
+CREATE INDEX i1 ON triples(source);
+CREATE INDEX i2 ON triples(relation);
+CREATE INDEX i3 ON triples(target);
+BEGIN;
+MARK
+;
+
+for $i (@triples) {
+  print A "INSERT INTO triples VALUES ('$i->[0]','$i->[1]','$i->[2]','$i->[3]');\n";
+}
+
+print A "COMMIT;\n";
 close(A);
 
 =item parse_date_list($string)
