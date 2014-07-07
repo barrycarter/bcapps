@@ -10,36 +10,26 @@ for $i (`cat pbs.txt pbs-cl.txt | egrep -v '^#|^\$'`) {
   $i=~s/\'/&\#39\;/g;
   $i=~s/,/&\#44\;/g;
   while ($i=~s/\[\[([^\[\]]*?)\]\]/\001/) {
-    # below forces everything to be at least length 4
-    my(@anno) = ($dates, split(/::/, $1), $dates);
+    my(@anno) = ($dates, split(/::/, $1));
     push(@triples, [@anno]);
     $i=~s/\001/$anno[-1]/;
   }
 }
 
 for $i (@triples) {
-  # len 3 -> date, relation, value; len 4 -> source, entity, relation, value
-  if (scalar @$i == 3) {
-    for $j (parse_date_list($i->[0])) {
-      for $k (split(/\+/, $i->[1])) {
-	for $l (split(/\+/, $i->[2])) {
+  # len 3 -> date, rel, val, ignore; len 4 -> source, entity, rel, val
+  for $j (parse_date_list($i->[0])) {
+    for $k (split(/\+/, $i->[1])) {
+      for $l (split(/\+/, $i->[2])) {
+	if (scalar(@$i) == 3) {
 	  debug("ALPHA: $j/$k/$l/$j");
-	}
-      }
-    }
-  } elsif (scalar @$i == 4) {
-    for $j (split(/\+/, $i->[0])) {
-      for $k (split(/\+/, $i->[1])) {
-	for $l (split(/\+/, $i->[2])) {
-	  # TODO: this could be just a single value
-	  for $m (parse_date_list($i->[3])) {
-	    debug("BETA: $j/$k/$l/$m");
+	} elsif (scalar(@$i) == 4) {
+	  for $m (split/\+/, $i->[3]) {
+	    debug("BETA: $k/$l/$m/$j");
 	  }
 	}
       }
     }
-  } else {
-    warn("GAMMA: BAD LENGTH",@$i);
   }
 }
 
