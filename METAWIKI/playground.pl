@@ -5,23 +5,29 @@ require "/usr/local/lib/bclib.pl";
 chdir("/home/barrycarter/BCGIT/METAWIKI/");
 
 for $i (`cat pbs.txt pbs-cl.txt | egrep -v '^#|^\$'`) {
-  $i=~s/\'/&\#39\;/g;
-  $i=~s/,/&\#44\;/g;
-  debug("I: $i");
+  chomp($i);
   $i=~s/^(\S+)\s+//;
   my($dates) = $1;
+  $i=~s/\'/&\#39\;/g;
+  $i=~s/,/&\#44\;/g;
   while ($i=~s/\[\[([^\[\]]*?)\]\]/\001/) {
-    my(@triple) = split(/::/, $1);
-    if (scalar @triple==2) {
-      push(@triples, [$dates, @triple]);
-    }  elsif (scalar @triple==3) {
-      push(@triples, [@triple, $dates]);
-    } else {
-      # do nothing
-    }
-    $i=~s/\001/$triple[-1]/;
+    my(@anno) = ($dates, split(/::/, $1));
+    push(@triples, [@anno]);
+    debug("ALPHA: $i, ANNO:", @anno);
+    $i=~s/\001/$anno[-1]/;
   }
 }
+
+for $i (@triples) {
+#  map(s/<<(\d+)>>/$triples[$1][0]/eg, @$i);
+  debug("BETA: ".join(", ",@$i));
+}
+
+die "TESTING";
+
+debug(unfold(@triples));
+
+die "TESTING";
 
 open(A,"| tee /tmp/pbs-simple.txt |sqlite3 /tmp/pbs-simple.db");
 print A << "MARK";

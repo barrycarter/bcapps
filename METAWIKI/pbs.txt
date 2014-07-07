@@ -1827,6 +1827,7 @@ MULTIREF [[title::Rat and the Lottery]] [[notes::On [[2005-12-19]], [[Rat]] says
 2009-08-24-2011-02-27 [[book::Pearls Freaks the #*%# Out]] [[Pearls Freaks the #*%# Out::isbn::1449423027]] [[meta::will need to fix hash marks here]]
 2011-02-28-2012-09-03 [[book::Pearls Falls Fast]] [[Pearls Falls Fast::isbn::9781449446598]]
 2014-07-05 [[character::Rat+Goat+Neighbor Phil]] [[Neighbor Phil::profession::coroner]] [[meta::Technically, Phil is just LOOKING for a coroners job, but I'm listing it as his profession anyway]]
+2014-07-07 [[character::Pig+Goat+Ricky (raisin)]]
 </data>
 
 # the following lines are incorrect and need to be checked
