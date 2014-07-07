@@ -5,22 +5,42 @@ require "/usr/local/lib/bclib.pl";
 chdir("/home/barrycarter/BCGIT/METAWIKI/");
 
 for $i (`cat pbs.txt pbs-cl.txt | egrep -v '^#|^\$'`) {
-  chomp($i);
   $i=~s/^(\S+)\s+//;
   my($dates) = $1;
   $i=~s/\'/&\#39\;/g;
   $i=~s/,/&\#44\;/g;
   while ($i=~s/\[\[([^\[\]]*?)\]\]/\001/) {
-    my(@anno) = ($dates, split(/::/, $1));
+    # below forces everything to be at least length 4
+    my(@anno) = ($dates, split(/::/, $1), $dates);
     push(@triples, [@anno]);
-    debug("ALPHA: $i, ANNO:", @anno);
     $i=~s/\001/$anno[-1]/;
   }
 }
 
 for $i (@triples) {
-#  map(s/<<(\d+)>>/$triples[$1][0]/eg, @$i);
-  debug("BETA: ".join(", ",@$i));
+  # len 3 -> date, relation, value; len 4 -> source, entity, relation, value
+  if (scalar @$i == 3) {
+    for $j (parse_date_list($i->[0])) {
+      for $k (split(/\+/, $i->[1])) {
+	for $l (split(/\+/, $i->[2])) {
+	  debug("ALPHA: $j/$k/$l/$j");
+	}
+      }
+    }
+  } elsif (scalar @$i == 4) {
+    for $j (split(/\+/, $i->[0])) {
+      for $k (split(/\+/, $i->[1])) {
+	for $l (split(/\+/, $i->[2])) {
+	  # TODO: this could be just a single value
+	  for $m (parse_date_list($i->[3])) {
+	    debug("BETA: $j/$k/$l/$m");
+	  }
+	}
+      }
+    }
+  } else {
+    warn("GAMMA: BAD LENGTH",@$i);
+  }
 }
 
 die "TESTING";
