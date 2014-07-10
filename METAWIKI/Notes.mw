@@ -1,0 +1,3 @@
+<table class="wikitable">
+{{#ask: [[Category:Strips]] [[notes::+]] | ?hash | ?notes | format=template | template=Notes | link=none | limit = 999999999 | searchlabel=... more ...}}
+</table>

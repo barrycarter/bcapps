@@ -4543,3 +4543,9 @@
 2014-07-02 http://assets.amuniversal.com/05556700d7e301316bdc005056a9545d?width=1500
 2014-07-03 http://assets.amuniversal.com/06b35ca0d7e301316bdc005056a9545d?width=1500
 2014-07-04 http://assets.amuniversal.com/07f45760d7e301316bdc005056a9545d?width=1500
+2014-07-05 http://assets.amuniversal.com/09331e30d7e301316bdc005056a9545d?width=1500
+2014-07-06 http://assets.amuniversal.com/9cdfb160c1e6013159ab005056a9545d?width=1500
+2014-07-07 http://assets.amuniversal.com/0f873990dd320131703d005056a9545d?width=1500
+2014-07-08 http://assets.amuniversal.com/10aa1150dd320131703d005056a9545d?width=1500
+2014-07-09 http://assets.amuniversal.com/11df6cb0dd320131703d005056a9545d?width=1500
+2014-07-10 http://assets.amuniversal.com/133d9c10dd320131703d005056a9545d?width=1500

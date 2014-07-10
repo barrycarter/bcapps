@@ -2,6 +2,16 @@
 
 require "/usr/local/lib/bclib.pl";
 
+
+
+
+
+
+
+
+
+die "TESTING";
+
 chdir("/home/barrycarter/BCGIT/METAWIKI/");
 
 for $i (`cat pbs.txt pbs-cl.txt | egrep -v '^#|^\$'`) {
@@ -16,30 +26,7 @@ for $i (`cat pbs.txt pbs-cl.txt | egrep -v '^#|^\$'`) {
   }
 }
 
-for $i (@triples) {
-  # len 3 -> date, rel, val, ignore; len 4 -> source, entity, rel, val
-  for $j (parse_date_list($i->[0])) {
-    for $k (split(/\+/, $i->[1])) {
-      for $l (split(/\+/, $i->[2])) {
-	if (scalar(@$i) == 3) {
-	  debug("ALPHA: $j/$k/$l/$j");
-	} elsif (scalar(@$i) == 4) {
-	  for $m (split/\+/, $i->[3]) {
-	    debug("BETA: $k/$l/$m/$j");
-	  }
-	}
-      }
-    }
-  }
-}
-
-die "TESTING";
-
-debug(unfold(@triples));
-
-die "TESTING";
-
-open(A,"| tee /tmp/pbs-simple.txt |sqlite3 /tmp/pbs-simple.db");
+open(A,"|sqlite3 /var/tmp/pbs-play.db");
 print A << "MARK";
 DROP TABLE IF EXISTS triples;
 CREATE TABLE triples (source, relation, target, datasource);
@@ -51,11 +38,27 @@ MARK
 ;
 
 for $i (@triples) {
-  print A "INSERT INTO triples VALUES ('$i->[0]','$i->[1]','$i->[2]','$i->[3]');\n";
+  # len 3 -> date, rel, val, ignore; len 4 -> source, entity, rel, val
+  for $j (parse_date_list($i->[0])) {
+    for $k (split(/\+/, $i->[1])) {
+      for $l (split(/\+/, $i->[2])) {
+	if (scalar(@$i) == 3) {
+	  print A "INSERT INTO triples VALUES ('$j', '$k', '$l', '$j');\n";
+	} elsif (scalar(@$i) == 4) {
+	  for $m (split/\+/, $i->[3]) {
+	    print A "INSERT INTO triples VALUES ('$k', '$l', '$m', '$j');\n";
+	  }
+	}
+      }
+    }
+  }
 }
 
 print A "COMMIT;\n";
 close(A);
+
+# and now the fixups...
+
 
 =item parse_date_list($string)
 
