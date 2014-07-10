@@ -5,6 +5,8 @@ Parameter 2: hash of image on gocomics site, like 0163f6c03fcf012f2fd000163e41dd
 
 </noinclude>
 
+[[has_date::{{{1}}}|]]
+
 <table border>
 <tr><th>{{WikiLink|{{{1}}}|{{#time: d M Y (l)|{{{1}}}}}}}</th></tr>
 <tr><th>{{#widget:LinkedThumbnail|url=http://www.gocomics.com/pearlsbeforeswine/{{#time: Y/m/d | {{{1}}}}}|hash={{{2}}}}}

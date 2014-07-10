@@ -1,0 +1,31 @@
+Welcome to the experimental, incomplete, and often inaccurate Pearls Before Swine referata wiki, an attempt to create a entire semantic wiki from just a few file.
+
+== Edit ==
+
+You can't edit this wiki directly, but to learn more about this project (and edit the source files):
+
+* The data: {{#widget:Extlink|url=https://github.com/barrycarter/bcapps/blob/master/METAWIKI/pbs.txt|text=https://github.com/barrycarter/bcapps/blob/master/METAWIKI/pbs.txt}}
+
+* The README page {{#widget:Extlink|url=https://github.com/barrycarter/bcapps/blob/master/METAWIKI/README|text=https://github.com/barrycarter/bcapps/blob/master/METAWIKI/README}}
+
+* The whole directory: {{#widget:Extlink|url=https://github.com/barrycarter/bcapps/blob/master/METAWIKI|text=https://github.com/barrycarter/bcapps/blob/master/METAWIKI}}
+
+You can also email me at referata@barrycarter.info
+
+== Browse ==
+
+Or.. if you just want to browse:
+
+* {{#ask: [[Category:Strips]]|format=count}} {{WikiLink|Category:Strips|Strips}}
+* {{#ask: [[Category:Characters]]|format=count}} {{WikiLink|Character List|Characters}}
+* {{#ask: [[Category:Storylines]]|format=count}} {{WikiLink|Storylines|Storylines}}
+* {{#ask: [[Category:Continuity]]|format=count}} {{WikiLink|Category:Continuity|continuity issues}}
+* {{#ask: [[Category:Strips]] [[event::+]] | format=count}} significant [[{{WikiLink|Events|events}}]] in Pearls' history
+* {{#ask: [[Category:Strips]] [[notes::+]] | format=count}} [[{{WikiLink|Notes|notes and annotations}}]]
+
+
+
+
+
+
+

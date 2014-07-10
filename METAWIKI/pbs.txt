@@ -2215,5 +2215,5 @@ undies != underwear, so maybe un-dies? (using rebirth)
 # 2002-02-16 (laundry vs "don't own clothes") also 2002-10-02 + all
 # washer/dryer strips
 
-
+# 27 Jun 2009 (Saturday) .... hair gel vs styling gel for his ears earlier
 
