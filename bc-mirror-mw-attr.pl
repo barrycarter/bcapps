@@ -21,6 +21,11 @@ system("rsync -Pavz /home/barrycarter/BCGIT/METAWIKI/*.mw /usr/local/etc/metawik
 unless ($apiep = $globopts{api}){die "$0 --api required";}
 unless (@ARGV) {die "Usage: $0 <files>";}
 
+# TODO: compensate for this, instead of considering it an error
+for $i (@ARGV) {
+  if ($i=~m%/%) {die "NO SLASHES!";}
+}
+
 my($tmpfile) = my_tmpfile2();
 open(A, "|xargs -0 lsattr -v > $tmpfile");
 print A join("\0", @ARGV);

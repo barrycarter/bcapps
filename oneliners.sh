@@ -1,5 +1,15 @@
 # shell one liners
 
+# list all pages on my wiki semi-manually
+
+curl -o out5.txt 'http://pbs3.referata.com/w/api.php?action=query&generator=allpages&gaplimit=500&prop=revisions&rvprop=timestamp|user&format=xml&namespace=0&gapcontinue=2007-06-04'
+
+exit;
+
+curl -o out1.txt 'http://pbs3.referata.com/w/api.php?action=query&generator=allpages&gaplimit=500&prop=revisions&rvprop=timestamp|user&format=xml&namespace=0'
+
+exit; 
+
 # from http://www.okcupid.com/messages?folder=2 prints users I've sent
 # mail to (note: be sure to scroll all the way down, and repeat if
 # there are multiple pages); 
