@@ -17,7 +17,7 @@ grab_all("pearlsbeforeswine.wikia.com");
 
 =item grab_all($wiki)
 
-Thin wrapper around grab() that grabs all $wiki's pages, all namespaces
+Thin wrapper around grab() that grabs all $wikis pages, all namespaces
 
 =cut
 
@@ -36,6 +36,42 @@ sub grab_all {
     grab($wiki,$i);
   }
 }
+
+=item mediawiki_list_pages($apiep, $ns=0)
+
+Given a wiki API endpoint and a namespace (default 0), return a list
+of all pages in wikis namespace.
+
+=cut
+
+sub mediawiki_list_pages {
+  my($apiep, $ns) = @_;
+  unless ($ns) {$ns=0;}
+
+  # first 500 pages
+  my($url) = "$apiep?action=query&generator=allpages&gaplimit=500&prop=revisions&rvprop=timestamp|user&format=xml&namespace=$ns";
+  # NOTE: setting age= semi-arbitrarily for now
+  my($res)=cache_command("curl -s -m 300 '$url'","age=3600&retfile=1");
+  my(@res) = ($res); # the files that hold list of pages
+  debug("RES: $res");
+
+  # find the continuation point, repeat until done
+  for (;;) {
+    my($all) = read_file($res);
+    debug("ALL: $all");
+    # end of page list? 
+    unless ($all =~ /<allpages gapcontinue="(.*?)"/) {last;}
+    my($gapfrom) = urlencode($1);
+    debug("PAGE: $gapfrom");
+    # not end of page list, so grab more pages (names only)
+    $res = cache_command("curl -s -m 300 '$url&gapfrom=$gapfrom'","age=3600&retfile=1");
+    push(@res,$res);
+  }
+
+  # this is wrong...
+  return @res;
+}
+  
 
 =item grab($wiki,$ns=0)
 

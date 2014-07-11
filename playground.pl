@@ -33,6 +33,10 @@ use Inline::Python;
 use FFI::Raw;
 use v5.10;
 
+print join("\n",mediawiki_list_pages("http://pbs3.referata.com/w/api.php")),"\n";
+
+die "TESTING";
+
 write_wiki_page("http://pebesw.referata.com/w/api.php", "Sandbox", "I am putting some sand in my sandbox", "dusty!", $private{referata}{user}, $private{referata}{pass});
 
 die "TESTING";
@@ -49,6 +53,35 @@ my($cmd) = "curl -L 'http://pearls-before-swine-bc.wikia.com/api.php' -d 'action
 system($cmd);
 
 debug($cmd);
+
+=item mediawiki_list_pages($apiep, $ns=0)
+
+Given a wiki API endpoint and a namespace (default 0), return a list
+of all pages in wikis namespace.
+
+=cut
+
+sub mediawiki_list_pages {
+  my($apiep, $ns) = @_;
+  my($gapfrom) = "";
+  my(@pages); # for the result
+  unless ($ns) {$ns=0;}
+
+  # the "ungapped" URL
+  my($url) = "$apiep?action=query&generator=allpages&gaplimit=500&prop=revisions&rvprop=timestamp|user&format=xml&namespace=$ns";
+
+  for (;;) {
+    # 3600 below is arbitrary
+    my($out, $err, $res) = cache_command2("curl -s -m 300 '$url&gapfrom=$gapfrom'","age=3600");
+    while ($out=~s/title="(.*?)">//s) {
+      push(@pages, $1);
+    }
+    # end of page list?
+    unless ($out =~ /<allpages gapcontinue="(.*?)"/) {last;}
+    $gapfrom = urlencode($1);
+  }
+  return @pages;
+}
 
 =item get_wiki_token($wiki, $user="", $pass="")
 
