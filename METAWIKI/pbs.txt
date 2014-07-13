@@ -32,6 +32,12 @@ Guidelines for editing this file:
 
 TODO (global todo's not specific to a given strip):
 
+  - At some point, need to delete pages that no longer exist
+
+  - Character pages should include character notes and description
+
+  - Consider redoing continuity/multiref pages as list not paragraph
+
   - Pig + Rat's human neighbors automatically "::aka::Neighbor x"?
 
   - Distinguish between storylines and characters: for example, Atlas
@@ -73,6 +79,9 @@ TODO (global todo's not specific to a given strip):
   - Pages referenced by MULTIREF should have a backlink to the MULTIREF page
 
   - Insure semantic triples inside MULTIREF are parsed and processed
+
+  - In a source relation target triple, source and target should never
+  be identical
 
   - Consider (loosely) annotating on a panel-by-panel basis, not just
   strip-by-strip
@@ -845,7 +854,7 @@ MULTIREF [[title::Rat's guilt]] [[notes::On [[2014-06-09]], Rat says he feels gu
 2005-02-21 [[character::Pig+Neighbor Bob+Phil (half-human)]]
 2007-06-19 [[character::Rat+[[Rat::boss::Phil 20070619 (human)]]]]
 2006-12-27 [[character::Pig+Neighbor Phil]] [[Phil 20061227 (human)::aka::Neighbor Phil]] [[Neighbor Phil::hobby::falconing]]
-2004-04-11 [[character::Zebra+Pig+Rat+Martin Figowitz (human)]] [[Martin Figowitz (human)::profession::Olympic hopeful]]
+2004-04-11 [[character::Zebra+Pig+Rat+Martin Figowitz (human)]] [[Martin Figowitz (human)::profession::archer (Olympic hopeful)]]
 2004-04-19 [[character::Pig+Rat+Bob 20040419 (human)]] [[Bob 20040419 (human)::profession::electronic store salesman]]
 2007-10-12 [[notes::We learn [[Larry]] attended {{wp|San Marino High School}} (just like [[Stephan Pastis]])]]
 2007-10-15 [[character::Steve (hamster)+Orville (hamster)]]
@@ -1310,9 +1319,9 @@ MULTIREF [[title::[[[[Larry]]'s mother]]]] [[notes::Larry's mother dies on [[200
 2013-03-24 [[character::Goat+Pig+Neighbor Bob]]
 2013-03-26 [[character::Pig+Armando (armadillo)]] [[armadillo_deaths::#1]] [[meta::second wife, Lupe = first?]]
 2013-04-10-2013-04-13 [[storyline::[[character::Monopoly tokens]]]] [[meta::Actually a group]]
-2013-04-11 [[character::car (game token)+iron (game token)+thimble (game token)]]
-2013-04-12 [[character::ship (game token)+car (game token)+iron (game token)+dog (game token)+thimble (game token)]] [[dog (game token)::aka::Scottie]] [[iron (game token)::aka::Stud Boy]] [[meta::Need to call these something better than "game token"]]
-2013-04-13 [[character::car (game token)+dog (game token)+thimble (game token)]]
+2013-04-11 [[character::Car (game token)+Iron (game token)+Thimble (game token)]]
+2013-04-12 [[character::Ship (game token)+Car (game token)+Iron (game token)+Dog (game token)+Thimble (game token)]] [[Dog (game token)::aka::Scottie]] [[Iron (game token)::aka::Stud Boy]] [[meta::Need to call these something better than "game token"]]
+2013-04-13 [[character::Car (game token)+Dog (game token)+Thimble (game token)]]
 2013-04-17-2013-04-19,2013-04-22,2013-04-23,2013-04-30,2013-05-01,2013-05-06-2013-05-08,2013-05-13-2013-05-15,2013-05-20-2013-05-22,2013-05-24,2013-05-29,2013-05-30,2013-05-31 [[storyline::[[character::Zebra]]'s Bad Vacation]]
 2013-04-24 [[character::Baby Johnson (human)]] [[meta::I am being inconsitent by referring to Baby Johnson without a first name]]
 2013-05-05,2013-05-19,2013-07-21,2013-08-11,2013-09-30,2012-04-15,2012-06-03,2012-09-23,2007-05-13,2009-04-19,2011-08-14,2006-12-10,2006-10-08,2006-04-16 [[category::Rat writes]]
@@ -1342,7 +1351,7 @@ MULTIREF [[title::[[[[Larry]]'s mother]]]] [[notes::Larry's mother dies on [[200
 2013-09-04-2013-09-06,2013-09-10-2013-09-11,2013-09-18,2013-09-19,2013-09-26-2013-09-27,2013-10-01,2013-10-09,2013-10-10,2013-10-25,2013-12-20 [[storyline::[[character::Penguins]] and [[character::Polar Bear]]]] [[meta::Does the polar bear ever get a name?]] [[Polar Bear::species::polar bear]] [[Penguins::species::penguin (group)]]
 2013-10-25,2013-10-28-2013-10-30 [[storyline::[[character::ZZE]] adopt [[character::Penguins]]]] [[ZZE::species::crocodile (group)]]
 2005-11-22 [[character::Pig+Doris (swordfish)]]
-2012-06-06,2012-06-07,2014-01-09,2014-01-10 [[storyline::[[character::Rat]]'s [[character::[[Rat::pet::person pet (human)]]]]]]
+2012-06-06,2012-06-07,2014-01-09,2014-01-10 [[storyline::[[character::Rat]]'s [[character::[[Rat::pet::Person pet (human)]]]]]]
 2013-09-15,2013-09-16,2013-09-22,2013-09-23 [[storyline::[[character::Rat]] coaches girls' basketball]]
 2013-09-19 [[deaths::Female Penguin]]
 2013-09-25,2013-07-25,2013-09-20,2013-09-24 [[notes::[[character::Gomer (goldfish)]] apparently survives his accident on [[2013-09-20]], since we see him again on [[2013-09-24]]]]
@@ -1859,6 +1868,9 @@ MULTIREF [[title::Rat and the Lottery]] [[notes::On [[2005-12-19]], [[Rat]] says
 2013-04-18 [[character::Rat+Pig]]
 2013-04-19 [[character::Larry]]
 2013-04-22 [[character::Larry+Pastis]]
+2014-07-12 [[character::Rat+Pig+[[deaths::Neighbor Bob]]]]
+2014-07-13 [[character::Goat+Pig+Rat+Danny Donkey]]
+2005-05-05 [[Rat::aka::Creesco]]
 </data>
 
 # the following lines are incorrect and need to be checked
@@ -2214,12 +2226,12 @@ undies != underwear, so maybe un-dies? (using rebirth)
 
 # some characters should be listed with their better known aliases
 
-# at some point, need to delete pages that no longer exist
-
 # Inter WIKI a links from this PBS to the other one (wikia)
 
 # 2002-02-16 (laundry vs "don't own clothes") also 2002-10-02 + all
 # washer/dryer strips
 
 # 27 Jun 2009 (Saturday) .... hair gel vs styling gel for his ears earlier
+
+# incidental cheese 2012-06-18
 

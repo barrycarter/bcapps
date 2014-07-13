@@ -33,7 +33,15 @@ use Inline::Python;
 use FFI::Raw;
 use v5.10;
 
-print join("\n",mediawiki_list_pages("http://pbs3.referata.com/w/api.php")),"\n";
+@pages = mediawiki_list_pages("http://pbs3.referata.com/w/api.php");
+
+# these changes are just so I can compare disk files to mediawiki page names
+for $i (@pages) {
+  $i=~s/\xef\xbc\x83/&\#65283\;/g;
+  $i=~s/&\#039\;/&\#39\;/g;
+}
+
+print join("\n", @pages),"\n";
 
 die "TESTING";
 

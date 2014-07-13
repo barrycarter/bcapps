@@ -68,6 +68,8 @@ for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
     map(s/\'/&\#39;/g, @$j);
     my($source, $k, $target, $datasource) = @$j;
 
+    if ($source eq $target) {warn "SOURCE==TARGET: $i, $source";}
+
     # determine relation type
     my($for, $rev, $stype, $ttype) = ("?", "?", "?", "?");
     if ($meta{$k}) {($for, $rev, $stype, $ttype) = @{$meta{$k}};}
@@ -402,6 +404,11 @@ sub parse_multiref {
   my($multiref) = @_;
   my(%hash);
   for $i (parse_semantic("MULTIREF", $multiref)) {$hash{$i->[1]}= $i->[2];}
+
+  # fix up title (and notes?)
+  debug("ALPHA: $hash{title}");
+  $hash{title}=~s/\'/&\#39\;/g;
+  debug("BETA: $hash{title}");
 
   # which dates are referenced?
   for $i ($hash{notes}=~m/\[\[(\d{4}-\d{2}-\d{2})\]\]/g) {
