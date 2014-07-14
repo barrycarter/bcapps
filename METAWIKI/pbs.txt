@@ -34,6 +34,9 @@ TODO (global todo's not specific to a given strip):
 
   - At some point, need to delete pages that no longer exist
 
+  - Should strip pages say "Rat (515th appearance of 917 to date)" or
+  something?
+
   - Character pages should include character notes and description
 
   - Consider redoing continuity/multiref pages as list not paragraph
@@ -1870,6 +1873,7 @@ MULTIREF [[title::Rat and the Lottery]] [[notes::On [[2005-12-19]], [[Rat]] says
 2013-04-22 [[character::Larry+Pastis]]
 2014-07-12 [[character::Rat+Pig+[[deaths::Neighbor Bob]]]]
 2014-07-13 [[character::Goat+Pig+Rat+Danny Donkey]]
+2014-07-14 [[character::Larry+Junior]]
 2005-05-05 [[Rat::aka::Creesco]]
 </data>
 
