@@ -43,6 +43,7 @@ while (<A>) {
   m/^(\d{8})\.(\d{6})/ || die ("BAD LINE: $_");
   # TODO list is time ordered, so can bail once hitting too old event
   my($age) = ($now-str2time("$1 $2"))/86400;
+  debug("AGE: $age");
   if ($age > $globopts{days}) {last;}
 
   # does first word end in colon?
