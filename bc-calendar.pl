@@ -4,6 +4,9 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# test file w/ some events
+require "/home/barrycarter/20140713/test.pl";
+
 # testing (pretend these happen everyday for now)
 my(@events) = ("radicalness \@1300", "perpendicularity \@0900", "osmosis \@1700", "ball \@0100");
 
@@ -54,6 +57,7 @@ for $week (0..$weeks-1) {
     my($dx, $dy) = ($x1+$xpos*$xwid, $y1+$ypos*$ywid);
 
     # events for this day
+    my(@events) = @{$events{$week*7+$weekday+$time}};
     for $i (0..$#events) {
       my($eventy) = $y1+$eventystart+$eventspacing*$i;
       my($eventx) = $x1+5;
