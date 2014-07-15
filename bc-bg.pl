@@ -167,6 +167,10 @@ if (-f "/home/barrycarter/ERR/urc.gif") {
   push(@fly, "copy 472,334,0,0,100,100,/home/barrycarter/ERR/urc.gif");
 }
 
+# testing calendar
+# TODO: this blots out <h>(eclipses)</h> moon, but ok w/ that for now
+push(@fly, "copy 150,100,0,0,999,999,/tmp/cal0.gif");
+
 # push output to .fly script
 # err gets pushed first (and in red), then info
 for $i (@err) {

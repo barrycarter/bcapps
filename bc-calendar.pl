@@ -44,16 +44,11 @@ my($time) = int(`date +%s -d 'last Sunday'`/86400);
 my($now) = strftime("%Y%m%d", localtime(time()));
 
 open(A,"|fly -o /tmp/cal0.gif");
-print A "new\nsize $xsize,$ysize\nsetpixel 0,0,0,0,0\n";
+# 1 more pixel to get right and bottom grid lines
+print A "new\nsize ",$xsize+1,",",$ysize+1,"\nsetpixel 0,0,0,0,0\n";
 
 for $week (0..$weeks-1) {
   for $weekday (0..6) {
-
-    # current day
-    my($date) = ($week*7+$weekday+$time+.5)*86400;
-    my($day) = strftime($dateformat, localtime($date));
-    # in "stardate" format (which is how I store entries)
-    my($stardate) = strftime("%Y%m%d", localtime($date));
 
     # x and y for top left
     my($x1, $y1) = ($xsize*$weekday/7, $ysize*$week/$weeks);
@@ -61,6 +56,23 @@ for $week (0..$weeks-1) {
     my($x2, $y2) = ($x1+$xwid, $y1+$ywid);
     # bottom left of day
     my($dx, $dy) = ($x1+$xpos*$xwid, $y1+$ypos*$ywid);
+
+    # current day
+    my($date) = ($week*7+$weekday+$time+.5)*86400;
+    my($day) = strftime($dateformat, localtime($date));
+
+    # and month if new month or diagonal
+    # compromise between putting month on every day + not often enough
+    # TODO: maybe also on last day of month? (sideways?)
+    if ($day eq "01" || ($weekday==$week)) {
+      # month abrrev
+      my($month) = strftime("%b", localtime($date));
+      # TODO: don't hardcode number
+      print A "string 255,0,255,",$dx-30,",$dy,$datesize,$month\n";
+    }
+
+    # in "stardate" format (which is how I store entries)
+    my($stardate) = strftime("%Y%m%d", localtime($date));
 
     # events for this day
     my(@events) = @{$events{$stardate}};

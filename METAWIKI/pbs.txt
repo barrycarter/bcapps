@@ -32,6 +32,8 @@ Guidelines for editing this file:
 
 TODO (global todo's not specific to a given strip):
 
+  - Transcribe 2003-11-09 album titles (no Easter eggs though)
+
   - At some point, need to delete pages that no longer exist
 
   - Should strip pages say "Rat (515th appearance of 917 to date)" or
@@ -538,7 +540,7 @@ MULTIREF [[title::Atlas]] [[notes::[[2004-09-13]] shows [[Atlas]] carrying the w
 2004-09-20 [[notes::The disclaimer text reads "Pearls Before Swine. Copyright 2004 by Stephan T. Pastis. Distributed by United Feature Syndicate. Laughter not guaranteed. Not suitable for some readers who prefer 75 year-old strips drawn by the son of the son of the son of the original creator. Product not available in some cities where `Snuffy Smith' still wins reader polls. Product may have limited availability in cities where editors choose comic strips based solely upon potential social or demographic appeal. Check local listings. No animals were harmed in the making of this strip, although we roughed up the dumb pig a little bit. Our apologies to the editors throughout North America who are staying up late tonight perusing this text with a magnifying glass to ensure that this cartoonist did not bury any offending words or concepts in this text. Okay... I'm tired now. To be perfectly frank, when I initially came up with this `tiny word' joke, I thought it would be really quick to do, but I now see that to make this joke work, the writing has to be really small, and it takes a ton of tiny words to fill such a large space. Hence, I have run out of ideas. If you'd like, you can now move on to `Cathy' or `B.C.'And check in on their crazy antics, as I am totally out of funny stuff. Actually, so are they. So heck, maybe you ought to put this newspaper down and watch a little TV. Geez, man, I STILL have more space to fill with this now tired joke. What to do... what to do... I suppose that a lesser cartoonist would use this space to promote his latest books, but I don't think that either of my two books, `BLTs taste so darn good' or `This little piggy stayed home', both pf which were published by Andrews McMeel publishing need that sort of cheap publicity. Their sales at Borders, Barnes & Nobles, Amazon.com and your local bookstore have been tremendous and they don't need more help from me here. Wow, finally... I'm done. I'm never doing this joke again"]]
 2004-09-27-2004-10-02 [[storyline::[[character::Rat]] the pet psychic]]
 2004-10-18-2004-10-22 [[storyline::Road signs]]
-2004-10-20 [[character::Pig+RR (sign)+Danger High Voltage (sign)+Icy (sign)+Dead End (sign)]]
+2004-10-20 [[character::Pig+RR (sign)+Hank (sign)+Icy (sign)+Dead End (sign)]] [[Hank (sign)::aka::Danger High Voltage+High Voltage]]
 2004-10-22 [[character::Pig+RR (sign)+Danger High Voltage (sign)+Jimmy (sign)]]
 2004-10-18 [[character::Pig+RR (sign)+Danger High Voltage (sign)+Slow Xing (sign)+Soft Shoulder (sign)]] [[RR (sign)::aka::Larry (sign)]] [[Slow Xing (sign)::aka::Ernie]] [[Soft Shoulder (sign)::aka::Clarence]] [[meta::may need to reverse these so things like Ernie are name, and rest is aka]]
 2004-10-23-2004-10-30,2004-11-01,2004-11-02 [[storyline::[[character::Rat]] runs for President (2004)]]
@@ -736,6 +738,7 @@ MULTIREF [[title::Rat's guilt]] [[notes::On [[2014-06-09]], Rat says he feels gu
 2006-05-29-2006-06-01 [[storyline::[[character::Rat]], the oil company CEO]]
 2010-03-10 [[notes::In the last panel, the letters on the beer can are reversed]]
 2006-06-06,2006-06-08,2007-10-08-2007-10-11,2006-04-13,2006-07-19,2008-10-13,2006-07-21,2006-02-17,2005-11-07,2006-03-14,2006-02-21,2014-05-19 [[storyline::[[character::Pig]] plays with [[character::Viking figures]]]]
+2007-10-11 [[character::Sven (Viking figure)+Olaf (Viking figure)]]
 2010-08-02 [[notes::The text between the panels reads "Stephan Pastis played with Star Wars figurines until he was 16 years old."]]
 2009-09-16 [[Pig::aka::Bongo]]
 2006-02-12 [[deaths::Clarence (crocodile)]]
@@ -1876,6 +1879,10 @@ MULTIREF [[title::Rat and the Lottery]] [[notes::On [[2005-12-19]], [[Rat]] says
 2014-07-14 [[character::Larry+Junior]]
 2005-05-05 [[Rat::aka::Creesco]]
 </data>
+
+# 2009-04-02 pig's reflection talks to him vs Pig talking to it
+
+# http://www.babyblues.com/archive/index.php?formname=getstrip&GoToDay=03/27/2006 vs baby blues arc
 
 # the following lines are incorrect and need to be checked
 
