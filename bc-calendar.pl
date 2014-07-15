@@ -59,10 +59,33 @@ for $week (0..$weeks-1) {
 
     # current day
     my($date) = ($week*7+$weekday+$time+.5)*86400;
+    debug("DATE: $date");
     my($day) = strftime($dateformat, localtime($date));
 
     # sun/moon info (lat/lon = ABQ)
-    my(%smi) = sunmooninfo(-106.651138463684,35.0844869067959,$date);
+    # TODO: the -6*3600 below is a timezone hack (noon on day local)
+    my(%smi) = sunmooninfo(-106.651138463684,35.0844869067959,$date-5*3600);
+
+=item comment
+
+THIS CODE IS NOT WORKING!
+
+    for $i ("sun","moon") {
+      # dawn/dusk don't exist for moon, but harmless
+      for $j ("rise","set","dawn","dusk") {
+	debug("ALPHA: $i/$j/$smi{$i}{$j}");
+	my($astrodate) = strftime("%d", localtime($smi{$i}{$j}));
+	if ($astrodate eq $day) {
+	  $smi{$i}{$j} = strftime("%H%M", localtime($smi{$i}{$j}));
+	} else {
+	  $smi{$i}{$j} = "NA";
+	}
+	debug("$day: $i/$j/$smi{$i}{$j}");
+      }
+    }
+
+=cut
+
     my($sr) = strftime("%H%M", localtime($smi{sun}{rise}));
     my($ss) = strftime("%H%M", localtime($smi{sun}{set}));
     my($cts) = strftime("%H%M", localtime($smi{sun}{dawn}));
@@ -70,6 +93,7 @@ for $week (0..$weeks-1) {
 
     # TODO: cleanup this code, its getting nasty
     # ignore moonrise/set on other days
+    # TODO: not working, moonrise/set ignored for now
     my($mr,$ms);
     if (strftime("%d", localtime($smi{moon}{rise})) != $date) {
       $mr = "NA";
@@ -84,7 +108,7 @@ for $week (0..$weeks-1) {
     }
 
     my($moonstr);
-    if ($mr<$ms) {$moonstr="RS: $mr/$ms";} else {$moonstr="SR: $ms/$mr"};
+#    if ($mr<$ms) {$moonstr="RS: $mr/$ms";} else {$moonstr="SR: $ms/$mr"};
 
     # and month if new month or diagonal
     # compromise between putting month on every day + not often enough
@@ -97,8 +121,9 @@ for $week (0..$weeks-1) {
 #    }
 
     # sun/civil
-    print A "string $datecolor,",$x1+5,",$dy,tiny,$sr/$ss\n";
-    print A "string $datecolor,",$x1+5,",",$dy+10,",tiny,$cts/$cte\n";
+    # TODO: this is inaccurate, off by up to a day
+    print A "string $datecolor,",$x1+5,",$dy,tiny,$sr-$ss\n";
+    print A "string $datecolor,",$x1+5,",",$dy+10,",tiny,$cts-$cte\n";
     print A "string 255,255,255,",$x1+5,",",$dy+20,",tiny,$moonstr\n";
 
     # in "stardate" format (which is how I store entries)

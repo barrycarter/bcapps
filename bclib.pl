@@ -4011,6 +4011,7 @@ sub sunmooninfo {
   my($lon,$lat,$time) = @_;
   my(%info); # return hash
   unless ($time) {$time=time();}
+  debug("TIME: $time");
 
   # construct observer
   my($observer) = Astro::Nova::LnLatPosn->new("lng"=>$lon,"lat"=>$lat);
