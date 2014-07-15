@@ -14,33 +14,24 @@ require "/home/barrycarter/20140713/test.pl";
 defaults("xsize=800&ysize=600&weeks=5");
 
 # last sunday (in seconds)
-my($time) = `date +%s -d 'last Sunday'`;
-
-# date range for db query (1 day on either side)
-
+my($time) = `date +%s -d '1200 last Sunday'`;
 # and today (as stardate)
 my($now) = strftime("%Y%m%d", localtime(time()));
-# first day calendar will not show
-my($lastday) = ($time+$globopts{weeks}*7+1)*86400;
 
+# date range for db query (1 day on either side)
+my($sdate) = strftime("%Y-%m-%d", localtime($time-86400));
+my($edate) = strftime("%Y-%m-%d", localtime($time+$globopts{weeks}*7*86400));
 
-
-
-# get relevant events
-sqlite3hashlist("SELECT * FROM abqastro", "/home/barrycarter/BCGIT/db/abqastro.db");
-
-
-
-die "TESTING";
-
-# testing (pretend these happen everyday for now)
-my(@events) = ("radicalness \@1300", "perpendicularity \@0900", "osmosis \@1700", "ball \@0100");
+# get relevant events and hash to date
+for $i (sqlite3hashlist("SELECT * FROM abqastro WHERE time>='$sdate' AND time<='$edate'", "/home/barrycarter/BCGIT/db/abqastro.db")) {
+  $hash{substr($i->{time}, 0, 10)}{$i->{event}} = substr($i->{time}, 11, 5);
+}
 
 # calculated params
 my($xwid) = $globopts{xsize}/7;
 my($ywid) = $globopts{ysize}/$globopts{weeks};
 
-# choice params below
+# choice params below (maybe later)
 
 # date position (relative) + color/size
 my($xpos) = .8;
@@ -74,54 +65,10 @@ for $week (0..$globopts{weeks}-1) {
     my($dx, $dy) = ($x1+$xpos*$xwid, $y1+$ypos*$ywid);
 
     # current day
-    my($date) = ($week*7+$weekday+$time+.5)*86400;
+    my($date) = ($week*7+$weekday)*86400+$time;
     debug("DATE: $date");
     my($day) = strftime($dateformat, localtime($date));
 
-    # sun/moon info (lat/lon = ABQ)
-    # TODO: the -6*3600 below is a timezone hack (noon on day local)
-    my(%smi) = sunmooninfo(-106.651138463684,35.0844869067959,$date-5*3600);
-
-=item comment
-
-THIS CODE IS NOT WORKING!
-
-    for $i ("sun","moon") {
-      # dawn/dusk don't exist for moon, but harmless
-      for $j ("rise","set","dawn","dusk") {
-	debug("ALPHA: $i/$j/$smi{$i}{$j}");
-	my($astrodate) = strftime("%d", localtime($smi{$i}{$j}));
-	if ($astrodate eq $day) {
-	  $smi{$i}{$j} = strftime("%H%M", localtime($smi{$i}{$j}));
-	} else {
-	  $smi{$i}{$j} = "NA";
-	}
-	debug("$day: $i/$j/$smi{$i}{$j}");
-      }
-    }
-
-=cut
-
-    my($sr) = strftime("%H%M", localtime($smi{sun}{rise}));
-    my($ss) = strftime("%H%M", localtime($smi{sun}{set}));
-    my($cts) = strftime("%H%M", localtime($smi{sun}{dawn}));
-    my($cte) = strftime("%H%M", localtime($smi{sun}{dusk}));
-
-    # TODO: cleanup this code, its getting nasty
-    # ignore moonrise/set on other days
-    # TODO: not working, moonrise/set ignored for now
-    my($mr,$ms);
-    if (strftime("%d", localtime($smi{moon}{rise})) != $date) {
-      $mr = "NA";
-    } else {
-      $mr = strftime("%H%M", localtime($smi{moon}{rise}));
-    }
-
-    if (strftime("%d", localtime($smi{moon}{set})) != $date) {
-      $ms = "NA";
-    } else {
-      $ms = strftime("%H%M", localtime($smi{moon}{set}));
-    }
 
     my($moonstr);
 #    if ($mr<$ms) {$moonstr="RS: $mr/$ms";} else {$moonstr="SR: $ms/$mr"};
