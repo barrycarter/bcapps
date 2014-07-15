@@ -54,22 +54,52 @@ for $week (0..$weeks-1) {
     my($x1, $y1) = ($xsize*$weekday/7, $ysize*$week/$weeks);
     # and bottom right
     my($x2, $y2) = ($x1+$xwid, $y1+$ywid);
-    # bottom left of day
+    # bottom left of where day is printed
     my($dx, $dy) = ($x1+$xpos*$xwid, $y1+$ypos*$ywid);
 
     # current day
     my($date) = ($week*7+$weekday+$time+.5)*86400;
     my($day) = strftime($dateformat, localtime($date));
 
+    # sun/moon info (lat/lon = ABQ)
+    my(%smi) = sunmooninfo(-106.651138463684,35.0844869067959,$date);
+    my($sr) = strftime("%H%M", localtime($smi{sun}{rise}));
+    my($ss) = strftime("%H%M", localtime($smi{sun}{set}));
+    my($cts) = strftime("%H%M", localtime($smi{sun}{dawn}));
+    my($cte) = strftime("%H%M", localtime($smi{sun}{dusk}));
+
+    # TODO: cleanup this code, its getting nasty
+    # ignore moonrise/set on other days
+    my($mr,$ms);
+    if (strftime("%d", localtime($smi{moon}{rise})) != $date) {
+      $mr = "NA";
+    } else {
+      $mr = strftime("%H%M", localtime($smi{moon}{rise}));
+    }
+
+    if (strftime("%d", localtime($smi{moon}{set})) != $date) {
+      $ms = "NA";
+    } else {
+      $ms = strftime("%H%M", localtime($smi{moon}{set}));
+    }
+
+    my($moonstr);
+    if ($mr<$ms) {$moonstr="RS: $mr/$ms";} else {$moonstr="SR: $ms/$mr"};
+
     # and month if new month or diagonal
     # compromise between putting month on every day + not often enough
     # TODO: maybe also on last day of month? (sideways?)
-    if ($day eq "01" || ($weekday==$week)) {
+#    if ($day eq "01" || ($weekday==$week)) {
       # month abrrev
       my($month) = strftime("%b", localtime($date));
       # TODO: don't hardcode number
-      print A "string 255,0,255,",$dx-30,",$dy,$datesize,$month\n";
-    }
+      print A "string $datecolor,",$dx-20,",$dy,tiny,$month\n";
+#    }
+
+    # sun/civil
+    print A "string $datecolor,",$x1+5,",$dy,tiny,$sr/$ss\n";
+    print A "string $datecolor,",$x1+5,",",$dy+10,",tiny,$cts/$cte\n";
+    print A "string 255,255,255,",$x1+5,",",$dy+20,",tiny,$moonstr\n";
 
     # in "stardate" format (which is how I store entries)
     my($stardate) = strftime("%Y%m%d", localtime($date));
