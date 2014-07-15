@@ -1,23 +1,44 @@
 #!/bin/perl
 
 # creates a graphic calendar I can put on the background of X11
+# Options:
+# xsize/ysize - size of calendar (default 800x600) [really 801x601]
+# weeks - number of weeks to show (default 5)
 
 require "/usr/local/lib/bclib.pl";
+
 
 # test file w/ some events
 require "/home/barrycarter/20140713/test.pl";
 
+defaults("xsize=800&ysize=600&weeks=5");
+
+# last sunday (in seconds)
+my($time) = `date +%s -d 'last Sunday'`;
+
+# date range for db query (1 day on either side)
+
+# and today (as stardate)
+my($now) = strftime("%Y%m%d", localtime(time()));
+# first day calendar will not show
+my($lastday) = ($time+$globopts{weeks}*7+1)*86400;
+
+
+
+
+# get relevant events
+sqlite3hashlist("SELECT * FROM abqastro", "/home/barrycarter/BCGIT/db/abqastro.db");
+
+
+
+die "TESTING";
+
 # testing (pretend these happen everyday for now)
 my(@events) = ("radicalness \@1300", "perpendicularity \@0900", "osmosis \@1700", "ball \@0100");
 
-
-# params
-my($xsize, $ysize) = (800,600);
-my($weeks) = 5;
-
 # calculated params
-my($xwid) = $xsize/7;
-my($ywid) = $ysize/$weeks;
+my($xwid) = $globopts{xsize}/7;
+my($ywid) = $globopts{ysize}/$globopts{weeks};
 
 # choice params below
 
@@ -38,20 +59,15 @@ my($eventsize) = "small";
 my($eventcolor) = "255,128,128";
 my($eventystart) = 25;
 
-# last sunday (in days)
-my($time) = int(`date +%s -d 'last Sunday'`/86400);
-# and today (as stardate)
-my($now) = strftime("%Y%m%d", localtime(time()));
-
 open(A,"|fly -o /tmp/cal0.gif");
 # 1 more pixel to get right and bottom grid lines
-print A "new\nsize ",$xsize+1,",",$ysize+1,"\nsetpixel 0,0,0,0,0\n";
+print A "new\nsize ",$globopts{xsize}+1,",",$globopts{ysize}+1,"\nsetpixel 0,0,0,0,0\n";
 
-for $week (0..$weeks-1) {
+for $week (0..$globopts{weeks}-1) {
   for $weekday (0..6) {
 
     # x and y for top left
-    my($x1, $y1) = ($xsize*$weekday/7, $ysize*$week/$weeks);
+    my($x1, $y1) = ($globopts{xsize}*$weekday/7, $globopts{ysize}*$week/$globopts{weeks});
     # and bottom right
     my($x2, $y2) = ($x1+$xwid, $y1+$ywid);
     # bottom left of where day is printed
