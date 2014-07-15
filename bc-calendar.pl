@@ -24,7 +24,9 @@ my($edate) = strftime("%Y-%m-%d", localtime($time+$globopts{weeks}*7*86400));
 
 # get relevant events and hash to date
 for $i (sqlite3hashlist("SELECT * FROM abqastro WHERE time>='$sdate' AND time<='$edate'", "/home/barrycarter/BCGIT/db/abqastro.db")) {
-  $hash{substr($i->{time}, 0, 10)}{$i->{event}} = substr($i->{time}, 11, 5);
+  # this is easier (but slower?) than using substr (seconds optional)
+  $i->{time}=~/^(....)\-(..)\-(..) (..):(..)/||die("BAD TIME: $i->{time}");
+  $hash{"$1$2$3"}{$i->{event}} = "$4$5";
 }
 
 # calculated params
@@ -48,14 +50,20 @@ my($gridcolor) = "0,0,255";
 my($eventspacing) = 15;
 my($eventsize) = "small";
 my($eventcolor) = "255,128,128";
-my($eventystart) = 25;
+my($eventystart) = 35;
 
-open(A,"|fly -o /tmp/cal0.gif");
+open(A,"|tee /tmp/calfly.txt|fly -o /tmp/cal0.gif");
 # 1 more pixel to get right and bottom grid lines
 print A "new\nsize ",$globopts{xsize}+1,",",$globopts{ysize}+1,"\nsetpixel 0,0,0,0,0\n";
 
 for $week (0..$globopts{weeks}-1) {
   for $weekday (0..6) {
+
+    # current day (in unix, print, month only, and stardate formats)
+    my($date) = ($week*7+$weekday)*86400+$time;
+    my($month) = strftime("%b", localtime($date));
+    my($day) = strftime($dateformat, localtime($date));
+    my($stardate) = strftime("%Y%m%d", localtime($date));
 
     # x and y for top left
     my($x1, $y1) = ($globopts{xsize}*$weekday/7, $globopts{ysize}*$week/$globopts{weeks});
@@ -64,33 +72,26 @@ for $week (0..$globopts{weeks}-1) {
     # bottom left of where day is printed
     my($dx, $dy) = ($x1+$xpos*$xwid, $y1+$ypos*$ywid);
 
-    # current day
-    my($date) = ($week*7+$weekday)*86400+$time;
-    debug("DATE: $date");
-    my($day) = strftime($dateformat, localtime($date));
-
-
     my($moonstr);
-#    if ($mr<$ms) {$moonstr="RS: $mr/$ms";} else {$moonstr="SR: $ms/$mr"};
+    if ($hash{$stardate}{MR} < $hash{$stardate}{MS}) {
+      $moonstr="RS: $hash{$stardate}{MR}-$hash{$stardate}{MS}";
+    } else {
+      $moonstr="SR: $hash{$stardate}{MS}-$hash{$stardate}{MR}";
+    };
 
-    # and month if new month or diagonal
-    # compromise between putting month on every day + not often enough
-    # TODO: maybe also on last day of month? (sideways?)
-#    if ($day eq "01" || ($weekday==$week)) {
-      # month abrrev
-      my($month) = strftime("%b", localtime($date));
-      # TODO: don't hardcode number
-      print A "string $datecolor,",$dx-20,",$dy,tiny,$month\n";
-#    }
-
-    # sun/civil
-    # TODO: this is inaccurate, off by up to a day
-    print A "string $datecolor,",$x1+5,",$dy,tiny,$sr-$ss\n";
-    print A "string $datecolor,",$x1+5,",",$dy+10,",tiny,$cts-$cte\n";
+    # print stuff
+    print A "string $datecolor,",$dx-20,",$dy,tiny,$month\n";
+    print A "string $datecolor,",$x1+5,",$dy,tiny,$hash{$stardate}{SR}-$hash{$stardate}{SS}\n";
+    print A "string $datecolor,",$x1+5,",",$dy+10,",tiny,$hash{$stardate}{CTS}-$hash{$stardate}{CTE}\n";
     print A "string 255,255,255,",$x1+5,",",$dy+20,",tiny,$moonstr\n";
 
-    # in "stardate" format (which is how I store entries)
-    my($stardate) = strftime("%Y%m%d", localtime($date));
+    # highlight date if today
+    if ($stardate == $now) {
+      print A "frect,",$dx-3,",",$y1+2,",",$x2-3,",",$dy+20,",255,0,0\n";
+      print A "string 255,255,255,$dx,$dy,$datesize,$day\n";
+    } else {
+      print A "string $datecolor,$dx,$dy,$datesize,$day\n";
+    }
 
     # events for this day
     my(@events) = @{$events{$stardate}};
@@ -101,13 +102,6 @@ for $week (0..$globopts{weeks}-1) {
     }
 
     print A "rect $x1,$y1,$x2,$y2,$gridcolor\n";
-
-    if ($stardate == $now) {
-      print A "frect,",$dx-3,",",$y1+2,",",$x2-3,",",$dy+20,",255,0,0\n";
-      print A "string 255,255,255,$dx,$dy,$datesize,$day\n";
-    } else {
-      print A "string $datecolor,$dx,$dy,$datesize,$day\n";
-    }
   }
 }
 
