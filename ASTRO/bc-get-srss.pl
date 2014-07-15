@@ -6,8 +6,17 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# values of $j below (split)
+# values of $type below (split into 2 pieces)
 my(@types)=("SR", "SS", "MR", "MS", "CTS", "CTE", "NTS", "NTE", "ATS", "ATE");
+
+# for db delete
+for $i (@types) {push(@delme, "'$i'");}
+$delme = join(", ", @delme);
+
+# I probably shouldn't do it this way
+open(A,"|sqlite3 /home/barrycarter/BCGIT/db/abqastro.db");
+print A "DELETE FROM abqastro WHERE event IN ($delme);\n";
+print A "BEGIN;\n";
 
 # In theory, the POST form,
 # http://aa.usno.navy.mil/cgi-bin/aa_rstablew.pl, accepts only POST
@@ -15,10 +24,9 @@ my(@types)=("SR", "SS", "MR", "MS", "CTS", "CTE", "NTS", "NTE", "ATS", "ATE");
 
 # TODO: move this declaration much further inside
 my(%data);
-for $i (2013..2023) {
-  for $j (0..4) {
-    # $i = year, $j = type of data
-    my($out,$err,$res) = cache_command2("curl 'http://aa.usno.navy.mil/cgi-bin/aa_rstablew.pl?FFX=1&xxy=$i&type=$j&st=NM&place=albuquerque&ZZZ=END'","age=86400");
+for $year (2009..2024) {
+  for $type (0..4) {
+    my($out,$err,$res) = cache_command2("curl 'http://aa.usno.navy.mil/cgi-bin/aa_rstablew.pl?FFX=1&xxy=$year&type=$type&st=NM&place=albuquerque&ZZZ=END'","age=86400");
 
     # parse result
     for $k (split(/\n/, $out)) {
@@ -27,23 +35,24 @@ for $i (2013..2023) {
       unless ($k=~/^\s*(\d+)\s*/) {next;}
       my($day) = $1;
       # data is positional and has blanks, so can't use split() here
-      for ($l=1; $l<13; $l++) {
-	my($start) = substr($k,$l*11-7,4);
-	my($end) = substr($k,$l*11-2,4);
-#	$data{$i}{$j}{$l}{$day}{start} = $start;
-#	$data{$i}{$j}{$l}{$day}{end} = $end;
-	$data{"$i,$j,$l,$day,0"}= $start;
-	$data{"$i,$j,$l,$day,1"}= $end;
+      for $month ("01".."12") {
+	my($times) = substr($k,$month*11-7,9);
+	# can't use \d below because of blanks
+	$times=~/^(..)(..) (..)(..)$/;
+	my(@times) = ("$1:$2", "$3:$4");
+	for $i (0..1) {
+	  # ignore blanks
+	  if ($times[$i]=~/^\s*:\s*$/) {next;}
+	  # bizarre hack for DST
+	  # TODO: generalize MST, the webpage does include this information
+	  my($time) = strftime("%Y-%m-%d %H:%M", localtime(str2time("$year-$month-$day $times[$i] MST")));
+	  print A "INSERT INTO abqastro VALUES ('$types[2*$type+$i]', '$time');\n";
+	}
       }
     }
   }
 }
 
-for $i (sort keys %data) {
-  unless (length($data{$i})) {next;}
-  debug("$i -> $data{$i}");
-  my($year,$type,$month,$day,$which) = split(/\,/, $i);
-  debug("$year-$month-$day $data{$i}");
-  my($event) = $types[$type*2+$which];
-  debug("$year/$month/$day/$event/$data{$i}");
-}
+print A "COMMIT;\n";
+
+close(A);
