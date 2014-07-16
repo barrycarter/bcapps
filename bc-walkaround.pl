@@ -14,6 +14,8 @@ $globopts{nowarn}=1;
 unless(mylock("bc-walkaround.pl","lock")) {exit(0);}
 $globopts{nowarn}=0;
 
+debug("BETA");
+
 $msg = "Get up and walkaround";
 $shortmsg = "GUAWA";
 
