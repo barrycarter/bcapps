@@ -14,14 +14,35 @@ chdir("/home/barrycarter/BCGIT/METAWIKI/");
 
 # fix numbered characters
 
+open(A,"|tee /tmp/pbs-play-debug.txt|sqlite3 /var/tmp/pbs-play.db");
+print A "BEGIN;\n";
+
 for $i (sqlite3hashlist("
  SELECT DISTINCT target FROM triples WHERE target  GLOB 
  '* [0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]*' UNION
  SELECT DISTINCT source FROM triples WHERE source  GLOB 
  '* [0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]*' ORDER BY 1
 ", "/var/tmp/pbs-play.db")) {
-  debug("I:", unfold($i));
+  unless ($i->{target}=~/^(.*?)\s+(\d{8})\s*(.*?)$/) {warn "$i->{target} BAD";}
+  my($base, $date, $species) = ($1, $2, $3);
+
+  # check species
+  unless ($species=~s/^\((.*?)\)$/$1/) {warn "BAD SPECIES: $i->{target}";}
+
+  # TODO: check first appearance
+
+  # new name
+  my($newname) = "$base ($species) &#65283;".sprintf("%0.2d",++$times{$base}{$species});
+
+  print A "INSERT INTO triples (source, relation, target, datasource) VALUES
+('$newname', 'aka', '$i->{target}', 'renaming');\n";
+  for $j ("source", "target") {
+    print A "UPDATE triples SET $j='$newname' WHERE $j='$i->{target}';\n";
+  }
 }
+
+print A "COMMIT;\n";
+close(A);
 
 sub fix_pbs_aka {
   open(A,"|sqlite3 /var/tmp/pbs-play.db");

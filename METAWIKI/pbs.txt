@@ -1917,7 +1917,9 @@ MULTIREF [[title::[[Pig]]'s Uncle [[George (pig)]]]] [[notes::On [[2004-12-05]],
 MULTIREF [[title::[[[[Larry]]'s mother]]]] [[notes::Larry's mother dies on [[2005-05-13]], but re-appears on [[2005-12-11]]. She also appears to have aged greatly when we see her on [[2012-09-04]]]]
 2007-03-19 [[character::Pig+Larry]]
 2013-01-27 [[character::Stephan Pastis]]
-2014-07-26 [[character::Pig+Goat]]
+2014-07-16 [[character::Pig+Goat]]
+2014-07-17 [[character::Larry+ZZE]]
+2014-07-14,2014-07-15,2014-07-17 [[storyline::[[character::Larry]] takes written driving test]]
 </data>
 
 # 2007-03-30 pig's mayors isnt LGD? (mayor in rehab)
@@ -2288,7 +2290,7 @@ undies != underwear, so maybe un-dies? (using rebirth)
 
 # incidental cheese 2012-06-18
 
-# 2002-08-13 wantons also 2014-06 or 2014-07 something?
+# 2002-08-13 wantons also 2014-06 or 2014-07 something? 2014-07-01
 
 # 2007-03-14 mean rat clones vs nice ones later?
 
