@@ -11,8 +11,6 @@ my($out,$err,$res) = cache_command2("curl 'https://api.meetup.com/2/open_events?
 
 for $i (@{$hash{results}}) {
   debug("I: $i",unfold($i));
-  print strftime("%a %H%M\t$i->{name}\t$i->{group}{name}\t$i->{yes_rsvp_count}\n",localtime($i->{time}/1000));
-#  debug("URL: $i->{name}, $i->{time}");
+  print join("\t", strftime("%c", localtime($i->{time}/1000)), 
+	     $i->{yes_rsvp_count}, $i->{group}{name}, $i->{name}),"\n";
 }
-
-# debug("OUT: $out");

@@ -7,11 +7,13 @@
 
 require "/usr/local/lib/bclib.pl";
 
-
-# test file w/ some events
-require "/home/barrycarter/20140713/test.pl";
-
 defaults("xsize=800&ysize=600&weeks=5");
+
+# read events file
+for $i (`grep -v '^#' /home/barrycarter/calendar.txt`) {
+  $i=~/^(\d{8})\s+(.*)$/;
+  push(@{$events{$1}}, $2);
+}
 
 # last sunday (in seconds)
 my($time) = `date +%s -d '1200 last Sunday'`;
@@ -84,6 +86,14 @@ for $week (0..$globopts{weeks}-1) {
     print A "string $datecolor,",$x1+5,",$dy,tiny,$hash{$stardate}{SR}-$hash{$stardate}{SS}\n";
     print A "string $datecolor,",$x1+5,",",$dy+10,",tiny,$hash{$stardate}{CTS}-$hash{$stardate}{CTE}\n";
     print A "string 255,255,255,",$x1+5,",",$dy+20,",tiny,$moonstr\n";
+
+    # this is ugly (find what "special" things happen today)
+    for $i ("SR", "SS", "CTS", "CTE", "NTS", "NTE", "ATS", "ATE", "MR", "MS") {
+      delete $hash{$stardate}{$i};
+    }
+
+    # TODO: do more here (ie, actual phases)
+    debug("LEFTOVER ($stardate):", unfold($hash{$stardate}));
 
     # highlight date if today
     if ($stardate == $now) {
