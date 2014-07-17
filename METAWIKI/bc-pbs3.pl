@@ -12,52 +12,59 @@ chdir("/home/barrycarter/BCGIT/METAWIKI/");
 # TODO: watch out for "double aliasing" (misc2.sql does NOT currently catch it)
 # aliases
 
+
+# error checking (of sorts)
+sub pbs_error_fixing {
+  # fixes errors (to be run after pbs_create_db, before anything else)
+  # also reports errors it can't fix (usually a problem w/ sourcefile)
+}
+
 # fix numbered characters
+sub pbs_fix_numbered_characters {
+  my(@res);
 
-open(A,"|tee /tmp/pbs-play-debug.txt|sqlite3 /var/tmp/pbs-play.db");
-print A "BEGIN;\n";
-
-for $i (sqlite3hashlist("
+  for $i (sqlite3hashlist("
  SELECT DISTINCT target FROM triples WHERE target  GLOB 
  '* [0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]*' UNION
  SELECT DISTINCT source FROM triples WHERE source  GLOB 
  '* [0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]*' ORDER BY 1
 ", "/var/tmp/pbs-play.db")) {
-  unless ($i->{target}=~/^(.*?)\s+(\d{8})\s*(.*?)$/) {warn "$i->{target} BAD";}
-  my($base, $date, $species) = ($1, $2, $3);
+    unless ($i->{target}=~/^(.*?)\s+(\d{8})\s*(.*?)$/) {warn "$i->{target} BAD";}
+    my($base, $date, $species) = ($1, $2, $3);
 
-  # check species
-  unless ($species=~s/^\((.*?)\)$/$1/) {warn "BAD SPECIES: $i->{target}";}
+    # check species
+    unless ($species=~s/^\((.*?)\)$/$1/) {warn "BAD SPECIES: $i->{target}";}
 
   # TODO: check first appearance
 
-  # new name
-  my($newname) = "$base ($species) &#65283;".sprintf("%0.2d",++$times{$base}{$species});
+    # new name
+    my($newname) = "$base ($species) &#65283;".sprintf("%0.2d",++$times{$base}{$species});
 
-  print A "INSERT INTO triples (source, relation, target, datasource) VALUES
-('$newname', 'aka', '$i->{target}', 'renaming');\n";
-  for $j ("source", "target") {
-    print A "UPDATE triples SET $j='$newname' WHERE $j='$i->{target}';\n";
-  }
-}
-
-print A "COMMIT;\n";
-close(A);
-
-sub fix_pbs_aka {
-  open(A,"|sqlite3 /var/tmp/pbs-play.db");
-  print A "BEGIN;\n";
-
-  for $i (sqlite3hashlist("SELECT * FROM triples WHERE relation='aka'", "/var/tmp/pbs-play.db")) {
+    push(@res,"INSERT INTO triples (source, relation, target, datasource)
+VALUES ('$newname', 'aka', '$i->{target}', 'renaming')");
     for $j ("source", "target") {
-      print A "UPDATE triples SET $j='$i->{source}' WHERE $j='$i->{target}'
-               AND relation NOT IN ('aka', 'storyline');\n";
+      push(@res,"UPDATE triples SET $j='$newname' WHERE $j='$i->{target}'");
     }
   }
-  print A "COMMIT;\n";
+  return @res;
 }
 
-sub create_pbs_db {
+# Querys to fix when aliases are source or target (except aka of course)
+sub fix_pbs_aka {
+  my(@res);
+  for $i (sqlite3hashlist("SELECT * FROM triples WHERE relation='aka'", "/var/tmp/pbs-play.db")) {
+    for $j ("source", "target") {
+      push(@res, "UPDATE triples SET $j='$i->{source}' WHERE $j='$i->{target}'
+               AND relation NOT IN ('aka', 'storyline')");
+    }
+  }
+  return @res;
+}
+
+# Querys to populate the database (but not create it)
+
+sub pbs_create_db {
+  my(@triples,@res);
 
   my($all) = read_file("pbs.txt");
   $all=~m%<data>(.*?)</data>%s;
@@ -73,36 +80,23 @@ sub create_pbs_db {
     }
   }
 
-  open(A,"|tee /tmp/bc-pbs3.txt|sqlite3 /var/tmp/pbs-play.db");
-  print A << "MARK";
-DROP TABLE IF EXISTS triples;
-CREATE TABLE triples (source, relation, target, datasource);
-CREATE INDEX i1 ON triples(source);
-CREATE INDEX i2 ON triples(relation);
-CREATE INDEX i3 ON triples(target);
-BEGIN;
-MARK
-;
-
   for $i (@triples) {
     # len 3 -> date, rel, val, ignore; len 4 -> source, entity, rel, val
     for $j (parse_date_list($i->[0])) {
       for $k (split(/\+/, $i->[1])) {
 	for $l (split(/\+/, $i->[2])) {
 	  if (scalar(@$i) == 3) {
-	    print A "INSERT INTO triples VALUES ('$j', '$k', '$l', '$j');\n";
+	    push(@res,"INSERT INTO triples VALUES ('$j', '$k', '$l', '$j')");
 	  } elsif (scalar(@$i) == 4) {
 	    for $m (split/\+/, $i->[3]) {
-	      print A "INSERT INTO triples VALUES ('$k', '$l', '$m', '$j');\n";
+	      push(@res,"INSERT INTO triples VALUES ('$k', '$l', '$m', '$j')");
 	    }
 	  }
 	}
       }
     }
   }
-
-  print A "COMMIT;\n";
-  close(A);
+  return @res;
 }
 
 =item parse_date_list($string)
@@ -130,4 +124,14 @@ sub parse_date_list {
     }
   }
   return @ret;
+}
+
+# literally just returns the schema
+sub pbs_schema {
+  return ("DROP TABLE IF EXISTS triples",
+	  "CREATE TABLE triples (source, relation, target, datasource)",
+	  "CREATE INDEX i1 ON triples(source)",
+	  "CREATE INDEX i2 ON triples(relation)",
+	  "CREATE INDEX i3 ON triples(target)"
+	  );
 }
