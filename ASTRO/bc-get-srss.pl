@@ -6,12 +6,8 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# values of $type below (split into 2 pieces)
+# values of $type below
 my(@types)=("SR", "SS", "MR", "MS", "CTS", "CTE", "NTS", "NTE", "ATS", "ATE");
-
-# for db delete
-for $i (@types) {push(@delme, "'$i'");}
-$delme = join(", ", @delme);
 
 # I probably shouldn't do it this way
 open(A,"|tee /tmp/sql.txt|sqlite3 /home/barrycarter/BCGIT/db/abqastro.db");
@@ -19,17 +15,13 @@ print A "BEGIN;\n";
 print A "DELETE FROM abqastro;\n";
 
 # major lunar phase data (moved from bc-moon-phases.pl)
-
-for $i (split(/\n/, `cat /home/barrycarter/BCGIT/db/moon-phases*`)) {
+for $i (split(/\n/, `cat /home/barrycarter/BCGIT/db/moon-phases* | fgrep -v 'phase'`)) {
   @fields = csv($i);
-  # ignore header lines
-  if ($fields[2]=~/phase/) {next;}
-  # fields 2 and 4 are phase and time/date of phase
-#  print "$fields[2]\t$fields[4]\n";
-  print "INSERT INTO abqastro VALUES ('$fields[2]', '$fields[4]');\n";
-}
 
-die "TESTING";
+  # convert to local time
+  my($time) = strftime("%Y-%m-%d %H:%M:%S",localtime($fields[5]));
+  print A "INSERT INTO abqastro VALUES ('$fields[2]', '$time');\n";
+}
 
 # In theory, the POST form,
 # http://aa.usno.navy.mil/cgi-bin/aa_rstablew.pl, accepts only POST

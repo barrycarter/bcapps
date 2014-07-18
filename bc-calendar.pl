@@ -31,27 +31,13 @@ for $i (sqlite3hashlist("SELECT * FROM abqastro WHERE time>='$sdate' AND time<='
   my($stardate, $etime) = ("$1$2$3", "$4$5");
   $hash{$stardate}{$i->{event}} = $etime;
 
-  debug("EVENT: $i->{event}");
   # moon major phase
-  if ($i->{event}=~/moon/i) {
-    debug("LUNAR EVENT: $i->{event}");
-  }
-
-  # computing image to display here is a bit premature, but...
-  if ($i->{event}=~/PHASE\s+([\d\.]+)(.)?/) {
-    my($pct, $dir) = ($1, $2);
-    debug("PCT: $pct");
-
-    # TODO: assuming the lunar files are linear with phase
-    # illumination, which is almost definitely wrong (but test)
-    # round then multiply (only even numbered images exist)
-
-    if ($dir eq "+") {
-      $hash{$stardate}{moonphase} = sprintf("/home/barrycarter/20140716/m%0.3d.gif.temp", 2*round($pct*90));
-    } else {
-      $hash{$stardate}{moonphase} = sprintf("/home/barrycarter/20140716/m%0.3d.gif.temp", 360-2*round($pct*90));
-    }
-    debug("$stardate -> $hash{$stardate}{moonphase}");
+  if ($i->{event}=~/moon|quarter/i) {
+    # record time of new moon for lunar age calcs (if two new, latest)
+    if ($i->{event} eq "New Moon") {$newmoon = str2time($i->{time});}
+    # just cap letters
+    $i->{event}=~s/[a-z\s]//g;
+    $hash{$stardate}{moonstamp} = $etime;
   }
 }
 
@@ -91,6 +77,11 @@ for $week (0..$globopts{weeks}-1) {
     my($day) = strftime($dateformat, localtime($date));
     my($stardate) = strftime("%Y%m%d", localtime($date));
 
+    # moon age (this is not 100% accurate)
+    # odd rounding since only even numbered gifs exist
+    my($moonage) = sprintf("%0.3d", round(180*fmodp(($date-$newmoon)/2551442.889600,1))*2);
+    debug("MA: $moonage");
+
     # x and y for top left
     my($x1, $y1) = ($globopts{xsize}*$weekday/7, $globopts{ysize}*$week/$globopts{weeks});
     # and bottom right
@@ -98,25 +89,17 @@ for $week (0..$globopts{weeks}-1) {
     # bottom left of where day is printed
     my($dx, $dy) = ($x1+$xpos*$xwid, $y1+$ypos*$ywid);
 
-    # moon phase testing (numbers only valid for 800x600)
     # must come before red box to avoid overlap
-    # tried copyresize on original image, did not work well (fuzzy images)
-#    print A "copy ",join(",", $x1+70, $y1+15, 0, 0, 21, 21, $hash{$stardate}{moonphase}),"\n";
+    print A "copy ",join(",", $x1+70, $y1+15, 0, 0, 21, 21, "/home/barrycarter/20140716/m$moonage.gif.temp"),"\n";
 
-#    print A "copyresized ",join(",", -1, -1, -1, -1, $x1+70, $y1+15,
-#    $x1+70+21, $y1+15+24, "/home/barrycarter/BCGIT/images/MOON/m180.gif"),"\n";
+    if ($hash{$stardate}{moonstamp}) {
+      print A "string ",join(",", $datecolor, $x1+71, $y1+20, tiny, $hash{$stardate}{moonstamp}),"\n";
+    }
 
-    # TODO: Better naming convention for these GIFs, put in GIT, and
-    # better naming convention for calendar itself (not in /tmp!)
-#    print A "copyresized ",join(",", -1, -1, -1, -1, $x1+70, $y1+15,
-#     $x1+70+21, $y1+15+21, "/home/barrycarter/20140716/m180.gif.temp"),"\n";
-
-    my($moonstr);
+    my($moonstr)="SR: $hash{$stardate}{MS}-$hash{$stardate}{MR}";
     if ($hash{$stardate}{MR} < $hash{$stardate}{MS}) {
       $moonstr="RS: $hash{$stardate}{MR}-$hash{$stardate}{MS}";
-    } else {
-      $moonstr="SR: $hash{$stardate}{MS}-$hash{$stardate}{MR}";
-    };
+    }
 
     # print stuff
     print A "string $datecolor,",$dx-20,",$dy,tiny,$month\n";
@@ -124,18 +107,9 @@ for $week (0..$globopts{weeks}-1) {
     print A "string $datecolor,",$x1+5,",",$dy+10,",tiny,$hash{$stardate}{CTS}-$hash{$stardate}{CTE}\n";
     print A "string 255,255,255,",$x1+5,",",$dy+20,",tiny,$moonstr\n";
 
-    # this is ugly (find what "special" things happen today)
-    for $i ("SR", "SS", "CTS", "CTE", "NTS", "NTE", "ATS", "ATE", "MR", "MS") {
-      delete $hash{$stardate}{$i};
-    }
-
-    # TODO: do more here (ie, actual phases)
-    debug("LEFTOVER ($stardate):", unfold($hash{$stardate}));
-
     # highlight date if today
     if ($stardate == $now) {
-#      print A "frect,",$dx-3,",",$y1+2,",",$x2-3,",",$dy+20,",255,0,0\n";
-      print A "frect,",$dx-3,",",$y1+2,",",$x2-3,",",$dy+20,",255,0,0\n";
+      print A "frect,",$dx,",",$y1+5,",",$x2-5,",",$dy+15,",255,0,0\n";
       print A "string 255,255,255,$dx,$dy,$datesize,$day\n";
     } else {
       print A "string $datecolor,$dx,$dy,$datesize,$day\n";
@@ -148,7 +122,6 @@ for $week (0..$globopts{weeks}-1) {
       my($eventx) = $x1+5;
       print A "string $eventcolor,$eventx,$eventy,$eventsize,$events[$i]\n";
     }
-
     print A "rect $x1,$y1,$x2,$y2,$gridcolor\n";
   }
 }
