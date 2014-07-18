@@ -81,7 +81,9 @@ for $year (2009..2024) {
 # waning; this fixes it (full/new moons might be left as is)
 print A << "MARK";
 
-UPDATE abqastro SET event = REPLACE(event, "PHASE", "PHASE+") 
+-- changing the events via postfix to avoid breaking sorting for other querys
+
+UPDATE abqastro SET event = event||"+"
 WHERE oid IN (
  SELECT a1.oid FROM abqastro a1, abqastro a2 
  WHERE a2.time = datetime(a1.time, '+1 day')
@@ -89,21 +91,13 @@ WHERE oid IN (
  AND a1.event < a2.event
 );
 
--- the results of the update above do affect the query below, but not
--- in a harmful way (I think)
-
-UPDATE abqastro SET event = REPLACE(event, "PHASE", "PHASE-")
+UPDATE abqastro SET event = event||"-"
 WHERE oid IN (
  SELECT a1.oid FROM abqastro a1, abqastro a2 
  WHERE a2.time = datetime(a1.time, '+1 day')
  AND a1.event LIKE 'PHASE %' AND a2.event LIKE 'PHASE%'
  AND a1.event > a2.event
 );
-
--- below is unnecessary, but useful for bc-calendar.pl
-
-UPDATE abqastro SET event = REPLACE(event, "PHASE", "PHASE=") WHERE
-event LIKE "PHASE %";
 
 MARK
 ;

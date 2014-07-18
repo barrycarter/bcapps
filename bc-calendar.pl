@@ -28,13 +28,32 @@ my($edate) = strftime("%Y-%m-%d", localtime($time+$globopts{weeks}*7*86400));
 for $i (sqlite3hashlist("SELECT * FROM abqastro WHERE time>='$sdate' AND time<='$edate'", "/home/barrycarter/BCGIT/db/abqastro.db")) {
   # this is easier (but slower?) than using substr (seconds optional)
   $i->{time}=~/^(....)\-(..)\-(..) (..):(..)/||die("BAD TIME: $i->{time}");
-  $hash{"$1$2$3"}{$i->{event}} = "$4$5";
+  my($stardate, $etime) = ("$1$2$3", "$4$5");
+  $hash{$stardate}{$i->{event}} = $etime;
 
-  if ($i->{event}=~/PHASE/) {debug("PHASE DATA: $i->{event}");}
+  debug("EVENT: $i->{event}");
+  # moon major phase
+  if ($i->{event}=~/moon/i) {
+    debug("LUNAR EVENT: $i->{event}");
+  }
 
+  # computing image to display here is a bit premature, but...
+  if ($i->{event}=~/PHASE\s+([\d\.]+)(.)?/) {
+    my($pct, $dir) = ($1, $2);
+    debug("PCT: $pct");
+
+    # TODO: assuming the lunar files are linear with phase
+    # illumination, which is almost definitely wrong (but test)
+    # round then multiply (only even numbered images exist)
+
+    if ($dir eq "+") {
+      $hash{$stardate}{moonphase} = sprintf("/home/barrycarter/20140716/m%0.3d.gif.temp", 2*round($pct*90));
+    } else {
+      $hash{$stardate}{moonphase} = sprintf("/home/barrycarter/20140716/m%0.3d.gif.temp", 360-2*round($pct*90));
+    }
+    debug("$stardate -> $hash{$stardate}{moonphase}");
+  }
 }
-
-die "TESTING";
 
 # calculated params
 my($xwid) = $globopts{xsize}/7;
@@ -81,7 +100,16 @@ for $week (0..$globopts{weeks}-1) {
 
     # moon phase testing (numbers only valid for 800x600)
     # must come before red box to avoid overlap
-    print A "copy ",join(",", $x1+70, $y1+15, 0, 0, 21, 21, "/home/barrycarter/20140716/m180.gif.temp"),"\n";
+    # tried copyresize on original image, did not work well (fuzzy images)
+#    print A "copy ",join(",", $x1+70, $y1+15, 0, 0, 21, 21, $hash{$stardate}{moonphase}),"\n";
+
+#    print A "copyresized ",join(",", -1, -1, -1, -1, $x1+70, $y1+15,
+#    $x1+70+21, $y1+15+24, "/home/barrycarter/BCGIT/images/MOON/m180.gif"),"\n";
+
+    # TODO: Better naming convention for these GIFs, put in GIT, and
+    # better naming convention for calendar itself (not in /tmp!)
+#    print A "copyresized ",join(",", -1, -1, -1, -1, $x1+70, $y1+15,
+#     $x1+70+21, $y1+15+21, "/home/barrycarter/20140716/m180.gif.temp"),"\n";
 
     my($moonstr);
     if ($hash{$stardate}{MR} < $hash{$stardate}{MS}) {
