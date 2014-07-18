@@ -15,31 +15,21 @@ $delme = join(", ", @delme);
 
 # I probably shouldn't do it this way
 open(A,"|tee /tmp/sql.txt|sqlite3 /home/barrycarter/BCGIT/db/abqastro.db");
-print A "DELETE FROM abqastro WHERE event IN ($delme);\n";
-print A "DELETE FROM abqastro WHERE event LIKE 'PHASE%';\n";
 print A "BEGIN;\n";
+print A "DELETE FROM abqastro;\n";
 
-# lunar phase data from http://aa.usno.navy.mil/data/docs/MoonFraction.php
+# major lunar phase data (moved from bc-moon-phases.pl)
 
-for $year (2009..2024) {
-  my($out,$err,$res) = cache_command2("curl 'http://aa.usno.navy.mil/cgi-bin/aa_moonill2.pl?xxy=2014&time=12&zone=-07&ZZZ=END'", "age=86400000");
-
-  for $k (split(/\n/, $out)) {
-    # TODO: need header lines to determine what data I have, but skip for now
-    # determine day (if not one, skip)
-    unless ($k=~/^\s*([\d\.]+)\s*/) {next;}
-    my($day) = $1;
-    # data is positional and has blanks, so can't use split() here
-    for $month ("01".."12") {
-      my($illum) = substr($k,$month*9-1,4);
-      # ignore blanks
-      if ($illum=~/^\s*$/) {next;}
-      # TODO: this isnt the right way to keep track of phase
-      # phases are for noon MST
-      print A "INSERT INTO abqastro VALUES ('PHASE $illum', '$year-$month-$day 12:00:00');\n";
-    }
-  }
+for $i (split(/\n/, `cat /home/barrycarter/BCGIT/db/moon-phases*`)) {
+  @fields = csv($i);
+  # ignore header lines
+  if ($fields[2]=~/phase/) {next;}
+  # fields 2 and 4 are phase and time/date of phase
+#  print "$fields[2]\t$fields[4]\n";
+  print "INSERT INTO abqastro VALUES ('$fields[2]', '$fields[4]');\n";
 }
+
+die "TESTING";
 
 # In theory, the POST form,
 # http://aa.usno.navy.mil/cgi-bin/aa_rstablew.pl, accepts only POST
