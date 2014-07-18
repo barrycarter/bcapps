@@ -59,31 +59,6 @@ for $year (2009..2024) {
   }
 }
 
-# the lunar phase data does NOT include whether moon is waxing or
-# waning; this fixes it (full/new moons might be left as is)
-print A << "MARK";
-
--- changing the events via postfix to avoid breaking sorting for other querys
-
-UPDATE abqastro SET event = event||"+"
-WHERE oid IN (
- SELECT a1.oid FROM abqastro a1, abqastro a2 
- WHERE a2.time = datetime(a1.time, '+1 day')
- AND a1.event LIKE 'PHASE %' AND a2.event LIKE 'PHASE%'
- AND a1.event < a2.event
-);
-
-UPDATE abqastro SET event = event||"-"
-WHERE oid IN (
- SELECT a1.oid FROM abqastro a1, abqastro a2 
- WHERE a2.time = datetime(a1.time, '+1 day')
- AND a1.event LIKE 'PHASE %' AND a2.event LIKE 'PHASE%'
- AND a1.event > a2.event
-);
-
-MARK
-;
-
 print A "COMMIT;\n";
 
 close(A);
