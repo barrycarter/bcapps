@@ -64,7 +64,8 @@ my($eventsize) = "small";
 my($eventcolor) = "255,128,128";
 my($eventystart) = 35;
 
-open(A,"|tee /tmp/calfly.txt|fly -o /tmp/cal0.gif");
+# putting image on background uses up too much colormap, -colors 128 fixes
+open(A,"|tee /tmp/calfly.txt|fly|convert - -colors 128 /tmp/cal0.gif");
 # 1 more pixel to get right and bottom grid lines
 print A "new\nsize ",$globopts{xsize}+1,",",$globopts{ysize}+1,"\nsetpixel 0,0,0,0,0\n";
 
@@ -122,8 +123,13 @@ for $week (0..$globopts{weeks}-1) {
       my($eventx) = $x1+5;
       print A "string $eventcolor,$eventx,$eventy,$eventsize,$events[$i]\n";
     }
+    # grid lines
     print A "rect $x1,$y1,$x2,$y2,$gridcolor\n";
   }
 }
 
 close(A);
+
+# transparentify for overlay
+system("convert -transparent black /tmp/cal0.gif /usr/local/etc/calendar.gif");
+

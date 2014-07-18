@@ -36,8 +36,6 @@ if ($loadavg>40) {
   die("LOAD FAR TOO HIGH");
 }
 
-
-
 # need current time
 $now=time();
 chdir(tmpdir());
@@ -118,8 +116,6 @@ $hash{observation_time}=~s/^last updated on //isg;
 
 push(@info, "Local/$hash{temp_f}F/$hash{wind_dir}$hash{wind_mph}G$hash{wind_gust_mph}/$hash{relative_humidity}% ($hash{dewpoint_f}F) [$hash{observation_time}]");
 
-debug("HASH",%hash);
-
 # I have no cronjob for world time, so...
 
 # hash of how I want to see the zones
@@ -163,13 +159,13 @@ push(@info, "WOTM: $res");
 
 # experimental: moon phase in middle of screen
 # TODO: maybe change bgcolor based on twilight?
-if (-f "/home/barrycarter/ERR/urc.gif") {
-  push(@fly, "copy 472,334,0,0,100,100,/home/barrycarter/ERR/urc.gif");
-}
+# if (-f "/home/barrycarter/ERR/urc.gif") {
+#  push(@fly, "copy 472,334,0,0,100,100,/home/barrycarter/ERR/urc.gif");
+# }
 
 # testing calendar
 # TODO: this blots out <h>(eclipses)</h> moon, but ok w/ that for now
-push(@fly, "copy 150,100,0,0,999,999,/tmp/cal0.gif");
+# push(@fly, "copy 150,100,0,0,999,999,/tmp/cal0.gif");
 
 # push output to .fly script
 # err gets pushed first (and in red), then info
@@ -233,7 +229,7 @@ for $i (@fly) {print A "$i\n";}
 close(A);
 
 # also copy file since I will need it on other machines
-system("fly -q -i bg.fly -o bg.gif; xv +noresetroot -root -quit bg.gif; cp bg.gif /tmp/bgimage.gif");
+system("fly -q -i bg.fly -o bg.gif; composite -geometry +150+100 /usr/local/etc/calendar.gif bg.gif /tmp/bgimage.gif; xv +noresetroot -root -quit /tmp/bgimage.gif");
 
 # call bc-get-astro.pl for next minute (calling it after generatinv
 # the bg image avoids race condition); must restore timezone
