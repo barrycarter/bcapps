@@ -29,7 +29,12 @@ for $i (sqlite3hashlist("SELECT * FROM abqastro WHERE time>='$sdate' AND time<='
   # this is easier (but slower?) than using substr (seconds optional)
   $i->{time}=~/^(....)\-(..)\-(..) (..):(..)/||die("BAD TIME: $i->{time}");
   $hash{"$1$2$3"}{$i->{event}} = "$4$5";
+
+  if ($i->{event}=~/PHASE/) {debug("PHASE DATA: $i->{event}");}
+
 }
+
+die "TESTING";
 
 # calculated params
 my($xwid) = $globopts{xsize}/7;
@@ -74,6 +79,10 @@ for $week (0..$globopts{weeks}-1) {
     # bottom left of where day is printed
     my($dx, $dy) = ($x1+$xpos*$xwid, $y1+$ypos*$ywid);
 
+    # moon phase testing (numbers only valid for 800x600)
+    # must come before red box to avoid overlap
+    print A "copy ",join(",", $x1+70, $y1+15, 0, 0, 21, 21, "/home/barrycarter/20140716/m180.gif.temp"),"\n";
+
     my($moonstr);
     if ($hash{$stardate}{MR} < $hash{$stardate}{MS}) {
       $moonstr="RS: $hash{$stardate}{MR}-$hash{$stardate}{MS}";
@@ -97,6 +106,7 @@ for $week (0..$globopts{weeks}-1) {
 
     # highlight date if today
     if ($stardate == $now) {
+#      print A "frect,",$dx-3,",",$y1+2,",",$x2-3,",",$dy+20,",255,0,0\n";
       print A "frect,",$dx-3,",",$y1+2,",",$x2-3,",",$dy+20,",255,0,0\n";
       print A "string 255,255,255,$dx,$dy,$datesize,$day\n";
     } else {

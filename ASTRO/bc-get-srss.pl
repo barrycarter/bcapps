@@ -14,9 +14,32 @@ for $i (@types) {push(@delme, "'$i'");}
 $delme = join(", ", @delme);
 
 # I probably shouldn't do it this way
-open(A,"|sqlite3 /home/barrycarter/BCGIT/db/abqastro.db");
+open(A,"|tee /tmp/sql.txt|sqlite3 /home/barrycarter/BCGIT/db/abqastro.db");
 print A "DELETE FROM abqastro WHERE event IN ($delme);\n";
+print A "DELETE FROM abqastro WHERE event LIKE 'PHASE%';\n";
 print A "BEGIN;\n";
+
+# lunar phase data from http://aa.usno.navy.mil/data/docs/MoonFraction.php
+
+for $year (2009..2024) {
+  my($out,$err,$res) = cache_command2("curl 'http://aa.usno.navy.mil/cgi-bin/aa_moonill2.pl?xxy=2014&time=12&zone=-07&ZZZ=END'", "age=86400000");
+
+  for $k (split(/\n/, $out)) {
+    # TODO: need header lines to determine what data I have, but skip for now
+    # determine day (if not one, skip)
+    unless ($k=~/^\s*([\d\.]+)\s*/) {next;}
+    my($day) = $1;
+    # data is positional and has blanks, so can't use split() here
+    for $month ("01".."12") {
+      my($illum) = substr($k,$month*9-1,4);
+      # ignore blanks
+      if ($illum=~/^\s*$/) {next;}
+      # TODO: this isnt the right way to keep track of phase
+      # phases are for noon MST
+      print A "INSERT INTO abqastro VALUES ('PHASE $illum', '$year-$month-$day 12:00:00');\n";
+    }
+  }
+}
 
 # In theory, the POST form,
 # http://aa.usno.navy.mil/cgi-bin/aa_rstablew.pl, accepts only POST
@@ -26,7 +49,8 @@ print A "BEGIN;\n";
 my(%data);
 for $year (2009..2024) {
   for $type (0..4) {
-    my($out,$err,$res) = cache_command2("curl 'http://aa.usno.navy.mil/cgi-bin/aa_rstablew.pl?FFX=1&xxy=$year&type=$type&st=NM&place=albuquerque&ZZZ=END'","age=86400");
+    # 100 day cache, could be even longer
+    my($out,$err,$res) = cache_command2("curl 'http://aa.usno.navy.mil/cgi-bin/aa_rstablew.pl?FFX=1&xxy=$year&type=$type&st=NM&place=albuquerque&ZZZ=END'","age=8640000");
 
     # parse result
     for $k (split(/\n/, $out)) {
@@ -53,6 +77,37 @@ for $year (2009..2024) {
   }
 }
 
+# the lunar phase data does NOT include whether moon is waxing or
+# waning; this fixes it (full/new moons might be left as is)
+print A << "MARK";
+
+UPDATE abqastro SET event = REPLACE(event, "PHASE", "PHASE+") 
+WHERE oid IN (
+ SELECT a1.oid FROM abqastro a1, abqastro a2 
+ WHERE a2.time = datetime(a1.time, '+1 day')
+ AND a1.event LIKE 'PHASE %' AND a2.event LIKE 'PHASE%'
+ AND a1.event < a2.event
+);
+
+UPDATE abqastro SET event = REPLACE(event, "PHASE", "PHASE-")
+WHERE oid IN (
+ SELECT a1.oid FROM abqastro a1, abqastro a2 
+ WHERE a2.time = datetime(a1.time, '+1 day')
+ AND a1.event LIKE 'PHASE %' AND a2.event LIKE 'PHASE%'
+ AND a1.event > a2.event
+);
+
+MARK
+;
+
 print A "COMMIT;\n";
 
 close(A);
+
+=item schema
+
+CREATE TABLE abqastro (event TEXT, time DATETIME);
+CREATE INDEX i_event ON abqastro(event);
+CREATE INDEX i_time ON abqastro(time);
+
+=cut
