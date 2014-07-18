@@ -1920,6 +1920,7 @@ MULTIREF [[title::[[[[Larry]]'s mother]]]] [[notes::Larry's mother dies on [[200
 2014-07-16 [[character::Pig+Goat]]
 2014-07-17 [[character::Larry+ZZE]]
 2014-07-14,2014-07-15,2014-07-17 [[storyline::[[character::Larry]] takes written driving test]]
+2014-07-18 [[character::Goat+Pastis+Pig]]
 </data>
 
 # 2007-03-30 pig's mayors isnt LGD? (mayor in rehab)
