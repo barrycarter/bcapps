@@ -89,6 +89,9 @@ WHERE oid IN (
  AND a1.event < a2.event
 );
 
+-- the results of the update above do affect the query below, but not
+-- in a harmful way (I think)
+
 UPDATE abqastro SET event = REPLACE(event, "PHASE", "PHASE-")
 WHERE oid IN (
  SELECT a1.oid FROM abqastro a1, abqastro a2 
@@ -96,6 +99,11 @@ WHERE oid IN (
  AND a1.event LIKE 'PHASE %' AND a2.event LIKE 'PHASE%'
  AND a1.event > a2.event
 );
+
+-- below is unnecessary, but useful for bc-calendar.pl
+
+UPDATE abqastro SET event = REPLACE(event, "PHASE", "PHASE=") WHERE
+event LIKE "PHASE %";
 
 MARK
 ;
