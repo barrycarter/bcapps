@@ -77,11 +77,8 @@ for $i (@suppress) {
   ($key,$val) = split(/\s+/,$i);
   # if date has already occurred, ignore line
   if ($val < stardate($now,"localtime=1")) {next;}
-  debug("KV: $key/$val");
   $suppress{$key}=$val;
 }
-
-debug("SUPPRESS",%suppress);
 
 # all errors are in ERR subdir (and info alerts are there too)
 for $i (glob("/home/barrycarter/ERR/*.err")) {
@@ -120,41 +117,25 @@ push(@info, "Local/$hash{temp_f}F/$hash{wind_dir}$hash{wind_mph}G$hash{wind_gust
 
 # hash of how I want to see the zones
 # explicitly excluding the Kiritimati cheat
-%zones = (
- "MT" => "US/Mountain",
- "CT" => "US/Central",
- "ET" => "US/Eastern",
- "PT" => "US/Pacific",
- "GMT" => "GMT",
- "Lagos" => "Africa/Lagos",
- "Cairo" => "Africa/Cairo",
- "HongKong" => "Asia/Hong_Kong",
- "Tokyo" => "Asia/Tokyo",
- "Delhi" => "Asia/Kolkata",
- "Sydney" => "Australia/Sydney",
- "Samoa" => "Pacific/Apia",
- "Pago Pago" => "Pacific/Pago_Pago",
- "Manila" => "Asia/Manila"
-);
 
-# HACK: manual sorting is cheating/dangerous ... should be able to do
-# this auto somehow (eg, by deviation from GMT?)
+# TODO: order these better (ie, more automatically)
 
-@zones= ("Pago Pago", "PT", "MT", "CT", "ET", "GMT", "Lagos",
-	 "Cairo", "Delhi",
-	 "HongKong", "Manila", "Tokyo", "Sydney", "Samoa");
+@zones = ( "Pago Pago", "Pacific/Pago_Pago", "PT", "US/Pacific", "MT",
+"US/Mountain", "CT", "US/Central", "ET", "US/Eastern", "GMT", "GMT",
+"Lagos", "Africa/Lagos", "Cairo", "Africa/Cairo", "Delhi",
+"Asia/Kolkata", "HongKong", "Asia/Hong_Kong", "Manila" =>
+"Asia/Manila", "Tokyo", "Asia/Tokyo", "Sydney" => "Australia/Sydney",
+"Samoa", "Pacific/Apia");
 
-for $i (@zones) {
-  $ENV{TZ} = $zones{$i};
+while ($i=shift @zones) {
+  $ENV{TZ} = shift(@zones);
   push(@info, strftime("$i: %H%M,%a%d%b",localtime(time())));
 }
 
 # random (but predictable) word from BCGIT/WWF/enable-random.txt
 # 172820 is fixed
 $num = ($now/60)%172820;
-debug("NUM: $num");
 $res = `head -$num /home/barrycarter/BCGIT/WWF/enable-random.txt | tail -1`;
-chomp($res);
 push(@info, "WOTM: $res");
 
 # experimental: moon phase in middle of screen
@@ -171,7 +152,6 @@ push(@info, "WOTM: $res");
 # err gets pushed first (and in red), then info
 for $i (@err) {
   # TODO: order these better
-  push(@rss, "$i");
   push(@fly, "string 255,0,0,0,$pos,giant,$i");
   $pos+=15;
 }
@@ -179,7 +159,6 @@ for $i (@err) {
 # now info (in blue for now); note $pos is "global"
 for $i (@info) {
   # TODO: order these better
-  push(@rss, "$i");
   push(@fly, "string $blue,0,$pos,medium,$i");
   $pos+=15;
 }
@@ -192,21 +171,19 @@ open(A,"tac /home/barrycarter/BCGIT/db/ipa.txt|");
 $br = 768-20; # bottom y value
 
 while (<A>) {
-  chomp;
   $br -= 15;
   # this is left justified, which means it won't work for arb files, sigh
   $xval = 950;
   push(@fly, "string $blue,$xval,$br,medium,$_");
-  debug("CHOMP: $_");
 }
 
-# create RSS (not working, will probably dump)
-open(A, ">/var/tmp/bc-bg.rss");
-print A qq%<?xml version="1.0" encoding="ISO-8859-1" ?><rss version="0.91">
-<channel><title>bc-bg</title><item><title>\n%;
-print A join("&lt;br&gt;\n", @rss),"\n";
-print A "</title></item></channel></rss>\n";
-close(A);
+# create RSS (not working, will probably dump) [dropped later]
+# open(A, ">/var/tmp/bc-bg.rss");
+# print A qq%<?xml version="1.0" encoding="ISO-8859-1" ?><rss version="0.91">
+# <channel><title>bc-bg</title><item><title>\n%;
+# print A join("&lt;br&gt;\n", @rss),"\n";
+# print A "</title></item></channel></rss>\n";
+# close(A);
 
 # sometimes, report scrolls off screen; this sends EOF (in darker
 # color) so I know where report ends
@@ -221,7 +198,6 @@ print A << "MARK";
 new
 size 1024,768
 setpixel 0,0,0,0,0
-setpixel 512,384,255,255,255
 MARK
     ;
 
@@ -233,6 +209,7 @@ system("fly -q -i bg.fly -o bg.gif; composite -geometry +150+100 /usr/local/etc/
 
 # call bc-get-astro.pl for next minute (calling it after generatinv
 # the bg image avoids race condition); must restore timezone
+
 $ENV{TZ} = "MST7MDT";
 system("/home/barrycarter/BCGIT/ASTRO/bc-get-astro.pl");
 
