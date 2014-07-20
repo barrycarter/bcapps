@@ -31,6 +31,8 @@ for $i (@ARGV) {
     $fname = handle_paypal($all);
   } elsif ($all=~/nmefcu/i) {
     $fname = handle_nmefcu($all);
+  } elsif ($all=~/www\.mtb\.com/i) {
+    $fname = handle_mtb($all);
   } else {
     warnlocal("Cannot rename: $i");
     next;
@@ -57,6 +59,13 @@ for $i (@ARGV) {
   # otherwise, advise move
   print "mv -i $i $fname\n";
 
+}
+
+sub handle_mtb {
+  my($all) = @_;
+
+  $all=~m%statement date:\s*(\d{2})/(\d{2})/(\d{2})\s+%is;
+  return "mtb-$1-$2-$3.pdf";
 }
 
 sub handle_nmefcu {
