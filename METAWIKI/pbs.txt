@@ -1922,6 +1922,8 @@ MULTIREF [[title::[[[[Larry]]'s mother]]]] [[notes::Larry's mother dies on [[200
 2014-07-14,2014-07-15,2014-07-17 [[storyline::[[character::Larry]] takes written driving test]]
 2014-07-18 [[character::Goat+Pastis+Pig]]
 2014-07-19 [[character::Mary (human)+Pastis+Rat]] [[Mary (human)::profession::nun]]
+2014-07-20 [[character::Rat+Death+Pig]]
+2014-07-21 [[character::Rat+Goat]] [[armadillo_deaths::1]] [[notes::The handle of Rat's cup changes direction between panels 1 and 2, even though he doesn't appear to have touched it]] [[meta::I can't tell if this is Arnie Armadillo or not]]
 </data>
 
 # 2007-03-30 pig's mayors isnt LGD? (mayor in rehab)
