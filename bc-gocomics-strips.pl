@@ -15,11 +15,12 @@
 
 require "/usr/local/lib/bclib.pl";
 
-$strip = "pearlsbeforeswine";
+$strip = "garfield";
 $workdir = "/mnt/extdrive/GOCOMICS/$strip";
 dodie("chdir('$workdir')");
 
-for $i (2002..2014) {
+# TODO: manually adjusting years per strip is bad
+for $i (1978..2014) {
   for $j (1..12) {
     # for which days this month are comics available?
 
@@ -64,7 +65,7 @@ for $i (@days) {
 # if any for first batch, run commands to get
 if (@commands2) {
   write_file(join("\n",@commands2), "runme2.sh");
-  system("parallel -j 20 < runme2.sh");
+  system("parallel -j 15 < runme2.sh");
 }
 
 # now, look inside files for image

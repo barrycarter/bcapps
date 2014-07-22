@@ -34,6 +34,8 @@ TODO (global todo's not specific to a given strip):
 
   - Transcribe 2003-11-09 album titles (no Easter eggs though)
 
+  - Characters that appear 0 times are probably mistakes
+
   - At some point, need to delete pages that no longer exist
 
   - Should strip pages say "Rat (515th appearance of 917 to date)" or
@@ -1924,6 +1926,7 @@ MULTIREF [[title::[[[[Larry]]'s mother]]]] [[notes::Larry's mother dies on [[200
 2014-07-19 [[character::Mary (human)+Pastis+Rat]] [[Mary (human)::profession::nun]]
 2014-07-20 [[character::Rat+Death+Pig]]
 2014-07-21 [[character::Rat+Goat]] [[armadillo_deaths::1]] [[notes::The handle of Rat's cup changes direction between panels 1 and 2, even though he doesn't appear to have touched it]] [[meta::I can't tell if this is Arnie Armadillo or not]]
+2014-07-22 [[character::Rat+Goat]]
 </data>
 
 # 2007-03-30 pig's mayors isnt LGD? (mayor in rehab)
