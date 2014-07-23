@@ -65,7 +65,7 @@ my($eventcolor) = "255,128,128";
 my($eventystart) = 35;
 
 # putting image on background uses up too much colormap, -colors 128 fixes
-open(A,"|tee /tmp/calfly.txt|fly|convert - -colors 128 /tmp/cal0.gif");
+open(A,"|tee /tmp/calfly.txt|fly -q|convert - -colors 128 /tmp/cal0.gif");
 # 1 more pixel to get right and bottom grid lines
 print A "new\nsize ",$globopts{xsize}+1,",",$globopts{ysize}+1,"\nsetpixel 0,0,0,0,0\n";
 

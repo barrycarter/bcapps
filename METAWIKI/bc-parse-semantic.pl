@@ -23,6 +23,7 @@ require "/usr/local/lib/bclib.pl";
 
 my($metadir) = "/home/barrycarter/BCGIT/METAWIKI";
 my($pagedir) = "/usr/local/etc/metawiki/pbs3";
+chdir($metadir);
 
 # faster diff
 for $i ("OLD", "NEW") {system("mkdir -p $pagedir/$i");}
@@ -44,6 +45,7 @@ for $i (split(/\n/, read_file("$metadir/largeimagelinks.txt"))) {
   my($strip, $hash) = ($1, $2);
   $triples{$strip}{hash}{$hash} = "largeimagelinks";
   $triples{$strip}{class}{strip} = "largeimagelinks";
+  $triples{$hash}{class}{string} = 1;
   # record my previous strip
   $triples{$strip}{prev}{$prevstrip} = "largeimagelinks";
   # and previous strips next strip
@@ -51,8 +53,9 @@ for $i (split(/\n/, read_file("$metadir/largeimagelinks.txt"))) {
   $prevstrip = $strip;
 }
 
-for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
-
+my($all) = read_file("pbs.txt");
+$all=~m%<data>(.*?)</data>%s;
+for $i (split(/\n/, $1.read_file("pbs-cl.txt"))) {
   # TODO: *_deaths
   # below allows for multiple dates
 
@@ -86,11 +89,11 @@ for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
 
     # classes for source and target...
 
-    unless ($stype eq "*" || $stype eq "string" || $stype eq "null") {
+    unless ($stype eq "*" || $stype eq "null") {
       $triples{$source}{class}{$stype} = "$datasource ($source::$k::$target)";
     }
 
-    unless ($ttype eq "*" || $ttype eq "string" || $stype eq "null") {
+    unless ($ttype eq "*" || $stype eq "null") {
       $triples{$target}{class}{$ttype} = "$datasource ($source::$k::$target)";
     }
 
@@ -106,8 +109,10 @@ for $i (`cat $metadir/pbs.txt $metadir/pbs-cl.txt | egrep -v '^#|^\$'`) {
       # (note that a species triple will correctly override this)
       # TODO: this is invalid, since we don't know that species come first
       if ($l=~/\(([^A-Z]*?)\)$/ && !$triples{$l}{species}) {
-	$triples{$l}{species}{$1} = "NAME2SPECIES";
-	debug("NAME2SPECIES: $l -> $1");
+	my($specname) = $1;
+	$triples{$l}{species}{$specname} = "NAME2SPECIES";
+	$triples{$specname}{class}{string} = 1;
+#	debug("NAME2SPECIES: $l -> $1");
       }
 
       # if the character has a "date like" name, tag for addl step
@@ -150,7 +155,7 @@ for $i (keys %triples) {
 for $i (sort keys %canon) {
   # if this alias isn't posing as a character, do nothing
   unless ($triples{$i}{class}{character}) {next;}
-  debug("C: $i -> $canon{$i}");
+#  debug("C: $i -> $canon{$i}");
 
   rename_entity($i, $canon{$i});
 
@@ -175,11 +180,12 @@ for $i (sort keys %datename) {
 
   # canonize name (cannot use "#" directly, browsers interpret it)
   my($newname) = "$base $species &#65283;".sprintf("%0.2d",++$times{$base}{$species});
-  debug("RENAME: $i -> $newname");
+#  debug("RENAME: $i -> $newname");
 
   rename_entity($i, $newname);
-  # so we can link back to pbs.txt
+  # so we can link back to pbs.txt (and make oldname a string)
   $triples{$newname}{reference_name}{$i} = "REFERENCE";
+  $triples{$i}{class}{string} = "REFERENCE";
 
 }
 
@@ -225,12 +231,6 @@ for $i (sort keys %triples) {
   # determine class for this entity
   my(@classes) = sort keys %{$triples{$i}{class}};
 
-  # insane page name?
-  if ($i=~/[\[\{\]\}]/) {
-    warn "WARNING: BAD PAGE NAME: $i";
-    next;
-  }
-
   if (scalar @classes == 0) {
     debug("NO CLASSES: $i");
     next;
@@ -243,9 +243,21 @@ for $i (sort keys %triples) {
 
   my($class) = shift(@classes);
 
+  # strings don't get pages
+  if ($class eq "string") {next;}
+
+  # insane page name?
+  if ($i=~/[\[\{\]\}]/) {
+    warn "WARNING: BAD PAGE NAME: $i";
+    next;
+  }
+
+#  debug("I: $i, CLASS: $class");
+
   # error check
   if ($class eq "character" && !$triples{$i}{species}) {
     warn "WARNING: $i: no species (so probably an error)";
+    debug(sort keys %{$triples{$i}{"-character"}});
     next;
   }
 
@@ -406,9 +418,9 @@ sub parse_multiref {
   for $i (parse_semantic("MULTIREF", $multiref)) {$hash{$i->[1]}= $i->[2];}
 
   # fix up title (and notes?)
-  debug("ALPHA: $hash{title}");
+#  debug("ALPHA: $hash{title}");
   $hash{title}=~s/\'/&\#39\;/g;
-  debug("BETA: $hash{title}");
+#  debug("BETA: $hash{title}");
 
   # which dates are referenced?
   for $i ($hash{notes}=~m/\[\[(\d{4}-\d{2}-\d{2})\]\]/g) {
@@ -435,20 +447,25 @@ sub rename_entity {
       # assign oldname values to newname
       $triples{$newname}{$i}{$j} = $triples{$oldname}{$i}{$j};
       delete $triples{$oldname}{$i}{$j};
-      debug("RI+ $newname/$i/$j","RI- $oldname/$i/$j");
+#      debug("RI+ $newname/$i/$j","RI- $oldname/$i/$j");
 
       if ($i=~/^\-/) {
 	# if $i is "negative", also fix target -> source relations
 	my($irev) = substr($i,1);
 	$triples{$j}{$irev}{$newname} = $triples{$j}{$irev}{$oldname};
 	delete $triples{$j}{$irev}{$oldname};
-	debug("RI+ $j/$irev/$newname","RI- $j/$irev/$oldname");
+#	debug("RI+ $j/$irev/$newname","RI- $j/$irev/$oldname");
       } else {
 	# if $i is "positive" fix target negative-relation source relations
 	$triples{$j}{"-$i"}{$newname} = $triples{$j}{"-$i"}{$oldname};
 	delete $triples{$j}{"-$i"}{$oldname};
-	debug("RI+ $j/-$i/$newname","RI- $j/-$i/$oldname");
+#	debug("RI+ $j/-$i/$newname","RI- $j/-$i/$oldname");
       }
     }
   }
+
+  # the oldname now becomes an alias to the newname
+#  $triples{$newname}{aka}{$oldname} = "rename_entity";
+#  $triples{$oldname}{class}{alias} = "rename_entity";
+
 }
