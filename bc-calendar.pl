@@ -11,9 +11,24 @@ defaults("xsize=800&ysize=600&weeks=5");
 
 # read events file
 for $i (`grep -v '^#' /home/barrycarter/calendar.txt`) {
-  $i=~/^(\d{8})\s+(.*)$/;
-  push(@{$events{$1}}, $2);
+
+  # ignore blanks
+  if ($i=~/^\s*$/) {next;}
+
+  if ($i=~/^(\d{8})\s+(.*)$/) {
+    # format yyyymmdd
+    push(@{$events{$1}}, $2);
+  } elsif ($i=~/^(MON|TUE|WED|THU|FRI|SAT|SUN)\s+(.*)$/) {
+    # format every week
+    push(@{$events{$1}}, $2);
+  } else {
+    warn "NOT UNDERSTOOD: $i";
+  }
 }
+
+debug(sort keys %events);
+
+die "TESTING";
 
 # last sunday (in seconds)
 my($time) = `date +%s -d '1200 last Sunday'`;
