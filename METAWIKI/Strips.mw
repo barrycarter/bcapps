@@ -1,0 +1,13 @@
+{{#ask:
+  [[Category:Strips]]
+  [[title::>{{#calendarstartdate:}}]]
+  [[title::<{{#calendarenddate:}}]]
+  |? hash
+  |? title
+  |format=calendar
+  |template=CalThumb
+  |limit=56
+}}
+
+See also {{WinkLink|Category:Strips}}
+

@@ -110,7 +110,7 @@ for $week (0..$globopts{weeks}-1) {
 
     # highlight date if today
     if ($stardate == $now) {
-      print A "frect,",$dx,",",$y1+5,",",$x2-5,",",$dy+15,",255,0,0\n";
+      print A "frect,",$dx-1,",",$y1+5,",",$x2-5,",",$dy+15,",255,0,0\n";
       print A "string 255,255,255,$dx,$dy,$datesize,$day\n";
     } else {
       print A "string $datecolor,$dx,$dy,$datesize,$day\n";

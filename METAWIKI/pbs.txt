@@ -1963,6 +1963,7 @@ MULTIREF [[title::[[[[Larry]]'s mother]]]] [[notes::Larry's mother dies on [[200
 2014-07-21 [[character::Rat+Goat]] [[armadillo_deaths::1]] [[notes::The handle of Rat's cup changes direction between panels 1 and 2, even though he doesn't appear to have touched it]] [[meta::I can't tell if this is Arnie Armadillo or not]]
 2014-07-22 [[character::Rat+Goat]]
 2014-07-23 [[character::Pig+Goat+[[Pig::friend::The Loofah (loofah)]]]] [[category::Shaggy Dog]]
+2014-07-24 [[character::Pig+Goat]]
 </data>
 
 # 2007-03-30 pig's mayors isnt LGD? (mayor in rehab)
