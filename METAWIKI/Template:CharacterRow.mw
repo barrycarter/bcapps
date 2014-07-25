@@ -1,3 +1,1 @@
-<nowiki>What a row in the character table should look like (link name and first strip appearance, but not number of appearances or species</nowiki>
-
-<tr><th>{{WikiLink:{{{1}}}}}</th><td>{{WikiLink:{{{2}}}}}</td><td>{{{3}}}</td><td>{{{4}}}</td></tr>
+<tr><td>{{#widget: IntLinkExisting|{{{1}}}|{{{1}}}}}</td><td>{{#widget: IntLinkExisting|{{{2}}}|{{{2}}}}}</td><td>{{{3}}}</td><td>{{{4}}}</td></tr>
