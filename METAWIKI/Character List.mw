@@ -1,0 +1,1 @@
+{{#ask: [[Category:Strips]] [[notes::+]] | ?hash | ?notes | format=template | template=Notes | link=none | limit = 20 | searchlabel=... more ... | intro=<table class="wikitable"> | outro=</table>}}
