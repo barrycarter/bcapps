@@ -26,10 +26,6 @@ for $i (`grep -v '^#' /home/barrycarter/calendar.txt`) {
   }
 }
 
-debug(sort keys %events);
-
-die "TESTING";
-
 # last sunday (in seconds)
 my($time) = `date +%s -d '1200 last Sunday'`;
 # and today (as stardate)
@@ -133,11 +129,15 @@ for $week (0..$globopts{weeks}-1) {
 
     # events for this day
     my(@events) = @{$events{$stardate}};
+    # events for this day (of the week)
+    push(@events, @{$events{uc(strftime("%a", localtime($date)))}});
+
     for $i (0..$#events) {
       my($eventy) = $y1+$eventystart+$eventspacing*$i;
       my($eventx) = $x1+5;
       print A "string $eventcolor,$eventx,$eventy,$eventsize,$events[$i]\n";
     }
+
     # grid lines
     print A "rect $x1,$y1,$x2,$y2,$gridcolor\n";
   }

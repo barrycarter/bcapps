@@ -1969,6 +1969,7 @@ MULTIREF [[title::[[[[Larry]]'s mother]]]] [[notes::Larry's mother dies on [[200
 2014-07-22 [[character::Rat+Goat]]
 2014-07-23 [[character::Pig+Goat+[[Pig::friend::The Loofah (loofah)]]]] [[category::Shaggy Dog]]
 2014-07-24 [[character::Pig+Goat]]
+2014-07-25 [[character::Pig+Goat+Rat]]
 </data>
 
 # 2007-03-30 pig's mayors isnt LGD? (mayor in rehab)
