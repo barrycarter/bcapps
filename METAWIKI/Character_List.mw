@@ -1,1 +1,1 @@
-{{#ask: [[Category:Characters]] | ?datemin=1st | ?datecount=# Strips | ?species=Species | limit = 100000}}
+{{#ask: [[Category:Characters]] | ?datemin=1st | ?datecount=# Strips | ?species=Species | ?aka=Aliases | limit = 100000}}

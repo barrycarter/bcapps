@@ -252,8 +252,6 @@ for $i (sort keys %triples) {
     next;
   }
 
-#  debug("I: $i, CLASS: $class");
-
   # error check
   if ($class eq "character" && !$triples{$i}{species}) {
     warn "WARNING: $i: no species (so probably an error)";
@@ -289,7 +287,11 @@ for $i (sort keys %triples) {
 print B "COMMIT;\n";
 close(B);
 
+# this is ugly, but prevents deletion of rsync'd files
+system("rsync -Pavz /home/barrycarter/BCGIT/METAWIKI/*.mw /usr/local/etc/metawiki/pbs3/NEW/");
+
 my(@diffs) = `diff -qr $pagedir $pagedir/NEW`;
+my(@cmds);
 
 for $i (@diffs) {
   chomp($i);
@@ -297,18 +299,18 @@ for $i (@diffs) {
 
   # only in NEW? (then yes, do copy)
   if ($i=~m%Only in $pagedir/NEW: (.*)$%) {
-    $cmd = "mv \"$pagedir/NEW/$1\" $pagedir";
+    push(@cmds,"mv \"$pagedir/NEW/$1\" $pagedir");
   } elsif ($i=~m%Only in $pagedir: (.*)$%) {
-    $cmd = "echo ignoring \"$1\"";
+    # TODO: avoid files I rsync over, they still need to be copied
+    push(@cmds,"mv \"$pagedir/$1\" $pagedir/OLD");
   } elsif ($i=~m%^Files (.*?) and (.*?) differ$%) {
-    $cmd = "mv \"$1\" $pagedir/OLD; mv \"$2\" $pagedir";
+    push(@cmds,"mv \"$1\" $pagedir/OLD; mv \"$2\" $pagedir");
   } else {
     die "BAD DIFF OUTPUT: $i";
   }
-
-  debug("RUNNING: $cmd");
-  system($cmd);
 }
+
+for $i (@cmds) {system($i);}
 
 =item parse_semantic($dates, $string)
 

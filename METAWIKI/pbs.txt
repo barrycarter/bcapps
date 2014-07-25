@@ -41,6 +41,8 @@ TODO (global todo's not specific to a given strip):
 
   - Characters that appear 0 times are probably mistakes
 
+  - Why is there no Bob (crocodile) #05?
+
   - At some point, need to delete pages that no longer exist
 
   - Should strip pages say "Rat (515th appearance of 917 to date)" or
@@ -164,7 +166,7 @@ TODO (global todo's not specific to a given strip):
   - Error check: 8 numbers in name, but not species?
 
   - Link storylines together when they relate to each other or flow into each other
- 
+
 # Notes:
 
 pages that link to [[Pig]] = Pig's appearances and mentions
@@ -1949,7 +1951,7 @@ MULTIREF [[title::Rat's Senate]] [[notes::On [[2006-07-22]], [[Rat]] doesn't kno
 MULTIREF [[title::Rat's guilt]] [[notes::On [[2014-06-09]], Rat says he feels guilty stealing from the collection basket, but, on [[2014-06-10]], the next day, he says he doesn't feel guilty (he probably got over it fast)]]
 MULTIREF [[title::Repeat joke]] [[notes::The joke Pastis intentionally repeats on [[2010-09-05]] comes from [[2002-01-31]]]]
 MULTIREF [[title::Sawing Women]] [[notes::On [[2011-03-24]], Pig offers to saw someone in half as part of a magic trick. On [[2013-10-26]], Pig believes it's murder and should be illegal. Is it possible Pig did the trick wrong and actually killed someone?]]
-MULTIREF [[title::Society of Cultured Pigs]] [[notes::[[Pig]] gets thrown out of the Society of Cultured Pigs sometime before [[2002-01-12]], but is seen attending a meetig on [[2003-07-06]] (maybe they re-instated him?)]]
+MULTIREF [[title::Society of Cultured Pigs]] [[notes::[[Pig]] gets thrown out of the Society of Cultured Pigs sometime before [[2002-01-12]], but is seen attending a meeting on [[2003-07-06]] (maybe they re-instated him?)]]
 MULTIREF [[title::Too Many Words]] [[notes::On [[2004-09-20]], [[Stephan Pastis]] notes that "I'm never doing this joke again", but does essentially the same thing on [[2011-02-08]]]]
 MULTIREF [[title::Tree Croc]] [[notes::On [[2007-01-07]], Larry poses as a "tree-climbing assassin monkey"; he does the same thing starting [[2011-05-12]], but now calls himself a "tree croc" instead]]
 MULTIREF [[title::Unicorns]] [[notes::On [[2009-08-15]], [[Junior]] says unicorns don't exist, and [[Rat]] implies the same on [[2010-09-15]], but [[Pig]] actually finds one, [[Uni (unicorn)]] on [[2010-02-22]]]]
