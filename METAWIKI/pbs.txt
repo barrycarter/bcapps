@@ -35,6 +35,10 @@ TODO (global todo's not specific to a given strip):
   - Character list should include species, subspecies, profession, and
   maybe aliases
 
+  - On character list, links should open in new tabs
+
+  - Find a more general way to create templates
+
   - Strip page should include "continuity issues"
 
   - Transcribe 2003-11-09 album titles (no Easter eggs though)
