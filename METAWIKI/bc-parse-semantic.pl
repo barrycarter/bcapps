@@ -107,7 +107,6 @@ for $i (split(/\n/, $1.read_file("pbs-cl.txt"))) {
 
       # if the character has parens in name and no species, note species
       # (note that a species triple will correctly override this)
-      # TODO: this is invalid, since we don't know that species come first
       if ($l=~/\(([^A-Z]*?)\)$/ && !$triples{$l}{species}) {
 	my($specname) = $1;
 	$triples{$l}{species}{$specname} = "NAME2SPECIES";

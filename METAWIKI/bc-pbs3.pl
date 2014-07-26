@@ -12,6 +12,28 @@ chdir("/home/barrycarter/BCGIT/METAWIKI/");
 # TODO: watch out for "double aliasing" (misc2.sql does NOT currently catch it)
 # aliases
 
+open(A, "|sqlite3 /var/tmp/pbs3.db");
+print A "BEGIN;\n";
+
+for $i (pbs_schema(),pbs_create_db(),pbs_largeimagelinks()) {
+  print A "$i;\n";
+}
+
+print A "COMMIT;\n";
+close(A);
+
+die "TESTING";
+
+# queries to provide largeimagelinks for each strip
+sub pbs_largeimagelinks {
+  my(@res);
+  for $i (split(/\n/, read_file("largeimagelinks.txt"))) {
+    $i=~s/^(.*?)\s+.*?\/([0-9a-f]+)\?.*$//;
+    push(@res, "INSERT INTO triples (source, relation, target, datasource)
+VALUES ('$1', 'hash', '$2', 'largeimagelinks.txt')");
+  }
+  return @res;
+}
 
 # error checking (of sorts)
 sub pbs_error_fixing {

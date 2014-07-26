@@ -50,7 +50,7 @@ deaths, , strip, character
 location, , *, location
 member, , *, group
 members, , group, *
-newspaper_mentions, , strip, newspaper
+newspaper, , strip, newspaper
 orientation, , character, string
 profession, , character, string
 hobby, , character, string

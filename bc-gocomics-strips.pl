@@ -15,12 +15,12 @@
 
 require "/usr/local/lib/bclib.pl";
 
-$strip = "garfield";
+$strip = "pearlsbeforeswine";
 $workdir = "/mnt/extdrive/GOCOMICS/$strip";
 dodie("chdir('$workdir')");
 
 # TODO: manually adjusting years per strip is bad
-for $i (1978..2014) {
+for $i (2001..2014) {
   for $j (1..12) {
     # for which days this month are comics available?
 
@@ -43,7 +43,7 @@ if (@commands) {
 
 for $i (glob "days-for-*") {
   $all = read_file($i);
-  debug("$i: $all");
+#  debug("$i: $all");
   # remove brackets and quotes, split into days
   $all=~s/[\[\]\"]//isg;
   push(@days,split(/\,/,$all));
@@ -71,7 +71,7 @@ if (@commands2) {
 # now, look inside files for image
 
 for $i (glob "page-2[0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]") {
-  debug("I: $i");
+#  debug("I: $i");
 
   # if I already have the GIF, ignore
   if (-f "$i.gif") {next;}
@@ -90,10 +90,15 @@ for $i (glob "page-2[0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]") {
     unless ($img=~/src="(.*?)"/) {next;}
     $src = $1;
 
+    # this is a hack for the few comics I don't have
+    unless ($src=~m%http://assets.amuniversal.com%) {next;}
+
+    debug("ALT: $alt, SRC: $src");
+
     # unless they match (up to case), continue
     unless (lc($src) eq lc("http://assets.amuniversal.com/$alt")) {next;}
 
-#    debug("ALT: $alt, SRC: $src");
+    debug("ALT: $alt, SRC: $src");
 
     # slightly different assets server for pearlsbeforeswine
 #    unless ($src=~/cdn\.svcs\.c2\.uclick\.com/) {next;}

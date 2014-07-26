@@ -40,9 +40,9 @@ require "/usr/local/lib/bclib.pl";
 $full{done} = "[[char_list_complete::1]]";
 
 # similar for unnamed/anon
-$full{anon} = "[[null::null]]";
-$full{unnamed} = "[[null::null]]";
-$full{other} = "[[null::null]]";
+$full{anon} = "[[has_anon_characters::1]]";
+$full{unnamed} = "[[has_anon_characters::1]]";
+$full{other} = "[[has_additional_characters::1]]";
 
 # the following need to be recognized as full
 for $i ("zebra", "pig", "rat", "goat", "larry", "guard duck", "junior",
