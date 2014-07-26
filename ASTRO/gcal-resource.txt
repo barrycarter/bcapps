@@ -1,26 +1,15 @@
 ; testing resource files
-    ; latitude 41.4798
-    ; longitude 2.3188 for gcal add 2 trailing zeros
-    ; height 0
-    ; Winter time Barcelona: GMT+1 Summer time Barcelona: GMT+2
 
-    $w=+60
-    $s=+120
-    $v=%2%4
-    $p=0*d1#999
+; latitude and longitude of Albuquerque
+$c=+35.0844869067959-106.651138463684
 
-    $c=+41.4798+002.3188
-    $x=~Sunrise %o$c,$w | Sunset %s$c,$w ~Daylength %u$c,$w | Nightlength %z$c,$w
-    $y=~Sunrise %o$c,$s | Sunset %s$c,$s ~Daylength %u$c,$s | Nightlength %z$c,$s
+; timezone, in minutes (summer only)
+$s=-360
 
-    ; Winter time selector
-    $b=%e#1980 %i0@a#0@b-1
-    b=10sun9
+$x=Sunrise: %o$c,$s Sunset: %s$c,$s
 
-    ; Summer time selector
-    $a=%e#1980 %e0@a#0@b-1
-    a=03sun9
+0 $x
 
-    ; What will be written, through selectors.
-    $p $a $x
-    $p $b $y
+
+
+
