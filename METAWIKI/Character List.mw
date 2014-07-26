@@ -1,1 +1,1 @@
-{{#ask: [[Category:Characters]] | ?datemin=1st | ?datecount=# Strips | ?species=Species | format=template | template=CharacterRow | link=none | limit = 9999 | intro=<table class="wikitable"> | outro=</table>}}
+{{#ask: [[Category:Characters]] | ?datemin=1st | ?datecount=# Strips | ?species=Species | format=template | template=CharacterRow | link=none | limit = 9999 | intro=<table class="wikitable sortable"><tr><th>Name</th><th>1st</th><th>#</th><th>Species</th></tr> | outro=</table>}}
