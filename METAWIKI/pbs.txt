@@ -220,7 +220,7 @@ aka == redirect?
 disclaim: based on gocomics website only
 
 <data>
-0000-00-00 [[meta::This is for "obvious" stuff, but is probably a bad idea]] [[Rat+Pig+Goat+Zebra+Larry+Stephan Pastis+Guard Duck+Junior+Max (lion)::gender::male]] [[Pigita+Patty (crocodile)+Farina+Maura+Joy+Annie May+Jennifer (seal)+Katie (cow)+Sweet Fanny (sheep)+Libby (human)+Vivian (pig)+Cindy (rat)+Connie (cow)+Wanda (human)::gender::female]]
+0000-00-00 [[meta::This is for "obvious" stuff, but is probably a bad idea]] [[Rat+Pig+Goat+Zebra+Larry+Stephan Pastis+Guard Duck+Junior+Max (lion)::gender::male]] [[Pigita+Patty (crocodile)+Farina+Maura+Joy+Annie May+Jennifer (seal)+Katie (cow)+Sweet Fanny (sheep)+Libby (human)+Vivian (pig)+Cindy (rat)+Connie (cow)+Wanda (human)::gender::female]] [[hash::null]]
 2001-12-31-2002-10-06 [[book::Pearls Before Swine: BLTs Taste So Darn Good]] [[Pearls Before Swine: BLTs Taste So Darn Good::isbn::0740734377]]
 2001-12-31-2003-07-13 [[book::Sgt. Piggy's Lonely Hearts Club Comic]] [[Sgt. Piggy's Lonely Hearts Club Comic::isbn::0740748076]]
 2002-01-07 [[character::Rat+Pig+[[deaths::Pinkett (human)]]]] [[Pinkett (human)::notes::species unknown, presumed human]]
@@ -393,7 +393,7 @@ disclaim: based on gocomics website only
 2003-05-25,2010-07-25,2002-09-11 [[category::Serious strips]]
 2003-05-26 [[description::[[character::Rat]] kills [[deaths::[[Rat::killee::Father Time 2003 (deity)]]]]]]
 2003-05-28 [[character::Pig+Shamus (human)]] [[Shamus (human)::aka::Patron Saint of the Monkeys]]
-2003-06-01 [[character::John (human)+Stephan Pastis+[[John (human)::pet::Andy 20030601 (dog)]]]] [[Andy 20030601 (dog)+Andy (dog)::notes::[[John (human)]]'s pet [[Andy 20030601 (dog)]] may have been the inspiration for [[Andy (dog)]], the oft-chained dog]] [[John (human)+John Patzakis::notes::[[John (human)]] and [[John Patzakis]] may be the same person]]
+2003-06-01 [[character::John (human)+Stephan Pastis+[[John (human)::pet::Andy 20030601 (dog)]]]] [[Andy 20030601 (dog)+Andy::notes::[[John (human)]]'s pet [[Andy 20030601 (dog)]] may have been the inspiration for [[Andy]], the oft-chained dog]] [[John (human)+John Patzakis (human)::notes::[[John (human)]] and [[John Patzakis (human)]] may be the same person]]
 2003-06-04 [[meta::this mentions albuquerque, need to do something easter eggy here]]
 2003-06-06 [[notes::[[character::Pig]]'s taco bag reads "PepeNet"]] [[[[character::Rat]]::profession::taco seller]]
 2003-06-07 [[character::Rat+Pig+Hudson (human)+Brown (human)]] [[meta::When using last names for humans, should I add "Mr" or something?]]

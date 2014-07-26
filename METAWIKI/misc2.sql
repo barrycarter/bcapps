@@ -47,6 +47,42 @@ INSERT INTO triples
 SELECT DISTINCT target, 'class', 'group', 'misc2.sql' FROM triples WHERE
  relation IN ('member');
 
+-- find/fix cases where source/target is an aka
+
+CREATE TEMPORARY TABLE aka AS
+ SELECT source, target FROM triples WHERE relation='aka';
+
+-- storylines can be named for aliases
+
+INSERT INTO triples
+SELECT a1.source, t1.relation, t1.target, t1.datasource
+ FROM triples t1 JOIN aka a1 ON
+ (t1.source = a1.target AND t1.target NOT IN ('aka', 'storyline'));
+
+DELETE FROM triples WHERE source IN (SELECT target FROM aka) AND
+ target NOT IN ('aka', 'storyline');
+
+
+
+
+
+
+SELECT t2.source, t1.relation, t1.target, t1.datasource
+ FROM triples t1 JOIN triples t2 ON
+ (t1.source = t2.target AND t2.relation='aka' AND t1.relation NOT IN ('class'))
+ORDER BY RANDOM() LIMIT 20;
+
+
+SELECT t1.source, t1.relation, t2.source, t1.datasource
+ FROM triples t1 JOIN triples t2 ON
+ (t1.target = t2.target AND t2.relation='aka' AND t1.relation NOT IN ('aka'))
+ORDER BY RANDOM() LIMIT 20;
+
+
+SELECT "USING QUIT TO QUIT";
+.quit
+
+
 -- items without classes (except those that are allowed not to have classes)
 
 -- if you are the target of class/hash/gender/etc, no class required
@@ -63,7 +99,6 @@ SELECT DISTINCT * FROM triples t1 LEFT JOIN triples t2 ON (
 t1.source = t2.source AND t2.relation='class')
 WHERE t1.source NOT IN ('MULTIREF') AND t2.source IS NULL;
 
-.quit
  
 
  

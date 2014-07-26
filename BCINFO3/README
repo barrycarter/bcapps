@@ -50,6 +50,7 @@ yum -y install mysql mysql-server lighttpd-fastcgi fcgi libxml2 libxml2-devel
 yum -y install nano graphviz qhull zip strace xz ncurses ncurses-devel
 yum -y install readline readline-devel nagios-plugins 'nagios-plugins-*'
 yum -y install perl-Perl-Critic "perl-ExtUtils-*" inotify-tools tidy
+yum -y install calendar
 
 % Perl modules (excluding those available via yum)
 

@@ -1,0 +1,19 @@
+; useful gcal options
+--holiday-list=long
+--cc-holidays=US_NM
+--highlighting=no
+--astronomical-holidays
+; --christian-holidays
+; --zodiacal-marker-holidays
+--precise
+; TODO: change this -07:00 outside of DST
+--time-offset=-06:00
+; --date-format=%<3#K, %<3#M  %1%>2&*D%2 %>04*Y
+; --date-format=%<3#M <4#Y  %1%>2&*D%2 %>04*Y
+; --date-format=%Y%>02#M%D ; %1(%>5u#K)%2
+; --date-format=%Y%>02#M%>02#D ; %1(%>5u#K)%2
+--date-format=%Y%>02#M%>02#D%1%2
+; --date-format=%Y%>02#M%>02#D%1%2 %o+5158+00738,120
+--list-of-fixed-dates=long
+; --list-mode
+; --end-of-year

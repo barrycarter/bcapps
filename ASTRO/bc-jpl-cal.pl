@@ -13,9 +13,9 @@ $unwanted = join("|", ("conference","society","symposium","lecture","anniversary
 # moon phases currently unused
 my($mout, $merr, $mres) = cache_command2("curl -L 'http://aa.usno.navy.mil/cgi-bin/aa_moonphases.pl?year=2014'", "age=86400");
 
-debug("MOUT: $mout");
+# debug("MOUT: $mout");
 
-die "TESTING";
+# die "TESTING";
 
 my($out,$err,$res) = cache_command2("curl -L http://www.jpl.nasa.gov/calendar/","age=86400");
 
