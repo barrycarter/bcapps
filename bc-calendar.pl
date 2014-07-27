@@ -7,7 +7,7 @@
 
 require "/usr/local/lib/bclib.pl";
 
-defaults("xsize=800&ysize=600&weeks=5");
+defaults("xsize=800&ysize=600&weeks=6");
 
 # read events file
 for $i (`grep -v '^#' /home/barrycarter/calendar.txt`) {
@@ -26,13 +26,13 @@ for $i (`grep -v '^#' /home/barrycarter/calendar.txt`) {
   }
 }
 
-# last sunday (in seconds)
-my($time) = `date +%s -d '1200 last Sunday'`;
+# last sunday (in seconds) + one week extra
+my($time) = `date +%s -d '1200 last Sunday'`-86400*7;
 # and today (as stardate)
 my($now) = strftime("%Y%m%d", localtime(time()));
 
 # date range for db query (1 day on either side)
-my($sdate) = strftime("%Y-%m-%d", localtime($time-86400));
+my($sdate) = strftime("%Y-%m-%d", localtime($time-86400*8));
 my($edate) = strftime("%Y-%m-%d", localtime($time+$globopts{weeks}*7*86400));
 
 # get relevant events and hash to date
@@ -80,7 +80,7 @@ open(A,"|tee /tmp/calfly.txt|fly -q|convert - -colors 128 /tmp/cal0.gif");
 # 1 more pixel to get right and bottom grid lines
 print A "new\nsize ",$globopts{xsize}+1,",",$globopts{ysize}+1,"\nsetpixel 0,0,0,0,0\n";
 
-for $week (0..$globopts{weeks}-1) {
+for $week (-1..$globopts{weeks}-1) {
   for $weekday (0..6) {
 
     # current day (in unix, print, month only, and stardate formats)
