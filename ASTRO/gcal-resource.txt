@@ -1,16 +1,20 @@
 ; testing resource files
 
-; EG: gcal -u --resource-file=/home/barrycarter/BCGIT/ASTRO/gcal-resource.txt --highlighting=no -cl@t999 2014
+; period, location, timezone offset (MDT)
+$p=0*d1#999
+; below is based on USNO, assuming 0 elevation (highly untrue)
+$l=+35.1-106.583333
+$t=-06:00
 
-0*d1#999 SR: %o4+35.0844869067959-106.651138463684,-06:00
-0*d1#999 SS: %s4+35.0844869067959-106.651138463684,-06:00
-0*d1#999 LOD: %u4+35.0844869067959-106.651138463684,-06:00
-0*d1#999 LON: %z4+35.0844869067959-106.651138463684,-06:00
-0*d1#999 CTS: %o6+35.0844869067959-106.651138463684,-06:00
-0*d1#999 CTE: %s6+35.0844869067959-106.651138463684,-06:00
-0*d1#999 SID: %ss+35.0844869067959-106.651138463684,-06:00
-0*d1#999 MR: %(4+35.0844869067959-106.651138463684,-06:00
-0*d1#999 MS: %)4+35.0844869067959-106.651138463684,-06:00
+; EG: gcal -u --resource-file=/home/barrycarter/BCGIT/ASTRO/gcal-resource.txt --highlighting=no -cl@t999 @/home/barrycarter/BCGIT/ASTRO/gcal-options.txt 2014
+
+$p CTS: %o6$l,$t
+$p SR: %o4$l,$t
+$p SS: %s4$l,$t
+$p CTE: %s6$l,$t
+$p SID: %ss$l,$t
+$p MR: %(4$l,$t
+$p MS: %)4$l,$t
 
 
 

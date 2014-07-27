@@ -1,5 +1,13 @@
 # shell one liners
 
+# filters stuff I want from calendar in correct format
+
+gcal -u @/home/barrycarter/BCGIT/ASTRO/gcal-options.txt 2014 | perl -nle '/^(.*?)\s{2,}[\+\-]\s+(\d{8})/||warn("BAD: $_"); my($e,$d)=($1,$2); $e=~s/\s*\(.*?\)\s*$//; $e=~s/\47//g; $e=~s/\s*Day\s*/ /; print "$d $e"' | egrep -v 'Waxing Half Moon|Waning Half Moon|New Moon|Full Moon| Advent| Sunday in Lent|Pesach/Passover'
+
+# gcal @/home/barrycarter/BCGIT/ASTRO/gcal-options.txt | perl -F"\s\s+" -anle '$F[0]=~s/\s*\(.*?\)\s*//; print "$F[2] $F[1]"'
+
+exit;
+
 # list all pages on my wiki semi-manually
 
 curl -o out5.txt 'http://pbs3.referata.com/w/api.php?action=query&generator=allpages&gaplimit=500&prop=revisions&rvprop=timestamp|user&format=xml&namespace=0&gapcontinue=2007-06-04'

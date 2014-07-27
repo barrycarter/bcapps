@@ -3,7 +3,8 @@
 --cc-holidays=US_NM
 --highlighting=no
 --astronomical-holidays
-; --christian-holidays
+--christian-holidays
+--hebrew-holidays
 ; --zodiacal-marker-holidays
 --precise
 ; TODO: change this -07:00 outside of DST
@@ -14,6 +15,6 @@
 ; --date-format=%Y%>02#M%>02#D ; %1(%>5u#K)%2
 --date-format=%Y%>02#M%>02#D%1%2
 ; --date-format=%Y%>02#M%>02#D%1%2 %o+5158+00738,120
---list-of-fixed-dates=long
+; --list-of-fixed-dates=long
 ; --list-mode
 ; --end-of-year
