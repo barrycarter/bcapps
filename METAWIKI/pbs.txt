@@ -201,6 +201,9 @@ Computer program jobs (what the computer program is supposed to do):
   - Error check: all date names ("foo 20010101") should have a species
   indicator
 
+  - Error check: all date names ("foo 20010101") first appearance
+  should be their name
+
   - Error check: everything in class 'character' must appear in at
   least one strip
 

@@ -2,7 +2,7 @@
 
 # filters stuff I want from calendar in correct format
 
-gcal -u @/home/barrycarter/BCGIT/ASTRO/gcal-options.txt 2016 | perl -nle '/^(.*?)\s{2,}[\+\-]\s+(\d{8})/||warn("BAD: $_"); my($e,$d)=($1,$2); $e=~s/\s*\(.*?\)\s*$//; $e=~s/\47//g; $e=~s/\s*Day\s*/ /; print "$d $e"' | egrep -vf /home/barrycarter/BCGIT/ASTRO/nocal.txt | sort | uniq >> cal-extra.txt
+gcal -u @/home/barrycarter/BCGIT/ASTRO/gcal-options.txt 2016 | perl -nle '/^(.*?)\s{2,}[\+\-]\s+(\d{8})/||warn("BAD: $_"); my($e,$d)=($1,$2); $e=~s/\s*\(.*?\)\s*$//; $e=~s/\47//g; $e=~s/\s*Day\s*/ /; print "$d $e"' | egrep -vf /home/barrycarter/20140726/nocal.txt | sort | uniq
 
 # gcal @/home/barrycarter/BCGIT/ASTRO/gcal-options.txt | perl -F"\s\s+" -anle '$F[0]=~s/\s*\(.*?\)\s*//; print "$F[2] $F[1]"'
 
