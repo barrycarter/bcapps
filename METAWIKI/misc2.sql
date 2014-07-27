@@ -127,6 +127,13 @@ FROM triples t1 JOIN charcount c1 ON
  (t1.target = c1.target AND t1.relation='deaths')
 WHERE c1.count>10 GROUP BY c1.target;
 
+-- this is the query that will ultimately build pages
+
+SELECT source, GROUP_CONCAT(tuples,"|") FROM (
+SELECT source, relation||"="||GROUP_CONCAT(DISTINCT(target)) AS tuples
+FROM triples GROUP BY source, relation
+) GROUP BY source;
+
 SELECT "USING QUIT TO QUIT";
 .quit
 
