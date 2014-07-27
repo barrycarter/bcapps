@@ -1,6 +1,7 @@
 -- checks/fixes things for bc-pbs3.pl
 
 -- TODO: drop psuedo-temporary tables and vacuum
+-- TODO: renaming of "Bob 20020209 (human)" must occur semi-early
 -- very lazy way to create 'relatives' table
 
 DROP TABLE IF EXISTS relatives;
@@ -73,8 +74,7 @@ DELETE FROM triples WHERE source IN (SELECT target FROM aka) AND
 INSERT INTO triples
 SELECT t1.source, t1.relation, a1.source, t1.datasource 
  FROM triples t1 JOIN aka a1 ON
- (t1.target = a1.target AND t1.relation NOT IN ('aka', 'storyline'))
-ORDER BY RANDOM() LIMIT 25;
+ (t1.target = a1.target AND t1.relation NOT IN ('aka', 'storyline'));
 
 DELETE FROM triples WHERE target IN (SELECT target FROM aka) AND
  relation NOT IN ('aka', 'storyline');
@@ -106,6 +106,8 @@ SELECT DISTINCT t1.target,
  FROM triples t1 JOIN relatives r1 ON (t1.relation = r1.relation)
 ;
 
+-- TODO: could delete extraneous 'brother/sister/etc' lines now
+
 -- this could be divined semantically but...
 
 DROP TABLE IF EXISTS charcount;
@@ -113,24 +115,17 @@ CREATE TABLE charcount AS
 SELECT COUNT(DISTINCT(source)) AS count, target FROM triples
  WHERE relation='character' GROUP BY target;
 
+INSERT INTO triples
+SELECT MIN(source), 'event', '1st appearance: [['||c1.target||']]','misc2.sql'
+FROM triples t1 JOIN charcount c1 ON 
+ (t1.target = c1.target AND t1.relation='character')
+WHERE c1.count > 10 GROUP BY c1.target;
 
-SELECT MIN(source), 'event', '1st appearance: [['||target||']]','misc2.sql'
-FROM triples WHERE target IN (
-SELECT target FROM (
-SELECT COUNT(DISTINCT(source)) AS count, target FROM triples
- WHERE relation='character' GROUP BY target
-) WHERE count>10
-) AND relation='character' GROUP BY target;
-
-SELECT source, 'event', '1st appearance: [['||target||']]','misc2.sql'
-FROM triples WHERE target IN (
-SELECT target FROM (
-SELECT COUNT(DISTINCT(source)) AS count, target FROM triples
- WHERE relation='character' GROUP BY target
-) WHERE count>10
-) AND relation='deaths';
-
-
+INSERT INTO triples
+SELECT source, 'event', 'Death: [['||c1.target||']]','misc2.sql'
+FROM triples t1 JOIN charcount c1 ON
+ (t1.target = c1.target AND t1.relation='deaths')
+WHERE c1.count>10 GROUP BY c1.target;
 
 SELECT "USING QUIT TO QUIT";
 .quit
