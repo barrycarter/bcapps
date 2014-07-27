@@ -4,7 +4,6 @@
 # Options:
 # xsize/ysize - size of calendar (default 800x600) [really 801x601]
 # weeks - number of weeks to show (default 5)
-# --noweek: don't show weekly events
 
 require "/usr/local/lib/bclib.pl";
 
@@ -22,9 +21,7 @@ for $i (`grep -v '^#' /home/barrycarter/calendar.txt`) {
     push(@{$events{$date}}, $event);
   } elsif ($i=~/^(MON|TUE|WED|THU|FRI|SAT|SUN)\s+(.*)$/) {
     # format every week
-    unless ($globopts{noweek}) {
       push(@{$events{$1}}, $2);
-    }
   } else {
     warn "NOT UNDERSTOOD: $i";
   }
@@ -139,7 +136,12 @@ for $week (-1..$globopts{weeks}-1) {
     for $i (0..$#events) {
       my($eventy) = $y1+$eventystart+$eventspacing*$i;
       my($eventx) = $x1+5;
-      print A "string $eventcolor,$eventx,$eventy,$eventsize,$events[$i]\n";
+      # different color for "?" events
+      if ($events[$i]=~s/^\?//) {
+	print A "string 64,64,64,$eventx,$eventy,$eventsize,$events[$i]\n";
+      } else {
+	print A "string $eventcolor,$eventx,$eventy,$eventsize,$events[$i]\n";
+      }
     }
 
     # grid lines
