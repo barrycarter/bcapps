@@ -2028,6 +2028,7 @@ MULTIREF [[title::[[[[Larry]]'s mother]]]] [[notes::Larry's mother dies on [[200
 2008-01-01-2008-01-05 [[notes::These strips appear to be missing from the online archive]] [[hash::null]]
 2008-05-26 [[character::Pig+Rat]]
 2008-04-30 [[character::Larry+Patty+Zebra]]
+2014-07-27 [[character::Rat+Pig]] [[Category::Rat writes]]
 </data>
 
 # 2007-03-30 pig's mayors isnt LGD? (mayor in rehab)
