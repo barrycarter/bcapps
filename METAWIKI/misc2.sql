@@ -136,8 +136,15 @@ FROM triples GROUP BY source, relation
 
 -- numbered characters
 
-SELECT source, MIN(datasource) FROM triples WHERE source LIKE '% 20%'
-GROUP BY source;
+SELECT char, MIN(mindate) AS min FROM (
+SELECT source AS char, REPLACE(MIN(datasource),'-','') AS mindate 
+FROM triples WHERE source GLOB '* [0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]*'
+GROUP BY source UNION
+SELECT target AS char, REPLACE(MIN(datasource),'-','') AS mindate
+FROM triples WHERE target GLOB '* [0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]*'
+AND relation NOT IN ('notes', 'description', 'event') GROUP BY target
+) GROUP BY char ORDER BY char;
+
 
 SELECT "USING QUIT TO QUIT";
 .quit

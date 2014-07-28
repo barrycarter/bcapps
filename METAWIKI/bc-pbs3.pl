@@ -6,34 +6,27 @@ require "/usr/local/lib/bclib.pl";
 
 chdir("/home/barrycarter/BCGIT/METAWIKI/");
 
-# TODO: largeimagelinks.txt and MULTIREF
-# create_pbs_db();
+# TODO: MULTIREF
 
 # TODO: watch out for "double aliasing" (misc2.sql does NOT currently catch it)
 # aliases
 
 open(A, "|sqlite3 /var/tmp/pbs3.db");
-print A "BEGIN;\n";
-
-for $i (pbs_schema(),pbs_create_db(),pbs_largeimagelinks()) {
-#  print A "$i;\n";
+for $i ("BEGIN",pbs_schema(),pbs_create_db(),pbs_largeimagelinks(),"COMMIT") {
+  print A "$i;\n";
 }
-
-print A "COMMIT;\n";
 close(A);
 
-# now, numbered fixup?
-
-for $i (sqlite3hashlist("SELECT source, REPLACE(MIN(datasource),'-','') AS min FROM triples WHERE source LIKE '% 20%' GROUP BY source ORDER BY source", "/var/tmp/pbs3.db")) {
-  $i->{source}=~/^(.*?)\s+(\d{8})\s+\((.*?)\)$/||warn("BAD: $i->{source}");
-  my($name, $number, $species) = ($1, $2, $3);
-  # note this error, but continue
-  unless ($number == $i->{min}) {warn("BAD: $i->{source} on $i->{min}");}
-  $renumber{$name}{$species}++;
-  debug("$i->{source} -> $name ($species) #$renumber{$name}{$species}");
-}
+# this must be called after db is populated
+my(@querys) = pbs_fix_numbered_characters();
+debug("QUERYS", @querys);
 
 die "TESTING";
+
+# and now done in a for loop (separately, since db closed after above)
+open(A, "|tee /tmp/out1.txt|sqlite3 /var/tmp/pbs3.db");
+for $i ("BEGIN",@querys,"COMMIT") {print A "$i;\n";}
+close(A);
 
 # queries to provide largeimagelinks for each strip
 sub pbs_largeimagelinks {
@@ -46,49 +39,32 @@ VALUES ('$1', 'hash', '$2', 'largeimagelinks.txt')");
   return @res;
 }
 
-# error checking (of sorts)
-sub pbs_error_fixing {
-  # fixes errors (to be run after pbs_create_db, before anything else)
-  # also reports errors it can't fix (usually a problem w/ sourcefile)
-}
-
 # fix numbered characters
 sub pbs_fix_numbered_characters {
   my(@res);
 
-  for $i (sqlite3hashlist("
- SELECT DISTINCT target FROM triples WHERE target  GLOB 
- '* [0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]*' UNION
- SELECT DISTINCT source FROM triples WHERE source  GLOB 
- '* [0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]*' ORDER BY 1
-", "/var/tmp/pbs-play.db")) {
-    unless ($i->{target}=~/^(.*?)\s+(\d{8})\s*(.*?)$/) {warn "$i->{target} BAD";}
+  my($query) = << "MARK";
+SELECT char, MIN(mindate) AS min FROM (
+SELECT source AS char, REPLACE(MIN(datasource),'-','') AS mindate 
+FROM triples WHERE source GLOB '* [0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]*'
+GROUP BY source UNION
+SELECT target AS char, REPLACE(MIN(datasource),'-','') AS mindate
+FROM triples WHERE target GLOB '* [0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]*'
+AND relation NOT IN ('notes', 'description', 'event') GROUP BY target
+) GROUP BY char ORDER BY char;
+MARK
+;
+
+  for $i (sqlite3hashlist($query, "/var/tmp/pbs3.db")) {
+    $i->{char}=~/^(.*?)\s+(\d{8})\s*\((.*?)\)$/||warn("BAD CHAR: $i->{char}");
     my($base, $date, $species) = ($1, $2, $3);
-
-    # check species
-    unless ($species=~s/^\((.*?)\)$/$1/) {warn "BAD SPECIES: $i->{target}";}
-
-  # TODO: check first appearance
-
-    # new name
+    unless ($date == $i->{min}) {warn("$i->{char} NOMATCH: $date/$i->{min}");}
     my($newname) = "$base ($species) &#65283;".sprintf("%0.2d",++$times{$base}{$species});
-
     push(@res,"INSERT INTO triples (source, relation, target, datasource)
-VALUES ('$newname', 'aka', '$i->{target}', 'renaming')");
+VALUES ('$newname', 'reference_name', '$i->{char}', 'pbs_fix_numbered_characters')");
     for $j ("source", "target") {
-      push(@res,"UPDATE triples SET $j='$newname' WHERE $j='$i->{target}'");
-    }
-  }
-  return @res;
-}
-
-# Querys to fix when aliases are source or target (except aka of course)
-sub fix_pbs_aka {
-  my(@res);
-  for $i (sqlite3hashlist("SELECT * FROM triples WHERE relation='aka'", "/var/tmp/pbs-play.db")) {
-    for $j ("source", "target") {
-      push(@res, "UPDATE triples SET $j='$i->{source}' WHERE $j='$i->{target}'
-               AND relation NOT IN ('aka', 'storyline')");
+      # below covers cases where char appears in notes/descriptions/etc
+      push(@res,"UPDATE triples SET $j=REPLACE($j,'$i->{char}','$newname')");
     }
   }
   return @res;
@@ -104,6 +80,9 @@ sub pbs_create_db {
   for $i (split(/\n/, $1.read_file("pbs-cl.txt"))) {
     $i=~s/^(\S+)\s+//;
     my($dates) = $1;
+
+    # multiref
+    if ($dates eq "MULTIREF") {push(@res,pbs_handle_multiref($i)); next;}
     $i=~s/\'/&\#39\;/g;
     $i=~s/,/&\#44\;/g;
     while ($i=~s/\[\[([^\[\]]*?)\]\]/\001/) {
@@ -167,4 +146,8 @@ sub pbs_schema {
 	  "CREATE INDEX i2 ON triples(relation)",
 	  "CREATE INDEX i3 ON triples(target)"
 	  );
+}
+
+sub pbs_handle_multiref {
+  debug("GOT",@_);
 }
