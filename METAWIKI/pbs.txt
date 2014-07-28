@@ -1470,7 +1470,7 @@ MULTIREF [[title::Pig and Pigita (continuity)]] [[On [[2004-04-20]], Pig says he
 2010-12-11 [[newspaper::The Daily Press]]
 2010-12-12 [[character::Rat+Goat+Pig+Zebra]] [[newspaper::Denver Post]]
 2010-12-13,2010-12-14 [[character::Rat+Pig+Gus 20101213 (human)]] [[Gus 20101213 (human)::aka::Father Gus]] [[Father Gus::profession::priest]]
-2012-07-24,2010-12-15,2014-02-12,2013-05-10,2012-04-22,2012-05-27,2012-06-24,2012-08-02,2012-08-07,2012-08-26,2012-11-16,2010-07-28,2006-10-16,2006-04-24,2007-07-13,2007-05-05,2006-11-14,2003-10-12,2004-06-21,2004-11-25,2004-06-22,2010-11-22,2004-01-03,2011-12-14,2009-03-17,2005-12-28,2010-08-02,2006-11-13,2004-03-08-2004-03-13,2010-11-17,2003-06-24,2012-04-02,2004-11-04,2011-10-26,2011-10-10,2010-08-25,2004-04-09,2006-04-14,2010-03-15,2003-07-13,2003-09-01 [[category::Third Wall]]
+2009-12-21,2012-07-24,2010-12-15,2014-02-12,2013-05-10,2012-04-22,2012-05-27,2012-06-24,2012-08-02,2012-08-07,2012-08-26,2012-11-16,2010-07-28,2006-10-16,2006-04-24,2007-07-13,2007-05-05,2006-11-14,2003-10-12,2004-06-21,2004-11-25,2004-06-22,2010-11-22,2004-01-03,2011-12-14,2009-03-17,2005-12-28,2010-08-02,2006-11-13,2004-03-08-2004-03-13,2010-11-17,2003-06-24,2012-04-02,2004-11-04,2011-10-26,2011-10-10,2010-08-25,2004-04-09,2006-04-14,2010-03-15,2003-07-13,2003-09-01 [[category::Third Wall]]
 2012-07-25 [[character::Dinky (duckling)+Guard Duck]]
 2012-07-26 [[character::Pig+Goat+Rat]]
 2010-12-18,2010-12-20 [[character::Junior]]
@@ -1534,6 +1534,11 @@ MULTIREF [[title::Pig and Pigita (continuity)]] [[On [[2004-04-20]], Pig says he
 2011-06-17 [[character::Rat+Pig+Neighbor Bob]]
 2011-06-20 [[newspaper::The Post Times+The Post-Times]]
 2011-06-25 [[character::Pig+Rat+[[Pig+Rat::neighbor::Clive Richardson (human)]]]]
+2009-10-22 [[character::Clive (human)]] [[Clive (human)::profession::zoo worker]] [[Clive (human)::notes::Clive looks a lot like [[Stephan Pastis]]]]
+2009-10-24 [[character::Clive (human)]]
+2009-10-27 [[character::Zebra+[[Zebra::kills::[[deaths::Larry]]]]]]
+2009-10-30 [[character::Rat+[[Rat::kills::[[deaths::Pig+Snuffles+Guard Duck+Goat+Patty+Zebra]]]]]] [[meta::still need to handle +'s in target]]
+2009-10-31 [[character::Rat+[[Rat::kills::[[deaths::Stephan Pastis]]]]]]
 2011-06-28 [[character::Goat+Pig+Brian (human)]] [[Brian (human)::profession::cosmologist]] [[notes::The cosmologist/cosmetologist joke was also used in the first episode of the TV show {{wp|Community}}]]
 2011-07-07-2011-07-09,2011-07-14 [[storyline::Beer-can-shaped aliens]]
 2011-07-11-2011-07-14 [[storyline::[[character::Pig]]'s Great Space Journey]]
@@ -2029,11 +2034,13 @@ MULTIREF [[title::[[[[Larry]]'s mother]]]] [[notes::Larry's mother dies on [[200
 2008-05-26 [[character::Pig+Rat]]
 2008-04-30 [[character::Larry+Patty+Zebra]]
 2014-07-27 [[character::Rat+Pig]] [[Category::Rat writes]]
+2009-10-10 [[character::Snuffles+Guard Duck]] [[cameo::PHB (Dilbert)+Alice (Dilbert)+Catbert (Dilbert)]]
+2014-07-28 [[character::Goat+Rat+Stephan Pastis]] [[event::Rat becomes pregnant]] [[category::Third Wall]]
 </data>
 
 # 2007-03-30 pig's mayors isnt LGD? (mayor in rehab)
 
-# 2009-04-02 pig's reflection talks to him vs Pig talking to it
+# 2009-04-02 pig's reflection talks to him vs Pig talking to it 2009-10-17
 
 # http://www.babyblues.com/archive/index.php?formname=getstrip&GoToDay=03/27/2006 vs baby blues arc
 

@@ -134,6 +134,11 @@ SELECT source, relation||"="||GROUP_CONCAT(DISTINCT(target)) AS tuples
 FROM triples GROUP BY source, relation
 ) GROUP BY source;
 
+-- numbered characters
+
+SELECT source, MIN(datasource) FROM triples WHERE source LIKE '% 20%'
+GROUP BY source;
+
 SELECT "USING QUIT TO QUIT";
 .quit
 
