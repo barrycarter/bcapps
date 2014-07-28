@@ -16,11 +16,22 @@ open(A, "|sqlite3 /var/tmp/pbs3.db");
 print A "BEGIN;\n";
 
 for $i (pbs_schema(),pbs_create_db(),pbs_largeimagelinks()) {
-  print A "$i;\n";
+#  print A "$i;\n";
 }
 
 print A "COMMIT;\n";
 close(A);
+
+# now, numbered fixup?
+
+for $i (sqlite3hashlist("SELECT source, REPLACE(MIN(datasource),'-','') AS min FROM triples WHERE source LIKE '% 20%' GROUP BY source ORDER BY source", "/var/tmp/pbs3.db")) {
+  $i->{source}=~/^(.*?)\s+(\d{8})\s+\((.*?)\)$/||warn("BAD: $i->{source}");
+  my($name, $number, $species) = ($1, $2, $3);
+  # note this error, but continue
+  unless ($number == $i->{min}) {warn("BAD: $i->{source} on $i->{min}");}
+  $renumber{$name}{$species}++;
+  debug("$i->{source} -> $name ($species) #$renumber{$name}{$species}");
+}
 
 die "TESTING";
 
