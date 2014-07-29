@@ -13,6 +13,20 @@ CREATE TABLE relatives AS SELECT DISTINCT relation FROM triples WHERE
  'pet', 'roommate', 'date', 'grandmother', 'killee', 'killer'
 );
 
+-- MULTIREF: assign class to MULTIREF
+INSERT INTO triples
+SELECT target, 'class', 'continuity', 'multiref'
+FROM triples WHERE source LIKE 'MULTIREF%' AND relation='title';
+
+-- MULTIREF: assign properties to title of multiref
+INSERT INTO triples
+SELECT t1.target, t2.relation, t2.target, 'multiref'
+FROM triples t1 JOIN triples t2 ON (t1.source = t2.source) WHERE
+t1.source LIKE 'MULTIREF%' AND t1.relation='title' AND t2.relation!='title';
+
+-- all done w multiref
+DELETE FROM triples WHERE source LIKE 'MULTIREF%';
+
 -- assign classes
 -- you're a character if you're on either side of a father/mother type relation
 -- also target=character if "strip,character|deaths|kille(re),target"
@@ -21,18 +35,14 @@ CREATE TABLE relatives AS SELECT DISTINCT relation FROM triples WHERE
 INSERT INTO triples
  SELECT DISTINCT source, 'class', 'character', 'misc2.sql'
  FROM triples WHERE relation IN (SELECT * FROM relatives) OR
- relation IN ('species', 'profession', 'killee', 'hobby', 'aka')
+ relation IN ('species', 'profession', 'hobby', 'aka')
 ;
 
 INSERT INTO triples
  SELECT DISTINCT target, 'class', 'character', 'misc2.sql'
  FROM triples WHERE relation IN (SELECT * FROM relatives) OR
- relation IN ('deaths', 'killee')
+ relation IN ('deaths')
 ;
-
-INSERT INTO triples
- SELECT DISTINCT target, 'class', 'continuity', 'misc2.sql' FROM triples
-WHERE source IN ('MULTIREF');
 
 INSERT INTO triples
  SELECT DISTINCT source, 'class', 'strip', 'misc2.sql' FROM triples WHERE

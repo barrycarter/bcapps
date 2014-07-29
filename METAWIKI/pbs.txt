@@ -1137,7 +1137,7 @@ MULTIREF [[title::Toby's "death"]] [[notes::[[Stephan Pastis]] fires [[Toby (tur
 2008-07-13 [[rebirths::Rat]]
 2004-04-30 [[cameo::Bucky Katt (Get Fuzzy)]]
 2004-09-04 [[character::Yassir Arafat (human)]] [[meta::Decide how I want to list "real people" incl wp link?]]
-MULTIREF [[title::Pig and Pigita (continuity)]] [[On [[2004-04-20]], Pig says he "won't get lucky tonight", suggesting he might've slept with Pigita previously. On [[2006-05-24]], however, he states he's never even kissed Pigita. Finally, on [[2008-07-21]], it appears Pig has slept with her]]
+MULTIREF [[title::Pig and Pigita (continuity)]] [[notes::On [[2004-04-20]], Pig says he "won't get lucky tonight", suggesting he might've slept with Pigita previously. On [[2006-05-24]], however, he states he's never even kissed Pigita. Finally, on [[2008-07-21]], it appears Pig has slept with her]]
 2008-08-11 [[Pig::aka::Nadia]] [[notes::Nadia is a reference to {{wp|Comaneci}}]]
 2008-07-22 [[character::Zebra+Larry+Gary (crocodile)]] [[Gary (crocodile)::aka::Crazy Gary]]
 2008-07-27 [[character::Pig+Rat+Stephan Pastis+Crumb (human)]]
@@ -2036,6 +2036,7 @@ MULTIREF [[title::[[[[Larry]]'s mother]]]] [[notes::Larry's mother dies on [[200
 2014-07-27 [[character::Rat+Pig]] [[Category::Rat writes]]
 2009-10-10 [[character::Snuffles+Guard Duck]] [[cameo::PHB (Dilbert)+Alice (Dilbert)+Catbert (Dilbert)]]
 2014-07-28 [[character::Goat+Rat+Stephan Pastis]] [[event::Rat becomes pregnant]] [[category::Third Wall]]
+2014-07-29 [[character::Rat+Goat+Comic Strip Censor]] [[category::Third Wall]]
 </data>
 
 # 2007-03-30 pig's mayors isnt LGD? (mayor in rehab)

@@ -19,14 +19,13 @@ close(A);
 
 # this must be called after db is populated
 my(@querys) = pbs_fix_numbered_characters();
-debug("QUERYS", @querys);
-
-die "TESTING";
 
 # and now done in a for loop (separately, since db closed after above)
-open(A, "|tee /tmp/out1.txt|sqlite3 /var/tmp/pbs3.db");
+open(A, "|sqlite3 /var/tmp/pbs3.db");
 for $i ("BEGIN",@querys,"COMMIT") {print A "$i;\n";}
 close(A);
+
+
 
 # queries to provide largeimagelinks for each strip
 sub pbs_largeimagelinks {
@@ -60,11 +59,10 @@ MARK
     my($base, $date, $species) = ($1, $2, $3);
     unless ($date == $i->{min}) {warn("$i->{char} NOMATCH: $date/$i->{min}");}
     my($newname) = "$base ($species) &#65283;".sprintf("%0.2d",++$times{$base}{$species});
-    push(@res,"INSERT INTO triples (source, relation, target, datasource)
-VALUES ('$newname', 'reference_name', '$i->{char}', 'pbs_fix_numbered_characters')");
+    push(@res,"INSERT INTO triples (source, relation, target, datasource) VALUES ('$newname', 'reference_name', '$i->{char}', 'pbs_fix_numbered_characters')");
     for $j ("source", "target") {
       # below covers cases where char appears in notes/descriptions/etc
-      push(@res,"UPDATE triples SET $j=REPLACE($j,'$i->{char}','$newname')");
+      push(@res,"UPDATE triples SET $j=REPLACE($j,'$i->{char}','$newname') WHERE $j LIKE '%$i->{char}%'");
     }
   }
   return @res;
@@ -73,7 +71,7 @@ VALUES ('$newname', 'reference_name', '$i->{char}', 'pbs_fix_numbered_characters
 # Querys to populate the database (but not create it)
 
 sub pbs_create_db {
-  my(@triples,@res);
+  my(@triples,@res,$multiref);
 
   my($all) = read_file("pbs.txt");
   $all=~m%<data>(.*?)</data>%s;
@@ -81,12 +79,20 @@ sub pbs_create_db {
     $i=~s/^(\S+)\s+//;
     my($dates) = $1;
 
-    # multiref
-    if ($dates eq "MULTIREF") {push(@res,pbs_handle_multiref($i)); next;}
+    # distinguish multirefs and turn [[foo]] into [[references::foo]]
+    if ($dates eq "MULTIREF") {
+      # TODO: these are both serious hacks
+      $dates="MULTIREF".++$multiref;
+      $i=~s/\[\[(\d{4}\-\d{2}\-\d{2})\]\]/[[references::$1]]/g;
+#      debug("I: $i");
+    }
+
+#    if ($dates eq "MULTIREF") {next;}
     $i=~s/\'/&\#39\;/g;
     $i=~s/,/&\#44\;/g;
     while ($i=~s/\[\[([^\[\]]*?)\]\]/\001/) {
       my(@anno) = ($dates, split(/::/, $1));
+#      debug("ANNO",@anno);
       push(@triples, [@anno]);
       $i=~s/\001/$anno[-1]/;
     }
@@ -146,8 +152,4 @@ sub pbs_schema {
 	  "CREATE INDEX i2 ON triples(relation)",
 	  "CREATE INDEX i3 ON triples(target)"
 	  );
-}
-
-sub pbs_handle_multiref {
-  debug("GOT",@_);
 }
