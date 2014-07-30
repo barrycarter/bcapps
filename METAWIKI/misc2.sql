@@ -10,7 +10,7 @@ CREATE TABLE relatives AS SELECT DISTINCT relation FROM triples WHERE
  'cousin', 'uncle', 'aunt', 'husband', 'brother', 'ex-husband',
  'grandfather', 'mother', 'niece', 'sister', 'son', 'wife',
  'neighbor', 'girlfriend', 'boss', 'friend', 'father', 'half-brother',
- 'pet', 'roommate', 'date', 'grandmother', 'killee', 'killer'
+ 'pet', 'roommate', 'date', 'grandmother', 'killee', 'killer', 'ex-employee'
 );
 
 -- MULTIREF: assign class to MULTIREF
@@ -116,7 +116,8 @@ SELECT DISTINCT t1.target,
  FROM triples t1 JOIN relatives r1 ON (t1.relation = r1.relation)
 ;
 
--- TODO: could delete extraneous 'brother/sister/etc' lines now
+-- and get rid of the now unnecessary relations
+DELETE FROM triples WHERE relation IN (SELECT * FROM relatives);
 
 -- this could be divined semantically but...
 
@@ -137,28 +138,8 @@ FROM triples t1 JOIN charcount c1 ON
  (t1.target = c1.target AND t1.relation='deaths')
 WHERE c1.count>10 GROUP BY c1.target;
 
--- this is the query that will ultimately build pages
-
-SELECT source, GROUP_CONCAT(tuples,"|") FROM (
-SELECT source, relation||"="||GROUP_CONCAT(DISTINCT(target)) AS tuples
-FROM triples GROUP BY source, relation
-) GROUP BY source;
-
--- numbered characters
-
-SELECT char, MIN(mindate) AS min FROM (
-SELECT source AS char, REPLACE(MIN(datasource),'-','') AS mindate 
-FROM triples WHERE source GLOB '* [0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]*'
-GROUP BY source UNION
-SELECT target AS char, REPLACE(MIN(datasource),'-','') AS mindate
-FROM triples WHERE target GLOB '* [0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]*'
-AND relation NOT IN ('notes', 'description', 'event') GROUP BY target
-) GROUP BY char ORDER BY char;
-
-
 SELECT "USING QUIT TO QUIT";
 .quit
-
 
 -- items without classes (except those that are allowed not to have classes)
 

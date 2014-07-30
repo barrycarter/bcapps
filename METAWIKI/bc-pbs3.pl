@@ -25,7 +25,24 @@ open(A, "|sqlite3 /var/tmp/pbs3.db");
 for $i ("BEGIN",@querys,"COMMIT") {print A "$i;\n";}
 close(A);
 
+# cleanup
+system("sqlite3 /var/tmp/pbs3.db < misc2.sql");
 
+# now the query to create the files
+
+my($query) = "SELECT source, GROUP_CONCAT(tuples,'|') AS data FROM (
+SELECT source, relation||'='||GROUP_CONCAT(DISTINCT(target)) AS tuples
+FROM triples GROUP BY source, relation
+) GROUP BY source;";
+
+$pagedir = "/usr/local/etc/metawiki/pbs3-test";
+for $i (sqlite3hashlist($query, "/var/tmp/pbs3.db")) {
+  debug("WRITING: $i->{source}");
+  open(A, ">$pagedir/$i->{source}.mw");
+  $i->{data}=~s/\|/\n/sg;
+  print A $i->{data},"\n";
+  close(A);
+}
 
 # queries to provide largeimagelinks for each strip
 sub pbs_largeimagelinks {
@@ -78,6 +95,10 @@ sub pbs_create_db {
   for $i (split(/\n/, $1.read_file("pbs-cl.txt"))) {
     $i=~s/^(\S+)\s+//;
     my($dates) = $1;
+
+    # TODO: this is a hack
+    $i=~s/\{\{wp\|//g;
+    $i=~s/\}\}//g;
 
     # distinguish multirefs and turn [[foo]] into [[references::foo]]
     if ($dates eq "MULTIREF") {
