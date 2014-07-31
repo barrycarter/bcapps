@@ -22,16 +22,17 @@ my(@querys) = pbs_fix_numbered_characters();
 
 # and now done in a for loop (separately, since db closed after above)
 open(A, "|tee /tmp/output.txt|sqlite3 /var/tmp/pbs3.db");
-for $i ("BEGIN",@querys,"COMMIT") {print A "$i;\n";}
+ for $i ("BEGIN",@querys,"COMMIT") {print A "$i;\n";}
 close(A);
 
 # cleanup
 system("sqlite3 /var/tmp/pbs3.db < misc2.sql");
 
-# now the query to create the files
+# now the query to create the files (splitting on triple pipe avoids
+# problems with {{wp|foo}})
 
 my($query) = << "MARK";
-SELECT source, GROUP_CONCAT(data,"|") AS data FROM (
+SELECT source, GROUP_CONCAT(data,"|||") AS data FROM (
 SELECT source, relation||'='||GROUP_CONCAT(target,", ") AS data FROM (
 SELECT DISTINCT t1.source, t2.relation, t2.target
  FROM triples t1 JOIN triples t2 ON (t1.source=t2.source)
@@ -44,9 +45,16 @@ MARK
 $pagedir = "/usr/local/etc/metawiki/pbs3-test";
 for $i (sqlite3hashlist($query, "/var/tmp/pbs3.db")) {
   # fix commas
+  $i->{source}=~s/&\#44\;/,/g;
   $i->{data}=~s/&\#44\;/,/g;
+  # remove braces (cant have these in a title)
+  debug("ALPHA: $i->{source}");
+  $i->{source}=~s/\{\{.*?\|(.*?)\}\}/$1/g;
+  $i->{source}=~s/[\[\[]//g;
+  debug("BETA: $i->{source}");
+
   # this works because Perl can cast lists to hashes
-  my(%hash) = split(/\||\=/, $i->{data});
+  my(%hash) = split(/\|\|\||\=/, $i->{data});
   if ($hash{class}=~/,/) {
     warn "$i->{source}: $hash{class} (multiple classes)";
     next;
@@ -93,7 +101,7 @@ MARK
     my($base, $date, $species) = ($1, $2, $3);
     unless ($date == $i->{min}) {warn("$i->{char} NOMATCH: $date/$i->{min}");}
     my($newname) = "$base ($species) &#65283;".sprintf("%0.2d",++$times{$base}{$species});
-    debug("GAMMA: $i->{char} -> $newname");
+#    debug("GAMMA: $i->{char} -> $newname");
     push(@res,"INSERT INTO triples (source, relation, target, datasource) VALUES ('$newname', 'reference_name', '$i->{char}', 'pbs_fix_numbered_characters')");
     for $j ("source", "target") {
       # below covers cases where char appears in notes/descriptions/etc
@@ -115,8 +123,8 @@ sub pbs_create_db {
     my($dates) = $1;
 
     # TODO: this is a hack
-    $i=~s/\{\{wp\|//g;
-    $i=~s/\}\}//g;
+#    $i=~s/\{\{wp\|//g;
+#    $i=~s/\}\}//g;
 
     # distinguish multirefs and turn [[foo]] into [[dates::foo]]
     if ($dates eq "MULTIREF") {
@@ -128,15 +136,28 @@ sub pbs_create_db {
 
     $i=~s/\'/&\#39\;/g;
     $i=~s/,/&\#44\;/g;
+#    debug("ALPHA: $i");
     while ($i=~s/\[\[([^\[\]]*?)\]\]/\001/) {
+#      debug("BETA: $i");
       my(@anno) = ($dates, split(/::/, $1));
-#      debug("ANNO",@anno);
-      push(@triples, [@anno]);
-      $i=~s/\001/$anno[-1]/;
+#      debug("ANNO". join(", ",@anno));
+
+      # this preserves [[double brackets]] in things like notes
+      if (scalar @anno > 2) {
+	push(@triples, [@anno]);
+	$i=~s/\001/$anno[-1]/;
+      } else {
+	$i=~s/\001/\002$anno[-1]\003/;
+      }
     }
   }
 
   for $i (@triples) {
+    # cleanup the [[problem]]
+    debug("I23: $i->[2], $i->[3]");
+    $i->[2]=~s/\002(.*?)\003/[[$1]]/g;
+#    $i->[3]=~s/\002(.*?)\003/[[$1]]/g;
+
     # len 3 -> date, rel, val, ignore; len 4 -> source, entity, rel, val
     for $j (parse_date_list($i->[0])) {
       for $k (split(/\+/, $i->[1])) {

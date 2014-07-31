@@ -44,6 +44,14 @@ INSERT INTO triples
  relation IN ('deaths')
 ;
 
+-- for deaths, you're a character on the day of your death
+-- TODO: this is probably redundant w something else
+
+INSERT INTO triples
+ SELECT DISTINCT datasource, 'character', target, 'misc2.sql'
+FROM triples WHERE relation IN ('deaths')
+;
+
 INSERT INTO triples
  SELECT DISTINCT source, 'class', 'strip', 'misc2.sql' FROM triples WHERE
  relation IN ('hash');
