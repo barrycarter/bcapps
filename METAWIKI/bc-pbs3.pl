@@ -37,6 +37,27 @@ FROM triples GROUP BY source, relation
 
 $pagedir = "/usr/local/etc/metawiki/pbs3-test";
 for $i (sqlite3hashlist($query, "/var/tmp/pbs3.db")) {
+  # GROUP_CONCAT won't take two args with DISTINCT, so need to do this here
+  $i->{data}=~s/,/, /g;
+  # this works because Perl can cast lists to hashes
+  my(%hash) = split(/\||\=/, $i->{data});
+  if ($hash{class}=~/,/) {
+    warn "$i: $hash{class} (multiple classes)";
+    next;
+  }
+  # assign title
+  $hash{title} = $i->{source};
+
+  open(A, ">$pagedir/$i->{source}.mw");
+  print A "{{$hash{class}\n";
+  # this seems ugly, since I have it in almost the form I need it
+  for $j (sort keys %hash) {print A "|$j=$hash{$j}\n";}
+  print A "}}\n";
+  close(A);
+
+  if (++$count>20) {die "TESTING";}
+
+next; warn "TESTING"; # this warning never shows up just a source code thing
   debug("WRITING: $i->{source}");
   open(A, ">$pagedir/$i->{source}.mw");
   $i->{data}=~s/\|/\n/sg;
