@@ -13,6 +13,12 @@ CREATE TABLE relatives AS SELECT DISTINCT relation FROM triples WHERE
  'pet', 'roommate', 'date', 'grandmother', 'killee', 'killer', 'ex-employee'
 );
 
+-- get rid of inapproptiate {{wp|things}} (except OK in some places)
+
+UPDATE triples SET target= REPLACE(REPLACE(target,"{{wp|",""),"}}","")
+WHERE target LIKE '%{{%}}%' AND relation IN 
+ ('storyline', 'cameo', 'location', 'aka');
+
 -- MULTIREF: assign class to MULTIREF
 INSERT INTO triples
 SELECT target, 'class', 'continuity', 'multiref'
@@ -32,24 +38,21 @@ DELETE FROM triples WHERE source LIKE 'MULTIREF%';
 -- also target=character if "strip,character|deaths|kille(re),target"
 -- also source=character if "source,species|profession,target"
 
-INSERT INTO triples
- SELECT DISTINCT source, 'class', 'character', 'misc2.sql'
- FROM triples WHERE relation IN (SELECT * FROM relatives) OR
- relation IN ('species', 'profession', 'hobby', 'aka')
-;
+-- TODO: this is a hack; if there is info given about you on date, you
+-- are a character for that date
 
 INSERT INTO triples
- SELECT DISTINCT target, 'class', 'character', 'misc2.sql'
+ SELECT DISTINCT datasource, 'character', source, 'misc2.sql'
+-- SELECT DISTINCT source, 'class', 'character', 'misc2.sql'
  FROM triples WHERE relation IN (SELECT * FROM relatives) OR
- relation IN ('deaths')
+ relation IN ('species', 'profession', 'hobby', 'aka', 'location')
 ;
-
--- for deaths, you're a character on the day of your death
--- TODO: this is probably redundant w something else
 
 INSERT INTO triples
  SELECT DISTINCT datasource, 'character', target, 'misc2.sql'
-FROM triples WHERE relation IN ('deaths')
+-- SELECT DISTINCT target, 'class', 'character', 'misc2.sql'
+ FROM triples WHERE relation IN (SELECT * FROM relatives) OR
+ relation IN ('deaths')
 ;
 
 INSERT INTO triples

@@ -156,7 +156,7 @@ sub pbs_create_db {
     # cleanup the [[problem]]
     debug("I23: $i->[2], $i->[3]");
     $i->[2]=~s/\002(.*?)\003/[[$1]]/g;
-#    $i->[3]=~s/\002(.*?)\003/[[$1]]/g;
+    if (scalar @$i == 4) {$i->[3]=~s/\002(.*?)\003/[[$1]]/g;}
 
     # len 3 -> date, rel, val, ignore; len 4 -> source, entity, rel, val
     for $j (parse_date_list($i->[0])) {
