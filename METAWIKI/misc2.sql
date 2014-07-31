@@ -41,15 +41,17 @@ DELETE FROM triples WHERE source LIKE 'MULTIREF%';
 -- TODO: this is a hack; if there is info given about you on date, you
 -- are a character for that date
 
+-- NOTE: Strips can have "location" too, so can't include "location" below
+
 INSERT INTO triples
- SELECT DISTINCT datasource, 'character', source, 'misc2.sql'
+ SELECT DISTINCT datasource, 'character', source, 'misc2.sql:L45'
 -- SELECT DISTINCT source, 'class', 'character', 'misc2.sql'
  FROM triples WHERE relation IN (SELECT * FROM relatives) OR
- relation IN ('species', 'profession', 'hobby', 'aka', 'location')
+ relation IN ('species', 'profession', 'hobby', 'aka')
 ;
 
 INSERT INTO triples
- SELECT DISTINCT datasource, 'character', target, 'misc2.sql'
+ SELECT DISTINCT datasource, 'character', target, 'misc2.sql:L52'
 -- SELECT DISTINCT target, 'class', 'character', 'misc2.sql'
  FROM triples WHERE relation IN (SELECT * FROM relatives) OR
  relation IN ('deaths')

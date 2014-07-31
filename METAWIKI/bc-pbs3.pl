@@ -122,15 +122,12 @@ sub pbs_create_db {
     $i=~s/^(\S+)\s+//;
     my($dates) = $1;
 
-    # TODO: this is a hack
-#    $i=~s/\{\{wp\|//g;
-#    $i=~s/\}\}//g;
-
     # distinguish multirefs and turn [[foo]] into [[dates::foo]]
     if ($dates eq "MULTIREF") {
       # TODO: these are both serious hacks
       $dates="MULTIREF".++$multiref;
-      $i=~s/\[\[(\d{4}\-\d{2}\-\d{2})\]\]/[[dates::$1]]/g;
+      # bizarre format keeps dates hyperlinked
+      $i=~s/\[\[(\d{4}\-\d{2}\-\d{2})\]\]/[[[[dates::$1]]]]/g;
 #      debug("I: $i");
     }
 
@@ -154,7 +151,7 @@ sub pbs_create_db {
 
   for $i (@triples) {
     # cleanup the [[problem]]
-    debug("I23: $i->[2], $i->[3]");
+#    debug("I23: $i->[2], $i->[3]");
     $i->[2]=~s/\002(.*?)\003/[[$1]]/g;
     if (scalar @$i == 4) {$i->[3]=~s/\002(.*?)\003/[[$1]]/g;}
 

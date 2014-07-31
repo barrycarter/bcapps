@@ -1946,7 +1946,7 @@ MULTIREF [[title::Fanny rub]] [[notes::[[Rat]] and [[Stephan Pastis]] seem horri
 2014-06-17,2010-11-29-2010-12-04,2010-12-06,2011-02-28,2011-03-01-2011-03-05,2011-03-07,2011-03-11,2011-03-20 [[storyline::[[character::Gophers]]]] [[Gophers::species::gopher (group)]]
 2014-06-18,2014-06-19 [[character::Sloth Man]]
 2014-06-19 [[character::Pig]] [[notes::The handle of [[character::Goat]]'s cup changes directions between panels 1 and 2, and again in panel 3 (panel 3 is a reverse angle, so the handle should be to the right of the cup). Goat's cup also normally has a teabag hanging out of it, but not today.]]
-2014-06-20 [[character::Goat+Pig+Rat+Stephan Pasis]] [[cameo::Richie Rich]] [[notes::[[character::Pig]] is referencing the song {{wp|99 Problems}} with the lyric "I got 99 problems but a bitch ain't one"]]
+2014-06-20 [[character::Goat+Pig+Rat+Stephan Pastis]] [[cameo::Richie Rich]] [[notes::[[character::Pig]] is referencing the song {{wp|99 Problems}} with the lyric "I got 99 problems but a bitch ain't one"]]
 2014-06-21 [[character::Pig+Neighbor Bob]]
 2014-06-22 [[category::[[character::Rat]] writes]] [[character::Pig+Goat]] [[cameo::PHB (Dilbert)]]
 2014-06-23 [[character::Rat+Pig+Gomer (goldfish)]] [[meta::Gomer's eyes now a black dot instead of a white circle (making him look more like a cracker?)]]
