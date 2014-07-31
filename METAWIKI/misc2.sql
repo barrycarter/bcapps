@@ -63,6 +63,17 @@ INSERT INTO triples
 SELECT DISTINCT target, 'class', 'group', 'misc2.sql' FROM triples WHERE
  relation IN ('member');
 
+-- for strips, find next and previous date (this is cheating slightly,
+-- assuming strips are available daily, when they are not)
+
+INSERT INTO triples
+SELECT source, 'prev', DATE(source, '-1 day'), 'misc2.sql'
+FROM triples WHERE relation='class' AND target='strip';
+
+INSERT INTO triples
+SELECT source, 'next', DATE(source, '+1 day'), 'misc2.sql'
+FROM triples WHERE relation='class' AND target='strip';
+
 -- find/fix cases where source/target is an aka -- this table is perm
 -- just so I can do "sqlite3 db < misc2.sql" and re-open db to run
 -- queries
@@ -76,18 +87,20 @@ CREATE TABLE aka AS
 INSERT INTO triples
 SELECT a1.source, t1.relation, t1.target, t1.datasource
  FROM triples t1 JOIN aka a1 ON
- (t1.source = a1.target AND t1.target NOT IN ('aka', 'storyline'));
+ (t1.source = a1.target AND t1.target NOT IN 
+('aka', 'storyline', 'reference_name'));
 
 DELETE FROM triples WHERE source IN (SELECT target FROM aka) AND
- target NOT IN ('aka', 'storyline');
+ target NOT IN ('aka', 'storyline', 'reference_name');
 
 INSERT INTO triples
 SELECT t1.source, t1.relation, a1.source, t1.datasource 
  FROM triples t1 JOIN aka a1 ON
- (t1.target = a1.target AND t1.relation NOT IN ('aka', 'storyline'));
+ (t1.target = a1.target AND t1.relation NOT IN 
+('aka', 'storyline', 'reference_name'));
 
 DELETE FROM triples WHERE target IN (SELECT target FROM aka) AND
- relation NOT IN ('aka', 'storyline');
+ relation NOT IN ('aka', 'storyline', 'reference_name');
 
 -- species assignment (may need Perl for this [nope!])
 
@@ -106,18 +119,19 @@ FROM triples t1 LEFT JOIN triples t2 ON
 
 INSERT INTO triples
 SELECT DISTINCT t1.source, 
-'relative', '[['||t1.target||']]'||' ('||t1.relation||')', t1.datasource
+'relationship', '[['||t1.target||']]'||' ('||t1.relation||')', t1.datasource
  FROM triples t1 JOIN relatives r1 ON (t1.relation = r1.relation)
 ;
 
 INSERT INTO triples
 SELECT DISTINCT t1.target, 
-'relative', '[['||t1.source||']]'||'''s '||t1.relation, t1.datasource
+'relationship', '[['||t1.source||']]'||'''s '||t1.relation, t1.datasource
  FROM triples t1 JOIN relatives r1 ON (t1.relation = r1.relation)
 ;
 
 -- and get rid of the now unnecessary relations
-DELETE FROM triples WHERE relation IN (SELECT * FROM relatives);
+-- commenting this out for testing purposes (it's harmless)
+-- DELETE FROM triples WHERE relation IN (SELECT * FROM relatives);
 
 -- this could be divined semantically but...
 

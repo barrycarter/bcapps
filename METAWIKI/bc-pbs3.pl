@@ -21,7 +21,7 @@ close(A);
 my(@querys) = pbs_fix_numbered_characters();
 
 # and now done in a for loop (separately, since db closed after above)
-open(A, "|sqlite3 /var/tmp/pbs3.db");
+open(A, "|tee /tmp/output.txt|sqlite3 /var/tmp/pbs3.db");
 for $i ("BEGIN",@querys,"COMMIT") {print A "$i;\n";}
 close(A);
 
@@ -30,38 +30,34 @@ system("sqlite3 /var/tmp/pbs3.db < misc2.sql");
 
 # now the query to create the files
 
-my($query) = "SELECT source, GROUP_CONCAT(tuples,'|') AS data FROM (
-SELECT source, relation||'='||GROUP_CONCAT(DISTINCT(target)) AS tuples
-FROM triples GROUP BY source, relation
-) GROUP BY source;";
+my($query) = << "MARK";
+SELECT source, GROUP_CONCAT(data,"|") AS data FROM (
+SELECT source, relation||'='||GROUP_CONCAT(target,", ") AS data FROM (
+SELECT DISTINCT t1.source, t2.relation, t2.target
+ FROM triples t1 JOIN triples t2 ON (t1.source=t2.source)
+ORDER BY t1.source, t2.relation, t2.target
+) GROUP BY source, relation ORDER BY source, relation
+) GROUP BY source ORDER BY source
+MARK
+;
 
 $pagedir = "/usr/local/etc/metawiki/pbs3-test";
 for $i (sqlite3hashlist($query, "/var/tmp/pbs3.db")) {
-  # GROUP_CONCAT won't take two args with DISTINCT, so need to do this here
-  $i->{data}=~s/,/, /g;
+  # fix commas
+  $i->{data}=~s/&\#44\;/,/g;
   # this works because Perl can cast lists to hashes
   my(%hash) = split(/\||\=/, $i->{data});
   if ($hash{class}=~/,/) {
-    warn "$i: $hash{class} (multiple classes)";
+    warn "$i->{source}: $hash{class} (multiple classes)";
     next;
   }
-  # assign title
-  $hash{title} = $i->{source};
 
+  debug("WRITING: $i->{source}");
   open(A, ">$pagedir/$i->{source}.mw");
-  print A "{{$hash{class}\n";
+  print A "{{$hash{class}\n|title=$i->{source}\n";
   # this seems ugly, since I have it in almost the form I need it
   for $j (sort keys %hash) {print A "|$j=$hash{$j}\n";}
   print A "}}\n";
-  close(A);
-
-  if (++$count>20) {die "TESTING";}
-
-next; warn "TESTING"; # this warning never shows up just a source code thing
-  debug("WRITING: $i->{source}");
-  open(A, ">$pagedir/$i->{source}.mw");
-  $i->{data}=~s/\|/\n/sg;
-  print A $i->{data},"\n";
   close(A);
 }
 
@@ -97,10 +93,11 @@ MARK
     my($base, $date, $species) = ($1, $2, $3);
     unless ($date == $i->{min}) {warn("$i->{char} NOMATCH: $date/$i->{min}");}
     my($newname) = "$base ($species) &#65283;".sprintf("%0.2d",++$times{$base}{$species});
+    debug("GAMMA: $i->{char} -> $newname");
     push(@res,"INSERT INTO triples (source, relation, target, datasource) VALUES ('$newname', 'reference_name', '$i->{char}', 'pbs_fix_numbered_characters')");
     for $j ("source", "target") {
       # below covers cases where char appears in notes/descriptions/etc
-      push(@res,"UPDATE triples SET $j=REPLACE($j,'$i->{char}','$newname') WHERE $j LIKE '%$i->{char}%'");
+      push(@res,"UPDATE triples SET $j=REPLACE($j,'$i->{char}','$newname') WHERE $j LIKE '%$i->{char}%' AND relation NOT IN ('reference_name')");
     }
   }
   return @res;
@@ -121,15 +118,14 @@ sub pbs_create_db {
     $i=~s/\{\{wp\|//g;
     $i=~s/\}\}//g;
 
-    # distinguish multirefs and turn [[foo]] into [[references::foo]]
+    # distinguish multirefs and turn [[foo]] into [[dates::foo]]
     if ($dates eq "MULTIREF") {
       # TODO: these are both serious hacks
       $dates="MULTIREF".++$multiref;
-      $i=~s/\[\[(\d{4}\-\d{2}\-\d{2})\]\]/[[references::$1]]/g;
+      $i=~s/\[\[(\d{4}\-\d{2}\-\d{2})\]\]/[[dates::$1]]/g;
 #      debug("I: $i");
     }
 
-#    if ($dates eq "MULTIREF") {next;}
     $i=~s/\'/&\#39\;/g;
     $i=~s/,/&\#44\;/g;
     while ($i=~s/\[\[([^\[\]]*?)\]\]/\001/) {
