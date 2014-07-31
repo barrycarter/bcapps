@@ -16,8 +16,12 @@ while ($data=~s/BEGIN:VEVENT(.*?)END:VEVENT//s) {
     $hash{$i} = $1;
   }
 
+  $hash{dtstart}=~s/^.*(\d{8}).*$/$1/ ||warn "BAD DATE: $hash{dtstart}";
+  $hash{summary}=~s/summary://i;
+  print "$hash{dtstart} $hash{summary}\n";
+
   # testing
-  unless ($hash{dtstart}=~/20140[89]/) {next;}
+#  unless ($hash{dtstart}=~/20140[89]/) {next;}
 
   debug("HASH",%hash);
 }
