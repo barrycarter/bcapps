@@ -165,8 +165,33 @@ FROM triples t1 JOIN charcount c1 ON
  (t1.target = c1.target AND t1.relation='deaths')
 WHERE c1.count>10 GROUP BY c1.target;
 
-SELECT "USING QUIT TO QUIT";
+-- disambiguate pages w/ 2 or more classes
+-- TODO: I'm not completely happy w how I'm doing this now
+
+SELECT source, GROUP_CONCAT(target) AS classes FROM triples 
+WHERE relation='class'
+GROUP BY source ORDER BY source;
+
+SELECT "USING .quit TO QUIT";
 .quit
+
+-- characters with no species (usually errors from bc-pbs-cl.pl)
+
+SELECT DISTINCT source FROM triples WHERE relation='character' AND target IN (
+SELECT DISTINCT t1.source FROM 
+ triples t1 LEFT JOIN triples t2 ON
+ (t1.source = t2.source AND t2.relation='species' AND t1.relation='class') 
+WHERE t1.target='character' AND t2.target IS NULL ORDER BY t1.source
+) ORDER BY source;
+
+SELECT char, MIN(mindate) AS min FROM (
+SELECT source AS char, REPLACE(MIN(datasource),'-','') AS mindate 
+FROM triples WHERE source GLOB '* [0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]*'
+GROUP BY source UNION
+SELECT target AS char, REPLACE(MIN(datasource),'-','') AS mindate
+FROM triples WHERE target GLOB '* [0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]*'
+AND relation NOT IN ('notes', 'description', 'event') GROUP BY target
+) GROUP BY char ORDER BY char;
 
 -- items without classes (except those that are allowed not to have classes)
 

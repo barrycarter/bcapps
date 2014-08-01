@@ -22,17 +22,20 @@ require "/usr/local/lib/bclib.pl";
 	 "zze" => "[[character::ZZE]]",
 	 "xmas tree girl" => "[[character::Christmas Tree Girl (rat)]]",
 	 "bootyworth" => "[[character::Ms. Bootyworth (bottle)]]",
-	 "lincoln" => "[[cameo::{{wp|Abraham Lincoln}}]]",
+	 "lincoln" => "{{wp|[[character::Abraham Lincoln]]}}",
 	 "gomer" => "[[character::Gomer (goldfish)]]",
 	 "jeffy" => "[[cameo::Jeffy (Family Circus)]]",
 	 "cubby" => "[[character::Cubby (fly)]]",
 	 "toby" => "[[character::Toby (turtle)]]",
 	 "baby johnson" => "[[character::Baby Johnson (human)]]",
-	 "weebear" => "[[character::Wee Bear]]",
+	 "weebear" => "[[character::Wee Bear (bear)]]",
 	 "rita rabbit" => "[[character::Rita (rabbit)]]",
 	 "tina" => "[[character::Tina (turtle)]]",
 	 "timmy" => "[[character::Timmy (turtle)]]",
 	 "lucky" => "[[character::Lucky (lion)]]",
+	 "garfield" => "[[cameo::Garfield (Garfield)]]",
+	 "cathy" => "[[cameo::Cathy (Cathy)]]",
+	 "hagar" => "[[cameo::Hagar (Hagar the Horrible)]]",
 	 );
 
 # "done" is special case for slash mode meaning "list of chars is

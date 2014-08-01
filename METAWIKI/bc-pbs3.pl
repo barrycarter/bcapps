@@ -11,18 +11,20 @@ chdir("/home/barrycarter/BCGIT/METAWIKI/");
 # TODO: watch out for "double aliasing" (misc2.sql does NOT currently catch it)
 # aliases
 
+my($pagedir) = "/usr/local/etc/metawiki/pbs3-test";
+system("rm /var/tmp/pbs3.db $pagedir/*.mw");
+system("rsync -Pavz /home/barrycarter/BCGIT/METAWIKI/*.mw $pagedir");
+
 open(A, "|sqlite3 /var/tmp/pbs3.db");
 for $i ("BEGIN",pbs_schema(),pbs_create_db(),pbs_largeimagelinks(),"COMMIT") {
   print A "$i;\n";
 }
 close(A);
 
-# this must be called after db is populated
-my(@querys) = pbs_fix_numbered_characters();
-
+# Note: pbs_fix_numbered_queries() uses queries above, so must start new proc
 # and now done in a for loop (separately, since db closed after above)
 open(A, "|tee /tmp/output.txt|sqlite3 /var/tmp/pbs3.db");
- for $i ("BEGIN",@querys,"COMMIT") {print A "$i;\n";}
+ for $i ("BEGIN",pbs_fix_numbered_characters(),"COMMIT") {print A "$i;\n";}
 close(A);
 
 # cleanup
@@ -42,22 +44,27 @@ ORDER BY t1.source, t2.relation, t2.target
 MARK
 ;
 
-$pagedir = "/usr/local/etc/metawiki/pbs3-test";
 for $i (sqlite3hashlist($query, "/var/tmp/pbs3.db")) {
   # fix commas
   $i->{source}=~s/&\#44\;/,/g;
   $i->{data}=~s/&\#44\;/,/g;
   # remove braces (cant have these in a title)
-  debug("ALPHA: $i->{source}");
+#  debug("ALPHA: $i->{source}");
   $i->{source}=~s/\{\{.*?\|(.*?)\}\}/$1/g;
   $i->{source}=~s/[\[\[]//g;
-  debug("BETA: $i->{source}");
+#  debug("BETA: $i->{source}");
 
   # this works because Perl can cast lists to hashes
   my(%hash) = split(/\|\|\||\=/, $i->{data});
   if ($hash{class}=~/,/) {
-    warn "$i->{source}: $hash{class} (multiple classes)";
-    next;
+    # storyline trumps others
+    # TODO: need to do a lot more here, at least redirects
+    if ($hash{class}=~/storyline/) {
+      $hash{class} = "storyline";
+    } else {
+      warn "$i->{source}: $hash{class} (multiple classes)";
+      next;
+    }
   }
 
   debug("WRITING: $i->{source}");
