@@ -29,6 +29,7 @@ require "/usr/local/lib/bclib.pl";
 	 "toby" => "[[character::Toby (turtle)]]",
 	 "baby johnson" => "[[character::Baby Johnson (human)]]",
 	 "weebear" => "[[character::Wee Bear (bear)]]",
+	 "wee bear" => "[[character::Wee Bear (bear)]]",
 	 "rita rabbit" => "[[character::Rita (rabbit)]]",
 	 "tina" => "[[character::Tina (turtle)]]",
 	 "timmy" => "[[character::Timmy (turtle)]]",
@@ -36,6 +37,7 @@ require "/usr/local/lib/bclib.pl";
 	 "garfield" => "[[cameo::Garfield (Garfield)]]",
 	 "cathy" => "[[cameo::Cathy (Cathy)]]",
 	 "hagar" => "[[cameo::Hagar (Hagar the Horrible)]]",
+	 "pig's mom" => "[[character::Pig's mother (pig)]]"
 	 );
 
 # "done" is special case for slash mode meaning "list of chars is

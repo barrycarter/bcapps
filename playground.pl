@@ -33,6 +33,49 @@ use Inline::Python;
 use FFI::Raw;
 use v5.10;
 
+chdir("/usr/local/etc/metawiki");
+my(@res) = diffuwr("pbs3", "pbs3-test");
+
+debug("DIFFER", @{$res[0]});
+debug("IN pbs3 only:", @{$res[1]});
+debug("IN pbs3-test only:", @{$res[2]});
+debug("SAME", @{$res[3]});
+
+=item diffuwr($dir1,$dir2)
+
+Given two directories, runs something like "diff -uwr" on them, and
+returns an array of arrays, with indexes as follows (semi-inspired by
+comms output):
+
+0: files that are in both $dir1 and $dir2 but differ in the two dirs
+1: files in $dir1 that are not in $dir2
+2: files in $dir2 that are not in $dir1
+3: files that are in both $dir1 and $dir2 and are identical in the two dirs
+
+=cut
+
+sub diffuwr {
+  my(@dirs) = @_;
+  my(@res);
+  my($out, $err, $res) = cache_command2("diff -s -q -r '$dirs[0]' '$dirs[1]'");
+  for $i (split(/\n/, $out)) {
+    if ($i=~/^Files $dirs[0]\/(.*?) and $dirs[1]\/\1 are identical$/) {
+      push(@{$res[3]}, $1);
+    }  elsif ($i=~/^Files $dirs[0]\/(.*?) and $dirs[1]\/\1 differ$/) {
+      push(@{$res[0]}, $1);
+    } elsif ($i=~/^Only in $dirs[0]: (.*?)$/) {
+      push(@{$res[1]}, $1);
+    } elsif ($i=~/^Only in $dirs[1]: (.*?)$/) {
+      push(@{$res[2]}, $1);
+    } else {
+      warn "DIFFUWR BAD LINE: $i";
+    }
+  }
+  return @res;
+}
+
+die "TESTING";
+
 @pages = mediawiki_list_pages("http://pbs3.referata.com/w/api.php");
 
 # these changes are just so I can compare disk files to mediawiki page names

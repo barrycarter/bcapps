@@ -2,14 +2,17 @@
 
 # yet another attempt (still feel I'm not doing it "quite right")
 
+# TODO: after fix numbered characters, see if there's only #1 of
+# something and never #2
+
 require "/usr/local/lib/bclib.pl";
 
 chdir("/home/barrycarter/BCGIT/METAWIKI/");
 
-# TODO: MULTIREF
-
 # TODO: watch out for "double aliasing" (misc2.sql does NOT currently catch it)
 # aliases
+
+pbs_create_anno();
 
 my($pagedir) = "/usr/local/etc/metawiki/pbs3-test";
 system("rm /var/tmp/pbs3.db $pagedir/*.mw");
@@ -74,6 +77,25 @@ for $i (sqlite3hashlist($query, "/var/tmp/pbs3.db")) {
   for $j (sort keys %hash) {print A "|$j=$hash{$j}\n";}
   print A "}}\n";
   close(A);
+}
+
+# create anno files for feh
+sub pbs_create_anno {
+  my($query) = << "MARK";
+SELECT datasource, 
+GROUP_CONCAT(source||"::"||relation||"::"||target,"\\n") AS data 
+FROM triples WHERE relation NOT IN ('book', 'isbn')
+AND datasource GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]'
+GROUP BY datasource ORDER BY datasource;
+MARK
+;
+
+  for $i (sqlite3hashlist($query, "/var/tmp/pbs3.db")) {
+    debug("WRITING: $i->{datasource}");
+    # convert \n to actual new lines
+    $i->{data}=~s/\\n/\n/g;
+    write_file($i->{data}, "/mnt/extdrive/GOCOMICS/pearlsbeforeswine/ANNO/page-$i->{datasource}.gif.txt");
+  }
 }
 
 # queries to provide largeimagelinks for each strip

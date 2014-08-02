@@ -175,6 +175,12 @@ GROUP BY source ORDER BY source;
 SELECT "USING .quit TO QUIT";
 .quit
 
+-- all data sourced to a given day (except book/isbn)
+
+SELECT datasource, GROUP_CONCAT(source||"::"||relation||"::"||target,"\n") 
+FROM triples WHERE relation NOT IN ('book', 'isbn')
+GROUP BY datasource ORDER BY datasource;
+
 -- characters with no species (usually errors from bc-pbs-cl.pl)
 
 SELECT DISTINCT source FROM triples WHERE relation='character' AND target IN (
