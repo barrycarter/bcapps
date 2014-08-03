@@ -90,6 +90,8 @@ for $i (glob "/mnt/extdrive/GOCOMICS/pearlsbeforeswine/CHARLIST/*.txt") {
       # guess at full form
       $nofullform{lc($j)} = 1;
       $j =~ s/(\w+)/\u$1/g;
+      # if species name, however, return to lower case
+      $j=~s/\(([A-Z])/"(".lc($1)/e;
       $j = "[[character::$j]]";
     }
   }

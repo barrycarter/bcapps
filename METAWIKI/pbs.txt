@@ -32,6 +32,8 @@ Guidelines for editing this file:
 
 TODO (global todo's not specific to a given strip):
 
+  - Read * comments I put in CHARLIST
+
   - Character list should include species, subspecies, profession, and
   maybe aliases
 
@@ -2028,7 +2030,7 @@ MULTIREF [[title::Unicorns]] [[notes::On [[2009-08-15]], [[Junior]] says unicorn
 MULTIREF [[title::You Are Here]] [[notes::Both [[2003-04-04]] and [[2004-12-18]] use the mall map's "you are here" joke, albeit different malls with different maps]]
 MULTIREF [[title::Larry spells his name]] [[notes::On [[2009-10-16]], Larry writes a sign "Watch Larry chug a BEER! (one dollar)", but, a year later, on [[2010-10-11]], his Celebrity Jeopardy placard reads "Mee no kan spel nayme" (perhaps all that beer killed off his spelling skill brain cells?)]]
 MULTIREF [[title::Pig's Uncle George (pig)]] [[notes::On [[2004-12-05]], Uncle George appears as a sausage link; on [[2011-02-18]], he appears as a package of bacon (maybe it's two different Uncle Georges, or different parts of the same Uncle George?)]]
-MULTIREF [[title::[[[[Larry]]'s mother]]]] [[notes::Larry's mother dies on [[2005-05-13]], but re-appears on [[2005-12-11]]. She also appears to have aged greatly when we see her on [[2012-09-04]]]]
+MULTIREF [[title::Larry's mother]] [[notes::Larry's mother dies on [[2005-05-13]], but re-appears on [[2005-12-11]]. She also appears to have aged greatly when we see her on [[2012-09-04]]]]
 2007-03-19 [[character::Pig+Larry]]
 2013-01-27 [[character::Stephan Pastis]]
 2014-07-16 [[character::Pig+Goat]]
@@ -2062,6 +2064,7 @@ MULTIREF [[title::[[[[Larry]]'s mother]]]] [[notes::Larry's mother dies on [[200
 2012-01-10 [[cameo::Oscar (Sesame Street)]]
 2012-01-09 [[cameo::Oscar (Sesame Street)+Grover (Sesame Street)+Bert (Sesame Street)]]
 2014-08-02 [[character::[[deaths::Fred 20140802 (lemming)]]]] [[location::Lemmings Leap]]
+2014-08-03 [[character::Stephan Pastis]]
 </data>
 
 # 2007-03-30 pig's mayors isnt LGD? (mayor in rehab)

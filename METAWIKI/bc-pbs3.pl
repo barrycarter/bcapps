@@ -8,32 +8,46 @@
 require "/usr/local/lib/bclib.pl";
 
 chdir("/home/barrycarter/BCGIT/METAWIKI/");
+my($pagedir) = "/usr/local/etc/metawiki/pbs3/";
 
 # TODO: watch out for "double aliasing" (misc2.sql does NOT currently catch it)
 # aliases
 
-pbs_create_anno();
+# not always necessary to run each of these every time
+# pbs_run_querys();
+# pbs_create_anno();
+pbs_create_pages();
 
-my($pagedir) = "/usr/local/etc/metawiki/pbs3-test";
-system("rm /var/tmp/pbs3.db $pagedir/*.mw");
-system("rsync -Pavz /home/barrycarter/BCGIT/METAWIKI/*.mw $pagedir");
+# runs the queries created by various other subroutines
+sub pbs_run_querys {
+  # remove the existing db
+  system("rm /var/tmp/pbs3.db");
+  open(A, "|sqlite3 /var/tmp/pbs3.db");
+  for $i ("BEGIN",pbs_schema(),pbs_create_db(),pbs_largeimagelinks(),"COMMIT") {
+    print A "$i;\n";
+  }
+  close(A);
 
-open(A, "|sqlite3 /var/tmp/pbs3.db");
-for $i ("BEGIN",pbs_schema(),pbs_create_db(),pbs_largeimagelinks(),"COMMIT") {
-  print A "$i;\n";
+  # Note: pbs_fix_numbered_queries() uses queries above, so must start new proc
+  # and now done in a for loop (separately, since db closed after above)
+  open(A, "|sqlite3 /var/tmp/pbs3.db");
+  for $i ("BEGIN",pbs_fix_numbered_characters(),"COMMIT") {print A "$i;\n";}
+  close(A);
+
+  # cleanup
+  system("sqlite3 /var/tmp/pbs3.db < misc2.sql");
 }
-close(A);
 
-# Note: pbs_fix_numbered_queries() uses queries above, so must start new proc
-# and now done in a for loop (separately, since db closed after above)
-open(A, "|tee /tmp/output.txt|sqlite3 /var/tmp/pbs3.db");
- for $i ("BEGIN",pbs_fix_numbered_characters(),"COMMIT") {print A "$i;\n";}
-close(A);
+# create pages
+sub pbs_create_pages {
 
-# cleanup
-system("sqlite3 /var/tmp/pbs3.db < misc2.sql");
+ # rsync from git
+  system("rsync -Pavz /home/barrycarter/BCGIT/METAWIKI/*.mw $pagedir");
 
-# now the query to create the files (splitting on triple pipe avoids
+  # clean out NEW dir
+  system("$pagedir/NEW/*.mw");
+
+# now the query to create the pages (splitting on triple pipe avoids
 # problems with {{wp|foo}})
 
 my($query) = << "MARK";
@@ -47,36 +61,40 @@ ORDER BY t1.source, t2.relation, t2.target
 MARK
 ;
 
-for $i (sqlite3hashlist($query, "/var/tmp/pbs3.db")) {
-  # fix commas
-  $i->{source}=~s/&\#44\;/,/g;
-  $i->{data}=~s/&\#44\;/,/g;
-  # remove braces (cant have these in a title)
-#  debug("ALPHA: $i->{source}");
-  $i->{source}=~s/\{\{.*?\|(.*?)\}\}/$1/g;
-  $i->{source}=~s/[\[\[]//g;
-#  debug("BETA: $i->{source}");
+  for $i (sqlite3hashlist($query, "/var/tmp/pbs3.db")) {
 
-  # this works because Perl can cast lists to hashes
-  my(%hash) = split(/\|\|\||\=/, $i->{data});
-  if ($hash{class}=~/,/) {
-    # storyline trumps others
-    # TODO: need to do a lot more here, at least redirects
-    if ($hash{class}=~/storyline/) {
-      $hash{class} = "storyline";
-    } else {
+    # fix commas
+    $i->{source}=~s/&\#44\;/,/g;
+    $i->{data}=~s/&\#44\;/,/g;
+
+    # remove braces (cant have these in a title)
+    $i->{source}=~s/\{\{.*?\|(.*?)\}\}/$1/g;
+    $i->{source}=~s/[\[\[]//g;
+
+    # this works because Perl can cast lists to hashes
+    my(%hash) = split(/\|\|\||\=/, $i->{data});
+
+    # multiple classes?
+    if ($hash{class}=~/,/) {
       warn "$i->{source}: $hash{class} (multiple classes)";
-      next;
+      # storyline trumps others (but warn anyway, because of TODO)
+      # TODO: need to do a lot more here, at least redirects
+      if ($hash{class}=~/storyline/) {
+	$hash{class} = "storyline";
+      } else {
+	warn "NORESOLVE: $i->{source}: $hash{class} (multiple classes)";
+	next;
+      }
     }
-  }
 
-  debug("WRITING: $i->{source}");
-  open(A, ">$pagedir/$i->{source}.mw");
-  print A "{{$hash{class}\n|title=$i->{source}\n";
-  # this seems ugly, since I have it in almost the form I need it
-  for $j (sort keys %hash) {print A "|$j=$hash{$j}\n";}
-  print A "}}\n";
-  close(A);
+    debug("WRITING (page): $i->{source}");
+    open(A, ">$pagedir/NEW/$i->{source}.mw");
+    print A "{{$hash{class}\n|title=$i->{source}\n";
+    # this seems ugly, since I have it in almost the form I need it
+    for $j (sort keys %hash) {print A "|$j=$hash{$j}\n";}
+    print A "}}\n";
+    close(A);
+  }
 }
 
 # create anno files for feh
@@ -91,7 +109,7 @@ MARK
 ;
 
   for $i (sqlite3hashlist($query, "/var/tmp/pbs3.db")) {
-    debug("WRITING: $i->{datasource}");
+    debug("WRITING (anno): $i->{datasource}");
     # convert \n to actual new lines
     $i->{data}=~s/\\n/\n/g;
     write_file($i->{data}, "/mnt/extdrive/GOCOMICS/pearlsbeforeswine/ANNO/page-$i->{datasource}.gif.txt");
@@ -135,6 +153,13 @@ MARK
     for $j ("source", "target") {
       # below covers cases where char appears in notes/descriptions/etc
       push(@res,"UPDATE triples SET $j=REPLACE($j,'$i->{char}','$newname') WHERE $j LIKE '%$i->{char}%' AND relation NOT IN ('reference_name')");
+    }
+  }
+
+  # check for useless renumberings
+  for $i (keys %times) {
+    if ($times{$base}==1) {
+      warn("$base appears only once, no renumbering required");
     }
   }
   return @res;
@@ -235,6 +260,7 @@ sub pbs_schema {
 	  "CREATE TABLE triples (source, relation, target, datasource)",
 	  "CREATE INDEX i1 ON triples(source)",
 	  "CREATE INDEX i2 ON triples(relation)",
-	  "CREATE INDEX i3 ON triples(target)"
+	  "CREATE INDEX i3 ON triples(target)",
+	  "CREATE INDEX i4 ON triples(datasource)"
 	  );
 }
