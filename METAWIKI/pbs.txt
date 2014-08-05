@@ -2077,7 +2077,7 @@ MULTIREF [[title::Larry's mother]] [[notes::Larry's mother dies on [[2005-05-13]
 2014-07-28 [[character::Goat+Rat+Stephan Pastis]] [[event::Rat becomes pregnant]] [[category::Third Wall]]
 2014-07-29 [[character::Rat+Goat+Comic Strip Censor]] [[category::Third Wall]]
 2014-07-30 [[character::Pig+Goat+Zebra+Rat]]
-2014-07-28-2014-08-01,2014-08-04 [[storyline::Rat's pregnancy]]
+2014-07-28-2014-08-01,2014-08-05 [[storyline::Rat's pregnancy]]
 2014-07-31 [[character::Rat+Goat]] [[notes::Rat's beer stein changes direction every panel even though Rat doesn't touch it.+Rat affirms he is male.]]
 2014-08-01 [[character::Rat+Goat+[[Rat::child::Little Rat (rat)]]]] [[notes::Rat's pregnancy must be affecting him very deeply for him to apologize]]
 2012-01-11 [[cameo::Ernie (Sesame Street)+Bert (Sesame Street)]]
@@ -2086,6 +2086,7 @@ MULTIREF [[title::Larry's mother]] [[notes::Larry's mother dies on [[2005-05-13]
 2014-08-02 [[character::[[deaths::Fred 20140802 (lemming)]]]] [[location::Lemmings Leap]]
 2014-08-03 [[character::Stephan Pastis]]
 2014-08-04 [[character::Rat+Pig+Goat+Pastis]]
+2014-08-05 [[character::Rat+Pastis+Pig]] [[cameo::Garfield (Garfield)]] [[notes::Reverses the traditional cat-eats-mouse/rat genre]]
 </data>
 
 # 2007-03-30 pig's mayors isnt LGD? (mayor in rehab)
