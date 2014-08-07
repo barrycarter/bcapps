@@ -28,7 +28,8 @@ for $i (`grep -v '^#' /home/barrycarter/calendar.txt`) {
 }
 
 # last sunday (in seconds) + one week extra
-my($time) = `date +%s -d '1200 last Sunday'`-86400*7;
+# GMT for JD later
+my($time) = `date +%s -d '1200 last Sunday GMT'`-86400*7;
 # and today (as stardate)
 my($now) = strftime("%Y%m%d", localtime(time()));
 
@@ -89,6 +90,7 @@ for $week (-1..$globopts{weeks}-1) {
     my($month) = strftime("%b", localtime($date));
     my($day) = strftime($dateformat, localtime($date));
     my($stardate) = strftime("%Y%m%d", localtime($date));
+    my($jd) = jd2unix($date, "unix2jd");
 
     # moon age (this is not 100% accurate)
     # odd rounding since only even numbered gifs exist
@@ -101,6 +103,9 @@ for $week (-1..$globopts{weeks}-1) {
     my($x2, $y2) = ($x1+$xwid, $y1+$ywid);
     # bottom left of where day is printed
     my($dx, $dy) = ($x1+$xpos*$xwid, $y1+$ypos*$ywid);
+
+    # JD bottom right (do I really want this?)
+    print A join(",", "stringup",64,64,64,$x1+$xwid-12,$y1+$ywid-2,"medium",$jd), "\n";
 
     # must come before red box to avoid overlap
     print A "copy ",join(",", $x1+70, $y1+15, 0, 0, 21, 21, "/home/barrycarter/20140716/m$moonage.gif.temp"),"\n";
