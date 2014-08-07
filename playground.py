@@ -19,8 +19,9 @@ print x,y,z
 
 
 for t in range (2456876,2456876+1000):
-    x,y,z = eph.position('mercury', t) - eph.position('jupiter', t)
-    eq = -0.0145987218963993*x+-0.430326550289791+0.902555226805917*z
+    mx,my,mz = eph.position('mercury', t)
+    jx,jy,jz = eph.position('jupiter', t)
+    eq = -0.0145987218963993*(jx-mx)-0.430326550289791*(jy-my)+0.902555226805917*(jz-mz)
     print "ALPHA",t,eq
 
 exit()
