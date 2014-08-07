@@ -14,8 +14,14 @@ eph = Ephemeris(de421)
 # x, y, z = eph.position('saturn', 2456656.501)
 # x, y, z = eph.position('mars', 2456658.500000000);
 # x, y, z = eph.position('mercury', 2414992.5);
-x, y, z = eph.position('mercury', 2456656.5+2)
+x,y,z = eph.position('mercury', 2456876) - eph.position('jupiter', 2456876)
 print x,y,z
+
+
+for t in range (2456876,2456876+1000):
+    x,y,z = eph.position('mercury', t) - eph.position('jupiter', t)
+    eq = -0.0145987218963993*x+-0.430326550289791+0.902555226805917*z
+    print "ALPHA",t,eq
 
 exit()
 

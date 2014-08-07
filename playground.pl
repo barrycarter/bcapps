@@ -16,7 +16,7 @@
 
 require "/usr/local/lib/bclib.pl";
 # below lets me override functions when testing
-require "/home/barrycarter/BCGIT/bclib-playground.pl";
+# require "/home/barrycarter/BCGIT/bclib-playground.pl";
 # require "bc-astro-lib.pl";
 require "bc-weather-lib.pl";
 # starting to store all my private pws, etc, in a single file
@@ -32,6 +32,49 @@ use Algorithm::GoldenSection;
 use Inline::Python;
 use FFI::Raw;
 use v5.10;
+
+# @mat = matrixmult([[1,0,0], [0,1,0], [0,0,1]], [[1],[2],[3]]);
+# debug("MAT",unfold(@mat));
+
+# ($x, $y, $z) = (3.99167512e+08, -5.71599972e+08, -2.48953490e+08);
+
+# jupiter pole in ICRS terms, in radians
+$ra = 268.057*$DEGRAD;
+$dec = 64.496*$DEGRAD;
+
+debug(sph2xyz($ra, $dec, 1));
+
+# -0.0145987218963993
+# -0.430326550289791
+# 0.902555226805917
+
+die "TESTING";
+
+# debug("PI: $PI");
+
+@matx = rotrad(-$ra, "z");
+debug("MATX", unfold(@matx));
+@res1 = matrixmult(\@matx, [[$x], [$y], [$z]]);
+debug("APPLY", unfold(@res1));
+@maty = rotrad(-$dec, "y");
+debug("MATY", unfold(@maty));
+@matfinal = matrixmult(\@maty, \@matx);
+debug("MATFINAL",unfold(@matfinal));
+debug("XYZ: $x $y $z");
+@f = matrixmult(\@matfinal, [[$x],[$y],[$z]]);
+debug(unfold(@f));
+
+# debug(unfold(@matfinal));
+
+die "TESTING";
+
+debug(unfold(matrixmult(\@mat, [[$x,$y,$z]])));
+
+# debug("ATAN", atan2($y,$x)*$RADDEG, atan2($z,sqrt($x*$x+$y*$y))*$RADDEG);
+
+
+
+die "TESTING";
 
 chdir("/usr/local/etc/metawiki");
 my(@res) = diffuwr("pbs3", "pbs3-test");

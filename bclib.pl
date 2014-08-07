@@ -1358,7 +1358,12 @@ sub hermione {
 
 =item matrixmult(\@x,\@y)
 
-Multiply matrices (2D arrays) x and y
+Multiply matrices (2D arrays) x and y. To multiply a matrix by a
+vector do something like:
+
+matrixmult(\@mat, [[$x],[$y],[$z]])
+
+so that the second argument is a reference to an array of references
 
 =cut
 
@@ -1371,7 +1376,7 @@ sub matrixmult {
     my($share)=$#b;
     my(@ans);
 
-    debug("ROWS: $rows, COLS: $cols");
+    debug("ROWS: $rows+1, COLS: $cols+1");
 
     for $i (0..$rows) {
 	for $j (0..$cols) {
