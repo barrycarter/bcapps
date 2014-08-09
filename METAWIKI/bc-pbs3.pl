@@ -14,8 +14,8 @@ my($pagedir) = "/usr/local/etc/metawiki/pbs3/";
 # aliases
 
 # not always necessary to run each of these every time
-# pbs_run_querys();
-# pbs_create_anno();
+pbs_run_querys();
+pbs_create_anno();
 pbs_create_pages();
 
 # runs the queries created by various other subroutines

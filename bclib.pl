@@ -1452,6 +1452,7 @@ Compute the Greenwich Mean Siderial Time at Unix time t
 =cut
 
 sub gmst {
+  debug("GMST");
   my($t)=@_;
   unless ($t) {$t = time();}
 

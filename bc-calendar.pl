@@ -92,6 +92,12 @@ for $week (-1..$globopts{weeks}-1) {
     my($stardate) = strftime("%Y%m%d", localtime($date));
     my($jd) = jd2unix($date, "unix2jd");
 
+    # sidereal time at noon
+    # TODO: this assumes MT = GMT-6 which isn't always true
+    # TODO: don't hardcode ABQ longitude
+    my($sd) = gmst($date+6*3600)-106.651138463684/15.;
+    $sd = sprintf("%02dh%02dm",int($sd), round($sd*60%60));
+
     # moon age (this is not 100% accurate)
     # odd rounding since only even numbered gifs exist
     my($moonage) = sprintf("%0.3d", round(180*fmodp(($date-$newmoon)/2551442.889600,1))*2);
@@ -104,8 +110,10 @@ for $week (-1..$globopts{weeks}-1) {
     # bottom left of where day is printed
     my($dx, $dy) = ($x1+$xpos*$xwid, $y1+$ypos*$ywid);
 
+    # sidereal time
+    print A join(",", "string",64,64,64,$x1+4,$y1+$ywid-9,"tiny",$sd),"\n";
     # JD bottom right (do I really want this?)
-    print A join(",", "stringup",64,64,64,$x1+$xwid-12,$y1+$ywid-2,"medium",$jd), "\n";
+    print A join(",", "string",64,64,64,$x1+$xwid-35,$y1+$ywid-9,"tiny",$jd), "\n";
 
     # must come before red box to avoid overlap
     print A "copy ",join(",", $x1+70, $y1+15, 0, 0, 21, 21, "/home/barrycarter/20140716/m$moonage.gif.temp"),"\n";

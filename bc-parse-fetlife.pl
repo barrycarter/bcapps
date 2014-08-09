@@ -5,7 +5,8 @@
 require "/usr/local/lib/bclib.pl";
 
 # fixed random seed (we need predictability while testing)
-srand(20140321);
+# tweaked this slightly since initial random seed gave bad first result
+srand(20140);
 
 # print the schema
 print << "MARK";
@@ -19,24 +20,68 @@ BEGIN TRANSACTION;
 MARK
 ;
 
-@files = glob("/home/barrycarter/20140321/user*.html");
+# this is for a newer pull on 20140808
+@files = glob("/home/barrycarter/20140808/[0-9]*");
 
 for $i (randomize(\@files)) {
   # read the file
   $all = read_file($i);
 
+  debug("ALL($i): $all");
+
+  # TODO: add group memberships
+
   # if the title is identically "Home - FetLife", something went wrong
   $all=~s%<title>(.*?)</title>%%s;
   $title = $1;
-  if ($title eq "Home - FetLife") {next;}
+  if ($title eq "Home - FetLife") {
+    warn "BAD FILE: $i";
+    next;
+  }
+
 
   # wipe out variables
   %data = ();
   ($name, $age, $gender, $role, $location, $user, $fetishes) = ();
 
-  # user number is only in filename
-  $i=~/\/user(\d+)\.html$/;
-  ($user) = $1;
+  # get groups
+  while ($all=~s/<li><a href="\/groups\/(\d+)">(.*?)<\/a><\/li>//s) {
+    $data{$title}{groups}{$2} = $1;
+  }
+
+  # get fetishes in better way
+  while ($all=~s/(into|curious about):(.*)$//im) {
+    my($type, @list) = ($1, split(/\,/, $2));
+    for $j (@list) {
+      $j=~s/<a href="\/fetishes\/(\d+)">(.*?)<\/a>//;
+      my($na, $nu) = ($1, $2);
+      $data{$i}{fetishes}{$na}{number} = $nu;
+      $j=~s/<span class="quiet smaller">\((.*?)\)<\/span>//;
+      $data{$i}{fetishes}{$na}{role} = $1;
+      }
+    }
+
+  debug(unfold(\%data));
+
+die "TESTING";
+
+  # TODO: this get fetishes in timeline which might be bad/noncurrent
+#  while ($all=~s/$title (.*?) <a href="\/fetishes\/(\d+)">(.*?)<\/a>//s) {
+  while ($all=~s/<a href="\/fetishes\/(\d+)">(.*?)<\/a>//s) {
+    debug("FET: $1, $2, $3");
+  }
+
+
+
+
+#                                <li><a href="/groups/311">FetLife Announcements</a></li>
+
+
+  # user number in filename
+  $user = $i;
+  $user=~s/.*\///g;
+  chomp($user);
+  debug("USER: $user");
 
   # name, age, and orientation/gender
   # I have confirmed names never have spaces
@@ -75,13 +120,11 @@ for $i (randomize(\@files)) {
   for $j ("into", "curiousabout") {
     # ones where role is indicated
     while ($data{$j}=~s%<a href="/fetishes/\d+">([^>]*?)</a> <span class="quiet smaller">(.*?)</span>%%) {
-      print "INSERT INTO fetishes (user, type, fetish, role) VALUES
-           ($user, '$j', '$1', '$2');\n";
+      print "INSERT INTO fetishes (user, type, fetish, role) VALUES ($user, '$j', '$1', '$2');\n";
     }
     # ones where role is NOT indicated
     while ($data{$j}=~s%<a href="/fetishes/\d+">([^>]*?)</a>%%) {
-      print "INSERT INTO fetishes (user, type, fetish, role) VALUES
-           ($user, '$j', '$1', 'NA');\n";
+      print "INSERT INTO fetishes (user, type, fetish, role) VALUES ($user, '$j', '$1', 'NA');\n";
     }
   }
 
@@ -99,13 +142,11 @@ for $i (randomize(\@files)) {
 
   # need '' around age in case its blank
   # TODO: change date from weird format to better format
-  print "INSERT INTO kinksters (name, age, gender, role, location, user,
-         orientation, active, latest)
-         VALUES ('$name', '$age', '$gender', '$role', '$location', $user,
-         '$data{orientation}', '$data{active}', '$date');\n";
+  print "INSERT INTO kinksters (name, age, gender, role, location, user, orientation, active, latest) VALUES ('$name', '$age', '$gender', '$role', '$location', $user, '$data{orientation}', '$data{active}', '$date');\n";
 
   # other frequently used fields, "relationship status" and "D/s
   # relationship status", are multivalued
+  die "TESTING";
 
 }
 
