@@ -2,6 +2,11 @@
 
 # parses a fetlife user page
 
+# list of files by size (assuming larger user pages will have more items)
+# \ls -ls | sort -nr | perl -anle 'print $F[-1]' | egrep -iv '[a-z]'
+
+# TODO: make the warnings more 'vocal' and remove warnings that are unneeded
+
 require "/usr/local/lib/bclib.pl";
 
 # fixed random seed (we need predictability while testing)
@@ -21,9 +26,10 @@ MARK
 ;
 
 # this is for a newer pull on 20140808
-@files = glob("/home/barrycarter/20140808/[0-9]*");
+# @files = glob("/home/barrycarter/20140808/[0-9]*");
+@files = split(/\n/, read_file("/home/barrycarter/20140808/filesbysize.txt"));
 
-for $i (randomize(\@files)) {
+for $i (@files) {
   if (++$count>20) {warn "TESTING"; last}
 
   # read the file
@@ -49,9 +55,6 @@ for $i (randomize(\@files)) {
 
   # number of friends (may have commas)
   if ($all=~s%Friends <span class="smaller">\(([\d\,]+)\)</span>%%s) {
-#  debug("ALL: $all");
-#  if ($all=~s%<span class=\"smaller\">(.*?)</span>%%s) {
-    debug("MATCH!");
     $data{$user}{nfriends} = $1;
     $data{$user}{nfriends}=~s/,//g;
   }
@@ -69,6 +72,7 @@ for $i (randomize(\@files)) {
   $all=~s/\&quot\;/\"/sg;
 
   # get groups
+  # TODO: exclude activity feed!
   while ($all=~s/<li><a href="\/groups\/(\d+)">(.*?)<\/a><\/li>//s) {
     $data{$user}{groups}{$2} = $1;
   }
@@ -95,55 +99,57 @@ for $i (randomize(\@files)) {
   while ($all=~s%<tr>\s*<th[^>]*>(.*?)</th>\s*<td>(.*?)</td>\s*</tr>%%is) {
     ($key, $val) = (lc($1),$2);
     $key=~s/:\s*$//isg;
-    $key=~s/\s//isg;
+    $key=~s/[\/\s]//isg;
     $val=~s/\'//isg;
     $data{$user}{$key} = $val;
   }
 
-#  debug("DATA($user):",unfold(\%data));
+  # parse out relationshipstatus + dsrelationshipstatus
+  for $j ("relationshipstatus", "dsrelationshipstatus") {
+    while ($data{$user}{$j}=~s%<li>(.*?)</li>%%) {
+      my($rel) = $1;
+#      debug("REL: $rel");
+      # need underscore below to avoid overwriting variable we're reading from
+      if ($rel=~s%^(.*?)\s*<a href="/users/(\d+)">.*?</a>%%m) {
+#	debug("SETTING: $user/$j/$1/$2");
+	$data{$user}{"_$j"}{$1}{$2} = 1;
+      } else {
+#	debug("SETTING: $user/$j/$rel/NULL");
+	$data{$user}{"_$j"}{$rel}{0} = 1;
+      }
+    }
+    # fix the hash (hopefully)
+    $data{$user}{$j} = $data{$user}{"_$j"};
+    delete $data{$user}{"_$j"};
+  }
 
-next; warn "TESTING";
+  # and islookingfor
+  for $j (split("<br/>", $data{$user}{islookingfor})) {
+    $data{$user}{"_islookingfor"}{$j} = 1;
+  }
+  # and fix
+  $data{$user}{islookingfor} = $data{$user}{"_islookingfor"};
+  delete $data{$user}{"_islookingfor"};
 
-  ($name, $age, $gender, $role, $location, $user, $fetishes) = ();
-
-  # since I only searched NM, the tail of the location is irrelevant
-  $location=~s/, new mexico, united states$//i;
-  # should really fix unicode more genrically, this works for n tilde only
-  # only necessarily for Espanola <h>which barely qualifies as a city</h>
-  $location=~s/\xe2\x88\x9a\xc2\xb1/n/isg;
-
-  # latest activity (just want to know when user was last active, only
-  # need most recent activity, not all)
-  $all=~s%<ul id="mini_feed">(.*?)</ul>%%is;
-  $activity = $1;
-  $activity=~s%<li>\s*(.*?)\s*</li>%%s;
-  $act = $1;
-  # find date of last activity
-  $act=~s%<span class="quiet small">(.*?)</span>%%s;
-  $date = $1;
-  # some dates are hyperlinked, sigh
-  $date=~s/<(.*?)>//isg;
-
-  # need '' around age in case its blank
-  # TODO: change date from weird format to better format
-#  print "INSERT INTO kinksters (name, age, gender, role, location, user, orientation, active, latest) VALUES ('$name', '$age', '$gender', '$role', '$location', $user, '$data{orientation}', '$data{active}', '$date');\n";
-
-  # other frequently used fields, "relationship status" and "D/s
-  # relationship status", are multivalued
-#  die "TESTING";
-
+  # latest activity (could get all activity on front page, but no)
+  $all=~s%<span class="quiet small">(.*? ago)</span>%%;
+  # leaving this in "fetlife format", like "3 hours ago"
+  $data{$user}{latestactivity} = $1;
 }
-
-# print "COMMIT;\n";
 
 for $i (sort keys %data) {
   debug("USER: $i");
-  debug("KEYS", sort keys %{$data{$i}});
+#  debug("KEYS", sort keys %{$data{$i}});
   for $j ("name", "age", "gender", "role", "city", "orientation", "active",
 	 "npics", "nfriends") {
+    # the delete below is just so we can see what keys are unused
     debug("$j: $data{$i}{$j}");
+    delete $data{$i}{$j};
   }
-  debug(); # blank line
+  
+  for $j (sort keys %{$data{$i}}) {
+    debug("$j (AFTER): $data{$i}{$j}");
+  }
 }
 
 =item views
