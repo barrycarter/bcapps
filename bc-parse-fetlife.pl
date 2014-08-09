@@ -9,19 +9,15 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# fixed random seed (we need predictability while testing)
-# tweaked this slightly since initial random seed gave bad first result
-srand(20140);
+system("rm -f /tmp/bcpfl.db");
+open(A,"|sqlite3 /tmp/bcpfl.db");
 
 # print the schema
-print << "MARK";
-DROP TABLE IF EXISTS kinksters;
-DROP TABLE IF EXISTS fetishes;
-CREATE TABLE kinksters (name, age INT, gender, role, location, user INT,
- orientation, active, latest);
+print A << "MARK";
+CREATE TABLE kinksters (userid INT, name, age INT, gender, role, city,
+ orientation, active, latest, npics INT, nfriends INT);
 CREATE TABLE fetishes (user INT, type, fetish, role);
-VACUUM;
-BEGIN TRANSACTION;
+BEGIN;
 MARK
 ;
 
@@ -38,10 +34,19 @@ for $i (@files) {
   # get rid of footer
   $all=~s/<em>going up\?<\/em>.*$//s;
 
+  # latest activity (could get all activity on front page, but no)
+  $all=~s%<span class="quiet small">(.*? ago)</span>%%;
+  # leaving this in "fetlife format", like "3 hours ago"
+  $data{$user}{latestactivity} = $1;
+
+  # after getting latest activity, nuke the activity feed, it interferes
+  $all=~s%<ul id="mini_feed">(.*?)</ul>%%;
+
   # user number in filename
   $user = $i;
   $user=~s/.*\///g;
-  debug("USER: $user");
+  # below is sort of pointless
+  $data{$user}{id} = $user;
 
   # title (= username)
   $all=~s%<title>(.*?) - Kinksters - FetLife</title>%%s||warn("BAD TITLE: $all");
@@ -79,17 +84,24 @@ for $i (@files) {
 
   # get fetishes in better way
   while ($all=~s/(into|curious about):(.*)$//im) {
-    # TODO: csv is broken in some cases (quoted stuff), need to fix
-#    debug("2: $2");
-    my($type, @list) = ($1, csv($2));
-#    debug("TYPE: $type, LIST",@list);
-    for $j (@list) {
-      $j=~s/<a href="\/fetishes\/(\d+)">(.*?)<\/a>//;
-      my($nu, $na) = ($1, $2);
-      $data{$user}{fetishes}{$na}{number} = $nu;
-      $j=~s/<span class="quiet smaller">\((.*?)\)<\/span>//;
-      $data{$user}{fetishes}{$na}{role} = $1;
+    my($type, $fetishes) = ($1, $2);
+
+    # look for ones with role attached first
+    while ($fetishes=~s%<a href="/fetishes/(\d+)">(.*?)</a> <span class="quiet smaller">\((.*?)\)</span>%%) {
+      $data{$user}{fetish}{$type}{$2} = $3;
+      $meta{fetish}{$2}{number} = $1;
     }
+
+    # ones without a role
+    while ($fetishes=~s%<a href="/fetishes/(\d+)">(.*?)</a>%%) {
+      $data{$user}{fetish}{$type}{$2} = 1;
+      $meta{fetish}{$2}{number} = $1;
+    }
+
+    # make sure we got them all
+    $fetishes=~s/<.*?>//g;
+    $fetishes=~s/[\,\s\.]//g;
+    if ($fetishes) {warn "LEFTOVER FETISHES: $fetishes";}
   }
 
   # table fields with headers/colons
@@ -108,13 +120,10 @@ for $i (@files) {
   for $j ("relationshipstatus", "dsrelationshipstatus") {
     while ($data{$user}{$j}=~s%<li>(.*?)</li>%%) {
       my($rel) = $1;
-#      debug("REL: $rel");
       # need underscore below to avoid overwriting variable we're reading from
       if ($rel=~s%^(.*?)\s*<a href="/users/(\d+)">.*?</a>%%m) {
-#	debug("SETTING: $user/$j/$1/$2");
 	$data{$user}{"_$j"}{$1}{$2} = 1;
       } else {
-#	debug("SETTING: $user/$j/$rel/NULL");
 	$data{$user}{"_$j"}{$rel}{0} = 1;
       }
     }
@@ -131,24 +140,28 @@ for $i (@files) {
   $data{$user}{islookingfor} = $data{$user}{"_islookingfor"};
   delete $data{$user}{"_islookingfor"};
 
-  # latest activity (could get all activity on front page, but no)
-  $all=~s%<span class="quiet small">(.*? ago)</span>%%;
-  # leaving this in "fetlife format", like "3 hours ago"
-  $data{$user}{latestactivity} = $1;
 }
 
 for $i (sort keys %data) {
   debug("USER: $i");
 #  debug("KEYS", sort keys %{$data{$i}});
-  for $j ("name", "age", "gender", "role", "city", "orientation", "active",
-	 "npics", "nfriends") {
+  for $j ("id", "name", "age", "gender", "role", "city", "orientation",
+	  "active", "npics", "nfriends", "latestactivity") {
     # the delete below is just so we can see what keys are unused
     debug("$j: $data{$i}{$j}");
     delete $data{$i}{$j};
   }
-  
+
+  for $j ("groups", "dsrelationshipstatus", "relationshipstatus", "fetish",
+	 "islookingfor") {
+    for $k (sort keys %{$data{$i}{$j}}) {
+      debug("BETA: $i $j $k $data{$i}{$j}{$k}");
+    }
+    delete $data{$i}{$j};
+  }
+
   for $j (sort keys %{$data{$i}}) {
-    debug("$j (AFTER): $data{$i}{$j}");
+    debug("$j (AFTER($i)):", unfold($data{$i}{$j}));
   }
 }
 
