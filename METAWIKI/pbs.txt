@@ -2093,6 +2093,7 @@ MULTIREF [[title::Larry's mother]] [[notes::Larry's mother dies on [[2005-05-13]
 2014-08-07 [[character::Rat+Goat+Pastis+Jim Davis (human)]] [[cameo::Garfield (Garfield)]]
 2014-08-08 [[character::Pig+Pastis+Jim Davis (human)]] [[cameo::Garfield (Garfield)]]
 2014-08-09 [[character::Pastis+Jim Davis (human)]] [[cameo::Garfield (Garfield)]]
+2014-08-10 [[character::Pig+Zebra+ZZE]]
 </data>
 
 # 2007-03-30 pig's mayors isnt LGD? (mayor in rehab)
