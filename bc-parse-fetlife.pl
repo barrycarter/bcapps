@@ -10,11 +10,37 @@
 require "/usr/local/lib/bclib.pl";
 
 # this is for a newer pull on 20140808
-# @files = glob("/home/barrycarter/20140808/[0-9]*");
+$dir = "/home/barrycarter/20140808";
+
+# metadata
+for $i (glob ("$dir/kinksters\?page\=*")) {
+  my($all) = read_file($i);
+
+  # page number
+  $i=~s/(\d+)$//;
+  my($page) = $1;
+  debug("PAGE: $page");
+
+  # users
+  # TODO: I can get more info than this, even for inactive users
+  while ($all=~s%<a href="/users/(\d+)">(.*?)</a>%%) {
+    # ignore $2 with tags
+    if ($2=~/</) {next;}
+    $data{$1}{name} = $2;
+    $data{$1}{page} = $page;
+  }
+}
+
+# @files = glob("$dir/[0-9]*");
 @files = split(/\n/, read_file("/home/barrycarter/20140808/filesbysize.txt"));
 
-for $i (@files) {
-  if (++$count>20) {warn "TESTING"; last}
+for $i (reverse @files) {
+  ++$count;
+  debug("FILE: $i ($count/".scalar(@files).")");
+#  if (++$count>20) {warn "TESTING"; last}
+
+  # TODO: record page number for each user and username even for
+  # inactive profiles
 
   # user number in filename
   $user = $i;
@@ -24,6 +50,12 @@ for $i (@files) {
 
   # read the file
   $all = read_file($i);
+
+  # inactive profile
+  if ($all=~s%You are being <a href="https://fetlife.com/home">redirected</a>.</body></html>%%) {
+    $data{$user}{latestactivity} = "inactive";
+    next;
+  }
 
   # get rid of footer
   $all=~s/<em>going up\?<\/em>.*$//s;
@@ -55,6 +87,12 @@ for $i (@files) {
     $data{$user}{npics}=~s/,//g;
   }
 
+  # and vids
+  if ($all=~s/view vids.*?\(([\,\d]+)\)//) {
+    $data{$user}{nvids} = $1;
+    $data{$user}{nvids}=~s/,//g;
+  }
+
   # number of friends (may have commas)
   if ($all=~s%Friends <span class="smaller">\(([\d\,]+)\)</span>%%s) {
     $data{$user}{nfriends} = $1;
@@ -80,7 +118,7 @@ for $i (@files) {
   }
 
   # get fetishes in better way
-  while ($all=~s/(into|curious about):(.*)$//im) {
+  while ($all=~s/(Into|Curious about):(.*)$//m) {
     my($type, $fetishes) = ($1, $2);
 
     # look for ones with role attached first
@@ -145,27 +183,36 @@ open(A,"|sqlite3 /tmp/bcpfl.db");
 # print the schema
 print A << "MARK";
 CREATE TABLE kinksters (id INT, name, age INT, gender, role, city,
- orientation, active, latestactivity, npics INT, nfriends INT);
-CREATE TABLE fetishes (user INT, type, fetish, role);
+ orientation, active, latestactivity, npics INT, nfriends INT, page INT,
+ nvids INT);
+CREATE TABLE triples (user INT, key, value, extra);
+CREATE TABLE meta (type, name, number INT);
 BEGIN;
 MARK
 ;
 
+# keys (columns) for the main table, also in "insertable form"
+my(@keys) = ("id", "name", "age", "gender", "role", "city", "nvids",
+"orientation", "active", "npics", "nfriends", "latestactivity", "page");
+my($keys) = join(", ",@keys);
+
 for $i (sort keys %data) {
   debug("USER: $i");
-#  debug("KEYS", sort keys %{$data{$i}});
-  for $j ("id", "name", "age", "gender", "role", "city", "orientation",
-	  "active", "npics", "nfriends", "latestactivity") {
-    # the delete below is just so we can see what keys are unused
-    debug("$j: $data{$i}{$j}");
+
+  my(@vals);
+  for $j (@keys) {
+    push(@vals, "'$data{$i}{$j}'");
     delete $data{$i}{$j};
   }
+  my($vals) = join(", ",@vals);
+
+  print A "INSERT INTO kinksters ($keys) VALUES ($vals);\n";
 
   # cases with 4 levels of hashing
   for $j ("dsrelationshipstatus", "relationshipstatus", "fetish") {
     for $k (sort keys %{$data{$i}{$j}}) {
       for $l (sort keys %{$data{$i}{$j}{$k}}) {
-	debug("BETA: $i $j $k $l");
+	print A "INSERT INTO triples VALUES ('$i', '$j', '$k', '$l');\n"
       }
     }
     delete $data{$i}{$j};
@@ -173,7 +220,7 @@ for $i (sort keys %data) {
 
   for $j ("groups", "islookingfor", "event") {
     for $k (sort keys %{$data{$i}{$j}}) {
-      debug("BETA: $i $j $k $data{$i}{$j}{$k}");
+      print A "INSERT INTO triples VALUES ('$i', '$j', '$k', '$data{$i}{$j}{$k}');\n"
     }
     delete $data{$i}{$j};
   }
@@ -183,14 +230,22 @@ for $i (sort keys %data) {
   }
 }
 
-=item views
+for $i (sort keys %meta) {
+  debug("I: $i");
+  for $j (sort keys %{$meta{$i}}) {
+    print A "INSERT INTO meta VALUES ('$i', '$j', '$meta{$i}{$j}{number}');\n";
+  }
+}
 
-Useful view:
+print A "COMMIT;\n";
 
-DROP VIEW IF EXISTS recent;
-
-CREATE VIEW recent AS SELECT * FROM kinksters WHERE latest LIKE
-'%minute%' OR latest LIKE '%hour%' OR latest LIKE '%day%' OR (latest
-LIKE '%month%' AND latest NOT LIKE '%months%');
-
-=cut
+# a useful view
+print A << "MARK"
+CREATE VIEW recent AS
+SELECT * FROM kinksters WHERE latestactivity NOT IN
+ ('', 'about 2 years ago', 'about 3 years ago', 'almost 2 years ago',
+'almost 3 years ago', 'inactive', 'over 1 year ago', 'over 2 years ago',
+'over 3 years ago');
+MARK
+;
+close(A);
