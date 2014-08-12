@@ -34,6 +34,8 @@ TODO (global todo's not specific to a given strip):
 
   - Why are MULTIREF30.mw and MULTIREF43.mw being created?
 
+  - MULTIREFs should be mentioned on strip pages
+
   - Read * comments I put in CHARLIST
 
   - Character list should include species, subspecies, profession, and
@@ -1851,7 +1853,7 @@ MULTIREF [[title::Fanny rub]] [[notes::[[Rat]] and [[Stephan Pastis]] seem horri
 2013-08-10 [[newspaper::The Times]]
 2013-08-12 [[character::Comic Police (human)]]
 2013-08-14-2013-08-16,2013-08-19-2013-08-21,2013-08-30 [[storyline::[[character::Rat]]'s Beer Land]]
-2014-08-02,2013-08-21,2013-06-03,2013-06-09,2013-07-09,2013-12-14,2014-03-05,2012-10-19,2014-03-17,2013-02-19,2012-10-20,2012-10-23,2012-10-26,2013-07-19,2013-08-05,2013-02-05,2014-03-07,2014-03-19,2014-03-23,2014-04-22,2013-02-21,2013-04-16,2013-06-08,2014-04-16,2013-02-07 [[storyline::[[character::Lemmings]]]] [[Lemmings::species::lemming (group)]]
+2014-08-12,2014-08-02,2013-08-21,2013-06-03,2013-06-09,2013-07-09,2013-12-14,2014-03-05,2012-10-19,2014-03-17,2013-02-19,2012-10-20,2012-10-23,2012-10-26,2013-07-19,2013-08-05,2013-02-05,2014-03-07,2014-03-19,2014-03-23,2014-04-22,2013-02-21,2013-04-16,2013-06-08,2014-04-16,2013-02-07 [[storyline::[[character::Lemmings]]]] [[Lemmings::species::lemming (group)]]
 2013-08-23 [[character::Pig+Goat+[[Goat::neighbor::Smith 20130823 (human)]]]]
 2013-08-25 [[character::Pig+Goat+Rat+[[Pig::friend::Patty (human)]]]]
 2013-08-26-2013-08-28,2013-08-30 [[storyline::[[character::{{wp|George Washington}}]]]] [[George Washington::species::human]]
@@ -2095,6 +2097,7 @@ MULTIREF [[title::Larry's mother]] [[notes::Larry's mother dies on [[2005-05-13]
 2014-08-09 [[character::Pastis+Jim Davis (human)]] [[cameo::Garfield (Garfield)]]
 2014-08-10 [[character::Pig+Zebra+ZZE]]
 2014-08-11 [[character::Goat+Rat+Pastis+Pig]] [[meta::I don't count this as a Rat undeath, since his severed head was still speaking on [[2014-08-07]]
+2014-08-12 [[character::Bob 20140812 (lemming)]] [[location::Lemmings Leap]]
 </data>
 
 # 2007-03-30 pig's mayors isnt LGD? (mayor in rehab)
