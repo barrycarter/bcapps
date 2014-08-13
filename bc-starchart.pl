@@ -75,7 +75,33 @@ for $i (@draw) {
 
   if ($objs[0] eq "line") {
     # convert ra and dec (currently, two coords per object)
+    push(@coords, [@objs[1..2], @objs[3..4]]);
+  } elsif ($objs[0] eq "fcircle" || $objs[0] eq "setpixel") {
+    push(@coords, [@objs[1..2]]);
+  } elsif ($objs[0] eq "string") {
+    push(@coords, [@objs[4..5]]);
+  } else {
+    warn("$objs[0]: not handled");
+  }
+}
+
+my(%coords) = cs2cs([@coords], "merc", sub {$_[0]*15,$_[1];}, sub {$globopts{xwid}*($_[0]/40000000+1), $globopts{ywid}*($_[1]/40000000+1), 0;});
+
+debug(unfold(\%coords));
+
+# now once more through the coords
+for $i (@draw) {
+  my(@objs) = split(/\,|\s/, $i);
+
+  if ($objs[0] eq "line") {
+    # convert ra and dec (currently, two coords per object)
+    debug("COORDS: $coords{[$objs[1],$objs[2]]}");
+
+    next;warn("TESTING");
+    my(%coords) = %{$hash{"$newra{$objs[1]},$objs[2]"}};
+    debug("HASH",%coords);
     push(@coords, @objs[1..4]);
+    debug("LION",@objs[1..4]);
   } elsif ($objs[0] eq "fcircle" || $objs[0] eq "setpixel") {
     push(@coords, @objs[1..2]);
   } elsif ($objs[0] eq "string") {
@@ -85,14 +111,7 @@ for $i (@draw) {
   }
 }
 
-# convert the coords to latitude/longitude and send to cs2cs
-while (@coords) {
-  my($ra,$dec) = (shift(@coords), shift(@coords));
-  $ra*=15;
-  push(@latlon, "$ra,$dec");
-}
-
-debug(cs2cs([@latlon], "merc"));
+debug(unfold(\%hash));
 
 # debug(@latlon);
 # debug(@coords);
@@ -279,50 +298,48 @@ sub draw_grid {
 
 # TODO: put this into bclib.pl
 
-=item cs2cs(\@lonlat, $proj, $options)
+=item cs2cs(\@lonlat, $proj, \&pre, \&post, $options)
 
-Given a list of longitude/latitudes (each entry being "lon,lat" as a
-literal string with a comma in it), return the mapping of these
-longitude/latitudes under cs2cs projection $proj as a hash such that:
+Given a list of longitude/latitudes (each entry being a list of two
+elements), return the mapping of these longitude/latitudes under cs2cs
+projection $proj as a hash such that the return value is a hash that
+converts these pairs to triples [x,y,z]
 
-$rethash{"$lon,$lat"}{x} = the x coordinate of the transform
-$rethash{"$lon,$lat"}{y} = the y coordinate of the transform
-$rethash{"$lon,$lat"}{z} = the z coordinate of the transform
+&pre: apply this function (expected to take two values) to $lon, $lat
+before converting
 
-A simple wrapper around cs2cs.
-
-$options: [NOT YET IMPLEMENTED]
-
-  fx=f: apply the function f to the x coordinates before returning
-  fy=f: apply the function f to the y coordinates before returning
-  fz=f: apply the function f to the z coordinates before returning
+&post: apply this function (expected to take three values) to x/y/z
+before returning
 
 =cut
 
 sub cs2cs {
-  my($listref, $proj, $options) = @_;
-  # by default, apply the id function to x,y,z
-  my(%opts) = parse_form("fx=id&fy=id&fz=id&$options");
+  my($listref, $proj, $pre, $post) = @_;
+  my(@str);
   my(@lonlat) = @{$listref};
-  my($str);
   my(%rethash);
-  my(%iscoord);
+  my($count) = 0;
 
   # write data to file
   for $i (@lonlat) {
-    $i=~s/,/ /;
-    $str .= "$i\n";
+    my(@coords) = @$i;
+    # apply the $pre function
+    if ($pre) {@coords=&$pre(@coords);}
+    push(@str, join(" ",@coords));
   }
 
   my($tmpfile) = my_tmpfile2();
-  write_file($str, $tmpfile);
+  write_file(join("\n",@str)."\n", $tmpfile);
 
-  my($out,$err,$res) = cache_command("cs2cs -E -e 'ERR ERR' +proj=lonlat +to +proj=$proj < $tmpfile","age=86400");
+  my($out,$err,$res) = cache_command("cs2cs -e 'ERR ERR' +proj=lonlat +to +proj=$proj < $tmpfile","age=86400");
   for $i (split(/\n/,$out)) {
+    # xyz values
     my(@fields) = split(/\s+/,$i);
-    $rethash{"$fields[0],$fields[1]"}{x} = $fields[2];
-    $rethash{"$fields[0],$fields[1]"}{y} = $fields[3];
-    $rethash{"$fields[0],$fields[1]"}{z} = $fields[4];
+    # apply post
+    if ($post) {@fields = &$post(@fields);}
+    # we need the original lon/lat (before translation) for hash
+    # TODO: can't seem to make hash key an array?
+    $rethash{join(",",@{$lonlat[$count++]})} = [@fields];
   }
   return %rethash;
 }
