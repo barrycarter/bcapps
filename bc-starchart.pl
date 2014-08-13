@@ -32,27 +32,12 @@ system("mkdir -p /tmp/bcstarchart");
 chdir("/tmp/bcstarchart");
 $gitdir = "/home/barrycarter/BCGIT/";
 
+# proj4 stuff
+# $proj = "ortho"; $div = 6378137; $pre = \&pre;
+
 # defaults
 $now = time();
 defaults("xwid=1024&ywid=768&fill=0,0,0&time=$now&stars=1&lines=1&planets=1&planetlabel=1&info=1&gridlabel=1");
-
-# we use these a LOT, so putting them into global vars
-($xwid, $ywid) = ($globopts{xwid}, $globopts{ywid});
-
-# half width and height
-$halfwid = $xwid/2;
-$halfhei = $ywid/2;
-
-# minimum dimension (so circle fits)
-$mind = min($xwid, $ywid);
-
-# the X graticule starts at $xwid/2-$mind/2, ends at $xwid/2+$mind/2
-($xs, $xe) = ($xwid/2-$mind/2, $xwid/2+$mind/2);
-
-# similarly for the y graticule
-($ys, $ye) = ($ywid/2-$mind/2, $ywid/2+$mind/2);
-
-debug("HW: $halfwid, $halfhei");
 
 # write to fly file
 open(A, ">map.fly");
@@ -66,7 +51,7 @@ if ($globopts{fill}=~/transparent/) {
 
 print A << "MARK";
 new
-size $xwid,$ywid
+size $globopts{xwid},$globopts{ywid}
 fill 0,0,$globopts{fill}
 MARK
     ;
@@ -283,4 +268,54 @@ sub draw_grid {
       }
     }
   }
+}
+
+# TODO: put this into bclib.pl
+
+=item cs2cs(\@lonlat, $proj, $options)
+
+Given a list of longitude/latitudes (each entry being "lon,lat" as a
+literal string with a comma in it), return the mapping of these
+longitude/latitudes under cs2cs projection $proj as a hash such that:
+
+$rethash{"$lon,$lat"}{x} = the x coordinate of the transform
+$rethash{"$lon,$lat"}{y} = the y coordinate of the transform
+$rethash{"$lon,$lat"}{z} = the z coordinate of the transform
+
+A simple wrapper around cs2cs.
+
+$options: [NOT YET IMPLEMENTED]
+
+  fx=f: apply the function f to the x coordinates before returning
+  fy=f: apply the function f to the y coordinates before returning
+  fz=f: apply the function f to the z coordinates before returning
+
+=cut
+
+sub cs2cs {
+  my($listref, $proj, $options) = @_;
+  # by default, apply the id function to x,y,z
+  my(%opts) = parse_form("fx=id&fy=id&fz=id&$options");
+  my(@lonlat) = @{$listref};
+  my($str);
+  my(%rethash);
+  my(%iscoord);
+
+  # write data to file
+  for $i (@lonlat) {
+    $i=~s/,/ /;
+    $str .= "$i\n";
+  }
+
+  my($tmpfile) = my_tmpfile2();
+  write_file($str, $tmpfile);
+
+  my($out,$err,$res) = cache_command("cs2cs -E -e 'ERR ERR' +proj=lonlat +to +proj=$proj < $tmpfile","age=86400");
+  for $i (split(/\n/,$out)) {
+    my(@fields) = split(/\s+/,$i);
+    $rethash{"$fields[0],$fields[1]"}{x} = $fields[2];
+    $rethash{"$fields[0],$fields[1]"}{y} = $fields[3];
+    $rethash{"$fields[0],$fields[1]"}{z} = $fields[4];
+  }
+  return %rethash;
 }
