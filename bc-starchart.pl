@@ -73,7 +73,7 @@ for $i (@draw) {
   if ($objs[0] eq "line") {
     # convert ra and dec (currently, two coords per object)
     push(@coords, [@objs[1..2], @objs[3..4]]);
-  } elsif ($objs[0] eq "fcircle" || $objs[0] eq "setpixel") {
+  } elsif ($objs[0] eq "fcircle" || $objs[0] eq "setpixel" || $objs[0] eq "circle") {
     push(@coords, [@objs[1..2]]);
   } elsif ($objs[0] eq "string") {
     push(@coords, [@objs[4..5]]);
@@ -82,10 +82,15 @@ for $i (@draw) {
   }
 }
 
-my(%coords) = cs2cs([@coords], "merc", sub {$_[0]*15,$_[1];}, sub {$globopts{xwid}*(-$_[0]/40000000+0.5), $globopts{ywid}*(-$_[1]/40000000+0.5), 0;});
+# my(%coords) = cs2cs([@coords], "merc", sub {$_[0]*15,$_[1];}, sub {$globopts{xwid}*(-$_[0]/40000000+0.5), $globopts{ywid}*(-$_[1]/40000000+0.5), 0;});
+
+# my(%coords) = cs2cs([@coords], "ortho", sub {$_[0]*15,$_[1];}, sub {$globopts{xwid}*(-$_[0]/6378137+0.5), $globopts{ywid}*(-$_[1]/6378137+0.5), 0;});
+
+my(%coords) = cs2cs([@coords], "robin", sub {$_[0]*15,$_[1];}, sub {$globopts{xwid}*(-$_[0]/17005833+0.5), $globopts{ywid}*(-$_[1]/17005833+0.5), 0;});
 
 # debug(unfold(\%coords));
 
+# TODO: don't plot off-canvas points
 # now once more through the coords
 for $i (@draw) {
   my(@objs) = split(/\,|\s/, $i);
@@ -93,25 +98,17 @@ for $i (@draw) {
   if ($objs[0] eq "line") {
     # convert ra and dec (currently, two coords per object)
     my(@p)=(@{$coords{"$objs[1],$objs[2]"}},@{$coords{"$objs[3],$objs[4]"}});
-    print A "line $p[0],$p[1],$p[3],$p[4],$objs[5],$objs[6],$objs[7]\n";
-    next;warn("TESTING");
-    my(%coords) = %{$hash{"$newra{$objs[1]},$objs[2]"}};
-    debug("HASH",%coords);
-    push(@coords, @objs[1..4]);
-    debug("LION",@objs[1..4]);
-  } elsif ($objs[0] eq "fcircle" || $objs[0] eq "setpixel") {
-    push(@coords, @objs[1..2]);
+    print A "line ",join(",",@p[0..1],@p[3..4],@objs[5..$#objs]),"\n";
+  } elsif ($objs[0] eq "circle" || $objs[0] eq "setpixel") {
+#    if ($objs[0] eq "fcircle") {next; warn "TESTING";}
+    my(@p) = @{$coords{"$objs[1],$objs[2]"}};
+    print A "$objs[0] ",join(",",@p[0..1],@objs[3..$#objs]),"\n";
   } elsif ($objs[0] eq "string") {
     push(@coords, @objs[4..5]);
   } else {
     warn("$objs[0]: not handled");
   }
 }
-
-debug(unfold(\%hash));
-
-# debug(@latlon);
-# debug(@coords);
 
 close(A);
 
@@ -146,7 +143,8 @@ sub draw_stars {
     my($ra, $dec, $mag) = split(/\s+/, $i);
     # circle width based on magnitude (one of several possible formulas)
     my($width) = floor(5.5-$mag);
-    push(@ret, "fcircle $ra,$dec,$width,255,255,255");
+#    if ($width == 0) {next;}
+    push(@ret, "circle $ra,$dec,$width,255,255,255");
   }
   return @ret;
 }
