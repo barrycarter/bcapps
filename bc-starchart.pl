@@ -57,12 +57,45 @@ MARK
     ;
 
 # draw stars/lines if requested (lines must preceed stars else they obscure)
-if ($globopts{lines}) {draw_lines();}
-if ($globopts{boundary}) {draw_boundaries();}
-if ($globopts{stars}) {draw_stars();}
-if ($globopts{planets}) {draw_planets();}
-if ($globopts{info}) {draw_info();}
-if ($globopts{grid}) {draw_grid();}
+
+# the list of things to draw
+my(@draw);
+if ($globopts{lines}) {push(@draw,draw_lines());}
+if ($globopts{boundary}) {push(@draw,draw_boundaries());}
+if ($globopts{stars}) {push(@draw,draw_stars());}
+if ($globopts{planets}) {push(@draw,draw_planets());}
+if ($globopts{info}) {push(@draw,draw_info());}
+if ($globopts{grid}) {push(@draw,draw_grid());}
+
+# list of coords to translate
+my(@coords);
+
+for $i (@draw) {
+  my(@objs) = split(/\,|\s/, $i);
+
+  if ($objs[0] eq "line") {
+    # convert ra and dec (currently, two coords per object)
+    push(@coords, @objs[1..4]);
+  } elsif ($objs[0] eq "fcircle" || $objs[0] eq "setpixel") {
+    push(@coords, @objs[1..2]);
+  } elsif ($objs[0] eq "string") {
+    push(@coords, @objs[4..5]);
+  } else {
+    warn("$objs[0]: not handled");
+  }
+}
+
+# convert the coords to latitude/longitude and send to cs2cs
+while (@coords) {
+  my($ra,$dec) = (shift(@coords), shift(@coords));
+  $ra*=15;
+  push(@latlon, "$ra,$dec");
+}
+
+debug(cs2cs([@latlon], "merc"));
+
+# debug(@latlon);
+# debug(@coords);
 
 close(A);
 
@@ -70,6 +103,8 @@ close(A);
 
 unless ($globopts{nocgi}) {print "Content-type: image/gif\n\n";}
 
+
+die "TESTING";
 system("fly -q -i map.fly");
 
 # load stars into *global* array (used by other subroutines) just once
@@ -84,7 +119,6 @@ sub load_stars {
 
 sub radec2xy {
   my($ra, $dec) = @_;
-  debug("GOT: $ra/$dec");
   return ((1-$ra/24.)*$globopts{xwid}, (1-($dec+90)/180.)*$globopts{ywid});
 }
 
@@ -92,23 +126,21 @@ sub radec2xy {
 
 sub draw_stars {
   load_stars();
-
+  my(@ret);
   for $i (@stars) {
     # split into ra/dec/mag
     my($ra, $dec, $mag) = split(/\s+/, $i);
-    # convert to x/y
-    my($x,$y) = radec2xy($ra,$dec);
-    # ignore below horizon
-    if ($x<0) {next;}
     # circle width based on magnitude (one of several possible formulas)
     my($width) = floor(5.5-$mag);
-    print A "fcircle $x,$y,$width,255,255,255\n";
+    push(@ret, "fcircle $ra,$dec,$width,255,255,255");
   }
-
+  return @ret;
 }
 
 # draw constellation lines (program-specific subroutine)
 sub draw_lines {
+  # return list, don't print directly
+  my(@ret);
   load_stars();
 
   for $i (split(/\n/,read_file("$gitdir/db/constellations.dat"))) {
@@ -119,23 +151,14 @@ sub draw_lines {
     # find ra/dec of from and to stars
     my($ra1,$dec1) = split(/\s+/, $stars[$from-1]);
     my($ra2,$dec2) = split(/\s+/, $stars[$to-1]);
-
-    # find x/y pos of stars above
-    my($x1,$y1) = radec2xy($ra1,$dec1);
-    my($x2,$y2) = radec2xy($ra2,$dec2);
-
-    # if one part of line out of bounds, ignore
-    if ($x1 < 0 || $x2 < 0) {next;}
-
-    # if the absolute value is greater than half the screen size, ignore
-    if (abs($x1-$x2)>$globopts{xwid}/2||abs($y1-$y2)>$globopts{ywid}/2) {next;}
-
-    print A "line $x1,$y1,$x2,$y2,0,0,255\n";
+    push(@ret,"line $ra1,$dec1,$ra2,$dec2,0,0,255");
   }
+  return @ret;
 }
 
 # draw planets
 sub draw_planets {
+  my(@ret);
   my(%pos);
 
   # preferred color and size of planets
@@ -164,26 +187,20 @@ sub draw_planets {
   }
 
   for $i (sort keys %pos) {
-    # xy position of planet (converting degrees to RA)
-    my($x,$y) = radec2xy(($pos{$i}->{ra})/15, $pos{$i}->{dec});
-    if ($x<0 && $y<0) {next;}
-    print A "fcircle $x,$y,$col{$i}\n";
+    push(@ret, "fcircle $pos{$i}->{ra},$pos{$i}->{dec},$col{$i}");
     
     # label planets?
     if ($globopts{planetlabel}) {
       my($name) = ucfirst($i);
-      
-      # print name on "SE corner" of planet
-      my($xname) = $x+2;
-      my($yname) = $y+2;
-
-      print A "string 255,255,255,$xname,$yname,tiny,$name\n";
+      push(@ret,"string 255,255,255,".$pos{$i}->{ra}.",".$pos{$i}->{dec}.",tiny,$name");
     }
   }
+  return @ret;
 }
 
 # draw constellation boundaries
 sub draw_boundaries {
+  my(@ret);
   my(%bounds);
   my(@data) = split(/\n/, read_file("/home/barrycarter/BCGIT/db/constellation_boundaries.dat"));
 
@@ -198,13 +215,7 @@ sub draw_boundaries {
     # record ra/dec for this constellation to print label later
     push(@{$bounds{$cname}{ra}}, $ra);
     push(@{$bounds{$cname}{dec}}, $dec);
-
-    # find xy
-    my($x,$y) = radec2xy($ra,$dec);
-    debug("$ra/$dec/$cname -> $x,$y");
-    if ($x<0 && $y<0) {next;}
-    # and draw
-    print A "setpixel $x,$y,255,0,0\n";
+    push(@ret, "setpixel $ra,$dec,255,0,0");
   }
 
   # now, labels (if desired)
@@ -220,11 +231,11 @@ sub draw_boundaries {
 
       # find xy of midpoint (not necessarily in constellation: convexity)
       # TODO: fix for nonconvex constellations
-      my($x,$y) = radec2xy(($minra+$maxra)/2,($mindec+$maxdec)/2);
-      if ($x<0 && $y<0) {next;}
-      print A "string 255,255,255,$x,$y,tiny,$i\n";
+      my($x,$y) = (($minra+$maxra)/2,($mindec+$maxdec)/2);
+      push(@ret, "string 255,255,255,$x,$y,tiny,$i");
     }
   }
+  return @ret;
 }
 
 # draw info
@@ -236,38 +247,34 @@ sub draw_info {
     print A "string 255,255,255,0,$y,small,$i: $globopts{$i}\n";
     $y+=10;
   }
-  print A "string 255,255,255,0,$y,small,Source: s.u.94y.info\n";
 }
 
 # draw grid
 sub draw_grid {
+  my(@ret);
   # declination grid
   # TODO: add labels
   for ($dec=-90; $dec<=90; $dec+=10) {
     for ($ra=0; $ra<=24; $ra+=1/15.) {
-      my($x,$y) = radec2xy($ra, $dec);
-      if ($x<0 && $y<0) {next;}
-      print A "setpixel $x,$y,64,64,64\n";
+      push(@ret, "setpixel $ra,$dec,64,64,64");
     }
   }
 
   # label at declination closest to zenith (rounded to 10 degrees)
   my($decmark) = round($globopts{lat}/10.)*10;
-  debug("DECMARK: $decmark");
 
   # RA grid
   for ($ra=0; $ra<=24; $ra+=1) {
     for ($dec=-90; $dec<=90; $dec+=1) {
-      my($x,$y) = radec2xy($ra, $dec);
-      if ($x<0 && $y<0) {next;}
-      print A "setpixel $x,$y,64,64,64\n";
+      push(@ret, "setpixel $ra,$dec,64,64,64");
       # label at equator
       # TODO: not convinced this is best spot; antimap of zenith maybe?
       if ($dec==$decmark && $globopts{gridlabel}) {
-	print A "string 64,64,64,$x,$y,tiny,${ra}h\n";
+	push(@ret, "string 64,64,64,$x,$y,tiny,${ra}h");
       }
     }
   }
+  return @ret;
 }
 
 # TODO: put this into bclib.pl
