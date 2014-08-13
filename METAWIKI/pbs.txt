@@ -2098,6 +2098,7 @@ MULTIREF [[title::Larry's mother]] [[notes::Larry's mother dies on [[2005-05-13]
 2014-08-10 [[character::Pig+Zebra+ZZE]]
 2014-08-11 [[character::Goat+Rat+Pastis+Pig]] [[meta::I don't count this as a Rat undeath, since his severed head was still speaking on [[2014-08-07]]
 2014-08-12 [[character::Bob 20140812 (lemming)]] [[location::Lemmings Leap]]
+2014-08-13 [[character::Pig+Goat]]
 </data>
 
 # 2007-03-30 pig's mayors isnt LGD? (mayor in rehab)

@@ -32,9 +32,6 @@ system("mkdir -p /tmp/bcstarchart");
 chdir("/tmp/bcstarchart");
 $gitdir = "/home/barrycarter/BCGIT/";
 
-# proj4 stuff
-# $proj = "ortho"; $div = 6378137; $pre = \&pre;
-
 # defaults
 $now = time();
 defaults("xwid=1024&ywid=768&fill=0,0,0&time=$now&stars=1&lines=1&planets=1&planetlabel=1&info=1&gridlabel=1");
@@ -85,9 +82,9 @@ for $i (@draw) {
   }
 }
 
-my(%coords) = cs2cs([@coords], "merc", sub {$_[0]*15,$_[1];}, sub {$globopts{xwid}*($_[0]/40000000+1), $globopts{ywid}*($_[1]/40000000+1), 0;});
+my(%coords) = cs2cs([@coords], "merc", sub {$_[0]*15,$_[1];}, sub {$globopts{xwid}*(-$_[0]/40000000+0.5), $globopts{ywid}*(-$_[1]/40000000+0.5), 0;});
 
-debug(unfold(\%coords));
+# debug(unfold(\%coords));
 
 # now once more through the coords
 for $i (@draw) {
@@ -95,8 +92,8 @@ for $i (@draw) {
 
   if ($objs[0] eq "line") {
     # convert ra and dec (currently, two coords per object)
-    debug("COORDS: $coords{[$objs[1],$objs[2]]}");
-
+    my(@p)=(@{$coords{"$objs[1],$objs[2]"}},@{$coords{"$objs[3],$objs[4]"}});
+    print A "line $p[0],$p[1],$p[3],$p[4],$objs[5],$objs[6],$objs[7]\n";
     next;warn("TESTING");
     my(%coords) = %{$hash{"$newra{$objs[1]},$objs[2]"}};
     debug("HASH",%coords);
@@ -122,8 +119,6 @@ close(A);
 
 unless ($globopts{nocgi}) {print "Content-type: image/gif\n\n";}
 
-
-die "TESTING";
 system("fly -q -i map.fly");
 
 # load stars into *global* array (used by other subroutines) just once
