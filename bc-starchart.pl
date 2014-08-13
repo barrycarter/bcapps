@@ -67,19 +67,14 @@ if ($globopts{grid}) {push(@draw,draw_grid());}
 # list of coords to translate
 my(@coords);
 
+# the position in which coordinates (ra/dec) start for various objects
+# (the second coordinate, dec, is immediately after the first)
+my(%pos) = ("line" => [1,3], "circle" => [1], "fcircle" => [1],
+	    "setpixel" => [1], "string" => [4]);
+
 for $i (@draw) {
   my(@objs) = split(/\,|\s/, $i);
-
-  if ($objs[0] eq "line") {
-    # convert ra and dec (currently, two coords per object)
-    push(@coords, [@objs[1..2], @objs[3..4]]);
-  } elsif ($objs[0] eq "fcircle" || $objs[0] eq "setpixel" || $objs[0] eq "circle") {
-    push(@coords, [@objs[1..2]]);
-  } elsif ($objs[0] eq "string") {
-    push(@coords, [@objs[4..5]]);
-  } else {
-    warn("$objs[0]: not handled");
-  }
+  for $j (@{$pos{$objs[0]}}) {push(@coords, [$objs[$j], $objs[$j+1]]);}
 }
 
 # my(%coords) = cs2cs([@coords], "merc", sub {$_[0]*15,$_[1];}, sub {$globopts{xwid}*(-$_[0]/40000000+0.5), $globopts{ywid}*(-$_[1]/40000000+0.5), 0;});
@@ -88,26 +83,18 @@ for $i (@draw) {
 
 my(%coords) = cs2cs([@coords], "robin", sub {$_[0]*15,$_[1];}, sub {$globopts{xwid}*(-$_[0]/17005833+0.5), $globopts{ywid}*(-$_[1]/17005833+0.5), 0;});
 
-# debug(unfold(\%coords));
+debug("COORDS", %coords);
 
 # TODO: don't plot off-canvas points
 # now once more through the coords
 for $i (@draw) {
   my(@objs) = split(/\,|\s/, $i);
-
-  if ($objs[0] eq "line") {
-    # convert ra and dec (currently, two coords per object)
-    my(@p)=(@{$coords{"$objs[1],$objs[2]"}},@{$coords{"$objs[3],$objs[4]"}});
-    print A "line ",join(",",@p[0..1],@p[3..4],@objs[5..$#objs]),"\n";
-  } elsif ($objs[0] eq "circle" || $objs[0] eq "setpixel") {
-#    if ($objs[0] eq "fcircle") {next; warn "TESTING";}
-    my(@p) = @{$coords{"$objs[1],$objs[2]"}};
-    print A "$objs[0] ",join(",",@p[0..1],@objs[3..$#objs]),"\n";
-  } elsif ($objs[0] eq "string") {
-    push(@coords, @objs[4..5]);
-  } else {
-    warn("$objs[0]: not handled");
+  for $j (@{$pos{$objs[0]}}) {
+    debug("CHANING: $j, KEY: $objs[$j],$objs[$j+1], VALUE", @{$coords{"$objs[$j],$objs[$j+1]"}});
+    ($objs[$j], $objs[$j+1]) = @{$coords{"$objs[$j],$objs[$j+1]"}};
   }
+
+  print A $objs[0]," ",join(",",@objs[1..$#objs]),"\n";
 }
 
 close(A);
