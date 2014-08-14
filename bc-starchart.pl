@@ -8,6 +8,8 @@
 
 # Constellation boundary data: http://cdsarc.u-strasbg.fr/viz-bin/nph-Cat/html?VI%2F49
 
+# HA Rey star data: http://wackymorningdj.users.sourceforge.net/ha_rey_stellarium.zip
+
 # Slew <h>(does anyone get this reference?)</h> of options:
 #
 # --xwid=1024 x width
@@ -95,7 +97,7 @@ sub post {
 # temporary "pre" function
 sub pre {
   my($ra,$dec) = @_;
-  my($lat, $lon) = latlonrot($dec, $ra*15, +23.45, "x");
+  my($lat, $lon) = latlonrot($dec, $ra*15, +0*23.45, "x");
   return $lon+180,$lat;
 }
 
@@ -137,7 +139,7 @@ system("fly -q -i map.fly");
 sub load_stars {
   if (%stars) {return;}
   for $i (sqlite3hashlist("SELECT hipp, ra/15 AS ra, dec, mag FROM stars WHERE
-mag<6.0", "/home/barrycarter/BCGIT/BCINFO3/sites/DB/bchip.db")) {
+mag<5.7", "/home/barrycarter/BCGIT/BCINFO3/sites/DB/bchip.db")) {
     for $j (keys %$i) {$stars{$i->{hipp}}{$j} = $i->{$j};}
   }
 }
@@ -219,6 +221,18 @@ sub draw_planets {
 sub draw_boundaries {
   my(@ret);
   my(%bounds);
+  my($data) = read_file("$gitdir/ASTRO/constellations_boundaries.dat");
+  while ($data=~s/(.*?)(\d+)\s+([A-Z]{3})\s+([A-Z]{3})//s) {
+    my($data1) = $1;
+    my(@arr) = split(/\s+/,trim($data1));
+    for ($i=1; $i<=$#arr; $i+=2) {
+      push(@ret, "setpixel $arr[$i],$arr[$i+1],255,0,0");
+    }
+  }
+
+  return @ret;
+
+  die "TESTING";
   my(@data) = split(/\n/, read_file("/home/barrycarter/BCGIT/db/constellation_boundaries.dat"));
 
   # just draw red dots
