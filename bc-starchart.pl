@@ -66,6 +66,16 @@ if ($globopts{planets}) {push(@draw,draw_planets());}
 if ($globopts{info}) {push(@draw,draw_info());}
 if ($globopts{grid}) {push(@draw,draw_grid());}
 
+# path of venus this month
+$jd = get_julian_from_timet(str2time("2014-08-01 00:00:00 UTC"));
+
+for ($i=1; $i<=30; $i+=1) {
+  my($equ) = Astro::Nova::get_mercury_equ_coords($jd+$i-1);
+  my($ra,$dec) = ($equ->get_ra()/15, $equ->get_dec());
+#  push(@draw, "setpixel $ra,$dec,0,255,0");
+  push(@draw, "string 0,255,0,$ra,$dec,tiny,$i");
+}
+
 # list of coords to translate
 my(@coords);
 
@@ -91,14 +101,14 @@ sub post {
   if ($x eq "ERR") {return -1,1;}
   my($div) = 20037508.34; # for equiangular
 #  return $globopts{xwid}*(-$x/$div/2+0.5), $globopts{ywid}*(-$y/$div*4+0.5);
-  return $globopts{xwid}*(-$x/$div/2+0.5), $globopts{ywid}*(-$y/$div+0.5);
+  return $globopts{xwid}*(-$x/$div/2+0.5), $globopts{ywid}*(-$y/$div*6+0.5);
 }
 
 # temporary "pre" function
 sub pre {
   my($ra,$dec) = @_;
-  my($lat, $lon) = latlonrot($dec, $ra*15, +0*23.45, "x");
-  return $lon+180,$lat;
+  my($lat, $lon) = latlonrot($dec, $ra*15, +23.45, "x");
+  return $lon,$lat;
 }
 
 # my(%coords) = cs2cs([@coords], "robin", sub {$_[0]*15,$_[1];}, sub {$globopts{xwid}*(-$_[0]/17005833+0.5), $globopts{ywid}*(-$_[1]/17005833+0.5), 0;});
@@ -106,15 +116,12 @@ sub pre {
 # TODO: don't plot off-canvas points
 # now once more through the coords
 for $i (@draw) {
-  debug("LINE: $i");
   # if object lies off screen, don't print it
   my($taint) = 0;
   my(@objs) = split(/\,|\s/, $i);
 
   for $j (@{$pos{$objs[0]}}) {
-    debug("BEFORE: $objs[$j], $objs[$j+1]");
     ($objs[$j], $objs[$j+1]) = @{$coords{"$objs[$j],$objs[$j+1]"}};
-    debug("AFTER: $objs[$j], $objs[$j+1]");
     if ($objs[$j] < 0 || $objs[$j] > $globopts{xwid} ||
 	$objs[$j+1] < 0 || $objs[$j+1] > $globopts{ywid}) {
       $taint = 1;
@@ -167,7 +174,6 @@ sub draw_lines {
     # starting at 3rd item (index 2) and going in pairs
     for ($j=2; $j<=$#constdata; $j+=2) {
       push(@ret,"line $stars{$constdata[$j]}{ra},$stars{$constdata[$j]}{dec},$stars{$constdata[$j+1]}{ra},$stars{$constdata[$j+1]}{dec},0,0,255");
-      debug("J: $constdata[$j] to $constdata[$j+1]");
     }
   }
   return @ret;
@@ -175,6 +181,7 @@ sub draw_lines {
 
 # draw planets
 sub draw_planets {
+  warn "DISABLED"; return;
   my(@ret);
   my(%pos);
 
@@ -225,10 +232,8 @@ sub draw_boundaries {
   # 12 case below for Serpens Cauda/Caput
   while ($data=~s/(.*?)(\d+)\s+([A-Z]{3})\s+([A-Z]{3}[12]?)//s) {
     my($data1, $num, $c1, $c2) = ($1, $2, $3, $4);
-    debug("DATA1: $data1");
     my(@arr) = split(/\s+/,trim($data1));
     for ($i=1; $i<=$#arr; $i+=2) {
-      debug("SETTING: $arr[$i] $arr[$i+1] $c1 $c2");
       push(@ret, "setpixel $arr[$i],$arr[$i+1],255,0,0");
     }
   }
@@ -290,7 +295,6 @@ sub draw_grid {
   # TODO: the ecliptic should be a separate calculation
   for ($ra=0; $ra<=24; $ra+=1/15.) {
     my($dec) = sin($ra*15*$DEGRAD)*23.45;
-    debug("RADEC: $ra/$dec");
     push(@ret, "setpixel $ra,$dec,255,255,255");
   }
 
@@ -387,7 +391,6 @@ sub latlonrot {
 
   # convert lat/lon to xyz coords (on sphere of radius 1)
   my(@xyz) = sph2xyz($lon, $lat, 1, "degrees=1");
-#  debug("OLD",@xyz);
   my(@newxyz);
 
   # perform the rotation
