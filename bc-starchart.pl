@@ -222,10 +222,13 @@ sub draw_boundaries {
   my(@ret);
   my(%bounds);
   my($data) = read_file("$gitdir/ASTRO/constellations_boundaries.dat");
-  while ($data=~s/(.*?)(\d+)\s+([A-Z]{3})\s+([A-Z]{3})//s) {
-    my($data1) = $1;
+  # 12 case below for Serpens Cauda/Caput
+  while ($data=~s/(.*?)(\d+)\s+([A-Z]{3})\s+([A-Z]{3}[12]?)//s) {
+    my($data1, $num, $c1, $c2) = ($1, $2, $3, $4);
+    debug("DATA1: $data1");
     my(@arr) = split(/\s+/,trim($data1));
     for ($i=1; $i<=$#arr; $i+=2) {
+      debug("SETTING: $arr[$i] $arr[$i+1] $c1 $c2");
       push(@ret, "setpixel $arr[$i],$arr[$i+1],255,0,0");
     }
   }
