@@ -8,7 +8,7 @@
 
 # Constellation boundary data: http://cdsarc.u-strasbg.fr/viz-bin/nph-Cat/html?VI%2F49
 
-# Slew of options:
+# Slew <h>(does anyone get this reference?)</h> of options:
 #
 # --xwid=1024 x width
 # --ywid=768 y width
@@ -21,7 +21,7 @@
 # --labelcons=0 label constellations when boundaries are drawn
 # --grid=0 draw ra/dec grid
 # --gridlabel=1 if drawing ra/dec grid, label it
-# --info=1 display info about this map
+# --info=0 display info about this map [not working]
 # --nocgi=0 output raw GIF, no CGI header
 
 # TODO: label bright stars
@@ -34,7 +34,7 @@ $gitdir = "/home/barrycarter/BCGIT/";
 
 # defaults
 $now = time();
-defaults("xwid=1024&ywid=768&fill=0,0,0&time=$now&stars=1&lines=1&planets=1&planetlabel=1&info=1&gridlabel=1");
+defaults("xwid=1024&ywid=768&fill=0,0,0&time=$now&stars=1&lines=1&planets=1&planetlabel=1&info=0&gridlabel=1");
 
 # write to fly file
 open(A, ">map.fly");
@@ -77,7 +77,9 @@ for $i (@draw) {
   for $j (@{$pos{$objs[0]}}) {push(@coords, [$objs[$j], $objs[$j+1]]);}
 }
 
-my(%coords) = cs2cs([@coords], "merc", \&pre, sub {$globopts{xwid}*(-$_[0]/40000000+0.5), $globopts{ywid}*(-$_[1]/5000000+0.5), 0;});
+# my(%coords) = cs2cs([@coords], "merc", \&pre, sub {$globopts{xwid}*(-$_[0]/40000000+0.5), $globopts{ywid}*(-$_[1]/5000000+0.5), 0;});
+
+my(%coords) = cs2cs([@coords], "eqc", \&pre, \&post);
 
 # my(%coords) = cs2cs([@coords], "ortho", \&pre, \&post);
 
@@ -85,13 +87,14 @@ my(%coords) = cs2cs([@coords], "merc", \&pre, sub {$globopts{xwid}*(-$_[0]/40000
 sub post {
   my($x,$y) = @_;
   if ($x eq "ERR") {return -1,1;}
-  return $globopts{xwid}*(-$_[0]/6378137/2+0.5), $globopts{ywid}*(-$_[1]/6378137/2+0.5), 0;
+  my($div) = 20037508.34; # for equiangular
+  return $globopts{xwid}*(-$x/$div/2+0.5), $globopts{ywid}*(-$y/$div*4+0.5);
 }
 
 # temporary "pre" function
 sub pre {
   my($ra,$dec) = @_;
-  my($lat, $lon) = latlonrot($dec, $ra*15, +23, "x");
+  my($lat, $lon) = latlonrot($dec, $ra*15, +23.45, "x");
   return $lon+180,$lat;
 }
 
@@ -114,7 +117,11 @@ for $i (@draw) {
       $taint = 1;
     }
   }
-  unless ($taint) {print A $objs[0]," ",join(",",@objs[1..$#objs]),"\n";}
+
+  unless ($taint) {
+  # lines that go "backwards"
+  if ($objs[0] eq "line" && abs($objs[1]-$objs[3])>$globopts{xwid}/2) {next;}
+  print A $objs[0]," ",join(",",@objs[1..$#objs]),"\n";}
 }
 
 close(A);
@@ -264,6 +271,15 @@ sub draw_info {
 # draw grid
 sub draw_grid {
   my(@ret);
+
+  # TODO: the ecliptic should be a separate calculation
+  for ($ra=0; $ra<=24; $ra+=1/15.) {
+    my($dec) = sin($ra*15*$DEGRAD)*23.45;
+    debug("RADEC: $ra/$dec");
+    push(@ret, "setpixel $ra,$dec,255,255,255");
+  }
+
+
   # declination grid
   # TODO: add labels
   for ($dec=-90; $dec<=90; $dec+=10) {
