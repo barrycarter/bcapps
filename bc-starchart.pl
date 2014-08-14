@@ -88,7 +88,8 @@ sub post {
   my($x,$y) = @_;
   if ($x eq "ERR") {return -1,1;}
   my($div) = 20037508.34; # for equiangular
-  return $globopts{xwid}*(-$x/$div/2+0.5), $globopts{ywid}*(-$y/$div*4+0.5);
+#  return $globopts{xwid}*(-$x/$div/2+0.5), $globopts{ywid}*(-$y/$div*4+0.5);
+  return $globopts{xwid}*(-$x/$div/2+0.5), $globopts{ywid}*(-$y/$div+0.5);
 }
 
 # temporary "pre" function
@@ -132,10 +133,12 @@ unless ($globopts{nocgi}) {print "Content-type: image/gif\n\n";}
 
 system("fly -q -i map.fly");
 
-# load stars into *global* array (used by other subroutines) just once
+# load stars into *global* hash (used by other subroutines) just once
 sub load_stars {
-  unless (@stars) {
-    @stars = split(/\n/,read_file("$gitdir/db/radecmag.asc"));
+  if (%stars) {return;}
+  for $i (sqlite3hashlist("SELECT hipp, ra/15 AS ra, dec, mag FROM stars WHERE
+mag<6.0", "/home/barrycarter/BCGIT/BCINFO3/sites/DB/bchip.db")) {
+    for $j (keys %$i) {$stars{$i->{hipp}}{$j} = $i->{$j};}
   }
 }
 
@@ -144,12 +147,9 @@ sub load_stars {
 sub draw_stars {
   load_stars();
   my(@ret);
-  for $i (@stars) {
-    # split into ra/dec/mag
-    my($ra, $dec, $mag) = split(/\s+/, $i);
-    # circle width based on magnitude (one of several possible formulas)
-    my($width) = floor(5.5-$mag);
-    push(@ret, "fcircle $ra,$dec,$width,255,255,255");
+  for $i (keys %stars) {
+    my($width) = floor(5.5-$stars{$i}{mag});
+    push(@ret, "fcircle $stars{$i}{ra},$stars{$i}{dec},$width,255,255,255");
   }
   return @ret;
 }
@@ -160,15 +160,13 @@ sub draw_lines {
   my(@ret);
   load_stars();
 
-  for $i (split(/\n/,read_file("$gitdir/db/constellations.dat"))) {
-    # ignore non digit-digit lines
-    unless ($i=~/^(\d+)\s+(\d+)$/) {next;}
-    # from star $from to star $to
-    my($from,$to) = ($1, $2);
-    # find ra/dec of from and to stars
-    my($ra1,$dec1) = split(/\s+/, $stars[$from-1]);
-    my($ra2,$dec2) = split(/\s+/, $stars[$to-1]);
-    push(@ret,"line $ra1,$dec1,$ra2,$dec2,0,0,255");
+  for $i (split(/\n/,read_file("$gitdir/ASTRO/constellationship.fab"))) {
+    my(@constdata) = split(/\s+/, $i);
+    # starting at 3rd item (index 2) and going in pairs
+    for ($j=2; $j<=$#constdata; $j+=2) {
+      push(@ret,"line $stars{$constdata[$j]}{ra},$stars{$constdata[$j]}{dec},$stars{$constdata[$j+1]}{ra},$stars{$constdata[$j+1]}{dec},0,0,255");
+      debug("J: $constdata[$j] to $constdata[$j+1]");
+    }
   }
   return @ret;
 }
