@@ -2007,7 +2007,7 @@ MULTIREF [[title::Fanny rub]] [[notes::[[Rat]] and [[Stephan Pastis]] seem horri
 2014-07-09 [[character::Pig+Goat+Stephan Pastis+Rat]]
 2014-07-10 [[character::Pig+[[Pig::friend::Tom (human)]]]]
 2014-07-11 [[character::Pig+Goat+Rat]]
-2014-07-12 [[character::Rat+Pig+[[deaths::Neighbor Bob]]]]
+2014-07-12 [[character::Rat+Pig+Neighbor Bob]] [[notes::Neighbor Bob apparently survives his fall, since we see him again on [[2014-08-14]]]]
 2014-07-13 [[character::Goat+Pig+Rat+Danny Donkey]]
 2014-07-14 [[character::Larry+Junior]]
 2014-07-15 [[character::Larry+ZZE]]
@@ -2099,6 +2099,7 @@ MULTIREF [[title::Larry's mother]] [[notes::Larry's mother dies on [[2005-05-13]
 2014-08-11 [[character::Goat+Rat+Pastis+Pig]] [[meta::I don't count this as a Rat undeath, since his severed head was still speaking on [[2014-08-07]]
 2014-08-12 [[character::Bob 20140812 (lemming)]] [[location::Lemmings Leap]]
 2014-08-13 [[character::Pig+Goat]]
+2014-08-14 [[character::Neighbor Bob+Rat+Pig]]
 </data>
 
 # 2007-03-30 pig's mayors isnt LGD? (mayor in rehab)

@@ -77,24 +77,44 @@ for $i (@draw) {
   for $j (@{$pos{$objs[0]}}) {push(@coords, [$objs[$j], $objs[$j+1]]);}
 }
 
-# my(%coords) = cs2cs([@coords], "merc", sub {$_[0]*15,$_[1];}, sub {$globopts{xwid}*(-$_[0]/40000000+0.5), $globopts{ywid}*(-$_[1]/40000000+0.5), 0;});
+my(%coords) = cs2cs([@coords], "merc", \&pre, sub {$globopts{xwid}*(-$_[0]/40000000+0.5), $globopts{ywid}*(-$_[1]/5000000+0.5), 0;});
 
-# my(%coords) = cs2cs([@coords], "ortho", sub {$_[0]*15,$_[1];}, sub {$globopts{xwid}*(-$_[0]/6378137+0.5), $globopts{ywid}*(-$_[1]/6378137+0.5), 0;});
+# my(%coords) = cs2cs([@coords], "ortho", \&pre, \&post);
 
-my(%coords) = cs2cs([@coords], "robin", sub {$_[0]*15,$_[1];}, sub {$globopts{xwid}*(-$_[0]/17005833+0.5), $globopts{ywid}*(-$_[1]/17005833+0.5), 0;});
+# temporary "post" function to fix coords
+sub post {
+  my($x,$y) = @_;
+  if ($x eq "ERR") {return -1,1;}
+  return $globopts{xwid}*(-$_[0]/6378137/2+0.5), $globopts{ywid}*(-$_[1]/6378137/2+0.5), 0;
+}
 
-debug("COORDS", %coords);
+# temporary "pre" function
+sub pre {
+  my($ra,$dec) = @_;
+  my($lat, $lon) = latlonrot($dec, $ra*15, +23, "x");
+  return $lon+180,$lat;
+}
+
+# my(%coords) = cs2cs([@coords], "robin", sub {$_[0]*15,$_[1];}, sub {$globopts{xwid}*(-$_[0]/17005833+0.5), $globopts{ywid}*(-$_[1]/17005833+0.5), 0;});
 
 # TODO: don't plot off-canvas points
 # now once more through the coords
 for $i (@draw) {
+  debug("LINE: $i");
+  # if object lies off screen, don't print it
+  my($taint) = 0;
   my(@objs) = split(/\,|\s/, $i);
-  for $j (@{$pos{$objs[0]}}) {
-    debug("CHANING: $j, KEY: $objs[$j],$objs[$j+1], VALUE", @{$coords{"$objs[$j],$objs[$j+1]"}});
-    ($objs[$j], $objs[$j+1]) = @{$coords{"$objs[$j],$objs[$j+1]"}};
-  }
 
-  print A $objs[0]," ",join(",",@objs[1..$#objs]),"\n";
+  for $j (@{$pos{$objs[0]}}) {
+    debug("BEFORE: $objs[$j], $objs[$j+1]");
+    ($objs[$j], $objs[$j+1]) = @{$coords{"$objs[$j],$objs[$j+1]"}};
+    debug("AFTER: $objs[$j], $objs[$j+1]");
+    if ($objs[$j] < 0 || $objs[$j] > $globopts{xwid} ||
+	$objs[$j+1] < 0 || $objs[$j+1] > $globopts{ywid}) {
+      $taint = 1;
+    }
+  }
+  unless ($taint) {print A $objs[0]," ",join(",",@objs[1..$#objs]),"\n";}
 }
 
 close(A);
@@ -112,14 +132,6 @@ sub load_stars {
   }
 }
 
-# convert ra/dec to x/y for given arguments to this program, return
-# -1,-1 if below horizon
-
-sub radec2xy {
-  my($ra, $dec) = @_;
-  return ((1-$ra/24.)*$globopts{xwid}, (1-($dec+90)/180.)*$globopts{ywid});
-}
-
 # draw stars (program-specific subroutine)
 
 sub draw_stars {
@@ -130,8 +142,7 @@ sub draw_stars {
     my($ra, $dec, $mag) = split(/\s+/, $i);
     # circle width based on magnitude (one of several possible formulas)
     my($width) = floor(5.5-$mag);
-#    if ($width == 0) {next;}
-    push(@ret, "circle $ra,$dec,$width,255,255,255");
+    push(@ret, "fcircle $ra,$dec,$width,255,255,255");
   }
   return @ret;
 }
@@ -186,12 +197,14 @@ sub draw_planets {
   }
 
   for $i (sort keys %pos) {
+    # convert ra back to ra format, not degrees
+    $pos{$i}->{ra}/=15;
     push(@ret, "fcircle $pos{$i}->{ra},$pos{$i}->{dec},$col{$i}");
-    
+
     # label planets?
     if ($globopts{planetlabel}) {
       my($name) = ucfirst($i);
-      push(@ret,"string 255,255,255,".$pos{$i}->{ra}.",".$pos{$i}->{dec}.",tiny,$name");
+      push(@ret,"string 255,255,255,$pos{$i}->{ra},$pos{$i}->{dec},tiny,$name");
     }
   }
   return @ret;
@@ -323,3 +336,46 @@ sub cs2cs {
   }
   return %rethash;
 }
+
+=item latlonrot($lat, $lon, $th, $ax="x|y|z")
+
+Given a latitude/longitude, rotate it $th degrees around the $ax axis.
+
+z-axis: center of earth to north pole
+x-axis: center of earth to intersection of prime meridian and equator
+y-axis: center of earth to longitude +90, latitude 0 (right hand rule)
+
+NOTE: this inefficiently uses rotdeg() which is sometimes unnecessary;
+for example, rotation around the z axis simply adds to longitude and
+preservers latitude.
+
+=cut
+
+sub latlonrot {
+  my($lat, $lon, $th, $ax) = @_;
+
+  # convert lat/lon to xyz coords (on sphere of radius 1)
+  my(@xyz) = sph2xyz($lon, $lat, 1, "degrees=1");
+#  debug("OLD",@xyz);
+  my(@newxyz);
+
+  # perform the rotation
+  my(@matrix) = rotdeg($th, $ax);
+
+  # I know the matrix is 3x3, so this is slightly over kill
+  for $row (0..$#matrix) {
+    my(@cols) = @{$matrix[$row]};
+    for $col (0..$#cols) {
+      @newxyz[$row] += $matrix[$row][$col]*$xyz[$col];
+    }
+  }
+
+  # return to sph coords (ignore radius)
+  my($newlon, $newlat) = xyz2sph(@newxyz,"degrees=1");
+
+  # for longitude, [-180,180] is used, not [0,360]
+  if ($newlon>=180) {$newlon-=360;}
+
+  return $newlat,$newlon;
+}
+
