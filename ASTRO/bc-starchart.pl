@@ -34,6 +34,11 @@ system("mkdir -p /tmp/bcstarchart");
 chdir("/tmp/bcstarchart");
 $gitdir = "/home/barrycarter/BCGIT/";
 
+my(%col) = ("solar"=>"255,255,0", "lunar"=>"255,255,255",
+"mercury"=>"255,128,128", "venus"=>"0,255,0", "mars" =>
+"255,0,0", "jupiter"=>"0,255,255", "saturn"=>"255,255,0",
+"uranus"=>"0,0,255");
+
 # defaults
 $now = time();
 defaults("xwid=1024&ywid=768&fill=0,0,0&time=$now&stars=1&lines=1&planets=1&planetlabel=1&info=0&gridlabel=1");
@@ -66,14 +71,15 @@ if ($globopts{planets}) {push(@draw,draw_planets());}
 if ($globopts{info}) {push(@draw,draw_info());}
 if ($globopts{grid}) {push(@draw,draw_grid());}
 
-# path of venus this month
-$jd = get_julian_from_timet(str2time("2014-08-01 00:00:00 UTC"));
+# path of planets this month
+$jd = get_julian_from_timet(str2time("2014-09-01 00:00:00 UTC"));
 
-for ($i=1; $i<=30; $i+=1) {
-  my($equ) = Astro::Nova::get_mercury_equ_coords($jd+$i-1);
-  my($ra,$dec) = ($equ->get_ra()/15, $equ->get_dec());
-#  push(@draw, "setpixel $ra,$dec,0,255,0");
-  push(@draw, "string 0,255,0,$ra,$dec,tiny,$i");
+for $j (keys %col) {
+  for ($i=1; $i<=30; $i+=1) {
+    my($equ) = eval("Astro::Nova::get_${j}_equ_coords($jd+$i-1)");
+    my($ra,$dec) = ($equ->get_ra()/15, $equ->get_dec());
+    push(@draw, "string $col{$j},$ra,$dec,tiny,$i");
+  }
 }
 
 # list of coords to translate
