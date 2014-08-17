@@ -4535,6 +4535,24 @@ sub mv_after_diff {
   system("mv \"$source\" \"$source.old\"; mv \"$source.new\" \"$source\"");
 }
 
+=item num2base($num,$base)
+
+Convert $num to base $base, returning a list of integers (lowest byte
+first) corresponding to $num
+
+=cut
+
+sub num2base {
+  my($num,$base) = @_;
+  my(@ret);
+
+  while ($num) {
+    push(@ret, $num%$base);
+    $num = floor($num/$base);
+  }
+  return @ret;
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
   debug("END: CLEANING UP TMP FILES");

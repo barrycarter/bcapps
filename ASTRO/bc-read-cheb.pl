@@ -60,7 +60,7 @@ for (;;) {
   map(s/^(.*?)D(.*)$/sprintf("%.30f",$1*10**$2)/e, @nums);
 #  map(s/^(.*?)D(.*)$/$1*10^$2/, @nums);
 
-  # first four: section number, number of data points, julian start, julia end
+  # first four: section number, number of data points, julian start, julian end
   my($bl, $sn, $nd, $js, $je) = splice(@nums,0,5);
 
   # only 2014 for now (2456658.5 - 2456658.5+365)

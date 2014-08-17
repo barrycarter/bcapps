@@ -4,6 +4,28 @@
 
 require "/usr/local/lib/bclib.pl";
 
+debug(num2base(4416951459393930,256));
+
+=item num2base($num,$base)
+
+Convert $num to base $base, returning a list of integers (lowest byte
+first) corresponding to $num
+
+=cut
+
+sub num2base {
+  my($num,$base) = @_;
+  my(@ret);
+
+  while ($num) {
+    push(@ret, $num%$base);
+    $num = floor($num/$base);
+  }
+  return @ret;
+}
+
+die "TESTING";
+
 # chebyshev
 
 open(A,"bzcat /home/barrycarter/BCGIT/ASTRO/ascp1950.430.bz2|");
