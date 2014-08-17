@@ -2,6 +2,10 @@
 
 # reads the Chebyshev coefficients from ascp1950.430.bz2
 
+# This helps find limits, which are -15 to +10, inclusive
+# bzcat ascp1950.430.bz2 | perl -nle 'while (s/D(...)//) {print $1}' | sort | uniq
+# can represent: 10^-31 to 10^10 with 16 digits of precision
+
 require "/usr/local/lib/bclib.pl";
 
 # list of planets with hardcoded coefficient numbers/etc
@@ -12,9 +16,116 @@ require "/usr/local/lib/bclib.pl";
 	    "uranus:387:6:1", "neptune:405:6:1", "whocares:423:6:1",
 	    "moongeo:441:13:8", "sun:753:11:2");
 
-planet_chebyshev(time(), "earthmoon");
+for $test ("-0.4821770431983586D-01", "-0.6233219171917435D+07", "0.3822701245044369D+04") {
+  debug(bin2cheb(cheb2bin($test)));
+}
 
 die "TESTING";
+
+
+$aa = cheb2bin("-0.1611214918998700D-07");
+$ab = cheb2bin("0.1611214918998700D-07");
+
+debug(bin2cheb($aa));
+
+
+# planet_chebyshev(time(), "earthmoon");
+
+=item cheb2bin
+
+Given a Chebyshev coefficient (like -0.9503118187993631D+07 convert it
+to a 7-byte string)
+
+=cut
+
+sub cheb2bin {
+  my($coeff) = @_;
+
+  # extract relevant parts
+  $coeff=~s/^(.*?)0\.(.*?)D(.)(..)//||warn("BAD COEFF: $coeff");
+  my($sgn, $man, $esgn, $exp) = ($1,$2,$3,$4);
+  # the last byte combines the exponent, and the sign of both exponent/mantissa
+  my($lastbyte) = chr(($sgn eq "-"?64:0)+($esgn eq "-"?32:0)+$exp);
+  # TODO: below does not handle trailing 0s
+  return join("",map($_=chr($_),num2base($man,256)))."$lastbyte";
+}
+
+=item bin2cheb
+
+Given a 7-byte string, return the associated Chebyshev coefficient
+(like -0.9503118187993631D+07)
+
+This function returns a string, not a double, because Perls default
+double precision routines are insufficiently precise.
+
+=cut
+
+sub bin2cheb {
+  my($str) = @_;
+  my($ret);
+
+  # the mantissa
+  my(@mant) = map($_=ord($_),split(//, $str));
+
+  # NOTE: last entry is sign/exponent, not part of mantissa
+  my($sign) = pop(@mant);
+
+  for $i (0..$#mant) {
+    $ret += $mant[$i]*256**$i;
+    debug("RETNOW: $mant[$i]/$i",sprintf("%0.f",$ret));
+}
+  debug(sprintf("%0.f", $ret));
+  # convert to non-engineering format
+  $ret = sprintf("0.%0.f", $ret);
+
+  # find the exponent
+  my($exp) = sprintf("%0.2d", $sign%16);
+  # signs <h>(signs, signs, everywhere a sign, blocking up the scenery...)</h>
+  if ($sign&32) {$exp="-$exp";} else {$exp="+$exp";}
+
+  # can't multiple $ret by -1, loses precision, so...
+  if ($sign&64) {
+    debug("-${ret}D$exp");
+  } else {
+    debug("${ret}D$exp");
+  }
+
+warn "TESTING"; return;
+
+
+
+
+  debug("SIGN: $sign");
+  # put exponent in Perl format
+  if ($sign&32) {$exp="-$exp";} else {$exp="+$exp";}
+
+  my($ret);
+
+
+  debug(sprintf("%0.fe$exp", $ret));
+
+  # TODO: this may be inaccurate in Perl (floating point limits)
+  return "${ret}e$exp";
+
+  # this probably won't work
+  debug("RET/EXP: $ret/$exp");
+  $ret*=10**$exp;
+  debug(sprintf("%0.f", $ret));
+
+#  debug(sprintf("%0.f %d", $ret, $exp));
+
+warn "FOO: TESTING";
+  return;
+
+  # extract relevant parts
+  $coeff=~s/^(.*?)0\.(.*?)D(.)(..)//||warn("BAD COEFF: $coeff");
+  my($sgn, $man, $esgn, $exp) = ($1,$2,$3,$4);
+  # the last byte combines the exponent, and the sign of both exponent/mantissa
+  my($lastbyte) = chr(($sgn eq "-"?64:0)+($esgn eq "-"?32:0)+$exp);
+  return join("",map($_=chr($_),num2base($man,256)))."$lastbyte";
+}
+
+
 
 =item planet_chebyshev($time,$planet)
 
