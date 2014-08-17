@@ -72,10 +72,10 @@ if ($globopts{info}) {push(@draw,draw_info());}
 if ($globopts{grid}) {push(@draw,draw_grid());}
 
 # path of planets this month
-$jd = get_julian_from_timet(str2time("2014-09-01 00:00:00 UTC"));
+$jd = get_julian_from_timet(str2time("2014-08-16 00:00:00 UTC"));
 
 for $j (keys %col) {
-  for ($i=1; $i<=30; $i+=1) {
+  for ($i=1; $i<=99; $i+=1) {
     my($equ) = eval("Astro::Nova::get_${j}_equ_coords($jd+$i-1)");
     my($ra,$dec) = ($equ->get_ra()/15, $equ->get_dec());
     push(@draw, "string $col{$j},$ra,$dec,tiny,$i");

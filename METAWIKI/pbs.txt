@@ -1617,7 +1617,7 @@ MULTIREF [[title::Fanny rub]] [[notes::[[Rat]] and [[Stephan Pastis]] seem horri
 2011-10-26 [[cameo::Jeffy (Family Circus)]]
 2011-10-26 [[newspaper::Arizona Daily ???+Incarman's??? ???+Press ???]]
 2011-10-30 [[newspaper::The Inquired]]
-2011-11-02,2007-05-09,2008-07-13,2006-01-29,2006-06-16,2006-09-09,2007-11-28 [[storyline::[[character::Goat]] writes a {{wp|blog}}]]
+2014-08-16,2011-11-02,2007-05-09,2008-07-13,2006-01-29,2006-06-16,2006-09-09,2007-11-28 [[storyline::[[character::Goat]] writes a {{wp|blog}}]]
 2011-11-03 [[character::Pig+Goat+Rat+[[Pig::friend::Bob 20111103 (bird)]]]]
 2011-11-04 [[event::[[Rat]] quits [[Joe's Roastery]]]]
 2011-11-06 [[character::Goat+Pig+James (human)]] [[James (human)::profession::butler]]
@@ -2101,6 +2101,7 @@ MULTIREF [[title::Larry's mother]] [[notes::Larry's mother dies on [[2005-05-13]
 2014-08-13 [[character::Pig+Goat]]
 2014-08-14 [[character::Neighbor Bob+Rat+Pig]]
 2014-08-15 [[character::Pig+Goat]]
+2014-08-16 [[character::Goat+Rat]]
 </data>
 
 # 2007-03-30 pig's mayors isnt LGD? (mayor in rehab)
