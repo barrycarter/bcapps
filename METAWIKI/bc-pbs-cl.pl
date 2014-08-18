@@ -37,7 +37,8 @@ require "/usr/local/lib/bclib.pl";
 	 "garfield" => "[[cameo::Garfield (Garfield)]]",
 	 "cathy" => "[[cameo::Cathy (Cathy)]]",
 	 "hagar" => "[[cameo::Hagar (Hagar the Horrible)]]",
-	 "pig's mom" => "[[character::Pig's mother (pig)]]"
+	 "pig's mom" => "[[character::Pig's mother (pig)]]",
+	 "henry hippo" => "[[character::Henry (hippo)]]"
 	 );
 
 # "done" is special case for slash mode meaning "list of chars is
@@ -89,7 +90,7 @@ for $i (glob "/mnt/extdrive/GOCOMICS/pearlsbeforeswine/CHARLIST/*.txt") {
     } else {
       # guess at full form
       $nofullform{lc($j)} = 1;
-      $j =~ s/(\w+)/\u$1/g;
+      $j =~ s/([\w\']+)/\u$1/g;
       # if species name, however, return to lower case
       $j=~s/\(([A-Z])/"(".lc($1)/e;
       $j = "[[character::$j]]";

@@ -16,11 +16,24 @@ require "/usr/local/lib/bclib.pl";
 	    "uranus:387:6:1", "neptune:405:6:1", "whocares:423:6:1",
 	    "moongeo:441:13:8", "sun:753:11:2");
 
+my(@arr) = planet_chebyshev(time(), "saturn");
+
+map(s/D/*10^/, @{$arr[0]}[0..6]);
+
+for $i (0..6) {
+  push(@out,@{$arr[0]}[$i]."*ChebyshevT[$i,0]");
+}
+
+print join("+\n", @out),"\n";
+
+
+die "TESTING";
+
 for $test ("-0.4821770431983586D-01", "-0.6233219171917435D+07", "0.3822701245044369D+04") {
   debug(bin2cheb(cheb2bin($test)));
 }
 
-die "TESTING";
+
 
 
 $aa = cheb2bin("-0.1611214918998700D-07");
@@ -28,8 +41,6 @@ $ab = cheb2bin("0.1611214918998700D-07");
 
 debug(bin2cheb($aa));
 
-
-# planet_chebyshev(time(), "earthmoon");
 
 =item cheb2bin
 
@@ -129,9 +140,11 @@ warn "FOO: TESTING";
 
 =item planet_chebyshev($time,$planet)
 
-Obtain the Chebyshev coefficients (as a list) for $planet at $time
-(Unix seconds). Requires ascp1950.430.bz2 (which is somewhere on
-NASAs/JPLs site, though I cant find it at the moment).
+Obtain the Chebyshev coefficients (as 3 lists, for x y z) for $planet
+at $time (Unix seconds). Requires ascp1950.430.bz2 (which is somewhere
+on NASAs/JPLs site, though I cant find it at the moment).
+
+Also returns a 4th list with metadata
 
 NOTES:
 
@@ -143,18 +156,31 @@ sub planet_chebyshev {
   my($time,$planet) = @_;
   local(*A);
 
+  # TODO: currently using uncompressed copy, change to use bzip'd copy
+  # TODO: when using bzip, using .tab file to seek more efficiently
   # TODO: opening this each time is inefficient, allow for mass grabs?
-  open(A,"bzcat /home/barrycarter/BCGIT/ASTRO/ascp1950.430.bz2|");
-  debug(seek(A,1,SEEK_SET),$!);
+  # TODO: should I be using DE431?
+  open(A,"/home/barrycarter/20140124/ascp1950.430");
 
   # where in file is time? First find chunk (chunk-1 actually)
   my($chunk) = floor(($time+632707200)/32/86400);
-  # seek there (each chunk = 26873 bytes)
-  # TODO: seeking in bzcat is inefficient, do better
-  debug("SEEK:",$chunk*26873);
-  debug("RES ($!)",seek(A, $chunk*26873, SEEK_SET));
-  debug(tell(A));
+  # seek there (each chunk = 26873 bytes) and read
+  seek(A, $chunk*26873, SEEK_SET);
+  # TODO: can seek even more precisely to exact position
+  read(A, my($data), 26873);
 
+  # compact data and get rid of newlines (probably inefficient)
+  $data=~s/\s+/ /g;
+
+  # the coefficients, chunk number, dates, etc
+  my(@data) = split(/\s+/, $data);
+
+  # the chunk numbers
+  my($blank, $chunk, $total) = (shift(@data), shift(@data), shift(@data));
+  debug("JD: $data[0] $data[1]");
+
+  # for saturn (testing)
+  return [@data[366..372],@data[373..379],@data[380..386]];
 }
 
 open(A,"bzcat /home/barrycarter/BCGIT/ASTRO/ascp1950.430.bz2|");
