@@ -52,7 +52,8 @@ for ($time=str2time("2014-01-01");$time<=str2time("2015-01-01");$time+=86400*32)
     map(s/D/*10^/, @coords);
     @terms = ();
     for $j (0..$#coords) {
-      push(@terms, "$coords[$j]*ChebyshevT[$j,(t-$us)/32/86400*2-1]");
+#      push(@terms, "$coords[$j]*ChebyshevT[$j,(t-$us)/32/86400*2-1]");
+      push(@terms, "$coords[$j]*ChebyshevT[$j,t]");
     }
 
     # the polynomial
@@ -60,7 +61,16 @@ for ($time=str2time("2014-01-01");$time<=str2time("2015-01-01");$time+=86400*32)
 
     # define this function independently as well
     print "chunk[$planet][$i][$count][t_] = $poly;\n";
-    print "pos[$planet][$i][t_/;t>=$us&&t<$ue] = $poly;\n";
+    print "chunkd1[$planet][$i][$count][t_] = D[$poly,t];\n";
+    print "chunkd2[$planet][$i][$count][t_] = D[$poly,t,t];\n";
+    print "chunkd3[$planet][$i][$count][t_] = D[$poly,t,t,t];\n";
+    print "chunkd4[$planet][$i][$count][t_] = D[$poly,t,t,t,t];\n";
+
+    print "pos[$planet][$i][t_/;t>=$us&&t<$ue] = chunk[$planet][$i][$count][(t-$us)/32/86400*2-1];\n";
+
+    for $j ("d1","d2","d3","d4") {
+      print "pos${j}[$planet][$i][t_/;t>=$us&&t<$ue] = chunk${j}[$planet][$i][$count][(t-$us)/32/86400*2-1];\n";
+    }
   }
 }
 
