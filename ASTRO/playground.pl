@@ -4,25 +4,41 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# on an ortho map, what goes in the .2,.3 to .3,.4 square (reverse
+# quadrangling), in terms of a mercator map
+
+# ortho limits: +-6378137 for x coord, same for y coord
+
+# .2 = 1275627.4, .3 = 1913441.1, .4 = 2551254.8
+
+# cs2cs -e 'ERR ERR' +proj=ortho +to +proj=merc
+# .2,.3 to 1347216.35 1961346.56 (NW)
+# .3,.4 to 2126937.58 2685005.75 (SE)
+# .2,.4 to 1403113.46 2685005.75 (SW)
+# .3,.3 to 2040458.85 1961346.56 (NE)
+
+# merc limits: +-20037508.34 in x direction, unlimited in y direction
+
+# merc x range: 1347216.35 to 2126937.58
+# merc y range: 1961346.56 to 2685005.75
+
+# scaled x: .0672347243 to .1061478075
+# scaled y: .0978837551 to .1339989835
+
+# xwidth (scaled): .0389130832
+# ywidth (scaled): .0361152284
+
+# so about 1/32 width or 1/2^5 so level 5 slippy tile?
+
+
+
+
+
+
+
+die "TESTING";
+
 debug(num2base(4416951459393930,256));
-
-=item num2base($num,$base)
-
-Convert $num to base $base, returning a list of integers (lowest byte
-first) corresponding to $num
-
-=cut
-
-sub num2base {
-  my($num,$base) = @_;
-  my(@ret);
-
-  while ($num) {
-    push(@ret, $num%$base);
-    $num = floor($num/$base);
-  }
-  return @ret;
-}
 
 die "TESTING";
 
