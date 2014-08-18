@@ -2103,6 +2103,7 @@ MULTIREF [[title::Larry's mother]] [[notes::Larry's mother dies on [[2005-05-13]
 2014-08-15 [[character::Pig+Goat]]
 2014-08-16 [[character::Goat+Rat]]
 2014-08-17 [[character::Goat+Pastis+Pig+[[deaths::Timmy (fish)]]+Bob (fish)]]
+2014-08-18 [[character::Pastis+Rat]]
 </data>
 
 # 2007-03-30 pig's mayors isnt LGD? (mayor in rehab)

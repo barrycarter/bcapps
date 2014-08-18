@@ -9,7 +9,7 @@ require "/usr/local/lib/bclib.pl";
 
 # ortho limits: +-6378137 for x coord, same for y coord
 
-# .2 = 1275627.4, .3 = 1913441.1, .4 = 2551254.8
+# .1 = 637813.7, .2 = 1275627.4, .3 = 1913441.1, .4 = 2551254.8, .5 = 3189068.5
 
 # cs2cs -e 'ERR ERR' +proj=ortho +to +proj=merc
 # .2,.3 to 1347216.35 1961346.56 (NW)
@@ -30,7 +30,20 @@ require "/usr/local/lib/bclib.pl";
 
 # so about 1/32 width or 1/2^5 so level 5 slippy tile?
 
+# roughly x tile 2
+# roughly y tile 3
 
+# better (Spain-ish): .4 - .5 in the x range and .1 - .2 in y range
+
+# unscaled x: 2638741.07 to 3415783.48
+# unscaled y: 635682.73 to 1284515.71
+
+# scaled x: .1316900796 to .1704694726
+# scaled y: .0317246395 to .0641055608
+
+# right about level 5 tiles, x starting at 4.21ish, y at 1ish
+
+# 2,1,1... children are 3,3,3 then 4,7,6 then 5,15,12
 
 
 

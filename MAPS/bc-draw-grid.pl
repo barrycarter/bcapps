@@ -22,11 +22,11 @@ $latspace = 15;
 $lonspace = 20;
 
 # x/y of image
-$xsize = 8192;
-$ysize = 8192;
+$xsize = 1000;
+$ysize = 1000;
 
 # use slippy tiles at this zoom level (prev hardcoded at 4)
-$zoomtile = 5;
+$zoomtile = 3;
 
 # test of "pre" function
 sub pre {
