@@ -11,17 +11,31 @@ require "/usr/local/lib/bclib.pl";
 # list of planets with hardcoded coefficient numbers/etc
 # TODO: don't hardcode, use header.430_572
 
+
+# some saturn data:
+# 2457754.500000000, A.D. 2017-Jan-01 00:00:00.0000,
+# -2.790167302332390E+08, -1.475897564189129E+09, 3.676598655656585E+07
+
 @planets = ("mercury:3:14:4", "venus:171:10:2", "earthmoon:231:13:2",
 	    "mars:309:11:1", "jupiter:342:8:1", "saturn:366:7:1",
 	    "uranus:387:6:1", "neptune:405:6:1", "whocares:423:6:1",
 	    "moongeo:441:13:8", "sun:753:11:2");
 
-my(@arr) = planet_chebyshev(time(), "saturn");
+my($time) = str2time("2017-01-01");
+my(@arr) = planet_chebyshev($time, "saturn");
 
-map(s/D/*10^/, @{$arr[0]}[0..6]);
+my(@arr2) = @{$arr[0]};
 
-for $i (0..6) {
-  push(@out,@{$arr[0]}[$i]."*ChebyshevT[$i,0]");
+debug("ARR2",@arr2);
+
+map(s/D/*10^/, @{$arr[0]});
+
+# for $i (0..6) {
+#  push(@out,@{$arr[0]}[$i]."*ChebyshevT[$i,0]");
+# }
+
+for $i (7..13) {
+  push(@out,@{$arr[0]}[$i]."*ChebyshevT[$i-7,0]");
 }
 
 print join("+\n", @out),"\n";
@@ -41,6 +55,53 @@ $ab = cheb2bin("0.1611214918998700D-07");
 
 debug(bin2cheb($aa));
 
+=item planet_chebyshev($time,$planet)
+
+Obtain the Chebyshev coefficients (as 3 lists, for x y z) for $planet
+at $time (Unix seconds). Requires ascp1950.430.bz2 (which is somewhere
+on NASAs/JPLs site, though I cant find it at the moment).
+
+Also returns a 4th list with metadata
+
+NOTES:
+
+First chunk (1 1801) starts at -632707200 and ends at -629942400 (32 days)
+
+=cut
+
+sub planet_chebyshev {
+  my($time,$planet) = @_;
+  local(*A);
+
+  # TODO: currently using uncompressed copy, change to use bzip'd copy
+  # TODO: when using bzip, using .tab file to seek more efficiently
+  # TODO: opening this each time is inefficient, allow for mass grabs?
+  # TODO: should I be using DE431?
+  open(A,"/home/barrycarter/20140124/ascp1950.430");
+
+  # where in file is time? First find chunk (chunk-1 actually)
+  my($chunk) = floor(($time+632707200)/32/86400);
+  # seek there (each chunk = 26873 bytes) and read
+  seek(A, $chunk*26873, SEEK_SET);
+  # TODO: can seek even more precisely to exact position
+  read(A, my($data), 26873);
+  debug("DATA: $data");
+
+  # compact data and get rid of newlines (probably inefficient)
+  $data=~s/\s+/ /g;
+
+  # the coefficients, chunk number, dates, etc
+  my(@data) = split(/\s+/, $data);
+
+  # the chunk numbers
+  my($blank, $chunk, $total) = (shift(@data), shift(@data), shift(@data));
+  debug("JD: $data[0] $data[1]");
+  for $i (0..$#data) {debug("DATA[$i]: $data[$i]");}
+
+  # for saturn (testing)
+  # 365 = the 366th list element (0-based array)
+  return [@data[365..371],@data[372..378],@data[379..385]];
+}
 
 =item cheb2bin
 
@@ -137,51 +198,6 @@ warn "FOO: TESTING";
 }
 
 
-
-=item planet_chebyshev($time,$planet)
-
-Obtain the Chebyshev coefficients (as 3 lists, for x y z) for $planet
-at $time (Unix seconds). Requires ascp1950.430.bz2 (which is somewhere
-on NASAs/JPLs site, though I cant find it at the moment).
-
-Also returns a 4th list with metadata
-
-NOTES:
-
-First chunk (1 1801) starts at -632707200 and ends at -629942400 (32 days)
-
-=cut
-
-sub planet_chebyshev {
-  my($time,$planet) = @_;
-  local(*A);
-
-  # TODO: currently using uncompressed copy, change to use bzip'd copy
-  # TODO: when using bzip, using .tab file to seek more efficiently
-  # TODO: opening this each time is inefficient, allow for mass grabs?
-  # TODO: should I be using DE431?
-  open(A,"/home/barrycarter/20140124/ascp1950.430");
-
-  # where in file is time? First find chunk (chunk-1 actually)
-  my($chunk) = floor(($time+632707200)/32/86400);
-  # seek there (each chunk = 26873 bytes) and read
-  seek(A, $chunk*26873, SEEK_SET);
-  # TODO: can seek even more precisely to exact position
-  read(A, my($data), 26873);
-
-  # compact data and get rid of newlines (probably inefficient)
-  $data=~s/\s+/ /g;
-
-  # the coefficients, chunk number, dates, etc
-  my(@data) = split(/\s+/, $data);
-
-  # the chunk numbers
-  my($blank, $chunk, $total) = (shift(@data), shift(@data), shift(@data));
-  debug("JD: $data[0] $data[1]");
-
-  # for saturn (testing)
-  return [@data[366..372],@data[373..379],@data[380..386]];
-}
 
 open(A,"bzcat /home/barrycarter/BCGIT/ASTRO/ascp1950.430.bz2|");
 
