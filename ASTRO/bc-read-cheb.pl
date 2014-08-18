@@ -39,7 +39,8 @@ for $i (@planets) {
 
 $planet = "mars";
 for ($time=str2time("2014-01-01");$time<=str2time("2015-01-01");$time+=86400*32) {
-  debug("TIME: $time");
+
+  $count++;
   my(%arr) = planet_chebyshev($time, $planet);
   map(s/D/e/, @{$arr{jd}});
   map($_=jd2unix($_,"jd2unix"), @{$arr{jd}});
@@ -53,7 +54,13 @@ for ($time=str2time("2014-01-01");$time<=str2time("2015-01-01");$time+=86400*32)
     for $j (0..$#coords) {
       push(@terms, "$coords[$j]*ChebyshevT[$j,(t-$us)/32/86400*2-1]");
     }
-    print "pos[$planet][$i][t_/;t>=$us&&t<$ue]= ","\n",join("+\n", @terms),";\n";
+
+    # the polynomial
+    my($poly) = join("+\n", @terms);
+
+    # define this function independently as well
+    print "chunk[$planet][$i][$count][t_] = $poly;\n";
+    print "pos[$planet][$i][t_/;t>=$us&&t<$ue] = $poly;\n";
   }
 }
 
