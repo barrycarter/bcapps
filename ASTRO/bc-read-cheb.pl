@@ -35,18 +35,33 @@ for $i (@planets) {
   $planetinfo{$plan} = [$pos,$num,$chunks];
 }
 
-my($time) = str2time("2017-01-01");
-my(%arr) = planet_chebyshev($time, "saturn");
+# an entire year or so of mars
 
-for $i ("x","y","z") {
-  my(@coords) = @{$arr{$i}};
-  # change the D into "*10^" for Mathematica
-  map(s/D/*10^/, @coords);
-  for $j (0..$#coords) {
-    print "$coords[$j]*ChebyshevT[$j,t]+\n";
+$planet = "mars";
+for ($time=str2time("2014-01-01");$time<=str2time("2015-01-01");$time+=86400*32) {
+  debug("TIME: $time");
+  my(%arr) = planet_chebyshev($time, $planet);
+  map(s/D/e/, @{$arr{jd}});
+  map($_=jd2unix($_,"jd2unix"), @{$arr{jd}});
+  my($us,$ue) = @{$arr{jd}};
+
+  for $i ("x","y","z") {
+    my(@coords) = @{$arr{$i}};
+    # change the D into "*10^" for Mathematica
+    map(s/D/*10^/, @coords);
+    @terms = ();
+    for $j (0..$#coords) {
+      push(@terms, "$coords[$j]*ChebyshevT[$j,(t-$us)/32/86400*2-1]");
+    }
+    print "pos[$planet][$i][t_/;t>=$us&&t<$ue]= ","\n",join("+\n", @terms),";\n";
   }
-  print "+0\n\n";
 }
+
+die "TESTING";
+
+# this is hardcoded for 2016-12-22 00:00:00 to 2017-01-23 00:00:00
+my($us,$ue) = (1482364800, 1485129600);
+
 
 # debug(unfold(%arr));
 
@@ -95,7 +110,6 @@ sub planet_chebyshev {
   seek(A, $chunk*26873, SEEK_SET);
   # TODO: can seek even more precisely to exact position
   read(A, my($data), 26873);
-  debug("DATA: $data");
 
   # the coefficients, chunk number, dates, etc
   my(@data) = split(/\s+/, $data);
@@ -103,13 +117,7 @@ sub planet_chebyshev {
   # the data we actually want (+3 to get rid of blanks and chunk numbers)
   @data = @data[3..4,$pos+2..$pos+2+$num*3];
   $rethash{jd} = [splice(@data,0,2)];
-
-  debug("RET:",@{$rethash{jd}});
-
-  for $i ("x","y","z") {
-    $rethash{$i} = [splice(@data,0,$num)]
-  }
-
+  for $i ("x","y","z") {$rethash{$i} = [splice(@data,0,$num)];}
   return %rethash;
 }
 
