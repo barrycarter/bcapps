@@ -38,7 +38,8 @@ for $i (@planets) {
 # an entire year or so of mars
 
 $planet = "mars";
-for ($time=str2time("2014-01-01");$time<=str2time("2015-01-01");$time+=86400*32) {
+for ($time=str2time("2000-01-01"); $time<=str2time("2038-01-01");
+     $time+=86400*32) {
 
   $count++;
   my(%arr) = planet_chebyshev($time, $planet);
