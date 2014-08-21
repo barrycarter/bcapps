@@ -1,0 +1,162 @@
+================================================================================
+format.txt
+
+    This document describes the format of the JPL DE405 Ephemeris data.
+
+                                                                Niek Sanders
+                                                Mon Jun 26 10:20:59 EDT 2006
+================================================================================
+
+
+(1) Getting the Data
+
+The main distribution site for JPL Ephemeris data is located here:
+        ftp://ssd.jpl.nasa.gov/pub/eph/export/
+
+The "/DE405" subdirectory contains a research paper explaining how the 
+Ephemerides were derived.  The actual data is found in "/ascii".  The top level 
+"README.txt" gives some helpful overview information, in addition to some 
+information about the header format.
+
+The primary source code examples are in "/fortran" and "/C-versions/hoffman".  
+There is also a (poorly-written) Java version which is essentially a cut and 
+paste of the FORTRAN routines.
+
+
+(2) The Ephemerides Format
+
+DE405 is a series of coefficients for Chebyshev Polynomials.  The data comes 
+distributed in a series of plain-text coefficient files and a single overall 
+header file.  Normally, these ASCII files are downloaded and then converted to 
+binary (using one of the supplied utilities).  Doing this process manually 
+allows for production of subsets of the Ephemerides and ensures the correct 
+endian-ness of the data.
+
+The header file, "/ascii/header.405" explains the overall layout and coverage of
+the data.  This file is subdivided in to "GROUP <###>" entries.
+
+    GROUP 1010 -> Plain text strings explaining the data source (JPL DE405) and
+                  the dates covered (12/9/1599 till 2/20/2201).
+
+    GROUP 1030 -> Three numbers.  The first two are the first and last dates 
+                  covered by the Ephemerides (Julian Day).  The third value 
+                  indicates the days per record.
+
+    GROUP 1040 -> The constants used when making the Ephemeris calculations.  
+                  First comes a numeral indicating the total number of constants
+                  (156), followed by the names.  The actual values associated 
+                  with each constant are given in GROUP 1041.
+
+    GROUP 1041 -> The values associated with each constant from GROUP 1040.  
+                  First comes a number indicating the total number of 
+                  constant-values (156).  Then come a series of double precision
+                  numbers corresponding to GROUP 1040 entries.  The sixth GROUP 
+                  1040 entry is "CLIGHT".  Accordinly, the sixth GROUP 1041 
+                  entry is "CLIGHT".
+
+                  Note that these doubles are written in FORTRAN style, and use 
+                  a "D" rather than "E" to indicate the exponent.
+
+    GROUP 1050 -> Layout information of each coefficient file.  The thirteen 
+                  columns represent the following astronomical entities:
+
+                      Column        Entity
+                        1           Mercury
+                        2           Venus
+                        3           Earth/Moon Barycenter
+                        4           Mars
+                        5           Jupiter
+                        6           Saturn
+                        7           Uranus
+                        8           Neptune
+                        9           Pluto
+                        10          Moon (Geocenter)
+                        11          Sun
+                        12          Terrestrial Nutations
+                        13          Lunar Librations
+
+                  The first row gives the starting location, in a given record, 
+                  of the Chebyshev coefficients for that entity.  The second row
+                  indicates the degree of the interpolating polynomials (there 
+                  is one for each dimension).  The third row indicates the 
+                  number of polynomials used to cover the record.
+
+                  For example: 
+                  Mercury uses polynomials of degree 14.  Each 32 day record has
+                  is subdivided in to 4 segments (each covering an 8 day span).
+                  The coefficients start at the third double-precision value in 
+                  each record.  (Values 1 and 2 are the Julian start/end day for
+                  that record).
+
+                  The coefficients for Venus start at 171.  
+                  171 - 3 = 168 coeffs for Mercury.
+                  168 / 4 = 42 coeffs for each 8 day period.
+                  42 / 3 = 14 coeffs for each of the three polynomials covering 
+                              the x, y, and z dimensions.
+                  
+                  Entities 1 through 11 have three components at each 
+                  subdivision (one for x, y, and z).  Entity 12 has two 
+                  components: d(psi) and d(epsilon).  Entity 13 has three euler 
+                  angles for components.
+
+    GROUP 1070 -> Marks the start of the data.  Note that this is empty in the 
+                  header file.  The ASCII coefficient files could be appended 
+                  here and produce a single large file with a coherent format. 
+
+The ASCII datafiles are separated in to 20 year blocks.  They are named:
+
+    /ascii/ascp1600.405
+    /ascii/ascp1620.405
+    /ascii/ascp1640.405
+           .
+           .
+           .
+    /ascii/ascp2200.405
+
+The four digit number in the filename indicates the starting year of the block.  
+Each block is subdivided in to a series of records, each covering 32 days.  For 
+each astronomical entity, these records are further subdivided accordingly to 
+the layout described in GROUP 1050 of the header file.
+
+Inside the file, each record is marked by two integers.  The first is the record
+number, starting at 1.  The second is the number of coefficients in the record 
+(1018).  The first two double precision number of each record show the start and
+end Julian Day covered by the record.  (These will always be 32 days apart).  
+Next come the 1018 coefficients.  As explained in GROUP 1050, They have the 
+following ordering:
+
+    32-Day Block
+        Mercury                                            
+            Mercury subdivision #1                         
+                14 coefficients for x dimension            offset 3
+                14 coefficients for y dimension            offset 17
+                14 coefficients for z dimension            offset 31
+
+            Mercury subdivision #2                         
+                14 coefficients for x dimension            offset 45
+                14 coefficients for y dimension            offset 59
+                14 coefficients for z dimension            offset 73
+
+            Mercury subdivision #3                         
+                14 coefficients for x dimension            offset 87
+                14 coefficients for y dimension            offset 101
+                14 coefficients for z dimension            offset 115
+
+            Mercury subdivision #4                         
+                14 coefficients for x dimension            offset 129
+                14 coefficients for y dimension            offset 143
+                14 coefficients for z dimension            offset 157
+
+        Venus                                             
+            Venus subdivision #1
+                14 coefficients for x dimension            offset 171
+                  .
+                  .
+                  .        
+
+Note that all position/velocity answers are given in the International 
+Celestial Reference Frame (ICRF) with one exception.  The data for the 
+moon is given relative to the Earth.  The ephemerides tell us the 
+location of the Earth-Moon Barycenter.  Using the relative masses of the
+moon and the earth (EMRAT in JPL 405 header file), we can computer the 
+position of the earth and the moon.

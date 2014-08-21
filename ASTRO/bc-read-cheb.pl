@@ -23,6 +23,9 @@ require "/usr/local/lib/bclib.pl";
 # 2457776.500000000 = A.D. 2017-Jan-23 00:00:00.0000 (CT)
 # 1.872704779146366E+08  1.048557408105275E+08 -2.422463501688972E+06
 
+# earthmoon = earth-moon barycenter
+# moongeo = position of moon from earth
+
 @planets = ("mercury:3:14:4", "venus:171:10:2", "earthmoon:231:13:2",
 	    "mars:309:11:1", "jupiter:342:8:1", "saturn:366:7:1",
 	    "uranus:387:6:1", "neptune:405:6:1", "whocares:423:6:1",
@@ -49,8 +52,10 @@ for ($time=str2time("2000-01-01"); $time<=str2time("2038-01-01");
 
   for $i ("x","y","z") {
     my(@coords) = @{$arr{$i}};
-    # change the D into "*10^" for Mathematica
-    map(s/D/*10^/, @coords);
+
+    # change to fractions for mathematica "precision"
+    map(s%\.(\d{16})\D%$1/10^17*10^%, @coords);
+
     @terms = ();
     for $j (0..$#coords) {
 #      push(@terms, "$coords[$j]*ChebyshevT[$j,(t-$us)/32/86400*2-1]");
@@ -105,6 +110,8 @@ Also returns other useful info in hash
 NOTES:
 
 First chunk (1 1801) starts at -632707200 and ends at -629942400 (32 days)
+
+TODO: this only works for planets with 32-day coefficients for now
 
 =cut
 
