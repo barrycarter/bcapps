@@ -1,5 +1,12 @@
 # shell one liners
 
+# lists tuesdays ("date -d 'next Tuesday 12:00:00' +%s" to start) and
+# later wednesdays
+
+perl -le 'use Date::Parse; use POSIX; for ($i=1409076000+86400;$i<=1409076000+15*366*86400; $i+=86400*7) {print strftime("%Y%m%d", localtime($i));}'
+
+exit;
+
 # filters stuff I want from calendar in correct format
 
 gcal -u @/home/barrycarter/BCGIT/ASTRO/gcal-options.txt 2016 | perl -nle '/^(.*?)\s{2,}[\+\-]\s+(\d{8})/||warn("BAD: $_"); my($e,$d)=($1,$2); $e=~s/\s*\(.*?\)\s*$//; $e=~s/\47//g; $e=~s/\s*Day\s*/ /; print "$d $e"' | egrep -vf /home/barrycarter/20140726/nocal.txt | sort | uniq

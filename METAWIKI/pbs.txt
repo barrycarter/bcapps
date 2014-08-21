@@ -1936,8 +1936,8 @@ MULTIREF [[title::Fanny rub]] [[notes::[[Rat]] and [[Stephan Pastis]] seem horri
 2014-02-17 [[character::Pig+Goat+Rat+Chef Phil]] [[Chef Phil::profession::chef]] [[Phil 20140217 (human)::aka::Chef Phil]]
 2014-02-17,2014-03-14,2014-03-18,2014-04-06,2013-03-21,2013-03-31,2013-04-04,2013-04-21,2013-05-26,2013-06-14,2013-06-30,2013-08-04,2013-08-25,2013-09-01,2013-09-03,2013-10-06,2013-11-11,2013-11-18,2013-12-29,2012-01-08,2012-04-08,2012-05-08,2012-07-08,2012-08-27,2012-10-04,2012-10-07,2012-11-26,2007-10-14,2011-07-31,2010-12-05,2010-08-15,2009-09-27,2003-01-19,2004-03-29,2005-04-10,2009-12-06,2011-01-30,2009-06-14,2004-03-02,2011-04-08,2008-05-25,2004-01-06,2010-11-07,2008-10-26,2008-06-15,2009-08-23,2004-04-03,2008-07-27,2004-03-23,2007-02-18 [[category::Shaggy Dog]]
 2014-02-18,2014-03-01,2014-03-24-2014-03-28 [[storyline::Breaking Bad]]
-2014-08-20,2014-02-19-2014-02-21,2014-02-24-2014-02-26,2014-03-03-2014-03-04,2014-03-20-2014-03-21 [[storyline::[[character::Rat]] is a doctor]]
-2014-08-20 [[character::Rat+Neighbor Fred]] [[meta::Assuming this is Neighbor Fred]]
+2014-08-20,2014-08-21,2014-02-19-2014-02-21,2014-02-24-2014-02-26,2014-03-03-2014-03-04,2014-03-20-2014-03-21 [[storyline::[[character::Rat]] is a doctor]]
+2014-08-20 [[character::Rat+Neighbor Fred+Pilly Wonka]] [[meta::Assuming this is Neighbor Fred]] [[Pilly Wonka::profession::pharmaceutical rep]]
 2014-02-24 [[character::Neighbor Johnson]] [[meta::might be assuming too much in saying this is Neighbor Johnson]]
 2014-03-20 [[character::Jones (human)]]
 2014-02-23 [[notes::Parodies Arizona's {{wp|Proposition 200}}, which *requires* (not just allows) police to check the immigration status of anyone stopped for any legitimate reason (eg, a traffic violation). It does *not* allow police to stop people solely because they appear to be illegal immigrants]]
@@ -2117,7 +2117,7 @@ MULTIREF [[title::Larry's mother]] [[notes::Larry's mother dies on [[2005-05-13]
 2014-08-17 [[character::Goat+Pastis+Pig+[[deaths::Timmy (fish)]]+Bob (fish)]]
 2014-08-18 [[character::Pastis+Rat]] [[Stephan Pastis::aka::Pastis]]
 2014-08-19 [[character::Pig]] [[location::Le Eatery]]
-
+2014-08-21 [[character::Rat+Pilly Wonka+Neighbor Fred]]
 </data>
 
 # 2007-03-30 pig's mayors isnt LGD? (mayor in rehab)
