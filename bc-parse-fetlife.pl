@@ -11,6 +11,7 @@ require "/usr/local/lib/bclib.pl";
 
 # this is for a newer pull on 20140808
 $dir = "/home/barrycarter/20140808";
+chdir($dir);
 
 # metadata
 for $i (glob ("$dir/kinksters\?page\=*")) {

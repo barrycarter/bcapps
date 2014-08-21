@@ -70,3 +70,5 @@ debug("RUNNING: $cmd");
   # move file to "DONE"
   system("mv $i DONE");
 }
+
+mylock("bc-query-gobbler-$db.pl","unlock");
