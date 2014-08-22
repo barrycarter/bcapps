@@ -2118,6 +2118,7 @@ MULTIREF [[title::Larry's mother]] [[notes::Larry's mother dies on [[2005-05-13]
 2014-08-18 [[character::Pastis+Rat]] [[Stephan Pastis::aka::Pastis]]
 2014-08-19 [[character::Pig]] [[location::Le Eatery]]
 2014-08-21 [[character::Rat+Pilly Wonka+Neighbor Fred]]
+2014-08-22 [[character::Pig+Rat+Neighbor Bob+Neighbor Bob's child (human)]]
 </data>
 
 # 2007-03-30 pig's mayors isnt LGD? (mayor in rehab)

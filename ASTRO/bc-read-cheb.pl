@@ -54,7 +54,7 @@ for ($time=str2time("2000-01-01"); $time<=str2time("2038-01-01");
     my(@coords) = @{$arr{$i}};
 
     # change to fractions for mathematica "precision"
-    map(s%\.(\d{16})\D%$1/10^17*10^%, @coords);
+    map(s%\.(\d{16})\D%$1/10^16*10^%, @coords);
 
     @terms = ();
     for $j (0..$#coords) {
@@ -64,6 +64,7 @@ for ($time=str2time("2000-01-01"); $time<=str2time("2038-01-01");
 
     # the polynomial
     my($poly) = join("+\n", @terms);
+    $poly = "Expand\[$poly\]";
 
     # define this function independently as well
     print "chunk[$planet][$i][$count][t_] = $poly;\n";

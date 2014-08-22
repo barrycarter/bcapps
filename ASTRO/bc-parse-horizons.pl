@@ -1,13 +1,13 @@
 #!/bin/perl
 
-# Requested ton of data from HORIZONS, now to parse it
-# not sure how useful this is to anyone, but ...
+# requested more data in different format (CSV) and different plane
+# (ICRS) on 22 Aug 2014
 
-require "bclib.pl";
+require "/usr/local/lib/bclib.pl";
 
-$targetdir = "/home/barrycarter/20110916/";
+$targetdir = "/home/barrycarter/20140822/";
 chdir($targetdir);
-open(A,"bzcat /home/barrycarter/mail/HORIZONS-SSBC.mbx.bz2|");
+open(A,"bzcat /home/barrycarter/mail/HORIZONS19702030.bz2|");
 
 while (<A>) {
   # because results are multipart (many messages per planet), subject
@@ -16,6 +16,9 @@ while (<A>) {
     close(B);
     open(B,">>pos-$1-$2-$3.txt");
     debug("APPENDING TO: pos-$1-$2-$3...");
+    next;
+  } elsif (/^Subject: DON\'T DELETE THIS MESSAGE/) {
+    # <h>stupid IMAP</h>
     next;
   } elsif (/^Subject/) {
     die("BAD SUBJECT: $_");
@@ -28,7 +31,7 @@ while (<A>) {
   }
 
   s/E/*10^/isg;
-  ($jd, $junk, $x, $y, $z) = split(/\,/,$_);
+  ($jd, $junk, $x, $y, $z) = split(/\,\s+/,$_);
 
   # I appear to be missing files/years, so adding this
   $junk=~/(\d{4})/;
