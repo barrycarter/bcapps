@@ -24,10 +24,10 @@ tocheb[n_, ax_] := Round[1000*CoefficientList[
  Total[coeffs[[Floor[n/ndays]+1,ax]]*cheb] /.
  t -> Mod[n,ndays]/ndays*2-1+t/ndays*2, t]]
 
-test[t_] = Total[tocheb[23394,1]*taylor]
+final = Table[tocheb[n,ax],{n,1,Length[coeffs]*ndays-1},{ax,1,3}]
 
-t1 = Table[tocheb[n,1][[1]], {n,1,Length[coeffs]*ndays-1}]
-t2 = Table[tocheb[n,1][[2]], {n,1,Length[coeffs]*ndays-1}]
-t3 = Table[tocheb[n,1][[3]], {n,1,Length[coeffs]*ndays-1}]
-t4 = Table[tocheb[n,1][[4]], {n,1,Length[coeffs]*ndays-1}]
+Flatten[final] >> /tmp/test1.m
 
+(* only 6 coeffs needed per poly *)
+
+Table[final[[n,3,6]],{n,1,Length[final]}]
