@@ -1,3 +1,28 @@
+(* Chebyshev to Taylor *)
+
+cheb[x_] = Sum[c[i+1]*ChebyshevT[i,x],{i,0,13}]
+taylor = Table[t^i,{i,0,13}]
+
+temp1[a_,b_] = CoefficientList[cheb[a+frac*(b-a)],frac]
+
+random = Table[Random[],{i,1,14}]
+
+rand1[x_] = cheb[x] /. c[i_] -> random[[i]]
+
+Plot[rand1[x],{x,-1,1}]
+
+(* The Taylor series for the right hand side *)
+
+rand2[t_] = Total[(temp1[0.4,0.6] /. c[i_] -> random[[i]])*taylor]
+
+Plot[rand2[t],{t,0,1}]
+
+
+
+
+
+
+
 (* TODO: assuming a and b are global below, fix *)
 
 (* parametric ellipse *)

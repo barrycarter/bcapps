@@ -13,12 +13,53 @@ coeffs = Partition[Partition[coeffs,ncoeff],3];
 cheb = Table[ChebyshevT[i,t],{i,0,ncoeff-1}]
 taylor = Table[t^i,{i,0,ncoeff-1}]
 
+(* function that semi-efficiently computes Taylor polynomial for
+interval [a,b] treated as [0,1] where c[i] are the Chebyshev
+coefficients up to order 14 (polynomial order 13) *)
+
+cheb2tay[a_,b_] := cheb2tay[a,b] = 
+CoefficientList[Sum[c[i+1]*ChebyshevT[i,x],{i,0,13}] /. x-> a+frac*(b-a),frac]
+
+cheb2tay[0,1/8] /. c[i_] -> coeffs[[2924,1,i]]
+
+Table[{2*i/ndays-1,2*(i+1)/ndays-1}, {i,0,ndays-1}]
+
+t1 = Table[cheb2tay[2*i/ndays-1, 2*(i+1)/ndays-1],{i,0,ndays-1}] /. 
+ c[i_] -> coeffs[[2924,1,i]] 
+
+t1 = Transpose[Table[Table[cheb2tay[2*i/ndays-1,
+2*(i+1)/ndays-1],{i,0,ndays-1}] /. c[i_] -> coeffs[[2924,axes,i]],
+{axes,1,3}]]
+
+t1 = Table[Transpose[Table[Table[cheb2tay[2*i/ndays-1,
+2*(i+1)/ndays-1],{i,0,ndays-1}] /. c[i_] -> coeffs[[n,axes,i]],
+{axes,1,3}]], {n,1,Length[coeffs]}];
+
+Timing[Table[cheb2tay[2*i/ndays-1,2*(i+1)/ndays-1],{i,0,ndays-1}] /. 
+ c[i_] -> coeffs[[1234,1,i]]]
+
+t1 =
+Timing[Table[Table[cheb2tay[2*i/ndays-1,2*(i+1)/ndays-1],{i,0,ndays-1}]
+/. c[i_] -> coeffs[[n,1,i]], {n,1,Length[coeffs]}]];
+
+
+
+
+
+
+Table[x[[1]], {x,t1}]
+
+Plot[Total[N[coeffs[[2924,1]]]*cheb],{t,-1,1}]
+
+
+
+
 (* the Chebyshev polynomials for day n, axes ax, converted to Taylor *)
 tocheb[n_, ax_] := Round[1000*CoefficientList[
  Total[coeffs[[Floor[n/ndays]+1,ax]]*cheb] /.
  t -> Mod[n,ndays]/ndays*2-1+t/ndays*2, t]]
 
-final = Table[tocheb[n,ax],{n,1,Length[coeffs]*ndays-1},{ax,1,3}];
+final = Timing[Table[tocheb[n,ax],{n,1,Length[coeffs]*ndays-1},{ax,1,3}]];
 
 (* max/min values tell us how much precision we need *)
 (* the values of the nth coeff for the ax-th axis *)
@@ -40,14 +81,21 @@ test4[frac_] = CoefficientList[test1[(4+frac)/16-1],frac]
 
 test5[n_, frac_] = CoefficientList[test1[(n+frac)/16-1],frac]
 
-(* Given a list of Chebyshev coefficients (up to 14 coeffs = order
-13), and n partitions, determine the Taylor (not Chebyshev)
-coefficients for the m-th (0 <= m <= n-1 partition *)
+(* Given a list of Chebyshev coefficients (up to 14 coefficients =
+order 13 polynomial), and n partitions, determine the Taylor (not
+Chebyshev) coefficients for the m-th (0 <= m <= n-1 partition (for the
+fractional part of m) *)
 
 (* The a[i] below are dummy variables for efficiency *)
 
-cheb2parttaylor[l_, m_, n_] = 
- Sum[a[i]*ChebyshevT[i-1,x], {i,1,13}]
+cheb2parttaylor[m_, n_] := cheb2parttaylor[m,n] =
+ CoefficientList[Sum[a[i]*ChebyshevT[i-1,x], {i,1,14}] /. x->(m+frac)/n*2-1, 
+frac]
+
+cheb2parttaylor[0,8] /. a[i_] -> coeffs[[1,1,i]]
+
+
+
 
 
 
