@@ -38,100 +38,35 @@ for $i (@planets) {
   $planetinfo{$plan} = [$pos,$num,$chunks];
 }
 
-=item comment
+# for mathematica, obtain raw coefficients for planets for 100 years
 
-
-
-
-
-
-=cut
-
-# for mathematica, obtain raw coefficients for mars for 100 years
-$planet = "mercury";
-my($pos,$num,$chunks) = @{$planetinfo{$planet}};
 open(A,"/home/barrycarter/20140124/ascp1950.430");
 
-# 1142 based on file size of 30688966 divided by 26873 per chunk
-for $i (0..1141) {
-  seek(A, $i*26873, SEEK_SET);
-  read(A, my($data), 26873);
-  my(@data) = split(/\s+/, $data);
-  @data = @data[$pos+2..$pos+2+$num*$chunks*3-1];
-  map(s%\.(\d{16})\D%$1/10^16*10^%, @data);
-  debug("LENGTH:",scalar(@data));
-  push(@all,@data);
-}
+for $planet (keys %planetinfo) {
+  my($pos,$num,$chunks) = @{$planetinfo{$planet}};
 
-print "ncoeff = $num;\n";
-print "ndays = 32/$chunks;\n";
-print "coeffs = {\n";
-print join(",\n", @all);
-print "\n}\n";
-
-die "TESTING";
-
-# an entire year or so of mars
-
-$planet = "mars";
-for ($time=str2time("2000-01-01"); $time<=str2time("2038-01-01");
-     $time+=86400*32) {
-
-  $count++;
-  my(%arr) = planet_chebyshev($time, $planet);
-  map(s/D/e/, @{$arr{jd}});
-  map($_=jd2unix($_,"jd2unix"), @{$arr{jd}});
-  my($us,$ue) = @{$arr{jd}};
-
-  for $i ("x","y","z") {
-    my(@coords) = @{$arr{$i}};
-
-    # change to fractions for mathematica "precision"
-    map(s%\.(\d{16})\D%$1/10^16*10^%, @coords);
-
-    @terms = ();
-    for $j (0..$#coords) {
-#      push(@terms, "$coords[$j]*ChebyshevT[$j,(t-$us)/32/86400*2-1]");
-      push(@terms, "$coords[$j]*ChebyshevT[$j,t]");
-    }
-
-    # the polynomial
-    my($poly) = join("+\n", @terms);
-    $poly = "Expand\[$poly\]";
-
-    # define this function independently as well
-    print "chunk[$planet][$i][$count][t_] = $poly;\n";
-    print "chunkd1[$planet][$i][$count][t_] = D[$poly,t];\n";
-    print "chunkd2[$planet][$i][$count][t_] = D[$poly,t,t];\n";
-    print "chunkd3[$planet][$i][$count][t_] = D[$poly,t,t,t];\n";
-    print "chunkd4[$planet][$i][$count][t_] = D[$poly,t,t,t,t];\n";
-
-    print "pos[$planet][$i][t_/;t>=$us&&t<$ue] = chunk[$planet][$i][$count][(t-$us)/32/86400*2-1];\n";
-
-    for $j ("d1","d2","d3","d4") {
-      print "pos${j}[$planet][$i][t_/;t>=$us&&t<$ue] = chunk${j}[$planet][$i][$count][(t-$us)/32/86400*2-1];\n";
-    }
+  # 1142 based on file size of 30688966 divided by 26873 per chunk
+  for $i (0..1141) {
+    seek(A, $i*26873, SEEK_SET);
+    read(A, my($data), 26873);
+    my(@data) = split(/\s+/, $data);
+    @data = @data[$pos+2..$pos+2+$num*$chunks*3-1];
+    map(s%\.(\d{16})\D%$1/10^16*10^%, @data);
+    push(@all,@data);
   }
+
+  my($all) = join(",\n",@all);
+  open(B,">/home/barrycarter/20140823/raw-$planet.m");
+  print B << "MARK";
+ncoeff = $num;
+ndays = 32/$chunks;
+coeffs = {$all};
+MARK
+  ;
+  close(B);
 }
 
-die "TESTING";
-
-# this is hardcoded for 2016-12-22 00:00:00 to 2017-01-23 00:00:00
-my($us,$ue) = (1482364800, 1485129600);
-
-
-# debug(unfold(%arr));
-
-die "TESTING";
-
-for $test ("-0.4821770431983586D-01", "-0.6233219171917435D+07", "0.3822701245044369D+04") {
-  debug(bin2cheb(cheb2bin($test)));
-}
-
-$aa = cheb2bin("-0.1611214918998700D-07");
-$ab = cheb2bin("0.1611214918998700D-07");
-
-debug(bin2cheb($aa));
+close(A);
 
 =item planet_chebyshev($time,$planet)
 
@@ -238,88 +173,4 @@ sub bin2cheb {
   } else {
     debug("${ret}D$exp");
   }
-
-warn "TESTING"; return;
-
-
-
-
-  debug("SIGN: $sign");
-  # put exponent in Perl format
-  if ($sign&32) {$exp="-$exp";} else {$exp="+$exp";}
-
-  my($ret);
-
-
-  debug(sprintf("%0.fe$exp", $ret));
-
-  # TODO: this may be inaccurate in Perl (floating point limits)
-  return "${ret}e$exp";
-
-  # this probably won't work
-  debug("RET/EXP: $ret/$exp");
-  $ret*=10**$exp;
-  debug(sprintf("%0.f", $ret));
-
-#  debug(sprintf("%0.f %d", $ret, $exp));
-
-warn "FOO: TESTING";
-  return;
-
-  # extract relevant parts
-  $coeff=~s/^(.*?)0\.(.*?)D(.)(..)//||warn("BAD COEFF: $coeff");
-  my($sgn, $man, $esgn, $exp) = ($1,$2,$3,$4);
-  # the last byte combines the exponent, and the sign of both exponent/mantissa
-  my($lastbyte) = chr(($sgn eq "-"?64:0)+($esgn eq "-"?32:0)+$exp);
-  return join("",map($_=chr($_),num2base($man,256)))."$lastbyte";
 }
-
-
-
-open(A,"bzcat /home/barrycarter/BCGIT/ASTRO/ascp1950.430.bz2|");
-
-# will end with explicit exit
-for (;;) {
-  my($buf);
-
-  # file is very well formatted, each 26873 bytes is one section
-  read(A, $buf, 26873);
-  # split into numbers
-  my(@nums) = split(/\s+/s, $buf);
-  # convert to Perl (16 digit precision, -10 lowest mantissa +4 for safety)
-  map(s/^(.*?)D(.*)$/sprintf("%.30f",$1*10**$2)/e, @nums);
-#  map(s/^(.*?)D(.*)$/$1*10^$2/, @nums);
-
-  # first four: section number, number of data points, julian start, julian end
-  my($bl, $sn, $nd, $js, $je) = splice(@nums,0,5);
-
-  # only 2014 for now (2456658.5 - 2456658.5+365)
-  if ($je < 2456658.5) {next;}
-  if ($js > 2456658.5+365) {last;}
-  debug("$js - $je");
-  # length of interval
-  my($in) = $je-$js;
-
-  # and now the planet list
-  for $i (@planets) {
-    # I don't actually use $spos, since I'm splicing
-    my($pl, $spos, $ncoeff, $sects) = split(/:/, $i);
-    # days per interval
-    my($days) = $in/$sects;
-    # loop through each section
-    for $j (1..$sects) {
-      # nth set of coefficients for this planet
-      $coeffset{$pl}++;
-      for $k ("x","y","z") {
-	@coeffs = splice(@nums,0,$ncoeff);
-	# TODO: only printing mercury x for now (mathematica stuff)
-	if ($k eq "x" && $pl eq "mercury") {
-	  # now including start/end dates
-	  $list = join(", ",($js+$days*($j-1), $js+$days*$j, @coeffs));
-	  print "$pl\[$k\][$coeffset{$pl}] = {$list};\n";
-	}
-      }
-    }
-  }
-}
-

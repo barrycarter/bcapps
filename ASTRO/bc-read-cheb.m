@@ -15,7 +15,8 @@ interval [a,b] treated as [0,1] where c[i] are the Chebyshev
 coefficients up to order 14 (polynomial order 13) *)
 
 cheb2tay[a_,b_] := cheb2tay[a,b] = 
-CoefficientList[Sum[c[i+1]*ChebyshevT[i,x],{i,0,13}] /. x-> a+frac*(b-a),frac]
+CoefficientList[Sum[c[i+1]*ChebyshevT[i,x],{i,0,ncoeff-1}] /. 
+x-> a+frac*(b-a),frac]
 
 final = Round[1000*Flatten[Table[Table[Table[
 cheb2tay[2*i/ndays-1, 2*(i+1)/ndays-1] /. 
@@ -25,12 +26,27 @@ final >> /tmp/output.m
 
 (* After we have the coefficients, test some stuff *)
 
-coeffs = Partition[Partition[mercury,14],3];
+(* coeffs = Partition[Partition[moongeo,14],3]; *)
 
 (* find largest of each coefficient *)
 
-t1 = Transpose[Partition[mercury,42]];
+t1 = Transpose[Partition[moongeo,13*3]];
 
-t2 = Table[Max[Abs[i]], {i,t1}]
+(* number of values we must store for each coefficient *)
+
+t2 = Table[{i,1+Max[t1[[i]]]-Min[t1[[i]]]}, {i,1,Length[t1]}]
+
+Table[Ceiling[Log[t2[[i,2]]]/Log[256]], {i,1,Length[t2]}]
+
+Table[Ceiling[Log[t2[[i,2]]]/Log[2]], {i,1,Length[t2]}]
+
+(* 76 bytes or 515 bits for mercury *)
+
+(* 59 bytes or 379 bits for earthmoonbarycenter, same for moongeo *)
+
+
+
+
+
 
 
