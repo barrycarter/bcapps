@@ -20,6 +20,37 @@ tocheb[n_, ax_] := Round[1000*CoefficientList[
 
 final = Table[tocheb[n,ax],{n,1,Length[coeffs]*ndays-1},{ax,1,3}];
 
+(* max/min values tell us how much precision we need *)
+(* the values of the nth coeff for the ax-th axis *)
+coefflist[ax_,n_] := Table[final[[i,n,ax]],{i,1,Length[final]}];
+
+N[Log[Max[%]-Min[%]]/Log[2]]
+
+(* testing: can I pre-compute Chebyshev 32-day polynomials for speed? *)
+
+test1[x_] = Sum[a[i]*ChebyshevT[i,x],{i,0,13}]
+
+test2 = CoefficientList[test1[x/16-1],x]
+
+(* for day 4, for example *)
+
+test4[frac_] = CoefficientList[test1[(4+frac)/16-1],frac]
+
+(* for day n *)
+
+test5[n_, frac_] = CoefficientList[test1[(n+frac)/16-1],frac]
+
+(* Given a list of Chebyshev coefficients (up to 14 coeffs = order
+13), and n partitions, determine the Taylor (not Chebyshev)
+coefficients for the m-th (0 <= m <= n-1 partition *)
+
+(* The a[i] below are dummy variables for efficiency *)
+
+cheb2parttaylor[l_, m_, n_] = 
+ Sum[a[i]*ChebyshevT[i-1,x], {i,1,13}]
+
+
+
 
 
 Flatten[final] >> /tmp/test1.m

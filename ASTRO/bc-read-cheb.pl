@@ -38,8 +38,17 @@ for $i (@planets) {
   $planetinfo{$plan} = [$pos,$num,$chunks];
 }
 
+=item comment
+
+
+
+
+
+
+=cut
+
 # for mathematica, obtain raw coefficients for mars for 100 years
-$planet = "moongeo";
+$planet = "mercury";
 my($pos,$num,$chunks) = @{$planetinfo{$planet}};
 open(A,"/home/barrycarter/20140124/ascp1950.430");
 
