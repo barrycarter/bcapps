@@ -39,8 +39,8 @@ for $i (@planets) {
 }
 
 # for mathematica, obtain raw coefficients for mars for 100 years
-
-my($pos,$num,$chunks) = @{$planetinfo{mars}};
+$planet = "moongeo";
+my($pos,$num,$chunks) = @{$planetinfo{$planet}};
 open(A,"/home/barrycarter/20140124/ascp1950.430");
 
 # 1142 based on file size of 30688966 divided by 26873 per chunk
@@ -48,12 +48,14 @@ for $i (0..1141) {
   seek(A, $i*26873, SEEK_SET);
   read(A, my($data), 26873);
   my(@data) = split(/\s+/, $data);
-  @data = @data[$pos+2..$pos+2+$num*3-1];
+  @data = @data[$pos+2..$pos+2+$num*$chunks*3-1];
   map(s%\.(\d{16})\D%$1/10^16*10^%, @data);
   debug("LENGTH:",scalar(@data));
   push(@all,@data);
 }
 
+print "ncoeff = $num;\n";
+print "ndays = 32/$chunks;\n";
 print "coeffs = {\n";
 print join(",\n", @all);
 print "\n}\n";
