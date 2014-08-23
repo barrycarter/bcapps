@@ -44,8 +44,8 @@ my($pos,$num,$chunks) = @{$planetinfo{mars}};
 open(A,"/home/barrycarter/20140124/ascp1950.430");
 
 # 1142 based on file size of 30688966 divided by 26873 per chunk
-for $i (0..1142) {
-  seek(A, $chunk*26873, SEEK_SET);
+for $i (0..1141) {
+  seek(A, $i*26873, SEEK_SET);
   read(A, my($data), 26873);
   my(@data) = split(/\s+/, $data);
   @data = @data[$pos+2..$pos+2+$num*3-1];

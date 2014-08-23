@@ -4,37 +4,30 @@ polynomials *)
 
 (* day 0 = 1949-Dec-14 00:00:00.0000 UTC = JD 2433264.500000000 *)
 
-(* split coeffs into groups of 11 coefficients for Mars *)
-coeffs = Partition[coeffs,11]
+(* number of coefficients per polynomial, number of days per polynomial *)
 
-(* a "blank" Chebyshev polynomial list, from 0 to 10 *)
-cheb = Table[ChebyshevT[i,t],{i,0,10}]
+ncoeff = 11
+ndays = 32
 
-dayconv[n_,t_] = {Floor[n/32]+1, Mod[n,32]/16-1+t/32}
+(* split coeffs into groups of ncoeff and then 3 axes *)
 
+coeffs = Partition[Partition[coeffs,ncoeff],3]
 
-(* the Chebyshev polynomial for day n, converted to Taylor *)
+(* "blank" Chebyshev polynomial list and Taylor series, from 0 to ncoeff-1 *)
 
-tocheb[n_] := Round[1000*CoefficientList[Total[coeffs[[Floor[n/32]+1]]*cheb] /.
-t -> Mod[n,32]/16-1+t/16, t]]
+cheb = Table[ChebyshevT[i,t],{i,0,ncoeff-1}]
+taylor = Table[t^i,{i,0,ncoeff-1}]
 
-taylor = Table[tocheb[n], {n,0,Length[coeffs]*32/3-1}]
+(* the Chebyshev polynomials for day n, axes ax, converted to Taylor *)
 
-Sum[tocheb[0][[i]]*t^(i-1),{i,1,Length[tocheb[0]]}]
+tocheb[n_, ax_] := Round[1000*CoefficientList[
+ Total[coeffs[[Floor[n/ndays]+1,ax]]*cheb] /.
+ t -> Mod[n,ndays]/ndays*2-1+t/ndays*2, t]]
 
+test[t_] = Total[tocheb[23394,1]*taylor]
 
-
-
-
-(* convert to meters and round, will round again later *)
-coeffs = Round[coeffs*1000]
-
-(* convert a list to a Chebyshev polynomial, get Taylor coeffs,
-multiply by 1000, round *)
-
-tocheb[l_] :=
-Round[CoefficientList[Sum[l[[i]]*ChebyshevT[i-1,x],{i,1,Length[l]}],x]]
-
-coeffs2 = Table[tocheb[i], {i,coeffs}]
-
+t1 = Table[tocheb[n,1][[1]], {n,1,Length[coeffs]*ndays-1}]
+t2 = Table[tocheb[n,1][[2]], {n,1,Length[coeffs]*ndays-1}]
+t3 = Table[tocheb[n,1][[3]], {n,1,Length[coeffs]*ndays-1}]
+t4 = Table[tocheb[n,1][[4]], {n,1,Length[coeffs]*ndays-1}]
 
