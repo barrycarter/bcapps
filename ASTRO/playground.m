@@ -1,3 +1,14 @@
+(* Earth pos *)
+
+(* moongeo.m and earthmoon.m loaded *)
+
+earthmoon = Partition[Partition[earthmoon,13],3];
+moongeo = Partition[Partition[moongeo,13],3];
+
+earthmoon[[23394]][[1]]
+moongeo[[23394]][[1]]
+
+
 (* Chebyshev to Taylor *)
 
 cheb[x_] = Sum[c[i+1]*ChebyshevT[i,x],{i,0,13}]
@@ -16,12 +27,6 @@ Plot[rand1[x],{x,-1,1}]
 rand2[t_] = Total[(temp1[0.4,0.6] /. c[i_] -> random[[i]])*taylor]
 
 Plot[rand2[t],{t,0,1}]
-
-
-
-
-
-
 
 (* TODO: assuming a and b are global below, fix *)
 

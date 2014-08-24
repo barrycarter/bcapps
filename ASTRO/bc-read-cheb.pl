@@ -43,6 +43,7 @@ for $i (@planets) {
 open(A,"/home/barrycarter/20140124/ascp1950.430");
 
 for $planet (keys %planetinfo) {
+  my(@all) = ();
   my($pos,$num,$chunks) = @{$planetinfo{$planet}};
 
   # 1142 based on file size of 30688966 divided by 26873 per chunk
