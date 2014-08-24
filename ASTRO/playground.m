@@ -1,3 +1,41 @@
+(* data packing *)
+
+(* coeffs = Partition[coeffs,14]; *)
+
+cheb2truetay = CoefficientList[Sum[a[i+1]*ChebyshevT[i,x],{i,0,ncoeff-1}],x]
+
+(* with Mercury data loaded *)
+
+(* mercury = Partition[coeffs,14]; *)
+
+(* below for moon compared to earth *)
+
+planet = Partition[coeffs,ncoeff];
+
+newcoff = Table[cheb2truetay /. a[n_] -> planet[[i,n]],{i,1,Length[planet]}];
+
+(* decimeter-level precision *)
+newcoff2 = Round[1000000*newcoff];
+
+new2 = Partition[Flatten[newcoff2],ncoeff*3];
+
+new2 = Transpose[new2];
+
+test3 = Table[{i,1+2*Max[Abs[new2[[i]]]]}, {i,1,Length[new2]}]
+
+Table[Ceiling[Log[test3[[i,2]]]/Log[256]], {i,1,Length[test3]}]
+
+(* bytes required given precision level:
+
+km: 78 bytes
+m: 129 bytes
+dm: 147 bytes
+cm: 164 bytes
+mm: 179 bytes
+um: 233 bytes
+
+*)
+
 (* Earth pos *)
 
 (* moongeo.m and earthmoon.m loaded *)

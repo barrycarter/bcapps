@@ -44,9 +44,23 @@ Table[Ceiling[Log[t2[[i,2]]]/Log[2]], {i,1,Length[t2]}]
 
 (* 59 bytes or 379 bits for earthmoonbarycenter, same for moongeo *)
 
+(* testing Fourier stuff below *)
+
+test0 = Table[coeffs[[n,1,1]],{n,1,Length[coeffs]}];
+test1 = Table[coeffs[[n,2,1]],{n,1,Length[coeffs]}];
+
+(* testing with coeffs directly *)
+
+test2 = Round[1000000*Transpose[Partition[coeffs,14*3]]];
+
+test3 = Table[{i,1+Max[test2[[i]]]-Min[test2[[i]]]}, {i,1,Length[test2]}]
+test3 = Table[{i,1+2*Max[Abs[test2[[i]]]]}, {i,1,Length[test2]}]
 
 
+Table[Ceiling[Log[test3[[i,2]]]/Log[256]], {i,1,Length[test3]}]
 
+Table[Ceiling[Log[test3[[i,2]]]/Log[2]], {i,1,Length[test3]}]
 
+(* 122 bytes for mercury or 802 bits [for 8 days] *)
 
 
