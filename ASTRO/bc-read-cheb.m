@@ -18,7 +18,7 @@ cheb2tay[a_,b_] := cheb2tay[a,b] =
 CoefficientList[Sum[c[i+1]*ChebyshevT[i,x],{i,0,ncoeff-1}] /. 
 x-> a+frac*(b-a),frac]
 
-final = Round[1000*Flatten[Table[Table[Table[
+final = Round[1000000*Flatten[Table[Table[Table[
 cheb2tay[2*i/ndays-1, 2*(i+1)/ndays-1] /. 
  c[k_] -> coeffs[[l,j,k]], {j,1,3}], {i,0,ndays-1}], {l,1,Length[coeffs]}]]];
 
@@ -30,11 +30,13 @@ final >> /tmp/output.m
 
 (* find largest of each coefficient *)
 
-t1 = Transpose[Partition[moongeo,13*3]];
+t1 = Partition[final,ncoeff*3];
+t1 = Transpose[t1];
 
 (* number of values we must store for each coefficient *)
 
 t2 = Table[{i,1+Max[t1[[i]]]-Min[t1[[i]]]}, {i,1,Length[t1]}]
+t2 = Table[{i,1+2*Max[Abs[t1[[i]]]]}, {i,1,Length[t1]}]
 
 Table[Ceiling[Log[t2[[i,2]]]/Log[256]], {i,1,Length[t2]}]
 
