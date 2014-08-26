@@ -33,6 +33,30 @@ use Inline::Python;
 use FFI::Raw;
 use v5.10;
 
+# create a 10 second random snippet from an MP3 file
+
+warn "TESTING: A's only";
+for $i (glob "/home/barrycarter/MP3/A*.mp3") {
+  my($length) = `exiftool '$i' | fgrep Duration`;
+  $length=~s/Duration.*?:\s*//;
+  $length=~s/\s*\(approx\)\s*//;
+  unless ($length=~/^(\d+):(\d+)$/) {warn "BAD LENGTH: $length"; next;}
+  $length = $1*60+$2;
+
+  for $j (0..9) {
+    my($rand) = floor(rand()*$length);
+    my($cmd)="mplayer -ss $rand -endpos 1 -ao pcm:file=/tmp/bcmp3-$j.wav '$i'";
+    system($cmd);
+  }
+
+  system("sox /tmp/bcmp3-[0-9].wav /tmp/bcmp3-final.wav");
+
+  die "TESTING";
+
+}
+
+die "TESTING";
+
 # @mat = matrixmult([[1,0,0], [0,1,0], [0,0,1]], [[1],[2],[3]]);
 # debug("MAT",unfold(@mat));
 

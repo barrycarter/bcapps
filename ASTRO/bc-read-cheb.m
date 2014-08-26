@@ -10,6 +10,9 @@ polynomials *)
 
 coeffs = Partition[Partition[coeffs,ncoeff],3];
 
+(* cheb2truetay =
+CoefficientList[Sum[a[i+1]*ChebyshevT[i,x],{i,0,ncoeff-1}],x] *)
+
 (* function that semi-efficiently computes Taylor polynomial for
 interval [a,b] treated as [0,1] where c[i] are the Chebyshev
 coefficients up to order 14 (polynomial order 13) *)
@@ -18,9 +21,23 @@ cheb2tay[a_,b_] := cheb2tay[a,b] =
 CoefficientList[Sum[c[i+1]*ChebyshevT[i,x],{i,0,ncoeff-1}] /. 
 x-> a+frac*(b-a),frac]
 
-final = Round[1000000*Flatten[Table[Table[Table[
+final = Round[100000*Flatten[Table[Table[Table[
 cheb2tay[2*i/ndays-1, 2*(i+1)/ndays-1] /. 
  c[k_] -> coeffs[[l,j,k]], {j,1,3}], {i,0,ndays-1}], {l,1,Length[coeffs]}]]];
+
+(* find largest of each coefficient, and how many bits to store it *)
+
+t1 = Partition[final,ncoeff*3];
+t1 = Transpose[t1];
+t2 = Table[{i,1+2*Max[Abs[t1[[i]]]]}, {i,1,Length[t1]}]
+t3 = Table[Ceiling[Log[t2[[i,2]]]/Log[2]], {i,1,Length[t2]}]
+
+t4 = Table[
+ Table[IntegerDigits[t1[[j,i]],2,t3[[j]]], {i,1,Length[t1[[j]]]}],
+{j,1,Length[t1]}];
+
+t4 = Flatten[Transpose[t4]];
+
 
 final >> /tmp/output.m
 
@@ -28,19 +45,12 @@ final >> /tmp/output.m
 
 (* coeffs = Partition[Partition[moongeo,14],3]; *)
 
-(* find largest of each coefficient *)
-
-t1 = Partition[final,ncoeff*3];
-t1 = Transpose[t1];
-
 (* number of values we must store for each coefficient *)
 
 t2 = Table[{i,1+Max[t1[[i]]]-Min[t1[[i]]]}, {i,1,Length[t1]}]
-t2 = Table[{i,1+2*Max[Abs[t1[[i]]]]}, {i,1,Length[t1]}]
 
 Table[Ceiling[Log[t2[[i,2]]]/Log[256]], {i,1,Length[t2]}]
 
-Table[Ceiling[Log[t2[[i,2]]]/Log[2]], {i,1,Length[t2]}]
 
 (* 76 bytes or 515 bits for mercury *)
 
@@ -64,5 +74,11 @@ Table[Ceiling[Log[test3[[i,2]]]/Log[256]], {i,1,Length[test3]}]
 Table[Ceiling[Log[test3[[i,2]]]/Log[2]], {i,1,Length[test3]}]
 
 (* 122 bytes for mercury or 802 bits [for 8 days] *)
+
+
+Plot[{superfour[t1[[1]],1][x],t1[[1,Floor[x]]]},{x,1,Length[t1[[1]]]}]
+
+Plot[{superfour[t1[[1]],1][x],t1[[1,Floor[x]]],
+superfour[t1[[1]],1][x]-t1[[1,Floor[x]]]},{x,1,Length[t1[[1]]]}]
 
 
