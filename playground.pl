@@ -37,7 +37,10 @@ use v5.10;
 
 warn "TESTING: A's only";
 chdir("/home/barrycarter/MP3/");
-for $i (glob "A*.mp3") {
+@mp3s = randomize([glob("*.mp3")]);
+
+for $i (@mp3s) {
+  debug("I: $i");
   my($length) = `exiftool '$i' | fgrep Duration`;
   $length=~s/Duration.*?:\s*//;
   $length=~s/\s*\(approx\)\s*//;
@@ -45,22 +48,7 @@ for $i (glob "A*.mp3") {
   $length = $1*60+$2;
 
   my($rand) = floor(rand()*($length-10));
-  debug("RAND: $rand");
-  system("mplayer -ss $rand -endpos 10 -vo none -ao pcm -file=/tmp/output.wav '$i'");
-  system("lame /tmp/output.wav 'GAME/$i'");
-  die "TESTING";
-  next;
-
-  for $j (0..1) {
-    my($rand) = floor(rand()*$length);
-    my($cmd)="mplayer -ss $rand -endpos 5 -ao pcm:file=/tmp/bcmp3-$j.wav '$i'";
-    system($cmd);
-  }
-
-  system("sox /tmp/bcmp3-[01].wav /tmp/bcmp3-final.wav");
-
-  die "TESTING";
-
+  system("ffmpeg -ss 30 -t 15 -i '$i' 'GAME/$i'");
 }
 
 die "TESTING";

@@ -4608,3 +4608,4 @@
 2014-08-23 http://assets.amuniversal.com/a621e9b0fa4301318884005056a9545d?width=1500
 2014-08-24 http://assets.amuniversal.com/5d8fdee0ede301317e05005056a9545d?width=1500
 2014-08-25 http://assets.amuniversal.com/f34be310ffc301318d0f005056a9545d?width=1500
+2014-08-26 http://assets.amuniversal.com/f45ef240ffc301318d0f005056a9545d?width=1500
