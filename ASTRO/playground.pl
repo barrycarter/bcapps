@@ -47,10 +47,11 @@ require "/usr/local/lib/bclib.pl";
 
 # getting data back from mercury file
 
-# mercury stored in bitfields like this: {44, 42, 40, 37, 34, 32, 29,
-# 27, 24, 22, 20, 18, 16, 12, 44, 42, 40, 37, 34, 31, 29, 26, 24, 21,
-# 20, 18, 16, 12, 43, 41, 39, 36, 33, 31, 28, 25, 23, 21, 19, 17, 15,
-# 11} [sum = 1173 bits]
+# mercury stored in bitfields like this: {43, 42, 39, 37, 34, 31, 28,
+# 26, 23, 21, 19, 18, 15, 11, 43, 41, 39, 36, 34, 31, 28, 26, 23, 21,
+# 19, 18, 15, 11, 42, 41, 38, 35, 33, 30, 27, 25, 23, 20, 18, 17, 14,
+# 10} 1145 bits total
+
 
 # to find mercury, find which 4 day chunk we are in:
 
@@ -62,47 +63,54 @@ $time = time();
 $chunk = ceil(($time+632707200)/86400/4);
 debug("CHUNK: $chunk");
 
-# 1173 bits per chunk, 8 bits per byte, so...
-$seek = $chunk*1173/8;
+open(A,"/home/barrycarter/20140826/mercury4.bin");
+my(@bits) = seek_bits(A, $chunk*1145+1, 1145);
 
-my(@bits) = seek_bits("/home/barrycarter/20140826/mercury4.bin", $chunk*1173+1, 1173);
+debug("FM", join(",",@bits[0..42]));
 
 debug("LEN:",scalar(@bits));
-# the first 44 bits
+# the first 43 bits
+my(@first) = @bits[0..42];
 
-# debug("BITS",@bits);
+# just the km part (43-16 = 27 bits)
+for $i (@bits[0..26]) {
+  $tot = $tot*2+$i;
+}
 
-=item seek_bits($file, $start, $num)
+$tot -= 2**26;
 
-Seek to bit (not byte) $start in $file, and return $num bits (as a
-list) from there.
+debug("TOT: $tot");
 
-TODO: should really use a filehandle, not a file
+die "TESTING";
+
+
+debug("PACK",pack("I",@first));
+
+debug("BITS",@first);
+
+
+
+
+=item seek_bits($fh, $start, $num)
+
+Seek to bit (not byte) $start in filehandle $fh, and return the next
+$num bits (as a list).
 
 =cut
 
 sub seek_bits {
-  my($file, $start, $num) = @_;
-  debug("SN: $start, $num");
-  local(*A);
+  my($fh, $start, $num) = @_;
   # the byte where this bit starts and the offset
   my($fbyte, $offset) = (floor($start/8), $start%8);
   # the number of bytes to read ($offset does affect this)
-  my($nbytes) = floor($num+$offset)/8;
-  debug("OE: $offset from $fbyte/$nbytes");
+  my($nbytes) = ceil($num+$offset)/8;
 
-  open(A,$file);
-  seek(A, $fbyte, SEEK_SET);
-  read(A, my($data), $nbytes);
-  # urgh!
-  close(A);
+  seek($fh, $fbyte, SEEK_SET);
+  read($fh, my($data), $nbytes);
   my(@ret) = split(//, unpack("B*", $data));
-  debug("LEN", scalar(@ret));
-  # get rid of extra bits
-  return @ret[$offset..$offset+$num-1];
+  # return requested bits
+  return @ret[$offset-1..$offset+$num];
 }
-
-die "TESTING";
 
 debug(num2base(4416951459393930,256));
 

@@ -17,9 +17,6 @@ coeffs = Partition[Partition[coeffs,ncoeff],3];
 
 nchunks = ndays/4;
 
-(* cheb2truetay =
-CoefficientList[Sum[a[i+1]*ChebyshevT[i,x],{i,0,ncoeff-1}],x] *)
-
 (* function that semi-efficiently computes Taylor polynomial for
 interval [a,b] treated as [0,1] where c[i] are the Chebyshev
 coefficients up to order 14 (polynomial order 13) *)
@@ -28,7 +25,7 @@ cheb2tay[a_,b_] := cheb2tay[a,b] =
 CoefficientList[Sum[c[i+1]*ChebyshevT[i,x],{i,0,ncoeff-1}] /. 
 x-> a+frac*(b-a),frac]
 
-final = Round[100000*Flatten[Table[Table[Table[
+final = Round[65536*Flatten[Table[Table[Table[
 cheb2tay[2*i/nchunks-1, 2*(i+1)/nchunks-1] /. 
  c[k_] -> coeffs[[l,j,k]], {j,1,3}], {i,0,nchunks-1}], {l,1,Length[coeffs]}]]];
 
@@ -38,9 +35,11 @@ t1 = Transpose[Partition[final,ncoeff*3]];
 t2 = Table[{i,1+2*Max[Abs[t1[[i]]]]}, {i,1,Length[t1]}]
 t3 = Table[Ceiling[Log[t2[[i,2]]]/Log[2]], {i,1,Length[t2]}]
 
+(* Add 2**t3[[i]]-1 to handle negatives *)
+
 t4 = Table[
- Table[IntegerDigits[t1[[j,i]],2,t3[[j]]], {i,1,Length[t1[[j]]]}],
-{j,1,Length[t1]}];
+ Table[IntegerDigits[t1[[j,i]]+2^(t3[[j]]-1),2,t3[[j]]], 
+{i,1,Length[t1[[j]]]}], {j,1,Length[t1]}];
 
 t5 = Partition[Flatten[Transpose[t4]],8];
 
