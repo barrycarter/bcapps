@@ -65,13 +65,42 @@ debug("CHUNK: $chunk");
 # 1173 bits per chunk, 8 bits per byte, so...
 $seek = $chunk*1173/8;
 
-debug("SEEK: $seek");
+my(@bits) = seek_bits("/home/barrycarter/20140826/mercury4.bin", $chunk*1173+1, 1173);
 
+debug("LEN:",scalar(@bits));
+# the first 44 bits
 
+# debug("BITS",@bits);
 
+=item seek_bits($file, $start, $num)
 
+Seek to bit (not byte) $start in $file, and return $num bits (as a
+list) from there.
 
+TODO: should really use a filehandle, not a file
 
+=cut
+
+sub seek_bits {
+  my($file, $start, $num) = @_;
+  debug("SN: $start, $num");
+  local(*A);
+  # the byte where this bit starts and the offset
+  my($fbyte, $offset) = (floor($start/8), $start%8);
+  # the number of bytes to read ($offset does affect this)
+  my($nbytes) = floor($num+$offset)/8;
+  debug("OE: $offset from $fbyte/$nbytes");
+
+  open(A,$file);
+  seek(A, $fbyte, SEEK_SET);
+  read(A, my($data), $nbytes);
+  # urgh!
+  close(A);
+  my(@ret) = split(//, unpack("B*", $data));
+  debug("LEN", scalar(@ret));
+  # get rid of extra bits
+  return @ret[$offset..$offset+$num-1];
+}
 
 die "TESTING";
 
