@@ -52,6 +52,9 @@ require "/usr/local/lib/bclib.pl";
 # 19, 18, 15, 11, 42, 41, 38, 35, 33, 30, 27, 25, 23, 20, 18, 17, 14,
 # 10} 1145 bits total
 
+# the bits for mercury's 42 coefficients
+
+@merc = (43, 42, 39, 37, 34, 31, 28, 26, 23, 21, 19, 18, 15, 11, 43, 41, 39, 36, 34, 31, 28, 26, 23, 21, 19, 18, 15, 11, 42, 41, 38, 35, 33, 30, 27, 25, 23, 20, 18, 17, 14, 10);
 
 # to find mercury, find which 4 day chunk we are in:
 
@@ -64,7 +67,31 @@ $chunk = ceil(($time+632707200)/86400/4);
 debug("CHUNK: $chunk");
 
 open(A,"/home/barrycarter/20140826/mercury4.bin");
-my(@bits) = seek_bits(A, $chunk*1145+1, 1145);
+my(@bits) = seek_bits(A, $chunk*1145*0+1, 1145);
+
+# read bits in chunks
+for $i (@merc) {
+  # the first $i remaining bits (indexes 0 to $i-1)
+  my(@ibits) = splice(@bits,0,$i);
+  debug("ALPHA",scalar(@ibits));
+  # ignore the last 16 bits for now (non-integer part)
+#  splice(@ibits,-16,16);
+  debug("BRAVO",scalar(@ibits));
+
+  # compute total
+  my($total) = 0;
+  for $j (@ibits) {
+    $total = $total*2+$j;
+  }
+
+  $total -= 2**(scalar(@ibits)-1);
+  $total /= 65536;
+
+#  debug("IBITS:",@ibits);
+  debug("TOTAL: $total");
+}
+
+die "TESTING";
 
 debug("FM", join(",",@bits[0..42]));
 
