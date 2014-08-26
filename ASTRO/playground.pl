@@ -45,6 +45,30 @@ require "/usr/local/lib/bclib.pl";
 
 # 2,1,1... children are 3,3,3 then 4,7,6 then 5,15,12
 
+# getting data back from mercury file
+
+# mercury stored in bitfields like this: {44, 42, 40, 37, 34, 32, 29,
+# 27, 24, 22, 20, 18, 16, 12, 44, 42, 40, 37, 34, 31, 29, 26, 24, 21,
+# 20, 18, 16, 12, 43, 41, 39, 36, 33, 31, 28, 25, 23, 21, 19, 17, 15,
+# 11} [sum = 1173 bits]
+
+# to find mercury, find which 4 day chunk we are in:
+
+# -632707200 = unix time of start of data
+
+$time = time();
+
+# 4 days per chunk, 86400 seconds per day
+$chunk = ceil(($time+632707200)/86400/4);
+debug("CHUNK: $chunk");
+
+# 1173 bits per chunk, 8 bits per byte, so...
+$seek = $chunk*1173/8;
+
+debug("SEEK: $seek");
+
+
+
 
 
 

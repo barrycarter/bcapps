@@ -1,14 +1,21 @@
-(* given the output of bc-read-cheb.pl, a list of coefficients,
-determine daily Taylor series to within 22m precision of Chebyshev
-polynomials *)
+(* given the output of bc-read-cheb.pl, a list of Chebyshev
+coefficients, determine Taylor series for 4 day intervals to within
+1mm of theoretical precision; choosing 4 day intervals because that's
+the smallest interval used *)
 
 (* day 0 = 1949-Dec-14 00:00:00.0000 UTC = JD 2433264.500000000 *)
 
 (* 1970-01-01 = day 7323, 2014-01-01 = day 23394 *)
 
+(* 1970-01-02 = chunk 1831, 2014-01-03 = chunk 5849 *)
+
 (* split coeffs into groups of ncoeff and then 3 axes *)
 
 coeffs = Partition[Partition[coeffs,ncoeff],3];
+
+(* the number of chunks = number of 4 day periods *)
+
+nchunks = ndays/4;
 
 (* cheb2truetay =
 CoefficientList[Sum[a[i+1]*ChebyshevT[i,x],{i,0,ncoeff-1}],x] *)
@@ -22,13 +29,12 @@ CoefficientList[Sum[c[i+1]*ChebyshevT[i,x],{i,0,ncoeff-1}] /.
 x-> a+frac*(b-a),frac]
 
 final = Round[100000*Flatten[Table[Table[Table[
-cheb2tay[2*i/ndays-1, 2*(i+1)/ndays-1] /. 
- c[k_] -> coeffs[[l,j,k]], {j,1,3}], {i,0,ndays-1}], {l,1,Length[coeffs]}]]];
+cheb2tay[2*i/nchunks-1, 2*(i+1)/nchunks-1] /. 
+ c[k_] -> coeffs[[l,j,k]], {j,1,3}], {i,0,nchunks-1}], {l,1,Length[coeffs]}]]];
 
 (* find largest of each coefficient, and how many bits to store it *)
 
-t1 = Partition[final,ncoeff*3];
-t1 = Transpose[t1];
+t1 = Transpose[Partition[final,ncoeff*3]];
 t2 = Table[{i,1+2*Max[Abs[t1[[i]]]]}, {i,1,Length[t1]}]
 t3 = Table[Ceiling[Log[t2[[i,2]]]/Log[2]], {i,1,Length[t2]}]
 
@@ -36,10 +42,17 @@ t4 = Table[
  Table[IntegerDigits[t1[[j,i]],2,t3[[j]]], {i,1,Length[t1[[j]]]}],
 {j,1,Length[t1]}];
 
-t4 = Flatten[Transpose[t4]];
+t5 = Partition[Flatten[Transpose[t4]],8];
 
+t6 = Table[FromDigits[i,2],{i,t5}];
 
-final >> /tmp/output.m
+t6 >> /tmp/output.m
+
+(* To convert above to true binary (note there is no -l below):
+
+perl -ne 'while (s/(\d+)//) {print chr($1);}' /tmp/output.m > whatever
+
+*)
 
 (* After we have the coefficients, test some stuff *)
 
