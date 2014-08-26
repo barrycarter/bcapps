@@ -36,20 +36,28 @@ use v5.10;
 # create a 10 second random snippet from an MP3 file
 
 warn "TESTING: A's only";
-for $i (glob "/home/barrycarter/MP3/A*.mp3") {
+chdir("/home/barrycarter/MP3/");
+for $i (glob "A*.mp3") {
   my($length) = `exiftool '$i' | fgrep Duration`;
   $length=~s/Duration.*?:\s*//;
   $length=~s/\s*\(approx\)\s*//;
   unless ($length=~/^(\d+):(\d+)$/) {warn "BAD LENGTH: $length"; next;}
   $length = $1*60+$2;
 
-  for $j (0..9) {
+  my($rand) = floor(rand()*($length-10));
+  debug("RAND: $rand");
+  system("mplayer -ss $rand -endpos 10 -vo none -ao pcm -file=/tmp/output.wav '$i'");
+  system("lame /tmp/output.wav 'GAME/$i'");
+  die "TESTING";
+  next;
+
+  for $j (0..1) {
     my($rand) = floor(rand()*$length);
-    my($cmd)="mplayer -ss $rand -endpos 1 -ao pcm:file=/tmp/bcmp3-$j.wav '$i'";
+    my($cmd)="mplayer -ss $rand -endpos 5 -ao pcm:file=/tmp/bcmp3-$j.wav '$i'";
     system($cmd);
   }
 
-  system("sox /tmp/bcmp3-[0-9].wav /tmp/bcmp3-final.wav");
+  system("sox /tmp/bcmp3-[01].wav /tmp/bcmp3-final.wav");
 
   die "TESTING";
 
