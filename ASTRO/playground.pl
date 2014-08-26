@@ -67,7 +67,7 @@ $chunk = ceil(($time+632707200)/86400/4);
 debug("CHUNK: $chunk");
 
 open(A,"/home/barrycarter/20140826/mercury4.bin");
-my(@bits) = seek_bits(A, $chunk*1145*0+1, 1145);
+my(@bits) = seek_bits(A, $chunk*1145+1, 1145);
 
 # read bits in chunks
 for $i (@merc) {
