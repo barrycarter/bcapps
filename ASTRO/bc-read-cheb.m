@@ -9,6 +9,10 @@ the smallest interval used *)
 
 (* 1970-01-02 = chunk 1831, 2014-01-03 = chunk 5849 *)
 
+(* the multiplier; we store each coeff to 1/this number km *)
+
+mult = 32768;
+
 (* split coeffs into groups of ncoeff and then 3 axes *)
 
 coeffs = Partition[Partition[coeffs,ncoeff],3];
@@ -25,7 +29,13 @@ cheb2tay[a_,b_] := cheb2tay[a,b] =
 CoefficientList[Sum[c[i+1]*ChebyshevT[i,x],{i,0,ncoeff-1}] /. 
 x-> a+frac*(b-a),frac]
 
-final = Round[65536*Flatten[Table[Table[Table[
+(* convert integer to bit string of given length n, allowing for
+special cases and adding 2^(n-1) to negative numbers; this effictively
+makes the high bit a sign bit *)
+
+int2bit[int_,n_] = If[n==0,{}, IntegerDigits[int+2^(n-1),2,n]]
+
+final = Round[mult*Flatten[Table[Table[Table[
 cheb2tay[2*i/nchunks-1, 2*(i+1)/nchunks-1] /. 
  c[k_] -> coeffs[[l,j,k]], {j,1,3}], {i,0,nchunks-1}], {l,1,Length[coeffs]}]]];
 
@@ -35,17 +45,22 @@ t1 = Transpose[Partition[final,ncoeff*3]];
 t2 = Table[{i,1+2*Max[Abs[t1[[i]]]]}, {i,1,Length[t1]}]
 t3 = Table[Ceiling[Log[t2[[i,2]]]/Log[2]], {i,1,Length[t2]}]
 
-(* Add 2**t3[[i]]-1 to handle negatives *)
+(* this number is constant across the lists, the number of coefficients *)
 
-t4 = Table[
- Table[IntegerDigits[t1[[j,i]]+2^(t3[[j]]-1),2,t3[[j]]], 
-{i,1,Length[t1[[j]]]}], {j,1,Length[t1]}];
+nperlist = Length[t1[[1]]];
+
+t4 =Table[int2bit[t1[[j,i]],t3[[j]]], {i,1,nperlist}, {j,1,Length[t1]}]
 
 t5 = Partition[Flatten[Transpose[t4]],8];
 
 t6 = Table[FromDigits[i,2],{i,t5}];
 
-t6 >> /tmp/output.m
+t3 >> /tmp/output-precision.m
+t6 >> /tmp/output-data.m
+
+Exit[];
+
+(* everything below this line is testing *)
 
 (* To convert above to true binary (note there is no -l below):
 
@@ -87,10 +102,20 @@ Table[Ceiling[Log[test3[[i,2]]]/Log[2]], {i,1,Length[test3]}]
 
 (* 122 bytes for mercury or 802 bits [for 8 days] *)
 
-
 Plot[{superfour[t1[[1]],1][x],t1[[1,Floor[x]]]},{x,1,Length[t1[[1]]]}]
 
 Plot[{superfour[t1[[1]],1][x],t1[[1,Floor[x]]],
 superfour[t1[[1]],1][x]-t1[[1,Floor[x]]]},{x,1,Length[t1[[1]]]}]
+
+f0[x_] = a+b*Cos[c*x-d] /. FindFit[t1[[1]], a+b*Cos[c*x-d], {a,b,c,d}, x]
+
+l0 = Table[f0[x]-t1[[1,x]],{x,1,Length[t1[[1]]]}];
+
+f1[x_] = a+b*Cos[c*x-d] /. FindFit[l0, a+b*Cos[c*x-d], {a,b,c,d}, x]
+
+l1 = Table[f1[x]-l0[[x]],{x,1,Length[l0]}];
+
+f0[x_] = a+b*Cos[c*x-d] /. FindFit[t1[[1]], a+b*Cos[c*x-d], 
+ {a,{b,1.84*10^12},{c,.28},{d,1}}, x]
 
 
