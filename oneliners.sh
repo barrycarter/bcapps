@@ -1,5 +1,11 @@
 # shell one liners
 
+# greps for gmail addresses in zip files (kind of)
+
+unzip -c facebook-barrycarter121.zip | perl -pnle 's/(<.*?>)/$1\n/g' | grep gmail
+
+exit;
+
 # lists tuesdays ("date -d 'next Tuesday 12:00:00' +%s" to start) and
 # later wednesdays
 

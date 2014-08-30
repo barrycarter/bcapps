@@ -35,7 +35,6 @@ use v5.10;
 
 # create a 10 second random snippet from an MP3 file
 
-warn "TESTING: A's only";
 chdir("/home/barrycarter/MP3/");
 @mp3s = randomize([glob("*.mp3")]);
 
@@ -48,7 +47,8 @@ for $i (@mp3s) {
   $length = $1*60+$2;
 
   my($rand) = floor(rand()*($length-10));
-  system("ffmpeg -ss 30 -t 15 -i '$i' 'GAME/$i'");
+  # the 22nd to 38th second
+  system("ffmpeg -ss 22 -t 16 -i '$i' 'GAME/$i'");
 }
 
 die "TESTING";

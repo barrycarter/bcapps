@@ -2125,6 +2125,9 @@ MULTIREF [[title::Larry's mother]] [[notes::Larry's mother dies on [[2005-05-13]
 2014-08-26 [[character::Aaron Aaronofski (fish)]] [[notes::No recurring or major characters appear in this strip]]
 2014-08-27 [[description::[[character::Pig+Goat]] discuss [[character::Rat]]'s visit to [[location::McDonalds headquarters]], where Rat tries to convince them to replace [[cameo::Ronald McDonald+Grimace+Mayor McCheese]] with Rat's new character, [[character::Mr McWhiskey Barrel]]]]
 2014-08-28 [[description::[[character::Rat]], at [[location::McDonalds headquarters]], tries to convince {{wp|McDonalds}} to add [[character::Mr McPunch-You-in-the-Face]] as an antagonist, but McDonalds declines, noting they already have the [[cameo::Hamburglar]]]] [[notes::In the last panel, the coffee cup handle should be pointing "at the camera" (assuming it hasn't been moved), but isn't]]
+2014-08-29 [[description::[[character::Rat]] pitches [[character::[[Saturated Fat Molecule::aka::Satch]]]] to {{wp|McDonalds}}]] [[location::McDonalds headquarters]]
+2014-08-27-2014-08-29 [[storyline::Rat pitches new character to McDonalds]]
+2014-08-30 [[description::[[character::Pig]]'s new diet requires him to burn more calories than he eats, and Pig incorrectly assumes a walk to and from the kitchen will burn off a large quantity of chili cheese fries. [[character::Goat]] questions him about this.]] [[notes::Ultimately, *any* diet requires you to burn more calories than you consume/digest]]
 </data>
 
 # 2007-03-30 pig's mayors isnt LGD? (mayor in rehab)
