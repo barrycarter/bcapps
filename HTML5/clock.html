@@ -1,31 +1,45 @@
 <!-- HTML 5 clock -->
 
 <body onload="draw();">
-<canvas id="clock" width="600" height="400"></canvas>
+<canvas id="clock" width="800" height="600"></canvas>
 
 <script type="text/javascript">
 
+// TODO: this is a really ugly proof of concept only
 var canvas = document.getElementById('clock');
 var ctx = canvas.getContext('2d');
 
-for (i=0; i<10; i++) {
-  var angle = 0.2*Math.PI*i;
-  ctx.fillText(i,300+300*Math.sin(angle),200-200*Math.cos(angle));
-}
+var height = 600;
+var width = 600;
 
 function draw() {
   var now = new Date();
 
-  // the fraction of day that has elapsed, in radian measure
-  var frac = (now.getHours() + now.getMinutes()/60 + now.getSeconds()/3600 + now.getMilliseconds()/3600000)/24*2*Math.PI;
+  ctx.clearRect(0,0,width,height);
+
+  // drawing this every time is probably unnecessary
+  for (i=0; i<10; i++) {
+    var angle = 0.2*Math.PI*i;
+    ctx.fillText(i,width/2*(1+Math.sin(angle))-5,height/2*(1-Math.cos(angle))+5);
+  }
+
+  // the fraction of day that has elapsed, in numerical + radian measure
+  var frac = (now.getHours() + now.getMinutes()/60 + now.getSeconds()/3600 + now.getMilliseconds()/3600000)/24;
   ctx.fillText(frac,10,50);
+  var angle = frac*2*Math.PI;
 
   ctx.lineWidth=1;
+  var ll = .4;
 
+  ctx.strokeStyle = '#ff0000';
   ctx.beginPath();
-  ctx.moveTo(300,200);
-  ctx.lineTo(300+300*Math.sin(frac),200-200*Math.cos(frac));
+  ctx.moveTo(width/2,height/2);
+  ctx.lineTo(width/2*(1+ll*Math.sin(angle)),height/2*(1-ll*Math.cos(angle)));
+
+
   ctx.stroke();
+  setTimeout(draw,10);
+
 }
 
 </script>
