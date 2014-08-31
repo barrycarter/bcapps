@@ -25,20 +25,26 @@ function draw() {
 
   // the fraction of day that has elapsed, in numerical + radian measure
   var frac = (now.getHours() + now.getMinutes()/60 + now.getSeconds()/3600 + now.getMilliseconds()/3600000)/24;
-  ctx.fillText(frac,10,50);
+  ctx.fillText("0."+Math.round(frac*1000000),width/2, height/2);
   var angle = frac*2*Math.PI;
 
+  // colors and lengths of hands (slowest to fastest)
+  var colors = ['#ff0000', '#ff8000', '#ffff00', '#00ff00', '#0000ff', '#ff00ff'];
+  var lengths = [.4,.9,.8,.7,.6,.2];
+
+  // TODO: allow for various line widths?
   ctx.lineWidth=1;
-  var ll = .4;
 
-  ctx.strokeStyle = '#ff0000';
-  ctx.beginPath();
-  ctx.moveTo(width/2,height/2);
-  ctx.lineTo(width/2*(1+ll*Math.sin(angle)),height/2*(1-ll*Math.cos(angle)));
+  for (i=0; i<=colors.length; i++) {
+    ctx.beginPath();
+    ctx.strokeStyle = colors[i];
+    ctx.moveTo(width/2,height/2);
+    ctx.lineTo(width/2*(1+lengths[i]*Math.sin(angle)),height/2*(1-lengths[i]*Math.cos(angle)));
+    ctx.stroke();
+    angle*=10;
+  }
 
-
-  ctx.stroke();
-  setTimeout(draw,10);
+  setTimeout(draw,1);
 
 }
 
