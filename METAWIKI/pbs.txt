@@ -2062,7 +2062,7 @@ MULTIREF [[title::Sawing Women]] [[notes::On [[2011-03-24]], Pig offers to saw s
 MULTIREF [[title::Pig and the Society of Cultured Pigs]] [[notes::[[Pig]] gets thrown out of the Society of Cultured Pigs sometime before [[2002-01-12]], but is seen attending a meeting on [[2003-07-06]] (maybe they re-instated him?)]]
 MULTIREF [[title::Too Many Words]] [[notes::On [[2004-09-20]], [[Stephan Pastis]] notes that "I'm never doing this joke again", but does essentially the same thing on [[2011-02-08]]]]
 MULTIREF [[title::Tree Croc]] [[notes::On [[2007-01-07]], Larry poses as a "tree-climbing assassin monkey"; he does the same thing starting [[2011-05-12]], but now calls himself a "tree croc" instead]]
-MULTIREF [[title::Unicorns]] [[notes::On [[2009-08-15]], [[Junior]] says unicorns don't exist, and [[Rat]] implies the same on [[2010-09-15]], but [[Pig]] actually finds one, [[Uni (unicorn)]] on [[2010-02-22]]]]
+MULTIREF [[title::Unicorns]] [[notes::On [[2009-08-15]], [[Junior]] says unicorns don't exist, and [[Rat]] implies the same on [[2010-09-15]], but [[Pig]] actually finds one, [[Uni (unicorn)]] on [[2010-02-22]]. On [[2014-08-31]], Pig thinks [[Zebra]] is a unicorn.]]
 MULTIREF [[title::You Are Here]] [[notes::Both [[2003-04-04]] and [[2004-12-18]] use the mall map's "you are here" joke, albeit different malls with different maps]]
 MULTIREF [[title::Larry spells his name]] [[notes::On [[2009-10-16]], Larry writes a sign "Watch Larry chug a BEER! (one dollar)", but, a year later, on [[2010-10-11]], his Celebrity Jeopardy placard reads "Mee no kan spel nayme" (perhaps all that beer killed off his spelling skill brain cells?)]]
 MULTIREF [[title::Pig's Uncle George (pig)]] [[notes::On [[2004-12-05]], Uncle George appears as a sausage link; on [[2011-02-18]], he appears as a package of bacon (maybe it's two different Uncle Georges, or different parts of the same Uncle George?)]]
@@ -2128,6 +2128,7 @@ MULTIREF [[title::Larry's mother]] [[notes::Larry's mother dies on [[2005-05-13]
 2014-08-29 [[description::[[character::Rat]] pitches [[character::[[Saturated Fat Molecule::aka::Satch]]]] to {{wp|McDonalds}}]] [[location::McDonalds headquarters]]
 2014-08-27-2014-08-29 [[storyline::Rat pitches new character to McDonalds]]
 2014-08-30 [[description::[[character::Pig]]'s new diet requires him to burn more calories than he eats, and Pig incorrectly assumes a walk to and from the kitchen will burn off a large quantity of chili cheese fries. [[character::Goat]] questions him about this.]] [[notes::Ultimately, *any* diet requires you to burn more calories than you consume/digest]]
+2014-08-31 [[description::[[character::Rat]] laments his dripping ice cream cone, when [[character::Zebra]] comes by, completely white due to a bleach accident. Claiming his problem is worse, Rat places his ice-cream covered cone on Zebra's head. [[character::Pig]], arriving on scene, mistakes Zebra for a unicorn and asks Zebra to fly him to Candyland. Meanwhile [[character::Goat]] asks [[character::Pastis]] what kinds of things happen in normal comic strips]]
 </data>
 
 # 2007-03-30 pig's mayors isnt LGD? (mayor in rehab)
