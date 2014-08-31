@@ -1,18 +1,31 @@
 <!-- HTML 5 clock -->
 
 <body onload="draw();">
-<canvas id="clock" width="800" height="600"></canvas>
+<canvas id="clock" width="600" height="400"></canvas>
 
 <script type="text/javascript">
 
 var canvas = document.getElementById('clock');
 var ctx = canvas.getContext('2d');
 
+for (i=0; i<10; i++) {
+  var angle = 0.2*Math.PI*i;
+  ctx.fillText(i,300+300*Math.sin(angle),200-200*Math.cos(angle));
+}
+
 function draw() {
   var now = new Date();
-  var frac = (now.getHours() + now.getMinutes()/60 + now.getSeconds()/3600 + now.getMilliseconds()/3600000)/24;
+
+  // the fraction of day that has elapsed, in radian measure
+  var frac = (now.getHours() + now.getMinutes()/60 + now.getSeconds()/3600 + now.getMilliseconds()/3600000)/24*2*Math.PI;
   ctx.fillText(frac,10,50);
-  alert(frac);
+
+  ctx.lineWidth=1;
+
+  ctx.beginPath();
+  ctx.moveTo(300,200);
+  ctx.lineTo(300+300*Math.sin(frac),200-200*Math.cos(frac));
+  ctx.stroke();
 }
 
 </script>
