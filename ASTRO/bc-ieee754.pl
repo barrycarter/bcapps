@@ -8,9 +8,12 @@ require "/usr/local/lib/bclib.pl";
 
 while (<>) {
   chomp;
-  if (/^\'(\-)?([A-F0-9]+)\^(\d+)\'$/) {
+  if (/^\'(\-)?([A-F0-9]+)\^(\-?\d+)\'$/) {
     my($sign, $mant, $exp) = ($1,$2,$3);
-    debug("HEX:",hex($mant)/(16**length($mant))*(16**$exp));
-    debug("$sign/$mant/$exp");
+    debug("MANT: $mant");
+    my($num) = hex($mant)*16**($exp-length($mant));
+    print "'$sign$num'\n";
+  } else {
+    print "$_\n";
   }
 }
