@@ -5,6 +5,8 @@ This informal document explains how to decode the satellite SPICE/SPK
 
 http://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/
 
+which are essentially sets of Chebyshev coefficients.
+
 Intended audience: you should know what the following terms mean:
 
   * DE430
@@ -29,12 +31,13 @@ ftp://naif.jpl.nasa.gov/pub/naif/toolkit/C/PC_Linux_GCC_32bit/executables/
 
 Note: Also download all other files in the toolkit, all are useful.
 
-Step 2: "toxfrp sat365.bsp" yields "sat365.xsp". Poking around int his
-file, we see quoted numbers like:
+Step 2: "toxfrp sat365.bsp" yields "sat365.xsp". Looking in
+sat365.xsp, we see quoted numbers like:
 
 '-E6BEBE0789D848^-2'
 
-These numbers are in IEEE-754 hex format and used by Fortran. In base 16, the number above is:
+These numbers are in IEEE-754 hex format and used by Fortran. In base
+16, the number above is:
 
 -0.E6BEBE0789D848*(10^-2)
 
@@ -102,14 +105,20 @@ BEGIN_ARRAY 2 7792004
 '32400'
 '31713.2412523424'
 
-"-3155727600" is the number of seconds after the "File Epoch Julian
-Date", which the end of sat365.xsp tells us is Julian day "2455470.50"
-or 2010-10-01T00:00:00.
+"-3155727600" is the number of seconds after the Julian day 2451545
+(2000-01-01T12:00:00), the same as the "Equinox Reference Julian
+Date".
 
-Thus, -3155727600 is 1910-10-01T09:00:00, and, since each set of
+IMPORTANT: Ignore the "File Epoch Julian Date": it is not useful to us
+
+TODO: Why isn't the epoch date more prominently mentioned?
+
+Thus, -3155727600 is 1899-12-31T21:00:00. Since each set of
 coefficients is good for 18/24 days (master interval divided by NDIV),
 the following coefficients are good from 1910-10-01T09:00:00 to
 1910-10-02T03:00:00.
+
+TODO: is -3155727600 actually the MIDDLE of the "good for" time?
 
 The latter time is -3155662800 seconds from the epoch. If you scroll
 down a bit (from "BEGIN_ARRAY 2 7792004"), you will see:
