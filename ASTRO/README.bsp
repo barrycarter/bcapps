@@ -1,24 +1,196 @@
+*********TODO: do I have my epochs wrong?
+
 This informal document explains how to decode the satellite SPICE/SPK
 .bsp files found at:
 
 http://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/
 
-For concreteness, I will use Phoebe, Saturn's 9th moon, whose position
-is described in sat365.bsp. This is an unusually simple special case,
-but covers all the salient points.
+Intended audience: you should know what the following terms mean:
 
-Step 1: run "toxfr" on sat365.bsp. You can find toxfr at:
+  * DE430
+  * SPICE
+  * Chebyshev polynomials
+
+Summary of steps:
+
+  * Convert .bsp to .xsp
+  * Convert DAF numbers to decimals
+  * <h>Profit!</h>
+  * Understand file format
+
+Step 1: Using sat365 as an example, run "toxfr" on sat365.bsp. You can
+find toxfr at:
 
 ftp://naif.jpl.nasa.gov/pub/naif/toolkit/
 
-You will probably want to download all the files (including the user
-guides) in this directory.
-
-For reference, I downloaded my copies from:
+You'll have to dig a bit to find your platform/language. I got mine at:
 
 ftp://naif.jpl.nasa.gov/pub/naif/toolkit/C/PC_Linux_GCC_32bit/executables/
 
-Your download will vary based on platform and language.
+Note: Also download all other files in the toolkit, all are useful.
+
+Step 2: "toxfrp sat365.bsp" yields "sat365.xsp". Poking around int his
+file, we see quoted numbers like:
+
+'-E6BEBE0789D848^-2'
+
+These numbers are in IEEE-754 hex format and used by Fortran. In base 16, the number above is:
+
+-0.E6BEBE0789D848*(10^-2)
+
+where "10" means 16, since we're in base 16.
+
+To convert do decimal, we first convert "E6BEBE0789D848" to decimal,
+yielding 64948968022988872 [1].
+
+"E6BEBE0789D848" is 14 characters long, so we divide by 16^14,
+yielding (to 30 digits):
+
+0.901347996559565989294071641780
+
+"^-2" means we multiply by 16^-2, yielding (30 digits):
+
+0.00352089061156080464567996735070
+
+Of course, we could've combined the two previous steps and just done:
+
+hex("E6BEBE0789D848")/16^16
+
+to get the same thing. More efficient methods almost certainly exist.
+
+bc-ieee754.pl in this directory
+(https://github.com/barrycarter/bcapps/tree/master/ASTRO) will also do
+the conversion.
+
+Step 3: Looking at the last few lines of sat365.xsp, we see things like:
+
+> Master Interval: 18.0000 Days
+
+>   Name        Number            GM             NDIV   NDEG   Model
+>   Mimas         601    2.503524000000000E+00     24     15   SATORBINT
+>   Enceladus     602    7.211454165826105E+00     24     12   SATORBINT
+
+Taking Enceladus as an example:
+
+  * Since Enceladus is the 2nd satellite listed, it's data will follow
+"BEGIN_ARRAY 2 7792004" in the xsp file (the 7792004 is the length of
+the array, so the next 7792004 lines are elements of the array) [2]
+
+  * NDIV=24 means each set of coefficients covers 18/24 days (18 =
+master interval).
+
+  * NDEG=12 means each coordinate is a 12th degree polynomial, so
+there will be 13 (not 12) Chebyshev coefficients for each coordinate.
+
+IMPORTANT: The NDEG convention used here is different from the
+convention used in GROUP 1050 of header.430_572
+
+Step 4: Looking at the first few lines after "BEGIN_ARRAY 2 7792004"
+after decimal conversion ("sat365.xsp.dec" if you're using
+bc-ieee754.pl), we see:
+
+BEGIN_ARRAY 2 7792004
+'SAT365                                  '
+'-3155716758.81603'
+'3155716867.18389'
+'25A'
+'6'
+'1'
+'3'
+1024
+'-3155727600'
+'32400'
+'31713.2412523424'
+
+"-3155727600" is the number of seconds after the "File Epoch Julian
+Date", which the end of sat365.xsp tells us is Julian day "2455470.50"
+or 2010-10-01T00:00:00.
+
+Thus, -3155727600 is 1910-10-01T09:00:00, and, since each set of
+coefficients is good for 18/24 days (master interval divided by NDIV),
+the following coefficients are good from 1910-10-01T09:00:00 to
+1910-10-02T03:00:00.
+
+The latter time is -3155662800 seconds from the epoch. If you scroll
+down a bit (from "BEGIN_ARRAY 2 7792004"), you will see:
+
+'-3155662800'
+'32400'
+'-53046.6360485376'
+
+indicating the start of the next set of coefficients.
+
+IMPORTANT: I'm note sure what the "32400" means, but it is NOT the
+number of seconds for each set of coefficients. Since NDIV=24 in this
+case and master interval is 18 days, each set of coefficients is good
+for 18/24 days of 64800 seconds. "32400" is half this value, and
+perhaps that what it's supposed to be?
+
+The "31713.2412523424" above is the first Chebyshev coefficient
+itself.
+
+Step 5: Since NDEG=12 for Enceladus, each coordinate has 13 (not 12)
+Chebyshev coefficients. The coordinates are for X, Y, Z, VX, VY, and
+VZ [3].
+
+Thus, each set has 13 coefficients times 6 coordinates for a total of
+78 lines. If we count "BEGIN_ARRAY 2 7792004" as line 1:
+
+Lines 12-24 are Chebyshev coefficients for X
+Lines 25-37 are Chebyshev coefficients for Y
+Lines 38-50 are Chebyshev coefficients for Z
+Lines 51-63 are Chebyshev coefficients for VX
+Lines 64-76 are Chebyshev coefficients for VY
+Lines 77-89 are Chebyshev coefficients for VZ
+
+Note the 90th line after "BEGIN_ARRAY 2 7792004" is "-3155662800",
+indicating the start of the next set of coefficients.
+
+Important notes:
+
+  * Ignore any unquoted numbers (most often "1024") in xsp files:
+these are NOT array entries [4]
+
+  * To see .bsp info without converting to .xsp, use "commnt -r sat365.bsp"
+and "brief -c sat365.bsp"
+
+  * Satellite positions are given relative to the *barycenter* of the
+satellite's planetary system, which means:
+
+    * Positions are NOT given relative to the solar system barycenter.
+
+    * Positions are NOT given relative to the planet itself. The
+planet's barycenter is the center of mass of the planet and its
+satellites.
+
+    * The position of the planet itself (relative to it's own
+barycenter) is provided, in this case as the 13th array.
+
+
+
+
+
+
+
+
+
+
+
+TONOTE: center of body, not barycenter of ss
+
+the following
+coefficients are for the time period starting at 1910-10-01T09:00:00.
+
+Since NDIV=24, each time period is 18/24 days, so the
+
+
+
+
+TODO: spell
+
+TODO: note 1024 oddness, check via email and web (exact params)
+
+
 
 Step 2: After running toxfr, you will have sat365.xsp. Looking at the
 last few lines of this file (use "tail -n 75" for example), we see
@@ -61,8 +233,6 @@ NDEG=15 means the polynomials for Mimas are of degree 15. This means
 there are 16 (not 15) coefficients for each component of Mimas'
 position.
 
-IMPORTANT: The NDEG convention used in these files is different from
-the convention used in GROUP 1050 of header.430_572
 
 
 
@@ -91,3 +261,18 @@ TODO: figure out what the GM heading means
 
 
 TODO: redundancy
+
+[1] Some languages/operating systems may choke on this. My Perl
+non-fatally warns "Integer overflow in hexadecimal number", but yields
+"6.49489680229889e+16", an approximation to the actual value. You can
+probably use clever bit-shifting to avoid this.
+
+[2] This isn't strictly true, but I explain more later.
+
+[3] The coefficients for VX, VY, VZ are redundant and can be obtained
+by differentiating the polynomials for X, Y, and Z.
+
+[4] These numbers probably had legacy use at some point, indicating,
+for example, that the next 1024 lines were array entries (useful to
+know when machines had less memory).
+
