@@ -2130,6 +2130,7 @@ MULTIREF [[title::Larry's mother]] [[notes::Larry's mother dies on [[2005-05-13]
 2014-08-30 [[description::[[character::Pig]]'s new diet requires him to burn more calories than he eats, and Pig incorrectly assumes a walk to and from the kitchen will burn off a large quantity of chili cheese fries. [[character::Goat]] questions him about this.]] [[notes::Ultimately, *any* diet requires you to burn more calories than you consume/digest]]
 2014-08-31 [[description::[[character::Rat]] laments his dripping ice cream cone, when [[character::Zebra]] comes by, completely white due to a bleach accident. Claiming his problem is worse, Rat places his ice-cream covered cone on Zebra's head. [[character::Pig]], arriving on scene, mistakes Zebra for a unicorn and asks Zebra to fly him to Candyland. Meanwhile [[character::Goat]] asks [[character::Pastis]] what kinds of things happen in normal comic strips]]
 2014-09-01 [[description::[[character::Pig]] confronts [[character::Rat]] about opening new bags of chips without throwing away old nearly-empty ones, but Rat explains that, as a genius, his time is too valuable to waste. Pig laments about this to [[character::Goat]]]]
+2014-09-02 [[description::[[character::Pig]] introduces his friend [[Pig::friend::[[character::Wally (walrus)]]]], an [[Wally (walrus)::profession::aerobics instructor]] to [[character::Goat]]]]
 </data>
 
 # 2007-03-30 pig's mayors isnt LGD? (mayor in rehab)

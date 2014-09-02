@@ -62,8 +62,8 @@ require "/usr/local/lib/bclib.pl";
 
 $time = time();
 
-# 4 days per chunk, 86400 seconds per day
-$chunk = ceil(($time+632707200)/86400/4);
+# 4 days per chunk, 86400 seconds per day (chunk 0 = first chunk)
+$chunk = ceil(($time+632707200)/86400/4)-1;
 debug("CHUNK: $chunk");
 
 open(A,"/home/barrycarter/20140826/mercury4.bin");

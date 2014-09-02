@@ -28,7 +28,7 @@ require "/usr/local/lib/bclib.pl";
 
 @planets = ("mercury:3:14:4", "venus:171:10:2", "earthmoon:231:13:2",
 	    "mars:309:11:1", "jupiter:342:8:1", "saturn:366:7:1",
-	    "uranus:387:6:1", "neptune:405:6:1", "whocares:423:6:1",
+	    "uranus:387:6:1", "neptune:405:6:1", "pluto:423:6:1",
 	    "moongeo:441:13:8", "sun:753:11:2");
 
 # TODO: this should NOT be defined here!!!
@@ -37,6 +37,8 @@ for $i (@planets) {
   my($plan,$pos,$num,$chunks) = split(/:/, $i);
   $planetinfo{$plan} = [$pos,$num,$chunks];
 }
+
+
 
 # for mathematica, obtain raw coefficients for planets for 100 years
 

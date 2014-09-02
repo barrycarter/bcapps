@@ -9,35 +9,41 @@ the smallest interval used *)
 
 (* 1970-01-02 = chunk 1831, 2014-01-03 = chunk 5849 *)
 
+(* 
+
+Semi-efficiently convert Chebyshev polynomials to Taylor series
+expansion for n coefficients (polynomial degree n-1), where c[i] are
+the Chebyshev coefficients (c[0] is the constant term).
+
+TODO: Should be a better way of doing this than using c[i]
+
+*)
+
+cheb2tay[n_] := cheb2tay[n] = 
+ CoefficientList[Sum[c[i]*ChebyshevT[i,x],{i,0,n-1}],x]
+
 (* the multiplier; we store each coeff to 1/this number km *)
 
 mult = 32768;
 
-(* split coeffs into groups of ncoeff and then 3 axes *)
+(* split coeffs into groups of ncoeff *)
 
-coeffs = Partition[Partition[coeffs,ncoeff],3];
-
-(* the number of chunks = number of 4 day periods *)
-
-nchunks = ndays/4;
-
-(* function that semi-efficiently computes Taylor polynomial for
-interval [a,b] treated as [0,1] where c[i] are the Chebyshev
-coefficients up to order 14 (polynomial order 13) *)
-
-cheb2tay[a_,b_] := cheb2tay[a,b] = 
-CoefficientList[Sum[c[i+1]*ChebyshevT[i,x],{i,0,ncoeff-1}] /. 
-x-> a+frac*(b-a),frac]
+coeffs = Partition[coeffs,ncoeff];
 
 (* convert integer to bit string of given length n, allowing for
-special cases and adding 2^(n-1) to negative numbers; this effictively
+special cases and adding 2^(n-1) to negative numbers; this effectively
 makes the high bit a sign bit *)
 
 int2bit[int_,n_] = If[n==0,{}, IntegerDigits[int+2^(n-1),2,n]]
 
-final = Round[mult*Flatten[Table[Table[Table[
-cheb2tay[2*i/nchunks-1, 2*(i+1)/nchunks-1] /. 
- c[k_] -> coeffs[[l,j,k]], {j,1,3}], {i,0,nchunks-1}], {l,1,Length[coeffs]}]]];
+final = Flatten[Round[32768*Table[cheb2tay[ncoeff] /. c[i_] :> coeffs[[n,i+1]],
+{n,1,Length[coeffs]}]]];
+
+(* below is test only *)
+
+test0 = Sum[coeffs[[172,i]]*ChebyshevT[i-1,t],{i,1,Length[coeffs[[172]]]}]
+test1 = Sum[final[[172,i]]*t^(i-1),{i,1,Length[final[[172]]]}]
+Plot[test0-test1/32768,{t,-1,1}]
 
 (* find largest of each coefficient, and how many bits to store it *)
 
@@ -49,7 +55,7 @@ t3 = Table[Ceiling[Log[t2[[i,2]]]/Log[2]], {i,1,Length[t2]}]
 
 nperlist = Length[t1[[1]]];
 
-t4 =Table[int2bit[t1[[j,i]],t3[[j]]], {i,1,nperlist}, {j,1,Length[t1]}]
+t4 =Table[int2bit[t1[[j,i]],t3[[j]]], {i,1,nperlist}, {j,1,Length[t1]}];
 
 t5 = Partition[Flatten[Transpose[t4]],8];
 
