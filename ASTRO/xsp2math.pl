@@ -18,18 +18,24 @@ open(B,">/tmp/xsp2math.m");
 
 while (<A>) {
 
+  # raw 1024 ignore so often, I want to ignore them early and quietly
+  if (/^1024$/) {next;}
+
   # start of new array?
   if (/BEGIN_ARRAY\s+(\d+)\s+(\d+)$/) {
     ($arraynum, $arraylength) = ($1,$2);
-
-    # unless this is the first array, close off old array
-    if ($arraynum>1) {print B "};\n";}
     # open new array (could do array as a true list, but nah)
     print B "array$arraynum = {\n";
     next;
   }
 
-  if ($arraynum>1) {warn "TESTING"; last;}
+  if (/END_ARRAY\s+(\d+)\s+(\d+)$/) {
+    # to avoid "last comma" issue, add artificial 0 to end of array
+    print B "0};\n";
+    next;
+  }
+
+  if ($arraynum>3) {warn "TESTING"; last;}
 
   # ignore anything not in DAF form
   unless (/^\'(\-?)([0-9A-F]+)\^(\-?(\d+))\'$/) {
@@ -45,10 +51,3 @@ while (<A>) {
   debug("$sgn:$mant:$exp:$num");
 
 }
-
-# close off the last array
-print B "};\n";
-
-
-
-
