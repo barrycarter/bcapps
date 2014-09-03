@@ -1,5 +1,3 @@
-*********TODO: do I have my epochs wrong?
-
 This informal document explains how to decode the satellite SPICE/SPK
 .bsp files found at:
 
@@ -156,7 +154,7 @@ satellites.
     * The position of the planet itself (relative to it's own
 barycenter) is provided, in this case as the 13th array.
 
-Spotchecking the answer:
+Spotchecking the answer (this section is incomplete!!!):
 
   * To check via email, send the following email (for example) to
 horizons@ssd.jpl.nasa.gov:
@@ -195,91 +193,12 @@ IMPORTANT NOTES (if using web interface):
 
     * Under Table Settings, the reference plane must be "FRAME".
 
-
-
-
-
-
-
-********
-
-
+TODO: add more steps above
 
 TODO: spellcheck
 
-TODO: note 1024 oddness, check via email and web (exact params)
-
-
-
-Step 2: After running toxfr, you will have sat365.xsp. Looking at the
-last few lines of this file (use "tail -n 75" for example), we see
-(heavily elided and quoted to show just the relevant-to-us parts):
-
->    BEGIN_TIME      = CAL-ET 1900 JAN 01 00:00:41.183
->    END_TIME        = CAL-ET 2100 JAN 01 00:01:07.183
-
-sat365.bsp (and thus sat365.xsp) contain positional data from the
-start of year 1900 to the start of year 2100.
-
-> Master Interval: 18.0000 Days
-
-This tells us the master interval is 18 days; more about that below.
-
-> Equinox Reference Julian Date: 2451545.00
-
-The coordinates are for Julian day 2451545.00 aka 2000-01-01 12:00:00
-UTC; in other words, J2000 coordinates.
-
-> Planetary Ephemeris Number: DE-0430/LE-0430
-
-These coordinates should be used with DE430.
-
-> Bodies on the File:
->    Name        Number            GM             NDIV   NDEG   Model
-
-A list of which bodies are described in this file.
-
-Let's briefly look at Mimas, the first entry, even though we're going
-to focus on Phoebe.
-
->   Mimas         601    2.503524000000000E+00     24     15   SATORBINT
-
-The NDIV of 24 means each 18 day master interval is divided into 24
-sub-intervals of 3/4 day each. In other words, each set of
-coefficients for Mimas represents positions for 3/4th of a day.
-
-NDEG=15 means the polynomials for Mimas are of degree 15. This means
-there are 16 (not 15) coefficients for each component of Mimas'
-position.
-
-
-
-
-
-TODO: figure out what the GM heading means
-
-
-
-
-   Enceladus     602    7.211454165826105E+00     24     12   SATORBINT
-   Tethys        603    4.121107782641367E+01     12     14   SATORBINT
-   Dione         604    7.311636648731589E+01     12     11   SATORBINT
-   Rhea          605    1.539424643535228E+02      8     11   SATORBINT
-   Titan         606    8.978138376543257E+03      6     12   SATORBINT
-   Hyperion      607    3.718742808950764E-01      4     10   SATORBINT
-   Iapetus       608    1.205120887032733E+02      2     10   SATORBINT
-   Phoebe        609    5.528989950537777E-01      1      8   SATORBINT
-   Helene        612    0.000000000000000E+00     12     11   SATORBINT
-   Telesto       613    0.000000000000000E+00     12     15   SATORBINT
-   Calypso       614    0.000000000000000E+00     12     15   SATORBINT
-   Saturn        699    3.793120747607848E+07     12     12   SATORBINT
-
-
-
- (WHERE)
-
-
-TODO: redundancy
+TODO: figure out what the GM heading means (although it appears to be
+unimportant)
 
 [1] Some languages/operating systems may choke on this. My Perl
 non-fatally warns "Integer overflow in hexadecimal number", but yields
