@@ -34,8 +34,8 @@ sat365.xsp, we see quoted numbers like:
 
 '-E6BEBE0789D848^-2'
 
-These numbers are in IEEE-754 hex format and used by Fortran. In base
-16, the number above is:
+These numbers are in IEEE-754 hex format (aka DAF) and used by
+Fortran. In base 16, the number above is:
 
 -0.E6BEBE0789D848*(10^-2)
 
@@ -45,17 +45,17 @@ To convert do decimal, we first convert "E6BEBE0789D848" to decimal,
 yielding 64948968022988872 [1].
 
 "E6BEBE0789D848" is 14 characters long, so we divide by 16^14,
-yielding (to 30 digits):
+yielding (to 30 digits and carrying the minus sign from earlier):
 
-0.901347996559565989294071641780
+-0.901347996559565989294071641780
 
 "^-2" means we multiply by 16^-2, yielding (30 digits):
 
-0.00352089061156080464567996735070
+-0.00352089061156080464567996735070
 
 Of course, we could've combined the two previous steps and just done:
 
-hex("E6BEBE0789D848")/16^16
+-hex("E6BEBE0789D848")/16^16
 
 to get the same thing. More efficient methods almost certainly exist.
 
@@ -139,8 +139,9 @@ Important notes:
   * Ignore any unquoted numbers (most often "1024") in xsp files:
 these are NOT array entries [4]
 
-  * To see .bsp info without converting to .xsp, use "commnt -r sat365.bsp"
-and "brief -c sat365.bsp"
+  * To see .bsp info without converting to .xsp, use "commnt -r
+sat365.bsp" and "brief -c sat365.bsp" (where "brief" and "commnt" are
+programs found in the SPICE toolkit above)
 
   * Satellite positions are given relative to the *barycenter* of the
 satellite's planetary system, which means:
