@@ -25,8 +25,11 @@ mult = 32768;
 
 (* below for the Chebyshev coefficients "as is" *)
 
-test0 = Transpose[Partition[Round[coeffs*mult],ncoeff*3]];
-test1 = Table[Ceiling[Log[2*Max[Abs[i]]+1]/Log[2]],{i,test0}]
+test0 = Round[coeffs*mult];
+
+test1 = Table[
+Ceiling[Log[1+2*Max[Abs[Transpose[Partition[test0, ncoeff*3]][[i]]]]]/Log[2]], 
+{i,1,ncoeff*3}];
 
 (* convert integer to bit string of given length n, allowing for
 special cases and adding 2^(n-1) to negative numbers; this effectively
@@ -34,21 +37,46 @@ makes the high bit a sign bit *)
 
 int2bit[int_,n_] = If[n==0,{}, IntegerDigits[int+2^(n-1),2,n]]
 
-Table[test1[[1+Mod[i,Length[test1]]]],{i,1,1000}]
+test2 = Table[int2bit[test0[[i]], test1[[1+Mod[i-1,Length[test1]]]]],
+ {i,1,Length[test0]}];
 
-test2 = Table[int2bit[coeffs[[i]], test1[[1+Mod[i,Length[test1]]]]], 
- {i,1,Length[coeffs]}];
+test2 = Partition[
+ Flatten[Table[int2bit[test0[[i]], test1[[1+Mod[i-1,Length[test1]]]]],
+ {i,1,Length[test0]}]],8];
 
-
-
-
-
-
-
-
+test3 = Table[FromDigits[i,2], {i,test2}];
 
 cheb2tay[n_] := cheb2tay[n] = 
  CoefficientList[Sum[c[i]*ChebyshevT[i,x],{i,0,n-1}],x]
+
+(* below is list version, which does CoefficientList each time which
+is probably inefficient *)
+
+cheb2tay[x_] := CoefficientList[Sum[
+ x[[i]]*ChebyshevT[i-1,t], {i,1,Length[x]}]
+,t];
+
+test4 = Flatten[Round[mult*Table[cheb2tay[i], {i, Partition[coeffs,ncoeff]}]]];
+
+test5 = Table[
+Ceiling[Log[1+2*Max[Abs[Transpose[Partition[test4, ncoeff*3]][[i]]]]]/Log[2]], 
+{i,1,ncoeff*3}];
+
+test6 = Partition[
+ Flatten[Table[int2bit[test4[[i]], test5[[1+Mod[i-1,Length[test5]]]]],
+ {i,1,Length[test4]}]],8];
+
+test7 = Table[FromDigits[i,2], {i,test6}];
+
+
+
+
+
+
+
+
+
+
 
 (* split coeffs into groups of ncoeff *)
 
