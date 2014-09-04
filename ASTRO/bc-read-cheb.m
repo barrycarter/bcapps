@@ -19,22 +19,40 @@ TODO: Should be a better way of doing this than using c[i]
 
 *)
 
-cheb2tay[n_] := cheb2tay[n] = 
- CoefficientList[Sum[c[i]*ChebyshevT[i,x],{i,0,n-1}],x]
-
 (* the multiplier; we store each coeff to 1/this number km *)
 
 mult = 32768;
 
-(* split coeffs into groups of ncoeff *)
+(* below for the Chebyshev coefficients "as is" *)
 
-coeffs = Partition[coeffs,ncoeff];
+test0 = Transpose[Partition[Round[coeffs*mult],ncoeff*3]];
+test1 = Table[Ceiling[Log[2*Max[Abs[i]]+1]/Log[2]],{i,test0}]
 
 (* convert integer to bit string of given length n, allowing for
 special cases and adding 2^(n-1) to negative numbers; this effectively
 makes the high bit a sign bit *)
 
 int2bit[int_,n_] = If[n==0,{}, IntegerDigits[int+2^(n-1),2,n]]
+
+Table[test1[[1+Mod[i,Length[test1]]]],{i,1,1000}]
+
+test2 = Table[int2bit[coeffs[[i]], test1[[1+Mod[i,Length[test1]]]]], 
+ {i,1,Length[coeffs]}];
+
+
+
+
+
+
+
+
+
+cheb2tay[n_] := cheb2tay[n] = 
+ CoefficientList[Sum[c[i]*ChebyshevT[i,x],{i,0,n-1}],x]
+
+(* split coeffs into groups of ncoeff *)
+
+coeffs = Partition[coeffs,ncoeff];
 
 final = Flatten[Round[32768*Table[cheb2tay[ncoeff] /. c[i_] :> coeffs[[n,i+1]],
 {n,1,Length[coeffs]}]]];
