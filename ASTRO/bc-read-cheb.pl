@@ -41,17 +41,39 @@ for $i (@planets) {
   $planetinfo{$plan} = [$pos,$num,$chunks];
 }
 
+# get earthmoon/moongeo coords for today (as part of EMRAT corrections)
+
+for $i ("earthmoon", "moongeo") {
+  %coeffs = planet_coeffs(time(), $i, "tay");
+
+  for $j ("x","y","z") {
+    @tay = @{$coeffs{$j}};
+    my(@terms) = ();
+    print "$i\[${j}_\,t_] = \n";
+    for $k (0..$#tay) {
+      $tay[$k]=~s/e/*10^/;
+      push(@terms,"$tay[$k]*t^$k");
+  }
+    print join("+\n", @terms),";\n";
+  }
+}
+
+die "TESTING";
+
+
+
+
 # my(%plan) = planet_coeffs(str2time("1994-06-17 UTC"),"mercury","cheb");
 # my(%plan) = planet_coeffs(str2time("1949-12-14 UTC"),"mercury","cheb");
 
-my(%plan) = planet_coeffs(time(),"mercury","cheb");
+my(%plan) = planet_coeffs(time(),"mercury","tay");
 
 # testing...
 
 $count = 0;
-for $i (@{$plan{y}}) {
+for $i (@{$plan{x}}) {
   $i=~s/e/*10^/;
-  push(@nomial, "$i*ChebyshevT[$count,t]");
+  push(@nomial, "$i*t^$count");
   $count++;
 }
 
