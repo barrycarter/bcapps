@@ -1,3 +1,15 @@
+(* Chebyshev or Taylor packing *)
+
+mdec = Table[{AstronomicalData["Moon", {"Declination", DateList[t]}]},
+ {t, AbsoluteTime[{2014,1,1}], AbsoluteTime[{2015,1,1}], 300}];
+
+mdec2 = Table[AstronomicalData["Moon", {"Declination", DateList[t]}],
+ {t, AbsoluteTime[{2014,1,1}], AbsoluteTime[{2015,1,1}], 3600}];
+
+t[n_] := Sum[((i-4381)/4380)^n*mdec2[[i]],{i,1,Length[mdec2]}];
+
+Table[t[i],{i,1,125}]*Table[t^i,{i,1,125}]
+
 (* data packing *)
 
 (* coeffs = Partition[coeffs,14]; *)
