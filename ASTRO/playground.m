@@ -1,3 +1,41 @@
+(* TODO: this may be useful for general library *)
+
+(* Given a list of Taylor coefficients and n, create n sets of Taylor
+coefficients, each good for 1/n of the interval [-1,1] (ie, tailor a
+Taylor series to behave the way we want) *)
+
+(* Taylor of a list at a variable *)
+
+taylor[list_,t_] := Sum[list[[i]]*t^(i-1),{i,1,Length[list]}]
+
+tailortaylor[list_,n_] := Table[CoefficientList[
+ taylor[list,(t+2*i-1)/n-1],t],{i,1,n}]
+
+
+
+(* below is wrong:
+
+tailortaylor[list_, n_] := Table[
+CoefficientList[Sum[list[[i]]*((t+2*j-1)/n-1)^(j-1), {i,1,Length[list]}],t],
+{j,1,n}]
+
+*)
+
+list = Table[1/i,{i,1,5}]
+
+tay = Table[t^i,{i,0,4}]
+
+Total[list*tay]
+
+Plot[%,{t,-1,1}]
+
+tailortaylor[list,4]
+
+Total[%[[3]]*tay]
+
+
+
+
 (* Chebyshev or Taylor packing *)
 
 mdec = Table[{AstronomicalData["Moon", {"Declination", DateList[t]}]},

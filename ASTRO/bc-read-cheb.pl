@@ -44,12 +44,12 @@ for $i (@planets) {
 # get earthmoon/moongeo coords for today (as part of EMRAT corrections)
 
 for $i ("earthmoon", "moongeo") {
-  %coeffs = planet_coeffs(time(), $i, "tay");
+  %coeffs = planet_coeffs(str2time("2014-09-20 UTC"), $i, "tay");
 
   for $j ("x","y","z") {
     @tay = @{$coeffs{$j}};
     my(@terms) = ();
-    print "$i\[${j}_\,t_] = \n";
+    print "$i\[t_,\"${j}\"] = \n";
     for $k (0..$#tay) {
       $tay[$k]=~s/e/*10^/;
       push(@terms,"$tay[$k]*t^$k");
@@ -169,8 +169,15 @@ sub planet_coeffs {
 
   # in which chunk are these coeffs? (number of days since start
   # divided by number of days per chunk
-  my($chunknum) = floor(($time+632707200)/86400/(32/$chunks));
-  debug("CHUNK: $chunknum, SUM: $sum, TIME: $time");
+  my($chunknum) = ($time+632707200)/86400/(32/$chunks);
+  # compute the value of t for Chebyshev/Taylor
+  my($frac) = $chunknum-floor($chunknum);
+  $chunknum = floor($chunknum);
+
+  # convert $frac to "t" value
+  $frac = $frac*2-1;
+
+  debug("CHUNK: $chunknum/$frac, SUM: $sum, TIME: $time");
 
   # TODO: allow output in pure Mathematica format
 
@@ -204,6 +211,9 @@ sub planet_coeffs {
   for $i ("x","y","z") {
     $rethash{$i} = [splice(@list,0,$num)];
   }
+
+  # some other useful info
+  $rethash{t} = $frac;
 
   return %rethash;
 }
