@@ -41,6 +41,22 @@ for $i (@planets) {
   $planetinfo{$plan} = [$pos,$num,$chunks];
 }
 
+# my(%plan) = planet_coeffs(str2time("1994-06-17 UTC"),"mercury","cheb");
+my(%plan) = planet_coeffs(str2time("1949-12-14 UTC"),"mercury","cheb");
+
+# testing...
+
+$count = 0;
+for $i (@{$plan{x}}) {
+  $i=~s/e/*10^/;
+  push(@nomial, "$i*ChebyshevT[$count,t]");
+  $count++;
+}
+
+debug(join("+\n",@nomial));
+
+die "TESTING";
+
 
 
 # for mathematica, obtain raw coefficients for planets for 100 years
@@ -77,123 +93,125 @@ MARK
   # this only needs to be done once, really shouldn't even use cache_command
   my($out,$err,$res) = cache_command2("math -initfile $workdir/raw-$planet.m -initfile /home/barrycarter/BCGIT/ASTRO/bc-read-cheb.m","age=9999999");
 
-  # the chebyshev coefficients
-  $out=~s/bytes_cheb=List\[(.*?)\]//s;
-  my($cheb) = $1;
-  $cheb=~s/[^0-9,]//g;
-  my(@cheb) = split(/\,/,$cheb);
-  debug("cheblen($planet)",scalar(@cheb));
-  map($_=chr($_),@cheb);
-  $cheb = join("",@cheb);
-  write_file($cheb,"$workdir/$planet-cheb.bin");
-  debug("CHEB: $cheb",length($cheb));
+  # the coefficients
+  while ($out=~s/(bytes|nbits)_(cheb|tay)=List\[(.*?)\]//s) {
+    my($bb,$ct,$coeffs) = ($1,$2,$3);
+    $coeffs=~s/[^0-9,]//g;
+
+    # for nbits, store as is (no bin conversion)
+    if ($bb eq "nbits") {
+      write_file($coeffs,"$workdir/$planet-$ct-$bb.txt");
+      next;
+    }
+
+    my(@coeffs) = split(/\,/,$coeffs);
+    map($_=chr($_),@coeffs);
+    $coeffs = join("",@coeffs);
+    write_file($coeffs,"$workdir/$planet-$ct.bin");
+  }
 }
 
 close(A);
 
-=item planet_chebyshev($time,$planet)
+=item planet_coeffs($time,$planet,$type="cheb|tay")
 
-Obtain the Chebyshev coefficients (as a hash of 3 lists, for x y z)
-for $planet at $time (Unix seconds). Requires ascp1950.430.bz2 (which
-is somewhere on NASAs/JPLs site, though I cant find it at the moment).
+Obtain the Chebyshev or Taylor coefficients for $planet at $time (Unix
+seconds). Requires the .bin and .txt files created by bc-read-cheb.pl
+(which will soon be included in the GIT directory).
 
-Also returns other useful info in hash
+TODO: output format
 
-NOTES:
+TODO: $workdir must change
 
-First chunk (1 1801) starts at -632707200 and ends at -629942400 (32 days)
-
-TODO: this only works for planets with 32-day coefficients for now
+TODO: dont use global @planet/%planetinfo
 
 =cut
 
-sub planet_chebyshev {
-  my($time,$planet) = @_;
-  local(*A);
+sub planet_coeffs {
+  my($time,$planet,$type) = @_;
+
+  warn("TESTING");
+  $time=-632707200;
+
+  my(@list);
   my(%rethash);
 
   # TODO: define planetinfo hash properly locally (dont do below)
   my($pos,$num,$chunks) = @{$planetinfo{$planet}};
 
-  # TODO: currently using uncompressed copy, change to use bzip'd copy
-  # TODO: when using bzip, using .tab file to seek more efficiently
-  # TODO: opening this each time is inefficient, allow for mass grabs?
-  # TODO: should I be using DE431?
-  open(A,"/home/barrycarter/20140124/ascp1950.430");
+  # bits per coefficient
+  my(@nbits) = split(/\,/,read_file("$workdir/$planet-$type-nbits.txt"));
 
-  # where in file is time? First find chunk (chunk-1 actually)
-  my($chunk) = floor(($time+632707200)/32/86400);
-  # seek there (each chunk = 26873 bytes) and read
-  seek(A, $chunk*26873, SEEK_SET);
-  # TODO: can seek even more precisely to exact position
-  read(A, my($data), 26873);
+  # total bits per chunk
+  my($sum)=0;
+  for $i (@nbits) {$sum+=$i;}
 
-  # the coefficients, chunk number, dates, etc
-  my(@data) = split(/\s+/, $data);
+  # in which chunk are these coeffs? (number of days since start
+  # divided by number of days per chunk
+  my($chunknum) = floor(($time+632707200)/86400/(32/$chunks));
+  debug("CHUNK: $chunknum, SUM: $sum, TIME: $time");
 
-  # the data we actually want (+3 to get rid of blanks and chunk numbers)
-  @data = @data[3..4,$pos+2..$pos+2+$num*3];
-  $rethash{jd} = [splice(@data,0,2)];
-  for $i ("x","y","z") {$rethash{$i} = [splice(@data,0,$num)];}
+  # TODO: allow output in pure Mathematica format
+
+  # open file and seek to correct spot (in bits)
+  local(*A);
+  open(A,"$workdir/$planet-$type.bin");
+  my(@bits) = seek_bits(A, $chunknum*$sum, $sum);
+
+  debug("BITS",join("",@bits[0..7]));
+
+  # convert bits back to numbers
+  # TODO: this needs to be a LOT more efficient!
+  for $i (@nbits) {
+    # reverse so we get low bit first
+    my(@num) = reverse(splice(@bits,0,$i));
+
+    debug("NUM",join("",reverse(@num)));
+
+    # convert to decimal
+    my($num)=0;
+    # last bit is sign
+    for $j (0..$#num-1) {
+      $num+=2**$j*$num[$j];
+      debug("NUM($j):$num");
+    }
+    # TODO: don't hardcode 32768 here
+    $num/=32768;
+    if (pop(@num)) {$num*=-1;}
+    push(@list,$num);
+  }
+
+  # the return values
+  for $i ("x","y","z") {
+    $rethash{$i} = [splice(@list,0,$num)];
+  }
+
   return %rethash;
 }
 
-=item cheb2bin
+=item seek_bits($fh, $start, $num)
 
-Given a Chebyshev coefficient (like -0.9503118187993631D+07 convert it
-to a 7-byte string)
-
-=cut
-
-sub cheb2bin {
-  my($coeff) = @_;
-
-  # extract relevant parts
-  $coeff=~s/^(.*?)0\.(.*?)D(.)(..)//||warn("BAD COEFF: $coeff");
-  my($sgn, $man, $esgn, $exp) = ($1,$2,$3,$4);
-  # the last byte combines the exponent, and the sign of both exponent/mantissa
-  my($lastbyte) = chr(($sgn eq "-"?64:0)+($esgn eq "-"?32:0)+$exp);
-  # TODO: below does not handle trailing 0s
-  return join("",map($_=chr($_),num2base($man,256)))."$lastbyte";
-}
-
-=item bin2cheb
-
-Given a 7-byte string, return the associated Chebyshev coefficient
-(like -0.9503118187993631D+07)
-
-This function returns a string, not a double, because Perls default
-double precision routines are insufficiently precise.
+Seek to bit (not byte) $start in filehandle $fh, and return the next
+$num bits (as a list).
 
 =cut
 
-sub bin2cheb {
-  my($str) = @_;
-  my($ret);
+sub seek_bits {
+  my($fh, $start, $num) = @_;
+  # the byte where this bit starts and the offset
+  my($fbyte, $offset) = (floor($start/8), $start%8);
+  # the number of bytes to read ($offset does affect this)
+  my($nbytes) = ceil(($num+$offset)/8);
 
-  # the mantissa
-  my(@mant) = map($_=ord($_),split(//, $str));
+  debug("STARTING AT $fbyte, seeking $nbytes");
 
-  # NOTE: last entry is sign/exponent, not part of mantissa
-  my($sign) = pop(@mant);
+  seek($fh, $fbyte, SEEK_SET);
+  read($fh, my($data), $nbytes);
 
-  for $i (0..$#mant) {
-    $ret += $mant[$i]*256**$i;
-    debug("RETNOW: $mant[$i]/$i",sprintf("%0.f",$ret));
+  for $i (split(//,$data)) {debug("GOT:",ord($i));}
+
+  my(@ret) = split(//, unpack("B*", $data));
+  # return requested bits
+  return @ret[$offset..$offset+$num-1];
 }
-  debug(sprintf("%0.f", $ret));
-  # convert to non-engineering format
-  $ret = sprintf("0.%0.f", $ret);
 
-  # find the exponent
-  my($exp) = sprintf("%0.2d", $sign%16);
-  # signs <h>(signs, signs, everywhere a sign, blocking up the scenery...)</h>
-  if ($sign&32) {$exp="-$exp";} else {$exp="+$exp";}
-
-  # can't multiple $ret by -1, loses precision, so...
-  if ($sign&64) {
-    debug("-${ret}D$exp");
-  } else {
-    debug("${ret}D$exp");
-  }
-}

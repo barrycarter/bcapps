@@ -50,11 +50,6 @@ bytes = Table[FromDigits[i,2], {i,bits}];
 nbits >> /tmp/bc-read-cheb-output-bits.txt;
 bytes >> /tmp/bc-read-cheb-output.txt;
 
-(* Print[nbits];
-Print[bytes];
-
-*)
-
 Print["nbits_cheb=",nbits // FullForm];
 Print["bytes_cheb=",bytes // FullForm];
 
