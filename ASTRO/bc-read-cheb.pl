@@ -42,7 +42,9 @@ for $i (@planets) {
 }
 
 # my(%plan) = planet_coeffs(str2time("1994-06-17 UTC"),"mercury","cheb");
-my(%plan) = planet_coeffs(str2time("1949-12-14 UTC"),"mercury","cheb");
+# my(%plan) = planet_coeffs(str2time("1949-12-14 UTC"),"mercury","cheb");
+
+my(%plan) = planet_coeffs(time(),"mercury","cheb");
 
 # testing...
 
@@ -130,9 +132,6 @@ TODO: dont use global @planet/%planetinfo
 sub planet_coeffs {
   my($time,$planet,$type) = @_;
 
-  warn("TESTING");
-  $time=-632707200;
-
   my(@list);
   my(%rethash);
 
@@ -158,27 +157,25 @@ sub planet_coeffs {
   open(A,"$workdir/$planet-$type.bin");
   my(@bits) = seek_bits(A, $chunknum*$sum, $sum);
 
-  debug("BITS",join("",@bits[0..7]));
-
   # convert bits back to numbers
   # TODO: this needs to be a LOT more efficient!
   for $i (@nbits) {
     # reverse so we get low bit first
     my(@num) = reverse(splice(@bits,0,$i));
 
-    debug("NUM",join("",reverse(@num)));
-
     # convert to decimal
-    my($num)=0;
+    my($sum)=0;
     # last bit is sign
-    for $j (0..$#num-1) {
-      $num+=2**$j*$num[$j];
-      debug("NUM($j):$num");
+    for $j (0..$#num) {
+      $sum+=2**$j*$num[$j];
     }
+
+    # correct for what int2bit does
+    $sum-=2**(scalar(@num)-1);
+
     # TODO: don't hardcode 32768 here
-    $num/=32768;
-    if (pop(@num)) {$num*=-1;}
-    push(@list,$num);
+    $sum/=32768;
+    push(@list,$sum);
   }
 
   # the return values
@@ -207,8 +204,6 @@ sub seek_bits {
 
   seek($fh, $fbyte, SEEK_SET);
   read($fh, my($data), $nbytes);
-
-  for $i (split(//,$data)) {debug("GOT:",ord($i));}
 
   my(@ret) = split(//, unpack("B*", $data));
   # return requested bits

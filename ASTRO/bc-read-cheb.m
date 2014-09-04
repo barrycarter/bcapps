@@ -8,8 +8,7 @@ the new lists in a highly-compressed format *)
 (* 1970-01-02 = chunk 1831, 2014-01-03 = chunk 5849 *)
 
 (* convert integer to bit string of given length n, allowing for
-special cases and adding 2^(n-1) to negative numbers; this effectively
-makes the high bit a sign bit *)
+special cases and adding 2^(n-1) to negative numbers *)
 
 int2bit[int_,n_] = If[n==0,{}, IntegerDigits[int+2^(n-1),2,n]]
 
