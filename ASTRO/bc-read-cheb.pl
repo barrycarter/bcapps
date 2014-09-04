@@ -49,7 +49,7 @@ my(%plan) = planet_coeffs(time(),"mercury","cheb");
 # testing...
 
 $count = 0;
-for $i (@{$plan{x}}) {
+for $i (@{$plan{y}}) {
   $i=~s/e/*10^/;
   push(@nomial, "$i*ChebyshevT[$count,t]");
   $count++;
@@ -195,6 +195,10 @@ $num bits (as a list).
 
 sub seek_bits {
   my($fh, $start, $num) = @_;
+
+  # special case
+  if ($num==0) {return;}
+
   # the byte where this bit starts and the offset
   my($fbyte, $offset) = (floor($start/8), $start%8);
   # the number of bytes to read ($offset does affect this)
