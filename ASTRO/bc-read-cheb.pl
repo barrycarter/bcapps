@@ -26,6 +26,9 @@ require "/usr/local/lib/bclib.pl";
 # earthmoon = earth-moon barycenter
 # moongeo = position of moon from earth
 
+# a "directory of the day"
+my($workdir) = "/home/barrycarter/20140823";
+
 @planets = ("mercury:3:14:4", "venus:171:10:2", "earthmoon:231:13:2",
 	    "mars:309:11:1", "jupiter:342:8:1", "saturn:366:7:1",
 	    "uranus:387:6:1", "neptune:405:6:1", "pluto:423:6:1",
@@ -48,25 +51,42 @@ for $planet (keys %planetinfo) {
   my(@all) = ();
   my($pos,$num,$chunks) = @{$planetinfo{$planet}};
 
-  # 1142 based on file size of 30688966 divided by 26873 per chunk
-  for $i (0..1141) {
-    seek(A, $i*26873, SEEK_SET);
-    read(A, my($data), 26873);
-    my(@data) = split(/\s+/, $data);
-    @data = @data[$pos+2..$pos+2+$num*$chunks*3-1];
-    map(s%\.(\d{16})\D%$1/10^16*10^%, @data);
-    push(@all,@data);
-  }
 
-  my($all) = join(",\n",@all);
-  open(B,">/home/barrycarter/20140823/raw-$planet.m");
-  print B << "MARK";
+  unless (-f "$workdir/raw-$planet.m") {
+    # 1142 based on file size of 30688966 divided by 26873 per chunk
+    for $i (0..1141) {
+      seek(A, $i*26873, SEEK_SET);
+      read(A, my($data), 26873);
+      my(@data) = split(/\s+/, $data);
+      @data = @data[$pos+2..$pos+2+$num*$chunks*3-1];
+      map(s%\.(\d{16})\D%$1/10^16*10^%, @data);
+      push(@all,@data);
+    }
+
+    my($all) = join(",\n",@all);
+    open(B,">$workdir/raw-$planet.m");
+    print B << "MARK";
 ncoeff = $num;
 ndays = 32/$chunks;
 coeffs = {$all};
 MARK
   ;
-  close(B);
+    close(B);
+  }
+
+  # this only needs to be done once, really shouldn't even use cache_command
+  my($out,$err,$res) = cache_command2("math -initfile $workdir/raw-$planet.m -initfile /home/barrycarter/BCGIT/ASTRO/bc-read-cheb.m","age=9999999");
+
+  # the chebyshev coefficients
+  $out=~s/bytes_cheb=List\[(.*?)\]//s;
+  my($cheb) = $1;
+  $cheb=~s/[^0-9,]//g;
+  my(@cheb) = split(/\,/,$cheb);
+  debug("cheblen($planet)",scalar(@cheb));
+  map($_=chr($_),@cheb);
+  $cheb = join("",@cheb);
+  write_file($cheb,"$workdir/$planet-cheb.bin");
+  debug("CHEB: $cheb",length($cheb));
 }
 
 close(A);

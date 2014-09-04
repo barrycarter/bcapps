@@ -50,6 +50,14 @@ bytes = Table[FromDigits[i,2], {i,bits}];
 nbits >> /tmp/bc-read-cheb-output-bits.txt;
 bytes >> /tmp/bc-read-cheb-output.txt;
 
+(* Print[nbits];
+Print[bytes];
+
+*)
+
+Print["nbits_cheb=",nbits // FullForm];
+Print["bytes_cheb=",bytes // FullForm];
+
 (* now, the same thing for Taylor converted coefficients (we convert
 from the pure numbers, not the rounded numbers, then multiply and round) *)
 
@@ -68,5 +76,8 @@ bytes = Table[FromDigits[i,2], {i,bits}];
 
 nbits >> /tmp/bc-read-taylor-output-bits.txt;
 bytes >> /tmp/bc-read-taylor-output.txt;
+
+Print["nbits_tay=",nbits // FullForm];
+Print["bytes_tay=",bytes // FullForm];
 
 Exit[];
