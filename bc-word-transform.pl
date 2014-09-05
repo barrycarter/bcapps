@@ -14,6 +14,7 @@ require "/usr/local/lib/bclib.pl";
 ($source, $target) = ("SALT", "PEPPER");
 ($source, $target) = ("DAY", "NIGHT");
 ($source, $target) = ("GESTATION", "BIRTH");
+($source, $target) = ($globopts{source}, $globopts{target});
 
 # load entire db into memory (faster?)
 @res = sqlite3hashlist("SELECT * FROM words", "/home/barrycarter/BCINFO/sites/DB/scrab.db");
