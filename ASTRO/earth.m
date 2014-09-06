@@ -11,6 +11,19 @@ earthmoon = coeffs;
 
 moongeo = coeffs;
 
+(* Earth-Moon mass ratio, from DE430, treated as infinite precision *)
+
+emrat = 813005690741906200*10^-16;
+
+(* See http://asd.gsfc.nasa.gov/Craig.Markwardt/bary/ *)
+
+emrat1 = 1/(1+emrat);
+
+tayearthmoon2[[5910*3+1]] - emrat1*taymoongeo[[5910*3+1]]
+
+
+  R_earth  =  R_earthmoon - EMRAT1 *  R_moon
+
 Unset[coeffs];
 
 (* convert from Chebyshev to Taylor, after breaking into chunks *)
@@ -22,25 +35,24 @@ Unset[coeffs];
 tayearthmoon = Table[cheb2tay[i], {i,Partition[earthmoon,13]}];
 taymoongeo = Table[cheb2tay[i], {i,Partition[moongeo,13]}];
 
-(* 06 Sep 2014 is roughly day 23642 since start of ephermis, so
-today's data is in 23642/16*3 for earthmoon, 23642/4*3 for moongeo; below
-is just to confirm things are still correct *)
-
-testearthmoon = test0[[1477*3+1]]
-testearthgeo  = test1[[5910*3+1]]
-
-Sum[testearthmoon[[i]]*t^(i-1), {i,1,Length[testearthmoon]}]
-Sum[testearthgeo[[i]]*t^(i-1), {i,1,Length[testearthgeo]}]
-
 (* convert the earthmoon coefficients to the same period as earthgeo *)
 
 tayearthmoon2 = Flatten[Table[Transpose[i],
  {i,Partition[Table[tailortaylor[i,4],{i,tayearthmoon}],3]}],2];
 
-(* and confirm they still work *)
+(* the Earth's Taylor coefficients *)
 
-N[tayearthmoon2[[5910*3+1]]]
-N[taymoongeo[[5910*3+1]]]
+tayearth = Partition[Flatten[tayearthmoon2-emrat1*taymoongeo],39];
+
+(* round to nearest 1/32768 of a km *)
+
+final = Round[32768*tayearth];
+
+nbits = Table[
+Ceiling[Log[1+2*Max[
+ Abs[Transpose[final][[i]]]]
+]/Log[2]], {i,1,39}];
+
 
 
 
