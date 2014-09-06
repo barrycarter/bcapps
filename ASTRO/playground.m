@@ -1,15 +1,22 @@
 (* TODO: this may be useful for general library *)
 
-(* Given a list of Taylor coefficients and n, create n sets of Taylor
-coefficients, each good for 1/n of the interval [-1,1] (ie, tailor a
-Taylor series to behave the way we want) *)
-
 (* Taylor of a list at a variable *)
 
 taylor[list_,t_] := Sum[list[[i]]*t^(i-1),{i,1,Length[list]}]
 
+(* Chebyshev of a list at a variable *)
+
+chebyshev[list_,t_] := Sum[list[[i]]*ChebyshevT[i-1,t],{t,1,Length[list]}]
+
+(* Given a list of Taylor coefficients and n, create n sets of Taylor
+coefficients, each good for 1/n of the interval [-1,1] (ie, tailor a
+Taylor series to behave the way we want) *)
+
 tailortaylor[list_,n_] := Table[CoefficientList[
  taylor[list,(t+2*i-1)/n-1],t],{i,1,n}]
+
+
+
 
 
 

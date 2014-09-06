@@ -84,7 +84,7 @@ difference[l_] := Table[l[[i]] - l[[i-1]], {i,2,Length[l]}]
 cft[l_,s_] := cft[l,s] = 
 Sum[l[[x]]*Exp[2*Pi*I*(x-1)*(s-1)/Length[l]],{x,1,Length[l]}]/Sqrt[Length[l]];
 
-(* findroot using binary method, which Mathematica can't do??? *)
+(* findroot using binary method, which Mathematica cant do??? *)
 (* using N throughout for speed *)
 findroot2[f_, a_, b_, delta_] := Module[{mid,fa,fb,fmid},
  mid = N[(a+b)/2];
@@ -115,7 +115,7 @@ hyperfourier[data_] := Module[
  (* interpolate the function *)
  f0 = Interpolation[data];
 
- (* find the data's primary period *)
+ (* find the datas primary period *)
  period = Abs[2*Pi/superfourier[data,1][[3]]];
 
  (* resample the data to apply Fourier *)
@@ -157,7 +157,7 @@ calmfourier[data_] := Module[
  (* interpolate the function *)
  f0 = Interpolation[data];
 
- (* find the data's primary period *)
+ (* find the datas primary period *)
  period = Abs[2*Pi/superfourier[data,1][[3]]];
 
  (* resample the data to apply Fourier *)
@@ -207,3 +207,24 @@ gdft[list_, s_, a_:0, b_:1] :=
 Sum[list[[r]]*Exp[2*Pi*I*b*(r-1)*(s-1)/Length[list]], {r,1,Length[list]}]/
 Length[list]^((1-a)/2)
 
+(* convert a list of Chebyshev coefficients to a list of Taylor
+coefficients; this version might be less efficient than the earlier
+one, but works fast enough for me *)
+
+cheb2tay[x_] := CoefficientList[Sum[
+ x[[i]]*ChebyshevT[i-1,t], {i,1,Length[x]}],t];
+
+(* Taylor of a list at a variable *)
+
+taylor[list_,t_] := Sum[list[[i]]*t^(i-1),{i,1,Length[list]}]
+
+(* Chebyshev of a list at a variable *)
+
+chebyshev[list_,t_] := Sum[list[[i]]*ChebyshevT[i-1,t],{i,1,Length[list]}]
+
+(* Given a list of Taylor coefficients and n, create n sets of Taylor
+coefficients, each good for 1/n of the interval [-1,1] (ie, tailor a
+Taylor series to behave the way we want) *)
+
+tailortaylor[list_,n_] := Table[CoefficientList[
+ taylor[list,(t+2*i-1)/n-1],t],{i,1,n}]

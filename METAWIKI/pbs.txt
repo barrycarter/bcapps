@@ -2134,7 +2134,7 @@ MULTIREF [[title::Larry's mother]] [[notes::Larry's mother dies on [[2005-05-13]
 2014-09-03 [[description::[[character::Pig]] tells [[character::Goat]] that he (Pig) is worried that he offended the LGBT community, mistakenly thinking LGBT stands for "Lettuce, Greasy Bacon, and Tomato" (instead of "Lesbian, Gay, Bisexual, Transgender). Goat asks [[character::Pastis]] to stop with the horrible jokes]]
 2014-09-04 [[description::[[character::Goat]] tells [[character::Rat]] that he (Goat) is reading a book that advises giving thanks for the little things in life. Rat's thankfulness is fairly misanthropic]] [[notes::Rat's beer mug handle changes directions between panels 1 and 2]]
 2014-09-05 [[description::[[character::Pig]] asks [[character::Goat]] if the smiley-face icon at the end of [[character::Pigita]]'s (presumably) {{wp|Dear John}} email makes the message OK.]]
-2014-09-06 [[description::[[character::Pig]]'s new neighbor, [[character::[[Pig+Rat::neighbor::Bill 20140906 (human)]]]], a [[Bill 20140906 (human)::profession::historian]], introduces himself facing backwards and processing comments on a 10-year-delay.]] [[Bill 20140906 (human)::aka::Neighbor Bill]]
+2014-09-06 [[description::[[character::Pig]]'s new neighbor, [[character::[[Pig+Rat::neighbor::Bill 20140906 (human)]]]], a [[Bill 20140906 (human)::profession::historian]], introduces himself facing backwards and processing comments on a 10-year-delay.]]
 MULTIREF [[title::Neighbor Bills]] [[notes::We see one Neighbor Bill on [[2013-05-25]], and a new, different one on [[2014-09-06]]]]
 </data>
 
