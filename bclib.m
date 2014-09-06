@@ -216,7 +216,8 @@ cheb2tay[x_] := CoefficientList[Sum[
 
 (* Taylor of a list at a variable *)
 
-taylor[list_,t_] := Sum[list[[i]]*t^(i-1),{i,1,Length[list]}]
+ (* putting list[[1]] separately avoids 0^0 error *)
+taylor[list_,t_] := list[[1]]+Sum[list[[i]]*t^(i-1),{i,2,Length[list]}]
 
 (* Chebyshev of a list at a variable *)
 

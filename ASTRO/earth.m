@@ -19,8 +19,8 @@ Unset[coeffs];
 
 (* moongeo = also 13 coeffs per series *)
 
-test0 = Table[cheb2tay[i], {i,Partition[earthmoon,13]}];
-test1 = Table[cheb2tay[i], {i,Partition[moongeo,13]}];
+tayearthmoon = Table[cheb2tay[i], {i,Partition[earthmoon,13]}];
+taymoongeo = Table[cheb2tay[i], {i,Partition[moongeo,13]}];
 
 (* 06 Sep 2014 is roughly day 23642 since start of ephermis, so
 today's data is in 23642/16*3 for earthmoon, 23642/4*3 for moongeo; below
@@ -34,22 +34,13 @@ Sum[testearthgeo[[i]]*t^(i-1), {i,1,Length[testearthgeo]}]
 
 (* convert the earthmoon coefficients to the same period as earthgeo *)
 
-test2 = Table[tailortaylor[i,4],{i,test0}];
-test3 = Flatten[test2,1];
+tayearthmoon2 = Flatten[Table[Transpose[i],
+ {i,Partition[Table[tailortaylor[i,4],{i,tayearthmoon}],3]}],2];
 
 (* and confirm they still work *)
 
-testearthmoon = test3[[5910*3+1]]
-testearthgeo  = test1[[5910*3+1]]
-
-chebyshev[testearthmoon,t]
-
-
-
-
-
-
-
+N[tayearthmoon2[[5910*3+1]]]
+N[taymoongeo[[5910*3+1]]]
 
 
 
