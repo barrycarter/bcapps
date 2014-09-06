@@ -189,8 +189,7 @@ Display/Output [change] : plain text
 
 IMPORTANT NOTES (if using web interface):
 
-    * The coordinate origin must be "Saturn System Barycenter
-[500@6]", NOT Saturn itself.
+    * The coordinate origin must be "Saturn System Barycenter [500@6]", NOT Saturn itself.
 
     * Under Table Settings, the reference plane must be "FRAME".
 
@@ -214,4 +213,3 @@ by differentiating the polynomials for X, Y, and Z.
 [4] These numbers probably had legacy use at some point, indicating,
 for example, that the next 1024 lines were array entries (useful to
 know when machines had less memory).
-
