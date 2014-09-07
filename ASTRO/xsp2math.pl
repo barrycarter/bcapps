@@ -10,7 +10,7 @@ require "/usr/local/lib/bclib.pl";
 no warnings;
 
 # TODO: this is a test file
-$fname = "sat365";
+my($fname) = @ARGV;
 open(A,"$homedir/SPICE/KERNELS/$fname.xsp");
 my($temp);
 
@@ -41,6 +41,7 @@ while (<A>) {
     # record next interval midpoint so we can ignore it later
     $nextint = $arraydata{startsec}+2*$arraydata{secs};
 
+    # TODO: check if output file already exists
     open(B,">$homedir/SPICE/KERNELS/MATH/xsp2math-$fname-array-$arraydata{objid}.m");
     print B "coeffs = {\n";
     next;

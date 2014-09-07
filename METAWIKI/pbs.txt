@@ -2136,6 +2136,7 @@ MULTIREF [[title::Larry's mother]] [[notes::Larry's mother dies on [[2005-05-13]
 2014-09-05 [[description::[[character::Pig]] asks [[character::Goat]] if the smiley-face icon at the end of [[character::Pigita]]'s (presumably) {{wp|Dear John}} email makes the message OK.]]
 2014-09-06 [[description::[[character::Pig]]'s new neighbor, [[character::[[Pig+Rat::neighbor::Bill 20140906 (human)]]]], a [[Bill 20140906 (human)::profession::historian]], introduces himself facing backwards and processing comments on a 10-year-delay.]]
 MULTIREF [[title::Neighbor Bills]] [[notes::We see one Neighbor Bill on [[2013-05-25]], and a new, different one on [[2014-09-06]]]]
+2014-09-07 [[description::[[character::Goat]] tells [[character::Pig]] that he (Goat) has been taking voice lessons, leading up to a pun on the {{wp|Beatles}} song "Yesterday". [[character::Rat]] expresses his loathing for the comic strip]]
 </data>
 
 # 2007-03-30 pig's mayors isnt LGD? (mayor in rehab)
