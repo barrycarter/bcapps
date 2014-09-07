@@ -29,6 +29,9 @@ push(@INC,"/home/barrycarter/BCGIT", "/usr/local/lib");
 # for X11 goodness (when starting Perl from nagios/cron or similar)
 $ENV{'DISPLAY'}=":0.0";
 
+# lets people use different home dirs
+our($homedir) = "/home/barrycarter";
+
 # TODO: sort of bad to call this "abbrev" in global lib
 our(%ABBREV)=("BC" => lc("Patches"),
 	 "BL" => lc("Blowing"),

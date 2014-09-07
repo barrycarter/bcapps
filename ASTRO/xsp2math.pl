@@ -11,11 +11,10 @@ no warnings;
 
 # TODO: this is a test file
 $fname = "sat365";
-open(A,"/home/barrycarter/SPICE/KERNELS/$fname.xsp");
+open(A,"$homedir/SPICE/KERNELS/$fname.xsp");
 my($temp);
 
 while (<A>) {
-  chomp;
 
   # raw 1024 ignore so often, I want to ignore them early and quietly
   if (/^1024$/) {next;}
@@ -31,8 +30,6 @@ while (<A>) {
       # avoid 1024
       $temp = <A>;
       if ($temp=~/^1024$/) {$temp=<A>;}
-
-      $temp=~s/\'//g;
       $temp = ieee754todec($temp);
       debug("$i -> $temp");
       $arraydata{$i} = $temp;
@@ -41,7 +38,10 @@ while (<A>) {
     # the body id (it's not in IEEE-754 format, so not caught above)
     $arraydata{objid} = hex($arraydata{objid});
 
-    open(B,">/home/barrycarter/SPICE/KERNELS/MATH/xsp2math-$fname-array-$arraydata{objid}.m");
+    # record next interval midpoint so we can ignore it later
+    $nextint = $arraydata{startsec}+2*$arraydata{secs};
+
+    open(B,">$homedir/SPICE/KERNELS/MATH/xsp2math-$fname-array-$arraydata{objid}.m");
     print B "coeffs = {\n";
     next;
   }
@@ -53,32 +53,30 @@ while (<A>) {
     next;
   }
 
-  # ignore anything not in DAF form
-  unless (/^\'(\-?)([0-9A-F]+)\^(\-?([0-9A-F]+))\'$/) {
-    warn("IGNORING: $_");
+  $num = ieee754todec($_);
+  if ($num eq $_) {warn "NO CHANGE: $num, ignoring"; next;}
+
+  # are we seeing the next interval? If so, ignore 2 lines and reset nextint
+  if ($num eq $nextint) {
+    debug("GOT NEXTINT: $num");
+    # read the next line and reset nextint
+    $temp = <A>;
+    $nextint += 2*ieee754todec($temp);
+    debug("NEXTINT NOW: $nextint");
     next;
   }
 
+  debug("NUM: $num");
+
   # we need to do this twice, once for Mathematica, and once for this script
-
-  # are we seeing the next "chunk"?
-  debug("GOT",ieee754todec($_));
-
-  next;warn "TESTING";
-
-
-  my($sgn,$mant,$exp) = ($1,$2,hex($3));
-  my($pow) = $exp-length($mant);
-  my($num) = hex($mant)*16**$pow;
-  if ($sgn eq "-") {$num*=-1;}
-
-  print B qq%${sgn}FromDigits["$mant",16]*16^$pow,\n%;
+  #  print B qq%${sgn}FromDigits["$mant",16]*16^$pow,\n%;
 }
 
 =item ieee754todec($str,$options)
 
 Converts $str in IEEE-754 format to decimal number. If $str is not in
-IEEE-754 format, return it as is.
+IEEE-754 format, return it as is (however, is $str is
+apostrophe-quoted, will remove apostrophes)
 
 WARNING: Perl does not have sufficient precision to do this 100% correctly.
 
@@ -90,9 +88,8 @@ mathematica=1: return in Mathematica format (exact), not decimal
 
 sub ieee754todec {
   my($str) = @_;
-  debug("GOT: $str");
+  $str=~s/\'//g;
   unless ($str=~/^(\-?)([0-9A-F]+)\^(\-?([0-9A-F]+))$/) {return $str;}
-
   my($sgn,$mant,$exp) = ($1,$2,hex($3));
 
   # TODO: implement mathematica option!
