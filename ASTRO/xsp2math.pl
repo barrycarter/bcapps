@@ -58,18 +58,14 @@ while (<A>) {
 
   # are we seeing the next interval? If so, ignore 2 lines and reset nextint
   if ($num eq $nextint) {
-    debug("GOT NEXTINT: $num");
     # read the next line and reset nextint
     $temp = <A>;
     $nextint += 2*ieee754todec($temp);
-    debug("NEXTINT NOW: $nextint");
     next;
   }
 
-  debug("NUM: $num");
+  print B ieee754todec($_,"mathematica=1"),",\n";
 
-  # we need to do this twice, once for Mathematica, and once for this script
-  #  print B qq%${sgn}FromDigits["$mant",16]*16^$pow,\n%;
 }
 
 =item ieee754todec($str,$options)
@@ -87,14 +83,18 @@ mathematica=1: return in Mathematica format (exact), not decimal
 =cut
 
 sub ieee754todec {
-  my($str) = @_;
+  my($str,$options) = @_;
+  my(%opts) = parse_form($options);
+
   $str=~s/\'//g;
   unless ($str=~/^(\-?)([0-9A-F]+)\^(\-?([0-9A-F]+))$/) {return $str;}
   my($sgn,$mant,$exp) = ($1,$2,hex($3));
-
-  # TODO: implement mathematica option!
-
   my($pow) = $exp-length($mant);
+
+  # for mathematica, return value is easy
+  if ($opts{mathematica}) {return qq%${sgn}FromDigits["$mant",16]*16^$pow%;}
+
+  # now the "real" (haha) value
   my($num) = hex($mant)*16**$pow;
   if ($sgn eq "-") {$num*=-1;}
   return $num;
