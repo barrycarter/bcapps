@@ -26,19 +26,22 @@ while (<A>) {
 
     # read the first few lines which are special
     # x1/x2/x3 uninteresting for now
-    for $i ("name", "jdstart", "jdend", "objid", "x1", "x2", "x3") {
+    for $i ("name", "jdstart", "jdend", "objid", "x1", "x2", "x3", "startsec",
+	   "secs") {
+      # avoid 1024
       $temp = <A>;
+      if ($temp=~/^1024$/) {$temp=<A>;}
+
       $temp=~s/\'//g;
+      $temp = ieee754todec($temp);
       debug("$i -> $temp");
       $arraydata{$i} = $temp;
     }
 
-    # the body id
+    # the body id (it's not in IEEE-754 format, so not caught above)
     $arraydata{objid} = hex($arraydata{objid});
 
-    debug("ARRAY!",unfold([%arraydata]));
-
-    open(B,">/tmp/xsp2math-$fname-array-$arraydata{objid}.m");
+    open(B,">/home/barrycarter/SPICE/KERNELS/MATH/xsp2math-$fname-array-$arraydata{objid}.m");
     print B "coeffs = {\n";
     next;
   }
@@ -56,6 +59,14 @@ while (<A>) {
     next;
   }
 
+  # we need to do this twice, once for Mathematica, and once for this script
+
+  # are we seeing the next "chunk"?
+  debug("GOT",ieee754todec($_));
+
+  next;warn "TESTING";
+
+
   my($sgn,$mant,$exp) = ($1,$2,hex($3));
   my($pow) = $exp-length($mant);
   my($num) = hex($mant)*16**$pow;
@@ -63,3 +74,32 @@ while (<A>) {
 
   print B qq%${sgn}FromDigits["$mant",16]*16^$pow,\n%;
 }
+
+=item ieee754todec($str,$options)
+
+Converts $str in IEEE-754 format to decimal number. If $str is not in
+IEEE-754 format, return it as is.
+
+WARNING: Perl does not have sufficient precision to do this 100% correctly.
+
+Options:
+
+mathematica=1: return in Mathematica format (exact), not decimal
+
+=cut
+
+sub ieee754todec {
+  my($str) = @_;
+  debug("GOT: $str");
+  unless ($str=~/^(\-?)([0-9A-F]+)\^(\-?([0-9A-F]+))$/) {return $str;}
+
+  my($sgn,$mant,$exp) = ($1,$2,hex($3));
+
+  # TODO: implement mathematica option!
+
+  my($pow) = $exp-length($mant);
+  my($num) = hex($mant)*16**$pow;
+  if ($sgn eq "-") {$num*=-1;}
+  return $num;
+}
+
