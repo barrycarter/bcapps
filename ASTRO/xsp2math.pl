@@ -12,19 +12,34 @@ no warnings;
 # TODO: this is a test file
 $fname = "sat365";
 open(A,"/home/barrycarter/SPICE/KERNELS/$fname.xsp");
-my($arraynum, $arraylength, $count, $ctime, $duration);
+my($temp);
 
 while (<A>) {
+  chomp;
 
   # raw 1024 ignore so often, I want to ignore them early and quietly
   if (/^1024$/) {next;}
 
   # start of new array?
   if (/BEGIN_ARRAY\s+(\d+)\s+(\d+)$/) {
-    ($arraynum, $arraylength) = ($1,$2);
-    open(B,">/tmp/xsp2math-$fname-array-$arraynum.m");
+    ($arraydata{num}, $arraydata{length}) = ($1,$2);
+
+    # read the first few lines which are special
+    # x1/x2/x3 uninteresting for now
+    for $i ("name", "jdstart", "jdend", "objid", "x1", "x2", "x3") {
+      $temp = <A>;
+      $temp=~s/\'//g;
+      debug("$i -> $temp");
+      $arraydata{$i} = $temp;
+    }
+
+    # the body id
+    $arraydata{objid} = hex($arraydata{objid});
+
+    debug("ARRAY!",unfold([%arraydata]));
+
+    open(B,">/tmp/xsp2math-$fname-array-$arraydata{objid}.m");
     print B "coeffs = {\n";
-    $count = 0;
     next;
   }
 
@@ -35,52 +50,16 @@ while (<A>) {
     next;
   }
 
-#  if ($arraynum>3) {warn "TESTING"; last;}
-
   # ignore anything not in DAF form
-  unless (/^\'(\-?)([0-9A-F]+)\^(\-?(\d+))\'$/) {
+  unless (/^\'(\-?)([0-9A-F]+)\^(\-?([0-9A-F]+))\'$/) {
     warn("IGNORING: $_");
     next;
   }
 
-  # which element of array are we looking at? (the first 4 elts are special)
-  $count++;
-
-  # the first two elements just give the integration interval, which
-  # is uninteresting to us
-  if ($count<=2) {next;}
-
-  my($sgn,$mant,$exp) = ($1,$2,$3);
+  my($sgn,$mant,$exp) = ($1,$2,hex($3));
   my($pow) = $exp-length($mant);
   my($num) = hex($mant)*16**$pow;
   if ($sgn eq "-") {$num*=-1;}
 
-  # elements 3 and 4 are the center time + duration of this sub-array
-  if ($count==3) {$ctime = $num; next;}
-  # when we have the 4th element, calculate start time of next sub-array
-  if ($count==4) {
-    $duration = $num;
-    $narray = $ctime+2*$duration;
-    debug("CTD: $ctime/$duration/$narray");
-    next;
-  }
-
-#  debug("ALPHA: $ctime/$duration/$narray");
-
-  # have we found the start of the next subarray?
-  if ($num == $narray) {
-    # reset $count (this is ugly!!!) so the next two numbers become
-    # the new ctime an duration
-    # TODO: this is really ugly!
-    $count = 3;
-    $ctime = $num;
-    next;
-  }
-
-#  debug("NARRAY: $narray");
-#  debug("$count: $num");
-  # TODO: extra comma?
   print B qq%${sgn}FromDigits["$mant",16]*16^$pow,\n%;
-#  debug("$sgn:$mant:$exp:$num");
-
 }
