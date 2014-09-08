@@ -4,6 +4,9 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# renice self
+system("/usr/bin/renice 19 -p $$");
+
 # forever
 for (;;) {
   # globbing each time semi-inefficient but means no restart when I add more
