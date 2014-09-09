@@ -43,13 +43,14 @@ while (<A>) {
 
     # TODO: check if output file already exists
     open(B,">$homedir/SPICE/KERNELS/MATH/xsp2math-$fname-array-$arraydata{objid}.m");
-    print B "coeffs = {\n";
+    print B "coeffs$arraydata{objid} = {\n";
     next;
   }
 
   if (/END_ARRAY\s+(\d+)\s+(\d+)$/) {
-    # to avoid "last comma" issue, add artificial 0 to end of array
+    # to avoid "last comma" issue, add/remove artificial 0 to end of array
     print B "0};\n";
+    print B "coeffs$arraydata{objid} = Drop[coeffs$arraydata{objid},-1];\n";
     close(B);
     next;
   }
