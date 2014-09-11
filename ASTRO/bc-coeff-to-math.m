@@ -13,11 +13,66 @@ test0 = Partition[Partition[N[coeffs],14],3];
 
 test0 = Partition[Partition[coeffs,14],3];
 
+Table[xpoly[n, t_] = chebyshev[test0[[n,1]],t], {n,1,Length[test0]}];
+
 x0[t_] = Piecewise[Table[
  {chebyshev[test0[[n,1]], 2*Mod[t,ndays]/ndays-1],
  t>=(n-1)*ndays && t<n*ndays}, 
 {n,1,Length[test0]}]];
 
+cond[n_] = t>=(n-1)*ndays && t<n*ndays
+
+f[x_] = x^2 /; x>0
+
+f[x_] = If[x>0,x^2]
+f[x_] = If[x<0,-x]
+
+f[x_ /; x>0] = x^2
+
+
+
+Table[
+ x0[t_ /; t>=(n-1)*ndays && t<n*ndays] = 
+ chebyshev[test0[[n,1]], 2*Mod[t,ndays]/ndays-1]
+, {n,1,10}]
+
+
+Table[
+ x0[t_ /; Evaluate[cond[n]]] =
+ chebyshev[test0[[n,1]], 2*Mod[t,ndays]/ndays-1]
+, {n,1,10}]
+
+
+
+Table[x0[t_] = chebyshev[test0[[n,1]], 2*Mod[t,ndays]/ndays-1] /;
+ t>=(n-1)*ndays && t<n*ndays, {n,1,10}]
+
+
+
+
+x0[t_] = xpoly[Floor[t/ndays]+1, 2*Mod[t,ndays]/ndays-1]
+
+(* possibly faster method below *)
+
+test1[t_] = {Floor[t/ndays]+1, 2*Mod[t,ndays]/ndays-1}
+
+Table[xfunc[t] = test0[[t,1]], {t,1,10}]
+
+test2[t_] = xfunc[Floor[t/ndays]+1]
+
+test2[t_] = chebyshev[xfunc[Floor[t/ndays]+1], t]
+
+
+
+x0[t_] = chebyshev[xfunc[Floor[t/ndays]+1], 2*Mod[t,ndays]/ndays-1]
+
+x0[t_] := chebyshev[test0[[Floor[t/ndays]+1,1]], 2*Mod[t,ndays]/ndays-1]
+y0[t_] := chebyshev[test0[[Floor[t/ndays]+1,2]], 2*Mod[t,ndays]/ndays-1]
+z0[t_] := chebyshev[test0[[Floor[t/ndays]+1,3]], 2*Mod[t,ndays]/ndays-1]
+
+(* above does not operate as function, so... *)
+
+x0[t_] = chebyshev[test0
 
 MiniMaxApproximation[x0[t],{t,{0,88},3,3}]
 
