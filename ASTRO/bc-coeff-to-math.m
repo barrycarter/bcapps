@@ -30,16 +30,95 @@ xmean = Mean[{xmin,xmax}]
 Table[x0[t_ /; Evaluate[t>=(n-1)*ndays && t<n*ndays]] =
  poly[n,1,2*Mod[t,ndays]/ndays-1], {n,1,Length[part]}];
 
-
-
-Table[x0[t_ /; Evaluate[t>=(n-1)*ndays && t<n*ndays]] =
- chebyshev[part[[n,1]], 2*Mod[t,ndays]/ndays-1], {n,1,Length[test0]}];
-
 Table[y0[t_ /; Evaluate[t>=(n-1)*ndays && t<n*ndays]] =
- chebyshev[test0[[n,2]], 2*Mod[t,ndays]/ndays-1], {n,1,Length[test0]}];
+ poly[n,2,2*Mod[t,ndays]/ndays-1], {n,1,Length[part]}];
 
 Table[z0[t_ /; Evaluate[t>=(n-1)*ndays && t<n*ndays]] =
- chebyshev[test0[[n,3]], 2*Mod[t,ndays]/ndays-1], {n,1,Length[test0]}];
+ poly[n,2,2*Mod[t,ndays]/ndays-1], {n,1,Length[part]}];
+
+(* x0[t] for one cycle *)
+
+Plot[x0[t],{t,0,365*12}]
+
+(* exact length of cycle *)
+cycle = t /. FindRoot[x0[t]-x0[0], {t,365*12}]
+
+(* min/max this cycle *)
+(* TODO: should not need /8 hack here *)
+minc = NMinimize[x0[t], {t,cycle/8,7*cycle/8}][[1]]
+maxc = NMaximize[x0[t], {t,cycle/8,7*cycle/8}][[1]]
+meanc = Mean[{minc,maxc}]
+
+Plot[2*(x0[t]-meanc)/(maxc-minc),{t,0,cycle}]
+
+Plot[ArcCos[2*(x0[t]-meanc)/(maxc-minc)],{t,0,cycle}]
+
+
+x0Normalized[t_] = 2*(x0[t]-xmean)/(xmax-xmin)
+Plot[x0Normalized[t],{t,0,36500}]
+
+Plot[{ArcCos[x0Normalized[t]], Pi/2+ArcSin[x0Normalized[t]]}, {t,0,36500}]
+
+Plot[{x0Normalized[t], 
+ Cos[-0.819157+(16*Pi+0.819157+1.93444)/36500*t]}, {t,0,36500}]
+
+Plot[{x0Normalized[t]-
+ Cos[-0.819157+(16*Pi+0.819157+1.93444)/36500*t]}, {t,0,36500}]
+
+rat[t_] = RationalInterpolation[
+ x0Normalized[t]-Cos[-0.819157+(16*Pi+0.819157+1.93444)/36500*t],
+ {t,24,0}, {t,0,36500}]
+
+Plot[{x0Normalized[t]-
+ Cos[-0.819157+(16*Pi+0.819157+1.93444)/36500*t]-rat[t]}, {t,0,36500}]
+
+Plot[{x0Normalized[t]-
+ Cos[-0.819157+(16*Pi+0.819157+1.93444)/36500*t]}, {t,0,36500}]
+
+Plot[{x0Normalized[t]/
+ Cos[-0.819157+(16*Pi+0.819157+1.93444)/36500*t]}, {t,0,36500}]
+
+Plot[ArcCos[x0Normalized[t]]-(-0.819157+(16*Pi+0.819157+1.93444)/36500*t),
+{t,0,36500}]
+
+Plot[ArcCos[x0Normalized[t]]-(-0.819157+(16*Pi+0.819157+1.93444)/36500*t),
+{t,0,365}]
+
+Plot[{x0Normalized[t],
+ Cos[-0.819157+(16*Pi+0.819157+1.93444)/36500*t]}, {t,0,365}]
+
+Plot[{ArcCos[x0Normalized[t]],
+ -(-0.819157+(16*Pi+0.819157+1.93444)/36500*t)}, {t,0,500}]
+
+Plot[{ArcCos[x0Normalized[t]]+
+ (-0.819157+(16*Pi+0.819157+1.93444)/36500*t)}, {t,0,500}]
+
+Plot[{ArcCos[x0Normalized[t]],
+ Mod[-(-0.819157+(16*Pi+0.819157+1.93444)/36500*t),Pi]}, {t,0,5000}]
+
+Plot[{ArcCos[x0Normalized[t]]-
+ ArcCos[Cos[-(-0.819157+(16*Pi+0.819157+1.93444)/36500*t)]]}, {t,0,36500}]
+
+Plot[{ArcCos[x0Normalized[t]]/
+ ArcCos[Cos[-(-0.819157+(16*Pi+0.819157+1.93444)/36500*t)]]}, {t,0,36500}]
+
+
+Plot[{ArcCos[x0Normalized[t]]-
+ ArcCos[Cos[-0.819157+(16*Pi+0.819157+1.93444)/36500*t]]}, {t,0,365*12}]
+
+
+
+
+Cos[t+delta] - Cos[t] = .08
+
+
+Plot[ArcCos[x0Normalized[t]],{t,0,36500}]
+
+derv[t_] = D[ArcCos[2*(x0[t]-xmean)/(xmax-xmin)],t]
+
+Plot[derv[t],{t,0,36500}]
+Plot[Abs[derv[t]],{t,0,36500}]
+
 
 (* Sum of distance from two arbitrary points [find ellipse foci] *)
 
