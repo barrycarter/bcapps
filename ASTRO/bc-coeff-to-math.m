@@ -24,11 +24,61 @@ max0 = t /. NMaximize[x0[t],{t,400,500}][[2]]
 min0 = t /. NMinimize[x0[t],{t,1500,3500}][[2]]
 mean0 = Mean[{x0[max0],x0[min0]}]
 mid0 = Mean[{max0,min0}]
-Plot[(x0[t]-mean0)/(x0[max0]-mean0),{t,max0,min0}]
-test1[t_] = ArcCos[(x0[t]-mean0)/(x0[max0]-mean0)]
-Plot[test1[t],{t,max0,min0},PlotRange->All,AxesOrigin->{max0,0}]
-ax[t_] = RationalInterpolation[test1[t], {t,6,4}, {t,max0,min0}]
-Plot[{Cos[ax[t]]*(x0[max0]-mean0)+mean0-x0[t]},{t,max0,min0}]
+
+(* convert [-1,1] to [max0,min0] and vice versa *)
+
+convert[t_] = t*(min0-max0)/2+mid0
+convert1[t_] = 2*(t-mid0)/(min0-max0);
+
+(* the normalized function on range -1,1 *)
+
+f[t_] = (x0[convert[t]]-mean0)/(x0[max0]-mean0)
+Plot[f[t],{t,-1,1}]
+
+(* Taylor series, this does not work! *)
+
+Normal[Series[f[t],{t,0,5}]]
+
+(* and its arccos *)
+
+test1[t_] = 2*ArcCos[f[t]]/Pi-1-t
+Plot[test1[t],{t,-1,1},PlotRange->All]
+
+Plot[test1[t],{t,-1,1},PlotRange->All]
+
+Plot[ArcCos[test1[t]/.0305141],{t,-1,1}]
+
+Plot[{test1[t],Sin[Pi/2*t+Pi/2]*.0305141},{t,-1,1},PlotRange->All]
+
+Plot[{test1[t]-Sin[Pi/2*t+Pi/2]*.0305141},{t,-1,1},PlotRange->All]
+
+(* reverse it? *)
+
+test2[t_] = Cos[(Sin[Pi/2*t+Pi/2]*.0305141+t+1)*Pi/2]
+
+Plot[{f[t],test2[t]},{t,-1,1}]
+
+(* approximate it *)
+
+ax[t_] = RationalInterpolation[test1[t], {t,24,0}, {t,-1,1}]
+
+Plot[{test1[t],ax[t]},{t,-1,1}]
+
+(* test the approximation *)
+
+Plot[{(Cos[Pi/2*(ax[t]+t+1)]-f[t])*(x0[max0]-mean0)},{t,-1,1},PlotRange->All]
+showit
+
+
+
+
+Plot[f[t],{t,0,1}]
+
+Plot[(x0[t+mid0]-mean0)/(x0[max0]-mean0),{t,max0-mid0,min0-mid0}]
+test1[t_] = ArcCos[(x0[t+mid0]-mean0)/(x0[max0]-mean0)]
+ax[t_] = RationalInterpolation[test1[t], {t,6,4}, {t,max0-mid0,min0-mid0}]
+ax[t_] = RationalInterpolation[test1[t], {t,1,0}, {t,max0-mid0,min0-mid0}]
+Plot[{Cos[ax[t]]*(x0[max0]-mean0)+mean0-x0[t+mid0]},{t,max0-mid0,mid0-min0}]
 showit
 
 
