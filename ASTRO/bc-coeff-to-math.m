@@ -8,13 +8,72 @@
 
 <</home/barrycarter/20140823/raw-jupiter.m
 
-(* N to speed things up *)
-test0 = Partition[Partition[N[coeffs],ncoeffs],3];
+part = Partition[Partition[coeffs,ncoeff],3];
 
-test0 = Partition[Partition[coeffs,ncoeff],3];
+(* We may actually need the polys themselves, so store them *)
+
+(* i = 1,2,3 to identify axis *)
+
+Table[poly[n,i,t_] = chebyshev[part[[n,i]],t], {i,1,3}, {n,1,Length[part]}];
+
+xmaxs = Table[Maximize[{poly[n,1,t],t>-1,t<1},t][[1]], {n,1,Length[part]}]
+xmax = Max[N[xmaxs]]
+
+xmins = Table[Minimize[{poly[n,1,t],t>-1,t<1},t][[1]], {n,1,Length[part]}]
+xmin = Min[N[xmins]]
+
+(* <h>I'm too lazy to write (xmax+xmin)/2</h> *)
+xmean = Mean[{xmin,xmax}]
+
+(* TODO: check memory usage, it's getting really high! *)
 
 Table[x0[t_ /; Evaluate[t>=(n-1)*ndays && t<n*ndays]] =
- chebyshev[test0[[n,1]], 2*Mod[t,ndays]/ndays-1], {n,1,Length[test0]}];
+ poly[n,1,2*Mod[t,ndays]/ndays-1], {n,1,Length[part]}];
+
+
+
+Table[x0[t_ /; Evaluate[t>=(n-1)*ndays && t<n*ndays]] =
+ chebyshev[part[[n,1]], 2*Mod[t,ndays]/ndays-1], {n,1,Length[test0]}];
+
+Table[y0[t_ /; Evaluate[t>=(n-1)*ndays && t<n*ndays]] =
+ chebyshev[test0[[n,2]], 2*Mod[t,ndays]/ndays-1], {n,1,Length[test0]}];
+
+Table[z0[t_ /; Evaluate[t>=(n-1)*ndays && t<n*ndays]] =
+ chebyshev[test0[[n,3]], 2*Mod[t,ndays]/ndays-1], {n,1,Length[test0]}];
+
+(* Sum of distance from two arbitrary points [find ellipse foci] *)
+
+dist[t_] = Norm[{x0[t],y0[t],z0[t]}-{ax,ay,az}] +
+           Norm[{x0[t],y0[t],z0[t]}-{bx,by,bz}]
+
+(* could not solve below *)
+NSolve[{dist[0] == dist[1] == dist[2] == dist[3]}, {ax,ay,az,bx,by,bz}]
+
+Plot[ArcTan[x0[t],y0[t]],{t,0,36500}]
+
+test0824[t_] = D[ArcTan[x0[t],y0[t]],t]
+
+Plot[test0824[t],{t,0,365*12}]
+
+Plot[Norm[{x0[t],y0[t],z0[t]}],{t,0,365*100}]
+
+Plot[x0[t],{t,0,365*100}]
+
+Plot[{x0[t],y0[t],z0[t],Norm[{x0[t],y0[t],z0[t]}]},{t,0,365*12}]
+
+
+
+
+
+testf0[t_] = RationalInterpolation[ArcTan[x0[t],y0[t]],{t,11,0},{t,0,2600}]
+
+Plot[{ArcTan[x0[t],y0[t]]-testf0[t]},{t,0,2600}]
+
+
+
+ 
+
+Plot[z0[t],{t,7323,7324}]
 
 Plot[x0[t],{t,0,365*12}]
 
@@ -35,14 +94,41 @@ convert1[t_] = 2*(t-mid0)/(min0-max0);
 f[t_] = (x0[convert[t]]-mean0)/(x0[max0]-mean0)
 Plot[f[t],{t,-1,1}]
 
-(* Taylor series, this does not work! *)
+(* first approximation *)
 
-Normal[Series[f[t],{t,0,5}]]
+approx1[t_] = 2*ArcCos[f[t]]/Pi-1-t
+Plot[approx1[t],{t,-1,1},PlotRange->All]
 
-(* and its arccos *)
+(* find max error *)
 
-test1[t_] = 2*ArcCos[f[t]]/Pi-1-t
-Plot[test1[t],{t,-1,1},PlotRange->All]
+maxerr = NMaximize[approx1[t],{t,-1/2,1/2}][[1]]
+
+(* approx of diff *)
+
+approx2[t_] = approx1[t]-maxerr*Cos[t*Pi/2]
+
+Plot[approx2[t],{t,-1,1}]
+
+(* and next min/max err *)
+
+min2 = NMinimize[approx2[t],{t,-3/4,-1/4}][[1]]
+max2 = NMaximize[approx2[t],{t,1/4,3/4}][[1]]
+mean2 = Mean[{min2,max2}]
+
+Plot[approx2[t],{t,-1,1}]
+approx3[t_] = approx2[t]-(mean2+(max2-mean2)*Sin[t*Pi])
+
+Plot[{approx2[t],approx3[t]},{t,-1,1}]
+
+Plot[{approx1[t],approx3[t]},{t,-1,1}]
+
+Plot[{(x0[max0]-mean0)*
+ (f[t]-Cos[(approx1[t]+approx2[t]+approx3[t]+t+1)*Pi/2])},{t,-1,1}]
+
+
+
+
+
 
 Plot[test1[t],{t,-1,1},PlotRange->All]
 
