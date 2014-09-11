@@ -19,6 +19,12 @@
 
 # <h>I have this nagging worry that my site gets no non-bot hits at all!</h>
 
+http://www.easou.com/search/spider.html
+http://www.opensiteexplorer.org/dotbot
+http://www.xovibot.net/
+http://www.linkdex.com/bots
+http://www.meanpath.com/meanpathbot.html
+http://OpenLinkProfiler.org/bot
 http://www.majestic12.co.uk/bot.php
 http://www.google.com/bot.html
 http://help.yahoo.com/help/us/ysearch/slurp
