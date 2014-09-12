@@ -36,6 +36,13 @@ Table[y0[t_ /; Evaluate[t>=(n-1)*ndays && t<n*ndays]] =
 Table[z0[t_ /; Evaluate[t>=(n-1)*ndays && t<n*ndays]] =
  poly[n,2,2*Mod[t,ndays]/ndays-1], {n,1,Length[part]}];
 
+(* find 0s, where period = approx planet orbital period in days *)
+
+period = 12*365.2425;
+
+planetZeros[period_] = t /. 
+ Table[FindRoot[x0[t],{t,n*period/2,(n+1)*period/2}],{n,0,2*36500/period-1}]
+
 (* x0[t] for one cycle *)
 
 Plot[x0[t],{t,0,365*12}]

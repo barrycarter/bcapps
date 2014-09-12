@@ -139,8 +139,10 @@ focus[a_,b_] = Sqrt[a^2-b^2]
 (* the ellipse, top right part *)
 g1 = ParametricPlot[{x[t],y[t]},{t,0,Pi/2}]
 
-(* "randomly" chosen value of t to show it doesn't match theta *)
+(* "randomly" chosen value of t to show it doesnt match theta *)
+
 (* t is NOT measured in degrees; degrees below is for convenience only *)
+
 samp = 55*Degree
 
 (* the lines from ellipse center and x/y axes to point, and angle arc *)
@@ -201,8 +203,6 @@ parea[theta_] = a*b*ArcTan[a*Tan[theta]/b]/2
 a = 2; b = 1;
 ParametricPlot[{x[t],y[t]} /. {a->2,b->1},{t,0,Pi/2}]
 
-
-
 Solve[Tan[theta] == (b*Sin[t])/(a*Cos[t]), theta]
 Solve[Tan[theta] == (b*Sin[t])/(a*Cos[t]), theta, Reals]
 
@@ -237,10 +237,10 @@ r*Sin[theta] == Exp[(-r*Cos[theta])^2]
 
 Log[r] + Log[Sin[theta]] == (-r*Cos[theta])^2
 
-
-
 (* t, given x or y [top half of ellipse only] *)
 
+x[t_] = a*Cos[t]
+y[t_] = b*Sin[t]
 tx[x_] = ArcCos[x/a]
 ty[y_] = ArcSin[y/b]
 
@@ -279,6 +279,12 @@ areafromfocus''[t]
 areafromfocus'''[t]
 areafromfocus''''[t]
 areafromfocus'[t]/areafromfocus'''[t]
+
+test0 = Table[{areafromfocus[t],x[t]}, {t,0,Pi,.01}] /. {a->1.2,b->1}
+ParametricPlot[{areafromfocus[t], x[t]} /. {a->1.2,b->1}, {t,0,Pi}]
+
+ParametricNDSolve[g[areafromfocus[t]] == x[t], g, {t,0,2*Pi}, {a,b}]
+g = g /. %
 
 Plot[areafromfocus[t]/t /. {a->1.1, b->1}, {t, 0, Pi}]
 
