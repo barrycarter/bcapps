@@ -1,32 +1,40 @@
-(* TODO: this may be useful for general library *)
+(* Given a parametrized ellipse, find area from focus *)
 
-(* Taylor of a list at a variable *)
+x[t_,a_,b_] = a*Cos[t]
+y[t_,a_,b_] = b*Sin[t]
 
-taylor[list_,t_] := Sum[list[[i]]*t^(i-1),{i,1,Length[list]}]
+(* area from center is abt/2 (surprisingly?); from focus, we subtract
+off triangle *)
 
-(* Chebyshev of a list at a variable *)
+areafromfocus[t_,a_,b_] = a*b*t/2 - Sqrt[a^2-b^2]*b*Sin[t]/2
 
-chebyshev[list_,t_] := Sum[list[[i]]*ChebyshevT[i-1,t],{t,1,Length[list]}]
+Plot[areafromfocus[t,2,1],{t,0,Pi}]
 
-(* Given a list of Taylor coefficients and n, create n sets of Taylor
-coefficients, each good for 1/n of the interval [-1,1] (ie, tailor a
-Taylor series to behave the way we want) *)
+Table[{areafromfocus[t,2,1],x[t,1,2]},{t,0,Pi,.01}]
 
-tailortaylor[list_,n_] := Table[CoefficientList[
- taylor[list,(t+2*i-1)/n-1],t],{i,1,n}]
+tfromarea[area_,a_,b_] := t /. FindRoot[areafromfocus[t,a,b]-area, {t,0,Pi}]
+
+xfromarea[area_,a_,b_] := x[tfromarea[area,a,b],a,b]
+
+Plot[xfromarea[area,2,1], {area,0,Pi}]
+
+test0[area_] := xfromarea[area,1.1,1]
+
+ri[area_,m_,n_] := RationalInterpolation[test0[area],{area,m,n},{area,0,Pi}]
+
+maxdiff[m_,n_] := NMaximize[{xfromarea[area,1.1,1]-ri[area,m,n], 
+ area>0, area<Pi}, area]
 
 
+test0[area]-ri[area],area>0,area<Pi},area]
 
+Plot[{test0[area]-ri[area]},{area,0,Pi},PlotRange->All]
+showit
 
+Plot[ArcCos[xfromarea[area,2,1]/2], {area,0,Pi}]
 
+Plot[xfromarea[area,2,1],{area,0,Pi}]
 
-(* below is wrong:
-
-tailortaylor[list_, n_] := Table[
-CoefficientList[Sum[list[[i]]*((t+2*j-1)/n-1)^(j-1), {i,1,Length[list]}],t],
-{j,1,n}]
-
-*)
 
 list = Table[1/i,{i,1,5}]
 
@@ -239,22 +247,39 @@ Log[r] + Log[Sin[theta]] == (-r*Cos[theta])^2
 
 (* t, given x or y [top half of ellipse only] *)
 
-x[t_] = a*Cos[t]
-y[t_] = b*Sin[t]
-tx[x_] = ArcCos[x/a]
-ty[y_] = ArcSin[y/b]
+(* more work done below 12 Sep 2014 *)
+
+x[t_,a_,b_] = a*Cos[t]
+y[t_,a_,b_] = b*Sin[t]
+tx[x_,a_,b_] = ArcCos[x/a]
+ty[y_,a_,b_] = ArcSin[y/b]
 
 (* y given x *)
 
-yofx[x_] = y[tx[x]]
+yofx[x_,a_,b_] = y[tx[x,a,b],a,b]
 
 (* area swept out from center *)
 
 (* triangle part *)
 
-triarea[t_] = x[t]*y[t]/2
+triarea[t_,a_,b_] = x[t,a,b]*y[t,a,b]/2
+
+(* the general integral *)
+
+genint[x_] = Integrate[yofx[x,a,b],x]
+
+(* with our limits *)
+
+remainder[t_,a_,b_] = FullSimplify[genint[a]-genint[a*Cos[t]], t>0 && t<Pi]
+
+(* complete area from focus at time t *)
+
+parea[t_] = FullSimplify[remainder[t,a,b]+triarea[t,a,b], t>0 && t<Pi]
 
 (* rest *)
+
+Integrate[yofx[x,a,b],{x,a*Cos[t],a}] /; {t>0, t<Pi, x<a, x>-a}
+
 
 (* need general intgrl here, Mathematica is bad about definite integral here *)
 
@@ -280,11 +305,17 @@ areafromfocus'''[t]
 areafromfocus''''[t]
 areafromfocus'[t]/areafromfocus'''[t]
 
+(* for a given a and b, these nsolve routines work *)
+
+tfromarea[area_,a_,b_] := NSolve[areafromfocus[t] /. {a->a, b->b} == area]
+
+
+
 test0 = Table[{areafromfocus[t],x[t]}, {t,0,Pi,.01}] /. {a->1.2,b->1}
 ParametricPlot[{areafromfocus[t], x[t]} /. {a->1.2,b->1}, {t,0,Pi}]
 
-ParametricNDSolve[g[areafromfocus[t]] == x[t], g, {t,0,2*Pi}, {a,b}]
-g = g /. %
+
+
 
 Plot[areafromfocus[t]/t /. {a->1.1, b->1}, {t, 0, Pi}]
 
