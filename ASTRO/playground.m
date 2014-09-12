@@ -1,13 +1,64 @@
-(* Find ellipse in 2D given points on perimeter *)
+(* 2D ellipse using NSolve *)
 
 coords = Table[{x[i],y[i]},{i,1,4}]
+
+Table[{x[i] = Random[], y[i] = Random[]}, {i,1,4}]
+
+dists = Table[Norm[i-{fx,fy}] + Norm[i-{gx,gy}], {i,coords}]
+
+NSolve[dists[[1]] == dists[[2]] == dists[[3]] == dists[[4]]]
+
+(* 2D circle *)
+
+coords = Table[{x[i],y[i]},{i,1,3}]
+dists = (Table[Norm[i-{cx,cy}], {i,coords}])^2
+
+Solve[dists[[1]]==dists[[2]]==dists[[3]], {cx,cy}, Reals]
+
+
+
+
+
+(* ellipse using NSolve *)
+
+coords = Table[{x[i],y[i],z[i]},{i,1,4}]
+
+(* this table is used just for assignment *)
+
+Table[{x[i] = Random[], y[i] = Random[], z[i] = Random[]}, {i,1,4}]
+
+dists = Table[Norm[i-{fx,fy,fz}] + Norm[i-{gx,gy,gz}], {i,coords}]
+
+NSolve[dists[[1]] == dists[[2]] == dists[[3]] == dists[[4]]]
+
+(* Find plane given 3 points *)
+
+coords = Table[{x[i],y[i],z[i]},{i,1,3}]
+
+(* equation of a plane *)
+
+Solve[Table[a*j[[1]]+b*j[[2]]+c*j[[3]]==1, {j,coords}], {a,b,c}]
+
+(* Find ellipse in 2D given points on perimeter *)
+
+coords = Table[{x[i],y[i]},{i,0,4}]
+
+(* wlog, can assume one point is origin, other on x axis *)
+
+x[0] = 0; y[0] = 0; y[1] = 0;
 
 (* distance from two foci summed [ie, a constant] *)
 
 dists = Table[Norm[i-{fx,fy}] + Norm[i-{gx,gy}], {i,coords}]
 
-sol1 = Solve[dists[[1]] == dists[[2]] == dists[[3]] == dists[[4]], 
- {fx,fy,gx,gy}, Reals];
+(* the squared dists *)
+
+dists2 = Expand[dists^2];
+
+sol1 = Expand[Solve[dists2[[1]]-dists2[[2]] == 0, {fx,fy,gx,gy}][[1]]];
+gy = gy /. sol1
+
+sol2 = Solve[dists2[[2]] - dists2[[3]] == 0, {fx,fy,gx}][[1]];
 
 (* Find ellipse given points on perimeter *)
 
