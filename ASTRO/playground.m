@@ -8,23 +8,39 @@ off triangle *)
 
 areafromfocus[t_,a_,b_] = a*b*t/2 - Sqrt[a^2-b^2]*b*Sin[t]/2
 
-Plot[areafromfocus[t,2,1],{t,0,Pi}]
-
-Table[{areafromfocus[t,2,1],x[t,1,2]},{t,0,Pi,.01}]
-
 tfromarea[area_,a_,b_] := t /. FindRoot[areafromfocus[t,a,b]-area, {t,0,Pi}]
 
 xfromarea[area_,a_,b_] := x[tfromarea[area,a,b],a,b]
 
-Plot[xfromarea[area,2,1], {area,0,Pi}]
-
-test0[area_] := xfromarea[area,1.1,1]
-
-ri[area_,m_,n_] := RationalInterpolation[test0[area],{area,m,n},{area,0,Pi}]
+ri[area_,m_,n_] := RationalInterpolation[
+ xfromarea[area,1.1,1],
+ {area,m,n},{area,0,Pi}]
 
 maxdiff[m_,n_] := NMaximize[{xfromarea[area,1.1,1]-ri[area,m,n], 
  area>0, area<Pi}, area]
 
+tab = Table[{n,m,maxdiff[m,n][[1]]},{m,0,10},{n,0,10}]
+
+Table[i[[3]],{i,Flatten[tab,1]}]
+
+2.11377*10^-7 is smallest
+
+Plot[ArcCos[xfromarea[area,1.1,1]/1.1],{area,0,1.1/2*Pi}]
+
+Plot[ArcCos[xfromarea[area,1.1,1]/1.1],{area,0,1.1/2*Pi}]
+
+Plot[xfromarea[area,1.1,1],{area,0,1.1/2*Pi}]
+
+Plot[Tan[xfromarea[area,1.1,1]],{area,0,1.1/2*Pi}]
+
+RationalInterpolation[Tan[xfromarea[area,1.1,1]], {area,2,0},{area,0,Pi}]
+
+Plot[{%-Tan[xfromarea[area,1.1,1]]},{area,0,1.1/2*Pi}]
+
+ecc = 2;
+RationalInterpolation[tfromarea[area,ecc,1], {area,10,0}, {area,0,Pi}]
+Plot[{%-tfromarea[area,ecc,1]}, {area,0,Pi}, PlotRange->All]
+showit
 
 test0[area]-ri[area],area>0,area<Pi},area]
 
