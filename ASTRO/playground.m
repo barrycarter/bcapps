@@ -1,3 +1,27 @@
+(* Find ellipse given points on perimeter *)
+
+coords = Table[{x[i],y[i],z[i]},{i,1,3}]
+
+(* distance from two foci summed [ie, a constant] *)
+
+dists = Table[Norm[i-{fx,fy,fz}] + Norm[i-{gx,gy,gz}], {i,coords}]
+
+sol1 = Solve[dists[[1]] == dists[[2]], {fx,fy,fz,gx,gy,gz}, Reals][[1]];
+gz = gz /. sol1
+
+sol2 = Solve[dists[[2]] == dists[[3]], {fx,fy,fz,gx,gy}][[1]];
+
+
+
+
+
+
+
+
+
+
+
+
 (* Given a parametrized ellipse, find area from focus *)
 
 x[t_,a_,b_] = a*Cos[t]
