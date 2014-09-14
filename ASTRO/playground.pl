@@ -45,6 +45,35 @@ require "/usr/local/lib/bclib.pl";
 
 # 2,1,1... children are 3,3,3 then 4,7,6 then 5,15,12
 
+$str= << "MARK";
+page
+599
+e
+v
+@0
+frame
+14-Sep-2014
+14-Oct-2014
+1h
+y
+x
+MARK
+;
+
+
+open(A,"|ncat -t ssd.jpl.nasa.gov 6775 > /tmp/output.txt");
+
+for $i (split(/\n/, $str)) {
+  sleep(1);
+  print A "$i\r\n";
+}
+
+# allow negotiation
+# sleep(5);
+
+
+die "TESTING";
+
 # find position of Europa (to Jupiter) for today, generalize later
 
 # from array-offsets.txt (I will copy this here later)
@@ -52,21 +81,27 @@ require "/usr/local/lib/bclib.pl";
 # jup310.xsp:14380563:253221110:BEGIN_ARRAY 3 4772702
 
 open(A,"/home/barrycarter/SPICE/KERNELS/jup310.xsp");
-seek(A,129945847,SEEK_SET);
+# seek(A,129945847,SEEK_SET);
 
 # I know the interval for Europa is this (in hex)
-$break="A8C^4";
+$break="'A8C^4'";
+
+for ($i=129945847; $i<253221110; $i+=(253221110-129945847)/100) {
+  debug("I: $i", test1(A,$i,$break));
+}
+
+# debug(test1((A,191583479,$break)));
 
 # for $i (0..98) {
 #  $x=<A>;
 #  debug("THUNK1: $x");
 # }
 
-my($pos) = find_str_in_file(A, 191583479+1000, "'A8C^4'");
+# my($pos) = find_str_in_file(A, 191583479+1000, "'A8C^4'");
 
-for $i (1..10) {
-  debug(current_line(A,"\n",-1));
-}
+# for $i (1..10) {
+#  debug(current_line(A,"\n",-1));
+# }
 
 # from the comments, I know Europa has 15+1 degree polynomials (and
 # there are always 6 of them), so 96 rows = coeffs, meaning, in
@@ -80,6 +115,57 @@ for $i (1..10) {
 #  $x=<A>;
 #  debug("THUNK: $x");
 # }
+
+=item test1($fh, $pos, $delim)
+
+Given an XSP filehandle, a position in that file, and a delimiter, return
+the Julian date associated with that position.
+
+=cut
+
+sub test1 {
+  my($fh, $pos, $delim) = @_;
+  my($temp);
+  # TODO: should I require caller to set $pos?
+  seek($fh, $pos, SEEK_SET);
+  my($pos) = find_str_in_file($fh, $pos, $delim);
+  # Julian date is two lines before delimiter (3 because we are end of line)
+  for $i (1..3) {$temp = current_line($fh, "\n", -1);}
+  return ieee754todec($temp);
+}
+
+
+=item ieee754todec($str,$options)
+
+Converts $str in IEEE-754 format to decimal number. If $str is not in
+IEEE-754 format, return it as is (however, is $str is
+apostrophe-quoted, will remove apostrophes)
+
+WARNING: Perl does not have sufficient precision to do this 100% correctly.
+
+Options:
+
+mathematica=1: return in Mathematica format (exact), not decimal
+
+=cut
+
+sub ieee754todec {
+  my($str,$options) = @_;
+  my(%opts) = parse_form($options);
+
+  $str=~s/\'//g;
+  unless ($str=~/^(\-?)([0-9A-F]+)\^(\-?([0-9A-F]+))$/) {return $str;}
+  my($sgn,$mant,$exp) = ($1,$2,hex($3));
+  my($pow) = $exp-length($mant);
+
+  # for mathematica, return value is easy
+  if ($opts{mathematica}) {return qq%${sgn}FromDigits["$mant",16]*16^$pow%;}
+
+  # now the "real" (haha) value
+  my($num) = hex($mant)*16**$pow;
+  if ($sgn eq "-") {$num*=-1;}
+  return $num;
+}
 
 =item find_str_in_file($fh, $pos, $str)
 
@@ -101,7 +187,6 @@ sub find_str_in_file {
   # TODO: handle EOF
   while (<$fh>) {
     chomp;
-    debug("GOT: $_");
     if ($_ eq $str) {return tell($fh);}
   }
 }
