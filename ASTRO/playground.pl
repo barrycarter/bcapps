@@ -45,6 +45,27 @@ require "/usr/local/lib/bclib.pl";
 
 # 2,1,1... children are 3,3,3 then 4,7,6 then 5,15,12
 
+# using template
+
+my(%hash) = parse_form("target=399&sdate=2014-09-01&edate=2014-10-01&interval=12h");
+my($all) = read_file("/home/barrycarter/BCGIT/ASTRO/template.tcl");
+$all=~s/\$([a-z]+)/$hash{$1}/esg;
+debug("ALL: $all");
+# TODO: cache
+local(*A);
+open(A,"|expect - > /tmp/output.txt");
+print A $all;
+close(A);
+
+# required: $target, $sdate, $edate, $interval
+
+
+
+
+
+
+die "TESTING";
+
 $str= << "MARK";
 page
 599
