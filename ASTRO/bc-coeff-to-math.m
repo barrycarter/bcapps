@@ -34,7 +34,23 @@ Table[y0[t_ /; Evaluate[t>=(n-1)*ndays && t<n*ndays]] =
  poly[n,2,2*Mod[t,ndays]/ndays-1], {n,1,Length[part]}];
 
 Table[z0[t_ /; Evaluate[t>=(n-1)*ndays && t<n*ndays]] =
- poly[n,2,2*Mod[t,ndays]/ndays-1], {n,1,Length[part]}];
+ poly[n,3,2*Mod[t,ndays]/ndays-1], {n,1,Length[part]}];
+
+(* best fit circle in 2D ... *)
+
+dt = 10;
+center[t_] := 
+circFromPoints[{x0[t],y0[t]},{x0[t+dt],y0[t+dt]},{x0[t-dt],y0[t-dt]}]
+
+ParametricPlot[center[t],{t,1,365*12}]
+
+(* plane fitting *)
+
+planeFromPoints[{x0[0],y0[0],z0[0]}, {x0[1],y0[1],z0[1]}, {x0[2],y0[2],z0[2]}]
+
+Plot[planeFromPoints[
+ {x0[t-1],y0[t-1],z0[t-1]}, {x0[t],y0[t],z0[t]}, {x0[t+1],y0[t+1],z0[t+1]}]
+[[2]], {t,0,365*12}]
 
 (* find 0s, where period = approx planet orbital period in days *)
 

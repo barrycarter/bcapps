@@ -45,12 +45,91 @@ require "/usr/local/lib/bclib.pl";
 
 # 2,1,1... children are 3,3,3 then 4,7,6 then 5,15,12
 
+# find position of Europa (to Jupiter) for today, generalize later
+
+# from array-offsets.txt (I will copy this here later)
+# jup310.xsp:7214658:129945847:BEGIN_ARRAY 2 7158904
+# jup310.xsp:14380563:253221110:BEGIN_ARRAY 3 4772702
+
+open(A,"/home/barrycarter/SPICE/KERNELS/jup310.xsp");
+seek(A,129945847,SEEK_SET);
+
+# I know the interval for Europa is this (in hex)
+$break="A8C^4";
+
+# for $i (0..98) {
+#  $x=<A>;
+#  debug("THUNK1: $x");
+# }
+
+my($pos) = find_str_in_file(A, 191583479+1000, "'A8C^4'");
+
+for $i (1..10) {
+  debug(current_line(A,"\n",-1));
+}
+
+# from the comments, I know Europa has 15+1 degree polynomials (and
+# there are always 6 of them), so 96 rows = coeffs, meaning, in
+# theory, any 97 rows will have AT LEAST ONE Julian date (but using
+# 98, since we might be the middle of a line)
+
+# seek to middle of array
+# seek(A,191583479,SEEK_SET);
+
+# for $i (0..98) {
+#  $x=<A>;
+#  debug("THUNK: $x");
+# }
+
+=item find_str_in_file($fh, $pos, $str)
+
+Given an open filehandle $fh and a starting byte offset $pos, read
+lines [not bytes] until finding one exactly matching $str. Return the
+byte position of $str.
+
+Effective does what "fgrep -xb" does, but semi-efficiently
+
+=cut
+
+sub find_str_in_file {
+  my($fh, $pos, $str) = @_;
+
+  # seek to initial position
+  seek($fh, $pos, SEEK_SET);
+
+  # read...
+  # TODO: handle EOF
+  while (<$fh>) {
+    chomp;
+    debug("GOT: $_");
+    if ($_ eq $str) {return tell($fh);}
+  }
+}
+
+# while(<A>) {debug($_);}
+
+die "TESTING";
+
 # getting data back from mercury file
 
 # mercury stored in bitfields like this: {43, 42, 39, 37, 34, 31, 28,
 # 26, 23, 21, 19, 18, 15, 11, 43, 41, 39, 36, 34, 31, 28, 26, 23, 21,
 # 19, 18, 15, 11, 42, 41, 38, 35, 33, 30, 27, 25, 23, 20, 18, 17, 14,
 # 10} 1145 bits total
+
+# "F56277EC70CAD^3" appears early in jup310.xsp, can we find it in jup310.bsp?
+
+open(A,"/home/barrycarter/SPICE/KERNELS/jup310.bsp");
+
+read(A,my($data),1000000);
+
+if ($data=~/(\xe7)$/) {
+  debug("FOUND: $1");
+}
+
+# debug($data);
+
+die "TESTING";
 
 # the bits for mercury's 42 coefficients
 

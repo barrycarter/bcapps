@@ -1,3 +1,11 @@
+(* 2D ellipse using alternate form (normalized) *)
+
+ellipse[x_,y_] = a*x^2+b*x*y+c*y^2+d*x+e*y+1
+
+coords = Table[ellipse[x[i],y[i]]==0,{i,1,5}]
+
+Solve[%, {a,b,c,d,e}]
+
 (* 2D ellipse using NSolve *)
 
 coords = Table[{x[i],y[i]},{i,1,4}]
@@ -15,9 +23,17 @@ dists = (Table[Norm[i-{cx,cy}], {i,coords}])^2
 
 Solve[dists[[1]]==dists[[2]]==dists[[3]], {cx,cy}, Reals]
 
+circFromPoints[{x0_,y0_},{x1_,y1_},{x2_,y2_}] = 
+ {cx,cy} /. Solve[Norm[{x0,y0}-{cx,cy}]^2 == Norm[{x1,y1}-{cx,cy}]^2 == 
+ Norm[{x2,y2}-{cx,cy}]^2, {cx,cy}, Reals][[1]]
 
+circFromPoints[{0,0},{3,4},{5,6}]
 
-
+circFromPoints[{x0_,y0_,z0_},{x1_,y1_,z1_},{x2_,y2_,z2_}] = 
+ {cx,cy,cz} /. Solve[Norm[{x0,y0,z0}-{cx,cy,cz}]^2 == 
+                     Norm[{x1,y1,z1}-{cx,cy,cz}]^2 == 
+                     Norm[{x2,y2,z2}-{cx,cy,cz}]^2, 
+{cx,cy,cz}, Reals][[1]]
 
 (* ellipse using NSolve *)
 
@@ -38,6 +54,12 @@ coords = Table[{x[i],y[i],z[i]},{i,1,3}]
 (* equation of a plane *)
 
 Solve[Table[a*j[[1]]+b*j[[2]]+c*j[[3]]==1, {j,coords}], {a,b,c}]
+
+planeFromPoints[{x0_,y0_,z0_},{x1_,y1_,z1_},{x2_,y2_,z2_}] = 
+{a,b,c} /.
+ Solve[{a*x0+b*y0+c*z0==1, a*x1+b*y1+c*z1==1, a*x2+b*y2+c*z2==1}, {a,b,c}][[1]]
+
+
 
 (* Find ellipse in 2D given points on perimeter *)
 
