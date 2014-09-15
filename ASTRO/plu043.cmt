@@ -1,0 +1,74 @@
+ 
+; plu043.bsp LOG FILE
+;
+; Created 2013-12-23/09:03:17.08.
+;
+; BEGIN NIOSPK COMMANDS
+ 
+LEAPSECONDS_FILE    = /kernels/gen/lsk/naif0010.tls
+SPK_FILE            = plu043.bsp
+  INCLUDE_TEXT_FILE = plu043.cmt
+  SOURCE_NIO_FILE   = plu043.nio
+    BEGIN_TIME      = CAL-ET 1900 JAN 07 00:00:41.184
+    END_TIME        = CAL-ET 2099 DEC 31 00:01:07.183
+  SOURCE_NIO_FILE   = /group/naif/kernels/gen/spk/de430.nio
+    BODIES          = 3, 399, 10, 9
+    BEGIN_TIME      = CAL-ET 1900 JAN 07 00:00:41.184
+    END_TIME        = CAL-ET 2099 DEC 31 00:01:07.183
+ 
+; END NIOSPK COMMANDS
+ 
+                      Satellite Ephemeris File Release
+ 
+ 
+Satellite Ephemeris: PLU043
+ 
+Location: ssd.jpl.nasa.gov/pub/eph/satellites/nio/LINUX_PC/plu043.nio
+Size(nio): 71396352 bytes
+ 
+Enter SATEPHMERGE/13 21-Dec-2013 09:09:41.752 linked 24-May-2011 16:26:51
+Fit to observations
+Ephemeris Version Number: 17
+Timespan from JED  2415025.500(06-JAN-1900) to JED  2488069.500(01-JAN-2100)
+File Epoch Julian Date: 2456293.50
+Master Interval: 6.0000 Days
+Equinox Reference Julian Date: 2451545.00
+Planetary Ephemeris Number: DE-0430/LE-0430
+ 
+Bodies on the File:
+ 
+   Name       Number            GM             NDIV   NDEG   Model
+   Charon       901    1.058799888601881E+02      1     13   SATORBINT
+   Nix          902    3.048175648169760E-03      2     11   SATORBINT
+   Hydra        903    3.211039206155255E-03      2     10   SATORBINT
+   Kerberos     904    1.110040850536676E-03      2     10   SATORBINT
+   Styx         905    0.000000000000000E+00      2     11   SATORBINT
+   Pluto        999    8.696138177608748E+02      1     11   SATORBINT
+   System              9.755011758767678E+02
+ 
+Additional Constants on the File:
+ 
+  AU       1.495978707000000E+08   RADIUS   1.181000000000000E+03
+  J902     0.000000000000000E+00   POLTIM   2.451545000000000E+06
+  ZACPL9   3.130520320000000E+02   ZDEPL9   6.176400000000000E+00
+  DACPL9   0.000000000000000E+00   DDEPL9   0.000000000000000E+00
+  WPL9     2.371753000000000E+02   WDP9    -5.636247850433917E+01
+  GM5      1.267127648000003E+08   GM6      3.794058520000016E+07
+  GM7      5.794548600000031E+06   GM8      6.836527100580398E+06
+  GM10     1.327132332639000E+11   C90202   0.000000000000000E+00
+  S90202   1.123749802405614E-20   901RAD   6.050000000000000E+02
+  901J2    0.000000000000000E+00   901C22   0.000000000000000E+00
+  901LIB   1.000000000000000E-10
+ 
+ 
+Chebyshev interpolation error:  1.400 meters
+ 
+Release to: Horizons/NAIF/New Horizons         Time: 21-Dec-2013 10:41:39
+ 
+Preparer: M. Brozovic
+ 
+Comments:
+Update of the ephemeris of Pluto's satellites from a fit to all
+available data.  This ephemeris is documented in an article that
+has been submitted to a special New Horizons issue of Icarus.
+ 

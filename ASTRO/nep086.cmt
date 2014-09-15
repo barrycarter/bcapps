@@ -1,0 +1,71 @@
+ 
+; nep086.bsp LOG FILE
+;
+; Created 2013-12-12/14:16:47.35.
+;
+; BEGIN NIOSPK COMMANDS
+ 
+LEAPSECONDS_FILE    = /kernels/gen/lsk/naif0010.tls
+SPK_FILE            = nep086.bsp
+  INCLUDE_TEXT_FILE = nep086.cmt
+  SOURCE_NIO_FILE   = nep086.nio
+    BEGIN_TIME      = CAL-ET 1900 JAN 01 00:00:41.183
+    END_TIME        = CAL-ET 2100 JAN 02 00:01:07.183
+  SOURCE_NIO_FILE   = /group/naif/kernels/gen/spk/de430.nio
+    BODIES          = 3, 399, 10, 8
+    BEGIN_TIME      = CAL-ET 1900 JAN 01 00:00:41.183
+    END_TIME        = CAL-ET 2100 JAN 02 00:01:07.183
+ 
+; END NIOSPK COMMANDS
+ 
+                      Satellite Ephemeris File Release
+ 
+ 
+Satellite Ephemeris: NEP086
+ 
+Location: ssd.jpl.nasa.gov/pub/eph/satellites/nio/LINUX_PC/nep086.nio
+Size(nio): 25637888 bytes
+ 
+Enter SATEPHMERGE/13 12-Dec-2013 10:05:18.988 linked 24-May-2011 16:26:51
+Integrated orbits - Fit to Earthbased data
+Ephemeris Version Number: 17
+Timespan from JED  2378520.500(25-JAN-1800) to JED  2524560.500(29-NOV-2199)
+File Epoch Julian Date: 2451200.50
+Master Interval: 40.0000 Days
+Equinox Reference Julian Date: 2451545.00
+Planetary Ephemeris Number: DE-0430/LE-0430
+ 
+Bodies on the File:
+ 
+   Name        Number            GM             NDIV   NDEG   Model
+   Halimede      809    0.000000000000000E+00      1      5   SATORBINT
+   Psamathe      810    0.000000000000000E+00      1      4   SATORBINT
+   Sao           811    0.000000000000000E+00      1      5   SATORBINT
+   Laomedeia     812    0.000000000000000E+00      1      5   SATORBINT
+   Neso          813    0.000000000000000E+00      1      6   SATORBINT
+   Neptune       899    6.835099500580001E+06     10     10   SATORBINT
+   System               6.836527100580000E+06
+ 
+Additional Constants on the File:
+ 
+  AU       1.495978706996262E+08   RADIUS   2.522500000000000E+04
+  J802     3.408428530717952E-03   J804    -3.339891759006578E-05
+  POLTIM   2.447763500000000E+06   ZACPL8   2.994608612607558E+02
+  ZDEPL8   4.340481079071409E+01   DACPL8   0.000000000000000E+00
+  DDEPL8   0.000000000000000E+00   WPL8     2.531800000000000E+02
+  WDP8     5.363128492000000E+02   801GM    1.427600000000000E+03
+  GM5      1.267127641000000E+08   GM6      3.794058520000000E+07
+  GM7      5.794548600000000E+06   GM10     1.327132332639000E+11
+ 
+ 
+Chebyshev interpolation error:  3.800 meters
+ 
+Release to: NAIF/Horizons                      Time: 12-Dec-2013 10:38:28
+ 
+Preparer: R. A. Jacobson
+ 
+Comments:
+Update of the Neptune irregular satellite ephemerides.  Additional
+data for Neso through 2010, updated dynamical constants, revised
+Chebyshev fit.
+ 

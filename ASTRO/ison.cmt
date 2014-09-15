@@ -1,0 +1,73 @@
+ 
+ 
+IMPORTANT NOTICE:
+ 
+ This informal file release should not be used for purposes affecting the
+ safety and success of spacecraft hardware or missions without first contacting
+ Donald.K.Yeomans@jpl.nasa.gov (Supervisor, Solar System Dynamics Group,
+ 818-354-2127) or Jon.D.Giorgini@jpl.nasa.gov (SSDG analyst).
+ 
+ This is because an object's orbit solution may be insufficiently determined
+ over the chosen time-span to be suitable for some high-precision purposes,
+ due to the quantity of measurements available for an object, the time-span
+ they cover, and the object's dynamical path.
+ 
+ Although not stored in this file, statistical uncertainty of the trajectory
+ as a function of time may be available from the JPL Horizons system. This can
+ help interpret the accuracy of the trajectory.
+ 
+ Orbit solutions are updated in Horizons as new measurements are made, so this
+ trajectory may be superceded by more recent solutions. Check the orbit solution
+ number for an object (given below as "source") against the latest Horizons
+ entry to determine if an updated orbit solution is available.
+ 
+ This parameterized post-Netwonian numerically integrated perturbed trajectory
+ was produced by:
+ 
+    Horizons On-Line Ephemeris System
+    Solar System Dynamics Group
+    Jet Propulsion Laboratory
+    4800 Oak Grove Drive
+    Pasadena, CA  91109
+    USA
+ 
+ Horizons information & documentation:
+ 
+   http://ssd.jpl.nasa.gov/?horizons
+ 
+ Connection for small-body SPK generation (automation scripts available):
+ 
+   telnet ssd.jpl.nasa.gov 6775       (interactive UNIX/Linux command-line)
+   telnet://ssd.jpl.nasa.gov:6775     (interactive browser URL window)
+   http://ssd.jpl.nasa.gov/x/spk.html (passive browser form)
+ 
+ Inquiries:
+ 
+   Jon.D.Giorgini@jpl.nasa.gov (program author; 818-393-3107)
+ 
+SPK file contents:
+ 
+OBJECT #01
+==========
+Requested by    : charles.acton@jpl.nasa.gov
+Execution date  : Tue Feb 26 17:13:19 2013 (Pasadena time)
+ 
+Target body     : ISON (C/2012 S1)                {source: Horizons_SPK:JPL#15}
+Target SPK ID   :  1003203
+Coord center    : Sun                      ( 10)  {source: DE-0405LE-04}
+GM of center    : 2.9591220828559109E-04  AU^3/D^2
+Small perturbers: Ceres, Pallas, Vesta            {source: SB405-CPV-2}
+Small body GMs  : 6.32E+01, 1.43E+01, 1.78E+01 km^3/s^2
+Start time      : 2012-Jan-01 00:00:00.0000  CT
+Stop  time      : 2014-Jan-02 00:00:00.0000  CT
+*******************************************************************************
+Initial FK5/J2000.0 heliocentric ecliptic osculating elements (AU, DAYS, DEG):
+  EPOCH=  2456282.5 != 2012-Dec-21.0000000 (CT)    Residual RMS= .50627
+   EC= 1.000003840002629   QR= .01250718992752768  TP= 2456625.2866813405
+   OM= 295.7428450059515   W= 345.5057438683777    IN= 61.82939000266723
+Comet physical & dynamic parameters (KM, SEC; A1,A2,A3=AU/d^2; DT=days):
+   GM= n.a.                RAD= n.a.               A1= n.a.
+   A2= n.a.                A3= n.a.                DT= n.a.
+   M1= 6.7                 M2= 9.8                 k1= 9.
+   k2= 5.                  PHCOF= .030
+ 

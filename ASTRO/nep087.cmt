@@ -1,0 +1,71 @@
+ 
+; nep087.bsp LOG FILE
+;
+; Created 2013-12-11/12:45:42.82.
+;
+; BEGIN NIOSPK COMMANDS
+ 
+LEAPSECONDS_FILE    = /kernels/gen/lsk/naif0010.tls
+SPK_FILE            = nep087.bsp
+  INCLUDE_TEXT_FILE = nep087.cmt
+  SOURCE_NIO_FILE   = nep087.nio
+    BEGIN_TIME      = CAL-ET 1950 JAN 01 00:00:41.183
+    END_TIME        = CAL-ET 2050 JAN 01 00:01:07.183
+  SOURCE_NIO_FILE   = /group/naif/kernels/gen/spk/de431.nio
+    BODIES          = 3, 399, 10, 8
+    BEGIN_TIME      = CAL-ET 1950 JAN 01 00:00:41.183
+    END_TIME        = CAL-ET 2050 JAN 01 00:01:07.183
+ 
+; END NIOSPK COMMANDS
+ 
+                      Satellite Ephemeris File Release
+ 
+ 
+Satellite Ephemeris: NEP087
+ 
+Location: ssd.jpl.nasa.gov/pub/eph/satellites/nio/LINUX_PC/nep087.nio
+Size(nio): 62580736 bytes
+ 
+Enter SATEPHGEN/17 15-Jul-2013 14:54:52.053 linked 21-Jul-2011 14:46:49
+Ephemeris fit to HST data
+HST data solution - NEP087
+Ephemeris Version Number: 17
+Timespan from JED  2433282.500(01-JAN-1950) to JED  2469810.500(04-JAN-2050)
+File Epoch Julian Date: 2447757.00
+Master Interval: 4.0000 Days
+Equinox Reference Julian Date: 2451545.00
+Planetary Ephemeris Number: DE-0430/LE-0430
+ 
+Bodies on the File:
+ 
+   Name        Number            GM             NDIV   NDEG   Model
+   S2004_N01     814    0.000000000000000E+00      8     15   ROCKS
+   Neptune       899    6.835099502439672E+06      1     10   CHEBY
+   System               6.836527100580397E+06
+ 
+Additional Constants on the File:
+ 
+  AU       1.495978706996262E+08   RADIUS   2.522500000000000E+04
+  J802     3.408428530717952E-03   J804    -3.339891759006578E-05
+  POLTIM   2.447763500000000E+06   ZACPL8   2.994608612607558E+02
+  ZDEPL8   4.340481079071409E+01   DACPL8   0.000000000000000E+00
+  DDEPL8   0.000000000000000E+00   WPL8     2.531800000000000E+02
+  WDP8     5.363128492000000E+02   801GM    1.427598140725034E+03
+  802GM    0.000000000000000E+00   GM5      1.267127648000000E+08
+  GM6      3.794058520000000E+07   GM7      5.794557000000000E+06
+  GM10     1.327132332632381E+11   803GM    0.000000000000000E+00
+  804GM    0.000000000000000E+00   805GM    0.000000000000000E+00
+  806GM    0.000000000000000E+00   807GM    0.000000000000000E+00
+  808GM    0.000000000000000E+00
+ 
+ 
+Chebyshev interpolation error: 0.0 meters
+ 
+Release to: Horizons/NAIF                      Time: 15-Jul-2013 14:56:32
+ 
+Preparer: R. A. Jacobson
+ 
+Comments:
+Ephemeris for new Neptunian satellite from a fit to the data.
+Planet shift vector on the file is from NEP081.
+ 

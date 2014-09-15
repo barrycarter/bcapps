@@ -1,0 +1,139 @@
+ 
+; mar097.bsp LOG FILE
+;
+; Created 2012-09-28/10:11:18.00.
+;
+; BEGIN NIOSPK COMMANDS
+ 
+LEAPSECONDS_FILE    = /kernels/gen/lsk/naif0010.tls
+SPK_FILE            = mar097.bsp
+  INCLUDE_TEXT_FILE = mar097.cmt
+  SOURCE_NIO_FILE   = mar097.nio
+    BEGIN_TIME      = CAL-ET 1900 JAN 04 00:00:41.184
+    END_TIME        = CAL-ET 2100 JAN 01 00:01:07.183
+  SOURCE_NIO_FILE   = /kernels/gen/spk/de721.nio
+    BODIES          = 3, 399, 10, 4
+    BEGIN_TIME      = CAL-ET 1900 JAN 04 00:00:41.184
+    END_TIME        = CAL-ET 2100 JAN 01 00:01:07.183
+ 
+; END NIOSPK COMMANDS
+ 
+                      Satellite Ephemeris File Release
+ 
+ 
+Satellite Ephemeris: MAR097
+ 
+Location: ssd.jpl.nasa.gov/pub/eph/satellites/nio/LINUX_PC/mar097.nio
+Size(nio): 463429632 bytes
+ 
+Enter SATEPHMERGE/13 19-Apr-2012 16:24:30.291 linked 24-May-2011 16:26:51
+Merge of forward and back
+Fit to data
+MAR097.3
+Ephemeris Version Number: 17
+Timespan from JED  2415023.500(04-JAN-1900) to JED  2488071.500(03-JAN-2100)
+File Epoch Julian Date: 2447575.50
+Master Interval: 4.0000 Days
+Equinox Reference Julian Date: 2451545.00
+Planetary Ephemeris Number: DE-0424/LE-0424
+ 
+Bodies on the File:
+ 
+   Name     Number            GM             NDIV   NDEG   Model
+   Phobos     401    7.087546066894452E-04     16     15   SATORBINT
+   Deimos     402    9.615569648120313E-05      8     15   SATORBINT
+   Mars       499    4.282837362069909E+04     16      7   SATORBINT
+   System            4.282837442560939E+04
+ 
+Additional Constants on the File:
+ 
+  AU             1.495978706996262E+08   RADIUS         3.396000000000000E+03
+  J402           1.956608644161255E-03   J403           3.147495502044837E-05
+  J404          -1.538684158075500E-05   J405           5.726838132552375E-06
+  J406          -4.855911997138415E-06   J407          -4.104248699958376E-06
+  J408          -5.956559226330613E-07   POLTIM         2.451545000000000E+06
+  ZACPL4         3.176808445956354E+02   ZDEPL4         5.288644035581287E+01
+  DACPL4        -1.061000000000000E-01   DDEPL4        -6.090000000000000E-02
+  WPL4           1.766304618256669E+02   WDP4           3.508919822600000E+02
+  GMB            4.035032363095674E+05   GM6            3.794058520000016E+07
+  GM5            1.267127648000003E+08   GMS            1.327124400409446E+11
+  J409           1.253363975517135E-06   J410          -3.330918862126270E-06
+  C40201         5.059272195139364E-10   S40201        -5.147009277292778E-11
+  C40202        -5.463224794135697E-05   S40202         3.158707724361160E-05
+  C40301         4.109090032246660E-06   S40301         2.719452675643503E-05
+  C40302        -5.447251395885167E-06   S40302         2.855970476290750E-06
+  C40303         4.888056849863661E-06   S40303         3.566177891809616E-06
+  C40401         3.999947537530113E-06   S40401         3.570249415447233E-06
+  C40402        -2.129908841685001E-07   S40402        -2.008184763796351E-06
+  C40403         3.858711198744610E-07   S40403        -1.154592388506631E-08
+  C40404         6.544820538570149E-09   S40404        -2.719922969620904E-07
+  C40501         4.142805937253578E-07   S40501         1.818130570108600E-06
+  C40502        -6.955834817020413E-07   S40502        -1.886872260655691E-07
+  C40503         1.094322223414943E-07   S40503         8.976174654506701E-09
+  C40504        -3.613124209643927E-08   S40504        -2.633398394977253E-08
+  C40505        -1.095648196953601E-08   S40505         9.306830494325348E-09
+  C40601         1.418130959981680E-06   S40601        -1.194714368923638E-06
+  C40602         1.071930993033025E-07   S40602         1.827658261048369E-07
+  C40603         1.981403352450276E-08   S40603         6.904474992092157E-09
+  C40604         3.817371692891542E-09   S40604         9.989041654259300E-09
+  C40605         1.337842123684313E-09   S40605         1.309802225642035E-09
+  C40606         6.435093524189051E-10   S40606         1.914711941702754E-10
+  401RAD         1.132000000000000E+01   401J02         1.056571048845342E-01
+  401C02_02      1.475359333353391E-02   401S02_02      0.000000000000000E+00
+  401LIB         1.386000000000000E+00   MARS_ANG11     3.379191830000000E+00
+  MARS_ANG21     0.000000000000000E+00   MARS_ANG12     2.467682669000000E+01
+  MARS_ANG22     0.000000000000000E+00   MARS_ANG13     8.196837223580000E+01
+  MARS_ANG23    -5.772329368900000E-06   MARS_ANG14     2.518937924240000E+01
+  MARS_ANG24    -3.111842783790000E-09   MARS_ANG15     1.333846200000000E+02
+  MARS_ANG25     3.508919853030000E+02   MARS_SPIN11    4.350000000000000E+02
+  MARS_SPIN21   -1.680000000000000E+02   MARS_SPIN12   -9.700000000000000E+01
+  MARS_SPIN22   -1.190000000000000E+02   MARS_SPIN13   -1.700000000000000E+01
+  MARS_SPIN23   -1.700000000000000E+01   MARS_SPIN14   -9.000000000000000E+00
+  MARS_SPIN24   -4.000000000000000E+00   MARS_REL1     -1.760000000000000E+02
+  MARS_REL2     -8.000000000000000E+00   MARS_REL3     -1.000000000000000E+00
+  MARS_COREFAC   7.000000000000001E-02   MARS_COREW    -1.500000000000000E+00
+  MARS_NUT_I00  -1.400000000000000E+00   MARS_NUT_M11  -4.000000000000000E-01
+  MARS_NUT_M21  -6.326000000000000E+02   MARS_NUT_M12   0.000000000000000E+00
+  MARS_NUT_M22  -4.420000000000000E+01   MARS_NUT_M13   0.000000000000000E+00
+  MARS_NUT_M23  -4.000000000000000E+00   MARS_NUT_Q11  -4.910000000000000E+01
+  MARS_NUT_Q21  -1.045000000000000E+02   MARS_NUT_Q12   5.157000000000000E+02
+  MARS_NUT_Q22   1.097000000000000E+03   MARS_NUT_Q13   1.128000000000000E+02
+  MARS_NUT_Q23   2.401000000000000E+02   MARS_NUT_Q14   1.920000000000000E+01
+  MARS_NUT_Q24   4.090000000000000E+01   MARS_NUT_Q15   3.000000000000000E+00
+  MARS_NUT_Q25   6.500000000000000E+00   MARS_NUT_Q16   4.000000000000000E-01
+  MARS_NUT_Q26   1.000000000000000E+00   400K2          1.830000000000000E-01
+  400PSI         0.000000000000000E+00   401PSI        -2.880128347837982E-01
+ 
+ 
+Chebyshev interpolation error:  2.000 meters
+ 
+Release to: Horizons/NAIF                      Time: 28-Sep-2012 09:45:49
+ 
+Preparer: R. A. Jacobson
+ 
+Comments:  DDA Abstract below
+ 
+Revised Ephemerides of the Martian Satellites
+ 
+R. A. Jacobson (JPL/Caltech)
+ 
+Jacobson (2010 AJ 139, 668) developed our previous ephemerides for the Martian
+satellites by fitting numerically integrated orbits to observations through
+2007. We included the Viking and Phobos_2 Doppler tracking data to provide
+information on the satellite GMs.  We subsequently acquired the tracking data
+from three Phobos close approaches by the Mars Express spacecraft (Morley 2011
+private comm.) and additional Mars Express imaging observations of Deimos
+through 2011 (Pasewaldt et al. 2012 A&A 525, A144).  We also improved our
+numerical model by adopting the latest published Martian gravity field (Konopliv
+et al. 2011 Icarus 211, 401) and including the gravitational effect of the tides
+raised on Mars by the Sun as well as by the satellites.  Moreover, we adopted
+the Phobos forced libration amplitude which was observed with the Mars Express
+imaging (Willner et al. 2010 Earth and Planetary Sci. Let. 294, 541).  Our new
+ephemerides are based on our numerical model fit to all of satellite
+observations and spacecraft tracking data.  Our fit determined the epoch states
+and GMs of the satellites, the Phobos gravitational harmonics J2 and C22, and
+the Martian tidal quality factor Q.
+ 
+Presented at the AAS Division of Dynamical Astronomy Meeting, Mt. Hood, Oregon,
+6-10 May 2012.
+ 

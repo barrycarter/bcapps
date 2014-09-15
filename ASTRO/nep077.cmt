@@ -1,0 +1,75 @@
+ 
+; nep077.bsp LOG FILE
+;
+; Created 2008-04-11/16:47:02.00.
+;
+; BEGIN NIOSPK COMMANDS
+ 
+LEAPSECONDS_FILE    = /kernels/gen/lsk/naif0008.tls
+SPK_FILE            = nep077.bsp
+  INCLUDE_TEXT_FILE = nep077.cmt
+  SOURCE_NIO_FILE   = nep077.nio
+    BEGIN_TIME      = CAL-ET 1950 JAN 01 00:00:41.183
+    END_TIME        = CAL-ET 2050 JAN 01 00:01:05.183
+  SOURCE_NIO_FILE   = /group/naif/kernels/gen/spk/de421.nio
+    BODIES          = 3, 399, 10, 8
+    BEGIN_TIME      = CAL-ET 1950 JAN 01 00:00:41.183
+    END_TIME        = CAL-ET 2050 JAN 01 00:01:05.183
+ 
+; END NIOSPK COMMANDS
+ 
+                      Satellite Ephemeris File Release
+ 
+ 
+Satellite Ephemeris: NEP077
+ 
+Location: ssd.jpl.nasa.gov/pub/eph/satellites/nio/LINUX_PC/nep077.nio
+Size(nio): 350423040 bytes
+ 
+Enter SATEPHMERGE/13 11-Apr-2008 09:00: 5.767 linked 01-Apr-2008 09:16:24
+Replace theory Proteus with integrated Proteus
+Ephemeris fit to all data
+Voyager, HST, and Astrometric data solution - NEP077
+Merge of back and forward
+Ephemeris Version Number: 17
+Timespan from JED  2433282.500(01-JAN-1950) to JED  2469810.500(04-JAN-2050)
+File Epoch Julian Date: 2447757.00
+Master Interval: 4.0000 Days
+Equinox Reference Julian Date: 2451545.00
+Planetary Ephemeris Number: DE-0421/LE-0421
+ 
+Bodies on the File:
+ 
+   Name     Number            GM             NDIV   NDEG   Model
+   Naiad      803    0.000000000000000E+00      8     15   ROCKS
+   Thalas     804    0.000000000000000E+00      8     15   ROCKS
+   Despin     805    0.000000000000000E+00      8     15   ROCKS
+   Galate     806    0.000000000000000E+00      8     15   ROCKS
+   Lariss     807    0.000000000000000E+00      8     15   ROCKS
+   Proteu     808    0.000000000000000E+00      8     15   SATORB
+   Neptun     899    6.835099756602132E+06      1     10   CHEBY
+   System            6.836527318428203E+06
+ 
+Additional Constants on the File:
+ 
+  AU       1.495978706996262E+08   RADIUS   2.522500000000000E+04
+  J802     3.408490228614368E-03   J804    -3.348417070476508E-05
+  POLTIM   2.447763500000000E+06   ZACPL8   2.994565486386811E+02
+  ZDEPL8   4.338624904158444E+01   DACPL8   0.000000000000000E+00
+  DDEPL8   0.000000000000000E+00   WPL8     2.531800000000000E+02
+  WDP8     5.363128492000000E+02   801GM    1.427561826071780E+03
+  802GM    0.000000000000000E+00   GM5      1.267127648000000E+08
+  GM6      3.794058520000000E+07   GM7      5.794557000000000E+06
+  GM10     1.327132332632381E+11
+ 
+ 
+Chebyshev interpolation error: 0.1000E-01 meters
+ 
+Release to: Horizons/NAIF                      Time: 11-Apr-2008 15:11: 8
+ 
+Preparer: R. A. Jacobson
+ 
+Comments:
+Refit of the inner Neptunian satellites.  Proteus is
+actually from the NEP076 solution.
+ 

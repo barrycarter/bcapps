@@ -1,0 +1,70 @@
+ 
+; nep081.bsp LOG FILE
+;
+; Created 2009-03-27/14:56:35.00.
+;
+; BEGIN NIOSPK COMMANDS
+ 
+LEAPSECONDS_FILE    = /kernels/gen/lsk/naif0009.tls
+SPK_FILE            = nep081.bsp
+  INCLUDE_TEXT_FILE = nep081.cmt
+  SOURCE_NIO_FILE   = nep081.nio
+    BEGIN_TIME      = CAL-ET 1900 JAN 01 00:00:41.183
+    END_TIME        = CAL-ET 2050 JAN 01 00:01:06.183
+  SOURCE_NIO_FILE   = /group/naif/kernels/gen/spk/de421.nio
+    BODIES          = 3, 399, 10, 8
+    BEGIN_TIME      = CAL-ET 1900 JAN 01 00:00:41.183
+    END_TIME        = CAL-ET 2050 JAN 01 00:01:06.183
+ 
+; END NIOSPK COMMANDS
+ 
+                      Satellite Ephemeris File Release
+ 
+ 
+Satellite Ephemeris: NEP081
+ 
+Location: ssd.jpl.nasa.gov/pub/eph/satellites/nio/LINUX_PC/nep081.nio
+Size(nio): 299073536 bytes
+ 
+Enter SATEPHMERGE/13 27-Mar-2009 14:25: 7.912 linked 01-Apr-2008 09:16:24
+Merge of back and forward
+Integrated orbits - Fit to Earthbased and Voyager data
+Ephemeris Version Number: 17
+Timespan from JED  2378494.500(30-DEC-1799) to JED  2524594.500(02-JAN-2200)
+File Epoch Julian Date: 2447830.50
+Master Interval: 4.0000 Days
+Equinox Reference Julian Date: 2451545.00
+Planetary Ephemeris Number: DE-0421/LE-0421
+ 
+Bodies on the File:
+ 
+   Name     Number            GM             NDIV   NDEG   Model
+   Triton     801    1.427598140725034E+03      1     15   SATORB
+   Nereid     802    0.000000000000000E+00      1     10   SATORB
+   Proteu     808    0.000000000000000E+00      8     15   SATORB
+   Neptun     899    6.835099502439672E+06      1     10   SATORB
+   System            6.836527100580397E+06
+ 
+Additional Constants on the File:
+ 
+  AU       1.495978706996262E+08   RADIUS   2.522500000000000E+04
+  J802     3.408428530717952E-03   J804    -3.339891759006578E-05
+  POLTIM   2.447763500000000E+06   ZACPL8   2.994608612607558E+02
+  ZDEPL8   4.340481079071409E+01   DACPL8   0.000000000000000E+00
+  DDEPL8   0.000000000000000E+00   WPL8     2.531800000000000E+02
+  WDP8     5.363128492000000E+02   GM5      1.267127648000000E+08
+  GM6      3.794058520000000E+07   GM7      5.794557000000000E+06
+  GM10     1.327132332632381E+11
+ 
+ 
+Chebyshev interpolation error:  1.000 meters
+ 
+Release to: Horizons/NAIF                      Time: 27-Mar-2009 14:33:24
+ 
+Preparer: R. A. Jacobson
+ 
+Comments:
+Ephemerides for the Neptunian satellites reported in
+the Astronomical Journal (2009).  Orbits were fit to
+all data through 2008.
+ 

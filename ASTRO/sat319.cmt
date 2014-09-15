@@ -1,0 +1,72 @@
+ 
+; sat319.bsp LOG FILE
+;
+; Created 2009-05-08/08:32:46.00.
+;
+; BEGIN NIOSPK COMMANDS
+ 
+LEAPSECONDS_FILE    = /kernels/gen/lsk/naif0009.tls
+SPK_FILE            = sat319.bsp
+  INCLUDE_TEXT_FILE = sat319.cmt
+  SOURCE_NIO_FILE   = sat319.nio
+    BEGIN_TIME      = CAL-ET 1950 JAN 01 00:00:41.183
+    END_TIME        = CAL-ET 2050 JAN 01 00:01:06.183
+  SOURCE_NIO_FILE   = /group/naif/kernels/gen/spk/de421.nio
+    BODIES          = 3, 399, 10, 6
+    BEGIN_TIME      = CAL-ET 1950 JAN 01 00:00:41.183
+    END_TIME        = CAL-ET 2050 JAN 01 00:01:06.183
+ 
+; END NIOSPK COMMANDS
+ 
+                      Satellite Ephemeris File Release
+ 
+ 
+Satellite Ephemeris: SAT319
+ 
+Location: ssd.jpl.nasa.gov/pub/eph/satellites/nio/LINUX_PC/sat319.nio
+Size(nio): 50237440 bytes
+ 
+Enter SATEPHMERGE/13 07-May-2009 11:18:21.652 linked 21-Apr-2004 10:07:57
+Merge of forward and back
+Fit to Cassini data
+Ephemeris Version Number: 13
+Timespan from JED  2433278.500(28-DEC-1949) to JED  2469818.500(12-JAN-2050)
+File Epoch Julian Date: 2454266.50
+Master Interval: 18.0000 Days
+Equinox Reference Julian Date: 2451545.00
+Planetary Ephemeris Number: DE-0421/LE-0421
+ 
+Bodies on the File:
+ 
+   Name     Number            GM             NDIV   NDEG   Model
+   Aegaeo     653    0.000000000000000E+00     36     11   SATORB
+   Saturn     699    3.793120746014835E+07      6     10   SATORB
+   System            3.794058501073460E+07
+ 
+Additional Constants on the File:
+ 
+  AU       1.495978706996262E+08   RADIUS   6.033000000000000E+04
+  J602     1.629070926432591E-02   J604    -9.352692682544803E-04
+  J606     8.914541605043824E-05   J608    -1.000000000000000E-05
+  POLTIM   2.451545000000000E+06   ZACPL6   4.058521220755514E+01
+  ZDEPL6   8.353753945201079E+01   DACPL6  -7.768181577078927E-02
+  DDEPL6  -2.560069999244829E-03   WPL6     3.890000000000000E+01
+  WDP6     8.107939024000000E+02   607GM    3.721174954921852E-01
+  609GM    5.533013324575637E-01   601GM    2.502446805161069E+00
+  602GM    7.208078064509785E+00   603GM    4.121579814717229E+01
+  604GM    7.311471722238183E+01   608GM    1.205019834550124E+02
+  605GM    1.539427871376573E+02   606GM    8.978139356594487E+03
+  GM7      5.794557000000000E+06   GM8      6.836528000000000E+06
+  GM5      1.267127648000000E+08   GM10     1.327132332632381E+11
+ 
+ 
+Chebyshev interpolation error:  4.600 meters
+ 
+Release to: Horizons/NAIF                      Time: 07-May-2009 16:19:39
+ 
+Preparer: R. A. Jacobson
+ 
+Comments:
+Ephemeris for new Saturnian satellite Aegaeon.  Numerical integration
+fit to Cassini observations.
+ 

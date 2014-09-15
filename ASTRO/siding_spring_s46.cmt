@@ -1,0 +1,97 @@
+ 
+; c2013a1_s46_merged_DE431.bsp LOG FILE
+ 
+; Created 2014-03-14/16:34:03.00.
+;
+; BEGIN SPKMERGE COMMANDS
+ 
+LEAPSECONDS_KERNEL   = /disk/data/leap-kernel
+ 
+SPK_KERNEL           = c2013a1_s46_merged_DE431.bsp
+  LOG_FILE           = c2013a1_s46_merged_DE431.log
+  SOURCE_SPK_KERNEL  = ./c2013a1_s46.bsp
+    INCLUDE_COMMENTS = YES
+    BODIES           = 1003228
+    BEGIN_TIME       = 1999 DEC 31 23:58:55.816
+    END_TIME         = 2015 DEC 31 23:58:52.816
+  SOURCE_SPK_KERNEL  = /disk/data/mb_spk_files/mar097.DE424.bsp
+    INCLUDE_COMMENTS = NO
+    BODIES           = 499, 402, 401, 399, 301, 10, 9, 4, 3
+    BEGIN_TIME       = 1999 DEC 31 23:58:55.816
+    END_TIME         = 2015 DEC 31 23:58:52.816
+  SOURCE_SPK_KERNEL  = /disk/data/mb_spk_files/DE431.BSP
+    INCLUDE_COMMENTS = NO
+    BODIES           = 1, 2, 5, 6, 7, 8, 199, 299
+    BEGIN_TIME       = 1999 DEC 31 23:58:55.816
+    END_TIME         = 2015 DEC 31 23:58:52.816
+ 
+; END SPKMERGE COMMANDS
+ 
+ 
+IMPORTANT NOTICE:
+ 
+ This informal file release should not be used for purposes affecting the
+ safety and success of spacecraft hardware or missions without first contacting
+ Donald.K.Yeomans@jpl.nasa.gov (Supervisor, Solar System Dynamics Group,
+ 818-354-2127) or Jon.D.Giorgini@jpl.nasa.gov (SSDG analyst).
+ 
+ This is because an object's orbit solution may be insufficiently determined
+ over the chosen time-span to be suitable for some high-precision purposes,
+ due to the quantity of measurements available for an object, the time-span
+ they cover, and the object's dynamical path.
+ 
+ Although not stored in this file, statistical uncertainty of the trajectory
+ as a function of time may be available from the JPL Horizons system. This can
+ help interpret the accuracy of the trajectory.
+ 
+ Orbit solutions are updated in Horizons as new measurements are made, so this
+ trajectory may be superceded by more recent solutions. Check the orbit solution
+ number for an object (given below as "source") against the latest Horizons
+ entry to determine if an updated orbit solution is available.
+ 
+ This parameterized post-Netwonian numerically integrated perturbed trajectory
+ was produced by:
+ 
+    Horizons On-Line Ephemeris System
+    Solar System Dynamics Group
+    Jet Propulsion Laboratory
+    4800 Oak Grove Drive
+    Pasadena, CA  91109
+    USA
+ 
+ Horizons information & documentation:
+ 
+   http://ssd.jpl.nasa.gov/?horizons
+ 
+ Connection for small-body SPK generation (automation scripts available):
+ 
+   telnet ssd.jpl.nasa.gov 6775       (interactive UNIX/Linux command-line)
+   telnet://ssd.jpl.nasa.gov:6775     (interactive browser URL window)
+   http://ssd.jpl.nasa.gov/x/spk.html (passive browser form)
+ 
+ Inquiries:
+ 
+   Jon.D.Giorgini@jpl.nasa.gov (program author; 818-393-3107)
+ 
+SPK file contents:
+ 
+OBJECT #01
+==========
+Requested by    : Jon.D.Giorgini@jpl.nasa.gov
+Execution date  : Fri Mar 14 16:32:19 2014 (Pasadena time)
+Target body     : Siding Spring (C/2013 A1)       {source: Horizons_SPK:JPL#46}
+Target SPK ID   :  1003228
+Coord center    : Sun                      ( 10)  {source: DE-0431LE-04}
+GM of center    : 2.9591220828559109E-04  au^3/d^2
+Small-body perts: Yes                             {source: SB431-BIG16}
+Start time      : 2000-Jan-01 00:00:00.0000  CT
+Stop  time      : 2016-Jan-01 00:00:00.0000  CT
+*******************************************************************************
+Initial FK5/J2000.0 heliocentric ecliptic osculating elements (au, days, deg.):
+  EPOCH=  2456505.5 != 2013-Aug-01.0000000 (CT)   RMSW= n.a.
+   EC= 1.000604515347663   QR= 1.399036956818885   TP= 2456955.8868333064
+   OM= 300.9743378699729   W= 2.435502966380776    IN= 129.0266593549997
+Comet physical (GM= km^3/s^2; RAD= km):
+   GM= n.a.                RAD= n.a.
+   M1=  8.6      M2=  10.4     k1=  7.     k2=  5.      PHCOF=  .030
+ 

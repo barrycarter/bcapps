@@ -1,0 +1,78 @@
+ 
+; jup310.bsp LOG FILE
+;
+; Created 2013-12-11/12:36:26.65.
+;
+; BEGIN NIOSPK COMMANDS
+ 
+LEAPSECONDS_FILE    = /kernels/gen/lsk/naif0010.tls
+SPK_FILE            = jup310.bsp
+  INCLUDE_TEXT_FILE = jup310.cmt
+  SOURCE_NIO_FILE   = jup310.nio
+    BEGIN_TIME      = CAL-ET 1900 JAN 01 00:00:41.183
+    END_TIME        = CAL-ET 2100 JAN 01 00:01:07.183
+  SOURCE_NIO_FILE   = /group/naif/kernels/gen/spk/de431.nio
+    BODIES          = 3, 399, 10, 5
+    BEGIN_TIME      = CAL-ET 1900 JAN 01 00:00:41.183
+    END_TIME        = CAL-ET 2100 JAN 01 00:01:07.183
+ 
+; END NIOSPK COMMANDS
+ 
+                      Satellite Ephemeris File Release
+ 
+ 
+Satellite Ephemeris: JUP310
+ 
+Location: ssd.jpl.nasa.gov/pub/eph/satellites/nio/LINUX_PC/jup310.nio
+Size(nio): 1947160576 bytes
+ 
+Enter SATEPHMERGE/13 15-Nov-2013 15:52:51.942 linked 24-May-2011 16:26:51
+Ephemeris fit to Earthbased and spacecraft data
+Global fit: JUP310.2
+Ephemeris Version Number: 17
+Timespan from JED  2378482.500(18-DEC-1799) to JED  2524606.500(14-JAN-2200)
+File Epoch Julian Date: 2450464.50
+Master Interval: 18.0000 Days
+Equinox Reference Julian Date: 2451545.00
+Planetary Ephemeris Number: DE-0430/LE-0430
+ 
+Bodies on the File:
+ 
+   Name       Number            GM             NDIV   NDEG   Model
+   Io           501    5.959924010272514E+03     24     11   SATORBINT
+   Europa       502    3.202739815114734E+03     18     15   SATORBINT
+   Ganymede     503    9.887819980080976E+03     12     15   SATORBINT
+   Callisto     504    7.179304867611079E+03     12     10   SATORBINT
+   Amalthea     505    1.487604677404272E-01     72     11   SATORBINT
+   Thebe        514    0.000000000000000E+00     72     11   SATORBINT
+   Adrastea     515    0.000000000000000E+00     72     13   SATORBINT
+   Metis        516    0.000000000000000E+00     72     13   SATORBINT
+   Jupiter      599    1.266865341960128E+08     18     10   SATORBINT
+   System              1.267127641334463E+08
+ 
+Additional Constants on the File:
+ 
+  AU       1.495978707000000E+08   RADIUS   7.149200000000000E+04
+  J502     1.469562477069651E-02   J503     0.000000000000000E+00
+  J504    -5.913138887463315E-04   J506     2.077510523748891E-05
+  POLTIM   2.451545000000000E+06   ZACPL5   2.680570781451589E+02
+  ZDEPL5   6.449582320291580E+01   DACPL5  -6.554328185586419E-03
+  DDEPL5   2.476496988122852E-03   WPL5     2.849500000000000E+02
+  WDP5     8.705359999999999E+02   GM6      3.794058500000000E+07
+  GM7      5.794548600000000E+06   GM8      6.836527100580000E+06
+  GM10     1.327132332639000E+11
+ 
+ 
+Chebyshev interpolation error: 0.5000 meters
+ 
+Release to: Horizons/NAIF/Juno                 Time: 25-Nov-2013 09:21:44
+ 
+Preparer: R. A. Jacobson
+ 
+Comments:
+Update and revision of the Galilean and inner Jovian satellite ephemerides
+based on all Earthbased and spacecraft data through 2013. The revision
+includes a more accurate Chebyshev fit, especially for the barycenter
+shift vector at the request of Juno Radio Science.  The inner satellite
+orbits have also been significantly improved.
+ 

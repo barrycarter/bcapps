@@ -1,0 +1,29 @@
+ 
+; ura091-rocks-merge.bsp LOG FILE
+ 
+; Created 2013-12-12/14:48:20.88.
+;
+; BEGIN SPKMERGE COMMANDS
+ 
+LEAPSECONDS_KERNEL   = /kernels/gen/lsk/naif0010.tls
+ 
+SPK_KERNEL           = ura091-rocks-merge.bsp
+  SOURCE_SPK_KERNEL  = ura091-rocks.bsp-source
+    INCLUDE_COMMENTS = NO
+    BODIES           = 727, 726, 725, 715, 714, 713, 712, 711, 710, 709, 708,
+                       707, 706
+    BEGIN_TIME       = 1900 JAN 04 00:00:00.000
+    END_TIME         = 2099 DEC 23 00:00:00.000
+  SOURCE_SPK_KERNEL  = /group/naif/kernels/gen/spk/de721.bsp
+    INCLUDE_COMMENTS = NO
+    BODIES           = 3, 7, 10, 399
+    BEGIN_TIME       = 1900 JAN 04 00:00:00.000
+    END_TIME         = 2099 DEC 23 00:00:00.000
+  SOURCE_SPK_KERNEL  = ura095.bsp
+    INCLUDE_COMMENTS = NO
+    BODIES           = 799
+    BEGIN_TIME       = 1900 JAN 04 00:00:00.000
+    END_TIME         = 2099 DEC 23 00:00:00.000
+ 
+; END SPKMERGE COMMANDS
+ 

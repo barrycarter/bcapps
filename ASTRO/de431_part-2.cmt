@@ -1,0 +1,18 @@
+ 
+; de431_part-2.bsp LOG FILE
+ 
+; Created 2013-09-03/12:32:15.48.
+;
+; BEGIN SPKMERGE COMMANDS
+ 
+LEAPSECONDS_KERNEL  = /group/naif/ftp/pub/naif/generic_kernels/lsk/naif0010.tls
+ 
+SPK_KERNEL           = de431_part-2.bsp
+  SOURCE_SPK_KERNEL  = de431.bsp
+    INCLUDE_COMMENTS = NO
+    BODIES           = 299, 199, 399, 301, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1
+    BEGIN_TIME       = 1 A.D. JAN 01 00:00:00.000
+    END_TIME         = 17191 MAR 01 00:00:00.000
+ 
+; END SPKMERGE COMMANDS
+ 

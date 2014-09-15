@@ -1,0 +1,80 @@
+ 
+; sat363.bsp LOG FILE
+;
+; Created 2014-01-31/09:34:21.15.
+;
+; BEGIN NIOSPK COMMANDS
+ 
+LEAPSECONDS_FILE    = /kernels/gen/lsk/naif0010.tls
+SPK_FILE            = sat363.bsp
+  INCLUDE_TEXT_FILE = sat363.cmt
+  SOURCE_NIO_FILE   = sat363.nio
+    BEGIN_TIME      = CAL-ET 1950 JAN 01 00:00:41.183
+    END_TIME        = CAL-ET 2050 JAN 01 00:01:07.183
+  SOURCE_NIO_FILE   = /group/naif/kernels/gen/spk/de430.nio
+    BODIES          = 3, 399, 10, 6
+    BEGIN_TIME      = CAL-ET 1950 JAN 01 00:00:41.183
+    END_TIME        = CAL-ET 2050 JAN 01 00:01:07.183
+ 
+; END NIOSPK COMMANDS
+ 
+                      Satellite Ephemeris File Release
+ 
+ 
+Satellite Ephemeris: SAT363
+ 
+Location: ssd.jpl.nasa.gov/pub/eph/satellites/nio/LINUX_PC/sat363.nio
+Size(nio): 533982208 bytes
+ 
+Enter SATEPHMERGE/13 27-Jan-2014 15:27:35.267 linked 24-May-2011 16:26:51
+Merge of forward and back
+Fit to Earthbased, HST, Voyager, and Cassini data
+Ephemeris Version Number: 17
+Timespan from JED  2433278.500(28-DEC-1949) to JED  2469818.500(12-JAN-2050)
+File Epoch Julian Date: 2453006.50
+Master Interval: 18.0000 Days
+Equinox Reference Julian Date: 2451545.00
+Planetary Ephemeris Number: DE-0430/LE-0430
+ 
+Bodies on the File:
+ 
+   Name         Number            GM             NDIV   NDEG   Model
+   Janus          610    1.265952065976075E-01     48     15   SATORBINT
+   Epimetheus     611    3.513127004555241E-02     48     15   SATORBINT
+   Atlas          615    3.720605324694770E-04     48     15   SATORBINT
+   Prometheus     616    1.066956110802386E-02     48     15   SATORBINT
+   Pandora        617    9.153140074398745E-03     48     15   SATORBINT
+   Pallene        633    0.000000000000000E+00     24     15   SATORBINT
+   Polydeuces     634    0.000000000000000E+00     12     15   SATORBINT
+   Anthe          649    0.000000000000000E+00     24     15   SATORBINT
+   Aegaeon        653    0.000000000000000E+00     24     15   SATORBINT
+   Saturn         699    3.793120731673100E+07     12     12   SATORBINT
+   System                3.794058506051076E+07
+ 
+Additional Constants on the File:
+ 
+  AU       1.495978707000000E+08   632GM    0.000000000000000E+00
+  RADIUS   6.033000000000000E+04   J602     1.629069546359586E-02
+  J603     9.999999999999999E-21   J604    -9.343510777884500E-04
+  J606     8.959557103488101E-05   J608    -1.000000000000000E-05
+  POLTIM   2.451545000000000E+06   ZACPL6   4.058270059425521E+01
+  ZDEPL6   8.353764728831548E+01   DACPL6  -5.808556328862353E-02
+  DDEPL6  -6.858357034897291E-03   WPL6     3.890000000000000E+01
+  WDP6     8.107939023840765E+02   607GM    3.718791714191668E-01
+  609GM    5.531110414633374E-01   601GM    2.503522884661795E+00
+  602GM    7.211292085479989E+00   603GM    4.121117207701302E+01
+  604GM    7.311635322923193E+01   608GM    1.205134781724041E+02
+  605GM    1.539422045545342E+02   606GM    8.978138845307376E+03
+  GM7      5.794548600000000E+06   GM8      6.836527100580000E+06
+  GM5      1.267127641000000E+08   GM10     1.327132332639000E+11
+ 
+ 
+Chebyshev interpolation error:  6.300 meters
+ 
+Release to: Cassini/Horizons/NAIF              Time: 27-Jan-2014 16:47:16
+ 
+Preparer: R. A. Jacobson
+ 
+Comments:
+Update of the inner satellites using Cassini imaging through the end of 2013.
+ 

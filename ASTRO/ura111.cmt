@@ -1,0 +1,72 @@
+ 
+; ura111.bsp LOG FILE
+;
+; Created 2014-01-08/17:29:18.25.
+;
+; BEGIN NIOSPK COMMANDS
+ 
+LEAPSECONDS_FILE    = /kernels/gen/lsk/naif0010.tls
+SPK_FILE            = ura111.bsp
+  INCLUDE_TEXT_FILE = ura111.cmt
+  SOURCE_NIO_FILE   = ura111.nio
+    BODIES          = 701, 702, 703, 704, 705, 799
+    BEGIN_TIME      = CAL-ET 1900 JAN 01 00:00:41.183
+    END_TIME        = CAL-ET 2099 DEC 24 00:01:07.183
+  SOURCE_NIO_FILE   = /group/naif/kernels/gen/spk/de430.nio
+    BODIES          = 3, 399, 10, 7
+    BEGIN_TIME      = CAL-ET 1900 JAN 01 00:00:41.183
+    END_TIME        = CAL-ET 2099 DEC 24 00:01:07.183
+ 
+; END NIOSPK COMMANDS
+ 
+                      Satellite Ephemeris File Release
+ 
+ 
+Satellite Ephemeris: URA111
+ 
+Location: ssd.jpl.nasa.gov/pub/eph/satellites/nio/LINUX_PC/ura111.nio
+Size(nio): 248999936 bytes
+ 
+Enter SATEPHMERGE/13 08-Jan-2014 12:12:48.143 linked 24-May-2011 16:26:51
+Fit to data
+Ephemeris Version Number: 17
+Timespan from JED  2415006.500(18-DEC-1899) to JED  2488074.500(06-JAN-2100)
+File Epoch Julian Date: 2446278.50
+Master Interval: 12.0000 Days
+Equinox Reference Julian Date: 2451545.00
+Planetary Ephemeris Number: DE-0430/LE-0430
+ 
+Bodies on the File:
+ 
+   Name      Number            GM             NDIV   NDEG   Model
+   Ariel       701    8.346344431770477E+01      8     12   SATORBINT
+   Umbriel     702    8.509338094489388E+01      8     11   SATORBINT
+   Titania     703    2.269437003741248E+02      6     10   SATORBINT
+   Oberon      704    2.053234302535623E+02      6      8   SATORBINT
+   Miranda     705    4.319516899232100E+00     12     13   SATORBINT
+   Puck        715    0.000000000000000E+00     24     11   SATORBINT
+   Uranus      799    5.793951322279009E+06      3     15   SATORBINT
+   System             5.794556465751799E+06
+ 
+Additional Constants on the File:
+ 
+  AU       1.495978707000000E+08   RADIUS   2.555900000000000E+04
+  J702     3.510685384697763E-03   J704    -3.416639735448987E-05
+  POLTIM   2.451545000000000E+06   ZACPL7   7.730990252631723E+01
+  ZDEPL7   1.517245819840212E+01   DACPL7   1.734056155021870E-04
+  DDEPL7   1.903682577001328E-05   WPL7     3.361900292123400E+02
+  WDP7     5.011600928000000E+02   GM5      1.267127641000000E+08
+  GM6      3.794058500000000E+07   GM8      6.836527100580000E+06
+  GM10     1.327132332639000E+11
+ 
+ 
+Chebyshev interpolation error: 0.8000 meters
+ 
+Release to: Horizons/NAIF                      Time: 08-Jan-2014 15:58:48
+ 
+Preparer: R. A. Jacobson
+ 
+Comments:
+Fit of the major Uranian satellites and Puck to Voyager and
+astrometric data through 2013.
+ 

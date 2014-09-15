@@ -1,0 +1,128 @@
+ 
+; jup300.bsp LOG FILE
+;
+; Created 2013-12-11/12:27:54.94.
+;
+; BEGIN NIOSPK COMMANDS
+ 
+LEAPSECONDS_FILE    = /kernels/gen/lsk/naif0010.tls
+SPK_FILE            = jup300.bsp
+  INCLUDE_TEXT_FILE = jup300.cmt
+  SOURCE_NIO_FILE   = jup300.nio
+    BEGIN_TIME      = CAL-ET 1900 JAN 12 00:00:41.184
+    END_TIME        = CAL-ET 2100 JAN 01 00:01:07.183
+  SOURCE_NIO_FILE   = /group/naif/kernels/gen/spk/de431.nio
+    BODIES          = 3, 399, 10, 5
+    BEGIN_TIME      = CAL-ET 1900 JAN 12 00:00:41.184
+    END_TIME        = CAL-ET 2100 JAN 01 00:01:07.183
+ 
+; END NIOSPK COMMANDS
+ 
+                      Satellite Ephemeris File Release
+ 
+ 
+Satellite Ephemeris: JUP300
+ 
+Location: ssd.jpl.nasa.gov/pub/eph/satellites/nio/LINUX_PC/jup300.nio
+Size(nio): 136005632 bytes
+ 
+Enter SATEPHMERGE/13 15-Oct-2013 10:53: 7.805 linked 24-May-2011 16:26:51
+Merge of all irregulars
+Ephemeris from Earth-based data fit
+Ephemeris Version Number: 17
+Timespan from JED  2414995.500(07-DEC-1899) to JED  2488075.500(07-JAN-2100)
+File Epoch Julian Date: 2452651.50
+Master Interval: 36.0000 Days
+Equinox Reference Julian Date: 2451545.00
+Planetary Ephemeris Number: DE-0430/LE-0430
+ 
+Bodies on the File:
+ 
+   Name         Number            GM             NDIV   NDEG   Model
+   Himalia        506    1.402097489313343E-01      2     15   SATORBINT
+   Elara          507    0.000000000000000E+00      2     15   SATORBINT
+   Pasiphae       508    0.000000000000000E+00      2     15   SATORBINT
+   Sinope         509    0.000000000000000E+00      2     15   SATORBINT
+   Lysithea       510    0.000000000000000E+00      2     15   SATORBINT
+   Carme          511    0.000000000000000E+00      2     15   SATORBINT
+   Ananke         512    0.000000000000000E+00      2     15   SATORBINT
+   Leda           513    0.000000000000000E+00      2     15   SATORBINT
+   Callirrhoe     517    0.000000000000000E+00      1     15   SATORBINT
+   Themisto       518    0.000000000000000E+00      2     15   SATORBINT
+   Magaclite      519    0.000000000000000E+00      1     15   SATORBINT
+   Taygete        520    0.000000000000000E+00      1     15   SATORBINT
+   Chaldene       521    0.000000000000000E+00      1     15   SATORBINT
+   Harpalyke      522    0.000000000000000E+00      1     15   SATORBINT
+   Kalyke         523    0.000000000000000E+00      1     15   SATORBINT
+   Iocaste        524    0.000000000000000E+00      1     15   SATORBINT
+   Erinome        525    0.000000000000000E+00      1     15   SATORBINT
+   Isonoe         526    0.000000000000000E+00      1     15   SATORBINT
+   Praxidike      527    0.000000000000000E+00      1     15   SATORBINT
+   Autonoe        528    0.000000000000000E+00      1     15   SATORBINT
+   Thyone         529    0.000000000000000E+00      1     15   SATORBINT
+   Hermippe       530    0.000000000000000E+00      1     15   SATORBINT
+   Aitne          531    0.000000000000000E+00      1     15   SATORBINT
+   Eurydome       532    0.000000000000000E+00      1     15   SATORBINT
+   Euanthe        533    0.000000000000000E+00      1     15   SATORBINT
+   Euporie        534    0.000000000000000E+00      1     15   SATORBINT
+   Orthosie       535    0.000000000000000E+00      1     15   SATORBINT
+   Sponde         536    0.000000000000000E+00      1     15   SATORBINT
+   Kale           537    0.000000000000000E+00      1     15   SATORBINT
+   Pasithee       538    0.000000000000000E+00      1     15   SATORBINT
+   Hegemone       539    0.000000000000000E+00      1     15   SATORBINT
+   Mneme          540    0.000000000000000E+00      1     15   SATORBINT
+   Aoede          541    0.000000000000000E+00      1     15   SATORBINT
+   Thelxinoe      542    0.000000000000000E+00      1     15   SATORBINT
+   Arche          543    0.000000000000000E+00      1     15   SATORBINT
+   Kallichore     544    0.000000000000000E+00      1     15   SATORBINT
+   Helike         545    0.000000000000000E+00      1     15   SATORBINT
+   Carpo          546    0.000000000000000E+00      2     15   SATORBINT
+   Eukelade       547    0.000000000000000E+00      1     15   SATORBINT
+   Cyllene        548    0.000000000000000E+00      1     15   SATORBINT
+   Kore           549    0.000000000000000E+00      1     15   SATORBINT
+   Herse          550    0.000000000000000E+00      1     15   SATORBINT
+   S2003_J2     55060    0.000000000000000E+00      1     15   SATORBINT
+   S2003_J3     55061    0.000000000000000E+00      1     15   SATORBINT
+   S2003_J4     55062    0.000000000000000E+00      1     15   SATORBINT
+   S2003_J5     55063    0.000000000000000E+00      1     15   SATORBINT
+   S2003_J9     55064    0.000000000000000E+00      1     15   SATORBINT
+   S2003_J10    55065    0.000000000000000E+00      1     15   SATORBINT
+   S2003_J12    55066    0.000000000000000E+00      1     15   SATORBINT
+   S2003_J15    55067    0.000000000000000E+00      1     15   SATORBINT
+   S2003_J16    55068    0.000000000000000E+00      1     15   SATORBINT
+   S2003_J18    55069    0.000000000000000E+00      1     15   SATORBINT
+   S2003_J19    55070    0.000000000000000E+00      1     15   SATORBINT
+   S2003_J23    55071    0.000000000000000E+00      1     15   SATORBINT
+   S2010_J1     55072    0.000000000000000E+00      1     15   SATORBINT
+   S2010_J2     55073    0.000000000000000E+00      1     15   SATORBINT
+   S2011_J1     55074    0.000000000000000E+00      1     15   SATORBINT
+   S2011_J2     55075    0.000000000000000E+00      1     15   SATORBINT
+   S2000_J11    55076    0.000000000000000E+00      1     15   SATORBINT
+   Jupiter        599    1.266865349093058E+08     16     15   SATORBINT
+   System                1.267127648382719E+08
+ 
+Additional Constants on the File:
+ 
+  AU       1.495978707000000E+08   RADIUS   7.149200000000000E+04
+  J502     1.469642900697847E-02   J503    -6.436411055625769E-07
+  J504    -5.871402915754995E-04   J506     3.425025517100406E-05
+  POLTIM   2.451545000000000E+06   ZACPL5   2.680565954302430E+02
+  ZDEPL5   6.449530333574846E+01   DACPL5  -6.499000000000000E-03
+  DDEPL5   2.431000000000000E-03   WPL5     2.849500000000000E+02
+  WDP5     8.705366420000000E+02   501GM    5.959925801233187E+03
+  502GM    3.202741544742959E+03   503GM    9.887824826911430E+03
+  504GM    7.179296583471260E+03   GM6      3.794058500000000E+07
+  GM7      5.794548600000000E+06   GM8      6.836527000000000E+06
+  GM10     1.327132332630000E+11
+ 
+ 
+Chebyshev interpolation error:  219.0 meters
+ 
+Release to: Horizons/NAIF                      Time: 15-Oct-2013 11:03:28
+ 
+Preparer: R. A. Jacobson/M. Brozovic
+ 
+Comments:
+Redelivery of the update of the irregular Jovians with observations through
+2012.  This file has a more accurate Chebyshev fit to the integration.
+ 

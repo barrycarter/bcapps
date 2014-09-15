@@ -1,0 +1,108 @@
+ 
+; sat368.bsp LOG FILE
+;
+; Created 2014-08-11/08:02:42.37.
+;
+; BEGIN NIOSPK COMMANDS
+ 
+LEAPSECONDS_FILE    = /kernels/gen/lsk/naif0010.tls
+SPK_FILE            = sat368.bsp
+  INCLUDE_TEXT_FILE = sat368.cmt
+  SOURCE_NIO_FILE   = sat368.nio
+    BEGIN_TIME      = CAL-ET 1900 JAN 01 00:00:41.183
+    END_TIME        = CAL-ET 2100 JAN 01 00:01:07.183
+  SOURCE_NIO_FILE   = /group/naif/kernels/gen/spk/de430.nio
+    BODIES          = 3, 399, 10, 6
+    BEGIN_TIME      = CAL-ET 1900 JAN 01 00:00:41.183
+    END_TIME        = CAL-ET 2100 JAN 01 00:01:07.183
+ 
+; END NIOSPK COMMANDS
+ 
+                      Satellite Ephemeris File Release
+ 
+ 
+Satellite Ephemeris: SAT368
+ 
+Location: ssd.jpl.nasa.gov/pub/eph/satellites/nio/LINUX_PC/sat368.nio
+Size(nio): 78039040 bytes
+ 
+Enter SATEPHMERGE/13 03-Jul-2014 16:03: 5.710 linked 24-May-2011 16:26:51
+Fit to Earthbased data
+Ephemeris Version Number: 17
+Timespan from JED  2415008.500(20-DEC-1899) to JED  2488070.500(02-JAN-2100)
+File Epoch Julian Date: 2451602.50
+Master Interval: 18.0000 Days
+Equinox Reference Julian Date: 2451545.00
+Planetary Ephemeris Number: DE-0430/LE-0430
+ 
+Bodies on the File:
+ 
+   Name         Number            GM             NDIV   NDEG   Model
+   Ymir           619    0.000000000000000E+00      1      4   SATORBINT
+   Paaliaq        620    0.000000000000000E+00      1      5   SATORBINT
+   Tarvos         621    0.000000000000000E+00      1      6   SATORBINT
+   Ijiraq         622    0.000000000000000E+00      1      5   SATORBINT
+   Suttungr       623    0.000000000000000E+00      1      4   SATORBINT
+   Kiviuq         624    0.000000000000000E+00      1      5   SATORBINT
+   Mundilfari     625    0.000000000000000E+00      1      4   SATORBINT
+   Albiorix       626    0.000000000000000E+00      1      4   SATORBINT
+   Skathi         627    0.000000000000000E+00      1      4   SATORBINT
+   Erriapus       628    0.000000000000000E+00      1      6   SATORBINT
+   Siarnaq        629    0.000000000000000E+00      1      5   SATORBINT
+   Thrymr         630    0.000000000000000E+00      1      5   SATORBINT
+   Narvi          631    0.000000000000000E+00      1      4   SATORBINT
+   Aegir          636    0.000000000000000E+00      1      5   SATORBINT
+   Bebhionn       637    0.000000000000000E+00      1      6   SATORBINT
+   Bergelmir      638    0.000000000000000E+00      1      5   SATORBINT
+   Bestla         639    0.000000000000000E+00      1      8   SATORBINT
+   Farbauti       640    0.000000000000000E+00      1      5   SATORBINT
+   Fenrir         641    0.000000000000000E+00      1      5   SATORBINT
+   Fornjot        642    0.000000000000000E+00      1      5   SATORBINT
+   Hati           643    0.000000000000000E+00      1      5   SATORBINT
+   Hyrrokkin      644    0.000000000000000E+00      1      5   SATORBINT
+   Kari           645    0.000000000000000E+00      1      5   SATORBINT
+   Loge           646    0.000000000000000E+00      1      5   SATORBINT
+   Skoll          647    0.000000000000000E+00      1      6   SATORBINT
+   Surtur         648    0.000000000000000E+00      1      5   SATORBINT
+   Jarnsaxa       650    0.000000000000000E+00      1      5   SATORBINT
+   Greip          651    0.000000000000000E+00      1      5   SATORBINT
+   Tarqeq         652    0.000000000000000E+00      1      5   SATORBINT
+   S2004_S07    65035    0.000000000000000E+00      1      6   SATORBINT
+   S2004_S12    65040    0.000000000000000E+00      1      5   SATORBINT
+   S2004_S13    65041    0.000000000000000E+00      1      5   SATORBINT
+   S2004_S17    65045    0.000000000000000E+00      1      5   SATORBINT
+   S2006_S01    65048    0.000000000000000E+00      1      5   SATORBINT
+   S2006_S03    65050    0.000000000000000E+00      1      5   SATORBINT
+   S2007_S02    65055    0.000000000000000E+00      1      5   SATORBINT
+   S2007_S03    65056    0.000000000000000E+00      1      5   SATORBINT
+   Saturn         699    3.793120747607848E+07     12     12   SATORBINT
+   System                3.794058503620384E+07
+ 
+Additional Constants on the File:
+ 
+  AU       1.495978707000000E+08   RADIUS   6.033000000000000E+04
+  J602     1.629069817035304E-02   J603     9.999999999999999E-21
+  J604    -9.343344679304898E-04   J606     9.003499615846118E-05
+  J608    -1.000000000000000E-05   POLTIM   2.451545000000000E+06
+  ZACPL6   4.058271311699307E+01   ZDEPL6   8.353763861569016E+01
+  DACPL6  -5.744235301066691E-02   DDEPL6  -6.782331809657585E-03
+  WPL6     3.890000000000000E+01   WDP6     8.107939023842531E+02
+  607GM    3.718742808950764E-01   609GM    5.528989950537777E-01
+  601GM    2.503524000000000E+00   602GM    7.211454165826105E+00
+  603GM    4.121107782641367E+01   604GM    7.311636648731589E+01
+  608GM    1.205120887032733E+02   605GM    1.539424643535228E+02
+  606GM    8.978138376543257E+03   GM7      5.794548600000000E+06
+  GM8      6.836527100580000E+06   GM5      1.267127641000000E+08
+  GM10     1.327132332639000E+11
+ 
+ 
+Chebyshev interpolation error:  556.0 meters
+ 
+Release to: Cassini/Horizons/NAIF              Time: 09-Aug-2014 10:05:56
+ 
+Preparer: R. A. Jacobson
+ 
+Comments:
+Update of Saturnian irregulars with Earthbased data through early 2014 and all
+Cassini imaging through 2013.
+ 

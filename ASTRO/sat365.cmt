@@ -1,0 +1,77 @@
+ 
+; sat365.bsp LOG FILE
+;
+; Created 2014-06-05/16:18:47.08.
+;
+; BEGIN NIOSPK COMMANDS
+ 
+LEAPSECONDS_FILE    = /kernels/gen/lsk/naif0010.tls
+SPK_FILE            = sat365.bsp
+  INCLUDE_TEXT_FILE = sat365.cmt
+  SOURCE_NIO_FILE   = sat365l.nio
+    BEGIN_TIME      = CAL-ET 1900 JAN 01 00:00:41.183
+    END_TIME        = CAL-ET 2100 JAN 01 00:01:07.183
+  SOURCE_NIO_FILE   = /group/naif/kernels/gen/spk/de430.nio
+    BODIES          = 3, 399, 10, 6
+    BEGIN_TIME      = CAL-ET 1900 JAN 01 00:00:41.183
+    END_TIME        = CAL-ET 2100 JAN 01 00:01:07.183
+ 
+; END NIOSPK COMMANDS
+ 
+                      Satellite Ephemeris File Release
+ 
+ 
+Satellite Ephemeris: SAT365
+ 
+Location: ssd.jpl.nasa.gov/pub/eph/satellites/nio/LINUX_PC/sat365l.nio
+Size(nio): 783820800 bytes
+ 
+Enter SATEPHMERGE/13 03-Jun-2014 17:11: 1.067 linked 24-May-2011 16:26:51
+Fit to Earthbased, Voyager, HST, and Cassini data
+Ephemeris Version Number: 17
+Timespan from JED  2378502.500(07-JAN-1800) to JED  2524608.500(16-JAN-2200)
+File Epoch Julian Date: 2455470.50
+Master Interval: 18.0000 Days
+Equinox Reference Julian Date: 2451545.00
+Planetary Ephemeris Number: DE-0430/LE-0430
+ 
+Bodies on the File:
+ 
+   Name        Number            GM             NDIV   NDEG   Model
+   Mimas         601    2.503524000000000E+00     24     15   SATORBINT
+   Enceladus     602    7.211454165826105E+00     24     12   SATORBINT
+   Tethys        603    4.121107782641367E+01     12     14   SATORBINT
+   Dione         604    7.311636648731589E+01     12     11   SATORBINT
+   Rhea          605    1.539424643535228E+02      8     11   SATORBINT
+   Titan         606    8.978138376543257E+03      6     12   SATORBINT
+   Hyperion      607    3.718742808950764E-01      4     10   SATORBINT
+   Iapetus       608    1.205120887032733E+02      2     10   SATORBINT
+   Phoebe        609    5.528989950537777E-01      1      8   SATORBINT
+   Helene        612    0.000000000000000E+00     12     11   SATORBINT
+   Telesto       613    0.000000000000000E+00     12     15   SATORBINT
+   Calypso       614    0.000000000000000E+00     12     15   SATORBINT
+   Saturn        699    3.793120747607848E+07     12     12   SATORBINT
+   System               3.794058503620384E+07
+ 
+Additional Constants on the File:
+ 
+  AU       1.495978707000000E+08   RADIUS   6.033000000000000E+04
+  J602     1.629069817035304E-02   J603     9.999999999999999E-21
+  J604    -9.343344679304898E-04   J606     9.003499615846118E-05
+  J608    -1.000000000000000E-05   POLTIM   2.451545000000000E+06
+  ZACPL6   4.058271311699307E+01   ZDEPL6   8.353763861569016E+01
+  DACPL6  -5.744235301066691E-02   DDEPL6  -6.782331809657585E-03
+  WPL6     3.890000000000000E+01   WDP6     8.107939023842531E+02
+  GM7      5.794548600000000E+06   GM8      6.836527100580000E+06
+  GM5      1.267127641000000E+08   GM10     1.327132332639000E+11
+ 
+ 
+Chebyshev interpolation error:  7.500 meters
+ 
+Release to: Horizons/NAIF/Cassini              Time: 05-Jun-2014 12:17:48
+ 
+Preparer: R. A. Jacobson
+ 
+Comments:
+Update of the Saturnian satellite ephemeris with data through 22 May 2014.
+ 

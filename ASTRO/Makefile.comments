@@ -1,0 +1,6 @@
+# creates xsp files from bsp files
+imageOBJS=$(shell echo *.bsp | perl -pnle 's/\.bsp/.cmt/isg')
+all: $(imageOBJS)
+
+%.cmt: %.bsp
+	/home/barrycarter/SPICE/commnt -r $< > $@
