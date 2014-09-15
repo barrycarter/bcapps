@@ -45,6 +45,55 @@ require "/usr/local/lib/bclib.pl";
 
 # 2,1,1... children are 3,3,3 then 4,7,6 then 5,15,12
 
+
+horizons_data(300,str2time("2014-09-01 GMT"),str2time("2014-10-01 GMT"),86400);
+
+=item horizons_data($object,$stime,$etime,$delta)
+
+Use HORIZONS (telnet interface) to return vector coordinates of
+$object (defined as a number as in /ASTRO/planet-ids.txt) from $stime
+to $etime (Unix times) in intervals of $delta seconds
+
+Uses caching when possible
+
+=cut
+
+sub horizons_data {
+  my($object,$stime,$etime,$delta) = @_;
+  local(*A);
+
+  # how many steps (TODO: can't use seconds directly, hmmm)
+  my($steps) = ceil(($etime-$stime)/$delta);
+
+  # convert to preferred format
+  $stime = strftime("%Y-%m-%d %H:%M:%S",gmtime($stime));
+  $etime = strftime("%Y-%m-%d %H:%M:%S",gmtime($etime));
+
+  # string we use for hashing
+  my($str) = "target=$object&sdate=$stime&edate=$etime&interval=$steps";
+  my($ofile) = sha1_hex($str);
+
+  # do we have it cached?
+  unless (-f "/var/tmp/HORIZONS/$ofile") {
+    # no such file, so...
+    my(%hash) = parse_form($str);
+    my($all) = read_file("/home/barrycarter/BCGIT/ASTRO/template.tcl");
+    $all=~s/\$([a-z]+)/$hash{$1}/sg;
+    open(A, "|expect - > /var/tmp/HORIZONS/$ofile");
+    print A $all;
+    close(A);
+  }
+
+  my($data) = read_file("/var/tmp/HORIZONS/$ofile");
+  $data=~s/\r//g;
+  $data=~/\$\$SOE\s*(.*?)\$\$EOE/s;
+  debug("GOT: $1");
+}
+
+
+
+die "TESTING";
+
 # using template
 
 my(%hash) = parse_form("target=399&sdate=2014-09-01&edate=2014-10-01&interval=12h");

@@ -1,0 +1,9 @@
+# In a directory with xsp files, create offsets file that shows where
+# each array in xsp file starts (in both bytes and lines, though we'll
+# probably only use bytes)
+
+imageOBJS=$(shell echo *.xsp | perl -pnle 's/\.xsp/.xsp.aos/isg')
+all: $(imageOBJS)
+
+%.xsp.aos: %.xsp
+	fgrep -inb "BEGIN_ARRAY" $< > $@
