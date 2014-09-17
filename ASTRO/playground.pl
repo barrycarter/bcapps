@@ -46,7 +46,40 @@ require "/usr/local/lib/bclib.pl";
 # 2,1,1... children are 3,3,3 then 4,7,6 then 5,15,12
 
 
-horizons_data(300,str2time("2014-09-01 GMT"),str2time("2014-10-01 GMT"),86400);
+open(A,"/home/barrycarter/SPICE/KERNELS/jup310.xsp");
+seek(A,253221110,SEEK_SET);
+
+while (<A>) {
+  debug(ieee754todec($_));
+}
+
+die "TESTING";
+
+open(A,"/home/barrycarter/SPICE/KERNELS/de430.xsp");
+seek(A,57896433,SEEK_SET);
+
+# while (<A>) {
+#   debug("THUNK: $_");
+# }
+
+# target: 464137200 = roughly today
+
+# binary search (TODO: we know file structure (linear), so can do better)
+
+my($f) = sub {debug("TESTING: $_[0]"); return test1(A,$_[0], "'A8C^5'")-464137200;};
+
+debug(findroot($f, 57896433, .9*77810085, 0, 10));
+
+my($sec) = test1(A, 66314639, "'A8C^5'");
+debug("SEC: $sec");
+
+# seek(A,66314639,SEEK_SET);
+
+while (<A>) {
+  debug(ieee754todec($_));
+}
+
+# horizons_data(399,str2time("2014-09-16 GMT"),str2time("2014-12-31 GMT"),86400);
 
 =item horizons_data($object,$stime,$etime,$delta)
 

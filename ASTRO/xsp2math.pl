@@ -5,11 +5,16 @@
 
 require "/usr/local/lib/bclib.pl";
 
+
+
+
+
+die "TESTING";
+
 # TODO: required to avoid "Integer overflow in hexadecimal number",
 # but do this better somehow
 no warnings;
 
-# TODO: this is a test file
 my($fname) = @ARGV;
 open(A,"$homedir/SPICE/KERNELS/$fname.xsp");
 my($temp);
