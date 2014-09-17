@@ -267,13 +267,20 @@ sub ieee754todec {
   # for mathematica, return value is easy
   if ($opts{mathematica}) {return qq%${sgn}FromDigits["$mant",16]*16^$pow%;}
 
+  # pad to 14 charaters, split into 2 pieces, hex each piece
+  $mant = sprintf("%014s", $mant);
+  $mant=~s/^(.{7})(.{7})$//;
+  my($p1,$p2) = ($1,$2);
+  my($val) = hex($p1)*16**($exp-7) + hex($p2)*16**($exp-14);
+  debug("VAL: $val ($str -> $p1/$p2)");
+
   # if $pow > 0, pad mantissa with 0s
   if ($pow>0) {$mant.= "0"x$pow;}
 
   # break into integer and decimal parts and add
   my($ipart) = substr($mant, 0, $exp);
   my($fpart) = substr($mant, $exp);
-  debug("CHARLIE: $ipart/$fpart");
+#  debug("CHARLIE: $ipart/$fpart");
   # NOTE: the outer parens are unnecessary, but helpful in understand
   my($val) = hex($ipart) + hex($fpart)/(16**length($fpart));
   if ($sgn eq "-") {$val*=-1;}
