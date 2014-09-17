@@ -258,6 +258,8 @@ sub ieee754todec {
   my(%opts) = parse_form($options);
 
   $str=~s/\'//g;
+  # if not a properly formatted string, return as is
+  # TODO: throw an exception here
   unless ($str=~/^(\-?)([0-9A-F]+)\^(\-?([0-9A-F]+))$/) {return $str;}
   my($sgn,$mant,$exp) = ($1,$2,hex($3));
   my($pow) = $exp-length($mant);
@@ -265,35 +267,17 @@ sub ieee754todec {
   # for mathematica, return value is easy
   if ($opts{mathematica}) {return qq%${sgn}FromDigits["$mant",16]*16^$pow%;}
 
-  # below required if $exp > length($mant)
-  # $mant2 for testing only
-  $mant2 = $mant."0"x50;
+  # if $pow > 0, pad mantissa with 0s
+  if ($pow>0) {$mant.= "0"x$pow;}
 
-  # break into integer and decimal parts
-  my($ipart) = substr($mant2, 0, $exp);
-  my($fpart) = substr($mant2, $exp);
-#  debug("BAKER: $str -> $ipart/$fpart");
+  # break into integer and decimal parts and add
+  my($ipart) = substr($mant, 0, $exp);
+  my($fpart) = substr($mant, $exp);
+  debug("CHARLIE: $ipart/$fpart");
   # NOTE: the outer parens are unnecessary, but helpful in understand
   my($val) = hex($ipart) + hex($fpart)/(16**length($fpart));
-#  debug("IPART: $ipart/$fpart ->", hex($ipart), hex($fpart));
-#  debug("VALUE:", hex($ipart), hex($fpart)/16**length($fpart));
-#  debug("VALUE:", hex($ipart), hex($fpart)/16**length($fpart));
-
-  # now the "real" (haha) value
-#  debug("MANT: $mant, POW: $pow");
-  my($num) = hex($mant)*16**$pow;
-  if ($sgn eq "-") {$num*=-1; $val*=-1;}
-
-#  debug("ALPHA: $val/$num ($ipart/$fpart vs $mant)");
-#  debug("ALPHA: $str -> $ipart/$fpart -> $val (vs $num)");
-  # just to test equivalents before I drop bad routine
-  if ($val ne $num) {
-    warn("BAD: $val vs $num ($str)");
-  } else {
-    debug("GOOD: $val vs $num ($str)");
-  }
-
-  return $num;
+  if ($sgn eq "-") {$val*=-1;}
+  return $val;
 }
 
 =item find_str_in_file($fh, $pos, $str)
