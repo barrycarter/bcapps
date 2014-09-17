@@ -50,6 +50,7 @@ open(A,"/home/barrycarter/SPICE/KERNELS/jup310.xsp");
 seek(A,253221110,SEEK_SET);
 
 while (<A>) {
+  chomp;
   debug(ieee754todec($_));
 }
 
@@ -264,9 +265,34 @@ sub ieee754todec {
   # for mathematica, return value is easy
   if ($opts{mathematica}) {return qq%${sgn}FromDigits["$mant",16]*16^$pow%;}
 
+  # below required if $exp > length($mant)
+  # $mant2 for testing only
+  $mant2 = $mant."0"x50;
+
+  # break into integer and decimal parts
+  my($ipart) = substr($mant2, 0, $exp);
+  my($fpart) = substr($mant2, $exp);
+#  debug("BAKER: $str -> $ipart/$fpart");
+  # NOTE: the outer parens are unnecessary, but helpful in understand
+  my($val) = hex($ipart) + hex($fpart)/(16**length($fpart));
+#  debug("IPART: $ipart/$fpart ->", hex($ipart), hex($fpart));
+#  debug("VALUE:", hex($ipart), hex($fpart)/16**length($fpart));
+#  debug("VALUE:", hex($ipart), hex($fpart)/16**length($fpart));
+
   # now the "real" (haha) value
+#  debug("MANT: $mant, POW: $pow");
   my($num) = hex($mant)*16**$pow;
-  if ($sgn eq "-") {$num*=-1;}
+  if ($sgn eq "-") {$num*=-1; $val*=-1;}
+
+#  debug("ALPHA: $val/$num ($ipart/$fpart vs $mant)");
+#  debug("ALPHA: $str -> $ipart/$fpart -> $val (vs $num)");
+  # just to test equivalents before I drop bad routine
+  if ($val ne $num) {
+    warn("BAD: $val vs $num ($str)");
+  } else {
+    debug("GOOD: $val vs $num ($str)");
+  }
+
   return $num;
 }
 
