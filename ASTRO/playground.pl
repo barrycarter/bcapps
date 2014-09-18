@@ -239,54 +239,6 @@ sub test1 {
 }
 
 
-=item ieee754todec($str,$options)
-
-Converts $str in IEEE-754 format to decimal number. If $str is not in
-IEEE-754 format, return it as is (however, is $str is
-apostrophe-quoted, will remove apostrophes)
-
-WARNING: Perl does not have sufficient precision to do this 100% correctly.
-
-Options:
-
-mathematica=1: return in Mathematica format (exact), not decimal
-
-=cut
-
-sub ieee754todec {
-  my($str,$options) = @_;
-  my(%opts) = parse_form($options);
-
-  $str=~s/\'//g;
-  # if not a properly formatted string, return as is
-  # TODO: throw an exception here
-  unless ($str=~/^(\-?)([0-9A-F]+)\^(\-?([0-9A-F]+))$/) {return $str;}
-  my($sgn,$mant,$exp) = ($1,$2,hex($3));
-  my($pow) = $exp-length($mant);
-
-  # for mathematica, return value is easy
-  if ($opts{mathematica}) {return qq%${sgn}FromDigits["$mant",16]*16^$pow%;}
-
-  # pad to 14 charaters, split into 2 pieces, hex each piece
-  $mant = sprintf("%014s", $mant);
-  $mant=~s/^(.{7})(.{7})$//;
-  my($p1,$p2) = ($1,$2);
-  my($val) = hex($p1)*16**($exp-7) + hex($p2)*16**($exp-14);
-  debug("VAL: $val ($str -> $p1/$p2)");
-
-  # if $pow > 0, pad mantissa with 0s
-  if ($pow>0) {$mant.= "0"x$pow;}
-
-  # break into integer and decimal parts and add
-  my($ipart) = substr($mant, 0, $exp);
-  my($fpart) = substr($mant, $exp);
-#  debug("CHARLIE: $ipart/$fpart");
-  # NOTE: the outer parens are unnecessary, but helpful in understand
-  my($val) = hex($ipart) + hex($fpart)/(16**length($fpart));
-  if ($sgn eq "-") {$val*=-1;}
-  return $val;
-}
-
 =item find_str_in_file($fh, $pos, $str)
 
 Given an open filehandle $fh and a starting byte offset $pos, read

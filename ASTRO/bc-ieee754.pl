@@ -19,10 +19,6 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# required to avoid "Integer overflow in hexadecimal number" warnings
-# TODO: not happy about this
-no warnings;
-
 for $i (@ARGV) {
 
   unless ($i=~/\.xsp$/) {

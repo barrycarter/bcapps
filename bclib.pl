@@ -32,6 +32,11 @@ $ENV{'DISPLAY'}=":0.0";
 # lets people use different home dirs
 our($homedir) = "/home/barrycarter";
 
+# git home (and other bclib hash vars)
+$bclib{githome} = "/home/barrycarter/BCGIT";
+$bclib{home} = "/home/barrycarter";
+$bclib{extdrive} = "/mnt/extdrive";
+
 # TODO: sort of bad to call this "abbrev" in global lib
 our(%ABBREV)=("BC" => lc("Patches"),
 	 "BL" => lc("Blowing"),
@@ -4554,6 +4559,45 @@ sub num2base {
     $num = floor($num/$base);
   }
   return @ret;
+}
+
+=item ieee754todec($str,$options)
+
+Converts $str in IEEE-754 format to decimal number. If $str is not in
+IEEE-754 format, return it as is (however, is $str is
+apostrophe-quoted, will remove apostrophes)
+
+Options:
+
+mathematica=1: return in Mathematica format (exact), not decimal
+
+=cut
+
+sub ieee754todec {
+  my($str,$options) = @_;
+  my(%opts) = parse_form($options);
+
+  $str=~s/\'//g;
+
+  # HACK: if string is pure hex (no exponent), return its hex value
+  if ($str=~/^[0-9A-F]+$/) {return hex($str);}
+
+  # if not a properly formatted string, return as is
+  # TODO: throw an exception here
+  unless ($str=~/^(\-?)([0-9A-F]+)\^(\-?([0-9A-F]+))$/) {return $str;}
+  my($sgn,$mant,$exp) = ($1,$2,hex($3));
+  my($pow) = $exp-length($mant);
+
+  # for mathematica, return value is easy
+  if ($opts{mathematica}) {return qq%${sgn}FromDigits["$mant",16]*16^$pow%;}
+
+  # pad to 14 charaters, split into 2 pieces, hex each piece
+  $mant = substr($mant."0"x14,0,14);
+  $mant=~s/^(.{7})(.{7})$//;
+  my($p1,$p2) = ($1,$2);
+  my($val) = hex($p1)*16**($exp-7) + hex($p2)*16**($exp-14);
+  if ($sgn eq "-") {$val*=-1;}
+  return $val;
 }
 
 # cleanup files created by my_tmpfile (unless --keeptemp set)
