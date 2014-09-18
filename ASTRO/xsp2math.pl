@@ -7,7 +7,7 @@ require "/usr/local/lib/bclib.pl";
 
 
 # xsp2math("de431_part-2", 4, 0, 0);
-xsp2math("jup310", 4, 1411072450, 1411072450);
+xsp2math("jup310", 4, 719812778, 1411072450);
 
 
 die "TESTING";
