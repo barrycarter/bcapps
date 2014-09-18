@@ -6,7 +6,8 @@
 require "/usr/local/lib/bclib.pl";
 
 
-xsp2math("de431_part-2", 3, 0, 0);
+# xsp2math("de431_part-2", 4, 0, 0);
+xsp2math("jup310", 4, 0, 0);
 
 
 die "TESTING";
@@ -86,37 +87,106 @@ sub xsp2math {
   $stime -= 946684800;
   $etime -= 946684800;
 
-  # find where all arrays begin (to find length of this one)
-  my(@res)=`fgrep 'BEGIN_ARRAY' $bclib{githome}/ASTRO/array-offsets.txt | fgrep $kern`;
-  debug("RES",@res);
-  die "TESTING";
-
-
-  # this file must exist, start of arrays in bytes
-  my($res)=`fgrep 'BEGIN_ARRAY $idx' $bclib{githome}/ASTRO/array-offsets.txt | fgrep $kern`;
-  debug("RES: $res");
-
-  # read data about this array
-  unless ($res=~s/^.*?:.*?:(.*?):BEGIN_ARRAY $idx (\d+)$//) {warn "BAD: $res";}
-  my($byte, $len) = ($1,$2);
+  # find where this array begins/ends
+  my(@res)=`fgrep '_ARRAY $idx' $bclib{githome}/ASTRO/array-offsets.txt | fgrep $kern`;
+  for $i (@res) {
+    unless ($i=~s/^.*?:.*?:(.*?):(BEGIN|END)_ARRAY $idx (\d+)$//) {
+      warn "BAD: $res";
+    }
+    $info{lc($2)."_array"} = $1;
+    $info{length} = $3;
+  }
 
   # TODO: use filehandle instead of opening one ourselves?
   my($fname) = "$bclib{home}/SPICE/KERNELS/$kern.xsp";
   open(A,$fname) || die("Can't open $fname, $!");
-  debug("BYTE: $byte");
-  seek(A, $byte, SEEK_SET);
+  seek(A, $info{begin_array}, SEEK_SET);
 
   # first 11 lines of the array are special
   for $i (0..10) {push(@arr, scalar(<A>));}
-  debug("ARR",@arr);
-  # start/end of integration dates, not actual data dates (but close?)
-  $info{sdate} = ieee754todec($arr[2]);
-  $info{edate} = ieee754todec($arr[3]);
+
+  # get information from those lines
   $info{objid} = ieee754todec($arr[4]);
-  $info{truestart} = ieee754todec($arr[9]);
   $info{interval} = ieee754todec($arr[10]);
+  # middle of the first interval (not true start)
+  $info{sdate} = ieee754todec($arr[9]);
   # we need the hex form of the interval to find interval boundaries
   $info{boundary} = $arr[10];
+
+  debug("INFO",%info);
+
+  # function for binary search
+  my($f) = sub {
+    debug("CALLED",@_);
+    seek(A,shift,SEEK_SET);
+    return nasa_sec(A,$info{boundary})-$stime;
+  };
+
+  debug(findroot($f, $info{begin_array}, $info{end_array}));
+
+  die "TESTING";
+
+  # TESTING
+  seek(A, 370000000, SEEK_SET);
+  debug("NS", nasa_sec(A,$info{boundary}));
+  die "TESTING";
+
+  # TODO: this reverse engineering seems really clunky
+
+  # how many coefficients per "chunk"?
+  do {
+    $i=<A>;
+    $info{count}++;
+  } until ($i eq $info{boundary});
+
+  # find end date
+  seek(A, $info{end_array}, SEEK_SET);
+  do {$i = current_line(A, "\n", -1)} until ($i eq $info{boundary});
+  $info{edate} = ieee754todec(current_line(A, "\n", -1));
+
+  # how many sets of coefficients? (interval is half length)
+  $info{ncoeffsets} = ($info{edate}-$info{sdate})/$info{interval}/2;
+  # how many coeffs per set (subtract 2 for interval + NASA second)
+  $info{ncoeffs} = floor($info{length}/$info{ncoeffsets}-2);
+  # TODO: ncoeffs and count are redundant
+
+  # in which coefficient set does $stime fall (-1/2 because interval is midpt)
+  my($int) = floor(($stime-$info{sdate})/$info{interval}/2-0.5);
+  debug("INT: $int");
+  # roughly, where is this interval?
+  my($ipos) = floor(($info{end_array}-$info{begin_array})*($int/$info{ncoeffsets})+$info{begin_array});
+
+  debug("INFO",%info);
+
+  seek(A, $ipos, SEEK_SET);
+  debug("IPOS: $ipos");
+  while ($i=scalar(<A>)) {debug(ieee754todec($i));}
+
+
+
+die "TESTING";
+
+
+  # how many chunks (based on array length)
+  $info{nchunks} = floor($info{length}/$info{count});
+
+  # all but 2 are coeffs
+  $info{ncoeffs} = $info{count}-2;
+
+  # TODO: this is sometimes 6, sometimes 3!
+  # coeffs per poly... TODO
+
+  # how many sets of coefficients?
+  debug("GAMMA: $info{length} $info{count}");
+
+  # estimate position of $stime (in bytes)
+  my($spos)=($stime-$info{truestart})/($info{edate}-$info{truestart});
+  debug("SPOS: $spos");
+
+  debug("COUNT: $info{count}");
+
+  debug("INFO",%info);
+  die "TESTING";
 
   # distance in bytes between boundaries (at least first/second)
   my($bs) = tell(A);
@@ -169,3 +239,17 @@ sub xsp2math {
   debug("INFO",%info);
 }
 
+# Given an open filehandle to an XSP file and a delimiter, return the
+# NASA second closest to where the filehandle is open (this function
+# is local to this program, not global)
+
+sub nasa_sec {
+  my($fh, $delim) = @_;
+  my($temp, $i);
+  # find delimiter
+  while (scalar(<$fh>) ne $delim) {next;}
+  # rewind three rows
+  debug("REWINDING...");
+  for $i (1..3) {$temp = current_line($fh, "\n", -1);}
+  return ieee754todec($temp);
+}
