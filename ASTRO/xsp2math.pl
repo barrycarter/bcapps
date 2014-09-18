@@ -86,6 +86,12 @@ sub xsp2math {
   $stime -= 946684800;
   $etime -= 946684800;
 
+  # find where all arrays begin (to find length of this one)
+  my(@res)=`fgrep 'BEGIN_ARRAY' $bclib{githome}/ASTRO/array-offsets.txt | fgrep $kern`;
+  debug("RES",@res);
+  die "TESTING";
+
+
   # this file must exist, start of arrays in bytes
   my($res)=`fgrep 'BEGIN_ARRAY $idx' $bclib{githome}/ASTRO/array-offsets.txt | fgrep $kern`;
   debug("RES: $res");
