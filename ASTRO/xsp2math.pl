@@ -7,7 +7,7 @@ require "/usr/local/lib/bclib.pl";
 
 
 # xsp2math("de431_part-2", 4, 0, 0);
-xsp2math("jup310", 4, 0, 0);
+xsp2math("jup310", 4, 1411072450, 1411072450);
 
 
 die "TESTING";
@@ -113,16 +113,50 @@ sub xsp2math {
   # we need the hex form of the interval to find interval boundaries
   $info{boundary} = $arr[10];
 
-  debug("INFO",%info);
+#  debug("INFO",%info);
 
   # function for binary search
   my($f) = sub {
-    debug("CALLED",@_);
-    seek(A,shift,SEEK_SET);
-    return nasa_sec(A,$info{boundary})-$stime;
+    my($byte) = @_;
+    my($rval);
+    debug("BYTE: $_[0]");
+    seek(A,round($byte),SEEK_SET);
+    # pull towards middle to avoid running off end of array
+    if ($byte > ($info{begin_array}+$info{end_array})/2) {
+      debug("CASE DELTA");
+      $rval = nasa_sec(A,$info{boundary},-1);
+    } else {
+      debug("CASE ECHO");
+      $rval = nasa_sec(A,$info{boundary},0);
+    }
+
+    debug("RVAL: $rval");
+    return $rval-$stime;
   };
 
-  debug(findroot($f, $info{begin_array}, $info{end_array}));
+  # below automatically positions A correctly, so we ignore return value
+  findroot($f, $info{begin_array}, $info{end_array}, $info{interval});
+
+  my(@coeffs) = nasa_sec(A,$info{boundary},0,1);
+  my($time) = shift(@coeffs);
+  debug("LENGTH".scalar(@coeffs));
+
+  # the x coeffs are the first 1/6th of the coeffs
+  print "interval = $info{interval}\n";
+  print "time = $time+946684800;\n";
+  print "objid = $info{objid};\n";
+  print "test[t_] = \n";
+  for $i (0..scalar(@coeffs/6)-1) {
+    print "$coeffs[$i]*ChebyshevT[$i,t]+\n";
+  }
+  print "0;\n";
+
+  die "TESTING";
+
+
+  while ($i=scalar(<A>)) {
+    debug("I: ".ieee754todec($i));
+  }
 
   die "TESTING";
 
@@ -239,17 +273,61 @@ die "TESTING";
   debug("INFO",%info);
 }
 
-# Given an open filehandle to an XSP file and a delimiter, return the
-# NASA second closest to where the filehandle is open (this function
-# is local to this program, not global)
+# Given $fh, an open filehandle to an XSP file and a delimiter $delim, 
+# return the next NASA second from the filehandle's current position.
+# If $dir==-1, return the previous NASA second (should be 0 otherwise)
+# If $info==1, return coefficients as well
+# This subroutine is local and thus not perldoc'd
 
 sub nasa_sec {
-  my($fh, $delim) = @_;
-  my($temp, $i);
+  my($fh, $delim, $dir, $info) = @_;
+  my($temp, $i, @arr);
+
   # find delimiter
-  while (scalar(<$fh>) ne $delim) {next;}
-  # rewind three rows
-  debug("REWINDING...");
-  for $i (1..3) {$temp = current_line($fh, "\n", -1);}
-  return ieee754todec($temp);
+  if ($dir == -1) {
+    while ($i = scalar(current_line($fh, "\n", -1))) {
+      debug("REV: $i");
+      if ($i eq $delim) {last;}
+    }
+  } else {
+    while ($i = scalar(<$fh>)) {
+      debug("FOR: $i");
+      if ($i eq $delim) {last;}
+    }
+  }
+
+  # TODO: watch out for stray '1024' like things
+
+  # rewind one or three rows depending on direction
+  debug("DIR: $dir");
+  for $i (1..3+2*$dir) {
+    $temp = current_line($fh, "\n", -1);
+    debug("REWIND: $temp");
+  }
+
+  debug("TEMP: $temp, RETURNING:", ieee754todec($temp));
+
+  # just requesting time? provide it
+  unless ($info) {return ieee754todec($temp);}
+
+  # ignore first line (it's just an ending apos), second line is time,
+  # third line is delimiter, all lines to next delimiter are
+  # coefficients (except last one is time)
+
+  my($ignore) = scalar(<$fh>);
+  debug("IGNORE: $ignore");
+  my($time) = ieee754todec(scalar(<$fh>));
+  my($ignore) = scalar(<$fh>);
+  debug("IGNORE2: $ignore");
+
+  while ($i=scalar(<$fh>)) {
+    debug("TIME: $time, pushing: $i");
+    if ($i eq $delim) {last;}
+    push(@arr, $i);
+  }
+
+  # convert to Mathematica format (all but last one) for now
+  map($_=ieee754todec($_,"mathematica=1"),@arr);
+  return ($time,@arr[0..$#arr-1]);
 }
+
