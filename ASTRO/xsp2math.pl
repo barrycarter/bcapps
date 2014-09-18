@@ -7,7 +7,8 @@ require "/usr/local/lib/bclib.pl";
 
 
 # xsp2math("de431_part-2", 4, 0, 0);
-xsp2math("jup310", 4, 719812778, 1411072450);
+# xsp2math("jup310", 4, 719812778, 1411072450);
+xsp2math("sat365", 6, 719812778, 1411072450);
 
 
 die "TESTING";
@@ -83,9 +84,9 @@ seconds. Result is normalized to Unix days (ie: Unix second/86400)
 sub xsp2math {
   my($kern, $idx, $stime, $etime) = @_;
   my(@arr, %info);
-  # convert stime/etime to NASA format (seconds since 2000-01-01)
-  $stime -= 946684800;
-  $etime -= 946684800;
+  # convert stime/etime to NASA format (seconds since 2000-01-01 noon UTC)
+  $stime -= 946728000;
+  $etime -= 946728000;
 
   # find where this array begins/ends
   my(@res)=`fgrep '_ARRAY $idx' $bclib{githome}/ASTRO/array-offsets.txt | fgrep $kern`;
@@ -143,7 +144,7 @@ sub xsp2math {
 
   # the x coeffs are the first 1/6th of the coeffs
   print "interval = $info{interval}\n";
-  print "time = $time+946684800;\n";
+  print "time = $time+946728000;\n";
   print "objid = $info{objid};\n";
   print "test[t_] = \n";
   for $i (0..scalar(@coeffs/6)-1) {
