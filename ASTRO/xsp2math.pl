@@ -161,23 +161,49 @@ sub read_coeffs {
 
   # interval is the delimiter in decimal form
   my($int) = ieee754todec($delim);
-  my(@arr);
+  my($time, %hash);
 
   # read elements, do special things if we see $delim
   while ($i=scalar<$fh>) {
 
-    # push most elts to arr
-    unless ($i eq $delim) {push(@arr,$i); next;}
+    # push most elts to array of current time
+    unless ($i eq $delim) {push(@{$hash{$time}},$i); next;}
 
-    # if this elt is delim, last elt was time
-    my($time) = ieee754todec($arr[-1]);
+    # if this elt is delim, last elt was time, so set new time
+    # this allows removes the time (which isn't a coeff) from the prev array
+    $time = ieee754todec(pop(@{$hash{$time}}));
 
-    # too early? too late?
-    if ($time+$int < $stime) {warn "TOO EARLY";}
-    if ($time-$int > $etime) {warn "end of coeffs reached (not an error)";}
+    # if $time too early, true error (but do nothing about it)
+    if ($time+$int < $stime) {warn "TOO EARLY"; next;}
 
-    debug("TIME: $time");
-
+    # if $time too late, we've reached end of coeffs (not an error)
+    if ($time-$int > $etime) {last;}
   }
 
+  # now, handle coefficients for each time period
+  for $i (sort keys %hash) {
+
+    # determine the Unix days this formula is valid
+    my($range) = ($i+946728000)/86400;
+    # this is a literal string: Mathematica will do the math
+    my($cond) = "/; t > $range-$int/86400 && t < $range+$int/86400";
+    # and the conversion to get time to (-1,1) interval
+    my($conv) = "86400*(t-$range)/$int";
+    debug("CONV: $conv");
+
+
+    # TODO: Most SPICE files give 6 parameters (X,Y,Z,VX,VY,VZ), the
+    # last 3 of which are redundant; however, some (DE43*?) only give the 3
+    # non-redundant ones. Tweak program to compensate
+    # NOTE: The DE43* may also have different indexing for Cheb
+    my($clen) = scalar(@{$hash{$i}})/6;
+
+    for $j ("x","y","z") {
+      for $k (0..$clen-1) {
+	debug("I: $i, J: $j, K: $k");
+      }
+    }
+  }
 }
+
+
