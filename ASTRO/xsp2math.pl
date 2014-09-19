@@ -8,7 +8,9 @@ require "/usr/local/lib/bclib.pl";
 
 # xsp2math("de431_part-2", 4, 0, 0);
 # xsp2math("jup310", 4, 719812778, 1411072450);
-xsp2math("sat365", 6, 0, 3.14*10**7);
+# xsp2math("sat365", 6, 0, 3.14*10**7);
+xsp2math("sat365", 6, 0, 86400*10);
+# xsp2math("jup310", 1, 0, 86400*10);
 
 =item xsp2math($kern, $idx, $stime, $etime)
 
@@ -71,7 +73,7 @@ sub xsp2math {
 
   # below automatically positions A correctly, so we ignore return value
   findroot($f, $info{begin_array}, $info{end_array}, $info{interval});
-  read_coeffs(A, $stime, $etime, $info{boundary});
+  read_coeffs(A, $stime, $etime, $info{boundary}, $info{objid});
 
   die "TESTING";
 
@@ -149,15 +151,15 @@ sub nasa_sec {
 }
 
 
-# Read Chebyshev coefficients from $fh, starting at $stime (or
-# earlier) and ending at $etime (in NASA seconds) or later, in
+# Read Chebyshev coefficients for $objid from $fh, starting at $stime
+# (or earlier) and ending at $etime (in NASA seconds) or later, in
 # Mathematica usable format (the Mathematica forms are in Unix days,
 # not NASA seconds). $delim is the delimiter (interval) between chunks
 
 # TODO: this replaces the $info parameter to nasa_sec
 
 sub read_coeffs {
-  my($fh, $stime, $etime, $delim) = @_;
+  my($fh, $stime, $etime, $delim, $objid) = @_;
 
   # interval is the delimiter in decimal form
   my($int) = ieee754todec($delim);
@@ -165,6 +167,11 @@ sub read_coeffs {
 
   # read elements, do special things if we see $delim
   while ($i=scalar<$fh>) {
+
+    debug("I: $i");
+
+    # ignore things outside quotes
+    unless ($i=~/^\'/) {next;}
 
     # push most elts to array of current time
     unless ($i eq $delim) {push(@{$hash{$time}},$i); next;}
@@ -177,16 +184,23 @@ sub read_coeffs {
     if ($time+$int < $stime) {warn "TOO EARLY"; next;}
 
     # if $time too late, we've reached end of coeffs (not an error)
-    if ($time-$int > $etime) {last;}
+    if ($time-$int > $etime) {
+      debug("$time minus $int > $etime");
+      last;
+    }
   }
 
-  # now, handle coefficients for each time period
-  for $i (sort keys %hash) {
+  # the null entry causes problems
+  delete $hash{""};
 
-    # determine the Unix days this formula is valid
-    my($range) = ($i+946728000)/86400;
+  # now, handle coefficients for each time period
+  for $i (sort {$a <=> $b} keys %hash) {
+    debug("I: $i");
+
+    # determine the UnCix days this formula is valid (a literal string)
+    my($range) = "($i+946728000)/86400";
     # this is a literal string: Mathematica will do the math
-    my($cond) = "/; t > $range-$int/86400 && t < $range+$int/86400";
+    my($cond) = "/; (t >= $range-$int/86400 && t <= $range+$int/86400)";
     # and the conversion to get time to (-1,1) interval
     my($conv) = "86400*(t-$range)/$int";
     debug("CONV: $conv");
@@ -197,13 +211,26 @@ sub read_coeffs {
     # non-redundant ones. Tweak program to compensate
     # NOTE: The DE43* may also have different indexing for Cheb
     my($clen) = scalar(@{$hash{$i}})/6;
+    debug("CLEN: $clen");
 
     for $j ("x","y","z") {
+      # array of Cheb coeffs
+      my(@cheb);
+
       for $k (0..$clen-1) {
-	debug("I: $i, J: $j, K: $k");
+	# the current coefficient
+	my($coeff) = ieee754todec(shift(@{$hash{$i}}), "mathematica=1");
+	debug("$i/$j/$k/$coeff");
+	debug("CONV: $conv");
+	push(@cheb, "$coeff*ChebyshevT[$k, $conv]");
       }
+
+      # TODO: not crazy about using x/y/z as functions, prefer pos[x]... ?
+      my($form) = "$j\[$objid,t_] := ".join("+\n", @cheb)."$cond;";
+      debug("FORM: $form");
+      # for testing
+      print "$form\n";
+
     }
   }
 }
-
-
