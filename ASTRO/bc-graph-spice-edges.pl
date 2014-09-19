@@ -5,6 +5,16 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# read planet names
+for $i (`fgrep -v '#' $bclib{githome}/ASTRO/planet-ids.txt`) {
+  chomp($i);
+  $i=~s/^(\d+)\s+//;
+  my($id) = $1;
+  $name{$id} = $i;
+  # replace leading digits
+  $name{$id}=~s/^(\d)/x$1/;
+}
+
 my(@all) = split("\n--\n", read_file("$bclib{githome}/ASTRO/some-array-data.txt"));
 
 for $i (@all) {
@@ -29,16 +39,19 @@ for $i (@all) {
   # two bodies may have positional data in multiple files/arrays
   $file=~s/\.xsp//;
   $file=~s/\-//g;
-  push(@{$edge{$source}{$target}}, "x$file,$idx,");
+  push(@{$edge{$source}{$target}}, "x$file,$idx");
 }
 
 print "digraph x {\n";
 
 for $i (keys %edge) {
   for $j (keys %{$edge{$i}}) {
-    $source = join("", @{$edge{$i}{$j}});
+    $source = join(",", @{$edge{$i}{$j}});
     debug("SRC: $source");
-    print hex($i)," -> ",hex($j)," [label=$source]\n";
+    my($from) = $name{hex($i)};
+    my($to) = $name{hex($j)};
+    print qq%"$from" -> "$to" [label=$source]\n%;
+#    print qq%"$from" -- "$to" [label=$source]\n%;
   }
 }
 
@@ -46,7 +59,8 @@ print "};\n";
 
 # pipe output to:
 # dot -Tpng -Nshape=record | display -
-
+# twopi -Tpng -Nshape=box -Nheight=0.01 -Nwidth=0.05 -Nfontsize=8 -Efontsize=8 -Goverlap=scale
+# twopi -Tpng -Nshape=record -Nheight=0.1 -Nfixedsize=1 -Nfontsize=6 -Efontsize=0 -Granksep=2 -Earrowsize=.25 -Goverlap=true
 
 
 
