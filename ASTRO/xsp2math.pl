@@ -8,7 +8,7 @@ require "/usr/local/lib/bclib.pl";
 
 # xsp2math("de431_part-2", 4, 0, 0);
 # xsp2math("jup310", 4, 719812778, 1411072450);
-xsp2math("sat365", 6, 719812778, 1411072450);
+xsp2math("sat365", 6, 0, 3.14*10**7);
 
 =item xsp2math($kern, $idx, $stime, $etime)
 
@@ -21,9 +21,10 @@ seconds. Result is normalized to Unix days (ie: Unix second/86400)
 sub xsp2math {
   my($kern, $idx, $stime, $etime) = @_;
   my(@arr, %info);
+  # TODO: handle this converstion at some point
   # convert stime/etime to NASA format (seconds since 2000-01-01 noon UTC)
-  $stime -= 946728000;
-  $etime -= 946728000;
+#  $stime -= 946728000;
+#  $etime -= 946728000;
 
   # find where this array begins/ends
   my(@res)=`fgrep '_ARRAY $idx' $bclib{githome}/ASTRO/array-offsets.txt | fgrep $kern`;
@@ -51,8 +52,6 @@ sub xsp2math {
   # we need the hex form of the interval to find interval boundaries
   $info{boundary} = $arr[10];
 
-#  debug("INFO",%info);
-
   # function for binary search
   my($f) = sub {
     my($byte) = @_;
@@ -61,19 +60,20 @@ sub xsp2math {
     seek(A,round($byte),SEEK_SET);
     # pull towards middle to avoid running off end of array
     if ($byte > ($info{begin_array}+$info{end_array})/2) {
-      debug("CASE DELTA");
       $rval = nasa_sec(A,$info{boundary},-1);
     } else {
-      debug("CASE ECHO");
       $rval = nasa_sec(A,$info{boundary},0);
     }
 
-    debug("RVAL: $rval");
+#    debug("RVAL: $rval");
     return $rval-$stime;
   };
 
   # below automatically positions A correctly, so we ignore return value
   findroot($f, $info{begin_array}, $info{end_array}, $info{interval});
+  read_coeffs(A, $stime, $etime, $info{boundary});
+
+  die "TESTING";
 
   my(@coeffs) = nasa_sec(A,$info{boundary},0,1);
   my($time) = shift(@coeffs);
@@ -103,12 +103,12 @@ sub nasa_sec {
   # find delimiter
   if ($dir == -1) {
     while ($i = scalar(current_line($fh, "\n", -1))) {
-      debug("REV: $i");
+#      debug("REV: $i");
       if ($i eq $delim) {last;}
     }
   } else {
     while ($i = scalar(<$fh>)) {
-      debug("FOR: $i");
+#      debug("FOR: $i");
       if ($i eq $delim) {last;}
     }
   }
@@ -119,10 +119,10 @@ sub nasa_sec {
   debug("DIR: $dir");
   for $i (1..3+2*$dir) {
     $temp = current_line($fh, "\n", -1);
-    debug("REWIND: $temp");
+#    debug("REWIND: $temp");
   }
 
-  debug("TEMP: $temp, RETURNING:", ieee754todec($temp));
+#  debug("TEMP: $temp, RETURNING:", ieee754todec($temp));
 
   # just requesting time? provide it
   unless ($info) {return ieee754todec($temp);}
@@ -132,13 +132,13 @@ sub nasa_sec {
   # coefficients (except last one is time)
 
   my($ignore) = scalar(<$fh>);
-  debug("IGNORE: $ignore");
+#  debug("IGNORE: $ignore");
   my($time) = ieee754todec(scalar(<$fh>));
   my($ignore) = scalar(<$fh>);
-  debug("IGNORE2: $ignore");
+#  debug("IGNORE2: $ignore");
 
   while ($i=scalar(<$fh>)) {
-    debug("TIME: $time, pushing: $i");
+#    debug("TIME: $time, pushing: $i");
     if ($i eq $delim) {last;}
     push(@arr, $i);
   }
@@ -146,4 +146,38 @@ sub nasa_sec {
   # convert to Mathematica format (all but last one) for now
   map($_=ieee754todec($_,"mathematica=1"),@arr);
   return ($time,@arr[0..$#arr-1]);
+}
+
+
+# Read Chebyshev coefficients from $fh, starting at $stime (or
+# earlier) and ending at $etime (in NASA seconds) or later, in
+# Mathematica usable format (the Mathematica forms are in Unix days,
+# not NASA seconds). $delim is the delimiter (interval) between chunks
+
+# TODO: this replaces the $info parameter to nasa_sec
+
+sub read_coeffs {
+  my($fh, $stime, $etime, $delim) = @_;
+
+  # interval is the delimiter in decimal form
+  my($int) = ieee754todec($delim);
+  my(@arr);
+
+  # read elements, do special things if we see $delim
+  while ($i=scalar<$fh>) {
+
+    # push most elts to arr
+    unless ($i eq $delim) {push(@arr,$i); next;}
+
+    # if this elt is delim, last elt was time
+    my($time) = ieee754todec($arr[-1]);
+
+    # too early? too late?
+    if ($time+$int < $stime) {warn "TOO EARLY";}
+    if ($time-$int > $etime) {warn "end of coeffs reached (not an error)";}
+
+    debug("TIME: $time");
+
+  }
+
 }
