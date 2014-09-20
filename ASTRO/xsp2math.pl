@@ -9,8 +9,14 @@ require "/usr/local/lib/bclib.pl";
 # xsp2math("de431_part-2", 4, 0, 0);
 # xsp2math("jup310", 4, 719812778, 1411072450);
 # xsp2math("sat365", 6, 0, 3.14*10**7);
-xsp2math("sat365", 6, 0, 86400*10);
+# xsp2math("sat365", 6, time(), time()+86400*100);
 # xsp2math("jup310", 1, 0, 86400*10);
+
+# get earth position from earth/moon barycenter from jup310.xsp (just
+# as a weird example)
+
+xsp2math("jup310", 13, 0, 86400*365);
+
 
 =item xsp2math($kern, $idx, $stime, $etime)
 
@@ -23,10 +29,9 @@ seconds. Result is normalized to Unix days (ie: Unix second/86400)
 sub xsp2math {
   my($kern, $idx, $stime, $etime) = @_;
   my(@arr, %info);
-  # TODO: handle this converstion at some point
   # convert stime/etime to NASA format (seconds since 2000-01-01 noon UTC)
-#  $stime -= 946728000;
-#  $etime -= 946728000;
+  $stime -= 946728000;
+  $etime -= 946728000;
 
   # find where this array begins/ends
   my(@res)=`fgrep '_ARRAY $idx' $bclib{githome}/ASTRO/array-offsets.txt | fgrep $kern`;
@@ -43,16 +48,16 @@ sub xsp2math {
   open(A,$fname) || die("Can't open $fname, $!");
   seek(A, $info{begin_array}, SEEK_SET);
 
-  # first 11 lines of the array are special
-  for $i (0..10) {push(@arr, scalar(<A>));}
+  # "" = values that aren't IEEE754 and/or we don't care about
+  my(@map) = ("", "", "int_start", "int_end", "target_id", "source_id",
+	      "", "coeff_flag", "", "mid_first");
 
-  # get information from those lines
-  $info{objid} = ieee754todec($arr[4]);
-  $info{interval} = ieee754todec($arr[10]);
-  # middle of the first interval (not true start)
-  $info{sdate} = ieee754todec($arr[9]);
-  # we need the hex form of the interval to find interval boundaries
-  $info{boundary} = $arr[10];
+  # first 11 lines of the array are special (11th line is super special)
+  for $i (0..$#map) {$info{$map[$i]} = ieee754todec(scalar(<A>));}
+
+  # 11th line, need both hex and decimal forms of interval (hex = boundary)
+  $info{boundary} = scalar(<A>);
+  $info{interval} = ieee754todec($info{boundary});
 
   # function for binary search
   my($f) = sub {
@@ -66,51 +71,35 @@ sub xsp2math {
     } else {
       $rval = nasa_sec(A,$info{boundary},0);
     }
-
-#    debug("RVAL: $rval");
+    debug("RETURNING $rval-$stime", $rval-$stime);
     return $rval-$stime;
   };
 
   # below automatically positions A correctly, so we ignore return value
+  debug("INT: $info{interval}");
   findroot($f, $info{begin_array}, $info{end_array}, $info{interval});
-  read_coeffs(A, $stime, $etime, $info{boundary}, $info{objid});
-
-  die "TESTING";
-
-  my(@coeffs) = nasa_sec(A,$info{boundary},0,1);
-  my($time) = shift(@coeffs);
-  debug("LENGTH".scalar(@coeffs));
-
-  # the x coeffs are the first 1/6th of the coeffs
-  print "interval = $info{interval}\n";
-  print "time = $time+946728000;\n";
-  print "objid = $info{objid};\n";
-  print "test[t_] = \n";
-  for $i (0..scalar(@coeffs/6)-1) {
-    print "$coeffs[$i]*ChebyshevT[$i,t]+\n";
-  }
-  print "0;\n";
+  read_coeffs(A, $stime, $etime, {%info});
 }
 
-# Given $fh, an open filehandle to an XSP file and a delimiter $delim, 
+# Given $fh, an open filehandle to an XSP file and a delimiter $delim,
 # return the next NASA second from the filehandle's current position.
 # If $dir==-1, return the previous NASA second (should be 0 otherwise)
-# If $info==1, return coefficients as well
 # This subroutine is local and thus not perldoc'd
 
 sub nasa_sec {
-  my($fh, $delim, $dir, $info) = @_;
+  my($fh, $delim, $dir) = @_;
   my($temp, $i, @arr);
+  debug("DELIM: $delim");
 
   # find delimiter
   if ($dir == -1) {
     while ($i = scalar(current_line($fh, "\n", -1))) {
-#      debug("REV: $i");
+      debug("REV: $i");
       if ($i eq $delim) {last;}
     }
   } else {
     while ($i = scalar(<$fh>)) {
-#      debug("FOR: $i");
+      debug("FOR: $i");
       if ($i eq $delim) {last;}
     }
   }
@@ -118,63 +107,36 @@ sub nasa_sec {
   # TODO: watch out for stray '1024' like things
 
   # rewind one or three rows depending on direction
-  debug("DIR: $dir");
   for $i (1..3+2*$dir) {
     $temp = current_line($fh, "\n", -1);
-#    debug("REWIND: $temp");
   }
 
-#  debug("TEMP: $temp, RETURNING:", ieee754todec($temp));
-
-  # just requesting time? provide it
-  unless ($info) {return ieee754todec($temp);}
-
-  # ignore first line (it's just an ending apos), second line is time,
-  # third line is delimiter, all lines to next delimiter are
-  # coefficients (except last one is time)
-
-  my($ignore) = scalar(<$fh>);
-#  debug("IGNORE: $ignore");
-  my($time) = ieee754todec(scalar(<$fh>));
-  my($ignore) = scalar(<$fh>);
-#  debug("IGNORE2: $ignore");
-
-  while ($i=scalar(<$fh>)) {
-#    debug("TIME: $time, pushing: $i");
-    if ($i eq $delim) {last;}
-    push(@arr, $i);
-  }
-
-  # convert to Mathematica format (all but last one) for now
-  map($_=ieee754todec($_,"mathematica=1"),@arr);
-  return ($time,@arr[0..$#arr-1]);
+  return ieee754todec($temp);
 }
 
-
-# Read Chebyshev coefficients for $objid from $fh, starting at $stime
-# (or earlier) and ending at $etime (in NASA seconds) or later, in
-# Mathematica usable format (the Mathematica forms are in Unix days,
-# not NASA seconds). $delim is the delimiter (interval) between chunks
-
-# TODO: this replaces the $info parameter to nasa_sec
+# Read Chebyshev coefficients for given object (as hash) from $fh,
+# starting at $stime (or earlier) and ending at $etime (in NASA
+# seconds) or later, in Mathematica usable format (the Mathematica
+# forms are in Unix days, not NASA seconds).
 
 sub read_coeffs {
-  my($fh, $stime, $etime, $delim, $objid) = @_;
+  my($fh, $stime, $etime, $hashref) = @_;
 
   # interval is the delimiter in decimal form
-  my($int) = ieee754todec($delim);
+  my($int) = ieee754todec($hashref->{boundary});
   my($time, %hash);
 
   # read elements, do special things if we see $delim
   while ($i=scalar<$fh>) {
 
-    debug("I: $i");
-
     # ignore things outside quotes
     unless ($i=~/^\'/) {next;}
 
     # push most elts to array of current time
-    unless ($i eq $delim) {push(@{$hash{$time}},$i); next;}
+    unless ($i eq $hashref->{boundary}) {
+      push(@{$hash{$time}},$i);
+      next;
+    }
 
     # if this elt is delim, last elt was time, so set new time
     # this allows removes the time (which isn't a coeff) from the prev array
@@ -184,10 +146,7 @@ sub read_coeffs {
     if ($time+$int < $stime) {warn "TOO EARLY"; next;}
 
     # if $time too late, we've reached end of coeffs (not an error)
-    if ($time-$int > $etime) {
-      debug("$time minus $int > $etime");
-      last;
-    }
+    if ($time-$int > $etime) {last;}
   }
 
   # the null entry causes problems
@@ -195,7 +154,6 @@ sub read_coeffs {
 
   # now, handle coefficients for each time period
   for $i (sort {$a <=> $b} keys %hash) {
-    debug("I: $i");
 
     # determine the UnCix days this formula is valid (a literal string)
     my($range) = "($i+946728000)/86400";
@@ -203,15 +161,14 @@ sub read_coeffs {
     my($cond) = "/; (t >= $range-$int/86400 && t <= $range+$int/86400)";
     # and the conversion to get time to (-1,1) interval
     my($conv) = "86400*(t-$range)/$int";
-    debug("CONV: $conv");
-
 
     # TODO: Most SPICE files give 6 parameters (X,Y,Z,VX,VY,VZ), the
     # last 3 of which are redundant; however, some (DE43*?) only give the 3
     # non-redundant ones. Tweak program to compensate
     # NOTE: The DE43* may also have different indexing for Cheb
-    my($clen) = scalar(@{$hash{$i}})/6;
-    debug("CLEN: $clen");
+    # coeff_flag might give this info?
+
+    my($clen) = scalar(@{$hash{$i}})/(3+3*($hashref->{coeff_flag}-2));
 
     for $j ("x","y","z") {
       # array of Cheb coeffs
@@ -220,17 +177,17 @@ sub read_coeffs {
       for $k (0..$clen-1) {
 	# the current coefficient
 	my($coeff) = ieee754todec(shift(@{$hash{$i}}), "mathematica=1");
-	debug("$i/$j/$k/$coeff");
-	debug("CONV: $conv");
 	push(@cheb, "$coeff*ChebyshevT[$k, $conv]");
       }
 
+      # TODO: keep raw polynomials around so that poly[t] = actual
+      # polynomial unevaluated
+
+
       # TODO: not crazy about using x/y/z as functions, prefer pos[x]... ?
-      my($form) = "$j\[$objid,t_] := ".join("+\n", @cheb)."$cond;";
-      debug("FORM: $form");
+      my($form)="$j\[$hashref->{target_id}, $hashref->{source_id},t_] := ".join("+\n", @cheb)."$cond;";
       # for testing
       print "$form\n";
-
     }
   }
 }
