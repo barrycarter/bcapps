@@ -1,3 +1,38 @@
+(* using results to find pos of mercury "today", day 16334 *)
+
+t = 16334;
+
+ArcTan[
+ x[1,0,t] - (x[399,3,t] + x[3,0,t]),
+ y[1,0,t] - (y[399,3,t] + y[3,0,t])
+]
+
+ArcTan[
+ (y[1,0,t] - (y[399,3,t] + y[3,0,t]))/
+ (x[1,0,t] - (x[399,3,t] + x[3,0,t]))
+]
+
+z[1,0,t] - (z[399,3,t] + z[3,0,t])
+
+Norm[{x[1,0,t] - (x[399,3,t] + x[3,0,t]), y[1,0,t] - (y[399,3,t] + y[3,0,t]),
+ z[1,0,t] - (z[399,3,t] + z[3,0,t])}]
+
+ArcSin[(z[1,0,t] - (z[399,3,t] + z[3,0,t])) /
+Norm[{x[1,0,t] - (x[399,3,t] + x[3,0,t]), y[1,0,t] - (y[399,3,t] + y[3,0,t]),
+ z[1,0,t] - (z[399,3,t] + z[3,0,t])}]
+]
+
+Plot[
+ArcTan[
+ x[1,0,t] - (x[399,3,t] + x[3,0,t]),
+ y[1,0,t] - (y[399,3,t] + y[3,0,t])
+],
+{t,16071,16071+365}
+]
+
+
+
+
 (* 2D ellipse using alternate form (normalized) *)
 
 ellipse[x_,y_] = a*x^2+b*x*y+c*y^2+d*x+e*y+1

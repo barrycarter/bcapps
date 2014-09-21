@@ -15,8 +15,15 @@ require "/usr/local/lib/bclib.pl";
 # as a weird example)
 # xsp2math("jup310", 13, 0, 86400*365);
 
+# mercury from earth, this year
 
-
+open(A,">/tmp/math.m")||die("Can't open, $!");
+for $arr (1,3,12) {
+  my($str)=xsp2math("de430",$arr,str2time("2014-01-01"),str2time("2015-01-01"));
+  debug("STR: $str");
+  print A $str;
+}
+close(A)||die("Can't close, $!");
 
 =item xsp2math($kern, $idx, $stime, $etime)
 
@@ -29,6 +36,7 @@ seconds. Result is normalized to Unix days (ie: Unix second/86400)
 sub xsp2math {
   my($kern, $idx, $stime, $etime) = @_;
   my(@arr, %info);
+  local(*A);
   # convert stime/etime to NASA format (seconds since 2000-01-01 noon UTC)
   $stime -= 946728000;
   $etime -= 946728000;
@@ -68,7 +76,7 @@ sub xsp2math {
   # below automatically positions A correctly, so we ignore return value
   debug("INT: $info{interval}");
   findroot($f, $info{begin_array}, $info{end_array}, $info{interval});
-  read_coeffs(A, $stime, $etime, {%info});
+  return read_coeffs(A, $stime, $etime, {%info});
 }
 
 # Given $fh, an open filehandle to an XSP file and a delimiter $delim,
@@ -168,9 +176,7 @@ sub read_coeffs {
 
 
       # TODO: not crazy about using x/y/z as functions, prefer pos[x]... ?
-      push(@ret, "$j\[$hashref->{target}, $hashref->{center},t_] := ".join("+\n", @cheb)."$cond;");
-      # for testing
-      print "$form\n";
+      push(@ret, "$j\[$hashref->{target},$hashref->{center},t_] := ".join("+\n", @cheb)."$cond;");
     }
   }
   return join("\n", @ret);
