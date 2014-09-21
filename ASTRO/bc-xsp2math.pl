@@ -18,7 +18,7 @@ require "/usr/local/lib/bclib.pl";
 # mercury from earth, this year
 
 open(A,">/tmp/math.m")||die("Can't open, $!");
-for $arr (1,3,12) {
+for $arr (1..14) {
   my($str)=xsp2math("de430",$arr,str2time("2014-01-01"),str2time("2015-01-01"));
   debug("STR: $str");
   print A $str;
@@ -151,16 +151,20 @@ sub read_coeffs {
   # the null entry causes problems
   delete $hash{""};
 
+  # convenience variables
+  my($target, $center) = ($hashref->{target}, $hashref->{center});
+
+  # make everything a function, including the condition
+
+  # range and conversion depends only on interval, i, and time
+  # TODO: probably only need this once globally?
+
+  push(@ret, "range[int_][i_][t_] = (t >= 21915/2 + (i-int)/86400 &&
+  t<= 21915/2 + (i+int)/86400);", "conv[int_][i_][t_] =
+  86400*(t-(i+946728000)/86400)/int;");
+
   # now, handle coefficients for each time period
   for $i (sort {$a <=> $b} keys %hash) {
-
-    # determine the Unix days this formula is valid (a literal string)
-    my($range) = "($i+946728000)/86400";
-    # this is a literal string: Mathematica will do the math
-    my($cond) = "/; (t >= $range-$int/86400 && t <= $range+$int/86400)";
-    # and the conversion to get time to (-1,1) interval
-    my($conv) = "86400*(t-$range)/$int";
-
     for $j ("x","y","z") {
       # array of Cheb coeffs
       my(@cheb);
@@ -168,8 +172,16 @@ sub read_coeffs {
       for $k (0..$hashref->{ncoeffs}-1) {
 	# the current coefficient
 	my($coeff) = ieee754todec(shift(@{$hash{$i}}), "mathematica=1");
-	push(@cheb, "$coeff*ChebyshevT[$k, $conv]");
+      # TODO: keep raw polys around too, not just converted ones
+#	push(@cheb, "$coeff*ChebyshevT[$k, w]");
+	push(@cheb, "$coeff*ChebyshevT[$k, conv[$int][$i][w]]");
       }
+
+      my($cheb) = join("+\n", @cheb);
+
+      # NOTE: do not move "/;" to the next line, it breaks stuff
+      push(@ret, "poly[$j][$target][$center][t_] := Function[w, $cheb] /;
+      range[$int][$i][t]");
 
       # TODO: keep raw polynomials around so that poly[t] = actual
       # polynomial unevaluated
@@ -216,7 +228,6 @@ sub spk_array_info {
   # 3rd line from above has boundary (hex format)
   # UGLY: this assigns boundary thrice, third one is correct
   for (1..3) {$hash{boundary} = scalar(<$fh>);}
-
 
   # from formulas in spk.html, but we want #coeffs, not degree, so don't -1
   if ($hash{eph_type} == 2) {

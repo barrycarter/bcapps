@@ -2,6 +2,19 @@
 
 t = 16334;
 
+(* 3 is technically barycenter *)
+
+ArcTan[
+poly[x][5][0][t][w] - poly[x][3][0][t][w],
+poly[y][5][0][t][w] - poly[y][3][0][t][w]
+]
+
+Normal[Series[%, {w,t,5}]]
+
+Plot[%, {w,t,t+1}]
+
+
+
 ArcTan[
  x[1,0,t] - (x[399,3,t] + x[3,0,t]),
  y[1,0,t] - (y[399,3,t] + y[3,0,t])
