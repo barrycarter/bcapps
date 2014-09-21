@@ -46,18 +46,8 @@ sub xsp2math {
   # TODO: use filehandle instead of opening one ourselves?
   my($fname) = "$bclib{home}/SPICE/KERNELS/$kern.xsp";
   open(A,$fname) || die("Can't open $fname, $!");
-  seek(A, $info{begin_array}, SEEK_SET);
 
-  # "" = values that aren't IEEE754 and/or we don't care about
-  my(@map) = ("", "", "int_start", "int_end", "target_id", "source_id",
-	      "", "coeff_flag", "", "mid_first");
-
-  # first 11 lines of the array are special (11th line is super special)
-  for $i (0..$#map) {$info{$map[$i]} = ieee754todec(scalar(<A>));}
-
-  # 11th line, need both hex and decimal forms of interval (hex = boundary)
-  $info{boundary} = scalar(<A>);
-  $info{interval} = ieee754todec($info{boundary});
+  my(%info) = spk_array_info(A, $info{begin_array}, $info{end_array});
 
   # function for binary search
   my($f) = sub {
@@ -190,4 +180,44 @@ sub read_coeffs {
       print "$form\n";
     }
   }
+}
+
+# given open filehandle to SPK file (with arrays of type 2 or 3 only),
+# byte positions of array start/end, return a hash of information
+# about the array, see:
+# spk.html#Segments--The%20Fundamental%20SPK%20Building%20Blocks
+# spk.html#Type%202:%20Chebyshev%20%28position%20only%29
+# in this directory for details
+
+sub spk_array_info {
+  my($fh, $bs, $be) = @_;
+  my(%hash);
+
+  # info from the end of the array
+  seek($fh, $be, SEEK_SET);
+
+  @map = ("footer", "numrec", "rsize", "interval", "init");
+  for $i (0..$#map) {
+    my($data) = current_line($fh, "\n", -1);
+    # special case because we use hex for boundary
+    if ($map[$i] eq "interval") {$hash{boundary} = $data;}
+    $hash{$map[$i]} = ieee754todec($data);
+  }
+
+  # from start of array (do this last so we can leave tell($fh) in good place)
+  seek($fh, $bs, SEEK_SET);
+
+  # directly from html file (except header = "BEGIN_ARRAY" line, and
+  # xsp does not have start/end address of array)
+  my(@map) = ("header", "name", "start_sec", "end_sec", "target",
+	      "center", "ref_frame", "eph_type");
+  for $i (0..$#map) {$hash{$map[$i]} = ieee754todec(scalar(<$fh>));}
+
+  # from formula in spk.html, but we want #coeffs, not degree, so don't -1
+  $hash{ncoeffs} = ($hash{rsize}-2)/3;
+
+  debug("HASH", %hash);
+
+  # PEDANTIC: this is really a list, but ok if receiver treats it as hash
+  return %hash;
 }
