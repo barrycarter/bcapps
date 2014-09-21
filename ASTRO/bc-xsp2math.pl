@@ -11,11 +11,11 @@ require "/usr/local/lib/bclib.pl";
 # xsp2math("sat365", 6, 0, 3.14*10**7);
 # xsp2math("sat365", 6, time(), time()+86400*100);
 # xsp2math("jup310", 1, 0, 86400*10);
-
 # get earth position from earth/moon barycenter from jup310.xsp (just
 # as a weird example)
+# xsp2math("jup310", 13, 0, 86400*365);
 
-xsp2math("jup310", 13, 0, 86400*365);
+
 
 
 =item xsp2math($kern, $idx, $stime, $etime)
@@ -111,6 +111,7 @@ sub nasa_sec {
 
 sub read_coeffs {
   my($fh, $stime, $etime, $hashref) = @_;
+  my(@ret);
 
   # interval is the delimiter in decimal form
   my($int) = ieee754todec($hashref->{boundary});
@@ -145,26 +146,18 @@ sub read_coeffs {
   # now, handle coefficients for each time period
   for $i (sort {$a <=> $b} keys %hash) {
 
-    # determine the UnCix days this formula is valid (a literal string)
+    # determine the Unix days this formula is valid (a literal string)
     my($range) = "($i+946728000)/86400";
     # this is a literal string: Mathematica will do the math
     my($cond) = "/; (t >= $range-$int/86400 && t <= $range+$int/86400)";
     # and the conversion to get time to (-1,1) interval
     my($conv) = "86400*(t-$range)/$int";
 
-    # TODO: Most SPICE files give 6 parameters (X,Y,Z,VX,VY,VZ), the
-    # last 3 of which are redundant; however, some (DE43*?) only give the 3
-    # non-redundant ones. Tweak program to compensate
-    # NOTE: The DE43* may also have different indexing for Cheb
-    # coeff_flag might give this info?
-
-    my($clen) = scalar(@{$hash{$i}})/(3+3*($hashref->{coeff_flag}-2));
-
     for $j ("x","y","z") {
       # array of Cheb coeffs
       my(@cheb);
 
-      for $k (0..$clen-1) {
+      for $k (0..$hashref->{ncoeffs}-1) {
 	# the current coefficient
 	my($coeff) = ieee754todec(shift(@{$hash{$i}}), "mathematica=1");
 	push(@cheb, "$coeff*ChebyshevT[$k, $conv]");
@@ -175,11 +168,12 @@ sub read_coeffs {
 
 
       # TODO: not crazy about using x/y/z as functions, prefer pos[x]... ?
-      my($form)="$j\[$hashref->{target_id}, $hashref->{source_id},t_] := ".join("+\n", @cheb)."$cond;";
+      push(@ret, "$j\[$hashref->{target}, $hashref->{center},t_] := ".join("+\n", @cheb)."$cond;");
       # for testing
       print "$form\n";
     }
   }
+  return join("\n", @ret);
 }
 
 # given open filehandle to SPK file (with arrays of type 2 or 3 only),
@@ -193,16 +187,16 @@ sub spk_array_info {
   my($fh, $bs, $be) = @_;
   my(%hash);
 
+  # pretty silly, but needed
+  $hash{begin_array} = $bs;
+  $hash{end_array} = $be;
+
   # info from the end of the array
   seek($fh, $be, SEEK_SET);
 
+  # NOTE: interval here is twice the previous thing I was calling "interval"
   @map = ("footer", "numrec", "rsize", "interval", "init");
-  for $i (0..$#map) {
-    my($data) = current_line($fh, "\n", -1);
-    # special case because we use hex for boundary
-    if ($map[$i] eq "interval") {$hash{boundary} = $data;}
-    $hash{$map[$i]} = ieee754todec($data);
-  }
+  for $i (0..$#map) {$hash{$map[$i]}=ieee754todec(current_line($fh,"\n",-1));}
 
   # from start of array (do this last so we can leave tell($fh) in good place)
   seek($fh, $bs, SEEK_SET);
@@ -213,10 +207,19 @@ sub spk_array_info {
 	      "center", "ref_frame", "eph_type");
   for $i (0..$#map) {$hash{$map[$i]} = ieee754todec(scalar(<$fh>));}
 
-  # from formula in spk.html, but we want #coeffs, not degree, so don't -1
-  $hash{ncoeffs} = ($hash{rsize}-2)/3;
+  # 3rd line from above has boundary (hex format)
+  # UGLY: this assigns boundary thrice, third one is correct
+  for (1..3) {$hash{boundary} = scalar(<$fh>);}
 
-  debug("HASH", %hash);
+
+  # from formulas in spk.html, but we want #coeffs, not degree, so don't -1
+  if ($hash{eph_type} == 2) {
+    $hash{ncoeffs} = ($hash{rsize}-2)/3;
+  } elsif ($hash{eph_type} == 3) {
+    $hash{ncoeffs} = ($hash{rsize}-2)/6;
+  } else {
+    die "Can only handle arrays of type 2 or 3 (for now)";
+  }
 
   # PEDANTIC: this is really a list, but ok if receiver treats it as hash
   return %hash;
