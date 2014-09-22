@@ -1,6 +1,47 @@
+(* more best fit ellipse stuff *)
+
+Integrate[
+ Norm[{x[t]-x0, y[t]-y0, z[t]-z0}] + 
+ Norm[{x[t]-x1, y[t]-y1, z[t]-z1}] -
+ c, t]
+
 (* using results to find pos of mercury "today", day 16334 *)
 
 t = 16334;
+
+x[t_] := poly[x][5][0][t][t]
+y[t_] := poly[y][5][0][t][t]
+z[t_] := poly[z][5][0][t][t]
+
+Integrate[
+ Norm[{x[t]-x0, y[t]-y0, z[t]-z0}] + 
+ Norm[{x[t]-x1, y[t]-y1, z[t]-z1}] -
+ c, {t,16333,16335}]
+
+Integrate[
+ Norm[{x[t]-x0, y[t]-y0, z[t]-z0}]^2,
+{t,16333,16335}]
+
+Integrate[Norm[poly[x][5][0][16334][w]-x0], {w,16333,16335}]
+
+(* testing with arb polys *)
+
+x[t_] = Sum[a[i]*t^i,{i,0,5}]
+y[t_] = Sum[b[i]*t^i,{i,0,5}]
+z[t_] = Sum[c[i]*t^i,{i,0,5}]
+
+Integrate[
+ Norm[{x[t]-x0, y[t]-y0, z[t]-z0}] + 
+ Norm[{x[t]-x1, y[t]-y1, z[t]-z1}],
+t]
+
+
+
+
+
+
+
+
 
 (* 3 is technically barycenter *)
 
