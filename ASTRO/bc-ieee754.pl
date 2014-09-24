@@ -14,7 +14,6 @@
 # See also:
 # http://stackoverflow.com/questions/21511224/how-to-read-daf-double-precision-array-file-transfer-files
 
-# TODO: Mathematica format too
 # TODO: Makefile (toxfr, this proggie)
 
 require "/usr/local/lib/bclib.pl";
@@ -33,23 +32,12 @@ for $i (@ARGV) {
 
   open(A,$i);
   open(B,">$i.dec");
-  # Mathematica (coeffs only, testing)
   open(C,">$i.dec.m");
 
   while (<A>) {
-    chomp;
-    if (/^\'(\-)?([A-F0-9]+)\^(\-?\d+)\'$/) {
-      my($sign, $mant, $exp) = ($1,$2,$3);
-      # true power
-      my($pow) = $exp-length($mant);
-      my($num) = hex($mant)*16**$pow;
-      print C "FromDigits\[\"$mant\",16\]*16^$pow\n";
-      print B "'$sign$num'\n";
-    } else {
-      print B "$_\n";
-    }
+    print B ieee754todec($_),"\n";
+    print C ieee754todec($_,"mathematica=1"),"\n";
   }
-
   close(A);
   close(B);
 }

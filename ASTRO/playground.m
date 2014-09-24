@@ -1,3 +1,46 @@
+(* best fit circle [evolute] from polynomial *)
+
+<</home/barrycarter/20140823/raw-jupiter.m
+
+part = Partition[Partition[coeffs,ncoeff],3];
+
+(* We may actually need the polys themselves, so store them *)
+
+(* i = 1,2,3 to identify axis *)
+
+Table[poly[n,i,t_] = chebyshev[part[[n,i]],t], {i,1,3}, {n,1,Length[part]}];
+
+test3 = Integrate[(poly[7,1,t]-x0)^2 + (poly[7,2,t]-y0)^2 + (poly[7,3,t]-z0)^2,
+{t,-1,1}]
+test4 = D[test3, x0]
+test6 = Solve[test4==0, x0]
+test5 = x0 /. test6[[1]]
+
+(* simpler case *)
+
+Integrate[(x0-x)^2 + (Sin[x]-y0)^2, {x,0,Pi}]
+
+Integrate[(poly[7,1,t]-x0)^2 + (poly[7,2,t]-y0)^2 + (poly[7,3,t]-z0)^2,
+{t,-1,1}]
+
+(* testing with arb polys *)
+
+x[t_] = Sum[a[i]*t^i,{i,0,5}]
+y[t_] = Sum[b[i]*t^i,{i,0,5}]
+z[t_] = Sum[c[i]*t^i,{i,0,5}]
+
+Integrate[(x[t]-x0)^2 + (y[t]-y0)^2 + (z[t]-z0)^2, {t,-1,1}]
+D[%, x0]
+Solve[%==0, x0]
+
+test0 = Integrate[(x[t]-x0)^2 + (y[t]-y0)^2 + (z[t]-z0)^2, {t,p0,p0+dt}]
+test1 = D[test0, x0]
+test2 = x0 /. Solve[test1==0, x0][[1]]
+
+Integrate[(x[t]-x0)^2 + (y[t]-y0)^2 + (z[t]-z0)^2, {t,-1,0}]
+D[%, x0]
+Solve[%==0, x0]
+
 (* more best fit ellipse stuff *)
 
 Integrate[
@@ -34,14 +77,6 @@ Integrate[
  Norm[{x[t]-x0, y[t]-y0, z[t]-z0}] + 
  Norm[{x[t]-x1, y[t]-y1, z[t]-z1}],
 t]
-
-
-
-
-
-
-
-
 
 (* 3 is technically barycenter *)
 
