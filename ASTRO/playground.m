@@ -1,3 +1,56 @@
+(* best fit circle to function *)
+
+(* Given three functions representing x[t], y[t], z[t], and an
+interval [a,b], find the center and radii of the best fit circle *)
+
+functionsToCircle[x_, y_, z_, a_, b_] := Module[{x0,y0,z0,val},
+ (* Integrate radius squared wrt arb point *)
+ val = Integrate[(x[t]-x0)^2+(y[t]-y0)^2+(z[t]-z0)^2, {t,a,b}];
+ (* Minimize wrt arb points using derivative *)
+ Solve[D[val,x0] == 0, x0];
+
+]
+
+ParametricPlot[{poly[x][4][0][t][t], poly[y][4][0][t][t]}, {t,10957,10957+687}]
+
+x[t_] := poly[x][4][0][t][t];
+y[t_] := poly[y][4][0][t][t];
+z[t_] := poly[z][4][0][t][t];
+a = 10957;
+b = a+687;
+
+val = Integrate[(x[t]-x0)^2+(y[t]-y0)^2+(z[t]-z0)^2, {t,a,b}]; 
+
+val = Integrate[poly[x][4][0][10957][t],{t,a,a+1}]
+
+test3 = Integrate[(poly[7,1,t]-x0)^2 + (poly[7,2,t]-y0)^2 + (poly[7,3,t]-z0)^2,
+
+(* mars from earth, given DE430 arrays 3, 4, and 12 *)
+
+(* last decade = 10957 to 14610 *)
+
+Plot[poly[x][4][0][t][t] - (poly[x][3][0][t][t] + poly[x][399][3][t][t]),
+{t,10957,14610}]
+
+
+
+
+Plot[ArcTan[
+poly[x][4][0][t][t] - (poly[x][3][0][t][t] + poly[x][399][3][t][t]),
+poly[y][4][0][t][t] - (poly[y][3][0][t][t] + poly[y][399][3][t][t])],
+{t,10957,14610}]
+
+
+ParametricPlot[{
+poly[x][4][0][t][t] - (poly[x][3][0][t][t] + poly[x][399][3][t][t]),
+poly[y][4][0][t][t] - (poly[y][3][0][t][t] + poly[y][399][3][t][t])},
+{t,10957,10957+365*2.14}]
+
+
+
+
+
+
 (* best fit circle [evolute] from polynomial *)
 
 <</home/barrycarter/20140823/raw-jupiter.m

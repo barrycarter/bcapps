@@ -15,6 +15,19 @@ require "/usr/local/lib/bclib.pl";
 # as a weird example)
 # xsp2math("jup310", 13, 0, 86400*365);
 
+# mars from earth
+
+open(A,">/tmp/math.m")||die("Can't open, $!");
+
+for $i (3,4,12) {
+  my($str) = xsp2math("de430", $i, str2time("2000-01-01"), str2time("2010-01-01"));
+  print A $str;
+}
+
+close(A);
+
+die "TESTING";
+
 # mercury from earth, this year
 
 open(A,">/tmp/math.m")||die("Can't open, $!");
@@ -126,7 +139,7 @@ sub read_coeffs {
   my($time, %hash);
 
   # read elements, do special things if we see $delim
-  while ($i=scalar<$fh>) {
+  while (my($i)=scalar<$fh>) {
 
     # ignore things outside quotes
     unless ($i=~/^\'/) {next;}
