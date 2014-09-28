@@ -40,7 +40,32 @@ for $i (@all) {
   $file=~s/\.xsp//;
   $file=~s/\-//g;
   push(@{$edge{$source}{$target}}, "x$file,$idx");
+
+  # to compactify graph
+  $graph{$source}{child}{"$file:$target"} = 1;
+  $graph{$target}{parent}{"$file:$source"} = 1;
 }
+
+# find nodes w/ same parents/children and edge names
+# TODO: in theory, could do this multiple times to "super compactify"
+for $i (sort keys %graph) {
+  # children, with edges
+  # TODO: could/should do this with hashes, not commas/semicolons
+  my($children) = join(",",sort keys %{$graph{$i}->{child}});
+  my($parents) = join(",",sort keys %{$graph{$i}->{parent}});
+  # record nodes that have same children and parents
+  $pc{"$children;$parents"}{$i} = 1;
+}
+
+# combine by parents/children
+for $i (sort keys %pc) {
+  my($c,$p) = split(";", $i);
+  debug("C: $c, p: $p");
+
+#  debug("$i:", sort keys %{$pc{$i}});
+}
+
+die "TESTING";
 
 print "digraph x {\n";
 
