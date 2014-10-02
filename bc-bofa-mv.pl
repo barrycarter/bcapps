@@ -33,6 +33,8 @@ for $i (@ARGV) {
     $fname = handle_nmefcu($all);
   } elsif ($all=~/www\.mtb\.com/i) {
     $fname = handle_mtb($all);
+  } elsif ($all=~/COMCAST/) {
+    $fname = handle_comcast($all);
   } else {
     warnlocal("Cannot rename: $i");
     next;
@@ -59,6 +61,13 @@ for $i (@ARGV) {
   # otherwise, advise move
   print "mv -i $i $fname\n";
 
+}
+
+sub handle_comcast {
+  my($all) = @_;
+  # first date is billing date
+  $all=~m%(\d{2})/(\d{2})/(\d{2})%;
+  return "comcast-$1-$2-20$3.pdf";
 }
 
 sub handle_mtb {

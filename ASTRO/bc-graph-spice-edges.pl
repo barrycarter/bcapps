@@ -5,6 +5,18 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# sqlite3 db
+system("rm /tmp/bgse.sql");
+open(A, "|sqlite3 /tmp/bgse.sql");
+print A << "MARK";
+CREATE TABLE graph (parent, edge, child);
+CREATE INDEX i1 ON graph(parent);
+CREATE INDEX i2 ON graph(edge);
+CREATE INDEX i3 ON graph(child);
+BEGIN;
+MARK
+;
+
 # read planet names
 for $i (`fgrep -v '#' $bclib{githome}/ASTRO/planet-ids.txt`) {
   chomp($i);
@@ -41,10 +53,17 @@ for $i (@all) {
   $file=~s/\-//g;
   push(@{$edge{$source}{$target}}, "x$file,$idx");
 
+  print A "INSERT INTO graph (parent, edge, child) VALUES ('$source', '$file', '$target');\n";
+
   # to compactify graph
   $graph{$source}{child}{"$file:$target"} = 1;
   $graph{$target}{parent}{"$file:$source"} = 1;
 }
+
+print A "COMMIT;\n";
+close(A);
+
+die "TESTING";
 
 # find nodes w/ same parents/children and edge names
 # TODO: in theory, could do this multiple times to "super compactify"
@@ -59,8 +78,20 @@ for $i (sort keys %graph) {
 
 # combine by parents/children
 for $i (sort keys %pc) {
+  debug("I: $i");
+  # turn this into a "supernode"
+  my($sn) = join(", ",sort keys %{$pc{$i}});
+  debug("SUPERNODE: $sn");
+
+  # find parents and children and add edges
   my($c,$p) = split(";", $i);
-  debug("C: $c, p: $p");
+
+  # TODO: this may not always work, only in simple cases?
+  for $j (split(",",$p)) {
+    debug("SN:$sn\nJ: $j");
+  }
+
+#  debug("C: $c, p: $p");
 
 #  debug("$i:", sort keys %{$pc{$i}});
 }

@@ -1,3 +1,28 @@
+(* Mercury below *)
+
+Plot[poly[x][1][0][t][t], {t,16071,16071+365}]
+
+ParametricPlot[{raw[x][1][0][16342][t],raw[y][1][0][16342][t]}, {t,-1,1}, 
+AxesOrigin->{0,0}]
+
+tab = Table[{t,poly[x][1][0][t][t]}, {t,16071,16071+365,22}]
+
+f = Interpolation[tab]
+
+Plot[f[t]-poly[x][1][0][t][t], {t,16071,16071+365}, PlotRange->All]
+
+Plot[{f[t],poly[x][1][0][t][t]}, {t,16071,16071+365}, PlotRange->All]
+
+p[x_] = InterpolatingPolynomial[tab, x]
+
+CoefficientList[p[x],x] - CoefficientList[poly[x][1][0][16071][t],t]
+
+Plot[p[x], {x,1,Length[tab]}]
+
+
+
+(* fit polynomial of lowest degree to given points = InterpolatingPolynomial *)
+
 (* best fit circle to function *)
 
 (* Given three functions representing x[t], y[t], z[t], and an

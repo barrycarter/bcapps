@@ -19,8 +19,8 @@ require "/usr/local/lib/bclib.pl";
 
 open(A,">/tmp/math.m")||die("Can't open, $!");
 
-for $i (3,4,12) {
-  my($str) = xsp2math("de430", $i, str2time("2000-01-01"), str2time("2010-01-01"));
+for $i (1) {
+  my($str) = xsp2math("de430", $i, str2time("2014-01-01"), str2time("2015-01-01"));
   print A $str;
 }
 
@@ -40,7 +40,7 @@ close(A)||die("Can't close, $!");
 
 =item xsp2math($kern, $idx, $stime, $etime)
 
-Return Mathematica coefficients for array $idx in SPICE kernel $kern
+Return Mathematica string for array $idx in SPICE kernel $kern
 (in xsp form) good from $stime to $etime, given in Unix
 seconds. Result is normalized to Unix days (ie: Unix second/86400)
 
@@ -179,29 +179,25 @@ sub read_coeffs {
   # now, handle coefficients for each time period
   for $i (sort {$a <=> $b} keys %hash) {
     for $j ("x","y","z") {
-      # array of Cheb coeffs
-      my(@cheb);
+      # arrays of Cheb coeffs
+      my(@cheb,@cheb2);
 
       for $k (0..$hashref->{ncoeffs}-1) {
 	# the current coefficient
 	my($coeff) = ieee754todec(shift(@{$hash{$i}}), "mathematica=1");
       # TODO: keep raw polys around too, not just converted ones
-#	push(@cheb, "$coeff*ChebyshevT[$k, w]");
+	push(@cheb2, "$coeff*ChebyshevT[$k, w]");
 	push(@cheb, "$coeff*ChebyshevT[$k, conv[$int][$i][w]]");
       }
 
       my($cheb) = join("+\n", @cheb);
+      my($cheb2) = join("+\n", @cheb2);
 
       # NOTE: do not move "/;" to the next line, it breaks stuff
       push(@ret, "poly[$j][$target][$center][t_] := Function[w, $cheb] /;
       range[$int][$i][t]");
-
-      # TODO: keep raw polynomials around so that poly[t] = actual
-      # polynomial unevaluated
-
-
-      # TODO: not crazy about using x/y/z as functions, prefer pos[x]... ?
-      push(@ret, "$j\[$hashref->{target},$hashref->{center},t_] := ".join("+\n", @cheb)."$cond;");
+      push(@ret, "raw[$j][$target][$center][t_] := Function[w, $cheb2] /;
+      range[$int][$i][t]");
     }
   }
   return join("\n", @ret);
