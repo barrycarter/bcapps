@@ -1,0 +1,1372 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>HORIZONS Web-Interface</title>
+    <meta name="robots" content="index,nofollow">
+    <link rel="shortcut icon" href="http://ssd.jpl.nasa.gov/favicon.ico">
+
+<!-- Include standard site Javascript functions -->
+<script language="JavaScript" src="north-pole-from-geocenter_files/jpl_std.js" type="text/javascript"></script>
+<script language="JavaScript" src="north-pole-from-geocenter_files/row_hiliter.js" type="text/javascript"></script>
+<!-- Safely import CSS file(s) -->
+<!-- common "safe" CSS file -->
+<link rel="StyleSheet" href="north-pole-from-geocenter_files/ssd.css" type="text/css" media="screen">
+
+<!-- Include "other" CSS file (prevents browsers with partial CSS support from loading) -->
+<style type="text/css">
+<!--
+@import "css/nav_menu.css";
+@import "css/ssd_extra.css";
+-->
+</style>
+
+<!-- Include site-global standard META tags -->
+  <meta name="Author" content="Alan Chamberlin">
+  <meta name="keywords" content="Solar System Dynamics,Solar System,Dynamics,Orbital Mechanics,Orbits">
+  <meta name="JPL-clearance" content="CL 97-0935">
+
+  </head>
+ 
+<body bgcolor="#000000">
+<!-- Skip navigation link -->
+<a href="#content"><img src="north-pole-from-geocenter_files/blank.gif" alt="Skip Page Navigation" border="0" height="0" width="0"></a>
+
+<!-- black HTML-page background with 10px margins (cellpadding=10, body margin 0px) -->
+    <table align="center" bgcolor="#000000" border="0" cellpadding="10" cellspacing="0" width="100%">
+      <tbody><tr valign="top">
+        <td>
+
+          <!-- white content-"page" background with 10px border -->
+          <table align="center" bgcolor="#FFFFFF" border="0" cellpadding="10" cellspacing="0" width="750">
+
+            <tbody><tr valign="top">
+              <td>
+                <table align="center" bgcolor="#FFFFFF" border="0" cellpadding="0" cellspacing="0" width="730">
+
+                  <!-- JPL standard header -->
+                  <tbody><tr valign="top">
+                    <td align="left" bgcolor="#FFFFFF" width="100%">
+                      
+<map name="Map">
+  <area shape="circle" coords="31,26,24" href="http://www.nasa.gov/" alt="NASA">
+  <area shape="rect" coords="68,10,260,27" href="http://www.jpl.nasa.gov/" alt="JPL">
+  <area shape="rect" coords="68,30,240,40" href="http://www.caltech.edu/" alt="Caltech">
+</map>
+
+<table border="0" cellpadding="0" cellspacing="0" width="730">
+
+  <!-- JPL Required Heading -->
+  <tbody><tr valign="middle">
+    <td align="left" bgcolor="#CCCCCC" width="255">
+      <img src="north-pole-from-geocenter_files/nasa_logo.gif" alt="NASA Logo - Jet Propulsion Laboratory" usemap="#Map" border="0" height="55" width="255">
+    </td>
+    <td align="center" bgcolor="#CCCCCC" width="40"><img src="north-pole-from-geocenter_files/blank.gif" alt="" width="40"></td>
+    <td align="center" bgcolor="#CCCCCC" width="1"><img src="north-pole-from-geocenter_files/black_1x1.gif" alt="" height="40" width="1"></td>
+    <td align="center" bgcolor="#CCCCCC" width="10"><img src="north-pole-from-geocenter_files/blank.gif" alt="" width="10"></td>
+    <td align="left" bgcolor="#CCCCCC" nowrap="nowrap" width="200">
+      <a class="portal_link" href="http://www.nasa.gov/home/">+ View the NASA Portal</a>
+      <br>
+      <a class="portal_link" href="http://neo.jpl.nasa.gov/">+ Near-Earth Object (NEO) Program</a>
+    </td>
+    <td align="center" bgcolor="#CCCCCC" width="10"><img src="north-pole-from-geocenter_files/blank.gif" alt="" width="10"></td>
+
+    <!-- placeholder for future site-wide search form -->
+    <td align="center" bgcolor="#006699" width="10"><img src="north-pole-from-geocenter_files/blank.gif" alt="" width="10"></td>
+    <td align="center" bgcolor="#006699" nowrap="nowrap" width="140">
+      <!--<img src="images/blank.gif" height="55" width="180" alt="">-->
+      <form method="GET" action="http://www.jpl.nasa.gov/cgi-bin/searchjpl.pl">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tbody><tr>
+            <td colspan="2" align="left" nowrap="nowrap"><font color="#FFFFFF" face="ariel" size="2">Search&nbsp;JPL</font></td>
+          </tr>
+          <tr>
+            <td align="left"><input name="q" size="12" maxlength="256" alt="Search JPL" title="Search JPL" type="text"></td>
+            <td align="right"><input name="search" src="north-pole-from-geocenter_files/arrow.gif" alt="Search" title="search" type="image"></td>
+          </tr>
+        </tbody></table>
+        <input alt="Search JPL" name="start" value="0" type="hidden">
+        <input name="num" value="30" type="hidden">
+        <input name="site" value="default_collection" type="hidden">
+        <input name="client" value="default_frontend" type="hidden">
+        <input name="proxystylesheet" value="default_frontend" type="hidden">
+        <input name="output" value="xml_no_dtd" type="hidden">
+      </form>
+    </td>
+
+  </tr>
+
+  <!-- JPL Required Main Navigation Bar -->
+  <tr>
+    <td colspan="8" align="center">
+      <table border="0" cellpadding="0" cellspacing="0">
+        <tbody><tr bgcolor="#FFFFFF">
+          <td><a href="http://www.jpl.nasa.gov/" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('home','','portal_images/topnav_01.gif',1)"><img name="home" alt="JPL Home" src="north-pole-from-geocenter_files/topnavoff_01.gif" border="0"></a></td>
+          <td><a href="http://www.jpl.nasa.gov/earth/" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('earth','','portal_images/topnav_02.gif',1)"><img name="earth" alt="Earth" src="north-pole-from-geocenter_files/topnavoff_02.gif" border="0"></a></td>
+          <td><a href="http://www.jpl.nasa.gov/solar_system/" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('solar_system','','portal_images/topnav_03.gif',1)"><img name="solar_system" alt="Solar System" src="north-pole-from-geocenter_files/topnavoff_03.gif" border="0"></a></td>
+          <td><a href="http://www.jpl.nasa.gov/stars_galaxies/" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('stars','','portal_images/topnav_04.gif',1)"><img name="stars" alt="Stars &amp; Galaxies" src="north-pole-from-geocenter_files/topnavoff_04.gif" border="0"></a></td>
+          <td><a href="http://www.jpl.nasa.gov/technology/" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('technology','','portal_images/topnav_05.gif',1)"><img name="technology" alt="Technology" src="north-pole-from-geocenter_files/topnavoff_05.gif" border="0"></a></td>
+        </tr>
+      </tbody></table>
+    </td>
+  </tr>
+
+</tbody></table>
+
+                      <!--?php include "include/jpl_std_head.html" ?-->
+                      
+                    </td>
+                  </tr>
+
+<!-- END OF JPL REQUIRED HEADER -->
+
+                  <!-- SSD standard header -->
+                  <tr><td><img src="north-pole-from-geocenter_files/blank.gif" alt="" height="2"></td></tr>
+                  <tr><td align="left"><a href="http://ssd.jpl.nasa.gov/"><img src="north-pole-from-geocenter_files/ssd_banner.jpg" alt="JPL Solar System Dynamics" border="0" height="97" width="730"></a></td></tr>
+                  <!--<tr><td align="center"><img src="images/blank.gif" height="1" alt=""></td></tr>-->
+                  <!-- SSD standard navigation bar -->
+                  <tr>
+                    <td>
+                      <!-- Sample SSD standard top navigation bar -->
+<table bgcolor="#666666" border="0" cellpadding="0" cellspacing="0" width="730">
+  <tbody><tr>
+    <td><a href="http://ssd.jpl.nasa.gov/?bodies" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('bodies','','images/nav/bodies_on.gif',1)"><img name="bodies" alt="BODIES" src="north-pole-from-geocenter_files/bodies_off.gif" border="0" height="16" width="78"></a></td>
+    <td bgcolor="#CCCCCC" width="1"><img src="north-pole-from-geocenter_files/blank.gif" alt="" height="16" width="1"></td>
+    <td><a href="http://ssd.jpl.nasa.gov/?orbits" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('orbits','','images/nav/orbits_on.gif',1)"><img name="orbits" alt="ORBITS" src="north-pole-from-geocenter_files/orbits_off.gif" border="0" height="16" width="75"></a></td>
+    <td bgcolor="#CCCCCC" width="1"><img src="north-pole-from-geocenter_files/blank.gif" alt="" height="16" width="1"></td>
+    <td><a href="http://ssd.jpl.nasa.gov/?ephemerides" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('ephemerides','','images/nav/ephemerides_on.gif',1)"><img name="ephemerides" alt="EPHEMERIDES" src="north-pole-from-geocenter_files/ephemerides_off.gif" border="0" height="16" width="121"></a></td>
+    <td bgcolor="#CCCCCC" width="1"><img src="north-pole-from-geocenter_files/blank.gif" alt="" height="16" width="1"></td>
+    <td><a href="http://ssd.jpl.nasa.gov/?tools" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('tools','','images/nav/tools_on.gif',1)"><img name="tools" alt="TOOLS" src="north-pole-from-geocenter_files/tools_off.gif" border="0" height="16" width="74"></a></td>
+    <td bgcolor="#CCCCCC" width="1"><img src="north-pole-from-geocenter_files/blank.gif" alt="" height="16" width="1"></td>
+    <td width="126"><a href="http://ssd.jpl.nasa.gov/?phys_data" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('phys_data','','images/nav/phys_data_on.gif',1)"><img name="phys_data" alt="PHYSICAL DATA" src="north-pole-from-geocenter_files/phys_data_off.gif" border="0" height="16" width="126"></a></td>
+    <td bgcolor="#CCCCCC" width="1"><img src="north-pole-from-geocenter_files/blank.gif" alt="" height="16" width="1"></td>
+    <td><a href="http://ssd.jpl.nasa.gov/?discovery" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('discovery','','images/nav/discovery_on.gif',1)"><img name="discovery" alt="DISCOVERY" src="north-pole-from-geocenter_files/discovery_off.gif" border="0" height="16" width="102"></a></td>
+    <td bgcolor="#CCCCCC" width="1"><img src="north-pole-from-geocenter_files/blank.gif" alt="" height="16" width="1"></td>
+    <td><a href="http://ssd.jpl.nasa.gov/?faq" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('faq','','images/nav/faq_on.gif',1)"><img name="faq" alt="FAQ" src="north-pole-from-geocenter_files/faq_off.gif" border="0" height="16" width="57"></a></td>
+    <td bgcolor="#CCCCCC" width="1"><img src="north-pole-from-geocenter_files/blank.gif" alt="" height="16" width="1"></td>
+    <td><a href="http://ssd.jpl.nasa.gov/?site_map" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('site_map','','images/nav/site_map_on.gif',1)"><img name="site_map" alt="SITE&nbsp;MAP" src="north-pole-from-geocenter_files/site_map_off.gif" border="0" height="16" width="90"></a></td>
+  </tr>
+</tbody></table>
+
+                      <!--?php include "include/ssd_top_nav_bar.html" ?-->
+<!--
+                    <table border="0" cellspacing="0" cellpadding="0" width="730">
+                      <tr><td align="left" bgcolor="#666666">
+                        <div class="navtext">SSD STANDARD NAVIGATION HEADER</div>
+                      </td></tr>
+                      <tr><td><img src="images/blank.gif" height="1" alt=""></td></tr>
+                      <tr><td align="left" width="730" bgcolor="#666666">
+                        <div class="navtext">SSD STANDARD NAVIGATION HEADER (LINE 2)</div>
+                      </td></tr>
+                    </table>
+-->
+                    </td>
+                  </tr>
+
+                  <tr><td><img src="north-pole-from-geocenter_files/blank.gif" alt="" height="10"></td></tr>
+
+<!-- START OF PAGE CONTENT -->
+
+<!--<tr width="100%">-->
+                  <tr>
+                    <td align="left"><a name="content"> </a>
+                      <!-- contents below will be displayed at the top of every page -->
+<!-- use something like <p class="note">NOTICE: my message here</p> -->
+
+                      <!--?php include "include/site_notice.html" ?-->
+<div class="page_title">HORIZONS Web-Interface</div>
+<table border="0" cellpadding="0" cellspacing="0" width="730">
+<tbody><tr><td align="left">
+This tool provides a web-based <em>limited</em> interface to
+<a href="http://ssd.jpl.nasa.gov/?horizons">JPL's HORIZONS system</a>
+which can be used to generate ephemerides for solar-system bodies.
+Full access to <a href="http://ssd.jpl.nasa.gov/?horizons">HORIZONS</a> features is available
+via the primary <a href="http://ssd.jpl.nasa.gov/?horizons#telnet">telnet interface</a>.
+<a href="http://ssd.jpl.nasa.gov/?horizons_news">HORIZONS system news</a>
+shows recent changes and improvements.
+A <a href="http://ssd.jpl.nasa.gov/?horizons_tutorial">web-interface tutorial</a> is available
+to assist new users.
+</td></tr>
+</tbody></table>
+<h3>Current Settings</h3>
+<table border="0" cellpadding="0" cellspacing="0"><tbody><tr valign="top"><td align="right" nowrap="nowrap">Ephemeris Type [<a href="http://ssd.jpl.nasa.gov/horizons.cgi?s_type=1#top">change</a>] :&nbsp;</td> <td align="left" nowrap="nowrap"><b>VECTORS</b></td></tr>
+ <tr valign="top"><td align="right" nowrap="nowrap">Target Body [<a href="http://ssd.jpl.nasa.gov/horizons.cgi?s_body=1#top">change</a>] :&nbsp;</td> <td align="left" nowrap="nowrap"><b>Earth [Geocenter]</b> [399]</td></tr>
+ <tr valign="top"><td align="right" nowrap="nowrap">Coordinate Origin [<a href="http://ssd.jpl.nasa.gov/horizons.cgi?s_loc=1#top">change</a>] :&nbsp;</td> <td align="left" nowrap="nowrap">user defined ( <b>0°00'00.0''E, 90°00'00.0''N</b> ) </td></tr>
+ <tr valign="top"><td align="right" nowrap="nowrap">Time Span [<a href="http://ssd.jpl.nasa.gov/horizons.cgi?s_time=1#top">change</a>] :&nbsp;</td> <td align="left" nowrap="nowrap">Start=<b>2014-10-02</b>, Stop=<b>2014-10-12</b>, Step=<b>1</b> <b>h</b></td></tr>
+ <tr valign="top"><td align="right" nowrap="nowrap">Table Settings [<a href="http://ssd.jpl.nasa.gov/horizons.cgi?s_tset=1#top">change</a>] :&nbsp;</td> <td align="left">output&nbsp;units=<b>KM-S</b>; reference&nbsp;plane=<b>FRAME</b></td></tr>
+ <tr valign="top"><td align="right" nowrap="nowrap">Display/Output [<a href="http://ssd.jpl.nasa.gov/horizons.cgi?s_disp=1#top">change</a>] :&nbsp;</td> <td align="left"><i>default</i> (formatted HTML)</td></tr>
+</tbody></table>
+<hr>
+<a name="results"> </a>
+<h3>Object Data Page</h3>
+<table bgcolor="#EEEEEE" border="1" cellpadding="8" cellspacing="0">
+<tbody><tr>
+<td align="left" nowrap="nowrap">
+<pre>Revised: Jul 31, 2013                  Earth                                399
+ 
+PHYSICAL PROPERTIES (revised Sep 18, 2013):
+ Mean radius, km          = 6371.01+-0.01   Mass, 10^24 kg = 5.97219+-0.0006
+ Equ. radius, km          = 6378.14+-0.01   Mass layers:
+ Polar axis, km           = 6356.752          Atmos          = 5.1   x 10^18 kg
+ Flattening               = 1/298.257         oceans         = 1.4   x 10^21 kg
+ Density, gm cm^-3        = 5.515             crust          = 2.6   x 10^22 kg
+ J2  (GEM T2, 1990)       = 0.0010826265      mantle         = 4.043 x 10^24 kg
+ gp, m s^-2 (polar)       = 9.8321863685      outer core     = 1.835 x 10^24 kg
+ ge, m s^-2 (equatorial)  = 9.7803267715      inner core     = 9.675 x 10^22 kg
+ go, m s^-2               = 9.82022         Fluid core rad   = 3480 km
+ GM, km^3 s^-2            = 398600.440      Inner core rad   = 1215 km
+ Mean rot. rate, rad s^-1 = 7.292115*10^-5  Surface Area:
+ Sidereal period, hr      = 23.93419          land           = 1.48 x 10^8 km
+ Mean solar day, days     = 1.002738          sea            = 3.62 x 10^8 km
+ Moment of inertia        = 0.3308          Love no., k2     = 0.299
+ Mean Temperature, K      = 270             Atm. pressure    = 1.0 bar
+ Solar constant, W/m^2    = 1367.6          Vis. mag. V(1,0) = -3.86
+ Volume, 10^10 km^3       = 108.321         Geometric albedo = 0.367 
+
+DYNAMICAL CHARACTERISTICS:
+ Obliquity to orbit, deg  = 23.45           Sidereal period  = 1.0000174  yrs
+ Orbit velocity, km s^-1  = 29.7859         Sidereal period  = 365.25636  days
+ Mean daily motion, n     = 0.9856474 deg/d Escape velocity  = 11.186 km s^-1
+ Hill's sphere radius     = 234.9           Magnetic moment  = 0.61 gauss Rp^3
+</pre>
+</td></tr>
+</tbody></table>
+<h3>Results</h3>
+<table bgcolor="#EEEEEE" border="1" cellpadding="8" cellspacing="0">
+<tbody><tr>
+<td align="left" nowrap="nowrap">
+<pre>*******************************************************************************
+Ephemeris / WWW_USER Thu Oct  2 13:44:57 2014 Pasadena, USA      / Horizons    
+*******************************************************************************
+Target body name: Earth (399)                     {source: DE-0431LE-0431}
+Center body name: Earth (399)                     {source: DE-0431LE-0431}
+Center-site name: (user defined site below)
+*******************************************************************************
+Start time      : A.D. 2014-Oct-02 00:00:00.0000 CT 
+Stop  time      : A.D. 2014-Oct-12 00:00:00.0000 CT 
+Step-size       : 60 minutes
+*******************************************************************************
+Center geodetic : 0.00000000,90.0000000,0.0000000 {E-lon(deg),Lat(deg),Alt(km)}
+Center cylindric: 0.00000000,3.9185E-13,6356.7523 {E-lon(deg),Dxy(km),Dz(km)}
+Center pole/equ : High-precision EOP model        {East-longitude +}
+Center radii    : 6378.1 x 6378.1 x 6356.8 km     {Equator, meridian, pole}    
+Output units    : KM-S                                                         
+Output format   : 03
+Reference frame : ICRF/J2000.0                                                 
+EOP file        : eop.141001.p141223                                           
+EOP coverage    : DATA-BASED 1962-JAN-20 TO 2014-OCT-01. PREDICTS-&gt; 2014-DEC-22
+Output type     : GEOMETRIC cartesian states
+Coordinate systm: Earth Mean Equator and Equinox of Reference Epoch            
+*******************************************************************************
+JDCT 
+   X     Y     Z
+   VX    VY    VZ
+   LT    RG    RR
+*******************************************************************************
+$$SOE
+2456932.500000000 = A.D. 2014-Oct-02 00:00:00.0000 (CT)
+  -9.168506581353002E+00  2.622476654875657E-01 -6.356745696846358E+03
+   5.307926130497065E-07  5.172625227021356E-07 -7.442368945801418E-10
+   2.120384334099953E-02  6.356752314245182E+03 -5.258501084558377E-23
+2456932.541666667 = A.D. 2014-Oct-02 01:00:00.0000 (CT)
+  -9.166865560480838E+00  2.643495283207916E-01 -6.356745699125974E+03
+   3.767612221219630E-07  6.430609417729003E-07 -5.165735378413664E-10
+   2.120384334099953E-02  6.356752314245180E+03  1.420289447427463E-23
+2456932.583333333 = A.D. 2014-Oct-02 02:00:00.0000 (CT)
+  -9.165832029181484E+00  2.668259535461959E-01 -6.356745700512847E+03
+   1.953555125678501E-07  7.245385795389813E-07 -2.512716713956976E-10
+   2.120384334099953E-02  6.356752314245180E+03  3.251882080964367E-23
+2456932.625000000 = A.D. 2014-Oct-02 03:00:00.0000 (CT)
+  -9.165482393700403E+00  2.695063436740176E-01 -6.356745700903904E+03
+  -9.838917148350421E-10  7.561224997157400E-07  3.347587939960691E-11
+   2.120384334099952E-02  6.356752314245178E+03  3.885637181133615E-23
+2456932.666666667 = A.D. 2014-Oct-02 04:00:00.0000 (CT)
+  -9.165846173329774E+00  2.722061626837362E-01 -6.356745700264340E+03
+  -1.987999253893862E-07  7.356588237239072E-07  3.181534225531090E-10
+   2.120384334099952E-02  6.356752314245179E+03  1.014920020267208E-24
+2456932.708333333 = A.D. 2014-Oct-02 05:00:00.0000 (CT)
+  -9.166904002172499E+00  2.747395783109161E-01 -6.356745698629969E+03
+  -3.845409699559096E-07  6.645584459028414E-07  5.832592397832655E-10
+   2.120384334099952E-02  6.356752314245179E+03 -5.084912610036108E-24
+2456932.750000000 = A.D. 2014-Oct-02 06:00:00.0000 (CT)
+  -9.168588978964987E+00  2.769321865574044E-01 -6.356745696104740E+03
+  -5.454887387127786E-07  5.476986033681301E-07  8.106407989349739E-10
+   2.120384334099952E-02  6.356752314245178E+03 -2.161326153038936E-23
+2456932.791666667 = A.D. 2014-Oct-02 07:00:00.0000 (CT)
+  -9.170791270798018E+00  2.786329471785494E-01 -6.356745692853585E+03
+  -6.706286254347587E-07  3.930871677091981E-07  9.847369208365095E-10
+   2.120384334099953E-02  6.356752314245180E+03 -2.240306306420714E-23
+2456932.833333333 = A.D. 2014-Oct-02 08:00:00.0000 (CT)
+  -9.173365653835321E+00  2.797245133786423E-01 -6.356745689091094E+03
+  -7.514029567687217E-07  2.113127671428432E-07  1.093641900556549E-09
+   2.120384334099952E-02  6.356752314245179E+03 -1.336462089640921E-24
+2456932.875000000 = A.D. 2014-Oct-02 09:00:00.0000 (CT)
+  -9.176141473215209E+00  2.801312493126919E-01 -6.356745685066818E+03
+  -7.822956369482662E-07  1.481849888875636E-08  1.129918816792721E-09
+   2.120384334099953E-02  6.356752314245181E+03  4.910315656745059E-25
+2456932.916666667 = A.D. 2014-Oct-02 10:00:00.0000 (CT)
+  -9.178934338957506E+00  2.798243876628783E-01 -6.356745681048138E+03
+  -7.612082442300486E-07 -1.829509499947224E-07  1.091106472166204E-09
+   2.120384334099953E-02  6.356752314245180E+03 -9.582174882034300E-24
+2456932.958333333 = A.D. 2014-Oct-02 11:00:00.0000 (CT)
+  -9.181558756196537E+00  2.788239756790618E-01 -6.356745677301982E+03
+  -6.896019380650231E-07 -3.684703140479319E-07  9.798854116643195E-10
+   2.120384334099952E-02  6.356752314245179E+03  3.454397630363926E-24
+2456933.000000000 = A.D. 2014-Oct-02 12:00:00.0000 (CT)
+  -9.183840824515933E+00  2.771974781104422E-01 -6.356745674076533E+03
+  -5.723955833348706E-07 -5.290597997987189E-07  8.038918254302897E-10
+   2.120384334099953E-02  6.356752314245180E+03  1.495704140388019E-23
+2456933.041666667 = A.D. 2014-Oct-02 13:00:00.0000 (CT)
+  -9.185630136883349E+00  2.750551344204032E-01 -6.356745671584250E+03
+  -4.176271937523447E-07 -6.537527699307932E-07  5.751922555667928E-10
+   2.120384334099952E-02  6.356752314245179E+03 -7.213834063024138E-23
+2456933.083333333 = A.D. 2014-Oct-02 14:00:00.0000 (CT)
+  -9.186810063935557E+00  2.725423898505631E-01 -6.356745669987353E+03
+  -2.359019973044842E-07 -7.340456852534770E-07  3.094552432557355E-10
+   2.120384334099953E-02  6.356752314245180E+03  1.220151956027825E-23
+2456933.125000000 = A.D. 2014-Oct-02 15:00:00.0000 (CT)
+  -9.187305720342176E+00  2.698299200827216E-01 -6.356745669386723E+03
+  -3.966502322823171E-08 -7.644790210083869E-07  2.487678285132403E-11
+   2.120384334099952E-02  6.356752314245178E+03  3.150855483756544E-23
+2456933.166666667 = A.D. 2014-Oct-02 16:00:00.0000 (CT)
+  -9.187089069040560E+00  2.671019336817538E-01 -6.356745669815053E+03
+   1.576518956642516E-07 -7.430094731483459E-07 -2.590667237501957E-10
+   2.120384334099952E-02  6.356752314245178E+03 -1.948509480989926E-23
+2456933.208333333 = A.D. 2014-Oct-02 17:00:00.0000 (CT)
+  -9.186180815370829E+00  2.645435541175203E-01 -6.356745671234628E+03
+   3.425502395794870E-07 -6.711480802631224E-07 -5.229525467191156E-10
+   2.120384334099952E-02  6.356752314245179E+03  2.223507002027292E-23
+2456933.250000000 = A.D. 2014-Oct-02 18:00:00.0000 (CT)
+  -9.184648963103262E+00  2.623281457179902E-01 -6.356745673539946E+03
+   5.023890067892799E-07 -5.538549265882227E-07 -7.487413608478951E-10
+   2.120384334099953E-02  6.356752314245182E+03 -4.796650340032012E-24
+2456933.291666667 = A.D. 2014-Oct-02 19:00:00.0000 (CT)
+  -9.182604132957394E+00  2.606054513049694E-01 -6.356745676564979E+03
+   6.262497298416296E-07 -3.991977619096917E-07 -9.210115943435665E-10
+   2.120384334099952E-02  6.356752314245178E+03  1.203765802613870E-23
+2456933.333333333 = A.D. 2014-Oct-02 20:00:00.0000 (CT)
+  -9.180191965810732E+00  2.594913532421882E-01 -6.356745680094584E+03
+   7.056831108630401E-07 -2.177980335023056E-07 -1.028013933554586E-09
+   2.120384334099952E-02  6.356752314245178E+03 -8.334589050338444E-24
+2456933.375000000 = A.D. 2014-Oct-02 21:00:00.0000 (CT)
+  -9.177583132222770E+00  2.590599580487544E-01 -6.356745683879231E+03
+   7.352862197111569E-07 -2.210236766351163E-08 -1.062473879196479E-09
+   2.120384334099952E-02  6.356752314245179E+03 -8.034647945560454E-25
+2456933.416666667 = A.D. 2014-Oct-02 22:00:00.0000 (CT)
+  -9.174961633507714E+00  2.593385452996848E-01 -6.356745687652133E+03
+   7.130708256866902E-07  1.744705311399753E-07 -1.022087535533501E-09
+   2.120384334099952E-02  6.356752314245179E+03  5.049355600543446E-24
+2456933.458333333 = A.D. 2014-Oct-02 23:00:00.0000 (CT)
+  -9.172512196198973E+00  2.603057251314806E-01 -6.356745691147508E+03
+   6.405977537205140E-07  3.584490920552223E-07 -9.096768439363329E-10
+   2.120384334099953E-02  6.356752314245182E+03  3.657589836485759E-24
+2456933.500000000 = A.D. 2014-Oct-03 00:00:00.0000 (CT)
+  -9.170407623400274E+00  2.618929288482664E-01 -6.356745694118772E+03
+   5.228681879410869E-07  5.172312334877601E-07 -7.329938050548929E-10
+   2.120384334099952E-02  6.356752314245179E+03 -1.483713002511537E-23
+2456933.541666667 = A.D. 2014-Oct-03 01:00:00.0000 (CT)
+  -9.168796969451753E+00  2.639891291041999E-01 -6.356745696355433E+03
+   3.679794074188292E-07  6.399468710564264E-07 -5.041871440974793E-10
+   2.120384334099953E-02  6.356752314245180E+03  1.861716870307449E-23
+2456933.583333333 = A.D. 2014-Oct-03 02:00:00.0000 (CT)
+  -9.167795345771497E+00  2.664484637496824E-01 -6.356745697697459E+03
+   1.865690832036962E-07  7.182007397550633E-07 -2.389687681605074E-10
+   2.120384334099953E-02  6.356752314245180E+03  4.527441812443154E-23
+2456933.625000000 = A.D. 2014-Oct-03 03:00:00.0000 (CT)
+  -9.167476055707002E+00  2.691002411382722E-01 -6.356745698046232E+03
+  -8.914601698809847E-09  7.466464516380970E-07  4.446412539174375E-11
+   2.120384334099953E-02  6.356752314245180E+03 -7.926930213715199E-23
+2456933.666666667 = A.D. 2014-Oct-03 04:00:00.0000 (CT)
+  -9.167865596901866E+00  2.717606408409358E-01 -6.356745697371256E+03
+  -2.050660755147496E-07  7.233507717398585E-07  3.266760362842129E-10
+   2.120384334099952E-02  6.356752314245178E+03  3.077311152931870E-23
+2456933.708333333 = A.D. 2014-Oct-03 05:00:00.0000 (CT)
+  -9.168941870349206E+00  2.742453067077935E-01 -6.356745695712228E+03
+  -3.884406761032830E-07  6.499242133128924E-07  5.883244074101801E-10
+   2.120384334099952E-02  6.356752314245179E+03 -2.330757092507994E-23
+2456933.750000000 = A.D. 2014-Oct-03 06:00:00.0000 (CT)
+  -9.170635717515943E+00  2.763819700999743E-01 -6.356745693176264E+03
+  -5.464751504721227E-07  5.314089494731333E-07  8.114838370168332E-10
+   2.120384334099953E-02  6.356752314245180E+03 -3.378859317425261E-23
+2456933.791666667 = A.D. 2014-Oct-03 07:00:00.0000 (CT)
+  -9.172835678563946E+00  2.780222390166300E-01 -6.356745689930556E+03
+  -6.683473315201486E-07  3.759318385103739E-07  9.808725979990145E-10
+   2.120384334099953E-02  6.356752314245181E+03  1.489555673055802E-23
+2456933.833333333 = A.D. 2014-Oct-03 08:00:00.0000 (CT)
+  -9.175395644220311E+00  2.790517464497663E-01 -6.356745686190879E+03
+  -7.457161671664238E-07  1.941464407505439E-07  1.084897542839172E-09
+   2.120384334099953E-02  6.356752314245180E+03 -1.183667796699353E-23
+2456933.875000000 = A.D. 2014-Oct-03 09:00:00.0000 (CT)
+  -9.178144875913297E+00  2.793979640204536E-01 -6.356745682206804E+03
+  -7.732914993655715E-07 -1.497661393846743E-09  1.116445949506890E-09
+   2.120384334099952E-02  6.356752314245177E+03  2.085273841243928E-25
+2456933.916666667 = A.D. 2014-Oct-03 10:00:00.0000 (CT)
+  -9.180899706924277E+00  2.790351471612823E-01 -6.356745678244601E+03
+  -7.491946729348700E-07 -1.976081251556735E-07  1.073370225309692E-09
+   2.120384334099953E-02  6.356752314245181E+03  1.242224628434752E-23
+2456933.958333333 = A.D. 2014-Oct-03 11:00:00.0000 (CT)
+  -9.183476122582544E+00  2.779860747978375E-01 -6.356745674568985E+03
+  -6.750853951774757E-07 -3.807672099897874E-07  9.586324413730453E-10
+   2.120384334099953E-02  6.356752314245180E+03  2.392020551132495E-23
+2456934.000000000 = A.D. 2014-Oct-03 12:00:00.0000 (CT)
+  -9.185702357767898E+00  2.763204660852946E-01 -6.356745671425013E+03
+  -5.560462832090334E-07 -5.384504022476544E-07  7.800989759398271E-10
+   2.120384334099952E-02  6.356752314245179E+03 -2.729398990333315E-23
+2456934.041666667 = A.D. 2014-Oct-03 13:00:00.0000 (CT)
+  -9.187430649254102E+00  2.741501843328348E-01 -6.356745669021310E+03
+  -4.002331297361627E-07 -6.598834098408352E-07  5.499995039249451E-10
+   2.120384334099953E-02  6.356752314245180E+03  1.663124628634162E-23
+2456934.083333333 = A.D. 2014-Oct-03 14:00:00.0000 (CT)
+  -9.188547338741961E+00  2.716215581537391E-01 -6.356745667515807E+03
+  -2.183149533119250E-07 -7.367788871407631E-07  2.840875423332378E-10
+   2.120384334099953E-02  6.356752314245181E+03 -1.753411130276850E-23
+2456934.125000000 = A.D. 2014-Oct-03 15:00:00.0000 (CT)
+  -9.188980635767297E+00  2.689053470480106E-01 -6.356745667004953E+03
+  -2.274227824011738E-08 -7.639025150615252E-07  5.601739671288449E-13
+   2.120384334099953E-02  6.356752314245181E+03 -1.764853145364063E-23
+2456934.166666667 = A.D. 2014-Oct-03 16:00:00.0000 (CT)
+  -9.188705510240704E+00  2.661850396140540E-01 -6.356745667517146E+03
+   1.731061713302693E-07 -7.394297704508213E-07 -2.811889709906873E-10
+   2.120384334099952E-02  6.356752314245179E+03  4.351907949844341E-23
+2456934.208333333 = A.D. 2014-Oct-03 17:00:00.0000 (CT)
+  -9.187745381165405E+00  2.636442864085168E-01 -6.356745669010829E+03
+   3.558398806687358E-07 -6.650690688011388E-07 -5.418980181789839E-10
+   2.120384334099952E-02  6.356752314245179E+03 -4.264319942197458E-23
+2456934.250000000 = A.D. 2014-Oct-03 18:00:00.0000 (CT)
+  -9.186170487590749E+00  2.614543282496608E-01 -6.356745671377364E+03
+   5.129732854647576E-07 -5.459429715251776E-07 -7.637554591184180E-10
+   2.120384334099953E-02  6.356752314245180E+03  4.329158620715138E-23
+2456934.291666667 = A.D. 2014-Oct-03 19:00:00.0000 (CT)
+  -9.184093055055712E+00  2.597622806502885E-01 -6.356745674448503E+03
+   6.337800828817205E-07 -3.902357165238118E-07 -9.316188000326085E-10
+   2.120384334099952E-02  6.356752314245179E+03  1.918250238190658E-23
+2456934.333333333 = A.D. 2014-Oct-03 20:00:00.0000 (CT)
+  -9.181659590104010E+00  2.586810759996137E-01 -6.356745678007948E+03
+   7.100266579008084E-07 -2.086313241684103E-07 -1.034049870975394E-09
+   2.120384334099953E-02  6.356752314245180E+03 -7.913500367014551E-24
+2456934.375000000 = A.D. 2014-Oct-03 21:00:00.0000 (CT)
+  -9.179040831889731E+00  2.582817512001944E-01 -6.356745681806168E+03
+   7.365344766237032E-07 -1.358085545779883E-08 -1.064096010874546E-09
+   2.120384334099952E-02  6.356752314245177E+03 -4.893399238688169E-25
+2456934.416666667 = A.D. 2014-Oct-03 22:00:00.0000 (CT)
+  -9.176420050013613E+00  2.585886075348725E-01 -6.356745685577523E+03
+   7.115330333284584E-07  1.815509245753977E-07 -1.019763777432091E-09
+   2.120384334099953E-02  6.356752314245180E+03  5.199911721249794E-24
+2456934.458333333 = A.D. 2014-Oct-03 23:00:00.0000 (CT)
+  -9.173980490591276E+00  2.595775726353783E-01 -6.356745689058427E+03
+   6.367792968696580E-07  3.634009955006731E-07 -9.041529076555866E-10
+   2.120384334099953E-02  6.356752314245181E+03 -5.677930657649766E-24
+2456934.500000000 = A.D. 2014-Oct-04 00:00:00.0000 (CT)
+  -9.171892830446950E+00  2.611778750326360E-01 -6.356745692005419E+03
+   5.174356000785573E-07  5.195229375738298E-07 -7.252415303494549E-10
+   2.120384334099952E-02  6.356752314245178E+03  4.029751033737407E-24
+2456934.541666667 = A.D. 2014-Oct-04 01:00:00.0000 (CT)
+  -9.170303498295235E+00  2.632769150951694E-01 -6.356745694211817E+03
+   3.617144322676749E-07  6.392386590925728E-07 -4.953374718607718E-10
+   2.120384334099953E-02  6.356752314245181E+03  9.335650620428270E-24
+2456934.583333333 = A.D. 2014-Oct-04 02:00:00.0000 (CT)
+  -9.169324662126529E+00  2.657279968458987E-01 -6.356745695521830E+03
+   1.803146863307712E-07  7.143682613567140E-07 -2.302335697095573E-10
+   2.120384334099953E-02  6.356752314245180E+03  1.738983377568712E-23
+2456934.625000000 = A.D. 2014-Oct-04 03:00:00.0000 (CT)
+  -9.169026567284760E+00  2.683603898765430E-01 -6.356745695841227E+03
+  -1.431214806078132E-08  7.397890073762329E-07  5.187536957249664E-11
+   2.120384334099953E-02  6.356752314245180E+03 -9.025441737863347E-24
+2456934.666666667 = A.D. 2014-Oct-04 04:00:00.0000 (CT)
+  -9.169432748479966E+00  2.709910318897402E-01 -6.356745695143733E+03
+  -2.088153153152426E-07  7.137843920985554E-07  3.316393734623857E-10
+   2.120384334099953E-02  6.356752314245180E+03  2.348509571995775E-23
+2456934.708333333 = A.D. 2014-Oct-04 05:00:00.0000 (CT)
+  -9.170518442185481E+00  2.734370693732457E-01 -6.356745693472809E+03
+  -3.898592739054337E-07  6.381599110475564E-07  5.898785979318943E-10
+   2.120384334099952E-02  6.356752314245178E+03 -3.019274826367452E-23
+2456934.750000000 = A.D. 2014-Oct-04 06:00:00.0000 (CT)
+  -9.172212306431964E+00  2.755283775667154E-01 -6.356745690938639E+03
+  -5.450366662290709E-07  5.181176511911433E-07  8.088963100402064E-10
+   2.120384334099952E-02  6.356752314245179E+03  9.576319198860763E-24
+2456934.791666667 = A.D. 2014-Oct-04 07:00:00.0000 (CT)
+  -9.174401328563283E+00  2.771192025789300E-01 -6.356745687710550E+03
+  -6.637172760624193E-07  3.618984115400260E-07  9.736896774845431E-10
+   2.120384334099953E-02  6.356752314245182E+03 -2.029443155341542E-23
+2456934.833333333 = A.D. 2014-Oct-04 08:00:00.0000 (CT)
+  -9.176938583337172E+00  2.780981291131204E-01 -6.356745684005386E+03
+  -7.377748859875126E-07  1.802159732546401E-07  1.072975525699619E-09
+   2.120384334099952E-02  6.356752314245179E+03 -9.068761594007599E-24
+2456934.875000000 = A.D. 2014-Oct-04 09:00:00.0000 (CT)
+  -9.179653308783815E+00  2.783956922190847E-01 -6.356745680072659E+03
+  -7.621423358732802E-07 -1.447764399031194E-08  1.099960931811742E-09
+   2.120384334099952E-02  6.356752314245179E+03  1.149600733258626E-24
+2456934.916666667 = A.D. 2014-Oct-04 10:00:00.0000 (CT)
+  -9.182362608828543E+00  2.779891131842582E-01 -6.356745676177427E+03
+  -7.351568702698914E-07 -2.088455514699821E-07  1.052806028189009E-09
+   2.120384334099952E-02  6.356752314245178E+03  5.298937830028992E-24
+2456934.958333333 = A.D. 2014-Oct-04 11:00:00.0000 (CT)
+  -9.184883980676190E+00  2.769038368122396E-01 -6.356745672582158E+03
+  -6.586722391551472E-07 -3.895795033371063E-07  9.347474863346400E-10
+   2.120384334099953E-02  6.356752314245180E+03  7.643618435860734E-25
+2456935.000000000 = A.D. 2014-Oct-04 12:00:00.0000 (CT)
+  -9.187047808891503E+00  2.752117664668918E-01 -6.356745669528748E+03
+  -5.379299967130845E-07 -5.443109799614002E-07  7.538743974466370E-10
+   2.120384334099953E-02  6.356752314245180E+03 -7.915842640283967E-24
+2456935.041666667 = A.D. 2014-Oct-04 13:00:00.0000 (CT)
+  -9.188708970825965E+00  2.730263194131373E-01 -6.356745667221990E+03
+  -3.811989324021629E-07 -6.624574697948863E-07  5.225720673734201E-10
+   2.120384334099953E-02  6.356752314245181E+03 -4.488348620945138E-24
+2456935.083333333 = A.D. 2014-Oct-04 14:00:00.0000 (CT)
+  -9.189756759327079E+00  2.704946425925883E-01 -6.356745665815551E+03
+  -1.992074381118706E-07 -7.359460451968618E-07  2.566719708809701E-10
+   2.120384334099952E-02  6.356752314245178E+03 -1.610628428983377E-23
+2456935.125000000 = A.D. 2014-Oct-04 15:00:00.0000 (CT)
+  -9.190122444262837E+00  2.677875232166496E-01 -6.356745665401500E+03
+  -4.407778551362773E-09 -7.597647577798901E-07 -2.563379230434790E-11
+   2.120384334099953E-02  6.356752314245181E+03 -7.696953543455061E-23
+2456935.166666667 = A.D. 2014-Oct-04 16:00:00.0000 (CT)
+  -9.189783956394148E+00  2.650876860795374E-01 -6.356745666004012E+03
+   1.898772797247233E-07 -7.323041920694543E-07 -3.050391040576368E-10
+   2.120384334099952E-02  6.356752314245179E+03  1.050743788659998E-23
+2456935.208333333 = A.D. 2014-Oct-04 17:00:00.0000 (CT)
+  -9.188767374410478E+00  2.625772796287832E-01 -6.356745667577770E+03
+   3.703669969227772E-07 -6.554659017120296E-07 -5.624460719702726E-10
+   2.120384334099953E-02  6.356752314245180E+03 -3.279289931373853E-23
+2456935.250000000 = A.D. 2014-Oct-04 18:00:00.0000 (CT)
+  -9.187145114962412E+00  2.604254079146185E-01 -6.356745670011087E+03
+   5.247318425031077E-07 -5.345304241722891E-07 -7.802723507840387E-10
+   2.120384334099953E-02  6.356752314245181E+03  4.957571019955526E-23
+2456935.291666667 = A.D. 2014-Oct-04 19:00:00.0000 (CT)
+  -9.185030951296065E+00  2.587765619893343E-01 -6.356745673133586E+03
+   6.424370889293074E-07 -3.777940334742744E-07 -9.436540481006698E-10
+   2.120384334099953E-02  6.356752314245180E+03  2.174709642247793E-23
+2456935.333333333 = A.D. 2014-Oct-04 20:00:00.0000 (CT)
+  -9.182572203162087E+00  2.577407422967392E-01 -6.356745676727904E+03
+   7.154630963775035E-07 -1.959992185922286E-07 -1.041461914940357E-09
+   2.120384334099952E-02  6.356752314245179E+03 -2.622695430282144E-25
+2456935.375000000 = A.D. 2014-Oct-04 21:00:00.0000 (CT)
+  -9.179939634148324E+00  2.573859474333633E-01 -6.356745680544585E+03
+   7.388530398508403E-07 -1.597984395269873E-09 -1.067061346157891E-09
+   2.120384334099953E-02  6.356752314245181E+03  2.806824134516786E-25
+2456935.416666667 = A.D. 2014-Oct-04 22:00:00.0000 (CT)
+  -9.177315749263155E+00  2.577335422676669E-01 -6.356745684319179E+03
+   7.110506694141593E-07  1.921015027961626E-07 -1.018764290370007E-09
+   2.120384334099952E-02  6.356752314245179E+03 -7.157791921896043E-24
+2456935.458333333 = A.D. 2014-Oct-04 23:00:00.0000 (CT)
+  -9.174882294773422E+00  2.587568210602730E-01 -6.356745687790350E+03
+   6.340050883419522E-07  3.718464424446524E-07 -8.999422876776633E-10
+   2.120384334099952E-02  6.356752314245178E+03 -1.855165011467722E-23
+2456935.500000000 = A.D. 2014-Oct-05 00:00:00.0000 (CT)
+  -9.172807816489291E+00  2.603828622833818E-01 -6.356745690717773E+03
+   5.130354965546632E-07  5.253466649857812E-07 -7.187930691148060E-10
+   2.120384334099953E-02  6.356752314245180E+03  4.597791339458599E-23
+2456935.541666667 = A.D. 2014-Oct-05 01:00:00.0000 (CT)
+  -9.171236128201885E+00  2.624975461877334E-01 -6.356745692898558E+03
+   3.564653004505124E-07  6.421154009734141E-07 -4.877769026187408E-10
+   2.120384334099953E-02  6.356752314245180E+03 -1.966562877529680E-23
+2456935.583333333 = A.D. 2014-Oct-05 02:00:00.0000 (CT)
+  -9.170276479330726E+00  2.649533907709898E-01 -6.356745694181138E+03
+   1.750506813167367E-07  7.141866470170053E-07 -2.227613058510644E-10
+   2.120384334099952E-02  6.356752314245179E+03 -3.913058654139371E-23
+2456935.625000000 = A.D. 2014-Oct-05 03:00:00.0000 (CT)
+  -9.169996094150770E+00  2.675796677100699E-01 -6.356745694475610E+03
+  -1.875701401137405E-08  7.366588411413105E-07  5.806692463271253E-11
+   2.120384334099952E-02  6.356752314245179E+03  1.152482623998270E-23
+2456935.666666667 = A.D. 2014-Oct-05 04:00:00.0000 (CT)
+  -9.170415591916788E+00  2.701941038673158E-01 -6.356745693759854E+03
+  -2.116645897761840E-07  7.080289508940787E-07  3.354479799832602E-10
+   2.120384334099952E-02  6.356752314245178E+03  1.559661213272350E-23
+2456935.708333333 = A.D. 2014-Oct-05 05:00:00.0000 (CT)
+  -9.171507600008940E+00  2.726153673261589E-01 -6.356745692081025E+03
+  -3.904474977517847E-07  6.302936067482384E-07  5.903681062524652E-10
+   2.120384334099953E-02  6.356752314245181E+03 -6.665641270103925E-23
+2456935.750000000 = A.D. 2014-Oct-05 06:00:00.0000 (CT)
+  -9.173198653356183E+00  2.746754824666123E-01 -6.356745689552264E+03
+  -5.428551588957766E-07  5.088105936735303E-07  8.053611482784012E-10
+   2.120384334099952E-02  6.356752314245178E+03  1.002558022456402E-24
+2456935.791666667 = A.D. 2014-Oct-05 07:00:00.0000 (CT)
+  -9.175374248372551E+00  2.762313241744782E-01 -6.356745686344948E+03
+  -6.584491348261593E-07  3.519303114187238E-07  9.657034769653151E-10
+   2.120384334099952E-02  6.356752314245179E+03 -1.995415129788639E-23
+2456935.833333333 = A.D. 2014-Oct-05 08:00:00.0000 (CT)
+  -9.177886703766283E+00  2.771744047917697E-01 -6.356745682676904E+03
+  -7.293168035552042E-07  1.704225544745388E-07  1.060420551769425E-09
+   2.120384334099953E-02  6.356752314245180E+03  8.465105721962007E-24
+2456935.875000000 = A.D. 2014-Oct-05 09:00:00.0000 (CT)
+  -9.180565288596119E+00  2.774382846786821E-01 -6.356745678797480E+03
+  -7.506117471635632E-07 -2.326203839024659E-08  1.083036308052448E-09
+   2.120384334099952E-02  6.356752314245179E+03  2.441819883366134E-25
+2456935.916666667 = A.D. 2014-Oct-05 10:00:00.0000 (CT)
+  -9.183227923019354E+00  2.770031003387412E-01 -6.356745674970459E+03
+  -7.208839481164943E-07 -2.158452175901946E-07  1.032014200751330E-09
+   2.120384334099952E-02  6.356752314245179E+03 -9.217365820322766E-24
+2456935.958333333 = A.D. 2014-Oct-05 11:00:00.0000 (CT)
+  -9.185693649895287E+00  2.758969016022144E-01 -6.356745671455993E+03
+  -6.421773000550106E-07 -3.941305675486136E-07  9.108598713974625E-10
+   2.120384334099952E-02  6.356752314245177E+03  6.802937521579527E-24
+2456936.000000000 = A.D. 2014-Oct-05 12:00:00.0000 (CT)
+  -9.187795023047274E+00  2.741937080459357E-01 -6.356745668492791E+03
+  -5.198878800583556E-07 -5.459068741877614E-07  7.278785857037973E-10
+   2.120384334099952E-02  6.356752314245178E+03  2.777981641729785E-23
+2456936.041666667 = A.D. 2014-Oct-05 13:00:00.0000 (CT)
+  -9.189389564144028E+00  2.720084193857686E-01 -6.356745666281789E+03
+  -3.623928106771989E-07 -6.607835753526203E-07  4.956042261343005E-10
+   2.120384334099953E-02  6.356752314245180E+03 -3.822915291418702E-24
+2456936.083333333 = A.D. 2014-Oct-05 14:00:00.0000 (CT)
+  -9.190369504387075E+00  2.694889299481996E-01 -6.356745664972410E+03
+  -1.804752397939120E-07 -7.309011368596172E-07  2.299390996375865E-10
+   2.120384334099952E-02  6.356752314245179E+03 -3.052278107364986E-23
+2456936.125000000 = A.D. 2014-Oct-05 15:00:00.0000 (CT)
+  -9.190669145009105E+00  2.668059885090181E-01 -6.356745664652369E+03
+   1.341508999194380E-08 -7.514677893153213E-07 -5.093640317054374E-11
+   2.120384334099953E-02  6.356752314245180E+03 -1.574897375574168E-23
+2456936.166666667 = A.D. 2014-Oct-05 16:00:00.0000 (CT)
+  -9.190269333949573E+00  2.641414988429250E-01 -6.356745665341684E+03
+   2.060149766154308E-07 -7.210859734425295E-07 -3.278095367421023E-10
+   2.120384334099952E-02  6.356752314245179E+03  2.717807990807025E-23
+2456936.208333333 = A.D. 2014-Oct-05 17:00:00.0000 (CT)
+  -9.189198753773413E+00  2.616760627255665E-01 -6.356745666991354E+03
+   3.841561355314395E-07 -6.418462569936451E-07 -5.817509582753724E-10
+   2.120384334099953E-02  6.356752314245180E+03 -1.757329558267144E-23
+2456936.250000000 = A.D. 2014-Oct-05 18:00:00.0000 (CT)
+  -9.187531934335347E+00  2.595766185334506E-01 -6.356745669486736E+03
+   5.356666048836423E-07 -5.191824161017103E-07 -7.954104061091574E-10
+   2.120384334099952E-02  6.356752314245179E+03 -1.496595505493325E-23
+2456936.291666667 = A.D. 2014-Oct-05 19:00:00.0000 (CT)
+  -9.185384127948133E+00  2.579850216273498E-01 -6.356745672655434E+03
+   6.502034754525815E-07 -3.614977270081813E-07 -9.542036121362324E-10
+   2.120384334099952E-02  6.356752314245178E+03 -1.882875405507840E-23
+2456936.333333333 = A.D. 2014-Oct-05 20:00:00.0000 (CT)
+  -9.182903399538338E+00  2.570083477618377E-01 -6.356745676279122E+03
+   7.199599756937537E-07 -1.795881708956301E-07 -1.047309253263391E-09
+   2.120384334099953E-02  6.356752314245180E+03  1.347522824524274E-24
+2456936.375000000 = A.D. 2014-Oct-05 21:00:00.0000 (CT)
+  -9.180260474718978E+00  2.567115824037100E-01 -6.356745680108513E+03
+   7.401985734317536E-07  1.409785669922643E-08 -1.068407793199806E-09
+   2.120384334099953E-02  6.356752314245180E+03 -5.358600735252724E-25
+2456936.416666667 = A.D. 2014-Oct-05 22:00:00.0000 (CT)
+  -9.177637041907047E+00  2.571131951767064E-01 -6.356745683880436E+03
+   7.095736912374507E-07  2.063125689718463E-07 -1.016111770088462E-09
+   2.120384334099952E-02  6.356752314245177E+03 -2.136498056383127E-23
+2456936.458333333 = A.D. 2014-Oct-05 23:00:00.0000 (CT)
+  -9.175213310091911E+00  2.581839008795412E-01 -6.356745687335874E+03
+   6.302220537356451E-07  3.839160901493556E-07 -8.940582338076288E-10
+   2.120384334099952E-02  6.356752314245179E+03  3.219656304565986E-23
+2456936.500000000 = A.D. 2014-Oct-06 00:00:00.0000 (CT)
+  -9.173155674378654E+00  2.598486902142667E-01 -6.356745690237662E+03
+   5.076146033775214E-07  5.347758986916660E-07 -7.106571794235120E-10
+   2.120384334099953E-02  6.356752314245180E+03  1.096691382628374E-23
+2456936.541666667 = A.D. 2014-Oct-06 01:00:00.0000 (CT)
+  -9.171605333455453E+00  2.619919892637853E-01 -6.356745692386729E+03
+   3.501803598739635E-07  6.485966256932979E-07 -4.785135481727292E-10
+   2.120384334099952E-02  6.356752314245179E+03 -8.522231164477209E-23
+2456936.583333333 = A.D. 2014-Oct-06 02:00:00.0000 (CT)
+  -9.170668638264063E+00  2.644655935328449E-01 -6.356745693635708E+03
+   1.687275148392786E-07  7.176244985022572E-07 -2.135616564271539E-10
+   2.120384334099952E-02  6.356752314245179E+03  5.066008512857530E-23
+2456936.625000000 = A.D. 2014-Oct-06 03:00:00.0000 (CT)
+  -9.170409830995911E+00  2.670988317307912E-01 -6.356745693898978E+03
+  -2.429731764422485E-08  7.371762054962637E-07  6.602675080459851E-11
+   2.120384334099953E-02  6.356752314245181E+03 -8.302968361201324E-24
+2456936.666666667 = A.D. 2014-Oct-06 04:00:00.0000 (CT)
+  -9.170846670142865E+00  2.697102617495214E-01 -6.356745693158503E+03
+  -2.156621345717635E-07  7.059581054999698E-07  3.410878173819914E-10
+   2.120384334099953E-02  6.356752314245181E+03  2.286849228178400E-23
+2456936.708333333 = A.D. 2014-Oct-06 05:00:00.0000 (CT)
+  -9.171949240193310E+00  2.721200981424587E-01 -6.356745691465031E+03
+  -3.922557728231123E-07  6.261530294736438E-07  5.927779785807923E-10
+   2.120384334099952E-02  6.356752314245179E+03  2.342445686753843E-23
+2456936.750000000 = A.D. 2014-Oct-06 06:00:00.0000 (CT)
+  -9.173642025552459E+00  2.741625197409527E-01 -6.356745688934579E+03
+  -5.419853942602983E-07  5.032690468574564E-07  8.038637614387277E-10
+   2.120384334099952E-02  6.356752314245179E+03 -6.415642636481596E-23
+2456936.791666667 = A.D. 2014-Oct-06 07:00:00.0000 (CT)
+  -9.175809105016265E+00  2.756970149261140E-01 -6.356745685740455E+03
+  -6.546037955159570E-07  3.457606768528570E-07  9.599007031614406E-10
+   2.120384334099953E-02  6.356752314245181E+03 -4.329301759637157E-24
+2456936.833333333 = A.D. 2014-Oct-06 08:00:00.0000 (CT)
+  -9.178302109599645E+00  2.766179883831793E-01 -6.356745682101362E+03
+  -7.224099443155129E-07  1.644485929481622E-07  1.050220740099478E-09
+   2.120384334099952E-02  6.356752314245178E+03 -8.598485172025975E-24
+2456936.875000000 = A.D. 2014-Oct-06 09:00:00.0000 (CT)
+  -9.180950397516494E+00  2.768619726308221E-01 -6.356745678266410E+03
+  -7.407748519270426E-07 -2.822234997977806E-08  1.068660572501419E-09
+   2.120384334099952E-02  6.356752314245179E+03  3.276059546156450E-24
+2456936.916666667 = A.D. 2014-Oct-06 10:00:00.0000 (CT)
+  -9.183572748612484E+00  2.764119518571931E-01 -6.356745674498033E+03
+  -7.084568730601888E-07 -2.190358894124080E-07  1.013981276794207E-09
+   2.120384334099952E-02  6.356752314245179E+03 -1.040203558947626E-23
+2456936.958333333 = A.D. 2014-Oct-06 11:00:00.0000 (CT)
+  -9.185989776919003E+00  2.752985035886690E-01 -6.356745671054019E+03
+  -6.276849582977484E-07 -3.949094947382003E-07  8.899505989133983E-10
+   2.120384334099953E-02  6.356752314245180E+03 -1.770114466529373E-23
+2456937.000000000 = A.D. 2014-Oct-06 12:00:00.0000 (CT)
+  -9.188036211231369E+00  2.735976816899013E-01 -6.356745668169863E+03
+  -5.040042803980601E-07 -5.437898829776940E-07  7.050824685414898E-10
+   2.120384334099952E-02  6.356752314245178E+03  3.708469216949185E-23
+2456937.041666667 = A.D. 2014-Oct-06 13:00:00.0000 (CT)
+  -9.189572203092219E+00  2.714257872896891E-01 -6.356745666042665E+03
+  -3.458949257971331E-07 -6.554776121706456E-07  4.720517425121221E-10
+   2.120384334099952E-02  6.356752314245179E+03 -3.715300847318314E-24
+2456937.083333333 = A.D. 2014-Oct-06 14:00:00.0000 (CT)
+  -9.190492888599445E+00  2.689313872387813E-01 -6.356745664817638E+03
+  -1.641898722275775E-07 -7.223243410425258E-07  2.068244091141025E-10
+   2.120384334099953E-02  6.356752314245180E+03  2.474457184165322E-23
+2456937.125000000 = A.D. 2014-Oct-06 15:00:00.0000 (CT)
+  -9.190735550378124E+00  2.662851279003193E-01 -6.356745664578199E+03
+   2.866780021441224E-08 -7.397550896779836E-07 -7.243705719059326E-11
+   2.120384334099953E-02  6.356752314245180E+03 -6.976825693219775E-23
+2456937.166666667 = A.D. 2014-Oct-06 16:00:00.0000 (CT)
+  -9.190283890680513E+00  2.636680427179626E-01 -6.356745665340294E+03
+   2.194775325533012E-07 -7.065798405984473E-07 -3.466181394355570E-10
+   2.120384334099953E-02  6.356752314245180E+03 -2.831896217971493E-23
+2456937.208333333 = A.D. 2014-Oct-06 17:00:00.0000 (CT)
+  -9.189169124616305E+00  2.612591547916483E-01 -6.356745667051334E+03
+   3.951853208053729E-07 -6.250732593687029E-07 -5.969612532307301E-10
+   2.120384334099953E-02  6.356752314245180E+03  2.010470741859273E-23
+2456937.250000000 = A.D. 2014-Oct-06 18:00:00.0000 (CT)
+  -9.187467820328202E+00  2.592232234615904E-01 -6.356745669593822E+03
+   5.437772473137824E-07 -5.008171984508400E-07 -8.063496128510367E-10
+   2.120384334099952E-02  6.356752314245178E+03  4.158966442433520E-24
+2456937.291666667 = A.D. 2014-Oct-06 19:00:00.0000 (CT)
+  -9.185296635656091E+00  2.576994736604196E-01 -6.356745672793440E+03
+   6.551013480579772E-07 -3.423168897261384E-07 -9.604781133166434E-10
+   2.120384334099952E-02  6.356752314245179E+03  2.757233004351541E-23
+2456937.333333333 = A.D. 2014-Oct-06 20:00:00.0000 (CT)
+  -9.182804313228830E+00  2.567920790507917E-01 -6.356745676431001E+03
+   7.215615924213242E-07 -1.604172176936374E-07 -1.048831133627677E-09
+   2.120384334099953E-02  6.356752314245180E+03  1.070555516730474E-23
+2456937.375000000 = A.D. 2014-Oct-06 21:00:00.0000 (CT)
+  -9.180161483387250E+00  2.565630494945274E-01 -6.356745680257469E+03
+   7.386365359851116E-07  3.244086294512365E-08 -1.065400425280717E-09
+   2.120384334099952E-02  6.356752314245179E+03  5.357950103788999E-25
+2456937.416666667 = A.D. 2014-Oct-06 22:00:00.0000 (CT)
+  -9.177548974116384E+00  2.570280084937291E-01 -6.356745684011031E+03
+   7.051872340821048E-07  2.230727799162626E-07 -1.009094077882261E-09
+   2.120384334099952E-02  6.356752314245179E+03 -1.813960520869912E-25
+2456937.458333333 = A.D. 2014-Oct-06 23:00:00.0000 (CT)
+  -9.175145429021411E+00  2.581551481253778E-01 -6.356745687435018E+03
+   6.235334485278013E-07  3.984532547865711E-07 -8.838087265621033E-10
+   2.120384334099952E-02  6.356752314245178E+03 -4.121620196415610E-23
+2456937.500000000 = A.D. 2014-Oct-07 00:00:00.0000 (CT)
+  -9.173115081304696E+00  2.598674313577508E-01 -6.356745690295473E+03
+   4.992930525216759E-07  5.466078385829399E-07 -6.981602334477524E-10
+   2.120384334099952E-02  6.356752314245179E+03 -1.008478768776314E-25
+2456937.541666667 = A.D. 2014-Oct-07 01:00:00.0000 (CT)
+  -9.171596520411610E+00  2.620478890728608E-01 -6.356745692397143E+03
+   3.409958048665985E-07  6.574320263119992E-07 -4.648915350224344E-10
+   2.120384334099953E-02  6.356752314245180E+03  4.044169026973589E-23
+2456937.583333333 = A.D. 2014-Oct-07 02:00:00.0000 (CT)
+  -9.170693220104880E+00  2.645476482618762E-01 -6.356745693596830E+03
+   1.594978077060799E-07  7.233820411818834E-07 -1.999980032617515E-10
+   2.120384334099952E-02  6.356752314245178E+03 -1.458322109639605E-23
+2456937.625000000 = A.D. 2014-Oct-07 03:00:00.0000 (CT)
+  -9.170466475657646E+00  2.671961398338736E-01 -6.356745693813169E+03
+  -3.276274509850311E-08  7.399898022116473E-07  7.836904262637784E-11
+   2.120384334099952E-02  6.356752314245178E+03  3.703088494744165E-23
+2456937.666666667 = A.D. 2014-Oct-07 04:00:00.0000 (CT)
+  -9.170931231590762E+00  2.698127856986526E-01 -6.356745693032154E+03
+  -2.226178362162071E-07  7.061671827752581E-07  3.511459966165400E-10
+   2.120384334099952E-02  6.356752314245179E+03  4.072956216086175E-23
+2456937.708333333 = A.D. 2014-Oct-07 05:00:00.0000 (CT)
+  -9.172055084469804E+00  2.722193650464955E-01 -6.356745691308060E+03
+  -3.970713885220314E-07  6.242787274449166E-07  5.996624046169202E-10
+   2.120384334099952E-02  6.356752314245178E+03  5.522006827367675E-24
+2456937.750000000 = A.D. 2014-Oct-07 06:00:00.0000 (CT)
+  -9.173760527282584E+00  2.742522127801865E-01 -6.356745688759693E+03
+  -5.441887873365358E-07  4.999779883405978E-07  8.069188130919503E-10
+   2.120384334099952E-02  6.356752314245177E+03  2.212120951412076E-23
+2456937.791666667 = A.D. 2014-Oct-07 07:00:00.0000 (CT)
+  -9.175930280057370E+00  2.757734151672176E-01 -6.356745685562226E+03
+  -6.539132795160112E-07  3.418188085273440E-07  9.587495715112128E-10
+   2.120384334099953E-02  6.356752314245181E+03  4.101190368454592E-24
+2456937.833333333 = A.D. 2014-Oct-07 08:00:00.0000 (CT)
+  -9.178415340232945E+00  2.766802368978833E-01 -6.356745681935162E+03
+  -7.187534044321132E-07  1.606682782900043E-07  1.044791052323753E-09
+   2.120384334099952E-02  6.356752314245179E+03  1.624210360788671E-23
+2456937.875000000 = A.D. 2014-Oct-07 09:00:00.0000 (CT)
+  -9.181045200294646E+00  2.769121351737826E-01 -6.356745678127303E+03
+  -7.342944690023678E-07 -3.103834826276232E-08  1.059189112774277E-09
+   2.120384334099953E-02  6.356752314245180E+03  1.620657912996723E-24
+2456937.916666667 = A.D. 2014-Oct-07 10:00:00.0000 (CT)
+  -9.183639532133537E+00  2.764548819888833E-01 -6.356745674399685E+03
+  -6.994991478777444E-07 -2.201496923508441E-07  1.000997506562327E-09
+   2.120384334099953E-02  6.356752314245180E+03  1.457258327196411E-23
+2456937.958333333 = A.D. 2014-Oct-07 11:00:00.0000 (CT)
+  -9.186020537576566E+00  2.753415138992513E-01 -6.356745671007705E+03
+  -6.167767423615841E-07 -3.936988671329853E-07  8.742401329162097E-10
+   2.120384334099953E-02  6.356752314245181E+03 -8.103159438690869E-24
+2456938.000000000 = A.D. 2014-Oct-07 12:00:00.0000 (CT)
+  -9.188025119333695E+00  2.736500459600896E-01 -6.356745668183642E+03
+  -4.918164775623612E-07 -5.397909988942180E-07  6.876330352757343E-10
+   2.120384334099953E-02  6.356752314245180E+03 -7.468208193240028E-24
+2456938.041666667 = A.D. 2014-Oct-07 13:00:00.0000 (CT)
+  -9.189516039339654E+00  2.714981079708175E-01 -6.356745666120770E+03
+  -3.331963711449322E-07 -6.484169082957584E-07  4.539853542494108E-10
+   2.120384334099953E-02  6.356752314245181E+03  4.605237816560950E-23
+2456938.083333333 = A.D. 2014-Oct-07 14:00:00.0000 (CT)
+  -9.190391301236051E+00  2.690348717711110E-01 -6.356745664960132E+03
+  -1.517945630270557E-07 -7.121372932258870E-07  1.893204053901460E-10
+   2.120384334099953E-02  6.356752314245181E+03  3.525918294014078E-24
+2456938.125000000 = A.D. 2014-Oct-07 15:00:00.0000 (CT)
+  -9.190591115668520E+00  2.664308235802283E-01 -6.356745664780919E+03
+   3.995649709140143E-08 -7.265906475503455E-07 -8.822281107159635E-11
+   2.120384334099952E-02  6.356752314245179E+03  2.473273848190669E-23
+2456938.166666667 = A.D. 2014-Oct-07 16:00:00.0000 (CT)
+  -9.190101972860919E+00  2.638660825740436E-01 -6.356745665595083E+03
+   2.289218720667352E-07 -6.907902394441672E-07 -3.596323626485609E-10
+   2.120384334099953E-02  6.356752314245181E+03 -1.221495510000421E-23
+2456938.208333333 = A.D. 2014-Oct-07 17:00:00.0000 (CT)
+  -9.188957545200816E+00  2.615180660527439E-01 -6.356745667346539E+03
+   4.021636071575812E-07 -6.071899297460469E-07 -6.063252567030426E-10
+   2.120384334099953E-02  6.356752314245180E+03  1.942050337133779E-23
+2456938.250000000 = A.D. 2014-Oct-07 18:00:00.0000 (CT)
+  -9.187236359676838E+00  2.595493458533361E-01 -6.356745669915043E+03
+   5.478262536958695E-07 -4.815144439341847E-07 -8.114192864587914E-10
+   2.120384334099953E-02  6.356752314245180E+03  2.934107167765632E-23
+2456938.291666667 = A.D. 2014-Oct-07 19:00:00.0000 (CT)
+  -9.185056401142290E+00  2.580965271621218E-01 -6.356745673124459E+03
+   6.559478389615657E-07 -3.223658367004556E-07 -9.608878055042905E-10
+   2.120384334099952E-02  6.356752314245179E+03 -3.968656739293474E-24
+2456938.333333333 = A.D. 2014-Oct-07 20:00:00.0000 (CT)
+  -9.182567017404851E+00  2.572609104373757E-01 -6.356745676754831E+03
+   7.191408089985298E-07 -1.406332018512771E-07 -1.044518443361003E-09
+   2.120384334099952E-02  6.356752314245178E+03  3.165777513054783E-24
+2456938.375000000 = A.D. 2014-Oct-07 21:00:00.0000 (CT)
+  -9.179938681621094E+00  2.571015747511533E-01 -6.356745680557468E+03
+   7.330963998136114E-07  5.125386573459460E-08 -1.056610235164335E-09
+   2.120384334099953E-02  6.356752314245180E+03  1.576870415487919E-24
+2456938.416666667 = A.D. 2014-Oct-07 22:00:00.0000 (CT)
+  -9.177351313861125E+00  2.576313547419906E-01 -6.356745684271976E+03
+   6.968780025880945E-07  2.401768747333319E-07 -9.963615777029284E-10
+   2.120384334099952E-02  6.356752314245179E+03 -2.124116539628409E-24
+2456938.458333333 = A.D. 2014-Oct-07 23:00:00.0000 (CT)
+  -9.174981961997663E+00  2.588159851010251E-01 -6.356745687644089E+03
+   6.129835496723172E-07  4.132267613534799E-07 -8.679226118261739E-10
+   2.120384334099952E-02  6.356752314245179E+03 -2.767799259322462E-23
+2456938.500000000 = A.D. 2014-Oct-08 00:00:00.0000 (CT)
+  -9.172992685500114E+00  2.605764695183856E-01 -6.356745690443071E+03
+   4.871727690550029E-07  5.585874172106821E-07 -6.801086154070996E-10
+   2.120384334099953E-02  6.356752314245182E+03  9.338773651454156E-24
+2456938.541666667 = A.D. 2014-Oct-08 01:00:00.0000 (CT)
+  -9.171519471765148E+00  2.627945107976720E-01 -6.356745692477485E+03
+   3.280710963778970E-07  6.663441836171253E-07 -4.457939631202906E-10
+   2.120384334099952E-02  6.356752314245179E+03  1.081520608788660E-22
+2456938.583333333 = A.D. 2014-Oct-08 02:00:00.0000 (CT)
+  -9.170662942167457E+00  2.653206272504593E-01 -6.356745693608296E+03
+   1.465782392254553E-07  7.291608306797188E-07 -1.810294564383065E-10
+   2.120384334099953E-02  6.356752314245181E+03 -2.752712742257300E-23
+2456938.625000000 = A.D. 2014-Oct-08 03:00:00.0000 (CT)
+  -9.170481483441627E+00  2.679843996378530E-01 -6.356745693758337E+03
+  -4.487951901204183E-08  7.427811231761080E-07  9.605867229230957E-11
+   2.120384334099952E-02  6.356752314245178E+03  1.467807503091410E-23
+2456938.666666667 = A.D. 2014-Oct-08 04:00:00.0000 (CT)
+  -9.170987274486764E+00  2.706061472074182E-01 -6.356745692917576E+03
+  -2.332005740192191E-07  7.063183405480645E-07  3.665104275237215E-10
+   2.120384334099952E-02  6.356752314245177E+03  1.878464124183773E-23
+2456938.708333333 = A.D. 2014-Oct-08 05:00:00.0000 (CT)
+  -9.172145477922568E+00  2.730092310503682E-01 -6.356745691143758E+03
+  -4.055051709574316E-07  6.223142243693512E-07  6.118303510799311E-10
+   2.120384334099952E-02  6.356752314245178E+03 -1.853740128562160E-23
+2456938.750000000 = A.D. 2014-Oct-08 06:00:00.0000 (CT)
+  -9.173876650426358E+00  2.750321428574714E-01 -6.356745688558413E+03
+  -5.500169285171685E-07  4.965632130046711E-07  8.152533633251364E-10
+   2.120384334099953E-02  6.356752314245181E+03 -1.035141646159832E-23
+2456938.791666667 = A.D. 2014-Oct-08 07:00:00.0000 (CT)
+  -9.176062205184811E+00  2.765395516588409E-01 -6.356745685338508E+03
+  -6.568683784813569E-07  3.377141118635300E-07  9.628915035510757E-10
+   2.120384334099953E-02  6.356752314245181E+03  1.020255198269766E-24
+2456938.833333333 = A.D. 2014-Oct-08 08:00:00.0000 (CT)
+  -9.178552550969282E+00  2.774315529135497E-01 -6.356745681704298E+03
+  -7.187754181837517E-07  1.566765815010805E-07  1.044683130012386E-09
+   2.120384334099953E-02  6.356752314245180E+03 -7.808683638208187E-24
+2456938.875000000 = A.D. 2014-Oct-08 09:00:00.0000 (CT)
+  -9.181177349289738E+00  2.776504877365445E-01 -6.356745677904231E+03
+  -7.315345754276774E-07 -3.412682716003586E-08  1.055079703321431E-09
+   2.120384334099952E-02  6.356752314245178E+03  7.371003852559268E-25
+2456938.916666667 = A.D. 2014-Oct-08 10:00:00.0000 (CT)
+  -9.183757186383442E+00  2.771848667554996E-01 -6.356745674197917E+03
+  -6.943091387825588E-07 -2.216118095080771E-07  9.934232745237010E-10
+   2.120384334099952E-02  6.356752314245179E+03  2.419503224160310E-24
+2456938.958333333 = A.D. 2014-Oct-08 11:00:00.0000 (CT)
+  -9.186115860328961E+00  2.760701314744929E-01 -6.356745670838352E+03
+  -6.096846769327291E-07 -3.929282991181930E-07  8.639889965346830E-10
+   2.120384334099953E-02  6.356752314245181E+03 -2.280840646610884E-23
+2456939.000000000 = A.D. 2014-Oct-08 12:00:00.0000 (CT)
+  -9.188092441869133E+00  2.743862027190238E-01 -6.356745668054600E+03
+  -4.834902673367190E-07 -5.363399581754532E-07  6.756899223023784E-10
+   2.120384334099952E-02  6.356752314245178E+03 -3.805875253383702E-23
+2456939.041666667 = A.D. 2014-Oct-08 13:00:00.0000 (CT)
+  -9.189552283461397E+00  2.722519856425920E-01 -6.356745666036130E+03
+  -3.243977944427822E-07 -6.420269717578767E-07  4.414644728934585E-10
+   2.120384334099952E-02  6.356752314245179E+03 -1.395581717592443E-23
+2456939.083333333 = A.D. 2014-Oct-08 14:00:00.0000 (CT)
+  -9.190396223525571E+00  2.698172090461775E-01 -6.356745664919856E+03
+  -1.433268630686994E-07 -7.027572332231968E-07  1.773886710606697E-10
+   2.120384334099953E-02  6.356752314245180E+03  3.747412763210543E-23
+2456939.125000000 = A.D. 2014-Oct-08 15:00:00.0000 (CT)
+  -9.190567356785182E+00  2.672521590224467E-01 -6.356745664780792E+03
+   4.730383580916960E-08 -7.143800461139753E-07 -9.842594495976375E-11
+   2.120384334099953E-02  6.356752314245180E+03 -1.007246635441882E-23
+2456939.166666667 = A.D. 2014-Oct-08 16:00:00.0000 (CT)
+  -9.190054908539420E+00  2.647360108048613E-01 -6.356745665626954E+03
+   2.344273805945055E-07 -6.761086415544147E-07 -3.670731734606996E-10
+   2.120384334099953E-02  6.356752314245180E+03 -2.367283542881608E-23
+2456939.208333333 = A.D. 2014-Oct-08 17:00:00.0000 (CT)
+  -9.188894949211056E+00  2.624445582460969E-01 -6.356745667398839E+03
+   4.052233997868733E-07 -5.905722842110500E-07 -6.101467538236798E-10
+   2.120384334099952E-02  6.356752314245179E+03  3.977166998839018E-23
+2456939.250000000 = A.D. 2014-Oct-08 18:00:00.0000 (CT)
+  -9.187167901925454E+00  2.605381811713777E-01 -6.356745669973531E+03
+   5.479955061685545E-07 -4.636345221511793E-07 -8.110000757387672E-10
+   2.120384334099952E-02  6.356752314245178E+03 -7.918054787260639E-24
+2456939.291666667 = A.D. 2014-Oct-08 19:00:00.0000 (CT)
+  -9.184993015422602E+00  2.591508741366519E-01 -6.356745673173151E+03
+   6.529713329331181E-07 -3.039901454509916E-07 -9.558847807656957E-10
+   2.120384334099952E-02  6.356752314245179E+03 -4.231446787492669E-24
+2456939.333333333 = A.D. 2014-Oct-08 20:00:00.0000 (CT)
+  -9.182520182254166E+00  2.583810869969676E-01 -6.356745676777054E+03
+   7.129704504235199E-07 -1.225685593020162E-07 -1.034890379834150E-09
+   2.120384334099952E-02  6.356752314245179E+03 -3.640413165843376E-24
+2456939.375000000 = A.D. 2014-Oct-08 21:00:00.0000 (CT)
+  -9.179919663709571E+00  2.582850032782759E-01 -6.356745680536958E+03
+   7.238945151748481E-07  6.821548678109178E-08 -1.042620672614099E-09
+   2.120384334099953E-02  6.356752314245180E+03  2.959722528492550E-25
+2456939.416666667 = A.D. 2014-Oct-08 22:00:00.0000 (CT)
+  -9.177370425896939E+00  2.588727151662493E-01 -6.356745684193951E+03
+   6.850061954886808E-07  2.553124456406705E-07 -9.785608050173257E-10
+   2.120384334099952E-02  6.356752314245178E+03 -2.639026280021683E-24
+2456939.458333333 = A.D. 2014-Oct-08 23:00:00.0000 (CT)
+  -9.175047886107929E+00  2.601075553656403E-01 -6.356745687496220E+03
+   5.989778938935125E-07  4.259315224006228E-07 -8.471100020156867E-10
+   2.120384334099952E-02  6.356752314245179E+03 -2.028031285065256E-23
+2456939.500000000 = A.D. 2014-Oct-09 00:00:00.0000 (CT)
+  -9.173111908510505E+00  2.619086298930646E-01 -6.356745690216278E+03
+   4.717070539506049E-07  5.684160430916003E-07 -6.572779108181247E-10
+   2.120384334099953E-02  6.356752314245180E+03  2.049840451729373E-23
+2456939.541666667 = A.D. 2014-Oct-09 01:00:00.0000 (CT)
+  -9.171695870808554E+00  2.641563771421114E-01 -6.356745692166528E+03
+   3.119107275944481E-07  6.730409628861642E-07 -4.220653774494952E-10
+   2.120384334099952E-02  6.356752314245179E+03  1.166006405616493E-23
+2456939.583333333 = A.D. 2014-Oct-09 02:00:00.0000 (CT)
+  -9.170897549370883E+00  2.667007700661769E-01 -6.356745693212078E+03
+   1.305277074637608E-07  7.326768505591325E-07 -1.575728840812742E-10
+   2.120384334099953E-02  6.356752314245181E+03  3.747962546797392E-24
+2456939.625000000 = A.D. 2014-Oct-09 03:00:00.0000 (CT)
+  -9.170772445939445E+00  2.693715990420195E-01 -6.356745693279945E+03
+  -6.003160998660096E-08  7.432771592191472E-07  1.181035120619175E-10
+   2.120384334099952E-02  6.356752314245179E+03 -8.673088202235531E-24
+2456939.666666667 = A.D. 2014-Oct-09 04:00:00.0000 (CT)
+  -9.171330011527902E+00  2.719901315917799E-01 -6.356745692364029E+03
+  -2.467353475743281E-07  7.041533878098800E-07  3.861117290995193E-10
+   2.120384334099952E-02  6.356752314245179E+03 -2.924920251497812E-23
+2456939.708333333 = A.D. 2014-Oct-09 05:00:00.0000 (CT)
+  -9.172533024126640E+00  2.743813489792556E-01 -6.356745690525479E+03
+  -4.168224508636121E-07  6.180204553162853E-07  6.281344537538859E-10
+   2.120384334099953E-02  6.356752314245181E+03 -3.911179955787860E-23
+2456939.750000000 = A.D. 2014-Oct-09 06:00:00.0000 (CT)
+  -9.174300161281790E+00  2.763859222342094E-01 -6.356745687888483E+03
+  -5.586759914221981E-07  4.908091051125892E-07  8.276426686992877E-10
+   2.120384334099953E-02  6.356752314245180E+03 -4.528752834842563E-23
+2456939.791666667 = A.D. 2014-Oct-09 07:00:00.0000 (CT)
+  -9.176511589792732E+00  2.778711080292116E-01 -6.356745684631732E+03
+  -6.626177050147803E-07  3.312582970158512E-07  9.710261297110983E-10
+   2.120384334099953E-02  6.356752314245180E+03 -3.080674917599335E-24
+2456939.833333333 = A.D. 2014-Oct-09 08:00:00.0000 (CT)
+  -9.179017188378504E+00  2.787398192141939E-01 -6.356745680976156E+03
+  -7.215694237316975E-07  1.503156004003821E-07  1.048523477393347E-09
+   2.120384334099953E-02  6.356752314245180E+03  6.595386084650721E-24
+2456939.875000000 = A.D. 2014-Oct-09 09:00:00.0000 (CT)
+  -9.181646839140743E+00  2.789372501257288E-01 -6.356745677169787E+03
+  -7.315361997632724E-07 -3.961327182648549E-08  1.054888422427383E-09
+   2.120384334099952E-02  6.356752314245179E+03 -5.545331965342275E-25
+2456939.916666667 = A.D. 2014-Oct-09 10:00:00.0000 (CT)
+  -9.184222082349462E+00  2.784546044792561E-01 -6.356745673470760E+03
+  -6.918781460339130E-07 -2.255143447357889E-07  9.897465405434053E-10
+   2.120384334099953E-02  6.356752314245180E+03 -1.203772308928507E-23
+2456939.958333333 = A.D. 2014-Oct-09 11:00:00.0000 (CT)
+  -9.186568336147921E+00  2.773296721741047E-01 -6.356745670129641E+03
+  -6.053524967965043E-07 -3.946564570797856E-07  8.576184129928091E-10
+   2.120384334099954E-02  6.356752314245183E+03  4.488901657689304E-24
+2456940.000000000 = A.D. 2014-Oct-09 12:00:00.0000 (CT)
+  -9.188526844503643E+00  2.756442171711358E-01 -6.356745667372272E+03
+  -4.779231278625852E-07 -5.354625203609531E-07  6.676076981509335E-10
+   2.120384334099953E-02  6.356752314245180E+03 -2.979840053350978E-23
+2456940.041666667 = A.D. 2014-Oct-09 13:00:00.0000 (CT)
+  -9.189965535765463E+00  2.735183568682427E-01 -6.356745665384342E+03
+  -3.183506934330979E-07 -6.383013382222372E-07  4.327756547978179E-10
+   2.120384334099953E-02  6.356752314245181E+03 -6.217304141079162E-24
+2456940.083333333 = A.D. 2014-Oct-09 14:00:00.0000 (CT)
+  -9.190788049178410E+00  2.711023192135206E-01 -6.356745664298675E+03
+  -1.375915451626146E-07 -6.961458307220744E-07  1.692450880599577E-10
+   2.120384334099952E-02  6.356752314245179E+03 -1.734518419148888E-24
+2456940.125000000 = A.D. 2014-Oct-09 15:00:00.0000 (CT)
+  -9.190940312467792E+00  2.685661430926630E-01 -6.356745664186184E+03
+   5.195332755238042E-08 -7.050526795525629E-07 -1.049048124026479E-10
+   2.120384334099953E-02  6.356752314245180E+03  3.167719647974006E-23
+2456940.166666667 = A.D. 2014-Oct-09 16:00:00.0000 (CT)
+  -9.190414221533008E+00  2.660880280094251E-01 -6.356745665051029E+03
+   2.372878527191774E-07 -6.644306558079201E-07 -3.708769901149905E-10
+   2.120384334099953E-02  6.356752314245181E+03  5.402983560550837E-23
+2456940.208333333 = A.D. 2014-Oct-09 17:00:00.0000 (CT)
+  -9.189248171877729E+00  2.638421311457824E-01 -6.356745666830380E+03
+   4.057107278513302E-07 -5.770793721852643E-07 -6.104435538242277E-10
+   2.120384334099953E-02  6.356752314245180E+03  7.626636954657469E-24
+2456940.250000000 = A.D. 2014-Oct-09 18:00:00.0000 (CT)
+  -9.187524407000073E+00  2.619866473450118E-01 -6.356745669398746E+03
+   5.456846416142930E-07 -4.489959239887562E-07 -8.071932034114534E-10
+   2.120384334099952E-02  6.356752314245179E+03  9.973920086344121E-24
+2456940.291666667 = A.D. 2014-Oct-09 19:00:00.0000 (CT)
+  -9.185363366850376E+00  2.606529877426396E-01 -6.356745672576597E+03
+   6.476253805162541E-07 -2.889627716549215E-07 -9.476536840859579E-10
+   2.120384334099952E-02  6.356752314245179E+03 -1.621978694868089E-23
+2456940.333333333 = A.D. 2014-Oct-09 20:00:00.0000 (CT)
+  -9.182915424715926E+00  2.599367971820684E-01 -6.356745676142676E+03
+   7.045568498106365E-07 -1.079451838640660E-07 -1.022212499938054E-09
+   2.120384334099952E-02  6.356752314245179E+03  1.178488770248089E-24
+2456940.375000000 = A.D. 2014-Oct-09 21:00:00.0000 (CT)
+  -9.180350579438507E+00  2.598914243021593E-01 -6.356745679849173E+03
+   7.125872424411899E-07  8.166041897893784E-08 -1.025772964634729E-09
+   2.120384334099952E-02  6.356752314245179E+03 -3.876006818858798E-24
+2456940.416666667 = A.D. 2014-Oct-09 22:00:00.0000 (CT)
+  -9.177846809537545E+00  2.605242900221156E-01 -6.356745683438695E+03
+   6.711738543631619E-07  2.668756964930551E-07 -9.581008144507687E-10
+   2.120384334099953E-02  6.356752314245180E+03  1.095793511208431E-23
+2456940.458333333 = A.D. 2014-Oct-09 23:00:00.0000 (CT)
+  -9.175577887054697E+00  2.617964015019727E-01 -6.356745686661889E+03
+   5.831585275779676E-07  4.350290181187742E-07 -8.238378121351674E-10
+   2.120384334099952E-02  6.356752314245179E+03 -2.395130569529109E-23
+2456940.500000000 = A.D. 2014-Oct-10 00:00:00.0000 (CT)
+  -9.173701485506657E+00  2.636250432753859E-01 -6.356745689294509E+03
+   4.545714112488066E-07  5.746226461663259E-07 -6.321815764074580E-10
+   2.120384334099952E-02  6.356752314245179E+03  1.510265272546222E-23
+2456940.541666667 = A.D. 2014-Oct-10 01:00:00.0000 (CT)
+  -9.172348395635481E+00  2.658894594099797E-01 -6.356745691152757E+03
+   2.942166450260482E-07  6.761189713124375E-07 -3.962538044742919E-10
+   2.120384334099953E-02  6.356752314245180E+03  1.671114383008725E-24
+2456940.583333333 = A.D. 2014-Oct-10 02:00:00.0000 (CT)
+  -9.171613586957612E+00  2.684391371905742E-01 -6.356745692105836E+03
+   1.130681633483235E-07  7.325928126323128E-07 -1.321998647399355E-10
+   2.120384334099953E-02  6.356752314245181E+03 -3.659548237191577E-23
+2456940.625000000 = A.D. 2014-Oct-10 03:00:00.0000 (CT)
+  -9.171549725806621E+00  2.711041233887568E-01 -6.356745692084875E+03
+  -7.648238705611883E-08  7.402036011854033E-07  1.419176270627224E-10
+   2.120384334099952E-02  6.356752314245179E+03  4.461407598610877E-23
+2456940.666666667 = A.D. 2014-Oct-10 04:00:00.0000 (CT)
+  -9.172163591950182E+00  2.737066652435823E-01 -6.356745691087629E+03
+  -2.614745975071471E-07  6.984568389565325E-07  4.073562482312835E-10
+   2.120384334099952E-02  6.356752314245179E+03  6.528836245383441E-23
+2456940.708333333 = A.D. 2014-Oct-10 05:00:00.0000 (CT)
+  -9.173415638026540E+00  2.760733796673462E-01 -6.356745689178581E+03
+  -4.292666893552644E-07  6.102362287550942E-07  6.459770360286843E-10
+   2.120384334099952E-02  6.356752314245179E+03 -5.622034908601010E-23
+2456940.750000000 = A.D. 2014-Oct-10 06:00:00.0000 (CT)
+  -9.175222720183912E+00  2.780471170879650E-01 -6.356745686484498E+03
+  -5.684006374010975E-07  4.816045529652799E-07  8.414857953733897E-10
+   2.120384334099952E-02  6.356752314245179E+03  3.620536374626527E-23
+2456940.791666667 = A.D. 2014-Oct-10 07:00:00.0000 (CT)
+  -9.177463811370064E+00  2.794977080079918E-01 -6.356745683185734E+03
+  -6.693858203366683E-07  3.213870536076320E-07  9.805474998532550E-10
+   2.120384334099953E-02  6.356752314245180E+03  1.075415733764512E-23
+2456940.833333333 = A.D. 2014-Oct-10 08:00:00.0000 (CT)
+  -9.179988304661791E+00  2.803308572856548E-01 -6.356745679503844E+03
+  -7.253476002871015E-07  1.405659437476750E-07  1.053697567383067E-09
+   2.120384334099953E-02  6.356752314245180E+03  2.678714799309008E-24
+2456940.875000000 = A.D. 2014-Oct-10 09:00:00.0000 (CT)
+  -9.182626336928340E+00  2.804945782714726E-01 -6.356745675686403E+03
+  -7.324965070733685E-07 -4.847240631005694E-08  1.055987735370480E-09
+   2.120384334099952E-02  6.356752314245178E+03  1.831852886122396E-24
+2456940.916666667 = A.D. 2014-Oct-10 10:00:00.0000 (CT)
+  -9.185200425130114E+00  2.799827277070754E-01 -6.356745671990054E+03
+  -6.903860058198086E-07 -2.327860019539237E-07  9.873224599838597E-10
+   2.120384334099953E-02  6.356752314245181E+03 -1.097621785621503E-23
+2456940.958333333 = A.D. 2014-Oct-10 11:00:00.0000 (CT)
+  -9.187537618081830E+00  2.788354009149903E-01 -6.356745668662918E+03
+  -6.019413147288430E-07 -3.997633452811216E-07  8.524629712668926E-10
+   2.120384334099952E-02  6.356752314245178E+03 -6.514772846294991E-24
+2456941.000000000 = A.D. 2014-Oct-10 12:00:00.0000 (CT)
+  -9.189481331639399E+00  2.771361619038188E-01 -6.356745665927641E+03
+  -4.732574207886643E-07 -5.379864709625527E-07  6.606988777590555E-10
+   2.120384334099952E-02  6.356752314245179E+03  5.787301806702217E-23
+2456941.041666667 = A.D. 2014-Oct-10 13:00:00.0000 (CT)
+  -9.190902057379922E+00  2.750062996416832E-01 -6.356745663966141E+03
+  -3.131802404945428E-07 -6.380118359779240E-07  4.252099714912702E-10
+   2.120384334099952E-02  6.356752314245179E+03 -2.382967014314739E-23
+2456941.083333333 = A.D. 2014-Oct-10 14:00:00.0000 (CT)
+  -9.191706212391106E+00  2.725965052047798E-01 -6.356745662907199E+03
+  -1.326997086637779E-07 -6.930156565753294E-07  1.621620787013529E-10
+   2.120384334099952E-02  6.356752314245179E+03 -2.109140629912080E-23
+2456941.125000000 = A.D. 2014-Oct-10 15:00:00.0000 (CT)
+  -9.191842525408056E+00  2.700765408636870E-01 -6.356745662817657E+03
+   5.580356349087753E-08 -6.992595926454500E-07 -1.104010160445832E-10
+   2.120384334099953E-02  6.356752314245180E+03 -1.948991761562412E-23
+2456941.166666667 = A.D. 2014-Oct-10 16:00:00.0000 (CT)
+  -9.191305523494131E+00  2.676236092787805E-01 -6.356745663697882E+03
+   2.394064194054128E-07 -6.563450003336994E-07 -3.737936184126046E-10
+   2.120384334099953E-02  6.356752314245180E+03 -7.092858901816121E-24
+2456941.208333333 = A.D. 2014-Oct-10 17:00:00.0000 (CT)
+  -9.190135882161893E+00  2.654102195914723E-01 -6.356745665481775E+03
+   4.055279752886216E-07 -5.672384626991642E-07 -6.099674717081905E-10
+   2.120384334099953E-02  6.356752314245180E+03 -3.462029537433439E-23
+2456941.250000000 = A.D. 2014-Oct-10 18:00:00.0000 (CT)
+  -9.188417616642012E+00  2.635923811877563E-01 -6.356745668041329E+03
+   5.427905435137060E-07 -4.380669729846673E-07 -8.027468102666828E-10
+   2.120384334099952E-02  6.356752314245179E+03 -6.148662521656002E-24
+2456941.291666667 = A.D. 2014-Oct-10 19:00:00.0000 (CT)
+  -9.186272308231269E+00  2.622989330599864E-01 -6.356745671195427E+03
+   6.417977477301583E-07 -2.776969123639833E-07 -9.389346042789776E-10
+   2.120384334099953E-02  6.356752314245181E+03  1.671153420896548E-23
+2456941.333333333 = A.D. 2014-Oct-10 20:00:00.0000 (CT)
+  -9.183850762488074E+00  2.616227384939921E-01 -6.356745674722262E+03
+   6.957766160004764E-07 -9.712575469362745E-08 -1.009214343246305E-09
+   2.120384334099953E-02  6.356752314245181E+03  4.038014053326733E-24
+2456941.375000000 = A.D. 2014-Oct-10 21:00:00.0000 (CT)
+  -9.181322671599631E+00  2.616143467593554E-01 -6.356745678374540E+03
+   7.010397771152392E-07  9.127176695996104E-08 -1.008785740390080E-09
+   2.120384334099953E-02  6.356752314245181E+03  8.622818788769347E-25
+2456941.416666667 = A.D. 2014-Oct-10 22:00:00.0000 (CT)
+  -9.178864989538884E+00  2.622785543137934E-01 -6.356745681896432E+03
+   6.572362220583089E-07  2.745913586441095E-07 -9.376909856424065E-10
+   2.120384334099953E-02  6.356752314245181E+03 -1.864709775040591E-25
+2456941.458333333 = A.D. 2014-Oct-10 23:00:00.0000 (CT)
+  -9.176649816346295E+00  2.635740993059622E-01 -6.356745685041073E+03
+   5.673735811858878E-07  4.402826591710338E-07 -8.008093789621512E-10
+   2.120384334099953E-02  6.356752314245181E+03 -1.596252726792336E-23
+2456941.500000000 = A.D. 2014-Oct-11 00:00:00.0000 (CT)
+  -9.174832621033849E+00  2.654165086197941E-01 -6.356745687587469E+03
+   4.376105150268833E-07  5.770080410149085E-07 -6.075208854783681E-10
+   2.120384334099952E-02  6.356752314245177E+03 -6.477368043445347E-23
+2456941.541666667 = A.D. 2014-Oct-11 01:00:00.0000 (CT)
+  -9.173541608766987E+00  2.676839005561907E-01 -6.356745689355609E+03
+   2.768337141201639E-07  6.754177142719585E-07 -3.710620594559377E-10
+   2.120384334099952E-02  6.356752314245178E+03  2.868565807267128E-23
+2456941.583333333 = A.D. 2014-Oct-11 02:00:00.0000 (CT)
+  -9.172868960110025E+00  2.702253453396822E-01 -6.356745690218758E+03
+   9.604776659698375E-08  7.287892834206679E-07 -1.076173681394878E-10
+   2.120384334099952E-02  6.356752314245179E+03  3.450937897555559E-23
+2456941.625000000 = A.D. 2014-Oct-11 03:00:00.0000 (CT)
+  -9.172864540405882E+00  2.728712094806829E-01 -6.356745690112109E+03
+  -9.237863216387953E-08  7.334858220559602E-07  1.647893267616483E-10
+   2.120384334099952E-02  6.356752314245178E+03  1.199666824392392E-24
+2456941.666666667 = A.D. 2014-Oct-11 04:00:00.0000 (CT)
+  -9.173532508088114E+00  2.754447740473056E-01 -6.356745689037192E+03
+  -2.755600840740308E-07  6.892033857402618E-07  4.275295871485880E-10
+   2.120384334099952E-02  6.356752314245177E+03 -2.480935846965381E-23
+2456941.708333333 = A.D. 2014-Oct-11 05:00:00.0000 (CT)
+  -9.174831053239236E+00  2.777743321097190E-01 -6.356745687061740E+03
+  -4.409766500903637E-07  5.989900815329756E-07  6.626457216014949E-10
+   2.120384334099953E-02  6.356752314245181E+03  6.818559183023600E-23
+2456941.750000000 = A.D. 2014-Oct-11 06:00:00.0000 (CT)
+  -9.176675282363945E+00  2.797049368178674E-01 -6.356745684314998E+03
+  -5.773305323980713E-07  4.690357073034171E-07  8.540795398947985E-10
+   2.120384334099952E-02  6.356752314245179E+03  3.691357609453173E-24
+2456941.791666667 = A.D. 2014-Oct-11 07:00:00.0000 (CT)
+  -9.178943050277587E+00  2.811089962706779E-01 -6.356745680978880E+03
+  -6.753186629579034E-07  3.082464837243634E-07  9.887704689101156E-10
+   2.120384334099952E-02  6.356752314245178E+03  1.279265077664711E-23
+2456941.833333333 = A.D. 2014-Oct-11 08:00:00.0000 (CT)
+  -9.181483338424208E+00  2.818949906688765E-01 -6.356745677275469E+03
+  -7.282683676445182E-07  1.276340975690613E-07  1.057547940010422E-09
+   2.120384334099953E-02  6.356752314245180E+03 -4.034760896008101E-24
+2456941.875000000 = A.D. 2014-Oct-11 09:00:00.0000 (CT)
+  -9.184126604879475E+00  2.820137161597337E-01 -6.356745673451803E+03
+  -7.325926741571566E-07 -6.043903267627944E-08  1.055757077255564E-09
+   2.120384334099952E-02  6.356752314245179E+03 -3.615298791343527E-24
+2456941.916666667 = A.D. 2014-Oct-11 10:00:00.0000 (CT)
+  -9.186696396660533E+00  2.814616293647558E-01 -6.356745669762956E+03
+  -6.880341979225488E-07 -2.431065402107887E-07  9.835750002800535E-10
+   2.120384334099952E-02  6.356752314245177E+03  2.184495139462243E-24
+2456941.958333333 = A.D. 2014-Oct-11 11:00:00.0000 (CT)
+  -9.189021428954943E+00  2.802810652007313E-01 -6.356745666454585E+03
+  -5.976810257389413E-07 -4.078789415674362E-07  8.459962520380191E-10
+   2.120384334099953E-02  6.356752314245180E+03 -1.015687765394405E-23
+2456942.000000000 = A.D. 2014-Oct-11 12:00:00.0000 (CT)
+  -9.190947304341211E+00  2.785573147255490E-01 -6.356745663746105E+03
+  -4.677536294001741E-07 -5.434982160103050E-07  6.524885177138251E-10
+   2.120384334099953E-02  6.356752314245180E+03 -1.419671347536922E-23
+2456942.041666667 = A.D. 2014-Oct-11 13:00:00.0000 (CT)
+  -9.192347070146710E+00  2.764127646506302E-01 -6.356745661815703E+03
+  -3.071775120550806E-07 -6.407076605053516E-07  4.163423657295306E-10
+   2.120384334099952E-02  6.356752314245179E+03  1.163800764954460E-23
+2456942.083333333 = A.D. 2014-Oct-11 14:00:00.0000 (CT)
+  -9.193129892021767E+00  2.739985011132961E-01 -6.356745660788156E+03
+  -1.269709460739780E-07 -6.928843768297875E-07  1.537596706289503E-10
+   2.120384334099952E-02  6.356752314245179E+03 -1.134392222794015E-24
+2456942.125000000 = A.D. 2014-Oct-11 15:00:00.0000 (CT)
+  -9.193247251104175E+00  2.714839536446552E-01 -6.356745660726320E+03
+   6.051019947842410E-08 -6.964911758474705E-07 -1.172567604397435E-10
+   2.120384334099953E-02  6.356752314245180E+03 -4.858083776126414E-23
+2456942.166666667 = A.D. 2014-Oct-11 16:00:00.0000 (CT)
+  -9.192696241933126E+00  2.690452891214536E-01 -6.356745661626858E+03
+   2.424187851011815E-07 -6.513170649152969E-07 -3.781362619749921E-10
+   2.120384334099953E-02  6.356752314245180E+03 -2.676395298140823E-23
+2456942.208333333 = A.D. 2014-Oct-11 17:00:00.0000 (CT)
+  -9.191519746907177E+00  2.668533506176594E-01 -6.356745663420512E+03
+   4.062959126875614E-07 -5.604899690101759E-07 -6.110116302314418E-10
+   2.120384334099953E-02  6.356752314245181E+03 -2.101181780532043E-23
+2456942.250000000 = A.D. 2014-Oct-11 18:00:00.0000 (CT)
+  -9.189803476955289E+00  2.650619668437849E-01 -6.356745665976865E+03
+   5.409234134622158E-07 -4.302609322938055E-07 -7.999416591398395E-10
+   2.120384334099952E-02  6.356752314245179E+03  1.356996018636134E-23
+2456942.291666667 = A.D. 2014-Oct-11 19:00:00.0000 (CT)
+  -9.187670082565075E+00  2.637974320902489E-01 -6.356745669113310E+03
+   6.370909828397542E-07 -2.695746865512712E-07 -9.320012442473444E-10
+   2.120384334099953E-02  6.356752314245181E+03 -4.049595293381068E-24
+2456942.333333333 = A.D. 2014-Oct-11 20:00:00.0000 (CT)
+  -9.185270739703990E+00  2.631498760080199E-01 -6.356745672607566E+03
+   6.882255044170500E-07 -8.945608571728633E-08 -9.981645125817672E-10
+   2.120384334099952E-02  6.356752314245178E+03 -4.094944306402818E-24
+2456942.375000000 = A.D. 2014-Oct-11 21:00:00.0000 (CT)
+  -9.182774787777054E+00  2.631671129479834E-01 -6.356745676212925E+03
+   6.908395633607072E-07  9.774550744822894E-08 -9.939206385857678E-10
+   2.120384334099953E-02  6.356752314245180E+03  6.845553882453620E-24
+2456942.416666667 = A.D. 2014-Oct-11 22:00:00.0000 (CT)
+  -9.180358129785530E+00  2.638513905091265E-01 -6.356745679675135E+03
+   6.447685458297052E-07  2.792020965031709E-07 -9.195803316204125E-10
+   2.120384334099952E-02  6.356752314245179E+03 -2.882622700040942E-24
+2456942.458333333 = A.D. 2014-Oct-11 23:00:00.0000 (CT)
+  -9.178191189202806E+00  2.651592583489698E-01 -6.356745682749824E+03
+   5.531802054608583E-07  4.424852511735940E-07 -7.802521721500270E-10
+   2.120384334099953E-02  6.356752314245181E+03  2.462048015573395E-23
+2456942.500000000 = A.D. 2014-Oct-12 00:00:00.0000 (CT)
+  -9.176427248018697E+00  2.670045646423717E-01 -6.356745685219204E+03
+   4.223561581832462E-07  5.764165119047979E-07 -5.854905800560132E-10
+   2.120384334099953E-02  6.356752314245180E+03  2.053890632591072E-23
+$$EOE
+*******************************************************************************
+Coordinate system description:
+
+  Earth Mean Equator and Equinox of Reference Epoch
+
+    Reference epoch: J2000.0
+    xy-plane: plane of the Earth's mean equator at the reference epoch
+    x-axis  : out along ascending node of instantaneous plane of the Earth's
+              orbit and the Earth's mean equator at the reference epoch
+    z-axis  : along the Earth mean north pole at the reference epoch
+
+Symbol meaning  
+
+    JDCT     Epoch Julian Date, Coordinate Time
+      X      x-component of position vector (km)                               
+      Y      y-component of position vector (km)                               
+      Z      z-component of position vector (km)                               
+      VX     x-component of velocity vector (km/sec)                           
+      VY     y-component of velocity vector (km/sec)                           
+      VZ     z-component of velocity vector (km/sec)                           
+      LT     One-way down-leg Newtonian light-time (sec)                       
+      RG     Range; distance from coordinate center (km)                       
+      RR     Range-rate; radial velocity wrt coord. center (km/sec)            
+
+Geometric states/elements have no aberration corrections applied.
+
+ Computations by ...
+     Solar System Dynamics Group, Horizons On-Line Ephemeris System
+     4800 Oak Grove Drive, Jet Propulsion Laboratory
+     Pasadena, CA  91109   USA
+     Information: http://ssd.jpl.nasa.gov/
+     Connect    : telnet://ssd.jpl.nasa.gov:6775  (via browser)
+                  telnet ssd.jpl.nasa.gov 6775    (via command-line)
+     Author     : Jon.Giorgini@jpl.nasa.gov
+*******************************************************************************
+</pre>
+</td></tr>
+</tbody></table>
+
+<!-- END OF PAGE CONTENT -->
+    </td>
+    </tr>
+
+<!-- SSD standard page footer -->
+    <tr><td align="center"><img src="north-pole-from-geocenter_files/blank.gif" alt="" height="10"></td></tr>
+
+    <tr><td>
+      <!-- Sample SSD standard bottom navigation bar -->
+<table bgcolor="#666666" border="0" cellpadding="0" cellspacing="0" width="730">
+  <tbody><tr align="center">
+    <td><a href="http://ssd.jpl.nasa.gov/?about" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('about','','images/nav/about_on.gif',1)"><img name="about" alt="ABOUT SSD" src="north-pole-from-geocenter_files/about_off.gif" border="0"></a></td>
+    <td bgcolor="#CCCCCC" width="1"><img src="north-pole-from-geocenter_files/blank.gif" alt="" width="1"></td>
+    <td><a href="http://ssd.jpl.nasa.gov/?credits" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('credits','','images/nav/credits_on.gif',1)"><img name="credits" alt="CREDITS/AWARDS" src="north-pole-from-geocenter_files/credits_off.gif" border="0"></a></td>
+    <td bgcolor="#CCCCCC" width="1"><img src="north-pole-from-geocenter_files/blank.gif" alt="" width="1"></td>
+    <td><a href="http://www.jpl.nasa.gov/copyrights.cfm" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('copyright','','images/nav/copyright_on.gif',1)"><img name="copyright" alt="PRIVACY/COPYRIGHT" src="north-pole-from-geocenter_files/copyright_off.gif" border="0"></a></td>
+    <td bgcolor="#CCCCCC" width="1"><img src="north-pole-from-geocenter_files/blank.gif" alt="" width="1"></td>
+    <td><a href="http://ssd.jpl.nasa.gov/?glossary" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('glossary','','images/nav/glossary_on.gif',1)"><img name="glossary" alt="GLOSSARY" src="north-pole-from-geocenter_files/glossary_off.gif" border="0"></a></td>
+    <td bgcolor="#CCCCCC" width="1"><img src="north-pole-from-geocenter_files/blank.gif" alt="" width="1"></td>
+    <td><a href="http://ssd.jpl.nasa.gov/?links" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('links','','images/nav/links_on.gif',1)"><img name="links" alt="LINKS" src="north-pole-from-geocenter_files/links_off.gif" border="0"></a></td>
+  </tr>
+</tbody></table>
+
+      <!--?php include "include/ssd_bottom_nav_bar.html" ?-->
+<!--
+      <table border="0" cellpadding="0" cellspacing="0" width="730">
+        <tr>
+          <td align="center" width="100%" bgcolor="#666666">
+            <div class="navtext">SSD STANDARD NAVIGATION FOOTER</div>
+          </td>
+        </tr>
+      </table>
+-->
+    </td></tr>
+
+
+<!-- START OF JPL REQUIRED FOOTER -->
+
+    <!-- JPL standard page footer -->
+    <tr><td><img src="north-pole-from-geocenter_files/blank.gif" alt="" height="2"></td></tr>
+    <tr>
+      <td align="left" bgcolor="#FFFFFF" width="100%">
+        <!-- JPL Required Standard Footer -->
+
+<table bgcolor="#CCCCCC" border="0" cellpadding="5" cellspacing="0" width="730">
+  <tbody><tr>
+    <!-- FirstGov Link -->
+    <td align="left" width="100%"><a target="_blank" href="http://www.firstgov.gov/"><img src="north-pole-from-geocenter_files/footer_image1.gif" alt="FirstGov" border="0" height="39" width="136"></a></td>
+
+    <!-- Current Date/Time stamp -->
+    <td align="right" nowrap="nowrap">
+      <font class="date_time">
+        <!--?php echo " ", gmdate('Y-M-d H:i'), " UT&nbsp;"; ?-->
+        
+        2014-Oct-02 20:44 UT
+        <br>(server date/time)&nbsp;&nbsp;
+      </font>
+    </td>
+
+    <!-- NASA Link -->
+    <td width="61"><a target="_blank" href="http://www.nasa.gov/home/index.html"><img src="north-pole-from-geocenter_files/footer_image2.gif" alt="NASA Home Page" border="0" height="40" width="61"></a></td>
+
+    <!-- Site Manager and Webmaster -->
+    <td align="right">
+      <table class="author" border="0" cellpadding="0" cellspacing="0">
+        <tbody><tr>
+          <td align="right" nowrap="nowrap">Site Manager:&nbsp;</td>
+          <td align="left" nowrap="nowrap">&nbsp;Donald K. Yeomans</td>
+        </tr>
+        <tr>
+          <td align="right" nowrap="nowrap"><a href="mailto:webmaster@ssd.jpl.nasa.gov">Webmaster</a>:&nbsp;</td>
+          <td align="left" nowrap="nowrap">&nbsp;Alan B. Chamberlin</td>
+        </tr>
+        <!--?php include "include/last_modified.inc" ?-->
+        <!--
+        <tr>
+          <td align="right" nowrap><font size="-2">&nbsp;</font></td>
+          <td align="left" nowrap><font size="-2">&nbsp;CL 97-0935</font></td>
+        </tr>
+        -->
+      </tbody></table>
+    </td>
+
+  </tr>
+
+</tbody></table>
+
+        <!--?php include "include/jpl_std_foot.html" ?-->
+      </td>
+    </tr>
+
+  </tbody></table>
+</td>
+</tr>
+</tbody></table>
+
+</td>
+</tr>
+</tbody></table>
+
+
+
+</body></html>

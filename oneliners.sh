@@ -1,5 +1,11 @@
 # shell one liners
 
+# first thursday of upcoming months
+
+perl -le 'use Date::Parse; for $y (2014..2029) {for $m ("01".."12") {$t = 8-(str2time("$y${m}01 00:00:00 UTC")/86400)%7; if ($t==8) {$t=1;}; print "$y${m}0$t"}}'
+
+exit;
+
 # greps for gmail addresses in zip files (kind of)
 
 unzip -c facebook-barrycarter121.zip | perl -pnle 's/(<.*?>)/$1\n/g' | grep gmail

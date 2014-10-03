@@ -114,6 +114,9 @@ for $week (-1..$globopts{weeks}-1) {
     print A join(",", "string",64,64,64,$x1+4,$y1+$ywid-9,"tiny",$sd),"\n";
     # JD bottom right (do I really want this?)
     print A join(",", "string",64,64,64,$x1+$xwid-35,$y1+$ywid-9,"tiny",$jd), "\n";
+    # Unix date (seconds/86400 for most of day)
+    print A join(",", "string",64,64,64,$x1+$xwid-70,$y1+$ywid-9,"tiny", sprintf("%d", $date/86400)), "\n";
+#    debug("DATE",sprintf("%d", $date/86400));
 
     # must come before red box to avoid overlap
     print A "copy ",join(",", $x1+70, $y1+15, 0, 0, 21, 21, "/home/barrycarter/20140716/m$moonage.gif.temp"),"\n";

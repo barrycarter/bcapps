@@ -45,6 +45,26 @@ require "/usr/local/lib/bclib.pl";
 
 # 2,1,1... children are 3,3,3 then 4,7,6 then 5,15,12
 
+# hack to find precession
+
+$all = read_file("/home/barrycarter/20141003/north-pole-from-geocenter-century.html");
+
+$all=~m%\$\$SOE(.*?)\$\$EOE%s;
+@all = split(/\n/, $1);
+
+print "test = {\n";
+for $i (0..$#all) {
+  unless ($i%4==2) {next;}
+  $all[$i]=~s/E/*10^/g;
+  $all[$i] = trim($all[$i]);
+  $all[$i]=~s/\s+/, /g;
+  print "{$all[$i]},\n";
+}
+
+print "{}};\n";
+
+die "TESTING";
+
 
 open(A,"/home/barrycarter/SPICE/KERNELS/jup310.xsp");
 seek(A,253221110,SEEK_SET);

@@ -1,3 +1,73 @@
+(* precession comps *)
+
+test2 = Drop[test,-1]
+
+xprecess = Table[{(n-1)*30, test2[[n,1]]}, {n,1,Length[test2]}]
+yprecess = Table[{(n-1)*30, test2[[n,2]]}, {n,1,Length[test2]}]
+
+xvals = Table[i[[1]], {i,test2}]
+yvals = Table[i[[2]], {i,test2}]
+
+x1[t_] = Fit[xprecess, {1,t}, t]
+
+y1[t_] = Fit[yprecess, {1,t}, t]
+approxy = Table[y1[t], {t,0,36510,30}]
+erry = yvals-approxy
+y2[t_] = FullSimplify[Chop[superfour[erry,1][t/30+1]]]
+approxy2 = Table[y1[t]+y2[t], {t,0,36510,30}]
+ListPlot[yvals-approxy2]
+
+approx1 = Table[f1[x], {x,0,36510,30}]
+
+err1 = xvals-approx1
+
+f2[x_] = FullSimplify[Chop[superfour[err1,1][x/30+1]]]
+
+approx2 = Table[f1[x]+f2[x], {x,0,36510,30}]
+
+ListPlot[xvals-approx2]
+
+superfour[xprecess-approx1,1]
+
+
+xprecess = Table[i[[1]], {i,test2}]
+
+Fit[xprecess, {1,x}, x]
+
+approx = Table[% /. x-> i, {i,1,Length[test2]}]
+
+ListPlot[{approx-xprecess}]
+
+superfour[approx-xprecess, 1]
+
+approx2 = Table[%[x] /. x-> i, {i,1,Length[test2]}]
+
+ListPlot[{xprecess-approx+approx2}, PlotJoined->True]
+
+(* xyz at given lst *)
+
+(* mean earth radius *)
+mer = 6371009/1000;
+
+(* albuquerque latitude, per NASA *)
+abqlat = 35.0836000*Degree
+
+z[lat_] = mer*Sin[lat]
+
+(* radius of the Earth at latitude lat, since Earth is not perfectly spherical; from http://en.wikipedia.org/wiki/Earth_radius#Radius_at_a_given_geodetic_latitude (and agrees closely w/ HORIZONS to within a few mm) *)
+
+num = (a^2*Cos[lat])^2 + (b^2*Sin[lat])^2 
+den = (a*Cos[lat])^2 + (b*Sin[lat])^2 
+rad[lat_] = Sqrt[num/den] /. {a -> 63781370/10000, b -> 63567523/10000} 
+
+(* below is input form, after simplification *)
+
+rad[lat_] = Sqrt[8108893139432429 - 32876703150355522144690902360200/
+    (8108893139432429 + 27233178721371*Cos[2*lat])]/10000
+
+
+
+
 (* Mercury below *)
 
 Plot[poly[x][1][0][t][t], {t,16071,16071+365}]

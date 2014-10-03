@@ -1460,7 +1460,6 @@ Compute the Greenwich Mean Siderial Time at Unix time t
 =cut
 
 sub gmst {
-  debug("GMST");
   my($t)=@_;
   unless ($t) {$t = time();}
 
@@ -1468,9 +1467,6 @@ sub gmst {
   # 946728000 = unix time at 2000 January 1, at 12h UT
   my($res) = 18.697374558 + 24.06570982441908*($t-946728000.)/86400.;
   return fmodp($res,24);
-
-  # i have no idea where I got this formula, but it's wrong
-#  my($aa)=6.59916+.9856002585*($t-$MILLSEC)/86400/15+($t%86400)/3600;
 }
 
 =item greeks_bin($cur, $str, $exp, $vol)
