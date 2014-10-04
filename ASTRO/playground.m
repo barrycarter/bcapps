@@ -6,16 +6,26 @@ xprecess = Table[{(n-1)*30, test2[[n,1]]}, {n,1,Length[test2]}]
 yprecess = Table[{(n-1)*30, test2[[n,2]]}, {n,1,Length[test2]}]
 
 xvals = Table[i[[1]], {i,test2}]
-yvals = Table[i[[2]], {i,test2}]
 
 x1[t_] = Fit[xprecess, {1,t}, t]
 
+yprecess = Table[{(n-1)*30, test2[[n,2]]}, {n,1,Length[test2]}]
+yvals = Table[i[[2]], {i,test2}]
 y1[t_] = Fit[yprecess, {1,t}, t]
 approxy = Table[y1[t], {t,0,36510,30}]
 erry = yvals-approxy
 y2[t_] = FullSimplify[Chop[superfour[erry,1][t/30+1]]]
 approxy2 = Table[y1[t]+y2[t], {t,0,36510,30}]
 ListPlot[yvals-approxy2]
+
+zprecess = Table[{(n-1)*30, test2[[n,3]]}, {n,1,Length[test2]}]
+zvals = Table[i[[3]], {i,test2}]
+z1[t_] = Fit[zprecess, {1,t}, t]
+approxz = Table[z1[t], {t,0,36510,30}]
+errz = zvals-approxz
+z2[t_] = FullSimplify[Chop[superfour[errz,1][t/30+1]]]
+approxz2 = Table[z1[t]+z2[t], {t,0,36510,30}]
+ListPlot[zvals-approxz2]
 
 approx1 = Table[f1[x], {x,0,36510,30}]
 
