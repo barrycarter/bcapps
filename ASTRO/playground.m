@@ -1,3 +1,20 @@
+(* simple moonrise/set at Albuquerque on day 16349ish *)
+
+(* position of moon from geocenter *)
+
+moon[t_] = Table[{poly[i][301][3][t][t] - poly[i][399][3][t][t]},{i,{x,y,z}}]
+
+(* position of Albuquerque from geocenter at siderial time t (different t) *)
+
+abq[t_] = {6371009/1000*Cos[35*Degree]*Cos[t/12*Pi],
+           6371009/1000*Cos[35*Degree]*Sin[t/12*Pi],
+           6371009/1000*Sin[t/12*Pi]
+	   }
+
+(* dot product wrt fixed moon position *)
+
+Plot[abq[t].moon[16349.5], {t,0,24}]
+
 (* precession comps *)
 
 test2 = Drop[test,-1]

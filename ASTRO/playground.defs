@@ -1,19 +1,13 @@
 \begindata
-      SITES = ( 'GOLDSTONE',
-                'CANBERRA',
-                'MADRID'     )
-      GOLDSTONE_FRAME  = 'IAU_EARTH'
-      GOLDSTONE_IDCODE =  399001
- 
-      CANBERRA_FRAME   = 'IAU_EARTH'
-      CANBERRA_IDCODE  =  399002
- 
-      MADRID_FRAME     = 'IAU_EARTH'
-      MADRID_IDCODE    =  399003
-      GOLDSTONE_XYZ   = ( -2353.623, -4641.344,  3667.062 )
-      CANBERRA_XYZ    = ( -4451.074,  2676.822, -3691.361 )
-      MADRID_XYZ      = (  4849.091,  -360.177,  4115.114 )
-\begintext
-See http://naif.jpl.nasa.gov/pub/naif/utilities/SunSPARC_32bit/pinpoint.ug
-Usage: pinpoint -def [this file] -spk output.spk
+SITES = ( 'GOLDSTONE', 'CANBERRA', 'MADRID' )
+GOLDSTONE_FRAME = 'IAU_EARTH'
+GOLDSTONE_IDCODE = 399001
 
+CANBERRA_FRAME = 'IAU_EARTH'
+CANBERRA_IDCODE = 399002
+
+MADRID_FRAME = 'IAU_EARTH'
+MADRID_IDCODE = 399003
+GOLDSTONE_XYZ = ( -2353.623, -4641.344, 3667.062 )
+CANBERRA_XYZ = ( -4451.074, 2676.822, -3691.361 )
+MADRID_XYZ = ( 4849.091, -360.177, 4115.114 )

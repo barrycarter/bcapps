@@ -19,7 +19,7 @@ require "/usr/local/lib/bclib.pl";
 
 open(A,">/tmp/math.m")||die("Can't open, $!");
 
-for $i (1) {
+for $i (1,11,12) {
   my($str) = xsp2math("de430", $i, str2time("2014-01-01"), str2time("2015-01-01"));
   print A $str;
 }
