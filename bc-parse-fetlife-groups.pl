@@ -9,7 +9,19 @@ require "/usr/local/lib/bclib.pl";
 
 my($str,$filename) = cmdfile();
 
-fetlife_groups($str);
+my(%hash) = fetlife_groups($str);
+
+@order = ("gid", "members", "discussions", "comments", "name");
+print join(" ",@order),"\n";
+
+for $i (keys %hash) {
+  for $j ("gid", "members", "discussions", "comments", "name") {
+    print $hash{$i}{$j}," ";
+  }
+  print "\n";
+}
+
+debug(unfold(\%hash));
 
 # Given a string (normally read_file(something)), extract the list of
 # fetlife groups (with group number and number of
@@ -19,21 +31,31 @@ sub fetlife_groups {
   my($data) = @_;
   my(%hash);
 
+  # ignore everything after end of group list + before "Most popular groups"
+  $data=~s/<div class="pagination">.*$//s;
+  $data=~s/^.*most popular groups//si;
+
   while ($data=~s%<li>(.*?)</li>%%s) {
     my($group) = $1;
 
-    # no "members" string? ignore
-    unless ($group=~/members/i) {next;}
+    # group id (ignore if none)
+    unless ($group=~s%"/groups/(\d+)"%%) {next;}
+    my($gid) = $1;
+    $hash{$gid}{gid} = $gid;
 
-    
+    # group name
+    $group=~s%<span class="larger name_of_group mbn">(.*?)</span>%%;
+    $hash{$gid}{name} = $1;
 
     # members/discussions/comments
     for $i ("members", "discussions", "comments") {
       $group=~s/([\d\,]+)\s+$i//s;
-      debug("$i: $1");
+      my($num) = $1;
+      $num=~s/,//;
+      $hash{$gid}{$i} = $num;
     }
-
   }
+  return %hash;
 }
 
 
