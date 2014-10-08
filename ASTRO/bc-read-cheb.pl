@@ -29,17 +29,20 @@ require "/usr/local/lib/bclib.pl";
 # a "directory of the day"
 my($workdir) = "/home/barrycarter/20140823";
 
+# TODO: this should NOT be defined here!!!
+
 @planets = ("mercury:3:14:4", "venus:171:10:2", "earthmoon:231:13:2",
 	    "mars:309:11:1", "jupiter:342:8:1", "saturn:366:7:1",
 	    "uranus:387:6:1", "neptune:405:6:1", "pluto:423:6:1",
-	    "moongeo:441:13:8", "sun:753:11:2");
-
-# TODO: this should NOT be defined here!!!
+	    "moongeo:441:13:8", "sun:753:11:2", "nutate:819:10:4");
 
 for $i (@planets) {
   my($plan,$pos,$num,$chunks) = split(/:/, $i);
   $planetinfo{$plan} = [$pos,$num,$chunks];
 }
+
+# yuk!
+goto NUTATE;
 
 # get earthmoon/moongeo coords for today (as part of EMRAT corrections)
 
@@ -81,16 +84,18 @@ debug(join("+\n",@nomial));
 
 die "TESTING";
 
-
-
 # for mathematica, obtain raw coefficients for planets for 100 years
+
+
+NUTATE:
 
 open(A,"/home/barrycarter/20140124/ascp1950.430");
 
-for $planet (keys %planetinfo) {
+# for $planet (keys %planetinfo) {
+for $planet ("nutate") {
   my(@all) = ();
   my($pos,$num,$chunks) = @{$planetinfo{$planet}};
-
+  debug("ALPHA: $pos/$num/$chunks");
 
   unless (-f "$workdir/raw-$planet.m") {
     # 1142 based on file size of 30688966 divided by 26873 per chunk
@@ -98,7 +103,15 @@ for $planet (keys %planetinfo) {
       seek(A, $i*26873, SEEK_SET);
       read(A, my($data), 26873);
       my(@data) = split(/\s+/, $data);
-      @data = @data[$pos+2..$pos+2+$num*$chunks*3-1];
+
+      # HACK!
+      if ($planet eq "nutate") {
+	$axes = 2;
+      } else {
+	$axes = 3;
+      }
+
+      @data = @data[$pos+2..$pos+2+$num*$chunks*$axes-1];
       map(s%\.(\d{16})\D%$1/10^16*10^%, @data);
       push(@all,@data);
     }

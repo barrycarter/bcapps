@@ -1,3 +1,39 @@
+(* nutations *)
+
+(* section 570: 1999-10-21 00:00:00 to 1999-11-22 00:00:00, 571: ends
+1999-12-24 00:00:00, so 572 is the one including 2000-01-01 *)
+
+Plot[chebyshev[Take[coeffs, {1+20*572,10+20*572}],t],{t,-1,1}]
+
+nums = N[{
+chebyshev[Take[coeffs, {1+20*572,10+20*572}],-1/2],
+chebyshev[Take[coeffs, {11+20*572,20+20*572}],-1/2]
+}, 20]
+
+
+
+
+
+
+
+
+(* polynomial equations *)
+
+f[t_] = x /. Solve[x^7+x+1==t, x][[1]]
+
+Plot[f[t],{t,-1,1}]
+
+(* finding the equatorial plane after precession *)
+
+planeFromPoints[{x0_,y0_,z0_},{x1_,y1_,z1_},{x2_,y2_,z2_}] = 
+{a,b,c} /.
+ Solve[{a*x0+b*y0+c*z0==1, a*x1+b*y1+c*z1==1, a*x2+b*y2+c*z2==1}, {a,b,c}][[1]]
+
+(* e = epsilon = derivative *)
+
+planeFromPoints[{x,y,z}, {e,e,e}, {x+e,y+e,z+e}]
+
+
 (* simple moonrise/set at Albuquerque on day 16349ish *)
 
 (* position of moon from geocenter *)
@@ -13,7 +49,7 @@ abq[t_] = {6371009/1000*Cos[35*Degree]*Cos[t/12*Pi],
 
 (* dot product wrt fixed moon position *)
 
-Plot[abq[t].moon[16349.5], {t,0,24}]
+Plot[abq[t].moon[16355], {t,0,24}]
 
 (* precession comps *)
 

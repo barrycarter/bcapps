@@ -80,7 +80,10 @@ alias wwf "bzfgrep -ix \!* /home/barrycarter/BCGIT/WWF/wwf.txt.bz2"
 alias elecstart "sudo pkill -9 vlc; sudo pkill -9 somagic-capture; sudo /bin/nice -n 19 somagic-capture | /bin/nice -n 19 vlc --config /home/barrycarter/.config/vlc/vlcrc-elecstart --demux rawvideo --rawvid-fps 15 --rawvid-width 720 --rawvid-height 576 --rawvid-chroma=UYVY file:///dev/stdin &"
 
 # recollq output tends to scroll by
-alias recollq "recollq \!* | tee /var/tmp/bc-cmd-recollq.txt"
+# 8 Oct 2014: added old "bad" index (that recollindex can no longer
+# use) that still seems to work for searching
+
+alias recollq "recollq -i /home/barrycarter/.recoll/xapiandb.20141006.bad \!* | tee /var/tmp/bc-cmd-recollq.txt"
 
 # seeing date to nanosecond isnt superuseful except when 'time' fails
 # can't really alias date as it breaks things like +%s and -d

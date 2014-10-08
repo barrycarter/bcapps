@@ -7,7 +7,37 @@
 
 require "/usr/local/lib/bclib.pl";
 
-chdir("/home/barrycarter/20140821/groups");
+my($str,$filename) = cmdfile();
+
+fetlife_groups($str);
+
+# Given a string (normally read_file(something)), extract the list of
+# fetlife groups (with group number and number of
+# members/discussions/comments)
+
+sub fetlife_groups {
+  my($data) = @_;
+  my(%hash);
+
+  while ($data=~s%<li>(.*?)</li>%%s) {
+    my($group) = $1;
+
+    # no "members" string? ignore
+    unless ($group=~/members/i) {next;}
+
+    
+
+    # members/discussions/comments
+    for $i ("members", "discussions", "comments") {
+      $group=~s/([\d\,]+)\s+$i//s;
+      debug("$i: $1");
+    }
+
+  }
+}
+
+
+die "TESTING";
 
 # rapid way to get page list
 my($out,$err,$res) = cache_command2("fgrep page= *", "age=3600");
