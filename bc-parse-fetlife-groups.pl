@@ -7,18 +7,17 @@
 
 require "/usr/local/lib/bclib.pl";
 
-my($str,$filename) = cmdfile();
-
-my(%hash) = fetlife_groups($str);
-
 @order = ("gid", "members", "discussions", "comments", "name");
 print join(" ",@order),"\n";
 
-for $i (keys %hash) {
-  for $j ("gid", "members", "discussions", "comments", "name") {
-    print $hash{$i}{$j}," ";
+for $k (@ARGV) {
+  my(%hash) = fetlife_groups(read_file($k));
+  for $i (keys %hash) {
+    for $j ("gid", "members", "discussions", "comments", "name") {
+      print $hash{$i}{$j}," ";
+    }
+    print "\n";
   }
-  print "\n";
 }
 
 debug(unfold(\%hash));
