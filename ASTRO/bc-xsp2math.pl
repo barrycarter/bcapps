@@ -19,7 +19,12 @@ require "/usr/local/lib/bclib.pl";
 
 open(A,">/tmp/math.m")||die("Can't open, $!");
 
-for $i (1,11,12) {
+# array 3: earth/moon barycenter to solar system barycenter
+# array 10: sun to solar system barycenter
+# array 11: moon to earth/moon barycenter
+# array 12: earth to earth/moon barycenter
+
+for $i (3,10,11,12) {
   my($str) = xsp2math("de430", $i, str2time("2014-01-01"), str2time("2015-01-01"));
   print A $str;
 }
@@ -195,9 +200,9 @@ sub read_coeffs {
 
       # NOTE: do not move "/;" to the next line, it breaks stuff
       push(@ret, "poly[$j][$target][$center][t_] := Function[w, $cheb] /;
-      range[$int][$i][t]");
+      range[$int][$i][t];");
       push(@ret, "raw[$j][$target][$center][t_] := Function[w, $cheb2] /;
-      range[$int][$i][t]");
+      range[$int][$i][t];");
     }
   }
   return join("\n", @ret);

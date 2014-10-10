@@ -1,3 +1,19 @@
+(* full moon using DE430 *)
+
+(* earth to moon *)
+
+poly[c_][399][301][t_][w_] := -poly[c][399][3][t][w] + poly[c][301][3][t][w];
+
+ArcTan[poly[x][399][301][16353][16353], poly[y][399][301][16353][16353]]
+
+(* above is 35 degrees, or about 2+ hours RA *)
+
+Norm[
+
+poly[x][399][3][16353][16353] + poly[x][301][3][16353][16353]
+
+
+
 (* nutations *)
 
 (* section 570: 1999-10-21 00:00:00 to 1999-11-22 00:00:00, 571: ends
@@ -9,13 +25,6 @@ nums = N[{
 chebyshev[Take[coeffs, {1+20*572,10+20*572}],-1/2],
 chebyshev[Take[coeffs, {11+20*572,20+20*572}],-1/2]
 }, 20]
-
-
-
-
-
-
-
 
 (* polynomial equations *)
 

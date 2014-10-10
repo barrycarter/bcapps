@@ -63,8 +63,6 @@ for $i (@all) {
 print A "COMMIT;\n";
 close(A);
 
-die "TESTING";
-
 # find nodes w/ same parents/children and edge names
 # TODO: in theory, could do this multiple times to "super compactify"
 for $i (sort keys %graph) {
