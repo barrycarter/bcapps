@@ -1,18 +1,89 @@
+(* Fourier using sum of squares *)
+
+f[a_,b_,c_,d_] = Sum[((a+b*Cos[c*n-d]) - l[[n]])^2, {n,1,Length[l]}];
+
+f[a_,b_,c_,d_] = Sum[((a+b*Cos[c*n-d]) - l[[n]])^2, {n,1,5}];
+
+fourtwo[l_] :=
+FindMinimum[Sum[((a+b*Cos[c*n-d]) - l[[n]])^2, {n,1,Length[l]}],
+{{a,Mean[l]},{b,(Max[l]-Min[l])/2},{c,0},d}];
+
+fourtwo[l_] :=
+FindMinimum[Sum[((a+b*Cos[c*n-d]) - l[[n]])^2, {n,1,Length[l]}],
+{{a,Mean[l]},{b,(Max[l]-Min[l])/2},{c,-0.0004},d}];
+
+
+
+opt[x_] = 45.8469 + 2528.03 Cos[1.371 - 0.000246661 x]
+
+t0 = Table[{l[[x]],opt[x]}, {x,1,Length[l]}];
+
+t0 = Table[opt[x], {x,1,Length[l]}];
+
+
+
+NMinimize[f[a,b,c,d],{{a,Mean[l]},b,c,d}]
+
 (* full moon using DE430 *)
 
 (* earth to moon *)
 
-poly[c_][399][301][t_][w_] := -poly[c][399][3][t][w] + poly[c][301][3][t][w];
+earthmoon[t_] := 
+Table[-poly[c][399][3][t][t] + poly[c][301][3][t][t], {c,{x,y,z}}]
 
-ArcTan[poly[x][399][301][16353][16353], poly[y][399][301][16353][16353]]
+(* sun to earth *)
+
+sunearth[t_] := Table[
+poly[c][10][0][t][t] - poly[c][3][0][t][t] - poly[c][399][3][t][t],
+{c,{x,y,z}}]
+
+Plot[(sunearth[t].earthmoon[t])/Norm[earthmoon[t]]/Norm[sunearth[t]],
+{t,16353,16353+30}]
+
+NMaximize[{(sunearth[t].earthmoon[t])/Norm[earthmoon[t]]/Norm[sunearth[t]],
+t>16353, t<16353+30}, t, WorkingPrecision -> 50, AccuracyGoal -> 20]
+
+(* answer above is
+16366.907155967293762640138985063849844000172257588, or 1414100778 as
+a second or Thu Oct 23 15:46:18 MDT 2014; actual time is 15:57 *)
+
+(* 16366.907155965177147329076151874100582632938057038 if using DE431
+or 1414100778 so same second *)
+
+NMaximize[{(sunearth[t].earthmoon[t])/Norm[earthmoon[t]]/Norm[sunearth[t]],
+t>16353+30, t<16353+60}, t, WorkingPrecision -> 50, AccuracyGoal -> 20]
+
+FindRoot[sunearth[t][[1]] + earthmoon[t][[1]] == 0, {t,16366}]
+
+t0 = 1414100778/86400.
+ArcTan[sunearth[t0][[1]], sunearth[t0][[2]]]
+ArcTan[earthmoon[t0][[1]], earthmoon[t0][[2]]]
+
+t1 = t0+11/1440;
+ArcTan[sunearth[t1][[1]], sunearth[t1][[2]]]
+ArcTan[earthmoon[t1][[1]], earthmoon[t1][[2]]]
+
+NMinimize[{(sunearth[t].earthmoon[t])/Norm[earthmoon[t]]/Norm[sunearth[t]],
+t>16345, t<16353}, t, WorkingPrecision -> 50, AccuracyGoal -> 20]
+
+NMaximize[{(sunearth[t-499.0/86400].earthmoon[t])/
+ Norm[earthmoon[t]]/Norm[sunearth[t-499/86400]],
+t>16353+30, t<16353+60}, t, WorkingPrecision -> 50, AccuracyGoal -> 20]
+
+sunearth[16353]
+
+ArcTan[sunearth[16353][[1]], sunearth[16353][[2]]]
+ArcSin[sunearth[16353][[3]]/Norm[sunearth[16353]]]
+
+Table[-poly[c][399][3][t][t] + poly[c][301][3][t][t], {c,{x,y,z}}]
+
+ArcTan[earthmoon[16353][[1]], earthmoon[16353][[2]]]
 
 (* above is 35 degrees, or about 2+ hours RA *)
 
-Norm[
+ArcSin[earthmoon[16353][[3]]/Norm[earthmoon[16353]]]
 
-poly[x][399][3][16353][16353] + poly[x][301][3][16353][16353]
-
-
+(* above also close though less so than I'd like vs stellarium *)
 
 (* nutations *)
 

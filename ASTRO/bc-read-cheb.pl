@@ -37,9 +37,66 @@ my($workdir) = "/home/barrycarter/20140823";
 	    "moongeo:441:13:8", "sun:753:11:2", "nutate:819:10:4");
 
 for $i (@planets) {
-  my($plan,$pos,$num,$chunks) = split(/:/, $i);
-  $planetinfo{$plan} = [$pos,$num,$chunks];
+#  my($plan,$pos,$num,$chunks) = split(/:/, $i);
+  my(@l) = split(/:/, $i);
+  for $j ("name", "pos", "num", "chunks") {
+    $planetinfo{$i}{$j} = splice(@l,0,1);
+  }
 }
+
+# get all info from filename(s) given on command line, assumed to be an
+# asc[pm]yyyy.43[01] file from one of:
+# ftp://ssd.jpl.nasa.gov/pub/eph/planets/ascii/de430/
+# ftp://ssd.jpl.nasa.gov/pub/eph/planets/ascii/de431/
+
+for $file (@ARGV) {
+  # TODO: confirm these files are actually this well structured
+  open(A, $file);
+  my($data);
+
+  while (!eof(A)) {
+    # TODO: confirm all chunks are this size, this seems incorrect
+    read(A, $data, 26821);
+
+    # convert D+ stuff
+    # TODO: use "exact" form
+    $data=~s/D/*10^/g;
+
+    # break into individual coefficients
+    my(@list) = split(/\s+/, $data);
+
+    # first 5 coeffs are special
+    my($blank, $chunknum, $tchunks, $jstart, $jend) = splice(@list,0,5);
+
+    # error checking
+    unless ($blank=~/^\s*$/) {warn "BAD BLANK: $data";}
+    unless ($chunknum=~/^\d+$/) {warn "BAD CHUNKNUM: $data";}
+    unless ($tchunks eq "1018") {warn "BAD TCHUNKS: $data";}
+
+    # TODO: use julian days somehow
+
+    # go thru planets
+    for $planet (@planets) {
+      debug("PLANET: $planet");
+      # number of chunks for this planet
+      for $i (1..$planetinfo{$planet}{chunks}) {
+	# coordinates
+	my(@coords) = ("x","y");
+	unless ($planetinfo{$planet}{name} eq "nutate") {push(@coords,"z");}
+	for $j (@coords) {
+	  my(@coeffs) = splice(@list, 0, $planetinfo{$planet}{num});
+
+	  # TODO: this is just testing
+	  print "pos[$planetinfo{$planet}{name}][$chunknum][$i][$j] = {";
+	  print join(", ",@coeffs);
+	  print "};\n";
+	}
+      }
+    }
+  }
+}
+
+die "TESTING";
 
 # yuk!
 goto NUTATE;

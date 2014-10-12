@@ -26,6 +26,9 @@ open(A,">/tmp/math.m")||die("Can't open, $!");
 
 for $i (3,10,11,12) {
   my($str) = xsp2math("de430", $i, str2time("2014-01-01"), str2time("2015-01-01"));
+
+# for $i (3,4,5,12) {
+#   my($str) = xsp2math("de431_part-2", $i, str2time("2014-01-01"), str2time("2015-01-01"));
   print A $str;
 }
 
@@ -171,6 +174,8 @@ sub read_coeffs {
 
   # convenience variables
   my($target, $center) = ($hashref->{target}, $hashref->{center});
+  # TODO: do this better, keep track of which target/center combos I have
+  push(@ret, "pairs[$target][$center] = 1;");
 
   # make everything a function, including the condition
 
