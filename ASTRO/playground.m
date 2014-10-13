@@ -1,3 +1,51 @@
+(* albuquerque true position at 12 Oct 2014 at 0000 UTC:
+
+location is: 253.349000,35.0836000,0.0000000 [lat/lon/el per NASA]
+
+actual el ~ 1609km, but ok for now
+
+3.123875261913859E+02,-5.216220605699863E+03,3.644794160555919E+03
+
+gmst is 18.697374558 + 24.06570982441908*d
+
+where d is days since 2000 January 1, at 12h UT (Unix second 946728000)
+
+1413072000 = 12 Oct 2014 at 0000 so d= 5397.5000000000
+
+lst is gmst+253.349000/15 or 18.2561
+
+so, assuming circular earth at mean radius 6371.009 km...
+
+*)
+
+z = 6371.009*Sin[35.0836000*Degree]
+x = 6371.009*Cos[35.0836000*Degree]*Cos[18.2561/24*2*Pi]
+y = 6371.009*Cos[35.0836000*Degree]*Sin[18.2561/24*2*Pi]
+
+(* general formula for position of lat, lon assuming fixed earth
+radius, t given in Unix days *)
+
+(* gmst at Unix epoch: *)
+
+Mod[18.697374558 + 24.06570982441908*-10957.5,24]
+
+(* GMST time at Unix day d *)
+
+gmst[d_] = Mod[18697374558/10^9 + 2406570982441908/10^14*(-109575/10+d),24]
+
+emr = 6371009/1000;
+
+pos[lat_,lon_,t_] = {emr*Cos[lat]*Cos[gmst[t]*15*Degree+lon],
+emr*Cos[lat]*Sin[gmst[t]*15*Degree+lon], emr*Sin[lat]}
+
+N[pos[35.0836*Degree,253.349*Degree,16355],20]
+
+
+
+(* angle of deviation from J2000 *)
+
+Table[ArcTan[Norm[{i[[1]],i[[2]]}], i[[3]]], {i,list}]
+
 (* Fourier using sum of squares *)
 
 f[a_,b_,c_,d_] = Sum[((a+b*Cos[c*n-d]) - l[[n]])^2, {n,1,Length[l]}];
