@@ -131,7 +131,7 @@ ArcTan[earthmoon[16353][[1]], earthmoon[16353][[2]]]
 
 ArcSin[earthmoon[16353][[3]]/Norm[earthmoon[16353]]]
 
-(* above also close though less so than I'd like vs stellarium *)
+(* above also close though less so than Id like vs stellarium *)
 
 (* nutations *)
 

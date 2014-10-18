@@ -1,3 +1,88 @@
+(* NMinimize and http://stackoverflow.com/questions/4463481/ *)
+
+(* the data *)
+
+data = Table[N[753+919*Sin[x/623-125]], {x,1,25000}];
+
+(* Find the position of the largest Fourier coefficient, after
+removing the last half of the list (which is redundant) and the
+constant term; the [[1]] is necessary because Ordering returns a list *)
+
+f2 = Ordering[Abs[Take[Fourier[data], {2,Round[Length[data]/2+1]}]],-1][[1]]
+
+(* Result: 6 *)
+
+(* Directly find the least squares difference between all functions of
+the form a+b*Sin[c*n-d], with intelligent starting values *)
+
+sol = FindMinimum[Sum[((a+b*Sin[c*n-d]) - data[[n]])^2, {n,1,Length[data]}],
+{{a,Mean[data]},{b,(Max[data]-Min[data])/2},{c,2*f2*Pi/Length[data]},d}]
+
+(* Result (using //InputForm): 
+
+FindMinimum::sszero: 
+   The step size in the search has become less than the tolerance prescribed by
+   the PrecisionGoal option, but the gradient is larger than the tolerance
+   specified by the AccuracyGoal option. There is a possibility that the method
+   has stalled at a point that is not a local minimum.
+
+{2.1375902350021628*^-19, {a -> 753., b -> -919., c -> 0.0016051364365971107, 
+  d -> 2.477886509998064}}
+
+*)
+
+(* For ABQ temps, first solution is:
+
+{a -> 56.5323, b -> 21.843, c -> 0.000707367, d -> 1.79006} w 500824 and true mean error 6.55626
+
+then:
+
+{a -> -0.000368675, b -> -10.0667, c -> 0.261809, d -> 1.46924} w 55728.5 and true mean error 2.03277
+
+then:
+
+{a -> 4.63661*10^-7  , b -> -2.08204, c -> 0.523609,  d -> 0.292938}
+
+then:
+
+{a -> -0.0746423, b -> 1.7464, c -> 0.00131012, d -> -0.0196226}
+
+then:
+
+{a -> 0.00012338, b -> 0.89525, c -> 0.262574, d -> 1.05245}
+
+*)
+
+
+
+
+(* Create a table of values for the resulting function to compare to 'data' *)
+
+tab = Table[a+b*Sin[c*x-d], {x,1,Length[data]}] /. sol[[2]];
+
+ListPlot[{tab,data},PlotJoined->True,PlotRange->All]
+
+(* The maximal difference is effectively 0 *)
+
+Max[Abs[data-tab]] // InputForm
+
+(* Result: 7.73070496506989*^-12 *)
+
+
+
+
+
+
+Take[Reverse[Ordering[Abs[Fourier[data]]]],10]
+
+FindFit[data, a+b*Cos[c*x-d], {a,b,c,d}, x]
+
+FindFit[data, a+b*Cos[c*x-d], {a,b,c,d}, x, Method->NMinimize]
+
+FindMinimum[Sum[((a+b*Cos[c*n-d]) - data[[n]])^2, {n,1,Length[data]}],
+{{a,Mean[data]},{b,(Max[data]-Min[data])/2},{c,1},d}];
+
+
 (* birthday "paradox" *)
 
 f[n_,p_] = FullSimplify[Product[n-i,{i,1,p-1}]/n^(p-1),Integers]
