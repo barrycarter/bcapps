@@ -6,11 +6,36 @@
 # answers that agree here; the Chebyshev polynomials are evaluated
 # from -1 to +1
 
-# This helps find limits, which are -15 to +10, inclusive
-# bzcat ascp1950.430.bz2 | perl -nle 'while (s/D(...)//) {print $1}' | sort | uniq
-# can represent: 10^-31 to 10^10 with 16 digits of precision
+# 26873 = sizeof chunk
+
+# ascp1950.430 starts at JD 2433264.5 = 1949-12-14 00:00:00 = Unix day -7323
+# ascp2050.430 starts 36512 days later
 
 require "/usr/local/lib/bclib.pl";
+use Astro::Time;
+
+debug(cal2mjd(18,10,2014));
+
+unixdate2chebchunk(str2time("1949-12-14 00:00:00 UTC"));
+
+die "TESTING";
+
+# given a unix date (unix second/86400), determine which SPICE
+# "kernel" file (asc[pm]yyyy.43[01]) and which array in that file
+# contains data for given date
+
+# TODO: naming convention for helper functions?
+
+sub unixdate2chebchunk {
+  my($date) = @_;
+
+  # filename with decimal
+  my($fname) = 1950+floor(($date+7323)/36512);
+
+  debug("DATE: $date, FNAME: $fname");
+}
+
+
 
 # list of planets with hardcoded coefficient numbers/etc
 # TODO: don't hardcode, use header.430_572
