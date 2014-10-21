@@ -1,0 +1,19 @@
+Mercator maps are normally drawn with the North Pole at top, Equator
+in the middle and South Pole at the bottom.
+
+This project aims to use proj4 and openstreetmap.org and convert's
+"convert -distort Perspective" to create Mercator (and other
+projection) maps with arbitrary north/south poles and direction.
+
+This isn't trivial even for static maps, since the slippy tile level
+you have to use varies with position. If you put a large city at the
+north pole, for example, you will need more detail in that area, since
+Mercator maps use more area near the poles.
+
+Ultimate goal is to create a map that overlays google maps with any
+given projection and parameters. This means find and computing the
+reshaped slippy tiles in real time.
+
+See also:
+
+http://gis.stackexchange.com/questions/29101/create-mercator-map-with-arbitrary-center-orientation

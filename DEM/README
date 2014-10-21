@@ -1,0 +1,17 @@
+If you live in a relatively flat place such as Kansas or the
+Australian outback, your horizon is fairly flat and the sun/moon
+rise/set times closely match those given in an almanac.
+
+If you live in a hilly or mountainous area (such as Albuquerque, NM,
+USA), sun/moon rise/set "over the mountains" can be quite different.
+
+This project uses Digital Elevation Maps (DEMs) to compute the true
+horizon at a given location. Notes:
+
+  - The Earth is curved, so the angle subtended by a hill/mountain
+  isn't just the arctangent of the elevation difference over the
+  distance.
+
+  - Constructing an accurate horizon may require examining a LOT of
+  DEM tiles: for example, Mt Taylor, about 90 miles west of
+  Albuquerque, affects Albuquerque's horizon.
