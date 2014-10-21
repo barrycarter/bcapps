@@ -1,7 +1,7 @@
 # shell one liners
 
 # open all urls in se-sites.txt in browser, one tab per site
-xargs -n 1 -i /root/build/firefox/firefox -remote 'openURL({})' </home/barrycarter/se-sites.txt
+egrep -v '^#' /home/barrycarter/se-sites.txt | xargs -n 1 -i /root/build/firefox/firefox -remote 'openURL({})'
 
 exit; 
 

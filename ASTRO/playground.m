@@ -1,3 +1,103 @@
+(* TODO: add below to library of some sort *)
+
+(* matrix of rigid rotation around xyz axis *)
+
+rotationMatrix[x,theta_] = {
+ {1,0,0}, {0,Cos[theta],Sin[theta]}, {0,-Sin[theta],Cos[theta]}
+};
+
+rotationMatrix[y,theta_] = {
+ {Cos[theta],0,-Sin[theta]}, {0,1,0}, {Sin[theta],0,Cos[theta]}
+};
+
+rotationMatrix[z,theta_] = {
+ {Cos[theta],-Sin[theta],0}, {Sin[theta],Cos[theta],0}, {0,0,1}
+};
+
+(* CoordinateTransform does NOT do this well *)
+
+sph2xyz[{th_,ph_,r_}] = r*{Cos[th]*Cos[ph], Sin[th]*Cos[ph], Sin[ph]}
+xyz2sph[{x_,y_,z_}] = {ArcTan[x,y], ArcTan[Sqrt[x^2+y^2],z], Norm[{x,y,z}]}
+test1[ra_,dec_] = sph2xyz[{ra,dec,1}]
+test2[ra_, dec_, t_] = rotationMatrix[z,-t].test1[ra,dec]
+test3[ra_, dec_, lat_, t_] = rotationMatrix[y, Pi/2-lat].test2[ra,dec,t]
+test4[ra_, dec_, lat_, t_] = xyz2sph[test3[ra,dec,lat,t]]
+
+Take[N[test4[0,90*Degree,35*Degree,0]/Degree],{1,2}]
+Take[N[test4[0,80*Degree,35*Degree,0]/Degree],{1,2}]
+
+Plot[(test4[0,20*Degree,35*Degree,t]/Degree)[[1]],{t,0,2*Pi}]
+
+test4[(13+40/60)/24*2*Pi, -10.5*Degree, 35*Degree, (12+49/60)/24*2*Pi]/Degree
+
+
+Solve[sph2xyz[th,ph,r] == {x,y,z}, {th,ph,r}, Reals]
+
+
+
+
+(* breaking it down *)
+
+test1[ra_,dec_] = CoordinateTransform["Spherical" -> "Cartesian", {1,ra,dec}];
+
+
+test[lat_, sidtime_, ra_, dec_] = Take[N[
+CoordinateTransform["Cartesian" -> "Spherical", 
+rotationMatrix[y,-lat].
+rotationMatrix[z,sidtime] .
+CoordinateTransform["Spherical" -> "Cartesian", {1,ra,dec}]
+]/Degree,20],{2,3}]
+
+test[35*Degree, 0, 0, 80*Degree]
+
+
+
+
+
+(* GMST time at Unix day d, given as an angle *)
+
+gmst[d_] = ((-4394688633775234485 + 401095163740318*d)*Pi)/200000000000000;
+
+
+
+
+
+(* These are temporary variables used to compute formulas above *)
+
+(* position of ra/dec on sphere *)
+
+
+
+
+
+CoordinateTransform["Polar" -> "Cartesian", {1,ra,dec}]
+
+hourAngle[d_, lon_, ra_] = gmst[d]+lon-ra;
+
+
+-sin($ha)*cos($dec)
+
+raDecLatLonTime2AzEl[ra_, dec_, lat_, lon_, d_] = 
+{ArcTan[Cos[lat]*Sin[dec]-Sin[lat]*Cos[dec]*Cos[hourAngle[d,lon,ra]], 
+ -Sin[hourAngle[d,lon,ra]]*Cos[dec]]
+}
+
+Plot[raDecLatLonTime2AzEl[0,Pi/2-.0001,35*Degree,-106*Degree,d][[1]],
+ {d,16363,16364}]
+
+
+
+
+$ha));
+
+(-sin($ha)*cos($dec),cos($lat)*sin($dec)-sin($lat)*cos($dec)*cos($ha));
+
+
+
+
+
+
+
 (* albuquerque true position at 12 Oct 2014 at 0000 UTC:
 
 location is: 253.349000,35.0836000,0.0000000 [lat/lon/el per NASA]
@@ -40,7 +140,13 @@ emr*Cos[lat]*Sin[gmst[t]*15*Degree+lon], emr*Sin[lat]}
 
 N[pos[35.0836*Degree,253.349*Degree,16355],20]
 
+(* abq to moon *)
 
+angle[t_,lat_,lon_] := (earthmoon[t]-pos[lat,lon,t]).pos[lat,lon,t]
+
+Plot[angle[t,35*Degree,-106*Degree],{t,16353,16354}]
+
+FindRoot[angle[t,-106*Degree,lat]==0,{t,16353}]
 
 (* angle of deviation from J2000 *)
 

@@ -8,32 +8,99 @@
 
 # 26873 = sizeof chunk
 
-# ascp1950.430 starts at JD 2433264.5 = 1949-12-14 00:00:00 = Unix day -7323
-# ascp2050.430 starts 36512 days later
+# ascp1550.430 (earliest) starts: 2287184.5
+# ascp1950.430 starts at JD 2433264.5 = 1949-12-14 00:00:00
+# ascp2050.430 starts at JD 2469776.5 = 2049-12-01 00:00:00, 36512 days later
+
+# ftp://ssd.jpl.nasa.gov/pub/eph/planets/ascii/de430/
 
 require "/usr/local/lib/bclib.pl";
 use Astro::Time;
 
-debug(cal2mjd(18,10,2014));
-
-unixdate2chebchunk(str2time("1949-12-14 00:00:00 UTC"));
+# unixdate2chebchunk("19491214.120711");
+# stardate2chebarray("20141018");
+stardate2chebarray("19491214");
 
 die "TESTING";
 
-# given a unix date (unix second/86400), determine which SPICE
-# "kernel" file (asc[pm]yyyy.43[01]) and which array in that file
-# contains data for given date
+=item stardate2chebarray
 
-# TODO: naming convention for helper functions?
+Given a stardate (yyyyddmm.hhmmss, assumed UTC), return the array of
+Chebyshev coefficients (from asc[pm]cc50.430) for that date.
 
-sub unixdate2chebchunk {
+TODO: expand to allow DE431 when outside DE430 range (1550-2650)
+
+=cut
+
+sub stardate2chebarray {
+  my($sd) = @_;
+  my($jd) = sd2jd($sd);
+
+  if ($jd < 2287184.5) {warn "Too early for DE430"; return;}
+  if ($jd > 2688976.5) {warn "Too late for DE430"; return;}
+
+  # determine which file
+  my($fname) = sprintf("$bclib{home}/SPICE/KERNELS/ascp%d.430", floor(($jd-2287184.5)/36512)*100+1550);
+
+  # position in file
+  debug("ALPHA", floor(($jd-2287184.5)/32));
+  my($pos) = 26873*(floor(($jd-2287184.5)/32)%1141);
+
+  # read data
+  open(local(*A), $fname);
+  seek(A, $pos, SEEK_SET);
+  read(A, my($data), 26873);
+  close(A);
+
+  # split into array, after getting rid of first two useless terms and
+  # convert D+ to E+ for Perl
+  $data=~s/^\s*(\d+)\s+(\d+)\s*//;
+  $data=~s/D/e/g;
+  my(@arr) = split(/\s+/, $data);
+
+  # the julian dates
+  # TODO: eval here is ugly
+  debug("FNAME: $fname, POS: $pos, ARR: $arr[0]/$arr[1]");
+  $sjd = eval($arr[0]);
+  $ejd = eval($arr[1]);
+
+  if ($jd < $sjd) {warn "Error: $jd < $sjd"; return;}
+  if ($jd > $ejd) {warn "Error: $jd > $ejd"; return;}
+
+  return @arr;
+}
+
+=item sd2jd($stardate)
+
+Given stardate $stardate (yyyyddmm.hhmmss, assumed UTC), return
+corresponding Julian date
+
+=cut
+
+sub sd2jd {
   my($date) = @_;
 
-  # filename with decimal
-  my($fname) = 1950+floor(($date+7323)/36512);
+  # split across "." (if any)
+  my($ymd, $hms) = split(/\./, $date);
+  
+  # $ymd to $m $d (leaving $y in $ymd)
+  $ymd=~s/(\d{2})(\d{2})$//;
+  my($m,$d) = ($1,$2);
 
-  debug("DATE: $date, FNAME: $fname");
+  # $hms to seconds since start of day
+  $hms=~s/(\d{2})?(\d{2})?(\d{2})?$//;
+  my($frac) = ($1*3600+$2*60+$3);
+
+  return mjd2jd(cal2mjd($d, $m, $ymd, $frac/86400));
 }
+
+
+
+  # filename with decimal
+#  my($fname) = 1950+floor(($date+7323)/36512);
+
+#  debug("DATE: $date, FNAME: $fname");
+# }
 
 
 
