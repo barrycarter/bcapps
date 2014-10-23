@@ -1,3 +1,127 @@
+(* Canon starts here (move to lib at some point) *)
+
+(* using input form so don't have to recalculate every time *)
+
+(* Given right ascension, declination, latitude, longitude, and Unix
+day, return azimuth and elevation *)
+
+raDec2AzEl[ra_,dec_,lat_,lon_,d_] = 
+
+{ArcTan[Cos[lat]*Sin[dec] + Cos[dec]*Sin[lat]*
+    Sin[lon + ((11366224765515 + 401095163740318*d)*Pi)/200000000000000 - ra], 
+  -(Cos[dec]*Cos[lon + ((11366224765515 + 401095163740318*d)*Pi)/
+       200000000000000 - ra])], 
+ ArcTan[Sqrt[Cos[dec]^2*Cos[lon + ((11366224765515 + 401095163740318*d)*Pi)/
+         200000000000000 - ra]^2 + 
+    (Cos[lat]*Sin[dec] + Cos[dec]*Sin[lat]*
+       Sin[lon + ((11366224765515 + 401095163740318*d)*Pi)/200000000000000 - 
+         ra])^2], Sin[dec]*Sin[lat] - Cos[dec]*Cos[lat]*
+    Sin[lon + ((11366224765515 + 401095163740318*d)*Pi)/200000000000000 - ra]]}
+
+
+
+
+
+(* Canon ends here *)
+
+FullSimplify[raDec2AzEl[ra,dec,lat,lon,d],
+{Member[ra,Reals], Member[dec, Reals], Member[lat, Reals], Member[d, Reals],
+ Member[lon,Reals]}]
+
+
+
+(* 
+
+Fresh start re ICRF to altaz:
+
+ICRF: 1,0,0 is 0h 0deg
+ICRF: 0,0,1 is any h 90deg
+ICRF: 0,1,0 is 6h 0deg (or 18h?)
+
+at 0h siderial time, locally
+
+0h0deg is due south 180deg az and 90-lat el
+anyh 90 deg is due north 0deg az at lat el [indep of t]
+6h 0 deg is due west 270deg az at el 0
+
+so at 0h:
+
+1, 0, 0 -> {-Sin[lat], 0, Cos[lat]}
+0, 1, 0 -> {0, -1, 0}
+0, 0, 1 -> {Cos[lat], 0, Sin[lat]}
+
+at sidereal hour t:
+
+th0deg is due south 180deg az and 90-lat el
+anyh 90 deg is due north 0deg az at lat el [indep of t]
+t+6h 0 deg is due east 90deg az at el 0
+
+{Cos[t], Sin[t], 0} -> {-Sin[lat], 0, Cos[lat]}
+{0, 0, 1} -> {Cos[lat], 0, Sin[lat]}
+{-Sin[t], Cos[t], 0} -> {0, 1, 0}
+
+*)
+
+mat = Table[m[i][j],{i,1,3},{j,1,3}]
+
+mat = mat /. FullSimplify[Solve[{
+ mat.{Cos[t], Sin[t], 0} == {-Sin[lat], 0, Cos[lat]},
+ mat.{0, 0, 1} == {Cos[lat], 0, Sin[lat]},
+ mat.{-Sin[t], Cos[t], 0} == {0, 1, 0} 
+}, Flatten[mat]]]
+
+sph2xyz[{th_,ph_,r_}] = r*{Cos[th]*Cos[ph], Sin[th]*Cos[ph], Sin[ph]}
+xyz2sph[{x_,y_,z_}] = {ArcTan[x,y], ArcTan[Sqrt[x^2+y^2],z], Norm[{x,y,z}]}
+
+radec2altaz[ra_, dec_] = 
+ xyz2sph[Flatten[mat.sph2xyz[{ra,dec,1}]]]
+
+radec2altaz[ra_,dec_,lat_,t_] = 
+FullSimplify[radec2altaz[ra,dec], {Member[ra,Reals], Member[dec, Reals],
+ Member[lat, Reals], Member[t, Reals]}]
+
+(* GMST time at Unix day d, given as an angle *)
+
+gmst[d_] = ((-4394688633775234485 + 401095163740318*d)*Pi)/200000000000000;
+
+radec2altaz2[ra_,dec_,lat_,lon_,d_] =  Take[
+FullSimplify[radec2altaz[ra,dec,lat,gmst[d]+lon]],2]
+
+
+
+radec2altaz2[13.75/24*2*Pi, -10.75*Degree, 35*Degree, -106*Degree,
+1413925700/86400]/Degree
+
+
+
+
+(* tests *)
+
+N[radec2altaz[0,0,35*Degree,0]/Degree]
+
+N[radec2altaz[0,27*Degree,35*Degree,0]/Degree]
+
+N[radec2altaz[1/24*2*Pi,27*Degree,35*Degree,0]/Degree]
+
+N[radec2altaz[2/24*2*Pi,27*Degree,35*Degree,0]/Degree]
+
+N[radec2altaz[8/24*2*Pi,27*Degree,35*Degree,0]/Degree]
+
+N[radec2altaz[13/24*2*Pi,27*Degree,35*Degree,0]/Degree]
+
+N[radec2altaz[18/24*2*Pi,27*Degree,35*Degree,0]/Degree]
+
+N[radec2altaz[23/24*2*Pi,27*Degree,35*Degree,0]/Degree]
+
+
+
+
+
+
+
+
+
+
 (* TODO: add below to library of some sort *)
 
 (* matrix of rigid rotation around xyz axis *)
@@ -16,8 +140,6 @@ rotationMatrix[z,theta_] = {
 
 (* CoordinateTransform does NOT do this well *)
 
-sph2xyz[{th_,ph_,r_}] = r*{Cos[th]*Cos[ph], Sin[th]*Cos[ph], Sin[ph]}
-xyz2sph[{x_,y_,z_}] = {ArcTan[x,y], ArcTan[Sqrt[x^2+y^2],z], Norm[{x,y,z}]}
 test1[ra_,dec_] = sph2xyz[{ra,dec,1}]
 test2[ra_, dec_, t_] = rotationMatrix[z,-t].test1[ra,dec]
 test3[ra_, dec_, lat_, t_] = rotationMatrix[y, Pi/2-lat].test2[ra,dec,t]
@@ -54,9 +176,6 @@ test[35*Degree, 0, 0, 80*Degree]
 
 
 
-(* GMST time at Unix day d, given as an angle *)
-
-gmst[d_] = ((-4394688633775234485 + 401095163740318*d)*Pi)/200000000000000;
 
 
 
