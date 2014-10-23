@@ -5,8 +5,7 @@
 # --title: feed title
 # --desc: channel description
 
-push(@INC,"/usr/local/lib");
-require "bclib.pl";
+require "/usr/local/lib/bclib.pl";
 
 print << "MARK";
 Content-type: text/xml
@@ -45,8 +44,11 @@ while (<STDIN>) {
     $_ .= "&lt;TD&gt;$1&lt;/TD&gt;\n";
   }
 
+  # just to make ifttt happy
+  my($guid) = "http://uniq.barrycarter.info/".rand().time().$$;
+
   # end of item
-  s%^</tr>$%$tabend</description></item>%i;
+  s%^</tr>$%$tabend</description><guid>$guid</guid></item>%i;
 
   # all else is part of the description (as a table cell w/ escaped HTML)
   if (/^<td>/i) {

@@ -18,17 +18,15 @@ raDec2AzEl[ra_,dec_,lat_,lon_,d_] =
          ra])^2], Sin[dec]*Sin[lat] - Cos[dec]*Cos[lat]*
     Sin[lon + ((11366224765515 + 401095163740318*d)*Pi)/200000000000000 - ra]]}
 
-
-
-
-
 (* Canon ends here *)
+
+Plot[ArcTan[Tan[3*x]*4],{x,0,Pi/2}]
 
 FullSimplify[raDec2AzEl[ra,dec,lat,lon,d],
 {Member[ra,Reals], Member[dec, Reals], Member[lat, Reals], Member[d, Reals],
  Member[lon,Reals]}]
 
-
+Plot[raDec2AzEl[0,0,35*Degree,0,d][[1]],{d,0,1}]
 
 (* 
 
