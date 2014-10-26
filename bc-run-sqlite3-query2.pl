@@ -21,6 +21,10 @@ if ($ENV{HTTP_HOST}=~/^schema\.([a-z]+)\.(db|database)\.(.*?)$/i) {
   # schema request($database, $tld)
   check_db($1);
   schema_request($1,"$2.$3");
+} elsif ($ENV{HTTP_HOST}=~/^iftttrss\.([0-9a-f]+)\.([a-z]+)\.(db|database)\.(.*?)$/i) {
+  # request for IFTTT compatible RSS (same subroutine as request for query)
+  check_db($2);
+  query_request($1,$2,"$3.$4", "iftttrss");
 } elsif ($ENV{HTTP_HOST}=~/^rss\.([0-9a-f]+)\.([a-z]+)\.(db|database)\.(.*?)$/i) {
   # request for RSS (same subroutine as request for query)
   check_db($2);
@@ -88,7 +92,13 @@ sub query_request {
   if ($rss=~/^csv$/) {$format="csv";} else {$format="html";}
 
   # avoid DOS by limiting cputime
-  my($out,$err,$res) = cache_command2("ulimit -t 5 && sqlite3 -$format -header $db.db < $tmp");
+  my($out, $err, $res);
+
+  if ($rss=~/^iftttrss$/i) {
+    ($out,$err,$res) = cache_command2("ulimit -t 5 && sqlite3 -line -batch $db.db < $tmp");
+  } else {
+    ($out,$err,$res) = cache_command2("ulimit -t 5 && sqlite3 -$format -header $db.db < $tmp");
+  }
 
   # restore hyperlinks and quotes
   $out=~s/&lt;/</isg;
@@ -102,8 +112,13 @@ sub query_request {
     webdie("QUERY: $query<br>ERROR: $err<br>");
   }
 
-  # known good result; requesting rss?
-  if ($rss=~/^rss$/i) {
+  # known good result; requesting rss or iftttrss?
+  if ($rss=~/^iftttrss$/i) {
+    local(*A);
+    open(A,"|/usr/local/bin/bc-sqlite32rss4ifttt.pl --title=$ENV{HTTP_HOST} --desc=DB_QUERY");
+    print A $out;
+    close(A);
+  } elsif ($rss=~/^rss$/i) {
     local(*A);
     open(A,"|/usr/local/bin/sqlite32rss.pl --title=$ENV{HTTP_HOST} --desc=DB_QUERY");
     print A $out;

@@ -20,6 +20,15 @@ raDec2AzEl[ra_,dec_,lat_,lon_,d_] =
 
 (* Canon ends here *)
 
+moon[t_] = {mx[t],my[t],mz[t]}
+me[t_] = {x[t],y[t],z[t]}
+
+Solve[(moon[t]-me[t]).me[t]==0, {x[t],y[t],z[t]}]
+
+Solve[(moon[t]-me[t]).me[t]==0, t]
+
+
+
 Plot[ArcTan[Tan[3*x]*4],{x,0,Pi/2}]
 
 FullSimplify[raDec2AzEl[ra,dec,lat,lon,d],
