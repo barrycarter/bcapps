@@ -10,7 +10,7 @@ value[s_] = Integrate[
  Assumptions -> {Element[v,Reals], v>0}
 ]
 
-(* If an option with strike s SDs out has value x, it's implied
+(* If an option with strike s SDs out has value x, its implied
 volatility is: *)
 
 impvol[s_, x_] = Solve[value[s]==x, v]

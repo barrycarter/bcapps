@@ -33,6 +33,20 @@ use Inline::Python;
 use FFI::Raw;
 use v5.10;
 
+
+my $str = << "MARK";
+hello,"world",there,"this has commas,yes"
+MARK
+;
+
+$str=~s/\"(.*?)\"/"\001$1\001"/g;
+@a = csv($str);
+map(s/\001/"/g, @a);
+debug("A",@a);
+
+
+die "TESTING";
+
 # create a 10 second random snippet from an MP3 file
 
 chdir("/home/barrycarter/MP3/");

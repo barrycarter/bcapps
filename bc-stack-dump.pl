@@ -20,7 +20,7 @@ $assoc_id = "aa1073f7-7e3b-4d4d-ace5-f2fca853f998";
 # won't help)
 
 for $i (1..2) {
-  ($out) = cache_command("curl 'http://stackauth.com/1.1/sites?page=$i&pagesize=100' | gunzip","age=86400");
+  ($out) = cache_command("curl 'http://api.stackexchange.com/2.2/sites' | gunzip","age=86400");
   $json = JSON::from_json($out);
   %jhash = %{$json};
   debug(var_dump("jhash", {%jhash}));
@@ -40,9 +40,9 @@ for $i (@items) {
 
 # find all my ids (won't work when I'm on more than 100 sites)
 
-$fname = cache_command2("curl 'http://stackauth.com/1.1/users/$assoc_id/associated?pagesize=100'","age=86400&retfile=1");
+my($out, $err, $res) = cache_command2("curl 'http://api.stackexchange.com/2.2/users/$assoc_id/associated' | gunzip","age=86400");
 
-debug("FNAME: $fname");
+debug("OUT: $out");
 
 die "TESTING";
 

@@ -2,6 +2,20 @@
 
 (* using input form so don't have to recalculate every time *)
 
+(* The Earth's mean radius [not polar/equitorial] *)
+
+earthMeanRadius = 6371009/1000;
+
+(* GMST time at Unix day d, given as an angle *)
+
+gmst[d_] = ((-4394688633775234485 + 401095163740318*d)*Pi)/200000000000000;
+
+(* xyz coordinates of lat/lon at time d (in Unix days) compared to
+earth geocenter, ignoring precession *)
+
+latlond2xyz[lat_,lon_,d_] = {earthMeanRadius*Cos[lat]*Cos[gmst[d]+lon],
+earthMeanRadius*Cos[lat]*Sin[gmst[d]+lon], earthMeanRadius*Sin[lat]}
+
 (* Given right ascension, declination, latitude, longitude, and Unix
 day, return azimuth and elevation *)
 
@@ -86,10 +100,6 @@ radec2altaz[ra_, dec_] =
 radec2altaz[ra_,dec_,lat_,t_] = 
 FullSimplify[radec2altaz[ra,dec], {Member[ra,Reals], Member[dec, Reals],
  Member[lat, Reals], Member[t, Reals]}]
-
-(* GMST time at Unix day d, given as an angle *)
-
-gmst[d_] = ((-4394688633775234485 + 401095163740318*d)*Pi)/200000000000000;
 
 radec2altaz2[ra_,dec_,lat_,lon_,d_] =  Take[
 FullSimplify[radec2altaz[ra,dec,lat,gmst[d]+lon]],2]
@@ -260,9 +270,6 @@ Mod[18.697374558 + 24.06570982441908*-10957.5,24]
 gmst[d_] = Mod[18697374558/10^9 + 2406570982441908/10^14*(-109575/10+d),24]
 
 emr = 6371009/1000;
-
-pos[lat_,lon_,t_] = {emr*Cos[lat]*Cos[gmst[t]*15*Degree+lon],
-emr*Cos[lat]*Sin[gmst[t]*15*Degree+lon], emr*Sin[lat]}
 
 N[pos[35.0836*Degree,253.349*Degree,16355],20]
 
