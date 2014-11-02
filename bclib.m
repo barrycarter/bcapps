@@ -229,7 +229,3 @@ Taylor series to behave the way we want) *)
 
 tailortaylor[list_,n_] := Table[CoefficientList[
  taylor[list,(t+2*i-1)/n-1],t],{i,1,n}]
-
-(* test for http://mathematica.stackexchange.com/questions/64496/why-cant-i-import-a-file-in-the-init-m-file *)
-
-temp123 = Import["/home/barrycarter/table.csv"];

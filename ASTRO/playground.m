@@ -11,7 +11,7 @@ earthMeanRadius = 6371009/1000;
 gmst[d_] = ((-4394688633775234485 + 401095163740318*d)*Pi)/200000000000000;
 
 (* xyz coordinates of lat/lon at time d (in Unix days) compared to
-earth geocenter, ignoring precession *)
+earth geocenter, ignoring precession and assuming spherical Earth *)
 
 latlond2xyz[lat_,lon_,d_] = {earthMeanRadius*Cos[lat]*Cos[gmst[d]+lon],
 earthMeanRadius*Cos[lat]*Sin[gmst[d]+lon], earthMeanRadius*Sin[lat]}
