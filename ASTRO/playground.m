@@ -17,7 +17,7 @@ latlond2xyz[lat_,lon_,d_] = {earthMeanRadius*Cos[lat]*Cos[gmst[d]+lon],
 earthMeanRadius*Cos[lat]*Sin[gmst[d]+lon], earthMeanRadius*Sin[lat]}
 
 (* Given right ascension, declination, latitude, longitude, and Unix
-day, return azimuth and elevation *)
+day, return "geocentric" azimuth and elevation *)
 
 raDec2AzEl[ra_,dec_,lat_,lon_,d_] = 
 
@@ -33,6 +33,8 @@ raDec2AzEl[ra_,dec_,lat_,lon_,d_] =
     Sin[lon + ((11366224765515 + 401095163740318*d)*Pi)/200000000000000 - ra]]}
 
 (* Canon ends here *)
+
+
 
 moon[t_] = {mx[t],my[t],mz[t]}
 me[t_] = {x[t],y[t],z[t]}
