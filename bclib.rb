@@ -21,7 +21,7 @@ module Math
 
   # Given a list of ChebyshevT coefficients (0th one first), evaluate at t
   def self.chebyshevlist(list,t)
-    list.each_index{|key| chebyshevt(key,t)*list[key]}.reduce(:+)
+    (0..list.length-1).collect{|key| chebyshevt(key,t)*list[key]}.reduce(:+)
   end
 
 end

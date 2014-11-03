@@ -57,8 +57,6 @@ module Aquarius
 
   def self.coeffs2poly(coeffs)
 
-    @planets.td("planets")
-    
     # the chunk number and total number of chunks is useless to us
     coeffs.slice!(0,2)
     # Julian start/end date for this set
@@ -72,7 +70,7 @@ module Aquarius
       (start, ncoeffs, nperiods) = [start, ncoeffs, nperiods].map{|i| i.to_i}
       # obtain the coefficients for each period for this planet
       # TODO: the "*3" won't work for nutations or librations
-      @position[name.td("name")][chunk] = (coeffs.slice!(0,ncoeffs*nperiods*3).each_slice(ncoeffs*3).to_a).map{|i| i.each_slice(ncoeffs).to_a}
+      @position[name][chunk] = (coeffs.slice!(0,ncoeffs*nperiods*3).each_slice(ncoeffs*3).to_a).map{|i| i.each_slice(ncoeffs).to_a}
     }
 
   end
@@ -88,14 +86,15 @@ module Aquarius
     # do we have this data? if not, get it
     unless @position[planet][chunk] then coeffs2poly(getcoeffs(chunk)) end
 
+    # which subarray of above (and find decimal part too, as t member -1,1)
+    subarr = pos*@position[planet][chunk].length
+    t = (subarr-subarr.floor)*2-1
+    subarr = subarr.floor
+
     # if this data has multiple subarrays, which array do we want
-    coeffs = @position[planet][chunk][(pos*@position[planet][chunk].length).floor]
-    # value of t corresponding to date
-    t = (pos*2-1)
+    coeffs = @position[planet][chunk][subarr]
     # evaluate for all 3 coordinates
-    coeffs.each{|i| Math.chebyshevlist(i,t).td("i")}
-    val = coeffs.collect{|i| Math.chebyshevlist(i,t)}
-    val.map{|i| i.to_f}.td("answer")
+    coeffs.collect{|i| Math.chebyshevlist(i,t)}
   end
 
 end
@@ -115,8 +114,19 @@ $DEBUG = 1
 
 # Math.chebyshevlist(test3, 0).to_f.td("output")
 
+(1..30).each{|i|
+  Aquarius.planetpos("mercury", Date.new(2014,11,i).td("date")).map{|i| i.to_f}.td(i)
+}
 
-Aquarius.planetpos("mercury", Date.new(2014,11,2)).td("test")
+# Math.chebyshevlist([1,2,3],0.6).td("test")
+# (1*Math.chebyshevt(0,0.6)).td("0")
+# (2*Math.chebyshevt(1,0.6)).td("1")
+# (3*Math.chebyshevt(2,0.6)).td("2")
+
+
+
+
+
 
 
     
