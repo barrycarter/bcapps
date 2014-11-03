@@ -5,8 +5,6 @@ require 'date'
 
 module Aquarius
 
-  attr_accessor :position
-
   # TODO: attr_ this
   def self.position() @position end
 
@@ -23,8 +21,8 @@ module Aquarius
 	      "uranus:387:6:1", "neptune:405:6:1", "pluto:423:6:1",
 	      "moongeo:441:13:8", "sun:753:11:2", "nutate:819:10:4"]
 
-  # position of planets
-  @position = Array.new
+  # position of planets, a 2-D hash
+  @position = Hash.new{|k,v| k[v] = Hash.new}
 
   # obtain the nth set of Chebyshev coefficients from ascp1950.430 and
   # return it as an array. ascp1950.430 must exist, uncompressed, in
@@ -51,28 +49,53 @@ module Aquarius
     sign*mant[2..-1].to_i*10**(exp.to_i-16)
   end
 
-  # given Date, return which array in ascp1950.430 that Date appears in
-  def self.date2chunk(date) ((date.ajd-2433264.5)/32).floor+1 end
+  # given Date, return array in ascp1950.430 for Date (include fraction)
+  def self.date2chunk(date) ((date.ajd-2433264.5)/32)+1 end
 
   # given a list of coefficients (returned from ascp2num), store
   # coefficients for planets
 
   def self.coeffs2poly(coeffs)
+
+    @planets.td("planets")
     
     # the chunk number and total number of chunks is useless to us
     coeffs.slice!(0,2)
     # Julian start/end date for this set
     (jdstart, jdend) = coeffs.slice!(0,2)
     # +16 puts it right in the middle of period, avoids roundoff errors
-    chunk = date2chunk(Date.jd(jdstart+16))
+    chunk = date2chunk(Date.jd(jdstart+16)).floor
 
     @planets.each{|i|
-      (name, start, ncoeffs, nperiods) = i.split(":").map{|i| i.to_i}
+      (name, start, ncoeffs, nperiods) = i.split(":")
+      # TODO: this is ugly
+      (start, ncoeffs, nperiods) = [start, ncoeffs, nperiods].map{|i| i.to_i}
       # obtain the coefficients for each period for this planet
       # TODO: the "*3" won't work for nutations or librations
-      @position[name][chunk] = (coeffs.slice!(0,ncoeffs*nperiods*3).each_slice(ncoeffs*3).to_a).map{|i| i.each_slice(ncoeffs).to_a}
+      @position[name.td("name")][chunk] = (coeffs.slice!(0,ncoeffs*nperiods*3).each_slice(ncoeffs*3).to_a).map{|i| i.each_slice(ncoeffs).to_a}
     }
 
+  end
+
+  # Return planet's xyz coordinates (in ICRF) at date
+  def self.planetpos(planet, date)
+    # what chunk does this date fall in and what position
+    # TODO: shorten code below
+    chunk = date2chunk(date)
+    pos = chunk-chunk.floor
+    chunk = chunk.floor
+
+    # do we have this data? if not, get it
+    unless @position[planet][chunk] then coeffs2poly(getcoeffs(chunk)) end
+
+    # if this data has multiple subarrays, which array do we want
+    coeffs = @position[planet][chunk][(pos*@position[planet][chunk].length).floor]
+    # value of t corresponding to date
+    t = (pos*2-1)
+    # evaluate for all 3 coordinates
+    coeffs.each{|i| Math.chebyshevlist(i,t).td("i")}
+    val = coeffs.collect{|i| Math.chebyshevlist(i,t)}
+    val.map{|i| i.to_f}.td("answer")
   end
 
 end
@@ -83,9 +106,17 @@ $DEBUG = 1
 # Aquarius.getcoeffs(7).td("ALPHA")
 # Aquarius.ascp2num("0.3570991140230295D-09").td("alpha")
 
-test1 = Aquarius.date2chunk(Date.new(2014,11,2)).td("alpha")
-test2 = Aquarius.coeffs2poly(Aquarius.getcoeffs(test1))
+# test1 = Aquarius.date2chunk(Date.new(2014,11,2)).td("alpha")
+# test2 = Aquarius.coeffs2poly(Aquarius.getcoeffs(test1))
 
-Aquarius.position.td("position")
+# pos = Aquarius.position
+
+# test3 = pos["mercury"][741][0][0]
+
+# Math.chebyshevlist(test3, 0).to_f.td("output")
+
+
+Aquarius.planetpos("mercury", Date.new(2014,11,2)).td("test")
+
 
     
