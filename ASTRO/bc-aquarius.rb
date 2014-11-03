@@ -29,7 +29,8 @@ module Aquarius
 
   # Earth-moon gravitation ratio, used to calculate position of Earth
   # which is stupidly not provided in ascp1950.430
-
+  # TODO: this should not have to be here!
+  @emrat = 813005690741906200*10**-16
 
   # obtain the nth set of Chebyshev coefficients from ascp1950.430 and
   # return it as an array. ascp1950.430 must exist, uncompressed, in
@@ -48,10 +49,7 @@ module Aquarius
 
   # convert ASCP numbers to rational numbers
   def self.ascp2num(num)
-    num.td("num")
     (mant,exp) = num.split("D")
-    mant.td("mant")
-    exp.td("exp")
     # if there is no "D" return number as is
     if exp.nil? then return num end
     # negative?
@@ -87,6 +85,9 @@ module Aquarius
 
   # Return planet's xyz coordinates (in ICRF) at date
   def self.planetpos(planet, date)
+    # special case for earth
+    if (planet=="earth") then return planetpos("earthmoon",date)-planetpos("moongeo",date)/@emrat end
+
     # what chunk does this date fall in and what position
     # TODO: shorten code below
     chunk = date2chunk(date)
@@ -107,53 +108,28 @@ module Aquarius
     coeffs.collect{|i| Math.chebyshevlist(i,t)}
   end
 
-  # TODO: this should not have to be here!
-  @emrat = 0.813005690741906200e+2
-
 end
 
 # testing
 
 $DEBUG = 1
-# Aquarius.getcoeffs(7).td("ALPHA")
-# Aquarius.ascp2num("0.3570991140230295D-09").td("alpha")
 
-# test1 = Aquarius.date2chunk(Date.new(2014,11,2)).td("alpha")
-# test2 = Aquarius.coeffs2poly(Aquarius.getcoeffs(test1))
-
-# pos = Aquarius.position
-
-# test3 = pos["mercury"][741][0][0]
-
-# Math.chebyshevlist(test3, 0).to_f.td("output")
-
-# (1..30).each{|i|
-#  Aquarius.planetpos("mercury", Date.new(2014,11,i)).map{|i| i.to_f}.td(i)
+(1..30).each{|i|
+#  Aquarius.planetpos("earthmoon", Date.new(2014,11,i)).map{|i| i.to_f}.td(i)
+  Aquarius.planetpos("earth", Date.new(2014,11,i)).map{|i| i.to_f}.td(i)
 #  Aquarius.planetpos("moongeo", Date.new(2014,11,i)).map{|i| i.to_f}.td(i)
-# }
+}
 
-# Math.chebyshevlist([1,2,3],0.6).td("test")
-# (1*Math.chebyshevt(0,0.6)).td("0")
-# (2*Math.chebyshevt(1,0.6)).td("1")
-# (3*Math.chebyshevt(2,0.6)).td("2")
-
-# Aquarius.emrat.td("emrat")
-
-emrat = Aquarius.emrat
-emrat.td("emrat")
+exit
 
 date = Date.new(2014,11,1)
-earthmoon = Aquarius.planetpos("earthmoon", date)
-moongeo = Aquarius.planetpos("moongeo", date)
+earthmoon = Aquarius.planetpos("earthmoon", date).td("earthmoon")
+moongeo = Aquarius.planetpos("moongeo", date).td("moongeo")
+(earthmoon-moongeo/Aquarius.emrat).td("earth?")
 
-date.td("date")
-earthmoon.td("earthmoon")
-moongeo.td("moongeo")
+([1,2,3]-[4,5,6]).td("foo")
 
-emrat.td("emrat")
-moongeo.collect{|i| i/Aquarius.emrat}.td("beta")
-
-earthmoon-moongeo/Aquarius.emrat
+([1,2,3]/Aquarius.emrat).td("test")
 
 # what we want for earth:
 # {2014, 2456962.500000000, 1.169539108800286*10^+08, 8.425850684626275*10^+07, 3.650516654653425*10^+07},

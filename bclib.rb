@@ -25,3 +25,18 @@ module Math
   end
 
 end
+
+class Array
+  # keep originals around where they exist
+  alias minus -
+
+  # TODO: distinguish between dividing/etc by number or array
+
+  # allow division by number
+  def /(n) self.collect{|i| i/n} end
+
+  # allow subtraction by array
+  def -(a) (0..self.length-1).collect{|i| self[i]-a[i]} end
+
+
+end
