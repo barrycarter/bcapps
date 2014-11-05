@@ -34,6 +34,36 @@ raDec2AzEl[ra_,dec_,lat_,lon_,d_] =
 
 (* Canon ends here *)
 
+(* Chebyshev to VSOP? *)
+
+Integrate[Cos[c*t]*ChebyshevT[n,t],{t,-1,1}]
+
+<</home/barrycarter/20140823/raw-jupiter.m
+
+part = Transpose[Partition[coeffs,ncoeff*3]];
+
+tots = Table[Total[i],{i,part}]
+
+(* only first 10 for Venus *)
+
+resp = Table[tots[[i]]*Integrate[Cos[c*t]*ChebyshevT[i-1,t],{t,-1,1}],
+{i,1,10}]
+
+test0[c_] = Total[resp]
+
+Plot[test0[c],{c,0.01,100},PlotRange->All]
+Plot[test0[c],{c,0.001,.01},PlotRange->All]
+Plot[test0[c],{c,1/56,1/14},PlotRange->All]
+Plot[test0[c],{c,4,5},PlotRange->All]
+
+(* roughly 4.5 min *)
+
+Plot[Cos[4.5*t],{t,-1,1}]
+
+
+
+
+
 
 
 moon[t_] = {mx[t],my[t],mz[t]}
@@ -572,11 +602,6 @@ ParametricPlot[{
 poly[x][4][0][t][t] - (poly[x][3][0][t][t] + poly[x][399][3][t][t]),
 poly[y][4][0][t][t] - (poly[y][3][0][t][t] + poly[y][399][3][t][t])},
 {t,10957,10957+365*2.14}]
-
-
-
-
-
 
 (* best fit circle [evolute] from polynomial *)
 

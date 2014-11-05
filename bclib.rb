@@ -26,17 +26,20 @@ module Math
 
 end
 
-class Array
-  # keep originals around where they exist
-  alias minus -
+# polar vectors
 
-  # TODO: distinguish between dividing/etc by number or array
+class Vector
+  
+  # TODO: add 2D polar if needed
+  def to_polar()
+    Vector.elements([self.norm, Math.atan2(self[1],self[0]), Math.asin(self[2]/self.norm)])
+  end
 
-  # allow division by number
-  def /(n) self.collect{|i| i/n} end
-
-  # allow subtraction by array
-  def -(a) (0..self.length-1).collect{|i| self[i]-a[i]} end
-
+  # TODO: add 2D if needed
+  def to_rect()
+    Vector.elements([self[0]*Math.cos(self[1])*Math.cos(self[2]),
+		      self[0]*Math.sin(self[1])*Math.cos(self[2]),
+		      self[0]*Math.sin(self[2])])
+    end
 
 end

@@ -74,7 +74,10 @@ push(@info, "UPTIME: $uptime (CPU: $loadavg)");
 
 # know which alerts to suppress
 for $i (@suppress) {
-  ($key,$val) = split(/\s+/,$i);
+  # allows for multiword keys
+  $i=~/^(.*)\s+(.+?)$/;
+  ($key,$val) = ($1,$2);
+  debug("KEY: $key, VAL: $val");
   # if date has already occurred, ignore line
   if ($val < stardate($now,"localtime=1")) {next;}
   $suppress{$key}=$val;

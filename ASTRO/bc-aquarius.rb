@@ -1,7 +1,12 @@
+#!/usr/local/bin/ruby
+
+# TODO: remove above after testing: this is a library, not a program
+
 # Attempt to create an astronomical library for Ruby that is fairly precise
 
 require '/home/barrycarter/BCGIT/bclib.rb'
 require 'date'
+require 'matrix'
 
 module Aquarius
 
@@ -105,7 +110,7 @@ module Aquarius
     # if this data has multiple subarrays, which array do we want
     coeffs = @position[planet][chunk][subarr]
     # evaluate for all 3 coordinates
-    coeffs.collect{|i| Math.chebyshevlist(i,t)}
+    Vector.elements(coeffs.collect{|i| Math.chebyshevlist(i,t)}, copy=false)
   end
 
 end
@@ -115,14 +120,23 @@ end
 $DEBUG = 1
 
 (1..30).each{|i|
+  date = Date.new(2014,11,i)
+  pos = Aquarius.planetpos("sun", date)-Aquarius.planetpos("earth", date)
+  pos = pos.to_polar
+  print "#{i}: #{pos[1]*12/Math::PI.modulo(24)}, #{pos[2]*180/Math::PI}\n"
 #  Aquarius.planetpos("earthmoon", Date.new(2014,11,i)).map{|i| i.to_f}.td(i)
-  Aquarius.planetpos("earth", Date.new(2014,11,i)).map{|i| i.to_f}.td(i)
+#  Aquarius.planetpos("earth", Date.new(2014,11,i)).map{|i| i.to_f}.td(i)
 #  Aquarius.planetpos("moongeo", Date.new(2014,11,i)).map{|i| i.to_f}.td(i)
 }
 
 exit
 
-date = Date.new(2014,11,1)
+date = DateTime::now
+date.td("DATE")
+(180/Math::PI*(Aquarius.planetpos("moongeo", date).to_polar)).td("test")
+
+exit
+
 earthmoon = Aquarius.planetpos("earthmoon", date).td("earthmoon")
 moongeo = Aquarius.planetpos("moongeo", date).td("moongeo")
 (earthmoon-moongeo/Aquarius.emrat).td("earth?")

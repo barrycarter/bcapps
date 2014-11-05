@@ -12,9 +12,16 @@ require "/usr/local/lib/bclib.pl";
 
 unless ($globopts{noheader}) {print "Content-type: text/xml\n\n";}
 
+# TODO: $title is not always URL, fix this!
+
 print << "MARK";
-<?xml version="1.0" encoding="ISO-8859-1" ?><rss version="2.0">
-<channel><title>$globopts{title}</title><description>$globopts{desc}</description>
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+<atom:link href="http://$globopts{title}" rel="self" type="application/rss+xml" />
+<title>$globopts{title}</title>
+<link>https://github.com/barrycarter/bcapps/blob/master/bc-run-sqlite3-query2.pl</link>
+<description>$globopts{desc}</description>
 
 MARK
 ;
@@ -36,7 +43,7 @@ for $item (split(/\n\n/, $all)) {
 print << "MARK";
 <item><title>$title</title><link>http://barrycarter.info</link>
 <description>$item</description>
-<guid>$guid</guid>
+<guid>http://$title</guid>
 </item>
 MARK
 ;
