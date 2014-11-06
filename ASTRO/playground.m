@@ -34,11 +34,93 @@ raDec2AzEl[ra_,dec_,lat_,lon_,d_] =
 
 (* Canon ends here *)
 
+(* more Chebyshev to VSOP, using http://stackoverflow.com/questions/4463481/continuous-fourier-transform-on-discrete-data-using-mathematica *)
+
+planet299 = Drop[planet299, -1];
+planet299 = planet299[[1;;Length[planet299];;10]];
+test = Table[planet299[[i,3]],{i,1,Length[planet299]}];
+Clear[planet299]
+Length[test]
+
+(* number of periods in list, roughly *)
+
+fourtwo[l_] :=
+FindMinimum[Sum[((a+b*Cos[c*n-d]) - l[[n]])^2, {n,1,Length[l]}],
+{{a,Mean[l]},{b,(Max[l]-Min[l])/2},{c,numperiods[l]*2*Pi/Length[l]},d}];
+
+f1[x_] = a+b*Cos[c*x-d] /. fourtwo[test][[2]]
+t1 = Table[f1[x],{x,1,Length[test]}];
+ListPlot[{t1-test}]
+
+f2[x_] = a+b*Cos[c*x-d] /. fourtwo[test-t1][[2]]
+t2 = Table[f2[x],{x,1,Length[test]}];
+ListPlot[{t1+t2-test}]
+
+f3[x_] = a+b*Cos[c*x-d] /. fourtwo[test-t1-t2][[2]]
+t3 = Table[f3[x],{x,1,Length[test]}];
+ListPlot[{t1+t2+t3-test}]
+
+(* test data to get fourtwo working *)
+
+data = Table[N[753+919*Sin[x/623-125]], {x,1,25000,1}]; 
+
+(* TODO: put this into bclib.m *)
+
+numperiods[data_] := Ordering[Abs[Take[Fourier[data], 
+ {2,Round[Length[data]/2+1]}]],-1][[1]];
+
+fourtwo[data_] := 
+ Function[x, Evaluate[a+b*Cos[c*x-d] /.
+ FindMinimum[Sum[((a+b*Cos[c*n-d]) - data[[n]])^2, {n,1,Length[data]}],
+ {{a,Mean[data]},{b,(Max[data]-Min[data])/2},
+ {c,numperiods[data]*2*Pi/Length[data]},d}][[2]]
+]];
+
+refinefourtwo[data_, f_] := Module[{t},
+ t = Table[data[[x]]- f[x], {x,1,Length[data]}];
+ Function[x,Evaluate[f[x] + fourtwo[t][x]]]
+]
+
+superfourtwo[data_, 0] = 0 &
+superfourtwo[data_, n_] := 
+ superfourtwo[data, n] = refinefourtwo[data,superfourtwo[data,n-1]];
+
+superfourtwoleft[data_, n_] := 
+ Table[superfourtwo[data,n][x] - data[[x]], {x,1,Length[data]}];
+
+
+
+
+
+
+(* end put into bclib.m *)
+
+Plot[%,{x,1,Length[test]}]
+
+
+cs = Table[c[i],{i,1,12}]
+Integrate[((a+b*Cos[c*x-t])-chebyshev[cs,x])^2,{x,-1,1}]
+
+Ordering[Take[Abs[Fourier[test]],Floor[Length[test]/2]],-1]
+
+
+
 (* Chebyshev to VSOP? *)
 
 Integrate[Cos[c*t]*poly[x][6][0][t][t],{t,0,60*365}]
 
 (* For mathematica stack *)
+
+(* http://mathematica.stackexchange.com/questions/65045/integrate-over-piecewise-function-defined-using?noredirect=1#comment182208_65045 *)
+
+Piecewise[(DownValues[f][[All, 2]] /. Verbatim[Condition][a_, b_] :> {a, b})]
+
+f[w_] = Piecewise[(DownValues[eval][[All,2]] /.
+Verbatim[Condition][a_, b_] :> {a, b})];
+
+t = Table[f[t],{t,10,10+365,.1}]
+
+tab = Table[eval[x,2,0,t],{t,10,10+365*10,.1}];
 
 f[x_] := x /; x<0
 f[x_] := x^2 /; x>=0

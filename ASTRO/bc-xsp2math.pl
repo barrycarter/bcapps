@@ -24,7 +24,7 @@ open(A,">/tmp/math.m")||die("Can't open, $!");
 # array 11: moon to earth/moon barycenter
 # array 12: earth to earth/moon barycenter
 
-for $i (6) {
+for $i (2) {
   my($str) = xsp2math("de430", $i, str2time("1970-01-01"), str2time("2030-01-01"));
 
 # for $i (3,4,5,12) {
@@ -140,7 +140,8 @@ sub nasa_sec {
 
 sub read_coeffs {
   my($fh, $stime, $etime, $hashref) = @_;
-  my(@ret);
+  # @pw = piecewise
+  my(@ret,@pw);
 
   # interval is the delimiter in decimal form
   my($int) = ieee754todec($hashref->{boundary});
@@ -204,12 +205,20 @@ sub read_coeffs {
       my($cheb2) = join("+\n", @cheb2);
 
       # NOTE: do not move "/;" to the next line, it breaks stuff
-      push(@ret, "poly[$j][$target][$center][t_] := Function[w, $cheb] /;
+      push(@pw, "{Function[w,$cheb], range[$int][$i][t]}");
+      push(@ret, "poly[$j,$target,$center,t_] := Function[w, $cheb] /;
       range[$int][$i][t];");
+
+      push(@ret, "eval[$j,$target,$center,w_] := $cheb /;
+      range[$int][$i][w];");
+
       push(@ret, "raw[$j][$target][$center][t_] := Function[w, $cheb2] /;
       range[$int][$i][t];");
     }
   }
+
+  my($pw) = join(",\n", @pw);
+  debug("<pw>$pw</pw>");
   return join("\n", @ret);
 }
 

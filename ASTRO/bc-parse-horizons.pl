@@ -5,9 +5,14 @@
 
 require "/usr/local/lib/bclib.pl";
 
-$targetdir = "/home/barrycarter/20140822/";
+$targetdir = "/home/barrycarter/SPICE/KERNELS/VSOP/";
 chdir($targetdir);
-open(A,"bzcat /home/barrycarter/mail/HORIZONS19702030.bz2|");
+# open(A,"bzcat /home/barrycarter/mail/HORIZONS19702030.bz2|");
+
+# below file uses "Ecliptic and Mean Equinox of Reference Epoch", so
+# should match VSOP87, not Chebyshev
+open(A,"bzcat /home/barrycarter/SPICE/KERNELS/HORIZONS-SSBC.mbx.bz2|");
+my(%seen);
 
 while (<A>) {
   # because results are multipart (many messages per planet), subject

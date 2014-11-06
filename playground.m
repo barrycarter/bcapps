@@ -1624,12 +1624,12 @@ f[x_] = a1 +b1*Sin[c1*x+d1] +b2*Sin[c2*x+d2]
 
 (* with x data of jupiter *)
 
-<<"!bzcat /home/barrycarter/20110916/final-pos-500-0-199.txt.bz2"; 
+<<"/home/barrycarter/SPICE/KERNELS/final-pos-500-0-299.txt"; 
 
-p0 = planet199;
+p0 = planet299;
 p1 = p0[[1;;Length[p0];;10]];
 Clear[p0];
-Clear[planet199];
+Clear[planet299];
 px = Table[{x[[2]]-2455562.500000000,x[[3]]},{x,p1}];
 px2 = Table[x[[3]],{x,p1}];
 
