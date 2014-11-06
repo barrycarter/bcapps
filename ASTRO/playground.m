@@ -36,6 +36,17 @@ raDec2AzEl[ra_,dec_,lat_,lon_,d_] =
 
 (* Chebyshev to VSOP? *)
 
+Integrate[Cos[c*t]*poly[x][6][0][t][t],{t,0,60*365}]
+
+(* For mathematica stack *)
+
+f[x_] := x /; x<0
+f[x_] := x^2 /; x>=0
+
+Integrate[f[x],{x,-1,1}]
+
+Integrate[Cos[n x] f[x], {x, -1, 1}]
+
 Integrate[Cos[c*t+2*i]*ChebyshevT[n,t],{t,-1,1}]
 
 <</home/barrycarter/20140823/raw-jupiter.m

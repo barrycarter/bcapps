@@ -19,7 +19,9 @@ use Astro::Time;
 
 # unixdate2chebchunk("19491214.120711");
 # stardate2chebarray("20141018");
-stardate2chebarray("19491214");
+# stardate2chebarray("19491214");
+
+goto DUMP;
 
 die "TESTING";
 
@@ -102,7 +104,7 @@ sub sd2jd {
 #  debug("DATE: $date, FNAME: $fname");
 # }
 
-
+DUMP:
 
 # list of planets with hardcoded coefficient numbers/etc
 # TODO: don't hardcode, use header.430_572
@@ -148,7 +150,7 @@ for $file (@ARGV) {
 
   while (!eof(A)) {
     # TODO: confirm all chunks are this size, this seems incorrect
-    read(A, $data, 26821);
+    read(A, $data, 26873);
 
     # convert D+ stuff
     # TODO: use "exact" form
