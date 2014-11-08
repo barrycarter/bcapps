@@ -1643,8 +1643,11 @@ fx3 = Table[{i,fx2[[i]],convolve[i]},{i,1,50}]
 convolve[n_] := Sum[px2[[x]]*Cos[n*x], {x,1,Length[px2]}]
 Plot[convolve[n],{n,31,33}, PlotRange->All]
 
+meanleft[n_] := meanleft[n] = Mean[Abs[superfourtwoleft[test,n]]]
+maxleft[n_] := maxleft[n] = Max[Abs[superfourtwoleft[test,n]]]
 
-
+tab3 = Table[meanleft[n],{n,0,20}]
+tab3 = Table[maxleft[n],{n,0,20}]
 
 
 fx2 = Fourier[px2];

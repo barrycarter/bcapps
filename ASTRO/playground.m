@@ -34,6 +34,62 @@ raDec2AzEl[ra_,dec_,lat_,lon_,d_] =
 
 (* Canon ends here *)
 
+(* closed form for integrating difference of symbolic arbitrary cosine
+function with Chebyshev m-th polynomial with coefficient k (n
+represents shift) *)
+
+cs = Table[c[i],{i,0,10}]
+
+temp1[m_] := temp1[m] = Integrate[
+ (a+b*Cos[c*(t+2*n)-d]-k*ChebyshevT[m,t])^2, {t,-1,1}]
+
+Integrate[(a+b*Cos[c*(t+2*n)-d]-chebyshev[cs,t])^2,{t,-1,1}]
+
+temp1[m_] := temp1[m] =
+Integrate[(a+b*Cos[c*(t+2*n)-d]-chebyshev[Table[c[i],{i,0,m-1}],t])^2,{t,-1,1}]
+
+(* for a list *)
+
+temp2[l_] := temp1[Length[l]] /. c[i_] :> l[[i+1]]
+
+(* note that c[i] goes to l[[i+1]] not l[[i]] *)
+
+(* using raw-venus.m *)
+
+test1 = Partition[coeffs,ncoeff];
+
+temp2[test1[[1]]]
+
+Sum[temp2[test1[[i]]] /. n->Floor[i/3], {i,1,28,3}]
+
+FindMinimum[%, {a,{b,10^8},{c,2*Pi/20},d}]
+
+FindMinimum[%, {a,b,c,d}]
+
+Show[{
+Plot[0, {t,-1,9}],
+Plot[chebyshev[test1[[1]],t], {t,-1,1}],
+Plot[chebyshev[test1[[4]],t-2], {t,1,3}],
+Plot[chebyshev[test1[[7]],t-4], {t,3,5}],
+Plot[chebyshev[test1[[10]],t-6], {t,5,7}],
+Plot[chebyshev[test1[[13]],t-8], {t,7,9}]
+}, PlotRange->All]
+
+(* Venus range is 16 days with 10 coeffs, so 1.6 day sample [minimal] starting at -11 ending at 21717 *)
+
+tab0 = Table[poly[x,2,0,t][t], {t,-11,21717,1.6}];
+
+(* fewer obs as first guess?; below totally does not work even a little bit *)
+
+tab0 = Table[poly[x,2,0,t][t], {t,-11,21717,8}];
+
+(* below is also crappy *)
+
+tab0 = Table[poly[x,2,0,t][t], {t,-11,21717,0.8}];
+
+tab0 = Table[poly[x,2,0,t][t], {t,0,1000,0.1}];
+
+
 (* more Chebyshev to VSOP, using http://stackoverflow.com/questions/4463481/continuous-fourier-transform-on-discrete-data-using-mathematica *)
 
 planet299 = Drop[planet299, -1];
@@ -64,44 +120,21 @@ ListPlot[{t1+t2+t3-test}]
 
 data = Table[N[753+919*Sin[x/623-125]], {x,1,25000,1}]; 
 
-(* TODO: put this into bclib.m *)
-
-numperiods[data_] := Ordering[Abs[Take[Fourier[data], 
- {2,Round[Length[data]/2+1]}]],-1][[1]];
-
-fourtwo[data_] := 
- Function[x, Evaluate[a+b*Cos[c*x-d] /.
- FindMinimum[Sum[((a+b*Cos[c*n-d]) - data[[n]])^2, {n,1,Length[data]}],
- {{a,Mean[data]},{b,(Max[data]-Min[data])/2},
- {c,numperiods[data]*2*Pi/Length[data]},d}][[2]]
-]];
-
-refinefourtwo[data_, f_] := Module[{t},
- t = Table[data[[x]]- f[x], {x,1,Length[data]}];
- Function[x,Evaluate[f[x] + fourtwo[t][x]]]
-]
-
-superfourtwo[data_, 0] = 0 &
-superfourtwo[data_, n_] := 
- superfourtwo[data, n] = refinefourtwo[data,superfourtwo[data,n-1]];
-
-superfourtwoleft[data_, n_] := 
- Table[superfourtwo[data,n][x] - data[[x]], {x,1,Length[data]}];
-
-
-
-
-
-
-(* end put into bclib.m *)
-
-Plot[%,{x,1,Length[test]}]
-
-
 cs = Table[c[i],{i,1,12}]
 Integrate[((a+b*Cos[c*x-t])-chebyshev[cs,x])^2,{x,-1,1}]
 
 Ordering[Take[Abs[Fourier[test]],Floor[Length[test]/2]],-1]
+
+N[Integrate[((a+b*Cos[c*t-d])-poly[x,2,0,-3][t])^2,{t,-11,5}]]
+N[Integrate[((a+b*Cos[c*t-d])-poly[x,2,0,13][t])^2,{t,5,21}]]
+
+Timing[Integrate[((a+b*Cos[c*t-d])-poly[x,2,0,-3][t])^2,{t,-11,5}]]
+
+piece[n_] := Integrate[
+ ((a+b*Cos[c*t-d])-poly[x,2,0,16*n][t])^2,
+ {t,16*n-11,16*n+5}]
+
+
 
 
 

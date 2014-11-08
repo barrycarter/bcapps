@@ -229,3 +229,33 @@ Taylor series to behave the way we want) *)
 
 tailortaylor[list_,n_] := Table[CoefficientList[
  taylor[list,(t+2*i-1)/n-1],t],{i,1,n}]
+
+(* Yet another Fourier approximation to a list, this one using
+FindMinimum and usually finds a better fit *)
+
+(* number of periods in a list, roughly *)
+
+numperiods[data_] := Ordering[Abs[Take[Fourier[data], 
+ {2,Round[Length[data]/2+1]}]],-1][[1]];
+
+(* see comments for superfourier, same thing below *)
+
+fourtwo[data_] := 
+ Function[x, Evaluate[a+b*Cos[c*x-d] /.
+ FindMinimum[Sum[((a+b*Cos[c*n-d]) - data[[n]])^2, {n,1,Length[data]}],
+ {{a,Mean[data]},{b,(Max[data]-Min[data])/2},
+ {c,numperiods[data]*2*Pi/Length[data]},d}][[2]]
+]];
+
+refinefourtwo[data_, f_] := Module[{t},
+ t = Table[data[[x]]- f[x], {x,1,Length[data]}];
+ Function[x,Evaluate[f[x] + fourtwo[t][x]]]
+]
+
+superfourtwo[data_, 0] = 0 &
+superfourtwo[data_, n_] := 
+ superfourtwo[data, n] = refinefourtwo[data,superfourtwo[data,n-1]];
+
+superfourtwoleft[data_, n_] := 
+ Table[superfourtwo[data,n][x] - data[[x]], {x,1,Length[data]}];
+
