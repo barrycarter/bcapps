@@ -238,13 +238,16 @@ FindMinimum and usually finds a better fit *)
 numperiods[data_] := Ordering[Abs[Take[Fourier[data], 
  {2,Round[Length[data]/2+1]}]],-1][[1]];
 
-(* see comments for superfourier, same thing below *)
+(* see comments for superfourier, same thing below; options passed
+directly to FindMinimum *)
+
+(* TODO: do not default to method Newton, find a better way to do this *)
 
 fourtwo[data_] := 
  Function[x, Evaluate[a+b*Cos[c*x-d] /.
  FindMinimum[Sum[((a+b*Cos[c*n-d]) - data[[n]])^2, {n,1,Length[data]}],
  {{a,Mean[data]},{b,(Max[data]-Min[data])/2},
- {c,numperiods[data]*2*Pi/Length[data]},d}][[2]]
+ {c,numperiods[data]*2*Pi/Length[data]},d}, Method -> Newton][[2]]
 ]];
 
 refinefourtwo[data_, f_] := Module[{t},

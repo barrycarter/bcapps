@@ -79,13 +79,34 @@ Plot[chebyshev[test1[[13]],t-8], {t,7,9}]
 
 tab0 = Table[poly[x,2,0,t][t], {t,-11,21717,1.6}];
 
-(* fewer obs as first guess?; below totally does not work even a little bit *)
+(* for below: 
 
 tab0 = Table[poly[x,2,0,t][t], {t,-11,21717,8}];
 
-(* below is also crappy *)
+Plot[{poly[x,2,0,t][t]-superfourtwo[tab0,5][(t+19)/8]}, {t,-11,21717}]
+
+NIntegrate[(superfourtwo[tab0,1][t]-poly[x,2,0,t][t])^2,{t,-11,21717}]
+
+diffsq[n_] := diffsq[n] = Total[superfourtwoleft[tab0,n]^2]
+
+ListPlot[Log[Table[diffsq[n],{n,1,20}]]/Log[10]/2, PlotJoined->True]
+
+Plot[{poly[x,2,0,t][t]-superfourtwo[tab0,1][(t+19)/8]}, {t,-11,21717}]
 
 tab0 = Table[poly[x,2,0,t][t], {t,-11,21717,0.8}];
+
+Plot[{poly[x,2,0,t][t]-superfourtwo[tab0,1][(t+11.8)/0.8]}, {t,-11,21717}]
+
+
+FindMinimum[Sum[((a+b*Cos[c*n-d]) - data[[n]])^2, {n,1,Length[data]}],
+{{a,Mean[data]},{b,(Max[data]-Min[data])/2},
+ {c,numperiods[data]*2*Pi/Length[data]},d},
+Method -> Newton
+]
+
+tab0 = Table[poly[x,2,0,t][t], {t,-11,21717,0.8}];
+
+Take[Sort[Abs[Fourier[tab0]]],-50]
 
 tab0 = Table[poly[x,2,0,t][t], {t,0,1000,0.1}];
 
