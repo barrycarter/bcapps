@@ -97,7 +97,6 @@ tab0 = Table[poly[x,2,0,t][t], {t,-11,21717,0.8}];
 
 Plot[{poly[x,2,0,t][t]-superfourtwo[tab0,1][(t+11.8)/0.8]}, {t,-11,21717}]
 
-
 FindMinimum[Sum[((a+b*Cos[c*n-d]) - data[[n]])^2, {n,1,Length[data]}],
 {{a,Mean[data]},{b,(Max[data]-Min[data])/2},
  {c,numperiods[data]*2*Pi/Length[data]},d},
