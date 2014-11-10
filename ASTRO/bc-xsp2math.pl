@@ -25,8 +25,8 @@ open(A,">/tmp/math.m")||die("Can't open, $!");
 # array 12: earth to earth/moon barycenter
 
 for $i (6) {
-#  my($str) = xsp2math("de430", $i, str2time("1970-01-01"), str2time("2030-01-01"));
-  my($str) = xsp2math("sat365", $i, str2time("2014-01-01"), str2time("2015-01-01"));
+  my($str) = xsp2math("de430", $i, str2time("1970-01-01"), str2time("2030-01-01"));
+#  my($str) = xsp2math("sat365", $i, str2time("2014-01-01"), str2time("2015-01-01"));
 
 # for $i (3,4,5,12) {
 #   my($str) = xsp2math("de431_part-2", $i, str2time("2014-01-01"), str2time("2015-01-01"));

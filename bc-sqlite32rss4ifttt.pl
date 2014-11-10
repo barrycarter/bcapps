@@ -39,11 +39,11 @@ for $item (split(/\n\n/, $all)) {
   $item=~s/\n/, /g;
   $item=~s/\s+\=\s+/: /g;
   $item=~s/\s+/ /g;
-  $guid = sha1_hex($item);
+#  $guid = sha1_hex($item);
 print << "MARK";
 <item><title>$title</title><link>http://barrycarter.info</link>
 <description>$item</description>
-<guid>http://$title</guid>
+<guid>http://$globopts{title}</guid>
 </item>
 MARK
 ;
