@@ -1,19 +1,9 @@
 #!/usr/local/bin/Rscript
 
-bubba <- c(3,5,7,9)
+saturn <- read.csv("/tmp/math.txt")
+saturn$xpos <- as.numeric(as.character(saturn$xpos))
 
-bubba[6]
+x <- saturn$day
+y <- saturn$xpos
 
-foo <- read.csv("/home/barrycarter/table.csv")
 
-summary(foo)
-
-# foo[3]
-
-# foo$High
-
-# names(foo)
-
-attributes(foo)
-
-plot(foo)
