@@ -1,0 +1,14 @@
+# IEEE 754 as used by NASA
+
+-EC9B7C77877C08^-1:
+
+EC9B7C77877C08 = mantissa, 14 hex digits (or fewer) = 7 bytes
+
+1 = exponent, single hex digit = 4 bits
+
+sign of exponent: 1 bit
+
+sign of mantissa: 1 bit
+
+
+

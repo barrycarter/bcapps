@@ -5,14 +5,14 @@ require "/usr/local/lib/bclib.pl";
 # attempts to rewrite XSP files in uber-compact format, broken down by
 # center and object, but wo losing any precision
 
-my(%hash);
-my($chunk);
+my(%hash, $chunk, @arr, $count);
 
 # TODO: genericize
 open(A,"$bclib{home}/SPICE/KERNELS/jup310.xsp");
 
 while (<A>) {
-  debug("ALPHA: $_");
+
+  chomp($_);
 
   # ignore pure numbers
   if (/^\d+$/) {next;}
@@ -37,17 +37,32 @@ while (<A>) {
     $hash{nint} = floor(($hash{end_sec}-$hash{start_sec})/$hash{interval}/2);
     # coefficients per interval (-2 because first two entries arent coeffs)
     $hash{cpi} = floor($hash{rsize}/$hash{nint})-2;
+
     # if this is eph_type 3, we ignore the useless vx/vy/vz components
 #    if ($hash{eph_type}==3) {$hash{cpi}=floor($hash{cpi}/2);}
-    debug("HASH",%hash);
-
+#    debug("HASH",%hash);
     next;
   }
 
   # if we haven't seen an array yet, do nothing
   unless ($hash{num}) {next;}
 
-  debug("GOT: $_");
+  push(@arr, $_);
+
+  # if array isn't full yet, keep going
+  if (scalar(@arr) < $hash{cpi}+2) {next;}
+
+  # array is full: first, drop last two values (midtime+interval)
+  pop(@arr); pop(@arr);
+
+  # if $eph_type is 3, we only want the first half of the array (the
+  # rest is vx vy vz which is redundant)
+  if ($hash{eph_type} == 3) {@arr = @arr[0..(scalar(@arr)-1)/2];}
+
+  # now, write to file
+
+  
+  debug("ARRAY",scalar(@arr),@arr);
 
 }
 

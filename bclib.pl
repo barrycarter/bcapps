@@ -4567,6 +4567,10 @@ Options:
 
 mathematica=1: return in Mathematica format (exact), not decimal
 
+binary=1: return as binary string (first 7 bytes are mantissa, 8th
+byte is exponent +32 if mantissa is negative, +64 if exponent is
+negative)
+
 =cut
 
 sub ieee754todec {
@@ -4581,14 +4585,19 @@ sub ieee754todec {
   # if not a properly formatted string, return as is
   # TODO: throw an exception here
   unless ($str=~/^(\-?)([0-9A-F]+)\^(\-?([0-9A-F]+))$/) {return $str;}
+  debug("3: $3");
   my($sgn,$mant,$exp) = ($1,$2,hex($3));
+  debug("EXP: $exp");
   my($pow) = $exp-length($mant);
 
   # for mathematica, return value is easy
   if ($opts{mathematica}) {return qq%${sgn}FromDigits["$mant",16]*16^$pow%;}
 
-  # pad to 14 charaters, split into 2 pieces, hex each piece
+  # pad to 14 characters, split into 2 pieces, hex each piece
   $mant = substr($mant."0"x14,0,14);
+
+  debug("MANT: $mant, EXP: $exp, SGN: $sgn");
+
   $mant=~s/^(.{7})(.{7})$//;
   my($p1,$p2) = ($1,$2);
   my($val) = hex($p1)*16**($exp-7) + hex($p2)*16**($exp-14);
