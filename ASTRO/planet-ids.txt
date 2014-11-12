@@ -1,207 +1,207 @@
 # JPL ids for planets and celestial objects, obtained by "telnet
 # ssd.jpl.nasa.gov 6775" and then "MB" and then edited
 # TODO: add hex values
-0 Solar System Barycenter
-1 Mercury Barycenter
-2 Venus Barycenter
-3 Earth-Moon Barycenter
-4 Mars Barycenter
-5 Jupiter Barycenter
-6 Saturn Barycenter
-7 Uranus Barycenter
-8 Neptune Barycenter
-9 Pluto Barycenter
-10 Sun
-199 Mercury
-299 Venus
-301 Moon
-391 L1
-392 L2
-394 L4
-395 L5
-399 Earth
-401 Phobos
-402 Deimos
-499 Mars
-501 Io
-502 Europa
-503 Ganymede
-504 Callisto
-505 Amalthea
-506 Himalia
-507 Elara
-508 Pasiphae
-509 Sinope
-510 Lysithea
-511 Carme
-512 Ananke
-513 Leda
-514 Thebe
-515 Adrastea
-516 Metis
-517 Callirrhoe
-518 Themisto
-519 Megaclite
-520 Taygete
-521 Chaldene
-522 Harpalyke
-523 Kalyke
-524 Iocaste
-525 Erinome
-526 Isonoe
-527 Praxidike
-528 Autonoe
-529 Thyone
-530 Hermippe
-531 Aitne
-532 Eurydome
-533 Euanthe
-534 Euporie
-535 Orthosie
-536 Sponde
-537 Kale
-538 Pasithee
-539 Hegemone
-540 Mneme
-541 Aoede
-542 Thelxinoe
-543 Arche
-544 Kallichore
-545 Helike
-546 Carpo
-547 Eukelade
-548 Cyllene
-549 Kore
-550 Herse
-55060 2003J2
-55061 2003J3
-55062 2003J4
-55063 2003J5
-55064 2003J9
-55065 2003J10
-55066 2003J12
-55067 2003J15
-55068 2003J16
-55069 2003J18
-55070 2003J19
-55071 2003J23
-55072 2010J1
-55073 2010J2
-55074 2011J1
-55075 2011J2
-55076 2000J11
-599 Jupiter
-601 Mimas
-602 Enceladus
-603 Tethys
-604 Dione
-605 Rhea
-606 Titan
-607 Hyperion
-608 Iapetus
-609 Phoebe
-610 Janus
-611 Epimetheus
-612 Helene
-613 Telesto
-614 Calypso
-615 Atlas
-616 Prometheus
-617 Pandora
-618 Pan
-619 Ymir
-620 Paaliaq
-621 Tarvos
-622 Ijiraq
-623 Suttungr
-624 Kiviuq
-625 Mundilfari
-626 Albiorix
-627 Skathi
-628 Erriapus
-629 Siarnaq
-630 Thrymr
-631 Narvi
-632 Methone
-633 Pallene
-634 Polydeuces
-635 Daphnis
-636 Aegir
-637 Bebhionn
-638 Bergelmir
-639 Bestla
-640 Farbauti
-641 Fenrir
-642 Fornjot
-643 Hati
-644 Hyrrokkin
-645 Kari
-646 Loge
-647 Skoll
-648 Surtur
-649 Anthe
-650 Jarnsaxa
-651 Greip
-652 Tarqeq
-653 Aegaeon
-65035 2004S7
-65040 2004S12
-65041 2004S13
-65045 2004S17
-65048 2006S1
-65050 2006S3
-65055 2007S2
-65056 2007S3
-699 Saturn
-701 Ariel
-702 Umbriel
-703 Titania
-704 Oberon
-705 Miranda
-706 Cordelia
-707 Ophelia
-708 Bianca
-709 Cressida
-710 Desdemona
-711 Juliet
-712 Portia
-713 Rosalind
-714 Belinda
-715 Puck
-716 Caliban
-717 Sycorax
-718 Prospero
-719 Setebos
-720 Stephano
-721 Trinculo
-722 Francisco
-723 Margaret
-724 Ferdinand
-725 Perdita
-726 Mab
-727 Cupid
-799 Uranus
-801 Triton
-802 Nereid
-803 Naiad
-804 Thalassa
-805 Despina
-806 Galatea
-807 Larissa
-808 Proteus
-809 Halimede
-810 Psamathe
-811 Sao
-812 Laomedeia
-813 Neso
-814 2004N1
-899 Neptune
-901 Charon
-902 Nix
-903 Hydra
-904 Kerberos
-905 Styx
-999 Pluto
-1000041 Hartley 2
-2006489 Golevka
-3430291 2008 TC3
+0 0 Solar System Barycenter
+1 1 Mercury Barycenter
+2 2 Venus Barycenter
+3 3 Earth-Moon Barycenter
+4 4 Mars Barycenter
+5 5 Jupiter Barycenter
+6 6 Saturn Barycenter
+7 7 Uranus Barycenter
+8 8 Neptune Barycenter
+9 9 Pluto Barycenter
+A 10 Sun
+C7 199 Mercury
+12B 299 Venus
+12D 301 Moon
+187 391 L1
+188 392 L2
+18A 394 L4
+18B 395 L5
+18F 399 Earth
+191 401 Phobos
+192 402 Deimos
+1F3 499 Mars
+1F5 501 Io
+1F6 502 Europa
+1F7 503 Ganymede
+1F8 504 Callisto
+1F9 505 Amalthea
+1FA 506 Himalia
+1FB 507 Elara
+1FC 508 Pasiphae
+1FD 509 Sinope
+1FE 510 Lysithea
+1FF 511 Carme
+200 512 Ananke
+201 513 Leda
+202 514 Thebe
+203 515 Adrastea
+204 516 Metis
+205 517 Callirrhoe
+206 518 Themisto
+207 519 Megaclite
+208 520 Taygete
+209 521 Chaldene
+20A 522 Harpalyke
+20B 523 Kalyke
+20C 524 Iocaste
+20D 525 Erinome
+20E 526 Isonoe
+20F 527 Praxidike
+210 528 Autonoe
+211 529 Thyone
+212 530 Hermippe
+213 531 Aitne
+214 532 Eurydome
+215 533 Euanthe
+216 534 Euporie
+217 535 Orthosie
+218 536 Sponde
+219 537 Kale
+21A 538 Pasithee
+21B 539 Hegemone
+21C 540 Mneme
+21D 541 Aoede
+21E 542 Thelxinoe
+21F 543 Arche
+220 544 Kallichore
+221 545 Helike
+222 546 Carpo
+223 547 Eukelade
+224 548 Cyllene
+225 549 Kore
+226 550 Herse
+D714 55060 2003J2
+D715 55061 2003J3
+D716 55062 2003J4
+D717 55063 2003J5
+D718 55064 2003J9
+D719 55065 2003J10
+D71A 55066 2003J12
+D71B 55067 2003J15
+D71C 55068 2003J16
+D71D 55069 2003J18
+D71E 55070 2003J19
+D71F 55071 2003J23
+D720 55072 2010J1
+D721 55073 2010J2
+D722 55074 2011J1
+D723 55075 2011J2
+D724 55076 2000J11
+257 599 Jupiter
+259 601 Mimas
+25A 602 Enceladus
+25B 603 Tethys
+25C 604 Dione
+25D 605 Rhea
+25E 606 Titan
+25F 607 Hyperion
+260 608 Iapetus
+261 609 Phoebe
+262 610 Janus
+263 611 Epimetheus
+264 612 Helene
+265 613 Telesto
+266 614 Calypso
+267 615 Atlas
+268 616 Prometheus
+269 617 Pandora
+26A 618 Pan
+26B 619 Ymir
+26C 620 Paaliaq
+26D 621 Tarvos
+26E 622 Ijiraq
+26F 623 Suttungr
+270 624 Kiviuq
+271 625 Mundilfari
+272 626 Albiorix
+273 627 Skathi
+274 628 Erriapus
+275 629 Siarnaq
+276 630 Thrymr
+277 631 Narvi
+278 632 Methone
+279 633 Pallene
+27A 634 Polydeuces
+27B 635 Daphnis
+27C 636 Aegir
+27D 637 Bebhionn
+27E 638 Bergelmir
+27F 639 Bestla
+280 640 Farbauti
+281 641 Fenrir
+282 642 Fornjot
+283 643 Hati
+284 644 Hyrrokkin
+285 645 Kari
+286 646 Loge
+287 647 Skoll
+288 648 Surtur
+289 649 Anthe
+28A 650 Jarnsaxa
+28B 651 Greip
+28C 652 Tarqeq
+28D 653 Aegaeon
+FE0B 65035 2004S7
+FE10 65040 2004S12
+FE11 65041 2004S13
+FE15 65045 2004S17
+FE18 65048 2006S1
+FE1A 65050 2006S3
+FE1F 65055 2007S2
+FE20 65056 2007S3
+2BB 699 Saturn
+2BD 701 Ariel
+2BE 702 Umbriel
+2BF 703 Titania
+2C0 704 Oberon
+2C1 705 Miranda
+2C2 706 Cordelia
+2C3 707 Ophelia
+2C4 708 Bianca
+2C5 709 Cressida
+2C6 710 Desdemona
+2C7 711 Juliet
+2C8 712 Portia
+2C9 713 Rosalind
+2CA 714 Belinda
+2CB 715 Puck
+2CC 716 Caliban
+2CD 717 Sycorax
+2CE 718 Prospero
+2CF 719 Setebos
+2D0 720 Stephano
+2D1 721 Trinculo
+2D2 722 Francisco
+2D3 723 Margaret
+2D4 724 Ferdinand
+2D5 725 Perdita
+2D6 726 Mab
+2D7 727 Cupid
+31F 799 Uranus
+321 801 Triton
+322 802 Nereid
+323 803 Naiad
+324 804 Thalassa
+325 805 Despina
+326 806 Galatea
+327 807 Larissa
+328 808 Proteus
+329 809 Halimede
+32A 810 Psamathe
+32B 811 Sao
+32C 812 Laomedeia
+32D 813 Neso
+32E 814 2004N1
+383 899 Neptune
+385 901 Charon
+386 902 Nix
+387 903 Hydra
+388 904 Kerberos
+389 905 Styx
+3E7 999 Pluto
+F4269 1000041 Hartley 2
+1E9DD9 2006489 Golevka
+345793 3430291 2008 TC3

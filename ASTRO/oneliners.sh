@@ -1,9 +1,16 @@
 #!/bin/sh
 
+# add decimal data to some-array-data.txt (am I really including my
+# lib for each line below? weird, but it seems to work)
+
+perl -nle 'require "/usr/local/lib/bclib.pl"; if (/\47([\-0-9A-F\^]*?)\47/) {print "$_ (",ieee754todec($1),")"} else {print $_;}' some-array-data.txt
+
+
+exit;
+
 # add hex values to planet-ids.txt (upcase to match NASA)
 
 perl -anle '$str=uc(unpack("H8", pack("N", $F[0]))); $str=~s/^0+//; print "$str $_"' planet-ids.txt
-
 
 exit;
 

@@ -269,6 +269,7 @@ sub spk_array_info {
   for (1..3) {$hash{boundary} = scalar(<$fh>);}
 
   # from formulas in spk.html, but we want #coeffs, not degree, so don't -1
+  # eph_type determines if we have x y z or also vx vy vz
   if ($hash{eph_type} == 2) {
     $hash{ncoeffs} = ($hash{rsize}-2)/3;
   } elsif ($hash{eph_type} == 3) {
