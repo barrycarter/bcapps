@@ -79,6 +79,31 @@ Plot[chebyshev[test1[[13]],t-8], {t,7,9}]
 
 tab0 = Table[poly[x,2,0,t][t], {t,-11,21717,1.6}];
 
+tab0 = Table[poly[x,6,0,t][t], {t,5,21717,1.6}];
+ListPlot[tab0]
+
+tab1 = tab0-Mean[tab0];
+ListPlot[tab1]
+
+tab2 = tab1/Max[Abs[tab1]];
+ListPlot[tab2]
+
+tab6 = Table[Sin[Pi*(868-i)/(10093/3)],{i,1,Length[tab2]}]-tab2;
+
+tab3 = ArcSin[tab2];
+ListPlot[tab3]
+
+tab4 = difference[tab3];
+ListPlot[tab4]
+
+tab5 = difference[tab4];
+ListPlot[tab5]
+
+
+
+
+
+
 (* for below: 
 
 tab0 = Table[poly[x,2,0,t][t], {t,-11,21717,8}];

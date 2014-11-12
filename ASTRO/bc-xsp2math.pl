@@ -179,6 +179,12 @@ sub read_coeffs {
   # TODO: do this better, keep track of which target/center combos I have
   push(@ret, "pairs[$target][$center] = 1;");
 
+  # TODO: make this initialization less kludgey
+  # the array of polynomials
+  push(@ret, "parray[x,$target,$center] = {};");
+  push(@ret, "parray[y,$target,$center] = {};");
+  push(@ret, "parray[z,$target,$center] = {};");
+
   # make everything a function, including the condition
 
   # range and conversion depends only on interval, i, and time
@@ -205,8 +211,12 @@ sub read_coeffs {
       my($cheb) = join("+\n", @cheb);
       my($cheb2) = join("+\n", @cheb2);
 
+      # an array of polynomials
+      push(@ret, "AppendTo[parray[$j,$target,$center], $cheb];");
+
+#      push(@pw, "{Function[w,$cheb], range[$int][$i][t]}");
+
       # NOTE: do not move "/;" to the next line, it breaks stuff
-      push(@pw, "{Function[w,$cheb], range[$int][$i][t]}");
       push(@ret, "poly[$j,$target,$center,t_] := Function[w, $cheb] /;
       range[$int][$i][t];");
 
