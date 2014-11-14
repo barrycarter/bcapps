@@ -60,6 +60,7 @@ while (<A>) {
   if ($hash{eph_type} == 3) {@arr = @arr[0..(scalar(@arr)-1)/2];}
 
   # now, write to file
+  @arr = map($_=ieee754todec($_,"binary=1"));
 
   
   debug("ARRAY",scalar(@arr),@arr);

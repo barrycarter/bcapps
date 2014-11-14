@@ -4568,7 +4568,7 @@ Options:
 mathematica=1: return in Mathematica format (exact), not decimal
 
 binary=1: return as binary string (first 7 bytes are mantissa, 8th
-byte is exponent +32 if mantissa is negative, +64 if exponent is
+byte is exponent +16 if exponent is negative, +32 if mantissa is
 negative)
 
 =cut
@@ -4584,24 +4584,33 @@ sub ieee754todec {
 
   # if not a properly formatted string, return as is
   # TODO: throw an exception here
-  unless ($str=~/^(\-?)([0-9A-F]+)\^(\-?([0-9A-F]+))$/) {return $str;}
-  debug("3: $3");
-  my($sgn,$mant,$exp) = ($1,$2,hex($3));
-  debug("EXP: $exp");
-  my($pow) = $exp-length($mant);
+  unless ($str=~/^(\-?)([0-9A-F]+)\^(\-?)([0-9A-F]+)$/) {return $str;}
+  my($sgn,$mant,$expsign,$exp) = ("${1}1",$2,"${3}1",$4);
+  my($pow) = $expsign*hex($exp)-length($mant);
+  debug("EXP: $exp, POW: $pow");
 
   # for mathematica, return value is easy
-  if ($opts{mathematica}) {return qq%${sgn}FromDigits["$mant",16]*16^$pow%;}
+  if ($opts{mathematica}) {return qq%${sgn}*FromDigits["$mant",16]*16^$pow%;}
 
-  # pad to 14 characters, split into 2 pieces, hex each piece
+  # pad to 14 characters
   $mant = substr($mant."0"x14,0,14);
 
-  debug("MANT: $mant, EXP: $exp, SGN: $sgn");
+  # if binary, convert now
+  if ($opts{binary}) {
+    # mantissa to binary
+    $mant=~s/(..)/chr(hex($1))/eg;
+    # exponent to binary (adding signs as needed)
+    $mant .= chr(hex($exp) + abs($expsign)*16 + abs($sgn)*32);
+    return $mant;
+  }
 
+  # at this point, we can convert exp to its full decimal value
+  $exp = $expsign*hex($exp);
+
+  # split into 2 pieces, hex each piece
   $mant=~s/^(.{7})(.{7})$//;
   my($p1,$p2) = ($1,$2);
-  my($val) = hex($p1)*16**($exp-7) + hex($p2)*16**($exp-14);
-  if ($sgn eq "-") {$val*=-1;}
+  my($val) = $sgn*(hex($p1)*16**($exp-7) + hex($p2)*16**($exp-14));
   return $val;
 }
 

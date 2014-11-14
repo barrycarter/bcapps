@@ -1,5 +1,11 @@
 # shell one liners
 
+# un7z all stackexchange stuff
+
+\ls *.7z | perl -nle 's/\.7z//; print "7z x -o$_ $_.7z"' | tee /tmp/un7z.sh
+
+exit; 
+
 # open all urls in se-sites.txt in browser, one tab per site
 egrep -v '^#' /home/barrycarter/se-sites.txt | xargs -n 1 -i /root/build/firefox/firefox -remote 'openURL({})'
 

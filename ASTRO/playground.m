@@ -34,11 +34,136 @@ raDec2AzEl[ra_,dec_,lat_,lon_,d_] =
 
 (* Canon ends here *)
 
+(* sine wave per chunk? *)
+
+temp1[t_] = 
+a+b*Cos[c*t-d] /. (
+Solve[Table[
+a+b*Cos[c*t-d] == parray[x,6,0][[4]] /. w -> t,
+{t,-1,1,2/3}
+], {a,b,c,d}][[1]] /. {C[1] -> 0, C[2] -> 0}
+)
+
+temp2[n_] := temp2[n] = {a,b,c,d} /.
+NSolve[Table[
+a+b*Cos[c*t-d] == parray[x,6,0][[n]] /. w -> t,
+{t,-1,1,2/3}
+], {a,b,c,d}, Reals]
+
+temp2[n_] := temp2[n] = {a,b,c,d} /.
+N[FindInstance[Table[
+a+b*Cos[c*t-d] == parray[x,6,0][[n]] /. w -> t,
+{t,-1,1,2/3}], {a,b,c,d}],25][[1]]
+
+NSolve[Table[
+a+b*Cos[c*t-d] == parray[x,6,0][[1]] /. w -> t,
+{t,-1,1,2/3}
+], {a,b,c,d}, Reals]
+
+temp3 = Table[temp2[n],{n,1,25}]
+
+Plot[{(a+b*Cos[c*t-d]) /. temp2[1], parray[x,6,0][[1]] /. w ->t},
+{t,-1,1}]
+
+(* using callisto, which is a little more windy *)
+
+Plot[parray[x,504,5][[1]] /. w -> t, {t,-1,1}]
+
+temp2[n_] := temp2[n] =
+N[FindInstance[Flatten[{Table[
+a+b*Cos[c*t-d] == parray[x,504,5][[n]] /. w -> t,
+{t,-1,1,2/3}], Abs[c]<1}], {a,b,c,d}],25][[1]]
+
+temp3 = Table[temp2[n],{n,1,25}]
+
+ListPlot[Transpose[temp3][[1]], PlotRange->All, PlotJoined->True]
+
+Plot[{(a+b*Cos[c*t-d]) /. temp2[1], parray[x,504,5][[1]] /. w ->t},
+{t,-1,1}]
+
+
+Plot[{temp1[t]-parray[x,6,0][[4]] /. w -> t}, {t,-1,1}]
+
+
+
+FindInstance[Table[
+a+b*Cos[c*t-d] == parray[x,6,0][[1]] /. w -> t,
+{t,-1,1,2/3}
+], {a,b,c,d}]
+
+
+temp4[n_] := temp4[n] =
+N[FindInstance[{
+b*Cos[-c-d] == parray[x,504,5][[n]] /. w -> -1,
+b*Cos[-d] == parray[x,504,5][[n]] /. w -> 0,
+b*Cos[c-d] == parray[x,504,5][[n]] /. w -> +1,
+Abs[c]<1
+}, {b,c,d}]]
+
+Plot[{(b*Cos[c*t-d] /. temp4[1]) - (parray[x,504,5][[1]] /. w ->t)}, {t,-1,1}]
+Plot[{(b*Cos[c*t-d] /. temp4[4]) , (parray[x,504,5][[4]] /. w ->t)}, {t,-1,1}]
+Plot[{(b*Cos[c*t-d] /. temp4[1]) - (parray[x,504,5][[1]] /. w ->t)}, {t,-1,1}]
+Plot[{(b*Cos[c*t-d] /. temp4[1]) - (parray[x,504,5][[1]] /. w ->t)}, {t,-1,1}]
+
+
+plttab = Table[
+Plot[{(b*Cos[c*t-d] /. temp4[n]) , (parray[x,504,5][[n]] /. w ->t)}, {t,-1,1}],
+{n,1,20}]
+
+plttab2 = Table[
+Plot[{(b*Cos[c*t-d] /. temp4[n]) - (parray[x,504,5][[n]] /. w ->t)}, {t,-1,1}],
+{n,1,20}]
+
+temp5 = Table[temp4[n],{n,1,20}]
+
+Table[
+{t,{-1,0,1}}], {b,c,d}]]
+
+Plot[{b*Cos[c*t-d] /. temp4[1], parray[x,504,5][[1]] /. w ->t}, {t,-1,1}]
+
+N[FindInstance[Flatten[{Table[
+a+b*Cos[c*t-d] == parray[x,504,5][[n]] /. w -> t,
+{t,-1,1,2/3}], Abs[c]<1}], {a,b,c,d}],25][[1]]
+
+
+
+
+
+
+
+
+
+temp1[t_] =
+a+b*Cos[c*t-d] /.
+(Solve[{
+a+b*Cos[c*-1-d] == parray[x,6,0][-1],
+a+b*Cos[c*-1/2-d] == poly[x,6,0,5][-1/2],
+a+b*Cos[c*1/2-d] == poly[x,6,0,5][1/2],
+a+b*Cos[c*1-d] == poly[x,6,0,5][1]
+},{a,b,c,d}] /. {C[1] -> 0, C[2] ->0})[[1]]
+
+
+
+
+
+
+Solve[{
+a+b*Cos[c*-1/2]-d == poly[x,6,0,5][-1],
+a+b*Cos[c*1/2]-d == poly[x,6,0,5][1]
+},{a,b,c,d}]
+
+
+
+
 (* closed form for integrating difference of symbolic arbitrary cosine
 function with Chebyshev m-th polynomial with coefficient k (n
 represents shift) *)
 
 cs = Table[c[i],{i,0,10}]
+
+temp2[n_] := Integrate[(a+b*Cos[c*t-d]-ChebyshevT[n,t])^2,{t,-1,1}]
+
+temp3[n_] := Integrate[Cos[c*t]*ChebyshevT[n,t],{t,-1,1}]
 
 temp1[m_] := temp1[m] = Integrate[
  (a+b*Cos[c*(t+2*n)-d]-k*ChebyshevT[m,t])^2, {t,-1,1}]
@@ -78,6 +203,256 @@ Plot[chebyshev[test1[[13]],t-8], {t,7,9}]
 (* Venus range is 16 days with 10 coeffs, so 1.6 day sample [minimal] starting at -11 ending at 21717 *)
 
 tab0 = Table[poly[x,2,0,t][t], {t,-11,21717,1.6}];
+
+Max[Abs[Fourier[tab0]]]
+
+Max[Abs[Fourier[Take[tab0],Length[tab0]-1]]]
+
+tab1 = Fourier[tab0];
+
+tab2 = Take[Abs[tab1], Floor[Length[tab1]/2]];
+
+Take[Reverse[Ordering[tab2]],5]
+
+Plot[Cos[99*2*Pi*t/Length[tab0]],{t,0,217*5}]
+
+temp = Table[Max[Abs[Fourier[Take[tab0,n]]]], {n,1,Length[tab0]}]
+
+(* 13482 is highest of the high *)
+
+temp2 = Fourier[Take[tab0,13482]];
+
+(* 97th coeff is best *)
+
+Plot[Cos[96/Length[temp2]*2*Pi*t - Arg[temp2[[97]]]], {t,1,140}]
+
+Table[Abs[temp2[[97]]]*Cos[96/Length[temp2]*2*Pi*t - Arg[temp2[[97]]]], 
+{t,1,140}]
+
+(* Use "snipping" to find best fit Fourier function *)
+
+snipfourier[l_] := snipfourier[l] = Module[{t,n,f,m},
+
+ (* table of all Fourier coefficients, pairwise from middle *)
+
+ t = Table[
+ Max[Abs[Fourier[Take[l,{1+Floor[Length[l]/2]-n, 1+Floor[Length[l]/2]+n}]]]],
+ {n,1, Floor[Length[l]/2-1/2]}];
+
+ (* Find which value of n resulted in highest coefficient *)
+
+ n = Ordering[t][[-1]];
+
+ (* recreate that Fourier transform (inefficient, but saves memory) *)
+
+ (* TODO: is normalizing here but not above invalid? *)
+
+ f = Fourier[Take[l,{1+Floor[Length[l]/2]-n, 1+Floor[Length[l]/2]+n}],
+    FourierParameters -> {-1,1}];
+
+ (* find where the max coefficient is (in first half) *)
+
+ m = Ordering[Abs[Take[f,Floor[Length[f]/2]]]][[-1]];
+
+ {n,m,f[[m]], Length[l]}
+
+(*
+ Function[w,
+Evaluate[2*Abs[f[[m]]]*Cos[2*Pi*w/((2*n+1)/(m-1)) - Arg[f[[m]]]]]]
+*)
+
+]
+
+snipfourier2[l_] := snipfourier2[l] = Module[{t,n,f,m},
+
+ (* table of all Fourier coefficients from start (= bad choice?) *)
+
+ t = Table[Max[Abs[Fourier[Take[l,n]]]], {n,1,Length[l]}];
+
+ (* Find which value of n resulted in highest coefficient *)
+
+ n = Ordering[t][[-1]];
+
+ (* recreate that Fourier transform (inefficient, but saves memory) *)
+
+ (* TODO: is normalizing here but not above invalid? *)
+
+ f = Fourier[Take[l,n], FourierParameters -> {-1,1}];
+
+ (* find where the max coefficient is (in first half) *)
+
+ m = Ordering[Abs[Take[f,Floor[Length[f]/2]]]][[-1]];
+
+ {n,m,f[[m]], Length[l]};
+
+ Function[w,
+ Evaluate[2*Abs[f[[m]]]*Cos[2*Pi*w/(n/(m-1)) - Arg[f[[m]]]]]]
+]
+
+
+data = Table[N[919*Sin[x/623-125]], {x,1,25000,1}]; 
+
+snipfourier2[data]
+
+tab0 = Table[%[w],{w,1,25000}]
+
+ListPlot[{tab0,data}]
+
+
+data = data-Mean[data]
+
+(* 
+
+{n,m,f[[m]], Length[l]} = {11832, 7, 437.76 - 139.153 I, 25000} 
+
+best fit was at 2*11832+1 = 23665
+
+found 7-1 periods there
+
+2*Pi/(23665/6) = approx 1/623 (actually 1/627.734)
+
+multiplier is 459.345*2 = 918.689
+
+phase shift is = -0.307774
+
+
+
+
+*)
+
+ListPlot[data]
+
+snipfourier[data]
+
+guess1 = Table[snipfourier[data][t],{t,1,Length[data]}];
+
+ListPlot[{data,guess1}]
+
+guess1 = Table[snipfourier[tab0][t],{t,1,Length[tab0]}];
+
+ListPlot[{tab0,guess1}]
+
+guess2 = Table[snipfourier[tab0-guess1][t],{t,1,Length[tab0]}];
+
+ListPlot[{tab0-guess1-guess2}]
+
+guess3 = Table[snipfourier[tab0-guess1-guess2][t],{t,1,Length[tab0]}];
+
+ListPlot[{tab0-guess1-guess2-guess3}]
+
+
+(* 0.751161 + 1.29836 I in 13th pos means: *)
+
+test2 = Table[2*1.5*Cos[2*Pi*t/(Length[test]/12)-1.0463], {t,1,Length[test]}];
+
+tab1 = Reverse[Sort[Abs[Fourier[tab0]]]];
+
+ListPlot[Log[tab1],PlotJoined->True,PlotRange->All]
+
+tab0 = Table[poly[x,2,0,t][t], {t,-11,21717,22}];
+
+tab0 = Table[poly[x,2,0,t][t], {t,0,719,24}];
+
+sum[t_] = Sum[b[i]*Cos[c[i]*t-d[i]], {i,1,10}]
+
+vars = Flatten[Table[{b[i],c[i],d[i]}, {i,1,10}]]
+
+eqs = Table[sum[t] == poly[x,2,0,t][t], {t,0,719,24}]
+
+FindInstance[eqs,vars]
+
+(* piecemeal? *)
+
+f1[t_] = b*Cos[c*t-d] /.
+NSolve[
+Table[b*Cos[c*t-d] == poly[x,2,0,t][t], {t,{0,24,48}}],
+{b,c,d}][[1]] /. {C[1] -> 0, C[2] -> 0}
+
+f2[t_] = b*Cos[c*t-d] /.
+NSolve[
+Table[b*Cos[c*t-d] == poly[x,2,0,t][t], {t,{48,72,96}}],
+{b,c,d}][[1]] /. {C[1] -> 0, C[2] -> 0}
+
+Plot[{f1[t],f2[t],poly[x,2,0,t][t]},{t,0,96}]
+
+Plot[{f1[t]-poly[x,2,0,t][t]},{t,0,48}]
+Plot[{f2[t]-poly[x,2,0,t][t]},{t,48,96}]
+
+f2[t_] = b*Cos[c*t-d] /.
+NSolve[
+Table[f1[t]+b*Cos[c*t-d] == poly[x,2,0,t][t], {t,{72,96,120}}],
+{b,c,d}, Reals][[1]] /. {C[1] -> 0, C[2] -> 0}
+
+eq[t_] = b*Cos[c*t-d]
+
+Solve[{eq[x1]==y1, eq[x2]==y2, eq[x3]==y3}, {b,c,d}, Reals]
+
+Reduce[{eq[x1]==y1, eq[x2]==y2, eq[x3]==y3}, {b,c,d}]
+
+(*** BELOW WORKS!!! ***)
+
+sols = Solve[Table[b*Cos[c*t-d] == y[t], {t,{1,2,3}}],{b,c,d}]                
+
+sols2 = Solve[Table[b*Cos[c*t-d] == y[t-3], {t,{4,5,6}}],{b,c,d}]
+
+sols = Solve[Table[b*Cos[c*t-d] == y[t], {t,{x[1],2,3}}],{b,c,d}]
+
+sols = Solve[Table[b*Cos[c*x[t]-d] == y[t], {t,{1,2,3}}],{b,c,d}]
+
+sols = Reduce[Table[b*Cos[c*t-d] == y[t], {t,{x[1],x[2],x[3]}}],{b,c,d}]
+
+
+b /. sols[[1]]
+b /. sols2[[1]]
+
+sols = Solve[Table[b*Cos[c*x[t]-d] == y[t], {t,{1,2}}],{b,c,d}]
+
+sols = Solve[Table[b*Cos[c*x[t]-d] == y[t], {t,1}],{b,c,d}]
+
+Table[b*Cos[c*x[t]-d] == y[t], {t,2,3}] /. b -> y[1]/Cos[d-c*x[1]]
+
+sol = Solve[%,{c,d}]
+
+t = Table[b*Cos[c*x[t]-d] == y[t], {t,{1,2,3}}]
+
+Solve[Table[b*Cos[c*t-d] == y[t], {t,{x[1],2,3}}],{b,c,d}]                
+
+t = Table[b*Cos[c*x[t]-d] == y[t], {t,{1,2,3}}]
+
+sols = Reduce[t,b]
+
+(* General solutions that work except in special cases *)
+
+b == Sec[d - c x[1]] y[1]
+
+t = Table[b*Cos[c*x[t]-d] == y[t], {t,{1,2,3}}] /. b -> Sec[d - c x[1]] y[1]
+
+sols = Solve[t,{c,d}]
+
+b*Cos[c*t-d] /. {b -> Sec[d - c x[1]] y[1], d -> %[[1]]}
+
+rands = Table[Rationalize[Random[],.0001], {n,1,6}]
+
+Solve[{
+ b*Cos[c*rands[[1]]-d] == rands[[2]],
+ b*Cos[c*rands[[3]]-d] == rands[[4]],
+ b*Cos[c*rands[[5]]-d] == rands[[6]]
+}, {b,c,d}]
+
+eqs = Flatten[{Table[eq[t] == poly[x,2,0,t][t], {t,{0,24,48}}], Abs[c]<1/4}]
+
+f1[t_] = eq[t] /. FindInstance[eqs,{b,c,d}][[1]]
+
+Plot[{f1[t]-poly[x,2,0,t][t]},{t,0,48}]
+
+eqs = Flatten[{Table[eq[t]+f1[t] == poly[x,2,0,t][t], 
+ {t,{72,96,120}}], Abs[c]<1/4}]
+
+f2[t_] = N[eq[t]+f1[t] /. FindInstance[eqs,{b,c,d}, Reals][[1]],20]
+
+Plot[{f1[t]+f2[t]-poly[x,2,0,t][t]},{t,0,72*5}]
+
+
 
 tab0 = Table[poly[x,6,0,t][t], {t,5,21717,1.6}];
 ListPlot[tab0]
