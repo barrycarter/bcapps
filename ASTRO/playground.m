@@ -233,38 +233,6 @@ Table[Abs[temp2[[97]]]*Cos[96/Length[temp2]*2*Pi*t - Arg[temp2[[97]]]],
 
 snipfourier[l_] := snipfourier[l] = Module[{t,n,f,m},
 
- (* table of all Fourier coefficients, pairwise from middle *)
-
- t = Table[
- Max[Abs[Fourier[Take[l,{1+Floor[Length[l]/2]-n, 1+Floor[Length[l]/2]+n}]]]],
- {n,1, Floor[Length[l]/2-1/2]}];
-
- (* Find which value of n resulted in highest coefficient *)
-
- n = Ordering[t][[-1]];
-
- (* recreate that Fourier transform (inefficient, but saves memory) *)
-
- (* TODO: is normalizing here but not above invalid? *)
-
- f = Fourier[Take[l,{1+Floor[Length[l]/2]-n, 1+Floor[Length[l]/2]+n}],
-    FourierParameters -> {-1,1}];
-
- (* find where the max coefficient is (in first half) *)
-
- m = Ordering[Abs[Take[f,Floor[Length[f]/2]]]][[-1]];
-
- {n,m,f[[m]], Length[l]}
-
-(*
- Function[w,
-Evaluate[2*Abs[f[[m]]]*Cos[2*Pi*w/((2*n+1)/(m-1)) - Arg[f[[m]]]]]]
-*)
-
-]
-
-snipfourier2[l_] := snipfourier2[l] = Module[{t,n,f,m},
-
  (* table of all Fourier coefficients from start (= bad choice?) *)
 
  t = Table[Max[Abs[Fourier[Take[l,n]]]], {n,1,Length[l]}];
@@ -288,6 +256,40 @@ snipfourier2[l_] := snipfourier2[l] = Module[{t,n,f,m},
  Function[w,
  Evaluate[2*Abs[f[[m]]]*Cos[2*Pi*w/(n/(m-1)) - Arg[f[[m]]]]]]
 ]
+
+tab0 = Table[poly[x,2,0,t][t], {t,-11,21717,1.6}];
+
+tab0 = tab0-Mean[tab0];
+
+guess1 = Table[snipfourier[tab0][w],{w,1,Length[tab0]}];
+resid1 = tab0-guess1;
+ListPlot[resid1]
+
+guess2 = Table[snipfourier[resid1][w],{w,1,Length[tab0]}];
+resid2 = resid1-guess2;
+ListPlot[resid2]
+
+guess3 = Table[snipfourier[resid2][w],{w,1,Length[tab0]}];
+resid3 = resid2-guess3;
+ListPlot[resid3]
+
+guess4 = Table[snipfourier[resid3][w],{w,1,Length[tab0]}];
+resid4 = resid3-guess4;
+ListPlot[resid4]
+
+ListPlot[{tab0-tab1},PlotJoined->True]
+
+snipfourier[tab0-tab1]
+
+tab2 = Table[snipfourier[tab0-tab1][w],{w,1,Length[tab0]}];
+
+ListPlot[{tab0-tab1-tab2},PlotJoined->True]
+
+snipfourier[tab0-tab1-tab2-Mean[tab0-tab1-tab2]]
+
+tab3 = Table[%[w],{w,1,Length[tab0]}];
+
+
 
 
 data = Table[N[919*Sin[x/623-125]], {x,1,25000,1}]; 
@@ -577,6 +579,8 @@ tab = Table[eval[x,2,0,t],{t,10,10+365*10,.1}];
 
 f[x_] := x /; x<0
 f[x_] := x^2 /; x>=0
+
+FindRoot[pos[x,504,5][t]==0,{t,16373.5}]
 
 Integrate[f[x],{x,-1,1}]
 

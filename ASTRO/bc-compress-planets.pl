@@ -20,14 +20,22 @@ while (<A>) {
   # if beginning of array, do special things
   if (/BEGIN_ARRAY\s+(\d+)\s+(\d+)$/) {
 
+    # close existing file (if any)
+    close(B);
+
     # array number and size
     ($hash{num}, $hash{rsize}) = ($1,$2);
 
     # other data on this array (start_sec is intentionally overwritten below)
     for $i ("name", "start_sec", "end_sec", "target", "center", "ref_frame",
 	    "eph_type", "start_sec", "interval") {
+
       # have to ignore pure numbers here too, ugly
       do {$chunk=scalar(<A>)} until ($chunk!~/^\d+$/);
+      chomp($chunk);
+
+      # we need these in pure form too
+      $hash{"pure_$i"} = $chunk;
       $hash{$i} = ieee754todec($chunk);
     }
 
@@ -38,9 +46,15 @@ while (<A>) {
     # coefficients per interval (-2 because first two entries arent coeffs)
     $hash{cpi} = floor($hash{rsize}/$hash{nint})-2;
 
-    # if this is eph_type 3, we ignore the useless vx/vy/vz components
-#    if ($hash{eph_type}==3) {$hash{cpi}=floor($hash{cpi}/2);}
-#    debug("HASH",%hash);
+    # open next file and write start date and interval
+    open(B,">/home/barrycarter/SPICE/KERNELS/test-$hash{target}-$hash{center}.bsp");
+    for $j ("pure_start_sec", "pure_interval") {
+      print B ieee754todec($hash{$j}, "binary=1")
+    }
+
+    # TODO: assuming cpi <= 255 is bad
+    print B chr($hash{cpi});
+
     next;
   }
 
@@ -60,16 +74,16 @@ while (<A>) {
   if ($hash{eph_type} == 3) {@arr = @arr[0..(scalar(@arr)-1)/2];}
 
   # now, write to file
-  @arr = map($_=ieee754todec($_,"binary=1"));
+  @arr = map($_=ieee754todec($_,"binary=1"), @arr);
 
-  
-  debug("ARRAY",scalar(@arr),@arr);
+  print B join("",@arr);
+
+  # and reset @arr
+  @arr = ();
 
 }
 
-
-debug(%hash);
-
+close(B);
 
 die "TESTING";
 

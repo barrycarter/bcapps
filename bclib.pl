@@ -4587,7 +4587,6 @@ sub ieee754todec {
   unless ($str=~/^(\-?)([0-9A-F]+)\^(\-?)([0-9A-F]+)$/) {return $str;}
   my($sgn,$mant,$expsign,$exp) = ("${1}1",$2,"${3}1",$4);
   my($pow) = $expsign*hex($exp)-length($mant);
-  debug("EXP: $exp, POW: $pow");
 
   # for mathematica, return value is easy
   if ($opts{mathematica}) {return qq%${sgn}*FromDigits["$mant",16]*16^$pow%;}

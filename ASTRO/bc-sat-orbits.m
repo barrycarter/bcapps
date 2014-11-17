@@ -19,6 +19,16 @@ triton = coeffs;
 neptune = Drop[neptune,-1];
 triton = Drop[triton,-1];
 
+(* Just Triton for space reasons *)
+
+tritonPart = Transpose[Partition[triton,16*3]];
+
+maxs = Table[Max[Abs[tritonPart[[i]]]], {i,1,Length[tritonPart]}];
+
+
+
+
+
 (*
 
 First 16 for Triton (at t=1) is x coord of:
@@ -34,22 +44,8 @@ tritonPart = Partition[triton,16];
 
 test0 = Transpose[tritonPart-neptunePart];
 
-
-
 diff = Round[32768*Transpose[tritonPart-neptunePart]];
 
 maxs = Ceiling[Log[Table[Max[Abs[i]]*2+1, {i,diff}]]/Log[2]]
 
-
-
-
-
-
-
-
 (* the two above are of identical size, but need to fix sublist length *)
-
-
-
-
-

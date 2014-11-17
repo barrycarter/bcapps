@@ -24,15 +24,15 @@ open(A,">/tmp/math.m")||die("Can't open, $!");
 # array 11: moon to earth/moon barycenter
 # array 12: earth to earth/moon barycenter
 
-for $i (2) {
-  my($str) = xsp2math("jup310", $i, str2time("2014-01-01"), str2time("2016-01-01"));
-my($str) = xsp2math("de430", $i, str2time("1970-01-01"), str2time("2030-01-01"));
+# for $i (2) {
+my($str) = xsp2math("jup310", 4, str2time("2014-01-01"), str2time("2016-01-01"));
+# my($str) = xsp2math("de430", $i, str2time("1970-01-01"), str2time("2030-01-01"));
 #  my($str) = xsp2math("sat365", $i, str2time("2014-01-01"), str2time("2015-01-01"));
 
 # for $i (3,4,5,12) {
 #   my($str) = xsp2math("de431_part-2", $i, str2time("2014-01-01"), str2time("2015-01-01"));
   print A $str;
-}
+# }
 
 close(A);
 
@@ -143,7 +143,7 @@ sub nasa_sec {
 sub read_coeffs {
   my($fh, $stime, $etime, $hashref) = @_;
   # @pw = piecewise
-  my(@ret,@pw);
+  my(@ret,@pw,@convs,@ranges,@piecewise);
 
   # interval is the delimiter in decimal form
   my($int) = ieee754todec($hashref->{boundary});
@@ -177,23 +177,24 @@ sub read_coeffs {
 
   # convenience variables
   my($target, $center) = ($hashref->{target}, $hashref->{center});
+
+  # breaking this up into multiple arrays for convenience
+
   # TODO: do this better, keep track of which target/center combos I have
-  push(@ret, "pairs[$target][$center] = 1;");
+  push(@ret, "pairs[$target][$center] = 1");
+
+  # the ranges and conversions
+  push(@ret, "range[int_][i_][t_] = (t >= 21915/2 + (i-int)/86400 &&
+  t<= 21915/2 + (i+int)/86400)");
+  push(@ret, "conv[int_][i_][t_] = 86400*(t-(i+946728000)/86400)/int");
+
 
   # TODO: make this initialization less kludgey
-  # the array of polynomials
-  push(@ret, "parray[x,$target,$center] = {};");
-  push(@ret, "parray[y,$target,$center] = {};");
-  push(@ret, "parray[z,$target,$center] = {};");
+  # the array of piecewise
 
-  # make everything a function, including the condition
-
-  # range and conversion depends only on interval, i, and time
-  # TODO: probably only need this once globally?
-
-  push(@ret, "range[int_][i_][t_] = (t >= 21915/2 + (i-int)/86400 &&
-  t<= 21915/2 + (i+int)/86400);", "conv[int_][i_][t_] =
-  86400*(t-(i+946728000)/86400)/int;");
+  for $j ("x","y","z") {
+    push(@ret, "parray[$j,$target,$center] = {}");
+  }
 
   # now, handle coefficients for each time period
   for $i (sort {$a <=> $b} keys %hash) {
@@ -205,33 +206,46 @@ sub read_coeffs {
 	# the current coefficient
 	my($coeff) = ieee754todec(shift(@{$hash{$i}}), "mathematica=1");
       # TODO: keep raw polys around too, not just converted ones
-	push(@cheb2, "$coeff*ChebyshevT[$k, w]");
+#	push(@cheb2, "$coeff*ChebyshevT[$k, w]");
 	push(@cheb, "$coeff*ChebyshevT[$k, conv[$int][$i][w]]");
       }
 
       my($cheb) = join("+\n", @cheb);
-      my($cheb2) = join("+\n", @cheb2);
+#      my($cheb2) = join("+\n", @cheb2);
+
+      push(@ret, "AppendTo[parray[$j,$target,$center], 
+                  {$cheb, range[$int][$i][w]}]");
 
       # an array of polynomials
-      push(@ret, "AppendTo[parray[$j,$target,$center], $cheb2];");
+#      push(@ret, "AppendTo[parray[$j,$target,$center], $cheb2];");
 
 #      push(@pw, "{Function[w,$cheb], range[$int][$i][t]}");
 
       # NOTE: do not move "/;" to the next line, it breaks stuff
-      push(@ret, "poly[$j,$target,$center,t_] := Function[w, $cheb] /;
-      range[$int][$i][t];");
+#      push(@ret, "poly[$j,$target,$center,t_] := Function[w, $cheb] /;
+#      range[$int][$i][t];");
 
-      push(@ret, "eval[$j,$target,$center,w_] := $cheb /;
-      range[$int][$i][w];");
+#      push(@ret, "eval[$j,$target,$center,w_] := $cheb /;
+#      range[$int][$i][w];");
 
-      push(@ret, "raw[$j][$target][$center][t_] := Function[w, $cheb2] /;
-      range[$int][$i][t];");
+#      push(@ret, "raw[$j][$target][$center][t_] := Function[w, $cheb2] /;
+#      range[$int][$i][t];");
+
+#      push(@ret, "pos[$j,$target,$center,w] = Piecewise[{");
+#      push(@ret, join(",\n", @piecewise));
+#      push(@ret, "}];\n");
+#      @piecewise = ();
     }
   }
 
-  my($pw) = join(",\n", @pw);
-  debug("<pw>$pw</pw>");
-  return join("\n", @ret);
+  for $j ("x","y","z") {
+    push(@ret,"pos[$j,$target,$center][w_] = 
+               Piecewise[parray[$j,$target,$center]]");
+  }
+
+#  my($pw) = join(",\n", @pw);
+#  debug("<pw>$pw</pw>");
+  return join(";\n", @ret);
 }
 
 # given open filehandle to SPK file (with arrays of type 2 or 3 only),

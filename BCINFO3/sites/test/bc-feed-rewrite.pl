@@ -8,14 +8,14 @@ require "/usr/local/lib/bclib.pl";
 # TODO: parametrize this
 
 # TODO: remove age parameter when going live
-my($out,$err,$res) = cache_command2("curl http://feeds.feedburner.com/Ruby5?format=xml", "age=3600");
+my($out,$err,$res) = cache_command2("curl http://feeds.feedburner.com/Ruby5?format=xml", "age=0");
 
 # find the mp3 link
 $out=~m%(http://([^<>]*?)\.mp3)%;
 my($link) = $1;
 
 # rewrite the primary URL tag
-$out=~s%<url>([^<>]*?)</url>%<url>$link</url>%;
+$out=~s%<link>([^<>]*?)</link>%<link>$link</link>%sg;
 
 # and output
 
