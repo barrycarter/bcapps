@@ -5,17 +5,24 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# quick/dirty hack to find coefficients and days for all objects
+# obtain object names JFF
+for $i (`fgrep -v '#' $bclib{githome}/ASTRO/planet-ids.txt`) {
+  chomp($i);
+  # decimal and hex codes
+  $i=~s/^(\w+)\s+(\w+)\s+//;
+  $name{$2} = $i;
+}
 
+# quick/dirty hack to find coefficients and days for all objects
 my(%info);
 
 # things we want (not necess currently in order)
-
 my(@l) = ("name", "target", "center", "ncoeffs", "interval",
 "start_sec","numrec");
 
-# header
-print join(",",@l),"\n";
+# header (special case, because I am tweaking; changing first elt to
+# filename, not name)
+print join(",", ("center_name", "target_name" , "filename", "array_number", "identifier", @l[1..$#l])),"\n";
 
 for $i (split(/\n/, read_file("$bclib{githome}/ASTRO/array-offsets.txt"))) {
   my($fname, $ln, $byte) = split(/:/, $i);
@@ -37,7 +44,7 @@ for $i (sort keys %info) {
     unless (%res) {next;}
 
     # print data for array
-    my(@line) = ();
+    my(@line) = ($name{$res{center}}, $name{$res{target}}, $i, $j);
     for $i (@l) {push(@line,$res{$i});}
     print join(",",@line),"\n";
   }
