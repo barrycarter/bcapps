@@ -5,6 +5,51 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# quick/dirty hack to find coefficients and days for all objects
+
+my(%info);
+
+# things we want (not necess currently in order)
+
+my(@l) = ("name", "target", "center", "ncoeffs", "interval",
+"start_sec","numrec");
+
+# files we must ignore wrong format
+%ignore = list2hash("codes_300ast_20100725.xsp", "ison.xsp");
+
+print join(",",@l),"\n";
+
+for $i (split(/\n/, read_file("$bclib{githome}/ASTRO/array-offsets.txt"))) {
+
+  my($fname, $ln, $byte) = split(/:/, $i);
+  if ($ignore{$fname}) {next;}
+
+  # assign to hash
+  if ($i=~/(BEGIN|END)_ARRAY\s+(\d+)/) {$info{$fname}{$2}{$1}=$byte;}
+}
+
+for $i (sort keys %info) {
+   debug("FNAME: $i");
+
+  # open the file
+  open(A, "$bclib{home}/SPICE/KERNELS/$i");
+
+  # go through array
+  for $j (sort {$a <=> $b} keys %{$info{$i}}) {
+    %res = spk_array_info(A, $info{$i}{$j}{BEGIN}, $info{$i}{$j}{END});
+
+    my(@line) = ();
+
+    for $i (@l) {push(@line,$res{$i});}
+
+    print join(",",@line),"\n";
+
+  }
+  close(A);
+}
+
+die "TESTING";
+
 
 # xsp2math("de431_part-2", 4, 0, 0);
 # xsp2math("jup310", 4, 719812778, 1411072450);
@@ -275,13 +320,19 @@ sub spk_array_info {
 
   # directly from html file (except header = "BEGIN_ARRAY" line, and
   # xsp does not have start/end address of array)
-  my(@map) = ("header", "name", "start_sec", "end_sec", "target",
+  # start_int = start of integration period <= first second
+  # end_int = end of integration period >= last second
+  my(@map) = ("header", "name", "start_int", "end_int", "target",
 	      "center", "ref_frame", "eph_type");
   for $i (0..$#map) {$hash{$map[$i]} = ieee754todec(scalar(<$fh>));}
 
-  # 3rd line from above has boundary (hex format)
-  # UGLY: this assigns boundary thrice, third one is correct
-  for (1..3) {$hash{boundary} = scalar(<$fh>);}
+  # hack for names with spaces
+  $hash{name}=~s/\s+$//;
+
+  # toss "1024" line, read true start second
+  <$fh>;
+  $hash{start_sec} = ieee754todec(scalar(<$fh>));
+  $hash{boundary} = scalar(<$fh>);
 
   # from formulas in spk.html, but we want #coeffs, not degree, so don't -1
   # eph_type determines if we have x y z or also vx vy vz
@@ -290,9 +341,10 @@ sub spk_array_info {
   } elsif ($hash{eph_type} == 3) {
     $hash{ncoeffs} = ($hash{rsize}-2)/6;
   } else {
-    die "Can only handle arrays of type 2 or 3 (for now)";
+    die "Can only handle arrays of type 2 or 3 (for now): $hash{name}";
   }
 
   # PEDANTIC: this is really a list, but ok if receiver treats it as hash
+  debug("RETURNING",%hash);
   return %hash;
 }
