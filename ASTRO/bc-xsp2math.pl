@@ -14,36 +14,32 @@ my(%info);
 my(@l) = ("name", "target", "center", "ncoeffs", "interval",
 "start_sec","numrec");
 
-# files we must ignore wrong format
-%ignore = list2hash("codes_300ast_20100725.xsp", "ison.xsp");
-
+# header
 print join(",",@l),"\n";
 
 for $i (split(/\n/, read_file("$bclib{githome}/ASTRO/array-offsets.txt"))) {
-
   my($fname, $ln, $byte) = split(/:/, $i);
-  if ($ignore{$fname}) {next;}
-
   # assign to hash
   if ($i=~/(BEGIN|END)_ARRAY\s+(\d+)/) {$info{$fname}{$2}{$1}=$byte;}
 }
 
+# process hash
 for $i (sort keys %info) {
-   debug("FNAME: $i");
 
   # open the file
   open(A, "$bclib{home}/SPICE/KERNELS/$i");
 
-  # go through array
+  # go through arrays in file
   for $j (sort {$a <=> $b} keys %{$info{$i}}) {
     %res = spk_array_info(A, $info{$i}{$j}{BEGIN}, $info{$i}{$j}{END});
 
+    # if empty return, skip
+    unless (%res) {next;}
+
+    # print data for array
     my(@line) = ();
-
     for $i (@l) {push(@line,$res{$i});}
-
     print join(",",@line),"\n";
-
   }
   close(A);
 }
@@ -341,10 +337,11 @@ sub spk_array_info {
   } elsif ($hash{eph_type} == 3) {
     $hash{ncoeffs} = ($hash{rsize}-2)/6;
   } else {
-    die "Can only handle arrays of type 2 or 3 (for now): $hash{name}";
+    # return nothing
+    warn "Can only handle arrays of type 2 or 3 (for now), returning null";
+    return;
   }
 
   # PEDANTIC: this is really a list, but ok if receiver treats it as hash
-  debug("RETURNING",%hash);
   return %hash;
 }
