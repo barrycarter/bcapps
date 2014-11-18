@@ -22,7 +22,7 @@ my($id) = 144803;
 
 my($out,$err,$res) = cache_command2("curl -L 'http://stackexchange.com/users/$id/barrycarter?tab=accounts'", "age=86400");
 
-my(%siteid,%max);
+my(%siteid,%max,%urls,%cmds);
 
 while ($out=~s%http://(.*?)/users/(\d+)%%) {$siteid{$1} = $2;}
 
@@ -41,11 +41,34 @@ for $i (keys %siteid) {
   # restore amps
   $baseurl=~s/&amp;/&/g;
 
-  # download all pages
+  # download all pages and find all links
   for $j (1..$max{$i}) {
-    my($out,$err,$res) = cache_command2("curl -L 'http://$i${baseurl}page=$j'", "age=86400&fake=1");
-    debug("ALPHA: $out");
+    my($out,$err,$res) = cache_command2("curl -L 'http://$i${baseurl}page=$j'", "age=86400");
+    while ($out=~s%href="/questions/(\d+)%%) {
+      # use hash because duplicates do exist (map to site for later)
+      $urls{$1}=$i;
+    }
   }
-    
-#  debug("I: $i, $max{$i}");
 }
+
+for $i (keys %urls) {
+  # put in /usr/local/etc/STACK/sitename/questionnumber
+  my($dname) = "/usr/local/etc/STACK/$urls{$i}";
+  unless (-d $dname) {system("mkdir -p $dname");}
+  my($fname) = "$dname/$i";
+
+  # already exists? skip
+  # TODO: re-download older URLs as they might have changed (-M)
+  if (-f $fname) {next;}
+
+  # dont run commands here in case I want to parallel them later or something
+  $cmds{"curl -Lo $fname 'http://$urls{$i}/questions/$i'"} = 1;
+}
+
+for $i (sort keys %cmds) {
+  debug("RUNNING: $i");
+  system($i);
+}
+
+
+
