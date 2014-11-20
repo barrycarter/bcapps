@@ -1,37 +1,19 @@
-(* elliptical orbit given parameters *)
+(* Mercurian parameters *)
 
-(* area traced out from focus given CENTRAL angle *)
+a0 = 0.387098
+e0 = 0.205630
+b0 = ellipseEA2B[a0,e0]
 
-focarea[a_,b_,th_] = (a*b*((2*a*b)/(a^2 + b^2 + (-a^2 + b^2)*Cos[2*th]) - 
-   (Sqrt[(a - b)*(a + b)]*Sin[th])/Sqrt[b^2*Cos[th]^2 + a^2*Sin[th]^2]))/2
+(* mean anamoly at given time 2014-Jul-31 00:00:00.0000 *)
+ma0 = 4.429045524674828*Degree
 
-(* eccentricity given semimajor and semiminor axes *)
+ellipseMA2TA[a0,b0,ma0]
 
-ecc[a_,b_] = 1-Sqrt[b*b/a/a]
+(* formula for ma2ta? *)
 
-(* semimajor given semiminor and ecc, it's a*(1-e) *)
+test[a_,t_] = Sum[a^n/n*Sin[n*t],{n,0,Infinity}]
 
-Solve[ecc[a,b] == e, b]
-
-(* for mercury below, AU *)
-
-a = 3.870974477755457*10^-1
-e = 2.056375198181663*10^-1
-
-(* thus b... *)
-
-b = a*(1-e)
-
-(* mean anamoly at given time 2014-May-20 00:00:00.0000 *)
-
-ma = 6.978017675467898*10
-
-(* area swept out *)
-
-Solve[focarea[a,b,th] == ma/360*Pi*a*b, th]
-
-focarea[a,b,ma*Degree]
-
+Plot[test[2,t],{t,0,2*Pi}]
 
 
 

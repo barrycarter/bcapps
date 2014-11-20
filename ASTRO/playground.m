@@ -34,6 +34,20 @@ raDec2AzEl[ra_,dec_,lat_,lon_,d_] =
 
 (* Canon ends here *)
 
+(* distance from two points on x axis, summed *)
+
+dist[t_] = Norm[{a*Cos[t],b*Sin[t]}-{f,0}] + Norm[{a*Cos[t],b*Sin[t]}-{-f,0}]
+
+Solve[dist[0]==dist[Pi/2],f] /. Abs[x_]^2 -> x^2
+
+(* for mercury (yes, again) *)
+
+
+
+
+
+
+
 (* generic rotation matrix *)
 
 m = Table[c[i,j],{i,1,3},{j,1,3}]

@@ -276,3 +276,17 @@ rotationMatrix[z,theta_] = {
  {Cos[theta],-Sin[theta],0}, {Sin[theta],Cos[theta],0}, {0,0,1}
 };
 
+(* ellipse, A/B = semimajor/minor axes, E = eccentricity, MA = mean
+anomaly, TA = true anomaly *)
+
+ellipseAreaFromFocus[a_,b_,t_] = a*b*t/2 - Sqrt[a^2-b^2]*b*Sin[t]/2
+ellipseAB2E[a_,b_] = Sqrt[1-b^2/a^2]
+ellipseEA2B[a_,e_] = a*Sqrt[1-e^2]
+ellipseMA2T[a_,b_,ma_] := t /. 
+ FindRoot[ellipseAreaFromFocus[a,b,t]==a*b*ma/2,{t,0}]
+ellipseMA2TA[a_,b_,ma_] := Module[{t},
+ t = ellipseMA2T[a,b,ma];
+ ArcTan[a*Cos[t]-Sqrt[a^2-b^2],b*Sin[t]]
+]
+
+

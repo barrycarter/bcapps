@@ -1,3 +1,16 @@
+(* Canon starts here *)
+
+(* Based on bc-ellipse-from-focus.png *)
+
+
+
+
+
+(* Canon ends here *)
+
+
+
+
 (* default values when we don't supply a and b *)
 a0 = 11/10; b0 = 1;
 
