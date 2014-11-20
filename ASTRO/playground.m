@@ -34,6 +34,48 @@ raDec2AzEl[ra_,dec_,lat_,lon_,d_] =
 
 (* Canon ends here *)
 
+v[t_] := {pos[x,1,0][t],pos[y,1,0][t],pos[z,1,0][t]}
+
+ParametricPlot3D[v[t], {t,0,366*2}]
+
+l = Table[v[t],{t,0,366*2,0.1}];
+
+(* given 3D points representing a planetary orbit (at least one full
+orbit), divine elements of orbits *)
+
+points2Ellipse[l_] := Module[{t,maxs,mins,avgs,l2,md,vmd,mat,zan},
+
+ (* compute true center *)
+ t = Transpose[l];
+ maxs = Map[Max,t];
+ mins = Map[Min,t];
+ avgs = (maxs+mins)/2;
+
+ (* shift *)
+ l2 = Map[#1-avgs &, l];
+
+ (* vector at maximal distance *)
+ md = Ordering[Map[Norm, l2],-1];
+ vmd = l2[[md]][[1]];
+
+ (* rotate around z axis to make max vector = x axis *)
+ mat = rotationMatrix[z,-ArcTan[vmd[[1]],vmd[[2]]]];
+ l3 = Map[mat.#1 &,l2];
+
+ (* find vector for max z position, and inclination *)
+ mz = l3[[Ordering[t[[3]]-avgs[[3]],-1]]][[1]];
+ zan = ArcTan[Norm[{mz[[1]],mz[[2]]}], mz[[3]]];
+
+ (* rotate down to xy plane *)
+ Map[rotationMatrix[y,zan]
+ 
+
+
+ 
+
+]
+
+
 (* distance from two points on x axis, summed *)
 
 dist[t_] = Norm[{a*Cos[t],b*Sin[t]}-{f,0}] + Norm[{a*Cos[t],b*Sin[t]}-{-f,0}]
@@ -41,6 +83,10 @@ dist[t_] = Norm[{a*Cos[t],b*Sin[t]}-{f,0}] + Norm[{a*Cos[t],b*Sin[t]}-{-f,0}]
 Solve[dist[0]==dist[Pi/2],f] /. Abs[x_]^2 -> x^2
 
 (* for mercury (yes, again) *)
+
+(* min dist from focus is *)
+
+a-Sqrt[a^2-b^2]
 
 
 

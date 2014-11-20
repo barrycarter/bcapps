@@ -7,7 +7,7 @@ b0 = ellipseEA2B[a0,e0]
 (* mean anamoly at given time 2014-Jul-31 00:00:00.0000 *)
 ma0 = 4.429045524674828*Degree
 
-ellipseMA2TA[a0,b0,ma0]
+ellipseMA2XY[a0,b0,ma0]
 
 (* formula for ma2ta? *)
 

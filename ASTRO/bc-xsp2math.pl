@@ -6,7 +6,7 @@
 require "/usr/local/lib/bclib.pl";
 
 
-print xsp2math("de430", 4, 0, 86400*366*2);
+print xsp2math("de430", 1, 0, 86400*366*2);
 
 die "TESTING";
 
