@@ -34,6 +34,128 @@ raDec2AzEl[ra_,dec_,lat_,lon_,d_] =
 
 (* Canon ends here *)
 
+(* generic rotation matrix *)
+
+m = Table[c[i,j],{i,1,3},{j,1,3}]
+
+(* exclude cases where any coeff is 0 [although this does happen] *)
+
+c1 = Table[i != 0, {i,Flatten[m]}];
+
+Reduce[{
+Norm[m.{1,0,0}] == 1,
+Norm[m.{0,1,0}] == 1,
+Norm[m.{0,0,1}] == 1,
+(m.{1,0,0}).(m.{0,1,0}) == 0,
+(m.{0,1,0}).(m.{0,0,1}) == 0,
+(m.{1,0,0}).(m.{0,0,1}) == 0
+}, Flatten[m]]
+
+s1 = Solve[{
+(m.{1,0,0}).(m.{0,1,0}) == 0,
+(m.{0,1,0}).(m.{0,0,1}) == 0,
+(m.{1,0,0}).(m.{0,0,1}) == 0,
+c[1, 1] != 0, c[1, 2] != 0, c[1, 3] != 0,
+c[2, 1] != 0, c[2, 2] != 0, c[2, 3] != 0,
+c[3, 1] != 0, c[3, 2] != 0, c[3, 3] != 0
+}, Flatten[m]]
+
+m = m /. s1[[1]]
+
+(* condition from m1.{1,0,0} *)
+
+m = m /. Solve[(Norm[m.{1,0,0}]^2 /. Abs[x_]^2 -> x^2) ==1][[1]]
+m = m /. Solve[(Norm[m.{0,1,0}]^2 /. Abs[x_]^2 -> x^2) ==1][[1]]
+m = m /. Solve[(Norm[m.{0,0,1}]^2 /. Abs[x_]^2 -> x^2) ==1][[1]]
+
+(* using positive square root here may cause probs *)
+
+m1 = m1 /. {c[1,1] -> Sqrt[1-c[2,1]^2-c[3,1]^2], Abs[x_]^2 -> x^2}
+
+(* Smallest/biggest coeffs, for Io *)
+
+coeffs2 = Transpose[Partition[coeffs,36]];
+
+maxs = Table[Max[Abs[i]], {i,coeffs2}];
+
+(* 363 bits to the nearest 1 km, 46 bytes; 86 bytes to nearest 1m *)
+
+(* currently: 8*12*3 = 288 bytes *)
+
+(* 
+
+divining the orbit of Mars (using 1970-1972 data as sample):
+
+NMaximize[{pos[x,4,0][t],t>600},t]
+
+maxx: 2.08543*10^8 at 657.159
+minx: -2.4664*10^8 at 322.029
+
+maxy: 2.14479*10^8 at 135.897
+maxy: -1.98215*10^8 at 498.058
+
+maxz: 9.90346*10^7 at 143.302
+minz: -9.05547*10^7 at 504.893
+
+affine: 
+
+x = -1.90485*10^7
+y = 8.132*10^6
+z = 4.23995*10^6
+
+max dist from above
+
+v[t_] := {pos[x,4,0][t]+1.90485*10^7, pos[y,4,0][t]-8.132*10^6,
+          pos[z,4,0][t]-4.23995*10^6}
+
+ParametricPlot3D[v[t], {t,5,2*366},
+ColorFunction->"Rainbow", AspectRatio->1]
+
+ParametricPlot3D[rotationMatrix[x,0.430704].v[t], {t,5,2*366},
+ColorFunction->"Rainbow", AspectRatio->1]
+
+Plot[(rotationMatrix[x,0.430704].v[t])[[3]], {t,5,2*366}]
+
+Plot[(rotationMatrix[x,0.430704].v[t])[[1]], {t,5,2*366}]
+
+
+
+ParametricPlot3D[v[t],{t,5,2*366},ColorFunction->"Rainbow"]
+
+NMaximize[{Norm[v[t]],t>200},t]
+
+2.2781*10^8 at 274.104
+
+v[247.104]
+
+ArcTan[v[247.104][[1]],v[247.104][[2]]]
+
+rotationMatrix[z,-2.56464].v[247.104]
+
+rotationMatrix[y,-0.266424].rotationMatrix[z,-2.56464].v[247.104]
+
+v2[t_] := rotationMatrix[y,-0.266424].rotationMatrix[z,-2.56464].v[t]
+
+ParametricPlot3D[{pos[x,4,0][t],pos[y,4,0][t],pos[z,4,0][t]}, {t,5,366*2},
+ColorFunction->"Rainbow"]
+
+
+
+rotationMatrix[y,ArcSin[v[247.104][[3]]/(2.2781*10^8)]]
+
+test[t_] := rotationMatrix[y,-ArcSin[v[247.104][[3]]/(2.2781*10^8)]].v[t]
+
+gen[a1_,a2_,a3_]=rotationMatrix[x,a3].rotationMatrix[y,a2].rotationMatrix[z,a1]
+
+Solve[{
+(gen[a1,a2,a3].v[247.104])[[2]] == 0, 
+(gen[a1,a2,a3].v[247.104])[[3]] == 0
+},Reals]
+
+
+
+*)
+
 (* sine wave per chunk? *)
 
 temp1[t_] = 
@@ -711,31 +833,6 @@ N[radec2altaz[13/24*2*Pi,27*Degree,35*Degree,0]/Degree]
 N[radec2altaz[18/24*2*Pi,27*Degree,35*Degree,0]/Degree]
 
 N[radec2altaz[23/24*2*Pi,27*Degree,35*Degree,0]/Degree]
-
-
-
-
-
-
-
-
-
-
-(* TODO: add below to library of some sort *)
-
-(* matrix of rigid rotation around xyz axis *)
-
-rotationMatrix[x,theta_] = {
- {1,0,0}, {0,Cos[theta],Sin[theta]}, {0,-Sin[theta],Cos[theta]}
-};
-
-rotationMatrix[y,theta_] = {
- {Cos[theta],0,-Sin[theta]}, {0,1,0}, {Sin[theta],0,Cos[theta]}
-};
-
-rotationMatrix[z,theta_] = {
- {Cos[theta],-Sin[theta],0}, {Sin[theta],Cos[theta],0}, {0,0,1}
-};
 
 (* CoordinateTransform does NOT do this well *)
 

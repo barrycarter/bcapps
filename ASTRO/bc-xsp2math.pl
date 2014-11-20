@@ -5,6 +5,11 @@
 
 require "/usr/local/lib/bclib.pl";
 
+
+print xsp2math("de430", 4, 0, 86400*366*2);
+
+die "TESTING";
+
 # obtain object names JFF
 for $i (`fgrep -v '#' $bclib{githome}/ASTRO/planet-ids.txt`) {
   chomp($i);

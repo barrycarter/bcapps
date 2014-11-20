@@ -262,3 +262,17 @@ superfourtwo[data_, n_] :=
 superfourtwoleft[data_, n_] := 
  Table[superfourtwo[data,n][x] - data[[x]], {x,1,Length[data]}];
 
+(* matrix of rigid rotation around xyz axis *)
+
+rotationMatrix[x,theta_] = {
+ {1,0,0}, {0,Cos[theta],Sin[theta]}, {0,-Sin[theta],Cos[theta]}
+};
+
+rotationMatrix[y,theta_] = {
+ {Cos[theta],0,-Sin[theta]}, {0,1,0}, {Sin[theta],0,Cos[theta]}
+};
+
+rotationMatrix[z,theta_] = {
+ {Cos[theta],-Sin[theta],0}, {Sin[theta],Cos[theta],0}, {0,0,1}
+};
+
