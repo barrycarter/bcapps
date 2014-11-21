@@ -3,6 +3,10 @@
 # Runs a nagios test; if a plugin exists, use it; otherwise, use
 # subroutines defined here
 
+# this hideously ugly: not setting LC_ALL causes subtle errors in
+# sorting and plugins
+$ENV{LC_ALL} = "C";
+
 # this is hideous; pass args to the program using NAGIOS_ARG2
 @ARGV = split(/\s+/, $ENV{NAGIOS_ARG2});
 

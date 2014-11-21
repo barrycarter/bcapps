@@ -43,7 +43,7 @@ l = Table[v[t],{t,0,366*2,0.1}];
 (* given 3D points representing a planetary orbit (at least one full
 orbit), divine elements of orbits *)
 
-points2Ellipse[l_] := Module[{t,maxs,mins,avgs,l2,md,vmd,mat,zan},
+points2Ellipse[l_] := Module[{t,maxs,mins,avgs,l2,mz,mat,l3,l4,md,zan,matx,l5}
 
  (* compute true center *)
  t = Transpose[l];
@@ -54,27 +54,24 @@ points2Ellipse[l_] := Module[{t,maxs,mins,avgs,l2,md,vmd,mat,zan},
  (* shift *)
  l2 = Map[#1-avgs &, l];
 
- (* vector at maximal distance *)
- md = Ordering[Map[Norm, l2],-1];
- vmd = l2[[md]][[1]];
+ (* find vector for max z position, and inclination *)
+ mz = l2[[Ordering[t[[3]]-avgs[[3]],-1]]][[1]];
 
- (* rotate around z axis to make max vector = x axis *)
- mat = rotationMatrix[z,-ArcTan[vmd[[1]],vmd[[2]]]];
+ (* find angle to rotate to make max z = x axis *)
+ mat = rotationMatrix[z,-ArcTan[mz[[1]],mz[[2]]]];
+
+ (* apply it *)
  l3 = Map[mat.#1 &,l2];
 
- (* find vector for max z position, and inclination *)
- mz = l3[[Ordering[t[[3]]-avgs[[3]],-1]]][[1]];
+ (* rotate around y axis for inclination *)
  zan = ArcTan[Norm[{mz[[1]],mz[[2]]}], mz[[3]]];
+ l4 = Map[rotationMatrix[y,-zan].#1 &,l3];
 
- (* rotate down to xy plane *)
- Map[rotationMatrix[y,zan]
- 
-
-
- 
-
+ (* max distance from center, rotate to make this x axis *)
+ md = l4[[Ordering[Map[Norm, l4],-1]]][[1]];
+ matx = rotationMatrix[z, -ArcTan[md[[1]],md[[2]]]];
+ l5 = Map[matx.#1 &,l4];
 ]
-
 
 (* distance from two points on x axis, summed *)
 

@@ -296,5 +296,3 @@ ellipseMA2XY[a_,b_,ma_] := Module[{t},
  {a*Cos[t], b*Sin[t]}
 ]
 
-
-

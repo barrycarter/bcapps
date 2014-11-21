@@ -4,6 +4,10 @@
 # on stackexchange.com sites; you will probably want to modify it for
 # your own userid
 
+# TODO: does NOT work with hidden comments "click here to show..."
+# TODO: does NOT work with multipage answers
+# TODO: does NOT download meta
+
 require "/usr/local/lib/bclib.pl";
 
 # My user page on stackexchange.com is
