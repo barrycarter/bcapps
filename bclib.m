@@ -294,5 +294,13 @@ ellipseMA2TA[a_,b_,ma_] := Module[{t},
 ellipseMA2XY[a_,b_,ma_] := Module[{t},
  t = ellipseMA2T[a,b,ma];
  {a*Cos[t], b*Sin[t]}
-]
+];
+
+(* given a list, find all zero crossings, interpolating between elements *)
+zeroCrossings[l_] := Module[{zc},
+ (* the last elt of 0 crossings *)
+ zc = Select[Range[2,Length[l]], Sign[l[[#-1]]] != Sign[l[[#]]] &];
+ Table[i+l[[i]]/(l[[i-1]]-l[[i]]),{i,zc}]
+];
+
 

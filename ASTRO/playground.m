@@ -34,6 +34,14 @@ raDec2AzEl[ra_,dec_,lat_,lon_,d_] =
 
 (* Canon ends here *)
 
+temp0 = Table[{t,pos[x,1,0][t]},{t,0,366*2,0.1}];
+temp1 = Interpolation[temp0];
+
+temp0 = Table[{t,pos[x,1,0][t]},{t,0,366*2,32}];
+temp1 = Interpolation[temp0];
+
+Plot[{pos[x,1,0][t]-temp1[t]},{t,0,366*2},PlotRange->All]
+
 v[t_] := {pos[x,1,0][t],pos[y,1,0][t],pos[z,1,0][t]}
 
 ParametricPlot3D[v[t], {t,0,366*2}]
@@ -43,7 +51,8 @@ l = Table[v[t],{t,0,366*2,0.1}];
 (* given 3D points representing a planetary orbit (at least one full
 orbit), divine elements of orbits *)
 
-points2Ellipse[l_] := Module[{t,maxs,mins,avgs,l2,mz,mat,l3,l4,md,zan,matx,l5}
+points2Ellipse[l_] := Module[
+{t,maxs,mins,avgs,l2,mz,mat,l3,l4,md,zan,matx,l5,l6,pd,mind,l6y,cross,zd}
 
  (* compute true center *)
  t = Transpose[l];
@@ -71,7 +80,34 @@ points2Ellipse[l_] := Module[{t,maxs,mins,avgs,l2,mz,mat,l3,l4,md,zan,matx,l5}
  md = l4[[Ordering[Map[Norm, l4],-1]]][[1]];
  matx = rotationMatrix[z, -ArcTan[md[[1]],md[[2]]]];
  l5 = Map[matx.#1 &,l4];
+
+ (* min distance from center, semiminor axis *)
+ mind = Min[Map[Norm,l5]];
+
+ (* first positive crossing over x axis is "0 time" *)
+ l6 = Transpose[l5];
+ l6y = l6[[2]];
+ cross = zeroCrossings[l6y];
+
+ (* if first crossing is negative2positive, use it, else use 2nd *)
+ zd = If[l6y[[Floor[cross[[1]]]]]<0, cross[[1]], cross[[2]]];
+ 
+
+ (* assuming fixed period for now *)
+ pd = Mean[Flatten[{Total/@Partition[difference[zeroCrossings[l6[[1]]]],2],
+            Total/@Partition[difference[zeroCrossings[l6[[2]]]],2]}]];
+
 ]
+
+(* find zero crossings? *)
+
+l6 = Transpose[l5];
+
+temp = l6[[2]];
+
+Select[Range[2,Length[temp]], Sign[temp[[#-1]]] != Sign[temp[[#]]] &]
+
+temp0 = Interpolation[l6[[1]]];
 
 (* distance from two points on x axis, summed *)
 
