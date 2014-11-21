@@ -52,7 +52,7 @@ l = Table[v[t],{t,0,366*2,0.1}];
 orbit), divine elements of orbits *)
 
 points2Ellipse[l_] := Module[
-{t,maxs,mins,avgs,l2,mz,mat,l3,l4,md,zan,matx,l5,l6,pd,mind,l6y,cross,zd}
+{t,maxs,mins,avgs,l2,mz,mat,l3,l4,md,zan,matx,l5,l6,pd,mind,l6y,cross,zd},
 
  (* compute true center *)
  t = Transpose[l];
@@ -77,7 +77,9 @@ points2Ellipse[l_] := Module[
  l4 = Map[rotationMatrix[y,-zan].#1 &,l3];
 
  (* max distance from center, rotate to make this x axis *)
- md = l4[[Ordering[Map[Norm, l4],-1]]][[1]];
+ (* and note that it is the "zero day" for the ellipse *)
+ zd = Ordering[Map[Norm, l4],-1];
+ md = l4[[zd]][[1]];
  matx = rotationMatrix[z, -ArcTan[md[[1]],md[[2]]]];
  l5 = Map[matx.#1 &,l4];
 
@@ -89,23 +91,75 @@ points2Ellipse[l_] := Module[
  l6y = l6[[2]];
  cross = zeroCrossings[l6y];
 
- (* if first crossing is negative2positive, use it, else use 2nd *)
- zd = If[l6y[[Floor[cross[[1]]]]]<0, cross[[1]], cross[[2]]];
- 
-
  (* assuming fixed period for now *)
  pd = Mean[Flatten[{Total/@Partition[difference[zeroCrossings[l6[[1]]]],2],
             Total/@Partition[difference[zeroCrossings[l6[[2]]]],2]}]];
 
+ (* what we return: the shift, the matrix, the zero day, the period, a, b *)
+ {avgs, matx.rotationMatrix[y,-zan].mat, zd, pd, Norm[md], mind}
+
 ]
 
-(* find zero crossings? *)
+(* computing l[[620]] from above *)
 
-l6 = Transpose[l5];
+points2Ellipse[l]
 
-temp = l6[[2]];
+ListPlot[Table[Norm[l5[[i]]-{Out[100],0,0}] +
+Norm[l5[[i]]+{Out[100],0,0}],{i,1,Length[l5]}]]
 
-Select[Range[2,Length[temp]], Sign[temp[[#-1]]] != Sign[temp[[#]]] &]
+Out[100] == 1.35444*10^7 (* distance to focus *)
+
+ListPlot[Table[ArcTan[l5[[i,1]]/Norm[md], l5[[i,2]]/mind], {i,1,Length
+[l5]}]]
+
+ListPlot[Table[ArcCos[l5[[i,1]]/Norm[md]],{i,1,Length[l5]}]]
+
+ListPlot[Table[ArcSin[l5[[i,2]]/mind],{i,1,Length[l5]}]]
+
+ListPlot[{Table[ArcCos[l5[[i,1]]/Norm[md]],{i,1,Length[l5]}] -
+Table[ArcSin[l5[[i,2]]/mind],{i,1,Length[l5]}]}]
+
+
+
+
+(* 
+
+{{-2.188908596366465*^6, -9.918772884696115*^6, -5.0741072891034335*^6}, 
+ {{-0.1418825759934066, -0.8788777888180415, -0.45545929231028476}, 
+ {0.9860355001546361, -0.0849515272878146, -0.14323836932283318}, 
+ {0.08719705880516773, -0.4694220599138667, 0.8786578415981674}}, {520}, 
+ 879.676619166228, 5.803106992453453*^7, 5.642831213891518*^7}
+
+mean anomaly: 100/879.677*2*Pi = 0.71426
+
+ellipseMA2XY[5.803106992453453*^7, 5.642831213891518*^7, 10*2*Pi/879.677]
+
+{3.622738718666659*^7, 4.408202866138123*^7}
+
+matrix of tranform (inverse):
+
+Inverse[{{-0.1418825759934066, -0.8788777888180415, -0.45545929231028476},  
+ {0.9860355001546361, -0.0849515272878146, -0.14323836932283318},  
+ {0.08719705880516773, -0.4694220599138667, 0.8786578415981674}}].
+{3.622738718666659*^7, 4.408202866138123*^7,0}
+
+{3.832641016340126*^7, -3.558428160600214*^7, -2.2814338032188486*^7}
+
+add back the avgs:
+
+{-2.188908596366465*^6, -9.918772884696115*^6, -5.0741072891034335*^6}-
+{3.832641016340126*^7, -3.558428160600214*^7, -2.2814338032188486*^7}
+
+{3.6137501567034796*^7, -4.550305449069825*^7, -2.788844532129192*^7}
+
+not even close...
+
+*)
+
+
+
+
+
 
 temp0 = Interpolation[l6[[1]]];
 
