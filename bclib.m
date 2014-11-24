@@ -284,7 +284,8 @@ ellipseAB2E[a_,b_] = Sqrt[1-b^2/a^2]
 ellipseEA2B[a_,e_] = a*Sqrt[1-e^2]
 
 ellipseMA2T[a_,b_,ma_] := t /. 
- FindRoot[ellipseAreaFromFocus[a,b,t]==a*b*ma/2,{t,0}]
+ FindRoot[ellipseAreaFromFocus[a,b,t]==a*b*ma/2,{t,0}, AccuracyGoal ->
+ 10, PrecisionGoal -> 10]
 
 ellipseMA2TA[a_,b_,ma_] := Module[{t},
  t = ellipseMA2T[a,b,ma];

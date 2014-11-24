@@ -1,7 +1,8 @@
 # creates text files from skypelogs using skypelog
+# updated 22 Nov 2014 when new SkyPE starts using sqlite3 (yay!)
 # To use: put in ~/.Skype/user/ directory and rename as "Makefile"
-imageOBJS=$(shell echo *.dbb | perl -nle 's/\.dbb/.dbb.txt/isg; print $_')
+imageOBJS=$(shell echo *.db | perl -nle 's/\.db/.db.txt/isg; print $_')
 all: $(imageOBJS)
 
-%.dbb.txt: %.dbb
-	/home/barrycarter/bin/skypelog $< > $@
+%.db.txt: %.db
+	sqlite3 $< .dump > $@

@@ -42,11 +42,21 @@ temp1 = Interpolation[temp0];
 
 Plot[{pos[x,1,0][t]-temp1[t]},{t,0,366*2},PlotRange->All]
 
-v[t_] := {pos[x,1,0][t],pos[y,1,0][t],pos[z,1,0][t]}
+v[t_] := v[t] = N[{pos[x,1,0][t],pos[y,1,0][t],pos[z,1,0][t]}]
 
-ParametricPlot3D[v[t], {t,0,366*2}]
+v[t_] := v[t] = N[{pos[x,501,5][t],pos[y,501,5][t],pos[z,501,5][t]}]
 
-l = Table[v[t],{t,0,366*2,0.1}];
+v[t_] := v[t] = N[
+{pos[x,1,0][t],pos[y,1,0][t],pos[z,1,0][t]}-
+{pos[x,10,0][t],pos[y,10,0][t],pos[z,10,0][t]}
+];
+
+
+ParametricPlot3D[v[t], {t,1,88*2}]
+
+l = Table[v[t],{t,1,88*2,0.1}];
+
+l = Take[l,{1,-1,10}];
 
 (* given 3D points representing a planetary orbit (at least one full
 orbit), divine elements of orbits *)
@@ -80,11 +90,15 @@ points2Ellipse[l_] := Module[
  (* and note that it is the "zero day" for the ellipse *)
  zd = Ordering[Map[Norm, l4],-1];
  md = l4[[zd]][[1]];
- matx = rotationMatrix[z, -ArcTan[md[[1]],md[[2]]]];
+ matx = rotationMatrix[z, Pi/2-ArcTan[md[[1]],md[[2]]]];
  l5 = Map[matx.#1 &,l4];
 
  (* min distance from center, semiminor axis *)
  mind = Min[Map[Norm,l5]];
+
+ (* TODO: this step flips the ellipse in case we have the wrong focus;
+ need to make sure we only do this when needed *)
+ l5 = Map[rotationMatrix[z,Pi].#1 &,l5];
 
  (* first positive crossing over x axis is "0 time" *)
  l6 = Transpose[l5];
@@ -99,6 +113,99 @@ points2Ellipse[l_] := Module[
  {avgs, matx.rotationMatrix[y,-zan].mat, zd, pd, Norm[md], mind}
 
 ]
+
+(* the matrix computed above *)
+
+mercmat = {{-0.21900319786723865, -0.8688294113699143, -0.4440417246864661}, 
+{0.9720398689633081, -0.15476351276649733, -0.1765977017460001}, 
+{0.08471182012988555, -0.4703017212968526, 0.8784305313885097}};
+
+(* is this really the correct matrix? testing *)
+
+l0 = Table[N[{pos[x,1,0][t],pos[y,1,0][t],pos[z,1,0][t]}],{t,1,88*2,0.1}];
+l1 = Transpose[l0];
+
+avgs = Table[(Max[i]+Min[i])/2, {i,l1}]
+
+l2 = Table[i-avgs,{i,l0}];
+
+l3 = Table[mercmat.i, {i,l2}];
+
+l4 = Table[Norm[i], {i,l3}];
+
+l3[[Ordering[l4,1]]]
+
+{{1.3446645521746145*^6, 5.6613719833374*^7, -351032.2346302554}}
+
+l3[[Ordering[l4,-1]]]
+
+{{5.792334100129215*^7, 1.315811459789984*^-8, 140655.83343998488}}
+
+
+
+
+
+
+ParametricPlot3D[mercmat.(v[t]-avgs),{t,1,88*2}]
+
+ParametricPlot[Take[mercmat.(v[t]-avgs),{1,2}],{t,1,88*2}]
+
+(* convert from list to real time *)
+
+(t+9)/10
+
+ParametricPlot[ellipseMA2XY[Norm[md], mind, (t*10-9-497)/pd*2*Pi], {t,1,88*2}]
+ParametricPlot[Take[mercmat.(v[t]-avgs),{1,2}],{t,1,88*2}]
+
+ParametricPlot[{ellipseMA2XY[Norm[md], mind, (t*10-9-497)/pd*2*Pi],
+Take[mercmat.(v[t]-avgs),{1,2}]},{t,1,88*2}]
+
+ParametricPlot[{ellipseMA2XY[Norm[md], mind, (t*10-9-497)/pd*2*Pi],
+Take[mercmat.(v[t]-avgs),{1,2}]},{t,1,22}, AxesOrigin->{0,0}
+
+]
+
+
+Norm[mercmat.{1,0,0}]
+Norm[mercmat.{0,1,0}]
+Norm[mercmat.{0,0,1}]
+
+(mercmat.{1,0,0}).(mercmat.{0,1,0})
+(mercmat.{1,0,0}).(mercmat.{0,0,1})
+(mercmat.{0,1,0}).(mercmat.{0,0,1})
+
+(* is this really an ellipse? *)
+
+ListPlot[{ArcCos[l6[[1]]/Norm[md]],ArcSin[l6[[2]]/mind]}]
+
+ArcTan[l6[[1]]/Norm[md],l6[[2]]/mind]
+
+(* reconstructing ellipse from above *)
+
+coord[t_] := avgs+Flatten[{ellipseMA2XY[Norm[md], mind, (t-497)/pd*2*Pi],0}];
+
+Plot[coord[t][[1]],{t,1,Length[l6[[1]]]}]
+
+ListPlot[l6[[1]]]
+
+tab0 = Table[coord[t][[1]],{t,1,Length[l6[[1]]]}];
+tab1 = Table[coord[t][[2]],{t,1,Length[l6[[2]]]}];
+
+ListPlot[{tab0,l6[[1]]}]
+ListPlot[{tab1,l6[[2]]}]
+
+
+
+
+
+l = Table[{pos[x,1,0][t],pos[y,1,0][t],pos[z,1,0][t]}, {t,1,366*30,32}];
+
+sd0 = Norm[{x,y,z}-{x0,y0,z0}] + Norm[{x,y,z}-{x1,y1,z1}]
+sd1 = Norm[{x+t*dx,y+t*dy,z+t*dz}-{x0,y0,z0}] + 
+      Norm[{x+t*dx,y+t*dy,z+t*dz}-{x1,y1,z1}]
+
+(sd1-sd0)/t /. Abs[x_]^2 -> x^2
+
 
 (* computing l[[620]] from above *)
 

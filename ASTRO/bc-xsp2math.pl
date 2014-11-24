@@ -6,7 +6,10 @@
 require "/usr/local/lib/bclib.pl";
 
 
-print xsp2math("de430", 1, 0, 86400*366*2);
+# print xsp2math("de430", 1, 0, 86400*366*60);
+
+# print xsp2math("de430", 10, 0, 86400*366*60);
+print xsp2math("de430", 1, 0, 86400*89*2);
 
 die "TESTING";
 
@@ -298,7 +301,7 @@ sub read_coeffs {
 
 #  my($pw) = join(",\n", @pw);
 #  debug("<pw>$pw</pw>");
-  return join(";\n", @ret);
+  return join(";\n", @ret).";\n";
 }
 
 # given open filehandle to SPK file (with arrays of type 2 or 3 only),
