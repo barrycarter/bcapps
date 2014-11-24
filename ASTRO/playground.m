@@ -90,7 +90,7 @@ points2Ellipse[l_] := Module[
  (* and note that it is the "zero day" for the ellipse *)
  zd = Ordering[Map[Norm, l4],-1];
  md = l4[[zd]][[1]];
- matx = rotationMatrix[z, Pi/2-ArcTan[md[[1]],md[[2]]]];
+ matx = rotationMatrix[z, -ArcTan[md[[1]],md[[2]]]];
  l5 = Map[matx.#1 &,l4];
 
  (* min distance from center, semiminor axis *)
@@ -98,7 +98,7 @@ points2Ellipse[l_] := Module[
 
  (* TODO: this step flips the ellipse in case we have the wrong focus;
  need to make sure we only do this when needed *)
- l5 = Map[rotationMatrix[z,Pi].#1 &,l5];
+(* l5 = Map[rotationMatrix[z,Pi].#1 &,l5]; *)
 
  (* first positive crossing over x axis is "0 time" *)
  l6 = Transpose[l5];
@@ -116,24 +116,25 @@ points2Ellipse[l_] := Module[
 
 (* the matrix computed above *)
 
-mercmat = {{-0.21900319786723865, -0.8688294113699143, -0.4440417246864661}, 
+mercmat = 
+{{-0.21900319786723865, -0.8688294113699143, -0.4440417246864661}, 
 {0.9720398689633081, -0.15476351276649733, -0.1765977017460001}, 
-{0.08471182012988555, -0.4703017212968526, 0.8784305313885097}};
+{0.08471182012988555, -0.4703017212968526, 0.8784305313885097}}
 
 (* is this really the correct matrix? testing *)
 
-l0 = Table[N[{pos[x,1,0][t],pos[y,1,0][t],pos[z,1,0][t]}],{t,1,88*2,0.1}];
-l1 = Transpose[l0];
+l20 = Table[N[{pos[x,1,0][t],pos[y,1,0][t],pos[z,1,0][t]}],{t,1,88*2,0.1}];
+l21 = Transpose[l20];
 
-avgs = Table[(Max[i]+Min[i])/2, {i,l1}]
+avgs = Table[(Max[i]+Min[i])/2, {i,l21}]
 
-l2 = Table[i-avgs,{i,l0}];
+l22 = Table[i-avgs,{i,l20}];
 
-l3 = Table[mercmat.i, {i,l2}];
+l23 = Table[mercmat.i, {i,l22}];
 
-l4 = Table[Norm[i], {i,l3}];
+l24 = Table[Norm[i], {i,l23}];
 
-l3[[Ordering[l4,1]]]
+l23[[Ordering[l24,-1]]]
 
 {{1.3446645521746145*^6, 5.6613719833374*^7, -351032.2346302554}}
 
@@ -141,10 +142,7 @@ l3[[Ordering[l4,-1]]]
 
 {{5.792334100129215*^7, 1.315811459789984*^-8, 140655.83343998488}}
 
-
-
-
-
+(* so mercmat is fixed *)
 
 ParametricPlot3D[mercmat.(v[t]-avgs),{t,1,88*2}]
 
@@ -154,16 +152,36 @@ ParametricPlot[Take[mercmat.(v[t]-avgs),{1,2}],{t,1,88*2}]
 
 (t+9)/10
 
+temp1304 = Table[mercmat.(v[(t+9)/10]-avgs), {t,1,Length[l5]}];
+
+ellipseMA2XY[Norm[md],mind,0]
+l5[[497]]
+(* pd is 879.717/10 *)
+
+ellipseMA2XY[Norm[md],mind,Pi/2]
+l5[[Round[497+pd/4]]]
+
+ellipseMA2XY[Norm[md],mind,Pi/8]
+l5[[Round[497+pd/16]]]
+
+l5[[Round[497+pd/2]]]
+
+
+
+
+
+
 ParametricPlot[ellipseMA2XY[Norm[md], mind, (t*10-9-497)/pd*2*Pi], {t,1,88*2}]
 ParametricPlot[Take[mercmat.(v[t]-avgs),{1,2}],{t,1,88*2}]
 
 ParametricPlot[{ellipseMA2XY[Norm[md], mind, (t*10-9-497)/pd*2*Pi],
 Take[mercmat.(v[t]-avgs),{1,2}]},{t,1,88*2}]
 
-ParametricPlot[{ellipseMA2XY[Norm[md], mind, (t*10-9-497)/pd*2*Pi],
-Take[mercmat.(v[t]-avgs),{1,2}]},{t,1,22}, AxesOrigin->{0,0}
+ParametricPlot[{ellipseMA2XY[Norm[md], mind, (t*10-9-497)/pd*2*Pi]-
+Take[mercmat.(v[t]-avgs),{1,2}]},{t,1,88*2}]
 
-]
+ParametricPlot[{ellipseMA2XY[Norm[md], mind, (t*10-9-497)/pd*2*Pi],
+Take[mercmat.(v[t]-avgs),{1,2}]},{t,1,22}, AxesOrigin->{0,0}]
 
 
 Norm[mercmat.{1,0,0}]
