@@ -34,9 +34,62 @@ raDec2AzEl[ra_,dec_,lat_,lon_,d_] =
 
 (* Canon ends here *)
 
-v[t_] := v[t] = N[{pos[x,10,0][t],pos[y,10,0][t],pos[z,10,0][t]}]
+v[t_] := v[t] = N[{pos[x,1,0][t],pos[y,1,0][t],pos[z,1,0][t]}]
 
-ParametricPlot3D[v[t],{t,1,365*5}]
+x0606 = Table[N[pos[x,1,0][t]],{t,1,365,.1}];
+
+(* normalize *)
+
+max = Max[x0606];
+min = Min[x0606];
+avg = (min+max)/2;
+
+x0612 = 2*(x0606-avg)/(max-min);
+
+(* figure out sine wave using 0 crossings *)
+
+zc = zeroCrossings[x0612];
+
+Plot[Sin[Pi*(zc[[1]]-t)/((zc[[-1]]-zc[[1]])/Length[zc])],{t,1,Length[x0612]}]
+
+test0623 = Table[
+Sin[Pi*(zc[[1]]-t)/((zc[[-1]]-zc[[1]])/(Length[zc]-1))],{t,1,Length[x0612]}];
+
+ListPlot[{test0623,x0612}]
+
+t0631 = Table[x^i,{i,0,50}]
+
+f0632 = Fit[x0612,t0631,x]
+
+t0633 = Table[f0632,{x,1,Length[x0612]}]
+
+ListPlot[{t0633,x0612}]
+
+four0636[l_] := Module[{avg,l2,zc},
+
+ (* "average" of sorts *)
+ avg = (Max[l]+Min[l])/2;
+ Print[avg];
+
+ (* normalize *)
+ l2 = l - avg;
+ Print[l2];
+
+ (* find zero crossings *)
+ zc = zeroCrossings[l2];
+ Print[zc];
+
+ avg + (Max[l2]-avg)*Sin[Pi*(zc[[1]]-t)/((zc[[-1]]-zc[[1]])/(Length[zc]-1))]
+]
+
+
+ 
+
+
+
+
+
+ParametricPlot3D[v[t],{t,1,365}]
 
 Plot[Norm[v[t]],{t,1,88*2}]
 
