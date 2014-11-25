@@ -34,6 +34,60 @@ raDec2AzEl[ra_,dec_,lat_,lon_,d_] =
 
 (* Canon ends here *)
 
+v[t_] := v[t] = N[{pos[x,10,0][t],pos[y,10,0][t],pos[z,10,0][t]}]
+
+ParametricPlot3D[v[t],{t,1,365*5}]
+
+Plot[Norm[v[t]],{t,1,88*2}]
+
+Plot[v[t][[3]],{t,1,88*2}]
+
+FindMaximum[v[t][[3]],{t,52+44}]
+FindMinimum[v[t][[3]],{t,52}]
+
+(* integrate for avg? *)
+
+int1453[x_] := Integrate[v[t][[1]],{t,1,x}];
+
+Plot[int1453[x]/(x-1),{x,1,88*2}]
+
+(* average values based on max min *)
+
+xavg = Mean[{5.4486944182578616*^7,-5.8521039757747784*^7}];
+yavg = Mean[{4.1075648196522124*^7,-6.1109258562838286*^7}];
+zavg = Mean[{2.2464555665310863*^7,-3.2730370420906916*^7}];
+avg = {xavg,yavg,zavg};
+
+Plot[Norm[v[t]-avg],{t,1,88*2}]
+FindMaximum[Norm[v[t]-avg],{t,140}]
+
+(* occurs at 50.66212687981157, 138.32770672047832 or 87.6656 days apart *)
+
+t1502 = Table[v[t]-avg, {t,50.66212687981157,138.32770672047832,.05}];
+t1503 = Transpose[t1502];
+
+(* find max z pos *)
+
+mz = Flatten[t1502[[Ordering[t1503[[3]],-1]]]]
+
+mat1509 = rotationMatrix[z,-ArcTan[mz[[1]],mz[[2]]]]
+t1509 = Table[mat1509.i, {i,t1502}];
+
+(* rotation around the y axis to flatten the ellipse *)
+
+zan = ArcTan[Norm[{mz[[1]],mz[[2]]}], mz[[3]]];
+t1519 = Map[rotationMatrix[y,-zan].#1 &,t1509];
+
+(* rotate to make apoapsis match x axis *)
+
+t1531 = 
+Table[rotationMatrix[z, -ArcTan[t1519[[1,1]],t1519[[1,2]]]].i,{i,t1519}];
+
+(* 1754 element list, so at quarter period.. *)
+
+(* nope, doesn't work, mercury does NOT orbit SSB *)
+
+
 temp0 = Table[{t,pos[x,1,0][t]},{t,0,366*2,0.1}];
 temp1 = Interpolation[temp0];
 
@@ -42,14 +96,13 @@ temp1 = Interpolation[temp0];
 
 Plot[{pos[x,1,0][t]-temp1[t]},{t,0,366*2},PlotRange->All]
 
-v[t_] := v[t] = N[{pos[x,1,0][t],pos[y,1,0][t],pos[z,1,0][t]}]
-
 v[t_] := v[t] = N[{pos[x,501,5][t],pos[y,501,5][t],pos[z,501,5][t]}]
 
 v[t_] := v[t] = N[
 {pos[x,1,0][t],pos[y,1,0][t],pos[z,1,0][t]}-
 {pos[x,10,0][t],pos[y,10,0][t],pos[z,10,0][t]}
 ];
+
 
 
 ParametricPlot3D[v[t], {t,1,88*2}]

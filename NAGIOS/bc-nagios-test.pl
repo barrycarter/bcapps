@@ -7,6 +7,9 @@
 # sorting and plugins
 $ENV{LC_ALL} = "C";
 
+# renice self
+system("/usr/bin/renice 19 -p $$");
+
 # this is hideous; pass args to the program using NAGIOS_ARG2
 @ARGV = split(/\s+/, $ENV{NAGIOS_ARG2});
 
