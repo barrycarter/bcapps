@@ -2,7 +2,7 @@
 
 (* using input form so don't have to recalculate every time *)
 
-(* The Earth's mean radius [not polar/equitorial] *)
+B(* The Earth's mean radius [not polar/equitorial] *)
 
 earthMeanRadius = 6371009/1000;
 
@@ -30,12 +30,118 @@ raDec2AzEl[ra_,dec_,lat_,lon_,d_] =
 
 (* Canon ends here *)
 
+(* yet more precession *)
+
+rotationMatrix[z,zr].rotationMatrix[y,yr].{0,0,epr}/epr
+
+yrs = Table[{i[[1]],ArcCos[i[[2,3]]/Norm[i[[2]]]]},{i,Drop[list,-1]}];
+
+(* 11998 is max value for yrs *)
+
+zrs = Table[{list[[i,1]],
+ArcCos[list[[i,2,1]]/Sin[yrs[[i,2]]]/Norm[list[[i,2]]]]}, 
+ {i,Length[list]-1}];
+
+(* zrs, 11999 is good; 11997 is arguably good *)
+
+(* 20141128.2038: this is best I have for now and it works *)
+
+(* THIS DOES NOT CORRECT FOR SIGN! *)
+
+zrs2 = Table[If[i<=11998,zrs[[i]],{zrs[[i,1]],yrs[[i,2]]}-Pi],  
+ {i,Length[yrs]}];
+
+ListPlot[Take[Drop[zrs2,{11900,12000}],{11700,12100}]]
+
+yrs2 = Table[If[i<=11998,yrs[[i]],{yrs[[i,1]],2*Pi-yrs[[i,2]]}],  
+ {i,Length[yrs]}];
+
+zrtest[x_] = Fit[zrs2,{1,x,x^2},x]
+
+zrt2102 = Table[{i,zrtest[i]},{i,Transpose[zrs2][[1]]}];
+
+Transpose[zrs2][[2]]-Transpose[zrt2102][[2]]
+
+
+
+
+
+
+
+
+
+
+
+
 (* TODO: add nutations *)
 
 (* xyz of lat/lon, correcting for ellipsoid, NOT correcting for precession *)
 
 latlond2xyz[lat_,lon_,d_] = {rad[lat]*Cos[lat]*Cos[gmst[d]+lon],
 rad[lat]*Cos[lat]*Sin[gmst[d]+lon], rad[lat]*Sin[lat]}
+
+ab1940 = latlond2xyz[35.0836000*Degree,253.349000*Degree, 16347]
+
+(* and the "correct" result *)
+
+ab1944 = -{4.060721112706535*10^2, 5.209035656792074*10^3,
+  -3.645836092501593*10^3};
+
+rotationMatrix[z,-0.030269134497586784].ab1940
+
+Plot[
+(rotationMatrix[y,yr].rotationMatrix[z,-0.030269134497586784].ab1940)[[1]],
+{yr,0,Pi}]
+
+Plot[
+(rotationMatrix[y,yr].rotationMatrix[z,0.030269134497586784].ab1940)[[1]],
+{yr,2.8,3}]
+
+(* 2.97 is only possible value *)
+
+(rotationMatrix[y,2.97].rotationMatrix[z,0.030269134497586784].ab1940)
+
+(* but wrong sign on z axis *)
+
+Plot[
+(rotationMatrix[y,yr].rotationMatrix[z,-0.030269134497586784].ab1940)[[1]],
+{yr,2.8,2.9}]
+
+(* 6.25 and 2.885 *) 
+
+(* 6.25 is correct, computed y value was -1.5693110722126618 which is
+6.25-2*Pi-Pi/2, so computed value plus Pi/2 *)
+
+(rotationMatrix[y,6.25].rotationMatrix[z,-0.030269134497586784].ab1940)
+
+(rotationMatrix[y,-1.5693110722126618+Pi/2].
+rotationMatrix[z,-0.030269134497586784].ab1940)
+
+(* using 12012/12013 averages *)
+
+(rotationMatrix[y,-1.56935+Pi/2].
+rotationMatrix[z,-0.0295077].ab1940)
+
+
+
+(* about 2.885 or 2.98 *)
+
+(rotationMatrix[y,2.885+Pi].rotationMatrix[z,-0.030269134497586784].ab1940)
+
+(rotationMatrix[y,2.98+Pi].rotationMatrix[z,0.030269134497586784].ab1940)
+
+
+
+Reduce[rotationMatrix[y,yr].rotationMatrix[z,zr].ab1940==ab1944,{yr,zr},Reals]
+
+(* precession for this day, using t0945[[12013]] *)
+
+(* -0.030269134497586784 is z rotation, -1.5693110722126618 is y rotation *)
+
+rotationMatrix[y,Pi/2-1.5693110722126618].
+rotationMatrix[z,0.030269134497586784].
+ab1940
+
 
 
 v[t_] := v[t] = N[{pos[x,1,0][t],pos[y,1,0][t],pos[z,1,0][t]}]
@@ -1504,6 +1610,10 @@ Plot[abq[t].moon[16355], {t,0,24}]
 (* Drop below due to trailing null *)
 
 t0945 = Table[{i[[1]], ArcTan[i[[2,2]]/i[[2,1]]]}, {i,Drop[list,-1]}];
+
+t0948 = Table[{i[[1]], 
+ ArcTan[Norm[{i[[2,1]],i[[2,2]]}], i[[2,3]]]},{i,Drop[list,-1]}];
+
 
 -ArcTan[i[[1]],i[[2]]],{i,list}];
 
