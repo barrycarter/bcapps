@@ -21,7 +21,10 @@ for $i (`grep -v '^#' /home/barrycarter/calendar.txt`) {
     push(@{$events{$date}}, $event);
   } elsif ($i=~/^(MON|TUE|WED|THU|FRI|SAT|SUN)\s+(.*)$/) {
     # format every week
-      push(@{$events{$1}}, $2);
+    push(@{$events{$1}}, $2);
+  } elsif ($i=~/^\-(\d{8})\s+(.*)$/) {
+    # ugly way to do exclusions
+    $exclude{$1}{$2} = 1;
   } else {
     warn "NOT UNDERSTOOD: $i";
   }
@@ -150,6 +153,8 @@ for $week (-1..$globopts{weeks}-1) {
     push(@events, @{$events{uc(strftime("%a", localtime($date)))}});
 
     for $i (0..$#events) {
+      if ($exclude{$stardate}{$events[$i]}) {next;}
+
       my($eventy) = $y1+$eventystart+$eventspacing*$i;
       my($eventx) = $x1+5;
       # different color for "?" events

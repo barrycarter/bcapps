@@ -6,10 +6,6 @@
 
 earthMeanRadius = 6371009/1000;
 
-(* GMST time at Unix day d, given as an angle *)
-
-gmst[d_] = ((-4394688633775234485 + 401095163740318*d)*Pi)/200000000000000;
-
 (* xyz coordinates of lat/lon at time d (in Unix days) compared to
 earth geocenter, ignoring precession and assuming spherical Earth *)
 
@@ -34,9 +30,15 @@ raDec2AzEl[ra_,dec_,lat_,lon_,d_] =
 
 (* Canon ends here *)
 
-v[t_] := v[t] = N[{pos[x,1,0][t],pos[y,1,0][t],pos[z,1,0][t]}]
+(* TODO: add nutations *)
 
-x0606 = Table[N[pos[x,1,0][t]],{t,1,365,.1}];
+(* xyz of lat/lon, correcting for ellipsoid, NOT correcting for precession *)
+
+latlond2xyz[lat_,lon_,d_] = {rad[lat]*Cos[lat]*Cos[gmst[d]+lon],
+rad[lat]*Cos[lat]*Sin[gmst[d]+lon], rad[lat]*Sin[lat]}
+
+
+v[t_] := v[t] = N[{pos[x,1,0][t],pos[y,1,0][t],pos[z,1,0][t]}]
 
 (* normalize *)
 
@@ -65,25 +67,45 @@ t0633 = Table[f0632,{x,1,Length[x0612]}]
 
 ListPlot[{t0633,x0612}]
 
+x0606 = Table[N[pos[x,1,0][t]],{t,1,365,.1}];
+
 four0636[l_] := Module[{avg,l2,zc},
 
  (* "average" of sorts *)
  avg = (Max[l]+Min[l])/2;
- Print[avg];
 
  (* normalize *)
  l2 = l - avg;
- Print[l2];
 
  (* find zero crossings *)
  zc = zeroCrossings[l2];
- Print[zc];
+ Print[avg,zc];
 
- avg + (Max[l2]-avg)*Sin[Pi*(zc[[1]]-t)/((zc[[-1]]-zc[[1]])/(Length[zc]-1))]
+ Function[t, Evaluate[avg + (Max[l2]-avg)*
+ Sin[Pi*(zc[[1]]-t)/((zc[[-1]]-zc[[1]])/(Length[zc]-1))]]]
 ]
 
 
- 
+
+(* This standardized the "superfour/two" stuff below *)
+
+(* recursion to apply a function to a list (that returns a function)
+and the same function to its residuals, recursively, remembering
+values as needed *)
+
+applyFunction[func_,list_,0] = 0 &
+
+applyFunction[func_,list_,n_] := applyFunction[func,list,n] = 
+ func[Table[list[[i]]-applyFunction[func,list,n-1][i], {i,1,Length[list]}]] +
+ applyFunction[func,list,n-1] &;
+
+(* apply func to find approximation to list, return residuals *)
+
+applyFunctionRes[func_,list_] := applyFunctionRes[func,list] =
+ list - Map[func[list],Range[1,Length[list]]];
+
+
+
 
 
 
@@ -1474,6 +1496,80 @@ abq[t_] = {6371009/1000*Cos[35*Degree]*Cos[t/12*Pi],
 (* dot product wrt fixed moon position *)
 
 Plot[abq[t].moon[16355], {t,0,24}]
+
+(* more precession *)
+
+(* these numbers are negative, so flip at last second *)
+
+(* Drop below due to trailing null *)
+
+t0945 = Table[{i[[1]], ArcTan[i[[2,2]]/i[[2,1]]]}, {i,Drop[list,-1]}];
+
+-ArcTan[i[[1]],i[[2]]],{i,list}];
+
+
+(* because I'm doing it "backwards", pole to geocenter *)
+
+list = -list; 
+
+(* earth's polar radius (less precision than implied) *)
+
+epr = 6356.75231424518;
+
+-ArcTan[-474.288, -4732.57]
+
+ArcTan[Norm[{-474.288, -4732.57}],4217.36]
+
+rotationMatrix[y,0.725415].rotationMatrix[z,-1.67068].{0,0,epr}
+
+rotationMatrix[y,Pi/2-0.725415].rotationMatrix[z,1.67068].list[[1]]
+
+Inverse[rotationMatrix[y,Pi/2-0.725415].rotationMatrix[z,1.67068]]
+
+
+ArcTan[4756.27,4217.36]
+
+rotationMatrix[z,ArcTan[list[[1,1]],list[[1,2]]]].
+rotationMatrix[y, -Pi/2+ArcTan[Norm[{Take[list[[1]],2]}],list[[1,3]]]].
+{0,0,epr}
+
+t0945 = Table[-ArcTan[i[[1]],i[[2]]],{i,list}];
+
+t0948 = Table[ArcTan[Norm[{i[[1]],i[[2]]}], i[[3]]],{i,list}];
+
+Plot[5028.796195*t + 1.10543482*t^2,{t,-100,100}]
+
+(* first 11945 rows of tab0945 *)
+
+-1.6705167602980788 - 0.00014597807269287757*x + 2.9944951665346477*^-9*x^2
+
+(* rest *)
+
+-0.017905645236881082 - 0.00009777066456471201*x - 2.2825168267828756*^-9*x^2
+
+(* first 11998 rows of tab0948 *)
+
+Fit[Take[t0948,11998],{1,x,x^2,x^3},x] // InputForm
+
+0.7254412783363136 + 0.000014553643257023684*x + 7.0929778315742026*^-9*x^2 - 
+ 2.0281304968203636*^-13*x^3
+
+Fit[Take[t0948,{11998,Length[t0948]}],{1,x,x^2,x^3},x] // InputForm
+
+1.5708727503972244 - 0.00009717029740654592*x + 2.0640720770412885*^-10*x^2 + 
+ 2.0279331733252155*^-13*x^3
+
+
+(* and the rest *)
+
+1.580929138254102 - 0.00010493561784306807*x + 2.6093497376024534*^-9*x^2
+
+f1021[x_] = Fit[Take[t0945,11945],{1,x,x^2},x]
+
+f1021[x+11999]
+
+
+
 
 (* precession comps *)
 

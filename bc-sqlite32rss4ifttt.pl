@@ -42,11 +42,11 @@ for $item (split(/\n\n/, $all)) {
   $ENV{TZ} = "GMT";
   my($date) = `date -R`;
   $date=~s/\n//s;
-#  $guid = sha1_hex($item);
+  $guid = sha1_hex($item);
 print << "MARK";
 <item><title>$title</title><link>http://barrycarter.info</link>
 <description>$item</description>
-<guid>http://$globopts{title}</guid>
+<guid>http://$globopts{title}/$guid</guid>
 <pubDate>$date</pubDate>
 </item>
 MARK

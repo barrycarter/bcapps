@@ -304,4 +304,12 @@ zeroCrossings[l_] := Module[{zc},
  Table[i+l[[i]]/(l[[i-1]]-l[[i]]),{i,zc}]
 ];
 
+(* the radius of the earth at latitude l (given in radians) *)
+
+rad[lat_] = Sqrt[8108893139432429 - 32876703150355522144690902360200/
+    (8108893139432429 + 27233178721371*Cos[2*lat])]/10000
+
+(* GMST time at Unix day d, given as an angle *)
+
+gmst[d_] = ((-4394688633775234485 + 401095163740318*d)*Pi)/200000000000000;
 
