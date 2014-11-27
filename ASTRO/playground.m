@@ -58,16 +58,21 @@ yrs2 = Table[If[i<=11998,yrs[[i]],{yrs[[i,1]],2*Pi-yrs[[i,2]]}],
 
 zrtest[x_] = Fit[zrs2,{1,x,x^2},x]
 
+yrtest[x_] = Fit[yrs2,{1,x,x^2},x]
+
 zrt2102 = Table[{i,zrtest[i]},{i,Transpose[zrs2][[1]]}];
 
 Transpose[zrs2][[2]]-Transpose[zrt2102][[2]]
 
+rotationMatrix[z,-zrtest[2456934.500000000]].
+rotationMatrix[y,Pi-yrtest[2456934.500000000]].
+latlond2xyz[35.0836000*Degree,253.349000*Degree, 16347]
 
+rotationMatrix[z,-zrtest[2456934.500000000]].
+rotationMatrix[y,yrtest[2456934.500000000]-Pi].
+latlond2xyz[35.0836000*Degree,253.349000*Degree, 16347]
 
-
-
-
-
+(* second one is slightly closer *)
 
 
 
