@@ -2,7 +2,7 @@
 
 (* using input form so don't have to recalculate every time *)
 
-B(* The Earth's mean radius [not polar/equitorial] *)
+(* The Earth's mean radius [not polar/equitorial] *)
 
 earthMeanRadius = 6371009/1000;
 
@@ -34,7 +34,20 @@ raDec2AzEl[ra_,dec_,lat_,lon_,d_] =
 
 rotationMatrix[z,zr].rotationMatrix[y,yr].{0,0,epr}/epr
 
-yrs = Table[{i[[1]],ArcCos[i[[2,3]]/Norm[i[[2]]]]},{i,Drop[list,-1]}];
+yrs = Table[{i[[1]],ArcCos[i[[2,3]]/Norm[i[[2]]]]},{i,-Drop[list,-1]}];
+
+(* note: -yrs is also a candidate here *)
+
+ListPlot[{Transpose[yrs][[2]], -Transpose[yrs][[2]]}]
+
+(* ABQ in 2100, z coord is consistently positive (after flip) *)
+
+rotationMatrix[y,yr].latlond2xyz[35.0836000*Degree,253.349000*Degree,47482] /.
+yr -> -yrs[[12098]][[2]]
+
+(* year 4100 *)
+
+(* the negative value appears to be the correct one *)
 
 (* 11998 is max value for yrs *)
 
@@ -2530,3 +2543,196 @@ showit
 g[t_] = Piecewise[Table[{tab[[i]][t+2-2*i], t < -1 + 2*i},{i,1,Length[tab]}]]
 
 Plot[g[t],{t,-1,95}]
+
+(* mercury x value single orbit *)
+
+(* 55.01355829672442 hits 0, 142.99268777587395 again *)
+
+Plot[pos[x,1,0][t],{t,55.01355829672442,142.99268777587395}]
+
+t0557 = Table[pos[x,1,0][t],{t,55.01355829672442,142.99268777587395,.1}]
+
+f0557 = Fourier[t0557]
+
+n0557 = Map[Norm,t0557]
+
+Plot[5.8520940166167766*^7*
+Sin[2*Pi*(t-55.01355829672442)/(142.99268777587395-55.01355829672442)],
+{t,55.01355829672442,142.99268777587395}]
+
+Plot[{pos[x,1,0][t],
+(5.8520940166167766*^7*
+Sin[2*Pi*(t-55.01355829672442)/(142.99268777587395-55.01355829672442)])},
+{t,55.01355829672442,142.99268777587395}]
+
+v[t_] := v[t] = N[
+{pos[x,1,0][t],pos[y,1,0][t],pos[z,1,0][t]}-
+{pos[x,10,0][t],pos[y,10,0][t],pos[z,10,0][t]}
+];
+
+ParametricPlot3D[v[t],{t,0,365}]
+
+(* find first two perihelions *)
+
+Plot[Norm[v[t]],{t,0,365}]
+
+t0 = t /. NMinimize[{Norm[v[t]],t>0},t]
+t1 = t /. NMinimize[{Norm[v[t]],t>88},t][[2]]
+
+(* max z value for this period *)
+
+zmax = NMaximize[{v[t][[3]],t>t0,t<t1},t]
+
+t2 = t /. zmax[[2]]
+
+(* move to x axis *)
+
+an1 = ArcTan[v[t2][[1]],v[t2][[2]]]
+
+v2[t_] := rotationMatrix[z,-an1].v[t]
+
+(* flip around y axis *)
+
+an2 = ArcTan[v2[t2][[1]],v2[t2][[3]]]
+
+v3[t_] := rotationMatrix[y,-an2].v2[t]
+
+an3 = ArcTan[v3[t0][[1]],v3[t0][[2]]]
+
+v4[t_] := rotationMatrix[z,-an3].v3[t]
+
+ParametricPlot3D[v4[t],{t,t0,t1}]
+
+(* and shift for symmetry *)
+
+v5[t_] := v4[t] - {v4[(t0+t1)/2][[1]]+v4[t0][[1]],0,0}/2;
+
+ParametricPlot[{v5[t][[1]],v5[t][[2]]},{t,t0,t1}]
+
+(* we now have an ellipse *)
+
+ela = (v5[t0]-v5[(t0+t1)/2])[[1]]/2
+
+(* find b *)
+
+tb = t /. FindRoot[v5[t][[1]]==0,{t,t0+(t1-t0)/4}]
+
+elb = v5[tb][[2]]
+
+(* and now the ellipse predictions *)
+
+ellipseAB2E[ela,elb]
+
+(* ecc is close to what we expect *)
+
+ellipseMA2XY[ela,elb,0]
+
+ellipseMA2XY[ela,elb,Pi/4]
+
+v5[t0 + (t1-t0)/8]
+
+ParametricPlot[ellipseMA2XY[ela,elb,x],{x,0,2*Pi}]
+ParametricPlot[Take[v5[t],2],{t,t0,t1}]
+
+ParametricPlot[{ellipseMA2XY[ela,elb,2*Pi*(t-t0)/(t1-t0)]-
+Take[v5[t],2]},{t,t0,t1}]
+
+Plot[{ellipseMA2XY[ela,elb,2*Pi*(t-t0)/(t1-t0)][[1]]-v5[t][[1]]},{t,t0,t1}]
+Plot[{ellipseMA2XY[ela,elb,2*Pi*(t-t0)/(t1-t0)][[2]]-v5[t][[2]]},{t,t0,t1}]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(* above is mercury around sun, let's find ellipse; first, max z val pos *)
+
+Plot[v[t][[3]],{t,0,365}]
+
+Maximize[v[t][[3]],t]
+
+(* t at 10.896366502434974 is maximal *)
+
+an1 = ArcTan[v[10.896366502434974][[1]],v[10.896366502434974][[2]]]
+
+v2[t_] := rotationMatrix[z,-an1].v[t]
+
+(* flip to plane? *)
+
+an2 = ArcTan[v2[10.896366502434974][[1]],v2[10.896366502434974][[3]]]
+
+v3[t_] := rotationMatrix[y,-an2].v2[t]
+
+(* and the periapsis *)
+
+Plot[Norm[v3[t]],{t,0,365}]
+
+NMinimize[Norm[v3[t]],t]
+
+(* occurs at 6.586797984578364 *)
+
+an3 = ArcTan[v3[6.586797984578364][[1]],v3[6.586797984578364][[2]]]
+
+v4[t_] := rotationMatrix[z,-an3].v3[t];
+
+(* length of semimajor axis *)
+
+Plot[v4[t][[1]],{t,0,365}]
+
+NMinimize[{v4[t][[1]],t>30,t<70},t]
+
+(* simple astronomy *)
+
+(* s = length of true day over length of sidereal day *)
+
+mypos[d_] = {ex,ey,ez} + {emr*Cos[lat]*Cos[lon+d*s],
+              emr*Cos[lat]*Sin[lon+d*s],
+              emr*Sin[lat]};
+
+(* exyz = earth, sxyz = sun, below = sunset w/o refraction or light
+travel time, assuming both sun and earth stationary *)
+
+
+Solve[mypos[d].{sx,sy,sz}==0,d,Reals]
+
+ellipseAreaFromFocus[a,b,t]
+
+InverseFunction[ellipseAreaFromFocus[a,b,t],t]
+
+Plot[ellipseMA2TA[1.2,1,ma],{ma,0,Pi}]
+
+t1808 = Table[{ma,ellipseMA2TA[1.2,1,ma]},{ma,0,Pi,Pi/1000}];
+
+f[x_] = Fit[t1808, {1,x,x^2,x^3},x]
+
+Plot[{f[ma],ellipseMA2TA[1.2,1,ma]},{ma,0,Pi}]
+
+ecc = Sqrt[1-(1/1.2)^2]
+
+Plot[{ellipseMA2XY[1.2,1,t][[1]]/1.2,Cos[t]},{t,0,2*Pi}]
+
+t0545 = sample[ellipseMA2XY[1.2,1,#][[1]]/1.2-Cos[#] &,0,2*Pi,1000]
+
+t0546 = sample[(Cos[2*#]-1)*ecc/2 &,0,2*Pi,1000]
+
+p0549 = Table[x^i,{i,0,6}]
+
+f0548[x_] = Fit[t0545,p0549,x]
+
+Plot[{Interpolation[t0545][x]+Interpolation[t0546][x],f0548[x]},{x,0,2*Pi}]
+
+
+
+
+

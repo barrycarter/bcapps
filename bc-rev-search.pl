@@ -17,4 +17,4 @@ if ($globopts{create}) {
 # TODO: allow more than one argument
 my($phrase) = @ARGV;
 $phrase = reverse($phrase);
-system("/home/barrycarter/BCGIT/bc-sgrep.pl '$phrase' /mnt/sshfs/revfiles.txt | rev");
+system("/home/barrycarter/BCGIT/bc-sgrep.pl --debug '$phrase' /mnt/sshfs/revfiles.txt | rev");
