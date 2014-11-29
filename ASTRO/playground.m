@@ -2720,6 +2720,48 @@ Plot[{f[ma],ellipseMA2TA[1.2,1,ma]},{ma,0,Pi}]
 
 ecc = Sqrt[1-(1/1.2)^2]
 
+
+(* 12 appears to be optimal below (or not) *)
+
+f0648[t_] := ellipseMA2XY[1.1,1,t][[1]];
+
+t0702 = sample[f0648,0,2*Pi,1000];
+
+f0705[x_] = Fit[t0702,Table[x^i,{i,0,2}],x] // InputForm
+
+
+
+
+Table[n!,{n,0,20}]*CoefficientList[f0705[x],x]
+
+ListPlot[CoefficientList[f0705[x],x],PlotJoined->True,PlotRange->All]
+
+Plot[{f0648[t],f0705[t]},{t,0,2*Pi}]
+
+(* for a=1.2, b=1:
+
+1.4118435352845478 - 1.6651297695749683*x + 0.26501363371732495*x^2
+
+a=1.1
+
+1.4235043781520018 - 1.578459236738001*x + 0.2512195899959131*x^2
+
+
+
+
+*)
+
+
+
+
+
+
+Plot[{f0648[t]/1.2-Cos[t]-(Cos[2*t]-1)*0.535146/2},{t,0,2*Pi}]
+
+t0656 = sample[f0648[#]/1.2-Cos[#]-(Cos[2*#]-1)*0.535146/2 &,0,2*Pi,1000]
+
+f0658[x_] = Fit[t0656,Table[x^i,{i,0,6}],x]
+
 Plot[{ellipseMA2XY[1.2,1,t][[1]]/1.2,Cos[t]},{t,0,2*Pi}]
 
 t0545 = sample[ellipseMA2XY[1.2,1,#][[1]]/1.2-Cos[#] &,0,2*Pi,1000]
