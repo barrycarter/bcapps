@@ -2723,37 +2723,61 @@ ecc = Sqrt[1-(1/1.2)^2]
 
 (* 12 appears to be optimal below (or not) *)
 
-f0648[t_] := ellipseMA2XY[1.1,1,t][[1]];
+a0814 = 1.022;
+
+ecc = Sqrt[1-1/a0814^2]
+
+f0648[t_] := ellipseMA2XY[a0814,1,t][[1]];
 
 t0702 = sample[f0648,0,2*Pi,1000];
 
-f0705[x_] = Fit[t0702,Table[x^i,{i,0,2}],x] // InputForm
+f0853[x_] = Fit[t0702,Table[Cos[n*x],{n,0,6}],x]
+
+f0955[x_] = Fit[t0702,Table[ChebyshevT[n,x],{n,0,6}],x]
+
+f0956[x_] = Fit[t0702,Table[x^n,{n,0,6}],x]
+
+Plot[{f0853[x]-f0648[x]},{x,0,2*Pi}]
+
+f0705[x_] = Fit[t0702,Table[x^i,{i,0,20}],x]
+
+Plot[f0648[t]-f0705[t],{t,0,2*Pi}]
+
+Plot[f0648[t]-a0814*Cos[t],{t,0,2*Pi}]
+
+Plot[{f0648[t]-a0814*Cos[t]-(ecc/2)*(Cos[2*t]-1)},{t,0,2*Pi}]
+
+Series[a0814*Cos[t]-(ecc/2)*(Cos[2*t]-1),{t,0,20}]
+
+(* for an ellipse with a,b pre-rotation, x only for now *)
+
+fx0843[a_,b_,t_] = a*Cos[t] + b*ellipseAB2E[a,b]/2*(Cos[2*t]-1)
 
 
 
+t0702 = sample[f0648[#]-Cos[#]-(ecc/2)*(Cos[2*#]-1) &,0,2*Pi,1000];
 
-Table[n!,{n,0,20}]*CoefficientList[f0705[x],x]
+f0826[x_] = Fit[t0702,Table[x^i,{i,0,6}],x]
 
-ListPlot[CoefficientList[f0705[x],x],PlotJoined->True,PlotRange->All]
+Plot[{f0826[t],Interpolation[t0702][t]},{t,0,2*Pi}]
 
-Plot[{f0648[t],f0705[t]},{t,0,2*Pi}]
+(* 
 
-(* for a=1.2, b=1:
+realistically, a=1.022 (ecc 0.206372) is the largest we'll see:
 
-1.4118435352845478 - 1.6651297695749683*x + 0.26501363371732495*x^2
+1.4623060218920325 - 1.4975249801145476*x + 0.23833850298882264*x^2
 
-a=1.1
+err up to 0.4+, cosine error is .20 (above), double cos error is .03
 
-1.4235043781520018 - 1.578459236738001*x + 0.2512195899959131*x^2
+10th deg: .0003 err
 
+8th deg: .008 err
+
+6th deg: .02 err
 
 
 
 *)
-
-
-
-
 
 
 Plot[{f0648[t]/1.2-Cos[t]-(Cos[2*t]-1)*0.535146/2},{t,0,2*Pi}]
@@ -2774,7 +2798,36 @@ f0548[x_] = Fit[t0545,p0549,x]
 
 Plot[{Interpolation[t0545][x]+Interpolation[t0546][x],f0548[x]},{x,0,2*Pi}]
 
+(* Sun/Moon/Earth JFF *)
 
+NDSolve[{
 
+ (* from NASA, ICRF2000, km and s on
+ 2457023.500000000 = A.D. 2015-Jan-01 00:00:00.0000 *)
+ 
+(* EARTH *)
 
+  -2.518093251638549E+07  1.327949054280765E+08  5.754641055834983E+07
+  -2.980233994481606E+01 -4.859672762093325E+00 -2.105837716452624E+00
 
+(* SUN *)
+
+   4.250119210295542E+05 -1.092065778824771E+05 -6.972086949195851E+04
+   6.882105685687786E-03  8.386463510315816E-03  3.452129224055193E-03
+
+(* MOON *)
+
+  -2.493673284195151E+07  1.330734168777016E+08  5.764600356317691E+07
+  -3.056658316901732E+01 -4.207149336797371E+00 -1.904942957747298E+00
+
+(* CONSTANTS *)
+
+6.67384 10-11 m3 kg-1 s-2 = G
+
+7.34767309 10^22 moon mass in kg
+
+5.972E24 kg earth mass
+
+1.989E30 kg sun mass
+
+}]
