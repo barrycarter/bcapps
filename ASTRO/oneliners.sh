@@ -1,5 +1,13 @@
 #!/bin/sh
 
+# this adds definitions for ephemeris values from the output of
+# bc-header-values.pl (I need to edit the output before inserting it
+# into README)
+
+bc-header-values.pl | perl -nle 'if (/^(.)D(.)/) {print "$_ D$1 of $2 at epoch"} elsif (/^(.)(.):/) {print "$_ $1 position of $2 at epoch"}'
+
+exit; 
+
 bzcat north-pole-from-geocenter.txt.bz2 | perl -nle 'if (/^(.*\.500000+)/) {print "{$1,"} elsif (s/(^\s*)(\-?\d\..*)$/$2/) {s/\s+/,/g;s/E/*10^/g; print "{$_}},"} sub BEGIN {print "list={";} sub END {print "};"}' > /tmp/math.m
 
 exit;

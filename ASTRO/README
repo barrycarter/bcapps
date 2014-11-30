@@ -1,1 +1,130 @@
-For astronomy stuff
+For astronomy stuff.
+
+Understanding some of the values in header.430_572:
+
+MASSES
+======
+
+TODO: figure out why they use such a weird mass measurement (probably
+has something to do w/ gravitational constant in AU-kg-d?)
+
+All masses are given as a fraction of 6.71968*10^33 kg (not sure why, this is approximately the gravitational constant in kg/m/s times 10^44
+
+In all cases, "mass of x" may mean "mass of x and its moons" (I'm not
+100% sure which it is).
+
+GM1: 0.491248045036476000D-10 mass of Mercury
+GM2: 0.724345233264412000D-09 mass of Venus
+GMB: 0.899701139019987100D-09 mass of Earth/Moon system
+GM4: 0.954954869555077000D-10 mass of Mars
+GM5: 0.282534584083387000D-06 mass of Jupiter
+GM6: 0.845970607324503000D-07 mass of Saturn
+GM7: 0.129202482578296000D-07 mass of Uranus
+GM8: 0.152435734788511000D-07 mass of Neptune
+GM9: 0.217844105197418000D-11 mass of Pluto
+GMS: 0.295912208285591100D-03 mass of Sun
+
+POSITIONS + VELOCITY
+====================
+
+For below, the epoch is 1969-Jun-28 00:00:00.0000 UTC = Julian day
+2440400.500000000 = Unix second -16156800 = Unix day -187
+
+Positions are in the ICRF J2000 reference frame in astronomical units
+(1AU = 149597870.700 km)
+
+XS: 0.450250878464055400D-02 X position of Sun at epoch
+YS: 0.767076427091007100D-03 Y position of Sun at epoch
+ZS: 0.266057917766977600D-03 Z position of Sun at epoch
+XDS: -0.351749536075523200D-06 DX of Sun at epoch
+YDS: 0.517762640983340500D-05 DY of Sun at epoch
+ZDS: 0.222910217891202900D-05 DZ of Sun at epoch
+X1: 0.361762716560282000D+00 X position of Mercury at epoch
+Y1: -0.907819721567660000D-01 Y position of Mercury at epoch
+Z1: -0.857149725627511600D-01 Z position of Mercury at epoch
+XD1: 0.336749397200575900D-02 DX of Mercury at epoch
+YD1: 0.248945205576834300D-01 DY of Mercury at epoch
+ZD1: 0.129463004097040900D-01 DZ of Mercury at epoch
+X2: 0.612751940835072200D+00 X position of Venus at epoch
+Y2: -0.348365369033622200D+00 Y position of Venus at epoch
+Z2: -0.195278286675943800D+00 Z position of Venus at epoch
+XD2: 0.109520684235282300D-01 DX of Venus at epoch
+YD2: 0.156176842678676800D-01 DY of Venus at epoch
+ZD2: 0.633110570297786400D-02 DZ of Venus at epoch
+XB: 0.120517414101384700D+00 X position of Earth-Moon barycenter at epoch
+YB: -0.925838474769148700D+00 Y position of Earth-Moon barycenter at epoch
+ZB: -0.401540226453152200D+00 Z position of Earth-Moon barycenter at epoch
+XDB: 0.168112683097837900D-01 DX of Earth-Moon barycenter at epoch
+YDB: 0.174830923073434400D-02 DY of Earth-Moon barycenter at epoch
+ZDB: 0.758202897383129100D-03 DZ of Earth-Moon barycenter at epoch
+X4: -0.110186077148798200D+00 X position of Mars at epoch
+Y4: -0.132759945030298300D+01 Y position of Mars at epoch
+Z4: -0.605889140484291400D+00 Z position of Mars at epoch
+XD4: 0.144816530570475700D-01 DX of Mars at epoch
+YD4: 0.242463076836468600D-03 DY of Mars at epoch
+ZD4: -0.281520727924338800D-03 DZ of Mars at epoch
+X5: -0.537970676855393700D+01 X position of Jupiter at epoch
+Y5: -0.830481326563397800D+00 Y position of Jupiter at epoch
+Z5: -0.224828874426565500D+00 Z position of Jupiter at epoch
+XD5: 0.109201259423733800D-02 DX of Jupiter at epoch
+YD5: -0.651811661280738400D-02 DY of Jupiter at epoch
+ZD5: -0.282078276229867900D-02 DZ of Jupiter at epoch
+X6: 0.789439068290953100D+01 X position of Saturn at epoch
+Y6: 0.459647805517127300D+01 Y position of Saturn at epoch
+Z6: 0.155869584283190000D+01 Z position of Saturn at epoch
+XD6: -0.321755651650091600D-02 DX of Saturn at epoch
+YD6: 0.433581034174662600D-02 DY of Saturn at epoch
+ZD6: 0.192864631686015500D-02 DZ of Saturn at epoch
+X7: -0.182654022538723600D+02 X position of Uranus at epoch
+Y7: -0.116195541867587000D+01 Y position of Uranus at epoch
+Z7: -0.250106057721338000D+00 Z position of Uranus at epoch
+XD7: 0.221190391015614700D-03 DX of Uranus at epoch
+YD7: -0.376247500810884400D-02 DY of Uranus at epoch
+ZD7: -0.165101502742995000D-02 DZ of Uranus at epoch
+X8: -0.160550357802333700D+02 X position of Neptune at epoch
+Y8: -0.239421915598547100D+02 Y position of Neptune at epoch
+Z8: -0.940015796880239500D+01 Z position of Neptune at epoch
+XD8: 0.264276984798005500D-02 DX of Neptune at epoch
+YD8: -0.149831255054097800D-02 DY of Neptune at epoch
+ZD8: -0.679041960802913300D-03 DZ of Neptune at epoch
+X9: -0.304833137671838400D+02 X position of Pluto at epoch
+Y9: -0.872405556841050100D+00 Y position of Pluto at epoch
+Z9: 0.891157617249955100D+01 Z position of Pluto at epoch
+XD9: 0.322207373497780800D-03 DX of Pluto at epoch
+YD9: -0.314357639364532900D-02 DY of Pluto at epoch
+ZD9: -0.107794975959731300D-02 DZ of Pluto at epoch
+XM: -0.808177351478184900D-03 X position of Earth's moon at epoch (wrt Earth)
+YM: -0.199462998549701300D-02 Y position of Earth's moon at epoch (wrt Earth)
+ZM: -0.108726268307068900D-02 Z position of Earth's moon at epoch (wrt Earth)
+XDM: 0.601084815614223700D-03 DX of Earth's moon at epoch (wrt Earth)
+YDM: -0.167445469157649800D-03 DY of Earth's moon at epoch (wrt Earth)
+ZDM: -0.855621414009487100D-04 DZ of Earth's moon at epoch (wrt Earth)
+XC: 0.000000000000000000D+00 X position of Ceres (asteroid) at epoch (unused)
+YC: 0.000000000000000000D+00 Y position of Ceres (asteroid) at epoch (unused)
+ZC: 0.000000000000000000D+00 Z position of Ceres (asteroid) at epoch (unused)
+XDC: 0.000000000000000000D+00 DX of Ceres (asteroid) at epoch (unused)
+YDC: 0.000000000000000000D+00 DY of Ceres (asteroid) at epoch (unused)
+ZDC: 0.000000000000000000D+00 DZ of Ceres (asteroid) at epoch (unused)
+
+GMx = the mass of item x (1 = Mercury, B = earth/moon, S = sun, etc)
+relative to 6.71968*10^33 kg (no idea why they chose this value, it
+appears to be the gravitational constant times 10^44 or so)
+
+Xn Yn Zn = the X Y and Z positions of the nth item at some point in time
+
+XDn YDn ZDn = the derivatives of the x y z positions of the nth item at 2440400.500000000 = A.D. 1969-Jun-28 00:00:00.0000 (CT)
+
+
+
+These are all in http://iau-comm4.jpl.nasa.gov/XSChap8.pdf but a
+different format (for DE405, not DE430/431)
+
+
+
+
+
+
+
+
+
+Source: http://iau-comm4.jpl.nasa.gov/XSChap8.pdf
