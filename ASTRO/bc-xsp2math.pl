@@ -9,8 +9,8 @@ require "/usr/local/lib/bclib.pl";
 # print xsp2math("de430", 1, 0, 86400*366*60);
 
 # print xsp2math("de430", 10, 0, 86400*366*60);
-print xsp2math("de430", 1, 0, 86400*365);
-print xsp2math("de430", 10, 0, 86400*365);
+print xsp2math("de430", 1, 0, 86400*365*100);
+# print xsp2math("de430", 10, 0, 86400*365);
 
 die "TESTING";
 
@@ -200,7 +200,7 @@ sub nasa_sec {
 sub read_coeffs {
   my($fh, $stime, $etime, $hashref) = @_;
   # @pw = piecewise
-  my(@ret,@pw,@convs,@ranges,@piecewise);
+  my(@ret,@pw,@convs,@ranges,@piecewise,@raw);
 
   # interval is the delimiter in decimal form
   my($int) = ieee754todec($hashref->{boundary});
@@ -232,6 +232,8 @@ sub read_coeffs {
   # the null entry causes problems
   delete $hash{""};
 
+  debug("HASH",unfold({%hash}));
+
   # convenience variables
   my($target, $center) = ($hashref->{target}, $hashref->{center});
 
@@ -262,19 +264,20 @@ sub read_coeffs {
       for $k (0..$hashref->{ncoeffs}-1) {
 	# the current coefficient
 	my($coeff) = ieee754todec(shift(@{$hash{$i}}), "mathematica=1");
+	debug("COEFF: $coeff");
       # TODO: keep raw polys around too, not just converted ones
-#	push(@cheb2, "$coeff*ChebyshevT[$k, w]");
+	push(@cheb2, "$coeff*ChebyshevT[$k, w]");
 	push(@cheb, "$coeff*ChebyshevT[$k, conv[$int][$i][w]]");
       }
 
       my($cheb) = join("+\n", @cheb);
-#      my($cheb2) = join("+\n", @cheb2);
+      my($cheb2) = join("+\n", @cheb2);
 
-      push(@ret, "AppendTo[parray[$j,$target,$center], 
-                  {$cheb, range[$int][$i][w]}]");
+#      push(@ret, "AppendTo[parray[$j,$target,$center], 
+#                  {$cheb, range[$int][$i][w]}]");
 
       # an array of polynomials
-#      push(@ret, "AppendTo[parray[$j,$target,$center], $cheb2];");
+      push(@ret, "AppendTo[parray[$j,$target,$center], $cheb2];");
 
 #      push(@pw, "{Function[w,$cheb], range[$int][$i][t]}");
 
@@ -295,10 +298,10 @@ sub read_coeffs {
     }
   }
 
-  for $j ("x","y","z") {
-    push(@ret,"pos[$j,$target,$center][w_] = 
-               Piecewise[parray[$j,$target,$center]]");
-  }
+#  for $j ("x","y","z") {
+#    push(@ret,"pos[$j,$target,$center][w_] = 
+#               Piecewise[parray[$j,$target,$center]]");
+#  }
 
 #  my($pw) = join(",\n", @pw);
 #  debug("<pw>$pw</pw>");

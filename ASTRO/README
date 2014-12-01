@@ -5,13 +5,15 @@ Understanding some of the values in header.430_572:
 MASSES (planets)
 ================
 
-TODO: figure out why they use such a weird mass measurement (probably
-has something to do w/ gravitational constant in AU-kg-d?)
+Planetary masses are given as "mass parameters" in AU^3/day^2 per
+http://ilrs.gsfc.nasa.gov/docs/2014/196C.pdf
 
-All masses are given as a fraction of 6.71968*10^33 kg (not sure why,
-this is approximately the gravitational constant in kg/m/s times 10^44
+A mass parameter of 1 = 6.72006*10^33 kg
 
-According to http://ilrs.gsfc.nasa.gov/docs/2014/196C.pdf these are "mass parameters" in AU^3/day^2
+This number is:
+
+((AU in meters)^3/(length of day in seconds)^2)/(gravitational
+constant in m^3/kg/s^2)
 
 In all cases, "mass of x" may mean "mass of x and its moons" (I'm not
 100% sure which it is).
