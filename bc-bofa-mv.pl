@@ -11,7 +11,7 @@ require "/usr/local/lib/bclib.pl";
 for $i (@ARGV) {
   debug("I: $i");
 
-  # for vanguard, it might be possible to get directly from PDF
+  # for some, it might be possible to get directly from PDF
   my($pdf) = read_file($i);
 
   unless (-f "$i.txt") {warnlocal("NO TEXT VERSION: $i"); next;}
@@ -24,9 +24,8 @@ for $i (@ARGV) {
     $fname = handle_ally($all);
   } elsif ($all=~/pnm\.com/i) {
     $fname = handle_pnm($all);
-  } elsif ($pdf=~/^%%DOC.*RPSS\d+[A-Z]\d+/m) {
-    # TODO: are there non vanguard documents with the regex above?
-    $fname = handle_vanguard($pdf);
+  } elsif ($pdf=~/Registered to: VANGUARD/m) {
+    $fname = handle_vanguard($all);
   } elsif ($all=~/PayPal Account ID/) {
     $fname = handle_paypal($all);
   } elsif ($all=~/nmefcu/i) {
@@ -34,6 +33,7 @@ for $i (@ARGV) {
   } elsif ($all=~/www\.mtb\.com/i) {
     $fname = handle_mtb($all);
   } elsif ($all=~/COMCAST/) {
+    # TODO: this catches statements where comcast is listed = bad
     $fname = handle_comcast($all);
   } else {
     warnlocal("Cannot rename: $i");
@@ -110,31 +110,11 @@ sub handle_paypal {
 }
 
 sub handle_vanguard {
-  my($pdf) = @_;
+  my($all) = @_;
 
-  # look for odd code (must be caps)
-  unless ($pdf=~/^%%DOC.*RPSS\d+[A-Z](\d+)/m) {
-    warnlocal("NO MATCH IN $i");
-    return;
-  }
-
-  return strftime("vanguard-%m-%d-%Y.pdf", gmtime(str2time($1)+43200)); 
-
-return;
-
-
-  my($date);
-
-  if ($all=~/(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)(.*?\d{4})\,*\s+year-to-date/im) {
-    $date = "$1$2";
-  } elsif ($all=~/ending balance on ([\d\/]+)/is) {
-    $date = $1;
-  } else {
-    warnlocal("CANNOT PARSE!");
-    return;
-  }
-
-  return strftime("vanguard-%m-%d-%Y.pdf", gmtime(str2time($date)));
+  # first three words
+  $all=~/^([A-Z][a-z]+\s+\d+\s*,\s*\d+)/s;
+  return strftime("vanguard-%m-%d-%Y.pdf", gmtime(str2time($1)+43200));
 }
 
 sub handle_pnm {
