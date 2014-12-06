@@ -9,7 +9,7 @@ require "/usr/local/lib/bclib.pl";
 # print xsp2math("de430", 1, 0, 86400*366*60);
 
 # print xsp2math("de430", 10, 0, 86400*366*60);
-print xsp2math("de430", 1, 0, 86400*365*100);
+print xsp2math("de430", 1, 0, 86400*365*10);
 # print xsp2math("de430", 10, 0, 86400*365);
 
 die "TESTING";
@@ -172,12 +172,12 @@ sub nasa_sec {
   # find delimiter
   if ($dir == -1) {
     while ($i = scalar(current_line($fh, "\n", -1))) {
-      debug("REV: $i");
+#      debug("REV: $i");
       if ($i eq $delim) {last;}
     }
   } else {
     while ($i = scalar(<$fh>)) {
-      debug("FOR: $i");
+#      debug("FOR: $i");
       if ($i eq $delim) {last;}
     }
   }
@@ -203,20 +203,32 @@ sub read_coeffs {
   my(@ret,@pw,@convs,@ranges,@piecewise,@raw);
 
   # interval is the delimiter in decimal form
+  map(chomp($_), values %{$hashref});
   my($int) = ieee754todec($hashref->{boundary});
   my($time, %hash);
 
   # read elements, do special things if we see $delim
   while (my($i)=scalar<$fh>) {
+    chomp($i);
 
     # ignore things outside quotes
     unless ($i=~/^\'/) {next;}
 
     # push most elts to array of current time
     unless ($i eq $hashref->{boundary}) {
+      debug("I: $i, TIME: $time");
       push(@{$hash{$time}},$i);
       next;
     }
+
+    debug("BOUND: $i");
+
+    # TEST: handle arrays one at a time, no need to memorize them
+#    write_coeffs($hash{$time}, $hashref);
+
+#    if (++$count>4) {die "ESTING";}
+
+#    next; 
 
     # if this elt is delim, last elt was time, so set new time
     # this allows removes the time (which isn't a coeff) from the prev array
@@ -233,6 +245,7 @@ sub read_coeffs {
   delete $hash{""};
 
   debug("HASH",unfold({%hash}));
+#  die "TESTING";
 
   # convenience variables
   my($target, $center) = ($hashref->{target}, $hashref->{center});
@@ -247,12 +260,11 @@ sub read_coeffs {
   t<= 21915/2 + (i+int)/86400)");
   push(@ret, "conv[int_][i_][t_] = 86400*(t-(i+946728000)/86400)/int");
 
-
   # TODO: make this initialization less kludgey
   # the array of piecewise
 
   for $j ("x","y","z") {
-    push(@ret, "parray[$j,$target,$center] = {}");
+#    push(@ret, "parray[$j,$target,$center] = {}");
   }
 
   # now, handle coefficients for each time period
@@ -277,35 +289,35 @@ sub read_coeffs {
 #                  {$cheb, range[$int][$i][w]}]");
 
       # an array of polynomials
-      push(@ret, "AppendTo[parray[$j,$target,$center], $cheb2];");
+#      push(@ret, "AppendTo[parray[$j,$target,$center], $cheb2];");
 
-#      push(@pw, "{Function[w,$cheb], range[$int][$i][t]}");
+      push(@pw, "{Function[w,$cheb], range[$int][$i][t]}");
 
       # NOTE: do not move "/;" to the next line, it breaks stuff
-#      push(@ret, "poly[$j,$target,$center,t_] := Function[w, $cheb] /;
-#      range[$int][$i][t];");
+      push(@ret, "poly[$j,$target,$center,t_] := Function[w, $cheb] /;
+      range[$int][$i][t];");
 
-#      push(@ret, "eval[$j,$target,$center,w_] := $cheb /;
-#      range[$int][$i][w];");
+      push(@ret, "eval[$j,$target,$center,w_] := $cheb /;
+      range[$int][$i][w];");
 
 #      push(@ret, "raw[$j][$target][$center][t_] := Function[w, $cheb2] /;
 #      range[$int][$i][t];");
 
-#     push(@ret, "pos[$j,$target,$center,w] = Piecewise[{");
-#      push(@ret, join(",\n", @piecewise));
+#      push(@ret, "pos[$j,$target,$center,w] = Piecewise[{");
+#      push(@ret, join(",\n", @pw));
 #      push(@ret, "}];\n");
-#      @piecewise = ();
+#      @pw = ();
     }
   }
 
-#  for $j ("x","y","z") {
+  for $j ("x","y","z") {
 #    push(@ret,"pos[$j,$target,$center][w_] = 
 #               Piecewise[parray[$j,$target,$center]]");
-#  }
+  }
 
 #  my($pw) = join(",\n", @pw);
 #  debug("<pw>$pw</pw>");
-  return join(";\n", @ret).";\n";
+  return join("\n", @ret).";\n";
 }
 
 # given open filehandle to SPK file (with arrays of type 2 or 3 only),
@@ -363,4 +375,12 @@ sub spk_array_info {
 
   # PEDANTIC: this is really a list, but ok if receiver treats it as hash
   return %hash;
+}
+
+sub write_coeffs {
+  my($lref, $href) = @_;
+  my(@arr) = @$lref;
+  my(%hash) = %$href;
+
+  debug("ARR",@arr,"HASH",%hash);
 }

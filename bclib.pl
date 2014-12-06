@@ -4470,7 +4470,7 @@ sub current_line {
   if (tell($fh)) {
     $pos = tell($fh);
     seek($fh,+2,1);
-}
+  }
 
   # and now scan forwards
   do {
