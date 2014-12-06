@@ -20,16 +20,41 @@ Simplify[xyz2sph[
  rotationMatrix[y,Pi/2-lat].rotationMatrix[z,h].sph2xyz[{-ra,dec,1}]
 ] /. ArcTan[x_,y_] -> ArcTan[y/x]]
 
-Simplify[xyz2sph2[
+temp1023 = Simplify[xyz2sph2[
  rotationMatrix[y,Pi/2-lat].rotationMatrix[z,h].sph2xyz[{-ra,dec,1}]
 ], {Element[ra,Reals], Element[dec,Reals], 
-Element[lat,Reals], Element[h, Reals]}]
+Element[lat,Reals], Element[h, Reals]}] /. (h-ra) -> ha;
+
+Plot[temp1023[[1]] - ha /. 
+ {lat -> 40*Degree, dec -> 22*Degree},
+ {ha,Pi/2,3*Pi/2}]
+
+Plot[Tan[temp1023[[1]]] /.
+ {lat -> 40*Degree, dec -> 22*Degree},
+ {ha,0,2*Pi}
+]
+
+temp1023[[1]] /. {ha -> ra-gmst[d]+lon} // InputForm
+
+azimuth[ra_,dec_,lat_,lon_,d_] = 
+ArcTan[(Cos[dec]*Sin[lon - ((-4394688633775234485 + 401095163740318*d)*Pi)/
+      200000000000000 + ra])/(-(Cos[lat]*Sin[dec]) + 
+   Cos[dec]*Cos[lon - ((-4394688633775234485 + 401095163740318*d)*Pi)/
+       200000000000000 + ra]*Sin[lat])]
+
+(* testing formula above *)
+
+azimuth[0,0,0,0,0]
+
+
 
 Simplify[xyz2sph2[
  rotationMatrix[y,Pi/2-lat].rotationMatrix[z,h].sph2xyz[{-ra,dec,1}],
 {Element[ra, Reals], Element[dec, Reals]}]] /. h-ra -> ha
 
+(* using "pure" formula, but taking out constants *)
 
+ra-gmst[d]+lon
 
 
 
