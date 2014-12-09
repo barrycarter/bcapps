@@ -1,3 +1,56 @@
+(* 12/07/14: attempting to generalize what I've found below for a
+single orbit *)
+
+(* using memoization as these are slow to compute *)
+
+s[t_] := s[t] = {eval[x,1,0,t],eval[y,1,0,t],eval[z,1,0,t]};
+
+v[t_] := v[t] = {D[poly[x,1,0,t][w],w], D[poly[y,1,0,t][w],w], 
+ D[poly[z,1,0,t][w],w]} /. w -> t
+
+a[t_] := a[t] = {D[poly[x,1,0,t][w],w,w], D[poly[y,1,0,t][w],w,w], 
+ D[poly[z,1,0,t][w],w,w]} /. w -> t
+
+Plot[Norm[s[t]]^2*Norm[a[t]],{t,0,365}]
+
+(* this is a quasi orbit, not necessarily real; starting values below
+= cheating *)
+
+t0 = t /. NMinimize[Norm[s[t]]^2*Norm[a[t]],{t,20,40}][[2]]
+t1 = t /. NMinimize[Norm[s[t]]^2*Norm[a[t]],{t,100,150}][[2]]
+
+(* t1-t0 = 89.8108 which is quite different from orbital period, hmmm *)
+
+(* find average of quantity *)
+
+gm = NIntegrate[Norm[s[t]]^2*Norm[a[t]],{t,t0,t1}]/(t1-t0);
+
+(* formula for radius *)
+
+r[t_] := r[t] = Sqrt[gm/Norm[a[t]]];
+
+(* and center *)
+
+c[t_] := c[t] = s[t] + r[t]*(a[t]/Norm[a[t]]);
+
+ParametricPlot3D[c[t],{t,t0,t1}]
+
+(* equal area sweeping from barycenter or new center? *)
+
+(* I'm doing this fundamentally wrong somehow *)
+
+area[x_] := NIntegrate[r[t],{t,t0+x,t0+x+1}];
+
+(* this is NOT very even *)
+
+Plot[area[t],{t,0,t1-t0-1}]
+
+area2[x_] := NIntegrate[Norm[s[t]-c[t]],{t,t0+x,t0+x+1}];
+
+(* and, sadly, neither is this *)
+
+Plot[area2[t],{t,0,t1-t0-1}]
+
 (* acceleration and velocity in terms of finding a gravitation object *)
 
 (* this is using eval[] from bc-xsp2math.pl *)

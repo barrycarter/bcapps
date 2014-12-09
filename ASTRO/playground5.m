@@ -28,11 +28,6 @@ N[f1151[23,35]*60*60]/69.0412
 
 Plot[f1151[23,lat]*60*60/69.0412,{lat,0,90}]
 
-
-
-
-
-
 Plot[2*ArcCos[-Tan[dec*Degree]*Tan[35*Degree]]/2/Pi*24,{dec,-90,90}]
 
 raDec2AzEl[ra_,dec_,lat_,lon_,d_] = 
