@@ -30,6 +30,18 @@ raDec2AzEl[ra_,dec_,lat_,lon_,d_] =
 
 (* Canon ends here *)
 
+(* Chebyshev vs cosine *)
+
+ArcCos[ChebyshevT[n,t]]
+
+Plot[{ChebyshevT[2,t],-Cos[Pi*t]},{t,-1,1}]
+
+tab0506 = sample[ChebyshevT[2,#]&, -1, 1, 10000];
+
+for0506 = Fourier[Transpose[tab0506][[2]]];
+
+ListPlot[Abs[for0506],PlotRange->All]
+
 (* yet more precession *)
 
 rotationMatrix[z,zr].rotationMatrix[y,yr].{0,0,epr}/epr

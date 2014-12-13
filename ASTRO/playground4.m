@@ -1,6 +1,27 @@
 (* 12/07/14: attempting to generalize what I've found below for a
 single orbit *)
 
+(* dtheta using dot products *)
+
+derv[t_, delta_] = 
+ ArcCos[s[t-delta].s[t+delta]/Norm[s[t-delta]]/Norm[s[t+delta]]]/2/delta;
+
+Plot[derv[5,dx],{dx,0,1}]
+
+Plot[derv[t,.01],{t,0,365}]
+Plot[Norm[s[t]],{t,0,365}]
+
+(* number below is very nearly constant *)
+
+Plot[Norm[s[t]]^2*derv[t,.01],{t,0,365}]
+
+(* experiment below to find better focus *)
+
+(* below does weird but unhelpful things *)
+
+Plot[Norm[s[t]+{-712222., -288357., -79737.9}]^2*derv[t,.01],{t,0,365}]
+
+
 (* using memoization as these are slow to compute *)
 
 s[t_] := s[t] = {eval[x,1,0,t],eval[y,1,0,t],eval[z,1,0,t]};
