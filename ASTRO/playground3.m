@@ -16,6 +16,46 @@ FindRoot[dervz[t]==0,{t,0,8}]
 t0516 = t /. DeleteCases[Table[If[Sign[dervz[n]] != Sign[dervz[n+8]],
 FindRoot[dervz[t]==0,{t,n+4}], 0], {n,0,365*9.5+44,8}],0]
 
+(* given 3 times, of zmax, zmin and next zmax, determine some angles *)
+
+m0708[t0_,t1_,t2_] := Module[{st0, st1, stavg},
+
+ (* first, we find the center the orbit *)
+
+ st0 = {eval[x,1,0,t0],eval[y,1,0,t0],eval[z,1,0,t0]};
+ st1 = {eval[x,1,0,t1],eval[y,1,0,t1],eval[z,1,0,t1]};
+ stavg = (st0+st1)/2;
+
+ (* now, the angle from maxz to ICRF 2000 *)
+
+ angz = ArcTan[st0[[1]],st0[[2]]];
+
+ (* and the inclination angle to ICRF 2000 *)
+
+ (* adjusted st0, for vertical centering and spin by -angz *)
+
+ st2 = rotationMatrix[z,-angz].(st0-{0,0,stavg[[3]]});
+
+ zan = ArcTan[st2[[1]],st2[[3]]];
+
+]
+
+(* does this work? *)
+
+s2[t_] := rotationMatrix[z,-angz].s[t];
+
+s3[t_] := rotationMatrix[y,-zan].rotationMatrix[z,-angz].s[t];
+
+Plot[{s3[t][[3]],s[t][[3]]},{t,10,999}]
+
+(* flattening is imperfect? *)
+
+s2[t_] := rotationMatrix[y,-zan+5*Degree].rotationMatrix[z,-angz].s[t];
+s2[t_] := rotationMatrix[y,-zan+7*Degree].rotationMatrix[z,-angz].s[t];
+
+
+
+
 (* length is 80, so this is 40 orbits, and its actually not super
 close to mercury's true orbital period, hmmm, about a day off! *)
 
