@@ -1,12 +1,146 @@
 (* determining orbits/etc directly from chebyshev polynomials *)
 
+s[t_] := s[t] = {eval[x,1,0,t],eval[y,1,0,t],eval[z,1,0,t]};
+
+pos[x,t_] := s[t][[1]];
+pos[y,t_] := s[t][[2]];
+pos[z,t_] := s[t][[3]];
+
+(* trying a "centralist" approach again, and will use a and b to find focus *)
+
+derv[x,t_] := D[poly[x,1,0,t][w],w] /. w -> t;
+derv[y,t_] := D[poly[y,1,0,t][w],w] /. w -> t;
+derv[z,t_] := D[poly[z,1,0,t][w],w] /. w -> t;
+
+tab[var_] := tab[var] = t /. DeleteCases[Table[If[Sign[derv[var,n]] !=
+Sign[derv[var,n+8]], FindRoot[derv[var,t]==0,{t,n+4}], 0],
+{n,0,365*9.5+44,8}],0];
+
+tab[x];tab[y];tab[z];
+
+poss[i_] := poss[i] = Map[pos[i,#]&, tab[i]];
+
+poss[x];poss[y];poss[z];
+
+(* correction vectors *)
+
+corr = Table[{
+ Mean[{poss[x][[i]],poss[x][[i+1]]}],
+ Mean[{poss[y][[i]],poss[y][[i+1]]}],
+ Mean[{poss[z][[i]],poss[z][[i+1]]}]
+}, {i,1,Length[poss[x]],2}]
+
+(* the modified orbit, first orbit *)
+
+s2[t_] := s[t] - corr[[1]];
+
+(* max z for first orbit *)
+
+t0 = tab[z][[1]];
+
+(* the angle at which z reaches max *)
+
+anzmax = ArcTan[s2[t0][[1]],s2[t0][[2]]];
+
+(* and what that angle actually is *)
+
+zmaxang = ArcTan[Norm[Take[s2[t0],2]], s2[t0][[3]]];
+
+(* apply the transform matrix *)
+
+s3[t_] := rotationMatrix[y,-zmaxang].rotationMatrix[z,-anzmax].s2[t];
+
+(* find the min and max for the first and second half-orbits *)
+
+xymaxmin = t /. Transpose[{
+NMaximize[{Norm[s3[t]],t>tab[z][[1]],t<tab[z][[2]]}, t],
+NMaximize[{Norm[s3[t]],t>tab[z][[2]],t<tab[z][[3]]}, t],
+NMinimize[{Norm[s3[t]],t>tab[z][[1]],t<tab[z][[2]]}, t],
+NMinimize[{Norm[s3[t]],t>tab[z][[2]],t<tab[z][[3]]}, t]
+}][[2]];
+
+(* angle at which the max norm occurs (first one) *)
+
+maxnorm1 = s3[xymaxmin[[1]]];
+
+mna = ArcTan[maxnorm1[[1]],maxnorm1[[2]]];
+
+s4[t_] := rotationMatrix[z,-mna].s3[t];
+
+ParametricPlot[Take[s4[t],2], {t,tab[z][[1]],tab[z][[3]]}]
+
+ParametricPlot[Take[s4[t],2], {t,xymaxmin[[1]],xymaxmin[[2]]}]
+
+(* semimajor and semiminor axes *)
+
+sma = Norm[s4[xymaxmin[[1]]]]
+smi = Norm[s4[xymaxmin[[3]]]]
+
+(* eccentricity match is good! *)
+
+ellipseAB2E[sma,smi]
+
+(* matches below are unsurprising since we planned it that way *)
+
+ellipseMA2XY[sma,smi,0]
+s4[xymaxmin[[1]]]
+
+ellipseMA2XY[sma,smi,Pi]
+s4[xymaxmin[[2]]]
+
+ellipseMA2XY[sma,smi,Pi/2]
+s4[Mean[Take[xymaxmin,2]]]
+
+Plot[s4[t][[1]],{t,50.4818,94.6935}]
+
+Plot[ellipseMA2XY[sma,smi,t][[2]],{t,0,Pi}]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Plot[Norm[s3[t]],{t,tab[z][[1]],tab[z][[3]]}]
+
+
+
+
+
+(* find average of min/max per orbit *)
+
+Table[
+ {x[tab[x][[i]]], x[tab[x][[i+1]]]},
+{i,1,Length[tab[x]]}
+]
+
+
+
+Mean[{tab[x][[i]],tab[x][[i+1]]}],{i,Length[tab[x]],2}]
+
+
+
+
 (* min/max z values of mercury's orbit *)
 
 t0450 = Table[NMaximize[{Abs[eval[z,1,0,t]],t>n,t<n+8},t],{n,0,36,8}];
 
 t0450 = Table[NMaximize[{eval[z,1,0,t],t>n,t<n+8},t],{n,0,365,8}];
 
-dervz[t_] := D[poly[z,1,0,t][w],w] /. w -> t;
 
 
 FindRoot[dervz[t]==0,{t,0,8}]
