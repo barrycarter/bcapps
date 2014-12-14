@@ -2,15 +2,48 @@
 
 s[t_] := s[t] = {eval[x,1,0,t],eval[y,1,0,t],eval[z,1,0,t]};
 
+(* the chebyshev interval for mercury *)
+
+days = 8;
+
+(* min and max days *)
+
+{mind,maxd} = {0,365*9};
+
+(* we will arbitrarily use successive maxs of x value to determine an orbit *)
+
+(* TODO: can I do better? *)
+
+derv[x,t_] := D[poly[x,1,0,t][w],w] /. w -> t;
+derv[y,t_] := D[poly[y,1,0,t][w],w] /. w -> t;
+derv[z,t_] := D[poly[z,1,0,t][w],w] /. w -> t;
+
+(* the orbits *)
+
+orbits = t /. DeleteCases[Table[If[Sign[derv[x,n]] !=
+Sign[derv[x,n+8]], FindRoot[derv[x,t]==0,{t,n+4}], 0],
+{n,mind,maxd,days}],0];
+
+(* TODO: this changes each time, this is orbit1 = elts 1-3 *)
+
+{t0,t1} = Take[orbits,{1,3,2}];
+
+(* days of xmin and xmax we know *)
+
+xavg = Mean[Map[s[#][[1]]&,Take[orbits,2]]];
+
+{ymin,ymax} = t /. Transpose[{NMinimize[{s[t][[2]],t>t0,t<t1},t], 
+               NMaximize[{s[t][[2]],t>t0,t<t1},t]}][[2]];
+
+
+
+
+
 pos[x,t_] := s[t][[1]];
 pos[y,t_] := s[t][[2]];
 pos[z,t_] := s[t][[3]];
 
 (* trying a "centralist" approach again, and will use a and b to find focus *)
-
-derv[x,t_] := D[poly[x,1,0,t][w],w] /. w -> t;
-derv[y,t_] := D[poly[y,1,0,t][w],w] /. w -> t;
-derv[z,t_] := D[poly[z,1,0,t][w],w] /. w -> t;
 
 tab[var_] := tab[var] = t /. DeleteCases[Table[If[Sign[derv[var,n]] !=
 Sign[derv[var,n+8]], FindRoot[derv[var,t]==0,{t,n+4}], 0],
