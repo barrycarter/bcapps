@@ -32,8 +32,157 @@ Sign[derv[x,n+8]], FindRoot[derv[x,t]==0,{t,n+4}], 0],
 
 xavg = Mean[Map[s[#][[1]]&,Take[orbits,2]]];
 
-{ymin,ymax} = t /. Transpose[{NMinimize[{s[t][[2]],t>t0,t<t1},t], 
-               NMaximize[{s[t][[2]],t>t0,t<t1},t]}][[2]];
+yavg = Mean[Transpose[{NMinimize[{s[t][[2]],t>t0,t<t1},t], 
+           NMaximize[{s[t][[2]],t>t0,t<t1},t]}][[1]]];
+
+(* need both time and quantity for zmax *)
+
+zavgs={NMinimize[{s[t][[3]],t>t0,t<t1},t],NMaximize[{s[t][[3]],t>t0,t<t1},t]};
+
+zmaxtime = t /. zavgs[[2,2]];
+
+zavg = Mean[Transpose[zavgs][[1]]]
+
+(* modified position *)
+
+s2[t_] := s[t] - {xavg,yavg,zavg};
+
+ParametricPlot3D[{s[t],s2[t]},{t,t0,t1}]
+
+(* angle of max z value from ICRF equator and then inclination angle *)
+
+anzmax = ArcTan[s2[zmaxtime][[1]],s2[zmaxtime][[2]]];
+
+zmaxang = ArcTan[Norm[Take[s2[zmaxtime],2]], s2[zmaxtime][[3]]];
+
+(* rotations to flatten ellipse *)
+
+s3[t_] := rotationMatrix[y,-zmaxang].rotationMatrix[z,-anzmax].s2[t];
+
+(* TODO: maybe split multi-orbit period into equal number of sections *)
+
+Plot[{s2[t][[3]],s3[t][[3]]},{t,t0,t1}]
+
+(* now rotate max norm in first half-orbit to be x axis *)
+
+Plot[Norm[s3[t]],{t,t0,(t0+t1)/2}]
+
+(* these can be ugly, since there should be 2 of each *)
+
+maxnorm = NMaximize[{Norm[s3[t]], t>t0, t<t1}, t];
+
+minnorm = NMinimize[{Norm[s3[t]], t>t0, t<t1}, t];
+
+(* the a and b values of the ellipse *)
+
+ela = maxnorm[[1]];
+elb = minnorm[[1]];
+
+(* argument when maxnorm occurs *)
+
+maxnormtime = t /. maxnorm[[2]];
+
+anmn = ArcTan[s3[maxnormtime][[1]],s3[maxnormtime][[2]]];
+
+(* and adjust *)
+
+s4[t_] := rotationMatrix[z,-anmn].s3[t];
+
+ParametricPlot[{s4[t][[1]],s4[t][[2]]},{t,t0,t1}]
+
+(* compare to ellipse *)
+
+ellipseMA2XY[ela,elb, 0]
+s4[maxnormtime]
+
+ellipseMA2XY[ela,elb, Pi/2]
+s4[maxnormtime+(t1-t0)/4]
+
+(* convert days to mean anomaly *)
+
+ma[t_] = (t-maxnormtime)/(t1-t0)*2*Pi
+
+ellipseMA2XY[ela, elb, ma[t0]]
+s4[t0]
+
+(* these are very good approximations *)
+
+Plot[{ellipseMA2XY[ela, elb, ma[t]][[1]], s4[t][[1]]}, {t,t0,t1}]
+Plot[{ellipseMA2XY[ela, elb, ma[t]][[2]], s4[t][[2]]}, {t,t0,t1}]
+
+Plot[{ellipseMA2XY[ela, elb, ma[t]][[1]]-s4[t][[1]]}, {t,t0,t1}]
+Plot[{ellipseMA2XY[ela, elb, ma[t]][[2]]-s4[t][[2]]}, {t,t0,t1}]
+
+(* modularizing *)
+
+(*
+
+Input to module:
+
+s - function representing position at time t
+t0 - start of orbit (x=0)
+t1 - end of orbit (x=0) = start of next orbit
+
+Returns:
+
+central point of orbit (not focus)
+the angle from the equator the max value of z
+the inclination
+the lengths of the semimajor and semiminor axes
+angle to reach maxnorm
+
+*)
+
+mod[s_,t0_,t1_] := Module[{rawavgs, s1, zmaxtime, angatzmax, zmaxangle,
+ s2, minmaxnorm, maxnormtime, maxnormangle},
+
+ (* averages *)
+
+ rawavgs = Table[{NMinimize[{s[t][[i]],t>t0,t<t1},t],
+                  NMaximize[{s[t][[i]],t>t0,t<t1},t]}, {i,1,3}];
+
+ (* subtract off true averages *)
+
+ s1[t_] := s[t] - Table[Mean[{rawavgs[[i,1,1]],rawavgs[[i,2,1]]}],{i,1,3}];
+
+ (* angle of max z from ICRF equator and inclination *)
+
+ zmaxtime = rawavgs[[3,2,2,1,2]];
+ angatzmax = ArcTan[s1[zmaxtime][[1]],s1[zmaxtime][[2]]];
+ zmaxangle = ArcTan[Norm[Take[s1[zmaxtime],2]], s1[zmaxtime][[3]]];
+
+ (* ellipse flattening *)
+
+ s2[t_] := rotationMatrix[y,-zmaxangle].rotationMatrix[z,angatzmax].s1[t];
+
+ (* norm min and max *)
+
+ minmaxnorm = {NMinimize[{Norm[s2[t]], t>t0, t<t1}, t], 
+               NMaximize[{Norm[s2[t]], t>t0, t<t1}, t]};
+
+ (* angle to reach max norm *)
+
+ maxnormtime = minmaxnorm[[2,2,1,2]];
+ maxnormangle = ArcTan[s2[maxnormtime][[1]], s2[maxnormtime][[2]]];
+
+ Return[{rawavgs, angatzmax, zmaxangle, minmaxnorm[[2,1]], minmaxnorm[[1,1]],
+         maxnormangle}];
+];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
