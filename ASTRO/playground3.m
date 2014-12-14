@@ -28,6 +28,12 @@ Sign[derv[x,n+8]], FindRoot[derv[x,t]==0,{t,n+4}], 0],
 
 {t0,t1} = Take[orbits,{1,3,2}];
 
+(* CUT TO MODULE HERE *)
+
+mod[s,t0,t1]
+
+
+
 (* days of xmin and xmax we know *)
 
 xavg = Mean[Map[s[#][[1]]&,Take[orbits,2]]];
@@ -143,7 +149,8 @@ mod[s_,t0_,t1_] := Module[{rawavgs, s1, zmaxtime, angatzmax, zmaxangle,
 
  (* subtract off true averages *)
 
- s1[t_] := s[t] - Table[Mean[{rawavgs[[i,1,1]],rawavgs[[i,2,1]]}],{i,1,3}];
+ trueavgs = Table[Mean[{rawavgs[[i,1,1]],rawavgs[[i,2,1]]}],{i,1,3}];
+ s1[t_] := s[t] - trueavgs;
 
  (* angle of max z from ICRF equator and inclination *)
 
@@ -165,10 +172,9 @@ mod[s_,t0_,t1_] := Module[{rawavgs, s1, zmaxtime, angatzmax, zmaxangle,
  maxnormtime = minmaxnorm[[2,2,1,2]];
  maxnormangle = ArcTan[s2[maxnormtime][[1]], s2[maxnormtime][[2]]];
 
- Return[{rawavgs, angatzmax, zmaxangle, minmaxnorm[[2,1]], minmaxnorm[[1,1]],
+ Return[{trueavgs, angatzmax, zmaxangle, minmaxnorm[[2,1]], minmaxnorm[[1,1]],
          maxnormangle}];
 ];
-
 
 
 
