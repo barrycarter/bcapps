@@ -74,3 +74,25 @@ findminleft[f_,a_,b_] := Module[{try,t},
  If[try[[2,1,2]]>a && try[[2,1,2]]<b, Return[try]];
  Return[FindMinimum[{f[t],t>a,t<b},{t,(a+b)/2}]];
 ]
+
+(* these functions override above, testing *)
+
+findmaxleft[f_,a_,b_] := Module[{try,t},
+ try = FindMaximum[f[t],{t,(a+b)/2}, Method -> Gradient];
+ If[try[[2,1,2]]>=a && try[[2,1,2]]<=b, Return[try]];
+ try = FindMaximum[f[t],{t,a}, Method -> Gradient];
+ If[try[[2,1,2]]>=a && try[[2,1,2]]<=b, Return[try]];
+ try = FindMaximum[f[t],{t,b}, Method -> Gradient];
+ If[try[[2,1,2]]>=a && try[[2,1,2]]<=b, Return[try]];
+ Return[FindMaximum[{f[t],t>=a,t<=b},{t,(a+b)/2}]];
+]
+
+findminleft[f_,a_,b_] := Module[{try,t},
+ try = FindMinimum[f[t],{t,(a+b)/2}, Method -> Gradient];
+ If[try[[2,1,2]]>=a && try[[2,1,2]]<=b, Return[try]];
+ try = FindMinimum[f[t],{t,a}, Method -> Gradient];
+ If[try[[2,1,2]]>=a && try[[2,1,2]]<=b, Return[try]];
+ try = FindMinimum[f[t],{t,b}, Method -> Gradient];
+ If[try[[2,1,2]]>=a && try[[2,1,2]]<=b, Return[try]];
+ Return[FindMinimum[{f[t],t>=a,t<=b},{t,(a+b)/2}]];
+]

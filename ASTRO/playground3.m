@@ -34,12 +34,35 @@ orbits = DeleteCases[Table[halfbrent[ds[#,x]&,n,n+days],{n,mind,maxd,days}],
 
 (* testing *)
 
-t0 = orbits[[9]];
-t1 = orbits[[11]];
+t0 = orbits[[37]];
+t1 = orbits[[39]];
+
+FindMinimum[s[t][[1]], {t,t1}, Method -> Gradient]
+
+f1204[p_] := FindMinimum[s[t][[2]], {t,t0 + (t1-t0)*p}][[2,1,2]]
+
+t1209 = Table[f1204[p],{p,0,1,.01}]
+
+f1210[p_] := FindMinimum[s[t][[2]], {t,t0 + (t1-t0)*p}, 
+ Method->Newton][[2,1,2]];
+
+t1210 = Table[f1210[p],{p,0,1,.01}]
+
+f1213[p_] := FindMinimum[s[t][[2]], {t,t0 + (t1-t0)*p}, 
+ Method->QuasiNewton][[2,1,2]];
+
+t1213 = Table[f1213[p],{p,0,1,.01}]
+
+f1215[p_] := FindMinimum[s[t][[2]], {t,t0 + (t1-t0)*p}, 
+ Method->Gradient][[2,1,2]];
+
+t1215 = Table[f1215[p],{p,0,1,.01}]
 
 findminleft[(s[#][[1]])&, t0, t1]
 
 mod[s, t0, t1]
+
+(* orbit[18] still slow *)
 
 orbit[n_] := orbit[n] = mod[s, orbits[[n*2+1]], orbits[[n*2+3]]];
 
