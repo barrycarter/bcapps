@@ -37,9 +37,7 @@ orbits = DeleteCases[Table[halfbrent[ds[#,x]&,n,n+days],{n,mind,maxd,days}],
 t0 = orbits[[11]];
 t1 = orbits[[13]];
 
-epsilon = 10^-5;
-
-findminleft[(s[#][[1]])&, t0-epsilon, t1+epsilon]
+findminleft[(s[#][[1]])&, t0, t1]
 
 mod[s, t0, t1]
 

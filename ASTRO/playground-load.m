@@ -22,13 +22,10 @@ angle to reach maxnorm
 mod[s_,t0_,t1_] := Module[{rawavgs, s1, zmaxtime, angatzmax, zmaxangle,
  s2, minmaxnorm, maxnormtime, maxnormangle, epsilon},
 
- (* epsilon = allow for small tolerances *)
- epsilon = 10^-5;
-
  (* averages *)
-			     
- rawavgs = Table[{findminleft[(s[#][[i]])&, t0-epsilon, t1+epsilon],
-                  findmaxleft[(s[#][[i]])&, t0-epsilon, t1+epsilon]}, {i,1,3}];
+
+ rawavgs = Table[{findminleft[(s[#][[i]])&, t0, t1],
+                  findmaxleft[(s[#][[i]])&, t0, t1]}, {i,1,3}];
 
  (* subtract off true averages *)
 
@@ -47,8 +44,8 @@ mod[s_,t0_,t1_] := Module[{rawavgs, s1, zmaxtime, angatzmax, zmaxangle,
 
  (* norm min and max *)
 
- minmaxnorm = {findminleft[s2[#]&, t0-epsilon, t1+epsilon], 
-               findmaxleft[s2[#]&, t0-epsilon, t1+epsilon]};
+ minmaxnorm = {findminleft[Norm[s2[#]]&, t0, t1], 
+               findmaxleft[Norm[s2[#]]&, t0, t1]};
 
  (* angle to reach max norm *)
 
@@ -63,17 +60,17 @@ mod[s_,t0_,t1_] := Module[{rawavgs, s1, zmaxtime, angatzmax, zmaxangle,
 wrapping FindMaximum/FindMinimum to be more efficient *)
 
 findmaxleft[f_,a_,b_] := Module[{try,t},
- try = FindMaximum[f[t],{t,a}];
+ try = FindMaximum[f[t],{t,(a+b)/2}];
  If[try[[2,1,2]]>a && try[[2,1,2]]<b, Return[try]];
- try = FindMaximum[{f[t],t>a},{t,a}];
+ try = FindMaximum[{f[t],t>a},{t,(a+b)/2}];
  If[try[[2,1,2]]>a && try[[2,1,2]]<b, Return[try]];
- Return[FindMaximum[{f[t],t>a,t<b},{t,a}]];
+ Return[FindMaximum[{f[t],t>a,t<b},{t,(a+b)/2}]];
 ]
 
 findminleft[f_,a_,b_] := Module[{try,t},
- try = FindMinimum[f[t],{t,a}];
+ try = FindMinimum[f[t],{t,(a+b)/2}];
  If[try[[2,1,2]]>a && try[[2,1,2]]<b, Return[try]];
- try = FindMinimum[{f[t],t>a},{t,a}];
+ try = FindMinimum[{f[t],t>a},{t,(a+b)/2}];
  If[try[[2,1,2]]>a && try[[2,1,2]]<b, Return[try]];
- Return[FindMinimum[{f[t],t>a,t<b},{t,a}]];
+ Return[FindMinimum[{f[t],t>a,t<b},{t,(a+b)/2}]];
 ]
