@@ -26,61 +26,80 @@ days = 8;
 
 (* maybe canonize this *)
 
-halfbrent[f_,a_,b_] := If[Sign[f[a]]==Sign[f[b]], {},
- FindRoot[f[z]==0, {z,(a+b)/2}][[1,2]]];
+(* find local maximum/minimum of f on [a,b] (biasing towards a)
+wrapping FindMaximum/FindMinimum to be more efficient *)
 
-orbits=DeleteCases[Table[halfbrent[ds[#,x]&,n,n+days], {n,mind,maxd,days}],{}];
-
-
-halfbrent[ds[#,x]&, 24, 32]
-
-Timing[Table[halfbrent[ds[#,x]&, n, n+days], {n,mind,maxd,days}]]
-
-Timing[Table[halfbrent[sderv[#][[1]]&, n, n+days], {n,mind,maxd,days}]]
-
-(* below works and is fairly rapid *)
-
-Table[
-If[Sign[ds[n,x]] == Sign[ds[n+8,x]], 0, FindRoot[ds[t,x]==0, {t,n+4}]],
-{n,mind,maxd,8}
+findmaxleft[f_,a_,b_] := Module[{try,t},
+ try = FindMaximum[f[t],{t,a}];
+ If[try[[2,1,2]]>a && try[[2,1,2]]<b, Return[try]];
+ try = FindMaximum[{f[t],t>a},{t,a}];
+ If[try[[2,1,2]]>a && try[[2,1,2]]<b, Return[try]];
+ Return[FindMaximum[{f[t],t>a,t<b},{t,a}]];
 ]
 
-(* 3.12s above, 9.06s below *)
-
-Timing[Table[brent[ds[#,x]&, n, n+8], {n,mind,maxd,8}]]
-
-
-
-
-
-f1642[t_] := If[Sign[ds[t][[1]]] == Sign[ds[t+8][[1]]], {}, 
-FindRoot[ds[x][[1]]==0, {x,t,t+8}, Method -> Brent]];
-
-
-
-
-Table[
-If[Sign[ds[t][[1]]] == Sign[ds[t+8][[1]]], {}, 
-FindRoot[ds[x][[1]]==0, {x,t+4}]],
-{t,mind,maxd,8}
+findminleft[f_,a_,b_] := Module[{try,t},
+ try = FindMinimum[f[t],{t,a}];
+ If[try[[2,1,2]]>a && try[[2,1,2]]<b, Return[try]];
+ try = FindMinimum[{f[t],t>a},{t,a}];
+ If[try[[2,1,2]]>a && try[[2,1,2]]<b, Return[try]];
+ Return[FindMinimum[{f[t],t>a,t<b},{t,a}]];
 ]
 
 
 
+halfbrent[f_,a_,b_] := Module[{x},
+ If[Sign[f[a]]==Sign[f[b]], Null, FindRoot[f[x]==0, {x,(a+b)/2}][[1,2]]]];
 
-(* we will arbitrarily use successive maxs of x value to determine an orbit *)
+halfbrent[f_,a_,b_] := Module[{x},If[Sign[f[a]]==Sign[f[b]], {},
+ FindRoot[f[x]==0, {x,(a+b)/2}]]];
 
-FindRoot[derv[x,t]==0, {t,(t0+t1)/2}]
+orbits = DeleteCases[Table[halfbrent[ds[#,x]&,n,n+days],{n,mind,maxd,days}],
+ Null];
 
-(* the orbits *)
+Timing[NMaximize[{s[t][[2]], t>a, t<b}, {t,a,b}]]
 
-orbits = t /. DeleteCases[Table[If[Sign[derv[x,n]] !=
-Sign[derv[x,n+8]], FindRoot[derv[x,t]==0,{t,n+4}], 0],
-{n,mind,maxd,days}],0];
+Timing[NMaximize[s[t][[2]], {t,a,b}]]
 
-Timing[Table[FindRoot[derv[x,t]==0,{t,n+4}], {n,mind,maxd,days}]]
+Timing[FindMaximum[ {s[t][[2]], t>=a, t<=b},{t,(a+b)/2}]]
 
-(* orbits elements separated by 2 (not 1) *)
+Timing[FindMaximum[s[t][[2]],{t,(a+b)/2}]]
+
+Timing[FindMaximum[{s[t][[2]]},{t,a}]]
+
+Timing[FindMaximum[{s[t][[2]],t>a},{t,a}]]
+
+Timing[FindMaximum[{s[t][[2]],t>a,t<b},{t,a}]]
+
+
+
+
+(* this is probably not libworthy: given a function and its
+derivative, split [a,b] into n intervals, find maxs and mins and
+return the first max followed by the first min, assuming no 2 extrema
+will occur in any (a-b)/n interval *)
+
+m0519[f_,df_,a_,b_,n_] := Module[{tab,roots},
+
+ (* table of intervals *)
+ tab = Table[{a+(b-a)*(i-1)/n, a+(b-a)*i/n}, {i,1,n}];
+
+ (* values where df is 0 *)
+ roots = t /. 
+         DeleteCases[Table[If[Sign[df[tab[[i,1]]]]==Sign[df[tab[[i,2]]]], Null,
+         FindRoot[df[t], {t, Mean[tab[[i]]]}]], {i,1,n}], Null];
+
+
+
+
+
+
+]
+
+
+(* testing *)
+
+t0 = orbits[[11]];
+t1 = orbits[[13]];
 
 orbit[n_] := orbit[n] = mod[s, orbits[[n*2+1]], orbits[[n*2+3]]];
 
@@ -91,6 +110,7 @@ orbit[1]
 Input to module:
 
 s - function representing position at time t
+ds - the derivative of s[t] (which need not be otherwise differntiable)
 t0 - start of orbit (x=0)
 t1 - end of orbit (x=0) = start of next orbit
 
@@ -104,10 +124,21 @@ angle to reach maxnorm
 
 *)
 
-mod[s_,t0_,t1_] := Module[{rawavgs, s1, zmaxtime, angatzmax, zmaxangle,
+mod[s_,ds_,t0_,t1_] := Module[{rawavgs, s1, zmaxtime, angatzmax, zmaxangle,
  s2, minmaxnorm, maxnormtime, maxnormangle},
 
  (* averages *)
+
+Table[Table[halfbrent[sderv[#][[i]]&, t0 + n/4*(t1-t0), t0 + (n+1)/4*(
+  t1-t0)],{i,1,3},{n,0,3}]]                                                     
+
+Table[DeleteCases[Table[
+halfbrent[sderv[#][[i]]&, t0 + n/4*(t1-t0), t0 + (n+1)/4*(t1-t0)], {i,1,3}]
+Null], {n,0,3}]
+
+
+
+
 
  rawavgs = Table[{NMinimize[{s[t][[i]],t>t0,t<t1},t],
                   NMaximize[{s[t][[i]],t>t0,t<t1},t]}, {i,1,3}];
