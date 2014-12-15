@@ -313,3 +313,7 @@ rad[lat_] = Sqrt[8108893139432429 - 32876703150355522144690902360200/
 
 gmst[d_] = ((-4394688633775234485 + 401095163740318*d)*Pi)/200000000000000;
 
+(* Brent method of FindRoot improved *)
+
+brent[f_,a_,b_] = If[Sign[f[a]]==Sign[f[b]], {}, FindRoot[f,{a,b},
+Method -> Brent]];

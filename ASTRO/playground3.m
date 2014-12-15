@@ -2,6 +2,20 @@
 
 s[t_] := s[t] = {eval[x,1,0,t],eval[y,1,0,t],eval[z,1,0,t]};
 
+(* can only do this one coord at a time, else things break *)
+
+sderv[t_] := {D[poly[x,1,0,t][w],w] /. w -> t,
+              D[poly[y,1,0,t][w],w] /. w -> t,
+              D[poly[z,1,0,t][w],w] /. w -> t};
+
+(* TODO: could automate this if xyz -> 123 *)
+
+ds[t_,x] := D[poly[x,1,0,t][w],w] /. w -> t;
+ds[t_,y] := D[poly[y,1,0,t][w],w] /. w -> t;
+ds[t_,z] := D[poly[z,1,0,t][w],w] /. w -> t;
+
+(* this is actually necessary due to the way Mathematica evaluates things *)
+
 (* the chebyshev interval for mercury *)
 
 days = 8;
@@ -10,13 +24,53 @@ days = 8;
 
 {mind,maxd} = {0,365*9};
 
+(* maybe canonize this *)
+
+halfbrent[f_,a_,b_] := If[Sign[f[a]]==Sign[f[b]], {},
+ FindRoot[f[z]==0, {z,(a+b)/2}][[1,2]]];
+
+orbits=DeleteCases[Table[halfbrent[ds[#,x]&,n,n+days], {n,mind,maxd,days}],{}];
+
+
+halfbrent[ds[#,x]&, 24, 32]
+
+Timing[Table[halfbrent[ds[#,x]&, n, n+days], {n,mind,maxd,days}]]
+
+Timing[Table[halfbrent[sderv[#][[1]]&, n, n+days], {n,mind,maxd,days}]]
+
+(* below works and is fairly rapid *)
+
+Table[
+If[Sign[ds[n,x]] == Sign[ds[n+8,x]], 0, FindRoot[ds[t,x]==0, {t,n+4}]],
+{n,mind,maxd,8}
+]
+
+(* 3.12s above, 9.06s below *)
+
+Timing[Table[brent[ds[#,x]&, n, n+8], {n,mind,maxd,8}]]
+
+
+
+
+
+f1642[t_] := If[Sign[ds[t][[1]]] == Sign[ds[t+8][[1]]], {}, 
+FindRoot[ds[x][[1]]==0, {x,t,t+8}, Method -> Brent]];
+
+
+
+
+Table[
+If[Sign[ds[t][[1]]] == Sign[ds[t+8][[1]]], {}, 
+FindRoot[ds[x][[1]]==0, {x,t+4}]],
+{t,mind,maxd,8}
+]
+
+
+
+
 (* we will arbitrarily use successive maxs of x value to determine an orbit *)
 
-(* TODO: can I do better? *)
-
-derv[x,t_] := D[poly[x,1,0,t][w],w] /. w -> t;
-derv[y,t_] := D[poly[y,1,0,t][w],w] /. w -> t;
-derv[z,t_] := D[poly[z,1,0,t][w],w] /. w -> t;
+FindRoot[derv[x,t]==0, {t,(t0+t1)/2}]
 
 (* the orbits *)
 
@@ -24,13 +78,13 @@ orbits = t /. DeleteCases[Table[If[Sign[derv[x,n]] !=
 Sign[derv[x,n+8]], FindRoot[derv[x,t]==0,{t,n+4}], 0],
 {n,mind,maxd,days}],0];
 
-(* TODO: this changes each time, this is orbit1 = elts 1-3 *)
+Timing[Table[FindRoot[derv[x,t]==0,{t,n+4}], {n,mind,maxd,days}]]
 
-{t0,t1} = Take[orbits,{1,3,2}];
+(* orbits elements separated by 2 (not 1) *)
 
-(* CUT TO MODULE HERE *)
+orbit[n_] := orbit[n] = mod[s, orbits[[n*2+1]], orbits[[n*2+3]]];
 
-mod[s,t0,t1]
+orbit[1]
 
 (*
 
