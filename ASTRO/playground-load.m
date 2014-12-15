@@ -60,7 +60,7 @@ mod[s_,t0_,t1_] := Module[{rawavgs, s1, zmaxtime, angatzmax, zmaxangle,
 wrapping FindMaximum/FindMinimum to be more efficient *)
 
 findmaxleft[f_,a_,b_] := Module[{try,t},
- try = FindMaximum[f[t],{t,(a+b)/2}];
+ try = FindMaximum[f[t],{t,(a+b)/2}, Method -> Newton];
  If[try[[2,1,2]]>a && try[[2,1,2]]<b, Return[try]];
  try = FindMaximum[{f[t],t>a},{t,(a+b)/2}];
  If[try[[2,1,2]]>a && try[[2,1,2]]<b, Return[try]];
@@ -68,7 +68,7 @@ findmaxleft[f_,a_,b_] := Module[{try,t},
 ]
 
 findminleft[f_,a_,b_] := Module[{try,t},
- try = FindMinimum[f[t],{t,(a+b)/2}];
+ try = FindMinimum[f[t],{t,(a+b)/2}, Method -> Newton];
  If[try[[2,1,2]]>a && try[[2,1,2]]<b, Return[try]];
  try = FindMinimum[{f[t],t>a},{t,(a+b)/2}];
  If[try[[2,1,2]]>a && try[[2,1,2]]<b, Return[try]];
