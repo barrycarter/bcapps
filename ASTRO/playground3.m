@@ -1,28 +1,27 @@
 (* determining orbits/etc directly from chebyshev polynomials *)
 
-s[t_] := s[t] = {eval[x,1,0,t],eval[y,1,0,t],eval[z,1,0,t]};
+goal = 504;
+target = 5;
 
-(* can only do this one coord at a time, else things break *)
+(* the chebyshev interval for goal/target *)
 
-sderv[t_] := {D[poly[x,1,0,t][w],w] /. w -> t,
-              D[poly[y,1,0,t][w],w] /. w -> t,
-              D[poly[z,1,0,t][w],w] /. w -> t};
-
-(* TODO: could automate this if xyz -> 123 *)
-
-ds[t_,x] := D[poly[x,1,0,t][w],w] /. w -> t;
-ds[t_,y] := D[poly[y,1,0,t][w],w] /. w -> t;
-ds[t_,z] := D[poly[z,1,0,t][w],w] /. w -> t;
-
-(* this is actually necessary due to the way Mathematica evaluates things *)
-
-(* the chebyshev interval for mercury *)
-
-days = 8;
+days = 64800/86400;
 
 (* min and max days *)
 
-{mind,maxd} = {0,365*9};
+{mind,maxd} = {16436,16436+365};
+
+s[t_] := s[t] = {eval[x,goal,target,t],
+                 eval[y,goal,target,t],
+                 eval[z,goal,target,t]};
+
+(* TODO: could automate this if xyz -> 123 *)
+
+ds[t_,x] := D[poly[x,goal,target,t][w],w] /. w -> t;
+ds[t_,y] := D[poly[y,goal,target,t][w],w] /. w -> t;
+ds[t_,z] := D[poly[z,goal,target,t][w],w] /. w -> t;
+
+(* this is actually necessary due to the way Mathematica evaluates things *)
 
 (* maybe canonize this *)
 
@@ -32,58 +31,18 @@ halfbrent[f_,a_,b_] := Module[{x},
 orbits = DeleteCases[Table[halfbrent[ds[#,x]&,n,n+days],{n,mind,maxd,days}],
  Null];
 
-(* testing *)
-
-t0 = orbits[[37]];
-t1 = orbits[[39]];
-
-FindMinimum[s[t][[1]], {t,t1}, Method -> Gradient]
-
-f1204[p_] := FindMinimum[s[t][[2]], {t,t0 + (t1-t0)*p}][[2,1,2]]
-
-t1209 = Table[f1204[p],{p,0,1,.01}]
-
-f1210[p_] := FindMinimum[s[t][[2]], {t,t0 + (t1-t0)*p}, 
- Method->Newton][[2,1,2]];
-
-t1210 = Table[f1210[p],{p,0,1,.01}]
-
-f1213[p_] := FindMinimum[s[t][[2]], {t,t0 + (t1-t0)*p}, 
- Method->QuasiNewton][[2,1,2]];
-
-t1213 = Table[f1213[p],{p,0,1,.01}]
-
-f1215[p_] := FindMinimum[s[t][[2]], {t,t0 + (t1-t0)*p}, 
- Method->Gradient][[2,1,2]];
-
-t1215 = Table[f1215[p],{p,0,1,.01}]
-
-findminleft[(s[#][[1]])&, t0, t1]
-
-mod[s, t0, t1]
-
-(* orbit[18] still slow *)
-
 orbit[n_] := orbit[n] = mod[s, orbits[[n*2+1]], orbits[[n*2+3]]];
 
-orbit[1]
+(* testing the matrix *)
 
-(* this is probably not libworthy: given a function and its
-derivative, split [a,b] into n intervals, find maxs and mins and
-return the first max followed by the first min, assuming no 2 extrema
-will occur in any (a-b)/n interval *)
+ParametricPlot3D[s[t],{t,orbits[[3]],orbits[[5]]}]
 
-m0519[f_,df_,a_,b_,n_] := Module[{tab,roots},
+ParametricPlot3D[orbit[1][[1]].(s[t]-orbit[1][[2]]),
+ {t,orbits[[3]],orbits[[5]]}]
 
- (* table of intervals *)
- tab = Table[{a+(b-a)*(i-1)/n, a+(b-a)*i/n}, {i,1,n}];
+Plot[(Inverse[orbit[1][[1]]].s[t])[[3]],{t,orbits[[3]],orbits[[5]]}]
 
- (* values where df is 0 *)
- roots = t /. 
-         DeleteCases[Table[If[Sign[df[tab[[i,1]]]]==Sign[df[tab[[i,2]]]], Null,
-         FindRoot[df[t], {t, Mean[tab[[i]]]}]], {i,1,n}], Null];
-]
-
+(*** CUT HERE *** (above this is quasi-useful) *)
 
 (* given a Chebyshev polynomial, return its min/max between -1 and 1
 if it has one *)

@@ -20,7 +20,7 @@ angle to reach maxnorm
 *)
 
 mod[s_,t0_,t1_] := Module[{rawavgs, s1, zmaxtime, angatzmax, zmaxangle,
- s2, minmaxnorm, maxnormtime, maxnormangle, epsilon},
+ s2, minmaxnorm, maxnormtime, maxnormangle, mat},
 
  (* averages *)
 
@@ -52,30 +52,16 @@ mod[s_,t0_,t1_] := Module[{rawavgs, s1, zmaxtime, angatzmax, zmaxangle,
  maxnormtime = minmaxnorm[[2,2,1,2]];
  maxnormangle = ArcTan[s2[maxnormtime][[1]], s2[maxnormtime][[2]]];
 
- Return[{trueavgs, angatzmax, zmaxangle, minmaxnorm[[2,1]], minmaxnorm[[1,1]],
+ (* the matrix to translate orbit to flat ellipse *)
+
+ mat = rotationMatrix[z,-maxnormangle].rotationMatrix[y,-zmaxangle].rotationMatrix[z,angatzmax];
+
+ Return[{mat, trueavgs, angatzmax, zmaxangle, minmaxnorm[[2,1]], minmaxnorm[[1,1]],
          maxnormangle}];
 ];
 
-(* find local maximum/minimum of f on [a,b] (biasing towards a)
-wrapping FindMaximum/FindMinimum to be more efficient *)
-
-findmaxleft[f_,a_,b_] := Module[{try,t},
- try = FindMaximum[f[t],{t,(a+b)/2}, Method -> Newton];
- If[try[[2,1,2]]>a && try[[2,1,2]]<b, Return[try]];
- try = FindMaximum[{f[t],t>a},{t,(a+b)/2}];
- If[try[[2,1,2]]>a && try[[2,1,2]]<b, Return[try]];
- Return[FindMaximum[{f[t],t>a,t<b},{t,(a+b)/2}]];
-]
-
-findminleft[f_,a_,b_] := Module[{try,t},
- try = FindMinimum[f[t],{t,(a+b)/2}, Method -> Newton];
- If[try[[2,1,2]]>a && try[[2,1,2]]<b, Return[try]];
- try = FindMinimum[{f[t],t>a},{t,(a+b)/2}];
- If[try[[2,1,2]]>a && try[[2,1,2]]<b, Return[try]];
- Return[FindMinimum[{f[t],t>a,t<b},{t,(a+b)/2}]];
-]
-
-(* these functions override above, testing *)
+(* find local maximum/minimum of f on [a,b] wrapping
+FindMaximum/FindMinimum to be more efficient *)
 
 findmaxleft[f_,a_,b_] := Module[{try,t},
  try = FindMaximum[f[t],{t,(a+b)/2}, Method -> Gradient];
