@@ -1,5 +1,12 @@
 # shell one liners
 
+# from TED (the energy detective) device, get per day total (after
+# bzcat and sort and uniq from raw data)
+
+perl -F, -anle '$F[1]=~s/\s.*//; $tot{$F[1]}+=$F[2]; sub END {for $i (sort keys %tot) {print "$i $tot{$i}";}}' allseconds-sorted.txt
+
+exit; 
+
 # un7z all stackexchange stuff
 
 \ls *.7z | perl -nle 's/\.7z//; print "7z x -o$_ $_.7z"' | tee /tmp/un7z.sh
