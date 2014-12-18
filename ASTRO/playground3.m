@@ -31,6 +31,29 @@ halfbrent[f_,a_,b_] := Module[{x},
 orbits = DeleteCases[Table[halfbrent[ds[#,x]&,n,n+days],{n,mind,maxd,days}],
  Null];
 
+(* sinusoidal per orbit? *)
+
+a = orbits[[7]];
+b = orbits[[9]];
+n = 10000;
+
+t1806 = Table[{(t-a)/(b-a)*2*Pi,s[t][[1]]},{t,a,b,(b-a)/(n-1)}];
+
+coss = Flatten[Table[{Cos[n*t],Sin[n*t]},{n,0,10}]]
+
+f1832 = Fit[t1806,coss,t]
+
+Plot[{f1832-s[t/2/Pi*(b-a)+a][[1]]}, {t,0,2*Pi},PlotRange->All]
+
+poly = Table[t^i,{i,0,25}]
+
+f1821 = Fit[t1806,poly,t]
+
+Plot[{f1821,s[t][[1]]},{t,a,b}]
+
+Plot[{f1821},{t,a,b}]
+Plot[{s[t][[1]]},{t,a,b}]
+
 orbit[n_] := orbit[n] = mod[s, orbits[[n*2+1]], orbits[[n*2+3]]];
 
 (* testing the matrix *)

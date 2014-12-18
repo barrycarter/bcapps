@@ -1,5 +1,7 @@
 #!/bin/sh
 
+exit; 
+
 # this adds definitions for ephemeris values from the output of
 # bc-header-values.pl (I need to edit the output before inserting it
 # into README)

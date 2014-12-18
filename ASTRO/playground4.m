@@ -1,4 +1,4 @@
-(* 12/07/14: attempting to generalize what I've found below for a
+(* 12/07/14: attempting to generalize what Ive found below for a
 single orbit *)
 
 (* dtheta using dot products *)

@@ -1,5 +1,12 @@
 # shell one liners
 
+# given output of "ls -l | sort -k7" (files in size order), running
+# total of file size to see how many files use up lots of space (in gigs)
+
+perl -anle '$count++; $sum+=$F[6]/1e9; print "$count $sum"'
+
+exit;
+
 # from TED (the energy detective) device, get per day total (after
 # bzcat and sort and uniq from raw data)
 

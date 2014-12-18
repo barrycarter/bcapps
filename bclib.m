@@ -102,7 +102,7 @@ findroot2[f_, a_, b_, delta_] := Module[{mid,fa,fb,fmid},
 ]
 
 (* return a table that samples f at n different points between a and b *)
-sample[f_,a_,b_,n_] := Table[{x,f[x]},{x,a,b,(b-a)/(n-1)}]
+sample[f_,a_,b_,n_] := Table[{x,f[x]},{x,a,b,(b-a)/(n-1)}];
 
 (* Given data, return a 'meta-Fourier' function matching it *)
 
