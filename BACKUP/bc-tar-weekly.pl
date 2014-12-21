@@ -12,7 +12,12 @@ $now = time();
 # TODO: reduce or eliminate cache time
 my($out,$err,$res) = cache_command2("find -L /usr/local/etc/weekly-backups/files -ls", "age=43200");
 
+debug("OUT: $out");
+
 for $i (split(/\n/, $out)) {
+  # kill leading spaces
+  $i=~s/^\s+//g;
+
   # TODO: I can probably do this better
   my(@arr) = split(/\s+/, $i);
   my($ino, $bsize, $perms, $nlinks, $user, $group, $size, $d1, $d2, $d3) =
@@ -22,7 +27,7 @@ for $i (split(/\n/, $out)) {
 
   # convert to unix
   my($age) = $now-str2time("$d1 $d2 $d3");
-  debug("$d1 $d2 $d3 -> $age");
+#  debug("$d1 $d2 $d3 -> $age");
 
   # older than one month? then print
   if ($age > 365.2425/12*86400) {print "$fname\n";}

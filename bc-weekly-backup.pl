@@ -36,7 +36,10 @@ debug("ALL FINISHED, SIR");
 sub dump_ls {
   # below just for reading purposes, cleaned up and run later
   my($bcpc_cmd) = << "MARK";
-/usr/bin/find / -ls > /cygdrive/c/bcpc-files.txt.new
+echo SOF > /cygdrive/c/bcpc-files.txt.new
+date >> /cygdrive/c/bcpc-files.txt.new
+/usr/bin/find / -ls >> /cygdrive/c/bcpc-files.txt.new
+date >> /cygdrive/c/bcpc-files.txt.new
 echo EOF >> /cygdrive/c/bcpc-files.txt.new
 mv /cygdrive/c/bcpc-files.txt.bz2 /cygdrive/c/bcpc-files.txt.old.bz2
 mv /cygdrive/c/bcpc-files.txt.new /cygdrive/c/bcpc-files.txt
@@ -45,7 +48,10 @@ MARK
 ;
 
   my($bcmac_cmd) = << "MARK";
-/usr/bin/find / -ls > /mnt/sshfs/bcmac-files.txt.new
+echo SOF > /mnt/sshfs/bcmac-files.txt.new
+date >> /mnt/sshfs/bcmac-files.txt.new
+/usr/bin/find / -ls >> /mnt/sshfs/bcmac-files.txt.new
+date >> /mnt/sshfs/bcmac-files.txt.new
 echo EOF >> /mnt/sshfs/bcmac-files.txt.new
 mv /mnt/sshfs/bcmac-files.txt.bz2 /mnt/sshfs/bcmac-files.txt.old.bz2
 mv /mnt/sshfs/bcmac-files.txt.new /mnt/sshfs/bcmac-files.txt
@@ -54,7 +60,10 @@ MARK
 ;
 
   my($bcunix_cmd) = << "MARK";
-/usr/bin/find / -xdev -ls > $dir/bcunix-files.txt.new
+echo SOF > $dir/bcunix-files.txt.new
+date >> $dir/bcunix-files.txt.new
+/usr/bin/find / -xdev -ls >> $dir/bcunix-files.txt.new
+date >> $dir/bcunix-files.txt.new
 echo EOF >> $dir/bcunix-files.txt.new
 mv $dir/bcunix-files.txt.bz2 $dir/bcunix-files.txt.old.bz2
 mv $dir/bcunix-files.txt.new $dir/bcunix-files.txt
