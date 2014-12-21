@@ -24,8 +24,11 @@ for $i (split(/\n/, $out)) {
   my($age) = $now-str2time("$d1 $d2 $d3");
   debug("$d1 $d2 $d3 -> $age");
 
-#  debug("LEFT",@arr);
-#  debug("$d1 $d2 $d3");
+  # older than one month? then print
+  if ($age > 365.2425/12*86400) {print "$fname\n";}
+
+  #  debug("LEFT",@arr);
+  #  debug("$d1 $d2 $d3");
 }
 
 
