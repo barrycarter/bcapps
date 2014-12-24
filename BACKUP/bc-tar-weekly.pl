@@ -6,6 +6,10 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# root only, and run at nice level 19
+if ($>) {die("Must run as root");}
+system("/usr/bin/renice 19 -p $$");
+
 my($dir) = "/usr/local/etc/weekly-backups/files";
 $now = time();
 

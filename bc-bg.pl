@@ -86,8 +86,15 @@ for $i (@suppress) {
 # all errors are in ERR subdir (and info alerts are there too)
 for $i (glob("/home/barrycarter/ERR/*.err")) {
   for $j (split("\n",read_file($i))) {
+
+    # for suppression, we ignore the PID, if any
+    # TODO: add this text to @info too
+    my($suptext) = $j;
+    $suptext=~s/\s*\(\d+\)\s*$//;
+    debug("SUPTEXT: $suptext");
+
     # unless suppressed, push to @err
-    if ($suppress{$j}) {next;}
+    if ($suppress{$suptext}) {next;}
     push(@err,$j);
   }
 }
