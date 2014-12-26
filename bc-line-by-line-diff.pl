@@ -13,6 +13,10 @@ open(A,$f1)||die("Can't open $f1, $!");
 open(B,$f2)||die("Can't open $f2, $!");
 
 for (;;) {
+
+  # just for fun
+  if ($count++%10000==0) {debug("LINE: $count");}
+
   if (eof(A)) {print "A: end of file\n"; last;}
   if (eof(B)) {print "B: end of file\n"; last;}
   my($a,$b) = (scalar(<A>),scalar(<B>));
