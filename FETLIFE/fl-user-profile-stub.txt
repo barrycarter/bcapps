@@ -1,0 +1,50 @@
+# the following lines occur in every (or most) FetLife user profiles
+# and give no actual information about the user so can be safely
+# removed (using "fgrep -xvf thisfile profile.txt"). Note these lines are
+# technically NOT a comment, because fgrep -f doesn't recognize
+# comments. However, it should be unique enough to not cause any
+# problems
+# yes, this is a blank line (ok since using fgrep -x)
+
+</div>
+</ul>
+</li>
+<ul>
+<li>
+</script>
+<div class="container">
+</textarea>
+</a>
+</p>
+<script type="text/javascript">
+<br/>
+<div class="span-5 colborder">
+<div class="clearfix">
+};
+}
+<ul id="nav_dropdown" class="horizontal profile">
+<ul class="vertical rcbs">
+<table>
+<script src="https://flassets.a.ssl.fastly.net/javascripts/innershiv.js?v58b5dbe26c9e9b" type="text/javascript"></script>
+<li class="nojs">
+<div class="span-4 last">
+<div class="span-13 append-1">
+</table>
+//]]>
+//<![CDATA[
+&nbsp;
+<tr>
+</tr>
+</span> 
+</span>
+<ul class="list">
+<p>
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+} else {
+var showLikesSection      = false;
+var initialMessageCount = 0;
+var friendshipRequestCount = 0;
+var atsCount = 0;
+var antiClickjack = document.getElementById("antiClickjack");
+top.location = self.location;
+return {
