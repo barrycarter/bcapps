@@ -24,7 +24,6 @@ system("/usr/bin/renice 19 -p $$");
 
 debug("CALLING dump_ls()");
 dump_ls();
-die "TESTING";
 debug("CALLING dump_other()");
 dump_other();
 debug("CALLING dump_remote()");

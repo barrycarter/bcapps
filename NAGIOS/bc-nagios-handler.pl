@@ -23,7 +23,7 @@ require "/home/barrycarter/bc-private.pl";
 
 $fbase = "/home/barrycarter/ERR/nagios.$ENV{NAGIOS_HOSTALIAS}";
 if ($ENV{NAGIOS_HOSTSTATEID}) {
-  write_file_new("nagios.$ENV{NAGIOS_HOSTALIAS}.down", "$fbase.err");
+  write_file_new("nagios.$ENV{NAGIOS_HOSTALIAS}.down\n", "$fbase.err");
 } else {
   system("mv $fbase.err $fbase.old");
 }
@@ -58,7 +58,7 @@ print A "$ENV{NAGIOS_HOSTALIAS}.$ENV{NAGIOS_SERVICEDESC} is down\n";
 # no point in rewriting file if it already exists (but this shouldnt
 # happen since nagios only calls me on statechange?)
 unless (-s "$fbase.err") {
-  write_file_new("nagios.$ENV{NAGIOS_HOSTALIAS}.$ENV{NAGIOS_SERVICEDESC}.down", "$fbase.err");
+  write_file_new("nagios.$ENV{NAGIOS_HOSTALIAS}.$ENV{NAGIOS_SERVICEDESC}.down\n", "$fbase.err");
 }
 
 # TODO: hardcoding here is bad
