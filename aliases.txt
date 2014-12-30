@@ -66,7 +66,11 @@ alias bcinfo4 "screen -t BC4 ssh -i /home/barrycarter/.ssh/id_rsa.bc -tt barryca
 # rsyncs to bcinfo3 (my new plugin is so awesome,I even sync it to my old site)
 # alias bcinfo3sync "cd /home/barrycarter/BCGIT; \rsync -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' -Pvzrlpt *.pl */*.pl root@bcinfo3:/usr/local/bin/; \rsync -Pvzrlpt -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' /home/barrycarter/BCGIT/BCINFO3/ root@bcinfo3:/; \rsync -Pvzrlpt -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' /home/barrycarter/BCGIT/BCINFO3/sites/wordpress/wp-content/plugins/ root@bcinfo:/usr/share/wordpress/wp-content/plugins/"
 # testing replacement using bc-mirror-server
-alias bcinfo3sync "bc-mirror-server.pl /home/barrycarter/BCGIT/BCINFO3/ bcinfo3"
+
+# some data on bcinfo3 has to be private (eg, auth keys), so must also
+# mirror from private directory
+
+alias bcinfo3sync "bc-mirror-server.pl /home/barrycarter/BCGIT/BCINFO3/ bcinfo3; bc-mirror-server.pl /home/barrycarter/BCINFO3-PRIV bcinfo3"
 
 # chmods all Perl scripts to +x (something I tend to be bad about)
 alias perlfix "find /home/barrycarter/PERL /home/barrycarter/BCGIT -iname '*.pl' | xargs chmod +x"
