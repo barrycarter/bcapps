@@ -58,6 +58,11 @@ alias nagiostest "echo 'this is obsolete; use nagtest instead'"
 # logs me into bcinfo3 into a new local screen and starts remote screen
 alias bcinfo3 "screen -t BC3 ssh -i /home/barrycarter/.ssh/id_rsa.bc -tt root@bcinfo3 screen -d -R"
 
+# after old bcinfo machine broke, this is new one (defined as bcinfo4
+# in /etc/hosts) (shared hosting)
+
+alias bcinfo4 "screen -t BC4 ssh -i /home/barrycarter/.ssh/id_rsa.bc -tt barrycar@bcinfo4 screen -d -R"
+
 # rsyncs to bcinfo3 (my new plugin is so awesome,I even sync it to my old site)
 # alias bcinfo3sync "cd /home/barrycarter/BCGIT; \rsync -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' -Pvzrlpt *.pl */*.pl root@bcinfo3:/usr/local/bin/; \rsync -Pvzrlpt -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' /home/barrycarter/BCGIT/BCINFO3/ root@bcinfo3:/; \rsync -Pvzrlpt -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' /home/barrycarter/BCGIT/BCINFO3/sites/wordpress/wp-content/plugins/ root@bcinfo:/usr/share/wordpress/wp-content/plugins/"
 # testing replacement using bc-mirror-server

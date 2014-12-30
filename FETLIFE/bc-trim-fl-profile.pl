@@ -22,20 +22,26 @@ for $i (@ARGV) {
     $all = read_file($i);
   }
 
-  # kill of leading spaces
+  # kill off leading spaces
   $all=~s/^\s+//mg;
 
   # nothing useful pre-title
   $all=~s/^.*?<title>/<title>/s;
 
   # everything between that and <h2
-  $all=~s%</title>.*?<h2%</title>\n<h2%s;
+  # $all=~s%</title>.*?<h2%</title>\n<h2%s;
+  $all=~s%</title>.*?<div class="span-6">%</title>%s;
 
-  # everything past the ads container
-  $all=~s%<div id="ads_container">.*$%%s;
+  # everything past the ads container (nope, past report user)
+#  $all=~s%<div id="ads_container">.*$%%s;
+  $all=~s%<section id="report_user".*$%%s;
 
-  # kill off lines that have just a single tag with no data
-  $all=~s%^\s*</?(div|table|tr)[^>]*?>\s*$%%mg;
+  # kill off lines that have just a single tag with no data (except div)
+#  $all=~s%^\s*</?(div|table|tr)[^>]*?>\s*$%%mg;
+  $all=~s%^\s*</?(table|tr)[^>]*?>\s*$%%mg;
+
+  # for div, can only kill off pure lines
+  $all=~s%^</?div>$%%mg;
 
   # kill off blank lines
   $all=~s/\n+/\n/sg;
