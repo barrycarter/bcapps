@@ -1,0 +1,1 @@
+../../../bc-analyze-conquerclub-game.php
