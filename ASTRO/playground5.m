@@ -30,7 +30,7 @@ Plot[f1151[23,lat]*60*60/69.0412,{lat,0,90}]
 
 Plot[2*ArcCos[-Tan[dec*Degree]*Tan[35*Degree]]/2/Pi*24,{dec,-90,90}]
 
-raDec2AzEl[ra_,dec_,lat_,lon_,d_] = 
+raDec2AzEl[ra_,dec_,lat_,lon_,d_] = FullSimplify[
 
 {ArcTan[Cos[lat]*Sin[dec] + Cos[dec]*Sin[lat]*
     Sin[lon + ((11366224765515 + 401095163740318*d)*Pi)/200000000000000 - ra], 
@@ -42,6 +42,20 @@ raDec2AzEl[ra_,dec_,lat_,lon_,d_] =
        Sin[lon + ((11366224765515 + 401095163740318*d)*Pi)/200000000000000 - 
          ra])^2], Sin[dec]*Sin[lat] - Cos[dec]*Cos[lat]*
     Sin[lon + ((11366224765515 + 401095163740318*d)*Pi)/200000000000000 - ra]]}
+
+, Member[{ra,dec,lat,lon,d},Reals]]
+
+Plot[raDec2AzEl[6.7524770277778/24*2*Pi, -16.716115833333*Degree, 35*Degree,
+-106.5*Degree,d][[1]], {d,16435,16436}]
+
+
+
+
+(* confirm repetition *)
+
+FullSimplify[raDec2AzEl[ra,dec,lat,lon,d]-raDec2AzEl[ra,dec,lat,lon,
+ d-200000000000000/200547581870159],
+ Element[{ra,dec,lat,lon,d},Reals]]
 
 (* testing above *)
 
