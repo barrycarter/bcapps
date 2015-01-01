@@ -41,6 +41,7 @@ debug("ALL FINISHED, SIR");
 sub dump_ls {
   # below just for reading purposes, cleaned up and run later
   my($bcpc_cmd) = << "MARK";
+rm -f /cygdrive/c/bcpc-files.txt.new
 echo SOF > /cygdrive/c/bcpc-files.txt.new
 date >> /cygdrive/c/bcpc-files.txt.new
 /usr/bin/find / -ls >> /cygdrive/c/bcpc-files.txt.new
@@ -52,6 +53,7 @@ MARK
 ;
 
   my($bcmac_cmd) = << "MARK";
+rm -f /mnt/sshfs/bcmac-files.txt.new
 echo SOF > /mnt/sshfs/bcmac-files.txt.new
 date >> /mnt/sshfs/bcmac-files.txt.new
 /usr/bin/find / -ls >> /mnt/sshfs/bcmac-files.txt.new
@@ -63,6 +65,7 @@ MARK
 ;
 
   my($bcunix_cmd) = << "MARK";
+rm -f $dir/bcunix-files.txt.new
 echo SOF > $dir/bcunix-files.txt.new
 date >> $dir/bcunix-files.txt.new
 /usr/bin/find / -xdev -ls >> $dir/bcunix-files.txt.new

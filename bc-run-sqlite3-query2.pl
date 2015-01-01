@@ -14,6 +14,9 @@ require "/usr/local/lib/bclib.pl";
 @dirpath = ("/home/barrycarter/LOCALHOST/20121228/DB", "/sites/DB");
 for $i (@dirpath) {if (-d $i) {chdir($i); last;}}
 
+# hack to handle /rss.pl which I used in previous version
+if ($ENV{REQUEST_URI}=~/rss/i) {$ENV{HTTP_HOST} = "rss.$ENV{HTTP_HOST}";}
+
 # check to see if db exists
 # TODO: add non-redundant error checking
 # parse hostname ($tld includes ".db." part)
