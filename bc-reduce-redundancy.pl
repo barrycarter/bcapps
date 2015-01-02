@@ -20,26 +20,61 @@ my($all) = read_file("files.uniq");
 # copy I can modify
 my($all2) = $all;
 
-# the hash to hold the translations
-my(%hash);
-
 # we will use special characters to encode; if file already has
 # special characters, note them
 
 # below takes too long, doing it line by line but that adds complications
 # while ($all2=~s/([\x7F-\xFF]+)//s) {$hash{$1} = $1;}
 
-# the number for the hash
-my($count);
+# the hash to hold the translations
+my(%hash);
+# strings to hash
+my(@strs);
+# special cases
+my(%spec);
 
 for $i (split(/\n/, $all)) {
   # lines CAN start with spaces, so only one space between count and line
   $i=~/\s*(\d+) (.*)$/;
   my($num,$line) = ($1,$2);
 
-  while ($line=~s/([\x7F-\xFF]+)//) {
-    # TODO: must handle this case!
-    warn("BAD CHAR: $1");
+  # no point in replacing lines that occur only once
+  # TODO: should I set limit higher than 1?
+  if ($num == 1) {last;}
+
+  push(@strs, $line);
+  # special characters already in string
+  while ($line=~s/([\x7F-\xFF]+)//) {$spec{$1} = $1;}
+}
+
+# decide on how many 7-bit characters we will use
+my($chars) = ceil(log(scalar(@strs))/log(128));
+
+# for special characters already in string, every substring of length
+# $chars must be protected
+
+my(%prot);
+
+for $i (keys %spec) {
+  for $j (0..length($i)-$chars) {
+    my($prot) = substr($i,$j,$chars);
+    $prot{$prot} = 1;
   }
-  debug("$num/$line");
+}
+
+# base 128 count up from 0 to scalar(@strs), bumping for special
+# characters when needed
+
+my($count) = 0;
+
+for $i (@strs) {
+
+  # the bits for $i
+  my(@bits) = num2base($count,128);
+  # pad with 0s so all are $chars length
+  push(@bits, (0)x($chars-scalar(@bits)));
+  # representation as string (we're using 128-255, so must add 128)
+  my($bits) = join("",map($_=chr($_+128), @bits));
+  debug("BITS: $bits",@bits);
+  $count++;
 }
