@@ -67,6 +67,8 @@ for $i (keys %spec) {
 
 my($count) = 0;
 
+open(A,">brr-trans-table.txt");
+
 for $i (@strs) {
 
   # the bits for $i
@@ -75,6 +77,10 @@ for $i (@strs) {
   push(@bits, (0)x($chars-scalar(@bits)));
   # representation as string (we're using 128-255, so must add 128)
   my($bits) = join("",map($_=chr($_+128), @bits));
-  debug("BITS: $bits",@bits);
+
+  # print the bits themselves if they are protected, else string
+  print A $prot{bits}?$bits:$i,"\n";
   $count++;
 }
+
+close(A);
