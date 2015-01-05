@@ -38,6 +38,20 @@ for $i (split(/\n/, $all)) {
   $i=~/\s*(\d+) (.*)$/;
   my($num,$line) = ($1,$2);
 
+  # compute how much space we'll save (roughly) assuming token size of 3
+  my($toksize) = 3;
+  my($oldspace) = $num*length($line);
+  # newspace = size of token times num plus one copy of orig line
+  my($newspace) = $num*$toksize + length($line);
+
+  my($savings) = $oldspace-$newspace;
+
+#  debug($i,"S: $savings");
+
+  # temp!
+  $totsavings += $savings;
+  debug("SAVINGS: $totsavings");
+
   # no point in replacing lines that occur only once
   # TODO: should I set limit higher than 1?
   if ($num == 1) {last;}

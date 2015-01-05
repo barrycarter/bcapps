@@ -142,3 +142,6 @@ alias waitpid bc-waitpid.pl
 # below requires file list and --dryrun=0
 alias mirror-referata "bc-mirror-mw-attr.pl --debug --api=http://pbs3.referata.com/w/api.php \!*"
 alias mirror-wikia "bc-mirror-mw.pl --debug --dir=pbs --api=http://pearls-before-swine-bc.wikia.com/api.php \!*"
+
+# record chat-avenue chats
+alias chatrecord "cd /home/barrycarter/TRANSCRIPTS/CHATAVENUE; sudo tcpflow 'net 199.59.161.0/24||net 100.42.219.208/29||net 199.59.160.0/24'&"
