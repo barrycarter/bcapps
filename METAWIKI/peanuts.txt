@@ -1,0 +1,4 @@
+<data>
+1950-10-02 First appearance of [[character::Charlie Brown+Shermy+Patty]]. Only [[first_named::Charlie Brown]] is named here, and only [[first_speech::Shermy]] speaks.
+1950-10-03 [[first_speech::Patty]] speaks for the first time, singing {{wp|What Are Little Girls Made Of?}}, and socking [[has_character::Shermy]] in the eye.
+</data>

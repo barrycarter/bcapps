@@ -21,7 +21,7 @@ while ($all=~s%<STMTTRN>(.*?)</STMTTRN>%%is) {
 
   # query
   push(@queries,
-"INSERT OR REPLACE INTO ofxstatements
+"REPLACE INTO ofxstatements
  (acctid, trnamt, trntype, dtposted, fitid, memo, refnum) VALUES
  ('$ofx{ACCTID}', $trans{TRNAMT}, '$trans{TRNTYPE}', '$trans{DTPOSTED}',
  '$trans{FITID}', '$trans{MEMO}', '$trans{REFNUM}')");

@@ -14,6 +14,8 @@ for $i ("madis","buoy","guidance2","metar","ship", "mesonet") {
   system("bc-get-$i.pl");
 }
 
+if ($globopts{test}) {die "TESTING";}
+
 # only run sqlite3 once, not after each download (too slow)
 system("bc-query-gobbler.pl madis --append=/usr/local/etc/madis.sql");
 sleep(60);

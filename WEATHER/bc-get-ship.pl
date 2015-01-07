@@ -84,7 +84,7 @@ print A "BEGIN;\n";
 
 for $i (@queries) {
   # REPLACE if needed
-  $i=~s/IGNORE/REPLACE/;
+  $i=~s/INSERT OR IGNORE/REPLACE/;
   print A "$i;\n";
 }
 
