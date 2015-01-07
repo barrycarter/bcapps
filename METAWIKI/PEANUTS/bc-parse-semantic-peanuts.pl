@@ -237,12 +237,12 @@ for $i (sort keys %triples) {
     next;
   }
 
-  # error check
-  if ($class eq "character" && !$triples{$i}{species}) {
-    warn "WARNING: $i: no species (so probably an error)";
-    debug(sort keys %{$triples{$i}{"-character"}});
-    next;
-  }
+  # error check (not for PEANUTS)
+#  if ($class eq "character" && !$triples{$i}{species}) {
+#    warn "WARNING: $i: no species (so probably an error)";
+#    debug(sort keys %{$triples{$i}{"-character"}});
+#    next;
+#  }
 
   open(A,">$pagedir/NEW/$i.mw");
   print A "{{$class\n|title=$i\n";

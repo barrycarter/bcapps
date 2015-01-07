@@ -1,10 +1,5 @@
 <relations>
 
-# this section contains the relations I use in pbs.txt. For example,
-# if I say "[[Dilbert::boss::PHB]] it means that Dilbert's boss is the
-# PHB. Thus, Dilbert is "employee_of" PHB, and PHB is "boss_of"
-# Dilbert. Further if [[x::boss::y]], both x and y must be characters
-
 # the character:character relations (most common type)
 # the reverse terms are male/female/neuter
 aunt, nephew/niece/nibling, character, character
@@ -62,6 +57,10 @@ storyline, , strip, storyline
 subspecies, , character, string
 # birthday = anniversary of birth, so caution
 birthday, , strip, character
+
+# added for peanuts
+first_named, , strip, character
+first_speech, , strip, character
 
 notes, , *, string
 description, , *, string

@@ -1,0 +1,34 @@
+<table border class="wikitable">
+<tr><th colspan=2>{{DateTable|{{{title|}}}|{{{hash|}}}}}</th></tr>
+{{#if: {{{character|}}} |
+<tr><th>[[Character List|Character(s)]]</th><td>{{#arraymap: {{{character|}}}|,
+|x|{{NewSemLink|character|x}}}}</td></tr>}}{{#if: {{{birthday|}}} |
+<tr><th>Birthday(s)</th><td>{{#arraymap: {{{birthday|}}}|,|x|{{NewSemLink|birthday|x}}}}</td></tr>}}{{#if: {{{deaths|}}} |
+<tr><th>Death(s)</th><td>{{#arraymap: {{{deaths|}}}|,|x|{{NewSemLink|deaths|x}}}}</td></tr>}}{{#if: {{{cameo|}}} |
+<tr><th>Cameo(s)</th><td>{{#arraymap: {{{cameo|}}}|,|x|{{NewSemLink|cameo|x}}}}</td></tr>}}{{#if: {{{storyline|}}} |
+<tr><th>[[Storylines|Storyline(s)]]</th><td>{{#arraymap: {{{storyline|}}}|,|x|{{NewSemLink|storyline|x}}}}</td></tr>}}{{#if: {{{newspaper|}}} |
+<tr><th>Newspaper Mention(s)</th><td>{{#arraymap: {{{newspaper|}}}|,|x|{{NewSemLink|newspaper|x}}}}</td></tr>}}{{#if: {{{event|}}} |
+<tr><th>Event(s)</th><td>{{#arraymap: {{{event|}}}|,|x|[[event::x]]}}</td></tr>}}{{#if: {{{meta|}}} |
+<tr><th>Meta Note(s)</th><td>{{#arraymap: {{{meta|}}}|,|x|[[meta::x]]}}</td></tr>}}
+</table>
+
+{{#if: {{{notes|}}} | == Notes ==
+{{#arraymap: {{{notes|}}}|<br>\n|x|[[notes::x]]}}
+| }}
+
+{{#if: {{{description|}}} | == Description ==
+{{#arraymap: {{{description|}}}|<br>\n|x|[[description::x]]}}
+| }}
+
+[[hash::{{{hash|}}}| ]]
+[[title::{{{title|}}}| ]]
+
+<table width=100%><tr><td>
+<< [[{{{prev|}}}|{{#time: d M Y (l)|{{{prev|}}}}}]]</td>
+<td align=right>[[{{{next|}}}|{{#time: d M Y (l)|{{{next|}}}}}]] >></td>
+</tr></table>
+
+{{#arraymap:{{{category|}}}|,|x|[[Category:x]]|&#32;}}
+
+[[Category:Strips]]
+

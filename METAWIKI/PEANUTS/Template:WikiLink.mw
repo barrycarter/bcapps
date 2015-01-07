@@ -1,0 +1,2 @@
+{{#ifeq: {{{1}}} | {{PAGENAME}} | {{#widget: IntLinkThis|title={{{1}}}|text={{{2}}}}} |
+{{#ifexist: {{{1}}} | {{#widget: IntLinkExisting|title={{{1}}}|text={{{2}}}}} | {{#widget: IntLinkNew|title={{{1}}}|text={{{2}}}}}}}}}

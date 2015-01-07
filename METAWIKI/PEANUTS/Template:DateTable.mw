@@ -1,0 +1,15 @@
+<noinclude>
+
+Parameter 1: date, like 2003-05-15
+Parameter 2: hash of image on gocomics site, like 0163f6c03fcf012f2fd000163e41dd5b
+
+</noinclude>
+
+[[has_date::{{{1}}}|]]
+
+<table border>
+<tr><th>{{WikiLink|{{{1}}}|{{#time: d M Y (l)|{{{1}}}}}}}</th></tr>
+<tr><th>{{#widget:LinkedThumbnail|url=http://www.gocomics.com/peanuts/{{#time: Y/m/d | {{{1}}}}}|hash={{{2}}}}}
+</th></tr>
+<tr><th>{{#widget:Extlink|url=http://assets.amuniversal.com/{{{2}}}?width=1500|text=highest resolution}}
+</th></tr></table>
