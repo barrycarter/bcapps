@@ -27,7 +27,8 @@ for $i (`egrep -v '^<|^#|^\$' $metadir/$comicname-meta.txt`) {
 # imagehashes and prev/next link (assumes largeimagelinks.txt is sorted)
 # TODO: confirm largeimagelinks.txt is sorted (sort -c?)
 for $i (split(/\n/, read_file("$metadir/$comicname-largeimagelinks.txt"))) {
-  $i=~s/^(.*?)\s+.*?\/([0-9a-f]+)\?.*$//;
+  # TODO: 32 below may not apply in all cases
+  $i=~s/^(.*?)\s+.*?\/([0-9a-f]{32})\??.*?$//;
   my($strip, $hash) = ($1, $2);
   $triples{$strip}{hash}{$hash} = "largeimagelinks";
   $triples{$strip}{class}{strip} = "largeimagelinks";

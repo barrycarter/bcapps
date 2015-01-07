@@ -1,0 +1,99 @@
+<relations>
+
+# this section contains the relations I use in pbs.txt. For example,
+# if I say "[[Dilbert::boss::PHB]] it means that Dilbert's boss is the
+# PHB. Thus, Dilbert is "employee_of" PHB, and PHB is "boss_of"
+# Dilbert. Further if [[x::boss::y]], both x and y must be characters
+
+# the character:character relations (most common type)
+# the reverse terms are male/female/neuter
+aunt, nephew/niece/nibling, character, character
+uncle, nephew/niece/nibling, character, character
+boss, employee, character, character
+boyfriend, girlfriend, character, character
+brother, brother/sister/sibling, character, character
+sister, brother/sister/sibling, character, character
+cousin, cousin, character, character
+coworker, coworker, character, character
+date, date, character, character
+ex-husband, ex-wife, character, character
+father, son/daughter/child, character, character
+mother, son/daughter/child, character, character
+# fires, fires, fired_by, character, character
+friend, friend, character, character
+girlfriend, boyfriend, character, character
+grandfather, grandson/granddaughter/grandchild, character, character
+grandmother, grandson/granddaughter/grandchild, character, character
+half-brother, half-brother/half-sister/half-sibling, character, character
+husband, wife, character, character
+# kills, kills, killed_by, character, character
+neighbor, neighbor, character, character
+niece, uncle/aunt/pibling, character, character
+pet, master, character, character
+roommate, roommate, character, character
+son, father/mother/parent, character, character
+daughter, father/mother/parent, character, character
+wife, husband, character, character
+killee, killer, character, character
+# this one is a stretch
+ex-employee, ex-employer, character, character
+
+# other relations
+# * = any type
+# string = plain text string, not an entity
+
+# we don't use the reverse relations here so I leave them blank
+
+aka, , character, alias
+character, , strip, character
+deaths, , strip, character
+location, , *, location
+member, , *, group
+members, , group, *
+newspaper, , strip, newspaper
+orientation, , character, string
+profession, , character, string
+hobby, , character, string
+rebirths, , strip, character
+religion, , character, string
+species, , character, string
+gender, , character, string
+storyline, , strip, storyline
+subspecies, , character, string
+# birthday = anniversary of birth, so caution
+birthday, , strip, character
+
+notes, , *, string
+description, , *, string
+event, , strip, string
+
+category, , *, string
+meta, , *, string
+
+# are cameos actually characters?
+cameo, , strip, cameo
+
+# actually maps strip to binary
+char_list_complete, , strip, string
+
+# not crazy about creating this for every death type
+# actually maps strip to integer
+
+antelope_deaths, , strip, string
+armadillo_deaths, , strip, string
+crocodile_deaths, , strip, string
+dolphin_deaths, , strip, string
+hamster_deaths, , strip, string
+human_deaths, , strip, string
+penguin_deaths, , strip, string
+pig_deaths, , strip, string
+rat_deaths, , strip, string
+squirrel_deaths, , strip, string
+zebra_deaths, , strip, string
+
+book, , strip, book
+isbn, , book, string
+
+null, , null, null
+
+</relations>
