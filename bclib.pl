@@ -645,14 +645,18 @@ sub sqlite3cols {
   return %ret;
 }
 
-=item webdie($str)
+=item webdie($str,$header)
 
 The die() command doesn\'t work well for CGI; this is die for CGI scripts
+
+If $header given, print it as a header (otherwise, assume calling
+program has printed header)
 
 =cut
 
 sub webdie {
-  my($str) = @_;
+  my($str,$header) = @_;
+  if ($header) {print "$header\n\n";}
   print "<p>ERROR: $str<p>\n";
   # exiting w/ 0 to avoid confusing lighttpd
   exit(0);

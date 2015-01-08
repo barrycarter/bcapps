@@ -6,80 +6,71 @@
 # starts off as a copy bc-run-sqlite3-query.pl
 # format: [rss|csv|].[query|"schema"].db.(db|database).other.stuff
 
+# TODO: replace "download sqlite3 db" with some sort of CSV/TSV dump?
+
 require "/usr/local/lib/bclib.pl";
 
 # TODO: stop doing this
 $globopts{debug}=1;
+$globopts{keeptemp}=1;
 
-# TODO: ugly way to stop 'requests' queries (maybe too ugly)
-if ($ENV{HTTP_HOST}=~/request/i) {
-  print "Content-type: text/html\n\n";
-  webdie("Hostname cannot contain phrase 'request': you cannot query the requests table");
-}
+# the only constant is .db|database.
+$ENV{HTTP_HOST}=~/^(.*?)\.(db|database)\.(.*)$/;
+my($base, $tld) = ($1,"$2.$3");
+
+# determine query pieces (reversed because lower parts don't always exist)
+my($db, $query, $type) = reverse(split(/\./, $base));
+
+# DB check
+check_db($db);
+
+# TODO: be more specific about which header to provide for requests
+print "Content-type: text/html\n\n";
+
+print << "MARK";
+<pre>
+TLD: $tld
+DB: $db
+QUERY: $query
+TYPE: $type
+</pre>
+MARK
+;
+
+if ($query eq "") {form_request($db,$tld);}
+if ($query eq "schema") {schema_request($db,$tld);}
+if ($query eq "post") {post_request($db,$tld);}
+
+# "real" query
+if ($query=~/[0-9a-f]{32}$/) {query_request($query,$db,$tld,$type);}
+print "Hostname $ENV{HTTP_HOST} not understood";
+
+die "TESTING";
 
 # TODO: SECURITY!!! (defeat dbname.tablename notation)
-# TODO: add non-redundant error checking
-# parse hostname ($tld includes ".db." part)
-if ($ENV{HTTP_HOST}=~/^schema\.([a-z_]+)\.(db|database)\.(.*?)$/i) {
-  # schema request($database, $tld)
-  check_db($1);
-  schema_request($1,"$2.$3");
-} elsif ($ENV{HTTP_HOST}=~/^rss\.([0-9a-f]+)\.([a-z_]+)\.(db|database)\.(.*?)$/i) {
-  # request for RSS (same subroutine as request for query)
-  check_db($2);
-  query_request($1,$2,"$3.$4", "rss");
-} elsif ($ENV{HTTP_HOST}=~/^csv\.([0-9a-f]+)\.([a-z_]+)\.(db|database)\.(.*?)$/i) {
-  # request for CSV (same subroutine as request for query)
-  check_db($2);
-  query_request($1,$2,"$3.$4", "csv");
-} elsif ($ENV{HTTP_HOST}=~/^([0-9a-f]+)\.([a-z_]+)\.(db|database)\.(.*?)$/i) {
-  # request for existing query
-  check_db($2);
-  query_request($1,$2,"$3.$4");
-} elsif ($ENV{HTTP_HOST}=~/^post\.([a-z_]+)\.(db|database)\.(.*?)$/i) {
-  # posting a new query
-  check_db($1);
-  post_request($1,"$2.$3");
-} elsif ($ENV{HTTP_HOST}=~/^([a-z_]+)\.(db|database)\.(.*?)$/i) {
-  # request for form only
-  check_db($1);
-  # lets me confirm at least the CGI is right
-  form_request($1,"$2.$3");
-} elsif ($ENV{HTTP_HOST}=~/^(db|database)\.(.*?)$/i) {
-  # request for list of dbs (currently not honored)
-  dblist_request("$1.$2");
-} else {
-  print "Content-type: text/html\n\n";
-  print "Hostname $ENV{HTTP_HOST} not understood";
-}
-
-exit();
 
 sub check_db {
   my($db) = @_;
+
+  # request for all dbs? not yet supported
+  if ($db eq "") {webdie("Cannot list databases (at the moment)", "Content-type: text/html");}
+
+  # invalid dbname?
   unless ($db=~/^[a-z_]+_shared$/i) {
-    print "Content-type: text/html\n\n";
-    webdie("DB name MUST end with _shared and contain only alpha characters");
+    webdie("DB name MUST end with _shared and contain only alpha characters", "Content-type: text/html");
   }
+
+  # db doesnt exist?
   my($res) = mysqlval("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '$db'");
-  unless ($res eq $db) {
-    print "Content-type: text/html\n\n";
-    webdie("No such database: $db");
-  }
-  # technically don't need to return anything, would've died if bad
-  return 1;
+  unless ($res eq $db) {webdie("No such database: $db", "Content-type: text/html");}
 }
 
 # this subroutines are specific to this program thus not well documented
 sub schema_request {
   my($db,$tld) = @_;
   my($out,$err,$res) = cache_command2("mysqldump --no-data --compact $db | egrep -v '^/'");
-  if ($res) {
-    print "Content-type: text/html\n\n";
-    webdie("Error getting schema: $res");
-  }
-  print "Content-type: text/plain\n\n";
-  print $out;
+  if ($res) {webdie("Error getting schema: $res");}
+  print "<pre>\n$out\n</pre>\n";
 }
 
 # request for query already in requests.requests
@@ -89,7 +80,6 @@ sub query_request {
 
   # no query returned?
   unless ($query) {
-    print "Content-type: text/html\n\n";
     webdie("$db exists, but no query with hash $hash. Try http://$db.$tld/");
   }
 
@@ -113,7 +103,6 @@ sub query_request {
 
   # error?
   if ($res) {
-    print "Content-type: text/html\n\n";
     webdie("QUERY: $query<br>ERROR: $err<br>");
   }
 
@@ -126,9 +115,7 @@ sub query_request {
   } else {
     # info about db
     if ($format=~/^csv$/) {
-      print "Content-type: text/plain\n\n";
     } else {
-      print "Content-type: text/html\n\n";
     }
     print read_file("$db.txt");
     print << "MARK";
@@ -178,22 +165,21 @@ sub post_request {
 
   # safety checks
   # TODO: restore this!
-#  unless ($query=~/^select/i) {
-#    print "Content-type: text/html\n\n";
-#    webdie("Query doesn't start w SELECT: $query");
-#  }
+  unless ($query=~/^select/i) {
+    webdie("Query doesn't start w SELECT: $query");
+  }
+
   # permitted characters (is this going to end up being everything?)
   if ($query=~/([^a-z0-9_: \(\)\,\*\<\>\"\'\=\.\/\?\|\!\+\-\%\\])/i) {
-    print "Content-type: text/html\n\n";
     webdie("Query contains illegal character '$1': $query");
   }
 
   # query is now safe, add to requests.db (as base 64)
   my($iquery) = encode_base64($query);
   my($queryhash) = md5_hex($iquery);
+  # TODO: if query already in db, need to do this (or pointless?)
   mysql("REPLACE INTO requests (query,db,md5) VALUES ('$iquery', '$db', '$queryhash')", "requests");
   if ($SQL_ERROR) {
-    print "Content-type: text/html\n\n";
     webdie("SQL ERROR (requests): $SQL_ERROR");
   }
   # and redirect
@@ -213,7 +199,6 @@ sub form_request {
 </form></table>
 
 <p><a href='http://schema.$db.$tld/' target='_blank'>Schema</a>
-<a href="http://$db.$tld/$db.db">Raw SQLite3 db</a>
 MARK
 ;
 
@@ -239,6 +224,7 @@ CREATE UNIQUE INDEX ui ON requests(md5(32));
 -- TODO: change "test" to the db Ill actually want to use
 CREATE USER readonly;
 GRANT SELECT ON test TO readonly;
+
 
 =cut
 
@@ -295,5 +281,3 @@ sub mysqlval {
   my(@temp) = values %{$res[0]};
   return $temp[0];
 }
-
-
