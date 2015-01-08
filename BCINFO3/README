@@ -50,7 +50,7 @@ yum -y install mysql mysql-server lighttpd-fastcgi fcgi libxml2 libxml2-devel
 yum -y install nano graphviz qhull zip strace xz ncurses ncurses-devel
 yum -y install readline readline-devel nagios-plugins 'nagios-plugins-*'
 yum -y install perl-Perl-Critic "perl-ExtUtils-*" inotify-tools tidy
-yum -y install calendar munin
+yum -y install calendar munin postgresql84 postgresql84-server
 
 % Perl modules (excluding those available via yum)
 
@@ -276,4 +276,15 @@ curl -O http://openlayers.org/download/OpenLayers-2.13.1.tar.gz
 % 29 Sep 2014: upgrade bash for shellshock:
 
 env x='() { :;}; echo vulnerable' bash -c 'echo hello'
+
+% 07 Jan 2015: installing postgres
+
+service postgresql initdb
+chkconfig postgresql on
+su - postgres
+: 2 below as postgres
+createuser -s root
+logout
+createdb root
+
 

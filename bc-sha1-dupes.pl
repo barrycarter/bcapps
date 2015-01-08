@@ -8,6 +8,8 @@
 
 require "/usr/local/lib/bclib.pl";
 
+warn "Must run in --debug mode for any results";
+
 while (<>) {
   m/^(.*?)\s+(.*?)$/;
   ($sha, $file) = ($1, $2);

@@ -11,6 +11,8 @@ require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
 defaults("dryrun=1");
 
+warn "Must use --dryrun=0 to actually do anything";
+
 # TODO: this is a total hack for stuff I keep forgetting to do
 
 # TODO: this doesnt work for new files, since the glob takes place at
