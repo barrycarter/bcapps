@@ -58,7 +58,8 @@ for $i (@{$hlref}) {
   if ($i->{latitude}=~/^\s*$/ || $i->{longitude}=~/^\s*$/) {
     unless ($statinfo{$i->{station_id}}) {
       # TODO: restore this warning!
-#      warn("$i->{station_id}: no position data at all!");
+      warn("$i->{station_id}: no position data at all!");
+      die "TESTING";
       next;
     }
 

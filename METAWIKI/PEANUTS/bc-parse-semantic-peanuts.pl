@@ -6,8 +6,8 @@
 require "/usr/local/lib/bclib.pl";
 
 
-my($comicname) = "peanuts";
-my($metadir) = "/home/barrycarter/BCGIT/METAWIKI";
+my($comicname) = uc("peanuts");
+my($metadir) = "/home/barrycarter/BCGIT/METAWIKI/$comicname";
 my($pagedir) = "/usr/local/etc/metawiki/$comicname";
 chdir($metadir);
 
@@ -91,21 +91,6 @@ for $i (split(/\n/, $1.read_file("$comicname-cl.txt"))) {
 
       # the character appears in $datasource
       $triples{$datasource}{character}{$l}="$datasource ($source::$k::$target)";
-
-      # if the character has parens in name and no species, note species
-      # (note that a species triple will correctly override this)
-      if ($l=~/\(([^A-Z]*?)\)$/ && !$triples{$l}{species}) {
-	my($specname) = $1;
-	$triples{$l}{species}{$specname} = "NAME2SPECIES";
-	$triples{$specname}{class}{string} = 1;
-#	debug("NAME2SPECIES: $l -> $1");
-      }
-
-      # if the character has a "date like" name, tag for addl step
-      # TODO: make sure date is actual first appearance
-      if ($l=~/^.*? \d{8} \(.*?\)/) {$datename{$l}=1;}
-    }
-
     # if this is an alias, tag for later canonization
     if ($k eq "aka") {$canon{$target} = $source;}
 
@@ -119,6 +104,7 @@ for $i (split(/\n/, $1.read_file("$comicname-cl.txt"))) {
       $triples{$target}{relationship}{$source} = $rev;
       $has_relation{$source} = 1;
       $has_relation{$target} = 1;
+    }
     }
   }
 }

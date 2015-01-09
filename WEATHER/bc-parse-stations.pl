@@ -11,6 +11,9 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# oneoff on 9 Jan 2015 for new MESO stations
+meso(); die "TESTING";
+
 # mli contains weird entries, so must go first
 mli();
 # because we get most of our data from mesonet, it comes next
@@ -40,7 +43,7 @@ sub meso {
     $seen{$data[0]} = 1;
     print join("\t", $data[0], "NULL", $data[2], $data[3], $data[4], $data[5],
 	       $data[6], $data[7],
-	       "http://mesowest.utah.edu/cgi-bin/droman/meso_station.cgi"),
+	       "http://mesowest.utah.edu/data/mesowest_link_csv.tbl"),
 		 "\n";
   }
 
