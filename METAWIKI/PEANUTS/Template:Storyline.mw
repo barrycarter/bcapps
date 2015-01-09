@@ -1,0 +1,9 @@
+<table class="wikitable">
+<tr><th>Starts</th><td>[[datemin::{{#ask: [[Category:Strips]] [[storyline::{{{title|}}}]] | order=ASC | limit=1 | searchlabel= | link=none}}]]</td></tr>
+<tr><th># Strips</th><td>[[datecount::{{#ask: [[Category:Strips]] [[storyline::{{{title|}}}]] | format=count | link=none}}]]</td></tr>
+<tr><th>Ends</th><td>[[datemax::{{#ask: [[Category:Strips]] [[storyline::{{{title|}}}]] | order=DESC | limit=1 | searchlabel= | link=none}}]]</td></tr>
+</table>
+
+{{#ask: [[Category:Strips]] [[storyline::{{{title|}}}]] | ?hash | order=ASC | format=template | limit=20 | sep=<br><br> | link=none | template=DateTable | searchlabel = ... more ...}}
+
+[[Category:Storylines]]

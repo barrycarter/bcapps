@@ -1,0 +1,37 @@
+<table class="wikitable">
+
+<tr><th colspan=2>{{#ask: [[Category:Strips]] [[character::{{{title|}}}]] | ?hash | order=ASC | limit=1 | searchlabel= | format=template | link=none | template=DateTable}}</th></tr>
+
+<tr><th>Name</th><td>{{{title|}}}</td></tr>
+
+<tr><th>1st Appearance</th><td>[[datemin::{{#ask: [[Category:Strips]] [[character::{{{title|}}}]] | order=ASC | limit=1 | searchlabel= | link=none}}]]</td></tr>
+
+<tr><th># Appearances</th><td>[[datecount::{{#ask: [[Category:Strips]] [[character::{{{title|}}}]] | format=count | link=none}}]]</td></tr>
+
+{{#if: {{{species|}}} | <tr><th>Species</th><td>
+{{#arraymap: {{{species|}}}|,|x|[[species::x]]}}</td></tr>}}
+
+{{#if: {{{subspecies|}}} | <tr><th>Subspecies</th><td>
+{{#arraymap: {{{subspecies|}}}|,|x|[[subspecies::x]]}}</td></tr>}}
+
+{{#if: {{{profession|}}} | <tr><th>Profession(s)</th><td>
+{{#arraymap: {{{profession|}}}|,|x|[[profession::x]]}}</td></tr>}}
+
+{{#if: {{{aka|}}} | <tr><th>Alias(es)</th><td>
+{{#arraymap: {{{aka|}}}|,|x|[[aka::x]]}}</td></tr>}}
+
+</table>
+
+{{#if: {{{notes|}}} | == Notes ==
+{{#arraymap: {{{notes|}}}|<br>\n|x|[[notes::x]]}}
+| }}
+
+{{#if: {{{description|}}} | == Description ==
+{{#arraymap: {{{description|}}}|<br>\n|x|[[description::x]]}}
+| }}
+
+== Appearances ==
+
+{{#ask: [[Category:Strips]] [[character::{{{title|}}}]] | ?hash | order=ASC | format=template | limit=20 | sep=<br><br> | link=none | template=DateTable | searchlabel = ... more ...}}
+
+[[Category:Characters]]

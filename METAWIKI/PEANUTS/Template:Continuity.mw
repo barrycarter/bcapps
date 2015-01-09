@@ -1,0 +1,8 @@
+{{{notes|}}}
+
+{{#arraymap: {{{dates|}}}|,|x|
+{{#ask: [[x]] | ?hash | format=template | template=DateTable | link=none | sep=<br><br>}}
+}}
+
+[[Category:Continuity]]
+

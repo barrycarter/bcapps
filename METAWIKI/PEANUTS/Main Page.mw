@@ -1,0 +1,29 @@
+Welcome to the experimental, incomplete, and often inaccurate Peanuts referata wiki, an attempt to create a entire semantic wiki from just a few file.
+
+== Edit ==
+
+You can't edit this wiki directly, but to learn more about this project (and edit the source files):
+
+* The data: {{#widget:Extlink|url=https://github.com/barrycarter/bcapps/blob/master/METAWIKI/PEANUTS/PEANUTS.txt|text=https://github.com/barrycarter/bcapps/blob/master/METAWIKI/PEANUTS/PEANUTS.txt}}
+
+* The whole directory: {{#widget:Extlink|url=https://github.com/barrycarter/bcapps/blob/master/METAWIKI/PEANUTS|text=https://github.com/barrycarter/bcapps/blob/master/METAWIKI/PEANUTS}}
+
+You can also email me at referata@barrycarter.info
+
+== Browse ==
+
+Or.. if you just want to browse:
+
+* {{#ask: [[Category:Strips]]|format=count}} {{WikiLink|Category:Strips|Strips}}
+* {{#ask: [[Category:Characters]]|format=count}} {{WikiLink|Character List|Characters}}
+* {{#ask: [[Category:Storylines]]|format=count}} {{WikiLink|Storylines|Storylines}}
+* {{#ask: [[Category:Continuity]]|format=count}} {{WikiLink|Category:Continuity|continuity issues}}
+* {{#ask: [[Category:Strips]] [[event::+]] | format=count}} significant [[{{WikiLink|Events|events}}]] in Peanuts' history
+* {{#ask: [[Category:Strips]] [[notes::+]] | format=count}} [[{{WikiLink|Notes|notes and annotations}}]]
+
+
+
+
+
+
+

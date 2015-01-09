@@ -1,0 +1,4 @@
+<a href="/wiki/<!--{$title}-->" target="_blank" title-"<!--{$title}-->">
+<img src="http://assets.amuniversal.com/<!--{$hash}-->?width=100" />
+</a>
+

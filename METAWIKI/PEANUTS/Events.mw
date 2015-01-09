@@ -1,0 +1,2 @@
+{{#ask: [[Category:Strips]] [[event::+]] | ?hash | ?event | format=template | template=Notes | link=none | limit = 500 | searchlabel=... more ... | intro=<table class="wikitable"> | outro=</table>}}
+

@@ -1,0 +1,11 @@
+<noinclude>
+
+Parameter 1: date, like 2003-05-15
+Parameter 2: hash of image on gocomics site, like 0163f6c03fcf012f2fd000163e41dd5b
+
+This version is for calendar, which needs smaller thumbnails and links
+to wiki pages, NOT to gocomics site
+
+</noinclude>
+
+{{#widget:LinkedThumbnailCal|title={{{1}}}|hash={{{2}}}}}
