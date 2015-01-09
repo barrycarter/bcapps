@@ -45,37 +45,37 @@ if ($query eq "post") {post_request($db,$tld);}
 if ($query=~/[0-9a-f]{32}$/) {query_request($query,$db,$tld,$type);}
 print "Hostname $ENV{HTTP_HOST} not understood";
 
-die "TESTING";
-
-# TODO: SECURITY!!! (defeat dbname.tablename notation)
+# TODO: more security?
 
 sub check_db {
   my($db) = @_;
+  my($header) = "Content-type: text/html";
 
   # request for all dbs? not yet supported
-  if ($db eq "") {webdie("Cannot list databases (at the moment)", "Content-type: text/html");}
+  if ($db eq "") {webdie("Cannot list databases (at the moment)", $header);}
 
   # invalid dbname?
   unless ($db=~/^[a-z_]+_shared$/i) {
-    webdie("DB name MUST end with _shared and contain only alpha characters", "Content-type: text/html");
+    webdie("DB name: alpha only, must end in _shared", $header);
   }
 
   # db doesnt exist?
   my($res) = mysqlval("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '$db'");
-  unless ($res eq $db) {webdie("No such database: $db", "Content-type: text/html");}
+  unless ($res eq $db) {webdie("No such database: $db", $header);}
 }
 
 # this subroutines are specific to this program thus not well documented
 sub schema_request {
   my($db,$tld) = @_;
   my($out,$err,$res) = cache_command2("mysqldump --no-data --compact $db | egrep -v '^/'");
-  if ($res) {webdie("Error getting schema: $res");}
+  if ($res) {webdie("Schema error: $res/$out/$err");}
   print "<pre>\n$out\n</pre>\n";
 }
 
 # request for query already in requests.requests
 sub query_request {
-  my($hash,$db,$tld,$rss) = @_;
+  my($hash,$db,$tld,$format) = @_;
+  my($options);
   my($query) = decode_base64(mysqlval("SELECT query FROM requests WHERE md5='$hash' AND db='$db'", "requests"));
 
   # no query returned?
@@ -87,13 +87,13 @@ sub query_request {
   my($tmp) = my_tmpfile("dbquery");
   write_file("$query;", $tmp);
 
-  # if $rss is actually "csv", give comma-separated output
-  my($format);
-  if ($rss=~/^csv$/) {$format="csv";} else {$format="html";}
+  # options based on format
+  $options="-H";
+  if ($format eq "csv") {$options="-B"};
+  if ($format eq "rss") {$options="-X"};
 
   # avoid DOS by limiting cputime
-  # TODO: allow non-html formats
-  my($out,$err,$res) = cache_command2("ulimit -t 5 && mysql -H $db < $tmp");
+  my($out,$err,$res) = cache_command2("ulimit -t 5 && mysql $options $db < $tmp");
 
   # restore hyperlinks and quotes
   $out=~s/&lt;/</isg;
@@ -102,23 +102,22 @@ sub query_request {
   $out=~s/&\#39;/\'/isg;
 
   # error?
-  if ($res) {
-    webdie("QUERY: $query<br>ERROR: $err<br>");
+  if ($res) {webdie("QUERY: $query<br>ERROR: $err<br>");}
+
+  # result is known good
+  if ($format eq "csv") {
+    $out=~s/\t/,/isg;
+    $out="<pre>\n$out\n</pre>";
   }
 
-  # known good result; requesting rss?
-  if ($rss=~/^rss$/i) {
-    local(*A);
-    open(A,"|/usr/local/bin/sqlite32rss.pl --title=$ENV{HTTP_HOST} --desc=DB_QUERY");
-    print A $out;
-    close(A);
-  } else {
-    # info about db
-    if ($format=~/^csv$/) {
-    } else {
-    }
-    print read_file("$db.txt");
-    print << "MARK";
+  if ($format eq "rss") {
+    $out="<pre>\n$out\n</pre>";
+  }
+
+  # info about db
+  # TODO: defeat for CSV?
+  print read_file("$db.txt");
+  print << "MARK";
 <title>$query</title>
 
 NOTE: This page is experimental. Bug reports to
@@ -141,7 +140,6 @@ $out
 MARK
 ;
     form_request($db,$tld,$query,$hash);
-  }
 }
 
 sub post_request {

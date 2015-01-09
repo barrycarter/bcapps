@@ -84,11 +84,11 @@ for $i (@{$hlref}) {
   $hash{name} = "$statinfo{$hash{id}}{city}, $statinfo{$hash{id}}{state}, $statinfo{$hash{id}}{country}";
 
   # warn of bad lat/lon (but use them anyway)
-  if (abs($hash{latitude}-$statinfo{$hash{id}}{latitude}) > .0051) {
+  if (abs($hash{latitude}-$statinfo{$hash{id}}{latitude}) > .01) {
     warn "$hash{id}: latitude difference excessive; $hash{latitude} vs $statinfo{$hash{id}}{latitude}";
   }
 
-  if (abs($hash{longitude}-$statinfo{$hash{id}}{longitude}) > .0051) {
+  if (abs($hash{longitude}-$statinfo{$hash{id}}{longitude}) > .01) {
     warn "$hash{id}: longitude difference excessive; $hash{longitude} vs $statinfo{$hash{id}}{longitude}";
   }
 
