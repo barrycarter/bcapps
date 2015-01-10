@@ -13,7 +13,7 @@ for $i (@res1) {$statinfo{$i->{metar}} = $i;}
 
 # TODO: handle case of sky_cover occurring three times
 
-my($url) = "http://weather.aero/dataserver_current/cache/metars.cache.csv.gz";
+my($url) = "http://weather.aero/dataserver1_4/cache/metars.cache.csv.gz";
 my($out,$err,$res) = cache_command2("curl $url | gunzip", "age=150");
 
 # store unzipped results

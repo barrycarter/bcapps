@@ -13,6 +13,7 @@
 # TODO: the "DONE" directory should be wiped regularly
 
 require "/usr/local/lib/bclib.pl";
+$globopts{debug} = 1;
 my($db)=shift||die("Usage: $0 name_of_db_without_.db");
 
 # this program is intended to avoid race conditions, so must only run once
@@ -29,6 +30,15 @@ for $i (sort(glob("*$db*"))) {
   $i=~/^[\d\.]+\-([a-z]+)/||warn("BAD I: $i");
   my($db) = $1;
 
+  # experimentally, write data to MySQL db too
+  # if madis, run on mysql too
+  if ($db eq "madis") {
+    system("mysql madis < $i 1> mysql.$db.out 2> mysql.$db.err");
+    system("mysql madis < /usr/local/etc/madis-my.sql");
+    warn("Updating MySQL only, not SQLite3");
+    next;
+  }
+
   # TODO: in theory, could group all files for one db together
   # copy to new version, run queries, move back safely
 
@@ -38,9 +48,6 @@ for $i (sort(glob("*$db*"))) {
   $cmd = "cp /sites/DB/$db.db $db.db.new; nice -n 19 sqlite3 $db.db.new < $i 1> $db.out 2> $db.err";
   debug("RUNNING: $cmd");
   system($cmd);
-
-  # experimentally, write data to MySQL db too
-#  system("bc-sqlite3dump2mysql.pl < $i | mysql shared");
 
   if ($globopts{append}) {
     $cmd = "nice -n 19 sqlite3 $db.db.new < $globopts{append}";

@@ -1,5 +1,45 @@
 (* simple astronomy to solve simple problems *)
 
+(* line of 60 deg declination if north is up *)
+
+test0705={Cos[theta]*Cos[57*Degree], Sin[theta]*Cos[57*Degree], Sin[57*Degree]}
+
+ParametricPlot3D[test0705,{theta,0,2*Pi},AxesOrigin->{0,0,0}]
+
+test0706 = FullSimplify[rotationMatrix[y,55*Degree].test0705, 
+ Element[theta,Reals]]
+
+test0713 = FullSimplify[ArcSin[test0706[[3]]], Element[theta,Reals]]
+
+test0934 = FullSimplify[ArcTan[test0706[[2]]/test0706[[1]]],
+Element[theta,Reals]]
+
+
+
+Plot[test0713/Degree,{theta,0,2*Pi}]
+
+(* it is NOT THE below *)
+
+Plot[35*Degree+33*Degree*Cos[theta], {theta,0,2*Pi}]
+
+Plot[{35+33*Cos[theta], test0713/Degree}, {theta,0,2*Pi}]
+
+Plot[{ArcTan[test0706[[2]]/test0706[[1]]],ArcSin[test0706[[3]]]},
+ {theta,0,2*Pi}]
+
+
+
+Plot[(test0713-35*Degree)/(10*Degree),{theta,0,2*Pi}]
+
+FullSimplify[(test0713-35*Degree)/(10*Degree),Element[theta,Reals]]
+
+FullSimplify[ArcSin[(test0713-35*Degree)/(10*Degree)]+Pi,
+ {theta>Pi,theta<3/2*Pi}]
+
+Plot[(test0713-35*Degree)/(10*Degree)+Sin[theta],{theta,0,2*Pi}]
+
+
+
 (* magic formula for time up either side of ra? *)
 
 ArcCos[Tan[dec]*Tan[lat]]
@@ -48,9 +88,6 @@ raDec2AzEl[ra_,dec_,lat_,lon_,d_] = FullSimplify[
 Plot[raDec2AzEl[6.7524770277778/24*2*Pi, -16.716115833333*Degree, 35*Degree,
 -106.5*Degree,d][[1]], {d,16435,16436}]
 
-
-
-
 (* confirm repetition *)
 
 FullSimplify[raDec2AzEl[ra,dec,lat,lon,d]-raDec2AzEl[ra,dec,lat,lon,
@@ -80,7 +117,7 @@ N[raDec2AzEl[sunra,sundec,abqlat,abqlon,curtime],20]/Degree
 
 (* above is {161.75050713266716177, 30.111178395836822086} *)
 
-(* or 1.82", 45m, 161 degrees so still not quite *)
+(* or 1.82\", 45m, 161 degrees so still not quite *)
 
 (* and 30 deg 6m 20.24s so not quite but close *)
 
@@ -105,12 +142,6 @@ temp1119.temp1120/Norm[temp1119]/Norm[temp1120]
 temp1123 = Cos[dec] Cos[lat] Cos[h + lon - ra] + Sin[dec] Sin[lat]
 
 temp1124 = Solve[temp1123==0,h]
-
-
-
-
-
-
 
 (* I dislike Mathematica's spherical conventions so.. *)
 
@@ -157,8 +188,6 @@ ArcTan[(Cos[dec]*Sin[lon - ((-4394688633775234485 + 401095163740318*d)*Pi)/
 (* testing formula above *)
 
 azimuth[0,0,0,0,0]
-
-
 
 Simplify[xyz2sph2[
  rotationMatrix[y,Pi/2-lat].rotationMatrix[z,h].sph2xyz[{-ra,dec,1}],
