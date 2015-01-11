@@ -59,7 +59,6 @@ for $i (@{$hlref}) {
     unless ($statinfo{$i->{station_id}}) {
       # TODO: restore this warning!
       warn("$i->{station_id}: no position data at all!");
-      die "TESTING";
       next;
     }
 

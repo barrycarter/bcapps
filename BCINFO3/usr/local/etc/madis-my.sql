@@ -30,18 +30,20 @@ DELETE FROM madis WHERE ABS(latitude)>90 OR ABS(longitude)>180;
 -- METAR-PARSED trumps many things...
 -- TODO: this still allows for 2+ non-metars.cache-parsed reports
 
-DELETE FROM madis WHERE oid IN (SELECT m1.oid FROM madis m1 JOIN
-madis m2 ON (m1.id = m2.id AND m1.time = m2.time AND m1.source IN
-('http://wdssii.nssl.noaa.gov/realtime/metar/recent/METAR.kmz',
- 'http://mesowest.utah.edu/data/mesowest.out.gz',
- 'http://www.srh.noaa.gov/gis/kml/metar/tf.kmz') AND
-m2.source='http://weather.aero/dataserver_current/cache/metars.cache.csv.gz'));
+-- TODO: restore deletes below
+
+-- DELETE FROM madis WHERE oid IN (SELECT m1.oid FROM madis m1 JOIN
+-- madis m2 ON (m1.id = m2.id AND m1.time = m2.time AND m1.source IN
+--  ('http://wdssii.nssl.noaa.gov/realtime/metar/recent/METAR.kmz',
+--  'http://mesowest.utah.edu/data/mesowest.out.gz',
+--  'http://www.srh.noaa.gov/gis/kml/metar/tf.kmz') AND
+-- m2.source='http://weather.aero/dataserver_current/cache/metars.cache.csv.gz'));
 
 -- Mesonet trumps /tf.kmz
-DELETE FROM madis WHERE oid IN (SELECT m1.oid FROM madis m1 JOIN
-madis m2 ON (m1.id = m2.id AND m1.time = m2.time AND m1.source IN
-('http://www.srh.noaa.gov/gis/kml/metar/tf.kmz') AND
-m2.source='http://mesowest.utah.edu/data/mesowest.out.gz'));
+-- DELETE FROM madis WHERE oid IN (SELECT m1.oid FROM madis m1 JOIN
+-- madis m2 ON (m1.id = m2.id AND m1.time = m2.time AND m1.source IN
+-- ('http://www.srh.noaa.gov/gis/kml/metar/tf.kmz') AND
+-- m2.source='http://mesowest.utah.edu/data/mesowest.out.gz'));
 
 -- after all these deletes, vacuum and analyze
 OPTIMIZE TABLE madis;

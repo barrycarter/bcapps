@@ -24,7 +24,7 @@ dodie('chdir("/var/tmp/querys")');
 for $i (sort(glob("*$db*"))) {
 
   unless ($i=~/^\d{8}\.\d{6}\.\d{9}\-$db/) {next;}
-  debug("PROCESSING: $i");
+  debug("GOBBLING: $i");
 
   # find db
   $i=~/^[\d\.]+\-([a-z]+)/||warn("BAD I: $i");
@@ -35,6 +35,7 @@ for $i (sort(glob("*$db*"))) {
   if ($db eq "madis") {
     system("mysql madis < $i 1> mysql.$db.out 2> mysql.$db.err");
     system("mysql madis < /usr/local/etc/madis-my.sql");
+    system("mv $i DONE");
     warn("Updating MySQL only, not SQLite3");
     next;
   }
