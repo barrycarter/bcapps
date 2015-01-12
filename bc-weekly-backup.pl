@@ -11,6 +11,8 @@
 # 3. i use them often enough that it's efficient to have them uncompressed
 # 4. saves time and CPU, making this proggie more efficient
 
+# as of 10 Jan 2015, putting bcunix file dumps in root dir
+
 require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
 my($dir) = "/usr/local/etc/weekly-backups/files";
@@ -41,41 +43,46 @@ debug("ALL FINISHED, SIR");
 sub dump_ls {
   # below just for reading purposes, cleaned up and run later
   my($bcpc_cmd) = << "MARK";
-rm -f /cygdrive/c/bcpc-files.txt.new
-echo SOF > /cygdrive/c/bcpc-files.txt.new
-date >> /cygdrive/c/bcpc-files.txt.new
-/usr/bin/find / -ls >> /cygdrive/c/bcpc-files.txt.new
-date >> /cygdrive/c/bcpc-files.txt.new
-echo EOF >> /cygdrive/c/bcpc-files.txt.new
-mv /cygdrive/c/bcpc-files.txt /cygdrive/c/bcpc-files.txt.old
-mv /cygdrive/c/bcpc-files.txt.new /cygdrive/c/bcpc-files.txt
+cd /cygdrive/c/
+rm -f bcpc-files.txt.new
+date >> bcpc-files.txt.new
+/usr/bin/find / -ls >> bcpc-files.txt.new
+date >> bcpc-files.txt.new
+mv bcpc-files.txt bcpc-files.txt.old
+mv bcpc-files.txt.new bcpc-files.txt
+rev bcpc-files.txt | sort > bcpc-files-rev.txt.srt.new
+mv bcpc-files-rev.txt.srt bcpc-files-rev.txt.srt.old
+mv bcpc-files-rev.txt.srt.new bcpc-files-rev.txt.srt
 MARK
 ;
 
   my($bcmac_cmd) = << "MARK";
-rm -f /mnt/sshfs/bcmac-files.txt.new
-echo SOF > /mnt/sshfs/bcmac-files.txt.new
-date >> /mnt/sshfs/bcmac-files.txt.new
-/usr/bin/find / -ls >> /mnt/sshfs/bcmac-files.txt.new
-date >> /mnt/sshfs/bcmac-files.txt.new
-echo EOF >> /mnt/sshfs/bcmac-files.txt.new
-mv /mnt/sshfs/bcmac-files.txt /mnt/sshfs/bcmac-files.txt.old
-mv /mnt/sshfs/bcmac-files.txt.new /mnt/sshfs/bcmac-files.txt
+cd /mnt/sshfs
+rm -f bcmac-files.txt.new
+date >> bcmac-files.txt.new
+/usr/bin/find / -ls >> bcmac-files.txt.new
+date >> bcmac-files.txt.new
+mv bcmac-files.txt bcmac-files.txt.old
+mv bcmac-files.txt.new bcmac-files.txt
+rev bcmac-files.txt| sort > bcmac-files-rev.txt.srt.new
+mv bcmac-files-rev.txt.srt bcmac-files-rev.txt.srt.old
+mv bcmac-files-rev.txt.srt.new bcmac-files-rev.txt.srt
 MARK
 ;
 
   my($bcunix_cmd) = << "MARK";
-rm -f $dir/bcunix-files.txt.new
-echo SOF > $dir/bcunix-files.txt.new
-date >> $dir/bcunix-files.txt.new
-/usr/bin/find / -xdev -ls >> $dir/bcunix-files.txt.new
-date >> $dir/bcunix-files.txt.new
-echo EOF >> $dir/bcunix-files.txt.new
-mv $dir/bcunix-files.txt $dir/bcunix-files.txt.old
-mv $dir/bcunix-files.txt.new $dir/bcunix-files.txt
+cd /
+rm -f bcunix-files.txt.new
+date >> bcunix-files.txt.new
+/usr/bin/find / -xdev -ls >> bcunix-files.txt.new
+date >> bcunix-files.txt.new
+mv -f bcunix-files.txt bcunix-files.txt.old
+mv -f bcunix-files.txt.new bcunix-files.txt
+rev bcunix-files.txt | sort > bcunix-files-rev.txt.srt.new
+mv -f bcunix-files-rev.txt.srt bcunix-files-rev.txt.srt.old
+mv -f bcunix-files-rev.txt.srt.new bcunix-files-rev.txt.srt
 MARK
 ;
-
 
   $bcpc_cmd=~s/\n/; /isg;
   $bcmac_cmd=~s/\n/; /isg;

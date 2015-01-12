@@ -1,4 +1,20 @@
 <data>
-1950-10-02 First appearance of [[character::Charlie Brown+Shermy+Patty]]. Only [[first_named::Charlie Brown]] is named here, and only [[first_speech::Shermy]] speaks.
-1950-10-03 [[first_speech::Patty]] speaks for the first time, singing {{wp|What Are Little Girls Made Of?}}, and socking [[character::Shermy]] in the eye.
+1950-10-02 [[description::This the first strip and the first appearance of [[character::Shermy+Patty+Charlie Brown]], but [[first_speech::Shermy]] is the only who speaks and we only learn [[first_name::Charlie Brown]]'s name.]]
+1950-10-03 [[description::The still-unnamed [[character+first_speech::Patty]] speaks for the first time, singing {{wp|What Are Little Girls Made Of?}}, and socking still-unnamed [[character::Shermy]] in the eye.]] [[notes::It's hard to tell for sure if this is Shermy or some other character]]
+1950-10-04 [[description::[[character::Patty]] waters her windowbox flowers, but some of the water drips onto the yet-unnamed [[character::Snoopy]] (making his first appearance) and causes his flower hat to wilt]] [[category::No dialogue]]
+1950-10-05 [[description::Umbrella-less [[character::Patty]] complains of rain in the first panel, but manages to coax [[character::Shermy]] to give her his umbrella, leaving Shermy complaining about rain in the last panel.]] [[notes::Neither Shermy nor Patty has been named yet]]
+1950-10-06 [[description::[[character::Patty]] waters a flower, causing it to grow rapidly. [[character::Snoopy]] sniffs the flower when it reaches nose-height, but loses interest when the flower grows too tall.]] [[notes::Neither Patty nor Snoopy have been named yet]] [[category::No dialogue]]
+1950-10-07 [[description::[[character::Shermy+Charlie Brown]] misinterpret a "WATCH OUT FOR CHILDREN" sign as indicating that some children may show up to play with them, and leave disappointed when none arrive.]] [[notes::Shermy has not been named yet]]
+1950-10-09 [[description::[[character::Shermy]] confirms he'd still love [[character::Patty]] if she grew up poor, but Patty doesn't fee the same way about Shermy]] [[notes::Neither Patty nor Shermy have been named yet]]
+1950-10-10 [[description::In this [[category::No dialogue|silent]] cartoon, [[character::Snoopy]] falls when an annoyed [[character::Charlie Brown]] dislikes the fact that Snoopy is resting on his head. After a brief "KLUNK", however, he happily rests on the chair where Charlie Brown had been sitting]] [[notes::Snoopy has not yet been named]] [[notes::This strip suggests Snoopy is Charlie Brown's dog or at least lives with or spends time with Charlie Brown, something that does not appear to be true later on]]
+1950-10-11 [[description::[[character::Sherman]] is impressed that [[character::Patty]] has jumped rope ten million times, not realizing that she has been counting by millions]] [[notes::We still haven't learned Shermy's and Patty's names]]
+1950-10-12 [[description::[[character::Snoopy]] unhappily pulls [[character::Sherman]] in a cart. When [[character::Patty]] comes along, Sherman ends up pulling Snoopy and Patty in a cart.]] [[notes::None of the three characters in this strip have yet been named]] [[category::No dialogue]]
 </data>
+
+NOTES:
+
+ - the index pages of the book reprints also have character listings
+ on a per-page (not per-strip) basis. Can I use these to be more efficient
+
+ - Lucy/Linus (for example) are canonical names, but full name are
+ Lucy Van Pelt, Linus Van Pelt, for example
