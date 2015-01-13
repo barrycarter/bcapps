@@ -42,8 +42,14 @@ for $i (split(/\n/, read_file("$metadir/$comicname-largeimagelinks.txt"))) {
 
 my($all) = read_file("$comicname.txt");
 $all=~m%<data>(.*?)</data>%s;
-for $i (split(/\n/, $1.read_file("$comicname-cl.txt"))) {
-  # TODO: *_deaths
+
+# start with data tags
+my($info) = $1;
+
+# add extra files
+$info = "$info\n".read_file("$comicname-cl.txt")."\n".read_file("$comicname-pp.txt");
+
+for $i (split(/\n/, $info)) {
   # below allows for multiple dates
 
   if ($i=~/^MULTIREF/) {parse_multiref($i); next;}

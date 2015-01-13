@@ -169,7 +169,7 @@ Speaking:  Shroeder, Lucy
 
 Non-speaking:  None
 
-Categories:  Shroeder plays piano
+Category:  Shroeder plays piano
 
 
 Date:  21 Feb 1963
@@ -181,7 +181,7 @@ Speaking:  None
 Non-speaking:  Snoopy
 
 
-Date:  22 Feb 2963
+Date:  22 Feb 1963
 
 Description:  Again in the rain, Charlie Brown and Linus come upon Snoopy waiting for the rich lady.  Snoopy notes their sarcasm
 

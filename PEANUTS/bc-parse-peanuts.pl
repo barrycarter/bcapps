@@ -14,7 +14,7 @@ for $i (glob "peanuts-???-????.txt") {
   $all = read_file($i);
 
   # each pair is header/value (dashes permitted)
-  my(@colons) = split(/^([a-z-]{1,15}:)/im, $all);
+  my(@colons) = split(/^([ a-z-]{1,15}:)/im, $all);
 
   my($date);
 
@@ -29,11 +29,19 @@ for $i (glob "peanuts-???-????.txt") {
     $h =~s/\s+/ /g;
     $v =~s/\s+/ /g;
 
+    # silly unicode (could use my general routine, but this should suffice)
+    $v=~s/\xe2\x80(\x99|\x98)/\'/g;
+    $v=~s/\xe2\x80(\x9c|\x9d)/\"/g;
+    $v=~s/\xE2\x80\x93/--/g;
+    $v=~s/\xC3\xA9/e/g;
+
     # if header is date, set new date
     if ($h=~/date/i) {$date = $v; next;}
 
-    # value separator for wiki is plus not comma (except for dates)
-    $v=~s/,\s*/+/g;
+    # convert header to form I use (probably bad to do this here)
+    if ($h=~/comments?/i || $h=~/note/i) {$h = "notes";}
+    if ($h=~/speaking/i) {$h = "character";}
+    
 
     # otherwise, associate data with date
 #    debug("$h -> $v");
@@ -42,9 +50,9 @@ for $i (glob "peanuts-???-????.txt") {
 }
 
 # now, put into format for wiki
+open(A,">$bclib{githome}/METAWIKI/PEANUTS/peanuts-pp.txt");
 
 for $i (keys %data) {
-  debug("I: $i");
 
   # TODO: this is really ugly: change the year to 1970 so str2time works
   $i2 = $i;
@@ -55,10 +63,16 @@ for $i (keys %data) {
 
   # chunks for each key/val pair
   for $j (keys %{$data{$i}}) {
-    push(@arr, "[[".lc($j)."::$data{$i}{$j}]]");
+
+    my($val) = $data{$i}{$j};
+
+    # except in description, use plus to separate, not commas
+    unless ($j=~/description|notes/i) {$val=~s/\,\s*/+/g;}
+
+    push(@arr, "[[".lc($j)."::$val]]");
   }
 
-  debug("$d",@arr);
-
+  print A "$d ",join(" ",@arr),"\n\n";
 }
 
+close(A);
