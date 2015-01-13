@@ -32,7 +32,7 @@
 
 1959-05-11 [[character::Lucy+Violet+Charlie Brown]] [[description::Lucy insults Charlie Brown, explaining to Violet that this is "destructive criticism". Charlie Brown smiles in the last panel, perhaps indicating this is being done with his consent.]]
 
-1960-03-03 [[character::Charlie Brown+Snoopy]] [[description::Charlie Brown threatens to give Snoopy's supper to [[mention::World War II|the cat next door]], and Snoopy leaps to attack his food.]]
+1960-03-03 [[character::Charlie Brown+Snoopy]] [[description::Charlie Brown threatens to give Snoopy's supper to [[mention::World War II]] (the cat next door), and Snoopy leaps to attack his food.]]
 
 1958-12-20 [[character::Snoopy+Charlie Brown]] [[description::Snoopy is called for supper, and he rolls down from the top and dashes as soon as he hits the ground.]]
 
@@ -178,7 +178,7 @@
 
 1964-03-02 [[character::Charlie Brown+Lucy]] [[category::Baseball]] [[description::Lucy berates Charlie Brown for slowing down. Charlie complains of arm pain, but an agressive Lucy tells him to forget about his arm and the only thing that matters is winning.]]
 
-1964-09-06 [[character::Lucy+Sally+Charlie Brown+Unknown boy]] [[description::Lucy, Sally and unknown boy are yelling back for the kid following them to stop. I ends with Charlie Brown being the kid left behind noting they were referring to his emotions immaturity]] [[todo::think this kid is "3"]]
+1964-09-06 [[character::Lucy+Sally+Charlie Brown+Unknown boy]] [[description::Lucy, Sally and unknown boy are yelling back for the kid following them to stop. I ends with Charlie Brown being the kid left behind noting they were referring to his emotions immaturity]] [[todo::think this kid is 3]]
 
 1962-01-29 [[character::Snoopy+Charlie Brown]] [[description::Snoopy hones his alertness, but he is surprised by the snapping of twig trodden on by Charlie Brown, who is bringing Snoppy's dinner]]
 
@@ -240,7 +240,7 @@
 
 1954-07-02 [[notes::Continues the tickling theme with Snoopy and Lucy]] [[character::Lucy+Snoopy+Charlie Brown]] [[category::dog+pets+tickling]] [[description::Lucy tickles Snoopy and then Charlie Brown tickles Snoopy which causes Snoopy to flip.]]
 
-1953-04-10 [[notes::There's another strip very similar to this one (does Lucy do this later)?]] [[character::Charlie Brown+Violet DateL 11 Apr 1953+Charlie Brown]] [[description::Charlie Brown tells Violet he'd like her if she liked him, but she decides it's not worth it.+Charlie Brown calls a fly ball, drops it, blushes, and then asks if everyone asks him to cover the whole field.]]
+1953-04-10 [[notes::There's another strip very similar to this one (does Lucy do this later)?]] [[character::Charlie Brown+Violet+Charlie Brown]] [[description::Charlie Brown tells Violet he'd like her if she liked him, but she decides it's not worth it. Charlie Brown calls a fly ball, drops it, blushes, and then asks if everyone asks him to cover the whole field.]]
 
 1954-01-14 [[character::Charlie Brown+Violet+Snoopy]] [[category::balancing glasses+trick+discouraged]] [[description::Charlie Brown shows Violet how Snoopy can balance a glass of water on each ear perfectly. Violet complains that it's a silly thing to do with all the trouble in the world, causig Snoopy to drop both glasses.]]
 
@@ -880,7 +880,7 @@
 
 1958-11-24 [[character::Linus]] [[category::A child's logic]] [[description::Linus steps on a large puddle of water to set the smaller puddles ""free.""]]
 
-1964-09-03 [[character::Snoopy+2 Unknown birds]] [[category::Speechless]] [[description::The bird with the "!" sign is met by a bird with a "?" sign. The 2 get into an argument. Snoopy sees trouble and get away as they begin to fight]]
+1964-09-03 [[character::Snoopy+unknown birds]] [[category::Speechless]] [[description::The bird with the "!" sign is met by a bird with a "?" sign. The 2 get into an argument. Snoopy sees trouble and get away as they begin to fight]]
 
 1954-04-25 [[notes::10 panel Sunday strip, continues sandcastle destruction theme with Patty]] [[character::Charlie Brown+Violet+Patty]] [[category::sandcastle+destruction]] [[description::Charlie Brown builds a sandcastle. Patty walks up and Charlie Brown gets mad that she is going to knock it down. When she doesn't, he celebrates until Violet knocks it down instead.]]
 
@@ -1224,7 +1224,7 @@
 
 1954-11-29 [[character::Charlie Brown+Snoopy]] [[category::candy+dogs+friendship]] [[description::Charlie Brown is petting Snoopy saying how much they like each other even if he doesn't have certain items until he mentions that he doesn't have candy. This comment makes Snoopy leave.]]
 
-1954-09-23 [[character::Lucy+Charlie Brown]] [[wikipedia::"You have to draw the line someplace."]] [[category::friends+children+imagination]] [[description::Lucy continues to draw a line around the world. Lucy tells Charlie Brown that she is doing so because of the saying "you have to draw the line someplace."]]
+1954-09-23 [[character::Lucy+Charlie Brown]] [[category::friends+children+imagination]] [[description::Lucy continues to draw a line around the world. Lucy tells Charlie Brown that she is doing so because of the saying "you have to draw the line someplace."]]
 
 1955-03-24 [[character::Charlie Brown+Lucy]] [[category::Bug]] [[description::Lucy is afraid a bug crawling in the street will get run over.]]
 
@@ -2176,7 +2176,7 @@
 
 1964-09-22 [[character::Freida+Charlie Brown+Linus (He speaks but is not pictured)+Snoopy]] [[description::Freida comes over the look at the mural Linus is painting on Snoopy's ceiling. He states that it depicts the story of civilization.]]
 
-1963-02-14 [[character::Charlie Brown+Lucy and Unknown character]] [[description::Charlie Bornw upset because it is Valentines Day and it emphasizes nobody likes him]]
+1963-02-14 [[character::Charlie Brown+Shermy+unknown kid]] [[description::Charlie Brown upset because it is Valentines Day and it emphasizes nobody likes him]]
 
 1962-10-21 [[character::Charlie Brown+Snoopy+Patty]] [[category::Pet problems]] [[description::Charlie Brown puts Snoopy on a leash and they go for a walk, but Snoopy pretends to choke on the leash.]]
 
@@ -2386,7 +2386,7 @@
 
 1959-05-18 [[notes::We see the feet/shoes of at least 6 other children, but have no idea who they are.]] [[character::Lucy+Charlie Brown]] [[description::Lucy notes that Charlie Brown hasn't set the record fr telephone booth stuffing (32). In the last panel, we see Charlie Brown is stuffing Snoopy's dog house.]]
 
-1964-09-11 [[character::Snoopy+2 birds]] [[category::Speechless]] [[description::Two birds are arguing with each other about their symbols. One makes his point many times and another makes his just once. The one who does just once seems to have to upper hand.]]
+1964-09-11 [[character::Snoopy+unknown birds]] [[category::Speechless]] [[description::Two birds are arguing with each other about their symbols. One makes his point many times and another makes his just once. The one who does just once seems to have to upper hand.]]
 
 1958-09-21 [[character::Lucy+Charlie Brown]] [[category::Football Gag]] [[description::Lucy volunteers to hold the football for Charlie Brown and promises not to pull it away. Charlie Brown believes her and Lucy fools him again.]]
 
