@@ -1,78 +1,78 @@
-1955-07-06 [[character::Linus+Lucy]] [[category::Lucy Teaching]] [[description::Lucy tells Linus that the sun comes up in the North and sets in the South.]]
+1955-07-06 [[character::Linus+Lucy]] [[description::Lucy tells Linus (incorrectly) that the sun comes up in the North and sets in the South]]
 
-1959-09-30 [[character::Charlie Brown+Violet]] [[category::step-mothers]] [[description::Charlie Brown is upset about how step-mothers are depicted in fairy tales.]]
+1959-09-30 [[character::Charlie Brown+Violet]] [[description::Charlie Brown is upset about how step-mothers are depicted in fairy tales]]
 
-1954-06-01 [[character::Charlie Brown+Lucy+Linus]] [[category::toddler+blanket]] [[description::Charlie Brown asks Lucy why Linus holds his blanket. Lucy says it's a feeling of security. Charlie Brown tries it out and is just feels like an idiot.]]
+1954-06-01 [[category::Linus' blanket]] [[description::[[character::Charlie Brown]] asks [[character::Lucy]] why [[character::Linus]] holds his blanket. Lucy says it's a feeling of security. Charlie Brown tries it out and is just feels like an idiot]] [[notes::The phrase "security blanket" comes from this strip]]
 
-1959-08-24 [[character::Charlie Brown+Lucy+Schroeder+Sally]] [[category::baseball+stroller]] [[description::Charlie Brown can't play baseball because he has to push Sally in a stroller. Lucy and Schroeder note that this shows the kind of dedication that loses ball games.]]
+1959-08-24 [[category:baseball]] [[description::[[character::Charlie Brown]] can't play baseball because he has to push [[character::Sally]] in a stroller. [[character::Lucy+Schroeder]] note that this shows the kind of dedication that loses ball games]]
 
-1959-05-27 [[character::Snoopy]] [[mentioned::Charlie Brown+Sally]] [[description::Snoopy notes that Sally's birth has caused a lot of excitement, to the point where no one remembers to feed the dog.]]
+1959-05-27 [[character::Snoopy]] [[mentioned::Charlie Brown+Sally]] [[description::Snoopy notes that Sally's birth has caused a lot of excitement, to the point where no one remembers to feed the dog]]
 
 1962-03-01 [[character::Charlie Brown+Snoopy]] [[description::Snoopy is sitting with his bowl in his mouth, begging Charlie Brown for food. Charlie Brown says that he has already been fed, so won't be getting any more, and, if it were up to Snoopy, he would be eating constantly! On his way back to his dog house, Snoopy comments that he eats out of frustration, and that he is frustrated because he isn't eating!]]
 
-1954-08-15 [[notes::11 panel Sunday strip]] [[character::Violet+Patty+Lucy]] [[category::gossip+dancing]] [[description::Patty and Violet are talking about how Lucy is going to dancing school, which was a disguise to get her out of the house. They have Lucy show them her dance moves which aren't much.]]
+1954-08-15 [[notes::11 panel Sunday strip]] [[character::Violet+Patty+Lucy]] [[category::gossip+dancing]] [[description::Patty and Violet are talking about how Lucy is going to dancing school, which was a disguise to get her out of the house. They have Lucy show them her dance moves which aren't much]]
 
-1960-03-18 [[character::Charlie Brown+Snoopy]] [[category::Speechless+Chopper+Snoopy imitation+Whirlydog]] [[description::Charlie Brown throws a ball for Snoopy to fetch, and Snoopy flies back with it.]]
+1960-03-18 [[character::Charlie Brown+Snoopy]] [[category::Speechless+Chopper+Snoopy imitation+Whirlydog]] [[description::Charlie Brown throws a ball for Snoopy to fetch, and Snoopy flies back with it]]
 
-1964-12-01 [[character::Lucy]] [[category::Football]] [[description::Lucy holds football, drops it and kicks it backwards over her own head. Dismayed, she proclaims that she is too feminine for football.]]
+1964-12-01 [[character::Lucy]] [[category::Football]] [[description::Lucy holds football, drops it and kicks it backwards over her own head. Dismayed, she proclaims that she is too feminine for football]]
 
-1955-01-22 [[character::Charlie Brown+Patty+Schroeder]] [[category::Schroeder playing the piano]] [[description::Charlie Brown tells Patty Schroeder will play a young Beethoven in a Hollywood movie.]]
+1955-01-22 [[character::Charlie Brown+Patty+Schroeder]] [[category::Schroeder piano]] [[description::Charlie Brown tells Patty Schroeder will play a young Beethoven in a Hollywood movie]]
 
-1964-02-10 [[character::Charlie Brown+Snoopy (in thought)+Linus]] [[category::Snoopy's Antics]] [[description::Charlie Brown and Linus are sitting on a couch chair together, reading. Snoopy is listening in. Charlie Brown is reading advice from a holy man, who suggests sleeping until noon so one might not bother humanity. Snoopy decides to go back to his dog house for more sleep!]]
+1964-02-10 [[character::Charlie Brown+Snoopy+Linus]] [[description::Charlie Brown and Linus are sitting on a couch chair together, reading. Snoopy is listening in. Charlie Brown is reading advice from a holy man, who suggests sleeping until noon so one might not bother humanity. Snoopy decides to go back to his dog house for more sleep!]]
 
-1954-09-22 [[character::Lucy+Charlie Brown]] [[category::friends+imagination+children]] [[description::Lucy is still trying to draw a line around the world. Charlie Brown tries to convince her its not possible. She says there are bridges, so it is possible.]]
+1954-09-22 [[character::Lucy+Charlie Brown]] [[description::Lucy is still trying to draw a line around the world. Charlie Brown tries to convince her its not possible. She says there are bridges, so it is possible]]
 
-1959-07-19 [[notes::This is a thirteen-panel Sunday comic.]] [[character::Linus+Charlie Brown]] [[category::learning/flashcards+vocabulary/spelling]] [[description::The background of the initial title panel shows proper vocabulary flashcards and Linus holding up some that he has made himself that say "wun" (one) and "tu" (two). We see him industriously cutting rectangles of paper and writing on them. When Charlie Brown enters and asks what he is doing he responds that he is making his own set of flashcards like they use in school to help him learn how to read. He tells Charlie Brown that he will quiz him to see how good a reader he is. Linus holds up the first card and Charlie Brown reads "loook" (look). Linus congratulates him and runs through a few more, "taybul"(table) and "kow" (cow). Linus compliments Charlie Brown for getting them correct then starts to go faster, "paypur" (paper), "dore" (door), "howse" (house), "welkum" (welcome), "nife" (knife), "spune" (spoon). When Linus asks if Charlie Brown wants to go through the cards again, Charlie Brown declines saying "Awl thys reeding is harrd onn mi eyys! (All this reading is hard on my eyes).]]
+1959-07-19 [[notes::This is a thirteen-panel Sunday comic]] [[character::Linus+Charlie Brown]] [[description::The background of the initial title panel shows proper vocabulary flashcards and Linus holding up some that he has made himself that say "wun" (one) and "tu" (two). We see him industriously cutting rectangles of paper and writing on them. When Charlie Brown enters and asks what he is doing he responds that he is making his own set of flashcards like they use in school to help him learn how to read. He tells Charlie Brown that he will quiz him to see how good a reader he is. Linus holds up the first card and Charlie Brown reads "loook" (look). Linus congratulates him and runs through a few more, "taybul"(table) and "kow" (cow). Linus compliments Charlie Brown for getting them correct then starts to go faster, "paypur" (paper), "dore" (door), "howse" (house), "welkum" (welcome), "nife" (knife), "spune" (spoon). When Linus asks if Charlie Brown wants to go through the cards again, Charlie Brown declines saying "Awl thys reeding is harrd onn mi eyys! (All this reading is hard on my eyes).]]
 
-1954-10-03 [[notes::9 panel Sunday strip]] [[character::Charlie Brown+Lucy+Snoopy]] [[category::dogs+pets]] [[description::Lucy and Charlie Brown try to touch Snoopy's nose to see what kind of mood he is in.]]
+1954-10-03 [[notes::9 panel Sunday strip]] [[character::Charlie Brown+Lucy+Snoopy]] [[description::Lucy and Charlie Brown try to touch Snoopy's nose to see what kind of mood he is in. Snoopy sneezes, and Lucy is worried that he exploded.]]
 
-1958-09-12 [[character::Lucy+Linus]] [[category::Weird eating habits]] [[description::Linus sprinkles his potato chips with sugar.]]
+1958-09-12 [[character::Lucy+Linus]] [[description::Linus sprinkles his potato chips with sugar.]]
 
-1964-05-31 [[notes::I don't believe this girl is a main character, possibly a reoccurring background character though.+Sunday strip]] [[character::Linus+Snoopy]] [[description::Linus is reading the Three Little Pigs as he walks with Snoopy, commenting that it's impossible for an animal to blow someone's house down. Snoopy then blows the book out of his hand, blows him over and rolls him with puffs of breath all the way to a kiddy pool where a random girl sits watching. Snoopy blows Linus into it, and Linus sits up in the water and begins describing Three Little Pigs to the girl in a far more positive light.]]
+1964-05-31 [[character::Patty+Linus+Snoopy]] [[description::Linus is reading the Three Little Pigs as he walks with Snoopy, commenting that it's impossible for an animal to blow someone's house down. Snoopy then blows the book out of his hand, blows him over and rolls him with puffs of breath all the way to a kiddy pool where Patty sits watching. Snoopy blows Linus into it, and Linus sits up in the water and begins describing Three Little Pigs to Patty in a far more positive light.]] [[notes::not 100% sure this is Patty]]
 
 1959-05-11 [[character::Lucy+Violet+Charlie Brown]] [[description::Lucy insults Charlie Brown, explaining to Violet that this is "destructive criticism". Charlie Brown smiles in the last panel, perhaps indicating this is being done with his consent.]]
 
-1960-03-03 [[character::Charlie Brown+Snoopy]] [[category::Supper dish]] [[description::Charlie Brown threatens to give Snoopy's supper to the cat next door, and Snoopy leaps to attack Charlie Brown.]]
+1960-03-03 [[character::Charlie Brown+Snoopy]] [[description::Charlie Brown threatens to give Snoopy's supper to [[mention::World War II|the cat next door]], and Snoopy leaps to attack his food.]]
 
-1958-12-20 [[character::Snoopy+Charlie Brown (not seen)]] [[category::Snoopy on the doghouse]] [[description::Snoopy is called for supper, and he rolls down from the top and dashes as soon as he hits the ground.]]
+1958-12-20 [[character::Snoopy+Charlie Brown]] [[description::Snoopy is called for supper, and he rolls down from the top and dashes as soon as he hits the ground.]]
 
-1957-12-31 [[character::Linus+Charlie Brown+Snoopy]] [[category::penguin+Snoopy imitation"]] [[description::Linus asks Charlie Brown if he's ever seen a penguin, and Charlie tells him how ""funny-looking"" they are. As he's trying to find a descriptive word, Snoopy imitates the penguin, and Charlie says it's sort of like that.]]
+1957-12-31 [[character::Linus+Charlie Brown+Snoopy]] [[category::Snoopy imitation]] [[description::Linus asks Charlie Brown if he's ever seen a penguin, and Charlie tells him how ""funny-looking"" they are. As he's trying to find a descriptive word, Snoopy imitates the penguin, and Charlie says it's sort of like that.]]
 
-1954-03-17 [[character::Charlie Brown+Patty]] [[category::marbles+games]] [[description::Patty and Charlie Brown are playing marbles with Charlie Brown down to his last marble. He gives a sad speech about the marble that convinces Patty to let Charlie Brown keep it.]]
+1954-03-17 [[character::Charlie Brown+Patty]] [[description::Patty and Charlie Brown are playing marbles with Charlie Brown down to his last marble. He gives a sad speech about the marble that convinces Patty to let Charlie Brown keep it.]]
 
-1954-12-20 [[character::Charlie Brown+Linus]] [[category::balloon+toddler]] [[description::Charlie Brown shows Linus how to blow up a balloon, which Linus blows into a cube.]]
+1954-12-20 [[character::Charlie Brown+Linus]] [[description::Charlie Brown shows Linus how to blow up a balloon, which Linus blows into a cube.]] [[category::Linus defies physics]]
 
-1964-09-27 [[character::Charlie Brown+Linus]] [[description::Linus is talking about discussing a "yoke" for a school report. He discusses several sections of the bible it is relates to. Charlie Brown notes afterwards how he has given Charlie Brown a "yoke of inferiority".]]
+1964-09-27 [[character::Charlie Brown+Linus]] [[description::Linus is talking about discussing a "yoke" for a school report. He discusses several sections of the bible it is relates to. Charlie Brown notes afterwards how he has given Charlie Brown a "yoke of inferiority".]] [[category::Bible]]
 
-1959-08-25 [[notes::Sally is thinking not literally speaking.]] [[character::Linus+Patty+Sally]] [[category::baseball+stroller]] [[description::Charlie Brown can't play baseball because he has to push Sally in a stroller. Linus is angry about this and demands of Sally if this is true. She can't look him in the eye.]] [[mentioned::Charlie Brown]]
+1959-08-25 [[character::Linus+Patty+Sally]] [[description::[[mention::Charlie Brown]] can't play baseball because he has to push Sally in a stroller. Linus is angry about this and demands of Sally if this is true. She can't look him in the eye.]]
 
-1954-02-28 [[notes::Lucy's mom appears off panel.]] [[character::Lucy+Lucy's Mom]] [[category::toys+bedtime+tantrum]] [[description::Lucy is playing with her toys when her mom tells her she has to go to bed. Lucy throws a huge tantrum, tiring herself out.]]
+1954-02-28 [[character::Lucy+Lucy's Mom]] [[description::Lucy is playing with her toys when her mom tells her she has to go to bed. Lucy throws a huge tantrum, tiring herself out.]] [[notes::One of the rare times we hear an adult speaking]]
 
-1955-03-31 [[character::Lucy+Charlie Brown+Sally Brown]] [[category::Space]] [[description::Lucy wants to know what Charlie Brown (Mr. Spaceman) thinks about girls on Earth.]]
+1955-03-31 [[character::Lucy+Charlie Brown+Sally Brown]] [[description::Lucy wants to know what Charlie Brown (Mr. Spaceman) thinks about girls on Earth and interprets his answer to mean "very beautiful"]]
 
 1954-10-17 [[notes::10 panel Sunday strip]] [[character::Charlie Brown+Lucy+Linus]] [[category::blanket]] [[description::Charlie Brown still doesn't understand Linus' blanket. He finds out that outing flannel brings happiness. He gets his own.]]
 
-1960-03-06 [[character::Charlie Brown+Snoopy+Violet]] [[category::Pet problems]] [[description::Snoopy persistently hangs around Charlie Brown in hopes of getting food.]]
+1960-03-06 [[character::Charlie Brown+Snoopy+Violet]] [[category::Pet problems]] [[description::Snoopy persistently hangs around Charlie Brown in hopes of getting food. When Charlie Brown asks Snoopy to leave him alone for "one minute", Snoopy does precisely that, using Violet's watch to time the minute]]
 
-1964-02-01 [[notes::It is unclear regarding the specifics of the video they're watching.]] [[character::Charlie Brown+Lucy]] [[category::Lucy's Services]] [[description::Charlie Brown is watching some kind of video on a projector -- either one from his childhood or some kind of therapy show -- and is horrified. Lucy comments on how there's still her bill to pay for providing Charlie Brown with this "aide".]]
+1964-02-01 [[character::Charlie Brown+Lucy]] [[description::Charlie Brown is watching some kind of filmstrip on a projector -- either one from his childhood or some kind of therapy film -- and is horrified. Lucy comments on how there's still her bill to pay for providing Charlie Brown with this "aid".]]
 
-1959-09-08 [[character::Charlie Brown]] [[category::stroller+baseball]] [[description::Charlie Brown is feeling down because everyone is mad at him, either for running out on pushing his sister in the stroller or for losing the game.]] [[mentioned::Mrs. Brown+Sally]]
+1959-09-08 [[character::Charlie Brown]] [[category::baseball]] [[description::Charlie Brown is feeling down because everyone is mad at him, either for running out on pushing his sister in the stroller or for losing the game.]] [[mentioned::Mrs. Brown+Sally]]
 
-1954-01-26 [[character::Charlie Brown+Shermy]] [[category::bundled up+warm+winter clothes]] [[description::Charlie Brown is all bundled up in winter clothing. He's warm but can't move.]]
+1954-01-26 [[character::Charlie Brown+Shermy]] [[description::Charlie Brown is all bundled up in winter clothing. He's warm but can't move.]]
 
-1955-01-12 [[character::Schroeder+Lucy]] [[category::Schroeder playing the piano]] [[description::Lucy gets annoyed by the ticking of Schroeder's metronome, and Schroeder tells her off.]]
+1955-01-12 [[character::Schroeder+Lucy]] [[category::Schroeder piano]] [[description::Lucy gets annoyed by the ticking of Schroeder's metronome, and Schroeder tells her off. Lucy leaves on a musical ("second fiddle") pun.]]
 
-1959-08-02 [[character::Charlie Brown+Violet+Linus+Snoopy]] [[category::blanket+laugh]] [[description::Violet shows off her new hairdo. Charlie Brown compliments her and Linus mocks him for doing so, so Charlie Brown wraps Linus' blanket around his face.]]
+1959-08-02 [[character::Charlie Brown+Violet+Linus+Snoopy]] [[category::Linus' blanket]] [[description::Violet shows off her new hairdo. Charlie Brown compliments her and Linus mocks him for doing so, so Charlie Brown wraps Linus' blanket around his face.]]
 
-1954-11-20 [[character::Charlie Brown+Snoopy]] [[category::dogs+comic strips]] [[description::Snoopy won't let go of Charlie Brown's comic book, so he has to read it while Snoopy is holding on to it.]]
+1954-11-20 [[character::Charlie Brown+Snoopy]] [[description::Snoopy won't let go of Charlie Brown's comic book, so he has to read it while Snoopy is holding on to it.]]
 
 1959-05-25 [[notes::Do/did most pregnant women remain in the hospital for 5 days when giving birth? Is/was this a well-known fact?]] [[character::Charlie Brown+Lucy]] [[description::Charlie Brown stays at his Gramma's house, as his mother's in the hospital for 5 days. The "5 days" makes Lucy wonder.]]
 
-1962-10-07 [[character::Snoopy+A flock of birds]] [[category::Migrating birds]] [[description::Migrating season has begun, and birds make Snoopy's dog house a stopover.]]
+1962-10-07 [[character::Snoopy+unknown birds]] [[description::Migrating season has begun, and birds make Snoopy's dog house a stopover.]]
 
-1955-03-22 [[character::Snoopy+Charlie Brown]] [[category::Space]] [[description::Charlie Brown is wearing his space helmet and gets upset when he sees that Snoopy is wearing one too.]]
+1955-03-22 [[character::Snoopy+Charlie Brown]] [[description::Charlie Brown is wearing his space helmet and gets upset when he sees that Snoopy is wearing one too.]]
 
-1954-12-27 [[character::Lucy+Charlie Brown]] [[category::snowball+science tests]] [[description::Lucy proves you cannot bounce a snowball no matter how hard you try.]]
+1954-12-27 [[character::Lucy+Charlie Brown]] [[description::Lucy proves you cannot bounce a snowball no matter how hard you try.]]
 
 1959-09-22 [[character::Snoopy]] [[category::leaves]] [[description::Snoopy says hi to a fallen leaf.]]
 
@@ -80,131 +80,133 @@
 
 1959-09-25 [[character::Snoopy]] [[category::leaves]] [[description::Snoopy opines that if he were a leaf he'd stay in the tree. He thinks he would make a lousy leaf.]]
 
-1964-02-27 [[character::Sally+Charlie Brown+Snoopy (in thought)]] [[category::Weather]] [[description::Charlie Brown and Sally are staring gloomily out the rainy window. Sally asks when it's going to stop, causing Charlie Brown to assess the situation and remember that Snoopy is still outside in the rain. Meanwhile, Snoopy is outside assuming he's a goner.]]
+1964-02-27 [[character::Sally+Charlie Brown+Snoopy]] [[description::Charlie Brown and Sally are staring gloomily out the rainy window. Sally asks when it's going to stop, causing Charlie Brown to assess the situation and remember that Snoopy is still outside in the rain. Meanwhile, Snoopy is outside assuming he's a goner, referencing the Biblical river {{wp|Jordan}}]]
 
-1964-04-25 [[character::Lucy+Schroeder]] [[category::Schroeder Plays Piano]] [[description::Lucy quizzes Schroeder on three obscure names that she bets he couldn't identity. Schroeder identifies them correctly as Beethoven's music teachers.]]
+1964-04-25 [[character::Lucy+Schroeder]] [[category::Schroeder piano]] [[description::Lucy quizzes Schroeder on three obscure names that she bets he couldn't identity. Schroeder identifies them [[wp::C.G. Neefe+Antonio Salieri+J.G. Albrechtsberger]] correctly as Beethoven's music teachers.]]
 
 1964-03-16 [[character::Charlie Brown+Lucy]] [[category::Baseball]] [[description::Charlie Brown takes off his arm sling, and Lucy worries that Charlie Brown might be ready to pitch again.]]
 
-1954-11-14 [[character::Schroeder+Lucy]] [[category::piano+love+sadness]] [[description::Lucy tries to get Schroeder to pay attention to her instead of playing music. It doesn't work, and she figures she'll never get married.]]
+1954-11-14 [[character::Schroeder+Lucy]] [[category::Schroeder piano]] [[description::Lucy tries to get Schroeder to pay attention to her instead of playing music. It doesn't work, and she figures she'll never get married.]]
 
-1962-05-09 [[character::Schroeder+Lucy]] [[category::Piano]] [[description::Lucy tells Schroeder he always plays things on the piano that no one wants to hear.]]
+1962-05-09 [[character::Schroeder+Lucy]] [[category::Schroeder piano]] [[description::Lucy tells Schroeder she has a friend who plays popular tunes on the accordian, implying that Schroeder plays things on the piano that no one wants to hear.]]
 
-1964-04-01 [[character::Lucy+Charlie Brown]] [[category::April Fools]] [[mentioned::Little red-haired girl]] [[description::It's April fools day, and Lucy tells Charlie Brown the little red-haired girl wants him to eat lunch with her.]]
+1964-04-01 [[character::Lucy+Charlie Brown]] [[mentioned::LRHG]] [[description::It's April fools day, and Lucy tells Charlie Brown the little red-haired girl wants him to eat lunch with her.]]
 
-1963-06-21 [[notes::Continuing story.]] [[character::Lucy+Sally]] [[description::Sally watches Lucy skip with some proficiency, whilst singing a skipping rhyme. She then offers the rope so Sally can try. Sally walks away, complaining that she doesn't like to memorise things.]]
+1963-06-21 [[character::Lucy+Sally]] [[description::Sally watches Lucy skip with some proficiency, whilst singing a skipping rhyme. She then offers the rope so Sally can try. Sally walks away, complaining that she doesn't like to memorise things.]]
 
-1960-01-28 [[character::Linus+Charlie Brown]] [[category::class project]] [[mentioned::Ms. Othmar (Linus's teacher)]] [[description::Linus tells Charlie Brown what happened when he didn't take the egg shells to class again.]]
+1960-01-28 [[character::Linus+Charlie Brown]] [[mentioned::Ms Othmar]] [[description::Linus tells Charlie Brown what happened when he didn't take the egg shells to class again.]]
 
-1954-01-24 [[character::Lucy+Linus+Schroeder+Violet+Charlie Brown+Shermy+Patty]] [[category::kicking+frustration+anger+destruction]] [[description::Lucy goes around kicking everybody's things in frustration. When they chase after her, she claims that no one understands her.]]
+1954-01-24 [[character::Lucy+Linus+Schroeder+Violet+Charlie Brown+Shermy+Patty]] [[category::Schroeder piano]] [[description::Lucy goes around kicking everybody's things in frustration. When they chase after her, she claims that no one understands her.]]
 
-1960-01-15 [[character::Linus+Charlie Brown]] [[category::explanation]] [[description::Linus explains to Charlie about love and hate.]]
+1960-01-15 [[character::Linus+Charlie Brown]] [[mention::Lucy]] [[description::Linus explains to Charlie about love and hate.]]
 
 1964-10-22 [[character::Linus]] [[category::Great Pumpkin]] [[mentioned::Great Pumpkin]] [[description::Linus speaks at the podium about the Great Pumpkin, only to be laughed off stage by the students, remarking to himself that he's blown the election.]]
 
-1954-12-08 [[character::Charlotte+Charlie Brown]] [[category::friends+girls+yelling]] [[mentioned::Violet+Patty]] [[description::Charlotte is complaining to Charlie Brown because the girls won't play with her because they say she is too loud. She asks if that is true, which causes Charlie to walk away and ask what she was saying.]]
+1954-12-08 [[character::Charlotte+Charlie Brown]] [[description::Charlotte is complaining to Charlie Brown because the girls won't play with her because they say she is too loud. She asks if that is true, which causes Charlie to walk away and ask what she was saying.]]
 
-1958-11-30 [[character::Lucy+Linus]] [[category::Fussbudget Lucy+Crabby Lucy]] [[description::Lucy torments Linus by demanding she be in charge of everything, until she demands to see ""her stars,"" and realizes that she doesn't own them.]]
+1958-11-30 [[character::Lucy+Linus]] [[category::Fussbudget+Crabby]] [[description::Lucy torments Linus by demanding she be in charge of everything, until she demands to see "her stars", and realizes that she doesn't own them.]]
 
-1963-06-17 [[character::Charlie Brown+Lucy+Frieda]] [[category::Baseball+Self Reference]] [[description::Charlie Brown is standing on the pitchers mound when he is accosted by Lucy and Frieda, complaining about how hard the boys are throwing the balls. Frieda asks him to tell them they don't need to 'burn them in', and Lucy agrees, saying he should tell them not to thrown 'Burnies'. They leave Charlie on the mound, repeating the term 'Burnies' with a somwhat incredulous look on his face.]]
+1963-06-17 [[character::Charlie Brown+Lucy+Frieda]] [[category::Baseball]] [[description::Charlie Brown is standing on the pitchers mound when he is accosted by Lucy and Frieda, complaining about how hard the boys are throwing the balls. Frieda asks him to tell them they don't need to 'burn them in', and Lucy agrees, saying he should tell them not to thrown 'Burnies'. They leave Charlie on the mound, repeating the term 'Burnies' with a somewhat incredulous look on his face.]]
 
-1962-05-31 [[character::Snoopy]] [[category::Birds]] [[description::The bird leaves all her babies sleeping in the nest on Snoopys roof.]]
+1962-05-31 [[character::Snoopy+unknown birds]] [[description::The bird leaves all her babies sleeping in the nest on Snoopys roof.]]
 
-1954-01-13 [[character::Charlie Brown+Schroeder+Snoopy]] [[category::trick+glass of water+demonstration]] [[description::Charlie Brown shows Shroeder that Snoopy can balance a glass of water on his ear indefinitely. Snoopy in the meantime is struggling to keep the glass up, until Charlie removes it and tells Schroeder that it seems to take no apparent effort.]]
+1954-01-13 [[character::Charlie Brown+Schroeder+Snoopy]] [[category::Snoopy vs physics]] [[description::Charlie Brown shows Shroeder that Snoopy can balance a glass of water on his ear indefinitely. Snoopy in the meantime is struggling to keep the glass up, until Charlie removes it and tells Schroeder that it seems to take no apparent effort.]]
 
-1954-10-29 [[character::Schroeder+Patty]] [[wikipedia::Halloween]] [[category::costume+Halloween]] [[description::Schroeder wears a jacket over his ghost Halloween costume.]]
+1954-10-29 [[character::Schroeder+Patty]] [[description::Schroeder wears a jacket over his ghost Halloween costume, ruining the effect.]]
 
-1954-06-11 [[notes::More star gazing for Lucy]] [[character::Charlie Brown+Lucy]] [[category::Sun+life-saving+astronomy]] [[description::Lucy is trying to touch the Sun by standing on a box. Charlie Brown yells at her to stop to save her life.]]
+1954-06-11 [[character::Charlie Brown+Lucy]] [[description::Lucy is trying to touch the Sun by standing on a box. Charlie Brown yells at her and knocks her off the box to stop her to save her life.]]
 
 1963-06-29 [[character::Charlie Brown]] [[category::Speechless]] [[mentioned::Snoopy]] [[description::Charlie Brown is writing a get well letter to Snoopy, who is still in hospital. He warns him to stay away from the 'pretty french poodle nurses!']]
 
-1954-09-06 [[character::Patty+Pig-Pen]] [[category::dirty+bath+friends]] [[description::Patty is going to give Pig-Pen a bath, but finds him already clean.]]
+1954-09-06 [[character::Patty+Pig-Pen]] [[description::Patty is going to give Pig-Pen a bath, but finds him already clean, not realizing he's only clean on the side facing her.]] [[notes::A rare case of Pig-Pen being clean, or at least half clean]]
 
 1958-11-13 [[character::Snoopy+Charlie Brown]] [[category::Speechless]] [[description::Charlie Brown walks on a pile of leaves, and Snoopy does the same to make them flutter.]]
 
-1954-03-10 [[character::Lucy+Linus]] [[category::brother/sister+building+toddler]] [[description::Lucy tells Linus that he can't go in her sandbox. Linus walks away and builds his own sandbox.]]
+1954-03-10 [[character::Lucy+Linus]] [[description::Lucy tells Linus that he can't go in her sandbox. Linus walks away and builds his own sandbox with blocks.]] [[category::Linus builds]]
 
 1962-09-28 [[character::Charlie Brown+Linus+Snoopy]] [[category::Snoopy Imitation]] [[description::Linus thinks modern architects need to place gargoyles in their designs.]]
 
 1962-05-23 [[character::Linus+Charlie Brown]] [[category::Baseball]] [[description::Linus tells Charlie Brown he can't be out there rooting for him to strike the guy out when he knows he can't.]]
 
-1954-05-05 [[character::Charlie Brown+Snoopy]] [[category::candy+dog trick+weakness]] [[description::Charlie Brown has Snoopy hold a piece of candy on his nose until Charlie instructs him to grab it. Snoopy struggles under the weight of the candy, and Charlie tells him it'll be a good trick once he has more strength.]]
+1954-05-05 [[character::Charlie Brown+Snoopy]] [[category::Snoopy tricks]] [[description::Charlie Brown has Snoopy hold a piece of candy on his nose until Charlie instructs him to grab it. Snoopy struggles under the weight of the candy, and Charlie tells him it'll be a good trick once he has more strength.]]
 
-1960-01-27 [[character::Linus+Charlie Brown]] [[category::class project]] [[description::Charlie Brown asks if Linus remembered the egg shells. Linus says they didn't have eggs for breakfast.]]
+1960-01-27 [[character::Linus+Charlie Brown]] [[description::Charlie Brown asks if Linus remembered the egg shells. Linus says they didn't have eggs for breakfast.]]
 
-1954-08-16 [[character::Pig-Pen+Charlie Brown]] [[category::sandbox+dirty+friends]] [[description::Pig-Pen asks to borrow a pail of sand. Charlie Brown says he can as long as he only takes one. Pig-Pen takes a large bucket full.]]
+1954-08-16 [[character::Pig-Pen+Charlie Brown]] [[description::Pig-Pen asks to borrow a pail of sand. Charlie Brown says he can as long as he only takes one. Pig-Pen complies, but stacks the sand several times higher than the pail (a physical impossibility?)]]
 
-1954-01-05 [[notes::Snoopy is essentially speechless in this strip, only uttering a ""gulp"".]] [[character::Charlie Brown+Snoopy+Schroeder]] [[category::caramel+candy+laughing]] [[description::Charlie Brown feeds Snoopy a caramel in the hopes that the sight of it getting stuck in his teeth will be hilarious. Snoopy eats it fine, and Schroeder laughs at Charlie Brown.]]
+1954-01-05 [[character::Charlie Brown+Snoopy+Schroeder]] [[description::Charlie Brown feeds Snoopy a caramel in the hopes that the sight of it getting stuck in his teeth will be hilarious. Snoopy gulps it down without chewing, and Schroeder laughs at Charlie Brown.]]
 
-1958-12-12 [[notes::Snoopy's doghouse is drawn from a 3/4 angle, and not from the side as it is typically drawn.]] [[character::Snoopy]] [[category::Snoopy on his doghouse]] [[description::A snoozing Snoopy rolls down from the top of the doghouse.]]
+1958-12-12 [[character::Snoopy]] [[description::A snoozing Snoopy rolls off the top of the doghouse.]]
 
-1954-03-22 [[character::Charlie Brown+Patty+Snoopy]] [[category::rain+embarrassment]] [[description::Charlie Brown calls Snoopy dumb for standing outside in the rain. When Patty asks Charlie Brown why hes standing in the rain, he runs away in embarrassment.]]
+1954-03-22 [[character::Charlie Brown+Patty+Snoopy]] [[description::Charlie Brown calls Snoopy dumb for standing outside in the rain. When Patty asks Charlie Brown why hes standing in the rain, he runs away in embarrassment.]]
 
-1955-07-23 [[character::Charlie Brown+Pig-pen]] [[category::Pig-pen gets clean]] [[description::Pig-pen walks by Charlie Brown all dressed up explaining he was at a birthday party. When Charlie Brown asks him if it was fun, Pig-pen says he never made it inside because they did not recognize him looking all nice.]]
+1955-07-23 [[character::Charlie Brown+Pig-Pen]] [[description::Pig-pen walks by Charlie Brown, clean and all dressed up explaining he was at a birthday party. When Charlie Brown asks him if it was fun, Pig-pen says he never made it inside because they did not recognize him looking all nice.]] [[notes::Another rare case where we Pig-Pen clean]]
 
-1960-01-17 [[notes::wasn't sure about the category. Could be security guard or something to that effect also.]] [[character::Charlie Brown+Snoopy]] [[category::weather]] [[description::Charlie Brown instructs Snoopy to guard his snowman until he returns from lunch. Snoopy obeys but can't guard the snowman from the sun.]]
+1960-01-17 [[character::Charlie Brown+Snoopy]] [[description::Charlie Brown instructs Snoopy to guard his snowman until he returns from lunch. Snoopy obeys but can't guard the snowman from the sun.]]
 
 1959-09-04 [[character::Charlie Brown]] [[category::baseball]] [[description::Charlie Brown is pinch-hitting with the game on the line. He reminds himself it only takes one pitch to get a hit. As we swings at strike three, he notes that this wasn't the one.]]
 
-1963-02-16 [[character::None+Snoopy]] [[description::A latch breaks on Snoopy's doghouse and stuff comes falling out]]
+1963-02-16 [[character::Snoopy]] [[description::A latch breaks on Snoopy's doghouse and stuff comes falling out]]
 
-1964-04-29 [[character::Snoopy]] [[category::Snoopy on doghouse]] [[description::A rerun of the April 2 strip. Snoopy guards closely his supper dish, and concludes that a watched supper dish never fills.]]
+1964-04-29 [[character::Snoopy]] [[description::Snoopy guards closely his supper dish, and concludes that a watched supper dish never fills.]]
 
-1954-08-27 [[character::Lucy+Lucy's mother]] [[category::mother+sister/brother+eating+dinner]] [[mentioned::Linus]] [[description::Lucy's mother tries to make her eat by telling her to beat her brother. Lucy thinks that in 500 years no one will care who won anyway.]]
+1954-08-27 [[character::Lucy+Lucy's mother]] [[mentioned::Linus]] [[description::Lucy's mother tries to make her eat by telling her to beat her brother. Lucy thinks that in 500 years no one will care who won anyway.]]
 
-1955-01-10 [[character::Schroeder+Lucy]] [[category::Schroeder playing the piano]] [[description::Schroeder has a metronome on top of his toy piano, and Lucy asks him if he can kick it.]]
+1955-01-10 [[character::Schroeder+Lucy]] [[category::Schroeder piano]] [[description::Schroeder has a metronome on top of his toy piano, and Lucy asks him if he can kick it.]]
 
-1954-09-16 [[character::Charlie Brown+Lucy]] [[category::baseball+sadness]] [[description::Charlie Brown tells everyone to back up. He swings and misses which Lucy catches right in front of him.]]
+1954-09-16 [[character::Charlie Brown+Lucy]] [[category::baseball]] [[description::Charlie Brown tells Lucy to back up as he hits a baseball. He doesn't hit far at all, and Lucy catches right in front of him.]]
 
-1954-03-14 [[notes::8 panel Sunday strip]] [[character::Charlie Brown+Lucy]] [[category::Speechless+snowballs+snow]] [[description::Charlie Brown builds a large mound of snowballs. He is read to throw them at Lucy when shes walking by, but they get all stuck frozen together.]]
+1954-03-14 [[notes::8 panel Sunday strip]] [[character::Charlie Brown+Lucy]] [[category::Speechless]] [[description::Charlie Brown builds a large mound of snowballs. He is read to throw them at Lucy when shes walking by, but they get all stuck frozen together.]]
 
-1964-10-05 [[notes::... Never figured Linus for the power hungry type]] [[character::Linus+Lucy]] [[description::Lucy tells Linus to run for school president and that she'll be his campaign manager, Linus protests until Lucy mentions the power he would have, at which point he grins and says he'll do it.]]
+1964-10-05 [[character::Linus+Lucy]] [[description::Lucy tells Linus to run for school president and that she'll be his campaign manager, Linus protests until Lucy mentions the power he would have, at which point he grins and says he'll do it.]] [[notes::A thirst for power appears to be out-of-character for Linus]]
 
 1953-04-14 [[character::Charlie Brown+Schroeder]] [[description::While playing baseball, Schroeder tells Charlie Brown that things look pretty bad. Charlie Brown wonders if the other team's caught on to their signals and know what he's going to pitch. Schroeder replies it's worse: they no longer *care* what he's going to pitch!]]
 
-1954-06-29 [[character::Violet+Charlie Brown]] [[category::drawing+circles]] [[description::Charlie Brown is excited that he drew a perfect circle. Violet asks when are circles not perfect.]]
+1954-06-29 [[character::Violet+Charlie Brown]] [[description::Charlie Brown is excited that he drew a perfect circle. Violet asks when are circles not perfect.]]
 
 1959-05-02 [[notes::Is Charlie Brown's league prominent enough to be mentioned even in a local paper?]] [[character::Charlie Brown]] [[description::Reading about his team's defeat yesterday, Charlie Brown finds the expression "hapless opposition" so depressing that he leans his head against a tree.]]
 
-1954-07-21 [[character::Charlie Brown+Snoopy]] [[category::swimming+dogs+pets+tricks]] [[description::Charlie Brown goes swimming and scared by a shark that is really Snoopy's ear.]]
+1954-07-21 [[character::Charlie Brown+Snoopy]] [[category::Snoopy imitation]] [[description::Charlie Brown goes swimming and scared by a shark that is really Snoopy's ear.]]
 
-1954-03-01 [[character::Schroeder+Snoopy]] [[category::Speechless]] [[description::Schroeder is trying to play the piano when Snoopy zooms in and accidentally takes it with him.]]
+1954-03-01 [[character::Schroeder+Snoopy]] [[category::Speechless]] [[description::Schroeder races a toy car onto Snoopy's head, leaving Snoopy to ponder how it got there]]
 
 1953-04-01 [[character::Charlie Brown+Schroeder]] [[description::Schroeder suggests Charlie Brown starting throwing his fast ball instead of his slow ball-- until Charlie Brown points out he *is* throwing his fast ball.]]
 
-1962-10-03 [[character::Snoopy]] [[category::Supper dish]] [[description::Snoopy eats from his supper dish on the roof of his doghouse, then the dish falls to the ground and lands upside down.]]
+1962-10-03 [[character::Snoopy]] [[description::Snoopy eats from his supper dish on the roof of his doghouse, then the dish falls to the ground and lands upside down, leading Snoopy to over-react that the world has come to an end.]]
 
-1954-12-15 [[character::Charlie Brown+Patty]] [[category::Santa Claus+letters+toys]] [[description::Charlie Brown writes a letter to Santa asking not for toys, but for a picture of Santa to hang on his wall.]]
+1954-12-15 [[character::Charlie Brown+Patty]] [[description::Charlie Brown applies psychology by writing a flattering letter to Santa, asking not for toys, but for a picture of Santa to hang on his wall.]]
 
 1964-03-02 [[character::Charlie Brown+Lucy]] [[category::Baseball]] [[description::Lucy berates Charlie Brown for slowing down. Charlie complains of arm pain, but an agressive Lucy tells him to forget about his arm and the only thing that matters is winning.]]
 
-1964-09-06 [[character::Lucy+Sally+Charlie Brown+Unknown boy]] [[description::Lucy, Sally and unknown boy are yelling back for the kid following them to stop. I ends with Charlie Brown being the kid left behind noting they were referring to his emotions immaturity]]
+1964-09-06 [[character::Lucy+Sally+Charlie Brown+Unknown boy]] [[description::Lucy, Sally and unknown boy are yelling back for the kid following them to stop. I ends with Charlie Brown being the kid left behind noting they were referring to his emotions immaturity]] [[todo::think this kid is "3"]]
 
-1962-01-29 [[character::Snoopy+Charlie Brown]] [[category::Snoopy on his doghouse]] [[description::Snoopy hones his alertness, but he is surprised by the snapping of twig trodden on by Charlie Brown.]]
+1962-01-29 [[character::Snoopy+Charlie Brown]] [[description::Snoopy hones his alertness, but he is surprised by the snapping of twig trodden on by Charlie Brown, who is bringing Snoppy's dinner]]
 
-1964-02-18 [[character::Snoopy (in thought)+Charlie Brown]] [[category::Snoopy's Antics]] [[description::Charlie Brown first brings his dog, Snoopy, his regular dinner dish. Snoopy is happy about this and begins eating. Charlie Brown comes back carrying a platter of French fries, of which Snoopy is especially happy about.]]
+1964-02-18 [[character::Snoopy+Charlie Brown]] [[category::Happiness is...]] [[description::Charlie Brown first brings his dog, Snoopy, his regular dinner dish. Snoopy is happy about this and begins eating. Charlie Brown comes back carrying a platter of French fries, of which Snoopy is especially happy about.]]
 
-1954-02-04 [[character::Snoopy+Charlie Brown]] [[category::speechless+train set+toy+tunnel]] [[description::Charlie Brown is watching his toy train go around the track. When it enters the tunnel, Snoopy panickly darts from out of the tunnel.]]
+1954-02-04 [[character::Snoopy+Charlie Brown]] [[description::Charlie Brown is watching his toy train go around the track. When it enters the tunnel, Snoopy panickly darts from out of the tunnel.]]
 
-1958-12-18 [[character::Charlie Brown]] [[category::Santa Claus]] [[description::Charlie Brown writes a letter to Santa asking him if they can have lunch together because he has much to tell him.]]
+1958-12-18 [[character::Charlie Brown]] [[description::Charlie Brown writes a letter to Santa asking him if they can have lunch together because he has much to tell him.]]
 
-1964-04-09 [[character::Charlie Brown+Snoopy]] [[category::Going to the vet]] [[description::Charlie Brown explains to Snoopy he had to get rabies shot because it's what the law says. Snoopy raises his fist in indignation, and his arm stings.]]
+1964-04-09 [[character::Charlie Brown+Snoopy]] [[description::Charlie Brown explains to Snoopy he had to get rabies shot because it's what the law says. Snoopy raises his fist in indignation, claiming "vaccination without representation" (a parody of "taxation without representation", the cry of the American Revolution) is wrong, and his arm stings.]]
 
 1963-06-02 [[character::Snoopy+Lucy]] [[description::Snoopy chases Lucy around whilst barking at her, but is perturbed when she turns around and does the same to him.]]
 
-1954-09-11 [[character::Charlie Brown+Patty+Schroeder+Snoopy]] [[category::dirty+friends+peer pressure]] [[description::Charlie Brown calls Patty to say they decide that she was right, and they all are clean. Patty is now the one who is dirty.]]
+1954-09-11 [[character::Charlie Brown+Patty+Schroeder+Snoopy]] [[description::Charlie Brown calls Patty to say they decide that she was right in saying they shouldn't be overly influenced by [[mentioned::Pig-Pen]], and they all are clean. Patty is now the one who is dirty.]]
 
 1962-10-22 [[character::Lucy+Linus]] [[category::Crabby Lucy]] [[description::Linus accuses Lucy of forgetting how to smile, and Lucy proves him right by frowning when she tried to smile.]]
 
-1962-05-29 [[character::Snoopy]] [[category::Dog house]] [[description::Snoopy finds a bird's nest on his dog house.]]
+1962-05-29 [[character::Snoopy]] [[description::Snoopy finds a bird's nest on his dog house, and regards the birds as tenants.]] [[notes::This is still pre-Woodstock]]
 
-1960-03-30 [[character::Charlie Brown]] [[category::Writing letters]] [[mentioned::Snicker Snack company]] [[description::Charlie Brown writes an ""unsolicited testimonial"" to the company that makes the cereal he eats in the morning.]]
+1960-03-30 [[character::Charlie Brown]] [[description::Charlie Brown writes an "unsolicited testimonial" to the company that makes the cereal he eats in the morning, but doesn't know what that actually means.]]
 
-1954-11-28 [[notes::12 panel Sunday strip]] [[character::Lucy+Linus]] [[category::brother/sister+balloon+angry]] [[description::Linus is playing with Lucy's balloon, which makes her angry. He lets the air out and puts it in his mouth before she sees him playing with it.]]
+1954-11-28 [[notes::12 panel Sunday strip]] [[character::Lucy+Linus]] [[description::Linus is playing with Lucy's balloon, which makes her angry. He lets the air out and puts it in his mouth before she sees him playing with it.]]
 
-1964-05-14 [[character::Lucy]] [[description::As she goes to bed Lucy wonders if perhaps she is too crabby. She concludes she could be nicer if she tried, but that she'll hate giving the rest of the world the satisfaction.]]
+1964-05-14 [[character::Lucy]] [[description::As she goes to bed Lucy wonders if perhaps she is too crabby. She concludes she could be nicer if she tried, but that she'll hate giving the rest of the world the satisfaction.]] [[category::Crabby Lucy]]
 
-1953-04-02 [[notes::This is a rare case where Charlie Brown's team has scored runs and is winning.+In a later strip, someone gives Charlie Brown statistics on his team, which say they've earned much fewer than 83 runs total, seeming to contradict this strip.]] [[character::Charlie Brown+Schroeder]] [[description::Charlie Brown's team is leading 83-79, so he suggests Schroeder take the ball (which belongs to him) and run for home.]]
+1953-04-02 [[notes::This is a rare case where Charlie Brown's team has scored runs and is winning. In a later strip, someone gives Charlie Brown statistics on his team, which say they've earned much fewer than 83 runs total, seeming to contradict this strip.]] [[character::Charlie Brown+Schroeder]] [[description::Charlie Brown's team is leading 83-79, so he suggests Schroeder take the ball (which belongs to him) and run for home.]]
+
+<!-- curated above this line -->
 
 1958-09-03 [[character::Charlie Brown]] [[category::Pencil Pal]] [[description::Charlie Brown writes to his pencil pal about his school, and says he would like to drive a school bus.]]
 
@@ -234,7 +236,7 @@
 
 1962-10-17 [[character::Lucy+Charlie Brown]] [[category::Serious talk]] [[description::Lucy complains of getting discouraged, and demands that she wants nond of the ""downs"" in life's ""ups and downs.""]]
 
-1963-02-23 [[character::Linus+Charlie Brown+None]] [[description::Charlie Brown notes that he would like to be rich but not a snob. Linus notes that he can be rich and still a nice person]]
+1963-02-23 [[character::Linus+Charlie Brown]] [[description::Charlie Brown notes that he would like to be rich but not a snob. Linus notes that he can be rich and still a nice person]]
 
 1954-07-02 [[notes::Continues the tickling theme with Snoopy and Lucy]] [[character::Lucy+Snoopy+Charlie Brown]] [[category::dog+pets+tickling]] [[description::Lucy tickles Snoopy and then Charlie Brown tickles Snoopy which causes Snoopy to flip.]]
 
@@ -246,7 +248,7 @@
 
 1959-05-04 [[character::Charlie Brown+Linus]] [[description::Lucy berates Linus for blaming his racket on poor tennis playing. In the last panel, we see the racket is severely warped, and Linus affirms his belief that the racket is to blame.]]
 
-1955-05-15 [[character::Linus.]] [[description::Linus is playing by himself, punching an inflatable robber, whapety up. Then it deflated and Linus thought he killed him.]]
+1955-05-15 [[character::Linus]] [[description::Linus is playing by himself, punching an inflatable robber, whapety up. Then it deflated and Linus thought he killed him.]]
 
 1964-03-10 [[character::Charlie Brown+Lucy]] [[category::Baseball]] [[description::Charlie Brown scolds Lucy for being sarcastic and unsympathetic. Lucy apologizes sardonically and asks him if he wants her to kiss his arm. Charlie Brown screams ""GET OUT OF HERE!""]]
 
@@ -338,7 +340,7 @@
 
 1954-07-22 [[character::Charlie Brown+Pig-Pen]] [[category::dirty+candy+friends]] [[description::Charlie Brown is eating candy and Pig-Pen asks if he can have a piece. Charlie Brown gets disgusted and gives all the candy to Pig-Pen.]]
 
-1963-02-12 [[character::Lucy+Linus+None]] [[description::Lucy yells at Linus due to the fact he doesn't listen when she speaks calmly]]
+1963-02-12 [[character::Lucy+Linus]] [[description::Lucy yells at Linus due to the fact he doesn't listen when she speaks calmly]]
 
 1964-10-03 [[character::Snoopy]] [[description::Snoopy watches a leaf fall from a tree, then asks the leaf if it was another year shot.]]
 
@@ -356,9 +358,9 @@
 
 1964-05-09 [[character::Lucy+Charlie Brown+Frieda]] [[category::eraserophagia]] [[description::Lucy directs Frieda's attention towards Charlie Brown's stomach, informing her that this normal looking stomach is actually full of erasers. Charlie Brown yells at them to get out sending both running.]]
 
-1955-05-20 [[character::Charlie Brown+Violet.]] [[description::Violet was asking Charlie Brown about his newspaper route and Charlie Brown said that he quit the first week because he did not get to write a single editorial.]]
+1955-05-20 [[character::Charlie Brown+Violet]] [[description::Violet was asking Charlie Brown about his newspaper route and Charlie Brown said that he quit the first week because he did not get to write a single editorial.]]
 
-1955-05-03 [[character::Lucy and Charlie Brown.]] [[description::Hysterical Lucy shouting about the world being worn down by the people for walking on the ground and worried that there will be no room to stand on so she shouts that everyone should walk on the sidewalk.]]
+1955-05-03 [[character::Lucy+Charlie Brown]] [[description::Hysterical Lucy shouting about the world being worn down by the people for walking on the ground and worried that there will be no room to stand on so she shouts that everyone should walk on the sidewalk.]]
 
 1964-02-05 [[character::Lucy+Charlie Brown]] [[category::Lucy's Services]] [[description::Lucy sits down with Charlie Brown to explain her bill. She breaks down the costs of the equipment, plus her personal fee. She stresses that the costs are quite reasonable. Charlie Brown notes that he still has the same problems despite the services.]]
 
@@ -452,7 +454,7 @@
 
 1954-01-01 [[notes::This may be one of the few interactions with a parent of one of the Peanuts gang. Her character does not appear in panel.]] [[character::Lucy+Linus+Lucy & Linus' mother]] [[category::cookie+mother+brother/sister+stealing]] [[description::Lucy steals Linus' cookie.When their mother accuses her, Lucy claims that Linus offered to share it with her, to which Linus yells ""Ho ho!""]]
 
-1955-05-10 [[notes::I don't really know who the boy is, probably just a passing character.]] [[character::Patty+Charlie Brown+Shermy.]] [[description::A boy saw Charlie Brown and Patty playing cowboys. Patty said that she is Buffalo Bill while Charlie Brown is Annie Oakley. Charlie Brown just turned red and made a comment about that's how it goes.]]
+1955-05-10 [[notes::I don't really know who the boy is, probably just a passing character.]] [[character::Patty+Charlie Brown+Shermy]] [[description::A boy saw Charlie Brown and Patty playing cowboys. Patty said that she is Buffalo Bill while Charlie Brown is Annie Oakley. Charlie Brown just turned red and made a comment about that's how it goes.]]
 
 1955-07-03 [[character::Lucy+Charlie Brown+Snoopy]] [[category::Ocean]] [[description::Lucy and Charlie Brown think that they can hear the ocean roar in Snoopy's ear.]]
 
@@ -538,9 +540,9 @@
 
 1954-08-28 [[character::Violet+Charlie Brown]] [[category::arguing+yelling+annoyed]] [[description::Violet tells Charlie Brown that he has a fat face. He says people with fat faces are cheerful and easy-going. She doubts that, and he yells its true.]]
 
-1963-02-19 [[character::Lucy+Linus+None]] [[description::It is raining and Lucy comments that she heard the oceans were filled with rain. Linus notes it must have been difficult to have picnics.]]
+1963-02-19 [[character::Lucy+Linus]] [[description::It is raining and Lucy comments that she heard the oceans were filled with rain. Linus notes it must have been difficult to have picnics.]]
 
-1964-09-04 [[character::Snoopy+3 Unknown birds]] [[category::Speechless]] [[description::Three separate birds appear one with the following sign; "!", "?", ";". Snoopy decides it is difficult to know what to believe.]]
+1964-09-04 [[character::Snoopy+unknown birds]] [[category::Speechless]] [[description::Three separate birds appear one with the following sign; "!", "?", ";". Snoopy decides it is difficult to know what to believe.]]
 
 1963-06-10 [[character::Sally]] [[category::Self reference]] [[mentioned::Sally's mother]] [[description::Sally is playing in the sand box alone. She comments that her mother is watching her, and theorises that mothers feel secure when they see their child playing in the sand box. She then complains that whilst her mother is secure, she herself is bored:]]
 
@@ -636,17 +638,17 @@
 
 1957-12-25 [[character::Shermy+Lucy+Pig Pen+Violet+Patty+Snoopy+Shroeder+Linus+Charlie Brown]] [[category::Christmas+greetings+Good Ol' Charlie Brown]] [[description::Shermy, Lucy, Pig Pen, Violet, Patty, Snoopy, Shroeder, and Linus are holding up signs that say ""Christmas Greetings From"", followed by their names, while angrily looking over at Charlie Brown, who is holding his sign upside down.]]
 
-1955-07-01 [[character::Charlie Brow+Unknown Character]] [[category::Davy Crocket]] [[description::Charlie Brown realizes that he is obsessed with Davy Crocket.]]
+1955-07-01 [[character::Charlie Brown+Shermy]] [[category::Davy Crocket]] [[description::Charlie Brown realizes that he is obsessed with Davy Crocket.]]
 
 1962-09-02 [[character::Linus+Lucy]] [[category::Crabby Lucy]] [[description::Linus congratulates Lucy on setting a record for being crabby for 1,000 days straight.]]
 
 1964-02-14 [[character::Charlie Brown]] [[category::Love]] [[mentioned::Little Red-haired Girl]] [[description::Valentine's Day is here, and Charlie Brown is sitting on his lunch bench observing the little redheaded girl passing out valentines. He comments on how she's giving out a lot of them and to all her friends. He waits with anticipation on his face and in his words. There ends up being no valentine for Charlie Brown from the little red-haired girl, causing him to be sad and sarcastic.]]
 
-1963-02-06 [[character::Linus+Charlie Brown+None]] [[description::Linus writes a letter to Secretary of Agriculture asking for a free cow. They comment how this would be great business is they received it.]]
+1963-02-06 [[character::Linus+Charlie Brown]] [[description::Linus writes a letter to Secretary of Agriculture asking for a free cow. They comment how this would be great business is they received it.]]
 
 1959-05-28 [[character::Violet+Lucy+Charlie Brown]] [[mentioned::Sally]] [[description::Violet seems happy that Charlie Brown has a new sister, but Lucy worries about overpopulation.]]
 
-1963-02-24 [[character::Shroeder+Lucy+None]] [[category::Schroeder playing piano]] [[description::Shroeder is playing piano and Lucy asks him what it would be like to be married. Shroeder thinks she is crazy and Lucy notes that her aunt was right in telling her not to talk marriage to a musician]]
+1963-02-24 [[character::Shroeder+Lucy]] [[category::Schroeder playing piano]] [[description::Shroeder is playing piano and Lucy asks him what it would be like to be married. Shroeder thinks she is crazy and Lucy notes that her aunt was right in telling her not to talk marriage to a musician]]
 
 1957-12-29 [[character::Linus+Snoopy+Charlie Brown]] [[category::ice+sliding+skating+hurt+falls]] [[description::Snoopy sees a patch of ice and begins slipping and sliding on it. He slides too far however and falls, causing Charlie Brown to have to drag him off the ice on a sled. Linus tells Snoopy that one patch of ice doth not a winter make, and Snoopy tells him to shut up.]]
 
@@ -716,9 +718,9 @@
 
 1954-11-23 [[character::Schroeder+Charlie Brown+Patty]] [[wikipedia::Beethoven]] [[category::teasing+Beethoven]] [[description::Charlie Brown makes fun of Schroeder because he said Beethoven was the founder of his country.]]
 
-1964-09-01 [[character::Snoopy+Unknown bird (Not Woodstock)]] [[description::A bird walks around Snoopy is carrying a sign with "!" on it. Snoopy remarks that you can't argue with that]]
+1964-09-01 [[character::Snoopy+unknown birds]] [[description::A bird walks around Snoopy is carrying a sign with "!" on it. Snoopy remarks that you can't argue with that]]
 
-1964-09-09 [[character::Snoopy+6 birds]] [[category::Speechless]] [[description::Six birds carrying the "!" sign attack a bird carrying a "?" sign. Snoopy notes that these guys really play for keeps]]
+1964-09-09 [[character::Snoopy+unknown birds]] [[category::Speechless]] [[description::Six birds carrying the "!" sign attack a bird carrying a "?" sign. Snoopy notes that these guys really play for keeps]]
 
 1958-11-16 [[character::Lucy+Schroeder]] [[category::Beethoven]] [[description::Schroeder's family took their summer vacation in Europe, and Schroeder took pictures of himself at landmarks associated with Beethoven.]]
 
@@ -738,9 +740,9 @@
 
 1954-02-20 [[character::Violet+Charlie Brown]] [[category::argument+winter clothes+bundled up+Violet's house]] [[description::Violet and Charlie Brown get into an argument and she tells him to go home. By the time Charlie Brown gets all his winter clothing on, Violet tells him she isn't mad anymore.]]
 
-1955-05-23 [[character::Lucy+Patty+Violet.]] [[category::Speechless+roller skates.]] [[description::Lucy is balancing on roller skates, she saw someone coming and immediately stepped off the pavement and stood on the grass. Patty and Violet whizzed by on their roller skates. Lucy went back on the pavement, struggling with her roller skates and sigh.]]
+1955-05-23 [[character::Lucy+Patty+Violet]] [[category::Speechless+roller skates.]] [[description::Lucy is balancing on roller skates, she saw someone coming and immediately stepped off the pavement and stood on the grass. Patty and Violet whizzed by on their roller skates. Lucy went back on the pavement, struggling with her roller skates and sigh.]]
 
-1959-06-02 [[character::Charlie Brown+Linus+Snoopy]] [[category::Sally Brown named+babies+brother/sister]] [[mentioned::Charlie Brown's new-born baby sister (Sally)]] [[description::Snoopy listens to Charlie Brown and Linus discussing the name of Charlie Brown's new-born baby sister.]]
+1959-06-02 [[character::Charlie Brown+Linus+Snoopy]] [[category::Sally Brown named+babies+brother/sister]] [[mentioned::Sally]] [[description::Snoopy listens to Charlie Brown and Linus discussing the name of Charlie Brown's new-born baby sister.]]
 
 1959-07-02 [[notes::Lucy is not behind her "psychiatric consultation - doctor is in" stand for this consultation.]] [[character::Lucy+Charlie Brown]] [[category::Charlie Brown insulted+depression]] [[description::Charlie Brown takes his depression troubles to Lucy. She says she cannot help him, not because he has such a complex personality but because it is so simple.]]
 
@@ -790,7 +792,7 @@
 
 1962-01-25 [[character::Charlie Brown+Lucy]] [[category::Serious talk]] [[description::Lucy hands down an ultimatum of twelve years on the world to straighten out its problems, so she can live a perfect life by the time she turns eighteen.]]
 
-1964-09-08 [[character::Snoopy+5 birds]] [[category::Speechless]] [[description::Several more birds show up carrying the following signs; "!", "&", ",","~", and "*". Snoopy notes that we don't hear from the "Way Out" groups.]]
+1964-09-08 [[character::Snoopy+unknown birds]] [[category::Speechless]] [[description::Several more birds show up carrying the following signs; "!", "&", ",","~", and "*". Snoopy notes that we don't hear from the "Way Out" groups.]]
 
 1962-09-12 [[character::Charlie Brown+Lucy]] [[category::Lucy's opinion]] [[description::Lucy is convinced that making the sky blue was a good idea, and any color other than blue wouldn't have worked.]]
 
@@ -798,7 +800,7 @@
 
 1954-04-29 [[notes::First Linus thoughts]] [[character::Linus]] [[category::toddler+steps]] [[description::Linus falls down steps and is excited because he went down steps.]]
 
-1955-05-16 [[character::Charlie Brown+Lucy.]] [[description::Lucy found a three-leaf clover and Charlie Brown advised her to not keep it because it's not worth keeping, but Lucy thinks it is the next best thing since she does not have a four-leaf clover.]]
+1955-05-16 [[character::Charlie Brown+Lucy]] [[description::Lucy found a three-leaf clover and Charlie Brown advised her to not keep it because it's not worth keeping, but Lucy thinks it is the next best thing since she does not have a four-leaf clover.]]
 
 1962-03-04 [[character::Frieda+Snoopy]] [[description::Frieda comes out of her house, commenting on what a perfect day it is, and proceeds to rouse Snoopy with a yell, telling him its time to chase rabbits. A bleary eyed Snoopy follows her as she walks to a field, noting the clear weather, and saying that they should find lots of rabbits, with Snoopy wondering how you can find rabbits in the middle of the night! Snoopy begins to fall asleep, making Frieda yell at him to wake up, so he can find the scent. Snoopy runs enthusiastically around the field, sniffing as he goes, but they find no rabbits. Frieda says, at least they tried, which should make them feel better. As Snoopy lies back down on his dog house roof, he comments that he doesn't actually know what a rabbit smells like!]]
 
@@ -884,7 +886,7 @@
 
 1957-12-16 [[character::Schroeder+Charlie Brown+Snoopy]] [[wikipedia::Ludwig van Beethoven+F Minor Sonata]] [[category::whistling+Beethoven+supper]] [[description::Charlie Brown is preparing Snoopy's supper, and he asks Schroeder to whistle for Snoopy to come in and get it. Schroeder whistles Beethoven's F Minor Sonata, and tells Snoopy he is the only dog who has had that whistled to him.]]
 
-1964-05-16 [[character::X+Lucy]] [[description::X tells Lucy that she'll never be able to change, and that she was born and will stay crabby. Lucy happily says to herself that she feels a great sense of relief.]]
+1964-05-16 [[character::Patty+Lucy]] [[description::Patty tells Lucy that she'll never be able to change, and that she was born and will stay crabby. Lucy happily says to herself that she feels a great sense of relief.]]
 
 1962-03-14 [[character::Lucy+Linus+Snoopy]] [[description::Lucy is pulling some strange faces and Linus (wearing his glasses) asks her what she is doing, whilst Snoopy is looking on. Lucy tells him she is doing eye exercises so she doesn't end up having to wear glasses like him. Linus tells her that his optician told him that the eye exercises wouldn't help. Snoopy walks away, commenting that he is glad those exercises wouldn't help, as he didn't think that his eyeballs would have liked them!]]
 
@@ -896,7 +898,7 @@
 
 1957-12-05 [[character::Charlie Brown]] [[category::bird+depression+resentment]] [[description::Charlie Brown is lying down on the ground and comments to himself that nobody likes him. A bird lands on his shoes, flies away, and Charlie sees this as confirmation.]]
 
-1955-05-24 [[character::Charlie Brown+Violet.]] [[mentioned::Shermy+Patty.]] [[description::Violet asked about Charlie Brown's cut on his finger and she showed him her scraped knee. Then they talked about how Shermy was stung by a bee and Patty cut her elbow. Charlie Brown concludes that something is going on.]]
+1955-05-24 [[character::Charlie Brown+Violet]] [[mentioned::Shermy+Patty]] [[description::Violet asked about Charlie Brown's cut on his finger and she showed him her scraped knee. Then they talked about how Shermy was stung by a bee and Patty cut her elbow. Charlie Brown concludes that something is going on.]]
 
 1954-03-21 [[notes::15 panel Sunday strip]] [[character::Charlie Brown+Patty]] [[category::sandcastle+tear down+speechless]] [[description::Charlie Brown builds a sandcastle that Patty stomps and tears down. He gets angry, gives up, and goes to bed.]]
 
@@ -910,7 +912,7 @@
 
 1954-08-04 [[notes::continues from the August 2nd strip]] [[character::Charlie Brown+Lucy]] [[category::Friends+fingerprints]] [[description::Lucy is studying her fingerprints and proclaims hers are prettier than Charlie Brown's.]]
 
-1960-01-16 [[character::Lucy+Linus< Charlie Brown]] [[category::explanation]] [[description::Linus wants to have a heart filled with love only, so Lucy instructs him on how to achieve this.]]
+1960-01-16 [[character::Lucy+Linus+Charlie Brown]] [[category::explanation]] [[description::Linus wants to have a heart filled with love only, so Lucy instructs him on how to achieve this.]]
 
 1964-02-07 [[character::Unnamed male+Charlie Brown+Lucy]] [[category::Lucy's Services]] [[description::A no-name male character is sitting at Lucy's help booth, describing his problem. Charlie Brown walks by and scoffs at the five cent price listing. The unnamed therapy recipient asks Lucy why Charlie Brown said that. Lucy tells him to ignore Charlie Brown's comment.]]
 
@@ -986,7 +988,7 @@
 
 1955-03-25 [[character::Linus+Snoopy]] [[category::Linus' blanket]] [[description::Linus is holding his blanket when Snoopy comes and sleeps on it.]]
 
-1964-02-25 [[character::Snoopy (in thought)]] [[category::Weather+Snoopy's Antics]] [[description::Snoopy is hanging out on top of his dog house in the rain. He comments on how the flood is rising, and that his dog house carpet will be damaged.]]
+1964-02-25 [[character::Snoopy]] [[category::Weather+Snoopy's Antics]] [[description::Snoopy is hanging out on top of his dog house in the rain. He comments on how the flood is rising, and that his dog house carpet will be damaged.]]
 
 1954-06-23 [[notes::not one character is shown]] [[category::Speechless+messages+love]] [[description::On a wooden wall, there are couples written on there such as Lucy loves Schroeder. At the end, it says "Charlie Brown loves Charlie Brown."]]
 
@@ -1008,7 +1010,7 @@
 
 1959-08-01 [[character::Charlie Brown+Linus]] [[category::philanthropist]] [[description::Linus wants to be a philanthropist when he grows up. When Charlie Brown points out you need money to be a philanthropist, Linus responds he wants to be a philanthropist with someone else's money.]]
 
-1963-02-04 [[character::Linus+Snoopy+None]] [[description::Linus tells Snoopy that he is going to be a champion cattle rancher and that Snoopy would be a prize Herefords. Linus feeds Snoopy some hay and Snoopy comments that Linus wouldn't be very good.]]
+1963-02-04 [[character::Linus+Snoopy]] [[description::Linus tells Snoopy that he is going to be a champion cattle rancher and that Snoopy would be a prize Herefords. Linus feeds Snoopy some hay and Snoopy comments that Linus wouldn't be very good.]]
 
 1954-05-27 [[character::Lucy+Charlie Brown+Snoopy]] [[category::Snoopy insulted+dog]] [[description::Lucy attempts to insult Snoopy by calling him ""just a dog"". When he doesn't become insulted, she wonders why, and Charlie tells her he's not insulted to be called a dog.]]
 
@@ -1042,7 +1044,7 @@
 
 1958-12-19 [[character::Charlie Brown+Linus]] [[category::Santa Claus]] [[description::Charlie Brown writes a letter to Santa for Linus, and Linus wants to address Santa as ""O Mighty One.""]]
 
-1963-02-28 [[character::Linus+Charlie Brown+None]] [[description::Charlie Brown can't believe Linus wants to run away from his problems and asks where we would be if everyone did so. Linus says everyone would be headed in the same direction.]]
+1963-02-28 [[character::Linus+Charlie Brown]] [[description::Charlie Brown can't believe Linus wants to run away from his problems and asks where we would be if everyone did so. Linus says everyone would be headed in the same direction.]]
 
 1964-03-09 [[character::Charlie Brown+Lucy+Schroeder]] [[category::Baseball]] [[description::Charlie Brown explains that his arm injury was caused by trying to pitch too hard without being properly warmed up. He then narrates in obscure medical jargon his x-ray findings. Lucy tells him the doctor was just trying to tell him in a nice way that he's a lousy pitcher.]]
 
@@ -1052,7 +1054,7 @@
 
 1962-05-22 [[character::Linus]] [[category::Baseball]] [[mentioned::Charlie Brown]] [[description::Linus is cheering Charlie Brown on.]]
 
-1955-05-02 [[character::Lucy and Charlie Brown.]] [[description::Charlie Brown and Lucy arguing about the world getting smaller. Charlie Brown thinks it's because of the airplane, traveling anywhere in the world is possible but Lucy thinks it's because of the people, millions walking all over the world that the land is wearing off.]]
+1955-05-02 [[character::Lucy+Charlie Brown]] [[description::Charlie Brown and Lucy arguing about the world getting smaller. Charlie Brown thinks it's because of the airplane, traveling anywhere in the world is possible but Lucy thinks it's because of the people, millions walking all over the world that the land is wearing off.]]
 
 1953-04-18 [[character::Charlie Brown+Shermy+Snoopy]] [[description::Shermy thinks he's the first one to get a short haircut, but the last panel shows that Snoopy's beaten him to it.]]
 
@@ -1198,9 +1200,9 @@
 
 1964-12-03 [[character::Lucy+Snoopy]] [[category::Football]] [[description::Lucy holds football, drops it and kicks it backwards over her own head. It hits Snoopy, sitting behind her. She scolds Snoopy for sitting in an unsafe spot.]]
 
-1955-05-26 [[character::Lucy+Violet.]] [[description::Violet asked Lucy about her kindergarten class to which Lucy said something about it is okay but the course she is most interested in, homemaking, is not being offered.]]
+1955-05-26 [[character::Lucy+Violet]] [[description::Violet asked Lucy about her kindergarten class to which Lucy said something about it is okay but the course she is most interested in, homemaking, is not being offered.]]
 
-1964-10-14 [[notes::The unknown male appears to be a reoccurring character, but may be just a random seat-filler, as I can find no evidence of him having a name or story.]] [[character::Linus+Charlie Brown+Sally+Lucy+unknown male]] [[description::Linus makes a speech about what he will do if elected school president, quickly going into biblical references as he shouts about purging 'the kingdom'. Charlie brown wonders aloud from the audience why the principal is looking pale.]]
+1964-10-14 [[character::Linus+Charlie Brown+Sally+Lucy+5]] [[description::Linus makes a speech about what he will do if elected school president, quickly going into biblical references as he shouts about purging 'the kingdom'. Charlie brown wonders aloud from the audience why the principal is looking pale.]] [[notes::This may or may not be 5]]
 
 1955-03-10 [[character::Charlie Brown+Sally Brown+Snoopy]] [[category::Chocolate]] [[description::Snoopy and Charlie Brown try the chocolate creams and hate them and fins out that they had coconut in them.]]
 
@@ -1214,7 +1216,7 @@
 
 1955-07-25 [[character::Lucy+Charlie Brown]] [[category::Fun]] [[mentioned::Peppermint Patty]] [[description::Lucy comes and brags to Charlie Brown about how much fun she and Patty have had all day.]]
 
-1963-02-09 [[character::None+Snoopy]] [[description::Snoopy jumps onto his roof and slides right off. Comments that it is icy.]]
+1963-02-09 [[character::Snoopy]] [[description::Snoopy jumps onto his roof and slides right off. Comments that it is icy.]]
 
 1957-12-27 [[character::Charlie Brown+Snoopy]] [[category::gum+chomp]] [[description::Snoopy is chewing something, spits it out, and walks away. Charlie looks at it and says he wishes Snoopy wouldn't spit his gum on the sidewalk.]]
 
@@ -1278,7 +1280,7 @@
 
 1954-10-23 [[character::Snoopy+Charlie Brown]] [[category::speechless+television+dogs]] [[description::Snoopy is watching television when Charlie Brown gets in his way.]]
 
-1964-09-10 [[character::Snoopy+3 birds]] [[category::Speechless]] [[description::Birds continue to show up carrying unique signs. Snoopy notes that they can't agree on anything]]
+1964-09-10 [[character::Snoopy+unknown birds]] [[category::Speechless]] [[description::Birds continue to show up carrying unique signs. Snoopy notes that they can't agree on anything]]
 
 1957-12-18 [[character::Lucy+Schroeder]] [[wikipedia::Ludwig van Beethoven]] [[category::Beethoven's birthday+forgets+laughing]] [[description::Lucy laughs at Schroeder for forgetting Beethoven's birthday after waiting a whole year for it. Schroeder bangs his head against a tree.]]
 
@@ -1324,7 +1326,7 @@
 
 1964-04-24 [[character::Lucy+Schroeder]] [[category::Schroeder Plays Piano]] [[description::Lucy interrupts Schroeder to tell him that the ""van"" in Beethoven's name didn't mean anything.]]
 
-1963-02-18 [[character::Charlie Brown+Linus+Frieda+None]] [[description::Freida asked Charlie Brown to ""lookit"" at he jumping rope. Charlie Brown says he is ""lookiting' at her.]]
+1963-02-18 [[character::Charlie Brown+Linus+Frieda]] [[description::Freida asked Charlie Brown to ""lookit"" at he jumping rope. Charlie Brown says he is ""lookiting' at her.]]
 
 1962-01-03 [[character::Charlie Brown+Linus]] [[category::Linus and his blanket]] [[description::Linus shows Charlie Brown how he can use his blanket as a weapon.]]
 
@@ -1342,11 +1344,11 @@
 
 1954-10-26 [[character::Snoopy]] [[category::leaves+dogs]] [[description::Snoopy takes a leaf that fell on his to a pile of leaves.]]
 
-1963-02-26 [[character::Lucy+Charlie Brown+None]] [[description::Lucy comments to Charlie Brown that she can't believe he has a kite stuck in a tree already. He notes that it was from last year]]
+1963-02-26 [[character::Lucy+Charlie Brown]] [[description::Lucy comments to Charlie Brown that she can't believe he has a kite stuck in a tree already. He notes that it was from last year]]
 
 1954-03-06 [[character::Violet+Charlie Brown]] [[category::Fighting+Women]] [[description::Violet and Charlie Brown are having an argument with only ""Yes"" from Charlie Brown and ""No"" from Violet. Each box they get louder, and Charlie Brown feels like he cannot win.]]
 
-1962-05-06 [[character::Charlie Brown+Snoopy]] [[category::Bowling]] [[description::Charlie Brown wakes up Snoopy to see him bowl.]]
+1962-05-06 [[character::Charlie Brown+Snoopy]] [[description::Charlie Brown wakes up Snoopy to see him bowl.]]
 
 1964-04-15 [[character::Lucy+Linus]] [[category::Science fair]] [[description::Lucy tests Linus and takes aways his blanket. After 50 seconds, he passes out.]]
 
@@ -1364,7 +1366,7 @@
 
 1962-05-01 [[character::Snoopy]] [[category::Snoopy eats]] [[description::Snoopy is eating out of his dog bowl and wonders why he never gets to eat on fine china.]]
 
-1964-02-12 [[character::Snoopy (in thought)]] [[category::Snoopy's Antics]] [[mentioned::Passing dog]] [[description::Snoopy is commenting to himself on a passing dog that has his head out the car window. Snoopy mocks the dog and thinks to himself how he would never do that. It ends by Snoopy priding himself on good posture and a seat belt while traveling in a vehicle.]]
+1964-02-12 [[character::Snoopy]] [[category::Snoopy's Antics]] [[mentioned::Passing dog]] [[description::Snoopy is commenting to himself on a passing dog that has his head out the car window. Snoopy mocks the dog and thinks to himself how he would never do that. It ends by Snoopy priding himself on good posture and a seat belt while traveling in a vehicle.]]
 
 1963-06-15 [[notes::Although you cannot tell what the bird is saying (the birds dialogue is represented in a speech bubble by a number of short vertical lines), the fact that it is saying something is established by Snoopy in the final frame.]] [[character::Snoopy]] [[description::Snoopy is sitting on the roof of his dog house with a bird who appears to be talking to him. Snoopy yawns and the birde flys away. Whilst lying down, Snoopy comments that he must have offended the bird, but that the talk of insecticides was beyond him.]]
 
@@ -1382,7 +1384,7 @@
 
 1963-02-15 [[character::Frieda+Charlie Brown+Patty]] [[description::Frieda comments how she got 30 Valentines day cards and Charlie Brown laughs/crys]]
 
-1964-02-08 [[notes::This cartoon takes place in the kids' living room. Linus is watching TV, and then Lucy goes to the table to write the letter.]] [[character::Lucy+Linus]] [[category::Lucy's Services]] [[mentioned::Charlie Brown (in context)]] [[description::Lucy asks Linus what he would do if he was a doctor and one of his patients didn't want to pay his bill (referring to Charlie Brown). Linus suggests threatening to beat the person up. Lucy considers it and writes to the medical board to find out if it is ethical.]]
+1964-02-08 [[notes::This cartoon takes place in the kids' living room. Linus is watching TV, and then Lucy goes to the table to write the letter.]] [[character::Lucy+Linus]] [[category::Lucy's Services]] [[description::Lucy asks Linus what he would do if he was a doctor and one of his patients didn't want to pay his bill (referring to Charlie Brown). Linus suggests threatening to beat the person up. Lucy considers it and writes to the medical board to find out if it is ethical.]]
 
 1959-05-13 [[character::Lucy+Schroeder]] [[description::Schroeder tells Lucy that the girl he marries must be a good cook, have a good sense of humor, and enjoy listening to string quartets. Lucy agrees she meets the first two criteria, but gives Schroeder a BOING!! for the third.]]
 
@@ -1402,7 +1404,7 @@
 
 1954-01-27 [[character::Charlie Brown+Snoopy]] [[category::bundled up+cold climate+show-off]] [[description::Charlie Brown is walking down the street explaining that all you need to live in cold weather is proper dress and a stout heart. Snoopy passes him unclothed, and Charlie calls him a show-off.]]
 
-1962-03-30 [[catgeory::bowling]] [[notes::Again, I think this is Peggy Sue, but its hard to be sure.]] [[character::Charlie Brown+Linus+Peggy Sue]] [[description::Linus and Charlie Brown are looking over at Peggy Sue, Linus complaining that she is always going on about bowling and that she says her Dad is so good at bowling he is going to be on tv. Charlie Brown says that he isn't that good at bowling, he's actually doing it on the radio!]]
+1962-03-30 [[notes::Again, I think this is Peggy Sue, but its hard to be sure.]] [[character::Charlie Brown+Linus+Peggy Sue]] [[description::Linus and Charlie Brown are looking over at Peggy Sue, Linus complaining that she is always going on about bowling and that she says her Dad is so good at bowling he is going to be on tv. Charlie Brown says that he isn't that good at bowling, he's actually doing it on the radio!]]
 
 1964-09-02 [[character::Snoopy+Unknown bird (Not Woodstock)]] [[category::Speechless]] [[description::The bird comes back the "!" sign. Snoopy notes that he is very sincere.]]
 
@@ -1410,7 +1412,7 @@
 
 1959-06-25 [[character::Charlie Brown+Schroeder+Snoopy+Violet]] [[category::Snoopy dressed as a baby]] [[description::Charlie Brown gets up from a board game to check on a sound he heard from the front door. Schroeder worries that Charlie Brown is going crazy then Charlie Brown comes back in with Snoopy dressed in the baby bonnet in his arms. He offers the "fuzzy baby" to Schroeder and Violet.]]
 
-1963-02-13 [[character::Lucy+Charlie Brown+None]] [[description::Lucy comments that her father had a chance for a 300 score in bowling but lost it in the 2nd frame]]
+1963-02-13 [[character::Lucy+Charlie Brown]] [[description::Lucy comments that her father had a chance for a 300 score in bowling but lost it in the 2nd frame]]
 
 1957-12-12 [[character::Linus+Charlie Brown]] [[wikipedia::Santa Claus]] [[category::Santa Claus+letter+writing]] [[description::Linus yells at Charlie Brown that he'll write his own letter to Santa without his help, and then proceeds to ask Charlie what end of the pencil to use.]]
 
@@ -1424,7 +1426,7 @@
 
 1954-03-24 [[character::Charlie Brown+Shermy+Schroeder]] [[category::baseball+friends+sadness]] [[description::Charlie Brown is down because the kids don't call for him to play. Schroeder and Shermy yell at him to come outside, and Charlie Brown is glad to be alive.]]
 
-1959-06-01 [[character::Violet+Patty+Charlie Brown+Linus]] [[category::babies+brother/sister+family]] [[mentioned::Charlie Brown's new-born baby sister (Sally)+Linus]] [[description::Violet and Lucy discuss Charlie Brown's new baby sister. Violet bemoans the fact that she doesn't have a baby sibling and Lucy does too, referring to her brother as an "old" baby.]]
+1959-06-01 [[character::Violet+Patty+Charlie Brown+Linus]] [[category::babies+brother/sister+family]] [[mentioned::Sally+Linus]] [[description::Violet and Lucy discuss Charlie Brown's new baby sister. Violet bemoans the fact that she doesn't have a baby sibling and Lucy does too, referring to her brother as an "old" baby.]]
 
 1954-09-27 [[character::Lucy+Schroeder]] [[wikipedia::Beethoven]] [[category::music+piano+children]] [[description::Lucy asks Schroeder about his Beethoven statue. She thought it was his grandpa.]]
 
@@ -1472,7 +1474,7 @@
 
 1959-09-17 [[character::Lucy+Charlie Brown+Linus]] [[category::kite]] [[description::Charlie Brown is trying to fly a kite. Lucy is enjoying the beautiful sky. As she's pointing out something in the sky to Linus, Charlie Brown's kite lands on her arm.]]
 
-1963-02-01 [[character::Linus+Lucy+None]] [[description::Linus is upset because whenever he comes up with an ambition, it is discouraged. Lucy suggests the reason is because he is stupid.]]
+1963-02-01 [[character::Linus+Lucy]] [[description::Linus is upset because whenever he comes up with an ambition, it is discouraged. Lucy suggests the reason is because he is stupid.]]
 
 1958-12-22 [[character::Linus+Charlie Brown]] [[category::Santa Claus]] [[description::Charlie Brown writes a letter to Santa while Linus dictates.]]
 
@@ -1510,7 +1512,7 @@
 
 1954-12-23 [[character::Charlie Brown+Linus]] [[category::toddler+balloons]] [[description::Charlie Brown tries to get Linus to blow round balloons, but he is not successful.]]
 
-1962-10-15 [[http:://en.wikipedia.org/wiki/Albert_Sabin]] [[character::Charlie Brown+Lucy]] [[wikipedia::Albert Sabin+who developed an oral polio vaccine.]] [[category::Vaccine]] [[description::Lucy took Sabin oral polio vaccine with a sugar cube, which she says her dentist prohibits eating.]]
+1962-10-15 [[character::Charlie Brown+Lucy]] [[wikipedia::Albert Sabin]] [[description::Lucy took Sabin oral polio vaccine with a sugar cube, which she says her dentist prohibits eating.]]
 
 1959-08-20 [[character::Charlie Brown+Linus]] [[category::rocks]] [[description::Linus states that his rocks are groomed to be thrown in anger, for he uses the same rocks over and over again in a process like running them through a filter.]]
 
@@ -1520,11 +1522,11 @@
 
 1959-06-16 [[character::Linus+Charlie Brown]] [[category::brother/sister+family+jealousy]] [[mentioned::Lucy+Sally]] [[description::Linus comes to the realization that Lucy resents having him as a younger brother rather than a little sister. Charlie Brown replies that his aunt always says that one can choose their friends but not their family.]]
 
-1963-02-27 [[character::Linus+Charlie Brown+None]] [[description::Linus notes that it is much better to avoid problems than to face them. No problem is to big to avoid]]
+1963-02-27 [[character::Linus+Charlie Brown]] [[description::Linus notes that it is much better to avoid problems than to face them. No problem is to big to avoid]]
 
 1953-04-15 [[character::Charlie Brown+Lucy]] [[description::Charlie Brown offers Lucy a caramel. When she ends up taking all of them, he sarcastically offers her the sack to carry them in.]]
 
-1963-02-03 [[character::Linus+Lucy+None]] [[description::Linus is upset due to the fact he can feel his tongue and it makes him feel uncomfortable. Lucy tells him he is stupid for thinking about it. When she leaves him she is upset with Linus because she is now thinking about her tongue]]
+1963-02-03 [[character::Linus+Lucy]] [[description::Linus is upset due to the fact he can feel his tongue and it makes him feel uncomfortable. Lucy tells him he is stupid for thinking about it. When she leaves him she is upset with Linus because she is now thinking about her tongue]]
 
 1960-01-12 [[character::Charlie Brown+Snoopy]] [[category::TV]] [[description::Charlie Brown is watching TV, but the reception is poor. Snoopy is the antenna of choice.]]
 
@@ -1542,7 +1544,7 @@
 
 1964-04-28 [[character::Lucy+Linus]] [[category::Lucy's opinion]] [[description::Lucy declares that happiness is not the same as being happy all the time, but confuses Linus when she mentions that if someone is sad sometimes, then that person is happy all the time.]]
 
-1955-05-05 [[character::Lucy.+Patty (not Peppermint Patty)+Violet Gray.]] [[description::Lucy stopped the two girls jumping rope and asked them to jump rope on the sidewalk because they are wearing the earth off.]]
+1955-05-05 [[character::Lucy.+Patty+Violet]] [[description::Lucy stopped the two girls jumping rope and asked them to jump rope on the sidewalk because they are wearing the earth off.]]
 
 1962-01-16 [[notes::There is a snowman in front of Snoopy's doghouse.]] [[character::Snoopy]] [[category::Snowman]] [[description::Snoopy tries to make friendly advances toward the snowman]]
 
@@ -1598,7 +1600,7 @@
 
 1954-08-13 [[character::Lucy]] [[wikipedia::Rock-a-bye baby]] [[category::record+nursery rhymes+babysitter]] [[description::Lucy thinks the rock-a-bye baby had an awful babysitter while listening to the record.]]
 
-1955-05-01 [[character::Snoopy and Lucy.]] [[category::Snoopy Imitation+Speechless.]] [[description::Lucy jumping rope, Snoopy watches. Snoopy joined in the jumping rope with Lucy then Lucy stopped but Snoopy is still jumping. Snoopy then realized Lucy has stopped jumping rope, stared at each other and Snoopy left embarrassed.]]
+1955-05-01 [[character::Snoopy+Lucy]] [[category::Snoopy Imitation+Speechless.]] [[description::Lucy jumping rope, Snoopy watches. Snoopy joined in the jumping rope with Lucy then Lucy stopped but Snoopy is still jumping. Snoopy then realized Lucy has stopped jumping rope, stared at each other and Snoopy left embarrassed.]]
 
 1958-09-22 [[character::Lucy+Charlie Brown]] [[description::Lucy points out the trouble with Charlie Brown is that he's Charlie Brown, implying that he's hopeless.]]
 
@@ -1616,7 +1618,7 @@
 
 1960-03-19 [[character::Charlie Brown+Snoopy]] [[category::Chopper+Snoopy imitation+Whirlydog]] [[description::While Snoopy flies, he hits the ground and his ears gets tangled.]]
 
-1955-05-29 [[character::Charlie Brown+Lucy.]] [[category::Kite flying.]] [[description::Charlie Brown asked Lucy to get some more kite string because the string is getting short. Lucy asked if it has to be a kite string and Charlie Brown said that anything will do. So Lucy returned and tied on the string's end the stuff she brought to Charlie Brown's surprised, a neck tie passed through his hands, then a clothes hanger, a watch, a mask and finally a big chunk of chain, that dragged his kite down.]]
+1955-05-29 [[character::Charlie Brown+Lucy]] [[category::Kite flying.]] [[description::Charlie Brown asked Lucy to get some more kite string because the string is getting short. Lucy asked if it has to be a kite string and Charlie Brown said that anything will do. So Lucy returned and tied on the string's end the stuff she brought to Charlie Brown's surprised, a neck tie passed through his hands, then a clothes hanger, a watch, a mask and finally a big chunk of chain, that dragged his kite down.]]
 
 1957-12-20 [[character::Lucy+Schroeder]] [[wikipedia::Pat Boone]] [[category::piano+Pat Boone+birthday]] [[description::Lucy is leaning against Schroeder's piano and tells him she would never forget Pat Boone's birthday.]]
 
@@ -1728,7 +1730,7 @@
 
 1964-10-29 [[character::Charlie Brown+Linus]] [[category::Self Reference+Great Pumpkin]] [[mentioned::Great Pumpkin]] [[description::Charlie Brown watches Linus work on his pumpkin patch, Linus commenting that the Great Pumpkin only rises out of the most sincere pumpkin patch. Linus asks Charlie Brown if his patch looks sincere, which he says it does before turning to the reader with a strained expression, saying that it at least didn't look insincere.]]
 
-1955-05-07 [[character::Charlie Brown+Lucy.]] [[description::Charlie Brown is reading a book explaining to Lucy that the world is not actually shrinking in size but it seems to be getting smaller in terms of the advancement and improvement in transportation and communication. As it turned out Lucy was not listening and made a comment about how small Charlie Brown's nose was.]]
+1955-05-07 [[character::Charlie Brown+Lucy]] [[description::Charlie Brown is reading a book explaining to Lucy that the world is not actually shrinking in size but it seems to be getting smaller in terms of the advancement and improvement in transportation and communication. As it turned out Lucy was not listening and made a comment about how small Charlie Brown's nose was.]]
 
 1954-09-14 [[character::Charlie Brown+Violet]] [[category::parties+coconut]] [[description::Violet knows Charlie Brown doesn't like coconut, so she is going to have lots of coconut options at her party to upset him and make him not go.]]
 
@@ -1784,7 +1786,7 @@
 
 1960-03-23 [[character::Linus+Charlie Brown]] [[category::Linus and his blanket+Grandma Van Pelt]] [[description::Linus tries to outwit his grandma from hiding his blanket by turning it into an oversized ribbon.]]
 
-1964-01-01 [[character::Charlie Brown+Snoopy (in thought)]] [[wikipedia::Van Gogh]] [[category::Weather+Snoopy's Antics]] [[description::Charlie Brown is on his hands and knees inspecting Snoopy's dog house after a storm. He says the TV still works and everything seems fine, and that Snoopy's Van Gogh painting went untouched! Snoopy smiles happily at this.]]
+1964-01-01 [[character::Charlie Brown+Snoopy]] [[wikipedia::Van Gogh]] [[category::Weather+Snoopy's Antics]] [[description::Charlie Brown is on his hands and knees inspecting Snoopy's dog house after a storm. He says the TV still works and everything seems fine, and that Snoopy's Van Gogh painting went untouched! Snoopy smiles happily at this.]]
 
 1955-03-04 [[notes::Continued from March 1st, 2nd, and 3rd.]] [[character::Lucy+Violet Gray+Charlie Brown]] [[description::Lucy and Violet Gray wonder whether Charlie Brown is really from space, and conclude that he must be because no earth creature has a head that round.]]
 
@@ -1794,7 +1796,7 @@
 
 1958-11-01 [[character::Charlie Brown+Lucy]] [[category::Irony]] [[description::Lucy stomps on a bug despite her motto being ""live and let live,"" as she thinks the bug wasn't really living.]]
 
-1959-07-04 [[notes::Charlie Brown refers to the grown-up world that is never pictured and makes a comment implying that a ten dollar haircut was something unheard of nearly fifty years ago.]] [[character::Charlie Brown]] [[category::bedtime+family+father]] [[mentioned::Charlie Brown's parents and sister Sally]] [[description::Charlie Brown expresses amazement at the wonder of the progression of life --- that his father can buy a barber shop, get married, and have children. He imagines what his father is going to have to do to support all the change and sees the new sign in the shop advertising ten dollar haircuts.]]
+1959-07-04 [[notes::Charlie Brown refers to the grown-up world that is never pictured and makes a comment implying that a ten dollar haircut was something unheard of nearly fifty years ago.]] [[character::Charlie Brown]] [[category::bedtime+family+father]] [[mentioned::Charlie Brown's parents+Sally]] [[description::Charlie Brown expresses amazement at the wonder of the progression of life --- that his father can buy a barber shop, get married, and have children. He imagines what his father is going to have to do to support all the change and sees the new sign in the shop advertising ten dollar haircuts.]]
 
 1954-03-11 [[notes::Refers to the March 9th comic]] [[character::Snoopy+Charlie Brown]] [[category::dog+pet+headache]] [[description::Snoopy sees Charlie Brown walking towards him and says he doesn't want to be patted on the head. Charlie Brown pats Snoopy's head only to have Snoopy collapse to the ground which makes Charlie Brown think he killed Snoopy.]]
 
@@ -1810,7 +1812,7 @@
 
 1955-07-18 [[character::Charlie Brown+Lucy+Linus]] [[category::Puzzle]] [[description::Linus puts a puzzle together that stands up vertically.]]
 
-1963-02-02 [[character::Snoopy+None]] [[description::Snoopy observes 2 birds coming together next to his doghouse. He comments that the birds parents don't approve of their being together]]
+1963-02-02 [[character::Snoopy]] [[description::Snoopy observes 2 birds coming together next to his doghouse. He comments that the birds parents don't approve of their being together]]
 
 1954-02-21 [[character::Lucy+Charlie Brown]] [[category::night+counting stars+frustration+determination]] [[description::Lucy is still counting stars, and Charlie Brown offers to help her. He asks if she's counted a particular star, and Lucy has trouble figuring out which one he's pointing to. After going back and forth awhile, Lucy finally spots it and then asks Charlie Brown, ""What about it?""]]
 
@@ -1854,7 +1856,7 @@
 
 1962-09-07 [[character::Sally+Charlie Brown]] [[category::School]] [[description::Sally enjoys kindergarten so much that she harbors the opinion that parents should force their kids to go to kindergarten if the child shows reluctance.]]
 
-1955-05-18 [[character::Charlie Brown.]] [[category::Baseball.]] [[description::Charlie Brown is telling himself the importance of a centerfielder, then shouted to let him play infield at least for awhile.]]
+1955-05-18 [[character::Charlie Brown]] [[category::Baseball.]] [[description::Charlie Brown is telling himself the importance of a centerfielder, then shouted to let him play infield at least for awhile.]]
 
 1964-10-06 [[character::Lucy+Linus]] [[description::Lucy gives Linus a form to sign and says she'll take it to the principal, at which point he will officially be in the race for school president. Linus commenting that he hopes he won't be expected to do something about teacher salaries right away.]]
 
@@ -1862,13 +1864,13 @@
 
 1955-01-31 [[character::Linus+Charlotte Braun]] [[category::Charlotte Braun talks too loudly]] [[description::Linus hides under his blanket when Charlotte talks to him in a loud voice.]]
 
-1955-05-22 [[character::Charlie Brown.]] [[category::Baseball.]] [[description::Charlie Brown is telling the others to let the hitter hit the ball because he is there to catch it then as soon as the ball got hit, he went after it, jumped over a pit, went through a brick wall, went under a fence, pass through an alley and a grove then he caught the ball and it fell to the ground, again.]]
+1955-05-22 [[character::Charlie Brown]] [[category::Baseball.]] [[description::Charlie Brown is telling the others to let the hitter hit the ball because he is there to catch it then as soon as the ball got hit, he went after it, jumped over a pit, went through a brick wall, went under a fence, pass through an alley and a grove then he caught the ball and it fell to the ground, again.]]
 
 1964-09-25 [[character::Charlie Brown+Linus+Snoopy+Patty]] [[description::Snoopy refuses to look at the mural. He says that for his kind the story leaves much to be desired]]
 
 1954-04-22 [[character::Charlie Brown+Shermy+Patty+Snoopy]] [[category::Speechless+rain]] [[description::Charlie Brown, Shermy, and Patty are sitting under an umbrella which is revealed to be held by Snoopy.]]
 
-1963-02-21 [[character::None+Snoopy]] [[description::Snoopy is sitting in the rain and wonders how pathetic he looks. Comments that rich ladies sometimes took in poor looking strays but not often.]]
+1963-02-21 [[character::Snoopy]] [[description::Snoopy is sitting in the rain and wonders how pathetic he looks. Comments that rich ladies sometimes took in poor looking strays but not often.]]
 
 1964-10-07 [[character::Linus+Lucy+Schroeder]] [[description::Linus and Lucy sit in the auditorium, Schroeder getting up to deliver a nomination speech for Linus, only to segue into Beethoven, much to Lucy's grief.]]
 
@@ -1906,7 +1908,7 @@
 
 1954-12-22 [[character::Lucy+Charlie Brown+Linus]] [[category::toddler+brother/sister+balloons]] [[description::Charlie Brown tells Lucy about Linus making square balloons, and she confronts him saying they will have to move out of the neighborhood.]]
 
-1955-05-25 [[character::Lucy.]] [[category::Roller skates.]] [[description::Lucy, all bruised up and mad dragging her roller skates, she then kicked the roller skates into the closet and screamed at it to rot.]]
+1955-05-25 [[character::Lucy]] [[category::Roller skates.]] [[description::Lucy, all bruised up and mad dragging her roller skates, she then kicked the roller skates into the closet and screamed at it to rot.]]
 
 1964-03-31 [[character::Charlie Brown+Lucy]] [[category::Baseball]] [[description::Charlie Brown tells Lucy that the situation calls for a bunt, but the other team knows they know the situation, and they know that the other team knows that they know. Lucy is confused by his explaination.]]
 
@@ -1942,7 +1944,7 @@
 
 1954-09-25 [[character::Linus+Lucy+Patty]] [[category::television+speechless]] [[description::Linus is watching television when Lucy joins him, followed by Patty. He decides to sit under the television.]]
 
-1964-09-07 [[character::Snoopy+unknown bird]] [[category::Speechless]] [[description::The bird with the "!" sign comes back. Snoopy tells the joke, "I think you have a point there." The bird doesn't think it is funny.]]
+1964-09-07 [[character::Snoopy+unknown birds]] [[category::Speechless]] [[description::The bird with the "!" sign comes back. Snoopy tells the joke, "I think you have a point there." The bird doesn't think it is funny.]]
 
 1964-03-06 [[notes::Little leaguer's elbow is a term that has been used for injuries of the elbow in young athletes due to the overuse of undeveloped muscles. Young pitchers are commonly affected.]] [[character::Charlie Brown+Lucy]] [[category::Baseball]] [[description::Charlie Brown tells Lucy he has Little Leaguer's Elbow. Lucy couldn't believe a ""lousy player"" like him could get injured.]]
 
@@ -1964,7 +1966,7 @@
 
 1959-09-26 [[character::Snoopy]] [[category::leaves]] [[description::Snoopy is glad there's one lead that has refused to fall. While he's watching, this last leaf falls.]]
 
-1963-02-20 [[character::Shroeder+Lucy+None]] [[descriptions::Shroeder is playing piano and Lucy continues to comment about Rachel Carson frustrating him. Lucy states she needs her heroines.]] [[category::Shroeder plays piano]]
+1963-02-20 [[character::Shroeder+Lucy]] [[description::Shroeder is playing piano and Lucy continues to comment about Rachel Carson frustrating him. Lucy states she needs her heroines.]] [[category::Shroeder plays piano]]
 
 1960-01-29 [[notes::wasn't sure about category, as it also pertains to the class project.]] [[character::Linus]] [[category::religion]] [[mentioned::Ms. Othmar (Linus's teacher)]] [[description::Linus's bedtime prayer.]]
 
@@ -1984,11 +1986,11 @@
 
 1958-11-12 [[character::Violet+Charlie Brown]] [[category::Birthday]] [[mentioned::Aunt Marian+Violet's aunt]] [[description::Violet sends her aunt a birthday card.]]
 
-1959-09-20 [[character::Violet+Lucy+Charlie Brown+Linus]] [[category::insults]] [[description::Charlie Brown and Linus commentate on a insult fight between Violet and Lucy.]]
+1959-09-20 [[character::Violet+Lucy+Charlie Brown+Linus]] [[category::insults]] [[description::Charlie Brown and Linus commentate on a insult fight between Violet and Lucy]]
 
 1962-03-02 [[notes::Continuation of previous strip]] [[character::Charlie Brown+Snoopy]] [[description::Charlie Brown is reading the newspaper, and notes that it says it is ok to give your dog 'little snacks between meals'. Once he is eating, Snoopy comments that you can get a lot out of sympathetic press!]]
 
-1955-05-12 [[character::Charlie Brown+Violet.]] [[description::Violet and Charlie Brown are talking about something which Violet is not so sure if it's true, Charlie Brown thinks it must be true since it is in the newspaper.]]
+1955-05-12 [[character::Charlie Brown+Violet]] [[description::Violet and Charlie Brown are talking about something which Violet is not so sure if it's true, Charlie Brown thinks it must be true since it is in the newspaper.]]
 
 1958-09-08 [[character::Lucy+Linus]] [[category::What-if scenario]] [[description::Linus decides to save half of his candy bar for the next day, and Lucy scares him into thinking that he might never get a chance to eat it if the world comes to an end the next day.]]
 
@@ -1998,13 +2000,13 @@
 
 1958-12-07 [[character::Charlie Brown+Linus]] [[category::Star-catching]] [[description::Linus wait for a star to fall down his pail, and Charlie Brown tells him stars a too big to fit in a pail.]]
 
-1964-04-07 [[character::Snoopy+Sally+Shermy+Schroeder+Lucy+Patty+Violet+Pigpen+Frieda+555 95472+twins 3 and 4+Charlie Brown]] [[category::Going to the vet]] [[description::Snoopy clings to a tree so he wouldn't have to receive rabies shots, while the rest of the Peanuts characters try to wrest him from the tree.]]
+1964-04-07 [[character::Snoopy+Sally+Shermy+Schroeder+Lucy+Patty+Violet+Pigpen+Frieda+555 95472+3+4+Charlie Brown]] [[category::Going to the vet]] [[description::Snoopy clings to a tree so he wouldn't have to receive rabies shots, while the rest of the Peanuts characters try to wrest him from the tree.]]
 
 1963-06-18 [[character::Sally+Lucy]] [[description::Lucy is teaching Sally how to skip. She starts with the simple instruction to place the rope behind her, which Sally does. She then explains the mechanics of skipping, complete with actions. Sally looks incredulous and turns to Lucy saying, 'You're kidding!']]
 
 1960-01-02 [[character::Snoopy]] [[category::New Year's]] [[description::Snoopy thinks about how he has changed over the last year.]]
 
-1963-02-08 [[character::Charlie Brown+Sally+None]] [[description::Charlie Brown plays finger game with Church, steeple and people. Sally comments there aren't many people]]
+1963-02-08 [[character::Charlie Brown+Sally]] [[description::Charlie Brown plays finger game with Church, steeple and people. Sally comments there aren't many people]]
 
 1959-07-17 [[character::Charlie Brown+Snoopy+Linus]] [[category::cats]] [[description::Snoopy is stretched out along the top of his doghouse when Charlie Brown walks by telling Linus that cats always land on their feet. We see a slinky-like spiral rolling off the roof of the doghouse then a very surprised Snoopy who has landed with a "wump" on all fours. Snoopy, leaning against a rock resting his bruised paws, says that the more he hears about cats, the less he likes them.]]
 
@@ -2020,11 +2022,11 @@
 
 1960-03-21 [[character::Linus+Charlie Brown]] [[category::Thumbsucking+Grandma Van Pelt]] [[description::Linus enumerates dentists and grandmothers as two classes of people violently opposed to thumbsucking.]]
 
-1955-05-04 [[notes::I'm not sure if it's really Pig-Pen who's wearing the catcher's mask.]] [[character::Lucy+Linus.+Charlie Brown+Pig-Pen.]] [[description::The boys are playing baseball and Charlie Brown is running to base, Linus shouting encouragement for him to slide on the base. Then Lucy came running screaming for Charlie Brown not to do it because of it is wearing the earth off.]]
+1955-05-04 [[notes::I'm not sure if it's really Pig-Pen who's wearing the catcher's mask.]] [[character::Lucy+Linus.+Charlie Brown+Pig-Pen]] [[description::The boys are playing baseball and Charlie Brown is running to base, Linus shouting encouragement for him to slide on the base. Then Lucy came running screaming for Charlie Brown not to do it because of it is wearing the earth off.]]
 
 1964-03-03 [[character::Charlie Brown+Schroeder]] [[category::Baseball]] [[description::Schroeder asks Charlie Brown about the pain in his arm. When Charlie Brown tells him he'd rather have his arm fall off than be called a quitter, Schroder replies that's the way Beethoven always used to feel. Charlie Brown wonders how Beethoven's name always crops up in conversations.]]
 
-1954-11-09 [[notes::More Lucy and astronomy]] [[character::Lucy+Charlie Brown]] [[wikipedia::The Sun]] [[category::astronomy+Sun+counting]] [[description::Lucy is counting suns, of which she is up to 12. Charlie Brown tells her there is only 1 Sun.]]
+1954-11-09 [[notes::More Lucy and astronomy]] [[character::Lucy+Charlie Brown]] [[wikipedia::Sun]] [[category::astronomy+Sun+counting]] [[description::Lucy is counting suns, of which she is up to 12. Charlie Brown tells her there is only 1 Sun.]]
 
 1964-04-22 [[character::Linus+Lucy]] [[category::New Math]] [[description::Linus tries to solve a ""new math"" problem, but is unable to do so with an ""old math"" mind.]]
 
@@ -2058,7 +2060,7 @@
 
 1954-04-20 [[character::Linus]] [[category::Speechless+dinner+toddler]] [[description::Linus happily knocks off his dinner from his table.]]
 
-1955-05-27 [[character::Charlie Brown+Lucy+Snoopy.]] [[category::Speechless+roller skates.]] [[description::Lucy is learning how to roller skate while Charlie Brown is watching from afar. She smiled because she did not fall and she is very slow, as soon as she passed Charlie Brown, Snoopy whizzed by really fast on a skate.]]
+1955-05-27 [[character::Charlie Brown+Lucy+Snoopy]] [[category::Speechless+roller skates.]] [[description::Lucy is learning how to roller skate while Charlie Brown is watching from afar. She smiled because she did not fall and she is very slow, as soon as she passed Charlie Brown, Snoopy whizzed by really fast on a skate.]]
 
 1954-07-20 [[character::Pig-Pen+Patty]] [[category::Dirty+friends]] [[description::Patty tells Pig-Pen that he is dirty and that he must go out of his way to get dirty. He says he doesn't go out of his way to stay clean.]]
 
@@ -2124,7 +2126,7 @@
 
 1958-09-17 [[character::Charlie Brown+Linus]] [[category::Linus and his blanket]] [[description::Linus considers having his blanket made over into a sport coat once he's too old to drag it around.]]
 
-1963-02-25 [[character::Lucy+None]] [[description::Lucy has to be hounded by her mother in order to write a thank you note to her grandmother]]
+1963-02-25 [[character::Lucy+Lucy's Mother]] [[description::Lucy has to be hounded by her mother in order to write a thank you note to her grandmother]]
 
 1964-12-04 [[character::Lucy+Snoopy]] [[category::Football]] [[description::Snoopy takes football and drop kicks it out of the panel. He looks smug and pleased with himself. Lucy observes the entire process and is humiliated.]]
 
@@ -2142,7 +2144,7 @@
 
 1959-07-26 [[notes::This is a twelve-panel Sunday comic.]] [[character::Snoopy+Linus+Charlie Brown]] [[category::blanket stealing+security blanket]] [[description::We see Snoopy crawling stealthily through the bushes. He hides behind a tree. He attacks. We see his target is Linus's security blanket, which he succeeds in getting hold of, spinning Linus like a top as he makes off with it. Linus chases him back to his doghouse and we see the doghouse shake and then roll away down a hill, finally smashing against a tree. Charlie Brown races to find out what has happened and sees a rather shaken Linus riding a rather shaken Snoopy. Linus is carrying the security blanket attached to a stick like a white sheet of surrender.]]
 
-1964-02-23 [[character::Snoopy (in thought)+Charlie Brown+Patty]] [[category::Snoopy's Antics]] [[description::Snoopy wakes up and comments on how it was chilly the previous night. He jumps down from his dog house and notices something about his water dish. He carries his water dish over to where Charlie Brown and Patty are talking and proceeds to ice skate on it, as it has frozen.]]
+1964-02-23 [[character::Snoopy+Charlie Brown+Patty]] [[category::Snoopy's Antics]] [[description::Snoopy wakes up and comments on how it was chilly the previous night. He jumps down from his dog house and notices something about his water dish. He carries his water dish over to where Charlie Brown and Patty are talking and proceeds to ice skate on it, as it has frozen.]]
 
 1959-09-02 [[character::Charlie Brown]] [[category::baseball]] [[description::Charlie Brown is determined to be the hero for once as opposed to the goat. He swings at strike one.]]
 
@@ -2156,7 +2158,7 @@
 
 1954-02-03 [[character::Linus]] [[category::speechless+hiccups+klunk+falling]] [[description::Linus is sitting on the floor. He hiccups and falls backward. He hiccups again and returns to the seated position.]]
 
-1955-05-09 [[character::Snoopy.+Linus.]] [[description::Snoopy saw Linus eating animal crackers and it made him shudder because he was smiling while eating the animal crackers.]]
+1955-05-09 [[character::Snoopy.+Linus]] [[description::Snoopy saw Linus eating animal crackers and it made him shudder because he was smiling while eating the animal crackers.]]
 
 1953-04-29 [[character::Violet+Charlie Brown]] [[mentioned::Patty+Schroeder+Lucy+Shermy]] [[description::Violet asks Charlie Brown to go to the show as a "last resort". Charlie Brown notes that he's worse than "second fiddle"-- he's not even part of te orchestra.]]
 
@@ -2198,11 +2200,11 @@
 
 1954-11-30 [[character::Charlotte Braun+Charlie Brown]] [[category::new friends+introductions]] [[description::Charlie Brown meets a new girl named Charlotte Braun.]]
 
-1958-12-11 [[http:://en.wikipedia.org/wiki/Wild_West_Days Rustler's Roundup is a title from ""Wild West Days+"" a movie series of Westerns.]] [[notes::A rustler is an energetic person, while roundup refers to the herding together of cattle, horses, etc., for inspection, branding, or shipping.]] [[character::Charlie Brown+Shermy]] [[wikipedia::]] [[category::Irony]] [[description::Charlie Brown announces that he'll stop watching Westerns on TV, and plans to read ""Rustler's Roundup"" instead.]]
+1958-12-11 [[notes::A rustler is an energetic person, while roundup refers to the herding together of cattle, horses, etc., for inspection, branding, or shipping.]] [[character::Charlie Brown+Shermy]] [[wikipedia::]] [[category::Irony]] [[description::Charlie Brown announces that he'll stop watching Westerns on TV, and plans to read [[wp::Rustler's Roundup]] instead.]]
 
 1959-05-12 [[character::Snoopy]] [[description::Snoopy shows us his collection of dishes (water, supper, dessert, snack), including his favorite: a 26" pizza dish.]]
 
-1963-02-07 [[character::Lucy+Linus+None]] [[description::Linus images him as a champion cattle rancher. Lucy makes fun of him and suggests he would be holding his blanket and sucking his thumb.]]
+1963-02-07 [[character::Lucy+Linus]] [[description::Linus images him as a champion cattle rancher. Lucy makes fun of him and suggests he would be holding his blanket and sucking his thumb.]]
 
 1954-11-16 [[character::Lucy+Charlie Brown]] [[category::astronomy+American history]] [[description::Lucy counts 48 suns, to which Charlie Brown says there are 48 states. She believe she has found some connection and scientific truth.]]
 
@@ -2226,11 +2228,11 @@
 
 1955-01-17 [[character::Charlie Brown+Charlotte Braun]] [[category::Charlotte Braun talking too loudly]] [[description::Charlotte Braun drives Charlie Brown nuts by talking too loudly.]]
 
-1958-12-16 [[http:://en.wikipedia.org/wiki/Johann_Sebastian_B ach]] [[character::Lucy+Schroeder]] [[wikipedia::The ""Johann"" Lucy refers to is Johann Sebastian Bach.]] [[category::Beethoven's birthday]] [[description::Lucy mistakenly sings a birthday song to ""Johann"" instead of to Beethoven.]]
+1958-12-16 [[character::Lucy+Schroeder]] [[wikipedia::Johann Sebastian Bach.]] [[category::Beethoven's birthday]] [[description::Lucy mistakenly sings a birthday song to "Johann" instead of to Beethoven.]]
 
 1955-07-27 [[character::Charlie Brown+Lucy]] [[category::Lucy's mood]] [[description::Lucy tells Charlie Brown she would be very happy if he went away. He leaves thinking how nice it is to bring happiness to someones life.]]
 
-1958-11-05 [[http:://en.wikipedia.org/wiki/Irving_Berlin Irving Berlin was a Jewish American composer and lyricist+and one of the most prolific American songwriters in history.]] [[character::Lucy+Schroeder]] [[wikipedia::]] [[category::Schroeder playing the piano]] [[description::Lucy whispers to Schroeder ""Hooray for Irving Berlin, much to his consternation.]]
+1958-11-05 [[character::Lucy+Schroeder]] [[wikipedia::Irving Berlin]] [[category::Schroeder playing the piano]] [[description::Lucy whispers to Schroeder ""Hooray for Irving Berlin, much to his consternation.]]
 
 1959-09-15 [[character::Linus+Charlie Brown]] [[category::kite]] [[description::Charlie Brown is trying to fly a kite. Linus asks him if he ever has any trouble getting the kite down once he gets it in the air. After the kite plummets straight down, Charlie Brown says he never worries about that problem.]]
 
@@ -2288,7 +2290,7 @@
 
 1954-09-05 [[notes::12 panel Sunday strip]] [[character::Violet+Patty+Lucy]] [[category::friends+angry]] [[description::Violet and Patty decide that they aren't going to play Lucy's way anymore.]]
 
-1955-01-05 [[character::charlie Brown+Lucy]] [[category::Snowflakes]] [[description::Lucy counts snowflakes.]]
+1955-01-05 [[character::Charlie Brown+Lucy]] [[category::Snowflakes]] [[description::Lucy counts snowflakes.]]
 
 1964-02-09 [[character::Linus+Lucy]] [[category::First Aid]] [[description::Linus is building with his Lincoln Logs when he gets a splinter in his finger. He shouts out in pain. Lucy comes over and offers to get the tweezers. Linus is really scared and tries to resist, but Lucy does her good sisterly duty and gets it out. When she's done, Linus questions why he didn't receive a bullet to bite on during his "surgery".]]
 
@@ -2298,7 +2300,7 @@
 
 1962-05-16 [[character::Snoopy]] [[category::Sprinklers]] [[description::Snoopy plays in the sprinklers.]]
 
-1955-05-06 [[character::Lucy.]] [[description::Lucy is still worried about the earth shrinking or being worn off to a basketball size and decided that it is due to billions of people walking on the ground causing erosion.]]
+1955-05-06 [[character::Lucy]] [[description::Lucy is still worried about the earth shrinking or being worn off to a basketball size and decided that it is due to billions of people walking on the ground causing erosion.]]
 
 1959-06-12 [[notes::]] [[character::Lucy+Linus+Charlie Brown]] [[category::mathematics+babies+brother/sister+family+jealousy]] [[mentioned::Sally]] [[description::Violet tells Charlie Brown that having a baby sister is not so wonderful now that he has to share his parents' affection. She puts percentages on how much of their affection he is going to lose and Linus comments that Charlie Brown probably didn't realize that family life was subject to mathematical definition.]]
 
@@ -2316,7 +2318,7 @@
 
 1964-03-07 [[character::Charlie Brown]] [[category::Baseball]] [[description::Charlie Brown complains of being always humiliated. He thinks it's unfair that if an big-league player gets injured, he has a guy called ""Doc"" who would rush onto the field to help him, while he has to see a pediatrician for his injuries.]]
 
-1964-02-26 [[character::Snoopy (in thought)]] [[category::Weather+Snoopy's Antics]] [[description::The water from rain keeps rising, and Snoopy finds himself stuck on top of his dog house. He fretfully asks where his help is. He ponders making a swim for it, but doesn't wish to offend any potential rescuers, such as the Humane Society.]]
+1964-02-26 [[character::Snoopy]] [[category::Weather+Snoopy's Antics]] [[description::The water from rain keeps rising, and Snoopy finds himself stuck on top of his dog house. He fretfully asks where his help is. He ponders making a swim for it, but doesn't wish to offend any potential rescuers, such as the Humane Society.]]
 
 1964-09-29 [[character::Snoopy]] [[category::Speechless]] [[description::A leaf is falling from a tree. Snoopy notes that it was pushed]]
 
@@ -2372,7 +2374,7 @@
 
 1954-03-18 [[notes::Continues the theme of Linus building random things]] [[character::Linus]] [[category::building+toddler+rain]] [[description::Linus is outside when it begins to rain outside. He builds himself a shelter.]]
 
-1955-05-19 [[character::Charlie Brown+Lucy.]] [[description::Lucy was telling Charlie Brown the foolishness of four-leaf clover which she found and did not do her any good. Charlie Brown asked her how long she saved it to which Lucy responded she did not know that it was to be saved, she ate it.]]
+1955-05-19 [[character::Charlie Brown+Lucy]] [[description::Lucy was telling Charlie Brown the foolishness of four-leaf clover which she found and did not do her any good. Charlie Brown asked her how long she saved it to which Lucy responded she did not know that it was to be saved, she ate it.]]
 
 1954-10-27 [[character::Violet+Charlie Brown]] [[wikipedia::Halloween]] [[category::Halloween+mask]] [[description::Charlie Brown wears his Halloween mask backwards because he doesn't want to see the frightened faces it will bring.]]
 
@@ -2388,13 +2390,13 @@
 
 1958-09-21 [[character::Lucy+Charlie Brown]] [[category::Football Gag]] [[description::Lucy volunteers to hold the football for Charlie Brown and promises not to pull it away. Charlie Brown believes her and Lucy fools him again.]]
 
-1964-04-08 [[character::charlie Brown+Snoopy]] [[category::Going to the vet]] [[description::Snoopy's arm hurts from the rabies shot, and Charlie Brown tells him they both had arm injuries, so he thinks they're a couple of sore-arm buddies.]]
+1964-04-08 [[character::Charlie Brown+Snoopy]] [[category::Going to the vet]] [[description::Snoopy's arm hurts from the rabies shot, and Charlie Brown tells him they both had arm injuries, so he thinks they're a couple of sore-arm buddies.]]
 
 1954-01-07 [[character::Charlie Brown+Patty]] [[category::snowman+winter]] [[description::Patty and Charlie Brown build a snowman, and Patty threatens to take her half home. Charlie calls her bluff, and ends up with half of a snowman.]]
 
 1959-08-16 [[character::Charlie Brown+Lucy+Linus]] [[category::brother/sister]] [[description::Lucy is consoling Charlie Brown about feeling bad about yelling at his sister. She mentions she felt the same way when Linus was a baby. Linus walks by reading her comic book and she yells at him. Lucy notes that she got over her feelings of guilt.]] [[mentioned::Sally]]
 
-1955-05-28 [[character::Charlie Brown+Violet.]] [[description::Violet and Charlie Brown are playing diner. Charlie Brown asked about a mud pie sandwich and Violet then said 'with or without'. Then this confused Charlie Brown and asked if she meant 'with or without onions', Violet answered crab grass not onions.]]
+1955-05-28 [[character::Charlie Brown+Violet]] [[description::Violet and Charlie Brown are playing diner. Charlie Brown asked about a mud pie sandwich and Violet then said 'with or without'. Then this confused Charlie Brown and asked if she meant 'with or without onions', Violet answered crab grass not onions.]]
 
 1964-02-21 [[character::Lucy+Charlie Brown]] [[category::School]] [[description::Lucy informs Charlie Brown that the following day is George Washington's birthday, and that she's required to write an essay on him for school. After some time spent writing, she asks Charlie Brown how to spell Gettysburg.]]
 
@@ -2408,7 +2410,7 @@
 
 1954-06-15 [[character::Snoopy]] [[category::Speechless+rain+dog+doghouse]] [[description::Snoopy is stuck in his doghouse because it's pouring rain. When it stops, he walks outside, but has to jet back in to avoid the rain that begins again.]]
 
-1963-02-05 [[character::Charlie Brown+Linus+None]] [[description::Charlie Brown asks Linus how he intends to get in Cattle Ranching business. Linus suggests as a member of 4H he would get the cows he needed. Charlie Brown realizes he has a lot to learn.]]
+1963-02-05 [[character::Charlie Brown+Linus]] [[description::Charlie Brown asks Linus how he intends to get in Cattle Ranching business. Linus suggests as a member of 4H he would get the cows he needed. Charlie Brown realizes he has a lot to learn.]]
 
 1955-01-08 [[character::Charlie Brown+Patty]] [[category::Snowman]] [[description::Charlie Brown feels obligated to make a snowman whenever it snows.]]
 
@@ -2432,7 +2434,7 @@
 
 1958-12-04 [[character::Linus+Lucy]] [[category::Snow]] [[description::Lucy tells Linus to tell the snow to stop, and he wonders if he should address the snowflakes individually.]]
 
-1955-05-17 [[character::Charlie Brown+Lucy.]] [[description::Lucy asked Charlie Brown if he can take a friendly criticism to which Charlie Brown responded that it is fine and a friendly criticism is always helpful. Lucy then blurted out that Charlie Brown is kind of stupid.]]
+1955-05-17 [[character::Charlie Brown+Lucy]] [[description::Lucy asked Charlie Brown if he can take a friendly criticism to which Charlie Brown responded that it is fine and a friendly criticism is always helpful. Lucy then blurted out that Charlie Brown is kind of stupid.]]
 
 1954-03-29 [[notes::Continues Linus building items theme]] [[character::Linus+Snoopy]] [[category::Speechless+Building]] [[description::Linus builds a brick wall for Snoopy to jump over.]]
 
@@ -2474,7 +2476,7 @@
 
 1955-03-02 [[notes::Continuation from the day before.]] [[character::Lucy+Peppermint Patty+Charlie Brown]] [[category::Space]] [[description::Charlie Brown is wearing a space helmet and Lucy and Peppermint Patty fog up the glass.]]
 
-1955-05-11 [[character::Linus+Charlie Brown+Snoopy.]] [[category::Speechless.]] [[description::Linus and Charlie Brown are playing marbles. Snoopy, who was sitting behind Linus suddenly went after the marble Linus threw in the circle, then Snoopy is suddenly shown running away with the marbles being thrown at him.]]
+1955-05-11 [[character::Linus+Charlie Brown+Snoopy]] [[category::Speechless.]] [[description::Linus and Charlie Brown are playing marbles. Snoopy, who was sitting behind Linus suddenly went after the marble Linus threw in the circle, then Snoopy is suddenly shown running away with the marbles being thrown at him.]]
 
 1957-12-06 [[character::Charlie Brown+Lucy+Snoopy]] [[category::Good Grief+sleeping]] [[description::Charlie Brown is lying on the ground, Snoopy walks up and rests his head on Charlie's head, then Lucy comes up and rests against Snoopy.]]
 
