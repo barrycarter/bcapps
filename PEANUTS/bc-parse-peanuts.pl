@@ -39,18 +39,24 @@ for $i (glob "peanuts-???-????.txt") {
     if ($h=~/date/i) {$date = $v; next;}
 
     # convert header to form I use (probably bad to do this here)
-    if ($h=~/comments?/i || $h=~/note/i) {$h = "notes";}
+    if ($h=~/comments?|note|discussion/i) {$h = "notes";}
     if ($h=~/speaking/i) {$h = "character";}
-    
+    # typos
+    if ($h=~/descripton/i) {$h = "description";}
 
     # otherwise, associate data with date
 #    debug("$h -> $v");
-    $data{$date}{$h} = $v;
+
+    if ($data{$date}{$h}) {
+      $data{$date}{$h} .= "+$v";
+    } else {
+      $data{$date}{$h} = $v;
+    }
   }
 }
 
 # now, put into format for wiki
-open(A,">$bclib{githome}/METAWIKI/PEANUTS/peanuts-pp.txt");
+open(A,">$bclib{githome}/METAWIKI/PEANUTS/PEANUTS-pp.txt");
 
 for $i (keys %data) {
 
