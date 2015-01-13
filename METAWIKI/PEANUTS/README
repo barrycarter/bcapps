@@ -1,0 +1,18 @@
+An attempt to create a Peanuts wiki using the metawiki format.
+
+TODO: gocomics has two sets of repeat Peanuts strips:
+
+http://www.gocomics.com/peanuts/ which has all original strips +
+colorized versions of many
+
+and
+
+http://www.gocomics.com/peanuts-begins/ which started on 5 Jan 2015,
+and prints ONLY colorized versions of the older strips
+
+Currently, I'm using /peanuts/ for the strips through the end of 2014
+(including colorized strips) and /peanuts-begins/ starting 5 Jan 2015,
+with no strips at all for the first 4 days of 2015.
+
+I need to rectify this and use both series for colorized strips.
+

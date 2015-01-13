@@ -10,11 +10,10 @@ for $i (glob "peanuts-???-????.txt") {
   # read file
   $all = read_file($i);
 
-  # split by double newline
-  for $j (split(/\n\n/, $all)) {
+  my(@colons) = split(/^([A-Z][a-z]{1,10}:)/m, $all);
 
-    # and each line by colon
-    $j=~/^([^:]*?):([^:]*)$/||warn("BAD LINE: $i/$j");
+  for $j (@colons) {
+    debug("J: $j");
   }
 
   next;

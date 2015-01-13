@@ -23410,3 +23410,11 @@
 2014-12-29 http://assets.amuniversal.com/58a72d705e530132b306005056a9545d
 2014-12-30 http://assets.amuniversal.com/59d3b9c05e530132b306005056a9545d
 2014-12-31 http://assets.amuniversal.com/5afbb9305e530132b306005056a9545d
+2015-01-05 http://assets.amuniversal.com/bdd99da0690e0132b6ab005056a9545d
+2015-01-06 http://assets.amuniversal.com/bf619d10690e0132b6ab005056a9545d
+2015-01-07 http://assets.amuniversal.com/c0e220f0690e0132b6ab005056a9545d
+2015-01-08 http://assets.amuniversal.com/c27ba490690e0132b6ab005056a9545d
+2015-01-09 http://assets.amuniversal.com/c411b7c0690e0132b6ab005056a9545d
+2015-01-10 http://assets.amuniversal.com/c5b97a90690e0132b6ab005056a9545d
+2015-01-12 http://assets.amuniversal.com/c7abb490690e0132b6ab005056a9545d
+2015-01-13 http://assets.amuniversal.com/c93d4d40690e0132b6ab005056a9545d

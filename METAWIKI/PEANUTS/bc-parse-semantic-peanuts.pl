@@ -230,6 +230,7 @@ for $i (sort keys %triples) {
 #    next;
 #  }
 
+  debug("OPENING: $pagedir/NEW/$i.mw");
   open(A,">$pagedir/NEW/$i.mw");
   print A "{{$class\n|title=$i\n";
 
@@ -259,14 +260,24 @@ print B "COMMIT;\n";
 close(B);
 
 # this is ugly, but prevents deletion of rsync'd files
-system("rsync -Pavz /home/barrycarter/BCGIT/METAWIKI/*.mw /usr/local/etc/metawiki/$comicname/NEW/");
+system("rsync -Pavz /home/barrycarter/BCGIT/METAWIKI/$comicname/*.mw /usr/local/etc/metawiki/$comicname/NEW/");
 
-my(@diffs) = `diff -qr $pagedir $pagedir/NEW`;
+debug("$pagedir vs $pagedir/NEW");
+
+# do not recurse, unnecessary and breaks things
+my(@diffs) = `diff -q $pagedir $pagedir/NEW`;
 my(@cmds);
 
 for $i (@diffs) {
   chomp($i);
-  my($cmd);
+
+  # TODO: this is an ugly way to avoid messing up OLD and NEW
+  unless ($i=~/\.mw/) {
+    warn("Ignoring: $i");
+    next;
+  }
+
+  debug("DIFF: $i");
 
   # only in NEW? (then yes, do copy)
   if ($i=~m%Only in $pagedir/NEW: (.*)$%) {
@@ -280,6 +291,8 @@ for $i (@diffs) {
     die "BAD DIFF OUTPUT: $i";
   }
 }
+
+debug("CMDS",@cmds);
 
 for $i (@cmds) {system($i);}
 
