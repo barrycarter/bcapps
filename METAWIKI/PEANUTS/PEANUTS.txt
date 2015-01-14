@@ -9,6 +9,18 @@
 1950-10-10 [[description::In this [[category::No dialogue|silent]] cartoon, [[character::Snoopy]] falls when an annoyed [[character::Charlie Brown]] dislikes the fact that Snoopy is resting on his head. After a brief "KLUNK", however, he happily rests on the chair where Charlie Brown had been sitting]] [[notes::Snoopy has not yet been named]] [[notes::This strip suggests Snoopy is Charlie Brown's dog or at least lives with or spends time with Charlie Brown, something that does not appear to be true later on]]
 1950-10-11 [[description::[[character::Shermy]] is impressed that [[character::Patty]] has jumped rope ten million times, not realizing that she has been counting by millions]] [[notes::We still haven't learned Shermy's and Patty's names]]
 1950-10-12 [[description::[[character::Snoopy]] unhappily pulls [[character::Shermy]] in a cart. When [[character::Patty]] comes along, Shermy ends up pulling Snoopy and Patty in a cart.]] [[notes::None of the three characters in this strip have yet been named]] [[category::No dialogue]]
+1964-01-23-1964-01-25,1964-01-27-1964-12-01,1964-02-03-1964-02-08 [[storyline::[[character::Lucy]] shows [[character::Charlie Brown]] his faults]] [[category::Lucy as psychiatrist]]
+1964-02-24-1964-02-29 [[storyline::Heavy rainstorm]]
+1964-07-10,1964-05-18,1964-05-04,1964-03-02-1964-03-07,1964-03-09-1964-03-14,1964-03-16-1964-03-17,1964-03-19,1964-03-24,1964-03-26,1964-04-08,1964-07-13-1964-07-18,1964-07-20 [[storyline::[[character::Charlie Brown]]'s "Little Leaguer's Elbow" baseball injury]]
+1964-04-07-1964-04-11 [[storyline::[[character::Snoopy]]'s rabies shot]]
+1964-04-13-1964-04-18 [[storyline::[[character::Linus]]' security blanket is [[character::Lucy]]'s Science Fair project]] [[category::Linus' blanket]]
+1964-05-05-1964-05-09 [[storyline::[[character::Charlie Brown]]'s eraserophagia]] [[notes::eraserophagia is not an actual medical condition]]
+1964-06-20 [[description::[[character::Linus]] pats and hugs [[character::Snoopy]], and then parodies the phrase "happiness is a warm puppy"]] [[category::self-reference]]
+1964-06-22-1964-06-27,1964-06-29-1964-06-30 [[storyline::The gang cleans [[character::Snoopy]]'s doghouse]]
+1964-07-02 [[category::queen snakes]]
+
+
+
 </data>
 
 NOTES:
