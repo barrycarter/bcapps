@@ -23,7 +23,12 @@ while (<>) {
   # this assumes filenames are split by single spaces = bad?
   my($file) = join(" ",@data[10..$#data]);
 
-  if ($globopts{justfiles}) {print "$file\n"; next;}
+  if ($globopts{justfiles}) {
+    # if just printing, remove backslashes
+    $file=~s/\\//g;
+    print "$file\n";
+    next;
+  }
 
   # find all ancestor directories
   do {$size{$file} += $size;} while ($file=~s/\/([^\/]*?)$//);
