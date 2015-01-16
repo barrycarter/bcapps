@@ -34,5 +34,5 @@ while (<>) {
   do {$size{$file} += $size;} while ($file=~s/\/([^\/]*?)$//);
 }
 
-for $i (sort {$size{$b} <=> $size{$a}} keys %size) {print "$i $size{$i}\n";}
+for $i (sort {$size{$b} <=> $size{$a}} keys %size) {print "$size{$i} $i\n";}
 
