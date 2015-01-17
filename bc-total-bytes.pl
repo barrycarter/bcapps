@@ -41,9 +41,14 @@ while (<>) {
 
   debug("$file $hash{size}");
 
+  # to save memory, print file size directly and don't hash it
+  print "$hash{size} $file\n";
+  
+
   # find all ancestor directories
-  do {$size{$file} += $hash{size};} while ($file=~s/\/([^\/]*?)$//);
+  while ($file=~s/\/([^\/]*?)$//) {$size{$file} += $hash{size}}
 }
 
-for $i (sort {$size{$b} <=> $size{$a}} keys %size) {print "$size{$i} $i\n";}
+for $i (keys %size) {print "$size{$i} $i\n";}
+
 
