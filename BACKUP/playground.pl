@@ -23,32 +23,35 @@ open(B,">$dir/statlist$chunk.txt")||die("Can't open, $!");
 
 while (<>) {
 
-  # below directly from bc-total-bytes.pl
+  # safe copy of line for statlist
+  my($line) = $_;
+
+  # below no longer from bc-total-bytes.pl, must fix that
   my(%hash) = ();
-  my(@data) = split(/\s+/, $_);
 
-  for $i (@format) {$hash{$i} = shift(@data);}
-
-  # rest of data is file type and file name (ignoring symlinks)
-  for $i (@data) {
-    if ($i=~/^\`(.*?)\'$/) {$hash{filename} = $1; last;}
-    # this catenates filetype into a single word
-    $hash{type}.=$i;
+  for $i (@format) {
+    s/\s*(\d+)\s*//;
+    $hash{$i} = $1;
   }
+
+  # type and name (ignoring symlink targets for now)
+  s/\s*(.*?)\s*\`/\`/;
+  $hash{type} = $1;
+  # TODO: does this fail on files with embedded apostrophes?
+  s/\`(.*?)\'\s*//;
+  $hash{filename} = $1;
+
+  if ($thunk && !($thunk=~/\->\s/)) {warn("BAD THUNK: $_");}
 
   # dont backup directories (but empty files and links are fine)
   if ($hash{type}=~/directory/) {next;}
-
-  debug("LINE: $_", "HASH",%hash);
-
-  debug("TYPE: $hash{type}");
 
   $tot+= $hash{size};
 
   # NOTE: to avoid problems w/ filesizes > $limit, we add to chunk
   # first and THEN check for overage
   print A "$hash{filename}\n";
-  print B $_;
+  print B $line;
 
   # if we've gone over limit, move on to next chunk
   if ($tot>$limit) {
@@ -60,3 +63,7 @@ while (<>) {
     open(B,">$dir/statlist$chunk.txt")||die("Can't open, $!");
   }
 }
+
+# To actually use (example):
+# sudo tar --bzip -cvf tarfile1.tbz --files-from=filelist1.txt >&! output1.txt&
+# and check output1.txt for "tar:" errors
