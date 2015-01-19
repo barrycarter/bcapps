@@ -56,6 +56,7 @@ while (<>) {
   # if we've gone over limit, move on to next chunk
   if ($tot>$limit) {
     $chunk++;
+    debug("STARTING CHUNK: $chunk");
     $tot=0;
     close(A);
     close(B);
@@ -66,4 +67,5 @@ while (<>) {
 
 # To actually use (example):
 # sudo tar --bzip -cvf tarfile1.tbz --files-from=filelist1.txt >&! output1.txt&
+# with pipe to gpg --encrypt if desired
 # and check output1.txt for "tar:" errors

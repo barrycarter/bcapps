@@ -20,18 +20,31 @@ my(@format) = ("size", "mtime", "ctime", "devno", "inode");
 
 while (<>) {
 
+  # this is ugly: convert true apos to ^A
+  s/\\\'/\x01/g;
+
+  debug("THUNK: $_");
+
   my(%hash) = ();
-  my(@data) = split(/\s+/, $_);
 
-  for $i (@format) {$hash{$i} = shift(@data);}
-
-  # rest of data is file type and file name (ignoring symlinks)
-  for $i (@data) {
-    if ($i=~/^\`(.*?)\'$/) {$hash{filename} = $1; last;}
-    # this catenates filetype into a single word
-    $hash{type}.=$i;
+  for $i (@format) {
+    s/\s*(\d+)\s*//;
+    $hash{$i} = $1;
   }
 
+  # type and name (ignoring symlink targets for now)
+  s/\s*(.*?)\s*\`/\`/;
+  $hash{type} = $1;
+  # TODO: does this fail on files with embedded apostrophes?
+  s/\`(.*?)\'\s*//;
+  $hash{filename} = $1;
+
+  if ($thunk && !($thunk=~/\->\s/)) {warn("BAD THUNK: $_");}
+
+  debug("FN: $hash{filename}");
+
+  # convert true apos back
+  $hash{filename}=~s/\x01/\'/g;
 
   if ($globopts{justfiles}) {print "$hash{filename}\n"; next;}
 
