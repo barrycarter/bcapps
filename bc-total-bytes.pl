@@ -20,11 +20,6 @@ my(@format) = ("size", "mtime", "ctime", "devno", "inode");
 
 while (<>) {
 
-  # this is ugly: convert true apos to ^A
-  s/\\\'/\x01/g;
-
-  debug("THUNK: $_");
-
   my(%hash) = ();
 
   for $i (@format) {
@@ -40,8 +35,6 @@ while (<>) {
   $hash{filename} = $1;
 
   if ($thunk && !($thunk=~/\->\s/)) {warn("BAD THUNK: $_");}
-
-  debug("FN: $hash{filename}");
 
   # convert true apos back
   $hash{filename}=~s/\x01/\'/g;
