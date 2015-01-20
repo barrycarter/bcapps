@@ -1,5 +1,20 @@
 (* simple astronomy to solve simple problems *)
 
+(* at north pole, north is up *)
+
+pos[theta_,dec_] = {-Cos[theta]*Cos[dec], -Sin[theta]*Cos[dec], Sin[dec]};
+
+pos2[theta_,dec_,lat_] = FullSimplify[
+rotationMatrix[y,lat-Pi/2].pos[theta,dec],Element[{theta,dec,lat},Reals]]
+
+el[theta_,dec_,lat_] = ArcSin[pos2[theta,dec,lat][[3]]]
+
+
+
+
+
+
+
 (* line of 60 deg declination if north is up *)
 
 test0705={Cos[theta]*Cos[57*Degree], Sin[theta]*Cos[57*Degree], Sin[57*Degree]}
@@ -13,8 +28,6 @@ test0713 = FullSimplify[ArcSin[test0706[[3]]], Element[theta,Reals]]
 
 test0934 = FullSimplify[ArcTan[test0706[[2]]/test0706[[1]]],
 Element[theta,Reals]]
-
-
 
 Plot[test0713/Degree,{theta,0,2*Pi}]
 
