@@ -11,6 +11,7 @@ require "/usr/local/lib/bclib.pl";
 my($dir,$server) = @ARGV;
 
 unless ($dir=~m%^\/%) {die "dir must be full path, not $dir";}
+unless ($server) {die "Usage: $0 directory server";}
 # strip trailing slashes
 $dir=~s%/+$%%g;
 # and chdir to it

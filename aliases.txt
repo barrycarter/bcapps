@@ -151,3 +151,9 @@ alias chatrecord "cd /home/barrycarter/TRANSCRIPTS/CHATAVENUE; sudo tcpflow 'net
 
 # easier for bc-doing.pl
 alias doing "bc-doing.pl \!*"
+
+# probably will never need this again, but using it a lot when
+# cleaning up directories
+
+# strip sha1 from output of sha1sum and return as null-separated list
+# for eg, xargs -0

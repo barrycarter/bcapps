@@ -1,8 +1,10 @@
 #!/bin/perl
 
 require "/usr/local/lib/bclib.pl";
+require "$bclib{home}/bc-private.pl";
 
-# --dir: the dir for this backup (required) to keep it separate from others
+# --dir=$dir: dir for this backup (required) to keep it separate from others
+# --stop=num: stop at this chunk
 
 # given an in-order list of files to backup as:
 # stat -c "%s %Y %Z %d %i %F %N")
@@ -10,17 +12,17 @@ require "/usr/local/lib/bclib.pl";
 # also record what files are backed up (w/ info above); in future, I can
 # fgrep -vf this list so I dont backup the same thing many times
 
-unless ($globopts{dir}) {die "Usage: $0 --dir=subdirectory";}
+unless ($globopts{dir}) {die "Usage: $0 --dir=subdirectory filename";}
+defaults("stop=9999999999");
 my(@format) = ("size", "mtime", "ctime", "devno", "inode");
 my($dir) = "/usr/local/etc/BACKUPS/$globopts{dir}";
-my($limit) = 5e+8;
-my($chunk) = 0;
-my($tot);
+dodie("chdir('$dir')");
 
-# store filelist for tar, statlist for future excludes
-# (could create one big statlist file but that could be ugly)
-open(A,">$dir/filelist$chunk.txt")||die("Can't open, $!");
-open(B,">$dir/statlist$chunk.txt")||die("Can't open, $!");
+if (glob("*")) {die "$dir already has files";}
+
+# setting $tot to $limit so first run inside loop increments chunk
+my($limit) = 5e+8;
+my($tot) = $limit;
 
 # the shell commands to run to tar, bzip, and encrypt the actual files
 open(C,">$dir/runme.sh");
@@ -28,6 +30,20 @@ open(C,">$dir/runme.sh");
 # for the first chunk
 
 while (<>) {
+
+  # if we've gone over limit (or first run), move on to next chunk
+  if ($tot>=$limit) {
+    $chunk++;
+    if ($chunk > $globopts{stop}) {last;}
+    debug("STARTING CHUNK: $chunk");
+    $tot=0;
+    close(A);
+    close(B);
+    open(A,">$dir/filelist$chunk.txt")||die("Can't open, $!");
+    open(B,">$dir/statlist$chunk.txt")||die("Can't open, $!");
+    # command to tar this newly created chunk
+    print C "(sudo tar --bzip -cvf - --files-from=filelist$chunk.txt | gpg -r $private{gpg}{user} --always-trust --encrypt -o gpgfile$chunk.gpg) 1> out$chunk.txt 2> err$chunk.txt\n";
+  }
 
   # safe copy of line for statlist
   my($line) = $_;
@@ -63,20 +79,8 @@ while (<>) {
   # first and THEN check for overage
   print A "$hash{filename}\n";
   print B $line;
-
-  # if we've gone over limit, move on to next chunk
-  if ($tot>$limit) {
-    $chunk++;
-    debug("STARTING CHUNK: $chunk");
-    $tot=0;
-    close(A);
-    close(B);
-    open(A,">$dir/filelist$chunk.txt")||die("Can't open, $!");
-    open(B,">$dir/statlist$chunk.txt")||die("Can't open, $!");
-  }
 }
 
-# To actually use (example):
-# sudo tar --bzip -cvf tarfile1.tbz --files-from=filelist1.txt >&! output1.txt&
-# with pipe to gpg --encrypt if desired
-# and check output1.txt for "tar:" errors
+close(A); close(B); close(C);
+
+# TODO: check out/err files for "tar:" errors when actually running;

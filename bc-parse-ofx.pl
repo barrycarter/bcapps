@@ -1,6 +1,7 @@
 #!/bin/perl
 
 # Parses arbitrary OFX and inserts results into database table
+# also works for QFX/Quicken files
 
 require "/usr/local/lib/bclib.pl";
 
