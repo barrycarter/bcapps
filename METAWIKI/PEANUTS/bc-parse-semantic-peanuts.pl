@@ -47,7 +47,11 @@ $all=~m%<data>(.*?)</data>%s;
 my($info) = $1;
 
 # add extra files
-$info = "$info\n".read_file("$comicname-cl.txt")."\n".read_file("$comicname-pp.txt");
+
+# turning off $comicname-pp.txt file for now, too ugly
+# $info = "$info\n".read_file("$comicname-cl.txt")."\n".read_file("$comicname-pp.txt");
+
+$info = "$info\n".read_file("$comicname-cl.txt")."\n";
 
 for $i (split(/\n/, $info)) {
   # below allows for multiple dates

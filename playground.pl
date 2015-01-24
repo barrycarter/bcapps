@@ -153,18 +153,6 @@ sub diffuwr {
 
 die "TESTING";
 
-@pages = mediawiki_list_pages("http://pbs3.referata.com/w/api.php");
-
-# these changes are just so I can compare disk files to mediawiki page names
-for $i (@pages) {
-  $i=~s/\xef\xbc\x83/&\#65283\;/g;
-  $i=~s/&\#039\;/&\#39\;/g;
-}
-
-print join("\n", @pages),"\n";
-
-die "TESTING";
-
 write_wiki_page("http://pebesw.referata.com/w/api.php", "Sandbox", "I am putting some sand in my sandbox", "dusty!", $private{referata}{user}, $private{referata}{pass});
 
 die "TESTING";

@@ -2216,7 +2216,7 @@ sub write_wiki_page {
 
   # now obtain token for page itself
   # TODO: requesting tokens 1-page-at-a-time is probably bad
-  my($out, $err, $res) = cache_command("curl -L -b $cookiefile -c $cookiefile '$wiki?action=query&prop=info&intoken=edit&titles=$page&format=xml'", "age=3600");
+  my($out, $err, $res) = cache_command2("curl -L -b $cookiefile -c $cookiefile '$wiki?action=query&prop=info&intoken=edit&titles=$page&format=xml'", "age=3600");
    debug("THIRD: $out");
   # hashify
   $out=~s/(\S+)=\"(.*?)\"/$hash{$1}=urlencode($2)/iseg;

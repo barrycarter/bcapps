@@ -9,6 +9,22 @@
 1950-10-10 [[description::In this [[category::No dialogue|silent]] cartoon, [[character::Snoopy]] falls when an annoyed [[character::Charlie Brown]] dislikes the fact that Snoopy is resting on his head. After a brief "KLUNK", however, he happily rests on the chair where Charlie Brown had been sitting]] [[notes::Snoopy has not yet been named]] [[notes::This strip suggests Snoopy is Charlie Brown's dog or at least lives with or spends time with Charlie Brown, something that does not appear to be true later on]]
 1950-10-11 [[description::[[character::Shermy]] is impressed that [[character::Patty]] has jumped rope ten million times, not realizing that she has been counting by millions]] [[notes::We still haven't learned Shermy's and Patty's names]]
 1950-10-12 [[description::[[character::Snoopy]] unhappily pulls [[character::Shermy]] in a cart. When [[character::Patty]] comes along, Shermy ends up pulling Snoopy and Patty in a cart.]] [[notes::None of the three characters in this strip have yet been named]] [[category::No dialogue]]
+1950-10-13 [[category::No dialogue]] [[description::[[character::Shermy]] is bothered by [[character::Snoopy]] looking at Shermy's dinner. Shermy outwits Snoopy by eating under the table]]
+1950-10-14 [[description::[[character::Shermy]] warns [[character::Patty]] that [[character::Snoopy]] is a mean dog who comes from a long line of killers. By the last panel, however, Snoopy has fallen asleep]]
+1950-10-16 [[description::[[character::Snoopy]] tries jumping through a hoop and fails, but garners a "nice try" from [[character::Charlie Brown]]]]
+1950-10-17 [[description::[[character::Charlie Brown]] assumes [[character::Patty]] is playing hopscotch, but she's actually hopping because she has a sore toe]]
+1950-10-18 [[category::No dialogue]] [[description::We see [[character::Shermy]] selling root beer, [[character::Charlie Brown]] selling flowers, and [[character::Patty]] selling lemonade. [[character::Snoopy]] joins the fun by selling bones]]
+1950-10-19 [[description::[[character::Patty]] tries to help a sad-looking [[character::Charlie Brown]], only to realize in the last panel that Charlie Brown is asleep]]
+1950-10-20 [[category::No dialogue]] [[description::[[character::Snoopy]] is startled by a jack-in-the-box, and then startles [[character::Shermy]] by hiding in the jack-in-the-box himself]]
+1950-10-21 [[description::[[character::Charlie Brown]] sells flowers (as he did on [[reference::1950-10-18]]). [[character::Shermy]] buys one, much to [[character::Patty]]'s delight, but Shermy ends up giving the flower to [[character::Snoopy]] (who also wore a flower on [[reference::1950-10-04]])]]
+1950-10-23 [[description::[[character::Patty]] claims checkers is a game of skill, until she loses to [[character::Shermy]], at which point she claims it's all luck]]
+1950-10-24 [[description::[[character::Shermy]] tells [[character::Charlie Brown]] that heat from the sun keeps us warm, but Charlie Brown notes that mittens help too]]
+1950-10-25 [[description::[[character::Patty]] is talking on the phone when [[character::Snoopy]] starts to listen, causing Patty to defer the phone call.]] [[notes::Snoopy might have gotten his name because he "snoops" on Patty's conversation]]
+1950-10-26 [[description::When [[character::Shermy]] asks if [[character:Patty]] is home, Patty pretends to be her own [[mention::Aunt Agnes]]. When Shermy threatens to visit that "pretty little girl in the next block", Patty reveals her identity, noting how jealous she is]]
+1950-10-27 [[description::[[character::Shermy]] tells [[character::Charlie Brown]] that the world is round "like a baseball", but Charlie Brown notes there are no stitches]]
+1950-10-28 [[description::[[character::Patty]] demands a bite of [[character::Shermy]]'s "ice cream", only to learn it's actually mashed potato.]]
+1950-10-30 [[description::[[character::Shermy+Patty]] bring [[character::Charlie Brown]] an empty platter, claiming they don't know his age or his birthday, and thus didn't bring candles or a cake.]] [[notes::Charlie Brown's birthday]] [[notes::Since Charlie Brown seems to think it's his birthday, his birthday may actually be October 30th]]
+1950-10-31 [[category::No dialogue]] [[description::Thinking [[character::Sherman]] is carry a bag of treats, [[character::Snoopy]] rushes to him, only to realize Shermy is playing marbles]] [[notes::In the last panel, Snoopy has a bandage on his head, indicating he perhaps injured himself chasing after Shermy]]
 1964-01-23-1964-01-25,1964-01-27-1964-12-01,1964-02-03-1964-02-08 [[storyline::[[character::Lucy]] shows [[character::Charlie Brown]] his faults]] [[category::Lucy as psychiatrist]]
 1964-02-24-1964-02-29 [[storyline::Heavy rainstorm]]
 1964-07-10,1964-05-18,1964-05-04,1964-03-02-1964-03-07,1964-03-09-1964-03-14,1964-03-16-1964-03-17,1964-03-19,1964-03-24,1964-03-26,1964-04-08,1964-07-13-1964-07-18,1964-07-20 [[storyline::[[character::Charlie Brown]]'s "Little Leaguer's Elbow" baseball injury]]
@@ -18,9 +34,6 @@
 1964-06-20 [[description::[[character::Linus]] pats and hugs [[character::Snoopy]], and then parodies the phrase "happiness is a warm puppy"]] [[category::self-reference]]
 1964-06-22-1964-06-27,1964-06-29-1964-06-30 [[storyline::The gang cleans [[character::Snoopy]]'s doghouse]]
 1964-07-02 [[category::queen snakes]]
-
-
-
 </data>
 
 NOTES:

@@ -2,6 +2,7 @@
 
 # the character:character relations (most common type)
 # the reverse terms are male/female/neuter
+
 aunt, nephew/niece/nibling, character, character
 uncle, nephew/niece/nibling, character, character
 boss, employee, character, character
@@ -41,6 +42,7 @@ ex-employee, ex-employer, character, character
 
 aka, , character, alias
 character, , strip, character
+mentioned, , strip, character
 deaths, , strip, character
 location, , *, location
 member, , *, group
