@@ -15,18 +15,29 @@ while ($all=~s%<article[^>]*?>(.*?)</article>%%is) {
   my($uno,$una) = ($1,$2);
 
   # time (TODO: decide if I want this GMT or local for person saving file)
-  $comment=~s/<time title="(.*?)"//;
+  $comment=~s/datetime="(.*?)"//;
   my($time) = $1;
 
   # and the comment itself
   $comment=~s%<div class="content">(.*?)</div>%%s;
   my($text) = $1;
 
-  debug("C: $comment");
+  # cleanups
+  $time=~s/\s*\+0000/UTC/;
+  $text=~s/\n/ /sg;
+  $text=~s/^\s*//;
+  $text=~s/\s*$//;
+  $text=~s/<p>/\n\n/g;
+  $text=~s%</p>%\n%g;
+  $text=~s%<br>%\n\n%g;
+  $text=~s%<blockquote>(.*?)</blockquote>%> $1%sg;
+  $text=~s/<.*?>//sg;
 
-#  debug("$1,$2");
-#  debug("C: $comment");
+  print << "MARK";
+**[http://fetlife.com/users/$uno][$una]** (*$time*)
+
+$text
+
+MARK
+;
 }
-
-# debug("ALL: $all");
-
