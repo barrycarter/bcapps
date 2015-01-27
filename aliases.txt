@@ -117,6 +117,9 @@ alias xephem "pushd .; cd /usr/local/xephem; \xephem & popd"
 # background)
 alias bcgit "pushd .; cd ~/BCGIT; git add .; git commit; git pull -v; git push  remotes master; popd"
 
+# running stuff from non-home-dir can do weird things, so..
+alias gnumeric "pushd .; cd ~; \gnumeric \!* & popd"
+
 # hex2dec often needed
 alias hex2dec "bc-call-func.pl hex \!*"
 
@@ -160,4 +163,4 @@ alias doing "bc-doing.pl \!*"
 alias sha1dir "find . -type f -print0 | xargs -0 sha1sum"
 
 # strip sha1s from stdin, and return in sorted order
-alias sha1sort "sed 's/ .*//' \!* | \sort | \uniq"
+alias sha1sort "(sed 's/ .*//' | \sort | \uniq)"
