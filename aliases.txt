@@ -164,3 +164,6 @@ alias sha1dir "find . -type f -print0 | xargs -0 sha1sum"
 
 # strip sha1s from stdin, and return in sorted order
 alias sha1sort "(sed 's/ .*//' | \sort | \uniq)"
+
+# to use my special magic file
+alias file "file -m /usr/share/magic:/home/barrycarter/BCGIT/bc-magic.dot \!*"
