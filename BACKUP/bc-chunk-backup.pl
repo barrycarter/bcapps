@@ -14,7 +14,14 @@ require "$bclib{home}/bc-private.pl";
 
 unless ($globopts{dir}) {die "Usage: $0 --dir=subdirectory filename";}
 defaults("stop=9999999999");
-my(@format) = ("size", "mtime", "ctime", "devno", "inode");
+
+my(@format);
+if ($globopts{altformat}) {
+  @format = ("size", "mtime", "ctime", "inode");
+} else {
+  @format = ("size", "mtime", "ctime", "devno", "inode");
+}
+
 my($dir) = "/usr/local/etc/BACKUPS/$globopts{dir}";
 dodie("chdir('$dir')");
 

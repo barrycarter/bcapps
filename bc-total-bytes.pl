@@ -3,6 +3,7 @@
 require "/usr/local/lib/bclib.pl";
 
 # --justfiles: just print out a list of files (ie, for tar --bzip --from-files)
+# --altformat: format that excludes device number (for external drives?)
 
 # TODO: generalize input format
 
@@ -16,7 +17,13 @@ require "/usr/local/lib/bclib.pl";
 my(%size);
 
 # list of fields, except %F and %N which can have spaces
-my(@format) = ("size", "mtime", "ctime", "devno", "inode");
+
+my(@format);
+if ($globopts{altformat}) {
+  @format = ("size", "mtime", "ctime", "inode");
+} else {
+  @format = ("size", "mtime", "ctime", "devno", "inode");
+}
 
 while (<>) {
 
