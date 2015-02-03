@@ -3,32 +3,25 @@
 require "/usr/local/lib/bclib.pl";
 require "$bclib{home}/bc-private.pl";
 
-# --dir=$dir: dir for this backup (required) to keep it separate from others
 # --stop=num: stop at this chunk
 
-# given an in-order list of files to backup as:
-# stat -c "%s %Y %Z %d %i %F %N")
-# break them into 500M chunks (not a magic number) for backing up
-# also record what files are backed up (w/ info above); in future, I can
-# fgrep -vf this list so I dont backup the same thing many times
+# see README for file format
 
-unless ($globopts{dir}) {die "Usage: $0 --dir=subdirectory filename";}
 defaults("stop=9999999999");
 
-my(@format);
-if ($globopts{altformat}) {
-  @format = ("size", "mtime", "ctime", "inode");
-} else {
-  @format = ("size", "mtime", "ctime", "devno", "inode");
-}
+# filetypes we ignore
+my(%ignore) = list2hash("directory", "fifo", "socket", 
+			"character special file", "block special file");
 
-my($dir) = "/usr/local/etc/BACKUPS/$globopts{dir}";
-dodie("chdir('$dir')");
+# types we accept
+my(%accept) = list2hash("regular empty file", "regular file", "symbolic link");
 
-if (glob("*")) {die "$dir already has files";}
+# TODO: maybe allow files to be created in alternate dir
+my($dir) = ".";
 
 # setting $tot to $limit so first run inside loop increments chunk
-my($limit) = 5e+8;
+# TODO: $limit should be an option
+my($limit) = 5e+9;
 my($tot) = $limit;
 
 # the shell commands to run to tar, bzip, and encrypt the actual files
@@ -48,6 +41,7 @@ while (<>) {
     close(B);
     open(A,">$dir/filelist$chunk.txt")||die("Can't open, $!");
     open(B,">$dir/statlist$chunk.txt")||die("Can't open, $!");
+    # TODO: replace below w zpaq (which requires hardlinks, non trivial)
     # command to tar this newly created chunk
     print C "(sudo tar --bzip -cvf - --files-from=filelist$chunk.txt | gpg -r $private{gpg}{user} --always-trust --encrypt -o gpgfile$chunk.gpg) 1> out$chunk.txt 2> err$chunk.txt\n";
   }
@@ -55,36 +49,28 @@ while (<>) {
   # safe copy of line for statlist
   my($line) = $_;
 
-  # this is ugly: convert true apos to ^A
-  s/\\\'/\x01/g;
+  # TODO: does this always get rid of symlink targets properly?
+  s/\' \-> \`(.*)\'/\'/;
 
-  my(%hash) = ();
+  # file name, type, and size
+  s/^(\d+)//;
+  my($size) = $1;
+  s/\'(.*?)\'//;
+  my($type) = $1;
+  # TODO: does this fail on some files?
+  s/\`(.*)\'\s*//;
+  my($filename) = $1;
+  debug("FNAME: $filename");
 
-  for $i (@format) {
-    s/\s*(\d+)\s*//;
-    $hash{$i} = $1;
-  }
+  # type we ignore or accept?
+  if ($ignore{$type}) {next;}
+  unless ($accept{$type}) {warn "IGNORING UNKNOWN TYPE: $type"; next;}
 
-  # type and name (ignoring symlink targets for now)
-  s/\s*(.*?)\s*\`/\`/;
-  $hash{type} = $1;
-  s/\`(.*?)\'\s*//;
-  $hash{filename} = $1;
-
-  if ($thunk && !($thunk=~/\->\s/)) {warn("BAD THUNK: $_");}
-
-  # convert true apos back
-  $hash{filename}=~s/\x01/\'/g;
-
-  # dont backup directories (but empty files and links are fine)
-  # TODO: add sockets and other weird types below, though they rarely come up
-  if ($hash{type}=~/directory/) {next;}
-
-  $tot+= $hash{size};
+  $tot+= $size;
 
   # NOTE: to avoid problems w/ filesizes > $limit, we add to chunk
   # first and THEN check for overage
-  print A "$hash{filename}\n";
+  print A "$filename\n";
   print B $line;
 }
 

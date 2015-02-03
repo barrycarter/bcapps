@@ -1,1 +1,14 @@
 Creating this dir for backup-related work
+
+I'm trying to standardize on the following format for file lists (from
+stat) for all backup programs:
+
+first field: file size (this is important for sorting)
+
+single quoted field: file type (eg, 'directory' or 'regular file')
+
+stat %N style quoted field: file name (eg, `filename')
+
+all other fields are currently ignored
+
+

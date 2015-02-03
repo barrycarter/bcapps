@@ -8,7 +8,7 @@
 require "/usr/local/lib/bclib.pl";
 
 # testing
-my($rootdir) = "/usr/local/etc/ZPAQ";
+my($rootdir) = "/usr/local/etc/ZPAQ/20150203/bcunix/";
 
 while (<>) {
   chomp;
@@ -17,15 +17,15 @@ while (<>) {
   /^(.*)\/(.*)$/;
   my($dir,$name) = ($1, $2);
 
-  unless ($dir && $name) {die("BAD DIR ($dir) OR NAME ($name)");}
+  unless ($name) {die("BAD NAME: $name");}
+
+  if (-f "$rootdir/$_") {next;}
 
   # create dir if it doesnt exist
   # TODO: ignore files w apostrophes or other weirdness, but warn about them
   unless (-d "$rootdir/$dir") {system("mkdir -p '$rootdir/$dir'");}
 
   # and symlink
-  system("ln $_ $rootdir/$_");
-
-#  debug("$dir vs $name");
+  # TODO: may fail on some files (even using list format)?
+  system("ln",$_,"$rootdir/$_");
 }
-
