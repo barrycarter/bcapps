@@ -9,10 +9,8 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# where to put the backups
+# where to put the backups including zpaq backups
 $etcdir="/usr/local/etc/quikbak";
-# testing with zpaq
-$zpaqdir="/usr/local/etc/zpaq";
 
 for $i (@ARGV) {
   ($target,$mod) = get_target($i);
@@ -22,7 +20,7 @@ for $i (@ARGV) {
 
   # for zpaq, just add regardless
   # TODO: move zpaq to a better location
-#  system("/root/build/ZPAQ/zpaq add $target $i");
+  system("/root/build/ZPAQ/zpaq add $target $i -quiet");
 
   # does target file exist? if not, copy from original and create
   # blank quikbak file
@@ -107,7 +105,6 @@ sub get_target {
 
   # create directory in backup area if not already there
   unless (-d "$etcdir/$aa") {system("/bin/mkdir", "-p" ,"$etcdir/$aa");}
-  unless (-d "$zpaqdir/$aa") {system("/bin/mkdir", "-p" ,"$zpaqdir/$aa");}
 
   # this is the target filename
   # return it and the timestamp of the original file
