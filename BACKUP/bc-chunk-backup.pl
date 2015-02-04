@@ -60,7 +60,6 @@ while (<>) {
   # TODO: does this fail on some files?
   s/\`(.*)\'\s*//;
   my($filename) = $1;
-  debug("FNAME: $filename");
 
   # type we ignore or accept?
   if ($ignore{$type}) {next;}

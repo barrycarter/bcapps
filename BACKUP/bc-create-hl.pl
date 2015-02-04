@@ -5,6 +5,9 @@
 # with zpaq (which can take a directory as an argument, but not a list
 # of files if the list is larger than what the shell can handle)
 
+# WARNING: hardlinking to certain files, eg crontab, can create all
+# sorts of problems
+
 require "/usr/local/lib/bclib.pl";
 
 # testing
