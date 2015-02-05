@@ -26,10 +26,10 @@ system("/usr/bin/renice 19 -p $$");
 
 debug("CALLING dump_ls()");
 dump_ls();
-debug("CALLING dump_other()");
-dump_other();
 debug("CALLING dump_remote()");
 dump_remote();
+debug("CALLING dump_other()");
+dump_other();
 
 # TODO: tar the whole thing up, and encrypt it
 
@@ -41,6 +41,10 @@ debug("ALL FINISHED, SIR");
 # subroutinizing this, since it takes forever (and so its nice to test
 # without running this each time)
 sub dump_ls {
+
+  # for bcmac now
+  system('ssh root\@bcmac "/mnt/sshfs/bcmac-dump.sh > /tmp/bcdump.out &"');
+
   # below just for reading purposes, cleaned up and run later
   my($bcpc_cmd) = << "MARK";
 cd /cygdrive/c/
