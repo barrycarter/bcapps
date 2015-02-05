@@ -1,14 +1,22 @@
 Creating this dir for backup-related work
 
-I'm trying to standardize on the following format for file lists (from
-stat) for all backup programs:
+Standard format for all file lists involving backups:
 
-first field: file size (this is important for sorting)
+TODO: allow additional fields provided they use prefixes or something
+TODO: preserving the inode number is probably useless and potentially bad?
 
-single quoted field: file type (eg, 'directory' or 'regular file')
+1st field: size in bytes
+2nd field: modify time in Unix seconds
+3rd field: inode number (decimal, -1 if unknown)
+4th field: raw mode (file type + user/group/other permissions)[1]
+5th field: group id (decimal, -1 if unknown)
+6th field: user id (decimal, -1 if unknown)
+remainder: filename (not quoted, since it runs to end of line)
 
-stat %N style quoted field: file name (eg, `filename')
+[1] see "man 2 stat" section "The following flags are defined for the
+st_mode field" for details
 
-all other fields are currently ignored
+(note that the option flags are different below, -c vs -f)
 
-
+On cygwin/Unix: stat -c "%s %Y %i %f %g %u %n"
+On MacOSX: stat -f "%z %m %i %p %g %u %N"
