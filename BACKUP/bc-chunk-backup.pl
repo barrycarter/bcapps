@@ -11,7 +11,7 @@ defaults("stop=1");
 
 # setting $tot to $limit so first run inside loop increments chunk
 # TODO: $limit should be an option
-my($limit) = 5e+9;
+my($limit) = 50e+9;
 my($tot) = $limit;
 
 while (<>) {
