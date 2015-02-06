@@ -7,29 +7,16 @@ require "$bclib{home}/bc-private.pl";
 
 # see README for file format
 
-defaults("stop=9999999999");
-
-# filetypes we ignore
-my(%ignore) = list2hash("directory", "fifo", "socket", 
-			"character special file", "block special file");
-
-# types we accept
-my(%accept) = list2hash("regular empty file", "regular file", "symbolic link");
-
-# TODO: maybe allow files to be created in alternate dir
-my($dir) = ".";
+defaults("stop=1");
 
 # setting $tot to $limit so first run inside loop increments chunk
 # TODO: $limit should be an option
 my($limit) = 5e+9;
 my($tot) = $limit;
 
-# the shell commands to run to tar, bzip, and encrypt the actual files
-open(C,">$dir/runme.sh");
-# TODO: this could probably be less redundant
-# for the first chunk
-
 while (<>) {
+  chomp;
+  my($orig) = $_;
 
   # if we've gone over limit (or first run), move on to next chunk
   if ($tot>=$limit) {
@@ -39,40 +26,35 @@ while (<>) {
     $tot=0;
     close(A);
     close(B);
-    open(A,">$dir/filelist$chunk.txt")||die("Can't open, $!");
-    open(B,">$dir/statlist$chunk.txt")||die("Can't open, $!");
+    open(A,">filelist$chunk.txt")||die("Can't open, $!");
+    open(B,">statlist$chunk.txt")||die("Can't open, $!");
     # TODO: replace below w zpaq (which requires hardlinks, non trivial)
-    # command to tar this newly created chunk
-    print C "(sudo tar --bzip -cvf - --files-from=filelist$chunk.txt | gpg -r $private{gpg}{user} --always-trust --encrypt -o gpgfile$chunk.gpg) 1> out$chunk.txt 2> err$chunk.txt\n";
   }
 
-  # safe copy of line for statlist
-  my($line) = $_;
+  my(%file);
 
-  # TODO: does this always get rid of symlink targets properly?
-  s/\' \-> \`(.*)\'/\'/;
+  for $i ("size", "mtime", "inode", "raw", "gid", "uid") {
+    s/^(.*?)\s+//;
+    $file{$i} = $1;
+  }
 
-  # file name, type, and size
-  s/^(\d+)//;
-  my($size) = $1;
-  s/\'(.*?)\'//;
-  my($type) = $1;
-  # TODO: does this fail on some files?
-  s/\`(.*)\'\s*//;
-  my($filename) = $1;
+  $file{name} = $_;
 
-  # type we ignore or accept?
-  if ($ignore{$type}) {next;}
-  unless ($accept{$type}) {warn "IGNORING UNKNOWN TYPE: $type"; next;}
+  # the hex and octal modes for regular files + symlinks
+  unless ($file{raw}=~/^[89ab]/ || $file{raw}=~/^1[02]/) {
+    # TODO: test that I'm not skipping I need
+    debug("SKIP: $_, $file{raw}");
+    next;
+  }
 
-  $tot+= $size;
+  $tot+= $file{size};
 
   # NOTE: to avoid problems w/ filesizes > $limit, we add to chunk
   # first and THEN check for overage
-  print A "$filename\n";
-  print B $line;
+  print A "$file{name}\n";
+  print B "$orig\n";
 }
 
-close(A); close(B); close(C);
+close(A); close(B);
 
-# TODO: check out/err files for "tar:" errors when actually running;
+# TODO: check zpaq errors
