@@ -11,7 +11,7 @@ bzip2 -v bcunix-files.txt
 mv bcunix-files.txt.bz2 bcunix-files.txt.old.bz2
 mv bcunix-files.txt.new bcunix-files.txt
 # TODO: this leaves bcunix-files-rev.txt briefly incomplete
-perl -nle 's%^.*?\/%/%; print $_' bcunix-files.txt|rev|sort>bcunix-files-rev.txt
+perl -nle 's%^.*?\/%/%; $x=reverse(); print $x' bcunix-files.txt|sort>bcunix-files-rev.txt
 # and now the extdrive
 cd /mnt/extdrive/
 date > extdrive-files.txt.new
@@ -21,4 +21,4 @@ bzip2 -v extdrive-files.txt
 mv extdrive-files.txt.bz2 extdrive-files.txt.old.bz2
 mv extdrive-files.txt.new extdrive-files.txt
 # TODO: this leaves extdrive-files-rev.txt briefly incomplete
-perl -nle 's%^.*?\/%/%; print $_' extdrive-files.txt|rev|sort>extdrive-files-rev.txt
+perl -nle 's%^.*?\/%/%; $x=reverse(); print $x' extdrive-files.txt|sort>extdrive-files-rev.txt

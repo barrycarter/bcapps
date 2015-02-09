@@ -20,6 +20,7 @@ for $i (@ARGV) {
 
   # for zpaq, just add regardless
   # TODO: move zpaq to a better location
+  # TODO: this broke things, removing temporarily
   system("/root/build/ZPAQ/zpaq add $target $i -quiet");
 
   # does target file exist? if not, copy from original and create

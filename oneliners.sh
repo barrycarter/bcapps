@@ -1,5 +1,10 @@
 # shell one liners
 
+# dump DST change dates in yyyymmdd format
+zdump -v MST7MDT | perl -nle 's/^.*\=\s+//; s/\sisdst.*$//; print "date \"+%Y%m%d DST\" -d \"$_\""'
+
+exit;
+
 # given output of "ls -l | sort -k7" (files in size order), running
 # total of file size to see how many files use up lots of space (in gigs)
 

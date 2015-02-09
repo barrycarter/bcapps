@@ -12,4 +12,6 @@ bzip2 -v bcpc-files.txt
 mv bcpc-files.txt.bz2 bcpc-files.txt.old.bz2
 mv bcpc-files.txt.new bcpc-files.txt
 # TODO: this leaves bcpc-files-rev.txt briefly incomplete
-perl -nle 's%^.*?\/%/%; print $_' bcpc-files.txt|rev|sort> bcpc-files-rev.txt
+# env change below required for consistent sorting
+# rev chokes on multibyte chars; the Perl oddness below works, but is weird
+perl -nle 's%^.*?\/%/%; $x=reverse(); print $x' bcpc-files.txt| env LC_ALL=C sort> bcpc-files-rev.txt.srt

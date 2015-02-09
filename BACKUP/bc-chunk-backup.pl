@@ -13,10 +13,12 @@ defaults("stop=1");
 # TODO: $limit should be an option
 my($limit) = 50e+9;
 my($tot) = $limit;
+my($count);
 
 while (<>) {
   chomp;
   my($orig) = $_;
+  $count++;
 
   # if we've gone over limit (or first run), move on to next chunk
   if ($tot>=$limit) {
@@ -43,7 +45,7 @@ while (<>) {
   # the hex and octal modes for regular files + symlinks
   unless ($file{raw}=~/^[89ab]/ || $file{raw}=~/^1[02]/) {
     # TODO: test that I'm not skipping I need
-    debug("SKIP: $_, $file{raw}");
+#    debug("SKIP: $_, $file{raw}");
     next;
   }
 
@@ -56,5 +58,7 @@ while (<>) {
 }
 
 close(A); close(B);
+
+debug("Used $count files to meet total");
 
 # TODO: check zpaq errors

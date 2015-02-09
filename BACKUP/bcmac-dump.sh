@@ -12,4 +12,4 @@ date >> /mnt/sshfs/bcmac-files.txt.new
 bzip2 -v /mnt/sshfs/bcmac-files.txt
 mv /mnt/sshfs/bcmac-files.txt.bz2 /mnt/sshfs/bcmac-files.txt.old.bz2
 mv /mnt/sshfs/bcmac-files.txt.new /mnt/sshfs/bcmac-files.txt
-perl -nle 's%^.*?\/%/%; print $_' /mnt/sshfs/bcmac-files.txt | rev | sort > /mnt/sshfs/bcmac-files-rev.txt
+perl -nle 's%^.*?\/%/%; print $_' /mnt/sshfs/bcmac-files.txt | rev | sort > /mnt/sshfs/bcmac-files-rev.txt.srt

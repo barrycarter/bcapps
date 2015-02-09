@@ -22,7 +22,7 @@ $phrase = reverse($phrase);
 
 for $i ("/mnt/sshfs/bcmac-files-rev.txt.srt", "/mnt/sshfs2/c/bcpc-files-rev.txt.srt", "/bcunix-files-rev.txt.srt") {
   # TODO: also search for $phrase.bz2 (reversed) and so on?
-  system("/home/barrycarter/BCGIT/bc-sgrep.pl --debug '$phrase' $i | rev");
+  system("/home/barrycarter/BCGIT/bc-sgrep.pl '$phrase' $i | rev");
 }
 
 
