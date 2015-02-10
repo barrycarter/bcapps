@@ -1,0 +1,50 @@
+# make file to help back things up using bc-chunk-backup.pl
+
+# only because these are the last targets (so everything else gets made too)
+all: big-by-file.txt big-by-dir.txt
+
+# because I tar from my main machine, filenames on bcmac's external
+# drive must be renamed to start with /mnt/sshfs; files on the main
+# drive must be renamed to start with /mnt/sshfs3, which is where I
+# mount them
+
+bcmac-converted.txt: /mnt/sshfs/bcmac-files.txt
+	perl -pnle 's%/Volumes/[A-Z]{5}/%/mnt/sshfs/% || s%/%/mnt/sshfs3/%' /mnt/sshfs/bcmac-files.txt > bcmac-converted.txt
+
+# similar for my PC (mounted on /mnt/sshfs2)
+bcpc-converted.txt: /mnt/sshfs2/c/bcpc-files.txt
+	perl -pnle 's%/cygdrive/%/mnt/sshfs2/%' /mnt/sshfs2/c/bcpc-files.txt > bcpc-converted.txt
+
+# combine the lists above with the local lists to create a list of all
+# files and all directories on all my quasi-local systems
+afad.txt: bcpc-converted.txt bcmac-converted.txt /bcunix-files.txt /mnt/extdrive/extdrive-files.txt
+	cat bcpc-converted.txt bcmac-converted.txt /bcunix-files.txt /mnt/extdrive/extdrive-files.txt > afad.txt
+
+# sorted version of afad.txt (by mtime, most recent first). I
+# intentionally don't combine the sort with the above step for
+# debugging purposes (for now)
+afad.txt.srt: afad.txt
+	sort -k2nr afad.txt > afad.txt.srt
+
+# TODO: THIS IS CHEATING
+
+# Because I tweak exclusions.txt so often, I only look at the 3M most
+# recent nonexcluded files; in theory, these might be less than 50G
+backfiles.srt: exclusions.txt afad.txt.srt
+	egrep -vf exclusions.txt afad.txt.srt|head -3000000> backfiles.srt
+
+# TODO: THIS ASSUMES ONLY ONE BACKUP FILE, WILL NOT WORK IF MULTI
+
+# --debug below to check that bc-chunk-backup.pl doesn't use all 3M
+# files (if it does, need to increase 3M above)
+# create filelist1 and statlist1 using bc-chunk-backup.pl
+filelist1.txt statlist1.txt: backfiles.srt
+	bc-chunk-backup.pl --debug < backfiles.srt
+
+# while testing exclusions, it's important to know what big files and
+# big directories I'm backing up (so I can potentially exclude them)
+
+big-by-dir.txt: statlist1.txt
+	bc-total-bytes.pl statlist1.txt | sort -nr > big-by-dir.txt
+big-by-file.txt: statlist1.txt
+	sort -k1nr statlist1.txt > big-by-file.txt

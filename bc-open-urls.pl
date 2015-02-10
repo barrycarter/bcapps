@@ -8,6 +8,10 @@ require "/usr/local/lib/bclib.pl";
 
 while (<>) {
   chomp;
+
+  # ignore comments
+  if (/^\#/) {next;}
+
   # TODO: make this path to firefox canonical
   my($out,$err,$res) = cache_command2("/root/build/firefox/firefox -remote 'openURL($_)'");
   # TODO: make sleep time an option

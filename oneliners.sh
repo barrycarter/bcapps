@@ -1,7 +1,9 @@
 # shell one liners
 
 # dump DST change dates in yyyymmdd format
-zdump -v MST7MDT | perl -nle 's/^.*\=\s+//; s/\sisdst.*$//; print "date \"+%Y%m%d DST\" -d \"$_\""'
+zdump -v MST7MDT | fgrep ' MST'| perl -nle 'use POSIX; use Date::Parse; print "LINE: $_"; s/MST7MDT\s+//;s/ \=.*$//; print strftime("%Y%m%d DST",localtime(str2time($_)))'
+
+# zdump -v MST7MDT | perl -nle 's/^.*\=\s+//; s/\sisdst.*$//; print "date \"+%Y%m%d DST\" -d \"$_\""'
 
 exit;
 
