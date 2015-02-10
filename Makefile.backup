@@ -1,5 +1,8 @@
 # make file to help back things up using bc-chunk-backup.pl
 
+# TODO: consider eliminating some of the intermediate files I use
+# below; however, they might actually be useful
+
 # only because these are the last targets (so everything else gets made too)
 all: big-by-file.txt big-by-dir.txt
 
@@ -31,7 +34,7 @@ afad.txt.srt: afad.txt
 # Because I tweak exclusions.txt so often, I only look at the 3M most
 # recent nonexcluded files; in theory, these might be less than 50G
 backfiles.srt: exclusions.txt afad.txt.srt
-	egrep -vf exclusions.txt afad.txt.srt|head -3000000> backfiles.srt
+	egrep -m 3000000 -vf exclusions.txt afad.txt.srt > backfiles.srt
 
 # TODO: THIS ASSUMES ONLY ONE BACKUP FILE, WILL NOT WORK IF MULTI
 
