@@ -18,7 +18,8 @@ my($count);
 while (<>) {
   chomp;
   my($orig) = $_;
-  $count++;
+
+  if (++$count%100000==0) {debug("COUNT: $count");}
 
   # if we've gone over limit (or first run), move on to next chunk
   if ($tot>=$limit) {

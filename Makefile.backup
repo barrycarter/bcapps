@@ -29,20 +29,10 @@ afad.txt: bcpc-converted.txt bcmac-converted.txt /bcunix-files.txt /mnt/extdrive
 afad.txt.srt: afad.txt
 	sort -k2nr afad.txt > afad.txt.srt
 
-# TODO: THIS IS CHEATING
-
-# Because I tweak exclusions.txt so often, I only look at the 3M most
-# recent nonexcluded files; in theory, these might be less than 50G
-backfiles.srt: exclusions.txt afad.txt.srt
-	egrep -m 3000000 -vf exclusions.txt afad.txt.srt > backfiles.srt
-
 # TODO: THIS ASSUMES ONLY ONE BACKUP FILE, WILL NOT WORK IF MULTI
 
-# --debug below to check that bc-chunk-backup.pl doesn't use all 3M
-# files (if it does, need to increase 3M above)
-# create filelist1 and statlist1 using bc-chunk-backup.pl
-filelist1.txt statlist1.txt: backfiles.srt
-	bc-chunk-backup.pl --debug < backfiles.srt
+filelist1.txt statlist1.txt: exclusions.txt afad.txt.srt
+	egrep -vf exclusions.txt afad.txt.srt | bc-chunk-backup.pl --debug
 
 # while testing exclusions, it's important to know what big files and
 # big directories I'm backing up (so I can potentially exclude them)

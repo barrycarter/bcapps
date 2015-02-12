@@ -169,4 +169,4 @@ alias sha1sort "(sed 's/ .*//' | \sort | \uniq)"
 alias file "file -m /usr/share/magic:/home/barrycarter/BCGIT/bc-magic.dot \!*"
 
 # really bad
-alias zpaq "/root/build/ZPAQ/zpaq \!*"
+alias zpaq "/root/build/ZPAQ71/zpaq \!*"
