@@ -170,3 +170,7 @@ alias file "file -m /usr/share/magic:/home/barrycarter/BCGIT/bc-magic.dot \!*"
 
 # really bad
 alias zpaq "/root/build/ZPAQ71/zpaq \!*"
+
+# run make in parallel
+alias make "make -j \!*"
+

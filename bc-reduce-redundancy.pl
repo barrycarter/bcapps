@@ -46,7 +46,7 @@ for $i (split(/\n/, $all)) {
 
   my($savings) = $oldspace-$newspace;
 
-#  debug($i,"S: $savings");
+  debug($i,"S: $savings");
 
   # temp!
   $totsavings += $savings;

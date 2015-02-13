@@ -15,10 +15,9 @@ Solve[p^(n+1)==1-p,n]
 
 f[p_] = Log[1-p]/Log[p] - 1
 
+Solve[((10^10-n)/10^10)^x==1/2,x,Reals]
 
-
-
-
+g[n_,p_] := NSolve[((10^10-n)/10^10)^x==p,x,Reals]
 
 
 

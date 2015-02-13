@@ -31,13 +31,13 @@ afad.txt.srt: afad.txt
 
 # TODO: THIS ASSUMES ONLY ONE BACKUP FILE, WILL NOT WORK IF MULTI
 
-filelist1.txt statlist1.txt: exclusions.txt afad.txt.srt
+filelist1.txt statlist1.txt: exclusions.txt afad.txt.srt /home/barrycarter/BCGIT/BACKUP/bc-chunk-backup.pl
 	egrep -vf exclusions.txt afad.txt.srt | bc-chunk-backup.pl --debug
 
 # while testing exclusions, it's important to know what big files and
 # big directories I'm backing up (so I can potentially exclude them)
 
-big-by-dir.txt: statlist1.txt
+big-by-dir.txt: statlist1.txt /home/barrycarter/BCGIT/bc-total-bytes.pl
 	bc-total-bytes.pl statlist1.txt | sort -nr > big-by-dir.txt
 big-by-file.txt: statlist1.txt
 	sort -k1nr statlist1.txt > big-by-file.txt
