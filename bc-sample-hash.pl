@@ -4,11 +4,20 @@
 # this program cheats by "randomly" (but consistently) sampling 10K of
 # each 1M of the file, and hashing the result
 
+# --srand: srand with this integer, not 20150213666
+
+# TODO: do a random-but-consistent seed for each group of files if we
+# won't be comparing one set of files to another
+
 require "/usr/local/lib/bclib.pl";
+
+defaults("srand=20150213666");
 
 for $i (@ARGV) {
   # this is important; must re-seed each time
-  srand(20150213666);
+  srand($globopts{srand});
+
+  unless (-f $i) {warn "SKIPPING: $i, no such file"; next;}
 
   # TODO: test for non-openability
   open(A,$i);
