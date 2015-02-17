@@ -132,8 +132,8 @@ push(@info, "Local/$hash{temp_f}F/$hash{wind_dir}$hash{wind_mph}G$hash{wind_gust
 
 @zones = ( "Pago Pago", "Pacific/Pago_Pago", "PT", "US/Pacific", "MT",
 "US/Mountain", "CT", "US/Central", "ET", "US/Eastern", "GMT", "GMT",
-"Lagos", "Africa/Lagos", "Cairo", "Africa/Cairo", "Delhi",
-"Asia/Kolkata", "HongKong", "Asia/Hong_Kong", "Manila" =>
+"Lagos", "Africa/Lagos", "Milan", "Europe/Rome", "Cairo", "Africa/Cairo",
+"Delhi", "Asia/Kolkata", "HongKong", "Asia/Hong_Kong", "Manila" =>
 "Asia/Manila", "Tokyo", "Asia/Tokyo", "Sydney" => "Australia/Sydney",
 "Samoa", "Pacific/Apia");
 

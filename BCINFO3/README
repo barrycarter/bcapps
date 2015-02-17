@@ -287,4 +287,6 @@ createuser -s root
 logout
 createdb root
 
+% 17 Feb 2015: turning off postgres at reboot but may change this
 
+chkconfig postgresql off
