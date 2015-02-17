@@ -18,26 +18,33 @@ my(%count,%files,$count,%canon);
 while (<>) {
   chomp;
 
-  # modification for sha1 (Unix form) below
-#  unless (/^MD5 \((.*)\) = ([0-9a-f]{32})$/) {warn("BAD LINE: $_"); next;}
-#  my($file, $md5) = ($1,$2);
+  # accepts Mac MD5 and Unix sha1 (but not vice versa for the moment)
 
-  unless (/^([0-9a-f]{40})\s+(.*)$/) {warn("BAD LINE: $_"); next;}
-  my($file, $md5) = ($2, $1);
+  my($file,$hash);
+
+  if (/^MD5 \((.*)\) = ([0-9a-f]{32})$/) {
+    ($file, $hash) = ($1,$2);
+  } elsif (/^([0-9a-f]{40})\s+(.*)$/) {
+    ($file, $hash) = ($2, $1);
+  } else {
+    warn("BAD LINE: $_");
+    next;
+  }
+
 
   # confirm file existence
   unless (-f $file) {debug("NO SUCH FILE: *$file*"); next;}
 
   # note it as a list of files for this hash, and number hash to
   # present in order
-  $files{$md5}{$file} = 1;
-  unless ($count{$md5}) {$count{$md5} = ++$count;}
+  $files{$hash}{$file} = 1;
+  unless ($count{$hash}) {$count{$hash} = ++$count;}
 
   # this is ugly
   for $i (@canon) {
     if (index($file,$i)>-1) {
       # note this hash has at least one canon file
-      $canon{$md5}{$file}=1;
+      $canon{$hash}{$file}=1;
       last;
     }
   }

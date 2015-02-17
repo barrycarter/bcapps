@@ -11,7 +11,7 @@ defaults("stop=1");
 
 # setting $tot to $limit so first run inside loop increments chunk
 # TODO: $limit should be an option
-my($limit) = 60e+9;
+my($limit) = 25e+9;
 my($tot) = $limit;
 my($count);
 
@@ -49,6 +49,9 @@ while (<>) {
 #    debug("SKIP: $_, $file{raw}");
     next;
   }
+
+  # TODO: this might slow things down excessively, even with caching
+  unless (-f $_ || -l $_) {warn "NO SUCH FILE: $_"; next;}
 
   $tot+= $file{size};
 

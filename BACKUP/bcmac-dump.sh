@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # to use this:
 # ssh root@bcmac "/mnt/sshfs/bcmac-dump.sh > /tmp/bcdump.out &"
 # runs on bcmac and creates file dump (what bc-weekly-backup.pl

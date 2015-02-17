@@ -33,7 +33,10 @@ while ($out=~s%http://(.*?)/users/(\d+)%%) {$siteid{$1} = $2;}
 # download activity per site (multiple pages possible)
 
 for $i (keys %siteid) {
-  my($out,$err,$res) = cache_command2("curl -L '$i/users/$siteid{$i}/?tab=activity'", "age=86400");
+  debug("I: $i");
+#  my($out,$err,$res) = cache_command2("curl -L '$i/users/$siteid{$i}/?tab=activity'", "age=86400");
+  # changed activity to activities, grumble
+  my($out,$err,$res) = cache_command2("curl -L '$i/users/$siteid{$i}/?tab=activities'", "age=86400");
 
   # number of pages (storing this in hash for later use?)
   my($baseurl);
