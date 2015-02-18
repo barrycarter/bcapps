@@ -69,12 +69,18 @@ if ($globopts{canononly}) {
 } else {
   for $i (sort {$count{$a} <=> $count{$b}} keys %count) {
     # if only one existing file for this hash, do nothing; else print
-    @keys = keys %{$files{$i}};
+    @keys = sort keys %{$files{$i}};
     if ($#keys==0) {next;}
 
+    # suggest removal of all but first
     print "FILES FOR $i:\n\n";
     # putting files in quotes makes it easier to delete them
     for $j (@keys) {print qq%"$j"\n%;}
-  print "\n"x3;
+    print "\n"x3;
+
+    for $j (@keys[1..$#keys]) {
+      # TODO: make this an option, don't always print
+      print "rm \"$j\"\n";
+    }
   }
 }

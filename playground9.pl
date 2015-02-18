@@ -5,22 +5,48 @@
 
 require "/usr/local/lib/bclib.pl";
 
-my($out,$err,$res) = cache_command2("curl -L 'https://astronomy.stackexchange.com/users/21/barrycarter?tab=reputation'", "age=86400");
 
-my(%urls);
+getStackRep("stackoverflow.com", 354134);
 
-# could do better filtering here
-while ($out=~s/data-load-url="(.*?)"//s) {$urls{$1}=1;}
+# oneoff for bc-suck-stack.pl so not perldoc'd
 
-# download data, but not post-specific data(?)
+# Given userid, site URL (like "astronomy.stackexchange.com"),
+# download user reputation and put in
+# /usr/local/etc/STACK/(sitename)/reputation (unless that file already
+# exists)
 
-for $i (sort keys %urls) {
-  unless ($i=~/post$/) {next;}
-  my($out,$err,$res) = cache_command2("curl -L 'https://astronomy.stackexchange.com/$i'", "age=86400");
+sub getStackRep {
+  my($site, $userid) = @_;
 
-  # tseting
-  debug("I: $i");
-  unless ($i=~/1420416000/) {next;}
+  # create destination directory unless it exists
+  my($dir) = "/usr/local/etc/STACK/$site/reputation";
+  unless (-d $dir) {system("mkdir -p $dir");}
+  chdir($dir);
 
-  debug("OUT($i): $out");
+  # base url
+  my($baseurl) = "https://$site/users/$userid";
+
+  # get main page (putting page=1 for better caching)
+  my($out,$err,$res) = cache_command2("curl -L '$baseurl?tab=reputation&page=1'", "age=86400");
+
+  # get highest page
+  my($page);
+  while ($out=~s/".*?page=(\d+)"//) {$page = max($1,$page);}
+
+  # go through pages, find URLs
+  for $i (1..$page) {
+    ($out,$err,$res) = cache_command2("curl -L '$baseurl?tab=reputation&page=$i'", "age=86400");
+    # and the urls on this page
+    while ($out=~s/data-load-url="(.*?post)"//s) {$urls{$1}=1;}
+  }
+
+  # download URLs
+  for $i (sort keys %urls) {
+    # timestamp
+    $i=~m%/(\d+)\?sort=post%;
+    my($fname) = $1;
+    if (-f $fname) {next;}
+    # no cache here, since only dl once
+    ($out,$err,$res) = cache_command2("curl -L -o $fname 'https://$site$i'");
+  }
 }
