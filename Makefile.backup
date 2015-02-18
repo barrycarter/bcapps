@@ -12,16 +12,27 @@ all: big-by-file.txt big-by-dir.txt
 # mount them
 
 bcmac-converted.txt: /mnt/sshfs/bcmac-files.txt
-	perl -pnle 's%/Volumes/[A-Z]{5}/%/mnt/sshfs/% || s%/%/mnt/sshfs3/%' /mnt/sshfs/bcmac-files.txt > bcmac-converted.txt
+	perl -pnle 's%/Volumes/[A-Z]{5}/%/mnt/sshfs/% || s%/%/mnt/sshfs3/%' /mnt/sshfs/bcmac-files.txt | bc-format2altformat.pl > bcmac-converted.txt
 
 # similar for my PC (mounted on /mnt/sshfs2)
+
 bcpc-converted.txt: /mnt/sshfs2/c/bcpc-files.txt
-	perl -pnle 's%/cygdrive/%/mnt/sshfs2/%' /mnt/sshfs2/c/bcpc-files.txt > bcpc-converted.txt
+	perl -pnle 's%/cygdrive/%/mnt/sshfs2/%' /mnt/sshfs2/c/bcpc-files.txt | bc-format2altformat.pl > bcpc-converted.txt
+
+# and unix
+bcunix-converted.txt: /bcunix-files.txt
+	bc-format2altformat.pl /bcunix-files.txt > bcunix-converted.txt
+
+# extdrive
+bcextdrive-converted.txt: /mnt/extdrive/extdrive-files.txt
+	bc-format2altformat.pl /mnt/extdrive/extdrive-files.txt > bcextdrive-converted.txt
 
 # combine the lists above with the local lists to create a list of all
 # files and all directories on all my quasi-local systems
-afad.txt: bcpc-converted.txt bcmac-converted.txt /bcunix-files.txt /mnt/extdrive/extdrive-files.txt
-	cat bcpc-converted.txt bcmac-converted.txt /bcunix-files.txt /mnt/extdrive/extdrive-files.txt > afad.txt
+
+# TODO: this sorting is to comm vs old backups, NOT numerical sorting (sigh)
+afad.txt: *-converted.txt
+	cat *-converted.txt | sort > afad.txt
 
 # sorted version of afad.txt (by mtime, most recent first). I
 # intentionally don't combine the sort with the above step for
