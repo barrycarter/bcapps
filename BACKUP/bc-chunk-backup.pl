@@ -12,6 +12,10 @@ defaults("stop=1");
 # setting $tot to $limit so first run inside loop increments chunk
 # TODO: $limit should be an option
 my($limit) = 25e+9;
+
+# TODO: TESTING (multiple backups) BELOW!
+$limit = 1e+9;
+
 my($tot) = $limit;
 my($count);
 
@@ -36,22 +40,32 @@ while (<>) {
 
   my(%file);
 
-  for $i ("size", "mtime", "inode", "raw", "gid", "uid") {
-    s/^(.*?)\s+//;
-    $file{$i} = $1;
-  }
+  # TODO: THIS BREAKS BACKUP FILE FORMAT!!!!
 
-  $file{name} = $_;
+#  for $i ("size", "mtime", "inode", "raw", "gid", "uid") {
+#    s/^(.*?)\s+//;
+#    $file{$i} = $1;
+#  }
+
+  ($file{mtime},$file{size},$file{name}) =  split(/\s+/, $_, 3);
 
   # the hex and octal modes for regular files + symlinks
-  unless ($file{raw}=~/^[89ab]/ || $file{raw}=~/^1[02]/) {
+#  unless ($file{raw}=~/^[89ab]/ || $file{raw}=~/^1[02]/) {
     # TODO: test that I'm not skipping I need
 #    debug("SKIP: $_, $file{raw}");
+#    next;
+#  }
+
+  # silently ignore directories, device files, etc
+  if (-d $file{name} || -c $file{name} || -b $file{name} || -S $file{name}) {
     next;
   }
 
   # TODO: this might slow things down excessively, even with caching
-  unless (-f $_ || -l $_) {warn "NO SUCH FILE: $_"; next;}
+  unless (-f $file{name} || -l $file{name}) {
+    warn "NO SUCH FILE: $file{name}";
+    next;
+  }
 
   $tot+= $file{size};
 
@@ -62,6 +76,9 @@ while (<>) {
 }
 
 close(A); close(B);
+
+# TODO: really unhappy about this, should be able to do this in program
+system ("sort statlist1.txt -o statlist1.txt");
 
 debug("Used $count files to meet total");
 

@@ -6,9 +6,6 @@
 require "/usr/local/lib/bclib.pl";
 
 while (<>) {
-  # TODO: doing these conversions here is bad (but easier)
-  s%/cygdrive/%/mnt/sshfs2/% || s%/Volumes/[A-Z]{5}/%/mnt/sshfs/% ||
-     s%/%/mnt/sshfs3/%;
 
   # $x = unwanted
   my($size,$mtime,$x,$x,$x,$x,$name) = split(/\s+/, $_, 7);

@@ -12,6 +12,8 @@ require "/usr/local/lib/bclib.pl";
 
 # NOTE: could've sworn I've written something very similar to this already
 
+# WARNING: BREAKING THIS COMPLETELY BECAUSE I NEED MTIME AS FIRST FIELD!!!
+
 my(%size,%count);
 
 while (<>) {
@@ -22,13 +24,7 @@ while (<>) {
 
   my(%file);
 
-  for $i ("size", "mtime", "inode", "raw", "gid", "uid") {
-    s/^(.*?)\s+//;
-    $file{$i} = $1;
-  }
-
-  $file{name} = $_;
-
+  ($file{mtime},$file{size},$file{name}) =  split(/\s+/, $_, 3);
 
   # TODO: filter out dirs/etc
   if ($globopts{justfiles}) {print "$filename\n"; next;}
