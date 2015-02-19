@@ -48,8 +48,3 @@ while (<A>) {
 
   debug("SIZE: $size, SHA: $sha, FILE: $file");
 }
-
-
-
-
-

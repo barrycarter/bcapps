@@ -8,7 +8,7 @@ require "/usr/local/lib/bclib.pl";
 while (<>) {
 
   # $x = unwanted
-  my($size,$mtime,$x,$x,$x,$x,$name) = split(/\s+/, $_, 7);
+  my($mtime,$size,$x,$x,$x,$x,$name) = split(/\s+/, $_, 7);
 
   # pad mtime to 10 characters so numerical sort == standard sort
   # (this is useful so I don't have to sort twice when using comm)

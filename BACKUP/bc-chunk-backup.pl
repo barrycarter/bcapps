@@ -40,21 +40,8 @@ while (<>) {
 
   my(%file);
 
-  # TODO: THIS BREAKS BACKUP FILE FORMAT!!!!
-
-#  for $i ("size", "mtime", "inode", "raw", "gid", "uid") {
-#    s/^(.*?)\s+//;
-#    $file{$i} = $1;
-#  }
-
+  # TODO: in theory, could grab current file size using "-s"
   ($file{mtime},$file{size},$file{name}) =  split(/\s+/, $_, 3);
-
-  # the hex and octal modes for regular files + symlinks
-#  unless ($file{raw}=~/^[89ab]/ || $file{raw}=~/^1[02]/) {
-    # TODO: test that I'm not skipping I need
-#    debug("SKIP: $_, $file{raw}");
-#    next;
-#  }
 
   # silently ignore directories, device files, etc
   if (-d $file{name} || -c $file{name} || -b $file{name} || -S $file{name}) {

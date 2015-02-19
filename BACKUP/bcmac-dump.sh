@@ -6,7 +6,7 @@
 # NOTE: /mnt/sshfs is a symlink on bcmac (not a true mount), so this DOES work
 date > /mnt/sshfs/bcmac-files.txt.new
 # note that this intentionally goes into mounted drives (no -xdev)
-/usr/bin/find / -print0 | xargs -0 stat -f "%z %m %i %p %g %u %N" >> /mnt/sshfs/bcmac-files.txt.new
+/usr/bin/find / -print0 | xargs -0 stat -f "%m %z %i %p %g %u %N" >> /mnt/sshfs/bcmac-files.txt.new
 date >> /mnt/sshfs/bcmac-files.txt.new
 # bzip the previous instance and save it, keep current instance uncompressed
 bzip2 -v /mnt/sshfs/bcmac-files.txt

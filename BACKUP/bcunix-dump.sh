@@ -4,7 +4,7 @@
 # dumps files and creates a reverse lookup table
 cd /
 date > bcunix-files.txt.new
-find / -xdev -print0|xargs -0 stat -c "%s %Y %i %f %g %u %n">>bcunix-files.txt.new
+find / -xdev -print0|xargs -0 stat -c "%Y %s %i %f %g %u %n">>bcunix-files.txt.new
 date >> bcunix-files.txt.new
 # bzip the previous instance and save it, keep current instance uncompressed
 bzip2 -v bcunix-files.txt
@@ -15,7 +15,7 @@ perl -nle 's%^.*?\/%/%; $x=reverse(); print $x' bcunix-files.txt|sort>bcunix-fil
 # and now the extdrive
 cd /mnt/extdrive/
 date > extdrive-files.txt.new
-find /mnt/extdrive/ -xdev -print0|xargs -0 stat -c "%s %Y %i %f %g %u %n">>extdrive-files.txt.new
+find /mnt/extdrive/ -xdev -print0|xargs -0 stat -c "%Y %s %i %f %g %u %n">>extdrive-files.txt.new
 date >> extdrive-files.txt.new
 bzip2 -v extdrive-files.txt
 mv extdrive-files.txt.bz2 extdrive-files.txt.old.bz2
