@@ -18,7 +18,7 @@ MAILTO="bcinfo3@barrycarter.info"
 # update database of files for locate
 0 2 * * * updatedb
 # remove cache files
-28 * * * * find /var/tmp/cache -type f -mtime +1 | xargs rm
+28 * * * * find /var/tmp/cache -type f -mmin +60 | xargs rm
 # and radar
 04 3 * * * find /var/tmp/radar -mtime +1 | xargs rm
 # this is really ugly (TODO: clean this up)

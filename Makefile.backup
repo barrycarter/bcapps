@@ -6,6 +6,11 @@
 # only because these are the last targets (so everything else gets made too)
 all: big-by-file.txt big-by-dir.txt
 
+# the list of files I haven't backed up previously (at least not with their current size and time): previousbackup.txt.srt is a sorted list of all files I've backed up previously (with size and mtime)
+
+backupnow.txt: afad.txt previousbackup.txt.srt
+	comm -23 afad.txt previousbackup.txt.srt > backupnow.txt
+
 # because I tar from my main machine, filenames on bcmac's external
 # drive must be renamed to start with /mnt/sshfs; files on the main
 # drive must be renamed to start with /mnt/sshfs3, which is where I
@@ -34,16 +39,10 @@ bcextdrive-converted.txt: /mnt/extdrive/extdrive-files.txt
 afad.txt: bcmac-converted.txt bcpc-converted.txt bcunix-converted.txt bcextdrive-converted.txt
 	cat *-converted.txt | sort > afad.txt
 
-# sorted version of afad.txt (by mtime, most recent first). I
-# intentionally don't combine the sort with the above step for
-# debugging purposes (for now)
-afad.txt.srt: afad.txt
-	sort -k2nr afad.txt > afad.txt.srt
-
 # TODO: THIS ASSUMES ONLY ONE BACKUP FILE, WILL NOT WORK IF MULTI
 
-filelist1.txt statlist1.txt: exclusions.txt afad.txt /home/barrycarter/BCGIT/BACKUP/bc-chunk-backup.pl
-	tac afad.txt | egrep -vf exclusions.txt | bc-chunk-backup.pl --debug
+filelist1.txt statlist1.txt: exclusions.txt backupnow.txt /home/barrycarter/BCGIT/BACKUP/bc-chunk-backup.pl
+	tac backupnow.txt | egrep -vf exclusions.txt | bc-chunk-backup.pl --debug
 
 # while testing exclusions, it's important to know what big files and
 # big directories I'm backing up (so I can potentially exclude them)

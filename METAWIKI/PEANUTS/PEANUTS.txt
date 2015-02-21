@@ -43,3 +43,8 @@ NOTES:
 
  - Lucy/Linus (for example) are canonical names, but full name are
  Lucy Van Pelt, Linus Van Pelt, for example
+
+ - http://www.yourdictionary.com/tattletale-gray explains tattletale gray pun
+
+ - the pipe for alternate text feature appears to be broken
+

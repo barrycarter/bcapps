@@ -13,9 +13,6 @@ defaults("stop=1");
 # TODO: $limit should be an option
 my($limit) = 25e+9;
 
-# TODO: TESTING (multiple backups) BELOW!
-$limit = 1e+9;
-
 my($tot) = $limit;
 my($count);
 
