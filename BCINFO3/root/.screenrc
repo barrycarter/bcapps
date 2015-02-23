@@ -4,3 +4,6 @@ escape ^bb
 vbell off
 # nethack is cool
 nethack on
+# I hate accidentally detaching screens
+bind d
+bind ^d

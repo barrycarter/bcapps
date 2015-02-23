@@ -1,5 +1,8 @@
 # make file to help back things up using bc-chunk-backup.pl
 
+# excluding extdrive (USB) since it's failing and I should have a
+# perfect mirror on /mnt/sshfs anyway
+
 # TODO: consider eliminating some of the intermediate files I use
 # below; however, they might actually be useful
 
@@ -28,15 +31,11 @@ bcpc-converted.txt: /mnt/sshfs2/c/bcpc-files.txt
 bcunix-converted.txt: /bcunix-files.txt
 	bc-format2altformat.pl /bcunix-files.txt > bcunix-converted.txt
 
-# extdrive
-bcextdrive-converted.txt: /mnt/extdrive/extdrive-files.txt
-	bc-format2altformat.pl /mnt/extdrive/extdrive-files.txt > bcextdrive-converted.txt
-
 # combine the lists above with the local lists to create a list of all
 # files and all directories on all my quasi-local systems
 
 # TODO: this sorting is to comm vs old backups, NOT numerical sorting (sigh)
-afad.txt: bcmac-converted.txt bcpc-converted.txt bcunix-converted.txt bcextdrive-converted.txt
+afad.txt: bcmac-converted.txt bcpc-converted.txt bcunix-converted.txt
 	cat *-converted.txt | sort > afad.txt
 
 # TODO: THIS ASSUMES ONLY ONE BACKUP FILE, WILL NOT WORK IF MULTI
@@ -44,7 +43,7 @@ afad.txt: bcmac-converted.txt bcpc-converted.txt bcunix-converted.txt bcextdrive
 filelist1.txt statlist1.txt: exclusions.txt backupnow.txt /home/barrycarter/BCGIT/BACKUP/bc-chunk-backup.pl
 	tac backupnow.txt | egrep -vf exclusions.txt | bc-chunk-backup.pl --debug
 
-# while testing exclusions, it's important to know what big files and
+# while testing exclusions.txt, it's important to know what big files and
 # big directories I'm backing up (so I can potentially exclude them)
 
 big-by-dir.txt: statlist1.txt /home/barrycarter/BCGIT/bc-total-bytes.pl
@@ -62,7 +61,7 @@ big-by-dir-quick.txt: statlist1-quick.txt
 	bc-total-bytes.pl statlist1-quick.txt | sort -nr > big-by-dir-quick.txt
 
 big-by-file-quick.txt: statlist1-quick.txt
-	sort -k1nr statlist1-quick.txt > big-by-file-quick.txt
+	sort -k2nr statlist1-quick.txt > big-by-file-quick.txt
 
 # statlist1.txt is NOT a dependency since we don't want to rebuild it
 statlist1-quick.txt: exclusions.txt
