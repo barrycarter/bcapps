@@ -1,0 +1,25 @@
+# dates that I will convert to ICS and create a icalshare.com calendar for
+
+# These are dates I believe "most" people should know, even people who
+# aren't specifically interested in the event/sport/religion involved
+
+
+
+20160207 Super Bowl
+20170205 Super Bowl
+20180204 Super Bowl
+
+20150502 Kentucky Derby
+20160507 Kentucky Derby
+
+20160402 Final Four
+20160404 NCAA Championship
+20150404 Final Four
+20150406 NCAA Championship
+20170401 Final Four
+20170403 NCAA Championship
+20180331 Final Four
+20180402 NCAA Championship
+20190406 Final Four
+20190408 NCAA Championship
+
