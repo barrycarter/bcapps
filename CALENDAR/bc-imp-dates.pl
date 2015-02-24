@@ -54,73 +54,104 @@ delete $fixed{""};
 # Earth Hour??, NBA Championships, World Cup (soccer/cricket), PGA (as
 # one offs), All-Star game
 
+# instead of printing, storing to array so I can put into multiple
+# formats (can't be a hash, multiple values for one key in either
+# direction)
+
+my(@dates);
+
 for $i (2015..2037) {
 
   # fixed dates
-  for $j (keys %fixed) {print "${i}$fixed{$j} $j\n";}
+  for $j (keys %fixed) {push(@dates, "${i}$fixed{$j}", $j);}
 
   # per http://www.unesco.org/new/en/unesco/events/prizes-and-celebrations/celebrations/international-days/
-  print weekdayAfterDate("${i}1101",4,2)," Philosophy Day\n";
+  push(@dates, weekdayAfterDate("${i}1101",4,2),"Philosophy Day");
 
 
-  print weekdayAfterDate("${i}0501", "6")," Kentucky Derby\n";
-  print weekdayAfterDate("${i}0501", "6", 2)," Preakness\n";
+  push(@dates, weekdayAfterDate("${i}0501", "6"),"Kentucky Derby");
+  push(@dates, weekdayAfterDate("${i}0501", "6", 2),"Preakness");
   # Always in June
-  print weekdayAfterDate("${i}0501", "6", 5)," Belmont Stakes\n";
-  print weekdayAfterDate("${i}0201", "0"), " Super Bowl\n";
-  print weekdayAfterDate("${i}0101", "1", 2), " MLK Day\n";
-  print weekdayAfterDate("${i}1001", "1", 1), " Columbus Day\n";
+  push(@dates, weekdayAfterDate("${i}0501", "6", 5),"Belmont Stakes");
+  push(@dates, weekdayAfterDate("${i}0201", "0"), "Super Bowl");
+  push(@dates, weekdayAfterDate("${i}0101", "1", 2), "MLK Day");
+  push(@dates, weekdayAfterDate("${i}1001", "1", 1), "Columbus Day");
   $thanks = weekdayAfterDate("${i}1101", "4", 3);
   $black =  weekdayAfterDate($thanks, 5, 0);
-  print "$thanks Thanksgiving\n";
-  print "$black Black Friday\n";
-  print weekdayAfterDate("${i}0501", "0", 1), " Mothers Day\n";
+  push(@dates, $thanks, "Thanksgiving");
+  push(@dates, $black, "Black Friday");
+  push(@dates, weekdayAfterDate("${i}0501", "0", 1), "Mothers Day");
   # same day below
-  print weekdayAfterDate("${i}0601", "0", 2), " Fathers Day\n";
-  print weekdayAfterDate("${i}0601", "0", 2), " US Open Golf Finals\n";
-  print weekdayAfterDate("${i}0301", "0", 1), " DST +1 hour\n";
-  print weekdayAfterDate("${i}1101", "0", 0), " DST -1 hour\n";
+  push(@dates, weekdayAfterDate("${i}0601", "0", 2), "Fathers Day");
+  push(@dates, weekdayAfterDate("${i}0601", "0", 2), "US Open Golf Finals");
+  push(@dates, weekdayAfterDate("${i}0301", "0", 1), "DST +1 hour");
+  push(@dates, weekdayAfterDate("${i}1101", "0", 0), "DST -1 hour");
   # technically washington's birthday...
-  print weekdayAfterDate("${i}0201", "1", 2), " President's Day\n";
+  push(@dates, weekdayAfterDate("${i}0201", "1", 2), "President's Day");
   # grandparents day = first sunday after labor day
   my($laborday) = weekdayAfterDate("${i}0901", "1", 0);
   my($grandparentday) = weekdayAfterDate($laborday, "0", 0);
   my($pga) = weekdayAfterDate($laborday, "6", -4);
   # PGA is wonky next few years
-#  print "$pga PGA Championship\n";
-  print "$laborday Labor Day\n";
-  print "$grandparentday Grandparent's Day\n";
+#  push(@dates, "$pga PGA Championship\n";
+  push(@dates, $laborday, "Labor Day");
+  push(@dates, $grandparentday, "Grandparent's Day");
   # below is last monday of may and previous Sunday
   $memday = weekdayAfterDate("${i}0601", "1", -1);
   $indiana500 = weekdayAfterDate($memday, "0", -1);
-  print "$memday Memorial Day\n";
-  print "$indiana500 Indianapolis 500\n";
-  print weekdayAfterDate("${i}0701", "0", 3), " Parents Day\n";
-  print weekdayAfterDate("${i}1001", "6", 2), " Sweetest Day\n";
+  push(@dates, $memday, "Memorial Day");
+  push(@dates, $indiana500, "Indianapolis 500");
+  push(@dates, weekdayAfterDate("${i}0701", "0", 3), "Parents Day");
+  push(@dates, weekdayAfterDate("${i}1001", "6", 2), "Sweetest Day");
 
-  # per wikipedia, "Monday falling between 20 and 26 June" but moved
+  # per wikipedia, "Monday falling between 20 and 26 June"but moved
   # back a week, so between 27 Jun and next Monday
   $wimbs = weekdayAfterDate("${i}0627", "1", 0);
   $wimbe = weekdayAfterDate($wimbs, 0, 1);
-  print "$wimbs Wimbledon starts\n";
-  print "$wimbe Wimbledon ends\n";
+  push(@dates, $wimbs, "Wimbledon starts");
+  push(@dates, $wimbe, "Wimbledon ends");
 
   # per http://sports.espn.go.com/espn/columns/story?page=wojciechowski-111018
   # this may change, then again, any of these might
-  print weekdayAfterDate("${i}1001", 0, 2), " World Series\n";
+  push(@dates, weekdayAfterDate("${i}1001", 0, 2), "World Series");
 
   $preelect = weekdayAfterDate("${i}1101", 1, 0);
-  print weekdayAfterDate($preelect, 2, 0), " Election Day\n";
-
-
+  push(@dates, weekdayAfterDate($preelect, 2, 0), "Election Day");
 
   # last Sunday in February (can be the Sunday the 29th, which is why
   # I need the special case below [otherwise would always be the 4th
   # Sunday in February])
 #  print weekdayAfterDate("${i}0301", "0", -1), " Daytona 500\n";
-  
 
 }
+
+open(A,">$bclib{githome}/CALENDAR/bcimpdates.ics");
+print A << "MARK";
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID: https://github.com/barrycarter/bcapps/blob/master/CALENDAR/bc-imp-dates.pl
+MARK
+;
+
+while (@dates) {
+  my($date,$event) = splice(@dates,0,2);
+
+  # this is silly
+  my($uid) = sha1_hex("$date $event");
+
+  # ics format
+  print A << "MARK";
+BEGIN:VEVENT
+SUMMARY:$event
+UID:$uid
+DTSTART:${date}T000000Z
+DTEND:${date}T235959Z
+END:VEVENT
+MARK
+;
+}
+
+print A "END:VCALENDAR\n";
 
 # computes the nth "weekday" after or on given date (yyyymmdd format)
 
