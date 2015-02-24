@@ -10,7 +10,7 @@ require "/usr/local/lib/bclib.pl";
 defaults("xsize=800&ysize=600&weeks=7");
 
 # read events file
-for $i (`grep -v '^#' /home/barrycarter/calendar.txt`) {
+for $i (`grep -hv '^#' /home/barrycarter/calendar.txt /home/barrycarter/calendar-auto.txt`) {
 
   # ignore blanks
   if ($i=~/^\s*$/) {next;}

@@ -3,15 +3,6 @@
 # These are dates I believe "most" people should know, even people who
 # aren't specifically interested in the event/sport/religion involved
 
-
-
-20160207 Super Bowl
-20170205 Super Bowl
-20180204 Super Bowl
-
-20150502 Kentucky Derby
-20160507 Kentucky Derby
-
 20160402 Final Four
 20160404 NCAA Championship
 20150404 Final Four
@@ -22,4 +13,14 @@
 20180402 NCAA Championship
 20190406 Final Four
 20190408 NCAA Championship
+
+# below per http://www.daytonachamber.com/member/fiveyrcal/
+20160221 Daytona 500
+20170226 Daytona 500
+20180225 Daytona 500
+
+# US Open Tennis (TODO: put these in the right form or find formula)
+Aug 29, 2016 - Sep 13, 2016
+Monday, Aug. 31, through Sunday, Sept. 13. 2015
+August 20 - [for 2017]
 
