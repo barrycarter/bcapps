@@ -125,11 +125,11 @@ for $i (2015..2037) {
 
 }
 
-open(A,">$bclib{githome}/CALENDAR/bcimpdates.ics");
+open(A,">$bclib{githome}/BCINFO3/sites/data/calendar/bcimpdates.ics");
 print A << "MARK";
-BEGIN:VCALENDAR
-VERSION:2.0
-PRODID: https://github.com/barrycarter/bcapps/blob/master/CALENDAR/bc-imp-dates.pl
+BEGIN:VCALENDAR\r
+VERSION:2.0\r
+PRODID: -//barrycarter.info//bc-imp-dates.pl//EN\r
 MARK
 ;
 
@@ -141,17 +141,17 @@ while (@dates) {
 
   # ics format
   print A << "MARK";
-BEGIN:VEVENT
-SUMMARY:$event
-UID:$uid
-DTSTART:${date}T000000Z
-DTEND:${date}T235959Z
-END:VEVENT
+BEGIN:VEVENT\r
+SUMMARY:$event\r
+UID:$uid\r
+DTSTART:${date}T000000Z\r
+DTEND:${date}T235959Z\r
+END:VEVENT\r
 MARK
 ;
 }
 
-print A "END:VCALENDAR\n";
+print A "END:VCALENDAR\r\n";
 
 # computes the nth "weekday" after or on given date (yyyymmdd format)
 
