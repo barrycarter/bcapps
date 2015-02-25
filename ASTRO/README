@@ -503,3 +503,17 @@ NOTES
 
 These are all in http://iau-comm4.jpl.nasa.gov/XSChap8.pdf but a
 different format (for DE405, not DE430/431)
+
+NASA FILES
+==========
+
+The events files (SKYCAL, eclipes, and transits) are from NASA:
+
+http://eclipse.gsfc.nasa.gov/SKYCAL/SKYCAL.html (using GMT and with
+all options checked)
+
+http://eclipse.gsfc.nasa.gov/SEcat5/SE2001-2100.html
+http://eclipse.gsfc.nasa.gov/LEcat5/LE2001-2100.html
+http://eclipse.gsfc.nasa.gov/transit/catalog/MercuryCatalog.html
+http://eclipse.gsfc.nasa.gov/transit/catalog/VenusCatalog.html
+
