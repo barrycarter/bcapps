@@ -18,11 +18,12 @@ open(A,"|/usr/local/bin/parallel -j 20");
 # TODO: exclude cases where result already exists!
 
 for $i (glob "*.png") {
-  print A "/usr/local/bin/convert $i $i.pnm\n";
+  unless (-f "$i.pnm") {print A "/usr/local/bin/convert $i $i.pnm\n";}
   # below automatically adds .txt extension, doesn't overwrite
-  print A "/usr/local/bin/tesseract $i $i\n";
+  unless (-f "$i.txt") {print A "/usr/local/bin/tesseract $i $i\n";}
 }
 
 close(A);
 
-# TODO: add zpaq'ing
+# TODO: add zpaq'ing + move txt files out of way
+
