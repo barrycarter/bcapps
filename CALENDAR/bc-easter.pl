@@ -1,7 +1,7 @@
 #!/bin/perl
 
-# Computes Easter, Lent, Shrove Thursday, Ash Wednesday, Mardi Gras,
-# plus a bunch of really useless stuff
+# Computes Easter, Lent, Shrove Thursday, Ash Wednesday, Good Friday,
+# Mardi Gras, plus a bunch of really useless stuff
 
 require "/usr/local/lib/bclib.pl";
 
@@ -18,7 +18,8 @@ sub computeEaster {
   # golden number
   my($gn) = ($year%19)+1;
   # epact (for 2000-2099 only)
-  my($epact) = (11*($gn-1)-1)%30;
+  # http://www.webexhibits.org/calendars/calendar-christian-easter.html
+  my($epact) = (24+19*($year%19))%30;
 
   # dominical letter (as number) for January
   my($dl) = (3-str2time("$year-01-01 12:00:00 UTC")/86400)%7+1;

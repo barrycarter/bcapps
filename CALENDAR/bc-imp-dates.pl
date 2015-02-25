@@ -68,6 +68,8 @@ for $i (2015..2037) {
   # per http://www.unesco.org/new/en/unesco/events/prizes-and-celebrations/celebrations/international-days/
   push(@dates, weekdayAfterDate("${i}1101",4,2),"Philosophy Day");
 
+  # http://en.wikipedia.org/wiki/Children%27s_Day#United_States_of_America
+  push(@dates, weekdayAfterDate("${i}0601",0), "Children's Day");
 
   push(@dates, weekdayAfterDate("${i}0501", "6"),"Kentucky Derby");
   push(@dates, weekdayAfterDate("${i}0501", "6", 2),"Preakness");
@@ -133,11 +135,16 @@ PRODID: -//barrycarter.info//bc-imp-dates.pl//EN\r
 MARK
 ;
 
+# this is the "flat calendar" version bc-calendar.pl uses
+open(B,">/tmp/flatcal.txt");
+
 while (@dates) {
   my($date,$event) = splice(@dates,0,2);
 
   # this is silly
   my($uid) = sha1_hex("$date $event");
+
+  print B "$date $event\n";
 
   # ics format
   print A << "MARK";
@@ -152,6 +159,8 @@ MARK
 }
 
 print A "END:VCALENDAR\r\n";
+
+close(A);close(B);
 
 # computes the nth "weekday" after or on given date (yyyymmdd format)
 

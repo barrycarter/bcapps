@@ -20,6 +20,9 @@ DESCRIPTION:This ical file contains every event listed in http://eclipse.gsfc.na
 MARK
 ;
 
+# flat format for bc-calendar.pl (but probably won't work, too wide)
+open(B,">/tmp/skycal.txt");
+
 for $i (glob "$bclib{githome}/ASTRO/SKYCAL*.html") {
 
   # figure out year
@@ -55,6 +58,12 @@ for $i (glob "$bclib{githome}/ASTRO/SKYCAL*.html") {
     # artificial
     my($uid) = sha1_hex("$event $time");
 
+    # keeping event pure for ics, but omitting bad char for bc-calendar
+    $event2 = $event;
+    $event2=~s/\xc2//;
+
+    print B "$year$month$date $event2\n";
+
 print << "MARK";
 BEGIN:VEVENT\r
 SUMMARY:$event\r
@@ -69,4 +78,7 @@ MARK
 }
 
 print "END:VCALENDAR\r\n";
+
+close(B);
+
 
