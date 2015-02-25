@@ -1,10 +1,12 @@
 BEGIN:VCALENDAR
 VERSION:2.0
 PRODID: -//barrycarter.info//bc-imp-dates.pl//EN
+DESCRIPTION:This ical file contains every event listed in http://eclipse.gsfc.nasa.gov/SKYCAL/SKYCAL.html, with all options checked, for 2015-2037, a total of 6299 events over 23 years (about 274 events per year). This includes moon phases, eclipses, equinoxes/solstices, apogee/perigee, lunar/planetary/solar conjuctions, maximum elongations, ascending/descending node, meteor showers and more. For most people this will overkill, and you will want to filter.\r
 BEGIN:VEVENT
 SUMMARY:Pearl Harbor's Day + more fun - bad things
 UID:2b51207527e1ba8045146f49744f804c10af5d32
 DTSTART:20151207T000000Z
 DTEND:20151207T235959Z
+DESCRIPTION:"Many years ago our forefathers brought upon this land a new continent (that can't be right...)"
 END:VEVENT
 END:VCALENDAR
