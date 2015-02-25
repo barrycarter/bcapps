@@ -47,6 +47,8 @@ for $i (glob "$bclib{githome}/ASTRO/SKYCAL*.html") {
     # no XML/HTML inside events
     $event=~s/<.*?>//g;
 
+    # TODO: add categories based on event type
+
     # format time
     my($ftime) = "$year$month${date}T${time}00Z";
 
