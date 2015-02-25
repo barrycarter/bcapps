@@ -3,8 +3,7 @@
 # Runs nightly and cleans up the previous days XWD files (as described below)
 # Runs directly on bcmac
 
-# TODO: don't hardcode this
-$date = "20150222";
+$date = $ARGV[0];
 
 chdir("/mnt/sshfs/XWD/");
 system("mkdir $date; mv pic.$date:*.png $date");
