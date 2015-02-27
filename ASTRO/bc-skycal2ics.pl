@@ -64,8 +64,7 @@ for $i (glob "$bclib{githome}/ASTRO/SKYCAL*.html") {
 
 
     # for my bc-calendar.pl, space is limited, so filter and shorten
-    $event2 = shorten($event,$time);
-    if ($event2) {print B "$year$month$date $event2\n";}
+    print B shorten($event,$ftime);
 
 print A << "MARK";
 BEGIN:VEVENT\r
@@ -88,10 +87,22 @@ close(A); close(B);
 
 sub shorten {
   my($event,$time) = @_;
-  debug("$event/$time");
+
+  # alert for lunar eclipses 12 hours in advance (ie, previous day)
+  my($stardate);
+  if ($event=~/lunar eclipse/i) {
+    $stardate = strftime("%Y%m%d.%H%M", localtime(str2time($time)-43200));
+  } else {
+    $stardate = strftime("%Y%m%d.%H%M", localtime(str2time($time)));
+  }
+
+  my($sdate,$stime) = split(/\./, $stardate);
 
   # odd character that causes problems
   $event=~s/\xc2//g;
+
+  # calendar includes Venus position start of each month, but I don't need this
+  if ($event=~/venus: \d/i) {return;}
 
   # uninteresting planets
   if ($event=~/neptune|pluto/i) {return;}
@@ -105,18 +116,18 @@ sub shorten {
   # max north/south also uninteresting
   if ($event=~/moon (nor|sou)th/i) {return;}
 
-  # TODO: adjust date if event is on prev day in my tz
   # eclipse abbreviation
-  if ($event=~/(partial|total) (lunar|solar) eclipse/i) {
-    return lc($2)." eclipse";
-  }
+  $event=~s/(partial|total|annular|pen\.|hybrid) (lunar|solar)/$2/i;
 
   # remove word elongation and odd spaces
-  if ($event=~s/elongation//i && $event=~s/ : /: /g) {return $event;}
+  $event=~s/elongation//i;
+
+  # for equinoxes/solstices, add time and remove type
+  $event=~s/^.*?\s+(equinox|solstice)/$1 ($stime)/i;
 
   # TODO: I want these back, this elimination is only temporary
   if ($event=~/^moon\-/i) {return;}
 
   # adding astericks for now so I can identify unchanged events
-  return "*$event*";
+  return "$sdate $event\n";
 }

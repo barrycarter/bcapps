@@ -3,18 +3,12 @@
 require "/usr/local/lib/bclib.pl";
 require "$bclib{home}/bc-private.pl";
 
-# --stop=num: stop at this chunk
-
+# rewriting 27 Feb 2015 for a single file
 # see README for file format
 
-defaults("stop=1");
-
-# setting $tot to $limit so first run inside loop increments chunk
 # TODO: $limit should be an option
 my($limit) = 25e+9;
-
-my($tot) = $limit;
-my($count);
+my($tot, $count);
 
 while (<>) {
   chomp;
@@ -22,35 +16,24 @@ while (<>) {
 
   if (++$count%100000==0) {debug("COUNT: $count, BYTES: $tot");}
 
-  # if we've gone over limit (or first run), move on to next chunk
-  if ($tot>=$limit) {
-    debug("TOT: $tot > LIMIT: $limit");
-    $chunk++;
-    if ($chunk > $globopts{stop}) {last;}
-    debug("STARTING CHUNK: $chunk");
-    $tot=0;
-    close(A);
-    close(B);
-    open(A,">filelist$chunk.txt")||die("Can't open, $!");
-    open(B,">statlist$chunk.txt")||die("Can't open, $!");
-    # TODO: replace below w zpaq (which requires hardlinks, non trivial)
-  }
+  if ($tot>=$limit) {last;}
 
   my(%file);
 
   # TODO: in theory, could grab current file size using "-s"
   ($file{mtime},$file{size},$file{name}) =  split(/\s+/, $_, 3);
 
+  # running four tests here is probably insanely inefficient
   # silently ignore directories, device files, etc
   if (-d $file{name} || -c $file{name} || -b $file{name} || -S $file{name}) {
     next;
   }
 
   # TODO: this might slow things down excessively, even with caching
-  unless (-f $file{name} || -l $file{name}) {
-    warn "NO SUCH FILE: $file{name}";
-    next;
-  }
+#  unless (-f $file{name} || -l $file{name}) {
+#    warn "NO SUCH FILE: $file{name}";
+#    next;
+#  }
 
   $tot+= $file{size};
 
