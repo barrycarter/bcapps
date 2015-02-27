@@ -43,7 +43,7 @@ debug("ALL FINISHED, SIR");
 sub dump_ls {
 
   # for all machine
-  system('ssh root\@bcmac "/mnt/sshfs/bcmac-dump.sh > /tmp/bcdump.out &"');
+  system('ssh root\@bcmac "/mnt/sshfs/bcmac-dump.sh 1> /tmp/bcdump.out 2> /tmp/bcdump.err &"');
   system('ssh User@bcpc "/cygdrive/c/bcpc-dump.sh > /tmp/bcdump.out &" ');
   system('/bcunix-dump.sh&');
 }

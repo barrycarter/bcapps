@@ -10,9 +10,9 @@ for $i (0..$#months) {$months{substr($months[$i],0,3)} = sprintf("%02d",$i);}
 
 my($month);
 
-debug(%months);
+open(A,">$bclib{githome}/BCINFO3/sites/data/calendar/bcimpdates.ics");
 
-print << "MARK";
+print A << "MARK";
 BEGIN:VCALENDAR\r
 VERSION:2.0\r
 PRODID: -//barrycarter.info//bc-skycal2ics.pl//EN\r
@@ -21,7 +21,7 @@ MARK
 ;
 
 # flat format for bc-calendar.pl (but probably won't work, too wide)
-open(B,">/tmp/skycal.txt");
+open(B,">$bclib{home}/calendar.d/skycal.txt");
 
 for $i (glob "$bclib{githome}/ASTRO/SKYCAL*.html") {
 
@@ -58,13 +58,16 @@ for $i (glob "$bclib{githome}/ASTRO/SKYCAL*.html") {
     # artificial
     my($uid) = sha1_hex("$event $time");
 
-    # keeping event pure for ics, but omitting bad char for bc-calendar
-    $event2 = $event;
-    $event2=~s/\xc2//;
+    # TODO: for lunar eclipses, note the day before (which can be
+    # wrong, but safer than day late) [or be clever and only go day
+    # early if needed?, eg if mid-eclipse > noon local, same day]
 
-    print B "$year$month$date $event2\n";
 
-print << "MARK";
+    # for my bc-calendar.pl, space is limited, so filter and shorten
+    $event2 = shorten($event,$time);
+    if ($event2) {print B "$year$month$date $event2\n";}
+
+print A << "MARK";
 BEGIN:VEVENT\r
 SUMMARY:$event\r
 UID:$uid\r
@@ -77,8 +80,43 @@ MARK
   }
 }
 
-print "END:VCALENDAR\r\n";
+print A "END:VCALENDAR\r\n";
 
-close(B);
+close(A); close(B);
 
+# program-specific subroutine to shorten event for bc-calendar.pl
 
+sub shorten {
+  my($event,$time) = @_;
+  debug("$event/$time");
+
+  # odd character that causes problems
+  $event=~s/\xc2//g;
+
+  # uninteresting planets
+  if ($event=~/neptune|pluto/i) {return;}
+
+  # apoapsis/periapsis uninteresting to me
+  if ($event=~/(apo|peri)(gee|helion)/i) {return;}
+  # I handle moon phases in bc-calendar.pl directly
+  if ($event=~/(full|new) moon/i || $event=~/(first|last) quarter/i) {return;}
+  # node crossings uninteresting
+  if ($event=~/moon (asc|desc)ending node/i) {return;}
+  # max north/south also uninteresting
+  if ($event=~/moon (nor|sou)th/i) {return;}
+
+  # TODO: adjust date if event is on prev day in my tz
+  # eclipse abbreviation
+  if ($event=~/(partial|total) (lunar|solar) eclipse/i) {
+    return lc($2)." eclipse";
+  }
+
+  # remove word elongation and odd spaces
+  if ($event=~s/elongation//i && $event=~s/ : /: /g) {return $event;}
+
+  # TODO: I want these back, this elimination is only temporary
+  if ($event=~/^moon\-/i) {return;}
+
+  # adding astericks for now so I can identify unchanged events
+  return "*$event*";
+}

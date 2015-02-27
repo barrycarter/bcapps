@@ -20,10 +20,11 @@ while (<>) {
   chomp;
   my($orig) = $_;
 
-  if (++$count%100000==0) {debug("COUNT: $count");}
+  if (++$count%100000==0) {debug("COUNT: $count, BYTES: $tot");}
 
   # if we've gone over limit (or first run), move on to next chunk
   if ($tot>=$limit) {
+    debug("TOT: $tot > LIMIT: $limit");
     $chunk++;
     if ($chunk > $globopts{stop}) {last;}
     debug("STARTING CHUNK: $chunk");
