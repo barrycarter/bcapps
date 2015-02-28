@@ -1,4 +1,20 @@
-Creating this dir for backup-related work
+BACKUP FORMATS:
+
+For storing file lists (to restore perms, etc):
+
+1st field: modify time in Unix seconds
+2nd field: size in bytes
+3rd field: inode [may drop this later]
+4th field: permissions in octal
+5th field: file type (like "ls -l")
+6th field: group name or id
+7th field: username or id
+8th field: device number
+remainder: filename followed by newline
+
+For GNU find (which is gfind on Mac), this is:
+
+find [...] -printf "%T@ %s %i %m %y %g %u %D %p\n" 
 
 Standard format for all file lists involving backups:
 
@@ -14,5 +30,5 @@ st_mode field" for details
 
 (note that the option flags are different below, -c vs -f)
 
-On cygwin/Unix: stat -c "%Y %s %i %f %g %u %n"
-On MacOSX: stat -f "%m %z %i %p %g %u %N"
+On cygwin/Unix: stat -c "%Y %s %i %f %g %u %d %n"
+On MacOSX: stat -f "%m %z %i %p %g %u %d %N"

@@ -5,7 +5,7 @@
 cd /cygdrive/c
 date > bcpc-files.txt.new
 # the /bin below is required, otherwise uses window's find
-/bin/find /cygdrive/ -print0|xargs -0 stat -c "%Y %s %i %f %g %u %n">>bcpc-files.txt.new
+/bin/find /cygdrive/ -printf "%T@ %s %i %m %y %g %u %D %p\n" >>bcpc-files.txt.new
 date >> bcpc-files.txt.new
 # bzip the previous instance and save it, keep current instance uncompressed
 bzip2 -v bcpc-files.txt

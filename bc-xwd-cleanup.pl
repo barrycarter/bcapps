@@ -24,5 +24,7 @@ for $i (glob "*.png") {
 
 close(A);
 
-# TODO: add zpaq'ing + move txt files out of way
+# and move tesseract files out of the way
+system("mkdir /mnt/sshfs/XWD2OCR/$date; mv *.txt /mnt/sshfs/XWD2OCR/$date/")
 
+# TODO: add zpaq'ing
