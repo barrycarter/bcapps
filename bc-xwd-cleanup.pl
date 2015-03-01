@@ -12,14 +12,16 @@ chdir("/mnt/sshfs/XWD/$date");
 # run tesseract and convert on all files in directory (convert to .pnm
 # because ZPAQ compresses this most efficiently)
 
-open(A,"|/usr/local/bin/parallel -j 20");
+open(A,"|/usr/local/bin/parallel -j 10");
 
 # TODO: exclude cases where result already exists!
 
 for $i (glob "*.png") {
   unless (-f "$i.pnm") {print A "/usr/local/bin/convert $i $i.pnm\n";}
   # below automatically adds .txt extension, doesn't overwrite
-  unless (-f "$i.txt") {print A "/usr/local/bin/tesseract $i $i\n";}
+  unless (-f "$i.txt" || -f "/mnt/sshfs/XWD2OCR/$date/$i.txt") {
+    print A "/usr/local/bin/tesseract $i $i\n";
+  }
 }
 
 close(A);

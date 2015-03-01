@@ -14,20 +14,12 @@ all: big-by-file.txt big-by-dir.txt
 backupnow.txt: afad.txt previousbackup.txt.srt
 	comm -23 afad.txt previousbackup.txt.srt > backupnow.txt
 
-# because I tar from my main machine, filenames on bcmac's external
-# drive must be renamed to start with /mnt/sshfs; files on the main
-# drive must be renamed to start with /mnt/sshfs3, which is where I
-# mount them
+# from the full file list, extract fields I want (except extdrive ignored)
 
 bcmac-converted.txt: /mnt/sshfs/bcmac-files.txt
-	perl -pnle 's%/Volumes/[A-Z]{5}/%/mnt/sshfs/% || s%/%/mnt/sshfs3/%' /mnt/sshfs/bcmac-files.txt | bc-format2altformat.pl > bcmac-converted.txt
-
-# similar for my PC (mounted on /mnt/sshfs2)
-
+	bc-format2altformat.pl /mnt/sshfs/bcmac-files.txt > bcmac-converted.txt
 bcpc-converted.txt: /mnt/sshfs2/c/bcpc-files.txt
-	perl -pnle 's%/cygdrive/%/mnt/sshfs2/%' /mnt/sshfs2/c/bcpc-files.txt | bc-format2altformat.pl > bcpc-converted.txt
-
-# and unix
+	bc-format2altformat.pl /mnt/sshfs2/c/bcpc-files.txt > bcpc-converted.txt
 bcunix-converted.txt: /bcunix-files.txt
 	bc-format2altformat.pl /bcunix-files.txt > bcunix-converted.txt
 
@@ -36,34 +28,33 @@ bcunix-converted.txt: /bcunix-files.txt
 
 # TODO: this sorting is to comm vs old backups, NOT numerical sorting (sigh)
 afad.txt: bcmac-converted.txt bcpc-converted.txt bcunix-converted.txt
-	cat *-converted.txt | sort > afad.txt
+	sort *-converted.txt > afad.txt
 
 # TODO: THIS ASSUMES ONLY ONE BACKUP FILE, WILL NOT WORK IF MULTI
 
-filelist1.txt statlist1.txt: exclusions.txt backupnow.txt /home/barrycarter/BCGIT/BACKUP/bc-chunk-backup.pl
+filelist.txt statlist.txt: exclusions.txt backupnow.txt
 	tac backupnow.txt | egrep -vf exclusions.txt | bc-chunk-backup.pl --debug
 
 # while testing exclusions.txt, it's important to know what big files and
 # big directories I'm backing up (so I can potentially exclude them)
 
-big-by-dir.txt: statlist1.txt /home/barrycarter/BCGIT/bc-total-bytes.pl
-	bc-total-bytes.pl statlist1.txt | sort -nr > big-by-dir.txt
-big-by-file.txt: statlist1.txt
-	sort -k2nr statlist1.txt > big-by-file.txt
+big-by-dir.txt: statlist.txt
+	bc-total-bytes.pl statlist.txt | sort -nr > big-by-dir.txt
+big-by-file.txt: statlist.txt
+	sort -k2nr statlist.txt > big-by-file.txt
 
 # it's sometimes useful to see what effect changing exclusions.txt
 # will have without redoing the entire chunk backup; "make quick"
 # allows for that
 
-quick: big-by-dir-quick.txt big-by-file-quick.txt statlist1-quick.txt
+quick: big-by-dir-quick.txt big-by-file-quick.txt statlist-quick.txt
 
-big-by-dir-quick.txt: statlist1-quick.txt
-	bc-total-bytes.pl statlist1-quick.txt | sort -nr > big-by-dir-quick.txt
+big-by-dir-quick.txt: statlist-quick.txt
+	bc-total-bytes.pl statlist-quick.txt | sort -nr > big-by-dir-quick.txt
 
-big-by-file-quick.txt: statlist1-quick.txt
-	sort -k2nr statlist1-quick.txt > big-by-file-quick.txt
+big-by-file-quick.txt: statlist-quick.txt
+	sort -k2nr statlist-quick.txt > big-by-file-quick.txt
 
-# statlist1.txt is NOT a dependency since we don't want to rebuild it
-statlist1-quick.txt: exclusions.txt
-	egrep -vf exclusions.txt statlist1.txt > statlist1-quick.txt
-
+# statlist.txt is NOT a dependency since we don't want to rebuild it
+statlist-quick.txt: exclusions.txt
+	egrep -vf exclusions.txt statlist.txt > statlist-quick.txt

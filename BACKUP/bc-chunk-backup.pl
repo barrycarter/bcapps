@@ -10,6 +10,9 @@ require "$bclib{home}/bc-private.pl";
 my($limit) = 25e+9;
 my($tot, $count);
 
+open(A,">filelist.txt");
+open(B,">statlist.txt");
+
 while (<>) {
   chomp;
   my($orig) = $_;
@@ -25,9 +28,9 @@ while (<>) {
 
   # running four tests here is probably insanely inefficient
   # silently ignore directories, device files, etc
-  if (-d $file{name} || -c $file{name} || -b $file{name} || -S $file{name}) {
-    next;
-  }
+#  if (-d $file{name} || -c $file{name} || -b $file{name} || -S $file{name}) {
+#    next;
+#  }
 
   # TODO: this might slow things down excessively, even with caching
 #  unless (-f $file{name} || -l $file{name}) {
@@ -46,7 +49,7 @@ while (<>) {
 close(A); close(B);
 
 # TODO: really unhappy about this, should be able to do this in program
-system ("sort statlist1.txt -o statlist1.txt");
+# system ("sort statlist1.txt -o statlist1.txt");
 
 debug("Used $count files to meet total");
 

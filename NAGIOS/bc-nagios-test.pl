@@ -86,6 +86,41 @@ sub func {
   }
 }
 
+=item bc_check_mounts(@mountpoints)
+
+Given a list of mountpoints, write a random tempfile to each, read it
+back to confirm its the same, and check that the associated device
+numbers are different (ie, I havent "lost" a mount)
+
+=cut
+
+sub bc_check_mounts {
+  my(@mountpoints) = @_;
+
+  debug("HALPYA");
+
+  for $i (@mountpoints) {
+    my($str);
+    # TODO: there has to be a better way to do this (/dev/urandom?)
+    for $j (1..1000) {$str .= chr(rand()*256);}
+    # TODO: don't always name file "tempfile.txt"?
+    write_file($str, "$i/tempfile.txt");
+    $str2 = read_file("$i/tempfile.txt");
+
+    unless ($str eq $str2) {
+      print "Files don't match: $i\n";
+      return 2;
+    }
+
+    # check device number
+
+    my($dev, $ino, $mode, $nlink, $uid, $gid, $rdev, $size, $atime,
+       $mtime, $ctime, $blksize, $blocks) = stat("$i/tempfile.txt");
+
+    debug("DEVNO: $dev");
+  }
+}
+
 =item bc_check_url_sha1($url, $sha1)
 
 Confirm that the sha1 of the content of $url is $sha1 (useful to test
