@@ -7,7 +7,7 @@ require "/usr/local/lib/bclib.pl";
 # TODO: http://www.un.org/en/events/observances/days.shtml
 # TODO: http://www.timeanddate.com/holidays/ (or maybe not)
 # TODO: more?
-# TODO: children's day
+# TODO: children's day, us tennis open
 
 # TODO: Chinese/Jewish/other New Years, Diwali, Islamic holidays
 
@@ -65,6 +65,10 @@ for $i (2015..2037) {
   # fixed dates
   for $j (keys %fixed) {push(@dates, "${i}$fixed{$j}", $j);}
 
+  # per http://en.wikipedia.org/wiki/Men%27s_major_golf_championships
+  push(@dates, datePlusDays(weekdayAfterDate("${i}0401",0,1),-3), "Masters (golf)");
+  push(@dates, datePlusDays(weekdayAfterDate("${i}0601",0,2),-3), "US Open (golf)");
+
   # per http://www.unesco.org/new/en/unesco/events/prizes-and-celebrations/celebrations/international-days/
   push(@dates, weekdayAfterDate("${i}1101",4,2),"Philosophy Day");
 
@@ -93,9 +97,8 @@ for $i (2015..2037) {
   # grandparents day = first sunday after labor day
   my($laborday) = weekdayAfterDate("${i}0901", "1", 0);
   my($grandparentday) = weekdayAfterDate($laborday, "0", 0);
-  my($pga) = weekdayAfterDate($laborday, "6", -4);
-  # PGA is wonky next few years
-#  push(@dates, "$pga PGA Championship\n";
+  my($pga) = weekdayAfterDate($laborday, "4", -4);
+  push(@dates, $pga, "PGA Championship");
   push(@dates, $laborday, "Labor Day");
   push(@dates, $grandparentday, "Grandparent's Day");
   # below is last monday of may and previous Sunday
@@ -136,7 +139,7 @@ MARK
 ;
 
 # this is the "flat calendar" version bc-calendar.pl uses
-open(B,">/tmp/flatcal.txt");
+open(B,">/home/barrycarter/calendar.d/flatcal.txt");
 
 while (@dates) {
   my($date,$event) = splice(@dates,0,2);
@@ -173,3 +176,11 @@ sub weekdayAfterDate {
   $time += ($day-$wday)%7*86400 + $n*86400*7;
   return strftime("%Y%m%d", gmtime($time));
 }
+
+# add days from given yyyymmdd "stardate"
+
+sub datePlusDays {
+  my($date,$days) = @_;
+  return strftime("%Y%m%d", gmtime(str2time($date)+86400*$days));
+}
+
