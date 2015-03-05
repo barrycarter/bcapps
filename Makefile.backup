@@ -47,7 +47,12 @@ big-by-file.txt: statlist.txt
 # will have without redoing the entire chunk backup; "make quick"
 # allows for that
 
+# the rm below is because I always end up looking at the wrong file,
+# so removing the one I shouldn't look at (since it won't be updated
+# until the next true make anyway)
+
 quick: big-by-dir-quick.txt big-by-file-quick.txt statlist-quick.txt
+	rm big-by-file.txt big-by-dir.txt
 
 big-by-dir-quick.txt: statlist-quick.txt
 	bc-total-bytes.pl statlist-quick.txt | sort -nr > big-by-dir-quick.txt

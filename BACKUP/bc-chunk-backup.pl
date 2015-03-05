@@ -17,7 +17,7 @@ while (<>) {
   chomp;
   my($orig) = $_;
 
-  if (++$count%100000==0) {debug("COUNT: $count, BYTES: $tot");}
+  if (++$count%10000==0) {debug("COUNT: $count, BYTES: $tot");}
 
   if ($tot>=$limit) {last;}
 
