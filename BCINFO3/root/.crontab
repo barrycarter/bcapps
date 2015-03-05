@@ -1,6 +1,8 @@
 # email output to me, not locally
 # TODO: this wont work until I set up SOME sort of SMTP server on bcinfo3
-MAILTO="bcinfo3@barrycarter.info"
+# removing this, hoping to have email go to /var/spool/mail/root or
+# something which I can then download remotely
+# MAILTO="bcinfo3@barrycarter.info"
 # reload self every hour (meaning I can just update this file instead
 # of having to run "crontab -e"; however, I DO have to run crontab
 # ~/.crontab once)
