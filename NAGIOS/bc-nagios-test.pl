@@ -7,8 +7,8 @@
 # sorting and plugins
 $ENV{LC_ALL} = "C";
 
-# renice self
-system("/usr/bin/renice 19 -p $$");
+# renice self (removed after I start nagios at nice 19 anyway)
+# system("/usr/bin/renice 19 -p $$");
 
 # this is hideous; pass args to the program using NAGIOS_ARG2
 @ARGV = split(/\s+/, $ENV{NAGIOS_ARG2});
@@ -96,8 +96,7 @@ numbers are different (ie, I havent "lost" a mount)
 
 sub bc_check_mounts {
   my(@mountpoints) = @_;
-
-  debug("HALPYA");
+  my(%hash);
 
   for $i (@mountpoints) {
     my($str);
@@ -117,8 +116,13 @@ sub bc_check_mounts {
     my($dev, $ino, $mode, $nlink, $uid, $gid, $rdev, $size, $atime,
        $mtime, $ctime, $blksize, $blocks) = stat("$i/tempfile.txt");
 
-    debug("DEVNO: $dev");
+    if ($hash{$dev}) {
+      print "Repeated device: $i vs $hash{$dev}\n";
+      return 2;
+    }
+    $hash{$dev} = $i;
   }
+  return 0;
 }
 
 =item bc_check_url_sha1($url, $sha1)

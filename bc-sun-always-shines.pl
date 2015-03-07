@@ -3,8 +3,7 @@
 # shows where sun is shining, twilight, etc
 
 # TODO: first and third line below are ugly!
-push(@INC, "/usr/local/lib");
-require "bclib.pl";
+require "/usr/local/lib/bclib.pl";
 chdir("/sites/DATA");
 
 # from wolframalpha (in m)
@@ -12,7 +11,7 @@ chdir("/sites/DATA");
 $EARTH_CIRC = 4.007504e+7;
 
 $now = time();
-$outputfile = "/home/barrycarter/BCINFO/sites/TEST/sunstuff.html";
+$outputfile = "/sites/TEST/sunstuff.html";
 
 # TODO: ugly ugly ugly (should use Perl funcs and also not do "cat >>"
 $ENV{TZ} = "GMT";

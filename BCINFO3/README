@@ -50,7 +50,7 @@ yum -y install mysql mysql-server lighttpd-fastcgi fcgi libxml2 libxml2-devel
 yum -y install nano graphviz qhull zip strace xz ncurses ncurses-devel
 yum -y install readline readline-devel nagios-plugins 'nagios-plugins-*'
 yum -y install perl-Perl-Critic "perl-ExtUtils-*" inotify-tools tidy
-yum -y install calendar munin postgresql84 postgresql84-server
+yum -y install calendar munin postgresql84 postgresql84-server gd-devel
 
 % Perl modules (excluding those available via yum)
 
@@ -290,3 +290,11 @@ createdb root
 % 17 Feb 2015: turning off postgres at reboot but may change this
 
 chkconfig postgresql off
+
+% 05 Mar 2015: installing fly since my programs use it
+
+cd /root/build; curl -O http://martin.gleeson.net/fly/dist/fly-2.0.1.tar.gz
+tar xvfz fly-2.0.1.tar.gz
+cd fly-2.0.1
+make
+cp fly /usr/local/bin/
