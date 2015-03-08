@@ -9,7 +9,8 @@ require "/usr/local/lib/bclib.pl";
 # copy stdin to file (which we wont erase since were testing)
 # this is bad because it makes a system call
 # TODO: Time::HiRes (although it doesnt have a nanosecond?)
-$file = "/var/tmp/mail/".`date +%Y%m%d.%H%M%S.%N`;
+# pmail = psuedo mail
+$file = "/var/pmail/".`date +%Y%m%d.%H%M%S.%N`;
 $file=~s/\s*$//isg;
 write_file(<STDIN>,"$file.pre");
 
