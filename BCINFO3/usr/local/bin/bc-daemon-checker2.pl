@@ -118,6 +118,6 @@ map($_="bcinfo3: $_",@err);
 if ($globopts{stderr}) {
   print STDERR join("\n",@err),"\n";
 } else {
-  write_file_new(join("\n",@err),"/home/barrycarter/ERR/bcinfo3.err");
+  write_file_new(join("\n",@err),"$ENV{HOME}/ERR/bcinfo3.err");
 }
 

@@ -1,8 +1,6 @@
 #!/bin/perl
 
-# As of 9 Mar 2015, I bunzip2 files before zpaq'ing them, so need only
-# mtime and then filename (w/ .bz2 removed) to see what's already
-# backed up
+# Converts files on various devices to canonical names, with size and mtime
 
 # my devnos:
 
@@ -41,11 +39,11 @@ while (<>) {
   }
 
   # remove .bz2 if any (perhaps remove .gz later)
-  $name=~s/\.bz2$//;
+#  $name=~s/\.bz2$//;
 
   # pad mtime to 10 characters so numerical sort == standard sort
   # (this is useful so I don't have to sort twice when using comm)
   # <h>this may break in 2286 AD or so </h>
   $mtime = sprintf("%0.10d", $mtime);
-  print "$mtime $name";
+  print "$mtime $size $name";
 }
