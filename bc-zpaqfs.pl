@@ -9,7 +9,7 @@ use Fuse::Simple qw(accessor main);
 
 my($zfile,$mdir) = @ARGV;
 
-unless ($zfile=~/\.zpaq$/ && -d $mdir && $mdir=~m%/%) {die("Usage: $0 zpaq-file full-path-tomount-directory");}
+unless (-d $mdir && $mdir=~m%/%) {die("Usage: $0 zpaq-file full-path-tomount-directory");}
 
 my($keystr);
 if ($globopts{key}) {$keystr="-key $globopts{key}";}
