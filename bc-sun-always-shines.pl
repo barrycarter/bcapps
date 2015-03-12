@@ -2,9 +2,7 @@
 
 # shows where sun is shining, twilight, etc
 
-# TODO: first and third line below are ugly!
 require "/usr/local/lib/bclib.pl";
-chdir("/sites/DATA");
 
 # from wolframalpha (in m)
 # (yes, I know I define a similar constant in bclib.pl)
@@ -17,11 +15,21 @@ $outputfile = "/sites/TEST/sunstuff.html";
 $ENV{TZ} = "GMT";
 system("echo '<meta http-equiv=\"refresh\" content=\"60\">' > $outputfile");
 system("echo Last updated: `date` >> $outputfile");
-system("/bin/cat /usr/local/etc/sun/gbefore.txt >> $outputfile");
+system("/bin/cat /usr/local/etc/gbefore.txt >> $outputfile");
 
 open(A, ">>$outputfile");
 
-($ra, $dec) = position("sun", $now);
+my(%data) = sunmooninfo(0,0);
+
+debug("DATA",unfold(\%data));
+
+my(%data) = sunmooninfo(-79-83,-3.6);
+
+debug("DATA2",unfold(\%data));
+
+die "TESTING";
+
+# ($ra, $dec) = position("sun", $now);
 
 # sidereal time in Greenwich
 $sdm = gmst($now);
