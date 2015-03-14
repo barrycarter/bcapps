@@ -13,8 +13,6 @@
 */5 * * * * /usr/local/bin/bc-cheap-bay.pl
 # send email to comicssherpa.com authors who have requested it
 */10 * * * * r2e run
-# confirms that all daemons are running
-*/10 * * * * /usr/local/bin/bc-daemon-checker.pl
 # keeps /tmp clean (I tend to create a lot of /tmp files)
 42 1 * * * find /tmp -name 'cache*' -mmin +180 | xargs --no-run-if-empty rm
 # update database of files for locate
@@ -31,6 +29,6 @@
 # TODO: should really use tmpwatch here or access time instead of mtime...
 09 6 * * * find /tmp/ -mtime +7 | xargs rm
 # MOS guidance
-52 * * * * /usr/local/bin/bc-get-guidance.pl
+52 * * * * /usr/local/bin/bc-get-guidance2.pl
 # check that all daemons are running properly
 */5 * * * * /usr/local/bin/bc-daemon-checker2.pl

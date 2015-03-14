@@ -9,40 +9,30 @@ require "/usr/local/lib/bclib.pl";
 $EARTH_CIRC = 4.007504e+7;
 
 $now = time();
-$outputfile = "/sites/TEST/sunstuff.html";
+$outputfile = "/sites/test/sunstuff.html";
 
 # TODO: ugly ugly ugly (should use Perl funcs and also not do "cat >>"
 $ENV{TZ} = "GMT";
 system("echo '<meta http-equiv=\"refresh\" content=\"60\">' > $outputfile");
 system("echo Last updated: `date` >> $outputfile");
+# circles that come close to the edges confuse google maps?
+system("echo '<br>The odd grey rectangles near the equinoxes appear to be an artifact of how google maps draws client-side circles' >> $outputfile");
 system("/bin/cat /usr/local/etc/gbefore.txt >> $outputfile");
 
 open(A, ">>$outputfile");
 
 my(%data) = sunmooninfo(0,0);
 
-debug("DATA",unfold(\%data));
-
-my(%data) = sunmooninfo(-79-83,-3.6);
-
-debug("DATA2",unfold(\%data));
-
-die "TESTING";
-
-# ($ra, $dec) = position("sun", $now);
-
 # sidereal time in Greenwich
 $sdm = gmst($now);
-
 # difference to $ra (east of Greenwich)
-$dege = ($ra-$sdm)*15;
-
+$dege = $data{sun}{ra}-$sdm*15;
 # determine overhead point
-($lat, $lon) = ($dec, $dege);
+($lat, $lon) = ($data{sun}{dec}, $dege);
 
 # finding antipode here is ugly
 $alat = -1*$lat;
-$alon = (180+$dege);
+$alon = fmodn((180+$dege),360);
 
 print A << "MARK"
 
@@ -89,12 +79,6 @@ for $i (1..15) {
   # civil/nautical/astro twiling
   if ($i <= 4 ) {$sw2 = 1;} else {$sw2 = 0.1;}
 
-  # figure out color (always red + some cyan for first 15, so white at top)
-  $lev = 255*($i/15);
-  $col = sprintf("#%0.2x%0.2x%0.2x",255,255,255);
-
-  debug("LEV: $lev, COL: $col");
-
   print A << "MARK";
 
 new google.maps.Circle({
@@ -120,9 +104,8 @@ MARK
 }
 
 # for moon, only one circle, so do it here
-($mra, $mdec) = position("moon", $now);
-$mdege = ($mra-$sdm)*15;
-($mlat, $mlon) = ($mdec, $mdege);
+$mdege = $data{moon}{ra}-$sdm*15;
+($mlat, $mlon) = ($data{moon}{dec}, $mdege);
 $mrad = $EARTH_CIRC/4;
 
 print A << "MARK"
@@ -151,4 +134,4 @@ MARK
 
 close(A);
 
-system("cat /usr/local/etc/sun/gend.txt >> $outputfile");
+system("cat /usr/local/etc/gend.txt >> $outputfile");

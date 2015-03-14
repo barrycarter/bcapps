@@ -9,6 +9,8 @@ use Fuse::Simple qw(accessor main);
 
 my($zfile,$mdir) = @ARGV;
 
+debug("ZFILE: $zfile, MDIR: $mdir");
+
 unless (-d $mdir && $mdir=~m%/%) {die("Usage: $0 zpaq-file full-path-tomount-directory");}
 
 my($keystr);
@@ -20,7 +22,10 @@ chdir("/var/tmp/fuse/");
 system("rm -rf /var/tmp/fuse/*");
 
 # list of files
+debug("START: reading file list");
 my($out,$err,$res) = cache_command("zpaq list $zfile $keystr", "age=86400");
+debug("END: reading file list");
+debug("START: parsing file list");
 
 # TODO: error checking
 
@@ -34,17 +39,28 @@ for $i (split(/\n/, $out)) {
   unless ($symb eq "-") {next;}
   # record file metadata (even for dirs, stripping trailing slash(es))
   $file=~s%/+$%%;
+
+  # TODO: fix this!!!
+  if ($file=~/\"/) {
+    warn("$file: skipped, files with quotes in name not supported (yet)");
+    next;
+  }
+
+
   $meta{"/$file"} = $i;
   if ($mode=~/^d/) {next;}
 
   my(@dirs) = split(/\//, $file);
-  map($_="{'$_'}", @dirs);
+  map($_="{\"$_\"}", @dirs);
 
   # TODO: there must be a better way to do this (tm)
-  my($eval) = "\$fs->".join("",@dirs)."=sub{read_zpaq_file('$file','$zfile')}";
+  my($eval) = "\$fs->".join("",@dirs)."=sub{read_zpaq_file(\"$file\",'$zfile')}";
+  debug("EVAL: $eval");
   eval($eval);
 
 }
+
+debug("END: parsing file list");
 
 # TODO: turn on threading when possible
 main("mountpoint" => $mdir, "/" => $fs);
@@ -52,8 +68,10 @@ main("mountpoint" => $mdir, "/" => $fs);
 # TODO: create cronjob or something to delete unused files
 sub read_zpaq_file {
   my($file,$zfile) = @_;
+  debug("EXTRACTING: $file");
   # create file if it doesn't exist
   unless (-f $file) {system("zpaq extract $zfile $file $keystr 1> /dev/null");}
+  debug("DONE EXTRACTING: $file");
   return read_file($file);
 }
 
