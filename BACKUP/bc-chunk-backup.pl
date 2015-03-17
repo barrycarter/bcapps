@@ -13,44 +13,32 @@ my($tot, $count);
 open(A,">filelist.txt");
 open(B,">statlist.txt");
 
+# record files to bunzip2/gunzip (and others?), but exclude symlinks
+# and put ROOT/ in front
+open(C,">bunzip2.txt");
+open(D,">gunzip.txt");
+
 while (<>) {
   chomp;
   my($orig) = $_;
-
   if (++$count%10000==0) {debug("COUNT: $count, BYTES: $tot");}
-
   if ($tot>=$limit) {last;}
 
-  my(%file);
+  # TODO: in theory, could grab current file size using "-s" (but too slow?)
+  my($mtime,$size,$name) =  split(/\s+/, $_, 3);
+  $tot+= $size;
 
-  # TODO: in theory, could grab current file size using "-s"
-  ($file{mtime},$file{size},$file{name}) =  split(/\s+/, $_, 3);
-
-  # running four tests here is probably insanely inefficient
-  # silently ignore directories, device files, etc
-#  if (-d $file{name} || -c $file{name} || -b $file{name} || -S $file{name}) {
-#    next;
-#  }
-
-  # TODO: this might slow things down excessively, even with caching
-#  unless (-f $file{name} || -l $file{name}) {
-#    warn "NO SUCH FILE: $file{name}";
-#    next;
-#  }
-
-  $tot+= $file{size};
+  # compressed? (newline for now, change to null for xargs -0 later)
+  if ($name=~/\.bz2$/ || $name=~/\.tbz$/) {print C "ROOT/$name\n";}
+  if ($name=~/\.gz$/ || $name=~/\.tgz$/) {print D "ROOT/$name\n";}
 
   # NOTE: to avoid problems w/ filesizes > $limit, we add to chunk
   # first and THEN check for overage
-  print A "$file{name}\n";
+  print A "$name\n";
   print B "$orig\n";
 }
 
-close(A); close(B);
-
-# TODO: really unhappy about this, should be able to do this in program
-# system ("sort statlist1.txt -o statlist1.txt");
-
 debug("Used $count files to meet total");
+close(A); close(B); close(C); close(D);
 
-# TODO: check zpaq errors
+
