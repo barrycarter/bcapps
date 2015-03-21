@@ -128,9 +128,10 @@ sub shorten {
   # shrink planet names + more
   $event=~s/(mercury|venus|earth|mars|jupiter|saturn|uranus|beehive|pollux|pleiades|aldebaran|superior|inferior|conj\.|conjunction)/substr($1,0,3)/ieg;
 
-  # TODO: I want these back, this elimination is only temporary
-#  if ($event=~/^moon\-/i) {return;}
+  # short form for meteor showers
+  $event=~s/(^.*?) Shower: ZHR = (\d+)/${1}s ($2\/hr)/;
 
-  # adding astericks for now so I can identify unchanged events
+  debug("EV: $event");
+
   return "$sdate $event\n";
 }

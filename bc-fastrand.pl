@@ -11,17 +11,21 @@ require "/usr/local/lib/bclib.pl";
 defaults("n=1");
 
 # size of file
-($fname) = @ARGV;
-open(A, $fname) || die("Can't open $fname, $!");
+my($fname) = @ARGV;
 $fsize = -s $fname;
+my(@rand);
 
-for $i (1..$globopts{n}) {
+# now gives line in same order they appear in file
+for $i (1..$globopts{n}) {push(@rand, int(rand($fsize)));}
 
-  # random byte
-  $rbyte = int(rand($fsize));
+open(A, $fname) || die("Can't open $fname, $!");
+
+for $i (sort {$a <=> $b} @rand) {
+
+  debug("BYTE: $i");
 
   # seek to that position in file
-  seek(A, $rbyte, SEEK_SET);
+  seek(A, $i, SEEK_SET);
 
   # read to end of that line
   $eol = <A>;

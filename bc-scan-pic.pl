@@ -17,6 +17,8 @@ $usb = $scanners{"0x03f0"}{"0x1205"};
 unless ($usb) {die "Scanner not attached";}
 $scanner = "hp5590:$usb";
 
+debug("SCANNER: $scanner");
+
 my($date) = `date +%Y%m%d.%H%M%S.%N`;
 chomp($date);
 system("sudo scanimage --mode Color -d $scanner --resolution 600 > $date.ppm");

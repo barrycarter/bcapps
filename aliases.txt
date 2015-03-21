@@ -174,3 +174,5 @@ alias zpaq "/root/build/ZPAQ71/zpaq \!*"
 # run make in parallel
 alias make "make -j \!*"
 
+# quickly check that a file is sorted by extracting a few lines
+alias quiksortcheck "bc-fastrand.pl --n=100 \!* | sort -c"
