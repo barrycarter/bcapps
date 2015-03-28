@@ -16,7 +16,7 @@ $file = "$bclib{home}/DOING";
 # thing given?
 
 # "DONE:" indicates item is done and not to be shown, NOT: = abandoned
-unless (@ARGV) {system("tac $file | egrep -v 'DONE:|NOT:|OK:|FIXED:' | less"); exit(0);}
+unless (@ARGV) {system("tac $file | egrep -v 'DONE:|NOT:|OK:|FIXED:|NOTED:' | less"); exit(0);}
 
 # <h>time and item are anagrams</h>
 my($item) = join(" ",@ARGV);

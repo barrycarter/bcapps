@@ -7,3 +7,5 @@ nethack on
 # I hate accidentally detaching screens
 bind d
 bind ^d
+# and have no idea what "digraph" means
+bind ^v
