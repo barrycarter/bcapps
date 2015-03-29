@@ -29,7 +29,7 @@ for (;;) {
 }
 
 # send file to ofx parser
-($out, $err, $res) = cache_command("/home/barrycarter/BCGIT/bc-parse-ofx.pl $out");
+($out, $err, $res) = cache_command("/home/barrycarter/BCGIT/bc-parse-ofx.pl '$out'");
 
 # useless fact: allybank.com no longer names their OFX dumps as
 # trans[x], where x is the unix time to the millisecond (I think)

@@ -11,6 +11,15 @@ my($time) = shift(@ARGV);
 # TODO: catenating remaining args is probably a bad idea
 my($msg) = join(" ",@ARGV);
 
+# sendmail command (as Perl function)
+$smc = "bc-call-func.pl sendmail $private{email}{from} $private{email}{sms} '$msg'";
+
+system($smc);
+
+debug("SMC: $smc");
+
+die "TESTING";
+
 open(A,"|at -v $time")||die("Can't open at command, $!");
 # TODO: is TERM setting below necessary?
 print A "DISPLAY=:0.0; export DISPLAY; TERM=vt100; export TERM; xmessage -geometry 1024 $msg & bc-call-func.pl sendmail $private{email}{from} $private{email}{sms} $msg &";
