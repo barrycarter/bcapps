@@ -44,6 +44,8 @@ require "/usr/local/lib/bclib.pl";
 	  "Tolerance Day" => "1116",
 	  "AIDS Day" => "1201",
 	  "Human Rights Day" => "1210",
+	  "Nurses Week" => "0506",
+	  "Nurses Day" => "0512",
 	  "" => ""
 	  );
 
@@ -64,6 +66,9 @@ for $i (2015..2037) {
 
   # fixed dates
   for $j (keys %fixed) {push(@dates, "${i}$fixed{$j}", $j);}
+
+  # http://en.wikipedia.org/wiki/National_Day_of_Prayer
+  push(@dates, weekdayAfterDate("${i}0501", 4, 0), "Prayer Day");
 
   # per http://en.wikipedia.org/wiki/Men%27s_major_golf_championships
   push(@dates, datePlusDays(weekdayAfterDate("${i}0401",0,1),-3), "Masters (golf)");

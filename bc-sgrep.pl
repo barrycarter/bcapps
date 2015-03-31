@@ -29,6 +29,7 @@ for (;;) {
   seek(A, $seek, SEEK_SET);
   # get current line
   $line = current_line(\*A,"\n");
+  debug("SEEK: $seek, LINE: $line");
 
   # if it matches, exit (will print later)
   # TODO: case insensitivity should be optional

@@ -180,5 +180,5 @@ alias quiksortcheck "bc-fastrand.pl --n=100 \!* | sort -c"
 # short name for bc-alarm.pl (alarm2 is because I used to have two
 # different alarm systems)
 
-alias alarm "/home/barrycarter/bc-alarm.pl \!*";
-alias alarm2 "/home/barrycarter/bc-alarm.pl \!*";
+alias alarm "/home/barrycarter/BCGIT/bc-alarm.pl \!*";
+alias alarm2 "/home/barrycarter/BCGIT/bc-alarm.pl \!*";
