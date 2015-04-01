@@ -6,8 +6,8 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# sortcmp("b","a");
-sortcmp("a","b");
+sortcmp("b","a");
+# sortcmp("a","b");
 
 =item sortcmp($left,$right,$opts)
 
@@ -22,10 +22,12 @@ TODO: do comparisons in both directions to avoid sort weirdnesses
 =cut
 
 sub sortcmp {
-  my($left,$right,$opts);
+  my($left,$right,$opts) = @_;
   local(*A);
-  debug(open(A, "|sort -c $opts"));
-  print A "$left\n$right\n";
-  debug(close(A));
-  debug("SUCC: $?, $!");
+#  open(A, "|sort -c $opts 1> /tmp/out1.txt 2> /tmp/out2.txt");
+  open(A, "|sort -c 1> /tmp/out1.txt 2> /tmp/out2.txt");
+#  print A "$left\n$right\n";
+  print A "b\na\n";
+  my($cval) = close(A);
+  debug("SUCC: $cval / $? / $!");
 }
