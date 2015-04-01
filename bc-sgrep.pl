@@ -12,7 +12,9 @@ use locale;
 # TODO: handle corner case of where first/last line matches
 # TODO: show all matches not just first found
 # TODO: in case of fail, show bracketing lines
+# TODO: confirm file is sorted, to extent possible (w/o doing extra work)
 my($key, $file) = @ARGV;
+my(%data);
 
 $size = -s $file;
 ($l, $r) = (0, $size);
@@ -29,15 +31,17 @@ for (;;) {
   seek(A, $seek, SEEK_SET);
   # get current line
   $line = current_line(\*A,"\n");
+  # TODO: confirm data keys and values in same order (else, badly sorted input)
+  $data{$seek} = $line;
   debug("SEEK: $seek, LINE: $line");
 
   # if it matches, exit (will print later)
   # TODO: case insensitivity should be optional
-  if (lc(substr($line,0,length($key))) eq lc($key)) {last;}
+  if (substr($line,0,length($key)) eq $key) {last;}
 
   # if not, change left/right range
   # TODO: generalize this test
-  if (lc($key) lt lc($line)) {
+  if ($key lt $line) {
     $r = $seek;
   } else {
     $l = $seek;
@@ -51,7 +55,7 @@ for (;;) {
 my($pos) = max(tell(A)-2,0);
 
 # look at lines going forward
-while (lc(substr($line,0,length($key))) eq lc($key)) {
+while (substr($line,0,length($key)) eq $key) {
   chomp($line);
   push(@for, $line);
   $line = current_line(\*A, "\n");
@@ -64,7 +68,7 @@ seek(A,$pos,SEEK_SET);
 $line = current_line(\*A,"\n",-1);
 
 # look at lines going backwards
-while  (lc(substr($line,0,length($key))) eq lc($key)) {
+while  (substr($line,0,length($key)) eq $key) {
   chomp($line);
   push(@rev, $line);
   $line = current_line(\*A, "\n",-1);
