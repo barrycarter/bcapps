@@ -4,7 +4,7 @@
 # dumps files and creates a reverse lookup table
 cd /
 date > bcunix-files.txt.new
-find / -xdev -printf "%T@ %s %i %m %y %g %u %D %p\n">>bcunix-files.txt.new
+find / -xdev -noleaf -warn -printf "%T@ %s %i %m %y %g %u %D %p\n">>bcunix-files.txt.new 2> bcunix-files.err
 date >> bcunix-files.txt.new
 # bzip the previous instance and save it, keep current instance uncompressed
 bzip2 -v bcunix-files.txt

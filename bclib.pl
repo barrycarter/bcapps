@@ -110,7 +110,7 @@ our(%is_tempfile);
 our(%shared);
 
 our(@globopts) = ("debug", "nocache", "tmpdir", "nowarn", "fake", "ignorelock",
-		  "affirm", "keeptemp", "xmessage");
+		  "affirm", "keeptemp", "xmessage", "bgend");
 
 # global options this library supports
 #
@@ -122,7 +122,8 @@ our(@globopts) = ("debug", "nocache", "tmpdir", "nowarn", "fake", "ignorelock",
 # --ignorelock: ignore any locks held by mylock()
 # --affirm: assume affirmative responses to anything affirm() asks
 # --keeptemp: keep temporary files
-# --xmessage: pop up xmessage after program ends
+# --xmessage: pop up xmessage when program ends
+# --bgend: write to background image when program ends
 
 # largest possible path
 $ENV{PATH} = "/sbin:/opt/metaf2xml/bin/:/sw/bin/:/bin/:/usr/bin/:/usr/local/bin/:/usr/X11R6/bin/:/usr/lib/nagios/plugins:/usr/lib:/usr/sbin/:$ENV{HOME}/bin:$ENV{HOME}/PERL";
@@ -4622,8 +4623,13 @@ sub END {
   debug("END: CLEANING UP TMP FILES");
   local $?;
 
-  # if --xmessage set, alert user
+  # if --xmessage set, alert user + write to bg image
   if ($globopts{xmessage}) {xmessage("Program has ended",1);}
+
+  # if --bgend, write to background image
+  if ($globopts{bgend}) {
+    append_file("$0 has ended\n", "$ENV{HOME}/ERR/ended_programs.err");
+  }
 
   if ($globopts{keeptemp}) {return;}
 
