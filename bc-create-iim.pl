@@ -13,7 +13,7 @@ require "/usr/local/lib/bclib.pl";
 
 # run the macro
 # TODO: yes, this is a terrible place to keep my firefox
-($out, $err, $res) = cache_command("/root/build/firefox/firefox -remote 'openURL(http://run.imacros.net/?m=bc-create-ally.iim,new-tab)'");
+($out, $err, $res) = cache_command("/root/build/firefox/firefox -P default -remote 'openURL(http://run.imacros.net/?m=bc-create-ally.iim,new-tab)'");
 
 # not sure how long it takes to run above command, so wait until
 # transactions*.qfx shows up in download directory (and is fairly recent)

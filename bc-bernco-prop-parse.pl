@@ -54,9 +54,6 @@ while ($all=~s/(.*?)$str//s) {
 }
 
 for $i (sort {$data{$a}{addr} cmp $data{$b}{addr}} keys %data) {
-  # only need first 4 chars of addr for my purposes
-  my($addr) = substr($data{$i}{addr},0,4);
-
-  print "$addr\t$data{$i}{owner1}\t\t$data{$i}{mailingaddress}\n";
+  print "$data{$i}{addr}\t$data{$i}{owner1}\t$data{$i}{mailingaddress}\n";
 }
 
