@@ -11,5 +11,10 @@
 require "/usr/local/lib/bclib.pl";
 
 for $i (glob "/mnt/sshfs/XWD/*.zpaq") {
+  # the files I've archived
+  my($out,$err,$res) = cache_command2("zpaq list $i","age=86400");
+  # the files I've OCRd
+  $i=~s/\.zpaq//;
   debug("I: $i");
+  my($out,$err,$res) = cache_command2("find /mnt/sshfs/XWD/$i","age=86400");
 }
