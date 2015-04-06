@@ -17,6 +17,8 @@ require "/usr/local/lib/bclib.pl";
 
 my(%size,%count);
 
+warn "special temporary tweak version";
+
 while (<>) {
   chomp;
 
@@ -27,7 +29,9 @@ while (<>) {
 
   ($file{mtime},$file{size},$file{name}) =  split(/\s+/, $_, 3);
 
-  debug("FILE",%file);
+  # tweak for special case
+  s%^.*?/%/%;
+  $file{name} = $_;
 
   # TODO: filter out dirs/etc
   if ($globopts{justfiles}) {print "$file{name}\n"; next;}
@@ -41,7 +45,9 @@ while (<>) {
   # find all ancestor directories
   while ($file{name}=~s/\/([^\/]*?)$//){
 
-    if ($globopts{printonly}) {print "$file{name}\n";}
+    debug("NAME NOW: $file{name}");
+
+    if ($globopts{printonly}) {print "$file{name}\n"; next;}
 
     $size{$file{name}}+=$file{size};
     $count{$file{name}}++;

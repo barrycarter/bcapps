@@ -3,11 +3,7 @@
 # Given the output of "zpaq list", outputs data that can be used to
 # exclude these files from next backup (via mtime and filename)
 
-# The SQLite3 lines below are experimental
-
 require "/usr/local/lib/bclib.pl";
-open(A,">/tmp/bczpaq2exclude.sql");
-print A "BEGIN;\n";
 
 while (<>) {
   chomp;
@@ -28,30 +24,5 @@ while (<>) {
   unless ($file=~s/\.([^\.\/]*)$/\0$1/) {$file="$file\0";}
 
   # including $size here is semi-pointless?
-  print "$time$file\0$size\n";
-
-  # just for sqlite3
-  $file=~s/\'/''/g;
-  print A "INSERT INTO files (mtime, size, filename, backedup) VALUES
- ($time, $size, '$file', 'Y');\n";
+  print "$time $file\0$size\n";
 }
-
-print A "COMMIT;\n";
-close(A);
-
-=item schema
-
-Schema of mysql tables:
-
-CREATE TABLE files (
- mtime INT,
- size INT,
- filename TEXT,
- backedup CHAR(1)
-);
-
-CREATE INDEX i1 ON files(mtime,filename);
-
-
-=cut
-

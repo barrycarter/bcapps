@@ -46,7 +46,6 @@ while (<>) {
   # for `join`, treat extension as separate field (or add null extension)
   unless ($name=~s/\.([^\.\/]*)$/\0$1/) {$name="$name\0";}
 
-  # unusual format so I can used Unix `join` command to check against
-  # older backups
+  # `join` on mtime and filename sans extension
   print "$mtime $name\0$size\n";
 }
