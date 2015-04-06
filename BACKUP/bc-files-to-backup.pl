@@ -9,19 +9,33 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# extensions that bc-chunk-backup.pl strips
+my(%badext) = list2hash("bz2","tbz","tgz","gz");
+
 while (<>) {
   chomp;
 
   my(@data) = split(/\0/,$_);
 
-  
+  # if only 3 fields, no join match, so definitely backup
+  if (scalar(@data)==3) {print "$_\n"; next;}
 
-  die "TESTING";
+  # only remaining case should be 5 fields
+  unless (scalar(@data)==5) {warn "BAD FIELDS: $_";}
 
-  # if the size and extension match, we definitely have backed this up already
-  if ($ext1 eq $ext2 && $size1 == $size2) {next;}
+  my($join,$ext1,$size1,$ext2,$size2) = @data;
 
-  # if the 
+  # if perfect match, already backed up
+  if ($ext1 eq $ext2 && $size1 eq $size2) {next;}
+
+  # backed up with stripped extension
+  if ($badext{$ext1} && $ext2 eq "") {next;}
+
+  # no extension match, so, yes, bakcup
+  debug("GO: $_");
+
+  # corner cases now, look at extensions
+
 
 
   if ($ext1 eq "bz2") {
