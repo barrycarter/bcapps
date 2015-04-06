@@ -9,11 +9,6 @@
 # only because these are the last targets (so everything else gets made too)
 all: big-by-file.txt big-by-dir.txt
 
-# joins all files to backed up files (afad.txt is sorted)
-# note that "-v 1" fails here because of imperfect join condition
-leftjoin.txt: afad.txt previouslydone.txt.srt
-	join -a 1 -t '\0' afad.txt previouslydone.txt.srt > leftjoin.txt
-
 # from the full file list, extract fields I want (except extdrive ignored)
 bcmac-converted.txt: /mnt/sshfs/bcmac-files.txt
 	bc-format2altformat.pl /mnt/sshfs/bcmac-files.txt>bcmac-converted.txt
@@ -31,21 +26,15 @@ afad.txt: bcmac-converted.txt bcpc-converted.txt bcunix-converted.txt
 # because there may be more efficient ways of doing it outside the
 # makefile)
 
-# the list of files I haven't backed up previously (at least not with
-# their current size and time): previousbackup.txt.srt is a sorted
-# list of all files I've backed up previously (with size and mtime)
-backupnow.txt: afad.txt previousbackup.txt.srt
-	comm -23 afad.txt previousbackup.txt.srt > backupnow.txt
-
-filelist.txt statlist.txt: exclusions.txt backupnow.txt
-	tac backupnow.txt | egrep -vf exclusions.txt | bc-chunk-backup.pl --debug
+filelist.txt statlist.txt: exclusions.txt afad.txt previouslydone.txt.srt
+	join -a 1 -t '\0' afad.txt previouslydone.txt.srt | bc-files-to-backup.pl | egrep -vf exclusions.txt | bc-chunk-backup.pl --debug
 
 # while testing exclusions.txt, it's important to know what big files and
 # big directories I'm backing up (so I can potentially exclude them)
 big-by-dir.txt: statlist.txt
 	bc-total-bytes.pl statlist.txt | sort -nr > big-by-dir.txt
 big-by-file.txt: statlist.txt
-	sort -k2nr statlist.txt > big-by-file.txt
+	sort -k1nr statlist.txt > big-by-file.txt
 
 # it's sometimes useful to see what effect changing exclusions.txt
 # will have without redoing the entire chunk backup; "make quick"
@@ -59,7 +48,7 @@ quick: big-by-dir-quick.txt big-by-file-quick.txt statlist-quick.txt
 big-by-dir-quick.txt: statlist-quick.txt
 	bc-total-bytes.pl statlist-quick.txt | sort -nr > big-by-dir-quick.txt
 big-by-file-quick.txt: statlist-quick.txt
-	sort -k2nr statlist-quick.txt > big-by-file-quick.txt
+	sort -k1nr statlist-quick.txt > big-by-file-quick.txt
 
 # statlist.txt is NOT a dependency since we don't want to rebuild it
 statlist-quick.txt: exclusions.txt

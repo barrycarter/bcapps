@@ -27,11 +27,12 @@ while (<>) {
 
   my(%file);
 
-  ($file{mtime},$file{size},$file{name}) =  split(/\s+/, $_, 3);
+  # cheat change
+  ($file{size},$file{mtime},$file{name}) =  split(/\s+/, $_, 3);
 
   # tweak for special case
-  s%^.*?/%/%;
-  $file{name} = $_;
+#  s%^.*?/%/%;
+#  $file{name} = $_;
 
   # TODO: filter out dirs/etc
   if ($globopts{justfiles}) {print "$file{name}\n"; next;}
