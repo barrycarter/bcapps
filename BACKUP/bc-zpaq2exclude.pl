@@ -16,23 +16,19 @@ while (<>) {
   # ignroe directories
   if ($mode=~/^d/) {next;}
 
+  unless ($symb eq "-") {warn("SKIPPING: $_"); next;}
+
   # strip directory head (where I rsync stuff)
-  $file=~s%/mnt/sshfs/CORPUS/ROOT/%/%;
+  unless ($file=~s%^ROOT/%/%) {warn "BAD FILENAME: $file";}
 
-  unless ($symb eq "-") {
-    warn("SKIPPING: $_");
-    next;
-  }
+  # 11 digits because `join` requires lexical sort
+  my($time) = sprintf("%0.11d", str2time("$date $time UTC"));
 
-  # 10 digits because comm requires lexical sort
-  my($time) = sprintf("%0.10d", str2time("$date $time UTC"));
+  # for `join`, treat extension as separate field (or add null extension)
+  unless ($file=~s/\.([^\.\/]*)$/\0$1/) {$file="$file\0";}
 
-  # because I unbzip2/ungzip files, must list all 3 versions of file
-  print "$time $file\n";
-  print "$time $file.bz2\n";
-  print "$time $file.gz\n";
-
-  if ($file=~s/\.tar$/.tbz/) {print "$time $file\n";}
+  # including $size here is semi-pointless?
+  print "$time$file\0$size\n";
 
   # just for sqlite3
   $file=~s/\'/''/g;
