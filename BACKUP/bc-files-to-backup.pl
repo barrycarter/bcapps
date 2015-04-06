@@ -23,6 +23,8 @@ while (<>) {
   # only remaining case should be 5 fields
   unless (scalar(@data)==5) {warn "BAD FIELDS: $_";}
 
+
+  debug("POSSIBLE MATCH: $_");
   my($join,$ext1,$size1,$ext2,$size2) = @data;
 
   # if perfect match, already backed up

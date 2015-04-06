@@ -20,8 +20,8 @@ while (<>) {
   # want to sort by time descending, see bc-format2altformat.pl for details
   my($time) = 2**33-str2time("$date $time UTC");
 
-  # for `join`, treat extension as separate field (or add null extension)
-  unless ($file=~s/\.([^\.\/]*)$/\0$1/) {$file="$file\0";}
+  # the only important extension for backups is tar (others are removed)
+  if ($file=~s/\.tar$//) {$file="$file\0tar";} else {$file="$file\0";}
 
   # including $size here is semi-pointless?
   print "$time $file\0$size\n";

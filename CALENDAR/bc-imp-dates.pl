@@ -51,6 +51,7 @@ my(@dates);
 	  "All Saints Day" => "1101",
 	  "All Souls Day" => "1102",
 	  "St Peter and Paul Day" => "0629",
+	  "QE II Birthday" => "0421",
 	  "" => ""
 	  );
 
