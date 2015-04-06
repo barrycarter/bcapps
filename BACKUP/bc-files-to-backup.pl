@@ -18,7 +18,7 @@ while (<>) {
   my(@data) = split(/\0/,$_);
 
   # if only 3 fields, no join match, so definitely backup
-  if (scalar(@data)==3) {print "$_\n"; next;}
+  if (scalar(@data)==3) {doprint($_); next;}
 
   # only remaining case should be 5 fields
   unless (scalar(@data)==5) {warn "BAD FIELDS: $_";}
@@ -32,18 +32,20 @@ while (<>) {
   if ($badext{$ext1} && $ext2 eq "") {next;}
 
   # no extension match, so, yes, bakcup
-  debug("GO: $_");
+  doprint($_);
+}
 
-  # corner cases now, look at extensions
+# prints the line in proper format for bc-chunk-backup.pl, restoring
+# extension and reordering fields
 
+sub doprint {
+  my($str) = @_;
 
+  # TODO: redundant coding, yuck
+  my($join,$ext1,$size1,$ext2,$size2) = split(/\0/,$_);
 
-  if ($ext1 eq "bz2") {
-    debug("SPECIAL: $_");
-  }
-
-  # otherwise, may need to back this up (but special cases apply)
-#  debug("THUNK: $_");
+  if ($ext1) {$join="$join.$ext1";}
+  print "$size1 $join\n";
 }
 
 

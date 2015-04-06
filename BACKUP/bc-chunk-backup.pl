@@ -25,7 +25,7 @@ while (<>) {
   if ($tot>=$limit) {last;}
 
   # TODO: in theory, could grab current file size using "-s" (but too slow?)
-  my($mtime,$size,$name) =  split(/\s+/, $_, 3);
+  my($size,$mtime,$name) =  split(/\s+/, $_, 3);
   $tot+= $size;
 
   # compressed? (newline for now, change to null for xargs -0 later)
