@@ -19,7 +19,7 @@ require "/usr/local/lib/bclib.pl";
 	  "Veterans Day" => "1111",
 	  "Christmas" => "1225",
 	  "Christmas Eve" => "1224",
-	  "Halloween" => "1031",
+	  "Halloween/Reformation" => "1031",
 	  "St Patrick's Day" => "0317",
 	  "Groundhog Day" => "0202",
 	  "Tax Day" => "0415",
@@ -27,7 +27,7 @@ require "/usr/local/lib/bclib.pl";
 	  "Cinco de Mayo" => "0505",
 	  "Citizenship Day" => "0917",
 	  "Rememberence Day" => "0911",
-	  "Boss's Day" => "1016",
+	  "Bosses' Day" => "1016",
 	  "New Year's Eve" => "1231",
 	  "Pearl Harbor Day" => "1207",
 	  "Susan B Anthony Day" => "0215",
@@ -46,10 +46,24 @@ require "/usr/local/lib/bclib.pl";
 	  "Human Rights Day" => "1210",
 	  "Nurses Week" => "0506",
 	  "Nurses Day" => "0512",
+	  "Boxing Day" => "1226",
+	  "All Saints Day" => "1101",
+	  "All Souls Day" => "1102",
+	  "St Peter and Paul Day" => "0629",
 	  "" => ""
 	  );
 
+# NOTE: some former British colonies bump Boxing Day to the 27th if it
+# falls on a Sunday. I don't
+
 delete $fixed{""};
+
+# from gcal's massive list of holidays
+my($out,$err,$res) = cache_command2("egrep -i 'easter sunday|mardi gras|ash wednesday|passion sunday|good friday|pentecost|whit monday|rosh' $bclib{githome}/ASTRO/bc-gcal-filter-out.txt","age=86400");
+
+debug("OUT: $out, ERR: $err");
+
+die "TESTING";
 
 # TODO: Hannukah, equinox/solstices, Easter/Mardi Gras/Ash
 # Wednesday/Good Friday, when holidays fall on weekend, Black Friday?,
@@ -66,6 +80,15 @@ for $i (2015..2037) {
 
   # fixed dates
   for $j (keys %fixed) {push(@dates, "${i}$fixed{$j}", $j);}
+
+  # http://en.wikipedia.org/wiki/Friendship_Day (first Sunday)
+  push(@dates, weekdayAfterDate("${i}0801",0,0), "Friendship Day");
+
+  # http://nationaldaycalendar.com/national-mother-in-law-day-fourth-sunday-in-october/
+  push(@dates, weekdayAfterDate("${i}1001",0,3), "Mother-in-Law Day");
+
+  # http://en.wikipedia.org/wiki/Armed_Forces_Day#United_States
+  push(@dates, weekdayAfterDate("${i}0501",6,2,), "Armed Forces Day");
 
   # http://en.wikipedia.org/wiki/National_Day_of_Prayer
   push(@dates, weekdayAfterDate("${i}0501", 4, 0), "Prayer Day");
@@ -91,9 +114,9 @@ for $i (2015..2037) {
   $black =  weekdayAfterDate($thanks, 5, 0);
   push(@dates, $thanks, "Thanksgiving");
   push(@dates, $black, "Black Friday");
-  push(@dates, weekdayAfterDate("${i}0501", "0", 1), "Mothers Day");
+  push(@dates, weekdayAfterDate("${i}0501", "0", 1), "Mothers' Day");
   # same day below
-  push(@dates, weekdayAfterDate("${i}0601", "0", 2), "Fathers Day");
+  push(@dates, weekdayAfterDate("${i}0601", "0", 2), "Fathers' Day");
   push(@dates, weekdayAfterDate("${i}0601", "0", 2), "US Open Golf Finals");
   push(@dates, weekdayAfterDate("${i}0301", "0", 1), "DST +1 hour");
   push(@dates, weekdayAfterDate("${i}1101", "0", 0), "DST -1 hour");
@@ -105,13 +128,13 @@ for $i (2015..2037) {
   my($pga) = weekdayAfterDate($laborday, "4", -4);
   push(@dates, $pga, "PGA Championship");
   push(@dates, $laborday, "Labor Day");
-  push(@dates, $grandparentday, "Grandparent's Day");
+  push(@dates, $grandparentday, "Grandparents' Day");
   # below is last monday of may and previous Sunday
   $memday = weekdayAfterDate("${i}0601", "1", -1);
   $indiana500 = weekdayAfterDate($memday, "0", -1);
   push(@dates, $memday, "Memorial Day");
   push(@dates, $indiana500, "Indianapolis 500");
-  push(@dates, weekdayAfterDate("${i}0701", "0", 3), "Parents Day");
+  push(@dates, weekdayAfterDate("${i}0701", "0", 3), "Parents' Day");
   push(@dates, weekdayAfterDate("${i}1001", "6", 2), "Sweetest Day");
 
   # per wikipedia, "Monday falling between 20 and 26 June"but moved

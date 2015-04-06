@@ -34,6 +34,7 @@ for $i (keys %zpaq) {
 }
 
 for $i (@flist) {
+  debug("I: $i");
   my(%hash);
 
   # the files I've archived
@@ -53,4 +54,5 @@ for $i (@flist) {
   }
 }
 
+print "echo recommend deleting empty dirs\n";
 

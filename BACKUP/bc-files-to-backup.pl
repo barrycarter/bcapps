@@ -12,7 +12,11 @@ require "/usr/local/lib/bclib.pl";
 while (<>) {
   chomp;
 
-  my($mtimename,$ext1,$size1,$ext2,$size2) = split(/\0/,$_);
+  my(@data) = split(/\0/,$_);
+
+  
+
+  die "TESTING";
 
   # if the size and extension match, we definitely have backed this up already
   if ($ext1 eq $ext2 && $size1 == $size2) {next;}
