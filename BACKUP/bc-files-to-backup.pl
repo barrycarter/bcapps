@@ -14,13 +14,18 @@ while (<>) {
 
   my($mtimename,$ext1,$size1,$ext2,$size2) = split(/\0/,$_);
 
-  # this is actually the reverse of what we want, just testing for now
-  if (length($size2)>0) {
-    # only show special cases (where extension/size nonidentical)
-    if (($ext1 ne $ext2) || ($size1 != $size2)) {
-      debug("THUNK: $_");
-    }
+  # if the size and extension match, we definitely have backed this up already
+  if ($ext1 eq $ext2 && $size1 == $size2) {next;}
+
+  # if the 
+
+
+  if ($ext1 eq "bz2") {
+    debug("SPECIAL: $_");
   }
+
+  # otherwise, may need to back this up (but special cases apply)
+#  debug("THUNK: $_");
 }
 
 
