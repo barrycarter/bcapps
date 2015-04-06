@@ -3,6 +3,7 @@
 # Computes well known "important" dates [assuming no major schedule changes]
 
 require "/usr/local/lib/bclib.pl";
+my(@dates);
 
 # TODO: http://www.un.org/en/events/observances/days.shtml
 # TODO: http://www.timeanddate.com/holidays/ (or maybe not)
@@ -59,11 +60,40 @@ require "/usr/local/lib/bclib.pl";
 delete $fixed{""};
 
 # from gcal's massive list of holidays
-my($out,$err,$res) = cache_command2("egrep -i 'easter sunday|mardi gras|ash wednesday|passion sunday|good friday|pentecost|whit monday|rosh' $bclib{githome}/ASTRO/bc-gcal-filter-out.txt","age=86400");
+my($out,$err,$res) = cache_command2("egrep -i 'easter sunday|mardi gras|ash wednesday|passion sunday|good friday|pentecost|whit monday|rosh|palm sunday|yom kippur|Hannukah|kwanzaa|diwali' $bclib{githome}/ASTRO/bc-gcal-filter-out.txt","age=86400");
 
-debug("OUT: $out, ERR: $err");
+for $i (split(/\n/,$out)) {
 
-die "TESTING";
+  # stop at the year 2037 (not necessarily sorted, so can't 'last' here)
+  $i=~s/^(\d{8})\s+//;
+  my($date) = $1;
+  if ($date>20379999) {next;}
+
+  # ignore orthodox Easter/Palm Sunday (before we cleanup the last field)
+  if ($i=~/(easter sunday|palm sunday|good friday|Pentecost)/i && $i=~/,OxN,/) {next;}
+
+  # ignore Cyprussian Whit Monday
+  if ($i=~/Whit Monday CY/) {next;}
+
+  # the last field is always a comma-separated list of where
+  # celebrated, useless to me
+  $i=~s/\s+\S+$//;
+
+  # cleanups
+  $i=~s%(shrove tuesday|whitsunday)/%%i;
+  $i=~s%/(atonement day|festival of lights)%%i;
+
+  # only the first of two Rosh Hashana
+  if ($i=~/Rosh Hashana/i) {
+    $i=~s%/New Year\'s Day%%;
+    unless ($i=~/\d{4}$/) {next;}
+  }
+
+  debug("PUSHING: $date $i");
+
+  push(@dates, $date, $i);
+ 
+}
 
 # TODO: Hannukah, equinox/solstices, Easter/Mardi Gras/Ash
 # Wednesday/Good Friday, when holidays fall on weekend, Black Friday?,
@@ -73,8 +103,6 @@ die "TESTING";
 # instead of printing, storing to array so I can put into multiple
 # formats (can't be a hash, multiple values for one key in either
 # direction)
-
-my(@dates);
 
 for $i (2015..2037) {
 

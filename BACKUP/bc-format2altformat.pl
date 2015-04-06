@@ -19,6 +19,11 @@ while (<>) {
   my($mtime,$size,$inode,$perm,$type,$gname,$uname,$devno,$name) = 
     split(/\s+/, $_, 9);
 
+  # because we want to sort highest mtimes first, use "negative mtime"
+  # 33 below guarentees result is exactly 10 digits long, no padding required
+  # (32 would probably work too)
+  $mtime = 2**33-$mtime;
+
   # recognized types I want to ignore
   if ($type=~/^[dspcb]$/) {next;}
 
@@ -38,10 +43,6 @@ while (<>) {
     warn("BAD DEVNO: $_");
     next;
   }
-
-  # pad mtime to 11 characters so numerical sort == standard sort
-  # (this is useful so I don't have to sort twice when using comm)
-  $mtime = sprintf("%0.11d", $mtime);
 
   # for `join`, treat extension as separate field (or add null extension)
   unless ($name=~s/\.([^\.\/]*)$/\0$1/) {$name="$name\0";}

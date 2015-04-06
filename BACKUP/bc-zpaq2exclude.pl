@@ -17,8 +17,8 @@ while (<>) {
   # strip directory head (where I rsync stuff)
   unless ($file=~s%^ROOT/%/%) {warn "BAD FILENAME: $file";}
 
-  # 11 digits because `join` requires lexical sort
-  my($time) = sprintf("%0.11d", str2time("$date $time UTC"));
+  # want to sort by time descending, see bc-format2altformat.pl for details
+  my($time) = 2**33-str2time("$date $time UTC");
 
   # for `join`, treat extension as separate field (or add null extension)
   unless ($file=~s/\.([^\.\/]*)$/\0$1/) {$file="$file\0";}

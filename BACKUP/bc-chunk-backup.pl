@@ -25,6 +25,7 @@ while (<>) {
   if ($tot>=$limit) {last;}
 
   # TODO: in theory, could grab current file size using "-s" (but too slow?)
+  # this isn't real mtime, actually 2**33-mtime
   my($size,$mtime,$name) =  split(/\s+/, $_, 3);
   $tot+= $size;
 
