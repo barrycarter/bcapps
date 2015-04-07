@@ -19,6 +19,9 @@ while (<>) {
   my($mtime,$size,$inode,$perm,$type,$gname,$uname,$devno,$name) = 
     split(/\s+/, $_, 9);
 
+  # zpaq rounds mtime down to nearest second
+  $mtime=~s/\..*$//;
+
   # because we want to sort highest mtimes first, use "negative mtime"
   # 33 below guarentees result is exactly 10 digits long, no padding required
   # (32 would probably work too)

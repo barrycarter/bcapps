@@ -13,23 +13,15 @@ while (<>) {
   chomp;
   my(@data) = split(/\0/,$_);
 
-  # if 3 fields, already backed up, 1 or 4+ is bad
+  # 2 fields = must backup, 3 fields = already backed up, else = bad
   my($nfields) = scalar(@data);
-  if ($nfields<2 || $nfields>3) {warn "BAD FIELDS: $_"; next;}
-  # if only 2 fields, no join match, so definitely backup
-  if ($nfields==2) {doprint($_);}
+
+  if ($nfields==2) {
+    print "$data[1] $data[0]\n";
+  } elsif ($nfields==3) {
+    # do nothing
+  } else {
+    warn("BAD FIELDS: $_");
+  }
 }
-
-# prints the line in proper format for bc-chunk-backup.pl, restoring
-# extension and reordering fields
-
-sub doprint {
-  my($str) = @_;
-
-  # TODO: redundant coding, yuck
-  my($join,$size1,$size2) = split(/\0/,$_);
-
-  print "$size1 $join\n";
-}
-
 
