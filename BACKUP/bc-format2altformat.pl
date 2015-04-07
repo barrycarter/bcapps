@@ -44,9 +44,6 @@ while (<>) {
     next;
   }
 
-  # for `join`, treat extension as separate field (or add null extension)
-  unless ($name=~s/\.([^\.\/]*)$/\0$1/) {$name="$name\0";}
-
-  # `join` on mtime and filename sans extension
+  # `join` on mtime and filename
   print "$mtime $name\0$size\n";
 }

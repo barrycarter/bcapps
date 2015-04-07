@@ -9,32 +9,15 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# extensions that bc-chunk-backup.pl strips
-my(%badext) = list2hash("bz2","tbz","tgz","gz");
-
 while (<>) {
   chomp;
-
   my(@data) = split(/\0/,$_);
 
-  # if only 3 fields, no join match, so definitely backup
-  if (scalar(@data)==3) {doprint($_); next;}
-
-  # only remaining case should be 5 fields
-  unless (scalar(@data)==5) {warn "BAD FIELDS: $_";}
-
-
-  debug("POSSIBLE MATCH: $_");
-  my($join,$ext1,$size1,$ext2,$size2) = @data;
-
-  # if perfect match, already backed up
-  if ($ext1 eq $ext2 && $size1 eq $size2) {next;}
-
-  # backed up with stripped extension
-  if ($badext{$ext1} && $ext2 eq "") {next;}
-
-  # no extension match, so, yes, bakcup
-  doprint($_);
+  # if 3 fields, already backed up, 1 or 4+ is bad
+  my($nfields) = scalar(@data);
+  if ($nfields<2 || $nfields>3) {warn "BAD FIELDS: $_"; next;}
+  # if only 2 fields, no join match, so definitely backup
+  if ($nfields==2) {doprint($_);}
 }
 
 # prints the line in proper format for bc-chunk-backup.pl, restoring
@@ -44,9 +27,8 @@ sub doprint {
   my($str) = @_;
 
   # TODO: redundant coding, yuck
-  my($join,$ext1,$size1,$ext2,$size2) = split(/\0/,$_);
+  my($join,$size1,$size2) = split(/\0/,$_);
 
-  if ($ext1) {$join="$join.$ext1";}
   print "$size1 $join\n";
 }
 

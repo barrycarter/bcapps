@@ -52,6 +52,7 @@ my(@dates);
 	  "All Souls Day" => "1102",
 	  "St Peter and Paul Day" => "0629",
 	  "QE II Birthday" => "0421",
+	  "UN Children's Day" => "1120",
 	  "" => ""
 	  );
 
@@ -61,7 +62,7 @@ my(@dates);
 delete $fixed{""};
 
 # from gcal's massive list of holidays
-my($out,$err,$res) = cache_command2("egrep -i 'easter sunday|mardi gras|ash wednesday|passion sunday|good friday|pentecost|whit monday|rosh|palm sunday|yom kippur|Hannukah|kwanzaa|diwali' $bclib{githome}/ASTRO/bc-gcal-filter-out.txt","age=86400");
+my($out,$err,$res) = cache_command2("egrep -i 'children.s day|easter sunday|mardi gras|ash wednesday|passion sunday|good friday|pentecost|whit monday|rosh|palm sunday|yom kippur|Hannukah|kwanzaa|diwali' $bclib{githome}/ASTRO/bc-gcal-filter-out.txt","age=86400");
 
 for $i (split(/\n/,$out)) {
 
@@ -72,6 +73,9 @@ for $i (split(/\n/,$out)) {
 
   # ignore orthodox Easter/Palm Sunday (before we cleanup the last field)
   if ($i=~/(easter sunday|palm sunday|good friday|Pentecost)/i && $i=~/,OxN,/) {next;}
+
+  # ignore non US Children's Day
+  if ($i=~/Children\'s Day/ && $i!~/,US_/) {next;}
 
   # ignore Cyprussian Whit Monday
   if ($i=~/Whit Monday CY/) {next;}
@@ -130,7 +134,8 @@ for $i (2015..2037) {
   push(@dates, weekdayAfterDate("${i}1101",4,2),"Philosophy Day");
 
   # http://en.wikipedia.org/wiki/Children%27s_Day#United_States_of_America
-  push(@dates, weekdayAfterDate("${i}0601",0), "Children's Day");
+  # ignoring except as above
+  # push(@dates, weekdayAfterDate("${i}0601",0), "Children's Day");
 
   push(@dates, weekdayAfterDate("${i}0501", "6"),"Kentucky Derby");
   push(@dates, weekdayAfterDate("${i}0501", "6", 2),"Preakness");

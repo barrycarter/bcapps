@@ -20,9 +20,17 @@ while (<>) {
   # want to sort by time descending, see bc-format2altformat.pl for details
   my($time) = 2**33-str2time("$date $time UTC");
 
-  # the only important extension for backups is tar (others are removed)
-  if ($file=~s/\.tar$//) {$file="$file\0tar";} else {$file="$file\0";}
-
+  # in addition to the file I actually backed up, claim to have backed
+  # up the bz2 and gz versions of the file
   # including $size here is semi-pointless?
   print "$time $file\0$size\n";
+  print "$time $file.bz2\0$size\n";
+  print "$time $file.gz\0$size\n";
+
+  # if $file ends in .tar, claim to have backed up the tgz/tbz versions as well
+  if ($file=~s/\.tar$//) {
+    print "$time $file.tbz\0$size\n";
+    print "$time $file.tgz\0$size\n";
+  }
 }
+
