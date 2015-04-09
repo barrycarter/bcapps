@@ -5,3 +5,5 @@ c1 = ParametricPlot3D[{Cos[theta],Sin[theta],0.7},{theta,0,2*Pi}]
 pl = Graphics3D[InfinitePlane[{{0,0,0},{1,0,0},{0,1,0}}]]
 
 Show[sph,c1,Boxed->False,Lighting->None]
+
+Graphics3D[InfinitePlane[{{1, 0, 0}, {1, 1, 1}, {0, 0, 1}}]]

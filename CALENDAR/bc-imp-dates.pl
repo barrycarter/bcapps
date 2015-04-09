@@ -62,7 +62,7 @@ my(@dates);
 delete $fixed{""};
 
 # from gcal's massive list of holidays
-my($out,$err,$res) = cache_command2("egrep -i 'children.s day|easter sunday|mardi gras|ash wednesday|passion sunday|good friday|pentecost|whit monday|rosh|palm sunday|yom kippur|Hannukah|kwanzaa|diwali' $bclib{githome}/ASTRO/bc-gcal-filter-out.txt","age=86400");
+my($out,$err,$res) = cache_command2("egrep -i 'purim\/|arbor day us|passover|children.s day|easter sunday|mardi gras|ash wednesday|passion sunday|good friday|pentecost|whit monday|rosh|palm sunday|yom kippur|Hannukah|kwanzaa|diwali' $bclib{githome}/ASTRO/bc-gcal-filter-out.txt","age=86400");
 
 for $i (split(/\n/,$out)) {
 
@@ -85,8 +85,8 @@ for $i (split(/\n/,$out)) {
   $i=~s/\s+\S+$//;
 
   # cleanups
-  $i=~s%(shrove tuesday|whitsunday)/%%i;
-  $i=~s%/(atonement day|festival of lights)%%i;
+  $i=~s%(shrove tuesday|whitsunday|pesach)/%%i;
+  $i=~s%/(atonement day|festival of lights|feast of lots)%%i;
 
   # only the first of two Rosh Hashana
   if ($i=~/Rosh Hashana/i) {
