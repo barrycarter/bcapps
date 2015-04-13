@@ -7,7 +7,7 @@ print << "MARK";
 Content-type: text/xml
 
 <?xml version="1.0" encoding="UTF-8"?>
-<Response><Record /></Response>
+<Response><Record time_limit="31556952" /></Response>
 MARK
 ;
 

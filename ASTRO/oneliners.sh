@@ -1,6 +1,9 @@
 #!/bin/sh
 
-exit; 
+# list of north pole coords from north-pole-from-geocenter.txt.bz2
+bzfgrep 'E+' north-pole-from-geocenter.txt.bz2 | perl -anle 'map(s/E/*10^/g, @F); print "{",join(", ",@F),"},"; sub BEGIN {print "list={";}; sub END {print "{}}; list = Drop[list,-1]"}' > /tmp/math.m
+
+exit;
 
 # this adds definitions for ephemeris values from the output of
 # bc-header-values.pl (I need to edit the output before inserting it
@@ -11,11 +14,6 @@ bc-header-values.pl | perl -nle 'if (/^(.)D(.)/) {print "$_ D$1 of $2 at epoch"}
 exit; 
 
 bzcat north-pole-from-geocenter.txt.bz2 | perl -nle 'if (/^(.*\.500000+)/) {print "{$1,"} elsif (s/(^\s*)(\-?\d\..*)$/$2/) {s/\s+/,/g;s/E/*10^/g; print "{$_}},"} sub BEGIN {print "list={";} sub END {print "};"}' > /tmp/math.m
-
-exit;
-
-# list of north pole coords from north-pole-from-geocenter.txt.bz2
-bzfgrep 'E+' north-pole-from-geocenter.txt.bz2 | perl -anle 'map(s/E/*10^/g, @F); print "{",join(", ",@F),"},"; sub BEGIN {print "list={";}; sub END {print "{}}; list = Drop[list,-1]"}' > /tmp/math.m
 
 exit;
 

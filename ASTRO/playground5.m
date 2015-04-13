@@ -9,12 +9,6 @@ rotationMatrix[y,lat-Pi/2].pos[theta,dec],Element[{theta,dec,lat},Reals]]
 
 el[theta_,dec_,lat_] = ArcSin[pos2[theta,dec,lat][[3]]]
 
-
-
-
-
-
-
 (* line of 60 deg declination if north is up *)
 
 test0705={Cos[theta]*Cos[57*Degree], Sin[theta]*Cos[57*Degree], Sin[57*Degree]}
