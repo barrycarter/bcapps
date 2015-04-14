@@ -3,6 +3,10 @@
 # This is bc-daemon-checker.pl for bcinfo3 (writes to file, doesn't send mail)
 # --stderr: write to stderr not ERR file
 # --file: use this as proclist file
+# Sections in config file:
+# must: these programs must be running at all times
+# may: these programs may run as long as they wish
+# kill: these programs must be killed if they run too long
 # TODO: make this restart failed daemons
 
 require "/usr/local/lib/bclib.pl";
@@ -25,11 +29,10 @@ while ($all=~s%<(.*?)>(.*?)</\1>%%s) {
   my($sec,$list) = ($1,$2);
   for $i (split(/\n/,$list)) {
     if ($i=~/^\s*$/) {next;}
+    debug("*$sec* *$i*");
     $proclist{$sec}{$i} = 1;
   }
 }
-
-debug(%proclist);
 
 # TODO: allow comments in must/may/kill sections
 
@@ -40,14 +43,30 @@ for $i (@procs) {
   ($pid, $time, $rss, $vsz, $proc, $proc2, $proc3) = split(/\s+/,$i);
 
   # ignore [bracketed] processes (TODO: why?)
-  if ($proc=~/^\[.*\]$/) {next;}
+#  if ($proc=~/^\[.*\]$/) {next;}
 
-  debug("RPOC: $proc");
+  debug("BETA:",$proclist{may}{"/sbin/init"},$proclist{may}{$proc});
+
+  debug("RPOC: *$proc*");
   # if process name is perl, use $proc2
   if ($proc eq "/bin/perl") {$proc=$proc2;}
 
+  debug("GAMMA:",$proclist{may}{"/sbin/init"},$proclist{may}{$proc});
+
+#  debug("PROC NOW: *$proc*");
+
   # strip directory information
-  $proc=~s%^.*/%%;
+#  $proc=~s%^.*/%%;
+
+  # if the proc must be running or may run indefinitely, stop here
+  # Note: programs that must run are also checked later
+#  debug("PROCALPH: *$proc*, $procinfo{may}{$proc}", $procinfo{may}{"/sbin/init"});
+
+  if ($proclist{must}{$proc} || $proclist{may}{$proc}) {next;}
+
+  debug("DELTA:",$proclist{may}{"/sbin/init"},$proclist{may}{$proc});
+
+  debug("FAIL ($proc),",$procinfo{must}{$proc}, $procinfo{may}{$proc},$procinfo{may}{"/sbin/init"});
 
   debug("LINE: $proc $proc2 $proc3","PROC: $proc");
 
@@ -119,8 +138,6 @@ for $i (@procs) {
 }
 
 # confirm all "must" processes are in fact running
-
-debug(keys %{$proclist{must}});
 
 for $i (sort keys %{$proclist{must}}) {
   if ($isproc{$i}) {next;}
