@@ -17,6 +17,10 @@ defaults("file=/home/barrycarter/BCGIT/BCINFO3/root/bcinfo3-procs.txt");
 # this command really does all the work
 ($out,$err,$res) = cache_command2("ps -www -ax -eo 'pid etime rss vsz args'","age=30");
 
+# if process matches any of these, use second argument
+# TODO: move this to conf file too?
+my(%use2nd) = list2hash("/usr/bin/perl", "python", "/bin/perl", "/usr/bin/python");
+
 @procs = split(/\n/,$out);
 shift(@procs); # ignore header line
 
@@ -28,8 +32,7 @@ my(%proclist);
 while ($all=~s%<(.*?)>(.*?)</\1>%%s) {
   my($sec,$list) = ($1,$2);
   for $i (split(/\n/,$list)) {
-    if ($i=~/^\s*$/) {next;}
-    debug("*$sec* *$i*");
+    if ($i=~/^\s*$/ || $i=~/^\#/) {next;}
     $proclist{$sec}{$i} = 1;
   }
 }
@@ -42,98 +45,37 @@ for $i (@procs) {
   $i=~s/\s+/ /isg;
   ($pid, $time, $rss, $vsz, $proc, $proc2, $proc3) = split(/\s+/,$i);
 
-  # ignore [bracketed] processes (TODO: why?)
-#  if ($proc=~/^\[.*\]$/) {next;}
+  # ignore [bracketed] processes because there are lots of them and
+  # they all seem OK
+  # TODO: is this wise?
+  if ($proc=~/^\[.*\]$/) {next;}
 
-  debug("BETA:",$proclist{may}{"/sbin/init"},$proclist{may}{$proc});
+  # use second arg? (third if second arg is an option)
+  if ($use2nd{$proc}) {if ($proc2=~/^\-/) {$proc=$proc3;} else {$proc=$proc2;}}
 
-  debug("RPOC: *$proc*");
-  # if process name is perl, use $proc2
-  if ($proc eq "/bin/perl") {$proc=$proc2;}
-
-  debug("GAMMA:",$proclist{may}{"/sbin/init"},$proclist{may}{$proc});
-
-#  debug("PROC NOW: *$proc*");
-
-  # strip directory information
-#  $proc=~s%^.*/%%;
+  # for multiple run checking, count if/how many times proc is running
+  $isproc{$proc}++;
 
   # if the proc must be running or may run indefinitely, stop here
   # Note: programs that must run are also checked later
-#  debug("PROCALPH: *$proc*, $procinfo{may}{$proc}", $procinfo{may}{"/sbin/init"});
 
   if ($proclist{must}{$proc} || $proclist{may}{$proc}) {next;}
 
-  debug("DELTA:",$proclist{may}{"/sbin/init"},$proclist{may}{$proc});
+  # any process may run for up to 300s
+  my($stime) = pstime2sec($time);
+  if ($stime < 300) {next;}
 
-  debug("FAIL ($proc),",$procinfo{must}{$proc}, $procinfo{may}{$proc},$procinfo{may}{"/sbin/init"});
-
-  debug("LINE: $proc $proc2 $proc3","PROC: $proc");
-
-  $isproc{$proc} = 1;
-
-  warn "TESTING";
-  next;
-
-  # for perl/xargs/python/ruby/sh, the next non-option arg tells what the process really is
-  if ($proc=~m%/perl$%||$proc eq "xargs"||$proc=~m%/python$%||$proc=~m%(^|/)ruby$%||$proc=~m%^/bin/sh$%||$proc=~m%^\-csh$%) {
-
-    # TODO: this is imperfect
-    if ($proc2=~/^\-/) {
-      $proc=$proc3;
-    } else {
-      $proc=$proc2;
-    }
-  }
-
-  # really ugly HACK: (for "perl -w") [can't even do -* because of -tcsh]
-  if ($proc=~/^\-w$/) {$proc=$proc3;}
-
-#  debug("PROC: $proc");
-  
-  # can't do much w/ defunct procs
-  if ($i=~/<defunct>/) {next;}
-
-  # if this program is permitted to run forever, but not required, stop here
-  # TODO: add check if process is on two lists?
-  if ($may{$proc}) {next;}
-
-  # if this process must run, record it and continue
-  if ($must{$proc}) {
-    $isproc{$proc}=1;
-    next;
-  }
-
-  # how long has program been running?
-  if ($time=~/^(\d+)\-(\d{2}):(\d{2}):(\d{2})$/) {
-    $sec = $1*86400+$2*3600+$3*60+$4;
-  } elsif ($time=~/^(\d{2}):(\d{2}):(\d{2})$/) {
-    $sec = $1*3600+$2*60+$3;
-  } elsif ($time=~/^(\d{2}):(\d{2})$/) {
-    $sec = $1*60+$2;
-  } else {
-    warnlocal("Can't convert $time into seconds");
-    next;
-  }
-
-  # processes are born 13:42 old (no idea why), this compensates
-  # TODO: HACK: figure this out
-  $sec-=822;
-
-  # any process permitted to run up to 5m
-  # bumped to 10m on 20 Jan 2014
-  # TODO: specific limits for procs where 5m is wrong
-  if ($sec<=600) {next;}
-
-  # if I'm allowed to kill this process, do so now
-  if ($kill{$proc}) {
+  # am I allowed to kill this process?
+  if ($proclist{kill}{$proc}) {
+    # if I am allowed to kill it and it's been running for 10x its
+    # allowed time, something is wrong
+    if ($stime>3000){push(@err, "$proc ($pid): running > 10x allowed");next;}
+    # kill it
     system("kill $pid");
-    next;
   }
 
   # process is running long, and is neither permitted nor required to
-  # run forever, but I'm now allowed to kill it.... so whine
-
+  # run forever, but I'm not allowed to kill it.... so whine
   push(@err, "$proc ($pid): running > 300s, but no perm to kill");
 }
 
@@ -144,10 +86,15 @@ for $i (sort keys %{$proclist{must}}) {
   push(@err, "$i: not running, but is required");
 }
 
-# HACK: tell where err is coming from
-map($_="bcinfo3: $_",@err);
+# multirun checking
+for $i (keys %isproc) {
+  if ($isproc{$i}>=2) {
+    push(@err, "$i: running multiple times");
+  }
+}
 
-die "TESTING";
+# HACK: tell where err is coming from
+map($_="MACHNAME: $_",@err);
 
 # write errors to file EVEN IF empty (since I plan to rsync error
 # file, and rsync won't remove deleted files except with special
@@ -158,3 +105,17 @@ if ($globopts{stderr}) {
   write_file_new(join("\n",@err),"$ENV{HOME}/ERR/bcinfo3.err");
 }
 
+=item pstime2sec($time)
+
+Conver the time given by ps (like "88-22:29:29") to seconds
+
+=cut
+
+sub pstime2sec {
+  my($time) = @_;
+  if ($time=~/^(\d+)\-(\d{2}):(\d{2}):(\d{2})$/) {return $1*86400+$2*3600+$3*60+$4;}
+  if ($time=~/^(\d{2}):(\d{2}):(\d{2})$/) {return $1*3600+$2*60+$3;}
+  if ($time=~/^(\d{2}):(\d{2})$/) {return $1*60+$2;}
+  warn("Can't convert $time into seconds");
+  return 0;
+}
