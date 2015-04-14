@@ -8,8 +8,6 @@
 
 require "/usr/local/lib/bclib.pl";
 
-warn "Must run in --debug mode for any results";
-
 while (<>) {
   m/^(.*?)\s+(.*?)$/;
   ($sha, $file) = ($1, $2);
@@ -23,11 +21,9 @@ for $i (sort keys %match) {
   # if only 1, no dupes
   unless ($#files) {next;}
 
-  # hideous hardcoding
-  if ($files[1] eq "$files[0].mobi") {
-    print "rm $files[0]\n";
-  }
-  debug("FILES($i)",@files);
-}
-  
+  debug("BASEFILE: $files[0]");
 
+  # print out all but the first
+  for $j (1..$#files) {print "$files[$j]\n";}
+
+}

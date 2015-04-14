@@ -2,33 +2,36 @@
 
 # This is bc-daemon-checker.pl for bcinfo3 (writes to file, doesn't send mail)
 # --stderr: write to stderr not ERR file
+# --file: use this as proclist file
 # TODO: make this restart failed daemons
 
 require "/usr/local/lib/bclib.pl";
 
+# default file is for my server
+defaults("file=/home/barrycarter/BCGIT/BCINFO3/root/bcinfo3-procs.txt");
+
 # this command really does all the work
 ($out,$err,$res) = cache_command2("ps -www -ax -eo 'pid etime rss vsz args'","age=30");
-
-debug("OUT: $out");
 
 @procs = split(/\n/,$out);
 shift(@procs); # ignore header line
 
 # TODO: make this an argument, not fixed
-$all = read_file("/home/barrycarter/BCGIT/BCINFO3/root/bcinfo3-procs.txt");
+$all = read_file($globopts{file});
+my(%proclist);
 
-# TODO: generalize this concept
+# NOTE: this not true XML
+while ($all=~s%<(.*?)>(.*?)</\1>%%s) {
+  my($sec,$list) = ($1,$2);
+  for $i (split(/\n/,$list)) {
+    if ($i=~/^\s*$/) {next;}
+    $proclist{$sec}{$i} = 1;
+  }
+}
+
+debug(%proclist);
+
 # TODO: allow comments in must/may/kill sections
-$all=~s%<must>(.*?)</must>%%is;
-%must = list2hash(split(/\n/, $1));
-$all=~s%<may>(.*?)</may>%%is;
-%may = list2hash(split(/\n/, $1));
-$all=~s%<kill>(.*?)</kill>%%is;
-%kill = list2hash(split(/\n/, $1));
-# TODO: this is ugly
-delete $must{""};
-delete $may{""};
-delete $kill{""};
 
 for $i (@procs) {
   # cleanup proc line and split into fields
@@ -38,6 +41,20 @@ for $i (@procs) {
 
   # ignore [bracketed] processes (TODO: why?)
   if ($proc=~/^\[.*\]$/) {next;}
+
+  debug("RPOC: $proc");
+  # if process name is perl, use $proc2
+  if ($proc eq "/bin/perl") {$proc=$proc2;}
+
+  # strip directory information
+  $proc=~s%^.*/%%;
+
+  debug("LINE: $proc $proc2 $proc3","PROC: $proc");
+
+  $isproc{$proc} = 1;
+
+  warn "TESTING";
+  next;
 
   # for perl/xargs/python/ruby/sh, the next non-option arg tells what the process really is
   if ($proc=~m%/perl$%||$proc eq "xargs"||$proc=~m%/python$%||$proc=~m%(^|/)ruby$%||$proc=~m%^/bin/sh$%||$proc=~m%^\-csh$%) {
@@ -53,7 +70,7 @@ for $i (@procs) {
   # really ugly HACK: (for "perl -w") [can't even do -* because of -tcsh]
   if ($proc=~/^\-w$/) {$proc=$proc3;}
 
-  debug("PROC: $proc");
+#  debug("PROC: $proc");
   
   # can't do much w/ defunct procs
   if ($i=~/<defunct>/) {next;}
@@ -103,14 +120,17 @@ for $i (@procs) {
 
 # confirm all "must" processes are in fact running
 
-for $i (sort keys %must) {
+debug(keys %{$proclist{must}});
+
+for $i (sort keys %{$proclist{must}}) {
   if ($isproc{$i}) {next;}
-  debug("KEY $i");
   push(@err, "$i: not running, but is required");
 }
 
 # HACK: tell where err is coming from
 map($_="bcinfo3: $_",@err);
+
+die "TESTING";
 
 # write errors to file EVEN IF empty (since I plan to rsync error
 # file, and rsync won't remove deleted files except with special
