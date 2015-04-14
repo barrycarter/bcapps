@@ -6,6 +6,8 @@
 # "bc-dupe-checker.pl sha1file | xargs ls -l | sort -k5nr" helpful in
 # finding large duplicates
 
+# this does exactly? what bc-sha1-dupes.pl does, but perhaps more dangerously
+
 push(@INC, "/usr/local/lib");
 require "bclib.pl";
 $dir = tmpdir();

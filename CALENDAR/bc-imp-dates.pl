@@ -97,7 +97,6 @@ for $i (split(/\n/,$out)) {
   debug("PUSHING: $date $i");
 
   push(@dates, $date, $i);
- 
 }
 
 # TODO: Hannukah, equinox/solstices, Easter/Mardi Gras/Ash

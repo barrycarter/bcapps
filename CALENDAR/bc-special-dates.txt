@@ -1,0 +1,3 @@
+# add this to your ~/calendar.d directory to see these dates
+# per http://www.usno.navy.mil/USNO/earth-orientation/leap-second-announcement
+20150630 leap second
