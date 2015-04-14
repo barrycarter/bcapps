@@ -2,6 +2,7 @@
 
 # This is bc-daemon-checker.pl for bcinfo3 (writes to file, doesn't send mail)
 # --stderr: write to stderr not ERR file
+# --mach: name of machine and name of file for errors
 # --file: use this as proclist file
 # Sections in config file:
 # must: these programs must be running at all times
@@ -12,7 +13,7 @@
 require "/usr/local/lib/bclib.pl";
 
 # default file is for my server
-defaults("file=/home/barrycarter/BCGIT/BCINFO3/root/bcinfo3-procs.txt");
+defaults("mach=bcinfo3&file=/home/barrycarter/BCGIT/BCINFO3/root/bcinfo3-procs.txt");
 
 # this command really does all the work
 ($out,$err,$res) = cache_command2("ps -www -ax -eo 'pid etime rss vsz args'","age=30");
@@ -88,13 +89,12 @@ for $i (sort keys %{$proclist{must}}) {
 
 # multirun checking
 for $i (keys %isproc) {
-  if ($isproc{$i}>=2) {
+  if ($isproc{$i}>=2 && !$proclist{multi}{$i}) {
     push(@err, "$i: running multiple times");
   }
 }
 
-# HACK: tell where err is coming from
-map($_="MACHNAME: $_",@err);
+map($_="$globopts{mach}.$_",@err);
 
 # write errors to file EVEN IF empty (since I plan to rsync error
 # file, and rsync won't remove deleted files except with special
@@ -102,7 +102,7 @@ map($_="MACHNAME: $_",@err);
 if ($globopts{stderr}) {
   print STDERR join("\n",@err),"\n";
 } else {
-  write_file_new(join("\n",@err),"$ENV{HOME}/ERR/bcinfo3.err");
+  write_file_new(join("\n",@err),"$ENV{HOME}/ERR/$globopts{mach}.err");
 }
 
 =item pstime2sec($time)
