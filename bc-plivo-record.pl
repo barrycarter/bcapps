@@ -7,7 +7,7 @@ print << "MARK";
 Content-type: text/xml
 
 <?xml version="1.0" encoding="UTF-8"?>
-<Response><Record maxLength="3600" recordSession="true" /></Response>
+<Response><Record maxLength="3600" recordSession="true" bothLegs="true" /></Response>
 MARK
 ;
 

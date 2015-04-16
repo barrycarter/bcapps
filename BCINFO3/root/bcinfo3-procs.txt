@@ -13,6 +13,7 @@ xinetd
 crond
 /usr/local/bin/bc-get-all-weather.pl
 /usr/local/bin/bc-gocomics-comments2.pl
+# bc-metar-db.pl will probably go away soon
 /usr/local/bin/bc-metar-db.pl
 /usr/sbin/lighttpd
 /usr/local/bin/bc-get-radar.pl
@@ -20,23 +21,22 @@ crond
 /usr/libexec/mysqld
 </must>
 
-# bc-metar-db.pl will probably go away soon
-# udevd I can't seem to get rid of, but don't really care
 <may>
+# later discovered that /sbin/mingetty appears to be important
+/sbin/mingetty
 screen
 SCREEN
 emacs
 -bin/tcsh
+# udevd I can't seem to get rid of, but don't really care
 /sbin/udevd
 /usr/local/bin//bc-query-gobbler.pl
 </may>
 
 # these processes must die if they run over 5m
 # sh is a dangerous choice here, but probably all perl subprocs
-# /sbin/mingetty added 1 Jul 2014, not sure why I need it though (it
-# probably shouldn't start at all in the first place)
+
 <kill>
-/sbin/mingetty
 php-cgi
 /usr/local/bin/php-cgi
 /usr/local/bin/bc-echo.pl
@@ -46,3 +46,20 @@ find
 sqlite3
 sh
 </kill>
+
+<multi>
+# /sbin/mingetty runs once for each terminal?
+/sbin/mingetty
+# equivalent of sshd, so multiples are ok
+/usr/sbin/dropbear
+# ok to run multiple shells
+-bin/tcsh
+screen
+mysql
+crond
+# TODO: not super happy w/ this one
+# TODO: also not happy w/ required double slash below
+/usr/local/bin//bc-query-gobbler.pl
+# argh: because of way shell runs things in parens?
+(curl
+</multi>

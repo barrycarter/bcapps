@@ -28,11 +28,11 @@ sleep($globopts{sleep});
 # this command really does all the work
 ($out,$err,$res) = cache_command2("ps -wwweo 'pid ppid etime rss vsz stat args'","age=30");
 
-# if process matches any of these, use second argument
+# if process matches any of these, use second argument (if one exists)
 # TODO: move this to conf file too?
 
 my(%use2nd) = list2hash("/usr/bin/perl", "python", "/bin/perl",
-"/usr/bin/python", "/bin/sh");
+"/usr/bin/python", "/bin/sh", "-csh", "sh");
 
 @procs = split(/\n/,$out);
 shift(@procs); # ignore header line
@@ -65,7 +65,9 @@ for $i (@procs) {
 
   # use second arg? (third if second arg is an option)
   # TODO: maybe improve this
-  if ($use2nd{$proc}) {if ($proc2=~/^\-/) {$proc=$proc3;} else {$proc=$proc2;}}
+  if ($use2nd{$proc} && $proc2) {
+    if ($proc2=~/^\-/) {$proc=$proc3;} else {$proc=$proc2;}
+  }
 
   # for multiple run checking, count if/how many times proc is running
   $isproc{$proc}++;

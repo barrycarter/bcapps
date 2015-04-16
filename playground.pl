@@ -33,6 +33,25 @@ use Inline::Python;
 use FFI::Raw;
 use v5.10;
 
+# one off to spit out third tuesday of each month for personal reasons
+
+for $i (2015..2029) {
+  for $j ("01".."12") {
+    print weekdayAfterDate("$i${j}01",2,2),"\n";
+  }
+}
+
+sub weekdayAfterDate {
+  my($date,$day,$n) = @_;
+  my($time) = str2time("$date 12:00:00 UTC");
+  # the -3 makes Monday = 1
+  my($wday) = ($time/86400-3)%7;
+  # add appropriate amount for first weekday after date
+  $time += ($day-$wday)%7*86400 + $n*86400*7;
+  return strftime("%Y%m%d", gmtime($time));
+}
+
+die "TESTING";
 
 my $str = << "MARK";
 hello,"world",there,"this has commas,yes"
