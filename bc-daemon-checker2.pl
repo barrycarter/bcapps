@@ -4,10 +4,18 @@
 # --stderr: write to stderr not ERR file
 # --mach: name of machine and name of file for errors
 # --file: use this as proclist file
+# --sleep: sleep this many seconds before running (useful to avoid
+# seeing multi CROND or similar for jobs that run frequently but
+# briefly)
+
 # Sections in config file:
 # must: these programs must be running at all times
 # may: these programs may run as long as they wish
 # kill: these programs must be killed if they run too long
+# memory: these programs can use as much memory as they wish
+
+# TODO: add per-process memory and time limits
+
 # TODO: make this restart failed daemons
 
 require "/usr/local/lib/bclib.pl";
@@ -15,14 +23,16 @@ require "/usr/local/lib/bclib.pl";
 # default file is for my server
 defaults("mach=bcinfo3&file=/home/barrycarter/BCGIT/BCINFO3/root/bcinfo3-procs.txt");
 
-# this command really does all the work
-($out,$err,$res) = cache_command2("ps -www -ax -eo 'pid etime rss vsz stat args'","age=30");
+sleep($globopts{sleep});
 
-# TODO: memory + stopped processes
+# this command really does all the work
+($out,$err,$res) = cache_command2("ps -wwweo 'pid ppid etime rss vsz stat args'","age=30");
 
 # if process matches any of these, use second argument
 # TODO: move this to conf file too?
-my(%use2nd) = list2hash("/usr/bin/perl", "python", "/bin/perl", "/usr/bin/python");
+
+my(%use2nd) = list2hash("/usr/bin/perl", "python", "/bin/perl",
+"/usr/bin/python", "/bin/sh");
 
 @procs = split(/\n/,$out);
 shift(@procs); # ignore header line
@@ -46,7 +56,7 @@ for $i (@procs) {
   # cleanup proc line and split into fields
   $i=trim($i);
   $i=~s/\s+/ /isg;
-  ($pid, $time, $rss, $vsz, $stat, $proc, $proc2, $proc3) = split(/\s+/,$i);
+  ($pid,$ppid,$time,$rss,$vsz,$stat,$proc,$proc2,$proc3) = split(/\s+/,$i);
 
   # ignore [bracketed] processes because there are lots of them and
   # they all seem OK
@@ -54,6 +64,7 @@ for $i (@procs) {
   if ($proc=~/^\[.*\]$/) {next;}
 
   # use second arg? (third if second arg is an option)
+  # TODO: maybe improve this
   if ($use2nd{$proc}) {if ($proc2=~/^\-/) {$proc=$proc3;} else {$proc=$proc2;}}
 
   # for multiple run checking, count if/how many times proc is running
@@ -65,7 +76,7 @@ for $i (@procs) {
   }
 
   # processes using too much memory
-  if ($rss>500000) {
+  if ($rss>500000 && !$proclist{memory}{$proc}) {
     push(@err, "mem.$proc ($pid)");
   }
 
