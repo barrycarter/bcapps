@@ -29,9 +29,13 @@ while (<>) {
   my($size,$mtime,$name) =  split(/\s+/, $_, 3);
   $tot+= $size;
 
+  # TODO: if $size is small (indicating symlink or pointlessness,
+  # don't add to this list) [256 = max length of filename and thus of
+  # symlink?]
+
   # compressed? (newline for now, change to null for xargs -0 later)
-  if ($name=~/\.bz2$/ || $name=~/\.tbz$/) {print C "ROOT/$name\n";}
-  if ($name=~/\.gz$/ || $name=~/\.tgz$/) {print D "ROOT/$name\n";}
+  if (($name=~/\.bz2$/||$name=~/\.tbz$/)&&$size>256) {print C "ROOT/$name\n";}
+  if (($name=~/\.gz$/ || $name=~/\.tgz$/)&&$size>256) {print D "ROOT/$name\n";}
 
   # NOTE: to avoid problems w/ filesizes > $limit, we add to chunk
   # first and THEN check for overage

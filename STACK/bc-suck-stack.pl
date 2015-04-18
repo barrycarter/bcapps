@@ -38,8 +38,11 @@ for $i (keys %siteid) {
   getStackRep($i,$siteid{$i});
 
 #  my($out,$err,$res) = cache_command2("curl -L '$i/users/$siteid{$i}/?tab=activity'", "age=86400");
-  # changed activity to activities, grumble
-  my($out,$err,$res) = cache_command2("curl -L '$i/users/$siteid{$i}/?tab=activities'", "age=86400");
+
+  # changed activity to activities, grumble (and back later, perhaps while revamping activity feed?)
+
+  debug("activity($i)");
+  my($out,$err,$res) = cache_command2("curl -L '$i/users/$siteid{$i}/?tab=activity'", "age=86400");
 
   # number of pages (storing this in hash for later use?)
   my($baseurl);
