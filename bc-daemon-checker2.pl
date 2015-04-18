@@ -13,6 +13,7 @@
 # may: these programs may run as long as they wish
 # kill: these programs must be killed if they run too long
 # memory: these programs can use as much memory as they wish
+# stopped: these programs are allowed to be stopped
 
 # TODO: add per-process memory and time limits
 
@@ -73,7 +74,7 @@ for $i (@procs) {
   $isproc{$proc}++;
 
   # report stopped processes
-  if ($stat=~/T/) {
+  if ($stat=~/T/ && !$proclist{stopped}{$proc}) {
     push(@err, "stopped.$proc ($pid)");
   }
 

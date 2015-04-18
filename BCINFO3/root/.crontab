@@ -31,4 +31,4 @@
 # MOS guidance
 52 * * * * /usr/local/bin/bc-get-guidance2.pl
 # check that all daemons are running properly
-*/5 * * * * /usr/local/bin/bc-daemon-checker2.pl
+*/5 * * * * /usr/local/bin/bc-daemon-checker2.pl --sleep=50

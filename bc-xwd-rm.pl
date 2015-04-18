@@ -12,7 +12,7 @@ require "/usr/local/lib/bclib.pl";
 
 # sshfs can be a little slow, so archiving...
 
-# which archives do I have/
+# which archives do I have?
 my($out,$err,$res) = cache_command2("echo /mnt/sshfs/XWD/*.zpaq","age=86400");
 my(%zpaq,%dirs);
 for $i (split(/\s+/,$out)) {
@@ -37,6 +37,9 @@ for $i (@flist) {
   debug("I: $i");
   my(%hash);
 
+  # if directory no longer exists, do nothing
+  unless (-d "/mnt/sshfs/XWD/$i") {next;}
+
   # the files I've archived
   my($out,$err,$res) = cache_command2("zpaq list /mnt/sshfs/XWD/$i.zpaq","age=86400");
   while ($out=~s%$i/pic\.($i:.*?)\.png\.pnm%%s) {$hash{zpaq}{$1} = 1;}
@@ -48,11 +51,17 @@ for $i (@flist) {
   # TODO: I can probably do this better...
   for $j (keys %{$hash{zpaq}}) {
     if ($hash{ocr}{$j}) {
-      print "rm /mnt/sshfs/XWD/$i/pic.$j.png\n";
-      print "rm /mnt/sshfs/XWD/$i/pic.$j.png.pnm\n";
+
+      if (-f "/mnt/sshfs/XWD/$i/pic.$j.png") {
+	print "rm /mnt/sshfs/XWD/$i/pic.$j.png\n";
+      }
+
+      if (-f "/mnt/sshfs/XWD/$i/pic.$j.png.pnm") {
+	print "rm /mnt/sshfs/XWD/$i/pic.$j.png.pnm\n";
+      }
     }
   }
+  print "rmdir /mnt/sshfs/XWD/$i\n";
 }
 
-print "echo recommend deleting empty dirs\n";
 
