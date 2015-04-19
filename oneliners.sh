@@ -1,5 +1,18 @@
 # shell one liners
 
+# list of files on extdrive, with filename separated from full
+# filename (so I can join against files in /mnt/sshfs/ with the goal
+# of getting the same files in the same directories to avoid confusing
+# rsync)
+
+# will need to sort these before using "join" of course
+
+perl -nle 's%^.*?/%/%;$x=$_;s%^.*/%%; print "$_\0$x"' /mnt/extdrive/extdrive-files.txt > extdrive-file-filename.txt &
+
+perl -nle 's%^.*?/%/%;$x=$_;s%^.*/%%; print "$_\0$x"' /mnt/sshfs/bcmac-files.txt > bcmac-file-filename.txt &
+
+exit; 
+
 # dump DST change dates in yyyymmdd format
 zdump -v MST7MDT | fgrep ' MST'| perl -nle 'use POSIX; use Date::Parse; print "LINE: $_"; s/MST7MDT\s+//;s/ \=.*$//; print strftime("%Y%m%d DST",localtime(str2time($_)))'
 

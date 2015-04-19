@@ -11,6 +11,7 @@ while (<>) {
     ($hash{num},$hash{id},$hash{img}) = ($1,$2,$3);
   } elsif (s%<span class="quiet">(.*?)</span>%%) {
     $hash{role} = $1;
+    debug("ROLE: $1");
   } elsif (s%<em class="small">(.*?)</em>%%) {
     $hash{location} = $1;
   } elsif (s%</div>%%) {
