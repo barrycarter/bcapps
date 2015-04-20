@@ -10,6 +10,15 @@
 require "/usr/local/lib/bclib.pl";
 
 while (<>) {
-  debug("GOT: $_");
+#  debug("THUNK: $_");
+  if (m%>(.*?) Kinksters living in (.*?)<%) {
+    debug("GOT: $1 $2");
+  }
+
+  if (m%<a href=\"(.*?)/kinksters\">view more%) {
+    debug("GOT: $1");
+  }
+
+#  debug("GOT: $_");
 }
 
