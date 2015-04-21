@@ -41,8 +41,12 @@ Kinksters may also to leave this field blank.
 
 role: The kinkster's role in the kink community
 
-city,state,country: The kinkster's city, state, and country. This
-field didn't parse well, so you there may be some unusual entries.
+loc1: The kinkster's location, usually a city
+
+loc2: The kinkster's state (if the kinkster is in the United States),
+province (if the kinkster is in Canada), or country (if the kinkster
+is outside the US/Canada). Some kinksters set their location to
+"Antarctica" if they don't want people to know where they live.
 
 page: The page number on which this kinkster was found in their
 administrative area/country. I don't know FetLife's ranking method,
@@ -51,6 +55,8 @@ but lower page numbers usually indicate more active kinksters.
 scrape_time: The time at which this information was scraped. All
 scraping was performed in the 8h58m window starting at 2015-04-20
 13:57 UTC and ending at 2015-04-20 22:55.
+
+NOTE: The loc1 and loc2 fields did not parse well and may have errors.
 
 NOTE: FetLife permits one person to have multiple profiles.
 
@@ -61,6 +67,10 @@ you're not a techie.
 NOTE: This list is probably not complete, and may contain
 duplicates. I've made some effort to remove duplicates, but some may
 still exist.
+
+NOTE: Data has been edited slightly. For details, see:
+
+https://github.com/barrycarter/bcapps/blob/master/FETLIFE/bc-dl-by-region.pl
 
 SPECIAL THANKS TO: Mircea Popescu for creating the original FetLife
 "meat list" at http://trilema.com/2015/the-fetlife-meatlist-volume-i/

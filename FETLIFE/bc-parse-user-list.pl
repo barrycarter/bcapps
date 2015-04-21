@@ -10,7 +10,7 @@ my(%hash);
 
 # order in which to print fields (also used for header)
 my(@fields) = ("id", "screenname", "thumbnail", "age", "gender",
-"role", "city", "state", "country");
+"role", "loc1", "loc2");
 
 # TODO: make sure sorting doesn't break this field
 print join(",",@fields),",page_number,scrape_time\n";
@@ -33,7 +33,7 @@ for $i (@ARGV) {
     } elsif (s%<span class="quiet">(.*?)</span>%%) {
       ($hash{age},$hash{gender},$hash{role}) = data2agr($1);
     } elsif (s%<em class="small">(.*?)</em>%%) {
-      ($hash{city},$hash{state},$hash{country}) = loc2csc($1);
+      ($hash{loc1},$hash{loc2}) = loc2csc($1);
     } elsif (s%</div>%%) {
       # print user data and reset hash
       if (%hash) {
@@ -61,18 +61,25 @@ sub data2agr {
 sub loc2csc {
   my($loc) = @_;
 
-  # useless
-  $loc=~s/\s+, city of//i;
+  # special cases
+  $loc=~s/NoMa, Washington, D\.C\., District of Columbia/NoMa Washington D.C., District of Columbia/;
+  $loc=~s/, Arkansas, Arkansas/, Arkansas/;
+  # intentionally no space between comma and Nebraska below
+  $loc=~s/,Nebraska, Nebraska/, Nebraska/;
+  $loc=~s/, Missouri\/Kickapoo, Missouri/, Missouri/;
+
+  if ($loc=~s/, (city of|the|Republic of),/,/is || $loc=~s/, (Republic of|Islamic Republic of|United Republic of|the Former Yugoslav Republic of|Federated States of|the Democratic Republic of the|Democratic People&\#x27\;s Republic of)$//) {
+#    debug("NEWLOC: $loc");
+  }
+
+  # useless (if condition for testing only for now)
+#  if ($loc=~s/, (city of|the|republic of|islamic republic of|united republic of)(,|$)/,/is) {
+#    debug("NEWLOC: $loc");
+#  }
 
   my(@data)=split(/\,\s*/, $loc);
 
-  if (scalar(@data)!=2) {debug("LOC: $loc");}
-
-  # just country
-  if (scalar(@data)==1) {return ("","",$data[0]);}
-  # country and city (I think?)
-  if (scalar(@data)==2) {return ($data[0],"",$data[1]);}
-  # country/city/state
-  if (scalar(@data)==3) {return ($data[0],$data[1],$data[2]);}
+  if (scalar(@data)==1) {return ("",$data[0]);}
+  if (scalar(@data)==2) {return (@data);}
   warn("NOPARSE: $loc");
 }
