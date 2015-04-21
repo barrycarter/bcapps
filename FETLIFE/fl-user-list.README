@@ -1,0 +1,72 @@
+This is the README file for fetlife-user-list.txt, a
+comma-separated-value list of 3,873,155 users collected on 20 Apr 2015
+(UTC) by parallel deep-crawling https://fetlife.com/places
+
+NOTE: FetLife users are referred to as "kinksters". Most notes below
+apply only if you are logged into FetLife.
+
+Fields:
+
+id: The kinkster's id. The kinkster's profile page is
+"https://fetlife.com/users/xxx" where "xxx" is the id. The id doesn't
+change even if the kinkster changes their screenname.
+
+screenname: The kinkster's screenname.
+
+thumbnail: The URL to the kinkster's profile picture thumbnail. This
+URL is not protected and can be viewed even if you're not logged into
+FetLife. The thumbnail "avatar_missing_60x60.gif" indicates the kinkster
+has no profile picture. Replacing the "_60.jpg" at the end of the URL
+with "_200.jpg" yields a larger version of the profile picture.
+
+age: The kinkster's age. Some kinsters use high numbers here
+(frequently 94) if they don't want to use their real age. Since
+FetLife automatically increments ages yearly, an age of 95, 96, etc,
+also probably indicates the kinkster doesn't wish to give their age.
+
+gender: The kinkster's gender. In addition to male (M) and female (F),
+Fetlife defines these special genders:
+
+CD/TV: Crossdresser/Transvestite
+MtF: Transgender - Male to Female
+FtM: Transgender - Female to Male</option>
+TG: Transgender
+GF: Gender Fluid
+GQ: Genderqueer
+IS: Intersex
+B: Butch
+FEM: Femme
+
+Kinksters may also to leave this field blank.
+
+role: The kinkster's role in the kink community
+
+city,state,country: The kinkster's city, state, and country. This
+field didn't parse well, so you there may be some unusual entries.
+
+page: The page number on which this kinkster was found in their
+administrative area/country. I don't know FetLife's ranking method,
+but lower page numbers usually indicate more active kinksters.
+
+scrape_time: The time at which this information was scraped. All
+scraping was performed in the 8h58m window starting at 2015-04-20
+13:57 UTC and ending at 2015-04-20 22:55.
+
+NOTE: FetLife permits one person to have multiple profiles.
+
+NOTE: fetlife-com-user-list.tbz is a raw dump of the user data, in
+case you want to parse it yourself. You can safely ignore this file if
+you're not a techie.
+
+NOTE: This list is probably not complete, and may contain
+duplicates. I've made some effort to remove duplicates, but some may
+still exist.
+
+SPECIAL THANKS TO: Mircea Popescu for creating the original FetLife
+"meat list" at http://trilema.com/2015/the-fetlife-meatlist-volume-i/
+and for publicly publishing a valid FetLife cookie, and to unixssh.com
+for providing universal free shell access.
+
+DISCLAIMER: Do not rely on this information. This information was
+obtained legally, and falls under the Fair Use doctorine of copyright
+law.

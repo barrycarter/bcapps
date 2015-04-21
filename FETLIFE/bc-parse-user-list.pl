@@ -22,9 +22,7 @@ for $i (@ARGV) {
   my($page) = $1;
   my($dev,$ino,$mode,$nlink,$uid,$gid,$rdev,$size,$atime,$mtime,$ctime,$blksize,$blocks)=stat($i);
   my($time) = strftime("%Y-%m-%d %H:%M:%S", gmtime($mtime));
-  debug("TIME: $time");
-
-
+#  debug("TIME: $time");
 
   open(A,$i);
 
@@ -63,7 +61,12 @@ sub data2agr {
 sub loc2csc {
   my($loc) = @_;
 
+  # useless
+  $loc=~s/\s+, city of//i;
+
   my(@data)=split(/\,\s*/, $loc);
+
+  if (scalar(@data)!=2) {debug("LOC: $loc");}
 
   # just country
   if (scalar(@data)==1) {return ("","",$data[0]);}

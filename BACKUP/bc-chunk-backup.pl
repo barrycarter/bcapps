@@ -12,14 +12,26 @@ my($tot, $count);
 
 open(A,">filelist.txt");
 open(B,">statlist.txt");
+open(E,">excluded-files.txt");
 
 # record files to bunzip2/gunzip (and others?), but exclude symlinks
 # and put ROOT/ in front
 open(C,">bunzip2.txt");
 open(D,">gunzip.txt");
 
+# this program now gets ALL files, and excluded ones are colored
+
 while (<>) {
   chomp;
+
+  # if this line is colored, we want to exclude it but leave nulls to
+  # indicate why it was excluded (this info could be useful)
+  # <h>There's a segregation joke in here somewhere!</h>
+  if (s/\e\[0m\e\[K/\0/ && s/\e\[m\e\[K/\0/) {
+    print E "$_\n";
+    next;
+  }
+
   my($orig) = $_;
   if (++$count%10000==0) {debug("COUNT: $count, BYTES: $tot");}
   if ($tot>=$limit) {last;}
@@ -44,6 +56,6 @@ while (<>) {
 }
 
 debug("Used $count files to meet total");
-close(A); close(B); close(C); close(D);
+close(A); close(B); close(C); close(D); close(E);
 
 
