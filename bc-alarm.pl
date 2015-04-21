@@ -12,7 +12,8 @@ my($time) = shift(@ARGV);
 my($msg) = join(" ",@ARGV);
 
 # sendmail command (as Perl function)
-$smc = "bc-call-func.pl sendmail $private{email}{from} $private{email}{sms} '$msg'";
+# IFTTT charges, so switching to alt address
+$smc = "bc-call-func.pl sendmail $private{email2}{from} $private{email2}{sms} '$msg'";
 
 open(A,"|at -v $time")||die("Can't open at command, $!");
 # TODO: is TERM setting below necessary?

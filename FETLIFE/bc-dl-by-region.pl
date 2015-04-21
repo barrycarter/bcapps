@@ -61,9 +61,8 @@ while (%pages) {
     $fname=~s/(\d+)/sprintf("%0.6d",$1)/iseg;
     $fname=~s%/%%g;
 
-    # the server I'm using does NOT have parallel, but does have xargs
-    # -P, so the 'curl' isn't actually printed below
-    print "-H 'Cookie: $fl_cookie' -o $fname '$url'\n";
+    # using "xargs -n 1 -P time (command)" instead of parallel
+    print "curl -sS -H 'Cookie: $fl_cookie' -o $fname '$url'\n";
 
   }
 }

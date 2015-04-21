@@ -33,6 +33,13 @@ use Inline::Python;
 use FFI::Raw;
 use v5.10;
 
+
+system("ls -l");
+system("ls","-l");
+
+
+die "TESTING";
+
 # one off to spit out third tuesday of each month for personal reasons
 
 for $i (2015..2029) {

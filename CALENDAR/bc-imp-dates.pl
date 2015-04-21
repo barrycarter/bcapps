@@ -53,6 +53,7 @@ my(@dates);
 	  "St Peter and Paul Day" => "0629",
 	  "QE II Birthday" => "0421",
 	  "UN Children's Day" => "1120",
+	  "JFK Birthday" => "0529",
 	  "" => ""
 	  );
 
