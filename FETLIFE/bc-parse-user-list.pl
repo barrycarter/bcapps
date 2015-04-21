@@ -1,28 +1,55 @@
 #!/bin/perl
 
-# Parses a user list, ie: https://fetlife.com/countries/233/kinksters?page=3
+# Parses a list of files, each containing a list of users (because
+# filenames contain information per bc-dl-by-region.pl), parse data
+# Sample file: https://fetlife.com/countries/233/kinksters?page=3
 
 require "/usr/local/lib/bclib.pl";
 
 my(%hash);
-while (<>) {
-  # new user marker
-  if (s%href=\"/users/(\d+)\".*alt=\"(.*?)\".*src=\"(.*?)\"%%) {
-    ($hash{num},$hash{id},$hash{img}) = ($1,$2,$3);
-  } elsif (s%<span class="quiet">(.*?)</span>%%) {
-    ($hash{age},$hash{gender},$hash{role}) = data2agr($1);
-#    debug("ROLE: $1");
-  } elsif (s%<em class="small">(.*?)</em>%%) {
-    loc2csc($1);
-#    $hash{location} = $1;
-  } elsif (s%</div>%%) {
-    # print user data and reset hash
-    if (%hash) {
-      print "$hash{num}|$hash{id}|$hash{img}|$hash{age}|$hash{gender}|$hash{role}|$hash{location}\n";
-      %hash=();
+
+# order in which to print fields (also used for header)
+my(@fields) = ("id", "screenname", "thumbnail", "age", "gender",
+"role", "city", "state", "country");
+
+# TODO: make sure sorting doesn't break this field
+print join(",",@fields),",page_number,scrape_time\n";
+
+for $i (@ARGV) {
+
+  # file name and mtime contains information
+  unless ($i=~/page=(\d+)/) {warn "NO PAGE: $i";}
+  my($page) = $1;
+  my($dev,$ino,$mode,$nlink,$uid,$gid,$rdev,$size,$atime,$mtime,$ctime,$blksize,$blocks)=stat($i);
+  my($time) = strftime("%Y-%m-%d %H:%M:%S", gmtime($mtime));
+  debug("TIME: $time");
+
+
+
+  open(A,$i);
+
+  while (<A>) {
+    # new user marker
+    if (s%href=\"/users/(\d+)\".*alt=\"(.*?)\".*src=\"(.*?)\"%%) {
+      ($hash{id},$hash{screenname},$hash{thumbnail}) = ($1,$2,$3);
+    } elsif (s%<span class="quiet">(.*?)</span>%%) {
+      ($hash{age},$hash{gender},$hash{role}) = data2agr($1);
+    } elsif (s%<em class="small">(.*?)</em>%%) {
+      ($hash{city},$hash{state},$hash{country}) = loc2csc($1);
+    } elsif (s%</div>%%) {
+      # print user data and reset hash
+      if (%hash) {
+	my(@print) = @fields;
+	map($_=$hash{$_},@print);
+	# time and page
+	push(@print,$time,$page);
+	# TODO: kill spurious commas, if any
+	print join(",",@print),"\n";
+	%hash=();
+      }
+    } else {
+#      debug("IGNRING: $_");
     }
-  } else {
-#    debug("IGNRING: $_");
   }
 }
 
