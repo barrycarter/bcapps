@@ -24,13 +24,14 @@ open(D,">gunzip.txt");
 while (<>) {
   chomp;
 
+  # "color code" below too slow, commented out later
   # if this line is colored, we want to exclude it but leave nulls to
   # indicate why it was excluded (this info could be useful)
   # <h>There's a segregation joke in here somewhere!</h>
-  if (s/\e\[0m\e\[K/\0/ && s/\e\[m\e\[K/\0/) {
-    print E "$_\n";
-    next;
-  }
+#  if (s/\e\[0m\e\[K/\0/ && s/\e\[m\e\[K/\0/) {
+#    print E "$_\n";
+#    next;
+#  }
 
   my($orig) = $_;
   if (++$count%10000==0) {debug("COUNT: $count, BYTES: $tot");}

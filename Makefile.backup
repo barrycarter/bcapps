@@ -31,7 +31,7 @@ afad.txt: bcmac-converted.txt bcpc-converted.txt bcunix-converted.txt
 # too worried)
 
 filelist.txt statlist.txt: exclusions.txt afad.txt previouslydone.txt.srt
-	join -a 1 -t '\0' afad.txt previouslydone.txt.srt | bc-files-to-backup.pl | egrep --color=always -C 2147483647 -vf exclusions.txt | bc-chunk-backup.pl --debug
+	join -a 1 -t '\0' afad.txt previouslydone.txt.srt | bc-files-to-backup.pl | egrep -vf exclusions.txt | bc-chunk-backup.pl --debug
 
 # while testing exclusions.txt, it's important to know what big files and
 # big directories I'm backing up (so I can potentially exclude them)

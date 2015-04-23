@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/local/bin/python3.4
 
 # cloud testing (you must have a picloud.com account AND set
 # cloudconf.py correctly for any of this to work)
@@ -6,6 +6,16 @@
 # from __future__ import print_function
 # import cloud
 # import os
+
+from skyfield.api import *
+years = range(-9999, 9999, 10)
+north_pole = earth.topos('90 N', '0 W')
+print(north_pole)
+x, y, z = north_pole.gcrs(utc=(years, 1, 1)).position.km
+print(x,y,z)
+plot(x, y)
+
+exit()
 
 # from skyfield.api import *
 import de421
