@@ -54,7 +54,7 @@ for $i (@ARGV) {
 # parses data into age, gender, role
 
 sub data2agr {
-  if ($_[0]=~m%(\d+)([A-Z/]*)\s*(.*)$%) {return ($1,$2,$3);}
+  if ($_[0]=~m%(\d+)([A-Za-z/]*)\s*(.*)$%) {return ($1,$2,$3);}
   warn ("BAD DATA: $_[0]");
 }
 
