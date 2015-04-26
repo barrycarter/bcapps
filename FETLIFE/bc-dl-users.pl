@@ -5,10 +5,14 @@
 # date
 
 require "/usr/local/lib/bclib.pl";
+require "/home/barrycarter/bc-private.pl";
+
+# directory where stuff gets done
+dodie('chdir("/usr/local/etc/FETLIFE")');
 
 # public cookie per http://trilema.com/2015/fetlife-the-meat-market/
 # TODO: if/when this stops working, allow user to create/set
-$fl_cookie = "_fl_sessionid=9c69a3c9bb86f4b1f6ff74064e788824";
+$fl_cookie = "_fl_sessionid=$private{fetlife}{session}";
 
 my($bad);
 my(@have);
@@ -17,19 +21,22 @@ my(@bad);
 
 # TODO: start id should not be fixed as it is below
 
-$id = 4623145;
+$id = 4625875;
 
 for (;;) {
   $id++;
-  if (-f "/usr/local/etc/FETLIFE/user$id.bz2" || -f "/usr/local/etc/FETLIFE/user$id") {
-    debug("ALREADYHAVE: $id");
-    push(@have,$id);
-    next;
-  }
+
+  # if exists but not bzipped, bzip it
+  if (-f "user$id") {system("bzip2 -v user$id");}
+
+  # only need to check for bzip2'd version now
+  if (-f "user$id.bz2") {push(@have,$id); next;}
 
   my($url) = "https://fetlife.com/users/$id";
-  my($out,$err,$res) = cache_command2("curl -o /usr/local/etc/FETLIFE/user$id -H 'Cookie: $fl_cookie' 'https://fetlife.com/users/$id'", "age=864000");
-  my($data) = read_file("/usr/local/etc/FETLIFE/user$id");
+  my($out,$err,$res) = cache_command2("curl -o user$id -H 'Cookie: $fl_cookie' 'https://fetlife.com/users/$id'", "age=864000");
+  my($data) = read_file("user$id");
+  # TODO: not crazy about putting this bzip2 here
+  system("bzip2 -v user$id");
 
   # look for 10 *consecutive* bds
   unless ($data=~/<title>/) {
