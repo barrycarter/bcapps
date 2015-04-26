@@ -15,6 +15,7 @@ my(@r) = randomize(\@list);
 $nickname = join("",@r[0..6]);
 $email = join("",@r[7..12]);
 $email_domain = join("",@r[13..19]);
+$email = "$email\@$email_domain.com";
 $password = join("",@r[20..25]);
 
 print << "MARK";
@@ -33,7 +34,9 @@ TAG POS=1 TYPE=INPUT:PASSWORD FORM=ACTION:/users ATTR=ID:user_password CONTENT=$
 TAG POS=1 TYPE=INPUT:PASSWORD FORM=ACTION:/users ATTR=ID:user_password_confirmation CONTENT=$password
 TAG POS=1 TYPE=INPUT:TEXT FORM=ACTION:/users ATTR=ID:user_spam_check_foo CONTENT=7
 TAG POS=1 TYPE=INPUT:CHECKBOX FORM=ACTION:/users ATTR=ID:user_terms_and_conditions CONTENT=YES
-! pause for captcha
+' prompt and pause for captcha
+PROMPT captcha
+PAUSE
 TAG POS=1 TYPE=INPUT:SUBMIT FORM=ID:new_user ATTR=NAME:commit&&VALUE:Join<SP>FetLife
 MARK
 ;
