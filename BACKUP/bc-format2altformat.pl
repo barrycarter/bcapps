@@ -42,6 +42,8 @@ while (<>) {
     $name=~s%/Volumes/[A-Z]{5}/%/mnt/sshfs/%;
   } elsif ($devno == 2886150081 || $devno == 3154434839) {
     $name=~s%/cygdrive/%/mnt/sshfs2/%;
+  } elsif ($devno == 2080) {
+    # do nothing, but allow
   } else {
     warn("BAD DEVNO: $_");
     next;

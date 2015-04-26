@@ -2,7 +2,7 @@
 
 CREATE TABLE kinksters (
  id INT, screenname TEXT, thumbnail TEXT, age INT, gender VARCHAR(10),
- role TEXT, loc1 TEXT, loc2 TEXT, page INT, scrape_time DATETIME
+ role TEXT, loc1 TEXT, loc2 TEXT, scrape_time DATETIME, page INT
 );
 
 CREATE INDEX i1 ON kinksters(screenname);
@@ -13,5 +13,4 @@ CREATE INDEX i5 ON kinksters(loc1);
 CREATE INDEX i6 ON kinksters(loc2);
 
 .separator ,
-.import /home/barrycarter/FETLIFE/20150418-FETLIFE/fetlife-user-list.csv kinksters
-
+.import /home/barrycarter/FETLIFE/20150418-FETLIFE/fetlife-users.csv kinksters

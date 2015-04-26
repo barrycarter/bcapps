@@ -54,6 +54,7 @@ my(@dates);
 	  "QE II Birthday" => "0421",
 	  "UN Children's Day" => "1120",
 	  "JFK Birthday" => "0529",
+	  "Guy Fawke's Day" => "1105",
 	  "" => ""
 	  );
 
