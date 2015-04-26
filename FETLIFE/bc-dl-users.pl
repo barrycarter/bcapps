@@ -22,9 +22,12 @@ for (;;) {
   my($url) = "https://fetlife.com/users/$id";
   my($out,$err,$res) = cache_command2("curl -o /usr/local/etc/FETLIFE/user$id -H 'Cookie: $fl_cookie' 'https://fetlife.com/users/$id'", "age=86400");
   my($data) = read_file("/usr/local/etc/FETLIFE/user$id");
-  debug("RES: $res", "OUT: $data");
-  debug("DURING DEBUT STAGE, HIT ENTER TO CONTINE");
-  <STDIN>;
+  debug("RES: $res");
+
+  if (++$count%25==0) {
+    debug("DURING DEBUT STAGE, HIT ENTER TO CONTINE (every 25)");
+    <STDIN>;
+  }
 }
 
 
