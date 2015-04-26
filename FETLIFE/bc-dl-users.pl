@@ -10,6 +10,8 @@ require "/home/barrycarter/bc-private.pl";
 # directory where stuff gets done
 dodie('chdir("/usr/local/etc/FETLIFE")');
 
+defaults("xmessage=1");
+
 # public cookie per http://trilema.com/2015/fetlife-the-meat-market/
 # TODO: if/when this stops working, allow user to create/set
 $fl_cookie = "_fl_sessionid=$private{fetlife}{session}";
@@ -33,7 +35,7 @@ for (;;) {
   if (-f "user$id.bz2") {push(@have,$id); next;}
 
   my($url) = "https://fetlife.com/users/$id";
-  my($out,$err,$res) = cache_command2("curl -o user$id -H 'Cookie: $fl_cookie' 'https://fetlife.com/users/$id'", "age=864000");
+  my($out,$err,$res) = cache_command2("curl -A 'Fauxzilla' --socks4a 127.0.0.1:9050 -o user$id -H 'Cookie: $fl_cookie' 'https://fetlife.com/users/$id'", "age=864000");
   my($data) = read_file("user$id");
   # TODO: not crazy about putting this bzip2 here
   system("bzip2 -v user$id");
