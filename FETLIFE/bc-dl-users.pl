@@ -23,10 +23,10 @@ my(@bad);
 
 # TODO: start id should not be fixed as it is below
 
-$id = 4625875;
+$id = 4623146;
 
 for (;;) {
-  $id++;
+  $id--;
 
   # if exists but not bzipped, bzip it
   if (-f "user$id") {system("bzip2 -v user$id");}
