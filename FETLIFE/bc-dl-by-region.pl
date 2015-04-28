@@ -5,14 +5,27 @@
 # coming first. In other words, download "best" users for each area
 # first.
 
-# Input to this program is the pages that link to https://fetlife.com/places
+# --sessionid: a valid fetlife session id
 
 require "/usr/local/lib/bclib.pl";
 
-# this session id is publicly posted at
-# http://trilema.com/2015/fetlife-the-meat-market/ (somewhat
-# surprising that it still works!)
-$fl_cookie = "_fl_sessionid=9c69a3c9bb86f4b1f6ff74064e788824";
+unless ($globopts{sessionid}) {die("--sessionid required");}
+dodie('chdir("/home/barrycarter/FETLIFE/FETLIFE-BY-REGIOD")');
+
+# options for all curl commands (lets me change quickly if needed)
+my($opts) = "--compress -A 'Fauxzilla' --socks4a 127.0.0.1:9050 -H 'Cookie: _fl_sessionid=$globopts{sessionid}'";
+
+# get list of places
+
+my($now) = time();
+my($out,$err,$res) = cache_command2("curl $opts -o places-$now.txt 'https://fetlife.com/places'","age=864000");
+
+debug("OUT: $out");
+
+die "TESTING";
+
+# Input to this program is the pages that link to https://fetlife.com/places
+
 
 for $i (@ARGV) {
   my($data) = read_file($i);
