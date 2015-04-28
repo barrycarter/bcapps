@@ -4,7 +4,12 @@
 
 require "/usr/local/lib/bclib.pl";
 
-debug(fetlife_user_data(`bzcat /usr/local/etc/FETLIFE/user4608512.bz2`));
+# fields from location sucking
+# id,screenname,thumbnail,age,gender,role,loc1,loc2,page_number,scrape_time
+
+my(%res) = fetlife_user_data(join("",`bzcat /usr/local/etc/FETLIFE/user4608502.bz2`));
+
+debug(unfold(\%res));
 
 =item fetlife_user_data($data)
 
@@ -14,19 +19,21 @@ hash of specific data
 =cut
 
 sub fetlife_user_data {
-  # TODO: this is probably silly
-  my($all) = join("",@_);
+  my($all) = @_;
   my(%data);
   # TODO: decide if %meta is useful to me in some way
   my(%meta);
-
-  # TODO: get user id (dont assume filename has it)
 
   # inactive profile
   if ($all=~s%You are being <a href="https://fetlife.com/home">redirected</a>.</body></html>%%) {
     $data{latestactivity} = "inactive";
     return %data;
   }
+
+  # thumbnail URL (correct 200 to 60 for consistency)
+  # TODO: check this degrades nicely if no thumb/blank thumb
+  $all=~s%(https://fl.*?_200\.jpg)%%;
+  $data{thumbnail} = $1;
 
   # get rid of footer
   $all=~s/<em>going up\?<\/em>.*$//s;

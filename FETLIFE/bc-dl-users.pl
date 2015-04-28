@@ -4,6 +4,9 @@
 # until hitting three blanks in a row, to keep my fetlife.db up to
 # date
 
+# --start: the starting user id
+# --direction: set to -1 to go backwards
+
 require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
 
@@ -24,10 +27,11 @@ my(@bad);
 # TODO: start id should not be fixed as it is below
 # TODO: direction should not be hardcoded
 
-$id = 4618518;
+$id = $globopts{start};
 
 for (;;) {
-  $id--;
+
+  if ($globopts{direction}==-1) {$id--;} else {$id++;}
 
   # if exists but not bzipped, bzip it
   if (-f "user$id") {system("bzip2 -v user$id");}
