@@ -10,24 +10,36 @@
 require "/usr/local/lib/bclib.pl";
 
 unless ($globopts{sessionid}) {die("--sessionid required");}
-dodie('chdir("/home/barrycarter/FETLIFE/FETLIFE-BY-REGIOD")');
+dodie('chdir("/home/barrycarter/FETLIFE/FETLIFE-BY-REGION")');
 
-# options for all curl commands (lets me change quickly if needed)
-my($opts) = "--compress -A 'Fauxzilla' --socks4a 127.0.0.1:9050 -H 'Cookie: _fl_sessionid=$globopts{sessionid}'";
+# curl commands (lets me change quickly if needed)
+my($cmd) = "curl --compress -A 'Fauxzilla' --socks4a 127.0.0.1:9050 -H 'Cookie: _fl_sessionid=$globopts{sessionid}'";
+
+# TODO: add timestamps to everything as we will be on infinite loop(?)
 
 # get list of places
+my($out,$err,$res) = cache_command2("$cmd -o places.html 'https://fetlife.com/places'","age=864000");
+my($data) = read_file("places.html");
 
-my($now) = time();
-my($out,$err,$res) = cache_command2("curl $opts -o places-$now.txt 'https://fetlife.com/places'","age=864000");
+open(A,"|parallel -j 5");
 
-debug("OUT: $out");
+while ($data=~s%"/(countries|administrative_areas)/(\d+)">(.*?)</a>%%) {
+  my($type,$num,$name) = ($1,$2,$3);
 
-die "TESTING";
+  push(@files, "$type-$num.txt");
 
-# Input to this program is the pages that link to https://fetlife.com/places
+  # TODO: add a time test here, not just an existence test
+  if (-f "$type-$num.txt") {next;}
 
+#  my($res) = cache_command2("$cmd -o $type-$num.txt 'https://fetlife.com/$type/$num'","age=86400");
+  debug("DOING: $type-$num");
+  print A "$cmd -o $type-$num.txt 'https://fetlife.com/$type/$num'\n";
+}
 
-for $i (@ARGV) {
+close(A);
+
+for $i (@files) {
+  debug("I: $i");
   my($data) = read_file($i);
   # <h>the abbreviation for country below is in honor of Fetlife</h>
   my($num,$cunt,$url);
@@ -75,7 +87,7 @@ while (%pages) {
     $fname=~s%/%%g;
 
     # using "xargs -n 1 -P time (command)" instead of parallel
-    print "curl -sS -H 'Cookie: $fl_cookie' -o $fname '$url'\n";
-
+    print "$cmd -sS -o $fname '$url'\0";
   }
 }
+
