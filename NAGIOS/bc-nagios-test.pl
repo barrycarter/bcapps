@@ -3,6 +3,12 @@
 # Runs a nagios test; if a plugin exists, use it; otherwise, use
 # subroutines defined here
 
+# To debug a test wo adding it to bc-services.cfg or whatever, do this AS ROOT:
+
+# setenv NAGIOS_ARG1 "bc_head_size ('http://s3.amazonaws.com/plivocloud/4c743546-7e1b-11e2-9060-002590662312.mp3', 1962720)"
+
+# and run
+
 # this hideously ugly: not setting LC_ALL causes subtle errors in
 # sorting and plugins
 $ENV{LC_ALL} = "C";
@@ -192,6 +198,8 @@ Does a HEAD request to $url and confirms content-length is $size
 large files)
 
 <h>My actual head size is: too big</h>
+
+# TODO: allow for etags here
 
 =cut
 

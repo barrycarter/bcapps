@@ -11,7 +11,7 @@ require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
 
 # directory where stuff gets done
-dodie('chdir("/usr/local/etc/FETLIFE")');
+dodie('chdir("/home/barrycarter/FETLIFE/FETLIFE-USER-PROFILES/")');
 
 defaults("xmessage=1");
 
@@ -33,31 +33,32 @@ for (;;) {
 
   if ($globopts{direction}==-1) {$id--;} else {$id++;}
 
-  # if exists but not bzipped, bzip it
-  if (-f "user$id") {system("bzip2 -v user$id");}
+  # the filename for a given $id (only works for > 1000000 or
+  # something but OK w/ that for now)
+  $id=~/^(\d{3})(\d{4})$/ || die("BAD ID: $id");
+  my($fname) = "$1/user$1$2.bz2";
+  # skip if I got it already
+  if (-f $fname) {next;}
 
-  # only need to check for bzip2'd version now
-  if (-f "user$id.bz2") {push(@have,$id); next;}
+  # no caching, since we used existence of file as cache check above
+  my($out,$err,$res) = cache_command2("curl --compress -A 'Fauxzilla' --socks4a 127.0.0.1:9050 -H 'Cookie: $fl_cookie' 'https://fetlife.com/users/$id'");
 
-  my($url) = "https://fetlife.com/users/$id";
-  my($out,$err,$res) = cache_command2("curl --compress -A 'Fauxzilla' --socks4a 127.0.0.1:9050 -o user$id -H 'Cookie: $fl_cookie' 'https://fetlife.com/users/$id'", "age=864000");
-  my($data) = read_file("user$id");
-  # TODO: not crazy about putting this bzip2 here
-  system("bzip2 -v user$id");
+  # bzip2 and write to correct place
+  debug("GETTNG: $id");
+  local(*A);
+  open(A,"|bzip2 -v - > $fname");
+  print A $out;
+  close(A);
 
-  # look for 10 *consecutive* bds
-  unless ($data=~/<title>/) {
-    push(@bad,$id);
-    $bad++;
-  } else {
-    push(@got,$id);
-    $bad=0;
-  }
+  # if $out looks ok, reset bad counter and continue
+  if ($out=~/<title>/) {$bad=0; next;}
 
-  if ($bad>10) {last;}
+  # otherwise, increment bad counter, note bad file + possibly exit
+  push(@bad,$fname);
+  if (++$bad>10) {last;}
 }
 
-# TODO: delete bads, but especially last 10 bads
+for $i (-10..0) {system("rm $bad[$i]");}
 
 # TODO: people, especially newbies(?) change their profiles often(?)
 
@@ -65,13 +66,4 @@ for (;;) {
 
 # TODO: keep old data (wiki style) so "blanking profile" trick doesn't work
 
-# NOTE: "10 day" cache will keep us from downloading the same bad many times
-
-# TODO: bzip2 others
-
-debug("PROGRAM ENDS HERE");
-
-
-
-
-
+# TODO: rename older profiles to follow user[number].bz2 scheme
