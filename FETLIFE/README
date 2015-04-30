@@ -1,5 +1,9 @@
 Creating new directory for FetLife related code
 
+Canon order (I hope to establish):
+
+id,screenname,age,gender,role,city,state,country,source,mtime
+
 Fields in both (renaming scrape_time to mtime):
 
 id,screenname,thumbnail,age,gender,role,mtime
@@ -15,6 +19,3 @@ latestactivity,npics,nvids,nfriends,cities,administrative_areas,countries
 Extra data from user sucking (not really fields):
 
 events,groups,fetish,islookingfor,relationshipstatus,dsrelationshipstatus
-
-
-TODO: add source
