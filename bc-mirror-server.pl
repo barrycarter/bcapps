@@ -3,12 +3,15 @@
 # mirrors a local directory a server root even more efficiently than
 # rsync by remembering time of previous mirror
 # --dryrun = don't actually do anything, use rsync -n
+# --remoteroot = mirror files to this directory on remote server (default "/")
+# --hash = use hashed mirror file, not pathwise mirror file
 
 # TODO: assumes mirroring as root@ (VPS), which may be bad
 
 require "/usr/local/lib/bclib.pl";
 
 my($dir,$server) = @ARGV;
+defaults("remoteroot=/");
 
 unless ($dir=~m%^\/%) {die "dir must be full path, not $dir";}
 unless ($server) {die "Usage: $0 directory server";}
@@ -21,6 +24,10 @@ dodie("chdir('$dir')");
 # mirror the same directory to different servers out of sync
 
 my($mirfile) = "/usr/local/etc/bcmirror/$dir/lastmirror.$server";
+
+if ($globopts{hash}) {
+  $mirfile = "/usr/local/etc/bcmirror/hash/".sha1_hex("$dir.$server");
+}
 
 # TODO: check to see if user really needs to "mkdir" or not
 unless (-f $mirfile) {
@@ -56,7 +63,7 @@ write_file(join("\n",@mirror)."\n","$mirfile.todo");
 # TODO: add options for verbosity
 if ($globopts{dryrun}) {$opts = "-n";}
 
-my($com)="rsync -vv -P $opts -z -R -L --files-from=$mirfile.todo . root\@$server:/";
+my($com)="rsync -vv -P $opts -z -R -L --files-from=$mirfile.todo . root\@$server:$globopts{remoteroot}";
 
 debug($com);
 my($out,$err,$res) = cache_command2($com);

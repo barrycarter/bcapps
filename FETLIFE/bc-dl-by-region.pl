@@ -15,6 +15,9 @@ dodie('chdir("/home/barrycarter/FETLIFE/FETLIFE-BY-REGION")');
 # curl commands (lets me change quickly if needed)
 my($cmd) = "curl --compress -A 'Fauxzilla' --socks4a 127.0.0.1:9050 -H 'Cookie: _fl_sessionid=$globopts{sessionid}'";
 
+# and the command to run on remote server (same except no TOR)
+my($cmd2) = "curl --compress -A 'Fauxzilla' -H 'Cookie: _fl_sessionid=$globopts{sessionid}'";
+
 # TODO: add timestamps to everything as we will be on infinite loop(?)
 
 # get list of places
@@ -25,15 +28,16 @@ open(A,"|parallel -j 5");
 
 while ($data=~s%"/(countries|administrative_areas)/(\d+)">(.*?)</a>%%) {
   my($type,$num,$name) = ($1,$2,$3);
+  my($fname) = "$type-$num.txt";
 
-  push(@files, "$type-$num.txt");
+  push(@files, $fname);
 
   # TODO: add a time test here, not just an existence test
-  if (-f "$type-$num.txt") {next;}
+  if (-f $fname && -M $fname < 1) {next;}
 
 #  my($res) = cache_command2("$cmd -o $type-$num.txt 'https://fetlife.com/$type/$num'","age=86400");
-  debug("DOING: $type-$num");
-  print A "$cmd -o $type-$num.txt 'https://fetlife.com/$type/$num'\n";
+  debug("DOING: $fname");
+  print A "$cmd -o $fname 'https://fetlife.com/$type/$num'\n";
 }
 
 close(A);
@@ -87,7 +91,7 @@ while (%pages) {
     $fname=~s%/%%g;
 
     # using "xargs -n 1 -P time (command)" instead of parallel
-    print "$cmd -sS -o $fname '$url'\n";
+    print "$cmd2 -sS -o $fname '$url'\n";
   }
 }
 

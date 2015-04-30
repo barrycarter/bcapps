@@ -7,20 +7,31 @@ require "/usr/local/lib/bclib.pl";
 # fields from location sucking
 # id,screenname,thumbnail,age,gender,role,loc1,loc2,page_number,scrape_time
 
-my(%res) = fetlife_user_data(join("",`bzcat /usr/local/etc/FETLIFE/user4608502.bz2`));
+# my(%res) = fetlife_user_data(join("",`bzcat /usr/local/etc/FETLIFE/user4608502.bz2`));
 
-debug(unfold(\%res));
+for $i (glob "/home/barrycarter/FETLIFE/FETLIFE-USER-PROFILES/464/*.bz2") {
+  debug("I: $i");
+  my(%res) = fetlife_user_data($i);
+  debug("RES", unfold(\%res));
+  die "TESTING";
+}
 
-=item fetlife_user_data($data)
+=item fetlife_user_data($file)
 
-Given a string that represents a FetLife users profile data, return a
-hash of specific data
+Given a (possibly BZIPed) file that contains FetLife users profile
+data, return a hash of specific data
 
 =cut
 
 sub fetlife_user_data {
-  my($all) = @_;
+  my($file) = @_;
   my(%data);
+  $data{filename} = $file;
+  $data{mtime} = (stat($file))[9];
+
+  my($all);
+  if($file=~/\.bz2$/){$all=join("",`bzcat $file`);}else{$all=read_file($file);}
+
   # TODO: decide if %meta is useful to me in some way
   my(%meta);
 
@@ -29,6 +40,8 @@ sub fetlife_user_data {
     $data{latestactivity} = "inactive";
     return %data;
   }
+
+  debug("ALL: $all");
 
   # thumbnail URL (correct 200 to 60 for consistency)
   # TODO: check this degrades nicely if no thumb/blank thumb
@@ -46,6 +59,9 @@ sub fetlife_user_data {
   # number
   $all=~s%"/conversations/new\?with=(\d+)"%%;
   $data{id} = $1;
+
+  # data source is user page itself
+  $data{source} = "https://fetlife.com/users/$data{id}";
 
   # after getting title, get rid of header
   $all=~s%^.*</head>%%s;
@@ -82,8 +98,10 @@ sub fetlife_user_data {
     $data{nfriends}=~s/,//g;
   }
 
+  debug("OMEGA: $all");
+
   # age, and orientation/gender
-  $all=~s%<h2 class="bottom">$data{name}\s*<span class="small quiet">(\d+)(.*)\s+(.*?)</span></h2>%%||warn("NO EXTRA DATA($i): $all");
+  $all=~s%<h2 class="bottom">$data{screenname}\s*<span class="small quiet">(\d+)(.*)\s+(.*?)</span></h2>%%s||warn("NO EXTRA DATA($i): $all");
   ($data{age}, $data{gender}, $data{role}) = ($1, $2, $3);
 
   # city if first /cities link in page

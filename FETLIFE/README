@@ -1,12 +1,12 @@
 Creating new directory for FetLife related code
 
-Fields in both:
+Fields in both (renaming scrape_time to mtime):
 
-id,screenname,thumbnail,age,gender,role
+id,screenname,thumbnail,age,gender,role,mtime
 
 Fields only in location sucking:
 
-loc1,loc2,page_number,scrape_time
+loc1,loc2,page_number
 
 Fields only in user sucking:
 
