@@ -1,1 +1,20 @@
 Creating new directory for FetLife related code
+
+Fields in both:
+
+id,screenname,thumbnail,age,gender,role
+
+Fields only in location sucking:
+
+loc1,loc2,page_number,scrape_time
+
+Fields only in user sucking:
+
+latestactivity,npics,nvids,nfriends,cities,administrative_areas,countries
+
+Extra data from user sucking (not really fields):
+
+events,groups,fetish,islookingfor,relationshipstatus,dsrelationshipstatus
+
+
+TODO: add source

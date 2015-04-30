@@ -87,7 +87,7 @@ while (%pages) {
     $fname=~s%/%%g;
 
     # using "xargs -n 1 -P time (command)" instead of parallel
-    print "$cmd -sS -o $fname '$url'\0";
+    print "$cmd -sS -o $fname '$url'\n";
   }
 }
 

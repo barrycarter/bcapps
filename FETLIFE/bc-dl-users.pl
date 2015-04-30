@@ -38,7 +38,7 @@ for (;;) {
   $id=~/^(\d{3})(\d{4})$/ || die("BAD ID: $id");
   my($fname) = "$1/user$1$2.bz2";
   # skip if I got it already
-  if (-f $fname) {next;}
+  if (-f $fname) {$bad=0; next;}
 
   # no caching, since we used existence of file as cache check above
   my($out,$err,$res) = cache_command2("curl --compress -A 'Fauxzilla' --socks4a 127.0.0.1:9050 -H 'Cookie: $fl_cookie' 'https://fetlife.com/users/$id'");

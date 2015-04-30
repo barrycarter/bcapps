@@ -34,17 +34,18 @@ sub fetlife_user_data {
   # TODO: check this degrades nicely if no thumb/blank thumb
   $all=~s%(https://fl.*?_200\.jpg)%%;
   $data{thumbnail} = $1;
+  $data{thumbnail}=~s/_200\.jpg/_60.jpg/;
 
   # get rid of footer
   $all=~s/<em>going up\?<\/em>.*$//s;
 
   # title (= username)
   $all=~s%<title>(.*?) - Kinksters - FetLife</title>%%s||warn("BAD TITLE: $all");
-  $data{name} = $1;
+  $data{screenname} = $1;
 
   # number
   $all=~s%"/conversations/new\?with=(\d+)"%%;
-  $data{num} = $1;
+  $data{id} = $1;
 
   # after getting title, get rid of header
   $all=~s%^.*</head>%%s;
