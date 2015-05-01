@@ -9,34 +9,39 @@ require "/usr/local/lib/bclib.pl";
 my(%hash);
 
 # order in which to print fields (also used for header)
-my(@fields) = ("id", "screenname", "thumbnail", "age", "gender",
-"role", "loc1", "loc2");
+my(@fields) = ("id", "screenname", "age", "gender", "role", "city", "state",
+	       "country", "thumbnail");
+
+my($country);
 
 # TODO: make sure sorting doesn't break this field
-print join(",",@fields),",page_number,scrape_time\n";
+# print join(",",@fields),",page_number,mtime\n";
+print join(",",@fields),",mtime\n";
 
 for $i (@ARGV) {
 
   # file name and mtime contains information
   unless ($i=~/page=(\d+)/) {warn "NO PAGE: $i";}
   my($page) = $1;
-  my($dev,$ino,$mode,$nlink,$uid,$gid,$rdev,$size,$atime,$mtime,$ctime,$blksize,$blocks)=stat($i);
-  my($time) = strftime("%Y-%m-%d %H:%M:%S", gmtime($mtime));
-#  debug("TIME: $time");
+  my($mtime) = (stat($i))[9];
+
+  # country (maybe) [this is fixed for a given page]
+  if (s%<title>Kinksters in (.*?) - FetLife</title>%%) {$country=$1;next;}
 
   open(A,$i);
 
   while (<A>) {
+
     # new user marker
     if (s%href=\"/users/(\d+)\".*alt=\"(.*?)\".*src=\"(.*?)\"%%) {
       ($hash{id},$hash{screenname},$hash{thumbnail}) = ($1,$2,$3);
     } elsif (s%<span class="quiet">(.*?)</span>%%) {
       ($hash{age},$hash{gender},$hash{role}) = data2agr($1);
     } elsif (s%<em class="small">(.*?)</em>%%) {
-      ($hash{loc1},$hash{loc2}) = loc2csc($1);
+      ($hash{city},$hash{state}) = loc2csc($1);
     } elsif (s%</div>%%) {
-      # print user data and reset hash
-      if (%hash) {
+      # print user data and reset hash (except country)
+      if ($hash{id}) {
 	my(@print) = @fields;
 	map($_=$hash{$_},@print);
 	# time and page
@@ -44,6 +49,7 @@ for $i (@ARGV) {
 	# TODO: kill spurious commas, if any
 	print join(",",@print),"\n";
 	%hash=();
+	$hash{country} = $country;
       }
     } else {
 #      debug("IGNRING: $_");

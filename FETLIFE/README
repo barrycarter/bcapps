@@ -2,7 +2,7 @@ Creating new directory for FetLife related code
 
 Canon order (I hope to establish):
 
-id,screenname,age,gender,role,city,state,country,source,mtime
+id,screenname,age,gender,role,city,state,country,thumbnail,source,mtime
 
 Fields in both (renaming scrape_time to mtime):
 

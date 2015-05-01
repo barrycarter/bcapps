@@ -9,7 +9,7 @@ require "/usr/local/lib/bclib.pl";
 
 # my(%res) = fetlife_user_data(join("",`bzcat /usr/local/etc/FETLIFE/user4608502.bz2`));
 
-my(@order)=split(/\,/,"id,screenname,age,gender,role,city,state,country,source,mtime");
+my(@order)=split(/\,/,"id,screenname,age,gender,role,city,state,country,thumbnail,source,mtime");
 
 for $i (glob "/home/barrycarter/FETLIFE/FETLIFE-USER-PROFILES/464/*.bz2") {
   my(%res) = fetlife_user_data($i);
