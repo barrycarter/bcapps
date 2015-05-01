@@ -4,19 +4,16 @@
 # filenames contain information per bc-dl-by-region.pl), parse data
 # Sample file: https://fetlife.com/countries/233/kinksters?page=3
 
+# giving up on merging this list w/ profile sucking list, so I can use
+# more fields
+
 require "/usr/local/lib/bclib.pl";
 
-my(%hash);
-
-# order in which to print fields (also used for header)
+# order in which to print per-user fields (also used for header)
 my(@fields) = ("id", "screenname", "age", "gender", "role", "city", "state",
-	       "country", "thumbnail");
+	       "country", "thumbnail", "popnum", "popnumtotal", "mtime");
 
-my($country);
-
-# TODO: make sure sorting doesn't break this field
-# print join(",",@fields),",page_number,mtime\n";
-print join(",",@fields),",mtime\n";
+print join(",",@fields),"\n";
 
 for $i (@ARGV) {
 
@@ -30,7 +27,6 @@ for $i (@ARGV) {
   s/showing\s*([\d,]+)\s*\-\s*([\d,]+)\s*of\s*([\d\,]+)//is||warn("ERR: $i: NO PAGE INFO");
   my(@pagedata) = ($1,$2,$3);
   map(s/\,//g, @pagedata);
-  my($usercount) = $pagedata[0]-1;
 
   # country (maybe) [this is fixed for a given page]
   s%<title>Kinksters in (.*?) \- FetLife</title>%%is||warn("ERR: $i: NO COUNTRY DATA");
@@ -39,10 +35,14 @@ for $i (@ARGV) {
   # users
   while (s%<div class="clearfix user_in_list">(.*?)</div>\s*</div>%%is) {
 
-    $usercount++;
-
     # parse user
     my($user) = $1;
+    my(%hash);
+
+    # last two are somewhat redundant
+    $hash{popnum} = $pagedata[0]++;
+    $hash{popnumtotal} = $pagedata[2];
+    $hash{mtime} = $mtime;
 
     $user=~s%href=\"/users/(\d+)\".*alt=\"(.*?)\".*src=\"(.*?)\"%%||warn("ERR: $i: no id/screenname/thumbnail");
     ($hash{id},$hash{screenname},$hash{thumbnail}) = ($1,$2,$3);
@@ -51,13 +51,11 @@ for $i (@ARGV) {
     ($hash{age},$hash{gender},$hash{role}) = data2agr($1);
 
     $user=~s%<em class="small">(.*?)</em>%%s||warn("ERR: $i: no city/state");
-    ($hash{city},$hash{state}) = loc2csc($1,$country);
+    ($hash{city},$hash{state},$hash{country}) = loc2csc($1,$country);
 
     # and print
     my(@print) = @fields; 
-    map($_=$hash{$_},@print); 
-
-    push(@print,$time,$page);
+    map($_=$hash{$_},@print);
     # TODO: kill spurious commas, if any
     print join(",",@print),"\n";
 
@@ -65,7 +63,8 @@ for $i (@ARGV) {
 
     next;
   }
-  unless ($usercount == $pagedata[1]) {warn "$i: lost users";}
+  # -1 to compensate for extra unused increment at last user
+  unless ($pagedata[0]-1 == $pagedata[1]) {warn "$i: lost users";}
 }
 
 # parses data into age, gender, role
@@ -91,14 +90,5 @@ sub loc2csc {
 
   # if city/state and country are same, null them
   for $i (0,1) {if ($data[$i] eq $data[2]) {$data[$i]="";}}
-
-
-  debug("DATA:".join("|",@data));
-
-  return "TESTING";
-
-
-  if (scalar(@data)==1) {return ("",$data[0]);}
-  if (scalar(@data)==2) {return (@data);}
-  warn("NOPARSE: $loc");
+  return @data;
 }
