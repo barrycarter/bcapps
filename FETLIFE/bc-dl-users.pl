@@ -58,7 +58,7 @@ for (;;) {
   if (++$bad>10) {last;}
 }
 
-for $i (-10..0) {system("rm $bad[$i]");}
+for $i (-11..0) {system("rm $bad[$i]");}
 
 # TODO: people, especially newbies(?) change their profiles often(?)
 
