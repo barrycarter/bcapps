@@ -22,11 +22,15 @@ for $i (@ARGV) {
   my($_) = read_file($i);
 
   # find URL of this page (indirectly)
-  my($source);
+  s%<a href="([^>]*?)">return to [^<]*?</a>%%is||warn("NO UPPAGE: $i");
+  my($source) = $1;
+  # TODO: may not work on last page for given country
+  s%<em class="current">(\d+)</em>%%||warn("NO PAGE#: $i");
+  # TODO: read https
+#  $source = "https://fetlife.com$source/kinksters?page=$1";
+  $source = "fetlife.com$source/kinksters?page=$1";
 
-  # most pages will have both
-  s%<a rel="(prev|next)" href="(.*?)">%%s||warn("LONE PAGE ALERT: $i");
- # debug("DATA: $1 $2");
+  unless (index($i,$source)) {debug("$i vs $source");}
 
   # how many of how many
   s/showing\s*([\d,]+)\s*\-\s*([\d,]+)\s*of\s*([\d\,]+)//is||warn("ERR: $i: NO PAGE INFO");
@@ -62,7 +66,7 @@ for $i (@ARGV) {
     my(@print) = @fields; 
     map($_=$hash{$_},@print);
     # TODO: kill spurious commas, if any
-#    print join(",",@print),"\n";
+    print join(",",@print),"\n";
 
 #    debug("LEFTOVER: $user");
 

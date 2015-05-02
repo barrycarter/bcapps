@@ -12,3 +12,10 @@ CREATE INDEX i4 ON kinksters(role(10));
 CREATE INDEX i5 ON kinksters(city(10));
 CREATE INDEX i6 ON kinksters(state(10));
 CREATE INDEX i7 ON kinksters(country(10));
+
+-- import for MySQL
+
+LOAD DATA INFILE '/home/barrycarter/temp.sql' INTO TABLE kinksters
+FIELDS TERMINATED BY ',';
+
+

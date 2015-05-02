@@ -120,7 +120,11 @@ sub shorten {
   $event=~s/(partial|total|annular|pen\.|hybrid) (lunar|solar)/$2/i;
 
   # remove word elongation and odd spaces
-  $event=~s/elongation//i;
+  if ($event=~s/elongation//i) {
+    $event=~s/ :/:/;
+    $event=~s/E/eve/;
+    $event=~s/W/morn/;
+  }
 
   # for equinoxes/solstices, add time and remove type
   $event=~s/^.*?\s+(equinox|solstice)/$1 ($stime)/i;
