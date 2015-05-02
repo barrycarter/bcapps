@@ -5,6 +5,20 @@
 
 # NOTE: /usr/local/etc/fetlife.id must contain a valid fetlife session id
 
+# not google? no go! (https://support.google.com/webmasters/answer/80553?hl=en)
+
+unless ($ENV{REMOTE_HOST}=~/\.googlebot\.com\.?$/) {
+  print << "MARK";
+Content-type: text/plain
+
+These aren't the droids you're looking for. Move along.
+
+If these are the droids you're looking for, please email fetlife\@barrycarter.info
+MARK
+;
+exit;
+}
+
 print "Content-type: text/html\n\n";
 
 my($sessionid) = `cat /usr/local/etc/fetlife.id`;
