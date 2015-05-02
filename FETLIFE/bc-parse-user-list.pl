@@ -11,7 +11,7 @@ require "/usr/local/lib/bclib.pl";
 
 # order in which to print per-user fields (also used for header)
 my(@fields) = ("id", "screenname", "age", "gender", "role", "city", "state",
-	       "country", "thumbnail", "popnum", "popnumtotal", "mtime");
+	       "country", "thumbnail", "popnum", "popnumtotal", "source", "mtime");
 
 print join(",",@fields),"\n";
 
@@ -21,7 +21,12 @@ for $i (@ARGV) {
   # using $_ is probably a bad idea
   my($_) = read_file($i);
 
-  # TODO: better error checking, but not case by case like I'm doing now
+  # find URL of this page (indirectly)
+  my($source);
+
+  # most pages will have both
+  s%<a rel="(prev|next)" href="(.*?)">%%s||warn("LONE PAGE ALERT: $i");
+ # debug("DATA: $1 $2");
 
   # how many of how many
   s/showing\s*([\d,]+)\s*\-\s*([\d,]+)\s*of\s*([\d\,]+)//is||warn("ERR: $i: NO PAGE INFO");
@@ -57,7 +62,7 @@ for $i (@ARGV) {
     my(@print) = @fields; 
     map($_=$hash{$_},@print);
     # TODO: kill spurious commas, if any
-    print join(",",@print),"\n";
+#    print join(",",@print),"\n";
 
 #    debug("LEFTOVER: $user");
 
