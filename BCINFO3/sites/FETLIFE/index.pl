@@ -3,20 +3,19 @@
 # proxy to fetlife.com that only works if you're accessing from the
 # "right" IP address (or hostname or user agent or something?)
 
+require "/usr/local/lib/bclib.pl";
+
 # NOTE: /usr/local/etc/fetlife.id must contain a valid fetlife session id
 
-# this is ugly but workable check for google botting
+# TODO: cache data?
 
-unless ($ENV{REMOTE_ADDR}=~/^66\.249/) {
-  print << "MARK";
-Content-type: text/plain
+# let my ip address (remote or whatever I want to put in here) also see proxy
+my($myip) = `cat /usr/local/etc/myip.txt`;
+$myip=~s/\s*$//;
 
-These aren't the droids you're looking for. Move along.
-
-If these are the droids you're looking for, please email fetlife\@barrycarter.info
-MARK
-;
-exit;
+unless ($ENV{REMOTE_ADDR}=~/^66\.249/ || $ENV{REMOTE_ADDR} eq $myip) {
+  system("cat nobot.txt");
+  exit;
 }
 
 print "Content-type: text/html\n\n";
@@ -24,19 +23,15 @@ print "Content-type: text/html\n\n";
 my($sessionid) = `cat /usr/local/etc/fetlife.id`;
 $sessionid=~s/\s*$//;
 
-# for $i (sort keys %ENV) {print "$i -> $ENV{$i}\n";}
-
-# special cases
-if ($ENV{REQUEST_URI} eq "/" || $ENV{REQUEST_URI} eq "/home/") {
-  $ENV{REQUEST_URI} = "/home/v4/";
-}
-
 my($url) = "https://fetlife.com$ENV{REQUEST_URI}";
 
 # TODO: sanitize URL better!!!
 $url=~s/\'//g;
 
-# print "curl --compress -A 'Fauxzilla' -H 'Cookie: _fl_sessionid=$sessionid' '$url'";
+my($cmd) = "curl --compress -A 'Fauxzilla' -H 'Cookie: _fl_sessionid=$sessionid' '$url'";
 
-system("curl --compress -A 'Fauxzilla' -H 'Cookie: _fl_sessionid=$sessionid' '$url'");
+# print $cmd;
 
+my($out,$err,$res) = cache_command2($cmd,"age=0");
+$out=~s%s://fetlife.com%://fl20150503.94y.info%;
+print $out;

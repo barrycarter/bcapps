@@ -21,7 +21,7 @@ my($cmd2) = "curl --compress -A 'Fauxzilla' -H 'Cookie: _fl_sessionid=$globopts{
 # TODO: add timestamps to everything as we will be on infinite loop(?)
 
 # get list of places
-my($out,$err,$res) = cache_command2("$cmd -o places.html 'https://fetlife.com/places'","age=864000");
+my($out,$err,$res) = cache_command2("$cmd -o places.html 'https://fetlife.com/places'","age=86400");
 my($data) = read_file("places.html");
 
 open(A,"|parallel -j 5");
@@ -58,8 +58,8 @@ for $i (@files) {
 
   # number of pages for this url
   # some URLs have multiple pages, always choose highest value
-  # adding 1 below to allow for growth during dl
-  $pages{$url} = max($pages{$url},ceil($num/16)+1);
+  # adding 2 below to allow for growth during dl
+  $pages{$url} = max($pages{$url},ceil($num/16)+2);
 }
 
 # glitch cases (countries w/ admin areas already on page, city I
@@ -72,6 +72,8 @@ for $i ("/countries/233", "/cities/8630", "/cities/11529") {delete $pages{$i};}
 
 my(@curls);
 
+my($n,$curdir);
+
 while (%pages) {
   $count++;
 
@@ -79,6 +81,14 @@ while (%pages) {
   for $i (keys %pages) {
     # ignore and delete URLs that have a lower page count
     if ($pages{$i}<$count) {delete $pages{$i}; next;}
+
+    # 500 files to a directory just to keep things organized (note:
+    # should really be sqrt(total number of pages) or something but
+    # sheesh
+    if ($n++%500==0) {
+      print "mkdir DIR$n\n";
+      $curdir = "DIR$n";
+    }
 
     # url for download and output filename (can't use -O will overwrite)
     my($url) = "https://fetlife.com/$i/kinksters?page=$count";
@@ -91,7 +101,8 @@ while (%pages) {
     $fname=~s%/%%g;
 
     # using "xargs -n 1 -P time (command)" instead of parallel
-    print "$cmd2 -sS -o $fname '$url'\n";
+    # putting bzip2 in the background here is dangerous, but efficient
+    print "$cmd2 -sS -o $curdir/$fname '$url'; bzip2 $curdir/$fname &\n";
   }
 }
 

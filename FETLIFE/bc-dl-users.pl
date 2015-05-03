@@ -19,10 +19,7 @@ defaults("xmessage=1");
 # TODO: if/when this stops working, allow user to create/set
 $fl_cookie = "_fl_sessionid=$private{fetlife}{session}";
 
-my($bad);
-my(@have);
-my(@got);
-my(@bad);
+my($bad,@bad);
 
 # TODO: start id should not be fixed as it is below
 # TODO: direction should not be hardcoded
@@ -49,6 +46,13 @@ for (;;) {
   open(A,"|bzip2 -v - > $fname");
   print A $out;
   close(A);
+
+  # if being asked to login, session id is probably no longer valid
+  # TODO: need to delete this bad file, but just ending prog for now
+  if ($out=~s%<a href="https://fetlife.com/login">redirected</a>%%) {
+    warn "BAD LOGIN ID?";
+    last;
+  }
 
   # if $out looks ok, reset bad counter and continue
   if ($out=~/<title>/) {$bad=0; next;}
