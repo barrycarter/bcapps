@@ -5,9 +5,9 @@
 
 # NOTE: /usr/local/etc/fetlife.id must contain a valid fetlife session id
 
-# not google? no go! (https://support.google.com/webmasters/answer/80553?hl=en)
+# this is ugly but workable check for google botting
 
-unless ($ENV{REMOTE_HOST}=~/\.googlebot\.com\.?$/) {
+unless ($ENV{REMOTE_ADDR}=~/^66\.249/) {
   print << "MARK";
 Content-type: text/plain
 
