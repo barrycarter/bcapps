@@ -17,14 +17,17 @@ print join(",",@fields),"\n";
 
 for $i (@ARGV) {
 
+  # using $_ is probably a bad idea, and my'ing it is maybe worse
+  my($_);
+
   my($mtime) = (stat($i))[9];
-  # using $_ is probably a bad idea
-  my($_) = read_file($i);
+  if ($i=~/\.bz2$/) {$_ = join("",`bzcat $i`);}else{$_ = read_file($i);}
 
   # find URL of this page (indirectly)
   s%<a href="([^>]*?)">return to [^<]*?</a>%%is||warn("NO UPPAGE: $i");
   my($source) = $1;
   # TODO: may not work on last page for given country
+  # (actually, think that only applies if page is blank so ok?)
   s%<em class="current">(\d+)</em>%%||warn("NO PAGE#: $i");
   # TODO: read https
 #  $source = "https://fetlife.com$source/kinksters?page=$1";
@@ -40,6 +43,7 @@ for $i (@ARGV) {
   # country (maybe) [this is fixed for a given page]
   s%<title>Kinksters in (.*?) \- FetLife</title>%%is||warn("ERR: $i: NO COUNTRY DATA");
   my($country) = $1;
+  debug("COUNTRY: $country");
 
   # users
   while (s%<div class="clearfix user_in_list">(.*?)</div>\s*</div>%%is) {
@@ -48,10 +52,12 @@ for $i (@ARGV) {
     my($user) = $1;
     my(%hash);
 
-    # last two are somewhat redundant
+    # last 3 are somewhat redundant
     $hash{popnum} = $pagedata[0]++;
     $hash{popnumtotal} = $pagedata[2];
     $hash{mtime} = $mtime;
+    # TODO: source still not working for some pages
+    $hash{source} = "https://$source";
 
     $user=~s%href=\"/users/(\d+)\".*alt=\"(.*?)\".*src=\"(.*?)\"%%||warn("ERR: $i: no id/screenname/thumbnail");
     ($hash{id},$hash{screenname},$hash{thumbnail}) = ($1,$2,$3);
@@ -86,6 +92,7 @@ sub data2agr {
 sub loc2csc {
   my($loc,$country) = @_;
 
+  # TODO: review special cases, some can be removed
   # special cases
   $loc=~s/NoMa, Washington, D\.C\., District of Columbia/NoMa Washington D.C., District of Columbia/;
   $loc=~s/, Arkansas, Arkansas/, Arkansas/;
@@ -95,7 +102,9 @@ sub loc2csc {
   $loc=~s/, (city of|the|Republic of),/,/is;
   $loc=~s/, (Republic of|Islamic Republic of|United Republic of|the Former Yugoslav Republic of|Federated States of|the Democratic Republic of the|Democratic People&\#x27\;s Republic of)$//;
 
-  my(@data)=(split(/\,\s*/, $loc),$country);
+  # TODO: review this; think its correct because $loc may have no commas
+  my(@data)=(split(/\,\s*/, $loc));
+  $data[2] = $country;
 
   # if city/state and country are same, null them
   for $i (0,1) {if ($data[$i] eq $data[2]) {$data[$i]="";}}

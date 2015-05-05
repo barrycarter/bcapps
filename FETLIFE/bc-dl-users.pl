@@ -40,29 +40,20 @@ for (;;) {
   # no caching, since we used existence of file as cache check above
   my($out,$err,$res) = cache_command2("curl --compress -A 'Fauxzilla' --socks4a 127.0.0.1:9050 -H 'Cookie: $fl_cookie' 'https://fetlife.com/users/$id'");
 
-  # bzip2 and write to correct place
+  # if being asked to login, session id is probably no longer valid
+  if ($out=~s%<a href="https://fetlife.com/login">redirected</a>%%) {die "BAD LOGIN ID!";}
+
+  # if no title move on to next, but increment bad and exit after 10 in a row
+  unless ($out=~/<title>/) {if (++$bad>10) {last;} next;}
+
+  # bzip2 and write to correct place (and reset bad)
+  $bad=0;
   debug("GETTNG: $id");
   local(*A);
-  open(A,"|bzip2 -v - > $fname");
+  open(A,"|bzip2 -v - > $fname")||die("Can't open for writing, $!");
   print A $out;
   close(A);
-
-  # if being asked to login, session id is probably no longer valid
-  # TODO: need to delete this bad file, but just ending prog for now
-  if ($out=~s%<a href="https://fetlife.com/login">redirected</a>%%) {
-    warn "BAD LOGIN ID?";
-    last;
-  }
-
-  # if $out looks ok, reset bad counter and continue
-  if ($out=~/<title>/) {$bad=0; next;}
-
-  # otherwise, increment bad counter, note bad file + possibly exit
-  push(@bad,$fname);
-  if (++$bad>10) {last;}
 }
-
-for $i (-11..0) {system("rm $bad[$i]");}
 
 # TODO: people, especially newbies(?) change their profiles often(?)
 

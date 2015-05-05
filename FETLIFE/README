@@ -1,1 +1,7 @@
 Creating new directory for FetLife related code
+
+canonical fields (primarily from location sucking):
+
+id,screenname,age,gender,role,city,state,country,thumbnail,popnum,popnumtotal,source,mtime
+
+popnum and popnumtotal given as 0 and 1 for profile sucking
