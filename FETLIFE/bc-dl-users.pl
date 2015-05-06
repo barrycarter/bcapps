@@ -6,6 +6,7 @@
 
 # --start: the starting user id
 # --direction: set to -1 to go backwards
+# --list: obtain list of user numbers from stdin (start/direction ignored)
 
 require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
@@ -28,14 +29,27 @@ $id = $globopts{start};
 
 for (;;) {
 
-  if ($globopts{direction}==-1) {$id--;} else {$id++;}
+  if ($globopts{list}) {
+    $id = <>;
+    chomp($id);
+  } elsif ($globopts{direction}==-1) {
+    $id--;
+  } else {
+    $id++;
+  }
 
   # the filename for a given $id (only works for > 1000000 or
   # something but OK w/ that for now)
   $id=~/^(\d{3})(\d{4})$/ || die("BAD ID: $id");
   my($fname) = "$1/user$1$2.bz2";
   # skip if I got it already
-  if (-f $fname) {$bad=0; next;}
+  if (-f $fname) {
+    debug("HAVE: $id");
+    $bad=0;
+    next;
+  }
+
+  debug("GETTING: $id");
 
   # no caching, since we used existence of file as cache check above
   my($out,$err,$res) = cache_command2("curl --compress -A 'Fauxzilla' --socks4a 127.0.0.1:9050 -H 'Cookie: $fl_cookie' 'https://fetlife.com/users/$id'");
@@ -48,7 +62,6 @@ for (;;) {
 
   # bzip2 and write to correct place (and reset bad)
   $bad=0;
-  debug("GETTNG: $id");
   local(*A);
   open(A,"|bzip2 -v - > $fname")||die("Can't open for writing, $!");
   print A $out;

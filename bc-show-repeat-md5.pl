@@ -11,12 +11,14 @@ require "/usr/local/lib/bclib.pl";
 
 # canon regexps; files meeting these regexps are never deleted, though
 # other (non-canon) files with the same md5/sha1 should be deleted
-@canon = split(/\n/, read_file("/home/barrycarter/20150215/canonregs.txt"));
+# @canon = split(/\n/, read_file("/home/barrycarter/20150215/canonregs.txt"));
 
 my(%count,%files,$count,%canon);
 
 while (<>) {
   chomp;
+
+  if ($n++%100==0) {debug("READING: $_");}
 
   # accepts Mac MD5 and Unix sha1 (but not vice versa for the moment)
 
@@ -41,11 +43,14 @@ while (<>) {
   unless ($count{$hash}) {$count{$hash} = ++$count;}
 
   # this is ugly
-  for $i (@canon) {
-    if (index($file,$i)>-1) {
-      # note this hash has at least one canon file
-      $canon{$hash}{$file}=1;
-      last;
+
+  if ($globopts{canononly}) {
+    for $i (@canon) {
+      if (index($file,$i)>-1) {
+	# note this hash has at least one canon file
+	$canon{$hash}{$file}=1;
+	last;
+      }
     }
   }
 }
