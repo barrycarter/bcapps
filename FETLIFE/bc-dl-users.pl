@@ -38,9 +38,27 @@ for (;;) {
     $id++;
   }
 
+  # this feels like a hack
+  my($d1) = $id%10000;
+  my($d2) = floor($id/10000);
+  my($d3) = $d2*10000;
+  my($fname) = "$d2/user$id.bz2";
+  # only for testing
+  print "$fname\n";
+#  unless (-f $fname) {debug("NOSUCHFILE: $fname");}
+  next;
+
+  die "TESTING";
+  
+
   # the filename for a given $id (only works for > 1000000 or
   # something but OK w/ that for now)
-  $id=~/^(\d{3})(\d{4})$/ || die("BAD ID: $id");
+
+  # the last 4 digits (or fewer)
+  $id=~s/(..?.?.?)$//;
+  debug("1: $1");
+
+  $id=~/^(\d+)(\d{4})$/ || die("BAD ID: $id");
   my($fname) = "$1/user$1$2.bz2";
   # skip if I got it already
   if (-f $fname) {
@@ -48,6 +66,7 @@ for (;;) {
     $bad=0;
     next;
   }
+
 
   debug("GETTING: $id");
 
