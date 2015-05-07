@@ -32,8 +32,10 @@ INTO TABLE kinksters FIELDS TERMINATED BY ',';
 
 --import for SQLite3 (due to error)
 
-ALTER TABLE kinksters ADD COLUMN bogus;
-
 .separator ","
-.import /sites/test/FETLIFE/fetlife-users-20150503.csv kinksters
+.import fetlife-users-20150507.csv kinksters
+
+-- I actually imported using split because bc-daemon-checker kills of
+-- sqlite3 if it runs too long (which really means I should allow for
+-- temporary exceptions)
 
