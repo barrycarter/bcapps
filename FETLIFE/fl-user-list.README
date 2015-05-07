@@ -1,8 +1,9 @@
-This is the README file for fetlife-user-list.txt, a
-comma-separated-value list of 3,873,155 users collected on 20 Apr 2015
-(UTC) by parallel deep-crawling https://fetlife.com/places
+This is the README file for fetlife-users-20150503.txt, a
+comma-separated-value list of FetLife users collected on approximately
+3 May 2015 by parallel deep-crawling https://fetlife.com/places and
+via other methods.
 
-NOTE: FetLife users are referred to as "kinksters". Most notes below
+NOTE: FetLife users are referred to as "kinksters". Some notes below
 apply only if you are logged into FetLife.
 
 Fields:
@@ -12,12 +13,6 @@ id: The kinkster's id. The kinkster's profile page is
 change even if the kinkster changes their screenname.
 
 screenname: The kinkster's screenname.
-
-thumbnail: The URL to the kinkster's profile picture thumbnail. This
-URL is not protected and can be viewed even if you're not logged into
-FetLife. The thumbnail "avatar_missing_60x60.gif" indicates the kinkster
-has no profile picture. Replacing the "_60.jpg" at the end of the URL
-with "_200.jpg" yields a larger version of the profile picture.
 
 age: The kinkster's age. Some kinsters use high numbers here
 (frequently 94) if they don't want to use their real age. Since
@@ -41,36 +36,38 @@ Kinksters may also to leave this field blank.
 
 role: The kinkster's role in the kink community
 
-loc1: The kinkster's location, usually a city
+city, state, country: The kinkster's city, state, and country. Some
+kinksters set their location to "Antarctica" if they don't want people
+to know where they live.
 
-loc2: The kinkster's state (if the kinkster is in the United States),
-province (if the kinkster is in Canada), or country (if the kinkster
-is outside the US/Canada). Some kinksters set their location to
-"Antarctica" if they don't want people to know where they live.
+thumbnail: The URL to the kinkster's profile picture thumbnail. This
+URL is not protected and can be viewed even if you're not logged into
+FetLife. The thumbnail "avatar_missing_60x60.gif" indicates the kinkster
+has no profile picture. Replacing the "_60.jpg" at the end of the URL
+with "_200.jpg" yields a larger version of the profile picture.
 
-page: The page number on which this kinkster was found in their
-administrative area/country. I don't know FetLife's ranking method,
-but lower page numbers usually indicate more active kinksters.
+popnum: The rank of this kinkster in their administrative
+area/country. I don't know FetLife's ranking method, but lower rank
+numbers usually indicate more active kinksters.
 
-scrape_time: The time at which this information was scraped. All
-scraping was performed in the 8h58m window starting at 2015-04-20
-13:57 UTC and ending at 2015-04-20 22:55.
+popnumtotal: The total number of kinksters in this kinkster's
+administrative area/country. Combined with popnum, gives a rough idea
+of how active the kinkster is. For example a popnum of 5364 and a
+popnumtotal of 53289 means the kinkster was ranked 5364 of the 53289
+kinksters in their administrative area.
 
-NOTE: The loc1 and loc2 fields did not parse well and may have errors.
+source: The source URL for the kinkster's data
+
+mtime: The Unix time at which this information was scraped.
+
+NOTE: The city, state, and country fields did not parse well and may
+have errors.
 
 NOTE: FetLife permits one person to have multiple profiles.
 
-NOTE: fetlife-com-user-list.tbz is a raw dump of the user data, in
-case you want to parse it yourself. You can safely ignore this file if
-you're not a techie.
-
-NOTE: This list is probably not complete, and may contain
-duplicates. I've made some effort to remove duplicates, but some may
-still exist.
-
-NOTE: Data has been edited slightly. For details, see:
-
-https://github.com/barrycarter/bcapps/blob/master/FETLIFE/bc-dl-by-region.pl
+NOTE: This list is probably not complete, and may contain errors and
+duplicates. I've made some effort to remove errors and duplicates, but
+some may still exist.
 
 SPECIAL THANKS TO: Mircea Popescu for creating the original FetLife
 "meat list" at http://trilema.com/2015/the-fetlife-meatlist-volume-i/

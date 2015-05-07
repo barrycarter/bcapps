@@ -106,6 +106,9 @@ sub loc2csc {
   my(@data)=(split(/\,\s*/, $loc));
   $data[2] = $country;
 
+  # leftover commas must be removed
+  for $i (@data) {$i=~s/,//g;}
+
   # if city/state and country are same, null them
   for $i (0,1) {if ($data[$i] eq $data[2]) {$data[$i]="";}}
   return @data;

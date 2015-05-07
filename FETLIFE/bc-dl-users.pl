@@ -43,30 +43,13 @@ for (;;) {
   my($d2) = floor($id/10000);
   my($d3) = $d2*10000;
   my($fname) = "$d2/user$id.bz2";
-  # only for testing
-  print "$fname\n";
-#  unless (-f $fname) {debug("NOSUCHFILE: $fname");}
-  next;
 
-  die "TESTING";
-  
-
-  # the filename for a given $id (only works for > 1000000 or
-  # something but OK w/ that for now)
-
-  # the last 4 digits (or fewer)
-  $id=~s/(..?.?.?)$//;
-  debug("1: $1");
-
-  $id=~/^(\d+)(\d{4})$/ || die("BAD ID: $id");
-  my($fname) = "$1/user$1$2.bz2";
   # skip if I got it already
   if (-f $fname) {
     debug("HAVE: $id");
     $bad=0;
     next;
   }
-
 
   debug("GETTING: $id");
 
@@ -77,7 +60,8 @@ for (;;) {
   if ($out=~s%<a href="https://fetlife.com/login">redirected</a>%%) {die "BAD LOGIN ID!";}
 
   # if no title move on to next, but increment bad and exit after 10 in a row
-  unless ($out=~/<title>/) {if (++$bad>10) {last;} next;}
+  # TODO: temporarily commenting this out, since I am traversing known good ids
+#  unless ($out=~/<title>/) {if (++$bad>10) {last;} next;}
 
   # bzip2 and write to correct place (and reset bad)
   $bad=0;
