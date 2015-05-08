@@ -43,8 +43,7 @@ php-cgi
 curl
 rm
 find
-# temporarily commented out to allow large import
-# sqlite3
+sqlite3
 sh
 </kill>
 
