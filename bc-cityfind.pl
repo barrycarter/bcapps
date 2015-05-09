@@ -11,7 +11,8 @@
 # corpus.christi.tx portugal michigan james.island tx.amarillo us.tx
 # us.amarillo "portland oregon" "portland maine"
 
-# TODO: add elevation and timezone
+# TODO: consider adding xyz coords those these are of course redundant
+# (and not int he db, so maybe a bad idea)
 
 require "/usr/local/lib/bclib.pl";
 

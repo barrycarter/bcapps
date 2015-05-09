@@ -33,18 +33,11 @@ use Inline::Python;
 use FFI::Raw;
 use v5.10;
 
-
-system("ls -l");
-system("ls","-l");
-
-
-die "TESTING";
-
-# one off to spit out third tuesday of each month for personal reasons
+# one off to spit out third wednesday of each month for personal reasons
 
 for $i (2015..2029) {
   for $j ("01".."12") {
-    print weekdayAfterDate("$i${j}01",2,2),"\n";
+    print weekdayAfterDate("$i${j}01",3,2),"\n";
   }
 }
 
@@ -57,6 +50,12 @@ sub weekdayAfterDate {
   $time += ($day-$wday)%7*86400 + $n*86400*7;
   return strftime("%Y%m%d", gmtime($time));
 }
+
+die "TESTING";
+
+system("ls -l");
+system("ls","-l");
+
 
 die "TESTING";
 
