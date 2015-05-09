@@ -1,0 +1,7 @@
+# list of regular expressions that can be safely filtered out of profiles
+# Usage: egrep -xvf thisfile profile.txt
+^ *$
+^<script type="text/javascript">.*</script>$
+^ *</div>
+
+
