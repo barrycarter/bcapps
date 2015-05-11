@@ -6,7 +6,7 @@
 
 # hosts
 # NAGIOS_HOSTADDRESS -> 192.168.0.7
-# NAGIOS_HOSTALIAS -> bcpc
+# NAGIOS_HOSTALIAS -> bcmac
 # NAGIOS_HOSTSTATE -> UP
 # NAGIOS_HOSTSTATEID -> 0
 
@@ -70,14 +70,5 @@ if ("$ENV{NAGIOS_HOSTALIAS}.$ENV{NAGIOS_SERVICEDESC}" eq "localhost.smtp") {
   system("sudo pkill -9 -f $secret{mtun_user}");
   # and reconnect
   system("sudo ssh -L 25:127.0.0.1:25 $secret{mtun_user} -N 1> $dbgfile.out 2> $dbgfile.err &");
-}
-
-if ("$ENV{NAGIOS_HOSTALIAS}.$ENV{NAGIOS_SERVICEDESC}" eq "localhost.sshfs2") {
-  print A "Trying to fix...\n";
-
-  # kill all bcpc related processes usings its secret name
-  system("sudo pkill -9 -f $secret{bcpc_name}; sudo umount /mnt/sshfs2");
-  # and restart
-  system("sudo -u $secret{bcpc_local_user} sshfs -o allow_other $secret{bcpc_user}\@secret{bcpc_name}:/cygdrive /mnt/sshfs2");
 }
 

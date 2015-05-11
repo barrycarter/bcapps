@@ -1,5 +1,13 @@
 # shell one liners
 
+# every possible transcoding with the hope that one of them works w/
+# Archos (for H264 videos which are not natively supported w/o
+# non-free plugin)
+
+perl -le 'for $v ("mp4v", "mpgv", "div1", "div2", "div3", "h263", "i263", "wmv1", "wmv2", "mjpg", "mjpb") {for $a ("mpga", "a52", "ac3", "vorb") {for $m ("avi", "ogg", "ps", "ts") {print "echo $m-$a-$v; date; vlc -I dummy input.mp4 --sout=\47#transcode:{vcodec=$v,acodec=$a}:std{access=file,mux=$m,dst=\"000-test-$m-$a-$v\"}\47 vlc://quit; date"}}}';
+
+exit; 
+
 # list of files on extdrive, with filename separated from full
 # filename (so I can join against files in /mnt/sshfs/ with the goal
 # of getting the same files in the same directories to avoid confusing

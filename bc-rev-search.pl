@@ -20,7 +20,7 @@ $phrase = reverse($phrase);
 
 # files below are expected to exist
 
-for $i ("/mnt/sshfs/bcmac-files-rev.txt.srt", "/mnt/sshfs2/c/bcpc-files-rev.txt.srt", "/bcunix-files-rev.txt", "/mnt/extdrive/extdrive-files-rev.txt") {
+for $i ("/mnt/sshfs/bcmac-files-rev.txt.srt", "/bcunix-files-rev.txt", "/mnt/extdrive/extdrive-files-rev.txt") {
   # TODO: also search for $phrase.bz2 (reversed) and so on?
   system("/home/barrycarter/BCGIT/bc-sgrep.pl '$phrase' $i | rev");
 }

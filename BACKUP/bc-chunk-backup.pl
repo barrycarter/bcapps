@@ -57,6 +57,20 @@ while (<>) {
 }
 
 debug("Used $count files to meet total");
+
+# below is just to avoid "egrep: writing output: Broken pipe" errors
+# TODO: is this the best way to handle those errors
+# $count = 0;
+# while (<>) {if (++$count%100000==0) {debug("IGNORE COUNT: $count");}}
+
 close(A); close(B); close(C); close(D); close(E);
 
+# do this so we're not waiting on egrep
+open(A,"|parallel -j 2");
+print A "bc-total-bytes.pl statlist.txt | sort -nr >! big-by-dir.txt\n";
+print A "sort -k1nr statlist.txt >! big-by-file.txt\n";
+close(A);
+
+# egrep hangs for a long time, so announce that at least I am finished
+xmessage("$0 has ended");
 

@@ -7,18 +7,16 @@
 # below; however, they might actually be useful
 
 # only because these are the last targets (so everything else gets made too)
-all: big-by-file.txt big-by-dir.txt
+all: statlist.txt
 
 # from the full file list, extract fields I want (except extdrive ignored)
 bcmac-converted.txt: /mnt/sshfs/bcmac-files.txt
 	bc-format2altformat.pl /mnt/sshfs/bcmac-files.txt>bcmac-converted.txt
-bcpc-converted.txt: /mnt/sshfs2/c/bcpc-files.txt
-	bc-format2altformat.pl /mnt/sshfs2/c/bcpc-files.txt>bcpc-converted.txt
 bcunix-converted.txt: /bcunix-files.txt
 	bc-format2altformat.pl /bcunix-files.txt > bcunix-converted.txt
 
 # TODO: this sorting is to join vs old backups, NOT numerical sorting (sigh)
-afad.txt: bcmac-converted.txt bcpc-converted.txt bcunix-converted.txt
+afad.txt: bcmac-converted.txt bcunix-converted.txt
 	sort *-converted.txt > afad.txt
 
 # The user is expected to provide "previouslydone.txt.srt", by running
@@ -30,15 +28,15 @@ afad.txt: bcmac-converted.txt bcpc-converted.txt bcunix-converted.txt
 # system; this will break if I have over 2 billion+ files (but I'm not
 # too worried)
 
-filelist.txt statlist.txt: exclusions.txt afad.txt previouslydone.txt.srt
+filelist.txt statlist.txt big-by-dir.txt big-by-file.txt: exclusions.txt afad.txt previouslydone.txt.srt
 	join -a 1 -t '\0' afad.txt previouslydone.txt.srt | bc-files-to-backup.pl | egrep -vf exclusions.txt | bc-chunk-backup.pl --debug
 
 # while testing exclusions.txt, it's important to know what big files and
 # big directories I'm backing up (so I can potentially exclude them)
-big-by-dir.txt: statlist.txt
-	bc-total-bytes.pl statlist.txt | sort -nr > big-by-dir.txt
-big-by-file.txt: statlist.txt
-	sort -k1nr statlist.txt > big-by-file.txt
+# big-by-dir.txt: statlist.txt
+# 	bc-total-bytes.pl statlist.txt | sort -nr > big-by-dir.txt
+# big-by-file.txt: statlist.txt
+# 	sort -k1nr statlist.txt > big-by-file.txt
 
 # it's sometimes useful to see what effect changing exclusions.txt
 # will have without redoing the entire chunk backup; "make quick"

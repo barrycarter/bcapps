@@ -17,6 +17,11 @@ print join(",",@fields),"\n";
 
 for $i (@ARGV) {
 
+  unless (-f $i) {
+    warn("NO SUCH FILE: $i");
+    next;
+  }
+
   # using $_ is probably a bad idea, and my'ing it is maybe worse
   my($_);
 
