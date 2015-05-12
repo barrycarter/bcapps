@@ -1,10 +1,19 @@
-This is the README file for fetlife-users-20150503.txt, a
-comma-separated-value list of FetLife users collected on approximately
-3 May 2015 by parallel deep-crawling https://fetlife.com/places and
-via other methods.
+<!-- NOTE: You can't actually download from this text file, but I'm
+cheating and also using this as an index.html file elsewhere -->
 
-NOTE: FetLife users are referred to as "kinksters". Some notes below
-apply only if you are logged into FetLife.
+<center><font size=+2>In a hurry? <a href="fetlife-users-latest.zip">Download here (~250M)</a><p></font></center><p>
+
+<pre>
+This is the README file for fetlife-users-[yyyymmdd].txt (where
+yyyymmdd represents the *approximate* date of the list), a
+comma-separated-value list of FetLife users collected by parallel
+deep-crawling https://fetlife.com/places and via other methods.
+
+You can search a database version of the list at:
+
+http://fetlife.db.94y.info/
+
+NOTE: FetLife users are referred to as "kinksters".
 
 Fields:
 
@@ -88,3 +97,13 @@ for providing universal free shell access.
 DISCLAIMER: Do not rely on this information. This information was
 obtained legally, and falls under the Fair Use doctorine of copyright
 law.
+
+More specifically, FetLife search engines are explicitly legal beause
+they meet the Fair Use criteria known as "transformative use":
+
+http://en.wikipedia.org/wiki/Transformativeness
+
+because they "provide the public with a benefit not previously
+available to it, which would otherwise remain unavailable", and "in a
+different manner or for a different purpose".
+</pre>

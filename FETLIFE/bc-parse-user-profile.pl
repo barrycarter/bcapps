@@ -9,7 +9,7 @@ require "/usr/local/lib/bclib.pl";
 
 my(@order)=split(/\,/,"id,screenname,age,gender,role,city,state,country,thumbnail,popnum,popnumtotal,source,mtime");
 
-for $i (glob "/home/barrycarter/FETLIFE/FETLIFE-USER-PROFILES/464/*.bz2") {
+for $i (@ARGV) {
   my(%res) = fetlife_user_data($i);
   unless ($res{id}) {next;}
   my(@l) = @order;

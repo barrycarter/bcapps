@@ -4562,7 +4562,6 @@ sub num2base {
   return @ret;
 }
 
-
 =item fetlife_user_data($file)
 
 Given a (possibly BZIPed) file that contains FetLife users profile
@@ -4644,7 +4643,9 @@ sub fetlife_user_data {
   }
 
   # age, and orientation/gender
-  $all=~s%<h2 class="bottom">$data{screenname}\s*<span class="small quiet">(\d+)(.*)\s+(.*?)</span></h2>%%s||warn("NO EXTRA DATA($i): $all");
+  $all=~s%<span class="small quiet">(.*?)</span></h2>%%s||warn("NO EXTRA DATA($i): $all");
+  my($extra) = $1;
+  $extra=~s/^(\d+)(.*)\s+(.*?)$//;
   ($data{age}, $data{gender}, $data{role}) = ($1, $2, $3);
 
   # city if first /cities link in page
