@@ -7,6 +7,13 @@
 # $file.quikbak, a series of patches to revert it to any previous
 # version
 
+# You can add the below to your init.el (or equivalent) emacs file to
+# quikbak on any change (which might be excessive):
+
+# (add-hook 'auto-save-hook '(lambda () 
+# (shell-command (format "/home/barrycarter/BCGIT/bc-quikbak.pl %s"
+# (buffer-file-name)))))
+
 require "/usr/local/lib/bclib.pl";
 
 # where to put the backups including zpaq backups

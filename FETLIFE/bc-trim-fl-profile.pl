@@ -22,6 +22,9 @@ for $i (@ARGV) {
     $all = read_file($i);
   }
 
+  # kill off scripts
+  $all=~s%<script[^>]*?>(.*?)</script>%%sg;
+
   # kill off leading spaces
   $all=~s/^\s+//mg;
 

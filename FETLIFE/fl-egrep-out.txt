@@ -1,7 +1,9 @@
 # list of regular expressions that can be safely filtered out of profiles
 # Usage: egrep -xvf thisfile profile.txt
 ^ *$
-^<script type="text/javascript">.*</script>$
-^ *</div>
-
-
+# single HTML tag + nothing more (this should help a LOT!)
+^[[:space:]]*<[^>]*>[[:space:]]*$
+# two abutting HTML tags + nothing more
+^[[:space:]]*<[^>]*><[^>]*>[[:space:]]*$
+# scripts, ads, viewer data, blocks
+^[[:space:]]*(<script|ADGEAR|FetLife|<p class="mbm">|<li class="requests"|<li class="inbox"|<iframe name="adgear_iframe"|<p class="smallest quiet">|var |<p>The choice is yours:</p>|<li class="shorter">|<li class="longer">).*$
