@@ -1,6 +1,8 @@
 <!-- NOTE: You can't actually download from this text file, but I'm
 cheating and also using this as an index.html file elsewhere -->
 
+<!-- TODO: make this document more "HTML friendly", ie not just pre tags -->
+
 <center><font size=+2>In a hurry? <a href="fetlife-users-latest.zip">Download here (~250M)</a><p></font></center><p>
 
 <pre>
@@ -79,6 +81,25 @@ kinksters in their administrative area.
 source: The source URL for the kinkster's data
 
 mtime: The Unix time at which this information was scraped.
+
+NOTE: User orientation is NOT included in this database, since it does
+NOT appear on the location pages. For reference, the possible
+orientations are:
+
+Straight
+Heteroflexible
+Bisexual
+Homoflexible
+Gay
+Lesbian
+Queer
+Pansexual
+Fluctuating/Evolving
+Asexual
+Unsure
+Not Applicable
+
+Kinksters may also choose to leave this field blank.
 
 NOTE: The city, state, and country fields did not parse well and may
 have errors.

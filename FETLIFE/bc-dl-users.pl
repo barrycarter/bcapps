@@ -69,6 +69,10 @@ for (;;) {
   open(A,"|bzip2 -v - > $fname")||die("Can't open for writing, $!");
   print A $out;
   close(A);
+
+  # delay to avoid flooding servers
+  sleep(2);
+
 }
 
 # TODO: people, especially newbies(?) change their profiles often(?)

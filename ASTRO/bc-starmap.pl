@@ -28,9 +28,7 @@
 
 # TODO: label bright stars
 
-push(@INC,"/usr/local/lib");
-require "bclib.pl";
-# require "bc-astro-lib.pl";
+require "/usr/local/lib/bclib.pl";
 chdir(tmpdir());
 $gitdir = "/home/barrycarter/BCGIT/";
 
@@ -184,7 +182,7 @@ sub draw_planets {
 
   # obtain planet positions from db
   my($jd) = jd2unix($now, "unix2jd");
-  my(@res) = sqlite3hashlist("SELECT p1.time, p1.planet, p1.type, p1.xinit, p1.slope FROM (SELECT p1.planet,p1.type,MAX(p1.time) AS max FROM planetpos p1 WHERE time<=$jd GROUP BY p1.planet,p1.type) AS t1 JOIN planetpos p1 ON (t1.planet=p1.planet AND t1.max=p1.time AND t1.type=p1.type)", "/home/barrycarter/BCGIT/db/planetpos.db");
+  my(@res) = sqlite3hashlist("SELECT p1.time, p1.planet, p1.type, p1.xinit, p1.slope FROM (SELECT p1.planet,p1.type,MAX(p1.time) AS max FROM planetpos p1 WHERE time<=$jd GROUP BY p1.planet,p1.type) AS t1 JOIN planetpos p1 ON (t1.planet=p1.planet AND t1.max=p1.time AND t1.type=p1.type)", "$gitdir/db/planetpos.db");
 
   # calculate ra/dec for each planet
   for $i (@res) {
@@ -215,7 +213,7 @@ sub draw_planets {
 # draw constellation boundaries
 sub draw_boundaries {
   my(%bounds);
-  my(@data) = split(/\n/, read_file("/home/barrycarter/BCGIT/db/constellation_boundaries.dat"));
+  my(@data) = split(/\n/, read_file("$gitdir/db/constellation_boundaries.dat"));
 
   # just draw red dots
   for $i (@data) {

@@ -107,8 +107,15 @@ close(C);
 sub cleanup {
   my($name) = @_;
 
+  debug("GOT: $name");
+
   # unidecode the whole thing first, lower case, despace
   $name = lc(unidecode($name));
+  debug("BETA: $name");
+
+  # "county" is a designation, not a name
+  $name=~s/\s+county$//isg;
+  debug("GAMMA: $name");
 
   # remove spaces
   $name=~s/\s//isg;

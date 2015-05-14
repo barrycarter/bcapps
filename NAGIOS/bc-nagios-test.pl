@@ -247,6 +247,8 @@ but this is slightly more reliable).
 
 TODO: make MUCH more generic
 
+TODO: if log doesn't rotate, also confirm first entry is sufficiently old
+
 =cut
 
 sub bc_info_log {
