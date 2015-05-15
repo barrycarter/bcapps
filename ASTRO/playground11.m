@@ -76,4 +76,54 @@ gast[s_] = (-452506800334363673497*Pi)/20593349747540136 +
 
 obliquity[s_] = -(Pi*(-5063835528000 + s))/38880000000000
 
+(*
+
+RA and DEC to azimuth and altitude (does not correct for precession,
+refraction)
+
+http://idlastro.gsfc.nasa.gov/ftp/pro/astro/hadec2altaz.pro
+
+sh = Sin[ha]
+ch = Cos[ha]
+sd = Sin[dec]
+cd = Cos[dec]
+sl = Sin[lat]
+cl = Cos[lat]
+
+x = - ch * cd * sl + sd * cl
+y = - sh * cd
+z = ch * cd * cl + sd * sl
+r = sqrt(x^2 + y^2)
+; now get Alt, Az
+
+az = ArcTan[x,y]
+alt = ArcTan[r,z]
+
+az /. ha -> gmst[s]-lon-ra
+
+radeclatlon2az[ra_,dec_,lat_,lon_] = az /. ha -> gmst[s]-lon-ra
+
+testing... Sirius = 6,45,50 and -16,44,08
+
+ra = (6+45/60+50/3600)/12*Pi
+
+dec = -(16+44/60+8/3600)/180*Pi
+
+lat = (35+7/60+12/3600)/180*Pi
+
+lon = -(106+37/60+12/3600)/180*Pi
+
+s = 1431713169
+
+N[radeclatlontime2az[ra,dec,lat,lon,1431713169]/Pi*180,20]
+
+*)
+
+radeclatlontime2az[ra_,dec_,lat_,lon_,s_] =
+ArcTan[Cos[lat]*Sin[dec] - 
+  Cos[dec]*Cos[lon + ra - (Pi*(-4394688633775234485 + 401095163740318*s))/
+      200000000000000]*Sin[lat], 
+ Cos[dec]*Sin[lon + ra - (Pi*(-4394688633775234485 + 401095163740318*s))/
+     200000000000000]]
+
 

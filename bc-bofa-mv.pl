@@ -20,6 +20,8 @@ for $i (@ARGV) {
   # switch based on pdf or txt contents
   if ($all=~/CenturyLink/s) {
     $fname = handle_centurylink($all);
+  } elsif ($all=~/compass/i) {
+    $fname = handle_compass($all);
   } elsif ($all=~/www\.ally\.com/) {
     $fname = handle_ally($all);
   } elsif ($all=~/pnm\.com/i) {
@@ -61,6 +63,12 @@ for $i (@ARGV) {
   # otherwise, advise move
   print "mv -i $i $fname\n";
 
+}
+
+sub handle_compass {
+  my($all) = @_;
+  $all=~/Account Summary for Period.*?\-\s*(.*?)\s*Summary of Account/;
+  return strftime("compass-%m-%d-%Y.pdf", gmtime(str2time($1)+43200));
 }
 
 sub handle_comcast {

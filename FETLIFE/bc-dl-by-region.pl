@@ -59,7 +59,7 @@ for $i (@files) {
   # number of pages for this url
   # some URLs have multiple pages, always choose highest value
   # adding 2 below to allow for growth during dl
-  $pages{$url} = max($pages{$url},ceil($num/16)+2);
+  $pages{$url} = max($pages{$url},ceil($num/20)+2);
 }
 
 # glitch cases (countries w/ admin areas already on page, city I
@@ -105,4 +105,3 @@ while (%pages) {
     print "$cmd2 -sS -o $curdir/$fname '$url'; bzip2 $curdir/$fname\n";
   }
 }
-
