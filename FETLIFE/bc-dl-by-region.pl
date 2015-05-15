@@ -102,6 +102,6 @@ while (%pages) {
 
     # using "xargs -n 1 -P time (command)" instead of parallel
     # NOT putting bzip2 in background to force slight additional delay
-    print "$cmd2 -sS -o $curdir/$fname '$url'; bzip2 $curdir/$fname\n";
+    print "$cmd -sS -o $curdir/$fname '$url'; bzip2 $curdir/$fname\n";
   }
 }

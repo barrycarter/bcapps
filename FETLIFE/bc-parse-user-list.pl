@@ -33,7 +33,8 @@ for $i (@ARGV) {
   my($source) = $1;
   # TODO: may not work on last page for given country
   # (actually, think that only applies if page is blank so ok?)
-  s%<em class="current">(\d+)</em>%%||warn("NO PAGE#: $i");
+  # temporarily not caring about missing page number due to other error
+  s%<em class="current">(\d+)</em>%%||debug("NO PAGE#: $i");
   # TODO: read https
 #  $source = "https://fetlife.com$source/kinksters?page=$1";
   $source = "fetlife.com$source/kinksters?page=$1";
@@ -76,6 +77,10 @@ for $i (@ARGV) {
     # and print
     my(@print) = @fields; 
     map($_=$hash{$_},@print);
+
+    # hideous hack so that numerical and alphabetic sort are identical
+    $print[0] = sprintf("%0.11d", $print[0]);
+
     # TODO: kill spurious commas, if any
     print join(",",@print),"\n";
 

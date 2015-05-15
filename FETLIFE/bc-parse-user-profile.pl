@@ -12,6 +12,10 @@ my(@order)=split(/\,/,"id,screenname,age,gender,role,city,state,country,thumbnai
 for $i (@ARGV) {
   my(%res) = fetlife_user_data($i);
   unless ($res{id}) {next;}
+
+  # hack for sorting
+  $res{id} = sprintf("%0.11d", $res{id});
+
   my(@l) = @order;
   map($_=$res{$_},@l);
   print join(",",@l),"\n";
