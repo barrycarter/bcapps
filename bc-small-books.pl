@@ -7,27 +7,27 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# extensions we ignore
-
-my(%ignore) = list2hash(
-			"tan", "nomedia", "xsc", "cat", "js", "ini",
-			"rb", "gif", "", "diz", "dir", "java", "url",
-			"wi", "class", "user", "webm", "png", "m", "zip",
-			"sfv", "xib", "hpp", "h", "cs", "php", "jpg", "py"
-		       );
+my($count,$tot);
 
 while (<>) {
   chomp;
   my(@arr) = split(/\s+/,$_,9);
-  my($fname,$type) = @arr[-1,4];
+  my($fname, $size, $type) = @arr[-1,1,4];
   unless ($type eq "f") {next;}
 
   # get extension
   my($ext);
   if ($fname=~/^.*\.(.*)$/) {$ext=$1;} else {$ext="";}
 
-  if ($ignore{lc($ext)}) {next;}
+  # Aldiko accepts only epub (is that really true?)
+  unless (lc($ext) eq "epub") {next;}
 
-  print "$fname\n";
+  $tot+=$size;
 
+  if ($tot>4e+9) {last;}
+
+  # use generic name to avoid confusing android
+  $count++;
+
+  print qq%cp "$fname" /Volumes/POLARIS/BOOKS/book$count.epub\n%;
 }

@@ -4688,7 +4688,7 @@ sub fetlife_user_data {
     # make sure we got them all
     $fetishes=~s/<.*?>//g;
     $fetishes=~s/[\,\s\.]//g;
-    if ($fetishes) {warn "LEFTOVER FETISHES: $fetishes";}
+    if ($fetishes) {warn "LEFTOVER FETISHES ($file): $fetishes";}
   }
 
   # table fields with headers/colons
