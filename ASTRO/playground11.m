@@ -96,6 +96,8 @@ z = ch * cd * cl + sd * sl
 r = sqrt(x^2 + y^2)
 ; now get Alt, Az
 
+http://en.wikipedia.org/wiki/Atan2 notes Mathematica oddness
+
 az = ArcTan[x,y]
 alt = ArcTan[r,z]
 
