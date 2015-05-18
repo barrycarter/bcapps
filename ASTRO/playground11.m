@@ -42,9 +42,12 @@ yielding...:
 
 *)
 
-gmst[s_] = (-452506800334363673497*Pi)/20593349747540136 + (424749743*Pi*s)/18299087654400
+gmst[s_] = (-452506800334363673497*Pi)/20593349747540136 +
+(424749743*Pi*s)/18299087654400
 
 (*
+
+also from http://aa.usno.navy.mil/faq/docs/GAST.php
 
 e0[d_] = Rationalize[23.4393 - 0.0000004*d,10^-100]*Degree
 
@@ -93,7 +96,7 @@ cl = Cos[lat]
 x = - ch * cd * sl + sd * cl
 y = - sh * cd
 z = ch * cd * cl + sd * sl
-r = sqrt(x^2 + y^2)
+r = Sqrt[x^2 + y^2]
 ; now get Alt, Az
 
 http://en.wikipedia.org/wiki/Atan2 notes Mathematica oddness
@@ -101,9 +104,14 @@ http://en.wikipedia.org/wiki/Atan2 notes Mathematica oddness
 az = ArcTan[x,y]
 alt = ArcTan[r,z]
 
-az /. ha -> gmst[s]-lon-ra
+Simplifying conditions
 
-radeclatlon2az[ra_,dec_,lat_,lon_] = az /. ha -> gmst[s]-lon-ra
+conds = {-Pi/2<dec<Pi/2, -Pi/2<lat<Pi/2, 0<ra<2*Pi, -Pi<lon<Pi,
+Element[s,Reals]}
+
+radeclatlontime2az[ra_,dec_,lat_,lon_,s_] = az /. ha -> gmst[s]+lon-ra
+
+radeclatlontime2el[ra_,dec_,lat_,lon_,s_] = alt /. ha -> gmst[s]+lon-ra
 
 testing... Sirius = 6,45,50 and -16,44,08
 
@@ -122,10 +130,10 @@ N[radeclatlontime2az[ra,dec,lat,lon,1431713169]/Pi*180,20]
 *)
 
 radeclatlontime2az[ra_,dec_,lat_,lon_,s_] =
-ArcTan[Cos[lat]*Sin[dec] - 
-  Cos[dec]*Cos[lon + ra - (Pi*(-4394688633775234485 + 401095163740318*s))/
-      200000000000000]*Sin[lat], 
- Cos[dec]*Sin[lon + ra - (Pi*(-4394688633775234485 + 401095163740318*s))/
-     200000000000000]]
 
+ArcTan[Cos[lat]*Sin[dec] + Cos[dec]*Sin[lat]*
+   Sin[lon - ra + (Pi*(11366224765515 + 401095163740318*s))/200000000000000], 
+ -(Cos[dec]*Cos[lon - ra + (Pi*(11366224765515 + 401095163740318*s))/
+      200000000000000])]
 
+radeclatlontime2el[ra_,dec_,lat_,lon_,s_] =

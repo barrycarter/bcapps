@@ -178,7 +178,8 @@ alias make "make -j \!*"
 alias quiksortcheck "bc-fastrand.pl --n=100 \!* | sort -c"
 
 # short name for bc-alarm.pl (alarm2 is because I used to have two
-# different alarm systems)
+# different alarm systems); the cd is not avoid running xmessage from
+# an odd dir
 
-alias alarm "/home/barrycarter/BCGIT/bc-alarm.pl \!*";
-alias alarm2 "/home/barrycarter/BCGIT/bc-alarm.pl \!*";
+alias alarm "pushd .; cd;/home/barrycarter/BCGIT/bc-alarm.pl \!*; popd";
+alias alarm2 "pushd.; cd;/home/barrycarter/BCGIT/bc-alarm.pl \!*; popd";

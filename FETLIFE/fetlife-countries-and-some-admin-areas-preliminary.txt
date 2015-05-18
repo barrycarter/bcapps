@@ -1,0 +1,316 @@
+administrative_areas-103.txt	Cuando Cubango
+administrative_areas-159.txt	Australian Capital Territory
+administrative_areas-160.txt	New South Wales
+administrative_areas-161.txt	Northern Territory
+administrative_areas-162.txt	Queensland
+administrative_areas-163.txt	South Australia
+administrative_areas-164.txt	Tasmania
+administrative_areas-165.txt	Victoria
+administrative_areas-166.txt	Western Australia
+administrative_areas-3937.txt	Alabama
+administrative_areas-3938.txt	Alaska
+administrative_areas-3939.txt	Arizona
+administrative_areas-3940.txt	Arkansas
+administrative_areas-3941.txt	California
+administrative_areas-3942.txt	Colorado
+administrative_areas-3943.txt	Connecticut
+administrative_areas-3944.txt	Delaware
+administrative_areas-3945.txt	District of Columbia
+administrative_areas-3946.txt	Florida
+administrative_areas-3947.txt	Georgia
+administrative_areas-3948.txt	Hawaii
+administrative_areas-3949.txt	Idaho
+administrative_areas-3950.txt	Illinois
+administrative_areas-3951.txt	Indiana
+administrative_areas-3952.txt	Iowa
+administrative_areas-3953.txt	Kansas
+administrative_areas-3954.txt	Kentucky
+administrative_areas-3955.txt	Louisiana
+administrative_areas-3956.txt	Maine
+administrative_areas-3957.txt	Maryland
+administrative_areas-3958.txt	Massachusetts
+administrative_areas-3959.txt	Michigan
+administrative_areas-3960.txt	Minnesota
+administrative_areas-3961.txt	Mississippi
+administrative_areas-3962.txt	Missouri
+administrative_areas-3963.txt	Montana
+administrative_areas-3964.txt	Nebraska
+administrative_areas-3965.txt	Nevada
+administrative_areas-3966.txt	New Hampshire
+administrative_areas-3967.txt	New Jersey
+administrative_areas-3968.txt	New Mexico
+administrative_areas-3969.txt	New York
+administrative_areas-3970.txt	North Carolina
+administrative_areas-3971.txt	North Dakota
+administrative_areas-3972.txt	Ohio
+administrative_areas-3973.txt	Oklahoma
+administrative_areas-3974.txt	Oregon
+administrative_areas-3975.txt	Pennsylvania
+administrative_areas-3976.txt	Rhode Island
+administrative_areas-3977.txt	South Carolina
+administrative_areas-3978.txt	South Dakota
+administrative_areas-3979.txt	Tennessee
+administrative_areas-3980.txt	Texas
+administrative_areas-3981.txt	Utah
+administrative_areas-3982.txt	Vermont
+administrative_areas-3983.txt	Virginia
+administrative_areas-3984.txt	Washington
+administrative_areas-3985.txt	West Virginia
+administrative_areas-3986.txt	Wisconsin
+administrative_areas-3987.txt	Wyoming
+administrative_areas-590.txt	Alberta
+administrative_areas-591.txt	British Columbia
+administrative_areas-592.txt	Manitoba
+administrative_areas-593.txt	New Brunswick
+administrative_areas-594.txt	Newfoundland and Labrador
+administrative_areas-595.txt	Nova Scotia
+administrative_areas-596.txt	Ontario
+administrative_areas-597.txt	Prince Edward Island
+administrative_areas-598.txt	Quebec
+administrative_areas-599.txt	Saskatchewan
+administrative_areas-600.txt	Yukon Territory
+administrative_areas-601.txt	Northwest Territories
+administrative_areas-602.txt	Nunavut
+countries-1.txt	Afghanistan
+countries-10.txt	Antigua and Barbuda
+countries-100.txt	Iceland
+countries-101.txt	India
+countries-102.txt	Indonesia
+countries-103.txt	Iran, Islamic Republic of
+countries-104.txt	Iraq
+countries-105.txt	Ireland
+countries-106.txt	Isle of Man
+countries-107.txt	Israel
+countries-108.txt	Italy
+countries-109.txt	Jamaica
+countries-11.txt	Argentina
+countries-110.txt	Japan
+countries-111.txt	Jersey
+countries-112.txt	Jordan
+countries-113.txt	Kazakhstan
+countries-114.txt	Kenya
+countries-115.txt	Kiribati
+countries-116.txt	Korea, Democratic People&#x27;s Republic of
+countries-117.txt	Korea, Republic of
+countries-118.txt	Kuwait
+countries-119.txt	Kyrgyzstan
+countries-12.txt	Armenia
+countries-120.txt	Lao People&#x27;s Democratic Republic
+countries-121.txt	Latvia
+countries-122.txt	Lebanon
+countries-123.txt	Lesotho
+countries-124.txt	Liberia
+countries-125.txt	Libyan Arab Jamahiriya
+countries-126.txt	Liechtenstein
+countries-127.txt	Lithuania
+countries-128.txt	Luxembourg
+countries-129.txt	Macao
+countries-13.txt	Aruba
+countries-130.txt	Macedonia, the Former Yugoslav Republic of
+countries-131.txt	Madagascar
+countries-132.txt	Malawi
+countries-133.txt	Malaysia
+countries-134.txt	Maldives
+countries-135.txt	Mali
+countries-136.txt	Malta
+countries-137.txt	Marshall Islands
+countries-138.txt	Martinique
+countries-139.txt	Mauritania
+countries-140.txt	Mauritius
+countries-141.txt	Mayotte
+countries-142.txt	Mexico
+countries-143.txt	Micronesia, Federated States of
+countries-144.txt	Moldova, Republic of
+countries-145.txt	Monaco
+countries-146.txt	Mongolia
+countries-147.txt	Montenegro
+countries-148.txt	Montserrat
+countries-149.txt	Morocco
+countries-15.txt	Austria
+countries-150.txt	Mozambique
+countries-151.txt	Myanmar
+countries-152.txt	Namibia
+countries-153.txt	Nauru
+countries-154.txt	Nepal
+countries-155.txt	Netherlands
+countries-156.txt	Netherlands Antilles
+countries-157.txt	New Caledonia
+countries-158.txt	New Zealand
+countries-159.txt	Nicaragua
+countries-16.txt	Azerbaijan
+countries-160.txt	Niger
+countries-161.txt	Nigeria
+countries-162.txt	Niue
+countries-163.txt	Norfolk Island
+countries-164.txt	Northern Mariana Islands
+countries-165.txt	Norway
+countries-166.txt	Oman
+countries-167.txt	Pakistan
+countries-168.txt	Palau
+countries-169.txt	Palestinian Territory, Occupied
+countries-17.txt	Bahamas
+countries-170.txt	Panama
+countries-171.txt	Papua New Guinea
+countries-172.txt	Paraguay
+countries-173.txt	Peru
+countries-174.txt	Philippines
+countries-175.txt	Pitcairn
+countries-176.txt	Poland
+countries-177.txt	Portugal
+countries-178.txt	Puerto Rico
+countries-179.txt	Qatar
+countries-18.txt	Bahrain
+countries-180.txt	Reunion
+countries-181.txt	Romania
+countries-182.txt	Russian Federation
+countries-183.txt	Rwanda
+countries-184.txt	Saint Barthélemy
+countries-185.txt	Saint Helena
+countries-186.txt	Saint Kitts and Nevis
+countries-187.txt	Saint Lucia
+countries-188.txt	Saint Martin
+countries-189.txt	Saint Pierre and Miquelon
+countries-19.txt	Bangladesh
+countries-190.txt	Saint Vincent and the Grenadines
+countries-191.txt	Samoa
+countries-192.txt	San Marino
+countries-193.txt	Sao Tome and Principe
+countries-194.txt	Saudi Arabia
+countries-195.txt	Senegal
+countries-196.txt	Serbia
+countries-197.txt	Seychelles
+countries-198.txt	Sierra Leone
+countries-199.txt	Singapore
+countries-2.txt	Aland Islands
+countries-20.txt	Barbados
+countries-200.txt	Slovakia
+countries-201.txt	Slovenia
+countries-202.txt	Solomon Islands
+countries-203.txt	Somalia
+countries-204.txt	South Africa
+countries-205.txt	South Georgia and the South Sandwich Islands
+countries-206.txt	Spain
+countries-207.txt	Sri Lanka
+countries-208.txt	Sudan
+countries-209.txt	Suriname
+countries-21.txt	Belarus
+countries-210.txt	Svalbard and Jan Mayen
+countries-211.txt	Swaziland
+countries-212.txt	Sweden
+countries-213.txt	Switzerland
+countries-214.txt	Syrian Arab Republic
+countries-215.txt	Taiwan
+countries-216.txt	Tajikistan
+countries-217.txt	Tanzania, United Republic of
+countries-218.txt	Thailand
+countries-219.txt	Timor-Leste
+countries-22.txt	Belgium
+countries-220.txt	Togo
+countries-221.txt	Tokelau
+countries-222.txt	Tonga
+countries-223.txt	Trinidad and Tobago
+countries-224.txt	Tunisia
+countries-225.txt	Turkey
+countries-226.txt	Turkmenistan
+countries-227.txt	Turks and Caicos Islands
+countries-228.txt	Tuvalu
+countries-229.txt	Uganda
+countries-23.txt	Belize
+countries-230.txt	Ukraine
+countries-231.txt	United Arab Emirates
+countries-232.txt	United Kingdom
+countries-234.txt	United States Minor Outlying Islands
+countries-235.txt	Uruguay
+countries-236.txt	Uzbekistan
+countries-237.txt	Vanuatu
+countries-238.txt	Venezuela
+countries-239.txt	Viet Nam
+countries-24.txt	Benin
+countries-240.txt	Virgin Islands, British
+countries-241.txt	Virgin Islands, U.S.
+countries-242.txt	Wallis and Futuna
+countries-243.txt	Western Sahara
+countries-244.txt	Yemen
+countries-245.txt	Zambia
+countries-246.txt	Zimbabwe
+countries-25.txt	Bermuda
+countries-26.txt	Bhutan
+countries-27.txt	Bolivia
+countries-28.txt	Bosnia and Herzegovina
+countries-29.txt	Botswana
+countries-3.txt	Albania
+countries-30.txt	Bouvet Island
+countries-31.txt	Brazil
+countries-32.txt	British Indian Ocean Territory
+countries-33.txt	Brunei Darussalam
+countries-34.txt	Bulgaria
+countries-35.txt	Burkina Faso
+countries-36.txt	Burundi
+countries-37.txt	Cambodia
+countries-38.txt	Cameroon
+countries-4.txt	Algeria
+countries-40.txt	Cape Verde
+countries-41.txt	Cayman Islands
+countries-42.txt	Central African Republic
+countries-43.txt	Chad
+countries-44.txt	Chile
+countries-45.txt	China
+countries-46.txt	Christmas Island
+countries-47.txt	Cocos (Keeling) Islands
+countries-48.txt	Colombia
+countries-49.txt	Comoros
+countries-5.txt	American Samoa
+countries-50.txt	Congo
+countries-51.txt	Congo, the Democratic Republic of the
+countries-52.txt	Cook Islands
+countries-53.txt	Costa Rica
+countries-54.txt	Côte D&#x27;ivoire
+countries-55.txt	Croatia
+countries-56.txt	Cuba
+countries-57.txt	Cyprus
+countries-58.txt	Czech Republic
+countries-59.txt	Denmark
+countries-6.txt	Andorra
+countries-60.txt	Djibouti
+countries-61.txt	Dominica
+countries-62.txt	Dominican Republic
+countries-63.txt	Ecuador
+countries-64.txt	Egypt
+countries-65.txt	El Salvador
+countries-66.txt	Equatorial Guinea
+countries-67.txt	Eritrea
+countries-68.txt	Estonia
+countries-69.txt	Ethiopia
+countries-7.txt	Angola
+countries-70.txt	Falkland Islands (Malvinas)
+countries-71.txt	Faroe Islands
+countries-72.txt	Fiji
+countries-73.txt	Finland
+countries-74.txt	France
+countries-75.txt	French Guiana
+countries-76.txt	French Polynesia
+countries-77.txt	French Southern Territories
+countries-78.txt	Gabon
+countries-79.txt	Gambia
+countries-8.txt	Anguilla
+countries-80.txt	Georgia
+countries-81.txt	Germany
+countries-82.txt	Ghana
+countries-83.txt	Gibraltar
+countries-84.txt	Greece
+countries-85.txt	Greenland
+countries-86.txt	Grenada
+countries-87.txt	Guadeloupe
+countries-88.txt	Guam
+countries-89.txt	Guatemala
+countries-9.txt	Antarctica
+countries-90.txt	Guernsey
+countries-91.txt	Guinea
+countries-92.txt	Guinea-Bissau
+countries-93.txt	Guyana
+countries-94.txt	Haiti
+countries-95.txt	Heard Island and Mcdonald Islands
+countries-96.txt	Holy See (Vatican City State)
+countries-97.txt	Honduras
+countries-98.txt	Hong Kong
+countries-99.txt	Hungary

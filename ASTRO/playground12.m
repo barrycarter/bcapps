@@ -37,13 +37,15 @@ Solving (Mathematica):
 
 m0 = Table[a[i,j],{i,1,3},{j,1,3}]
 
-(* this is technically an incorrect use of Simplify, but it works *)
+(* Some simplifying assumptions, intentionally avoiding corner cases *)
+
+conds = {-Pi/2 < dec < Pi/2, -Pi/2 < lat < Pi/2, 0 < ra < 2*Pi, -Pi < lst < Pi}
 
 m = Simplify[m0 /. Solve[{
- m.{0,0,1} == {Cos[lat], 0, Sin[lat]},
- m.{Cos[lst],Sin[lst],0} == {-Sin[lat], 0, Cos[lat]},
- m.{-Sin[lst],Cos[lst],0} == {0,1,0}
-},Flatten[m]],Reals]
+ m0.{0,0,1} == {Cos[lat], 0, Sin[lat]},
+ m0.{Cos[lst],Sin[lst],0} == {-Sin[lat], 0, Cos[lat]},
+ m0.{-Sin[lst],Cos[lst],0} == {0,1,0}
+},Flatten[m0]],conds]
 
 m = m[[1]]
 
@@ -107,9 +109,38 @@ Converting back to spherical coordinates and simplifying:
 
 *)
 
-{x,y,z} = Simplify[m.{Cos[dec] Cos[ra], Cos[dec] Sin[ra], Sin[dec]},Reals]
+{x,y,z} = Simplify[m.{Cos[dec] Cos[ra], Cos[dec] Sin[ra], Sin[dec]},conds]
 
-az = ArcTan[y,x]
-el = ArcTan[z,Sqrt[x^2+y^2]]
+(* NOTE: the use of single argument arctangent here introduces
+ambiguity, and the final answer must compensate for this *)
 
+az = Simplify[ArcTan[y/x],conds]
 
+el = Simplify[ArcSin[z],conds]
+
+(*
+
+yielding:
+
+$
+   \text{azimuth}=-\tan ^{-1}\left(\frac{\cos (\text{dec}) \sin
+    (\text{lst}-\text{ra})}{\sin (\text{dec}) \cos (\text{lat})-\cos
+    (\text{dec}) \sin (\text{lat}) \cos (\text{lst}-\text{ra})}\right)
+$
+
+$
+   \text{elevation}=\sin ^{-1}(\cos (\text{dec}) \cos (\text{lat}) \cos
+    (\text{lst}-\text{ra})+\sin (\text{dec}) \sin (\text{lat}))
+$
+
+Assuming I haven't made any mistakes, the next steps would be:
+
+  - Converting local time to local sidereal time
+
+  - Inverting these equations to get latitude and longitude from
+  azimuth, elevation, and time.
+
+I may or may not edit this answer to add those steps, but this
+hopefully provides a start.
+
+*)

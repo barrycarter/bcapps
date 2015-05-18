@@ -5,18 +5,28 @@
 # coming first. In other words, download "best" users for each area
 # first.
 
+# major changes 17 May 2015 to localize the process, test for errors,
+# allow for mirroring, etc
+
 # --sessionid: a valid fetlife session id
+# --subdir: the subdirectory to which I am downloading
 
 require "/usr/local/lib/bclib.pl";
 
-unless ($globopts{sessionid}) {die("--sessionid required");}
+unless ($globopts{sessionid} && $globopts{subdir}) {
+  die("Usage: $0 --sessionid=x --subdir=x");
+}
+
 dodie('chdir("/home/barrycarter/FETLIFE/FETLIFE-BY-REGION")');
+
+unless (-d $globopts{subdir}) {
+  die("$globopts{subdir} does not exist in /home/barrycarter/FETLIFE/FETLIFE-BY-REGION");
+}
+
+my(%files);
 
 # curl commands (lets me change quickly if needed)
 my($cmd) = "curl --compress -A 'Fauxzilla' --socks4a 127.0.0.1:9050 -H 'Cookie: _fl_sessionid=$globopts{sessionid}'";
-
-# and the command to run on remote server (same except no TOR)
-my($cmd2) = "curl --compress -A 'Fauxzilla' -H 'Cookie: _fl_sessionid=$globopts{sessionid}'";
 
 # TODO: add timestamps to everything as we will be on infinite loop(?)
 
@@ -24,32 +34,29 @@ my($cmd2) = "curl --compress -A 'Fauxzilla' -H 'Cookie: _fl_sessionid=$globopts{
 my($out,$err,$res) = cache_command2("$cmd -o places.html 'https://fetlife.com/places'","age=86400");
 my($data) = read_file("places.html");
 
-open(A,"|parallel -j 5");
-
 while ($data=~s%"/(countries|administrative_areas)/(\d+)">(.*?)</a>%%) {
   my($type,$num,$name) = ($1,$2,$3);
   my($fname) = "$type-$num.txt";
 
-  push(@files, $fname);
+  $files{$fname}=1;
 
-  # TODO: add a time test here, not just an existence test
+  # if we've visited this page less than a day ago, ignore
   if (-f $fname && -M $fname < 1) {next;}
 
-#  my($res) = cache_command2("$cmd -o $type-$num.txt 'https://fetlife.com/$type/$num'","age=86400");
-  debug("DOING: $fname");
-  print A "$cmd -o $fname 'https://fetlife.com/$type/$num'\n";
+  my($res) = cache_command2("$cmd -o $fname 'https://fetlife.com/$type/$num'");
 }
 
-close(A);
-
-for $i (@files) {
-  debug("I: $i");
+for $i (sort keys %files) {
   my($data) = read_file($i);
+
   # <h>the abbreviation for country below is in honor of Fetlife</h>
   my($num,$cunt,$url);
 
   unless ($data=~m%>(.*?) Kinksters living in (.*?)<%) {warn "NO DATA IN: $i";}
   ($num,$cunt) = ($1,$2);
+
+  # print this out just for my ref
+#  print "$i\t$cunt\n";
 
   unless ($data=~m%<a href=\"(.*?)/kinksters\">view more%) {warn "NO URL: $i";}
   my($url) = $1;
@@ -62,46 +69,46 @@ for $i (@files) {
   $pages{$url} = max($pages{$url},ceil($num/20)+2);
 }
 
-# glitch cases (countries w/ admin areas already on page, city I
-# myself am in, etc)
+# special case for admin area I use when obtaining data
 
-for $i ("/countries/233", "/cities/8630", "/cities/11529") {delete $pages{$i};}
+delete($pages{"/administrative_areas/103"});
+
+# create output file
+my($outfile) = "$globopts{subdir}/fetlife-users-$globopts{subdir}.csv";
+system("rm -f $outfile; touch $outfile");
 
 # print page 1 for each URL, then page 2, etc
 # there might be more efficient ways to do this? (but fast enough for me)
 
-my(@curls);
-
-my($n,$curdir);
-
 while (%pages) {
+
   $count++;
 
   # print all URLs that still have pages, delete those that dont
   for $i (keys %pages) {
+
     # ignore and delete URLs that have a lower page count
     if ($pages{$i}<$count) {delete $pages{$i}; next;}
 
-    # 500 files to a directory just to keep things organized (note:
-    # should really be sqrt(total number of pages) or something but
-    # sheesh
-    if ($n++%500==0) {
-      print "mkdir DIR$n\n";
-      $curdir = "DIR$n";
+    # url for download and output filename (can't use -O will overwrite)
+    my($dir,$fname) = ("$globopts{subdir}$i", "kinksters?page=$count");
+    $fname = "$dir/$fname";
+    my($url) = "https://fetlife.com$i/kinksters?page=$count";
+
+    # if it doesn't exist (which will normally be the case), get it
+    unless (-f $fname) {
+
+      # does the directory exist?
+      unless (-d $dir) {system("mkdir -p $dir");}
+
+      # the cache below is solely in case write fails for some reason
+      my($out,$err,$res) = cache_command2("$cmd -sS -o '$fname' '$url'","age=86400");
     }
 
-    # url for download and output filename (can't use -O will overwrite)
-    my($url) = "https://fetlife.com/$i/kinksters?page=$count";
-    my($fname) = "fetlife-$i-p$count.txt";
+    # check size
+    if (-s $fname < 1000) {xmessage("'$fname'<1000b"); die;}
 
-    # this is just to make a "pretty" filename
-    $fname=~s/administrative_areas/aa-/g;
-    $fname=~s/countries/co-/g;
-    $fname=~s/(\d+)/sprintf("%0.6d",$1)/iseg;
-    $fname=~s%/%%g;
-
-    # using "xargs -n 1 -P time (command)" instead of parallel
-    # NOT putting bzip2 in background to force slight additional delay
-    print "$cmd -sS -o $curdir/$fname '$url'; bzip2 $curdir/$fname\n";
+    # feed it to bc-parse-user-list
+    system("/home/barrycarter/BCGIT/FETLIFE/bc-parse-user-list.pl '$fname' >> $outfile");
   }
 }
