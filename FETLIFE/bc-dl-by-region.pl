@@ -25,6 +25,9 @@ unless (-d $globopts{subdir}) {
   die("$globopts{subdir} does not exist in /home/barrycarter/FETLIFE/FETLIFE-BY-REGION");
 }
 
+# to handle things that don't dl at all for whatever reason
+open(A,">$globopts{subdir}/redo-from-start.txt");
+
 my(%files);
 
 # curl commands (lets me change quickly if needed)
@@ -109,6 +112,10 @@ while (%pages) {
       my($out,$err,$res) = cache_command2("$cmd -sS -o '$fname' '$url'","age=86400");
     }
 
+    # if file totally empty, record it but move on (not as serious as
+    # losing sessionid)
+    if (-z $fname) {print A "$i\n"; next;}
+
     # check size
     if (-s $fname < 1000) {xmessage("'$fname'<1000b",1); die;}
 
@@ -118,3 +125,5 @@ while (%pages) {
     }
   }
 }
+
+close(A);
