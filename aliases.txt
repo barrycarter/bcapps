@@ -179,7 +179,7 @@ alias quiksortcheck "bc-fastrand.pl --n=100 \!* | sort -c"
 
 # short name for bc-alarm.pl (alarm2 is because I used to have two
 # different alarm systems); the cd is not avoid running xmessage from
-# an odd dir
+# an odd dir (removed cd later, since bc-alarm.pl does this now anyway
 
-alias alarm "pushd .; cd;/home/barrycarter/BCGIT/bc-alarm.pl \!*; popd";
-alias alarm2 "pushd.; cd;/home/barrycarter/BCGIT/bc-alarm.pl \!*; popd";
+alias alarm "/home/barrycarter/BCGIT/bc-alarm.pl \!*"
+alias alarm2 "/home/barrycarter/BCGIT/bc-alarm.pl \!*"

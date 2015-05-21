@@ -309,9 +309,12 @@ zeroCrossings[l_] := Module[{zc},
 rad[lat_] = Sqrt[8108893139432429 - 32876703150355522144690902360200/
     (8108893139432429 + 27233178721371*Cos[2*lat])]/10000
 
-(* GMST time at Unix day d, given as an angle *)
+(* GMST and GAST time at Unix day d, given as an angle,
+http://aa.usno.navy.mil/faq/docs/GAST.php *)
 
-gmst[d_] = ((-4394688633775234485 + 401095163740318*d)*Pi)/200000000000000;
+gmst[d_] = 
+  ((-452506800334363673497 + 41299464944756238*d)*Pi)/20593349747540136;
+
 
 (* Brent method of FindRoot improved *)
 

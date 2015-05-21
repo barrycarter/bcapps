@@ -4006,7 +4006,8 @@ sub xmessage {
   my($tempfile)=my_tmpfile("xmess");
   write_file("Message from $0 at ".`date`.$msg, $tempfile);
   if ($bg) {$BGCHAR="&";}
-  my($ret)=system("xmessage -geometry 1024 -nearmouse -file $tempfile -buttons OK:0,BAD:2 -default OK 1> $tempfile.out 2> $tempfile.err $BGCHAR");
+  # revert to home directory to avoid problems
+  my($ret)=system("cd; xmessage -geometry 1024 -nearmouse -file $tempfile -buttons OK:0,BAD:2 -default OK 1> $tempfile.out 2> $tempfile.err $BGCHAR");
   # don't kill temp file too fast
   if ($bg) {sleep(1); return 0;}
   # if not backgrounding, read result

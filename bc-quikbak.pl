@@ -29,7 +29,7 @@ for $i (@ARGV) {
   # TODO: move zpaq to a better location
   # TODO: this broke things, removing temporarily
   debug("ZPAQ: $target $i");
-  system("/root/build/ZPAQ/zpaq","add",$target,$i,"-quiet");
+#  system("/root/build/ZPAQ/zpaq","add",$target,$i,"-quiet");
 
   # does target file exist? if not, copy from original and create
   # blank quikbak file

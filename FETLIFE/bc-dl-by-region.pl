@@ -13,6 +13,8 @@
 
 require "/usr/local/lib/bclib.pl";
 
+defaults("xmessage=1");
+
 unless ($globopts{sessionid} && $globopts{subdir}) {
   die("Usage: $0 --sessionid=x --subdir=x");
 }
@@ -74,8 +76,9 @@ for $i (sort keys %files) {
 delete($pages{"/administrative_areas/103"});
 
 # create output file
-my($outfile) = "$globopts{subdir}/fetlife-users-$globopts{subdir}.csv";
-system("rm -f $outfile; touch $outfile");
+# creating individual outfiles in case interuppted
+# my($outfile) = "$globopts{subdir}/fetlife-users-$globopts{subdir}.csv";
+# system("rm -f $outfile; touch $outfile");
 
 # print page 1 for each URL, then page 2, etc
 # there might be more efficient ways to do this? (but fast enough for me)
@@ -96,7 +99,8 @@ while (%pages) {
     my($url) = "https://fetlife.com$i/kinksters?page=$count";
 
     # if it doesn't exist (which will normally be the case), get it
-    unless (-f $fname) {
+    # do the same for empty files
+    unless (-f $fname && -s $fname) {
 
       # does the directory exist?
       unless (-d $dir) {system("mkdir -p $dir");}
@@ -106,9 +110,11 @@ while (%pages) {
     }
 
     # check size
-    if (-s $fname < 1000) {xmessage("'$fname'<1000b"); die;}
+    if (-s $fname < 1000) {xmessage("'$fname'<1000b",1); die;}
 
-    # feed it to bc-parse-user-list
-    system("/home/barrycarter/BCGIT/FETLIFE/bc-parse-user-list.pl '$fname' >> $outfile");
+    # feed it to bc-parse-user-list, and dump to related txt file
+    unless (-f "$fname.txt") {
+      system("/home/barrycarter/BCGIT/FETLIFE/bc-parse-user-list.pl '$fname' >> '$fname.txt'");
+    }
   }
 }
