@@ -13,12 +13,10 @@ for $i (glob "/home/barrycarter/FETLIFE/FETLIFE-BY-REGION/*.txt") {
     next;
   }
 
-  my($parent) = $2;
+  my(@parent) = ($1,$2);
   my($all) = read_file($i);
 
-  while ($all=~s/
-
-
-
-  debug("I: $i");
+  while ($all=~s%/(administrative_areas|cities)/(\d+)\".*?>(.*?)</a>%%is) {
+    print "$2:$1:$3:$parent[1]:$parent[0]\n";
+  }
 }

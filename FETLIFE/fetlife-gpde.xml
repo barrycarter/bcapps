@@ -1,0 +1,65 @@
+<!-- DSPL file to upload FetLife data to Google's Public Data Explorer -->
+
+<!-- TODO: consider making types more accurate, such as geo for city/state and limited choice for gender/role; also consider using JOIN tables for city/state/country and role/gender/etc -->
+
+<concepts>
+
+ <concept id="id"><info><name><value>screenname</value></name></info>
+  <type ref="integer" /></concept>
+
+ <concept id="screenname"><info><name><value>screenname</value></name></info>
+  <type ref="string" /></concept>
+
+ <concept id="age"><info><name><value>age</value></name></info>
+  <type ref="integer" /></concept>
+
+ <concept id="gender"><info><name><value>gender</value></name></info>
+  <type ref="string" /></concept>
+
+ <concept id="role"><info><name><value>role</value></name></info>
+  <type ref="string" /></concept>
+
+ <concept id="city"><info><name><value>city</value></name></info>
+  <type ref="string" /></concept>
+
+ <concept id="state"><info><name><value>state</value></name></info>
+  <type ref="string" /></concept>
+
+ <concept id="country"><info><name><value>country</value></name></info>
+  <type ref="string" /></concept>
+
+ <concept id="thumbnail"><info><name><value>thumbnail</value></name></info>
+  <type ref="string" /></concept>
+
+ <concept id="popnum"><info><name><value>popnum</value></name></info>
+  <type ref="integer" /></concept>
+
+ <concept id="popnumtotal"><info><name><value>popnumtotal</value></name></info>
+  <type ref="integer" /></concept>
+
+ <concept id="source"><info><name><value>source</value></name></info>
+  <type ref="string" /></concept>
+
+ <concept id="mtime"><info><name><value>mtime</value></name></info>
+  <type ref="integer" /></concept>
+
+</concepts>
+
+<slices>
+ <slice id="user_data">
+  <dimension concept="id"/>
+  <metric concept="screenname"/>
+  <metric concept="age"/>
+  <metric concept="gender"/>
+  <metric concept="role"/>
+  <metric concept="city"/>
+  <metric concept="state"/>
+  <metric concept="country"/>
+  <metric concept="thumbnail"/>
+  <metric concept="popnum"/>
+  <metric concept="popnumtotal"/>
+  <metric concept="source"/>
+  <metric concept="mtime"/>
+  <table ref="fetlife-user-list-20150511.csv"/>
+ </slice>
+</slices>
