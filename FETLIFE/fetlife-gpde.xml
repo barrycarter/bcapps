@@ -2,6 +2,19 @@
 
 <!-- TODO: consider making types more accurate, such as geo for city/state and limited choice for gender/role; also consider using JOIN tables for city/state/country and role/gender/etc -->
 
+<?xml version="1.0" encoding="UTF-8"?>
+<dspl xmlns="http://schemas.google.com/dspl/2010"
+    xmlns:geo="http://www.google.com/publicdata/dataset/google/geo"
+    xmlns:geo_usa="http://www.google.com/publicdata/dataset/google/geo/us"
+    xmlns:time="http://www.google.com/publicdata/dataset/google/time"
+    xmlns:quantity="http://www.google.com/publicdata/dataset/google/quantity"
+    xmlns:entity="http://www.google.com/publicdata/dataset/google/entity">
+
+<info><name><value>FetLife user data test 001</value></name>
+<description><value>Test</value></description></info>
+
+<provider><name><value>Me</value></name></provider>
+
 <concepts>
 
  <concept id="id"><info><name><value>screenname</value></name></info>
@@ -63,3 +76,26 @@
   <table ref="fetlife-user-list-20150511.csv"/>
  </slice>
 </slices>
+
+<tables>
+ <table id="fetlife-user-list-20150511.csv">
+  <column id="id" type="integer"/>
+  <column id="screenname" type="string"/>
+  <column id="age" type="string"/>
+  <column id="gender" type="string"/>
+  <column id="role" type="string"/>
+  <column id="city" type="string"/>
+  <column id="state" type="string"/>
+  <column id="country" type="string"/>
+  <column id="thumbnail" type="string"/>
+  <column id="popnum" type="integer"/>
+  <column id="popnumtotal" type="integer"/>
+  <column id="source" type="string"/>
+  <column id="mtime" type="integer"/>
+  <data>
+   <file format="csv" encoding="utf-8">fetlife-user-list-20150511.csv</file>
+  </data>
+ </table>
+</tables>
+
+</dspl>
