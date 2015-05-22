@@ -1,5 +1,13 @@
 # shell one liners
 
+# copy files to a remote location, but only 500 per dir (because
+# target program that imports them doesn't like large file lists)
+
+perl -nle 'if ($count++%500==0) {print "mkdir /remote/",++$dir;} print "cp \"$_\" /remote/$dir/$count.epub"'
+
+
+exit; 
+
 # every possible transcoding with the hope that one of them works w/
 # Archos (for H264 videos which are not natively supported w/o
 # non-free plugin)

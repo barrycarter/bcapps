@@ -112,9 +112,10 @@ while (%pages) {
       my($out,$err,$res) = cache_command2("$cmd -sS -o '$fname' '$url'","age=86400");
     }
 
-    # if file totally empty, record it but move on (not as serious as
-    # losing sessionid)
-    if (-z $fname) {print A "$i\n"; next;}
+    # if file doesn't exist, record it but move on (not as serious as
+    # losing sessionid) [note: -z does NOT work here (not that it should)]
+
+    unless (-f $fname) {print A "$i\n"; next;}
 
     # check size
     if (-s $fname < 1000) {xmessage("'$fname'<1000b",1); die;}
