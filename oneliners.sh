@@ -1,10 +1,15 @@
 # shell one liners
 
+# most indexed documents in recollindex (useful to trim out useless docs)
+
+fgrep '[/' recollindex.log | perl -nle '/\[(.*?)\]/; $x=$1; $x=~s/\|.*$//; print $x' | sort | uniq -c | sort -nr | tee /tmp/results.txt
+
+exit; 
+
 # copy files to a remote location, but only 500 per dir (because
 # target program that imports them doesn't like large file lists)
 
-perl -nle 'if ($count++%500==0) {print "mkdir /remote/",++$dir;} print "cp \"$_\" /remote/$dir/$count.epub"'
-
+perl -nle 'if ($count++%100==0) {print "mkdir /remote/",++$dir;} print "cp \"$_\" /remote/$dir/$count.pdf"'
 
 exit; 
 

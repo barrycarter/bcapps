@@ -182,7 +182,7 @@ sub post_request {
   # safety checks
   unless ($query=~/^select/i) {webdie("Query doesn't start w SELECT: $query");}
   # permitted characters (is this going to end up being everything?)
-  if ($query=~/([^a-z0-9_: \(\)\,\*\<\>\"\'\=\.\/\?\|\!\+\-\%\\])/i) {
+  if ($query=~/([^a-z0-9_: \(\)\,\*\<\>\"\'\=\.\/\?\|\!\+\-\%\\]\&)/i) {
     webdie("Query contains illegal character '$1': $query");
   }
 
