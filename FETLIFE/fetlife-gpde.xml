@@ -1,7 +1,3 @@
-<!-- DSPL file to upload FetLife data to Google's Public Data Explorer -->
-
-<!-- TODO: consider making types more accurate, such as geo for city/state and limited choice for gender/role; also consider using JOIN tables for city/state/country and role/gender/etc -->
-
 <?xml version="1.0" encoding="UTF-8"?>
 <dspl xmlns="http://schemas.google.com/dspl/2010"
     xmlns:geo="http://www.google.com/publicdata/dataset/google/geo"
