@@ -32,3 +32,5 @@
 52 * * * * /usr/local/bin/bc-get-guidance2.pl
 # check that all daemons are running properly
 */5 * * * * /usr/local/bin/bc-daemon-checker2.pl --sleep=50
+# keep geonames changes up to date (hourly here is overkill but ok)
+3 * * * * /usr/local/bin/bc-daily-update.pl --debug
