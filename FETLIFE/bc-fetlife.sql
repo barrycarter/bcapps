@@ -17,6 +17,7 @@ CREATE INDEX i7 ON kinksters(country(10));
 
 -- indexes for SQLite3
 
+CREATE INDEX i0 ON kinksters(id);
 CREATE INDEX i1 ON kinksters(screenname);
 CREATE INDEX i2 ON kinksters(age);
 CREATE INDEX i3 ON kinksters(gender);

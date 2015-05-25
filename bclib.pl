@@ -3490,8 +3490,9 @@ sub cache_command2 {
   if ($globopts{nocache}) {
   # if global nocache, then not cached
     debug("--nocache, not cached");
-  } elsif (!(-f $file)) {
-    debug("$file does not exist, not cached");
+  } elsif (!(-f $file && -s $file)) {
+    # for cache_command2, zero size is impossible
+    debug("$file does not exist (or has zero size), not cached");
   } elsif ($opts{age}<=0) {
     # setting age=-1 can be useful for testing (instead of just omitting age=)
     debug("opts{age} < 0, not cached");

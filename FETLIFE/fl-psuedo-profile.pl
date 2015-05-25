@@ -33,20 +33,28 @@ $hash{thumbnail}=~s/_60.jpg/_200.jpg/;
 
 my($birth)=strftime("%Y",gmtime($hash{mtime}-($hash{age}+.5)*365.2425*86400));
 
+my($crawl)=strftime("%Y-%m-%d %H:%M:%S UTC", gmtime($hash{mtime}));
+
 my($location) = "$hash{city}, $hash{state}, $hash{country}";
 
 $location=~s/, ,/,/g;
 
 print << "MARK";
 
+<title>Fetlife User #$hash{id}</title>
+
+<center><h1>Fetlife User #$hash{id}</h1></center>
+
 <table itemscope itemtype="http://schema.org/Person" border=1 width=100%>
 
 <tr>
  <th><img src="$hash{thumbnail}" itemprop="image"></th>
- <th itemprop="name">$hash{screenname}</th>
+ <th itemprop="name"><a href="https://fetlife.com/users/$hash{id}" itemprop="url">$hash{screenname}</a></th>
 </tr>
 
-<tr><th>Age</th><td itemprop="birthDate">$birth</td></tr>
+<tr><th>Age</th><td>
+<time itemprop="birthDate" datetime="$birth">$hash{age}</time>
+</td></tr>
 
 <tr><th>Gender</th><td itemprop="gender">$gender{$hash{gender}}</td>
 
@@ -54,10 +62,7 @@ print << "MARK";
 
 <tr><th>Location</th><td itemprop="homeLocation">$location</td>
 
-<tr><th>URL</th><td itemprop="url">https://fetlife.com/users/$hash{id}</td></tr>
-
-
-
+<tr><th>Last Crawled</th><td>$crawl</td>
 
 </table>
 

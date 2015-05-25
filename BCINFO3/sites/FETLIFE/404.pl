@@ -7,6 +7,13 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# special case if requesting a user
+
+if ($ENV{REQUEST_URI}=~m%^/users/(\d+)$%) {
+  system("/usr/local/bin/fl-psuedo-profile.pl $1");
+  exit;
+}
+
 my($file) = "/sites/FETLIFE/$ENV{REQUEST_URI}";
 
 if (-f $file) {print "Content-type: text/html\n\n",read_file($file);exit;}
