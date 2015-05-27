@@ -5,7 +5,11 @@
 
 require "/usr/local/lib/bclib.pl";
 
-my(@order) = split(/\,/,"city,state,country,latitude,longitude");
+# my(@order) = split(/\,/,"city,state,country,latitude,longitude");
+
+# below to join to FetLife cities later
+my(@order) = split(/\,/,"cityq,latitude,longitude");
+
 my(%hash,@print);
 
 my($data,$file) = cmdfile();

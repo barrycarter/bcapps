@@ -183,3 +183,6 @@ alias quiksortcheck "bc-fastrand.pl --n=100 \!* | sort -c"
 
 alias alarm "/home/barrycarter/BCGIT/bc-alarm.pl \!*"
 alias alarm2 "/home/barrycarter/BCGIT/bc-alarm.pl \!*"
+
+# long form of ps that provides more info, as used by bc-daemon-checker2.pl
+alias pslong "ps -wwweo 'pid ppid etime rss vsz stat args' \!*"

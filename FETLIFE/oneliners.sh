@@ -1,3 +1,10 @@
+# converts FetLife cities (in CSV) to dotted notation to feed to
+# bc-cityfind.pl for later join
+
+perl -F, -anle '$x=lc(join(".",@F[5..7])); $x=~s/\s/./g; $x=~s/\.\././g; $x=~s/^\.//; print $x' ~/FETLIFE/FETLIFE-BY-REGION/fetlife-users-20150519.txt
+
+exit;
+
 # cleans up fetlife CSV for upload to modeanalytics.com which limits
 # filesizes to 500M
 

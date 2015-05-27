@@ -380,7 +380,7 @@ sub bc_metformin_test {
 
 =item bc_nagios_file_size($file, $size, $options)
 
-Confirm that $file (which can be a directory) is less than $size bytes
+Confirm that $file (which can be a directory) is <= $size bytes
 
 =cut
 

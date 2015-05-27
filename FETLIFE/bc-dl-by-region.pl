@@ -39,8 +39,14 @@ my($cmd) = "curl --compress -A 'Fauxzilla' --socks4a 127.0.0.1:9050 -H 'Cookie: 
 my($out,$err,$res) = cache_command2("$cmd -o places.html 'https://fetlife.com/places'","age=86400");
 my($data) = read_file("places.html");
 
-# "countries" known to exist but not on places.html page
+# doing only countries now, and these are countries not listed on
+# places.html (because their admin areas are listed instead); this
+# catches handful of people who have no admin areas (probably a
+# glitch)
 $extra = << "MARK";
+<li><a href="/countries/14">Australia</a></li>
+<li><a href="/countries/39">Canada</a></li>
+<li><a href="/countries/233">USA</a></li>
 <li><a href="/countries/247">Bonaire</a></li>
 <li><a href="/countries/248">Curacao</a></li>
 MARK
@@ -48,7 +54,7 @@ MARK
 
 $data = "$data\n$extra\n";
 
-while ($data=~s%"/(countries|administrative_areas)/(\d+)">(.*?)</a>%%) {
+while ($data=~s%"/(countries)/(\d+)">(.*?)</a>%%) {
   my($type,$num,$name) = ($1,$2,$3);
   my($fname) = "$type-$num.txt";
 
@@ -82,10 +88,6 @@ for $i (sort keys %files) {
   # adding 2 below to allow for growth during dl
   $pages{$url} = max($pages{$url},ceil($num/20)+2);
 }
-
-# special case for admin area I use when obtaining data
-
-delete($pages{"/administrative_areas/103"});
 
 # create output file
 # creating individual outfiles in case interuppted
@@ -129,9 +131,9 @@ while (%pages) {
     # check size
     if (-s $fname < 1000) {xmessage("'$fname'<1000b",1); die;}
 
-    # feed it to bc-parse-user-list, and dump to related txt file
+    # feed it to bc-parse-user-list, and dump to stdout
     unless (-f "$fname.txt") {
-      system("/home/barrycarter/BCGIT/FETLIFE/bc-parse-user-list.pl '$fname' >> '$fname.txt'");
+      system("/home/barrycarter/BCGIT/FETLIFE/bc-parse-user-list.pl '$fname'");
     }
   }
 }

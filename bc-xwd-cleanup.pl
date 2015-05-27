@@ -12,7 +12,8 @@ chdir("/mnt/sshfs/XWD/$date");
 # run tesseract and convert on all files in directory (convert to .pnm
 # because ZPAQ compresses this most efficiently)
 
-open(A,"|/usr/local/bin/parallel -j 10");
+# reduced to -j 1 (ie, no parallel processing) because of heavy CPU load
+open(A,"|/usr/local/bin/parallel -j 1");
 
 # TODO: exclude cases where result already exists!
 
