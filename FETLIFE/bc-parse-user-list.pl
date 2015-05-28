@@ -48,17 +48,7 @@ for $i (@ARGV) {
 
   # country (maybe) [this is fixed for a given page]
   s%<title>Kinksters in (.*?) \- FetLife</title>%%is||warn("ERR: $i: NO COUNTRY DATA");
-  my($country) = $1;
-
-  # fixup country
-  $country = unidecode($country);
-  # unnecessarily long titles
-  $country=~s/, (Republic of|Islamic Republic of|United Republic of|the Former Yugoslav Republic of|Federated States of|the Democratic Republic of the)//;
-
-  # parentheses
-  $country=~s/\((.*?)\)//g;
-
-  debug("COUNTRY: $country");
+  my($country) = clean_country($1);
 
   # users
   while (s%<div class="clearfix user_in_list">(.*?)</div>\s*</div>%%is) {
@@ -135,4 +125,29 @@ sub loc2csc {
 sub clean_country {
   my($country) = @_;
 
+  # hex badness
+  $country=~s/\xc3\xb4/o/g;
+  $country=~s/\xc3\xa9/e/g;
+
+  # apostrophes (not allowed)
+  $country=~s/\&\#x27\;//g;
+
+  # unnecessarily long titles
+  $country=~s/, (Republic of|Islamic Republic of|United Republic of|the Former Yugoslav Republic of|Federated States of|the Democratic Republic of the|Democratic Peoples Republic of)//;
+
+  # parentheses
+  $country=~s/\((.*?)\)//g;
+
+  # one offs
+  $country=~s/Brunei Darussalam/Brunei/;
+  $country=~s/\s+Peoples Democratic Republic//;
+  $country=~s/Libyan Arab Jamahiriya/Libya/;
+  $country=~s/Palestinian Territory, Occupied/Palestine/;
+  $country=~s/Virgin Islands, (.*?)$/$1 Virgin Islands/;
+
+  # multispaces
+  $country=~s/\s+/ /g;
+  $country=~s/\s+$//g;
+
+  return $country;
 }

@@ -49,6 +49,8 @@ while (<A>) {
 close(A);
 close(B);
 
+die "TESTING";
+
 # create canon.txt
 unless (-f "canon.txt") {admpcl();}
 

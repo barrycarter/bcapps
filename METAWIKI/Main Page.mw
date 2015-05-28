@@ -20,10 +20,8 @@ Or.. if you just want to browse:
 * {{#ask: [[Category:Characters]]|format=count}} {{WikiLink|Character List|Characters}}
 * {{#ask: [[Category:Storylines]]|format=count}} {{WikiLink|Storylines|Storylines}}
 * {{#ask: [[Category:Continuity]]|format=count}} {{WikiLink|Category:Continuity|continuity issues}}
-* {{#ask: [[Category:Strips]] [[event::+]] | format=count}} significant [[{{WikiLink|Events|events}}]] in Pearls' history
-* {{#ask: [[Category:Strips]] [[notes::+]] | format=count}} [[{{WikiLink|Notes|notes and annotations}}]]
-
-
+* {{#ask: [[Category:Strips]] [[event::+]] | format=count}} significant {{WikiLink|Events|events}} in Pearls' history
+* {{#ask: [[Category:Strips]] [[notes::+]] | format=count}} {{WikiLink|Notes|notes and annotations}}
 
 
 
