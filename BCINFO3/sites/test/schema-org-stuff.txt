@@ -1,13 +1,11 @@
-<div itemscope itemtype="https://schema.org/Person">
-   <div itemprop="givenName">Alice</div>
-   <div itemprop="parent">
-      <div itemscope itemtype="https://schema.org/Person">
-         <div itemprop="givenName">Bob</div>
-         <div itemprop="sibling">
-            <div itemscope itemtype="https://schema.org/Person">
-            <div itemprop="givenName">Charles</div>
-            </div><!-- End person Charles -->
-         </div><!-- End itemprop sibling -->
-      </div><!-- End person Bob -->
-   </div><!-- End itemprop parent -->
-</div><!-- End person Alice -->
+    <div itemscope itemtype="http://schema.org/Person">
+       <div itemprop="givenName">Alice</div>
+       <div itemprop="parent" 
+            itemscope itemtype="http://schema.org/Person">
+           <div itemprop="givenName">Bob</div> 
+           <div itemprop="sibling" 
+                itemscope itemtype="http://schema.org/Person">
+               <div itemprop="givenName">Charles</div>
+           </div>
+       </div>
+    </div>

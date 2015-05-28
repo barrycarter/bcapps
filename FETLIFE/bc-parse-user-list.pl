@@ -49,6 +49,15 @@ for $i (@ARGV) {
   # country (maybe) [this is fixed for a given page]
   s%<title>Kinksters in (.*?) \- FetLife</title>%%is||warn("ERR: $i: NO COUNTRY DATA");
   my($country) = $1;
+
+  # fixup country
+  $country = unidecode($country);
+  # unnecessarily long titles
+  $country=~s/, (Republic of|Islamic Republic of|United Republic of|the Former Yugoslav Republic of|Federated States of|the Democratic Republic of the)//;
+
+  # parentheses
+  $country=~s/\((.*?)\)//g;
+
   debug("COUNTRY: $country");
 
   # users
@@ -110,7 +119,6 @@ sub loc2csc {
   $loc=~s/,Nebraska, Nebraska/, Nebraska/;
   $loc=~s/, Missouri\/Kickapoo, Missouri/, Missouri/;
   $loc=~s/, (city of|the|Republic of),/,/is;
-  $loc=~s/, (Republic of|Islamic Republic of|United Republic of|the Former Yugoslav Republic of|Federated States of|the Democratic Republic of the|Democratic People&\#x27\;s Republic of)$//;
 
   # TODO: review this; think its correct because $loc may have no commas
   my(@data)=(split(/\,\s*/, $loc));
@@ -122,4 +130,9 @@ sub loc2csc {
   # if city/state and country are same, null them
   for $i (0,1) {if ($data[$i] eq $data[2]) {$data[$i]="";}}
   return @data;
+}
+
+sub clean_country {
+  my($country) = @_;
+
 }

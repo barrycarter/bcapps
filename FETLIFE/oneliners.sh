@@ -1,3 +1,11 @@
+# same as below, but adds dotted notation to existing CSV for join
+
+# result must be sorted by join field, (ie, "sort -t, -k14,14")
+
+perl -F, -anle '$x=lc(join(".",@F[5..7])); $x=~s/\s/./g; $x=~s/\.\././g; $x=~s/^\.//; print "$_,$x"' ~/FETLIFE/FETLIFE-BY-REGION/fetlife-users-20150519.txt
+
+exit;
+
 # converts FetLife cities (in CSV) to dotted notation to feed to
 # bc-cityfind.pl for later join
 

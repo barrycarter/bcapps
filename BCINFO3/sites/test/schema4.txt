@@ -1,0 +1,12 @@
+<div itemscope itemtype="http://schema.org/Person">
+   <div itemprop="children" itemscope itemtype="http://schema.org/Person">
+      <div itemprop="givenName">Alice</div>
+   </div>
+</div>
+
+<div itemscope itemtype="http://schema.org/Person">
+   <div itemprop="children" itemscope itemtype="http://schema.org/Person">
+      <div itemprop="givenName">Bob</div>
+   </div>
+</div>
+
