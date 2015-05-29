@@ -37,6 +37,10 @@ while (<A>) {
   # ignore links (get mangled too badly by "cleanup" and not useful)
   if ($fields[2] eq "link") {next;}
 
+  # TODO: additional altnames we may add (eg, both "Mount" and "Mt")
+#  my(%altaltnames) = list2hash(altaltnames($fields[3]));
+#  debug("HASH",%altaltnames);
+
   # sqlite requires EXACTLY 8 fields per line
   for $j (0..7) {unless ($fields[$j]) {$fields[$j]="";}}
 
@@ -48,8 +52,6 @@ while (<A>) {
 
 close(A);
 close(B);
-
-die "TESTING";
 
 # create canon.txt
 unless (-f "canon.txt") {admpcl();}
@@ -77,6 +79,9 @@ while (<A>) {
    $featureclass, $featurecode, $admin[0], $cc2, $admin[1],
    $admin[2], $admin[3], $admin[4], $population, $elevation,
    $gtopo30, $timezone, $modificationdate) = split("\t",$_);
+
+  # cleanup (TODO: really need to this quite a bit better)
+  $asciiname = cleanup($asciiname);
 
   # ASCII name written ONLY to altnames, geonames will no longer have ANY names
   # the artificial altnameid is -1*geonameid

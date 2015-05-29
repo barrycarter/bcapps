@@ -303,5 +303,3 @@ cp fly /usr/local/bin/
 % 08 Mar 2015: replaced /etc/alternatives/mta with symlink to
 bc-msmtp-wrapper.pl so I can capture all outgoing mail (thought not
 necessarily in proper format)
-
-
