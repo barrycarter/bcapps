@@ -25,9 +25,6 @@ unless (-d $globopts{subdir}) {
   die("$globopts{subdir} does not exist in /home/barrycarter/FETLIFE/FETLIFE-BY-REGION");
 }
 
-# to handle things that don't dl at all for whatever reason
-open(A,">$globopts{subdir}/redo-from-start.txt");
-
 my(%files);
 
 # curl commands (lets me change quickly if needed)
@@ -112,21 +109,15 @@ while (%pages) {
     $fname = "$dir/$fname";
     my($url) = "https://fetlife.com$i/kinksters?page=$count";
 
-    # if it doesn't exist (which will normally be the case), get it
-    # do the same for empty files
-    unless (-f $fname && -s $fname) {
+    # if file exists and is nonempty, skip other steps (efficient when
+    # having to restart)
+    if (-f $fname && -s $fname) {next;}
 
-      # does the directory exist?
-      unless (-d $dir) {system("mkdir -p $dir");}
+    # does the directory exist?
+    unless (-d $dir) {system("mkdir -p $dir");}
 
-      # the cache below is solely in case write fails for some reason
-      my($out,$err,$res) = cache_command2("$cmd -sS -o '$fname' '$url'","age=86400");
-    }
-
-    # if file doesn't exist, record it but move on (not as serious as
-    # losing sessionid) [note: -z does NOT work here (not that it should)]
-
-    unless (-f $fname) {print A "$i\n"; next;}
+    # get file
+    my($out,$err,$res) = cache_command2("$cmd -sS -o '$fname' '$url'");
 
     # check size
     if (-s $fname < 1000) {xmessage("'$fname'<1000b",1); die;}
@@ -137,5 +128,3 @@ while (%pages) {
     }
   }
 }
-
-close(A);
