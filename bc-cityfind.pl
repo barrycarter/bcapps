@@ -12,13 +12,13 @@
 # us.amarillo "portland oregon" "portland maine"
 
 # TODO: consider adding xyz coords those these are of course redundant
-# (and not int he db, so maybe a bad idea)
+# (and not in the db, so maybe a bad idea)
 
 require "/usr/local/lib/bclib.pl";
 
 # search path for geonames2.db
 for $i ("/sites/DB/geonames2.db", "/mnt/sshfs/geonames2.db") {
-  if (-f $i) {$db = $i;}
+  if (-f $i) {$db = $i; last;}
 }
 
 ($tmp1, $tmp2) = (my_tmpfile2("cityp"),my_tmpfile2("cityq"));
