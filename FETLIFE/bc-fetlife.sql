@@ -26,6 +26,15 @@ CREATE INDEX i5 ON kinksters(city);
 CREATE INDEX i6 ON kinksters(state);
 CREATE INDEX i7 ON kinksters(country);
 
+-- thumbnail view
+
+CREATE VIEW thumbs AS 
+ SELECT "<img src='"||thumbnail||"'>" AS img,
+ "<a href='https://fetlife.com/users/" || id || "' target='_blank'> "|| 
+  screenname || "</a>" as link,
+age, gender, role, city, state, country, popnum, popnumtotal
+FROM kinksters;
+
 -- import for MySQL
 
 LOAD DATA LOCAL INFILE '/home/barrycarter/20150506/fetlife-users-20150503.csv'

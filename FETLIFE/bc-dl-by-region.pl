@@ -19,11 +19,7 @@ unless ($globopts{sessionid} && $globopts{subdir}) {
   die("Usage: $0 --sessionid=x --subdir=x");
 }
 
-dodie('chdir("/home/barrycarter/FETLIFE/FETLIFE-BY-REGION")');
-
-unless (-d $globopts{subdir}) {
-  die("$globopts{subdir} does not exist in /home/barrycarter/FETLIFE/FETLIFE-BY-REGION");
-}
+dodie('chdir("/home/barrycarter/FETLIFE/FETLIFE-BY-REGION/$globopts{subdir}")');
 
 my(%files);
 
@@ -33,11 +29,11 @@ my($cmd) = "curl --compress -A 'Fauxzilla' --socks4a 127.0.0.1:9050 -H 'Cookie: 
 # TODO: add timestamps to everything as we will be on infinite loop(?)
 
 # get list of places
-my($out,$err,$res) = cache_command2("$cmd -o places.html 'https://fetlife.com/places'","age=86400");
-my($data) = read_file("places.html");
+my($out,$err,$res) = cache_command2("$cmd -o ../places.html 'https://fetlife.com/places'","age=86400");
+my($data) = read_file("../places.html");
 
 # doing only countries now, and these are countries not listed on
-# places.html (because their admin areas are listed instead); this
+# places.html (because their admin areas are listed instead); this also
 # catches handful of people who have no admin areas (probably a
 # glitch)
 $extra = << "MARK";
@@ -53,7 +49,8 @@ $data = "$data\n$extra\n";
 
 while ($data=~s%"/(countries)/(\d+)">(.*?)</a>%%) {
   my($type,$num,$name) = ($1,$2,$3);
-  my($fname) = "$type-$num.txt";
+  my($fname) = "../$type-$num.txt";
+  unless (-d "$type/$num") {system("mkdir -p $type/$num");}
 
   $files{$fname}=1;
 
@@ -86,10 +83,25 @@ for $i (sort keys %files) {
   $pages{$url} = max($pages{$url},ceil($num/20)+2);
 }
 
-# create output file
-# creating individual outfiles in case interuppted
-# my($outfile) = "$globopts{subdir}/fetlife-users-$globopts{subdir}.csv";
-# system("rm -f $outfile; touch $outfile");
+# the output file is now fixed at fetlife-users-0.csv in current
+# directory (the "0" indicating this is the unsorted plain version);
+# if it exists, we read what pages we've already downloaded to avoid
+# repeats
+
+my(%done);
+
+if (-f "fetlife-users-0.csv") {
+  open(A,"fetlife-users-0.csv");
+  while (<A>) {
+    my(@csv)=split(/\,/,$_);
+
+    # if the last field isn't a timestamp, ignore this line, something is wrong
+    unless ($csv[-1]=~/^\d+$/) {next;}
+    # count how many we have for this page
+    $done{$csv[-2]}++;
+  }
+  close(A);
+}
 
 # print page 1 for each URL, then page 2, etc
 # there might be more efficient ways to do this? (but fast enough for me)
@@ -105,26 +117,27 @@ while (%pages) {
     if ($pages{$i}<$count) {delete $pages{$i}; next;}
 
     # url for download and output filename (can't use -O will overwrite)
-    my($dir,$fname) = ("$globopts{subdir}$i", "kinksters?page=$count");
+    my($dir,$fname) = ($i, "kinksters?page=$count");
+    $dir=~s%^/%%;
     $fname = "$dir/$fname";
     my($url) = "https://fetlife.com$i/kinksters?page=$count";
 
-    # if file exists and is nonempty, skip other steps (efficient when
-    # having to restart)
-    if (-f $fname && -s $fname) {next;}
+    # if file already exists and is nonempty, don't dl
+    unless (-f $fname && -s $fname) {
 
-    # does the directory exist?
-    unless (-d $dir) {system("mkdir -p $dir");}
+      # get file
+      my($out,$err,$res) = cache_command2("$cmd -sS -o '$fname' '$url'");
 
-    # get file
-    my($out,$err,$res) = cache_command2("$cmd -sS -o '$fname' '$url'");
+      # check size
+      if (-s $fname < 1000) {xmessage("'$fname'<1000b",1); die;}
 
-    # check size
-    if (-s $fname < 1000) {xmessage("'$fname'<1000b",1); die;}
+    }
 
-    # feed it to bc-parse-user-list, and dump to stdout
-    unless (-f "$fname.txt") {
-      system("/home/barrycarter/BCGIT/FETLIFE/bc-parse-user-list.pl '$fname'");
+    # feed it to bc-parse-user-list, unless already done
+
+    unless ($done{$url}>0) {
+      system("/home/barrycarter/BCGIT/FETLIFE/bc-parse-user-list.pl '$fname' >> fetlife-users-0.csv");
     }
   }
 }
+
