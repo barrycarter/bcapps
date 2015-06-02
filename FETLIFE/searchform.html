@@ -6,8 +6,10 @@
 
 <tr><th>Gender</th><td>SELECT GOES HERE</td></tr>
 <tr><th>Role</th><td>SELECT GOES HERE</td></tr>
+<tr><th>City</th><td>textentry goes here w comma notice</td></tr>
+<tr><th>State</th><td>textentry goes here w comma notice</td></tr>
 <tr><th>Country</th><td>SELECT GOES HERE</td></tr>
-<tr><th>Gender</th><td>SELECT GOES HERE</td></tr>
+<tr><th>Age</th><td>TWO SELECTS GO HERE</td></tr>
 <tr><th>Gender</th><td>SELECT GOES HERE</td></tr>
 <tr><th>Gender</th><td>SELECT GOES HERE</td></tr>
 
@@ -17,8 +19,22 @@
 
 emphasize no FL affiliation
 
-create fixed queries to sort role/gender/etc by number of users
-(GROUP BY) and link to form
+create static queries to sort role/gender/etc by number of users
+(GROUP BY) and link to form:
+
+Genders:
+http://4e7541f44c65b198855163f4806ca243.fetlife.db.94y.info/
+
+Roles:
+http://26786bbe4823b71afa24fbbd7e6951b1.fetlife.db.94y.info/
+
+Ages:
+http://85b090dd07451a14eaf69ec083fea479.fetlife.db.94y.info/
+
+Gender/Roles: [this times out]
+
+Countries:
+http://b754f578b06eea176e8c2795eb5eaf35.fetlife.db.94y.info/
 
 note no search-by-orientation
 
@@ -33,6 +49,17 @@ create a name for "jump to instructions" after form
 add "this is experimental" disclaimer
 
 if it's easier, MIME encode query before posting to form, but make sure bc-run-query can handle data that way [and that it doesn't defeat any safety checks]
+
+allow multiple cities/states separated by commas (and handle correctly
+on bc-fl-search.pl)
+
+use thumbs view (not main table) I created
+
+mention kinksters table for those who want to go "raw"
+
+once user has chose specific values, make those values "sticky"
+
+current db has a header line that I need to delete on next update
 
 -->
 
