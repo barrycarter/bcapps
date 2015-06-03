@@ -21,13 +21,28 @@ while (<>) {
   # probably automated, but oh well)
   if (/^0+\,|^id/) {next;}
 
-  # the unicode subs
-  s/\xc3\xbc/u/g;
-  s/\xc2\xa3/L/g;
+  if (/^[a-z0-9_\?\/\=\,\-\.\:\s]+$/i) {next;}
 
-  # check
-  unless (/^[a-z0-9_\?\/\=\,\-\.\:\s]+$/i) {
-#  unless (/^[[::print::]]+$/i) {
-    debug("BAD: *$_* vs",unidecode($_));
-  }
+  debug("PROB: $_");
+
+  # TODO: changing URLs and stuff will break them, this should really
+  # limit changes to just city/state/country or something (ie, purely
+  # for bc-cityfind.pl)
+
+  # no apostrophes
+  s/\&\#x27\;//g;
+
+  # the unicode subs (from en.wikipedia.org/wiki/Combining_character)
+  # TODO: lowercasing unnecessarily below
+  s/\xc3[\x80-\x85\xa0-\xa5]/a/g;
+  s/\xc3[\xa8-\xab\x88-\x8b]/e/g;
+  s/\xc3[\xac-\xaf]/i/g;
+  s/\xc3[\xb0\xb2-\xb6\xb8]/o/g;
+  s/\xc3[\xb9-\xbc]/u/g;
+  s/\xc2\xa3/L/g;
+  s/\xc2\xae/R/g;
+  s/\xc2\xa7/SS/g;
+
+  debug("AFTER: $_");
+
 }
