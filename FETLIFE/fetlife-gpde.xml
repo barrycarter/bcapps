@@ -13,7 +13,7 @@
 
 <concepts>
 
- <concept id="id"><info><name><value>screenname</value></name></info>
+ <concept id="id"><info><name><value>id</value></name></info>
   <type ref="integer" /></concept>
 
  <concept id="screenname"><info><name><value>screenname</value></name></info>

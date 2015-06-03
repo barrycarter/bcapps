@@ -41,9 +41,9 @@ $location=~s/, ,/,/g;
 
 print << "MARK";
 
-<title>Fetlife User #$hash{id}</title>
+<title>Fetlife Kinkster $hash{screenname} $hash{age} $gender{$hash{gender}} $hash{role} $location</title>
 
-<center><h1>Fetlife User #$hash{id}</h1></center>
+<center><h3>Fetlife Kinkster $hash{screenname} $hash{age} $gender{$hash{gender}} $hash{role} $location</h3></center>
 
 <table itemscope itemtype="http://schema.org/Person" border=1 width=100%>
 
