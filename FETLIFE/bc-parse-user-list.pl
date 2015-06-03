@@ -67,7 +67,7 @@ for $i (@ARGV) {
     $user=~s%href=\"/users/(\d+)\".*alt=\"(.*?)\".*src=\"(.*?)\"%%||warn("ERR: $i: no id/screenname/thumbnail");
     ($hash{id},$hash{screenname},$hash{thumbnail}) = ($1,$2,$3);
 
-    $user=~s%<span class="quiet">(.*?)</span>%%s||warn("ERR: $i: no age/gender/role");
+    $user=~s%<span class="quiet">(.*?)</span>%%s||warn("ERR: $user: no age/gender/role");
     ($hash{age},$hash{gender},$hash{role}) = data2agr($1);
 
     $user=~s%<em class="small">(.*?)</em>%%s||warn("ERR: $i: no city/state");
