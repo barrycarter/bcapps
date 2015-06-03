@@ -20,23 +20,24 @@ while ($city=~s/\.\././g) {}
 $city=~s/cte\.divoire\.cote\.divoire/cote.divoire/g;
 $city=~s/libyan\.arab\.jamahiriya/libya/g;
 $city=~s/^st\./saint/;
+$city=~s/^mt\./mount/;
 
 # the District of Columbia is small enough that we can ignore which part
 if ($city=~m%district.of.columbia.united.states$%) {$city="washington.dc.usa";}
 
+
 debug("GOT: $city");
 
-# send to bc-cityfind.pl
+# stripping dots so we can at least find a "containing" area's
+# latitude/longitude
 
-my($out,$err,$res) = cache_command2("bc-cityfind.pl $city");
+do {
 
-# if we got something, return it after changing cityq
+  debug("TRYING: $city");
+  my($out,$err,$res) = cache_command2("bc-cityfind.pl $city");
 
-if ($out) {
-  $out=~s%<cityq>.*?</cityq>%<cityq>$ocity</cityq>%s;
-  print $out;
-  exit;
-}
+  # if we got something, return it after changing cityq
+  if ($out=~s%<cityq>.*?</cityq>%<cityq>$ocity</cityq>%s) {print $out; exit;}
+} while ($city=~s/^.*?\.//);
 
-# TODO: main part of program will be stripping dots so we can at least
-# find a "containing" area's latitude/longitude
+
