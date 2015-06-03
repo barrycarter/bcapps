@@ -2,7 +2,9 @@
 
 # result must be sorted by join field, (ie, "sort -t, -k14,14")
 
-perl -F, -anle 'chomp;$x=lc(join(".",@F[5..7])); $x=~s/[^a-z]/./g; print "$_,$x"' ~/FETLIFE/FETLIFE-BY-REGION/fetlife-users-20150519.txt
+perl -F, -anle 'chomp;$x=lc(join(".",@F[5..7])); $x=~s/[^a-z]/./g; print "$_,$x"'
+
+# perl -F, -anle 'chomp;$x=lc(join(".",@F[5..7])); $x=~s/[^a-z]/./g; print "$_,$x"' ~/FETLIFE/FETLIFE-BY-REGION/fetlife-users-20150519.txt
 
 exit; 
 
