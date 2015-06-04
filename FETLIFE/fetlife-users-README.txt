@@ -19,18 +19,18 @@ NOTE: FetLife users are referred to as "kinksters".
 
 Fields:
 
-id: The kinkster's id. The kinkster's profile page is
+Field 1: id: The kinkster's id. The kinkster's profile page is
 "https://fetlife.com/users/xxx" where "xxx" is the id. The id doesn't
 change even if the kinkster changes their screenname.
 
-screenname: The kinkster's screenname.
+Field 2: screenname: The kinkster's screenname.
 
-age: The kinkster's age. Some kinsters use high numbers here
+Field 3: age: The kinkster's age. Some kinsters use high numbers here
 (frequently 94) if they don't want to use their real age. Since
 FetLife automatically increments ages yearly, an age of 95, 96, etc,
 also probably indicates the kinkster doesn't wish to give their age.
 
-gender: The kinkster's gender. In addition to male (M) and female (F),
+Field 4: gender: The kinkster's gender. In addition to male (M) and female (F),
 Fetlife defines these special genders:
 
 CD/TV: Crossdresser/Transvestite
@@ -45,7 +45,7 @@ FEM: Femme
 
 Kinksters may also to leave this field blank.
 
-role: The kinkster's role in the kink community. One of:
+Field 5: role: The kinkster's role in the kink community. One of:
 
 Ageplayer, Big, Bootblack, Bottom, Bull, Daddy, Doll, Dom, Domme,
 Evolving, Exhibitionist, Exploring, Fetishist, Furry, Hedonist,
@@ -58,29 +58,32 @@ Switch, Top, Undecided, Vanilla, Voyeur, babyboy, babygirl, brat,
 cuckold, cuckquean, kajira, kajirus, kitten, little, pet, pony, pup,
 role, sissy, slave, sub
 
-city, state, country: The kinkster's city, state, and country. Some
+Fields 6-8: city, state, country: The kinkster's city, state, and country. Some
 kinksters set their location to "Antarctica" if they don't want people
 to know where they live.
 
-thumbnail: The URL to the kinkster's profile picture thumbnail. This
+Field 9: thumbnail: The URL to the kinkster's profile picture thumbnail. This
 URL is not protected and can be viewed even if you're not logged into
 FetLife. The thumbnail "avatar_missing_60x60.gif" indicates the kinkster
 has no profile picture. Replacing the "_60.jpg" at the end of the URL
 with "_200.jpg" yields a larger version of the profile picture.
 
-popnum: The rank of this kinkster in their administrative
+Field 10: popnum: The rank of this kinkster in their administrative
 area/country. I don't know FetLife's ranking method, but lower rank
 numbers usually indicate more active kinksters.
 
-popnumtotal: The total number of kinksters in this kinkster's
+Field 11: popnumtotal: The total number of kinksters in this kinkster's
 administrative area/country. Combined with popnum, gives a rough idea
 of how active the kinkster is. For example a popnum of 5364 and a
 popnumtotal of 53289 means the kinkster was ranked 5364 of the 53289
 kinksters in their administrative area.
 
-source: The source URL for the kinkster's data
+Field 12: source: The source URL for the kinkster's data
 
-mtime: The Unix time at which this information was scraped.
+Field 13: mtime: The Unix time at which this information was scraped.
+
+Fields 14-15: latitude and longitude: the approximate latitude and
+longitude of the kinkster, based on the city, state, and country
 
 NOTE: User orientation is NOT included in this database, since it does
 NOT appear on the location pages. For reference, the possible
@@ -102,7 +105,8 @@ Not Applicable
 Kinksters may also choose to leave this field blank.
 
 NOTE: The city, state, and country fields did not parse well and may
-have errors.
+have errors. For the same reason (and others), the latitude and
+longitude fields may also have errors.
 
 NOTE: FetLife permits one person to have multiple profiles.
 

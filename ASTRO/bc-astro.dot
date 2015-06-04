@@ -1,0 +1,16 @@
+# digraph showing what you can compute from what
+
+# TODO: shape = record?
+# TODO: normalize function names
+
+digraph x {
+ "clock time" -> "gmst" [label="gmst"],
+ "clock time" -> "ecliptic obliquity" [label="obliquity"],
+ "ra,dec,lat,lon,time" -> "az" [label="radeclatlontime2az"],
+ "ra,dec,lat,lon,time" -> "el" [label="radeclatlontime2el"],
+ "lat" -> "Earth radius" [label="rad"],
+ "gmst,lon" -> "lst" [label="not yet"],
+ "lst,ra" -> "ha" [label="not yet"],
+ "lat,dec" -> "hoursup" [label="not yet"],
+ "ra,lat,dec" -> "siderealrise, siderealset" [label="not yet"]
+}

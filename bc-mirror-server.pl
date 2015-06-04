@@ -63,7 +63,10 @@ write_file(join("\n",@mirror)."\n","$mirfile.todo");
 # TODO: add options for verbosity
 if ($globopts{dryrun}) {$opts = "-n";}
 
-my($com)="rsync -vv -P $opts -z -R -L --files-from=$mirfile.todo . root\@$server:$globopts{remoteroot}";
+# even locally, the delta algorithm is faster (large files w/ appends
+# at end), so --no-W
+
+my($com)="rsync --no-W -vv -P $opts -z -R -L --files-from=$mirfile.todo . root\@$server:$globopts{remoteroot}";
 
 debug($com);
 my($out,$err,$res) = cache_command2($com);

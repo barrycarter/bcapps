@@ -19,6 +19,9 @@ while ($city=~s/\.\././g) {}
 # even before the first attempt, we can fix these
 $city=~s/cte\.divoire\.cote\.divoire/cote.divoire/g;
 $city=~s/libyan\.arab\.jamahiriya/libya/g;
+
+# TODO: maybe put these in main loop for things like
+# port.st..joe.florida.united.states
 $city=~s/^st\./saint/;
 $city=~s/^mt\./mount/;
 
@@ -37,7 +40,7 @@ do {
   my($out,$err,$res) = cache_command2("bc-cityfind.pl $city");
 
   # if we got something, return it after changing cityq
-  if ($out=~s%<cityq>.*?</cityq>%<cityq>$ocity</cityq>%s) {print $out; exit;}
+  if ($out=~s%<cityq>(.*?)</cityq>%<cityq>$ocity</cityq>\n<city_real>$1</city_real>%s) {print $out; exit;}
 } while ($city=~s/^.*?\.//);
 
 

@@ -3,7 +3,7 @@
 CREATE TABLE kinksters (
  id INT, screenname TEXT, age INT, gender TEXT, role TEXT, city TEXT,
  state TEXT, country text, thumbnail TEXT, popnum INT, popnumtotal INT,
- source TEXT, mtime INT);
+ source TEXT, mtime INT, latitude DOUBLE, longitude DOUBLE);
 
 -- indexes for MySQL
 
@@ -25,6 +25,8 @@ CREATE INDEX i4 ON kinksters(role);
 CREATE INDEX i5 ON kinksters(city);
 CREATE INDEX i6 ON kinksters(state);
 CREATE INDEX i7 ON kinksters(country);
+CREATE INDEX i8 ON kinksters(latitude);
+CREATE INDEX i9 ON kinksters(longitude);
 
 -- thumbnail view
 
