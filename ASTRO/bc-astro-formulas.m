@@ -31,16 +31,20 @@ lon - longitude (radians)
 
 ha - hour angle (radians)
 
-siderealSet - local sidereal setting time
+haSet - local hour angle setting time
 
-siderealRise - local sidereal rising time
+haRise - local hour angle rising time
 
 earthRadius - radius of the Earth (varies with latitude)
 
-xyzAltAz - the xyz coordinates for a given altitude and azimuth (virtual sphere of radius 1)
+xyzAltAz - the xyz coordinates for a given altitude and azimuth
+(virtual sphere of radius 1)
 
 xyzRaDec - the xyz coordinates for a given right ascension and
 declination (virtual sphere of radius 1)
+
+xyzEarth - xyz coordinates on Earth for current epoch, in km (no
+precession/nutation)
 
 *)
 
@@ -50,6 +54,17 @@ conds = {-Pi/2<dec<Pi/2, -Pi/2<lat<Pi/2, 0<ra<2*Pi, -Pi<lon<Pi,
 Element[date,Reals], Element[gmst,Reals]
 }
 
+(* constants (km) *)
+
+earthMeanRadius = 6378.1370;
+earthPolarRadius = 6356.7523;
+
+(* http://en.wikipedia.org/wiki/Earth_radius#Geocentric_radius *)
+
+lat2earthRadius[lat_] = Sqrt[
+((earthMeanRadius^2*Cos[lat])^2 + (earthPolarRadius^2*Sin[lat])^2)/
+((earthMeanRadius*Cos[lat])^2 + (earthPolarRadius*Sin[lat])^2)
+]
 
 (* http://aa.usno.navy.mil/faq/docs/GAST.php converted to radians *)
 
@@ -75,6 +90,16 @@ decHaLat2xyzRaDec[dec_,ha_,lat_] = Module[{sh,sd,sl,ch,cd,cl},
 
 decHaLat2azEl[dec_,ha_,lat_] = Module[{r,x,y,z},
  {x,y,z} = decHaLat2xyzRaDec[dec,ha,lat];
- r = Sqrt[x^2 + y^2];
+ r = Sqrt[1-z^2];
  {ArcTan[x,y],ArcTan[r,z]}
 ]
+
+(* the rise and set are not necessarily on the same day *)
+
+decLat2haRise[dec_,lat_] = -ArcCos[-Tan[dec]*Tan[lat]]
+decLat2haSet[dec_,lat_] = ArcCos[-Tan[dec]*Tan[lat]]
+
+latLst2xyzEarth[lat_,lst_] = 
+ lat2earthRadius[lat]*{Sin[lat]*Cos[lst],Sin[lat]*Sin[lst],Cos[lat]}
+
+

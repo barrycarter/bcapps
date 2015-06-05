@@ -22,8 +22,8 @@ $city=~s/libyan\.arab\.jamahiriya/libya/g;
 
 # TODO: maybe put these in main loop for things like
 # port.st..joe.florida.united.states
-$city=~s/^st\./saint/;
-$city=~s/^mt\./mount/;
+$city=~s/^st\./saint./;
+$city=~s/^mt\./mount./;
 
 # the District of Columbia is small enough that we can ignore which part
 if ($city=~m%district.of.columbia.united.states$%) {$city="washington.dc.usa";}
