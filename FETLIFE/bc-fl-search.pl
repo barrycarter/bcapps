@@ -11,14 +11,21 @@ $globopts{debug}=1;
 
 # if there is a query, handle it
 
-my(%chunks)=str2hash($ENV{QUERY_STRING});
+# defaults are read first and are trumped by QUERY_STRING
+my($defaults) = ("gender=F&lowage=18&highage=29&country=United+States&role=submissive&city=Lincoln&state=Nebraska");
+
+my(%chunks)=str2hash("$defaults&$ENV{QUERY_STRING}");
 
 # treat lowage and highage special (both must be set)
 my(@conds) = ("age BETWEEN $chunks{lowage} AND $chunks{highage}");
-delete $chunks{lowage};
-delete $chunks{highage};
 
 for $i (keys %chunks) {
+
+  # ignore low/highage (but keep them for later form)
+  if ($i=~/^(high|low)age$/) {next;}
+  # and submit button
+  if ($i eq "submit") {next;}
+
   # empty values and "*" are ignored
   if ($chunks{$i}=~/^\s*$/ || $chunks{$i} eq "*") {next;}
 
@@ -32,6 +39,18 @@ for $i (keys %chunks) {
 my($conds)=join(" AND ",@conds);
 
 my($query) = "SELECT * FROM thumbs WHERE $conds";
+
+webug("CHUNKS",%chunks);
+
+# run curl with data in tmp dir
+my($tempdir) = tmpdir();
+write_file($query, "$tempdir/query");
+my($out,$err,$res) = cache_command2("curl -D - -d \@$tempdir/query http://post.fetlife.db.94y.info/","salt=$tmpdir");
+
+webug("OUT: $out");
+
+exit(0);
+
 
 webug("QUERY: $query");
 
@@ -75,7 +94,7 @@ UNOFFICIAL FetLife Search Form (not affiliated with FetLife)
 <th>City</th><td><input type='text' name='city' value='$chunks{city}'></td></tr>
 <tr><th>State</th><td><input type='text' name='state' value='$chunks{state}'></td></tr>
 <tr><th>Country</th><td>$cunts</td></tr>
-<tr><th colspan=2><input type="submit" value="SEARCH"></th></tr>
+<tr><th colspan=2><input name="submit" type="submit" value="SEARCH"></th></tr>
 
 </table></form>
 
@@ -95,7 +114,6 @@ my($tmpdir) = tmpdir("bcfs");
 
 write_file($query, "query");
 
-my($out,$err,$res) = cache_command2("curl -L -d \@query http://post.fetlife.db.94y.info/","salt=$tmpdir");
 
 debug("OER: $out/$err/$res");
 
