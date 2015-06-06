@@ -22,80 +22,11 @@
 
 <roleform>
 
-<select id="role" name="role">
-<option selected="selected" value="*">Any Role</option>
-<option value="Ageplayer">Ageplayer</option>
-<option value="Big">Big</option>
-<option value="Bootblack">Bootblack</option>
-<option value="Bottom">Bottom</option>
-<option value="Bull">Bull</option>
-<option value="Daddy">Daddy</option>
-<option value="Doll">Doll</option>
-<option value="Dominant">Dominant</option>
-<option value="Domme">Domme</option>
-<option value="Evolving">Evolving</option>
-<option value="Exhibitionist">Exhibitionist</option>
-<option value="Exploring">Exploring</option>
-<option value="Fetishist">Fetishist</option>
-<option value="Furry">Furry</option>
-<option value="Hedonist">Hedonist</option>
-<option value="Kinkster">Kinkster</option>
-<option value="Leather Boi">Leather Boi</option>
-<option value="Leather Daddy">Leather Daddy</option>
-<option value="Leather Man">Leather Man</option>
-<option value="Leather Top">Leather Top</option>
-<option value="Leather Woman">Leather Woman</option>
-<option value="Leather bottom">Leather bottom</option>
-<option value="Leather boy">Leather boy</option>
-<option value="Leather girl">Leather girl</option>
-<option value="Masochist">Masochist</option>
-<option value="Master">Master</option>
-<option value="Middle">Middle</option>
-<option value="Mistress">Mistress</option>
-<option value="Mommy">Mommy</option>
-<option value="Not Applicable">Not Applicable</option></select></td>
-<option value="Primal Predator">Primal Predator</option>
-<option value="Primal Prey">Primal Prey</option>
-<option value="Primal">Primal</option>
-<option value="Princess">Princess</option>
-<option value="Rigger">Rigger</option>
-<option value="Rope Bottom">Rope Bottom</option>
-<option value="Rope Bunny">Rope Bunny</option>
-<option value="Rope Top">Rope Top</option>
-<option value="Sadist">Sadist</option>
-<option value="Sadomasochist">Sadomasochist</option>
-<option value="Sensualist">Sensualist</option>
-<option value="Slut">Slut</option>
-<option value="Spankee">Spankee</option>
-<option value="Spanker">Spanker</option>
-<option value="Spanko">Spanko</option>
-<option value="Swinger">Swinger</option>
-<option value="Switch">Switch</option>
-<option value="Top">Top</option>
-<option value="Undecided">Undecided</option>
-<option value="Vanilla">Vanilla</option>
-<option value="Voyeur">Voyeur</option>
-<option value="babyboy">babyboy</option>
-<option value="babygirl">babygirl</option>
-<option value="brat">brat</option>
-<option value="cuckold">cuckold</option>
-<option value="cuckquean">cuckquean</option>
-<option value="kajira">kajira</option>
-<option value="kajirus">kajirus</option>
-<option value="kitten">kitten</option>
-<option value="little">little</option>
-<option value="pet">pet</option>
-<option value="pony">pony</option>
-<option value="pup">pup</option>
-<option value="sissy">sissy</option>
-<option value="slave">slave</option>
-<option value="submissive">submissive</option>
-</select>
-
 </roleform>
 
 <countryform>
 
+<select name="country">
 <option selected="selected" value="*">Any Country</option>
 <option value="Afghanistan">Afghanistan</option>
 <option value="Aland Islands">Aland Islands</option>
