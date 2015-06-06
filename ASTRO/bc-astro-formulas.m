@@ -76,7 +76,7 @@ lstRa2ha[lst_,ra_] = lst-ra
 
 (* http://idlastro.gsfc.nasa.gov/ftp/pro/astro/hadec2altaz.pro *)
 
-decHaLat2xyzRaDec[dec_,ha_,lat_] = Module[{sh,sd,sl,ch,cd,cl},
+decHaLat2xyzAltAz[dec_,ha_,lat_] = Module[{sh,sd,sl,ch,cd,cl},
  sh = Sin[ha];
  ch = Cos[ha];
  sd = Sin[dec];
@@ -89,7 +89,7 @@ decHaLat2xyzRaDec[dec_,ha_,lat_] = Module[{sh,sd,sl,ch,cd,cl},
 (* Mathematica convention: ArcTan[x,y] ~ ArcTan[x/y] *)
 
 decHaLat2azEl[dec_,ha_,lat_] = Module[{r,x,y,z},
- {x,y,z} = decHaLat2xyzRaDec[dec,ha,lat];
+ {x,y,z} = decHaLat2xyzAltAz[dec,ha,lat];
  r = Sqrt[1-z^2];
  {ArcTan[x,y],ArcTan[r,z]}
 ]
