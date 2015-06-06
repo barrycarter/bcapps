@@ -9,109 +9,82 @@ print "Content-type: text/html\n\n";
 # for now
 $globopts{debug}=1;
 
+# if there is a query, handle it
+
+my(%chunks)=str2hash($ENV{QUERY_STRING});
+
+# treat lowage and highage special (both must be set)
+my(@conds) = ("age BETWEEN $chunks{lowage} AND $chunks{highage}");
+delete $chunks{lowage};
+delete $chunks{highage};
+
+for $i (keys %chunks) {
+  # empty values and "*" are ignored
+  if ($chunks{$i}=~/^\s*$/ || $chunks{$i} eq "*") {next;}
+
+  # space correction
+  $chunks{$i}=~s/\+/ /g;
+
+  # conditions (the use of IN instead of = does nothing for now, but may later)
+  push(@conds, "$i IN ('$chunks{$i}')");
+}
+
+my($conds)=join(" AND ",@conds);
+
+my($query) = "SELECT * FROM thumbs WHERE $conds";
+
+webug("QUERY: $query");
+
 my($options) = read_file("fl-forms.txt");
 
-# TODO: this can and really should be subroutinized to create
-# arbitrary SELECT dropdowns
+# default values to whatever user entered
 
 $options=~s%<genders>(.*?)</genders>%%s;
 my(@genders) = split(/\n/, $1);
 unshift(@genders, "*:Any Gender");
-$genders = html_select_list("gender",\@genders);
+$genders = html_select_list("gender",\@genders,$chunks{gender});
 
 $options=~s%<roles>(.*?)</roles>%%s;
+# case-insensitive sort
 my(@roles) = split(/\n/, $1);
+@roles = sort {lc($a) cmp lc($b)} @roles;
 unshift(@roles, "*:Any Role");
-$roles = html_select_list("role",\@roles);
+$roles = html_select_list("role",\@roles,$chunks{role});
 
 $options=~s%<countries>(.*?)</countries>%%s;
 my(@cunts) = split(/\n/, $1);
-unshift(@cunts, "*:Any Cuntry");
-$cunts = html_select_list("country",\@cunts);
+unshift(@cunts, "*:Any Country");
+$cunts = html_select_list("country",\@cunts,$chunks{country});
 
-my(@ages) = ("*:Any Age",(18..99));
-$ages = html_select_list("age",\@ages);
-
-debug("AGES: $cunts");
-
-
-die "TESTING";
-
-
-
-# the wildcard option
-my(@genselect) = ("<option value=\"*\">Any Gender</option>");
-
-for $i (sort @genders) {
-  # ignore non-hash (and empty)
-  unless ($i=~/^(.*?):(.*)$/) {next;}
-  push(@genselect, "<option value=\"$1\">$2</option>");
-}
-
-$genselect="<select name='gender'>\n".join("\n",@genselect)."\n</select>\n";
-
-# roles are easier, list not a hash
-
-$options=~s%<roles>(.*?)</roles>%%s;
-
-my(@roles) = split(/\n/, $1);
-
-
-my(@roleselect) = ("<option value=\"*\">Any Gender</option>");
-
-for $i (sort @roles) {
-  # ignore non-hash (and empty)
-  unless ($i=~/^(.*?):(.*)$/) {next;}
-  push(@roleselect, "<option value=\"$1\">$2</option>");
-}
-
-$roleselect="<select name='role'>\n".join("\n",@roleselect)."\n</select>\n";
-
-# options for age (no one is really 99, since earliest allowed birth
-# year is 1920 [which is why 95 = birth year 1920 is the "fake age" value]
-
-my(@ages);
-for $i (18..99) {push(@ages,"<option value='$i'>$i</option>");}
-
-
+my(@ages) = (18..99);
+my(@rages) = reverse(@ages);
+$lowage = html_select_list("lowage",\@ages,$chunks{lowage});
+$highage = html_select_list("highage",\@rages,$chunks{highage});
 
 my($form) = << "MARK";
 
 <form action="/bc-fl-search.pl" method="GET"><table border>
 
-<tr><th colspan=2>UNOFFICIAL FetLife Search Form (not affiliated with FetLife)</th></tr>
+<tr><th colspan=2>
+UNOFFICIAL FetLife Search Form (not affiliated with FetLife)
+</th></tr>
 
-<tr><th>Gender</th><td>$genselect</td></tr>
-<tr><th>Age</th><td>X to X</td></tr>
-<tr><th>Role</th><td>$roleselect</td></tr><tr>
-<th>City</th><td><input type='text' name='city' /></td></tr>
-<tr><th>State</th><td><input type='text' name='state' /></td></tr>
-<tr><th>Cuntry</th><td>
+<tr><th>Gender</th><td>$genders</td></tr>
+<tr><th>Age</th><td>$lowage to $highage</td></tr>
+<tr><th>Role</th><td>$roles</td></tr><tr>
+<th>City</th><td><input type='text' name='city' value='$chunks{city}'></td></tr>
+<tr><th>State</th><td><input type='text' name='state' value='$chunks{state}'></td></tr>
+<tr><th>Country</th><td>$cunts</td></tr>
+<tr><th colspan=2><input type="submit" value="SEARCH"></th></tr>
+
+</table></form>
 
 MARK
 ;
 
-debug("FORM: $form");
+print $form;
 
-
-debug("GENDERS:",$genselect);
-
-die "TESTING";
-
-
-
-
-
-# list of countries
-@cunts = `egrep -v '#' $bclib{githome}/FETLIFE/countrylist.txt`;
-map(chomp($_),@cunts);
-
-# parse query sent by user
-
-my(@chunks)=split(/\&/,$ENV{QUERY_STRING});
-
-webug("CHUNKS",@chunks);
-
+exit(0);
 
 # submit a query to fetlife.db.94y.info
 
@@ -126,9 +99,11 @@ my($out,$err,$res) = cache_command2("curl -L -d \@query http://post.fetlife.db.9
 
 debug("OER: $out/$err/$res");
 
-=item html_select_list($name, \@list)
+=item html_select_list($name, \@list, $selected="")
 
 Create an HTML form SELECT list from \@list with name $name.
+
+If $selected is set, key matching $selected will be pre-SELECTed
 
 Ignores empty list items.
 
@@ -139,15 +114,20 @@ TODO: need to allow generic separator character (or true hashes)
 =cut
 
 sub html_select_list {
-  my($name,$listref) = @_;
+  my($name,$listref,$selected) = @_;
   my(@ret)=("<select name='$name'>");
   for $i (@$listref) {
     if ($i=~/^\s*$/) {next;}
 
-    if ($i=~/^(.*?):(.*)$/) {
-      push(@ret,"<option value='$1'>$2</option>");
+    # split into key/value
+    my($k,$v);
+    if ($i=~/^(.*?):(.*)$/) {($k,$v)=($1,$2);} else {$k=$v=$i;}
+
+    # SELECTed?
+    if ($k eq $selected) {
+      push(@ret,"<option value='$k' SELECTED>$v</option>");
     } else {
-      push(@ret,"<option value='$i'>$i</option>");
+      push(@ret,"<option value='$k'>$v</option>");
     }
   }
   push(@ret,"</select>");
