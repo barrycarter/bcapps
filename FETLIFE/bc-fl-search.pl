@@ -15,8 +15,29 @@ my($options) = read_file("fl-forms.txt");
 # arbitrary SELECT dropdowns
 
 $options=~s%<genders>(.*?)</genders>%%s;
-
 my(@genders) = split(/\n/, $1);
+unshift(@genders, "*:Any Gender");
+$genders = html_select_list("gender",\@genders);
+
+$options=~s%<roles>(.*?)</roles>%%s;
+my(@roles) = split(/\n/, $1);
+unshift(@roles, "*:Any Role");
+$roles = html_select_list("role",\@roles);
+
+$options=~s%<countries>(.*?)</countries>%%s;
+my(@cunts) = split(/\n/, $1);
+unshift(@cunts, "*:Any Cuntry");
+$cunts = html_select_list("country",\@cunts);
+
+my(@ages) = ("*:Any Age",(18..99));
+$ages = html_select_list("age",\@ages);
+
+debug("AGES: $cunts");
+
+
+die "TESTING";
+
+
 
 # the wildcard option
 my(@genselect) = ("<option value=\"*\">Any Gender</option>");
@@ -104,6 +125,34 @@ write_file($query, "query");
 my($out,$err,$res) = cache_command2("curl -L -d \@query http://post.fetlife.db.94y.info/","salt=$tmpdir");
 
 debug("OER: $out/$err/$res");
+
+=item html_select_list($name, \@list)
+
+Create an HTML form SELECT list from \@list with name $name.
+
+Ignores empty list items.
+
+If list is "str1:str2", the value is str1, but str2 is printed.
+
+TODO: need to allow generic separator character (or true hashes)
+
+=cut
+
+sub html_select_list {
+  my($name,$listref) = @_;
+  my(@ret)=("<select name='$name'>");
+  for $i (@$listref) {
+    if ($i=~/^\s*$/) {next;}
+
+    if ($i=~/^(.*?):(.*)$/) {
+      push(@ret,"<option value='$1'>$2</option>");
+    } else {
+      push(@ret,"<option value='$i'>$i</option>");
+    }
+  }
+  push(@ret,"</select>");
+  return join("\n",@ret)."\n";
+}
 
 
 
