@@ -1,1 +1,1 @@
-query=SELECT COUNT(*) FROM kinksters&submit=1
+query=SELECT COUNT(*) FROM kinksters
