@@ -7,6 +7,7 @@ CREATE TABLE kinksters (
 
 -- indexes for MySQL
 
+CREATE INDEX i0 ON kinksters(id);
 CREATE INDEX i1 ON kinksters(screenname(20));
 CREATE INDEX i2 ON kinksters(age);
 CREATE INDEX i3 ON kinksters(gender(10));
@@ -14,6 +15,8 @@ CREATE INDEX i4 ON kinksters(role(10));
 CREATE INDEX i5 ON kinksters(city(10));
 CREATE INDEX i6 ON kinksters(state(10));
 CREATE INDEX i7 ON kinksters(country(10));
+CREATE INDEX i8 ON kinksters(latitude);
+CREATE INDEX i9 ON kinksters(longitude);
 
 -- indexes for SQLite3
 

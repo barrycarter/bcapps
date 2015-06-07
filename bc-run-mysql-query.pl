@@ -7,6 +7,9 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# TODO: do not do this
+# $globopts{keeptemp}=1;
+
 # the only constant is .db|database.
 $ENV{HTTP_HOST}=~/^(.*?)\.(db|database)\.(.*)$/;
 my($base, $tld) = ($1,"$2.$3");
@@ -28,7 +31,7 @@ webdie("Hostname $ENV{HTTP_HOST} not understood", "Content-type: text/html");
 # this subroutines are specific to this program thus not well documented
 sub schema_request {
   my($db,$tld) = @_;
-  my($out,$err,$res) = cache_command2("mysqldump --no-data --compact $db | egrep -v '^/'");
+  my($out,$err,$res) = cache_command2("mysqldump --no-data $db");
   if ($res) {webdie("Schema error: $res/$out/$err","Content-type: text/html");}
   print "Content-type: text/plain\n\n$out\n";
 }
@@ -86,7 +89,7 @@ sub query_request {
   print << "MARK";
 Content-type: text/html
 
-Results:
+<a name="#query">See/edit your query</a>
 
 <p><table border>
 $out
@@ -128,6 +131,7 @@ sub post_request {
 
   # query is now safe, add to requests.db (as base 64)
   my($iquery) = encode_base64($query);
+  chomp($iquery);
   my($queryhash) = md5_hex($iquery);
   # TODO: if query already in db, need to do this (or pointless?)
   mysql("REPLACE INTO requests (query,db,md5) VALUES ('$iquery', '$db', '$queryhash')", "requests");
@@ -142,6 +146,7 @@ sub post_request {
 sub form_request {
   my($db,$tld,$query,$queryhash) = @_;
   print << "MARK";
+<a name="query">
 <form method='POST' action='http://post.$db.$tld/'><table border>
 <tr><th>Enter query below (must start w/ SELECT):</th></tr>
 <tr><th><input type="submit" value="RUN QUERY"></th></tr>
@@ -176,7 +181,8 @@ CREATE UNIQUE INDEX ui ON requests(md5 (32));
 
 -- TODO: change "test" to the db Ill actually want to use
 CREATE USER readonly;
-GRANT SELECT ON shared.* TO readonly;
+GRANT SELECT ON shared.* TO 'readonly'@'localhost';
+GRANT SELECT,INSERT,DELETE ON requests.* TO 'readonly'@'localhost';
 
 =cut
 
