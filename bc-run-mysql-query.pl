@@ -1,20 +1,11 @@
 #!/usr/bin/perl -0777
 
 # run an arbitrary readonly MySQL query webapp
-# starts off as a copy bc-run-sqlite3-query.pl
+# TODO: add RSS and CSV and dl entire db options; rushing to
+# "production" for now
 # format: [rss|csv|].[query|"schema"].db.(db|database).other.stuff
 
-# TODO: replace "download sqlite3 db" with some sort of CSV/TSV dump?
-
 require "/usr/local/lib/bclib.pl";
-
-# TODO: stop doing this
-# $globopts{debug}=1;
-# $globopts{keeptemp}=1;
-
-# TODO: don't print header this early (just for debugging)
-# TODO: be more specific about which header to provide for requests
-# print "Content-type: text/html\n\n";
 
 # the only constant is .db|database.
 $ENV{HTTP_HOST}=~/^(.*?)\.(db|database)\.(.*)$/;
@@ -23,54 +14,22 @@ my($base, $tld) = ($1,"$2.$3");
 # determine query pieces (reversed because lower parts don't always exist)
 my($db, $query, $type) = reverse(split(/\./, $base));
 
-# print << "MARK";
-# <pre>
-# TLD: $tld
-# DB: $db
-# QUERY: $query
-# TYPE: $type
-# </pre>
-# MARK
-# ;
+# this is bad long term
+unless ($db eq "shared") {print "Location: http://shared.$tld\n\n"; exit;}
 
-# DB check
-check_db($db);
-
-if ($query eq "") {
-  form_request($db,$tld);
-} elsif ($query eq "schema") {
-  schema_request($db,$tld);
-} elsif ($query eq "post") {
-  post_request($db,$tld);
-} elsif ($query=~/[0-9a-f]{32}$/) {
-  query_request($query,$db,$tld,$type);
-} else {
-  print "Hostname $ENV{HTTP_HOST} not understood";
-}
-
-sub check_db {
-  my($db) = @_;
-  my($header) = "Content-type: text/html";
-
-  # request for all dbs? not yet supported
-  if ($db eq "") {webdie("Cannot list databases (at the moment)", $header);}
-
-  # currently ONLY sharing "shared" db (but can tweak later)
-  unless ($db eq "shared") {
-    webdie("Only shared database is: 'shared'", $header);
-  }
-
-  # db doesnt exist?
-  my($res) = mysqlval("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '$db'");
-  webug("RES: $res");
-  unless ($res eq $db) {webdie("No such database: $db", $header);}
+if ($query eq ""){print "Content-type: text/html\n\n";form_request($db,$tld);}
+elsif ($query eq "schema") {schema_request($db,$tld);}
+elsif ($query eq "post") {post_request($db,$tld);}
+elsif ($query=~/[0-9a-f]{32}$/) {query_request($query,$db,$tld,$type);}
+else {
+webdie("Hostname $ENV{HTTP_HOST} not understood", "Content-type: text/html");
 }
 
 # this subroutines are specific to this program thus not well documented
 sub schema_request {
   my($db,$tld) = @_;
   my($out,$err,$res) = cache_command2("mysqldump --no-data --compact $db | egrep -v '^/'");
-  if ($res) {webdie("Schema error: $res/$out/$err");}
+  if ($res) {webdie("Schema error: $res/$out/$err","Content-type: text/html");}
   print "Content-type: text/plain\n\n$out\n";
 }
 
@@ -82,7 +41,7 @@ sub query_request {
 
   # no query returned?
   unless ($query) {
-    webdie("$db exists, but no query with hash $hash. Try http://$db.$tld/");
+    webdie("$db exists, but no query with hash $hash. Try http://$db.$tld/","Content-type: text/html");
   }
 
   # actually run query (use tmpfile to avoid command line danger)
@@ -104,7 +63,7 @@ sub query_request {
   $out=~s/&\#39;/\'/isg;
 
   # error?
-  if ($res) {webdie("QUERY: $query<br>ERROR: $err<br>");}
+  if ($res) {webdie("QUERY: $query<br>ERROR: $err","Content-type: text/html");}
 
   # result is known good
   if ($format eq "csv") {
@@ -114,6 +73,7 @@ sub query_request {
     return;
   }
 
+  # this doesnt actually work right now
   if ($format eq "rss") {
     $out="Content-type: text/xml\n\n$out\n";
     print $out;
@@ -126,21 +86,7 @@ sub query_request {
   print << "MARK";
 Content-type: text/html
 
-<title>$query</title>
-
-NOTE: This page is experimental. Bug reports to
-carter.barry\@gmail.com. Query language is MySQL.<p>
-
-Prepend rss. to the URL for an RSS feed, csv. to the URL for CSV output.<p>
-
-<p><pre>QUERY: $query</pre><p>
-
-To edit query (or if query above is munged), see textbox at bottom of page<p>
-
-Empty result may indicate error: I'm not sure why my error checking
-code isn't working.<p>
-
-<a href="https://github.com/barrycarter/bcapps/blob/master/bc-run-mysql-query.pl" target="_blank">Source code</a>
+Results:
 
 <p><table border>
 $out
@@ -195,10 +141,7 @@ sub post_request {
 # print the (trivial) form for queries
 sub form_request {
   my($db,$tld,$query,$queryhash) = @_;
-#  webug("FORM_REQUEST($db,$tld,$queryhash)");
   print << "MARK";
-Content-type: text/html
-
 <form method='POST' action='http://post.$db.$tld/'><table border>
 <tr><th>Enter query below (must start w/ SELECT):</th></tr>
 <tr><th><input type="submit" value="RUN QUERY"></th></tr>
@@ -211,8 +154,9 @@ MARK
 ;
 
   if ($queryhash) {
-    print "<a href='http://rss.$queryhash.$db.$tld'>RSS feed for this query</a>\n";
-  }
+    print "<a href='http://rss.$queryhash.$db.$tld'>XML</a>\n"; 
+    print "<a href='http://csv.$queryhash.$db.$tld'>CSV</a>\n";
+ }
 }
 
 =item schema
