@@ -1,4 +1,4 @@
--- schema for FetLife db
+-- schema for FetLife db (both MySQL and SQLite3)
 
 CREATE TABLE kinksters (
  id INT, screenname TEXT, age INT, gender TEXT, role TEXT, city TEXT,
@@ -28,7 +28,7 @@ CREATE INDEX i7 ON kinksters(country);
 CREATE INDEX i8 ON kinksters(latitude);
 CREATE INDEX i9 ON kinksters(longitude);
 
--- thumbnail view
+-- thumbnail view (SQLite3)
 
 CREATE VIEW thumbs AS 
  SELECT "<img src='"||thumbnail||"'>" AS img,
@@ -37,9 +37,19 @@ CREATE VIEW thumbs AS
 age, gender, role, city, state, country, popnum, popnumtotal
 FROM kinksters;
 
+-- thumbnail view (MySQL)
+
+CREATE VIEW thumbs AS 
+ SELECT CONCAT("<img src='",thumbnail,"'>") AS img,
+ CONCAT("<a href='https://fetlife.com/users/",id,"' target='_blank'>",
+  screenname,"</a>") as link,
+age, gender, role, city, state, country, popnum, popnumtotal
+FROM kinksters;
+
 -- import for MySQL
 
-LOAD DATA LOCAL INFILE '/home/barrycarter/20150506/fetlife-users-20150503.csv'
+LOAD DATA LOCAL INFILE 
+'/mnt/extdrive/20150509/fetlife-users-20150519-with-lat-lon.csv'
 INTO TABLE kinksters FIELDS TERMINATED BY ',';
 
 --import for SQLite3 (due to error)

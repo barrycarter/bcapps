@@ -4,6 +4,7 @@
 
 require "/usr/local/lib/bclib.pl";
 
+my($link);
 print "Content-type: text/html\n\n";
 
 # for now
@@ -12,7 +13,7 @@ $globopts{debug}=1;
 # if there is a query, handle it
 
 # defaults are read first and are trumped by QUERY_STRING
-my($defaults) = ("gender=F&lowage=18&highage=29&country=United+States&role=submissive&city=Lincoln&state=Nebraska");
+my($defaults) = ("gender=F&lowage=18&highage=29&country=United+States&role=sub&city=Lincoln&state=Nebraska");
 
 my(%chunks)=str2hash("$defaults&$ENV{QUERY_STRING}");
 
@@ -36,23 +37,23 @@ for $i (keys %chunks) {
   push(@conds, "$i IN ('$chunks{$i}')");
 }
 
-my($conds)=join(" AND ",@conds);
+# do the below only if there's an actual query
 
-my($query) = "SELECT * FROM thumbs WHERE $conds";
+if ($chunks{"submit"}) {
 
-webug("CHUNKS",%chunks);
+  my($conds)=join(" AND ",@conds);
+  # TODO: allow user to set limit
+  my($query) = "SELECT * FROM thumbs WHERE $conds ORDER BY popnum LIMIT 200";
 
-# run curl with data in tmp dir
-my($tempdir) = tmpdir();
-write_file($query, "$tempdir/query");
-my($out,$err,$res) = cache_command2("curl -D - -d \@$tempdir/query http://post.fetlife.db.94y.info/","salt=$tmpdir");
-
-webug("OUT: $out");
-
-exit(0);
-
-
-webug("QUERY: $query");
+  # run curl with data in tmp dir
+  my($tempdir) = tmpdir();
+  write_file($query, "$tempdir/query");
+  my($out,$err,$res) = cache_command2("curl -D - -d \@$tempdir/query http://post.fetlife.db.94y.info/","salt=$tmpdir");
+  # TODO: handle fail case here
+  $out=~/^Location: (.*?)$/m;
+  my($url) = $1;
+  $link = "<a href='$url' target='_blank'>Your results</a>(opens in new window)";
+}
 
 my($options) = read_file("fl-forms.txt");
 
@@ -81,6 +82,8 @@ $lowage = html_select_list("lowage",\@ages,$chunks{lowage});
 $highage = html_select_list("highage",\@rages,$chunks{highage});
 
 my($form) = << "MARK";
+
+$link
 
 <form action="/bc-fl-search.pl" method="GET"><table border>
 

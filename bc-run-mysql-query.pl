@@ -1,7 +1,5 @@
 #!/usr/bin/perl -0777
 
-# during testing, this works: http://stations.db.mydev/ (courtesy dnsmasq)
-
 # run an arbitrary readonly MySQL query webapp
 # starts off as a copy bc-run-sqlite3-query.pl
 # format: [rss|csv|].[query|"schema"].db.(db|database).other.stuff
@@ -11,8 +9,12 @@
 require "/usr/local/lib/bclib.pl";
 
 # TODO: stop doing this
-$globopts{debug}=1;
-$globopts{keeptemp}=1;
+# $globopts{debug}=1;
+# $globopts{keeptemp}=1;
+
+# TODO: don't print header this early (just for debugging)
+# TODO: be more specific about which header to provide for requests
+# print "Content-type: text/html\n\n";
 
 # the only constant is .db|database.
 $ENV{HTTP_HOST}=~/^(.*?)\.(db|database)\.(.*)$/;
@@ -21,31 +23,30 @@ my($base, $tld) = ($1,"$2.$3");
 # determine query pieces (reversed because lower parts don't always exist)
 my($db, $query, $type) = reverse(split(/\./, $base));
 
+# print << "MARK";
+# <pre>
+# TLD: $tld
+# DB: $db
+# QUERY: $query
+# TYPE: $type
+# </pre>
+# MARK
+# ;
+
 # DB check
 check_db($db);
 
-# TODO: be more specific about which header to provide for requests
-print "Content-type: text/html\n\n";
-
-print << "MARK";
-<pre>
-TLD: $tld
-DB: $db
-QUERY: $query
-TYPE: $type
-</pre>
-MARK
-;
-
-if ($query eq "") {form_request($db,$tld);}
-if ($query eq "schema") {schema_request($db,$tld);}
-if ($query eq "post") {post_request($db,$tld);}
-
-# "real" query
-if ($query=~/[0-9a-f]{32}$/) {query_request($query,$db,$tld,$type);}
-print "Hostname $ENV{HTTP_HOST} not understood";
-
-# TODO: more security?
+if ($query eq "") {
+  form_request($db,$tld);
+} elsif ($query eq "schema") {
+  schema_request($db,$tld);
+} elsif ($query eq "post") {
+  post_request($db,$tld);
+} elsif ($query=~/[0-9a-f]{32}$/) {
+  query_request($query,$db,$tld,$type);
+} else {
+  print "Hostname $ENV{HTTP_HOST} not understood";
+}
 
 sub check_db {
   my($db) = @_;
@@ -54,13 +55,14 @@ sub check_db {
   # request for all dbs? not yet supported
   if ($db eq "") {webdie("Cannot list databases (at the moment)", $header);}
 
-  # invalid dbname?
-  unless ($db=~/^[a-z_]+_shared$/i) {
-    webdie("DB name: alpha only, must end in _shared", $header);
+  # currently ONLY sharing "shared" db (but can tweak later)
+  unless ($db eq "shared") {
+    webdie("Only shared database is: 'shared'", $header);
   }
 
   # db doesnt exist?
   my($res) = mysqlval("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '$db'");
+  webug("RES: $res");
   unless ($res eq $db) {webdie("No such database: $db", $header);}
 }
 
@@ -69,7 +71,7 @@ sub schema_request {
   my($db,$tld) = @_;
   my($out,$err,$res) = cache_command2("mysqldump --no-data --compact $db | egrep -v '^/'");
   if ($res) {webdie("Schema error: $res/$out/$err");}
-  print "<pre>\n$out\n</pre>\n";
+  print "Content-type: text/plain\n\n$out\n";
 }
 
 # request for query already in requests.requests
@@ -107,17 +109,23 @@ sub query_request {
   # result is known good
   if ($format eq "csv") {
     $out=~s/\t/,/isg;
-    $out="<pre>\n$out\n</pre>";
+    $out="Content-type: text/plain\n\n$out\n";
+    print $out;
+    return;
   }
 
   if ($format eq "rss") {
-    $out="<pre>\n$out\n</pre>";
+    $out="Content-type: text/xml\n\n$out\n";
+    print $out;
+    return;
   }
 
   # info about db
   # TODO: defeat for CSV?
   print read_file("$db.txt");
   print << "MARK";
+Content-type: text/html
+
 <title>$query</title>
 
 NOTE: This page is experimental. Bug reports to
@@ -187,8 +195,10 @@ sub post_request {
 # print the (trivial) form for queries
 sub form_request {
   my($db,$tld,$query,$queryhash) = @_;
-  webug("FORM_REQUEST($db,$tld,$queryhash)");
+#  webug("FORM_REQUEST($db,$tld,$queryhash)");
   print << "MARK";
+Content-type: text/html
+
 <form method='POST' action='http://post.$db.$tld/'><table border>
 <tr><th>Enter query below (must start w/ SELECT):</th></tr>
 <tr><th><input type="submit" value="RUN QUERY"></th></tr>
@@ -209,6 +219,7 @@ MARK
 
 Schema of tables and users (keep requests in an unshared db intentionally):
 
+CREATE DATABASE shared;
 CREATE DATABASE requests;
 \u requests
 CREATE TABLE requests (
@@ -217,12 +228,11 @@ CREATE TABLE requests (
  md5 TEXT -- the query hash
 );
 
-CREATE UNIQUE INDEX ui ON requests(md5(32));
+CREATE UNIQUE INDEX ui ON requests(md5 (32));
 
 -- TODO: change "test" to the db Ill actually want to use
 CREATE USER readonly;
-GRANT SELECT ON test TO readonly;
-
+GRANT SELECT ON shared.* TO readonly;
 
 =cut
 

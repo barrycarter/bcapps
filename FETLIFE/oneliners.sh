@@ -1,3 +1,18 @@
+# lowest query below runs too slowly in sqlite3, so trying different ways to
+# get same info (devnull is since I'm only timing, don't care about results)
+
+echo "SELECT * FROM (SELECT * FROM (SELECT * FROM kinksters WHERE gender='F' AND age>=18 AND age<=29 AND country='United States') WHERE state='Nebraska') WHERE city='Lincoln' LIMIT 200;" | sqlite3 /sites/DB/fetlife.db > /tmp/output.txt
+
+# this is slow:
+
+# echo "SELECT * FROM kinksters WHERE gender='F' AND age>=18 AND age<=29 AND country='United States' AND state='Nebraska' LIMIT 200;" | sqlite3 /sites/DB/fetlife.db > /tmp/output.txt
+
+# echo "SELECT * FROM kinksters WHERE age BETWEEN 18 AND 29 AND country IN ('United States') AND state IN ('Nebraska') AND city IN ('Lincoln') AND role IN ('sub') AND gender IN ('F') ORDER BY popnum LIMIT 200;" | sqlite3 /sites/DB/fetlife.db 
+
+
+
+exit;
+
 # hideous join condition and sort to get final result
 
 join -t, -1 14 -2 1 -o 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 1.10 1.11 1.12 1.13 2.2 2.3 fetlife-users-20150519-no-unicode-city.state.country.csv.srt fetlife-cities-lat-lon-final.txt | sort -k1,1 > fetlife-users-20150519-with-lat-lon.csv

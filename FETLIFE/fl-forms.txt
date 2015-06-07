@@ -17,6 +17,8 @@ TG:Transgender
 
 </genders>
 
+# Dom(inant) and sub(missive) are the only two they abbreviate?
+
 <roles>
 
 Ageplayer
@@ -26,7 +28,7 @@ Bottom
 Bull
 Daddy
 Doll
-Dominant
+Dom:Dominant
 Domme
 Evolving
 Exhibitionist
@@ -83,7 +85,7 @@ pony
 pup
 sissy
 slave
-submissive
+sub:submissive
 Not Applicable
 
 </roles>
