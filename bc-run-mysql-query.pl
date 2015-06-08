@@ -89,7 +89,7 @@ sub query_request {
   print << "MARK";
 Content-type: text/html
 
-<a name="#query">See/edit your query</a>
+<a href="#query">See/edit your query</a>
 
 <p><table border>
 $out
