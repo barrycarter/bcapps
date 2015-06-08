@@ -7,7 +7,19 @@ require "/usr/local/lib/bclib.pl";
 
 # determine what are lat/lon bounds are
 
-%query = str2hash($ENV{QUERY_STRING});
+%q = str2hash($ENV{QUERY_STRING});
+
+my($wlon,$nlat) = slippy2latlon($q{x},$q{y},$q{zoom},0,0);
+
+# this is technically one pixel past the tile, but that's OK
+my($elon,$slat) = slippy2latlon($q{x},$q{y},$q{zoom},256,256);
+
+# this hideous formula derived using Mathematica
+
+sub lat2py {
+(2^(-1 + zoom)*(256*Pi - 2^(9 - zoom)*Pi*y - 
+   256*Log[Tan[(90*Pi + lat*Pi)/360]]))/Pi
+
 
 # TODO: simplify formulas below
 
