@@ -21,6 +21,16 @@ print << "MARK";
 <?xml version="1.0" encoding="utf-8"?>
 <kml xmlns="http://earth.google.com/kml/2.0">
 <Document>
+
+<Style id="pushpin">
+ <IconStyle id="mystyle">
+   <Icon>
+     <href>http://test.94y.info/dot2x2.png</href>
+     <scale>1.0</scale>
+   </Icon>
+ </IconStyle>
+</Style>
+
 MARK
 ;
 
@@ -29,6 +39,7 @@ for $i (keys %data) {
   print << "MARK";
 <Placemark>
 <name>$hash{city}</name>
+<styleUrl>#pushpin</styleUrl>
 <Point>
 <coordinates>$hash{longitude},$hash{latitude}</coordinates>
 </Point>
