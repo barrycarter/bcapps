@@ -3,11 +3,11 @@
 require "/usr/local/lib/bclib.pl";
 
 
-my(%res) = mysqlhashlist("SELECT * FROM abqaddresses LIMIT 20", "test");
+my(@res) = mysqlhashlist("SELECT * FROM abqaddresses LIMIT 20", "test");
 
-for $i (keys %res) {
-  for $j (keys %{$res{$i}}) {
-    debug("$i,$j,$res{$i}{$j}");
+for $i (@res) {
+  for $j (keys %$i) {
+    debug("$i,$j,$i->{$j}");
   }
 }
 
@@ -16,17 +16,16 @@ for $i (keys %res) {
 Run $query (should be a SELECT statement) on $db as $user, and return
 list of hashes, one for each row
 
-TODO: add error checking
+NOTE: return array first index is 1, not 0
 
-TODO: should return an array, not a hash
+TODO: add error checking
 
 =cut
 
 sub mysqlhashlist {
   my($query,$db,$user) = @_;
   unless ($user) {$user="''";}
-  my(%res,$row);
-  my(@restest);
+  my(@res,$row);
   chdir(tmpdir());
 
   write_file($query,"query");
@@ -35,13 +34,10 @@ sub mysqlhashlist {
   # go through results
   for $i (split(/\n/,$out)) {
     # new row
-    if ($i=~/^\*+\s*(\d+)\. row\s*\*+$/) {$row = $1; $restest[$row]={}; next;}
-    debug("TEST: $row -> $restest[$row]");
+    if ($i=~/^\*+\s*(\d+)\. row\s*\*+$/) {$row = $1; $res[$row]={}; next;}
     unless ($i=~/^\s*(.*?):\s*(.*)/) {warn("IGNORING: $_"); next;}
-    $restest[$row]->{$1}=$2;
-    $res{$row}{$1}=$2;
+    $res[$row]->{$1}=$2;
   }
-  debug("RESTEST",@restest);
-  return %res;
+  return @res;
 }
 
