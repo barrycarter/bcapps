@@ -17,7 +17,7 @@ bcunix-converted.txt: /bcunix-files.txt
 
 # TODO: this sorting is to join vs old backups, NOT numerical sorting (sigh)
 afad.txt: bcmac-converted.txt bcunix-converted.txt
-	sort *-converted.txt > afad.txt
+	sort -f *-converted.txt > afad.txt
 
 # The user is expected to provide "previouslydone.txt.srt", by running
 # bc-zpaq2exclude.pl on previous zpaq lists (not doing that here,
@@ -28,8 +28,9 @@ afad.txt: bcmac-converted.txt bcunix-converted.txt
 # system; this will break if I have over 2 billion+ files (but I'm not
 # too worried)
 
+# -i below because stupid bcmac fs is case insensitive
 filelist.txt statlist.txt big-by-dir.txt big-by-file.txt: exclusions.txt afad.txt previouslydone.txt.srt
-	join -a 1 -t '\0' afad.txt previouslydone.txt.srt | bc-files-to-backup.pl | egrep -vf exclusions.txt | bc-chunk-backup.pl --debug
+	join -i --check-order -a 1 -t '\0' afad.txt previouslydone.txt.srt | bc-files-to-backup.pl | egrep -vf exclusions.txt | bc-chunk-backup.pl --debug
 
 # while testing exclusions.txt, it's important to know what big files and
 # big directories I'm backing up (so I can potentially exclude them)
