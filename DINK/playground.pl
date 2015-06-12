@@ -25,5 +25,17 @@ debug(substr($all,1,31280));
 
 # so first 388 bytes of each chunk = bitmap (+ hardness?)
 
+# experiments w/ bored:
+
+# hardwood floor = ts01.bmp, row 1, col 4
+
+# appears to be 80 bytes per tile? [which would mean 391 chunks of 80
+# bytes total]
+
+# 30 = black, 19 = wall, 6 = wall/bookcase
+
+# actually 64 tiles per supertile (50x50 each)
+
+# 12x8 layout of 96 tiles per screen,  50x50 per tile
 
 

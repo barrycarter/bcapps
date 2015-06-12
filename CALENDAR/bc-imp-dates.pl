@@ -246,4 +246,3 @@ sub datePlusDays {
   my($date,$days) = @_;
   return strftime("%Y%m%d", gmtime(str2time($date)+86400*$days));
 }
-

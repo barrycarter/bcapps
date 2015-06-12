@@ -14,6 +14,10 @@ system("egrep -v '^#|^ *\$' /home/barrycarter/BCGIT/bots.txt > phrases.txt");
 open(A, "zfgrep -ivf phrases.txt $ARGV[0]|");
 
 while (<A>) {
+
+  # this lets me add to the bot list if needed
+  debug($_);
+
   # extract ip
   s/\s+.*$//;
 

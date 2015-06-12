@@ -36,6 +36,8 @@ http://www.exabot.com/go/robot
 http://search.msn.com/msnbot.htm
 # below also catches .html
 http://www.baidu.com/search/spider.htm
+# a little suspicious here...
+http://www.baidu.com/search/spi_der.html
 http://www.bing.com/bingbot.htm
 http://www.brandwatch.net
 http://www.alexa.com/site/help/webmasters
@@ -76,6 +78,11 @@ http://showyou.com/crawler
 http://www.linguee.com/bot
 http://www.searchmetrics.com/en/searchmetrics-bot
 http://www.warebay.com/bot.html
+# below added Jun 2015
+http://advbot.org/bot.html
+https://www.megaindex.ru/
+http://www.archive.org/details/archive.org_bot
+Mail.RU_Bot/
 
 
 # tempted to add raw phrase "nutch" but nah
