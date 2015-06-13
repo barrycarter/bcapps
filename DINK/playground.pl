@@ -15,20 +15,42 @@ chdir("/tmp/dink/");
 # commenting out for testing
 # for (1..50) {xdotoolkey("Left",$win); xdotoolkey("Up",$win);}
 
+# get wininfo
+my($out,$err,$res) = cache_command2("xwininfo -id $win");
+
+# find absolute nw corner
+$out=~s/Absolute upper-left X:\s*(\d+)//s;
+my($nwx) = $1;
+$out=~s/Absolute upper-left Y:\s*(\d+)//s;
+my($nwy) = $1;
+
+debug("$nwx/$nwy");
+
 system("xdotool windowraise $win");
 
-for (1..24) {
-  $count++;
-  xdotoolkey("Return",$win);
-  # assuming mouse is safely hidden (but could do mousemove here to be sure)
-#  xdotoolkey("Tab",$win);
-  system("xwd -id $win > $count.xwd");
-  # below can also be Escape
-#  xdotoolkey("Tab",$win);
-  xdotoolkey("Escape",$win);
-  xdotoolkey("Right",$win);
-  debug("DONE $count, sleeping");
-  sleep(1);
+# assuming 32x24 map, Quest for Dorinthia 2 and others have bigger maps
+
+# y pixels: 0-399 used, x pixels 20-619 used (600x400)
+# tile geometry: 12x8 (50x50 per tile)
+
+for $y (1..24) {
+  for $x (1..32) {
+    xdotoolkey("Return",$win);
+    # go to mouse mode to avoid white square
+    xdotoolkey("Tab",$win);
+    # hide mouse (upper left corner is safe because there's a 20px border)
+    system("xdotool mousemove $nwx $nwy");
+    # capture, convert to PNG and resize as 6 google 256x256 tiles
+    system("xwd -id $win | convert -crop 600x400+20+0 -geometry 768x512 - $x-$y.png");
+    # back to white square mode
+    xdotoolkey("Tab",$win);
+    # back to main map
+    xdotoolkey("Escape",$win);
+    xdotoolkey("Right",$win);
+  }
+
+  die "TESTING";
+
 }
 
 die "TESTING";
@@ -41,7 +63,8 @@ die "TESTING";
 sub xdotoolkey {
   my($key,$win) = @_;
   # using system sleep (not Perl sleep) for hopefully more consistency
-  system("xdotool keydown --window $win $key; sleep 0.05; xdotool keyup --window $win $key");
+  # the sleep post-keyup so next xdotool command is delayed
+  system("xdotool keydown --window $win $key; sleep 0.05; xdotool keyup --window $win $key; sleep 0.25");
 }
 
 die "TESTING";
