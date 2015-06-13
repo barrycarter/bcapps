@@ -3,12 +3,18 @@
 # Creates freedink map tiles (assumes freedinkeditor is up and
 # running) in /tmp/dink/
 
+# Useful for testing and smaller maps:
+# --xstart,--xend,--ystart,--yend: start/end at this x/y value, not 1/24/32
+
 # TODO: lots, this is NOT a finished program
 
 # TODO: redirect the stderr of freedinkedit (or bring it up ourselves)
 # since the output is useful
 
 require "/usr/local/lib/bclib.pl";
+
+# defaults
+defaults("xstart=1&xend=32&ystart=1&yend=24");
 
 # find and raise freedink edit window
 my($win) = `xdotool search --name dink`;
@@ -40,10 +46,6 @@ for $y (1..24) {
   }
 }
 
-debug("MARK",unfold(\%mark));
-
-debug("MARK1", unfold($mark{1}));
-
 # move to top left corner (OK to have two keys down at the same time)
 # sleep 5 below is overkill
 my($out,$err,$res) = cache_command2("xdotool keydown --window $win Left; xdotool keydown --window $win Up; sleep 5; xdotool keyup --window $win Left; xdotool keyup --window $win Up");
@@ -65,13 +67,11 @@ debug("$nwx/$nwy");
 # tile geometry: 12x8 (50x50 per tile)
 
 for $y (1..24) {
-  # TODO: restore to 32, just testing
   for $x (1..32) {
 
-    # if this is dreaded purple tile of doom, skip it, but move right
-    # if file exists, assume it is correct
-    if ($mark{$y}{$x} || -f "$x-$y.png") {
-      debug("MARK: $y/$x exists");
+    # skip this tile if: purple (blank), already mapped, or --(xy)(startend)
+    if ($x<$globopts{xstart} || $x>$globopts{xend} || $y<$globopts{ystart} ||
+	$y>$globopts{yend} || $mark{$y}{$x} || -f "$x-$y.png") {
       xdotoolkey("Right",$win);
       next;
     }
