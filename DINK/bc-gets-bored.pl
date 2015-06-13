@@ -62,11 +62,14 @@ my($nwy) = $1;
 debug("$nwx/$nwy");
 
 # assuming 32x24 map, Quest for Dorinthia 2 and others have bigger maps
-
 # y pixels: 0-399 used, x pixels 20-619 used (600x400)
 # tile geometry: 12x8 (50x50 per tile)
 
-for $y (1..24) {
+# if skipping screens, do so here
+
+for (1..$globopts{ystart}-1) {xdotoolkey("Down",$win);}
+
+for $y ($globopts{ystart}..$globopts{yend}) {
   for $x (1..32) {
 
     # skip this tile if: purple (blank), already mapped, or --(xy)(startend)
