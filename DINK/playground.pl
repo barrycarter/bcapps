@@ -16,16 +16,26 @@ system("rm /tmp/dink/*");
 
 # the whole "map"
 my($out,$err,$res) = cache_command2("xwd -id $win > wholemap.xwd");
+my(%mark);
 
-# slice main map to find dreaded purple tiles of doom
+warn("Caching tile data; if you change maps, use --nocache first time");
+
+# slice main map to find dreaded purple tiles of doom(tm)
+# 1943571059b5545ec0ef333dd42cb91740b1615b = sha1 of dreaded tile
 for $y (1..24) {
   for $x (1..32) {
     # slice and dice
     my($gx,$gy) = ($x*20-20,$y*20-20);
-    # NOTE: conversion to PNG here is only for testing
-    my($out,$err,$res) = cache_command2("convert -crop 20x20+$gx+$gy wholemap.xwd slice-$x-$y.png");
+    # this code should be taken out and shot
+    my($out,$err,$res) = cache_command2("convert -crop 20x20+$gx+$gy wholemap.xwd - | sha1sum | grep 1943571059b5545ec0ef333dd42cb91740b1615b","age=3600");
+    unless ($res) {$mark{$y}{$x} = 1;}
   }
-  die "TESTING";
+}
+
+for $i (sort {$a <=> $b} keys %mark) {
+  for $j (sort {$a <=> $b} keys %{$mark{$i}}) {
+    debug("ROWCOL: $i/$j should be purple");
+  }
 }
 
 die "TESTING";
