@@ -7,7 +7,23 @@ require "/usr/local/lib/bclib.pl";
 my($win) = `xdotool search --name dink`;
 chomp($win);
 
+# move to top left corner (50 here is excessive)
+# commenting out for testing
+# for (1..50) {xdotoolkey("Left",$win); xdotoolkey("Up",$win);}
+
+system("xdotool windowraise $win");
+
+# testing one tile
+
+xdotoolkey("Return",$win);
+# assuming mouse is safely hidden (but could do mousemove here to be sure)
+xdotoolkey("Tab",$win);
+system("xwd -id $win > /tmp/test0.xwd");
+xdotoolkey("Escape",$win);
+xdotoolkey("Escape",$win);
 xdotoolkey("Right",$win);
+
+die "TESTING";
 
 # not sure why freedinkedit doesn't work with "xdotool key", but
 # "holding" key down for a fraction of a second seems to work
