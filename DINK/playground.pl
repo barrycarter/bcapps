@@ -2,6 +2,26 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# freedinkedit xdotool testing
+
+my($win) = `xdotool search --name dink`;
+chomp($win);
+
+xdotoolkey("Right",$win);
+
+# not sure why freedinkedit doesn't work with "xdotool key", but
+# "holding" key down for a fraction of a second seems to work
+
+# this is really really really ugly and may break so not adding it to bclib.pl
+
+sub xdotoolkey {
+  my($key,$win) = @_;
+  # using system sleep (not Perl sleep) for hopefully more consistency
+  system("xdotool keydown --window $win $key; sleep 0.05; xdotool keyup --window $win $key");
+}
+
+die "TESTING";
+
 # largely from
 # https://github.com/alexschrod/freedink-lua/blob/master/contrib/dinkdat_inspect.c
 # and
