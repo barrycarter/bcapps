@@ -7,21 +7,29 @@ require "/usr/local/lib/bclib.pl";
 my($win) = `xdotool search --name dink`;
 chomp($win);
 
+# using consistent tmp dir for now
+mkdir("/tmp/dink/");
+chdir("/tmp/dink/");
+
 # move to top left corner (50 here is excessive)
 # commenting out for testing
 # for (1..50) {xdotoolkey("Left",$win); xdotoolkey("Up",$win);}
 
 system("xdotool windowraise $win");
 
-# testing one tile
-
-xdotoolkey("Return",$win);
-# assuming mouse is safely hidden (but could do mousemove here to be sure)
-xdotoolkey("Tab",$win);
-system("xwd -id $win > /tmp/test0.xwd");
-xdotoolkey("Escape",$win);
-xdotoolkey("Escape",$win);
-xdotoolkey("Right",$win);
+for (1..24) {
+  $count++;
+  xdotoolkey("Return",$win);
+  # assuming mouse is safely hidden (but could do mousemove here to be sure)
+#  xdotoolkey("Tab",$win);
+  system("xwd -id $win > $count.xwd");
+  # below can also be Escape
+#  xdotoolkey("Tab",$win);
+  xdotoolkey("Escape",$win);
+  xdotoolkey("Right",$win);
+  debug("DONE $count, sleeping");
+  sleep(1);
+}
 
 die "TESTING";
 
