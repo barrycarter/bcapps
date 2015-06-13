@@ -2,14 +2,33 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# freedinkedit xdotool testing
-
+# find and raise freedink edit window
 my($win) = `xdotool search --name dink`;
 chomp($win);
+system("xdotool windowraise $win; xdotool windowfocus $win");
 
 # using consistent tmp dir for now
 mkdir("/tmp/dink/");
 chdir("/tmp/dink/");
+
+# TODO: this is testing only
+system("rm /tmp/dink/*");
+
+# the whole "map"
+my($out,$err,$res) = cache_command2("xwd -id $win > wholemap.xwd");
+
+# slice main map to find dreaded purple tiles of doom
+for $y (1..24) {
+  for $x (1..32) {
+    # slice and dice
+    my($gx,$gy) = ($x*20-20,$y*20-20);
+    # NOTE: conversion to PNG here is only for testing
+    my($out,$err,$res) = cache_command2("convert -crop 20x20+$gx+$gy wholemap.xwd slice-$x-$y.png");
+  }
+  die "TESTING";
+}
+
+die "TESTING";
 
 # move to top left corner (50 here is excessive)
 # commenting out for testing
@@ -25,8 +44,6 @@ $out=~s/Absolute upper-left Y:\s*(\d+)//s;
 my($nwy) = $1;
 
 debug("$nwx/$nwy");
-
-system("xdotool windowraise $win");
 
 # assuming 32x24 map, Quest for Dorinthia 2 and others have bigger maps
 
