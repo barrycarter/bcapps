@@ -125,7 +125,8 @@ sub post_request {
   }
 
   # permitted characters (is this going to end up being everything?)
-  if ($query=~/([^a-z0-9_: \(\)\,\*\<\>\"\'\=\.\/\?\|\!\+\-\%\\])/i) {
+  # had to drop \\ to prevent injection attacks
+  if ($query=~/([^a-z0-9_: \(\)\,\*\<\>\"\'\=\.\/\?\|\!\+\-\%])/i) {
     webdie("Query contains illegal character '$1': $query");
   }
 

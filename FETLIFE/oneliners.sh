@@ -1,3 +1,13 @@
+# same as below, but adds dotted notation to existing CSV for join
+
+# result must be sorted by join field, (ie, "sort -t, -k14,14")
+
+perl -F, -anle 'chomp;$x=lc(join(".",@F[5..7])); $x=~s/[^a-z]/./g; print "$_,$x"'
+
+# perl -F, -anle 'chomp;$x=lc(join(".",@F[5..7])); $x=~s/[^a-z]/./g; print "$_,$x"' ~/FETLIFE/FETLIFE-BY-REGION/fetlife-users-20150519.txt
+
+exit; 
+
 # lowest query below runs too slowly in sqlite3, so trying different ways to
 # get same info (devnull is since I'm only timing, don't care about results)
 
@@ -9,8 +19,6 @@ echo "SELECT * FROM (SELECT * FROM (SELECT * FROM kinksters WHERE gender='F' AND
 
 # echo "SELECT * FROM kinksters WHERE age BETWEEN 18 AND 29 AND country IN ('United States') AND state IN ('Nebraska') AND city IN ('Lincoln') AND role IN ('sub') AND gender IN ('F') ORDER BY popnum LIMIT 200;" | sqlite3 /sites/DB/fetlife.db 
 
-
-
 exit;
 
 # hideous join condition and sort to get final result
@@ -18,16 +26,6 @@ exit;
 join -t, -1 14 -2 1 -o 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 1.10 1.11 1.12 1.13 2.2 2.3 fetlife-users-20150519-no-unicode-city.state.country.csv.srt fetlife-cities-lat-lon-final.txt | sort -k1,1 > fetlife-users-20150519-with-lat-lon.csv
 
 exit;
-
-# same as below, but adds dotted notation to existing CSV for join
-
-# result must be sorted by join field, (ie, "sort -t, -k14,14")
-
-perl -F, -anle 'chomp;$x=lc(join(".",@F[5..7])); $x=~s/[^a-z]/./g; print "$_,$x"'
-
-# perl -F, -anle 'chomp;$x=lc(join(".",@F[5..7])); $x=~s/[^a-z]/./g; print "$_,$x"' ~/FETLIFE/FETLIFE-BY-REGION/fetlife-users-20150519.txt
-
-exit; 
 
 perl -F, -anle '$x=lc(join(".",@F[5..7])); $x=~s/\s/./g; $x=~s/\.\././g; $x=~s/^\.//; print "$_,$x"' ~/FETLIFE/FETLIFE-BY-REGION/fetlife-users-20150519.txt
 

@@ -55,6 +55,14 @@ LOAD DATA LOCAL INFILE
 '/mnt/extdrive/20150509/fetlife-users-20150519-with-lat-lon.csv'
 INTO TABLE kinksters FIELDS TERMINATED BY ',';
 
+-- placecounts for google maps stuff (created as table, not view, for speed)
+
+DROP TABLE IF EXISTS placecounts;
+
+CREATE TABLE placecounts AS SELECT COUNT(*) AS
+count,city,state,country,latitude,longitude FROM kinksters GROUP BY
+city,state,country,latitude,longitude;
+
 --import for SQLite3 (due to error)
 
 .separator ","
