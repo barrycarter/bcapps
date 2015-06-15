@@ -4,7 +4,8 @@
 # running) in /tmp/dink/
 
 # Useful for testing and smaller maps:
-# --xstart,--xend,--ystart,--yend: start/end at this x/y value, not 1/24/32
+# --ystart,--yend: start/end at this y value, not 1/24
+# restricting x isn't useful, doesn't save time
 
 # TODO: lots, this is NOT a finished program
 
@@ -14,7 +15,7 @@
 require "/usr/local/lib/bclib.pl";
 
 # defaults
-defaults("xstart=1&xend=32&ystart=1&yend=24");
+defaults("ystart=1&yend=24");
 
 # find and raise freedink edit window
 my($win) = `xdotool search --name dink`;
@@ -73,8 +74,7 @@ for $y ($globopts{ystart}..$globopts{yend}) {
   for $x (1..32) {
 
     # skip this tile if: purple (blank), already mapped, or --(xy)(startend)
-    if ($x<$globopts{xstart} || $x>$globopts{xend} || $y<$globopts{ystart} ||
-	$y>$globopts{yend} || $mark{$y}{$x} || -f "$x-$y.png") {
+    if ($mark{$y}{$x} || -f "$x-$y.png") {
       xdotoolkey("Right",$win);
       next;
     }
