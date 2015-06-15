@@ -10,16 +10,58 @@ require "/usr/local/lib/bclib.pl";
 open(A,"dink.dat")||die("Can't open dink.dat, $!");
 
 # first 8 bytes are header
-seek(A,9,SEEK_SET);
+seek(A,21,SEEK_SET);
 my($buf);
 
 # 20 bytes at a time
 
 for $y (1..24) {
   for $x (1..32) {
-    read(A,$buf,20);
-    debug("$y, $x: $buf");
+    read(A,$buf,4);
+    # ignore true null
+    if ($buf=~/^\0*$/) {next;}
+
+    # convert to int (TODO: not just last byte)
+    my($num) = ord(substr($buf,3,1));
+#    debug("$y, $x: $num");
   }
+}
+
+close(A);
+
+open(A,"map.dat")||die("Can't open map.dat, $!");
+
+# each screen is 31280 bytes
+
+# jump to 9th screen
+
+seek(A,31280*8,SEEK_SET);
+
+# $buf is one screen
+# read(A,$buf,31280);
+
+# tiles for screen one
+# read(A,$buf,97*4);
+
+for $tile (0..96) {
+  read(A,$buf,4);
+  debug("TILE $tile: $buf");
+}
+
+# sprites for screen one
+seek(A,8020,SEEK_SET);
+
+for $sprite (0..100) {
+  read(A,$buf,220);
+  debug("SPRITE $sprite: $buf");
+}
+
+die "TESTING";
+
+for $i (0..96) {
+  # 4 bytes for tile index and hardness, this is screen 1
+  read(A,$buf,4);
+  debug("$i: $buf");
 }
 
 die "TESTING";

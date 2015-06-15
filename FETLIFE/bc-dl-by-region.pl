@@ -128,6 +128,9 @@ while (%pages) {
       # get file
       my($out,$err,$res) = cache_command2("$cmd -sS -o '$fname' '$url'");
 
+      # not sure why this happens, but file not created, just move on
+      unless (-f $fname) {next;}
+
       # check size
       if (-s $fname < 1000) {xmessage("'$fname'<1000b",1); die;}
 
