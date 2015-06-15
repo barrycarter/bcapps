@@ -84,8 +84,8 @@ for $y ($globopts{ystart}..$globopts{yend}) {
     xdotoolkey("Tab",$win);
     # hide mouse (upper left corner is safe because there's a 20px border)
     system("xdotool mousemove $nwx $nwy");
-    # capture, convert to PNG and resize as 6 google 256x256 tiles
-    my($out,$err,$res) = cache_command2("xwd -id $win | convert -crop 600x400+20+0 -geometry 768x512 - $x-$y.png");
+    # capture (leaving conversion to other prog)
+     my($out,$err,$res) = cache_command2("xwd -id $win > $x-$y.xwd");
     # back to white square mode
     xdotoolkey("Tab",$win);
     # back to main map
@@ -93,10 +93,10 @@ for $y ($globopts{ystart}..$globopts{yend}) {
     xdotoolkey("Right",$win);
   }
 
-  # next row
-  xdotoolkey("Down",$win);
   # carriage return...
   my($out,$err,$res) = cache_command2("xdotool keydown --window $win Left; sleep 5; xdotool keyup --window $win Left");
+  # next row
+  xdotoolkey("Down",$win);
 }
 
 # not sure why freedinkedit doesn't work with "xdotool key", but
