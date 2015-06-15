@@ -1,71 +1,82 @@
-<title>UNOFFICIAL FetLife Search Form (not affiliated with FetLife)</title>
+<a name="notes" />
 
-<h1>UNOFFICIAL FetLife Search Form (not affiliated with FetLife)</h1>
+<h4>Notes</h4>
 
-<!-- GET below so URLs can be bookmarked -->
+This form provides limited access to the unofficial and experimental
+FetLife user database.
 
-</table></form>
+<p>
+
+If you know SQL well, you can access the full database at <a
+href="http://shared.db.mysql.94y.info/">http://shared.db.mysql.94y.info/</a>.
+The database has no instructions, so, if you don't know SQL (MySQL
+engine) well, this won't be very useful.
+
+<p>
+
+When you click "view results", the bottom of the results page will
+show the query that created your results. If you know SQL moderately
+well, you can modify this query to refine your results.
+
+<p>
+
+The default search is limited to 200 rows. You can remove this limitation on the results page by removing "LIMIT 200" from the query. However...
+
+<p>
+
+Queries are limited to 5 seconds of CPU time (which can be more than 5
+seconds of clock time). If your results time out repeatedly (or you
+run into any other problems), please feel free to contact me at
+openfetlife@mail.com
+
+<p>
+
+The popnum and popnumtotal fields indicate roughly how active a user
+is (lower popnum numbers = more active), but do not rely too heavily
+on these fields.
+
+<p>
+
+The full table (4 million plus rows) is available at <a
+href="http://www.quadlemon.unixssh.com/">http://www.quadlemon.unixssh.com/</a>
+
+<p>
+
+Mirror site: <a href="http://test.94y.info/FETLIFE/">http://test.94y.info/FETLIFE/</a>
+
+<p>
+
+You can also visit the links above for more details on the database,
+and what each field means, along with additional disclaimers.
+
+<p>
+
+Because of the way this database is generated, you can unfortunately
+not search by orientation.
+
+<p>
+
+Do not rely on this information. This information was obtained
+legally, and falls under the Fair Use doctorine of copyright law.<p>
+
+More specifically, FetLife search engines are explicitly legal beause
+they meet the Fair Use criteria known as "transformative use":<p>
+
+<a href="http://en.wikipedia.org/wiki/Transformativeness">http://en.wikipedia.org/wiki/Transformativeness</a><p>
+
+because they "provide the public with a benefit not previously
+available to it, which would otherwise remain unavailable", and "in a
+different manner or for a different purpose".
 
 <!-- TODO LIST:
 
-create static queries to sort role/gender/etc by number of users
-(GROUP BY) and link to form:
-
-Genders:
-http://4e7541f44c65b198855163f4806ca243.fetlife.db.94y.info/
-
-Roles:
-http://26786bbe4823b71afa24fbbd7e6951b1.fetlife.db.94y.info/
-
-Ages:
-http://85b090dd07451a14eaf69ec083fea479.fetlife.db.94y.info/
-
-Gender/Roles: [this times out]
-
-Countries:
-http://b754f578b06eea176e8c2795eb5eaf35.fetlife.db.94y.info/
-
-note no search-by-orientation
+add magnet link?
 
 provide list of admin areas per country perhaps using group_concat (or list?)
-
-add legal disclaimer re transformative work
-
-add limit (allow limitless queries but warn re time out)
-
-create a name for "jump to instructions" after form
-
-add "this is experimental" disclaimer (to title as well)
-
-if it's easier, MIME encode query before posting to form, but make sure bc-run-query can handle data that way [and that it doesn't defeat any safety checks]
 
 allow multiple cities/states separated by commas (and handle correctly
 on bc-fl-search.pl)
 
-use thumbs view (not main table) I created
-
-mention kinksters table for those who want to go "raw"
-
-once user has chose specific values, make those values "sticky"
-
-current db has a header line that I need to delete on next update
-
-link psuedo profiles to this form (perhaps w/ data filled in based on
-existing user?) with a "not what you're looking for?" type of thing
-
 case-insensitive sort of roles? (or do lower case = new roles = things I want to keep lower on the list?)
 
-antarctica and 95 = 1920
-
-links to zip file (full list) and magnet link for bittorrent
-
-perhaps allow left-matching (ie, 'alb' matches 'albany' and 'albquerque')
-
-include field definitions from README file
-
-
-
 -->
-
-
-

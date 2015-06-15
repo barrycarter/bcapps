@@ -33,6 +33,12 @@ for $i (keys %chunks) {
   # space correction
   $chunks{$i}=~s/\+/ /g;
 
+  # left match (city/state only)
+  if ($i eq "city" || $i eq "state") {
+    push(@conds, "$i LIKE '$chunks{$i}%'");
+    next;
+  }
+
   # conditions (the use of IN instead of = does nothing for now, but may later)
   push(@conds, "$i IN ('$chunks{$i}')");
 }
@@ -52,8 +58,10 @@ if ($chunks{"submit"}) {
   # TODO: handle fail case here
   $out=~/^Location: (.*?)$/m;
   my($url) = $1;
-  $link = "<a href='$url' target='_blank'>Your results</a>(opens in new window)";
+  $link = "<font size=+2>&gt;&gt;&gt; <a href='$url' target='_blank'>Your results</a> (opens in new window)</font>";
 }
+
+unless ($link) {$link="<font size=-1>(a link to your search results will appear here)</font>";}
 
 my($options) = read_file("fl-forms.txt");
 
@@ -83,20 +91,45 @@ $highage = html_select_list("highage",\@rages,$chunks{highage});
 
 my($form) = << "MARK";
 
-$link
+$link<p>
+
+Need help? Form not working? Read the <a href="#notes">notes</a>, or
+email openfetlife\@mail.com
 
 <form action="/bc-fl-search.pl" method="GET"><table border>
 
 <tr><th colspan=2>
-UNOFFICIAL FetLife Search Form (not affiliated with FetLife)
+EXPERIMENTAL UNOFFICIAL FetLife Search Form (not affiliated with FetLife)
 </th></tr>
 
-<tr><th>Gender</th><td>$genders</td></tr>
-<tr><th>Age</th><td>$lowage to $highage</td></tr>
-<tr><th>Role</th><td>$roles</td></tr><tr>
-<th>City</th><td><input type='text' name='city' value='$chunks{city}'></td></tr>
-<tr><th>State</th><td><input type='text' name='state' value='$chunks{state}'></td></tr>
-<tr><th>Country</th><td>$cunts</td></tr>
+<tr><th>Gender</th><td>$genders
+<br><em><font size=-1><a href="http://724da4c231198317b884338cd2f0c0ec.shared.db.mysql.94y.info/" target="_blank">(breakdown by gender)</font></em>
+</td></tr>
+
+<tr><th>Age</th><td>$lowage to $highage
+<br><em><font size=-1><a href="http://0c06b634327ae188e0d4454041012ea6.shared.db.mysql.94y.info/" target="_blank">(breakdown by age)</a>; some kinksters list their birthyear as 1920 for privacy, so 94 or 95 effectively means "no age provided")</font></em>
+</td></tr>
+
+
+
+<tr><th>Role</th><td>$roles
+<br><em><font size=-1><a href="http://73b2535d8c94c331767afc6129fdf0cb.shared.db.mysql.94y.info/" target="_blank">(breakdown by roles)</a>; FetLife recently introduced several new roles, most of which are virtually unused</font></em>
+</td></tr>
+
+<tr><th>City</th><td><input type='text' name='city' value='$chunks{city}'>
+<br><em><font size=-1>(first few letters OK, but no abbreviations: ok to use "Saint L" for Saint Louis, but not "St. L"; leave blank for all cities)</font></em>
+</td></tr>
+
+<tr><th>State</th><td><input type='text' name='state' value='$chunks{state}'>
+<br><em><font size=-1>(first few letters OK, but no abbreviations: ok to use "Mississ" for Mississippi, but not "MS"; leave blank for all states)</font></em>
+</td></tr>
+
+<tr><th>Country</th><td>$cunts
+<br><em><font size=-1>
+<a href="http://a66e284742512cee1441fbbcf808eed6.shared.db.mysql.94y.info/">(breakdown by country)</a>; many kinksters use "Antarctica" to mean "I do not wish to reveal my location"
+</font></em>
+</td></tr>
+
 <tr><th colspan=2><input name="submit" type="submit" value="SEARCH"></th></tr>
 
 </table></form>
@@ -106,19 +139,7 @@ MARK
 
 print $form;
 
-exit(0);
-
-# submit a query to fetlife.db.94y.info
-
-# really should use "submit=RUN+QUERY" but ok w/below
-my($query)="query=SELECT COUNT(*) FROM kinksters";
-
-my($tmpdir) = tmpdir("bcfs");
-
-write_file($query, "query");
-
-
-debug("OER: $out/$err/$res");
+print read_file("searchform.html");
 
 =item html_select_list($name, \@list, $selected="")
 
@@ -154,6 +175,3 @@ sub html_select_list {
   push(@ret,"</select>");
   return join("\n",@ret)."\n";
 }
-
-
-

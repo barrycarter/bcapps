@@ -39,6 +39,11 @@ my($location) = "$hash{city}, $hash{state}, $hash{country}";
 
 $location=~s/, ,/,/g;
 
+# to improve google search results:
+
+if ($hash{role} eq "sub") {$hash{role} = "sub (submissive)"};
+if ($hash{role} eq "Dom") {$hash{role} = "Dom (Dominant)"};
+
 print << "MARK";
 
 <title>Fetlife Kinkster $hash{screenname} $hash{age} $gender{$hash{gender}} $hash{role} $location</title>
@@ -64,7 +69,9 @@ print << "MARK";
 
 <tr><th>Last Crawled</th><td>$crawl</td>
 
-</table>
+</table><p>
+
+Not what you're looking for? Try the <a href="http://search.fetlife.94y.info/" target="_blank">Experimental Unofficial FetLife Search Engine</a>
 
 MARK
 ;
