@@ -4,6 +4,8 @@
 
 require "/usr/local/lib/bclib.pl";
 
+my(%dinksprites) = read_dink_ini();
+
 # TODO: allow map.dat to be in different dir
 # how many screens?
 my($ns) = int((-s "map.dat")/31280);
@@ -65,8 +67,30 @@ sub dink_sprite_data {
   $data=~s/^.{8240}//;
 
   while ($data=~s/^(.{220})//) {
+    my($sprite) = $1;
+    my(@sprite);
+    debug("SPR: $sprite");
+    while ($sprite=~s/^(....)//) {push(@sprite,unpack("i4",$1));}
     # xpos = 4 char, ypos = 4 char, seq = 4 char, frame = 4 char, type/size?
-    debug("SPRITE: $1");
+    my($xpos, $ypos, $seq, $frame, $type, $size) = @sprite;
+
+    debug("SPRITE: $seq -> $dinksprites{$seq}");
+
   }
 }
+
+# reads the standard Dink.ini file (not mod-specific), returns a
+# number-to-sprite-hash
+
+sub read_dink_ini {
+  my(%result);
+  my(@lines) = `fgrep load_sequence_now /usr/share/dink/dink/Dink.ini`;
+
+  for $i (@lines) {
+    $i=~/^.*\\(.*?)\s+(\d+)/;
+    $result{$2} = uc($1);
+  }
+  return %result;
+}
+
 
