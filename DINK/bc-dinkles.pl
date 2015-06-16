@@ -1,27 +1,39 @@
 #!/bin/perl
 
-# A more direct attempt at creating maps for Dink D-Mods
+# Usage: $0 directory-where-mod-is (last part of dir will be used as map name)
+
+# A direct attempt at creating maps for Dink D-Mods
 
 require "/usr/local/lib/bclib.pl";
+
+my($moddir) = @ARGV;
+
+# since I'm going to chdir to another dir, need moddir
+unless ($moddir=~m%^/%) {$moddir = "$ENV{PWD}/$moddir";}
+
+# and name
+$name = $moddir;
+$name=~s%^.*/%%;
+unless ($name) {die "Usage: $0 <directory> [cannot use current dir + dir name can't end in slash]";}
+
+# maps created here
+system("mkdir -p /usr/local/etc/DINK/MAPS/$name");
+dodie('chdir("/usr/local/etc/DINK/MAPS/$name")');
 
 my(%dinksprites) = read_dink_ini();
 
 # TODO: allow map.dat to be in different dir
 # how many screens?
-my($ns) = int((-s "map.dat")/31280);
-open(A,"map.dat")||die;
+my($ns) = int((-s "$moddir/map.dat")/31280);
+open(A,"$moddir/map.dat")||die("Can't open $moddir/map.dat");
 my($buf);
-
-read(A,$buf,31820);
-dink_sprite_data($buf);
-
-die "TESTING";
 
 for $i (0..$ns-1) {
   debug("SCREEN $i");
   seek(A,31280*$i,SEEK_SET);
   read(A,$buf,31820);
-  dink_render_screen($buf,"/tmp/final$i.png");
+  dink_render_screen($buf,"screen$i.png");
+  dink_sprite_data($buf);
 }
 
 # Given the 31820 byte chunk representing a screen, attempt to recreate screen in given filename
@@ -29,7 +41,6 @@ for $i (0..$ns-1) {
 sub dink_render_screen {
   my($data,$file) = @_;
 
-  # TODO: this is probably a bad idea
   if (-f $file) {return;}
 
   # need better output convention
@@ -55,28 +66,40 @@ sub dink_render_screen {
       }
       print A "/var/cache/DINK/tile-$s-$px-$py.png\n";
     }
-    close(A);
   }
+  close(A);
 }
 
-# determine sprite data (but do nothing w/ it for now), given screen
+# given an image, determine sprite data and overlay it onto image
 
 sub dink_sprite_data {
-  my($data) = @_;
-  # sprite data starts at 8020, but first sprite is always blank
-  $data=~s/^.{8240}//;
+  my($data,$image) = @_;
 
-  while ($data=~s/^(.{220})//) {
+  # sprite data starts at 8020, but first sprite is always blank
+  $data=~s/^.{8240}//s;
+
+  # 100 sprites
+  my($count) = 0;
+
+  while ($data=~s/^(.{220})//s) {
+    if (++$count>100) {return;}
     my($sprite) = $1;
+    # silently ignore null
+    if ($sprite=~/^\0+$/) {next;}
     my(@sprite);
-    debug("SPR: $sprite");
     while ($sprite=~s/^(....)//) {push(@sprite,unpack("i4",$1));}
     # xpos = 4 char, ypos = 4 char, seq = 4 char, frame = 4 char, type/size?
+    # TODO: ignoring frame number for now, just putting 01 frame
+    # TODO: ignoring size for now
     my($xpos, $ypos, $seq, $frame, $type, $size) = @sprite;
-    my($fname) = "/usr/local/etc/DINK/BMP/$dinksprites{$seq}";
+    my($fname) = "$bclib{githome}/DINK/PNG/$dinksprites{$seq}01.PNG";
 
-    # see if sprite exists where I uncompressed all sprites
-    debug("SPRITES",glob("$fname*"));
+    # not so silently ignore non sprites
+    unless (-f $fname) {
+      warn "SPRITE $seq does not exist, ignoring";
+      next;
+    }
+    debug("$fname to $xpos,$ypos")
   }
 }
 
