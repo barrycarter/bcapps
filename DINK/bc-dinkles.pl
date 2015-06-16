@@ -34,7 +34,6 @@ for $i (0..$ns-1) {
   read(A,$buf,31820);
   dink_render_screen($buf,"screen$i.png");
   dink_sprite_data($buf,"screen$i.png");
-  die "TESTING";
 }
 
 # Given the 31820 byte chunk representing a screen, attempt to recreate screen in given filename
@@ -75,6 +74,7 @@ sub dink_render_screen {
 
 sub dink_sprite_data {
   my($data,$image) = @_;
+  my(@sprites);
 
   # sprite data starts at 8020, but first sprite is always blank
   $data=~s/^.{8240}//s;
@@ -83,16 +83,18 @@ sub dink_sprite_data {
   my($count) = 0;
 
   while ($data=~s/^(.{220})//s) {
-    if (++$count>100) {return;}
+    if (++$count>100) {last;}
     my($sprite) = $1;
     # silently ignore null
     if ($sprite=~/^\0+$/) {next;}
     my(@sprite);
     while ($sprite=~s/^(....)//s) {push(@sprite,unpack("i4",$1));}
+
+    debug("SPRITE DATA",@sprite);
     # xpos = 4 char, ypos = 4 char, seq = 4 char, frame = 4 char, type/size?
     # TODO: ignoring frame number for now, just putting 01 frame
     # TODO: ignoring size for now
-    my($xpos, $ypos, $seq, $frame, $type, $size) = @sprite;
+    my($xpos, $ypos, $seq, $frame, $type, $size, $active, $rotation, $special, $brain) = @sprite;
     my($fname) = "$bclib{githome}/DINK/PNG/$dinksprites{$seq}01.PNG";
 
     # not so silently ignore non sprites
@@ -100,10 +102,13 @@ sub dink_sprite_data {
       warn "SPRITE $seq does not exist, ignoring";
       next;
     }
-    my($out,$err,$res) = cache_command2("composite -geometry +$xpos+$ypos $fname $image temp-$image");
-    die "TESTING";
+
+    push(@sprites, "-page +$xpos+$ypos $fname");
     debug("$fname to $xpos,$ypos")
   }
+
+  my($sprites) = join(" ",@sprites);
+  my($out,$err,$res) = cache_command2("convert -page +0+0 $image $sprites -layers flatten temp-$image");
 }
 
 # reads the standard Dink.ini file (not mod-specific), returns a
