@@ -105,12 +105,16 @@ sub dink_sprite_data {
       next;
     }
 
-    push(@sprites, "-page +$xpos+$ypos -gravity northwest $fname");
+    # TODO: this is only a test!
+    $xpos-=100;
+    $ypos-=100;
+
+    push(@sprites, "-page +$xpos+$ypos $fname");
     debug("$fname to $xpos,$ypos")
   }
 
   my($sprites) = join(" ",@sprites);
-  my($out,$err,$res) = cache_command2("convert -page +0+0 $image $sprites -layers composite temp-$image");
+  my($out,$err,$res) = cache_command2("convert -page +0+0 $image $sprites -layers flatten temp-$image");
 }
 
 # reads the standard Dink.ini file (not mod-specific), returns a
