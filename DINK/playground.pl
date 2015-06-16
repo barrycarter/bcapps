@@ -35,7 +35,7 @@ open(A,"map.dat")||die("Can't open map.dat, $!");
 
 # jump to 9th screen
 
-seek(A,31280*8,SEEK_SET);
+# seek(A,31280*8,SEEK_SET);
 
 # $buf is one screen
 # read(A,$buf,31280);
@@ -44,15 +44,19 @@ seek(A,31280*8,SEEK_SET);
 # read(A,$buf,97*4);
 
 for $tile (0..96) {
-  read(A,$buf,4);
-  debug("TILE $tile: $buf");
+  read(A,$buf,80);
+  debug(substr($buf,20,2));
 }
 
-# sprites for screen one
+# read the rest
+# read(A,$buf,31280-80*96);
+
+# sprites for screen one (NOT screen nine!)
 seek(A,8020,SEEK_SET);
 
 for $sprite (0..100) {
   read(A,$buf,220);
+  if ($buf=~/^\0+$/) {next;}
   debug("SPRITE $sprite: $buf");
 }
 
