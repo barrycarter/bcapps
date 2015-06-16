@@ -73,9 +73,10 @@ sub dink_sprite_data {
     while ($sprite=~s/^(....)//) {push(@sprite,unpack("i4",$1));}
     # xpos = 4 char, ypos = 4 char, seq = 4 char, frame = 4 char, type/size?
     my($xpos, $ypos, $seq, $frame, $type, $size) = @sprite;
+    my($fname) = "/usr/local/etc/DINK/BMP/$dinksprites{$seq}";
 
-    debug("SPRITE: $seq -> $dinksprites{$seq}");
-
+    # see if sprite exists where I uncompressed all sprites
+    debug("SPRITES",glob("$fname*"));
   }
 }
 
@@ -84,7 +85,7 @@ sub dink_sprite_data {
 
 sub read_dink_ini {
   my(%result);
-  my(@lines) = `fgrep load_sequence_now /usr/share/dink/dink/Dink.ini`;
+  my(@lines) = `fgrep load_sequence /usr/share/dink/dink/Dink.ini`;
 
   for $i (@lines) {
     $i=~/^.*\\(.*?)\s+(\d+)/;
