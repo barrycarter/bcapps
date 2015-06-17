@@ -11,6 +11,14 @@ require "/usr/local/lib/bclib.pl";
 my(@sdata) = ("xpos", "ypos", "seq", "frame", "type", "size",
 "active", "rotation", "special", "brain");
 
+# the 4-byte integer field that appear after script name + 38 unused chars
+
+my(@smore) = ("speed", "base_walk", "base_idle", "base_attack",
+"base_hit", "timer", "que", "hard", "alt.left", "alt.top",
+"alt.right", "alt.bottom", "prop", "warp_map", "warp_x", "warp_y",
+"parm_seq", "base_die", "gold", "hitpoints", "strength", "defense",
+"exp", "sound", "vision", "nohit", "touch_damage");
+
 my($moddir) = @ARGV;
 
 # since I'm going to chdir to another dir, need moddir
@@ -34,11 +42,12 @@ open(A,"$moddir/map.dat")||die("Can't open $moddir/map.dat");
 my($buf);
 
 for $i (0..$ns-1) {
-  debug("SCREEN $i");
+  debug("SCREEN $i\n\n");
   seek(A,31280*$i,SEEK_SET);
   read(A,$buf,31820);
   dink_render_screen($buf,"screen$i.png");
   dink_sprite_data($buf,"screen$i.png");
+  die "TESTING";
 }
 
 # Given the 31820 byte chunk representing a screen, attempt to recreate screen in given filename
@@ -85,13 +94,17 @@ sub dink_sprite_data {
   $data=~s/^.{8240}//s;
 
   # 100 sprites
-  my($count) = 1;
+  my($count) = 0;
 
   while ($data=~s/^(.{220})//s) {
     if (++$count>100) {last;}
     my($sprite) = $1;
+
     # silently ignore null
-    if ($sprite=~/^\0+$/) {next;}
+    if ($sprite=~/^\0+$/) {
+      debug("SPRITE $count: NULL\n");
+      next;
+    }
 
     my(%sprite);
 
@@ -107,34 +120,33 @@ sub dink_sprite_data {
     # 38 unused characters
     $sprite=~s/^.{38}//s;
 
-    
+    for $i (@smore) {
+      $sprite=~s/(.{4})//s;
+      $sprite{$i} = unpack("i4",$1);
+    }
 
-    debug("LEFTOVER: $sprite");
+    # for filenaming
+    $sprite{frame} = sprintf("%0.2d", $sprite{frame});
 
-    return; #### TESTING!
+    # from Dink.ini
+    $sprite{"extra"} = $dinksprites{"$sprite{seq}.$sprite{frame}"};
 
-    debug("RAW SPRITE: $sprite");
-    my(@sprite);
-    while ($sprite=~s/^(....)//s) {push(@sprite,unpack("i4",$1));}
+    # this is just for debugging (for now)
+    $sprite{"fname"} = "$bclib{githome}/DINK/PNG/$dinksprites{$sprite{seq}}$sprite{frame}.PNG";
 
-    # xpos = 4 char, ypos = 4 char, seq = 4 char, frame = 4 char, type/size?
-    # TODO: ignoring size for now
-    my($xpos, $ypos, $seq, $frame, $type, $size, $active, $rotation, $special, $brain) = @sprite;
+    $sprite{"more"} = $dinksprites{"$sprite{seq}.extra"};
 
-    debug("ALL DATA:".join(", ",@sprite));
 
-    debug("SPRITE $count DATA: $xpos, $ypos, $seq, $frame, $type, $size, $active, $rotation, $special, $brain, more: ".$dinksprites{"$seq.$frame"});
+    debug("SPRITE: $count\n");
+    for $i (sort keys %sprite) {
+      debug("$i: $sprite{$i}");
+    }
+    debug();
 
-    # this MAY be the vision
-    debug("VISION?: $sprite[-8]");
+    next; ########TESTING##########
 
-    # if vision not-0 (or not active), skip
-    if ($sprite[-8] || !$active) {next;}
+    return;
 
-    # this is probably wrong
-#    if ($dinksprites{"$seq.$frame"}) {next;}
-
-    $frame = sprintf("%0.2d", $frame);
     my($fname) = "$bclib{githome}/DINK/PNG/$dinksprites{$seq}$frame.PNG";
 
     # not so silently ignore non sprites
@@ -169,8 +181,9 @@ sub read_dink_ini {
   my(@lines) = split(/\n/, read_file("/usr/share/dink/dink/Dink.ini"));
 
   for $i (@lines) {
-    if ($i=~m%^load_sequence(_now)?\s+.*\\(.*?)\s+(\d+)%) {
+    if ($i=~m%^load_sequence(_now)?\s+.*\\(.*?)\s+(\d+)(.*)$%) {
       $result{$3} = uc($2);
+      $result{"$3.extra"} = $4;
     } elsif ($i=~/^SET_SPRITE_INFO\s+(\d+)\s+(\d+)\s+(.*)$/) {
       $result{"$1.$2"} = $3;
     } else {
