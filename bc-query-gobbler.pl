@@ -1,5 +1,7 @@
 #!/bin/perl
 
+# TODO: since switching to MySQL, I probably don't need to use this at all
+
 # To prevent race conditions, some of my programs will now write
 # queries to /var/tmp/queries with filename
 # "YYYYMMDD.HHMMSS.NNNNNNNNN-dbname-pid" where N* = time down to the

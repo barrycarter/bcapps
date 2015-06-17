@@ -18,7 +18,9 @@ my($base, $tld) = ($1,"$2.$3");
 my($db, $query, $type) = reverse(split(/\./, $base));
 
 # this is bad long term
-unless ($db eq "shared") {print "Location: http://shared.$tld\n\n"; exit;}
+unless ($db eq "shared" || $db eq "madis") {
+  print "Location: http://shared.$tld\n\n"; exit;
+}
 
 if ($query eq ""){print "Content-type: text/html\n\n";form_request($db,$tld);}
 elsif ($query eq "schema") {schema_request($db,$tld);}

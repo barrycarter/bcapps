@@ -81,21 +81,25 @@ sub dink_sprite_data {
   $data=~s/^.{8240}//s;
 
   # 100 sprites
-  my($count) = 0;
+  my($count) = 1;
 
   while ($data=~s/^(.{220})//s) {
     if (++$count>100) {last;}
     my($sprite) = $1;
+    debug("RAW SPRITE: $sprite");
     # silently ignore null
     if ($sprite=~/^\0+$/) {next;}
     my(@sprite);
     while ($sprite=~s/^(....)//s) {push(@sprite,unpack("i4",$1));}
 
-    debug("SPRITE DATA",@sprite);
     # xpos = 4 char, ypos = 4 char, seq = 4 char, frame = 4 char, type/size?
-    # TODO: ignoring frame number for now, just putting 01 frame
     # TODO: ignoring size for now
     my($xpos, $ypos, $seq, $frame, $type, $size, $active, $rotation, $special, $brain) = @sprite;
+
+    debug("ALL DATA:".join(", ",@sprite));
+
+    debug("SPRITE $count DATA: $xpos, $ypos, $seq, $frame, $type, $size, $active, $rotation, $special, $brain, more: ".$dinksprites{"$seq.$frame"});
+
     $frame = sprintf("%0.2d", $frame);
     my($fname) = "$bclib{githome}/DINK/PNG/$dinksprites{$seq}$frame.PNG";
 
@@ -105,9 +109,14 @@ sub dink_sprite_data {
       next;
     }
 
-    # TODO: this is only a test!
-    $xpos-=100;
-    $ypos-=100;
+    # TODO: this is seriously ugly, imagemagick must have an option for this
+    # TODO: turning off debugging here because it annoys me, need to undo
+    $globopts{debug}=0;
+    my(@res) = cache_command2("identify $fname","age=86400");
+    $globopts{debug}=1;
+    $res[0]=~s/.*?(\d+)x(\d+)//;
+    $xpos-=$1*.75;
+    $ypos-=$2*.75;
 
     push(@sprites, "-page +$xpos+$ypos $fname");
     debug("$fname to $xpos,$ypos")
@@ -118,15 +127,20 @@ sub dink_sprite_data {
 }
 
 # reads the standard Dink.ini file (not mod-specific), returns a
-# number-to-sprite-hash
+# number-to-sprite-hash with additional sprite info
 
 sub read_dink_ini {
   my(%result);
-  my(@lines) = `fgrep load_sequence /usr/share/dink/dink/Dink.ini`;
+  my(@lines) = split(/\n/, read_file("/usr/share/dink/dink/Dink.ini"));
 
   for $i (@lines) {
-    $i=~/^.*\\(.*?)\s+(\d+)/;
-    $result{$2} = uc($1);
+    if ($i=~m%^load_sequence(_now)?\s+.*\\(.*?)\s+(\d+)%) {
+      $result{$3} = uc($2);
+    } elsif ($i=~/^SET_SPRITE_INFO\s+(\d+)\s+(\d+)\s+(.*)$/) {
+      $result{"$1.$2"} = $3;
+    } else {
+      # do nothing
+    }
   }
   return %result;
 }

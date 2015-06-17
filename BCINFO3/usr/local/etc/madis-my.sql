@@ -6,6 +6,9 @@ DELETE FROM madis WHERE temperature='NULL';
 -- delete entries older than 24h
 DELETE FROM madis WHERE DATEDIFF(time,NOW())<-1;
 
+-- shouldn't need this but do
+DELETE FROM madis WHERE time = '0000-00-00 00:00:00';
+
 -- delete entries in the future (except MOS)
 DELETE FROM madis WHERE time > timestamp AND type NOT IN ('MOS');
 
