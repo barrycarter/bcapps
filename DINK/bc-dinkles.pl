@@ -6,6 +6,11 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# the 4-byte integers at the start of a sprite (before the 14 character script)
+
+my(@sdata) = ("xpos", "ypos", "seq", "frame", "type", "size",
+"active", "rotation", "special", "brain");
+
 my($moddir) = @ARGV;
 
 # since I'm going to chdir to another dir, need moddir
@@ -34,7 +39,6 @@ for $i (0..$ns-1) {
   read(A,$buf,31820);
   dink_render_screen($buf,"screen$i.png");
   dink_sprite_data($buf,"screen$i.png");
-  die "TESTING";
 }
 
 # Given the 31820 byte chunk representing a screen, attempt to recreate screen in given filename
@@ -86,9 +90,30 @@ sub dink_sprite_data {
   while ($data=~s/^(.{220})//s) {
     if (++$count>100) {last;}
     my($sprite) = $1;
-    debug("RAW SPRITE: $sprite");
     # silently ignore null
     if ($sprite=~/^\0+$/) {next;}
+
+    my(%sprite);
+
+    for $i (@sdata) {
+      $sprite=~s/(.{4})//s;
+      $sprite{$i} = unpack("i4",$1);
+    }
+
+    # 14 character script to run
+    $sprite=~s/^(.{14})//s;
+    $sprite{"script"} = $1;
+
+    # 38 unused characters
+    $sprite=~s/^.{38}//s;
+
+    
+
+    debug("LEFTOVER: $sprite");
+
+    return; #### TESTING!
+
+    debug("RAW SPRITE: $sprite");
     my(@sprite);
     while ($sprite=~s/^(....)//s) {push(@sprite,unpack("i4",$1));}
 
@@ -99,6 +124,15 @@ sub dink_sprite_data {
     debug("ALL DATA:".join(", ",@sprite));
 
     debug("SPRITE $count DATA: $xpos, $ypos, $seq, $frame, $type, $size, $active, $rotation, $special, $brain, more: ".$dinksprites{"$seq.$frame"});
+
+    # this MAY be the vision
+    debug("VISION?: $sprite[-8]");
+
+    # if vision not-0 (or not active), skip
+    if ($sprite[-8] || !$active) {next;}
+
+    # this is probably wrong
+#    if ($dinksprites{"$seq.$frame"}) {next;}
 
     $frame = sprintf("%0.2d", $frame);
     my($fname) = "$bclib{githome}/DINK/PNG/$dinksprites{$seq}$frame.PNG";
@@ -115,8 +149,9 @@ sub dink_sprite_data {
     my(@res) = cache_command2("identify $fname","age=86400");
     $globopts{debug}=1;
     $res[0]=~s/.*?(\d+)x(\d+)//;
-    $xpos-=$1*.75;
-    $ypos-=$2*.75;
+    # .725 by trial and error
+    $xpos-=$1*.725;
+    $ypos-=$2*.725;
 
     push(@sprites, "-page +$xpos+$ypos $fname");
     debug("$fname to $xpos,$ypos")
