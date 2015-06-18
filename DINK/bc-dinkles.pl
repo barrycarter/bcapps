@@ -185,5 +185,3 @@ sub read_dink_ini {
   }
   return %result;
 }
-
-
