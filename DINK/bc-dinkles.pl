@@ -47,7 +47,6 @@ for $i (0..$ns-1) {
   read(A,$buf,31820);
   dink_render_screen($buf,"screen$i.png");
   dink_sprite_data($buf,"screen$i.png");
-  if ($i>10) {die "TESTING";}
 }
 
 # Given the 31820 byte chunk representing a screen, attempt to recreate screen in given filename
@@ -102,7 +101,7 @@ sub dink_sprite_data {
 
     # silently ignore null
     if ($sprite=~/^\0+$/) {
-      debug("SPRITE $count: NULL\n");
+      debug("SPRITE: $count ISNULL\n");
       next;
     }
 
@@ -129,13 +128,13 @@ sub dink_sprite_data {
     if ($sprite{vision}) {next;}
 
     # for filenaming
-    $sprite{frame} = sprintf("%0.2d", $sprite{frame});
+    $sprite{frame2} = sprintf("%0.2d", $sprite{frame});
 
     # from Dink.ini
     $sprite{"extra"} = $dinksprites{"$sprite{seq}.$sprite{frame}"};
 
     # this is just for debugging (for now)
-    $sprite{"fname"} = "$bclib{githome}/DINK/PNG/$dinksprites{$sprite{seq}}$sprite{frame}.PNG";
+    $sprite{"fname"} = "$bclib{githome}/DINK/PNG/$dinksprites{$sprite{seq}}$sprite{frame2}.PNG";
 
     unless (-f $sprite{fname}) {
       warn "NO SUCH FILE: $sprite{fname}, ignoring";
@@ -144,31 +143,18 @@ sub dink_sprite_data {
 
     $sprite{"more"} = $dinksprites{"$sprite{seq}.extra"};
 
+    # figure out true x y coords
+    ($sprite{xdelta},$sprite{ydelta}) = split(/\s+/, $sprite{extra});
+    $sprite{xpos2}=$sprite{xpos}-$sprite{xdelta};
+    $sprite{ypos2}=$sprite{ypos}-$sprite{ydelta};
+
     debug("SPRITE: $count\n");
     for $i (sort keys %sprite) {
       debug("$i: $sprite{$i}");
     }
     debug();
 
-    # figure out true x y coords
-
-    if ($sprite{"extra"}) {
-      # keeping these as two separate keys, easier to debug
-      ($sprite{xdelta},$sprite{ydelta}) = split(/\s+/, $sprite{extra});
-      $sprite{deltamethod} = "dink.ini";
-    } else {
-      # per http://www.dinknetwork.com/forum.cgi?MID=192179
-      my(@res) = cache_command2("identify $fname","age=86400");
-      $res[0]=~s/.*?(\d+)x(\d+)//;
-      $sprite{deltamethod} = "formula";
-      $sprite{xdelta} = int($1/6)-int($1/2);
-      $sprite{ydelta} = -int($2/4)-int($2/30);
-    }
-
-    $sprite{xpos}+=$sprite{xdelta};
-    $sprite{ypos}+=$sprite{ydelta};
-
-    push(@sprites, "-page +$sprite{xpos}+$sprite{ypos} $sprite{fname}");
+    push(@sprites, "-page +$sprite{xpos2}+$sprite{ypos2} $sprite{fname}");
   }
 
   my($sprites) = join(" ",@sprites);
@@ -183,8 +169,11 @@ sub transdebug {debug(@_); return @_;}
 sub read_dink_ini {
   my(%result);
   my(@lines) = split(/\n/, read_file("/usr/share/dink/dink/Dink.ini"));
+  push(@lines, split(/\n/, read_file("$bclib{githome}/DINK/dink-more.ini")));
 
   for $i (@lines) {
+    debug("LINE: $i");
+
     if ($i=~m%^load_sequence(_now)?\s+.*\\(.*?)\s+(\d+)(.*)$%) {
       $result{$3} = uc($2);
       $result{"$3.extra"} = $4;
