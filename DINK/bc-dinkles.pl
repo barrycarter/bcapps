@@ -47,7 +47,7 @@ for $i (0..$ns-1) {
   read(A,$buf,31820);
   dink_render_screen($buf,"screen$i.png");
   dink_sprite_data($buf,"screen$i.png");
-  die "TESTING";
+  if ($i>10) {die "TESTING";}
 }
 
 # Given the 31820 byte chunk representing a screen, attempt to recreate screen in given filename
@@ -125,6 +125,9 @@ sub dink_sprite_data {
       $sprite{$i} = unpack("i4",$1);
     }
 
+    # if not in vision 0, ignore
+    if ($sprite{vision}) {next;}
+
     # for filenaming
     $sprite{frame} = sprintf("%0.2d", $sprite{frame});
 
@@ -134,8 +137,12 @@ sub dink_sprite_data {
     # this is just for debugging (for now)
     $sprite{"fname"} = "$bclib{githome}/DINK/PNG/$dinksprites{$sprite{seq}}$sprite{frame}.PNG";
 
-    $sprite{"more"} = $dinksprites{"$sprite{seq}.extra"};
+    unless (-f $sprite{fname}) {
+      warn "NO SUCH FILE: $sprite{fname}, ignoring";
+      next;
+    }
 
+    $sprite{"more"} = $dinksprites{"$sprite{seq}.extra"};
 
     debug("SPRITE: $count\n");
     for $i (sort keys %sprite) {
@@ -143,35 +150,32 @@ sub dink_sprite_data {
     }
     debug();
 
-    next; ########TESTING##########
+    # figure out true x y coords
 
-    return;
-
-    my($fname) = "$bclib{githome}/DINK/PNG/$dinksprites{$seq}$frame.PNG";
-
-    # not so silently ignore non sprites
-    unless (-f $fname) {
-      warn "SPRITE $seq,$frame, $dinksprites{$seq} does not exist, ignoring";
-      next;
+    if ($sprite{"extra"}) {
+      # keeping these as two separate keys, easier to debug
+      ($sprite{xdelta},$sprite{ydelta}) = split(/\s+/, $sprite{extra});
+      $sprite{deltamethod} = "dink.ini";
+    } else {
+      # per http://www.dinknetwork.com/forum.cgi?MID=192179
+      my(@res) = cache_command2("identify $fname","age=86400");
+      $res[0]=~s/.*?(\d+)x(\d+)//;
+      $sprite{deltamethod} = "formula";
+      $sprite{xdelta} = int($1/6)-int($1/2);
+      $sprite{ydelta} = -int($2/4)-int($2/30);
     }
 
-    # TODO: this is seriously ugly, imagemagick must have an option for this
-    # TODO: turning off debugging here because it annoys me, need to undo
-    $globopts{debug}=0;
-    my(@res) = cache_command2("identify $fname","age=86400");
-    $globopts{debug}=1;
-    $res[0]=~s/.*?(\d+)x(\d+)//;
-    # .725 by trial and error
-    $xpos-=$1*.725;
-    $ypos-=$2*.725;
+    $sprite{xpos}+=$sprite{xdelta};
+    $sprite{ypos}+=$sprite{ydelta};
 
-    push(@sprites, "-page +$xpos+$ypos $fname");
-    debug("$fname to $xpos,$ypos")
+    push(@sprites, "-page +$sprite{xpos}+$sprite{ypos} $sprite{fname}");
   }
 
   my($sprites) = join(" ",@sprites);
-  my($out,$err,$res) = cache_command2("convert -page +0+0 $image $sprites -layers flatten temp-$image");
+  my($out,$err,$res) = cache_command2(transdebug("convert -page +0+0 $image $sprites -layers flatten temp-$image"));
 }
+
+sub transdebug {debug(@_); return @_;}
 
 # reads the standard Dink.ini file (not mod-specific), returns a
 # number-to-sprite-hash with additional sprite info
