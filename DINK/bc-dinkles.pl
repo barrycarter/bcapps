@@ -11,7 +11,12 @@ require "/usr/local/lib/bclib.pl";
 my(@sdata) = ("xpos", "ypos", "seq", "frame", "type", "size",
 "active", "rotation", "special", "brain");
 
-# the 4-byte integer field that appear after script name + 38 unused chars
+# the 4 13-byte scripts (3 of which are unused, and I don't need the
+# 4th, but...)
+
+my(@scripts) = ("main", "hit", "die", "talk");
+
+# the 4-byte integer field that appear after the 4 scripts
 
 my(@smore) = ("speed", "base_walk", "base_idle", "base_attack",
 "base_hit", "timer", "que", "hard", "alt.left", "alt.top",
@@ -20,10 +25,8 @@ my(@smore) = ("speed", "base_walk", "base_idle", "base_attack",
 "exp", "sound", "vision", "nohit", "touch_damage");
 
 my($moddir) = @ARGV;
-
 # since I'm going to chdir to another dir, need moddir
 unless ($moddir=~m%^/%) {$moddir = "$ENV{PWD}/$moddir";}
-
 # and name
 $name = $moddir;
 $name=~s%^.*/%%;
@@ -35,12 +38,12 @@ dodie('chdir("/usr/local/etc/DINK/MAPS/$name")');
 
 my(%dinksprites) = read_dink_ini();
 
-# TODO: allow map.dat to be in different dir
 # how many screens?
 my($ns) = int((-s "$moddir/map.dat")/31280);
 open(A,"$moddir/map.dat")||die("Can't open $moddir/map.dat");
 my($buf);
 
+# go through screens
 for $i (0..$ns-1) {
   debug("SCREEN $i\n\n");
   seek(A,31280*$i,SEEK_SET);
@@ -49,14 +52,14 @@ for $i (0..$ns-1) {
   dink_sprite_data($buf,"screen$i.png");
 }
 
-# Given the 31820 byte chunk representing a screen, attempt to recreate screen in given filename
+# Given the 31820 byte chunk representing a screen, recreate screen in
+# given filename (without sprites for now)
 
 sub dink_render_screen {
   my($data,$file) = @_;
 
   if (-f $file) {return;}
 
-  # need better output convention
   local(*A);
   open(A,"|montage \@- -tile 12x8 -geometry +0+0 $file");
 
@@ -69,7 +72,6 @@ sub dink_render_screen {
       if ($t>=128) {$s++; $t=-128;}
       # top left pixel
       my($px,$py) = ($t%12*50,int($t/12)*50);
-      # TODO: fix ts*.bmp case oddnesses
       # TODO: look for tiles in game itself, not just stdloc
       # create if not already existing
       unless (-f "/var/cache/DINK/tile-$s-$px-$py.png") {
@@ -107,34 +109,21 @@ sub dink_sprite_data {
 
     my(%sprite);
 
-    for $i (@sdata) {
-      $sprite=~s/(.{4})//s;
-      $sprite{$i} = unpack("i4",$1);
-    }
+    # ints, scripts, more ints
+    for $i (@sdata) {$sprite=~s/(.{4})//s;$sprite{$i} = unpack("i4",$1);}
+    for $i (@scripts) {$sprite=~s/(.{13})//s;$sprite{"$i_script"}=$1;}
+    for $i (@smore) {$sprite=~s/(.{4})//s;$sprite{$i} = unpack("i4",$1);}
 
-    # 14 character script to run
-    $sprite=~s/^(.{14})//s;
-    $sprite{"script"} = $1;
-
-    # 38 unused characters
-    $sprite=~s/^.{38}//s;
-
-    for $i (@smore) {
-      $sprite=~s/(.{4})//s;
-      $sprite{$i} = unpack("i4",$1);
-    }
-
+    # TODO: need more tests here to see when NOT to display sprite (eg, active?)
     # if not in vision 0, ignore
     if ($sprite{vision}) {next;}
 
-    # for filenaming
-    $sprite{frame2} = sprintf("%0.2d", $sprite{frame});
+    # filename (not 2-char padding for frame)
+    $sprite{"fname"} = sprintf("$bclib{githome}/DINK/PNG/$dinksprites{$sprite{seq}}$sprite{%02d}.PNG",$sprite{frame});
 
     # from Dink.ini
     $sprite{"extra"} = $dinksprites{"$sprite{seq}.$sprite{frame}"};
 
-    # this is just for debugging (for now)
-    $sprite{"fname"} = "$bclib{githome}/DINK/PNG/$dinksprites{$sprite{seq}}$sprite{frame2}.PNG";
 
     unless (-f $sprite{fname}) {
       warn "NO SUCH FILE: $sprite{fname}, ignoring";
