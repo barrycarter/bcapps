@@ -1,4 +1,3 @@
-10 tiles\s
 12 graphics\dink\idle\ds-i2-
 14 graphics\dink\idle\ds-i4-
 16 graphics\dink\idle\ds-i6-
