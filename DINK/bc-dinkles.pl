@@ -102,46 +102,28 @@ sub dink_sprite_data {
     my($sprite) = $1;
 
     # silently ignore null
-    if ($sprite=~/^\0+$/) {
-      debug("SPRITE: $count ISNULL\n");
-      next;
-    }
+    if ($sprite=~/^\0+$/) {next;}
 
     my(%sprite);
-
     # ints, scripts, more ints
     for $i (@sdata) {$sprite=~s/(.{4})//s;$sprite{$i} = unpack("i4",$1);}
     for $i (@scripts) {$sprite=~s/(.{13})//s;$sprite{"$i_script"}=$1;}
     for $i (@smore) {$sprite=~s/(.{4})//s;$sprite{$i} = unpack("i4",$1);}
 
-    # TODO: need more tests here to see when NOT to display sprite (eg, active?)
+    # TODO: more tests here to see when NOT to display sprite (eg, active?)
     # if not in vision 0, ignore
     if ($sprite{vision}) {next;}
 
-    # filename (not 2-char padding for frame)
-    $sprite{"fname"} = sprintf("$bclib{githome}/DINK/PNG/$dinksprites{$sprite{seq}}$sprite{%02d}.PNG",$sprite{frame});
+    # filename (note 2-char padding for frame)
+    $sprite{frame2} = sprintf("%0.2d", $sprite{frame});
+    $sprite{fname} = "$bclib{githome}/DINK/PNG/$dinksprites{$sprite{seq}}$sprite{frame2}.PNG";
 
-    # from Dink.ini
-    $sprite{"extra"} = $dinksprites{"$sprite{seq}.$sprite{frame}"};
-
-
-    unless (-f $sprite{fname}) {
-      warn "NO SUCH FILE: $sprite{fname}, ignoring";
-      next;
-    }
-
-    $sprite{"more"} = $dinksprites{"$sprite{seq}.extra"};
+    unless (-f $sprite{fname}) {warn "NOFILE: $sprite{fname}, ignoring"; next;}
 
     # figure out true x y coords
-    ($sprite{xdelta},$sprite{ydelta}) = split(/\s+/, $sprite{extra});
+    ($sprite{xdelta},$sprite{ydelta}) = split(/\s+/, $dinksprites{"$sprite{seq}.$sprite{frame}"});
     $sprite{xpos2}=$sprite{xpos}-$sprite{xdelta};
     $sprite{ypos2}=$sprite{ypos}-$sprite{ydelta};
-
-    debug("SPRITE: $count\n");
-    for $i (sort keys %sprite) {
-      debug("$i: $sprite{$i}");
-    }
-    debug();
 
     push(@sprites, "-page +$sprite{xpos2}+$sprite{ypos2} $sprite{fname}");
   }
@@ -149,8 +131,6 @@ sub dink_sprite_data {
   my($sprites) = join(" ",@sprites);
   my($out,$err,$res) = cache_command2(transdebug("convert -page +0+0 $image $sprites -layers flatten temp-$image"));
 }
-
-sub transdebug {debug(@_); return @_;}
 
 # reads the standard Dink.ini file (not mod-specific), returns a
 # number-to-sprite-hash with additional sprite info
@@ -161,16 +141,8 @@ sub read_dink_ini {
   push(@lines, split(/\n/, read_file("$bclib{githome}/DINK/dink-more.ini")));
 
   for $i (@lines) {
-    debug("LINE: $i");
-
-    if ($i=~m%^load_sequence(_now)?\s+.*\\(.*?)\s+(\d+)(.*)$%) {
-      $result{$3} = uc($2);
-      $result{"$3.extra"} = $4;
-    } elsif ($i=~/^SET_SPRITE_INFO\s+(\d+)\s+(\d+)\s+(.*)$/) {
-      $result{"$1.$2"} = $3;
-    } else {
-      # do nothing
-    }
+    if ($i=~m%^load_sequence(_now)?\s+.*\\(.*?)\s+(\d+)%){$result{$3}=uc($2);}
+    if ($i=~/^SET_SPRITE_INFO\s+(\d+)\s+(\d+)\s+(.*)$/) {$result{"$1.$2"}=$3;}
   }
   return %result;
 }

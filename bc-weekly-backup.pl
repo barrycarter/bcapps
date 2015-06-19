@@ -69,7 +69,7 @@ sub dump_remote {
   local(*A);
   # TODO: keep backup copies(?)
   my($str) = << "MARK";
-ssh -i /home/barrycarter/.ssh/id_rsa.bc root\@bcinfo3 'mysqldump --skip-extended-insert=yes wordpress' > $dir/bcinfo3-wordpress.txt.new; mv -f $dir/bcinfo3-wordpress.txt $dir/bcinfo3-wordpress.txt.old;  mv -f $dir/bcinfo3-wordpress.txt.new $dir/bcinfo3-wordpress.txt
+ssh -i /home/barrycarter/.ssh/id_rsa.bc root\@bcinfo3 'mysqldump --skip-extended-insert=yes --databases wordpress requests' > $dir/bcinfo3-wordpress-requests.txt.new; mv -f $dir/bcinfo3-wordpress-requests.txt $dir/bcinfo3-wordpress-requests.txt.old;  mv -f $dir/bcinfo3-wordpress-requests.txt.new $dir/bcinfo3-wordpress-requests.txt
 rsync -trlzo -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' root\@bcinfo3:/sites/DB/requests.db $dir/bcinfo3-requests.db
 rsync "root\@bcmac:/Users/*/*" "root\@bcmac:/Users/*/.*" bcmac/
 MARK

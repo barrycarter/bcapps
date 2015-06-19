@@ -9,10 +9,19 @@ require "/usr/local/lib/bclib.pl";
 # TODO: sense I'm not handling the printing of content-type: text/html
 # optimally
 
+# special case for fetlife move (for tinyurl.com/openfetlife)
+if ($ENV{HTTP_HOST}=~/fetlife/i) {
+  print << "MARK";
+Content-type: text/html
+
+The fetlife users database has <a href="http://search.fetlife.94y.info/">moved</a>
+MARK
+;
+exit;
+}
+
 # where the dbs are <h>(sadly, /sites/GIRLS/ does not work as well...)</h>
-# this is a really ugly hack so I can run on my home machine
-@dirpath = ("/home/barrycarter/LOCALHOST/20121228/DB", "/sites/DB");
-for $i (@dirpath) {if (-d $i) {chdir($i); last;}}
+chdir("/sites/DB");
 
 # hack to handle /rss.pl which I used in previous version
 if ($ENV{REQUEST_URI}=~/rss/i) {$ENV{HTTP_HOST} = "rss.$ENV{HTTP_HOST}";}
