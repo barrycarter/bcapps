@@ -50,6 +50,7 @@ for $i (0..$ns-1) {
   read(A,$buf,31820);
   dink_render_screen($buf,"screen$i.png");
   dink_sprite_data($buf,"screen$i.png");
+  if ($i>1) {die "TESTING";}
 }
 
 # Given the 31820 byte chunk representing a screen, recreate screen in
@@ -110,9 +111,9 @@ sub dink_sprite_data {
     for $i (@scripts) {$sprite=~s/(.{13})//s;$sprite{"$i_script"}=$1;}
     for $i (@smore) {$sprite=~s/(.{4})//s;$sprite{$i} = unpack("i4",$1);}
 
-    # TODO: more tests here to see when NOT to display sprite (eg, active?)
-    # if not in vision 0, ignore
-    if ($sprite{vision}) {next;}
+    # TODO: more tests here to see when NOT to display sprite
+    # if not in all visions, invisible or inactive, don't show
+    if ($sprite{vision} || $sprite{type}==3 || !$sprite{active}) {next;}
 
     # filename (note 2-char padding for frame)
     $sprite{frame2} = sprintf("%0.2d", $sprite{frame});
@@ -125,11 +126,36 @@ sub dink_sprite_data {
     $sprite{xpos2}=$sprite{xpos}-$sprite{xdelta};
     $sprite{ypos2}=$sprite{ypos}-$sprite{ydelta};
 
-    push(@sprites, "-page +$sprite{xpos2}+$sprite{ypos2} $sprite{fname}");
+    # the z coordinate (higher values over lower values); default is que
+    $sprite{z} = $sprite{que};
+    # if background sprite, lowest value
+    if ($sprite{type}==0) {$sprite{z} = -Infinity;}
+    # special case for 0
+    if ($sprite{que}==0) {$sprite{z} = $sprite{ypos};}
+
+    push(@sprites,\%sprite);
+
+    for $i (@sprites) {
+      debug("<SPRITE>");
+      for $j (sort keys %{$i}) {
+	debug("$j -> $i->{$j}");
+      }
+      debug("</SPRITE>");
+    }
+
+#    push(@sprites, "-page +$sprite{xpos2}+$sprite{ypos2} $sprite{fname}");
   }
 
-  my($sprites) = join(" ",@sprites);
-  my($out,$err,$res) = cache_command2(transdebug("convert -page +0+0 $image $sprites -layers flatten temp-$image"));
+  # sort by z value
+  my(@overlays);
+  for $j (sort {$a->{z} <=> $b->{z}} @sprites) {
+    push(@overlays, "-page +$j->{xpos2}+$j->{ypos2} $j->{fname}");
+  }
+
+  my($overlays) = join(" ",@overlays);
+  debug("OL: $overlays");
+
+  my($out,$err,$res) = cache_command2("convert -page +0+0 $image $overlays -layers flatten temp-$image");
 }
 
 # reads the standard Dink.ini file (not mod-specific), returns a

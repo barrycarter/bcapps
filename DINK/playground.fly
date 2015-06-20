@@ -1,0 +1,9 @@
+# attempt to add numbers to a Dink map (by converting it to GIF first)
+# if this works, will create a program probably
+existing map.gif
+string 255,255,255,6,1,giant,0
+string 255,255,255,6,21,giant,1
+string 255,255,255,6,41,giant,2
+string 255,255,255,1,161,giant,10
+
+

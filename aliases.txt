@@ -186,3 +186,10 @@ alias alarm2 "/home/barrycarter/BCGIT/bc-alarm.pl \!*"
 
 # long form of ps that provides more info, as used by bc-daemon-checker2.pl
 alias pslong "ps -wwweo 'pid ppid etime rss vsz stat args' \!*"
+
+# open a file in firefox directly from cmd line (fail, will need prog?)
+# TODO: only works for one file
+alias firefoxfile "readlink -f \!* | bc-open-urls.pl"
+# works for phrases (even without quotes) though it shouldnt
+alias firefoxgoogle "echo 'http://google.com/search?q=\!*' | bc-open-urls.pl"
+
