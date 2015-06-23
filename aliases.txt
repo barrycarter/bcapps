@@ -119,6 +119,7 @@ alias bcgit "pushd .; cd ~/BCGIT; git add .; git commit; git pull -v; git push  
 
 # running stuff from non-home-dir can do weird things, so..
 alias gnumeric "pushd .; cd ~; \gnumeric \!* & popd"
+alias skype "pushd .; cd ~; /root/build/skype-4.3.0.37/skype \!*& popd"
 
 # hex2dec often needed
 alias hex2dec "bc-call-func.pl hex \!*"

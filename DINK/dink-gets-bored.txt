@@ -1,0 +1,42 @@
+# interesting grid points on Dink Gets Bored game (for possible map
+# creation pending author permission); coords are x y, top left is 0 0
+
+# two below shouldnt be on same spot hmmmm
+14 9 landing spot
+14 9 save game
+
+15 9 darryl
+13 11 gold
+13 12 potion
+10 14 gold
+
+# below appears to be random?
+9 13 man w gold
+
+10 11 charla
+10 11 nut tree
+
+13 8 potion
+15 11 gold
+12 10 duck statue
+11 9 potion
+13 7 gold
+14 5 bridge
+14 5 dangerous area sign
+9 2 road closed sign
+9 1 landslide
+7 5 gold
+6 5 boring warehouse
+6 7 gold
+12 4 gold
+12 4 kalest heights entry
+19 4 gold
+17 6 man vs raptor
+16 11 goblin block
+18 5 gold
+15 5 gold
+15 11 gold
+10 15 gold
+
+
+# BUG: leave at least one space free to get sword; do not fill up on nuts

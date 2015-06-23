@@ -1,0 +1,15 @@
+14 2 start
+15 2 goblin blockade
+14 1 james house
+15 1 george/johanna house
+13 1 edward house
+14 0 dink house
+17 0 gap in fence
+18 2 potions
+17 1 hole to 18 3
+18 3 hole to 17 1
+18 4 potions
+19 2 bridge?
+20 3 game save/part 2 starts
+21 2 potions log block
+

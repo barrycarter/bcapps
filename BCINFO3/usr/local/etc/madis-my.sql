@@ -49,4 +49,5 @@ DELETE FROM madis WHERE ABS(latitude)>90 OR ABS(longitude)>180;
 -- m2.source='http://mesowest.utah.edu/data/mesowest.out.gz'));
 
 -- after all these deletes, vacuum and analyze
-OPTIMIZE TABLE madis;
+-- commented out below after it appeared to be causing issues
+-- OPTIMIZE TABLE madis;

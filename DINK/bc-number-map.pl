@@ -9,16 +9,19 @@ print "existing map.gif\n";
 
 for $i (0..31) {
 
-  # adjust for two digits
-  my($x) = $i<10?6:1;
-  my($y) = 1+20*$i;
+  my($pos) = $i*20;
 
-  print "string 255,255,255,$x,$y,giant,$i\n";
-  print "string 255,255,255,$y,$x,giant,$i\n";
+  # adjust for two digits
+  my($x) = $i<10?8:6;
+  my($y) = 6+$pos;
+  my($y2) = $i<10?$y+2:$y;
+
+  print "string 255,255,255,$x,$y,tiny,$i\n";
+  print "string 255,255,255,$y2,6,tiny,$i\n";
 
 #  if ($i%5==0) {
-    print "dline 0,$y,640,$y,0,0,255\n";
-    print "dline $y,0,$y,480,0,0,255\n";
+    print "dline 0,$pos,640,$pos,0,0,255\n";
+    print "dline $pos,0,$pos,480,0,0,255\n";
 #  }
 
 }
