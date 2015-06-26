@@ -6,14 +6,14 @@
 require "/usr/local/lib/bclib.pl";
 
 # create dink.dat (always 11488 bytes)
-my($str)="Smallwood"."\0"x12;
+my($str)="Smallwood"."\0"x13;
 
 # screen indices as 4 byte integers
 # for $i (1..511) {
-for $i (1..256) {
+for $i (0..511) {
   $str.="\x0\x0";
-  if ($i<=255) {$str.="\x0".chr($i); next;}
-  $str.="\x1".chr($i-255);
+  if ($i<=255) {$str.=chr($i)."\x0"; next;}
+  $str.=chr($i-256)."\x1";
 }
 
 # rest of the file can be empty (ie, null)
