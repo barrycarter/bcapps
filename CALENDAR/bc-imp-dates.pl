@@ -50,11 +50,12 @@ my(@dates);
 	  "Boxing Day" => "1226",
 	  "All Saints Day" => "1101",
 	  "All Souls Day" => "1102",
-	  "St Peter and Paul Day" => "0629",
+	  "St Peter/Paul Day" => "0629",
 	  "QE II Birthday" => "0421",
 	  "UN Children's Day" => "1120",
 	  "JFK Birthday" => "0529",
 	  "Guy Fawke's Day" => "1105",
+	  "Running of Bulls" => "0707",
 	  "" => ""
 	  );
 
@@ -115,6 +116,10 @@ for $i (2015..2037) {
   # fixed dates
   for $j (keys %fixed) {push(@dates, "${i}$fixed{$j}", $j);}
 
+  # Gilroy Garlic Festival (last weekend in July, Sunday must be in July)
+  push(@dates, datePlusDays(weekdayAfterDate("${i}0801", 0, -1),-2),
+       "Gilroy GarlicFest");
+
   # http://en.wikipedia.org/wiki/Friendship_Day (first Sunday)
   push(@dates, weekdayAfterDate("${i}0801",0,0), "Friendship Day");
 
@@ -152,7 +157,7 @@ for $i (2015..2037) {
   push(@dates, weekdayAfterDate("${i}0501", "0", 1), "Mothers' Day");
   # same day below
   push(@dates, weekdayAfterDate("${i}0601", "0", 2), "Fathers' Day");
-  push(@dates, weekdayAfterDate("${i}0601", "0", 2), "US Open Golf Finals");
+  push(@dates, weekdayAfterDate("${i}0601", "0", 2), "US Open Golf Final");
   push(@dates, weekdayAfterDate("${i}0301", "0", 1), "DST +1 hour");
   push(@dates, weekdayAfterDate("${i}1101", "0", 0), "DST -1 hour");
   # technically washington's birthday...

@@ -135,6 +135,11 @@ sub shorten {
   # short form for meteor showers
   $event=~s/(^.*?) Shower: ZHR = (\d+)/${1}s ($2\/hr)/;
 
+  # others
+  $event=~s/aquarids/Aqu/i;
+  $event=~s/regulus/AlfLeo/i;
+  $event=~s/aphelion: /Sun-Ear: /i;
+
   debug("EV: $event");
 
   return "$sdate $event\n";

@@ -99,7 +99,7 @@ email openfetlife\@mail.com
 <form action="/bc-fl-search.pl" method="GET"><table border>
 
 <tr><th colspan=2>
-EXPERIMENTAL UNOFFICIAL FetLife Search Form (not affiliated with FetLife)
+EXPERIMENTAL UNOFFICIAL FetLife Search Engine Form (not affiliated with FetLife)
 </th></tr>
 
 <tr><th>Gender</th><td>$genders

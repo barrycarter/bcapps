@@ -102,3 +102,12 @@ debug(substr($all,1,31280));
 # 12x8 layout of 96 tiles per screen,  50x50 per tile
 
 
+# Dink allows 96 tiles per screen (eg,
+# /usr/share/dink/dink/tiles/Ts02.bmp), but the numbers start at
+# multiples of 128 only
+
+# total theoretical tiles: 512 tilescreens, 96 tiles/screen = 49152 tiles
+
+# at 50x50 per tile, 122 megapixels or 11Kx11K image
+
+# or 512 images of 640x480 each
