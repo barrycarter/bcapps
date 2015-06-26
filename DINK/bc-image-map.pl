@@ -6,29 +6,25 @@
 require "/usr/local/lib/bclib.pl";
 
 # create dink.dat (always 11488 bytes)
-
-open(A,">temp.dink.dat");
-
-# 20 characters garbage
-print A "Smallwood";
-print A "\0"x12;
+my($str)="Smallwood"."\0"x12;
 
 # screen indices as 4 byte integers
-for $i (1..511) {
-# for $i (1..5) {
-  print A "\x0\x0";
-  if ($i<=255) {print A "\x0",chr($i); next;}
-  print A "\x1",chr($i-256);
+# for $i (1..511) {
+for $i (1..256) {
+  $str.="\x0\x0";
+  if ($i<=255) {$str.="\x0".chr($i); next;}
+  $str.="\x1".chr($i-255);
 }
 
 # rest of the file can be empty (ie, null)
-print A "\0"x9424;
+$str.="\0"x(11488-length($str));
 
-close(A);
+write_file($str,"temp.dink.dat");
 
 # can do at most 512 tiles this way, not all 768
 
-for $i (1..256) {
+# for $i (1..256) {
+for $i (1..150) {
 
   # each value of $ts references two tile screens
   my($ts) = int(($i-1)/2);
