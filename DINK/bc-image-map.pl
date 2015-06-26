@@ -8,9 +8,8 @@ require "/usr/local/lib/bclib.pl";
 # can do at most 512 tiles this way, not all 768
 
 for $i (1..512) {
-  # only the 21nd and 22nd byte are relevant
-  print "\0"x20;
-
-  my($s) = int(($i-1)/2);
-  my($t) = ($i-1)%256;
-  
+  # for each screen, the first tile screen
+  my($ts) = int(($i-1)/2);
+  # and each of the tiles for first/second screen
+  for $j (0..95,128..128+95) {print "\0"x20,chr($ts),chr($j),"\0"x58;}
+}
