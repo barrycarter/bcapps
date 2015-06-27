@@ -1,5 +1,13 @@
 # shell one liners
 
+# find PNG files that haven't been tesseract'd and tesseract them
+# (note: using .tess since I use .txt for feh annotations)
+
+find . -iname '*.png' | perl -nle 'unless (-f "$_.tess.txt") {print "tesseract $_ $_.tess"}'
+
+exit;
+
+
 # most indexed documents in recollindex (useful to trim out useless docs)
 
 fgrep '[/' recollindex.log | perl -nle '/\[(.*?)\]/; $x=$1; $x=~s/\|.*$//; print $x' | sort | uniq -c | sort -nr | tee /tmp/results.txt

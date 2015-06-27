@@ -10,7 +10,7 @@ my($str)="Smallwood"."\0"x13;
 
 # screen indices as 4 byte integers
 # for $i (1..511) {
-for $i (0..75) {
+for $i (0..81) {
   $str.="\x0\x0";
   if ($i<=255) {$str.=chr($i)."\x0"; next;}
   $str.=chr($i-256)."\x1";
@@ -24,7 +24,7 @@ write_file($str,"temp.dink.dat");
 # can do at most 512 tiles this way, not all 768
 
 # for $i (1..256) {
-for $i (1..38) {
+for $i (1..100) {
 
   # each value of $ts references two tile screens
   my($ts) = int(($i-1)/2);
