@@ -3,7 +3,7 @@
 # find PNG files that haven't been tesseract'd and tesseract them
 # (note: using .tess since I use .txt for feh annotations)
 
-# other extensions: .jfx (for JFAX TIFF files)
+# other extensions: .jfx (for JFAX TIFF files), .tif (TIFFs), .xif (more TIFFs)
 
 find . -iname '*.tif' | fgrep -v /.xvpics/ | perl -nle 'unless (-f "$_.tess.txt") {print "tesseract $_ $_.tess"}'
 
