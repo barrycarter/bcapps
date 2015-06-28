@@ -13,7 +13,7 @@ for $tile ("01".."511") {
   print A << "MARK";
 new
 size 600,400
-setpixel 0,0,255,255,255
+setpixel 0,0,255,192,192
 MARK
 ;
   for $y (1..8) {

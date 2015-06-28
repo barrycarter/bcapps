@@ -9,8 +9,8 @@ require "/usr/local/lib/bclib.pl";
 my($str)="Smallwood"."\0"x13;
 
 # screen indices as 4 byte integers
-for $i (1..511) {
-# for $i (0..82) {
+# for $i (0..511) {
+for $i (1..6) {
   $str.="\x0\x0";
   if ($i<=255) {$str.=chr($i)."\x0"; next;}
   $str.=chr($i-256)."\x1";
@@ -24,10 +24,10 @@ write_file($str,"temp.dink.dat");
 # can do at most 512 tiles this way, not all 768
 
 # for $i (1..256) {
-for $i (1..511) {
+for $i (0..2) {
 
   # each value of $ts references two tile screens
-  my($ts) = int(($i-1)/2);
+  my($ts) = $i;
 
   # and each of the tiles in screen 1
   for $j (0..95) {print "\0"x20,chr($j),chr($ts),"\0"x58;}
