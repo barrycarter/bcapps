@@ -8,9 +8,8 @@ require "/usr/local/lib/bclib.pl";
 # working dir
 dodie('chdir("/mnt/extdrive/FREEDINK/20150627/tiles/")');
 
-for $tile (1..511) {
-  # TODO: remember leading 0 for $tile<10
-  open(A,"|fly|convert gif:- ts$tile.bmp");
+for $tile ("01".."511") {
+  open(A,"|fly -q|convert gif:- ts$tile.bmp");
   print A << "MARK";
 new
 size 600,400
@@ -25,6 +24,4 @@ MARK
       print A "string 0,0,0,$px,",$py+10,",small,y=$y\n";
     }
   }
-  die "TESTING";
 }
-
