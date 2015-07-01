@@ -9,6 +9,10 @@
 # Extents: 34.8695709310438 to 35.2185421030882
 # Lon: -107.190882540743 to -106.149658771479
 
+# True city limits (28 Jun 2015):
+# -106.8727864516886 to -106.4711832053026
+# 34.9471161943005 to 35.21795333996647
+
 require "/usr/local/lib/bclib.pl";
 
 print << "MARK";
@@ -19,7 +23,8 @@ MARK
 ;
 
 my($xmin,$xmax,$ymin,$ymax) = 
-  (-107.190882540743,-106.149658771479, 34.8695709310438, 35.2185421030882);
+#  (-107.190882540743,-106.149658771479, 34.8695709310438, 35.2185421030882);
+(-106.8727864516886,-106.4711832053026,34.9471161943005,35.21795333996647);
 
 open(A,"bzcat $bclib{githome}/db/abqaddr.bz2|");
 
@@ -40,14 +45,15 @@ $latlon) = split(/\|/, $_);
   if ($saddr=~/^\d*$/||$saddr=~/99999/) {next;}
 
   # TODO: this is just to avoid too much printing
-  if (rand()<.9) {next;}
+#  if (rand()<.9) {next;}
 
-  # TODO: lat may be upside down (then again, east = up in ABQ?)
   my($x) = round(($lon-$xmin)/($xmax-$xmin)*19200);
-  my($y) = round(($lat-$ymin)/($ymax-$ymin)*6400);
+  my($y) = round((1-($lat-$ymin)/($ymax-$ymin))*6400);
 
   # TODO: this map is stretched, need to fix that
   print "string 0,0,0,$x,$y,tiny,$saddr\n";
+#  print "setpixel $x,$y,255,0,0\n";
+#  print "fcircle $x,$y,2,255,0,0\n";
 }
 
 die "TESTING";

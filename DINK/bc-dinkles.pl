@@ -107,8 +107,9 @@ sub dink_sprite_data {
 
     my(%sprite);
     # ints, scripts, more ints
+    debug("SCRIPTS",@scripts);
     for $i (@sdata) {$sprite=~s/(.{4})//s;$sprite{$i} = unpack("i4",$1);}
-    for $i (@scripts) {$sprite=~s/(.{13})//s;$sprite{"$i_script"}=$1;}
+    for $i (@scripts) {$sprite=~s/(.{13})//s;$sprite{"${i}_script"}=$1;}
     for $i (@smore) {$sprite=~s/(.{4})//s;$sprite{$i} = unpack("i4",$1);}
 
     # TODO: more tests here to see when NOT to display sprite
