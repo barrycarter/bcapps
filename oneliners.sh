@@ -5,7 +5,7 @@
 
 # other extensions: .jfx (for JFAX TIFF files), .tif (TIFFs), .xif (more TIFFs)
 
-find . -iname '*.tif' | fgrep -v /.xvpics/ | perl -nle 'unless (-f "$_.tess.txt") {print "tesseract $_ $_.tess"}'
+find . -iname '*.png' | fgrep -v /.xvpics/ | perl -nle 'unless (-f "$_.tess.txt") {print "tesseract $_ $_.tess"}'
 
 exit;
 

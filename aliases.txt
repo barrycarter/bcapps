@@ -194,3 +194,8 @@ alias firefoxfile "readlink -f \!* | bc-open-urls.pl"
 # works for phrases (even without quotes) though it shouldnt
 alias firefoxgoogle "echo 'http://google.com/search?q=\!*' | bc-open-urls.pl"
 
+# brings up file in currently running *terminal* version of xemacs
+# (which must be running "gnuserv-start"); should rewrite this to use
+# gnuclient, but how?
+
+alias emacsfile 'readlink -f \!* | xargs -I : gnudoit \(find-file \":\"\)'
