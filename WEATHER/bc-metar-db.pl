@@ -45,8 +45,13 @@ print A << "MARK";
 BEGIN;
 DELETE FROM metar_now;
 DELETE FROM buoy_now;
+DELETE FROM ship_now;
+
 DELETE FROM metar WHERE (strftime('%s', 'now') - strftime('%s', observation_time) > 86400) OR (strftime('%s', 'now') - strftime('%s', timestamp) > 100000);
+
 DELETE FROM buoy WHERE YYYY*10000 + MM*100 + DD + hh/100. + minute/10000 < $yest;
+
+
 MARK
 ;
 
@@ -73,18 +78,3 @@ unless ($globopts{nodaemon}) {
   warn("In --nodaemon mode, not running bc-query-gobbler.pl");
 }
 
-
-=item schema
-
-Schema for ship tables:
-
-CREATE TABLE ship (day, dewpoint_c, gust, latitude, longitude, maxgst,
-sea_level_pressure_mb, station_id, temp_c, wind);
-
-CREATE TABLE ship_now (day, dewpoint_c, gust, latitude, longitude, maxgst,
-sea_level_pressure_mb, station_id, temp_c, wind);
-
-CREATE UNIQUE INDEX i5 ON ship_now(station_id);
-CREATE UNIQUE INDEX i6 ON ship(station_id, day);
-
-=cut
