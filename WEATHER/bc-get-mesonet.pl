@@ -120,13 +120,3 @@ for $i (@queries) {
 
 print A "COMMIT;\n";
 close(A);
-
-
-
-
-
-
-
-
-
-

@@ -1,5 +1,14 @@
 #!/bin/sh
 
+# create a per-backup list of files (from "zpaq list" outputs) in
+# exclude format; results can be "sort -m" together for current
+# exclusion list
+
+cd /mnt/extdrive2/massbacks;
+\ls *.list | perl -nle 'unless (-f "$_.exclude.srt") {print "bc-zpaq2exclude.pl $_|sort>$_.exclude.srt"}'
+
+exit; 
+
 zip -v -tt 11212014 -r oldstuff /usr/local/etc/weekly-backups/files
 
 exit;

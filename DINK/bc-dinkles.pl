@@ -50,7 +50,6 @@ for $i (0..$ns-1) {
   read(A,$buf,31820);
   dink_render_screen($buf,"screen$i.png");
   dink_sprite_data($buf,"screen$i.png");
-  if ($i>1) {die "TESTING";}
 }
 
 # Given the 31820 byte chunk representing a screen, recreate screen in
@@ -107,7 +106,7 @@ sub dink_sprite_data {
 
     my(%sprite);
     # ints, scripts, more ints
-    debug("SCRIPTS",@scripts);
+#    debug("SCRIPTS",@scripts);
     for $i (@sdata) {$sprite=~s/(.{4})//s;$sprite{$i} = unpack("i4",$1);}
     for $i (@scripts) {$sprite=~s/(.{13})//s;$sprite{"${i}_script"}=$1;}
     for $i (@smore) {$sprite=~s/(.{4})//s;$sprite{$i} = unpack("i4",$1);}
@@ -124,8 +123,11 @@ sub dink_sprite_data {
 
     # figure out true x y coords
     ($sprite{xdelta},$sprite{ydelta}) = split(/\s+/, $dinksprites{"$sprite{seq}.$sprite{frame}"});
+
     $sprite{xpos2}=$sprite{xpos}-$sprite{xdelta};
     $sprite{ypos2}=$sprite{ypos}-$sprite{ydelta};
+#    $sprite{xpos2}=$sprite{xpos}-$sprite{xdelta}*$sprite{size}/100;
+#    $sprite{ypos2}=$sprite{ypos}-$sprite{ydelta}*$sprite{size}/100;
 
     # the z coordinate (higher values over lower values); default is que
     $sprite{z} = $sprite{que};
@@ -137,11 +139,11 @@ sub dink_sprite_data {
     push(@sprites,\%sprite);
 
     for $i (@sprites) {
-      debug("<SPRITE>");
+#      debug("<SPRITE>");
       for $j (sort keys %{$i}) {
-	debug("$j -> $i->{$j}");
+#	debug("$j -> $i->{$j}");
       }
-      debug("</SPRITE>");
+#      debug("</SPRITE>");
     }
 
 #    push(@sprites, "-page +$sprite{xpos2}+$sprite{ypos2} $sprite{fname}");
@@ -149,8 +151,15 @@ sub dink_sprite_data {
 
   # sort by z value
   my(@overlays);
+  my($tempcount);
   for $j (sort {$a->{z} <=> $b->{z}} @sprites) {
-    push(@overlays, "-page +$j->{xpos2}+$j->{ypos2} $j->{fname}");
+    ++$tempcount;
+#    unless ($tempcount==7) {next;}
+
+    debug(dump_var("SPRITE",$j));
+
+#    push(@overlays, "-page +$j->{xpos2}+$j->{ypos2} $j->{fname}");
+    push(@overlays, "-page +$j->{xpos2}+$j->{ypos2} '$j->{fname}\[$j->{size}%\]'");
   }
 
   my($overlays) = join(" ",@overlays);

@@ -47,11 +47,9 @@ DELETE FROM metar_now;
 DELETE FROM buoy_now;
 DELETE FROM ship_now;
 
-DELETE FROM metar WHERE (strftime('%s', 'now') - strftime('%s', observation_time) > 86400) OR (strftime('%s', 'now') - strftime('%s', timestamp) > 100000);
-
-DELETE FROM buoy WHERE YYYY*10000 + MM*100 + DD + hh/100. + minute/10000 < $yest;
-
-
+DELETE FROM metar WHERE timestamp < DATETIME(CURRENT_TIMESTAMP, '-24 hour');
+DELETE FROM buoy WHERE timestamp < DATETIME(CURRENT_TIMESTAMP, '-24 hour');
+DELETE FROM ship WHERE timestamp < DATETIME(CURRENT_TIMESTAMP, '-24 hour');
 MARK
 ;
 
@@ -77,4 +75,3 @@ unless ($globopts{nodaemon}) {
 } else {
   warn("In --nodaemon mode, not running bc-query-gobbler.pl");
 }
-
