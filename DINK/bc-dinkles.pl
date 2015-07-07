@@ -46,6 +46,10 @@ my($buf);
 # go through screens
 for $i (0..$ns-1) {
   debug("SCREEN $i\n\n");
+
+  # testing
+#  unless ($i==21) {next;}
+
   seek(A,31280*$i,SEEK_SET);
   read(A,$buf,31820);
   dink_render_screen($buf,"screen$i.png");
@@ -69,9 +73,11 @@ sub dink_render_screen {
       $data=~s/^.{20}(.)(.)(.{58})//s;
       # tile number and screen number (wraparound if $t>=128)
       my($t,$s) = (ord($1),2*ord($2)+1);
-      if ($t>=128) {$s++; $t=-128;}
+      debug("TS: $t $s");
+      if ($t>=128) {$s++; $t-=128;}
       # top left pixel
       my($px,$py) = ($t%12*50,int($t/12)*50);
+      debug("X: $x, Y: $y, T: $t, S: $s, PX/PY: $px/$py");
       # TODO: look for tiles in game itself, not just stdloc
       # create if not already existing
       unless (-f "/var/cache/DINK/tile-$s-$px-$py.png") {
@@ -173,8 +179,13 @@ sub dink_sprite_data {
 
 sub read_dink_ini {
   my(%result);
-  my(@lines) = split(/\n/, read_file("/usr/share/dink/dink/Dink.ini"));
-  push(@lines, split(/\n/, read_file("$bclib{githome}/DINK/dink-more.ini")));
+
+  my(@lines) = split(/\n/, read_file(glob("$moddir/[Dd][iI][nN][kK].[iI][nN][iI]")));
+#  debug("LINES",@lines);
+
+  # TODO: restore reading default file when needed
+#  my(@lines) = split(/\n/, read_file("/usr/share/dink/dink/Dink.ini"));
+#  push(@lines, split(/\n/, read_file("$bclib{githome}/DINK/dink-more.ini")));
 
   for $i (@lines) {
     if ($i=~m%^load_sequence(_now)?\s+.*\\(.*?)\s+(\d+)%){$result{$3}=uc($2);}
