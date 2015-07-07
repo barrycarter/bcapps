@@ -48,7 +48,7 @@ for $i (0..$ns-1) {
   debug("SCREEN $i\n\n");
 
   # testing
-#  unless ($i==21) {next;}
+  unless ($i==21) {next;}
 
   seek(A,31280*$i,SEEK_SET);
   read(A,$buf,31820);
@@ -180,12 +180,11 @@ sub dink_sprite_data {
 sub read_dink_ini {
   my(%result);
 
-  my(@lines) = split(/\n/, read_file(glob("$moddir/[Dd][iI][nN][kK].[iI][nN][iI]")));
-#  debug("LINES",@lines);
-
-  # TODO: restore reading default file when needed
-#  my(@lines) = split(/\n/, read_file("/usr/share/dink/dink/Dink.ini"));
-#  push(@lines, split(/\n/, read_file("$bclib{githome}/DINK/dink-more.ini")));
+  # read standard dink.ini, my addition to it and game-specific ini
+  # (later lines will override earlier ones)
+  my(@lines) = split(/\n/, read_file("/usr/share/dink/dink/Dink.ini"));
+  push(@lines, split(/\n/, read_file("$bclib{githome}/DINK/dink-more.ini")));
+  push(@lines,split(/\n/, read_file(glob("$moddir/[Dd][iI][nN][kK].[iI][nN][iI]"))));
 
   for $i (@lines) {
     if ($i=~m%^load_sequence(_now)?\s+.*\\(.*?)\s+(\d+)%){$result{$3}=uc($2);}
