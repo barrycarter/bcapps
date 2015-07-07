@@ -2,7 +2,7 @@
 
 # Given a user id and a valid fl_session_id cookie value, generate a
 # list of URLs for thumbnail images for that user (which are easily
-# converted to full size by changing the _120 to _720 or whatever);
+# converted to full size by changing the _120 to _958 or whatever);
 # does not actually download the images, which can be done separately
 # and does not require a cookie
 
