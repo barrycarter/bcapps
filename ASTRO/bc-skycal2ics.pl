@@ -10,7 +10,7 @@ for $i (0..$#months) {$months{substr($months[$i],0,3)} = sprintf("%02d",$i);}
 
 my($month);
 
-open(A,">$bclib{githome}/BCINFO3/sites/data/calendar/bcimpdates.ics");
+open(A,">$bclib{githome}/BCINFO3/sites/data/calendar/skycal.ics");
 
 print A << "MARK";
 BEGIN:VCALENDAR\r
