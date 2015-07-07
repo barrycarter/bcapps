@@ -62,6 +62,7 @@ for $i (0..$ns-1) {
 sub dink_render_screen {
   my($data,$file) = @_;
 
+  # TODO: dink_sprite_data should also return or neither sub should be called
   if (-f $file) {return;}
 
   local(*A);
@@ -73,11 +74,9 @@ sub dink_render_screen {
       $data=~s/^.{20}(.)(.)(.{58})//s;
       # tile number and screen number (wraparound if $t>=128)
       my($t,$s) = (ord($1),2*ord($2)+1);
-      debug("TS: $t $s");
       if ($t>=128) {$s++; $t-=128;}
       # top left pixel
       my($px,$py) = ($t%12*50,int($t/12)*50);
-      debug("X: $x, Y: $y, T: $t, S: $s, PX/PY: $px/$py");
       # TODO: look for tiles in game itself, not just stdloc
       # create if not already existing
       unless (-f "/var/cache/DINK/tile-$s-$px-$py.png") {
@@ -121,11 +120,17 @@ sub dink_sprite_data {
     # if not in all visions, invisible or inactive, don't show
     if ($sprite{vision} || $sprite{type}==3 || !$sprite{active}) {next;}
 
+    # find transparent PNG version of this sprite (or create it)
+    debug(dump_var("SPRITE",\%sprite));
+    dink_sprite_png(\%sprite);
+
+    die "TESTING";
+
     # filename (note 2-char padding for frame)
     $sprite{frame2} = sprintf("%0.2d", $sprite{frame});
     $sprite{fname} = "$bclib{githome}/DINK/PNG/$dinksprites{$sprite{seq}}$sprite{frame2}.PNG";
 
-    unless (-f $sprite{fname}) {warn "NOFILE: $sprite{fname}, ignoring"; next;}
+#    unless (-f $sprite{fname}) {warn "NOFILE: $sprite{fname}, ignoring"; next;}
 
     # figure out true x y coords
     ($sprite{xdelta},$sprite{ydelta}) = split(/\s+/, $dinksprites{"$sprite{seq}.$sprite{frame}"});
@@ -162,8 +167,6 @@ sub dink_sprite_data {
     ++$tempcount;
 #    unless ($tempcount==7) {next;}
 
-    debug(dump_var("SPRITE",$j));
-
 #    push(@overlays, "-page +$j->{xpos2}+$j->{ypos2} $j->{fname}");
     push(@overlays, "-page +$j->{xpos2}+$j->{ypos2} '$j->{fname}\[$j->{size}%\]'");
   }
@@ -187,8 +190,18 @@ sub read_dink_ini {
   push(@lines,split(/\n/, read_file(glob("$moddir/[Dd][iI][nN][kK].[iI][nN][iI]"))));
 
   for $i (@lines) {
-    if ($i=~m%^load_sequence(_now)?\s+.*\\(.*?)\s+(\d+)%){$result{$3}=uc($2);}
+    if ($i=~m%^load_sequence(_now)?\s+(.*?)\s+(\d+)%){$result{$3}=uc($2);}
     if ($i=~/^SET_SPRITE_INFO\s+(\d+)\s+(\d+)\s+(.*)$/) {$result{"$1.$2"}=$3;}
   }
   return %result;
+}
+
+# finds or creates the file that is the transparent PNG version of a
+# given sprite (sent as hash)
+
+sub dink_sprite_png {
+  my($spriteref) = @_;
+  my(%sprite) = %{$spriteref};
+  my($path) = $dinksprites{$sprite{seq}};
+  debug("PATH: $path/$sprite{frame}");
 }
