@@ -2,9 +2,15 @@
 
 # Usage: $0 directory-where-mod-is (last part of dir will be used as map name)
 
+# NOTE: you must run "ffrextract" in /usr/share/dink/dink for this to
+# work (running it at toplevel will create BMPs in subdirectories as
+# needed)
+
 # A direct attempt at creating maps for Dink D-Mods
 
 require "/usr/local/lib/bclib.pl";
+
+my($dinkdir) = "/usr/share/dink/dink";
 
 # the 4-byte integers at the start of a sprite (before the 14 character script)
 
@@ -122,15 +128,9 @@ sub dink_sprite_data {
 
     # find transparent PNG version of this sprite (or create it)
     debug(dump_var("SPRITE",\%sprite));
-    dink_sprite_png(\%sprite);
+    $sprite{fname} = dink_sprite_png(\%sprite);
 
-    die "TESTING";
-
-    # filename (note 2-char padding for frame)
-    $sprite{frame2} = sprintf("%0.2d", $sprite{frame});
-    $sprite{fname} = "$bclib{githome}/DINK/PNG/$dinksprites{$sprite{seq}}$sprite{frame2}.PNG";
-
-#    unless (-f $sprite{fname}) {warn "NOFILE: $sprite{fname}, ignoring"; next;}
+    debug("FNAME: $fname");
 
     # figure out true x y coords
     ($sprite{xdelta},$sprite{ydelta}) = split(/\s+/, $dinksprites{"$sprite{seq}.$sprite{frame}"});
@@ -148,22 +148,16 @@ sub dink_sprite_data {
     if ($sprite{que}==0) {$sprite{z} = $sprite{ypos};}
 
     push(@sprites,\%sprite);
-
-    for $i (@sprites) {
-#      debug("<SPRITE>");
-      for $j (sort keys %{$i}) {
-#	debug("$j -> $i->{$j}");
-      }
-#      debug("</SPRITE>");
-    }
-
-#    push(@sprites, "-page +$sprite{xpos2}+$sprite{ypos2} $sprite{fname}");
   }
 
   # sort by z value
   my(@overlays);
   my($tempcount);
   for $j (sort {$a->{z} <=> $b->{z}} @sprites) {
+
+    # TODO: this is probably bad
+    unless ($j->{fname}) {next;}
+
     ++$tempcount;
 #    unless ($tempcount==7) {next;}
 
@@ -199,9 +193,23 @@ sub read_dink_ini {
 # finds or creates the file that is the transparent PNG version of a
 # given sprite (sent as hash)
 
+# TODO: currently just using raw bmp for testing
+
 sub dink_sprite_png {
   my($spriteref) = @_;
   my(%sprite) = %{$spriteref};
-  my($path) = $dinksprites{$sprite{seq}};
-  debug("PATH: $path/$sprite{frame}");
+
+  # the "base" path
+  my($path) = sprintf("$dinksprites{$sprite{seq}}%02d.bmp",$sprite{frame});
+  # convert backslashes to forward ones
+  $path=~s%\\+%/%g;
+  # TODO: this should really be a subroutine (wildcard glob)
+  $path=~s/([a-z])/"\[".lc($1).uc($1)."\]"/ieg;
+
+  # search in moddir first, then dinkdir
+  # two candidates to match
+  my($g1) = glob("$moddir/$path");
+  if ($g1) {return $g1;}
+  # this will (correctly) return empty if in neither place
+  return glob("$dinkdir/$path");
 }
