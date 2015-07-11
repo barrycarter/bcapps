@@ -9,49 +9,39 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# order in which to print per-user fields (also used for header)
+# order in which to print per-user fields
 my(@fields) = ("id", "screenname", "age", "gender", "role", "city", "state",
-	       "country", "thumbnail", "popnum", "popnumtotal", "source", "mtime");
+	       "country", "thumbnail", "popnum", "popnumtotal", "source",
+	       "jloc", "mtime");
 
-print join(",",@fields),"\n";
+# Since I tend to cat(enate) output of this program, no header
+# print join(",",@fields),"\n";
 
 for $i (@ARGV) {
 
-  unless (-f $i) {
-    warn("NO SUCH FILE: $i");
-    next;
-  }
+  unless (-f $i) {warn("NO SUCH FILE: $i"); next;}
 
-  # using $_ is probably a bad idea, and my'ing it is maybe worse
-  my($_);
-
+  my($all,$err,$res) = cache_command2("bzcat -f $i");
   my($mtime) = (stat($i))[9];
-  if ($i=~/\.bz2$/) {$_ = join("",`bzcat $i`);}else{$_ = read_file($i);}
 
-  # find URL of this page (indirectly)
-  s%<a href="([^>]*?)">return to [^<]*?</a>%%is||warn("NO UPPAGE: $i");
-  my($source) = $1;
-  # TODO: may not work on last page for given country
-  # (actually, think that only applies if page is blank so ok?)
-  # temporarily not caring about missing page number due to other error
-  s%<em class="current">(\d+)</em>%%||debug("NO PAGE#: $i");
-  # TODO: read https
-#  $source = "https://fetlife.com$source/kinksters?page=$1";
-  $source = "fetlife.com$source/kinksters?page=$1";
-
-  unless (index($i,$source)) {debug("$i vs $source");}
-
-  # how many of how many
-  s/showing\s*([\d,]+)\s*\-\s*([\d,]+)\s*of\s*([\d\,]+)//is||warn("ERR: $i: NO PAGE INFO");
+  # find out how many of how many we are showing (do this first to avoid errs)
+  $all=~s/showing\s*([\d,]+)\s*\-\s*([\d,]+)\s*of\s*([\d\,]+)//is||warn("ERR: $i: NO PAGE INFO");
   my(@pagedata) = ($1,$2,$3);
   map(s/\,//g, @pagedata);
+  # if showing x to y of z and x>z, we are on empty page
+  if ($pagedata[0]>$pagedata[2]) {debug("No data"); next;}
+  # this is uglier than looking up page# but works for all pages(?)
+  my($pagenum) = ceil($pagedata[0]/20);
 
-  # country (maybe) [this is fixed for a given page]
-  s%<title>Kinksters in (.*?) \- FetLife</title>%%is||warn("ERR: $i: NO COUNTRY DATA");
+  # find URL of this page (indirectly)
+  $all=~s%<a href="([^>]*?)">return to [^<]*?</a>%%is||warn("NO UPPAGE: $i");
+  my($source) = "fetlife.com$1/kinksters?page=$pagenum";
+  # country name
+  $all=~s%<title>Kinksters in (.*?) \- FetLife</title>%%is||warn("ERR: $i: NO COUNTRY DATA");
   my($country) = clean_country($1);
 
   # users
-  while (s%<div class="clearfix user_in_list">(.*?)</div>\s*</div>%%is) {
+  while ($all=~s%<div class="clearfix user_in_list">(.*?)</div>\s*</div>%%is) {
 
     # parse user
     my($user) = $1;
@@ -65,7 +55,9 @@ for $i (@ARGV) {
     $hash{source} = "https://$source";
 
     $user=~s%href=\"/users/(\d+)\".*alt=\"(.*?)\".*src=\"(.*?)\"%%||warn("ERR: $i: no id/screenname/thumbnail");
-    ($hash{id},$hash{screenname},$hash{thumbnail}) = ($1,$2,$3);
+    # hack to make numbers alpha sort (pushing limits of bad programming here)
+    ($hash{id},$hash{screenname},$hash{thumbnail}) =
+      (sprintf("%0.11d",$1),$2,$3);
 
     $user=~s%<span class="quiet">(.*?)</span>%%s||warn("ERR: $user: no age/gender/role");
     ($hash{age},$hash{gender},$hash{role}) = data2agr($1);
@@ -73,20 +65,20 @@ for $i (@ARGV) {
     $user=~s%<em class="small">(.*?)</em>%%s||warn("ERR: $i: no city/state");
     ($hash{city},$hash{state},$hash{country}) = loc2csc($1,$country);
 
+    # string to join to locations db, once I create it
+    $hash{jloc} = lc(join(".", $hash{city},$hash{state},$hash{country}));
+    $hash{jloc}=~s/[^a-z]/./ig;
+    $hash{jloc}=~s/^\.+//;
+    $hash{jloc}=~s/\.+$//;
+    $hash{jloc}=~s/\.+/./g;
+
     # and print
-    my(@print) = @fields; 
+    my(@print) = @fields;
     map($_=$hash{$_},@print);
-
-    # hideous hack so that numerical and alphabetic sort are identical
-    $print[0] = sprintf("%0.11d", $print[0]);
-
     # TODO: kill spurious commas, if any
     print join(",",@print),"\n";
-
-#    debug("LEFTOVER: $user");
-
-    next;
   }
+
   # -1 to compensate for extra unused increment at last user
   unless ($pagedata[0]-1 == $pagedata[1]) {warn "$i: lost users";}
 }
