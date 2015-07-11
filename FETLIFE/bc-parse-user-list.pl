@@ -13,15 +13,18 @@ require "/usr/local/lib/bclib.pl";
 my(@fields) = ("id", "screenname", "age", "gender", "role", "city", "state",
 	       "country", "thumbnail", "popnum", "popnumtotal", "source",
 	       "jloc", "mtime");
+my($fields) = join(", ",@fields);
 
-# Since I tend to cat(enate) output of this program, no header
-# print join(",",@fields),"\n";
+# using xargs, this means there will be "several" BEGIN/COMMIT blocks,
+# but I'm OK with that
+print "BEGIN;\n";
 
 for $i (@ARGV) {
 
   unless (-f $i) {warn("NO SUCH FILE: $i"); next;}
 
-  my($all,$err,$res) = cache_command2("bzcat -f $i");
+  # below is faster than cache_command2 (?) and doesn't clutter /var/tmp/
+  my($all) = join("",`bzcat -f $i`);
   my($mtime) = (stat($i))[9];
 
   # find out how many of how many we are showing (do this first to avoid errs)
@@ -55,9 +58,7 @@ for $i (@ARGV) {
     $hash{source} = "https://$source";
 
     $user=~s%href=\"/users/(\d+)\".*alt=\"(.*?)\".*src=\"(.*?)\"%%||warn("ERR: $i: no id/screenname/thumbnail");
-    # hack to make numbers alpha sort (pushing limits of bad programming here)
-    ($hash{id},$hash{screenname},$hash{thumbnail}) =
-      (sprintf("%0.11d",$1),$2,$3);
+    ($hash{id},$hash{screenname},$hash{thumbnail}) = ($1,$2,$3);
 
     $user=~s%<span class="quiet">(.*?)</span>%%s||warn("ERR: $user: no age/gender/role");
     ($hash{age},$hash{gender},$hash{role}) = data2agr($1);
@@ -66,22 +67,23 @@ for $i (@ARGV) {
     ($hash{city},$hash{state},$hash{country}) = loc2csc($1,$country);
 
     # string to join to locations db, once I create it
+    # TODO: this is ugly!
     $hash{jloc} = lc(join(".", $hash{city},$hash{state},$hash{country}));
     $hash{jloc}=~s/[^a-z]/./ig;
     $hash{jloc}=~s/^\.+//;
     $hash{jloc}=~s/\.+$//;
     $hash{jloc}=~s/\.+/./g;
 
-    # and print
-    my(@print) = @fields;
-    map($_=$hash{$_},@print);
-    # TODO: kill spurious commas, if any
-    print join(",",@print),"\n";
+    my($vals) = join(", ",map("'$hash{$_}'",@fields));
+    # TODO: open for "INSERT OR IGNORE" if we are using older data
+    print "REPLACE INTO kinksters ($fields) VALUES ($vals);\n";
   }
 
   # -1 to compensate for extra unused increment at last user
   unless ($pagedata[0]-1 == $pagedata[1]) {warn "$i: lost users";}
 }
+
+print "COMMIT;\n";
 
 # parses data into age, gender, role
 
