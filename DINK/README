@@ -1,2 +1,7 @@
 Stuff to do w/ freedink (game)
 
+# add these lines to dink.ini to use single-pixel horizontal/vertical sprites
+load_sequence_now extra\vsprite- 901 100
+load_sequence_now extra\hsprite- 902 100
+
+

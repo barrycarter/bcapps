@@ -1,3 +1,11 @@
+# find all used sprite numbers in all mods to date (which is actually
+# fairly pointless)
+
+find . -iname 'dink.ini' -print0 | xargs -0 egrep -ih '^load_sequence' | perl -anle 'print $F[2]' | sort -n | uniq > used.txt
+
+
+exit;
+
 # convert BMPs I dont already have to PNG (not all of them ship w/
 # dink?), some from http://www.rtsoft.com/dink/dinkgraphics.zip per
 # http://www.dinknetwork.com/forum.cgi?MID=189738&Posts=9

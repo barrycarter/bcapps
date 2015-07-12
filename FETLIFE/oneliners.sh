@@ -1,12 +1,3 @@
-# from the list of country files provided by bc-dl-by-region.pl,
-# enumerate administrative areas (with country given as number which
-# is uglyish)
-
-grep /administrative_areas/ countries-* 
-
-
-exit;
-
 # same as below, but adds dotted notation to existing CSV for join
 
 # result must be sorted by join field, (ie, "sort -t, -k14,14")
