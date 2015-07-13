@@ -4,10 +4,6 @@
 
 require "/usr/local/lib/bclib.pl";
 
-dink_read_save_dat(read_file("test/save0.dat"));
-
-die "TESTING";
-
 my($screen,$path) = @ARGV;
 
 # direction from $screen
@@ -32,7 +28,8 @@ for $y (1..8) {
 
     # for now, repeat the same tile
     # may end up doing this long term if we use background BMPs + alt hardness?
-    print A "\002\005";
+#    print A "\002\005";
+    print A "\000\000";
     # the other 58 chars that make up a tile
     print A "\000"x58;
   }
@@ -58,8 +55,7 @@ chomp($date);
 
 open(A,">$dir/story/DYNAMIC.c");
 print A << "MARK";
-&moves += 1;
-say_stop("direction: $screen ($dir[$screen]), time: $date, moves: &moves",1);
+say_stop("direction: $screen ($dir[$screen]), time: $date",1);
 // say_stop("direction: $screen ($dir[$screen]), time: $date",1);
 MARK
 ;
