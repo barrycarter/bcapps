@@ -6,17 +6,19 @@ require "/usr/local/lib/bclib.pl";
 
 my($screen,$path) = @ARGV;
 
+# code to run based on screen "entered"
 # direction from $screen
-my(@dir) = ("0", "north","2","south","west","east");
+# my(@dir) = ("0", "north","2","south","west","east");
+my(@dir) = ("", "&y += 1","","&y -= 1","&x -= 1","&x += 1");
 
 # figure out directory, we'll need it later
 my($dir) = $path;
 $dir=~s%/([^/]*?)$%%;
 
-open(A,">$path");
+# read save file
+my(%dinkvars) = dink_read_save_dat(read_file("$dir/save0.dat"));
 
-# unused screen name
-# print A "\0"x19;
+open(A,">$path");
 
 # the tiles
 
@@ -48,15 +50,12 @@ print A "\000"x1035;
 
 close(A);
 
-my($date)=`date`;
-chomp($date);
-
 # now create the script dynamically
 
 open(A,">$dir/story/DYNAMIC.c");
 print A << "MARK";
-say_stop("direction: $screen ($dir[$screen]), time: $date",1);
-// say_stop("direction: $screen ($dir[$screen]), time: $date",1);
+$dir[$screen];
+say_stop("Coords: &x,&y,&z",1);
 MARK
 ;
 
@@ -66,11 +65,13 @@ close(A);
 
 sub dink_read_save_dat {
   my($data) = @_;
+  my(%ret);
 
   while ($data=~s/(....)\&(.{20})//) {
     my($val,$var) = ($1,$2);
     $var=~s/\0//g;
     $val = unpack("i",$val);
-    debug("$var -> $val");
+    $ret{$var}=$val;
   }
+  return %ret;
 }
