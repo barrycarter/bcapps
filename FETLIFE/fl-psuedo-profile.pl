@@ -21,9 +21,13 @@ require "/usr/local/lib/bclib.pl";
 my($user) = @ARGV;
 
 # TODO: handle case where user not in eb
-my(@res) = sqlite3hashlist("SELECT * FROM kinksters WHERE id=$user", "/sites/DB/fetlife.db");
+my(@res) = mysqlhashlist("SELECT * FROM kinksters WHERE id=$user", "shared");
 
-my(%hash) = %{$res[0]};
+debug("RES",@res);
+
+my(%hash) = %{$res[1]};
+
+debug("HASH",%hash);
 
 # TODO: add content-type: text/html if needed if called as CGI
 
@@ -75,4 +79,40 @@ Not what you're looking for? Try the <a href="http://search.fetlife.94y.info/" t
 
 MARK
 ;
+
+=item mysqlhashlist($query,$db,$user)
+
+Run $query (should be a SELECT statement) on $db as $user, and return
+list of hashes, one for each row
+
+NOTE: return array first index is 1, not 0
+
+TODO: add error checking
+
+=cut
+
+sub mysqlhashlist {
+  my($query,$db,$user) = @_;
+  unless ($user) {$user="''";}
+  my(@res,$row);
+  chdir(tmpdir());
+
+  write_file($query,"query");
+
+  my($temp) = `date +%N`;
+  chomp($temp);
+  # TODO: for large resultsets, loading entire output may be bad
+  my($out,$err,$res) = cache_command2("mysql -w -u $user -E $db < query","salt=$query&cachefile=/tmp/cache.$temp");
+
+  debug("OUT: $out");
+
+  # go through results
+  for $i (split(/\n/,$out)) {
+    # new row
+    if ($i=~/^\*+\s*(\d+)\. row\s*\*+$/) {$row = $1; $res[$row]={}; next;}
+    unless ($i=~/^\s*(.*?):\s*(.*)/) {warn("IGNORING: $_"); next;}
+    $res[$row]->{$1}=$2;
+  }
+  return @res;
+}
 

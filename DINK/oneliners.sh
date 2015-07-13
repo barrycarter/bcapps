@@ -1,8 +1,14 @@
+# alpha: run this once from /usr/share/dink/dink to create transparent
+# PNG versions of all BMPs (note the resulting files end in .BMP.png)
+
+find graphics -iname '*.bmp' | perl -nle 'print "convert $_ -transparent white $_.png"'
+
+exit; 
+
 # find all used sprite numbers in all mods to date (which is actually
 # fairly pointless)
 
 find . -iname 'dink.ini' -print0 | xargs -0 egrep -ih '^load_sequence' | perl -anle 'print $F[2]' | sort -n | uniq > used.txt
-
 
 exit;
 

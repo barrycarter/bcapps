@@ -2,9 +2,11 @@
 
 # Usage: $0 directory-where-mod-is (last part of dir will be used as map name)
 
-# NOTE: you must run "ffrextract" in /usr/share/dink/dink for this to
-# work (running it at toplevel will create BMPs in subdirectories as
-# needed)
+# NOTE: you must run "ffrextract" once with no arguments in
+# /usr/share/dink/dink for this to work (running it at toplevel will
+# create BMPs in subdirectories as needed). See also "alpha" in oneliners.sh
+
+# must also convert all D-MOD specific BMPs to transparent PNGs
 
 # A direct attempt at creating maps for Dink D-Mods
 
@@ -127,15 +129,16 @@ sub dink_sprite_data {
     if ($sprite{vision} || $sprite{type}==3 || !$sprite{active}) {next;}
 
     # find transparent PNG version of this sprite (or create it)
-    debug(dump_var("SPRITE",\%sprite));
     $sprite{fname} = dink_sprite_png(\%sprite);
 
-    debug("FNAME: $fname");
+    debug("<sprite>",dump_var("SPRITE",\%sprite),"</sprite>");
+#    debug("FNAME: $fname");
 
     # figure out true x y coords
     ($sprite{xdelta},$sprite{ydelta}) = split(/\s+/, $dinksprites{"$sprite{seq}.$sprite{frame}"});
 
-    $sprite{xpos2}=$sprite{xpos}-$sprite{xdelta};
+    # the 20 appears to be an artifact of freedinkedit's left padding?!
+    $sprite{xpos2}=$sprite{xpos}-$sprite{xdelta}-20;
     $sprite{ypos2}=$sprite{ypos}-$sprite{ydelta};
 #    $sprite{xpos2}=$sprite{xpos}-$sprite{xdelta}*$sprite{size}/100;
 #    $sprite{ypos2}=$sprite{ypos}-$sprite{ydelta}*$sprite{size}/100;
@@ -200,7 +203,8 @@ sub dink_sprite_png {
   my(%sprite) = %{$spriteref};
 
   # the "base" path
-  my($path) = sprintf("$dinksprites{$sprite{seq}}%02d.bmp",$sprite{frame});
+#  my($path) = sprintf("$dinksprites{$sprite{seq}}%02d.bmp",$sprite{frame});
+  my($path) = sprintf("$dinksprites{$sprite{seq}}%02d.bmp.png",$sprite{frame});
   # convert backslashes to forward ones
   $path=~s%\\+%/%g;
   # TODO: this should really be a subroutine (wildcard glob)

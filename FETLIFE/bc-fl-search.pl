@@ -2,6 +2,8 @@
 
 # Frontend to fetlife.db.94y.info that allows access to some simple queries
 
+die "Obsoleted by MySQL";
+
 require "/usr/local/lib/bclib.pl";
 
 my($link);

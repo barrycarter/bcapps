@@ -1,5 +1,10 @@
 # shell one liners
 
+# (suggests) renaming files that make doesn't handle well (removes spaces)
+\ls | perl -nle '$x=$_; if (s/[^a-z0-9_\.\-\%\,]/_/isg) {print "mv \"$x\" $_"}'
+
+exit;
+
 # find PNG files that haven't been tesseract'd and tesseract them
 # (note: using .tess since I use .txt for feh annotations)
 
@@ -148,11 +153,6 @@ exit;
 # stellarium/etc lunar testing
 
 perl -le 'printf("%0.4f,%0.4f,%d\n",rand(360)-180,rand(180)-90,rand(10000))';
-
-exit;
-
-# (suggests) renaming files that make doesn't handle well (removes spaces)
-\ls | perl -nle '$x=$_; if (s/[^a-z0-9_\.\-\%\,]/_/isg) {print "mv \"$x\" $_"}'
 
 exit;
 

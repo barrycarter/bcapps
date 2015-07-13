@@ -8,6 +8,8 @@
 # --direction: set to -1 to go backwards
 # --list: obtain list of user numbers from stdin (start/direction ignored)
 
+die "Obsoleted by bc-dl-by-region.pl";
+
 require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
 

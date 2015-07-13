@@ -13,7 +13,7 @@ deep-crawling https://fetlife.com/places and via other methods.
 
 You can search a database version of the list at:
 
-http://fetlife.db.94y.info/
+http://search.fetlife.94y.info/
 
 NOTE: FetLife users are referred to as "kinksters".
 
