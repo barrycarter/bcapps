@@ -56,7 +56,7 @@ for $i (0..$ns-1) {
   debug("SCREEN $i\n\n");
 
   # testing
-  unless ($i==21) {next;}
+#  unless ($i==21) {next;}
 
   seek(A,31280*$i,SEEK_SET);
   read(A,$buf,31820);
@@ -127,6 +127,8 @@ sub dink_sprite_data {
     # TODO: more tests here to see when NOT to display sprite
     # if not in all visions, invisible or inactive, don't show
     if ($sprite{vision} || $sprite{type}==3 || !$sprite{active}) {next;}
+    # not sure about this one, so separating it out
+#    if ($sprite{ypos}<0) {next;}
 
     # find transparent PNG version of this sprite (or create it)
     $sprite{fname} = dink_sprite_png(\%sprite);
@@ -205,15 +207,17 @@ sub dink_sprite_png {
   # the "base" path
 #  my($path) = sprintf("$dinksprites{$sprite{seq}}%02d.bmp",$sprite{frame});
   my($path) = sprintf("$dinksprites{$sprite{seq}}%02d.bmp.png",$sprite{frame});
+
+  debug("PATH: $path");
+
   # convert backslashes to forward ones
   $path=~s%\\+%/%g;
   # TODO: this should really be a subroutine (wildcard glob)
   $path=~s/([a-z])/"\[".lc($1).uc($1)."\]"/ieg;
 
   # search in moddir first, then dinkdir
-  # two candidates to match
-  my($g1) = glob("$moddir/$path");
-  if ($g1) {return $g1;}
-  # this will (correctly) return empty if in neither place
-  return glob("$dinkdir/$path");
+  # note Perl glob breaks on these, using ls instead
+  my($out,$err,$res) = cache_command2("ls $moddir/$path $dinkdir/$path");
+  chomp($out);
+  return $out;
 }
