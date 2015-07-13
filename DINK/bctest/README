@@ -4,4 +4,5 @@ freedink.c that call each map from a remote program.
 NOTE: I put the modified dinkvar.c and freedink.c files here for
 convenience. They have no effect on actual gameplay.
 
+NOTE: The coordinates don't work well for the first few screens.
 
