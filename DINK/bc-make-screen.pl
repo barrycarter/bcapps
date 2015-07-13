@@ -4,6 +4,10 @@
 
 require "/usr/local/lib/bclib.pl";
 
+dink_read_save_dat(read_file("test/save0.dat"));
+
+die "TESTING";
+
 my($screen,$path) = @ARGV;
 
 # direction from $screen
@@ -54,8 +58,23 @@ chomp($date);
 
 open(A,">$dir/story/DYNAMIC.c");
 print A << "MARK";
-say_stop("I just walked direction $screen ($dir[$screen]) at $date",1);
+&moves += 1;
+say_stop("direction: $screen ($dir[$screen]), time: $date, moves: &moves",1);
+// say_stop("direction: $screen ($dir[$screen]), time: $date",1);
 MARK
 ;
 
 close(A);
+
+# read variables from save file
+
+sub dink_read_save_dat {
+  my($data) = @_;
+
+  while ($data=~s/(....)\&(.{20})//) {
+    my($val,$var) = ($1,$2);
+    $var=~s/\0//g;
+    $val = unpack("i",$val);
+    debug("$var -> $val");
+  }
+}
