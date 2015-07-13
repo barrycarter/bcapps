@@ -17,3 +17,8 @@ db/*.sqlite3
 # data/*/*/*
 db/geonames.db
 .emacs*
+# created by modified freedink, but no need to mirror
+DINK/bctest/save0.dat
+DINK/bctest/story/DYNAMIC.c
+# this changes constantly, just need one copy though
+DINK/map.dat
