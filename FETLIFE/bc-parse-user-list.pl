@@ -17,7 +17,12 @@ my($fields) = join(", ",@fields);
 
 # using xargs, this means there will be "several" BEGIN/COMMIT blocks,
 # but I'm OK with that
-print "BEGIN;\n";
+
+# NOTE: using BEGIN below WILL NOT WORK since MySQL autocommit is
+# still on; must use "START TRANSACTION":
+# https://dev.mysql.com/doc/refman/5.0/en/commit.html
+
+print "START TRANSACTION;\n";
 
 for $i (@ARGV) {
 

@@ -9,7 +9,7 @@ CREATE TABLE kinksters (
 
 -- indexes for MySQL
 
-CREATE INDEX i0 ON kinksters(id);
+CREATE UNIQUE INDEX i0 ON kinksters(id);
 CREATE INDEX i1 ON kinksters(screenname(20));
 CREATE INDEX i2 ON kinksters(age);
 CREATE INDEX i3 ON kinksters(gender(10));

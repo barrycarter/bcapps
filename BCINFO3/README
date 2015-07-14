@@ -51,7 +51,8 @@ yum -y install nano graphviz qhull zip strace xz ncurses ncurses-devel
 yum -y install readline readline-devel nagios-plugins 'nagios-plugins-*'
 yum -y install perl-Perl-Critic "perl-ExtUtils-*" inotify-tools tidy
 yum -y install calendar munin postgresql84 postgresql84-server gd-devel
-yum -y install rss2email
+yum -y install rss2email bzip2-devel rlog rlog-devel fuse-devel fuse git boost
+yum -y install boost-devel
 
 % Perl modules (excluding those available via yum)
 
@@ -303,3 +304,10 @@ cp fly /usr/local/bin/
 % 08 Mar 2015: replaced /etc/alternatives/mta with symlink to
 bc-msmtp-wrapper.pl so I can capture all outgoing mail (thought not
 necessarily in proper format)
+
+% 14 Jul 201%: installing fusecompress (since system has no loop
+mounting and doesn't recognize squashfs anyway?)
+
+git clone https://github.com/tex/fusecompress.git
+
+sh configure --enable-crippled_boost

@@ -91,6 +91,7 @@ while (%pages) {
     $dir=~s%^/%%;
     $fname = "$dir/$fname";
     # already exists? keep going
+    # TODO: add size check here
     if (-f $fname) {next;}
 
     my($url) = "https://fetlife.com/countries/$i/kinksters?page=$count";
