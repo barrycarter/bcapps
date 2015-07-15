@@ -1,725 +1,264 @@
-<!DOCTYPE html>
-<!--[if IE 8]>         <html class="lt-ie10 lt-ie9 ie8" lang="en"> <![endif]-->
-<!--[if IE 9]>         <html class="lt-ie10 ie9" lang="en"> <![endif]-->
-<!--[if lt IE 8]>      <html class="lt-ie10 lt-ie9 lt-ie8" lang="en"> <![endif]-->
-<!--[if lt IE 9]>      <html class="lt-ie10" lang="en"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en"> <!--<![endif]-->
-<head>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="pinterest" content="nopin" />
+<!--
 
-  
-  <script type="text/javascript">
-  var showLikesSection      = false;
-  FetLife                   = {};
-  FetLife.currentNoticeId   = 29;
-  FetLife.currentUser       = {};
-  FetLife.chatPollingServer = "https://push03.fetlife.com";
-  FetLife.websocketServer = "wss://rt03.fetlife.com:9393";
-    FetLife.currentUser.id          = 4733748;
-    FetLife.currentUser.nickname    = "ibzdwal";
-    FetLife.currentUser.profileUrl  = "/users/4733748";
-    FetLife.currentUser.shouldPush  = false;
-    FetLife.currentUser.shouldPoll  = true;
-    FetLife.currentUser.shouldGetStream = false;
-    FetLife.currentUser.avatar_urls = {
-      mini: "https://flassets.a.ssl.fastly.net/images/avatar_missing_35x35.gif"
-    };
-    FetLife.currentUser.mostRecentBrowser              = {};
-      FetLife.currentUser.mostRecentBrowser.raw_user_agent    = "Mozilla/5.0 (X11; Linux i686; rv:14.0) Gecko/20100101 Firefox/14.0.1";
-      FetLife.currentUser.mostRecentBrowser.raw_flash_version = "Shockwave Flash 10.0 r45";
-    FetLife.currentUser.updateBrowserDetailUrl = "https://fetlife.com/users/4733748/update_browser_details";
-</script>
+Fetlife's places.html links to administrative areas, not just
+countries. Since I no longer download administrative areas, these
+links will get progressively staler. Instead, I am writing my own
+places.html and removing administrative_areas altogether.
 
-  <script type="text/javascript">
-  //<![CDATA[
-  var initialMessageCount = 0;
-  var friendshipRequestCount = 0;
-  var atsCount = 0;
-  //]]>
-</script>
+All of this is mostly for bots/spiders. Non-arachnoid users should use
+search.fetlife.94y.info
 
-    <style id="antiClickjack">.content_container{display: none !important;}</style>
-  <script>
-     if (self === top) {
-         var antiClickjack = document.getElementById("antiClickjack");
-         antiClickjack.parentNode.removeChild(antiClickjack);
-     } else {
-         top.location = self.location;
-     }
-  </script>
+-->
 
+<ul>
 
-  <meta charset="utf-8" />
-<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","errorBeacon":"bam.nr-data.net","licenseKey":"eade0ff4c8","applicationID":"4517960","transactionName":"clleEUoJW1ldRBZaXERYRBdRA0QaUVhdXEs=","queueTime":0,"applicationTime":55,"agent":"js-agent.newrelic.com/nr-632.min.js"}</script>
-<script type="text/javascript">window.NREUM||(NREUM={}),__nr_require=function(e,n,t){function r(t){if(!n[t]){var o=n[t]={exports:{}};e[t][0].call(o.exports,function(n){var o=e[t][1][n];return r(o?o:n)},o,o.exports)}return n[t].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<t.length;o++)r(t[o]);return r}({QJf3ax:[function(e,n){function t(e){function n(n,t,a){e&&e(n,t,a),a||(a={});for(var u=c(n),f=u.length,s=i(a,o,r),p=0;f>p;p++)u[p].apply(s,t);return s}function a(e,n){f[e]=c(e).concat(n)}function c(e){return f[e]||[]}function u(){return t(n)}var f={};return{on:a,emit:n,create:u,listeners:c,_events:f}}function r(){return{}}var o="nr@context",i=e("gos");n.exports=t()},{gos:"7eSDFh"}],ee:[function(e,n){n.exports=e("QJf3ax")},{}],3:[function(e,n){function t(e){return function(){r(e,[(new Date).getTime()].concat(i(arguments)))}}var r=e("handle"),o=e(1),i=e(2);"undefined"==typeof window.newrelic&&(newrelic=window.NREUM);var a=["setPageViewName","addPageAction","setCustomAttribute","finished","addToTrace","inlineHit","noticeError"];o(a,function(e,n){window.NREUM[n]=t("api-"+n)}),n.exports=window.NREUM},{1:12,2:13,handle:"D5DuLP"}],"7eSDFh":[function(e,n){function t(e,n,t){if(r.call(e,n))return e[n];var o=t();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(e,n,{value:o,writable:!0,enumerable:!1}),o}catch(i){}return e[n]=o,o}var r=Object.prototype.hasOwnProperty;n.exports=t},{}],gos:[function(e,n){n.exports=e("7eSDFh")},{}],handle:[function(e,n){n.exports=e("D5DuLP")},{}],D5DuLP:[function(e,n){function t(e,n,t){return r.listeners(e).length?r.emit(e,n,t):(o[e]||(o[e]=[]),void o[e].push(n))}var r=e("ee").create(),o={};n.exports=t,t.ee=r,r.q=o},{ee:"QJf3ax"}],id:[function(e,n){n.exports=e("XL7HBI")},{}],XL7HBI:[function(e,n){function t(e){var n=typeof e;return!e||"object"!==n&&"function"!==n?-1:e===window?0:i(e,o,function(){return r++})}var r=1,o="nr@id",i=e("gos");n.exports=t},{gos:"7eSDFh"}],G9z0Bl:[function(e,n){function t(){var e=d.info=NREUM.info,n=f.getElementsByTagName("script")[0];if(e&&e.licenseKey&&e.applicationID&&n){c(p,function(n,t){n in e||(e[n]=t)});var t="https"===s.split(":")[0]||e.sslForHttp;d.proto=t?"https://":"http://",a("mark",["onload",i()]);var r=f.createElement("script");r.src=d.proto+e.agent,n.parentNode.insertBefore(r,n)}}function r(){"complete"===f.readyState&&o()}function o(){a("mark",["domContent",i()])}function i(){return(new Date).getTime()}var a=e("handle"),c=e(1),u=(e(2),window),f=u.document,s=(""+location).split("?")[0],p={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-632.min.js"},d=n.exports={offset:i(),origin:s,features:{}};f.addEventListener?(f.addEventListener("DOMContentLoaded",o,!1),u.addEventListener("load",t,!1)):(f.attachEvent("onreadystatechange",r),u.attachEvent("onload",t)),a("mark",["firstbyte",i()])},{1:12,2:3,handle:"D5DuLP"}],loader:[function(e,n){n.exports=e("G9z0Bl")},{}],12:[function(e,n){function t(e,n){var t=[],o="",i=0;for(o in e)r.call(e,o)&&(t[i]=n(o,e[o]),i+=1);return t}var r=Object.prototype.hasOwnProperty;n.exports=t},{}],13:[function(e,n){function t(e,n,t){n||(n=0),"undefined"==typeof t&&(t=e?e.length:0);for(var r=-1,o=t-n||0,i=Array(0>o?0:o);++r<o;)i[r]=e[n+r];return i}n.exports=t},{}]},{},["G9z0Bl"]);</script>
-  <meta name="description" content="FetLife is the largest and most popular FREE Social Network for the Kinky community (Bondage, BDSM &amp; fetish). Similar to Facebook and mySpace but for kinksters." />
-  <meta name="keywords" content="Fetish Social Network,Fetish Community, Fetish Dating Site,Bondage Social Network,Bondage Community,Bondage Dating Site,Kinky Social Network,Kinky Community,Kinky Dating Site,BDSM Social Network,BDSM Community,BDSM Dating Site,Kinky mySpace,Kinky Facebook,BDSM mySpace,BDSM Facebook,Bondage mySpace,Bondage Facebook,Shibari Community,Rope Community,Alternative Lifestyle" />
-  <meta content="authenticity_token" name="csrf-param" />
-<meta content="/QRzmy//o8N9peV+hQSVdct/lUx96ZBWr3G4ZHD+eUM=" name="csrf-token" />
-  
-  <title>Browse By Country - Kinksters - FetLife</title>
-
-
-  <link href="https://flassets.a.ssl.fastly.net/stylesheets/base_packaged.css?v52f88f19aedad4" media="screen, projection" rel="stylesheet" type="text/css" />
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js" type="text/javascript"></script>
-    <script type="text/javascript">
-      $.ajaxSetup({dataType: "script"});
-    </script>
-
-    <script src="https://flassets.a.ssl.fastly.net/javascripts/mobile/jquery.tmpl.js?v5ddb3c73502d71" type="text/javascript"></script>
-    <script src="https://flassets.a.ssl.fastly.net/javascripts/mobile/knockout-1.2.1.debug.js?v5eed986e493382" type="text/javascript"></script>
-    <script src="https://flassets.a.ssl.fastly.net/javascripts/base_packaged.js?v51120f6f97c391" type="text/javascript"></script>
-
-
-
-    
-
-  <script src="https://flassets.a.ssl.fastly.net/javascripts/jquery.masonry.min.js?v5db5d708394e2f" type="text/javascript"></script>
-
-  <script type="text/javascript">
-//<![CDATA[
-
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-3889510-1', 'auto');
-    ga('require', 'ecommerce', 'ecommerce.js');
-    ga('send', 'pageview');
-
-//]]>
-</script>
-
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/selectivizr/1.0.2/selectivizr-min.js"></script>
-  <![endif]-->
-</head>
-<body class="">
-  <a name="top_of_page"></a>
-  <div id="pop_up_background"></div>
-  <div style="display:none;" id="authenticity_token">/QRzmy//o8N9peV+hQSVdct/lUx96ZBWr3G4ZHD+eUM=</div>
-
-  
-
-  
-
-
-    <header id="header_v2">
-  <div class="flexible_container">
-    <nav>
-    <h1><a href="/home">FetLife<span class="picto">H</span></a></h1>
-      <ul class="horizontal sections">
-        <li><a href="/explore/" class="">Kinky<span class="amp">&amp;</span>Popular</a><span class="s q pu1">|</span></li>
-        <li class="shorter"><a href="/groups">Groups</a></li>
-        <li class="shorter"><a href="/places">Places</a></li>
-        <li class="shorter"><a href="/events/near_me">Events</a></li>
-        <li class="shorter">
-          <ul id="nav_dropdown" class="horizontal profile">
-            <li class="nojs">
-              <a href="#" class="rcts pulldown-trigger">more<span class="or">&or;</span></a>
-              <ul class="vertical rcbs">
-                <li><a href="/fetishes">Fetishes</a></li>
-                <li><a href="/posts/everyone">Writing</a></li>
-                <li class="shorter"><a href="/videos/all">Videos</a></li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-        <li class="longer"><a href="/groups">Groups</a></li>
-        <li class="longer"><a href="/places">Places</a></li>
-        <li class="longer"><a href="/events/near_me">Events</a></li>
-        <li class="longer"><a href="/fetishes">Fetishes</a></li>
-        <li class="longer"><a href="/posts/everyone">Writing</a></li>
-        <li class="longer"><a href="/videos/all">Videos</a></li>
-      </ul>
-
-      <form class="global_search" action="/search">
-        <input type="text" class="placeholder" name="q" value="" placeholder="Search for..." />
-      </form>
-
-      <ul id="nav_dropdown" class="horizontal profile">
-        <li class="nojs">
-          <a href="#" class="small rcts pulldown-trigger"><span class="nickname">ibzdwal</span><span class="or">&or;</span></a>
-          <ul class="vertical rcbs">
-            <li class="seperator"><a href="/users/4733748"><span class="picto">U</span>View Your Profile</a></li>
-            <li><a href="/users/4733748/friends"><span class="picto">g</span>View Your Friends</a></li>
-            <li class="seperator"><a href="/users/4733748/likes_v4"><span class="picto">k</span>Stuff You Love</a></li>
-            <li class="seperator"><a href="/pictures/new"><span class="picto">v</span>Upload Pictures</a></li>
-            <li><a href="/videos/new"><span class="picto">V</span>Upload Videos</a></li>
-            <li><a href="/posts/new"><span class="picto">W</span>Write</a></li>
-            <li class="seperator"><a href="/settings/profile"><span class="picto">x</span>Edit Profile</a></li>
-            <li><a href="/settings/email"><span class="picto">y</span>Update Settings</a></li>
-              <li class="seperator support"><a href="/support?pcta=header"><span class="picto">$</span>Support FetLife!</a></li>
-            <li class="seperator"><a href="/help"><span class="picto">?</span>Help</a></li>
-            <li class="seperator"><a href="/logout"><span class="picto">Q</span>Logout</a></li>
-          </ul>
-        </li>
-      </ul>
-
-      <ul class="horizontal messaging" id="notification_counts">
-  <li class="inbox" data-bind="css: {'new': new_messages() > 0}"><a href="/conversations" data-bind="attr: {title: new_messages.with_label(), alt: new_messages.with_label()}" title="Inbox (0)" alt="Inbox (0)"><span class="picto push_down_1">M</span><span class="picto_alt">Inb</span><span class="count" data-bind="visible: new_messages() > 0, text: new_messages.with_max()"></span></a></li>
-  <li class="requests" data-bind="css: {'new': friendship_requests() > 0}"><a href="/requests" data-bind="attr: {title: friendship_requests.with_label(), alt: friendship_requests.with_label()}" title="Friendship Requests (0)" alt="Friendship Requests (0)"><span class="picto push_down_1">g</span><span class="picto_alt">Req</span><span class="count" data-bind="visible: friendship_requests() > 0, text: friendship_requests.with_max()"></span></a></li>
-    <li class="ats" data-bind="css: {'new': ats() > 0}"><a href="https://fetlife.com/ats" data-bind="attr: {title: ats.with_label(), alt: ats.with_label()}" title="@You (0)" alt="@You (0)"><span class="au1">@</span><span class="count" data-bind="text: ats.with_max(), visible: ats() > 0"></span></a></li>
+<li><a href='/countries/1'>Afghanistan</a></li>
+<li><a href='/countries/2'>Aland Islands</a></li>
+<li><a href='/countries/3'>Albania</a></li>
+<li><a href='/countries/4'>Algeria</a></li>
+<li><a href='/countries/5'>American Samoa</a></li>
+<li><a href='/countries/6'>Andorra</a></li>
+<li><a href='/countries/7'>Angola</a></li>
+<li><a href='/countries/8'>Anguilla</a></li>
+<li><a href='/countries/9'>Antarctica</a></li>
+<li><a href='/countries/10'>Antigua and Barbuda</a></li>
+<li><a href='/countries/11'>Argentina</a></li>
+<li><a href='/countries/12'>Armenia</a></li>
+<li><a href='/countries/13'>Aruba</a></li>
+<li><a href='/countries/14'>Australia</a></li>
+<li><a href='/countries/15'>Austria</a></li>
+<li><a href='/countries/16'>Azerbaijan</a></li>
+<li><a href='/countries/17'>Bahamas</a></li>
+<li><a href='/countries/18'>Bahrain</a></li>
+<li><a href='/countries/19'>Bangladesh</a></li>
+<li><a href='/countries/20'>Barbados</a></li>
+<li><a href='/countries/21'>Belarus</a></li>
+<li><a href='/countries/22'>Belgium</a></li>
+<li><a href='/countries/23'>Belize</a></li>
+<li><a href='/countries/24'>Benin</a></li>
+<li><a href='/countries/25'>Bermuda</a></li>
+<li><a href='/countries/26'>Bhutan</a></li>
+<li><a href='/countries/27'>Bolivia</a></li>
+<li><a href='/countries/247'>Bonaire</a></li>
+<li><a href='/countries/28'>Bosnia and Herzegovina</a></li>
+<li><a href='/countries/29'>Botswana</a></li>
+<li><a href='/countries/30'>Bouvet Island</a></li>
+<li><a href='/countries/31'>Brazil</a></li>
+<li><a href='/countries/32'>British Indian Ocean Territory</a></li>
+<li><a href='/countries/33'>Brunei Darussalam</a></li>
+<li><a href='/countries/34'>Bulgaria</a></li>
+<li><a href='/countries/35'>Burkina Faso</a></li>
+<li><a href='/countries/36'>Burundi</a></li>
+<li><a href='/countries/37'>Cambodia</a></li>
+<li><a href='/countries/38'>Cameroon</a></li>
+<li><a href='/countries/39'>Canada</a></li>
+<li><a href='/countries/40'>Cape Verde</a></li>
+<li><a href='/countries/41'>Cayman Islands</a></li>
+<li><a href='/countries/54'>Côte D&#x27;ivoire</a></li>
+<li><a href='/countries/42'>Central African Republic</a></li>
+<li><a href='/countries/43'>Chad</a></li>
+<li><a href='/countries/44'>Chile</a></li>
+<li><a href='/countries/45'>China</a></li>
+<li><a href='/countries/46'>Christmas Island</a></li>
+<li><a href='/countries/47'>Cocos (Keeling) Islands</a></li>
+<li><a href='/countries/48'>Colombia</a></li>
+<li><a href='/countries/49'>Comoros</a></li>
+<li><a href='/countries/50'>Congo</a></li>
+<li><a href='/countries/51'>Congo, the Democratic Republic of the</a></li>
+<li><a href='/countries/52'>Cook Islands</a></li>
+<li><a href='/countries/53'>Costa Rica</a></li>
+<li><a href='/countries/55'>Croatia</a></li>
+<li><a href='/countries/56'>Cuba</a></li>
+<li><a href='/countries/248'>Curacao</a></li>
+<li><a href='/countries/57'>Cyprus</a></li>
+<li><a href='/countries/58'>Czech Republic</a></li>
+<li><a href='/countries/59'>Denmark</a></li>
+<li><a href='/countries/60'>Djibouti</a></li>
+<li><a href='/countries/61'>Dominica</a></li>
+<li><a href='/countries/62'>Dominican Republic</a></li>
+<li><a href='/countries/63'>Ecuador</a></li>
+<li><a href='/countries/64'>Egypt</a></li>
+<li><a href='/countries/65'>El Salvador</a></li>
+<li><a href='/countries/66'>Equatorial Guinea</a></li>
+<li><a href='/countries/67'>Eritrea</a></li>
+<li><a href='/countries/68'>Estonia</a></li>
+<li><a href='/countries/69'>Ethiopia</a></li>
+<li><a href='/countries/70'>Falkland Islands (Malvinas)</a></li>
+<li><a href='/countries/71'>Faroe Islands</a></li>
+<li><a href='/countries/72'>Fiji</a></li>
+<li><a href='/countries/73'>Finland</a></li>
+<li><a href='/countries/74'>France</a></li>
+<li><a href='/countries/75'>French Guiana</a></li>
+<li><a href='/countries/76'>French Polynesia</a></li>
+<li><a href='/countries/77'>French Southern Territories</a></li>
+<li><a href='/countries/78'>Gabon</a></li>
+<li><a href='/countries/79'>Gambia</a></li>
+<li><a href='/countries/80'>Georgia</a></li>
+<li><a href='/countries/81'>Germany</a></li>
+<li><a href='/countries/82'>Ghana</a></li>
+<li><a href='/countries/83'>Gibraltar</a></li>
+<li><a href='/countries/84'>Greece</a></li>
+<li><a href='/countries/85'>Greenland</a></li>
+<li><a href='/countries/86'>Grenada</a></li>
+<li><a href='/countries/87'>Guadeloupe</a></li>
+<li><a href='/countries/88'>Guam</a></li>
+<li><a href='/countries/89'>Guatemala</a></li>
+<li><a href='/countries/90'>Guernsey</a></li>
+<li><a href='/countries/91'>Guinea</a></li>
+<li><a href='/countries/92'>Guinea-Bissau</a></li>
+<li><a href='/countries/93'>Guyana</a></li>
+<li><a href='/countries/94'>Haiti</a></li>
+<li><a href='/countries/95'>Heard Island and Mcdonald Islands</a></li>
+<li><a href='/countries/96'>Holy See (Vatican City State)</a></li>
+<li><a href='/countries/97'>Honduras</a></li>
+<li><a href='/countries/98'>Hong Kong</a></li>
+<li><a href='/countries/99'>Hungary</a></li>
+<li><a href='/countries/100'>Iceland</a></li>
+<li><a href='/countries/101'>India</a></li>
+<li><a href='/countries/102'>Indonesia</a></li>
+<li><a href='/countries/103'>Iran, Islamic Republic of</a></li>
+<li><a href='/countries/104'>Iraq</a></li>
+<li><a href='/countries/105'>Ireland</a></li>
+<li><a href='/countries/106'>Isle of Man</a></li>
+<li><a href='/countries/107'>Israel</a></li>
+<li><a href='/countries/108'>Italy</a></li>
+<li><a href='/countries/109'>Jamaica</a></li>
+<li><a href='/countries/110'>Japan</a></li>
+<li><a href='/countries/111'>Jersey</a></li>
+<li><a href='/countries/112'>Jordan</a></li>
+<li><a href='/countries/113'>Kazakhstan</a></li>
+<li><a href='/countries/114'>Kenya</a></li>
+<li><a href='/countries/115'>Kiribati</a></li>
+<li><a href='/countries/116'>Korea, Democratic People&#x27;s Republic of</a></li>
+<li><a href='/countries/117'>Korea, Republic of</a></li>
+<li><a href='/countries/118'>Kuwait</a></li>
+<li><a href='/countries/119'>Kyrgyzstan</a></li>
+<li><a href='/countries/120'>Lao People&#x27;s Democratic Republic</a></li>
+<li><a href='/countries/121'>Latvia</a></li>
+<li><a href='/countries/122'>Lebanon</a></li>
+<li><a href='/countries/123'>Lesotho</a></li>
+<li><a href='/countries/124'>Liberia</a></li>
+<li><a href='/countries/125'>Libyan Arab Jamahiriya</a></li>
+<li><a href='/countries/126'>Liechtenstein</a></li>
+<li><a href='/countries/127'>Lithuania</a></li>
+<li><a href='/countries/128'>Luxembourg</a></li>
+<li><a href='/countries/129'>Macao</a></li>
+<li><a href='/countries/130'>Macedonia, the Former Yugoslav Republic of</a></li>
+<li><a href='/countries/131'>Madagascar</a></li>
+<li><a href='/countries/132'>Malawi</a></li>
+<li><a href='/countries/133'>Malaysia</a></li>
+<li><a href='/countries/134'>Maldives</a></li>
+<li><a href='/countries/135'>Mali</a></li>
+<li><a href='/countries/136'>Malta</a></li>
+<li><a href='/countries/137'>Marshall Islands</a></li>
+<li><a href='/countries/138'>Martinique</a></li>
+<li><a href='/countries/139'>Mauritania</a></li>
+<li><a href='/countries/140'>Mauritius</a></li>
+<li><a href='/countries/141'>Mayotte</a></li>
+<li><a href='/countries/142'>Mexico</a></li>
+<li><a href='/countries/143'>Micronesia, Federated States of</a></li>
+<li><a href='/countries/144'>Moldova, Republic of</a></li>
+<li><a href='/countries/145'>Monaco</a></li>
+<li><a href='/countries/146'>Mongolia</a></li>
+<li><a href='/countries/147'>Montenegro</a></li>
+<li><a href='/countries/148'>Montserrat</a></li>
+<li><a href='/countries/149'>Morocco</a></li>
+<li><a href='/countries/150'>Mozambique</a></li>
+<li><a href='/countries/151'>Myanmar</a></li>
+<li><a href='/countries/152'>Namibia</a></li>
+<li><a href='/countries/153'>Nauru</a></li>
+<li><a href='/countries/154'>Nepal</a></li>
+<li><a href='/countries/155'>Netherlands</a></li>
+<li><a href='/countries/156'>Netherlands Antilles</a></li>
+<li><a href='/countries/157'>New Caledonia</a></li>
+<li><a href='/countries/158'>New Zealand</a></li>
+<li><a href='/countries/159'>Nicaragua</a></li>
+<li><a href='/countries/160'>Niger</a></li>
+<li><a href='/countries/161'>Nigeria</a></li>
+<li><a href='/countries/162'>Niue</a></li>
+<li><a href='/countries/163'>Norfolk Island</a></li>
+<li><a href='/countries/164'>Northern Mariana Islands</a></li>
+<li><a href='/countries/165'>Norway</a></li>
+<li><a href='/countries/166'>Oman</a></li>
+<li><a href='/countries/167'>Pakistan</a></li>
+<li><a href='/countries/168'>Palau</a></li>
+<li><a href='/countries/169'>Palestinian Territory, Occupied</a></li>
+<li><a href='/countries/170'>Panama</a></li>
+<li><a href='/countries/171'>Papua New Guinea</a></li>
+<li><a href='/countries/172'>Paraguay</a></li>
+<li><a href='/countries/173'>Peru</a></li>
+<li><a href='/countries/174'>Philippines</a></li>
+<li><a href='/countries/175'>Pitcairn</a></li>
+<li><a href='/countries/176'>Poland</a></li>
+<li><a href='/countries/177'>Portugal</a></li>
+<li><a href='/countries/178'>Puerto Rico</a></li>
+<li><a href='/countries/179'>Qatar</a></li>
+<li><a href='/countries/180'>Reunion</a></li>
+<li><a href='/countries/181'>Romania</a></li>
+<li><a href='/countries/182'>Russian Federation</a></li>
+<li><a href='/countries/183'>Rwanda</a></li>
+<li><a href='/countries/184'>Saint Barthélemy</a></li>
+<li><a href='/countries/185'>Saint Helena</a></li>
+<li><a href='/countries/186'>Saint Kitts and Nevis</a></li>
+<li><a href='/countries/187'>Saint Lucia</a></li>
+<li><a href='/countries/188'>Saint Martin</a></li>
+<li><a href='/countries/189'>Saint Pierre and Miquelon</a></li>
+<li><a href='/countries/190'>Saint Vincent and the Grenadines</a></li>
+<li><a href='/countries/191'>Samoa</a></li>
+<li><a href='/countries/192'>San Marino</a></li>
+<li><a href='/countries/193'>Sao Tome and Principe</a></li>
+<li><a href='/countries/194'>Saudi Arabia</a></li>
+<li><a href='/countries/195'>Senegal</a></li>
+<li><a href='/countries/196'>Serbia</a></li>
+<li><a href='/countries/197'>Seychelles</a></li>
+<li><a href='/countries/198'>Sierra Leone</a></li>
+<li><a href='/countries/199'>Singapore</a></li>
+<li><a href='/countries/200'>Slovakia</a></li>
+<li><a href='/countries/201'>Slovenia</a></li>
+<li><a href='/countries/202'>Solomon Islands</a></li>
+<li><a href='/countries/203'>Somalia</a></li>
+<li><a href='/countries/204'>South Africa</a></li>
+<li><a href='/countries/205'>South Georgia and the South Sandwich Islands</a></li>
+<li><a href='/countries/206'>Spain</a></li>
+<li><a href='/countries/207'>Sri Lanka</a></li>
+<li><a href='/countries/208'>Sudan</a></li>
+<li><a href='/countries/209'>Suriname</a></li>
+<li><a href='/countries/210'>Svalbard and Jan Mayen</a></li>
+<li><a href='/countries/211'>Swaziland</a></li>
+<li><a href='/countries/212'>Sweden</a></li>
+<li><a href='/countries/213'>Switzerland</a></li>
+<li><a href='/countries/214'>Syrian Arab Republic</a></li>
+<li><a href='/countries/215'>Taiwan</a></li>
+<li><a href='/countries/216'>Tajikistan</a></li>
+<li><a href='/countries/217'>Tanzania, United Republic of</a></li>
+<li><a href='/countries/218'>Thailand</a></li>
+<li><a href='/countries/219'>Timor-Leste</a></li>
+<li><a href='/countries/220'>Togo</a></li>
+<li><a href='/countries/221'>Tokelau</a></li>
+<li><a href='/countries/222'>Tonga</a></li>
+<li><a href='/countries/223'>Trinidad and Tobago</a></li>
+<li><a href='/countries/224'>Tunisia</a></li>
+<li><a href='/countries/225'>Turkey</a></li>
+<li><a href='/countries/226'>Turkmenistan</a></li>
+<li><a href='/countries/227'>Turks and Caicos Islands</a></li>
+<li><a href='/countries/228'>Tuvalu</a></li>
+<li><a href='/countries/229'>Uganda</a></li>
+<li><a href='/countries/230'>Ukraine</a></li>
+<li><a href='/countries/231'>United Arab Emirates</a></li>
+<li><a href='/countries/232'>United Kingdom</a></li>
+<li><a href='/countries/233'>United States</a></li>
+<li><a href='/countries/234'>United States Minor Outlying Islands</a></li>
+<li><a href='/countries/235'>Uruguay</a></li>
+<li><a href='/countries/236'>Uzbekistan</a></li>
+<li><a href='/countries/237'>Vanuatu</a></li>
+<li><a href='/countries/238'>Venezuela</a></li>
+<li><a href='/countries/239'>Viet Nam</a></li>
+<li><a href='/countries/240'>Virgin Islands, British</a></li>
+<li><a href='/countries/241'>Virgin Islands, U.S.</a></li>
+<li><a href='/countries/242'>Wallis and Futuna</a></li>
+<li><a href='/countries/243'>Western Sahara</a></li>
+<li><a href='/countries/244'>Yemen</a></li>
+<li><a href='/countries/245'>Zambia</a></li>
+<li><a href='/countries/246'>Zimbabwe</a></li>
 
 </ul>
-
-    </nav>
-  </div><!-- /.flexible_container -->
-</header><!-- /#header_v2 -->
-
-
-  <div class="clearfix content_container">
-    
-<div class="container">
-  <div class="span-20 border">
-      <div id="places_section_header" class="clearfix">
-      	<div class="span-4 border">
-      	  <h2 style="font-size: 42px" class="bottom">Places</h2>
-      	</div>
-      	<div class="span-15 last">
-      	  <p class="quiet small" style="padding-top: 5px">Select a location below and meet kinksters from the area,<br/>learn about upcoming events and find local groups.</p>
-      	</div>
-      </div>
-
-    	<p id="your_location">
-    		<span class="larger">
-      		
-      		<a href="/administrative_areas/103">Cuando Cubango</a>,
-      		<a href="/countries/7">Angola</a>
-        </span>
-    		<span class="quiet">&larr; Kinksters, events and groups near you.</span> 
-    	</p>
-
-      <div id="list_of_countries">
-      	<div class="clearfix">
-      		<div class="span-15 border">
-      			<h3 class="mbn">United States</h3>
-      			<div class="span-5 border">
-      				<ul>
-      					<li><a href="/administrative_areas/3937">Alabama</a></li> 
-      					<li><a href="/administrative_areas/3938">Alaska</a></li> 
-      					<li><a href="/administrative_areas/3939">Arizona</a></li> 
-      					<li><a href="/administrative_areas/3940">Arkansas</a></li> 
-      					<li><a href="/administrative_areas/3941">California</a></li> 
-      					<li><a href="/administrative_areas/3942">Colorado</a></li> 
-      					<li><a href="/administrative_areas/3943">Connecticut</a></li> 
-      					<li><a href="/administrative_areas/3944">Delaware</a></li> 
-      					<li><a href="/administrative_areas/3945">District of Columbia</a></li> 
-      					<li><a href="/administrative_areas/3946">Florida</a></li> 
-      					<li><a href="/administrative_areas/3947">Georgia</a></li> 
-      					<li><a href="/administrative_areas/3948">Hawaii</a></li> 
-      					<li><a href="/administrative_areas/3949">Idaho</a></li> 
-      					<li><a href="/administrative_areas/3950">Illinois</a></li> 
-      					<li><a href="/administrative_areas/3951">Indiana</a></li> 
-      					<li><a href="/administrative_areas/3952">Iowa</a></li> 
-      					<li><a href="/administrative_areas/3953">Kansas</a></li> 
-      				</ul>
-      			</div>
-      			<div class="span-5 border">
-      				<ul>
-      					<li><a href="/administrative_areas/3954">Kentucky</a></li> 
-      					<li><a href="/administrative_areas/3955">Louisiana</a></li> 
-      					<li><a href="/administrative_areas/3956">Maine</a></li> 
-      					<li><a href="/administrative_areas/3957">Maryland</a></li> 
-      					<li><a href="/administrative_areas/3958">Massachusetts</a></li> 
-      					<li><a href="/administrative_areas/3959">Michigan</a></li> 
-      					<li><a href="/administrative_areas/3960">Minnesota</a></li> 
-      					<li><a href="/administrative_areas/3961">Mississippi</a></li> 
-      					<li><a href="/administrative_areas/3962">Missouri</a></li> 
-      					<li><a href="/administrative_areas/3963">Montana</a></li> 
-      					<li><a href="/administrative_areas/3964">Nebraska</a></li> 
-      					<li><a href="/administrative_areas/3965">Nevada</a></li> 
-      					<li><a href="/administrative_areas/3966">New Hampshire</a></li> 
-      					<li><a href="/administrative_areas/3967">New Jersey</a></li> 
-      					<li><a href="/administrative_areas/3968">New Mexico</a></li> 
-      					<li><a href="/administrative_areas/3969">New York</a></li> 
-      					<li><a href="/administrative_areas/3970">North Carolina</a></li> 
-      				</ul>
-      			</div>
-      			<div class="span-5 last">
-      				<ul>
-      					<li><a href="/administrative_areas/3971">North Dakota</a></li> 
-      					<li><a href="/administrative_areas/3972">Ohio</a></li> 
-      					<li><a href="/administrative_areas/3973">Oklahoma</a></li> 
-      					<li><a href="/administrative_areas/3974">Oregon</a></li> 
-      					<li><a href="/administrative_areas/3975">Pennsylvania</a></li> 
-      					<li><a href="/administrative_areas/3976">Rhode Island</a></li> 
-      					<li><a href="/administrative_areas/3977">South Carolina</a></li> 
-      					<li><a href="/administrative_areas/3978">South Dakota</a></li> 
-      					<li><a href="/administrative_areas/3979">Tennessee</a></li> 
-      					<li><a href="/administrative_areas/3980">Texas</a></li> 
-      					<li><a href="/administrative_areas/3981">Utah</a></li> 
-      					<li><a href="/administrative_areas/3982">Vermont</a></li> 
-      					<li><a href="/administrative_areas/3983">Virginia</a></li> 
-      					<li><a href="/administrative_areas/3984">Washington</a></li> 
-      					<li><a href="/administrative_areas/3985">West Virginia</a></li> 
-      					<li><a href="/administrative_areas/3986">Wisconsin</a></li> 
-      					<li><a href="/administrative_areas/3987">Wyoming</a></li> 
-      				</ul>
-      			</div>
-      		</div>
-      		<div class="span-5 last">
-      			<h3 class="mbn">Canada</h3>
-      			<ul>
-      				<li><a href="/administrative_areas/590">Alberta</a></li> 
-      				<li><a href="/administrative_areas/591">British Columbia</a></li> 
-      				<li><a href="/administrative_areas/592">Manitoba</a></li> 
-      				<li><a href="/administrative_areas/593">New Brunswick</a></li> 
-      				<li><a href="/administrative_areas/594">Newfoundland</a></li> 
-      				<li><a href="/administrative_areas/601">Northwest Territories</a></li> 
-      				<li><a href="/administrative_areas/595">Nova Scotia</a></li> 
-      				<li><a href="/administrative_areas/602">Nunavut</a></li> 
-      				<li><a href="/administrative_areas/596">Ontario</a></li> 
-      				<li><a href="/administrative_areas/597">Prince Edward Island</a></li> 
-      				<li><a href="/administrative_areas/598">Quebec</a></li> 
-      				<li><a href="/administrative_areas/599">Saskatchewan</a></li> 
-      				<li><a href="/administrative_areas/600">Yukon Territory</a></li> 
-      			</ul>
-      		</div>
-      	</div>
-      	
-      	<br/><br/><hr/><br/>
-
-      	<div class="clearfix">
-      		<div class="span-20 last">
-        		<div class="span-5 border">
-        			<h3 class="mbn">Australia</h3>
-        			<ul>
-        				<li><a href="/administrative_areas/159">Australian Capital Ter.</a></li> 
-        				<li><a href="/administrative_areas/160">New South Wales</a></li> 
-        				<li><a href="/administrative_areas/161">Northen Territory</a></li> 
-        				<li><a href="/administrative_areas/162">Queensland</a></li> 
-        				<li><a href="/administrative_areas/163">South Australia</a></li> 
-        				<li><a href="/administrative_areas/164">Tasmania</a></li> 
-        				<li><a href="/administrative_areas/165">Victoria</a></li> 
-        				<li><a href="/administrative_areas/166">Western Australia</a></li> 
-        			</ul>
-        		</div>
-      			<h3 class="mbn">Europe</h3>
-      			<div class="span-5 border">
-      				<ul>
-      					<li><a href="/countries/3">Albania</a></li> 
-      					<li><a href="/countries/6">Andorra</a></li> 
-      					<li><a href="/countries/12">Armenia</a></li> 
-      					<li><a href="/countries/15">Austria</a></li> 
-      					<li><a href="/countries/16">Azerbaijan</a></li> 
-      					<li><a href="/countries/21">Belarus</a></li> 
-      					<li><a href="/countries/22">Belgium</a></li> 
-      					<li><a href="/countries/28">Bosnia and Herzegovina</a></li> 
-      					<li><a href="/countries/34">Bulgaria</a></li> 
-      					<li><a href="/countries/55">Croatia</a></li> 
-      					<li><a href="/countries/57">Cyprus</a></li> 
-      					<li><a href="/countries/58">Czech Republic</a></li> 
-      					<li><a href="/countries/59">Denmark</a></li> 
-      					<li><a href="/countries/68">Estonia</a></li> 
-      					<li><a href="/countries/73">Finland</a></li> 
-      					<li><a href="/countries/74">France</a></li> 
-      					<li><a href="/countries/80">Georgia</a></li> 
-      				</ul>
-      			</div>
-      			<div class="span-5 border">
-      				<ul>
-      					<li><a href="/countries/81">Germany</a></li> 
-      					<li><a href="/countries/84">Greece</a></li> 
-      					<li><a href="/countries/99">Hungary</a></li> 
-      					<li><a href="/countries/100">Iceland</a></li> 
-      					<li><a href="/countries/105">Ireland</a></li> 
-      					<li><a href="/countries/108">Italy</a></li> 
-      					<li><a href="/countries/113">Kazakhstan</a></li> 
-      					<li><a href="/countries/121">Latvia</a></li> 
-      					<li><a href="/countries/126">Liechtenstein</a></li> 
-      					<li><a href="/countries/127">Lithuania</a></li> 
-      					<li><a href="/countries/128">Luxembourg</a></li> 
-      					<li><a href="/countries/130">Macedonia</a></li> 
-      					<li><a href="/countries/136">Malta</a></li> 
-      					<li><a href="/countries/144">Moldova</a></li> 
-      					<li><a href="/countries/145">Monaco</a></li> 
-      					<li><a href="/countries/147">Montenegro</a></li> 
-      					<li><a href="/countries/155">Netherlands</a></li> 
-      				</ul>
-      			</div>
-      			<div class="span-5 last">
-      				<ul>
-      					<li><a href="/countries/165">Norway</a></li> 
-      					<li><a href="/countries/176">Poland</a></li> 
-      					<li><a href="/countries/177">Portugal</a></li> 
-      					<li><a href="/countries/181">Romania</a></li> 
-      					<li><a href="/countries/182">Russian Federation</a></li> 
-      					<li><a href="/countries/192">San Marino</a></li> 
-      					<li><a href="/countries/196">Serbia</a></li> 
-      					<li><a href="/countries/200">Slovakia</a></li> 
-      					<li><a href="/countries/201">Slovenia</a></li> 
-      					<li><a href="/countries/206">Spain</a></li> 
-      					<li><a href="/countries/212">Sweden</a></li> 
-      					<li><a href="/countries/213">Switzerland</a></li> 
-      					<li><a href="/countries/225">Turkey</a></li> 
-      					<li><a href="/countries/230">Ukraine</a></li> 
-      					<li><a href="/countries/232">United Kingdom</a></li> 
-      					<li><a href="/countries/96">Vatican City</a></li> 
-      				</ul>
-      			</div>
-      		</div>
-      	</div>
-      	
-      	<br/><br/><hr/><br/>
-	
-      	<div class="span-20 last">
-      		<h3 class="mbn">Other Countries</h3>
-      		<div class="span-5 border">
-      			<ul>
-      				<li><a href="/countries/1">Afghanistan</a></li> 
-      				<li><a href="/countries/2">Aland Islands</a></li> 
-      				<li><a href="/countries/4">Algeria</a></li> 
-      				<li><a href="/countries/5">American Samoa</a></li> 
-      				<li><a href="/countries/7">Angola</a></li> 
-      				<li><a href="/countries/8">Anguilla</a></li> 
-      				<li><a href="/countries/9">Antarctica</a></li> 
-      				<li><a href="/countries/10">Antigua and Barbuda</a></li> 
-      				<li><a href="/countries/11">Argentina</a></li> 
-      				<li><a href="/countries/13">Aruba</a></li> 
-      				<li><a href="/countries/17">Bahamas</a></li> 
-      				<li><a href="/countries/18">Bahrain</a></li> 
-      				<li><a href="/countries/19">Bangladesh</a></li> 
-      				<li><a href="/countries/20">Barbados</a></li> 
-      				<li><a href="/countries/23">Belize</a></li> 
-      				<li><a href="/countries/24">Benin</a></li> 
-      				<li><a href="/countries/25">Bermuda</a></li> 
-      				<li><a href="/countries/26">Bhutan</a></li> 
-      				<li><a href="/countries/27">Bolivia</a></li> 
-      				<li><a href="/countries/29">Botswana</a></li> 
-      				<li><a href="/countries/30">Bouvet Island</a></li> 
-      				<li><a href="/countries/31">Brazil</a></li> 
-      				<li><a href="/countries/32">British Indian Ocean Territory</a></li> 
-      				<li><a href="/countries/33">Brunei Darussalam</a></li> 
-      				<li><a href="/countries/35">Burkina Faso</a></li> 
-      				<li><a href="/countries/36">Burundi</a></li> 
-      				<li><a href="/countries/37">Cambodia</a></li> 
-      				<li><a href="/countries/38">Cameroon</a></li> 
-      				<li><a href="/countries/40">Cape Verde</a></li> 
-      				<li><a href="/countries/41">Cayman Islands</a></li> 
-      				<li><a href="/countries/42">Central African Republic</a></li> 
-      				<li><a href="/countries/43">Chad</a></li> 
-      				<li><a href="/countries/44">Chile</a></li> 
-      				<li><a href="/countries/45">China</a></li> 
-      				<li><a href="/countries/46">Christmas Island</a></li> 
-      				<li><a href="/countries/47">Cocos (Keeling) Islands</a></li> 
-      				<li><a href="/countries/48">Colombia</a></li> 
-      				<li><a href="/countries/49">Comoros</a></li> 
-      				<li><a href="/countries/50">Congo</a></li> 
-      				<li><a href="/countries/51">Congo, the Democratic Republic of the</a></li> 
-      				<li><a href="/countries/52">Cook Islands</a></li> 
-      				<li><a href="/countries/53">Costa Rica</a></li> 
-      				<li><a href="/countries/54">Côte D'ivoire</a></li> 
-      				<li><a href="/countries/56">Cuba</a></li> 
-      				<li><a href="/countries/60">Djibouti</a></li> 
-      				<li><a href="/countries/61">Dominica</a></li> 
-      				<li><a href="/countries/62">Dominican Republic</a></li> 
-      				<li><a href="/countries/63">Ecuador</a></li> 
-      				<li><a href="/countries/64">Egypt</a></li> 
-      			</ul>
-      		</div>
-      		<div class="span-5 border">
-      			<ul>
-      				<li><a href="/countries/65">El Salvador</a></li> 
-      				<li><a href="/countries/66">Equatorial Guinea</a></li> 
-      				<li><a href="/countries/67">Eritrea</a></li> 
-      				<li><a href="/countries/69">Ethiopia</a></li> 
-      				<li><a href="/countries/70">Falkland Islands (Malvinas)</a></li> 
-      				<li><a href="/countries/71">Faroe Islands</a></li> 
-      				<li><a href="/countries/72">Fiji</a></li> 
-      				<li><a href="/countries/75">French Guiana</a></li> 
-      				<li><a href="/countries/76">French Polynesia</a></li> 
-      				<li><a href="/countries/77">French Southern Territories</a></li> 
-      				<li><a href="/countries/78">Gabon</a></li> 
-      				<li><a href="/countries/79">Gambia</a></li> 
-      				<li><a href="/countries/82">Ghana</a></li> 
-      				<li><a href="/countries/83">Gibraltar</a></li> 
-      				<li><a href="/countries/85">Greenland</a></li> 
-      				<li><a href="/countries/86">Grenada</a></li> 
-      				<li><a href="/countries/87">Guadeloupe</a></li> 
-      				<li><a href="/countries/88">Guam</a></li> 
-      				<li><a href="/countries/89">Guatemala</a></li> 
-      				<li><a href="/countries/90">Guernsey</a></li> 
-      				<li><a href="/countries/91">Guinea</a></li> 
-      				<li><a href="/countries/92">Guinea-Bissau</a></li> 
-      				<li><a href="/countries/93">Guyana</a></li> 
-      				<li><a href="/countries/94">Haiti</a></li> 
-      				<li><a href="/countries/95">Heard Island and Mcdonald Islands</a></li> 
-      				<li><a href="/countries/97">Honduras</a></li> 
-      				<li><a href="/countries/98">Hong Kong</a></li> 
-      				<li><a href="/countries/101">India</a></li> 
-      				<li><a href="/countries/102">Indonesia</a></li> 
-      				<li><a href="/countries/103">Iran, Islamic Republic of</a></li> 
-      				<li><a href="/countries/104">Iraq</a></li> 
-      				<li><a href="/countries/106">Isle of Man</a></li> 
-      				<li><a href="/countries/107">Israel</a></li> 
-      				<li><a href="/countries/109">Jamaica</a></li> 
-      				<li><a href="/countries/110">Japan</a></li> 
-      				<li><a href="/countries/111">Jersey</a></li> 
-      				<li><a href="/countries/112">Jordan</a></li> 
-      				<li><a href="/countries/114">Kenya</a></li> 
-      				<li><a href="/countries/115">Kiribati</a></li> 
-      				<li><a href="/countries/116">Korea, Democratic People's Republic of</a></li> 
-      				<li><a href="/countries/117">Korea, Republic of</a></li> 
-      				<li><a href="/countries/118">Kuwait</a></li> 
-      				<li><a href="/countries/119">Kyrgyzstan</a></li> 
-      				<li><a href="/countries/120">Lao People's Democratic Republic</a></li> 
-      				<li><a href="/countries/122">Lebanon</a></li> 
-      				<li><a href="/countries/123">Lesotho</a></li> 
-      				<li><a href="/countries/124">Liberia</a></li> 
-      				<li><a href="/countries/125">Libyan Arab Jamahiriya</a></li> 
-      			</ul>
-      		</div>
-      		<div class="span-5 border">
-      			<ul>
-      				<li><a href="/countries/129">Macao</a></li> 
-      				<li><a href="/countries/131">Madagascar</a></li> 
-      				<li><a href="/countries/132">Malawi</a></li> 
-      				<li><a href="/countries/133">Malaysia</a></li> 
-      				<li><a href="/countries/134">Maldives</a></li> 
-      				<li><a href="/countries/135">Mali</a></li> 
-      				<li><a href="/countries/137">Marshall Islands</a></li> 
-      				<li><a href="/countries/138">Martinique</a></li> 
-      				<li><a href="/countries/139">Mauritania</a></li> 
-      				<li><a href="/countries/140">Mauritius</a></li> 
-      				<li><a href="/countries/141">Mayotte</a></li> 
-      				<li><a href="/countries/142">Mexico</a></li> 
-      				<li><a href="/countries/143">Micronesia</a></li> 
-      				<li><a href="/countries/146">Mongolia</a></li> 
-      				<li><a href="/countries/148">Montserrat</a></li> 
-      				<li><a href="/countries/149">Morocco</a></li> 
-      				<li><a href="/countries/150">Mozambique</a></li> 
-      				<li><a href="/countries/151">Myanmar</a></li> 
-      				<li><a href="/countries/152">Namibia</a></li> 
-      				<li><a href="/countries/153">Nauru</a></li> 
-      				<li><a href="/countries/154">Nepal</a></li> 
-      				<li><a href="/countries/156">Netherlands Antilles</a></li> 
-      				<li><a href="/countries/157">New Caledonia</a></li> 
-      				<li><a href="/countries/158">New Zealand</a></li> 
-      				<li><a href="/countries/159">Nicaragua</a></li> 
-      				<li><a href="/countries/160">Niger</a></li> 
-      				<li><a href="/countries/161">Nigeria</a></li> 
-      				<li><a href="/countries/162">Niue</a></li> 
-      				<li><a href="/countries/163">Norfolk Island</a></li> 
-      				<li><a href="/countries/164">Northern Mariana Islands</a></li> 
-      				<li><a href="/countries/166">Oman</a></li> 
-      				<li><a href="/countries/167">Pakistan</a></li> 
-      				<li><a href="/countries/168">Palau</a></li> 
-      				<li><a href="/countries/169">Palestinian Territory</a></li> 
-      				<li><a href="/countries/170">Panama</a></li> 
-      				<li><a href="/countries/171">Papua New Guinea</a></li> 
-      				<li><a href="/countries/172">Paraguay</a></li> 
-      				<li><a href="/countries/173">Peru</a></li> 
-      				<li><a href="/countries/174">Philippines</a></li> 
-      				<li><a href="/countries/175">Pitcairn</a></li> 
-      				<li><a href="/countries/178">Puerto Rico</a></li> 
-      				<li><a href="/countries/179">Qatar</a></li> 
-      				<li><a href="/countries/180">Reunion</a></li> 
-      				<li><a href="/countries/183">Rwanda</a></li> 
-      				<li><a href="/countries/184">Saint Barthélemy</a></li> 
-      				<li><a href="/countries/185">Saint Helena</a></li> 
-      				<li><a href="/countries/186">Saint Kitts and Nevis</a></li> 
-      				<li><a href="/countries/187">Saint Lucia</a></li> 
-      				<li><a href="/countries/188">Saint Martin</a></li> 
-      				<li><a href="/countries/189">Saint Pierre and Miquelon</a></li> 
-      			</ul>
-      		</div>
-      		<div class="span-5 last">
-      			<ul>
-      				<li><a href="/countries/190">Saint Vincent and the Grenadines</a></li> 
-      				<li><a href="/countries/191">Samoa</a></li> 
-      				<li><a href="/countries/193">Sao Tome and Principe</a></li> 
-      				<li><a href="/countries/194">Saudi Arabia</a></li> 
-      				<li><a href="/countries/195">Senegal</a></li> 
-      				<li><a href="/countries/197">Seychelles</a></li> 
-      				<li><a href="/countries/198">Sierra Leone</a></li> 
-      				<li><a href="/countries/199">Singapore</a></li> 
-      				<li><a href="/countries/202">Solomon Islands</a></li> 
-      				<li><a href="/countries/203">Somalia</a></li> 
-      				<li><a href="/countries/204">South Africa</a></li> 
-      				<li><a href="/countries/205">South Georgia and the South Sandwich Islands</a></li> 
-      				<li><a href="/countries/207">Sri Lanka</a></li> 
-      				<li><a href="/countries/208">Sudan</a></li> 
-      				<li><a href="/countries/209">Suriname</a></li> 
-      				<li><a href="/countries/210">Svalbard and Jan Mayen</a></li> 
-      				<li><a href="/countries/211">Swaziland</a></li> 
-      				<li><a href="/countries/214">Syrian Arab Republic</a></li> 
-      				<li><a href="/countries/215">Taiwan</a></li> 
-      				<li><a href="/countries/216">Tajikistan</a></li> 
-      				<li><a href="/countries/217">Tanzania</a></li> 
-      				<li><a href="/countries/218">Thailand</a></li> 
-      				<li><a href="/countries/219">Timor-Leste</a></li> 
-      				<li><a href="/countries/220">Togo</a></li> 
-      				<li><a href="/countries/221">Tokelau</a></li> 
-      				<li><a href="/countries/222">Tonga</a></li> 
-      				<li><a href="/countries/223">Trinidad and Tobago</a></li> 
-      				<li><a href="/countries/224">Tunisia</a></li> 
-      				<li><a href="/countries/226">Turkmenistan</a></li> 
-      				<li><a href="/countries/227">Turks and Caicos Islands</a></li> 
-      				<li><a href="/countries/228">Tuvalu</a></li> 
-      				<li><a href="/countries/229">Uganda</a></li> 
-      				<li><a href="/countries/231">United Arab Emirates</a></li> 
-      				<li><a href="/countries/234">United States Minor Outlying Islands</a></li> 
-      				<li><a href="/countries/235">Uruguay</a></li> 
-      				<li><a href="/countries/236">Uzbekistan</a></li> 
-      				<li><a href="/countries/237">Vanuatu</a></li> 
-      				<li><a href="/countries/238">Venezuela</a></li> 
-      				<li><a href="/countries/239">Viet Nam</a></li> 
-      				<li><a href="/countries/240">Virgin Islands, British</a></li> 
-      				<li><a href="/countries/241">Virgin Islands, U.S.</a></li> 
-      				<li><a href="/countries/242">Wallis and Futuna</a></li> 
-      				<li><a href="/countries/243">Western Sahara</a></li> 
-      				<li><a href="/countries/244">Yemen</a></li> 
-      				<li><a href="/countries/245">Zambia</a></li> 
-      				<li><a href="/countries/246">Zimbabwe</a></li> 
-      			</ul>
-      		</div>
-        </div>
-    </div>
-  </div>
-  <div class="span-4 last">
-  	<div id="ads_container">
-  <script type="text/javascript" language="javascript">
-  ADGEAR = {};
-  ADGEAR.site_callbacks = {};
-  ADGEAR.site_callbacks.variables = function() {
-    return {
-      gender: 'M',
-      orientation: 'Straight',
-      relationship_status: '',
-      relationships: [],
-      f: []
-    };
-  }
-</script>
-
-
-  <iframe name="adgear_iframe" id="adgear_iframe" scrolling="no" border="0" frameborder="0" marginHeight="0" marginWidth="0" vspace="0" hspace="0" style="padding:0; margin:0; visibility:hidden;" width="150" height="495" src="/adgear/adgear_iframe_3_vertical.html"></iframe>
-
-  <p class="smallest quiet"><em><a href="/ads/all">View all advertisers</a></em></p>
-
-  <p class="smallest quiet"><em>Want to <a href="/ads">advertise</a>?</em></p>
-</div>
-
-  </div>
-</div>
-
-  </div>
-
-  <div id="back_to_top" class="flexible_container">
-      <a href="#top_of_page" class="js-sassy-sexy-sax">^ <em>going up?</em> ^</a>
-  </div>
-
-  <div id="footer">
-  <div class="container">
-    <div class="span-5 colborder">
-      <h4>About FetLife</h4>
-      <ul>
-        <li><a href="/fetlife/team">Our Team</a></li>
-        <li><a href="/fetlife/greeters">Greeters</a></li>
-        <li><a href="/fetlife/caretakers">Caretakers</a></li>
-        <li><a href="/fetlife/presentations">Presentations</a></li>
-        <li><a href="/fetlife/contact_us">Contact Us</a></li>
-      </ul>
-
-      <h4>Advertising</h4>
-      <ul>
-        <li><a href="/ads">Advertise on FetLife</a></li>
-        <li><a href="/ads/all">Our Advertisers</a></li>
-      </ul>
-    </div>
-    <div class="span-5 colborder">
-      <h4>What's New?</h4>
-      <ul>
-        <li><a href="/groups/311">Announcements</a></li>
-      </ul>
-
-      <h4>Need help?</h4>
-      <ul>
-        <li><a href="/help">Frequently Asked Questions</a></li>
-        <li><a href="/groups/693">Support Forum</a></li>
-          <li><a href="/improvements">Suggestion Box</a></li>
-      </ul>
-
-      <h4>Bathroom Material</h4>
-      <ul>
-        <li><a href="/fetlife/community_guidelines">Community Guidelines</a></li>
-        <li><a href="/fetlife/content_guidelines">Content Guidelines</a></li>
-        <li><a href="/fetlife/group_leader_guidelines">Group Leader Guidelines</a></li>
-        <li><a href="/fetlife/2257exempt">2257 Exempt</a></li>
-        <li><a href="/fetlife/privacy">Privacy Policy</a></li>
-        <li><a href="/fetlife/tou">Terms of Use</a></li>
-      </ul>
-    </div>
-    <div class="span-5 colborder">
-      <h4>FetLife Gives Back</h4>
-      <ul>
-        <li><a href="/fetlife/open_source_projects">Open Source Projects</a></li>
-        <li><a href="/fetlife/organizations_we_support">Organizations We Support</a></li>
-      </ul>
-
-      <h4>Support <span class="sprite redheart pd1"></span> FetLife</h4>
-      <ul>
-        <li><a href="/support?pcta=footer">Support FetLife Today!</a></li>
-      </ul>
-
-      <h4>Schwag &amp; Media</h4>
-      <ul>
-        <li><a href="/fetlife/schwag">I <span class="amp">&amp;</span> We (heart) FetLife Button</a></li>
-        <li><a href="/fetlife/podcast_bumpers">Podcast Bumpers</a></li>
-      </ul>
-    </div>
-    <div class="span-6 last">
-      <ul class="social_media">
-        <li>
-          <a href="http://www.facebook.com/pages/FetLifecom/213152362056575" class="bcht tdn pd3">
-            <span class="sprite facebook" alt="Fan us on Facebook" title="Fan us on Facebook" ></span>
-          </a>
-          <a href="http://www.facebook.com/pages/FetLifecom/213152362056575"><span>Become a fan on Facebook</span></a>
-        </li>
-        <li>
-          <a href="http://twitter.com/fetlife" class="bcht tdn pd3">
-            <span class="sprite twitter" alt="Follow us on Twitter" title="Follow us on Twitter" ></span>
-          </a>
-          <a href="http://twitter.com/fetlife"><span>Follow us on Twitter</span></a>
-        </li>
-        <li>
-          <a href="http://delicious.com/save" class="bcht tdn pd3" onclick="window.open('http://delicious.com/save?v=5&noui&jump=close&url='+encodeURIComponent('http://fetlife.com')+'&title='+encodeURIComponent('Bondage, BDSM &amp; Fetish Community For Kinksters, By Kinksters - FetLife'), 'delicious','toolbar=no,width=550,height=550'); return false;">
-            <span class="sprite delicious" alt="Bookmark FetLife on Delicious" title="Bookmark FetLife on Delicious" ></span>
-          </a>
-          <a href="http://delicious.com/save" onclick="window.open('http://delicious.com/save?v=5&noui&jump=close&url='+encodeURIComponent('http://fetlife.com')+'&title='+encodeURIComponent('Bondage, BDSM &amp; Fetish Community For Kinksters, By Kinksters - FetLife'), 'delicious','toolbar=no,width=550,height=550'); return false;">
-            <span>Bookmark us on Delicious</span>
-          </a>
-        </li>
-        <li>
-          <a href="http://www.stumbleupon.com/submit?url=http://fetlife.com" class="bcht tdn pd3">
-            <span class="sprite stumbleupon" alt="StumbleUpon FetLife" title="StumbleUpon FetLife" ></span>
-          </a>
-          <a href="http://www.stumbleupon.com/submit?url=http://fetlife.com"><span>StumbleUpon FetLife</span></a>
-        </li>
-      </ul>
-    </div>
-    <div class="span-24 last quiet" id="trademark">
-      <br/>
-      <p>
-        All text and design is copyright &copy;2007-2015 BitLove Inc. / BitLove Ltd. All rights reserved.<br/>
-        The name and logo for FetLife are trademarks of BitLove Inc.<br/><br/>
-        <span class="xq s">Bitlove Inc, Suite #125, 718-333 Brooksbank Ave., North Vancouver, BC, V7J 3V8, Canada</span><br/>
-        <span class="xq s">Bitlove Limited, Avlonos, 1 Maria House, Nicosia, 1075, Cyprus</span>
-      </p>
-    </div>
-  </div>
-</div>
-
-
-  
-
-
-
-</body>
-</html>
-

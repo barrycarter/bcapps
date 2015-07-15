@@ -34,8 +34,8 @@ open(B,"|xargs -r $cmd");
 # TODO: do check places.html to see if there is new highwater mark
 # countries 249 and 250 were later removed
 for $i (1..248) {
-  # dont re dl for a given subdir
-  if (-f "countries-$i.txt") {next;}
+  # dont re dl for a given subdir unless too small
+  if (-s "countries-$i.txt" > 1000) {next;}
   print B "-o countries-$i.txt https://fetlife.com/countries/$i\n";
 }
 
@@ -90,9 +90,8 @@ while (%pages) {
     my($dir,$fname) = ($i, "kinksters?page=$count");
     $dir=~s%^/%%;
     $fname = "$dir/$fname";
-    # already exists? keep going
-    # TODO: add size check here
-    if (-f $fname) {next;}
+    # already exists (and not trivial)? keep going
+    if (-s $fname > 1000) {next;}
 
     my($url) = "https://fetlife.com/countries/$i/kinksters?page=$count";
     print B "-o '$fname' '$url'\n";
@@ -111,4 +110,6 @@ while (<B>) {
   s/\Cookie: (.*?) /"Cookie: $1" /;
   my($out,$err,$res)=cache_command2($_);
   debug("OUT: $out","ERR: $err", "RES: $res");
+  # TODO: check $res, check that files sizes are reasonable, etc
+
 }
