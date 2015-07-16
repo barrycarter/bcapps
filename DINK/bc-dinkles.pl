@@ -56,7 +56,7 @@ for $i (0..$ns-1) {
   debug("SCREEN $i\n\n");
 
   # testing
-#  unless ($i==21) {next;}
+#  unless ($i==25) {next;}
 
   seek(A,31280*$i,SEEK_SET);
   read(A,$buf,31820);
@@ -85,14 +85,7 @@ sub dink_render_screen {
       if ($t>=128) {$s++; $t-=128;}
       # top left pixel
       my($px,$py) = ($t%12*50,int($t/12)*50);
-      # TODO: look for tiles in game itself, not just stdloc
-      # create if not already existing
-      unless (-f "/var/cache/DINK/tile-$s-$px-$py.png") {
-	my($fname) = sprintf("/usr/share/dink/dink/Tiles/Ts%02d.bmp",$s);
-	unless (-f $fname) {die "NO SUCH FILE: $fname";}
-	my($out,$err,$res) = cache_command2("convert -crop 50x50+$px+$py $fname /var/cache/DINK/tile-$s-$px-$py.png");
-      }
-      print A "/var/cache/DINK/tile-$s-$px-$py.png\n";
+      print A dink_tile_png($s,$px,$py),"\n";
     }
   }
   close(A);
@@ -145,6 +138,10 @@ sub dink_sprite_data {
 #    $sprite{xpos2}=$sprite{xpos}-$sprite{xdelta}*$sprite{size}/100;
 #    $sprite{ypos2}=$sprite{ypos}-$sprite{ydelta}*$sprite{size}/100;
 
+    # TODO: figure out when freedink does/doesn't render a sprite,
+    # below is guesswork
+#    if ($sprite{ypos2}>400)
+
     # the z coordinate (higher values over lower values); default is que
     $sprite{z} = $sprite{que};
     # if background sprite, lowest value
@@ -171,6 +168,8 @@ sub dink_sprite_data {
   }
 
   my($overlays) = join(" ",@overlays);
+  # convert doesnt like +-
+  $overlays=~s/\+\-/-/g;
   debug("OL: $overlays");
 
   my($out,$err,$res) = cache_command2("convert -page +0+0 $image $overlays -layers flatten temp-$image");
@@ -221,3 +220,32 @@ sub dink_sprite_png {
   chomp($out);
   return $out;
 }
+
+# returns the transparent PNG for a tile, given as $s, $px, $py
+
+sub dink_tile_png {
+  my($s,$px,$py) = @_;
+
+  # check moddir and then main dir
+  for $i ($moddir,$dinkdir) {
+    my($path) = sprintf("$i/tiles/ts%02d.bmp",$s);
+    $path=~s/([a-z])/"\[".lc($1).uc($1)."\]"/ieg;
+    my($out,$err,$res) = cache_command2("ls $path");
+    # TODO: ignoring spaces here may break things
+    $out=~s/\s.*//s;
+    # if we don't find it, continue
+    unless ($out) {next;}
+    # we did find it, now check for tile
+    my($tile) = "$out-$px-$py.png";
+    # create it if it doesnt exist
+    unless (-f $tile) {
+    # create using convert
+      ($out,$err,$res) = cache_command2(debug("convert -crop 50x50+$px+$py $out $tile"));
+      # TODO: you may have to be root for above to work = icky
+      if ($res) {die("ERROR: $err")};
+    }
+    return $tile;
+  }
+}
+
+

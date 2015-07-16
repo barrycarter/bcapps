@@ -264,9 +264,8 @@ newlines if --debug given at command line
 =cut
 
 sub debug {
-  if($globopts{debug}) {
-    print STDERR join("\n",@_),"\n";
-  }
+  if($globopts{debug}) {print STDERR join("\n",@_),"\n";}
+  return @_;
 }
 
 =item webug(@list)
