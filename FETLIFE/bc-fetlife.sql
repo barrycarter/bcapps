@@ -5,7 +5,7 @@
 CREATE TABLE kinksters (
  id INT, screenname TEXT, age INT, gender TEXT, role TEXT, city TEXT,
  state TEXT, country text, thumbnail TEXT, popnum INT, popnumtotal INT,
- source TEXT, jloc TEXT, mtime INT) ENGINE = INNODB;
+ source TEXT, jloc TEXT, mtime INT);
 
 -- indexes for MySQL
 
@@ -30,9 +30,9 @@ FROM kinksters;
 
 -- import for MySQL (obsolete, program now prints queries directly)
 
--- LOAD DATA LOCAL INFILE 
--- '/mnt/extdrive/20150509/fetlife-users-20150519-with-lat-lon.csv'
--- INTO TABLE kinksters FIELDS TERMINATED BY ',';
+LOAD DATA LOCAL INFILE 
+'/mnt/extdrive2/FETLIFE-BY-REGION/20150702/testfile0'
+IGNORE INTO TABLE kinksters FIELDS TERMINATED BY ',';
 
 -- placecounts for google maps stuff (created as table, not view, for speed)
 

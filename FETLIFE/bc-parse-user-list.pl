@@ -7,6 +7,10 @@
 # giving up on merging this list w/ profile sucking list, so I can use
 # more fields
 
+# going back to CSV format so I can use MySQL's "LOAD DATA" feature:
+# individual INSERTs, *even inside a trasaction*, are too slow (and
+# LOAD DATA allows for REPLACE/IGNORE so I don't lose anything)
+
 require "/usr/local/lib/bclib.pl";
 
 # order in which to print per-user fields
@@ -21,8 +25,6 @@ my($fields) = join(", ",@fields);
 # NOTE: using BEGIN below WILL NOT WORK since MySQL autocommit is
 # still on; must use "START TRANSACTION":
 # https://dev.mysql.com/doc/refman/5.0/en/commit.html
-
-print "START TRANSACTION;\n";
 
 for $i (@ARGV) {
 
@@ -65,15 +67,6 @@ for $i (@ARGV) {
     $user=~s%href=\"/users/(\d+)\".*alt=\"(.*?)\".*src=\"(.*?)\"%%||warn("ERR: $i: no id/screenname/thumbnail");
     ($hash{id},$hash{screenname},$hash{thumbnail}) = ($1,$2,$3);
 
-    # this prevents duplicates for one TRANSACTION (ie, one running
-    # instance of this program = multiple files), but not across
-    # multiple transactions, so it's not ideal; however, it's better
-    # than having repeats inside a single transaction, which hangs
-    # MySQL
-
-    if ($seen{$hash{id}}) {warn("ID ALREADY SEEN: $hash{id}"); next;}
-    $seen{$hash{id}}=1;
-
     $user=~s%<span class="quiet">(.*?)</span>%%s||warn("ERR: $user: no age/gender/role");
     ($hash{age},$hash{gender},$hash{role}) = data2agr($1);
 
@@ -88,16 +81,13 @@ for $i (@ARGV) {
     $hash{jloc}=~s/\.+$//;
     $hash{jloc}=~s/\.+/./g;
 
-    my($vals) = join(", ",map("'$hash{$_}'",@fields));
-    # TODO: open for "INSERT OR IGNORE" if we are using older data
-    print "REPLACE INTO kinksters ($fields) VALUES ($vals);\n";
+    my($vals) = join(",",map($hash{$_},@fields));
+    print $vals,"\n";
   }
 
   # -1 to compensate for extra unused increment at last user
   unless ($pagedata[0]-1 == $pagedata[1]) {warn "$i: lost users";}
 }
-
-print "COMMIT;\n";
 
 # parses data into age, gender, role
 

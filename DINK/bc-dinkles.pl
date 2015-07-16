@@ -52,7 +52,7 @@ open(A,"$moddir/map.dat")||die("Can't open $moddir/map.dat");
 my($buf);
 
 # go through screens
-for $i (0..$ns-1) {
+for $i (1..$ns) {
   debug("SCREEN $i\n\n");
 
   # testing
@@ -206,8 +206,6 @@ sub dink_sprite_png {
   # the "base" path
 #  my($path) = sprintf("$dinksprites{$sprite{seq}}%02d.bmp",$sprite{frame});
   my($path) = sprintf("$dinksprites{$sprite{seq}}%02d.bmp.png",$sprite{frame});
-
-  debug("PATH: $path");
 
   # convert backslashes to forward ones
   $path=~s%\\+%/%g;
