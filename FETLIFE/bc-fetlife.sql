@@ -5,7 +5,7 @@
 CREATE TABLE kinksters (
  id INT, screenname TEXT, age INT, gender TEXT, role TEXT, city TEXT,
  state TEXT, country text, thumbnail TEXT, popnum INT, popnumtotal INT,
- source TEXT, jloc TEXT, mtime INT);
+ source TEXT, jloc TEXT, mtime INT) ENGINE = INNODB;
 
 -- indexes for MySQL
 

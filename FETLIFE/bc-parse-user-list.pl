@@ -65,6 +65,15 @@ for $i (@ARGV) {
     $user=~s%href=\"/users/(\d+)\".*alt=\"(.*?)\".*src=\"(.*?)\"%%||warn("ERR: $i: no id/screenname/thumbnail");
     ($hash{id},$hash{screenname},$hash{thumbnail}) = ($1,$2,$3);
 
+    # this prevents duplicates for one TRANSACTION (ie, one running
+    # instance of this program = multiple files), but not across
+    # multiple transactions, so it's not ideal; however, it's better
+    # than having repeats inside a single transaction, which hangs
+    # MySQL
+
+    if ($seen{$hash{id}}) {warn("ID ALREADY SEEN: $hash{id}"); next;}
+    $seen{$hash{id}}=1;
+
     $user=~s%<span class="quiet">(.*?)</span>%%s||warn("ERR: $user: no age/gender/role");
     ($hash{age},$hash{gender},$hash{role}) = data2agr($1);
 

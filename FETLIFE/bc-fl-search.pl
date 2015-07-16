@@ -1,6 +1,7 @@
 #!/bin/perl
 
-# Frontend to fetlife.db.94y.info that allows access to some simple queries
+# Frontend to shared.db.mysql.94y.info that allows access to some
+# simple queries
 
 require "/usr/local/lib/bclib.pl";
 
@@ -58,7 +59,7 @@ if ($chunks{"submit"}) {
   # TODO: handle fail case here
   $out=~/^Location: (.*?)$/m;
   my($url) = $1;
-  $link = "<font size=+2>&gt;&gt;&gt; <a href='$url' target='_blank'>Your results</a> (opens in new window)</font>";
+  $link = "<font size=+2>&gt;&gt;&gt; <a href='$url' target='_blank'>Click here to see your results</a> (opens in new window)</font>";
 }
 
 unless ($link) {$link="<font size=-1>(a link to your search results will appear here)</font>";}
