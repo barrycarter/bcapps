@@ -11,20 +11,10 @@ my($dir) = "/sites/MAP/IMAGES/TEST";
 %query = str2hash($ENV{QUERY_STRING});
 my($x,$y,$z) = ($query{x}, $query{y},$query{zoom});
 
-# TODO: THIS IS JUST TESTING!!!
-$x-=19;
-$y-=44;
-
 # TODO: pretty much just display z,x,y
-my($file);
-
-if (-f "$dir/$z,$x,$y.png") {
-  $file = "$dir/$z,$x,$y.png";
-} else {
-  $file = "$dir/blank.png";
-}
-
-print "Content-type: image/png\n\n";
+my($file) = "$dir/$z,$x,$y.jpg";
+unless (-f $file) {$file = "$dir/blank.jpg";}
+print "Content-type: image/jpeg\n\n";
 print read_file($file);
 
 

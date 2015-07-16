@@ -1,38 +1,41 @@
 #!/bin/perl
 
-# Given output of bc-dinkles.pl, tries to figure out when each screen
-# image goes using MAP.DAT
-
-# TODO: much bigger map, this is just testing
-
-# small image: 32 tiles wide, 24 tiles long, squashed 255x255
+# Given a directory with the output of bc-dinkles.pl, and a
+# (presumably matching) dink.dat file, creates slippy-style tiles
+# (which bc-image-from-tiles.pl can overlay on google maps)
 
 # slippy tile order is z,x,y
-
 require "/usr/local/lib/bclib.pl";
 
-# hash to map location to map
-my(%maps);
+my($dir,$dinkdat) = @ARGV;
+unless ($dir && $dinkdat) {die "Usage: $0 directory /path/to/dink.dat";}
 
-# TODO: do read_file here, so I don't have to loop twice?
-open(A,"dink.dat")||die("Can't open dink.dat, $!");
-
-# first 8 bytes are header
-seek(A,21,SEEK_SET);
-my($buf);
-
-# 20 bytes at a time
+my($all) = read_file($dinkdat);
+# first 20 chars are garbage
+$all=~s/^.{20}//s;
 
 for $y (1..24) {
   for $x (1..32) {
-    read(A,$buf,4);
-    # convert to int (TODO: not just last byte)
-    my($num) = ord(substr($buf,3,1));
-    $maps{$x}{$y} = $num;
+    $all=~s/^(....)//s;
+    my($num) = $1;
+    # TODO: this breaks for >256 maps, being too lazy
+    $num = ord(substr($num,0,1));
+    if ($num==0) {next;}
+    # break into 6 tiles and resize
+    for $px (0,200,400) {
+      for $py (0,200) {
+	# x and y coords of tiles
+	# TODO: MAYBE center these a bit more
+	my($xc,$yc) = ($x*3+$px/200-1,$y*2+$py/200-1);
+	my($outfile) = "7,$xc,$yc.jpg";
+	my($out,$err,$res) = cache_command2("convert $dir/temp-screen$num.png -crop 200x200+$px+$py -geometry 256x256 $dir/$outfile");
+      }
+    }
   }
 }
 
-close(A);
+
+die "TESTING";
 
 # TODO: don't hardcode
 my($screendir) = "/usr/local/etc/DINK/MAPS/solstice";
