@@ -7,7 +7,7 @@
       }
 
     </style>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
     <script>
 function CoordMapType() {}
 
@@ -16,17 +16,16 @@ CoordMapType.prototype.maxZoom = 19;
 
 CoordMapType.prototype.getTile = function(coord, zoom, ownerDocument) {
   var div = ownerDocument.createElement('div');
-  div.innerHTML = "<table border><tr><th>"+coord+"</th></tr></table>";
+  div.innerHTML = "<img src='http://map.barrycarter.info/IMAGES/TEST/"+zoom+","+coord.x+","+coord.y+".jpg' />"
   return div;
 };
 
 var map;
-var chicago = new google.maps.LatLng(41.850033,-87.6500523);
 var coordinateMapType = new CoordMapType();
 
 function initialize() {
   var mapOptions = {
-    zoom: 10,
+    zoom: 3,
     center: new google.maps.LatLng(0,0),
     streetViewControl: false,
     mapTypeId: 'coordinate',
