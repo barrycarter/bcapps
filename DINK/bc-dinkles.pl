@@ -60,8 +60,8 @@ for $i (1..$ns) {
 
   seek(A,31280*$i,SEEK_SET);
   read(A,$buf,31820);
-  dink_render_screen($buf,"screen$i.png");
-  dink_sprite_data($buf,"screen$i.png");
+  dink_render_screen($buf,"screen$i.jpg");
+  dink_sprite_data($buf,"screen$i.jpg");
 }
 
 # Given the 31820 byte chunk representing a screen, recreate screen in
@@ -194,18 +194,15 @@ sub read_dink_ini {
   return %result;
 }
 
-# finds or creates the file that is the transparent PNG version of a
+# finds or creates the file that is the transparent JPG version of a
 # given sprite (sent as hash)
 
-# TODO: currently just using raw bmp for testing
-
-sub dink_sprite_png {
+sub dink_sprite_jpg {
   my($spriteref) = @_;
   my(%sprite) = %{$spriteref};
 
   # the "base" path
-#  my($path) = sprintf("$dinksprites{$sprite{seq}}%02d.bmp",$sprite{frame});
-  my($path) = sprintf("$dinksprites{$sprite{seq}}%02d.bmp.png",$sprite{frame});
+  my($path) = sprintf("$dinksprites{$sprite{seq}}%02d.bmp.jpg",$sprite{frame});
 
   # convert backslashes to forward ones
   $path=~s%\\+%/%g;

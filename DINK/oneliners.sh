@@ -1,7 +1,7 @@
 # alpha: run this once from /usr/share/dink/dink to create transparent
-# PNG versions of all BMPs (note the resulting files end in .BMP.png)
+# JPG versions of all BMPs (note the resulting files end in .BMP.jpg)
 
-find graphics -iname '*.bmp' | perl -nle 'unless (-f "$_.png") {print "convert $_ -transparent white $_.png"}'
+find graphics -iname '*.bmp' | perl -nle 'unless (-f "$_.jpg") {print "convert $_ -transparent white $_.jpg"}'
 
 exit; 
 
