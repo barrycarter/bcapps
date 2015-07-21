@@ -74,7 +74,8 @@ for $i (1..248) {
 # because the quoting below and cache_command2 both add characters to
 # command line (130072 = 2**17-1000)
 
-open(B,"|xargs -s 130072 -r echo $cmd > cmdlist.txt");
+# lessening number of URLs per connection to avoid blocks
+open(B,"|xargs -s 50000 -r echo $cmd > cmdlist.txt");
 
 while (%pages) {
 
@@ -82,6 +83,7 @@ while (%pages) {
 
   # print all URLs that still have pages, delete those that dont
   for $i (sort {$a <=> $b} keys %pages) {
+    ++$innercount;
 
     # ignore and delete URLs that have a lower page count
     if ($pages{$i}<$count) {delete $pages{$i}; next;}
@@ -92,6 +94,11 @@ while (%pages) {
     $fname = "$dir/$fname";
     # already exists (and not trivial)? keep going
     if (-s $fname > 1000) {next;}
+
+    # every so often, visit home page to avoid block
+    if ($innercount%25==0) {
+      print B "-o homepage.html 'https://fetlife.com/home/v4'\n";
+    }
 
     my($url) = "https://fetlife.com/countries/$i/kinksters?page=$count";
     print B "-o '$fname' '$url'\n";
@@ -110,6 +117,7 @@ while (<B>) {
   s/\Cookie: (.*?) /"Cookie: $1" /;
   my($out,$err,$res)=cache_command2($_);
   debug("OUT: $out","ERR: $err", "RES: $res");
+  # since i repeatedly dl homepage.html, check its size
+  unless (-s "homepage.html" > 10000) {die "homepage.html too small";}
   # TODO: check $res, check that files sizes are reasonable, etc
-
 }

@@ -12,9 +12,8 @@ unless ($dir && $dinkdat) {die "Usage: $0 directory /path/to/dink.dat";}
 
 # slippy_unzoom(6);
 # slippy_unzoom(5);
-slippy_unzoom(0);
-
-die "TESTING";
+# slippy_unzoom(0);
+# die "TESTING";
 
 my($all) = read_file($dinkdat);
 # first 20 chars are garbage

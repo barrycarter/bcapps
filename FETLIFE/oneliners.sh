@@ -1,5 +1,13 @@
 # same as below, but adds dotted notation to existing CSV for join
 
+# list of files I've already parsed (bc-parse-user-list via xargs was
+# interuppted); the last one is invalid (partial parse but the others
+# can be excluded)
+
+perl -F, -anle '$F[11]=~s%https://fetlife.com/%%; print $F[11]' kinksters-20150615.csv | uniq > parsed.txt
+
+exit;
+
 # result must be sorted by join field, (ie, "sort -t, -k14,14")
 
 perl -F, -anle 'chomp;$x=lc(join(".",@F[5..7])); $x=~s/[^a-z]/./g; print "$_,$x"'

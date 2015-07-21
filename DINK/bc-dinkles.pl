@@ -194,15 +194,15 @@ sub read_dink_ini {
   return %result;
 }
 
-# finds or creates the file that is the transparent JPG version of a
+# finds or creates the file that is the transparent PNG version of a
 # given sprite (sent as hash)
 
-sub dink_sprite_jpg {
+sub dink_sprite_png {
   my($spriteref) = @_;
   my(%sprite) = %{$spriteref};
 
   # the "base" path
-  my($path) = sprintf("$dinksprites{$sprite{seq}}%02d.bmp.jpg",$sprite{frame});
+  my($path) = sprintf("$dinksprites{$sprite{seq}}%02d.bmp.png",$sprite{frame});
 
   # convert backslashes to forward ones
   $path=~s%\\+%/%g;

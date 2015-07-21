@@ -28,7 +28,7 @@ CREATE VIEW thumbs AS
 age, gender, role, city, state, country, popnum, popnumtotal
 FROM kinksters;
 
--- import for MySQL (obsolete, program now prints queries directly)
+-- import for MySQL
 
 LOAD DATA LOCAL INFILE 
 '/mnt/extdrive2/FETLIFE-BY-REGION/20150702/testfile0'
