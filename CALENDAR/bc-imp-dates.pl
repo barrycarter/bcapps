@@ -5,17 +5,32 @@
 require "/usr/local/lib/bclib.pl";
 my(@dates);
 
+my(@fields) = ("name", "location", "desc", "date", "ncs", "notes");
+
 # Courtesy Emilie C., more info for the vcalendar version
-# TODO: "international" -> "worldwide"
-my($all) = read_file("$bclib{githome}/CALENDAR/impdates.csv");
+my($all) = read_file("$bclib{githome}/CALENDAR/impdates.xml");
 
-my(@items) = csv($all);
+while ($all=~s%<table:table-row.*?>(.*?)</table:table-row>%%is) {
+  my($event) = $1;
+  my(@data) = ($event=~m%<table:table-cell.*?>(.*?)</table:table-cell>%isg);
+  for $i (@data) {
+    # remove HTML and trim/fix newlines (vcalendar should be ok w that)
+    $i=~s/<.*?>//g;
+    $i=~s/^\s*//;
+    $i=~s/\s*$//;
+    $i=~s/\n/\\n/g;
+    # ugly
+    $i=~s/[^ -~]//g;
+    # uglier
+    $i=~s/\&\#\d+\;//g;
+#    $i=~s/\s+/ /g;
+    # per Emilie request
+    $i=~s/international/worldwide/g;
+  }
 
-for $i (@items) {
-  debug("ITEM: $i");
+  # map data to name
+  for $i (0..$#fields) {$data{$data[0]}{$fields[$i]} = $data[$i];}
 }
-
-die "TESTING";
 
 # TODO: http://www.un.org/en/events/observances/days.shtml
 # TODO: http://www.timeanddate.com/holidays/ (or maybe not)
@@ -52,7 +67,7 @@ die "TESTING";
 	  "Youth Day" => "0812",
 	  "Literacy Day" => "0908",
 	  "Peace Day" => "0921",
-	  "Teachers Day" => "1005",
+#	  "Teachers Day" => "1005",
 	  "Statistics Day" => "1020",
 	  "Tolerance Day" => "1116",
 	  "AIDS Day" => "1201",
@@ -68,8 +83,11 @@ die "TESTING";
 	  "JFK Birthday" => "0529",
 	  "Guy Fawke's Day" => "1105",
 	  "Running of Bulls" => "0707",
+	  "Pi Day" => "0314",
 	  "" => ""
 	  );
+
+# dropped teachers and childrens days since there are many of these
 
 # NOTE: some former British colonies bump Boxing Day to the 27th if it
 # falls on a Sunday. I don't
@@ -225,28 +243,43 @@ open(B,">/home/barrycarter/calendar.d/flatcal.txt");
 while (@dates) {
   my($date,$event) = splice(@dates,0,2);
 
+  if ($event=~/^(.*?)\s*\d*$/) {$data{$event} = $data{$1};}
+  if ($event=~/^DST/) {$data{$event} = $data{DST};}
+
+  debug("EV: $event $data{$event}");
+
   # this is silly
   my($uid) = sha1_hex("$date $event");
 
   print B "$date $event\n";
 
   # ics format
-  # 120000 GMT = "closest" (in some sense) to everywhere in world = same day
+  # 1000 GMT = "closest" (in some sense) to everywhere in world = same day
   # old way (0000-2359 UTC) had overlaps into previous/next day
+  # 1000 cuts off UTC-11 and UTC+14 but I'm ok with that
   print A << "MARK";
 BEGIN:VEVENT\r
 SUMMARY:$event\r
 UID:$uid\r
-DTSTART:${date}T120000Z\r
-DTEND:${date}T120000Z\r
+DTSTART:${date}T100000Z\r
+DTEND:${date}T101459Z\r
+LOCATION: $data{$event}{location}\r
+DESCRIPTION: $data{$event}{desc}\r
+COMMENT: $data{$event}{notes}\r
 END:VEVENT\r
 MARK
 ;
+
+# this lets me see what events are missing (usually due to typos)
+delete $data{$event};
+
 }
 
 print A "END:VCALENDAR\r\n";
 
 close(A);close(B);
+
+debug(sort keys %data);
 
 # computes the nth "weekday" after or on given date (yyyymmdd format)
 
