@@ -8,7 +8,7 @@ my(@dates);
 # TODO: http://www.un.org/en/events/observances/days.shtml
 # TODO: http://www.timeanddate.com/holidays/ (or maybe not)
 # TODO: more?
-# TODO: children's day, us tennis open
+# TODO: re-add children's day (if I find canonical), us tennis open
 
 # TODO: Chinese/Jewish/other New Years, Diwali, Islamic holidays
 
@@ -27,7 +27,7 @@ my(@dates);
 	  "Earth Day" => "0422",
 	  "Cinco de Mayo" => "0505",
 	  "Citizenship Day" => "0917",
-	  "Rememberence Day" => "0911",
+	  "Remembrance Day" => "0911",
 	  "Bosses' Day" => "1016",
 	  "New Year's Eve" => "1231",
 	  "Pearl Harbor Day" => "1207",
@@ -52,7 +52,7 @@ my(@dates);
 	  "All Souls Day" => "1102",
 	  "St Peter/Paul Day" => "0629",
 	  "QE II Birthday" => "0421",
-	  "UN Children's Day" => "1120",
+#	  "UN Children's Day" => "1120",
 	  "JFK Birthday" => "0529",
 	  "Guy Fawke's Day" => "1105",
 	  "Running of Bulls" => "0707",
@@ -65,7 +65,8 @@ my(@dates);
 delete $fixed{""};
 
 # from gcal's massive list of holidays
-my($out,$err,$res) = cache_command2("egrep -i 'purim\/|arbor day us|passover|children.s day|easter sunday|mardi gras|ash wednesday|passion sunday|good friday|pentecost|whit monday|rosh|palm sunday|yom kippur|Hannukah|kwanzaa|diwali' $bclib{githome}/ASTRO/bc-gcal-filter-out.txt","age=86400");
+# removed childrens day, not canon
+my($out,$err,$res) = cache_command2("egrep -i 'purim\/|arbor day us|passover|easter sunday|mardi gras|ash wednesday|passion sunday|good friday|pentecost|whit monday|rosh|palm sunday|yom kippur|Hannukah|kwanzaa|diwali' $bclib{githome}/ASTRO/bc-gcal-filter-out.txt","age=86400");
 
 for $i (split(/\n/,$out)) {
 
