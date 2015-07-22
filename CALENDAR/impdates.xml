@@ -1,0 +1,2904 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<office:document-content xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0"
+xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0"
+xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0"
+xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0"
+xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0"
+xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0"
+xmlns:xlink="http://www.w3.org/1999/xlink"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0"
+xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0"
+xmlns:of="urn:oasis:names:tc:opendocument:xmlns:of:1.2"
+office:version="1.2">
+<office:font-face-decls>
+<style:font-face style:name="Calibri" svg:font-family="Calibri" />
+</office:font-face-decls>
+<office:automatic-styles>
+<style:style style:name="ce1" style:family="table-cell"
+style:parent-style-name="Default" style:data-style-name="N0">
+<style:table-cell-properties style:vertical-align="middle"
+fo:wrap-option="wrap" style:repeat-content="false" />
+<style:paragraph-properties fo:text-align="center" />
+<style:text-properties fo:font-size="10pt"
+style:font-size-asian="10pt" style:font-size-complex="10pt" />
+</style:style>
+<style:style style:name="ce2" style:family="table-cell"
+style:parent-style-name="Default" style:data-style-name="N0">
+<style:table-cell-properties style:vertical-align="middle"
+fo:wrap-option="wrap" style:repeat-content="false" />
+<style:paragraph-properties fo:text-align="center" />
+</style:style>
+<style:style style:name="ce3" style:family="table-cell"
+style:parent-style-name="Default" style:data-style-name="N0">
+<style:table-cell-properties style:vertical-align="middle"
+fo:wrap-option="wrap" fo:background-color="#00B0F0"
+style:repeat-content="false" />
+<style:paragraph-properties fo:text-align="center" />
+<style:text-properties fo:font-size="10pt"
+style:font-size-asian="10pt" style:font-size-complex="10pt" />
+</style:style>
+<style:style style:name="T1" style:family="text"
+style:parent-style-name="Default">
+<style:text-properties fo:color="#FF0000"
+style:text-line-through-style="none" style:font-name="Calibri"
+style:font-name-asian="Calibri" style:font-name-complex="Calibri"
+fo:font-size="10pt" style:font-size-asian="10pt"
+style:font-size-complex="10pt" fo:font-style="normal"
+style:font-style-asian="normal" style:font-style-complex="normal"
+style:text-underline-style="none" style:text-underline-type="none"
+fo:font-weight="normal" style:font-weight-asian="normal"
+style:font-weight-complex="normal" style:text-outline="false"
+fo:text-shadow="none" />
+</style:style>
+<style:style style:name="co1" style:family="table-column">
+<style:table-column-properties fo:break-before="auto"
+style:column-width="2.8575cm"
+style:use-optimal-column-width="true" />
+</style:style>
+<style:style style:name="co2" style:family="table-column">
+<style:table-column-properties fo:break-before="auto"
+style:column-width="3.889375cm"
+style:use-optimal-column-width="true" />
+</style:style>
+<style:style style:name="co3" style:family="table-column">
+<style:table-column-properties fo:break-before="auto"
+style:column-width="19.685cm"
+style:use-optimal-column-width="true" />
+</style:style>
+<style:style style:name="co4" style:family="table-column">
+<style:table-column-properties fo:break-before="auto"
+style:column-width="7.51416666666667cm"
+style:use-optimal-column-width="true" />
+</style:style>
+<style:style style:name="co5" style:family="table-column">
+<style:table-column-properties fo:break-before="auto"
+style:column-width="4.89479166666667cm"
+style:use-optimal-column-width="true" />
+</style:style>
+<style:style style:name="co6" style:family="table-column">
+<style:table-column-properties fo:break-before="auto"
+style:column-width="3.175cm"
+style:use-optimal-column-width="true" />
+</style:style>
+<style:style style:name="co7" style:family="table-column">
+<style:table-column-properties fo:break-before="auto"
+style:column-width="2.11666666666667cm" />
+</style:style>
+<style:style style:name="ro1" style:family="table-row">
+<style:table-row-properties style:row-height="15pt"
+style:use-optimal-row-height="false" fo:break-before="auto" />
+</style:style>
+<style:style style:name="ro2" style:family="table-row">
+<style:table-row-properties style:row-height="63.75pt"
+style:use-optimal-row-height="true" fo:break-before="auto" />
+</style:style>
+<style:style style:name="ro3" style:family="table-row">
+<style:table-row-properties style:row-height="51pt"
+style:use-optimal-row-height="true" fo:break-before="auto" />
+</style:style>
+<style:style style:name="ro4" style:family="table-row">
+<style:table-row-properties style:row-height="76.5pt"
+style:use-optimal-row-height="true" fo:break-before="auto" />
+</style:style>
+<style:style style:name="ro5" style:family="table-row">
+<style:table-row-properties style:row-height="114.75pt"
+style:use-optimal-row-height="true" fo:break-before="auto" />
+</style:style>
+<style:style style:name="ro6" style:family="table-row">
+<style:table-row-properties style:row-height="89.25pt"
+style:use-optimal-row-height="true" fo:break-before="auto" />
+</style:style>
+<style:style style:name="ro7" style:family="table-row">
+<style:table-row-properties style:row-height="102pt"
+style:use-optimal-row-height="true" fo:break-before="auto" />
+</style:style>
+<style:style style:name="ro8" style:family="table-row">
+<style:table-row-properties style:row-height="38.25pt"
+style:use-optimal-row-height="true" fo:break-before="auto" />
+</style:style>
+<style:style style:name="ro9" style:family="table-row">
+<style:table-row-properties style:row-height="12.75pt"
+style:use-optimal-row-height="true" fo:break-before="auto" />
+</style:style>
+<style:style style:name="ta1" style:family="table"
+style:master-page-name="mp1">
+<style:table-properties table:display="true"
+style:writing-mode="lr-tb" />
+</style:style>
+</office:automatic-styles>
+<office:body>
+<office:spreadsheet>
+<table:calculation-settings table:case-sensitive="false"
+table:search-criteria-must-apply-to-whole-cell="true"
+table:use-wildcards="true" table:use-regular-expressions="false"
+table:automatic-find-labels="false" />
+<table:table table:name="Feuil1" table:style-name="ta1">
+<table:table-column table:style-name="co1"
+table:default-cell-style-name="ce1" />
+<table:table-column table:style-name="co2"
+table:default-cell-style-name="ce1" />
+<table:table-column table:style-name="co3"
+table:default-cell-style-name="ce1" />
+<table:table-column table:style-name="co4"
+table:default-cell-style-name="ce1" />
+<table:table-column table:style-name="co5"
+table:default-cell-style-name="ce1" />
+<table:table-column table:style-name="co6"
+table:default-cell-style-name="ce1" />
+<table:table-column table:style-name="co7"
+table:number-columns-repeated="16378"
+table:default-cell-style-name="ce1" />
+<table:table-row table:style-name="ro1">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>NAME</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>LOCATION</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>DESCRIPTION</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>DATE</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>NAME CHANGE SUGGESTION</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>NOTE</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16378"
+table:style-name="ce2" />
+</table:table-row>
+<table:table-row table:style-name="ro2">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Gilroy GarlicFest</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Christmas Hill Park, Gilroy, CA 95020, United
+States</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>The Gilroy Garlic Festival is one of the largest food
+festivals in the United States, held annually in Gilroy, California
+on the last full weekend in July at Christmas Hill Park.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162; www.gilroygarlicfestival.com</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Gilroy_Garlic_Festival</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - last full weekend in July</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="2"
+table:style-name="ce1" />
+<table:table-cell table:number-columns-repeated="16378"
+table:style-name="ce2" />
+</table:table-row>
+<table:table-row table:style-name="ro3">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Parents' Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>United States</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Parents' Day is a holiday similar to a combination of
+Father's Day and Mother's Day. In the United States, Parents' Day
+is held on the fourth Sunday of every July.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Parents'_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - fourth Sunday of every July</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="2"
+table:style-name="ce1" />
+<table:table-cell table:number-columns-repeated="16378"
+table:style-name="ce2" />
+</table:table-row>
+<table:table-row table:style-name="ro4">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Friendship Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International Friendship Day is a day for celebrating
+friendship. On this day people spend time with their friends and
+express love for them. Exchange of Friendship Day Gifts like
+flowers, cards and wrist bands is a popular tradition of this
+occasion. International Friendship Day celebrations take place on
+the first Sunday of August every year.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162; http://www.friendshipday.org/</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Friendship_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - first Sunday of August</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="2"
+table:style-name="ce1" />
+<table:table-cell table:number-columns-repeated="16378"
+table:style-name="ce2" />
+</table:table-row>
+<table:table-row table:style-name="ro2">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Youth Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International Youth Day (IYD) is an awareness day
+designated by the United Nations. The purpose of the day is to draw
+attention to a given set of cultural and legal issues surrounding
+youth.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+http://www.un.org/en/events/youthday/</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/International_Youth_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - 12 August</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International Youth Day</text:p>
+</table:table-cell>
+<table:table-cell table:style-name="ce1" />
+<table:table-cell table:number-columns-repeated="16378"
+table:style-name="ce2" />
+</table:table-row>
+<table:table-row table:style-name="ro3">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>PGA Championship</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>United States</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>The U.S. PGA Championship is an annual golf
+tournament.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+http://www.pga.com/pgachampionship/</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/PGA_Championship</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - played in mid-August on the 3rd weekend prior to
+Labor Day weekend</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="2"
+table:style-name="ce1" />
+<table:table-cell table:number-columns-repeated="16378"
+table:style-name="ce2" />
+</table:table-row>
+<table:table-row table:style-name="ro3">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Labor Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>United States</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Labor Day in the United States is a holiday celebrated on
+the first Monday in September. It is a celebration of the American
+labor movement and is dedicated to the social and economic
+achievements of workers.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Labor_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - First Monday in September</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="2"
+table:style-name="ce1" />
+<table:table-cell table:number-columns-repeated="16378"
+table:style-name="ce2" />
+</table:table-row>
+<table:table-row table:style-name="ro2">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Literacy Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Member states of the United Nations</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>On International Literacy Day each year, UNESCO reminds the
+international community of the status of literacy and adult
+learning globally.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+http://internationalliteracyday.org/</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/International_Literacy_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - September 8</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro2">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Rememberence Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>United States</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>The National Day of Service and Remembrance occurs on
+September 11 of each year in memory of the 2,977 killed in the 2001
+September 11 attacks.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+http://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Patriot_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - September 11</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Service Day OR Remembrance Day</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16379"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro5">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Grandparents' Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>United States</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>There are three purposes for National Grandparents
+Day:</text:p>
+<text:p>To honor grandparents.</text:p>
+<text:p>To give grandparents an opportunity to show love for their
+children's children.</text:p>
+<text:p>To help children become aware of the strength, information
+and guidance older people can offer.</text:p>
+<text:p>It's a celebration of both paternal and maternal
+grandparents.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162; http://grandparentsday.org/</text:p>
+<text:p>&#226;&#8364;&#162;
+http://legacyproject.org/guides/gpdhistory.html</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/National_Grandparents_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - First Sunday after Labor Day</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro4">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Rosh Hashana
+<text:s /></text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Rosh Hashana is the Jewish (&#226;&#339;&#161;) New Year,
+it's a two-day celebration.
+<text:s /></text:p>
+<text:p>Please note: Jewish holidays begin and finish at sunset.
+<text:s /></text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://www.hebcal.com/holidays/rosh-hashana</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Rosh_Hashanah</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually
+<text:span text:style-name="T1">
+<text:s />- ten days before Yom Kippur</text:span></text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>&#240;&#376;&#8221;&#175; Rosh Hashana OR
+<text:s /></text:p>
+<text:p>&#226;&#339;&#161; Rosh Hashana</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>The NAME is not correct since you change each year since
+you added the year</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16378" />
+</table:table-row>
+<table:table-row table:style-name="ro2">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Citizenship Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>United States</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Constitution Day (or Citizenship Day) is an American
+federal observance that recognizes the adoption of the United
+States Constitution and those who have become U.S.
+citizens.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+http://www.constitutionday.com/</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Constitution_Day_(United_States)</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - September 17</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro6">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Peace Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Each year the International Day of Peace
+(&#226;&#732;&#174;) is observed around the world on 21 September.
+The General Assembly has declared this as a day devoted to
+strengthening the ideals of peace, both within and among all
+nations and peoples.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+http://www.un.org/en/events/peaceday/</text:p>
+<text:p>&#226;&#8364;&#162;
+http://internationaldayofpeace.org/</text:p>
+<text:p>&#226;&#8364;&#162; http://www.peaceoneday.org/</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/International_Day_of_Peace</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - September 21</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>&#226;&#732;&#174; Peace Day</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16379"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro2">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Yom Kippur</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Yom Kippur also known as Day of Atonement, is the holiest
+day of the year for the Jewish (&#240;&#376;&#8221;&#175;) people.
+Yom Kippur is "the tenth day of [the] seventh month" (Tishrei) and
+is regarded as the "Sabbath of Sabbaths". Its central themes are
+repentance and atonement.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://www.hebcal.com/holidays/yom-kippur</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Yom_Kippur</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - 10th day of Tishrei (10 days after Rosh
+Hashana)</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>&#240;&#376;&#8221;&#175; Yom Kippur</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16379"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro6">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Teachers Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>World Teachers' Day, held annually on October 5th since
+1994, commemorates teachers&#226;&#8364;&#8482; organizations
+worldwide. Its aim is to mobilize support for teachers and to
+ensure that the needs of future generations will continue to be met
+by teachers.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/World_Teachers%27_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - October 5</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>World Teachers' Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Teachers' days are distinct from World Teachers' Day which
+is officially celebrated across the world on October 5</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16378" />
+</table:table-row>
+<table:table-row table:style-name="ro3">
+<table:table-cell office:value-type="string"
+table:style-name="ce3">
+<text:p>Children's Day</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="2"
+table:style-name="ce3" />
+<table:table-cell office:value-type="string"
+table:style-name="ce3">
+<text:p>?</text:p>
+</table:table-cell>
+<table:table-cell table:style-name="ce3" />
+<table:table-cell office:value-type="string"
+table:style-name="ce3">
+<text:p>Wrong Date ? See UN Children's day on november 20 (line
+32)</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16378" />
+</table:table-row>
+<table:table-row table:style-name="ro3">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Columbus Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Americas</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Many countries in the New World and elsewhere officially
+celebrate as a holiday the anniversary of Christopher Columbus's
+arrival in the Americas, which happened on October 12, 1492. The
+landing is celebrated as Columbus Day in the United
+States.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Columbus_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - October 12 (actual/traditional); second Monday
+in October (observed in the United States)</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro3">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Bosses' Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>United States, Canada, Lithuania and Romania</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Bosses' Day, also known as National Boss Day has
+traditionally been a day for employees to thank their bosses for
+being kind and fair throughout the year. This day was created for
+the purpose of strengthening the bond between employer and
+employee.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Boss%27s_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - October 16 (or nearest working day)</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro2">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Sweetest Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Midwestern United States</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Sweetest Day is a holiday celebrated in the Midwestern
+United States, and parts of the Northeastern United States, on the
+third Saturday in October. Sweetest Day has also been referred to
+as a "concocted promotion" created by the candy industry solely to
+increase sales of sweets. But it is also a day to bestow romantic
+deeds or expressions.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Sweetest_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - Third Saturday in October</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro3">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>World Series</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>United States</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>The World Series is the annual championship series of North
+American-based Major League Baseball (MLB), played since 1903
+between the American League (AL) champion team and the National
+League (NL) champion.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/World_Series</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro5">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Statistics Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>The World Statistics Day was proclaimed by the United
+Nations General Assembly in 2010 to recognize the importance of
+statistics in shaping our societies. The Bureau of the Statistical
+Commission has recommended that World Statistics Day should be
+observed every five years.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+http://unstats.un.org/unsd/wsd/</text:p>
+<text:p>&#226;&#8364;&#162;
+https://worldstatisticsday.org/</text:p>
+<text:p>&#226;&#8364;&#162;
+http://www.un.org/en/events/statisticsday/</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/World_Statistics_Day</text:p>
+<text:p />
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Every 5 years - on October 20</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro3">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Mother-in-Law Day</text:p>
+</table:table-cell>
+<table:table-cell table:style-name="ce1" />
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Mothers-in-law have never enjoyed the widespread respect
+and devotion that mothers have received over the years, and the
+rising divorce rate has given the whole concept of in-laws a less
+permanent place in the national imagination. Mother-In-Law Day
+gives you and your mother-in-law a chance to get to know each
+other. Why not take your Mother-In-Law out for a nice meal, buy her
+flowers, etc.</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>annually - The Fourth Sunday of October</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro7">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Halloween/Reformation</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Halloween is a date celebrated on the night of October
+31st. Children wear costumes and they go to peoples' homes saying
+"Trick or treat!" to ask for candy and then people give it to
+them.</text:p>
+<text:p />
+<text:p>&#226;&#339; Reformation Day is a religious holiday
+celebrated on October 31, alongside All Hallows' Eve, in
+remembrance of the Reformation, particularly by Lutheran and some
+Reformed church communities.
+<text:s /></text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Halloween</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Reformation_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>annually - october 31</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro2">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>All Saints Day</text:p>
+</table:table-cell>
+<table:table-cell table:style-name="ce1" />
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Many churches in the United States celebrate All Saints'
+Day (&#226;&#339; ) to honor all the saints, particularly those who
+do not have their own special feast day, on November 1. All Saints'
+Day is celebrated in many areas of the United States. In New
+Orleans, for example, people gather in local cemeteries and
+decorated the graves with flowers.
+<text:s /></text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/All_Saints%27_Day</text:p>
+</table:table-cell>
+<table:table-cell table:style-name="ce1" />
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>&#226;&#339; All Saints Day</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16379" />
+</table:table-row>
+<table:table-row table:style-name="ro2">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>DST</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>United States</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Daylight saving time (DST) is the practice of advancing
+clocks during summer months by one hour so that in the evening
+hours day light is experienced later, while sacrificing normal
+sunrise times. Typically, users in regions with summer time adjust
+clocks forward one hour close to the start of spring and adjust
+them backward in the autumn to standard time.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Daylight_saving_time</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Twice Annually - Second Sunday March &amp; First Sunday
+November</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>&#226;&#338;&#353; DST</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16379" />
+</table:table-row>
+<table:table-row table:style-name="ro8">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>All Souls Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>All Souls&#226;&#8364;&#8482; Day (&#226;&#339;) in the
+United States is dedicated to prayers for the dead. The Day of the
+Dead is also celebrated on this day.
+<text:s /></text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/All_Souls%27_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - 2 November</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>&#226;&#339; All Souls Day</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16379" />
+</table:table-row>
+<table:table-row table:style-name="ro3">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Election Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>United States</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Election Day in the United States is the day set by law for
+the general elections of public officials. It occurs on the Tuesday
+right after the first Monday in November.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Election_Day_(United_States)</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - The Tuesday after the first Monday of
+November</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro2">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Guy Fawke's Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Great Britain</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Guy Fawkes Day also known as Guy Fawkes Night is a firework
+festival in Britain. It remembers the Gunpowder Plot of 5 November
+1605.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162; http://www.bonfirenight.net/</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Guy_Fawkes_Night</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - November 5</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Guy Fawkes Day</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16379" />
+</table:table-row>
+<table:table-row table:style-name="ro2">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Veterans Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>United States</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Veterans Day is an official United States federal holiday
+that is observed annually on November 11, honoring people who have
+served in the U.S. Armed Forces, also known as veterans. Most
+countries call it Remembrance Day, but the US reserves that word
+for a different day.
+<text:s /></text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Veterans_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - November 11</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro4">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Tolerance Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>The International Day for Tolerance is an annual observance
+declared by UNESCO in 1995 to generate public awareness of the
+dangers of intolerance.
+<text:s /></text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+http://www.un.org/en/events/toleranceday/</text:p>
+<text:p>&#226;&#8364;&#162;
+http://www.unesco.org/new/en/unesco/events/prizes-and-celebrations/celebrations/international-day-for-tolerance</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/International_Day_for_Tolerance</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - 16 November</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro4">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Philosophy Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>World Philosophy Day was introduced in 2002 by UNESCO to
+honour philosophical reflection in the entire world by opening up
+free and accessible spaces. Its objective is to encourage the
+peoples of the world to share their philosophical heritage and to
+open their minds to new ideas.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+http://www.un.org/en/events/philosophyday/</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/World_Philosophy_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro2">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>UN Children's Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Universal Children's Day takes place annually on November
+20. First proclaimed by the United Nations General Assembly in
+1954, it was established firstly to promote mutual exchange and
+understanding among children and secondly to initiate action to
+benefit and promote the welfare of the world's children.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+http://www.un.org/en/events/childrenday/</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - November 20</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro8">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Thanksgiving</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>United States and Canada</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Thanksgiving is a holiday celebrated once a year. It is a
+day to give thanks. It is always on the fourth Thursday of
+November.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Thanksgiving_(United_States)</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - fourth Thursday of November</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro7">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Black Friday</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>United States, United Kingdom, Canada, Mexico, Brazil,
+India, Panama, Costa Rica, Romania, Denmark, Sweden, South Africa,
+France, Norway and Hungary</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Black Friday is the Friday which comes immediately after
+the Thanksgiving holiday in the United States. Since the early
+2000s, it has been regarded as the beginning of the Christmas
+shopping season in the US, and most major retailers open very early
+(and more recently during overnight hours) and offer promotional
+sales. Black Fridays are not federal holidays. Certain states,
+however, observe this day instead of Columbus Day for employees of
+the state government.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Black_Friday_(shopping)</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - Friday after Thanksgiving</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro4">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>AIDS Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>World AIDS Day is held on 1 December each year and is an
+opportunity for people worldwide to unite in the fight against HIV,
+show their support for people living with HIV and to commemorate
+people who have died. World AIDS Day was the first ever global
+health day and the first one was held in 1988.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162; http://www.worldaidsday.org/</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/World_AIDS_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - Dec 1</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro4">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Hannukah</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Hanukkah, The Feast of Lights (&#240;&#376;&#8221;&#175;
+Feast of Dedication) is celebrated for eight days to commemorate
+the rededication of the Temple following the Jews' victory over
+occupying forces in 165 BCE, which re-established for a time their
+religious and political freedom. Begins at sundown and ends at
+sundown.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://www.hebcal.com/holidays/chanukah</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Hanukkah</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - Begins 25 Kislev and Ends 2 Tevet or 3
+Tevet</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>&#240;&#376;&#8221;&#175; Hannukah</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16379" />
+</table:table-row>
+<table:table-row table:style-name="ro2">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Human Rights Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>The UN General Assembly proclaimed 10 December as Human
+Rights Day in 1950, to bring to the attention &#226;&#8364;&#732;of
+the peoples of the world&#226;&#8364;&#8482; the Universal
+Declaration of Human Rights as the common standard of achievement
+for all peoples and all nations.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+http://www.un.org/en/events/humanrightsday/</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Human_Rights_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - 10 December</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro8">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Christmas Eve</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>&#226;&#339; Day or evening preceding the traditional
+birthday of Jesus.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Christmas_Eve</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - Dec 24</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>&#226;&#339; Christmas Eve</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16379" />
+</table:table-row>
+<table:table-row table:style-name="ro4">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Christmas</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>&#226;&#339; Christmas (which means "Feast day of Christ")
+is a Christian holiday that honors the birth of Jesus (whom
+Christians believe is the Son of God), and a cultural holiday for
+non-Christians. The traditions are different from country to
+country, but they nearly always include a feast, giving gifts or
+cards.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+http://www.calendarlabs.com/holidays/us/christmas.php</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Christmas</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - Dec 25</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>&#226;&#339; Christmas</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16379" />
+</table:table-row>
+<table:table-row table:style-name="ro4">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Boxing Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>United Kingdom, Canada, New Zealand and Australia</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Boxing Day is a public holiday. It is based on a long
+custom of giving gifts to poor people. It is usually celebrated on
+26 December, the day after Christmas Day; In some countries the
+public holiday is moved to the next weekday if 26 December is a
+Saturday or Sunday.</text:p>
+<text:p>In some countries, stores have sales on Boxing Day, similar
+to Black Friday sales in the United States.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Boxing_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - Dec 26</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro2">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Kwanzaa</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>United States</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Kwanzaa is a week long celebration held in the United
+States to honor universal African heritage and culture. People
+light a kinara (candle holder with seven candles) and give each
+other gifts. It takes place from December 26 to January 1 every
+year.
+<text:s /></text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+http://www.officialkwanzaawebsite.org/</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Kwanzaa</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - Dec 26-Jan 1</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro3">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>New Year's Eve</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>New Year's Eve is the holiday before New Year's Day, on
+December 31, the last day of the current year. Kiribati is the
+first country to welcome the New Year while Baker Island, in the
+United States is among the last.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/New_Year%27s_Eve</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - dec 31</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro2">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>New Years Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>New Year's Day is the first day of the year, in the
+Gregorian calendar, and falls exactly one week after the Christmas
+Day of the previous year.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+http://www.officeholidays.com/countries/global/new_years_day.php</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/New_Year%27s_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - Jan 1</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro3">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>MLK Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>United States</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Martin Luther King, Jr. Day is an American federal holiday
+marking the birthday of Martin Luther King, Jr.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+http://www.nationalservice.gov/mlkday</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Martin_Luther_King,_Jr._Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - Jan 18</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:number-rows-repeated="1048532"
+table:style-name="ro9">
+<table:table-cell table:number-columns-repeated="16384" />
+</table:table-row>
+</table:table>
+</office:spreadsheet>
+</office:body>
+</office:document-content>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<office:document-content xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0"
+xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0"
+xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0"
+xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0"
+xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0"
+xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0"
+xmlns:xlink="http://www.w3.org/1999/xlink"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0"
+xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0"
+xmlns:of="urn:oasis:names:tc:opendocument:xmlns:of:1.2"
+office:version="1.2">
+<office:font-face-decls>
+<style:font-face style:name="Calibri" svg:font-family="Calibri" />
+</office:font-face-decls>
+<office:automatic-styles>
+<style:style style:name="ce1" style:family="table-cell"
+style:parent-style-name="Default" style:data-style-name="N0">
+<style:table-cell-properties style:vertical-align="middle"
+fo:wrap-option="wrap" style:repeat-content="false" />
+<style:paragraph-properties fo:text-align="center" />
+<style:text-properties fo:font-size="10pt"
+style:font-size-asian="10pt" style:font-size-complex="10pt" />
+</style:style>
+<style:style style:name="ce2" style:family="table-cell"
+style:parent-style-name="Default" style:data-style-name="N0">
+<style:table-cell-properties style:vertical-align="middle"
+fo:wrap-option="wrap" style:repeat-content="false" />
+<style:paragraph-properties fo:text-align="center" />
+</style:style>
+<style:style style:name="ce3" style:family="table-cell"
+style:parent-style-name="Default" style:data-style-name="N0">
+<style:table-cell-properties style:vertical-align="middle"
+fo:wrap-option="wrap" fo:background-color="#00B0F0"
+style:repeat-content="false" />
+<style:paragraph-properties fo:text-align="center" />
+<style:text-properties fo:font-size="10pt"
+style:font-size-asian="10pt" style:font-size-complex="10pt" />
+</style:style>
+<style:style style:name="T1" style:family="text"
+style:parent-style-name="Default">
+<style:text-properties fo:color="#FF0000"
+style:text-line-through-style="none" style:font-name="Calibri"
+style:font-name-asian="Calibri" style:font-name-complex="Calibri"
+fo:font-size="10pt" style:font-size-asian="10pt"
+style:font-size-complex="10pt" fo:font-style="normal"
+style:font-style-asian="normal" style:font-style-complex="normal"
+style:text-underline-style="none" style:text-underline-type="none"
+fo:font-weight="normal" style:font-weight-asian="normal"
+style:font-weight-complex="normal" style:text-outline="false"
+fo:text-shadow="none" />
+</style:style>
+<style:style style:name="co1" style:family="table-column">
+<style:table-column-properties fo:break-before="auto"
+style:column-width="2.8575cm"
+style:use-optimal-column-width="true" />
+</style:style>
+<style:style style:name="co2" style:family="table-column">
+<style:table-column-properties fo:break-before="auto"
+style:column-width="3.889375cm"
+style:use-optimal-column-width="true" />
+</style:style>
+<style:style style:name="co3" style:family="table-column">
+<style:table-column-properties fo:break-before="auto"
+style:column-width="19.685cm"
+style:use-optimal-column-width="true" />
+</style:style>
+<style:style style:name="co4" style:family="table-column">
+<style:table-column-properties fo:break-before="auto"
+style:column-width="7.51416666666667cm"
+style:use-optimal-column-width="true" />
+</style:style>
+<style:style style:name="co5" style:family="table-column">
+<style:table-column-properties fo:break-before="auto"
+style:column-width="4.89479166666667cm"
+style:use-optimal-column-width="true" />
+</style:style>
+<style:style style:name="co6" style:family="table-column">
+<style:table-column-properties fo:break-before="auto"
+style:column-width="3.175cm"
+style:use-optimal-column-width="true" />
+</style:style>
+<style:style style:name="co7" style:family="table-column">
+<style:table-column-properties fo:break-before="auto"
+style:column-width="2.11666666666667cm" />
+</style:style>
+<style:style style:name="ro1" style:family="table-row">
+<style:table-row-properties style:row-height="15pt"
+style:use-optimal-row-height="false" fo:break-before="auto" />
+</style:style>
+<style:style style:name="ro2" style:family="table-row">
+<style:table-row-properties style:row-height="63.75pt"
+style:use-optimal-row-height="true" fo:break-before="auto" />
+</style:style>
+<style:style style:name="ro3" style:family="table-row">
+<style:table-row-properties style:row-height="51pt"
+style:use-optimal-row-height="true" fo:break-before="auto" />
+</style:style>
+<style:style style:name="ro4" style:family="table-row">
+<style:table-row-properties style:row-height="76.5pt"
+style:use-optimal-row-height="true" fo:break-before="auto" />
+</style:style>
+<style:style style:name="ro5" style:family="table-row">
+<style:table-row-properties style:row-height="114.75pt"
+style:use-optimal-row-height="true" fo:break-before="auto" />
+</style:style>
+<style:style style:name="ro6" style:family="table-row">
+<style:table-row-properties style:row-height="89.25pt"
+style:use-optimal-row-height="true" fo:break-before="auto" />
+</style:style>
+<style:style style:name="ro7" style:family="table-row">
+<style:table-row-properties style:row-height="102pt"
+style:use-optimal-row-height="true" fo:break-before="auto" />
+</style:style>
+<style:style style:name="ro8" style:family="table-row">
+<style:table-row-properties style:row-height="38.25pt"
+style:use-optimal-row-height="true" fo:break-before="auto" />
+</style:style>
+<style:style style:name="ro9" style:family="table-row">
+<style:table-row-properties style:row-height="12.75pt"
+style:use-optimal-row-height="true" fo:break-before="auto" />
+</style:style>
+<style:style style:name="ta1" style:family="table"
+style:master-page-name="mp1">
+<style:table-properties table:display="true"
+style:writing-mode="lr-tb" />
+</style:style>
+</office:automatic-styles>
+<office:body>
+<office:spreadsheet>
+<table:calculation-settings table:case-sensitive="false"
+table:search-criteria-must-apply-to-whole-cell="true"
+table:use-wildcards="true" table:use-regular-expressions="false"
+table:automatic-find-labels="false" />
+<table:table table:name="Feuil1" table:style-name="ta1">
+<table:table-column table:style-name="co1"
+table:default-cell-style-name="ce1" />
+<table:table-column table:style-name="co2"
+table:default-cell-style-name="ce1" />
+<table:table-column table:style-name="co3"
+table:default-cell-style-name="ce1" />
+<table:table-column table:style-name="co4"
+table:default-cell-style-name="ce1" />
+<table:table-column table:style-name="co5"
+table:default-cell-style-name="ce1" />
+<table:table-column table:style-name="co6"
+table:default-cell-style-name="ce1" />
+<table:table-column table:style-name="co7"
+table:number-columns-repeated="16378"
+table:default-cell-style-name="ce1" />
+<table:table-row table:style-name="ro1">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>NAME</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>LOCATION</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>DESCRIPTION</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>DATE</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>NAME CHANGE SUGGESTION</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>NOTE</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16378"
+table:style-name="ce2" />
+</table:table-row>
+<table:table-row table:style-name="ro2">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Gilroy GarlicFest</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Christmas Hill Park, Gilroy, CA 95020, United
+States</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>The Gilroy Garlic Festival is one of the largest food
+festivals in the United States, held annually in Gilroy, California
+on the last full weekend in July at Christmas Hill Park.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162; www.gilroygarlicfestival.com</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Gilroy_Garlic_Festival</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - last full weekend in July</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="2"
+table:style-name="ce1" />
+<table:table-cell table:number-columns-repeated="16378"
+table:style-name="ce2" />
+</table:table-row>
+<table:table-row table:style-name="ro3">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Parents' Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>United States</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Parents' Day is a holiday similar to a combination of
+Father's Day and Mother's Day. In the United States, Parents' Day
+is held on the fourth Sunday of every July.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Parents'_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - fourth Sunday of every July</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="2"
+table:style-name="ce1" />
+<table:table-cell table:number-columns-repeated="16378"
+table:style-name="ce2" />
+</table:table-row>
+<table:table-row table:style-name="ro4">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Friendship Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International Friendship Day is a day for celebrating
+friendship. On this day people spend time with their friends and
+express love for them. Exchange of Friendship Day Gifts like
+flowers, cards and wrist bands is a popular tradition of this
+occasion. International Friendship Day celebrations take place on
+the first Sunday of August every year.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162; http://www.friendshipday.org/</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Friendship_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - first Sunday of August</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="2"
+table:style-name="ce1" />
+<table:table-cell table:number-columns-repeated="16378"
+table:style-name="ce2" />
+</table:table-row>
+<table:table-row table:style-name="ro2">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Youth Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International Youth Day (IYD) is an awareness day
+designated by the United Nations. The purpose of the day is to draw
+attention to a given set of cultural and legal issues surrounding
+youth.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+http://www.un.org/en/events/youthday/</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/International_Youth_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - 12 August</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International Youth Day</text:p>
+</table:table-cell>
+<table:table-cell table:style-name="ce1" />
+<table:table-cell table:number-columns-repeated="16378"
+table:style-name="ce2" />
+</table:table-row>
+<table:table-row table:style-name="ro3">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>PGA Championship</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>United States</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>The U.S. PGA Championship is an annual golf
+tournament.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+http://www.pga.com/pgachampionship/</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/PGA_Championship</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - played in mid-August on the 3rd weekend prior to
+Labor Day weekend</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="2"
+table:style-name="ce1" />
+<table:table-cell table:number-columns-repeated="16378"
+table:style-name="ce2" />
+</table:table-row>
+<table:table-row table:style-name="ro3">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Labor Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>United States</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Labor Day in the United States is a holiday celebrated on
+the first Monday in September. It is a celebration of the American
+labor movement and is dedicated to the social and economic
+achievements of workers.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Labor_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - First Monday in September</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="2"
+table:style-name="ce1" />
+<table:table-cell table:number-columns-repeated="16378"
+table:style-name="ce2" />
+</table:table-row>
+<table:table-row table:style-name="ro2">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Literacy Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Member states of the United Nations</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>On International Literacy Day each year, UNESCO reminds the
+international community of the status of literacy and adult
+learning globally.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+http://internationalliteracyday.org/</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/International_Literacy_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - September 8</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro2">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Rememberence Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>United States</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>The National Day of Service and Remembrance occurs on
+September 11 of each year in memory of the 2,977 killed in the 2001
+September 11 attacks.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+http://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Patriot_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - September 11</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Service Day OR Remembrance Day</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16379"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro5">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Grandparents' Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>United States</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>There are three purposes for National Grandparents
+Day:</text:p>
+<text:p>To honor grandparents.</text:p>
+<text:p>To give grandparents an opportunity to show love for their
+children's children.</text:p>
+<text:p>To help children become aware of the strength, information
+and guidance older people can offer.</text:p>
+<text:p>It's a celebration of both paternal and maternal
+grandparents.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162; http://grandparentsday.org/</text:p>
+<text:p>&#226;&#8364;&#162;
+http://legacyproject.org/guides/gpdhistory.html</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/National_Grandparents_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - First Sunday after Labor Day</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro4">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Rosh Hashana
+<text:s /></text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Rosh Hashana is the Jewish (&#226;&#339;&#161;) New Year,
+it's a two-day celebration.
+<text:s /></text:p>
+<text:p>Please note: Jewish holidays begin and finish at sunset.
+<text:s /></text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://www.hebcal.com/holidays/rosh-hashana</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Rosh_Hashanah</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually
+<text:span text:style-name="T1">
+<text:s />- ten days before Yom Kippur</text:span></text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>&#240;&#376;&#8221;&#175; Rosh Hashana OR
+<text:s /></text:p>
+<text:p>&#226;&#339;&#161; Rosh Hashana</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>The NAME is not correct since you change each year since
+you added the year</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16378" />
+</table:table-row>
+<table:table-row table:style-name="ro2">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Citizenship Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>United States</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Constitution Day (or Citizenship Day) is an American
+federal observance that recognizes the adoption of the United
+States Constitution and those who have become U.S.
+citizens.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+http://www.constitutionday.com/</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Constitution_Day_(United_States)</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - September 17</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro6">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Peace Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Each year the International Day of Peace
+(&#226;&#732;&#174;) is observed around the world on 21 September.
+The General Assembly has declared this as a day devoted to
+strengthening the ideals of peace, both within and among all
+nations and peoples.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+http://www.un.org/en/events/peaceday/</text:p>
+<text:p>&#226;&#8364;&#162;
+http://internationaldayofpeace.org/</text:p>
+<text:p>&#226;&#8364;&#162; http://www.peaceoneday.org/</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/International_Day_of_Peace</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - September 21</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>&#226;&#732;&#174; Peace Day</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16379"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro2">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Yom Kippur</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Yom Kippur also known as Day of Atonement, is the holiest
+day of the year for the Jewish (&#240;&#376;&#8221;&#175;) people.
+Yom Kippur is "the tenth day of [the] seventh month" (Tishrei) and
+is regarded as the "Sabbath of Sabbaths". Its central themes are
+repentance and atonement.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://www.hebcal.com/holidays/yom-kippur</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Yom_Kippur</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - 10th day of Tishrei (10 days after Rosh
+Hashana)</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>&#240;&#376;&#8221;&#175; Yom Kippur</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16379"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro6">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Teachers Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>World Teachers' Day, held annually on October 5th since
+1994, commemorates teachers&#226;&#8364;&#8482; organizations
+worldwide. Its aim is to mobilize support for teachers and to
+ensure that the needs of future generations will continue to be met
+by teachers.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/World_Teachers%27_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - October 5</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>World Teachers' Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Teachers' days are distinct from World Teachers' Day which
+is officially celebrated across the world on October 5</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16378" />
+</table:table-row>
+<table:table-row table:style-name="ro3">
+<table:table-cell office:value-type="string"
+table:style-name="ce3">
+<text:p>Children's Day</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="2"
+table:style-name="ce3" />
+<table:table-cell office:value-type="string"
+table:style-name="ce3">
+<text:p>?</text:p>
+</table:table-cell>
+<table:table-cell table:style-name="ce3" />
+<table:table-cell office:value-type="string"
+table:style-name="ce3">
+<text:p>Wrong Date ? See UN Children's day on november 20 (line
+32)</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16378" />
+</table:table-row>
+<table:table-row table:style-name="ro3">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Columbus Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Americas</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Many countries in the New World and elsewhere officially
+celebrate as a holiday the anniversary of Christopher Columbus's
+arrival in the Americas, which happened on October 12, 1492. The
+landing is celebrated as Columbus Day in the United
+States.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Columbus_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - October 12 (actual/traditional); second Monday
+in October (observed in the United States)</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro3">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Bosses' Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>United States, Canada, Lithuania and Romania</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Bosses' Day, also known as National Boss Day has
+traditionally been a day for employees to thank their bosses for
+being kind and fair throughout the year. This day was created for
+the purpose of strengthening the bond between employer and
+employee.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Boss%27s_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - October 16 (or nearest working day)</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro2">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Sweetest Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Midwestern United States</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Sweetest Day is a holiday celebrated in the Midwestern
+United States, and parts of the Northeastern United States, on the
+third Saturday in October. Sweetest Day has also been referred to
+as a "concocted promotion" created by the candy industry solely to
+increase sales of sweets. But it is also a day to bestow romantic
+deeds or expressions.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Sweetest_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - Third Saturday in October</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro3">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>World Series</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>United States</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>The World Series is the annual championship series of North
+American-based Major League Baseball (MLB), played since 1903
+between the American League (AL) champion team and the National
+League (NL) champion.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/World_Series</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro5">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Statistics Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>The World Statistics Day was proclaimed by the United
+Nations General Assembly in 2010 to recognize the importance of
+statistics in shaping our societies. The Bureau of the Statistical
+Commission has recommended that World Statistics Day should be
+observed every five years.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+http://unstats.un.org/unsd/wsd/</text:p>
+<text:p>&#226;&#8364;&#162;
+https://worldstatisticsday.org/</text:p>
+<text:p>&#226;&#8364;&#162;
+http://www.un.org/en/events/statisticsday/</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/World_Statistics_Day</text:p>
+<text:p />
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Every 5 years - on October 20</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro3">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Mother-in-Law Day</text:p>
+</table:table-cell>
+<table:table-cell table:style-name="ce1" />
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Mothers-in-law have never enjoyed the widespread respect
+and devotion that mothers have received over the years, and the
+rising divorce rate has given the whole concept of in-laws a less
+permanent place in the national imagination. Mother-In-Law Day
+gives you and your mother-in-law a chance to get to know each
+other. Why not take your Mother-In-Law out for a nice meal, buy her
+flowers, etc.</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>annually - The Fourth Sunday of October</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro7">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Halloween/Reformation</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Halloween is a date celebrated on the night of October
+31st. Children wear costumes and they go to peoples' homes saying
+"Trick or treat!" to ask for candy and then people give it to
+them.</text:p>
+<text:p />
+<text:p>&#226;&#339; Reformation Day is a religious holiday
+celebrated on October 31, alongside All Hallows' Eve, in
+remembrance of the Reformation, particularly by Lutheran and some
+Reformed church communities.
+<text:s /></text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Halloween</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Reformation_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>annually - october 31</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro2">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>All Saints Day</text:p>
+</table:table-cell>
+<table:table-cell table:style-name="ce1" />
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Many churches in the United States celebrate All Saints'
+Day (&#226;&#339; ) to honor all the saints, particularly those who
+do not have their own special feast day, on November 1. All Saints'
+Day is celebrated in many areas of the United States. In New
+Orleans, for example, people gather in local cemeteries and
+decorated the graves with flowers.
+<text:s /></text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/All_Saints%27_Day</text:p>
+</table:table-cell>
+<table:table-cell table:style-name="ce1" />
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>&#226;&#339; All Saints Day</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16379" />
+</table:table-row>
+<table:table-row table:style-name="ro2">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>DST</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>United States</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Daylight saving time (DST) is the practice of advancing
+clocks during summer months by one hour so that in the evening
+hours day light is experienced later, while sacrificing normal
+sunrise times. Typically, users in regions with summer time adjust
+clocks forward one hour close to the start of spring and adjust
+them backward in the autumn to standard time.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Daylight_saving_time</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Twice Annually - Second Sunday March &amp; First Sunday
+November</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>&#226;&#338;&#353; DST</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16379" />
+</table:table-row>
+<table:table-row table:style-name="ro8">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>All Souls Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>All Souls&#226;&#8364;&#8482; Day (&#226;&#339;) in the
+United States is dedicated to prayers for the dead. The Day of the
+Dead is also celebrated on this day.
+<text:s /></text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/All_Souls%27_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - 2 November</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>&#226;&#339; All Souls Day</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16379" />
+</table:table-row>
+<table:table-row table:style-name="ro3">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Election Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>United States</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Election Day in the United States is the day set by law for
+the general elections of public officials. It occurs on the Tuesday
+right after the first Monday in November.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Election_Day_(United_States)</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - The Tuesday after the first Monday of
+November</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro2">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Guy Fawke's Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Great Britain</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Guy Fawkes Day also known as Guy Fawkes Night is a firework
+festival in Britain. It remembers the Gunpowder Plot of 5 November
+1605.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162; http://www.bonfirenight.net/</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Guy_Fawkes_Night</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - November 5</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Guy Fawkes Day</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16379" />
+</table:table-row>
+<table:table-row table:style-name="ro2">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Veterans Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>United States</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Veterans Day is an official United States federal holiday
+that is observed annually on November 11, honoring people who have
+served in the U.S. Armed Forces, also known as veterans. Most
+countries call it Remembrance Day, but the US reserves that word
+for a different day.
+<text:s /></text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Veterans_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - November 11</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro4">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Tolerance Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>The International Day for Tolerance is an annual observance
+declared by UNESCO in 1995 to generate public awareness of the
+dangers of intolerance.
+<text:s /></text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+http://www.un.org/en/events/toleranceday/</text:p>
+<text:p>&#226;&#8364;&#162;
+http://www.unesco.org/new/en/unesco/events/prizes-and-celebrations/celebrations/international-day-for-tolerance</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/International_Day_for_Tolerance</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - 16 November</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro4">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Philosophy Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>World Philosophy Day was introduced in 2002 by UNESCO to
+honour philosophical reflection in the entire world by opening up
+free and accessible spaces. Its objective is to encourage the
+peoples of the world to share their philosophical heritage and to
+open their minds to new ideas.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+http://www.un.org/en/events/philosophyday/</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/World_Philosophy_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro2">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>UN Children's Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Universal Children's Day takes place annually on November
+20. First proclaimed by the United Nations General Assembly in
+1954, it was established firstly to promote mutual exchange and
+understanding among children and secondly to initiate action to
+benefit and promote the welfare of the world's children.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+http://www.un.org/en/events/childrenday/</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - November 20</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro8">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Thanksgiving</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>United States and Canada</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Thanksgiving is a holiday celebrated once a year. It is a
+day to give thanks. It is always on the fourth Thursday of
+November.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Thanksgiving_(United_States)</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - fourth Thursday of November</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro7">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Black Friday</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>United States, United Kingdom, Canada, Mexico, Brazil,
+India, Panama, Costa Rica, Romania, Denmark, Sweden, South Africa,
+France, Norway and Hungary</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Black Friday is the Friday which comes immediately after
+the Thanksgiving holiday in the United States. Since the early
+2000s, it has been regarded as the beginning of the Christmas
+shopping season in the US, and most major retailers open very early
+(and more recently during overnight hours) and offer promotional
+sales. Black Fridays are not federal holidays. Certain states,
+however, observe this day instead of Columbus Day for employees of
+the state government.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Black_Friday_(shopping)</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - Friday after Thanksgiving</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro4">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>AIDS Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>World AIDS Day is held on 1 December each year and is an
+opportunity for people worldwide to unite in the fight against HIV,
+show their support for people living with HIV and to commemorate
+people who have died. World AIDS Day was the first ever global
+health day and the first one was held in 1988.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162; http://www.worldaidsday.org/</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/World_AIDS_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - Dec 1</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro4">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Hannukah</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Hanukkah, The Feast of Lights (&#240;&#376;&#8221;&#175;
+Feast of Dedication) is celebrated for eight days to commemorate
+the rededication of the Temple following the Jews' victory over
+occupying forces in 165 BCE, which re-established for a time their
+religious and political freedom. Begins at sundown and ends at
+sundown.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://www.hebcal.com/holidays/chanukah</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Hanukkah</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - Begins 25 Kislev and Ends 2 Tevet or 3
+Tevet</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>&#240;&#376;&#8221;&#175; Hannukah</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16379" />
+</table:table-row>
+<table:table-row table:style-name="ro2">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Human Rights Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>The UN General Assembly proclaimed 10 December as Human
+Rights Day in 1950, to bring to the attention &#226;&#8364;&#732;of
+the peoples of the world&#226;&#8364;&#8482; the Universal
+Declaration of Human Rights as the common standard of achievement
+for all peoples and all nations.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+http://www.un.org/en/events/humanrightsday/</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Human_Rights_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - 10 December</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro8">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Christmas Eve</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>&#226;&#339; Day or evening preceding the traditional
+birthday of Jesus.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Christmas_Eve</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - Dec 24</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>&#226;&#339; Christmas Eve</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16379" />
+</table:table-row>
+<table:table-row table:style-name="ro4">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Christmas</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>&#226;&#339; Christmas (which means "Feast day of Christ")
+is a Christian holiday that honors the birth of Jesus (whom
+Christians believe is the Son of God), and a cultural holiday for
+non-Christians. The traditions are different from country to
+country, but they nearly always include a feast, giving gifts or
+cards.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+http://www.calendarlabs.com/holidays/us/christmas.php</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Christmas</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - Dec 25</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>&#226;&#339; Christmas</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16379" />
+</table:table-row>
+<table:table-row table:style-name="ro4">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Boxing Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>United Kingdom, Canada, New Zealand and Australia</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Boxing Day is a public holiday. It is based on a long
+custom of giving gifts to poor people. It is usually celebrated on
+26 December, the day after Christmas Day; In some countries the
+public holiday is moved to the next weekday if 26 December is a
+Saturday or Sunday.</text:p>
+<text:p>In some countries, stores have sales on Boxing Day, similar
+to Black Friday sales in the United States.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Boxing_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - Dec 26</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro2">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Kwanzaa</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>United States</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Kwanzaa is a week long celebration held in the United
+States to honor universal African heritage and culture. People
+light a kinara (candle holder with seven candles) and give each
+other gifts. It takes place from December 26 to January 1 every
+year.
+<text:s /></text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+http://www.officialkwanzaawebsite.org/</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Kwanzaa</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - Dec 26-Jan 1</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro3">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>New Year's Eve</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>New Year's Eve is the holiday before New Year's Day, on
+December 31, the last day of the current year. Kiribati is the
+first country to welcome the New Year while Baker Island, in the
+United States is among the last.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/New_Year%27s_Eve</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - dec 31</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro2">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>New Years Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>International</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>New Year's Day is the first day of the year, in the
+Gregorian calendar, and falls exactly one week after the Christmas
+Day of the previous year.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+http://www.officeholidays.com/countries/global/new_years_day.php</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/New_Year%27s_Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - Jan 1</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:style-name="ro3">
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>MLK Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>United States</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Martin Luther King, Jr. Day is an American federal holiday
+marking the birthday of Martin Luther King, Jr.</text:p>
+<text:p />
+<text:p>&#226;&#8364;&#162;
+http://www.nationalservice.gov/mlkday</text:p>
+<text:p>&#226;&#8364;&#162;
+https://en.wikipedia.org/wiki/Martin_Luther_King,_Jr._Day</text:p>
+</table:table-cell>
+<table:table-cell office:value-type="string"
+table:style-name="ce1">
+<text:p>Annually - Jan 18</text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-repeated="16380"
+table:style-name="ce1" />
+</table:table-row>
+<table:table-row table:number-rows-repeated="1048532"
+table:style-name="ro9">
+<table:table-cell table:number-columns-repeated="16384" />
+</table:table-row>
+</table:table>
+</office:spreadsheet>
+</office:body>
+</office:document-content>

@@ -5,6 +5,18 @@
 require "/usr/local/lib/bclib.pl";
 my(@dates);
 
+# Courtesy Emilie C., more info for the vcalendar version
+# TODO: "international" -> "worldwide"
+my($all) = read_file("$bclib{githome}/CALENDAR/impdates.csv");
+
+my(@items) = csv($all);
+
+for $i (@items) {
+  debug("ITEM: $i");
+}
+
+die "TESTING";
+
 # TODO: http://www.un.org/en/events/observances/days.shtml
 # TODO: http://www.timeanddate.com/holidays/ (or maybe not)
 # TODO: more?
@@ -219,12 +231,14 @@ while (@dates) {
   print B "$date $event\n";
 
   # ics format
+  # 120000 GMT = "closest" (in some sense) to everywhere in world = same day
+  # old way (0000-2359 UTC) had overlaps into previous/next day
   print A << "MARK";
 BEGIN:VEVENT\r
 SUMMARY:$event\r
 UID:$uid\r
-DTSTART:${date}T000000Z\r
-DTEND:${date}T235959Z\r
+DTSTART:${date}T120000Z\r
+DTEND:${date}T120000Z\r
 END:VEVENT\r
 MARK
 ;
