@@ -261,7 +261,8 @@ MARK
 ;
 
 # this lets me see what events are missing (usually due to typos)
-delete $data{$event};
+# TODO: see which events I don't use, doing below breaks things
+# delete $data{$event};
 
 }
 
