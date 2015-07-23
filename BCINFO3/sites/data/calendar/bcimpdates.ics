@@ -7107,8 +7107,8 @@ SUMMARY:All Saints Day
 UID:f23eb3fd8a4f9529e6073d20324f95f647522e62
 DTSTART:20151101T000000
 DTEND:20151101T235959
-LOCATION: <table:table-cell office:value-type="string"\ntable:style-name="ce1">\nMany churches in the United States celebrate All Saints'\nDay ( ) to honor all the saints, particularly those who\ndo not have their own special feast day, on November 1. All Saints'\nDay is celebrated in many areas of the United States. In New\nOrleans, for example, people gather in local cemeteries and\ndecorated the graves with flowers.\n\n\n\nhttps://en.wikipedia.org/wiki/All_Saints%27_Day
-DESCRIPTION: <table:table-cell office:value-type="string"\ntable:style-name="ce1">\n All Saints Day
+LOCATION: Many churches in the United States celebrate All Saints'\nDay ( ) to honor all the saints, particularly those who\ndo not have their own special feast day, on November 1. All Saints'\nDay is celebrated in many areas of the United States. In New\nOrleans, for example, people gather in local cemeteries and\ndecorated the graves with flowers.\n\n\n\nhttps://en.wikipedia.org/wiki/All_Saints%27_Day
+DESCRIPTION: All Saints Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -7296,7 +7296,7 @@ SUMMARY:Mother-in-Law Day
 UID:52f4c8b84c72e302a3f3a0e5d5b75c823a0fdf88
 DTSTART:20151025T000000
 DTEND:20151025T235959
-LOCATION: <table:table-cell office:value-type="string"\ntable:style-name="ce1">\nMothers-in-law have never enjoyed the widespread respect\nand devotion that mothers have received over the years, and the\nrising divorce rate has given the whole concept of in-laws a less\npermanent place in the national imagination. Mother-In-Law Day\ngives you and your mother-in-law a chance to get to know each\nother. Why not take your Mother-In-Law out for a nice meal, buy her\nflowers, etc.
+LOCATION: Mothers-in-law have never enjoyed the widespread respect\nand devotion that mothers have received over the years, and the\nrising divorce rate has given the whole concept of in-laws a less\npermanent place in the national imagination. Mother-In-Law Day\ngives you and your mother-in-law a chance to get to know each\nother. Why not take your Mother-In-Law out for a nice meal, buy her\nflowers, etc.
 DESCRIPTION: annually - The Fourth Sunday of October
 COMMENT: 
 END:VEVENT
