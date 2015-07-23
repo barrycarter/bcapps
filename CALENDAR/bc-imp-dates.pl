@@ -32,6 +32,18 @@ while ($all=~s%<table:table-row.*?>(.*?)</table:table-row>%%is) {
   for $i (0..$#fields) {$data{$data[0]}{$fields[$i]} = $data[$i];}
 }
 
+# this one off code rewrites the xml above as a "CSV" for easier
+# editing (I'll then edit the code above to use it)
+
+for $i (keys %data) {
+  my(%hash) = %{$data{$i}};
+  print join("|", $hash{name}, $hash{location}, $hash{desc}, $hash{date}, $hash{ncs}, $hash{notes}),"\n";
+#  debug("HASH($i)",%hash);
+}
+
+die "TESTING";
+
+
 # TODO: http://www.un.org/en/events/observances/days.shtml
 # TODO: http://www.timeanddate.com/holidays/ (or maybe not)
 # TODO: more?
@@ -84,6 +96,8 @@ while ($all=~s%<table:table-row.*?>(.*?)</table:table-row>%%is) {
 	  "Guy Fawke's Day" => "1105",
 	  "Running of Bulls" => "0707",
 	  "Pi Day" => "0314",
+	  "Womens = Day" => "0826",
+	  "Juneteenth" => "0619",
 	  "" => ""
 	  );
 
