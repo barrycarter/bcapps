@@ -8,44 +8,20 @@ my(@dates);
 my(@fields) = ("name", "location", "desc", "date", "ncs", "notes");
 
 # Courtesy Emilie C., more info for the vcalendar version
-my($all) = read_file("$bclib{githome}/CALENDAR/impdates.xml");
+my(@all) = split(/\n/,read_file("$bclib{githome}/CALENDAR/impdates-data.txt"));
 
-while ($all=~s%<table:table-row.*?>(.*?)</table:table-row>%%is) {
-  my($event) = $1;
-  my(@data) = ($event=~m%<table:table-cell.*?>(.*?)</table:table-cell>%isg);
-  for $i (@data) {
-    # remove HTML and trim/fix newlines (vcalendar should be ok w that)
-    $i=~s/<.*?>//g;
-    $i=~s/^\s*//;
-    $i=~s/\s*$//;
-    $i=~s/\n/\\n/g;
-    # ugly
-    $i=~s/[^ -~]//g;
-    # uglier
-    $i=~s/\&\#\d+\;//g;
-#    $i=~s/\s+/ /g;
-    # per Emilie request
-    $i=~s/international/worldwide/g;
-  }
-
-  # map data to name
-  for $i (0..$#fields) {$data{$data[0]}{$fields[$i]} = $data[$i];}
+for $i (@all) {
+  @data = split(/\|/,$i);
+  for $j (0..$#fields) {$data{$data[0]}{$fields[$j]} = $data[$j];}
 }
-
-# this one off code rewrites the xml above as a "CSV" for easier
-# editing (I'll then edit the code above to use it)
-
-for $i (keys %data) {
-  my(%hash) = %{$data{$i}};
-  print join("|", $hash{name}, $hash{location}, $hash{desc}, $hash{date}, $hash{ncs}, $hash{notes}),"\n";
-#  debug("HASH($i)",%hash);
-}
-
-die "TESTING";
-
 
 # TODO: http://www.un.org/en/events/observances/days.shtml
 # TODO: http://www.timeanddate.com/holidays/ (or maybe not)
+
+# TONOTDO:
+# http://snap.nal.usda.gov/nutrition-through-seasons/holiday-observances
+# (too silly)
+
 # TODO: more?
 # TODO: re-add children's day (if I find canonical), us tennis open
 
