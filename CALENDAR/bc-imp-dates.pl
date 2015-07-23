@@ -16,7 +16,7 @@ for $i (@all) {
 }
 
 # TODO: http://www.un.org/en/events/observances/days.shtml
-# TODO: http://www.timeanddate.com/holidays/ (or maybe not)
+# TODO: http://www.timeanddate.com/holidays/us/ (or maybe not)
 
 # TONOTDO:
 # http://snap.nal.usda.gov/nutrition-through-seasons/holiday-observances
@@ -233,20 +233,15 @@ open(B,">/home/barrycarter/calendar.d/flatcal.txt");
 while (@dates) {
   my($date,$event) = splice(@dates,0,2);
 
-  if ($event=~/^(.*?)\s*\d*$/) {$data{$event} = $data{$1};}
-  if ($event=~/^DST/) {$data{$event} = $data{DST};}
-
-  debug("EV: $event $data{$event}");
+  if ($event=~/^(.*?)\s*\d*$/) {$data{$event} = $data{$1}; $used{$1}=1;}
+  if ($event=~/^DST/) {$data{$event} = $data{DST}; $used{DST}=1;}
 
   # this is silly
   my($uid) = sha1_hex("$date $event");
 
   print B "$date $event\n";
 
-  # ics format
-  # 1000 GMT = "closest" (in some sense) to everywhere in world = same day
-  # old way (0000-2359 UTC) had overlaps into previous/next day
-  # 1000 cuts off UTC-11 and UTC+14 but I'm ok with that
+  # ics format, local time zone so no "leakage" into other days
   print A << "MARK";
 BEGIN:VEVENT\r
 SUMMARY:$event\r
@@ -261,8 +256,7 @@ MARK
 ;
 
 # this lets me see what events are missing (usually due to typos)
-# TODO: see which events I don't use, doing below breaks things
-# delete $data{$event};
+$used{$event}=1;
 
 }
 
@@ -270,7 +264,12 @@ print A "END:VCALENDAR\r\n";
 
 close(A);close(B);
 
-debug(sort keys %data);
+# keys in data not used
+for $i (keys %data) {
+  unless ($used{$i} || $i=~/^\#/) {
+    warn "Unused: $i";
+  }
+}
 
 # computes the nth "weekday" after or on given date (yyyymmdd format)
 
