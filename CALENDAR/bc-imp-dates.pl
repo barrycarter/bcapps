@@ -261,8 +261,8 @@ while (@dates) {
 BEGIN:VEVENT\r
 SUMMARY:$event\r
 UID:$uid\r
-DTSTART:${date}T100000Z\r
-DTEND:${date}T101459Z\r
+DTSTART:${date}T000000\r
+DTEND:${date}T235959\r
 LOCATION: $data{$event}{location}\r
 DESCRIPTION: $data{$event}{desc}\r
 COMMENT: $data{$event}{notes}\r

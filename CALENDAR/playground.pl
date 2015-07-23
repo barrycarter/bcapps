@@ -2,6 +2,15 @@
 
 require "/usr/local/lib/bclib.pl";
 
+use iCal::Parser;
+
+my $parser=iCal::Parser->new();
+my $hash=$parser->parse("playground.ics");
+
+debug(var_dump("hash",$hash));
+
+die "TESTING";
+
 # parsing semi-odd CSV format per emiliem.ch@gmail.com
 
 my($all) = read_file("impdates-more.csv");
