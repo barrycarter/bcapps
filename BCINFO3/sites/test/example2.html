@@ -1,0 +1,55 @@
+<!DOCTYPE html><html><head><title>Basic map types</title>
+    <style>
+      html, body, #map-canvas {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <script>
+function CoordMapType() {}
+
+CoordMapType.prototype.tileSize = new google.maps.Size(256,256);
+CoordMapType.prototype.maxZoom = 19;
+
+CoordMapType.prototype.getTile = function(coord, zoom, ownerDocument) {
+  var div = ownerDocument.createElement('div');
+  div.innerHTML = "hello, i love you, wont you tell me your name?";
+  return div;
+};
+
+var map;
+var coordinateMapType = new CoordMapType();
+
+function initialize() {
+  var mapOptions = {
+    zoom: 3,
+    center: new google.maps.LatLng(0,0),
+    streetViewControl: false,
+    mapTypeId: 'coordinate',
+//    mapTypeControlOptions: {
+//      mapTypeIds: ['coordinate', google.maps.MapTypeId.ROADMAP],
+//      style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+//    }
+  };
+  map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
+
+//  google.maps.event.addListener(map, 'maptypeid_changed', function() {
+//    var showStreetViewControl = map.getMapTypeId() != 'coordinate';
+//    map.setOptions({'streetViewControl': showStreetViewControl});
+//  });
+
+  // Now attach the coordinate map type to the map's registry
+  map.mapTypes.set('coordinate', coordinateMapType);
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+  </head>
+  <body>
+    <div id="map-canvas"></div>
+  </body>
+</html>
