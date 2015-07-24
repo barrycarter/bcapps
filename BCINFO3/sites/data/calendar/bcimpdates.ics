@@ -6,8 +6,8 @@ SUMMARY:Mardi Gras
 UID:afd631f5a3de8f85402282ec1a32e72ee7a8746a
 DTSTART:20140304T000000
 DTEND:20140304T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Mardi Gras (Fat Tuesday) is a festival held the day before Ash Wednesday, signifying the end of the Carnival season and the start of Lent. Many cities (especially those with large Catholic populations) like New Orleans are famous for their Mardi Gras. ? https://en.wikipedia.org/wiki/Mardi_Gras_in_the_United_States
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -15,8 +15,8 @@ SUMMARY:Ash Wednesday
 UID:47d41f4da0a6a50e0db044a26f2dfd6065d1cf88
 DTSTART:20140305T000000
 DTEND:20140305T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Ash Wednesday, a day of fasting, is the first day of Lent in the Western Christian calendar. https://en.wikipedia.org/wiki/Ash_Wednesday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -267,8 +267,8 @@ SUMMARY:Mardi Gras
 UID:25462e41d403061c6d34d0b7f8731acc711db22c
 DTSTART:20150217T000000
 DTEND:20150217T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Mardi Gras (Fat Tuesday) is a festival held the day before Ash Wednesday, signifying the end of the Carnival season and the start of Lent. Many cities (especially those with large Catholic populations) like New Orleans are famous for their Mardi Gras. ? https://en.wikipedia.org/wiki/Mardi_Gras_in_the_United_States
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -276,8 +276,8 @@ SUMMARY:Ash Wednesday
 UID:bf22139a74a97eb4f2d5e6b1cdacbd5148bb36a2
 DTSTART:20150218T000000
 DTEND:20150218T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Ash Wednesday, a day of fasting, is the first day of Lent in the Western Christian calendar. https://en.wikipedia.org/wiki/Ash_Wednesday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -564,8 +564,8 @@ SUMMARY:Mardi Gras
 UID:07dd12d09d5efbeeace87beaa54726723ea51638
 DTSTART:20160209T000000
 DTEND:20160209T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Mardi Gras (Fat Tuesday) is a festival held the day before Ash Wednesday, signifying the end of the Carnival season and the start of Lent. Many cities (especially those with large Catholic populations) like New Orleans are famous for their Mardi Gras. ? https://en.wikipedia.org/wiki/Mardi_Gras_in_the_United_States
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -573,8 +573,8 @@ SUMMARY:Ash Wednesday
 UID:00cde852e2cbcd1dbf9e6361c00d44fbae5e65f0
 DTSTART:20160210T000000
 DTEND:20160210T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Ash Wednesday, a day of fasting, is the first day of Lent in the Western Christian calendar. https://en.wikipedia.org/wiki/Ash_Wednesday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -861,8 +861,8 @@ SUMMARY:Mardi Gras
 UID:a503e7bdb920150754407ba01b8421d547ea4eaf
 DTSTART:20170228T000000
 DTEND:20170228T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Mardi Gras (Fat Tuesday) is a festival held the day before Ash Wednesday, signifying the end of the Carnival season and the start of Lent. Many cities (especially those with large Catholic populations) like New Orleans are famous for their Mardi Gras. ? https://en.wikipedia.org/wiki/Mardi_Gras_in_the_United_States
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -870,8 +870,8 @@ SUMMARY:Ash Wednesday
 UID:be674f5b7b7a1c5c3eadd98ba81632c09e238a44
 DTSTART:20170301T000000
 DTEND:20170301T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Ash Wednesday, a day of fasting, is the first day of Lent in the Western Christian calendar. https://en.wikipedia.org/wiki/Ash_Wednesday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -1122,8 +1122,8 @@ SUMMARY:Mardi Gras
 UID:06d46ae1754cc809f672dcd9e728cb428af4cca6
 DTSTART:20180213T000000
 DTEND:20180213T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Mardi Gras (Fat Tuesday) is a festival held the day before Ash Wednesday, signifying the end of the Carnival season and the start of Lent. Many cities (especially those with large Catholic populations) like New Orleans are famous for their Mardi Gras. ? https://en.wikipedia.org/wiki/Mardi_Gras_in_the_United_States
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -1131,8 +1131,8 @@ SUMMARY:Ash Wednesday
 UID:efcc6d9b16b1238e79c638c18343fa9e39ab926d
 DTSTART:20180214T000000
 DTEND:20180214T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Ash Wednesday, a day of fasting, is the first day of Lent in the Western Christian calendar. https://en.wikipedia.org/wiki/Ash_Wednesday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -1419,8 +1419,8 @@ SUMMARY:Mardi Gras
 UID:36a648c75de7edf1c250b9cea0a34878dc22839c
 DTSTART:20190305T000000
 DTEND:20190305T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Mardi Gras (Fat Tuesday) is a festival held the day before Ash Wednesday, signifying the end of the Carnival season and the start of Lent. Many cities (especially those with large Catholic populations) like New Orleans are famous for their Mardi Gras. ? https://en.wikipedia.org/wiki/Mardi_Gras_in_the_United_States
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -1428,8 +1428,8 @@ SUMMARY:Ash Wednesday
 UID:9d3afc489bf659defe037fd2485f63f2abcae872
 DTSTART:20190306T000000
 DTEND:20190306T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Ash Wednesday, a day of fasting, is the first day of Lent in the Western Christian calendar. https://en.wikipedia.org/wiki/Ash_Wednesday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -1716,8 +1716,8 @@ SUMMARY:Mardi Gras
 UID:d0447efe372f08882d92217c13415e80d4eb1934
 DTSTART:20200225T000000
 DTEND:20200225T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Mardi Gras (Fat Tuesday) is a festival held the day before Ash Wednesday, signifying the end of the Carnival season and the start of Lent. Many cities (especially those with large Catholic populations) like New Orleans are famous for their Mardi Gras. ? https://en.wikipedia.org/wiki/Mardi_Gras_in_the_United_States
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -1725,8 +1725,8 @@ SUMMARY:Ash Wednesday
 UID:eee2b984c359625f8ceabe25274a0ae8768a9cc2
 DTSTART:20200226T000000
 DTEND:20200226T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Ash Wednesday, a day of fasting, is the first day of Lent in the Western Christian calendar. https://en.wikipedia.org/wiki/Ash_Wednesday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -2013,8 +2013,8 @@ SUMMARY:Mardi Gras
 UID:d02dddb6404b8dc8d3d246dda509cea92ba38bdb
 DTSTART:20210216T000000
 DTEND:20210216T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Mardi Gras (Fat Tuesday) is a festival held the day before Ash Wednesday, signifying the end of the Carnival season and the start of Lent. Many cities (especially those with large Catholic populations) like New Orleans are famous for their Mardi Gras. ? https://en.wikipedia.org/wiki/Mardi_Gras_in_the_United_States
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -2022,8 +2022,8 @@ SUMMARY:Ash Wednesday
 UID:ade6aa8a66d2b492dd93d83660e1e2811bd765df
 DTSTART:20210217T000000
 DTEND:20210217T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Ash Wednesday, a day of fasting, is the first day of Lent in the Western Christian calendar. https://en.wikipedia.org/wiki/Ash_Wednesday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -2310,8 +2310,8 @@ SUMMARY:Mardi Gras
 UID:e52d01c5a0221992d37f5c70de19d3232151105e
 DTSTART:20220301T000000
 DTEND:20220301T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Mardi Gras (Fat Tuesday) is a festival held the day before Ash Wednesday, signifying the end of the Carnival season and the start of Lent. Many cities (especially those with large Catholic populations) like New Orleans are famous for their Mardi Gras. ? https://en.wikipedia.org/wiki/Mardi_Gras_in_the_United_States
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -2319,8 +2319,8 @@ SUMMARY:Ash Wednesday
 UID:264b0a706372e550aa93948400585edae9e385bd
 DTSTART:20220302T000000
 DTEND:20220302T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Ash Wednesday, a day of fasting, is the first day of Lent in the Western Christian calendar. https://en.wikipedia.org/wiki/Ash_Wednesday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -2607,8 +2607,8 @@ SUMMARY:Mardi Gras
 UID:1d56adb35f454f05152cd245672dd32ab4ef5ec4
 DTSTART:20230221T000000
 DTEND:20230221T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Mardi Gras (Fat Tuesday) is a festival held the day before Ash Wednesday, signifying the end of the Carnival season and the start of Lent. Many cities (especially those with large Catholic populations) like New Orleans are famous for their Mardi Gras. ? https://en.wikipedia.org/wiki/Mardi_Gras_in_the_United_States
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -2616,8 +2616,8 @@ SUMMARY:Ash Wednesday
 UID:47554ca87d3006c03c7207e3004455b17d59fa63
 DTSTART:20230222T000000
 DTEND:20230222T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Ash Wednesday, a day of fasting, is the first day of Lent in the Western Christian calendar. https://en.wikipedia.org/wiki/Ash_Wednesday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -2904,8 +2904,8 @@ SUMMARY:Mardi Gras
 UID:6f6208bd5e09816f6f833a767917200b4bb05772
 DTSTART:20240213T000000
 DTEND:20240213T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Mardi Gras (Fat Tuesday) is a festival held the day before Ash Wednesday, signifying the end of the Carnival season and the start of Lent. Many cities (especially those with large Catholic populations) like New Orleans are famous for their Mardi Gras. ? https://en.wikipedia.org/wiki/Mardi_Gras_in_the_United_States
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -2913,8 +2913,8 @@ SUMMARY:Ash Wednesday
 UID:59301c1022da03345a22b74bcf009cdf6a6a95ba
 DTSTART:20240214T000000
 DTEND:20240214T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Ash Wednesday, a day of fasting, is the first day of Lent in the Western Christian calendar. https://en.wikipedia.org/wiki/Ash_Wednesday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -3201,8 +3201,8 @@ SUMMARY:Mardi Gras
 UID:bc0f13accddcd714c40d6adb06df35b99af17bf5
 DTSTART:20250304T000000
 DTEND:20250304T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Mardi Gras (Fat Tuesday) is a festival held the day before Ash Wednesday, signifying the end of the Carnival season and the start of Lent. Many cities (especially those with large Catholic populations) like New Orleans are famous for their Mardi Gras. ? https://en.wikipedia.org/wiki/Mardi_Gras_in_the_United_States
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -3210,8 +3210,8 @@ SUMMARY:Ash Wednesday
 UID:ab03f847cb0575cad8e9098d362dbd9cc9791bd4
 DTSTART:20250305T000000
 DTEND:20250305T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Ash Wednesday, a day of fasting, is the first day of Lent in the Western Christian calendar. https://en.wikipedia.org/wiki/Ash_Wednesday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -3462,8 +3462,8 @@ SUMMARY:Mardi Gras
 UID:78226354c43da6119c514b05bc87ead4e8aae4c8
 DTSTART:20260217T000000
 DTEND:20260217T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Mardi Gras (Fat Tuesday) is a festival held the day before Ash Wednesday, signifying the end of the Carnival season and the start of Lent. Many cities (especially those with large Catholic populations) like New Orleans are famous for their Mardi Gras. ? https://en.wikipedia.org/wiki/Mardi_Gras_in_the_United_States
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -3471,8 +3471,8 @@ SUMMARY:Ash Wednesday
 UID:5d51e73abb8f27225b19f2728746c85b77826273
 DTSTART:20260218T000000
 DTEND:20260218T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Ash Wednesday, a day of fasting, is the first day of Lent in the Western Christian calendar. https://en.wikipedia.org/wiki/Ash_Wednesday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -3759,8 +3759,8 @@ SUMMARY:Mardi Gras
 UID:afe8621672b0e989f6856d91e4c9826e4abdd65f
 DTSTART:20270209T000000
 DTEND:20270209T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Mardi Gras (Fat Tuesday) is a festival held the day before Ash Wednesday, signifying the end of the Carnival season and the start of Lent. Many cities (especially those with large Catholic populations) like New Orleans are famous for their Mardi Gras. ? https://en.wikipedia.org/wiki/Mardi_Gras_in_the_United_States
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -3768,8 +3768,8 @@ SUMMARY:Ash Wednesday
 UID:3b48f2f9d5a18197172282103b9f05494dfe4db4
 DTSTART:20270210T000000
 DTEND:20270210T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Ash Wednesday, a day of fasting, is the first day of Lent in the Western Christian calendar. https://en.wikipedia.org/wiki/Ash_Wednesday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -4056,8 +4056,8 @@ SUMMARY:Mardi Gras
 UID:ddb253404e89abf4e73ae31230f29181bff4b0a0
 DTSTART:20280229T000000
 DTEND:20280229T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Mardi Gras (Fat Tuesday) is a festival held the day before Ash Wednesday, signifying the end of the Carnival season and the start of Lent. Many cities (especially those with large Catholic populations) like New Orleans are famous for their Mardi Gras. ? https://en.wikipedia.org/wiki/Mardi_Gras_in_the_United_States
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -4065,8 +4065,8 @@ SUMMARY:Ash Wednesday
 UID:3d4bc7d4b69f178331a3cde17ee5336e00c907a5
 DTSTART:20280301T000000
 DTEND:20280301T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Ash Wednesday, a day of fasting, is the first day of Lent in the Western Christian calendar. https://en.wikipedia.org/wiki/Ash_Wednesday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -4317,8 +4317,8 @@ SUMMARY:Mardi Gras
 UID:67b2fa4fdf90dc7d99b08705db89daf4332a24d3
 DTSTART:20290213T000000
 DTEND:20290213T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Mardi Gras (Fat Tuesday) is a festival held the day before Ash Wednesday, signifying the end of the Carnival season and the start of Lent. Many cities (especially those with large Catholic populations) like New Orleans are famous for their Mardi Gras. ? https://en.wikipedia.org/wiki/Mardi_Gras_in_the_United_States
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -4326,8 +4326,8 @@ SUMMARY:Ash Wednesday
 UID:a8bad8e4825611f7d86d134552772e7cdce26050
 DTSTART:20290214T000000
 DTEND:20290214T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Ash Wednesday, a day of fasting, is the first day of Lent in the Western Christian calendar. https://en.wikipedia.org/wiki/Ash_Wednesday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -4614,8 +4614,8 @@ SUMMARY:Mardi Gras
 UID:893dee928f67d2cb6b0491cdd917b24a9be03b38
 DTSTART:20300305T000000
 DTEND:20300305T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Mardi Gras (Fat Tuesday) is a festival held the day before Ash Wednesday, signifying the end of the Carnival season and the start of Lent. Many cities (especially those with large Catholic populations) like New Orleans are famous for their Mardi Gras. ? https://en.wikipedia.org/wiki/Mardi_Gras_in_the_United_States
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -4623,8 +4623,8 @@ SUMMARY:Ash Wednesday
 UID:ccb8f84317732ddc0c3f116ed14226519d6393cb
 DTSTART:20300306T000000
 DTEND:20300306T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Ash Wednesday, a day of fasting, is the first day of Lent in the Western Christian calendar. https://en.wikipedia.org/wiki/Ash_Wednesday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -4911,8 +4911,8 @@ SUMMARY:Mardi Gras
 UID:b61de9cea1aa91253e952d2701fb59f9d2453df2
 DTSTART:20310225T000000
 DTEND:20310225T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Mardi Gras (Fat Tuesday) is a festival held the day before Ash Wednesday, signifying the end of the Carnival season and the start of Lent. Many cities (especially those with large Catholic populations) like New Orleans are famous for their Mardi Gras. ? https://en.wikipedia.org/wiki/Mardi_Gras_in_the_United_States
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -4920,8 +4920,8 @@ SUMMARY:Ash Wednesday
 UID:d66418961739116ef4fe46d6dbd4fa61521dc0d5
 DTSTART:20310226T000000
 DTEND:20310226T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Ash Wednesday, a day of fasting, is the first day of Lent in the Western Christian calendar. https://en.wikipedia.org/wiki/Ash_Wednesday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -5172,8 +5172,8 @@ SUMMARY:Mardi Gras
 UID:59fb62832a473d669ba4f462c3534922c0a54611
 DTSTART:20320210T000000
 DTEND:20320210T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Mardi Gras (Fat Tuesday) is a festival held the day before Ash Wednesday, signifying the end of the Carnival season and the start of Lent. Many cities (especially those with large Catholic populations) like New Orleans are famous for their Mardi Gras. ? https://en.wikipedia.org/wiki/Mardi_Gras_in_the_United_States
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -5181,8 +5181,8 @@ SUMMARY:Ash Wednesday
 UID:10dbcfa8dfa972d4955baf1fd349cd1130ab20d8
 DTSTART:20320211T000000
 DTEND:20320211T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Ash Wednesday, a day of fasting, is the first day of Lent in the Western Christian calendar. https://en.wikipedia.org/wiki/Ash_Wednesday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -5469,8 +5469,8 @@ SUMMARY:Mardi Gras
 UID:bf0d8925a853144ce755ad0a8f9fc55a31ee2783
 DTSTART:20330301T000000
 DTEND:20330301T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Mardi Gras (Fat Tuesday) is a festival held the day before Ash Wednesday, signifying the end of the Carnival season and the start of Lent. Many cities (especially those with large Catholic populations) like New Orleans are famous for their Mardi Gras. ? https://en.wikipedia.org/wiki/Mardi_Gras_in_the_United_States
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -5478,8 +5478,8 @@ SUMMARY:Ash Wednesday
 UID:9a789871c614683a966f9bed6d48e7fdd48f4ba5
 DTSTART:20330302T000000
 DTEND:20330302T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Ash Wednesday, a day of fasting, is the first day of Lent in the Western Christian calendar. https://en.wikipedia.org/wiki/Ash_Wednesday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -5766,8 +5766,8 @@ SUMMARY:Mardi Gras
 UID:6fe73a88c15619f4aea458b0e15e1f2188edcbe4
 DTSTART:20340221T000000
 DTEND:20340221T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Mardi Gras (Fat Tuesday) is a festival held the day before Ash Wednesday, signifying the end of the Carnival season and the start of Lent. Many cities (especially those with large Catholic populations) like New Orleans are famous for their Mardi Gras. ? https://en.wikipedia.org/wiki/Mardi_Gras_in_the_United_States
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -5775,8 +5775,8 @@ SUMMARY:Ash Wednesday
 UID:0b9fba5ca6b7789774f80ebcbcf1eae17ec67bfd
 DTSTART:20340222T000000
 DTEND:20340222T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Ash Wednesday, a day of fasting, is the first day of Lent in the Western Christian calendar. https://en.wikipedia.org/wiki/Ash_Wednesday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -6027,8 +6027,8 @@ SUMMARY:Mardi Gras
 UID:0057a5a57f20d839fb6989a3e643b55ea9061aa3
 DTSTART:20350206T000000
 DTEND:20350206T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Mardi Gras (Fat Tuesday) is a festival held the day before Ash Wednesday, signifying the end of the Carnival season and the start of Lent. Many cities (especially those with large Catholic populations) like New Orleans are famous for their Mardi Gras. ? https://en.wikipedia.org/wiki/Mardi_Gras_in_the_United_States
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -6036,8 +6036,8 @@ SUMMARY:Ash Wednesday
 UID:9b735fae7b202a598e413a26950f9bafa5aa8632
 DTSTART:20350207T000000
 DTEND:20350207T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Ash Wednesday, a day of fasting, is the first day of Lent in the Western Christian calendar. https://en.wikipedia.org/wiki/Ash_Wednesday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -6324,8 +6324,8 @@ SUMMARY:Mardi Gras
 UID:cd3723c0f5a69c307030ccf0f06fafb368b22451
 DTSTART:20360226T000000
 DTEND:20360226T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Mardi Gras (Fat Tuesday) is a festival held the day before Ash Wednesday, signifying the end of the Carnival season and the start of Lent. Many cities (especially those with large Catholic populations) like New Orleans are famous for their Mardi Gras. ? https://en.wikipedia.org/wiki/Mardi_Gras_in_the_United_States
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -6333,8 +6333,8 @@ SUMMARY:Ash Wednesday
 UID:9fe5ceea32591b4864e90c807503433679e58a14
 DTSTART:20360227T000000
 DTEND:20360227T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Ash Wednesday, a day of fasting, is the first day of Lent in the Western Christian calendar. https://en.wikipedia.org/wiki/Ash_Wednesday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -6621,8 +6621,8 @@ SUMMARY:Mardi Gras
 UID:fcee96056dc33a5a9d08d8ac1f61dc7a925a8816
 DTSTART:20370217T000000
 DTEND:20370217T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Mardi Gras (Fat Tuesday) is a festival held the day before Ash Wednesday, signifying the end of the Carnival season and the start of Lent. Many cities (especially those with large Catholic populations) like New Orleans are famous for their Mardi Gras. ? https://en.wikipedia.org/wiki/Mardi_Gras_in_the_United_States
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -6630,8 +6630,8 @@ SUMMARY:Ash Wednesday
 UID:ce03a86da2ba3e8fbc57b0651c4f57b3272bcf6e
 DTSTART:20370218T000000
 DTEND:20370218T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Ash Wednesday, a day of fasting, is the first day of Lent in the Western Christian calendar. https://en.wikipedia.org/wiki/Ash_Wednesday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -6990,8 +6990,8 @@ SUMMARY:Susan B Anthony Day
 UID:6e8289d261284c94b2ef7e3d69d095886b06500d
 DTSTART:20150215T000000
 DTEND:20150215T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Susan B. Anthony Day is a commemorative holiday to celebrate the birth of Susan B. Anthony and women's suffrage in the United States. The holiday is on Anthony's birthday. https://en.wikipedia.org/wiki/Susan_B._Anthony_Day"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -7125,8 +7125,8 @@ SUMMARY:Valentine's Day
 UID:cf32e7a8887394d509935ccca1f3d3b34cc51e46
 DTSTART:20150214T000000
 DTEND:20150214T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Valentine's Day is a holiday that happens on February 14. It is the day of the year when lovers show their love to each other. This can be done by giving flowers, chocolates, Valentine's cards or just a nice gift. http://www.calendarlabs.com/holidays/us/valentines-day.php https://en.wikipedia.org/wiki/Valentine%27s_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -7180,7 +7180,7 @@ UID:13ef1bc072554c32a88ac91bffb879858c4bd707
 DTSTART:20150911T000000
 DTEND:20150911T235959
 LOCATION: United States
-DESCRIPTION: The National Day of Service and Remembrance occurs on\nSeptember 11 of each year in memory of the 2,977 killed in the 2001\nSeptember 11 attacks.\n\n\nhttp://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance\n\nhttps://en.wikipedia.org/wiki/Patriot_Day
+DESCRIPTION: The National Day of Service and Remembrance occurs on September 11 of each year in memory of the 2,977 killed in the 2001 September 11 attacks. http://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance https://en.wikipedia.org/wiki/Patriot_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -7251,8 +7251,8 @@ SUMMARY:Groundhog Day
 UID:853885fb2bf7b3f9e856c216c2073dad13ea1e76
 DTSTART:20150202T000000
 DTEND:20150202T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Groundhog Day is a holiday on February 2. It marks about six weeks before the end of winter. It began in the year 1886. This holiday celebrates Punxsutawney Phil, a groundhog who can supposedly forecast the weather
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -7377,8 +7377,8 @@ SUMMARY:Super Bowl
 UID:7b87669e5780f00fa02c35c13d43497b60f7a0d1
 DTSTART:20150201T000000
 DTEND:20150201T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: The Super Bowl is a special American football game played every year at the end of the National Football League (NFL) season. The best team from each of the two NFL conferences play for the Vince Lombardi Trophy, which was named after the first coach to win a Super Bowl. For most football fans, it is a very special event. Some people who do not like football still watch it for the commercials and the half-time show. The TV advertisements during Super Bowl are the most expensive in the world in per second value. Because the high cost of advertising companies usually produce unique advertisements. https://twitter.com/superbowl http://www.nfl.com/superbowl https://en.wikipedia.org/wiki/Super_Bowl"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -7467,8 +7467,8 @@ SUMMARY:President's Day
 UID:c8ecea0c6ac4d1f985b41117d82dbf626150f8b6
 DTSTART:20150216T000000
 DTEND:20150216T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Washington's Birthday, also known as Presidents' Day, is a United States Federal holiday to celebrate the birth of George Washington. The holiday is held on the third Monday in February. This also celebrates Abraham Lincoln's birthday, which is February 12. Presidents Day is now popularly viewed as a day to celebrate all U.S. presidents past and present. http://www.calendarlabs.com/holidays/us/presidents-day.php https://en.wikipedia.org/wiki/Washington%27s_Birthday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -7683,8 +7683,8 @@ SUMMARY:Susan B Anthony Day
 UID:3c489a292387bbcd52da04df49b01b9800c20d70
 DTSTART:20160215T000000
 DTEND:20160215T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Susan B. Anthony Day is a commemorative holiday to celebrate the birth of Susan B. Anthony and women's suffrage in the United States. The holiday is on Anthony's birthday. https://en.wikipedia.org/wiki/Susan_B._Anthony_Day"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -7818,8 +7818,8 @@ SUMMARY:Valentine's Day
 UID:74be4732f509721eed4707b6579c86c5b3b9c40a
 DTSTART:20160214T000000
 DTEND:20160214T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Valentine's Day is a holiday that happens on February 14. It is the day of the year when lovers show their love to each other. This can be done by giving flowers, chocolates, Valentine's cards or just a nice gift. http://www.calendarlabs.com/holidays/us/valentines-day.php https://en.wikipedia.org/wiki/Valentine%27s_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -7873,7 +7873,7 @@ UID:b35fdc31d343a722bf1a0b343148e538e184a059
 DTSTART:20160911T000000
 DTEND:20160911T235959
 LOCATION: United States
-DESCRIPTION: The National Day of Service and Remembrance occurs on\nSeptember 11 of each year in memory of the 2,977 killed in the 2001\nSeptember 11 attacks.\n\n\nhttp://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance\n\nhttps://en.wikipedia.org/wiki/Patriot_Day
+DESCRIPTION: The National Day of Service and Remembrance occurs on September 11 of each year in memory of the 2,977 killed in the 2001 September 11 attacks. http://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance https://en.wikipedia.org/wiki/Patriot_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -7944,8 +7944,8 @@ SUMMARY:Groundhog Day
 UID:a3aecf8ebc0e5579f098e6f2813272c06e4ce429
 DTSTART:20160202T000000
 DTEND:20160202T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Groundhog Day is a holiday on February 2. It marks about six weeks before the end of winter. It began in the year 1886. This holiday celebrates Punxsutawney Phil, a groundhog who can supposedly forecast the weather
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -8070,8 +8070,8 @@ SUMMARY:Super Bowl
 UID:59af4ab4b6784ea4ae079ce169f8ca156e5ffb4d
 DTSTART:20160207T000000
 DTEND:20160207T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: The Super Bowl is a special American football game played every year at the end of the National Football League (NFL) season. The best team from each of the two NFL conferences play for the Vince Lombardi Trophy, which was named after the first coach to win a Super Bowl. For most football fans, it is a very special event. Some people who do not like football still watch it for the commercials and the half-time show. The TV advertisements during Super Bowl are the most expensive in the world in per second value. Because the high cost of advertising companies usually produce unique advertisements. https://twitter.com/superbowl http://www.nfl.com/superbowl https://en.wikipedia.org/wiki/Super_Bowl"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -8160,8 +8160,8 @@ SUMMARY:President's Day
 UID:26be729197d9a9f1bd118e9f170b113d1309807f
 DTSTART:20160215T000000
 DTEND:20160215T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Washington's Birthday, also known as Presidents' Day, is a United States Federal holiday to celebrate the birth of George Washington. The holiday is held on the third Monday in February. This also celebrates Abraham Lincoln's birthday, which is February 12. Presidents Day is now popularly viewed as a day to celebrate all U.S. presidents past and present. http://www.calendarlabs.com/holidays/us/presidents-day.php https://en.wikipedia.org/wiki/Washington%27s_Birthday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -8376,8 +8376,8 @@ SUMMARY:Susan B Anthony Day
 UID:c9566ba90d0f76866bb2bf159d0f9da36815e85a
 DTSTART:20170215T000000
 DTEND:20170215T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Susan B. Anthony Day is a commemorative holiday to celebrate the birth of Susan B. Anthony and women's suffrage in the United States. The holiday is on Anthony's birthday. https://en.wikipedia.org/wiki/Susan_B._Anthony_Day"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -8511,8 +8511,8 @@ SUMMARY:Valentine's Day
 UID:305e1f19e4fc91957e15b4e9dfa06fac66804a2c
 DTSTART:20170214T000000
 DTEND:20170214T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Valentine's Day is a holiday that happens on February 14. It is the day of the year when lovers show their love to each other. This can be done by giving flowers, chocolates, Valentine's cards or just a nice gift. http://www.calendarlabs.com/holidays/us/valentines-day.php https://en.wikipedia.org/wiki/Valentine%27s_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -8566,7 +8566,7 @@ UID:157c9caf329f92c43154a55e05502af933052bb5
 DTSTART:20170911T000000
 DTEND:20170911T235959
 LOCATION: United States
-DESCRIPTION: The National Day of Service and Remembrance occurs on\nSeptember 11 of each year in memory of the 2,977 killed in the 2001\nSeptember 11 attacks.\n\n\nhttp://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance\n\nhttps://en.wikipedia.org/wiki/Patriot_Day
+DESCRIPTION: The National Day of Service and Remembrance occurs on September 11 of each year in memory of the 2,977 killed in the 2001 September 11 attacks. http://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance https://en.wikipedia.org/wiki/Patriot_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -8637,8 +8637,8 @@ SUMMARY:Groundhog Day
 UID:cf79f14b6e93bcdbe5d1ff724ce0c96891f3e795
 DTSTART:20170202T000000
 DTEND:20170202T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Groundhog Day is a holiday on February 2. It marks about six weeks before the end of winter. It began in the year 1886. This holiday celebrates Punxsutawney Phil, a groundhog who can supposedly forecast the weather
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -8763,8 +8763,8 @@ SUMMARY:Super Bowl
 UID:149ecb27a0a3d4e424f49001781e868393f6c242
 DTSTART:20170205T000000
 DTEND:20170205T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: The Super Bowl is a special American football game played every year at the end of the National Football League (NFL) season. The best team from each of the two NFL conferences play for the Vince Lombardi Trophy, which was named after the first coach to win a Super Bowl. For most football fans, it is a very special event. Some people who do not like football still watch it for the commercials and the half-time show. The TV advertisements during Super Bowl are the most expensive in the world in per second value. Because the high cost of advertising companies usually produce unique advertisements. https://twitter.com/superbowl http://www.nfl.com/superbowl https://en.wikipedia.org/wiki/Super_Bowl"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -8853,8 +8853,8 @@ SUMMARY:President's Day
 UID:2a2661f6f90748fe6b2da753c8299648a843b614
 DTSTART:20170220T000000
 DTEND:20170220T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Washington's Birthday, also known as Presidents' Day, is a United States Federal holiday to celebrate the birth of George Washington. The holiday is held on the third Monday in February. This also celebrates Abraham Lincoln's birthday, which is February 12. Presidents Day is now popularly viewed as a day to celebrate all U.S. presidents past and present. http://www.calendarlabs.com/holidays/us/presidents-day.php https://en.wikipedia.org/wiki/Washington%27s_Birthday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -9069,8 +9069,8 @@ SUMMARY:Susan B Anthony Day
 UID:783a081fc43b5315a41fceae13d8d79da5220c96
 DTSTART:20180215T000000
 DTEND:20180215T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Susan B. Anthony Day is a commemorative holiday to celebrate the birth of Susan B. Anthony and women's suffrage in the United States. The holiday is on Anthony's birthday. https://en.wikipedia.org/wiki/Susan_B._Anthony_Day"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -9204,8 +9204,8 @@ SUMMARY:Valentine's Day
 UID:a0fd7b67d6fcad34c473088130d65e2e1b658113
 DTSTART:20180214T000000
 DTEND:20180214T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Valentine's Day is a holiday that happens on February 14. It is the day of the year when lovers show their love to each other. This can be done by giving flowers, chocolates, Valentine's cards or just a nice gift. http://www.calendarlabs.com/holidays/us/valentines-day.php https://en.wikipedia.org/wiki/Valentine%27s_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -9259,7 +9259,7 @@ UID:3801ad125c880c3dbc40c4d0d023bd9a8d3d47dd
 DTSTART:20180911T000000
 DTEND:20180911T235959
 LOCATION: United States
-DESCRIPTION: The National Day of Service and Remembrance occurs on\nSeptember 11 of each year in memory of the 2,977 killed in the 2001\nSeptember 11 attacks.\n\n\nhttp://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance\n\nhttps://en.wikipedia.org/wiki/Patriot_Day
+DESCRIPTION: The National Day of Service and Remembrance occurs on September 11 of each year in memory of the 2,977 killed in the 2001 September 11 attacks. http://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance https://en.wikipedia.org/wiki/Patriot_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -9330,8 +9330,8 @@ SUMMARY:Groundhog Day
 UID:107df4386328c818e7a3c65072b387eaa6744b1b
 DTSTART:20180202T000000
 DTEND:20180202T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Groundhog Day is a holiday on February 2. It marks about six weeks before the end of winter. It began in the year 1886. This holiday celebrates Punxsutawney Phil, a groundhog who can supposedly forecast the weather
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -9456,8 +9456,8 @@ SUMMARY:Super Bowl
 UID:3e21241188c97093ef639a22df5113d4dbc92b09
 DTSTART:20180204T000000
 DTEND:20180204T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: The Super Bowl is a special American football game played every year at the end of the National Football League (NFL) season. The best team from each of the two NFL conferences play for the Vince Lombardi Trophy, which was named after the first coach to win a Super Bowl. For most football fans, it is a very special event. Some people who do not like football still watch it for the commercials and the half-time show. The TV advertisements during Super Bowl are the most expensive in the world in per second value. Because the high cost of advertising companies usually produce unique advertisements. https://twitter.com/superbowl http://www.nfl.com/superbowl https://en.wikipedia.org/wiki/Super_Bowl"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -9546,8 +9546,8 @@ SUMMARY:President's Day
 UID:ac7f5402b68bea7e61066e0435ca49b573c87a70
 DTSTART:20180219T000000
 DTEND:20180219T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Washington's Birthday, also known as Presidents' Day, is a United States Federal holiday to celebrate the birth of George Washington. The holiday is held on the third Monday in February. This also celebrates Abraham Lincoln's birthday, which is February 12. Presidents Day is now popularly viewed as a day to celebrate all U.S. presidents past and present. http://www.calendarlabs.com/holidays/us/presidents-day.php https://en.wikipedia.org/wiki/Washington%27s_Birthday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -9762,8 +9762,8 @@ SUMMARY:Susan B Anthony Day
 UID:f8a4ace1ba6d72b48e3aa256a231121064b6081c
 DTSTART:20190215T000000
 DTEND:20190215T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Susan B. Anthony Day is a commemorative holiday to celebrate the birth of Susan B. Anthony and women's suffrage in the United States. The holiday is on Anthony's birthday. https://en.wikipedia.org/wiki/Susan_B._Anthony_Day"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -9897,8 +9897,8 @@ SUMMARY:Valentine's Day
 UID:982c5fd822bad4ceb3b35bb7fe43ec01ac80e260
 DTSTART:20190214T000000
 DTEND:20190214T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Valentine's Day is a holiday that happens on February 14. It is the day of the year when lovers show their love to each other. This can be done by giving flowers, chocolates, Valentine's cards or just a nice gift. http://www.calendarlabs.com/holidays/us/valentines-day.php https://en.wikipedia.org/wiki/Valentine%27s_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -9952,7 +9952,7 @@ UID:830592198fa5997cbbd60804c9c5ad607fed0734
 DTSTART:20190911T000000
 DTEND:20190911T235959
 LOCATION: United States
-DESCRIPTION: The National Day of Service and Remembrance occurs on\nSeptember 11 of each year in memory of the 2,977 killed in the 2001\nSeptember 11 attacks.\n\n\nhttp://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance\n\nhttps://en.wikipedia.org/wiki/Patriot_Day
+DESCRIPTION: The National Day of Service and Remembrance occurs on September 11 of each year in memory of the 2,977 killed in the 2001 September 11 attacks. http://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance https://en.wikipedia.org/wiki/Patriot_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -10023,8 +10023,8 @@ SUMMARY:Groundhog Day
 UID:5e91c83236012700771ec4b76546051e922fe011
 DTSTART:20190202T000000
 DTEND:20190202T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Groundhog Day is a holiday on February 2. It marks about six weeks before the end of winter. It began in the year 1886. This holiday celebrates Punxsutawney Phil, a groundhog who can supposedly forecast the weather
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -10149,8 +10149,8 @@ SUMMARY:Super Bowl
 UID:23492c59a1ea8e593767be5eda5be7656034fb78
 DTSTART:20190203T000000
 DTEND:20190203T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: The Super Bowl is a special American football game played every year at the end of the National Football League (NFL) season. The best team from each of the two NFL conferences play for the Vince Lombardi Trophy, which was named after the first coach to win a Super Bowl. For most football fans, it is a very special event. Some people who do not like football still watch it for the commercials and the half-time show. The TV advertisements during Super Bowl are the most expensive in the world in per second value. Because the high cost of advertising companies usually produce unique advertisements. https://twitter.com/superbowl http://www.nfl.com/superbowl https://en.wikipedia.org/wiki/Super_Bowl"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -10239,8 +10239,8 @@ SUMMARY:President's Day
 UID:d4873313da89e58391d11a40e9b1bd525aee73b2
 DTSTART:20190218T000000
 DTEND:20190218T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Washington's Birthday, also known as Presidents' Day, is a United States Federal holiday to celebrate the birth of George Washington. The holiday is held on the third Monday in February. This also celebrates Abraham Lincoln's birthday, which is February 12. Presidents Day is now popularly viewed as a day to celebrate all U.S. presidents past and present. http://www.calendarlabs.com/holidays/us/presidents-day.php https://en.wikipedia.org/wiki/Washington%27s_Birthday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -10455,8 +10455,8 @@ SUMMARY:Susan B Anthony Day
 UID:627c433cd96cec5168fa53ef87772cd0a5613abc
 DTSTART:20200215T000000
 DTEND:20200215T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Susan B. Anthony Day is a commemorative holiday to celebrate the birth of Susan B. Anthony and women's suffrage in the United States. The holiday is on Anthony's birthday. https://en.wikipedia.org/wiki/Susan_B._Anthony_Day"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -10590,8 +10590,8 @@ SUMMARY:Valentine's Day
 UID:df31ce386529fc8d00be5310f960fb485fdc26bd
 DTSTART:20200214T000000
 DTEND:20200214T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Valentine's Day is a holiday that happens on February 14. It is the day of the year when lovers show their love to each other. This can be done by giving flowers, chocolates, Valentine's cards or just a nice gift. http://www.calendarlabs.com/holidays/us/valentines-day.php https://en.wikipedia.org/wiki/Valentine%27s_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -10645,7 +10645,7 @@ UID:862ac25adaf90980c56e9eed00476815a97a1876
 DTSTART:20200911T000000
 DTEND:20200911T235959
 LOCATION: United States
-DESCRIPTION: The National Day of Service and Remembrance occurs on\nSeptember 11 of each year in memory of the 2,977 killed in the 2001\nSeptember 11 attacks.\n\n\nhttp://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance\n\nhttps://en.wikipedia.org/wiki/Patriot_Day
+DESCRIPTION: The National Day of Service and Remembrance occurs on September 11 of each year in memory of the 2,977 killed in the 2001 September 11 attacks. http://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance https://en.wikipedia.org/wiki/Patriot_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -10716,8 +10716,8 @@ SUMMARY:Groundhog Day
 UID:7dfb03a06b01f73c1ade8e033abf7aea65024e52
 DTSTART:20200202T000000
 DTEND:20200202T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Groundhog Day is a holiday on February 2. It marks about six weeks before the end of winter. It began in the year 1886. This holiday celebrates Punxsutawney Phil, a groundhog who can supposedly forecast the weather
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -10842,8 +10842,8 @@ SUMMARY:Super Bowl
 UID:d934b1e26edda18eecf2f260c5a661c322677645
 DTSTART:20200202T000000
 DTEND:20200202T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: The Super Bowl is a special American football game played every year at the end of the National Football League (NFL) season. The best team from each of the two NFL conferences play for the Vince Lombardi Trophy, which was named after the first coach to win a Super Bowl. For most football fans, it is a very special event. Some people who do not like football still watch it for the commercials and the half-time show. The TV advertisements during Super Bowl are the most expensive in the world in per second value. Because the high cost of advertising companies usually produce unique advertisements. https://twitter.com/superbowl http://www.nfl.com/superbowl https://en.wikipedia.org/wiki/Super_Bowl"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -10932,8 +10932,8 @@ SUMMARY:President's Day
 UID:8767440c21e0d266e480de5848d9540405bca089
 DTSTART:20200217T000000
 DTEND:20200217T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Washington's Birthday, also known as Presidents' Day, is a United States Federal holiday to celebrate the birth of George Washington. The holiday is held on the third Monday in February. This also celebrates Abraham Lincoln's birthday, which is February 12. Presidents Day is now popularly viewed as a day to celebrate all U.S. presidents past and present. http://www.calendarlabs.com/holidays/us/presidents-day.php https://en.wikipedia.org/wiki/Washington%27s_Birthday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -11148,8 +11148,8 @@ SUMMARY:Susan B Anthony Day
 UID:3bd99c4499d9b8665296c5b2b76c0cc683ac817d
 DTSTART:20210215T000000
 DTEND:20210215T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Susan B. Anthony Day is a commemorative holiday to celebrate the birth of Susan B. Anthony and women's suffrage in the United States. The holiday is on Anthony's birthday. https://en.wikipedia.org/wiki/Susan_B._Anthony_Day"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -11283,8 +11283,8 @@ SUMMARY:Valentine's Day
 UID:2bd42c24190aac8ca389482ee4e0fc70672bb0eb
 DTSTART:20210214T000000
 DTEND:20210214T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Valentine's Day is a holiday that happens on February 14. It is the day of the year when lovers show their love to each other. This can be done by giving flowers, chocolates, Valentine's cards or just a nice gift. http://www.calendarlabs.com/holidays/us/valentines-day.php https://en.wikipedia.org/wiki/Valentine%27s_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -11338,7 +11338,7 @@ UID:76d759b74d5066f5cbef8f3f4adfe9ad04de44b2
 DTSTART:20210911T000000
 DTEND:20210911T235959
 LOCATION: United States
-DESCRIPTION: The National Day of Service and Remembrance occurs on\nSeptember 11 of each year in memory of the 2,977 killed in the 2001\nSeptember 11 attacks.\n\n\nhttp://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance\n\nhttps://en.wikipedia.org/wiki/Patriot_Day
+DESCRIPTION: The National Day of Service and Remembrance occurs on September 11 of each year in memory of the 2,977 killed in the 2001 September 11 attacks. http://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance https://en.wikipedia.org/wiki/Patriot_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -11409,8 +11409,8 @@ SUMMARY:Groundhog Day
 UID:8fc2ed259927821180af6a84319248ab7eaa2af3
 DTSTART:20210202T000000
 DTEND:20210202T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Groundhog Day is a holiday on February 2. It marks about six weeks before the end of winter. It began in the year 1886. This holiday celebrates Punxsutawney Phil, a groundhog who can supposedly forecast the weather
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -11535,8 +11535,8 @@ SUMMARY:Super Bowl
 UID:f22346bf781ee3b9f9117122b8c0b3bf634bf8e7
 DTSTART:20210207T000000
 DTEND:20210207T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: The Super Bowl is a special American football game played every year at the end of the National Football League (NFL) season. The best team from each of the two NFL conferences play for the Vince Lombardi Trophy, which was named after the first coach to win a Super Bowl. For most football fans, it is a very special event. Some people who do not like football still watch it for the commercials and the half-time show. The TV advertisements during Super Bowl are the most expensive in the world in per second value. Because the high cost of advertising companies usually produce unique advertisements. https://twitter.com/superbowl http://www.nfl.com/superbowl https://en.wikipedia.org/wiki/Super_Bowl"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -11625,8 +11625,8 @@ SUMMARY:President's Day
 UID:6a367b923478d57ecf8e9fc4c359a43533b46a4a
 DTSTART:20210215T000000
 DTEND:20210215T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Washington's Birthday, also known as Presidents' Day, is a United States Federal holiday to celebrate the birth of George Washington. The holiday is held on the third Monday in February. This also celebrates Abraham Lincoln's birthday, which is February 12. Presidents Day is now popularly viewed as a day to celebrate all U.S. presidents past and present. http://www.calendarlabs.com/holidays/us/presidents-day.php https://en.wikipedia.org/wiki/Washington%27s_Birthday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -11841,8 +11841,8 @@ SUMMARY:Susan B Anthony Day
 UID:156ce43e69ed326f685e5385a2d0512d207413a9
 DTSTART:20220215T000000
 DTEND:20220215T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Susan B. Anthony Day is a commemorative holiday to celebrate the birth of Susan B. Anthony and women's suffrage in the United States. The holiday is on Anthony's birthday. https://en.wikipedia.org/wiki/Susan_B._Anthony_Day"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -11976,8 +11976,8 @@ SUMMARY:Valentine's Day
 UID:8ad188cb330ec284e3fa3bc20679b587261e74bd
 DTSTART:20220214T000000
 DTEND:20220214T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Valentine's Day is a holiday that happens on February 14. It is the day of the year when lovers show their love to each other. This can be done by giving flowers, chocolates, Valentine's cards or just a nice gift. http://www.calendarlabs.com/holidays/us/valentines-day.php https://en.wikipedia.org/wiki/Valentine%27s_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -12031,7 +12031,7 @@ UID:c3093f37a16bf8888be2a6085dbbfe8d52e68799
 DTSTART:20220911T000000
 DTEND:20220911T235959
 LOCATION: United States
-DESCRIPTION: The National Day of Service and Remembrance occurs on\nSeptember 11 of each year in memory of the 2,977 killed in the 2001\nSeptember 11 attacks.\n\n\nhttp://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance\n\nhttps://en.wikipedia.org/wiki/Patriot_Day
+DESCRIPTION: The National Day of Service and Remembrance occurs on September 11 of each year in memory of the 2,977 killed in the 2001 September 11 attacks. http://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance https://en.wikipedia.org/wiki/Patriot_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -12102,8 +12102,8 @@ SUMMARY:Groundhog Day
 UID:131b5c8cb623fe405712ff2f36a874aeab4685e5
 DTSTART:20220202T000000
 DTEND:20220202T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Groundhog Day is a holiday on February 2. It marks about six weeks before the end of winter. It began in the year 1886. This holiday celebrates Punxsutawney Phil, a groundhog who can supposedly forecast the weather
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -12228,8 +12228,8 @@ SUMMARY:Super Bowl
 UID:6ea45a386ce7053f39c8c496a96bd135fe8f2141
 DTSTART:20220206T000000
 DTEND:20220206T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: The Super Bowl is a special American football game played every year at the end of the National Football League (NFL) season. The best team from each of the two NFL conferences play for the Vince Lombardi Trophy, which was named after the first coach to win a Super Bowl. For most football fans, it is a very special event. Some people who do not like football still watch it for the commercials and the half-time show. The TV advertisements during Super Bowl are the most expensive in the world in per second value. Because the high cost of advertising companies usually produce unique advertisements. https://twitter.com/superbowl http://www.nfl.com/superbowl https://en.wikipedia.org/wiki/Super_Bowl"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -12318,8 +12318,8 @@ SUMMARY:President's Day
 UID:cb31503a59c379364ec4bde96fe6c54563662f70
 DTSTART:20220221T000000
 DTEND:20220221T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Washington's Birthday, also known as Presidents' Day, is a United States Federal holiday to celebrate the birth of George Washington. The holiday is held on the third Monday in February. This also celebrates Abraham Lincoln's birthday, which is February 12. Presidents Day is now popularly viewed as a day to celebrate all U.S. presidents past and present. http://www.calendarlabs.com/holidays/us/presidents-day.php https://en.wikipedia.org/wiki/Washington%27s_Birthday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -12534,8 +12534,8 @@ SUMMARY:Susan B Anthony Day
 UID:2b8351389a7ecbab24863a185bf52f9264c43ad4
 DTSTART:20230215T000000
 DTEND:20230215T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Susan B. Anthony Day is a commemorative holiday to celebrate the birth of Susan B. Anthony and women's suffrage in the United States. The holiday is on Anthony's birthday. https://en.wikipedia.org/wiki/Susan_B._Anthony_Day"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -12669,8 +12669,8 @@ SUMMARY:Valentine's Day
 UID:ab5010a0c7142deb4c26d7b6b9e93ea527d104f2
 DTSTART:20230214T000000
 DTEND:20230214T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Valentine's Day is a holiday that happens on February 14. It is the day of the year when lovers show their love to each other. This can be done by giving flowers, chocolates, Valentine's cards or just a nice gift. http://www.calendarlabs.com/holidays/us/valentines-day.php https://en.wikipedia.org/wiki/Valentine%27s_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -12724,7 +12724,7 @@ UID:0450a0c80618eb9010aba91059b84179086585e6
 DTSTART:20230911T000000
 DTEND:20230911T235959
 LOCATION: United States
-DESCRIPTION: The National Day of Service and Remembrance occurs on\nSeptember 11 of each year in memory of the 2,977 killed in the 2001\nSeptember 11 attacks.\n\n\nhttp://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance\n\nhttps://en.wikipedia.org/wiki/Patriot_Day
+DESCRIPTION: The National Day of Service and Remembrance occurs on September 11 of each year in memory of the 2,977 killed in the 2001 September 11 attacks. http://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance https://en.wikipedia.org/wiki/Patriot_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -12795,8 +12795,8 @@ SUMMARY:Groundhog Day
 UID:f3c8d47af9c25bd364fccdcb35e8661c9ea1eb2b
 DTSTART:20230202T000000
 DTEND:20230202T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Groundhog Day is a holiday on February 2. It marks about six weeks before the end of winter. It began in the year 1886. This holiday celebrates Punxsutawney Phil, a groundhog who can supposedly forecast the weather
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -12921,8 +12921,8 @@ SUMMARY:Super Bowl
 UID:9f5c1dc1f56e75b0eb10bb08117d0c4ef1971f17
 DTSTART:20230205T000000
 DTEND:20230205T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: The Super Bowl is a special American football game played every year at the end of the National Football League (NFL) season. The best team from each of the two NFL conferences play for the Vince Lombardi Trophy, which was named after the first coach to win a Super Bowl. For most football fans, it is a very special event. Some people who do not like football still watch it for the commercials and the half-time show. The TV advertisements during Super Bowl are the most expensive in the world in per second value. Because the high cost of advertising companies usually produce unique advertisements. https://twitter.com/superbowl http://www.nfl.com/superbowl https://en.wikipedia.org/wiki/Super_Bowl"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -13011,8 +13011,8 @@ SUMMARY:President's Day
 UID:980c6a6d3f3af80355581d2bdcdbfbc0a5b592c9
 DTSTART:20230220T000000
 DTEND:20230220T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Washington's Birthday, also known as Presidents' Day, is a United States Federal holiday to celebrate the birth of George Washington. The holiday is held on the third Monday in February. This also celebrates Abraham Lincoln's birthday, which is February 12. Presidents Day is now popularly viewed as a day to celebrate all U.S. presidents past and present. http://www.calendarlabs.com/holidays/us/presidents-day.php https://en.wikipedia.org/wiki/Washington%27s_Birthday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -13227,8 +13227,8 @@ SUMMARY:Susan B Anthony Day
 UID:f9ba9209b57f080e3cd4583ee9d38fd70a725e6c
 DTSTART:20240215T000000
 DTEND:20240215T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Susan B. Anthony Day is a commemorative holiday to celebrate the birth of Susan B. Anthony and women's suffrage in the United States. The holiday is on Anthony's birthday. https://en.wikipedia.org/wiki/Susan_B._Anthony_Day"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -13362,8 +13362,8 @@ SUMMARY:Valentine's Day
 UID:872c6b03d26b4d2f12ebf06970f842373a3120e8
 DTSTART:20240214T000000
 DTEND:20240214T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Valentine's Day is a holiday that happens on February 14. It is the day of the year when lovers show their love to each other. This can be done by giving flowers, chocolates, Valentine's cards or just a nice gift. http://www.calendarlabs.com/holidays/us/valentines-day.php https://en.wikipedia.org/wiki/Valentine%27s_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -13417,7 +13417,7 @@ UID:8fec8c6ccbe02fdfee0cecadcb487e80d601eeca
 DTSTART:20240911T000000
 DTEND:20240911T235959
 LOCATION: United States
-DESCRIPTION: The National Day of Service and Remembrance occurs on\nSeptember 11 of each year in memory of the 2,977 killed in the 2001\nSeptember 11 attacks.\n\n\nhttp://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance\n\nhttps://en.wikipedia.org/wiki/Patriot_Day
+DESCRIPTION: The National Day of Service and Remembrance occurs on September 11 of each year in memory of the 2,977 killed in the 2001 September 11 attacks. http://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance https://en.wikipedia.org/wiki/Patriot_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -13488,8 +13488,8 @@ SUMMARY:Groundhog Day
 UID:aefc42dcc332ed86aa1160110a395bf1bb9d6809
 DTSTART:20240202T000000
 DTEND:20240202T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Groundhog Day is a holiday on February 2. It marks about six weeks before the end of winter. It began in the year 1886. This holiday celebrates Punxsutawney Phil, a groundhog who can supposedly forecast the weather
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -13614,8 +13614,8 @@ SUMMARY:Super Bowl
 UID:b38cc4ef4977615538288f9f995aa98492ce284e
 DTSTART:20240204T000000
 DTEND:20240204T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: The Super Bowl is a special American football game played every year at the end of the National Football League (NFL) season. The best team from each of the two NFL conferences play for the Vince Lombardi Trophy, which was named after the first coach to win a Super Bowl. For most football fans, it is a very special event. Some people who do not like football still watch it for the commercials and the half-time show. The TV advertisements during Super Bowl are the most expensive in the world in per second value. Because the high cost of advertising companies usually produce unique advertisements. https://twitter.com/superbowl http://www.nfl.com/superbowl https://en.wikipedia.org/wiki/Super_Bowl"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -13704,8 +13704,8 @@ SUMMARY:President's Day
 UID:fc1aee616b0cd83ed215d16fc4bbb22dba628fe2
 DTSTART:20240219T000000
 DTEND:20240219T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Washington's Birthday, also known as Presidents' Day, is a United States Federal holiday to celebrate the birth of George Washington. The holiday is held on the third Monday in February. This also celebrates Abraham Lincoln's birthday, which is February 12. Presidents Day is now popularly viewed as a day to celebrate all U.S. presidents past and present. http://www.calendarlabs.com/holidays/us/presidents-day.php https://en.wikipedia.org/wiki/Washington%27s_Birthday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -13920,8 +13920,8 @@ SUMMARY:Susan B Anthony Day
 UID:50184520c4c8669e791839a4dfa67165a3382c7d
 DTSTART:20250215T000000
 DTEND:20250215T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Susan B. Anthony Day is a commemorative holiday to celebrate the birth of Susan B. Anthony and women's suffrage in the United States. The holiday is on Anthony's birthday. https://en.wikipedia.org/wiki/Susan_B._Anthony_Day"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -14055,8 +14055,8 @@ SUMMARY:Valentine's Day
 UID:6219edac0ff435a6d5855720fd9730c23f651ac3
 DTSTART:20250214T000000
 DTEND:20250214T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Valentine's Day is a holiday that happens on February 14. It is the day of the year when lovers show their love to each other. This can be done by giving flowers, chocolates, Valentine's cards or just a nice gift. http://www.calendarlabs.com/holidays/us/valentines-day.php https://en.wikipedia.org/wiki/Valentine%27s_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -14110,7 +14110,7 @@ UID:f9a49cce124897001545201e8e95b754bf803fbb
 DTSTART:20250911T000000
 DTEND:20250911T235959
 LOCATION: United States
-DESCRIPTION: The National Day of Service and Remembrance occurs on\nSeptember 11 of each year in memory of the 2,977 killed in the 2001\nSeptember 11 attacks.\n\n\nhttp://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance\n\nhttps://en.wikipedia.org/wiki/Patriot_Day
+DESCRIPTION: The National Day of Service and Remembrance occurs on September 11 of each year in memory of the 2,977 killed in the 2001 September 11 attacks. http://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance https://en.wikipedia.org/wiki/Patriot_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -14181,8 +14181,8 @@ SUMMARY:Groundhog Day
 UID:2ce22473275a5e886ed8c2dcee0599430553c87f
 DTSTART:20250202T000000
 DTEND:20250202T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Groundhog Day is a holiday on February 2. It marks about six weeks before the end of winter. It began in the year 1886. This holiday celebrates Punxsutawney Phil, a groundhog who can supposedly forecast the weather
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -14307,8 +14307,8 @@ SUMMARY:Super Bowl
 UID:719f1f0302e1438b0203a9a38d8255e415109e22
 DTSTART:20250202T000000
 DTEND:20250202T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: The Super Bowl is a special American football game played every year at the end of the National Football League (NFL) season. The best team from each of the two NFL conferences play for the Vince Lombardi Trophy, which was named after the first coach to win a Super Bowl. For most football fans, it is a very special event. Some people who do not like football still watch it for the commercials and the half-time show. The TV advertisements during Super Bowl are the most expensive in the world in per second value. Because the high cost of advertising companies usually produce unique advertisements. https://twitter.com/superbowl http://www.nfl.com/superbowl https://en.wikipedia.org/wiki/Super_Bowl"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -14397,8 +14397,8 @@ SUMMARY:President's Day
 UID:f109158f740fd48464596cb2025e4863209a6dc0
 DTSTART:20250217T000000
 DTEND:20250217T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Washington's Birthday, also known as Presidents' Day, is a United States Federal holiday to celebrate the birth of George Washington. The holiday is held on the third Monday in February. This also celebrates Abraham Lincoln's birthday, which is February 12. Presidents Day is now popularly viewed as a day to celebrate all U.S. presidents past and present. http://www.calendarlabs.com/holidays/us/presidents-day.php https://en.wikipedia.org/wiki/Washington%27s_Birthday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -14613,8 +14613,8 @@ SUMMARY:Susan B Anthony Day
 UID:ce019a3ee2d3266dfb58ca35d591ac7a0b959ca3
 DTSTART:20260215T000000
 DTEND:20260215T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Susan B. Anthony Day is a commemorative holiday to celebrate the birth of Susan B. Anthony and women's suffrage in the United States. The holiday is on Anthony's birthday. https://en.wikipedia.org/wiki/Susan_B._Anthony_Day"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -14748,8 +14748,8 @@ SUMMARY:Valentine's Day
 UID:52debc739e53c082abe45e49e422966d923b34fe
 DTSTART:20260214T000000
 DTEND:20260214T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Valentine's Day is a holiday that happens on February 14. It is the day of the year when lovers show their love to each other. This can be done by giving flowers, chocolates, Valentine's cards or just a nice gift. http://www.calendarlabs.com/holidays/us/valentines-day.php https://en.wikipedia.org/wiki/Valentine%27s_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -14803,7 +14803,7 @@ UID:3d5fa16c9ab2411e6d0f805132bd9d6da174d385
 DTSTART:20260911T000000
 DTEND:20260911T235959
 LOCATION: United States
-DESCRIPTION: The National Day of Service and Remembrance occurs on\nSeptember 11 of each year in memory of the 2,977 killed in the 2001\nSeptember 11 attacks.\n\n\nhttp://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance\n\nhttps://en.wikipedia.org/wiki/Patriot_Day
+DESCRIPTION: The National Day of Service and Remembrance occurs on September 11 of each year in memory of the 2,977 killed in the 2001 September 11 attacks. http://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance https://en.wikipedia.org/wiki/Patriot_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -14874,8 +14874,8 @@ SUMMARY:Groundhog Day
 UID:05bd31220e110c6d343954644bc0bb465824662e
 DTSTART:20260202T000000
 DTEND:20260202T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Groundhog Day is a holiday on February 2. It marks about six weeks before the end of winter. It began in the year 1886. This holiday celebrates Punxsutawney Phil, a groundhog who can supposedly forecast the weather
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -15000,8 +15000,8 @@ SUMMARY:Super Bowl
 UID:fea37f3fcd30b54f3688c5ad02f7fbb7cea2b225
 DTSTART:20260201T000000
 DTEND:20260201T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: The Super Bowl is a special American football game played every year at the end of the National Football League (NFL) season. The best team from each of the two NFL conferences play for the Vince Lombardi Trophy, which was named after the first coach to win a Super Bowl. For most football fans, it is a very special event. Some people who do not like football still watch it for the commercials and the half-time show. The TV advertisements during Super Bowl are the most expensive in the world in per second value. Because the high cost of advertising companies usually produce unique advertisements. https://twitter.com/superbowl http://www.nfl.com/superbowl https://en.wikipedia.org/wiki/Super_Bowl"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -15090,8 +15090,8 @@ SUMMARY:President's Day
 UID:9158740b7e21bd96772aa5b3ba9f629c2120abea
 DTSTART:20260216T000000
 DTEND:20260216T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Washington's Birthday, also known as Presidents' Day, is a United States Federal holiday to celebrate the birth of George Washington. The holiday is held on the third Monday in February. This also celebrates Abraham Lincoln's birthday, which is February 12. Presidents Day is now popularly viewed as a day to celebrate all U.S. presidents past and present. http://www.calendarlabs.com/holidays/us/presidents-day.php https://en.wikipedia.org/wiki/Washington%27s_Birthday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -15306,8 +15306,8 @@ SUMMARY:Susan B Anthony Day
 UID:50445a2b494058aac0dd4e10ac24a6b8774e48f5
 DTSTART:20270215T000000
 DTEND:20270215T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Susan B. Anthony Day is a commemorative holiday to celebrate the birth of Susan B. Anthony and women's suffrage in the United States. The holiday is on Anthony's birthday. https://en.wikipedia.org/wiki/Susan_B._Anthony_Day"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -15441,8 +15441,8 @@ SUMMARY:Valentine's Day
 UID:4a9c5565fc4311874c9acd80bbd1ee1257cb4143
 DTSTART:20270214T000000
 DTEND:20270214T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Valentine's Day is a holiday that happens on February 14. It is the day of the year when lovers show their love to each other. This can be done by giving flowers, chocolates, Valentine's cards or just a nice gift. http://www.calendarlabs.com/holidays/us/valentines-day.php https://en.wikipedia.org/wiki/Valentine%27s_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -15496,7 +15496,7 @@ UID:ae20a9d2a979739cde182d1cd32368fa14d6cf13
 DTSTART:20270911T000000
 DTEND:20270911T235959
 LOCATION: United States
-DESCRIPTION: The National Day of Service and Remembrance occurs on\nSeptember 11 of each year in memory of the 2,977 killed in the 2001\nSeptember 11 attacks.\n\n\nhttp://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance\n\nhttps://en.wikipedia.org/wiki/Patriot_Day
+DESCRIPTION: The National Day of Service and Remembrance occurs on September 11 of each year in memory of the 2,977 killed in the 2001 September 11 attacks. http://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance https://en.wikipedia.org/wiki/Patriot_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -15567,8 +15567,8 @@ SUMMARY:Groundhog Day
 UID:2f51798ad79bee33fe8d5729e275cad9c146efa5
 DTSTART:20270202T000000
 DTEND:20270202T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Groundhog Day is a holiday on February 2. It marks about six weeks before the end of winter. It began in the year 1886. This holiday celebrates Punxsutawney Phil, a groundhog who can supposedly forecast the weather
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -15693,8 +15693,8 @@ SUMMARY:Super Bowl
 UID:a990364a630d32e8971cbe7d87f43683f4dbc3b7
 DTSTART:20270207T000000
 DTEND:20270207T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: The Super Bowl is a special American football game played every year at the end of the National Football League (NFL) season. The best team from each of the two NFL conferences play for the Vince Lombardi Trophy, which was named after the first coach to win a Super Bowl. For most football fans, it is a very special event. Some people who do not like football still watch it for the commercials and the half-time show. The TV advertisements during Super Bowl are the most expensive in the world in per second value. Because the high cost of advertising companies usually produce unique advertisements. https://twitter.com/superbowl http://www.nfl.com/superbowl https://en.wikipedia.org/wiki/Super_Bowl"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -15783,8 +15783,8 @@ SUMMARY:President's Day
 UID:e82a3a2b50c04136461970c52d30259319ef583f
 DTSTART:20270215T000000
 DTEND:20270215T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Washington's Birthday, also known as Presidents' Day, is a United States Federal holiday to celebrate the birth of George Washington. The holiday is held on the third Monday in February. This also celebrates Abraham Lincoln's birthday, which is February 12. Presidents Day is now popularly viewed as a day to celebrate all U.S. presidents past and present. http://www.calendarlabs.com/holidays/us/presidents-day.php https://en.wikipedia.org/wiki/Washington%27s_Birthday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -15999,8 +15999,8 @@ SUMMARY:Susan B Anthony Day
 UID:feee98bb7e41185eb6d22ba18b34b452224efc1e
 DTSTART:20280215T000000
 DTEND:20280215T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Susan B. Anthony Day is a commemorative holiday to celebrate the birth of Susan B. Anthony and women's suffrage in the United States. The holiday is on Anthony's birthday. https://en.wikipedia.org/wiki/Susan_B._Anthony_Day"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -16134,8 +16134,8 @@ SUMMARY:Valentine's Day
 UID:e79dc1dca30c7b3fd04e7576075106a15841147e
 DTSTART:20280214T000000
 DTEND:20280214T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Valentine's Day is a holiday that happens on February 14. It is the day of the year when lovers show their love to each other. This can be done by giving flowers, chocolates, Valentine's cards or just a nice gift. http://www.calendarlabs.com/holidays/us/valentines-day.php https://en.wikipedia.org/wiki/Valentine%27s_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -16189,7 +16189,7 @@ UID:7b7384a7d6bf914cecbebfeff0ad9d9a2b81431f
 DTSTART:20280911T000000
 DTEND:20280911T235959
 LOCATION: United States
-DESCRIPTION: The National Day of Service and Remembrance occurs on\nSeptember 11 of each year in memory of the 2,977 killed in the 2001\nSeptember 11 attacks.\n\n\nhttp://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance\n\nhttps://en.wikipedia.org/wiki/Patriot_Day
+DESCRIPTION: The National Day of Service and Remembrance occurs on September 11 of each year in memory of the 2,977 killed in the 2001 September 11 attacks. http://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance https://en.wikipedia.org/wiki/Patriot_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -16260,8 +16260,8 @@ SUMMARY:Groundhog Day
 UID:c90d54a99d41c63798a172031de310b874e56f47
 DTSTART:20280202T000000
 DTEND:20280202T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Groundhog Day is a holiday on February 2. It marks about six weeks before the end of winter. It began in the year 1886. This holiday celebrates Punxsutawney Phil, a groundhog who can supposedly forecast the weather
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -16386,8 +16386,8 @@ SUMMARY:Super Bowl
 UID:805ea9b28fc73b91e7d01671f337e180a1e23852
 DTSTART:20280206T000000
 DTEND:20280206T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: The Super Bowl is a special American football game played every year at the end of the National Football League (NFL) season. The best team from each of the two NFL conferences play for the Vince Lombardi Trophy, which was named after the first coach to win a Super Bowl. For most football fans, it is a very special event. Some people who do not like football still watch it for the commercials and the half-time show. The TV advertisements during Super Bowl are the most expensive in the world in per second value. Because the high cost of advertising companies usually produce unique advertisements. https://twitter.com/superbowl http://www.nfl.com/superbowl https://en.wikipedia.org/wiki/Super_Bowl"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -16476,8 +16476,8 @@ SUMMARY:President's Day
 UID:c8d4a67ec35e6f81d65b0d8a345e9b96058d7372
 DTSTART:20280221T000000
 DTEND:20280221T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Washington's Birthday, also known as Presidents' Day, is a United States Federal holiday to celebrate the birth of George Washington. The holiday is held on the third Monday in February. This also celebrates Abraham Lincoln's birthday, which is February 12. Presidents Day is now popularly viewed as a day to celebrate all U.S. presidents past and present. http://www.calendarlabs.com/holidays/us/presidents-day.php https://en.wikipedia.org/wiki/Washington%27s_Birthday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -16692,8 +16692,8 @@ SUMMARY:Susan B Anthony Day
 UID:feca6b51000f3e7bd46f8a56a757a4411e48e67c
 DTSTART:20290215T000000
 DTEND:20290215T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Susan B. Anthony Day is a commemorative holiday to celebrate the birth of Susan B. Anthony and women's suffrage in the United States. The holiday is on Anthony's birthday. https://en.wikipedia.org/wiki/Susan_B._Anthony_Day"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -16827,8 +16827,8 @@ SUMMARY:Valentine's Day
 UID:891ecf6879ee7a85059cbf4e4a874c8513a19573
 DTSTART:20290214T000000
 DTEND:20290214T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Valentine's Day is a holiday that happens on February 14. It is the day of the year when lovers show their love to each other. This can be done by giving flowers, chocolates, Valentine's cards or just a nice gift. http://www.calendarlabs.com/holidays/us/valentines-day.php https://en.wikipedia.org/wiki/Valentine%27s_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -16882,7 +16882,7 @@ UID:f07d0310d702b81154d9b39b0e25f6bfdf8ef664
 DTSTART:20290911T000000
 DTEND:20290911T235959
 LOCATION: United States
-DESCRIPTION: The National Day of Service and Remembrance occurs on\nSeptember 11 of each year in memory of the 2,977 killed in the 2001\nSeptember 11 attacks.\n\n\nhttp://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance\n\nhttps://en.wikipedia.org/wiki/Patriot_Day
+DESCRIPTION: The National Day of Service and Remembrance occurs on September 11 of each year in memory of the 2,977 killed in the 2001 September 11 attacks. http://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance https://en.wikipedia.org/wiki/Patriot_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -16953,8 +16953,8 @@ SUMMARY:Groundhog Day
 UID:5fd0af74b3321d831590a5ee15ea268959e9a1af
 DTSTART:20290202T000000
 DTEND:20290202T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Groundhog Day is a holiday on February 2. It marks about six weeks before the end of winter. It began in the year 1886. This holiday celebrates Punxsutawney Phil, a groundhog who can supposedly forecast the weather
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -17079,8 +17079,8 @@ SUMMARY:Super Bowl
 UID:0b39cdc70e6849145687fc0e61ebe99f16ba411d
 DTSTART:20290204T000000
 DTEND:20290204T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: The Super Bowl is a special American football game played every year at the end of the National Football League (NFL) season. The best team from each of the two NFL conferences play for the Vince Lombardi Trophy, which was named after the first coach to win a Super Bowl. For most football fans, it is a very special event. Some people who do not like football still watch it for the commercials and the half-time show. The TV advertisements during Super Bowl are the most expensive in the world in per second value. Because the high cost of advertising companies usually produce unique advertisements. https://twitter.com/superbowl http://www.nfl.com/superbowl https://en.wikipedia.org/wiki/Super_Bowl"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -17169,8 +17169,8 @@ SUMMARY:President's Day
 UID:ba5bde01925cc13a742d6acb459b220104e8fffa
 DTSTART:20290219T000000
 DTEND:20290219T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Washington's Birthday, also known as Presidents' Day, is a United States Federal holiday to celebrate the birth of George Washington. The holiday is held on the third Monday in February. This also celebrates Abraham Lincoln's birthday, which is February 12. Presidents Day is now popularly viewed as a day to celebrate all U.S. presidents past and present. http://www.calendarlabs.com/holidays/us/presidents-day.php https://en.wikipedia.org/wiki/Washington%27s_Birthday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -17385,8 +17385,8 @@ SUMMARY:Susan B Anthony Day
 UID:132f3dcdc07f6b16ffad394c2cd6421ba91cc035
 DTSTART:20300215T000000
 DTEND:20300215T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Susan B. Anthony Day is a commemorative holiday to celebrate the birth of Susan B. Anthony and women's suffrage in the United States. The holiday is on Anthony's birthday. https://en.wikipedia.org/wiki/Susan_B._Anthony_Day"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -17520,8 +17520,8 @@ SUMMARY:Valentine's Day
 UID:0be23bb62c751c909465d2fc41f7b9bc3f59d11f
 DTSTART:20300214T000000
 DTEND:20300214T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Valentine's Day is a holiday that happens on February 14. It is the day of the year when lovers show their love to each other. This can be done by giving flowers, chocolates, Valentine's cards or just a nice gift. http://www.calendarlabs.com/holidays/us/valentines-day.php https://en.wikipedia.org/wiki/Valentine%27s_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -17575,7 +17575,7 @@ UID:10c05ba9948701edc1076cb4b0f742813a3d64b8
 DTSTART:20300911T000000
 DTEND:20300911T235959
 LOCATION: United States
-DESCRIPTION: The National Day of Service and Remembrance occurs on\nSeptember 11 of each year in memory of the 2,977 killed in the 2001\nSeptember 11 attacks.\n\n\nhttp://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance\n\nhttps://en.wikipedia.org/wiki/Patriot_Day
+DESCRIPTION: The National Day of Service and Remembrance occurs on September 11 of each year in memory of the 2,977 killed in the 2001 September 11 attacks. http://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance https://en.wikipedia.org/wiki/Patriot_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -17646,8 +17646,8 @@ SUMMARY:Groundhog Day
 UID:b3d244e1773cef3e9c01cdf7f99bdb14206f6428
 DTSTART:20300202T000000
 DTEND:20300202T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Groundhog Day is a holiday on February 2. It marks about six weeks before the end of winter. It began in the year 1886. This holiday celebrates Punxsutawney Phil, a groundhog who can supposedly forecast the weather
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -17772,8 +17772,8 @@ SUMMARY:Super Bowl
 UID:b0ffa299ce5fed87b522aa268dfd839ec9b1ebdc
 DTSTART:20300203T000000
 DTEND:20300203T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: The Super Bowl is a special American football game played every year at the end of the National Football League (NFL) season. The best team from each of the two NFL conferences play for the Vince Lombardi Trophy, which was named after the first coach to win a Super Bowl. For most football fans, it is a very special event. Some people who do not like football still watch it for the commercials and the half-time show. The TV advertisements during Super Bowl are the most expensive in the world in per second value. Because the high cost of advertising companies usually produce unique advertisements. https://twitter.com/superbowl http://www.nfl.com/superbowl https://en.wikipedia.org/wiki/Super_Bowl"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -17862,8 +17862,8 @@ SUMMARY:President's Day
 UID:93db97b5d4fe6afd7a59530c6ac0bd8b384ed71f
 DTSTART:20300218T000000
 DTEND:20300218T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Washington's Birthday, also known as Presidents' Day, is a United States Federal holiday to celebrate the birth of George Washington. The holiday is held on the third Monday in February. This also celebrates Abraham Lincoln's birthday, which is February 12. Presidents Day is now popularly viewed as a day to celebrate all U.S. presidents past and present. http://www.calendarlabs.com/holidays/us/presidents-day.php https://en.wikipedia.org/wiki/Washington%27s_Birthday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -18078,8 +18078,8 @@ SUMMARY:Susan B Anthony Day
 UID:70a8786dae2e696ed8a040c6a08de9e79f2c9312
 DTSTART:20310215T000000
 DTEND:20310215T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Susan B. Anthony Day is a commemorative holiday to celebrate the birth of Susan B. Anthony and women's suffrage in the United States. The holiday is on Anthony's birthday. https://en.wikipedia.org/wiki/Susan_B._Anthony_Day"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -18213,8 +18213,8 @@ SUMMARY:Valentine's Day
 UID:8d6f9bbdaaa9d4740ae8ab614d7cf54a2ef89204
 DTSTART:20310214T000000
 DTEND:20310214T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Valentine's Day is a holiday that happens on February 14. It is the day of the year when lovers show their love to each other. This can be done by giving flowers, chocolates, Valentine's cards or just a nice gift. http://www.calendarlabs.com/holidays/us/valentines-day.php https://en.wikipedia.org/wiki/Valentine%27s_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -18268,7 +18268,7 @@ UID:784c6df2050b597caf40c157aabac2d9d4edcfd6
 DTSTART:20310911T000000
 DTEND:20310911T235959
 LOCATION: United States
-DESCRIPTION: The National Day of Service and Remembrance occurs on\nSeptember 11 of each year in memory of the 2,977 killed in the 2001\nSeptember 11 attacks.\n\n\nhttp://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance\n\nhttps://en.wikipedia.org/wiki/Patriot_Day
+DESCRIPTION: The National Day of Service and Remembrance occurs on September 11 of each year in memory of the 2,977 killed in the 2001 September 11 attacks. http://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance https://en.wikipedia.org/wiki/Patriot_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -18339,8 +18339,8 @@ SUMMARY:Groundhog Day
 UID:1778b96575837be3986d1e590f62aaa627cab2b4
 DTSTART:20310202T000000
 DTEND:20310202T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Groundhog Day is a holiday on February 2. It marks about six weeks before the end of winter. It began in the year 1886. This holiday celebrates Punxsutawney Phil, a groundhog who can supposedly forecast the weather
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -18465,8 +18465,8 @@ SUMMARY:Super Bowl
 UID:125fc7c9fae03e74c73a8fc4738983019d3ee4e2
 DTSTART:20310202T000000
 DTEND:20310202T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: The Super Bowl is a special American football game played every year at the end of the National Football League (NFL) season. The best team from each of the two NFL conferences play for the Vince Lombardi Trophy, which was named after the first coach to win a Super Bowl. For most football fans, it is a very special event. Some people who do not like football still watch it for the commercials and the half-time show. The TV advertisements during Super Bowl are the most expensive in the world in per second value. Because the high cost of advertising companies usually produce unique advertisements. https://twitter.com/superbowl http://www.nfl.com/superbowl https://en.wikipedia.org/wiki/Super_Bowl"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -18555,8 +18555,8 @@ SUMMARY:President's Day
 UID:0e5797584c7bf0ccd393d9dca9d11e1c3a5f1fab
 DTSTART:20310217T000000
 DTEND:20310217T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Washington's Birthday, also known as Presidents' Day, is a United States Federal holiday to celebrate the birth of George Washington. The holiday is held on the third Monday in February. This also celebrates Abraham Lincoln's birthday, which is February 12. Presidents Day is now popularly viewed as a day to celebrate all U.S. presidents past and present. http://www.calendarlabs.com/holidays/us/presidents-day.php https://en.wikipedia.org/wiki/Washington%27s_Birthday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -18771,8 +18771,8 @@ SUMMARY:Susan B Anthony Day
 UID:8c348dfbab73138fa9683fc680856cd0000f8ad0
 DTSTART:20320215T000000
 DTEND:20320215T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Susan B. Anthony Day is a commemorative holiday to celebrate the birth of Susan B. Anthony and women's suffrage in the United States. The holiday is on Anthony's birthday. https://en.wikipedia.org/wiki/Susan_B._Anthony_Day"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -18906,8 +18906,8 @@ SUMMARY:Valentine's Day
 UID:bd040c8de4db89e400abe8051e408a04b38ba2f0
 DTSTART:20320214T000000
 DTEND:20320214T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Valentine's Day is a holiday that happens on February 14. It is the day of the year when lovers show their love to each other. This can be done by giving flowers, chocolates, Valentine's cards or just a nice gift. http://www.calendarlabs.com/holidays/us/valentines-day.php https://en.wikipedia.org/wiki/Valentine%27s_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -18961,7 +18961,7 @@ UID:9eb33392e36c4147195b566f8ce939ee123b9a10
 DTSTART:20320911T000000
 DTEND:20320911T235959
 LOCATION: United States
-DESCRIPTION: The National Day of Service and Remembrance occurs on\nSeptember 11 of each year in memory of the 2,977 killed in the 2001\nSeptember 11 attacks.\n\n\nhttp://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance\n\nhttps://en.wikipedia.org/wiki/Patriot_Day
+DESCRIPTION: The National Day of Service and Remembrance occurs on September 11 of each year in memory of the 2,977 killed in the 2001 September 11 attacks. http://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance https://en.wikipedia.org/wiki/Patriot_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -19032,8 +19032,8 @@ SUMMARY:Groundhog Day
 UID:b441af9adfe6d36a8314f8ae4eaaf0c162ca4718
 DTSTART:20320202T000000
 DTEND:20320202T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Groundhog Day is a holiday on February 2. It marks about six weeks before the end of winter. It began in the year 1886. This holiday celebrates Punxsutawney Phil, a groundhog who can supposedly forecast the weather
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -19158,8 +19158,8 @@ SUMMARY:Super Bowl
 UID:b36bee77a670e0f56d9a30bb7d4d83d0bda0063d
 DTSTART:20320201T000000
 DTEND:20320201T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: The Super Bowl is a special American football game played every year at the end of the National Football League (NFL) season. The best team from each of the two NFL conferences play for the Vince Lombardi Trophy, which was named after the first coach to win a Super Bowl. For most football fans, it is a very special event. Some people who do not like football still watch it for the commercials and the half-time show. The TV advertisements during Super Bowl are the most expensive in the world in per second value. Because the high cost of advertising companies usually produce unique advertisements. https://twitter.com/superbowl http://www.nfl.com/superbowl https://en.wikipedia.org/wiki/Super_Bowl"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -19248,8 +19248,8 @@ SUMMARY:President's Day
 UID:b88a46d10ea9efdd9e494ec4568434fabf77491d
 DTSTART:20320216T000000
 DTEND:20320216T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Washington's Birthday, also known as Presidents' Day, is a United States Federal holiday to celebrate the birth of George Washington. The holiday is held on the third Monday in February. This also celebrates Abraham Lincoln's birthday, which is February 12. Presidents Day is now popularly viewed as a day to celebrate all U.S. presidents past and present. http://www.calendarlabs.com/holidays/us/presidents-day.php https://en.wikipedia.org/wiki/Washington%27s_Birthday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -19464,8 +19464,8 @@ SUMMARY:Susan B Anthony Day
 UID:14e32340eec281341a722e7a7e53acb67998792c
 DTSTART:20330215T000000
 DTEND:20330215T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Susan B. Anthony Day is a commemorative holiday to celebrate the birth of Susan B. Anthony and women's suffrage in the United States. The holiday is on Anthony's birthday. https://en.wikipedia.org/wiki/Susan_B._Anthony_Day"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -19599,8 +19599,8 @@ SUMMARY:Valentine's Day
 UID:89408d2d0c19ce8637c1d6751641728acf47920f
 DTSTART:20330214T000000
 DTEND:20330214T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Valentine's Day is a holiday that happens on February 14. It is the day of the year when lovers show their love to each other. This can be done by giving flowers, chocolates, Valentine's cards or just a nice gift. http://www.calendarlabs.com/holidays/us/valentines-day.php https://en.wikipedia.org/wiki/Valentine%27s_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -19654,7 +19654,7 @@ UID:0c1258dcda472dbdb86923148d6d2a5739a8ebd9
 DTSTART:20330911T000000
 DTEND:20330911T235959
 LOCATION: United States
-DESCRIPTION: The National Day of Service and Remembrance occurs on\nSeptember 11 of each year in memory of the 2,977 killed in the 2001\nSeptember 11 attacks.\n\n\nhttp://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance\n\nhttps://en.wikipedia.org/wiki/Patriot_Day
+DESCRIPTION: The National Day of Service and Remembrance occurs on September 11 of each year in memory of the 2,977 killed in the 2001 September 11 attacks. http://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance https://en.wikipedia.org/wiki/Patriot_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -19725,8 +19725,8 @@ SUMMARY:Groundhog Day
 UID:31d00470c86ba57d4f4f9d053f25172f8d1d6395
 DTSTART:20330202T000000
 DTEND:20330202T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Groundhog Day is a holiday on February 2. It marks about six weeks before the end of winter. It began in the year 1886. This holiday celebrates Punxsutawney Phil, a groundhog who can supposedly forecast the weather
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -19851,8 +19851,8 @@ SUMMARY:Super Bowl
 UID:9d152ece693cd3ed317a31619d2a4d664236b650
 DTSTART:20330206T000000
 DTEND:20330206T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: The Super Bowl is a special American football game played every year at the end of the National Football League (NFL) season. The best team from each of the two NFL conferences play for the Vince Lombardi Trophy, which was named after the first coach to win a Super Bowl. For most football fans, it is a very special event. Some people who do not like football still watch it for the commercials and the half-time show. The TV advertisements during Super Bowl are the most expensive in the world in per second value. Because the high cost of advertising companies usually produce unique advertisements. https://twitter.com/superbowl http://www.nfl.com/superbowl https://en.wikipedia.org/wiki/Super_Bowl"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -19941,8 +19941,8 @@ SUMMARY:President's Day
 UID:97e6164060b702fe115e74f4d662734da1b4dad5
 DTSTART:20330221T000000
 DTEND:20330221T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Washington's Birthday, also known as Presidents' Day, is a United States Federal holiday to celebrate the birth of George Washington. The holiday is held on the third Monday in February. This also celebrates Abraham Lincoln's birthday, which is February 12. Presidents Day is now popularly viewed as a day to celebrate all U.S. presidents past and present. http://www.calendarlabs.com/holidays/us/presidents-day.php https://en.wikipedia.org/wiki/Washington%27s_Birthday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -20157,8 +20157,8 @@ SUMMARY:Susan B Anthony Day
 UID:4ef8c2a019693c8f3dc7f4794a9e5a511a77aac0
 DTSTART:20340215T000000
 DTEND:20340215T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Susan B. Anthony Day is a commemorative holiday to celebrate the birth of Susan B. Anthony and women's suffrage in the United States. The holiday is on Anthony's birthday. https://en.wikipedia.org/wiki/Susan_B._Anthony_Day"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -20292,8 +20292,8 @@ SUMMARY:Valentine's Day
 UID:b3ec972331fb2c6398f9647bfccf9e5e525afa79
 DTSTART:20340214T000000
 DTEND:20340214T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Valentine's Day is a holiday that happens on February 14. It is the day of the year when lovers show their love to each other. This can be done by giving flowers, chocolates, Valentine's cards or just a nice gift. http://www.calendarlabs.com/holidays/us/valentines-day.php https://en.wikipedia.org/wiki/Valentine%27s_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -20347,7 +20347,7 @@ UID:dcf9d58a9a83f88ac2a2c6cdd53143dcd6090b7e
 DTSTART:20340911T000000
 DTEND:20340911T235959
 LOCATION: United States
-DESCRIPTION: The National Day of Service and Remembrance occurs on\nSeptember 11 of each year in memory of the 2,977 killed in the 2001\nSeptember 11 attacks.\n\n\nhttp://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance\n\nhttps://en.wikipedia.org/wiki/Patriot_Day
+DESCRIPTION: The National Day of Service and Remembrance occurs on September 11 of each year in memory of the 2,977 killed in the 2001 September 11 attacks. http://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance https://en.wikipedia.org/wiki/Patriot_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -20418,8 +20418,8 @@ SUMMARY:Groundhog Day
 UID:96d5974bb8fce0b7c8b3a4b9e1f991fea7a58d07
 DTSTART:20340202T000000
 DTEND:20340202T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Groundhog Day is a holiday on February 2. It marks about six weeks before the end of winter. It began in the year 1886. This holiday celebrates Punxsutawney Phil, a groundhog who can supposedly forecast the weather
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -20544,8 +20544,8 @@ SUMMARY:Super Bowl
 UID:aac8e393887df6d1a865bb5b4ae1a103469dd98d
 DTSTART:20340205T000000
 DTEND:20340205T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: The Super Bowl is a special American football game played every year at the end of the National Football League (NFL) season. The best team from each of the two NFL conferences play for the Vince Lombardi Trophy, which was named after the first coach to win a Super Bowl. For most football fans, it is a very special event. Some people who do not like football still watch it for the commercials and the half-time show. The TV advertisements during Super Bowl are the most expensive in the world in per second value. Because the high cost of advertising companies usually produce unique advertisements. https://twitter.com/superbowl http://www.nfl.com/superbowl https://en.wikipedia.org/wiki/Super_Bowl"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -20634,8 +20634,8 @@ SUMMARY:President's Day
 UID:da5cb93ae236a03ec2bd00834d78b45f073a5ddc
 DTSTART:20340220T000000
 DTEND:20340220T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Washington's Birthday, also known as Presidents' Day, is a United States Federal holiday to celebrate the birth of George Washington. The holiday is held on the third Monday in February. This also celebrates Abraham Lincoln's birthday, which is February 12. Presidents Day is now popularly viewed as a day to celebrate all U.S. presidents past and present. http://www.calendarlabs.com/holidays/us/presidents-day.php https://en.wikipedia.org/wiki/Washington%27s_Birthday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -20850,8 +20850,8 @@ SUMMARY:Susan B Anthony Day
 UID:30a3bc18cafdf32b1ef044b0d6738b027044ed61
 DTSTART:20350215T000000
 DTEND:20350215T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Susan B. Anthony Day is a commemorative holiday to celebrate the birth of Susan B. Anthony and women's suffrage in the United States. The holiday is on Anthony's birthday. https://en.wikipedia.org/wiki/Susan_B._Anthony_Day"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -20985,8 +20985,8 @@ SUMMARY:Valentine's Day
 UID:ef1a87976cd2b11d58ed9b494fea790f3816e2d4
 DTSTART:20350214T000000
 DTEND:20350214T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Valentine's Day is a holiday that happens on February 14. It is the day of the year when lovers show their love to each other. This can be done by giving flowers, chocolates, Valentine's cards or just a nice gift. http://www.calendarlabs.com/holidays/us/valentines-day.php https://en.wikipedia.org/wiki/Valentine%27s_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -21040,7 +21040,7 @@ UID:712889d565922e7f42457c45dc1f1a7288c9ed39
 DTSTART:20350911T000000
 DTEND:20350911T235959
 LOCATION: United States
-DESCRIPTION: The National Day of Service and Remembrance occurs on\nSeptember 11 of each year in memory of the 2,977 killed in the 2001\nSeptember 11 attacks.\n\n\nhttp://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance\n\nhttps://en.wikipedia.org/wiki/Patriot_Day
+DESCRIPTION: The National Day of Service and Remembrance occurs on September 11 of each year in memory of the 2,977 killed in the 2001 September 11 attacks. http://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance https://en.wikipedia.org/wiki/Patriot_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -21111,8 +21111,8 @@ SUMMARY:Groundhog Day
 UID:aa7007a65860ab3f46e428a38179d5708524b1d2
 DTSTART:20350202T000000
 DTEND:20350202T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Groundhog Day is a holiday on February 2. It marks about six weeks before the end of winter. It began in the year 1886. This holiday celebrates Punxsutawney Phil, a groundhog who can supposedly forecast the weather
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -21237,8 +21237,8 @@ SUMMARY:Super Bowl
 UID:bb4cb021a862541eb7f6a352221bf9120e0fa0bd
 DTSTART:20350204T000000
 DTEND:20350204T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: The Super Bowl is a special American football game played every year at the end of the National Football League (NFL) season. The best team from each of the two NFL conferences play for the Vince Lombardi Trophy, which was named after the first coach to win a Super Bowl. For most football fans, it is a very special event. Some people who do not like football still watch it for the commercials and the half-time show. The TV advertisements during Super Bowl are the most expensive in the world in per second value. Because the high cost of advertising companies usually produce unique advertisements. https://twitter.com/superbowl http://www.nfl.com/superbowl https://en.wikipedia.org/wiki/Super_Bowl"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -21327,8 +21327,8 @@ SUMMARY:President's Day
 UID:99768ff0bbae56cd62d35e4eb570f971677a3064
 DTSTART:20350219T000000
 DTEND:20350219T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Washington's Birthday, also known as Presidents' Day, is a United States Federal holiday to celebrate the birth of George Washington. The holiday is held on the third Monday in February. This also celebrates Abraham Lincoln's birthday, which is February 12. Presidents Day is now popularly viewed as a day to celebrate all U.S. presidents past and present. http://www.calendarlabs.com/holidays/us/presidents-day.php https://en.wikipedia.org/wiki/Washington%27s_Birthday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -21543,8 +21543,8 @@ SUMMARY:Susan B Anthony Day
 UID:cdda1454ab74ed49420a2cf046870a70f76ad40e
 DTSTART:20360215T000000
 DTEND:20360215T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Susan B. Anthony Day is a commemorative holiday to celebrate the birth of Susan B. Anthony and women's suffrage in the United States. The holiday is on Anthony's birthday. https://en.wikipedia.org/wiki/Susan_B._Anthony_Day"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -21678,8 +21678,8 @@ SUMMARY:Valentine's Day
 UID:b03649d592554bf9992586477183eb1fc4094a09
 DTSTART:20360214T000000
 DTEND:20360214T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Valentine's Day is a holiday that happens on February 14. It is the day of the year when lovers show their love to each other. This can be done by giving flowers, chocolates, Valentine's cards or just a nice gift. http://www.calendarlabs.com/holidays/us/valentines-day.php https://en.wikipedia.org/wiki/Valentine%27s_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -21733,7 +21733,7 @@ UID:ffd499c7a15794f0c7affcb4b9d01150045bde11
 DTSTART:20360911T000000
 DTEND:20360911T235959
 LOCATION: United States
-DESCRIPTION: The National Day of Service and Remembrance occurs on\nSeptember 11 of each year in memory of the 2,977 killed in the 2001\nSeptember 11 attacks.\n\n\nhttp://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance\n\nhttps://en.wikipedia.org/wiki/Patriot_Day
+DESCRIPTION: The National Day of Service and Remembrance occurs on September 11 of each year in memory of the 2,977 killed in the 2001 September 11 attacks. http://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance https://en.wikipedia.org/wiki/Patriot_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -21804,8 +21804,8 @@ SUMMARY:Groundhog Day
 UID:c3ce7625b4d1510f3df5693a869176aeda8cab23
 DTSTART:20360202T000000
 DTEND:20360202T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Groundhog Day is a holiday on February 2. It marks about six weeks before the end of winter. It began in the year 1886. This holiday celebrates Punxsutawney Phil, a groundhog who can supposedly forecast the weather
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -21930,8 +21930,8 @@ SUMMARY:Super Bowl
 UID:f951892c6bd81328b17e717a6826e45545264db0
 DTSTART:20360203T000000
 DTEND:20360203T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: The Super Bowl is a special American football game played every year at the end of the National Football League (NFL) season. The best team from each of the two NFL conferences play for the Vince Lombardi Trophy, which was named after the first coach to win a Super Bowl. For most football fans, it is a very special event. Some people who do not like football still watch it for the commercials and the half-time show. The TV advertisements during Super Bowl are the most expensive in the world in per second value. Because the high cost of advertising companies usually produce unique advertisements. https://twitter.com/superbowl http://www.nfl.com/superbowl https://en.wikipedia.org/wiki/Super_Bowl"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -22020,8 +22020,8 @@ SUMMARY:President's Day
 UID:399893331eb5b069c56ecd47780f586f12f657ea
 DTSTART:20360218T000000
 DTEND:20360218T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Washington's Birthday, also known as Presidents' Day, is a United States Federal holiday to celebrate the birth of George Washington. The holiday is held on the third Monday in February. This also celebrates Abraham Lincoln's birthday, which is February 12. Presidents Day is now popularly viewed as a day to celebrate all U.S. presidents past and present. http://www.calendarlabs.com/holidays/us/presidents-day.php https://en.wikipedia.org/wiki/Washington%27s_Birthday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -22236,8 +22236,8 @@ SUMMARY:Susan B Anthony Day
 UID:c3a4e35860791bcf4b713603e3f295d89aa70c28
 DTSTART:20370215T000000
 DTEND:20370215T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Susan B. Anthony Day is a commemorative holiday to celebrate the birth of Susan B. Anthony and women's suffrage in the United States. The holiday is on Anthony's birthday. https://en.wikipedia.org/wiki/Susan_B._Anthony_Day"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -22371,8 +22371,8 @@ SUMMARY:Valentine's Day
 UID:af8cdec6eeb435e4ce9a72e1cbeed7bcdc19096f
 DTSTART:20370214T000000
 DTEND:20370214T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: International
+DESCRIPTION: Valentine's Day is a holiday that happens on February 14. It is the day of the year when lovers show their love to each other. This can be done by giving flowers, chocolates, Valentine's cards or just a nice gift. http://www.calendarlabs.com/holidays/us/valentines-day.php https://en.wikipedia.org/wiki/Valentine%27s_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -22426,7 +22426,7 @@ UID:69159fca16bbc1546c02bfbd5563834751a9f841
 DTSTART:20370911T000000
 DTEND:20370911T235959
 LOCATION: United States
-DESCRIPTION: The National Day of Service and Remembrance occurs on\nSeptember 11 of each year in memory of the 2,977 killed in the 2001\nSeptember 11 attacks.\n\n\nhttp://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance\n\nhttps://en.wikipedia.org/wiki/Patriot_Day
+DESCRIPTION: The National Day of Service and Remembrance occurs on September 11 of each year in memory of the 2,977 killed in the 2001 September 11 attacks. http://www.serve.gov/?q=site-page/september-11th-national-day-service-and-remembrance https://en.wikipedia.org/wiki/Patriot_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -22497,8 +22497,8 @@ SUMMARY:Groundhog Day
 UID:3941306779b022b972cec1d7f7bb643429b555b5
 DTSTART:20370202T000000
 DTEND:20370202T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Groundhog Day is a holiday on February 2. It marks about six weeks before the end of winter. It began in the year 1886. This holiday celebrates Punxsutawney Phil, a groundhog who can supposedly forecast the weather
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -22623,8 +22623,8 @@ SUMMARY:Super Bowl
 UID:07277fad0ba0c08f6e644d86a839e3c5419fc397
 DTSTART:20370201T000000
 DTEND:20370201T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: The Super Bowl is a special American football game played every year at the end of the National Football League (NFL) season. The best team from each of the two NFL conferences play for the Vince Lombardi Trophy, which was named after the first coach to win a Super Bowl. For most football fans, it is a very special event. Some people who do not like football still watch it for the commercials and the half-time show. The TV advertisements during Super Bowl are the most expensive in the world in per second value. Because the high cost of advertising companies usually produce unique advertisements. https://twitter.com/superbowl http://www.nfl.com/superbowl https://en.wikipedia.org/wiki/Super_Bowl"
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -22713,8 +22713,8 @@ SUMMARY:President's Day
 UID:2b4293bdc06cde803908a5b64191ab75146a0102
 DTSTART:20370216T000000
 DTEND:20370216T235959
-LOCATION: 
-DESCRIPTION: 
+LOCATION: United States
+DESCRIPTION: Washington's Birthday, also known as Presidents' Day, is a United States Federal holiday to celebrate the birth of George Washington. The holiday is held on the third Monday in February. This also celebrates Abraham Lincoln's birthday, which is February 12. Presidents Day is now popularly viewed as a day to celebrate all U.S. presidents past and present. http://www.calendarlabs.com/holidays/us/presidents-day.php https://en.wikipedia.org/wiki/Washington%27s_Birthday
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
