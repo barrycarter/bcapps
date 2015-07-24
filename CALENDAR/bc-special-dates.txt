@@ -3,3 +3,7 @@
 20150630 leap second
 20151021 McFly returns
 20380119 Unix time ends
+# record cat life: 38 years, 3 days
+20160619 Garfield 38th
+20150910 QE II longest reign
+20160421 QE II 90th
