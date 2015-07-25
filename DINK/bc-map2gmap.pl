@@ -19,7 +19,7 @@ my($all) = read_file($dinkdat);
 # first 20 chars are garbage
 $all=~s/^.{20}//s;
 
-for $y (1..24) {
+for $y (1..32) {
   for $x (1..32) {
     $all=~s/^(....)//s;
     my($num) = $1;
@@ -35,7 +35,11 @@ for $y (1..24) {
 	if (-f "$dir/$outfile") {next;}
 
 	# for tile #0, symlink (don't copy) to blank.jpg (which must exist)
-	if ($num==0) {system("ln -s $dir/blank.jpg $dir/$outfile"); next;}
+	# also do this for y>=25 (we need perfectly square map for zooming)
+	if ($num==0 || $y>=25) {
+	  system("ln -s $dir/blank.jpg $dir/$outfile");
+	  next;
+	}
 
 	# TODO: temp-screen0.png must exist and will be used for empty spaces
 	# probably more efficient to use symlinks for temp-screen0.png
@@ -44,13 +48,6 @@ for $y (1..24) {
     }
   }
 }
-
-# map must be square, otherwise unzooming breaks things
-# here we just symlink to the blank tile
-for $y (25..32) {
-  for $x (1..32) {
-    
-
 
 # create level n slippy tiles (from level n+1 tiles, which must already exist)
 
