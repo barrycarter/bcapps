@@ -88,9 +88,7 @@ delete $fixed{""};
 # removed childrens day, not canon
 my($out,$err,$res) = cache_command2("egrep -i 'zod|islamic|ramadan|purim\/|arbor day us|passover|easter sunday|mardi gras|ash wednesday|passion sunday|good friday|pentecost|whit monday|rosh|palm sunday|yom kippur|Hannukah|kwanzaa|diwali' $bclib{githome}/ASTRO/bc-gcal-filter-out.txt","age=86400");
 
-# changing loop variable to $k to avoid tweaking loop variable which is bad
-for $k (split(/\n/,$out)) {
-  $i = $k;
+for $i (split(/\n/,$out)) {
 
   # stop at the year 2037 (not necessarily sorted, so can't 'last' here)
   $i=~s/^(\d{8})\s+//;
@@ -99,11 +97,9 @@ for $k (split(/\n/,$out)) {
 
   # ignore zodiac events not relating to a constellation, fix others
   if ($i=~/Zod$/) {
-    # TODO: turn this to "Sun enters Cancer" not just "Cancer"
     # TODO: Capricornus -> Capricorn, Scorpius -> Scorpio, etc?
     # NOTE: XX below because I trim last field later
     unless ($i=~s%^.*/(.*?)\[.*$%Sun enters $1 XX%) {next;}
-    debug("I: $i");
   }
 
   # ignore orthodox Easter/Palm Sunday (before we cleanup the last field)

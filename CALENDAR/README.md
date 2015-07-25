@@ -11,7 +11,7 @@ it is the catenation of two XML files
 
 TODO:
 
-Astrological sun signs start?
+wikidata holidays in usa
 
 Friday the 13ths?
 
