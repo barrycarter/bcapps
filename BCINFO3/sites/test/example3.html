@@ -1,8 +1,9 @@
-<!DOCTYPE html><html><head><title>Basic map types</title>
+<!DOCTYPE html><html><head><title>Example 3</title>
 <style>html, body, #map-canvas {height: 100%; margin: 0; padding: 0;}</style>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
     
 <script>
+
 function CoordMapType() {}
 
 CoordMapType.prototype.tileSize = new google.maps.Size(256,256);
@@ -10,7 +11,7 @@ CoordMapType.prototype.maxZoom = 7;
 
 CoordMapType.prototype.getTile = function(coord, zoom, ownerDocument) {
   var div = ownerDocument.createElement('div');
-  div.innerHTML = "<img src='http://1.map.barrycarter.info/IMAGES/TEST/"+zoom+","+coord.y+","+coord.x+".jpg' />"
+  div.innerHTML = zoom+","+coord.y+","+coord.x;
   return div;
 };
 
@@ -28,7 +29,15 @@ function initialize() {
 
   // Now attach the coordinate map type to the map's registry
   map.mapTypes.set('coordinate', coordinateMapType);
+  marker.setMap(map);
 }
+
+// test code
+var marker = new google.maps.Marker({
+      position: new google.maps.LatLng(-25.363882,131.044922),
+      map: map,
+      title: 'Hello World!'
+});
 
 google.maps.event.addDomListener(window, 'load', initialize);
 
