@@ -16,7 +16,7 @@ CoordMapType.prototype.maxZoom = 19;
 
 CoordMapType.prototype.getTile = function(coord, zoom, ownerDocument) {
   var div = ownerDocument.createElement('div');
-  div.innerHTML = "<img src='http://map.barrycarter.info/IMAGES/TEST/"+zoom+","+coord.x+","+coord.y+".jpg' />"
+  div.innerHTML = "<img src='http://map.barrycarter.info/IMAGES/TEST/"+zoom+","+coord.y+","+coord.x+".jpg' />"
   return div;
 };
 

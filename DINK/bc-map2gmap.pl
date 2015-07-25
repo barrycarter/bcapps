@@ -45,6 +45,13 @@ for $y (1..24) {
   }
 }
 
+# map must be square, otherwise unzooming breaks things
+# here we just symlink to the blank tile
+for $y (25..32) {
+  for $x (1..32) {
+    
+
+
 # create level n slippy tiles (from level n+1 tiles, which must already exist)
 
 # TODO: this is dink specific and only creates the necessary tiles,
