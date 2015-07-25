@@ -1,9 +1,6 @@
 # shell one liners
 
-# (suggests) renaming files that make doesn't handle well (removes spaces)
-\ls | perl -nle '$x=$_; if (s/[^a-z0-9_\.\-\%\,]/_/isg) {print "mv \"$x\" $_"}'
-
-exit;
+# item alpha
 
 # find PNG files that haven't been tesseract'd and tesseract them
 # (note: using .tess since I use .txt for feh annotations)
@@ -14,6 +11,11 @@ find . -iname '*.png' | fgrep -v /.xvpics/ | perl -nle 'unless (-f "$_.tess.txt"
 
 exit;
 
+
+# (suggests) renaming files that make doesn't handle well (removes spaces)
+\ls | perl -nle '$x=$_; if (s/[^a-z0-9_\.\-\%\,]/_/isg) {print "mv \"$x\" $_"}'
+
+exit;
 
 # most indexed documents in recollindex (useful to trim out useless docs)
 

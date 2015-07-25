@@ -33,6 +33,8 @@ music festivals?
 
 Sundance, Tribeca, SXSW, other film festivals?
 
-Ramadan/Islam holidays
+Mohammed's birthday (gcal does not appear to list this)
 
-Chinese New Years
+Chinese New Years (gcal has an odd version of this)
+
+starts of sports seasons, hockey, baseball, basketball, etc

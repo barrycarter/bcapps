@@ -86,14 +86,25 @@ delete $fixed{""};
 
 # from gcal's massive list of holidays
 # removed childrens day, not canon
-my($out,$err,$res) = cache_command2("egrep -i 'purim\/|arbor day us|passover|easter sunday|mardi gras|ash wednesday|passion sunday|good friday|pentecost|whit monday|rosh|palm sunday|yom kippur|Hannukah|kwanzaa|diwali' $bclib{githome}/ASTRO/bc-gcal-filter-out.txt","age=86400");
+my($out,$err,$res) = cache_command2("egrep -i 'zod|islamic|ramadan|purim\/|arbor day us|passover|easter sunday|mardi gras|ash wednesday|passion sunday|good friday|pentecost|whit monday|rosh|palm sunday|yom kippur|Hannukah|kwanzaa|diwali' $bclib{githome}/ASTRO/bc-gcal-filter-out.txt","age=86400");
 
-for $i (split(/\n/,$out)) {
+# changing loop variable to $k to avoid tweaking loop variable which is bad
+for $k (split(/\n/,$out)) {
+  $i = $k;
 
   # stop at the year 2037 (not necessarily sorted, so can't 'last' here)
   $i=~s/^(\d{8})\s+//;
   my($date) = $1;
   if ($date>20379999) {next;}
+
+  # ignore zodiac events not relating to a constellation, fix others
+  if ($i=~/Zod$/) {
+    # TODO: turn this to "Sun enters Cancer" not just "Cancer"
+    # TODO: Capricornus -> Capricorn, Scorpius -> Scorpio, etc?
+    # NOTE: XX below because I trim last field later
+    unless ($i=~s%^.*/(.*?)\[.*$%Sun enters $1 XX%) {next;}
+    debug("I: $i");
+  }
 
   # ignore orthodox Easter/Palm Sunday (before we cleanup the last field)
   if ($i=~/(easter sunday|palm sunday|good friday|Pentecost)/i && $i=~/,OxN,/) {next;}
@@ -111,6 +122,9 @@ for $i (split(/\n/,$out)) {
   # cleanups
   $i=~s%(shrove tuesday|whitsunday|pesach)/%%i;
   $i=~s%/(atonement day|festival of lights|feast of lots)%%i;
+  $i=~s%Ramadan%Ramadan starts%i;
+  $i=~s%Islamic New Year\'s Day%Islam New Year%i;
+
 
   # only the first of two Rosh Hashana
   if ($i=~/Rosh Hashana/i) {
