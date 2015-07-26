@@ -58,7 +58,7 @@ for $i (1..$ns) {
   # testing
 #  unless ($i==25) {next;}
 
-  seek(A,31280*$i,SEEK_SET);
+  seek(A,31280*($i-1),SEEK_SET);
   read(A,$buf,31820);
   dink_render_screen($buf,"screen$i.jpg");
   dink_sprite_data($buf,"screen$i.jpg");

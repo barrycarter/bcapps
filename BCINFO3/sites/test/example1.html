@@ -10,7 +10,7 @@ CoordMapType.prototype.maxZoom = 7;
 
 CoordMapType.prototype.getTile = function(coord, zoom, ownerDocument) {
   var div = ownerDocument.createElement('div');
-  div.innerHTML = "<img src='http://1.map.barrycarter.info/IMAGES/TEST/"+zoom+","+coord.y+","+coord.x+".jpg' />"
+  div.innerHTML = "<img src='http://map.barrycarter.info/IMAGES/TEST/"+zoom+","+coord.x+","+coord.y+".jpg' />"
   return div;
 };
 
@@ -19,8 +19,8 @@ var coordinateMapType = new CoordMapType();
 
 function initialize() {
   var mapOptions = {
-    zoom: 3,
-    center: new google.maps.LatLng(0,0),
+    zoom: 4,
+    center: new google.maps.LatLng(75,-55),
     streetViewControl: false,
     mapTypeId: 'coordinate',
   };

@@ -20,13 +20,20 @@ unless ($dir && $dinkdat) {die "Usage: $0 directory /path/to/dink.dat";}
 # about that, although the blank jpg file appears to be only 417b
 
 # <h>TONOTDO: be annoyed at how I wrote loop but never do anything about it</h>
-# for $i (6,5,4,3,2,1,0) {slippy_unzoom($i);}
-slippy_unzoom(6,$dir);
+for $i (6,5,4,3,2,1,0) {slippy_unzoom($i,$dir);}
+die "TESTING";
+
+# TODO: can no longer print commands for all zoom levels in advance
+# since I check for file existence
+# slippy_unzoom(0,$dir);
 # die "TESTING";
 
 my($all) = read_file($dinkdat);
 # first 20 chars are garbage
-$all=~s/^.{20}//s;
+# $all=~s/^.{20}//s;
+
+# first 24 chars are garbage
+$all=~s/^.{24}//s;
 
 for $y (1..24) {
   for $x (1..32) {
@@ -36,6 +43,7 @@ for $y (1..24) {
     $num = ord(substr($num,0,1));
     #  tile #0 means no map in that space, do nothing
     if ($num==0) {next;}
+    debug("XYN: $x,$y,$num");
 
     # break into 6 tiles and resize
     for $px (0,200,400) {
@@ -44,8 +52,10 @@ for $y (1..24) {
 	# TODO: MAYBE center these a bit more
 	my($xc,$yc) = ($x*3+$px/200-3,$y*2+$py/200-2);
 	my($outfile) = "7,$xc,$yc.jpg";
+	debug("CREATING: $outfile");
 	if (-f "$dir/$outfile") {next;}
-	my($out,$err,$res) = cache_command2("convert $dir/temp-screen$num.png -crop 200x200+$px+$py -geometry 256x256 $dir/$outfile");
+	my($out,$err,$res) = cache_command2("convert $dir/temp-screen$num.jpg -crop 200x200+$px+$py -geometry 256x256 $dir/$outfile");
+	debug("ERR: $err");
       }
     }
   }
@@ -68,11 +78,9 @@ sub slippy_unzoom {
 	for $we (0..1) {
 	  my($tilefile) = "$dir/".join(",",$z,2*$x+$we,2*$y+$ns).".jpg";
 	  if (-f $tilefile) {
-	    debug("$tilefile exists!");
 	    push(@tiles,$tilefile);
 	  } else {
 	    # doesn't exist? make a note (in case all 4 dont exist)
-	    debug("$tilefile no exist");
 	    push(@tiles,"blank.jpg");
 	    $blanks++;
 	  }
@@ -80,12 +88,10 @@ sub slippy_unzoom {
       }
 
       # ignore all blanks (program on server will replace with blank.jpg)
-      debug("B: $blanks");
       if ($blanks==4) {next;}
-      debug("TILES",@tiles,"B: $blanks");
-
-      my($cmd) = "montage -geometry 128x128+0+0".join(" ",@tiles)." -tile 2x2 $n,$x,$y.jpg";
-      print "$cmd\n";
+      if (-f "$n,$x,$y.jpg") {next;}
+      my($cmd) = "montage -geometry 128x128+0+0 ".join(" ",@tiles)." -tile 2x2 $n,$x,$y.jpg";
+      system($cmd);
     }
   }
 }
