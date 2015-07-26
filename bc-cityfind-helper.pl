@@ -40,7 +40,8 @@ do {
   my($out,$err,$res) = cache_command2("bc-cityfind.pl $city");
 
   # if we got something, return it after changing cityq
-  if ($out=~s%<cityq>(.*?)</cityq>%<cityq>$ocity</cityq>\n<city_real>$1</city_real>%s) {print $out; exit;}
+  # cityf = pattern we actually found
+  if ($out=~s%<cityq>(.*?)</cityq>%<cityq>$ocity</cityq>\n<cityf>$1</cityf>%s) {print $out; exit;}
 } while ($city=~s/^.*?\.//);
 
 

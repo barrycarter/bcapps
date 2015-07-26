@@ -21,7 +21,7 @@ unless ($dir && $dinkdat) {die "Usage: $0 directory /path/to/dink.dat";}
 
 # <h>TONOTDO: be annoyed at how I wrote loop but never do anything about it</h>
 # for $i (6,5,4,3,2,1,0) {slippy_unzoom($i);}
-slippy_unzoom(6);
+slippy_unzoom(6,$dir);
 # die "TESTING";
 
 my($all) = read_file($dinkdat);
@@ -63,16 +63,28 @@ sub slippy_unzoom {
 
   for $x (0..2**$n-1) {
     for $y (0..2**$n-1) {
-      # this is less efficient than a loop, but easier to understand
-      # TODO: restore it to loop later?
-      my($nw) = join(",",$z,2*$x,2*$y);
-      my($ne) = join(",",$z,2*$x+1,2*$y);
-      my($sw) = join(",",$z,2*$x,2*$y+1);
-      my($se) = join(",",$z,2*$x+1,2*$y+1);
-      debug("$nw/$ne/$se/$sw");
+      my(@tiles,$blanks);
+      for $ns (0..1) {
+	for $we (0..1) {
+	  my($tilefile) = "$dir/".join(",",$z,2*$x+$we,2*$y+$ns).".jpg";
+	  if (-f $tilefile) {
+	    debug("$tilefile exists!");
+	    push(@tiles,$tilefile);
+	  } else {
+	    # doesn't exist? make a note (in case all 4 dont exist)
+	    debug("$tilefile no exist");
+	    push(@tiles,"blank.jpg");
+	    $blanks++;
+	  }
+	}
+      }
 
-      # TODO: figure out why this y,x not x,y
-      my($cmd) = "montage -geometry 128x128+0+0".join(" ",@tiles)." -tile 2x2 $n,$y,$x.jpg";
+      # ignore all blanks (program on server will replace with blank.jpg)
+      debug("B: $blanks");
+      if ($blanks==4) {next;}
+      debug("TILES",@tiles,"B: $blanks");
+
+      my($cmd) = "montage -geometry 128x128+0+0".join(" ",@tiles)." -tile 2x2 $n,$x,$y.jpg";
       print "$cmd\n";
     }
   }
