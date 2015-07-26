@@ -3,10 +3,10 @@ cheating and also using this as an index.html file elsewhere -->
 
 <!-- TODO: make this document more "HTML friendly", ie not just pre tags -->
 
-<center><font size=+2>In a hurry? <a href="fetlife-users-latest.zip">Download here (~250M)</a><p></font></center><p>
+<center><font size=+2>In a hurry? <a href="fetlife-users-latest.zip">Download here (~300M)</a><p></font></center><p>
 
 <pre>
-This is the README file for fetlife-users-[yyyymmdd].txt (where
+This is the README file for fetlife-users-[yyyymmdd].csv (where
 yyyymmdd represents the *approximate* date of the list), a
 comma-separated-value list of FetLife users collected by parallel
 deep-crawling https://fetlife.com/places and via other methods.
@@ -80,10 +80,9 @@ kinksters in their administrative area.
 
 Field 12: source: The source URL for the kinkster's data
 
-Field 13: mtime: The Unix time at which this information was scraped.
+Field 13: jloc: used only for technical purposes
 
-Fields 14-15: latitude and longitude: the approximate latitude and
-longitude of the kinkster, based on the city, state, and country
+Field 14: mtime: The Unix time at which this information was scraped.
 
 NOTE: User orientation is NOT included in this database, since it does
 NOT appear on the location pages. For reference, the possible
@@ -131,4 +130,5 @@ http://en.wikipedia.org/wiki/Transformativeness
 because they "provide the public with a benefit not previously
 available to it, which would otherwise remain unavailable", and "in a
 different manner or for a different purpose".
+
 </pre>
