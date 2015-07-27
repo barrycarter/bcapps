@@ -1,0 +1,45 @@
+# interesting-ish points on solstice map (latitude/longitude references
+# as per bc-dinkles/bc-map2gmap)
+
+# NOTE: doing this one by hand, but can automate considerably
+
+# Format: type, latitude, longitude, description
+
+bigheart,66.08491,-46.82373
+bigheart,74.31924,-75.73975
+spaceshippart,68.0733,-18.4021
+purplepotion,67.94578,-74.31152
+spaceshippart,71.31136,-39.00146
+spaceshippart,68.0692,-18.34717
+spaceshippart,65.37142,-51.9873
+spaceshippart,66.09827,-35.50781
+spaceshippart,71.76707,-50.27344
+location,69.36483,-55.62378,Dink's house
+location,69.74855,-48.97705,Redink1's house
+save,69.85855,-39.04541
+save,73.57506,-48.66943
+save,64.54844,-71.88354
+location,69.46526,-32.89307,Ms Drink's house (flaming pussy of death) [also attack cat]
+bluepotion,64.73195,-44.80225
+redpotion,74.20899,-66.00586
+location,65.87023,-41.26465,Wizard's house
+# hot lady ~ flint = pun?
+location,65.37142,-25.51025,Hot lady's house (flint)
+location,71.33247,-16.94092,Bomb seller
+screenlock,73.1058,-31.9812
+location,77.64595, -40.80322,Castle Goodheart
+silverpear,79.79675,-80.32104
+silverpear,79.83366,-74.36646
+silverpear,79.74602,-57.43652
+silverpear,79.72253,-38.68286
+silverpear,79.28427,-30.47607
+silverpear,78.2648, -24.03809
+silverpear,76.41397,-15.88623
+silverpear,77.17181,-48.68042
+location,77.43977,-80.50781,Koten's Wild Adventure
+silverpear,78.57355,-64.48975
+location,73.20132,-16.99585,Alien home
+location,72.63337,-67.60986,Girl's house (key)
+location,65.27509,-75.52002,Church of the Blessed Sea (key)
+location,65.15535,-80.1123,Old Lady's House
+

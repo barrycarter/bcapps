@@ -7,20 +7,27 @@
 var map = L.map('map').setView([75, -55], 4);
 L.tileLayer('http://map.barrycarter.info/IMAGES/TEST/{z},{x},{y}.jpg',
 {maxZoom: 7}).addTo(map);
+L.layers = [hearts, robots];
+map.attributionControl.setPrefix("brassweasel's Solstice (map by barrycarter)");
 
-var marker = L.marker([75, -55]).addTo(map);
-marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
+// var marker = L.marker([75, -55]).addTo(map);
+// marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
 
 var popup = L.popup();
 
-function onMapClick(e) {
-    popup
-        .setLatLng(e.latlng)
-        .setContent("You clicked the map at " + e.latlng.toString())
-        .openOn(map);
+function showLatLng(e) {
+popup.setLatLng(e.latlng).setContent(e.latlng.toString()).openOn(map);
 }
 
-map.on('click', onMapClick);
+// map.on('contextmenu', showLatLng);
+
+var ssp = [
+L.marker([71.31136,-39.00146]),
+L.marker([68.0692,-18.34717]),
+L.marker([65.37142,-51.9873]),
+L.marker([66.09827,-35.50781]),
+L.marker([71.76707,-50.27344])
+];
 
 var heart0 = L.marker([66.08491, -46.82373]),
     robot0 = L.marker([65.37142, -51.9873]),
@@ -31,6 +38,9 @@ var heart0 = L.marker([66.08491, -46.82373]),
 
 var hearts = L.layerGroup([heart0,heart1]);
 var robots = L.layerGroup([robot0,robot1]);
+
+var overlays = {"Hearts": hearts, "Robots": robots};
+L.control.layers(null,overlays).addTo(map);
 
 </script>
 
