@@ -7,7 +7,6 @@
 
 bigheart,66.08491,-46.82373
 bigheart,74.31924,-75.73975
-spaceshippart,68.0733,-18.4021
 purplepotion,67.94578,-74.31152
 spaceshippart,71.31136,-39.00146
 spaceshippart,68.0692,-18.34717
@@ -36,8 +35,8 @@ silverpear,79.28427,-30.47607
 silverpear,78.2648, -24.03809
 silverpear,76.41397,-15.88623
 silverpear,77.17181,-48.68042
-location,77.43977,-80.50781,Koten's Wild Adventure
 silverpear,78.57355,-64.48975
+location,77.43977,-80.50781,Koten's Wild Adventure
 location,73.20132,-16.99585,Alien home
 location,72.63337,-67.60986,Girl's house (key)
 location,65.27509,-75.52002,Church of the Blessed Sea (key)

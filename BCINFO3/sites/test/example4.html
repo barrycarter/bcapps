@@ -7,11 +7,7 @@
 var map = L.map('map').setView([75, -55], 4);
 L.tileLayer('http://map.barrycarter.info/IMAGES/TEST/{z},{x},{y}.jpg',
 {maxZoom: 7}).addTo(map);
-L.layers = [hearts, robots];
 map.attributionControl.setPrefix("brassweasel's Solstice (map by barrycarter)");
-
-// var marker = L.marker([75, -55]).addTo(map);
-// marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
 
 var popup = L.popup();
 
@@ -19,27 +15,30 @@ function showLatLng(e) {
 popup.setLatLng(e.latlng).setContent(e.latlng.toString()).openOn(map);
 }
 
-// map.on('contextmenu', showLatLng);
+map.on('contextmenu', showLatLng);
 
-var ssp = [
+var ssp = L.layerGroup([
 L.marker([71.31136,-39.00146]),
 L.marker([68.0692,-18.34717]),
 L.marker([65.37142,-51.9873]),
 L.marker([66.09827,-35.50781]),
 L.marker([71.76707,-50.27344])
-];
+]);
 
-var heart0 = L.marker([66.08491, -46.82373]),
-    robot0 = L.marker([65.37142, -51.9873]),
-    robot1 = L.marker([66.09827, -35.50781]),
-    robot2 = L.marker([68.0733, -18.4021]),
-    heart1 = L.marker([74.31924, -75.73975])
-;
+var pears = L.layerGroup([
+L.marker([79.79675,-80.32104]),
+L.marker([79.83366,-74.36646]),
+L.marker([79.74602,-57.43652]),
+L.marker([79.72253,-38.68286]),
+L.marker([79.28427,-30.47607]),
+L.marker([78.2648, -24.03809]),
+L.marker([76.41397,-15.88623]),
+L.marker([77.17181,-48.68042]),
+L.marker([78.57355,-64.48975])
+]);
 
-var hearts = L.layerGroup([heart0,heart1]);
-var robots = L.layerGroup([robot0,robot1]);
+var overlays = {"Spaceship Parts": ssp, "Silver Pears": pears};
 
-var overlays = {"Hearts": hearts, "Robots": robots};
 L.control.layers(null,overlays).addTo(map);
 
 </script>
