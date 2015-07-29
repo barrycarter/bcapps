@@ -11,6 +11,7 @@ my(@fields) = ("name", "location", "desc", "date", "ncs", "notes");
 my(@all) = split(/\n/,read_file("$bclib{githome}/CALENDAR/impdates-data.txt"));
 
 for $i (@all) {
+  if ($i=~/^\#/ || $i=~/^\s*$/) {next;}
   @data = split(/\|/,$i);
   for $j (0..$#fields) {$data{$data[0]}{$fields[$j]} = $data[$j];}
 }
@@ -275,11 +276,9 @@ print A "END:VCALENDAR\r\n";
 close(A);close(B);
 
 # keys in data not used
-for $i (keys %data) {
-  unless ($used{$i} || $i=~/^\#/) {
-    warn "Unused: $i";
-  }
-}
+for $i (keys %data) {unless ($used{$i}) {warn("UNUSED: $i");}}
+# holidays not annotated (not really an error)
+for $i (keys %used) {unless ($data{$i}) {warn("UNANNOTATED: $i");}}
 
 # computes the nth "weekday" after or on given date (yyyymmdd format)
 
