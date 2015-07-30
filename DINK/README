@@ -7,5 +7,10 @@ load_sequence_now extra\hsprite- 902 100
 Put this in story/button6.c to display map on 'M' press (must actually
 exist in BMP format at top level of D-MOD):
 
-void main {show_bmp("map.bmp", 0,0); kill_this_task();}
+void main ( void )
+{
+show_bmp("tiles\map.bmp", 1, 0);
+kill_this_task();
+}
+
 

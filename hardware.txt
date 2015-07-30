@@ -1,0 +1,35 @@
+# an attempt to model my hardware connections, on the theory that I
+# can maybe unclutter them slightly
+
+# format is: hardware, connection, hardware
+
+# note there are 2+ powersquids/bricks, treating as 1 for now
+# (interchangeable, in some sense)
+
+bcunix,powercord,powersquid
+powersquid,powercord,walloutlet
+bcunix,ethernet,cablemodem
+bcunix,USB,extdrive
+bcunix,USB,extdrive2
+bcunix,15pin,flatscreen
+bcunix,USB,scanner
+bcunix,USB,printer
+bcunix,audio,headphones
+
+cablemodem,powercord,powersquid
+extdrive,powercord,powersquid
+extdrive2,powercord,powersquid
+flatscreen,powercord,powersquid
+scanner,powercord,powersquid
+printer,powercord,powersquid
+
+bcmac,powercord,powersquid
+bcmac,USB,bcmacdrive
+bcmac,ethernet,cablemodem
+bcmacdrive,powercord,powersquid
+
+lamp1,powercord,powersquid
+lamp2,powercord,powersquid
+
+cablemodem,pincable,cableoutlet
+cablemodem,ethernet,bcxbox

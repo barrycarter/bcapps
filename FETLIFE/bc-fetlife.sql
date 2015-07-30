@@ -31,7 +31,7 @@ FROM kinksters;
 -- import for MySQL
 
 LOAD DATA LOCAL INFILE 
-'/mnt/extdrive2/FETLIFE-BY-REGION/20150702/testfile0'
+'/mnt/extdrive2/FETLIFE-BY-REGION/20150713/kinksters-here.txt'
 IGNORE INTO TABLE kinksters FIELDS TERMINATED BY ',';
 
 -- placecounts for google maps stuff (created as table, not view, for speed)
