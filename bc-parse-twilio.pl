@@ -15,6 +15,9 @@ for $file (@ARGV) {
     my($iddate, $direction, $from, $to, $type, $status, $recording, $duration) = @data;
 
     # cleanup/grep
+    # this may be unwise
+    $from=~s/\D//g;
+    $to=~s/\D//g;
     $iddate=~s/([\d\:]+)\s*UTC\s*<br>\s*([\d\-]+)//s;
     my($time) = "$2 $1";
     $iddate=~s%/calls/(.*?)\"%%;
@@ -34,14 +37,13 @@ for $file (@ARGV) {
     # should be nothing (except spaces/hyphens) leftover after above (no hrs?)
     unless ($duration=~/^[\s\-]*$/) {warn "LEFTOVER: $duration";}
 
-    # TODO: maybe make duration in pure seconds
-    $duration=~s/\s+//g;
-    $duration=~s/min/m/;
-    $duration=~s/sec/s/;
-    debug("$recording");
+    # only need last part of recording
+    debug("R: $recording");
+    $recording=~s%/Recordings/(.*?)\"%%is;
+    $recording = $1;
 
     # TODO: print id too, not just fields above
-
+    print join(",",$id,$time,$from,$to,$type,$status,$recording,$durations),"\n";
 
   }
 }
