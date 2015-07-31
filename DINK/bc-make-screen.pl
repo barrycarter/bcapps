@@ -3,20 +3,41 @@
 # command that is called to create a dink screen from modified dinkvar.c
 
 require "/usr/local/lib/bclib.pl";
+use feature qw(switch say);
 
 my($screen,$path) = @ARGV;
+
+$globopts{debug}=1;
 
 # code to run based on screen "entered"
 # direction from $screen
 # my(@dir) = ("0", "north","2","south","west","east");
-my(@dir) = ("", "&y += 1","","&y -= 1","&x -= 1","&x += 1");
+my(@dir) = ("", "&y -= 1","","&y += 1","&x -= 1","&x += 1");
 
 # figure out directory, we'll need it later
 my($dir) = $path;
 $dir=~s%/([^/]*?)$%%;
+debug("DIR: $dir");
 
 # read save file
 my(%dinkvars) = dink_read_save_dat(read_file("$dir/save0.dat"));
+
+# we need to figure out new coords to know what map to copy/obtain
+# NOTE: this doesn't actually change anything in freedink, just locally
+
+# TODO: this is ugly
+
+debug("SCREEN: $screen");
+given ($screen) {
+  when (1) {$dinkvars{y}--;}
+  when (3) {$dinkvars{y}++;}
+  when (4) {$dinkvars{x}--;}
+  when (5) {$dinkvars{x}++;}
+  default {}
+}
+
+# this was copying the wrong map, but ok now
+system("convert -geometry '620x400!' /var/cache/OSM/5,$dinkvars{x},$dinkvars{y}.png /tmp/bcmakescreen.bmp");
 
 open(A,">$path");
 
@@ -52,9 +73,12 @@ close(A);
 
 # now create the script dynamically
 
-open(A,">$dir/story/DYNAMIC.c");
+open(A,">$dir/story/DYNAMIC.c")||die("Can't open $dir/story/DYNAMIC.c, $!");;
 print A << "MARK";
-$dir[$screen];
+&x = $dinkvars{x};
+&y = $dinkvars{y};
+copy_bmp_to_screen("bcmakescreen.bmp");
+draw_status();
 say_stop("Coords: &x,&y,&z",1);
 MARK
 ;

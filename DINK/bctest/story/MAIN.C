@@ -29,10 +29,9 @@ void main()
   make_global_int("&magic_cost", 0);
   make_global_int("&missle_source", 0);
 
-  // added by BC (z currently unused, zoom 17 = google maps max w/
-  // "proper" coords)
+  // added by BC (z currently unused, sort of)
 
-  make_global_int("&x",0);
-  make_global_int("&y",0);
-  make_global_int("&z",17);
+  make_global_int("&x",6);
+  make_global_int("&y",12);
+  make_global_int("&z",5);
 }

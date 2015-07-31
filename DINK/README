@@ -13,4 +13,7 @@ show_bmp("tiles\map.bmp", 1, 0);
 kill_this_task();
 }
 
+# bcmakescreen.bmp is a symlink since it is constantly overwritten and
+# no point in pushing each change to git
+
 
