@@ -40,7 +40,9 @@ for $y (1..24) {
     $all=~s/^(....)//s;
     my($num) = $1;
     # TODO: this breaks for >256 maps, being too lazy
-    $num = ord(substr($num,0,1));
+#    $num = ord(substr($num,0,1));
+    $num = unpack("s2",$num);
+    debug("NUM: $num");
     #  tile #0 means no map in that space, do nothing
     if ($num==0) {next;}
     debug("XYN: $x,$y,$num");

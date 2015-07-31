@@ -6,15 +6,28 @@
 
 require "/usr/local/lib/bclib.pl";
 
-unless ($ARGV[0]) {die "Usage: $0 pid";}
+my($pid) = @ARGV;
+unless ($pid) {die "Usage: $0 pid|string";}
 defaults("message=No message");
 
+# if argument is string, use pgrep
+unless ($pid=~/^\d+$/) {
+  debug("PGREPPING: $pid");
+  my(@procs) = `pgrep $pid`;
+
+  if ($#procs==-1) {die "No procs matching: $pid";}
+  # TODO: proceed here with "first" process pgrep returns
+  if ($#procs>0) {die "More than 1 proc matchines: $pid";}
+  $pid = $procs[0];
+  chomp($pid);
+}
+
 # determine process name
-my(@arr) = `ps -p $ARGV[0]`;
+my(@arr) = `ps -p $pid`;
 $arr[1]=~s/^\s+//;
 my(@proc) = split(/\s+/, $arr[1]);
 my($name) = $proc[3];
 
-while (!system("ps -p $ARGV[0] > /dev/null")) {sleep 1;}
+while (!system("ps -p $pid > /dev/null")) {sleep 1;}
 
-unless ($globopts{nox}) {system("xmessage '$ARGV[0] ($name) is done: $globopts{message}'&");}
+unless ($globopts{nox}) {system("xmessage '$pid ($name) is done: $globopts{message}'&");}
