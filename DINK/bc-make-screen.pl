@@ -36,8 +36,10 @@ given ($screen) {
   default {}
 }
 
+osm_map($dinkvars{x},$dinkvars{y},$dinkvars{z},"xy=1");
+
 # this was copying the wrong map, but ok now
-system("convert -geometry '620x400!' /var/cache/OSM/5,$dinkvars{x},$dinkvars{y}.png /tmp/bcmakescreen.bmp");
+system("convert -geometry '620x400!' /var/cache/OSM/$dinkvars{z},$dinkvars{x},$dinkvars{y}.png /tmp/bcmakescreen.bmp");
 
 open(A,">$path");
 
