@@ -28,6 +28,6 @@ $arr[1]=~s/^\s+//;
 my(@proc) = split(/\s+/, $arr[1]);
 my($name) = $proc[3];
 
-while (!system("ps -p $pid > /dev/null")) {sleep 1;}
+while (!system("ps -p $pid > /dev/null")) {sleep 5;}
 
 unless ($globopts{nox}) {system("xmessage '$pid ($name) is done: $globopts{message}'&");}

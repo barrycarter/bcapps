@@ -2,15 +2,13 @@
 
 # Given a directory with the output of bc-dinkles.pl, and a
 # (presumably matching) dink.dat file, creates slippy-style tiles
-# (which bc-image-from-tiles.pl can overlay on google maps)
+# (which leaflet can use to create google-style maps)
 
 # slippy tile order is z,x,y
 require "/usr/local/lib/bclib.pl";
 
 my($dir,$dinkdat) = @ARGV;
 unless ($dir && $dinkdat) {die "Usage: $0 directory /path/to/dink.dat";}
-
-# TODO: currently, this just prints commands, doesn't run them
 
 # TODO: shortcut unzooming when all tiles are black/blank (ie, the
 # supertile is itself a link to the blank tile?)
@@ -20,17 +18,13 @@ unless ($dir && $dinkdat) {die "Usage: $0 directory /path/to/dink.dat";}
 # about that, although the blank jpg file appears to be only 417b
 
 # <h>TONOTDO: be annoyed at how I wrote loop but never do anything about it</h>
+# TODO: when calling below, check that blank.jpg actually exists
 for $i (6,5,4,3,2,1,0) {slippy_unzoom($i,$dir);}
 die "TESTING";
 
 # TODO: can no longer print commands for all zoom levels in advance
-# since I check for file existence
-# slippy_unzoom(0,$dir);
-# die "TESTING";
 
 my($all) = read_file($dinkdat);
-# first 20 chars are garbage
-# $all=~s/^.{20}//s;
 
 # first 24 chars are garbage
 $all=~s/^.{24}//s;
