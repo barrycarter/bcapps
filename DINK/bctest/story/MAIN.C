@@ -31,7 +31,7 @@ void main()
 
   // added by BC (z currently unused, sort of)
 
-  make_global_int("&x",13357);
-  make_global_int("&y",25934);
-  make_global_int("&z",16);
+  make_global_int("&x",106880);
+  make_global_int("&y",207474);
+  make_global_int("&z",19);
 }

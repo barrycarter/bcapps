@@ -7,7 +7,7 @@
 # 2080 = /mnt/extdrive
 # 64768 = /
 # 234881026 = /mnt/sshfs3/
-# 234881029 = /mnt/sshfs/
+# 234881029 (also 234881028) = /mnt/sshfs/
 # 2886150081 = /mnt/sshfs2/c/
 # 3154434839 = /mnt/sshfs2/k/
 
@@ -38,7 +38,7 @@ while (<>) {
     # do nothing, but not an error
   } elsif ($devno == 234881026) {
     $name = "/mnt/sshfs3$name";
-  } elsif ($devno == 234881029) {
+  } elsif ($devno == 234881028) {
     $name=~s%/Volumes/[A-Z]{5}/%/mnt/sshfs/%;
   } elsif ($devno == 2886150081 || $devno == 3154434839) {
     $name=~s%/cygdrive/%/mnt/sshfs2/%;
