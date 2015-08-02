@@ -151,6 +151,11 @@ for $week (-1..$globopts{weeks}-1) {
     my(@events) = @{$events{$stardate}};
     # events for this day (of the week)
     push(@events, @{$events{uc(strftime("%a", localtime($date)))}});
+    # events in year 0000 mean "every year"
+    my($zerodate) = $stardate;
+    $zerodate=~s/^..../0000/;
+    push(@events, @{$events{$zerodate}});
+    debug("EVENTS($stardate):",@events);
 
     for $i (0..$#events) {
       if ($exclude{$stardate}{$events[$i]}) {next;}
