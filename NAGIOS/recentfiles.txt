@@ -1,0 +1,34 @@
+# Format: warn_time critical_time "fileglob (or name) in quotes"
+
+# Tests multiple files for recency at once, and lets me change which
+# files are tested (and how often) without having to restart nagios
+
+# For globs matching multiple files, ALL files must be recent enough
+
+# Replaces check_file_age and bc_check_files_age
+
+# Many of these are transfers from bc-services.cfg
+
+# TODO: testing every 10m, even for files that can be 1-2d old may be
+# inefficient
+
+# Confirm bc-getmail is working properly
+600 600 "/home/barrycarter/.getmail/oldmail-imap.*"
+
+# Confirm my emacs buffer file is current
+600 1200 "~/.emacs_????"
+
+# Confirm that dump scripts have recently created reverse sorted text
+# (which implicitly confirms creation of other files recently?)
+
+# TODO: split this into separate tests?
+
+129600 259200 "/mnt/sshfs/bcmac-files-rev.txt.srt /bcunix-files-rev.txt /mnt/extdrive/extdrive-files-rev.txt"
+
+# quikbak
+86400 86400 "/usr/local/etc/quikbak/home/*/DOING.quikbak"
+
+# when running, bc-dl-by-region.pl should create this file repeatedly
+# and frequentlyish (the filename/directory changes with each run)
+
+600 1200 "/mnt/extdrive2/FETLIFE-BY-REGION/20150730/homepage.html"

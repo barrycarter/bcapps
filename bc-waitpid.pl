@@ -9,10 +9,11 @@ require "/usr/local/lib/bclib.pl";
 my($pid) = @ARGV;
 unless ($pid) {die "Usage: $0 pid|string";}
 defaults("message=No message");
+my($stringq) = 0;
 
 # if argument is string, use pgrep
 unless ($pid=~/^\d+$/) {
-  debug("PGREPPING: $pid");
+  $stringq = 1;
   my(@procs) = `pgrep $pid`;
 
   if ($#procs==-1) {die "No procs matching: $pid";}
@@ -27,6 +28,8 @@ my(@arr) = `ps -p $pid`;
 $arr[1]=~s/^\s+//;
 my(@proc) = split(/\s+/, $arr[1]);
 my($name) = $proc[3];
+
+if ($stringq) {print "'$ARGV[0]' matches: $name ($pid)\n";}
 
 while (!system("ps -p $pid > /dev/null")) {sleep 5;}
 
