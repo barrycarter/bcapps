@@ -104,10 +104,12 @@ sub bc_check_file_of_files_age {
 
   $globopts{debug}=1;
 
+  # TODO: should really check error/return status on this
   my(@tests) = `egrep -v '^#|^\$' $file`;
 
   for $i (@tests) {
     chomp($i);
+    debug("LINE: $i");
 
     # file glob MUST be quoted
     unless ($i=~s/\"(.*?)\"//) {
@@ -121,18 +123,18 @@ sub bc_check_file_of_files_age {
     my($out,$err,$res) = cache_command("ls -1tr $files | head -1 | xargs stat -c '%Y'");
 
     if ($res) {
-      print "Filespec $i returned error: $err\n";
+      print "Filespec $files returned error: $err\n";
       return 2;
     }
 
     my($fileage) = time()-$out;
     if ($fileage > $c) {
-      print "Filespec $i critical: $fileage\n";
+      print "Filespec $files critical: $fileage\n";
       return 2;
     }
 
     if ($fileage > $w) {
-      print "Filespec $i warning: $fileage\n";
+      print "Filespec $files warning: $fileage\n";
       return 1;
     }
   }

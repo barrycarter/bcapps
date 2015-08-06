@@ -4,6 +4,8 @@
 # (presumably matching) dink.dat file, creates slippy-style tiles
 # (which leaflet can use to create google-style maps)
 
+# TODO: sometimes creates maps in "wrong" directory?
+
 # slippy tile order is z,x,y
 require "/usr/local/lib/bclib.pl";
 
