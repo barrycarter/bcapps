@@ -21,6 +21,10 @@ open(A,"|at -v $time")||die("Can't open at command, $!");
 print A "DISPLAY=:0.0; export DISPLAY; TERM=vt100; export TERM; xmessage -geometry 1024 $msg & $smc &";
 close(A);
 
+# log
+my($now) = stardate();
+append_file("$now UTC $time $msg\n","/home/barrycarter/alarm.log");
+
 # this uses ifttt.com to send SMS
 # TODO: FAIL!!! this can't occur right away
 # sendmail($private{email}{from}, $private{email}{sms}, $msg, "");
