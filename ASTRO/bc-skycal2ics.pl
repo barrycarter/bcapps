@@ -132,6 +132,10 @@ sub shorten {
   # shrink planet names + more
   $event=~s/(mercury|venus|earth|mars|jupiter|saturn|uranus|beehive|pollux|pleiades|aldebaran|superior|inferior|conj\.|conjunction)/substr($1,0,3)/ieg;
 
+  # convert inferior/superior conjunction to something more useful
+  $event=~s/inf con/-> mor*/i;
+  $event=~s/sup con/-> eve*/i;
+
   # short form for meteor showers
   $event=~s/(^.*?) Shower: ZHR = (\d+)/${1}s ($2\/hr)/;
 

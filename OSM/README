@@ -1,3 +1,40 @@
+http://opendata.stackexchange.com/questions/5462/city-road-maps-as-graphs
+
+This doesn't answer your question and may not even be accurate, but
+here's some starter code, if we assume that a "vertex" in your graph
+is a "node shared by at least two ways" (which means dead ends/cul de
+sacs are NOT considered vertexes).
+
+To convert OSM data to a trivial undirected G(V,E) graph (no edge
+lengths, no names, etc):
+
+  - Find which nodes appear in more than one way:
+
+bzfgrep 'nd ref' albuquerque_new-mexico.osm.bz2|sort|uniq -d>multinodes.txt
+
+  - Create a file that contains the above PLUS the string "<way". One
+  way (ha ha) to do this:
+
+echo "<way" >> multinodes.txt
+
+  - Find the ways that have these repeated nodes:
+
+bzfgrep -f multinodes.txt albuquerque_new-mexico.osm.bz2 > multinodes2.txt
+
+  - And how they connect:
+
+perl -ne 'chomp; if (/<way/) {print "\n"; next} else {/ref="(\d+)"/; print "$1 "}' multinodes2.txt > multinodes3.txt
+
+  - Each line now shows a list of pairwise connected vertexes.
+
+   - NOTE: Lines with a single vertex represent nodes that connect to
+   dead ends. You can probably ignore them.
+
+I'm bored and would be happy to do this (and perhaps a bit more) for
+free for any city in https://mapzen.com/data/metro-extracts
+
+====== CUT HERE =====
+
 Adding many data to openstreetmap.org
 
 This projects aims to add all Albuquerque street addresses (and later
@@ -29,6 +66,3 @@ This gives me latitude/longitude for ABQ businesses (roughly). Adding
 coloring will let me snip out the exact address from the line.
 
 note: test4.txt is the working version
-
-
-

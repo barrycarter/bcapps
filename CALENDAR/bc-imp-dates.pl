@@ -19,6 +19,9 @@ for $i (@all) {
 # TODO: http://www.un.org/en/events/observances/days.shtml
 # TODO: http://www.timeanddate.com/holidays/us/ (or maybe not)
 
+# TODO: http://nationaldaycalendar.com/calendar-at-a-glance/ (maybe,
+# also downloaded to /home/barrycarter/20150806 (in the _001 files))
+
 # TONOTDO:
 # http://snap.nal.usda.gov/nutrition-through-seasons/holiday-observances
 # (too silly)
