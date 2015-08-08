@@ -10,6 +10,13 @@ ParametricPlot[earth[t],{t,0,1}]
 
 ang[t_,p_,d_] = Apply[ArcTan,planet[t,p,d]-earth[t]]
 
+angd[t_,p_,d_] = Simplify[D[ang[t,p,d],t]]
+
+angd[t,p,p^(2/3)]
+
+angd[t,11.8618,5.204267]
+
+
 Plot[ang[t,12,5],{t,0,12}]
 
 Plot[ang[t,11.8618,5.204267],{t,0,12}]
@@ -37,8 +44,19 @@ p/(p-1)
 
 Plot[{planet[t,11.8618,5.204267][[2]],earth[t][[2]]},{t,0,24}]
 
-
 ParametricPlot[{Cos[t],2*Sin[t]},{t,0,2*Pi}]
+
+(* using Mathematica's astro data *)
+
+mdec2 = Table[AstronomicalData["Moon", {"Declination", DateList[t]}],
+ {t, AbsoluteTime[{2014,1,1}], AbsoluteTime[{2015,1,1}], 3600}];
+
+test1010 = Table[AstronomicalData["Jupiter", {"Declination", DateList[t]}],
+ {t, AbsoluteTime[{-9998,1,1}], AbsoluteTime[{-9997,1,1}], 3600}];
+
+
+
+
 
 
 

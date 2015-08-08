@@ -145,7 +145,13 @@ for $i (@planets) {
 
 for $file (@ARGV) {
   # TODO: confirm these files are actually this well structured
-  open(A, $file);
+
+  if ($file=~/\.bz2$/) {
+    open(A,"bzcat $file|");
+  } else {
+    open(A, $file);
+  }
+
   my($data);
 
   while (!eof(A)) {

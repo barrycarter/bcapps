@@ -29,9 +29,8 @@ for (;;) {
   unless ($lastlong) {$lastlong=$long; next;}
 
   # except for first case, print diff
-  debug("DIFF:", $long-$lastlong);
-
-
+  my($diff) =  fmodp($long-$lastlong,360);
+  debug("DIFF: $diff");
 
   # store last seen longitude
   $lastlong = $long;
