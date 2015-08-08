@@ -9,7 +9,7 @@ require "/usr/local/lib/bclib.pl";
 # wait for $$SOE
 while (<> !~/\$\$SOE/) {next;}
 
-my($data);
+my($data,$lastlong);
 
 # forever loop (but we do break out of it eventually)
 for (;;) {
@@ -18,10 +18,25 @@ for (;;) {
 
   # read 5 lines at a time
   for $i (1..5) {
-    $data=<>;
+    $data = <>;
     while ($data=~s/^\s*([A-Z]+)\s*\=\s*([0-9E\+\-\.]+)//) {$hash{$1}=$2;}
   }
 
-  debug("HASH:",%hash);
+  # the ecliptic longitude is MA + OM + W
+  my($long) = $hash{MA}+$hash{OM}+$hash{W};
+
+  # special case if we are first
+  unless ($lastlong) {$lastlong=$long; next;}
+
+  # except for first case, print diff
+  debug("DIFF:", $long-$lastlong);
+
+
+
+  # store last seen longitude
+  $lastlong = $long;
+
 }
+
+
 
