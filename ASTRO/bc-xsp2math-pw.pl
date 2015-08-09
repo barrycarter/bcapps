@@ -1,117 +1,12 @@
 #!/bin/perl
 
-# converts XSP files for use with Mathematica, and tries to be a
-# little clever about it
+# creates piecewise functions for Mathematica representing planetary
+# positions at given Unix day (second/86400)
 
 require "/usr/local/lib/bclib.pl";
 
 # testing
 print xsp2math("de430", 2, 16656*86400, 16657*86400);
-# print xsp2math("de430", 3, 1420070400-86400*10, 1451606400+86400*10);
-# print xsp2math("de430", 3, 1420070400-86400*10, 1451606400+86400*10);
-
-
-# print xsp2math("de430", 1, 0, 86400*366*15);
-
-# print xsp2math("de430", 10, 0, 86400*366*60);
-
-# callisto for year 2015
-# print xsp2math("jup310", 4, 1420070400-86400*10, 1451606400+86400*10);
-
-# print xsp2math("de430", 10, 0, 86400*365);
-
-die "TESTING";
-
-# obtain object names JFF
-for $i (`fgrep -v '#' $bclib{githome}/ASTRO/planet-ids.txt`) {
-  chomp($i);
-  # decimal and hex codes
-  $i=~s/^(\w+)\s+(\w+)\s+//;
-  $name{$2} = $i;
-}
-
-# quick/dirty hack to find coefficients and days for all objects
-my(%info);
-
-# things we want (not necess currently in order)
-my(@l) = ("name", "target", "center", "ncoeffs", "interval",
-"start_sec","numrec");
-
-# header (special case, because I am tweaking; changing first elt to
-# filename, not name)
-print join(",", ("center_name", "target_name" , "filename", "array_number", "identifier", @l[1..$#l])),"\n";
-
-for $i (split(/\n/, read_file("$bclib{githome}/ASTRO/array-offsets.txt"))) {
-  my($fname, $ln, $byte) = split(/:/, $i);
-  # assign to hash
-  if ($i=~/(BEGIN|END)_ARRAY\s+(\d+)/) {$info{$fname}{$2}{$1}=$byte;}
-}
-
-# process hash
-for $i (sort keys %info) {
-
-  # open the file
-  open(A, "$bclib{home}/SPICE/KERNELS/$i");
-
-  # go through arrays in file
-  for $j (sort {$a <=> $b} keys %{$info{$i}}) {
-    %res = spk_array_info(A, $info{$i}{$j}{BEGIN}, $info{$i}{$j}{END});
-
-    # if empty return, skip
-    unless (%res) {next;}
-
-    # print data for array
-    my(@line) = ($name{$res{center}}, $name{$res{target}}, $i, $j);
-    for $i (@l) {push(@line,$res{$i});}
-    print join(",",@line),"\n";
-  }
-  close(A);
-}
-
-die "TESTING";
-
-
-# xsp2math("de431_part-2", 4, 0, 0);
-# xsp2math("jup310", 4, 719812778, 1411072450);
-# xsp2math("sat365", 6, 0, 3.14*10**7);
-# xsp2math("sat365", 6, time(), time()+86400*100);
-# xsp2math("jup310", 1, 0, 86400*10);
-# get earth position from earth/moon barycenter from jup310.xsp (just
-# as a weird example)
-# xsp2math("jup310", 13, 0, 86400*365);
-
-# mars from earth
-
-open(A,">/tmp/math.m")||die("Can't open, $!");
-
-# array 3: earth/moon barycenter to solar system barycenter
-# array 10: sun to solar system barycenter
-# array 11: moon to earth/moon barycenter
-# array 12: earth to earth/moon barycenter
-
-# for $i (2) {
-my($str) = xsp2math("jup310", 4, str2time("2014-01-01"), str2time("2016-01-01"));
-# my($str) = xsp2math("de430", $i, str2time("1970-01-01"), str2time("2030-01-01"));
-#  my($str) = xsp2math("sat365", $i, str2time("2014-01-01"), str2time("2015-01-01"));
-
-# for $i (3,4,5,12) {
-#   my($str) = xsp2math("de431_part-2", $i, str2time("2014-01-01"), str2time("2015-01-01"));
-  print A $str;
-# }
-
-close(A);
-
-die "TESTING";
-
-# mercury from earth, this year
-
-open(A,">/tmp/math.m")||die("Can't open, $!");
-for $arr (1..14) {
-  my($str)=xsp2math("de430",$arr,str2time("2014-01-01"),str2time("2015-01-01"));
-  debug("STR: $str");
-  print A $str;
-}
-close(A)||die("Can't close, $!");
 
 =item xsp2math($kern, $idx, $stime, $etime)
 
