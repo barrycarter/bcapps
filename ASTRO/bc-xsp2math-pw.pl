@@ -119,7 +119,6 @@ sub read_coeffs {
 
     # push most elts to array of current time
     unless ($i eq $hashref->{boundary}) {
-      debug("I: $i, TIME: $time");
       push(@{$hash{$time}},$i);
       next;
     }
@@ -153,32 +152,26 @@ sub read_coeffs {
   # TODO: make this initialization less kludgey
   # the array of piecewise
 
-  for $j ("x","y","z") {
-    push(@ret, "parray[$j,$target,$center] = {}");
-  }
+  for $j ("x","y","z") {push(@ret, "parray[$j,$target,$center] = {}");}
 
   # now, handle coefficients for each time period
   for $i (sort {$a <=> $b} keys %hash) {
     for $j ("x","y","z") {
       # arrays of Cheb coeffs
-      my(@cheb,@cheb2);
+      my(@cheb);
 
       for $k (0..$hashref->{ncoeffs}-1) {
 	# the current coefficient
 	my($coeff) = ieee754todec(shift(@{$hash{$i}}), "mathematica=1");
 	debug("COEFF: $coeff");
-      # TODO: keep raw polys around too, not just converted ones
-	push(@cheb2, "$coeff*ChebyshevT[$k, w]");
+	# TODO: keep raw polys around too, not just converted ones
 	push(@cheb, "$coeff*ChebyshevT[$k, conv[$int][$i][w]]");
       }
 
       my($cheb) = join("+\n", @cheb);
-      my($cheb2) = join("+\n", @cheb2);
 
       push(@ret, "AppendTo[parray[$j,$target,$center], 
                   {$cheb, range[$int][$i][w]}]");
-
-      # an array of polynomials
 
       push(@pw, "{Function[w,$cheb], range[$int][$i][t]}");
 
@@ -254,12 +247,4 @@ sub spk_array_info {
 
   # PEDANTIC: this is really a list, but ok if receiver treats it as hash
   return %hash;
-}
-
-sub write_coeffs {
-  my($lref, $href) = @_;
-  my(@arr) = @$lref;
-  my(%hash) = %$href;
-
-  debug("ARR",@arr,"HASH",%hash);
 }
