@@ -118,10 +118,7 @@ sub read_coeffs {
     unless ($i=~/^\'/) {next;}
 
     # push most elts to array of current time
-    unless ($i eq $hashref->{boundary}) {
-      push(@{$hash{$time}},$i);
-      next;
-    }
+    unless ($i eq $hashref->{boundary}) {push(@{$hash{$time}},$i); next;}
 
     # this allows removes the time (which isn't a coeff) from the prev array
     $time = ieee754todec(pop(@{$hash{$time}}));
@@ -163,18 +160,14 @@ sub read_coeffs {
       for $k (0..$hashref->{ncoeffs}-1) {
 	# the current coefficient
 	my($coeff) = ieee754todec(shift(@{$hash{$i}}), "mathematica=1");
-	debug("COEFF: $coeff");
 	# TODO: keep raw polys around too, not just converted ones
 	push(@cheb, "$coeff*ChebyshevT[$k, conv[$int][$i][w]]");
       }
 
       my($cheb) = join("+\n", @cheb);
 
-      push(@ret, "AppendTo[parray[$j,$target,$center], 
-                  {$cheb, range[$int][$i][w]}]");
-
+      push(@ret, "AppendTo[parray[$j,$target,$center], {$cheb, range[$int][$i][w]}]");
       push(@pw, "{Function[w,$cheb], range[$int][$i][t]}");
-
       push(@ret, "pos[$j,$target,$center,w] = Piecewise[{");
       push(@ret, join(",\n", @pw));
       push(@ret, "}];\n");
@@ -183,12 +176,8 @@ sub read_coeffs {
   }
 
   for $j ("x","y","z") {
-    push(@ret,"pos[$j,$target,$center][w_] = 
-               Piecewise[parray[$j,$target,$center]]");
-  }
+    push(@ret,"pos[$j,$target,$center][w_] = Piecewise[parray[$j,$target,$center]]");}
 
-  my($pw) = join(",\n", @pw);
-  debug("<pw>$pw</pw>");
   return join("\n", @ret).";\n";
 }
 
