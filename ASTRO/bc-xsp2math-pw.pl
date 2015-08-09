@@ -124,16 +124,6 @@ sub read_coeffs {
       next;
     }
 
-    debug("BOUND: $i");
-
-    # TEST: handle arrays one at a time, no need to memorize them
-#    write_coeffs($hash{$time}, $hashref);
-
-#    if (++$count>4) {die "ESTING";}
-
-#    next; 
-
-    # if this elt is delim, last elt was time, so set new time
     # this allows removes the time (which isn't a coeff) from the prev array
     $time = ieee754todec(pop(@{$hash{$time}}));
 
@@ -146,9 +136,6 @@ sub read_coeffs {
 
   # the null entry causes problems
   delete $hash{""};
-
-  debug("HASH",unfold({%hash}));
-#  die "TESTING";
 
   # convenience variables
   my($target, $center) = ($hashref->{target}, $hashref->{center});
@@ -192,19 +179,8 @@ sub read_coeffs {
                   {$cheb, range[$int][$i][w]}]");
 
       # an array of polynomials
-#      push(@ret, "AppendTo[parray[$j,$target,$center], $cheb2];");
 
       push(@pw, "{Function[w,$cheb], range[$int][$i][t]}");
-
-      # NOTE: do not move "/;" to the next line, it breaks stuff
-      push(@ret, "poly[$j,$target,$center,t_] := Function[w, $cheb] /;
-      range[$int][$i][t];");
-
-      push(@ret, "eval[$j,$target,$center,w_] := $cheb /;
-      range[$int][$i][w];");
-
-      push(@ret, "raw[$j][$target][$center][t_] := Function[w, $cheb2] /;
-      range[$int][$i][t];");
 
       push(@ret, "pos[$j,$target,$center,w] = Piecewise[{");
       push(@ret, join(",\n", @pw));
