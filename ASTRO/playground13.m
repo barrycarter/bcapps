@@ -1,5 +1,27 @@
 (* conjunctions approximation for http://astronomy.stackexchange.com/questions/11456/has-the-conjunction-between-venus-jupiter-and-regulus-only-occurred-twice-in-2?noredirect=1#comment15731_11456 *)
 
+(* approach using polynomials not circles *)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (* planet d AU away, p years to orbit, at perfect vernal opp at 0 *)
 
 planet[t_,p_,d_] = {d*Cos[t*2*Pi/p],d*Sin[t*2*Pi/p]}
