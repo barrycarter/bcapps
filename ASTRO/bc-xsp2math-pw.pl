@@ -3,25 +3,125 @@
 # converts XSP files for use with Mathematica, and tries to be a
 # little clever about it
 
-# cloning bc-xsp2math-pw.pl so I can have an independent piecewise version
-
 require "/usr/local/lib/bclib.pl";
 
-# limited for testing
-print xsp2math_pw("de430", 2, 1420070400-86400*10, 1420070400-86400*9);
-# print xsp2math_pw("de430", 3, 1420070400-86400*10, 1451606400+86400*10);
-# print xsp2math_pw("de430", 3, 1420070400-86400*10, 1451606400+86400*10);
+# testing
+print xsp2math("de430", 2, 16656*86400, 16657*86400);
+# print xsp2math("de430", 3, 1420070400-86400*10, 1451606400+86400*10);
+# print xsp2math("de430", 3, 1420070400-86400*10, 1451606400+86400*10);
+
+
+# print xsp2math("de430", 1, 0, 86400*366*15);
+
+# print xsp2math("de430", 10, 0, 86400*366*60);
+
+# callisto for year 2015
+# print xsp2math("jup310", 4, 1420070400-86400*10, 1451606400+86400*10);
+
+# print xsp2math("de430", 10, 0, 86400*365);
+
+die "TESTING";
+
+# obtain object names JFF
+for $i (`fgrep -v '#' $bclib{githome}/ASTRO/planet-ids.txt`) {
+  chomp($i);
+  # decimal and hex codes
+  $i=~s/^(\w+)\s+(\w+)\s+//;
+  $name{$2} = $i;
+}
+
+# quick/dirty hack to find coefficients and days for all objects
+my(%info);
+
+# things we want (not necess currently in order)
+my(@l) = ("name", "target", "center", "ncoeffs", "interval",
+"start_sec","numrec");
+
+# header (special case, because I am tweaking; changing first elt to
+# filename, not name)
+print join(",", ("center_name", "target_name" , "filename", "array_number", "identifier", @l[1..$#l])),"\n";
+
+for $i (split(/\n/, read_file("$bclib{githome}/ASTRO/array-offsets.txt"))) {
+  my($fname, $ln, $byte) = split(/:/, $i);
+  # assign to hash
+  if ($i=~/(BEGIN|END)_ARRAY\s+(\d+)/) {$info{$fname}{$2}{$1}=$byte;}
+}
+
+# process hash
+for $i (sort keys %info) {
+
+  # open the file
+  open(A, "$bclib{home}/SPICE/KERNELS/$i");
+
+  # go through arrays in file
+  for $j (sort {$a <=> $b} keys %{$info{$i}}) {
+    %res = spk_array_info(A, $info{$i}{$j}{BEGIN}, $info{$i}{$j}{END});
+
+    # if empty return, skip
+    unless (%res) {next;}
+
+    # print data for array
+    my(@line) = ($name{$res{center}}, $name{$res{target}}, $i, $j);
+    for $i (@l) {push(@line,$res{$i});}
+    print join(",",@line),"\n";
+  }
+  close(A);
+}
+
+die "TESTING";
+
+
+# xsp2math("de431_part-2", 4, 0, 0);
+# xsp2math("jup310", 4, 719812778, 1411072450);
+# xsp2math("sat365", 6, 0, 3.14*10**7);
+# xsp2math("sat365", 6, time(), time()+86400*100);
+# xsp2math("jup310", 1, 0, 86400*10);
+# get earth position from earth/moon barycenter from jup310.xsp (just
+# as a weird example)
+# xsp2math("jup310", 13, 0, 86400*365);
+
+# mars from earth
+
+open(A,">/tmp/math.m")||die("Can't open, $!");
+
+# array 3: earth/moon barycenter to solar system barycenter
+# array 10: sun to solar system barycenter
+# array 11: moon to earth/moon barycenter
+# array 12: earth to earth/moon barycenter
+
+# for $i (2) {
+my($str) = xsp2math("jup310", 4, str2time("2014-01-01"), str2time("2016-01-01"));
+# my($str) = xsp2math("de430", $i, str2time("1970-01-01"), str2time("2030-01-01"));
+#  my($str) = xsp2math("sat365", $i, str2time("2014-01-01"), str2time("2015-01-01"));
+
+# for $i (3,4,5,12) {
+#   my($str) = xsp2math("de431_part-2", $i, str2time("2014-01-01"), str2time("2015-01-01"));
+  print A $str;
+# }
+
+close(A);
+
+die "TESTING";
+
+# mercury from earth, this year
+
+open(A,">/tmp/math.m")||die("Can't open, $!");
+for $arr (1..14) {
+  my($str)=xsp2math("de430",$arr,str2time("2014-01-01"),str2time("2015-01-01"));
+  debug("STR: $str");
+  print A $str;
+}
+close(A)||die("Can't close, $!");
 
 =item xsp2math($kern, $idx, $stime, $etime)
 
-Return Mathematica string for array $idx in SPICE kernel $kern (in xsp
-form) good from $stime to $etime, given in Unix seconds as a piecewise
-function. Result is normalized to Unix days (ie: Unix
-second/86400). _pw version does it with piecewise functions
+Return Mathematica string for array $idx in SPICE kernel $kern
+(in xsp form) good from $stime to $etime, given in Unix
+seconds. Result is normalized to Unix days (ie: Unix second/86400)
 
 =cut
 
-sub xsp2math_pw {
+sub xsp2math {
   my($kern, $idx, $stime, $etime) = @_;
   my(@arr, %info);
   local(*A);
@@ -64,7 +164,7 @@ sub xsp2math_pw {
   # below automatically positions A correctly, so we ignore return value
   debug("INT: $info{interval}");
   findroot($f, $info{begin_array}, $info{end_array}, $info{interval});
-  return read_coeffs_pw(A, $stime, $etime, {%info});
+  return read_coeffs(A, $stime, $etime, {%info});
 }
 
 # Given $fh, an open filehandle to an XSP file and a delimiter $delim,
@@ -103,11 +203,11 @@ sub nasa_sec {
 # Read Chebyshev coefficients for given object (as hash) from $fh,
 # starting at $stime (or earlier) and ending at $etime (in NASA
 # seconds) or later, in Mathematica usable format (the Mathematica
-# forms are in Unix days, not NASA seconds). The _pw version does this
-# using piecewise functions
+# forms are in Unix days, not NASA seconds).
 
-sub read_coeffs_pw {
+sub read_coeffs {
   my($fh, $stime, $etime, $hashref) = @_;
+  # @pw = piecewise
   my(@ret,@pw,@convs,@ranges,@piecewise,@raw);
 
   # interval is the delimiter in decimal form
@@ -131,6 +231,13 @@ sub read_coeffs_pw {
 
     debug("BOUND: $i");
 
+    # TEST: handle arrays one at a time, no need to memorize them
+#    write_coeffs($hash{$time}, $hashref);
+
+#    if (++$count>4) {die "ESTING";}
+
+#    next; 
+
     # if this elt is delim, last elt was time, so set new time
     # this allows removes the time (which isn't a coeff) from the prev array
     $time = ieee754todec(pop(@{$hash{$time}}));
@@ -146,6 +253,7 @@ sub read_coeffs_pw {
   delete $hash{""};
 
   debug("HASH",unfold({%hash}));
+#  die "TESTING";
 
   # convenience variables
   my($target, $center) = ($hashref->{target}, $hashref->{center});
@@ -158,6 +266,7 @@ sub read_coeffs_pw {
   # the ranges and conversions
   push(@ret, "range[int_][i_][t_] = (t >= 21915/2 + (i-int)/86400 &&
   t<= 21915/2 + (i+int)/86400)");
+  push(@ret, "conv[int_][i_][t_] = 86400*(t-(i+946728000)/86400)/int");
 
   # TODO: make this initialization less kludgey
   # the array of piecewise
@@ -187,14 +296,17 @@ sub read_coeffs_pw {
       push(@ret, "AppendTo[parray[$j,$target,$center], 
                   {$cheb, range[$int][$i][w]}]");
 
+      # an array of polynomials
+#      push(@ret, "AppendTo[parray[$j,$target,$center], $cheb2];");
+
       push(@pw, "{Function[w,$cheb], range[$int][$i][t]}");
 
       # NOTE: do not move "/;" to the next line, it breaks stuff
-#      push(@ret, "poly[$j,$target,$center,t_] := Function[w, $cheb] /;
-#      range[$int][$i][t];");
+      push(@ret, "poly[$j,$target,$center,t_] := Function[w, $cheb] /;
+      range[$int][$i][t];");
 
-#      push(@ret, "eval[$j,$target,$center,w_] := $cheb /;
-#      range[$int][$i][w];");
+      push(@ret, "eval[$j,$target,$center,w_] := $cheb /;
+      range[$int][$i][w];");
 
       push(@ret, "raw[$j][$target][$center][t_] := Function[w, $cheb2] /;
       range[$int][$i][t];");
@@ -212,7 +324,7 @@ sub read_coeffs_pw {
   }
 
   my($pw) = join(",\n", @pw);
-  debug("RET:",@ret);
+  debug("<pw>$pw</pw>");
   return join("\n", @ret).";\n";
 }
 
