@@ -5,18 +5,19 @@
 
 require "/usr/local/lib/bclib.pl";
 
-for $file (glob("/home/barrycarter/SPICE/KERNELS/asc[pm]*.bz2")) {
-  # much of this code is from bc-read-cheb.pl
-  open(A,"bzcat $file|");
-  my(@data) = ();
+open(A,"bzcat /home/barrycarter/SPICE/KERNELS/asc[pm]*.bz2|");
 
-  # 341 lines per chunk
-  while (<A>) {
-    for (1..341) {push(@data,scalar(<A>));}
-  }
-
-  debug("DATA",@data);
+while (!eof(A)) {
+  chomp;
+  my($data) = "";
+  # <h>this code should be taken out and shot</h>
+  for (1..341) {$data.=<A>;}
+  my(@data) = split(/\s+/s, $data);
+  # TODO: first chunk should be blank!
+  debug("DATA:",@data);
 
 }
+
+
 
 
