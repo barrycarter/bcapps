@@ -5,6 +5,8 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# NOTE: 16436 starts 2015
+
 my($start) = 16436*86400;
 my($end) = $start + 366*86400;
 print xsp2math("de430", 2, $start, $end);
@@ -119,13 +121,11 @@ sub nasa_sec {
 
 sub read_coeffs {
   my($fh, $stime, $etime, $hashref) = @_;
-  # @pw = piecewise
-  my(@ret,@pw,@convs,@ranges,@piecewise,@raw);
+  my(@ret,$time,%hash);
 
   # interval is the delimiter in decimal form
   map(chomp($_), values %{$hashref});
   my($int) = ieee754todec($hashref->{boundary});
-  my($time, %hash);
 
   # read elements, do special things if we see $delim
   while (my($i)=scalar<$fh>) {
@@ -153,8 +153,6 @@ sub read_coeffs {
   # convenience variables
   my($target, $center) = ($hashref->{target}, $hashref->{center});
 
-  debug(var_dump("hashref",$hashref));
-
   # breaking this up into multiple arrays for convenience
 
   # TODO: do this better, keep track of which target/center combos I have
@@ -181,16 +179,14 @@ sub read_coeffs {
 	my($coeff) = ieee754todec(shift(@{$hash{$i}}), "mathematica=1");
 	# TODO: keep raw polys around too, not just converted ones
 	push(@cheb, "$coeff*ChebyshevT[$k, conv[$int][$i][w]]");
+	# test code for speed MUST MAKE THIS AN OPTION LATER!!!
+#	push(@cheb, "N[$coeff]*ChebyshevT[$k, conv[$int][$i][w]]");
+
       }
 
       my($cheb) = join("+\n", @cheb);
 
       push(@ret, "AppendTo[parray[$j,$target,$center], {$cheb, range[$int][$i][w]}]");
-      push(@pw, "{Function[w,$cheb], range[$int][$i][t]}");
-      push(@ret, "pos[$j,$target,$center,w] = Piecewise[{");
-      push(@ret, join(",\n", @pw));
-      push(@ret, "}];\n");
-      @pw = ();
     }
   }
 

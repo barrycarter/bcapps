@@ -29,7 +29,7 @@ LogPlot[{
  VectorAngle[earthvector[2,t],earthvector[4,t]]/Degree,
  VectorAngle[earthvector[4,t],earthvector[5,t]]/Degree
 },
- {t,16436,16436+366}, PlotRange->All]
+ {t,0,30*366}, PlotRange->All]
 
 ang[t_] = VectorAngle[earthvector[2,t],earthvector[5,t]];
 
