@@ -5,8 +5,25 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# testing
-print xsp2math("de430", 2, 16656*86400, 16657*86400);
+my($start) = 16436*86400;
+my($end) = $start + 366*86400;
+print xsp2math("de430", 2, $start, $end);
+print xsp2math("de430", 3, $start, $end);
+print xsp2math("de430", 4, $start, $end);
+print xsp2math("de430", 11, $start, $end);
+print xsp2math("de430", 5, $start, $end);
+
+# ugly and hideous, NASA does NOT give Earth's position directly
+
+print << "MARK";
+emrat = 813005690741906200*10^-16;
+pos[x,301,0][t_] = pos[x,3,0][t]-pos[x,301,3][t]/emrat;
+pos[y,301,0][t_] = pos[y,3,0][t]-pos[y,301,3][t]/emrat;
+pos[z,301,0][t_] = pos[z,3,0][t]-pos[z,301,3][t]/emrat;
+MARK
+;
+
+# TODO: rename this routine (and read_coeffs)
 
 =item xsp2math($kern, $idx, $stime, $etime)
 
@@ -135,6 +152,8 @@ sub read_coeffs {
 
   # convenience variables
   my($target, $center) = ($hashref->{target}, $hashref->{center});
+
+  debug(var_dump("hashref",$hashref));
 
   # breaking this up into multiple arrays for convenience
 
