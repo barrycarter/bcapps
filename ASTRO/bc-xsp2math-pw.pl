@@ -5,10 +5,10 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# NOTE: 16436 starts 2015
+# NOTE: day 16436 starts 2015
 
-my($start) = 16436*86400;
-my($end) = $start + 366*86400;
+my($start) = 0*86400;
+my($end) = $start + 366*86400*10;
 print xsp2math("de430", 2, $start, $end);
 print xsp2math("de430", 3, $start, $end);
 print xsp2math("de430", 4, $start, $end);
@@ -19,9 +19,7 @@ print xsp2math("de430", 5, $start, $end);
 
 print << "MARK";
 emrat = 813005690741906200*10^-16;
-pos[x,301,0][t_] = pos[x,3,0][t]-pos[x,301,3][t]/emrat;
-pos[y,301,0][t_] = pos[y,3,0][t]-pos[y,301,3][t]/emrat;
-pos[z,301,0][t_] = pos[z,3,0][t]-pos[z,301,3][t]/emrat;
+pos[399,0][t_] = pos[3,0][t]-pos[301,3][t]/emrat;
 MARK
 ;
 
@@ -186,12 +184,22 @@ sub read_coeffs {
 
       my($cheb) = join("+\n", @cheb);
 
-      push(@ret, "AppendTo[parray[$j,$target,$center], {$cheb, range[$int][$i][w]}]");
+#      push(@ret, "AppendTo[parray[$j,$target,$center], {$cheb, range[$int][$i][w]}]");
+      push(@ret, "AppendTo[parray[$j,$target,$center], N[{$cheb, range[$int][$i][w]}]]");
+#      push(@ret, "AppendTo[parray[$j,$target,$center], N[{Expand[$cheb], range[$int][$i][w]}]]");
+
     }
   }
 
+  # vectorizing
+  my(@xyz);
+
   for $j ("x","y","z") {
-    push(@ret,"pos[$j,$target,$center][w_] = Piecewise[parray[$j,$target,$center]]");}
+    #    push(@ret,"pos[$j,$target,$center][w_] = Piecewise[parray[$j,$target,$center]]");
+    push(@xyz,"Piecewise[parray[$j,$target,$center]]");
+}
+
+  push(@ret, "pos[$target,$center][w_] = {",join(",",@xyz),"}");
 
   return join("\n", @ret).";\n";
 }

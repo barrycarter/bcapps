@@ -1,14 +1,40 @@
 (* conjunctions approximation for http://astronomy.stackexchange.com/questions/11456/has-the-conjunction-between-venus-jupiter-and-regulus-only-occurred-twice-in-2?noredirect=1#comment15731_11456 *)
 
+(* attempt to speed things up a bit *)
+
+pos50 = Compile[t,Evaluate[pos[5,0][t]]]
+AbsoluteTiming[t = Table[pos[5,0][t],{t,0,366}]][[1]]
+AbsoluteTiming[t2 = Table[pos50[t],{t,0,366}]][[1]]
+
+AbsoluteTiming[Table[pos[2,0][t],{t,0,10*366}]][[1]]
+AbsoluteTiming[Table[pos20[t],{t,0,10*366}]][[1]]
+
+pos50 = Compile[t,Evaluate[pos[5,0][t]]];
+pos20 = Compile[t,Evaluate[pos[2,0][t]]];
+(* below takes forever *)
+pos3990 = Compile[t,Evaluate[pos[399,0][t]]];
+
+(* vector as seen from earth (via Sun) *)
+(* not happy about the setequals below *)
+
+earthvector[target_,t_]:=earthvector[target,t]=pos[target,0][t]-pos[399,0][t];
+
+LogPlot[{
+ VectorAngle[earthvector[2,t],earthvector[5,t]]/Degree, 
+ VectorAngle[earthvector[2,t],earthvector[4,t]]/Degree,
+ VectorAngle[earthvector[4,t],earthvector[5,t]]/Degree
+},
+ {t,0,10*366}, PlotRange->All]
+
+
+
 (* convert three coordinates to vector *)
 
 vector[target_,center_,t_] = {
 pos[x,target,center][t], pos[y,target,center][t], pos[z,target,center][t]
 }
 
-(* vector as seen from earth (via Sun) *)
 
-earthvector[target_,t_] = vector[target,0,t] - vector[301,0,t];
 
 (* right ascension and declination *)
 
