@@ -17,26 +17,21 @@ To: HORIZONS <horizons\@ssd.jpl.nasa.gov>
 Subject: JOB
 
 !\$\$SOF
-COMMAND= '%TARGET%'
-CENTER= '\@%SOURCE%'
-OBJ_DATA= 'YES'
+COMMAND= '%SOURCE%'
+CENTER= '500@0'
 MAKE_EPHEM= 'YES'
-TABLE_TYPE= 'OBS'
+TABLE_TYPE= 'VECTORS'
 START_TIME= '%STARTYEAR%-01-01'
 STOP_TIME= '%ENDYEAR%-01-01'
 STEP_SIZE= '1 d'
-QUANTITIES= '1'
-CAL_FORMAT= 'CAL'
+OUT_UNITS= 'KM-S'
+VECT_TABLE= '3'
+REF_PLANE= 'FRAME'
 REF_SYSTEM= 'J2000'
-ANG_FORMAT= 'DEG'
-RANGE_UNITS= 'AU'
-APPARENT= 'AIRLESS'
-SOLAR_ELONG= '0,180'
-SUPPRESS_RANGE_RATE= 'YES'
-SKIP_DAYLT= 'NO'
-EXTRA_PREC= 'NO'
-R_T_S_ONLY= 'NO'
+VECT_CORR= 'NONE'
+VEC_LABELS= 'NO'
 CSV_FORMAT= 'YES'
+OBJ_DATA= 'YES'
 !\$\$EOF
 
 MARK
@@ -53,7 +48,8 @@ for ($i=1; $i<=9999; $i+=200) {
 
     # and convert template
     $email = $template;
-    $i1 = $i + 1;
+    $email=~s/%SOURCE%/0/isg;
+    $i1 = $i + 200;
     $email=~s/%STARTYEAR%/$i/isg;
     $email=~s/%ENDYEAR%/$i1/isg;
     $email=~s/%OBJECT%/${j}/isg;

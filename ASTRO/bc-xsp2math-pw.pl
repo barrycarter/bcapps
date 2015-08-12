@@ -7,13 +7,13 @@ require "/usr/local/lib/bclib.pl";
 
 # NOTE: day 16436 starts 2015
 
-my($start) = 16436*86400;
-my($end) = $start + 366*86400*10;
-print xsp2math("de430", 2, $start, $end);
-print xsp2math("de430", 3, $start, $end);
-print xsp2math("de430", 4, $start, $end);
-print xsp2math("de430", 11, $start, $end);
-print xsp2math("de430", 5, $start, $end);
+my($start) = -17020*86400;
+my($end) = $start + 366*86400*600;
+print xsp2math("de430", 1, $start, $end);
+# print xsp2math("de430", 3, $start, $end);
+# print xsp2math("de430", 4, $start, $end);
+# print xsp2math("de430", 11, $start, $end);
+# print xsp2math("de430", 5, $start, $end);
 
 # ugly and hideous, NASA does NOT give Earth's position directly
 
