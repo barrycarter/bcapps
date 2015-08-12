@@ -3,21 +3,27 @@
 # creates piecewise functions for Mathematica representing planetary
 # positions at given Unix day (second/86400)
 
+# Usage: $0 ephermis(de430) planetid(1) startyear(1500) endyear(2100)
+
 require "/usr/local/lib/bclib.pl";
+
+(my($eph,$id,$syear,$eyear) = @ARGV)||die("Usage: $0 ephermis(de430) planetid(1) startyear(1500) endyear(2100)");
+
+debug("eph,$id,$syear,$eyear");
 
 # NOTE: day 16436 starts 2015
 
-my($start) = -17020*86400;
-my($end) = $start + 366*86400*600;
-print xsp2math("de430", 1, $start, $end);
-# print xsp2math("de430", 3, $start, $end);
-# print xsp2math("de430", 4, $start, $end);
-# print xsp2math("de430", 11, $start, $end);
-# print xsp2math("de430", 5, $start, $end);
+# 364/366 below insures we overshoot
+my($start) = ($syear-1970)*86400*364;
+my($end) = ($eyear-1970)*86400*366;
+debug($eph, $id, $start, $end);
+print xsp2math($eph, $id, $start, $end);
 
 # ugly and hideous, NASA does NOT give Earth's position directly
 
 print << "MARK";
+sdate = $start/86400;
+edate = $end/86400;
 emrat = 813005690741906200*10^-16;
 pos[399,0][t_] = pos[3,0][t]-pos[301,3][t]/emrat;
 MARK
