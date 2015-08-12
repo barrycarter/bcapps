@@ -218,6 +218,9 @@ MARK
 for $i (@fly) {print A "$i\n";}
 close(A);
 
+# want to keep a copy of the bg file around
+system("cp bg.fly /tmp/");
+
 # also copy file since I will need it on other machines
 system("fly -q -i bg.fly -o bg.gif; composite -geometry +150+100 /usr/local/etc/calendar.gif bg.gif /tmp/bgimage.gif; xv +noresetroot -root -quit /tmp/bgimage.gif");
 

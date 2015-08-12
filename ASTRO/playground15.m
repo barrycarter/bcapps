@@ -2,25 +2,26 @@
 assuming circular orbits... for "production" use, at least double
 these numbers *)
 
-(* Assuming two dimensions; units are AU and years; currently NOT
-using Keplers identity T^2=R^3 *)
+(* Assuming two dimensions; units are AU/years; using Keplers T^2=R^3 *)
 
-conds = {Element[{t,d1,p1,d2,p2},Reals], d1!=1, d2!=1, p1!=1, p2!=1}
-
+conds = {Element[t,Reals],p>0,p!=1}
 earth[t_] = {Cos[2*Pi*t],Sin[2*Pi*t]}
-plan1[t_] = {d1*Cos[2*Pi*t/p1],d1*Sin[2*Pi*t/p1]}
-plan2[t_] = {d2*Cos[2*Pi*t/p2],d2*Sin[2*Pi*t/p2]}
+plan[t_,p_] = {p^(3/2)*Cos[2*Pi*t/p],p^(3/2)*Sin[2*Pi*t/p]}
+ang[t_,p_] = Apply[ArcTan,plan[t,p]-earth[t]]
+anged[t_,p_] = FullSimplify[D[ang[t,p],t],conds]
+angedd[t_,p_] = FullSimplify[D[anged[t,p],t],conds]
 
+Solve[angedd[t,p]==0,t,Reals]
 
-ange[t_] = ArcTan[(plan1[t]-earth[t])[[2]]/((plan1[t]-earth[t])[[1]])]
-anged[t_] = Simplify[ange'[t],conds]
-angedd[t_] = Simplify[ange''[t],conds]
+(* the second derv is 0 when t = p*n/(p-1) or t=(p+2p*n)/2/(p-1) *)
 
-conds = {Element[{t,d1,p1,d2,p2},Reals], d1>1, d2>1, p1>1, p2>1}
+Simplify[anged[p*n/(p-1),p],Element[n,Integers]]
+Simplify[anged[(p+2p*n)/2/(p-1),p],Element[n,Integers]]
 
-Solve[angedd[t]==0,t,Reals] /. conds
+(* min and max change in angle per year *)
 
-Solve[angedd[t]==0 && d1>1 && p1>1,t,Reals]
+2*Pi/(1+Sqrt[p]+p)
+2*Pi/(1-Sqrt[p]+p)
 
 
 
