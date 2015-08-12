@@ -7,7 +7,7 @@ require "/usr/local/lib/bclib.pl";
 
 # NOTE: day 16436 starts 2015
 
-my($start) = 0*86400;
+my($start) = 16436*86400;
 my($end) = $start + 366*86400*10;
 print xsp2math("de430", 2, $start, $end);
 print xsp2math("de430", 3, $start, $end);
