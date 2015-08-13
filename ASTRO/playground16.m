@@ -47,16 +47,7 @@ max[jd_] := Max[{
  earthangle[jd,venus,jupiter]
 }];
 
-Table[ternary[t,t+90,max,10^-6],{t,2451770.,2451770+365*10,90.}]
+Table[Print[FullForm[ternary[t,t+90,max,10^-6]]],{t,2451536.5,2816784.5,90.}]
 
-Plot[earthangle[jd,venus,jupiter], {jd,2457248.227454-100,2457248.227454+100}]
 
-Plot[VectorAngle[earthvector[jd,jupiter],regulus],{jd,2457248-100,2457248+100}]
-Plot[VectorAngle[earthvector[jd,venus],regulus],{jd,2457248-100,2457248+100}]
-
-Plot[{
- VectorAngle[earthvector[jd,jupiter],regulus],
- VectorAngle[earthvector[jd,venus],regulus],
- earthangle[jd,venus,jupiter]
-}, {jd, 2457248, 2457248+366}]
 

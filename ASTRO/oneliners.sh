@@ -1,5 +1,13 @@
 #!/bin/sh
 
+# printing out the list of conjunctions in "Mathematica" form, eg:
+# List[2.1625297498230506`*^6, 0.008766346776571019`]
+# this converts to y-m-d and degrees
+
+perl -nle 'unless (/null/i) {s/\`\*\^/e/g; s/^.*?\[(.*?),\s*//; system("j2d $1"); s/\`\].*$//; print $_/3.1416*180}' all.txt
+
+exit;
+
 # list of north pole coords from north-pole-from-geocenter.txt.bz2
 bzfgrep 'E+' north-pole-from-geocenter.txt.bz2 | perl -anle 'map(s/E/*10^/g, @F); print "{",join(", ",@F),"},"; sub BEGIN {print "list={";}; sub END {print "{}}; list = Drop[list,-1]"}' > /tmp/math.m
 

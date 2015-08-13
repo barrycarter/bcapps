@@ -22,7 +22,7 @@ for $i (@planets) {
 
 # limiting to "current" eon for testing
 # open(A,"bzcat /home/barrycarter/SPICE/KERNELS/asc[pm]*.bz2|");
-open(A,"bzcat /home/barrycarter/SPICE/KERNELS/ascp01000.431.bz2|");
+open(A,"bzcat /home/barrycarter/SPICE/KERNELS/ascp02000.431.bz2|");
 
 while (!eof(A)) {
   chomp;
