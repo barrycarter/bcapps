@@ -15,6 +15,8 @@ for $i (@planets) {
   my(@l) = split(/:/, $i);
   for $j ("name", "pos", "num", "chunks") {
     $planetinfo{$i}{$j} = splice(@l,0,1);
+    # this barely works because name is defined first
+    print "info[$planetinfo{$i}{name}][$j] = $planetinfo{$i}{$j};\n";
   }
 }
 
@@ -28,9 +30,9 @@ while (!eof(A)) {
   # <h>this code should be taken out and shot</h>
   for (1..341) {$data.=<A>;}
   my(@data) = split(/\s+/s, $data);
-  debug("DATA",@data);
+#  debug("DATA",@data);
   # TODO: might be more efficient to do this earlier
-  map(s/d/e/i,@data);
+  map(s/d/*10^/i,@data);
 
   # first 5 coeffs are special
   my($blank, $chunknum, $tchunks, $jstart, $jend) = splice(@data,0,5);
@@ -42,8 +44,18 @@ while (!eof(A)) {
 
   # go thru planets
   for $planet (@planets) {
+    # data elements belonging to this planet
+    my($coeffs) = join(", ",splice(@data,0,$planetinfo{$planet}{chunks}*3*$planetinfo{$planet}{num}));
+    print "pos[$planetinfo{$planet}{name}][Rationalize[$jstart]]=Rationalize[{$coeffs},0]\n";
+
+#    debug("COEFFS: $#coeffs",@coeffs);
+    next;
+
     # number of data chunks for this planet (convenience variable)
     my($chunks) = $planetinfo{$planet}{chunks};
+    
+
+
     # days per chunk (32 is hardcoded)
     my($days) = 32/$chunks;
 
