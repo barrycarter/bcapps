@@ -45,8 +45,9 @@ while (!eof(A)) {
   # go thru planets
   for $planet (@planets) {
     # data elements belonging to this planet
-    my($coeffs) = join(", ",splice(@data,0,$planetinfo{$planet}{chunks}*3*$planetinfo{$planet}{num}));
-    print "pos[$planetinfo{$planet}{name}][Rationalize[$jstart]]=Rationalize[{$coeffs},0]\n";
+    my($ncoeffs) = $planetinfo{$planet}{chunks}*3*$planetinfo{$planet}{num};
+    my($coeffs) = join(", ",splice(@data,0,$ncoeffs));
+    print "pos[$planetinfo{$planet}{name}][Rationalize[$jstart]]=Partition[Partition[Rationalize[{$coeffs},0],$planetinfo{$planet}{num}],3];\n";
 
 #    debug("COEFFS: $#coeffs",@coeffs);
     next;

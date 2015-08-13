@@ -1,5 +1,33 @@
 (* dump the daily positions of planets, with help from bc-dump-cheb.pl *)
 
+jd2params[jd_,planet_] := Module[{jd2,chunk,days,t},
+   (* normalize to boundary *)
+   jd2 = jd-33/2;
+   (* days in a given chunk *)
+   days = 32/info[planet][chunks];
+   (* which chunk *)
+   chunk = Floor[Mod[jd2,32]/days]+1;
+   (* where in chunk *)
+   t = Mod[jd2,days]/days*2-1;
+   {Quotient[jd2,32]*32+33/2,chunk,t}
+];
+
+(* Chebyshev with memoization *)
+
+cheb[n_,t_] := cheb[n,t] = ChebyshevT[n,t];
+
+(* list of cheb at t w/ coeffs *)
+
+chebval[t_,list_] := Table[cheb[n,t],{n,0,Length[list]-1}].list
+
+jd2params[2457248.209699,mercury]
+
+
+
+
+
+jd2params[2451536+1/2+5,mercury]
+
 
 (* for a given JD, find the "base" 32-day-"multiple" JD and the
 remainder term *)
