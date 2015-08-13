@@ -28,6 +28,7 @@ while (!eof(A)) {
   # <h>this code should be taken out and shot</h>
   for (1..341) {$data.=<A>;}
   my(@data) = split(/\s+/s, $data);
+  debug("DATA",@data);
   # TODO: might be more efficient to do this earlier
   map(s/d/e/i,@data);
 
@@ -48,9 +49,14 @@ while (!eof(A)) {
 
     for $i (0..$chunks-1) {
 
+#      my(@print) = "f\['$planetinfo{name}', $jstart+$i*$days, $jstart+($i+1)*$days
+
       # determine coefficients
       for $j ("x","y","z"){
 	my(@coeffs)=splice(@data,0,$planetinfo{$planet}{num});
+	map(s/e/*10^/g,@coeffs);
+	print "f\[$planet,$jstart+$i*$days,$jstart+($i+1)*$days,\n";
+	print join(",",@coeffs),"\n";
       }
 
       # the start and end days for this chunk [for this planet], JD

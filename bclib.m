@@ -315,8 +315,22 @@ http://aa.usno.navy.mil/faq/docs/GAST.php *)
 gmst[d_] = 
   ((-452506800334363673497 + 41299464944756238*d)*Pi)/20593349747540136;
 
-
 (* Brent method of FindRoot improved *)
 
 brent[f_,a_,b_] = If[Sign[f[a]]==Sign[f[b]], {}, FindRoot[f,{a,b},
 Method -> Brent]];
+
+(* ternary method to find mimima *)
+
+(* TODO: this is recursive and thus non-ideal *)
+
+ternary[a_,b_,f_,eps_] := Module[{t},
+ If[Abs[a-b]<eps,Return[{(a+b)/2,f[(a+b)/2]}]];
+ t = Table[{x,f[x]},{x,a,b,(b-a)/3}];
+ If[t[[2,2]]<=t[[3,2]]<=t[[4,2]],Return[ternary[a,t[[3,1]],f,eps]]];
+ If[t[[3,2]]<=t[[2,2]]<=t[[1,2]],Return[ternary[t[[2,1]],b,f,eps]]];
+ If[t[[2,2]]<t[[1,2]] && t[[3,2]]<t[[4,2]],
+  Return[ternary[t[[2,1]],t[[3,1]],f,eps]]];
+ Return[{Null,Null}];
+]
+

@@ -1,6 +1,6 @@
 (* attempt to find conjunctions using Mathematicas AstronomicalData functions *)
 
-(* if I'm going to compute daily planetary positions, might as well do
+(* if Im going to compute daily planetary positions, might as well do
 it in a way others can use ... *)
 
 AbsoluteTiming[
@@ -30,7 +30,23 @@ ang2[t_]:=ang2[t]=VectorAngle[av[t]-ae[t],regulus]
 
 max[t_]:=max[t]=Max[ang0[t],ang1[t],ang2[t]]/Degree
 
+AbsoluteTiming[test = Table[ternary[t,t+.25,max,10^-9],{t,1600,1610,.25}]][[1]]
+
+(* 41.064015 at that level of precision, 27.124001 at 10^-6, 14.816769
+for 10^-3 *)
+
+Table[Print[ternary[t,t+.25,max,10^-6]],{t,0,2100,.25}] >> /home/barrycarter/20150812/reg-ven-jup.txt
+
+
+
+
+Plot[ang1[t],{t,2000,2024}]
+Plot[ang2[t],{t,2000,2024}]
+Plot[ang0[t],{t,2000,2024}]
+
 AbsoluteTiming[list = Table[max[t],{t,1,10,.004}]][[1]]
+
+
 
 (* 37.229233 for 1 to 10, 36.982120 for 11 to 20, 79.102711 for 21-40 *)
 

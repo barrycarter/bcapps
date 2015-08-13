@@ -29,9 +29,6 @@ ang2[t_,p1_,p2_] = ang[t,p1]-ang[t,p2]
 ang2ed[t_,p1_,p2_] = FullSimplify[D[ang2[t,p1,p2],t],conds]
 ang2dd[t_,p1_,p2_] = FullSimplify[D[ang2ed[t,p1,p2],t],conds]
 
-
-
-
 (* for outer planets first... *)
 
 (* conds = {Element[{t,d1,p1,d2,p2},Reals], d1!=1, d2!=1, p1!=1, p2!=1} *)
