@@ -22,7 +22,7 @@ for $i (@planets) {
 
 # limiting to "current" eon for testing
 # open(A,"bzcat /home/barrycarter/SPICE/KERNELS/asc[pm]*.bz2|");
-open(A,"bzcat /home/barrycarter/SPICE/KERNELS/ascp02000.431.bz2|");
+open(A,"bzcat /home/barrycarter/SPICE/KERNELS/ascp01000.431.bz2|");
 
 while (!eof(A)) {
   chomp;
@@ -48,53 +48,5 @@ while (!eof(A)) {
     my($ncoeffs) = $planetinfo{$planet}{chunks}*3*$planetinfo{$planet}{num};
     my($coeffs) = join(", ",splice(@data,0,$ncoeffs));
     print "pos[$planetinfo{$planet}{name}][Rationalize[$jstart]]=Partition[Partition[Rationalize[{$coeffs},0],$planetinfo{$planet}{num}],3];\n";
-
-#    debug("COEFFS: $#coeffs",@coeffs);
-    next;
-
-    # number of data chunks for this planet (convenience variable)
-    my($chunks) = $planetinfo{$planet}{chunks};
-    
-
-
-    # days per chunk (32 is hardcoded)
-    my($days) = 32/$chunks;
-
-    for $i (0..$chunks-1) {
-
-#      my(@print) = "f\['$planetinfo{name}', $jstart+$i*$days, $jstart+($i+1)*$days
-
-      # determine coefficients
-      for $j ("x","y","z"){
-	my(@coeffs)=splice(@data,0,$planetinfo{$planet}{num});
-	map(s/e/*10^/g,@coeffs);
-	print "f\[$planet,$jstart+$i*$days,$jstart+($i+1)*$days,\n";
-	print join(",",@coeffs),"\n";
-      }
-
-      # the start and end days for this chunk [for this planet], JD
-      debug("JS: $jstart");
-      my($jdstart) = $jstart+$i*$days;
-      my($jdend) = $jdstart+$days;
-
-      # loop through each day
-      for $j (0..$days) {
-	# position in interval
-	my($pos) = -1+$j*2/$days;
-	debug("DAY: $j, POS: $pos");
-      }
-
-      debug("$jdstart-$jdend");
-      debug("I: $i");
-      # coordinates
-
-
-
-	  # TODO: this is just testing
-#	  print "pos[$planetinfo{$planet}{name}][$chunknum][$i][$j] = {";
-#	  print join(", ",@coeffs);
-#	  print "};\n";
-      }
-    }
   }
-
+}

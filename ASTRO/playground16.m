@@ -25,47 +25,38 @@ posxyz[jd_,planet_] := Module[{jd2,chunk,days,t},
     {i,1,3}]
 ];
 
+(* the vector between earth and a planet *)
 
+earthvector[jd_,planet_] := posxyz[jd,planet]-posxyz[jd,earth];
 
-(* Chebyshev with memoization [which is actually unnecessary, grumble] *)
+(* the fixed J2000 vector for a given ra/dec [eg, fixed stars] *)
 
-cheb[n_,t_] := cheb[n,t] = ChebyshevT[n,t];
+earthvecstar[ra_,dec_] = {Cos[ra]*Cos[dec], Sin[ra]*Cos[dec], Sin[dec]};
 
-(* list of cheb at t w/ coeffs *)
+regulus = earthvecstar[(10+8/60+22.311/3600)/12*Pi,(11+58/60+1.95/3600)*Degree]
 
-jd2params[2457248.209699,mercury]
+(* angle between two planets, as viewed from earth *)
 
+earthangle[jd_,p1_,p2_] := VectorAngle[earthvector[jd,p1],earthvector[jd,p2]];
 
+(* max separation between any two *)
 
+max[jd_] := Max[{
+ VectorAngle[earthvector[jd,jupiter],regulus],
+ VectorAngle[earthvector[jd,venus],regulus],
+ earthangle[jd,venus,jupiter]
+}];
 
+Table[ternary[t,t+90,max,10^-6],{t,2451770.,2451770+365*10,90.}]
 
-jd2params[2451536+1/2+5,mercury]
+Plot[earthangle[jd,venus,jupiter], {jd,2457248.227454-100,2457248.227454+100}]
 
+Plot[VectorAngle[earthvector[jd,jupiter],regulus],{jd,2457248-100,2457248+100}]
+Plot[VectorAngle[earthvector[jd,venus],regulus],{jd,2457248-100,2457248+100}]
 
-(* for a given JD, find the "base" 32-day-"multiple" JD and the
-remainder term *)
-
-(* TODO: first part can maybe be written better as Quotient? *)
-
-jd2jd[jd_] = {Floor[(jd-33/2)/32]*32+33/2,Mod[jd-33/2,32]}
-
-(* which coefficient set to use? *)
-
-jd2setn[jd_,planet_] = Floor[jd2jd[jd][[2]]/32*info[planet][chunks]+1]
-
-(* where in [-1,1] are we for that coefficient set? *)
-
-
-
-
-
-(* Given a planet id [purely so I can spit it back out], start date,
-end date, and Chebyshev coefficients, return values for each date in
-interval *)
-
-f[id_,sd_,ed_,l_] := Module[{p,d},
- p[t_] = Sum[l[[i]]*ChebyshevT[i-1,t],{i,1,Length[l]}];
- Table[p[(d-sd)/(ed-sd)*2-1],{d,sd,ed}]
-]
-
+Plot[{
+ VectorAngle[earthvector[jd,jupiter],regulus],
+ VectorAngle[earthvector[jd,venus],regulus],
+ earthangle[jd,venus,jupiter]
+}, {jd, 2457248, 2457248+366}]
 
