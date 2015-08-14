@@ -37,6 +37,8 @@ while (!eof(A)) {
   # first 5 coeffs are special
   my($blank, $chunknum, $tchunks, $jstart, $jend) = splice(@data,0,5);
 
+  # TODO: allow for range checking here, if <$start next, if >$end last
+
   # error checking
   unless ($blank=~/^\s*$/) {warn "BAD BLANK: $data";}
   unless ($chunknum=~/^\d+$/) {warn "BAD CHUNKNUM: $data";}
@@ -44,6 +46,10 @@ while (!eof(A)) {
 
   # go thru planets
   for $planet (@planets) {
+
+    # TODO: allow for planet checking as well (currently grepping
+    # output to find planets I want)
+
     # data elements belonging to this planet
     my($ncoeffs) = $planetinfo{$planet}{chunks}*3*$planetinfo{$planet}{num};
     my($coeffs) = join(", ",splice(@data,0,$ncoeffs));

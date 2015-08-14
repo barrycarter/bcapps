@@ -2,14 +2,31 @@
 assuming circular orbits... for "production" use, at least double
 these numbers *)
 
+(* TODO: restore "FullSimplify" on each formula, but removing now
+since I want to use production values *)
+
 (* Assuming two dimensions; units are AU/years; using Keplers T^2=R^3 *)
 
 conds = {Element[t,Reals],p>0,p1>0,p2>0,p1!=1,p2!=1,p!=1}
 earth[t_] = {Cos[2*Pi*t],Sin[2*Pi*t]}
 plan[t_,p_] = {p^(3/2)*Cos[2*Pi*t/p],p^(3/2)*Sin[2*Pi*t/p]}
 ang[t_,p_] = Apply[ArcTan,plan[t,p]-earth[t]]
-anged[t_,p_] = FullSimplify[D[ang[t,p],t],conds]
-angedd[t_,p_] = FullSimplify[D[anged[t,p],t],conds]
+anged[t_,p_] = D[ang[t,p],t]
+angedd[t_,p_] = D[anged[t,p],t]
+
+(* and now, for two separate planets *)
+
+ang2[t_,p1_,p2_] = ang[t,p1]-ang[t,p2]
+ang2ed[t_,p1_,p2_] = D[ang2[t,p1,p2],t]
+ang2dd[t_,p1_,p2_] = D[ang2ed[t,p1,p2],t]
+
+(* Periods:
+
+Mars: 1.8808
+Jupiter: 11.8618
+
+*)
+
 
 Solve[angedd[t,p]==0,t,Reals]
 
@@ -22,12 +39,6 @@ Simplify[anged[(p+2p*n)/2/(p-1),p],Element[n,Integers]]
 
 2*Pi/(1+Sqrt[p]+p)
 2*Pi/(1-Sqrt[p]+p)
-
-(* and now, for two separate planets *)
-
-ang2[t_,p1_,p2_] = ang[t,p1]-ang[t,p2]
-ang2ed[t_,p1_,p2_] = FullSimplify[D[ang2[t,p1,p2],t],conds]
-ang2dd[t_,p1_,p2_] = FullSimplify[D[ang2ed[t,p1,p2],t],conds]
 
 (* for outer planets first... *)
 
