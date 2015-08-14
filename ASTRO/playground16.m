@@ -47,7 +47,4 @@ max[jd_] := Max[{
  earthangle[jd,venus,jupiter]
 }];
 
-Table[Print[FullForm[ternary[t,t+90,max,10^-6]]],{t,2451536.5,2816784.5,90.}]
-
-
-
+Table[{jd,max[jd]},{jd,2451536.5,2816784.5}] >> /home/barrycarter/20150813/dailies2000.txt

@@ -4,7 +4,7 @@
 # List[2.1625297498230506`*^6, 0.008766346776571019`]
 # this converts to y-m-d and degrees
 
-perl -nle 'unless (/null/i) {s/\`\*\^/e/g; s/^.*?\[(.*?),\s*//; system("j2d $1"); s/\`\].*$//; print $_/3.1416*180}' all.txt
+perl -nle 'if(/null/i){next;} s/\`\*\^/e/g; s/^.*?\[(.*?),\s*//;my($date)=`j2d $1`;s/\`\].*$//;chomp($date);my($deg)=$_*180/3.1415926535897932385;if($deg>=5.5){next;};print "$date $deg"' venjupreg-*.txt
 
 exit;
 
