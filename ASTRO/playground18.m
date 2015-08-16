@@ -1,16 +1,46 @@
 (* planetary conjunctions using ecliptic coordinates, more for
 explanation and general overview, not exact calculations *)
 
-(* http://farside.ph.utexas.edu/Books/Syntaxis/Almagest/node37.html#lt4 *)
+(* http://ssd.jpl.nasa.gov/txt/p_elem_t2.txt *)
 
 (* circular orbits, ecliptic longitude, t = days since 2000-01-01 12:00:00 *)
 
 pos[t_,au_,j2kp_,degday_] = au*{
- Cos[(j2kp+t*degday)*Degree], Sin[(j2kp+degday)*Degree]
+ Cos[(j2kp+t*degday/36525)*Degree], Sin[(j2kp+t*degday/36525)*Degree]
 };
 
-mercury[t_] = pos[t,0.38709843,252.25166724,7.00559432];
-venus[t_] = pos[t,0.72332102,181.97970850,3.39777545];
+mercury[t_] = pos[t,0.38709843,252.25166724,149472.67486623];
+venus[t_] = pos[t,0.72332102,181.97970850,58517.81560260];
+(* cheating and using EMB, but that's close + I'm only seeking approx *)
+earth[t_] = pos[t,1.00000018,100.46691572,35999.37306329];
+mars[t_] = pos[t,1.52371243,-4.56813164,19140.29934243];
+jupiter[t_] = pos[t,5.20248019,34.33479152,3034.90371757];
+saturn[t_] = pos[t,9.54149883,50.07571329,1222.11494724];
+uranus[t_] = pos[t,19.18797948,314.20276625,428.49512595];
+
+Plot[Apply[ArcTan,jupiter[t]-earth[t]]/Degree/15,{t,0,365}]
+
+Plot[{Apply[ArcTan,jupiter[t]-earth[t]],
+      Apply[ArcTan,venus[t]-earth[t]]},
+{t,0,3650}]
+
+Plot[{Apply[ArcTan,jupiter[t]-earth[t]]-
+      Apply[ArcTan,venus[t]-earth[t]]},
+{t,0,3650}]
+
+conds = Element[{t,a1,a2,a3,b1,b2,b3},Reals]
+o[t_] = {Cos[t],Sin[t]}
+o1[t_] = a1*{Cos[a2*t+a3],Sin[a2*t+a3]}
+o2[t_] = b1*{Cos[b2*t+b3],Sin[b2*t+b3]}
+Simplify[VectorAngle[o1[t]-o[t],o2[t]-o[t]],conds]
+
+Solve[(o1[t]-o[t]).(o2[t]-o[t]) == a1*b1,t,Reals]
+Solve[(o1[t]-o[t]).(o2[t]-o[t]) == 0,t,Reals]
+
+
+
+
+
 
 (* matrix to convert equatorial to ecliptic coordinates J2000 only(?) *)
 

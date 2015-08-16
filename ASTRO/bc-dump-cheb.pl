@@ -22,7 +22,11 @@ for $i (@planets) {
 
 # limiting to "current" eon for testing
 # open(A,"bzcat /home/barrycarter/SPICE/KERNELS/asc[pm]*.bz2|");
-open(A,"bzcat /home/barrycarter/SPICE/KERNELS/ascp02000.431.bz2|");
+open(A,"bzcat /home/barrycarter/SPICE/KERNELS/ascm01000.431.bz2|");
+
+# keep track of first/last JD
+# <h>This is the glb and lub for the empty set</h>
+my($mjstart,$mjend) = (+Infinity,-Infinity);
 
 while (!eof(A)) {
   chomp;
@@ -36,6 +40,10 @@ while (!eof(A)) {
 
   # first 5 coeffs are special
   my($blank, $chunknum, $tchunks, $jstart, $jend) = splice(@data,0,5);
+
+  # keep track of max/min
+  if ($jstart<$mjstart) {$mjstart=$jstart;}
+  if ($jend>$mjend) {$mjend=$mjend;}
 
   # TODO: allow for range checking here, if <$start next, if >$end last
 
@@ -56,3 +64,11 @@ while (!eof(A)) {
     print "pos[$planetinfo{$planet}{name}][Rationalize[$jstart]]=Partition[Partition[Rationalize[{$coeffs},0],$planetinfo{$planet}{num}],3];\n";
   }
 }
+
+close(A);
+
+print << "MARK";
+jstart = $mjstart;
+jend = $mjend;
+MARK
+;
