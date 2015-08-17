@@ -34,13 +34,23 @@ o1[t_] = a1*{Cos[a2*t+a3],Sin[a2*t+a3]}
 o2[t_] = b1*{Cos[b2*t+b3],Sin[b2*t+b3]}
 Simplify[VectorAngle[o1[t]-o[t],o2[t]-o[t]],conds]
 
+(* equating slopes *)
+
+Solve[
+(o1[t]-o[t])[[1]]/(o1[t]-o[t])[[2]] == (o2[t]-o[t])[[1]]/(o2[t]-o[t])[[2]],
+t]
+
+
 Solve[(o1[t]-o[t]).(o2[t]-o[t]) == a1*b1,t,Reals]
 Solve[(o1[t]-o[t]).(o2[t]-o[t]) == 0,t,Reals]
 
+Plot[First[venus[t]-earth[t]]*Last[jupiter[t]-earth[t]] -
+     Last[venus[t]-earth[t]]*First[jupiter[t]-earth[t]],
+{t,0,2000}]
 
-
-
-
+FindAllCrossings[First[venus[t]-earth[t]]*Last[jupiter[t]-earth[t]] -
+     Last[venus[t]-earth[t]]*First[jupiter[t]-earth[t]],
+{t,0,365000}]
 
 (* matrix to convert equatorial to ecliptic coordinates J2000 only(?) *)
 
@@ -107,7 +117,4 @@ Print["DEBUG:",t]'
   Return[ternary[t[[2,1]],t[[3,1]],f,eps]]];
  Return[{Null,Null}];
 ]
-
-
-
 

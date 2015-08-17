@@ -334,3 +334,60 @@ ternary[a_,b_,f_,eps_] := Module[{t},
  Return[{Null,Null}];
 ]
 
+(* per http://mathematica.stackexchange.com/questions/5663/about-multi-root-search-in-mathematica-for-transcendental-equations *)
+
+Options[FindAllCrossings] = 
+  Sort[Join[Options[FindRoot], {MaxRecursion -> Automatic,
+       PerformanceGoal :> $PerformanceGoal, PlotPoints -> Automatic}]];
+
+FindAllCrossings[f_, {t_, a_, b_}, opts___] := Module[{r, s, s1, ya},
+       {r, ya} = Transpose[First[Cases[Normal[
+                 Plot[f, {t, a, b}, Method -> Automatic,
+                 Evaluate[Sequence @@ 
+                 FilterRules[Join[{opts}, Options[FindAllCrossings]], 
+                             Options[Plot]]]]], Line[l_] :> l, Infinity]]];
+       s1 = Sign[ya]; If[ ! MemberQ[Abs[s1], 1], Return[{}]];
+       s = Times @@@ Partition[s1, 2, 1];
+       If[MemberQ[s, -1] || MemberQ[Take[s, {2, -2}], 0], 
+          Union[Join[Pick[r, s1, 0], 
+                Select[t /. Map[FindRoot[f, {t, r[[#]], r[[# + 1]]}, 
+                       Evaluate[Sequence @@ 
+                       FilterRules[Join[{opts}, Options[FindAllCrossings]], 
+                                   Options[FindRoot]]]] &,
+                       Flatten[Position[s, -1]]], a <= # <= b &]]], {}]]
+
+(* the planet functions below only work if pos[] is defined *)
+
+(* A planets position *)
+
+posxyz[jd_,planet_] := Module[{jd2,chunk,days,t},
+
+   (* normalize to boundary *)
+   jd2 = jd-33/2;
+
+   (* days in a given chunk *)
+   days = 32/info[planet][chunks];
+
+   (* which chunk *)
+   chunk = Floor[Mod[jd2,32]/days]+1;
+
+   (* where in chunk *)
+   t = Mod[jd2,days]/days*2-1;
+
+   (* and Chebyshev *)
+   Table[chebyshev[pos[planet][Quotient[jd2,32]*32+33/2][[chunk]][[i]],t],
+    {i,1,3}]
+];
+
+(* the vector between earth and a planet *)
+
+earthvector[jd_,planet_] := posxyz[jd,planet]-posxyz[jd,earthmoon];
+
+(* the fixed J2000 vector for a given ra/dec [eg, fixed stars] *)
+
+earthvecstar[ra_,dec_] = {Cos[ra]*Cos[dec], Sin[ra]*Cos[dec], Sin[dec]};
+
+(* angle between two planets, as viewed from earth *)
+
+earthangle[jd_,p1_,p2_] :=  VectorAngle[earthvector[jd,p1],earthvector[jd,p2]];
+
