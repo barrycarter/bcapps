@@ -391,3 +391,7 @@ earthvecstar[ra_,dec_] = {Cos[ra]*Cos[dec], Sin[ra]*Cos[dec], Sin[dec]};
 
 earthangle[jd_,p1_,p2_] :=  VectorAngle[earthvector[jd,p1],earthvector[jd,p2]];
 
+xyz2sph[x_,y_,z_] = {ArcTan[x,y], ArcTan[Sqrt[x^2+y^2],z], Norm[{x,y,z}]};
+sph2xyz[th_,ph_,r_] = r*{Cos[th]*Cos[ph], Sin[th]*Cos[ph], Sin[ph]};
+
+

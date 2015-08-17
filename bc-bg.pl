@@ -50,7 +50,7 @@ $blue = "128,128,255";
 # HACK: leave n top lines blank for apps that "nest" there
 # push(@info,"","","");
 # last line indicates break between blank and data
-push(@err,"","");
+#push(@err,"","");
 push(@info,"______________________");
 
 # uptime (just the seconds)

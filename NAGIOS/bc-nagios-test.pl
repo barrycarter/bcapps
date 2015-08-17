@@ -92,6 +92,23 @@ sub func {
   }
 }
 
+=item bc_git($dir)
+
+Checks if I have unpushed git changes (which may be a bad thing to
+check actually). This is pretty much just "git diff --exit-code ." 
+with a chdir, but I couldn't get it working like that. Note the '.' 
+can NOT be changed to another directory, the meaning and results are
+quire different.
+
+=cut
+
+sub bc_git {
+  my($dir) = @_;
+  chdir($dir)||die("Can't change to $dir");
+  my($out,$err,$res) = cache_command2("git diff --exit-code .");
+  return $res;
+}
+
 =item bc_check_file_of_files_age($file)
 
 Given a file formatted like recentfiles.txt, check that all files are
@@ -143,9 +160,21 @@ sub bc_check_file_of_files_age {
   return 0;
 }
 
+=item bc_check_mounts2($filename)
 
+Runs bc_check_mounts for all mount points in $filename. This really
+should be an option to bc_check_mounts, but since I send the mounts
+point there as a list, there's no place for options (sigh).
 
+=cut
 
+sub bc_check_mounts2 {
+  my($fname) = @_;
+  my(@mpts) = `egrep -v '^#' $fname`;
+  map(chomp($_),@mpts);
+  debug("MPTS",@mpts);
+  return bc_check_mounts(@mpts);
+}
 
 =item bc_check_mounts(@mountpoints)
 
