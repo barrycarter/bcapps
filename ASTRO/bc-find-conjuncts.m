@@ -1,27 +1,12 @@
-(* TODO: had to load info[] lines manually, need to automate this *)
+(* Load in mx files created by bc-dump-cheb.pl *)
 
-(* after bc-find-vjr.m files are created, glue them back into
-mathematica like this:
+DumpGet["/home/barrycarter/SPICE/KERNELS/ascp01000.431.bz2.venus,jupiter,earthmoon,sun.mx"];
+DumpGet["/home/barrycarter/SPICE/KERNELS/CONJUNCTIONS/seps1000.mx"];
 
-echo "list = {" >! outputfile.txt
-: the -v 'jd' avoids printing the header string
-fgrep -h '{' output-for-*.txt | fgrep -v jd |
- perl -nle 'chomp;print "$_,"' >> outputfile.txt
-: the 0 line prevents the null error
-echo "{0,{0,0,0}}};\n" >> outputfile.txt
+(* find the maximal separation of Venus/Jupiter/Regulus and then max
+separation from Sun; sort to assure JD order *)
 
-(ignore the "null" error, load both outputfile.txt above and the
-ephermis for the time period in question, then...)
-
-*)
-
-(* find the maximal separation of Venus/Jupiter/Regulus *)
-
-(* the -1 below is to get rid of the "null" error *)
-
-maxt = Table[{list[[i,1]],Max[list[[i,2]]]}, {i,1,Length[list]-1}];
-
-regulus = earthvecstar[(10+8/60+22.311/3600)/12*Pi,(11+58/60+1.95/3600)*Degree]
+seps2=Sort[Table[{i[[1]],Max[Take[i[[2]],3]],Max[Take[i[[2]],-3]]},{i,seps}]];
 
 (* and the actual formula *)
 
@@ -31,16 +16,22 @@ max[jd_] := Max[{
  earthangle[jd,venus,jupiter]
 }];
 
-(* find local minima indices in maxt *)
+regulus = earthvecstar[(10+8/60+22.311/3600)/12*Pi,(11+58/60+1.95/3600)*Degree]
 
-mins =  Select[Range[2,Length[maxt]-1],
- maxt[[#,2]]<=maxt[[#+1,2]] && maxt[[#,2]]<=maxt[[#-1,2]] &];
+(* find local minima *)
+
+mins =  Table[{i,seps2[[i]]}, {i,Select[Range[2,Length[seps2]-1],
+ seps2[[#,2]]<=seps2[[#+1,2]] && seps2[[#,2]]<=seps2[[#-1,2]] &]}];
 
 (* find actual lowest instant *)
 
-mins2 = Table[maxt[[i,1]],{i,mins}];
+truemin[minelt_] := ternary[minelt[[2,1]]-1,minelt[[2,1]]+1,max,10^-6];
 
-mins3=Table[ternary[mins2[[i]]-1,mins2[[i]]+1,max,10^-9],{i,1,Length[mins2]}];
+
+
+mins2=Table[ternary[i[[2,1]]-1,i[[2,1]]+1,max,10^-9],{i,mins}];
+
+DumpSave["/home/barrycarter/SPICE/KERNELS/CONJUNCTIONS/rmin1000.mx", mins2];
 
 (* format as degrees and days *)
 

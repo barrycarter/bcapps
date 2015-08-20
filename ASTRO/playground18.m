@@ -1,6 +1,32 @@
 (* planetary conjunctions using ecliptic coordinates, more for
 explanation and general overview, not exact calculations *)
 
+(* what if jupiters orbit were exactly 12 years? *)
+
+fakeearth[t_] = {Cos[2*Pi*t],Sin[2*Pi*t]};
+
+(* below from Keplers R^3/T^2 = constant *)
+
+fakeplan[t_,p_] = p^(2/3)*{Cos[2*Pi*t/p],Sin[2*Pi*t/p]};
+
+ParametricPlot[{fakeearth[t],fakeplan[t,2]},{t,0,1},AxesOrigin->{0,0}];
+
+Plot[Apply[ArcTan,fakeplan[t,11.866308987591655]-fakeearth[t]]/Degree,{t,0,150}]
+
+fakejupiter[t_] = 144^(1/3)*{Cos[Pi*t/6],Sin[Pi*t/6]};
+
+(* 13 years *)
+
+fakejupiter2[t_] = 169^(1/3)*{Cos[Pi*t/6.5],Sin[Pi*t/6.5]};
+
+ParametricPlot[{fakeearth[t],fakejupiter[t]},{t,0,1}];
+
+Plot[Apply[ArcTan,fakejupiter2[t]-fakeearth[t]]/Degree,{t,0,13}]
+
+
+
+
+
 (* http://ssd.jpl.nasa.gov/txt/p_elem_t2.txt *)
 
 (* circular orbits, ecliptic longitude, t = days since 2000-01-01 12:00:00 *)

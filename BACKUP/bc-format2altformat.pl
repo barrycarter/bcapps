@@ -10,6 +10,9 @@
 # 234881029 (also 234881028) = /mnt/sshfs/
 # 2886150081 = /mnt/sshfs2/c/
 # 3154434839 = /mnt/sshfs2/k/
+# below is temporary for a special case external drive
+# 2065 = temp
+
 
 require "/usr/local/lib/bclib.pl";
 
@@ -42,10 +45,12 @@ while (<>) {
     $name=~s%/Volumes/[A-Z]{5}/%/mnt/sshfs/%;
   } elsif ($devno == 2886150081 || $devno == 3154434839) {
     $name=~s%/cygdrive/%/mnt/sshfs2/%;
+  } elsif ($devno == 2065) {
+    $name=~s%^\.%%;
   } elsif ($devno == 2080) {
     # do nothing, but allow
   } else {
-    warn("BAD DEVNO: $_");
+    warn("BAD DEVNO ($devno): $_");
     next;
   }
 
