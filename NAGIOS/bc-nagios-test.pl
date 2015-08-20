@@ -139,7 +139,10 @@ sub bc_check_file_of_files_age {
 
     my($out,$err,$res) = cache_command("ls -1tr $files | head -1 | xargs stat -c '%Y'");
 
-    if ($res) {
+    debug("ERR: $err, RES: $res");
+
+    # pipeline can return 0 even if ls returns error, so checking stderr too
+    if ($res||$err) {
       print "Filespec $files returned error: $err\n";
       return 2;
     }
