@@ -5,6 +5,21 @@ these numbers *)
 (* TODO: restore "FullSimplify" on each formula, but removing now
 since I want to use production values *)
 
+(* by plotting, maximal derv as function of p:
+
+1.1: ~ 5.98
+1.5: 4.9
+2: 4.0
+4: 2.1
+5: 1.75
+12: .66
+50: .0143
+
+In[50]:= ListPlot[{{1.5,4.9},{2,4},{4,2.1},{5,1.75},{12,.66},{50,.0143}}]       
+
+
+*)
+
 (* Assuming two dimensions; units are AU/years; using Keplers T^2=R^3 *)
 
 conds = {Element[t,Reals],p>0,p1>0,p2>0,p1!=1,p2!=1,p!=1}

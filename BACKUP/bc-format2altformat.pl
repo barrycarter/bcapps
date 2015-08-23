@@ -11,7 +11,7 @@
 # 2886150081 = /mnt/sshfs2/c/
 # 3154434839 = /mnt/sshfs2/k/
 # below is temporary for a special case external drive
-# 2065 = temp
+# 2065/2161 = temp
 
 
 require "/usr/local/lib/bclib.pl";
@@ -45,7 +45,7 @@ while (<>) {
     $name=~s%/Volumes/[A-Z]{5}/%/mnt/sshfs/%;
   } elsif ($devno == 2886150081 || $devno == 3154434839) {
     $name=~s%/cygdrive/%/mnt/sshfs2/%;
-  } elsif ($devno == 2065) {
+  } elsif ($devno == 2161) {
     $name=~s%^\.%%;
   } elsif ($devno == 2080) {
     # do nothing, but allow

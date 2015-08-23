@@ -38,6 +38,8 @@ my($mjstart,$mjend) = (+Infinity,-Infinity);
 
 while (!eof(A)) {
 
+#  if (++$count>10) {last;} # testing
+
   chomp;
   my($data) = "";
   # <h>this code should be taken out and shot</h>
@@ -79,7 +81,9 @@ my($df) = "$file.$globopts{planets}.mx";
 print B << "MARK";
 info[jstart] = $mjstart;
 info[jend] = $mjend;
-DumpSave["$df", {pos,info}];
+<</home/barrycarter/BCGIT/ASTRO/bc-define-seps.m
+seps = Table[seps[jd],{jd,$mjstart,$mjend}];
+DumpSave["$df", {pos,info,seps}];
 MARK
 ;
 

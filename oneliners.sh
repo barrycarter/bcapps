@@ -1,5 +1,13 @@
 # shell one liners
 
+# obtains number to category mapping for
+# http://en.allexperts.com/q/a.htm and similar pages
+
+fgrep /q/ ?.htm | perl -nle 's%/q/.*?\-(\d+)/\">(.*?)</a>%%; print "$1 $2"'
+
+
+exit;
+
 # item alpha
 
 # find PNG files that haven't been tesseract'd and tesseract them
