@@ -30,6 +30,10 @@ while ($all=~s/\{+(.*?),\s*\{(.*?)\,\s*(.*?)\},\s*(.*?)\}//) {
   # fly oddness
 #  if ($y+$r > 113) {next;}
 
+  # the ecliptic
+  my($midy) = $h/2;
+  print "dline 0,$midy,$w,$midy,255,0,0\n";
+
   # testing limit
   if ($mag<=3.5) {
     print "string 0,0,255,$x,$y,tiny,$name\n";
