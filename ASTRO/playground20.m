@@ -29,3 +29,9 @@ t2 = Table[{Disk[{-i[[2,1]],i[[2,2]]},1*(6-i[[3]])],
  Text["",{-i[[2,1]],i[[2,2]]}]}, {i,Select[t,Abs[#[[2,2]]]<5&]}]
 
 Show[Graphics[t2]]
+
+(* venus ecliptic position, 2015 daily, radians and km *)
+
+ven = Table[{jd,Apply[xyz2sph,equ2ecl[obq].earthvector[jd,venus]],
+VectorAngle[earthvector[jd,sun],earthvector[jd,venus]]},
+{jd,2457023.5,2457023.5+366}]

@@ -9,6 +9,29 @@ fakeearth[t_] = {Cos[2*Pi*t],Sin[2*Pi*t]};
 
 fakeplan[t_,p_] = p^(2/3)*{Cos[2*Pi*t/p],Sin[2*Pi*t/p]};
 
+fakeplan2[t_,p_] = p^(2/3)*{Cos[2*Pi*(t/p-t)],Sin[2*Pi*(t/p-t)]};
+
+fakeplan3[t_,p_] = fakeplan2[t,p]-{1,0};
+
+(* this is the slope of the vector from earth, sun fixed *)
+
+fakeplan4[t_,p_] = Apply[Divide,fakeplan3[t,p]];
+
+Chop[Series[Apply[ArcTan,fakeplan3[t,12.]],{t,0,15}]];
+
+Chop[Series[Apply[ArcTan,fakeplan3[t,5.20248019^(3/2)]],
+{t,11.8663/10.8663/2,15}]];
+
+(* above repeats every 12/11 year or whatever *)
+
+(* letting u = t/p we have ... *)
+
+Series[Apply[ArcTan,fakeplan3[p*u,t/u]],{t,0,5}];
+Series[Apply[ArcTan,fakeplan3[2*u,t/u]],{t,0,5}];
+
+
+Plot[{Apply[Divide,fakeplan2[t,1.5]-{1,0}],Apply[Divide,fakeplan2[t,12]-{1,0}]},{t,0,.5},AxesOrigin->{0,0}];
+
 ParametricPlot[{fakeearth[t],fakeplan[t,2]},{t,0,1},AxesOrigin->{0,0}];
 
 Plot[Apply[ArcTan,fakeplan[t,11.866308987591655]-fakeearth[t]]/Degree,{t,0,150}]
