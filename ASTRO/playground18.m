@@ -1,6 +1,59 @@
 (* planetary conjunctions using ecliptic coordinates, more for
 explanation and general overview, not exact calculations *)
 
+(* ecliptic longitude vs sun's ecliptic longitude *)
+
+(* matrix to convert equatorial to ecliptic coordinates J2000 only(?) *)
+
+equ2ecl[e_] = {{1,0,0},{0,Cos[e],Sin[e]},{0,-Sin[e],Cos[e]}};
+
+(* approx obliquity *)
+
+obq = Pi*5063835528000/38880000000000;
+
+equ2ecl = equ2ecl[obq];
+
+(* ecliptic latitude/longitude, in radians, as measured from Earth *)
+
+ecllatlong[jd_,planet_]:=Take[Apply[xyz2sph,equ2ecl.earthvector[jd,planet]],2];
+
+Plot[ecllatlong[jd,jupiter][[1]]/Degree,{jd,2457259-365*5,2457259}]
+
+(* ecliptic longitude angle, in radians, from earth, between planet and ssbc *)
+
+ecllatssbc[jd_,planet_] := Pi+Apply[xyz2sph,equ2ecl.posxyz[jd,earthmoon]][[1]]-
+                           ecllatlong[jd,planet][[1]];
+
+
+
+Apply[xyz2sph,equ2ecl.posxyz[2457259.372500,mercury]]
+
+(* jupiter's ecliptic longitude *)
+
+Plot[Apply[xyz2sph,equ2ecl.earthvector[jd,jupiter]][[1]]/Degree,
+{jd,2457259,2457259+365}]
+
+Plot[Apply[xyz2sph,-equ2ecl.posxyz[jd,earthmoon]][[1]]/Degree,
+{jd,2457259,2457259+365}]
+
+Plot[(
+ Apply[xyz2sph,-equ2ecl.posxyz[jd,earthmoon]][[1]] -
+ Apply[xyz2sph,equ2ecl.earthvector[jd,jupiter]][[1]])/Degree +
+ 0*(jd-2457259)/398.869*360,
+{jd,2457259,2457259+399}]
+
+Plot[{
+ Apply[xyz2sph,-equ2ecl.posxyz[jd,earthmoon]][[1]]/Degree,
+ Apply[xyz2sph,equ2ecl.earthvector[jd,jupiter]][[1]]/Degree
+},
+{jd,2457259,2457259+399}]
+
+
+
+(* given period of a planet's orbit, determine time between oppositions *)
+
+deltaopp[p_] = p/(p-1);
+
 (* what if jupiters orbit were exactly 12 years? *)
 
 fakeearth[t_] = {Cos[2*Pi*t],Sin[2*Pi*t]};
@@ -100,16 +153,6 @@ Plot[First[venus[t]-earth[t]]*Last[jupiter[t]-earth[t]] -
 FindAllCrossings[First[venus[t]-earth[t]]*Last[jupiter[t]-earth[t]] -
      Last[venus[t]-earth[t]]*First[jupiter[t]-earth[t]],
 {t,0,365000}]
-
-(* matrix to convert equatorial to ecliptic coordinates J2000 only(?) *)
-
-equ2ecl[e_] = {{1,0,0},{0,Cos[e],Sin[e]},{0,-Sin[e],Cos[e]}};
-
-(* approx obliquity)
-
-obq = Pi*5063835528000/38880000000000;
-
-equ2ecl = equ2ecl[obq];
 
 (* at 2451545.0 2000-01-01 12:00:00 *)
 

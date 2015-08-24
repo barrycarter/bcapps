@@ -20,7 +20,7 @@ $loadavg=~s/\s.*$//;
 # drop to text terminal if loadavg goes past 10 (will lower loadavg
 # and let me kill bad procs)
 # bumped this to 20 since 10 seems OK
-if ($loadavg>20) {
+if ($loadavg>30) {
   system("sudo chvt 1");
   die("LOAD TOO HIGH");
 }

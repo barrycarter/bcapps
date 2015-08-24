@@ -19,8 +19,23 @@ j2d[jd_] := Module[{},
 
 (* The rmin files define mins2 only *)
 
+limit = 5.487968849556921;
+mins25 = Select[mins2,#[[2]]/Degree<limit&];
+mins3 = Table[{i[[1]],j2d[i[[1]]],i[[2]]/Degree},{i,mins25}];
 
+(* this is the conjunction of -2-08-17 13:43:06, in degrees *)
 
+regulus = earthvecstar[(10+8/60+22.311/3600)/12*Pi,(11+58/60+1.95/3600)*Degree]
+
+(* solar distance is minimum of distances to 3 objects, in degrees *)
+
+sol[jd_] := Min[
+ VectorAngle[earthvector[jd,sun],earthvector[jd,venus]],
+ VectorAngle[earthvector[jd,sun],earthvector[jd,jupiter]],
+ VectorAngle[earthvector[jd,sun],regulus]
+]/Degree;
+
+mins5 = Table[Flatten[{sol[i[[1]]],i}],{i,mins3}];
 
 
 
