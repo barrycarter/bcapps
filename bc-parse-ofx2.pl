@@ -26,6 +26,8 @@ $all=~s%<($regex)>\s*(.*?)\s*</\1>%$ofx{$1}=$2%iseg;
 # only use last four digits
 $ofx{ACCTID}=~s/^.*(.{4})$/$1/;
 
+# determine existing transactions (to avoid dupes; can't use UNIQUE INDEX in MySQL for legacy 
+
 # transactions
 while ($all=~s%<STMTTRN>(.*?)</STMTTRN>%%is) {
   $trans = $1;
@@ -46,20 +48,15 @@ while ($all=~s%<STMTTRN>(.*?)</STMTTRN>%%is) {
   # out the card number
   $trans{MEMO}=~s/^$ofx{ACCTID}: //;
 
-  # query
+  # query (credcardstatements2 is new version w/ good indicies, etc)
   push(@queries,
-"INSERT IGNORE INTO credcardstatements
+"INSERT IGNORE INTO credcardstatements2
  (whichcard, amount, type, date, transaction_id, merchant) VALUES
  ('$ofx{ACCTID}', $trans{TRNAMT}, '$trans{TRNTYPE}', '$trans{DTPOSTED}',
  '$trans{FITID}', '$trans{MEMO}');");
 }
 
-debug("QUERIES",@queries);
-
-die "TESTING";
-
-# this is probably stupid
-open(A,"|sqlite3 /home/barrycarter/ofx.db");
+open(A,"|mysql test");
 print A "BEGIN;\n";
 for $i (@queries) {print A "$i;\n"}
 print A "COMMIT;\n";
