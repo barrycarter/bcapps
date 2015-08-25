@@ -1,21 +1,23 @@
 (* dumps planetary positions and will attempt to find conjunctions
 using those dumped positions [I believe it will be faster to cache] *)
 
-(* cache in general, m = memoization; hopefulyl won't run out of memory *)
+(* attempting to cache "retroactively" here *)
 
-posxyzm[jd_,planet_] := posxyzm[jd,planet] = posxyz[jd,planet];
+posxyz2[jd_,planet_] := posxyz2[jd,planet] = posxyz[jd,planet];
 
-earthvectorm[jd_,planet_] := earthvectorm[jd,planet] =
- posxyzm[jd,planet]-posxyzm[jd,earthmoon];
+earthvector2[jd_,planet_] := earthvector2[jd,planet] =
+ posxyz2[jd,planet]-posxyz2[jd,earthmoon];
 
-(* venus and mars as first tests *)
+planets={mercury,venus,mars,jupiter,saturn,uranus};
 
-venus = AbsoluteTiming[
-Table[{i,earthvectorm[i,venus]},{i,info[jstart],info[jstart]+3650}]
-];
+dailypos[p_] := dailypos[p] = 
+Table[{i,earthvector2[i,p]},{i,info[jstart],info[jend]}];
 
-(* venus about 1.51s for 10 years w/o memo *)
+Table[dailypos[p],{p,planets}];
 
+(* TODO: this should probably use info[jstart/end] to avoid overwriting *)
+
+DumpSave["/home/barrycarter/SPICE/KERNELS/daily2k.mx", dailypos];
 
 
 
