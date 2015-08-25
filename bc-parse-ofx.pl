@@ -28,6 +28,8 @@ while ($all=~s%<STMTTRN>(.*?)</STMTTRN>%%is) {
  '$trans{FITID}', '$trans{MEMO}', '$trans{REFNUM}')");
 }
 
+debug("QUERIES",@queries);
+
 # this is probably stupid
 open(A,"|sqlite3 /home/barrycarter/ofx.db");
 print A "BEGIN;\n";

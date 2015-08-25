@@ -24,6 +24,15 @@ Plot[ecllatlong[jd,jupiter][[1]]/Degree,{jd,2457259-365*5,2457259}]
 ecllatssbc[jd_,planet_] := Pi+Apply[xyz2sph,equ2ecl.posxyz[jd,earthmoon]][[1]]-
                            ecllatlong[jd,planet][[1]];
 
+Plot[Mod[ecllatssbc[jd,jupiter]/Degree,360],{jd,2457259,2457259+400}]
+
+Plot[Mod[ecllatssbc[jd,mars]/Degree,360],{jd,2457259,2457259+400}]
+
+(* oppositions every 399 days or so, so 360/399 per day *)
+
+Plot[ecllatssbc[jd,jupiter]/Degree-(jd-2457259)*360/399,
+{jd,2457259,2457259+400}]
+
 
 
 Apply[xyz2sph,equ2ecl.posxyz[2457259.372500,mercury]]
