@@ -1,0 +1,13 @@
+NOTES
+=====
+
+bc-dump-cheb.pl: creates files like
+"ascp02000.431.bz2.sun,mercury,venus,earthmoon,mars,jupiter,saturn,uranus.mx"
+which lets Mathematica determine planet positions at any time during
+the given millenia (not just at discrete intervals)
+
+bc-pos-dump.m: given output of above, create a Mathematica file with
+daily positions for all planets (my belief is that it's faster to
+cache these, though that might be 100% wrong)
+
+
