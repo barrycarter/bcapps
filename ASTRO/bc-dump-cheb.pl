@@ -81,9 +81,7 @@ my($df) = "$file.$globopts{planets}.mx";
 print B << "MARK";
 info[jstart] = $mjstart;
 info[jend] = $mjend;
-<</home/barrycarter/BCGIT/ASTRO/bc-define-seps.m
-seps = Table[seps[jd],{jd,$mjstart,$mjend}];
-DumpSave["$df", {pos,info,seps}];
+DumpSave["$df", {pos,info}];
 MARK
 ;
 

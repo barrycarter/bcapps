@@ -1,3 +1,9 @@
+(* TEST BELOW: what if I use the Chebs directly? *)
+
+seps2[{p1_,p2_}] := seps2[{p1,p2}] = Table[{jd,VectorAngle[
+earthvector[jd,p1],earthvector[jd,p2]]}, {jd,info[jstart],info[jend]}];
+
+
 (* Uses the results of bc-pos-dump.m to find conjunction candidates *)
 
 outfile = "/home/barrycarter/SPICE/KERNELS/mseps"<>"-"<>

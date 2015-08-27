@@ -10,4 +10,3 @@ bc-pos-dump.m: given output of above, create a Mathematica file with
 daily positions for all planets (my belief is that it's faster to
 cache these, though that might be 100% wrong)
 
-

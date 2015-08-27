@@ -1,5 +1,14 @@
 #!/bin/sh
 
+\ls ~/SPICE/KERNELS/*.mx | xargs -I{} -n 1 math -initfile {} -initfile ~/BCGIT/ASTRO/bc-pos-dump.m
+
+exit;
+
+# for real run, will remove -p from xargs
+\ls /home/barrycarter/SPICE/KERNELS/asc*000.431*.bz2 | xargs -p -n 1 bc-dump-cheb.pl --planets=mercury,venus,earthmoon,mars,jupiter,saturn,uranus,sun
+
+exit;
+
 # printing out the list of conjunctions in "Mathematica" form, eg:
 # List[2.1625297498230506`*^6, 0.008766346776571019`]
 # this converts to y-m-d and degrees
