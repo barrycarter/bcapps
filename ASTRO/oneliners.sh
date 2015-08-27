@@ -1,6 +1,6 @@
 #!/bin/sh
 
-\ls ~/SPICE/KERNELS/*.mx | xargs -I{} -n 1 math -initfile {} -initfile ~/BCGIT/ASTRO/bc-pos-dump.m
+\ls ~/SPICE/KERNELS/asc*.mx | perl -nle 'print "math -initfile $_ < /home/barrycarter/BCGIT/ASTRO/bc-pos-dump.m";'
 
 exit;
 

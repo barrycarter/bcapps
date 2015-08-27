@@ -4,6 +4,11 @@ using those dumped positions [I believe it will be faster to cache] *)
 outfile = "/home/barrycarter/SPICE/KERNELS/daily"<>"-"<>
  ToString[Round[info[jstart]]]<>"-"<>ToString[Round[info[jend]]]<>".mx";
 
+(***** testing, this isn't working! ****)
+
+outfile = "/home/barrycarter/SPICE/KERNELS/spicetest.txt";
+info[jend] = info[jstart]+10;
+
 posxyz2[jd_,planet_] := posxyz2[jd,planet] = posxyz[jd,planet];
 
 earthvector2[jd_,planet_] := earthvector2[jd,planet] =
