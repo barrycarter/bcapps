@@ -1,5 +1,11 @@
 #!/bin/sh
 
+# find minimal separations in daily files
+
+\ls ~/SPICE/KERNELS/daily*.mx | perl -nle 'print "math -initfile $_ < /home/barrycarter/BCGIT/ASTRO/bc-conjunct-table.m";'
+
+exit;
+
 \ls ~/SPICE/KERNELS/asc*.mx | perl -nle 'print "math -initfile $_ < /home/barrycarter/BCGIT/ASTRO/bc-pos-dump.m";'
 
 exit;

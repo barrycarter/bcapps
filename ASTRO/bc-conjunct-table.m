@@ -22,20 +22,18 @@ angsep[p1_,p2_] := VectorAngle[earthvector2[jd,p1],earthvector2[jd,p2]];
 
 (* Given a table of separations, find local minima, sorted *)
 
-minseps[tab_] := Sort[Table[{i,tab[[i]]}, {i,Select[Range[2,Length[tab]-1], 
-tab[[#,2]] <= Min[tab[[#-1,2]],tab[[#+1,2]]] &]}],#1[[2,2]] < #2[[2,2]] &];
-
 minseps[tab_] := Table[tab[[i]], {i,Select[Range[2,Length[tab]-1], 
 tab[[#,2]] <= Min[tab[[#-1,2]],tab[[#+1,2]]] &]}];
 
 (* minimum separations for given list of planets *)
 
-(****** TODO: 7 is just a test below !!! ****)
-
 minangdists[list_] := minangdists[list] = Module[{t},
 
+ (* just for debugging *)
+ Print[{Round[info[jstart]],Round[info[jend]],list}];
+
  (* the daily separations *)
- t = Table[{jd,maxflist[angsep,list]},{jd,info[jstart],info[jstart]+7777}];
+ t = Table[{jd,maxflist[angsep,list]},{jd,info[jstart],info[jend]}];
 
  (* local minima and the list sent in*)
  Return[minseps[t]];
