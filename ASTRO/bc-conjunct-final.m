@@ -19,7 +19,7 @@ trueminsep[jd_,list_] := trueminsep[jd,list] = Module[{f},
  (* define the unaryfunction that is the max separation *)
  f[x_] := maxseplist[x,list];
 
- Return[ternary[jd-1,jd+1,f,1/86400]];
+ Return[ternary[jd-1,jd+1,f,1/48]];
 ]
 
 (* thread for every separation in given list *)
