@@ -1,14 +1,70 @@
-(* finds the visible stars close enough to the ecliptic to be
-"interesting" in the sense of conjunctions and occultations; ie within
-10 degrees (which is overkill since venus is 8.25 degrees at max) *)
+(* math -initfile ~/SPICE/KERNELS/stars.mx -initfile [some daily file] *)
+
+(* Given a star/planet, compute daily distances and find local mins *)
+
+test1423 = Table[
+{jd,VectorAngle[stars[[5,2]],earthvector2[jd,mars]]},
+{jd,info[jstart],info[jstart]+1000}
+]
+
+minseps[tab_] := Sort[Table[{i,tab[[i]]}, {i,Select[Range[2,Length[tab]-1], 
+tab[[#,2]] <= Min[tab[[#-1,2]],tab[[#+1,2]]] &]}],#1[[2,2]] < #2[[2,2]] &];
+
+(* 1000 below for testing, 365280 is "correct" value *)
+
+(* info[jend] = info[jstart]+1000; *)
+
+info[jend] = info[jstart]+365280;
+
+minPlanStarDist[planet_,star_] := minPlanStarDist[planet,star] = Module [{t},
+
+ (* table of distances *)
+ t = Table[{jd,VectorAngle[star,earthvector2[jd,planet]]},
+ {jd,info[jstart],info[jend]}];
+
+ (* return minimal separations *)
+ Return[minseps[t]];
+];
+
+minPlanStarDist[mars,stars[[5,2]]]
+
+
+
+
+VectorAngle[stars[[1,2]],earthvector[info[jstart],mars]]
+
+
+
+Sort[Table[
+{i[[1]],VectorAngle[i[[2]],earthvector[2457265.5,mars]]},
+{i,stars}], #1[[2]] < #2[[2]] &]
+
+
+
+
+
+test1 = Table[{jd,VectorAngle[earthvector2[jd,mars],stars3[[135,2]]]},
+{jd,info[jstart],info[jstart]+365*40}];
+
+test2=minseps[test1];
+
+(* CODE BELOW THIS LINE WAS RUN ONCE TO CREATE stars.mx, no need to run again
+
+(* the code below was run once and finds the visible stars close
+enough to the ecliptic to be "interesting" in the sense of
+conjunctions and occultations; ie within 14.5 degrees of the ecliptic *)
 
 (* math -initfile ~/BCGIT/ASTRO/eclipticlong.txt -initfile ~/BCGIT/ASTRO/namradecmag4math.m *)
+
+(* doing this as a one off so we have the "ecliptic stars" in one place *)
 
 (* x is defined in eclipticlong.txt, stars in naradecmag4math.m *)
 
 (* the 278 stars within 10 degrees of the ecliptic; 375 within 14 degrees *)
 
-x2 = Table[i[[1]],{i,Select[x,Abs[#[[2,2]]]<14&]}];
+(* Using 14.5 so Venus within 6 degrees still works; 395 of these *)
+
+x2 = Table[i[[1]],{i,Select[x,Abs[#[[2,2]]]<14.5&]}];
 
 (* stars = true ra/dec of stars *)
 
@@ -20,32 +76,8 @@ stars3 = Table[{
  i[[1]],earthvecstar[i[[2]]/12*Pi,i[[3]]*Degree],i[[4]]
 },{i,stars2}];
 
+stars = stars3;
 
-test1 = Table[{jd,VectorAngle[earthvector2[jd,mars],stars3[[135,2]]]},
-{jd,info[jstart],info[jstart]+365*40}];
+DumpSave["/home/barrycarter/SPICE/KERNELS/stars.mx",stars];
 
-minseps[tab_] := Sort[Table[{i,tab[[i]]}, {i,Select[Range[2,Length[tab]-1], 
-tab[[#,2]] <= Min[tab[[#-1,2]],tab[[#+1,2]]] &]}],#1[[2,2]] < #2[[2,2]] &];
-
-test2=minseps[test1];
-
-(* Given a J2000 star vector, planet and start/end dates, compute the
-minimal distances from the planet to the star; this assumes
-earthvector2 is defined from jdstart to jdend *)
-
-minPlanStarDist[planet_,star_,jdstart_,jdend_] := Module [{t},
-
- (* table of distances *)
- t = Table[{jd,VectorAngle[star,earthvector2[jd,planet]]},
- {jd,jdstart,jdend}];
-
- (* return minimal separations *)
- Return[minseps[t]];
-];
-
-
-
-
-
-
-
+*)

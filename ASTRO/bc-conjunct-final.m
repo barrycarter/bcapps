@@ -8,8 +8,18 @@ compute nearest fixed object *)
 planets={mercury,venus,mars,jupiter,saturn,uranus};
 conjuct1 = Subsets[planets,{2,Length[planets]}];
 
-(* TODO: looking only at seps less than 8 degrees to find mins less
-than 6 degrees might be invalid here, especially for {venus,mars} *)
+(*
+
+Looking at 8 degrees here is fine, because planets can move at most
+1.5 degrees per day, so the change in angular distance between two
+planets is limited to 3 degrees per day (opposite directions), though
+the actual limit is more like 1.75 degrees per day.
+
+If two planets are more than 8 degrees apart, there is no way the
+difference can shrink to 6 degrees at then come back to 8 degrees
+without a 4 degree movement in a day, which is impossible.
+
+*)
 
 minangdists2[list_] := minangdists2[list] = 
  Select[minangdists[list], #[[2]] < 8*Degree&];

@@ -55,6 +55,19 @@ Simplify[anged[(p+2p*n)/2/(p-1),p],Element[n,Integers]]
 2*Pi/(1+Sqrt[p]+p)
 2*Pi/(1-Sqrt[p]+p)
 
+(* computing for README.conjucts *)
+
+op[p_] := AstronomicalData[p,"OrbitPeriod"]/
+ AstronomicalData["Earth","OrbitPeriod"];
+
+Table[{p,op[p],
+2*Pi/(1+Sqrt[op[p]]+op[p])/365.2425/Degree,
+2*Pi/(1-Sqrt[op[p]]+op[p])/365.2425/Degree},
+{p,AstronomicalData["Planet"]}]
+
+
+
+
 (* for outer planets first... *)
 
 (* conds = {Element[{t,d1,p1,d2,p2},Reals], d1!=1, d2!=1, p1!=1, p2!=1} *)

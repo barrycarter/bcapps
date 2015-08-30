@@ -12,7 +12,8 @@ faster since I use the same positions multiple times). Sample output
 filename: "daily-2086288-2451568.mx" where 2086288 and 2451568 are
 Julian dates.
 
-bc-conjunct-table.m: given the output of bc-pos-dump.m, find local minimal for daily separations and writes them to mseps*.mx
+bc-conjunct-table.m: given the output of bc-pos-dump.m, find local
+minimal for daily separations and writes them to mseps*.mx
 
 
 
