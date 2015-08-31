@@ -1,6 +1,8 @@
 (* graphing conjunctions JFF *)
 
-p = Plot[earthangle[jd,mercury,venus],{jd,info[jstart],info[jend]}];
+(* for 1000 and 100 years, this method isn't even close *)
+
+p = Plot[earthangle[jd,mercury,venus],{jd,info[jstart],info[jstart]+365*10}];
 
 points = p[[1,1,3,2,1]];
 
