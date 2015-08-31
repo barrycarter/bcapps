@@ -2,19 +2,8 @@
 
 (* Given a star/planet, compute daily distances and find local mins *)
 
-test1423 = Table[
-{jd,VectorAngle[stars[[5,2]],earthvector2[jd,mars]]},
-{jd,info[jstart],info[jstart]+1000}
-]
-
-minseps[tab_] := Sort[Table[{i,tab[[i]]}, {i,Select[Range[2,Length[tab]-1], 
-tab[[#,2]] <= Min[tab[[#-1,2]],tab[[#+1,2]]] &]}],#1[[2,2]] < #2[[2,2]] &];
-
-(* 1000 below for testing, 365280 is "correct" value *)
-
-(* info[jend] = info[jstart]+1000; *)
-
-info[jend] = info[jstart]+365280;
+minseps[tab_] := Table[{i,tab[[i]]}, {i,Select[Range[2,Length[tab]-1], 
+tab[[#,2]] <= Min[tab[[#-1,2]],tab[[#+1,2]]] &]}];
 
 minPlanStarDist[planet_,star_] := minPlanStarDist[planet,star] = Module [{t},
 
@@ -26,27 +15,21 @@ minPlanStarDist[planet_,star_] := minPlanStarDist[planet,star] = Module [{t},
  Return[minseps[t]];
 ];
 
-minPlanStarDist[mars,stars[[5,2]]]
+(* this is the function we'll ultimately create *)
 
+minPlanStar[planet_,star_] := minPlanStar[planet,star] = 
+ Select[minPlanStarDist[planet,star[[2]]], #[[2,2]] < 8*Degree&];
 
+planets={mercury,venus,mars,jupiter,saturn,uranus};
 
+(* table below is purely for evaluation purposes *)
 
-VectorAngle[stars[[1,2]],earthvector[info[jstart],mars]]
+Table[minPlanStar[p,s],{p,planets},{s,stars}];
 
+outfile = "/home/barrycarter/SPICE/KERNELS/starseps"<>"-"<>
+ ToString[Round[info[jstart]]]<>"-"<>ToString[Round[info[jend]]]<>".mx";
 
-
-Sort[Table[
-{i[[1]],VectorAngle[i[[2]],earthvector[2457265.5,mars]]},
-{i,stars}], #1[[2]] < #2[[2]] &]
-
-
-
-
-
-test1 = Table[{jd,VectorAngle[earthvector2[jd,mars],stars3[[135,2]]]},
-{jd,info[jstart],info[jstart]+365*40}];
-
-test2=minseps[test1];
+DumpSave[outfile,minPlanStar];
 
 (* CODE BELOW THIS LINE WAS RUN ONCE TO CREATE stars.mx, no need to run again
 
