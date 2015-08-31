@@ -2,9 +2,31 @@
 
 (* for 1000 and 100 years, this method isn't even close *)
 
-p = Plot[earthangle[jd,mercury,venus],{jd,info[jstart],info[jstart]+365*10}];
+delta = 365*1;
 
-points = p[[1,1,3,2,1]];
+AbsoluteTiming[xyz = Table[
+Plot[earthangle[jd,mercury,venus],{jd,i,i+delta}],
+{i,info[jstart],info[jend],delta}]
+];
+
+(* Timing for delta:
+
+10 years: 156 seconds
+ 5 years: 255 seconds
+ 3 years: 350 seconds
+ 1 year: 618 seconds
+*)
+
+points = Flatten[Table[i[[1,1,3,2,1]],{i,xyz}],1];
+
+(* Number of points sampled (365280 days)
+
+10 years: 258813
+ 5 years: 425461
+ 3 years: 584498
+ 1 year: 1031693
+
+*)
 
 minin = Select[Range[2,Length[points]-1], 
 points[[#,2]] < points[[#+1,2]] && points[[#,2]] < points[[#-1,2]] &];
@@ -13,14 +35,66 @@ minpts = Table[points[[i]],{i,minin}];
 
 min2 = Select[minpts, #[[2]]<6*Degree&];
 
-(* finds 260 conjunctions *)
+(* Number of conjunctions found (daily finds 2335):
+
+10 years: 2327
+ 5 years: 2335
+ 3 years: 2337
+ 1 year: 2337
+*)
 
 true = trueminseps[{mercury,venus}];
 
-(* 2.4516196051509483*10^6 is first true conjunction, plot misses it *)
+diffs = Table[min2[[i]]-true[[i]],{i,1,
+Min[Length[min2],Length[true]]}]
+
+Abs[Transpose[diffs][[1]]]
+
+Max[
+ AbsoluteValue[Transpose[Table[min2[[i]]-true[[i]],{i,1,Length[min2]}]][[1]]]
+]
+
+(* below to track down problem of psuedo-min? *)
+
+Plot[earthangle[jd,mercury,venus],{jd,true[[1,1]],min2[[1,1]]}]
+
+FindMinimum[earthangle[jd,mercury,venus],{jd,info[jstart]}
+
+NMinimize[{earthangle[jd,mercury,venus],jd>info[jstart]},jd,
+ Method->RandomSearch]
+
+FindMinimum[{earthangle[jd,mercury,venus],jd>info[jstart]&&jd<info[jend]}, 
+{jd,min2[[1,1]]},
+Method -> LinearProgramming]
+
+
+Plot[earthangle[jd,mercury,venus],{jd,2.4557906206687754`*^6,
+2.455878831384927`*^6+5}]
+
+Plot[earthangle[jd,mercury,venus],{jd,2.4557906206687754`*^6+22,
+2.455878831384927`*^6+5}]
+
+(* function of one variable *)
+
+f[t_Real] := Module[{},
+Print["CALLED: ",t];
+Return[earthangle[t,mercury,venus]];
+];
+
+min=FindMinimum[{f[t],t>info[jstart]},{t,info[jstart]}]
+max=FindMaximum[{f[t],t>2.4515365`*^6},{t,2.4515365`*^6}]
+
+min=FindMinimum[{f[t],t>info[jstart]+365},{t,info[jstart]+365}]
 
 
 
+(* Largest misses
+
+10 years: NA, doesn't get all
+ 5 years: generally within .3 days, .1 degree
+ 3 years: can't compute, mismatch in number
+
+*)
 
 delta = .001;
 
