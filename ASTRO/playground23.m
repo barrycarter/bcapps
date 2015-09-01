@@ -2,7 +2,7 @@
 
 (* for 1000 and 100 years, this method isn't even close *)
 
-delta = 365*1;
+delta = 365*25;
 
 AbsoluteTiming[xyz = Table[
 Plot[earthangle[jd,mercury,venus],{jd,i,i+delta}],
@@ -11,6 +11,8 @@ Plot[earthangle[jd,mercury,venus],{jd,i,i+delta}],
 
 (* Timing for delta:
 
+100 years: 19 seconds
+25 years:  71 seconds
 10 years: 156 seconds
  5 years: 255 seconds
  3 years: 350 seconds
@@ -21,6 +23,8 @@ points = Flatten[Table[i[[1,1,3,2,1]],{i,xyz}],1];
 
 (* Number of points sampled (365280 days)
 
+100 years: 31367
+25 years: 120139
 10 years: 258813
  5 years: 425461
  3 years: 584498
@@ -31,12 +35,22 @@ points = Flatten[Table[i[[1,1,3,2,1]],{i,xyz}],1];
 minin = Select[Range[2,Length[points]-1], 
 points[[#,2]] < points[[#+1,2]] && points[[#,2]] < points[[#-1,2]] &];
 
+f = Function[t,earthangle[t,mercury,venus]];
+
+test1828 = Table[ternary[points[[i-1,1]],points[[i+1,1]],f,1/48],
+{i,minin}];
+
+
+
+Plot[f[t],{t,points[[42,1]],points[[44,1]]}]
+
 minpts = Table[points[[i]],{i,minin}];
 
 min2 = Select[minpts, #[[2]]<6*Degree&];
 
 (* Number of conjunctions found (daily finds 2335):
 
+100 years: 1583
 10 years: 2327
  5 years: 2335
  3 years: 2337
