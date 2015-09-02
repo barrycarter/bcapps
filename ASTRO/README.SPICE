@@ -1,8 +1,23 @@
 To compile and run example1.c:
 
-gcc -I /home/barrycarter/SPICE/cspice/include example1.c -o /tmp/example1 /home/barrycarter/SPICE/cspice/lib/cspice.a -lm
+  - Obtain the latest cspice library:
 
-where /home/barrycarter/SPICE/cspice is whereever you untarred the
-cspice.tar.Z file you got starting at
 http://naif.jpl.nasa.gov/naif/toolkit_C.html
 
+and untar the cspice.tar.Z file. I put mine in /home/barrycarter/SPICE/cspice/
+
+  - Obtain copies of the latest .tls and .tpc files:
+
+http://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/
+http://naif.jpl.nasa.gov/pub/naif/generic_kernels/lsk/
+
+I put my copies of pck00010.tpc and naif0011.tls in
+/home/barrycarter/SPICE/KERNELS
+
+  - If your versions are more recent than mine, update standards.tm
+
+  - You will need at least one ephermis (bsp) file to run
+
+  - Compile:
+
+gcc -I /home/barrycarter/SPICE/cspice/include example1.c -o /tmp/example1 /home/barrycarter/SPICE/cspice/lib/cspice.a -lm
