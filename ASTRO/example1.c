@@ -11,12 +11,6 @@
 int main( int argc, char **argv )
 {
 
-         /.
-  Create the needed windows. Note, one window
-    consists of two values, so the total number
-         of cell values to allocate equals twice
-         the number of windows.
-         ./
     SPICEDOUBLE_CELL ( result, 2*MAXWIN );
   SPICEDOUBLE_CELL ( cnfine, 2       );
 
@@ -47,31 +41,18 @@ int main( int argc, char **argv )
   SpiceInt          count;
   SpiceInt          i;
 
-         /.
-         Load kernels.
-         ./
+
 	   furnsh_c( "standard.tm" );
 
-         /.
-         Store the time bounds of our search interval in
-         the cnfine confinement window.
-         ./
 	   str2et_c( "2007 JAN 01", &begtim );
          str2et_c( "2008 JAN 01", &endtim );
 
          wninsd_c ( begtim, endtim, &cnfine );
 
-         /.
-	   Search using a step size of 6 days (in units of seconds).
-         ./
 	     step   = 6.*spd_c();
 	   adjust = 0.;
 	   refval = 0.;
 
-         /.
-         List the beginning and ending points in each interval
-         if result contains data.
-         ./
 	   gfsep_c ( targ1,
 		     shape1,
 		     frame1,
@@ -90,9 +71,6 @@ int main( int argc, char **argv )
 
          count = wncard_c( &result );
 
-         /.
-         Display the results.
-         ./
 	   if (count == 0 )
 	     {
 	       printf ( "Result window is empty.\n\n" );
@@ -102,10 +80,6 @@ int main( int argc, char **argv )
 	       for ( i = 0;  i < count;  i++ )
 		 {
 
-               /.
-               Fetch the endpoints of the Ith interval
-               of the result window.
-               ./
 		 wnfetd_c ( &result, i, &beg, &end );
 
                timout_c ( beg, TIMFMT, TIMLEN, begstr );

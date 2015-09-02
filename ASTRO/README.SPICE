@@ -1,0 +1,8 @@
+To compile and run example1.c:
+
+gcc -I /home/barrycarter/SPICE/cspice/include example1.c -o /tmp/example1 /home/barrycarter/SPICE/cspice/lib/cspice.a -lm
+
+where /home/barrycarter/SPICE/cspice is whereever you untarred the
+cspice.tar.Z file you got starting at
+http://naif.jpl.nasa.gov/naif/toolkit_C.html
+
