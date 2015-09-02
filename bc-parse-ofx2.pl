@@ -31,13 +31,16 @@ $ofx{ACCTID}=~s/^.*(.{4})$/$1/;
 # transactions
 while ($all=~s%<STMTTRN>(.*?)</STMTTRN>%%is) {
   $trans = $1;
+
   %trans = ();
   # <h>obscure code + confusing variable re-use, woohoo!</h>
   if ($globopts{caponesucks}) {
-    $trans=~s%<(.*?)>(.*?)\r%$trans{$1}=$2%iseg;
+    $trans=~s%<(.*?)>(.*?)[\r\n]%$trans{$1}=$2%iseg;
   } else {
     $trans=~s%<(.*?)>(.*?)</\1>%$trans{$1}=$2%iseg;
   }
+
+  debug("TRANS",%trans);
 
   # cleanup for MySQL
   $trans{DTPOSTED}=~s/^(\d{4})(\d{2})(\d{2}).*$/$1-$2-$3/;
@@ -46,7 +49,10 @@ while ($all=~s%<STMTTRN>(.*?)</STMTTRN>%%is) {
   # MEMO field with the full name of the merchant (but truncates the
   # merchant name in the NAME field), so I use the MEMO field, but cut
   # out the card number
-  $trans{MEMO}=~s/^$ofx{ACCTID}: //;
+
+  unless ($trans{MEMO}=~s/^$ofx{ACCTID}: //) {$trans{MEMO}=$trans{NAME};}
+
+  $trans{MEMO}=~s/\'//g;
 
   # query (credcardstatements2 is new version w/ good indicies, etc)
   push(@queries,
@@ -56,8 +62,9 @@ while ($all=~s%<STMTTRN>(.*?)</STMTTRN>%%is) {
  '$trans{FITID}', '$trans{MEMO}');");
 }
 
-open(A,"|mysql test");
-print A "BEGIN;\n";
-for $i (@queries) {print A "$i;\n"}
-print A "COMMIT;\n";
-close(A);
+# this is probably overkill
+# open(A,"|mysql test");
+print "BEGIN;\n";
+for $i (@queries) {print "$i;\n"}
+print "COMMIT;\n";
+# close(A);
