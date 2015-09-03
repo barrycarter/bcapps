@@ -6,14 +6,9 @@ conjuct1 = Subsets[planets,{2,Length[planets]}];
 
 DumpGet["/home/barrycarter/SPICE/KERNELS/stars.mx"];
 
-j2d[jd_] := j2d[jd] = Module[{},
- Run["j2d "<>ToString[AccountingForm[jd,Infinity]]<>" >/tmp/jdout.txt"];
- Return[ReadList["/tmp/jdout.txt","String"]];
-];
-
 (* distance to a given stellar object for a list of planets *)
 
-p2sdist[jd_,list_,star_] := 
+p2sdist[jd_,list_,star_] := p2sdist[jd,list,star] = 
 Max[Table[VectorAngle[earthvector[jd,i],star[[2]]],{i,list}]]
 
 (* given a single separation (planet list, jd, distance), clean it up *)
@@ -26,16 +21,19 @@ cleanup[list_,jd_,sep_] := Module[{sa,star},
  (* nearest stellar object *)
  star = Sort[Table[{p2sdist[jd,list,i],i[[1]]},{i,stars}]][[1]];
 
- Return[{j2d[jd],sep/Degree,sa,star[[2]],star[[1]]/Degree}];
+ Return[{jd,sep/Degree,sa,star[[2]],star[[1]]/Degree}];
 ];
 
+(* annotated minseps for any list of planets *)
 
-(* table of seps for merc/ven test *)
+annminsep[list_] := annminsep[list] = 
+Table[cleanup[list,i[[1]],i[[2]]], {i,trueminseps[list]}];
 
-test1223 =
-Table[{{mercury,venus},i[[1]],i[[2]]},{i,trueminseps[{mercury,venus}]}];
+(* compute for all subsets *)
 
-Apply[cleanup,test1223[[7]]]
+Table[annminsep[i],{i,conjuct1}];
 
-test1230 = Table[Apply[cleanup,i],{i,test1223}];
+outfile = "/home/barrycarter/SPICE/KERNELS/annmseps"<>"-"<>
+ ToString[Round[info[jstart]]]<>"-"<>ToString[Round[info[jend]]]<>".mx";
 
+DumpSave[outfile,{annminsep,info}];

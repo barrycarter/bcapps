@@ -7,13 +7,27 @@ which lets Mathematica determine planet positions at any time during
 the given millenia (not just at discrete intervals)
 
 bc-pos-dump.m: given output of above, create a Mathematica file with
-daily positions for all planets (to find separations, caching these is
-faster since I use the same positions multiple times). Sample output
-filename: "daily-2086288-2451568.mx" where 2086288 and 2451568 are
-Julian dates. The dump file defines "earthvector2[jd,planet]"
+daily positions for all planets relative to Earth (to find
+separations, caching these is faster since I use the same positions
+multiple times). Sample output filename: "daily-2086288-2451568.mx"
+where 2086288 and 2451568 are Julian dates. The dump file defines
+"earthvector2[jd,planet]"
 
 bc-conjunct-table.m: given the output of bc-pos-dump.m, find local
 minimal for daily separations and writes them to mseps*.mx
 
+bc-conjunct-final.m: find the true intraday minimal separations, and
+filter out minimal separations more than 6 degrees apart. Creates
+trueseps*.mx
+
+bc-trueseps2final.m: adds solar angle information and nearest star to
+trueseps, writes to annmseps-2451536-2816816.mx etc
+
+TODO
+====
+
+  - add Vesta
+
+  - compactify process above
 
 

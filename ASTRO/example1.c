@@ -1,3 +1,6 @@
+/* This is a modification of example(1) in
+   http://emfisis.physics.uiowa.edu/Software/C/cspice/doc/html/cspice/gfsep_c.html */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
