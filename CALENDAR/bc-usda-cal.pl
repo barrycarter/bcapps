@@ -18,9 +18,6 @@ MARK
 # months hash
 for $i (1..12) {$months{$months[$i]}=$i;}
 
-# days that gcal already lists
-my(%known) = list2hash("Independence Day", "New Year's Day");
-
 my($all) = read_file("$bclib{githome}/CALENDAR/holiday-observances.html");
 
 # fixed dates
@@ -34,26 +31,32 @@ while ($all=~s%<li>(.*?)\s*\((.*?)\).%%) {
   # if date does not end in number, ignore
   unless ($da=~s/\s*(\d+)$//) {next;}
   my($day) = $1;
+  debug("DAY: $day");
 
   # if what remains is not a month, ignore
   unless ($months{$da}) {next;}
 
-  # if already listed holiday, ignore
-  if ($known{$ev}) {next;}
+  # required by format
+  my($uid) = sha1_hex("$da $day $ev barrycarter");
 
-  # print a "basic" form of the holiday for grepping
-  my($grep) = $ev;
-  $grep=~s/\b(day|of|the|\&amp\;)\b//isg;
-  $grep = lc($grep);
-  $grep=~s/\s+/ /sg;
-  $grep=~s/^\s+//sg;
-  $grep=~s/\s+$//sg;
+  # cleanup
+  my($dtstart) = sprintf("2015%02d%02dT000000",$months{$da},$day);
+  debug("DTS: $dtstart");
 
-  # print this so I can confirm I am not repeating stuff sort of
-  print "$grep\n";
 
-#  debug("GRE: $grep");
-
-  debug("GOT: $da|$day|$ev");
+# TODO: this doesn't work yet, use RECUR rule
+  print A << "MARK";
+BEGIN:VEVENT\r
+SUMMARY:$ev\r
+UID:$uid\r
+DTSTART:$dtstart
+RRULE:FREQ=YEARLY;
+END:VEVENT\r
+MARK
+;
 }
+
+print A "END:VCALENDAR\r\n";
+close(A);
+
 
