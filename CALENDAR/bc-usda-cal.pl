@@ -7,7 +7,7 @@
 
 require "/usr/local/lib/bclib.pl";
 
-open(A,">$bclib{githome}/BCINFO3/sites/data/calendar/bcusda.ics");
+open(A,">$bclib{githome}/BCINFO3/sites/data/calendar/bcusda-test.ics");
 print A << "MARK";
 BEGIN:VCALENDAR\r
 VERSION:2.0\r
@@ -18,6 +18,14 @@ MARK
 # months hash
 for $i (1..12) {$months{$months[$i]}=$i;}
 
+# regex
+my($reg) = join("|",@months[1..12]);
+
+# deordinalize
+my(%ord) = ("first" => 1, "second" => 2, "third" => 3, "fourth" => 4);
+
+debug("REG: $reg");
+
 my($all) = read_file("$bclib{githome}/CALENDAR/holiday-observances.html");
 
 # fixed dates
@@ -26,31 +34,63 @@ while ($all=~s%<li>(.*?)\s*\((.*?)\).%%) {
   # split into event and date
   my($ev,$da)=($1,$2);
 
-  # TODO: don't actually ignore non-dates, just for now
+  # ignore variable (non-computable) events
+  if ($da=~/varies/i) {
+    debug("IGNORING VARIABLE: $ev/$da");
+    next;
+  }
 
-  # if date does not end in number, ignore
-  unless ($da=~s/\s*(\d+)$//) {next;}
-  my($day) = $1;
-  debug("DAY: $day");
-
-  # if what remains is not a month, ignore
-  unless ($months{$da}) {next;}
+  $ev=~s/\&amp\;/&/g;
 
   # required by format
   my($uid) = sha1_hex("$da $day $ev barrycarter");
 
+  # week long events
+  if ($da=~s/^(.*?)\s+week\s+of\s+($reg)$//is) {
+    my($ord,$mon) = ($1,$2);
+    my($dtstart) = sprintf("2015%02d01T000000",$months{$mon});
+    debug("WEEK: $ord/$mon");
+    print A << "MARK";
+BEGIN:VEVENT\r
+SUMMARY:$ev\r
+UID:$uid\r
+DTSTART:20150101T000000\r
+RRULE:FREQ=MONTHLY;BYMONTH=$months{$mon};BYDAY=$ord{$ord}SU\r
+DURATION:P1W\r
+END:VEVENT\r
+MARK
+;
+    next;
+  }
+
+  # TODO: don't actually ignore non-dates, just for now
+
+  # if date does not end in number, ignore
+  unless ($da=~s/\s*(\d+)$//) {
+    debug("SKIPPING: $ev/$da");
+    next;
+  }
+
+
+  my($day) = $1;
+
+  # if what remains is not a month, ignore
+  unless ($months{$da}) {
+    debug("SKIPPING: $ev/$da");
+    next;
+  }
+
   # cleanup
   my($dtstart) = sprintf("2015%02d%02dT000000",$months{$da},$day);
-  debug("DTS: $dtstart");
-
 
 # TODO: this doesn't work yet, use RECUR rule
   print A << "MARK";
 BEGIN:VEVENT\r
 SUMMARY:$ev\r
 UID:$uid\r
-DTSTART:$dtstart
-RRULE:FREQ=YEARLY;
+DTSTART:$dtstart\r
+DURATION: 1d\r
+RRULE:FREQ=YEARLY;\r
 END:VEVENT\r
 MARK
 ;

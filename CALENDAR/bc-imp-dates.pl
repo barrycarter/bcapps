@@ -16,6 +16,9 @@ for $i (@all) {
   for $j (0..$#fields) {$data{$data[0]}{$fields[$j]} = $data[$j];}
 }
 
+# to avoid certain repeats
+my(%seen);
+
 # TODO: http://www.un.org/en/events/observances/days.shtml
 # TODO: http://www.timeanddate.com/holidays/us/ (or maybe not)
 
@@ -90,7 +93,7 @@ delete $fixed{""};
 
 # from gcal's massive list of holidays
 # removed childrens day, not canon
-my($out,$err,$res) = cache_command2("egrep -i 'zod|islamic|ramadan|purim\/|arbor day us|passover|easter sunday|mardi gras|ash wednesday|passion sunday|good friday|pentecost|whit monday|rosh|palm sunday|yom kippur|Hannukah|kwanzaa|diwali' $bclib{githome}/ASTRO/bc-gcal-filter-out.txt","age=86400");
+my($out,$err,$res) = cache_command2("egrep -i 'cycle 78|zod|islamic|ramadan|purim\/|arbor day us|passover|easter sunday|mardi gras|ash wednesday|passion sunday|good friday|pentecost|whit monday|rosh|palm sunday|yom kippur|Hannukah|kwanzaa|diwali' $bclib{githome}/ASTRO/bc-gcal-filter-out.txt","age=86400");
 
 for $i (split(/\n/,$out)) {
 
@@ -124,6 +127,14 @@ for $i (split(/\n/,$out)) {
   $i=~s%/(atonement day|festival of lights|feast of lots)%%i;
   $i=~s%Ramadan%Ramadan starts%i;
   $i=~s%Islamic New Year\'s Day%Islam New Year%i;
+
+  # TODO: fix double chinese new year to use 2nd date?
+  debug("I: $i");
+  if ($i=~s%Cycle 78\/(\d+)\-\d+ .*?/([^/]*?)$%Chinese NY ($2)%i) {
+    # already have a CNY for this cycle
+    if ($seen{cny}{$1}) {next;}
+    $seen{cny}{$1}=1;
+  }
 
 
   # only the first of two Rosh Hashana
