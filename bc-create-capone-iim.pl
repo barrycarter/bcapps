@@ -41,11 +41,9 @@ write_file($macro, "/home/barrycarter/iMacros/Macros/bc-create-capone.iim");
 # if not running macro, stop here
 if ($globopts{norun}) {exit 0;}
 
-die "TESTING";
-
 # run the macro
 # TODO: yes, this is a terrible place to keep my firefox
-($out, $err, $res) = cache_command("/root/build/firefox/firefox -remote 'openURL(http://run.imacros.net/?m=bc-create-ally.iim,new-tab)'");
+($out, $err, $res) = cache_command("/root/build/firefox/firefox -remote 'openURL(http://run.imacros.net/?m=bc-create-capone.iim,new-tab)'");
 
 # not sure how long it takes to run above command, so wait until
 # trans*.ofx shows up in download directory (and is fairly recent)
@@ -53,14 +51,14 @@ die "TESTING";
 # TODO: this is hideous (-mmin -60 should be calculated not a guess)
 
 for (;;) {
-  ($out, $err, $res) = cache_command("find '/home/barrycarter/Download/' -iname 'trans*.ofx' -mmin -60");
+  ($out, $err, $res) = cache_command("find '/home/barrycarter/Download/' -iname 'export*.qfx' -mmin -60");
   if ($out) {last;}
   debug("OUT: $out");
   sleep(1);
 }
 
 # send file to ofx parser
-($out, $err, $res) = cache_command("/home/barrycarter/BCGIT/bc-parse-ofx.pl $out");
+($out, $err, $res) = cache_command("/home/barrycarter/BCGIT/bc-parse-ofx2.pl --caponesucks $out");
 
 # useless fact: allybank.com names their OFX dumps as trans[x], where
 # x is the unix time to the millisecond (I think)
