@@ -11,15 +11,6 @@ j2d[jd_] := j2d[jd] = Module[{},
  Return[ReadList["/tmp/jdout.txt","String"]];
 ];
 
-(* table of seps for merc/ven test *)
-
-test1223 =
-Table[{{mercury,venus},i[[1]],i[[2]]},{i,trueminseps[{mercury,venus}]}];
-
-Apply[cleanup,test1223[[7]]]
-
-test1230 = Table[Apply[cleanup,i],{i,test1223}];
-
 (* distance to a given stellar object for a list of planets *)
 
 p2sdist[jd_,list_,star_] := 
@@ -37,4 +28,14 @@ cleanup[list_,jd_,sep_] := Module[{sa,star},
 
  Return[{j2d[jd],sep/Degree,sa,star[[2]],star[[1]]/Degree}];
 ];
+
+
+(* table of seps for merc/ven test *)
+
+test1223 =
+Table[{{mercury,venus},i[[1]],i[[2]]},{i,trueminseps[{mercury,venus}]}];
+
+Apply[cleanup,test1223[[7]]]
+
+test1230 = Table[Apply[cleanup,i],{i,test1223}];
 
