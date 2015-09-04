@@ -37,17 +37,19 @@ my(@coeffs);
 
 # about 1m to read them all for a given 1000 year period
 while (<A>) {
-  if ($count++>100000) {warn "TESTING"; last;}
+#  if ($count++>100000) {warn "TESTING"; last;}
   s/D/E/g;
   while (s/(\-?0\.\d+E[+-]\d+)//) {push(@coeffs,$1);}
 }
 
-# for $i (0..$#coeffs) {debug("$i: $coeffs[$i]");}
+my($lastday) = $coeffs[$#coeffs-$#coeffs%1018+1];
 
-debug("SIZE: $#coeffs");
+debug("NCOEFF $#coeffs, $lastday");
 
-for $i (0..10) {
-  posxyz(2457266.5+$i,"mars");
+for ($i=$coeffs[0]+0; $i<$lastday; $i++) {
+  for $j (keys %planets) {
+    print join(" ",($i,$j,posxyz($i,$j),"\n"));
+  }
 }
 
 =item posxyz($jd,$planet)
@@ -61,6 +63,7 @@ TODO: @coeffs should have a better name and not be global?
 
 sub posxyz {
   my($jd,$planet) = @_;
+  my(@ret);
 
   # figure out 32 day chunk and days into that chunk
   my($chunk32) = int(($jd-$coeffs[0])/32);
@@ -78,19 +81,11 @@ sub posxyz {
 
   for $i (1..3) {
     my(@coord) = splice(@xyz, 0, $planetinfo{$planet}{num});
-    debug(chebyshevt(\@coord,$t));
+    push(@ret,chebyshevt(\@coord,$t));
   }
 
-#  debug("FC: $findchunk");
-#  debug(@coeffs[$findchunk..$findchunk+3*$planetinfo{$planet}{num}]);
-
-
-#  debug(@coeffs[$findchunk-1..$findchunk+2]);
-
-#  debug("$chunk32 + $subchunk + $t");
+  return @ret;
 }
-
-die "TESTING";
 
 =item chebyshevt([list],x)
 
