@@ -1,4 +1,8 @@
 core.setDate("2006:03:14T21:21:32");
 core.setMountMode("equatorial");
+core.selectObjectByName("Mars",true);
+StelMovementMgr.setFlagTracking(true);
+core.setTimeRate(10000);
+StelMovementMgr.zoomTo(3, 0);
 // core.moveToRaDec("17h 53m 0s", "66d 25m 0s");
 // StelMovementMgr.zoomTo(210, 5);
