@@ -20,9 +20,14 @@ my(@planets) = ("mercury:3:14:4", "venus:171:10:2", "earthmoon:231:13:2",
 # we get info for all planets, not just ones we are dumping
 for $i (@planets) {
   my(@l) = split(/:/, $i);
+  my($name) = $l[0];
   for $j ("name", "pos", "num", "chunks") {
-    $planetinfo{$i}{$j} = splice(@l,0,1);
+    $planetinfo{$name}{$j} = splice(@l,0,1);
   }
+
+  # this turns out to be really helpful
+  $planetinfo{$name}{daysperchunk} = 32/$planetinfo{$name}{chunks};
+
 }
 
 open(A,"bzcat $file|");
@@ -32,12 +37,18 @@ my(@coeffs);
 
 # about 1m to read them all for a given 1000 year period
 while (<A>) {
-  if ($count++>1000) {warn "TESTING"; last;}
+  if ($count++>100000) {warn "TESTING"; last;}
   s/D/E/g;
   while (s/(\-?0\.\d+E[+-]\d+)//) {push(@coeffs,$1);}
 }
 
-posxyz(2457270.429676,"mercury");
+# for $i (0..$#coeffs) {debug("$i: $coeffs[$i]");}
+
+debug("SIZE: $#coeffs");
+
+for $i (0..10) {
+  posxyz(2457266.5+$i,"mars");
+}
 
 =item posxyz($jd,$planet)
 
@@ -53,12 +64,23 @@ sub posxyz {
 
   # figure out 32 day chunk and days into that chunk
   my($chunk32) = int(($jd-$coeffs[0])/32);
-  my($days) = $jd-32*$chunk32-$coeffs[0];
+  $jd -= 32*$chunk32+$coeffs[0];
 
   # which subchunk and where in subchunk (-1,1)
-  my($subchunk) = int($days/32*$planetinfo{$planet}{chunks});
+  my($subchunk) = int($jd/$planetinfo{$planet}{daysperchunk});
+  $jd -= $subchunk*$planetinfo{$planet}{daysperchunk};
+  my($t) = $jd/$planetinfo{$planet}{daysperchunk}*2-1;
 
-  debug("$chunk32 + $subchunk + $days");
+  # find where in @coeffs the coefficients are for this time and planet
+  my($findchunk) = 1018*$chunk32+$planetinfo{$planet}{pos}+3*$planetinfo{$planet}{num}*$subchunk-1;
+
+  debug("FC: $findchunk");
+  debug(@coeffs[$findchunk..$findchunk+3*$planetinfo{$planet}{num}]);
+
+
+#  debug(@coeffs[$findchunk-1..$findchunk+2]);
+
+#  debug("$chunk32 + $subchunk + $t");
 }
 
 die "TESTING";
