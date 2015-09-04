@@ -50,6 +50,7 @@ while ($all=~s%<li>(.*?)\s*\((.*?)\).%%) {
     my($ord,$mon) = ($1,$2);
     my($dtstart) = sprintf("2015%02d01T000000",$months{$mon});
     debug("WEEK: $ord/$mon");
+# TODO: this creates a spurious event on 1 Jan 2015
     print A << "MARK";
 BEGIN:VEVENT\r
 SUMMARY:$ev\r

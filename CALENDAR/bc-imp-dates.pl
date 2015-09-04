@@ -27,12 +27,12 @@ my(%seen);
 
 # TONOTDO:
 # http://snap.nal.usda.gov/nutrition-through-seasons/holiday-observances
-# (too silly)
+# (too silly, but did create other calendar for this)
 
 # TODO: more?
 # TODO: re-add children's day (if I find canonical), us tennis open
 
-# TODO: Chinese/Jewish/other New Years, Diwali, Islamic holidays
+# TODO: other New Years?, Diwali, more Islamic holidays
 
 %fixed = (
 	  "New Years Day" => "0101",
@@ -148,10 +148,9 @@ for $i (split(/\n/,$out)) {
   push(@dates, $date, $i);
 }
 
-# TODO: Hannukah, equinox/solstices, Easter/Mardi Gras/Ash
-# Wednesday/Good Friday, when holidays fall on weekend, Black Friday?,
-# Earth Hour??, NBA Championships, World Cup (soccer/cricket), PGA (as
-# one offs), All-Star game
+# TODO: equinox/solstices (these do appear in another one of my
+# calendars), when holidays fall on weekend, Earth Hour??, NBA
+# Championships, World Cup (soccer/cricket), All-Star game
 
 # instead of printing, storing to array so I can put into multiple
 # formats (can't be a hash, multiple values for one key in either

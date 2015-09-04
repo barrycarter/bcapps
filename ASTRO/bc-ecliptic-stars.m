@@ -1,35 +1,22 @@
 (* math -initfile ~/SPICE/KERNELS/stars.mx -initfile [some daily file] *)
 
-(* Given a star/planet, compute daily distances and find local mins *)
-
-minseps[tab_] := Table[{i,tab[[i]]}, {i,Select[Range[2,Length[tab]-1], 
-tab[[#,2]] <= Min[tab[[#-1,2]],tab[[#+1,2]]] &]}];
-
-minPlanStarDist[planet_,star_] := minPlanStarDist[planet,star] = Module [{t},
-
- (* table of distances *)
- t = Table[{jd,VectorAngle[star,earthvector2[jd,planet]]},
- {jd,info[jstart],info[jend]}];
-
- (* return minimal separations *)
- Return[minseps[t]];
-];
-
-(* this is the function we'll ultimately create *)
-
-minPlanStar[planet_,star_] := minPlanStar[planet,star] = 
- Select[minPlanStarDist[planet,star[[2]]], #[[2,2]] < 8*Degree&];
-
 planets={mercury,venus,mars,jupiter,saturn,uranus};
 
-(* table below is purely for evaluation purposes *)
+minPlanStarDist[planet_,star_] := minPlanStarDist[planet,star] = Module [{t},
+ t = Table[{jd,VectorAngle[star[[2]],earthvector2[jd,planet]]},
+  {jd,info[jstart],info[jend]}];
+ Return[Table[t[[i]],{i, Select[Range[2,Length[t]-1], 
+  (t[[#,2]] < 8*Degree && t[[#,2]] < t[[#-1,2]] && t[[#,2]] < t[[#+1,2]]) &]}
+ ]];
+];
 
-Table[minPlanStar[p,s],{p,planets},{s,stars}];
+(* returns nothing, just force eval *)
+Table[minPlanStarDist[planet,star],{planet,planets},{star,stars}];
 
 outfile = "/home/barrycarter/SPICE/KERNELS/starseps"<>"-"<>
  ToString[Round[info[jstart]]]<>"-"<>ToString[Round[info[jend]]]<>".mx";
 
-DumpSave[outfile,minPlanStar];
+DumpSave[outfile,minPlanStarDist];
 
 (* CODE BELOW THIS LINE WAS RUN ONCE TO CREATE stars.mx, no need to run again
 
