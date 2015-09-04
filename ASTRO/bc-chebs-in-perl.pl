@@ -74,8 +74,12 @@ sub posxyz {
   # find where in @coeffs the coefficients are for this time and planet
   my($findchunk) = 1018*$chunk32+$planetinfo{$planet}{pos}+3*$planetinfo{$planet}{num}*$subchunk-1;
 
-  debug("FC: $findchunk");
-  debug(@coeffs[$findchunk..$findchunk+3*$planetinfo{$planet}{num}]);
+  my(@xyz) = @coeffs[$findchunk..$findchunk+$planetinfo{$planet}{num}*3-1];
+
+  debug("L: $#xyz");
+
+#  debug("FC: $findchunk");
+#  debug(@coeffs[$findchunk..$findchunk+3*$planetinfo{$planet}{num}]);
 
 
 #  debug(@coeffs[$findchunk-1..$findchunk+2]);
