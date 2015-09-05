@@ -3,13 +3,12 @@
 
 void main(int argc, char **argv) {
 
-#define        SPK           "/home/barrycarter/SPICE/KERNELS/de431_part-2.bsp"
-#define        ET0           -63082238400.0
-#define        STEP          86400.0
-#define        MAXITR        6278579
+#define ET0 -479695089600.+86400*468
+#define STEP 86400.0
+#define MAXITR 11100016
   SpiceInt i;
   SpiceDouble et, lt, pos [3];
-  furnsh_c(SPK);
+  furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
   int source = atoi(argv[1]);
   int target = atoi(argv[2]);
 
