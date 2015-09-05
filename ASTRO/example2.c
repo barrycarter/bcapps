@@ -1,26 +1,21 @@
 #include <stdio.h>
 #include "SpiceUsr.h"
 
-void main() {
+void main(int argc, char **argv) {
 
-#define        ABCORR        "NONE"
-#define        FRAME         "J2000"
 #define        SPK           "/home/barrycarter/SPICE/KERNELS/de431_part-2.bsp"
-#define        ET0           -43200
+#define        ET0           -63082238400.0
 #define        STEP          86400.0
-#define        MAXITR        365000
-#define        OBSERVER      399
-#define        TARGET        4
-  SpiceInt       i;
-  SpiceDouble    et;
-  SpiceDouble    lt;
-  SpiceDouble    pos [3];
-  furnsh_c ( SPK );
+#define        MAXITR        6278579
+  SpiceInt i;
+  SpiceDouble et, lt, pos [3];
+  furnsh_c(SPK);
+  int source = atoi(argv[1]);
+  int target = atoi(argv[2]);
 
   for ( i = 0;  i < MAXITR;  i++ ) {
     et  =  ET0 + i*STEP;
-    spkezp_c ( TARGET, et, FRAME, ABCORR, OBSERVER,  pos,  &lt);
-    printf("%0.f %.9f %.9f %.9f\n",et,pos[0],pos[1],pos[2]);
-    //    printf("%20.10f %20.10f %20.10f %20.10f\n",et,pos[0],pos[1],pos[2]);
+    spkezp_c (target, et, "J2000", "NONE", source,  pos,  &lt);
+    printf("%d %d %f %.9f %.9f %.9f\n",source,target,2451545.+et/86400.,pos[0],pos[1],pos[2]);
   }
 }
