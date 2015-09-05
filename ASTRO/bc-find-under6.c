@@ -6,7 +6,7 @@
 #include <string.h>
 #include "SpiceUsr.h"
 
-#define       MAXWIN    10000
+#define MAXWIN 1000000
 
 int main( int argc, char **argv )
 {
@@ -23,12 +23,12 @@ int main( int argc, char **argv )
   gfstol_c(1.);
 
   // SPICE window for all DE431
-  //  wninsd_c (-479695089600.+86400*468, 479386728000., &cnfine );
+  wninsd_c (-479695089600.+86400*468, 479386728000., &cnfine );
 
-  for (j=-479654654400.; j<479386728000.; j+= 15778476000.) {
+  //  for (j=-479654654400.; j<479386728000.; j+= 15778476000.) {
 
     // SPICE window creation
-    wninsd_c (j, j+15778476000., &cnfine );
+  //    wninsd_c (j, j+15778476000., &cnfine );
     
     // I send these as: observer b1 b2, thus the odd argv order below
     // 0.10471975511965977462 radians = 6 degrees
@@ -42,5 +42,5 @@ int main( int argc, char **argv )
       wnfetd_c ( &result,i,&begtim,&endtim);
       printf("%f,%f\n",begtim,endtim);
     }
-  }
+    //  }
 }
