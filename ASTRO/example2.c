@@ -6,11 +6,11 @@ void main() {
 #define        ABCORR        "NONE"
 #define        FRAME         "J2000"
 #define        SPK           "/home/barrycarter/SPICE/KERNELS/de431_part-2.bsp"
-#define        ET0           0.0
-#define        STEP          3600.0
-#define        MAXITR        100 
+#define        ET0           -43200
+#define        STEP          86400.0
+#define        MAXITR        365000
 #define        OBSERVER      399
-#define        TARGET        301
+#define        TARGET        4
   SpiceInt       i;
   SpiceDouble    et;
   SpiceDouble    lt;
