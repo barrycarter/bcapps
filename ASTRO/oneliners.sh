@@ -1,5 +1,11 @@
 #!/bin/sh
 
+# daily positions for all planets, all days (will use later) w Perl
+
+\ls /home/barrycarter/SPICE/KERNELS/asc*.431.bz2 | perl -nle 'print "/home/barrycarter/BCGIT/ASTRO/bc-chebs-in-perl.pl $_ --planets=sun,mercury,venus,earthmoon,mars,jupiter,saturn,uranus,moongeo,neptune,pluto,nutate > $_.perl"'
+
+exit;
+
 # find minimal separations in daily files
 
 \ls ~/SPICE/KERNELS/daily*.mx | perl -nle 'print "math -initfile $_ < /home/barrycarter/BCGIT/ASTRO/bc-conjunct-table.m";'
