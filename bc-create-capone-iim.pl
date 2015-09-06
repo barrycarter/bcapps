@@ -58,7 +58,7 @@ for (;;) {
 }
 
 # send file to ofx parser
-($out, $err, $res) = cache_command("/home/barrycarter/BCGIT/bc-parse-ofx2.pl --caponesucks '$out'");
+($out, $err, $res) = cache_command("/home/barrycarter/BCGIT/bc-parse-ofx2.pl --caponesucks '$out' | mysql test");
 
 # useless fact: allybank.com names their OFX dumps as trans[x], where
 # x is the unix time to the millisecond (I think)
