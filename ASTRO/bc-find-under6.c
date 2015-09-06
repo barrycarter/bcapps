@@ -6,7 +6,7 @@
 #include <string.h>
 #include "SpiceUsr.h"
 
-#define MAXWIN 100000
+#define MAXWIN 1000000
 
 int main( int argc, char **argv )
 {
@@ -26,10 +26,10 @@ int main( int argc, char **argv )
   gfstol_c(1.);
 
   // SPICE window for all DE431
-  // wninsd_c (-479695089600.+86400*468, 479386728000., &cnfine);
+  wninsd_c (-479695089600.+86400*468, 479386728000., &cnfine);
 
   // FOR TESTING PURPOSES ONLY!!!!
-  wninsd_c (946684800., 2147483648., &cnfine);
+  // wninsd_c (-946684800., 2147483647.+946684800., &cnfine);
     
   // I send these as: observer b1 b2, thus the odd argv order below
   // 0.10471975511965977462 radians = 6 degrees
@@ -44,7 +44,7 @@ int main( int argc, char **argv )
 
     // find the ith result and print it
     wnfetd_c(&result,i,&begtim,&endtim);
-    printf("%s %s %s 6deg %f %f\n",argv[1],argv[2],argv[3],begtim,endtim);
+    printf("%s %s %s 6deg %f %f\n",argv[1],argv[2],argv[3],2451545.+begtim/86400.,2451545.+endtim/86400.);
 
     // find min separation in this interval
     
@@ -61,7 +61,7 @@ int main( int argc, char **argv )
     for (j=0; j<count2; j++) {
       wnfetd_c(&resultr,j,&mintim1,&mintim2);
       // mintim1 and mintim2 should be identical, printing them both anyway
-      printf("%s %s %s min %f %f\n",argv[1],argv[2],argv[3],mintim1,mintim2);
+      printf("%s %s %s min %f %f\n",argv[1],argv[2],argv[3],2451545.+mintim1/86400.,2451545.+mintim2/86400.);
     }
 
     removd_c(endtim,&cnfiner);

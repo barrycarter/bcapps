@@ -5,21 +5,6 @@
 
 require "/usr/local/lib/bclib.pl";
 
-use DateTime;
-
-$dt = DateTime->from_epoch( epoch => -31556952000. );
-
-debug($dt->jd());
-
-
-# debug(get_timet_from_julian(2.4666864981041644e6));
-
-
-
-
-
-die "TESTING";
-
 # for $i (glob "/home/barrycarter/SPICE/KERNELS/annmsepsdump*.txt") {
 
 warn "TESTING WITH CURRENT FILE";
@@ -34,12 +19,26 @@ for $i (glob "/home/barrycarter/SPICE/KERNELS/annmsepsdump-2451536-2816816.txt")
 
     while ($data=~s/\{(.*?)\}//s) {
       my($jd, $sep, $sun, $star, $ssep) = split(/\,\s*/s,$1);
+
+      # TODO: yuck!
       $jd=~s/\*\^/e/;
+      $jd=sprintf("%0.6f",$jd);
+      # TODO: serious yuck!
+      my($out,$err,$res) = cache_command2("j2d $jd","age=9999999");
+      chomp($out);
+      debug("OUT: $out");
+
       debug("$planets/$jd/$sep/$sun/$star/$ssep");
+
+      # TODO: turn this into an INSERT statement
+      # TODO: breakup into year, month, day for searching
+      # TODO: this won't work if more than 2 planets, fix
+      # NOTE: including JD in final result can't use MySQL date, but also
+      # doing year/month/day breakdown for ease of use
+      print join("\t",@planets,$jd,$out,$sep,$sun,$star,$ssep),"\n";
+
     }
   }
-
-  debug("LEFTOVER: $all");
-
-  die "TESTING";
 }
+
+

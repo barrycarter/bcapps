@@ -1,5 +1,12 @@
 #!/bin/sh
 
+# runs bc-find-under6.c (compiled in ~/bin/seps) for all combinations
+# of visible planets' angular separations as viewed from Earth
+
+perl -le '@p=(1,2,4,5,6,7); for $i (0..$#p) {for $j ($i+1..$#p) {print "/home/barrycarter/bin/seps 399 $p[$i] $p[$j] > 399-$p[$i]-$p[$j]-conjuncts.out"}}'
+
+exit;
+
 # daily positions for all planets, all days (will use later) w Perl
 
 \ls /home/barrycarter/SPICE/KERNELS/asc*.431.bz2 | perl -nle 'print "/home/barrycarter/BCGIT/ASTRO/bc-chebs-in-perl.pl $_ --planets=sun,mercury,venus,earthmoon,mars,jupiter,saturn,uranus,moongeo,neptune,pluto,nutate > $_.perl"'
