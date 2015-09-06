@@ -12,11 +12,12 @@ int main( int argc, char **argv )
 {
 
   SPICEDOUBLE_CELL(result,2*MAXWIN );
+  SPICEDOUBLE_CELL(resultr,2*MAXWIN );
 
   // TODO: these windows can hold at most one interval????? 
   SPICEDOUBLE_CELL(cnfine,2);
-  SpiceInt i;
-  SpiceDouble j;
+  SPICEDOUBLE_CELL(cnfiner,2);
+  SpiceInt i,j;
 
   // which ephermis's to use
   furnsh_c( "/home/barrycarter/BCGIT/ASTRO/standard.tm" );
@@ -37,7 +38,7 @@ int main( int argc, char **argv )
 	  "<", 0.10471975511965977462,0,86400.,MAXWIN,&cnfine,&result);
 
   SpiceInt count = wncard_c(&result);
-  SpiceDouble begtim, endtim, mintim;
+  SpiceDouble begtim, endtim, mintim1, mintim2;
 
   for (i=0; i<count; i++) {
 
@@ -46,18 +47,26 @@ int main( int argc, char **argv )
     printf("%s %s %s 6deg %f %f\n",argv[1],argv[2],argv[3],begtim,endtim);
 
     // find min separation in this interval
-    SPICEDOUBLE_CELL(cnfiner,2);
+    
+    // TODO: this is hideous coding (append/remove, must be a better way)
     appndd_c(begtim,&cnfiner);
     appndd_c(endtim,&cnfiner);
     wnvald_c(2,2,&cnfiner);
+  
+    // TODO: use of ABSMIN below may miss some "conjunctions"
+    gfsep_c(argv[2],"POINT","J2000",argv[3],"POINT","J2000","NONE",argv[1], "ABSMIN", 0,0,86400.,MAXWIN,&cnfiner,&resultr);
+
+    SpiceInt count2 = wncard_c(&resultr);
+
+    for (j=0; j<count2; j++) {
+      wnfetd_c(&resultr,j,&mintim1,&mintim2);
+      // mintim1 and mintim2 should be identical, printing them both anyway
+      printf("%s %s %s min %f %f\n",argv[1],argv[2],argv[3],mintim1,mintim2);
+    }
+
     removd_c(endtim,&cnfiner);
     removd_c(begtim,&cnfiner);
 
-    //    wninsd_c(begtim, endtim, &cnfiner);
-
-    // TODO: can't re-use result here, inside loop
-    // TODO: use of ABSMIN below may miss some "conjunctions"
-    //    gfsep_c(argv[2],"POINT","J2000",argv[3],"POINT","J2000","NONE",argv[1], "ABSMIN", 0,0,86400.,MAXWIN,&cnfiner,&result);
   }
 }
 
