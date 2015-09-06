@@ -6,7 +6,7 @@
 #include <string.h>
 #include "SpiceUsr.h"
 
-#define MAXWIN 1000000
+#define MAXWIN 100000
 
 int main( int argc, char **argv )
 {
@@ -33,7 +33,7 @@ int main( int argc, char **argv )
     // I send these as: observer b1 b2, thus the odd argv order below
     // 0.10471975511965977462 radians = 6 degrees
     gfsep_c(argv[2],"POINT","J2000",argv[3],"POINT","J2000","NONE",argv[1],
-	  "<", 0.10471975511965977462,0,86400.,10000,&cnfine,&result);
+	  "<", 0.10471975511965977462,0,86400.,MAXWIN,&cnfine,&result);
 
     SpiceInt count = wncard_c( &result );
     SpiceDouble begtim, endtim;
