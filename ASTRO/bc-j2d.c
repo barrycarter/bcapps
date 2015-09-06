@@ -6,11 +6,9 @@
 #include "SpiceUsr.h"
 
 SpiceChar s[255];
-SpiceDouble time = 0.;
-SpiceInt len = 255;
 
 int main( int argc, char **argv ) {
-  etcal_c(time,len,s);
+  etcal_c(0,255,s);
   printf("%s\n",s);
 }
 
