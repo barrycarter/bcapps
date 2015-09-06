@@ -12,8 +12,9 @@ int main( int argc, char **argv )
 {
 
   SPICEDOUBLE_CELL(result,2*MAXWIN );
+
+  // TODO: these windows can hold at most one interval????? 
   SPICEDOUBLE_CELL(cnfine,2);
-  SPICEDOUBLE_CELL(cnfiner,2);
   SpiceInt i;
   SpiceDouble j;
 
@@ -39,13 +40,24 @@ int main( int argc, char **argv )
   SpiceDouble begtim, endtim, mintim;
 
   for (i=0; i<count; i++) {
-    wnfetd_c ( &result,i,&begtim,&endtim);
+
+    // find the ith result and print it
+    wnfetd_c(&result,i,&begtim,&endtim);
     printf("%s %s %s 6deg %f %f\n",argv[1],argv[2],argv[3],begtim,endtim);
 
-    // also find min separation in this interval
+    // find min separation in this interval
+    SPICEDOUBLE_CELL(cnfiner,2);
+    appndd_c(begtim,&cnfiner);
+    appndd_c(endtim,&cnfiner);
+    wnvald_c(2,2,&cnfiner);
+    removd_c(endtim,&cnfiner);
+    removd_c(begtim,&cnfiner);
+
+    //    wninsd_c(begtim, endtim, &cnfiner);
+
+    // TODO: can't re-use result here, inside loop
     // TODO: use of ABSMIN below may miss some "conjunctions"
-    //    gfsep_c(argv[2],"POINT","J2000",argv[3],"POINT","J2000","NONE",argv[1],
-    //  "ABSMIN", 0,0,86400.,MAXWIN,&cnfiner,&result);
+    //    gfsep_c(argv[2],"POINT","J2000",argv[3],"POINT","J2000","NONE",argv[1], "ABSMIN", 0,0,86400.,MAXWIN,&cnfiner,&result);
   }
 }
 
