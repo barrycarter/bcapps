@@ -3,7 +3,10 @@
 # runs bc-find-under6.c (compiled in ~/bin/seps) for all combinations
 # of visible planets' angular separations as viewed from Earth
 
-perl -le '@p=(1,2,4,5,6,7); for $i (0..$#p) {for $j ($i+1..$#p) {print "/home/barrycarter/bin/seps 399 $p[$i] $p[$j] > 399-$p[$i]-$p[$j]-conjuncts.out"}}'
+# had to run this a second time (too many hits, had to up MAXWIN),
+# thus the -f test
+
+perl -le '@p=(1,2,4,5,6,7); for $i (0..$#p) {for $j ($i+1..$#p) {unless (-f "399-$p[$i]-$p[$j]-conjuncts.out") {print "/home/barrycarter/bin/seps 399 $p[$i] $p[$j] > 399-$p[$i]-$p[$j]-conjuncts.out"}}}'
 
 exit;
 

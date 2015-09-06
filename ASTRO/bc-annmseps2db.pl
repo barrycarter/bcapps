@@ -5,11 +5,7 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# for $i (glob "/home/barrycarter/SPICE/KERNELS/annmsepsdump*.txt") {
-
-warn "TESTING WITH CURRENT FILE";
-
-for $i (glob "/home/barrycarter/SPICE/KERNELS/annmsepsdump-2451536-2816816.txt") {
+for $i (glob "/home/barrycarter/SPICE/KERNELS/annmsepsdump*.txt") {
   my($all) = read_file($i);
 
   while ($all=~s/annminsep\[\{(.*?)\}\]\s*=\s*\{(\{.*?\})\}//s) {
