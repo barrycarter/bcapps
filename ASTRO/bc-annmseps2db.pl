@@ -5,18 +5,13 @@
 
 require "/usr/local/lib/bclib.pl";
 
-
-my($date) = Astro::Nova::get_date(0.);
-
-debug($date->get_years());
-
-
-
-
-
+my($date) = Astro::Nova::get_date(-3099716.496516);
+my(@date) = ($date->get_years(), $date->get_months(),
+	     $date->get_days(), $date->get_hours(),
+	     $date->get_minutes(), $date->get_seconds());
+debug("$jd ->",join(" ",@date));
 
 die "TESTING";
-
 
 warn "Ignoring multi-planet conjunctions (for now)";
 
@@ -33,9 +28,16 @@ for $i (glob "/home/barrycarter/SPICE/KERNELS/annmsepsdump*.txt") {
     while ($data=~s/\{(.*?)\}//s) {
       my($jd, $sep, $sun, $star, $ssep) = split(/\,\s*/s,$1);
 
-      # TODO: yuck!
+      # get calendar date from Julian date
+      # MySQL can't handle years < 100 so separate into fields
       $jd=~s/\*\^/e/;
-      $jd=sprintf("%0.6f",$jd);
+      my($date) = Astro::Nova::get_date($jd);
+      my(@date) = ($date->get_years(), $date->get_months(),
+		   $date->get_days(), $date->get_hours(),
+		   $date->get_minutes(), $date->get_seconds());
+      debug("$jd ->",join(" ",@date));
+
+#      $jd=sprintf("%0.6f",$jd);
       # TODO: serious yuck!
   #    my($out,$err,$res) = cache_command2("j2d $jd","age=9999999");
 #      chomp($out);
