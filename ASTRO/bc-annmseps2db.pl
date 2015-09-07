@@ -5,6 +5,21 @@
 
 require "/usr/local/lib/bclib.pl";
 
+
+my($date) = Astro::Nova::get_date(0.);
+
+debug($date->get_years());
+
+
+
+
+
+
+die "TESTING";
+
+
+warn "Ignoring multi-planet conjunctions (for now)";
+
 for $i (glob "/home/barrycarter/SPICE/KERNELS/annmsepsdump*.txt") {
   my($all) = read_file($i);
 
@@ -13,6 +28,8 @@ for $i (glob "/home/barrycarter/SPICE/KERNELS/annmsepsdump*.txt") {
     my($planets,$data) = ($1,$2);
     my(@planets) = split(/\,\s*/s,$planets);
 
+    if (scalar(@planets)>2) {next;}
+
     while ($data=~s/\{(.*?)\}//s) {
       my($jd, $sep, $sun, $star, $ssep) = split(/\,\s*/s,$1);
 
@@ -20,9 +37,9 @@ for $i (glob "/home/barrycarter/SPICE/KERNELS/annmsepsdump*.txt") {
       $jd=~s/\*\^/e/;
       $jd=sprintf("%0.6f",$jd);
       # TODO: serious yuck!
-      my($out,$err,$res) = cache_command2("j2d $jd","age=9999999");
-      chomp($out);
-      debug("OUT: $out");
+  #    my($out,$err,$res) = cache_command2("j2d $jd","age=9999999");
+#      chomp($out);
+#      debug("OUT: $out");
 
       debug("$planets/$jd/$sep/$sun/$star/$ssep");
 
@@ -31,7 +48,7 @@ for $i (glob "/home/barrycarter/SPICE/KERNELS/annmsepsdump*.txt") {
       # TODO: this won't work if more than 2 planets, fix
       # NOTE: including JD in final result can't use MySQL date, but also
       # doing year/month/day breakdown for ease of use
-      print join("\t",@planets,$jd,$out,$sep,$sun,$star,$ssep),"\n";
+      print join("\t",@planets,$jd,"xxx",$sep,$sun,$star,$ssep),"\n";
 
     }
   }

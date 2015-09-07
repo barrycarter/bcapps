@@ -11,12 +11,10 @@ int main( int argc, char **argv ) {
 
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
-  SpiceDouble jd = 1721423.5;
+  SpiceDouble et;
 
-  et2utc_c ((jd-2451545.)*86400, "C", 0, 255, s);
-  printf("%s\n",s);
-
-  //  etcal_c((jd-2451545.)*86400.,255,s);
-  //  printf("%s\n",s);
+  for (et=-479654654399.+300.; et<= 479386728000.; et+=86400.*1.) {
+    et2utc_c(et,"C",0,255,s);
+    printf("%f %f %s\n",et,et/86400.+2451545.,s);
+  }
 }
-
