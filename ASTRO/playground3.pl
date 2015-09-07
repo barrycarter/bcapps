@@ -6,15 +6,15 @@ require "/usr/local/lib/bclib.pl";
 
 # lets add multiple 400 year periods (400 years = 146097 days)
 
-$jd = -3089124.5;
-
-$jd= ($jd-2451543.5)%146097+2451543.5;
-
-my($date) = Astro::Nova::get_date($jd);
-my(@date) = ($date->get_years(), $date->get_months(),
+while (<>) {
+  chomp;
+  my($modjd)= ($_-2451543.5)%146097+2451543.5;
+  my($date) = Astro::Nova::get_date($modjd);
+  my(@date) = ($date->get_years(), $date->get_months(),
 	     $date->get_days(), $date->get_hours(),
 	     $date->get_minutes(), $date->get_seconds());
-debug("$jd ->",join(" ",@date));
+  debug("$_ ->".join(" ",@date));
+}
 
 die "TESTING";
 
