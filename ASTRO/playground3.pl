@@ -9,8 +9,9 @@ while (<>) {
   chomp;
 
   # just testing, format is year jd
-  my($year,$jd) = split(/\s+/,$_);
-  debug("$year ($jd) ->".join(" ",jd2ymdhms_test($jd)));
+  my($sec,$jd,$date,$time) = split(/\s+/,$_);
+
+  debug("$date ($jd) ->".jd2proleptic_julian_ymdhms($jd));
 }
 
 die "TESTING";
@@ -36,6 +37,38 @@ for $y (-13200..-4000) {
 # $rd = cjdn_to_rd($cjdn, $cjdf);
 
 # debug(strftime("%Y-%m-%d",gmtime(-999999999999)));
+
+=item jd2proleptic_julian_ymdhms($jd)
+
+Given a Julian date, returns the proleptic Julian year/month/day etc.
+
+Proleptic Julian = assumes the Julian calendar (1 leap year every 4
+years w/ no variance) is always used
+
+=cut
+
+sub jd2proleptic_julian_ymdhms {
+  my($jd) = @_;
+
+  # The Julian calendar repeats every 4*365+1 = 1461 days
+  # using 2000-2003 as "reference date"
+  # [2000 1 1 = JD 2451544.500000 = Unix 946684800]
+  # how many "chunks" of 1461 days ago is/was this?
+  # 13 to compensate for Gregorian reformation
+  my($yrs) = ($jd-2451544.500000-13.);
+  # how many days into this chunk?
+  my($chunks,$days) = (floor($yrs/1461),fmodp($yrs,1461));
+  debug("CD: $yrs/$chunks/$days");
+  my(@gm) = gmtime(946684800+$days*86400);
+#  debug(946684800+$days*86400,"becomes",@gm);
+  debug(strftime("PRE: %Y-%m-%d %H:%M:%S",@gm));
+  # adjust the year (gmtime returns years-1900, thus the adjustment below)
+  debug("OLD: $gm[5]");
+  $gm[5] += 1900+4*$chunks;
+  debug("NEW: $gm[5]");
+  debug("$gm[5]-$gm[4]-$gm[3] $gm[2]:$gm[1]:$gm[0]");
+}
+
 
 sub jd2ymdhms_test {
 
