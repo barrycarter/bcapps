@@ -126,7 +126,7 @@ for $i (split(/\n/,$out)) {
   $i=~s%(shrove tuesday|whitsunday|pesach)/%%i;
   $i=~s%/(atonement day|festival of lights|feast of lots)%%i;
   $i=~s%Ramadan%Ramadan starts%i;
-  $i=~s%Islamic New Year\'s Day%Islam New Year%i;
+  $i=~s%Islamic New Year\'s Day%Islam NY%i;
 
   # TODO: fix double chinese new year to use 2nd date?
   debug("I: $i");

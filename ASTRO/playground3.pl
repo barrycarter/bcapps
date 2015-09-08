@@ -3,40 +3,6 @@
 require "/usr/local/lib/bclib.pl";
 
 
-=item jd2ymdhms($jd)
-
-Given a Julian date, return the year, month, date, hour, minute, and
-second, in the same way that
-http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/etcal_c.html
-would
-
-=cut
-
-sub jd2ymdhms {
-  my($jd) = @_;
-
-  # "reduce" this date to 2000-2399, by adding/subtracting 400 year periods
-  # JD 2451543.5 = 1999-12-31 00:00:00, day 0 of year 2000
-
-  # how many 400 year periods we add/subtract
-  my($div) = int(($jd-2451543.5)/146097);
-
-  # how many days are leftover
-  my($newjd) = ($jd-2451543.5)%146097+2451543.5;
-
-  # compute for newjd
-  my($date) = Astro::Nova::get_date($newjd);
-  my(@date) = ($date->get_years(), $date->get_months(),
-	     $date->get_days(), $date->get_hours(),
-	     $date->get_minutes(), $date->get_seconds());
-
-  # fix the year, otherwise all good
-  $date[0] += 400*($div-1)-1;
-
-  return @date;
-}
-
-
 # Julian Dates, the adventure continues
 
 while (<>) {
@@ -44,7 +10,7 @@ while (<>) {
 
   # just testing, format is year jd
   my($year,$jd) = split(/\s+/,$_);
-  debug("$year ($jd) ->".join(" ",jd2ymdhms($jd)));
+  debug("$year ($jd) ->".join(" ",jd2ymdhms_test($jd)));
 }
 
 die "TESTING";
@@ -58,12 +24,6 @@ for $y (-13200..-4000) {
   print "$y $jdmar1\n";
 }
 
-=item comment
-
-Above breaks down:
-
-
-
 # use Date::Convert;
 # $date=new Date::Convert::Absolute(10000.);
 # convert Date::Convert::Julian $date;
@@ -76,3 +36,43 @@ Above breaks down:
 # $rd = cjdn_to_rd($cjdn, $cjdf);
 
 # debug(strftime("%Y-%m-%d",gmtime(-999999999999)));
+
+sub jd2ymdhms_test {
+
+  my($jd) = @_;
+
+  # "reduce" this date to 2000-2399, by adding/subtracting 400 year periods
+  # JD 2451543.5 = 1999-12-31 00:00:00, day 0 of year 2000
+
+  # how many 400 year periods we add/subtract
+  my($div) = floor(($jd-2451543.5)/146097);
+
+  # how many days are leftover
+  my($newjd) = ($jd-2451543.5)%146097+2451543.5;
+
+  # compute for newjd
+  my($date) = Astro::Nova::get_date($newjd);
+  my(@date) = ($date->get_years(), $date->get_months(),
+	     $date->get_days());
+
+  # Astro::Nova::get_date doesn't compute hms
+  my($hms) = fmod(24*($jd-floor($jd))+12,24);
+
+  # TODO: there are much better ways to do this
+  push(@date,floor($hms));
+  $hms-=floor($hms);
+  $hms*=60;
+  push(@date,floor($hms));
+  $hms-=floor($hms);
+  $hms*=60;
+  push(@date,$hms);
+
+  # fix the year, otherwise all good
+  # following astronomical convention that 1 BCE = 0, 2 BCE = -1, etc:
+  # http://www.stellarium.org/wiki/index.php/FAQ#.22There_is_no_year_0.22.2C_or_.22BC_dates_are_a_year_out.22
+
+  $date[0] += 400*$div;
+
+  return @date;
+}
+
