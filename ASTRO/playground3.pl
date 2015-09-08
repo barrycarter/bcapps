@@ -10,8 +10,12 @@ while (<>) {
 
   # just testing, format is year jd
   my($sec,$jd,$date,$time) = split(/\s+/,$_);
-
-  debug("$date ($jd) ->".jd2proleptic_julian_ymdhms($jd));
+  my(@l) = jd2proleptic_julian_ymdhms($jd);
+  debug("JULIAN: $date ($jd) ->".join(" ",@l));
+  my(@l) = jd2proleptic_gregorian_ymdhms($jd);
+  debug("GREGOR: $date ($jd) ->".join(" ",@l));
+  my(@l) = jd2mixed_ymdhms($jd);
+  debug("MIXED: $date ($jd) ->".join(" ",@l));
 }
 
 die "TESTING";
@@ -52,60 +56,65 @@ sub jd2proleptic_julian_ymdhms {
 
   # The Julian calendar repeats every 4*365+1 = 1461 days
   # using 2000-2003 as "reference date"
-  # [2000 1 1 = JD 2451544.500000 = Unix 946684800]
+  # [2000 1 1 = JD 2451544.500000 = Unix 946684800, so 2451543.500000 = day 0]
   # how many "chunks" of 1461 days ago is/was this?
-  # 13 to compensate for Gregorian reformation
-  my($yrs) = ($jd-2451544.500000-13.);
+  # 14 to compensate for Gregorian reformation
+  my($yrs) = ($jd-2451543.500000-14.);
   # how many days into this chunk?
   my($chunks,$days) = (floor($yrs/1461),fmodp($yrs,1461));
-  debug("CD: $yrs/$chunks/$days");
   my(@gm) = gmtime(946684800+$days*86400);
-#  debug(946684800+$days*86400,"becomes",@gm);
-  debug(strftime("PRE: %Y-%m-%d %H:%M:%S",@gm));
   # adjust the year (gmtime returns years-1900, thus the adjustment below)
-  debug("OLD: $gm[5]");
   $gm[5] += 1900+4*$chunks;
-  debug("NEW: $gm[5]");
-  debug("$gm[5]-$gm[4]-$gm[3] $gm[2]:$gm[1]:$gm[0]");
+  # gmtime returns month-1, so...
+  $gm[4]++;
+  return(reverse(@gm[0..5]));
 }
 
+=item jd2proleptic_gregorian_ymdhms($jd)
 
-sub jd2ymdhms_test {
+Given a Julian date, returns the proleptic Gregorian year/month/day etc.
+
+Proleptic Gregorian = assumes the Gregorian calendar (1 leap year every 4
+years except every 100 years except every 400 years) is always used
+
+=cut
+
+sub jd2proleptic_gregorian_ymdhms {
 
   my($jd) = @_;
 
   # "reduce" this date to 2000-2399, by adding/subtracting 400 year periods
   # JD 2451543.5 = 1999-12-31 00:00:00, day 0 of year 2000
+  my($yrs) =$jd-2451543.500000;
 
-  # how many 400 year periods we add/subtract
-  my($div) = floor(($jd-2451543.5)/146097);
-
-  # how many days are leftover
-  my($newjd) = ($jd-2451543.5)%146097+2451543.5;
-
-  # compute for newjd
-  my($date) = Astro::Nova::get_date($newjd);
+  # The Gregorian calendar repeats every 400 years = 146097 days
+  my($chunks,$days) = (floor($yrs/146097),fmodp($yrs,146097));
+  # compute for newjd (add to days to bring back into 2000-2399 era)
+  my($date) = Astro::Nova::get_date($days+2451543.5);
   my(@date) = ($date->get_years(), $date->get_months(),
-	     $date->get_days());
-
-  # Astro::Nova::get_date doesn't compute hms
-  my($hms) = fmod(24*($jd-floor($jd))+12,24);
-
-  # TODO: there are much better ways to do this
-  push(@date,floor($hms));
-  $hms-=floor($hms);
-  $hms*=60;
-  push(@date,floor($hms));
-  $hms-=floor($hms);
-  $hms*=60;
-  push(@date,$hms);
-
-  # fix the year, otherwise all good
-  # following astronomical convention that 1 BCE = 0, 2 BCE = -1, etc:
-  # http://www.stellarium.org/wiki/index.php/FAQ#.22There_is_no_year_0.22.2C_or_.22BC_dates_are_a_year_out.22
-
-  $date[0] += 400*$div;
-
+	     $date->get_days(), $date->get_hours(), $date->get_minutes,
+	      $date->get_seconds);
+  # adjust
+  $date[0] += 400*$chunks;
   return @date;
 }
 
+=item jd2mixed_ymdhms($jd)
+
+Returns either the Gregorian year/month/date/etc or the Julian one,
+depending on whether is it before or after the Reformation:
+
+TODO: allow user to choose Reformation date, one below is per NASA:
+
+http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/time.html#Calendars
+
+Julian 1582 Oct 6 = Gregorian 1582 Oct 16 = JD 2299161.500000
+
+=cut
+
+sub jd2mixed_ymdhms {
+  my($jd) = @_;
+
+  if ($jd<2299161.5) {return jd2proleptic_julian_ymdhms($jd);}
+  return jd2proleptic_gregorian_ymdhms($jd);
+}
