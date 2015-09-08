@@ -49,6 +49,8 @@ Given a Julian date, returns the proleptic Julian year/month/day etc.
 Proleptic Julian = assumes the Julian calendar (1 leap year every 4
 years w/ no variance) is always used
 
+See jd2mixed_ymdhms() for caveats
+
 =cut
 
 sub jd2proleptic_julian_ymdhms {
@@ -76,6 +78,8 @@ Given a Julian date, returns the proleptic Gregorian year/month/day etc.
 
 Proleptic Gregorian = assumes the Gregorian calendar (1 leap year every 4
 years except every 100 years except every 400 years) is always used
+
+See jd2mixed_ymdhms() for caveats
 
 =cut
 
@@ -108,13 +112,19 @@ TODO: allow user to choose Reformation date, one below is per NASA:
 
 http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/time.html#Calendars
 
-Julian 1582 Oct 6 = Gregorian 1582 Oct 16 = JD 2299161.500000
+Julian 1582 Oct 5 = Gregorian 1582 Oct 15 = JD 2299160.500000
+
+Caveats: following the astronomical convention that 1BC is year 0, 2BC
+is year -1, and so on, since Im mostly doing this for Stellarium dates:
+
+http://www.stellarium.org/wiki/index.php/FAQ#.22There_is_no_year_0.22.2C_or\
+_.22BC_dates_are_a_year_out.22
 
 =cut
 
 sub jd2mixed_ymdhms {
   my($jd) = @_;
 
-  if ($jd<2299161.5) {return jd2proleptic_julian_ymdhms($jd);}
+  if ($jd<2299160.5) {return jd2proleptic_julian_ymdhms($jd);}
   return jd2proleptic_gregorian_ymdhms($jd);
 }
