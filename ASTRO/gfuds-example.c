@@ -28,10 +28,9 @@ int main( int argc, char **argv ) {
   SpiceInt          count,i,j;
   
   furnsh_c( "standard.tm" );
-   
-  str2et_c( "2007 JAN 01", &begtim );
-  str2et_c( "2007 APR 01", &endtim );
-  wninsd_c ( begtim, endtim, &cnfine );
+
+  // 1970 to 2038 (all "Unix time")
+  wninsd_c (-946684800., 2147483647.+946684800., &cnfine);
    
   step   = spd_c();
   adjust = 0.;
@@ -42,10 +41,6 @@ int main( int argc, char **argv ) {
 
     count = wncard_c( &result );
    
-    if (count == 0 )
-      {
-	printf ( "Result window is empty.\n\n" );
-      } else {
       for ( i = 0;  i < count;  i++ )
 	{
    
@@ -59,8 +54,6 @@ int main( int argc, char **argv ) {
 	  
 	}
       
-    }
-   
     printf("\n");
    
   kclear_c();
