@@ -28,7 +28,7 @@ int main( int argc, char **argv ) {
  // 1970 to 2038 (all "Unix time")
  wninsd_c (-946684800., 2147483647.+946684800., &cnfine);
  
- gfuds_c (gfq, gfdecrx, "<", 0.10472, 0., 86400., MAXWIN, &cnfine, &result );
+ gfuds_c (gfq, gfdecrx, "LOCMIN", 0.10472, 0., 86400., MAXWIN, &cnfine, &result );
 
  count = wncard_c( &result );
  
