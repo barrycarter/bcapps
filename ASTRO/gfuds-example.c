@@ -19,12 +19,10 @@ int main( int argc, char **argv ) {
 
  SPICEDOUBLE_CELL (result, 2*MAXWIN);
  SPICEDOUBLE_CELL (cnfine, 2);
- 
  SpiceDouble step,adjust,refval,beg,end;
  SpiceChar begstr [ TIMLEN ];
  SpiceChar endstr [ TIMLEN ];
  SpiceInt count,i;
- 
  furnsh_c( "standard.tm" );
 
  // 1970 to 2038 (all "Unix time")
@@ -45,18 +43,24 @@ int main( int argc, char **argv ) {
  printf ( "Start time, drdt = %s \n", begstr );
  printf ( "Stop time, drdt = %s \n", endstr );
  }
- kclear_c();
  return( 0 );
 }
 
 void gfq ( SpiceDouble et, SpiceDouble * value ) {
- 
- SpiceDouble state [6];
- SpiceDouble lt;
- 
- spkez_c (301, et, "J2000", "NONE", 10, state, &lt );
- *value = dvnorm_( state );
- return;
+
+  // angular separation between Mars and Regulus
+  SpiceDouble mars[3];
+  SpiceDouble lt;
+
+  // TODO: this shouldnt have to be here
+  // TODO: not actually Regulus at the moment
+  // position of Regulus
+  SpiceDouble reg[3];
+  radrec_c(1,0,0,reg);
+
+  spkezp_c(4, et, "J2000", "NONE", 0, mars, &lt);
+  *value = vsep_c(mars,reg);
+  return;
 }
  
 void gfdecrx ( void ( * udfuns ) ( SpiceDouble et,
