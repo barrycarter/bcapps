@@ -26,16 +26,6 @@ int main( int argc, char **argv ) {
   SpiceChar         begstr [ TIMLEN ];
   SpiceChar         endstr [ TIMLEN ];
   SpiceInt          count,i,j;
-   
-  ConstSpiceChar * relate [NLOOPS] = { "=",
-				       "<",
-				       ">",
-				       "LOCMIN",
-				       "ABSMIN",
-				       "LOCMAX",
-                                              "ABSMAX"
-  };
-   
   
   furnsh_c( "standard.tm" );
    
@@ -47,10 +37,7 @@ int main( int argc, char **argv ) {
   adjust = 0.;
   refval = .3365;
    
-  for ( j = 0;  j < NLOOPS;  j++ ) {
-    printf ( "Relation condition: %s \n",  relate[j] );
-    
-    gfuds_c ( gfq, gfdecrx, relate[j], refval, adjust, step,
+    gfuds_c ( gfq, gfdecrx, "<", refval, adjust, step,
 	      MAXWIN, &cnfine, &result );
 
     count = wncard_c( &result );
@@ -76,8 +63,6 @@ int main( int argc, char **argv ) {
    
     printf("\n");
    
-  }
-  
   kclear_c();
   return( 0 );
 }
