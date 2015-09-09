@@ -28,11 +28,7 @@ int main( int argc, char **argv ) {
  // 1970 to 2038 (all "Unix time")
  wninsd_c (-946684800., 2147483647.+946684800., &cnfine);
  
- step = spd_c();
- adjust = 0.;
- refval = .3365;
- 
- gfuds_c (gfq, gfdecrx, "<", refval, adjust, step, MAXWIN, &cnfine, &result );
+ gfuds_c (gfq, gfdecrx, "<", 0.10472, 0., 86400., MAXWIN, &cnfine, &result );
 
  count = wncard_c( &result );
  
@@ -56,9 +52,9 @@ void gfq ( SpiceDouble et, SpiceDouble * value ) {
   // TODO: not actually Regulus at the moment
   // position of Regulus
   SpiceDouble reg[3];
-  radrec_c(1,0,0,reg);
+  radrec_c(1,10.1333395277778/12*pi_c(),11.9666722222222/180*pi_c(),reg);
 
-  spkezp_c(4, et, "J2000", "NONE", 0, mars, &lt);
+  spkezp_c(4, et, "J2000", "NONE", 399, mars, &lt);
   *value = vsep_c(mars,reg);
   return;
 }
