@@ -53,21 +53,11 @@ int main( int argc, char **argv ) {
 
 void gfq ( SpiceDouble et, SpiceDouble * value ) {
    
-         /* Initialization */
-  SpiceInt             targ   = 301;
-  SpiceInt             obs    = 10;
-  
-  SpiceChar          * ref    = "J2000";
-  SpiceChar          * abcorr = "NONE";
-   
   SpiceDouble          state [6];
   SpiceDouble          lt;
-   
   
-  spkez_c ( targ, et, ref, abcorr, obs, state, &lt );
-   
+  spkez_c (301, et, "J2000", "NONE", 10, state, &lt );
   *value = dvnorm_( state );
-   
   return;
 }
    
@@ -76,8 +66,7 @@ void gfdecrx ( void ( * udfuns ) ( SpiceDouble    et,
 	       SpiceDouble    et,
 	       SpiceBoolean * isdecr ) {
    
-         SpiceDouble         dt = 10.;
-	 uddc_c( udfuns, et, dt, isdecr );
-   
-	 return;
+  SpiceDouble         dt = 10.;
+  uddc_c( udfuns, et, dt, isdecr );
+  return;
 }
