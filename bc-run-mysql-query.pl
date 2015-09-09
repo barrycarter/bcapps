@@ -18,7 +18,7 @@ my($base, $tld) = ($1,"$2.$3");
 my($db, $query, $type) = reverse(split(/\./, $base));
 
 # this is bad long term
-unless ($db eq "shared" || $db eq "madis") {
+unless ($db eq "shared" || $db eq "madis" || $db eq "astro") {
   print "Location: http://shared.$tld\n\n"; exit;
 }
 
