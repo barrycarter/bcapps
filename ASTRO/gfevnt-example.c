@@ -37,11 +37,7 @@ int main() {
 
  str2et_c ( begstr, &begtim );
  str2et_c ( endstr, &endtim );
-
-
  wninsd_c ( begtim, endtim, &cnfine );
-
-
  count = wncard_c( &cnfine );
  printf( "Found %ld intervals in cnfine\n", count );
 
@@ -60,56 +56,37 @@ int main() {
  adjust = 0.;
  nintvls= MAXVAL;
 
- gfevnt_c ( gfstep_c,
-	 gfrefn_c,
-	 event,
-	 qnpars,
-	 lenvals,
-	 qpnams,
-	 qcpars,
-	 qdpars,
-	 qipars,
-	 qlpars,
-	 relate,
-	 refval,
-	 tol,
-	 adjust,
-	 rpt,
-	 &gfrepi_c,
-	 gfrepu_c,
-	 gfrepf_c,
-	 nintvls,
-	 bail,
-	 gfbail_c,
-	 &cnfine,
-	 &result );
+ gfevnt_c ( gfstep_c, gfrefn_c, event, qnpars, lenvals, qpnams,
+ qcpars, qdpars, qipars, qlpars, relate, refval, tol, adjust, rpt,
+ &gfrepi_c, gfrepu_c, gfrepf_c, nintvls, bail, gfbail_c, &cnfine,
+ &result );
 
- if ( gfbail_c() ) 
- {
- gfclrh_c();
-
- printf ( "\nSearch was interrupted.\n\nThis message "
-	 "was written after an interrupt signal\n"
-	 "was trapped. By default, the program "
-	 "would have terminated \nbefore this message "
-	 "could be written.\n\n" );
+ if ( gfbail_c() ) {
+   
+   gfclrh_c();
+ 
+   printf ( "\nSearch was interrupted.\n\nThis message "
+	    "was written after an interrupt signal\n"
+	    "was trapped. By default, the program "
+	    "would have terminated \nbefore this message "
+	    "could be written.\n\n" );
  }
  else
-	 {
-	 count = wncard_c( &result);
-	 printf( "Found %ld intervals in result\n", count );
-
-	 for( i=0; i<count; i++ )
- {
-		 wnfetd_c( &result, i, &beg, &end );
-		 
-		 timout_c ( beg, TIMFMT, LNSIZE, begstr );
-		 timout_c ( end, TIMFMT, LNSIZE, endstr );
-		 
-		 printf( "Interval %ld\n", i );
-		 printf( "Beginning TDB %s\n", begstr );
-		 printf( "Ending TDB %s\n", endstr );
- }
-	 }
+   {
+     count = wncard_c( &result);
+     printf( "Found %ld intervals in result\n", count );
+     
+     for( i=0; i<count; i++ )
+       {
+	 wnfetd_c( &result, i, &beg, &end );
+	 
+	 timout_c ( beg, TIMFMT, LNSIZE, begstr );
+	 timout_c ( end, TIMFMT, LNSIZE, endstr );
+	 
+	 printf( "Interval %ld\n", i );
+	 printf( "Beginning TDB %s\n", begstr );
+	 printf( "Ending TDB %s\n", endstr );
+       }
+   }
  return (0);
 }
