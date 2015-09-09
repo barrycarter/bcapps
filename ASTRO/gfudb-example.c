@@ -20,12 +20,12 @@ void gfq ( void ( * udfunc ) ( SpiceDouble    et,
 int main( int argc, char **argv )
 {
 
-         /.
+         /*
   Create the needed windows. Note, one interval
     consists of two values, so the total number
          of cell values to allocate is twice
          the number of intervals.
-         ./
+         */
     SPICEDOUBLE_CELL ( result, 2*MAXWIN );
   SPICEDOUBLE_CELL ( cnfine, 2        );
 
@@ -45,27 +45,27 @@ int main( int argc, char **argv )
 
   printf( "Compile date %s, %s\n\n", __DATE__, __TIME__ );
 
-         /.
+         /*
          Load kernels.
-         ./
+         */
 	   furnsh_c( "standard.tm" );
 
-         /.
+         /*
          Store the time bounds of our search interval in the 'cnfine'
          confinement window.
-         ./
+         */
 	   str2et_c ( "Jan 1 2011", &begtim );
          str2et_c ( "Jan 1 2012", &endtim );
 
          wninsd_c ( begtim, endtim, &cnfine );
 
 
-         /.
+         /*
          The moon orbit about the earth-moon barycenter is
          twenty-eight days. The event condition occurs
 	   during (very) approximately a quarter of the orbit. Use
          a step of five days.
-         ./
+         */
 
 	   step = 5.0 * spd_c();
 
@@ -77,9 +77,9 @@ int main( int argc, char **argv )
 
          count = wncard_c( &result );
 
-         /.
+         /*
          Display the results.
-         ./
+         */
 	   if (count == 0 )
 	     {
 	       printf ( "Result window is empty.\n\n" );
@@ -89,10 +89,10 @@ int main( int argc, char **argv )
 	       for ( i = 0;  i < count;  i++ )
 		 {
 
-               /.
+               /*
                Fetch the endpoints of the Ith interval
                of the result window.
-               ./
+               */
 		 wnfetd_c ( &result, i, &left, &right );
 
                printf ( "Interval %ld\n", i );
@@ -118,39 +118,39 @@ int main( int argc, char **argv )
 
 
 
-      /.
+      /*
       The user defined functions required by gfudb_c.
 
          udf_c   for udfuns
          gfq     for udfunb
-      ./
+      */
 
 
 
-      /.
+      /*
       -Procedure Procedure gfq
-      ./
+      */
 
       void gfq ( void ( * udfuns ) ( SpiceDouble    et,
                                      SpiceDouble  * value ),
                  SpiceDouble et,
                  SpiceBoolean * xbool )
 
-      /.
+      /*
       -Abstract
 
       User defined geometric boolean function:
 
            Z >= 0 with dZ/dt > 0.
 
-      ./
+      */
 {
 
-         /.
+         /*
          Initialization. Retrieve the vector from the earth to
 	   the moon in the IAU_EARTH frame, without aberration
          correction.
-         ./
+         */
 	   SpiceInt             targ   = 301;
          SpiceInt             obs    = 399;
 
@@ -160,15 +160,15 @@ int main( int argc, char **argv )
          SpiceDouble          state [6];
          SpiceDouble          lt;
 
-         /.
+         /*
          Evaluate the state of TARG from OBS at ET with
          correction ABCORR.
-         ./
+         */
 	   spkez_c ( targ, et, ref, abcorr, obs, state, &lt );
 
-         /.
+         /*
          Calculate the boolean value.
-         ./
+         */
 
 	   *xbool = (state[2] >= 0.0) && (state[5] > 0.0);
 
