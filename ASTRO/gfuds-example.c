@@ -36,26 +36,17 @@ int main( int argc, char **argv ) {
   adjust = 0.;
   refval = .3365;
    
-    gfuds_c ( gfq, gfdecrx, "<", refval, adjust, step,
-	      MAXWIN, &cnfine, &result );
+  gfuds_c (gfq, gfdecrx, "<", refval, adjust, step, MAXWIN, &cnfine, &result );
 
-    count = wncard_c( &result );
+  count = wncard_c( &result );
    
-      for ( i = 0;  i < count;  i++ )
-	{
-   
-	  wnfetd_c ( &result, i, &beg, &end );
-	  
-	  timout_c ( beg, TIMFMT, TIMLEN, begstr );
-	  timout_c ( end, TIMFMT, TIMLEN, endstr );
-	  
-	  printf ( "Start time, drdt = %s \n", begstr );
-	  printf ( "Stop time,  drdt = %s \n", endstr );
-	  
-	}
-      
-    printf("\n");
-   
+  for ( i = 0;  i < count;  i++ ) {
+    wnfetd_c ( &result, i, &beg, &end );
+    timout_c ( beg, TIMFMT, TIMLEN, begstr );
+    timout_c ( end, TIMFMT, TIMLEN, endstr );
+    printf ( "Start time, drdt = %s \n", begstr );
+    printf ( "Stop time,  drdt = %s \n", endstr );
+  }
   kclear_c();
   return( 0 );
 }
