@@ -72,7 +72,7 @@ email astro\@barrycarter.info
 
 <form action="/index.pl" method="GET"><table border>
 
-<tr><th colspan=2>Conjunctions database searh form</th></tr>
+<tr><th colspan=2>Conjunctions database search form</th></tr>
 
 <tr><th>Planet 1</th><td>$planets
 <br><em><font size=-1>
@@ -107,8 +107,7 @@ to
 <br><em><font size=-1>
 
 The years for which you want to see conjunctions. This database covers
-conjunctions from the year -13001 to 16999 (which is smaller than
-largest possible range, I am working to correct this).
+conjunctions from the years -13001 to 16999.
 
 <br>
 
