@@ -42,7 +42,7 @@ if ($chunks{"submit"}) {
   my($conds)=join(" AND ",@conds);
   my($query) = << "MARK";
 
-SELECT UPPER(p1) AS "Planet 1", UPPER(p2) AS "Planet 2", CONCAT(year,"-",LPAD(month,2,"0"),"-",LPAD(day,2,"0")," ",time) AS "Date/Time", FORMAT(sep,3) AS "Separation", FORMAT(solarsep,3) AS "Sun Distance", star AS "Nearest Star", FORMAT(starsep,3) AS "Star Distance" FROM p2 WHERE $conds ORDER BY year,month,day LIMIT 200;
+SELECT UPPER(p1) AS "Planet 1", UPPER(p2) AS "Planet 2", CONCAT(year,"-",LPAD(month,2,"0"),"-",LPAD(day,2,"0")," ",time) AS "Date/Time", FORMAT(sep,3) AS "Separation<br>(degrees)", FORMAT(solarsep,3) AS "Sun Distance<br>(degrees)", star AS "Nearest Star", FORMAT(starsep,3) AS "Star Distance<br>(degrees)" FROM p2 WHERE $conds ORDER BY year,month,day LIMIT 200;
 
 MARK
 ;
@@ -77,9 +77,8 @@ email astro\@barrycarter.info
 <tr><th>Planet 1</th><td>$planets
 <br><em><font size=-1>
 
-The first planet for which you want to see conjunctions. This should
-be the planet closer to the Sun (use "all planets" to see all
-conjunctions)
+The first conjuncting planet, the one closer to the Sun (use "all
+planets" to see all conjunctions)
 
 </font></em>
 </td></tr>
@@ -87,12 +86,14 @@ conjunctions)
 <tr><th>Planet 2</th><td>$planets2
 <br><em><font size=-1>
 
-The second planet for which you want to see conjunctions. This should
-be the planet farther from the Sun (use "all planets" to see all
-conjunctions).
+The second conjuncting planet, the one farther from the Sun (use "all planets" to see all conjunctions).<br>
 
 Note that Mercury is not on the list, since it can never be the
-farther planet.
+farther planet.<br>
+
+Note: if you choose "all planets" for Planet 2 but not for Planet 1,
+you will get unpredictable results. If you choose "all planets" for
+Planet 2, you *must* choose "all planets" for Planet 1.
 
 </font></em>
 </td></tr>
