@@ -29,7 +29,7 @@ int main( int argc, char **argv ) {
 
   SPICEDOUBLE_CELL (result, 2*MAXWIN);
   SPICEDOUBLE_CELL (cnfine, 2);
-  SpiceDouble step,adjust,refval,beg,end;
+  SpiceDouble beg,end;
   SpiceInt count,i;
   furnsh_c("standard.tm");
 
@@ -51,7 +51,7 @@ int main( int argc, char **argv ) {
 
 void gfq ( SpiceDouble et, SpiceDouble * value ) {
 
-  // angular separation between Mars and Regulus
+  // angular separation between planet and star
   SpiceDouble planet[3];
   SpiceDouble lt;
   SpiceDouble star[3];
