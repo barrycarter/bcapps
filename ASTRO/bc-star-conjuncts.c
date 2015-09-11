@@ -4,10 +4,12 @@
 #include "SpiceUsr.h"
 #include "SpiceZfc.h"
 #define MAXWIN 20000
-#define TIMFMT "YYYY-MON-DD HR:MN:SC.###"
-#define TIMLEN 41
 
 // Usage: $0 naif-id-of-planet ra-of-star-in-radians dec-of-star-in-radians
+
+// actually declaring entire functions here, not just prototype
+double et2jd(double d) {return 2451544.5+d/86400.;}
+double unix2et(double d) {return d-946684800.;}
 
 // gfq = function that returns scalar value of interest
 void gfq (SpiceDouble et, SpiceDouble * value );
@@ -22,30 +24,29 @@ int main( int argc, char **argv ) {
   setenv("RA",argv[2],1);
   setenv("DEC",argv[3],1);
 
-  printf("PLANET: %s, RA: %s DEC: %s\n",argv[1],argv[2],argv[3]);
+  // argv[4] is the optional star name
+  printf("PLANET: %s, RA: %s DEC: %s (%s)\n\n",argv[1],argv[2],argv[3],argv[4]);
 
   SPICEDOUBLE_CELL (result, 2*MAXWIN);
   SPICEDOUBLE_CELL (cnfine, 2);
   SpiceDouble step,adjust,refval,beg,end;
-  SpiceChar begstr [ TIMLEN ];
-  SpiceChar endstr [ TIMLEN ];
   SpiceInt count,i;
   furnsh_c("standard.tm");
 
- // 1970 to 2038 (all "Unix time")
- wninsd_c (-946684800., 2147483647.-946684800., &cnfine);
+  // 1970 to 2038 (all "Unix time")
+  wninsd_c (unix2et(0),unix2et(2147483647),&cnfine);
  
- gfuds_c (gfq, gfdecrx, "LOCMIN", 0.10472, 0., 86400., MAXWIN, &cnfine, &result );
+  gfuds_c (gfq,gfdecrx,"LOCMIN",0.10472,0.,86400.,MAXWIN,&cnfine,&result );
 
- count = wncard_c( &result );
+  count = wncard_c( &result );
  
- for ( i = 0; i < count; i++ ) {
- wnfetd_c ( &result, i, &beg, &end );
- timout_c ( beg, TIMFMT, TIMLEN, begstr );
- timout_c ( end, TIMFMT, TIMLEN, endstr );
- printf ("%f - %f\n",beg,end-beg);
- }
- return( 0 );
+  for ( i = 0; i < count; i++ ) {
+    wnfetd_c ( &result, i, &beg, &end );
+    // this is cheating, but I'm not using &end, so...
+    gfq(beg,&end);
+    printf ("%f %f\n",et2jd(beg),end/pi_c()*180.);
+  }
+  return( 0 );
 }
 
 void gfq ( SpiceDouble et, SpiceDouble * value ) {
@@ -62,12 +63,10 @@ void gfq ( SpiceDouble et, SpiceDouble * value ) {
   return;
 }
  
-void gfdecrx ( void ( * udfuns ) ( SpiceDouble et,
-				 SpiceDouble * value ),
-	 SpiceDouble et,
-	 SpiceBoolean * isdecr ) {
- 
+void gfdecrx (void(* udfuns)(SpiceDouble et,SpiceDouble * value),
+	      SpiceDouble et, SpiceBoolean * isdecr ) {
  SpiceDouble dt = 10.;
  uddc_c( udfuns, et, dt, isdecr );
  return;
 }
+
