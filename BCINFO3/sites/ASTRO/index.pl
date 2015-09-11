@@ -9,7 +9,7 @@ my($link);
 
 # TODO: removing Mercury for p2 below; but this is dumb way to do it
 my(@planets) = ("*:Any planet", "Mercury", "Venus", "Mars", "Jupiter",
-"Saturn", "Uranus");
+"Saturn");
 my(@planets2) = ("*:Any planet", "Venus", "Mars", "Jupiter",
 "Saturn", "Uranus");
 
@@ -78,7 +78,7 @@ email astro\@barrycarter.info
 <br><em><font size=-1>
 
 The first conjuncting planet, the one closer to the Sun (use "all
-planets" to see all conjunctions)
+planets" to see all conjunctions; Uranus is not on this list, since it can never be the nearer planet)
 
 </font></em>
 </td></tr>
@@ -86,14 +86,7 @@ planets" to see all conjunctions)
 <tr><th>Planet 2</th><td>$planets2
 <br><em><font size=-1>
 
-The second conjuncting planet, the one farther from the Sun (use "all planets" to see all conjunctions).<br>
-
-Note that Mercury is not on the list, since it can never be the
-farther planet.<br>
-
-Note: if you choose "all planets" for Planet 2 but not for Planet 1,
-you will get unpredictable results. If you choose "all planets" for
-Planet 2, you *must* choose "all planets" for Planet 1.
+The second conjuncting planet, the one farther from the Sun (use "all planets" to see all conjunctions; Mercury is not on the list, since it can never be the farther planet).<br>
 
 </font></em>
 </td></tr>
@@ -108,14 +101,6 @@ to
 
 The years for which you want to see conjunctions. This database covers
 conjunctions from the years -13001 to 16999.
-
-<br>
-
-I follow the standard astronomical convention that 1BCE is year 0,
-2BCE is year -1, and so on, partly so you can use Stellarium to view
-these conjunctions:
-
-<a href="http://www.stellarium.org/wiki/index.php/FAQ#.22There_is_no_year_0.22.2C_or_.22BC_dates_are_a_year_out.22">http://www.stellarium.org/wiki/index.php/FAQ</a>
 
 </font></em></td></tr>
 

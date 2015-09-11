@@ -2,7 +2,28 @@
 
 <h4>Notes</h4>
 
-This form provides limited access to the conjunctions database.
+This form provides limited access to the conjunctions database, which
+lists conjunctions of the visible planets (Mercury, Venus, Mars,
+Jupiter, Saturn, and Uranus) from -13001 to 16999 (which are (almost)
+the limiting times for which NASA provides planetary position
+information).
+
+<p>
+
+To search for all conjunctions involving Mars (for example), first run
+a query choosing Mars as Planet 1 and setting Planet 2 to "Any
+Planet".  This will find when Mars conjuncts Jupiter, Saturn, or
+Uranus.
+
+<p>
+
+Then, run a second query, choosing Mars as Planet 2 and setting Planet
+1 to "Any Planet". This will find when Mars conjuncts Mercury or Venus.
+
+<p>
+
+Of course, if you're accessing the database directly, you can use
+"Mars in (p1,p2)" (for example).
 
 <p>
 
@@ -53,8 +74,164 @@ and may not be accurate.
 
 <p>
 
+In general, I use Bayer of Flamsteed designations for star names (eg,
+"alfLEO" instead of "Regulus"). A full list of stars in the database:
+http://df755f824fc46dd6bd7094aa95014d03.astro.db.mysql.94y.info/
+
+<p>
+
 Do not rely on this information. You can (and should) check this
 information against a planetarium program (like Stellarium) and/or
 NASA HORIZONS (http://ssd.jpl.nasa.gov/?horizons). Of course, neither
-of these is necessarily 100% accurate either.
+of these is necessarily 100% accurate either. Additional disclaimers
+below.
 
+<p>
+
+I used the Earth-Moon barycenter (not the center of the Earth) for my
+calculations. The Earth-Moon barycenter is about 3000 miles from the
+Earth's center (and thus 1000 miles below the surface), which means
+it's between 1000 and 7000 miles from any given Terran observer.
+Because the planets are fairly far away, this does not introduce much
+of an error. If I were computing lunar conjunctions, this would have a
+major effect on the calculations.
+
+<p>
+
+I used planetary system barycenters (the center of mass of a planet
+and its moons) for an entirely different reason. If you ask HORIZONS
+(http://ssd.jpl.nasa.gov/?horizons) for the position of Mars and set
+the date, you'll see this notice:
+
+<p>
+
+Available time span for currently selected target body:
+1900-Jan-04 to 2500-Jan-04 CT.
+
+<p>
+
+However, if you use Mars' barycenter, this becomes:
+
+<p>
+
+Available time span for currently selected target body:
+BC 9998-Mar-20 to AD 9999-Dec-31 CT.
+
+<p>
+
+In other words, NASA computes the position of Mars' planetary system
+barycenter for a much longer interval than they compute Mars' actual
+position. Since I wanted to compute conjunctions for a long period of
+time, I went with the barycenters (DE430 computes barycenters even
+beyond 9998 BC and 9999 AD).
+
+<p>
+
+I've complained that this is silly, especially for Mars, since the
+distance between Mars' center and Mars' planetary system barycenter is
+only about 20cm (yes, centimeters, since Phobos and Deimos have very
+little mass) per
+http://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/aareadme_de430-de431.txt. However,
+NASA apparently plans to keep it this way.
+
+<p>
+
+I ignore light travel time, which introduces a small error. Most
+planetarium programs, like Stellarium, ignore light travel time by
+default, although Stellarium has an option to turn it on.
+
+<p>
+
+I ignore things like refraction, aberration, and similar minor adjustments.
+
+<p>
+
+If you are using Stellarium to verify/view these conjunctions, note
+that Stellarium appears to have difficulty with dates before -4800 Mar
+1, so you may not be able to verify conjunctions prior to this date.
+
+<p>
+
+The database only includes conjunctions between the visible planets
+(Mercury, Venus, Mars, Jupiter, Saturn, and Uranus). It does not
+include conjunctions/occultations involving Neptune, the Moon, the
+Sun, the (other) stars, or any asteroids/minor planets.
+
+<p>
+
+The database will tell you the angular distance to the Sun, and the
+angular distance to the nearest (non-solar) star, but that's not the
+same thing.
+
+<p>
+
+When you use the search form to query, you received a "prettified"
+version of the results. If you are accessing the tables directly, here
+is a description of the fields:
+
+<pre>
+
+p1: The first planet to conjunct. This is the conjuncting planet
+closer to the Sun.
+
+p2: The second planet to conjunct. This is the conjuncting planet
+farther from the Sun.
+
+p3 through p6: the main conjunction table is p2, which lists
+conjunctions of 2 planets; if you are looking for conjunctions of 3 or
+more planets, you can query p3, p4, p5, and p6 respectively. Each of
+these tables have extra fields for the extra planets.
+
+jd: The Julian date of the conjunction, probably useful only to techies
+
+year/month/day: The year, month, and day of the conjunction. As per
+standard astronomical convention
+(http://www.stellarium.org/wiki/index.php/FAQ#.22There_is_no_year_0.22.2C_or_.22BC_dates_are_a_year_out.22),
+0 stands for the year 1BCE, -1 stands for the year 2BCE, and so on.
+
+MySQL's DATETIME type only supports years back to 1000, so I could not
+use the DATETIME field here; instead, I broke the date into three
+fields.
+
+time: The UTC time of the conjunction
+
+sep: The angular separation between the conjuncting planets, in
+degrees. For more than two planets, this is maximum angular separation
+between any pair of planets.
+
+solarsep: The angular separation (in degrees) from the Sun of the
+conjuncting planet nearest to the Sun. Conjunctions close to the Sun
+can be difficult to see. Of course, Mercury (and to a lesser extent,
+Venus) are always close to the Sun, so conjunctions involving these
+planets will always be somewhat close to the Sun.
+
+star: The visible star closest to the conjunction; mostly provided as
+an afterthought, to get a general idea where the conjunction occurs
+
+starsep: The distance from 'star' (above) to the conjunction. Again,
+this is provided as an afterthought, and isn't really that important.
+
+</pre>
+
+<p>
+
+Source code and notes at Github:
+
+https://github.com/barrycarter/bcapps/tree/master/ASTRO
+
+<p>
+
+This database was created in part to answer:
+
+https://astronomy.stackexchange.com/questions/11141/how-to-calculate-conjunctions-of-2-planets/11142
+
+and my answer may contain additional useful information, as may
+another related question:
+
+https://astronomy.stackexchange.com/questions/11456/has-the-conjunction-between-venus-jupiter-and-regulus-only-occurred-twice-in-2
+
+
+
+
+
+%%%%%% TODO: sample queries, hyperlink URLs, pics
