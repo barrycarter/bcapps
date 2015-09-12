@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include "SpiceUsr.h"
 
+double et2jd(double d) {return 2451545.+d/86400.;}
+double jd2et(double d) {return 86400.*(d-2451545.);}
+
 void main(int argc, char **argv) {
 
 #define ET0 -479695089600.+86400*468
@@ -15,6 +18,6 @@ void main(int argc, char **argv) {
   for ( i = 0;  i < MAXITR;  i++ ) {
     et  =  ET0 + i*STEP;
     spkezp_c (target, et, "J2000", "NONE", source,  pos,  &lt);
-    printf("%d %d %f %.9f %.9f %.9f\n",source,target,2451545.+et/86400.,pos[0],pos[1],pos[2]);
+    printf("%d %d %f %.9f %.9f %.9f\n",source,target,et2jd(et),pos[0],pos[1],pos[2]);
   }
 }

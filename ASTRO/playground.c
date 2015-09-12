@@ -9,8 +9,8 @@
 #include "SpiceZfc.h"
 
 // actually declaring entire functions here, not just prototype
-double et2jd(double d) {return 2451544.+d/86400.;}
-double jd2et(double d) {return 86400.*(d-2451544.);}
+double et2jd(double d) {return 2451545.+d/86400.;}
+double jd2et(double d) {return 86400.*(d-2451545.);}
 
 int main (int argc, char **argv) {
 
@@ -26,6 +26,5 @@ int main (int argc, char **argv) {
     //    spkgps_c(planet,time,"J2000",0,position,&lt);
     printf("%f -> %f %f %f\n",time,position[0],position[1],position[2]);
   }
-
 
 }

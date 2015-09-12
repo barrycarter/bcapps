@@ -9,7 +9,8 @@
 // Usage: $0 naif-id-of-planet ra-of-star-in-radians dec-of-star-in-radians
 
 // actually declaring entire functions here, not just prototype
-double et2jd(double d) {return 2451544.5+d/86400.;}
+double et2jd(double d) {return 2451545.+d/86400.;}
+double jd2et(double d) {return 86400.*(d-2451545.);}
 double unix2et(double d) {return d-946684800.;}
 
 // gfq = function that returns scalar value of interest

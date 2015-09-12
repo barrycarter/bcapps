@@ -8,6 +8,9 @@
 
 #define MAXWIN 1000000
 
+double et2jd(double d) {return 2451545.+d/86400.;}
+double jd2et(double d) {return 86400.*(d-2451545.);}
+
 int main( int argc, char **argv )
 {
 
@@ -44,7 +47,7 @@ int main( int argc, char **argv )
 
     // find the ith result and print it
     wnfetd_c(&result,i,&begtim,&endtim);
-    printf("%s %s %s 6deg %f %f\n",argv[1],argv[2],argv[3],2451545.+begtim/86400.,2451545.+endtim/86400.);
+    printf("%s %s %s 6deg %f %f\n",argv[1],argv[2],argv[3],et2jd(begtim),et2jd(endtim));
 
     // find min separation in this interval
     
@@ -61,7 +64,7 @@ int main( int argc, char **argv )
     for (j=0; j<count2; j++) {
       wnfetd_c(&resultr,j,&mintim1,&mintim2);
       // mintim1 and mintim2 should be identical, printing them both anyway
-      printf("%s %s %s min %f %f\n",argv[1],argv[2],argv[3],2451545.+mintim1/86400.,2451545.+mintim2/86400.);
+      printf("%s %s %s min %f %f\n",argv[1],argv[2],argv[3],et2jd(mintim1),et2jd(mintim2));
     }
 
     removd_c(endtim,&cnfiner);
