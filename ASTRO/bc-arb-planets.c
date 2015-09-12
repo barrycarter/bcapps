@@ -69,20 +69,26 @@ void gfq ( SpiceDouble et, SpiceDouble * value ) {
   // max separation between all non-0 planets in planets
   // TODO: get min solar separation (not necessarily here)
   SpiceInt i,j;
-  SpiceDouble maxsep, lt;
+  SpiceDouble sep, maxsep, lt;
   SpiceDouble position[planetcount][2];
 
   // compute the Earth positions first for efficiency
   for (i=1; i<=planetcount; i++) {
     spkezp_c(planets[i], et, "J2000", "LT+S", 399, position[i], &lt);
-    printf("POS: %d %f %f %f %f\n",planets[i],et,position[i][0],position[i][1],position[i][2]);
-
   }
 
-  //    for (j=i+1; j<=planetcount; j++) {
-  //
-  //    }
-  //  }
+  // separation can never be more than pi, so this works
+  maxsep = 4.;
+
+  // and now the angle diffs (keep only min)
+  for (i=1; i<=planetcount; i++) {
+    for (j=i+1; j<=planetcount; j++) {
+      sep = vsep_c(position[i],position[j]);
+      printf("SEP: %d %d %f\n",planets[i],planets[j],sep);
+    }
+  }
+
+
   value=0;
   return;
 }
