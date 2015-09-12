@@ -41,10 +41,7 @@ int main( int argc, char **argv ) {
   //  wninsd_c (-479695089600.+86400*468, 479386728000., &cnfine);
 
   // 1970 to 2038 (all "Unix time") for testing
-  //  wninsd_c (unix2et(0),unix2et(2147483647),&cnfine);
-
-  // even shorter testing
-  wninsd_c (0,86400*365.,&cnfine);
+  wninsd_c (unix2et(0),unix2et(2147483647),&cnfine);
  
   gfuds_c (gfq,gfdecrx,"LOCMIN",0.,0.,86400.,MAXWIN,&cnfine,&result );
 
@@ -85,10 +82,8 @@ void gfq ( SpiceDouble et, SpiceDouble *value ) {
     for (j=i+1; j<=planetcount; j++) {
       sep = vsep_c(position[i],position[j]);
       if (sep>*value) {*value=sep;}
-      //      printf("SEP VAL: %f,%f\n",sep,*value);
     }
   }
-  printf("RETURNING: %f -> %f\n",et,value);
   return;
 }
  
