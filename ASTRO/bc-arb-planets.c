@@ -23,43 +23,66 @@ void gfdecrx (void (*udfuns) (SpiceDouble et, SpiceDouble *value ),
 
 int main( int argc, char **argv ) {
 
+  SpiceInt i,j,count,count2;
+  SPICEDOUBLE_CELL(result, 2*MAXWIN);
+  SPICEDOUBLE_CELL(result2,2*MAXWIN );
+  // I use the two below as windows
+  SPICEDOUBLE_CELL(cnfine,2);
+  SPICEDOUBLE_CELL(cnfine2,2);
+  // I use this as just a cell
+  SPICEDOUBLE_CELL(cell,2);
+  SpiceDouble beg, end, beg2, end2;
+
   // fill the static planets array
-  SpiceInt i;
   for (i=1; i<argc; i++) {planets[i] = atoi(argv[i]);}
   planetcount = argc-1;
 
   // 1 second tolerance (serious overkill, but 1e-6 is default, worse!)
   gfstol_c(1.);
 
-  SPICEDOUBLE_CELL (result, 2*MAXWIN);
-  SPICEDOUBLE_CELL (cnfine, 2);
-  SpiceDouble beg,end;
-  SpiceInt count;
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
   // DE431 limits
   //  wninsd_c (-479695089600.+86400*468, 479386728000., &cnfine);
 
   // 1970 to 2038 (all "Unix time") for testing
-  wninsd_c (unix2et(0),unix2et(2147483647),&cnfine);
- 
-  gfuds_c (gfq,gfdecrx,"LOCMIN",0.,0.,86400.,MAXWIN,&cnfine,&result );
+  wninsd_c(unix2et(0),unix2et(2147483647),&cnfine);
 
-  count = wncard_c( &result );
+  // find under 6 degrees...
+  gfuds_c(gfq,gfdecrx,"<",SIXDEGREES,0.,86400.,MAXWIN,&cnfine,&result);
+  count = wncard_c(&result); 
 
   for (i=0; i<count; i++) {
-    wnfetd_c ( &result, i, &beg, &end );
+    wnfetd_c(&result,i,&beg,&end);
+    printf("6deg %f %f\n",et2jd(beg),et2jd(end));
 
-    // this is cheating, but I'm not using &end, so...
-    gfq(beg,&end);
+    // TODO: this is hideous coding (append/remove, must be a better way)
+    //    appndd_c(beg,&cnfine2);
+    //    appndd_c(end,&cnfine2);
+    //    wnvald_c(2,2,&cnfine2);
+    
+    wninsd_c(beg,end,&cnfine2);
 
-    // ignore more than 6 degrees
-    // removed for testing
-    //    if (end>SIXDEGREES) {continue;}
+    printf("SIZE1: %d\n",card_c(&cnfine2));
 
-    printf ("%f %f\n",et2jd(beg),end/pi_c()*180.);
+    // find min *separations* (maybe more than one!) in this window
+    gfuds_c(gfq,gfdecrx,"LOCMIN",0.,0.,86400.,MAXWIN,&cnfine2,&result2);
+    count2 = wncard_c(&result2);
+
+    for (j=0; j<count2; j++) {
+      wnfetd_c(&result2,j,&beg2,&end2);
+      // this is cheating, but I'm not using &end, so...
+      gfq(beg,&end);
+      // TODO: compute minimal solar distance
+      printf ("%f %f\n",et2jd(beg2),end2/pi_c()*180.);
+    }
+
+    removd_c(beg,&cnfine2);
+    removd_c(end,&cnfine2);
+    printf("SIZE2: %d\n",card_c(&cnfine2));
+
   }
-  return( 0 );
+  return 0;
 }
 
 void gfq ( SpiceDouble et, SpiceDouble *value ) {
