@@ -65,7 +65,7 @@ int main( int argc, char **argv ) {
   return( 0 );
 }
 
-void gfq ( SpiceDouble et, SpiceDouble * value ) {
+void gfq ( SpiceDouble et, SpiceDouble *value ) {
 
   // max separation between all non-0 planets in planets
   // TODO: get min solar separation (not necessarily here)
@@ -78,15 +78,17 @@ void gfq ( SpiceDouble et, SpiceDouble * value ) {
     spkezp_c(planets[i], et, "J2000", "LT+S", 399, position[i], &lt);
   }
 
+  *value = 0;
+
   // and now the angle diffs (keep only min)
   for (i=1; i<=planetcount; i++) {
     for (j=i+1; j<=planetcount; j++) {
       sep = vsep_c(position[i],position[j]);
       if (sep>*value) {*value=sep;}
-      printf("SEP VAL: %f,%f\n",sep,*value);
+      //      printf("SEP VAL: %f,%f\n",sep,*value);
     }
   }
-  printf("RETURNING: %f\n",value);
+  printf("RETURNING: %f -> %f\n",et,value);
   return;
 }
  
