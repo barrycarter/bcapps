@@ -53,8 +53,8 @@ int main( int argc, char **argv )
     appndd_c(endtim,&cnfiner);
     wnvald_c(2,2,&cnfiner);
   
-    // TODO: use of ABSMIN below may miss some "conjunctions"
-    gfsep_c(argv[2],"POINT","J2000",argv[3],"POINT","J2000","NONE",argv[1], "ABSMIN", 0,0,86400.,MAXWIN,&cnfiner,&resultr);
+    // TODO: use of ABSMIN missed conjunctions, changed to LOCMIN
+    gfsep_c(argv[2],"POINT","J2000",argv[3],"POINT","J2000","NONE",argv[1], "LOCMIN", 0,0,86400.,MAXWIN,&cnfiner,&resultr);
 
     SpiceInt count2 = wncard_c(&resultr);
 
