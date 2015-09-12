@@ -1,5 +1,5 @@
 # creates executables from C code
-all: /home/barrycarter/bin/seps /home/barrycarter/bin/j2d /home/barrycarter/bin/gfevnt /home/barrycarter/bin/gfuds /home/barrycarter/bin/gfudb /home/barrycarter/bin/starconjunct /home/barrycarter/bin/pconjuncts
+all: /home/barrycarter/bin/seps /home/barrycarter/bin/j2d /home/barrycarter/bin/gfevnt /home/barrycarter/bin/gfuds /home/barrycarter/bin/gfudb /home/barrycarter/bin/starconjunct /home/barrycarter/bin/pconjuncts /home/barrycarter/bin/playground
 /home/barrycarter/bin/seps: bc-find-under6.c
 	gcc -I /home/barrycarter/SPICE/cspice/include bc-find-under6.c -o /home/barrycarter/bin/seps /home/barrycarter/SPICE/cspice/lib/cspice.a -lm
 /home/barrycarter/bin/j2d: bc-j2d.c
@@ -14,3 +14,5 @@ all: /home/barrycarter/bin/seps /home/barrycarter/bin/j2d /home/barrycarter/bin/
 	gcc -I /home/barrycarter/SPICE/cspice/include bc-star-conjuncts.c -o /home/barrycarter/bin/starconjunct /home/barrycarter/SPICE/cspice/lib/cspice.a -lm
 /home/barrycarter/bin/pconjuncts: bc-arb-planets.c
 	gcc -I /home/barrycarter/SPICE/cspice/include bc-arb-planets.c -o /home/barrycarter/bin/pconjuncts /home/barrycarter/SPICE/cspice/lib/cspice.a -lm
+/home/barrycarter/bin/playground: playground.c
+	gcc -I /home/barrycarter/SPICE/cspice/include playground.c -o /home/barrycarter/bin/playground /home/barrycarter/SPICE/cspice/lib/cspice.a -lm

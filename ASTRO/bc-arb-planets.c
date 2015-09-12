@@ -64,28 +64,28 @@ void gfq ( SpiceDouble et, SpiceDouble *value ) {
   // TODO: get min solar separation (not necessarily here)
   SpiceInt i,j;
   SpiceDouble sep, lt, max;
-  SpiceDouble position[6][3];
-  SpiceDouble test[3];
+  SpiceDouble position[planetcount][3];
+  // TODO: why do I need a temp var here?
+  SpiceDouble temp[3];
 
   // compute the Earth positions first for efficiency
   for (i=1; i<=planetcount; i++) {
-    //    spkezp_c(planets[i], et, "J2000", "LT+S", 399, position[i], &lt);
-    spkezp_c(planets[i], et, "J2000", "NONE", 3, test, &lt);
-    // this is stupid
-    for (j=0; j<=2; j++) {position[i][j] = test[j];}
+    spkezp_c(planets[i], et, "J2000", "LT+S", 399, temp, &lt);
+    // copy from temp var (argh!)
+    for (j=0; j<=2; j++) {position[i][j] = temp[j];}
   }
 
   // and now the angle diffs (keep only min)
   for (i=1; i<=planetcount; i++) {
     for (j=i+1; j<=planetcount; j++) {
-      printf("I3: %d %f -> %f %f %f %f\n",planets[i],et2jd(et),position[i][0],position[i][1],position[i][2],position[i][3]);
+      //      printf("I3: %d %f -> %f %f %f %f\n",planets[i],et2jd(et),position[i][0],position[i][1],position[i][2],position[i][3]);
       //      printf("I3: %d %f -> %f %f %f %f\n",planets[i],et2jd(et),test[0],test[1],test[2],test[3]);
       sep = vsep_c(position[i],position[j]);
       if (sep>max) {max=sep;}
     }
   }
 
-  if (max<SIXDEGREES){printf("ABOUT TO RETURN: %f -> %f\n",et2jd(et),max);}
+  //  if (max<SIXDEGREES){printf("ABOUT TO RETURN: %f -> %f\n",et2jd(et),max);}
   *value=max;
   return;
 }
