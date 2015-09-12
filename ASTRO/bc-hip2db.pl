@@ -7,60 +7,69 @@
 # a file
 
 # This is primarily so I can call bc-star-conjuncts.c with all
-# "bright" stars, although is fairly silly, since planets won't get
-# close to most of these stars (but the program runs fast enough as
-# is, so I don't care?)
-
-# TODO: find Bayer names for other stars?
-# TODO: only print stars w/in 8.5 degree of ecliptic (Venus) (-e ?)
+# "bright" stars "near" the ecliptic, so the output is in radians, NOT
+# degrees or hms
 
 require "/usr/local/lib/bclib.pl";
 
 # TODO: do other skycultures have names for stars that wester doesn't?
 # TODO: try to include constellation info for stars w odd names
+# TODO: find Bayer names for other stars?
+
 # read stellarium data
+my(%starname);
 for $i (split(/\n/,read_file("/usr/share/stellarium/skycultures/western/star_names.fab"))) {
   $i=~s/\s*(\d+)\|(.*?)$//||warn("BAD STAR: $i");
+  $starname{$1}=$2;
 }
 
 # -n and -r very large just to print everything about 6.5
 # -d = decimal degrees
 # -m = limiting magnitude
 # -j = use J2000 (0 0 = RA and DEC of 0)
+# -h = header lines (which I ignore but are helpful to see)
 # -c = catalog name
 # NOTE: both files hipparcos and hipparcosra must exist and be identical
-open(A,"scat -n 9999999 -r 9999999 -d -s m -m 6.5 -j 0 0 -c $bclib{githome}/ASTRO/hipparcos|");
 
-while (<A>) {
-  my($num, $ra, $dec);
+# first, ecliptic to search for stars w/in 15 degrees (which is slight
+# overkill; Venus can be 8.25 degrees from ecliptic, so this allows
+# for conjunctions up to 6+ degrees away)
 
-  debug("GOT: $_");
+my($out,$err,$res) = cache_command2("scat -h -n 9999999 -r 9999999 -d -s m -m 6.5 -e 0 0 -c $bclib{githome}/ASTRO/hipparcos", "age=999999");
+
+my(%close);
+
+for $i (split(/\n/,$out)) {
+  my($num,$lon,$lat,$mag) = split(/\s+/,$i);
+
+  # -m 6.5 includes stars with no listed magnitudes as "0" mag, this
+  # gets rid of them (there are no true 0 mag near enough to ecliptic)
+  if ($mag eq "0.00") {next;}
+  # normalizing to match to Stellarium (later)
+  $num=~s/^0+//;
+  if (abs($lat)<=15) {$close{$num}=1;}
 }
 
-die "TESTING";
+# and now, ra dec for the program
+($out,$err,$res) = cache_command2("scat -h -n 9999999 -r 9999999 -d -s m -m 6.5 -j 0 0 -c $bclib{githome}/ASTRO/hipparcos", "age=999999");
 
-system("rm /tmp/bchip.db");
-open(A,"|tee /tmp/q1.txt|sqlite3 /tmp/bchip.db");
-print A << "MARK";
-CREATE TABLE stars (hipp INT, mag DOUBLE, ra DOUBLE, dec DOUBLE);
-CREATE INDEX i1 ON stars(hipp);
-CREATE INDEX i2 ON stars(mag);
-CREATE INDEX i3 ON stars(ra);
-CREATE INDEX i4 ON stars(dec);
-BEGIN;
-MARK
-;
+for $i (split(/\n/,$out)) {
 
-for $i (split(/\n/, `zcat /home/barrycarter/20140814/hip_main.dat.gz`)) {
-  my(@l) = split(/\|/,$i);
-  map($_=trim($_), @l);
-  # at least one of ra/dec must be non-0
-  unless ($l[8]||$l[9]) {next;}
-  print A "INSERT INTO stars VALUES ($l[1], $l[5], $l[8], $l[9]);\n";
+  # skip headers
+  unless ($i=~/^\d/) {debug("SKIPPING: $i"); next;}
+  # special case for count line
+  if ($i=~/hipparcos/) {next;}
+
+  # get ra/dec ignore non-close to ecliptic
+  my($num, $ra, $dec) = split(/\s+/,$i);
+  $num=~s/^0+//;
+  unless ($close{$num}) {next;}
+
+  debug("GOT: $i");
+
+  # star name instead of number
+  if ($starname{$num}) {$num = $starname{$num};} else {$num="HIP$num";}
+
+  # convert to radians and print
+  printf("%.10f %.10f %s\n",$ra*$PI/180,$dec*$PI/180,$num);
 }
-
-print A "COMMIT;\n";
-close(A);
-
-
-

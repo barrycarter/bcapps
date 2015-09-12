@@ -3,7 +3,8 @@
 #include <string.h>
 #include "SpiceUsr.h"
 #include "SpiceZfc.h"
-#define MAXWIN 20000
+#define MAXWIN 200000
+#define SIXDEGREES 0.10471975511965977462
 
 // Usage: $0 naif-id-of-planet ra-of-star-in-radians dec-of-star-in-radians
 
@@ -24,6 +25,9 @@ int main( int argc, char **argv ) {
   setenv("RA",argv[2],1);
   setenv("DEC",argv[3],1);
 
+  // 1 second tolerance (serious overkill, but 1e-6 is default, worse!)
+  gfstol_c(1.);
+
   // argv[4] is the optional star name
   printf("PLANET: %s, RA: %s DEC: %s (%s)\n\n",argv[1],argv[2],argv[3],argv[4]);
 
@@ -31,19 +35,27 @@ int main( int argc, char **argv ) {
   SPICEDOUBLE_CELL (cnfine, 2);
   SpiceDouble beg,end;
   SpiceInt count,i;
-  furnsh_c("standard.tm");
+  furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
+
+  // DE431 limits
+  wninsd_c (-479695089600.+86400*468, 479386728000., &cnfine);
 
   // 1970 to 2038 (all "Unix time")
-  wninsd_c (unix2et(0),unix2et(2147483647),&cnfine);
+  //  wninsd_c (unix2et(0),unix2et(2147483647),&cnfine);
  
-  gfuds_c (gfq,gfdecrx,"LOCMIN",0.10472,0.,86400.,MAXWIN,&cnfine,&result );
+  gfuds_c (gfq,gfdecrx,"LOCMIN",0.,0.,86400.,MAXWIN,&cnfine,&result );
 
   count = wncard_c( &result );
  
-  for ( i = 0; i < count; i++ ) {
+  for (i=0; i<count; i++) {
     wnfetd_c ( &result, i, &beg, &end );
+
     // this is cheating, but I'm not using &end, so...
     gfq(beg,&end);
+
+    // ignore more than 6 degrees
+    if (end>SIXDEGREES) {continue;}
+
     printf ("%f %f\n",et2jd(beg),end/pi_c()*180.);
   }
   return( 0 );
