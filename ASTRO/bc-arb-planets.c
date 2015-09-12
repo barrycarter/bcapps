@@ -57,7 +57,8 @@ int main( int argc, char **argv ) {
     gfq(beg,&end);
 
     // ignore more than 6 degrees
-    if (end>SIXDEGREES) {continue;}
+    // removed for testing
+    //    if (end>SIXDEGREES) {continue;}
 
     printf ("%f %f\n",et2jd(beg),end/pi_c()*180.);
   }
@@ -69,7 +70,7 @@ void gfq ( SpiceDouble et, SpiceDouble * value ) {
   // max separation between all non-0 planets in planets
   // TODO: get min solar separation (not necessarily here)
   SpiceInt i,j;
-  SpiceDouble sep, maxsep, lt;
+  SpiceDouble sep, lt;
   SpiceDouble position[planetcount][2];
 
   // compute the Earth positions first for efficiency
@@ -77,19 +78,15 @@ void gfq ( SpiceDouble et, SpiceDouble * value ) {
     spkezp_c(planets[i], et, "J2000", "LT+S", 399, position[i], &lt);
   }
 
-  // separation can never be more than pi, so this works
-  maxsep = 4.;
-
   // and now the angle diffs (keep only min)
   for (i=1; i<=planetcount; i++) {
     for (j=i+1; j<=planetcount; j++) {
       sep = vsep_c(position[i],position[j]);
-      printf("SEP: %d %d %f\n",planets[i],planets[j],sep);
+      if (sep>*value) {*value=sep;}
+      printf("SEP VAL: %f,%f\n",sep,*value);
     }
   }
-
-
-  value=0;
+  printf("RETURNING: %f\n",value);
   return;
 }
  
