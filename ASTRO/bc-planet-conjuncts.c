@@ -27,8 +27,7 @@ void posxyz(double time, int planet, SpiceDouble position[3]) {
 
 void earthvector(double time, int planet, SpiceDouble position[3]) {
   SpiceDouble lt;
-  // TODO: make this 399 for production
-  spkezp_c(planet, jd2et(time),"J2000","NONE",3,position,&lt);
+  spkezp_c(planet, jd2et(time),"J2000","NONE",399,position,&lt);
 }
 
 double earthangle(double time, int p1, int p2) {
@@ -52,6 +51,22 @@ double earthmaxangle(double time, int arrsize, SpiceInt *planets) {
     }
   }
   return max;
+}
+
+// min angle from sun of given planets at given time
+
+double sunminangle(double time, int arrsize, SpiceInt *planets) {
+
+  // max angle is actually pi/2, so 3.1416 is overkill
+  double min=3.1416, sep;
+  int i;
+
+  for (i=0; i<arrsize; i++) {
+    if (planets[i]==0) {continue;}
+    sep = earthangle(time, planets[i], 10);
+    if (sep<min) {min=sep;}
+  }
+  return min;
 }
 
 // function to minimize is earthmaxangle
@@ -89,7 +104,8 @@ void findmins (SpiceDouble beg, SpiceDouble end) {
 
   for (i=0; i<count; i++) {
     wnfetd_c(&result,i,&beg,&end);
-    printf("min %f %f\n",et2jd(beg),et2jd(end));
+    // TODO: beg and end should be identical, bad to print both?
+    printf("min %f %f %f\n",et2jd(beg),et2jd(end),earthmaxangle);
   }
 
 }
