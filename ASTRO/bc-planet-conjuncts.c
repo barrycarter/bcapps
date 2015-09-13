@@ -22,12 +22,12 @@ double unix2et(double d) {return d-946684800.;}
 
 void posxyz(double time, int planet, SpiceDouble position[3]) {
   SpiceDouble lt;
-  spkezp_c(planet, jd2et(time),"J2000","NONE",0,position,&lt);
+  spkezp_c(planet, time,"J2000","NONE",0,position,&lt);
 }
 
 void earthvector(double time, int planet, SpiceDouble position[3]) {
   SpiceDouble lt;
-  spkezp_c(planet, jd2et(time),"J2000","NONE",399,position,&lt);
+  spkezp_c(planet, time,"J2000","NONE",399,position,&lt);
 }
 
 double earthangle(double time, int p1, int p2) {
@@ -71,7 +71,7 @@ double sunminangle(double time, int arrsize, SpiceInt *planets) {
 
 // function to minimize is earthmaxangle
 void gfq (SpiceDouble et, SpiceDouble *value) {
-  *value = earthmaxangle(et2jd(et),planetcount,planets);
+  *value = earthmaxangle(et,planetcount,planets);
 }
 
 // this just takes differentials of gfq
@@ -106,9 +106,8 @@ void findmins (SpiceDouble beg, SpiceDouble end) {
     wnfetd_c(&result,i,&beg,&end);
     // becuase beg and end are equal, overwriting end with actual value
     gfq(beg,&end);
-    printf("min %f %f %f\n",et2jd(beg),end,sunminangle(et2jd(beg),);
+    printf("min %f %f %f\n",et2jd(beg),end,sunminangle(beg,planetcount,planets));
   }
-
 }
 
 int main (int argc, char **argv) {
