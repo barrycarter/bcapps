@@ -29,15 +29,29 @@ double earthangle(double time, int p1, int p2) {
   SpiceDouble pos[3], pos2[3];
   earthvector(time, p1, pos);
   earthvector(time, p2, pos2);
-  printf("P1: %f -> %f %f %f\n",time,pos[0],pos[1],pos[2]);
-  printf("P2: %f -> %f %f %f\n",time,pos2[0],pos2[1],pos2[2]);
   return vsep_c(pos,pos2);
+}
+
+double earthmaxangle(double time, int arrsize, SpiceInt *planets) {
+  double max, sep;
+
+  int i,j;
+
+  for (i=0; i<arrsize; i++) {
+    for (j=i+1; j<arrsize; j++) {
+      sep = earthangle(time, planets[i], planets[j]);
+      if (sep>max) {max=sep;}
+      printf("MAXSEP: %d %d %f %f\n",planets[i],planets[j],max,sep);
+    }
+  }
+  return max;
 }
 
 int main (int argc, char **argv) {
 
   SpiceDouble pos[3];
   SpiceDouble lt;
+  SpiceInt planets[6], i;
 
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
@@ -60,6 +74,13 @@ int main (int argc, char **argv) {
     int p1 = atoi(argv[3]);
     int p2 = atoi(argv[4]);
     SpiceDouble sep = earthangle(time,p1,p2);
+    printf("%f -> %f\n",time,sep);
+  };
+
+  if (!strcmp(argv[1],"earthmaxangle")) {
+    double time = atof(argv[2]);
+    for (i=3; i<argc; i++) {planets[i-3] = atoi(argv[i]);}
+    SpiceDouble sep = earthmaxangle(time,argc-3,planets);
     printf("%f -> %f\n",time,sep);
   };
 
