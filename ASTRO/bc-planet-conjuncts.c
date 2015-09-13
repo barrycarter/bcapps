@@ -12,13 +12,14 @@
 #define MAXWIN 1000000
 
 // these are "globally" scoped
-SpiceInt planets[6], planetcount;
+SpiceInt planets[7], planetcount;
 
 // icky defining functions first
 
 double et2jd(double d) {return 2451545.+d/86400.;}
 double jd2et(double d) {return 86400.*(d-2451545.);}
 double unix2et(double d) {return d-946684800.;}
+double r2d(double d) {return d*180./pi_c();}
 
 void posxyz(double time, int planet, SpiceDouble position[3]) {
   SpiceDouble lt;
@@ -106,7 +107,7 @@ void findmins (SpiceDouble beg, SpiceDouble end) {
     wnfetd_c(&result,i,&beg,&end);
     // becuase beg and end are equal, overwriting end with actual value
     gfq(beg,&end);
-    printf("min %f %f %f\n",et2jd(beg),end,sunminangle(beg,planetcount,planets));
+    printf("M %f %f %f\n",et2jd(beg),r2d(end),r2d(sunminangle(beg,planetcount,planets)));
   }
 }
 
@@ -119,9 +120,14 @@ int main (int argc, char **argv) {
 
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
+  // this is wasteful, but I don't want to rewrite code
+  planets[0] = 0;
+
   // planets array and count
   for (i=1; i<argc; i++) {planets[i] = atoi(argv[i]);}
   planetcount = argc;
+
+  printf("CONJUNCTIONS FOR %f degrees, planets: %d %d %d %d %d %d\n",r2d(MAXSEP),(int)planets[1],(int)planets[2],(int)planets[3],(int)planets[4],(int)planets[5],(int)planets[6]);
 
   // TODO: make this DE431 when not testing
   wninsd_c(unix2et(0),unix2et(2147483647),&cnfine);
@@ -136,7 +142,8 @@ int main (int argc, char **argv) {
 
   for (i=0; i<nres; i++) {
     wnfetd_c(&result,i,&beg,&end);
-    printf("6deg %f %f\n",et2jd(beg),et2jd(end));
+    // R = range, M = min
+    printf("R %f %f\n",et2jd(beg),et2jd(end));
     findmins(beg,end);
   }
 
