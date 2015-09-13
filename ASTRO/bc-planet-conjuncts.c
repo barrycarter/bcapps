@@ -104,8 +104,9 @@ void findmins (SpiceDouble beg, SpiceDouble end) {
 
   for (i=0; i<count; i++) {
     wnfetd_c(&result,i,&beg,&end);
-    // TODO: beg and end should be identical, bad to print both?
-    printf("min %f %f %f\n",et2jd(beg),et2jd(end),earthmaxangle);
+    // becuase beg and end are equal, overwriting end with actual value
+    gfq(beg,&end);
+    printf("min %f %f %f\n",et2jd(beg),end,sunminangle(et2jd(beg),);
   }
 
 }
