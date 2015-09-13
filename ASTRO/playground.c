@@ -41,7 +41,6 @@ double earthmaxangle(double time, int arrsize, SpiceInt *planets) {
     for (j=i+1; j<arrsize; j++) {
       sep = earthangle(time, planets[i], planets[j]);
       if (sep>max) {max=sep;}
-      printf("MAXSEP: %d %d %f %f\n",planets[i],planets[j],max,sep);
     }
   }
   return max;
