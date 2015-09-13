@@ -39,12 +39,14 @@ double earthangle(double time, int p1, int p2) {
 }
 
 double earthmaxangle(double time, int arrsize, SpiceInt *planets) {
-  double max, sep;
+  double max=0, sep;
 
   int i,j;
 
   for (i=0; i<arrsize; i++) {
+    if (planets[i]==0) {continue;}
     for (j=i+1; j<arrsize; j++) {
+      if (planets[j]==0) {continue;}
       sep = earthangle(time, planets[i], planets[j]);
       if (sep>max) {max=sep;}
     }
@@ -65,17 +67,45 @@ void gfdecrx (void(* udfuns)(SpiceDouble et,SpiceDouble * value),
   return;
 }
 
+// find and print (icky) min seps in given interval
+
+void findmins (SpiceDouble beg, SpiceDouble end) {
+
+  SpiceInt i, count;
+
+  // SPICEDOUBLE_CELLs are static, so must reinit them each time, sigh
+  SPICEDOUBLE_CELL(result, 200);
+  SPICEDOUBLE_CELL(cnfine,2);
+  scard_c(0,&result);
+  scard_c(0,&cnfine);
+
+  // create interval
+  wninsd_c(beg,end,&cnfine);
+
+  // get results
+  gfuds_c(gfq,gfdecrx,"LOCMIN",0.,0.,86400.,MAXWIN,&cnfine,&result);
+
+  count = wncard_c(&result); 
+
+  for (i=0; i<count; i++) {
+    wnfetd_c(&result,i,&beg,&end);
+    printf("min %f %f\n",et2jd(beg),et2jd(end));
+  }
+
+}
+
 int main (int argc, char **argv) {
 
-  SpiceInt i;
+  SpiceInt i, nres;
   SPICEDOUBLE_CELL(cnfine,2);
   SPICEDOUBLE_CELL(result,2*MAXWIN);
+  SpiceDouble beg,end;
 
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
   // planets array and count
   for (i=1; i<argc; i++) {planets[i] = atoi(argv[i]);}
-  planetcount = argc-1;
+  planetcount = argc;
 
   // TODO: make this DE431 when not testing
   wninsd_c(unix2et(0),unix2et(2147483647),&cnfine);
@@ -86,7 +116,15 @@ int main (int argc, char **argv) {
   // find under 6 degrees...
   gfuds_c(gfq,gfdecrx,"<",MAXSEP,0.,86400.,MAXWIN,&cnfine,&result);
 
-  printf("There are %d results\n",wncard_c(&result));
+  nres = wncard_c(&result);
+
+  for (i=0; i<nres; i++) {
+    wnfetd_c(&result,i,&beg,&end);
+    printf("6deg %f %f\n",et2jd(beg),et2jd(end));
+    findmins(beg,end);
+  }
+
+  //  printf("There are %d results\n",wncard_c(&result));
 
   return 0;
 }
