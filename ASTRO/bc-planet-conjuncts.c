@@ -7,6 +7,7 @@
 #include <string.h>
 #include "SpiceUsr.h"
 #include "SpiceZfc.h"
+#include "SpiceZpr.h"
 #define MAXSEP 0.10471975511965977462
 #define MAXWIN 1000000
 
@@ -53,10 +54,7 @@ double earthmaxangle(double time, int arrsize, SpiceInt *planets) {
 
 // function to minimize is earthmaxangle
 void gfq (SpiceDouble et, SpiceDouble *value) {
-  //  printf("BEFORE: %p %f\n",value,*value);
   *value = earthmaxangle(et2jd(et),planetcount,planets);
-  //  printf("AFTER: %p\n",value);
-  printf("%d\n",42);
 }
 
 // this just takes differentials of gfq
@@ -90,4 +88,5 @@ int main (int argc, char **argv) {
 
   printf("There are %d results\n",wncard_c(&result));
 
+  return 0;
 }

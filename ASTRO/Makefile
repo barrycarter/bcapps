@@ -17,4 +17,4 @@ all: /home/barrycarter/bin/seps /home/barrycarter/bin/j2d /home/barrycarter/bin/
 /home/barrycarter/bin/playground: playground.c
 	gcc -I /home/barrycarter/SPICE/cspice/include playground.c -o /home/barrycarter/bin/playground /home/barrycarter/SPICE/cspice/lib/cspice.a -lm
 /home/barrycarter/bin/pconjuncts: bc-planet-conjuncts.c
-	gcc -I /home/barrycarter/SPICE/cspice/include bc-planet-conjuncts.c -o /home/barrycarter/bin/pconjuncts /home/barrycarter/SPICE/cspice/lib/cspice.a -lm
+	gcc -Wall -O2 -I /home/barrycarter/SPICE/cspice/include bc-planet-conjuncts.c -o /home/barrycarter/bin/pconjuncts /home/barrycarter/SPICE/cspice/lib/cspice.a -lm
