@@ -23,7 +23,7 @@ SpiceDouble *posxyz(double time, int planet) {
 
 int main (int argc, char **argv) {
 
-  SpiceDouble *position;
+  SpiceDouble *pos, *pos2;
   SpiceDouble lt;
 
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
@@ -33,8 +33,9 @@ int main (int argc, char **argv) {
     int planet = atoi(argv[3]);
     //    spkezp_c(planet,time,"J2000","NONE",0,position,&lt);
     //    spkgps_c(planet,time,"J2000",0,position,&lt);
-    position = posxyz(atof(argv[2]),atoi(argv[3]));
-    printf("%f -> %f %f %f\n",time,position[0],position[1],position[2]);
+    pos = posxyz(atof(argv[2]),atoi(argv[3]));
+    //    pos2 = posxyz(2450000,6);
+    printf("%f -> %f %f %f\n",time,pos[0],pos[1],pos[2]);
   }
 
 }
