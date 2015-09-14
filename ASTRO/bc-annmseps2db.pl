@@ -72,9 +72,9 @@ print B "COMMIT;\n";
 -- TODO: change to filled text if this doesnt work
 
 CREATE TABLE conjunctions (p1 TEXT, p2 TEXT, p3 TEXT, p4 TEXT, p5
-TEXT, p6 TEXT, jd DOUBLE, cdate DATETIME, year INT, month INT, day
-INT, time TIME, sep DOUBLE, sunsep DOUBLE, sjd DOUBLE, sdate DATETIME,
-ejd DOUBLE, edate DATETIME);
+TEXT, p6 TEXT, jd DOUBLE, cdate TEXT, year INT, month INT, day
+INT, time TIME, sep DOUBLE, sunsep DOUBLE, sjd DOUBLE, sdate TEXT,
+ejd DOUBLE, edate TEXT);
 
 CREATE INDEX p1 ON conjunctions(p1(10));
 CREATE INDEX p2 ON conjunctions(p2(10));
@@ -83,15 +83,15 @@ CREATE INDEX p4 ON conjunctions(p4(10));
 CREATE INDEX p5 ON conjunctions(p5(10));
 CREATE INDEX p6 ON conjunctions(p6(10));
 CREATE INDEX p7 ON conjunctions(jd);
-CREATE INDEX pi ON conjunctions(cdate);
+CREATE INDEX pi ON conjunctions(cdate(12));
 CREATE INDEX p8 ON conjunctions(year);
 CREATE INDEX p9 ON conjunctions(month);
 CREATE INDEX pa ON conjunctions(day);
 CREATE INDEX pb ON conjunctions(time);
 CREATE INDEX pc ON conjunctions(sep);
 CREATE INDEX pd ON conjunctions(sunsep);
-CREATE INDEX pe ON conjunctions(sdate);
-CREATE INDEX pf ON conjunctions(edate);
+CREATE INDEX pe ON conjunctions(sdate(12));
+CREATE INDEX pf ON conjunctions(edate(12));
 CREATE INDEX pg ON conjunctions(sjd);
 CREATE INDEX ph ON conjunctions(ejd);
 
