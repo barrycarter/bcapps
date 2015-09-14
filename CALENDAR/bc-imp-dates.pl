@@ -106,7 +106,7 @@ for $i (split(/\n/,$out)) {
   if ($i=~/Zod$/) {
     # TODO: Capricornus -> Capricorn, Scorpius -> Scorpio, etc?
     # NOTE: XX below because I trim last field later
-    unless ($i=~s%^.*/(.*?)\[.*$%Sun enters $1 XX%) {next;}
+    unless ($i=~s%^.*/(.*?)\[.*$%Sun -> $1 XX%) {next;}
   }
 
   # ignore orthodox Easter/Palm Sunday (before we cleanup the last field)

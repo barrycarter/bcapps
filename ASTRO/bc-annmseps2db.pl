@@ -1,7 +1,6 @@
 #!/bin/perl
 
-# The final final step of the quest to find conjunctions: this takes
-# the annmsepsdump dump files and converts them to a MySQL database
+# Converts the output of pconjuncts (in the CONJUNCTIONS subdir) to MySQL
 
 require "/usr/local/lib/bclib.pl";
 
@@ -11,7 +10,55 @@ open(A,">/tmp/conjuncts.txt");
 open(B,">/tmp/ams2-queries.txt");
 print B "BEGIN;\n";
 
-for $i (glob "/home/barrycarter/SPICE/KERNELS/annmsepsdump*.txt") {
+open(C,"bzcat $bclib{githome}/ASTRO/CONJUNCTIONS/*.out.bz2|");
+
+my(@planets,@range);
+
+while (<C>) {
+
+  # new set of planets?
+  if (/CONJUNCTIONS FOR.*planets: (.*?)$/i) {
+    @planets = ();
+    for $i (split(/\s+/,$1)) {if ($i) {push(@planets,$i);}}
+    next;
+  }
+
+  # range for conjunction (just record, wont print until min line)
+  if (/^R\s+(.*?)\s+(.*?)$/) {@range=($1,$2);next;}
+
+  # the min line where we actually do print stuff
+  my($m,$jd,$sep,$sunsep) = split(/\s+/, $_);
+  my($numplans) = scalar(@planets);
+  my(@date) = jd2mixed_ymdhms($jd);
+  # the start and end dates for the range containing this conjunction
+  my(@sdate) = jd2mixed_ymdhms($range[0]);
+  my(@edate) = jd2mixed_ymdhms($range[1]);
+
+  # cleanup hms
+  my($hms) = sprintf("%02d:%02d:%02d",@date[3..5]);
+  debug("HMS: $hms");
+
+  debug("DATE",@date);
+
+  # build up field list (this is ugly and non-normalized)
+  my($flist) = "p1";
+  for $j (2..$numplans) {$flist.=", p$j";}
+
+  my(@printlist) = (@planets,$jd,@date[0..2],join(":",@date[3..5]),$sep,$sun,$star,$sunsep);
+  map($_="'$_'",@printlist);
+  my($print) = join(", ",@printlist);
+
+  # TODO: printing to stdout just for testing
+  print "INSERT INTO p$numplans 
+($flist, jd, year, month, day, time, sep, solarsep) VALUES ($print);\n";
+
+  print A join(",",(join("+",@planets),$jd,@date[0..2],join(":",@date[3..5]),$sep,$sunsep)),"\n";
+
+}
+
+die "TESTING";
+
+for $i (glob "$bclib{githome}/ASTRO/CONJUNCTIONS/*.out.bz2") {
   debug("READING: $i");
   my($all) = read_file($i);
 
@@ -63,54 +110,25 @@ close(B);
 
 =item schema
 
--- The schema of the MySQL tables:
+-- The schema of the MySQL table:
 
-CREATE TABLE p2 (
-p1 TEXT, p2 TEXT, 
-jd DOUBLE, year INT, month INT, day INT, time TIME,
-sep DOUBLE, solarsep DOUBLE, star TEXT, starsep DOUBLE
-);
-
--- The others are identical, but with more planets
-
-CREATE TABLE p3 (
-p1 TEXT, p2 TEXT, p3 TEXT, 
-jd DOUBLE, year INT, month INT, day INT, time TIME,
-sep DOUBLE, solarsep DOUBLE, star TEXT, starsep DOUBLE
-);
-
-CREATE TABLE p4 (
-p1 TEXT, p2 TEXT, p3 TEXT, p4 TEXT,
-jd DOUBLE, year INT, month INT, day INT, time TIME,
-sep DOUBLE, solarsep DOUBLE, star TEXT, starsep DOUBLE
-);
-
-CREATE TABLE p5 (
-p1 TEXT, p2 TEXT, p3 TEXT, p4 TEXT, p5 TEXT, 
-jd DOUBLE, year INT, month INT, day INT, time TIME,
-sep DOUBLE, solarsep DOUBLE, star TEXT, starsep DOUBLE
-);
-
--- there is only one conjunction of all 6 planets
-
-CREATE TABLE p6 (
+CREATE TABLE conjunctions (
 p1 TEXT, p2 TEXT, p3 TEXT, p4 TEXT, p5 TEXT, p6 TEXT,
 jd DOUBLE, year INT, month INT, day INT, time TIME,
-sep DOUBLE, solarsep DOUBLE, star TEXT, starsep DOUBLE
-);
+sep DOUBLE, solarsep DOUBLE);
 
--- indexes are also similar
-
-CREATE INDEX p11 ON p2(p1(10));
-CREATE INDEX p12 ON p2(p2(10));
-CREATE INDEX p13 ON p2(jd);
-CREATE INDEX p14 ON p2(year);
-CREATE INDEX p15 ON p2(month);
-CREATE INDEX p16 ON p2(day);
-CREATE INDEX p17 ON p2(time);
-CREATE INDEX p18 ON p2(sep);
-CREATE INDEX p19 ON p2(solarsep);
-CREATE INDEX p1a ON p2(star(10));
-CREATE INDEX p1b ON p2(starsep);
+CREATE INDEX p1 ON conjunctions(p1(10));
+CREATE INDEX p2 ON conjunctions(p2(10));
+CREATE INDEX p3 ON conjunctions(p3(10));
+CREATE INDEX p4 ON conjunctions(p4(10));
+CREATE INDEX p5 ON conjunctions(p5(10));
+CREATE INDEX p6 ON conjunctions(p6(10));
+CREATE INDEX p7 ON conjunctions(jd);
+CREATE INDEX p8 ON conjunctions(year);
+CREATE INDEX p9 ON conjunctions(month);
+CREATE INDEX pa ON conjunctions(day);
+CREATE INDEX pb ON conjunctions(time);
+CREATE INDEX pc ON conjunctions(sep);
+CREATE INDEX pd ON conjunctions(solarsep);
 
 =cut
