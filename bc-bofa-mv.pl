@@ -20,6 +20,9 @@ for $i (@ARGV) {
   # switch based on pdf or txt contents
   if ($all=~/CenturyLink/s) {
     $fname = handle_centurylink($all);
+  } elsif ($all=~/capitalone/i) {
+    # this test MUST come before COMCAST test because I bill COMCAST to capone
+    $fname = handle_capone($all);
   } elsif ($all=~/compass/i) {
     $fname = handle_compass($all);
   } elsif ($all=~/www\.ally\.com/) {
@@ -37,6 +40,8 @@ for $i (@ARGV) {
   } elsif ($all=~/COMCAST/) {
     # TODO: this catches statements where comcast is listed = bad
     $fname = handle_comcast($all);
+  } elsif ($all=~/samsclub/) {
+    $fname = handle_samsclub($all);
   } else {
     warnlocal("Cannot rename: $i");
     next;
@@ -63,6 +68,13 @@ for $i (@ARGV) {
   # otherwise, advise move
   print "mv -i $i $fname\n";
 
+}
+
+sub handle_samsclub {
+  my($all) = @_;
+  # first mm/dd/yyyy after "closing date"
+  $all=~m%closing date.*?(\d{2})/(\d{2})/(\d{4})%is;
+  return "samsclub-$1-$2-$3.pdf";
 }
 
 sub handle_compass {

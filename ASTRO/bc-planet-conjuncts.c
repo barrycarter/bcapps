@@ -129,13 +129,14 @@ int main (int argc, char **argv) {
 
   printf("CONJUNCTIONS FOR %f degrees, planets: %d %d %d %d %d %d\n",r2d(MAXSEP),(int)planets[1],(int)planets[2],(int)planets[3],(int)planets[4],(int)planets[5],(int)planets[6]);
 
-  // TODO: make this DE431 when not testing
-  wninsd_c(unix2et(0),unix2et(2147483647),&cnfine);
+
+  //  wninsd_c(unix2et(0),unix2et(2147483647),&cnfine);
+  wninsd_c (-479695089600.+86400*468, 479386728000., &cnfine);
 
   // 1 second tolerance (serious overkill, but 1e-6 is default, worse!)
   gfstol_c(1.);
 
-  // find under 6 degrees...
+  // find under MAXSEP degrees...
   gfuds_c(gfq,gfdecrx,"<",MAXSEP,0.,86400.,MAXWIN,&cnfine,&result);
 
   nres = wncard_c(&result);
