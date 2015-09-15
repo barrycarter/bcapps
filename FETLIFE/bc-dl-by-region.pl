@@ -13,6 +13,9 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# max length of command line (131071 is a guess)
+$maxlen = 131071;
+
 defaults("xmessage=1");
 
 unless ($globopts{sessionid} && $globopts{subdir}) {
@@ -70,13 +73,11 @@ for $i (1..248) {
 
 # dumping commands to file so I can see results as I run them
 
-# -s is ugly (and makes using xargs somewhat pointless), but required
-# because the quoting below and cache_command2 both add characters to
-# command line (130072 = 2**17-1000)
+# total length so far
+my($len) = 0;
 
-# lessening number of URLs per connection to avoid blocks
-# TODO: this can end on a "-o" which breaks things
-open(B,"|xargs -s 40000 -r echo $cmd > cmdlist.txt");
+open(B,">cmdlist.txt");
+
 
 while (%pages) {
 
@@ -96,17 +97,29 @@ while (%pages) {
     # already exists (and not trivial)? keep going
     if (-s $fname > 1000) {next;}
 
+    # the string to print (if theres room)
+    my($str);
+
     # every so often, visit home page to avoid block
     if ($innercount%25==0) {
-      print B "-o homepage.html 'https://fetlife.com/home/v4'\n";
+      $str .= "-o homepage.html 'https://fetlife.com/home/v4'\n";
     }
 
     my($url) = "https://fetlife.com/countries/$i/kinksters?page=$count";
-    print B "-o '$fname' '$url'\n";
+    $str .="-o '$fname' '$url'\n";
+
+    # enough room to print string? (if not, print return first + curl)
+    $len += length($str);
+
+    debug("LEN: $len");
+    
+
   }
 }
 
 close(B);
+
+die "TESTING";
 
 # now to run the commands (which requires minor tweaking due to quoting issues)
 

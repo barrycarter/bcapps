@@ -4,7 +4,7 @@
 #include "SpiceUsr.h"
 #include "SpiceZfc.h"
 #define MAXWIN 200000
-#define SIXDEGREES 0.10471975511965977462
+#define MAXSEP 0.10471975511965977462
 
 // Usage: $0 ra-of-star-radians dec-of-star-radians list-of-planet
 
@@ -23,10 +23,15 @@ double r2d(double d) {return d*180./pi_c();}
 
 void earthvector(double time, int planet, SpiceDouble position[3]) {
   SpiceDouble lt;
+  SpiceInt i;
 
   // planet -1 is the star
-  // TODO: not sure setting this equality will work
-  if (planet==-1) {&position = &starpos; return;}
+  if (planet==-1) {
+    for (i=0; i<=2; i++) {
+      position[i] = starpos[i];
+    }
+    return;
+  }
 
   spkezp_c(planet, time,"J2000","NONE",399,position,&lt);
 }
@@ -35,6 +40,7 @@ double earthangle(double time, int p1, int p2) {
   SpiceDouble pos[3], pos2[3];
   earthvector(time, p1, pos);
   earthvector(time, p2, pos2);
+  //  printf("GOT: %d %d %f %f %f\n",p1,p2,pos[0],pos[1],pos[2]);
   return vsep_c(pos,pos2);
 }
 
@@ -120,21 +126,21 @@ int main (int argc, char **argv) {
 
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
-  // this is wasteful, but I don't want to rewrite code
-  planets[0] = 0;
+  // this will represent the stars position
+  planets[0] = -1;
 
   // convert ra and dec to starpos
-  radrec_c(1,atof(argv[1]),atof(argv[2]),&starpos);
+  radrec_c(1,atof(argv[1]),atof(argv[2]),starpos);
 
   // planets array and count
-  for (i=1; i<argc; i++) {planets[i] = atoi(argv[i+2]);}
-  planetcount = argc;
+  for (i=1; i<argc-2; i++) {planets[i] = atoi(argv[i+2]);}
+  planetcount = argc-2;
 
-  printf("CONJUNCTIONS FOR %f degrees, planets: %s %s %d %d %d %d %d %d\n",argv[1],argv[2],r2d(MAXSEP),(int)planets[1],(int)planets[2],(int)planets[3],(int)planets[4],(int)planets[5],(int)planets[6]);
+  printf("CONJUNCTIONS FOR %f degrees, planets: %s %s %d %d %d %d %d %d\n",r2d(MAXSEP),argv[1],argv[2],(int)planets[1],(int)planets[2],(int)planets[3],(int)planets[4],(int)planets[5],(int)planets[6]);
 
   // TODO: this is for testing only
-  wninsd_c(unix2et(0),unix2et(2147483647),&cnfine);
-  //  wninsd_c (-479695089600.+86400*468, 479386728000., &cnfine);
+  // wninsd_c(unix2et(0),unix2et(2147483647),&cnfine);
+  wninsd_c (-479695089600.+86400*468, 479386728000., &cnfine);
 
   // 1 second tolerance (serious overkill, but 1e-6 is default, worse!)
   gfstol_c(1.);
