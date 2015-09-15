@@ -11,7 +11,7 @@ all: /home/barrycarter/bin/seps /home/barrycarter/bin/j2d /home/barrycarter/bin/
 /home/barrycarter/bin/gfudb: gfudb-example.c
 	gcc -I /home/barrycarter/SPICE/cspice/include gfudb-example.c -o /home/barrycarter/bin/gfudb /home/barrycarter/SPICE/cspice/lib/cspice.a -lm
 /home/barrycarter/bin/starconjunct: bc-star-conjuncts.c
-	gcc -I /home/barrycarter/SPICE/cspice/include bc-star-conjuncts.c -o /home/barrycarter/bin/starconjunct /home/barrycarter/SPICE/cspice/lib/cspice.a -lm
+	gcc -Wall -O2 -I /home/barrycarter/SPICE/cspice/include bc-star-conjuncts.c -o /home/barrycarter/bin/starconjunct /home/barrycarter/SPICE/cspice/lib/cspice.a -lm
 # /home/barrycarter/bin/pconjuncts: bc-arb-planets.c
 #	gcc -I /home/barrycarter/SPICE/cspice/include bc-arb-planets.c -o /home/barrycarter/bin/pconjuncts /home/barrycarter/SPICE/cspice/lib/cspice.a -lm
 /home/barrycarter/bin/playground: playground.c

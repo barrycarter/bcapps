@@ -75,7 +75,8 @@ for $i (1..248) {
 # command line (130072 = 2**17-1000)
 
 # lessening number of URLs per connection to avoid blocks
-open(B,"|xargs -s 50000 -r echo $cmd > cmdlist.txt");
+# TODO: this can end on a "-o" which breaks things
+open(B,"|xargs -s 40000 -r echo $cmd > cmdlist.txt");
 
 while (%pages) {
 
