@@ -13,8 +13,8 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# max length of command line (131071 is a guess)
-$maxlen = 131071;
+# max length of command line (131071 is a guess, leaving room for temp files)
+$maxlen = 100000;
 
 defaults("xmessage=1");
 
@@ -73,8 +73,8 @@ for $i (1..248) {
 
 # dumping commands to file so I can see results as I run them
 
-# total length so far
-my($len) = 0;
+# total length so far (start with infinity to force command at start)
+my($len) = +Infinity;
 
 open(B,">cmdlist.txt");
 
@@ -102,36 +102,37 @@ while (%pages) {
 
     # every so often, visit home page to avoid block
     if ($innercount%25==0) {
-      $str .= "-o homepage.html 'https://fetlife.com/home/v4'\n";
+      $str .= "-o homepage.html 'https://fetlife.com/home/v4' ";
     }
 
     my($url) = "https://fetlife.com/countries/$i/kinksters?page=$count";
-    $str .="-o '$fname' '$url'\n";
+    $str .= "-o '$fname' '$url' ";
 
     # enough room to print string? (if not, print return first + curl)
     $len += length($str);
 
-    debug("LEN: $len");
-    
+    if ($len <= $maxlen) {print B $str; next;}
 
+    # length too long, so print new line
+    $str = "\n$cmd $str";
+    $len = length($str);
+    print B $str;
   }
 }
 
 close(B);
 
-die "TESTING";
-
-# now to run the commands (which requires minor tweaking due to quoting issues)
-
+# now to run the commands
 open(B,"cmdlist.txt");
 
 while (<B>) {
   chomp;
-  # surprisingly, this is the ONLY thing that REQUIRES quotes
-  s/\Cookie: (.*?) /"Cookie: $1" /;
+  # ignore first line
+  if (/^\s*$/) {next;}
   my($out,$err,$res)=cache_command2($_);
   debug("OUT: $out","ERR: $err", "RES: $res");
   # since i repeatedly dl homepage.html, check its size
+  # TODO: this only checks once per run, create it many times per run
   unless (-s "homepage.html" > 10000) {die "homepage.html too small";}
   # TODO: check $res, check that files sizes are reasonable, etc
 }

@@ -1,7 +1,6 @@
 #!/bin/perl
 
-# Frontend to astro.db.mysql.94y.info that allows access to some
-# simple queries to p2 (but not to p3, p4, p5, p6)
+# Frontend (astro.db.mysql.94y.info), allows simple queries to conjunctions
 
 require "/usr/local/lib/bclib.pl";
 
@@ -21,14 +20,14 @@ $globopts{debug}=1;
 # if there is a query, handle it
 
 # defaults are read first and are trumped by QUERY_STRING
-my($defaults) = ("p1=Mercury&p2=Venus&lowyear=2014&highyear=2016&sep=6&solarsep=18");
+my($defaults) = ("p1=Mercury&p2=Venus&lowyear=2014&highyear=2016&sep=6&sunsep=18");
 
 my(%chunks)=str2hash("$defaults&$ENV{QUERY_STRING}");
 
 # conditions
 my(@conds) = (
  "year BETWEEN $chunks{lowyear} AND $chunks{highyear}",
- "sep < $chunks{sep}", "solarsep > $chunks{solarsep}"
+ "sep < $chunks{sep}", "sunsep > $chunks{sunsep}"
 );
 
 # if p1 and/or p2 are not "*"
@@ -42,7 +41,7 @@ if ($chunks{"submit"}) {
   my($conds)=join(" AND ",@conds);
   my($query) = << "MARK";
 
-SELECT UPPER(p1) AS "Planet 1", UPPER(p2) AS "Planet 2", CONCAT(year,"-",LPAD(month,2,"0"),"-",LPAD(day,2,"0")," ",time) AS "Date/Time", FORMAT(sep,3) AS "Separation<br>(degrees)", FORMAT(solarsep,3) AS "Sun Distance<br>(degrees)", star AS "Nearest Star", FORMAT(starsep,3) AS "Star Distance<br>(degrees)" FROM p2 WHERE $conds ORDER BY year,month,day LIMIT 200;
+SELECT UPPER(p1) AS "Planet 1", UPPER(p2) AS "Planet 2", cdate AS "Date/Time", FORMAT(sep,3) AS "Separation<br>(degrees)", FORMAT(sunsep,3) AS "Sun Distance<br>(degrees)", sdate AS "Conjunction Starts<br>(6 degrees)", edate AS "Conjunction Ends<br>(6 degrees)" FROM conjunctions WHERE $conds ORDER BY year,month,day LIMIT 200;
 
 MARK
 ;
@@ -100,7 +99,7 @@ to
 <br><em><font size=-1>
 
 The years for which you want to see conjunctions. This database covers
-conjunctions from the years -13001 to 16999.
+conjunctions from the years -13200 to 17190.
 
 </font></em></td></tr>
 
@@ -117,7 +116,7 @@ setting this value higher than 6 won't give you more results, but setting it low
 </font></em></td></tr>
 
 <tr><th>Solar Distance</th><td>
-<input type='text' size='10' name='solarsep' value='$chunks{solarsep}'>
+<input type='text' size='10' name='sunsep' value='$chunks{sunsep}'>
 <br><em><font size=-1>
 
 The minimum distance from the Sun for this conjunction. Conjunctions

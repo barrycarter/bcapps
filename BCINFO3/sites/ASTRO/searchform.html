@@ -2,10 +2,10 @@
 
 <h4>Notes</h4>
 
-This form provides limited access to the conjunctions database, which
+This form provides limited access to the conjunctions table, which
 lists conjunctions of the visible planets (Mercury, Venus, Mars,
-Jupiter, Saturn, and Uranus) from -13001 to 16999 (which are (almost)
-the limiting times for which NASA provides planetary position
+Jupiter, Saturn, and Uranus) from -13200 to 17190 (which are the
+limiting times for which NASA provides planetary position
 information).
 
 <p>
@@ -22,8 +22,10 @@ Then, run a second query, choosing Mars as Planet 2 and setting Planet
 
 <p>
 
-Of course, if you're accessing the database directly, you can use
-"Mars in (p1,p2)" (for example).
+Of course, if you're accessing the table directly, you can use "'Mars'
+in (p1,p2,p3,p4,p5,p6)" (for example). If you're pedantic, "'Mars' IN
+(p1,p2,p3)" suffices, since Mars can never be more than the 3rd
+furthest planet in a conjunction of visible planets.
 
 <p>
 
@@ -53,30 +55,26 @@ astro@barrycarter.info
 
 <p>
 
-The "Nearest Star" and "Star Distance (degrees)" indicates the star
-closest to the conjunction and its angular distance. However, these
-fields were computed as an afterthought, so you should not rely on
-them.
-
-<p>
-
-A list of all 447,159 conjunctions is available at <a
+A list of all 454,981 conjunctions is available at <a
 href="http://test.barrycarter.info/ASTRO/">http://test.barrycarter.info/ASTRO/</a>. This
-file is 18.6M compressed, and 56.0M uncompressed.
+file is 23.9M compressed, and 91.0M uncompressed.
 
 <p>
 
-You can't search for "nearest star" name or distance using the form
-above, but you can so using direct access to the database. However, I
-don't recommend this since the star names aren't always what you
-expect, and the star names/distance were computed at the last minute
-and may not be accurate.
+Note that any conjunction of 4 planets (eg, Venus, Mars, Jupiter,
+Uranus) will also be listed as four conjunctions of 3 planets (ie,
+Venus-Mars-Jupiter, Venus-Mars-Uranus, Venus-Jupiter-Uranus,
+Mars-Jupiter-Uranus), and as 6 conjunctions of 2 planets (Venus-Mars,
+Venus-Jupiter, Venus-Uranus, Mars-Jupiter, Mars-Uranus,
+Jupiter-Uranus).
 
 <p>
 
-In general, I use Bayer of Flamsteed designations for star names (eg,
-"alfLEO" instead of "Regulus"). A full list of stars in the database:
-http://df755f824fc46dd6bd7094aa95014d03.astro.db.mysql.94y.info/
+There will be similar multiple conjunctions when 3, 5, or 6 planets
+conjunct. For example, a conjunction of all 6 planets (which only
+occurs once) also yields 5 5-planet conjunctions, 15 4-planet
+conjunctions, 20 3-planet conjunctions, and 15 2-planet conjunctions,
+for a whopping total of 56 conjunctions.
 
 <p>
 
@@ -88,18 +86,8 @@ below.
 
 <p>
 
-I used the Earth-Moon barycenter (not the center of the Earth) for my
-calculations. The Earth-Moon barycenter is about 3000 miles from the
-Earth's center (and thus 1000 miles below the surface), which means
-it's between 1000 and 7000 miles from any given Terran observer.
-Because the planets are fairly far away, this does not introduce much
-of an error. If I were computing lunar conjunctions, this would have a
-major effect on the calculations.
-
-<p>
-
 I used planetary system barycenters (the center of mass of a planet
-and its moons) for an entirely different reason. If you ask HORIZONS
+and its moons) for the following reason: if you ask HORIZONS
 (http://ssd.jpl.nasa.gov/?horizons) for the position of Mars and set
 the date, you'll see this notice:
 
@@ -122,15 +110,15 @@ BC 9998-Mar-20 to AD 9999-Dec-31 CT.
 In other words, NASA computes the position of Mars' planetary system
 barycenter for a much longer interval than they compute Mars' actual
 position. Since I wanted to compute conjunctions for a long period of
-time, I went with the barycenters (DE430 computes barycenters even
+time, I went with the barycenters (DE431 computes barycenters even
 beyond 9998 BC and 9999 AD).
 
 <p>
 
-I've complained that this is silly, especially for Mars, since the
-distance between Mars' center and Mars' planetary system barycenter is
-only about 20cm (yes, centimeters, since Phobos and Deimos have very
-little mass) per
+I've complained to NASA that this is silly, especially for Mars, since
+the distance between Mars' center and Mars' planetary system
+barycenter is only about 20cm (yes, centimeters, since Phobos and
+Deimos have very little mass) per
 http://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/aareadme_de430-de431.txt. However,
 NASA apparently plans to keep it this way.
 
@@ -154,14 +142,13 @@ that Stellarium appears to have difficulty with dates before -4800 Mar
 
 The database only includes conjunctions between the visible planets
 (Mercury, Venus, Mars, Jupiter, Saturn, and Uranus). It does not
-include conjunctions/occultations involving Neptune, the Moon, the
+include conjunctions/occultations/transits involving Neptune, the Moon, the
 Sun, the (other) stars, or any asteroids/minor planets.
 
 <p>
 
-The database will tell you the angular distance to the Sun, and the
-angular distance to the nearest (non-solar) star, but that's not the
-same thing.
+The database will tell you the angular distance to the Sun, but that's
+not the same as including solar conjunctions or transits.
 
 <p>
 
@@ -177,21 +164,26 @@ closer to the Sun.
 p2: The second planet to conjunct. This is the conjuncting planet
 farther from the Sun.
 
-p3 through p6: the main conjunction table is p2, which lists
-conjunctions of 2 planets; if you are looking for conjunctions of 3 or
-more planets, you can query p3, p4, p5, and p6 respectively. Each of
-these tables have extra fields for the extra planets.
+p3 through p6: The third through sixth planets to conjunct, in
+increasing distance from the Sun. If you're only interested in two
+planet conjunctions, you can leave these fields blank. If you're
+interested in three-planet conjunctions, you can leave fields p4
+through p6 blank, and so on.
 
 jd: The Julian date of the conjunction, probably useful only to techies
+
+cdate: A prettified version of the conjunction date and time.
+
+MySQL's DATETIME type only supports years back to 1000, so I could not
+use a true DATETIME field here. The cdate field is actually text.
+
+For searches, you should use the next four fields, which break out the
+date into integer fields and the time into a simple TIME field.
 
 year/month/day: The year, month, and day of the conjunction. As per
 standard astronomical convention
 (http://www.stellarium.org/wiki/index.php/FAQ#.22There_is_no_year_0.22.2C_or_.22BC_dates_are_a_year_out.22),
 0 stands for the year 1BCE, -1 stands for the year 2BCE, and so on.
-
-MySQL's DATETIME type only supports years back to 1000, so I could not
-use the DATETIME field here; instead, I broke the date into three
-fields.
 
 time: The UTC time of the conjunction
 
@@ -199,17 +191,31 @@ sep: The angular separation between the conjuncting planets, in
 degrees. For more than two planets, this is maximum angular separation
 between any pair of planets.
 
-solarsep: The angular separation (in degrees) from the Sun of the
+sunsep: The angular separation (in degrees) from the Sun of the
 conjuncting planet nearest to the Sun. Conjunctions close to the Sun
 can be difficult to see. Of course, Mercury (and to a lesser extent,
 Venus) are always close to the Sun, so conjunctions involving these
 planets will always be somewhat close to the Sun.
 
-star: The visible star closest to the conjunction; mostly provided as
-an afterthought, to get a general idea where the conjunction occurs
+sjd: The Julian date for the "start" of the conjunction; in other
+words, when the conjuncting planets were first within 6 degrees of
+each other.
 
-starsep: The distance from 'star' (above) to the conjunction. Again,
-this is provided as an afterthought, and isn't really that important.
+sdate: A prettified version of sjd. For searches/sorting, use sjd, not
+this field.
+
+ejd: The Julian date for the "end" of the conjunction, when the
+conjuncting planets are last within 6 degrees of each other.
+
+edate: A prettified version of ejd.
+
+NOTE: Normally, there is only one "conjunction" for every sjd, ejd
+pair. However, it's possible for 2 or more planets to come within 6
+degrees of each other, approach as close as 2 degrees, move away again
+to 3 degrees, then come together again to 1 degree, before finally
+moving apart until they are more than 6 degrees away. In this case,
+both the 2 degrees event and then 1 degree event will be listed as
+"conjunctions", and will have the same sjd and ejd
 
 </pre>
 
@@ -230,8 +236,21 @@ another related question:
 
 https://astronomy.stackexchange.com/questions/11456/has-the-conjunction-between-venus-jupiter-and-regulus-only-occurred-twice-in-2
 
+%%%%%% TODO: sample queries, hyperlink URLs, pics, DB fun facts
+
+%%%%% num conjuncts:
+
+SELECT p1, p2, COUNT(*) AS total FROM conjunctions WHERE p3='' GROUP BY p1, p2 ORDER BY total DESC 
+
+http://1e37c1adfe7e8734bbe2999289f15acb.astro.db.mysql.94y.info/
+
+%%%% time conjuncting
+
+SELECT p1, p2, SUM(ejd-sjd) AS ttime FROM conjunctions WHERE p3='' GROUP BY p1, p2 ORDER BY ttime DESC 
+
+http://2150f9bdb55594922bb0ebfffa5e1373.astro.db.mysql.94y.info/
+
+11099865.925502 days covered = 30390.4006940649 Gregorian years
 
 
 
-
-%%%%%% TODO: sample queries, hyperlink URLs, pics
