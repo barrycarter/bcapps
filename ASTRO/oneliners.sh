@@ -1,5 +1,18 @@
 #!/bin/sh
 
+# nothing really exciting here, manually labelling pictures but too
+# long to fit in a single command line every time I change parameters
+
+# the below must be run with "csh" not "sh" (TODO: why?)
+
+convert -fill red \
+-draw "text 61,89 Saturn"\
+-draw "text 300,27 Mercury"\
+-draw "text 977,604 Venus"\
+~/STELLARIUM/stellarium-092.png /tmp/test.png
+
+exit;
+
 # runs bc-find-under6.c (compiled in ~/bin/seps) for all combinations
 # of visible planets' angular separations as viewed from Earth
 

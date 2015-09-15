@@ -146,7 +146,8 @@ int main (int argc, char **argv) {
   gfstol_c(1.);
 
   // find under MAXSEP degrees...
-  gfuds_c(gfq,gfdecrx,"<",MAXSEP,0.,86400.,MAXWIN,&cnfine,&result);
+  // TODO: The 90 days below is just for testing, not accurate!!!!
+  gfuds_c(gfq,gfdecrx,"<",MAXSEP,0.,86400.*90,MAXWIN,&cnfine,&result);
 
   nres = wncard_c(&result);
 
