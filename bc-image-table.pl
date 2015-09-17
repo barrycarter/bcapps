@@ -18,6 +18,7 @@ for $i (@files) {
   $image=~s/\.txt$//;
 
   $text{$image} = read_file($i);
+  $text{$image}=~s/\'/&\#39\;/;
 
   # create thumbnail unless one exists
   # TODO: allow user to select width

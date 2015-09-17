@@ -3,13 +3,35 @@
 # nothing really exciting here, manually labelling pictures but too
 # long to fit in a single command line every time I change parameters
 
-# the below must be run with "csh" not "sh" (TODO: why?)
+# the below converts must be run with "csh" not "sh" (TODO: why?)
 
 convert -fill red \
--draw "text 61,89 Saturn"\
--draw "text 300,27 Mercury"\
--draw "text 977,604 Venus"\
-~/STELLARIUM/stellarium-092.png /tmp/test.png
+-draw "text 933,302 Mercury" \
+-draw "text 742,261 Mars" \
+-draw "text 100,466 Venus" \
+-draw "text 274,477 Uranus" \
+-draw "text 950,250 Jupiter" \
+~/STELLARIUM/stellarium-191.png ~/STELLARIUM/stellarium-191.ann.png
+xv ~/STELLARIUM/stellarium-191.ann.png &
+
+exit;
+
+convert -fill red \
+-draw "text 921,298 Mercury" \
+-draw "text 719,256 Mars" \
+-draw "text 163,409 Saturn" \
+-draw "text 100,466 Venus" \
+~/STELLARIUM/stellarium-184.png ~/STELLARIUM/stellarium-184.ann.png
+xv ~/STELLARIUM/stellarium-184.ann.png &
+
+exit;
+
+convert -fill red \
+-draw "text 300,27 Mercury" \
+-draw "text 977,604 Venus" \
+-draw "text 889,736 Uranus" \
+-draw "text 488,309 Mars" \
+~/STELLARIUM/stellarium-092.png ~/STELLARIUM/stellarium-092.ann.png 
 
 exit;
 

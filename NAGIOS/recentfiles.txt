@@ -33,4 +33,4 @@
 # when running, bc-dl-by-region.pl should create this file repeatedly
 # and frequentlyish (the filename/directory changes with each run)
 
-600 1200 "/mnt/extdrive2/FETLIFE-BY-REGION/20150730/homepage.html"
+600 1200 "/mnt/extdrive2/FETLIFE-BY-REGION/20150914/homepage.html"
