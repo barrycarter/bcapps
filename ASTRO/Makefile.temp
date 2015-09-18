@@ -1,0 +1,2 @@
+# compile all C programs in this dir, spit out to ~/bin
+imageOBJS=$(shell echo *.c | perl -pnle 's%^(.*?)\.c%/home/barrycarter/bin/$1%isg')

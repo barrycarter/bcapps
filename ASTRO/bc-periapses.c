@@ -7,69 +7,15 @@
 #include "SpiceUsr.h"
 #include "SpiceZfc.h"
 #include "SpiceZpr.h"
+// this the wrong way to do things
+#include "/home/barrycarter/BCGIT/ASTRO/helpers.c"
 #define MAXSEP 0.10471975511965977462
 #define MAXWIN 1000000
 
 // these are "globally" scoped
 SpiceInt planets[7], planetcount;
 
-// icky defining functions first
-
-double et2jd(double d) {return 2451545.+d/86400.;}
-double jd2et(double d) {return 86400.*(d-2451545.);}
-double unix2et(double d) {return d-946684800.;}
-double r2d(double d) {return d*180./pi_c();}
-
-void posxyz(double time, int planet, SpiceDouble position[3]) {
-  SpiceDouble lt;
-  spkezp_c(planet, time,"J2000","NONE",0,position,&lt);
-}
-
-void earthvector(double time, int planet, SpiceDouble position[3]) {
-  SpiceDouble lt;
-  spkezp_c(planet, time,"J2000","NONE",399,position,&lt);
-}
-
-double earthangle(double time, int p1, int p2) {
-  SpiceDouble pos[3], pos2[3];
-  earthvector(time, p1, pos);
-  earthvector(time, p2, pos2);
-  return vsep_c(pos,pos2);
-}
-
-double earthmaxangle(double time, int arrsize, SpiceInt *planets) {
-  double max=0, sep;
-
-  int i,j;
-
-  for (i=0; i<arrsize; i++) {
-    if (planets[i]==0) {continue;}
-    for (j=i+1; j<arrsize; j++) {
-      if (planets[j]==0) {continue;}
-      sep = earthangle(time, planets[i], planets[j]);
-      if (sep>max) {max=sep;}
-    }
-  }
-  return max;
-}
-
-// min angle from sun of given planets at given time
-
-double sunminangle(double time, int arrsize, SpiceInt *planets) {
-
-  // max angle is actually pi/2, so 3.1416 is overkill
-  double min=3.1416, sep;
-  int i;
-
-  for (i=0; i<arrsize; i++) {
-    if (planets[i]==0) {continue;}
-    sep = earthangle(time, planets[i], 10);
-    if (sep<min) {min=sep;}
-  }
-  return min;
-}
-
-// function to minimize is earthmaxangle
+// function to minimize is at top, one of only two things to change
 void gfq (SpiceDouble et, SpiceDouble *value) {
   *value = earthmaxangle(et,planetcount,planets);
 }
@@ -137,7 +83,9 @@ int main (int argc, char **argv) {
   gfstol_c(1.);
 
   // find under MAXSEP degrees...
-  gfuds_c(gfq,gfdecrx,"<",MAXSEP,0.,86400.,MAXWIN,&cnfine,&result);
+  //  gfuds_c(gfq,gfdecrx,"<",MAXSEP,0.,86400.,MAXWIN,&cnfine,&result);
+
+  gfdist_c ("1","NONE","0","LOCMIN",0,0,86400.,MAXWIN,&cnfine,&result);
 
   nres = wncard_c(&result);
 
