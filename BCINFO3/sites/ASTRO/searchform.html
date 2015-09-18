@@ -1,3 +1,5 @@
+<!-- process this file w/ MarkdownSharp for production version -->
+
 <a name="notes" />
 
 <h4>Notes</h4>
@@ -8,58 +10,40 @@ Jupiter, Saturn, and Uranus) from -13200 to 17190 (which are the
 limiting times for which NASA provides planetary position
 information).
 
-<p>
-
 To search for all conjunctions involving Mars (for example), first run
 a query choosing Mars as Planet 1 and setting Planet 2 to "Any
 Planet".  This will find when Mars conjuncts Jupiter, Saturn, or
 Uranus.
 
-<p>
-
 Then, run a second query, choosing Mars as Planet 2 and setting Planet
 1 to "Any Planet". This will find when Mars conjuncts Mercury or Venus.
-
-<p>
 
 Of course, if you're accessing the table directly, you can use "'Mars'
 in (p1,p2,p3,p4,p5,p6)" (for example). If you're pedantic, "'Mars' IN
 (p1,p2,p3)" suffices, since Mars can never be more than the 3rd
 furthest planet in a conjunction of visible planets.
 
-<p>
-
-If you know SQL well, you can access the full database at <a
-href="http://astro.db.mysql.barrycarter.info/">http://astro.db.mysql.barrycarter.info/</a>.
-The database has no instructions, so, if you don't know SQL (MySQL
-engine) well, this won't be very useful.
-
-<p>
+If you know SQL well, you can access the full database at
+http://astro.db.mysql.barrycarter.info/.  The database has no
+instructions, so, if you don't know SQL (MySQL engine) well, this
+won't be very useful.
 
 When you click "view results", the bottom of the results page will
 show the query that created your results. If you know SQL moderately
 well, you can modify this query to refine your results.
 
-<p>
-
 The default search is limited to 200 rows. You can remove this
 limitation on the results page by removing "LIMIT 200" from the
 query. However...
-
-<p>
 
 Queries are limited to 5 seconds of CPU time (which can be more than 5
 seconds of clock time). If your results time out repeatedly (or you
 run into any other problems), please feel free to contact me at
 astro@barrycarter.info
 
-<p>
-
-A list of all 454,981 conjunctions is available at <a
-href="http://test.barrycarter.info/ASTRO/">http://test.barrycarter.info/ASTRO/</a>. This
-file is 23.9M compressed, and 91.0M uncompressed.
-
-<p>
+A list of all 454,981 conjunctions is available at
+http://test.barrycarter.info/ASTRO/. This file is 23.9M compressed,
+and 91.0M uncompressed.
 
 Note that any conjunction of 4 planets (eg, Venus, Mars, Jupiter,
 Uranus) will also be listed as four conjunctions of 3 planets (ie,
@@ -68,15 +52,11 @@ Mars-Jupiter-Uranus), and as 6 conjunctions of 2 planets (Venus-Mars,
 Venus-Jupiter, Venus-Uranus, Mars-Jupiter, Mars-Uranus,
 Jupiter-Uranus).
 
-<p>
-
 There will be similar multiple conjunctions when 3, 5, or 6 planets
 conjunct. For example, a conjunction of all 6 planets (which only
 occurs once) also yields 5 5-planet conjunctions, 15 4-planet
 conjunctions, 20 3-planet conjunctions, and 15 2-planet conjunctions,
 for a whopping total of 56 conjunctions.
-
-<p>
 
 Do not rely on this information. You can (and should) check this
 information against a planetarium program (like Stellarium) and/or
@@ -84,36 +64,24 @@ NASA HORIZONS (http://ssd.jpl.nasa.gov/?horizons). Of course, neither
 of these is necessarily 100% accurate either. Additional disclaimers
 below.
 
-<p>
-
 I used planetary system barycenters (the center of mass of a planet
 and its moons) for the following reason: if you ask HORIZONS
 (http://ssd.jpl.nasa.gov/?horizons) for the position of Mars and set
 the date, you'll see this notice:
 
-<p>
-
-Available time span for currently selected target body:
-1900-Jan-04 to 2500-Jan-04 CT.
-
-<p>
+`Available time span for currently selected target body:
+1900-Jan-04 to 2500-Jan-04 CT.`
 
 However, if you use Mars' barycenter, this becomes:
 
-<p>
-
-Available time span for currently selected target body:
-BC 9998-Mar-20 to AD 9999-Dec-31 CT.
-
-<p>
+`Available time span for currently selected target body:
+BC 9998-Mar-20 to AD 9999-Dec-31 CT.`
 
 In other words, NASA computes the position of Mars' planetary system
 barycenter for a much longer interval than they compute Mars' actual
 position. Since I wanted to compute conjunctions for a long period of
 time, I went with the barycenters (DE431 computes barycenters even
 beyond 9998 BC and 9999 AD).
-
-<p>
 
 I've complained to NASA that this is silly, especially for Mars, since
 the distance between Mars' center and Mars' planetary system
@@ -122,35 +90,23 @@ Deimos have very little mass) per
 http://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/aareadme_de430-de431.txt. However,
 NASA apparently plans to keep it this way.
 
-<p>
-
 I ignore light travel time, which introduces a small error. Most
 planetarium programs, like Stellarium, ignore light travel time by
 default, although Stellarium has an option to turn it on.
 
-<p>
-
 I ignore things like refraction, aberration, and similar minor adjustments.
-
-<p>
 
 If you are using Stellarium to verify/view these conjunctions, note
 that Stellarium appears to have difficulty with dates before -4800 Mar
 1, so you may not be able to verify conjunctions prior to this date.
-
-<p>
 
 The database only includes conjunctions between the visible planets
 (Mercury, Venus, Mars, Jupiter, Saturn, and Uranus). It does not
 include conjunctions/occultations/transits involving Neptune, the Moon, the
 Sun, the (other) stars, or any asteroids/minor planets.
 
-<p>
-
 The database will tell you the angular distance to the Sun, but that's
 not the same as including solar conjunctions or transits.
-
-<p>
 
 When you use the search form to query, you received a "prettified"
 version of the results. If you are accessing the tables directly, here
@@ -219,40 +175,57 @@ both the 2 degrees event and then 1 degree event will be listed as
 
 </pre>
 
-<p>
-
 Source code and notes at Github:
 
 https://github.com/barrycarter/bcapps/tree/master/ASTRO
 
-<p>
-
 This database was created in part to answer:
 
-https://astronomy.stackexchange.com/questions/11141/how-to-calculate-conjunctions-of-2-planets/11142
+  - https://astronomy.stackexchange.com/questions/11141/how-to-calculate-conjunctions-of-2-planets/11142
 
 and my answer may contain additional useful information, as may
 another related question:
 
-https://astronomy.stackexchange.com/questions/11456/has-the-conjunction-between-venus-jupiter-and-regulus-only-occurred-twice-in-2
+  - https://astronomy.stackexchange.com/questions/11456/has-the-conjunction-between-venus-jupiter-and-regulus-only-occurred-twice-in-2
 
-<p>
+If you want to use the database directly, here are some sample queries
+to get you started:
 
+  - The longest lasting 6-degree conjunctions (all of these are
+  between Saturn and Uranus, some lasting over 2 years!):
 
+http://484ba9b5edc525d96a498a8b492c8f9b.astro.db.mysql.barrycarter.info/
+
+  - The longest lasting 3 (or more) planet conjunctions:
+
+http://7426646275ab9581f3aba8db61639737.astro.db.mysql.barrycarter.info/
+
+  - Conjunctions of 5 or 6 planets (there are only 31 of these):
+
+http://a2d6175b28deb5fe2beece04fdb701c3.astro.db.mysql.barrycarter.info/
+
+  - The number of conjunctions per pair of planets:
+
+http://1e37c1adfe7e8734bbe2999289f15acb.astro.db.mysql.barrycarter.info/
+
+REMINDER: I count conjunctions as any local minimum separation that is
+less than 6 degrees. This is not an official definition, so other
+sources' counts may vary.
+
+  - The total amount of time any 2 planets spend within 6 degrees of
+  each other (some surprises here?):
+
+http://2150f9bdb55594922bb0ebfffa5e1373.astro.db.mysql.barrycarter.info/
+
+  - Same thing for 3 planets:
+
+http://9994c29468d1c482c7d2b20853695958.astro.db.mysql.barrycarter.info/
 
 %%%%%% TODO: sample queries, hyperlink URLs, pics, DB fun facts
 
 %%%%% num conjuncts:
 
-SELECT p1, p2, COUNT(*) AS total FROM conjunctions WHERE p3='' GROUP BY p1, p2 ORDER BY total DESC 
-
-http://1e37c1adfe7e8734bbe2999289f15acb.astro.db.mysql.94y.info/
-
 %%%% time conjuncting
-
-SELECT p1, p2, SUM(ejd-sjd) AS ttime FROM conjunctions WHERE p3='' GROUP BY p1, p2 ORDER BY ttime DESC 
-
-http://2150f9bdb55594922bb0ebfffa5e1373.astro.db.mysql.94y.info/
 
 11099865.925502 days covered = 30390.4006940649 Gregorian years
 
