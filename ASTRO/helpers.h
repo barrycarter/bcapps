@@ -1,5 +1,7 @@
 // Several useful C functions that can be used across many programs
 
+// Putting this in a .h file is even worse!
+
 // The correct way to do this would be to compile these into an object
 // (.o) file and then compile my programs against that object file. I
 // know this, but am too lazy (and dislike C too much) to do this

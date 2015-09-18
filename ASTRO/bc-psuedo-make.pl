@@ -16,8 +16,14 @@ for $i (glob("*.c")) {
 
   # else compile
   my($cmd) = "gcc -Wall -O2 -I /home/barrycarter/SPICE/cspice/include $i -o $targ /home/barrycarter/SPICE/cspice/lib/cspice.a -lm";
-
   debug($cmd);
+
+  print "Making: $i -> $targ\n";
+
+  my($out,$err,$res) = cache_command2($cmd);
+
+  # even if make ok, return warnings
+  print "$out\n$err\n$res\n";
 
 }
 
