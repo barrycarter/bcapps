@@ -12,6 +12,21 @@
 #define MAXSEP 0.10471975511965977462
 #define MAXWIN 1000000
 
+// even if we're using something other than gfevnt_c, we need to
+// define this to get a value (ugly!) [so we always run gfevnt_c?]
+
+void gfq (SpiceDouble et, SpiceDouble *value) {
+  SpiceDouble v[3], lt;
+  spkezp_c(1,et,"J2000","NONE",0,v,&lt);
+  *value = vnorm_c(v);
+}
+
+void gfq2 (SpiceDouble et, SpiceDouble *value) {
+  SpiceDouble v[3], lt;
+  spkezp_c(1,et,"J2000","NONE",10,v,&lt);
+  *value = vnorm_c(v);
+}
+
 // given a prefix (string), window (collection of intervals) and a
 // function, display (print) the value of the function at each
 // endpoint of each interval with prefix (which I will use to tell me
@@ -24,24 +39,12 @@ void show_results (char *prefix, SpiceCell result,
   SpiceInt nres = wncard_c(&result);
   SpiceDouble beg, end, vbeg, vend;
 
-  printf("CALLED!\n");
-
   for (i=0; i<nres; i++) {
     wnfetd_c(&result,i,&beg,&end);
     udfuns(beg,&vbeg);
     udfuns(end,&vend);
-    printf("%s %f %f %f %f\n",prefix,beg,end,vbeg,vend);
+    printf("%s %f %f %f %f\n",prefix,et2jd(beg),et2jd(end),vbeg,vend);
   }
-}
-
-// even if we're using something other than gfevnt_c, we need to
-// define this to get a value (ugly!) [so we always run gfevnt_c?]
-
-void gfq (SpiceDouble et, SpiceDouble *value) {
-  SpiceDouble v[3], lt;
-  spkezp_c(1,et,"J2000","NONE",0,v,&lt);
-  printf("RETURNING: %f\n",*value);
-  *value = vnorm_c(v);
 }
 
 // these are "globally" scoped
@@ -56,6 +59,7 @@ void gfdecrx (void(* udfuns)(SpiceDouble et,SpiceDouble * value),
 }
 
 // find and print (icky) min seps in given interval
+// TODO: move this function to lib?
 
 void findmins (SpiceDouble beg, SpiceDouble end) {
 
@@ -106,29 +110,16 @@ int main (int argc, char **argv) {
   gfstol_c(1.);
 
   gfuds_c(gfq,gfdecrx,"LOCMIN",0.,0.,86400.,MAXWIN,&cnfine,&result);
+  show_results("min-bc-to-mercury",result,gfq);
 
-  //  gfdist_c("1","NONE","0","LOCMIN",0,0,86400.,MAXWIN,&cnfine,&result);
+  gfuds_c(gfq2,gfdecrx,"LOCMIN",0.,0.,86400.,MAXWIN,&cnfine,&result);
+  show_results("min-sun-to-mercury",result,gfq);
 
-  show_results("prefix",result,gfq);
+  gfuds_c(gfq2,gfdecrx,"LOCMAX",0.,0.,86400.,MAXWIN,&cnfine,&result);
+  show_results("max-sun-to-mercury",result,gfq);
+
+  gfuds_c(gfq2,gfdecrx,"LOCMAX",0.,0.,86400.,MAXWIN,&cnfine,&result);
+  show_results("max-sun-to-mercury",result,gfq);
 
   return(0);
-
-  //  printf("CONJUNCTIONS FOR %f degrees, planets: %d %d %d %d %d %d\n",r2d(MAXSEP),(int)planets[1],(int)planets[2],(int)planets[3],(int)planets[4],(int)planets[5],(int)planets[6]);
-
-  // find under MAXSEP degrees...
-  //  gfuds_c(gfq,gfdecrx,"<",MAXSEP,0.,86400.,MAXWIN,&cnfine,&result);
-
-
-  //  nres = wncard_c(&result);
-
-  //  for (i=0; i<nres; i++) {
-  //    wnfetd_c(&result,i,&beg,&end);
-    // R = range, M = min
-  //    printf("R %f %f\n",et2jd(beg),et2jd(end));
-  //    findmins(beg,end);
-  //  }
-
-  //  printf("There are %d results\n",wncard_c(&result));
-
-  //  return 0;
 }
