@@ -44,7 +44,7 @@ sub dump_ls {
 
   # for all machines
   system('ssh root\@bcmac "/mnt/sshfs/bcmac-dump.sh 1> /tmp/bcdump.out 2> /tmp/bcdump.err &"');
-  system('/bcunix-dump.sh&');
+  system('/bcunix-dump.sh & /mnt/extdrive/bcext1-dump.sh & /mnt/extdrive/bcext2-dump.sh &');
 }
 
 # various other things I dumps
