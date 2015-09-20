@@ -135,7 +135,7 @@ MARK
 
 print $form;
 
-print read_file("searchform.html");
+print read_file("searchform-md.html");
 
 =item html_select_list($name, \@list, $selected="")
 

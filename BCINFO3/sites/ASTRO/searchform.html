@@ -1,6 +1,6 @@
 <!-- process this file w/ MarkdownSharp for production version -->
 
-<a name="notes" />
+<a name="notes"></a>
 
 <h4>Notes</h4>
 
@@ -9,6 +9,8 @@ lists conjunctions of the visible planets (Mercury, Venus, Mars,
 Jupiter, Saturn, and Uranus) from -13200 to 17190 (which are the
 limiting times for which NASA provides planetary position
 information).
+
+Some of the "cooler" conjunctions I found are <a target="_blank" href="/table.html">here</a>.
 
 To search for all conjunctions involving Mars (for example), first run
 a query choosing Mars as Planet 1 and setting Planet 2 to "Any
@@ -24,7 +26,7 @@ in (p1,p2,p3,p4,p5,p6)" (for example). If you're pedantic, "'Mars' IN
 furthest planet in a conjunction of visible planets.
 
 If you know SQL well, you can access the full database at
-http://astro.db.mysql.barrycarter.info/.  The database has no
+<http://astro.db.mysql.barrycarter.info/>.  The database has no
 instructions, so, if you don't know SQL (MySQL engine) well, this
 won't be very useful.
 
@@ -42,7 +44,7 @@ run into any other problems), please feel free to contact me at
 astro@barrycarter.info
 
 A list of all 454,981 conjunctions is available at
-http://test.barrycarter.info/ASTRO/. This file is 23.9M compressed,
+<http://test.barrycarter.info/ASTRO/>. This file is 23.9M compressed,
 and 91.0M uncompressed.
 
 Note that any conjunction of 4 planets (eg, Venus, Mars, Jupiter,
@@ -60,13 +62,13 @@ for a whopping total of 56 conjunctions.
 
 Do not rely on this information. You can (and should) check this
 information against a planetarium program (like Stellarium) and/or
-NASA HORIZONS (http://ssd.jpl.nasa.gov/?horizons). Of course, neither
+NASA HORIZONS (<http://ssd.jpl.nasa.gov/?horizons>). Of course, neither
 of these is necessarily 100% accurate either. Additional disclaimers
 below.
 
 I used planetary system barycenters (the center of mass of a planet
 and its moons) for the following reason: if you ask HORIZONS
-(http://ssd.jpl.nasa.gov/?horizons) for the position of Mars and set
+(<http://ssd.jpl.nasa.gov/?horizons>) for the position of Mars and set
 the date, you'll see this notice:
 
 `Available time span for currently selected target body:
@@ -87,7 +89,7 @@ I've complained to NASA that this is silly, especially for Mars, since
 the distance between Mars' center and Mars' planetary system
 barycenter is only about 20cm (yes, centimeters, since Phobos and
 Deimos have very little mass) per
-http://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/aareadme_de430-de431.txt. However,
+<http://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/aareadme_de430-de431.txt>. However,
 NASA apparently plans to keep it this way.
 
 I ignore light travel time, which introduces a small error. Most
@@ -109,15 +111,15 @@ The database will tell you the angular distance to the Sun, but that's
 not the same as including solar conjunctions or transits.
 
 When you use the search form to query, you received a "prettified"
-version of the results. If you are accessing the tables directly, here
+version of the results. If you are accessing the table directly, here
 is a description of the fields:
 
 <pre>
 
-p1: The first planet to conjunct. This is the conjuncting planet
+p1: The first planet to conjunct. This must be the conjuncting planet
 closer to the Sun.
 
-p2: The second planet to conjunct. This is the conjuncting planet
+p2: The second planet to conjunct. This must be the conjuncting planet
 farther from the Sun.
 
 p3 through p6: The third through sixth planets to conjunct, in
@@ -138,7 +140,7 @@ date into integer fields and the time into a simple TIME field.
 
 year/month/day: The year, month, and day of the conjunction. As per
 standard astronomical convention
-(http://www.stellarium.org/wiki/index.php/FAQ#.22There_is_no_year_0.22.2C_or_.22BC_dates_are_a_year_out.22),
+(<http://www.stellarium.org/wiki/index.php/FAQ#.22There_is_no_year_0.22.2C_or_.22BC_dates_are_a_year_out.22>),
 0 stands for the year 1BCE, -1 stands for the year 2BCE, and so on.
 
 time: The UTC time of the conjunction
@@ -177,16 +179,16 @@ both the 2 degrees event and then 1 degree event will be listed as
 
 Source code and notes at Github:
 
-https://github.com/barrycarter/bcapps/tree/master/ASTRO
+<https://github.com/barrycarter/bcapps/tree/master/ASTRO>
 
 This database was created in part to answer:
 
-  - https://astronomy.stackexchange.com/questions/11141/how-to-calculate-conjunctions-of-2-planets/11142
+  - <https://astronomy.stackexchange.com/questions/11141/how-to-calculate-conjunctions-of-2-planets/11142>
 
 and my answer may contain additional useful information, as may
 another related question:
 
-  - https://astronomy.stackexchange.com/questions/11456/has-the-conjunction-between-venus-jupiter-and-regulus-only-occurred-twice-in-2
+  - <https://astronomy.stackexchange.com/questions/11456/has-the-conjunction-between-venus-jupiter-and-regulus-only-occurred-twice-in-2>
 
 If you want to use the database directly, here are some sample queries
 to get you started:
@@ -194,19 +196,19 @@ to get you started:
   - The longest lasting 6-degree conjunctions (all of these are
   between Saturn and Uranus, some lasting over 2 years!):
 
-http://484ba9b5edc525d96a498a8b492c8f9b.astro.db.mysql.barrycarter.info/
+<http://484ba9b5edc525d96a498a8b492c8f9b.astro.db.mysql.barrycarter.info/>
 
   - The longest lasting 3 (or more) planet conjunctions:
 
-http://7426646275ab9581f3aba8db61639737.astro.db.mysql.barrycarter.info/
+<http://7426646275ab9581f3aba8db61639737.astro.db.mysql.barrycarter.info/>
 
   - Conjunctions of 5 or 6 planets (there are only 31 of these):
 
-http://a2d6175b28deb5fe2beece04fdb701c3.astro.db.mysql.barrycarter.info/
+<http://a2d6175b28deb5fe2beece04fdb701c3.astro.db.mysql.barrycarter.info/>
 
   - The number of conjunctions per pair of planets:
 
-http://1e37c1adfe7e8734bbe2999289f15acb.astro.db.mysql.barrycarter.info/
+<http://1e37c1adfe7e8734bbe2999289f15acb.astro.db.mysql.barrycarter.info/>
 
 REMINDER: I count conjunctions as any local minimum separation that is
 less than 6 degrees. This is not an official definition, so other
@@ -215,19 +217,13 @@ sources' counts may vary.
   - The total amount of time any 2 planets spend within 6 degrees of
   each other (some surprises here?):
 
-http://2150f9bdb55594922bb0ebfffa5e1373.astro.db.mysql.barrycarter.info/
+<http://2150f9bdb55594922bb0ebfffa5e1373.astro.db.mysql.barrycarter.info/>
 
   - Same thing for 3 planets:
 
-http://9994c29468d1c482c7d2b20853695958.astro.db.mysql.barrycarter.info/
+<http://9994c29468d1c482c7d2b20853695958.astro.db.mysql.barrycarter.info/>
 
-%%%%%% TODO: sample queries, hyperlink URLs, pics, DB fun facts
-
-%%%%% num conjuncts:
-
-%%%% time conjuncting
+%%%%%% TODO:
 
 11099865.925502 days covered = 30390.4006940649 Gregorian years
 
-%%%%%%% sample queries: longest (2 years 1 month), longest for 3 planets, all 5 planets
-</pre>
