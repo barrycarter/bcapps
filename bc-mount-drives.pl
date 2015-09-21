@@ -6,17 +6,53 @@
 
 require "/usr/local/lib/bclib.pl";
 
-my(%drive);
+# id to mountpoint, and device to id
+my(%id2mp,%dev2id);
 
 # read the blkids.txt file (private) of my drives
 for $i (split(/\n/,read_file("$bclib{home}/blkids.txt"))) {
   if ($i=~/^\#/) {next;}
   $i=~/^(.*?)\s+(.*)$/||die("BAD LINE: $i");
-  $drive{$1}=$2;
+  $id2mp{$1}=$2;
 }
-
-debug(%drive);
 
 my($out,$err,$res) = cache_command2("blkid");
 
-debug("OUT: $out");
+for $i (split(/\n/,$out)) {
+  $i=~m%^(/dev/.*?):.*?UUID=\"(.*?)\"%||die("BAD LINE: $i");
+  $dev2id{$1}=$2;
+}
+
+# now the drives actually on the system
+
+for $i (glob("/dev/sd*")) {
+  # drive sda (and its partitions) are main hard drive, so not interesting
+  if ($i=~m%/sda%) {next;}
+
+  # TODO: push below is fairly ugly, could do better
+  my($id) = $dev2id{$i};
+  unless ($id) {push(@nomount,$i);next;}
+
+  # and now id to mount point
+  my($mp) = $id2mp{$id};
+  unless ($mp) {push(@nomount,$i);next;}
+
+  my($cmd) = "sudo mount $i $mp";
+  # being chicken and just printing commands for now
+  # TODO: background these, no need to do sequentially
+  print "$cmd\n";
+
+  # this lets me check "leftovers" at end
+  delete $dev2id{$i};
+  delete $id2mp{$id};
+
+  # TODO: check for already mounted, but really shouldn't be using
+  # this program if some are mounted
+
+  debug("$i -> $id -> $mp");
+}
+
+# TODO: this program works as much as I need it to, but is not
+# complete: I need to check that all drives have their partitions or
+# themselves mounted and there are no other "leftovers" from this
+# process
