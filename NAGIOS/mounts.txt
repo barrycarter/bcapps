@@ -1,6 +1,6 @@
 # replaces bc_check_mounts, lets me more flexibly edit which mount points to check
 /
-/mnt/extdrive/
+# /mnt/extdrive/
 /mnt/extdrive2/
 /mnt/extdrive3/
 /mnt/extdrive4/
