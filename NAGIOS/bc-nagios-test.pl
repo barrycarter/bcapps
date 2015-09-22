@@ -92,6 +92,40 @@ sub func {
   }
 }
 
+=item bc_dig($host,$answer)
+
+Checks that "dig +trace ... $host" returns $answer.
+
+The default nagios check_dig plugin does not allow trace
+
+
+This replaces the horrid:
+
+check_command raw!"dig +trace barrycarter.info | egrep 'IN[[:space:]]+A' | cut -f 5 | sort | paste -s -d, | fgrep -xx 192.169.60.43"!--func=1is2
+
+in bc-services.cfg
+
+=cut
+
+sub bc_dig {
+  my($host,$answer) = @_;
+
+  my($out,$err,$res) = cache_command2("dig +trace $host");
+  unless ($out=~s/IN\s+A\s(.*?)\n//s) {
+    print "Output contains no 'A' records\n";
+    return 2;
+  }
+
+  my($addr) = $1;
+
+  if ($addr ne $answer) {
+    print "Address is $addr, not $answer\n";
+    return 2;
+  }
+  return 0;
+}
+
+
 =item bc_git($dir)
 
 Checks if I have unpushed git changes (which may be a bad thing to
@@ -228,8 +262,7 @@ binary files where searching for a string is impratical)
 
 sub bc_check_url_sha1 {
   my($url, $sha1) = @_;
-  # TODO: shorten this cache time
-  my($out,$err,$res) = cache_command2("curl '$url'","age=300");
+  my($out,$err,$res) = cache_command2("curl '$url'");
   # check for errors
   if ($res) {
     print "Error retrieving URL $url: $err\n";
@@ -293,7 +326,7 @@ large files)
 
 sub bc_head_size {
   my($url,$size) = @_;
-  my($out,$err,$res) = cache_command("curl --head $url | grep Content-Length: | cut -d ' ' -f 2", "age=60");
+  my($out,$err,$res) = cache_command("curl --head $url | grep Content-Length: | cut -d ' ' -f 2");
 
   if ($res) {
     print "Command returned error $res: $err\n";
@@ -579,8 +612,7 @@ sub bc_check_domain_exp {
   my($now) = time();
   for $i (@domains) {
     chomp($i);
-    # cache long time and sleep to avoid overwhelming servers
-    my($out,$err,$res) = cache_command2("whois $i", "age=43200");
+    my($out,$err,$res) = cache_command2("whois $i");
     # no expiration date?
     unless ($out=~/^\s*(Expiration Date|Expires on|Domain Expiration Date|Registrar Expiration Date|Registrar Registration Expiration Date|Registry Expiry Date):\s*(.*?)$/m) {
       print "ERR: No expiration date found: $i\n";

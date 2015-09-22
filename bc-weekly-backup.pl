@@ -42,9 +42,10 @@ debug("ALL FINISHED, SIR");
 # without running this each time)
 sub dump_ls {
 
-  # for all machines
+  # for remote machine (which no longer exists, but...)
   system('ssh root\@bcmac "/mnt/sshfs/bcmac-dump.sh 1> /tmp/bcdump.out 2> /tmp/bcdump.err &"');
-  system('/bcunix-dump.sh & /mnt/extdrive/bcext1-dump.sh & /mnt/extdrive/bcext2-dump.sh &');
+  # for extdrives and main drive
+  system('sh /home/barrycarter/BCGIT/BACKUP/dumpall.sh &');
 }
 
 # various other things I dumps
