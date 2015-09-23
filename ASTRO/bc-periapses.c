@@ -12,6 +12,9 @@
 #define MAXSEP 0.10471975511965977462
 #define MAXWIN 1000000
 
+// file scope variables
+double star[2][3] = { {1,0,0}, {-1,0,0} };
+
 // even if we're using something other than gfevnt_c, we need to
 // define this to get a value (ugly!) [so we always run gfevnt_c?]
 
@@ -31,6 +34,15 @@ void gfq3 (SpiceDouble et, SpiceDouble *value) {
   SpiceDouble v[3], lt;
   spkezp_c(1,et,"ECLIPJ2000","NONE",10,v,&lt);
   *value = v[1];
+}
+
+void gfq4 (SpiceDouble et, SpiceDouble *value) {
+  SpiceDouble v[3], lt;
+
+  // angular distance between Mars (for now) + globally defined star vector
+  spkezp_c(4,et,"J2000","NONE",399,v,&lt);
+
+  *value = vsep_c(v,star);
 }
 
 // given a prefix (string), window (collection of intervals) and a
@@ -76,6 +88,13 @@ int main (int argc, char **argv) {
   // 1901-2100ish
   wninsd_c(unix2et(-70*366*86400.),unix2et(2147483647+70*366*86400.),&cnfine);
 
+  // test for star sep
+
+  gfuds_c(gfq4,gfdecrx,"<",MAXSEP,0.,86400.,MAXWIN,&cnfine,&result);
+  show_results("star-test-zero",result,gfq4);
+  
+  return(0);
+
   // all of DE431
   // wninsd_c (-479695089600.+86400*468, 479386728000., &cnfine);
 
@@ -84,8 +103,6 @@ int main (int argc, char **argv) {
 
   gfuds_c(gfq3,gfdecrx,"=",0.,0.,86400.,MAXWIN,&cnfine,&result);
   show_results("bc-sun-eclip-x-zero",result,gfq3);
-
-  return(0);
 
   gfuds_c(gfq,gfdecrx,"LOCMIN",0.,0.,86400.,MAXWIN,&cnfine,&result);
   show_results("min-bc-to-mercury",result,gfq);

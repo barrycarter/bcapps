@@ -31,7 +31,12 @@ for $i (glob("/dev/sd*")) {
 
   # TODO: push below is fairly ugly, could do better
   my($id) = $dev2id{$i};
-  unless ($id) {push(@nomount,$i);next;}
+  unless ($id) {
+    # TODO: this is broken, need to do partition stuff
+    debug("NO ID, IGNORING: $i");
+    push(@nomount,$i);
+    next;
+  }
 
   # and now id to mount point
   my($mp) = $id2mp{$id};
@@ -40,7 +45,7 @@ for $i (glob("/dev/sd*")) {
   my($cmd) = "sudo mount $i $mp";
   # being chicken and just printing commands for now
   # TODO: background these, no need to do sequentially
-  print "$cmd\n";
+  print "$cmd&\n";
 
   # this lets me check "leftovers" at end
   delete $dev2id{$i};
@@ -51,6 +56,8 @@ for $i (glob("/dev/sd*")) {
 
   debug("$i -> $id -> $mp");
 }
+
+debug(%dev2id);
 
 # TODO: this program works as much as I need it to, but is not
 # complete: I need to check that all drives have their partitions or

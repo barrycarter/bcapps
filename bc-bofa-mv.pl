@@ -70,6 +70,14 @@ for $i (@ARGV) {
 
 }
 
+sub handle_capone {
+  my($all) = @_;
+
+#  $all=~/([A-Z][a-z][a-z]\.\s+\d{2})\s+\-\+.*?,\s+(\d+)/s;
+  $all=~/[A-Z][a-z][a-z]\.\s+\d{2}\s+\-\s+([A-Z][a-z][a-z]\.\s+\d{2},\s+\d+)/s;
+  return strftime("capone-%m-%d-%Y.pdf", gmtime(str2time($1)));
+}
+
 sub handle_samsclub {
   my($all) = @_;
   # first mm/dd/yyyy after "closing date"
