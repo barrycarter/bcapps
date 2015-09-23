@@ -80,6 +80,28 @@ print << "MARK";
 
 Not what you're looking for? Try the <a href="http://search.fetlife.94y.info/" target="_blank">Experimental Unofficial FetLife Search Engine</a>
 
+<p>
+<font color='#ff0000' size=+1>
+
+DISCLAIMER: This person is not necessarily who you think they are.<p>
+
+Please remember that anyone can create a FetLife account, and that
+FetLife does not validate anyone's information (you can even use a
+fake email address).<p>
+
+Some people have created accounts for the "friends" (or enemies) as a
+joke or out of malice.<p>
+
+Additionally, one person may use a screenname on FetLife that another
+person uses (totally by coincidence) on another site. Someone on
+FaceBook, for example, may choose a username without first checking if
+someone on FetLife (or some other site) is using it, and vice versa.<p>
+
+Summary: If you see this screenname on another site (or came here by
+searching for a screenname), please remember that this may be an
+entirely different person, or even a prank listing.<p>
+
+</font>
 </body>
 </html>
 MARK

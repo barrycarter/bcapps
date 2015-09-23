@@ -1,0 +1,15 @@
+# Uranus is about 50x further from the Sun than Mercury... can I
+# reasonably portray both?
+new
+# size 2400,2400
+setpixel 0,0,0,0,0
+# circle 1200,1200,48,255,0,0
+# circle 1200,1200,2400,0,255,0
+# circle 1200,1200,1200,255,255,0
+
+size 768,768
+setpixel 0,0,0,0,0
+circle 384,384,15,255,0,0
+circle 384,384,768,0,255,0
+circle 384,384,384,255,255,0
+
