@@ -13,7 +13,12 @@
 #define MAXWIN 1000000
 
 // file scope variables
+
+// array of stars
 double star[2][3] = { {1,0,0}, {-1,0,0} };
+
+// current star
+double curstar[3];
 
 // even if we're using something other than gfevnt_c, we need to
 // define this to get a value (ugly!) [so we always run gfevnt_c?]
@@ -77,6 +82,7 @@ int main (int argc, char **argv) {
 
   SPICEDOUBLE_CELL(cnfine,2);
   SPICEDOUBLE_CELL(result,2*MAXWIN);
+  int i,j;
 
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
@@ -90,8 +96,15 @@ int main (int argc, char **argv) {
 
   // test for star sep
 
-  gfuds_c(gfq4,gfdecrx,"<",MAXSEP,0.,86400.,MAXWIN,&cnfine,&result);
-  show_results("star-test-zero",result,gfq4);
+  for (i=0; i<=1; i++) {
+    printf("I is: %d\n",i);
+
+    // must be a better way to do this
+    for (j=0; j<=2; j++) {curstar[j] = star[i][j];}
+
+    gfuds_c(gfq4,gfdecrx,"<",MAXSEP,0.,86400.,MAXWIN,&cnfine,&result);
+    show_results("star-test-zero",result,gfq4);
+  }
   
   return(0);
 
