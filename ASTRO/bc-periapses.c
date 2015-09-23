@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "SpiceUsr.h"
 #include "SpiceZfc.h"
 #include "SpiceZpr.h"
@@ -14,8 +15,13 @@
 
 // file scope variables
 
-// array of stars
-double star[2][3] = { {1,0,0}, {-1,0,0} };
+// array of stars (ra/dec/name, sigh)
+double star[][3] = {
+  {10.1396, 11.9672},
+  {13.4199, -11.1612},
+  {16.4901, -26.4319},
+  {2.11952, 23.4628}
+};
 
 // current star
 double curstar[3];
@@ -96,11 +102,12 @@ int main (int argc, char **argv) {
 
   // test for star sep
 
-  for (i=0; i<=1; i++) {
-    printf("I is: %d\n",i);
+  for (i=0; i<=3; i++) {
+    printf("I: %d\n",i);
 
-    // must be a better way to do this
-    for (j=0; j<=2; j++) {curstar[j] = star[i][j];}
+    curstar[0] = cos(star[i][0]*pi_c()/12)*cos(star[i][1]*pi_c()/180);
+    curstar[1] = cos(star[i][0]*pi_c()/12)*sin(star[i][1]*pi_c()/180);
+    curstar[2] = sin(star[i][1]*pi_c()/180);
 
     gfuds_c(gfq4,gfdecrx,"<",MAXSEP,0.,86400.,MAXWIN,&cnfine,&result);
     show_results("star-test-zero",result,gfq4);
