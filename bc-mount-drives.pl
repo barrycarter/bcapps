@@ -16,7 +16,7 @@ for $i (split(/\n/,read_file("$bclib{home}/blkids.txt"))) {
   $id2mp{$1}=$2;
 }
 
-my($out,$err,$res) = cache_command2("blkid");
+my($out,$err,$res) = cache_command2("sudo blkid");
 
 for $i (split(/\n/,$out)) {
   $i=~m%^(/dev/.*?):.*?UUID=\"(.*?)\"%||die("BAD LINE: $i");

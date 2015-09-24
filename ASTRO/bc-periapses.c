@@ -20,7 +20,10 @@ double star[][3] = {
   {10.1396, 11.9672},
   {13.4199, -11.1612},
   {16.4901, -26.4319},
-  {2.11952, 23.4628}
+  {2.11952, 23.4628},
+  {0,0},
+  {6,23},
+  {18,-23}
 };
 
 // current star
@@ -50,10 +53,10 @@ void gfq3 (SpiceDouble et, SpiceDouble *value) {
 void gfq4 (SpiceDouble et, SpiceDouble *value) {
   SpiceDouble v[3], lt;
 
-  // angular distance between Mars (for now) + globally defined star vector
+  // angular distance between Mars (for now) + globally defined curstar vector
   spkezp_c(4,et,"J2000","NONE",399,v,&lt);
 
-  *value = vsep_c(v,star);
+  *value = vsep_c(v,curstar);
 }
 
 // given a prefix (string), window (collection of intervals) and a
@@ -88,7 +91,7 @@ int main (int argc, char **argv) {
 
   SPICEDOUBLE_CELL(cnfine,2);
   SPICEDOUBLE_CELL(result,2*MAXWIN);
-  int i,j;
+  int i;
 
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
@@ -102,13 +105,9 @@ int main (int argc, char **argv) {
 
   // test for star sep
 
-  for (i=0; i<=3; i++) {
-    printf("I: %d\n",i);
-
-    curstar[0] = cos(star[i][0]*pi_c()/12)*cos(star[i][1]*pi_c()/180);
-    curstar[1] = cos(star[i][0]*pi_c()/12)*sin(star[i][1]*pi_c()/180);
-    curstar[2] = sin(star[i][1]*pi_c()/180);
-
+  for (i=0; i<=7; i++) {
+    printf("RA: %f DEC: %f\n",star[i][0],star[i][1]);
+    radrec_c (1., star[i][0]*pi_c()/12, star[i][1]*pi_c()/180, curstar);
     gfuds_c(gfq4,gfdecrx,"<",MAXSEP,0.,86400.,MAXWIN,&cnfine,&result);
     show_results("star-test-zero",result,gfq4);
   }

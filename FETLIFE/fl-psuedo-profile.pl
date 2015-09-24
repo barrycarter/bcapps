@@ -89,7 +89,7 @@ Please remember that anyone can create a FetLife account, and that
 FetLife does not validate anyone's information (you can even use a
 fake email address).<p>
 
-Some people have created accounts for the "friends" (or enemies) as a
+Some people have created accounts for their "friends" (or enemies) as a
 joke or out of malice.<p>
 
 Additionally, one person may use a screenname on FetLife that another
