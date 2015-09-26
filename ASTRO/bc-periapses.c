@@ -45,8 +45,8 @@ double curstar[3];
 
 void gfq5 (SpiceDouble et, SpiceDouble *value) {
   SpiceDouble u[3], v[3], lt;
-  spkezp_c(5,et,REF,"NONE",6,v,&lt);
-  spkezp_c(10,et,REF,"NONE",6,u,&lt);
+  spkezp_c(5,et,REF,"NONE",601,v,&lt);
+  spkezp_c(10,et,REF,"NONE",601,u,&lt);
   *value = vsep_c(u,v)*180./pi_c();
 }
 
@@ -113,7 +113,7 @@ int main (int argc, char **argv) {
 
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
-  wninsd_c((SYEAR-1970.)*31556952.,(EYEAR-1970.)*31556952.,&cnfine);
+  wninsd_c((SYEAR-2000.)*31556952.,(EYEAR-2000.)*31556952.,&cnfine);
 
   // TODO: make this switch based on argument
 
