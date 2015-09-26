@@ -129,8 +129,10 @@ while (<B>) {
   chomp;
   # ignore first line
   if (/^\s*$/) {next;}
+  debug("COMMAND START:",time());
   my($out,$err,$res)=cache_command2($_);
   debug("OUT: $out","ERR: $err", "RES: $res");
+  debug("COMMAND END:",time());
   # since i repeatedly dl homepage.html, check its size
   # TODO: this only checks once per run, create it many times per run
   unless (-s "homepage.html" > 10000) {die "homepage.html too small";}

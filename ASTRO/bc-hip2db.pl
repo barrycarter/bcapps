@@ -47,11 +47,15 @@ for $i (split(/\n/,$out)) {
   if ($mag eq "0.00") {next;}
   # normalizing to match to Stellarium (later)
   $num=~s/^0+//;
+
+  debug($i," $num $lat");
   if (abs($lat)<=15) {$close{$num}=1;}
 }
 
 # and now, ra dec for the program
 ($out,$err,$res) = cache_command2("scat -h -n 9999999 -r 9999999 -d -s m -m 6.5 -j 0 0 -c $bclib{githome}/ASTRO/hipparcos", "age=999999");
+
+# debug("ALPHA, out is: $out/$err/$res");
 
 for $i (split(/\n/,$out)) {
 
@@ -63,7 +67,7 @@ for $i (split(/\n/,$out)) {
   # get ra/dec ignore non-close to ecliptic
   my($num, $ra, $dec) = split(/\s+/,$i);
   $num=~s/^0+//;
-  unless ($close{$num}) {next;}
+  unless ($close{$num}) {debug("TOOFAR: $i"); next;}
 
   debug("GOT: $i");
 
