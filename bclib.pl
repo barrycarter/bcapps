@@ -3506,6 +3506,7 @@ sub cache_command2 {
     if ($opts{fake}) {return "NOT CACHED: $command";}
     # otherwise, run command
     my($res) = system("($command) 1> $file-out 2> $file-err");
+    my($etime) = time();
     my($stdout,$stderr) = (read_file("$file-out"), read_file("$file-err"));
     # delete now unneeded files
     unlink("$file-out","$file-err");
@@ -3514,9 +3515,11 @@ sub cache_command2 {
 			   "<caller>$0</caller>",
 			   "<cmd>$command</cmd>",
 			   "<time>$now</time>",
-			   "<stdout>", $stdout, "</stdout>",
-			   "<stderr>", $stderr, "</stderr>",
-			   "<status>$res</status>", "\n"
+			   "<stdout>$stdout</stdout>",
+			   "<stderr>$stderr</stderr>",
+			   "<status>$res</status>",
+			   "<etime>$etime</etime>",
+			   "\n"
 			   )), $file);
     # and return them
     return $stdout, $stderr, $res;
