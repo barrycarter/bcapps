@@ -19,6 +19,7 @@
 #define COND "LOCMIN"
 #define LABEL "testing"
 // these are only approx!
+// DE431 starts -13199.6509168566, ends 17191.1606672279 is my scheme
 #define SYEAR 1950.
 #define EYEAR 2050.
 
@@ -126,34 +127,8 @@ int main (int argc, char **argv) {
 
   SPICEDOUBLE_CELL(cnfine,2);
   SPICEDOUBLE_CELL(result,2*MAXWIN);
-  /*  int i; */
-
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
-
   wninsd_c((SYEAR-2000.)*31556952.,(EYEAR-2000.)*31556952.,&cnfine);
-
-  // TODO: make this switch based on argument
-
-  // Unix time, 1970-2034
-  // wninsd_c(unix2et(0),unix2et(2147483647),&cnfine);
-
-  // 1901-2100ish
-  //  wninsd_c(unix2et(-70*366*86400.),unix2et(2147483647+70*366*86400.),&cnfine);
-
-  // test for star sep
-
-  /*
-
-  for (i=0; i<=7; i++) {
-    printf("RA: %f DEC: %f\n",star[i][0],star[i][1]);
-    radrec_c (1., star[i][0]*pi_c()/12, star[i][1]*pi_c()/180, curstar);
-    gfuds_c(GFQ,gfdecrx,"<",MAXSEP,0.,86400.,MAXWIN,&cnfine,&result);
-    show_results("star-test-zero",result,GFQ);
-  }
-  
-  return(0);
-
-  */
 
   // all of DE431
   // wninsd_c (-479695089600.+86400*468, 479386728000., &cnfine);
@@ -165,23 +140,6 @@ int main (int argc, char **argv) {
   gfuds_c(GFQ,gfdecrx,COND,MAXSEP,0.,86400.,MAXWIN,&cnfine,&result);
   extra = 1;
   show_results(LABEL,result,GFQ);
-
-  return 0;
-
-  gfuds_c(gfq3,gfdecrx,"=",0.,0.,86400.,MAXWIN,&cnfine,&result);
-  show_results("bc-sun-eclip-x-zero",result,gfq3);
-
-  gfuds_c(gfq,gfdecrx,"LOCMIN",0.,0.,86400.,MAXWIN,&cnfine,&result);
-  show_results("min-bc-to-mercury",result,gfq);
-
-  gfuds_c(gfq2,gfdecrx,"LOCMIN",0.,0.,86400.,MAXWIN,&cnfine,&result);
-  show_results("min-sun-to-mercury",result,gfq2);
-
-  gfuds_c(gfq2,gfdecrx,"LOCMAX",0.,0.,86400.,MAXWIN,&cnfine,&result);
-  show_results("max-sun-to-mercury",result,gfq);
-
-  gfuds_c(gfq2,gfdecrx,"LOCMAX",0.,0.,86400.,MAXWIN,&cnfine,&result);
-  show_results("max-sun-to-mercury",result,gfq2);
 
   return(0);
 }
