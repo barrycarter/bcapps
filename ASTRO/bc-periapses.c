@@ -14,14 +14,14 @@
 #define MAXWIN 1000000
 
 // this lets me change function definition and times in all place
-#define GFQ gfq5
+#define GFQ gfq2
 #define REF "J2000"
 #define COND "LOCMIN"
-#define LABEL "testing"
+#define LABEL "mercury-peri"
 // these are only approx!
 // DE431 starts -13199.6509168566, ends 17191.1606672279 is my scheme
-#define SYEAR 1950.
-#define EYEAR 2050.
+#define SYEAR -13199
+#define EYEAR 17191
 
 // file scope variables
 char s[5000];
@@ -74,6 +74,9 @@ void gfq (SpiceDouble et, SpiceDouble *value) {
 void gfq2 (SpiceDouble et, SpiceDouble *value) {
   SpiceDouble v[3], lt;
   spkezp_c(1,et,"J2000","NONE",10,v,&lt);
+
+  sprintf(s,"%f %f %f",v[0],v[1],v[2]);
+
   *value = vnorm_c(v);
 }
 
