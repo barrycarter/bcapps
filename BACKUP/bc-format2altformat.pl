@@ -13,6 +13,10 @@
 # below is temporary for a special case external drive
 # 2065/2161/2225 = temp
 
+# new extdrives (already use full path names in their dumps)
+
+my(%drives) = ( 2096 => "/mnt/extdrive", 2065 => "/mnt/extdrive2",
+2113 => "/mnt/extdrive3", 2129 => "/mnt/extdrive4" );
 
 require "/usr/local/lib/bclib.pl";
 
@@ -37,7 +41,9 @@ while (<>) {
   unless ($type=~/^[fl]$/) {warn "BAD TYPE: $_"; next;}
 
   # edit filename based on devno
-  if ($devno == 64768) {
+  if ($drives{$devno}) {
+    # do nothing, already ok
+  } elsif ($devno == 64768) {
     # do nothing, but not an error
   } elsif ($devno == 234881026) {
     $name = "/mnt/sshfs3$name";

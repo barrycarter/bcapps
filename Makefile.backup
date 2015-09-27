@@ -1,8 +1,5 @@
 # make file to help back things up using bc-chunk-backup.pl
 
-# excluding extdrive (USB) since it's failing and I should have a
-# perfect mirror on /mnt/sshfs anyway
-
 # TODO: consider eliminating some of the intermediate files I use
 # below; however, they might actually be useful
 
@@ -15,8 +12,19 @@ bcmac-converted.txt: /mnt/sshfs/bcmac-files.txt
 bcunix-converted.txt: /bcunix-files.txt
 	bc-format2altformat.pl /bcunix-files.txt > bcunix-converted.txt
 
+# this is ugly, should really loop through drives instead of listing
+# them one at a time
+extdrive-converted.txt: /mnt/extdrive/extdrive-files.txt
+	bc-format2altformat.pl /mnt/extdrive/extdrive-files.txt > extdrive-converted.txt
+extdrive2-converted.txt: /mnt/extdrive2/extdrive2-files.txt
+	bc-format2altformat.pl /mnt/extdrive2/extdrive2-files.txt > extdrive2-converted.txt
+extdrive3-converted.txt: /mnt/extdrive3/extdrive3-files.txt
+	bc-format2altformat.pl /mnt/extdrive3/extdrive3-files.txt > extdrive3-converted.txt
+extdrive4-converted.txt: /mnt/extdrive4/extdrive4-files.txt
+	bc-format2altformat.pl /mnt/extdrive4/extdrive4-files.txt > extdrive4-converted.txt
+
 # TODO: this sorting is to join vs old backups, NOT numerical sorting (sigh)
-afad.txt: bcmac-converted.txt bcunix-converted.txt
+afad.txt: bcmac-converted.txt bcunix-converted.txt extdrive-converted.txt extdrive2-converted.txt extdrive3-converted.txt extdrive4-converted.txt
 	sort *-converted.txt > afad.txt
 
 # The user is expected to provide "previouslydone.txt.srt", by running

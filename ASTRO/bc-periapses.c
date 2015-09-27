@@ -24,9 +24,7 @@
 #define EYEAR 2050.
 
 // file scope variables
-
-// whether to print extra data
-int extra = 0;
+char s[5000];
 
 // array of stars (ra/dec)
 double star[][3] = {
@@ -52,18 +50,17 @@ void gfq5 (SpiceDouble et, SpiceDouble *value) {
   spkezp_c(10,et,REF,"NONE",601,u,&lt);
   spkezp_c( 5,et,REF,"NONE",601,v,&lt);
 
+  // set global variable "s" to extra data, caller not required to use it
+
   // This is really ugly; if global variable 'extra' is set, print out
   // extra information; this should only be used when printing results
   // NOT during the search phase (TODO: this is ugly, better way?)
 
-  if (extra) {
     if (vnorm_c(u)<vnorm_c(v)) {
-      printf("SUN IS CLOSER\n");
+      strcpy(s, "SUN IS CLOSER");
     } else {
-      // <h>A trasnit is like a transit, only moreso</h> //
-      printf("TRASNIT?\n");
+      strcpy(s, "POSSIBLE TRANSIT");
     }
-  }
 
   *value = vsep_c(u,v)*180./pi_c();
 }
@@ -111,7 +108,7 @@ void show_results (char *prefix, SpiceCell result,
     wnfetd_c(&result,i,&beg,&end);
     udfuns(beg,&vbeg);
     udfuns(end,&vend);
-    printf("%s %f %f %f %f\n",prefix,et2jd(beg),et2jd(end),vbeg,vend);
+    printf("%s %f %f %f %f '%s'\n",prefix,et2jd(beg),et2jd(end),vbeg,vend,s);
   }
 }
 
@@ -138,7 +135,6 @@ int main (int argc, char **argv) {
 
   // NOTE: putting MAXSEP below is harmless if cond is LOCMIN or something
   gfuds_c(GFQ,gfdecrx,COND,MAXSEP,0.,86400.,MAXWIN,&cnfine,&result);
-  extra = 1;
   show_results(LABEL,result,GFQ);
 
   return(0);
