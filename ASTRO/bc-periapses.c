@@ -73,7 +73,7 @@ void gfq (SpiceDouble et, SpiceDouble *value) {
 
 void gfq2 (SpiceDouble et, SpiceDouble *value) {
   SpiceDouble v[3], lt;
-  spkezp_c(1,et,"J2000","NONE",10,v,&lt);
+  spkezp_c(1,et,"J2000","NONE",0,v,&lt);
 
   sprintf(s,"%f %f %f",v[0],v[1],v[2]);
 

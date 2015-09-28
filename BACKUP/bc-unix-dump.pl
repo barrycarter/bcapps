@@ -16,6 +16,9 @@ dodie("chdir('$dir')");
 open(A,">$name.log.new")||die("Can't open $name.log.new, $!");
 print A "Starting dump: ",time(),"\n";
 
+# ugly hack to avoid //
+if ($dir eq "/") {$dir="";}
+
 my($out,$err,$res) = cache_command2("find $dir/ -xdev -noleaf -warn -printf \"%T@ %s %i %m %y %g %u %D %p\n\" >> $name-files.txt.new");
 
 print A "Dump ends: ",time(),"\n";
