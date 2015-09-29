@@ -5,12 +5,12 @@
 
 require "/usr/local/lib/bclib.pl";
 
-my($first) = <>;
-
-debug("FIRST IS: $first");
+my($first,$cur);
 
 while (<>) {
-  debug("THUNK: $_");
-  print $_-$first,"\n";
-  $first = $_;
+
+  unless ($first) {$first=1; $cur=$_; next;}
+
+  print $_-$cur,"\n";
+  $cur = $_;
 }
