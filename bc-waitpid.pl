@@ -24,7 +24,7 @@ unless ($pid=~/^\d+$/) {
 }
 
 # determine process name
-my(@arr) = `ps -p $pid`;
+my(@arr) = `ps -wwwp $pid`;
 $arr[1]=~s/^\s+//;
 my(@proc) = split(/\s+/, $arr[1]);
 my($name) = $proc[3];
