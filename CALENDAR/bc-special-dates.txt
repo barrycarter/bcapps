@@ -9,3 +9,5 @@
 20160421 QE II 90th
 20151113 Venus/Eta Virgo
 20151121 Mars/Eta Virgo
+20160509 Mercury Transit
+20191111 Mercury Transit

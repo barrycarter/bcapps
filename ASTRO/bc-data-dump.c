@@ -14,28 +14,20 @@
 #include "SpiceZpr.h"
 // this the wrong way to do things
 #include "/home/barrycarter/BCGIT/ASTRO/bclib.h"
-#define MAXSEP 0.10471975511965977462
-#define MAXWIN 1000000
+#define PLANET 2
 
 // this lets me change function definition and times in all place
-#define GFQ gfq2
-#define REF "J2000"
-#define COND "LOCMIN"
-#define LABEL "mercury-peri"
+
 // these are only approx!
 // DE431 starts -13199.6509168566, ends 17191.1606672279 is my scheme
 // #define SYEAR -13199
 // #define EYEAR 17191
-
 #define SYEAR 2000
-#define EYEAR 2016
-
-// given a prefix (string), window (collection of intervals) and a
-// function, display (print) the value of the function at each
-// endpoint of each interval with prefix (which I will use to tell me
-// what I am computing)
+#define EYEAR 2001
 
 int main (int argc, char **argv) {
+
+  SpiceInt planet = atoi(argv[1]);
 
   SpiceDouble i,lt,ra,dec,range;
   SpiceDouble v[3];
@@ -44,10 +36,9 @@ int main (int argc, char **argv) {
   for (i=(SYEAR-2000.)*31556952; i<=(EYEAR-2000.)*31556952; i+=86400) {
 
     // TODO: consider subroutinizing this
-    spkezp_c(5,i,"ECLIPJ2000","NONE",399,v,&lt);
+    spkezp_c(planet,i,"ECLIPJ2000","NONE",10,v,&lt);
     recrad_c(v,&range,&ra,&dec);
-    printf("%f: %f %f %f\n",i,ra*12/pi_c(),dec*180/pi_c(),range);
-
+    printf("%0.20f %0.20f %0.20f %0.20f\n",et2jd(i),ra,dec,earthangle(i,0,PLANET));
 
   }
   return(0);

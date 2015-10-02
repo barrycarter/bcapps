@@ -35,10 +35,18 @@ while ($all=~s/\{+(.*?),\s*\{(.*?)\,\s*(.*?)\},\s*(.*?)\}//) {
 
 # TODO: draw venus/planets later so they don't cover up star
 
-$all = read_file("/tmp/ven.txt");
+# $all = read_file("/tmp/ven.txt");
 
-while ($all=~s/\{+(.*?),\s*\{(.*?),\s*(.*?),\s*(.*?)\},\s*(.*?)\}+//) {
-  my($jd,$eclong,$eclat,$dist,$sangle) = ($1,$2,$3,$4,$5,$6);
+# while ($all=~s/\{+(.*?),\s*\{(.*?),\s*(.*?),\s*(.*?)\},\s*(.*?)\}+//) {
+#  my($jd,$eclong,$eclat,$dist,$sangle) = ($1,$2,$3,$4,$5,$6);
+
+# Using different format for now
+
+while (<>) {
+
+  my($jd,$eclong,$eclat,$sangle) = split(/\s+/,$_);
+
+  debug("JD: $jd");
 
   # convert eclong/eclat to xy, after degree conversion
   my($x,$y) = ell2xy($eclong*$RADDEG,$eclat*$RADDEG);
@@ -51,11 +59,15 @@ while ($all=~s/\{+(.*?),\s*\{(.*?),\s*(.*?),\s*(.*?)\},\s*(.*?)\}+//) {
   # if first of month, note it
   $jd=~s/\*\^/e/;
   my(@time) = gmtime(jd2unix($jd,"jd2unix"));
-  my($mday) = $time[3];
+  # this is actually month - 1
+  my($mday,$mo) = ($time[3],$time[4]);
 
-  if ($mday==1 || $mday==15) {
-    my($print) = strftime("%b %d",@time);
-    print "string 255,255,0,$x,$y,tiny,$print\n";
+  my($print);
+
+  if ($mo%3==0 && $mday==1) {
+    print strftime("string 255,255,0,$x,$y,tiny,%b %d %Y\n",@time);
+  } elsif ($mday==1 || $mday==15) {
+    print strftime("string 255,255,0,$x,$y,tiny,%b %d\n",@time);
   }
 
   print "fcircle $x,$y,5,$oppcolor,255,$oppcolor\n";
@@ -66,5 +78,7 @@ while ($all=~s/\{+(.*?),\s*\{(.*?),\s*(.*?),\s*(.*?)\},\s*(.*?)\}+//) {
 
 sub ell2xy {
   my($eclong,$eclat) = @_;
+  $eclong = fmodn($eclong,360);
+  debug("GOT: $eclong/$eclat");
   return ($w*(-$eclong/360+1/2),-$factor*$w*$eclat/360+$h/2);
 }
