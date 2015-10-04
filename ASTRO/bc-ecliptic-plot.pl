@@ -19,8 +19,11 @@ require "/usr/local/lib/bclib.pl";
 [1.00000018,100.46691572,35999.37306329,0,0,255],
 [1.52371243,-4.56813164,19140.29934243,255,0,0],
 [5.20248019,34.33479152,3034.90371757,0,255,255],
-[9.54149883,50.07571329,1222.11494724,255,255,0],
-[19.18797948,314.20276625,428.49512595,0,0,255]);
+[9.54149883,50.07571329,1222.11494724,255,255,0]
+);
+
+# commenting out uranus for now
+# [19.18797948,314.20276625,428.49512595,0,0,255]);
 
 ($xwid,$ywid) = (800,800);
 
@@ -38,16 +41,20 @@ setpixel 0,0,0,0,0
 MARK
 ;
 
+@pos = positions(96);
+
+# these must be drawn first, otherwise fcircle confuses fly
+for $i (@planets) {
+  my($x,$y) = au2pixels(@{shift(@pos)});
+  my($rgb) = join(",",@$i[3..5]);
+  print "fcircle $x,$y,6,$rgb\n";
+}
+
 # draw planet orbits
 for $i (@planets) {
   my($au) = round(@$i[0]*$xwid/$range);
-  debug("AU: $au");
-  print "circle $xwid2,$ywid2,$au,255,255,255\n";
-}
-
-for $i (positions(0)) {
-  debug(@$i);
-  debug(au2pixels(@$i));
+  my($rgb) = join(",",@$i[3..5]);
+  print "circle $xwid2,$ywid2,$au,$rgb\n";
 }
 
 # convert pure xy (AU) to pixels

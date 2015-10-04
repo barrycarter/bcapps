@@ -51,7 +51,7 @@ if ($globopts{norun}) {exit 0;}
 # TODO: this is hideous (-mmin -60 should be calculated not a guess)
 
 for (;;) {
-  ($out, $err, $res) = cache_command("find '/home/barrycarter/Download/' -iname 'export*.qfx' -mmin -60");
+  ($out, $err, $res) = cache_command("find '/home/barrycarter/Download/' -iname 'export*.ofx' -mmin -60");
   if ($out) {last;}
   debug("OUT: $out");
   sleep(1);
