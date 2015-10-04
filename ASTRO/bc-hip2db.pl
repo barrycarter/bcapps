@@ -37,10 +37,14 @@ for $i (split(/\n/,read_file("/usr/share/stellarium/skycultures/western/star_nam
 
 my($out,$err,$res) = cache_command2("scat -h -n 9999999 -r 9999999 -d -s m -m 6.5 -e 0 0 -c $bclib{githome}/ASTRO/hipparcos", "age=999999");
 
+debug("OUT: $out");
+
 my(%close);
 
 for $i (split(/\n/,$out)) {
-  my($num,$lon,$lat,$mag) = split(/\s+/,$i);
+  my($num,$lon,$lat,$mag1,$mag2,$mag3,$mag4) = split(/\s+/,$i);
+
+  debug("MAGS: $mag1 $mag2 $mag3 $mag4");
 
   # -m 6.5 includes stars with no listed magnitudes as "0" mag, this
   # gets rid of them (there are no true 0 mag near enough to ecliptic)
