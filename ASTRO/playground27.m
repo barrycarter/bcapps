@@ -12,8 +12,7 @@ Element[{e,th,ph},Reals]]
 
 
 
-
-
-
+Simplify[Apply[xyz2sph,rotationMatrix[x,e].sph2xyz[th,ph,1]],
+Element[{e,th,ph},Reals]]
 
 
