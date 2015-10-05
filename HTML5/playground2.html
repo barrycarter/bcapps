@@ -6,14 +6,11 @@
 <script>
 
 var map = L.map('map');
-
-// var map = L.tileLayer.canvas();
-var canvasTiles = L.tileLayer.canvas();
-
+var canvasTiles = new L.TileLayer.Canvas();
 
 canvasTiles.drawTile = function(canvas, tilePoint, zoom) {
-    var ctx = canvas.getContext('2d');
    alert('Got: '+tilePoint+zoom);
+    var ctx = canvas.getContext('2d');
     // draw something on the tile canvas
 }
 
@@ -21,6 +18,7 @@ canvasTiles.on("tileload", function( event) {  alert('hello world'); });
 
 canvasTiles.on("contextmenu", function( event) {  alert('hello world'); });
 
+map.addLayer(canvasTiles);
 </script>
 
 <!-- testing leaflet's canvas feature -->
