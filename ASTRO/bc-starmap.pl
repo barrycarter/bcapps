@@ -134,6 +134,11 @@ sub draw_stars {
     # circle width based on magnitude (one of several possible formulas)
     my($width) = floor(5.5-$mag);
     print A "fcircle $x,$y,$width,255,255,255\n";
+
+    # test using color instead of width
+#    my($color) = round(197.6-$mag*36);
+#    print A "fcircle $x,$y,4,$color,$color,$color\n";
+
   }
 
 }

@@ -6,18 +6,59 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# testing
+open(A,"zcat $bclib{githome}/ASTRO/hygdata_v3.csv.gz|");
 
-my(@mat) = rotrad(23.443683*$DEGRAD,"x");
+my(@head) = split(/,/,<A>);
 
-my(@star) = sph2xyz(0,0,1);
+# ignore sun
+<A>;
 
-debug("STAR",@star);
+while (<A>) {
+  %hash = ();
+  my(@vals) = split(/,/,$_);
 
-my(@res) = matrixmult(\@mat,[[$star[0]],[$star[1]],[$star[2]]]);
+  for $i (0..$#head) {$hash{$head[$i]} = $vals[$i];};
 
-debug("RES",unfold(@res));
+  # 0 as placeholder for NA
+  unless ($hash{hip}) {$hash{hip}=0;}
 
+  # need hip, ra, dec, mag
 
+  # ignore dim stars
+  if ($hash{mag}>6.5) {next;}
+
+  # convert to ecliptic coords
+  my($elon,$elat) = equ2ecl($hash{ra}*$PI/12,$hash{dec}*$DEGRAD);
+  map($_=$_*180/$PI,($elon,$elat));
+
+  # ignore further than 15deg away
+  if (abs($elat)>15) {next;}
+
+  # just for fun
+  print "$hash{hip} $hash{mag} $hash{ra} $hash{dec} $elon $elat $hash{proper}\n";
+}
+
+=item equ2ecl($ra,$dec)
+
+Given right ascension and declination (radians), return ecliptic
+coordinates (in radians), assuming J2000
+
+=cut
+
+sub equ2ecl {
+  my($ra,$dec) = @_;
+
+  # TODO: recomputing this each time is ugly
+  my(@mat) = rotrad(23.443683*$DEGRAD,"x");
+
+  # to xyz
+  my($x,$y,$z) = sph2xyz($ra,$dec,1);
+
+  # matrix multiplication
+  # TODO: this is ugly, make matrix dot vector easier?
+  my(@xyz2) = matrixmult(\@mat,[[$x],[$y],[$z]]);
+
+  return xyz2sph($xyz2[0][0],$xyz2[1][0],$xyz2[2][0]);
+}
 
 
