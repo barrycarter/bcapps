@@ -32,7 +32,7 @@ while (<A>) {
   map($_=$_*180/$PI,($elon,$elat));
 
   # ignore further than 15deg away
-  if (abs($elat)>15) {next;}
+#  if (abs($elat)>15) {next;}
 
   # output is: elon elat mag hip# name (optional)
   print "$elon $elat $hash{mag} $hash{hip} $hash{proper}\n";

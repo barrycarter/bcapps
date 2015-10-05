@@ -1,10 +1,9 @@
 <html>
     <head>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">		
-		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.css" />
-		<!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.ie.css" /><![endif]-->
+		<link rel="stylesheet" href="leaflet.css" />
 		
-		<script src="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js"></script>
+		<script src="leaflet.js"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>	
 		
     </head>
@@ -39,11 +38,6 @@
 				{ lat: 41.555004, lon: -7.631723 },
 				{ lat: 40.798902, lon: -7.870874 }];
 
-			// add an OpenStreetMap tile layer
-			L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-				attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-			}).addTo(map);
-			
 			var tiles = new L.TileLayer.Canvas();
 			tiles.drawTile = function (canvas, tile, zoom) {
 				var context = canvas.getContext('2d');
