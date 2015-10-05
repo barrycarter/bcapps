@@ -2,6 +2,11 @@
 
 # creates an ecliptic map (perhaps eventually for leaflet)
 
+# Format for stdin to this program:
+# naif-id JD ecliptic-longitude ecliptic-latitude distance(unused) solar_angle
+
+# TODO: add equinox points, especially, since I'm shifting by a few degrees
+
 require "/usr/local/lib/bclib.pl";
 
 my(%hip);
@@ -17,6 +22,9 @@ my($all) = read_file("$bclib{githome}/ASTRO/eclipticlong2.txt");
 my($midy) = $h/2;
 print "dline 0,$midy,$w,$midy,255,0,0\n";
 
+# this lets me control order of rendering
+my(@stars,@consts,@planets);
+
 for $i (split(/\n/,$all)) {
 
   chomp($i);
@@ -26,18 +34,12 @@ for $i (split(/\n/,$all)) {
   @{$hip{$hip}} = ($eclong,$eclat);
 
   my($x,$y) = ell2xy($eclong,$eclat);
-  my($r) = round(6-$mag);
+  my($r) = round(7-$mag);
   if ($y<0 || $y>$h) {next;}
 
-  # testing limit
-#  if ($mag<=3.5) {
-#    print "string 0,0,255,$x,$y,tiny,$name\n";
-#  }
-
-  print "fcircle $x,$y,$r,255,255,255\n";
+  push(@stars,"fcircle $x,$y,$r,255,255,255");
+  push(@names,join(",","string 128,128,128",$x+5,$y,"tiny,$name"));
 }
-
-debug("HIP",%hip);
 
 for $i (split(/\n/,read_file("$bclib{githome}/ASTRO/constellationship.fab"))) {
 
@@ -58,11 +60,13 @@ for $i (split(/\n/,read_file("$bclib{githome}/ASTRO/constellationship.fab"))) {
     @s2 = ell2xy(@s2);
 
     # draw line
-    print "line ",join(",",@s1,@s2),",0,0,255\n";
+    push(@consts,"line ".join(",",@s1,@s2).",0,0,255");
   }
 }
 
-die "TESTING";
+print join("\n",@consts),"\n";
+print join("\n",@names),"\n";
+print join("\n",@stars),"\n";
 
 # using 2015 venus as example
 
@@ -77,6 +81,7 @@ die "TESTING";
 
 while (<>) {
 
+  # TODO: new format uses naif id too (so I can determine colors myself?)
   my($jd,$eclong,$eclat,$sangle) = split(/\s+/,$_);
 
   debug("JD: $jd");
@@ -112,6 +117,7 @@ while (<>) {
 sub ell2xy {
   my($eclong,$eclat) = @_;
   debug("GOT: $eclong,$eclat");
-  $eclong = fmodn($eclong,360);
+  # the -5 is a test to keep virgo whole
+  $eclong = fmodn($eclong+6,360);
   return (round($w*(-$eclong/360+1/2)),round(-$factor*$w*$eclat/360+$h/2));
 }

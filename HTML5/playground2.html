@@ -1,0 +1,18 @@
+<link rel="stylesheet" href="leaflet.css" />
+<script src="leaflet.js"></script>
+<style>html,body, #map {height:100%;}</style>
+<div id="canvasTiles"></div>
+
+<script>
+
+var canvasTiles = L.tileLayer.Canvas();
+
+canvasTiles.drawTile = function(canvas, tilePoint, zoom) {
+    var ctx = canvas.getContext('2d');
+   alert('Got: '+tilePoint+zoom);
+    // draw something on the tile canvas
+}
+</script>
+
+<!-- testing leaflet's canvas feature -->
+
