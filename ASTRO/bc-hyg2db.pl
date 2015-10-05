@@ -34,8 +34,8 @@ while (<A>) {
   # ignore further than 15deg away
   if (abs($elat)>15) {next;}
 
-  # just for fun
-  print "$hash{hip} $hash{mag} $hash{ra} $hash{dec} $elon $elat $hash{proper}\n";
+  # output is: elon elat mag hip# name (optional)
+  print "$elon $elat $hash{mag} $hash{hip} $hash{proper}\n";
 }
 
 =item equ2ecl($ra,$dec)
