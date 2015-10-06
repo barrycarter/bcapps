@@ -6,8 +6,8 @@ require "$bclib{home}/bc-private.pl";
 # rewriting 27 Feb 2015 for a single file
 # see README for file format
 
-# TODO: $limit should be an option
-my($limit) = 25e+9;
+defaults("limit=25000000000");
+$limit = $globopts{limit};
 my($tot, $count);
 
 open(A,">filelist.txt");

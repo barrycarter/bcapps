@@ -16,7 +16,7 @@
 // DE431 starts -13199.6509168566, ends 17191.1606672279 is my scheme
 // #define SYEAR -13199
 // #define EYEAR 17191
-#define SYEAR 2015
+#define SYEAR 2010
 #define EYEAR 2016
 
 int main (int argc, char **argv) {
