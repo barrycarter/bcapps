@@ -17,35 +17,67 @@
 
 require "/usr/local/lib/bclib.pl";
 
-mkdir("/tmp/bcmovefiles");
-chdir("/tmp/bcmovefiles");
+chdir("/home/barrycarter/20151007/bcmovefiles");
 
 # we're going to join on the filename (w/o dir part) and size, but
 # need the full name for the mv command
 
 my(@f) = @ARGV;
 
-open(A,$f[0]);
+for $i (@f) {
+
+  open(A,$i);
+  open(B,"|sort > $i.2");
+
+  while (<A>) {
+    chomp;
+    my($mtime,$size,$inode,$perm,$type,$gname,$uname,$devno,$name) = 
+      split(/\s+/, $_, 9);
+
+    if ($size < 1000000) {next;}
+
+    # ignore directories, sockets, pipes, character/block devices + symlinks
+    if ($type=~/^[dspcbl]$/) {next;}
+
+    # if I decide to use mtime, snip off decimals
+    $mtime=~s/\..*$//;
+
+    # split into dir and pure filename
+    $name=~s%^(.*)/(.*?)$%%;
+    my($dir,$file) = ($1,$2);
+
+    # joining (using mtime for now, but may drop)
+    # the dir is not part of the join condition
+    print B "$size $mtime $file\0$dir\n";
+  }
+
+  close(A);close(B);
+}
+
+system("join --check-order -t '\\0' local.txt.2 remote.txt.2 > joined.txt");
+
+open(A,"joined.txt");
 
 while (<A>) {
   chomp;
-  my($mtime,$size,$inode,$perm,$type,$gname,$uname,$devno,$name) = 
-    split(/\s+/, $_, 9);
 
-  # TODO: maybe add a size filter... only care about biggish files
+  my($fdata,$d1,$d2) = split(/\0/,$_);
 
-  # if I decide to use mtime, snip off decimals
-  $mtime=~s/\..*$//;
+  # get filename
+  $fdata=~s/^\d+ \d+ //;
 
-  # ignore directories, sockets, pipes, character/block devices + symlinks
-  if ($type=~/^[dspcbl]$/) {next;}
+  # if source no longer exists, ignore
+  unless (-f "$d1/$fdata") {next;}
 
-  # split into dir and pure filename
-  $name=~s%^(.*)/(.*?)$%%;
-  my($dir,$file) = ($1,$2);
+  # change d2 to match d1 (TODO: don't hardcode this)
+  $d2=~s%/Volumes/[A-Z]+/%/mnt/extdrive/%;
 
-  # joining (using mtime for now, but may drop)
-  # the dir is not part of the join condition
-  print "$mtime $size $file\0$dir\n";
+  # does this directory exist? (if not, create it)
+  unless (-d $d2) {print "sudo mkdir -p \"$d2\"\n";}
 
+  # does target exist ("mv -n" checks this, but its useful to check here too)
+  if (-f "$d2/$fdata") {next;}
+
+  print "sudo mv -n \"$d1/$fdata\" \"$d2/\"\n";
 }
+
