@@ -231,7 +231,9 @@ for $i (2015..2037) {
 
   # per http://sports.espn.go.com/espn/columns/story?page=wojciechowski-111018
   # this may change, then again, any of these might
-  push(@dates, weekdayAfterDate("${i}1001", 0, 2), "World Series");
+
+  # World Series schedule has gone wonky, no longer automatic
+#  push(@dates, weekdayAfterDate("${i}1001", 0, 2), "World Series");
 
   $preelect = weekdayAfterDate("${i}1101", 1, 0);
   push(@dates, weekdayAfterDate($preelect, 2, 0), "Election Day");

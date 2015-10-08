@@ -34,7 +34,10 @@ for $i (@f) {
     my($mtime,$size,$inode,$perm,$type,$gname,$uname,$devno,$name) = 
       split(/\s+/, $_, 9);
 
-    if ($size < 1000000) {next;}
+    if ($size < 0) {next;}
+
+    # this breaks stuff
+    if ($name=~/\`/) {next;}
 
     # ignore directories, sockets, pipes, character/block devices + symlinks
     if ($type=~/^[dspcbl]$/) {next;}
@@ -67,17 +70,23 @@ while (<A>) {
   $fdata=~s/^\d+ \d+ //;
 
   # if source no longer exists, ignore
-  unless (-f "$d1/$fdata") {next;}
+  unless (-f "$d1/$fdata") {
+    debug("NOSOURCEFILE: $d1/$fdata");
+    next;
+  }
 
   # change d2 to match d1 (TODO: don't hardcode this)
   $d2=~s%/Volumes/[A-Z]+/%/mnt/extdrive/%;
 
   # does this directory exist? (if not, create it)
-  unless (-d $d2) {print "sudo mkdir -p \"$d2\"\n";}
+  unless (-d $d2) {print "mkdir -p \"$d2\"\n";}
 
   # does target exist ("mv -n" checks this, but its useful to check here too)
-  if (-f "$d2/$fdata") {next;}
+  if (-f "$d2/$fdata") {
+    debug("TARGETEXISTS: $d2/$fdata");
+    next;
+  }
 
-  print "sudo mv -n \"$d1/$fdata\" \"$d2/\"\n";
+  print "mv -n \"$d1/$fdata\" \"$d2/\"\n";
 }
 

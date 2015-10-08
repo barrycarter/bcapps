@@ -17,8 +17,8 @@
 
 # these appear to change on reboot/remount, grrr
 # TODO: automate updating these
-my(%drives) = ( 2112 => "/mnt/extdrive", 2161 => "/mnt/extdrive2",
-2129 => "/mnt/extdrive3", 2145 => "/mnt/extdrive4" );
+my(%drives) = ( 2096 => "/mnt/extdrive", 2065 => "/mnt/extdrive2",
+2081 => "/mnt/extdrive3", 2113 => "/mnt/extdrive4" );
 
 require "/usr/local/lib/bclib.pl";
 

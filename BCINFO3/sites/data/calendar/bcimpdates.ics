@@ -10802,15 +10802,6 @@ DESCRIPTION: The Wimbledon Championships is one of the four Grand Slam tennis to
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:World Series
-UID:58d78b208f1e7070926c09837ddab9585b0d51fc
-DTSTART:20151018T000000
-DTEND:20151018T235959
-LOCATION: United States
-DESCRIPTION: The World Series is the annual championship series of North\nAmerican-based Major League Baseball (MLB), played since 1903\nbetween the American League (AL) champion team and the National\nLeague (NL) champion.\n\n\nhttps://en.wikipedia.org/wiki/World_Series
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Election Day
 UID:377684245b527ba8540dd9d6d02b46883b1b9395
 DTSTART:20151103T000000
@@ -11492,15 +11483,6 @@ DTSTART:20160710T000000
 DTEND:20160710T235959
 LOCATION: Wimbledon, London, United Kingdom
 DESCRIPTION: The Wimbledon Championships is one of the four Grand Slam tennis tournaments. It is played in Wimbledon, a suburb of London in England, Great Britain. The Championships are unique because they are the only Grand Slam played on a grass court. Wimbledon is the third tennis grand slam of the year and is widely seen as the biggest event on the sport's calendar.\n\n- https://en.wikipedia.org/wiki/The_Championships,_Wimbledon
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:World Series
-UID:b40f913557e8cbe3b7bd9504470f01fe1c5a2821
-DTSTART:20161016T000000
-DTEND:20161016T235959
-LOCATION: United States
-DESCRIPTION: The World Series is the annual championship series of North\nAmerican-based Major League Baseball (MLB), played since 1903\nbetween the American League (AL) champion team and the National\nLeague (NL) champion.\n\n\nhttps://en.wikipedia.org/wiki/World_Series
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -12188,15 +12170,6 @@ DESCRIPTION: The Wimbledon Championships is one of the four Grand Slam tennis to
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:World Series
-UID:f8db3c68712e7131e3437ff6dc688ddb221fa6b7
-DTSTART:20171015T000000
-DTEND:20171015T235959
-LOCATION: United States
-DESCRIPTION: The World Series is the annual championship series of North\nAmerican-based Major League Baseball (MLB), played since 1903\nbetween the American League (AL) champion team and the National\nLeague (NL) champion.\n\n\nhttps://en.wikipedia.org/wiki/World_Series
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Election Day
 UID:764acf69efc6652cf479076b45e6bc9cd5813445
 DTSTART:20171107T000000
@@ -12878,15 +12851,6 @@ DTSTART:20180715T000000
 DTEND:20180715T235959
 LOCATION: Wimbledon, London, United Kingdom
 DESCRIPTION: The Wimbledon Championships is one of the four Grand Slam tennis tournaments. It is played in Wimbledon, a suburb of London in England, Great Britain. The Championships are unique because they are the only Grand Slam played on a grass court. Wimbledon is the third tennis grand slam of the year and is widely seen as the biggest event on the sport's calendar.\n\n- https://en.wikipedia.org/wiki/The_Championships,_Wimbledon
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:World Series
-UID:f8a021afdc1125609d47a7287110f7f3c19e8184
-DTSTART:20181021T000000
-DTEND:20181021T235959
-LOCATION: United States
-DESCRIPTION: The World Series is the annual championship series of North\nAmerican-based Major League Baseball (MLB), played since 1903\nbetween the American League (AL) champion team and the National\nLeague (NL) champion.\n\n\nhttps://en.wikipedia.org/wiki/World_Series
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -13574,15 +13538,6 @@ DESCRIPTION: The Wimbledon Championships is one of the four Grand Slam tennis to
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:World Series
-UID:1a394d8f2dc730b69d912c86e91d99ec210f26ac
-DTSTART:20191020T000000
-DTEND:20191020T235959
-LOCATION: United States
-DESCRIPTION: The World Series is the annual championship series of North\nAmerican-based Major League Baseball (MLB), played since 1903\nbetween the American League (AL) champion team and the National\nLeague (NL) champion.\n\n\nhttps://en.wikipedia.org/wiki/World_Series
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Election Day
 UID:5520cd1767f30e8bab6c38ffa2d58ffa4a050258
 DTSTART:20191105T000000
@@ -14264,15 +14219,6 @@ DTSTART:20200712T000000
 DTEND:20200712T235959
 LOCATION: Wimbledon, London, United Kingdom
 DESCRIPTION: The Wimbledon Championships is one of the four Grand Slam tennis tournaments. It is played in Wimbledon, a suburb of London in England, Great Britain. The Championships are unique because they are the only Grand Slam played on a grass court. Wimbledon is the third tennis grand slam of the year and is widely seen as the biggest event on the sport's calendar.\n\n- https://en.wikipedia.org/wiki/The_Championships,_Wimbledon
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:World Series
-UID:7a46cb4ab47111670d0b7b85815462b0b23298ea
-DTSTART:20201018T000000
-DTEND:20201018T235959
-LOCATION: United States
-DESCRIPTION: The World Series is the annual championship series of North\nAmerican-based Major League Baseball (MLB), played since 1903\nbetween the American League (AL) champion team and the National\nLeague (NL) champion.\n\n\nhttps://en.wikipedia.org/wiki/World_Series
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -14960,15 +14906,6 @@ DESCRIPTION: The Wimbledon Championships is one of the four Grand Slam tennis to
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:World Series
-UID:a91be769084a79ac3c79d37f64ff4b6d9de66ff8
-DTSTART:20211017T000000
-DTEND:20211017T235959
-LOCATION: United States
-DESCRIPTION: The World Series is the annual championship series of North\nAmerican-based Major League Baseball (MLB), played since 1903\nbetween the American League (AL) champion team and the National\nLeague (NL) champion.\n\n\nhttps://en.wikipedia.org/wiki/World_Series
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Election Day
 UID:a3243141db5c36bbf3cd49d2635ef9dbc6c0e788
 DTSTART:20211102T000000
@@ -15650,15 +15587,6 @@ DTSTART:20220710T000000
 DTEND:20220710T235959
 LOCATION: Wimbledon, London, United Kingdom
 DESCRIPTION: The Wimbledon Championships is one of the four Grand Slam tennis tournaments. It is played in Wimbledon, a suburb of London in England, Great Britain. The Championships are unique because they are the only Grand Slam played on a grass court. Wimbledon is the third tennis grand slam of the year and is widely seen as the biggest event on the sport's calendar.\n\n- https://en.wikipedia.org/wiki/The_Championships,_Wimbledon
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:World Series
-UID:4a04f410ec9f33f3dd43395e89e84dbdf734068b
-DTSTART:20221016T000000
-DTEND:20221016T235959
-LOCATION: United States
-DESCRIPTION: The World Series is the annual championship series of North\nAmerican-based Major League Baseball (MLB), played since 1903\nbetween the American League (AL) champion team and the National\nLeague (NL) champion.\n\n\nhttps://en.wikipedia.org/wiki/World_Series
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -16346,15 +16274,6 @@ DESCRIPTION: The Wimbledon Championships is one of the four Grand Slam tennis to
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:World Series
-UID:fbda587345a26346085c8aaf790324cf18fa9320
-DTSTART:20231015T000000
-DTEND:20231015T235959
-LOCATION: United States
-DESCRIPTION: The World Series is the annual championship series of North\nAmerican-based Major League Baseball (MLB), played since 1903\nbetween the American League (AL) champion team and the National\nLeague (NL) champion.\n\n\nhttps://en.wikipedia.org/wiki/World_Series
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Election Day
 UID:119f63a1aa7f92a59aa060c75c625dde85eef66b
 DTSTART:20231107T000000
@@ -17036,15 +16955,6 @@ DTSTART:20240714T000000
 DTEND:20240714T235959
 LOCATION: Wimbledon, London, United Kingdom
 DESCRIPTION: The Wimbledon Championships is one of the four Grand Slam tennis tournaments. It is played in Wimbledon, a suburb of London in England, Great Britain. The Championships are unique because they are the only Grand Slam played on a grass court. Wimbledon is the third tennis grand slam of the year and is widely seen as the biggest event on the sport's calendar.\n\n- https://en.wikipedia.org/wiki/The_Championships,_Wimbledon
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:World Series
-UID:c12f7f840bed21e8aa89b35825738010dd46e97a
-DTSTART:20241020T000000
-DTEND:20241020T235959
-LOCATION: United States
-DESCRIPTION: The World Series is the annual championship series of North\nAmerican-based Major League Baseball (MLB), played since 1903\nbetween the American League (AL) champion team and the National\nLeague (NL) champion.\n\n\nhttps://en.wikipedia.org/wiki/World_Series
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -17732,15 +17642,6 @@ DESCRIPTION: The Wimbledon Championships is one of the four Grand Slam tennis to
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:World Series
-UID:406e974887f32bb916b068edcc843a3fd833c504
-DTSTART:20251019T000000
-DTEND:20251019T235959
-LOCATION: United States
-DESCRIPTION: The World Series is the annual championship series of North\nAmerican-based Major League Baseball (MLB), played since 1903\nbetween the American League (AL) champion team and the National\nLeague (NL) champion.\n\n\nhttps://en.wikipedia.org/wiki/World_Series
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Election Day
 UID:1a798469fcbabd30a578486bf70b988d1458690d
 DTSTART:20251104T000000
@@ -18422,15 +18323,6 @@ DTSTART:20260712T000000
 DTEND:20260712T235959
 LOCATION: Wimbledon, London, United Kingdom
 DESCRIPTION: The Wimbledon Championships is one of the four Grand Slam tennis tournaments. It is played in Wimbledon, a suburb of London in England, Great Britain. The Championships are unique because they are the only Grand Slam played on a grass court. Wimbledon is the third tennis grand slam of the year and is widely seen as the biggest event on the sport's calendar.\n\n- https://en.wikipedia.org/wiki/The_Championships,_Wimbledon
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:World Series
-UID:9c91e35f3e78056b65a66e82cb2bd3323efc4fff
-DTSTART:20261018T000000
-DTEND:20261018T235959
-LOCATION: United States
-DESCRIPTION: The World Series is the annual championship series of North\nAmerican-based Major League Baseball (MLB), played since 1903\nbetween the American League (AL) champion team and the National\nLeague (NL) champion.\n\n\nhttps://en.wikipedia.org/wiki/World_Series
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -19118,15 +19010,6 @@ DESCRIPTION: The Wimbledon Championships is one of the four Grand Slam tennis to
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:World Series
-UID:8eda953680d75c1eaa391d17c535627ada60900c
-DTSTART:20271017T000000
-DTEND:20271017T235959
-LOCATION: United States
-DESCRIPTION: The World Series is the annual championship series of North\nAmerican-based Major League Baseball (MLB), played since 1903\nbetween the American League (AL) champion team and the National\nLeague (NL) champion.\n\n\nhttps://en.wikipedia.org/wiki/World_Series
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Election Day
 UID:bccee5cb61e53dc9a3361bd5f6a26a0d436c56e2
 DTSTART:20271102T000000
@@ -19808,15 +19691,6 @@ DTSTART:20280716T000000
 DTEND:20280716T235959
 LOCATION: Wimbledon, London, United Kingdom
 DESCRIPTION: The Wimbledon Championships is one of the four Grand Slam tennis tournaments. It is played in Wimbledon, a suburb of London in England, Great Britain. The Championships are unique because they are the only Grand Slam played on a grass court. Wimbledon is the third tennis grand slam of the year and is widely seen as the biggest event on the sport's calendar.\n\n- https://en.wikipedia.org/wiki/The_Championships,_Wimbledon
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:World Series
-UID:b30d6ff305aa2958cffb2eef986bc55075dd0380
-DTSTART:20281015T000000
-DTEND:20281015T235959
-LOCATION: United States
-DESCRIPTION: The World Series is the annual championship series of North\nAmerican-based Major League Baseball (MLB), played since 1903\nbetween the American League (AL) champion team and the National\nLeague (NL) champion.\n\n\nhttps://en.wikipedia.org/wiki/World_Series
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -20504,15 +20378,6 @@ DESCRIPTION: The Wimbledon Championships is one of the four Grand Slam tennis to
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:World Series
-UID:844345a219e7441f3e6f3d364648d0c0b6d37ac2
-DTSTART:20291021T000000
-DTEND:20291021T235959
-LOCATION: United States
-DESCRIPTION: The World Series is the annual championship series of North\nAmerican-based Major League Baseball (MLB), played since 1903\nbetween the American League (AL) champion team and the National\nLeague (NL) champion.\n\n\nhttps://en.wikipedia.org/wiki/World_Series
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Election Day
 UID:c13c78e433a3a077fcbde96134eb3fff660c6f5f
 DTSTART:20291106T000000
@@ -21194,15 +21059,6 @@ DTSTART:20300714T000000
 DTEND:20300714T235959
 LOCATION: Wimbledon, London, United Kingdom
 DESCRIPTION: The Wimbledon Championships is one of the four Grand Slam tennis tournaments. It is played in Wimbledon, a suburb of London in England, Great Britain. The Championships are unique because they are the only Grand Slam played on a grass court. Wimbledon is the third tennis grand slam of the year and is widely seen as the biggest event on the sport's calendar.\n\n- https://en.wikipedia.org/wiki/The_Championships,_Wimbledon
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:World Series
-UID:c785ecef9c80fdb807984cfa7cb4b0db99e19fbd
-DTSTART:20301020T000000
-DTEND:20301020T235959
-LOCATION: United States
-DESCRIPTION: The World Series is the annual championship series of North\nAmerican-based Major League Baseball (MLB), played since 1903\nbetween the American League (AL) champion team and the National\nLeague (NL) champion.\n\n\nhttps://en.wikipedia.org/wiki/World_Series
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -21890,15 +21746,6 @@ DESCRIPTION: The Wimbledon Championships is one of the four Grand Slam tennis to
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:World Series
-UID:af32ba3d1f61041d360e8347bce3ae5e5934b6ed
-DTSTART:20311019T000000
-DTEND:20311019T235959
-LOCATION: United States
-DESCRIPTION: The World Series is the annual championship series of North\nAmerican-based Major League Baseball (MLB), played since 1903\nbetween the American League (AL) champion team and the National\nLeague (NL) champion.\n\n\nhttps://en.wikipedia.org/wiki/World_Series
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Election Day
 UID:0e17275db6bd534b4d785406d28fe4293a75d1d4
 DTSTART:20311104T000000
@@ -22580,15 +22427,6 @@ DTSTART:20320711T000000
 DTEND:20320711T235959
 LOCATION: Wimbledon, London, United Kingdom
 DESCRIPTION: The Wimbledon Championships is one of the four Grand Slam tennis tournaments. It is played in Wimbledon, a suburb of London in England, Great Britain. The Championships are unique because they are the only Grand Slam played on a grass court. Wimbledon is the third tennis grand slam of the year and is widely seen as the biggest event on the sport's calendar.\n\n- https://en.wikipedia.org/wiki/The_Championships,_Wimbledon
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:World Series
-UID:0f7dc3a00f0917018b80ecdf2299f720ce8a0bfc
-DTSTART:20321017T000000
-DTEND:20321017T235959
-LOCATION: United States
-DESCRIPTION: The World Series is the annual championship series of North\nAmerican-based Major League Baseball (MLB), played since 1903\nbetween the American League (AL) champion team and the National\nLeague (NL) champion.\n\n\nhttps://en.wikipedia.org/wiki/World_Series
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -23276,15 +23114,6 @@ DESCRIPTION: The Wimbledon Championships is one of the four Grand Slam tennis to
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:World Series
-UID:cd4a6e1b6c15a8bb526f0e1d8acf49828bf56d5b
-DTSTART:20331016T000000
-DTEND:20331016T235959
-LOCATION: United States
-DESCRIPTION: The World Series is the annual championship series of North\nAmerican-based Major League Baseball (MLB), played since 1903\nbetween the American League (AL) champion team and the National\nLeague (NL) champion.\n\n\nhttps://en.wikipedia.org/wiki/World_Series
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Election Day
 UID:ac5f0a60ed10a3965467eea31c14010cadfe2beb
 DTSTART:20331108T000000
@@ -23966,15 +23795,6 @@ DTSTART:20340716T000000
 DTEND:20340716T235959
 LOCATION: Wimbledon, London, United Kingdom
 DESCRIPTION: The Wimbledon Championships is one of the four Grand Slam tennis tournaments. It is played in Wimbledon, a suburb of London in England, Great Britain. The Championships are unique because they are the only Grand Slam played on a grass court. Wimbledon is the third tennis grand slam of the year and is widely seen as the biggest event on the sport's calendar.\n\n- https://en.wikipedia.org/wiki/The_Championships,_Wimbledon
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:World Series
-UID:a48eb6449731464a626493abe0963551b1c86582
-DTSTART:20341015T000000
-DTEND:20341015T235959
-LOCATION: United States
-DESCRIPTION: The World Series is the annual championship series of North\nAmerican-based Major League Baseball (MLB), played since 1903\nbetween the American League (AL) champion team and the National\nLeague (NL) champion.\n\n\nhttps://en.wikipedia.org/wiki/World_Series
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -24662,15 +24482,6 @@ DESCRIPTION: The Wimbledon Championships is one of the four Grand Slam tennis to
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:World Series
-UID:d65ffc87fa52672be6bae6658b1de2406756da75
-DTSTART:20351021T000000
-DTEND:20351021T235959
-LOCATION: United States
-DESCRIPTION: The World Series is the annual championship series of North\nAmerican-based Major League Baseball (MLB), played since 1903\nbetween the American League (AL) champion team and the National\nLeague (NL) champion.\n\n\nhttps://en.wikipedia.org/wiki/World_Series
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Election Day
 UID:12e46e9f1c10f2643ebf49f5a6a189d59d569e7a
 DTSTART:20351106T000000
@@ -25355,15 +25166,6 @@ DESCRIPTION: The Wimbledon Championships is one of the four Grand Slam tennis to
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:World Series
-UID:c378570274e8e38f5a73cdc51f7f43afa84662cb
-DTSTART:20361019T000000
-DTEND:20361019T235959
-LOCATION: United States
-DESCRIPTION: The World Series is the annual championship series of North\nAmerican-based Major League Baseball (MLB), played since 1903\nbetween the American League (AL) champion team and the National\nLeague (NL) champion.\n\n\nhttps://en.wikipedia.org/wiki/World_Series
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Election Day
 UID:80ad25554a1ab4a712a9127c0285fd556ad0be25
 DTSTART:20361104T000000
@@ -26045,15 +25847,6 @@ DTSTART:20370712T000000
 DTEND:20370712T235959
 LOCATION: Wimbledon, London, United Kingdom
 DESCRIPTION: The Wimbledon Championships is one of the four Grand Slam tennis tournaments. It is played in Wimbledon, a suburb of London in England, Great Britain. The Championships are unique because they are the only Grand Slam played on a grass court. Wimbledon is the third tennis grand slam of the year and is widely seen as the biggest event on the sport's calendar.\n\n- https://en.wikipedia.org/wiki/The_Championships,_Wimbledon
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:World Series
-UID:b77bab24a844933a80a71bf8310e13e6aeb26406
-DTSTART:20371018T000000
-DTEND:20371018T235959
-LOCATION: United States
-DESCRIPTION: The World Series is the annual championship series of North\nAmerican-based Major League Baseball (MLB), played since 1903\nbetween the American League (AL) champion team and the National\nLeague (NL) champion.\n\n\nhttps://en.wikipedia.org/wiki/World_Series
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
