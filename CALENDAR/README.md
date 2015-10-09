@@ -11,6 +11,11 @@ it is the catenation of two XML files
 
 TODO:
 
+Draconids not listed in SKYCAL (astro) calendar, and maybe other
+meteor showers as well
+
+World Series is no longer held at regularly scheduled time?, fix dates
+
 wikidata holidays in usa
 
 Friday the 13ths?
