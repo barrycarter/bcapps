@@ -1,5 +1,7 @@
 #!/bin/perl
 
+die "This does not work + will be removed soon; use bc-hyg2db.pl instead";
+
 # Rewrite of bc-hip2db.pl that uses "scat" <h>(runner-up for "worst
 # possible name for a program")</h> to show the J2000 (not J1991.25 or
 # B1950) cooridinates for stars AND the stellarium catalog for proper

@@ -4,6 +4,8 @@
 # scat?), so using the Tycho catalog and doing the equatorial to
 # ecliptic translations myself (sigh)
 
+die "This does not work + will be removed soon; use bc-hyg2db.pl instead";
+
 require "/usr/local/lib/bclib.pl";
 
 # downloaded as tar from http://vizier.u-strasbg.fr/viz-bin/Cat?I/259
