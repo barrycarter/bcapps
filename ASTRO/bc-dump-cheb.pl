@@ -70,6 +70,7 @@ while (!eof(A)) {
     # NOTE: do this after above because we still need to slurp coefficients
     unless ($planets{$planetinfo{$planet}{name}}) {next;}
     print B "pos[$planetinfo{$planet}{name}][Rationalize[$jstart]]=Partition[Partition[Rationalize[{$coeffs},0],$planetinfo{$planet}{num}],3];\n";
+    debug("pos[$planetinfo{$planet}{name}][Rationalize[$jstart]]=Partition[Partition[Rationalize[{$coeffs},0],$planetinfo{$planet}{num}],3];\n");
   }
 }
 

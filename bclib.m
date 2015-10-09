@@ -362,6 +362,10 @@ FindAllCrossings[f_, {t_, a_, b_}, opts___] := Module[{r, s, s1, ya},
 
 posxyz[jd_,planet_] := Module[{jd2,chunk,days,t},
 
+   (* special case for Earth sigh, below is EMRAT1 *)
+   If[planet==earth, Return[
+    posxyz[jd,earthmoon]-50000000000000/4115028453709531*posxyz[jd,moongeo]]];
+
    (* normalize to boundary *)
    jd2 = jd-33/2;
 
