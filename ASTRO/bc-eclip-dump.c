@@ -10,31 +10,46 @@
 // this the wrong way to do things
 #include "/home/barrycarter/BCGIT/ASTRO/bclib.h"
 
-// this lets me change function definition and times in all place
+/*
 
-// these are only approx!
-// DE431 starts -13199.6509168566, ends 17191.1606672279 is my scheme
-// #define SYEAR -13199
-// #define EYEAR 17191
-#define SYEAR 2010
-#define EYEAR 2016
+Arguments to this program in order:
+
+naifid: the integer id of observed body
+obs: the integer id of the observing body (399 = Earth)
+syear: the decimal starting year (approx) (eyear > syear> -13199.6509168566)
+eyear: the decimal ending year (approx) (syear < eyear < 17191.1606672279)
+
+-13199.6509168566 < syear < eyear < 17191.1606672279 required
+
+*/
 
 int main (int argc, char **argv) {
 
-  SpiceInt planet = atoi(argv[1]);
+  // if insufficient argc, complain, don't just seg fault
+  if (argc != 5) {
+    printf("Usage: observed observer syear eyear\n");
+    exit(-1);
+  }
+
+  int planet = atoi(argv[1]);
+  int obs = atoi(argv[2]);
+  double syear = atof(argv[3]);
+  double eyear = atof(argv[4]);
+
+  printf("YEAR: %f to %f\n", syear,eyear);
 
   SpiceDouble i,lt,ra,dec,range;
   SpiceDouble v[3];
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
-  for (i=(SYEAR-2000.)*31556952; i<=(EYEAR-2000.)*31556952; i+=86400) {
+  for (i=(syear-2000.)*31556952; i<=(eyear-2000.)*31556952; i+=3600) {
 
     // planet ecliptic coords as viewed from earth, converted to spherical
-    spkezp_c(planet,i,"ECLIPJ2000","NONE",399,v,&lt);
+    spkezp_c(planet,i,"ECLIPJ2000","NONE",obs,v,&lt);
     recrad_c(v,&range,&ra,&dec);
 
-    printf("%d %f %f %f %f %f\n", planet, et2jd(i), ra, dec,
-	   earthangle(i,0,planet), earthangle(i,planet,10));
+    printf("%d %f %f %f %f\n", planet, et2jd(i), ra, dec,
+	   earthangle(i,planet,10));
 
   }
   return(0);

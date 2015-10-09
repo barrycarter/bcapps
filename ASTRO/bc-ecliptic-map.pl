@@ -11,10 +11,27 @@ require "/usr/local/lib/bclib.pl";
 
 my(%hip);
 $factor = 1;
-# extra pixels in y to avoid corner cases
-my($w,$h) = (7200,3600*$factor);
 
-print "new\nsize $w,$h\nsetpixel 0,0,0,0,0\n";
+# 16384 = 1.32 minutes of arc per pixel
+# TODO: maybe bump this up (confuses Imagemagick, but since we're leafletting...)
+
+my($w,$h) = (16384,16384/12*$factor);
+
+# testing
+# my($w,$h) = (2048,round(2048/12*$factor));
+
+# setting a blue pixel here forces the color to be available later
+# (not sure why I have to surround it with black pixels on each side,
+# but that does work)
+
+print << "MARK";
+new
+size $w,$h
+setpixel 0,0,0,0,0
+setpixel 0,0,0,0,255
+setpixel 0,0,0,0,0
+MARK
+;
 
 my($all) = read_file("$bclib{githome}/ASTRO/eclipticlong3.txt");
 
@@ -23,7 +40,7 @@ my($midy) = $h/2;
 print "dline 0,$midy,$w,$midy,255,0,0\n";
 
 # this lets me control order of rendering
-my(@stars,@consts,@planets);
+my(@stars,@consts,@names,@planets);
 
 for $i (split(/\n/,$all)) {
 
@@ -35,7 +52,7 @@ for $i (split(/\n/,$all)) {
 
   my($x,$y) = ell2xy($eclong,$eclat);
   my($r) = round(7-$mag);
-  if ($y<0 || $y>$h) {next;}
+  if ($y<$r || $y>$h-$r) {next;}
 
   push(@stars,"fcircle $x,$y,$r,255,255,255");
 
@@ -69,16 +86,10 @@ for $i (split(/\n/,read_file("$bclib{githome}/ASTRO/constellationship.fab"))) {
   }
 }
 
-print join("\n",@consts),"\n";
-print join("\n",@names),"\n";
-print join("\n",@stars),"\n";
-
 while (<>) {
 
   # TODO: new format uses naif id too (so I can determine colors myself?)
   my($id,$jd,$eclong,$eclat,$sangle) = split(/\s+/,$_);
-
-  debug("JD: $jd");
 
   # convert eclong/eclat to xy, after degree conversion
   my($x,$y) = ell2xy($eclong*$RADDEG,$eclat*$RADDEG);
@@ -92,25 +103,33 @@ while (<>) {
   $jd=~s/\*\^/e/;
   my(@time) = gmtime(jd2unix($jd,"jd2unix"));
   # this is actually month - 1
-  my($mday,$mo) = ($time[3],$time[4]);
+  my($hour,$mday,$mo) = @time[2..4];
 
-  my($print);
-
-  if ($mo%3==0 && $mday==1) {
-    print strftime("string 255,255,0,$x,$y,tiny,%b %d %Y\n",@time);
-  } elsif ($mday==1 || $mday==15) {
-    print strftime("string 255,255,0,$x,$y,tiny,%b %d\n",@time);
+  if ($mo%3==0 && $mday==1 && $hour==0) {
+    push(@names,strftime("string 255,255,0,$x,$y,tiny,%b %d %Y",@time));
+  } elsif (($mday==1 || $mday==15) && $hour==0) {
+    push(@names,strftime("string 255,255,0,$x,$y,tiny,%b %d",@time));
   }
 
-  print "fcircle $x,$y,5,$oppcolor,255,$oppcolor\n";
+#  push(@planets,"fcircle $x,$y,1,$oppcolor,255,$oppcolor");
 
+  if ($hour==0) {
+    push(@planets,"fcircle $x,$y,2,$oppcolor,255,$oppcolor");
+  } else {
+    push(@planets,"setpixel $x,$y,$oppcolor,255,$oppcolor");
+  }
 }
+
+print join("\n",@planets),"\n";
+print join("\n",@consts),"\n";
+print join("\n",@names),"\n";
+print join("\n",@stars),"\n";
 
 # this subroutine uses globals, not suitable for general use
 
 sub ell2xy {
   my($eclong,$eclat) = @_;
-  # the +6 was a test to keep virgo whole
-  $eclong = fmodn($eclong,360);
+  # the +6 is a test to keep virgo whole
+  $eclong = fmodn($eclong+6,360);
   return (round($w*(-$eclong/360+1/2)),round(-$factor*$w*$eclat/360+$h/2));
 }
