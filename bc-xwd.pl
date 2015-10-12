@@ -11,6 +11,6 @@ unless (mylock("bc-xwd.pl","lock")) {die("Locked");}
 unless (-d "/mnt/sshfs/XWD") {die "/mnt/sshfs/XWD does not exist";}
 
 # this was originally a cron job with the below, but I wanted to add locking
-system("xwd -root | convert xwd:- /mnt/sshfs/XWD/pic.`date +\%Y\%m\%d:\%H\%M\%S`.png");
+system("xwd -root | convert xwd:- /mnt/extdrive2/XWD/pic.`date +\%Y\%m\%d:\%H\%M\%S`.png");
 
 mylock("bc-xwd.pl","unlock");

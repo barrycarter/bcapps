@@ -144,6 +144,7 @@ sub shorten {
   $event=~s/regulus/AlfLeo/i;
   $event=~s/aphelion: /Sun-Ear: /i;
   $event=~s/South /S. /;
+  $event=~s/North /N. /;
 
   debug("EV: $event");
 

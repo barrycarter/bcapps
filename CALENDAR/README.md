@@ -14,6 +14,8 @@ TODO:
 Draconids not listed in SKYCAL (astro) calendar, and maybe other
 meteor showers as well
 
+Mercury transit of 2016 may 09 wasnt listed (added it as special case), figure out why + add others?
+
 World Series is no longer held at regularly scheduled time?, fix dates
 
 wikidata holidays in usa

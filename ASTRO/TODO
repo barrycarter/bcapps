@@ -6,4 +6,10 @@ TODO
   - Orbit of Mercury/other planets as viewed from Sun is very "steady"
   (compared to barycenter orbit?), perhaps leaflet plot this just for fun
 
+  - Create page that just pops up random conjunctions to torture search engines
 
+  - Add ecliptic coordinates to the HYG db (I've pinged owner of database to ask if he's interested)
+
+  - Instead of using size to indicate different stellar brightnesses,
+  consider using colors (ie, black to white), though early experiments
+  didn't go well
