@@ -13,7 +13,7 @@ chdir("/mnt/extdrive2/XWD/$date");
 # because ZPAQ compresses this most efficiently)
 
 # reduced to -j 1 (ie, no parallel processing) because of heavy CPU load
-open(A,"|/usr/local/bin/parallel -j 10");
+open(A,"|/usr/local/bin/parallel -j 5");
 
 # TODO: exclude cases where result already exists!
 

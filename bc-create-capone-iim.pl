@@ -10,48 +10,17 @@
 require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
 
-$macro = << "MARK";
-TAB T=1
-URL GOTO=https://servicing.capitalone.com/c1/Login.aspx
-FRAME F=2
-TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:login ATTR=ID:uname CONTENT=$private{capitalone}{username}
-TAG POS=1 TYPE=INPUT:PASSWORD FORM=NAME:login ATTR=ID:cofisso_ti_passw CONTENT=$private{capitalone}{password}
-TAG POS=1 TYPE=INPUT:IMAGE FORM=NAME:login ATTR=ID:cofisso_btn_login
-TAG POS=1 TYPE=A ATTR=ID:transactionsLink0
-TAG POS=1 TYPE=A ATTR=ID:view_download_transactions_link_ID
-TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:MAINFORM ATTR=ID:txtFromDate_TextBox CONTENT=:STARTDATE:
-TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:MAINFORM ATTR=ID:txtToDate_TextBox CONTENT=:ENDDATE:
-TAG POS=1 TYPE=INPUT:RADIO FORM=ID:MAINFORM ATTR=ID:ctlStatementFilter_1
-ONDOWNLOAD FOLDER=* FILE=+_{{!NOW:yyyymmdd_hhnnss}} WAIT=YES
-TAG POS=1 TYPE=INPUT:IMAGE FORM=ID:MAINFORM ATTR=ID:btnDownload
-MARK
-;
-
-# now and 80 days ago (90 is limit, but playing it safe)
-$now = time();
-$enddate = strftime("%m/%d/%Y", localtime($now));
-$startdate = strftime("%m/%d/%Y", localtime($now-80*86400));
-
-# substiute into macro (TODO: redundant code, use hash?, create generalized subroutine?)
-$macro=~s/:STARTDATE:/$startdate/isg;
-$macro=~s/:ENDDATE:/$enddate/isg;
-
-write_file($macro, "/home/barrycarter/iMacros/Macros/bc-create-capone.iim");
-
-# if not running macro, stop here
-if ($globopts{norun}) {exit 0;}
-
 # run the macro
 # TODO: yes, this is a terrible place to keep my firefox
-($out, $err, $res) = cache_command("/root/build/firefox/firefox -remote 'openURL(http://run.imacros.net/?m=bc-create-capone.iim,new-tab)'");
+($out, $err, $res) = cache_command("/root/build/firefox/firefox -remote 'openURL(http://run.imacros.net/?m=bc-capone-fixed.iim,new-tab)'");
 
 # not sure how long it takes to run above command, so wait until
-# trans*.ofx shows up in download directory (and is fairly recent)
+# transactions*.ofx shows up in download directory (and is fairly recent)
 
 # TODO: this is hideous (-mmin -60 should be calculated not a guess)
 
 for (;;) {
-  ($out, $err, $res) = cache_command("find '/home/barrycarter/Download/' -iname 'export*.ofx' -mmin -60");
+  ($out, $err, $res) = cache_command("find '/home/barrycarter/Download/' -iname 'transactions*.ofx' -mmin -60");
   if ($out) {last;}
   debug("OUT: $out");
   sleep(1);
