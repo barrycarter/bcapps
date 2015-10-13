@@ -7,36 +7,52 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# work directory for testing
+dodie('chdir("/home/barrycarter/20151013/TORRENTS")');
+open(A,">magnets.txt");
+
 # URLs to torrent clients, not to torrents
 %exclude = list2hash("http://www.qbittorrent.org","http://deluge-torrent.org",
 		     "http://www.transmissionbt.com");
 
 (my($url) = @ARGV)||die("Usage: $0 URL");
 
+# to hold magnets
+my(@magnets);
+
 my($out,$err,$res) = cache_command2("curl $url","age=86400");
+my($all) = $out;
 
-while ($out=~s%href="(.*?)"%%is) {
+while ($all=~s%href="(.*?)"%%is) {
 
-  my($url2) = $1;
-
-  debug("URLA: $url2");
+  my($turl) = $1;
 
   # ignore locals and torrent clients
-  unless ($url2=~/http/ && !$exclude{$url2}) {next;}
-
-  debug("URLB: $url2");
+  unless ($turl=~/http/ && !$exclude{$turl}) {next;}
 
   # grab url
-  debug("URL: $url2");
-  my($out2,$err2,$res2) = cache_command2("curl -L '$url2'", "age=86400");
-  debug("ERR: $err");
+  my($out,$err,$res) = cache_command2("curl -L '$turl'", "age=86400");
+
+  # site of turl for local links
+  debug("TURL: $turl");
+  $turl=~s%^(.*?//.*?)/.*$%$1%;
+
+  while ($out=~s%href="(.*?)"%%is) {
+    my($link) = $1;
+
+    if ($link=~/^magnet/i) {
+      print A "$link\n";
+      next;
+    }
+
+    if ($link=~/\.torrent$/) {
+      my($tout,$terr,$tres) = cache_command2("curl '$link'","age=86400");
+    }
+
+#    debug("GOT: $link");
+  }
 
   # obvious torrents and magnets
-  
+#  debug("OUT: $out");
 
-  debug("GOT ($url2): $out");
 }
-
-# debug("OUT: $out");
-
-
