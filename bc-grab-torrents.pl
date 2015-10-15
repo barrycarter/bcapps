@@ -9,7 +9,6 @@ require "/usr/local/lib/bclib.pl";
 
 # work directory for testing
 dodie('chdir("/home/barrycarter/20151013/TORRENTS")');
-open(A,">magnets.txt");
 
 # URLs to torrent clients, not to torrents
 %exclude = list2hash("http://www.qbittorrent.org","http://deluge-torrent.org",
@@ -40,13 +39,20 @@ while ($all=~s%href="(.*?)"%%is) {
   while ($out=~s%href="(.*?)"%%is) {
     my($link) = $1;
 
+    # just to avoid collision (TODO: find a better way to do this, sha1?)
+    $count++;
+
     if ($link=~/^magnet/i) {
-      print A "$link\n";
+#      write_file("$link\n","magnet.$count.torrent");
+#      write_file("<a href='$link'>magnet</a>\n","magnet.$count.html");
       next;
     }
 
     if ($link=~/\.torrent$/) {
-      my($tout,$terr,$tres) = cache_command2("curl '$link'","age=86400");
+      debug("LINK: $turl/$link");
+      my($tout,$terr,$tres) = cache_command2("curl '$turl/$link'","age=86400");
+#      debug("OUT: $tout, ERR: $terr");
+      write_file("$tout", "$count.torrent");
     }
 
 #    debug("GOT: $link");
