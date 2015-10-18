@@ -65,12 +65,12 @@ for $i (@ARGV) {
 
 #  debug("ALL IS: $all");
 
-#  unless (-d "$target/$dir") {system("mkdir $target/$dir");}
+  unless (-d "$target/$dir") {system("mkdir $target/$dir");}
 
-#  write_file($all, "$target/$dir/$dir$file");
+  write_file($all, "$target/$dir/$dir$file");
 
   # bzdiff doesn't support "-r", so leaving these unbzipped for now
-  # system("bzip2 $target/$dir/$dir$file");
+  system("bzip2 $target/$dir/$dir$file");
 }
 
 # to test, use "diff -uwr" on two directories (after bunzipping the

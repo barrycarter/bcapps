@@ -12,7 +12,7 @@ require "/home/barrycarter/bc-private.pl";
 
 # run the macro
 # TODO: yes, this is a terrible place to keep my firefox
-($out, $err, $res) = cache_command("/root/build/firefox/firefox -remote 'openURL(http://run.imacros.net/?m=bc-capone-fixed.iim,new-tab)'");
+($out, $err, $res) = cache_command("/root/build/firefox/firefox -remote 'openURL(http://run.imacros.net/?m=bc-create-capone.iim,new-tab)'");
 
 # not sure how long it takes to run above command, so wait until
 # transactions*.ofx shows up in download directory (and is fairly recent)
