@@ -1,26 +1,62 @@
 #!/bin/perl
 
-# Given a valid FetLife session id, downloads user data sequentially,
-# until hitting three blanks in a row, to keep my fetlife.db up to
-# date
+# Downloads given users data similar to bc-dl-by-region
 
-# --start: the starting user id
-# --direction: set to -1 to go backwards
-# --list: obtain list of user numbers from stdin (start/direction ignored)
-
-die "Obsoleted by bc-dl-by-region.pl";
+# --sessionid: a valid fetlife session id
 
 require "/usr/local/lib/bclib.pl";
-require "/home/barrycarter/bc-private.pl";
+
+# TODO: user profiles do change
 
 # directory where stuff gets done
 dodie('chdir("/home/barrycarter/FETLIFE/FETLIFE-USER-PROFILES/")');
 
+$maxlen = 100000;
+my($len) = +Infinity;
+
+unless ($globopts{sessionid}) {die "Usage: $0 --sessionid=x";}
+
 defaults("xmessage=1");
 
-# public cookie per http://trilema.com/2015/fetlife-the-meat-market/
-# TODO: if/when this stops working, allow user to create/set
-$fl_cookie = "_fl_sessionid=$private{fetlife}{session}";
+my($cmd) = "curl -f --create-dirs --compress -A Fauxzilla --socks4a 127.0.0.1:9050 -H 'Cookie: _fl_sessionid=$globopts{sessionid}'";
+
+open(B,">cmdlist.txt");
+
+# one userid per line expected
+
+while (<>) {
+
+  my($str);
+  chomp;
+  ++$innercount;
+  # TODO: bzip2? (or check for bzipped version?)
+
+  my($fname) = join("",floor($_/10000),"/user",$_);
+  if (-s $fname > 1000 || -s "$fname.bz2" > 1000) {
+    debug("EXISTS: $fname");
+    next;
+  }
+
+  # every so often, visit home page to avoid block
+  if ($innercount%25==0) {
+    $str .= "-o homepage.html 'https://fetlife.com/home/v4' ";
+  }
+
+  my($url) = "https://fetlife.com/users/$_";
+  $str .= "-o '$fname' '$url' ";
+
+  # enough room to print string? (if not, print return first + curl)
+  $len += length($str);
+
+  if ($len <= $maxlen) {print B $str; next;}
+
+  # length too long, so print new line
+  $str = "\n$cmd $str";
+  $len = length($str);
+  print B $str;
+}
+
+die "TESTING";
 
 my($bad,@bad);
 
