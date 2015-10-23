@@ -14,8 +14,12 @@ require "/usr/local/lib/bclib.pl";
 
 # capital one error
 if ($globopts{caponesucks}) {
+
+  # Capital One fucks up their ofx even more ~22 Oct 2015
+#  $all=~s%<([A-Z]+)>([^>]*?)<%<$1>$2</$1>\n<%sg;
+
   for $i ("ACCTID","DTSERVER","DTSTART","DTEND") {
-    $all=~s%<$i>(.*?)\s%<$i>$1</$i>\n%is;
+    $all=~s%<$i>(.*?)<%<$i>$1</$i>\n<%is;
   }
 }
 
@@ -32,10 +36,12 @@ $ofx{ACCTID}=~s/^.*(.{4})$/$1/;
 while ($all=~s%<STMTTRN>(.*?)</STMTTRN>%%is) {
   $trans = $1;
 
+  debug("TRANS: $trans");
+
   %trans = ();
   # <h>obscure code + confusing variable re-use, woohoo!</h>
   if ($globopts{caponesucks}) {
-    $trans=~s%<(.*?)>(.*?)[\r\n]%$trans{$1}=$2%iseg;
+    $trans=~s%<(.*?)>(.*?)(?=<)%$trans{$1}=$2%iseg;
   } else {
     $trans=~s%<(.*?)>(.*?)</\1>%$trans{$1}=$2%iseg;
   }

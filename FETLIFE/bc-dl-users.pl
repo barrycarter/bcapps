@@ -4,6 +4,9 @@
 
 # --sessionid: a valid fetlife session id
 
+# testing shows that rate 24 w/ tor works, but rate 48 does not (the
+# speed is not actually in bytes/second, despite what "man curl" says)
+
 require "/usr/local/lib/bclib.pl";
 
 # TODO: user profiles do change
@@ -18,7 +21,7 @@ unless ($globopts{sessionid}) {die "Usage: $0 --sessionid=x";}
 
 defaults("xmessage=1");
 
-my($cmd) = "curl -f --create-dirs --compress -A Fauxzilla -H 'Cookie: _fl_sessionid=$globopts{sessionid}'";
+my($cmd) = "curl -f --socks4a 127.0.0.1:9050 --limit-rate 24 --create-dirs --compress -A Fauxzilla -H 'Cookie: _fl_sessionid=$globopts{sessionid}'";
 
 open(B,">cmdlist.txt");
 
@@ -29,13 +32,14 @@ while (<>) {
   my($str);
   chomp;
   ++$innercount;
-  # TODO: bzip2? (or check for bzipped version?)
 
+
+  # TODO: these profiles are two old, so not checking
   my($fname) = join("",floor($_/10000),"/user",$_);
-  if (-s $fname > 1000 || -s "$fname.bz2" > 1000) {
-    debug("EXISTS: $fname");
-    next;
-  }
+#  if (-s $fname > 1000 || -s "$fname.bz2" > 1000) {
+#    debug("EXISTS: $fname");
+#    next;
+#  }
 
   # every so often, visit home page to avoid block
   if ($innercount%25==0) {

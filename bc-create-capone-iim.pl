@@ -26,8 +26,11 @@ for (;;) {
   sleep(1);
 }
 
+my($fname) = $out;
+chomp($fname);
+
 # send file to ofx parser
-($out, $err, $res) = cache_command("/home/barrycarter/BCGIT/bc-parse-ofx2.pl '$out' | mysql test");
+($out, $err, $res) = cache_command("/home/barrycarter/BCGIT/bc-parse-ofx2.pl '$fname' | mysql test");
 
 $globopts{debug} = 1;
 debug("OUT: $out","ERR: $err","RES: $res");
