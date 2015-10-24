@@ -1,0 +1,13 @@
+﻿VERSION BUILD=7031111 RECORDER=FX
+SET !TIMEOUT 20
+SET !ERRORIGNORE YES
+TAB T=1
+'must be on list-of-addresses page for this to work
+TAG POS=1 TYPE=A ATTR=HREF:index.pl?myemails=*
+TAG POS=1 TYPE=INPUT:TEXT FORM=ACTION:index.pl ATTR=NAME:count CONTENT=20
+TAG POS=1 TYPE=INPUT:RADIO FORM=ACTION:index.pl ATTR=NAME:hidden&&VALUE:0
+TAG POS=1 TYPE=INPUT:SUBMIT FORM=ACTION:index.pl ATTR=VALUE:update<SP>address
+TAG POS=1 TYPE=INPUT:CHECKBOX FORM=NAME:searchform ATTR=NAME:showHidden CONTENT=YES
+TAG POS=1 TYPE=INPUT:SUBMIT FORM=NAME:searchform ATTR=VALUE:search<SP>addresses
+TAG POS=1 TYPE=TD ATTR=TXT:re-main-ing
+' run this multiple times to unhide/reset all spamgourmet.com addresses to 20

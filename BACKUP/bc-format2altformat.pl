@@ -17,10 +17,12 @@
 
 # these appear to change on reboot/remount, grrr
 # TODO: automate updating these
-my(%drives) = ( 2096 => "/mnt/extdrive", 2065 => "/mnt/extdrive2",
-2081 => "/mnt/extdrive3", 2113 => "/mnt/extdrive4" );
+# my(%drives) = ( 2096 => "/mnt/extdrive", 2065 => "/mnt/extdrive2",
+# 2081 => "/mnt/extdrive3", 2113 => "/mnt/extdrive4" );
 
 require "/usr/local/lib/bclib.pl";
+
+warn "Rewriting feature disabled, original filenames used";
 
 while (<>) {
   chomp;
@@ -42,6 +44,12 @@ while (<>) {
   # ignore nonfiles/links
   unless ($type=~/^[fl]$/) {warn "BAD TYPE: $_"; next;}
 
+=item comment
+
+commenting out this code because I no longer have sshfs mounted
+drives, and drive numbers locally change on every remount which is
+ugly.
+
   # edit filename based on devno
   if ($drives{$devno}) {
     # do nothing, already ok
@@ -61,6 +69,8 @@ while (<>) {
     warn("BAD DEVNO ($devno): $_");
     next;
   }
+
+=cut
 
   # `join` on mtime and filename
   print "$mtime $name\0$size\n";

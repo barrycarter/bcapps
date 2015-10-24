@@ -26,6 +26,7 @@
 # 129600 259200 "/mnt/sshfs/bcmac-files-rev.txt.srt /bcunix-files-rev.txt /mnt/extdrive/extdrive-files-rev.txt"
 
 129600 259200 "/bcunix-files-rev.txt /mnt/extdrive/extdrive-files-rev.txt"
+# 129600 259200 "/bcunix-files-rev.txt /mnt/*/*-files-rev.txt"
 
 # quikbak
 86400 86400 "/usr/local/etc/quikbak/home/*/DOING.quikbak"
