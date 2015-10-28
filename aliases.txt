@@ -155,7 +155,11 @@ alias mirror-peanuts "bc-mirror-mw-attr.pl --debug --api=http://peanuts.referata
 # record chat-avenue chats (the quikbak just in case tcpflow
 # overwrites the "same" packet from an older session)
 
-alias chatrecord "cd /home/barrycarter/TRANSCRIPTS/CHATAVENUE; bc-quikbak.pl *; sudo tcpflow 'net 199.59.161.0/24||net 100.42.219.208/29||net 199.59.160.0/24'&"
+# alias chatrecord "cd /home/barrycarter/TRANSCRIPTS/CHATAVENUE; bc-quikbak.pl *; sudo tcpflow 'net 199.59.161.0/24||net 100.42.219.208/29||net 199.59.160.0/24'&"
+
+# chatavenue.com changes IP addresses later (and possibly encrypts, which would make this quite less useful)
+
+alias chatrecord "cd /home/barrycarter/TRANSCRIPTS/CHATAVENUE; bc-quikbak.pl *; sudo tcpflow 'net 45.34.0.0/15'&"
 
 # easier for bc-doing.pl
 alias doing "bc-doing.pl \!*"
