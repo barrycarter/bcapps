@@ -4,11 +4,6 @@ bc-calendar.pl screenshot (I put this on my X root window):
 
 <img src="bc-cal-ss.gif">
 
-NOTE: to create impdates.xml, I unzipped two ODS files sent by Emilie
-C, ran tidy -xml on the content.xml and then glued the two outputs of
-tidy together. In other words, impdates.xml is NOT a valid XML file:
-it is the catenation of two XML files
-
 TODO:
 
 Draconids not listed in SKYCAL (astro) calendar, and maybe other
@@ -45,3 +40,10 @@ Mohammed's birthday (gcal does not appear to list this)
 Chinese New Years (gcal has an odd version of this)
 
 starts of sports seasons, hockey, baseball, basketball, etc
+
+"Chinese NY (Rooster)" is too wide for bc-calendar.pl, but won't be an
+issue until ~2017
+
+"Quadrantids (120/hr)" and "Moon-Antares: 2.1<B0> S" same issue;
+latter won't be a problem until 2022, which is suspicious actually
+

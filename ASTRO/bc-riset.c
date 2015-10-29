@@ -31,9 +31,6 @@ void gfq (SpiceDouble et, SpiceDouble *value) {
   // target position (in IAU_EARTH)
   spkezp_c(target,et,"IAU_EARTH","NONE",399,v,&lt);
 
-  printf("ME: %f %f %f %f\n",et,pos[0],pos[1],pos[2]);
-  printf("TARG: %f %f %f %f\n",et,v[0],v[1],v[2]);
-
   // and the angle (radians)
   *value = vsep_c(v,pos);
 

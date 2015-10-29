@@ -146,6 +146,9 @@ sub shorten {
   $event=~s/South /S. /;
   $event=~s/North /N. /;
 
+  # will cause probs for bc-calendar.pl
+  if (length($event)>19) {warn("$event > 18 chars");}
+
   debug("EV: $event");
 
   return "$sdate $event\n";

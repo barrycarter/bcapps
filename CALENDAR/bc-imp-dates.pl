@@ -42,7 +42,7 @@ my(%seen);
 	  "Veterans Day" => "1111",
 	  "Christmas" => "1225",
 	  "Christmas Eve" => "1224",
-	  "Halloween/Reformation" => "1031",
+	  "Halloween" => "1031",
 	  "St Patrick's Day" => "0317",
 	  "Groundhog Day" => "0202",
 	  "Tax Day" => "0415",
@@ -264,6 +264,9 @@ while (@dates) {
 
   # this is silly
   my($uid) = sha1_hex("$date $event");
+
+  # will cause probs for bc-calendar.pl
+  if (length($event)>19) {warn("WARN: $event is longer than 19 characters");}
 
   print B "$date $event\n";
 

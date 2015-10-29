@@ -10172,15 +10172,6 @@ DESCRIPTION: International Nurses Day (IND) is celebrated around the world on 12
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:Halloween/Reformation
-UID:9f9d0f6371df15639d0b358732749d6f019af2c2
-DTSTART:20151031T000000
-DTEND:20151031T235959
-LOCATION: International
-DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Veterans Day
 UID:24c382cb916ae99df79a70ce26703fd1479edd24
 DTSTART:20151111T000000
@@ -10448,6 +10439,15 @@ DTSTART:20151201T000000
 DTEND:20151201T235959
 LOCATION: International
 DESCRIPTION: World AIDS Day is held on 1 December each year and is an\nopportunity for people worldwide to unite in the fight against HIV,\nshow their support for people living with HIV and to commemorate\npeople who have died. World AIDS Day was the first ever global\nhealth day and the first one was held in 1988.\n\n http://www.worldaidsday.org/\n\nhttps://en.wikipedia.org/wiki/World_AIDS_Day
+COMMENT: 
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Halloween
+UID:e165103edf7589e9064a71bd2001f66182793c73
+DTSTART:20151031T000000
+DTEND:20151031T235959
+LOCATION: International
+DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -10856,15 +10856,6 @@ DESCRIPTION: International Nurses Day (IND) is celebrated around the world on 12
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:Halloween/Reformation
-UID:66913ca8681230afa8f60376228ef25f0f15e214
-DTSTART:20161031T000000
-DTEND:20161031T235959
-LOCATION: International
-DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Veterans Day
 UID:72dca462a8d4fb5812160727395e437879961900
 DTSTART:20161111T000000
@@ -11132,6 +11123,15 @@ DTSTART:20161201T000000
 DTEND:20161201T235959
 LOCATION: International
 DESCRIPTION: World AIDS Day is held on 1 December each year and is an\nopportunity for people worldwide to unite in the fight against HIV,\nshow their support for people living with HIV and to commemorate\npeople who have died. World AIDS Day was the first ever global\nhealth day and the first one was held in 1988.\n\n http://www.worldaidsday.org/\n\nhttps://en.wikipedia.org/wiki/World_AIDS_Day
+COMMENT: 
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Halloween
+UID:0ee215f088bed1af92f33ab2b3aae14cbef5b053
+DTSTART:20161031T000000
+DTEND:20161031T235959
+LOCATION: International
+DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -11540,15 +11540,6 @@ DESCRIPTION: International Nurses Day (IND) is celebrated around the world on 12
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:Halloween/Reformation
-UID:d2340431064fb8f6bc8030add9b58e5e625910bd
-DTSTART:20171031T000000
-DTEND:20171031T235959
-LOCATION: International
-DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Veterans Day
 UID:22c552cb2d2d2da3079737d29376cbf0330f76a0
 DTSTART:20171111T000000
@@ -11816,6 +11807,15 @@ DTSTART:20171201T000000
 DTEND:20171201T235959
 LOCATION: International
 DESCRIPTION: World AIDS Day is held on 1 December each year and is an\nopportunity for people worldwide to unite in the fight against HIV,\nshow their support for people living with HIV and to commemorate\npeople who have died. World AIDS Day was the first ever global\nhealth day and the first one was held in 1988.\n\n http://www.worldaidsday.org/\n\nhttps://en.wikipedia.org/wiki/World_AIDS_Day
+COMMENT: 
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Halloween
+UID:cbd85da1a3696b2669bddf2f9afd02f36d8dc632
+DTSTART:20171031T000000
+DTEND:20171031T235959
+LOCATION: International
+DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -12224,15 +12224,6 @@ DESCRIPTION: International Nurses Day (IND) is celebrated around the world on 12
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:Halloween/Reformation
-UID:9fc831ec13e773abdf933d4ed3580546c61f7e87
-DTSTART:20181031T000000
-DTEND:20181031T235959
-LOCATION: International
-DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Veterans Day
 UID:caab8ca8bdc8cab274f63f7c86f430241f5f31ec
 DTSTART:20181111T000000
@@ -12500,6 +12491,15 @@ DTSTART:20181201T000000
 DTEND:20181201T235959
 LOCATION: International
 DESCRIPTION: World AIDS Day is held on 1 December each year and is an\nopportunity for people worldwide to unite in the fight against HIV,\nshow their support for people living with HIV and to commemorate\npeople who have died. World AIDS Day was the first ever global\nhealth day and the first one was held in 1988.\n\n http://www.worldaidsday.org/\n\nhttps://en.wikipedia.org/wiki/World_AIDS_Day
+COMMENT: 
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Halloween
+UID:345abd5b12225d32cdf383f8bd53dc7caa940e6b
+DTSTART:20181031T000000
+DTEND:20181031T235959
+LOCATION: International
+DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -12908,15 +12908,6 @@ DESCRIPTION: International Nurses Day (IND) is celebrated around the world on 12
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:Halloween/Reformation
-UID:36e3302d0e071b88dcc9a2d5ddfbb05c46ad17a5
-DTSTART:20191031T000000
-DTEND:20191031T235959
-LOCATION: International
-DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Veterans Day
 UID:ead126f020a4a37d289e6bcb5590d46034eee33c
 DTSTART:20191111T000000
@@ -13184,6 +13175,15 @@ DTSTART:20191201T000000
 DTEND:20191201T235959
 LOCATION: International
 DESCRIPTION: World AIDS Day is held on 1 December each year and is an\nopportunity for people worldwide to unite in the fight against HIV,\nshow their support for people living with HIV and to commemorate\npeople who have died. World AIDS Day was the first ever global\nhealth day and the first one was held in 1988.\n\n http://www.worldaidsday.org/\n\nhttps://en.wikipedia.org/wiki/World_AIDS_Day
+COMMENT: 
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Halloween
+UID:65d28d7efc3764e31632c29fb614bd16faa4701e
+DTSTART:20191031T000000
+DTEND:20191031T235959
+LOCATION: International
+DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -13592,15 +13592,6 @@ DESCRIPTION: International Nurses Day (IND) is celebrated around the world on 12
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:Halloween/Reformation
-UID:6560b8578e9ca61aa30c023a3d8a163d00279acf
-DTSTART:20201031T000000
-DTEND:20201031T235959
-LOCATION: International
-DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Veterans Day
 UID:e1f1caa8b162a2b8e3c2afb4a3776a9da88e5bfd
 DTSTART:20201111T000000
@@ -13868,6 +13859,15 @@ DTSTART:20201201T000000
 DTEND:20201201T235959
 LOCATION: International
 DESCRIPTION: World AIDS Day is held on 1 December each year and is an\nopportunity for people worldwide to unite in the fight against HIV,\nshow their support for people living with HIV and to commemorate\npeople who have died. World AIDS Day was the first ever global\nhealth day and the first one was held in 1988.\n\n http://www.worldaidsday.org/\n\nhttps://en.wikipedia.org/wiki/World_AIDS_Day
+COMMENT: 
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Halloween
+UID:e8bb4e0332b3318f3d619f5920c74e7898fd7dcb
+DTSTART:20201031T000000
+DTEND:20201031T235959
+LOCATION: International
+DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -14276,15 +14276,6 @@ DESCRIPTION: International Nurses Day (IND) is celebrated around the world on 12
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:Halloween/Reformation
-UID:1c7340caab1aae507f96489d7250c7d7c7906745
-DTSTART:20211031T000000
-DTEND:20211031T235959
-LOCATION: International
-DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Veterans Day
 UID:738bbada453004938144be56d9eb21145e2f211f
 DTSTART:20211111T000000
@@ -14552,6 +14543,15 @@ DTSTART:20211201T000000
 DTEND:20211201T235959
 LOCATION: International
 DESCRIPTION: World AIDS Day is held on 1 December each year and is an\nopportunity for people worldwide to unite in the fight against HIV,\nshow their support for people living with HIV and to commemorate\npeople who have died. World AIDS Day was the first ever global\nhealth day and the first one was held in 1988.\n\n http://www.worldaidsday.org/\n\nhttps://en.wikipedia.org/wiki/World_AIDS_Day
+COMMENT: 
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Halloween
+UID:682f90cf140506dd5fbcdc8366d2cc8e171fadbf
+DTSTART:20211031T000000
+DTEND:20211031T235959
+LOCATION: International
+DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -14960,15 +14960,6 @@ DESCRIPTION: International Nurses Day (IND) is celebrated around the world on 12
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:Halloween/Reformation
-UID:4d99f4a48edce07c520424139db89a99aaf53825
-DTSTART:20221031T000000
-DTEND:20221031T235959
-LOCATION: International
-DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Veterans Day
 UID:88b5ce7efbe3fee84693fa27abc8eb555c4f832e
 DTSTART:20221111T000000
@@ -15236,6 +15227,15 @@ DTSTART:20221201T000000
 DTEND:20221201T235959
 LOCATION: International
 DESCRIPTION: World AIDS Day is held on 1 December each year and is an\nopportunity for people worldwide to unite in the fight against HIV,\nshow their support for people living with HIV and to commemorate\npeople who have died. World AIDS Day was the first ever global\nhealth day and the first one was held in 1988.\n\n http://www.worldaidsday.org/\n\nhttps://en.wikipedia.org/wiki/World_AIDS_Day
+COMMENT: 
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Halloween
+UID:ad00ec64f3388136afd9515047e0c546d38989f4
+DTSTART:20221031T000000
+DTEND:20221031T235959
+LOCATION: International
+DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -15644,15 +15644,6 @@ DESCRIPTION: International Nurses Day (IND) is celebrated around the world on 12
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:Halloween/Reformation
-UID:0f40c968fe82204c7a3e4ac81169b7d81dd6e103
-DTSTART:20231031T000000
-DTEND:20231031T235959
-LOCATION: International
-DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Veterans Day
 UID:749690f3954eaaf995a9033af08fdd02fa5068d1
 DTSTART:20231111T000000
@@ -15920,6 +15911,15 @@ DTSTART:20231201T000000
 DTEND:20231201T235959
 LOCATION: International
 DESCRIPTION: World AIDS Day is held on 1 December each year and is an\nopportunity for people worldwide to unite in the fight against HIV,\nshow their support for people living with HIV and to commemorate\npeople who have died. World AIDS Day was the first ever global\nhealth day and the first one was held in 1988.\n\n http://www.worldaidsday.org/\n\nhttps://en.wikipedia.org/wiki/World_AIDS_Day
+COMMENT: 
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Halloween
+UID:cf47cb6c6f0dc7e6b8a9fa5a23f1ab64f2a43eed
+DTSTART:20231031T000000
+DTEND:20231031T235959
+LOCATION: International
+DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -16328,15 +16328,6 @@ DESCRIPTION: International Nurses Day (IND) is celebrated around the world on 12
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:Halloween/Reformation
-UID:d48130eecc80dfc28286b6926eda0d0e286d5372
-DTSTART:20241031T000000
-DTEND:20241031T235959
-LOCATION: International
-DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Veterans Day
 UID:b5882a1b1282468b548f409eb60a374e1f08c04a
 DTSTART:20241111T000000
@@ -16604,6 +16595,15 @@ DTSTART:20241201T000000
 DTEND:20241201T235959
 LOCATION: International
 DESCRIPTION: World AIDS Day is held on 1 December each year and is an\nopportunity for people worldwide to unite in the fight against HIV,\nshow their support for people living with HIV and to commemorate\npeople who have died. World AIDS Day was the first ever global\nhealth day and the first one was held in 1988.\n\n http://www.worldaidsday.org/\n\nhttps://en.wikipedia.org/wiki/World_AIDS_Day
+COMMENT: 
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Halloween
+UID:bca110d52953d7461f9bb73e1724277d5d755696
+DTSTART:20241031T000000
+DTEND:20241031T235959
+LOCATION: International
+DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -17012,15 +17012,6 @@ DESCRIPTION: International Nurses Day (IND) is celebrated around the world on 12
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:Halloween/Reformation
-UID:f690f17bc758fc98bb3be67d9d57fa5f43d5dee3
-DTSTART:20251031T000000
-DTEND:20251031T235959
-LOCATION: International
-DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Veterans Day
 UID:09c4adb601fad402e87cfd95031b5a9c64530f94
 DTSTART:20251111T000000
@@ -17288,6 +17279,15 @@ DTSTART:20251201T000000
 DTEND:20251201T235959
 LOCATION: International
 DESCRIPTION: World AIDS Day is held on 1 December each year and is an\nopportunity for people worldwide to unite in the fight against HIV,\nshow their support for people living with HIV and to commemorate\npeople who have died. World AIDS Day was the first ever global\nhealth day and the first one was held in 1988.\n\n http://www.worldaidsday.org/\n\nhttps://en.wikipedia.org/wiki/World_AIDS_Day
+COMMENT: 
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Halloween
+UID:658b830553d16fc1237e6abe9dcfd7cfb2594e33
+DTSTART:20251031T000000
+DTEND:20251031T235959
+LOCATION: International
+DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -17696,15 +17696,6 @@ DESCRIPTION: International Nurses Day (IND) is celebrated around the world on 12
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:Halloween/Reformation
-UID:ff914ecbdf0bdd57f87f6d00894086e126141ee6
-DTSTART:20261031T000000
-DTEND:20261031T235959
-LOCATION: International
-DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Veterans Day
 UID:934522d252c0ab1b2c64f05f0f33ea6e8973a834
 DTSTART:20261111T000000
@@ -17972,6 +17963,15 @@ DTSTART:20261201T000000
 DTEND:20261201T235959
 LOCATION: International
 DESCRIPTION: World AIDS Day is held on 1 December each year and is an\nopportunity for people worldwide to unite in the fight against HIV,\nshow their support for people living with HIV and to commemorate\npeople who have died. World AIDS Day was the first ever global\nhealth day and the first one was held in 1988.\n\n http://www.worldaidsday.org/\n\nhttps://en.wikipedia.org/wiki/World_AIDS_Day
+COMMENT: 
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Halloween
+UID:4802101062d98da49a970a01a38506ef34febd2c
+DTSTART:20261031T000000
+DTEND:20261031T235959
+LOCATION: International
+DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -18380,15 +18380,6 @@ DESCRIPTION: International Nurses Day (IND) is celebrated around the world on 12
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:Halloween/Reformation
-UID:962b6484b00157d413e5bd7cee32246b946e8ea9
-DTSTART:20271031T000000
-DTEND:20271031T235959
-LOCATION: International
-DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Veterans Day
 UID:5b9c0203c073a5ac8a462a058562da021bbf756c
 DTSTART:20271111T000000
@@ -18656,6 +18647,15 @@ DTSTART:20271201T000000
 DTEND:20271201T235959
 LOCATION: International
 DESCRIPTION: World AIDS Day is held on 1 December each year and is an\nopportunity for people worldwide to unite in the fight against HIV,\nshow their support for people living with HIV and to commemorate\npeople who have died. World AIDS Day was the first ever global\nhealth day and the first one was held in 1988.\n\n http://www.worldaidsday.org/\n\nhttps://en.wikipedia.org/wiki/World_AIDS_Day
+COMMENT: 
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Halloween
+UID:0a25b4ebb8c49fd97c212491d0fc3f1ea823c006
+DTSTART:20271031T000000
+DTEND:20271031T235959
+LOCATION: International
+DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -19064,15 +19064,6 @@ DESCRIPTION: International Nurses Day (IND) is celebrated around the world on 12
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:Halloween/Reformation
-UID:1c9f9d7ec51e91a85e44831f5e6e29caee0f574b
-DTSTART:20281031T000000
-DTEND:20281031T235959
-LOCATION: International
-DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Veterans Day
 UID:0ddd264c560f6d56606e57982f3e74f984b69135
 DTSTART:20281111T000000
@@ -19340,6 +19331,15 @@ DTSTART:20281201T000000
 DTEND:20281201T235959
 LOCATION: International
 DESCRIPTION: World AIDS Day is held on 1 December each year and is an\nopportunity for people worldwide to unite in the fight against HIV,\nshow their support for people living with HIV and to commemorate\npeople who have died. World AIDS Day was the first ever global\nhealth day and the first one was held in 1988.\n\n http://www.worldaidsday.org/\n\nhttps://en.wikipedia.org/wiki/World_AIDS_Day
+COMMENT: 
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Halloween
+UID:f7ca7189af7cb08c965e16aa6c4435eedc9e9322
+DTSTART:20281031T000000
+DTEND:20281031T235959
+LOCATION: International
+DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -19748,15 +19748,6 @@ DESCRIPTION: International Nurses Day (IND) is celebrated around the world on 12
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:Halloween/Reformation
-UID:24b48faeab62cc34765a7a19bddaf8ea9b0bb668
-DTSTART:20291031T000000
-DTEND:20291031T235959
-LOCATION: International
-DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Veterans Day
 UID:1d7b536575b327e541b44dc60bcbbf45424832fa
 DTSTART:20291111T000000
@@ -20024,6 +20015,15 @@ DTSTART:20291201T000000
 DTEND:20291201T235959
 LOCATION: International
 DESCRIPTION: World AIDS Day is held on 1 December each year and is an\nopportunity for people worldwide to unite in the fight against HIV,\nshow their support for people living with HIV and to commemorate\npeople who have died. World AIDS Day was the first ever global\nhealth day and the first one was held in 1988.\n\n http://www.worldaidsday.org/\n\nhttps://en.wikipedia.org/wiki/World_AIDS_Day
+COMMENT: 
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Halloween
+UID:3f3d05cafe829531b06439188bccd58a8b128e3b
+DTSTART:20291031T000000
+DTEND:20291031T235959
+LOCATION: International
+DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -20432,15 +20432,6 @@ DESCRIPTION: International Nurses Day (IND) is celebrated around the world on 12
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:Halloween/Reformation
-UID:f6e7be05eafc422c40eab6dc6df1bdbe779fb57e
-DTSTART:20301031T000000
-DTEND:20301031T235959
-LOCATION: International
-DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Veterans Day
 UID:ab27f01edf421c4ac426909884800cc10de05e18
 DTSTART:20301111T000000
@@ -20708,6 +20699,15 @@ DTSTART:20301201T000000
 DTEND:20301201T235959
 LOCATION: International
 DESCRIPTION: World AIDS Day is held on 1 December each year and is an\nopportunity for people worldwide to unite in the fight against HIV,\nshow their support for people living with HIV and to commemorate\npeople who have died. World AIDS Day was the first ever global\nhealth day and the first one was held in 1988.\n\n http://www.worldaidsday.org/\n\nhttps://en.wikipedia.org/wiki/World_AIDS_Day
+COMMENT: 
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Halloween
+UID:e45e535f081197be3c94415e1741aa562196ae88
+DTSTART:20301031T000000
+DTEND:20301031T235959
+LOCATION: International
+DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -21116,15 +21116,6 @@ DESCRIPTION: International Nurses Day (IND) is celebrated around the world on 12
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:Halloween/Reformation
-UID:267fe5b4521bc57af798d66b58eba5d08b87146c
-DTSTART:20311031T000000
-DTEND:20311031T235959
-LOCATION: International
-DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Veterans Day
 UID:55f6219a486afdccb72dfc24d897c563b3eca1af
 DTSTART:20311111T000000
@@ -21392,6 +21383,15 @@ DTSTART:20311201T000000
 DTEND:20311201T235959
 LOCATION: International
 DESCRIPTION: World AIDS Day is held on 1 December each year and is an\nopportunity for people worldwide to unite in the fight against HIV,\nshow their support for people living with HIV and to commemorate\npeople who have died. World AIDS Day was the first ever global\nhealth day and the first one was held in 1988.\n\n http://www.worldaidsday.org/\n\nhttps://en.wikipedia.org/wiki/World_AIDS_Day
+COMMENT: 
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Halloween
+UID:b034a13dee6d011216cc2d20f8e83f114f97c05f
+DTSTART:20311031T000000
+DTEND:20311031T235959
+LOCATION: International
+DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -21800,15 +21800,6 @@ DESCRIPTION: International Nurses Day (IND) is celebrated around the world on 12
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:Halloween/Reformation
-UID:0694015aa40f0da6063868646a03cbfac09240a3
-DTSTART:20321031T000000
-DTEND:20321031T235959
-LOCATION: International
-DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Veterans Day
 UID:2609238995b2e7f60394587483fef33fa96beb32
 DTSTART:20321111T000000
@@ -22076,6 +22067,15 @@ DTSTART:20321201T000000
 DTEND:20321201T235959
 LOCATION: International
 DESCRIPTION: World AIDS Day is held on 1 December each year and is an\nopportunity for people worldwide to unite in the fight against HIV,\nshow their support for people living with HIV and to commemorate\npeople who have died. World AIDS Day was the first ever global\nhealth day and the first one was held in 1988.\n\n http://www.worldaidsday.org/\n\nhttps://en.wikipedia.org/wiki/World_AIDS_Day
+COMMENT: 
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Halloween
+UID:7f92ee22e0c83ed1a7134f43cb66a8ebcc7ea4f1
+DTSTART:20321031T000000
+DTEND:20321031T235959
+LOCATION: International
+DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -22484,15 +22484,6 @@ DESCRIPTION: International Nurses Day (IND) is celebrated around the world on 12
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:Halloween/Reformation
-UID:545b5ccd2aabc593a456973b2c83a8bfc4f8c9bb
-DTSTART:20331031T000000
-DTEND:20331031T235959
-LOCATION: International
-DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Veterans Day
 UID:7deeb009b3758fc8e7b0b9b7e55d8151e071638b
 DTSTART:20331111T000000
@@ -22760,6 +22751,15 @@ DTSTART:20331201T000000
 DTEND:20331201T235959
 LOCATION: International
 DESCRIPTION: World AIDS Day is held on 1 December each year and is an\nopportunity for people worldwide to unite in the fight against HIV,\nshow their support for people living with HIV and to commemorate\npeople who have died. World AIDS Day was the first ever global\nhealth day and the first one was held in 1988.\n\n http://www.worldaidsday.org/\n\nhttps://en.wikipedia.org/wiki/World_AIDS_Day
+COMMENT: 
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Halloween
+UID:1731ed999c73658e50b2cd4f4519a458ef0d0b16
+DTSTART:20331031T000000
+DTEND:20331031T235959
+LOCATION: International
+DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -23168,15 +23168,6 @@ DESCRIPTION: International Nurses Day (IND) is celebrated around the world on 12
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:Halloween/Reformation
-UID:961b3ab65a30508f68add3acd6ef785d12162840
-DTSTART:20341031T000000
-DTEND:20341031T235959
-LOCATION: International
-DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Veterans Day
 UID:9ba5a4b8359ba48dd0b395b818a9efcea8a8c799
 DTSTART:20341111T000000
@@ -23444,6 +23435,15 @@ DTSTART:20341201T000000
 DTEND:20341201T235959
 LOCATION: International
 DESCRIPTION: World AIDS Day is held on 1 December each year and is an\nopportunity for people worldwide to unite in the fight against HIV,\nshow their support for people living with HIV and to commemorate\npeople who have died. World AIDS Day was the first ever global\nhealth day and the first one was held in 1988.\n\n http://www.worldaidsday.org/\n\nhttps://en.wikipedia.org/wiki/World_AIDS_Day
+COMMENT: 
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Halloween
+UID:f4116f77d86d6cd2ada4be44eb0b59f6739c3af3
+DTSTART:20341031T000000
+DTEND:20341031T235959
+LOCATION: International
+DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -23852,15 +23852,6 @@ DESCRIPTION: International Nurses Day (IND) is celebrated around the world on 12
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:Halloween/Reformation
-UID:687071b610b07d8acfe9a61a4230b2880ecbe44f
-DTSTART:20351031T000000
-DTEND:20351031T235959
-LOCATION: International
-DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Veterans Day
 UID:1e9d39db80cf2d6b3c836ea074210e08e971e5ed
 DTSTART:20351111T000000
@@ -24128,6 +24119,15 @@ DTSTART:20351201T000000
 DTEND:20351201T235959
 LOCATION: International
 DESCRIPTION: World AIDS Day is held on 1 December each year and is an\nopportunity for people worldwide to unite in the fight against HIV,\nshow their support for people living with HIV and to commemorate\npeople who have died. World AIDS Day was the first ever global\nhealth day and the first one was held in 1988.\n\n http://www.worldaidsday.org/\n\nhttps://en.wikipedia.org/wiki/World_AIDS_Day
+COMMENT: 
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Halloween
+UID:595b7fc8cab0fde71e0621cbf4d57cb006c45738
+DTSTART:20351031T000000
+DTEND:20351031T235959
+LOCATION: International
+DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -24536,15 +24536,6 @@ DESCRIPTION: International Nurses Day (IND) is celebrated around the world on 12
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:Halloween/Reformation
-UID:3161299f947394021fd4533674cf949ac4f5a8fe
-DTSTART:20361031T000000
-DTEND:20361031T235959
-LOCATION: International
-DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Veterans Day
 UID:ceff1c3b97ffb214675f0dd0599615a11c0c6686
 DTSTART:20361111T000000
@@ -24812,6 +24803,15 @@ DTSTART:20361201T000000
 DTEND:20361201T235959
 LOCATION: International
 DESCRIPTION: World AIDS Day is held on 1 December each year and is an\nopportunity for people worldwide to unite in the fight against HIV,\nshow their support for people living with HIV and to commemorate\npeople who have died. World AIDS Day was the first ever global\nhealth day and the first one was held in 1988.\n\n http://www.worldaidsday.org/\n\nhttps://en.wikipedia.org/wiki/World_AIDS_Day
+COMMENT: 
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Halloween
+UID:8e222974570a53ef82936cdf54969d72dfc6bee6
+DTSTART:20361031T000000
+DTEND:20361031T235959
+LOCATION: International
+DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
@@ -25220,15 +25220,6 @@ DESCRIPTION: International Nurses Day (IND) is celebrated around the world on 12
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:Halloween/Reformation
-UID:ede31048b5ea4f48f4b09256799a4b0c858bf18c
-DTSTART:20371031T000000
-DTEND:20371031T235959
-LOCATION: International
-DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
-COMMENT: 
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Veterans Day
 UID:1e8ed19ad9780fa1af7956a42c07b1b0d865599b
 DTSTART:20371111T000000
@@ -25496,6 +25487,15 @@ DTSTART:20371201T000000
 DTEND:20371201T235959
 LOCATION: International
 DESCRIPTION: World AIDS Day is held on 1 December each year and is an\nopportunity for people worldwide to unite in the fight against HIV,\nshow their support for people living with HIV and to commemorate\npeople who have died. World AIDS Day was the first ever global\nhealth day and the first one was held in 1988.\n\n http://www.worldaidsday.org/\n\nhttps://en.wikipedia.org/wiki/World_AIDS_Day
+COMMENT: 
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Halloween
+UID:12619abc4c65a866a38047b10694edcc376b4127
+DTSTART:20371031T000000
+DTEND:20371031T235959
+LOCATION: International
+DESCRIPTION: Halloween is a date celebrated on the night of October\n31st. Children wear costumes and they go to peoples' homes saying\n"Trick or treat!" to ask for candy and then people give it to\nthem.\n\n Reformation Day is a religious holiday\ncelebrated on October 31, alongside All Hallows' Eve, in\nremembrance of the Reformation, particularly by Lutheran and some\nReformed church communities.\n\n\n\nhttps://en.wikipedia.org/wiki/Halloween\n\nhttps://en.wikipedia.org/wiki/Reformation_Day
 COMMENT: 
 END:VEVENT
 BEGIN:VEVENT
