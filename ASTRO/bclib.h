@@ -8,7 +8,7 @@
 
 double et2jd(double d) {return 2451545.+d/86400.;}
 double jd2et(double d) {return 86400.*(d-2451545.);}
-double unix2et(double d) {return d-946684800.;}
+double unix2et(double d) {return d-946728000.;}
 double r2d(double d) {return d*180./pi_c();}
 
 void posxyz(double time, int planet, SpiceDouble position[3]) {
