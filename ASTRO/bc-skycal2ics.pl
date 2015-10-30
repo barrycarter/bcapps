@@ -136,12 +136,17 @@ sub shorten {
   $event=~s/inf con/-> mor*/i;
   $event=~s/sup con/-> eve*/i;
 
+  # solar conjunctions are just listed as Conjunction (which I shorted
+  # to Con), fixing here
+  $event=~s/ Con/-Sun/;
+
   # short form for meteor showers
   $event=~s/(^.*?) Shower: ZHR = (\d+)/${1}s ($2\/hr)/;
 
   # others
   $event=~s/aquarids/Aqu/i;
   $event=~s/regulus/AlfLeo/i;
+  $event=~s/antares/AlfSco/i;
   $event=~s/aphelion: /Sun-Ear: /i;
   $event=~s/South /S. /;
   $event=~s/North /N. /;
