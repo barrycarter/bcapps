@@ -1,13 +1,16 @@
 #!/usr/bin/perl
 
 # Runs nightly and cleans up the previous days XWD files (as described below)
-# Runs directly on bcmac
+
+require "/usr/local/lib/bclib.pl";
 
 $date = $ARGV[0];
 
+system("/usr/bin/renice 19 -p $$");
 chdir("/mnt/extdrive2/XWD/");
 system("mkdir $date; mv pic.$date:*.png $date");
 chdir("/mnt/extdrive2/XWD/$date");
+defaults("xmessage=1");
 
 # run tesseract and convert on all files in directory (convert to .pnm
 # because ZPAQ compresses this most efficiently)

@@ -6,12 +6,11 @@
 
 # --until=stardate: only use data until stardate
 # --nograph: dont display graph
-# --start: start date (default: Tue Sep 11 19:20:58 MDT 2012)
 
 require "/usr/local/lib/bclib.pl";
 
 # defaults
-defaults("start=20120911.192058");
+defaults("start=20150930");
 
 # if --start is in "stardate" format, fix it to change dot to space
 # (str2time doesn't like stardate format)
@@ -19,6 +18,10 @@ $globopts{start}=~s/^(\d{8})\.(\d*)$/$1 $2/;
 
 # plot using gnuplot
 open(A,">/tmp/bwl.txt");
+
+# allows for more complex fits using mathematica
+open(B,">/tmp/bwl.m");
+print B "data = {\n";
 
 # convert to unix seconds
 $stime = str2time($globopts{start});
@@ -34,6 +37,7 @@ for $i (sort keys %weights) {
   my($days) = ($i-$stime)/86400;
   my($days2) = ($i-$now)/86400;
   print A "$days2 $weights{$i}\n";
+  print B "{$days2,$weights{$i}},\n";
   push(@x, $days);
   push(@y, $weights{$i});
   push(@z,log($weights{$i}));
@@ -72,6 +76,9 @@ debug("MAXDY:",@maxdays);
 debug("MAXVAL:",@maxvals);
 
 close(A);
+
+print B "};\ndata=Drop[data,-1];\n";
+close(B);
 
 # delete "low" weight for first day, since it was incomplete
 delete $low{15594};
@@ -205,3 +212,11 @@ MARK
 close(B);
 
 unless ($globopts{nograph}) {system("gnuplot -persist /tmp/bwl.plt");}
+
+=item mathematica
+
+To use bwl.m in Mathematica:
+
+f[x_] = a+b*Exp[c*x] /. FindFit[data,a+b*Exp[c*x],{a,b,c},x]
+
+=cut
