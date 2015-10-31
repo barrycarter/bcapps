@@ -15,13 +15,12 @@
 // Earth's equatorial and polar radii
 #define EER 6378.137
 #define EPR 6356.7523
-#define MAXWIN 1000000
+#define MAXWIN 10000
 
 // globals
 
 double lat, lon, elev, utime, desired;
 int target;
-char s[5000];
 
 void show_results (char *prefix, SpiceCell result, 
                    void(* udfuns)(SpiceDouble et,SpiceDouble * value)) {
@@ -34,7 +33,7 @@ void show_results (char *prefix, SpiceCell result,
     wnfetd_c(&result,i,&beg,&end);
     udfuns(beg,&vbeg);
     udfuns(end,&vend);
-    printf("%s %f %f %f %f '%s'\n",prefix,et2jd(beg),et2jd(end),vbeg,vend,s);
+    printf("%s %f %f %f %f\n",prefix,et2jd(beg),et2jd(end),vbeg,vend);
   }
 }
 
@@ -51,16 +50,16 @@ void gfq (SpiceDouble et, SpiceDouble *value) {
   // and the angle (radians)
   *value = vsep_c(v,pos);
 
-  // debugging
-  printf("%f %f\n",et,*value);
-
 }
 
 void gfdecrx (void(* udfuns)(SpiceDouble et,SpiceDouble * value),
               SpiceDouble et, SpiceBoolean * isdecr ) {
-  SpiceDouble dt = 10.;
-  uddc_c( udfuns, et, dt, isdecr );
-  return;
+
+  SpiceDouble v1=0, v2=0;
+  udfuns(et-0.5,&v1);
+  udfuns(et+0.5,&v2);
+  // TODO: if v1 and v2 are identical, choose larger interval?
+  if (v2<v1) {*isdecr=1;} else {*isdecr=0;}
 }
 
 int main(int argc, char **argv) {
@@ -86,10 +85,10 @@ int main(int argc, char **argv) {
   target = atoi(argv[5]);
   desired = atoi(argv[6]);
 
-  wninsd_c(unix2et(utime),unix2et(utime+86400),&cnfine);
+  wninsd_c(unix2et(utime-86400),unix2et(utime+86400),&cnfine);
 
   // search for when object at desired altitude (astronomical)
-  gfuds_c(gfq,gfdecrx,"=",desired*rpd_c(),0,60,MAXWIN,&cnfine,&result);
+  gfuds_c(gfq,gfdecrx,"=",desired*rpd_c(),0,3600,MAXWIN,&cnfine,&result);
 
   show_results("test",result,gfq);
 
