@@ -15,11 +15,28 @@
 // Earth's equatorial and polar radii
 #define EER 6378.137
 #define EPR 6356.7523
+#define MAXWIN 1000000
 
 // globals
 
-double lat, lon, elev, utime;
+double lat, lon, elev, utime, desired;
 int target;
+char s[5000];
+
+void show_results (char *prefix, SpiceCell result, 
+                   void(* udfuns)(SpiceDouble et,SpiceDouble * value)) {
+
+  SpiceInt i;
+  SpiceInt nres = wncard_c(&result);
+  SpiceDouble beg, end, vbeg, vend;
+
+  for (i=0; i<nres; i++) {
+    wnfetd_c(&result,i,&beg,&end);
+    udfuns(beg,&vbeg);
+    udfuns(end,&vend);
+    printf("%s %f %f %f %f '%s'\n",prefix,et2jd(beg),et2jd(end),vbeg,vend,s);
+  }
+}
 
 void gfq (SpiceDouble et, SpiceDouble *value) {
 
@@ -29,20 +46,33 @@ void gfq (SpiceDouble et, SpiceDouble *value) {
   georec_c (lon*rpd_c(), lat*rpd_c(), elev, EER, (EER-EPR)/EER, pos);
 
   // target position (in IAU_EARTH)
-  spkezp_c(target,et,"IAU_EARTH","NONE",399,v,&lt);
+  spkezp_c(target,et,"IAU_EARTH","LT",399,v,&lt);
 
   // and the angle (radians)
   *value = vsep_c(v,pos);
 
+  // debugging
+  printf("%f %f\n",et,*value);
+
+}
+
+void gfdecrx (void(* udfuns)(SpiceDouble et,SpiceDouble * value),
+              SpiceDouble et, SpiceBoolean * isdecr ) {
+  SpiceDouble dt = 10.;
+  uddc_c( udfuns, et, dt, isdecr );
+  return;
 }
 
 int main(int argc, char **argv) {
 
-  SpiceDouble ang;
+  SPICEDOUBLE_CELL(cnfine,2);
+  SPICEDOUBLE_CELL(result,2*MAXWIN);
+
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
-  if (argc != 6) {
-    printf("Usage: latitude longitude elevation unixtime target\n");
+  if (argc != 7) {
+    // elevation in meters, of location
+    printf("Usage: latitude longitude elevation unixtime target desired\n");
     exit(-1);
   }
 
@@ -54,12 +84,18 @@ int main(int argc, char **argv) {
   // fractional unix time is probably silly, but allowing it
   utime = atof(argv[4]);
   target = atoi(argv[5]);
+  desired = atoi(argv[6]);
 
-  printf("INPUT: %f %f %f %f %d\n",lat,lon,elev,utime,target);
+  wninsd_c(unix2et(utime),unix2et(utime+86400),&cnfine);
 
-  gfq(unix2et(utime),&ang);
+  // search for when object at desired altitude (astronomical)
+  gfuds_c(gfq,gfdecrx,"=",desired*rpd_c(),0,60,MAXWIN,&cnfine,&result);
 
-  printf("%f\n",r2d(ang));
+  show_results("test",result,gfq);
+
+  //  printf("INPUT: %f %f %f %f %d\n",lat,lon,elev,utime,target);
+  //  gfq(unix2et(utime),&ang);
+  //  printf("%f\n",r2d(ang));
 
   return 0;
 
