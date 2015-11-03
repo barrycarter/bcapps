@@ -1,5 +1,11 @@
 #!/bin/sh
 
+# using cldr
+
+fgrep mapZone common/supplemental/windowsZones.xml | perl -nle '/other="(.*?)".*type="(.*?)"/; for $i (split(/\s+/,$2)) {print "$i $1"}' | sort | uniq
+
+exit; 
+
 # timezones with filename (zdump.txt is just the output of "find /usr/share/zoneinfo -type f | xargs -n 1 zdump -v"
 
 perl -anle '$F[0]=~s%/usr/share/zoneinfo/%%; print "$F[0] $F[-3]"' /home/barrycarter/20151102/zdump.txt | sort | uniq > tzfileabbrev.txt
