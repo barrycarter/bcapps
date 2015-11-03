@@ -11,17 +11,25 @@
 # used somewhere in the world but don't have an exact match in
 # CLDR, or even a reasonably good approximate match
 
+# wp says "[Atikokan] in the Central Time Zone but observes Eastern
+# Standard Time year round"
 # America/Atikokan
+
 # America/Montreal
+
+# why does this miniscule New Mexico city have its own entry?
 # America/Shiprock
+
+# pretty sure they use NZT but not 100% sure
 # Antarctica/South_Pole
+
+# pretty sure China uses a single timezone, need to verify
 # Asia/Chongqing
 # Asia/Harbin
-# Asia/Ho_Chi_Minh
 # Asia/Kashgar
+
 # Asia/Pyongyang
 # Atlantic/Faroe
-# Pacific/Pohnpei
 
 # Below are timezones geonames uses that aren't EXACTLY in CLDR, but
 # have an obvious equivalent in CLDR (eg, "Asia/Kolkata" vs
@@ -38,6 +46,8 @@ LINK America/Kentucky/Louisville America/Louisville
 LINK Asia/Kathmandu Asia/Katmandu
 LINK Asia/Kolkata Asia/Calcutta
 LINK Pacific/Chuuk Pacific/Truk
+LINK Asia/Ho_Chi_Minh Asia/Saigon
+LINK Pacific/Pohnpei Pacific/Ponape
 
 America/Whitehorse "Pacific Standard Time" "Pacific Daylight Time" "Pacific Time"
 America/Bogota "Colombia Standard Time" "Colombia Summer Time" "Colombia Time"
