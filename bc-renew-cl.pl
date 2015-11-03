@@ -9,7 +9,7 @@ require "/usr/local/lib/bclib.pl";
 while (<>) {
 
   # obtain page
-  my($out,$err,$res) = cache_command2("curl $_","age=3600");
+  my($out,$err,$res) = cache_command2("curl -k $_","age=3600");
   my($form);
 
   # find renew form
@@ -27,7 +27,7 @@ while (<>) {
 
   my($crypt) = $1;
 
-  my($cmd) = "curl -d 'action=renew&crypt=$crypt' $_";
+  my($cmd) = "curl -k -d 'action=renew&crypt=$crypt' $_";
 
   my($out,$err,$res) = cache_command2($cmd, "age=3600");
 

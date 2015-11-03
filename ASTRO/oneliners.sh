@@ -1,5 +1,10 @@
 #!/bin/sh
 
+# list of all timezones abbrevs used by zoneinfo
+find /usr/share/zoneinfo -type f | xargs -n 1 zdump -v | perl -anle 'print $F[-3]' | sort | uniq > tzabbrevs.txt
+
+exit;
+
 # nothing really exciting here, manually labelling pictures but too
 # long to fit in a single command line every time I change parameters
 

@@ -139,6 +139,7 @@ push(@info, "Local/$hash{temp_f}F/$hash{wind_dir}$hash{wind_mph}G$hash{wind_gust
 "Lagos", "Africa/Lagos", "Milan", "Europe/Rome", "Cairo", "Africa/Cairo",
 "Delhi", "Asia/Kolkata", "HongKong", "Asia/Hong_Kong", "Manila" =>
 "Asia/Manila", "Tokyo", "Asia/Tokyo", "Sydney" => "Australia/Sydney",
+"Auckland" => "Pacific/Auckland", "Chatam" => "Pacific/Chatham",
 "Samoa", "Pacific/Apia");
 
 while ($i=shift @zones) {

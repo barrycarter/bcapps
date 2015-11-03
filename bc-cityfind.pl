@@ -17,7 +17,7 @@
 require "/usr/local/lib/bclib.pl";
 
 # search path for geonames2.db
-for $i ("/sites/DB/geonames2.db", "/mnt/sshfs/geonames2.db") {
+for $i ("/sites/DB/geonames2.db", "/mnt/extdrive/geonames2.db") {
   if (-f $i) {$db = $i; last;}
 }
 

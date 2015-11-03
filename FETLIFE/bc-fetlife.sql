@@ -21,11 +21,12 @@ CREATE INDEX i8 ON kinksters(jloc(20));
 
 -- thumbnail view (MySQL)
 
+DROP VIEW IF EXISTS thumbs;
 CREATE VIEW thumbs AS 
  SELECT CONCAT("<img src='",thumbnail,"'>") AS img,
  CONCAT("<a href='https://fetlife.com/users/",id,"' target='_blank'>",
   screenname,"</a>") as link,
-age, gender, role, city, state, country, popnum, popnumtotal
+age, gender, role, city, state, country, popnum, popnumtotal, id
 FROM kinksters;
 
 -- import for MySQL
