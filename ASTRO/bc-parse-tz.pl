@@ -48,5 +48,23 @@ $all = read_file("$cldr/common/main/en.xml");
 while ($all=~s%<metazone type="(.*?)">(.*?)</metazone>%%s) {
 
   my($name,$data) = ($1,$2);
-  debug("NAME: $name");
+
+  # more than one of these conditions can be true
+  while ($data=~s%<(standard|generic|daylight)>(.*?)</\1>%%s) {
+    $tz2name{$name}{$1} = $2;
+  }
 }
+
+for $i (keys %tz2z) {
+
+  # output format: filename_of_tz standard_name daylight_name generic_name
+  # any/all of these might be blank when unknown
+
+  print qq%$i "$tz2name{$tz2z{$i}}{standard}" "$tz2name{$tz2z{$i}}{daylight}" "$tz2name{$tz2z{$i}}{generic}"\n%;
+}
+
+# Asia/Urumqi "" "" ""
+
+
+
+
