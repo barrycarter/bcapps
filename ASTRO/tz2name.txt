@@ -8,18 +8,10 @@
 # no named timezones in CLDR at all
 
 # According to a recent copy of geonames, the following timezones are
-# used somewhere in the world but don't have an EXACT match in
-# CLDR.
+# used somewhere in the world but don't have an exact match in
+# CLDR, or even a reasonably good approximate match
 
-# Africa/Asmara
-# America/Argentina/Buenos_Aires
-# America/Argentina/Catamarca
-# America/Argentina/Cordoba
-# America/Argentina/Jujuy
-# America/Argentina/Mendoza
 # America/Atikokan
-# America/Indiana/Indianapolis
-# America/Kentucky/Louisville
 # America/Montreal
 # America/Shiprock
 # Antarctica/South_Pole
@@ -27,21 +19,25 @@
 # Asia/Harbin
 # Asia/Ho_Chi_Minh
 # Asia/Kashgar
-# Asia/Kathmandu
-# Asia/Kolkata
 # Asia/Pyongyang
 # Atlantic/Faroe
-# Pacific/Chuuk
 # Pacific/Pohnpei
 
 # Below are timezones geonames uses that aren't EXACTLY in CLDR, but
-# have an obvious equivalent in CLDR.
+# have an obvious equivalent in CLDR (eg, "Asia/Kolkata" vs
+# "Asia/Calcutta"). TODO: ping geonames to standardize?
 
-
-
-# In many cases, however, the names are very similar (eg,
-# "Asia/Kolkata" vs "Asia/Calcutta"). For those cases, I've created
-# "LINK" lines below 
+LINK Africa/Asmara Africa/Asmera
+LINK America/Argentina/Buenos_Aires America/Buenos_Aires
+LINK America/Argentina/Catamarca America/Catamarca
+LINK America/Argentina/Cordoba America/Cordoba
+LINK America/Argentina/Jujuy America/Jujuy
+LINK America/Argentina/Mendoza America/Mendoza
+LINK America/Indiana/Indianapolis America/Indianapolis
+LINK America/Kentucky/Louisville America/Louisville
+LINK Asia/Kathmandu Asia/Katmandu
+LINK Asia/Kolkata Asia/Calcutta
+LINK Pacific/Chuuk Pacific/Truk
 
 America/Whitehorse "Pacific Standard Time" "Pacific Daylight Time" "Pacific Time"
 America/Bogota "Colombia Standard Time" "Colombia Summer Time" "Colombia Time"
