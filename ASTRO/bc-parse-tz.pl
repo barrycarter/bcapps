@@ -45,9 +45,19 @@ while ($all=~s%<timezone type="(.*?)">(.*?)</timezone>%%s) {
 
 $all = read_file("$cldr/common/main/en.xml");
 
+# in some cases, zones are named directly (but ugly, so ignoring)
+
+while ($all=~s%<zone type="(.*?)">(.*?)</zone>%%s) {
+  debug("$1 -> $2");
+}
+
 while ($all=~s%<metazone type="(.*?)">(.*?)</metazone>%%s) {
 
   my($name,$data) = ($1,$2);
+
+  # TODO: theoretically could have short version of generic + no long version?
+  # if there is a <long> section, kill of the <short> section
+  if ($data=~m%<long>(.*?)</long>%s) {$data=~s%<short>.*?</short>%%s;}
 
   # more than one of these conditions can be true
   while ($data=~s%<(standard|generic|daylight)>(.*?)</\1>%%s) {
