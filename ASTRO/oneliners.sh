@@ -1,5 +1,11 @@
 #!/bin/sh
 
+# timezones with filename (zdump.txt is just the output of "find /usr/share/zoneinfo -type f | xargs -n 1 zdump -v"
+
+perl -anle '$F[0]=~s%/usr/share/zoneinfo/%%; print "$F[0] $F[-3]"' /home/barrycarter/20151102/zdump.txt | sort | uniq > tzfileabbrev.txt
+
+exit;
+
 # list of all timezones abbrevs used by zoneinfo
 find /usr/share/zoneinfo -type f | xargs -n 1 zdump -v | perl -anle 'print $F[-3]' | sort | uniq > tzabbrevs.txt
 
