@@ -1,3 +1,5 @@
+# TODO: many of these are quasi-incorrect; MST7MDT is "Mountain Time"
+# not "Mountain Standard Time"
 # this is my fixup on windowstz.txt
 Africa/Abidjan Greenwich Standard Time
 Africa/Accra Greenwich Standard Time
@@ -431,17 +433,18 @@ Pacific/Truk West Pacific Standard Time
 Pacific/Wake UTC+12
 Pacific/Wallis UTC+12
 # below this line, time zones that exist in geonames, but not CLDR
-Africa/Asmara
+# (but they often do exist in modified form)
+Africa/Asmara E. Africa Standard Time
 America/Adak
-America/Argentina/Buenos_Aires
-America/Argentina/Catamarca
-America/Argentina/Cordoba
-America/Argentina/Jujuy
-America/Argentina/Mendoza
+America/Argentina/Buenos_Aires Argentina Standard Time
+America/Argentina/Catamarca Argentina Standard Time
+America/Argentina/Cordoba Argentina Standard Time
+America/Argentina/Jujuy Argentina Standard Time
+America/Argentina/Mendoza Argentina Standard Time
 America/Atikokan
-America/Indiana/Indianapolis
-America/Kentucky/Louisville
-America/Metlakatla
+America/Indiana/Indianapolis US Eastern Standard Time
+America/Kentucky/Louisville Eastern Standard Time
+America/Metlakatla 
 America/Miquelon
 America/Shiprock
 Antarctica/South_Pole
@@ -451,17 +454,17 @@ Asia/Harbin
 Asia/Hebron
 Asia/Ho_Chi_Minh
 Asia/Kashgar
-Asia/Kathmandu
-Asia/Kolkata
-Asia/Pyongyang
-Atlantic/Faroe
-Australia/Eucla
+Asia/Kathmandu Nepal Standard Time
+Asia/Kolkata India Standard Time
+Asia/Pyongyang 
+Atlantic/Faroe 
+Australia/Eucla 
 Australia/Lord_Howe
-Pacific/Chatham
-Pacific/Chuuk
-Pacific/Easter
-Pacific/Gambier
-Pacific/Marquesas
-Pacific/Norfolk
-Pacific/Pitcairn
-Pacific/Pohnpei
+Pacific/Chatham 
+Pacific/Chuuk Chuuk Time
+Pacific/Easter Easter Island Summer Time
+Pacific/Gambier Gambier Time
+Pacific/Marquesas Marquesas Time
+Pacific/Norfolk Norfolk Time
+Pacific/Pitcairn Pitcairn Standard Time 
+Pacific/Pohnpei Pohnpei Standard Time 
