@@ -1,3 +1,48 @@
+# This file is essentially the output of bc-parse-tz.pl with the
+# addition of these comments and the small <zone>...</zone> sections
+# of common/main/en.xml which names 2 timezones directly. Format:
+
+# file-of-timezone "standard time" "daylight time" "generic time"
+
+# Not all fields occur for all files; in particular, Asia/Urumqi has
+# no named timezones in CLDR at all
+
+# According to a recent copy of geonames, the following timezones are
+# used somewhere in the world but don't have an EXACT match in
+# CLDR.
+
+# Africa/Asmara
+# America/Argentina/Buenos_Aires
+# America/Argentina/Catamarca
+# America/Argentina/Cordoba
+# America/Argentina/Jujuy
+# America/Argentina/Mendoza
+# America/Atikokan
+# America/Indiana/Indianapolis
+# America/Kentucky/Louisville
+# America/Montreal
+# America/Shiprock
+# Antarctica/South_Pole
+# Asia/Chongqing
+# Asia/Harbin
+# Asia/Ho_Chi_Minh
+# Asia/Kashgar
+# Asia/Kathmandu
+# Asia/Kolkata
+# Asia/Pyongyang
+# Atlantic/Faroe
+# Pacific/Chuuk
+# Pacific/Pohnpei
+
+# Below are timezones geonames uses that aren't EXACTLY in CLDR, but
+# have an obvious equivalent in CLDR.
+
+
+
+# In many cases, however, the names are very similar (eg,
+# "Asia/Kolkata" vs "Asia/Calcutta"). For those cases, I've created
+# "LINK" lines below 
+
 America/Whitehorse "Pacific Standard Time" "Pacific Daylight Time" "Pacific Time"
 America/Bogota "Colombia Standard Time" "Colombia Summer Time" "Colombia Time"
 Africa/Kinshasa "West Africa Standard Time" "West Africa Summer Time" "West Africa Time"
@@ -228,7 +273,8 @@ America/Coral_Harbour "Eastern Standard Time" "Eastern Daylight Time" "Eastern T
 America/Edmonton "Mountain Standard Time" "Mountain Daylight Time" "Mountain Time"
 Asia/Yerevan "Armenia Standard Time" "Armenia Summer Time" "Armenia Time"
 Africa/Dakar "Greenwich Mean Time" "" ""
-Europe/London "Greenwich Mean Time" "" ""
+# British Summer Time from <zone/> section of common/main/en.xml
+Europe/London "Greenwich Mean Time" "British Summer Time" ""
 America/Anguilla "Atlantic Standard Time" "Atlantic Daylight Time" "Atlantic Time"
 Asia/Aqtobe "West Kazakhstan Time" "" ""
 Africa/Bamako "Greenwich Mean Time" "" ""
@@ -396,7 +442,9 @@ America/North_Dakota/Beulah "Central Standard Time" "Central Daylight Time" "Cen
 America/Paramaribo "Suriname Time" "" ""
 Asia/Taipei "Taipei Standard Time" "Taipei Daylight Time" "Taipei Time"
 Antarctica/Rothera "Rothera Time" "" ""
-Europe/Dublin "Greenwich Mean Time" "" ""
+# Irish Standard Time from <zone/> section of common/main/en.xml (yes,
+# their daylight time has the word Standard in it, possibly an error)
+Europe/Dublin "Greenwich Mean Time" "Irish Standard Time" ""
 Atlantic/Bermuda "Atlantic Standard Time" "Atlantic Daylight Time" "Atlantic Time"
 Africa/Freetown "Greenwich Mean Time" "" ""
 Pacific/Kosrae "Kosrae Time" "" ""
