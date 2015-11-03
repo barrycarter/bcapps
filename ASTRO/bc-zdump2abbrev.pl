@@ -10,7 +10,10 @@
 
 require "/usr/local/lib/bclib.pl";
 
-my(%latest,%abbrev);
+my(%latest,%abbrev,%geonames);
+
+# limit to those timezones actually found in geonames
+my(%geonames) = list2hash(split(/\n/,read_file("$bclib{githome}/ASTRO/tz-names-in-geonames.txt")));
 
 open(A,"bzcat $bclib{githome}/ASTRO/zdump.txt.srt.bz2|");
 
@@ -21,6 +24,8 @@ while (<A>) {
 
   my($fname, $utcy, $abbrev) = @data[0,5,13];
   $fname=~s%/usr/share/zoneinfo/%%;
+
+  unless ($geonames{$fname}) {next;}
 
   # if I already have later abbrev for this tz, ignore
   if ($latest{$fname} > $utcy) {next;}

@@ -1,377 +1,415 @@
-1901
-2038
-ACST
-ACT
-ADDT
-ADMT
-ADT
-AFT
-AHDT
-AHST
-AKDT
-AKST
-AKTST
-AKTT
-ALMST
-ALMT
-AMST
-AMT
-ANAST
-ANAT
-ANT
-AOT
-APT
-AQTST
-AQTT
-ARST
-ART
-ASHST
-ASHT
-AST
-AWT
-AZOMT
-AZOST
-AZOT
-AZST
-AZT
-BAKST
-BAKT
-BDST
-BDT
-BEAT
-BEAUT
-BMT
-BNT
-BORT
-BORTST
-BOST
-BOT
-BRST
-BRT
-BST
-BTT
-BURT
-CANT
-CAPT
-CAST
-CAT
-CAWT
-CCT
-CDDT
-CDT
-CEMT
-CEST
-CET
-CGST
-CGT
-CHADT
-CHAST
-CHAT
-CHDT
-CHOST
-CHOT
-CHUT
-CIT
-CJT
-CKHST
-CKT
-CLST
-CLT
-CMT
-COST
-COT
-CPT
-CST
-CUT
-CVST
-CVT
-CWST
-CWT
-CXT
-ChST
-DACT
-DAVT
-DDUT
-DMT
-DUSST
-DUST
-EASST
-EAST
-EAT
-ECT
-EDDT
-EDT
-EEST
-EET
-EGST
-EGT
-EHDT
-EIT
-ELT
-EMT
-EPT
-EST
-EWT
-FET
-FFMT
-FJST
-FJT
-FKST
-FKT
-FMT
-FNST
-FNT
-FORT
-FRUST
-FRUT
-GALT
-GAMT
-GBGT
-GEST
-GET
-GFT
-GHST
-GILT
-GMT
-GMT+1
-GMT+10
-GMT+11
-GMT+12
-GMT+2
-GMT+3
-GMT+4
-GMT+5
-GMT+6
-GMT+7
-GMT+8
-GMT+9
-GMT-1
-GMT-10
-GMT-11
-GMT-12
-GMT-13
-GMT-14
-GMT-2
-GMT-3
-GMT-4
-GMT-5
-GMT-6
-GMT-7
-GMT-8
-GMT-9
-GST
-GYT
-HADT
-HAST
-HDT
-HKST
-HKT
-HMT
-HOVST
-HOVT
-HST
-ICT
-IDDT
-IDT
-IHST
-IMT
-IOT
-IRDT
-IRKST
-IRKT
-IRST
-ISST
-IST
-JAVT
-JDT
-JMT
-JST
-KART
-KAST
-KDT
-KGST
-KGT
-KIZST
-KIZT
-KMT
-KOST
-KRAST
-KRAT
-KST
-KUYST
-KUYT
-KWAT
-LHST
-LINT
-LKT
-LMT
-LONT
-LRT
-LST
-MADMT
-MADST
-MADT
-MAGST
-MAGT
-MALST
-MALT
-MART
-MAWT
-MDDT
-MDST
-MDT
-MEST
-MET
-MHT
-MIST
-MMT
-MOST
-MOT
-MPT
-MSD
-MSK
-MST
-MUST
-MUT
-MVT
-MWT
-MYT
-MeST
-NCST
-NCT
-NDDT
-NDT
-NEGT
-NEST
-NET
-NFT
-NMT
-NOVST
-NOVT
-NPT
-NRT
-NST
-NUT
-NWT
-NZDT
-NZMT
-NZST
-OMSST
-OMST
-ORAST
-ORAT
-PDDT
-PDT
-PEST
-PET
-PETST
-PETT
-PGT
-PHOT
-PHST
-PHT
-PKST
-PKT
-PMDT
-PMST
-PMT
-PNT
-PONT
-PPMT
-PPT
-PST
-PWT
-PYST
-PYT
-QMT
-QYZST
-QYZT
-RET
-RMT
-ROTT
-SAKST
-SAKT
-SAMST
-SAMT
-SAST
-SBT
-SCT
-SDMT
-SGT
-SHEST
-SHET
-SJMT
-SLST
-SMT
-SRT
-SST
-STAT
-SVEST
-SVET
-SWAT
-SYOT
-TAHT
-TASST
-TAST
-TBIST
-TBIT
-TBMT
-TFT
-TJT
-TKT
-TLT
-TMT
-TOST
-TOT
-TRST
-TRT
-TSAT
-TVT
-UCT
-ULAST
-ULAT
-URAST
-URAT
-URUT
-UTC
-UYHST
-UYST
-UYT
-UZST
-UZT
-VET
-VLASST
-VLAST
-VLAT
-VOLST
-VOLT
-VOST
-VUST
-VUT
-WAKT
-WARST
-WART
-WAST
-WAT
-WEMT
-WEST
-WET
-WFT
-WGST
-WGT
-WIT
-WMT
-WSDT
-WST
-YAKST
-YAKT
-YDDT
-YDT
-YEKST
-YEKT
-YERST
-YERT
-YPT
-YST
-YWT
-zzz
+America/Whitehorse PST
+America/Bogota COT
+Africa/Kinshasa WAT
+America/Mazatlan MST
+Antarctica/Palmer CLST
+America/Indiana/Vincennes EST
+America/Marigot AST
+Asia/Manila PHT
+Africa/Conakry GMT
+America/Nassau EST
+Europe/Belgrade CET
+Asia/Dhaka BDT
+America/Los_Angeles PST
+Asia/Aqtau AQTT
+Asia/Dushanbe TJT
+Europe/Vaduz CET
+Africa/Bujumbura CAT
+Asia/Baghdad AST
+Asia/Beirut EET
+America/Juneau AKST
+America/St_Kitts AST
+America/Inuvik MST
+Asia/Pyongyang KST
+Africa/Nairobi EAT
+Pacific/Norfolk NFT
+America/St_Johns NST
+Pacific/Guam ChST
+Australia/Currie EST
+Europe/Jersey GMT
+America/Hermosillo MST
+Europe/Ljubljana CET
+Asia/Muscat GST
+America/Indiana/Knox CST
+America/Grenada AST
+Asia/Bahrain AST
+Asia/Samarkand UZT
+Africa/Addis_Ababa EAT
+America/Halifax AST
+Asia/Ulaanbaatar ULAT
+Asia/Jerusalem IST
+America/Guyana GYT
+America/Cayman EST
+America/Indiana/Vevay EST
+Europe/Chisinau EET
+Asia/Kuwait AST
+Atlantic/Reykjavik GMT
+Pacific/Wake WAKT
+Asia/Krasnoyarsk KRAT
+Europe/Bucharest EET
+America/Dawson_Creek MST
+Pacific/Tahiti TAHT
+America/North_Dakota/New_Salem CST
+Africa/Blantyre CAT
+Europe/Istanbul EET
+Pacific/Fiji FJST
+Pacific/Marquesas MART
+America/Matamoros CST
+America/Atikokan EST
+America/Bahia BRT
+Australia/Broken_Hill CST
+America/Antigua AST
+America/New_York EST
+Pacific/Pohnpei PONT
+America/El_Salvador CST
+America/Blanc-Sablon AST
+Africa/Harare CAT
+America/Shiprock MST
+Asia/Shanghai CST
+Indian/Comoro EAT
+Africa/Porto-Novo WAT
+Pacific/Nauru NRT
+Europe/Warsaw CET
+Europe/Brussels CET
+America/Havana CST
+Antarctica/Casey WST
+America/Guadeloupe AST
+America/Barbados AST
+Pacific/Kwajalein MHT
+Africa/Ouagadougou GMT
+Africa/Abidjan GMT
+Asia/Hebron EET
+America/Rainy_River CST
+Asia/Makassar CIT
+Asia/Vladivostok VLAT
+America/Santarem BRT
+Asia/Pontianak WIT
+Africa/Lusaka CAT
+Europe/Isle_of_Man GMT
+Africa/Luanda WAT
+Europe/Kaliningrad FET
+America/Argentina/Mendoza ART
+Europe/Madrid CET
+Africa/Mogadishu EAT
+America/Yellowknife MST
+Pacific/Majuro MHT
+Atlantic/Stanley FKST
+America/St_Thomas AST
+America/Jamaica EST
+Indian/Antananarivo EAT
+Asia/Kashgar CST
+America/Argentina/Cordoba ART
+Asia/Anadyr ANAT
+Indian/Mauritius MUT
+Asia/Irkutsk IRKT
+America/Cuiaba AMST
+Asia/Sakhalin SAKT
+Pacific/Niue NUT
+Africa/Sao_Tome GMT
+America/Manaus AMT
+Africa/Monrovia GMT
+America/Tijuana PST
+Asia/Ho_Chi_Minh ICT
+Africa/Algiers CET
+Europe/Riga EET
+Europe/Vilnius EET
+Asia/Colombo IST
+Antarctica/DumontDUrville DDUT
+America/Boise MST
+Africa/Kampala EAT
+Pacific/Pago_Pago SST
+Asia/Dubai GST
+Indian/Christmas CXT
+America/Dawson PST
+Pacific/Kiritimati LINT
+America/Bahia_Banderas CST
+America/Yakutat AKST
+Asia/Kabul AFT
+America/Danmarkshavn GMT
+Europe/Uzhgorod EET
+America/Glace_Bay AST
+Africa/Bissau GMT
+America/Kentucky/Louisville EST
+America/Kralendijk AST
+Africa/Dar_es_Salaam EAT
+Africa/El_Aaiun WET
+Asia/Amman EET
+America/Costa_Rica CST
+America/La_Paz BOT
+Pacific/Tongatapu TOT
+America/Nipigon EST
+Asia/Tbilisi GET
+Africa/Tunis CET
+Europe/Simferopol EET
+Pacific/Guadalcanal SBT
+America/Regina CST
+Pacific/Enderbury PHOT
+Indian/Cocos CCT
+Australia/Perth WST
+America/Creston MST
+America/St_Barthelemy AST
+Asia/Kolkata IST
+America/Argentina/Rio_Gallegos ART
+Europe/Skopje CET
+Asia/Magadan MAGT
+Asia/Phnom_Penh ICT
+America/Porto_Velho AMT
+Europe/San_Marino CET
+Atlantic/Canary WET
+America/Kentucky/Monticello EST
+Pacific/Chuuk CHUT
+America/Swift_Current CST
+Europe/Minsk FET
+Pacific/Palau PWT
+Europe/Helsinki EET
+Australia/Melbourne EST
+Europe/Vatican CET
+America/Monterrey CST
+America/Menominee CST
+America/Cayenne GFT
+America/Miquelon PMST
+America/Iqaluit EST
+Asia/Novosibirsk NOVT
+Australia/Adelaide CST
+Europe/Moscow MSK
+Pacific/Rarotonga CKT
+Europe/Amsterdam CET
+Europe/Malta CET
+Indian/Kerguelen TFT
+Africa/Tripoli CET
+Africa/Banjul GMT
+Asia/Urumqi CST
+Africa/Libreville WAT
+Africa/Khartoum EAT
+America/Recife BRT
+America/Argentina/La_Rioja ART
+Europe/Paris CET
+Indian/Mayotte EAT
+Pacific/Funafuti TVT
+America/Argentina/Salta ART
+Europe/Berlin CET
+Asia/Choibalsan CHOT
+America/Montevideo UYST
+Africa/Djibouti EAT
+America/Belize CST
+America/Argentina/San_Juan ART
+America/Thunder_Bay EST
+Asia/Hovd HOVT
+Indian/Maldives MVT
+Asia/Novokuznetsk NOVT
+America/Toronto EST
+Australia/Eucla CWST
+Pacific/Galapagos GALT
+Asia/Tehran IRST
+Africa/Malabo WAT
+America/Martinique AST
+Asia/Aden AST
+America/Chihuahua MST
+Australia/Sydney EST
+America/Moncton AST
+America/Goose_Bay AST
+America/Detroit EST
+Australia/Lindeman EST
+Africa/Mbabane SAST
+Africa/Lubumbashi CAT
+America/Asuncion PYST
+Antarctica/Vostok VOST
+Africa/Lome GMT
+America/Indiana/Petersburg EST
+Asia/Harbin CST
+Asia/Tashkent UZT
+America/Montreal EST
+Africa/Brazzaville WAT
+Atlantic/St_Helena GMT
+Antarctica/Macquarie MIST
+Pacific/Saipan ChST
+America/Edmonton MST
+Asia/Yerevan AMT
+Africa/Dakar GMT
+Europe/London GMT
+America/Anguilla AST
+America/Indiana/Indianapolis EST
+Asia/Aqtobe AQTT
+Africa/Bamako GMT
+Australia/Lord_Howe LHST
+Europe/Budapest CET
+Europe/Rome CET
+Pacific/Fakaofo TKT
+Africa/Maseru SAST
+Europe/Oslo CET
+Africa/Asmara EAT
+Africa/Douala WAT
+Asia/Brunei BNT
+America/Merida CST
+America/Thule AST
+Asia/Rangoon MMT
+Asia/Macau CST
+Asia/Oral ORAT
+America/Cancun CST
+Asia/Singapore SGT
+Europe/Podgorica CET
+Asia/Chongqing CST
+America/Maceio BRT
+America/St_Vincent AST
+America/North_Dakota/Center CST
+Pacific/Easter EASST
+Africa/Johannesburg SAST
+Europe/Prague CET
+America/Resolute CST
+America/Indiana/Winamac EST
+Pacific/Noumea NCT
+Asia/Bishkek KGT
+Pacific/Chatham CHADT
+America/Dominica AST
+America/Eirunepe AMT
+America/Rankin_Inlet CST
+Atlantic/South_Georgia GST
+America/Cambridge_Bay MST
+Pacific/Tarawa GILT
+Pacific/Pitcairn PST
+Pacific/Efate VUT
+Asia/Yakutsk YAKT
+America/Araguaina BRST
+Atlantic/Cape_Verde CVT
+Africa/Gaborone CAT
+Pacific/Johnston HST
+America/Argentina/Jujuy ART
+Africa/Cairo EET
+Africa/Windhoek WAST
+America/Winnipeg CST
+America/St_Lucia AST
+Africa/Casablanca WET
+Europe/Guernsey GMT
+Africa/Kigali CAT
+Asia/Vientiane ICT
+Africa/Bangui WAT
+Asia/Ashgabat TMT
+Africa/Nouakchott GMT
+America/Argentina/Tucuman ART
+Europe/Gibraltar CET
+America/Pangnirtung EST
+America/Sao_Paulo BRST
+Asia/Nicosia EET
+Pacific/Midway SST
+Europe/Andorra CET
+Asia/Riyadh AST
+Europe/Volgograd VOLT
+Europe/Athens EET
+Asia/Qyzylorda QYZT
+Asia/Omsk OMST
+Asia/Gaza EET
+America/Sitka AKST
+Asia/Tokyo JST
+Asia/Thimphu BTT
+Asia/Jayapura EIT
+Antarctica/Syowa SYOT
+America/Port-au-Prince EST
+Asia/Damascus EET
+America/Indiana/Marengo EST
+Asia/Qatar AST
+America/Fortaleza BRT
+Europe/Sofia EET
+America/Mexico_City CST
+America/Belem BRT
+Atlantic/Azores AZOT
+Asia/Hong_Kong HKT
+America/Godthab WGT
+America/Nome AKST
+Antarctica/Davis DAVT
+America/Scoresbysund EGT
+Australia/Brisbane EST
+Africa/Lagos WAT
+Asia/Kuala_Lumpur MYT
+Asia/Baku AZT
+Indian/Chagos IOT
+America/Vancouver PST
+Asia/Yekaterinburg YEKT
+Pacific/Port_Moresby PGT
+America/Phoenix MST
+Europe/Copenhagen CET
+Antarctica/McMurdo NZDT
+Asia/Almaty ALMT
+Asia/Kathmandu NPT
+Asia/Dili TLT
+America/Argentina/Catamarca ART
+America/Adak HAST
+America/Caracas VET
+America/Lower_Princes AST
+America/Curacao AST
+Africa/Juba EAT
+America/Tegucigalpa CST
+Pacific/Honolulu HST
+Pacific/Wallis WFT
+Africa/Niamey WAT
+America/Ojinaga MST
+Europe/Tirane CET
+America/Rio_Branco AMT
+America/Guatemala CST
+Africa/Ceuta CET
+America/Argentina/San_Luis WARST
+America/Santa_Isabel PST
+Africa/Maputo CAT
+America/Managua CST
+America/Noronha FNT
+America/Santiago CLST
+Asia/Kamchatka PETT
+America/Campo_Grande AMST
+Europe/Lisbon WET
+America/Lima PET
+Asia/Bangkok ICT
+Australia/Darwin CST
+America/Metlakatla MeST
+Asia/Seoul KST
+Europe/Luxembourg CET
+Atlantic/Faroe WET
+America/Boa_Vista AMT
+Pacific/Apia WSDT
+Antarctica/South_Pole NZDT
+Antarctica/Mawson MAWT
+Europe/Monaco CET
+America/Argentina/Buenos_Aires ART
+America/Santo_Domingo AST
+Europe/Kiev EET
+Europe/Bratislava CET
+Asia/Jakarta WIT
+Africa/Ndjamena WAT
+America/Guayaquil ECT
+America/Chicago CST
+Europe/Samara SAMT
+America/Indiana/Tell_City CST
+America/Denver MST
+Europe/Zaporozhye EET
+Pacific/Auckland NZDT
+Arctic/Longyearbyen CET
+Europe/Vienna CET
+America/Argentina/Ushuaia ART
+America/Grand_Turk EST
+Asia/Kuching MYT
+America/Aruba AST
+Asia/Karachi PKT
+Africa/Accra GMT
+America/Port_of_Spain AST
+America/Paramaribo SRT
+America/Anchorage AKST
+America/North_Dakota/Beulah CST
+Asia/Taipei CST
+Antarctica/Rothera ROTT
+Europe/Dublin GMT
+Africa/Freetown GMT
+Atlantic/Bermuda AST
+Pacific/Kosrae KOST
+Europe/Tallinn EET
+Pacific/Gambier GAMT
+Europe/Zagreb CET
+Australia/Hobart EST
+Indian/Reunion RET
+America/Montserrat AST
+America/Panama EST
+Europe/Zurich CET
+America/Tortola AST
+Europe/Sarajevo CET
+Europe/Mariehamn EET
+Atlantic/Madeira WET
+America/Puerto_Rico AST
+Indian/Mahe SCT
+Europe/Stockholm CET
