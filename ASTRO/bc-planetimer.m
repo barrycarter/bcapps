@@ -13,3 +13,9 @@ v[t_] = p2[t]-p1[t];
 
 ang[t_] = ArcTan[v[t][[2]]/v[t][[1]]];
 
+(* the psuedo-planet is at distance 2 *)
+
+(* parametrized vector *)
+
+Norm[u*p1[t] + (1-u)*p2[t]]
+
