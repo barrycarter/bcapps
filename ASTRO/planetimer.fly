@@ -1,14 +1,49 @@
 new
 size 600,600
 setpixel 0,0,0,0,0
+
+# sun
 fcircle 300,300,10,255,255,0
-fcircle 317,347,10,0,0,255
+string 255,255,0,285,292,giant,S
+
+# earth
+fcircle 317,347,10,0,255,255
+circle 300,300,100,0,255,255
+string 0,255,255,317,357,giant,E
+
+# "mars"
 fcircle 485,64,10,255,0,0
-dline 317,347,485,64,255,255,255
-circle 300,300,100,0,0,255
 circle 300,300,600,255,0,0
+string 255,0,0,495,50,giant,M
+
+# earth-mars
+dline 317,347,485,64,255,255,255
+
+# fictional 
+fcircle 380,241,10,255,0,255
 circle 300,300,200,255,0,255
+string 255,0,255,390,233,giant,F
+
+# to first point of Aries
+fcircle 599,300,10,255,255,255
 line 300,300,600,300,255,255,255
-line 300,300,380,241,255,255,255
+string 255,255,255,585,280,giant,A
+
+# sun-fictional
+line 300,300,380,241,255,0,255
+
+# sun-mars
+line 300,300,485,64,255,0,0
+
+# sun-earth
+line 300,300,317,347,0,255,255
+
+# problem
+string 0,255,255,0,0,small,cyan radius: r1
+string 255,0,255,0,11,small,purple radius: r2, r2 > r1
+string 255,0,0,0,22,small,red radius: r3, r3 > r2
+string 255,255,255,0,33,small,given <ASM, <ASE
+string 255,255,255,0,44,small,EFM collinear
+string 255,255,255,0,55,small,find <ASF in terms of r1,r2,r3,<ASM,<ASE
 
 
