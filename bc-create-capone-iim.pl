@@ -32,5 +32,8 @@ chomp($fname);
 # send file to ofx parser
 ($out, $err, $res) = cache_command("/home/barrycarter/BCGIT/bc-parse-ofx2.pl --caponesucks '$fname' | mysql test");
 
+# cleanup categories
+system("mysql test < /home/barrycarter/SQL/update-cc.sql");
+
 $globopts{debug} = 1;
 debug("OUT: $out","ERR: $err","RES: $res");
