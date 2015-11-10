@@ -207,3 +207,5 @@ alias firefoxgoogle "echo 'http://google.com/search?q=\!*' | bc-open-urls.pl"
 # gnuclient, but how?
 
 alias emacsfile 'readlink -f \!* | xargs -I : gnudoit \(find-file \":\"\)'
+
+alias date+ "/home/barrycarter/BCGIT/bc-date-plus.pl"

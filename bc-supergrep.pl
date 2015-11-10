@@ -40,6 +40,8 @@ for $i (@ARGV) {
 
 # search for inclusions (allowing for recursion and self-looping)
 
+unless (@files) {die "No files specified on command line";}
+
 for $i (@files) {
   my(@incs) = `egrep '^## include \' $i`;
   for $j (@incs) {
