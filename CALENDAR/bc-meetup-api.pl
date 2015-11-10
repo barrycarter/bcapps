@@ -9,9 +9,9 @@ require "/home/barrycarter/bc-private.pl";
 
 my($url) = "https://api.meetup.com/2/event";
 
-my($postdata) = "group_urlname=Meetup-API-Testing&name=Big+Barry+Birthday+Bash&key=$private{meetup}{key}";
+my($postdata) = "group_urlname=Albuquerque-Multigenerational-Center-Events-unofficial&name=Please+Ignore+This+Test+Event&key=$private{meetup}{key}";
 
 my($out,$err,$res) = cache_command("curl -d '$postdata' '$url'","age=1800");
 
-debug("OUT: $out");
+debug("OUT: $out\nERR: $err");
 
