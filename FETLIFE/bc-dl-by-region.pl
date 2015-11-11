@@ -8,7 +8,7 @@
 # major changes 17 May 2015 to localize the process, test for errors,
 # allow for mirroring, etc
 
-# --sessionid: a valid fetlife session id
+# $private{fetlife}{session} must be defined in bc-private.pl
 # --subdir: the subdirectory to which I am downloading
 
 require "/usr/local/lib/bclib.pl";
@@ -28,7 +28,7 @@ my(%files);
 
 # curl commands (lets me change quickly if needed)
 # -f as crude substitute for checking for 91 byte files
-my($cmd) = "curl -f --create-dirs --compress -A Fauxzilla --socks4a 127.0.0.1:9050 -H 'Cookie: _fl_sessionid=$globopts{sessionid}'";
+my($cmd) = "curl -f --create-dirs --compress -A Fauxzilla --socks4a 127.0.0.1:9050 -H 'Cookie: _fl_sessionid=$private{fetlife}{session}'";
 
 # multi-argument curl is more efficient
 open(B,"|xargs -r $cmd");

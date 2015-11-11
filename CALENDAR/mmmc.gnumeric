@@ -85,12 +85,7 @@
             <gnm:Font Unit="10" Bold="1" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
           </gnm:Style>
         </gnm:StyleRegion>
-        <gnm:StyleRegion startCol="0" startRow="1" endCol="7" endRow="15">
-          <gnm:Style HAlign="2" VAlign="1" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
-            <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
-          </gnm:Style>
-        </gnm:StyleRegion>
-        <gnm:StyleRegion startCol="0" startRow="16" endCol="7" endRow="255">
+        <gnm:StyleRegion startCol="0" startRow="1" endCol="255" endRow="255">
           <gnm:Style HAlign="2" VAlign="1" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
             <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
           </gnm:Style>
@@ -105,35 +100,32 @@
             <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
           </gnm:Style>
         </gnm:StyleRegion>
-        <gnm:StyleRegion startCol="8" startRow="1" endCol="255" endRow="255">
-          <gnm:Style HAlign="2" VAlign="1" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
-            <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
-          </gnm:Style>
-        </gnm:StyleRegion>
       </gnm:Styles>
       <gnm:Cols DefaultSizePts="48">
-        <gnm:ColInfo No="0" Unit="53.25"/>
-        <gnm:ColInfo No="1" Unit="148.5"/>
-        <gnm:ColInfo No="2" Unit="93"/>
-        <gnm:ColInfo No="3" Unit="37.5"/>
-        <gnm:ColInfo No="4" Unit="38.25"/>
-        <gnm:ColInfo No="5" Unit="59.25"/>
-        <gnm:ColInfo No="6" Unit="88.5"/>
-        <gnm:ColInfo No="7" Unit="372.8"/>
+        <gnm:ColInfo No="0" Unit="69.75"/>
+        <gnm:ColInfo No="1" Unit="185.2"/>
+        <gnm:ColInfo No="2" Unit="109.5"/>
+        <gnm:ColInfo No="3" Unit="42.75"/>
+        <gnm:ColInfo No="4" Unit="46.5"/>
+        <gnm:ColInfo No="5" Unit="102.8"/>
+        <gnm:ColInfo No="6" Unit="105.8"/>
+        <gnm:ColInfo No="7" Unit="480"/>
       </gnm:Cols>
       <gnm:Rows DefaultSizePts="12.75">
         <gnm:RowInfo No="0" Unit="12.75"/>
-        <gnm:RowInfo No="2" Unit="42.75"/>
+        <gnm:RowInfo No="2" Unit="51.75"/>
         <gnm:RowInfo No="3" Unit="74.25"/>
-        <gnm:RowInfo No="4" Unit="32.25"/>
-        <gnm:RowInfo No="5" Unit="12.75" Count="3"/>
+        <gnm:RowInfo No="4" Unit="39"/>
+        <gnm:RowInfo No="5" Unit="12.75"/>
+        <gnm:RowInfo No="6" Unit="13.5"/>
+        <gnm:RowInfo No="7" Unit="12.75"/>
         <gnm:RowInfo No="8" Unit="21.75" Count="2"/>
         <gnm:RowInfo No="10" Unit="12.75"/>
         <gnm:RowInfo No="11" Unit="32.25"/>
         <gnm:RowInfo No="12" Unit="12.75" Count="5"/>
       </gnm:Rows>
-      <gnm:Selections CursorCol="0" CursorRow="17">
-        <gnm:Selection startCol="0" startRow="17" endCol="0" endRow="17"/>
+      <gnm:Selections CursorCol="2" CursorRow="9">
+        <gnm:Selection startCol="2" startRow="9" endCol="2" endRow="9"/>
       </gnm:Selections>
       <gnm:Cells>
         <gnm:Cell Row="0" Col="0" ValueType="60">Type</gnm:Cell>
@@ -170,18 +162,16 @@ TR1100-1300</gnm:Cell>
         <gnm:Cell Row="5" Col="2" ValueType="60">F1800-2000</gnm:Cell>
         <gnm:Cell Row="6" Col="0" ValueType="60">Activity</gnm:Cell>
         <gnm:Cell Row="6" Col="1" ValueType="60">Amateur Telescope</gnm:Cell>
-        <gnm:Cell Row="6" Col="2" ValueType="60">1W+3W</gnm:Cell>
+        <gnm:Cell Row="6" Col="2" ValueType="60">13W</gnm:Cell>
         <gnm:Cell Row="7" Col="0" ValueType="60">Arts/Crafts</gnm:Cell>
         <gnm:Cell Row="7" Col="1" ValueType="60">Beading</gnm:Cell>
         <gnm:Cell Row="7" Col="2" ValueType="60">M0800</gnm:Cell>
         <gnm:Cell Row="8" Col="0" ValueType="60">Club</gnm:Cell>
         <gnm:Cell Row="8" Col="1" ValueType="60">Free Thinkers Toastmasters</gnm:Cell>
-        <gnm:Cell Row="8" Col="2" ValueType="60">1TH1730-1830
-3TH1730-1830</gnm:Cell>
+        <gnm:Cell Row="8" Col="2" ValueType="60">13R1730-1830</gnm:Cell>
         <gnm:Cell Row="9" Col="0" ValueType="60">Club</gnm:Cell>
         <gnm:Cell Row="9" Col="1" ValueType="60">Kirkland New Horizons Toastmasters</gnm:Cell>
-        <gnm:Cell Row="9" Col="2" ValueType="60">1F1145-1330
-3F1145-1330</gnm:Cell>
+        <gnm:Cell Row="9" Col="2" ValueType="60">13F1145-1330</gnm:Cell>
         <gnm:Cell Row="9" Col="4" ValueType="60">Room 5</gnm:Cell>
         <gnm:Cell Row="9" Col="6" ValueType="60">Larry Luna 872-0193</gnm:Cell>
         <gnm:Cell Row="10" Col="0" ValueType="60">Club</gnm:Cell>
@@ -215,7 +205,7 @@ Treatment + Prevenation of
         <gnm:Cell Row="16" Col="1" ValueType="60">&quot;Apple of my Eye&quot; Luncheon</gnm:Cell>
         <gnm:Cell Row="16" Col="2" ValueType="40">20151125</gnm:Cell>
       </gnm:Cells>
-      <gnm:SheetLayout TopLeft="A5"/>
+      <gnm:SheetLayout TopLeft="A4"/>
       <gnm:Solver ProblemType="1" Inputs="" MaxTime="0" MaxIter="0" NonNeg="1" Discr="0" AutoScale="0" ShowIter="0" AnswerR="0" SensitivityR="0" LimitsR="0" PerformR="0" ProgramR="0"/>
     </gnm:Sheet>
     <gnm:Sheet DisplayFormulas="0" HideZero="0" HideGrid="0" HideColHeader="0" HideRowHeader="0" DisplayOutlines="1" OutlineSymbolsBelow="1" OutlineSymbolsRight="1" Visibility="GNM_SHEET_VISIBILITY_VISIBLE" GridColor="0:0:0">

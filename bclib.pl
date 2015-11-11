@@ -2920,7 +2920,11 @@ sub gnumeric2array {
   my($res) = join("",`zcat -f $file`);
   my(@ret);
 
-  while ($res=~s%<gnm:Cell(.*?)>(.*?)</gnm:Cell>%%) {
+  # ugly hack (required because of /s below)
+  $res=~s%^.*?<gnm:Cells>\s*%%s;
+  $res=~s%</gnm:Cells>.*$%%s;
+
+  while ($res=~s%<gnm:Cell(.*?)>(.*?)</gnm:Cell>%%s) {
     my($info,$val) = ($1,$2);
     # extract row/col from info (TODO: error check)
     $info=~/Row="(.*?)" Col="(.*?)"/i;
