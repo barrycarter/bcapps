@@ -24,8 +24,35 @@ require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
 
 # TODO: change gname when not testing
-my($gname,$status) = ("Meetup-API-Testing", "published");
-# my ($gname,$status) = ("Albuquerque-Multigenerational-Center-Events-unofficial","draft");
+# my($gname,$status) = ("Meetup-API-Testing", "published");
+my ($gname,$status) = ("Albuquerque-Multigenerational-Center-Events-unofficial","published");
+
+# get existing events to avoid dupes (sandbox has private events, MUST
+# use my actual group
+
+my(%seen);
+
+my($out,$err,$res) = cache_command2("curl 'http://api.meetup.com/Albuquerque-Multigenerational-Center-Events-unofficial/upcoming.ical'","age=3600");
+
+# only unix nls permitted
+$out=~s/\r//g;
+
+while ($out=~s/BEGIN:VEVENT(.*?)END:VEVENT//s) {
+  my($event) = $1;
+  my(%hash);
+
+  # for now, assuming that start/end date + summary (name) are unique
+  # the .*? below allows for things like ";TZID=America/Denver"
+  while ($event=~s/(SUMMARY|DTSTART|DTEND).*?:(.*?)\n//s) {$hash{$1}=$2;}
+
+  # this borders on being hideous
+  $seen{join("|", $hash{SUMMARY}, str2time($hash{DTSTART}),
+	     str2time($hash{DTEND}))} = 1;
+
+  debug("GOT:",%seen);
+}
+
+# debug("OUT: $out");
 
 my($desc) = "
 
@@ -75,6 +102,12 @@ for $i (1..$#arr) {
 
     for $k (@dates) {
       my($st,$en) = @{$k};
+
+      # have we seen this event?
+      if ($seen{join("|",$hash{name},$st,$en)}) {
+	debug("SKIPPING: $hash{name}: $st - $en, already done");
+	next;
+      }
 
       # now, cruft the meetup itself
 
@@ -184,7 +217,3 @@ sub weekdayAfterDate {
   $time += ($day-$wday)%7*86400 + $n*86400*7;
   return strftime("%Y%m%d", gmtime($time));
 }
-
-
-
-
