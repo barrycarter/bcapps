@@ -21,6 +21,11 @@
 require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
 
+# TODO: change gname when not testing
+
+my($gname) = "Meetup-API-Testing";
+# my ($gname) = "Albuquerque-Multigenerational-Center-Events-unofficial";
+
 for $i (0..6) {$wday{substr("xmtwrfs",$i,1)} = $i;}
 
 my(@arr) = gnumeric2array("$bclib{githome}/CALENDAR/mmmc.gnumeric");
@@ -53,15 +58,13 @@ for $i (1..$#arr) {
 
       # these are fixed for all meetups I post
       # TODO: using draft for now
-      $pstr .= "group_urlname=Albuquerque-Multigenerational-Center-Events-unofficial&key=$private{meetup}{key}&guest_limit=999&publish_status=draft&venue_visibility=public&venue_id=710375";
-
-      debug("PSTR: $pstr");
+      $pstr .= "&group_urlname=$gname&key=$private{meetup}{key}&guest_limit=999&publish_status=draft&venue_visibility=public&venue_id=710375";
 
       # TODO: add non-fixed data to post: name, description
-      
+      $pstr .= "&name=this+event+needs+a+name&description=needs+a+description&simple_html_description=what+the+heck+is+a+simple+html+desc";
 
-
-      debug("$st/$en");
+      # for now, just print the command, don't actually run it
+      print "curl -d '$pstr' 'https://api.meetup.com/2/event'\n";
     }
   }
 }
