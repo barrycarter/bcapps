@@ -41,7 +41,7 @@
     <gnm:Sheet DisplayFormulas="0" HideZero="0" HideGrid="0" HideColHeader="0" HideRowHeader="0" DisplayOutlines="1" OutlineSymbolsBelow="1" OutlineSymbolsRight="1" Visibility="GNM_SHEET_VISIBILITY_VISIBLE" GridColor="0:0:0">
       <gnm:Name>Sheet1</gnm:Name>
       <gnm:MaxCol>7</gnm:MaxCol>
-      <gnm:MaxRow>2</gnm:MaxRow>
+      <gnm:MaxRow>10</gnm:MaxRow>
       <gnm:Zoom>1</gnm:Zoom>
       <gnm:Names>
         <gnm:Name>
@@ -81,50 +81,57 @@
       </gnm:PrintInformation>
       <gnm:Styles>
         <gnm:StyleRegion startCol="0" startRow="0" endCol="255" endRow="0">
-          <gnm:Style HAlign="1" VAlign="2" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
+          <gnm:Style HAlign="2" VAlign="1" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
             <gnm:Font Unit="10" Bold="1" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
           </gnm:Style>
         </gnm:StyleRegion>
-        <gnm:StyleRegion startCol="0" startRow="1" endCol="3" endRow="255">
-          <gnm:Style HAlign="1" VAlign="2" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
+        <gnm:StyleRegion startCol="0" startRow="1" endCol="7" endRow="15">
+          <gnm:Style HAlign="2" VAlign="1" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
+            <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
+          </gnm:Style>
+        </gnm:StyleRegion>
+        <gnm:StyleRegion startCol="0" startRow="16" endCol="7" endRow="255">
+          <gnm:Style HAlign="2" VAlign="1" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
             <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
           </gnm:Style>
         </gnm:StyleRegion>
         <gnm:StyleRegion startCol="0" startRow="256" endCol="255" endRow="4095">
-          <gnm:Style HAlign="1" VAlign="2" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
+          <gnm:Style HAlign="2" VAlign="1" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
             <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
           </gnm:Style>
         </gnm:StyleRegion>
         <gnm:StyleRegion startCol="0" startRow="4096" endCol="255" endRow="65535">
-          <gnm:Style HAlign="1" VAlign="2" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
-            <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
-          </gnm:Style>
-        </gnm:StyleRegion>
-        <gnm:StyleRegion startCol="4" startRow="1" endCol="7" endRow="15">
-          <gnm:Style HAlign="1" VAlign="2" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
-            <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
-          </gnm:Style>
-        </gnm:StyleRegion>
-        <gnm:StyleRegion startCol="4" startRow="16" endCol="7" endRow="255">
-          <gnm:Style HAlign="1" VAlign="2" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
+          <gnm:Style HAlign="2" VAlign="1" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
             <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
           </gnm:Style>
         </gnm:StyleRegion>
         <gnm:StyleRegion startCol="8" startRow="1" endCol="255" endRow="255">
-          <gnm:Style HAlign="1" VAlign="2" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
+          <gnm:Style HAlign="2" VAlign="1" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
             <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
           </gnm:Style>
         </gnm:StyleRegion>
       </gnm:Styles>
       <gnm:Cols DefaultSizePts="48">
-        <gnm:ColInfo No="0" Unit="48" Count="8"/>
+        <gnm:ColInfo No="0" Unit="45.75"/>
+        <gnm:ColInfo No="1" Unit="148.5"/>
+        <gnm:ColInfo No="2" Unit="70.5"/>
+        <gnm:ColInfo No="3" Unit="37.5"/>
+        <gnm:ColInfo No="4" Unit="38.25"/>
+        <gnm:ColInfo No="5" Unit="26.25"/>
+        <gnm:ColInfo No="6" Unit="88.5"/>
+        <gnm:ColInfo No="7" Unit="64.5"/>
       </gnm:Cols>
       <gnm:Rows DefaultSizePts="12.75">
         <gnm:RowInfo No="0" Unit="12.75"/>
         <gnm:RowInfo No="2" Unit="42.75"/>
+        <gnm:RowInfo No="3" Unit="74.25"/>
+        <gnm:RowInfo No="4" Unit="32.25"/>
+        <gnm:RowInfo No="5" Unit="12.75" Count="3"/>
+        <gnm:RowInfo No="8" Unit="21.75" Count="2"/>
+        <gnm:RowInfo No="10" Unit="12.75"/>
       </gnm:Rows>
-      <gnm:Selections CursorCol="1" CursorRow="2">
-        <gnm:Selection startCol="1" startRow="2" endCol="1" endRow="2"/>
+      <gnm:Selections CursorCol="0" CursorRow="10">
+        <gnm:Selection startCol="0" startRow="10" endCol="0" endRow="10"/>
       </gnm:Selections>
       <gnm:Cells>
         <gnm:Cell Row="0" Col="0" ValueType="60">Type</gnm:Cell>
@@ -141,6 +148,43 @@
 T1800-2050
 R1900-2050
 F1330-1600</gnm:Cell>
+        <gnm:Cell Row="3" Col="0" ValueType="60">Fitness</gnm:Cell>
+        <gnm:Cell Row="3" Col="1" ValueType="60">Basketball (open)</gnm:Cell>
+        <gnm:Cell Row="3" Col="2" ValueType="60">MTRF1100-1300
+M1900-2050
+W1100-1230
+F1900-2045</gnm:Cell>
+        <gnm:Cell Row="3" Col="4" ValueType="60">W. Court</gnm:Cell>
+        <gnm:Cell Row="3" Col="7" ValueType="60">age 16-49 only</gnm:Cell>
+        <gnm:Cell Row="4" Col="0" ValueType="60">Fitness</gnm:Cell>
+        <gnm:Cell Row="4" Col="1" ValueType="60">Basketball (senior)</gnm:Cell>
+        <gnm:Cell Row="4" Col="2" ValueType="60">M1145-1300
+W1145-1230
+TR1100-1300</gnm:Cell>
+        <gnm:Cell Row="4" Col="4" ValueType="60">E. Court</gnm:Cell>
+        <gnm:Cell Row="4" Col="7" ValueType="60">age 50+ only</gnm:Cell>
+        <gnm:Cell Row="5" Col="0" ValueType="60">Game</gnm:Cell>
+        <gnm:Cell Row="5" Col="1" ValueType="60">Chess</gnm:Cell>
+        <gnm:Cell Row="5" Col="2" ValueType="60">F1800-2000</gnm:Cell>
+        <gnm:Cell Row="6" Col="0" ValueType="60">Activity</gnm:Cell>
+        <gnm:Cell Row="6" Col="1" ValueType="60">Amateur Telescope</gnm:Cell>
+        <gnm:Cell Row="6" Col="2" ValueType="60">1W+3W</gnm:Cell>
+        <gnm:Cell Row="7" Col="0" ValueType="60">Arts/Crafts</gnm:Cell>
+        <gnm:Cell Row="7" Col="1" ValueType="60">Beading</gnm:Cell>
+        <gnm:Cell Row="7" Col="2" ValueType="60">M0800</gnm:Cell>
+        <gnm:Cell Row="8" Col="0" ValueType="60">Club</gnm:Cell>
+        <gnm:Cell Row="8" Col="1" ValueType="60">Free Thinkers Toastmasters</gnm:Cell>
+        <gnm:Cell Row="8" Col="2" ValueType="60">1TH1730-1830
+3TH1730-1830</gnm:Cell>
+        <gnm:Cell Row="9" Col="0" ValueType="60">Club</gnm:Cell>
+        <gnm:Cell Row="9" Col="1" ValueType="60">Kirkland New Horizons Toastmasters</gnm:Cell>
+        <gnm:Cell Row="9" Col="2" ValueType="60">1F1145-1330
+3F1145-1330</gnm:Cell>
+        <gnm:Cell Row="9" Col="4" ValueType="60">Room 5</gnm:Cell>
+        <gnm:Cell Row="9" Col="6" ValueType="60">Larry Luna 872-0193</gnm:Cell>
+        <gnm:Cell Row="10" Col="0" ValueType="60">Club</gnm:Cell>
+        <gnm:Cell Row="10" Col="1" ValueType="60">Society of Creative Anachronism</gnm:Cell>
+        <gnm:Cell Row="10" Col="2" ValueType="60">3T1800-2100</gnm:Cell>
       </gnm:Cells>
       <gnm:SheetLayout TopLeft="A1"/>
       <gnm:Solver ProblemType="1" Inputs="" MaxTime="0" MaxIter="0" NonNeg="1" Discr="0" AutoScale="0" ShowIter="0" AnswerR="0" SensitivityR="0" LimitsR="0" PerformR="0" ProgramR="0"/>
