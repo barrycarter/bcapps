@@ -23,6 +23,9 @@
 require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
 
+# TODO: this is a HORRIBLE way to note closures
+my(%closed) = list2hash("20151111","20151126","20151127");
+
 # TODO: change gname when not testing
 # my($gname,$status) = ("Meetup-API-Testing", "published");
 my ($gname,$status) = ("Albuquerque-Multigenerational-Center-Events-unofficial","published");
@@ -32,7 +35,7 @@ my ($gname,$status) = ("Albuquerque-Multigenerational-Center-Events-unofficial",
 
 my(%seen);
 
-my($out,$err,$res) = cache_command2("curl 'http://api.meetup.com/Albuquerque-Multigenerational-Center-Events-unofficial/upcoming.ical'","age=3600");
+my($out,$err,$res) = cache_command2("curl 'http://api.meetup.com/Albuquerque-Multigenerational-Center-Events-unofficial/upcoming.ical'");
 
 # only unix nls permitted
 $out=~s/\r//g;
@@ -46,7 +49,7 @@ while ($out=~s/BEGIN:VEVENT(.*?)END:VEVENT//s) {
   while ($event=~s/(SUMMARY|DTSTART|DTEND).*?:(.*?)\n//s) {$hash{$1}=$2;}
 
   # this borders on being hideous
-  $seen{join("|", $hash{SUMMARY}, str2time($hash{DTSTART}),
+  $seen{join("|", urlencode($hash{SUMMARY}), str2time($hash{DTSTART}),
 	     str2time($hash{DTEND}))} = 1;
 
   debug("GOT:",%seen);
@@ -98,12 +101,16 @@ for $i (1..$#arr) {
   $hash{name} = urlencode($hash{name});
 
   for $j (split(/\n/,$hash{when})) {
+    debug("PARSING: $j");
     my(@dates) = parseDateString($j,11,2015);
 
     for $k (@dates) {
       my($st,$en) = @{$k};
 
+      debug("ST: $st, EN: $en");
+
       # have we seen this event?
+      debug("CHECKING:",join("|",$hash{name},$st,$en));
       if ($seen{join("|",$hash{name},$st,$en)}) {
 	debug("SKIPPING: $hash{name}: $st - $en, already done");
 	next;
@@ -147,7 +154,7 @@ for $i (1..$#arr) {
 
 # given one of the date formats above, return a list of Unix time
 # pairs of start and end times (with end time being optional), for a
-# given month and year
+# given month and year (ignoring events that started [TODO: ended?] before now)
 
 sub parseDateString {
 
@@ -160,6 +167,8 @@ sub parseDateString {
     ($stime,$etime) = split(/\-/,$time);
     # ok to overwrite here, not going thru loop below
     $stime = str2time("$sdate $stime MST7MDT");
+    # too early
+    if ($stime < time()) {next;}
     $etime = $etime?str2time("$sdate $etime MST7MDT"):"";
     # this is a one-element list whose element is a list of two elements
     return [$stime,$etime];
@@ -199,10 +208,13 @@ sub parseDateString {
       unless ($stime) {warn "NO STIME ($str), IGNORING"; next;}
       # unix start and end times
       my($ustime) = str2time("$sdate $stime MST7MDT");
+      if ($ustime < time()) {next;}
+      # note that end date is ALSO $sdate
       my($uetime) = $etime?str2time("$sdate $etime MST7MDT"):"";
       push(@res,[$ustime,$uetime]);
     }
   }
+  debug("RETURNINIG",@{$res[0]});
   return @res;
 }
 
