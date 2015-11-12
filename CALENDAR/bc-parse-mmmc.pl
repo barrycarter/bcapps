@@ -23,6 +23,9 @@
 require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
 
+# creating files in this dir for testing
+chdir("/home/barrycarter/20151112")||die("Can't chdir, $!");
+
 # TODO: this is a HORRIBLE way to note closures
 my(%closed) = list2hash("20151111","20151126","20151127");
 
@@ -35,25 +38,47 @@ my ($gname,$status) = ("Albuquerque-Multigenerational-Center-Events-unofficial",
 
 my(%seen);
 
-my($out,$err,$res) = cache_command2("curl 'http://api.meetup.com/Albuquerque-Multigenerational-Center-Events-unofficial/upcoming.ical'");
+warn "caching...";
+my($out,$err,$res) = cache_command2("curl 'http://api.meetup.com/Albuquerque-Multigenerational-Center-Events-unofficial/upcoming.ical'","age=3600");
+
+write_file($out,"upcoming.ical");
 
 # only unix nls permitted
 $out=~s/\r//g;
 
 while ($out=~s/BEGIN:VEVENT(.*?)END:VEVENT//s) {
   my($event) = $1;
+
+  # cleanup continuation lines
+#  debug("A: $event");
+#  $event=~s/\r\n\s+//sg;
+#  debug("B: $event");
+
   my(%hash);
 
   # for now, assuming that start/end date + summary (name) are unique
   # the .*? below allows for things like ";TZID=America/Denver"
-  while ($event=~s/(SUMMARY|DTSTART|DTEND).*?:(.*?)\n//s) {$hash{$1}=$2;}
+  while ($event=~s/(SUMMARY|DTSTART|DTEND|UID).*?:(.*?)\n//s) {$hash{$1}=$2;}
 
-  # this borders on being hideous
-  $seen{join("|", urlencode($hash{SUMMARY}), str2time($hash{DTSTART}),
-	     str2time($hash{DTEND}))} = 1;
+  # change \n to ^j (so it won't get killed by next line)
+  $hash{SUMMARY}=~s/\\n/\n/sg;
 
-  debug("GOT:",%seen);
+  # remove backslashes from event
+  $hash{SUMMARY}=~s/\\//g;
+
+  # string to check
+
+  my($str) = join("|", urlencode($hash{SUMMARY}),
+		  str2time($hash{DTSTART}), str2time($hash{DTEND}));
+
+  if ($seen{$str}) {
+    warn "EXISTING DUPLICATE: $str ($hash{UID})";
+  } else {
+    $seen{$str} = 1;
+  }
 }
+
+write_file(join("\n",keys %seen),"seen.txt");
 
 # debug("OUT: $out");
 
@@ -110,7 +135,7 @@ for $i (1..$#arr) {
       debug("ST: $st, EN: $en");
 
       # have we seen this event?
-      debug("CHECKING:",join("|",$hash{name},$st,$en));
+      debug("CHECKING: ".join("|",$hash{name},$st,$en));
       if ($seen{join("|",$hash{name},$st,$en)}) {
 	debug("SKIPPING: $hash{name}: $st - $en, already done");
 	next;
