@@ -204,6 +204,9 @@ sub parseDateString {
       # ignore dates not in current month
       unless ($sdate=~/^$yr$mon/) {next;}
 
+      # ignore closure dates
+      if ($closed{$sdate}) {next;}
+
       # TODO: figure out what to do w/ no start time
       unless ($stime) {warn "NO STIME ($str), IGNORING"; next;}
       # unix start and end times
