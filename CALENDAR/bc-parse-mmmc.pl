@@ -68,8 +68,7 @@ while ($out=~s/BEGIN:VEVENT(.*?)END:VEVENT//s) {
 
   # string to check
 
-  my($str) = join("|", urlencode($hash{SUMMARY}),
-		  str2time($hash{DTSTART}), str2time($hash{DTEND}));
+  my($str) = join("|", urlencode($hash{SUMMARY}),str2time($hash{DTSTART}));
 
   if ($seen{$str}) {
     warn "EXISTING DUPLICATE: $str ($hash{UID})";
@@ -135,8 +134,8 @@ for $i (1..$#arr) {
       debug("ST: $st, EN: $en");
 
       # have we seen this event?
-      debug("CHECKING: ".join("|",$hash{name},$st,$en));
-      if ($seen{join("|",$hash{name},$st,$en)}) {
+      my($str) = join("|",$hash{name},$st);
+      if ($seen{$str}) {
 	debug("SKIPPING: $hash{name}: $st - $en, already done");
 	next;
       }
