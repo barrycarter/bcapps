@@ -36,7 +36,7 @@
     <gnm:SheetName gnm:Cols="256" gnm:Rows="65536">Sheet2</gnm:SheetName>
     <gnm:SheetName gnm:Cols="256" gnm:Rows="65536">Sheet3</gnm:SheetName>
   </gnm:SheetNameIndex>
-  <gnm:Geometry Width="624" Height="489"/>
+  <gnm:Geometry Width="1004" Height="487"/>
   <gnm:Sheets>
     <gnm:Sheet DisplayFormulas="0" HideZero="0" HideGrid="0" HideColHeader="0" HideRowHeader="0" DisplayOutlines="1" OutlineSymbolsBelow="1" OutlineSymbolsRight="1" Visibility="GNM_SHEET_VISIBILITY_VISIBLE" GridColor="0:0:0">
       <gnm:Name>Sheet1</gnm:Name>
@@ -90,42 +90,92 @@
             <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
           </gnm:Style>
         </gnm:StyleRegion>
-        <gnm:StyleRegion startCol="0" startRow="16" endCol="3" endRow="255">
+        <gnm:StyleRegion startCol="0" startRow="16" endCol="3" endRow="511">
           <gnm:Style HAlign="2" VAlign="1" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
             <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
           </gnm:Style>
         </gnm:StyleRegion>
-        <gnm:StyleRegion startCol="0" startRow="256" endCol="255" endRow="3839">
+        <gnm:StyleRegion startCol="0" startRow="512" endCol="255" endRow="3327">
           <gnm:Style HAlign="2" VAlign="1" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
             <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
           </gnm:Style>
         </gnm:StyleRegion>
-        <gnm:StyleRegion startCol="0" startRow="3840" endCol="255" endRow="4095">
+        <gnm:StyleRegion startCol="0" startRow="3328" endCol="255" endRow="4351">
           <gnm:Style HAlign="2" VAlign="1" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
             <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
           </gnm:Style>
         </gnm:StyleRegion>
-        <gnm:StyleRegion startCol="0" startRow="4096" endCol="255" endRow="61439">
+        <gnm:StyleRegion startCol="0" startRow="4352" endCol="255" endRow="7935">
           <gnm:Style HAlign="2" VAlign="1" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
             <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
           </gnm:Style>
         </gnm:StyleRegion>
-        <gnm:StyleRegion startCol="0" startRow="61440" endCol="255" endRow="65279">
+        <gnm:StyleRegion startCol="0" startRow="7936" endCol="255" endRow="8191">
           <gnm:Style HAlign="2" VAlign="1" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
             <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
           </gnm:Style>
         </gnm:StyleRegion>
-        <gnm:StyleRegion startCol="0" startRow="65280" endCol="255" endRow="65532">
+        <gnm:StyleRegion startCol="0" startRow="8192" endCol="255" endRow="53247">
           <gnm:Style HAlign="2" VAlign="1" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
             <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
           </gnm:Style>
         </gnm:StyleRegion>
-        <gnm:StyleRegion startCol="0" startRow="65533" endCol="255" endRow="65535">
+        <gnm:StyleRegion startCol="0" startRow="53248" endCol="255" endRow="57087">
+          <gnm:Style HAlign="2" VAlign="1" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
+            <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
+          </gnm:Style>
+        </gnm:StyleRegion>
+        <gnm:StyleRegion startCol="0" startRow="57088" endCol="255" endRow="57599">
+          <gnm:Style HAlign="2" VAlign="1" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
+            <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
+          </gnm:Style>
+        </gnm:StyleRegion>
+        <gnm:StyleRegion startCol="0" startRow="57600" endCol="255" endRow="60927">
+          <gnm:Style HAlign="2" VAlign="1" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
+            <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
+          </gnm:Style>
+        </gnm:StyleRegion>
+        <gnm:StyleRegion startCol="0" startRow="60928" endCol="255" endRow="61183">
+          <gnm:Style HAlign="2" VAlign="1" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
+            <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
+          </gnm:Style>
+        </gnm:StyleRegion>
+        <gnm:StyleRegion startCol="0" startRow="61184" endCol="255" endRow="61439">
+          <gnm:Style HAlign="2" VAlign="1" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
+            <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
+          </gnm:Style>
+        </gnm:StyleRegion>
+        <gnm:StyleRegion startCol="0" startRow="61440" endCol="255" endRow="61695">
+          <gnm:Style HAlign="2" VAlign="1" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
+            <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
+          </gnm:Style>
+        </gnm:StyleRegion>
+        <gnm:StyleRegion startCol="0" startRow="61696" endCol="255" endRow="64767">
+          <gnm:Style HAlign="2" VAlign="1" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
+            <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
+          </gnm:Style>
+        </gnm:StyleRegion>
+        <gnm:StyleRegion startCol="0" startRow="64768" endCol="255" endRow="65023">
+          <gnm:Style HAlign="2" VAlign="1" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
+            <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
+          </gnm:Style>
+        </gnm:StyleRegion>
+        <gnm:StyleRegion startCol="0" startRow="65024" endCol="255" endRow="65279">
+          <gnm:Style HAlign="2" VAlign="1" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
+            <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
+          </gnm:Style>
+        </gnm:StyleRegion>
+        <gnm:StyleRegion startCol="0" startRow="65280" endCol="255" endRow="65531">
+          <gnm:Style HAlign="2" VAlign="1" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
+            <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
+          </gnm:Style>
+        </gnm:StyleRegion>
+        <gnm:StyleRegion startCol="0" startRow="65532" endCol="255" endRow="65535">
           <gnm:Style HAlign="1" VAlign="2" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
             <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
           </gnm:Style>
         </gnm:StyleRegion>
-        <gnm:StyleRegion startCol="4" startRow="1" endCol="255" endRow="255">
+        <gnm:StyleRegion startCol="4" startRow="1" endCol="255" endRow="511">
           <gnm:Style HAlign="2" VAlign="1" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
             <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
           </gnm:Style>
@@ -144,14 +194,14 @@
       <gnm:Rows DefaultSizePts="12.75">
         <gnm:RowInfo No="0" Unit="12.75"/>
         <gnm:RowInfo No="2" Unit="51.75"/>
-        <gnm:RowInfo No="3" Unit="13.5" Count="22"/>
-        <gnm:RowInfo No="25" Unit="26.25" Count="2"/>
-        <gnm:RowInfo No="27" Unit="13.5" Count="11"/>
-        <gnm:RowInfo No="38" Unit="26.25"/>
-        <gnm:RowInfo No="39" Unit="13.5" Count="13"/>
+        <gnm:RowInfo No="3" Unit="13.5" Count="21"/>
+        <gnm:RowInfo No="24" Unit="26.25" Count="2"/>
+        <gnm:RowInfo No="26" Unit="13.5" Count="11"/>
+        <gnm:RowInfo No="37" Unit="26.25"/>
+        <gnm:RowInfo No="38" Unit="13.5" Count="17"/>
       </gnm:Rows>
-      <gnm:Selections CursorCol="0" CursorRow="41">
-        <gnm:Selection startCol="0" startRow="41" endCol="255" endRow="43"/>
+      <gnm:Selections CursorCol="1" CursorRow="54">
+        <gnm:Selection startCol="1" startRow="54" endCol="1" endRow="54"/>
       </gnm:Selections>
       <gnm:Cells>
         <gnm:Cell Row="0" Col="0" ValueType="60">Type</gnm:Cell>
@@ -198,200 +248,252 @@ TR1100-1300</gnm:Cell>
         <gnm:Cell Row="7" Col="1" ValueType="60">Beading</gnm:Cell>
         <gnm:Cell Row="7" Col="2" ValueType="60">M0800</gnm:Cell>
         <gnm:Cell Row="7" Col="3" ValueType="60">MMMC</gnm:Cell>
-        <gnm:Cell Row="8" Col="0" ValueType="60">Club</gnm:Cell>
-        <gnm:Cell Row="8" Col="1" ValueType="60">Free Thinkers Toastmasters</gnm:Cell>
-        <gnm:Cell Row="8" Col="2" ValueType="60">13R1730-1830</gnm:Cell>
+        <gnm:Cell Row="8" Col="0" ValueType="60">Clubs/Discussion</gnm:Cell>
+        <gnm:Cell Row="8" Col="1" ValueType="60">Kirkland New Horizons Toastmasters</gnm:Cell>
+        <gnm:Cell Row="8" Col="2" ValueType="60">13F1145-1330</gnm:Cell>
         <gnm:Cell Row="8" Col="3" ValueType="60">MMMC</gnm:Cell>
-        <gnm:Cell Row="9" Col="0" ValueType="60">Club</gnm:Cell>
-        <gnm:Cell Row="9" Col="1" ValueType="60">Kirkland New Horizons Toastmasters</gnm:Cell>
-        <gnm:Cell Row="9" Col="2" ValueType="60">13F1145-1330</gnm:Cell>
+        <gnm:Cell Row="8" Col="4" ValueType="60">Room 5</gnm:Cell>
+        <gnm:Cell Row="8" Col="6" ValueType="60">Larry Luna 872-0193</gnm:Cell>
+        <gnm:Cell Row="9" Col="0" ValueType="60">Clubs/Discussion</gnm:Cell>
+        <gnm:Cell Row="9" Col="1" ValueType="60">Society of Creative Anachronism</gnm:Cell>
+        <gnm:Cell Row="9" Col="2" ValueType="60">3T1800-2100</gnm:Cell>
         <gnm:Cell Row="9" Col="3" ValueType="60">MMMC</gnm:Cell>
-        <gnm:Cell Row="9" Col="4" ValueType="60">Room 5</gnm:Cell>
-        <gnm:Cell Row="9" Col="6" ValueType="60">Larry Luna 872-0193</gnm:Cell>
-        <gnm:Cell Row="10" Col="0" ValueType="60">Club</gnm:Cell>
-        <gnm:Cell Row="10" Col="1" ValueType="60">Society of Creative Anachronism</gnm:Cell>
-        <gnm:Cell Row="10" Col="2" ValueType="60">3T1800-2100</gnm:Cell>
-        <gnm:Cell Row="10" Col="3" ValueType="60">MMMC</gnm:Cell>
-        <gnm:Cell Row="11" Col="0" ValueType="60">Presentation</gnm:Cell>
-        <gnm:Cell Row="11" Col="1" ValueType="60">Use of Osteogenic Loading for
+        <gnm:Cell Row="10" Col="0" ValueType="60">Presentation</gnm:Cell>
+        <gnm:Cell Row="10" Col="1" ValueType="60">Use of Osteogenic Loading for
 Treatment + Prevenation of
  Osteoporosis</gnm:Cell>
-        <gnm:Cell Row="11" Col="2" ValueType="60">20151112:1330-1500</gnm:Cell>
+        <gnm:Cell Row="10" Col="2" ValueType="60">20151112:1330-1500</gnm:Cell>
+        <gnm:Cell Row="10" Col="3" ValueType="60">MMMC</gnm:Cell>
+        <gnm:Cell Row="10" Col="4" ValueType="60">Room 5</gnm:Cell>
+        <gnm:Cell Row="10" Col="5" ValueType="60">$1 (donation)</gnm:Cell>
+        <gnm:Cell Row="11" Col="0" ValueType="60">Presentation</gnm:Cell>
+        <gnm:Cell Row="11" Col="1" ValueType="60">We Honor Veteran's Day</gnm:Cell>
+        <gnm:Cell Row="11" Col="2" ValueType="60">20151117:1000-1100</gnm:Cell>
         <gnm:Cell Row="11" Col="3" ValueType="60">MMMC</gnm:Cell>
-        <gnm:Cell Row="11" Col="4" ValueType="60">Room 5</gnm:Cell>
-        <gnm:Cell Row="11" Col="5" ValueType="60">$1 (donation)</gnm:Cell>
-        <gnm:Cell Row="12" Col="0" ValueType="60">Presentation</gnm:Cell>
-        <gnm:Cell Row="12" Col="1" ValueType="60">We Honor Veteran's Day</gnm:Cell>
-        <gnm:Cell Row="12" Col="2" ValueType="60">20151117:1000-1100</gnm:Cell>
+        <gnm:Cell Row="11" Col="4" ValueType="60">Room 4</gnm:Cell>
+        <gnm:Cell Row="11" Col="7" ValueType="60">Center is closed on Veteran's Day; this presentation takes place on Nov 17, not Veteran's Day</gnm:Cell>
+        <gnm:Cell Row="12" Col="0" ValueType="60">Trip</gnm:Cell>
+        <gnm:Cell Row="12" Col="1" ValueType="60">Wine by Design</gnm:Cell>
+        <gnm:Cell Row="12" Col="2" ValueType="60">20151112:1245-1600</gnm:Cell>
         <gnm:Cell Row="12" Col="3" ValueType="60">MMMC</gnm:Cell>
-        <gnm:Cell Row="12" Col="4" ValueType="60">Room 4</gnm:Cell>
-        <gnm:Cell Row="12" Col="7" ValueType="60">Center is closed on Veteran's Day; this presentation takes place on Nov 17, not Veteran's Day</gnm:Cell>
+        <gnm:Cell Row="12" Col="5" ValueType="60">2.5 (transportation)</gnm:Cell>
         <gnm:Cell Row="13" Col="0" ValueType="60">Trip</gnm:Cell>
-        <gnm:Cell Row="13" Col="1" ValueType="60">Wine by Design</gnm:Cell>
-        <gnm:Cell Row="13" Col="2" ValueType="60">20151112:1245-1600</gnm:Cell>
+        <gnm:Cell Row="13" Col="1" ValueType="60">Christmas in Old Town</gnm:Cell>
+        <gnm:Cell Row="13" Col="2" ValueType="60">20151204:1615-2030</gnm:Cell>
         <gnm:Cell Row="13" Col="3" ValueType="60">MMMC</gnm:Cell>
-        <gnm:Cell Row="13" Col="5" ValueType="60">2.5 (transportation)</gnm:Cell>
-        <gnm:Cell Row="14" Col="0" ValueType="60">Trip</gnm:Cell>
-        <gnm:Cell Row="14" Col="1" ValueType="60">Christmas in Old Town</gnm:Cell>
-        <gnm:Cell Row="14" Col="2" ValueType="60">20151204:1615-2030</gnm:Cell>
+        <gnm:Cell Row="13" Col="5" ValueType="60">1.5 (transportation)</gnm:Cell>
+        <gnm:Cell Row="14" Col="0" ValueType="60">Event</gnm:Cell>
+        <gnm:Cell Row="14" Col="1" ValueType="60">Polar Express</gnm:Cell>
+        <gnm:Cell Row="14" Col="2" ValueType="60">20151218:1700-2030</gnm:Cell>
         <gnm:Cell Row="14" Col="3" ValueType="60">MMMC</gnm:Cell>
-        <gnm:Cell Row="14" Col="5" ValueType="60">1.5 (transportation)</gnm:Cell>
+        <gnm:Cell Row="14" Col="5" ValueType="60">FREE</gnm:Cell>
         <gnm:Cell Row="15" Col="0" ValueType="60">Event</gnm:Cell>
-        <gnm:Cell Row="15" Col="1" ValueType="60">Polar Express</gnm:Cell>
-        <gnm:Cell Row="15" Col="2" ValueType="60">20151218:1700-2030</gnm:Cell>
+        <gnm:Cell Row="15" Col="1" ValueType="60">&quot;Apple of my Eye&quot; Luncheon</gnm:Cell>
+        <gnm:Cell Row="15" Col="2" ValueType="40">20151125</gnm:Cell>
         <gnm:Cell Row="15" Col="3" ValueType="60">MMMC</gnm:Cell>
-        <gnm:Cell Row="15" Col="5" ValueType="60">FREE</gnm:Cell>
-        <gnm:Cell Row="16" Col="0" ValueType="60">Event</gnm:Cell>
-        <gnm:Cell Row="16" Col="1" ValueType="60">&quot;Apple of my Eye&quot; Luncheon</gnm:Cell>
-        <gnm:Cell Row="16" Col="2" ValueType="40">20151125</gnm:Cell>
+        <gnm:Cell Row="16" Col="0" ValueType="60">Fitness</gnm:Cell>
+        <gnm:Cell Row="16" Col="1" ValueType="60">Exercise to Music Aerobics (SF)</gnm:Cell>
+        <gnm:Cell Row="16" Col="2" ValueType="60">MTWR0815-0915</gnm:Cell>
         <gnm:Cell Row="16" Col="3" ValueType="60">MMMC</gnm:Cell>
+        <gnm:Cell Row="16" Col="4" ValueType="60">Gym</gnm:Cell>
         <gnm:Cell Row="17" Col="0" ValueType="60">Fitness</gnm:Cell>
         <gnm:Cell Row="17" Col="1" ValueType="60">Exercise to Music Aerobics (SF)</gnm:Cell>
-        <gnm:Cell Row="17" Col="2" ValueType="60">MTWR0815-0915</gnm:Cell>
+        <gnm:Cell Row="17" Col="2" ValueType="60">F0815-0915</gnm:Cell>
         <gnm:Cell Row="17" Col="3" ValueType="60">MMMC</gnm:Cell>
-        <gnm:Cell Row="17" Col="4" ValueType="60">Gym</gnm:Cell>
+        <gnm:Cell Row="17" Col="4" ValueType="60">East Social Hall</gnm:Cell>
         <gnm:Cell Row="18" Col="0" ValueType="60">Fitness</gnm:Cell>
-        <gnm:Cell Row="18" Col="1" ValueType="60">Exercise to Music Aerobics (SF)</gnm:Cell>
-        <gnm:Cell Row="18" Col="2" ValueType="60">F0815-0915</gnm:Cell>
+        <gnm:Cell Row="18" Col="1" ValueType="60">Flex &amp; Tone (SF)</gnm:Cell>
+        <gnm:Cell Row="18" Col="2" ValueType="60">TR0815-0915</gnm:Cell>
         <gnm:Cell Row="18" Col="3" ValueType="60">MMMC</gnm:Cell>
-        <gnm:Cell Row="18" Col="4" ValueType="60">East Social Hall</gnm:Cell>
+        <gnm:Cell Row="18" Col="4" ValueType="60">Gym</gnm:Cell>
         <gnm:Cell Row="19" Col="0" ValueType="60">Fitness</gnm:Cell>
-        <gnm:Cell Row="19" Col="1" ValueType="60">Flex &amp; Tone (SF)</gnm:Cell>
-        <gnm:Cell Row="19" Col="2" ValueType="60">TR0815-0915</gnm:Cell>
+        <gnm:Cell Row="19" Col="1" ValueType="60">Gentle Exercise (SF)</gnm:Cell>
+        <gnm:Cell Row="19" Col="2" ValueType="60">MWF0930-1030</gnm:Cell>
         <gnm:Cell Row="19" Col="3" ValueType="60">MMMC</gnm:Cell>
         <gnm:Cell Row="19" Col="4" ValueType="60">Gym</gnm:Cell>
         <gnm:Cell Row="20" Col="0" ValueType="60">Fitness</gnm:Cell>
-        <gnm:Cell Row="20" Col="1" ValueType="60">Gentle Exercise (SF)</gnm:Cell>
-        <gnm:Cell Row="20" Col="2" ValueType="60">MWF0930-1030</gnm:Cell>
+        <gnm:Cell Row="20" Col="1" ValueType="60">Get Moving Cardio $</gnm:Cell>
+        <gnm:Cell Row="20" Col="2" ValueType="60">MW1700</gnm:Cell>
         <gnm:Cell Row="20" Col="3" ValueType="60">MMMC</gnm:Cell>
-        <gnm:Cell Row="20" Col="4" ValueType="60">Gym</gnm:Cell>
+        <gnm:Cell Row="20" Col="4" ValueType="60">East Social Hall</gnm:Cell>
+        <gnm:Cell Row="20" Col="5" ValueType="60">2.50/class, 20.00/month</gnm:Cell>
+        <gnm:Cell Row="20" Col="6" ValueType="60">Ann Owens 266-3649</gnm:Cell>
         <gnm:Cell Row="21" Col="0" ValueType="60">Fitness</gnm:Cell>
-        <gnm:Cell Row="21" Col="1" ValueType="60">Get Moving Cardio $</gnm:Cell>
-        <gnm:Cell Row="21" Col="2" ValueType="60">MW1700</gnm:Cell>
+        <gnm:Cell Row="21" Col="1" ValueType="60">Low-Impact Aerobics (SF)</gnm:Cell>
+        <gnm:Cell Row="21" Col="2" ValueType="60">MWF0815-0915</gnm:Cell>
         <gnm:Cell Row="21" Col="3" ValueType="60">MMMC</gnm:Cell>
-        <gnm:Cell Row="21" Col="4" ValueType="60">East Social Hall</gnm:Cell>
-        <gnm:Cell Row="21" Col="5" ValueType="60">2.50/class, 20.00/month</gnm:Cell>
-        <gnm:Cell Row="21" Col="6" ValueType="60">Ann Owens 266-3649</gnm:Cell>
         <gnm:Cell Row="22" Col="0" ValueType="60">Fitness</gnm:Cell>
-        <gnm:Cell Row="22" Col="1" ValueType="60">Low-Impact Aerobics (SF)</gnm:Cell>
-        <gnm:Cell Row="22" Col="2" ValueType="60">MWF0815-0915</gnm:Cell>
+        <gnm:Cell Row="22" Col="1" ValueType="60">Intermediate/Advanced Boot Camp</gnm:Cell>
+        <gnm:Cell Row="22" Col="2" ValueType="60">TR1630-1730</gnm:Cell>
         <gnm:Cell Row="22" Col="3" ValueType="60">MMMC</gnm:Cell>
+        <gnm:Cell Row="22" Col="4" ValueType="60">East Social Hall</gnm:Cell>
         <gnm:Cell Row="23" Col="0" ValueType="60">Fitness</gnm:Cell>
-        <gnm:Cell Row="23" Col="1" ValueType="60">Intermediate/Advanced Boot Camp</gnm:Cell>
-        <gnm:Cell Row="23" Col="2" ValueType="60">TR1630-1730</gnm:Cell>
+        <gnm:Cell Row="23" Col="1" ValueType="60">Personal Self Defense Club $</gnm:Cell>
+        <gnm:Cell Row="23" Col="2" ValueType="60">M1900-2100</gnm:Cell>
         <gnm:Cell Row="23" Col="3" ValueType="60">MMMC</gnm:Cell>
-        <gnm:Cell Row="23" Col="4" ValueType="60">East Social Hall</gnm:Cell>
+        <gnm:Cell Row="23" Col="4" ValueType="60">Room 4</gnm:Cell>
+        <gnm:Cell Row="23" Col="5" ValueType="60">10.00/month</gnm:Cell>
+        <gnm:Cell Row="23" Col="6" ValueType="60">Sean Ross 710-1877</gnm:Cell>
         <gnm:Cell Row="24" Col="0" ValueType="60">Fitness</gnm:Cell>
-        <gnm:Cell Row="24" Col="1" ValueType="60">Personal Self Defense Club $</gnm:Cell>
-        <gnm:Cell Row="24" Col="2" ValueType="60">M1900-2100</gnm:Cell>
-        <gnm:Cell Row="24" Col="3" ValueType="60">MMMC</gnm:Cell>
-        <gnm:Cell Row="24" Col="4" ValueType="60">Room 4</gnm:Cell>
-        <gnm:Cell Row="24" Col="5" ValueType="60">10.00/month</gnm:Cell>
-        <gnm:Cell Row="24" Col="6" ValueType="60">Sean Ross 710-1877</gnm:Cell>
-        <gnm:Cell Row="25" Col="0" ValueType="60">Fitness</gnm:Cell>
-        <gnm:Cell Row="25" Col="1" ValueType="60">Pickleball Training</gnm:Cell>
-        <gnm:Cell Row="25" Col="2" ValueType="60">TR0915-1100
+        <gnm:Cell Row="24" Col="1" ValueType="60">Pickleball Training</gnm:Cell>
+        <gnm:Cell Row="24" Col="2" ValueType="60">TR0915-1100
 S1230-1450</gnm:Cell>
+        <gnm:Cell Row="24" Col="3" ValueType="60">MMMC</gnm:Cell>
+        <gnm:Cell Row="25" Col="0" ValueType="60">Fitness</gnm:Cell>
+        <gnm:Cell Row="25" Col="1" ValueType="60">Pickleball</gnm:Cell>
+        <gnm:Cell Row="25" Col="2" ValueType="60">R1400-1600
+S0900-1100</gnm:Cell>
         <gnm:Cell Row="25" Col="3" ValueType="60">MMMC</gnm:Cell>
         <gnm:Cell Row="26" Col="0" ValueType="60">Fitness</gnm:Cell>
-        <gnm:Cell Row="26" Col="1" ValueType="60">Pickleball</gnm:Cell>
-        <gnm:Cell Row="26" Col="2" ValueType="60">R1400-1600
-S0900-1100</gnm:Cell>
+        <gnm:Cell Row="26" Col="1" ValueType="60">Shuffleboard</gnm:Cell>
+        <gnm:Cell Row="26" Col="2" ValueType="60">T1300-1600</gnm:Cell>
         <gnm:Cell Row="26" Col="3" ValueType="60">MMMC</gnm:Cell>
         <gnm:Cell Row="27" Col="0" ValueType="60">Fitness</gnm:Cell>
-        <gnm:Cell Row="27" Col="1" ValueType="60">Shuffleboard</gnm:Cell>
-        <gnm:Cell Row="27" Col="2" ValueType="60">T1300-1600</gnm:Cell>
+        <gnm:Cell Row="27" Col="1" ValueType="60">Tai Chi Chuan</gnm:Cell>
+        <gnm:Cell Row="27" Col="2" ValueType="60">T0930-1030</gnm:Cell>
         <gnm:Cell Row="27" Col="3" ValueType="60">MMMC</gnm:Cell>
+        <gnm:Cell Row="27" Col="4" ValueType="60">East Social Hall</gnm:Cell>
+        <gnm:Cell Row="27" Col="5" ValueType="60">5.00 (suggested onation)</gnm:Cell>
+        <gnm:Cell Row="27" Col="6" ValueType="60">Ilene Dunn</gnm:Cell>
         <gnm:Cell Row="28" Col="0" ValueType="60">Fitness</gnm:Cell>
-        <gnm:Cell Row="28" Col="1" ValueType="60">Tai Chi Chuan</gnm:Cell>
-        <gnm:Cell Row="28" Col="2" ValueType="60">T0930-1030</gnm:Cell>
+        <gnm:Cell Row="28" Col="1" ValueType="60">TVE Wellness Classes</gnm:Cell>
+        <gnm:Cell Row="28" Col="2" ValueType="60">R0830-0930</gnm:Cell>
         <gnm:Cell Row="28" Col="3" ValueType="60">MMMC</gnm:Cell>
         <gnm:Cell Row="28" Col="4" ValueType="60">East Social Hall</gnm:Cell>
-        <gnm:Cell Row="28" Col="5" ValueType="60">5.00 (suggested onation)</gnm:Cell>
-        <gnm:Cell Row="28" Col="6" ValueType="60">Ilene Dunn</gnm:Cell>
+        <gnm:Cell Row="28" Col="5" ValueType="60">2.00/class (for 50+), 5.00/class (others)</gnm:Cell>
+        <gnm:Cell Row="28" Col="6" ValueType="60">Dimitri Carranza 214-724-6263</gnm:Cell>
         <gnm:Cell Row="29" Col="0" ValueType="60">Fitness</gnm:Cell>
-        <gnm:Cell Row="29" Col="1" ValueType="60">TVE Wellness Classes</gnm:Cell>
-        <gnm:Cell Row="29" Col="2" ValueType="60">R0830-0930</gnm:Cell>
+        <gnm:Cell Row="29" Col="1" ValueType="60">TVE Qi Gong Animal Kung Fu</gnm:Cell>
+        <gnm:Cell Row="29" Col="2" ValueType="60">T1830-2000</gnm:Cell>
         <gnm:Cell Row="29" Col="3" ValueType="60">MMMC</gnm:Cell>
         <gnm:Cell Row="29" Col="4" ValueType="60">East Social Hall</gnm:Cell>
-        <gnm:Cell Row="29" Col="5" ValueType="60">2.00/class (for 50+), 5.00/class (others)</gnm:Cell>
+        <gnm:Cell Row="29" Col="5" ValueType="60">8.00/class, 25.00/month</gnm:Cell>
         <gnm:Cell Row="29" Col="6" ValueType="60">Dimitri Carranza 214-724-6263</gnm:Cell>
         <gnm:Cell Row="30" Col="0" ValueType="60">Fitness</gnm:Cell>
-        <gnm:Cell Row="30" Col="1" ValueType="60">TVE Qi Gong Animal Kung Fu</gnm:Cell>
-        <gnm:Cell Row="30" Col="2" ValueType="60">T1830-2000</gnm:Cell>
+        <gnm:Cell Row="30" Col="1" ValueType="60">Volleyball (open)</gnm:Cell>
+        <gnm:Cell Row="30" Col="2" ValueType="60">MF1700-1900</gnm:Cell>
         <gnm:Cell Row="30" Col="3" ValueType="60">MMMC</gnm:Cell>
-        <gnm:Cell Row="30" Col="4" ValueType="60">East Social Hall</gnm:Cell>
-        <gnm:Cell Row="30" Col="5" ValueType="60">8.00/class, 25.00/month</gnm:Cell>
-        <gnm:Cell Row="30" Col="6" ValueType="60">Dimitri Carranza 214-724-6263</gnm:Cell>
         <gnm:Cell Row="31" Col="0" ValueType="60">Fitness</gnm:Cell>
-        <gnm:Cell Row="31" Col="1" ValueType="60">Volleyball (open)</gnm:Cell>
-        <gnm:Cell Row="31" Col="2" ValueType="60">MF1700-1900</gnm:Cell>
+        <gnm:Cell Row="31" Col="1" ValueType="60">Yoga (beginning) $</gnm:Cell>
+        <gnm:Cell Row="31" Col="2" ValueType="60">M1815-1915</gnm:Cell>
         <gnm:Cell Row="31" Col="3" ValueType="60">MMMC</gnm:Cell>
+        <gnm:Cell Row="31" Col="4" ValueType="60">East Social Hall</gnm:Cell>
+        <gnm:Cell Row="31" Col="5" ValueType="60">7.00/class, 25.00/month</gnm:Cell>
+        <gnm:Cell Row="31" Col="6" ValueType="60">Ann Owens 266-3649</gnm:Cell>
         <gnm:Cell Row="32" Col="0" ValueType="60">Fitness</gnm:Cell>
-        <gnm:Cell Row="32" Col="1" ValueType="60">Yoga (beginning) $</gnm:Cell>
-        <gnm:Cell Row="32" Col="2" ValueType="60">M1815-1915</gnm:Cell>
+        <gnm:Cell Row="32" Col="1" ValueType="60">Yoga (Kundalini)</gnm:Cell>
+        <gnm:Cell Row="32" Col="2" ValueType="60">W1010-1110</gnm:Cell>
         <gnm:Cell Row="32" Col="3" ValueType="60">MMMC</gnm:Cell>
-        <gnm:Cell Row="32" Col="4" ValueType="60">East Social Hall</gnm:Cell>
-        <gnm:Cell Row="32" Col="5" ValueType="60">7.00/class, 25.00/month</gnm:Cell>
-        <gnm:Cell Row="32" Col="6" ValueType="60">Ann Owens 266-3649</gnm:Cell>
+        <gnm:Cell Row="32" Col="4" ValueType="60">Room 4</gnm:Cell>
+        <gnm:Cell Row="32" Col="6" ValueType="60">Sueshila Stubbe 797-7738</gnm:Cell>
         <gnm:Cell Row="33" Col="0" ValueType="60">Fitness</gnm:Cell>
-        <gnm:Cell Row="33" Col="1" ValueType="60">Yoga (Kundalini)</gnm:Cell>
-        <gnm:Cell Row="33" Col="2" ValueType="60">W1010-1110</gnm:Cell>
+        <gnm:Cell Row="33" Col="1" ValueType="60">Yoga (Hatha)</gnm:Cell>
+        <gnm:Cell Row="33" Col="2" ValueType="60">W0900</gnm:Cell>
         <gnm:Cell Row="33" Col="3" ValueType="60">MMMC</gnm:Cell>
-        <gnm:Cell Row="33" Col="4" ValueType="60">Room 4</gnm:Cell>
-        <gnm:Cell Row="33" Col="6" ValueType="60">Sueshila Stubbe 797-7738</gnm:Cell>
+        <gnm:Cell Row="33" Col="4" ValueType="60">Room 5</gnm:Cell>
+        <gnm:Cell Row="33" Col="6" ValueType="60">Dee Cappell 265-5453</gnm:Cell>
         <gnm:Cell Row="34" Col="0" ValueType="60">Fitness</gnm:Cell>
-        <gnm:Cell Row="34" Col="1" ValueType="60">Yoga (Hatha)</gnm:Cell>
-        <gnm:Cell Row="34" Col="2" ValueType="60">W0900</gnm:Cell>
+        <gnm:Cell Row="34" Col="1" ValueType="60">Yoga (Hatha Plus)</gnm:Cell>
+        <gnm:Cell Row="34" Col="2" ValueType="60">F0900-1000</gnm:Cell>
         <gnm:Cell Row="34" Col="3" ValueType="60">MMMC</gnm:Cell>
         <gnm:Cell Row="34" Col="4" ValueType="60">Room 5</gnm:Cell>
-        <gnm:Cell Row="34" Col="6" ValueType="60">Dee Cappell 265-5453</gnm:Cell>
+        <gnm:Cell Row="34" Col="6" ValueType="60">Jan Porter 293-5789</gnm:Cell>
         <gnm:Cell Row="35" Col="0" ValueType="60">Fitness</gnm:Cell>
-        <gnm:Cell Row="35" Col="1" ValueType="60">Yoga (Hatha Plus)</gnm:Cell>
-        <gnm:Cell Row="35" Col="2" ValueType="60">F0900-1000</gnm:Cell>
+        <gnm:Cell Row="35" Col="1" ValueType="60">Yoga (laughter)</gnm:Cell>
+        <gnm:Cell Row="35" Col="2" ValueType="60">S0900-1000</gnm:Cell>
         <gnm:Cell Row="35" Col="3" ValueType="60">MMMC</gnm:Cell>
-        <gnm:Cell Row="35" Col="4" ValueType="60">Room 5</gnm:Cell>
-        <gnm:Cell Row="35" Col="6" ValueType="60">Jan Porter 293-5789</gnm:Cell>
+        <gnm:Cell Row="35" Col="6" ValueType="60">Kathy Chambers 332-3753</gnm:Cell>
         <gnm:Cell Row="36" Col="0" ValueType="60">Fitness</gnm:Cell>
-        <gnm:Cell Row="36" Col="1" ValueType="60">Yoga (laughter)</gnm:Cell>
-        <gnm:Cell Row="36" Col="2" ValueType="60">S0900-1000</gnm:Cell>
+        <gnm:Cell Row="36" Col="1" ValueType="60">Yoga (gentle)</gnm:Cell>
+        <gnm:Cell Row="36" Col="2" ValueType="60">T1245-1345</gnm:Cell>
         <gnm:Cell Row="36" Col="3" ValueType="60">MMMC</gnm:Cell>
-        <gnm:Cell Row="36" Col="6" ValueType="60">Kathy Chambers 332-3753</gnm:Cell>
+        <gnm:Cell Row="36" Col="5" ValueType="60">donation based</gnm:Cell>
         <gnm:Cell Row="37" Col="0" ValueType="60">Fitness</gnm:Cell>
-        <gnm:Cell Row="37" Col="1" ValueType="60">Yoga (gentle)</gnm:Cell>
-        <gnm:Cell Row="37" Col="2" ValueType="60">T1245-1345</gnm:Cell>
-        <gnm:Cell Row="37" Col="3" ValueType="60">MMMC</gnm:Cell>
-        <gnm:Cell Row="37" Col="5" ValueType="60">donation based</gnm:Cell>
-        <gnm:Cell Row="38" Col="0" ValueType="60">Fitness</gnm:Cell>
-        <gnm:Cell Row="38" Col="1" ValueType="60">Zumba $</gnm:Cell>
-        <gnm:Cell Row="38" Col="2" ValueType="60">S1115-1215
+        <gnm:Cell Row="37" Col="1" ValueType="60">Zumba $</gnm:Cell>
+        <gnm:Cell Row="37" Col="2" ValueType="60">S1115-1215
 R1800-1900</gnm:Cell>
+        <gnm:Cell Row="37" Col="3" ValueType="60">MMMC</gnm:Cell>
+        <gnm:Cell Row="37" Col="5" ValueType="60">3.00/class</gnm:Cell>
+        <gnm:Cell Row="37" Col="6" ValueType="60">Jenny</gnm:Cell>
+        <gnm:Cell Row="38" Col="0" ValueType="60">Fitness</gnm:Cell>
+        <gnm:Cell Row="38" Col="1" ValueType="60">Zumba Gold $</gnm:Cell>
+        <gnm:Cell Row="38" Col="2" ValueType="60">MW1045-1145</gnm:Cell>
         <gnm:Cell Row="38" Col="3" ValueType="60">MMMC</gnm:Cell>
-        <gnm:Cell Row="38" Col="5" ValueType="60">3.00/class</gnm:Cell>
-        <gnm:Cell Row="38" Col="6" ValueType="60">Jenny</gnm:Cell>
+        <gnm:Cell Row="38" Col="4" ValueType="60">Gym</gnm:Cell>
+        <gnm:Cell Row="38" Col="5" ValueType="60">2.00/class</gnm:Cell>
+        <gnm:Cell Row="38" Col="6" ValueType="60">Dee Williams</gnm:Cell>
         <gnm:Cell Row="39" Col="0" ValueType="60">Fitness</gnm:Cell>
-        <gnm:Cell Row="39" Col="1" ValueType="60">Zumba Gold $</gnm:Cell>
-        <gnm:Cell Row="39" Col="2" ValueType="60">MW1045-1145</gnm:Cell>
+        <gnm:Cell Row="39" Col="1" ValueType="60">Zumba Gold Training $</gnm:Cell>
+        <gnm:Cell Row="39" Col="2" ValueType="60">F0800-0900</gnm:Cell>
         <gnm:Cell Row="39" Col="3" ValueType="60">MMMC</gnm:Cell>
         <gnm:Cell Row="39" Col="4" ValueType="60">Gym</gnm:Cell>
         <gnm:Cell Row="39" Col="5" ValueType="60">2.00/class</gnm:Cell>
         <gnm:Cell Row="39" Col="6" ValueType="60">Dee Williams</gnm:Cell>
-        <gnm:Cell Row="40" Col="0" ValueType="60">Fitness</gnm:Cell>
-        <gnm:Cell Row="40" Col="1" ValueType="60">Zumba Gold Training $</gnm:Cell>
-        <gnm:Cell Row="40" Col="2" ValueType="60">F0800-0900</gnm:Cell>
+        <gnm:Cell Row="40" Col="0" ValueType="60">Clubs/Discussions</gnm:Cell>
+        <gnm:Cell Row="40" Col="1" ValueType="60">Bible Discussion Group</gnm:Cell>
+        <gnm:Cell Row="40" Col="2" ValueType="60">R1000</gnm:Cell>
         <gnm:Cell Row="40" Col="3" ValueType="60">MMMC</gnm:Cell>
-        <gnm:Cell Row="40" Col="4" ValueType="60">Gym</gnm:Cell>
-        <gnm:Cell Row="40" Col="5" ValueType="60">2.00/class</gnm:Cell>
-        <gnm:Cell Row="40" Col="6" ValueType="60">Dee Williams</gnm:Cell>
+        <gnm:Cell Row="40" Col="4" ValueType="60">Room 5</gnm:Cell>
+        <gnm:Cell Row="41" Col="0" ValueType="60">Clubs/Discussions</gnm:Cell>
+        <gnm:Cell Row="41" Col="1" ValueType="60">Cherokees of NM</gnm:Cell>
+        <gnm:Cell Row="41" Col="2" ValueType="60">3S1200-1500</gnm:Cell>
         <gnm:Cell Row="41" Col="3" ValueType="60">MMMC</gnm:Cell>
+        <gnm:Cell Row="42" Col="0" ValueType="60">Clubs/Discussions</gnm:Cell>
+        <gnm:Cell Row="42" Col="1" ValueType="60">Escribiente Calligraphy</gnm:Cell>
+        <gnm:Cell Row="42" Col="2" ValueType="60">1W1830-2030</gnm:Cell>
         <gnm:Cell Row="42" Col="3" ValueType="60">MMMC</gnm:Cell>
+        <gnm:Cell Row="42" Col="4" ValueType="60">Room 3</gnm:Cell>
+        <gnm:Cell Row="42" Col="6" ValueType="60">escribiente.org</gnm:Cell>
+        <gnm:Cell Row="43" Col="0" ValueType="60">Clubs/Discussions</gnm:Cell>
+        <gnm:Cell Row="43" Col="1" ValueType="60">Free Thinkers Toastmasters</gnm:Cell>
+        <gnm:Cell Row="43" Col="2" ValueType="60">13R1730-1830</gnm:Cell>
         <gnm:Cell Row="43" Col="3" ValueType="60">MMMC</gnm:Cell>
+        <gnm:Cell Row="43" Col="4" ValueType="60">Room 4</gnm:Cell>
+        <gnm:Cell Row="44" Col="0" ValueType="60">Clubs/Discussions</gnm:Cell>
+        <gnm:Cell Row="44" Col="1" ValueType="60">Invest in Debt</gnm:Cell>
+        <gnm:Cell Row="44" Col="2" ValueType="60">2W1800-2100</gnm:Cell>
         <gnm:Cell Row="44" Col="3" ValueType="60">MMMC</gnm:Cell>
+        <gnm:Cell Row="45" Col="0" ValueType="60">Clubs/Discussions</gnm:Cell>
+        <gnm:Cell Row="45" Col="1" ValueType="60">Libros</gnm:Cell>
+        <gnm:Cell Row="45" Col="2" ValueType="60">1S0900-1200</gnm:Cell>
         <gnm:Cell Row="45" Col="3" ValueType="60">MMMC</gnm:Cell>
+        <gnm:Cell Row="45" Col="4" ValueType="60">Room 3</gnm:Cell>
+        <gnm:Cell Row="46" Col="0" ValueType="60">Clubs/Discussions</gnm:Cell>
+        <gnm:Cell Row="46" Col="1" ValueType="60">Natural Health Solutions: Essential Oils</gnm:Cell>
+        <gnm:Cell Row="46" Col="2" ValueType="60">3M1800-1900</gnm:Cell>
         <gnm:Cell Row="46" Col="3" ValueType="60">MMMC</gnm:Cell>
-        <gnm:Cell Row="47" Col="3" ValueType="60">MMMC</gnm:Cell>
+        <gnm:Cell Row="46" Col="4" ValueType="60">Room 3</gnm:Cell>
+        <gnm:Cell Row="47" Col="0" ValueType="60">Clubs/Discussions</gnm:Cell>
+        <gnm:Cell Row="47" Col="1" ValueType="60">Reclaiming Families</gnm:Cell>
+        <gnm:Cell Row="47" Col="2" ValueType="60">M1800-1930</gnm:Cell>
+        <gnm:Cell Row="47" Col="4" ValueType="60">1800-1930</gnm:Cell>
+        <gnm:Cell Row="48" Col="0" ValueType="60">Clubs/Discussions</gnm:Cell>
+        <gnm:Cell Row="48" Col="1" ValueType="60">Red Hat Society</gnm:Cell>
+        <gnm:Cell Row="48" Col="2" ValueType="60">3R1000</gnm:Cell>
+        <gnm:Cell Row="48" Col="4" ValueType="60">East Social Hall</gnm:Cell>
+        <gnm:Cell Row="49" Col="0" ValueType="60">Clubs/Discussions</gnm:Cell>
+        <gnm:Cell Row="49" Col="1" ValueType="60">TOPS #216</gnm:Cell>
+        <gnm:Cell Row="49" Col="2" ValueType="60">F1000</gnm:Cell>
+        <gnm:Cell Row="49" Col="4" ValueType="60">Room 4</gnm:Cell>
+        <gnm:Cell Row="50" Col="0" ValueType="60">Clubs/Discussions</gnm:Cell>
+        <gnm:Cell Row="50" Col="1" ValueType="60">Vietanamese Seniors</gnm:Cell>
+        <gnm:Cell Row="50" Col="2" ValueType="60">S0900</gnm:Cell>
+        <gnm:Cell Row="51" Col="0" ValueType="60">Clubs/Discussions</gnm:Cell>
+        <gnm:Cell Row="51" Col="1" ValueType="60">Women's Bible Discussion</gnm:Cell>
+        <gnm:Cell Row="51" Col="2" ValueType="60">T1030-1230</gnm:Cell>
+        <gnm:Cell Row="52" Col="0" ValueType="60">Music</gnm:Cell>
+        <gnm:Cell Row="52" Col="1" ValueType="60">Beginning Tuira</gnm:Cell>
+        <gnm:Cell Row="52" Col="2" ValueType="60">T0900</gnm:Cell>
+        <gnm:Cell Row="53" Col="0" ValueType="60">Music</gnm:Cell>
+        <gnm:Cell Row="53" Col="1" ValueType="60">Sing-a-Long</gnm:Cell>
+        <gnm:Cell Row="53" Col="2" ValueType="60">T1300</gnm:Cell>
+        <gnm:Cell Row="54" Col="0" ValueType="60">Activities/Class</gnm:Cell>
+        <gnm:Cell Row="54" Col="1" ValueType="60">AARP Defensive Driving</gnm:Cell>
+        <gnm:Cell Row="54" Col="2" ValueType="60">13S0900</gnm:Cell>
+        <gnm:Cell Row="54" Col="4" ValueType="60">Room 5</gnm:Cell>
+        <gnm:Cell Row="54" Col="5" ValueType="60">$15 AARP members, $20 others</gnm:Cell>
       </gnm:Cells>
-      <gnm:SheetLayout TopLeft="A27">
+      <gnm:SheetLayout TopLeft="A40">
         <gnm:FreezePanes FrozenTopLeft="A1" UnfrozenTopLeft="A2"/>
       </gnm:SheetLayout>
       <gnm:Solver ProblemType="1" Inputs="" MaxTime="0" MaxIter="0" NonNeg="1" Discr="0" AutoScale="0" ShowIter="0" AnswerR="0" SensitivityR="0" LimitsR="0" PerformR="0" ProgramR="0"/>

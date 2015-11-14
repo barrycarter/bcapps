@@ -35,4 +35,4 @@
 # keep geonames changes up to date (hourly here is overkill but ok)
 3 * * * * /usr/local/bin/bc-daily-update.pl --debug
 # dump gocomics db nightly (only one I actually create remotely)
-7 1 * * * sqlite3 /sites/DB/gocomics.db .dump > /sites/DB/gocomics-dump.txt; mv gocomics-dump.txt.bz2 gocomics-dump.txt.bz2.old; bzip2 gocomics-dump.txt
+7 1 * * * cd /sites/DB/; /usr/local/bin/sqlite3 gocomics.db .dump > gocomics-dump.txt; mv gocomics-dump.txt.bz2 gocomics-dump.txt.bz2.old; bzip2 gocomics-dump.txt
