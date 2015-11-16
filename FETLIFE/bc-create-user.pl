@@ -4,6 +4,7 @@
 # it in, in order to obtain a session cookie
 
 require "/usr/local/lib/bclib.pl";
+require "/home/barrycarter/bc-private.pl";
 
 # TODO: create $nickname, $email, $password
 
@@ -14,8 +15,14 @@ my(@r) = randomize(\@list);
 
 $nickname = join("",@r[0..6]);
 $email = join("",@r[7..12]);
-$email_domain = join("",@r[13..19]);
-$email = "$email\@$email_domain.com";
+$email_domain = join("",@r[13..19]).".com";
+
+# this is my personal override because I actually *want* to get FL
+# emails, at least as a test
+
+$email_domain = $private{secret}{domain};
+
+$email = "$email\@$email_domain";
 $password = join("",@r[20..25]);
 
 print << "MARK";

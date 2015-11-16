@@ -12,15 +12,14 @@
 # --subdir: the subdirectory to which I am downloading
 
 require "/usr/local/lib/bclib.pl";
+require "/home/barrycarter/bc-private.pl";
 
 # max length of command line (131071 is a guess, leaving room for temp files)
 $maxlen = 100000;
 
 defaults("xmessage=1");
 
-unless ($globopts{sessionid} && $globopts{subdir}) {
-  die("Usage: $0 --sessionid=x --subdir=x");
-}
+unless ($globopts{subdir}) {die("Usage: $0 --subdir=x");}
 
 dodie('chdir("/mnt/extdrive2/FETLIFE-BY-REGION/$globopts{subdir}")');
 

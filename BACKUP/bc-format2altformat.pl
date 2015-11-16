@@ -38,11 +38,15 @@ while (<>) {
   # (32 would probably work too)
   $mtime = 2**33-$mtime;
 
-  # recognized types I want to ignore
-  if ($type=~/^[dspcb]$/) {next;}
+  # ZPAQ ignores links, so ignoring them here as well. This reduces
+  # the *number* of entries massively, but has very little impact on
+  # estimated size (since symlinks are tiny)
 
-  # ignore nonfiles/links
-  unless ($type=~/^[fl]$/) {warn "BAD TYPE: $_"; next;}
+  # recognized types I want to ignore
+  if ($type=~/^[dspcbl]$/) {next;}
+
+  # ignore nonfiles
+  unless ($type=~/^[f]$/) {warn "BAD TYPE: $_"; next;}
 
 =item comment
 
