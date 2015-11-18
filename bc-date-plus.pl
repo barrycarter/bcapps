@@ -24,7 +24,7 @@ if ($amount=~s/^\-//) {$sign=-1;}
 # TODO: allow for multi-character in $amount?
 # start at current time and add
 $res = time();
-while ($amount=~s/(\d+)(\D)//) {
+while ($amount=~s/([\d\.]+)(\D)//) {
   # ugly to use $1,$2 directly
   $res+= $sign*$1*$seconds{$2}
 }
