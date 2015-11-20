@@ -13,3 +13,5 @@ TODO
   - Instead of using size to indicate different stellar brightnesses,
   consider using colors (ie, black to white), though early experiments
   didn't go well
+
+  - List Mercury/Venus transits (despite what README file says, I don't have these listed)
