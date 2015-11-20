@@ -72,14 +72,3 @@ e''[t] == grav*sm*(s[t]-e[t])/Norm[s[t]-e[t]]^3 +
 m''[t] == grav*em*(e[t]-m[t])/Norm[e[t]-m[t]]^3 +
           grav*sm*(s[t]-m[t])/Norm[s[t]-m[t]]^3
 }, {s,e,m}, {t,0,86400*365*100}][[1]]
-
-
-
-
-
-
-
-
-
-
-
