@@ -96,9 +96,9 @@ for $week (-1..$globopts{weeks}-1) {
     my($jd) = jd2unix($date, "unix2jd");
 
     # sidereal time at noon
-    # TODO: this assumes MT = GMT-6 which isn't always true
+    # TODO: this assumes MT = GMT-6 or -7 which isn't always true
     # TODO: don't hardcode ABQ longitude
-    my($sd) = gmst($date+6*3600)-106.651138463684/15.;
+    my($sd) = fmodp(gmst($date+7*3600)-106.651138463684/15.,24);
     $sd = sprintf("%02dh%02dm",int($sd), round($sd*60%60));
 
     # moon age (this is not 100% accurate)
