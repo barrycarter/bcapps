@@ -101,6 +101,9 @@ sub shorten {
   # odd character that causes problems
   $event=~s/\xc2//g;
 
+  # kill space after degrees
+  $event=~s/\xb0\s+/\xb0/g;
+
   # calendar includes Venus position start of each month, but I don't need this
   if ($event=~/venus: \d/i) {return;}
 
@@ -130,7 +133,7 @@ sub shorten {
   $event=~s/^.*?\s+(equinox|solstice)/$1 ($stime)/i;
 
   # shrink planet names + more
-  $event=~s/(mercury|venus|earth|mars|jupiter|saturn|uranus|beehive|pollux|pleiades|aldebaran|superior|inferior|conj\.|conjunction)/substr($1,0,3)/ieg;
+  $event=~s/(mercury|venus|earth|mars|jupiter|saturn|uranus|beehive|pollux|pleiades|aldebaran|superior|inferior|conj\.|conjunction|regulus|antares)/substr($1,0,3)/ieg;
 
   # convert inferior/superior conjunction to something more useful
   $event=~s/inf con/-> mor*/i;
@@ -138,6 +141,10 @@ sub shorten {
 
   # solar conjunctions are just listed as Conjunction (which I shorted
   # to Con), fixing here
+
+  # NOTE: when Saturn conjuncts the sun, this yields a confusing
+  # "Sat-Sun", but I'm ok w/ that [eg, 29 Nov 2015, which happens to
+  # be a Sunday]
   $event=~s/ Con/-Sun/;
 
   # short form for meteor showers
@@ -145,14 +152,15 @@ sub shorten {
 
   # others
   $event=~s/aquarids/Aqu/i;
-  $event=~s/regulus/AlfLeo/i;
-  $event=~s/antares/AlfSco/i;
+  $event=~s/Quadrantids/Quadrntds/i;
+#  $event=~s/regulus/Reglus/i;
+#  $event=~s/antares/Antres/i;
   $event=~s/aphelion: /Sun-Ear: /i;
   $event=~s/South /S. /;
   $event=~s/North /N. /;
 
   # will cause probs for bc-calendar.pl
-  if (length($event)>19) {warn("$event > 18 chars");}
+  if (length($event)>18) {warn("$event > 18 chars");}
 
   debug("EV: $event");
 

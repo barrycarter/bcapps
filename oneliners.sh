@@ -1,10 +1,18 @@
 # shell one liners
 
+# generates imacro to dl pof contact history (dirs and stuff will
+# change over time)
+
+# NOTE: this ONLY dls OUTBOUND contacts, must still compensate for inbound
+
+perl -le 'sub BEGIN {print "URL GOTO=http://www.pof.com/firstcontacthistory.aspx\nSAVEAS TYPE=HTM FOLDER=/home/barrycarter/20151123/ FILE=contact1.htm\n"} for $i (2..15) {print "TAG POS=1 TYPE=A ATTR=TXT:$i\nSAVEAS TYPE=HTM FOLDER=/home/barrycarter/20151123/ FILE=contact$i.htm\n"}'
+
+exit;
+
 # obtains number to category mapping for
 # http://en.allexperts.com/q/a.htm and similar pages
 
 fgrep /q/ ?.htm | perl -nle 's%/q/.*?\-(\d+)/\">(.*?)</a>%%; print "$1 $2"'
-
 
 exit;
 

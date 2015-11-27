@@ -128,9 +128,14 @@ for $i (1..$#arr) {
     debug("PARSING: $j");
     my(@dates) = parseDateString($j,11,2015);
 
+    debug("<dates>",unfold(\@dates),"</dates>");
+
     for $k (@dates) {
+
       my($st,$en) = @{$k};
 
+      # if no dates, ignore (TODO: warn?)
+      unless ($st && $en) {next;}
       debug("ST: $st, EN: $en");
 
       # have we seen this event?
@@ -139,6 +144,8 @@ for $i (1..$#arr) {
 	debug("SKIPPING: $hash{name}: $st - $en, already done");
 	next;
       }
+
+      debug("NOT SEEN: $hash{name}: $st - $en");
 
       # now, cruft the meetup itself
 
@@ -241,7 +248,7 @@ sub parseDateString {
       push(@res,[$ustime,$uetime]);
     }
   }
-  debug("RETURNINIG",@{$res[0]});
+  debug("RETURNING",@{$res[0]});
   return @res;
 }
 
