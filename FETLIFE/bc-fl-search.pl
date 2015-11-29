@@ -127,7 +127,7 @@ EXPERIMENTAL UNOFFICIAL FetLife Search Engine Form (not affiliated with FetLife)
 
 <tr><th>Country</th><td>$cunts
 <br><em><font size=-1>
-<a href="http://a66e284742512cee1441fbbcf808eed6.shared.db.mysql.94y.info/">(breakdown by country)</a>; many kinksters use "Antarctica" to mean "I do not wish to reveal my location"
+<a href="http://a66e284742512cee1441fbbcf808eed6.shared.db.mysql.94y.info/" target="_blank">(breakdown by country)</a>; many kinksters use "Antarctica" to mean "I do not wish to reveal my location"
 </font></em>
 </td></tr>
 

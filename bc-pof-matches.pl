@@ -17,9 +17,11 @@ require "/usr/local/lib/bclib.pl";
 
 while (<>) {
   unless (/profile_id=(\d+)/) {next;}
-  my($id) = $1;
-  if ($seen{$id}) {next;}
-  print "$id\n";
-  $seen{$id} = 1;
+  while (s/profile_id=(\d+)//) {
+    my($id) = $1;
+    if ($seen{$id}) {next;}
+    print "$id\n";
+    $seen{$id} = 1;
+  }
 }
 

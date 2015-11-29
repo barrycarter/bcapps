@@ -162,7 +162,7 @@ MARK
 ;
 
   if ($queryhash) {
-    print "<a href='http://rss.$queryhash.$db.$tld'>XML</a>\n"; 
+    print "<a href='http://rss.$queryhash.$db.$tld'>RSS (broken)</a>\n"; 
     print "<a href='http://csv.$queryhash.$db.$tld'>CSV</a>\n";
  }
 }
