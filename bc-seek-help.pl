@@ -101,6 +101,7 @@ for (;;) {
   # TODO: don't let non-JSON reply kill the whole program
 
   # data is in JSON format
+  debug("THUNK: $thunk");
   $json = JSON::from_json($thunk);
 
   # in theory, could do filtering (via source, etc) here
