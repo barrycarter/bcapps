@@ -3,13 +3,15 @@
 # Given a list of files containing okcupid profiles, output data for
 # those profiles
 
-require "/usr/local/lib/bclib.pl";
+# To extract from match.html
 
-# list of info values that mean "this is not a user"
-my(%bad) = list2hash("Bookmarks | OkCupid", "OkCupid | Careers", 
-		     "OkCupid | About Us", "OkTrends",
-		     "Free Online Dating | OkCupid", "Matches | OkCupid",
-		     "Messages | OkCupid", ");
+# perl -nle 'while(s%/profile/(.*?)\?%%) {print $1}' match.html | sort | uniq
+
+# to obtain profiles (no login required):
+# http://www.okcupid.com/profile/(profile_id)
+# NOTE: some profiles DO require login
+
+require "/usr/local/lib/bclib.pl";
 
 my(@fields) = ("name", "age", "location", "height", "ethnicity", "orientation",
 	       "bodytype", "lastonline", "drinking", "drugs", "offspring",
@@ -28,13 +30,14 @@ for $i (@ARGV) {
   # name age and location
   $all=~s%<title>\s*(.*?)\s*</title>%%s;
   my($info) = $1;
-  if ($bad{$info}) {next;}
-  debug("INFO: $info");
-
-
   # cleanup "| OkCupid" at end
   $info=~s/\s*\|\s*okcupid\s*$//i;
   ($hash{name},$hash{age},$hash{location}) = split(/\s*\/\s*/,$info);
+
+  unless ($hash{age}) {
+    warn "BAD INFO: $info, ignoring file";
+    next;
+  }
 
   while ($all=~s%<dl>(.*?)</dl>%%s) {
     my($data) = $1;
