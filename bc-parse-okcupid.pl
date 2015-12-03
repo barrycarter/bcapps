@@ -4,8 +4,13 @@
 # those profiles
 
 # To extract from match.html
+# perl -nle 'while(s%/profile/(.*?)\?%%) {print $1}' match*.html | sort | uniq
 
-# perl -nle 'while(s%/profile/(.*?)\?%%) {print $1}' match.html | sort | uniq
+# To get unseen profiles:
+# perl -nle 'unless (-f $_) {print "curl -O http://www.okcupid.com/profile/$_"}'
+
+# people I've already contacted
+# perl -nle 'while (s%To\s*</span>\s*(.*?)</span>%%) {print $1}' messages-sent*.html | sort | uniq
 
 # to obtain profiles (no login required):
 # http://www.okcupid.com/profile/(profile_id)
