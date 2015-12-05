@@ -23,7 +23,7 @@ require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
 
 # for testing only!
-$globopts{debug}=1;
+# $globopts{debug}=1;
 
 debug("ARGV",@ARGV);
 
@@ -148,15 +148,15 @@ sub bc_git {
 Given a file formatted like recentfiles.txt, check that all files are
 sufficiently recent
 
+If $file contains spaces, this effectively checks multiple files
+
 =cut
 
 sub bc_check_file_of_files_age {
   my($file) = @_;
 
-  $globopts{debug}=1;
-
   # TODO: should really check error/return status on this
-  my(@tests) = `egrep -v '^#|^\$' $file`;
+  my(@tests) = `egrep -hv '^#|^\$' $file`;
 
   for $i (@tests) {
     chomp($i);
@@ -183,15 +183,19 @@ sub bc_check_file_of_files_age {
 
     my($fileage) = time()-$out;
     if ($fileage > $c) {
-      print "Filespec $files critical: $fileage\n";
+      print "Filespec $files critical: $fileage > $c\n";
       return 2;
     }
 
     if ($fileage > $w) {
-      print "Filespec $files warning: $fileage\n";
+      print "Filespec $files warning: $fileage > $w\n";
       return 1;
     }
+
+    print "Filespec $files good: $fileage < $w\n";
   }
+
+  print "All filespecs have passed\n";
 
   # if ALL tests pass...
   return 0;
