@@ -35,5 +35,5 @@ chomp($fname);
 # cleanup categories
 system("mysql test < /home/barrycarter/SQL/update-cc.sql");
 
-$globopts{debug} = 1;
-debug("OUT: $out","ERR: $err","RES: $res");
+# $globopts{debug} = 1;
+# debug("OUT: $out","ERR: $err","RES: $res");
