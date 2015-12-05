@@ -35,3 +35,9 @@
 # and frequentlyish (the filename/directory changes with each run)
 
 1200 2400 "/mnt/extdrive2/FETLIFE-BY-REGION/20151106/homepage.html"
+
+# I mirror my gocomics comments db locally and also update other files
+# that need to be backed up weekly; this checks that they are all
+# recent enough
+
+129600 259200 "/usr/local/etc/weekly-backups/files/bcunix-*.txt /usr/local/etc/weekly-backups/files/bcinfo3-*.[tb][xz][t2]"

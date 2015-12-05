@@ -1,0 +1,8 @@
+# nagios will use this file to check that certain files (or
+# directories) are above/below/at certain sizes (this will replace the
+# individual file size tests in bc-services.cfg)
+
+# TODO: allow checking of remote files as well, currently only localhost
+
+"/home/barrycarter/SCRATCH" = 0
+"/tmp" < 1000000
