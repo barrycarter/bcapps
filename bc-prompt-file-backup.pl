@@ -17,18 +17,27 @@ for $i (@ARGV) {
   my($name) = $i;
   $name=~s%.*/%%;
   $name = "$name.$size";
+
+  # using salted sha1hash is terrible, not reversible
+  # TODO: keep track of salted hashes locally!
+  my($encname) = sha1_hex("$name.$size.$private{promptfile}{salt}");
+
   # TODO: allow for multiple runs, don't hardcode "filename"
-  open(A,"|openssl rsautl -inkey rsakey -encrypt|base64 > filename");
-  print A $name;
-  close(A);
-  my($encname) = read_file("filename");
-  $encname=~s/\s//g;
-  $encname=~s%/%-%g;
-  $encname=~s%\+%,%g;
-  debug("ENC: $i -> $encname");
+#  open(A,"|openssl rsautl -inkey rsakey -encrypt|base64 > filename");
+#  print A $name;
+#  close(A);
+#  my($encname) = read_file("filename");
+#  $encname=~s/\s//g;
+#  $encname=~s%/%-%g;
+#  $encname=~s%\+%,%g;
+#  debug("ENC: $i -> $encname");
 
   # now the ncftp command to send it over
-  print "openssl enc -bf -pass file:rsakey -in '$i' | ncftpput -c -z -u $private{promptfile}{username} -p $private{promptfile}{password} $private{promptfile}{server} . $encname\n";
+  # NOTE: to decrypt "openssl enc -d -bf ..."
+
+  # NOTE: the -z below doesn't work because uploaded files aren't
+  # visible in promptfile's directory tree
+  print "openssl enc -bf -pass file:rsakey -in \"$i\" | ncftpput -c -z -u $private{promptfile}{username} -p $private{promptfile}{password} $private{promptfile}{server} $encname\n";
 
 }
 

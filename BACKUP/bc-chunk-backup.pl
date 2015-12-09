@@ -1,12 +1,14 @@
 #!/bin/perl
 
+# --checkfile: check that each file actually exists (slow)
+
 require "/usr/local/lib/bclib.pl";
 require "$bclib{home}/bc-private.pl";
 
 # rewriting 27 Feb 2015 for a single file
 # see README for file format
 
-defaults("limit=25000000000");
+defaults("limit=25000000000&xmessage=1");
 $limit = $globopts{limit};
 my($tot, $count);
 
@@ -40,6 +42,11 @@ while (<>) {
   # TODO: in theory, could grab current file size using "-s" (but too slow?)
   # this isn't real mtime, actually 2**33-mtime
   my($size,$mtime,$name) =  split(/\s+/, $_, 3);
+
+  # this slows things down a lot, but it useful when I've been making
+  # changes to the fs
+  if ($globopts{checkfile} && !(-f $name)) {next;}
+
   $tot+= $size;
 
   # TODO: if $size is small (indicating symlink or pointlessness,
@@ -72,5 +79,5 @@ print A "sort -k1nr statlist.txt >! big-by-file.txt\n";
 close(A);
 
 # egrep hangs for a long time, so announce that at least I am finished
-xmessage("$0 has ended");
+# xmessage("$0 has ended");
 
