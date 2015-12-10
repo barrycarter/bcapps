@@ -23,6 +23,8 @@ open(D,">gunzip.txt");
 
 # this program now gets ALL files, and excluded ones are colored
 
+my($size,$mtime,$name) =  split(/\s+/, $_, 3);
+
 while (<>) {
   chomp;
 
@@ -41,7 +43,7 @@ while (<>) {
 
   # TODO: in theory, could grab current file size using "-s" (but too slow?)
   # this isn't real mtime, actually 2**33-mtime
-  my($size,$mtime,$name) =  split(/\s+/, $_, 3);
+  ($size,$mtime,$name) =  split(/\s+/, $_, 3);
 
   # this slows things down a lot, but it useful when I've been making
   # changes to the fs
@@ -63,7 +65,8 @@ while (<>) {
   print B "$orig\n";
 }
 
-debug("Used $count files to meet total");
+my($rtime) = 2**33-$mtime;
+debug("Used $count files to meet total, earliest ts: $rtime");
 
 # below is just to avoid "egrep: writing output: Broken pipe" errors
 # TODO: is this the best way to handle those errors
