@@ -1,6 +1,7 @@
 #!/bin/perl
 
 # backs up files to promptfile.com, encrypting them first
+# later changed to livedrive.com, since promptfile.com limits to 1000 files
 
 require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
