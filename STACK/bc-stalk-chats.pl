@@ -7,11 +7,21 @@ require "/usr/local/lib/bclib.pl";
 # http://chat.stackexchange.com/rooms/36/mathematics is test
 
 my($rid) = 36;
-my($out,$err,$res) = cache_command2("curl -L http://chat.stackexchange.com/rooms/$rid","age=3600");
+my($out,$err,$res) = cache_command2("curl -L http://chat.stackexchange.com/rooms/1","age=3600");
 
 unless ($out=~s%<input id="fkey" name="fkey" type="hidden" value="(.*?)" />%%s) {die "NO FKEY";}
 
 my($fkey) = $1;
+
+my($rids) = "r36=0&r49=0&r24938=0";
+
+# get recent events
+($out,$err,$res) = cache_command2("curl -d 'fkey=$fkey&$rids' http://chat.stackexchange.com/events", "age=3600");
+
+debug("OUT: $out");
+
+die "TESTING";
+
 
 # get events
 
