@@ -43,28 +43,7 @@ for $i (keys %hash) {
   }
 }
 
-debug(unfold(\%msgs));
-
-# debug(var_dump("hash",\%hash));
-
-die "TESTING";
-
-
-# get events
-
-# fixed timestamp for testing
-my($ts) = 1449949857-600;
-
-# apprently, first two digits are trimmed (why?)
-$ts=~s/^..//;
-
-# testing
-$ts = "49014409";
-
-# TODO: normally, dont cache this
-# TODO: can I do multiple roomids here, eg r1=foo&r2=foo.. ?
-($out,$err,$res) = cache_command2("curl --trace-ascii - -d 'fkey=$fkey&r$rid=$ts' http://chat.stackexchange.com/events", "age=3600");
-
-# debug("FK: $fkey");
-debug("OUT: $out","ERR: $err");
+for $i (sort {$a <=> $b} keys %msgs) {
+  print "$i: $msgs{$i}\n";
+}
 
