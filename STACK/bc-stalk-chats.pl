@@ -35,15 +35,18 @@ for $i (keys %hash) {
   for $j (keys %{$hash{$i}}) {
     # the d and t values are probably important, but not to me at the moment
     for $k (@{$hash{$i}{$j}}) {
-      # TODO: ignore non-1 event_type?
-      # TODO: this is just a temporary "prettyprint"
-#      my(%hash) = %{$k};
-      $msgs{$k->{id}} = join("|", $k->{room_name}, $k->{user_name}, $k->{time_stamp}, $k->{content});
+      $msgs{$k->{id}} = $k;
     }
   }
 }
 
 for $i (sort {$a <=> $b} keys %msgs) {
-  print "$i: $msgs{$i}\n";
-}
+  # TODO: ignore non-1 event_type?
+  my(%hash) = %{$msgs{$i}};
+#  debug("HASH",%hash);
 
+  # compute timestamp
+  my($ts) = strftime("%H%M%S", localtime($hash{time_stamp}));
+
+  print "$ts $hash{room_name} $hash{user_name} $hash{content}\n";
+}
