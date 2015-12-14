@@ -80,7 +80,7 @@ for $i (keys %urls) {
 
 for $i (sort keys %cmds) {
   debug("RUNNING: $i");
-  system($i);
+#  system($i);
 }
 
 # oneoff for bc-suck-stack.pl so not perldoc'd
