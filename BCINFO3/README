@@ -305,11 +305,25 @@ cp fly /usr/local/bin/
 bc-msmtp-wrapper.pl so I can capture all outgoing mail (thought not
 necessarily in proper format)
 
-% 14 Jul 201%: installing fusecompress (since system has no loop
+% 14 Jul 2015: installing fusecompress (since system has no loop
 mounting and doesn't recognize squashfs anyway?)
 
 svn checkout http://fusecompress.googlecode.com/svn/trunk/ fusecompress-read-only
 
-(above is the ONLY version that compiled for me!)
+(above is the ONLY version that compiled for me)
 
+% 15 Dec 2015: manual weblog rotation (dumb, but what I'm doing for now):
+
+cd /var/log/lighttpd/
+
+: make sure date below is correct
+: run these four commands "at once" to minimize downtime
+
+/etc/init.d/lighttpd stop
+mv access.log access.log.20151215
+mv error.log error.log.20151215
+/etc/init.d/lighttpd start
+
+: this can be run later
+bzip2 -v access.log.* error.log.* &
 
