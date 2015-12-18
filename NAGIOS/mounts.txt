@@ -9,3 +9,5 @@
 # temporarily down, alas
 # /mnt/sshfs3/
 /mnt/ramdisk/
+# new drive
+/mnt/extdrive5/

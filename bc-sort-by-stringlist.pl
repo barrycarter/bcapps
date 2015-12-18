@@ -29,3 +29,5 @@ while (<STDIN>) {
   # if $cmp is still -1, print that instead
   if ($cmp == -1) {print "-1 $_";}
 }
+
+# fgrep --color=always -af matchstrings.txt file.txt > output.txt

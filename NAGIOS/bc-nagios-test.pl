@@ -235,7 +235,9 @@ sub bc_check_mounts {
     for $j (1..1000) {$str .= chr(rand()*256);}
     # TODO: don't always name file "tempfile.txt"?
     # TODO: this could work on broken mount due to caching?
+    debug("Writing to $i/tempfile.txt");
     write_file($str, "$i/tempfile.txt");
+    debug("Reading back from $i/tempfile.txt");
     $str2 = read_file("$i/tempfile.txt");
 
     unless ($str eq $str2) {
