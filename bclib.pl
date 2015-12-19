@@ -110,11 +110,12 @@ our(%is_tempfile);
 our(%shared);
 
 our(@globopts) = ("debug", "nocache", "tmpdir", "nowarn", "fake", "ignorelock",
-		  "affirm", "keeptemp", "xmessage", "bgend");
+		  "affirm", "keeptemp", "xmessage", "bgend", "filedebug");
 
 # global options this library supports
 #
 # --debug: print debugging messages
+# --filedebug=file: send debugging messages to file, not STDERR
 # --nocache: do not cache results
 # --tmpdir=x: use x as temporary directory when needed
 # --nowarn: if using warnlocal(), suppress warnings
@@ -264,7 +265,13 @@ newlines if --debug given at command line
 =cut
 
 sub debug {
-  if($globopts{debug}) {print STDERR join("\n",@_),"\n";}
+  my($err) = join("\n",@_)."\n";
+
+  # TODO: appending to file each line is inefficient
+  if ($globopts{filedebug}) {append_file($err, $globopts{filedebug});}
+
+  # note that both filedebug and debug can be used at the same time
+  if($globopts{debug}) {print STDERR $err;}
   return @_;
 }
 

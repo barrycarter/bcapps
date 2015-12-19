@@ -8,19 +8,28 @@ require "/usr/local/lib/bclib.pl";
 # no buffering for instant response
 $|=1;
 
-# start with something I know works (from testing)
+# server name
+my($sname) = "bic";
 
-<>;<>;
+# TODO: this should be in bclib.pl (remove old copy of debug file)
+system("rm /tmp/fakeirc.txt");
 
-print << "MARK";
-:ircd.ratbox 376 barrycarter :End of /MOTD command.
-MARK
-;
+# must read two lines from client first, otherwise pidgin whines
+my($user) = scalar(<>);
+my($nick) = scalar(<>);
 
-# print ":server 001 foo: bar";
+debug("USER: $user","NICK: $nick");
+
+print ":$sname 376 barrycarter :End of /MOTD command.\n";
 
 while (<>) {
-  print "GOT $_";
+
+  # JOIN message
+  if (/^JOIN/) {
+    print ":$sname 332\n";
+  }
+
+  debug("GOT: $_");
 }
 
 
