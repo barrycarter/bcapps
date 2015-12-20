@@ -4,6 +4,30 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# do i just need IPC w tcsh?
+
+use IPC::Open3;
+
+my $pid = open3(\*IN, \*OUT, \*ERR, 'sh');
+
+my($input,$output);
+
+for (;;) {
+
+  print "Enter something for mr shell\n";
+  $input = <STDIN>;
+  print IN $input;
+
+  print "Lets see what mr shell says\n";
+  $output = <OUT>;
+  print "SHELL: $output";
+
+}
+
+die "TESTING";
+
+
+
 use Expect;
 
 sub myfunc {
@@ -17,9 +41,9 @@ my($exp) = Expect->spawn("sh");
 
 # $exp->debug(3);
 
-$exp->send("date\n");
+$exp->send("adventure\n");
 
-$exp->expect(1);
+$exp->expect(0);
 
 debug("BEFORE", "<start>".$exp->before()."<end>");
 
