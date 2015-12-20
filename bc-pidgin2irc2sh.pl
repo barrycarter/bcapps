@@ -35,6 +35,9 @@ send_msg(":$sender PRIVMSG $nick :hello, I am $channel printing even before you 
 
 while (<>) {
 
+  # TODO: this probably doesnt belong here
+  s/\s*$//;
+
   get_msg($_);
 
   # JOIN message
@@ -43,7 +46,7 @@ while (<>) {
   }
 
   # print to an arbitrary channel the user isnt in
-  send_msg(":$sender PRIVMSG $nick :hello, I am $sender");
+  send_msg(":$sender PRIVMSG $nick :you said '$_'");
 
 }
 
