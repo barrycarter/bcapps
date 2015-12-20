@@ -6,15 +6,24 @@ require "/usr/local/lib/bclib.pl";
 
 use Expect;
 
-sub myfunc {debug("MY FUNC CALLED WITH: <arg>",@_,"</arg>");}
+sub myfunc {
+  my($glob) = @_;
+
+  debug("MATCH:",$glob->match());
+
+}
 
 my($exp) = Expect->spawn("sh");
 
-$exp->debug(0);
+$exp->debug(3);
 
 $exp->send("date\n");
 
-$exp->expect(0,[qr/./ => \&myfunc]);
+$exp->expect(1, '-re', "..................");
+
+debug("MATCH:", $exp->match());
+
+# $exp->expect(1,[qr/.+/s => \&myfunc]);
 
 # $exp->expect(0,
 #           [ qr/.+/ => sub { my $exp = shift;
