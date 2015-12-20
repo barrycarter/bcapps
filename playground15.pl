@@ -4,11 +4,15 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# do i just need IPC w tcsh?
+# do i just need IPC w (tc)sh?
 
 use IPC::Open3;
+$|=1;
 
 my $pid = open3(\*IN, \*OUT, \*ERR, 'sh');
+
+# fcntl(IN,F_SETFL,O_NONBLOCK);
+# fcntl(OUT,F_SETFL,O_NONBLOCK);
 
 my($input,$output);
 
@@ -21,6 +25,10 @@ for (;;) {
   print "Lets see what mr shell says\n";
   $output = <OUT>;
   print "SHELL: $output";
+
+#  while ($output = <OUT>) {
+#    print "SHELL: $output";
+#  }
 
 }
 
