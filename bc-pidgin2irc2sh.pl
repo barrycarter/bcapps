@@ -13,6 +13,7 @@ my($sname) = "bic";
 
 # just while testing
 my($chan) = "channel";
+my($sender) = "admin!admin\@admin";
 
 # TODO: this should be in bclib.pl (remove old copy of debug file)
 system("rm /tmp/fakeirc.txt");
@@ -21,23 +22,42 @@ system("rm /tmp/fakeirc.txt");
 my($user) = scalar(<>);
 my($nick) = scalar(<>);
 
-debug("USER: $user","NICK: $nick");
+# get just the nickname
+unless ($nick=~/NICK (.*?)\s*$/) {
+  # TODO: die a bit nicer here
+  die "NO NICKEE, NO PLAYEE";
+}
 
-print ":$sname 376 barrycarter :End of /MOTD command.\n";
+$nick = $1;
 
-print ":admin PRIVMSG #$channel  :hello, I am $channel printing even before you do anything\n";
+send_msg(":$sname 376 $nick :End of /MOTD command.");
+send_msg(":$sender PRIVMSG $nick :hello, I am $channel printing even before you do anything");
 
 while (<>) {
 
+  get_msg($_);
+
   # JOIN message
   if (/^JOIN/) {
-    print ":$sname 332\n";
+    send_msg(":$sname 332");
   }
 
   # print to an arbitrary channel the user isnt in
-  print ":admin PRIVMSG #$channel :hello, I am $channel\n";
+  send_msg(":$sender PRIVMSG $nick :hello, I am $sender");
 
-  debug("GOT: $_");
+}
+
+# these are just wrappers for debugging
+
+sub send_msg {
+  my($msg) = @_;
+  debug("SENDING: $msg");
+  print "$msg\r\n";
+}
+
+sub get_msg {
+  my($msg) = @_;
+  debug("GOT: $msg");
 }
 
 
