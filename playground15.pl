@@ -15,11 +15,15 @@ sub myfunc {
 
 my($exp) = Expect->spawn("sh");
 
-$exp->debug(3);
+# $exp->debug(3);
 
 $exp->send("date\n");
 
-$exp->expect(1, '-re', "..................");
+$exp->expect(1);
+
+debug("BEFORE", "<start>".$exp->before()."<end>");
+
+# $exp->expect(1, '-re', "/................../s");
 
 debug("MATCH:", $exp->match());
 
