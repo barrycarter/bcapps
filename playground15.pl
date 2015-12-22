@@ -23,7 +23,8 @@ for (;;) {
   print IN $input;
 
   print "Lets see what mr shell says\n";
-  $output = <OUT>;
+
+  sysread(OUT,$output,10000);
   print "SHELL: $output";
 
 #  while ($output = <OUT>) {

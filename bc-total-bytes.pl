@@ -31,8 +31,8 @@ while (<>) {
   ($file{size},$file{mtime},$file{name}) =  split(/\s+/, $_, 3);
 
   # more cheating (TODO: really really need to allow arb format)
-#  my(@arr) = split(/\s+/, $_, 9);
-#  ($file{size},$file{mtime},$file{name}) =  ($arr[1],$arr[0],$arr[8]);
+  my(@arr) = split(/\s+/, $_, 9);
+  ($file{size},$file{mtime},$file{name}) =  ($arr[1],$arr[0],$arr[8]);
 
 
   # tweak for special case
