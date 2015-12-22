@@ -32,7 +32,7 @@ void show_results (char *prefix, SpiceCell result,
     wnfetd_c(&result,i,&beg,&end);
     udfuns(beg,&vbeg);
     udfuns(end,&vend);
-    printf("%s %f %f %f %f\n",prefix,et2jd(beg),et2jd(end),vbeg,vend);
+    printf("%s %f %f %f %f\n",prefix,et2unix(beg),et2unix(end),vbeg,vend);
   }
 }
 
@@ -41,12 +41,13 @@ void gfq (SpiceDouble et, SpiceDouble *value) {
   SpiceDouble v[3], lt;
 
   // target position (in IAU_EARTH)
-  spkezp_c(target,et,"IAU_EARTH","LT",399,v,&lt);
+  spkezp_c(target,et,"IAU_EARTH","LT+S",399,v,&lt);
+  //  spkezp_c(target,et,"EARTH_FIXED","LT+S",399,v,&lt);
 
-  printf("GOT: %f, TARGET: %d, VECTOR: %f %f %f, RET: %f\n",et,target,v[0],v[1],v[2],vsep_c(v,pos));
+  //  printf("@%f: %f\n",et2unix(et),dpr_c()*(halfpi_c()-vsep_c(v,pos)));
 
-  // and the angle (radians)
-  *value = vsep_c(v,pos);
+  // and the angle (radians) (pi/2 minus because vsep is distance from zenith)
+  *value = halfpi_c()-vsep_c(v,pos);
 
 }
 
@@ -79,25 +80,18 @@ int main(int argc, char **argv) {
   elev = atof(argv[3])/1000.;
   utime = atof(argv[4]);
   target = atoi(argv[5]);
-  desired = atoi(argv[6])*rpd_c();
+  desired = atof(argv[6])*rpd_c();
 
   // compute position of lat,lon in IAU_EARTH frame (a rotating frame)
   georec_c (lon, lat, elev, EER, (EER-EPR)/EER, pos);
 
   printf("POS ON IAU_EARTH: %f %f %f\n",pos[0],pos[1],pos[2]);
 
-  // testing
-
-  SpiceDouble test;
-  gfq(3600*7+15552000, &test);
-
-  exit(0);
-
   // create a window one day on either side of given time
   wninsd_c(unix2et(utime-86400),unix2et(utime+86400),&cnfine);
 
   // search for when object at desired altitude (astronomical)
-  gfuds_c(gfq,gfdecrx,"=",desired,0,1800,MAXWIN,&cnfine,&result);
+  gfuds_c(gfq,gfdecrx,"=",desired,0,1,MAXWIN,&cnfine,&result);
 
   show_results("test",result,gfq);
 
