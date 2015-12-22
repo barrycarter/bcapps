@@ -18,7 +18,7 @@
 #define MAXWIN 10000
 
 // globals
-double lat, lon, elev, utime, desired, pos[3];
+SpiceDouble lat, lon, elev, utime, desired, pos[3];
 int target;
 
 void show_results (char *prefix, SpiceCell result, 
@@ -65,6 +65,8 @@ int main(int argc, char **argv) {
 
   SPICEDOUBLE_CELL(cnfine,2);
   SPICEDOUBLE_CELL(result,2*MAXWIN);
+  SpiceDouble trans[6][6];
+  SpiceDouble pos0[3];
 
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
@@ -83,9 +85,23 @@ int main(int argc, char **argv) {
   desired = atof(argv[6])*rpd_c();
 
   // compute position of lat,lon in IAU_EARTH frame (a rotating frame)
-  georec_c (lon, lat, elev, EER, (EER-EPR)/EER, pos);
+  georec_c (lon, lat, elev, EER, (EER-EPR)/EER, pos0);
 
-  printf("POS ON IAU_EARTH: %f %f %f\n",pos[0],pos[1],pos[2]);
+  // correct for precession (assumes fixed precession at utime; to be
+  // more accurate, would compute precession inside gfq itself)
+
+  sxform_c("IAU_EARTH","J2000",unix2et(utime),trans);
+
+  for (int i=0; i<=5; i++) {
+    for (int j=0; j<=5; j++) {
+      printf("ARR %d %d %f\n",i,j,trans[i][j]);
+    }
+  }
+
+  // position of lat/lon in the J2000 frame
+  mxvg_c(trans, pos0, 6, 6, pos);
+
+  printf("POS IN J2000: %f %f %f\n",pos[0],pos[1],pos[2]);
 
   // create a window one day on either side of given time
   wninsd_c(unix2et(utime-86400),unix2et(utime+86400),&cnfine);
