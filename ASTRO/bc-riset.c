@@ -18,8 +18,7 @@
 #define MAXWIN 10000
 
 // globals
-
-double lat, lon, elev, utime, desired;
+double lat, lon, elev, utime, desired, pos[3];
 int target;
 
 void show_results (char *prefix, SpiceCell result, 
@@ -39,13 +38,12 @@ void show_results (char *prefix, SpiceCell result,
 
 void gfq (SpiceDouble et, SpiceDouble *value) {
 
-  SpiceDouble pos[3], v[3], lt;
-
-  // position of point on IAU_EARTH
-  georec_c (lon*rpd_c(), lat*rpd_c(), elev, EER, (EER-EPR)/EER, pos);
+  SpiceDouble v[3], lt;
 
   // target position (in IAU_EARTH)
   spkezp_c(target,et,"IAU_EARTH","LT",399,v,&lt);
+
+  printf("GOT: %f, TARGET: %d, VECTOR: %f %f %f, RET: %f\n",et,target,v[0],v[1],v[2],vsep_c(v,pos));
 
   // and the angle (radians)
   *value = vsep_c(v,pos);
@@ -70,31 +68,42 @@ int main(int argc, char **argv) {
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
   if (argc != 7) {
-    // elevation in meters, of location
+    // Units: degrees degrees meters seconds id-from-planet-ids.txt degrees
     printf("Usage: latitude longitude elevation unixtime target desired\n");
     exit(-1);
   }
 
-  // assign from argv
-  lat = atof(argv[1]);
-  lon = atof(argv[2]);
-  // elevation in km
-  elev = atof(argv[3]);
-  // fractional unix time is probably silly, but allowing it
+  // assign from argv and convert degrees -> radians, meters -> km
+  lat = atof(argv[1])*rpd_c();
+  lon = atof(argv[2])*rpd_c();
+  elev = atof(argv[3])/1000.;
   utime = atof(argv[4]);
   target = atoi(argv[5]);
-  desired = atoi(argv[6]);
+  desired = atoi(argv[6])*rpd_c();
 
+  // compute position of lat,lon in IAU_EARTH frame (a rotating frame)
+  georec_c (lon, lat, elev, EER, (EER-EPR)/EER, pos);
+
+  printf("POS ON IAU_EARTH: %f %f %f\n",pos[0],pos[1],pos[2]);
+
+  // testing
+
+  SpiceDouble test;
+  gfq(3600*7+15552000, &test);
+
+  exit(0);
+
+  // create a window one day on either side of given time
   wninsd_c(unix2et(utime-86400),unix2et(utime+86400),&cnfine);
 
   // search for when object at desired altitude (astronomical)
-  gfuds_c(gfq,gfdecrx,"=",desired*rpd_c(),0,3600,MAXWIN,&cnfine,&result);
+  gfuds_c(gfq,gfdecrx,"=",desired,0,1800,MAXWIN,&cnfine,&result);
 
   show_results("test",result,gfq);
 
-  //  printf("INPUT: %f %f %f %f %d\n",lat,lon,elev,utime,target);
+  printf("INPUT: %f %f %f %f %d\n",lat,lon,elev,utime,target);
   //  gfq(unix2et(utime),&ang);
-  //  printf("%f\n",r2d(ang));
+  //printf("%f\n",r2d(ang));
 
   return 0;
 
