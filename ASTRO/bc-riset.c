@@ -38,16 +38,21 @@ void show_results (char *prefix, SpiceCell result,
 
 void gfq (SpiceDouble et, SpiceDouble *value) {
 
-  SpiceDouble v[3], lt;
+  SpiceDouble v[3], lt, trans[6][6], pos2[3];
 
   // target position (in IAU_EARTH)
-  spkezp_c(target,et,"IAU_EARTH","LT+S",399,v,&lt);
-  //  spkezp_c(target,et,"EARTH_FIXED","LT+S",399,v,&lt);
+  spkezp_c(target,et,"IAU_EARTH","LT",399,v,&lt);
+
+  // matrix to convert to J2000 (precession)
+  // (computing each time = inefficient?, but needed since IAU_EARTH rotates?)
+  sxform_c("IAU_EARTH","J2000",unix2et(utime),trans);
+  mxvg_c(trans, pos, 3, 3, pos2);
 
   //  printf("@%f: %f\n",et2unix(et),dpr_c()*(halfpi_c()-vsep_c(v,pos)));
+  printf("POS: %f %f %f\nPOS2: %f %f %f\n",pos[0],pos[1],pos[2],pos2[0],pos2[1],pos2[2]);
 
   // and the angle (radians) (pi/2 minus because vsep is distance from zenith)
-  *value = halfpi_c()-vsep_c(v,pos);
+  *value = halfpi_c()-vsep_c(v,pos2);
 
 }
 
@@ -65,8 +70,6 @@ int main(int argc, char **argv) {
 
   SPICEDOUBLE_CELL(cnfine,2);
   SPICEDOUBLE_CELL(result,2*MAXWIN);
-  SpiceDouble trans[6][6];
-  SpiceDouble pos0[3];
 
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
@@ -85,29 +88,13 @@ int main(int argc, char **argv) {
   desired = atof(argv[6])*rpd_c();
 
   // compute position of lat,lon in IAU_EARTH frame (a rotating frame)
-  georec_c (lon, lat, elev, EER, (EER-EPR)/EER, pos0);
-
-  // correct for precession (assumes fixed precession at utime; to be
-  // more accurate, would compute precession inside gfq itself)
-
-  sxform_c("IAU_EARTH","J2000",unix2et(utime),trans);
-
-  for (int i=0; i<=5; i++) {
-    for (int j=0; j<=5; j++) {
-      printf("ARR %d %d %f\n",i,j,trans[i][j]);
-    }
-  }
-
-  // position of lat/lon in the J2000 frame
-  mxvg_c(trans, pos0, 6, 6, pos);
-
-  printf("POS IN J2000: %f %f %f\n",pos[0],pos[1],pos[2]);
+  georec_c (lon, lat, elev, EER, (EER-EPR)/EER, pos);
 
   // create a window one day on either side of given time
   wninsd_c(unix2et(utime-86400),unix2et(utime+86400),&cnfine);
 
   // search for when object at desired altitude (astronomical)
-  gfuds_c(gfq,gfdecrx,"=",desired,0,1,MAXWIN,&cnfine,&result);
+  gfuds_c(gfq,gfdecrx,"=",desired,0,3600,MAXWIN,&cnfine,&result);
 
   show_results("test",result,gfq);
 
