@@ -9,9 +9,9 @@
 int main (int argc, char **argv) {
 
   // t=19037 is the closest second to the epoch where GMST is 0
-  SpiceDouble lt, v[3], t=19037;
-  furnsh_c("/home/barrycarter/BCGIT/ASTRO/test.tm");
-  spkezp_c(10,t,"IAU_EARTH","NONE",399,v,&lt);
+  SpiceDouble lt, v[3], t=19037.329109816072825;
+  furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
+  spkezp_c(10,t,"ITRF93","NONE",399,v,&lt);
   printf("IAU_EARTH: %f %f %f\n",v[0],v[1],v[2]);
   spkezp_c(10,t,"J2000","NONE",399,v,&lt);
   printf("J2000: %f %f %f\n",v[0],v[1],v[2]);

@@ -41,9 +41,9 @@ void gfq (SpiceDouble et, SpiceDouble *value) {
   SpiceDouble v[3], lt;
 
   // target position (in IAU_EARTH)
-  spkezp_c(target,et,"IAU_EARTH","LT+S",399,v,&lt);
+  spkezp_c(target,et,"EARTH_FIXED","LT+S",399,v,&lt);
 
-  //  printf("@%f: %f %f %f\n",et2unix(et),v[0],v[1],v[2]);
+  printf("@%f: %f %f %f\n",et2unix(et),v[0],v[1],v[2]);
 
   // and the angle (radians) (pi/2 minus because vsep is distance from zenith)
   *value = halfpi_c()-vsep_c(v,pos);
@@ -83,6 +83,8 @@ int main(int argc, char **argv) {
   // compute position of lat,lon in IAU_EARTH frame (a rotating frame)
   georec_c (lon, lat, elev, EER, (EER-EPR)/EER, pos);
   //georec_c (lon, lat, elev, EER, 0, pos);
+
+  printf("POS: %f %f %f\n",pos[0],pos[1],pos[2]);
 
   // create a window one day on either side of given time
   wninsd_c(unix2et(utime-86400),unix2et(utime+86400),&cnfine);

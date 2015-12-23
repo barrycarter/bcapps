@@ -43,7 +43,8 @@ debug("ALL FINISHED, SIR");
 sub dump_ls {
 
   # for remote machine (which no longer exists, but...)
-  system('ssh root\@bcmac "/mnt/sshfs/bcmac-dump.sh 1> /tmp/bcdump.out 2> /tmp/bcdump.err &"');
+  # dropped 23 Dec 2015
+#  system('ssh root\@bcmac "/mnt/sshfs/bcmac-dump.sh 1> /tmp/bcdump.out 2> /tmp/bcdump.err &"');
   # for extdrives and main drive
   system('sh /home/barrycarter/BCGIT/BACKUP/dumpall.sh &');
 }
