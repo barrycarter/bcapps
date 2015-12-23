@@ -17,8 +17,8 @@
 #define EPR 6356.7523
 #define MAXWIN 10000
 
-// globals; pos must be [6] for 6x6 matrix of precession transform
-SpiceDouble lat, lon, elev, utime, desired, pos[6];
+// globals
+SpiceDouble lat, lon, elev, utime, desired, pos[3];
 int target;
 
 void show_results (char *prefix, SpiceCell result, 
@@ -38,22 +38,15 @@ void show_results (char *prefix, SpiceCell result,
 
 void gfq (SpiceDouble et, SpiceDouble *value) {
 
-  SpiceDouble v[3], lt, trans[6][6], pos2[6];
+  SpiceDouble v[3], lt;
 
   // target position (in IAU_EARTH)
   spkezp_c(target,et,"IAU_EARTH","LT",399,v,&lt);
 
-  // matrix to convert to J2000 (precession)
-  // (computing each time = inefficient?, but needed since IAU_EARTH rotates?)
-  sxform_c("IAU_EARTH","J2000",unix2et(utime),trans);
-  mxvg_c(trans, pos, 6, 6, pos2);
-
-  //  printf("@%f: %f\n",et2unix(et),dpr_c()*(halfpi_c()-vsep_c(v,pos)));
-  printf("POS: %f %f %f\nPOS2: %f %f %f\n",pos[0],pos[1],pos[2],pos2[0],pos2[1],pos2[2]);
+  //  printf("@%f: %f %f %f\n",et2unix(et),v[0],v[1],v[2]);
 
   // and the angle (radians) (pi/2 minus because vsep is distance from zenith)
-  *value = halfpi_c()-vsep_c(v,pos2);
-
+  *value = halfpi_c()-vsep_c(v,pos);
 }
 
 void gfdecrx (void(* udfuns)(SpiceDouble et,SpiceDouble * value),
@@ -89,9 +82,7 @@ int main(int argc, char **argv) {
 
   // compute position of lat,lon in IAU_EARTH frame (a rotating frame)
   georec_c (lon, lat, elev, EER, (EER-EPR)/EER, pos);
-
-  // set pos velocity to 0 so matrix transform later works
-  //  for (int i=3; i++; i<=5) {pos[i]=0;}
+  //georec_c (lon, lat, elev, EER, 0, pos);
 
   // create a window one day on either side of given time
   wninsd_c(unix2et(utime-86400),unix2et(utime+86400),&cnfine);
