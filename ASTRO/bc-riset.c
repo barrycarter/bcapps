@@ -41,7 +41,7 @@ void gfq (SpiceDouble et, SpiceDouble *value) {
   SpiceDouble v[3], lt;
 
   // target position (in IAU_EARTH)
-  spkezp_c(target,et,"IAU_EARTH","LT",399,v,&lt);
+  spkezp_c(target,et,"IAU_EARTH","LT+S",399,v,&lt);
 
   //  printf("@%f: %f %f %f\n",et2unix(et),v[0],v[1],v[2]);
 
@@ -90,9 +90,9 @@ int main(int argc, char **argv) {
   // search for when object at desired altitude (astronomical)
   gfuds_c(gfq,gfdecrx,"=",desired,0,3600,MAXWIN,&cnfine,&result);
 
+  printf("INPUT: %f %f %f %f %d\n",lat,lon,elev,utime,target);
   show_results("test",result,gfq);
 
-  printf("INPUT: %f %f %f %f %d\n",lat,lon,elev,utime,target);
   //  gfq(unix2et(utime),&ang);
   //printf("%f\n",r2d(ang));
 
