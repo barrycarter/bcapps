@@ -5,6 +5,7 @@
 #include <string.h>
 #include "SpiceUsr.h"
 #include "SpiceZfc.h"
+#include <math.h>
 // this the wrong way to do things
 #include "/home/barrycarter/BCGIT/ASTRO/bclib.h"
 
@@ -17,18 +18,26 @@ int main (int argc, char **argv) {
   int i;
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
+  spkezp_c(299,0,"ITRF93","LT+S",399,v,&lt);
+  printf("POS: %f,%f,%f\n",v[0],v[1],v[2]);
+
+  exit(0);
+
+
   // abq roughly
-  georec_c (-106.5*rpd_c(), 35.5*rpd_c(), 1.609344, 6378.137, 
+  georec_c (-106.5*rpd_c(), 35.05*rpd_c(), 1.609344, 6378.137, 
 	    (6378.137-6356.7523)/6378.137, pos);
 
-  for (i=0; i<86400; i+=3600) {
+  for (i=0; i<=86400; i+=3600) {
     // pos of sun from IAU_EARTH
-    spkezp_c(10,i,"IAU_EARTH","NONE",399,v,&lt);
+    spkezp_c(299,i,"ITRF93","LT+S",399,v,&lt);
+
+    printf("POS(%d): %f,%f,%f\n",i,v[0],v[1],v[2]);
 
     // angle between abq vector and sun vector (0 = zenith)
     ang = vsep_c (v,pos);
 
-    printf("%d %f\n",i,r2d(ang));
+    //    printf("%d %f\n",i,r2d(ang));
   }
 
   return 0;

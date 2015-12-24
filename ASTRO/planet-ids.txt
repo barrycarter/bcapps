@@ -1,6 +1,5 @@
 # JPL ids for planets and celestial objects, obtained by "telnet
 # ssd.jpl.nasa.gov 6775" and then "MB" and then edited
-# TODO: add hex values
 0 0 Solar System Barycenter
 1 1 Mercury Barycenter
 2 2 Venus Barycenter
