@@ -6,10 +6,29 @@
 // (.o) file and then compile my programs against that object file. I
 // know this, but am too lazy (and dislike C too much) to do this
 
+// TODO: these are wrong because I don't account for TDB-UTC (using
+// deltet_c) like I should (but now fixing for unix conversions)
+
 double et2jd(double d) {return 2451545.+d/86400.;}
 double jd2et(double d) {return 86400.*(d-2451545.);}
-double unix2et(double d) {return d-946728000.;}
-double et2unix(double d) {return d+946728000.;}
+
+// TODO: check routines below, I may have delta backwards or for wrong era
+
+double unix2et(double d) {
+  // compute delta
+  SpiceDouble delta;
+  deltet_c(d-946728000,"UTC",delta);
+  return d-946728000.+delta;
+}
+
+double et2unix(double d) {
+  // compute delta
+  SpiceDouble delta;
+  deltet_c(et,"ET",delta);
+  return d+946728000.-delta;
+}
+
+// TODO: replace this with rpd_c or dpr_c everywhere it appears
 double r2d(double d) {return d*180./pi_c();}
 
 void posxyz(double time, int planet, SpiceDouble position[3]) {

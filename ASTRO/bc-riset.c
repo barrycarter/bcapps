@@ -18,7 +18,7 @@
 #define MAXWIN 10000
 
 // globals
-SpiceDouble lat, lon, elev, utime, desired, pos[3];
+SpiceDouble lat, lon, elev, utime, desired, pos[3], delta;
 int target;
 
 void show_results (char *prefix, SpiceCell result, 
@@ -40,7 +40,7 @@ void gfq (SpiceDouble et, SpiceDouble *value) {
 
   SpiceDouble v[3], lt;
 
-  // target position (in IAU_EARTH)
+  // target position (converting utc to et)
   spkezp_c(target,et,"EARTH_FIXED","LT+S",399,v,&lt);
 
   printf("@%f: %f %f %f\n",et2unix(et),v[0],v[1],v[2]);
