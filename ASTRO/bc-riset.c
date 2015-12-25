@@ -24,11 +24,10 @@ int target;
 void show_results (char *prefix, SpiceCell result, 
                    void(* udfuns)(SpiceDouble et,SpiceDouble * value)) {
 
-  SpiceInt i;
   SpiceInt nres = wncard_c(&result);
   SpiceDouble beg, end, vbeg, vend;
 
-  for (i=0; i<nres; i++) {
+  for (int i=0; i<nres; i++) {
     wnfetd_c(&result,i,&beg,&end);
     udfuns(beg,&vbeg);
     udfuns(end,&vend);
