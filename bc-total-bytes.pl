@@ -8,7 +8,6 @@ require "/usr/local/lib/bclib.pl";
 # (useful to avoid "out of memory" errors)
 
 # --size: field in which size appears (default 0)
-# --mtime: field in which mtime appears (default 1)
 # --name: field in which name starts (default 2)
 
 # file format as in BACKUP/README
@@ -21,7 +20,7 @@ require "/usr/local/lib/bclib.pl";
 
 my(%size,%count);
 
-defaults("size=0&mtime=1&name=2");
+defaults("size=0&name=2");
 
 while (<>) {
   chomp;
@@ -29,10 +28,9 @@ while (<>) {
   # ignore lines without slashes (probably just the first/last date lines)
   unless(/\//) {next;}
 
-  my(@arr) = split(/\s+/, $_, $globopts{name}+1);
   my(%file);
-  ($file{size},$file{mtime},$file{name}) =
-    ($arr[$globopts{size}],$arr[$globopts{mtime}],$arr[$globopts{name}]);
+  my(@arr) = split(/\s+/, $_, $globopts{name}+1);
+  ($file{size},$file{name}) = ($arr[$globopts{size}],$arr[$globopts{name}]);
 
   # TODO: filter out dirs/etc
   if ($globopts{justfiles}) {print "$file{name}\n"; next;}
