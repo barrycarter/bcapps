@@ -58,7 +58,7 @@ ParametricPlot3D[c[t],{t,t0,t1}]
 
 (* equal area sweeping from barycenter or new center? *)
 
-(* I'm doing this fundamentally wrong somehow *)
+(* Im doing this fundamentally wrong somehow *)
 
 area[x_] := NIntegrate[r[t],{t,t0+x,t0+x+1}];
 

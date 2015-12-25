@@ -4,6 +4,22 @@
 
 a[v1_,v2_,m1_,m2_,g_] = (v2-v1)*g*m2/Norm[v1-v2]^3
 
+(* Given initial position, initial velocity, and mass of objects,
+create something that can be fed to NDSolve; each list element is:
+{{x,y},{vx,vy},m} ; TODO: gravitational constant *)
+
+(* this gives only the accelration equations, not intials *)
+
+grav[x_,y_,am_,bm_,g_] = {
+
+
+
+
+
+
+
+
+
 p[t_] := {px[t],py[t]}
 s[t_] := {sx[t],sy[t]}
 
