@@ -41,9 +41,12 @@ void gfq (SpiceDouble et, SpiceDouble *value) {
   SpiceDouble v[3], lt;
 
   // target position (converting utc to et)
-  spkezp_c(target,et,"EARTH_FIXED","LT+S",399,v,&lt);
+  spkezp_c(target,et,"ITRF93","CN+S",399,v,&lt);
 
-  printf("@%f: %f %f %f\n",et2unix(et),v[0],v[1],v[2]);
+  // target position compared to pos
+  for (int i=0; i<=2; i++) {v[i] -= pos[i];}
+
+  //  printf("@%f: %f %f %f\n",et2unix(et),v[0],v[1],v[2]);
 
   // and the angle (radians) (pi/2 minus because vsep is distance from zenith)
   *value = halfpi_c()-vsep_c(v,pos);

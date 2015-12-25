@@ -17,14 +17,14 @@ double jd2et(double d) {return 86400.*(d-2451545.);}
 double unix2et(double d) {
   // compute delta
   SpiceDouble delta;
-  deltet_c(d-946728000,"UTC",delta);
+  deltet_c(d-946728000,"UTC",&delta);
   return d-946728000.+delta;
 }
 
 double et2unix(double d) {
   // compute delta
   SpiceDouble delta;
-  deltet_c(et,"ET",delta);
+  deltet_c(d,"ET",&delta);
   return d+946728000.-delta;
 }
 

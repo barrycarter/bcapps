@@ -7,6 +7,10 @@ require "/usr/local/lib/bclib.pl";
 # --printonly: just print filenames AND parents, but dont count
 # (useful to avoid "out of memory" errors)
 
+# --size: field in which size appears (default 0)
+# --mtime: field in which mtime appears (default 1)
+# --name: field in which name starts (default 2)
+
 # file format as in BACKUP/README
 
 # report space used by files and directories (including
@@ -17,7 +21,7 @@ require "/usr/local/lib/bclib.pl";
 
 my(%size,%count);
 
-warn "special temporary tweak version";
+defaults("size=0&mtime=1&name=2");
 
 while (<>) {
   chomp;
@@ -25,19 +29,10 @@ while (<>) {
   # ignore lines without slashes (probably just the first/last date lines)
   unless(/\//) {next;}
 
+  my(@arr) = split(/\s+/, $_, $globopts{name}+1);
   my(%file);
-
-  # cheat change
-  ($file{size},$file{mtime},$file{name}) =  split(/\s+/, $_, 3);
-
-  # more cheating (TODO: really really need to allow arb format)
-  my(@arr) = split(/\s+/, $_, 9);
-  ($file{size},$file{mtime},$file{name}) =  ($arr[1],$arr[0],$arr[8]);
-
-
-  # tweak for special case
-#  s%^.*?/%/%;
-#  $file{name} = $_;
+  ($file{size},$file{mtime},$file{name}) =
+    ($arr[$globopts{size}],$arr[$globopts{mtime}],$arr[$globopts{name}]);
 
   # TODO: filter out dirs/etc
   if ($globopts{justfiles}) {print "$file{name}\n"; next;}

@@ -18,10 +18,10 @@ int main (int argc, char **argv) {
   int i;
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
-  spkezp_c(299,0,"ITRF93","LT+S",399,v,&lt);
-  printf("POS: %f,%f,%f\n",v[0],v[1],v[2]);
+  //  spkezp_c(299,0,"ITRF93","LT+S",399,v,&lt);
+  //  printf("POS: %f,%f,%f\n",v[0],v[1],v[2]);
 
-  exit(0);
+  //  exit(0);
 
 
   // abq roughly
@@ -30,7 +30,7 @@ int main (int argc, char **argv) {
 
   for (i=0; i<=86400; i+=3600) {
     // pos of sun from IAU_EARTH
-    spkezp_c(299,i,"ITRF93","LT+S",399,v,&lt);
+    spkezp_c(10,i,"ITRF93","LT+S",399,v,&lt);
 
     printf("POS(%d): %f,%f,%f\n",i,v[0],v[1],v[2]);
 
