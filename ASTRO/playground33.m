@@ -7,6 +7,17 @@ gravitational constant g *)
 
 accel[v1_,v2_,m1_,m2_,g_] = (v2-v1)*g*m2/Norm[v1-v2]^3
 
+(* only works for 2d below *)
+
+accel[{x1_,y1_},{x2_,y2_},m1_,m2_,g_] =
+g*m2/Norm[{x2-x1,y2-y1}]^3*{x2-x1,y2-y1}
+
+nds = NDSolve[{
+f[0] == {1,0}, f'[0] == {0,1}, f''[t] == accel[f[t],{0,Sin[t]},1,1,1]
+},f,{t,0,1}]
+
+ParametricPlot[nds[[1,1,2]][t],{t,0,1}]
+
 (* just a test for simple cases first *)
 
 planet[t_] = {Cos[t],Sin[t]};
@@ -27,7 +38,7 @@ f''[t] == -f[t]/Norm[f[t]]^3 + {f[t][[1]],f[t][[2]]}-{Cos[t],Sin[t]}
 
 [[1,1]]
 
-ParametricPlot[obj[t],{t,0,1000}]
+
 
  obj''[t] == accel[obj[t],planet[t],1,1,1] + accel[obj[t],sun[t],1,1,1]
 
