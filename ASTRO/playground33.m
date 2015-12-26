@@ -9,14 +9,16 @@ accel[v1_,v2_,m1_,m2_,g_] = (v2-v1)*g*m2/Norm[v1-v2]^3
 
 (* only works for 2d below *)
 
-accel[{x1_,y1_},{x2_,y2_},m1_,m2_,g_] =
-g*m2/Norm[{x2-x1,y2-y1}]^3*{x2-x1,y2-y1}
+accel[{x1_,y1_},{x2_,y2_},m1_,m2_,g_]=g*m2/Norm[{x2-x1,y2-y1}]^3*{x2-x1,y2-y1}
 
 nds = NDSolve[{
-f[0] == {1,0}, f'[0] == {0,1}, f''[t] == accel[f[t],{0,Sin[t]},1,1,1]
-},f,{t,0,1}]
 
-ParametricPlot[nds[[1,1,2]][t],{t,0,1}]
+f[0] == {1.1,0}, f'[0] == {3,0}, 
+f''[t] == accel[f[t],{0,0},1,1,1] + accel[f[t],{Cos[t],Sin[t]},1,1,1]
+
+},f,{t,0,2*Pi}]
+
+ParametricPlot[nds[[1,1,2]][t],{t,0,2*Pi}]
 
 (* just a test for simple cases first *)
 
