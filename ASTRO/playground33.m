@@ -12,10 +12,20 @@ accel[v1_,v2_,m1_,m2_,g_] = (v2-v1)*g*m2/Norm[v1-v2]^3
 planet[t_] = {Cos[t],Sin[t]};
 
 obj[t_] = f[t] /.
-NDSolve[
-{f[0] == {1.1,0.2}, f'[0] == {0,1},
-f''[t] == -f[t]/Norm[f[t]]^3
-}, {f}, {t,0,1000}][[1,1]]
+
+$Assumptions = Element[f[t], Vectors[2,Real]]
+
+Assuming[Element[f[t], Vectors[2,Real]],
+
+NDSolve[{
+f[0] == {1.1,0.2}, f'[0] == {0,1},
+f''[t] == -f[t]/Norm[f[t]]^3 + {f[t][[1]],f[t][[2]]}-{Cos[t],Sin[t]}
+}, f, {t,0,1000}]
+
+
+
+
+[[1,1]]
 
 ParametricPlot[obj[t],{t,0,1000}]
 
