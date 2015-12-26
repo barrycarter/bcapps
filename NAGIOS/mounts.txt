@@ -1,6 +1,7 @@
 # replaces bc_check_mounts, lets me more flexibly edit which mount points to check
 /
-/mnt/extdrive/
+# temporarily ro
+# /mnt/extdrive/
 /mnt/extdrive2/
 # moved to other machine later, restored even later
 /mnt/extdrive3/
