@@ -1,8 +1,30 @@
 (* http://astronomy.stackexchange.com/questions/12981/delta-v-from-mercury-surface-to-venus-surface *)
 
-(* units: mercury distance + mercury orbit + mercury mass*g, 2D, sun
-is 6M times more massive *)
 
+(* acceleration of an object at v1 with mass m1 due to an object at v2
+with mass m2 [note that m2 is actually irrelevant], and with
+gravitational constant g *)
+
+accel[v1_,v2_,m1_,m2_,g_] = (v2-v1)*g*m2/Norm[v1-v2]^3
+
+(* just a test for simple cases first *)
+
+planet[t_] = {Cos[t],Sin[t]};
+
+obj[t_] = f[t] /.
+NDSolve[
+{f[0] == {1.1,0.2}, f'[0] == {0,1},
+f''[t] == -f[t]/Norm[f[t]]^3
+}, {f}, {t,0,1000}][[1,1]]
+
+ParametricPlot[obj[t],{t,0,1000}]
+
+ obj''[t] == accel[obj[t],planet[t],1,1,1] + accel[obj[t],sun[t],1,1,1]
+
+
+
+(* units: mercury distance + mercury orbit + mercury mass*g, 2D, sun
+is 6M times more massive; merc radius = 4.213*10^-5 its orbit *)
 
 merc[t_] = {Cos[t],Sin[t]};
 
