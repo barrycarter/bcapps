@@ -49,6 +49,7 @@ void gfq (SpiceDouble et, SpiceDouble *value) {
 
   // and the angle (radians) (pi/2 minus because vsep is distance from zenith)
   *value = halfpi_c()-vsep_c(v,pos);
+  printf("elev(%f) :%f\n",et2unix(et),*value*dpr_c());
 }
 
 void gfdecrx (void(* udfuns)(SpiceDouble et,SpiceDouble * value),
