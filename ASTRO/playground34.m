@@ -64,14 +64,22 @@ merc[t_] = {Cos[t*2*Pi/mercper],Sin[t*2*Pi/mercper]}*mercsma
 
 (*
 
-Although I ignore Venus' gravity, I do want to plot Venus' orbit, so I
-use the semi-major axis and period values below.
+I also ignore Venus' own gravity: you can do slightly better by noting
+that Venus will pull the payload towards itself once the payload gets
+close enough.
+
+I do want to plot Venus' orbit, so I use the semi-major axis and
+period values below.
+
+Venus' starting angle (vsa below) was found by trial and error to make
+sure Venus was at the right place when the payload crossed its orbit.
 
 *)
 
 vensma = 108208000000
 venper = 224.701*86400;
-ven[t_] = {Cos[t*2*Pi/venper],Sin[t*2*Pi/venper]}*vensma
+vsa = 53*Degree;
+ven[t_] = {Cos[t*2*Pi/venper+vsa],Sin[t*2*Pi/venper+vsa]}*vensma
 
 (*
 
@@ -104,7 +112,7 @@ change between 12500 m/s and 13000 m/s
 
 *)
 
-v0 = merc'[0] + {0,13000}
+v0 = merc'[0] + {0,12800}
 
 (*
 
@@ -124,25 +132,7 @@ nds = NDSolve[{s[0]==s0, s'[0] == v0,
 
 (* The use of [[1,1,2]] below is just Mathematica nesting weirdness *)
 
-g= ParametricPlot[{nds[[1,1,2]][t],merc[t]},{t,0,timelimit}, 
- Mesh -> timelimit/86400]
-
-(* 
-
-This just plots Venus' orbit for reference. 108000000000 is Venus'
-semimajor axis in meters.
-
-I assume that it's sufficient to reach Venus' orbit and that you can
-arrange for Venus to be in the right position when the payload crosses
-the orbit.
-
-I also ignore Venus' own gravity: you can do slightly better by noting
-that Venus will pull the payload towards itself once the payload gets
-close enough.
-
-*)
-
-v = ParametricPlot[108000000000*{Cos[2*Pi*t],Sin[2*Pi*t]},{t,0,1},
- PlotStyle -> {Green}, Mesh -> 224]
-
-Show[g,v,PlotRange->All]
+g= ParametricPlot[{nds[[1,1,2]][t],merc[t],ven[t]},{t,0,timelimit}, 
+ Mesh -> timelimit/86400, AxesOrigin->{0,0}, PlotStyle -> {Blue,Red,Green},
+ MeshStyle -> {Black}
+]
