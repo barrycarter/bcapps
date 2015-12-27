@@ -16,7 +16,8 @@ accel[{x1_,y1_},{x2_,y2_},m1_,m2_,g_]=g*m2/Norm[{x2-x1,y2-y1}]^3*{x2-x1,y2-y1}
 vensma = 108208000000;
 
 mercsma = 57909050000;
-merc[t_] = {Cos[t*2*Pi/87.9691/86400],Sin[t*2*Pi/87.9691/86400]}*mercsma
+mercper = 87.9691
+merc[t_] = {Cos[t*2*Pi/mercper/86400],Sin[t*2*Pi/mercper/86400]}*mercsma
 mercrad = 2439700
 mercmass = 3.3011*10^23
 
@@ -25,19 +26,22 @@ g = 6.6740*10^-11
 sun[t_] = {0,0}
 sunmass = 1.98855*10^30
 
-timelimit = 86400*88*2
-
-(* not actual venus orbit, just to draw the circle *)
-
 vensma = 108208000000;
-ven[t_] = vensma*{Cos[t/86400],Sin[t/86400]}
+venper = 224.701;
+angle = 65;
+ven[t_] = vensma*{Cos[t*2*Pi/venper/86400+angle*Degree],
+	Sin[t*2*Pi/venper/86400+angle*Degree]}
+venmass = 4.8675*10^24
+
+timelimit = 30*86400
 
 nds = NDSolve[{
 
-f[0] == {mercsma-mercrad,0},
-f'[0] == merc'[0]+{-20000,0},
+f[0] == {mercsma+mercrad,0},
+f'[0] == merc'[0]+{0,4250*4},
 f''[t] == accel[f[t],sun[t],1,sunmass,g] + 
-          accel[f[t],merc[t],1,mercmass,g]
+          accel[f[t],merc[t],1,mercmass,g] +
+	  accel[f[t],ven[t],1,venmass,g]
 },f,{t,0,timelimit}]
 
 ParametricPlot[{nds[[1,1,2]][t],merc[t],ven[t]},{t,0,timelimit},
