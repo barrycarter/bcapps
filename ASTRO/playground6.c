@@ -18,7 +18,7 @@ int main(void) {
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
   double stime = 1419984000, etime = 1451692800;
-  double lat = 35.05, lon = -106.5;
+  double lat = 89., lon = 0;
 
   double *results = bc_between(lat*rpd_c(), lon*rpd_c(), 0, stime, etime,
 			       "Sun", -5/6.*rpd_c(), -3/10.*rpd_c());
@@ -31,7 +31,9 @@ int main(void) {
     // if the end result is too close to etime, result is inaccurate
     if (abs(results[2*i+1]-etime)<1) {continue;}
     
-    printf("%f\n", results[2*i+1]-results[2*i]);
+    // the "day" and length of sunrise/sunset
+    printf("%f %f\n", ((results[2*i+1]+results[2*i])/2.-stime)/86400.,
+	   results[2*i+1]-results[2*i]);
   }
 
   return 0;
