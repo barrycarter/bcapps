@@ -12,7 +12,7 @@ int main(void) {
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
   double stime = 1448953200, etime = 1454310000;
-  double lat=40., lon=-100., dl, noon, mindl, minnoon;
+  double lat=40., lon=100., dl, noon, mindl, minnoon;
 
   double *results = bcriset(lat*rpd_c(),lon*rpd_c(), 0, stime, etime,
 			    "Sun", -5/6.*rpd_c(), ">");
@@ -41,9 +41,13 @@ int main(void) {
       minnoon = noon;
     }
   }
+  
+  // the start of December for this longitude (1448928000 = GMT
+  // midnight Dec 1)
+  double sod = 1448928000-240.*lon;
 
   // this is: minimal time of noon and length of day
-  printf("%f %f %f %f\n", lat, lon, minnoon, mindl);
+  printf("%f %f %f %f %f\n", lat, lon, minnoon, mindl, 1+(minnoon-sod)/86400);
 
 
   return 0;
