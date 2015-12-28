@@ -79,3 +79,39 @@ double sunminangle(double time, int arrsize, SpiceInt *planets) {
   }
   return min;
 }
+
+
+// determine (sky) elevation of body at given time and place (radians
+// and meters) on Earth
+
+double bc_sky_elev (double latitude, double longitude, double elevation, double unixtime, char *target) {
+
+  SpiceDouble radii[3], pos[3], normal[3], state[6], lt;
+  SpiceInt n;
+  
+  // the Earth's equatorial and polar radii
+  bodvrd_c("EARTH", "RADII", 3, &n, radii);
+
+  // position of latitude/longitude/elevation on ellipsoid
+  georec_c(longitude, latitude, elevation/1000., radii[0], 
+	   (radii[0]-radii[2])/radii[0], pos);
+
+  // surface normal vector to ellipsoid at latitude/longitude (this is
+  // NOT the same as pos!)
+  surfnm_c(radii[0], radii[1], radii[2], pos, normal);
+
+  // find the position
+  spkcpo_c(target, unix2et(unixtime), "ITRF93", "OBSERVER", "CN+S", pos, 
+	   "Earth", "ITRF93", state,  &lt);
+
+  // debugging
+  printf("ELEV(%s) at %f, lat %f, lon %f: %f\n", target, unixtime,
+	 latitude*dpr_c(), longitude*dpr_c(), 
+	 (halfpi_c() - vsep_c(state,normal))*dpr_c());
+
+  // TODO: vsep_c below uses first 3 members of state, should I be
+  // more careful here?
+
+  return halfpi_c() - vsep_c(state,normal);
+}
+
