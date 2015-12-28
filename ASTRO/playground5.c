@@ -14,8 +14,8 @@ int main(void) {
   double stime = 1448953200, etime = 1454310000;
   double lat, lon, dl, noon, mindl, minnoon;
 
-  for (lat = 20.; lat<=70.; lat+=5.) {
-    for (lon = -180.; lon <= 180.; lon+=15.) {
+  for (lat = 22.; lat<=67.; lat+=1.) {
+    for (lon = -74.; lon <= -71.; lon+=0.1) {
 
       double *results = bcriset(lat*rpd_c(),lon*rpd_c(), 0, stime, etime,
 				"Sun", -5/6.*rpd_c(), ">");
