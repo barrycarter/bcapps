@@ -104,14 +104,52 @@ double bc_sky_elev (double latitude, double longitude, double elevation, double 
   spkcpo_c(target, unix2et(unixtime), "ITRF93", "OBSERVER", "CN+S", pos, 
 	   "Earth", "ITRF93", state,  &lt);
 
-  // debugging
-  printf("ELEV(%s) at %f, lat %f, lon %f: %f\n", target, unixtime,
-	 latitude*dpr_c(), longitude*dpr_c(), 
-	 (halfpi_c() - vsep_c(state,normal))*dpr_c());
-
   // TODO: vsep_c below uses first 3 members of state, should I be
   // more careful here?
 
   return halfpi_c() - vsep_c(state,normal);
 }
 
+
+// for this functional version, angles are in radians, elevation in m
+// stime, etime: start and end Unix times
+// direction = "<" or ">", whether elevation above/below desire
+
+SpiceDouble *bcriset (double latitude, double longitude, double elevation,
+		double stime, double etime, char *target, double desired, 
+		char *direction) {
+
+  static SpiceDouble beg, end, results[10000];
+  
+  // TODO: compute this more efficiently, assuming no more than n
+  // rises/day?
+  SPICEDOUBLE_CELL(result, 10000);
+  SPICEDOUBLE_CELL(cnfine,2);
+  wninsd_c(stime, etime, &cnfine);
+
+  // define gfq for geometry finder (nested functions ok per gcc)
+  void gfq (SpiceDouble unixtime, SpiceDouble *value) {
+    *value = bc_sky_elev(latitude, longitude, elevation, unixtime, target);
+  }
+
+  // TODO: this is silly and semi-pointless
+  void gfdecrx (void(* udfuns)(SpiceDouble et,SpiceDouble * value),
+		SpiceDouble et, SpiceBoolean * isdecr ) {
+    SpiceDouble dt = 10.;
+    uddc_c(udfuns, et, dt, isdecr);
+  }
+    
+  // and now the geometry finder
+  // TODO: is 3600 below excessive or too small?
+  gfuds_c(gfq, gfdecrx, direction, desired, 0, 3600, 10000, &cnfine, &result);
+
+  SpiceInt count = wncard_c(&result); 
+
+  for (int i=0; i<count; i++) {
+    wnfetd_c(&result,i,&beg,&end);
+    results[i*2] = beg;
+    results[i*2+1] = end;
+  }
+
+  return results;
+}
