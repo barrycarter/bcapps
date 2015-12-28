@@ -1,6 +1,4 @@
-// An attempt to functionalize bc-riset.c with corrections to match HORIZONS
-
-// START: just for testing
+// Solve http://astronomy.stackexchange.com/questions/12940/22nd-is-shortest-day-in-some-places-but-the-21st-is-shortest-in-other-places-c
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,33 +7,21 @@
 #include "SpiceZfc.h"
 #include "/home/barrycarter/BCGIT/ASTRO/bclib.h"
 
-// END: just for testing (but see other section)
-
-// entire main subroutine is just for testing
-
 int main(void) {
 
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
-  //  bcriset(35.05*rpd_c(), -106.5*rpd_c(), 0, 1451070000-86400,
-  //  	  1451070000+86400, "Sun", -5/6.*rpd_c(), "<");
-
-  //  bcriset(35.05*rpd_c(), -106.5*rpd_c(), 0, 1398924000-86400,
-  //  	  1398924000+86400, "Sun", -5/6.*rpd_c(), "<");
-
-  double *results = bcriset(-71.9244790753479*rpd_c(),
-			    -90.3495091977422*rpd_c(), 0, 1398924000-86400*10,
-			    1398924000+86400*10, "Sun", -5/6.*rpd_c(), "<");
+  double *results = bcriset(30*rpd_c(),0*rpd_c(), 0, 1448953200, 1454310000,
+			    "Sun", -5/6.*rpd_c(), ">");
 
   // this is weird because I don't know actual size of results?
-  for (int i=0; i<=200; i++) {
-    printf("RESULT %d: %f\n",i,results[i]);
+  for (int i=0; i<=100; i++) {
+    if (results[2*i] < .001) {break;}
+
+    // this is: time of noon and length of day
+    printf("%f %f %f %f\n",30.,0.,
+	   (results[2*i]+results[2*i+1])/2, results[2*i+1]-results[2*i]);
   }
-
-  //  printf("SIZE: %d\n", sizeof(*results));
-
-
-  //  printf("TEST: %f\n",dpr_c()*bc_sky_elev(35.05*rpd_c(), -106.5*rpd_c(), 0, 1451070000, "Sun"));
 
   return 0;
 }
