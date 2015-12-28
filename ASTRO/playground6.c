@@ -18,9 +18,9 @@ int main(void) {
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
   double stime = 1419984000, etime = 1451692800;
-  double lat = 89., lon = 0;
+  double lat, lon;
 
-  for (lat=88; lat<=90; lat+=0.1) {
+  for (lat=89.80; lat<=90.00; lat+=0.01) {
     for (lon=-180; lon<=180; lon+=10) {
 
       double *results = bc_between(lat*rpd_c(), lon*rpd_c(), 0, stime, etime,
