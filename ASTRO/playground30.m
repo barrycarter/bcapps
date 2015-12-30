@@ -18,3 +18,5 @@ Integrate[Cos[n*(x-c)]*x^2,{x,-1,1}]
 
 
 
+
+

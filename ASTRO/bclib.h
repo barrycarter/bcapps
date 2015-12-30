@@ -179,6 +179,7 @@ SpiceDouble *bc_between (double latitude, double longitude, double elevation,
   }
 
   // and now the geometry finder (assume condition met for at least 30s)
+  // TODO: let 30 be a variable sent to this routine
   gfudb_c(udf_c, gfq, 30, &cnfine, &result);
 
   SpiceInt count = wncard_c(&result); 

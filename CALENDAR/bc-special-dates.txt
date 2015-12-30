@@ -13,7 +13,6 @@
 20191111 Mercury Transit
 # world series no longer "normal"
 20151027 World Series
-20160201 first state primaries
-20160607 last state primaries
-20160301 Super Tuesday
-
+20160201 1st US primarys
+20160607 last US primarys
+20160301 US Super Tuesday

@@ -2,6 +2,8 @@
 http://astronomy.stackexchange.com/questions/12824/how-long-does-a-sunrise-or-sunset-take
 *)
 
+
+
 (* t = days from vernal equinox *)
 
 sundec[t_] = 23.44*Degree*Sin[2*Pi*t/365.2425]
