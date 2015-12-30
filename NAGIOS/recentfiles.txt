@@ -1,5 +1,8 @@
 # Format: warn_time critical_time "fileglob (or name) in quotes"
 
+# TODO: allow tests to be ignored temporarily w/o having to comment
+# them out entirely
+
 # Tests multiple files for recency at once, and lets me change which
 # files are tested (and how often) without having to restart nagios
 
@@ -40,4 +43,5 @@
 # that need to be backed up weekly; this checks that they are all
 # recent enough
 
-129600 259200 "/usr/local/etc/weekly-backups/files/bcunix-*.txt /usr/local/etc/weekly-backups/files/bcinfo3-*.[tb][xz][t2]"
+# temp down
+# 129600 259200 "/usr/local/etc/weekly-backups/files/bcunix-*.txt /usr/local/etc/weekly-backups/files/bcinfo3-*.[tb][xz][t2]"

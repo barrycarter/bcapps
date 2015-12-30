@@ -157,10 +157,14 @@ SpiceDouble *bcriset (double latitude, double longitude, double elevation,
 // for this functional version, angles are in radians, elevation in m
 // stime, etime: start and end Unix times
 // direction = "<" or ">", whether elevation above/below desire
+// delta = minimum length of event; flags currently unused
+
+// TODO: flags = 1 to mean: add angular radius of object to elev (ie,
+// elevation is elevation of upper limb)
 
 SpiceDouble *bc_between (double latitude, double longitude, double elevation,
 			 double stime, double etime, char *target, double low,
-			 double high) {
+			 double high, double delta, int flags) {
 
   static SpiceDouble beg, end, results[10000];
   
@@ -180,7 +184,7 @@ SpiceDouble *bc_between (double latitude, double longitude, double elevation,
 
   // and now the geometry finder (assume condition met for at least 30s)
   // TODO: let 30 be a variable sent to this routine
-  gfudb_c(udf_c, gfq, 30, &cnfine, &result);
+  gfudb_c(udf_c, gfq, delta, &cnfine, &result);
 
   SpiceInt count = wncard_c(&result); 
 

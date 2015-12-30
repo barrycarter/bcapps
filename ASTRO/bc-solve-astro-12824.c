@@ -19,7 +19,7 @@ int main(int argc, char **argv) {
   double lat = atof(argv[1]), lon = atof(argv[2]);
 
   double *results = bc_between(lat*rpd_c(), lon*rpd_c(), 0, stime, etime,
-			       "Sun", -5/6.*rpd_c(), -3/10.*rpd_c());
+			       "Sun", -5/6.*rpd_c(), -3/10.*rpd_c(), 30, 0);
 
       for (int i=2; i<1000; i++) {
 
