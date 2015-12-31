@@ -28,8 +28,8 @@ int main(int argc, char **argv) {
 			  "Moon", radii[0])<=-34/60.*rpd_c());
   }
 
-  // we're looking for minimum 1 week down, so 604800. below is ok
-  gfudb_c(udf_c, moondown, 604800., &cnfine, &result);
+  // need 3600 below to catch/avoid brief moonrises
+  gfudb_c(udf_c, moondown, 3600., &cnfine, &result);
 
   SpiceInt count = wncard_c(&result); 
 
