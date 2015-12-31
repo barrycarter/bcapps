@@ -39,6 +39,7 @@ double et2unix(double d) {
 // TODO: replace this with rpd_c or dpr_c everywhere it appears
 double r2d(double d) {return d*180./pi_c();}
 
+// TODO: maybe rewrite posxyz and earthvector to return array of double
 void posxyz(double time, int planet, SpiceDouble position[3]) {
   SpiceDouble lt;
   spkezp_c(planet, time,"J2000","NONE",0,position,&lt);
@@ -106,9 +107,10 @@ double bc_sky_elev (int num,...) {
   double elevation = va_arg(valist, double);
   double unixtime = va_arg(valist, double);
   char *target = va_arg(valist, char *);
-
-  // 'radius' is the radius of the target; return position of upper limb
   double radius = va_arg(valist, double);
+
+  // 'radius' is the radius of the target; return position of upper
+  // limb (using 0 treats target as single point)
   
   // the Earth's equatorial and polar radii
   bodvrd_c("EARTH", "RADII", 3, &n, radii);

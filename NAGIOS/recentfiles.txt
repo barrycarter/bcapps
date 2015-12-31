@@ -44,4 +44,4 @@
 # recent enough
 
 # temp down
-# 129600 259200 "/usr/local/etc/weekly-backups/files/bcunix-*.txt /usr/local/etc/weekly-backups/files/bcinfo3-*.[tb][xz][t2]"
+129600 259200 "/usr/local/etc/weekly-backups/files/bcunix-*.txt /usr/local/etc/weekly-backups/files/bcinfo3-*.[tb][xz][t2]"
