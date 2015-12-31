@@ -130,7 +130,7 @@ double bc_sky_elev (int num,...) {
   // TODO: vsep_c below uses first 3 members of state, should I be
   // more careful here?
 
-  return halfpi_c() - vsep_c(state,normal) + atan(radius/vnorm_c(pos));
+  return halfpi_c() - vsep_c(state,normal) + atan(radius/vnorm_c(state));
 }
 
 // for this functional version, angles are in radians, elevation in m
@@ -188,9 +188,8 @@ SpiceDouble *bcriset (int num,...) {
   return results;
 }
 
-// for this functional version, angles are in radians, elevation in m
-// stime, etime: start and end Unix times
-// delta = minimum length of event
+// Determine when at least one part of target is at given sky
+// elevation (radius >= 0, otherwise not useful)
 
 SpiceDouble *bc_between (int num,...) {
 
@@ -206,8 +205,7 @@ SpiceDouble *bc_between (int num,...) {
   double stime = va_arg(valist, double);
   double etime = va_arg(valist, double);
   char *target = va_arg(valist, char *);
-  double low = va_arg(valist, double);
-  double high = va_arg(valist, double);
+  double desired = va_arg(valist, double);
   double delta = va_arg(valist, double);
   double radius = va_arg(valist,double);
 
@@ -222,9 +220,11 @@ SpiceDouble *bc_between (int num,...) {
   void gfq ( void (*udfuns) (SpiceDouble et, SpiceDouble  *value ),
 	     SpiceDouble unixtime, SpiceBoolean * xbool ) {
 
-    double elev=bc_sky_elev(5, latitude, longitude, elevation, unixtime, target, radius);
+    // TODO: this is really really really inefficient
+    double elev=bc_sky_elev(5, latitude, longitude, elevation, unixtime, target, 0);
+    double angrad = bc_sky_elev(5, latitude, longitude, elevation, unixtime, target, radius) - elev;
 
-    *xbool = (elev>=low && elev<=high);
+    *xbool = (elev>=desired-angrad && elev<=desired+angrad);
   }
 
   // and now the geometry finder (assume condition met for at least 30s)

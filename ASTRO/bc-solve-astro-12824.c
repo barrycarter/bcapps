@@ -1,6 +1,4 @@
-// determine when a given object is between two given elevations for a
-// given location; this is primarily for sun and moon rise
-// calculations, since most other objects have virtually 0 angular width
+// http://astronomy.stackexchange.com/questions/12824/how-long-does-a-sunrise-or-sunset-take
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,17 +7,28 @@
 #include "SpiceZfc.h"
 #include "/home/barrycarter/BCGIT/ASTRO/bclib.h"
 
-// format is lat lon, degrees
-
 int main(int argc, char **argv) {
+
+  SpiceDouble radii[3];
+  SpiceInt n;
 
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
-  double stime = 1419984000, etime = 1451692800;
+  // the year 2015
+  //  double stime = 1419984000, etime = 1451692800;
+
+  // test
+  double stime = 1419984000, etime = 1419984000+86400*10;
+
+  // lat/lon from argv
   double lat = atof(argv[1]), lon = atof(argv[2]);
 
+  // the sun's radii
+  bodvrd_c("SUN", "RADII", 3, &n, radii);
+
+
   double *results = bc_between(9, lat*rpd_c(), lon*rpd_c(), 0., stime, etime,
-			       "Sun", -5/6.*rpd_c(), -3/10.*rpd_c(), 30.);
+			       "Sun", -34/60.*rpd_c(), 30., radii[1]);
 
       for (int i=2; i<1000; i++) {
 
