@@ -11,8 +11,8 @@ int main(int argc, char **argv) {
 
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
-  // the year 2015
-  double stime = 1419984000, etime = 1451692800;
+  // the years 2000-2016
+  double stime = 946771200, etime = 1457827200;
   wninsd_c(stime, etime, &cnfine);
 
   // lat/lon from argv
@@ -29,14 +29,14 @@ int main(int argc, char **argv) {
   }
 
   // we're looking for minimum 1 week down, so 604800. below is ok
-  gfudb_c(udf_c, moondown, 604800./5., &cnfine, &result);
+  gfudb_c(udf_c, moondown, 604800., &cnfine, &result);
 
   SpiceInt count = wncard_c(&result); 
 
   // intentionally ignoring first result
   for (int i=1; i<count; i++) {
     wnfetd_c(&result,i,&beg,&end);
-    printf("%f %f %f\n",beg,end,end-beg);
+    printf("%f %f %f %f %f\n",lat,lon,beg,end,end-beg);
   }
   return 0;
 }

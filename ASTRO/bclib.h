@@ -127,12 +127,6 @@ double bc_sky_elev (int num,...) {
   spkcpo_c(target, unix2et(unixtime), "ITRF93", "OBSERVER", "CN+S", pos, 
 	   "Earth", "ITRF93", state,  &lt);
 
-    printf("%s %f %f %f %s elev: %f (+%f width)\n",target,longitude, latitude,
-  	 unixtime, target,
-  	 (halfpi_c() - vsep_c(state,normal))*dpr_c(),
-  	 atan(radius/vnorm_c(state))*dpr_c()
-  	  );
-
   // TODO: vsep_c below uses first 3 members of state, should I be
   // more careful here?
 
