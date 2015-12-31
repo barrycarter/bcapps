@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <string.h>
+#include <math.h>
 #include "SpiceUsr.h"
 #include "SpiceZfc.h"
 
@@ -105,6 +106,9 @@ double bc_sky_elev (int num,...) {
   double elevation = va_arg(valist, double);
   double unixtime = va_arg(valist, double);
   char *target = va_arg(valist, char *);
+
+  // 'radius' is the radius of the target; return position of upper limb
+  double radius = va_arg(valist, double);
   
   // the Earth's equatorial and polar radii
   bodvrd_c("EARTH", "RADII", 3, &n, radii);
@@ -124,18 +128,30 @@ double bc_sky_elev (int num,...) {
   // TODO: vsep_c below uses first 3 members of state, should I be
   // more careful here?
 
-  return halfpi_c() - vsep_c(state,normal);
+  return halfpi_c() - vsep_c(state,normal) + atan(radius/vnorm_c(pos));
 }
 
 // for this functional version, angles are in radians, elevation in m
 // stime, etime: start and end Unix times
 // direction = "<" or ">", whether elevation above/below desire
 
-SpiceDouble *bcriset (double latitude, double longitude, double elevation,
-		double stime, double etime, char *target, double desired, 
-		char *direction) {
+SpiceDouble *bcriset (int num,...) {
 
   static SpiceDouble beg, end, results[10000];
+
+  va_list valist;
+  va_start(valist, num);
+
+  // variables
+  double latitude = va_arg(valist, double);
+  double longitude = va_arg(valist, double);
+  double elevation = va_arg(valist, double);
+  double stime = va_arg(valist, double);
+  double etime = va_arg(valist, double);
+  char *target = va_arg(valist, char *);
+  double desired = va_arg(valist, double);
+  char *direction = va_arg(valist,char *);
+  double radius = va_arg(valist, double);
   
   // TODO: compute this more efficiently, assuming no more than n
   // rises/day?
@@ -145,7 +161,7 @@ SpiceDouble *bcriset (double latitude, double longitude, double elevation,
 
   // define gfq for geometry finder (nested functions ok per gcc)
   void gfq (SpiceDouble unixtime, SpiceDouble *value) {
-    *value = bc_sky_elev(5, latitude, longitude, elevation, unixtime, target);
+    *value = bc_sky_elev(5, latitude, longitude, elevation, unixtime, target, radius);
   }
 
   // TODO: this is silly and semi-pointless
@@ -172,11 +188,7 @@ SpiceDouble *bcriset (double latitude, double longitude, double elevation,
 
 // for this functional version, angles are in radians, elevation in m
 // stime, etime: start and end Unix times
-// direction = "<" or ">", whether elevation above/below desire
-// delta = minimum length of event; flags currently unused
-
-// TODO: flags = 1 to mean: add angular radius of object to elev (ie,
-// elevation is elevation of upper limb)
+// delta = minimum length of event
 
 SpiceDouble *bc_between (int num,...) {
 
@@ -191,18 +203,13 @@ SpiceDouble *bc_between (int num,...) {
   double elevation = va_arg(valist, double);
   double stime = va_arg(valist, double);
   double etime = va_arg(valist, double);
-
-  printf("VALS: %f %f %f %f %f\n",latitude,longitude,elevation,stime,etime);
-
   char *target = va_arg(valist, char *);
-
-  printf("STR: %s\n",target);
-
   double low = va_arg(valist, double);
   double high = va_arg(valist, double);
   double delta = va_arg(valist, double);
-  //  char *limb = va_arg(valist,char *);
+  double radius = va_arg(valist,double);
 
+  // TODO: default delta if not provided
   
   // TODO: compute this more efficiently?
   SPICEDOUBLE_CELL(result, 10000);
@@ -213,7 +220,7 @@ SpiceDouble *bc_between (int num,...) {
   void gfq ( void (*udfuns) (SpiceDouble et, SpiceDouble  *value ),
 	     SpiceDouble unixtime, SpiceBoolean * xbool ) {
 
-    double elev=bc_sky_elev(5, latitude, longitude, elevation, unixtime, target);
+    double elev=bc_sky_elev(5, latitude, longitude, elevation, unixtime, target, radius);
 
     *xbool = (elev>=low && elev<=high);
   }
