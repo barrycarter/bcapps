@@ -21,10 +21,10 @@ int main(int argc, char **argv) {
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
   // the year 2015
-  //  double stime = 1419984000, etime = 1451692800;
+  double stime = 1419984000, etime = 1451692800;
 
   // test
-  double stime =  1388559600, etime = 1419984000;
+  // double stime =  1388559600, etime = 1419984000;
 
   // lat/lon from argv
   double lat = atof(argv[1]), lon = atof(argv[2]);
