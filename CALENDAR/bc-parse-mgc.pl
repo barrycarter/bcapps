@@ -56,15 +56,20 @@ for $i (split(/\n/,read_file("$bclib{githome}/CALENDAR/mmmc.txt"))) {
   create_event_from_data_list(split(";",$i));
 }
 
-
+# this returns a *list* of hashes (important!)
 sub create_event_from_data_list {
   my(@data) = @_;
-  my(%event);
+  my(@events);
 
+  # data that applies to all events, if multiple dates
+  my(%metaevent);
   # first element is always the event title
-  $event{title} = shift(@data);
+  $metaevent{title} = shift(@data);
 
   for $i (@data) {
+    if ($i=~/\"/) {$metaevent{description} = $i; next;}
+    
+
     debug("I: $i");
   }
 
