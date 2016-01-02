@@ -1,0 +1,4 @@
+# anything in this file is considered a "location" (inside a center)
+Gym
+West Court
+East Court
