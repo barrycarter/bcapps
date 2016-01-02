@@ -127,6 +127,8 @@ double bc_sky_elev (int num,...) {
   spkcpo_c(target, unix2et(unixtime), "ITRF93", "OBSERVER", "CN+S", pos, 
 	   "Earth", "ITRF93", state,  &lt);
 
+  //  printf("ANG DIAM: %f\n", atan(radius/vnorm_c(state))*dpr_c()*60);
+
   // TODO: vsep_c below uses first 3 members of state, should I be
   // more careful here?
 

@@ -1,15 +1,8 @@
 #!/bin/perl
 
-# Parses a list of files, each containing a list of users (because
-# filenames contain information per bc-dl-by-region.pl), parse data
+# Parses a list of files, each containing a list of users (note that
+# the filenames themselves contain information)
 # Sample file: https://fetlife.com/countries/233/kinksters?page=3
-
-# giving up on merging this list w/ profile sucking list, so I can use
-# more fields
-
-# going back to CSV format so I can use MySQL's "LOAD DATA" feature:
-# individual INSERTs, *even inside a trasaction*, are too slow (and
-# LOAD DATA allows for REPLACE/IGNORE so I don't lose anything)
 
 require "/usr/local/lib/bclib.pl";
 
