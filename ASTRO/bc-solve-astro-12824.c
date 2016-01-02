@@ -36,26 +36,29 @@ int main(int argc, char **argv) {
   double *results = bc_between(9, lat*rpd_c(), lon*rpd_c(), 0., stime, etime,
 			       "Sun", -34/60.*rpd_c(), 120., radii[0]);
 
-      for (int i=2; i<1000; i++) {
+  // NOTE: can NOT ignore result 0 and 1, but must check if they are borders
+  for (int i=0; i<1000; i++) {
 
-	// if we start seeing 0s, we are out of true answers
-	if (results[2*i] < .001) {break;}
+    double rstart = results[2*i], rend = results[2*i+1];
 
-	// if the end result is too close to etime, result is inaccurate
-	if (abs(results[2*i+1]-etime)<1) {continue;}
+    // if we start seeing 0s, we are out of true answers
+    // TODO: this may break near 1970
+    if (abs(rstart) < .001) {break;}
 
-	double rstart = results[2*i], rend = results[2*i+1];
-
-	// TODO: this really inefficient
-	if (bc_sky_elev(6, lat, lon, 0., rstart, "Sun", 0.) >
-	    bc_sky_elev(6, lat, lon, 0., rend, "Sun", 0.)) {
-	  strcpy(direction,"SET");
-	} else {
-	  strcpy(direction,"RISE");
-	}
+    // if the end result is too close to etime, result is inaccurate
+    // same if start result is too close to stime
+    if (abs(rend-etime)<1 || abs(rstart-stime)<1) {continue;}
     
-	// the "day" and length of sunrise/sunset
-	printf("%f %f %s %f %f %f\n", lat, lon, direction, rstart, rend, rend-rstart);
-      }
+    // TODO: this really inefficient (and not even always correct?)
+    if (bc_sky_elev(6, lat, lon, 0., rstart, "Sun", 0.) >
+	bc_sky_elev(6, lat, lon, 0., rend, "Sun", 0.)) {
+      strcpy(direction,"SET");
+    } else {
+      strcpy(direction,"RISE");
+    }
+    
+    // the "day" and length of sunrise/sunset
+    printf("%f %f %s %f %f %f\n", lat, lon, direction, rstart, rend, rend-rstart);
+  }
   return 0;
 }

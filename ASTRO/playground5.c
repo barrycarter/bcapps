@@ -24,6 +24,10 @@ int main(void) {
       minnoon = 0.;
 
       // we intentionally ignore first result, expect it to be wrong
+
+      // TODO: this assumption is invalid, and, even if it were valid,
+      // should be i=1, not i=2
+
       for (int i=2; i<=100; i++) {
 
 	// if we start seeing 0s, we are out of true answers

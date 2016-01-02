@@ -1,0 +1,45 @@
+# from January newsletter
+
+Pie Social;2F:1145-1300;$0.75
+Birthday Cake;1145-1230;-1F:1145-1230;
+Town Hall Meeting;"An opportunity to meet with our State Legislators";20160107:1900-2045
+What Parents Need To Know;"The importance of protecting your childs good name and future from ID Thieves.";20160112:1845-2000 
+Reversing Brain Drain;"Come join the discussion in an open panel style on the subject Brain Drain.";20160113:1800-2030
+Awakening Your Spiritual Awareness;"Most of us spend a lifetime seeking what we want out of life and how to achieve this. Come join discussion on ways to get you where you want to be.";20160114:1900-2030
+
+# TODO: the newsletter says 11:30pm, but that can't be right?
+Living Alone: an Exciting Challenge;20160115:1000-1130 
+
+Chinese American Speaker Series;"Come join us as Dora Wang talks with us about a new way to look at Mental Health.";20160123:1000-1200
+UNM Hospitals Quarterly Community Input;"Join the forum with UNMH Administrators and Executives as they will share information and ask for community input on UNMH and answer questions.";20160126:0900-2200
+
+# "Coming in February" section
+
+Valentines Day Serenade;20160212:1800-2000
+Revolutionary Fitness;"Learn how to stay fit from home.";20160205:0900-1100
+KOB News Room Tour;"See behind the scenes of our local KOB 4 news team in action.";20160218:1100-1300
+
+# page 3 right hand side
+
+Hispanic Cultural Center Exhibit;"El Retrato Nuevomexicano Ahora New Mexican Portraiture Now. This exhibit will highlight portraiture by New Mexican artists.";20160126:0900-1500;$1
+
+# TODO: add hiking trips: they have an end time but no start time
+
+# HIKING Friday, 1/8/2016; Bernardo Waterfowl Area ~ Sevilleta National Wildlife Refuge ~ Socorro; Rating B (Moderate); Elevation 4760; Vertical 310; Distance 6; Travel Time to hike trailhead 1:30 hours; Estimated Return Time 4:15pm; Cost $7.00 Friday, 1/22/2016; Arroyo Del Tajo ~ Socorro: Rating B (Moderate); Elevation 4890; Vertical 370; Distance 5.3; Travel Time to hike trailhead 1:45 hours; Estimated Return Time 4:24 pm; Cost $9.00
+
+Northeast Area Command Policing Council;"Come discuss concerns you might have with an APD panel.";20160112:1800-2000
+New Mexico Children and Teens OCD Support Group;"Guest speaker, Dora Wang, MD will share pearls from her two decades of treating patients with OCD. As a Yale graduate and former Chief Resident of the UCLA OCD program, Dr. Wang is a nationally-recognized expert in the field of Obsessive-Compulsive Disorder. Dr. Wang has also trained psychiatrists at the UNM School of Medicine in the treatment of OCD, since 1999. Children and Teens (along with their family members) are welcome to join our support group meeting, immediately following the presentation.";20160112:1800
+New Mexico Children and Teens OCD Support Group;"Guest speaker, David J. Kutz, Ph.D., MP will share successful methods for helping kids and teens battle their Obsessive-Compulsive Disorder (OCD). As a Clinical Psychologist, Dr. Kutz is the leading provider of Exposure and Response Prevention (ERP) and Cognitive Behavioral Therapy (CBT) for children in New Mexico. Children and Teens (along with their family members) are welcome to join our support group meeting, immediately following the presentation.";20160126:1800
+
+# page 4 (ad reads "2015", but...)
+A Ballroom Dance;20160122:1800-2000;"Come and practice your new dance skills! Dance to Waltz, Foxtrot, Rumba, ChaCha, Merengue, Tango, Samba, East Coast Swing. A 5 minute mini-lesson review will be given for each style of dance."
+Murder Mystery Dinner;"Come join us here at North Domingo Baca and help solve the Murder Mystery that has happened here at the center. Follow all the clues and see who and how the crime happened. Use your detective skills to solve the case and make the arrest of the person or persons involved in the crime. Enjoy dinner and the company of others for this great evening. Prizes awarded";20160129:1800-2000;Social Hall;$7.50;
+
+# TODO: current youth programs on page 6 (no start/end time info)
+
+# page 7
+
+Dance Competition;"Come compete and show us your dance skills, or sit back and enjoy the show. The Dance Competition is free for the public to come and watch the athletes compete. If you are interested in competing, contact us at the Palo Duro Sports and Fitness Center, 505-880-2800.";20160218:1700
+
+
+

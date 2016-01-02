@@ -34,6 +34,7 @@ int main(int argc, char **argv) {
   SpiceInt count = wncard_c(&result); 
 
   // intentionally ignoring first result
+  // TODO: can NOT ignore first result, just check its not near stime
   for (int i=1; i<count; i++) {
     wnfetd_c(&result,i,&beg,&end);
     printf("%f %f %f %f %f\n",lat,lon,beg,end,end-beg);

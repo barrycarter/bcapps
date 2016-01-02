@@ -1,0 +1,38 @@
+# attempt to create a text file (not a gnumeric spreadsheet) to list
+# events at MMMC, since it seems easier to fill out, especially with
+# many missing fields for many events
+
+# from http://manzanomesacenter.com/general.html
+
+Exercise to Music; M-F0815-0915; Gym
+Gentle Exercise; MWF1000-1100; Gym
+Open Basketball; M1100-1300,M1900-2100,T0930-1300,W1100-1230,F1100-1300,F1900-2100; Gym
+Open Basketball; R0930-1600; West Court
+Open Basketball; R0930-1100,R1330-1600; East Court
+Men's Sr. Basketball; R1100-1330; East Court
+Badminton; M1300-1600,T1800-2100,F1300-1600; Gym
+Shuffleboard; T1300-1600; Gym
+Volleyball; M1700-1900,F1700-1900; Gym
+
+# from http://manzanomesacenter.com/clubs.html
+
+Drop In Bridge; "For the experienced player or someone trying to improve their game. Bring a partner if possible - a friendly group."; M1100-1500
+Sing - Along;"Join us for an afternoon of singing! A variety of songs and music styles are available. You don't have to be good, only willing. Everyone welcome.";T1300-1530
+Bridge Club;"This is a group of already established bridge players who meet to play bridge and to enjoy the companionship of each other.";T1300-1530
+Pinochle;"This group meets to provide entertainment for any senior who wishes to learn to play the game of pinochle. Join the fun.";W1200-1600
+Artists Corner;"This group meets to paint, share their artwork and just enjoy each others company. The group also paints landscapes, nature or whatever inspires them.";R1300-1500
+Writing For Fun & Profit;"This is a group joined together for mutual benefit, interest, and encourgement. It consists of amateurs and professionals. The club has poets, journalists, novelists, and short story writers. Most of our writings are of the inspirational type. Those interested in writing are invited to join.";M1300-1500
+Rock'n Rhythm Dance Team;"This is a group of advanced line dancers from Manzano Mesa, Bear Canyon and Palo Duro senior centers who practice line dancing under the direction of Mickey Powell-Dominguez to prepare for line dance performances.";T0930-1130
+High Vibrations Toastmasters;"The Toastmasters meets once a week to develop communication skills, to think clearly and quickly on your feet and will help you build strong leadership abilities. If you are interested in this program, contact President George Harris at 266-0264";W1145-1400
+Jubilee Dancers;"This is a group of dancers who choreograph their dances to various showtunes. They entertain at nursing homes, other centers and throughout the community. This group is already established, but newcomers are welcome.";R1330-1600
+Sophisticated Ladies;"This is an already established dance group that entertains within the community. They do group, pairs, and individual dances to showtunes.";T1300-1500
+Sharing Life's Journey;"A small group "get together" that talks about issues affecting their daily lives. They share feelings and ideas and find areas of common interests.";T1300-1500
+Crochet Club;"The group meets to crochet, share ideas and enjoy each others company. Everyone is welcome from beginners on up. Instruction is available to those who need it.";M1300-1500
+The New Mexico Fencing Club;"The New Mexico Fencing Club (NMFC) offers beginner and advanced beginner level fencing classes at Manzano Mesa on Saturday Mornings and at Highland Senior Center on Tuesdays and Thursdays in the late afternoon. Fencers having their own gear are always welcome to come and practice with our club at no fee. Lesson schedules are posted on our website, www.nmfencing.net. For More information contact cdbuckl@nmfencing.net.";S0900-1200
+Kendo Kai (Japanese Sword Fencing);"New Mexico Kendo Kai is inviting new members to join and experience Japanese culture through the concept of kendo and discipline of the human character.";F1800-2000
+Karate Club(Shorin Ryu Karate);"Sensei Gallegos welcomes everyone to learn Karate. You will learn Self Defence, Physical Fitness, Improved Self Confidence, Self Discipline, Learn to Focus at School or Work, Relive Stress, and Just to have fun. Give it a try. Your first week of lessons are free and you can start anytime. The minimum age is 10 and Club Dues are $25.00 per month. Our web page is www.BKWOW.com For more information contact Sensei Gallegos at (505)294-6993 or e-mail to bushi@bkwow.com.";MT1900-2030
+
+# TODO: http://manzanomesacenter.com/classes.html does not list times
+# (or even dates in some cases)
+
+# TODO: add manzano.csv

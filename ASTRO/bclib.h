@@ -21,7 +21,7 @@ double et2jd(double d) {return 2451545.+d/86400.;}
 double jd2et(double d) {return 86400.*(d-2451545.);}
 
 // print a message if environment variable DEBUG is set
-void debug(char *s) {if (strcmp(getenv("DEBUG"),"1")==0) {printf("%s\n",s);}}
+int debug(void) {return strcmp(getenv("DEBUG"),"1")==0;}
 
 double unix2et(double d) {
   // compute delta
@@ -225,6 +225,8 @@ SpiceDouble *bc_between (int num,...) {
     double elev=bc_sky_elev(6, latitude, longitude, elevation, unixtime, target, 0);
     double angrad = bc_sky_elev(6, latitude, longitude, elevation, unixtime, target, radius) - elev;
 
+    //    printf("ELEV: %f, DESIRED: %f, ANGRAD: %f, WHICHIS: %d\n",elev*dpr_c(), desired*dpr_c(), angrad*dpr_c(), elev>=desired-angrad && elev<=desired+angrad);
+
     *xbool = (elev>=desired-angrad && elev<=desired+angrad);
   }
 
@@ -232,7 +234,9 @@ SpiceDouble *bc_between (int num,...) {
   // TODO: let 30 be a variable sent to this routine
   gfudb_c(udf_c, gfq, delta, &cnfine, &result);
 
-  SpiceInt count = wncard_c(&result); 
+  int count = wncard_c(&result); 
+
+  printf("NUMBER OF RSULTS: %d\n",count);
 
   for (int i=0; i<count; i++) {
     wnfetd_c(&result,i,&beg,&end);
