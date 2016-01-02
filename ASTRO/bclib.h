@@ -20,7 +20,8 @@
 double et2jd(double d) {return 2451545.+d/86400.;}
 double jd2et(double d) {return 86400.*(d-2451545.);}
 
-// TODO: check routines below, I may have delta backwards or for wrong era
+// print a message if environment variable DEBUG is set
+void debug(char *s) {if (strcmp(getenv("DEBUG"),"1")==0) {printf("%s\n",s);}}
 
 double unix2et(double d) {
   // compute delta
@@ -126,8 +127,6 @@ double bc_sky_elev (int num,...) {
   // find the position
   spkcpo_c(target, unix2et(unixtime), "ITRF93", "OBSERVER", "CN+S", pos, 
 	   "Earth", "ITRF93", state,  &lt);
-
-  //  printf("ANG DIAM: %f\n", atan(radius/vnorm_c(state))*dpr_c()*60);
 
   // TODO: vsep_c below uses first 3 members of state, should I be
   // more careful here?
