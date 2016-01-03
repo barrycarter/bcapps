@@ -51,13 +51,17 @@ while ($out=~s/BEGIN:VEVENT(.*?)END:VEVENT//s) {
 
 write_file(join("\n",keys %seen),"seen.txt");
 
+# list of all events
+my(@events);
+
 # files to parse: ndbc.txt mmmc.txt manzano.csv (latter in diff format)
 
-for $i (split(/\n/,read_file("$bclib{githome}/CALENDAR/MGC/mmmc.txt"))) {
+for $i (split(/\n/,read_file("$bclib{githome}/CALENDAR/MGC/mmmc.txt")),
+	split(/\n/,read_file("$bclib{githome}/CALENDAR/MGC/ndbc.txt"))) {
 
   if ($i=~/^\#/ || $i=~/^\s*$/) {next;}
 
-  debug(unfold(create_event_from_data_list(split(";",$i))));
+  push(@events, create_event_from_data_list(split(";",$i)));
 }
 
 # this returns a *list* of hashes (important!)
@@ -84,7 +88,7 @@ sub create_event_from_data_list {
 
   debug("TIMES",@times);
 
-  for ($i=0; $i<=$#times; $i+=2) {
+  for $i (@times) {
     # create actual events
     my(%event);
     
@@ -92,17 +96,14 @@ sub create_event_from_data_list {
     for $j (keys %metaevent) {$event{$j} = $metaevent{$j};}
 
     # and set start/end dates
-    $event{starttime} = $times[$i*2];
-    $event{endtime} = $times[$i*2+1];
+    ($event{starttime}, $event{endtime}) = @$i;
 
     # and push to list of events I will return
     push(@events, \%event);
   }
 
   return @events;
-
 }
-
 
 # given one of the date formats above, return a list of Unix time
 # pairs of start and end times (with end time being optional), for a
