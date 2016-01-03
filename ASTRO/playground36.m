@@ -7,6 +7,8 @@ TODO: allow for angular launches (not straight up?)
 
 TODO: subscript v0?
 
+TODO: allow ellipsoid planets?
+
 NOTE: I intentionally didn't mention phi in the statement of the
 problem as a way of noting that solutions sometimes depend on extra
 parameters.
@@ -157,6 +159,9 @@ root = t /. FindRoot[Norm[s[t]]-Norm[s[0]], {t, 2*v0/g}];
 
 Return[{s[t],site[t],root, xyz2sph[s[root]]-xyz2sph[site[root]]}]
 ]
+
+ret = launch[6371000, 86400, 10, 45*Degree, 5000]
+
 
 ret = launch[6371000, 86400, 10, 45*Degree, 1200]
 
