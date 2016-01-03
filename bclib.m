@@ -398,4 +398,7 @@ earthangle[jd_,p1_,p2_] :=  VectorAngle[earthvector[jd,p1],earthvector[jd,p2]];
 xyz2sph[x_,y_,z_] = {ArcTan[x,y], ArcTan[Sqrt[x^2+y^2],z], Norm[{x,y,z}]};
 sph2xyz[th_,ph_,r_] = r*{Cos[th]*Cos[ph], Sin[th]*Cos[ph], Sin[ph]};
 
+xyz2sph[l_] := Apply[xyz2sph,l]
+sph2xyz[l_] := Apply[sph2xyz,l]
+
 

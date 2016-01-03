@@ -139,9 +139,11 @@ Mathematica code follows.
 
 (* this module returns position of projectile and site position *)
 
-launch[r_, p_, g_, phi_, v0_] := Module[{orbit},
+(* TODO: I am not returning functions properly here *)
 
-s[t_] := {x[t], y[t], z[t]} /. NDSolve[{
+launch[r_, p_, g_, phi_, v0_] := Module[{s,site,root},
+
+s[t_] = {x[t], y[t], z[t]} /. NDSolve[{
  x[0] == r*Cos[phi], y[0] == 0, z[0] == r*Sin[phi],
  x'[0] == v0*Cos[phi], y'[0] == 2*Pi*r*Cos[phi]/p, z'[0] == v0*Sin[phi],
  x''[t] == -g*((r^2*x[t])/(x[t]^2 + y[t]^2 + z[t]^2)^(3/2)),
@@ -149,10 +151,28 @@ s[t_] := {x[t], y[t], z[t]} /. NDSolve[{
  z''[t] == -g*((r^2*z[t])/(x[t]^2 + y[t]^2 + z[t]^2)^(3/2))
 }, {x[t],y[t],z[t]}, {t,0,4*v0/g}][[1]];
 
-Return[s]
+site[t_] = r*{Cos[2*Pi*t/p]*Cos[phi], Sin[2*Pi*t/p]*Sin[phi], Sin[phi]};
+
+root = t /. FindRoot[Norm[s[t]]-Norm[s[0]], {t, 2*v0/g}];
+
+Return[{s[t],site[t],root, xyz2sph[s[root]]-xyz2sph[site[root]]}]
 ]
 
-launch[6371000, 86400, 9.8, 45*Degree, 1200]
+ret = launch[6371000, 86400, 10, 45*Degree, 1200]
+
+s[t_] = ret[[1]]
+site[t_] = ret[[2]]
+root = ret[[3]]
+
+ParametricPlot3D[s[t]-site[t],{t,0,root}]
+
+ret = launch[6371000, 86400, 10, 45*Degree, 5]
+
+s[t_] = ret[[1]]
+site[t_] = ret[[2]]
+root = ret[[3]]
+
+
 
 (* position of launch site at time *)
 
