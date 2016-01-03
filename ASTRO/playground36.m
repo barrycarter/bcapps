@@ -103,17 +103,17 @@ t)^2+z(t)^2}},-\frac{z(t)}{\sqrt{x(t)^2+y(t)^2+z(t)^2}}\right\}
 $
 
 The acceleration due to gravity is g at the surface, which is distance
-r from the planet's center, and is thus (r/d)^2 at distance d from the
+r from the planet's center, and is thus g*(r/d)^2 at distance d from the
 planet (provided that d > r, which it is in our problem). Using the
 distance formula, the magnitude of gravity at time t is:
 
-$\frac{r^2}{x(t)^2+y(t)^2+z(t)^2}$
+$\frac{g r^2}{x^2+y^2+z^2}$
 
 Thus, the vector of acceleration due to gravity is:
 
 $
-   \left\{-\frac{r^2 x(t)}{\left(x(t)^2+y(t)^2+z(t)^2\right)^{3/2}},-\frac{r^2
-    y(t)}{\left(x(t)^2+y(t)^2+z(t)^2\right)^{3/2}},-\frac{r^2
+   \left\{-\frac{g r^2 x(t)}{\left(x(t)^2+y(t)^2+z(t)^2\right)^{3/2}},-\frac{g
+    r^2 y(t)}{\left(x(t)^2+y(t)^2+z(t)^2\right)^{3/2}},-\frac{g r^2
     z(t)}{\left(x(t)^2+y(t)^2+z(t)^2\right)^{3/2}}\right\}
 $
 
@@ -137,88 +137,31 @@ Mathematica code follows.
 
 *)
 
-orbit[r_, p_, g_, phi_] := NDSolve[{
+orbit[r_, p_, g_, phi_, v0_] := {x[t], y[t], z[t]} /. NDSolve[{
  x[0] == r*Cos[phi], y[0] == 0, z[0] == r*Sin[phi],
  x'[0] == v0*Cos[phi], y'[0] == 2*Pi*r*Cos[phi]/p, z'[0] == v0*Sin[phi],
- x''[t] == -((r^2*x[t])/(x[t]^2 + y[t]^2 + z[t]^2)^(3/2)),
- y''[t] == -((r^2*y[t])/(x[t]^2 + y[t]^2 + z[t]^2)^(3/2)),
- z''[t] == -((r^2*z[t])/(x[t]^2 + y[t]^2 + z[t]^2)^(3/2))
-}, {x[t],y[t],z[t]}, {t,0,4*v0/g}]
- 
+ x''[t] == -g*((r^2*x[t])/(x[t]^2 + y[t]^2 + z[t]^2)^(3/2)),
+ y''[t] == -g*((r^2*y[t])/(x[t]^2 + y[t]^2 + z[t]^2)^(3/2)),
+ z''[t] == -g*((r^2*z[t])/(x[t]^2 + y[t]^2 + z[t]^2)^(3/2))
+}, {x[t],y[t],z[t]}, {t,0,4*v0/g}][[1]]
 
-phi = "\[Phi]" 
-r[x_,y_,z_] = Sqrt[x^2+y^2+z^2];
+(* position of launch site at time *)
 
-assums = {
- Element[x[t],Reals],
- Element[y[t],Reals],
- Element[z[t],Reals]
-}
+site[r_, t_,phi_,p_] = 
+ r*{Cos[2*Pi*t/p]*Cos[phi], Sin[2*Pi*t/p]*Sin[phi], Sin[phi]};
 
-(* break equations into position, velocity and acceleration *)
+(* some interesting answers *)
 
-eqn0 = {x[0] == Cos[phi], y[0] == 0, z[0] == Sin[phi]};
-eqn1 = {x'[0] == v0*Cos[phi], y'[0] == Cos[phi], z'[0] == v0*Sin[phi]};
-eqn2 = {
-x''[t] == -g0*x[t]/r[x[t],y[t],z[t]],
-y''[t] == -g0*y[t]/r[x[t],y[t],z[t]],
-z''[t] == -g0*z[t]/r[x[t],y[t],z[t]]
-};
+(* below in meters and seconds *)
 
-DSolve[{eqn2}, {x[t],y[t],z[t]}, t]
+s[t_] = orbit[6371000, 86400, 9.8, 45*Degree, 1200]
 
-NDSolve[{eqn0,eqn1,eqn2}, {x[t],y[t],z[t]}, t]
+(* solve for landing time (note Norm[s[0]] == r) *)
 
-orbit[g0_, phi_, v0_] :=
- NDSolve[{
-x[0] == Cos[phi], y[0] == 0, z[0] == Sin[phi],
-x'[0] == v0*Cos[phi], y'[0] == Cos[phi], z'[0] == v0*Sin[phi],
-x''[t] == -g0*x[t]/Norm[{x[t],y[t],z[t]}],
-y''[t] == -g0*y[t]/Norm[{x[t],y[t],z[t]}],
-z''[t] == -g0*z[t]/Norm[{x[t],y[t],z[t]}]
-}, {x[t],y[t],z[t]}, {t,0,10}];
+(* TODO: this depends too much on params, so include params *)
 
-orbit2[g0_, phi_, v0_] :=
- NDSolve[{
-x[0] == Cos[phi], y[0] == 0, z[0] == Sin[phi],
-x'[0] == v0*Cos[phi], y'[0] == Cos[phi], z'[0] == v0*Sin[phi],
-x''[t] == -g0*x[t]/Norm[{x[t],y[t],z[t]}]^3,
-y''[t] == -g0*y[t]/Norm[{x[t],y[t],z[t]}]^3,
-z''[t] == -g0*z[t]/Norm[{x[t],y[t],z[t]}]^3
-}, {x[t],y[t],z[t]}, {t,0,10}];
+NSolve[Norm[s[t]] == 6371000, t, Reals]
 
-(* 1200 m/s at 45N for example *)
+FindRoot[Norm[s[t]]-Norm[s[0]], {t, 2*1200/9.8}]
 
-(* 1200 m/s * 86400 s/ day * 1 earth radius/6371000m = 16.2737 earth rad/day *)
-
-(* 9.8 m/s/s * 86400*86400*s*s/day*day * 1 earth radius/6371000m = 11482.8 *)
-
-orbit3[r_, rot_, g0_, phi_, v0_] :=
- NDSolve[{
-x[0] == Cos[phi], y[0] == 0, z[0] == Sin[phi],
-x'[0] == v0*Cos[phi], y'[0] == Cos[phi], z'[0] == v0*Sin[phi],
-x''[t] == -g0*x[t]/Norm[{x[t],y[t],z[t]}]^3,
-y''[t] == -g0*y[t]/Norm[{x[t],y[t],z[t]}]^3,
-z''[t] == -g0*z[t]/Norm[{x[t],y[t],z[t]}]^3
-}, {x[t],y[t],z[t]}, {t,0,10}];
-
-
-
-
-
-
-
-eqnsfake = {
-x[0] == Cos[phi], y[0] == 0, z[0] == Sin[phi],
-x'[0] == v0*Cos[phi], y'[0] == Cos[phi], z'[0] == v0*Sin[phi],
-x''[t] == 0,
-y''[t] == 0,
-z''[t] == 0
-}
-
-
-
-
-
-
-
+s[t] /. FindRoot[Norm[s[t]]==Norm[s[0]], {t, 2*1200/9.8}]
