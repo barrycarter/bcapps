@@ -115,13 +115,58 @@ assums = {
  Element[z[t],Reals]
 }
 
-eqns = {
-x[0] == Cos[phi], y[0] == 0, z[0] == Sin[phi],
-x'[0] == v0*Cos[phi], y'[0] == Cos[phi], z'[0] == v0*Sin[phi],
+(* break equations into position, velocity and acceleration *)
+
+eqn0 = {x[0] == Cos[phi], y[0] == 0, z[0] == Sin[phi]};
+eqn1 = {x'[0] == v0*Cos[phi], y'[0] == Cos[phi], z'[0] == v0*Sin[phi]};
+eqn2 = {
 x''[t] == -g0*x[t]/r[x[t],y[t],z[t]],
 y''[t] == -g0*y[t]/r[x[t],y[t],z[t]],
 z''[t] == -g0*z[t]/r[x[t],y[t],z[t]]
 };
+
+DSolve[{eqn2}, {x[t],y[t],z[t]}, t]
+
+NDSolve[{eqn0,eqn1,eqn2}, {x[t],y[t],z[t]}, t]
+
+orbit[g0_, phi_, v0_] :=
+ NDSolve[{
+x[0] == Cos[phi], y[0] == 0, z[0] == Sin[phi],
+x'[0] == v0*Cos[phi], y'[0] == Cos[phi], z'[0] == v0*Sin[phi],
+x''[t] == -g0*x[t]/Norm[{x[t],y[t],z[t]}],
+y''[t] == -g0*y[t]/Norm[{x[t],y[t],z[t]}],
+z''[t] == -g0*z[t]/Norm[{x[t],y[t],z[t]}]
+}, {x[t],y[t],z[t]}, {t,0,10}];
+
+orbit2[g0_, phi_, v0_] :=
+ NDSolve[{
+x[0] == Cos[phi], y[0] == 0, z[0] == Sin[phi],
+x'[0] == v0*Cos[phi], y'[0] == Cos[phi], z'[0] == v0*Sin[phi],
+x''[t] == -g0*x[t]/Norm[{x[t],y[t],z[t]}]^3,
+y''[t] == -g0*y[t]/Norm[{x[t],y[t],z[t]}]^3,
+z''[t] == -g0*z[t]/Norm[{x[t],y[t],z[t]}]^3
+}, {x[t],y[t],z[t]}, {t,0,10}];
+
+(* 1200 m/s at 45N for example *)
+
+(* 1200 m/s * 86400 s/ day * 1 earth radius/6371000m = 16.2737 earth rad/day *)
+
+(* 9.8 m/s/s * 86400*86400*s*s/day*day * 1 earth radius/6371000m = 11482.8 *)
+
+orbit3[r_, rot_, g0_, phi_, v0_] :=
+ NDSolve[{
+x[0] == Cos[phi], y[0] == 0, z[0] == Sin[phi],
+x'[0] == v0*Cos[phi], y'[0] == Cos[phi], z'[0] == v0*Sin[phi],
+x''[t] == -g0*x[t]/Norm[{x[t],y[t],z[t]}]^3,
+y''[t] == -g0*y[t]/Norm[{x[t],y[t],z[t]}]^3,
+z''[t] == -g0*z[t]/Norm[{x[t],y[t],z[t]}]^3
+}, {x[t],y[t],z[t]}, {t,0,10}];
+
+
+
+
+
+
 
 eqnsfake = {
 x[0] == Cos[phi], y[0] == 0, z[0] == Sin[phi],
@@ -130,12 +175,6 @@ x''[t] == 0,
 y''[t] == 0,
 z''[t] == 0
 }
-
-DSolve[eqns, {x[t],y[t],z[t]}, t]
-
-DSolve[eqns, {x,y,z}, t]
-
-
 
 
 
