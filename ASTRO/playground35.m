@@ -4,33 +4,49 @@
 
  *)
 
-p = ParametricPlot[{Sin[t],Cos[t] + Sin[t*180/35]}, {t,0,35*Degree},
- PlotStyle -> Red]
+deg0 = 32*Degree
 
-g0 = Graphics[{
- PointSize[Large],
- RGBColor[{1,0,0}],
- Point[{Sin[35*Degree],Cos[35*Degree]}]
-}]
+f[t_] = {Sin[t],Cos[t] + Sin[t*180/deg0*Degree]}
+g[t_] = {Sin[t],Cos[t]}
 
+(* p = ParametricPlot[f[t], {t,0,deg0}, PlotStyle -> Red] *)
+
+tab0 = Table[f[t], {t, 0, 6*Degree, 1*Degree}]
+tab1 = Table[f[t], {t, 6*Degree, 26*Degree, 1*Degree}]
+tab3 = Table[f[t], {t, 26*Degree, 32*Degree, 1*Degree}]
 
 deg = 40*Degree;
 
-g = Graphics[{
- Circle[{0,0},1, {0,90*Degree}], 
+tab10 = Table[g[t], {t, 0, deg, 1*Degree}]
+
+g0 = Graphics[{
+ RGBColor[{0,0,1}],
+ Thickness[.006],
+ Arrow[{tab10}],
+ Thickness[Medium],
+ RGBColor[{0,0,0}],
+ Circle[{0,0},1, {0,180*Degree}], 
  Arrow[{{0,0},{Sqrt[2]/2,Sqrt[2]/2}}],
  Text[Style["r",Medium], {Sqrt[2]/4+.02,Sqrt[2]/4-.02}],
  PointSize[Large],
- RGBColor[{0,0,1}],
+ RGBColor[{1,0,1}],
  Point[{0,1}],
- Text[Style["u(init)",Medium], {0.10,1.05}],
+ RGBColor[{0,0,1}],
+ Text[Style["t=0",Medium], {0.10,1.05}],
  Point[{Sin[deg],Cos[deg]}],
- Text[Style["u(final)",Medium], {Sin[deg]+0.10,Cos[deg]+0.05}]
+ Text[Style["u(final)",Medium], {Sin[deg]+0.10,Cos[deg]+0.05}],
+ RGBColor[{1,0,0}],
+ Arrow[{tab0}],
+ Arrow[{tab1}],
+ Arrow[{tab3}],
+ PointSize[Large],
+ Point[{Sin[deg0],Cos[deg0]}]
 }]
 
-Show[p, g0, g,
+Show[g0,
 Axes->True , AxesLabel->{x,y}, AxesStyle -> Medium,
-     Ticks -> None, AxesOrigin -> {0,0}, PlotRange->All]
+     Ticks -> None, AxesOrigin -> {0,0}, PlotRange->All,
+ AspectRatio -> Automatic]
 
 
 
