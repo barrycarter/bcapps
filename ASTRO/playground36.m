@@ -5,106 +5,146 @@ Generalized version of the projectile-on-planet question in 3D
 
 TODO: allow for angular launches (not straight up?)
 
+TODO: subscript v0?
+
+NOTE: I intentionally didn't mention phi in the statement of the
+problem as a way of noting that solutions sometimes depend on extra
+parameters.
+
 Question:
 
-You launch a projectile upwards at velocity v0 on a spherical planet
-with a surface acceleration of g0. How far from the launch point will
-the projectile land? Solve the problem in two ways:
+You launch a projectile upwards at velocity v0 on a airless spherical
+planet with a radius of r, a rotation period of p, and a surface
+acceleration of g.
 
-  - 1. Assume the projectile remains close enough to the planets surface
-  that acceleration is constant in magnitude.
+1. Set up differential equations to find how far from the launch point
+the projectile will land? You may ignore the planet's revolution
+around its primary (if any), in your calculations.
 
-  - 2. Allow for the change in acceleration magnitude as the
-  projectile gets further away from the planet's center.
-
-In both cases, you may ignore the planet's revolution around its primary.
+2. Numerically solve these differential equations in some interesting cases.
 
 Answer:
 
-Without loss of generality:
-
-  - We can measure distances in planetary radii, so the planet's
-  radius is 1 by definition.
-
-  - We can measure times in planetary rotations ("days"), so the
-  planet's rotation period is 1 by definition.
-
-  - We can draw our axes so the projectile's initial position is in
-  the xz plane.
+Without loss of generality, we can draw our axes so the projectile's
+initial position is in the xz plane.
 
 Solution:
 
-TODO: move the mathematica stuff around a bit
-
-phi = "\[Phi]"
-
-Allowing $\Phi$ to be the launch site's latitude, the projectile's
+Allowing `phi` to be the launch site's latitude, the projectile's
 initial position is:
 
-{Cos[phi], 0, Sin[phi]}
+$\{r \cos (\phi ),0,r \sin (\phi )\}$
 
-The launch site completes a rotation in 1 time unit, so its position
+The launch site completes a rotation in time p, so its position
 at time t is:
 
-site[t] = {Cos[phi]*Cos[t], Cos[phi]*Sin[t], Sin[phi]}
+$
+   \left\{r \cos (\phi ) \cos \left(\frac{2 \pi  t}{p}\right),r \cos (\phi )
+    \sin \left(\frac{2 \pi  t}{p}\right),r \sin (\phi )\right\}
+$
 
 Differentiating, we have the site's velocity as:
 
-site'[t] = {-Cos[phi]*Sin[t], Cos[phi]*Cos[t], 0}
+$   
+   \left\{-\frac{2 \pi  r \cos (\phi ) \sin \left(\frac{2 \pi 
+    t}{p}\right)}{p},\frac{2 \pi  r \cos (\phi ) \cos \left(\frac{2 \pi 
+    t}{p}\right)}{p},0\right\}
+$
 
-In particular:
+In particular, the velocity at time 0 is:
 
-site'[0] = {0, Cos[phi], 0}
+$\left\{0,\frac{2 \pi  r \cos (\phi )}{p},0\right\}$
 
 Thus, the projectile's starting velocity will be `v0` plus the
 velocity imparted from the launch site, as above.
 
-Excluding that component, the launch will be away from the center of
-the planet, and thus in the direction:
+Excluding the site velocity for a moment, the launch will be away from
+the center of the planet, and thus in the direction:
 
-{Cos[phi], 0, Sin[phi]}
+$\{\cos (\phi ),0,\sin (\phi )\}$
 
 Since this is a unit vector, the launch velocity (excluding the launch site's velocity for the moment) is:
 
-{v0*Cos[phi], 0, v0*Sin[phi]}
+$\{\text{v0} \cos (\phi ),0,\text{v0} \sin (\phi )\}$
 
-Adding the launch site's initial velocity, we have the projectile's
-initial velocity as:
+Adding the launch site's initial velocity back in, we have the
+projectile's initial velocity as:
 
-{v0*Cos[phi], Cos[phi], v0*Sin[phi]}
+$
+   \left\{\text{v0} \cos (\phi ),\frac{2 \pi  r \cos (\phi )}{p},\text{v0} \sin
+    (\phi )\right\}
+$
 
-To simplify, we break the projectile's position into x, y, and z
-components. From the above, we have:
+To simplify, we write separate equations for the x, y, and z
+components of the projectile. From the above, we have:
 
-x[0] = Cos[phi]
-y[0] = 0
-z[0] = Sin[phi]
+$x(0)=r \cos (\phi )$
 
-x'[0] = v0*Cos[phi]
-y'[0] = Cos[phi]
-z'[0] = v0*Sin[phi]
+$y(0)=0$
+
+$z(0)=r \sin (\phi )$
+
+$x'(0)=\text{v0} \cos (\phi )$
+
+$y'(0)=\cos (\phi )$
+
+$z'(0)=\text{v0} \sin (\phi )$
 
 Acceleration acts towards the center of the planet, so the direction
 of acceleration at time t is:
 
-{-x[t],-y[t],-z[t]}
+$\{-x(t),-y(t),-z(t)\}$
 
-Converting this to a unit vector, we briefly allow:
+Converting this to a unit vector:
 
-r[t] = Sqrt[x[t]^2+y[t]^2+z[t]^2]
+$
+\left\{-\frac{x(t)}{\sqrt{x(t)^2+y(t)^2+z(t)^2}},-\frac{y(t)}{\sqrt{x(t)^2+y(
+t)^2+z(t)^2}},-\frac{z(t)}{\sqrt{x(t)^2+y(t)^2+z(t)^2}}\right\}
+$
 
-Thus, the unit vector is:
+The acceleration due to gravity is g at the surface, which is distance
+r from the planet's center, and is thus (r/d)^2 at distance d from the
+planet (provided that d > r, which it is in our problem). Using the
+distance formula, the magnitude of gravity at time t is:
 
-{-x[t]/r[t], -y[t]/r[t], -z[t]/r[t]}
+$\frac{r^2}{x(t)^2+y(t)^2+z(t)^2}$
 
-To solve the first part of the problem, we assume the magnitude of
-acceleration is g0, so the acceleration vector is:
+Thus, the vector of acceleration due to gravity is:
 
-{-g0*x[t]/r[t], -g0*y[t]/r[t], -g0*z[t]/r[t]}
+$
+   \left\{-\frac{r^2 x(t)}{\left(x(t)^2+y(t)^2+z(t)^2\right)^{3/2}},-\frac{r^2
+    y(t)}{\left(x(t)^2+y(t)^2+z(t)^2\right)^{3/2}},-\frac{r^2
+    z(t)}{\left(x(t)^2+y(t)^2+z(t)^2\right)^{3/2}}\right\}
+$
 
-TODO: TeX check
+Since we'll be solving these equations numerically, we need to limit
+the values of t. We obviously want to start at t=0, but where to end? 
+
+Roughly speaking, if an object has initial velocity v0 and accelerates
+at g (in the negative direction), it will reach 0 velocity at time
+v0/g, and will return to its initial position at time
+2*v0/g. Therefore, computing until t=4*v0/g should be sufficient.
+
+(of course, this entire problem is about refining the "roughly
+speaking" paragraph above)
+
+Note that simply finding the approximate function for the projectile's
+position is only step 1. We then need to find when the projectile
+lands back on the planet: in other words, when it's distance from the
+center is once again r.
+
+Mathematica code follows.
 
 *)
+
+orbit[r_, p_, g_, phi_] := NDSolve[{
+ x[0] == r*Cos[phi], y[0] == 0, z[0] == r*Sin[phi],
+ x'[0] == v0*Cos[phi], y'[0] == 2*Pi*r*Cos[phi]/p, z'[0] == v0*Sin[phi],
+ x''[t] == -((r^2*x[t])/(x[t]^2 + y[t]^2 + z[t]^2)^(3/2)),
+ y''[t] == -((r^2*y[t])/(x[t]^2 + y[t]^2 + z[t]^2)^(3/2)),
+ z''[t] == -((r^2*z[t])/(x[t]^2 + y[t]^2 + z[t]^2)^(3/2))
+}, {x[t],y[t],z[t]}, {t,0,4*v0/g}]
+ 
 
 phi = "\[Phi]" 
 r[x_,y_,z_] = Sqrt[x^2+y^2+z^2];
