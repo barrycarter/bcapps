@@ -4,30 +4,34 @@
 
  *)
 
-opts = {Axes->True, AxesLabel->{x,y}, AxesStyle -> Medium, Ticks -> None};
+p = ParametricPlot[{Sin[t],Cos[t] + Sin[t*180/35]}, {t,0,35*Degree},
+ PlotStyle -> Red]
 
-p = ParametricPlot[{Sin[t],Cos[t]-(t-10*Degree)^2+(10*Degree)^2},
- {t,0,20*Degree}, {Axes->True , AxesLabel->{x,y}, AxesStyle -> Medium,
- Ticks -> None}]
+g0 = Graphics[{
+ PointSize[Large],
+ RGBColor[{1,0,0}],
+ Point[{Sin[35*Degree],Cos[35*Degree]}]
+}]
 
-p = ParametricPlot[{Sin[t],Cos[t]-(t-10*Degree)^2+(10*Degree)^2}, 
- {t,0,20*Degree}, Flatten[opts]]
 
+deg = 40*Degree;
 
 g = Graphics[{
- Circle[{0,0},1], 
+ Circle[{0,0},1, {0,90*Degree}], 
  Arrow[{{0,0},{Sqrt[2]/2,Sqrt[2]/2}}],
  Text[Style["r",Medium], {Sqrt[2]/4+.02,Sqrt[2]/4-.02}],
  PointSize[Large],
  RGBColor[{0,0,1}],
  Point[{0,1}],
  Text[Style["u(init)",Medium], {0.10,1.05}],
- Point[{Sin[25*Degree],Cos[25*Degree]}],
- Text[Style["u(final)",Medium], {Sin[25*Degree]+0.10,Cos[25*Degree]+0.05}]
-}
-,opts]
+ Point[{Sin[deg],Cos[deg]}],
+ Text[Style["u(final)",Medium], {Sin[deg]+0.10,Cos[deg]+0.05}]
+}]
 
-Show[p,g]
+Show[p, g0, g,
+Axes->True , AxesLabel->{x,y}, AxesStyle -> Medium,
+     Ticks -> None, AxesOrigin -> {0,0}, PlotRange->All]
+
 
 
 Show[ParametricPlot[#[[1]]*{Cos[\[Theta]],Sin[\[Theta]]}, {\[Theta],
