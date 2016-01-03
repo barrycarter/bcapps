@@ -137,17 +137,26 @@ Mathematica code follows.
 
 *)
 
-orbit[r_, p_, g_, phi_, v0_] := {x[t], y[t], z[t]} /. NDSolve[{
+(* this module returns position of projectile and site position *)
+
+launch[r_, p_, g_, phi_, v0_] := Module[{orbit},
+
+s[t_] := {x[t], y[t], z[t]} /. NDSolve[{
  x[0] == r*Cos[phi], y[0] == 0, z[0] == r*Sin[phi],
  x'[0] == v0*Cos[phi], y'[0] == 2*Pi*r*Cos[phi]/p, z'[0] == v0*Sin[phi],
  x''[t] == -g*((r^2*x[t])/(x[t]^2 + y[t]^2 + z[t]^2)^(3/2)),
  y''[t] == -g*((r^2*y[t])/(x[t]^2 + y[t]^2 + z[t]^2)^(3/2)),
  z''[t] == -g*((r^2*z[t])/(x[t]^2 + y[t]^2 + z[t]^2)^(3/2))
-}, {x[t],y[t],z[t]}, {t,0,4*v0/g}][[1]]
+}, {x[t],y[t],z[t]}, {t,0,4*v0/g}][[1]];
+
+Return[s]
+]
+
+launch[6371000, 86400, 9.8, 45*Degree, 1200]
 
 (* position of launch site at time *)
 
-site[r_, t_,phi_,p_] = 
+site[r_, p_, phi_, t_] = 
  r*{Cos[2*Pi*t/p]*Cos[phi], Sin[2*Pi*t/p]*Sin[phi], Sin[phi]};
 
 (* some interesting answers *)
@@ -159,8 +168,6 @@ s[t_] = orbit[6371000, 86400, 9.8, 45*Degree, 1200]
 (* solve for landing time (note Norm[s[0]] == r) *)
 
 (* TODO: this depends too much on params, so include params *)
-
-NSolve[Norm[s[t]] == 6371000, t, Reals]
 
 FindRoot[Norm[s[t]]-Norm[s[0]], {t, 2*1200/9.8}]
 
