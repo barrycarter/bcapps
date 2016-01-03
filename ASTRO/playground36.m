@@ -3,11 +3,7 @@
 Generalized version of the projectile-on-planet question in 3D
 <h>(just like Nature Trail To Hell)</h>
 
-TODO: allow for angular launches (not straight up?)
-
 TODO: subscript v0?
-
-TODO: allow ellipsoid planets?
 
 NOTE: I intentionally didn't mention phi in the statement of the
 problem as a way of noting that solutions sometimes depend on extra
@@ -24,6 +20,16 @@ the projectile will land? You may ignore the planet's revolution
 around its primary (if any), in your calculations.
 
 2. Numerically solve these differential equations in some interesting cases.
+
+Ways to make this problem harder:
+
+  - Allow for directional launches, not just straight up
+  launches. This is probably the easiest and most obvious improvement
+  to the question.
+
+  - Allow for ellipsoid planets, where the radius varies with
+  latitude, and the surface normal ("up" direction) is not exactly
+  opposite to the pull of gravity ("down" direction)
 
 Answer:
 
@@ -139,11 +145,37 @@ Mathematica code follows.
 
 *)
 
-(* this module returns position of projectile and site position *)
-
 (* TODO: I am not returning functions properly here *)
 
-launch[r_, p_, g_, phi_, v0_] := Module[{s,site,root},
+(* 
+
+This module returns (in this order):
+
+s[t]: the xyz position of the projectile at time t, 0 < t < root
+
+site[t]: the position of the launch site at time t, just as a reminder
+that the planet is rotating.
+
+root: The time at which the projectile lands
+
+dlat: The projectile's change in latitude (radians)
+
+dlon: The projectile's change in longitude (radians)
+
+nsdist: north/south distance traveled by projectile
+
+ewdist: east/west distance traveled by projectile
+
+tdist: total distance traveled by projectile (on surface of sphere)
+
+Some helper functions used below are found in:
+
+https://github.com/barrycarter/bcapps/blob/master/bclib.m
+
+*)
+
+launch[r_, p_, g_, phi_, v0_] := Module[
+ {s, site, root, dlat, dlon, garb, nsdist, ewdist, tdist},
 
 s[t_] = {x[t], y[t], z[t]} /. NDSolve[{
  x[0] == r*Cos[phi], y[0] == 0, z[0] == r*Sin[phi],
@@ -153,21 +185,32 @@ s[t_] = {x[t], y[t], z[t]} /. NDSolve[{
  z''[t] == -g*((r^2*z[t])/(x[t]^2 + y[t]^2 + z[t]^2)^(3/2))
 }, {x[t],y[t],z[t]}, {t,0,4*v0/g}][[1]];
 
-site[t_] = r*{Cos[2*Pi*t/p]*Cos[phi], Sin[2*Pi*t/p]*Sin[phi], Sin[phi]};
+site[t_] = r*{Cos[2*Pi*t/p]*Cos[phi], Sin[2*Pi*t/p]*Cos[phi], Sin[phi]};
 
 root = t /. FindRoot[Norm[s[t]]-Norm[s[0]], {t, 2*v0/g}];
 
-Return[{s[t],site[t],root, xyz2sph[s[root]]-xyz2sph[site[root]]}]
+{dlon,dlat,garb} = xyz2sph[s[root]]-xyz2sph[site[root]];
+
+{nsdist, ewdist} = {dlat*r, Cos[phi+dlat]*dlon*r};
+
+Print[dlat," ",r," ",nsdist];
+
+tdist = 2*r*ArcSin[Norm[s[root]-site[root]]/2/r];
+
+Return[{s[t], site[t], root, dlat, dlon, nsdist, ewdist, tdist}];
 ]
 
-ret = launch[6371000, 86400, 10, 45*Degree, 5000]
+
+{s[t_], site[t_], root, dlat, dlon, nsdist, ewdist, tdist} = 
+ launch[6371000, 86400, 10, 70*Degree, 100]
+
+{s[t_], site[t_], root, dlat, dlon, nsdist, ewdist, tdist} = 
+ launch[6371000, 86400, 10, 45*Degree, 100]
 
 
-ret = launch[6371000, 86400, 10, 45*Degree, 1200]
 
-s[t_] = ret[[1]]
-site[t_] = ret[[2]]
-root = ret[[3]]
+
+ launch[6371000, 86400, 10, 45*Degree, 1200]
 
 ParametricPlot3D[s[t]-site[t],{t,0,root}]
 
