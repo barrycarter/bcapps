@@ -8,5 +8,7 @@ KERNELS_TO_LOAD = (
 '/home/user/SPICE/KERNELS/nep081.bsp',
 '/home/barrycarter/SPICE/KERNELS/pck00010.tpc',
 '/home/barrycarter/SPICE/KERNELS/naif0011.tls',
+'/home/barrycarter/SPICE/KERNELS/earth_720101_070426.bpc',
+'/home/barrycarter/SPICE/KERNELS/earth_070425_370426_predict.bpc',
 '/home/barrycarter/SPICE/KERNELS/earth_latest_high_prec.bpc'
 )
