@@ -5,6 +5,8 @@ Generalized version of the projectile-on-planet question in 3D
 
 TODO: subscript v0?
 
+TODO: compute highest elevation reached!
+
 NOTE: I intentionally didn't mention phi in the statement of the
 problem as a way of noting that solutions sometimes depend on extra
 parameters.
@@ -177,7 +179,7 @@ https://github.com/barrycarter/bcapps/blob/master/bclib.m
 *)
 
 launch[r_, p_, g_, phi_, v0_] := launch[r,p,g,phi,v0] = Module[
- {s, site, root, dlat, dlon, garb, nsdist, ewdist, tdist},
+ {s, site, root, dlat, dlon, garb, nsdist, ewdist, tdist, maxtime, maxheight},
 
 s[t_] = {x[t], y[t], z[t]} /. NDSolve[{
  x[0] == r*Cos[phi], y[0] == 0, z[0] == r*Sin[phi],
@@ -187,12 +189,17 @@ s[t_] = {x[t], y[t], z[t]} /. NDSolve[{
  z''[t] == -g*((r^2*z[t])/(x[t]^2 + y[t]^2 + z[t]^2)^(3/2))
 }, {x[t],y[t],z[t]}, {t,0,4*v0/g}][[1]];
 
+maxtime = FindMaximum[Norm[s[t]]-r,{t,v0/g}];
+maxheight = maxtime[[2,1,2]];
+maxtime = maxtime[[1]];
+
 site[t_] = r*{Cos[2*Pi*t/p]*Cos[phi], Sin[2*Pi*t/p]*Cos[phi], Sin[phi]};
 root = t /. FindRoot[Norm[s[t]]-Norm[s[0]], {t, 2*v0/g}];
 {dlon,dlat,garb} = xyz2sph[s[root]]-xyz2sph[site[root]];
 {nsdist, ewdist} = {dlat*r, Cos[phi+dlat]*dlon*r};
 tdist = 2*r*ArcSin[Norm[s[root]-site[root]]/2/r];
-Return[{s[t], site[t], root, dlat, dlon, nsdist, ewdist, tdist}];
+Return[{s[t], site[t], root, dlat, dlon, nsdist, ewdist, tdist, maxtime,
+ maxheight}];
 ];
 
 (*
@@ -205,7 +212,7 @@ To jump for 1 second, I need an initial velocity of 4.9m/s, so we compute
 
 `launch[6371000, 86400, 9.8, 0*Degree, 4.9]`
 
-The jump takes 1.0033 seconds (3 milliseconds longer than expected),
+The jump takes 1.003 seconds (3 milliseconds longer than expected),
 and I land 116 micrometers west of my original position (no change in
 my north/south position, since I started at the equator).
 
@@ -227,6 +234,21 @@ http://physics.stackexchange.com/questions/89276 Even though the
 train's ceiling is probably no more than 1m higher than the thrower's
 hand, the 600mph velocity of the train might be sufficient to affect
 the equation.
+
+<added>
+
+  - https://physics.stackexchange.com/questions/214008
+
+Let's solve the problem at 45 degrees north latitude, where the
+bullet's motion is greatest:
+
+`launch[6371000, 86400, 9.8, 45*Degree, 1200]`
+
+The bullet will land 249.148 seconds later, 507m west and 1260m south
+of its original position, reaching a maximum height of 74455m at the
+halfway point in its journey (124.574s)
+
+</added>
 
   - http://physics.stackexchange.com/questions/226882 actually asks
   about air resistance, so my answer explicitly doesn't apply, but
