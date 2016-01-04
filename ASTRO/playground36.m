@@ -174,7 +174,7 @@ https://github.com/barrycarter/bcapps/blob/master/bclib.m
 
 *)
 
-launch[r_, p_, g_, phi_, v0_] := Module[
+launch[r_, p_, g_, phi_, v0_] := launch[r,p,g,phi,v0] = Module[
  {s, site, root, dlat, dlon, garb, nsdist, ewdist, tdist},
 
 s[t_] = {x[t], y[t], z[t]} /. NDSolve[{
@@ -186,57 +186,109 @@ s[t_] = {x[t], y[t], z[t]} /. NDSolve[{
 }, {x[t],y[t],z[t]}, {t,0,4*v0/g}][[1]];
 
 site[t_] = r*{Cos[2*Pi*t/p]*Cos[phi], Sin[2*Pi*t/p]*Cos[phi], Sin[phi]};
-
 root = t /. FindRoot[Norm[s[t]]-Norm[s[0]], {t, 2*v0/g}];
-
 {dlon,dlat,garb} = xyz2sph[s[root]]-xyz2sph[site[root]];
-
 {nsdist, ewdist} = {dlat*r, Cos[phi+dlat]*dlon*r};
-
-Print[dlat," ",r," ",nsdist];
-
 tdist = 2*r*ArcSin[Norm[s[root]-site[root]]/2/r];
-
 Return[{s[t], site[t], root, dlat, dlon, nsdist, ewdist, tdist}];
-]
+];
+
+(*
+
+Now, let's use this code to answer some existing questions:
+
+  - http://physics.stackexchange.com/questions/48287/
+
+To jump for 1 second, I need an initial velocity of 4.9m/s, so we compute
+
+`launch[6371000, 86400, 9.8, 0*Degree, 4.9]`
+
+The jump takes 1.0033 seconds (3 milliseconds longer than expected),
+and I land 116 micrometers west of my original position (no change in
+my north/south position, since I started at the equator).
+
+To check @NowIGetToLearnWhatAHe's answer: jumping 1m on Earth requires
+an initial velocity of 4.43 m/s, so we run
+
+`launch[6371000, 86400, 9.8, 45*Degree, 4.43]`
+
+The jump lasts 0.9053 seconds, and I land 6.9mm south and 62.5
+micrometers west of where I started, verifying
+@NowIGetToLearnWhatAHe's answers up to roundoff errors.
+
+This effectively also answers
+http://physics.stackexchange.com/questions/80090/ if we assume jumping
+1m up and hovering 1 second is close enough to the cases above.
+
+It also answers http://physics.stackexchange.com/questions/89276 since
+the initial motion of the train is irrelevant, and we assume the
+train's ceiling isn't much more than 1m higher than where the
+thrower's hands are. The ball would land a few millmeters south of
+where it was thrown, but still well within the 12cm radius of an
+average hand.
+
+  - http://physics.stackexchange.com/questions/226882 actually asks
+  about air resistance, so my answer explicitly doesn't apply, but
+  let's run the numbers anyway. I did
+
+`launch[3389500, 88643, 3.711, 0*Degree, v0]`
+
+with various v0's to see how fast the coin must be flipped to miss the
+flipper's hand (assuming hand radius of 12cm).
+
+At the Martian equator, you would have to flip a coin at 25.9m/s for
+it to miss your hand on the way down. This is equivalent to flipping a
+coin at 9.8m/s (about 22 miles per hour) on Earth, so, yes, you could
+concievably flip a coin fast enough that it would miss your hand on
+the way down.
+
+At 45 degrees latitude on Mars, we have:
+
+`launch[3389500, 88643, 3.711, 45*Degree, v0]`
+
+and it turns out an initial velocity of 10m/s (equivalent to 3.76m/s
+or 8.5 mph on Earth) would suffice to have the coin miss your hand.
+
+  - http://physics.stackexchange.com/questions/89276
 
 
-{s[t_], site[t_], root, dlat, dlon, nsdist, ewdist, tdist} = 
- launch[6371000, 86400, 10, 70*Degree, 100]
-
-{s[t_], site[t_], root, dlat, dlon, nsdist, ewdist, tdist} = 
- launch[6371000, 86400, 10, 45*Degree, 100]
 
 
+  - Other questions this helps answers (which don't have numerical
+  quantities in the question):
 
-
- launch[6371000, 86400, 10, 45*Degree, 1200]
-
-ParametricPlot3D[s[t]-site[t],{t,0,root}]
-
-ret = launch[6371000, 86400, 10, 45*Degree, 5]
-
-s[t_] = ret[[1]]
-site[t_] = ret[[2]]
-root = ret[[3]]
+    - http://physics.stackexchange.com/questions/166853
+    - http://physics.stackexchange.com/questions/174385
+    - http://physics.stackexchange.com/questions/137191
+    - http://physics.stackexchange.com/questions/14993
+    - http://physics.stackexchange.com/questions/126469
+    - http://physics.stackexchange.com/questions/148008
+    - http://physics.stackexchange.com/questions/7479
 
 
 
-(* position of launch site at time *)
 
-site[r_, p_, phi_, t_] = 
- r*{Cos[2*Pi*t/p]*Cos[phi], Sin[2*Pi*t/p]*Sin[phi], Sin[phi]};
 
-(* some interesting answers *)
+(* launching from earth at 45 degrees with variable initial velocity *)
 
-(* below in meters and seconds *)
+elaunch[v0_] := elaunch[v0] =  launch[6371000, 86400, 10, 45*Degree, v0]
 
-s[t_] = orbit[6371000, 86400, 9.8, 45*Degree, 1200]
+(* time in air *)
 
-(* solve for landing time (note Norm[s[0]] == r) *)
+Plot[{elaunch[v][[3]],v/5},{v,0,7000}]
+Plot[{elaunch[v][[3]]-v/5},{v,0,7000}]
 
-(* TODO: this depends too much on params, so include params *)
+Plot[{elaunch[v][[8]]},{v,0,7000}]
 
-FindRoot[Norm[s[t]]-Norm[s[0]], {t, 2*1200/9.8}]
+Plot[{elaunch[v][[6]]},{v,0,7000}]
 
-s[t] /. FindRoot[Norm[s[t]]==Norm[s[0]], {t, 2*1200/9.8}]
+Plot[{elaunch[v][[7]]},{v,0,7000}]
+
+t0 = Table[{v,elaunch[v][[3]]},{v,0,7000}]
+
+t1 = Table[{v,elaunch[v][[3]]-v/5},{v,0,7000}]
+
+(* 
+
+Approximate functions:
+
