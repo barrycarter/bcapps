@@ -235,8 +235,6 @@ train's ceiling is probably no more than 1m higher than the thrower's
 hand, the 600mph velocity of the train might be sufficient to affect
 the equation.
 
-<added>
-
   - https://physics.stackexchange.com/questions/214008
 
 Let's solve the problem at 45 degrees north latitude, where the
@@ -247,8 +245,6 @@ bullet's motion is greatest:
 The bullet will land 249.148 seconds later, 507m west and 1260m south
 of its original position, reaching a maximum height of 74455m at the
 halfway point in its journey (124.574s)
-
-</added>
 
   - http://physics.stackexchange.com/questions/226882 actually asks
   about air resistance, so my answer explicitly doesn't apply, but
