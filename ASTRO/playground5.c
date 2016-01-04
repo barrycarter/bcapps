@@ -10,6 +10,23 @@ int main (int argc, char **argv) {
 
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
+  // change error handling to see if we can do try/catch
+  erract_c("SET", 0, "RETURN");
+
+
+  
+  spkezp_c(10,unix2et(-365.2425*86400*8),"ITRF93","CN+S",399,v,&lt);
+
+  if (failed_c()) {printf("You have failed\n");}
+
+  printf("Program continues\n");
+
+  
+
+
+  exit(0);
+
+
   // this shouldn't work
   printf("%f\n", unix2et(-86400*365.2425*7));
   spkezp_c(10,-1167626622,"ITRF93","CN+S",399,v,&lt);
