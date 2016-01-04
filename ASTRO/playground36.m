@@ -9,7 +9,11 @@ NOTE: I intentionally didn't mention phi in the statement of the
 problem as a way of noting that solutions sometimes depend on extra
 parameters.
 
-Question:
+Subject: Trajectory of projectile launched from planet's surface
+
+Say, Barry, can you abuse this site's "answer your own question"
+feature to provide insight into this oft-asked question (in various
+different forms):
 
 You launch a projectile upwards at velocity v0 on a airless spherical
 planet with a radius of r, a rotation period of p, and a surface
@@ -35,8 +39,6 @@ Answer:
 
 Without loss of generality, we can draw our axes so the projectile's
 initial position is in the xz plane.
-
-Solution:
 
 Allowing `phi` to be the launch site's latitude, the projectile's
 initial position is:
@@ -220,12 +222,11 @@ This effectively also answers
 http://physics.stackexchange.com/questions/80090/ if we assume jumping
 1m up and hovering 1 second is close enough to the cases above.
 
-It also answers http://physics.stackexchange.com/questions/89276 since
-the initial motion of the train is irrelevant, and we assume the
-train's ceiling isn't much more than 1m higher than where the
-thrower's hands are. The ball would land a few millmeters south of
-where it was thrown, but still well within the 12cm radius of an
-average hand.
+It unfortunately doesn't answer
+http://physics.stackexchange.com/questions/89276 Even though the
+train's ceiling is probably no more than 1m higher than the thrower's
+hand, the 600mph velocity of the train might be sufficient to affect
+the equation.
 
   - http://physics.stackexchange.com/questions/226882 actually asks
   about air resistance, so my answer explicitly doesn't apply, but
@@ -249,11 +250,6 @@ At 45 degrees latitude on Mars, we have:
 and it turns out an initial velocity of 10m/s (equivalent to 3.76m/s
 or 8.5 mph on Earth) would suffice to have the coin miss your hand.
 
-  - http://physics.stackexchange.com/questions/89276
-
-
-
-
   - Other questions this helps answers (which don't have numerical
   quantities in the question):
 
@@ -264,31 +260,59 @@ or 8.5 mph on Earth) would suffice to have the coin miss your hand.
     - http://physics.stackexchange.com/questions/126469
     - http://physics.stackexchange.com/questions/148008
     - http://physics.stackexchange.com/questions/7479
+    - http://physics.stackexchange.com/questions/20424
+    - http://physics.stackexchange.com/questions/136351
+    - https://physics.stackexchange.com/questions/12766
 
+  - It doesn't answer the following questions, but may have enough
+  relevance that they're worth linking to this answer:
 
+    - http://physics.stackexchange.com/questions/16390
+    - http://physics.stackexchange.com/questions/133801
+    - https://physics.stackexchange.com/questions/214614
 
+We can also use this code to get an idea of how much accounting for
+gravity and rotation affects trajectory at different initial
+velocities.
 
+For the below, I use:
 
-(* launching from earth at 45 degrees with variable initial velocity *)
+`launch[6371000, 86400, 10, 45*Degree, v0]`
 
-elaunch[v0_] := elaunch[v0] =  launch[6371000, 86400, 10, 45*Degree, v0]
+estimating Earth's surface gravity at 10m/s^2 for convenience.
 
-(* time in air *)
+  - Landing time (in seconds):
 
-Plot[{elaunch[v][[3]],v/5},{v,0,7000}]
-Plot[{elaunch[v][[3]]-v/5},{v,0,7000}]
+[[landtime.jpg]]
 
-Plot[{elaunch[v][[8]]},{v,0,7000}]
+The red line represents t/5, the landing time we'd expect if the Earth
+didn't rotate and gravity didn't decrease with distance.
 
-Plot[{elaunch[v][[6]]},{v,0,7000}]
+The blue line represents actual landing time.
 
-Plot[{elaunch[v][[7]]},{v,0,7000}]
+  - Landing spot how far west of launch site (in meters):
 
-t0 = Table[{v,elaunch[v][[3]]},{v,0,7000}]
+[[landwest.jpg]]
 
-t1 = Table[{v,elaunch[v][[3]]-v/5},{v,0,7000}]
+  - Landing spot how far south of launch site (in meters):
 
-(* 
+[[landsouth.jpg]]
 
-Approximate functions:
+  - The total distance between landing spot and launch site mirrors
+  the graph above, since most of the motion is north-south.
 
+  - The apparent surface velocity of the projectile: ie, the distance
+  traveled on the surface divided by the landing time (in meters/second):
+
+[[landvel.jpg]]
+
+Notes:
+
+  - Mathematica can't solve the differential equation when the initial
+  velocity exceeds 7000m/s, possibly since that's fairly close to the
+  velocity required to achieve Earth orbit (though not enough to
+  escape the Earth's gravitational pull entirely, which would require
+  a velocity of 11186 m/s)
+
+  - Longer-term, I'd like to work out first-order approximations to
+  the quantities above.
