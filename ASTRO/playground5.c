@@ -5,7 +5,7 @@
 int main (int argc, char **argv) {
 
   SPICEDOUBLE_CELL(cnfine,2);
-  SPICEDOUBLE_CELL(result,10000);
+  SPICEDOUBLE_CELL(result,500000);
   SpiceDouble beg, end, i_start, i_end, et_start, et_end;
   char ftime[200], jtime[200];
 
@@ -18,9 +18,7 @@ int main (int argc, char **argv) {
 
   // and the limits of DE431
   str2et_c("13201 B.C. MAY 07 00:00:41.184", &et_start);
-  str2et_c("17091 MAY 07 00:00:41.184", &et_start);
   str2et_c("17191 MAR 01 00:01:07.184", &et_end);
-  //  str2et_c("13001 B.C. MAR 01 00:01:07.184", &et_end);
 
   // because I'm using large time intervals...
   gfstol_c(10.);
@@ -29,7 +27,8 @@ int main (int argc, char **argv) {
   void solarzed (SpiceDouble et, SpiceDouble *value) {
     SpiceDouble v[3], lt;
 
-    if (et >= i_start && et <= i_end) {
+    // using 86400 here for safety too 
+    if (et >= i_start+86400 && et <= i_end-86400) {
       spkezp_c(10,et,"ITRF93","CN+S",399,v,&lt);
     } else {
       spkezp_c(10,et,"IAU_EARTH","CN+S",399,v,&lt);
@@ -48,7 +47,7 @@ int main (int argc, char **argv) {
   // NOTE: bumping one day either side to avoid off-the-edge errors
   wninsd_c(et_start+86400, et_end-86400, &cnfine);
 
-  gfuds_c(solarzed,gfdecrx,"=",0,0,86400,10000,&cnfine,&result);
+  gfuds_c(solarzed,gfdecrx,"LOCMAX",0,0,86400,500000,&cnfine,&result);
 
   int count = wncard_c( &result );
 
@@ -58,7 +57,7 @@ int main (int argc, char **argv) {
     // compute in "calendar form" and JD form
     et2utc_c(beg, "C", 20, 199, ftime);
     et2utc_c(beg, "J", 20, 199, jtime);
-    printf("EQUINOX %f %s %s\n", beg, jtime, ftime);
+    printf("SUMMER %f %s %s\n", beg, jtime, ftime);
   }
 
 }
