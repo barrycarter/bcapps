@@ -11,6 +11,16 @@ int main (int argc, char **argv) {
 
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
+  // debugging here
+  SpiceDouble v[3], lt;
+
+  for (SpiceDouble t=0; t<=366*86400; t+=3600) {
+    spkezp_c(10,t,"ITRF93","CN+S",399,v,&lt);
+    printf("POS: %f %f %f (%f/%f) at %f\n",v[0],v[1],v[2],atan2(v[2],v[1])*dpr_c(),lt,t/86400.);
+  }
+
+  exit(0);
+
   // the limits of ITRF93 (per "brief earth_720101_070426.bpc" etc)
   str2et_c("1962 JAN 20 00:00:41.184", &i_start);
   str2et_c("2037 JUL 17 00:01:05.183", &i_end);
