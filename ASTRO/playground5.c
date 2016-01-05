@@ -6,42 +6,33 @@ int main (int argc, char **argv) {
 
   SPICEDOUBLE_CELL(cnfine,2);
   SPICEDOUBLE_CELL(result,10000);
-  SpiceDouble beg, end, v[3], lt;
+  SpiceDouble beg, end, i_start, i_end, et_start, et_end;
+  char ftime[200], jtime[200];
 
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
-  // change error handling
-  erract_c("SET", 0, "RETURN");
+  // the limits of ITRF93 (per "brief earth_720101_070426.bpc" etc)
+  str2et_c("1962 JAN 20 00:00:41.184", &i_start);
+  str2et_c("2037 JUL 17 00:01:05.183", &i_end);
+  printf("RANGE: %f %f\n",i_start,i_end);
+
+  // and the limits of DE431
+  str2et_c("13201 B.C. MAY 07 00:00:41.184", &et_start);
+  str2et_c("17091 MAY 07 00:00:41.184", &et_start);
+  str2et_c("17191 MAR 01 00:01:07.184", &et_end);
+  //  str2et_c("13001 B.C. MAR 01 00:01:07.184", &et_end);
 
   // because I'm using large time intervals...
   gfstol_c(10.);
 
-  // because I know I will be seeing errors
-  errprt_c ("SET", 0, "NONE");
-
   // sun's z position
   void solarzed (SpiceDouble et, SpiceDouble *value) {
+    SpiceDouble v[3], lt;
 
-    // NOTE: trying ITRF93 first and checking for error is
-    // inefficient, since ITRF93 only covers a few dozen years; more
-    // efficient would be finding the actual times ITRF93 is valid
-    // (which the filenames and comments clearly state, although
-    // earth_720101_070426.bpc actually goes back to 1963 or so), but
-    // I want to show how clever I am with error handling
-
-    // try ITRF93 first
-    spkezp_c(10,et,"ITRF93","CN+S",399,v,&lt);
-
-    // I should be checking for a specific error, but this is close enough
-    if (failed_c()) {
-      // fallback on IAU_EARTH
-      spkezp_c(10,et,"IAU_EARTH","CN+S",399,v,&lt);
-      // and reset the error message
-      reset_c();
-      // this printf will let me use a better approach later
-      //      printf("NO ITRF93 FOR: %f %f\n",et,et2unix(et));
+    if (et >= i_start && et <= i_end) {
+      spkezp_c(10,et,"ITRF93","CN+S",399,v,&lt);
     } else {
-      printf("USING ITRF FOR: %f %f\n",et,et2unix(et));
+      spkezp_c(10,et,"IAU_EARTH","CN+S",399,v,&lt);
     }
 
     *value = v[2];
@@ -52,14 +43,10 @@ int main (int argc, char **argv) {
     uddc_c( udfuns, et, 10., isdecr );
   }
 
-  // using 1000-3000 for first attempt to compare randomly to
-  // http://stellafane.org/misc/equinox.html
-
-  double et_start = -31556217600.;
-  double et_end = -31556217600+2000*366*86400.;
-
+  // TODO: compare to http://stellafane.org/misc/equinox.html among others
   // TODO: find max and min for solstices
-  wninsd_c(et_start, et_end,&cnfine);
+  // NOTE: bumping one day either side to avoid off-the-edge errors
+  wninsd_c(et_start+86400, et_end-86400, &cnfine);
 
   gfuds_c(solarzed,gfdecrx,"=",0,0,86400,10000,&cnfine,&result);
 
@@ -67,7 +54,11 @@ int main (int argc, char **argv) {
 
   for (int i=0; i<count; i++) {
     wnfetd_c (&result, i, &beg, &end);
-    printf("%f\n", beg);
+
+    // compute in "calendar form" and JD form
+    et2utc_c(beg, "C", 20, 199, ftime);
+    et2utc_c(beg, "J", 20, 199, jtime);
+    printf("EQUINOX %f %s %s\n", beg, jtime, ftime);
   }
 
 }
