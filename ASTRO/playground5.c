@@ -13,9 +13,14 @@ int main (int argc, char **argv) {
   // change error handling
   erract_c("SET", 0, "RETURN");
 
+  // because I'm using large time intervals...
+  gfstol_c(10.);
+
+  // because I know I will be seeing errors
+  errprt_c ("SET", 0, "NONE");
+
   // sun's z position
-  void solarzed (SpiceDouble unixtime, SpiceDouble *value) {
-    SpiceDouble v[3], lt;
+  void solarzed (SpiceDouble et, SpiceDouble *value) {
 
     // NOTE: trying ITRF93 first and checking for error is
     // inefficient, since ITRF93 only covers a few dozen years; more
@@ -25,16 +30,18 @@ int main (int argc, char **argv) {
     // I want to show how clever I am with error handling
 
     // try ITRF93 first
-    spkezp_c(10,unix2et(unixtime),"ITRF93","CN+S",399,v,&lt);
+    spkezp_c(10,et,"ITRF93","CN+S",399,v,&lt);
 
     // I should be checking for a specific error, but this is close enough
     if (failed_c()) {
       // fallback on IAU_EARTH
-      spkezp_c(10,unix2et(unixtime),"IAU_EARTH","CN+S",399,v,&lt);
+      spkezp_c(10,et,"IAU_EARTH","CN+S",399,v,&lt);
       // and reset the error message
       reset_c();
       // this printf will let me use a better approach later
-      printf("NO ITRF93 FOR: %f %f\n",unix2et(unixtime),unixtime);
+      //      printf("NO ITRF93 FOR: %f %f\n",et,et2unix(et));
+    } else {
+      printf("USING ITRF FOR: %f %f\n",et,et2unix(et));
     }
 
     *value = v[2];
@@ -45,9 +52,14 @@ int main (int argc, char **argv) {
     uddc_c( udfuns, et, 10., isdecr );
   }
 
-  // find when 0
+  // using 1000-3000 for first attempt to compare randomly to
+  // http://stellafane.org/misc/equinox.html
+
+  double et_start = -31556217600.;
+  double et_end = -31556217600+2000*366*86400.;
+
   // TODO: find max and min for solstices
-  wninsd_c(-86400*365.2425*7,1451631600+86400*365.2425*20,&cnfine);
+  wninsd_c(et_start, et_end,&cnfine);
 
   gfuds_c(solarzed,gfdecrx,"=",0,0,86400,10000,&cnfine,&result);
 
