@@ -14,10 +14,18 @@ int main (int argc, char **argv) {
   // debugging here
   SpiceDouble v[3], lt;
 
-  for (SpiceDouble t=0; t<=366*86400; t+=86400) {
-    spkezp_c(10,t,"ECLIPDATE","CN+S",399,v,&lt);
-    printf("POS: %f %f %f at %f\n",v[0],v[1],v[2],t/86400.);
+  SpiceDouble test;
+  str2et_c("2020 MAR 20 00:00:00", &test);
+
+  for (SpiceDouble add=0; add<=86400*3; add+=60) {
+    spkezp_c(10,test+add,"ECLIPDATE","CN+S",399,v,&lt);
+    printf("POS: %f %f %f at %f\n",v[0],v[1],v[2],add);
   }
+
+
+  //  str2et_c("2020 MAR 20 03:48:00", &i_start);
+  //  spkezp_c(10,i_start,"GSE","CN+S",399,v,&lt);
+  //  printf("POS: %f %f %f\n",v[0],v[1],v[2]);
 
   exit(0);
 
