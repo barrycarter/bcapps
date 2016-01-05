@@ -1,3 +1,5 @@
+Note that 000157.html is a literal copy of https://naif.jpl.nasa.gov/pipermail/spice_discussion/2005-February/000157.html
+
 \begindata
 
 KERNELS_TO_LOAD = (
@@ -11,5 +13,6 @@ KERNELS_TO_LOAD = (
 '/home/barrycarter/SPICE/KERNELS/naif0011.tls',
 '/home/barrycarter/SPICE/KERNELS/earth_720101_070426.bpc',
 '/home/barrycarter/SPICE/KERNELS/earth_070425_370426_predict.bpc',
-'/home/barrycarter/SPICE/KERNELS/earth_latest_high_prec.bpc'
+'/home/barrycarter/SPICE/KERNELS/earth_latest_high_prec.bpc',
+'/home/barrycarter/BCGIT/ASTRO/000157.html'
 )
