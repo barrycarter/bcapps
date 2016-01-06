@@ -6,39 +6,48 @@ int main (int argc, char **argv) {
 
   SPICEDOUBLE_CELL(cnfine,2);
   SPICEDOUBLE_CELL(result,500000);
-  SpiceDouble beg, end, i_start, i_end, et_start, et_end;
-  char ftime[200], jtime[200];
+  SpiceDouble beg, end, et_start, et_end;
+  char ftime[255];
 
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
   // debugging here
-  SpiceDouble v[3], lt;
+  //  SpiceDouble v[3], lt;
 
-  SpiceDouble test;
+  //  SpiceDouble test;
   // equinox time 0350 per http://aa.usno.navy.mil/data/docs/EarthSeasons.php
   // 
-  str2et_c("2020 MAR 20 00:00:00", &test);
+  //  str2et_c("2025 SEP 22 00:00:00", &test);
 
-  for (SpiceDouble add=0; add<=86400*3; add+=60) {
-    spkezp_c(10,test+add,"EQEQDATE","CN+S",399,v,&lt);
-    printf("POS: %f %f %f at %f\n",v[0],v[1],v[2],add/60.);
-  }
+  //  for (SpiceDouble add=0; add<=86400*3; add+=60) {
+  //    spkezp_c(10,test+add,"EQEQDATE","CN+S",399,v,&lt);
+  //    printf("POS: %f %f %f at %f\n",v[0],v[1],v[2],add/60.);
+  //  }
 
 
   //  str2et_c("2020 MAR 20 03:48:00", &i_start);
   //  spkezp_c(10,i_start,"GSE","CN+S",399,v,&lt);
   //  printf("POS: %f %f %f\n",v[0],v[1],v[2]);
 
-  exit(0);
+  //  exit(0);
 
   // the limits of ITRF93 (per "brief earth_720101_070426.bpc" etc)
-  str2et_c("1962 JAN 20 00:00:41.184", &i_start);
-  str2et_c("2037 JUL 17 00:01:05.183", &i_end);
-  printf("RANGE: %f %f\n",i_start,i_end);
+  // str2et_c("1962 JAN 20 00:00:41.184", &i_start);
+  // str2et_c("2037 JUL 17 00:01:05.183", &i_end);
+  // printf("RANGE: %f %f\n",i_start,i_end);
 
   // and the limits of DE431
-  str2et_c("13201 B.C. MAY 07 00:00:41.184", &et_start);
-  str2et_c("17191 MAR 01 00:01:07.184", &et_end);
+  //    str2et_c("13201 B.C. MAY 07 00:00:41.184", &et_start);
+  //  str2et_c("17091 MAY 07 00:00:41.184", &et_start);
+  //  str2et_c("13101 B.C. MAY 07 00:00:41.184", &et_end);
+  //    str2et_c("17191 MAR 01 00:01:07.184", &et_end);
+
+  str2et_c("26 B.C. MAY 07 00:00:41.184", &et_start); 
+  str2et_c("39 A.D. MAY 07 00:00:41.184", &et_end); 
+
+
+  // str2et_c("2000 JAN 01 00:00:00", &et_start); 
+  // str2et_c("2026 JAN 01 00:00:00", &et_end); 
 
   // because I'm using large time intervals...
   gfstol_c(10.);
@@ -47,14 +56,18 @@ int main (int argc, char **argv) {
   void solarzed (SpiceDouble et, SpiceDouble *value) {
     SpiceDouble v[3], lt;
 
-    // using 86400 here for safety too 
-    if (et >= i_start+86400 && et <= i_end-86400) {
-      spkezp_c(10,et,"ITRF93","CN+S",399,v,&lt);
-    } else {
-      spkezp_c(10,et,"IAU_EARTH","CN+S",399,v,&lt);
-    }
+    spkezp_c(10,et,"EQEQDATE","CN+S",399,v,&lt);
 
-    *value = v[2];
+    //    printf("RETURNING: %f -> %f (range %f - %f)\n",et,v[0],et_start,et_end);
+
+    // using 86400 here for safety too 
+    //    if (et >= i_start+86400 && et <= i_end-86400) {
+    //      spkezp_c(10,et,"ITRF93","CN+S",399,v,&lt);
+    //    } else {
+    //      spkezp_c(10,et,"IAU_EARTH","CN+S",399,v,&lt);
+    //    }
+
+    *value = v[1];
   }
 
   void gfdecrx (void(* udfuns)(SpiceDouble et,SpiceDouble * value),
@@ -67,7 +80,7 @@ int main (int argc, char **argv) {
   // NOTE: bumping one day either side to avoid off-the-edge errors
   wninsd_c(et_start+86400, et_end-86400, &cnfine);
 
-  gfuds_c(solarzed,gfdecrx,"LOCMAX",0,0,86400,500000,&cnfine,&result);
+  gfuds_c(solarzed,gfdecrx,"=",0,0,86400,500000,&cnfine,&result);
 
   int count = wncard_c( &result );
 
@@ -75,9 +88,11 @@ int main (int argc, char **argv) {
     wnfetd_c (&result, i, &beg, &end);
 
     // compute in "calendar form" and JD form
-    et2utc_c(beg, "C", 20, 199, ftime);
-    et2utc_c(beg, "J", 20, 199, jtime);
-    printf("SUMMER %f %s %s\n", beg, jtime, ftime);
+    //    et2utc_c(beg, "C", 20, 199, ftime);
+    //    et2utc_c(beg, "J", 20, 199, jtime);
+    timout_c(beg, "ERA YYYY##-MM-DD HR:MN:SC ::MCAL",255,ftime);
+    //    timout_c(beg, "YYYY#-MM-DD HR:MN:SC ::MCAL",255,ftime);
+    printf("EQU %f %s\n", beg, ftime);
   }
 
 }
