@@ -130,7 +130,7 @@ for $i (split(/\n/,$out)) {
 
   # TODO: fix double chinese new year to use 2nd date?
   debug("I: $i");
-  if ($i=~s%Cycle 78\/(\d+)\-\d+ .*?/([^/]*?)$%Chinese NY ($2)%i) {
+  if ($i=~s%Cycle 78\/(\d+)\-\d+ .*?/([^/]*?)$%Chinese NY($2)%i) {
     # already have a CNY for this cycle
     if ($seen{cny}{$1}) {next;}
     $seen{cny}{$1}=1;

@@ -15,11 +15,13 @@ int main (int argc, char **argv) {
   SpiceDouble v[3], lt;
 
   SpiceDouble test;
+  // equinox time 0350 per http://aa.usno.navy.mil/data/docs/EarthSeasons.php
+  // 
   str2et_c("2020 MAR 20 00:00:00", &test);
 
   for (SpiceDouble add=0; add<=86400*3; add+=60) {
-    spkezp_c(10,test+add,"ECLIPDATE","CN+S",399,v,&lt);
-    printf("POS: %f %f %f at %f\n",v[0],v[1],v[2],add);
+    spkezp_c(10,test+add,"EQEQDATE","CN+S",399,v,&lt);
+    printf("POS: %f %f %f at %f\n",v[0],v[1],v[2],add/60.);
   }
 
 

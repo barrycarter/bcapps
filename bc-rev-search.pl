@@ -20,7 +20,8 @@ $phrase = reverse($phrase);
 
 # non-glob files below are expected to exist
 
-my(@exts) = glob("/mnt/extdrive*/*-files-rev.txt");
+# extdrive5 thing is a short-term special case hack
+my(@exts) = glob("/mnt/extdrive*/*-files-rev.txt /mnt/extdrive5/?????/*-files-rev.txt");
 
 for $i ("/mnt/sshfs/bcmac-files-rev.txt.srt", "/bcunix-files-rev.txt", @exts) {
   # TODO: also search for $phrase.bz2 (reversed) and so on?
