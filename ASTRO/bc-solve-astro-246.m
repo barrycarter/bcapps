@@ -20,49 +20,8 @@ OrbitCenter, but nah *)
 angmoon[s_, p_] := ang[AstronomicalData[s, "SemimajorAxis"], 
  AstronomicalData[s, "Diameter"]];
 
-annular[p_] := Table[{i, angmoon[i, p]/angsun[p]}, 
- {i,AstronomicalData[p, "Satellites"]}];
-
-t = Table[{p, annular[p]}, {p, AstronomicalData["Planet"]}]
-
-plans = Union[AstronomicalData["Planet"], AstronomicalData["DwarfPlanet"]]
 plans = Union[AstronomicalData["Planet"], {"Pluto"}]
 
 t = Sort[Flatten[Table[{p, s, angmoon[s,p]/angsun[p]}, 
  {p, plans},
  {s, AstronomicalData[p, "Satellites"]}],1], #1[[3]] > #2[[3]] &]
-
-
-
-
-
-
-
-
-
-
-
-
-
-2*ArcTan[AstronomicalData[p, "Periapsis"], 
- AstronomicalData["Sun", "EquatorialRadius"]]
-
-
-p = AstronomicalData["Planet"]
-
-
-AstronomicalData["Sun", "EquatorialDiameter"]
-AstronomicalData["Jupiter", "EquatorialDiameter"]
-AstronomicalData["Jupiter", "Periapsis"]
-AstronomicalData["Jupiter", "Satellites"]
-
-(* angular diameter of sun from planet *)
-
-(* planet moons + radii + distances *)
-
-AstronomicalData["Io", "Radius"]
-AstronomicalData["Io", "Periapsis"]
-
-
-
-
