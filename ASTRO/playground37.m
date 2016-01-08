@@ -5,116 +5,63 @@ storing it *)
 
 (* START SKIP FROM HERE TO NEXT "SKIP" IF USING MX FILE BELOW:
 
-math -initfile /home/barrycarter/20160107/magpos.mx
+math -initfile /home/barrycarter/20160107/stardata.mx
 
  *)
 
-pos[s_] := pos[s] = AstronomicalData[s, "PositionLightYears"];
-
-(* this just forces evaluation of above, doesn't actually do anything *)
-
-Table[pos[s],{s, AstronomicalData["Star"]}];
-
-mag[s_] := mag[s] = AstronomicalData[s, "AbsoluteMagnitude"];
-
-Table[mag[s],{s, AstronomicalData["Star"]}];
-
 stars = AstronomicalData["Star"];
-
 exos = AstronomicalData["Exoplanet"];
 
-oc[p_] := oc[p] = AstronomicalData[p, "OrbitCenter"];
+(* To avoid
+http://astronomy.stackexchange.com/questions/13126/absolute-apparent-magnitude-and-distance-for-hip31978-inconsistent
+situation, using apparent magnitude to compute absolute magnitude *)
 
-Table[oc[p],{p, AstronomicalData["Exoplanet"]}];
-
-(* stars that have exoplanets *)
-
+Table[pos[s] = AstronomicalData[s, "PositionLightYears"], {s,stars}];
+Table[mag[s] = AstronomicalData[s, "ApparentMagnitude"], {s,stars}];
+Table[oc[p] = AstronomicalData[p, "OrbitCenter"], {p,exos}];
 exostars = Union[Table[oc[p], {p,exos}],{}];
 
-(* some stars have position and apparent magnitude but no absolute magnitude *)
-
-badstars = Select[stars, !NumberQ[mag[#]]  &];
-
-Table[mag[s] = Log[10,32.6/Norm[AstronomicalData[s, "PositionLightYears"]]]*5 +
- AstronomicalData[s, "ApparentMagnitude"], {s,badstars}]
-
-(* remove stars we have no luminosity info for (but store them first) *)
-
-realbadstars = Select[stars, !NumberQ[mag[#]]  &];
-
-(* testing to see if I can add any more, result is empty, so no *)
-
-test0 = Table[{s,AstronomicalData[s, "ApparentMagnitude"]}, {s,realbadstars}]
-test1 = Select[test0, NumberQ[#[[2]]] &];
-test2 = Table[{s,AstronomicalData[s, "PositionLightYears"]}, {s,realbadstars}]
-test3 = Select[test2, NumberQ[#[[2,1]]] &]
-test4 = Table[i[[1]],{i,test1}]
-test5 = Table[i[[1]],{i,test3}]
-Intersection[test4,test5]
-
-DumpSave["/home/barrycarter/20160107/magpos3.mx", 
- {mag,pos,stars,exos,oc,exostars,realbadstars}];
+DumpSave["/home/barrycarter/20160107/stardata.mx", 
+ {stars,exos,pos,mag,oc,exostars}];
 
 (* END SKIP FROM HERE *)
+
+(* convert solar apparent magnitudes to absolute magnitudes *)
+
+absmag[s_] := absmag[s] = Log[10, 32.6/Norm[pos[s]]]*5 + mag[s]
+
+(* special case for Sun *)
+
+absmag["Sun"] = 4.83;
 
 (* the distance between stars s1 and s2 *)
 dist[s1_,s2_] :=  Norm[pos[s1]-pos[s2]];
 
 (* magnitude of s2 as viewed from s1 *)
-magXY[s1_,s2_] := mag[s2] - Log[10,32.6/dist[s1,s2]]*5;
+(* if s2 = s1, don't want it on list *)
+magXY[s1_,s2_]:=If[s1==s2, +Infinity,absmag[s2] - Log[10,32.6/dist[s1,s2]]*5];
 
 (* brightness of top 10 stars from given star system [11 incl primary]
 and also of our own Sun [and its position in list] *)
 
-(* TODO: memoize and save *)
+(* TODO: save; print below just so I can see progress *)
 
-brightstars[s_] := Module[{t}, 
+brightstars[s_] := brightstars[s] = Module[{t,t2,sun}, 
+ Print[s];
  t = Sort[Table[{s, s1, magXY[s, s1]}, {s1,stars}], #1[[3]] < #2[[3]] &];
- Return[Take[t,11]];
+ t2 = Table[Flatten[{i,t[[i]]}],{i,1,Length[t]}];
+ t2 = Select[t2, #[[1]] <=11 || #[[3]] == "Sun" &];
+ Return[t2];
 ]
 
-test = brightstars[exostars[[7]]];
-
-test2 = Sort[test, #1[[2]] < #2[[2]] &];
-
-
-(* convert absolute magnitude and distance in light years to apparent
-magnitude *)
-
-abs2app[mag_, dist_] = Simplify[mag-Log[10,32.6/dist]*5]
-
+print = Table[brightstars[s], {s,exostars}];
 
 (* stars with exoplanets; 464 stars with 552 exoplanets *)
 
-swex = Union[Table[AstronomicalData[p, "OrbitCenter"], 
- {p, AstronomicalData["Exoplanet"]}], {}];
+(* TODO: brightness of primary from exoplanet *)
 
-(* magnitudes of all stars as viewed from given exoplanet (TODO:
-special case for its own primary *)
+(* some cleanup later *)
 
-stars = AstronomicalData["Star"];
-
-starsAtNight[p_] := Module[{s0},
- s0 = AstronomicalData[p, "OrbitCenter"];
- Return[Table[dist[s0,s], {s, stars}]];
-];
-
-t = starsAtNight["Nu2CanisMajoris"];
-
-
-
-(* for now, just nearby stars, but expand this *)
-
-stars = AstronomicalData["StarNearest100"]
-
-(* note: AverageOrbitDistance *)
-
-
-dist = 8.6 light years
-absmag = 1.45
-appmag = -1.44
-
-parsec = 32.6 ly
-
-
+print = Flatten[print,1];
+print = Select[print, NumericQ[#[[4]]] &]
 
