@@ -27,24 +27,53 @@ oc[p_] := oc[p] = AstronomicalData[p, "OrbitCenter"];
 
 Table[oc[p],{p, AstronomicalData["Exoplanet"]}];
 
-DumpSave["/home/barrycarter/20160107/magpos.mx", {mag,pos,stars,exos,oc}];
+(* stars that have exoplanets *)
+
+exostars = Union[Table[oc[p], {p,exos}],{}];
+
+(* some stars have position and apparent magnitude but no absolute magnitude *)
+
+badstars = Select[stars, !NumberQ[mag[#]]  &];
+
+Table[mag[s] = Log[10,32.6/Norm[AstronomicalData[s, "PositionLightYears"]]]*5 +
+ AstronomicalData[s, "ApparentMagnitude"], {s,badstars}]
+
+(* remove stars we have no luminosity info for (but store them first) *)
+
+realbadstars = Select[stars, !NumberQ[mag[#]]  &];
+
+(* testing to see if I can add any more, result is empty, so no *)
+
+test0 = Table[{s,AstronomicalData[s, "ApparentMagnitude"]}, {s,realbadstars}]
+test1 = Select[test0, NumberQ[#[[2]]] &];
+test2 = Table[{s,AstronomicalData[s, "PositionLightYears"]}, {s,realbadstars}]
+test3 = Select[test2, NumberQ[#[[2,1]]] &]
+test4 = Table[i[[1]],{i,test1}]
+test5 = Table[i[[1]],{i,test3}]
+Intersection[test4,test5]
+
+DumpSave["/home/barrycarter/20160107/magpos3.mx", 
+ {mag,pos,stars,exos,oc,exostars,realbadstars}];
 
 (* END SKIP FROM HERE *)
 
 (* the distance between stars s1 and s2 *)
-
 dist[s1_,s2_] :=  Norm[pos[s1]-pos[s2]];
 
 (* magnitude of s2 as viewed from s1 *)
-
 magXY[s1_,s2_] := mag[s2] - Log[10,32.6/dist[s1,s2]]*5;
 
-(* brightness of all stars (excluding primary?) from given exoplanet *)
+(* brightness of top 10 stars from given star system [11 incl primary]
+and also of our own Sun [and its position in list] *)
 
-brightstars[p_] := Sort[Table[{s1, magXY[oc[p], s1]}, {s1,stars}], 
- #1[[2]] < #2[[2]] &];
+(* TODO: memoize and save *)
 
-test = brightstars[exos[[8]]];
+brightstars[s_] := Module[{t}, 
+ t = Sort[Table[{s, s1, magXY[s, s1]}, {s1,stars}], #1[[3]] < #2[[3]] &];
+ Return[Take[t,11]];
+]
+
+test = brightstars[exostars[[7]]];
 
 test2 = Sort[test, #1[[2]] < #2[[2]] &];
 
