@@ -66,7 +66,12 @@ while (<>) {
 }
 
 my($rtime) = 2**33-$mtime;
-debug("Used $count files to meet total, earliest ts: $rtime");
+
+# can't assign and do "my" at same time, will be treated as list
+my($ptime);
+$ptime = localtime($rtime);
+
+debug("Used $count files to meet total, earliest ts: $rtime ($ptime)");
 
 # below is just to avoid "egrep: writing output: Broken pipe" errors
 # TODO: is this the best way to handle those errors
