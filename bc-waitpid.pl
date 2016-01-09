@@ -30,6 +30,7 @@ unless ($pid=~/^\d+$/) {
 }
 
 # determine process name
+# TODO: this is broken
 my(@arr) = `ps -wwwFp $pid`;
 $arr[1]=~s/^\s+//;
 my(@proc) = split(/\s+/, $arr[1]);
