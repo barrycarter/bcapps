@@ -14,13 +14,7 @@ my($stringq) = 0;
 # if argument is string, use pgrep
 unless ($pid=~/^\d+$/) {
   $stringq = 1;
-
-  # as per 'man pgrep', this only matches first 15 characters; using
-  # "pgrep -f" reports pgreps own processes
-
   my(@procs) = `pgrep $pid`;
-
-  debug("PROCS",@procs);
 
   if ($#procs==-1) {die "No procs matching: $pid";}
   # TODO: proceed here with "first" process pgrep returns
@@ -30,11 +24,10 @@ unless ($pid=~/^\d+$/) {
 }
 
 # determine process name
-# TODO: this is broken
-my(@arr) = `ps -wwwFp $pid`;
+my(@arr) = `ps -wwwp $pid`;
 $arr[1]=~s/^\s+//;
 my(@proc) = split(/\s+/, $arr[1]);
-my($name) = $proc[$#proc];
+my($name) = $proc[3];
 
 if ($stringq) {print "'$ARGV[0]' matches: $name ($pid)\n";}
 
