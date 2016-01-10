@@ -1,0 +1,10 @@
+This trivial landscape simulates refraction at the horizon in
+stellarium by drawing the horizon 34 arcminutes below the geometric
+horizon.
+
+Later versions of stellarium include refraction and/or support a
+refraction plugin, so this is only useful if you have an older version
+of stellarium
+
+To use, create a ~/.stellarium/landscapes/refraction directory
+and then choose "refraction" as your landscape
