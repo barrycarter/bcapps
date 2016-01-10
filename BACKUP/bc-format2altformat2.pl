@@ -9,8 +9,8 @@ require "/usr/local/lib/bclib.pl";
 
 # this is experimental
 # TODO: create file and send to mysql, don't pipe
-open(B,"|mysql extdrive2");
-print B "BEGIN;\n";
+# open(B,"|mysql extdrive2");
+# print B "BEGIN;\n";
 
 # read list of conversions
 open(A,"egrep -hv '^ *\$|^#' $bclib{githome}/BACKUP/bc-conversions.txt $bclib{home}/bc-conversions-private.txt|");
@@ -78,13 +78,20 @@ while (<>) {
   }
 
   # TODO: table name will vary based on if this is a zpaq list
-  print B qq%INSERT IGNORE INTO afad (mtime, name, origname, size)
- VALUES ("$mtime", "$name", "$origname", "$size");\n%;
+
+  # this is ugly, but I have filenames with both quotation marks and
+  # apostrophes (hopefully not both)
+
+  my($q) = '"';
+  if ($name=~/\"/ || $origname=~/\"/) {$q = "'";}
+
+#  print B "INSERT IGNORE INTO afad (mtime, name, origname, size)
+# VALUES ($q$mtime$q, $q$name$q, $q$origname$q, $q$size$q);\n";
 
 }
 
-print B "COMMIT;\n";
-close(B);
+# print B "COMMIT;\n";
+# close(B);
 
 =item schema
 
