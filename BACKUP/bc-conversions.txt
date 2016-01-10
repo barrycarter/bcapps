@@ -1,0 +1,16 @@
+# This is one of two files (the other is private) that converts one
+# string to another in an attempt to standardize/normalize filenames.
+# Comments and empty lines ignored
+# Format: "from string in quotes" "to string in quotes"
+
+# compression
+".bz2" ""
+".gz" ""
+
+# backed up on /mnt/sshfs => backed up on /mnt/extdrive
+"/mnt/sshfs/" "/mnt/extdrive/"
+
+# special case move of XWD directory (double transfer)
+"/mnt/extdrive3/XWD/" "/mnt/extdrive/XWD/"
+
+

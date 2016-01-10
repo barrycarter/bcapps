@@ -1,0 +1,39 @@
+# make file to help back things up using bc-chunk-backup.pl
+
+# exclusions2.txt is a commented/prettified version of the exclusions
+# file; this converts it to a usable format
+exclusions.txt: exclusions2.txt
+	egrep -v '^#|^ *$$' exclusions2.txt > exclusions.txt
+
+# list of all files, after normalization
+afad.txt: bcunix-converted.txt extdrive-converted.txt extdrive2-converted.txt extdrive3-converted.txt extdrive4-converted.txt extdrive5-converted.txt
+	sort -u *-converted.txt > afad.txt
+
+# list of mtimes and canonized files to compare to previous backup list
+# TODO: confirm afad2.txt is sorted, but it should be
+afad2.txt: afad.txt
+	perl -F\\0 -anle 'print "$$F[0]\0$$F[1]"' afad.txt > afad2.txt
+
+# and now, the files to backup (before exclusion) in reverse time order
+files-to-backup.txt.srt: afad2.txt previouslydone.txt.srt
+	comm -23 afad2.txt previouslydone.txt.srt | sort -nr > files-to-backup.txt.srt
+
+# after exclusions
+files-to-backup2.txt.srt: files-to-backup.txt.srt exclusions.txt
+	egrep -avf exclusions.txt files-to-backup.txt.srt > files-to-backup2.txt.srt
+
+# TODO: this is ugly, should really loop through drives instead of listing
+# them one at a time
+
+bcunix-converted.txt: /bcunix-files.txt
+	bc-format2altformat2.pl /bcunix-files.txt > bcunix-converted.txt
+extdrive-converted.txt: /mnt/extdrive/extdrive-files.txt
+	bc-format2altformat2.pl /mnt/extdrive/extdrive-files.txt > extdrive-converted.txt
+extdrive2-converted.txt: /mnt/extdrive2/extdrive2-files.txt
+	bc-format2altformat2.pl /mnt/extdrive2/extdrive2-files.txt > extdrive2-converted.txt
+extdrive3-converted.txt: /mnt/extdrive3/extdrive3-files.txt
+	bc-format2altformat2.pl /mnt/extdrive3/extdrive3-files.txt > extdrive3-converted.txt
+extdrive4-converted.txt: /mnt/extdrive4/extdrive4-files.txt
+	bc-format2altformat2.pl /mnt/extdrive4/extdrive4-files.txt > extdrive4-converted.txt
+extdrive5-converted.txt: /mnt/extdrive5/extdrive5-files.txt
+	bc-format2altformat2.pl /mnt/extdrive5/extdrive5-files.txt > extdrive5-converted.txt

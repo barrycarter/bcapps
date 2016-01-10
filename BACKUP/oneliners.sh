@@ -5,7 +5,7 @@
 # exclusion list
 
 cd /mnt/extdrive2/massbacks;
-\ls *.list | perl -nle 'unless (-f "$_.exclude.srt") {print "bc-zpaq2exclude.pl $_|sort>$_.exclude.srt"}'
+\ls *.list | perl -nle 'unless (-s "$_.exclude.srt") {print "bc-format2altformat2.pl --zpaqlist $_|sort>$_.exclude.srt"}'
 
 exit; 
 
