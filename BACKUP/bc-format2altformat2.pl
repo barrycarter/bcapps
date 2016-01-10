@@ -7,6 +7,11 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# this is experimental
+# TODO: create file and send to mysql, don't pipe
+open(B,"|mysql extdrive2");
+print B "BEGIN;\n";
+
 # read list of conversions
 open(A,"egrep -hv '^ *\$|^#' $bclib{githome}/BACKUP/bc-conversions.txt $bclib{home}/bc-conversions-private.txt|");
 
@@ -71,4 +76,27 @@ while (<>) {
   } else {
     print "$mtime $name\0$origname\0$size\n";
   }
+
+  # TODO: table name will vary based on if this is a zpaq list
+  print B qq%INSERT IGNORE INTO afad (mtime, name, origname, size)
+ VALUES ("$mtime", "$name", "$origname", "$size");\n%;
+
 }
+
+print B "COMMIT;\n";
+close(B);
+
+=item schema
+
+Schema for afad and prevback tables:
+
+CREATE TABLE afad (mtime INT, name TEXT, origname TEXT, size INT);
+CREATE TABLE prevback (mtime INT, name TEXT, origname TEXT, size INT);
+
+-- one day, this 255 will come back to bite me...
+
+CREATE INDEX uniq1 ON afad(mtime,name(255),origname(255),size);
+CREATE INDEX uniq2 ON prevback(mtime,name(255),origname(255),size);
+
+=cut
+
