@@ -67,9 +67,9 @@ while (<>) {
   # for zpaqlist, just need mtime and standardized name
 
   if ($globopts{zpaqlist}) {
-    print "$mtime\0$name\n";
+    print "$name\0$mtime\n";
   } else {
-    print "$mtime\0$name\0$origname\0$size\n";
+    print "$name\0$mtime\0$origname\0$size\n";
   }
 }
 
