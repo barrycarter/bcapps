@@ -3,15 +3,21 @@
 # Given the output of 'join -a 1 -t '\0' afad.txt
 # previouslydone.txt.srt', do... something
 
+# TODO: egrep -avf exclusions.txt after join, pre running this prog?
+# TODO: can actually sort by second field first so only doing most recent
+
 require "/usr/local/lib/bclib.pl";
 
 while (<>) {
-  my(@arr) = split(/\0/, $_);
-  debug("<array len=$#arr+1>",@arr,"</array>");
 
-  if ($#arr != 4) {
-    debug("<array len=$#arr+1>",@arr,"</array>");
+  chomp;
+  my($canon, $mtime, $origname, $size, $backtime) = split(/\0/, $_);
+
+  if ($backtime>$mtime) {
+    debug("ODD CASE: $backtime > $mtime",$_);
   }
+
+#  debug("$mtime vs $backtime");
 
 }
 
