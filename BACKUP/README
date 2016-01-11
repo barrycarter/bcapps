@@ -1,3 +1,101 @@
+BACKUP PROCESS:
+
+Compile null-separated lists of all files on each of my hard drives,
+with the following fields:
+
+  - Canonical name: when I move entire directories around, files end
+  up with new paths, but I don't want to back them up again;
+  canonizing the name lets me match against existing backups properly
+
+  - mtime: if file is already backed up, back it up again if this
+  mtime is greater than backup mtime
+
+  - file's actual (noncanonical) name: when we actually perform the
+  backup, we will need the file's actual name.
+
+  - size: when we backup, we count bytes to make sure backup doesn't
+  get too large.
+
+To create these lists, we use bc-format2altformat2.pl on the file lists.
+
+Because two different files (not necessarily on the same drive) may
+have the same canonized name, we have to remove duplicates. If the
+duplicates have different timestamps, we choose the most recent
+timestamp:
+
+sort -t '\0' -k2nr *-converted.txt | sort -t '\0' -k1,1 -u > afad.txt
+
+The first sort orders the files by most recent mtime first.
+
+The second sort orders by filename, but eliminates duplicates. Since
+the most recent mtime for each file comes first, we now have the most
+recent mtime for each file.
+
+We now do something similar with files we've already backed up, except
+we don't need the canoncial name (since the backup name *is* the
+canonical name), or the size.
+
+To do this, we first run "bc-format2altformat2.pl --zpaqlist" on each
+individual backup file list, and then combine them as follows:
+
+sort -t '\0' -k2nr backuplists | sort -t '\0' -k1,1 -u > previouslydone.txt.srt
+
+As with the previous sort commands, this gives us the most recent
+mtime for each backed-up file.
+
+We now want to compare the mtimes of files on our drives with the
+mtimes of the same files when they were backed up. If the backup time
+is more recent (which shouldn't normally happen, but does due to
+oddnesses), we don't backup the file. If the backup time is older or
+the file has never been backed up at all, we back it up.
+
+join --check-order -a 1 -t '\0' afad.txt previouslydone.txt.srt > backup0.txt
+
+Note that backup0.txt has these null-separated fields:
+
+  - File's canonical name
+
+  - File's current mtime
+
+  - File's actual (non-canon) name
+
+  - File's size
+
+  - If the file has been backed up previously, the mtime of the most
+  recent backup; if the file has not been backed up previously, this
+  field is blank
+  
+There are some files we never want to backup. For these, we have a
+list of regular expressions in exclusions.txt. To filter out these
+files:
+
+egrep -avf exclusions.txt backup0.txt > backup1.txt
+
+It's convenient that backup0.txt has both the actual file name AND the
+canonical file name, so that exclusions.txt can exclude by either one.
+
+We now run backup1.txt through bc-join-backup.pl to compare current
+mtimes to backup mtimes and to see which files have never been backed up:
+
+bc-join-backup.pl backup1.txt > backup2.txt
+
+Note that backup2.txt contains these null-separated fields:
+
+  - The file's modification time
+
+  - The file's actual (not canon) name
+
+  - The file's size
+
+We want to backup the most recent files first, so we sort by mtime descending:
+
+sort -t '\0' -nr backup2.txt > backup3.txt
+
+We now feed the results to bc-chunk-backup2.pl so it can choose the
+25G (or whatever) worth of most recently changed files to backup.
+
+In Makefile2.backup, some of these steps are combined via pipes.
+
 BACKUP FORMATS:
 
 For storing file lists (to restore perms, etc):

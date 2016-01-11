@@ -13,11 +13,12 @@ while (<>) {
   chomp;
   my($canon, $mtime, $origname, $size, $backtime) = split(/\0/, $_);
 
-  if ($backtime>$mtime) {
-    debug("ODD CASE: $backtime > $mtime",$_);
-  }
+  # if the backup time is more recent, do nothing
+  if ($backtime >= $mtime) {next;}
 
-#  debug("$mtime vs $backtime");
-
+  # in all other cases, print for bc-chunk-backup2.pl
+  # note that bc-chunk-backup2.pl will ignore mtime
+  print join("\0", $mtime, $origname, $size),"\n";
 }
+
 
