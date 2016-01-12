@@ -25,10 +25,11 @@ afad.txt: bcunix-converted.txt extdrive-converted.txt extdrive2-converted.txt ex
 	sort -t '\0' -k2nr *-converted.txt | sort -t '\0' -k1,1 -u > afad.txt
 
 backup0.txt: afad.txt previouslydone.txt.srt
-	join --check-order -a 1 -t '\0' afad.txt previouslydone.txt.srt > backup0.txt
+	join --check-order -a 1 -t '\0' afad.txt previouslydone.txt.srt | sort -t '\0' -k2nr > backup0.txt
 
+# TODO: the large limit below is just for testing
 statlist.txt: backup0.txt exclusions.txt
-	egrep -avf exclusions.txt backup0.txt | bc-join-backup.pl | sort -t '\0' -nr | bc-chunk-backup2.pl --debug
+	egrep -avf exclusions.txt backup0.txt | bc-join-backup.pl | bc-chunk-backup2.pl --limit=1000000000000 --debug
 
 # exclusions2.txt is a commented/prettified version of the exclusions
 # file; this converts it to a usable format and converts 'end of line'

@@ -49,9 +49,11 @@ We now want to compare the mtimes of files on our drives with the
 mtimes of the same files when they were backed up. If the backup time
 is more recent (which shouldn't normally happen, but does due to
 oddnesses), we don't backup the file. If the backup time is older or
-the file has never been backed up at all, we back it up.
+the file has never been backed up at all, we back it up. We'll
+ultimately want to back up in reverse time order, so we sort here (the
+remaining steps preserve the sort)
 
-join --check-order -a 1 -t '\0' afad.txt previouslydone.txt.srt > backup0.txt
+join --check-order -a 1 -t '\0' afad.txt previouslydone.txt.srt | sort -t '\0' -k2nr > backup0.txt
 
 Note that backup0.txt has these null-separated fields:
 
@@ -88,10 +90,6 @@ Note that backup2.txt contains these null-separated fields:
   - The file's actual (not canon) name
 
   - The file's size
-
-We want to backup the most recent files first, so we sort by mtime descending:
-
-sort -t '\0' -nr backup2.txt > backup3.txt
 
 We now feed the results to bc-chunk-backup2.pl so it can choose the
 25G (or whatever) worth of most recently changed files to backup.
