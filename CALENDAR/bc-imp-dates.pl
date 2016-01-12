@@ -53,7 +53,7 @@ my(%seen);
 	  "Bosses' Day" => "1016",
 	  "New Year's Eve" => "1231",
 	  "Pearl Harbor Day" => "1207",
-	  "Susan B Anthony Day" => "0215",
+	  "Susan B Anthony" => "0215",
 	  "Flag Day" => "0614",
 	  "Bastille Day" => "0714",
 	  "Poetry Day" => "0321",
@@ -206,7 +206,7 @@ for $i (2015..2037) {
   push(@dates, weekdayAfterDate("${i}0301", "0", 1), "DST +1 hour");
   push(@dates, weekdayAfterDate("${i}1101", "0", 0), "DST -1 hour");
   # technically washington's birthday...
-  push(@dates, weekdayAfterDate("${i}0201", "1", 2), "President's Day");
+  push(@dates, weekdayAfterDate("${i}0201", "1", 2), "Presidents' Day");
   # grandparents day = first sunday after labor day
   my($laborday) = weekdayAfterDate("${i}0901", "1", 0);
   my($grandparentday) = weekdayAfterDate($laborday, "0", 0);
