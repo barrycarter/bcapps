@@ -40,6 +40,8 @@ individual backup file list, and then combine them as follows:
 
 sort -t '\0' -k2nr backuplists | sort -t '\0' -k1,1 -u > previouslydone.txt.srt
 
+[note that this step is NOT performed in the Makefile, I do it separately]
+
 As with the previous sort commands, this gives us the most recent
 mtime for each backed-up file.
 
