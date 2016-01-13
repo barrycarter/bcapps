@@ -1,0 +1,39 @@
+# make file to help back things up using bc-chunk-backup.pl, see
+# README for details
+
+# some of the parallel sorts below take gigs of space, so using bigger tmpdir
+export TMPDIR=/mnt/extdrive2/tmp/
+
+all: statlist.txt
+
+# TODO: this is ugly, should really loop through drives instead of listing
+# them one at a time
+bcunix-converted.txt: /bcunix-files.txt
+	bc-format2altformat2.pl /bcunix-files.txt > bcunix-converted.txt
+extdrive-converted.txt: /mnt/extdrive/extdrive-files.txt
+	bc-format2altformat2.pl /mnt/extdrive/extdrive-files.txt > extdrive-converted.txt
+extdrive2-converted.txt: /mnt/extdrive2/extdrive2-files.txt
+	bc-format2altformat2.pl /mnt/extdrive2/extdrive2-files.txt > extdrive2-converted.txt
+extdrive3-converted.txt: /mnt/extdrive3/extdrive3-files.txt
+	bc-format2altformat2.pl /mnt/extdrive3/extdrive3-files.txt > extdrive3-converted.txt
+extdrive4-converted.txt: /mnt/extdrive4/extdrive4-files.txt
+	bc-format2altformat2.pl /mnt/extdrive4/extdrive4-files.txt > extdrive4-converted.txt
+extdrive5-converted.txt: /mnt/extdrive5/extdrive5-files.txt
+	bc-format2altformat2.pl /mnt/extdrive5/extdrive5-files.txt > extdrive5-converted.txt
+
+afad.txt: bcunix-converted.txt extdrive-converted.txt extdrive2-converted.txt extdrive3-converted.txt extdrive4-converted.txt extdrive5-converted.txt
+	sort -t '\0' -k2nr *-converted.txt | sort -t '\0' -k1,1 -u > afad.txt
+
+backup0.txt: afad.txt previouslydone.txt.srt
+	join --check-order -a 1 -t '\0' afad.txt previouslydone.txt.srt | sort -t '\0' -k2nr > backup0.txt
+
+# TODO: the large limit below is just for testing
+statlist.txt: backup0.txt exclusions.txt
+	egrep -avf exclusions.txt backup0.txt | bc-join-backup.pl | bc-chunk-backup2.pl --limit=10000000000000 --debug
+
+# exclusions2.txt is a commented/prettified version of the exclusions
+# file; this converts it to a usable format and converts 'end of line'
+# to nulls, since filenames are terminated with NUL not end of line
+
+exclusions.txt: exclusions2.txt
+	egrep -v '^#|^ *$$' exclusions2.txt | perl -pnle 's/\$$/\0/' > exclusions.txt
