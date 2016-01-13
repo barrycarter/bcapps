@@ -60,9 +60,52 @@ In our case, we already know the declination and latitude, and want
 the hour angle. This is:
 
 $
-   \cos ^{-1}(\sec (\text{dec}) \sec (\text{lat})
-    (\text{elevation}-\sin (\text{dec}) \sin (\text{lat})))
+   \cos ^{-1}(\sec (\text{dec}) \sec (\text{lat}) (\sin (\text{el})-\sin
+    (\text{dec}) \sin (\text{lat})))
 $
+
+An hour angle of 0 degrees represents noon, and an hour angle of 180
+degrees represents midnight. Of course, in most of the world, the sun
+won't be visible at midnight. To convert the formula above to 24-hour
+clock time, we divide by 15 and add 12. Thus, the time is:
+
+$
+   12\pm \frac{1}{15} \cos ^{-1}(\sec (\text{dec}) \sec (\text{lat}) (\sin
+    (\text{el})-\sin (\text{dec}) \sin (\text{lat})))
+$
+
+where fractional hours can be converted to minutes (60 minutes = 1 hour).
+
+Technically, the hour angle measures sidereal hours, not clock hours,
+but since we know the sun moves in right ascension and thus takes
+closer to 24 hours (not 23 hours 56 minutes) from noon to noon, we can
+use clock hours to increase our accuracy slightly here.
+
+In theory, you could combine the formula for declination with the
+formula for time, but you'd end up with:
+
+$
+   12\pm \frac{1}{15} \cos ^{-1}(\sec (\text{lat}) \sec (0.171144 \cos (2.6491\,
+    -0.0516083 d)+0.381008 \cos (3.03481\, -0.0344047 d)+23.258 \cos (2.97552\,
+    -0.017203 d)+0.377319) (\sin (\text{el})-\sin (\text{lat}) \sin (0.171144
+    \cos (2.6491\, -0.0516083 d)+0.381008 \cos (3.03481\, -0.0344047 d)+23.258
+    \cos (2.97552\, -0.017203 d)+0.377319)))
+$
+
+which doesn't really appear to be helpful.
+
+You now have the local solar time, which is a good first approximation
+to clock time.
+
+However, the time between two noons isn't always exactly 86400 seconds
+(1 clock day), so we can apply a correction in the form of the
+Equation of Time (https://en.wikipedia.org/wiki/Equation_of_time).
+
+
+
+
+
+
 
 
 
@@ -91,61 +134,42 @@ t[day_] = day*86400+AbsoluteTime[{2000,1,1}]-43200
 sd = Table[AstronomicalData["Sun", {"Declination", DateList[t[i]]}],
  {i,1,36525}];
 
-(* This list has 0's with different *10^n *)
-
-test0 = Fourier[sd];
-
-(* this is needed to avoid loss of precision; note that 6 digits adds
-excessive precision, but Wolfram has too little *)
-
-sd2 = N[Rationalize[sd,0],6];
-
 sd3 = Rationalize[sd,0];
 
+(* then did superfour(sd3,3) to get below *)
 
+dec[d_] = 0.37731921109319183 + 0.17114353969934407*
+  Cos[2.6491014480640547 - 0.0516083217949086*d] + 
+ 0.381008013930157*Cos[3.03481263352109 - 0.03440467341653927*d] + 
+ 23.25797749077835*Cos[2.9755216847831316 - 0.017203031398896944*d];
 
+el[dec_, lat_, ha_] = ArcSin[Cos[dec]*Cos[lat]*Cos[ha] + Sin[dec]*Sin[lat]]
 
+(* this is really plus/minus, but Mathematica doesn't handle that
+well, even with PlusMinus[] *)
 
+ha[dec_, lat_, el_] = ArcCos[(Sin[el] - Sin[dec]*Sin[lat])/Cos[lat]/Cos[dec]]
 
+solar[dec_, lat_, el_] = PlusMinus[12, ha[dec,lat,el]/Degree/15]
 
+(* modified from
+https://www.wolfram.com/mathematica/new-in-10/symbolic-dates-and-times/do-celestial-time-calculations.html
+*)
 
-
-(* tropical year from http://hpiers.obspm.fr/eop-pc/models/constants.html *)
-
-tyear = 365.242190402;
-
-(* NOTE: this should work without Date[] but doesn't *)
-
-AstronomicalData["Sun", {"Declination", Date[]}]
-
-start = AbsoluteTime[{2016,1,1}]
-end = AbsoluteTime[{2017,1,1}]
-
-t[day_] = day*86400+AbsoluteTime[{2016,1,1}]-43200
-
-(* TODO: explain my day convention *)
-
-Plot[AstronomicalData["Sun", {"Declination", DateList[t[day]]}],
- {day,1,366}]
-
-sundec[d_] := AstronomicalData["Sun", {"Declination", DateList[t[d]]}];
-sunra[d_] := AstronomicalData["Sun", {"RightAscension", DateList[t[d]]}];
-
-res  = NIntegrate[Exp[2*Pi*I*x/tyear]*sundec[x],{x,0,tyear}]
-
-(* res = -4184.99 + 729.51 I *)
-
-amp = Norm[res]/tyear*2
-
-phase = Arg[res]/Degree
-
-Plot[{amp*Cos[2*Pi*x/tyear-phase*Degree],sundec[x]},{x,0,tyear}]
-
-(* about 0.8 degree accuracy *)
-
-Plot[{amp*Cos[2*Pi*x/tyear-phase*Degree]-sundec[x]},{x,0,tyear*10}]
-
-Plot[fakederv[sunra,d,.01],{d,0,tyear}]
-
-Plot[If[sunra[d]>sunra[0],sunra[d]-24,sunra[d]],{d,0,tyear}]
+sunpos = SunPosition[GeoPosition[{0, 0}], 
+   DateRange[DateObject[{2014, 1, 1, 12, 0}, TimeZone -> 0], 
+    DateObject[{2014, 12, 31, 12, 0}, TimeZone -> 0], 10], 
+   CelestialSystem -> "Equatorial"];
+stime = SiderealTime[GeoPosition[{0, 0}], 
+   DateRange[DateObject[{2014, 1, 1, 12, 0}, TimeZone -> 0], 
+    DateObject[{2014, 12, 31, 12, 0}, TimeZone -> 0], 10]];
+equationoftime = 
+  TimeSeriesThread[
+   With[{diff = First[#][[1]] - Last[#]}, 
+     UnitConvert[
+      Mod[diff, Quantity[24, "HoursOfRightAscension"], 
+       Quantity[-12, "HoursOfRightAscension"]], 
+      "MinutesOfRightAscension"]] &, {sunpos, stime}];
+DateListPlot[equationoftime, PlotLabel -> "Equation of Time", 
+ Axes -> True]
 
