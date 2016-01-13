@@ -28,17 +28,18 @@ metric[star_] := AstronomicalData[star, "DistanceLightYears"]/
 
 t = Table[{metric[s],s}, {s, starsall}];
 
+t2 = Sort[Transpose[t][[1]]];
 
-unitary[star_] := {AstronomicalData[star, "AbsoluteMagnitude"],
- AstronomicalData[star, "ApparentMagnitude"],
- AstronomicalData[star, "DistanceLightYears"]};
+ListPlot[t2]
 
-Sqrt[100^((.479+.08)/5)]*lyp == dist
+ListPlot[t2,PlotRange->All]
 
-Sqrt[100^(magdiff/5)]*lyp == dist
+(* based on listplot without plotrange->all, .98 and 1.02 will be the
+cutoffs *)
 
-Sqrt[10^(2*magdiff/5)]*lyp == dist
+big = Sort[Select[t, #[[1]] > 1.3 &]];
 
+small = Sort[Select[t, #[[1]] < 0.77 &]];
 
 
 
