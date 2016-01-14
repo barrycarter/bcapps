@@ -156,6 +156,11 @@ solar[dec_, lat_, el_] = PlusMinus[12, ha[dec,lat,el]/Degree/15]
 https://www.wolfram.com/mathematica/new-in-10/symbolic-dates-and-times/do-celestial-time-calculations.html
 *)
 
+sunaz[d_] := AstronomicalData["Sun", {"Azimuth", DateList[t[d]],{0,0}}];
+sunalt[d_] := AstronomicalData["Sun", {"Altitude", DateList[t[d]],{0,0}}];
+
+
+
 sunpos = SunPosition[GeoPosition[{0, 0}], 
    DateRange[DateObject[{2014, 1, 1, 12, 0}, TimeZone -> 0], 
     DateObject[{2014, 12, 31, 12, 0}, TimeZone -> 0], 10], 
