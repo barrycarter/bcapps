@@ -152,16 +152,26 @@ ha[dec_, lat_, el_] = ArcCos[(Sin[el] - Sin[dec]*Sin[lat])/Cos[lat]/Cos[dec]]
 
 solar[dec_, lat_, el_] = PlusMinus[12, ha[dec,lat,el]/Degree/15]
 
-(* modified from
-https://www.wolfram.com/mathematica/new-in-10/symbolic-dates-and-times/do-celestial-time-calculations.html
-*)
+(* this computes the sun's azimuth MINUS 180 degrees, so I can use
+brent to compute the 0s *)
 
 sunaz[d_] := AstronomicalData["Sun", {"Azimuth",
-DateList[t[d]],{0,0}}, TimeZone -> 0];
+DateList[t[d]],{0,0}}, TimeZone -> 0] - 180;
+
+(* this is hideously ugly *)
+
+sunalt[d_] := AstronomicalData["Sun", {"Altitude", DateList[t[d]],{0,0}},
+TimeZone -> 0];
+
+
+solarnoon[d_] := FindRoot[sunaz[x] - 180, {x,d-.25,d+.25}][[1,2]]-d
+
+solarnoon = Table[FindRoot[sunaz[d] == 180, {d, i-0.5, i+0,5}], {i,1,5}];
+
+
 
 FindRoot[sunaz[d] == 180, {d,7.5,8.5}]
 
-sunalt[d_] := AstronomicalData["Sun", {"Altitude", DateList[t[d]],{0,0}}];
 
 Plot[AstronomicalData["Sun", {"Azimuth", DateList[t], {0,0}}], {t,0,86400}]
 
