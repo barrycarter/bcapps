@@ -6,9 +6,72 @@ to calculate the time *)
 
 (*
 
+TODO: mention git
+
+**Summary**:
+
+  - Compute the number of days since 31 December 1999 (or even
+  December 31st of the previous year if you need less precision), call
+  this `d`.
+
+  - Compute the sun's declination:
+
+$
+   0.171144 \cos (2.6491\, -0.0516083 d)+0.381008 \cos (3.03481\, -0.0344047
+    d)+23.258 \cos (2.97552\, -0.017203 d)+0.377319
+$
+
+  - Compute the sun's hour angle:
+
+$
+   12\pm \frac{1}{15} \cos ^{-1}(\sec (\text{dec}) \sec (\text{lat}) (\sin
+    (\text{el})-\sin (\text{dec}) \sin (\text{lat})))
+$
+
+where `el` is your observed elevation of the sun, `dec` is the
+declination you computed earlier, and `lat` is your latitude.
+
+Note that the sun reaches the same elevation twice a day (eg, the
+elevation is near 0 at both sunrise and sunset), so this calculation
+will always give you 2 results. To determine which result is correct,
+you need additional information, such as whether it's before or after
+solar noon. There are many ways to do this (eg, see if the sun is
+getting higher or lower in the sky by observing the length of a shadow
+cast by a straight stick in the ground [shorter = sun's getting higher
+so it's before solar noon, longer = sun's getting lower so it's after
+solar noon]), but, since this information isn't given, we'll continue
+to use both values.
+
+  - Add the correction for the equation of time:
+
+$
+   0.166219 \cos (1.24548\, -0.0344057 d)+0.122628 \cos (1.64551\, -0.0172016
+    d)+0.00877307
+$
+
+where `d` is the same `d` you computed in the first step.
+
+  - Add the correction for standardized time zones:
+
+$
+   \text{Round}\left[\frac{\text{long}}{15}\right]-\frac{\text{long}}{15}
+$
+
+  - Add 1 hour for Daylight Saving Time, if applicable.
+
 Precise astronomical calculations can be difficult, so I'm assuming
 you're looking for an approximation to the current time, not something
-that is to-the-second precise.
+that is to-the-second precise. In particular:
+
+  - I'm assuming the Earth is a sphere, even though it's actually an ellipsoid.
+
+  - I'm ignoring the effects of refraction, which can be considerable
+  when the visible (refracted) sun is near the horizon.
+
+  - I'm assuming you are at or near sea level, even if your
+  latitude/longitude is for a city with a higher elevation.
+
+**Detailed Steps**
 
 We first calculate the sun's declination. In degrees, this is:
 
@@ -101,31 +164,96 @@ However, the time between two noons isn't always exactly 86400 seconds
 (1 clock day), so we can apply a correction in the form of the
 Equation of Time (https://en.wikipedia.org/wiki/Equation_of_time).
 
+To within about 1 minute accuracy for this century, the equation of
+time in hours is:
 
+$
+   0.166219 \cos (1.24548\, -0.0344057 d)+0.122628 \cos (1.64551\, -0.0172016
+    d)+0.00877307
+$
 
+where `d` is measured as above.
 
+We now add this value to the local solar time we obtained earlier to
+get mean local solar time.
 
+To get the clock time, we need to adjust for timezones. Assuming you
+are in the time zone closest to your meridian, this correction in hours is:
 
+$
+   \text{Round}\left[\frac{\text{long}}{15}\right]-\frac{\text{long}}{15}
+$
 
+where `long` is your longitude in degrees. Remember that longitudes
+west of the prime meridian (where most of the USA is) are negative.
 
+Finally, add 1 hour if Daylight Saving Time is in effect.
 
+**Worked example** (the time and location below were chosen so that
+each step above would be significant)
 
-Cos[dec] Cos[lat] Cos[ha] + Sin[dec] Sin[lat]
+On October 15th 2016, the sun is 41.5 degrees high in Flagstaff, AZ
+(latitude 35.198 degrees north, longitude 111.65 degrees west). What
+time is it?
 
-goodness of fit, daily motion
+  - We first determine the number of days since 1999 December 31... or
+  we can cheat and just count the number of days since December 31
+  last year. This is:
 
+<pre><code>
+January 31 = February 0 = day 31
+February 29 = March 0 = day 31+29 = day 60
+March 31 = April 0 = day 60+31 = day 91
+April 30 = May 0 = day 91+30 = day 121
+May 31 = June 0 = day 121+31 = day 152
+June 30 = July 0 = day 152+30 = day 182
+July 31 = August 0 = day 182+31 = day 213
+August 31 = September 0 = day 213+31 = day 244
+September 30 = October 0 = day 244+30 = day 274
+</code></pre>
 
+Thus October 15th is 274+15 or day 289 (you can verify this result by
+comparing the outputs of the Unix commands `cal -j 10 2016` and `cal
+10 2016`)
 
+  - We now compute the sun's declination in degrees using the formula
+  above. The result is: -8.748 degrees.
 
-TODO: solar noon, high low declination, formula, 23h56m days,work example off meridian, not abq
+  - We now compute the hour angle by plugging in the declination and
+  latitude to get: $12\pm 1.44842$ hours.
 
+  - The fractional part, 0.44842, is about 0.44842*60 = 27 minutes
+  approximately.
+
+  - This means that local solar time is 1h27m before or after noon. In
+  other words, the local solar time is about 10:33am or 1:27pm.
+
+  - Now, we apply the correction for the equation of time. This
+  computes out to: -0.236 hours or about -14 minutes.
+
+  - Adding in the correction, we now know the local mean solar time is
+  either 10:19am or 1:13pm.
+
+  - We now apply the correction for longitude, which works out to
+  0.443 or about 27 minutes.
+
+  - Adding this 27 minutes back in, we know the non-daylight-savings
+  clock time is either 10:46am or 1:40pm
+
+  - Although most of the United States will still be observing Daylight
+  Saving Time on October 15, Arizona does not observe Daylight Saving
+  Time at all, so we need make no further corrections.
+
+As it turns out, or guess is good to the nearest minute (I turned off
+"atmosphere effects" in Stellarium so the sun's elevation would be
+visible more clearly):
+
+[[IMAGE]]
 
 *)
 
 
 (* TODO: note not worth bounty, but still *)
-
-(* TODO: explain lack of precision *)
 
 (* daily solar declination this century *)
 
@@ -152,12 +280,6 @@ ha[dec_, lat_, el_] = ArcCos[(Sin[el] - Sin[dec]*Sin[lat])/Cos[lat]/Cos[dec]]
 
 solar[dec_, lat_, el_] = PlusMinus[12, ha[dec,lat,el]/Degree/15]
 
-(* this computes the sun's azimuth MINUS 180 degrees, so I can use
-brent to compute the 0s *)
-
-sunaz[d_] := AstronomicalData["Sun", {"Azimuth",
-DateList[t[d]],{0,0}}, TimeZone -> 0] - 180;
-
 (* this is hideously ugly *)
 
 sunalt[d_] := AstronomicalData["Sun", {"Altitude", DateList[t[d]],{0,0}},
@@ -168,43 +290,8 @@ solarnoons = Table[solarnoon[d],{d,1,36525}];
 
 DumpSave["/home/barrycarter/MATH/solarnoons.mx", solarnoons];
 
+solarnoons2 = 24*N[solarnoons];
 
-
-FindRoot[sunaz[d] == 180, {d,7.5,8.5}]
-
-
-Plot[AstronomicalData["Sun", {"Azimuth", DateList[t], {0,0}}], {t,0,86400}]
-
-sunpos = SunPosition[GeoPosition[{0, 0}], 
-   DateRange[DateObject[{2014, 1, 1, 12, 0}, TimeZone -> 0], 
-    DateObject[{2014, 12, 31, 12, 0}, TimeZone -> 0], 10], 
-   CelestialSystem -> "Equatorial"];
-stime = SiderealTime[GeoPosition[{0, 0}], 
-   DateRange[DateObject[{2014, 1, 1, 12, 0}, TimeZone -> 0], 
-    DateObject[{2014, 12, 31, 12, 0}, TimeZone -> 0], 10]];
-equationoftime = 
-  TimeSeriesThread[
-   With[{diff = First[#][[1]] - Last[#]}, 
-     UnitConvert[
-      Mod[diff, Quantity[24, "HoursOfRightAscension"], 
-       Quantity[-12, "HoursOfRightAscension"]], 
-      "MinutesOfRightAscension"]] &, {sunpos, stime}];
-DateListPlot[equationoftime, PlotLabel -> "Equation of Time", 
- Axes -> True]
-
-AstronomicalData[ 
-     "Sun", {"Azimuth", {2008, 1, 5, 12, 1, 1}, {0, 0}}, TimeZone -> 0]
-
-AstronomicalData[ 
-     "Sun", {"Azimuth", DateList[t[4.7]], {0, 0}}, TimeZone -> 0]
-
-positions = Table[{
-    AstronomicalData[
-     "Sun", {"Azimuth", {2008, 1, i, 8.5}, {40.1, -88.2}}, 
-     TimeZone -> -5], 
-    AstronomicalData[
-     "Sun", {"Altitude", {2008, 1, i, 8.5}, {40.1, -88.2}}, 
-     TimeZone -> -5]}, {i, 1, 365.25, 5}];
-
-Graphics[{Orange, Point[QuantityMagnitude@positions]}, Frame -> True, 
- FrameLabel -> {"azimuth", "altitude"}]
+eqoftime[d_] = Function[x$, 0.008773065586820438 + 0.16621863187369598*
+   Cos[1.2454752262849815 - 0.03440567188713581*x$] + 
+  0.12262766296036547*Cos[1.64550620256258 - 0.0172016184688075*x$]][d];
