@@ -156,10 +156,14 @@ solar[dec_, lat_, el_] = PlusMinus[12, ha[dec,lat,el]/Degree/15]
 https://www.wolfram.com/mathematica/new-in-10/symbolic-dates-and-times/do-celestial-time-calculations.html
 *)
 
-sunaz[d_] := AstronomicalData["Sun", {"Azimuth", DateList[t[d]],{0,0}}];
+sunaz[d_] := AstronomicalData["Sun", {"Azimuth",
+DateList[t[d]],{0,0}}, TimeZone -> 0];
+
+FindRoot[sunaz[d] == 180, {d,7.5,8.5}]
+
 sunalt[d_] := AstronomicalData["Sun", {"Altitude", DateList[t[d]],{0,0}}];
 
-
+Plot[AstronomicalData["Sun", {"Azimuth", DateList[t], {0,0}}], {t,0,86400}]
 
 sunpos = SunPosition[GeoPosition[{0, 0}], 
    DateRange[DateObject[{2014, 1, 1, 12, 0}, TimeZone -> 0], 
@@ -178,3 +182,19 @@ equationoftime =
 DateListPlot[equationoftime, PlotLabel -> "Equation of Time", 
  Axes -> True]
 
+AstronomicalData[ 
+     "Sun", {"Azimuth", {2008, 1, 5, 12, 1, 1}, {0, 0}}, TimeZone -> 0]
+
+AstronomicalData[ 
+     "Sun", {"Azimuth", DateList[t[4.7]], {0, 0}}, TimeZone -> 0]
+
+positions = Table[{
+    AstronomicalData[
+     "Sun", {"Azimuth", {2008, 1, i, 8.5}, {40.1, -88.2}}, 
+     TimeZone -> -5], 
+    AstronomicalData[
+     "Sun", {"Altitude", {2008, 1, i, 8.5}, {40.1, -88.2}}, 
+     TimeZone -> -5]}, {i, 1, 365.25, 5}];
+
+Graphics[{Orange, Point[QuantityMagnitude@positions]}, Frame -> True, 
+ FrameLabel -> {"azimuth", "altitude"}]
