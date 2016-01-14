@@ -163,10 +163,10 @@ DateList[t[d]],{0,0}}, TimeZone -> 0] - 180;
 sunalt[d_] := AstronomicalData["Sun", {"Altitude", DateList[t[d]],{0,0}},
 TimeZone -> 0];
 
+solarnoon[d_] := FindMaximum[sunalt[x], {x,d-.25,d+.25}][[2,1,2]]-d
+solarnoons = Table[solarnoon[d],{d,1,36525}];
 
-solarnoon[d_] := FindRoot[sunaz[x] - 180, {x,d-.25,d+.25}][[1,2]]-d
-
-solarnoon = Table[FindRoot[sunaz[d] == 180, {d, i-0.5, i+0,5}], {i,1,5}];
+DumpSave["/home/barrycarter/MATH/solarnoons.mx", solarnoons];
 
 
 
