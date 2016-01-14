@@ -1,12 +1,10 @@
 (* http://physics.stackexchange.com/questions/228542/calculating-time-from-altitude-of-the-sun *)
 
-(* If I know the angle between the sun and the horizon, the latitude
-and longitude of the location, and the day, what equations are needed
-to calculate the time *)
-
 (*
 
-TODO: mention git
+I don't think this question is worth a bounty, so I feel a bit bad in
+answering it, but...
+
 
 **Summary**:
 
@@ -250,10 +248,10 @@ visible more clearly):
 
 [[IMAGE]]
 
+The program I wrote to help answer this question:
+https://github.com/barrycarter/bcapps/blob/master/ASTRO/bc-solve-astro-228542.m
+
 *)
-
-
-(* TODO: note not worth bounty, but still *)
 
 (* daily solar declination this century *)
 
