@@ -1,0 +1,17 @@
+\begindata
+INPUT_DATA_TYPE   = 'TL_ELEMENTS'
+OUTPUT_SPK_TYPE   = 10
+OBJECT_ID = 25544
+TLE_INPUT_OBJ_ID  = 25544
+TLE_SPK_OBJ_ID    = -125544
+CENTER_ID         = 399
+REF_FRAME_NAME    = 'J2000'
+TLE_START_PAD     = '2 days'
+TLE_STOP_PAD      = '2 days'
+LEAPSECONDS_FILE  = '/home/barrycarter/SPICE/KERNELS/naif0011.tls'
+INPUT_DATA_FILE   = '/home/barrycarter/BCGIT/ASTRO/iss.tle'
+OUTPUT_SPK_FILE   = '/home/barrycarter/BCGIT/ASTRO/iss.bsp'
+PCK_FILE          = '/home/barrycarter/SPICE/KERNELS/geophysical.ker'
+SEGMENT_ID        = 'ISS TLE-based Trajectory'
+PRODUCER_ID = 'Barry Carter (kind of)'
+\begintext
