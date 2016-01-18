@@ -34,10 +34,27 @@ $4879.78 \cos (0.228027 t)$
 When t=0, the moon's radial velocity reaches a maximum of 4879.78 km
 per day or about 203 km per hour.
 
-When the moon is at the horizon, it's distance from you can be
-computed using this image:
+The moon's distance from you can be computed using this image:
 
+[[image2]]
 
+When the moon is at the horizon (ignoring refraction), it's distance
+from you, via the Pythagorean Theorem is:
+
+$\sqrt{\text{OS}^2-\text{OU}^2}$
+
+where OS is the distance from the Earth's center to the moon, and OU
+is the Earth's radius.
+
+When the moon is overhead, it's distance from you is simply OE-OU,
+where OE is the distance from the Earth's center to the moon. Note
+that OE may be different from OS since, as above, the moon's distance
+from the center of the Earth is not constant.
+
+How much closer does the moon get from the time it rises to the time
+it's overhead? We subtract the two quantities above to get:
+
+$-\text{OE}+\sqrt{\text{OS}^2-\text{OU}^2}+\text{OU}$
 
 
 
@@ -47,14 +64,29 @@ computed using this image:
 
 f[t_] = 384000 + 21400*Sin[2*Pi*t/27.554551]
 
+moonhor = Sqrt[OS^2-OU^2]
+
+moonhigh = OE-OU
+
+moonhor - moonhigh /. {OU -> 6371., OS -> 384000, OE -> 384000}
+
+
 earth = {RGBColor[0,0,1], Circle[{0,0}, 1]};
 
 moons = {
- {Circle[{-1.5,1}, 0.1], AxesOrigin->{0,0}},
- {Circle[{0,1.8}, 0.1]} 
+ {Disk[{-1.5,1}, 0.03], AxesOrigin->{0,0}},
+ {Disk[{0,1.8}, 0.03]},
+ {Circle[{0,0}, 1.8]}
 };
 
-you = {RGBColor[1,0,0], Circle[{1,0}, 0.1]}
+labels = {
+ Text[Style["O", Medium], {0.05,-0.05}],
+ Text[Style["U", Medium], {0.05,1-0.05}],
+ Text[Style["E", Medium], {0.05,1.8-0.05}],
+ Text[Style["S", Medium], {-1.5+0.05,1-0.08}],
+}
+
+you = {RGBColor[1,0,0], Disk[{0,1}, 0.03]}
 
 arrows = {
  Line[{{0,0}, {-1.5,1}}],
@@ -63,6 +95,6 @@ arrows = {
  Arrow[{{0,1}, {0,1.8}}]
 };
 
-Graphics[{earth,moons,arrows,you}]
+Graphics[{earth,moons,arrows,you,labels}]
 showit
 
