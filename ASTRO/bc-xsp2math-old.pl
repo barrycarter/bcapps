@@ -38,10 +38,10 @@ while (<A>) {
     $nextint = $arraydata{startsec}+2*$arraydata{secs};
 
     debug("DATA",%arraydata);
-    die "ALPHA TESTING";
+#     die "ALPHA TESTING";
 
     # TODO: check if output file already exists
-    open(B,">$homedir/SPICE/KERNELS/MATH/xsp2math-$fname-array-$arraydata{objid}.m");
+    open(B,">$homedir/SPICE/KERNELS/MATH/xsp2math-$fname-array-$arraydata{objid}.m")||die("Can't open, $!");;
     print B "coeffs = {\n";
     next;
   }
