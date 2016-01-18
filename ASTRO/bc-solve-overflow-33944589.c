@@ -18,8 +18,8 @@ int main (int argc, char **argv) {
   void issmoon (SpiceDouble et, SpiceDouble *value) {
     SpiceDouble iss[3], moon[3], lt;
 
-    spkezp_c(-125544,et,"J2000","CN+S",399,iss,&lt);
-    spkezp_c(301,et,"J2000","CN+S",399,moon,&lt);
+    spkezp_c(-125544,et,"EQEQDATE","CN+S",399,iss,&lt);
+    spkezp_c(301,et,"EQEQDATE","CN+S",399,moon,&lt);
     //    printf("%f -> %f\n", et, vsep_c(iss,moon)*dpr_c());
     *value = vsep_c(iss,moon);
   }
