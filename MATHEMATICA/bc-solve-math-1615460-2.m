@@ -2,9 +2,15 @@
 
 (* TODO: Sum of p[i] is 1 *)
 
-probs = Table[p[i],{i,1,6}]
+(* probs = Table[p[i],{i,1,6}] *)
 
-conds = Flatten[{Table[{p[i]>0, p[i]<1},{i,1,6}], Total[probs] == 1}]
+(* doing below intentionally to avoid confusion w/ multiplication *)
+
+probs = {p1,p2,p3,p4,p5,p6};
+
+(* probs = Flatten[{Table[p[i],{i,1,5}], 1-p[1]-p[2]-p[3]-p[4]-p[5]}] *)
+
+(* conds = Flatten[{Table[{p[i]>0, p[i]<1},{i,1,6}], Total[probs] == 1}] *)
 
 values = {1,2,3,4,5,6};
 
@@ -37,7 +43,7 @@ plist[list_] := Module[{prob,nextfew},
  Return[prob*nextfew];
 ]
  
-sum[n_] := Sum[plist[i]*Total[i],{i,Tuples[values,n]}];
+sum[n_] := sum[n] = Sum[plist[i]*Total[i],{i,Tuples[values,n]}];
 
 (* FullSimplify[sum, conds] * )
 
