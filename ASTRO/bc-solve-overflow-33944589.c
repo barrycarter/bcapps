@@ -4,8 +4,8 @@ int main (int argc, char **argv) {
 
   SPICEDOUBLE_CELL(cnfine,2);
   SPICEDOUBLE_CELL(result,500000);
-  SpiceDouble beg, end, et_start, et_end;
-  char stime[255], etime[255];
+  SpiceDouble beg, end, et_start, et_end, lt, iss[3];
+  char stime[255];
 
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
@@ -20,7 +20,7 @@ int main (int argc, char **argv) {
 
     spkezp_c(-125544,et,"J2000","CN+S",399,iss,&lt);
     spkezp_c(301,et,"J2000","CN+S",399,moon,&lt);
-    printf("%f -> %f\n", et, vsep_c(iss,moon)*dpr_c());
+    //    printf("%f -> %f\n", et, vsep_c(iss,moon)*dpr_c());
     *value = vsep_c(iss,moon);
   }
 
@@ -30,10 +30,10 @@ int main (int argc, char **argv) {
   }
 
   // using two day window, but not accurate for those buffer times
-  //  wninsd_c(et_start+86400.*2, et_end-86400.*2, &cnfine);
+  // wninsd_c(et_start+86400.*2, et_end-86400.*2, &cnfine);
 
-  // testing
-  wninsd_c(et_start+86400.*2, et_start+86400.*3, &cnfine);
+  // test
+  wninsd_c(et_start+86400.*2, et_start+86400.*4, &cnfine);
 
   gfuds_c(issmoon,gfdecrx,"LOCMIN",0,0,10.,500000,&cnfine,&result);
 
@@ -41,8 +41,10 @@ int main (int argc, char **argv) {
 
   for (int i=0; i<count; i++) {
     wnfetd_c (&result, i, &beg, &end);
-    timout_c(beg, "ERA YYYY##-MM-DD HR:MN:SC ::MCAL",255,stime);
-    timout_c(end, "ERA YYYY##-MM-DD HR:MN:SC ::MCAL",255,etime);
-    printf("CLOSEST %f %f %s %s\n", beg, end, stime, etime);
+    // below is completely hideous/improper use of end variable
+    issmoon(beg, &end);
+    spkezp_c(-125544,beg,"J2000","CN+S",399,iss,&lt);
+    timout_c(beg, "YYYY-MM-DD HR:MN:SC ::MCAL",255,stime);
+    printf("CLOSEST %s %f %f\n", stime, end*dpr_c(), vnorm_c(iss));
   }
 }
