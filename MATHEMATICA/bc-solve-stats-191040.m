@@ -34,23 +34,19 @@ $1-\frac{1}{2}\text{erfc}\left(-\frac{\sqrt{9-\text{y0}^2}-2}{\sqrt{2}}\right)$
   will be large enough to make the total length bigger than 3 is the
   sum of the above or:
 
-$
-   \frac{1}{2}
-    \left(-\text{erfc}\left(-\frac{\sqrt{9-\text{y0}^2}-2}{\sqrt{2}}\right)+\tex
-    t{erfc}\left(\frac{\sqrt{9-\text{y0}^2}+2}{\sqrt{2}}\right)+2\right)
-$
+$ \frac{1}{2}
+\left(-\text{erfc}\left(-\frac{\sqrt{9-\text{y0}^2}-2}{\sqrt{2}}\right)+\tex
+t{erfc}\left(\frac{\sqrt{9-\text{y0}^2}+2}{\sqrt{2}}\right)+2\right) $
 
   - So, for any given value of y0, the above is the chance x will be
   big enough to make the total length greater than 3. Since we know
   the probability of y=y0 (as above), the probability of the combined
   events is the product of the two probabilities or:
 
-$
-   \frac{e^{-\frac{\text{y0}^2}{2}}
-    \left(-\text{erfc}\left(-\frac{\sqrt{9-\text{y0}^2}-2}{\sqrt{2}}\right)+\tex
-    t{erfc}\left(\frac{\sqrt{9-\text{y0}^2}+2}{\sqrt{2}}\right)+2\right)}{2
-    \sqrt{2 \pi }}
-$
+$ \frac{e^{-\frac{\text{y0}^2}{2}}
+\left(-\text{erfc}\left(-\frac{\sqrt{9-\text{y0}^2}-2}{\sqrt{2}}\right)+\tex
+t{erfc}\left(\frac{\sqrt{9-\text{y0}^2}+2}{\sqrt{2}}\right)+2\right)}{2
+\sqrt{2 \pi }} $
 
   - To find the total probability over all y0, we integrate the above
   from -3 to +3 (since we made a special case for y < -3 and y > 3
