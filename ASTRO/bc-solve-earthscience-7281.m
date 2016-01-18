@@ -61,6 +61,49 @@ $-\text{OE}+\sqrt{\text{OS}^2-\text{OU}^2}+\text{OU}$
 
 *)
 
+(* loophole graphics *)
+
+moon = {-5,5};
+
+lh = {
+
+ (* the Earth *)
+ {RGBColor[0,0,1], Circle[{0,0}, 1]},
+
+ (* the viewer *)
+ {RGBColor[1,0,0], Disk[{0,1}, 0.03]},
+
+ (* viewer horizon *)
+ {RGBColor[1,0,0], Line[{{moon[[1]],1},{1,1}}]},
+
+ (* the moon *)
+ {Disk[moon, 0.03]},
+
+ (* geocenter to you *)
+ {Line[{{0,0},{0,1}}]},
+
+ (* geocenter to moon *)
+ {Line[{{0,0},moon}]},
+
+ (* moon to axes *)
+ {Dashed, Line[{moon, {0, moon[[2]]}}]},
+
+ (* you to moon *)
+ {Line[{{0,1},moon}]},
+
+ (* angle label *)
+ Text[Style["\[Theta]", Large], {-0.20,1.20}],
+
+
+
+  (* the null at the end is so I can end every line above w a comma *)
+
+{}};
+
+Graphics[lh, Axes->True, TicksStyle -> Directive[FontOpacity -> 0,
+FontSize -> 0]]
+showit;
+
 
 f[t_] = 384000 + 21400*Sin[2*Pi*t/27.554551]
 
@@ -71,7 +114,7 @@ moonhigh = OE-OU
 moonhor - moonhigh /. {OU -> 6371., OS -> 384000, OE -> 384000}
 
 
-earth = {RGBColor[0,0,1], Circle[{0,0}, 1]};
+earth = 
 
 moons = {
  {Disk[{-1.5,1}, 0.03], AxesOrigin->{0,0}},
