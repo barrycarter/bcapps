@@ -59,6 +59,10 @@ $
   - We now add this probability to the probability of |y| > 3 we
   computed earlier to get 0.214362
 
+I wrote
+https://github.com/barrycarter/bcapps/blob/master/MATHEMATICA/bc-solve-stats-191040.m
+to help solve this.
+
 *)
 
 bigy = 2*CDF[NormalDistribution[0,1]][-3];
@@ -70,3 +74,29 @@ xsmall = CDF[NormalDistribution[2,1]][-Sqrt[3^2-y0^2]]
 xbig = 1-CDF[NormalDistribution[2,1]][Sqrt[3^2-y0^2]]
 
 Integrate[yeqy0*(xsmall+xbig),{y0,-3,3}]
+
+f[x_,y_] = PDF[NormalDistribution[0,1]][y]*PDF[NormalDistribution[2,1]][x];
+
+p1 = Plot3D[f[x,y],  {x,-5,5}, {y,-5,5}, ColorFunction -> Hue, 
+ ViewVector -> {0,0,1}, PlotRange -> All]
+
+p3 = Plot3D[If[Abs[x^2+y^2-9] < 0.5, 1,0],{x,-5,5},{y,-5,5}]
+
+p4 = Graphics3D[Cylinder[{{0, 0, 0}, {0, 0, 1}}, 3]]
+
+p4 = Graphics3D[Cylinder[{{0, 0, 0}, {0, 0, 0.15}}, 3]]
+
+p2 = ParametricPlot3D[{Cos[t],Sin[t],0},{t,0,2*Pi}]
+
+p5 = ParametricPlot3D[{3*Cos[x],3*Sin[x],PDF[NormalDistribution[0,1]][3*Sin
+[x]]*PDF[NormalDistribution[2,1]][3*Cos[x]]}, {x,0,2*Pi},
+ ViewVector -> {0,0,1}]
+
+p6 = ParametricPlot3D[{3*Cos[x],3*Sin[x],0}, {x,0,2*Pi}]
+
+
+Graphics[{Thickness[2],p2,p1}]
+
+
+
+
