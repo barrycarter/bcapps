@@ -7,7 +7,9 @@ int main (int argc, char **argv) {
 
   // et 504878400.000000 = midnight 2016 Jan 1
 
-  spkgps_c(-125544, 504878400. + 15.5*86400, "J2000", 399, iss, &lt);
+  spkgps_c(-125544, 504878400. + 18.5*86400, "J2000", 399, iss, &lt);
+
+  printf("POS: %f %f %f\n",iss[0],iss[1],iss[2]);
 
   // spkpos_c ("-125544", jd2et(2457412.5), "EQEQDATE", "CN+S", "Earth", iss, &lt);
   //  spkezp_c(-125544, jd2et(2457412.5), "IAU_EARTH", "CN+S", 399, iss, &lt);
