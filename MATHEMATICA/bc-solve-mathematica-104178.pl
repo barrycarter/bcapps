@@ -9,16 +9,18 @@ require "/usr/local/lib/bclib.pl";
 # /usr/local/Wolfram/Mathematica/9.0/AddOns/Packages/PhysicalConstants/PhysicalConstants.m,
 # such as EarthRadius (and probably many more)
 
+# TODO: ultimately create a package
+
 # TODO: would adding AstronomicalData constants overload this?
+
+my($valid) = 0;
 
 while (<>) {
   my(@data) = column_data($_, [0,60,85,110,999]);
 
-  # unless the first three fields are filled, we ignore
-  unless ($data[0] && $data[1] && $data[2]) {
-    debug("IGNORING: $_");
-    next;
-  }
+  # ignore up to line of hyphens
+  if (/^\-{20}/) {$valid = 1; next;}
+  unless ($valid) {next;}
 
   # trim data
   for $i (@data) {$i=~s/\s*$//;$i=~s/^\s*//;}
@@ -29,7 +31,13 @@ while (<>) {
   $value=~s/\s//g;
   $value=~s/e/*10^/;
   $uncert=~s/\s//g;
-  $uncert=~s/e/*10^/;
+  if ($uncert eq "(exact)") {$uncert = 0;} else {$uncert=~s/e/*10^/;}
+  $unit=~s/ /\*/g;
+
+  # unitless
+  if ($unit=~/^\s*$/) {$unit = "1";}
+
+  print qq%physicalConstant["$name"] = {$value,$uncert,$unit};\n%;
 
   debug("GOT: $name/$value/$uncert/$unit");
 }
