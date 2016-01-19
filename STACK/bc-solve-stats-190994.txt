@@ -1,48 +1,60 @@
-This is a Bayesian approach.
+This is a Bayesian approach, and is effectively a copy of my answer to
+https://www.quora.com/I-have-burned-200-disks-and-I-want-to-make-sure-that-they-are-all-in-perfect-working-order-What-is-the-smallest-size-sample-I-could-test-in-order-to-be-relatively-confident-that-98-of-all-the-disks-are-fine-burned-correctly
 
-Suppose you tested 10 disks and they all came out fine.
+Suppose you randomly pick 50 marbles and they are all red.
 
-If there were exactly 20 good disks (180 bad), you could do this in
-Binomial[20,10] or 184756 ways.
+If there were exactly 100 red marbles (900 black), you could do this
+in Binomial[100,50] or 100891344545564193334812497256 ways.
 
-If there were exactly 21 good disks (179 bad), you could do this in
-Binomial[21,10] or 352716 ways.
+If there were exactly 101 red marbles (899 black), you could do this in
+Binomial[101,50] or 199804427433372226016001220056 ways.
 
-In other words, it's 352716/184756 (which is 21/11) more likely there
-are exactly 21 good disks than there are exactly 20 good disks.
+In other words, it's
+199804427433372226016001220056/100891344545564193334812497256 (which
+is 101/51) more likely there are exactly 101 red marbles than there
+are exactly 100 red marbles.
 
-In general, there are Binomial[n,10] ways there can be exactly n good disks.
+In general, there are Binomial[n,50] ways there can be exactly n red
+marbles if you picked 50 marbles and all were red.
 
-How many ways can there be 196 or more good disks? (196 = 98% of 200):
+How many ways can there be at least 990 red marbles (990 = 99% of 1000):
 
-Sum[Binomial[i,10],{i,196,200}] = 101527022021565504
+Sum[Binomial[i,50],{i,990,1000}] =
+81531993898242794598076623570369772515365019903144264043266969772686950795976808446840
 
-How many ways can there be n good disks for any value of n?
+How many ways can there be n red marbles for any value of n?
 
-Sum[Binomial[i,10],{i,0,200}] = 410241078737424480
+Sum[Binomial[i,50],{i,0,1000}] =
+185684734874564765959015411764819077718596543052359268997222801777737175488143399579280
 
-(which also happens to be Binomial[201,11])
+(which also happens to be Binomial[1001,51])
 
-So the chance we have 196 or more good disks is
-101527022021565504/410241078737424480 or about 24.75%
+So the chance we have 990 or more red marbles (if we pick 50 red in a
+row) is
+81531993898242794598076623570369772515365019903144264043266969772686950795976808446840/185684734874564765959015411764819077718596543052359268997222801777737175488143399579280
+or about 43.91%
 
-Now, if we change 10 disks to k disks, the chance of 196 or more good disks is:
+Now, if we change 50 marbles to k marbles, the chance of 990 or more
+red marbles is:
 
-Sum[Binomial[i,k],{i,196,200}]/Binomial[201,k+1]
+Sum[Binomial[i,k],{i,990,1000}]/Binomial[1001,k+1]
 
-The final answer depends on your definition of "relatively
-confident". Some interesting values:
+Some results:
 
-To be 50% confident, test 25 disks
-To be 75% confident, test 48 disks
-To be 90% confident, test 73 disks
-To be 95% confident, test 89 disks
-To be 99% confident, test 119 disks
-To be 99.5% confident, test 130 disks
-To be 99.9% confident, test 148 disks
-To be 99.95% confident, test 155 disks
-To be 99.99% confident, test 167 disks
-To be 99.995% confident, test 171 disks
-To be 99.999% confident, test 178 disks
+To be 50% confident you have 990+ red marbles, pick 60 red marbles.
+To be 75% confident, pick 117 red marbles.
+To be 90% confident, pick 188 red marbles.  (this is the answer to your question).
+To be 95% confident, pick 237 red marbles.
+To be 99% confident, pick 340 red marbles.
+To be 99.5% confident, pick 380 red marbles.
+To be 99.9% confident, pick 464 red marbles.
+To be 99.95% confident, pick 496 red marbles.
+To be 99.99% confident, pick 564 red marbles.
+To be 99.995% confident, pick 591 red marbles.
+To be 99.999% confident, pick 646 red marbles.
 
-And, of course, to be 100% confident, test 196 disks.
+And, of course, to be 100% confident that 99% of the marbles are red,
+pick 990 red marbles.
+
+Given how big these numbers get, using a normal distribution approach
+may have been better, though slightly less accurate.
