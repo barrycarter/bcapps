@@ -1,0 +1,48 @@
+This is a Bayesian approach.
+
+Suppose you tested 10 disks and they all came out fine.
+
+If there were exactly 20 good disks (180 bad), you could do this in
+Binomial[20,10] or 184756 ways.
+
+If there were exactly 21 good disks (179 bad), you could do this in
+Binomial[21,10] or 352716 ways.
+
+In other words, it's 352716/184756 (which is 21/11) more likely there
+are exactly 21 good disks than there are exactly 20 good disks.
+
+In general, there are Binomial[n,10] ways there can be exactly n good disks.
+
+How many ways can there be 196 or more good disks? (196 = 98% of 200):
+
+Sum[Binomial[i,10],{i,196,200}] = 101527022021565504
+
+How many ways can there be n good disks for any value of n?
+
+Sum[Binomial[i,10],{i,0,200}] = 410241078737424480
+
+(which also happens to be Binomial[201,11])
+
+So the chance we have 196 or more good disks is
+101527022021565504/410241078737424480 or about 24.75%
+
+Now, if we change 10 disks to k disks, the chance of 196 or more good disks is:
+
+Sum[Binomial[i,k],{i,196,200}]/Binomial[201,k+1]
+
+The final answer depends on your definition of "relatively
+confident". Some interesting values:
+
+To be 50% confident, test 25 disks
+To be 75% confident, test 48 disks
+To be 90% confident, test 73 disks
+To be 95% confident, test 89 disks
+To be 99% confident, test 119 disks
+To be 99.5% confident, test 130 disks
+To be 99.9% confident, test 148 disks
+To be 99.95% confident, test 155 disks
+To be 99.99% confident, test 167 disks
+To be 99.995% confident, test 171 disks
+To be 99.999% confident, test 178 disks
+
+And, of course, to be 100% confident, test 196 disks.
