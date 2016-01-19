@@ -15,6 +15,8 @@ require "/usr/local/lib/bclib.pl";
 
 my($valid) = 0;
 
+print "physicalConstants = {};\n";
+
 while (<>) {
   my(@data) = column_data($_, [0,60,85,110,999]);
 
@@ -37,7 +39,9 @@ while (<>) {
   # unitless
   if ($unit=~/^\s*$/) {$unit = "1";}
 
-  print qq%physicalConstant["$name"] = {$value,$uncert,$unit};\n%;
+  # TODO: this is probably insanely inefficient
+  print qq%physicalConstants = Append[physicalConstants, {"$name",
+  $value,$uncert,$unit}];\n%;
 
   debug("GOT: $name/$value/$uncert/$unit");
 }
