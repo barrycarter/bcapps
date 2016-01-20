@@ -80,11 +80,53 @@ from the Earth's center, how far away is the moon from you?
 
 *)
 
-(* parametrized line to moon *)
 
-conds = t>0 && r>0 && m>r && theta > 0 && theta < Pi/2
+(* Math starts here *)
+
+(* these conditions help Mathematica simplify expressions, and simply
+state the Earth's radius is positive and the moon is further from the
+center of the Earth than the Earth's own surface [interestingly, the
+Earth-Moon barycenter does NOT meet this condition, and is closer to
+the Earth's center than the Earth's surface, but that's not relevant
+here] *)
+
+conds = r>0 && m>r && x>0 && theta>-Pi/2 && theta<Pi/2
+
+(* the line from you to the moon has slope Tan[theta] and y-intercept
+r, so its formula is... *)
 
 y[x_] = r + x*Tan[theta]
+
+(* For any given value of x, it's distance squared from the origin
+is x^2+y^2, and the distance from you is x^2+(y-r)^2 since you are at y=r *)
+
+distsquared[x_] = FullSimplify[x^2+y[x]^2, conds]
+
+distfromyousquared[x_] = FullSimplify[x^2+(y[x]-r)^2,conds]
+
+(* For what value of x is this equal to m^2 *)
+
+x0 = Solve[distsquared[x] == m^2, x, Reals]
+
+(* some simplifications Mathematica should do but doesn't *)
+
+x1 = x0 /. {Tan[theta]^2 -> Sec[theta]^2-1}
+
+(* and the distance from you at that point? *)
+
+distsquared0 = FullSimplify[distfromyousquared[x0],conds]
+
+
+
+
+
+
+
+(* Math ends here *)
+
+
+
+
 
 normsquared[x_] = FullSimplify[x^2+y[x]^2,conds]
 
