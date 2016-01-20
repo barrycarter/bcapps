@@ -82,11 +82,21 @@ from the Earth's center, how far away is the moon from you?
 
 (* parametrized line to moon *)
 
-y[x_] = r - x*Tan[theta]
+conds = t>0 && r>0 && m>r && theta > 0 && theta < Pi/2
+
+y[x_] = r + x*Tan[theta]
+
+normsquared[x_] = FullSimplify[x^2+y[x]^2,conds]
+
+solve = Solve[normsquared[x] == m^2, x][[2,1,2]]
+
+solve2 = FullSimplify[solve, conds]
+
+solve3 = FullSimplify[solve2^2+(y[solve2]-1)^2,conds]
 
 line[t_] = {-t, r+t*Tan[theta]}
 
-conds = t>0 && r>0 && m>r && theta > 0 && theta < Pi/2
+
 
 nline[t_] = FullSimplify[Norm[line[t]],conds]
 
@@ -98,7 +108,7 @@ solve = FullSimplify[solve0[[1,1,2,1]], conds];
 
 (* loophole graphics *)
 
-moon = {-5,5};
+moon = {5,5};
 
 lh = {
 
@@ -109,10 +119,10 @@ lh = {
  {RGBColor[1,0,0], Disk[{0,1}, 0.03]},
 
  (* viewer text *)
- Text["(0,r)", {0.2,1.08}],
+ Text["(0,r)", {-0.2,1.08}],
 
  (* viewer horizon *)
- {RGBColor[1,0,0], Line[{{moon[[1]],1},{1,1}}]},
+ {RGBColor[1,0,0], Line[{{0,1}, {moon[[1]],1}}]},
 
  (* the moon *)
  {Disk[moon, 0.03]},
@@ -124,7 +134,7 @@ lh = {
  {Dashed, Line[{{0,0},moon}]},
 
  (* text for geocenter to moon *)
- Text[Style["m", Large], {-3,2.8}],
+ Text[Style["m", Large], {3,2.8}],
 
 (* {Circle[{0,0},Norm[moon]]}, *)
 
@@ -135,10 +145,10 @@ lh = {
  {Line[{{0,1},moon}]},
 
  (* angle label *)
- Text[Style["\[Theta]", Large], {-0.50,1.20}],
+ Text[Style["\[Theta]", Large], {0.50,1.20}],
 
  (* angle symbol *)
- {Circle[{0,1}, 0.25, {Pi-ArcTan[4/5], Pi}]},
+ {Circle[{0,1}, 0.25, {0, ArcTan[4/5]}]},
 
 
   (* the null at the end is so I can end every line above w a comma *)
