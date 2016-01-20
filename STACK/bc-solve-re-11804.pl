@@ -10,16 +10,22 @@ while (<>) {
   my($ck) = hex(pop(@data));
 #  debug("DATA", @data);
 
-  my(@test) = (32,16,8,2,4,1);
+  my(@test) = (32,16,8,4,2,1);
 
   # note that this is NOT hex(string) because two digit pairs (base
   # 256) are treated as a single number
 
   $sum = 0;
   for $i (0..$#test) {
-    $sum += $test[$i]*$data[$i];
+    $sum += (-1)**($i+1)*$test[$i]*hex($data[$i]);
+#    $sum += $test[$i]*hex($data[$i]);
   }
 
-  debug("SUM: $sum vs $ck");
+
+  $sum += -114;
+
+  $sum = $sum%256;
+
+  debug("SUM($_): $sum vs $ck");
 
 }
