@@ -57,9 +57,44 @@ it's overhead? We subtract the two quantities above to get:
 $-\text{OE}+\sqrt{\text{OS}^2-\text{OU}^2}+\text{OU}$
 
 
+TODO: glue this stuff to above
+
+[[moon.jpg]]
+
+When the moon is $\theta$ degrees above your horizon and distance `m`
+from the Earth's center, how far away is the moon from you?
+
+  - Note that your position on the Cartesian grid is `(0,r)` where
+  `r` is the Earth's radius.
+
+  - The line between you and the moon can be parametrized as $\{-t
+  \cos (\theta ),\text{r}+t \sin (\theta )\}$ for t > 0
+
+  - The distance of this line from the origin (not from you) at time t
+  is simply it's norm or $\sqrt{\text{r}^2+2 \text{r} t \sin (\theta )+t^2}$
+
+  - This parametrizated line hits the moon when its distance from the Earth's center is `m`, which is when t = $\sqrt{m^2-\frac{1}{2} r^2 \cos (2 \theta )-\frac{r^2}{2}}-r \sin (\theta )$ and 
+
+
 
 
 *)
+
+(* parametrized line to moon *)
+
+y[x_] = r - x*Tan[theta]
+
+line[t_] = {-t, r+t*Tan[theta]}
+
+conds = t>0 && r>0 && m>r && theta > 0 && theta < Pi/2
+
+nline[t_] = FullSimplify[Norm[line[t]],conds]
+
+solve0 = Solve[{Norm[line[t]]==m , conds}, t, Reals];
+
+solve = FullSimplify[solve0[[1,1,2,1]], conds];
+
+
 
 (* loophole graphics *)
 
@@ -73,6 +108,9 @@ lh = {
  (* the viewer *)
  {RGBColor[1,0,0], Disk[{0,1}, 0.03]},
 
+ (* viewer text *)
+ Text["(0,r)", {0.2,1.08}],
+
  (* viewer horizon *)
  {RGBColor[1,0,0], Line[{{moon[[1]],1},{1,1}}]},
 
@@ -83,17 +121,24 @@ lh = {
  {Line[{{0,0},{0,1}}]},
 
  (* geocenter to moon *)
- {Line[{{0,0},moon}]},
+ {Dashed, Line[{{0,0},moon}]},
+
+ (* text for geocenter to moon *)
+ Text[Style["m", Large], {-3,2.8}],
+
+(* {Circle[{0,0},Norm[moon]]}, *)
 
  (* moon to axes *)
- {Dashed, Line[{moon, {0, moon[[2]]}}]},
+(* {Dashed, Line[{moon, {0, moon[[2]]}}]}, *)
 
  (* you to moon *)
  {Line[{{0,1},moon}]},
 
  (* angle label *)
- Text[Style["\[Theta]", Large], {-0.20,1.20}],
+ Text[Style["\[Theta]", Large], {-0.50,1.20}],
 
+ (* angle symbol *)
+ {Circle[{0,1}, 0.25, {Pi-ArcTan[4/5], Pi}]},
 
 
   (* the null at the end is so I can end every line above w a comma *)
