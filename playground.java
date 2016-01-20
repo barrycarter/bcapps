@@ -10,7 +10,7 @@ public class playground {
         int choice = 0;
 	// -1 to make sure its negative
         double weight = -1.;
-	// mercury, venus, earth, moon, jupiter
+	// the 0/"" is so I can match array indexes to numbers
 	double[] gravs = {0, 3.7/9.81, 8.87/9.81, 1.622/9.81, 24.79/9.81};
 	String[] names = {"", "Mercury", "Venus", "Moon", "Jupiter"};
 
@@ -27,11 +27,11 @@ public class playground {
 
 	do {
 	    System.out.println("/////MENU/////");
-	    for (int i=0; i<=3; i++) {
+	    for (int i=1; i<=4; i++) {
 		System.out.format("%d %s\n", i, names[i]);
 	    }
 	    choice = input.nextInt();
-	} while (choice <= 0 || choice >=4);
+	} while (choice <= 0 || choice >=5);
 
 	System.out.format("You selected %s, your weight on %s is %f lbs\n", names[choice], names[choice], weight*gravs[choice]);
         System.out.println("Thank you for using the Planetary Weight Calculator");
