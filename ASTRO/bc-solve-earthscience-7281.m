@@ -108,6 +108,8 @@ distfromyousquared[x_] = FullSimplify[x^2+(y[x]-r)^2,conds]
 
 x0 = Solve[distsquared[x] == m^2, x, Reals]
 
+x1 = x0[[
+
 (* some simplifications Mathematica should do but doesn't *)
 
 x1 = x0 /. {Tan[theta]^2 -> Sec[theta]^2-1}
@@ -197,10 +199,84 @@ lh = {
 
 {}};
 
-Graphics[lh, Axes->True, TicksStyle -> Directive[FontOpacity -> 0,
-FontSize -> 0]]
+(* special case, horizon *)
+
+moon2 = {5,1};
+
+lh2 = {
+
+ (* the Earth *)
+ {RGBColor[0,0,1], Circle[{0,0}, 1]},
+
+ (* the viewer *)
+ {RGBColor[1,0,0], Disk[{0,1}, 0.03]},
+
+ (* the moon *)
+ {Disk[moon2, 0.03]},
+
+ (* geocenter to you *)
+ {Line[{{0,0},{0,1}}]},
+
+ (* geocenter to moon *)
+ {Line[{{0,0},moon2}]},
+
+ (* text for geocenter to moon *)
+ Text[Style["m", Large], {2.5,0.3}],
+
+ Text[Style["d", Large], {2.5,1.15}],
+
+ Text[Style["r",Large],{-.1,.5}],
+
+ (* you to moon *)
+ {Line[{{0,1},moon2}]},
+
+ (* the null at the end is so I can end every line above w a comma *)
+
+{}};
+
+Graphics[lh2]
 showit;
 
+moon3 = {0,5};
+
+lh3 = {
+
+ (* the Earth *)
+ {RGBColor[0,0,1], Circle[{0,0}, 1]},
+
+ (* the viewer *)
+ {RGBColor[1,0,0], Disk[{0,1}, 0.03]},
+
+ (* the moon *)
+ {Disk[moon3, 0.03]},
+
+ (* geocenter to you *)
+ {Line[{{0,0},{0,1}}]},
+
+ (* geocenter to moon *)
+ {Line[{{0,0},moon3}]},
+
+ (* text for geocenter to moon *)
+ Text[Style["m", Large], {-0.25,2.5}],
+
+ Text[Style["d", Large], {0.25,3}],
+
+ Text[Style["r",Large],{0.25,.5}],
+
+ (* you to moon *)
+ {Line[{{0,1},moon3}]},
+
+ (* distance arrow for d *)
+ {Dashed, Arrowheads[{-.05, .05}], Arrow[{{0.1,1},{0.1,moon3[[2]]}}]},
+ {Arrowheads[{-.05, .05}], Arrow[{{0.1,0},{0.1,1}}]},
+ {Arrowheads[{-.05, .05}], Arrow[{{-0.1,0},{-0.1,moon3[[2]]}}]},
+
+ (* the null at the end is so I can end every line above w a comma *)
+
+{}};
+
+Graphics[lh3, Axes -> True, Ticks -> None]
+showit;
 
 f[t_] = 384000 + 21400*Sin[2*Pi*t/27.554551]
 
