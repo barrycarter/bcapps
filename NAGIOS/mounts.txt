@@ -3,8 +3,8 @@
 # temporarily ro
 # /mnt/extdrive/
 /mnt/extdrive2/
-# moved to other machine later, restored even later
-/mnt/extdrive3/
+# moved to other machine later, restored even later, removed again later
+# /mnt/extdrive3/
 # moved to other machine later
 # /mnt/extdrive4/
 # temporarily down, alas
