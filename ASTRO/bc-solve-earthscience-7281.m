@@ -4,6 +4,74 @@
 
 TODO: summarize answer, ignoring refraction, not to scale
 
+[[moon-at-horizon.jpg]]
+
+When the moon is at your horizon (as above and ignoring refraction),
+you can compute its distance using the Pythagorean Theorem as
+$\sqrt{m^2-r^2}$ where `r` is the Earth's radius, and `m` is the
+moon's distance from the center of the Earth.
+
+[[moon-at-zenith.jpg]]
+
+When the moon is overhead (as above), its distance from you is simply
+`m-r`, with `m` and `r` the same as above.
+
+The moon's average distance from the center of the Earth is 384399 km,
+and the Earth's average radius is 6371 km.
+
+Plugging these in, we see that the moon is about 384346 km from you
+when it's at the horizon, and about 378028 km from you when it's
+overhead. So, the horizonal moon is, on average, about 6318km or about
+1.64% further away than the zenith moon.
+
+However, the moon's orbit isn't perfectly circular. It's distance from
+the Earth's center varies from about 362600 km to 405400 km every
+month, sometimes more (356400 km and 406700 km are the absolute
+limits).
+
+If the horizonal moon is at perigee 362600 km away from the Earth's
+center, its distance from you is about 362544 km.
+
+And, if the zenith moon is at apogee 405400 km away from the Earth's
+center, its distance from you is about 399029 km, which is 36485 km or
+9.1% fruther away than the horizonal moon.
+
+While this answer is technically correct, it's a bit unsatisfying,
+since it takes the moon about 13.78 days to go from perigee to
+apogee. In other words, the zenith moon *today* can be further away
+than the horizonal moon *2 weeks from now*.
+
+Presumably, we want to know if the moon at moonrise is further away
+than the moon later *on the same day*, so we turn to the more general
+situation:
+
+[[moon.jpg]]
+
+When the moon is $\theta$ degrees above your horizon and distance `m`
+from the Earth's center, how far away is the moon from you?
+
+
+
+  - Note that your position on the Cartesian grid is `(0,r)` where
+  `r` is the Earth's radius.
+
+  - The line between you and the moon can be parametrized as $\{-t
+  \cos (\theta ),\text{r}+t \sin (\theta )\}$ for t > 0
+
+  - The distance of this line from the origin (not from you) at time t
+  is simply it's norm or $\sqrt{\text{r}^2+2 \text{r} t \sin (\theta )+t^2}$
+
+  - This parametrizated line hits the moon when its distance from the Earth's center is `m`, which is when t = $\sqrt{m^2-\frac{1}{2} r^2 \cos (2 \theta )-\frac{r^2}{2}}-r \sin (\theta )$ and 
+
+
+
+
+
+
+
+
+
+
 Per Wikipedia (https://en.wikipedia.org/wiki/Moon) the moon's average
 apogee is 405400km and the average perigee is 362600km.
 
@@ -59,23 +127,6 @@ $-\text{OE}+\sqrt{\text{OS}^2-\text{OU}^2}+\text{OU}$
 
 TODO: glue this stuff to above
 
-[[moon.jpg]]
-
-When the moon is $\theta$ degrees above your horizon and distance `m`
-from the Earth's center, how far away is the moon from you?
-
-  - Note that your position on the Cartesian grid is `(0,r)` where
-  `r` is the Earth's radius.
-
-  - The line between you and the moon can be parametrized as $\{-t
-  \cos (\theta ),\text{r}+t \sin (\theta )\}$ for t > 0
-
-  - The distance of this line from the origin (not from you) at time t
-  is simply it's norm or $\sqrt{\text{r}^2+2 \text{r} t \sin (\theta )+t^2}$
-
-  - This parametrizated line hits the moon when its distance from the Earth's center is `m`, which is when t = $\sqrt{m^2-\frac{1}{2} r^2 \cos (2 \theta )-\frac{r^2}{2}}-r \sin (\theta )$ and 
-
-
 
 
 *)
@@ -90,7 +141,9 @@ Earth-Moon barycenter does NOT meet this condition, and is closer to
 the Earth's center than the Earth's surface, but that's not relevant
 here] *)
 
-conds = r>0 && m>r && x>0 && theta>-Pi/2 && theta<Pi/2
+(* TODO: theta > 0 not necessarily true due to refraction *)
+
+conds = r>0 && m>r && x>0 && m>0 && theta> 0 && theta <= Pi/2 && theta >= -Pi/2
 
 (* the line from you to the moon has slope Tan[theta] and y-intercept
 r, so its formula is... *)
@@ -100,23 +153,32 @@ y[x_] = r + x*Tan[theta]
 (* For any given value of x, it's distance squared from the origin
 is x^2+y^2, and the distance from you is x^2+(y-r)^2 since you are at y=r *)
 
-distsquared[x_] = FullSimplify[x^2+y[x]^2, conds]
-
-distfromyousquared[x_] = FullSimplify[x^2+(y[x]-r)^2,conds]
+distsquared[x_] = x^2+y[x]^2
 
 (* For what value of x is this equal to m^2 *)
 
-x0 = Solve[distsquared[x] == m^2, x, Reals]
+x0 = Solve[distsquared[x] == m^2 && conds, x, Reals]
 
-x1 = x0[[
+x1 = x0[[1,1,2,1]]
 
-(* some simplifications Mathematica should do but doesn't *)
+distfromyousquared[x_] = x^2+(y[x]-r)^2
 
-x1 = x0 /. {Tan[theta]^2 -> Sec[theta]^2-1}
+distsq1 = distfromyousquared[x1]
 
-(* and the distance from you at that point? *)
+dist[r_,theta_,m_] = Sqrt[m^2 - r*(r*Cos[2*theta] + Sqrt[4*m^2 - 2*r^2
+- 2*r^2*Cos[2*theta]]*Sin[theta])];
 
-distsquared0 = FullSimplify[distfromyousquared[x0],conds]
+dm[r_,theta_,m_] = D[dist[r,theta,m],m]
+
+dt[r_,theta_,m_] = D[dist[r,theta,m],theta]
+
+Solve[dm[r,theta,m] == dt[r,theta,m], {m,theta}]
+
+Plot[{dist[6371, theta*Degree, 362600], dist[6371, theta*Degree, 384399], 
+ dist[6371, theta*Degree, 405400]}, {theta,-90,90}]
+
+Plot[{dt[6371, theta*Degree, 362600], dt[6371, theta*Degree, 384399], 
+ dt[6371, theta*Degree, 405400]}, {theta,-1.5,1.5}]
 
 
 
