@@ -14,14 +14,28 @@ colspeed[m1_,m2_,v1_,v2_] = {u1,u2} /. Solve[{
  u1 != v1, u2 != v2
 }, {u1,u2}][[1]]
 
-colspeed[mb, mt, -vb, vt]
+(* Our case: mass m1 and velocity v1 collides elastically with one
+object of mass m2 at v2 and then another with mass m3 and velocity
+-v3; final velocities for all three objects *)
 
-vb2 = colspeed[mb, mt, vb, vt][[1]]
+colspeed[m1,v1,m2,v2]
 
-colspeed[mb, mt, vb2, -vt]
+colspeed[m1, colspeed[m1,v1,m2,v2][[1]], m3, -v3]
 
+bouncespeed[m1_, m2_, m3_, v1_, v2_, v3_] = {
 
+(m1^2*m3 + v1*(m2 - 2*v2)*(m3 + 2*v3) + m1*(m3*v1 - m2*(m3 + 2*v3)))/
+ (m1^2 + m1*(m2 + v1) - v1*(m2 - 2*v2)),
 
+(2*m1*m2 - m1*v2 + v1*v2)/(m1 + v1),
+
+(2*m1*m3*(m1 + v1) + (m1^2 + m1*(-m2 + v1) + v1*(m2 - 2*v2))*v3)/
+ (m1^2 + m1*(m2 + v1) - v1*(m2 - 2*v2))
+};
+
+(* sanity checking *)
+
+bouncespeed[1, 1000, 1000, -10, 50, 50]
 
 
 
