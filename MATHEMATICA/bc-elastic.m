@@ -39,25 +39,25 @@ bouncespeed[1, 1000, 1000, -10, 50, 50]
 
 (* iteration *)
 
-bs[m1_, m2_, m3_, v1_, v2_, v3_] = 
+bs[{m1_, m2_, m3_, v1_, v2_, v3_}] = 
  Flatten[{m1, m2, m3, bouncespeed[m1, m2, m3, v1, v2, v3]}];
 
-bs2[{m1_, m2_, m3_, v1_, v2_, v3_}] = 
- Flatten[{m1, m2, m3, bouncespeed[m1, m2, m3, v1, v2, v3]}];
+iter[0] = {m1,m2,m3,v1,v2,v3};
 
-iter[0] = bs[m1,m2,m3,v1,v2,v3];
+iter[n_] := iter[n] = bs[iter[n-1]];
 
-iter[n_] := Apply[bs,iter[n-1]];
+conds = {m1 -> 1., m2 -> 1000., m3 -> 1000., v1 -> -10., v2 -> 50., v3 -> -50.}
 
-RSolve[{f[0] == bs[m1,m2,m3,v1,v2,v3],
-       f[n] == Apply[bs,f[n-1]]}, f[n], n]
+iter[1] /. conds
+
+(* specific case iteration *)
+
+spec[0] = {1., 1000., 1000., -10., 50., -50.}
+
+spec[n_] := spec[n] = bs[spec[n-1]]
 
 
-RSolve[{f[0] == {m1,m2,m3,v1,v2,v3},
-       f[n] == bs2[f[n-1]]}, f[n], n]
 
-
-(* example Rsolve "error" *)
 
 
 
