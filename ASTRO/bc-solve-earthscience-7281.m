@@ -2,7 +2,7 @@
 
 (*
 
-TODO: summarize answer, ignoring refraction, not to scale
+TODO: summarize answer, ignoring refraction, not to scale, spellcheck
 
 [[moon-at-horizon.jpg]]
 
@@ -21,7 +21,7 @@ and the Earth's average radius is 6371 km.
 
 Plugging these in, we see that the moon is about 384346 km from you
 when it's at the horizon, and about 378028 km from you when it's
-overhead. So, the horizonal moon is, on average, about 6318km or about
+overhead. So, the horizon moon is, on average, about 6318km or about
 1.64% further away than the zenith moon.
 
 However, the moon's orbit isn't perfectly circular. It's distance from
@@ -29,17 +29,17 @@ the Earth's center varies from about 362600 km to 405400 km every
 month, sometimes more (356400 km and 406700 km are the absolute
 limits).
 
-If the horizonal moon is at perigee 362600 km away from the Earth's
+If the horizon moon is at perigee 362600 km away from the Earth's
 center, its distance from you is about 362544 km.
 
 And, if the zenith moon is at apogee 405400 km away from the Earth's
 center, its distance from you is about 399029 km, which is 36485 km or
-9.1% fruther away than the horizonal moon.
+9.1% further away than the horizon moon.
 
 While this answer is technically correct, it's a bit unsatisfying,
 since it takes the moon about 13.78 days to go from perigee to
 apogee. In other words, the zenith moon *today* can be further away
-than the horizonal moon *2 weeks from now*.
+than the horizon moon *2 weeks from now*.
 
 Presumably, we want to know if the moon at moonrise is further away
 than the moon later *on the same day*, so we turn to the more general
@@ -48,7 +48,60 @@ situation:
 [[moon.jpg]]
 
 When the moon is $\theta$ degrees above your horizon and distance `m`
-from the Earth's center, how far away is the moon from you?
+from the Earth's center, its distance from you (by lemma 1 at end of
+answer) is:
+
+$
+   \sqrt{m^2-r \left(\sin (\theta ) \sqrt{4 m^2-2 r^2 \cos (2 \theta )-2 r^2}+r
+    \cos (2 \theta )\right)}
+$
+
+where `r` is the Earth's radius.
+
+The Earth's radius is fairly constant, so the two things that change
+this distance are the moon's elevation in the sky $\theta$ and the
+distance from the center of the Earth to the moon, `m`.
+
+How does this distance change with respect to $\theta$? Taking the
+partial derivative of the formula above with respect to $\theta$, we get:
+
+$
+   -\frac{r \left(\frac{2 \sqrt{2} \cos (\theta ) \left(m^2-r^2 \cos (2 \theta
+    )\right)}{\sqrt{2 m^2-r^2 \cos (2 \theta )-r^2}}-2 r \sin (2 \theta
+    )\right)}{2 \sqrt{m^2-r \left(\sin (\theta ) \sqrt{4 m^2-2 r^2 \cos (2
+    \theta )-2 r^2}+r \cos (2 \theta )\right)}}
+$
+
+and with respect to `m`:
+
+$
+   \frac{2 m-\frac{4 m r \sin (\theta )}{\sqrt{4 m^2-2 r^2 \cos (2 \theta )-2
+    r^2}}}{2 \sqrt{m^2-r \left(\sin (\theta ) \sqrt{4 m^2-2 r^2 \cos (2 \theta
+    )-2 r^2}+r \cos (2 \theta )\right)}}
+$
+
+Since we're primarily interested in the horizon, let's simplify the
+above formulas by setting $\theta$ to 0. In other words, let's look at
+the instantaneous rate at which the moon's distance changes from you
+when the moon is at the horizon.
+
+For $\theta$, this simplifies to simply `-r`, where `r` is the Earth's
+radius. In other words, the rising moon gets 1 Earth radius closer to
+us for each radian it rises.
+
+Putting this in more familiar terms, this is 6371 km/radian or 111.2
+km/degree. In other words, if the moon's orbit around the Earth's
+center was perfectly circular, it would get 111.2 kilometers closer to
+us for every degree it rose above the horizon.
+
+Note that this is an *instantaneous* rate. As we saw earlier, 
+
+
+
+
+
+
+TODO: Lemma 1
 
 
 
@@ -168,9 +221,12 @@ distsq1 = distfromyousquared[x1]
 dist[r_,theta_,m_] = Sqrt[m^2 - r*(r*Cos[2*theta] + Sqrt[4*m^2 - 2*r^2
 - 2*r^2*Cos[2*theta]]*Sin[theta])];
 
-dm[r_,theta_,m_] = D[dist[r,theta,m],m]
+dt[r_,theta_,m_] = -(r*((2*Sqrt[2]*Cos[theta]*(m^2 -
+r^2*Cos[2*theta]))/ Sqrt[2*m^2 - r^2 - r^2*Cos[2*theta]] -
+2*r*Sin[2*theta]))/ (2*Sqrt[m^2 - r*(r*Cos[2*theta] + Sqrt[4*m^2 -
+2*r^2 - 2*r^2*Cos[2*theta]]* Sin[theta])])
 
-dt[r_,theta_,m_] = D[dist[r,theta,m],theta]
+dm[r_,theta_,m_] = D[dist[r,theta,m],m]
 
 Solve[dm[r,theta,m] == dt[r,theta,m], {m,theta}]
 

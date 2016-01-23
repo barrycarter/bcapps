@@ -92,6 +92,43 @@ sub func {
   }
 }
 
+=item bc_extras(@files)
+
+Runs all commands in given @files, and reports errors; this lets me
+add/subtract tests without restarting nagios, but Im concerned that
+this is not "the nagios way", and it generates just one alert instead
+of multiple alerts.
+
+The @files are expected to contain commands that should be run every
+15m or so; commands that should be run less/more frequently should be
+handled directly in nagios.
+
+=cut
+
+sub bc_extras {
+  my(@files) = @_;
+
+  # NOTE: we intentionally dont stop on first error
+  my($count);
+
+  for $i (@files) {
+    debug("I: $i");
+    for $j (split(/\n/, read_file($i))) {
+      if ($j=~/^\#/ || $j=~/^\s*$/) {next;}
+      debug("RUNNING: $j");
+      my($out,$err,$res) = cache_command2($j);
+      if ($res) {$count++;}
+    }
+  }
+
+  if ($count) {
+    print "$count errors in extra tests\n";
+    return 2;
+  }
+
+  return 0;
+}
+
 =item bc_dig($host,$answer)
 
 Checks that "dig +trace ... $host" returns $answer.

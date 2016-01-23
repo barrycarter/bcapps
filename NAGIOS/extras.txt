@@ -1,0 +1,4 @@
+# commands to run regularly for nagios
+
+# confirms my energy monitoring device's local webserver is running
+curl -s http://ted.local.lan/Footprints.html | zcat | grep 'TED 5000'
