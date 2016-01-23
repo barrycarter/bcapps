@@ -20,20 +20,20 @@ map(s/D/*10^/g, @vals);
 
 for $i (0..$#names) {print "$names[$i]=$vals[$i];\n";}
 
-# now, lets setup the DFQs (all units are in AU and days, per NASA)
+my(@planets) = (1,2,4..9,"m","s","b");
+
+# now, lets setup the DFQs (all units are in AU and days, per NASA)???
 
 # initial positions/velocity at epoch
 
 my(@init);
-
-# for $i (1,2,4..9,"m","s","b") {
-for $i (1) {
-  warn "TESTING";
+for $i (1,2,4..9,"m","s","b") {
+# for $i (1) {warn "TESTING";
   push(@init,"planet[$i][0] == {x$i, y$i, z$i}");
   push(@init,"planet[$i]'[0] == {xd$i, yd$i, zd$i}");
 
   # TODO: THIS IS JUST FOR TESTING
-  push(@init,"planet[$i]''[t] == {0,0,0}");
+#  push(@init,"planet[$i]''[t] == {0,0,0}");
 
 }
 
@@ -41,7 +41,18 @@ print "posvel = {\n";
 print join(",\n", @init);
 print "};\n";
 
+# now, their gravitational influence on each other
 
+for $i (@planets) {
+  for $j (@planets) {
+    if ($i eq $j) {next;}
+
+    # TODO: listify this
+    print "gm$i*(planet[$j][t]-planet[$i][t])/
+           Norm[planet[$j][t]-planet[$i][t]]^3\n";
+
+  }
+}
 
 
 
