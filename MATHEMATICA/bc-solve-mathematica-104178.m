@@ -101,7 +101,7 @@ physicalConstants = Append[physicalConstants, {"atomic unit of mass",
 physicalConstants = Append[physicalConstants, {"atomic unit of mom.um",
   1.992851882*10^-24,0.000000024*10^-24,kg*m*s^-1}];
 physicalConstants = Append[physicalConstants, {"atomic unit of permittivity",
-  1.112650056...*10^-10,0,F*m^-1}];
+  1.112650056*10^-10,0,F*m^-1}];
 physicalConstants = Append[physicalConstants, {"atomic unit of time",
   2.418884326509*10^-17,0.000000000014*10^-17,s}];
 physicalConstants = Append[physicalConstants, {"atomic unit of velocity",
@@ -129,7 +129,7 @@ physicalConstants = Append[physicalConstants, {"Boltzmann constant in Hz/K",
 physicalConstants = Append[physicalConstants, {"Boltzmann constant in inverse meters per kelvin",
   69.503457,0.000040,m^-1*K^-1}];
 physicalConstants = Append[physicalConstants, {"characteristic impedance of vacuum",
-  376.730313461...,0,ohm}];
+  376.730313461,0,ohm}];
 physicalConstants = Append[physicalConstants, {"classical electron radius",
   2.8179403227*10^-15,0.0000000019*10^-15,m}];
 physicalConstants = Append[physicalConstants, {"Compton wavelength",
@@ -175,7 +175,7 @@ physicalConstants = Append[physicalConstants, {"deuteron-proton mass ratio",
 physicalConstants = Append[physicalConstants, {"deuteron rms charge radius",
   2.1413*10^-15,0.0025*10^-15,m}];
 physicalConstants = Append[physicalConstants, {"electric constant",
-  8.854187817...*10^-12,0,F*m^-1}];
+  8.854187817*10^-12,0,F*m^-1}];
 physicalConstants = Append[physicalConstants, {"electron charge to mass quotient",
   -1.758820024*10^11,0.000000011*10^11,C*kg^-1}];
 physicalConstants = Append[physicalConstants, {"electron-deuteron mag. mom. ratio",
@@ -309,7 +309,7 @@ physicalConstants = Append[physicalConstants, {"hertz-electron volt relationship
 physicalConstants = Append[physicalConstants, {"hertz-hartree relationship",
   1.5198298460088*10^-16,0.0000000000090*10^-16,E_h}];
 physicalConstants = Append[physicalConstants, {"hertz-inverse meter relationship",
-  3.335640951...*10^-9,0,m^-1}];
+  3.335640951*10^-9,0,m^-1}];
 physicalConstants = Append[physicalConstants, {"hertz-joule relationship",
   6.626070040*10^-34,0.000000081*10^-34,J}];
 physicalConstants = Append[physicalConstants, {"hertz-kelvin relationship",
@@ -349,7 +349,7 @@ physicalConstants = Append[physicalConstants, {"joule-inverse meter relationship
 physicalConstants = Append[physicalConstants, {"joule-kelvin relationship",
   7.2429731*10^22,0.0000042*10^22,K}];
 physicalConstants = Append[physicalConstants, {"joule-kilogram relationship",
-  1.112650056...*10^-17,0,kg}];
+  1.112650056*10^-17,0,kg}];
 physicalConstants = Append[physicalConstants, {"kelvin-atomic mass unit relationship",
   9.2510842*10^-14,0.0000053*10^-14,u}];
 physicalConstants = Append[physicalConstants, {"kelvin-electron volt relationship",
@@ -375,7 +375,7 @@ physicalConstants = Append[physicalConstants, {"kilogram-hertz relationship",
 physicalConstants = Append[physicalConstants, {"kilogram-inverse meter relationship",
   4.524438411*10^41,0.000000056*10^41,m^-1}];
 physicalConstants = Append[physicalConstants, {"kilogram-joule relationship",
-  8.987551787...*10^16,0,J}];
+  8.987551787*10^16,0,J}];
 physicalConstants = Append[physicalConstants, {"kilogram-kelvin relationship",
   6.5096595*10^39,0.0000037*10^39,K}];
 physicalConstants = Append[physicalConstants, {"lattice parameter of silicon",
@@ -385,7 +385,7 @@ physicalConstants = Append[physicalConstants, {"Loschmidt constant (273.15 K, 10
 physicalConstants = Append[physicalConstants, {"Loschmidt constant (273.15 K, 101.325 kPa)",
   2.6867811*10^25,0.0000015*10^25,m^-3}];
 physicalConstants = Append[physicalConstants, {"mag. constant",
-  12.566370614...*10^-7,0,N*A^-2}];
+  12.566370614*10^-7,0,N*A^-2}];
 physicalConstants = Append[physicalConstants, {"mag. flux quantum",
   2.067833831*10^-15,0.000000013*10^-15,Wb}];
 physicalConstants = Append[physicalConstants, {"molar gas constant",
@@ -692,4 +692,3 @@ physicalConstants = Append[physicalConstants, {"Wien frequency displacement law 
   5.8789238*10^10,0.0000034*10^10,Hz*K^-1}];
 physicalConstants = Append[physicalConstants, {"Wien wavelength displacement law constant",
   2.8977729*10^-3,0.0000017*10^-3,m*K}];
-

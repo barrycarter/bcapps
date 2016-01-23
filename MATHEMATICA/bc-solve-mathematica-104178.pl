@@ -30,6 +30,7 @@ while (<>) {
   my($name, $value, $uncert, $unit) = @data;
 
   # cleanup specific to fields
+  $value=~s/\.\.\.//g;
   $value=~s/\s//g;
   $value=~s/e/*10^/;
   $uncert=~s/\s//g;
