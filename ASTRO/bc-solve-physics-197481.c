@@ -13,8 +13,6 @@ static int planetcount;
 
 void gfq ( SpiceDouble et, SpiceDouble *value ) {
 
-  printf("GFQ CALLED: %f, pc is: %d\n",et,planetcount);
-
   // max separation between all non-0 planets in planets
   int i,j;
   SpiceDouble sep, lt, max=0.;
@@ -33,7 +31,6 @@ void gfq ( SpiceDouble et, SpiceDouble *value ) {
   // and now the angle diffs (keep only min)
   for (i=1; i<=planetcount; i++) {
     for (j=i+1; j<=planetcount; j++) {
-      printf("J: %d\n",j);
       sep = vsep_c(position[i],position[j]);
       if (sep>max) {max=sep;}
     }
@@ -86,18 +83,16 @@ int main( int argc, char **argv ) {
   for (i=1; i<argc; i++) {planets[i] = atoi(argv[i]);}
   planetcount = argc-1;
 
-  printf("PLANETS: %d %d %d %d\n",planets[0],planets[1],planets[2],planetcount);
-
   // 1 second tolerance (serious overkill, but 1e-6 is default, worse!)
   gfstol_c(1.);
 
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
   // DE431 limits
-  //  wninsd_c (-479695089600.+86400*468, 479386728000., &cnfine);
+  wninsd_c (-479695089600.+86400*468, 479386728000., &cnfine);
 
   // 1970 to 2038 (all "Unix time") for testing
-  wninsd_c(unix2et(0),unix2et(2147483647),&cnfine);
+  //  wninsd_c(unix2et(0),unix2et(2147483647),&cnfine);
 
   // find under 6 degrees...
   gfuds_c(gfq,gfdecrx,"<",6.*rpd_c(),0.,86400.,MAXWIN,&cnfine,&result);
