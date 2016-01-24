@@ -20,6 +20,7 @@ map(s/D/*10^/g, @vals);
 
 for $i (0..$#names) {print "$names[$i]=$vals[$i];\n";}
 
+# TODO: probably can't do both earth-moon barycentre and earth-moon separately
 my(@planets) = (1,2,4..9,"m","s","b");
 
 # now, lets setup the DFQs (all units are in AU and days, per NASA)???
@@ -27,7 +28,7 @@ my(@planets) = (1,2,4..9,"m","s","b");
 # initial positions/velocity at epoch
 
 my(@init);
-for $i (1,2,4..9,"m","s","b") {
+for $i (@planets) {
 # for $i (1) {warn "TESTING";
   push(@init,"planet[$i][0] == {x$i, y$i, z$i}");
   push(@init,"planet[$i]'[0] == {xd$i, yd$i, zd$i}");
@@ -43,16 +44,28 @@ print "};\n";
 
 # now, their gravitational influence on each other
 
+my(@all) = ();
 for $i (@planets) {
+  my(@accel) = ();
   for $j (@planets) {
     if ($i eq $j) {next;}
 
-    # TODO: listify this
-    print "gm$i*(planet[$j][t]-planet[$i][t])/
-           Norm[planet[$j][t]-planet[$i][t]]^3\n";
-
+    push(@accel, "gm$j*(planet[$i][t]-planet[$j][t])/
+           Norm[planet[$i][t]-planet[$j][t]]^3");
   }
+
+  debug("ACCEL",@accel);
+
+  push(@all, "planet[$i]''[t] == Total[",join(",\n",@accel),"]");
+
+  debug("ALL AT $i",@all);
 }
+
+debug("ALL: $all[0] and then ",@all);
+
+print "accels = {\n";
+print join(",\n", @all);
+print "};\n";
 
 
 
