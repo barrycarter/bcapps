@@ -27,21 +27,14 @@ for $i (0..$#names) {print "$names[$i]=$vals[$i];\n";}
 # TODO: this computes EMB, but not E or M directly
 my(@planets) = (0..9);
 
-warn "TESTING"; @planets = (0..1);
-
 # now, lets setup the DFQs (all units are in AU and days, per NASA)???
 
 # initial positions/velocity at epoch
 
 my(@init);
 for $i (@planets) {
-# for $i (1) {warn "TESTING";
   push(@init,"planet[$i][0] == {x$i, y$i, z$i}");
   push(@init,"planet[$i]'[0] == {xd$i, yd$i, zd$i}");
-
-  # TODO: THIS IS JUST FOR TESTING
-#  push(@init,"planet[$i]''[t] == {0,0,0}");
-
 }
 
 print "posvel = {\n";
@@ -59,15 +52,8 @@ for $i (@planets) {
     push(@accel, "gm$j*(planet[$i][t]-planet[$j][t])/
            Norm[planet[$i][t]-planet[$j][t]]^3");
   }
-
-  debug("ACCEL",@accel);
-
-  push(@all, "planet[$i]''[t] == Total[{".join(",\n",@accel)."}]");
-
-  debug("ALL AT $i",@all);
+  push(@all, "planet[$i]''[t] == -Total[{".join(",\n",@accel)."}]");
 }
-
-debug("ALL: $all[0] and then ",@all);
 
 print "accels = {\n";
 print join(",\n", @all);
