@@ -12,6 +12,10 @@ $all=~s/(DENUM.*?)GROUP/GROUP/s;
 my($names) = lc($1);
 my(@names) = split(/\s+/, $names);
 
+# change GMB to GM3 and GMS to GM0
+map(s/^(gm|[xyz]d?)b$/${1}3/, @names);
+map(s/^(gm|[xyz]d?)s$/${1}0/, @names);
+
 # the values
 $all=~s/1041.*?(0\..*?)GROUP//s;
 my($vals) = $1;
@@ -20,8 +24,10 @@ map(s/D/*10^/g, @vals);
 
 for $i (0..$#names) {print "$names[$i]=$vals[$i];\n";}
 
-# TODO: probably can't do both earth-moon barycentre and earth-moon separately
-my(@planets) = (1,2,4..9,"m","s","b");
+# TODO: this computes EMB, but not E or M directly
+my(@planets) = (0..9);
+
+warn "TESTING"; @planets = (0..1);
 
 # now, lets setup the DFQs (all units are in AU and days, per NASA)???
 
@@ -56,7 +62,7 @@ for $i (@planets) {
 
   debug("ACCEL",@accel);
 
-  push(@all, "planet[$i]''[t] == Total[",join(",\n",@accel),"]");
+  push(@all, "planet[$i]''[t] == Total[{".join(",\n",@accel)."}]");
 
   debug("ALL AT $i",@all);
 }
