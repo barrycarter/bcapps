@@ -1,13 +1,8 @@
 #!/usr/bin/python
 
-import ephem
+import ephem, math
 
 obs = ephem.Observer();
 obs.long,obs.lat=0,0;
-print obs.sidereal_time();
-
-j = ephem.Jupiter('2007/12/6')
-print j.g_ra, j.g_dec;
-// print ephem.city('Greenwich').sidereal_time()
-
-
+pl = ephem.Pluto(ephem.now())
+print 180.*(pl.g_ra-obs.sidereal_time())/math.pi,180.*pl.g_dec/math.pi
