@@ -5,7 +5,7 @@
 
 require "/usr/local/lib/bclib.pl";
 
-$all = read_file("$bclib{githome}/ASTRO/header.430_572");
+$all = read_file("$bclib{githome}/ASTRO/header.431_572");
 
 # cheating slightly here
 $all=~s/(DENUM.*?)GROUP/GROUP/s;

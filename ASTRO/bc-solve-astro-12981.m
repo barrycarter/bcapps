@@ -132,7 +132,21 @@ nds = NDSolve[{s[0]==s0, s'[0] == v0,
 
 (* The use of [[1,1,2]] below is just Mathematica nesting weirdness *)
 
-g= ParametricPlot[{nds[[1,1,2]][t],merc[t],ven[t]},{t,0,timelimit}, 
+graph= ParametricPlot[{nds[[1,1,2]][t],merc[t],ven[t]},{t,0,timelimit}, 
  Mesh -> timelimit/86400, AxesOrigin->{0,0}, PlotStyle -> {Blue,Red,Green},
  MeshStyle -> {Black}
 ]
+
+(* checking other answer *)
+
+(*
+nds = NDSolve[{s[0]==s0, s'[0] == merc'[0]+{0,8000},
+ s''[t] == accel[s[t],sun[t],1,sunmass,g] + accel[s[t],merc[t],1,mercmass,g]
+},s,{t,0,timelimit}]
+
+graph= ParametricPlot[{nds[[1,1,2]][t],merc[t],ven[t]},{t,0,221}, 
+ Mesh -> timelimit/86400, AxesOrigin->{0,0}, PlotStyle -> {Blue,Red,Green},
+ MeshStyle -> {Black}
+]
+
+*)

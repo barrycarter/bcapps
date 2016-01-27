@@ -56,7 +56,16 @@ $
     \cos (2 \theta )\right)}
 $
 
-where `r` is the Earth's radius.
+where `r` is the Earth's radius. Let's graph this for the moon's
+average distance from the Earth:
+
+[[moongraph1.jpg]]
+
+As we expect, the moon is furthest away when it's directly beneath our
+feet (x=-90 on the graph) and closest when it's above our head (x=90
+on the graph).
+
+The speed at which the moon approaches us (in terms of km/degree) 
 
 The Earth's radius is fairly constant, so the two things that change
 this distance are the moon's elevation in the sky $\theta$ and the
@@ -225,6 +234,10 @@ dt[r_,theta_,m_] = -(r*((2*Sqrt[2]*Cos[theta]*(m^2 -
 r^2*Cos[2*theta]))/ Sqrt[2*m^2 - r^2 - r^2*Cos[2*theta]] -
 2*r*Sin[2*theta]))/ (2*Sqrt[m^2 - r*(r*Cos[2*theta] + Sqrt[4*m^2 -
 2*r^2 - 2*r^2*Cos[2*theta]]* Sin[theta])])
+
+ticks = Table[-90+i*10,{i,0,18}]
+
+Plot[dist[6371,theta*Degree,384399],{theta,-90,90}, Ticks->{ticks,Automatic}]
 
 dm[r_,theta_,m_] = D[dist[r,theta,m],m]
 
