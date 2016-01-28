@@ -61,7 +61,7 @@ eqs = {x[0] == d, x'[0] == 0, x''[t] == x[t]^-2}
 
 (* mathematica loses solutions w/ boundary conditions *)
 
-eqs = {x''[t] == x[t]^-2}
+eqs = {x''[t] == -x[t]^-2}
 s = DSolve[eqs,x,t]
 form = s[[1]]
 
@@ -70,5 +70,34 @@ form[[1,1]] == form[[2,1]]
 (* WRONG: convinced C[2] is 0 *)
 
 s2 = form[[1,1]] == form[[2,1]] /. C[2] -> 0
+
+(* so trying ndsolve... *)
+
+sol[d_] := sol[d] = 
+NDSolve[{x[0] == d, x'[0] == 0, x''[t] == -x[t]^-2}, x, {t,0,10^6}]
+
+col[d_] := sol[d][[1,1,2,1,1,2]]
+
+tab = Table[{d,col[d]},{d,2,1000}]
+
+FindFit[tab, x^a, {a}, x]
+
+Plot[{x^1.51575, col[x]}, {x,2,1000}]
+
+Plot[Log[col[d]]/Log[d],{d,0,100}]
+
+Plot[Log[col[d]]/Log[d],{d,0,10000}]
+
+Solve[D[x^n,x,x] == (x^n)^-2,n]
+
+NSolve[D[x^n,x,x] == (x^n)^-2 /. x -> 10 ,n]
+
+Plot[{D[x^n,x,x]-(x^n)^-2} /. x->10,{n,0,2}]
+
+FindRoot[D[x^n,x,x] == -(x^n)^-2 /. x -> 10 ,{n,-2,2}]
+
+
+
+(* coll[d_] := FindRoot[sol[d][[1,1,2]][t]==0, {t,0,500}][[1,2]] *)
 
 
