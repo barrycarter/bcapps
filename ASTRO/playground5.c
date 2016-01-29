@@ -7,10 +7,22 @@
 
 int main( int argc, char **argv ) {
 
-  char arch[100], type[100];
+  SPICEDOUBLE_CELL(result, 4);
+  SpiceDouble beg, end;
+  SpiceInt count, i;
 
-  getfat_c("/home/barrycarter/SPICE/KERNELS/jup310.bsp", 100, 100, arch, type);
-  printf("%s %s\n",arch,type);
+  //  char arch[100], type[100];
+  //  getfat_c("/home/barrycarter/SPICE/KERNELS/jup310.bsp", 100, 100, arch, type);
+  //  printf("%s %s\n",arch,type);
+
+  spkcov_c ("/home/barrycarter/SPICE/KERNELS/jup310.bsp", 502, &result);
+
+  count = wncard_c(&result); 
+
+  for (i=0; i<count; i++) {
+    wnfetd_c(&result,i,&beg,&end);
+    printf("min %f %f\n",et2jd(beg),et2jd(end));
+  }
 
   return 0;
 }
