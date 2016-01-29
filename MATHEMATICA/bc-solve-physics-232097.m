@@ -76,9 +76,35 @@ s2 = form[[1,1]] == form[[2,1]] /. C[2] -> 0
 sol[d_] := sol[d] = 
 NDSolve[{x[0] == d, x'[0] == 0, x''[t] == -x[t]^-2}, x, {t,0,10^6}]
 
+plot[d_] := Plot[sol[d][[1,1,2]][t], {t,0,sol[d][[1,1,2,1,1,2]]}]
+
+Plot[4-sol[4][[1,1,2]][t], {t,0,sol[4][[1,1,2,1,1,2]]}]
+
+(* compare 50 to 5 *)
+
+Plot[sol[50][[1,1,2]][t], {t,0,sol[50][[1,1,2,1,1,2]]}]
+Plot[sol[5][[1,1,2]][t], {t,0,sol[5][[1,1,2,1,1,2]]}]
+
+scale = sol[50][[1,1,2,1,1,2]]/sol[5][[1,1,2,1,1,2]]
+Plot[10*sol[5][[1,1,2]][t/scale], {t,0,sol[50][[1,1,2,1,1,2]]}]
+
+Plot[{10*sol[5][[1,1,2]][t/scale], sol[50][[1,1,2]][t]},
+{t,0,sol[50][[1,1,2,1,1,2]]}]
+
+Plot[{10*sol[5][[1,1,2]][t/scale]- sol[50][[1,1,2]][t]},
+{t,0,sol[50][[1,1,2,1,1,2]]}]
+
 col[d_] := sol[d][[1,1,2,1,1,2]]
 
 tab = Table[{d,col[d]},{d,2,1000}]
+
+powers = Table[x^i,{i,0,10}]
+
+g[x_] = Fit[tab,powers,x]
+
+tabg = Table[{x,g[x]},{x,2,1000}]
+
+diffs = Table[{x,tabg[[x,2]]-tab[[x,2]]}, {x,1,999}]
 
 FindFit[tab, x^a, {a}, x]
 
