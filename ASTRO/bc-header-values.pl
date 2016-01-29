@@ -22,7 +22,7 @@ my($vals) = $1;
 my(@vals) = split(/\s+/, $vals);
 map(s/D/*10^/g, @vals);
 
-for $i (0..$#names) {print "$names[$i]=$vals[$i];\n";}
+for $i (0..$#names) {print "$names[$i]=Rationalize[$vals[$i],0];\n";}
 
 # TODO: this computes EMB, but not E or M directly
 my(@planets) = (0..9);
