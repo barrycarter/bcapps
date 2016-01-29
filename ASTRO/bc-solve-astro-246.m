@@ -41,10 +41,16 @@ ang[AstronomicalData[s, "Periapsis"], AstronomicalData[s, "Diameter"]]
 (* doing this as a module to catch Missing[NotAvailable] which messes
 up Sort *)
 
-angmoonsun[s_, p_] := Module[{},
- Table[data[x,y] = AstronomicalData[x,y], {x, {"Sun",p,s}},  
- {y, {"Periapsis","Apoapsis","Diameter"}}];
- Print[data[s,"Diameter"]];
+angmoonsun[s_, p_] := Module[{data,t,b,mb,ms,sb,ss},
+ t = Flatten[Table[data[x,y] = AstronomicalData[x,y], {x, {"Sun",p,s}},  
+ {y, {"Periapsis","Apoapsis","Diameter"}}]];
+ b = Length[Select[t, !NumericQ[#] &]];
+ If[b>0,Return[{}]];
+ mb = ang[data[s,"Periapsis"], data[s,"Diameter"]];
+ ms = ang[data[s,"Apoapsis"], data[s,"Diameter"]];
+ sb = ang[data[p,"Periapsis"], data["Sun","Diameter"]];
+ ss = ang[data[p,"Apoapsis"], data["Sun","Diameter"]];
+ Return[{s,p, ms/sb, mb/ss}];
 ]
 
 plans2 = Union[AstronomicalData["Planet"], {"Pluto"}]
