@@ -46,3 +46,4 @@ angdiam[a1_,a2_] := Module[{dist},
  Return[Sort[{2*ArcTan[diam/2/dist[[1]]],2*ArcTan[diam/2/dist[[2]]]}]];
 ]
 
+
