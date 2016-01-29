@@ -45,7 +45,7 @@ angmoonsun[s_, p_] := Module[{data,t,b,mb,ms,sb,ss},
  t = Flatten[Table[data[x,y] = AstronomicalData[x,y], {x, {"Sun",p,s}},  
  {y, {"Periapsis","Apoapsis","Diameter"}}]];
  b = Length[Select[t, !NumericQ[#] &]];
- If[b>0,Return[{}]];
+ If[b>0,Return[{s,p,0,0}]];
  mb = ang[data[s,"Periapsis"], data[s,"Diameter"]];
  ms = ang[data[s,"Apoapsis"], data[s,"Diameter"]];
  sb = ang[data[p,"Periapsis"], data["Sun","Diameter"]];
@@ -53,11 +53,28 @@ angmoonsun[s_, p_] := Module[{data,t,b,mb,ms,sb,ss},
  Return[{s,p, ms/sb, mb/ss}];
 ]
 
+angplansun[s_, p_] := Module[{data,t,b,pb,ps,sb,ss},
+ t = Flatten[Table[data[x,y] = AstronomicalData[x,y], {x, {"Sun",p,s}},  
+ {y, {"Periapsis","Apoapsis","Diameter"}}]];
+ b = Length[Select[t, !NumericQ[#] &]];
+ If[b>0,Return[{s,p,0,0}]];
+ pb = ang[data[s,"Periapsis"], data[p,"Diameter"]];
+ ps = ang[data[s,"Apoapsis"], data[p,"Diameter"]];
+ sb = ang[data[p,"Periapsis"]-data[s,"Apoapsis"], data["Sun","Diameter"]];
+ ss = ang[data[p,"Apoapsis"]+data[s,"Apoapsis"], data["Sun","Diameter"]];
+ Return[{s,p, ps/sb, pb/ss}];
+]
+
 plans2 = Union[AstronomicalData["Planet"], {"Pluto"}]
 
-t2 = Sort[Flatten[Table[{p, s, angmoon2[s,p]/angsun2[p]}, 
- {p, plans2},
- {s, AstronomicalData[p, "Satellites"]}],1], #1[[3,1]] > #2[[3,1]] &]
+t2=Table[angmoonsun[s,p], {p, plans2}, {s, AstronomicalData[p, "Satellites"]}]
+
+t3=Flatten[t2,1]
+
+t4 = Sort[t3, #1[[3]] > #2[[3]] &];
+
+t5=Table[angplansun[s,p], {p, plans2}, {s, AstronomicalData[p, "Satellites"]}]
+
 
 t2 = Flatten[Table[{p, s, angmoon2[s,p]/angsun2[p]}, {p, plans2}, 
  {s, AstronomicalData[p, "Satellites"]}], 1]
