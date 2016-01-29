@@ -7,15 +7,26 @@
 
 int main( int argc, char **argv ) {
 
-  SPICEDOUBLE_CELL(result, 4);
+  SPICEDOUBLE_CELL(result, 20000);
+  SPICEDOUBLE_CELL(cnfine, 2);
+  SpiceInt i, count;
   SpiceDouble beg, end;
-  SpiceInt count, i;
 
-  //  char arch[100], type[100];
-  //  getfat_c("/home/barrycarter/SPICE/KERNELS/jup310.bsp", 100, 100, arch, type);
-  //  printf("%s %s\n",arch,type);
+  furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
-  spkcov_c ("/home/barrycarter/SPICE/KERNELS/jup310.bsp", 502, &result);
+  // these ET limits for jup310.bsp should be consistent
+  spkcov_c ("/home/barrycarter/SPICE/KERNELS/jup310.bsp", 502, &cnfine);
+
+  printf("SIZE: %d\n", card_c(&cnfine));
+  printf("%f\n", SPICE_CELL_ELEM_D(&cnfine,0));
+  printf("%f\n", SPICE_CELL_ELEM_D(&cnfine,1));
+  printf("%f\n", SPICE_CELL_ELEM_D(&cnfine,2));
+  printf("%f\n", SPICE_CELL_ELEM_D(&cnfine,3));
+  printf("%f\n", SPICE_CELL_ELEM_D(&cnfine,4));
+  printf("%f\n", SPICE_CELL_ELEM_D(&cnfine,5));
+
+  gfoclt_c("ANY", "502", "ELLIPSOID", "IAU_EUROPA", "10", "ELLIPSOID", 
+	   "IAU_SUN", "CN", "501", 60, &cnfine, &result);
 
   count = wncard_c(&result); 
 
