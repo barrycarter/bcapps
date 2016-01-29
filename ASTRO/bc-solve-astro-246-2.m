@@ -46,4 +46,11 @@ angdiam[a1_,a2_] := Module[{dist},
  Return[Sort[{2*ArcTan[diam/2/dist[[1]]],2*ArcTan[diam/2/dist[[2]]]}]];
 ]
 
+(* try for Jupiter *)
+
+sats = AstronomicalData["Jupiter", "Satellites"];
+
+t0 = Flatten[Table[Flatten[{i,j,angdiam[i,j]},1], {i,sats},{j,sats}],1]
+
+t1 = Sort[t0, #1[[3]] > #2[[3]] &];
 
