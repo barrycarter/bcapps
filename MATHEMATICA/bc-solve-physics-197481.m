@@ -102,8 +102,11 @@ tend = Solve[angle[Jupiter][t]==360+angle[Saturn][t],t][[1,1,2]]
 pp[t_] := ParametricPlot[{pos[Jupiter][u], pos[Saturn][u]}, {u,t0,t0+t},
  PlotStyle -> {data[Jupiter][color], data[Saturn][color]}]
 
-g0[t_] = Graphics[{
- Text[Style["Elapsed Time: "<>ToString[t]<>" years","Large"],{0,-9}],
+g0[t_] = Graphics[{FontSize[12],
+ If[t<data[Jupiter][period], 
+ Text[Style["Jupiter gains on Saturn"],{-9,-9}], 
+ Text[Style["Jupiter completes one orbit, but hasn't caught up to Saturn yet"],
+ {-9,-9}]],
  Line[{{0,0}, pos[Saturn][t0]}], 
  Dashed, Line[{{0,0}, pos[Saturn][tend]}],
  PointSize[0.05],
@@ -115,7 +118,7 @@ g1[t_] := Show[{g0[t],pp[t]}, Axes -> True, Ticks -> False,
  PlotRange -> {{-data[Saturn][distance]-.5, data[Saturn][distance]+.5},
   {-data[Saturn][distance]-.5, data[Saturn][distance]+.5}}]
 
-t1 = Table[g1[t],{t,-0.50,tend-t0,0.15}];
+(* t1 = Table[g1[t],{t,-0.50,tend-t0,0.15}]; *)
 
 t1 = Table[g1[t],{t,-0.01,data[Saturn][period],0.15}];
 
