@@ -17,13 +17,12 @@ int main( int argc, char **argv ) {
   // these ET limits for jup310.bsp should be consistent
   spkcov_c ("/home/barrycarter/SPICE/KERNELS/jup310.bsp", 502, &cnfine);
 
-  printf("SIZE: %d\n", card_c(&cnfine));
+  // refine slightly to avoid corner case errors
+  SPICE_CELL_SET_D(SPICE_CELL_ELEM_D(&cnfine,0)+86400, 0, &cnfine);
+  SPICE_CELL_SET_D(SPICE_CELL_ELEM_D(&cnfine,1)-86400, 1, &cnfine);
+
   printf("%f\n", SPICE_CELL_ELEM_D(&cnfine,0));
   printf("%f\n", SPICE_CELL_ELEM_D(&cnfine,1));
-  printf("%f\n", SPICE_CELL_ELEM_D(&cnfine,2));
-  printf("%f\n", SPICE_CELL_ELEM_D(&cnfine,3));
-  printf("%f\n", SPICE_CELL_ELEM_D(&cnfine,4));
-  printf("%f\n", SPICE_CELL_ELEM_D(&cnfine,5));
 
   gfoclt_c("ANY", "502", "ELLIPSOID", "IAU_EUROPA", "10", "ELLIPSOID", 
 	   "IAU_SUN", "CN", "501", 60, &cnfine, &result);
