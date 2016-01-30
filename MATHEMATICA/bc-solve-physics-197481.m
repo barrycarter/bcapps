@@ -3,8 +3,7 @@
 This is an interesting question. I've previously computed planetary
 conjunctions *as viewed from Earth*:
 https://astronomy.stackexchange.com/questions/11141 but not as viewed
-from the Sun, or from an observer looking down at the solar system and
-looking for straightish lines.
+from the Sun.
 
 It turns out this is much easier to compute, since the planets follow
 nearly circular orbits around the Sun.
@@ -73,24 +72,63 @@ deg/Cy, deg, deg/Cy, deg, deg/Cy, deg, deg/Cy
 1 = name
 2 = distance (AU)
 5 = longitude at epoch (2000-01-01 12:00:00?) (degrees)
-11 = increase in longitude per day (degrees)
+11 = increase in longitude per century (degrees)
+
+For consistency, NOT using AstronomicalData below
 
 *)
 
-Table[angle[i[[1]]][t_] = Mod[i[[5]]+t*i[[11]]/36525,360], {i,plans}];
+Table[{
+data[i[[1]]][period] = 36525/i[[11]],
+data[i[[1]]][sangle] = i[[5]],
+data[i[[1]]][distance] = i[[2]]
+}, {i,plans}]
 
-Table[
-pos[i[[1]]][t_] = i[[2]]*{Cos[angle[i[[1]]][t]*Degree], 
- Sin[angle[i[[1]]][t]*Degree]}, {i,plans}]
+pos[i_][t_] = data[i][distance]*
+              {Cos[data[i][sangle]*Degree + 2*Pi*t/data[i][period]],
+	      Sin[data[i][sangle]*Degree + 2*Pi*t/data[i][period]]};
 
-Solve[d/p1 == d/p2+1, d] (* p1*p2/(p1-p2) *)
+(* TODO: consider changing these *)
 
-Table[period[i[[1]]] = AstronomicalData[ToString[i[[1]]], "OrbitPeriodYears"],
- {i,plans}];
+data[Saturn][color] = RGBColor[{0.5,0.5,0}]
+data[Jupiter][color] = RGBColor[{0,1,0}]
 
-period[EMBary] = AstronomicalData["Earth", "OrbitPeriodYears"];
+angle[i_][t_] = data[i][sangle] + t*360/data[i][period]
 
-t = Table[period[i[[1]]]*period[j[[1]]]/
- (period[i[[1]]]-period[j[[1]]]), {i,plans}, {j,plans}]
+t0 = FindInstance[angle[Jupiter][t] == angle[Saturn][t], t][[1,1,2]]
 
-Animate[x^2,{x,0,1}]
+tend = Solve[angle[Jupiter][t]==360+angle[Saturn][t],t][[1,1,2]]
+
+pp[t_] := ParametricPlot[{pos[Jupiter][u], pos[Saturn][u]}, {u,t0,t0+t},
+ PlotStyle -> {data[Jupiter][color], data[Saturn][color]}]
+
+g0[t_] = Graphics[{
+ Line[{{0,0}, pos[Saturn][t0]}], 
+ Dashed, Line[{{0,0}, pos[Saturn][tend]}],
+ PointSize[0.05],
+ data[Jupiter][color], Point[pos[Jupiter][t0+t]],
+ data[Saturn][color], Point[pos[Saturn][t0+t]]
+}];
+
+g1[t_] := Show[{g0[t],pp[t]}, AxesOrigin -> {0,0}, Axes -> True, 
+ PlotRange -> {{-data[Saturn][distance], data[Saturn][distance]},
+  {-data[Saturn][distance], data[Saturn][distance]}}]
+
+t1 = Table[g1[t],{t,-0.50,tend-t0,0.15}];
+
+t1 = Table[g1[t],{t,-0.01,data[Saturn][period],0.15}];
+
+Export["/tmp/orbits.gif",t1]
+
+ParametricPlot[{pos[Jupiter][t], pos[Saturn][t]}, {t,0,data[Jupiter][period]}]
+
+ParametricPlot[{pos[Jupiter][t], pos[Saturn][t]}, {t,0,6}]
+
+(* 47 degrees = arb starting lineup *)
+
+
+Show[jup[5], AxesOrigin -> {0,0}, Axes -> True]
+
+
+
+
