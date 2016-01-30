@@ -14,18 +14,23 @@ int main( int argc, char **argv ) {
 
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
-  // these ET limits for jup310.bsp should be consistent
+  // these ET limits for jupxxx.bsp should be consistent
   spkcov_c ("/home/barrycarter/SPICE/KERNELS/jup310.bsp", 502, &cnfine);
 
   // refine slightly to avoid corner case errors
   SPICE_CELL_SET_D(SPICE_CELL_ELEM_D(&cnfine,0)+86400, 0, &cnfine);
   SPICE_CELL_SET_D(SPICE_CELL_ELEM_D(&cnfine,1)-86400, 1, &cnfine);
 
+  // testing only
+  SPICE_CELL_SET_D(year2et(2010), 0, &cnfine);
+  SPICE_CELL_SET_D(year2et(2020), 1, &cnfine);
+  
+
   printf("%f\n", SPICE_CELL_ELEM_D(&cnfine,0));
   printf("%f\n", SPICE_CELL_ELEM_D(&cnfine,1));
 
-  gfoclt_c("ANY", "502", "ELLIPSOID", "IAU_EUROPA", "10", "ELLIPSOID", 
-	   "IAU_SUN", "CN", "501", 60, &cnfine, &result);
+  gfoclt_c("FULL", "EUROPA", "ELLIPSOID", "IAU_EUROPA", "SUN", "ELLIPSOID", 
+	   "IAU_SUN", "CN", "IO", 360, &cnfine, &result);
 
   count = wncard_c(&result); 
 

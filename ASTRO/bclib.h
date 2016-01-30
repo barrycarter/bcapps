@@ -14,6 +14,9 @@
 #include "SpiceUsr.h"
 #include "SpiceZfc.h"
 
+// this routine *very roughly* converts years to to et for testing only
+double year2et(double d) {return (d-2000)*31556952;}
+
 // TODO: these are wrong because I don't account for TDB-UTC (using
 // deltet_c) like I should (but now fixing for unix conversions)
 
