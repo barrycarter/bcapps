@@ -90,7 +90,7 @@ pos[i_][t_] = data[i][distance]*
 
 (* TODO: consider changing these *)
 
-data[Saturn][color] = RGBColor[{0.5,0.5,0}]
+data[Saturn][color] = RGBColor[{0.9,0.9,0}]
 data[Jupiter][color] = RGBColor[{0,1,0}]
 
 angle[i_][t_] = data[i][sangle] + t*360/data[i][period]
@@ -103,6 +103,7 @@ pp[t_] := ParametricPlot[{pos[Jupiter][u], pos[Saturn][u]}, {u,t0,t0+t},
  PlotStyle -> {data[Jupiter][color], data[Saturn][color]}]
 
 g0[t_] = Graphics[{
+ Text[Style["Elapsed Time: "<>ToString[t]<>" years","Large"],{0,-9}],
  Line[{{0,0}, pos[Saturn][t0]}], 
  Dashed, Line[{{0,0}, pos[Saturn][tend]}],
  PointSize[0.05],
@@ -110,9 +111,9 @@ g0[t_] = Graphics[{
  data[Saturn][color], Point[pos[Saturn][t0+t]]
 }];
 
-g1[t_] := Show[{g0[t],pp[t]}, AxesOrigin -> {0,0}, Axes -> True, 
- PlotRange -> {{-data[Saturn][distance], data[Saturn][distance]},
-  {-data[Saturn][distance], data[Saturn][distance]}}]
+g1[t_] := Show[{g0[t],pp[t]}, Axes -> True, Ticks -> False,
+ PlotRange -> {{-data[Saturn][distance]-.5, data[Saturn][distance]+.5},
+  {-data[Saturn][distance]-.5, data[Saturn][distance]+.5}}]
 
 t1 = Table[g1[t],{t,-0.50,tend-t0,0.15}];
 
