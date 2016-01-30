@@ -102,11 +102,7 @@ tend = Solve[angle[Jupiter][t]==360+angle[Saturn][t],t][[1,1,2]]
 pp[t_] := ParametricPlot[{pos[Jupiter][u], pos[Saturn][u]}, {u,t0,t0+t},
  PlotStyle -> {data[Jupiter][color], data[Saturn][color]}]
 
-g0[t_] = Graphics[{FontSize[12],
- If[t<data[Jupiter][period], 
- Text[Style["Jupiter gains on Saturn"],{-9,-9}], 
- Text[Style["Jupiter completes one orbit, but hasn't caught up to Saturn yet"],
- {-9,-9}]],
+g0[t_] = Graphics[{
  Line[{{0,0}, pos[Saturn][t0]}], 
  Dashed, Line[{{0,0}, pos[Saturn][tend]}],
  PointSize[0.05],
@@ -114,15 +110,27 @@ g0[t_] = Graphics[{FontSize[12],
  data[Saturn][color], Point[pos[Saturn][t0+t]]
 }];
 
-g1[t_] := Show[{g0[t],pp[t]}, Axes -> True, Ticks -> False,
+text[t_] := Graphics[{Text[Style["Years: "<>ToString[t], Large], 
+ Scaled[{.9,.9}]]}];
+
+g1[t_] := Show[{g0[t],pp[t],text[t]}, Axes -> True, Ticks -> False,
  PlotRange -> {{-data[Saturn][distance]-.5, data[Saturn][distance]+.5},
   {-data[Saturn][distance]-.5, data[Saturn][distance]+.5}}]
+
+g1[5]
+showit2
+
+showit2 := Module[{file}, file = StringJoin["/tmp/math", 
+       ToString[RunThrough["date +%Y%m%d%H%M%S", ""]], ".jpg"]; 
+     Export[file, %, ImageSize -> {360, 360}]; 
+     Run[StringJoin["display ", file, "&"]]; ]
+
 
 (* t1 = Table[g1[t],{t,-0.50,tend-t0,0.15}]; *)
 
 t1 = Table[g1[t],{t,-0.01,data[Saturn][period],0.15}];
 
-Export["/tmp/orbits.gif",t1]
+Export["/tmp/orbits.gif",t1, ImageSize -> {800,600}]
 
 ParametricPlot[{pos[Jupiter][t], pos[Saturn][t]}, {t,0,data[Jupiter][period]}]
 
