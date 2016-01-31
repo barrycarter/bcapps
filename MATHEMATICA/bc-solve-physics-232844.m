@@ -22,16 +22,17 @@ our your initial eastward velocity.
 A plane as powerful as this, however, could probably travel anywhere
 in the world rapidly, without help from the Earth's rotation.
 
+For a slightly more realistic answer, consider my question/answer to
+http://space.stackexchange.com/questions/13815/
 
 
-
-
+TODO: how far and when it lines up
 
 TODO: launch and land per other question
 
 TODO: non infinite boost speed
 
-TODO: mention this progs URL
+TODO: mention this progs URL and others since I changed it
 
 *)
 

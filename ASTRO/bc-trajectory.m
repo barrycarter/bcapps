@@ -334,3 +334,5 @@ Notes:
 
   - Longer-term, I'd like to work out first-order approximations to
   the quantities above.
+
+ *)
