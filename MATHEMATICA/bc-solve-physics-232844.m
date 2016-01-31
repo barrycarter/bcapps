@@ -42,6 +42,8 @@ eer = 6378.137;
 dist = 4000*1.609344;
 hi = 300*1.609344;
 sidday = 86164.1
+g = 9.8*10^-3
+
 
 (* the start and end points at time t, given in seconds *)
 
@@ -71,14 +73,32 @@ gr[t_] := Graphics[{earth,points[t],craft[t],lines[t], text[t]},
 gr[360*25]
 showit
 
-(* TODO: decrease step for final post *)
-
 tab = Table[gr[t],{t,0,t0+7200,360}];
 
 Export["/tmp/launch.gif", tab, ImageSize -> {600,400}]
 
-conds = {
- x[0] == 0, y[0] == 0, y''[0] == -9.8, x''[0] == 1000, x'[0] == 0, 
- y'[0] == 10};
+(* using bc-trajectory.m *)
 
-NDSolve[conds,{x,y},t]
+v0 = 9.25;
+
+test = NDSolve[{
+ x[0] == 0, y[0] == eer,
+ x'[0] == st'[0][[1]], y'[0] ==  v0,
+ x''[t] == -g*((eer^2*x[t])/(x[t]^2 + y[t]^2)^(3/2)),
+ y''[t] == -g*((eer^2*y[t])/(x[t]^2 + y[t]^2)^(3/2))
+}, {x,y}, {t,0,4*v0/g}]
+
+Plot[test[[1,2,2]][t]-eer, {t,0,86400/6.}]
+showit
+
+ParametricPlot[{test[[1,1,2]][t], test[[1,2,2]][t]}, {t,0,4*v0/g}]
+showit
+
+
+
+(* magnitude of gravity at x[t], y[t] *)
+
+mag = g*eer^2/(x^2+y^2)
+
+magx = mag*x/Sqrt[x^2+y^2]
+
