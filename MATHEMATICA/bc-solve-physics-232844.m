@@ -44,7 +44,6 @@ hi = 300*1.609344;
 sidday = 86164.1
 g = 9.8*10^-3
 
-
 (* the start and end points at time t, given in seconds *)
 
 st[t_] = eer*{Sin[2*Pi*t/sidday],Cos[2*Pi*t/sidday]};
@@ -53,7 +52,7 @@ cr[t_] = {t*st'[0][[1]], eer+hi}
 
 (* actual time of being over target *)
 
-t0 = 28911
+t0 = 28911;
 
 points[t_] := {PointSize[0.02], RGBColor[{1,0,0}], Point[st[t]], 
  RGBColor[{0,0,1}], Point[en[t]]};
@@ -70,6 +69,10 @@ text[t_] := {Text[Style[ToString[N[t/3600]]<>" hours", "Large"],
 gr[t_] := Graphics[{earth,points[t],craft[t],lines[t], text[t]}, 
  PlotRange -> {{-eer-300,17000}, {-eer-300,eer+hi+300}}]
 
+(*
+
+temporarily commenting out so I can -initfile
+
 gr[360*25]
 showit
 
@@ -77,28 +80,33 @@ tab = Table[gr[t],{t,0,t0+7200,360}];
 
 Export["/tmp/launch.gif", tab, ImageSize -> {600,400}]
 
-(* using bc-trajectory.m *)
+*)
 
-v0 = 9.25;
+v0 = 9.8;
 
-test = NDSolve[{
+res = NDSolve[{
  x[0] == 0, y[0] == eer,
  x'[0] == st'[0][[1]], y'[0] ==  v0,
  x''[t] == -g*((eer^2*x[t])/(x[t]^2 + y[t]^2)^(3/2)),
  y''[t] == -g*((eer^2*y[t])/(x[t]^2 + y[t]^2)^(3/2))
-}, {x,y}, {t,0,4*v0/g}]
+}, {x,y}, {t,0,50*v0/g}]
 
-Plot[test[[1,2,2]][t]-eer, {t,0,86400/6.}]
+rc[t_] = {res[[1,1,2]][t], res[[1,2,2]][t]};
+
+FindRoot[rc[t][[2]] == eer, {t,14000}]
+
+Plot[rc[t][[2]] - eer, {t,0,20000}]
+
+rocket[t_] := {PointSize[0.02], RGBColor[{0,0,0}], Point[rc[t]]}
+
+Plot[If[Norm[rc[t]]>eer, Norm[rc[t]-en[t]], Null],{t,0,20000}]
 showit
 
-ParametricPlot[{test[[1,1,2]][t], test[[1,2,2]][t]}, {t,0,4*v0/g}]
-showit
+gr[t_] := Graphics[{earth,points[t],rocket[t],lines[t]}, 
+ PlotRange -> {{-eer-300,eer+300}, {-eer-300,21000+eer}}]
 
+tab = Table[gr[t],{t,0,20000,60}];
 
+Export["/tmp/launch2.gif", tab, ImageSize -> {600,400}]
 
-(* magnitude of gravity at x[t], y[t] *)
-
-mag = g*eer^2/(x^2+y^2)
-
-magx = mag*x/Sqrt[x^2+y^2]
-
+(* 13840.8s is about how long we want it in the air *)
