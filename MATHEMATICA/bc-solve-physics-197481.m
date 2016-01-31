@@ -12,9 +12,21 @@ TODO: note significantly more accurate calculations with CSPICE
 
 TODO: note that I've ignored dwarf planets except for Pluto
 
+TODO: ecliptic latitude (and show "bad" conjunctions?)
+
+TODO: snapshots from orrery
+
+TODO: 3+ planets (including specific n years mention in question)
+
+TODO: inner planets
+
+TODO: does Bode's "law" help?
+
 TODO: note EMBary vs E
 
 TODO: does R^3/T^2 help any? (I don't think so, but...)
+
+TODO: mention this program
 
 *)
 
@@ -103,7 +115,12 @@ pp[t_] := ParametricPlot[{pos[Jupiter][u], pos[Saturn][u]}, {u,t0,t0+t},
  PlotStyle -> {data[Jupiter][color], data[Saturn][color]}]
 
 g0[t_] = Graphics[{
- Line[{{0,0}, pos[Saturn][t0]}], 
+ Line[{{0,0}, pos[Saturn][t0]}],
+ data[Saturn][color], 
+ Line[{{0,0}, pos[Saturn][t0+t]}],
+ data[Jupiter][color], 
+ Line[{{0,0}, pos[Jupiter][t0+t]}],
+ RGBColor[{0,0,0}],
  Dashed, Line[{{0,0}, pos[Saturn][tend]}],
  PointSize[0.05],
  data[Jupiter][color], Point[pos[Jupiter][t0+t]],
@@ -111,26 +128,24 @@ g0[t_] = Graphics[{
 }];
 
 text[t_] := Graphics[{Text[Style["Years: "<>ToString[t], Large], 
- Scaled[{.9,.9}]]}];
+ Scaled[{.84,.03}]]}];
 
 g1[t_] := Show[{g0[t],pp[t],text[t]}, Axes -> True, Ticks -> False,
  PlotRange -> {{-data[Saturn][distance]-.5, data[Saturn][distance]+.5},
   {-data[Saturn][distance]-.5, data[Saturn][distance]+.5}}]
 
-g1[5]
-showit2
-
 showit2 := Module[{file}, file = StringJoin["/tmp/math", 
        ToString[RunThrough["date +%Y%m%d%H%M%S", ""]], ".jpg"]; 
-     Export[file, %, ImageSize -> {360, 360}]; 
+     Export[file, %, ImageSize -> {600, 400}]; 
      Run[StringJoin["display ", file, "&"]]; ]
-
+g1[5]
+showit2
 
 (* t1 = Table[g1[t],{t,-0.50,tend-t0,0.15}]; *)
 
 t1 = Table[g1[t],{t,-0.01,data[Saturn][period],0.15}];
 
-Export["/tmp/orbits.gif",t1, ImageSize -> {800,600}]
+Export["/tmp/orbits.gif",t1, ImageSize -> {600,400}]
 
 ParametricPlot[{pos[Jupiter][t], pos[Saturn][t]}, {t,0,data[Jupiter][period]}]
 

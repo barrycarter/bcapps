@@ -1,0 +1,57 @@
+# this is presumably the complement of solved.txt, but I update it
+# manually so not necessarily
+
+# cardinality
+bc-solve-mathematica-104993.m
+
+# want to use chi-squared distribution here too
+bc-solve-stats-191040.m
+
+# may have inconsistent starting conditions
+bc-solve-math-1626286.m
+
+# gravity problem
+bc-solve-physics-232097.m
+
+# status unknown (loaded die rolls)
+bc-solve-math-1615460-2.m
+
+# tilted ellipse
+bc-solve-math-1615072.m
+
+# physicals constants, want to do more here
+bc-solve-mathematica-104178.m
+bc-solve-mathematica-104178.pl
+
+# odd geopath
+bc-solve-stats-191220.pl
+
+# Bayesian marbles (want to do more or at least cleanup)
+bc-solve-stats-190994.txt
+
+# orbital payload launch (my solution non-optimal)
+bc-solve-astro-12981.m
+
+# status unknown (ISS vs moon)
+bc-solve-overflow-33944589.c
+
+# moon at horizon
+bc-solve-earthscience-7281.m
+
+# satellite/satellite occultations
+bc-solve-astro-246-2.m
+
+# similar to above, want to improve by using ranges
+bc-solve-astro-246.m
+bc-solve-astro-246.txt.bz2
+
+# trajectory
+bc-solve-physics-230221.m
+
+# need Mathematica 10 (errors in AstronomicalData)
+bc-solve-astro-13126.m
+
+# gas giant alignment, exact and inexact versions
+bc-solve-physics-197481.c
+bc-solve-physics-197481.m
+

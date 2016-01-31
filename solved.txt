@@ -1,0 +1,25 @@
+# these are the Stack Exchange problems I consider "solved" in the
+# sense that I don't expect to make any more effort on them; this file
+# allows me to 'grep -v' when looking for unsolved problems
+
+# abandoned
+bc-solve-mathematica-104830.m
+bc-solve-math-1624385.m
+bc-solve-codereview-118091.c
+bc-solve-re-11804.pl
+
+# finished
+bc-solve-math-1615460.m
+bc-solve-astro-10979.m
+bc-solve-money-57938.m
+bc-solve-codereview-116985.java
+bc-solve-astro-13248.py
+bc-solve-astro-13227.c
+bc-solve-astro-13008.c
+bc-solve-astro-12824.c
+bc-solve-astro-12940.c
+bc-solve-astro-13115.m
+bc-solve-astro-228542.m
+bc-solve-astro-13396.m
+bc-solve-astro-5894.c
+
