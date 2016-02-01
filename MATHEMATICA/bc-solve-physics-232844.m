@@ -80,6 +80,8 @@ tab = Table[gr[t],{t,0,t0+7200,360}];
 
 Export["/tmp/launch.gif", tab, ImageSize -> {600,400}]
 
+8.92635 appears to be the "magic number"
+
 *)
 
 (* NOTE: this is a hideously ugly function for one time use only *)
@@ -93,26 +95,48 @@ solve[v0_] := Module[{res}, res = NDSolve[{
   Return[{res[[1,1,2]][#],res[[1,2,2]][#]} &];
 ]
 
-ParametricPlot[solve[9.8][[
-
 distance[v0_] := Module[{res,rc,root},
  res = solve[v0]; 
- rc[t_] = {res[[1,1,2]][t], res[[1,2,2]][t]};
+ rc[t_] = res[t];
  root = t /. FindRoot[rc[t][[2]] == eer, {t,16000}];
 
  (* return the vector angle between me and the target *)
  (* TODO: convert to miles to satisfy original user *)
- Return[{root,VectorAngle[rc[root],en[root]]}];
+ Return[{root,eer/1.609344*VectorAngle[rc[root],en[root]]}];
 ];
 
-tab1245 = Table[{v0, distance[v0]}, {v0,9,10,0.1}]
+tab1245 = Table[{v0, distance[v0][[2]]}, {v0,8.9,9.1,1/100}]
+
+ListPlot[tab1245, PlotJoined->True]
+
+tab1245 = Table[{v0, distance[v0][[2]]}, {v0,8.92,8.94,1/1000}]
+ListPlot[tab1245]
+showit
+
+tab1245 = Table[{v0, distance[v0][[2]]}, {v0,8.9255,8.9265,1/10000}]
+ListPlot[tab1245]
+showit
+
+ftomin[t_] := distance[t][[2]];
+
+Plot[ftomin[u],{u,8.9255,8.9265}]
+
+Plot[ftomin[u],{u,8.8,9.0}]
+
+Minimize[ftomin[u], {u,8.9255,8.9265}]
+
+ternary[8.92, 8.94, ftomin, 0.00001]
+
+
+ParametricPlot[solve[9.8][u], {u,0,20000}]
 
 (*
 
 
 Plot[rc[t][[2]] - eer, {t,0,20000}]
 
-rocket[t_] := {PointSize[0.02], RGBColor[{0,0,0}], Point[rc[t]]}
+rocket[t_] := {PointSize[0.02], RGBColor[{0,0,0}], 
+ Point[solve[8.92635][t]]};
 
 Plot[If[Norm[rc[t]]>eer, Norm[rc[t]-en[t]], Null],{t,0,20000}]
 showit
@@ -120,7 +144,7 @@ showit
 gr[t_] := Graphics[{earth,points[t],rocket[t],lines[t]}, 
  PlotRange -> {{-eer-300,eer+300}, {-eer-300,21000+eer}}]
 
-tab = Table[gr[t],{t,0,20000,60}];
+tab = Table[gr[u],{u,0,20000,60}];
 
 Export["/tmp/launch2.gif", tab, ImageSize -> {600,400}]
 
