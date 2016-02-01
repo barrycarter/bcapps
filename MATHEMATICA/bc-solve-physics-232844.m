@@ -82,18 +82,33 @@ Export["/tmp/launch.gif", tab, ImageSize -> {600,400}]
 
 *)
 
-v0 = 9.8;
+(* NOTE: this is a hideously ugly function for one time use only *)
 
-res = NDSolve[{
- x[0] == 0, y[0] == eer,
- x'[0] == st'[0][[1]], y'[0] ==  v0,
- x''[t] == -g*((eer^2*x[t])/(x[t]^2 + y[t]^2)^(3/2)),
- y''[t] == -g*((eer^2*y[t])/(x[t]^2 + y[t]^2)^(3/2))
-}, {x,y}, {t,0,50*v0/g}]
+solve[v0_] := Module[{res}, res = NDSolve[{
+  x[0] == 0, y[0] == eer,
+  x'[0] == st'[0][[1]], y'[0] ==  v0,
+  x''[t] == -g*((eer^2*x[t])/(x[t]^2 + y[t]^2)^(3/2)),
+  y''[t] == -g*((eer^2*y[t])/(x[t]^2 + y[t]^2)^(3/2))
+  }, {x,y}, {t,0,20000}];
+  Return[{res[[1,1,2]][#],res[[1,2,2]][#]} &];
+]
 
-rc[t_] = {res[[1,1,2]][t], res[[1,2,2]][t]};
+ParametricPlot[solve[9.8][[
 
-FindRoot[rc[t][[2]] == eer, {t,14000}]
+distance[v0_] := Module[{res,rc,root},
+ res = solve[v0]; 
+ rc[t_] = {res[[1,1,2]][t], res[[1,2,2]][t]};
+ root = t /. FindRoot[rc[t][[2]] == eer, {t,16000}];
+
+ (* return the vector angle between me and the target *)
+ (* TODO: convert to miles to satisfy original user *)
+ Return[{root,VectorAngle[rc[root],en[root]]}];
+];
+
+tab1245 = Table[{v0, distance[v0]}, {v0,9,10,0.1}]
+
+(*
+
 
 Plot[rc[t][[2]] - eer, {t,0,20000}]
 
@@ -110,3 +125,5 @@ tab = Table[gr[t],{t,0,20000,60}];
 Export["/tmp/launch2.gif", tab, ImageSize -> {600,400}]
 
 (* 13840.8s is about how long we want it in the air *)
+
+*)

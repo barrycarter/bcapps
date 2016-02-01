@@ -72,6 +72,10 @@ plans = {
 224.09702598, 110.30167986, 0.00449751, 0.00006016, 0.00000501,
 145.18042903, -0.00968827, -0.00809981} }
 
+(* this lets us do exact analysis *)
+
+plans = Rationalize[plans,0]
+
 (* the format above is:
 
 name, a, e, I, L, long.peri., long.node., AU, AU/Cy, rad, rad/Cy, deg,
@@ -99,6 +103,43 @@ data[i[[1]]][distance] = i[[2]]
 pos[i_][t_] = data[i][distance]*
               {Cos[data[i][sangle]*Degree + 2*Pi*t/data[i][period]],
 	      Sin[data[i][sangle]*Degree + 2*Pi*t/data[i][period]]};
+
+(* angle, in degrees, corrected for 0-360 *)
+
+angle[i_][t_] = Mod[data[i][sangle] + t*360/data[i][period],360]
+
+Plot[angle[Jupiter][t],{t,0,100}]
+
+(* distance between two angles in degrees, assuming both are 0 < x <
+360 [over 180 = less than 180] *)
+
+angdist[a1_,a2_] = If[Abs[a1-a2]<180, Abs[a1-a2], 360-Abs[a1-a2]]
+
+Plot[angdist[angle[Jupiter][t], angle[Saturn][t]], {t,0,100}]
+
+(* maximum angular distance *)
+
+maxangdist[list_] := Max[Flatten[Table[angdist[list[[i]],list[[j]]],
+ {i,1,Length[list]}, {j,i+1,Length[list]}]]]
+
+Plot[maxangdist[{
+ angle[Jupiter][t], angle[Saturn][t], angle[Uranus][t]}], 
+{t,0,1000}, PlotRange -> {0,30}]
+
+Plot[maxangdist[{angle[Jupiter][t], angle[Saturn][t],
+angle[Uranus][t], angle[Neptune][t]}], {t,0,10000}, PlotRange -> {0,30}]
+
+Minimize[{maxangdist[
+ {angle[Jupiter][t], angle[Saturn][t], angle[Uranus][t], angle[Neptune][t]}],
+ t>0 && t<100}, t]
+
+FindMinimum[{maxangdist[
+ {angle[Jupiter][t], angle[Saturn][t], angle[Uranus][t], angle[Neptune][t]}],
+ t>0 && t<1000}, t]
+
+Plot[maxangdist[
+ {angle[Jupiter][t], angle[Saturn][t], angle[Uranus][t], angle[Neptune][t]}],
+ {t,0,1000}]
 
 (* TODO: consider changing these *)
 
@@ -151,10 +192,6 @@ ParametricPlot[{pos[Jupiter][t], pos[Saturn][t]}, {t,0,data[Jupiter][period]}]
 
 ParametricPlot[{pos[Jupiter][t], pos[Saturn][t]}, {t,0,6}]
 
-(* 47 degrees = arb starting lineup *)
-
-
-Show[jup[5], AxesOrigin -> {0,0}, Axes -> True]
 
 
 

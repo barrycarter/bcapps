@@ -55,3 +55,5 @@ bc-solve-astro-13126.m
 bc-solve-physics-197481.c
 bc-solve-physics-197481.m
 
+# magic plane
+bc-solve-physics-232844.m
