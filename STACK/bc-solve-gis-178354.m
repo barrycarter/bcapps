@@ -9,6 +9,65 @@ BottomRight: (-73.9944,40.6718)
 
 *)
 
+(* 
+
+pixel conversion check; for sample map this is:
+
+top left -> 2223,0
+
+top right -> 3437, 654
+
+bottom left -> 1, 4119
+
+bottom right -> 1215, 4774
+
+initial image coords: 1380x4682
+
+final image coords: 3438x4776
+
+*)
+
+angle = 28.34*Degree
+
+{x-1380/2, y-4682/2}
+
+convert[x_,y_] = Take[rotationMatrix[z, angle].{x-1380/2,y-4682/2,0},2]
+
+Clear[angle,cx,cy];
+angle = 28.34*Degree
+cx = 1380/2
+cy = 4682/2
+
+step1[x_,y_] = Take[rotationMatrix[z, angle].{cx-x,y-cy,0},2]
+
+points =
+ Partition[Flatten[Table[step1[i,j], {i,{0,cx,cx*2}}, {j,{0,cy,cy*2}}]],2]
+
+convert[x_,y_] = step1[x,y] + Abs[step1[0,0]]
+
+
+
+
+ListPlot[frame]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+convert[0,0]
+
+convert[x_,y_] = Take[rotationMatrix[z, angle].{x,y,0},2]
+
+
 xy2ll[x_, 1] = {-73.9308+ x*(-73.8584+73.9308)/1815,
                 40.8883 + x*(40.858-40.8883)/1815};
 
