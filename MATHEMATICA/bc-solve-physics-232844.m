@@ -1,5 +1,11 @@
 (* 
 
+Summary: It's not a great idea. It will take you over 8 hours, and
+you'll end up 5400+ miles above your destination. Details follow
+image.
+
+[[launch.gif]]
+
 Since you don't specify the speed of the plane, let's assume for the
 moment that you can move 300 miles up from your current location
 instantaneously.
@@ -10,23 +16,66 @@ an airless planet that is otherwise similar to Earth.
 Finally, since you can "stand still in the air", we'll ignore the
 effect of gravity as well.
 
-However, since your launchpoint has an initial velocity of about
-1000mph, so do you. Here's what would happen:
+Since your starting point is rotating, its (x,y) position in the diagram
+above is modeled as:
 
-[[launch.gif]]
+$
+  \left\{\text{eer} \sin \left(\frac{2 \pi  t}{\text{sidday}}\right),\text{eer}
+    \cos \left(\frac{2 \pi  t}{\text{sidday}}\right)\right\}
+$
+
+where `t` is the time in seconds since the "launch", `eer = 6378.137`
+is the Earth's equitorial radius in kilometers and `sidday = 86164.1`
+is the length of the sidereal day in seconds.
+
+And your destination is:
+
+$
+   \left\{-\text{eer} \sin \left(\frac{\text{dist}}{\text{eer}}-\frac{2 \pi 
+    t}{\text{sidday}}\right),\text{eer} \cos
+    \left(\frac{\text{dist}}{\text{eer}}-\frac{2 \pi 
+    t}{\text{sidday}}\right)\right\}
+$
+
+where `dist = 4000*1.609344` is the distance to your destination in kilometers.
+
+Since your launchpoint has an initial velocity of about 1000mph, so do
+you. This means your position at time t is:
+
+$\left\{\frac{2 \pi  \text{eer} t}{\text{sidday}},\text{eer}+\text{hi}\right\}$
+
+where `hi= 300*1.609344` is your initial height in kilometers.
+
+With these conditions, you will be over your destination about 28911
+seconds after you start (8 hours, 1 minute and 51 seconds), at a
+height of about 8718 kilometers (about 5417 miles).
+
+Your average surface velocity would be right around 500 miles per
+hour, slower than a supersonic airplane, and even slower if you
+include the time to ascend 300 miles at the start and descend 5417
+miles at the end.
 
 Of course, if your magic plane can move 300 miles in time $\epsilon$,
 you could just as easily apply a westward thrust of ~1000mph to cancel
-our your initial eastward velocity.
+our your initial eastward velocity, in which case your calculations
+would be correct.
 
 A plane as powerful as this, however, could probably travel anywhere
-in the world rapidly, without help from the Earth's rotation.
+in the world rapidly, without help from the Earth's rotation, so you'd
+be best off aiming it west, just as you would a normal airplane.
 
-For a slightly more realistic answer, consider my question/answer to
-http://space.stackexchange.com/questions/13815/
+I toyed with the idea that you could launch at a high velocity and
+land back on Earth at your destination purely due to gravity (albeit
+at a very high speed) as per:
 
+http://space.stackexchange.com/questions/13815
 
-TODO: how far and when it lines up
+but haven't been able to get the numbers to work. My work on the
+high-velocity launch idea is at:
+
+https://github.com/barrycarter/bcapps/blob/master/MATHEMATICA/bc-solve-physics-232844.m
+
+--- answer ends here ---
 
 TODO: launch and land per other question
 
