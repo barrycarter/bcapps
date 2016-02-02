@@ -27,63 +27,16 @@ final image coords: 3438x4776
 
 *)
 
-angle = 28.34*Degree
-
-{x-1380/2, y-4682/2}
-
-convert[x_,y_] = Take[rotationMatrix[z, angle].{x-1380/2,y-4682/2,0},2]
-
 Clear[angle,cx,cy];
 angle = 28.34*Degree
 cx = 1380/2
 cy = 4682/2
 
 step1[x_,y_] = Take[rotationMatrix[z, angle].{x-cx,y-cy,0},2]
+convert[x_,y_] = Simplify[
+ step1[x,y] + {step1[cx*2,0][[1]], step1[cx*2,cy*2][[2]]}]
 
-trans = 
- Table[Arrow[{{i,j},step1[i,j]}], {i,{0,cx,cx*2}}, {j,{0,cy,cy*2}}]
-Graphics[trans]
-showit
-
-test[x_,y_] = step1[x,y] + {step1[cx*2,0][[1]], step1[cx*2,cy*2][[2]]}
-
-trans = 
- Table[Arrow[{{i,j},test[i,j]}], {i,{0,cx,cx*2}}, {j,{0,cy,cy*2}}]
-Graphics[trans]
-showit
-
-
-
-points =
- Partition[Flatten[Table[step1[i,j], {i,{0,cx,cx*2}}, {j,{0,cy,cy*2}}]],2]
-
-convert[x_,y_] = step1[x,y] + Abs[step1[0,0]]
-
-points2 =
- Partition[Flatten[Table[convert[i,j], {i,{0,cx,cx*2}}, {j,{0,cy,cy*2}}]],2]
-
-
-
-
-ListPlot[frame]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-convert[0,0]
-
-convert[x_,y_] = Take[rotationMatrix[z, angle].{x,y,0},2]
-
+(* OLD INCORRECT ANSWER BELOW *)
 
 xy2ll[x_, 1] = {-73.9308+ x*(-73.8584+73.9308)/1815,
                 40.8883 + x*(40.858-40.8883)/1815};
