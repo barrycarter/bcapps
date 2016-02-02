@@ -38,12 +38,29 @@ angle = 28.34*Degree
 cx = 1380/2
 cy = 4682/2
 
-step1[x_,y_] = Take[rotationMatrix[z, angle].{cx-x,y-cy,0},2]
+step1[x_,y_] = Take[rotationMatrix[z, angle].{x-cx,y-cy,0},2]
+
+trans = 
+ Table[Arrow[{{i,j},step1[i,j]}], {i,{0,cx,cx*2}}, {j,{0,cy,cy*2}}]
+Graphics[trans]
+showit
+
+test[x_,y_] = step1[x,y] + {step1[cx*2,0][[1]], step1[cx*2,cy*2][[2]]}
+
+trans = 
+ Table[Arrow[{{i,j},test[i,j]}], {i,{0,cx,cx*2}}, {j,{0,cy,cy*2}}]
+Graphics[trans]
+showit
+
+
 
 points =
  Partition[Flatten[Table[step1[i,j], {i,{0,cx,cx*2}}, {j,{0,cy,cy*2}}]],2]
 
 convert[x_,y_] = step1[x,y] + Abs[step1[0,0]]
+
+points2 =
+ Partition[Flatten[Table[convert[i,j], {i,{0,cx,cx*2}}, {j,{0,cy,cy*2}}]],2]
 
 
 
