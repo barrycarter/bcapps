@@ -33,11 +33,41 @@ vector<float> attack_wins, defend_wins;
 vector<battle> outcomes;
 
 int main() {
-    int attackers, defenders;
+  int attackers, defenders, i, j;
     cout << "Enter number of attackers: ";
     cin >> attackers;
     cout << "Enter number of defenders: ";
     cin >> defenders;
+
+    // I need attackers and defenders to be array indexes
+    double odds[attackers+1][defenders+1];
+
+    // compute odds for attacker each number of attackers/defenders
+    // see http://www.strategygamenetwork.com/statistics.html#q9 but
+    // can also compute the numbers below yourself
+
+    // no defenders = you have won, no attackers = you have lost
+    for (i=1; i<=attackers; i++) {odds[i][0] = 1.;}
+    for (i=1; i<=defenders; i++) {odds[0][i] = 0.;}
+
+    // special case for one defender
+    for (i=1; i<=attackers; i++) {
+      odds[i][1] = 855./1296 + 441./1296*odds[i-1][1];
+    }
+
+    // all other cases
+    for (i=2; i<=attackers; i++) {
+      for (j=2; j<=defenders; j++) {
+	odds[i][j] = 2890./7776*odds[i][j-2] + 2611./7776*odds[i-1][j-1] +
+	  2275./7776*odds[i-2][j];
+      }
+    }
+
+    for (i=0; i<=attackers; i++) {
+      for (j=0; j<=defenders; j++) {
+	printf("%d %d: %f\n", i, j, odds[i][j]);
+      }
+    }
 
     submain(attackers, defenders);
 
