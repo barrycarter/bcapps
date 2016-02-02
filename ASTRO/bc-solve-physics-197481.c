@@ -3,7 +3,7 @@
 #include <string.h>
 #include "SpiceUsr.h"
 #include "SpiceZfc.h"
-#define MAXWIN 200000
+#define MAXWIN 2000000
 #include "/home/barrycarter/BCGIT/ASTRO/bclib.h"
 
 // Usage: $0 naif-id-of-planet naif-id-of-planet  naif-id-of-planet  ...
