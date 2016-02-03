@@ -4,6 +4,7 @@
 #include "SpiceUsr.h"
 #include "SpiceZfc.h"
 #include "/home/barrycarter/BCGIT/ASTRO/bclib.h"
+#define SIZE 1000000
 
 // hardcoding start/end times per planet (bad idea, but...)
 #define STIME -3155716758.816031
@@ -51,7 +52,7 @@ void gfdecrx (void(* udfuns)(SpiceDouble et,SpiceDouble * value),
 
 int main( int argc, char **argv ) {
 
-  SPICEDOUBLE_CELL(result, 200000);
+  SPICEDOUBLE_CELL(result, SIZE);
   SPICEDOUBLE_CELL(cnfine, 2);
   SpiceInt i, count, n;
   SpiceChar stime[255];
@@ -80,7 +81,7 @@ int main( int argc, char **argv ) {
   // wninsd_c(year2et(2010),year2et(2020),&cnfine);
   wninsd_c(STIME+86400.,ETIME-86400.,&cnfine);
 
-  gfuds_c(gfq,gfdecrx,"LOCMIN",0.,0.,3600.,200000,&cnfine,&result);
+  gfuds_c(gfq,gfdecrx,"LOCMIN",0.,0.,3600.,SIZE,&cnfine,&result);
   count = wncard_c(&result); 
 
   // for printing, we want the extra values
