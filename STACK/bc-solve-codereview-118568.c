@@ -45,10 +45,9 @@ int main() {
   // I use the highest number as an index, so adding 1
   double odds[attackers+1][defenders+1];
 
-
   // most of game is 3 vs 2
-  for (i = attackers; i>=3; i--) {
-    for (j = defenders; j>=2; j--) {
+  for (i = attackers; i>=0; i--) {
+    for (j = defenders; j>=0; j--) {
 
       // the starting condition is true by definition
       if (i==attackers && j==defenders) {odds[i][j]=1; continue;}
@@ -67,6 +66,10 @@ int main() {
       printf("COMPUTED: %d %d -> %f from (%d,%d):%f (%d,%d):%f (%d,%d):%f\n", i, j, odds[i][j], i, j+2, dl2, i+1, j+1, el1, i+2, j, al2);
     }
   }
+
+  // the special terminal cases
+
+
 
   exit(-1);
 
