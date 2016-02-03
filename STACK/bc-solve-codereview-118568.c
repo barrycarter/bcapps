@@ -39,8 +39,15 @@ int main() {
     cout << "Enter number of defenders: ";
     cin >> defenders;
 
-    // I need attackers and defenders to be array indexes
+    // I use the highest number as an index, so adding 1
     double odds[attackers+1][defenders+1];
+
+    for (i = attackers; i>=0; i--) {
+      for (j = defenders; j>=0; j--) {
+	printf("IJ: %d %d, need: (%d,%d) (%d,%d) (%d,%d)\n", i, j, i, j+2, i+1, j+1, i+2, j);
+      }
+    }
+
 
     // compute odds for attacker each number of attackers/defenders
     // see http://www.strategygamenetwork.com/statistics.html#q9 but
