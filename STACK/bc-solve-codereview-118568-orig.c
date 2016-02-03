@@ -33,70 +33,11 @@ vector<float> attack_wins, defend_wins;
 vector<battle> outcomes;
 
 int main() {
-  int attackers, defenders, i, j;
-  double dl2, el1, al2;
-  cout << "Enter number of attackers: ";
-  cin >> attackers;
-  cout << "Enter number of defenders: ";
-  cin >> defenders;
-
-  printf("\n");
-
-  // I use the highest number as an index, so adding 1
-  double odds[attackers+1][defenders+1];
-
-
-  // most of game is 3 vs 2
-  for (i = attackers; i>=3; i--) {
-    for (j = defenders; j>=2; j--) {
-
-      // the starting condition is true by definition
-      if (i==attackers && j==defenders) {odds[i][j]=1; continue;}
-	
-      // defender lost two
-      dl2 = (j+2 > defenders)?0:odds[i][j+2];
-      // each lost one
-      el1 = (j+1 > defenders || i+1 > attackers)?0:odds[i+1][j+1];
-      // attacker lost two
-      al2 = (i+2 > attackers)?0:odds[i+2][j];
-
-      // and combine them
-      // see http://www.strategygamenetwork.com/statistics.html#q9 
-      odds[i][j] = (2890.*dl2 + 2611.*el1 + 2275.*al2)/7776.;
-
-      printf("COMPUTED: %d %d -> %f from (%d,%d):%f (%d,%d):%f (%d,%d):%f\n", i, j, odds[i][j], i, j+2, dl2, i+1, j+1, el1, i+2, j, al2);
-    }
-  }
-
-  exit(-1);
-
-
-    // compute odds for attacker each number of attackers/defenders
-    // see http://www.strategygamenetwork.com/statistics.html#q9 but
-    // can also compute the numbers below yourself
-
-    // no defenders = you have won, no attackers = you have lost
-    for (i=1; i<=attackers; i++) {odds[i][0] = 1.;}
-    for (i=1; i<=defenders; i++) {odds[0][i] = 0.;}
-
-    // special case for one defender
-    for (i=1; i<=attackers; i++) {
-      odds[i][1] = 855./1296 + 441./1296*odds[i-1][1];
-    }
-
-    // all other cases
-    for (i=2; i<=attackers; i++) {
-      for (j=2; j<=defenders; j++) {
-	odds[i][j] = 2890./7776*odds[i][j-2] + 2611./7776*odds[i-1][j-1] +
-	  2275./7776*odds[i-2][j];
-      }
-    }
-
-    for (i=0; i<=attackers; i++) {
-      for (j=0; j<=defenders; j++) {
-	printf("%d %d: %f\n", i, j, odds[i][j]);
-      }
-    }
+    int attackers, defenders;
+    cout << "Enter number of attackers: ";
+    cin >> attackers;
+    cout << "Enter number of defenders: ";
+    cin >> defenders;
 
     submain(attackers, defenders);
 
@@ -111,7 +52,6 @@ void submain(int attackers, int defenders){
     outcomes.push_back(battle(attackers, defenders, 100));
 
     while (!outcomes.empty()){
-        //cerr << loopnum << endl;
         vector<battle> list = outcomes;
         outcomes.clear();
         cleaner(list);
@@ -160,7 +100,6 @@ void cleaner(vector<battle>& list){
 // Either puts the odds into the correct array (if the battle is over)
 // or decides which function to use (if the battle is still going on)
 void sorter(battle fight) {
-  //    loopnum++;
     switch(fight.attackers) {
         case 0:
             defend_wins[fight.defenders-1] = fight.odds;
