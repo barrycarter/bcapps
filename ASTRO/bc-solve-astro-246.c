@@ -6,8 +6,8 @@
 #include "/home/barrycarter/BCGIT/ASTRO/bclib.h"
 
 // hardcoding start/end times per planet (bad idea, but...)
-#define STIME 315569520.
-#define ETIME 631139040.
+#define STIME -3155716758.816031
+#define ETIME 3155716867.183885
 
 // Usage: $0 moon1 moon2
 
@@ -60,8 +60,10 @@ int main( int argc, char **argv ) {
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
   // running this just once to get coverage
-  // spkcov_c ("/home/barrycarter/SPICE/KERNELS/jup310.bsp", 502, &cnfine);
-  spkcov_c ("/home/barrycarter/BCGIT/ASTRO/standard.tm", 502, &cnfine);
+  //  spkcov_c ("/home/barrycarter/SPICE/KERNELS/jup310.bsp", 502, &cnfine);
+  //  wnfetd_c(&cnfine, 0, &beg, &end);
+  //  printf("INTS: %f %f\n",beg,end);
+  //  exit(-1);
 
 
   // the moons
