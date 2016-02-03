@@ -9,10 +9,18 @@ int main( int argc, char **argv ) {
 
   SPICEDOUBLE_CELL(result, 20000);
   SPICEDOUBLE_CELL(cnfine, 2);
-  SpiceInt i, count;
+  SpiceInt i, count, fid;
+  SpiceChar name[255];
+  SpiceBoolean found;
   SpiceDouble beg, end;
 
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
+
+  cidfrm_c(542, 255, &fid, name, &found);
+
+  printf("507 to %d %s\n",fid,name);
+
+  exit(-1);
 
   // these ET limits for jupxxx.bsp should be consistent
   spkcov_c ("/home/barrycarter/SPICE/KERNELS/jup310.bsp", 502, &cnfine);

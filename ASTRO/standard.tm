@@ -10,6 +10,7 @@ KERNELS_TO_LOAD = (
 '/home/barrycarter/SPICE/KERNELS/de431_part-1.bsp',
 '/home/barrycarter/SPICE/KERNELS/de431_part-2.bsp',
 '/home/barrycarter/SPICE/KERNELS/jup310.bsp',
+'/home/barrycarter/SPICE/KERNELS/jup300.bsp',
 '/home/barrycarter/SPICE/KERNELS/sat365.bsp',
 '/home/barrycarter/SPICE/KERNELS/ura111.bsp',
 '/home/barrycarter/SPICE/KERNELS/nep081.bsp',
