@@ -34,19 +34,39 @@ vector<battle> outcomes;
 
 int main() {
   int attackers, defenders, i, j;
-    cout << "Enter number of attackers: ";
-    cin >> attackers;
-    cout << "Enter number of defenders: ";
-    cin >> defenders;
+  double dl2, el1, al2;
+  cout << "Enter number of attackers: ";
+  cin >> attackers;
+  cout << "Enter number of defenders: ";
+  cin >> defenders;
 
-    // I use the highest number as an index, so adding 1
-    double odds[attackers+1][defenders+1];
+  // I use the highest number as an index, so adding 1
+  double odds[attackers+1][defenders+1];
 
-    for (i = attackers; i>=0; i--) {
-      for (j = defenders; j>=0; j--) {
-	printf("IJ: %d %d, need: (%d,%d) (%d,%d) (%d,%d)\n", i, j, i, j+2, i+1, j+1, i+2, j);
-      }
+  // the starting condition is true by definition
+  odds[attackers][defenders] = 1.;
+
+  for (i = attackers; i>=0; i--) {
+    for (j = defenders-1; j>=0; j--) {
+	
+      // we combine the possible ways we got here (special case 0 if
+      // we need indices above the number of attackers defenders)
+      
+      // defender lost two
+      dl2 = (j+2 > defenders)?0:odds[i][j+2];
+      // each lost one
+      el1 = (j+1 > defenders || i+1 > attackers)?0:odds[i+1][j+1];
+      // attacker lost two
+      al2 = (i+2 > attackers)?0:odds[i+2][j];
+
+      // and combine them
+      // see http://www.strategygamenetwork.com/statistics.html#q9 
+      odds[i][j] = (2890.*dl2 + 2611.*el1 + 2275.*al2)/7776.;
+
+      printf("IJ: %d %d, need: (%d,%d) (%d,%d) (%d,%d)\n", i, j, i, j+2, i+1, j+1, i+2, j);
+      printf("COMPUTED: %d %d -> %f from %f %f %f\n", i, j, odds[i][j], dl2, el1, al2);
     }
+  }
 
 
     // compute odds for attacker each number of attackers/defenders
