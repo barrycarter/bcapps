@@ -56,8 +56,46 @@ int main() {
   odds[attackers][defenders] = 1.;
 
   // most of game is 3 vs 2
-  for (i = attackers; i>=3; i--) {
-    for (j = defenders; j>=2; j--) {
+  for (i = attackers; i>=2; i--) {
+    for (j = defenders; j>=1; j--) {
+
+      // special case handled later
+      if (j==1 && i<=2) {continue;}
+
+      // special case 1 defender, 3+ attackers
+      if (j==1) {
+
+	// defender loses 1
+	odds[i][0] += odds[i][j]*855./1296.;
+    
+	// attacker loses 1
+	odds[i-1][1] += odds[i][j]*441./1296.;
+
+	printf("odds[%d][%d] = %f\n", i, j, odds[i][j]);
+
+	printf("SETTING: odds[%d][%d] = %f, odds[%d][%d] = %f\n", i, 0, odds[i][0], i-1, 1, odds[i-1][1]);
+
+	continue;
+      }
+
+      // special case 2 attackers, 2+ defenders
+      if (i==2 && j>=2) {
+	
+	// defender loses 2
+	odds[2][j-2] += 295./1296.*odds[i][j];
+
+	// each lose 1
+	odds[1][j-1] += 581./1296.*odds[i][j];
+
+	// attacker loses 2
+	odds[0][j] += 420./1296.*odds[i][j];
+
+	printf("odds[%d][%d] = %f\n", i, j, odds[i][j]);
+	printf("SETTING: odds[%d][%d] = %f, odds[%d][%d] = %f, odds[%d][%d] = %f\n", 2, j-2, odds[2][j-2], 1, j-1, odds[1][j-1], 0, j, odds[0][j]);
+
+	continue;
+
+      }
 
       // defender loses two
       odds[i][j-2] += 2890./7776.*odds[i][j];
@@ -68,38 +106,13 @@ int main() {
       // attacker loses two
       odds[i-2][j] += 2275./7776.*odds[i][j];
 
-      //      printf("ODDS[%d][%d]: %f, ASSIG: %d,%d %d,%d, %d,%d\n",i,j,odds[i][j],
-      //	     i, j-2, i-1, j-1, i-2, j);
+	printf("odds[%d][%d] = %f\n", i, j, odds[i][j]);
+	printf("SETTING: odds[%d][%d] = %f, odds[%d][%d] = %f, odds[%d][%d] = %f\n", i, j-2, odds[i][j-2], i-1, j-1, odds[i-1][j-1], i-2, j, odds[i-2][j]);
+
     }
   }
 
   // cleanup special cases
-  // TODO: could do this as if condition in main loop?
-
-  // 1 defender, 3+ attackers
-  for (i = attackers; i>=3; i--) {
-
-    // defender loses 1
-    odds[i][0] += odds[i][1]*855./1296.;
-    
-    // attacker loses 1
-    odds[i-1][1] += odds[i][1]*441./1296.;
-
-  }
-
-  // 2 attackers, 2+ defenders
-  for (j = defenders; j>=2; j--) {
-
-    // defender loses 2
-    odds[2][j-2] += 295./1296.*odds[2][j];
-
-    // each lose 1
-    odds[1][j-1] += 581./1296.*odds[2][j];
-
-    // attacker loses 2
-    odds[0][j] += 420./1296.*odds[2][j];
-
-  }
 
   // 2 vs 1 leads to 2 vs 0 or 1 vs 1 w/ these probs
   odds[2][0] += 125./216.*odds[2][1];
@@ -108,6 +121,12 @@ int main() {
   // 1 vs 1 leads to 1 vs 0 or 0 vs 1 w/ these probs
   odds[1][0] += 15./36.*odds[1][1];
   odds[0][1] += 21./36.*odds[1][1];
+
+  for (i = attackers; i>=0; i--) {
+    for (j = defenders; j>=0; j--) {
+      printf("odds[%d][%d] = %f\n", i, j, odds[i][j]);
+    }
+  }
 
   // print
 
