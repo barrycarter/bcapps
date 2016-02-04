@@ -7,8 +7,14 @@
 #define SIZE 1000000
 
 // hardcoding start/end times per planet (bad idea, but...)
-#define STIME -3155716758.816031
+
+// below is Jupiter's smaller moons (jup300.bsp)
+#define STIME -3154766358.815713
 #define ETIME 3155716867.183885
+
+// below is Jupiter's main moons (jup310.bsp)
+// #define STIME -3155716758.816031
+// #define ETIME 3155716867.183885
 
 // Usage: $0 moon1 moon2
 
@@ -60,11 +66,11 @@ int main( int argc, char **argv ) {
 
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
-  // running this just once to get coverage
-    spkcov_c ("/home/barrycarter/SPICE/KERNELS/jup300.bsp", 506, &cnfine);
-    wnfetd_c(&cnfine, 0, &beg, &end);
-    printf("INTS: %f %f\n",beg,end);
-    exit(-1);
+  // running this just once per bsp to get coverage
+  // spkcov_c ("/home/barrycarter/SPICE/KERNELS/jup300.bsp", 506, &cnfine);
+  // wnfetd_c(&cnfine, 0, &beg, &end);
+  // printf("INTS: %f %f\n",beg,end);
+  // exit(-1);
 
 
   // the moons

@@ -45,14 +45,19 @@ int main() {
   // I use the highest number as an index, so adding 1
   double odds[attackers+1][defenders+1];
 
+  // initialize all elts to 0 (annoyed C++ doesnt do this)
+  for (i=0; i<=attackers; i++) {
+    for (j=0; j<=defenders; j++) {
+      odds[i][j] = 0.;
+    }
+  }
+
   // the starting condition is true by definition
   odds[attackers][defenders] = 1.;
 
   // most of game is 3 vs 2
   for (i = attackers; i>=2; i--) {
     for (j = defenders; j>=2; j--) {
-
-      // 6/4 is the current smallest fail case
 
       // defender loses two
       odds[i][j-2] += 2890./7776.*odds[i][j];
