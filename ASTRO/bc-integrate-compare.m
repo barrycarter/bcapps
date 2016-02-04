@@ -27,10 +27,10 @@ AbsoluteTiming[sol = NDSolve[{posvel,accels},planets,{t,-366*500,366*500},
 *)
 
 start = 2440400.5;
-years = 18;
+years = 105;
 
 sol = NDSolve[{posvel,accels},planets,{t,-366*years,366*years},
- AccuracyGoal -> 11, PrecisionGoal -> 11];
+ AccuracyGoal -> 15, PrecisionGoal -> 13, MaxSteps -> 100000];
 
 (* TODO: do the ascp files use ephermis time? if so, below is slightly wrong *)
 
