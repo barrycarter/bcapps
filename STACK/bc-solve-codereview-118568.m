@@ -56,6 +56,16 @@ if 0 attackers left, previous could have been 1 vs d+1 or 2 vs d or ...
 
 1v1 -> 1v0, 0v0 [not really], 0v1
 
+6v4 giving me probs...
+
+6v4 to 6v2 (good), 5v3 (good), 4v4 (good)
+
+6v2 to 6v0 (not done), 5v1 (not done), 4v2 (good)
+
+5v3 to 5v1 (not done), 4v2 (good), 3v3 (done)
+
+5v2 is negative, why?
+
 *)
 
 
