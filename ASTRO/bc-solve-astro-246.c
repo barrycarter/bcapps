@@ -61,10 +61,10 @@ int main( int argc, char **argv ) {
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
   // running this just once to get coverage
-  //  spkcov_c ("/home/barrycarter/SPICE/KERNELS/jup310.bsp", 502, &cnfine);
-  //  wnfetd_c(&cnfine, 0, &beg, &end);
-  //  printf("INTS: %f %f\n",beg,end);
-  //  exit(-1);
+    spkcov_c ("/home/barrycarter/SPICE/KERNELS/jup300.bsp", 506, &cnfine);
+    wnfetd_c(&cnfine, 0, &beg, &end);
+    printf("INTS: %f %f\n",beg,end);
+    exit(-1);
 
 
   // the moons
