@@ -70,23 +70,18 @@ int main() {
 
       printf("ODDS[%d][%d]: %f, ASSIG: %d,%d %d,%d, %d,%d\n",i,j,odds[i][j],
 	     i, j-2, i-1, j-1, i-2, j);
-	
-      // defender lost two
-      //      dl2 = (j+2 > defenders)?0:odds[i][j+2];
-      // each lost one
-      //      el1 = (j+1 > defenders || i+1 > attackers)?0:odds[i+1][j+1];
-      // attacker lost two
-      //      al2 = (i+2 > attackers)?0:odds[i+2][j];
-
-      // and combine them
-      // see http://www.strategygamenetwork.com/statistics.html#q9 
-      //      odds[i][j] = (2890.*dl2 + 2611.*el1 + 2275.*al2)/7776.;
-
-      //      printf("COMPUTED: %d %d -> %f from (%d,%d):%f (%d,%d):%f (%d,%d):%f\n", i, j, odds[i][j], i, j+2, dl2, i+1, j+1, el1, i+2, j, al2);
     }
   }
 
-  // the special terminal cases
+  // cleanup special cases
+  
+  // 2 vs 2 leads to 2 vs 0, 1 vs 1, or 0 vs 2 w/ these probs
+  odds[2][0] = 295./1296.*odds[2][2];
+  odds[1][1] = 581./1296.*odds[2][2];
+  odds[0][2] = 420./1296.*odds[2][2];
+
+
+
 
 
 
