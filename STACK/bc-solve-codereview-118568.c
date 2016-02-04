@@ -56,13 +56,43 @@ int main() {
   odds[attackers][defenders] = 1.;
 
   // most of game is 3 vs 2
-  for (i = attackers; i>=2; i--) {
+  for (i = attackers; i>=1; i--) {
     for (j = defenders; j>=1; j--) {
 
       // special case handled later
-      if (j==1 && i<=2) {continue;}
+      if (j==1 && i<=2) {
+	printf("SKIPPING: %d %d\n",i,j);
+	continue;
+      }
 
-      // special case 1 defender, 3+ attackers
+      // short-circuit: if 0 odds of reaching this state, just move on
+      // TODO: shouldnt test float to 0
+      if (odds[i][j] == 0.) {
+	printf("odds[%d][%d] = 0, so ignoring\n", i, j);
+	continue;
+      }
+
+      // special case 1 attackers, 2+ defenders
+      // note: this case is NOT in
+      // http://www.strategygamenetwork.com/statistics.html#q9
+
+      if (i==1 && j>=2) {
+
+	// defender loses one
+	odds[1][j-1] = 55./216.*odds[i][j];
+
+	// attacker loses one
+	odds[0][j] = 161./216.*odds[i][j];
+
+	printf("ALPHA odds[%d][%d] = %f\n", i, j, odds[i][j]);
+
+	printf("SETTING: odds[%d][%d] = %f, odds[%d][%d] = %f\n", 1, j-1, odds[1][j-1], 0, j, odds[0][j]);
+
+	continue;
+      }
+
+
+      // special case 3+ attackers, 1 defender
       if (j==1) {
 
 	// defender loses 1
@@ -71,7 +101,7 @@ int main() {
 	// attacker loses 1
 	odds[i-1][1] += odds[i][j]*441./1296.;
 
-	printf("odds[%d][%d] = %f\n", i, j, odds[i][j]);
+	printf("BETA odds[%d][%d] = %f\n", i, j, odds[i][j]);
 
 	printf("SETTING: odds[%d][%d] = %f, odds[%d][%d] = %f\n", i, 0, odds[i][0], i-1, 1, odds[i-1][1]);
 
@@ -85,12 +115,12 @@ int main() {
 	odds[2][j-2] += 295./1296.*odds[i][j];
 
 	// each lose 1
-	odds[1][j-1] += 581./1296.*odds[i][j];
+	odds[1][j-1] += 420./1296.*odds[i][j];
 
 	// attacker loses 2
-	odds[0][j] += 420./1296.*odds[i][j];
+	odds[0][j] += 581./1296.*odds[i][j];
 
-	printf("odds[%d][%d] = %f\n", i, j, odds[i][j]);
+	printf("GAMMA odds[%d][%d] = %f\n", i, j, odds[i][j]);
 	printf("SETTING: odds[%d][%d] = %f, odds[%d][%d] = %f, odds[%d][%d] = %f\n", 2, j-2, odds[2][j-2], 1, j-1, odds[1][j-1], 0, j, odds[0][j]);
 
 	continue;
@@ -106,7 +136,7 @@ int main() {
       // attacker loses two
       odds[i-2][j] += 2275./7776.*odds[i][j];
 
-	printf("odds[%d][%d] = %f\n", i, j, odds[i][j]);
+	printf("DELTA odds[%d][%d] = %f\n", i, j, odds[i][j]);
 	printf("SETTING: odds[%d][%d] = %f, odds[%d][%d] = %f, odds[%d][%d] = %f\n", i, j-2, odds[i][j-2], i-1, j-1, odds[i-1][j-1], i-2, j, odds[i-2][j]);
 
     }
@@ -115,20 +145,21 @@ int main() {
   // cleanup special cases
 
   // 2 vs 1 leads to 2 vs 0 or 1 vs 1 w/ these probs
-  odds[2][0] += 125./216.*odds[2][1];
-  odds[1][1] += 91./216.*odds[2][1];
 
-  // 1 vs 1 leads to 1 vs 0 or 0 vs 1 w/ these probs
-  odds[1][0] += 15./36.*odds[1][1];
-  odds[0][1] += 21./36.*odds[1][1];
-
-  for (i = attackers; i>=0; i--) {
-    for (j = defenders; j>=0; j--) {
-      printf("odds[%d][%d] = %f\n", i, j, odds[i][j]);
-    }
+  if (attackers>=2 && defenders>=1) {
+    odds[2][0] += 125./216.*odds[2][1];
+    odds[1][1] += 91./216.*odds[2][1];
+    printf("EPSILON odds[%d][%d] = %f\n", 2, 1, odds[2][1]);
+    printf("SETTING: odds[%d][%d] = %f, odds[%d][%d] = %f\n", 2, 0, odds[2][0], 1, 1, odds[1][1]);
   }
 
-  // print
+  // 1 vs 1 leads to 1 vs 0 or 0 vs 1 w/ these probs
+  if (attackers>=1 && defenders>=1) {
+    odds[1][0] += 15./36.*odds[1][1];
+    odds[0][1] += 21./36.*odds[1][1];
+    printf("ZETA odds[%d][%d] = %f\n", 1, 1, odds[1][1]);
+    printf("SETTING: odds[%d][%d] = %f, odds[%d][%d] = %f\n", 1, 0, odds[1][0], 0, 1, odds[0][1]);
+  }
 
   for (i = attackers; i>=1; i--) {
     printf("A: %d, D: 0, odds: %f\n", i, odds[i][0]);
