@@ -64,8 +64,24 @@ eqs = {x[0] == d, x'[0] == 0, x''[t] == x[t]^-2}
 eqs = {x''[t] == -x[t]^-2}
 s = DSolve[eqs,x,t]
 form = s[[1]]
-
 form[[1,1]] == form[[2,1]]
+
+(* reverse form of above, let f be the function satisfying the inverse: *)
+
+f[x[t]] = t
+
+f'[x[t]] x'[t] = 1
+
+x'[t]^2* f''[x[t]] + f'[x[t]] x''[t] = 0
+
+eqs = {
+ f[x[t]] == t, f'[x[t]] x'[t] == 1, x'[t]^2* f''[x[t]] + f'[x[t]] x''[t] ==0
+} /. {x[t] -> y, x'[t] -> 1/f'[y], x''[t] -> -y^-2}
+
+
+
+
+
 
 (* WRONG: convinced C[2] is 0 *)
 
