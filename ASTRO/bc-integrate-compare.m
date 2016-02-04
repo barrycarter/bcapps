@@ -19,24 +19,35 @@ This is one of many possible ways to solve these DFQs
 
 planets = Table[planet[i],{i,0,9}]
 
+(*
+
 AbsoluteTiming[sol = NDSolve[{posvel,accels},planets,{t,-366*500,366*500}, 
  MaxSteps->100000, AccuracyGoal -> 50]]
 
-Table[plan[i][t_] = planet[i][t-2440400.5]*149597870.7 /. sol[[1]], {i,0,9}]
+*)
 
-plan[1][2440400.500000000]
-posxyz[2440400.500000000, mercury]
+start = 2440400.5;
+years = 18;
 
-Plot[Norm[plan[1][j]-posxyz[j,mercury]], {j,2440400.5-66467,2440400.5+66467}]
-Plot[Norm[plan[2][j]-posxyz[j,venus]], {j,2440400.5-66467,2440400.5+66467}]
-Plot[Norm[plan[4][j]-posxyz[j,mars]], {j,2440400.5-66467,2440400.5+66467}]
-Plot[Norm[plan[5][j]-posxyz[j,jupiter]], {j,2440400.5-66467,2440400.5+66467}]
-Plot[Norm[plan[6][j]-posxyz[j,saturn]], {j,2440400.5-66467,2440400.5+66467}]
-Plot[Norm[plan[7][j]-posxyz[j,uranus]], {j,2440400.5-66467,2440400.5+66467}]
-Plot[Norm[plan[0][j]-posxyz[j,sun]], {j,2440400.5-66467,2440400.5+66467}]
+sol = NDSolve[{posvel,accels},planets,{t,-366*years,366*years},
+ AccuracyGoal -> 11, PrecisionGoal -> 11];
+
+(* TODO: do the ascp files use ephermis time? if so, below is slightly wrong *)
+
+Table[plan[i][t_] = planet[i][t-start]*149597870.7 /. sol[[1]], {i,0,9}]
+
+Plot[Norm[plan[1][j]-posxyz[j,mercury]], {j,start-366*years,start+366*years}]
+showit
+
+Plot[Norm[plan[2][j]-posxyz[j,venus]], {j,start-366*years,start+366*years}]
+Plot[Norm[plan[4][j]-posxyz[j,mars]], {j,start-366*years,start+366*years}]
+Plot[Norm[plan[5][j]-posxyz[j,jupiter]], {j,start-366*years,start+366*years}]
+Plot[Norm[plan[6][j]-posxyz[j,saturn]], {j,start-366*years,start+366*years}]
+Plot[Norm[plan[7][j]-posxyz[j,uranus]], {j,start-366*years,start+366*years}]
+Plot[Norm[plan[0][j]-posxyz[j,sun]], {j,start-366*years,start+366*years}]
 
 ParametricPlot3D[plan[1][j]-posxyz[j,mercury],
- {j,2440400.5-20000, 2440400.5+20000}]
+ {j,start-20000, start+20000}]
 
 AbsoluteTiming[sol = NDSolve[{posvel,accels},planets,{t,-366*500,366*500}, 
  MaxSteps->100000, PrecisionGoal -> 50]]
