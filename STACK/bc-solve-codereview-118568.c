@@ -101,11 +101,6 @@ int main() {
 
   }
 
-  // 2 vs 2 leads to 2 vs 0, 1 vs 1, or 0 vs 2 w/ these probs
-  odds[2][0] += 295./1296.*odds[2][2];
-  odds[1][1] += 581./1296.*odds[2][2];
-  odds[0][2] += 420./1296.*odds[2][2];
-
   // 2 vs 1 leads to 2 vs 0 or 1 vs 1 w/ these probs
   odds[2][0] += 125./216.*odds[2][1];
   odds[1][1] += 91./216.*odds[2][1];
