@@ -45,7 +45,7 @@ bc-solve-astro-246-2.m
 bc-solve-astro-246.m
 bc-solve-astro-246.txt.bz2
 
-# trajectory
+# trajectory (calculus of variations)
 bc-solve-physics-230221.m
 
 # need Mathematica 10 (errors in AstronomicalData)

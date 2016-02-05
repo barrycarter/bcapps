@@ -8,6 +8,39 @@ http://physics.stackexchange.com/questions/14700/the-time-that-2-masses-will-col
 
 (* observer in center, 2*d = distance between objects *)
 
+DSolve[{
+ x1[0] == -d, x2[0] == d, x1'[0] == 0, x2'[0] == 0,
+ x1''[t] == g/(x1[t]-x2[t])^2,
+ x2''[t] == -g/(x2[t]-x1[t])^2
+}, {x1,x2}, t]
+
+eqs = {x[0] == d, x''[t] == -g*x[t]^-2}
+
+DSolve[eqs,x,t]
+
+eqs = {x''[t] == -g*x[t]^-2}
+DSolve[eqs,x,t]
+
+DSolve[{
+ x1''[t] == g/(x1[t]-x2[t])^2,
+ x2''[t] == -g/(x2[t]-x1[t])^2
+}, {x1,x2}, t]
+
+(* let f and g be inverses of x1 and x2:
+
+f[x1[t]] == t,
+g[x2[t]] == t,
+
+f'[x1[t]] x1'[t] == 1,
+g'[x2[t]] x2'[t] == 1,
+
+x1'[t]^2*f''[x1[t]] + f'[x1[t]]*x1''[t] == 0
+x2'[t]^2*g''[x2[t]] + g'[x2[t]] x2''[t] == 0
+
+note: grav = gravity to avoid variable collission
+
+*)
+
 sol[g_, d_] := sol[g,d] = 
 NDSolve[{
  x1[0] == -d, x2[0] == d, x1'[0] == 0, x2'[0] == 0,
@@ -74,13 +107,12 @@ f'[x[t]] x'[t] = 1
 
 x'[t]^2* f''[x[t]] + f'[x[t]] x''[t] = 0
 
-eqs = {
- f[x[t]] == t, f'[x[t]] x'[t] == 1, x'[t]^2* f''[x[t]] + f'[x[t]] x''[t] ==0
-} /. {x[t] -> y, x'[t] -> 1/f'[y], x''[t] -> -y^-2}
+eqs = {x'[t]^2* f''[x[t]] + f'[x[t]] x''[t] ==0} /. 
+ {x[t] -> y, x'[t] -> 1/f'[y], x''[t] -> -y^-2}
 
+DSolve[eqs,f[y],y]
 
-
-
+Solve[s[[1]] /. x[t] -> x,t]
 
 
 (* WRONG: convinced C[2] is 0 *)

@@ -31,9 +31,17 @@ AbsoluteTiming[sol = NDSolve[{posvel,accels},planets,{t,-366*500,366*500},
 Unprotect[Out]; Clear[Out]; Clear[sol]; Clear[plan]; N[MemoryInUse[]/10^6]
 
 start = 2440400.5;
-years = 185;
+years = 26;
 
 planets = Table[planet[i],{i,0,9}]
+
+(* solve just for mercury for now, its the tricky one *)
+
+sol = NDSolve[{posvel,accels},planets,{t,-366*years,366*years}]
+
+Table[plan[i][t_] = planet[i][t-start]*149597870.7 /. sol[[1]], {i,0,9}]
+Plot[Norm[plan[1][j]-posxyz[j,mercury]], {j,start-366*years,start+366*years}]
+showit
 
 sol = NDSolve[{posvel,accels},planets,{t,-366*years,366*years},
  InterpolationOrder -> 6, PrecisionGoal -> 10, AccuracyGoal ->10, 
