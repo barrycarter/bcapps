@@ -39,11 +39,10 @@ bc-solve-overflow-33944589.c
 bc-solve-earthscience-7281.m
 
 # satellite/satellite occultations
-bc-solve-astro-246-2.m
-
-# similar to above, want to improve by using ranges
 bc-solve-astro-246.m
 bc-solve-astro-246.txt.bz2
+bc-solve-astro-246-2.m
+bc-solve-astro-246.c
 
 # trajectory (calculus of variations)
 bc-solve-physics-230221.m
@@ -57,3 +56,17 @@ bc-solve-physics-197481.m
 
 # magic plane
 bc-solve-physics-232844.m
+
+# create a number from other numbers
+bc-solve-math-1638274.m
+
+# use earth's turning to shorten flight time (partly solved)
+bc-solve-space-13866.m
+
+# RISK odds
+bc-solve-codereview-118568.c
+bc-solve-codereview-118568.m
+bc-solve-codereview-118568-orig.c
+
+# vertices and in nodes/out nodes
+bc-solve-math-1630476.m

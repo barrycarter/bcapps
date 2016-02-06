@@ -23,8 +23,9 @@ bc-solve-astro-13227.c
 # ancient equinoxes
 bc-solve-astro-13008.c
 
-# length of sunrise/sunset
+# length of sunrise/sunset (could do more here w/ Mathematica, but nah)
 bc-solve-astro-12824.c
+bc-solve-astro-12824.m
 
 # shortest day is 22nd/23rd
 bc-solve-astro-12940.c
@@ -41,3 +42,5 @@ bc-solve-astro-13396.m
 # long time w/o moon
 bc-solve-astro-5894.c
 
+# manhattan map rotated
+bc-solve-gis-178354.m
