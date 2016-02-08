@@ -1,18 +1,12 @@
 #include <iostream>
-#include <iomanip>
-#include <cmath>
-#include <vector>
-
-using namespace std;
 
 int main() {
   int attackers, defenders, i, j;
   double arun=0.;
-  //  double dl2, el1, al2;
-  cout << "Enter number of attackers: ";
-  cin >> attackers;
-  cout << "Enter number of defenders: ";
-  cin >> defenders;
+  std::cout << "Enter number of attackers: ";
+  std::cin >> attackers;
+  std::cout << "Enter number of defenders: ";
+  std::cin >> defenders;
 
   printf("\n");
 
@@ -58,7 +52,6 @@ int main() {
 	odds[0][j] += 161./216.*odds[i][j];
 	continue;
       }
-
 
       // special case 3+ attackers, 1 defender
       if (j==1 && i>=3) {
