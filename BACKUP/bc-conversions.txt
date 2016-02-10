@@ -6,6 +6,8 @@
 # compression
 ".bz2" ""
 ".gz" ""
+".tbz" ".tar"
+".tgz" ".tar"
 
 # backed up on /mnt/sshfs => backed up on /mnt/extdrive
 "/mnt/sshfs/" "/mnt/extdrive/"

@@ -124,6 +124,24 @@ osculate2pos[2457426.500000000,
  4.831063055709055*10^1*Degree, 2.916897863654748*10^1*Degree,
  2457396.232535627671, 4.092339797874488*10^0*Degree, 3.870986129747908*10^-1]
 
+(* doing it raw (outside submodule) just to confirm) *)
+
+t = 2457433.500000000;
+tp = 2457396.232535627671;
+n = 4.092339797874488*Degree;
+a = 3.870986129747908/10.
+ec =  2.056278659391942/10.
+om = 4.831063055709055*10.*Degree
+in = 7.004033769058982*Degree
+w = 2.916897863654748*10*Degree
+
+ma = (t-tp)*n
+b = ellipseEA2B[a,ec];
+{x1,y1} = ellipseMA2XY[a,b,ma]-{Sqrt[a^2-b^2],0};
+{x2,y2,z2} = rotationMatrix[z, w].{x1,y1,0};
+{x3,y3,z3} = rotationMatrix[x, -in].{x2,y2,z2};
+rotationMatrix[z, om].{x3,y3,z3}
+
 
 
 
