@@ -3,8 +3,8 @@
 The area swept out from the focus of an ellipse is:
 
 $
-   a b \theta -\frac{a b \sqrt{a^2-b^2} \left| \tan (\theta )\right| }{2
-    \sqrt{a^2 \tan ^2(\theta )+b^2}}
+   b \left(a \theta -b \sin (\theta ) \sqrt{\frac{(a-b) (a+b)}{a^2 \cos
+    ^2(\theta )+b^2 \sin ^2(\theta )}}\right)
 $
 
 where $\theta$ is the **central** angle, $a$ is the semimajor axis,
@@ -46,30 +46,42 @@ $\frac{b \sin (t)}{a \cos (t)}=\tan (\theta )$
 
 Solving for t:
 
-$t=\tan ^{-1}\left(\frac{a \tan (\theta )}{b}\right)$
+$t=\tan ^{-1}(a \cos (\theta ),b \sin (\theta ))$
+
+Note that we must use the two argument form of $tan ^{-1} ()$ to make
+sure $t$ is in the correct quadrant.
 
 Plugging back in for $x$ and $y$ and applying trignometric identities
 and other simplifications:
 
-$x=\frac{a b}{\sqrt{a^2 \tan ^2(\theta )+b^2}}$
+$x=\frac{a^2 \cos (\theta )}{\sqrt{a^2 \cos ^2(\theta )+b^2 \sin ^2(\theta )}}$
 
-$y=\frac{a b \tan (\theta )}{\sqrt{a^2 \tan ^2(\theta )+b^2}}$
+$y=\frac{b^2 \sin (\theta )}{\sqrt{a^2 \cos ^2(\theta )+b^2 \sin ^2(\theta )}}$
 
-Computing $\frac{b h}{2}$ gives us:
+We now have the height of the triangle, $y$, as above. Apply the area
+formula gives us:
 
-$\frac{a b \sqrt{a^2-b^2} \tan (\theta )}{2 \sqrt{a^2 \tan ^2(\theta )+b^2}}$
+$b^2 \sin (\theta ) \sqrt{\frac{(a-b) (a+b)}{a^2 \cos ^2(\theta )+b^2 \sin
+^2(\theta )}}$
 
 Subtracting that from the original $a b \theta$, we get:
 
 $
-   a b \theta -\frac{a b \sqrt{a^2-b^2} \tan (\theta )}{2 \sqrt{a^2 \tan
-    ^2(\theta )+b^2}}
+   b \left(a \theta -b \sin (\theta ) \sqrt{\frac{(a-b) (a+b)}{a^2 \cos
+    ^2(\theta )+b^2 \sin ^2(\theta )}}\right)
 $
-
-TODO: note lost solutions
 
 
 *)
+
+a*b*theta
+
+t[theta_] = ArcTan[a*Cos[theta],b*Sin[theta]]
+
+Plot[t[theta],{theta,0,2*Pi}]
+
+ParametricPlot[{a*Cos[t[theta]],b*Sin[t[theta]]}, {theta,0,2*Pi}]
+
 
 x = (a*b)/Sqrt[b^2 + a^2*Tan[theta]^2]
 
