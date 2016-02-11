@@ -38,6 +38,8 @@ Unset[a]; Unset[b];
    Mathematica solves this for t poorly (extraneous junk), so
    I just give the cleaned up result below *)
 
+(* TODO: below is only true for theta < Pi/2 *)
+
 t[theta_] = ArcTan[a*Tan[theta]/b]
 
 (* reparametrizing using theta *)
@@ -57,7 +59,5 @@ parea[theta_] = Integrate[FullSimplify[r2[x]/2],{x,0,theta}] *)
 
 parea[theta_] = a*b*ArcTan[a*Tan[theta]/b]/2
 
-
-
-
-
+Plot[{ArcTan[b/a*Tan[theta]], ArcTan[a*Cos[theta],b*Sin[theta]]},{thet
+a,0,2*Pi}]                                                                      

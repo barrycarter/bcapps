@@ -3,8 +3,8 @@
 The area swept out from the focus of an ellipse is:
 
 $
-   a b \theta -\frac{a b \sqrt{a^2-b^2} \tan (\theta )}{2 \sqrt{a^2 \tan
-    ^2(\theta )+b^2}}
+   a b \theta -\frac{a b \sqrt{a^2-b^2} \left| \tan (\theta )\right| }{2
+    \sqrt{a^2 \tan ^2(\theta )+b^2}}
 $
 
 where $\theta$ is the **central** angle, $a$ is the semimajor axis,
@@ -75,11 +75,17 @@ x = (a*b)/Sqrt[b^2 + a^2*Tan[theta]^2]
 
 y = (a*b*Tan[theta])/Sqrt[b^2 + a^2*Tan[theta]^2]
 
+tri[theta_] = (a*b*Sqrt[a^2 -b^2]*Abs[Tan[theta]])/(2*Sqrt[b^2 +
+a^2*Tan[theta]^2]);
 
+area[theta_] = a*b*theta - (a*b*Sqrt[a^2 -
+b^2]*Abs[Tan[theta]])/(2*Sqrt[b^2 + a^2*Tan[theta]^2]);
 
 a=2; b=1.9;
 
 ang = 45*Degree;
+
+ang = 95*Degree;
 
 f = Sqrt[a^2-b^2];
 

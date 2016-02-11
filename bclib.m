@@ -276,6 +276,8 @@ rotationMatrix[z,theta_] = {
  {Cos[theta],-Sin[theta],0}, {Sin[theta],Cos[theta],0}, {0,0,1}
 };
 
+(* TODO: check the formulas below, they might be wrong *)
+
 (* ellipse, A/B = semimajor/minor axes, E = eccentricity, MA = mean
 anomaly, TA = true anomaly *)
 
