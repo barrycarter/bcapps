@@ -17,14 +17,38 @@ Thus, for a satellite with semi-major axis of 9600 km, the orbital
 period is about 9361 seconds (156 minutes and 1 second).
 
 That means the satellite has already made one orbit in 90 minutes, and
-is 3961 seconds into its second orbit.
+is 3961 seconds into its second orbit. [TODO: this is wrong!!!!]
+
+Per Kepler's second law, this means it's traced out
+$\frac{3961}{9361}$ of the area of its elliptical orbit from the focus
+of its orbit.
+
+The total area of an ellipse is $2 \pi a b$ where $a$ and $b$ are the
+semimajor and semiminor axes respectively.
+
+We don't have $b$, the length of the semiminor axis, but can find it
+from the eccentricity:
+
+$b=a \sqrt{1-e^2}$
+
+In this case, that gives us a semiminor axis of about 9406km, and a
+total ellipse area of about 283679500 $\text{km}^2$.
+
+Since the satellite has traced out 3961/6391 of this area, it has traced out 
 
 If the satellite were in a circular orbit, it would be 3961/9361*360 =
 152.33 degrees from its perigee. In other words, 152.33 degrees is the
 "mean anomaly".
 
 Computing the "true anomaly" from the "mean anomaly" isn't easy
-(there's no closed form solution), but you can find it using numerical
+(there's no closed form solution), but we can use my answer to
+http://math.stackexchange.com/a/1651008/2469 to find a numerical
+solution:
+
+  
+
+
+you can find it using numerical
 methods as noted in https://en.wikipedia.org/wiki/Mean_anomaly#Formulae
 
 Doing this, 
