@@ -3,14 +3,15 @@
 There's no really good answer to this, so let me give the slightly
 ugly one.
 
-Per Kepler's third law, `r^3/t^2` is constant for any satellite
-orbiting the Earth, where `r` is the semimajor axis and `t` is the
-orbital period.
+Per Kepler's third law, $\frac{r^3}{t^2}$ is constant for any
+satellite orbiting the Earth, where $r$ is the semimajor axis and $t$
+is the orbital period.
 
 Since geosynchronus satellites have an orbit of 42164km
 (https://en.wikipedia.org/wiki/Geosynchronous_orbit#Orbital_characteristics),
 and the Earth's sidereal day is 86164.1 seconds, this constant is
-approximately 10096.5 km^3/s^2 for satellites orbiting the Earth.
+approximately $\frac{10096.5 \text{km}^3}{s^2}$ for satellites
+orbiting the Earth.
 
 Thus, for a satellite with semi-major axis of 9600 km, the orbital
 period is about 9361 seconds (156 minutes and 1 second).
