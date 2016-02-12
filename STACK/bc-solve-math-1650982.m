@@ -32,6 +32,27 @@ RegionPlot[True, {a,-.01,.01}, {b,-.01,.01},
 RegionPlot[True, {a,-1,1}, {b,-1,1}, ColorFunction -> 
  Function[{x,y} -> Hue[af[x,y]]]]
 
+RegionPlot[True, {a,-1,1}, {b,-1,1}, ColorFunction -> 
+ Function[{x,y} -> Hue[nf[x,y]]]]
+
+Plot3D[nf[a,b],{a,-1,1},{b,-1,1}]
+
+RegionPlot[True, {a,-1,1}, {b,-1,1}, ColorFunction -> 
+ Function[{x,y} -> Hue[nf[x,y]]]]
+
+Plot3D[nf[a,b],{a,-1,1},{b,-1,1}, ColorFunction ->
+ Function[{x,y,z} -> Hue[nf[x,y]]]]
+
+Plot3D[nf[x,y],{x,-1,1},{y,-1,1}, 
+ColorFunction -> Function[{x,y,z} -> Hue[z]]]
+
+(* fail case for post *)
+
+Plot3D[Sin[x y], {x, 0, 3}, {y, 0, 3}, 
+ ColorFunction -> Function[{x, y, z}, Hue[z]]]
+
+Plot3D[nf[x,y], {x, -1, 1}, {y, -1, 1}, 
+ ColorFunction -> Function[{x, y, z}, Hue[z]]]
 
 
 
