@@ -69,15 +69,32 @@ time = 90*60;
 
 final = ellipseMA2XY[a,b,time/t*2*Pi]
 
+(* dot product of vector from earth center to surface point and from
+that point to object at perigee *)
+
+rad[theta_] = er*{Cos[theta],Sin[theta]}-{f,0}
+
+
+
+tosat[theta_] = rad[theta]-{a,0}
+
+Solve[rad[theta].tosat[theta]==0, theta]
+
+theta0 = Solve[rad[temp].tosat[temp]==0, temp][[1,1,2]]
+
+p1 = er*{Cos[theta0],Sin[theta0]}
+
+
 s[t_] = {major*Cos[t], minor*Sin[t]};
 
 g2 = ParametricPlot[s[t],{t,0,2*Pi}]
 
 g1 = Graphics[{
  PointSize[.02],
+ Point[p1],
  Point[{a,0}],
  Point[{0,0}],
- Line[{{0,0},final}],
+ Arrow[{{0,0},final}],
  Circle[{0,0}, {a,b}],
  Arrow[{{0,0}, {a,0}}],
  Point[{final}],
