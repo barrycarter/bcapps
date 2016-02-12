@@ -1,12 +1,85 @@
-Plot3D[0, {x,0,1}, {y,0,1}, ColorFunction -> Function[{x,y,z}, Hue[x,y,1]]]
+s[x_] = y /. Solve[x^4 + y^4 == 1, y]
 
-ContourPlot[0,{x,0,1}, {y,0,1}, ColorFunction -> Function[{x,y,z}, Hue[x,y,1]]]
+VectorPlot[{Re[s[a+b*I][[1]]],Im[s[a+b*I][[1]]]}, {a,-2,2}, {b,-2,2}]
 
-RegionPlot[True,{x,0,1}, {y,0,1}, ColorFunction -> Function[{x,y}, Hue[x,y,1]]]
+VectorPlot[{Re[s[a+b*I][[2]]],Im[s[a+b*I][[2]]]}, {a,-2,2}, {b,-2,2}]
 
-RegionPlot[True,{x,-1,1},{y,-1,1},ColorFunction -> Function[{x,y}, Hue[x,y,1]]]
+VectorPlot[{Re[s[a+b*I][[3]]],Im[s[a+b*I][[3]]]}, {a,-2,2}, {b,-2,2}]
 
-Solve[x^4+y^4==1,x]
+VectorPlot[{
+ {Re[s[a+b*I][[1]]],Im[s[a+b*I][[1]]]}, 
+ {Re[s[a+b*I][[1]]],Im[s[a+b*I][[2]]]}, 
+ {Re[s[a+b*I][[1]]],Im[s[a+b*I][[3]]]}, 
+ {Re[s[a+b*I][[1]]],Im[s[a+b*I][[4]]]}
+},
+{a,-2,2}, {b,-2,2}, VectorStyle -> Arrowheads[0.01]]
+
+
+VectorPlot[{
+ {Re[s[a+b*I][[1]]],Im[s[a+b*I][[1]]]}+ 
+ {Re[s[a+b*I][[1]]],Im[s[a+b*I][[2]]]}+
+ {Re[s[a+b*I][[1]]],Im[s[a+b*I][[3]]]}+ 
+ {Re[s[a+b*I][[1]]],Im[s[a+b*I][[4]]]}
+}, 
+{a,-2,2}, {b,-2,2}]
+
+
+ds[x_] = D[s[x],x]
+
+VectorPlot[{Re[ds[a+b*I][[1]]],Im[ds[a+b*I][[1]]]}, {a,-2,2}, {b,-2,2}]
+
+dds[x_] = D[s[x],x,x]
+
+VectorPlot[{Re[dds[a+b*I][[1]]],Im[dds[a+b*I][[1]]]}, {a,-2,2}, {b,-2,2}]
+
+VectorPlot[{
+{Re[s[a+b*I][[1]]],Im[s[a+b*I][[1]]]},
+{Re[ds[a+b*I][[1]]],Im[ds[a+b*I][[1]]]}
+}, {a,-2,2}, {b,-2,2}]
+
+VectorPlot[{
+{Re[s[a+b*I][[1]]],Im[s[a+b*I][[1]]]},
+{Re[s[a+b*I][[1]]],Im[s[a+b*I][[1]]]} + 0.5*
+{Re[ds[a+b*I][[1]]],Im[ds[a+b*I][[1]]]}
+}, {a,-2,2}, {b,-2,2}]
+
+RegionPlot[True, {a,-2,2}, {b,-2,2}, ColorFunction -> Function[{a,b},
+Hue[Arg[s[a+b*I][[1]]], 1, Norm[s[a+b*I][[1]]]]]]
+
+RegionPlot[True, {a,-2,2}, {b,-2,2}, ColorFunction -> Function[{a,b},
+Hue[Norm[s[a+b*I][[1]]], 1, Norm[s[a+b*I][[1]]]]]]
+
+
+RegionPlot[True, {a,-2,2}, {b,-2,2}, ColorFunction -> Function[{a,b},
+Hue[Norm[s[a+b*I][[1]]], 1, 1]]]
+
+
+RegionPlot[True, {a,0.9,1.1}, {b,-0.1,0.1}, ColorFunction -> Function[{a,b},
+Hue[Arg[s[a+b*I][[1]]], 1, Norm[s[a+b*I][[1]]]]]]
+
+RegionPlot[True, {a,-2,2}, {b,-2,2}, ColorFunction -> Function[{a,b},
+Hue[1, 1, Norm[s[a+b*I][[1]]]]]]
+
+Plot3D[Norm[s[a+b*I][[1]]], {a,-2,2}, {b,-2,2}]
+
+Plot3D[Norm[s[a+b*I][[2]]], {a,-2,2}, {b,-2,2}]
+
+Plot3D[Norm[s[a+b*I][[3]]], {a,-2,2}, {b,-2,2}]
+
+Plot3D[Norm[s[a+b*I][[4]]], {a,-2,2}, {b,-2,2}]
+
+Plot3D[Norm[s[a+b*I][[1]]], {a,-.05,.05}, {b,.95,1.05}]
+
+ContourPlot[Norm[s[a+b*I][[1]]], {a,-2,2}, {b,-2,2}]
+
+
+Hue[af[a,b], nf[a,b], 1]]]
+
+(* A point in 2 space that moves with time *)
+
+point[a_,b_,t_] = {a,b} + 
+
+
 
 (a+b*I)^4 + (c+d*I)^4
 
@@ -18,7 +91,7 @@ Solve[{real[a,b,c,d] == 1, imag[a,b,c,d]==0}, d, Reals]
 
 sol[z_] = w /. Solve[z^4+w^4 == 1, w, Complexes][[1]]
 
-g[a_,b_] = y /. Solve[(a+b*I)^4 + y^4 == 1, y]
+g[a_,b_] = y /. 
 
 f[a_,b_] = y /. Solve[(a+b*I)^4 + y^4 == 1, y][[1]]
 
@@ -36,7 +109,7 @@ t = Table[{Re[g[a,b][[i]]], Im[g[a,b][[i]]]}, {i,1,4}]
 
 VectorPlot[t, {a,-2,2}, {b,-2,2}]
 
-
+VectorPlot[
 
 VectorPlot[{Re[f[a,b]],Im[f[a,b]]}, {a,-2,2}, {b,-2,2}]
 
