@@ -57,24 +57,37 @@ Doing this,
 
 er = 6371;
 
-major = 9600;
-minor = ellipseEA2B[major,.2]
+a = 9600;
+b = ellipseEA2B[major,.2]
+f = Sqrt[a^2-b^2]
+
+er3t2 = 42164^3/86164.1^2
+
+t = temp /. Solve[{a^3/temp^2 == er3t2, temp>0}, temp][[1,1]]
+
+time = 90*60;
+
+final = ellipseMA2XY[a,b,time/t*2*Pi]
 
 s[t_] = {major*Cos[t], minor*Sin[t]};
 
 g2 = ParametricPlot[s[t],{t,0,2*Pi}]
 
 g1 = Graphics[{
- RGBColor[{0,0,1}],
- Disk[{0,0}, er],
+ PointSize[.02],
+ Point[{a,0}],
+ Point[{0,0}],
+ Line[{{0,0},final}],
+ Circle[{0,0}, {a,b}],
+ Arrow[{{0,0}, {a,0}}],
+ Point[{final}],
+ RGBColor[{0,0,1, 0.2}],
+ Disk[{f,0}, er],
+ RGBColor[{0,0,1,1}],
+ Point[{f,0}]
+
+,}]
 
 
-
-
-
-
-
-}
-];
-
-Show[g1,g2]
+Show[g1]
+showit
