@@ -6,16 +6,27 @@ connecting to, as below (binary)
 
 *)
 
-(* no subnodes, I get 1 *)
+(* if my child nodelist is xxx0 [ie, the even numbers], I get 1 *)
 
-f[0] = 1;
+s1 = {0, 2, 4, 6, 8, 10, 12, 14}
 
-(* 0001, I get 2 *)
+(* if my child nodelist is xx01, I get 2; 0001, 0101, 1001, 1101 *)
 
-f[1] = 2;
+s2 = {1, 5, 9, 13}
 
-(* 0010, I get 1 *)
+(* if my child nodelist is x011, I get 3; 0011 1011 *)
 
-f[2] = 1;
+s3 = {3, 11}
 
-(* 
+(* if my child nodelist is 0111, I get 4 *)
+
+s4 = {7}
+
+(* if my child nodelist is 1111, abort *)
+
+f[15] = Null;
+
+Table[f[i] = 1, {i,s1}]
+Table[f[i] = 2, {i,s2}]
+Table[f[i] = 3, {i,s3}]
+Table[f[i] = 4, {i,s4}]
