@@ -75,42 +75,43 @@ require "/usr/local/lib/bclib.pl";
 
 sub xsp_arrays {
   my($fname) = @_;
-  my(@arrays);
+  my($temp, @arrays, %rethash);
 
   # NOTE: assuming these files never change
   # TODO: in theory could check file time vs cache time but sheesh!
-  my($out,$err,$res) = cache_command2("fgrep -b _ARRAY $fname", "age=9999999");
+  my($out,$err,$res) = cache_command2("fgrep -b BEGIN_ARRAY $fname", "age=9999999");
 
   local(*A);
-  local($/);
-  open(A,$fname);
+   open(A,$fname);
 
   for $i (split(/\n/, $out)) {
-    $i=~m/^(\d+):(BEGIN|END)_ARRAY (\d+) (\d+)$/||die("BAD LINE: $i");
-    my($byte, $type, $arrnum, $size) = ($1, $2, $3, $4);
-
-    # TODO: do something w this
-    if ($type eq "END") {next;}
+    $i=~m/^(\d+):BEGIN_ARRAY (\d+) (\d+)$/||die("BAD LINE: $i");
+    my(%hash);
+    $hash{fname} = $fname;
+    ($hash{byte}, $hash{num}, $hash{size}) = ($1, $2, $3);
 
     # seek to the start of array and store stuff in hash
-    my(%hash);
-    seek(A, $byte, SEEK_SET);
-    debug("THUNK:",<A>);
+    seek(A, $hash{byte}, SEEK_SET);
 
     # read data from file
-    for $j ("name", "jdstart", "jdend", "objid", "x1", "x2", "x3", "startsec",
-	    "secs") {
-      my($temp) = <A>;
+    for $j ("", "name", "jdstart", "jdend", "objid", "x1", "x2", "x3", 
+	    "startsec", "secs") {
+      $temp = <A>;
       # avoid 1024
       if ($temp=~/^1024$/) {$temp=<A>;}
-      debug("TEMP: $temp");
+      chomp($temp);
       $hash{$j} = ieee754todec($temp);
     }
 
-    debug("HASH:",%hash);
+    # setup the hash we'll be returning
+    for $j (keys %hash) {$rethash{$hash{objid}}{$j} = $hash{$j};}
   }
 
+  debug(unfold("y",\%hash));
+
+  close(A);
+  return \%rethash;
 }
 
-xsp_arrays("/home/barrycarter/SPICE/KERNELS/jup310.xsp");
+debug(var_dump("x",xsp_arrays("/home/barrycarter/SPICE/KERNELS/jup310.xsp")));
 
