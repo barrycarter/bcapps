@@ -30,3 +30,12 @@ Table[f[i] = 1, {i,s1}]
 Table[f[i] = 2, {i,s2}]
 Table[f[i] = 3, {i,s3}]
 Table[f[i] = 4, {i,s4}]
+
+(* and the quasi-inverse *)
+
+g[i_] := g[i] = Select[Range[0,14], f[#] == i &]
+{g[1],g[2],g[3],g[4]}
+
+inv[list_] := Flatten[Map[g,list]]
+
+
