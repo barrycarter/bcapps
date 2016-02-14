@@ -95,6 +95,8 @@ osculate2pos[t_, ec_, in_, om_, w_, tp_, n_, a_] := Module[
 
 (* tests *)
 
+
+
 (*
 
 osc (mercury from sun): 
@@ -142,7 +144,13 @@ b = ellipseEA2B[a,ec];
 {x3,y3,z3} = rotationMatrix[x, -in].{x2,y2,z2};
 rotationMatrix[z, om].{x3,y3,z3}
 
+(* and again against web tested data, http://www.stargazing.net/kepler/ellipse.html *)
 
+in = 1.84992*Degree
+om = 49.5664*Degree
+w  = 336.0882*Degree
+a  = 1.5236365
+n  = 0.5240613*Degree
+ec = 0.0934231
+tp = -262.42784/n
 
-
- 
