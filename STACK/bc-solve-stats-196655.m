@@ -1,17 +1,16 @@
 (*
 
-TODO: put equations in github, and quicklink at top
-
 Subject: Faster way to test possible points-to-plane-fitting identity?
 
-Summary: I want to confirm an identity by checking that a certain sum
-(provided near end of message) is 0 for all values of n>=3.
+Summary: I want to confirm the three sum-defined quantities in
+https://github.com/barrycarter/bcapps/blob/master/STACK/planetest.m
+are identically zero for all values of n>=3.
 
 While attempting to solve
 http://stats.stackexchange.com/questions/196655 (fitting points to a
 plane), I came up with these (probably either wrong or previously
 derived by someone else) formulas for `a,b,c` such that `z=a*x+b*y+c`
-is a best fit for points n points `x[i], y[i], and z[i]`:
+is a best fit for n points `x[i], y[i], and z[i]`:
 
 <pre><code>
 a = 
@@ -107,9 +106,116 @@ intentionally giving in "full" form for those who don't want to read
 the rest of this question)...:
 
 <pre><code>
+atest[n_] := 
 
-TODO: import ~/temp.m when ready, I'm changing it
+Sum[-2*x[i]*(-((Sum[x[i]*y[i], {i, 1, n}]^2*Sum[z[i], {i, 1, n}] - 
+      Sum[x[i]^2, {i, 1, n}]*Sum[y[i]^2, {i, 1, n}]*Sum[z[i], {i, 1, n}] - 
+      Sum[y[i], {i, 1, n}]*Sum[x[i]*y[i], {i, 1, n}]*
+       Sum[x[i]*z[i], {i, 1, n}] + Sum[x[i], {i, 1, n}]*Sum[y[i]^2, {i, 1, n}]*
+       Sum[x[i]*z[i], {i, 1, n}] + Sum[x[i]^2, {i, 1, n}]*Sum[y[i], {i, 1, n}]*
+       Sum[y[i]*z[i], {i, 1, n}] - Sum[x[i], {i, 1, n}]*
+       Sum[x[i]*y[i], {i, 1, n}]*Sum[y[i]*z[i], {i, 1, n}])/
+     (Sum[x[i]^2, {i, 1, n}]*Sum[y[i], {i, 1, n}]^2 - 2*Sum[x[i], {i, 1, n}]*
+       Sum[y[i], {i, 1, n}]*Sum[x[i]*y[i], {i, 1, n}] + 
+      n*Sum[x[i]*y[i], {i, 1, n}]^2 + Sum[x[i], {i, 1, n}]^2*
+       Sum[y[i]^2, {i, 1, n}] - n*Sum[x[i]^2, {i, 1, n}]*
+       Sum[y[i]^2, {i, 1, n}])) + 
+   ((Sum[y[i], {i, 1, n}]*Sum[x[i]*y[i], {i, 1, n}]*Sum[z[i], {i, 1, n}] - 
+      Sum[x[i], {i, 1, n}]*Sum[y[i]^2, {i, 1, n}]*Sum[z[i], {i, 1, n}] - 
+      Sum[y[i], {i, 1, n}]^2*Sum[x[i]*z[i], {i, 1, n}] + 
+      n*Sum[y[i]^2, {i, 1, n}]*Sum[x[i]*z[i], {i, 1, n}] + 
+      Sum[x[i], {i, 1, n}]*Sum[y[i], {i, 1, n}]*Sum[y[i]*z[i], {i, 1, n}] - 
+      n*Sum[x[i]*y[i], {i, 1, n}]*Sum[y[i]*z[i], {i, 1, n}])*x[i])/
+    (Sum[x[i]^2, {i, 1, n}]*Sum[y[i], {i, 1, n}]^2 - 
+     2*Sum[x[i], {i, 1, n}]*Sum[y[i], {i, 1, n}]*Sum[x[i]*y[i], {i, 1, n}] + 
+     n*Sum[x[i]*y[i], {i, 1, n}]^2 + Sum[x[i], {i, 1, n}]^2*
+      Sum[y[i]^2, {i, 1, n}] - n*Sum[x[i]^2, {i, 1, n}]*
+      Sum[y[i]^2, {i, 1, n}]) + 
+   ((-(Sum[x[i]^2, {i, 1, n}]*Sum[y[i], {i, 1, n}]*Sum[z[i], {i, 1, n}]) + 
+      Sum[x[i], {i, 1, n}]*Sum[x[i]*y[i], {i, 1, n}]*Sum[z[i], {i, 1, n}] + 
+      Sum[x[i], {i, 1, n}]*Sum[y[i], {i, 1, n}]*Sum[x[i]*z[i], {i, 1, n}] - 
+      n*Sum[x[i]*y[i], {i, 1, n}]*Sum[x[i]*z[i], {i, 1, n}] - 
+      Sum[x[i], {i, 1, n}]^2*Sum[y[i]*z[i], {i, 1, n}] + 
+      n*Sum[x[i]^2, {i, 1, n}]*Sum[y[i]*z[i], {i, 1, n}])*y[i])/
+    (Sum[x[i]^2, {i, 1, n}]*Sum[y[i], {i, 1, n}]^2 - 
+     2*Sum[x[i], {i, 1, n}]*Sum[y[i], {i, 1, n}]*Sum[x[i]*y[i], {i, 1, n}] + 
+     n*Sum[x[i]*y[i], {i, 1, n}]^2 + Sum[x[i], {i, 1, n}]^2*
+      Sum[y[i]^2, {i, 1, n}] - n*Sum[x[i]^2, {i, 1, n}]*
+     Sum[y[i]^2, {i, 1, n}]) + z[i]), {i, 1, n}];
 
+btest[n_] :=
+
+Sum[-2*y[i]*(-((Sum[x[i]*y[i], {i, 1, n}]^2*Sum[z[i], {i, 1, n}] - 
+      Sum[x[i]^2, {i, 1, n}]*Sum[y[i]^2, {i, 1, n}]*Sum[z[i], {i, 1, n}] - 
+      Sum[y[i], {i, 1, n}]*Sum[x[i]*y[i], {i, 1, n}]*
+       Sum[x[i]*z[i], {i, 1, n}] + Sum[x[i], {i, 1, n}]*Sum[y[i]^2, {i, 1, n}]*
+       Sum[x[i]*z[i], {i, 1, n}] + Sum[x[i]^2, {i, 1, n}]*Sum[y[i], {i, 1, n}]*
+       Sum[y[i]*z[i], {i, 1, n}] - Sum[x[i], {i, 1, n}]*
+       Sum[x[i]*y[i], {i, 1, n}]*Sum[y[i]*z[i], {i, 1, n}])/
+     (Sum[x[i]^2, {i, 1, n}]*Sum[y[i], {i, 1, n}]^2 - 2*Sum[x[i], {i, 1, n}]*
+       Sum[y[i], {i, 1, n}]*Sum[x[i]*y[i], {i, 1, n}] + 
+      n*Sum[x[i]*y[i], {i, 1, n}]^2 + Sum[x[i], {i, 1, n}]^2*
+       Sum[y[i]^2, {i, 1, n}] - n*Sum[x[i]^2, {i, 1, n}]*
+       Sum[y[i]^2, {i, 1, n}])) + 
+   ((Sum[y[i], {i, 1, n}]*Sum[x[i]*y[i], {i, 1, n}]*Sum[z[i], {i, 1, n}] - 
+      Sum[x[i], {i, 1, n}]*Sum[y[i]^2, {i, 1, n}]*Sum[z[i], {i, 1, n}] - 
+      Sum[y[i], {i, 1, n}]^2*Sum[x[i]*z[i], {i, 1, n}] + 
+      n*Sum[y[i]^2, {i, 1, n}]*Sum[x[i]*z[i], {i, 1, n}] + 
+      Sum[x[i], {i, 1, n}]*Sum[y[i], {i, 1, n}]*Sum[y[i]*z[i], {i, 1, n}] - 
+      n*Sum[x[i]*y[i], {i, 1, n}]*Sum[y[i]*z[i], {i, 1, n}])*x[i])/
+    (Sum[x[i]^2, {i, 1, n}]*Sum[y[i], {i, 1, n}]^2 - 
+     2*Sum[x[i], {i, 1, n}]*Sum[y[i], {i, 1, n}]*Sum[x[i]*y[i], {i, 1, n}] + 
+     n*Sum[x[i]*y[i], {i, 1, n}]^2 + Sum[x[i], {i, 1, n}]^2*
+      Sum[y[i]^2, {i, 1, n}] - n*Sum[x[i]^2, {i, 1, n}]*
+      Sum[y[i]^2, {i, 1, n}]) + 
+   ((-(Sum[x[i]^2, {i, 1, n}]*Sum[y[i], {i, 1, n}]*Sum[z[i], {i, 1, n}]) + 
+      Sum[x[i], {i, 1, n}]*Sum[x[i]*y[i], {i, 1, n}]*Sum[z[i], {i, 1, n}] + 
+      Sum[x[i], {i, 1, n}]*Sum[y[i], {i, 1, n}]*Sum[x[i]*z[i], {i, 1, n}] - 
+      n*Sum[x[i]*y[i], {i, 1, n}]*Sum[x[i]*z[i], {i, 1, n}] - 
+      Sum[x[i], {i, 1, n}]^2*Sum[y[i]*z[i], {i, 1, n}] + 
+      n*Sum[x[i]^2, {i, 1, n}]*Sum[y[i]*z[i], {i, 1, n}])*y[i])/
+    (Sum[x[i]^2, {i, 1, n}]*Sum[y[i], {i, 1, n}]^2 - 
+     2*Sum[x[i], {i, 1, n}]*Sum[y[i], {i, 1, n}]*Sum[x[i]*y[i], {i, 1, n}] + 
+     n*Sum[x[i]*y[i], {i, 1, n}]^2 + Sum[x[i], {i, 1, n}]^2*
+      Sum[y[i]^2, {i, 1, n}] - n*Sum[x[i]^2, {i, 1, n}]*
+      Sum[y[i]^2, {i, 1, n}]) + z[i]), {i, 1, n}];
+
+ctest[n_] :=
+
+Sum[-2*(-((Sum[x[i]*y[i], {i, 1, n}]^2*Sum[z[i], {i, 1, n}] - 
+      Sum[x[i]^2, {i, 1, n}]*Sum[y[i]^2, {i, 1, n}]*Sum[z[i], {i, 1, n}] - 
+      Sum[y[i], {i, 1, n}]*Sum[x[i]*y[i], {i, 1, n}]*
+       Sum[x[i]*z[i], {i, 1, n}] + Sum[x[i], {i, 1, n}]*Sum[y[i]^2, {i, 1, n}]*
+       Sum[x[i]*z[i], {i, 1, n}] + Sum[x[i]^2, {i, 1, n}]*Sum[y[i], {i, 1, n}]*
+       Sum[y[i]*z[i], {i, 1, n}] - Sum[x[i], {i, 1, n}]*
+       Sum[x[i]*y[i], {i, 1, n}]*Sum[y[i]*z[i], {i, 1, n}])/
+     (Sum[x[i]^2, {i, 1, n}]*Sum[y[i], {i, 1, n}]^2 - 2*Sum[x[i], {i, 1, n}]*
+       Sum[y[i], {i, 1, n}]*Sum[x[i]*y[i], {i, 1, n}] + 
+      n*Sum[x[i]*y[i], {i, 1, n}]^2 + Sum[x[i], {i, 1, n}]^2*
+       Sum[y[i]^2, {i, 1, n}] - n*Sum[x[i]^2, {i, 1, n}]*
+       Sum[y[i]^2, {i, 1, n}])) + 
+   ((Sum[y[i], {i, 1, n}]*Sum[x[i]*y[i], {i, 1, n}]*Sum[z[i], {i, 1, n}] - 
+      Sum[x[i], {i, 1, n}]*Sum[y[i]^2, {i, 1, n}]*Sum[z[i], {i, 1, n}] - 
+      Sum[y[i], {i, 1, n}]^2*Sum[x[i]*z[i], {i, 1, n}] + 
+      n*Sum[y[i]^2, {i, 1, n}]*Sum[x[i]*z[i], {i, 1, n}] + 
+      Sum[x[i], {i, 1, n}]*Sum[y[i], {i, 1, n}]*Sum[y[i]*z[i], {i, 1, n}] - 
+      n*Sum[x[i]*y[i], {i, 1, n}]*Sum[y[i]*z[i], {i, 1, n}])*x[i])/
+    (Sum[x[i]^2, {i, 1, n}]*Sum[y[i], {i, 1, n}]^2 - 
+     2*Sum[x[i], {i, 1, n}]*Sum[y[i], {i, 1, n}]*Sum[x[i]*y[i], {i, 1, n}] + 
+     n*Sum[x[i]*y[i], {i, 1, n}]^2 + Sum[x[i], {i, 1, n}]^2*
+      Sum[y[i]^2, {i, 1, n}] - n*Sum[x[i]^2, {i, 1, n}]*
+      Sum[y[i]^2, {i, 1, n}]) + 
+   ((-(Sum[x[i]^2, {i, 1, n}]*Sum[y[i], {i, 1, n}]*Sum[z[i], {i, 1, n}]) + 
+      Sum[x[i], {i, 1, n}]*Sum[x[i]*y[i], {i, 1, n}]*Sum[z[i], {i, 1, n}] + 
+      Sum[x[i], {i, 1, n}]*Sum[y[i], {i, 1, n}]*Sum[x[i]*z[i], {i, 1, n}] - 
+      n*Sum[x[i]*y[i], {i, 1, n}]*Sum[x[i]*z[i], {i, 1, n}] - 
+      Sum[x[i], {i, 1, n}]^2*Sum[y[i]*z[i], {i, 1, n}] + 
+      n*Sum[x[i]^2, {i, 1, n}]*Sum[y[i]*z[i], {i, 1, n}])*y[i])/
+    (Sum[x[i]^2, {i, 1, n}]*Sum[y[i], {i, 1, n}]^2 - 
+     2*Sum[x[i], {i, 1, n}]*Sum[y[i], {i, 1, n}]*Sum[x[i]*y[i], {i, 1, n}] + 
+     n*Sum[x[i]*y[i], {i, 1, n}]^2 + Sum[x[i], {i, 1, n}]^2*
+      Sum[y[i]^2, {i, 1, n}] - n*Sum[x[i]^2, {i, 1, n}]*
+      Sum[y[i]^2, {i, 1, n}]) + z[i]), {i, 1, n}];
 </code></pre>
 
 I'm claiming `atest[n], btest[n], ctest[n]` are identially 0 for all
