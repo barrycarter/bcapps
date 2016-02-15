@@ -1,5 +1,7 @@
 (*
 
+TODO: put equations in github, and quicklink at top
+
 Subject: Faster way to test possible points-to-plane-fitting identity?
 
 Summary: I want to confirm an identity by checking that a certain sum
@@ -88,20 +90,50 @@ available to Solve.`).
 Mathematica *will* solve for `a,b,c` for specific values of `n`, which
 led me to the guess above.
 
+To test my guess, I need to confirm that each partial derivative is
+zero. In other words, I need to confirm:
 
+<pre><code>
+Sum[-2*x[i]*(-c - a*x[i] - b*y[i] + z[i]),{i,1,n}] == 0
+Sum[-2*y[i]*(-c - a*x[i] - b*y[i] + z[i]),{i,1,n}] == 0
+Sum[-2*(-c - a*x[i] - b*y[i] + z[i]),{i,1,n}] == 0
+</code></pre>
 
+are identically zero for all values of x[i], y[i], z[i], and n, when I
+put in my guesses above.
 
-agen = 
-{-((-(xzs*ys^2) + n*xzs*yys - n*xys*yzs + xs*ys*yzs + xys*ys*zs - xs*yys*zs)/
-   (n*xys^2 - 2*xs*xys*ys + xss*ys^2 + xs^2*yys - n*xss*yys))}[[1]]
+In other words (these are the big ugly equations which I'm
+intentionally giving in "full" form for those who don't want to read
+the rest of this question)...:
 
-bgen = 
-{-((-n*xys*xzs + xs*xzs*ys - xs^2*yzs + n*xss*yzs + xs*xys*zs - xss*ys*zs)/
-   (n*xys^2 - 2*xs*xys*ys + xss*ys^2 + xs^2*yys - n*xss*yys))}[[1]]
+<pre><code>
 
-cgen = 
-{(-(xys*xzs*ys) + xs*xzs*yys - xs*xys*yzs + xss*ys*yzs + xys^2*zs - 
-xss*yys*zs)/(n*xys^2 - 2*xs*xys*ys + xss*ys^2 + xs^2*yys - n*xss*yys)}[[1]]
+TODO: import ~/temp.m when ready, I'm changing it
+
+</code></pre>
+
+I'm claiming `atest[n], btest[n], ctest[n]` are identially 0 for all
+values of n>=3.
+
+How far I've gotten on my own:
+
+<pre><code>
+
+t = Table[Simplify[{atest[i], btest[i], ctest[i]}], {i,3,6}]
+
+Out[1]= {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}}
+
+</code></pre>
+
+However, `Simplify[atest[7]]` just hangs. Even if I waited for it, I
+suspect `Simplify`ing atest, btest, and ctest for larger numbers would
+take even longer.
+
+I realize I'm asking Mathematica to do a lot, especially since I'm
+using symbols instead of actual numbers, but is there a good way to
+verify this identity for all n>=3 (or prove its false, of course).
+
+*)
 
 sum = Sum[diff[i],{i,1,n}]
 
