@@ -75,7 +75,7 @@ require "/usr/local/lib/bclib.pl";
 
 sub xsp_arrays {
   my($fname) = @_;
-  my($temp, @arrays, %rethash);
+  my($bs, $be, @ret);
 
   # NOTE: assuming these files never change
   # TODO: in theory could check file time vs cache time but sheesh!
@@ -85,15 +85,79 @@ sub xsp_arrays {
   open(A,$fname);
 
   for $i (split(/\n/, $out)) {
-    chomp($i);
-    debug("I: $i");
-    if ($i=~m/^(\d+):BEGIN_ARRAY (\d+) (\d+)$/) {$arrays[$2]{bs} = $1; next;}
-    if ($i=~m/^(\d+):END_ARRAY (\d+) (\d+)$/) {$arrays[$2]{be} = $1; next;}
-    warn ("ODD LINE: $i");
+
+    # if start of array record it
+    if ($i=~m/^(\d+):BEGIN_ARRAY (\d+) (\d+)$/) {$bs = $1; next;}
+
+    # if not end of array, move on
+    unless ($i=~m/^(\d+):END_ARRAY (\d+) (\d+)$/) {next;}
+
+    # end of array: record arraynum + ending byte and send to other subr
+    my($be, $num) = ($1, $2);
+
+    debug("ALPHA");
+
+    my(%hash) = spk_array_info(A, $bs, $be);
+    
+    $ret[$num] = \%hash;
   }
 
-  debug(unfold("arr",@arrays));
+  debug(unfold("arr",@ret));
 
+}
+
+# below copied directly from bc-xsp2math-pw.pl, see details there
+
+sub spk_array_info {
+  my($fh, $bs, $be) = @_;
+  my(%hash);
+
+  debug("CALLED");
+
+  # pretty silly, but needed
+  $hash{begin_array} = $bs;
+  $hash{end_array} = $be;
+
+  # info from the end of the array
+  seek($fh, $be, SEEK_SET);
+
+  # NOTE: interval here is twice the previous thing I was calling "interval"
+  @map = ("footer", "numrec", "rsize", "interval", "init");
+  for $i (0..$#map) {$hash{$map[$i]}=ieee754todec(current_line($fh,"\n",-1));}
+
+  # from start of array (do this last so we can leave tell($fh) in good place)
+  seek($fh, $bs, SEEK_SET);
+
+  # directly from html file (except header = "BEGIN_ARRAY" line, and
+  # xsp does not have start/end address of array)
+  # start_int = start of integration period <= first second
+  # end_int = end of integration period >= last second
+  my(@map) = ("header", "name", "start_int", "end_int", "target",
+	      "center", "ref_frame", "eph_type");
+  for $i (0..$#map) {$hash{$map[$i]} = ieee754todec(scalar(<$fh>));}
+
+  # hack for names with spaces
+  $hash{name}=~s/\s+$//;
+
+  # toss "1024" line, read true start second
+  <$fh>;
+  $hash{start_sec} = ieee754todec(scalar(<$fh>));
+  $hash{boundary} = scalar(<$fh>);
+
+  # from formulas in spk.html, but we want #coeffs, not degree, so don't -1
+  # eph_type determines if we have x y z or also vx vy vz
+  if ($hash{eph_type} == 2) {
+    $hash{ncoeffs} = ($hash{rsize}-2)/3;
+  } elsif ($hash{eph_type} == 3) {
+    $hash{ncoeffs} = ($hash{rsize}-2)/6;
+  } else {
+    # return nothing
+    warn "Can only handle arrays of type 2 or 3 (for now), returning null";
+    return;
+  }
+
+  # PEDANTIC: this is really a list, but ok if receiver treats it as hash
+  return %hash;
 }
 
 
