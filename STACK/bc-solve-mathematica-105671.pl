@@ -79,40 +79,21 @@ sub xsp_arrays {
 
   # NOTE: assuming these files never change
   # TODO: in theory could check file time vs cache time but sheesh!
-  my($out,$err,$res) = cache_command2("fgrep -b BEGIN_ARRAY $fname", "age=9999999");
+  my($out,$err,$res) = cache_command2("egrep -b 'BEGIN_ARRAY|END_ARRAY' $fname", "age=9999999");
 
   local(*A);
-   open(A,$fname);
+  open(A,$fname);
 
   for $i (split(/\n/, $out)) {
-    $i=~m/^(\d+):BEGIN_ARRAY (\d+) (\d+)$/||die("BAD LINE: $i");
-    my(%hash);
-    $hash{fname} = $fname;
-    ($hash{byte}, $hash{num}, $hash{size}) = ($1, $2, $3);
-
-    # seek to the start of array and store stuff in hash
-    seek(A, $hash{byte}, SEEK_SET);
-
-    # read data from file
-    for $j ("", "name", "jdstart", "jdend", "objid", "center", "ref_frame", 
-	    "eph_type", "startsec", "secs") {
-      $temp = <A>;
-      # avoid 1024
-      if ($temp=~/^1024$/) {$temp=<A>;}
-      chomp($temp);
-      $hash{$j} = ieee754todec($temp);
-    }
-
-
-
-    # setup the hash we'll be returning
-    for $j (keys %hash) {$rethash{$hash{objid}}{$j} = $hash{$j};}
+    chomp($i);
+    debug("I: $i");
+    if ($i=~m/^(\d+):BEGIN_ARRAY (\d+) (\d+)$/) {$arrays[$2]{bs} = $1; next;}
+    if ($i=~m/^(\d+):END_ARRAY (\d+) (\d+)$/) {$arrays[$2]{be} = $1; next;}
+    warn ("ODD LINE: $i");
   }
 
-  debug(unfold("y",\%hash));
+  debug(unfold("arr",@arrays));
 
-  close(A);
-  return \%rethash;
 }
 
 
