@@ -94,14 +94,16 @@ sub xsp_arrays {
     seek(A, $hash{byte}, SEEK_SET);
 
     # read data from file
-    for $j ("", "name", "jdstart", "jdend", "objid", "x1", "x2", "x3", 
-	    "startsec", "secs") {
+    for $j ("", "name", "jdstart", "jdend", "objid", "center", "ref_frame", 
+	    "eph_type", "startsec", "secs") {
       $temp = <A>;
       # avoid 1024
       if ($temp=~/^1024$/) {$temp=<A>;}
       chomp($temp);
       $hash{$j} = ieee754todec($temp);
     }
+
+
 
     # setup the hash we'll be returning
     for $j (keys %hash) {$rethash{$hash{objid}}{$j} = $hash{$j};}
@@ -112,6 +114,8 @@ sub xsp_arrays {
   close(A);
   return \%rethash;
 }
+
+
 
 debug(var_dump("x",xsp_arrays("/home/barrycarter/SPICE/KERNELS/jup310.xsp")));
 
