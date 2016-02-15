@@ -144,7 +144,8 @@ b = ellipseEA2B[a,ec];
 {x3,y3,z3} = rotationMatrix[x, -in].{x2,y2,z2};
 rotationMatrix[z, om].{x3,y3,z3}
 
-(* and again against web tested data, http://www.stargazing.net/kepler/ellipse.html *)
+(* and again against web tested data,
+http://www.stargazing.net/kepler/ellipse.html *)
 
 in = 1.84992*Degree
 om = 49.5664*Degree
@@ -152,5 +153,33 @@ w  = 336.0882*Degree
 a  = 1.5236365
 n  = 0.5240613*Degree
 ec = 0.0934231
-tp = -262.42784/n
+tp = 254.895962/n
+
+ma = tp*n
+b = ellipseEA2B[a,ec];
+{x1,y1} = ellipseMA2XY[a,b,ma]-{Sqrt[a^2-b^2],0};
+{x2,y2,z2} = rotationMatrix[z, w].{x1,y1,0};
+{x3,y3,z3} = rotationMatrix[x, -in].{x2,y2,z2};
+rotationMatrix[z, om].{x3,y3,z3}
+
+(*
+
+graphics attempts, using extremism
+
+*)
+
+
+a = 2; b = 1;
+ParametricPlot[{a*Cos[t],b*Sin[t]}, {t,0,2*Pi}]
+
+re = Take[rotationMatrix[z,20*Degree].{a*Cos[t], b*Sin[t], 0},2]
+
+ParametricPlot[re, {t,0,2*Pi}]
+
+(* the "money shot": rotate around y axis into 3D *)
+
+re2 = rotationMatrix[x,20*Degree].{a*Cos[t], b*Sin[t], 0}
+
+ParametricPlot3D[re2,{t,0,2*Pi}, ViewPoint -> {0,0,1}]
+
 
