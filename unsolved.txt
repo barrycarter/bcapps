@@ -65,3 +65,17 @@ bc-solve-space-13866.m
 
 # vertices and in nodes/out nodes
 bc-solve-math-1630476.m
+
+# Planetary moon orbits: elliptical and exact solutions
+bc-solve-mathematica-105671.m
+bc-solve-mathematica-105671.pl
+
+# 4D+ visualization of x^4 + y^4 = 1 in the complex plane
+bc-solve-math-1650982.m
+
+# satellite orbit
+bc-solve-astronomy-13635.m
+
+# four color theorem (but reduced?)
+bc-solve-1650965.m
+

@@ -49,3 +49,13 @@ bc-solve-gis-178354.m
 bc-solve-codereview-118568.c
 bc-solve-codereview-118568.m
 bc-solve-codereview-118568-orig.c
+
+# weighted average code
+bc-solve-codereview-119661.php
+bc-solve-codereview-119661-orig.php
+
+# closed form formula for planar fitting
+bc-solve-stats-196655.m
+
+# ellipse area from focus
+bc-solve-math-388134.m
