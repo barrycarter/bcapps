@@ -10,6 +10,7 @@ Eccentricity is EC
 
 Inclination is IN
 
+PeriapsisArgument is W (not even close?)
 
 2451544.500000000 = A.D. 2000-Jan-01 00:00:00.0000 (TDB)
  EC= 1.384945144772775E-03 QR= 1.069249695814333E+06 IN= 2.556617232510752E+01
