@@ -38,7 +38,7 @@ bc-solve-overflow-33944589.c
 # moon at horizon
 bc-solve-earthscience-7281.m
 
-# satellite/satellite occultations
+# satellite/satellite occultations (w/ help)
 bc-solve-astro-246.m
 bc-solve-astro-246.txt.bz2
 bc-solve-astro-246-2.m

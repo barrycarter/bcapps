@@ -155,12 +155,12 @@ n  = 0.5240613*Degree
 ec = 0.0934231
 tp = 254.895962/n
 
-ma = tp*n
+ma = tp*n*Degree
 b = ellipseEA2B[a,ec];
 {x1,y1} = ellipseMA2XY[a,b,ma]-{Sqrt[a^2-b^2],0};
-{x2,y2,z2} = rotationMatrix[z, w].{x1,y1,0};
-{x3,y3,z3} = rotationMatrix[x, -in].{x2,y2,z2};
-rotationMatrix[z, om].{x3,y3,z3}
+{x2,y2,z2} = rotationMatrix[z, -w].{x1,y1,0};
+{x3,y3,z3} = rotationMatrix[x, in].{x2,y2,z2};
+rotationMatrix[z, -om].{x3,y3,z3}
 
 (*
 

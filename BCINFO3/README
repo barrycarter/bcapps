@@ -1,4 +1,4 @@
-This directory contains notes and commands I use to setup a newserver,
+This directory contains notes and commands I use to setup a new server,
 bcinfo3. My goal is to migrate barrycarter.info and related domains here.
 
 It may or may not help other people setup a new server (probably not)
@@ -52,45 +52,13 @@ yum -y install readline readline-devel nagios-plugins 'nagios-plugins-*'
 yum -y install perl-Perl-Critic "perl-ExtUtils-*" inotify-tools tidy
 yum -y install calendar munin postgresql84 postgresql84-server gd-devel
 yum -y install rss2email git autoconf subversion automake libtool fuse
-yum -y install fuse-devel
+yum -y install fuse-devel "perl-Statistics-*" "libtool*"
 
 % Perl modules (excluding those available via yum)
 
-cpan Math::Round Digest::SHA1 Statistics::Distributions JSON
-
-% mail.resilans.se does not relay:
-
-[root@bcinfo3 ~]# telnet mail.resilans.se 25
-Trying 2a01:280:1::2...
-Connected to mail.resilans.se.
-Escape character is '^]'.
-220 server.resilans.se ESMTP Postfix
-HELO testing
-250 server.resilans.se
-MAIL FROM: <here@me.com>
-250 2.1.0 Ok
-RCPT TO: <barry@barrycarter.info>
-554 5.7.1 <barry@barrycarter.info>: Relay access denied
-QUIT
-221 2.0.0 Bye
-Connection closed by foreign host.
-
-% Neither does smtp.cdlan.net:
-
-[root@bcinfo3 ~]# telnet smtp.cdlan.net 25
-Trying 217.171.33.231...
-Connected to smtp.cdlan.net.
-Escape character is '^]'.
-220 smtpout.cdlan.net ESMTP
-HELO testing 
-250 smtpout.cdlan.net
-MAIL FROM: <here@me.com> 
-250 2.1.0 Ok
-RCPT TO: <barry@barrycarter.info> 
-554 5.7.1 <unknown[193.183.99.226]>: Client host rejected: Access denied
-QUIT
-221 2.0.0 Bye
-Connection closed by foreign host.
+cpan Module::Build ExtUtils::ParseXS ExtUtils::Makemaker
+cpan Math::Round Digest::SHA1 Statistics::Distributions JSON Astro::Nova
+cpan Astro::MoonPhase
 
 % Stop/remove/replace unnecessary services:
 
@@ -116,7 +84,10 @@ chkconfig xfs off
 /etc/init.d/xfs stop
 
 : intentionally not removing sendmail below, need client
-yum -y remove httpd saslauthd openssh-server
+: perl-ExtUtils-ParseXS = need more recent version
+yum -y remove httpd saslauthd openssh-server perl-ExtUtils-ParseXS.noarch 
+
+% TODO: confirm I no longer use sendmail at all on this server
 
 % edit sendmail files
 
@@ -127,6 +98,10 @@ yum -y remove httpd saslauthd openssh-server
 
 : some of these may not be installed
 yum -y remove php php-cli php-mysql
+
+% NOTE: I don't run wordpress on bcinfo3 any more
+
+% TODO: do I use php at all on bcinfo3 any more?
 
 % reinstall from source
 
@@ -147,6 +122,14 @@ cd nmap-6.25
 sh configure | & tee configure.out
 make |& tee make.out
 make install
+
+% install libnova (not in yum, and Astro::Nova needs it)
+
+cd /root/build;
+curl -L -o libnova.tgz https://sourceforge.net/projects/libnova/files/libnova/v%200.15.0/libnova-0.15.0.tar.gz/download
+tar -xvzf libnova.tgz
+cd libnova-0.15.0/
+sh configure |& tee configure.out
 
 % TODO: reboot after changes to make sure they "stick"
 
