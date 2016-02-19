@@ -145,36 +145,11 @@ curl -O http://download.geonames.org/export/dump/countryInfo.txt
 
 % Start crontab once (and it will reload itself after that)
 
-% move over wordpress files:
-
-# my wordpress is fairly specialized, so I have to rsync it over (not
-# do a new install), at least for now
-
-mkdir /sites; cd /sites
-rsync -Pvzrlpt root@wordpress.barrycarter.info:/usr/share/wordpress /sites
-
-% and wordpress db:
-
-# <h>a braver man would combine these steps</h>
-ssh root@wordpress.barrycarter.info "mysqldump wordpress">/tmp/wp.txt
-mysql> CREATE DATABASE wordpress;
-mysql wordpress < /tmp/wp.txt
-
-% for now, this command syncs this directory to my server
-% TODO: make this more efficient
-% TODO: copying files at this level is pointless
-\rsync -Pvzrlpt -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' /home/barrycarter/BCGIT/BCINFO3/ root@bcinfo3:/
-
-% OBSOLETE: decided not to use msmtp, sendmail in client mode should
-do the trick
-
 % TODO: bring over test.barrycarter.info (I link to it a LOT from wordpress)
 
 % TODO: configure r2e to match setting on old bc
 
 % LAST MINUTE STEPS:
-
-  - resync wordpress db and files (change constantly on live site)
 
   - mirror r2e config (change constantly on live site?)
 
@@ -239,6 +214,13 @@ db (danger!)
 
 CREATE DATABASE shared;
 \u shared
+CREATE TABLE requests (
+ hash TEXT,
+ request TEXT
+);
+
+: see MYSQL/index.pl for additional users/dbs to create
+
 ; below in shell to get some useful data
 echo .dump | sqlite3 /sites/DB/stations.db > /tmp/mytake.txt
 bc-sqlite3dump2mysql.pl /tmp/mytake.txt > /tmp/mytake2.txt
@@ -309,4 +291,3 @@ mv error.log error.log.20151215
 
 : this can be run later
 bzip2 -v access.log.* error.log.* &
-
