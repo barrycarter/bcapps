@@ -1,0 +1,29 @@
+@AccidentalFourierTransform's answer in comments is correct, and I'll
+provide an example for clarity. By appropriate choice of units, I will
+show the following are all equal to 1:
+
+  - speed of light (c)
+
+  - gravitational constant of the universe (G)
+
+  - the ideal gas constant (R)
+
+  - the illuminance of the Sun (Sb)
+
+We'll start with two obvious choices: measuring distance in light
+seconds (ls) and time in seconds. This gives us c = 1.
+
+Let G be the gravitational constant of the universe and apply unit
+conversion:
+
+$
+
+6.674\times10^{-11}\frac{m^3}{\text{kg} \times s^2}
+\times(\frac{\text{ls}}{299792458 m})^3
+
+$
+
+
+mass of 4.03716 10^35
+
+10^35 = 50K solar masses, 1/1000 globular cluster, zeptobarry =  ~~ ( 0.24 ~~ 1/4 ) mass of all humans alive (~~ 9.30^11 lb )

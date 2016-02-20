@@ -6,6 +6,8 @@ as raw points
 
 TODO: handle or properly ignore case c=0 which may be vertical plane
 
+TODO: fix d=1 and then ignore case d=0 
+
 *)
 
 assums = {Element[{x,y,z,x0,y0,a,b,c,d}, Reals], c!=0}

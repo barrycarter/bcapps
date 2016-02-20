@@ -19,8 +19,9 @@ mkdir /root/.ssh/; cd /root/.ssh; ex authorized_keys
 % Test locally
 > ssh -i ~/.ssh/id_rsa.bc root@bcinfo3 date
 
-% Put Perl in /bin as well
+% Put Perl in /bin and /usr/local/bin/ as well
 ln -s `which perl` /bin
+ln -s `which perl` /usr/local/bin
 
 % One off copy Perl files to /usr/local/bin
 % TODO: create a better rsyncing method
