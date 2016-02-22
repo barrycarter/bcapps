@@ -55,7 +55,7 @@ if ($chunks{"submit"}) {
   # run curl with data in tmp dir
   my($tempdir) = tmpdir();
   write_file($query, "$tempdir/query");
-  my($out,$err,$res) = cache_command2("curl -D - -d \@$tempdir/query http://post.shared.db.mysql.94y.info/","salt=$tmpdir");
+  my($out,$err,$res) = cache_command2("curl -D - -d \@$tempdir/query http://post.shared.db.mysql.a.94y.info/","salt=$tmpdir");
   # TODO: handle fail case here
   $out=~/^Location: (.*?)$/m;
   my($url) = $1;

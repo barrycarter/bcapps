@@ -5,6 +5,8 @@
 # --dryrun = don't actually do anything, use rsync -n
 # --remoteroot = mirror files to this directory on remote server (default "/")
 # --hash = use hashed mirror file, not pathwise mirror file
+# --ssh = use this command for the rsync, not the regular ssh (can be
+# used to supply different id files, for example)
 
 # TODO: assumes mirroring as root@ (VPS), which may be bad
 
@@ -66,7 +68,9 @@ if ($globopts{dryrun}) {$opts = "-n";}
 # even locally, the delta algorithm is faster (large files w/ appends
 # at end), so --no-W
 
-my($com)="rsync --no-W -vv -P $opts -z -R -L --files-from=$mirfile.todo . root\@$server:$globopts{remoteroot}";
+if ($globopts{ssh}) {$globopts{ssh} = "-e '$globopts{ssh}'";};
+
+my($com)="rsync $globopts{ssh} --no-W -vv -P $opts -z -R -L --files-from=$mirfile.todo . root\@$server:$globopts{remoteroot}";
 
 debug($com);
 my($out,$err,$res) = cache_command2($com);

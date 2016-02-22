@@ -78,4 +78,3 @@ bc-solve-astronomy-13635.m
 
 # four color theorem (but reduced?)
 bc-solve-1650965.m
-

@@ -27,34 +27,28 @@ yclose = y0 /. sol[[1]]
 
 dist = FullSimplify[pt2plane[x,y,z,xclose,yclose,a,b,c,d]]
 
-min = Minimize[{pt2plane[x,y,z,x0,y0,a,b,c,d], assums},{x0,y0},Reals]
+{a0, b0, c0, d0} = {-3,-2,1,15}
 
-dist = FullSimplify[pt2plane[x,y,z,xclose,yclose,a,b,c,d],assums]
+{xp,yp,zp} = {-2,-2,25}
 
-
-
-Solve[{
- D[pt2plane[x,y,z,x0,y0,a,b,c,d], x0] == 0, x != x0
-}, {x0,y0}, Reals]
-
-
-
-
-
-
-
-
-f[x_,y_] = 3*x+2*y+15;
+xclose0 = xclose /. {a->a0,b->b0,c->c0,d->d0,x->xp,y->yp,z->zp}
+yclose0 = yclose /. {a->a0,b->b0,c->c0,d->d0,x->xp,y->yp,z->zp}
+f[x_,y_] = zplane[x,y] /. {a -> a0, b -> b0, c -> c0, d -> d0}
 
 p0 = Plot3D[f[x,y], {x,-5,5}, {y,-5,5}, Mesh -> None,
  ColorFunction -> Function[{x,y,z}, Hue[1,0.5,1,0.2]]]
 
 g0 = Graphics3D[{
 PointSize[.02],
-Point[{-2,-2,f[-2,-2]}],
+Point[{xp,yp,zp}],
+Point[{xp,yp,f[xp,yp]}],
+Point[{xclose0,yclose0,f[xclose0,yclose0]}],
 Dashed,
-Line[{{-2,-2,f[-2,-2]}, {-2,-2,45}}]
+Line[{{xp,yp,f[xp,yp]}, {xp,yp,zp}}],
+Line[{{xclose0,yclose0,f[xclose0,yclose0]}, {xclose0,yclose0,zp}}]
 }]
 
-Show[{p0,g0}, Boxed -> False, PlotRange -> {{-5,5},{-5,5},{-10,55}}]
+Show[{p0,g0}, Boxed -> False, 
+ PlotRange -> {{-10,55},{-10,55},{-10,55}},
+ SphericalRegion -> True]
 showit
