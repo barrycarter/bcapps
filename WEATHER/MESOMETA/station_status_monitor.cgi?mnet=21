@@ -23,6 +23,8 @@
 	</tr>
 </table>		
 
+
+
 <script type="text/javascript">
   <!--
     function submitit(masterform){
@@ -57,8 +59,7 @@
         <option value="NWCC" >Pacific Northwest GCA</option>
         <option value="NOCC" >Northern California GCA</option>
         <option value="SOCC" >Southern California GCA</option>
-        <option value="WBCC" >Western Great Basin GCA</option>
-        <option value="EBCC" >Eastern Great Basin GCA</option>
+        <option value="GBCC" >Great Basin GCA</option>
         <option value="NRCC" >Northern Rockies GCA</option>
         <option value="RMCC" >Rocky Mountain GCA</option>
         <option value="SWCC" >Southwest GCA</option>
@@ -278,6 +279,8 @@
         <option value="CTP" >PA - State College CWA</option>
         <option value="CTPfwz" >PA - State College FWZ</option>
         <option value="PR" >PUERTO RICO</option>
+        <option value="SJU" >PR - San Juan CWA</option>
+        <option value="SJUfwz" >PR - San Juan FWZ</option>
         <option value="RI" >RHODE ISLAND</option>
         <option value="SC" >SOUTH CAROLINA</option>
         <option value="CHS" >SC - Charleston CWA</option>
@@ -387,7 +390,8 @@
       <td align="right" width="100%" nowrap="nowrap">
          <small><a href="/" target="_top">MesoWest</a></small> | 
          <small><a href="/html/help/main_index.html" target="_top">Help</a></small> |
-         <small><a href="site_map.cgi" target="_blank">Site Map</a></small>
+         <small><a href="site_map.cgi" target="_blank">Site Map</a></small> |
+         <small><a href="http://synopticlabs.org/" target="_blank">SynopticLabs Services</a></small>		 
       </td>
   </tr>
 
@@ -428,16 +432,21 @@ Mesonet Selection:<span style="padding-left:10px">
          <option value="11">AGRIMET</option>
          <option value="136">AIRNOW</option>
          <option value="179">AJKNDBC</option>
+         <option value="200">AJKWFO</option>
          <option value="90">AKDOT</option>
+         <option value="192">ALBWFO</option>
+         <option value="199">ALERT-MISC</option>
          <option value="65">APRSWXNET/CWOP</option>
          <option value="9">AQ</option>
          <option value="5">ARL FRD</option>
          <option value="10">ARL SORD</option>
+         <option value="202">ATOC</option>
          <option value="6">AVALANCHE</option>
          <option selected="selected" value="21">AZ ALERT</option>
          <option value="119">AZDOT</option>
          <option value="39">AZMET</option>
          <option value="31">BAMI</option>
+         <option value="205">BCCZO</option>
          <option value="115">BCHYDRO</option>
          <option value="151">BPANET</option>
          <option value="48">BTAVAL</option>
@@ -458,6 +467,7 @@ Mesonet Selection:<span style="padding-left:10px">
          <option value="30">CLR</option>
          <option value="182">CNRA</option>
          <option value="43">CNRFC</option>
+         <option value="185">COE470</option>
          <option value="94">CPCRC</option>
          <option value="123">CRN</option>
          <option value="176">CSCAN</option>
@@ -478,8 +488,10 @@ Mesonet Selection:<span style="padding-left:10px">
          <option value="138">FGNet</option>
          <option value="88">FGZWFO</option>
          <option value="159">FLDOT</option>
+         <option value="208">GADOT</option>
          <option value="84">GGWWFO</option>
          <option value="68">GNP</option>
+         <option value="186">GOMOOS</option>
          <option value="69">GPSMET</option>
          <option value="52">GSE</option>
          <option value="56">GTFWFO</option>
@@ -493,6 +505,8 @@ Mesonet Selection:<span style="padding-left:10px">
          <option value="160">ILDOT</option>
          <option value="118">INDOT</option>
          <option value="41">ITD</option>
+         <option value="198">IUTAH</option>
+         <option value="191">JPL</option>
          <option value="42">KBCI</option>
          <option value="20">KENNECOTT</option>
          <option value="169">KSKTA</option>
@@ -501,12 +515,14 @@ Mesonet Selection:<span style="padding-left:10px">
          <option value="148">KYMN</option>
          <option value="51">LANL</option>
          <option value="24">LAS VEGAS</option>
+         <option value="187">LCRA</option>
          <option value="110">LKNWFO</option>
          <option value="17">LOXWFO</option>
          <option value="154">LSCNET</option>
          <option value="147">MADIS MISC</option>
          <option value="161">MAEOT</option>
          <option value="95">MAMMOTH</option>
+         <option value="195">MAP</option>
          <option value="96">MARITIME</option>
          <option value="120">MAWN</option>
          <option value="152">MCDONALD</option>
@@ -516,6 +532,7 @@ Mesonet Selection:<span style="padding-left:10px">
          <option value="97">MEDOT</option>
          <option value="28">MEXICO</option>
          <option value="93">MFRWFO</option>
+         <option value="184">MGCNET</option>
          <option value="162">MIDOT</option>
          <option value="12">MISC</option>
          <option value="100">MNDOT</option>
@@ -530,17 +547,21 @@ Mesonet Selection:<span style="padding-left:10px">
          <option value="101">NDDOT</option>
          <option value="102">NEDOR</option>
          <option value="131">NEMPPA</option>
+         <option value="188">NERRS</option>
          <option value="105">NHDOT</option>
          <option value="164">NJDOT</option>
          <option value="109">NJNET</option>
          <option value="150">NMAQ</option>
+         <option value="196">NMCC</option>
+         <option value="204">NMDOT</option>
          <option value="122">NOS-NWLON</option>
          <option value="121">NOS-PORTS</option>
          <option value="22">NV DOT</option>
-         <option value="37">NWAVAL</option>
+         <option value="37">NWAC</option>
          <option value="72">NWS COOP</option>
          <option value="1">NWS/FAA</option>
          <option value="165">NYDOT</option>
+         <option value="197">OCPW</option>
          <option value="124">ODA</option>
          <option value="89">ODEQ</option>
          <option value="49">ODOT</option>
@@ -552,9 +573,12 @@ Mesonet Selection:<span style="padding-left:10px">
          <option value="54">PDTWFO</option>
          <option value="82">PIHWFO</option>
          <option value="92">PQRWFO</option>
+         <option value="206">PURPLEAIR</option>
+         <option value="203">RAINWISE</option>
          <option value="2">RAWS</option>
          <option value="18">REC</option>
          <option value="146">RENO</option>
+         <option value="190">REVWFO</option>
          <option value="180">RIOMESA</option>
          <option value="33">SARC</option>
          <option value="113">SBCAPCD</option>
@@ -576,6 +600,9 @@ Mesonet Selection:<span style="padding-left:10px">
          <option value="87">SUNCREST</option>
          <option value="168">TNDOT</option>
          <option value="7">TOOELE</option>
+         <option value="207">UB-AIR</option>
+         <option value="194">UCC-AGNET</option>
+         <option value="193">UCINET</option>
          <option value="32">UDWR</option>
          <option value="64">UPR</option>
          <option value="170">USARRAY</option>
@@ -586,6 +613,7 @@ Mesonet Selection:<span style="padding-left:10px">
          <option value="104">VADOT</option>
          <option value="178">VCAPCD</option>
          <option value="132">VTRANS</option>
+         <option value="201">VTWAC</option>
          <option value="36">WA DOT</option>
          <option value="40">WAAQ</option>
          <option value="67">WHITEPINE</option>
@@ -598,6 +626,7 @@ Mesonet Selection:<span style="padding-left:10px">
          <option value="35">WX4U</option>
          <option value="16">WY DOT</option>
          <option value="116">YAKIMA</option>
+         <option value="189">YPG</option>
 </select>
 <span style="padding-left:20px">
 <input type="hidden" name="order" value="id"/>
@@ -640,35 +669,35 @@ Some column names can be clicked, which will sort the table by the desired colum
 		<td align="left" class="newtable"><a href="/cgi-bin/droman/station_status_monitor.cgi?order=name&mnet=21"><b>Station Name</b></a></td>
 		<td align="center" class="newtable"><a href="/cgi-bin/droman/station_status_monitor.cgi?order=state&mnet=21"><b>State</b></a></td>
 		<td align="center" class="newtable"><a href="/cgi-bin/droman/station_status_monitor.cgi?order=status&mnet=21"><b>Status</b></a></td>
-		<td align="center" class="newtable" width=50><b>10/11</b></td>
-		<td align="center" class="newtable" width=50><b>10/12</b></td>
-		<td align="center" class="newtable" width=50><b>10/13</b></td>
-		<td align="center" class="newtable" width=50><b>10/14</b></td>
-		<td align="center" class="newtable" width=50><b>10/15</b></td>
-		<td align="center" class="newtable" width=50><b>10/16</b></td>
-		<td align="center" class="newtable" width=50><b>10/17</b></td>
-		<td align="center" class="newtable" width=50><b>10/18</b></td>
-		<td align="center" class="newtable" width=50><b>10/19</b></td>
-		<td align="center" class="newtable" width=50><b>10/20</b></td>
+		<td align="center" class="newtable" width=50><b>02/14</b></td>
+		<td align="center" class="newtable" width=50><b>02/15</b></td>
+		<td align="center" class="newtable" width=50><b>02/16</b></td>
+		<td align="center" class="newtable" width=50><b>02/17</b></td>
+		<td align="center" class="newtable" width=50><b>02/18</b></td>
+		<td align="center" class="newtable" width=50><b>02/19</b></td>
+		<td align="center" class="newtable" width=50><b>02/20</b></td>
+		<td align="center" class="newtable" width=50><b>02/21</b></td>
+		<td align="center" class="newtable" width=50><b>02/22</b></td>
+		<td align="center" class="newtable" width=50><b>02/23</b></td>
 	</tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MA67" target="_blank">MA67</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MA67" target="_blank">MA67</a></td>
 			<td class="newtable" bgcolor="#33FF66">ACDC @ 67th Ave.</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MABL" target="_blank">MABL</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MABL" target="_blank">MABL</a></td>
 			<td class="newtable" bgcolor="#33FF66">Bartlett Lake</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -684,7 +713,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MABU" target="_blank">MABU</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MABU" target="_blank">MABU</a></td>
 			<td class="newtable" bgcolor="#33FF66">Buckeye FRS #1</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -700,8 +729,8 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MACH" target="_blank">MACH</a></td>
-			<td class="newtable" bgcolor="#33FF66">Columbia Hill</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MACC" target="_blank">MACC</a></td>
+			<td class="newtable" bgcolor="#33FF66">Camelback Rd. @ Citrus Rd.</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
@@ -716,7 +745,23 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MACP" target="_blank">MACP</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MACH" target="_blank">MACH</a></td>
+			<td class="newtable" bgcolor="#33FF66">Columbia Hill</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+		<tr>
+		<tr>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MACP" target="_blank">MACP</a></td>
 			<td class="newtable" bgcolor="#33FF66">Crossroads Park</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -732,7 +777,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MACR" target="_blank">MACR</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MACR" target="_blank">MACR</a></td>
 			<td class="newtable" bgcolor="#33FF66">Carefree Ranch</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -748,7 +793,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MACY" target="_blank">MACY</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MACY" target="_blank">MACY</a></td>
 			<td class="newtable" bgcolor="#33FF66">Coyote Wash</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -764,7 +809,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MADC" target="_blank">MADC</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MADC" target="_blank">MADC</a></td>
 			<td class="newtable" bgcolor="#33FF66">Durango Complex</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -780,7 +825,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MADM" target="_blank">MADM</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MADM" target="_blank">MADM</a></td>
 			<td class="newtable" bgcolor="#33FF66">Desert Mountain School</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -796,7 +841,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MAEF" target="_blank">MAEF</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MAEF" target="_blank">MAEF</a></td>
 			<td class="newtable" bgcolor="#33FF66">Estrella Fan</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -812,7 +857,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MAFH" target="_blank">MAFH</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MAFH" target="_blank">MAFH</a></td>
 			<td class="newtable" bgcolor="#33FF66">Fountain Hills Fire Dept.</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -828,7 +873,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MAGB" target="_blank">MAGB</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MAGB" target="_blank">MAGB</a></td>
 			<td class="newtable" bgcolor="#33FF66">Gila Bend Mountains</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -844,7 +889,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MAGC" target="_blank">MAGC</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MAGC" target="_blank">MAGC</a></td>
 			<td class="newtable" bgcolor="#33FF66">GateWay Community College</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -860,7 +905,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MAGD" target="_blank">MAGD</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MAGD" target="_blank">MAGD</a></td>
 			<td class="newtable" bgcolor="#33FF66">City of Glendale</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -876,7 +921,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MAGL" target="_blank">MAGL</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MAGL" target="_blank">MAGL</a></td>
 			<td class="newtable" bgcolor="#33FF66">Gila Bend Landfill</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -892,7 +937,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MAGU" target="_blank">MAGU</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MAGU" target="_blank">MAGU</a></td>
 			<td class="newtable" bgcolor="#33FF66">Saguaro Lake</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -908,7 +953,23 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MAHB" target="_blank">MAHB</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MAGV" target="_blank">MAGV</a></td>
+			<td class="newtable" bgcolor="#33FF66">Aguila VFD</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+		<tr>
+		<tr>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MAHB" target="_blank">MAHB</a></td>
 			<td class="newtable" bgcolor="#33FF66">Horsethief Basin</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -924,7 +985,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MAHL" target="_blank">MAHL</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MAHL" target="_blank">MAHL</a></td>
 			<td class="newtable" bgcolor="#33FF66">Horseshoe Lake</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -940,7 +1001,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MAHM" target="_blank">MAHM</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MAHM" target="_blank">MAHM</a></td>
 			<td class="newtable" bgcolor="#33FF66">Humboldt Mountain</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -956,23 +1017,23 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MAHR" target="_blank">MAHR</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MAHR" target="_blank">MAHR</a></td>
 			<td class="newtable" bgcolor="#33FF66">Hassayampa R @ I-10</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MAIS" target="_blank">MAIS</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MAIS" target="_blank">MAIS</a></td>
 			<td class="newtable" bgcolor="#33FF66">Osborn Rd. @ 64th St.</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -988,7 +1049,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MALP" target="_blank">MALP</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MALP" target="_blank">MALP</a></td>
 			<td class="newtable" bgcolor="#33FF66">Lake Pleasant North</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -1004,23 +1065,23 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MAMC" target="_blank">MAMC</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MAMC" target="_blank">MAMC</a></td>
 			<td class="newtable" bgcolor="#33FF66">McMicken Floodway</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MAMD" target="_blank">MAMD</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MAMD" target="_blank">MAMD</a></td>
 			<td class="newtable" bgcolor="#33FF66">McMicken Dam</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -1036,7 +1097,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MAMF" target="_blank">MAMF</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MAMF" target="_blank">MAMF</a></td>
 			<td class="newtable" bgcolor="#33FF66">Magma FRS</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -1052,7 +1113,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MAMO" target="_blank">MAMO</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MAMO" target="_blank">MAMO</a></td>
 			<td class="newtable" bgcolor="#33FF66">Mobile</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -1068,7 +1129,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MAMU" target="_blank">MAMU</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MAMU" target="_blank">MAMU</a></td>
 			<td class="newtable" bgcolor="#33FF66">Mt. Union Wx</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -1084,10 +1145,10 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#FF6666"><a href="/cgi-bin/droman/meso_base.cgi?stn=MAPH" target="_blank">MAPH</a></td>
-			<td class="newtable" bgcolor="#FF6666">Phoenix Dam 2A</td>
-			<td align="center" class="newtable" bgcolor="#FF6666">AZ</td>
-			<td align="center" class="newtable" bgcolor="#FF6666">INACTIVE</td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MAPH" target="_blank">MAPH</a></td>
+			<td class="newtable" bgcolor="#33FF66">Phoenix Dam 2A</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
+			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
 			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
 			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
 			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
@@ -1100,7 +1161,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MAPJ" target="_blank">MAPJ</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MAPJ" target="_blank">MAPJ</a></td>
 			<td class="newtable" bgcolor="#33FF66">Pima Rd. @ Jomax Rd.</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -1116,7 +1177,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MAPL" target="_blank">MAPL</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MAPL" target="_blank">MAPL</a></td>
 			<td class="newtable" bgcolor="#33FF66">Lake Pleasant</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -1132,7 +1193,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MASF" target="_blank">MASF</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MASF" target="_blank">MASF</a></td>
 			<td class="newtable" bgcolor="#33FF66">South Mountain Fan</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -1148,7 +1209,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MASP" target="_blank">MASP</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MASP" target="_blank">MASP</a></td>
 			<td class="newtable" bgcolor="#33FF66">South Mountain Park</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -1164,23 +1225,23 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MATA" target="_blank">MATA</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MATA" target="_blank">MATA</a></td>
 			<td class="newtable" bgcolor="#33FF66">Thunderbird Academy</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
-			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
+			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MATP" target="_blank">MATP</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MATP" target="_blank">MATP</a></td>
 			<td class="newtable" bgcolor="#33FF66">Thompson Peak</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -1196,7 +1257,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MATW" target="_blank">MATW</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MATW" target="_blank">MATW</a></td>
 			<td class="newtable" bgcolor="#33FF66">Tiger Wash Fan</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -1212,7 +1273,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MAUP" target="_blank">MAUP</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MAUP" target="_blank">MAUP</a></td>
 			<td class="newtable" bgcolor="#33FF66">Usery Park WS</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -1228,7 +1289,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MAWA" target="_blank">MAWA</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MAWA" target="_blank">MAWA</a></td>
 			<td class="newtable" bgcolor="#33FF66">Wickenburg Airport</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -1244,7 +1305,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MEMF" target="_blank">MEMF</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MEMF" target="_blank">MEMF</a></td>
 			<td class="newtable" bgcolor="#33FF66">EMF @ Arizona Ave.</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -1260,7 +1321,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MRKC" target="_blank">MRKC</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MRKC" target="_blank">MRKC</a></td>
 			<td class="newtable" bgcolor="#33FF66">Rackensack Canyon</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -1276,7 +1337,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base.cgi?stn=MSYC" target="_blank">MSYC</a></td>
+			<td class="newtable" bgcolor="#33FF66"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=MSYC" target="_blank">MSYC</a></td>
 			<td class="newtable" bgcolor="#33FF66">Sycamore Creek - Upper</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">AZ</td>
 			<td align="center" class="newtable" bgcolor="#33FF66">ACTIVE</td>
@@ -1292,7 +1353,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#33FF66">Y</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#FF6666"><a href="/cgi-bin/droman/meso_base.cgi?stn=YABA" target="_blank">YABA</a></td>
+			<td class="newtable" bgcolor="#FF6666"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=YABA" target="_blank">YABA</a></td>
 			<td class="newtable" bgcolor="#FF6666">Bagdad Airport</td>
 			<td align="center" class="newtable" bgcolor="#FF6666">AZ</td>
 			<td align="center" class="newtable" bgcolor="#FF6666">INACTIVE</td>
@@ -1308,7 +1369,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#FF6666"><a href="/cgi-bin/droman/meso_base.cgi?stn=YABC" target="_blank">YABC</a></td>
+			<td class="newtable" bgcolor="#FF6666"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=YABC" target="_blank">YABC</a></td>
 			<td class="newtable" bgcolor="#FF6666">Black Canyon City</td>
 			<td align="center" class="newtable" bgcolor="#FF6666">AZ</td>
 			<td align="center" class="newtable" bgcolor="#FF6666">INACTIVE</td>
@@ -1324,7 +1385,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#FF6666"><a href="/cgi-bin/droman/meso_base.cgi?stn=YACJ" target="_blank">YACJ</a></td>
+			<td class="newtable" bgcolor="#FF6666"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=YACJ" target="_blank">YACJ</a></td>
 			<td class="newtable" bgcolor="#FF6666">Cordes Junction</td>
 			<td align="center" class="newtable" bgcolor="#FF6666">AZ</td>
 			<td align="center" class="newtable" bgcolor="#FF6666">INACTIVE</td>
@@ -1340,7 +1401,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#FF6666"><a href="/cgi-bin/droman/meso_base.cgi?stn=YACW" target="_blank">YACW</a></td>
+			<td class="newtable" bgcolor="#FF6666"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=YACW" target="_blank">YACW</a></td>
 			<td class="newtable" bgcolor="#FF6666">Cottonwood PW Yard</td>
 			<td align="center" class="newtable" bgcolor="#FF6666">AZ</td>
 			<td align="center" class="newtable" bgcolor="#FF6666">INACTIVE</td>
@@ -1356,7 +1417,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#FF6666"><a href="/cgi-bin/droman/meso_base.cgi?stn=YAMM" target="_blank">YAMM</a></td>
+			<td class="newtable" bgcolor="#FF6666"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=YAMM" target="_blank">YAMM</a></td>
 			<td class="newtable" bgcolor="#FF6666">Mingus Mountain</td>
 			<td align="center" class="newtable" bgcolor="#FF6666">AZ</td>
 			<td align="center" class="newtable" bgcolor="#FF6666">INACTIVE</td>
@@ -1372,7 +1433,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#FF6666"><a href="/cgi-bin/droman/meso_base.cgi?stn=YAPV" target="_blank">YAPV</a></td>
+			<td class="newtable" bgcolor="#FF6666"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=YAPV" target="_blank">YAPV</a></td>
 			<td class="newtable" bgcolor="#FF6666">Prescott Valley PD</td>
 			<td align="center" class="newtable" bgcolor="#FF6666">AZ</td>
 			<td align="center" class="newtable" bgcolor="#FF6666">INACTIVE</td>
@@ -1388,7 +1449,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#FF6666"><a href="/cgi-bin/droman/meso_base.cgi?stn=YASD" target="_blank">YASD</a></td>
+			<td class="newtable" bgcolor="#FF6666"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=YASD" target="_blank">YASD</a></td>
 			<td class="newtable" bgcolor="#FF6666">Sedona Airport</td>
 			<td align="center" class="newtable" bgcolor="#FF6666">AZ</td>
 			<td align="center" class="newtable" bgcolor="#FF6666">INACTIVE</td>
@@ -1404,7 +1465,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#FF6666"><a href="/cgi-bin/droman/meso_base.cgi?stn=YASL" target="_blank">YASL</a></td>
+			<td class="newtable" bgcolor="#FF6666"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=YASL" target="_blank">YASL</a></td>
 			<td class="newtable" bgcolor="#FF6666">Seligman Airport</td>
 			<td align="center" class="newtable" bgcolor="#FF6666">AZ</td>
 			<td align="center" class="newtable" bgcolor="#FF6666">INACTIVE</td>
@@ -1420,7 +1481,7 @@ Some column names can be clicked, which will sort the table by the desired colum
 			<td align="center" class="newtable" bgcolor="#FF6666">N</td>
 		<tr>
 		<tr>
-			<td class="newtable" bgcolor="#FF6666"><a href="/cgi-bin/droman/meso_base.cgi?stn=YAYA" target="_blank">YAYA</a></td>
+			<td class="newtable" bgcolor="#FF6666"><a href="/cgi-bin/droman/meso_base_dyn.cgi?stn=YAYA" target="_blank">YAYA</a></td>
 			<td class="newtable" bgcolor="#FF6666">Yavapai FCD</td>
 			<td align="center" class="newtable" bgcolor="#FF6666">AZ</td>
 			<td align="center" class="newtable" bgcolor="#FF6666">INACTIVE</td>
