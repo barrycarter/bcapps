@@ -6,9 +6,8 @@
 
 # TODO: improve this when data is unavailable
 
-push(@INC, "/usr/local/lib");
-require "bclib.pl";
-require "bc-weather-lib.pl";
+require "/usr/local/lib/bclib.pl";
+require "/usr/local/lib/bc-weather-lib.pl";
 
 # own tmp dir
 dodie('chdir("/var/tmp/bcweathertext")');

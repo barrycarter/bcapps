@@ -41,7 +41,7 @@ shift(@comments);
 for $comment (@comments) {
 
   # commentor id and name
-  $comment=~s%<a href="/profile/(\d+)">(.*?)</a>%%s;
+  $comment=~s%<a href="/profiles/(\d+)">(.*?)</a>%%s;
   ($commentorid, $commentor) = ($1, $2);
 
   # strip commented on (and when, tho gocomics gives that in useless format)

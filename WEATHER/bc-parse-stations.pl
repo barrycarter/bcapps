@@ -26,7 +26,7 @@ sub meso {
   local(*A);
 
   # use csv file, it's more accurate than meso_station.cgi.html
-  open(A, "zcat /home/barrycarter/BCGIT/WEATHER/mesowest_link_csv.tbl.gz|");
+  open(A, "bzcat /home/barrycarter/BCGIT/WEATHER/mesowest_link_csv.tbl.bz2|");
 
   # skip header line (this is cheating in some sense)
   <A>;

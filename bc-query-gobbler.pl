@@ -15,7 +15,7 @@
 # TODO: the "DONE" directory should be wiped regularly
 
 require "/usr/local/lib/bclib.pl";
-$globopts{debug} = 1;
+# $globopts{debug} = 1;
 my($db)=shift||die("Usage: $0 name_of_db_without_.db");
 
 # this program is intended to avoid race conditions, so must only run once
