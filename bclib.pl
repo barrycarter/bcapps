@@ -16,13 +16,11 @@ use Math::Round;
 use Data::Dumper 'Dumper';
 use B;
 
-# temporarily NOT include Astro::Nova because I can't get it to install on rebuilt bcinfo3 even after making considerable efforts
-
-# use Astro::Nova qw(get_solar_equ_coords get_lunar_equ_coords get_hrz_from_equ
-#		   get_solar_rst_horizon get_timet_from_julian
-#		   get_julian_from_timet get_lunar_rst get_lunar_phase
-#		   get_apparent_sidereal_time get_mars_equ_coords
-#		   get_ecl_from_equ);
+use Astro::Nova qw(get_solar_equ_coords get_lunar_equ_coords get_hrz_from_equ
+		   get_solar_rst_horizon get_timet_from_julian
+		   get_julian_from_timet get_lunar_rst get_lunar_phase
+		   get_apparent_sidereal_time get_mars_equ_coords
+		   get_ecl_from_equ);
 use Astro::MoonPhase qw(phase phasehunt);
 require JSON;
 
