@@ -26,6 +26,18 @@ Thus, A to B transform is:
 
 *)
 
+g0[t_] := Graphics[{
+ PointSize[0.01],
+ Point[{0,0}],
+ Point[{0.9*t,1}],
+ Hue[1],
+ If[t>1, Point[{t-1,1}]]
+}];
+
+Show[g0[5], PlotRange -> {{-0.1,10},{-.1,1.1}}]
+
+
+
 (* the Loretnz contraction, v as fraction of light speed *)
 
 Sqrt[1-v^2]
