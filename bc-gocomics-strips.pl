@@ -2,10 +2,13 @@
 
 # downloads all gocomics strips (each day) for a given strip
 
-# <h>Pearls Before Swine = test strip, because of my everlasting hatred
-# for Steven Pastis!</h>
+# TODO: to collect comments, allow for downloads of page w/o dl'ing image
 
-# NOTE: this is VERY similar to bc-get-peanuts.pl
+# --strip: short code for strip (eg, "pearlsbeforeswine"), as shown in
+# URL: http://www.gocomics.com/pearlsbeforeswine/2016/02/25
+# --syear: starting year
+# --eyear: ending year
+# --real: actually run (otherwise, just print files)
 
 # one liner to obtain strips 2014-05-02+ (different format) after
 # dl'ing page data (pipe to sh or parallel):
@@ -15,15 +18,23 @@
 
 require "/usr/local/lib/bclib.pl";
 
-$strip = "pearlsbeforeswine";
-$workdir = "/mnt/extdrive/GOCOMICS/$strip";
+$strip = $globopts{strip};
+$workdir = "/mnt/extdrive-old/GOCOMICS/$strip";
+unless (-d $workdir) {mkdir($workdir);}
 dodie("chdir('$workdir')");
 
-# TODO: manually adjusting years per strip is bad
-for $i (2001..2014) {
-  for $j (1..12) {
-    # for which days this month are comics available?
+# never pass the current month
+my($yr,$mo) = split(/\s+/,strftime("%Y %m",gmtime()));
+debug("YR: $yr, MO: $mo");
 
+# TODO: manually adjusting years per strip is bad
+for $i ($globopts{syear}..$globopts{eyear}) {
+  for $j (1..12) {
+
+    # no future comics possible
+    if ($i>$yr || ($i==$yr && $j>$mo)) {last;}
+
+    # for which days this month are comics available?
     # already have it?
     if (-f "days-for-$i-$j.txt") {next;}
 
@@ -36,8 +47,10 @@ for $i (2001..2014) {
 
 if (@commands) {
   write_file(join("\n",@commands), "runme1.sh");
-  system("parallel -j 20 < runme1.sh");
+  if ($globopts{real}) {system("parallel -j 20 < runme1.sh");}
 }
+
+unless ($globopts{real}) {die "TESTING";}
 
 # and now, see which days are available
 
