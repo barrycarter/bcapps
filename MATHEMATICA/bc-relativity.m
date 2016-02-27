@@ -28,13 +28,17 @@ Thus, A to B transform is:
 
 g0[t_] := Graphics[{
  PointSize[0.01],
- Point[{0,0}],
- Point[{0.9*t,1}],
+ Text[Style[StringJoin["t=",ToString[t]],FontSize -> 20],{0.9*t,0.2}],
+ Text[Style[StringJoin["d=",ToString[0.9*t]],FontSize -> 20],{0.9*t,-0.2}],
  Hue[1],
- If[t>1, Point[{t-1,1}]]
+ Point[{0,0}],
+ If[t>1, Line[{{0,0},{t-1,0}}]],
+ Hue[1/3],
+ Point[{0.9*t,0}],
 }];
 
-Show[g0[5], PlotRange -> {{-0.1,10},{-.1,1.1}}]
+Show[g0[5], PlotRange -> {{-0.1,10},{-0.4,0.4}}]
+showit
 
 
 
