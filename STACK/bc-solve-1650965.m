@@ -38,4 +38,18 @@ g[i_] := g[i] = Select[Range[0,14], f[#] == i &]
 
 inv[list_] := Flatten[Map[g,list]]
 
+(*
 
+Node 1: (1,0)
+
+Node 2: (2,1)
+
+Node 3: (1, 2) or (2, 1)
+
+Node 4: (1, {2, 4
+
+
+
+
+
+*)
