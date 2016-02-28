@@ -8,14 +8,20 @@ line[{z1,z2}]: the line (segment) from z1 to z2
 
 *)
 
-angle[line[{z1_,z2_}],line[{z3_,z4_}]] = Arg[z2-z1]-Arg[z4-z3]
+(* Mathematica yields errors on definitions like these, but allows them *)
 
-lines[triangle[{z1_,z2_,z3_}]] = {line[{z2,z3}], line[{z1,z3}], line[{z1,z2}]};
+arg[line[pts_]] = Arg[pts[[2]]-pts[[1]]]
 
+angle[line1_,line2_] = arg[line1] - arg[line2]
 
+(* TODO: these lines/angles aren't in "order"? *)
 
-{Arg[z2-z1]-Arg[z3-z1], 
-Arg[z1-z2]-Arg[z3-z2],  Arg[z1-z3]-Arg[z2-z3]};
+lines[triangle[pts_]] = 
+ Flatten[Table[line[{pts[[i]],pts[[j]]}],{i,2},{j,i+1,3}]]
+
+angles[triangle[pts_]] = Flatten[Table[angle[lines[triangle[pts]][[i]], 
+ lines[triangle[pts]][[j]]], {i,2}, {j,i+1,3}]]
+
 
 
 
