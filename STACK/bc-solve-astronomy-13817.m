@@ -1,5 +1,20 @@
 (*
 
+a = 10/300/10^6
+conds = {t>0, a>0, v>0, v<1}
+factor[v_] = (1-v^2)^(-1/2)
+speed[t_] = Tanh[a*t]
+distance[t_] = Integrate[speed[t],t]
+rate[t_] = FullSimplify[1/factor[speed[t]], conds]
+elapsed[t_] = FullSimplify[Integrate[rate[t],t],conds]
+distrat[t_] = FullSimplify[1/factor[speed[t]],conds]
+totdist[t_] = 
+
+FullSimplify[Integrate[speed[t]*distrat[t],t],conds]
+
+
+
+
 TODO: it would be more fun to derive these from first principles
 
 This doesn't fully answer your question.
