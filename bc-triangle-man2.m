@@ -1,3 +1,58 @@
+(*
+
+Given a triangle in the complex plane with vertices {a,b,c}, formulas
+for interesting quantities (this just summarizes + simplifies the
+equations below)
+
+Results section (in Mathematica form)
+
+Altitudes:
+
+  - Where altitude hits opposite side of triangle
+
+A: b + (-b + c)*Re[(-a + b)/(b - c)]
+B: a + (-a + c)*Re[(a - b)/(a - c)]
+C: a + (-a + b)*Re[(a - c)/(a - b)]
+
+  - Lengths
+
+A: Norm[-a + b + (-b + c)*Re[(-a + b)/(b - c)]]
+B: Norm[a - b + (-a + c)*Re[(a - b)/(a - c)]]
+C: Norm[-((a - b)*(-1 + Re[(a - c)/(a - b)]))]
+
+  - Orthocenter
+
+OC: ((b - c)*(-a + b + c)*Conjugate[a] - (a - c)*(a - b + c)*Conjugate[b] + 
+  (a - b)*(a + b - c)*Conjugate[c])/((b - c)*Conjugate[a] + 
+  (-a + c)*Conjugate[b] + (a - b)*Conjugate[c])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*)
+
+
+
+
+
+
+
+
+
+
 (* Revision of bc-triangle-man.m for arbitrary triangle with vertexs a b c *)
 
 (* reference/sample triangle [changed to be acute later] *)
@@ -111,7 +166,7 @@ basetrisectors[z_] = translates[basetrisector]
 
 (* perpendicular bisector for some triangles *)
 (* TODO: find the shorter one *)
-(* can't use translates trick here, neither point is a vertex *)
+(* cant use translates trick here, neither point is a vertex *)
 
 baseperps[z_] = intersection[{0,1},perpin2[{1,c},(1+c)/2]]
 

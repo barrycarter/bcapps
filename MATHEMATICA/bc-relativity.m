@@ -1,5 +1,22 @@
 (*
 
+Q: For the community wiki, derive the special theory of relativity
+without using matrices or mirrors.
+
+A:
+
+First, let's consider a simple example:
+
+  - Observer B is moving at 0.9c with respect to Observer A.
+
+  - One second after Observer B passes Observer A, Observer A shoots a
+  light beam towards Observer B. Of course, this is 1 second in
+  Observer A's reference frame.
+
+
+
+
+
 Simple relativity:
 
 A shoots light at B, 0.9 light second away moving at .9c after 1s
@@ -30,12 +47,24 @@ g0[t_] := Graphics[{
  PointSize[0.01],
  Text[Style[StringJoin["t=",ToString[t]],FontSize -> 20],{0.9*t,0.2}],
  Text[Style[StringJoin["d=",ToString[0.9*t]],FontSize -> 20],{0.9*t,-0.2}],
- Hue[1],
+ Hue[2/3],
  Point[{0,0}],
+ Thickness[0.004],
+ Hue[1],
  If[t>1, Line[{{0,0},{t-1,0}}]],
  Hue[1/3],
  Point[{0.9*t,0}],
 }];
+
+show[t_] := Show[g0[t], PlotRange -> {{-1.1,10},{-1,1}}, Axes -> {True,False}]
+
+Export["/tmp/test.gif",show[-.5], ImageSize -> {800,200}]
+Run["display /tmp/test.gif&"]
+
+t1 = Table[show[t],{t,-0.5,9,.1}];
+Export["/tmp/animate.gif",t1]
+
+
 
 Show[g0[5], PlotRange -> {{-0.1,10},{-0.4,0.4}}]
 showit
