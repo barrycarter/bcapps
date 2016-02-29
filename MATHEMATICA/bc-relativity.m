@@ -121,29 +121,120 @@ distance can affect time.
   distance. If 5 meters translates to 1 meter, 10 meters will
   translate to 2 meters, and so on.
 
-According to
-https://en.wikipedia.org/wiki/Derivations_of_the_Lorentz_transformations:
-
-<blockquote>
-Since space is assumed to be homogeneous, the transformation must be linear.
-</blockquote>
-
-I have to admit that I, Barry Carter, the person writing this answer,
-do not understand why this implication holds. Searching the Internet
-(or even just stackexchange.com, especially physics.stackexchange.com)
-show several explanations (and at least one result that disagrees with
-this hypothesis), but these explanations seem extremely complicated
-for such a simple hypothesis. For now, let's accept linearity to
-proceed with the derivation.
-
-
-
-
 TODO: note specific to v
 
+TODO: obviousity of linearity through addition
+
+Combining these observations, we come up with formulas:
+
+$\text{t}_{\text{B}}=p \text{d}_{\text{A}}+q \text{t}_{\text{A}}$
+$\text{d}_{\text{B}}=s \text{d}_{\text{A}}+r \text{t}_{\text{A}}$
+
+In other words, the time and distance in reference frame B depend
+linearly on the time and distance in reference frame A. Note that this
+applies to any two reference frames, not just the A and B from the
+example earlier.
+
+Note also that $\{p,q,r,s\}$ all depend on $v$, the relative velocity
+between the two frames. If the velocity changes, so will
+$\{p,q,r,s\}$. Although I'm not specifying $p$ as $p(v)$, we will see
+our solution will be in terms of $v$.
+
+Because these are linear equations, some derivations turn to matrices
+at this point. There's nothing wrong with that (matrices are a
+"shortcut" to solving linear equations), but we'll stick with the
+equations as is.
+
+Based on our thought experiment above, we know that a distance of
+$\frac{v}{1-v}$ and a time of $\frac{1}{1-v}$ in frame A translate to
+some time and distance in frame B such that
+$\frac{\text{d}_{\text{B}}}{\text{t}_{\text{B}}}=c$ (we don't know
+that actual time and distance, just their ratio). Substituting this
+into the equations above, we have:
+
+$
+   \frac{s \text{d}_{\text{A}}+r \text{t}_{\text{A}}}{q \text{d}_{\text{A}}+p
+    \text{t}_{\text{A}}}=c
+$
+
+which lets us solve for any one of the variables. It turns out solving
+for `s` is slightly cleaner, giving us:
+
+$\left\{s\to \frac{t_{\text{A}} (c p-r)}{d_{\text{A}}}+c q\right\}$
+
+Since frame A and frame B are both traveling at velocity $v$ with
+respect to each other, we should be able to use the same equations to
+convert from frame B back to frame A. If we convert from frame A to
+frame B and back, we should get back the same time and distance we
+started with.
+
+First, let's convert from frame A to frame B (note: even though we've
+solved for $s$, I'll continue using as a variable below for
+simplicity: we will substitute the value of $s$ back in later):
+
+$\text{t}_{\text{B}}=p \text{d}_{\text{A}}+q \text{t}_{\text{A}}$
+$\text{d}_{\text{B}}=s \text{d}_{\text{A}}+r \text{t}_{\text{A}}$
+
+Going from frame B to frame A, we have:
+
+$\text{t}_{\text{A}}=p \text{d}_{\text{B}}+q \text{t}_{\text{B}}$
+$\text{d}_{\text{A}}=s \text{d}_{\text{B}}+r \text{t}_{\text{B}}$
+
+Now, substituting the first pair of equations into the second:
+
+$
+t_{\text{A}}=
+p \left(sd_{\text{A}}+r t_{\text{A}}\right)+
+q \left(p d_{\text{A}}+q t_{\text{A}}\right)
+$
+
+$ 
+d_{\text{A}}=
+s \left(s d_{\text{A}}+rt_{\text{A}}\right)+
+r \left(p d_{\text{A}}+q t_{\text{A}}\right)
+$
 
 
 
+
+
+
+
+
+TODO: off by negative sign?
+
+
+JUNK NOTES:
+
+s -> tA*(c*p-r)/dA + c*q
+
+Solve[{
+ tA == q (dA p + q tA) + p (dA s + r tA)
+ dA == r (dA p + q tA) + s (dA s + r tA)
+}, {p,q}]
+
+
+x = dist, y = time
+time[x_,y_] = p*x + q*y
+dist[x_,y_] = s*x + r*y
+
+tA == q (dA p + q tA) + p (dA s + r tA)
+
+
+trans = {dA -> Subscript[d,"A"], tA -> Subscript[t,"A"],
+         dB -> Subscript[d,"B"], tB -> Subscript[t,"B"]};
+
+
+Subscript["t","B"] == p*Subscript["t","A"] + q*Subscript["d","A"]     
+Subscript["d","B"] == r*Subscript["t","A"] + s*Subscript["d","A"]
+
+(r*Subscript["t","A"] + s*Subscript["d","A"])/
+(p*Subscript["t","A"] + q*Subscript["d","A"]) == c
+
+Solve[(s*dA + r*tA)/(q*dA + p*tA) == c,s]
+
+
+TODO: spellcheck
 
 
 Simple relativity:

@@ -1,0 +1,56 @@
+(* an answer to http://physics.stackexchange.com/questions/105379/homogeneity-of-space-implies-linearity-of-lorentz-transformations *)
+
+Intuitively, this is fairly easy to understand. This isn't a proof,
+but suppose Bob is traveling at a constant velocity relative to you in
+such a way that:
+
+  - 3 minutes on Bob's clock equal 15 minutes on your clock (time dilation)
+
+  - 15 meters of Bob's distance is equal to 3 meters of your distance
+  (Lorentz contraction)
+
+Note that I'm making no assumption of linearity. I don't know how long
+4 minutes on Bob's clock will be on my clock. I'm only going to use
+the two specific observations above to show linearity (intuitively).
+
+Suppose Bob starts a 3 minute egg timer (hourglass), and, the moment 3
+minutes elapse, he turns it around to measure another 3 minutes.
+
+Since Bob is in an inertial (constant velocity) reference frame, his 3
+minutes plus 3 minutes add to 6 minutes.
+
+In your reference frame, the first 3 minutes took 15 minutes (by our
+observation above) and the second 3 minutes *also* took 15 minutes,
+since Bob's velocity relative to us remains constant. Thus, Bob's 6
+minutes took 15 + 15 minutes, or 30 minutes.
+
+Of course, you can apply this observation to any amount of time, thus
+showing linearity.
+
+The argument for distance is similar. If Bob walks 15 meters, pauses
+(for a length of time that will differ for the two of you), and then
+walks another 15 meters, he has walked a total of 30 meters, since
+distances add.
+
+You don't know how long 30 of Bob's meters are for you, but you do
+know the first 15 meters translates to 3 meters, as does the second 15
+meters. Since distance adds for you as well, you now know that 30
+meters of Bob's distance equals 6 meters of your distance.
+
+In other words, time and distance add in all intertial reference frames.
+
+Why is this not a proof?
+
+I assume that 3 minutes on Bob's clock is *always* equal to 15 minutes
+on your clock, since Bob is traveling at a constant velocity relative
+to you.
+
+However, it's at least theoretically possible that the speed of Bob's
+clock depends on his distance from you. Perhaps 3 minutes on Bob's
+clock equals 15 minutes on your clock the instant he passes you, but,
+when he's half a light year away, 3 minutes on his clock is now an
+hour on your clock.
+
+So, this isn't a proof, but if you intuitively accept that the
+difference in time and distance between two observers depends solely
+on their relative velocity, this may be helpful.
