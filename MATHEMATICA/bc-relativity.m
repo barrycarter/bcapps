@@ -45,23 +45,56 @@ Thus, A to B transform is:
 
 g0[t_] := Graphics[{
  PointSize[0.01],
- Text[Style[StringJoin["t=",ToString[t]],FontSize -> 20],{0.9*t,0.2}],
- Text[Style[StringJoin["d=",ToString[0.9*t]],FontSize -> 20],{0.9*t,-0.2}],
+ Text[Style[StringJoin["t=",ToString[
+ PaddedForm[Round[t,.1], {2,1}]
+]],FontSize -> 20],
+ {0.9*t,0.2}],
  Hue[2/3],
  Point[{0,0}],
  Thickness[0.004],
  Hue[1],
  If[t>1, Line[{{0,0},{t-1,0}}]],
+ If[Abs[t-1]<.25, Text[Style["FIRE!", FontSize -> 20],{0,.5}]],
+ If[Abs[t-10]<.25, Text[Style["I'M HIT!", FontSize -> 20],{9,.5}]],
  Hue[1/3],
  Point[{0.9*t,0}],
 }];
 
-show[t_] := Show[g0[t], PlotRange -> {{-1.1,10},{-1,1}}, Axes -> {True,False}]
+show[t_] := Show[g0[t], PlotRange -> {{-1.1,10},{-1,1}}, Axes -> {True,False},
+ ImageSize-> {800,200}]
+
+g1[t_] := Graphics[{
+ Arrowheads[{-0.02,0.02}],
+ Arrow[{{-2.7,-0.2},{0,-0.2}}],
+ Text[Style["x", FontSize -> 20], {-1.35,-.4}],
+ PointSize[0.01],
+ If[Abs[t]<0.11, Text[Style[StringJoin["t=",ToString[
+ PaddedForm[Round[0,.1], {2,1}]
+]],FontSize -> 20],
+ {0,0.2}],
+ Text[Style["t=???",FontSize -> 20], {0,0.2}]],
+ Hue[2/3],
+ Point[{-0.9*t,0}],
+ Thickness[0.004],
+ Hue[1],
+ If[t>3, Line[{{-2.7,0},{-2.7+(t-2.7),0}}]],
+ Hue[1/3],
+ Point[{0,0}],
+}];
+
+show2[t_] := Show[g1[t], PlotRange -> {{-10, 1.1},{-1,1}}, 
+ Axes -> {True,False}, ImageSize-> {800,200}, Ticks -> None]
+show2[5]
+showit
+
+t2 = Table[show2[t],{t,-0.5,11,.1}];
+Export["/tmp/animate.gif",t2]
+
 
 Export["/tmp/test.gif",show[-.5], ImageSize -> {800,200}]
 Run["display /tmp/test.gif&"]
 
-t1 = Table[show[t],{t,-0.5,9,.1}];
+t1 = Table[show[t],{t,-0.5,11,.1}];
 Export["/tmp/animate.gif",t1]
 
 
