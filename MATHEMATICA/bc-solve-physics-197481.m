@@ -30,6 +30,67 @@ TODO: mention this program
 
 *)
 
+(* 
+
+Let's genericize the concept of intervals here
+
+p1 = period 1
+p2 = period 2
+
+p1 < p2 wlog
+
+Example: 5 and 7 years -> every 17.5 years (p1*p2/(p1-p2))
+
+but within those periods, interval of n degrees? (n < 180)
+
+360*n*(1/p1 - 1/p2) on either side
+
+generic:
+
+m*p1*p2/(p1-p2) +- 360*n*(1/p1 - 1/p2)
+
+note that the intersect must work for ANY pair, not a 5 from b, b 5 from c
+
+*)
+
+Solve[t/p1 == t/p2 + 1, t]
+
+p1*p2/(p1-p2)
+
+FullSimplify[m*p1*p2/(p1-p2) + 360*n*(1/p1 - 1/p2),
+ {Element[{m,n},Integers], p1 > 0, p2 > 0}]
+
+Interval[{m*p1*p2/(p1-p2) - 360*n*(1/p1 - 1/p2), 
+          m*p1*p2/(p1-p2) + 360*n*(1/p1 - 1/p2)}]
+
+int[p1_,p2_,m_,n_] =  Interval[{m*p1*p2/(p1-p2) - (n/360)/(1/p1 - 1/p2), 
+                                m*p1*p2/(p1-p2) + (n/360)/(1/p1 - 1/p2)}];
+
+int[p1,p2,n1,m1]
+int[p1,p3,n2,m2]
+
+(* work it out for mer/ven/ear within 5 degrees *)
+
+int[0.38709843,0.72332102,m1,5]
+int[0.38709843,1.00000018,m2,5]
+int[0.72332102,1.00000018,m3,5]
+
+mv = Table[int[0.38709843,0.72332102,m,5], {m,1000}];
+me = Table[int[0.38709843,1.00000018,m,5], {m,1000}];
+ve = Table[int[0.72332102,1.00000018,m,5], {m,1000}];
+
+mv2 = Apply[IntervalUnion, mv];
+me2 = Apply[IntervalUnion, me];
+ve2 = Apply[IntervalUnion, ve];
+
+IntervalIntersection[mv2,me2,ve2]
+
+
+
+
+
+
+
 (* http://ssd.jpl.nasa.gov/txt/p_elem_t2.txt *)
 
 (* below is raw cut and paste, I clean it up later *)
