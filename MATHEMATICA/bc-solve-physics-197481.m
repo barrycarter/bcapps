@@ -94,21 +94,42 @@ planets (as a number between 0 and 1) and their periods, return:
 
   - interval between alignments
 
-  - gain (in number of orbits) for given time unit
-
 TODO: clean this up to be symmetric and allow for d1-d2 > .5 (which
 gives a "late" first alignment)
 
 *)
 
-orbhelp[{p1_,d1_},{p2_,d2_}] = {
- ((d1 - d2)*p1*p2)/(p1 - p2), p1*p2/(p1-p2), 1/p1-1/p2
-};
+orbhelp[{p1_,d1_},{p2_,d2_}]={((d1-d2)*p1*p2)/(p1-p2),Abs[p1*p2/(p1-p2)]};
 
+orbhelp[{88.,.3},{267.,.4}]
+orbhelp[{267.,.4},{88.,.3}]
 
+(*
 
+Given (something that limits iterations), a tolerance (in orbits) and
+the periods and t=0 current positions of an arbitrary number of
+planets, find when the tolerance is met. Call looks like
 
+conjuncts[1000, 0.01, { {p1,d1}, {p2,d2}, ... }]
 
+TODO: if this gets ugly memory-wise, can intersect on the fly?
+
+TODO: allow for searches with intervals if starting with 10 degrees
+for example and narrowing down
+
+*)
+
+conjuncts[n_, d_, lol_] := Module[{int,tab},
+ tab= Flatten[Table[orbhelp[lol[[i]],lol[[j]]], 
+  {i,1,Length[lol]}, {j,i+1, Length[lol]}],1];
+ Return[tab];
+]
+
+test = conjuncts[1000,.01,{ {0.38709843, 0.20563661}, {0.72332102, 0.00676399},
+ {1.00000018, 0.01673163}, {1.52371243, 0.09336511}}]
+
+test0 = { {0.38709843, 0.20563661}, {0.72332102, 0.00676399},
+ {1.00000018, 0.01673163}, {1.52371243, 0.09336511}};
 
 
 
