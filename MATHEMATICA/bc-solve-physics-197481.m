@@ -85,6 +85,28 @@ ve2 = Apply[IntervalUnion, ve];
 
 IntervalIntersection[mv2,me2,ve2]
 
+(*
+
+Helper function: given the t=0 "current" orbital positions of two
+planets (as a number between 0 and 1) and their periods, return:
+
+  - time of first alignment
+
+  - interval between alignments
+
+  - gain (in number of orbits) for given time unit
+
+TODO: clean this up to be symmetric and allow for d1-d2 > .5 (which
+gives a "late" first alignment)
+
+*)
+
+orbhelp[{p1_,d1_},{p2_,d2_}] = {
+ ((d1 - d2)*p1*p2)/(p1 - p2), p1*p2/(p1-p2), 1/p1-1/p2
+};
+
+
+
 
 
 
