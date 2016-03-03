@@ -1,5 +1,13 @@
 << FunctionApproximations`
 
+(* per http://mathematica.stackexchange.com/questions/109010/texform-of-absan-is-not-valid-tex-known-error/109016#109016 *)
+
+System`Convert`TeXFormDump`maketex[
+				   TemplateBox[{System`Convert`CommonDump`n_}, "Abs", ___]
+				   ] := "\\left| " <> 
+ System`Convert`TeXFormDump`MakeTeX[System`Convert`CommonDump`n] <> 
+ " \\right|"
+
 (* <<JavaGraphics` *)
 
 (* work around "new and improved" graphics handling in Mathematica 7+ *)
