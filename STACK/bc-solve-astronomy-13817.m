@@ -85,8 +85,8 @@ a fraction of light speed) is:
 $\text{add}(u,v)=\frac{u+v}{\frac{u v}{c^2}+1}$
 
 If I start at zero velocity (with respect to some "stationery" X), and
-follow the process above (drop beacons and accelerate) every second of
-**my** time, I have:
+follow the process above (drop beacons and accelerate by `a` where `a`
+is much smaller than `c`) every second of **my** time, I have:
 
 $\text{speed}(0)=0$
 
@@ -106,6 +106,17 @@ beacon $n$ and beacon $n+1$?
 When 1 second passes on my clock,
 $\frac{1}{\sqrt{1-\text{speed}(n)^2}}$ passes on the stationery
 observer's clock. Plugging in $\text{speed}(n)$ and simplifying:
+
+$
+\frac{\left\left| (1-a)^n+(a+1)^n\right\right| }{2\sqrt{\left(1-a^2\right)^n}}
+$
+
+
+
+
+
+len[n_] = FullSimplify[factor[g[n]],{a>0,n>0,Element[n,Integers]}]
+
 
 
 
