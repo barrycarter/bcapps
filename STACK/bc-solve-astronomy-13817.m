@@ -47,6 +47,35 @@ This seems incorrect. What am I doing wrong?
 Note: I came across this while attempting to answer
 http://astronomy.stackexchange.com/questions/13817/
 
+EDIT (to answer @Timaeus):
+
+Here's the discrete analog of what I (the moving object) am
+doing. Every second:
+
+  - I drop a beacon that has zero relative velocity to me.
+
+  - I accelerate until I'm traveling at 10m/s (or whatever `a` I
+  choose) with respect to the beacon.
+
+I believe:
+
+  - When smoothed out to be continuous, I will feel a constant acceleration.
+
+  - As viewed from X (the stationery observer), my velocity is tanh(a*t)
+
+You mention in your answer "for every unit of your time the object
+accelerates to the speed of an object that it currently thinks is
+moving at a certain speed. But this means it has to accelerate at a
+faster rate according to its own clock", but I'm not sure I understand
+this.
+
+As I see it, the moving object can be seen as accelerating with
+respect to a beacon it just dropped, and the small 10m/s velocity
+increase shouldn't have significant time dilation. In the continuous
+case, there should be no time dilation at all.
+
+I believe your answer is correct, but think I'm still missing something.
+
 a = 10/300/10^6
 conds = {t>0, a>0, v>0, v<1}
 factor[v_] = (1-v^2)^(-1/2)
@@ -99,4 +128,37 @@ RSolve[{
  a[0] == 2
 },
 a[n],n]
+
+(* integrating the addition equation; uv in fractional light speed *)
+
+(* putting in c^2 just to make things happy *)
+
+add[u_,v_] = (u+v)/(1+u*v/c^2)
+Simplify[(add[v,dv]-v)/dv]
+
+add[u_,v_] = (u+v)/(1+u*v)
+
+test[0] = 0;
+
+test[n_] := test[n] = add[test[n-1],.01]
+
+tab = Table[test[n],{n,0,1000}];
+dtab = difference[tab];
+
+v2[t_] = FullSimplify[c^2*t/Sqrt[c^4/a^2+c^2*t^2], Element[{a,c,t},Reals]]
+
+v2[t_] = v2[t] /. {c -> 1, a -> .01}
+
+Maximize[Tanh[.01*t]-v2[t],t]                                          
+0.0736882, {t -> 162.195}
+
+
+
+
+
+
+
+
+
+
 
