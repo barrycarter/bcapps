@@ -76,34 +76,44 @@ case, there should be no time dilation at all.
 
 I believe your answer is correct, but think I'm still missing something.
 
-EDIT (discrete case):
+EDIT (this is the discrete case, just for fun, but with my
+misunderstanding corrected):
 
-The formula for adding relativistic velocities is:
+The formula for adding relativistic velocities (when both are given as
+a fraction of light speed) is:
 
 $\text{add}(u,v)=\frac{u+v}{\frac{u v}{c^2}+1}$
 
-(note that you can ignore the `c^2` term if you're giving velocities
-relative to the speed of light (ie c=1), but I'll keep it in just to
-minimize the chance for error).
-
 If I start at zero velocity (with respect to some "stationery" X), and
-drop beacons at regular intervals and then accelerate to speed $a$ (a
-<< c) with respect to the last beacon I dropped, I claim my speed with
-respect to X after dropping the nth beacon (n=0 is start condition) is
-given by:
+follow the process above (drop beacons and accelerate) every second of
+**my** time, I have:
 
 $\text{speed}(0)=0$
 
 $\text{speed}(n+1)=\frac{a+\text{speed}(n)}{\frac{a \text{speed}(n)}{c^2}+1}$
 
-Is this correct?
+The closed-form solution (simplest form Mathematica could find):
 
-If so, this recurrence has a closed-form solution:
+$\text{speed}(n)=\frac{2}{\left(\frac{2}{a+1}-1\right)^n+1}-1$
 
-$\text{speed}(n)=c \left(\frac{2 a^n}{a^n+\left(\frac{a
-(c-a)}{a+c}\right)^n}-1\right)$
+**Although I'm dropping beacons every 1 second in my own time frame, I
+am dropping them slower and slower to the "stationery" observer
+X. This was the crux of my misunderstanding**
 
-(that's the simplest form Mathematica could fine)
+For the stationery observer, how much time passes between my dropping
+beacon $n$ and beacon $n+1$?
+
+When 1 second passes on my clock,
+$\frac{1}{\sqrt{1-\text{speed}(n)^2}}$ passes on the stationery
+observer's clock. Plugging in $\text{speed}(n)$ and simplifying:
+
+
+
+
+
+
+
+
 
 
 
@@ -126,6 +136,8 @@ speed[n+1] == (speed[n]+a)/(1+a*speed[n]/c^2)
 MATHEMATICA NOTES:
 
 add[u_,v_] = (u+v)/(1+u*v/c^2)
+
+add[u,v] == (u+v)/(1+u*v/c^2)
 
 
 
