@@ -82,19 +82,27 @@ misunderstanding corrected):
 The formula for adding relativistic velocities (when both are given as
 a fraction of light speed) is:
 
-$\text{add}(u,v)=\frac{u+v}{\frac{u v}{c^2}+1}$
+$\text{add}(u,v)=\frac{u+v}{u v+1}$
 
 If I start at zero velocity (with respect to some "stationery" X), and
 follow the process above (drop beacons and accelerate by `a` where `a`
-is much smaller than `c`) every second of **my** time, I have:
+is much smaller than `c`) every second of **my** time, my speed for
+the stationery observer is given by:
 
 $\text{speed}(0)=0$
-
-$\text{speed}(n+1)=\frac{a+\text{speed}(n)}{\frac{a \text{speed}(n)}{c^2}+1}$
+$\text{speed}(n+1)=\frac{a+\text{speed}(n)}{a \text{speed}(n)+1}$
 
 The closed-form solution (simplest form Mathematica could find):
 
 $\text{speed}(n)=\frac{2}{\left(\frac{2}{a+1}-1\right)^n+1}-1$
+
+Note the increase in my speed to the stationery observer (which we'll
+need later) is:
+
+$
+\frac{2}{\left(\frac{2}{a+1}-1\right)^{n+1}+1}-\frac{2}{\left(\frac{2}{a+1}-1
+\right)^n+1}
+$
 
 **Although I'm dropping beacons every 1 second in my own time frame, I
 am dropping them slower and slower to the "stationery" observer
@@ -107,17 +115,32 @@ When 1 second passes on my clock,
 $\frac{1}{\sqrt{1-\text{speed}(n)^2}}$ passes on the stationery
 observer's clock. Plugging in $\text{speed}(n)$ and simplifying:
 
+$\frac{\left| (1-a)^n+(a+1)^n\right| }{2\sqrt{\left(1-a^2\right)^n}}$
+
+I couldn't find a simple formula for the total time to drop n beacons:
+
 $
-\frac{\left\left| (1-a)^n+(a+1)^n\right\right| }{2\sqrt{\left(1-a^2\right)^n}}
+   \sum _{i=0}^n \frac{\left| (1-a)^i+(a+1)^i\right| }{2
+    \sqrt{\left(1-a^2\right)^i}}
 $
 
+The acceleration seen by the stationery observer between the nth and
+(n+1)st beacon (change in speed from earlier, change in time from
+above) is:
 
+$
+   \frac{4 \sqrt{\left(1-a^2\right)^n} 
+  \left(\frac{1}{\left(\frac{2}{a+1}-1\right)^{n+1}+1}-\frac{1}{\left(\frac{2} 
+    {a+1}-1\right)^n+1}\right)}{\left| (1-a)^n+(a+1)^n\right| } 
+$
 
 
 
 len[n_] = FullSimplify[factor[g[n]],{a>0,n>0,Element[n,Integers]}]
 
 
+
+acc[n_] = FullSimplify[(g[n+1]-g[n])/len[n], {a>0,n>0,Element[n,Integers]}]
 
 
 
