@@ -76,6 +76,62 @@ case, there should be no time dilation at all.
 
 I believe your answer is correct, but think I'm still missing something.
 
+EDIT (discrete case):
+
+The formula for adding relativistic velocities is:
+
+$\text{add}(u,v)=\frac{u+v}{\frac{u v}{c^2}+1}$
+
+(note that you can ignore the `c^2` term if you're giving velocities
+relative to the speed of light (ie c=1), but I'll keep it in just to
+minimize the chance for error).
+
+If I start at zero velocity (with respect to some "stationery" X), and
+drop beacons at regular intervals and then accelerate to speed $a$ (a
+<< c) with respect to the last beacon I dropped, I claim my speed with
+respect to X after dropping the nth beacon (n=0 is start condition) is
+given by:
+
+$\text{speed}(0)=0$
+
+$\text{speed}(n+1)=\frac{a+\text{speed}(n)}{\frac{a \text{speed}(n)}{c^2}+1}$
+
+Is this correct?
+
+If so, this recurrence has a closed-form solution:
+
+$\text{speed}(n)=c \left(\frac{2 a^n}{a^n+\left(\frac{a
+(c-a)}{a+c}\right)^n}-1\right)$
+
+(that's the simplest form Mathematica could fine)
+
+
+
+
+
+
+
+
+
+speed[0] == 0
+speed[n+1] == (speed[n]+a)/(1+a*speed[n]/c^2)
+
+
+
+
+
+
+
+
+MATHEMATICA NOTES:
+
+add[u_,v_] = (u+v)/(1+u*v/c^2)
+
+
+
+
+*)
+
 a = 10/300/10^6
 conds = {t>0, a>0, v>0, v<1}
 factor[v_] = (1-v^2)^(-1/2)
@@ -151,16 +207,24 @@ v2[t_] = v2[t] /. {c -> 1, a -> .01}
 Maximize[Tanh[.01*t]-v2[t],t]                                          
 0.0736882, {t -> 162.195}
 
-(* below is to post to mathematica.stackexchange.com *)
-
 v[0] = 0;
 
 v[n_] := v[n] = (a + v[n-1])/(1 + a*v[n-1])
 
 Solve[(a + x)/(1+a*x) == x, x]
 
-f[n_] = FullSimplify[
+g[n_] = FullSimplify[
 v[n] /. RSolve[{v[0] == 0, v[n] == (a+v[n-1])/(1+a*v[n-1])}, v[n], n],
 Element[a, Reals]][[1]]
+
+f[n_] = FullSimplify[
+RSolve[{speed[0] == 0, speed[n] == (a+speed[n-1])/(1+a*speed[n-1]/c^2)},
+ speed[n], n][[1,1,2]], {a>0, c>0, n>=0, Element[n, Integers]}]
+
+
+
+
+RSolve[{v[0] == 0, v[n] == (a+speed[n-1])/(1+a*speed[n-1])}, v[n], n]
+
 
 
