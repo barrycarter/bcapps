@@ -88,9 +88,6 @@ totdist[t_] =
 
 FullSimplify[Integrate[speed[t]*distrat[t],t],conds]
 
-
-
-
 TODO: it would be more fun to derive these from first principles
 
 This doesn't fully answer your question.
@@ -133,8 +130,10 @@ a[n],n]
 
 (* putting in c^2 just to make things happy *)
 
-add[u_,v_] = (u+v)/(1+u*v/c^2)
+add2[u_,v_] = (u+v)/(1+u*v/c^2)
 Simplify[(add[v,dv]-v)/dv]
+
+RSolve[{v[0] == 0, v[n_] == add[v[n-1],a]}, v[n], n]
 
 add[u_,v_] = (u+v)/(1+u*v)
 
@@ -152,13 +151,16 @@ v2[t_] = v2[t] /. {c -> 1, a -> .01}
 Maximize[Tanh[.01*t]-v2[t],t]                                          
 0.0736882, {t -> 162.195}
 
+(* below is to post to mathematica.stackexchange.com *)
 
+v[0] = 0;
 
+v[n_] := v[n] = (a + v[n-1])/(1 + a*v[n-1])
 
+Solve[(a + x)/(1+a*x) == x, x]
 
-
-
-
-
+f[n_] = FullSimplify[
+v[n] /. RSolve[{v[0] == 0, v[n] == (a+v[n-1])/(1+a*v[n-1])}, v[n], n],
+Element[a, Reals]][[1]]
 
 

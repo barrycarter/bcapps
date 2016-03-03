@@ -88,7 +88,8 @@ IntervalIntersection[mv2,me2,ve2]
 (*
 
 Helper function: given the t=0 "current" orbital positions of two
-planets (as a number between 0 and 1) and their periods, return:
+planets (as a number between 0 and 1 [this unit is known as a 'turn'])
+and their periods, return:
 
   - time of first alignment
 
@@ -106,9 +107,9 @@ orbhelp[{267.,.4},{88.,.3}]
 
 (*
 
-Given (something that limits iterations), a tolerance (in orbits) and
-the periods and t=0 current positions of an arbitrary number of
-planets, find when the tolerance is met. Call looks like
+Given (something that limits iterations), a tolerance (in orbits
+[turns]) and the periods and t=0 current positions of an arbitrary
+number of planets, find when the tolerance is met. Call looks like
 
 conjuncts[1000, 0.01, { {p1,d1}, {p2,d2}, ... }]
 
@@ -122,6 +123,13 @@ for example and narrowing down
 conjuncts[n_, d_, lol_] := Module[{int,tab},
  tab= Flatten[Table[orbhelp[lol[[i]],lol[[j]]], 
   {i,1,Length[lol]}, {j,i+1, Length[lol]}],1];
+
+ (* having to create this a special case for 1st is ugly *)
+
+(*
+ int = Table[tab[[1,1]] + {(m-d)*tab[[1,2]], (m+d)*tab[[1,2]]}, {m,1,2}]
+*)
+
  Return[tab];
 ]
 
