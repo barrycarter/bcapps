@@ -10,27 +10,53 @@ example case to better show the effects of relativity.
 All of the equations here come from
 http://physics.stackexchange.com/questions/240342
 
-As you move from `A` to `B`, your speed (relative to `A`) `t` seconds
+As you move from A to B, your speed (relative to A) $t$ seconds
 after blastoff will be:
 
 $\text{speed}(a,t)=\frac{a t}{\sqrt{a^2 t^2+1}}$
 
-where `a` is your acceleration per second as a fraction of the speed
+and your distance will be:
+
+$\text{dist}(a,t)=\frac{\sqrt{a^2 t^2+1}}{a}$
+
+where $a$ is your acceleration per second as a fraction of the speed
 of light. In your case, this will be $\frac{g}{c}$ or about
 $\frac{9.8}{299792458} = \text{3.27}*10^{-8}$, but we'll leave it as
-`a` for generality.
+$a$ for generality.
 
-From `A`'s point of view, you'll reach your coasting speed `s` when
+From A's point of view, you'll reach B (the point where you start coasting) at:
 
-$\text{coasttime}(a,s)=\frac{s}{\sqrt{a^2-a^2 s^2}}$
+$\text{timeA2B}(a,s)=\frac{s}{\sqrt{a^2-a^2 s^2}}$
 
 at which point your distance from A will be:
 
-$\text{coastdist}(a,s)=\frac{\sqrt{\frac{1}{1-s^2}}}{a}$
+$\text{distA2B}(a,s)=\frac{\sqrt{\frac{1}{1-s^2}}}{a}$
 
-You then coast for the following amount of time before decelerating:
+where $s$ is your coasting speed as a fraction of the speed of light
+(in your case, this is $0.6$)
 
-$\text{coastfor}(a,s,d)=\frac{d-\frac{2 \sqrt{\frac{1}{1-s^2}}}{a}}{s}$
+You then coast from B to C, and the time/distance you travel (in A's
+reference frame) is:
+
+$\text{timeB2C}(a,s,d)=\frac{d-\frac{2 \sqrt{\frac{1}{1-s^2}}}{a}}{s}$
+
+$\text{distB2C}(a,s,d)=d-\frac{2 \sqrt{\frac{1}{1-s^2}}}{a}$
+
+where $d$ is the total distance you're traveling in light seconds. In
+your case this is 40 light years * 31556952 seconds/year or 1262278080
+light seconds.
+
+Note that if $s>\frac{\sqrt{a^2 d^2-4}}{a d}$, there is no solution to
+the problem: by the time you reach coasting speed, you will already be
+more than halfway to your destination and not be able to decelerate
+enough to land at speed 0.
+
+Fortunately, this does not happen in either of our test cases.
+
+
+
+
+TODO: put speed disclaimer here (can't go faster than... )
 
 where `d` is the distance you're traveling in light seconds.
 
@@ -38,7 +64,6 @@ You then decelerate for the same amount of time (in `A`'s reference
 frame as you accelerated earlier):
 
 $\text{coasttime}(a,s)=\frac{s}{\sqrt{a^2-a^2 s^2}}$
-
 
 
 TODO: disclaim "seconds" (any unit of time consistent)
@@ -119,13 +144,29 @@ TODO: note there is a maximal `s` for the 40 ly in question
 
 TODO: note that you don't gain much in `A`'s reference frame, but do in your own for .6 -> .995
 
+MATHEMATICA NOTES:
+
+conds = {t>0, a>0, v>0, v<1}
+
+speed[a_,t_] = a*t/Sqrt[(a*t)^2+1]
+dist[a_,t_] = Integrate[speed[a,t],t]
+
+timeA2B[a_,s_] = Solve[speed[a,t]==s,t][[2,1,2]]
+distA2B[a_,s_] = FullSimplify[dist[a,timeA2B[a,s]],conds]
+
+timeB2C[a_,s_,d_] = FullSimplify[(d-2*distA2B[a,s])/s, conds]
+distB2C[a_,s_,d_] = FullSimplify[timeB2C[a,s,d]*s, conds]
+
+Solve[timeB2C[a,s,d]==0,s][[2]]
+
+(* example of how to print *)
+
+HoldForm[dist[a,t]] == dist[a,t]
 
 secinyear = 86400*365.2425
 g = 98/10;
 c = 299792458;
 conds = {a>0,t>0,s>0,d>0}
-speed[a_,t_] = a*t/Sqrt[(a*t)^2+1]
-dist[a_,t_] = Integrate[speed[a,t],t]
 coasttime[a_,s_] = Solve[speed[a,t]==s,t][[2,1,2]]
 coastdist[a_,s_] =  FullSimplify[dist[a,coasttime[a,s]],conds]
 
@@ -227,7 +268,6 @@ showit
 
 
 a = 10/300/10^6
-conds = {t>0, a>0, v>0, v<1}
 speed[t_] = Tanh[a*t]
 distance[t_] = Integrate[speed[t],t]
 rate[t_] = FullSimplify[1/factor[speed[t]], conds]
