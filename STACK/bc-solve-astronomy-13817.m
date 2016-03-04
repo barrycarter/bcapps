@@ -115,72 +115,55 @@ When 1 second passes on my clock,
 $\frac{1}{\sqrt{1-\text{speed}(n)^2}}$ passes on the stationery
 observer's clock. Plugging in $\text{speed}(n)$ and simplifying:
 
-$\frac{\left| (1-a)^n+(a+1)^n\right| }{2\sqrt{\left(1-a^2\right)^n}}$
+$\frac{1}{2} \left(1-a^2\right)^{-n/2} \left((1-a)^n+(a+1)^n\right)$
 
-I couldn't find a simple formula for the total time to drop n beacons:
+The total elapsed time between beacon 0 and beacon $n$:
 
 $
-   \sum _{i=0}^n \frac{\left| (1-a)^i+(a+1)^i\right| }{2
-    \sqrt{\left(1-a^2\right)^i}}
+   -\frac{\left(1-a^2\right)^{\frac{1}{2}-\frac{n}{2}}
+    \left(\left(\sqrt{1-a^2}-1\right) \left((1-a)^{n/2}+(a+1)^{n/2}\right)^2+a
+    \left((1-a)^n-(a+1)^n\right)\right)}{4 \left(a^2+\sqrt{1-a^2}-1\right)}
 $
 
 The acceleration seen by the stationery observer between the nth and
-(n+1)st beacon (change in speed from earlier, change in time from
+(n+1)st beacon (change in speed from earlier divided by change in time from
 above) is:
 
 $
-   \frac{4 \sqrt{\left(1-a^2\right)^n} 
-  \left(\frac{1}{\left(\frac{2}{a+1}-1\right)^{n+1}+1}-\frac{1}{\left(\frac{2} 
-    {a+1}-1\right)^n+1}\right)}{\left| (1-a)^n+(a+1)^n\right| } 
+   \frac{4 \left(1-a^2\right)^{n/2}
+   \left(\frac{1}{\left(\frac{2}{a+1}-1\right)^{n+1}+1}-\frac{1}{\left(\frac{2}
+    {a+1}-1\right)^n+1}\right)}{(1-a)^n+(a+1)^n}
 $
-
-
-
-len[n_] = FullSimplify[factor[g[n]],{a>0,n>0,Element[n,Integers]}]
-
-
-
-acc[n_] = FullSimplify[(g[n+1]-g[n])/len[n], {a>0,n>0,Element[n,Integers]}]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-speed[0] == 0
-speed[n+1] == (speed[n]+a)/(1+a*speed[n]/c^2)
-
-
-
-
-
-
-
 
 MATHEMATICA NOTES:
 
-add[u_,v_] = (u+v)/(1+u*v/c^2)
+conds = {a>0,a<1,n>0,Element[n,Integers]}
 
-add[u,v] == (u+v)/(1+u*v/c^2)
+add[u_,v_] = (u+v)/(1+u*v)
 
+speed[a_, n_] = 
+FullSimplify[RSolve[{v[0] == 0, v[n] == add[v[n-1],a]}, v[n], n][[1,1,2]],
+ {a>0,a<1,n>0,Element[n,Integers]}]
 
+dv[a_,n_] = FullSimplify[speed[a,n+1]-speed[a,n], 
+ {a>0,a<1,n>0,Element[n, Integers]}]
 
+factor[v_] = (1-v^2)^(-1/2)
+
+dilation[a_,n_] = FullSimplify[factor[speed[a,n]],conds]
+
+elapsed[a_,n_] = FullSimplify[Sum[dilation[a,i],{i,0,n}],conds]
+
+accel[a_,n_] = FullSimplify[dv[a,n]/dilation[a,n],conds]
+
+Solve[lspeed[elapsed[a,n]] == speed[a,n], lspeed[n]]
+
+TODO: spell check
 
 *)
 
 a = 10/300/10^6
 conds = {t>0, a>0, v>0, v<1}
-factor[v_] = (1-v^2)^(-1/2)
 speed[t_] = Tanh[a*t]
 distance[t_] = Integrate[speed[t],t]
 rate[t_] = FullSimplify[1/factor[speed[t]], conds]
@@ -235,9 +218,8 @@ a[n],n]
 add2[u_,v_] = (u+v)/(1+u*v/c^2)
 Simplify[(add[v,dv]-v)/dv]
 
-RSolve[{v[0] == 0, v[n_] == add[v[n-1],a]}, v[n], n]
 
-add[u_,v_] = (u+v)/(1+u*v)
+
 
 test[0] = 0;
 
