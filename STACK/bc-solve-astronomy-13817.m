@@ -276,13 +276,24 @@ journeyTime[a_,s_,d_] = FullSimplify[2*coasttime[a,s] + coastfor[a,s,d],conds]
 speedAtTime[a_,t_,s_,d_] = 
  If[t < coasttime[a,s], speed[a,t],
   If[t < coasttime[a,s] + coastfor[a,s,d], s,
-   speed[a,journeyTime[a,s,d]-t]]]
+   If[t < journeyTime[a,s,d], speed[a,journeyTime[a,s,d]-t],
+    0]]]
 
 Plot[speedAtTime[g/c, t*secinyear, .6, 40*secinyear],{t,0,
  journeyTime[g/c, .6, 40*secinyear]/secinyear}]
 
 Plot[speedAtTime[g/c, t*secinyear, .995, 40*secinyear],{t,0,
- journeyTime[g/c, .995, 40*secinyear]/secinyear}]
+ journeyTime[g/c, .6, 40*secinyear]/secinyear}]
+
+Plot[{
+ speedAtTime[g/c, t*secinyear, .6, 40*secinyear],
+ speedAtTime[g/c, t*secinyear, .995, 40*secinyear]
+}, {t,0,journeyTime[g/c, .6, 40*secinyear]/secinyear}]
+
+Plot[{
+ speedAtTime[g/c, t*secinyear, .6, 40*secinyear]-
+ speedAtTime[g/c, t*secinyear, .995, 40*secinyear]
+}, {t,0,journeyTime[g/c, .6, 40*secinyear]/secinyear}]
 
 
 
