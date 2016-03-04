@@ -198,7 +198,30 @@ TODO: spell check
 
 Answer to main question starts here.
 
+*)
 
+Graphics[{
+ Text[Style["30 ly", FontSize -> 20], {15,1}],
+ Rotate[Text[Style["40 ly", FontSize -> 20], {31,20}], Pi/2],
+ Rotate[Text[Style["50 ly", FontSize -> 20], {14,21}], ArcTan[3,4]],
+ Arrowheads[{-0.02,0.02}],
+ Arrow[{{0,0},{30,0}}],
+ Arrow[{{30,0},{30,40}}],
+ Arrow[{{0,0},{30,40}}],
+ PointSize[0.02],
+ RGBColor[0,0,1],
+ Point[{0,0}],
+ RGBColor[1,0,0],
+ Point[{30,0}],
+ RGBColor[0,1,0],
+ Point[{30,40}],
+ RGBColor[0,1,1],
+ Point[{30,10}]
+}]
+showit
+
+
+ 
 
 
 
