@@ -222,22 +222,71 @@ From `A`'s point of view, you'll reach your coasting speed `s` when
 
 $t\to \frac{s}{\sqrt{a^2-a^2 s^2}}$
 
+at which point your distance from A will be:
+
+$\text{coastdist}(a,s)=\frac{\sqrt{\frac{1}{1-s^2}}}{a}$
+
+Putting some actual numbers on this. At 1g and in `A`'s reference frame,
+
+  - It will take about 0.73 years to reach $0.6 c$, and you will be
+  1.21 light years from `A`.
+
+  - It will take about 9.7 years to reach $0.995 c$, and you will also
+  be about 9.7 light years from `A` (as your speed increases, `A` will
+  see you approach the speed of light, so 9.7 light years in 9.7 years
+  from `A`'s perspective isn't surprising)
+
+You then coast for the following amount of time before decelerating:
+
+$\text{coastfor}(a,s,d)=\frac{d-\frac{2 \sqrt{\frac{1}{1-s^2}}}{a}}{s}$
+
+where `d` is the distance you're traveling in light seconds. For the
+40 ly journey from A to B:
+
+  - With a coasting speed of $0.6 c$, you coast for 62.6 years.
+
+  - With a coasting speed of $0.995 c$, you coast for 20.7 years.
+
+Again, all times are in `A`'s reference frame.
+
+
+
+
+
+
+
+TODO: note there is a maximal `s` for the 40 ly in question
+
+TODO: note that you don't gain much in `A`'s reference frame, but do in your own for .6 -> .995
+
+
+secinyear = 86400*365.2425
+g = 98/10;
+c = 299792458;
+conds = {a>0,t>0,s>0,d>0}
 speed[a_,t_] = a*t/Sqrt[(a*t)^2+1]
+dist[a_,t_] = Integrate[speed[a,t],t]
+coasttime[a_,s_] = Solve[speed[a,t]==s,t][[2,1,2]]
+coastdist[a_,s_] =  FullSimplify[dist[a,coasttime[a,s]],conds]
 
-coasting[a_,t_,s_] = Solve[speed[a,t]==s][[1,1,2]]
+coastfor[a_,s_,d_] = FullSimplify[(d-2*coastdist[a,s])/s, conds]
+
+journeyTime[a_,s_,d_] = FullSimplify[2*coasttime[a,s] + coastfor[a,s,d],conds]
+
+speedAtTime[a_,t_,s_,d_] = 
+ If[t < coasttime[a,s], speed[a,t],
+  If[t < coasttime[a,s] + coastfor[a,s,d], s,
+   speed[a,journeyTime[a,s,d]-t]]]
+
+Plot[speedAtTime[g/c, t*secinyear, .6, 40*secinyear],{t,0,
+ journeyTime[g/c, .6, 40*secinyear]/secinyear}]
+
+Plot[speedAtTime[g/c, t*secinyear, .995, 40*secinyear],{t,0,
+ journeyTime[g/c, .995, 40*secinyear]/secinyear}]
 
 
 
 
-
-
-
-
-
-
-
-
-[TODO: source!]
 
 
 
