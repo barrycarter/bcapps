@@ -79,65 +79,97 @@ I believe your answer is correct, but think I'm still missing something.
 EDIT (this is the discrete case, just for fun, but with my
 misunderstanding corrected):
 
+NOTE: for the below "my" refers to the accelerating frame of reference
+and "fixed" refers to non-accelerating frame of reference.
+
 The formula for adding relativistic velocities (when both are given as
 a fraction of light speed) is:
 
 $\text{add}(u,v)=\frac{u+v}{u v+1}$
 
-If I start at zero velocity (with respect to some "stationery" X), and
-follow the process above (drop beacons and accelerate by `a` where `a`
-is much smaller than `c`) every second of **my** time, my speed for
-the stationery observer is given by:
+If I start at zero velocity (with respect to some fixed X), and follow
+the process above (drop beacons and accelerate by `a` where `a` is
+much smaller than `c`) every second of **my** time, my speed as viewed
+by the fixed observer is given by:
 
-$\text{speed}(0)=0$
-$\text{speed}(n+1)=\frac{a+\text{speed}(n)}{a \text{speed}(n)+1}$
+$\text{speed}(a,0)=0$
+$\text{speed}(a,n+1)=\frac{a+\text{speed}(a,n)}{a * \text{speed}(a,n)+1}$
 
 The closed-form solution (simplest form Mathematica could find):
 
-$\text{speed}(n)=\frac{2}{\left(\frac{2}{a+1}-1\right)^n+1}-1$
-
-Note the increase in my speed to the stationery observer (which we'll
-need later) is:
-
-$
-\frac{2}{\left(\frac{2}{a+1}-1\right)^{n+1}+1}-\frac{2}{\left(\frac{2}{a+1}-1
-\right)^n+1}
-$
+$\text{speed}(a,n)=\frac{2}{\left(\frac{2}{a+1}-1\right)^n+1}-1$
 
 **Although I'm dropping beacons every 1 second in my own time frame, I
-am dropping them slower and slower to the "stationery" observer
+am dropping them slower and slower to the fixed observer
 X. This was the crux of my misunderstanding**
 
-For the stationery observer, how much time passes between my dropping
+For the fixed observer, how much time passes between my dropping
 beacon $n$ and beacon $n+1$?
 
-When 1 second passes on my clock,
-$\frac{1}{\sqrt{1-\text{speed}(n)^2}}$ passes on the stationery
-observer's clock. Plugging in $\text{speed}(n)$ and simplifying:
+When 1 second passes on my clock, time dilation tells me
+$\frac{1}{\sqrt{1-\text{speed}(a,n)^2}}$ passes on the fixed
+observer's clock. Plugging in $\text{speed}(a,n)$ and simplifying:
 
-$\frac{1}{2} \left(1-a^2\right)^{-n/2} \left((1-a)^n+(a+1)^n\right)$
+$\text{dilation}(a,n) = 
+\frac{1}{2} \left(1-a^2\right)^{-n/2} \left((1-a)^n+(a+1)^n\right)$
 
-The total elapsed time between beacon 0 and beacon $n$:
+For the continuous case, we accelerate $\frac{a}{k}$ (k times slower)
+$k n$ (k times as often) and take the limit as $k\to \infty$. This yields:
+
+$\text{contspeed}(n)=\lim_{k\to \infty } \, \text{speed}\left(\frac{a}{k},
+nk\right) = \tanh (a n)
+$
+
+Note this is the same value I had earlier, but that it refers to
+seconds elapsed in **my** frame of reference.
+
+How many seconds have elapsed in the fixed frame of reference in the
+continuous case? The instantaneous time dilation is:
 
 $
-   -\frac{\left(1-a^2\right)^{\frac{1}{2}-\frac{n}{2}}
-    \left(\left(\sqrt{1-a^2}-1\right) \left((1-a)^{n/2}+(a+1)^{n/2}\right)^2+a
-    \left((1-a)^n-(a+1)^n\right)\right)}{4 \left(a^2+\sqrt{1-a^2}-1\right)}
+\text{contdilation}(a,n) = 
+lim_{k\to \infty } \text{dilation}\left(\frac{a}{k}, nk\right) =
+lim_{k\to \infty }
+\frac{1}{2} \left(k^2-a^2\right)^{-\frac{k n}{2}} \left((k-a)^{k n}+(a+k)^{k
+n}\right) = \cosh (a n)
 $
 
-The acceleration seen by the stationery observer between the nth and
-(n+1)st beacon (change in speed from earlier divided by change in time from
-above) is:
+Thus, when the nth infinitesimal time unit ticks off in my reference
+frame, $\cosh (a n)$ infinitesimal time units tick off in the fixed
+frame. The total elapsed time for the fixed frame is simply the
+integral of this or $\frac{\sinh (a n)}{a}$
 
-$
-   \frac{4 \left(1-a^2\right)^{n/2}
-   \left(\frac{1}{\left(\frac{2}{a+1}-1\right)^{n+1}+1}-\frac{1}{\left(\frac{2}
-    {a+1}-1\right)^n+1}\right)}{(1-a)^n+(a+1)^n}
-$
+So, when $\frac{\sinh (a n)}{a}$ seconds have elapsed in the fixed
+reference frame, my speed (relative to the fixed reference frame) is
+$\tanh (a n)$:
+
+$\text{fixedspeed}\left(\frac{\sinh (a n)}{a}\right)=\tanh (a n)$
+
+To solve, we apply this change of variable to both sides:
+
+$n\to \frac{\sinh ^{-1}(a x)}{a}$
+
+to yield:
+
+$\text{fixedspeed}(n)=\frac{a n}{\sqrt{a^2 n^2+1}}$
+
+which is equivalent to @timeaus' answer for v(t).
+
+The total distance is just the integral of this, or:
+
+$\text{fixeddist}(a,n)=\int \text{fixedspeed}(a,n) \, dn = 
+\frac{\sqrt{a^2 n^2+1}}{a}$
+
+which, as expected, is equivalent to timeaus' answer for x(t).
 
 MATHEMATICA NOTES:
 
-conds = {a>0,a<1,n>0,Element[n,Integers]}
+timeaus[a_,n_] = FullSimplify[c^2*t/(Sqrt[c^4/a^2 + c^2*t^2]),
+ {t>0,a>0,c==1}] /. t -> n
+
+fixedspeed[a_,n_] = a*n/Sqrt[(a*n)^2+1]
+
+conds = {a>0,a<1,n>0,Element[n,Integers],k>0}
 
 add[u_,v_] = (u+v)/(1+u*v)
 
@@ -161,6 +193,18 @@ Solve[lspeed[elapsed[a,n]] == speed[a,n], lspeed[n]]
 TODO: spell check
 
 *)
+
+(*
+
+Answer to main question starts here.
+
+
+
+
+
+
+
+
 
 a = 10/300/10^6
 conds = {t>0, a>0, v>0, v<1}
