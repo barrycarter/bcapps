@@ -198,9 +198,58 @@ TODO: spell check
 
 Answer to main question starts here.
 
+[[graphic]]
+
+Since the relativistic effects at $0.6 c$ are fairly mild, I will
+solve the problem in general for the limiting speed `s`, but use
+$0.995 c$ (where the time dilation/space contraction is 10) as my
+example case to better show the effects of relativity.
+
+All of the equations here come from
+http://physics.stackexchange.com/questions/240342
+
+As you move from `A` to `B`, your speed (relative to `A`) `t` seconds
+after blastoff will be:
+
+$\text{speed}(a,t)=\frac{a t}{\sqrt{a^2 t^2+1}}$
+
+where `a` is your acceleration per second as a fraction of the speed
+of light. In your case, this will $\frac{g}{c}$ or about
+$\frac{9.8}{299792458} = \text{3.27}*10^{-8}$, but we'll leave it as
+`a` for generality.
+
+From `A`'s point of view, you'll reach your coasting speed `s` when
+
+$t\to \frac{s}{\sqrt{a^2-a^2 s^2}}$
+
+speed[a_,t_] = a*t/Sqrt[(a*t)^2+1]
+
+coasting[a_,t_,s_] = Solve[speed[a,t]==s][[1,1,2]]
+
+
+
+
+
+
+
+
+
+
+
+
+[TODO: source!]
+
+
+
 *)
 
 Graphics[{
+ PointSize[0.02],
+ RGBColor[1/2,0,1/2],
+ Point[{30,3}],
+ Text[Style["P", FontSize -> 20], {31,3}],
+ Arrow[{{30,3},{30,8}}],
+ RGBColor[0,0,0],
  Text[Style["30 ly", FontSize -> 20], {15,1}],
  Rotate[Text[Style["40 ly", FontSize -> 20], {31,20}], Pi/2],
  Rotate[Text[Style["50 ly", FontSize -> 20], {14,21}], ArcTan[3,4]],
@@ -208,15 +257,15 @@ Graphics[{
  Arrow[{{0,0},{30,0}}],
  Arrow[{{30,0},{30,40}}],
  Arrow[{{0,0},{30,40}}],
- PointSize[0.02],
  RGBColor[0,0,1],
  Point[{0,0}],
+ Text[Style["E", FontSize -> 20], {-1,0}],
  RGBColor[1,0,0],
  Point[{30,0}],
+ Text[Style["A", FontSize -> 20], {31,0}],
  RGBColor[0,1,0],
  Point[{30,40}],
- RGBColor[0,1,1],
- Point[{30,10}]
+ Text[Style["B", FontSize -> 20], {31,40}],
 }]
 showit
 
