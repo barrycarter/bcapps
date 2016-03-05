@@ -125,20 +125,36 @@ for example and narrowing down
 *)
 
 conjuncts[n_, d_, lol_] := Module[{int,tab},
+
+ int = Interval[{-Infinity, Infinity}];
+
  tab= Flatten[Table[orbhelp[lol[[i]],lol[[j]]], 
   {i,1,Length[lol]}, {j,i+1, Length[lol]}],1];
 
- (* having to create this a special case for 1st is ugly *)
-
 (*
- int = Table[tab[[1,1]] + {(m-d)*tab[[1,2]], (m+d)*tab[[1,2]]}, {m,1,2}]
+ Return[Apply[Interval,
+  Flatten[Table[{tab[[1,1]] + {m-d,m+d}*tab[[1,2]]}, {m,1,n}]]]];
+
+ Return[Interval[Table[{tab[[1,1]] + {m-d,m+d}*tab[[1,2]]}, {m,1,n}]]];
+
 *)
 
- Return[tab];
+ (* compute intervals of conjunction for each pair of planets + intersect *) 
+
+ Table[int = IntervalIntersection[int, 
+ Apply[Interval,Flatten[Table[{tab[[i,1]] + {m-d,m+d}*tab[[i,2]]}, {m,1,n}]]]],
+ {i,1,Length[tab]}];
+
+ Return[int];
 ]
+
+test = conjuncts[2,.01,{ {0.38709843, 0.20563661}, {0.72332102, 0.00676399},
+ {1.00000018, 0.01673163}, {1.52371243, 0.09336511}}]
 
 test = conjuncts[1000,.01,{ {0.38709843, 0.20563661}, {0.72332102, 0.00676399},
  {1.00000018, 0.01673163}, {1.52371243, 0.09336511}}]
+
+test0 = { {0.38709843, 0.20563661}, {0.72332102, 0.00676399},
 
 test0 = { {0.38709843, 0.20563661}, {0.72332102, 0.00676399},
  {1.00000018, 0.01673163}, {1.52371243, 0.09336511}};
