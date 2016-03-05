@@ -3,28 +3,27 @@
 [[image1.jpg]]
 
 Since the relativistic effects at $0.6 c$ are fairly mild, I will
-solve the problem in general for the limiting speed `s`, and use
+solve the problem in general for the limiting speed $s$, and use
 $0.995 c$ (where the time dilation/space contraction is 10) as another
 example case to better show the effects of relativity.
 
 All of the equations here come from
 http://physics.stackexchange.com/questions/240342
 
-As you move from A to B, your speed (relative to A) $t$ seconds
-after blastoff will be:
+As you move from A to B, your speed (relative to A) and distance $t$
+seconds after blastoff will be:
 
-$\text{speed}(a,t)=\frac{a t}{\sqrt{a^2 t^2+1}}$
+$\text{speedA2B}(a,t)=\frac{a t}{\sqrt{a^2 t^2+1}}$
 
-and your distance will be:
-
-$\text{dist}(a,t)=\frac{\sqrt{a^2 t^2+1}}{a}$
+$\text{distA2B}(a,t)=\frac{\sqrt{\frac{1}{1-t^2}}}{a}$
 
 where $a$ is your acceleration per second as a fraction of the speed
 of light. In your case, this will be $\frac{g}{c}$ or about
 $\frac{9.8}{299792458} = \text{3.27}*10^{-8}$, but we'll leave it as
 $a$ for generality.
 
-From A's point of view, you'll reach B (the point where you start coasting) at:
+From A's reference frame, you'll reach B (the point where you need to
+start coasting) at:
 
 $\text{timeA2B}(a,s)=\frac{s}{\sqrt{a^2-a^2 s^2}}$
 
@@ -35,8 +34,13 @@ $\text{distA2B}(a,s)=\frac{\sqrt{\frac{1}{1-s^2}}}{a}$
 where $s$ is your coasting speed as a fraction of the speed of light
 (in your case, this is $0.6$)
 
-You then coast from B to C, and the time/distance you travel (in A's
-reference frame) is:
+You then coast from B to C, traveling at constant speed $s$:
+
+$\text{speedB2C}(a,s,t)=s$
+
+$\text{distB2C}(a,s,t)=s t$
+
+
 
 $\text{timeB2C}(a,s,d)=\frac{d-\frac{2 \sqrt{\frac{1}{1-s^2}}}{a}}{s}$
 
@@ -53,43 +57,64 @@ enough to land at speed 0.
 
 Fortunately, this does not happen in either of our test cases.
 
+You then decelerate from C to D, mirroring (in reverse) the
+acceleration from A to B. The time and distance are the same from A to
+B:
+
+$\text{timeC2D}(a,s)=\frac{s}{\sqrt{a^2-a^2 s^2}}$
+
+$\text{distC2D}(a,s)=\frac{\sqrt{\frac{1}{1-s^2}}}{a}$
+
+The total time you spend on the trip (from A's reference frame) is:
+
+$   
+\text{timeA2D}(a,s,d)=\frac{a d+\frac{2 s^2}{\sqrt{1-s^2}}-2
+\sqrt{\frac{1}{1-s^2}}}{a s}
+$
+
+The distance traveled is, of course, $d$.
 
 
-
-TODO: put speed disclaimer here (can't go faster than... )
-
-where `d` is the distance you're traveling in light seconds.
-
-You then decelerate for the same amount of time (in `A`'s reference
-frame as you accelerated earlier):
-
-$\text{coasttime}(a,s)=\frac{s}{\sqrt{a^2-a^2 s^2}}$
 
 
 TODO: disclaim "seconds" (any unit of time consistent)
 
 TODO: need to get this print cleaned up a bit
 
-TODO: use better function names, perhaps even put points on diagram to refer
-
 TODO: TeX can't seem to display as fancy tables as Mathematica, use image
 
 print = {
- {"a", "s", "d", "Accel For", "Dist After Accel", 
- "Coast For", "Dist After Coast", "Decel For", "Total"},
+ {"a", "s", "d", "A2B {time, distance}", "B2C {time, distance}", 
+  "C2D {time, distance}", "Total (A2D)"},
 
- {"a", "s", "d", coasttime[a,s], coastdist[a,s],
- coastfor[a,s,d], distaftercoast[a,s,d], coasttime[a,s], journeyTime[a,s,d]},
-
-{"1g", ".995c", "40 ly", "9.66 years", "9.71 ly", "20.69 years", "30.29 ly",
- "9.66 years", "40.01 years"}
-
+ {"a", "s", "d", {timeA2B[a,s], distA2B[a,s]}}
 
 }
 
 Grid[print, Alignment -> Left, Spacings -> {2, 1}, Frame -> All, 
  ItemStyle -> "Text", Background -> {{Gray, None}, {LightGray, None}}]
 showit
+
+Grid[print, Alignment -> Left, Spacings -> {2, 1}, Frame -> All, 
+ ItemStyle -> "Text", Background -> { {LightGray, None}}
+]
+showit
+
+
+coasttime[a,s], coastdist[a,s],
+ coastfor[a,s,d], distaftercoast[a,s,d], coasttime[a,s], journeyTime[a,s,d]},
+
+{"1g", ".995c", "40 ly", "9.66 years", "9.71 ly", "20.69 years", "30.29 ly",
+ "9.66 years", "40.01 years"}
+
+{"1g", ".995c", "40 ly", "9.66 years\nfoo", "9.71 ly", "20.69 years", 
+ "30.29 ly",
+ "9.66 years", "40.01 years"}
+
+
+}
+
+
 
 
 
@@ -151,11 +176,29 @@ conds = {t>0, a>0, v>0, v<1}
 speed[a_,t_] = a*t/Sqrt[(a*t)^2+1]
 dist[a_,t_] = Integrate[speed[a,t],t]
 
+speedA2B[a_,t_] = a*t/Sqrt[(a*t)^2+1]
+
+(******* TODO: critical, name variables distinctly *****)
+
+distA2B[a_,t_] = Integrate[speedA2B[a,t],t]
 timeA2B[a_,s_] = Solve[speed[a,t]==s,t][[2,1,2]]
 distA2B[a_,s_] = FullSimplify[dist[a,timeA2B[a,s]],conds]
 
+speedB2C[a_,s_,t_] = s
+distB2C[a_,s_,t_] = s*t
 timeB2C[a_,s_,d_] = FullSimplify[(d-2*distA2B[a,s])/s, conds]
 distB2C[a_,s_,d_] = FullSimplify[timeB2C[a,s,d]*s, conds]
+
+timeC2D[a_,s_] = timeA2B[a,s];
+distC2D[a_,s_] = distA2B[a,s];
+
+timeA2D[a_,s_,d_] = FullSimplify[timeA2B[a,s] + timeB2C[a,s,d] + timeC2D[a,s],
+ conds]
+
+distA2D[a_,s_,d_] = distA2B[a,s] + distB2C[a,s,d] + distC2D[a,s]
+
+
+
 
 Solve[timeB2C[a,s,d]==0,s][[2]]
 
