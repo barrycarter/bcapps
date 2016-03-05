@@ -1,5 +1,9 @@
 (*
 
+This answer may help:
+
+http://astronomy.stackexchange.com/questions/13965/
+
 This is an interesting question. I've previously computed planetary
 conjunctions *as viewed from Earth*:
 https://astronomy.stackexchange.com/questions/11141 but not as viewed
