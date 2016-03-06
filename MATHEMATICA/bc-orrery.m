@@ -1,8 +1,63 @@
 (*
 
-This answer may help:
+I can maybe answer this too:
 
-http://astronomy.stackexchange.com/questions/13965/
+START ANSWER TO http://astronomy.stackexchange.com/questions/13965/
+
+NOTE: I am using a "geocentric" frame of reference, where both the
+moons and the sun orbit the planet, and creating a
+
+We note from @Hohmannfan's answer that (answering your questions out
+of order for simplicity):
+
+  - Moon B will eclipse the sun every $\frac{10385}{304}$ (~ 34.16)
+  days. In this time period, the sun completes $\frac{31}{304}$th of
+  an orbit and moon B completes $1\frac{31}{304}$ orbits, lapping the
+  sun once.
+
+  - Moon A will eclipse the sun every $\frac{26130}{257}$ (~ 101.67)
+  days. The sun will complete $\frac{78}{257}$ of an orbit, and Moon A
+  will lap it by completing $1\frac{78}{257}$ orbits.
+
+  - Moon B will overlap Moon A once every $\frac{2418}{47}$ (~ 51.44)
+  days, in which Moon A will complete $\frac{31}{47}$ of an orbit and
+  Moon B will lap it by completing $1\frac{31}{47}$ orbits.
+
+However, as @Hohmannfan notes, there's no guarantee that the moons
+will be *full* when they overlap.
+
+There's also no guarantee that the two moons will *ever* both eclipse
+the sun at the exact same time, although they will get arbitrarily
+close to doing so:
+
+Suppose the sun's position is $r$ when the two moons first overlap
+each other, where $r$ is measured in orbits. For example $r=\frac{1}{2}$
+
+TODO: sim arg
+
+
+
+
+
+
+If we make the oversimplifying assumption that moon B is eclipsing
+moon A and moon A is eclipsing the sun at time 0, we note from
+@Hohmannfan's answer that (answering your questions out of order for
+simplicity):
+
+
+
+
+
+
+
+
+
+TODO: caveats, unlikely, near conjuncts, not perfect multiples,
+mention other prob, fiction, but.... inter general
+
+END ANSWER TO http://astronomy.stackexchange.com/questions/13965/ 
+
 
 This is an interesting question. I've previously computed planetary
 conjunctions *as viewed from Earth*:
@@ -36,61 +91,6 @@ TODO: mention this program
 
 *)
 
-(* 
-
-Let's genericize the concept of intervals here
-
-p1 = period 1
-p2 = period 2
-
-p1 < p2 wlog
-
-Example: 5 and 7 years -> every 17.5 years (p1*p2/(p1-p2))
-
-but within those periods, interval of n degrees? (n < 180)
-
-360*n*(1/p1 - 1/p2) on either side
-
-generic:
-
-m*p1*p2/(p1-p2) +- 360*n*(1/p1 - 1/p2)
-
-note that the intersect must work for ANY pair, not a 5 from b, b 5 from c
-
-*)
-
-Solve[t/p1 == t/p2 + 1, t]
-
-p1*p2/(p1-p2)
-
-FullSimplify[m*p1*p2/(p1-p2) + 360*n*(1/p1 - 1/p2),
- {Element[{m,n},Integers], p1 > 0, p2 > 0}]
-
-Interval[{m*p1*p2/(p1-p2) - 360*n*(1/p1 - 1/p2), 
-          m*p1*p2/(p1-p2) + 360*n*(1/p1 - 1/p2)}]
-
-int[p1_,p2_,m_,n_] =  Interval[{m*p1*p2/(p1-p2) - (n/360)/(1/p1 - 1/p2), 
-                                m*p1*p2/(p1-p2) + (n/360)/(1/p1 - 1/p2)}];
-
-int[p1,p2,n1,m1]
-int[p1,p3,n2,m2]
-
-(* work it out for mer/ven/ear within 5 degrees *)
-
-int[0.38709843,0.72332102,m1,5]
-int[0.38709843,1.00000018,m2,5]
-int[0.72332102,1.00000018,m3,5]
-
-mv = Table[int[0.38709843,0.72332102,m,5], {m,1000}];
-me = Table[int[0.38709843,1.00000018,m,5], {m,1000}];
-ve = Table[int[0.72332102,1.00000018,m,5], {m,1000}];
-
-mv2 = Apply[IntervalUnion, mv];
-me2 = Apply[IntervalUnion, me];
-ve2 = Apply[IntervalUnion, ve];
-
-IntervalIntersection[mv2,me2,ve2]
-
 (*
 
 Helper function: given the t=0 "current" orbital positions of two
@@ -106,10 +106,9 @@ gives a "late" first alignment)
 
 *)
 
-orbhelp[{p1_,d1_},{p2_,d2_}]={((d1-d2)*p1*p2)/(p1-p2),Abs[p1*p2/(p1-p2)]};
+(* TODO: is my abs value correct? I think so, but comment if, order of ops *)
 
-orbhelp[{88.,.3},{267.,.4}]
-orbhelp[{267.,.4},{88.,.3}]
+orbhelp[{p1_,d1_},{p2_,d2_}]={((d1-d2)*p1*p2)/(p1-p2),Abs[p1*p2/(p1-p2)]};
 
 (*
 
@@ -120,6 +119,9 @@ number of planets, find when the tolerance is met. Call looks like
 conjuncts[1000, 0.01, { {p1,d1}, {p2,d2}, ... }]
 
 TODO: if this gets ugly memory-wise, can intersect on the fly?
+
+TODO: would starting with the largest (two) periods here be useful
+(and then trimming the results?)
 
 TODO: allow for searches with intervals if starting with 10 degrees
 for example and narrowing down
@@ -145,6 +147,30 @@ conjuncts[n_, d_, lol_] := Module[{int, tab, newint},
 
 ]
 
+q13965 = {{335,0}, {78, 0}, {31, 0}};
+
+ints = conjuncts[10000, 0.5/360, q13965]
+
+a1 = (31*78)/(78-31)
+
+a2 = (31*335)/(335-31)
+
+a3 = (78*335)/(335-78)
+
+lcm = LCM[a1,a2,a3]
+
+(* 810030 days = 2418 years in "their" time *)
+
+
+
+
+
+
+(* given an interval that is a list of intervals, find their midpoints *)
+
+midpoints[ints_] := Map[Mean,Apply[List,ints]]
+
+
 (* true gas giants based on p_elem_t1.txt *)
 
 (* epoch is 2000 *)
@@ -161,39 +187,6 @@ giantsol = conjuncts[5000, 10/360, giants];
 giant2 = conjuncts[5000, 5/360, giants];
 
 giant3 = conjuncts[5000, 2/360, giants];
-
-
-
-
-(* mer/ven/earth within 10 degs, assuming start conjunct *)
-
-test = conjuncts[500, 10/360, {
- {0.38709843, 0}, {0.72332102, 0}, {1.00000018, 0}
-}];
-
-
-gasg = conjuncts[5000, 10/360, {
- {5.20248019, 0}, {9.54149883, 0}, {19.18797948, 0}, {30.06952752, 0}
-}];
-
-
-
-test = conjuncts[2,.01,{ {0.38709843, 0.20563661}, {0.72332102, 0.00676399},
- {1.00000018, 0.01673163}, {1.52371243, 0.09336511}}]
-
-test = conjuncts[3,.5,{ {0.38709843, 0.20563661}, {0.72332102, 0.00676399},
- {1.00000018, 0.01673163}, {1.52371243, 0.09336511}}]
-
-test = conjuncts[1000,.01,{ {0.38709843, 0.20563661}, {0.72332102, 0.00676399},
- {1.00000018, 0.01673163}, {1.52371243, 0.09336511}}]
-
-test0 = { {0.38709843, 0.20563661}, {0.72332102, 0.00676399},
-
-test0 = { {0.38709843, 0.20563661}, {0.72332102, 0.00676399},
- {1.00000018, 0.01673163}, {1.52371243, 0.09336511}};
-
-
-
 
 (* http://ssd.jpl.nasa.gov/txt/p_elem_t2.txt *)
 
@@ -356,8 +349,3 @@ Export["/tmp/orbits.gif",t1, ImageSize -> {600,400}]
 ParametricPlot[{pos[Jupiter][t], pos[Saturn][t]}, {t,0,data[Jupiter][period]}]
 
 ParametricPlot[{pos[Jupiter][t], pos[Saturn][t]}, {t,0,6}]
-
-
-
-
-
