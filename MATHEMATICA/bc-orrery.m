@@ -63,15 +63,104 @@ some other calculations.
 
 Since the moons line up every $\frac{2418}{47}$ days and the sun and
 Moon B line up every $\frac{10385}{304}$ days, all three will line up
-on the least common multiple of these numbers, or 810,030 days (which
-would be exactly 2418 of your years, and note that 2418 is the product
-of the two lunar orbits). In this time:
+(to form a double moon eclipse of the sun) on the least common
+multiple of these numbers, or 810,030 days (which would be exactly
+2418 of your years, and note that 2418 is the product of the two lunar
+orbits). In this time:
 
   - Moon A will have completed exactly 10,385 orbits.
 
   - Moon B will have completed exactly 26,130 orbits.
 
-  - As above, the sun will have completed 2,418 orbits.
+  - As above, the sun will have completed exactly 2,418 orbits.
+
+As it turns out, there can never be a perfect double full moon bullseye:
+
+  - Moon B will be full on day $\frac{10385}{608}$ (~ 17.08), at which
+  point it will have completed $\frac{335}{608}$ of an orbit and the
+  sun will have completed $\frac{31}{608}$ of an orbit, so Moon B will
+  have gained half an orbit on the sun, which is required for a full
+  moon. After that, the moon will be full every $\frac{10385}{304}$
+  days, the period of time it takes the sun to complete
+  $\frac{31}{304}$ orbits, and Moon B to complete $1\frac{31}{304}$
+  orbits.
+
+  - By similar calculation, Moon A will be full on day
+  $\frac{13065}{257}$ (~ 50.84) and every $\frac{26130}{257}$ days
+  thereafter.
+
+  - To find when they're both full at the same time, we solve this
+  linear Diophantine equation:
+
+$\frac{10385 n}{304}+\frac{10385}{608}=\frac{26130 m}{257}+\frac{13065}{257}$
+
+where n and m are integers. This reduces to:
+
+$n\to \frac{47424 m+15745}{15934}$
+
+Unfortunately, $47424 m$ is always even, so $47424 m+15745$ is always
+odd. Since the denominator ($15934$) is even, you are dividing an odd
+number by an even number, and the result can never be an integer.
+
+However, this doesn't tell the full story. On day
+$\frac{74571030157}{5797920}$ (~ 12861.69), for example, Moon B has
+completed $\frac{74571030157}{179735520}$ orbits and is thus
+$\frac{160524877}{179735520}$ of the way in its 414th
+orbit. Similarly, Moon A has completed $\frac{31079809}{34787520}$ of
+its 164th orbit, and the sun has completed
+$\frac{763508557}{1942303200}$ of its 38th orbit.
+
+Thus, the two moons are $\frac{6911}{22944960}$ of an orbit or about
+0.11 degrees apart, and 
+
+conjuncts[1000, 1/360, {
+ {335,0}, {78, 1/2}, {31, 1/2}
+}]
+
+test1222=conjuncts[100000, 1/360/128, {   {335,0}, {78, 1/2}, {31, 1/2}  }]
+
+
+
+74571030157/5797920
+
+Solve[13065/257 + 26130/257*m == 10385/304*n + 10385/608, {m,n}, Integers]
+
+Minimize[13065/257 + 26130/257*m - (10385/304*n + 10385/608), {m,n}, Integers]
+
+tab = Table[
+ FractionalPart[Solve[13065/257 + 26130/257*m == 10385/304*n + 10385/608,n]
+[[1,1,2]]],{m,1,10000}
+];
+
+Ordering[tab][[-1]]
+
+4257 and 3709 are close to 0 (or 1)
+
+dtest = 13065/257 + 26130/257*(4257)
+
+
+
+
+>      ConditionalExpression[3709 + 7967 C[1], C[1] \[Element] Integers], 
+ 
+>     n -> ConditionalExpression[11040 + 23712 C[1], C[1] \[Element] Integers]}}
+
+In[294]:= Solve[47424*m + 15746 == 15934*n, {m,n}, Integers]                    
+
+Out[294]= {{m -> 
+ 
+>      ConditionalExpression[4257 + 7967 C[1], C[1] \[Element] Integers], 
+ 
+>     n -> ConditionalExpression[12671 + 23712 C[1], C[1] \[Element] Integers]}}
+
+
+Solve[a2/2 + n*a2 == a3/2 + m*a3, {n,m}, Integers]
+
+Solve[a2/2 + n*a2 == a3/2 + m*a3, n]
+
+FindInstance[a2/2 + n*a2 == a3/2 + m*a3, {n,m}, Integers]
+
+
 
 
 
