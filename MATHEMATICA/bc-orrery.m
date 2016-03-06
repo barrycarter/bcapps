@@ -102,7 +102,17 @@ Unfortunately, $47424 m$ is always even, so $47424 m+15745$ is always
 odd. Since the denominator ($15934$) is even, you are dividing an odd
 number by an even number, and the result can never be an integer.
 
-However, this doesn't tell the full story. On day
+However, this doesn't tell the full story. For example, if we compute
+the positions on day $\frac{34987576465283}{92766720}$ (~ 377156.55),
+we find:
+
+  - Moon B is at 122.5656 degrees.
+
+  - Moon A is at 122.5581 degrees, only ~ 1/133 of a degree away.
+
+  - The sun is at 302.5658 degrees, 
+
+
 $\frac{74571030157}{5797920}$ (~ 12861.69), for example, Moon B has
 completed $\frac{74571030157}{179735520}$ orbits and is thus
 $\frac{160524877}{179735520}$ of the way in its 414th
@@ -119,6 +129,9 @@ conjuncts[1000, 1/360, {
 
 test1222=conjuncts[100000, 1/360/128, {   {335,0}, {78, 1/2}, {31, 1/2}  }]
 
+moonb = FractionalPart[34987576465283/92766720/31]*360
+moona = FractionalPart[34987576465283/92766720/78]*360
+sun = FractionalPart[34987576465283/92766720/335]*360
 
 
 74571030157/5797920
