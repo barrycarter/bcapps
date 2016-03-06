@@ -12,6 +12,8 @@ from the Sun.
 It turns out this is much easier to compute, since the planets follow
 nearly circular orbits around the Sun.
 
+TODO: stellarium
+
 TODO: note significantly more accurate calculations with CSPICE
 
 TODO: note that I've ignored dwarf planets except for Pluto
@@ -131,15 +133,37 @@ conjuncts[n_, d_, lol_] := Module[{int, tab, newint},
  tab= Flatten[Table[orbhelp[lol[[i]],lol[[j]]], 
   {i,1,Length[lol]}, {j,i+1, Length[lol]}],1];
 
+ (* TODO: same number of iterations for each planet is wasteful *)
+
  For[i=1, i<=Length[tab], i++,
   newint = Apply[Interval,
-  Flatten[Table[{tab[[i,1]] + {m-d,m+d}*tab[[i,2]]}, {m,1,n}],1]];
+  Flatten[Table[{tab[[i,1]] + {m-d,m+d}*tab[[i,2]]}, {m,-n,n}],1]];
   int = IntervalIntersection[int, newint];
  ];
 
  Return[int];
 
 ]
+
+(* true gas giants based on p_elem_t1.txt *)
+
+(* epoch is 2000 *)
+
+giants = {
+ {360/(3034.74612775/100), 34.39644051/360},
+ {360/(1222.49362201/100), 49.95424423/360},
+ {360/(428.48202785/100), 313.23810451/360},
+ {360/(218.45945325 /100), -55.12002969}
+};
+
+giantsol = conjuncts[5000, 10/360, giants];
+
+giant2 = conjuncts[5000, 5/360, giants];
+
+giant3 = conjuncts[5000, 2/360, giants];
+
+
+
 
 (* mer/ven/earth within 10 degs, assuming start conjunct *)
 
