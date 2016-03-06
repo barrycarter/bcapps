@@ -30,44 +30,38 @@ There's also no guarantee that the two moons will *ever* both eclipse
 the sun at the exact same time, although they will get arbitrarily
 close to doing so:
 
-Suppose the sun is $r {}^{\circ}$ from the two moons when they overlap
-at some given time. Since the sun's period is 335 days, it moves
-$\frac{360 {}^{\circ}}{335}$ per day (I didn't simplify this fraction
-to avoid confusion). Since the two moons overlap every
-$\frac{2418}{47}$ days, the Sun will have moved $\frac{2418}{47}
-\times \frac{360 {}^{\circ}}{355}$ in that time period. Now, I will
-simplify (but leave as a mixed number) to get $\frac{174096
-{}^{\circ}}{3337}$
+In the $\frac{2418}{47}$ days between two successive overlaps, the sun
+moves $\frac{2418}{47} \times \frac{1}{335}$ of an orbit.
 
-As noted above, the Moon A will have completed $\frac{31}{47}$ orbits
-in that time, and thus moved $360 \times \frac{31}{47}
-{}^{\circ}$. Moon B will have completed $1\frac{31}{47}$ orbits, and
-thus moved $360 \times 1\frac{31}{47} {}^{\circ}$.
+As above, the moons have advanced $\frac{31}{47}$ of an orbit.
 
-Simplifying, we see that Moon A moved $\frac{11160 {}^{\circ}}{47}$
-and Moon B moved $\frac{28080 {}^{\circ}}{47}$. Since Moon B has moved
-more than $360 {}^{\circ}$, we can reduce Moon B's movement to
-$\left(\frac{28080}{47}-360\right) {}^{\circ}$ or $\frac{11160
-{}^{\circ}}{47}$ (which makes sense, since Moon A and Moon B must be
-in the same position as each other if they are overlapping).
+Thus, compared to the sun, the moons have advanced $\frac{31}{47} -
+\frac{2418}{47} \times \frac{1}{335}$ or $\frac{7967}{15745}$ of an
+orbit (this number is surprisingly close to $\frac{1}{2}$ but that's
+just a coincidence).
 
+This happens between every pair of overlaps, so the sun's angular
+distance (in orbits) from the overlapping moons is $\frac{7967
+n}{15745}+r$ where $r$ is the angular distance at a specific overlap
+and $n$ is any integer.
 
+For the overlapping moons to eclipse the sun $\frac{7967 n}{15745}+r$
+must be an integer. If $r$ is irrational, this can never happen.
 
+However, the angular distance can get arbitrarily small, even to the
+point where an observer wouldn't realize the double moon eclipse isn't
+100% perfect.
 
+By a similar argument, you can show the two full moons will get
+arbitrarily close to overlapping.
 
-At the next overlap, $\frac{2418}{47}$ days later, the sun will have moved 
+**NOW**, if we make the simplifying assumption that both moons are
+eclipsing the sun at year 0 (perhaps your astronomer-priests have
+decided this unusual occurence is a good time to start numbering the
+years, and believe zero (not one) is a good first year), we can make
+some other calculations.
 
-each other, where $r$ is measured in orbits. For example $r=\frac{1}{2}$
-
-TODO: sim arg
-
-
-
-
-
-
-If we make the oversimplifying assumption that moon B is eclipsing
-moon A and moon A is eclipsing the sun at time 0, we note from
+we note from
 @Hohmannfan's answer that (answering your questions out of order for
 simplicity):
 
