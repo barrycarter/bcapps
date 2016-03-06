@@ -61,9 +61,18 @@ decided this unusual occurence is a good time to start numbering the
 years, and believe zero (not one) is a good first year), we can make
 some other calculations.
 
-we note from
-@Hohmannfan's answer that (answering your questions out of order for
-simplicity):
+Since the moons line up every $\frac{2418}{47}$ days and the sun and
+Moon B line up every $\frac{10385}{304}$ days, all three will line up
+on the least common multiple of these numbers, or 810,030 days (which
+would be exactly 2418 of your years, and note that 2418 is the product
+of the two lunar orbits). In this time:
+
+  - Moon A will have completed exactly 10,385 orbits.
+
+  - Moon B will have completed exactly 26,130 orbits.
+
+  - As above, the sun will have completed 2,418 orbits.
+
 
 
 
