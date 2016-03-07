@@ -1,11 +1,10 @@
 (*
 
-I can maybe answer this too:
-
 START ANSWER TO http://astronomy.stackexchange.com/questions/13965/
 
 NOTE: I am using a "geocentric" frame of reference, where both the
-moons and the sun orbit the planet, and creating a
+moons and the sun orbit the planet, and am creating an arbitrary xy
+coordinate system.
 
 We note from @Hohmannfan's answer that (answering your questions out
 of order for simplicity):
@@ -108,81 +107,34 @@ we find:
 
   - Moon B is at 122.5656 degrees.
 
-  - Moon A is at 122.5581 degrees, only ~ 1/133 of a degree away.
+  - Moon A is at 122.5581 degrees, only ~ 27 arcseconds away.
 
-  - The sun is at 302.5658 degrees, 
+  - The sun is at 302.5658 degrees, 179.9998 degrees from moon B, and
+  179.9924 degrees from moon A (~ 28 arcseconds from opposition).
 
+In other words, this is pretty close to a double full moon, even
+though it's not exact.
 
-$\frac{74571030157}{5797920}$ (~ 12861.69), for example, Moon B has
-completed $\frac{74571030157}{179735520}$ orbits and is thus
-$\frac{160524877}{179735520}$ of the way in its 414th
-orbit. Similarly, Moon A has completed $\frac{31079809}{34787520}$ of
-its 164th orbit, and the sun has completed
-$\frac{763508557}{1942303200}$ of its 38th orbit.
+In a similar vein, even though double solar eclipses only occur once
+every 810,030 days, there are several close calls:
 
-Thus, the two moons are $\frac{6911}{22944960}$ of an orbit or about
-0.11 degrees apart, and 
+*******
 
-conjuncts[1000, 1/360, {
- {335,0}, {78, 1/2}, {31, 1/2}
-}]
+Other notes:
 
-test1222=conjuncts[100000, 1/360/128, {   {335,0}, {78, 1/2}, {31, 1/2}  }]
+  - Even though you said this was fiction, note that it's highly
+  unlikely that the moons' orbital period will be an exact multiple of
+  the planets day. The only exception to this is if the moon(s) are
+  tidally locked, in which case the orbital period will equal exactly
+  one day.
 
-moonb = FractionalPart[34987576465283/92766720/31]*360
-moona = FractionalPart[34987576465283/92766720/78]*360
-sun = FractionalPart[34987576465283/92766720/335]*360
+  - Similarly, it's unlikely the planet's orbital period would be an
+  exact multiple of its rotation period (ours certainly isn't).
 
-
-74571030157/5797920
-
-Solve[13065/257 + 26130/257*m == 10385/304*n + 10385/608, {m,n}, Integers]
-
-Minimize[13065/257 + 26130/257*m - (10385/304*n + 10385/608), {m,n}, Integers]
-
-tab = Table[
- FractionalPart[Solve[13065/257 + 26130/257*m == 10385/304*n + 10385/608,n]
-[[1,1,2]]],{m,1,10000}
-];
-
-Ordering[tab][[-1]]
-
-4257 and 3709 are close to 0 (or 1)
-
-dtest = 13065/257 + 26130/257*(4257)
-
-
-
-
->      ConditionalExpression[3709 + 7967 C[1], C[1] \[Element] Integers], 
- 
->     n -> ConditionalExpression[11040 + 23712 C[1], C[1] \[Element] Integers]}}
-
-In[294]:= Solve[47424*m + 15746 == 15934*n, {m,n}, Integers]                    
-
-Out[294]= {{m -> 
- 
->      ConditionalExpression[4257 + 7967 C[1], C[1] \[Element] Integers], 
- 
->     n -> ConditionalExpression[12671 + 23712 C[1], C[1] \[Element] Integers]}}
-
-
-Solve[a2/2 + n*a2 == a3/2 + m*a3, {n,m}, Integers]
-
-Solve[a2/2 + n*a2 == a3/2 + m*a3, n]
-
-FindInstance[a2/2 + n*a2 == a3/2 + m*a3, {n,m}, Integers]
-
-
-
-
-
-
-
-
-
-
-
+This is an interesting problem in general, and I am writing
+https://github.com/barrycarter/bcapps/blob/master/MATHEMATICA/bc-orrery.m
+to solve a similar problem:
+http://physics.stackexchange.com/questions/197481/
 
 TODO: caveats, unlikely, near conjuncts, not perfect multiples,
 mention other prob, fiction, but.... inter general
@@ -280,7 +232,7 @@ conjuncts[n_, d_, lol_] := Module[{int, tab, newint},
 
 q13965 = {{335,0}, {78, 0}, {31, 0}};
 
-ints = conjuncts[10000, 0.5/360, q13965]
+ints = conjuncts[30000, 1/360, q13965]
 
 a1 = (31*78)/(78-31)
 
@@ -291,11 +243,6 @@ a3 = (78*335)/(335-78)
 lcm = LCM[a1,a2,a3]
 
 (* 810030 days = 2418 years in "their" time *)
-
-
-
-
-
 
 (* given an interval that is a list of intervals, find their midpoints *)
 
