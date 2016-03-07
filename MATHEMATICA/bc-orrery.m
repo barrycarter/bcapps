@@ -1,3 +1,76 @@
+(* functions start here *)
+
+(* Given a list of planets in {period, init_position} format and a
+time t, determine maximum distance (in orbits) between planets *)
+
+maxdist[lol_, t_] := Module[{pos, diffs},
+
+ (* planet positions *)
+ pos = Table[i[[2]] + t/i[[1]], {i,lol}];
+
+ (* differences uncorrected *)
+ diffs = Flatten[Table[Abs[FractionalPart[pos[[i]]-pos[[j]]]], 
+  {i,1,Length[pos]-1}, {j,i+1,Length[pos]}],1];
+
+ (* corrected *)
+ diffs = Sort[Map[If[#>.5, 1-#, #]&, diffs]];
+
+ Return[diffs[[-1]]];
+];
+
+(* Given initial (t=0) orbital positions of two planets (in number of
+orbits), return time of first alignment and interval between
+alignments *)
+
+orbhelp[{p1_,d1_},{p2_,d2_}]={((d1-d2)*p1*p2)/(p1-p2),Abs[p1*p2/(p1-p2)]};
+
+(* Given a limited time, a tolerance (in orbits), and the initial
+positions/periods of a list of planets, find when the tolerance is
+met. Example:
+
+conjuncts[1000, 0.01, { {p1,d1}, {p2,d2}, ... }]
+
+TODO: allow for searches with intervals if starting with 10 degrees
+for example and narrowing down
+
+*)
+
+conjuncts[n_, d_, lol_] := Module[{int, tab, newint, i},
+
+ int = Interval[{-Infinity, Infinity}];
+
+ tab= Flatten[Table[orbhelp[lol[[i]],lol[[j]]], 
+  {i,1,Length[lol]}, {j,i+1, Length[lol]}],1];
+
+ (* TODO: same number of iterations for each planet is wasteful *)
+
+ For[i=1, i<=Length[tab], i++,
+  newint = Apply[Interval,
+  Flatten[Table[{tab[[i,1]] + {m-d,m+d}*tab[[i,2]]}, 
+ {m, Floor[-n/tab[[i,2]]], Ceiling[n/tab[[i,2]]]}],1]];
+  int = IntervalIntersection[int, newint];
+ ];
+
+ Return[int];
+
+]
+
+(* given the same inputs as conjuncts, find the closest conjunction in
+each interval that conjuncts returns *)
+
+closest[n_, d_, lol_] := Module[{ints, i}, 
+
+ (* convert to list *)
+ ints = Apply[List,conjuncts[n, d, lol]];
+
+ Return[Table[
+  FindMinimum[maxdist[lol,t],{t,i[[1]],i[[2]]}, 
+   WorkingPrecision -> 20, PrecisionGoal -> 20, AccuracyGoal -> 20],
+ {i, ints}]];
+];
+
+(* functions end here *)
+
 (*
 
 START ANSWER TO http://astronomy.stackexchange.com/questions/13965/
@@ -174,28 +247,6 @@ TODO: mention this program
 
 *)
 
-(*
-
-Given a list of planets in {period, init_position} format and a time
-t, determine maximum distance (in orbits) between planets
-
-*)
-
-maxdist[lol_, t_] := Module[{pos, diffs},
-
- (* planet positions *)
- pos = Table[i[[2]] + t/i[[1]], {i,lol}];
-
- (* differences uncorrected *)
- diffs = Flatten[Table[Abs[FractionalPart[pos[[i]]-pos[[j]]]], 
-  {i,1,Length[pos]-1}, {j,i+1,Length[pos]}],1];
-
- (* corrected *)
- diffs = Sort[Map[If[#>.5, 1-#, #]&, diffs]];
-
- Return[diffs[[-1]]];
-];
-
 giants = {
  {360/(3034.74612775/100), 34.39644051/360},
  {360/(1222.49362201/100), 49.95424423/360},
@@ -215,76 +266,11 @@ Interval[{1.0829346067465821*^7, 1.082934607826173*^7},
 FindMinimum[maxdist[giants,t], {t,1.0829346067465821*^7, 1.082934607826173*^7}]
 
 
-(* Given a planets period and initial position, determine position at time t *)
-
-perinit2pos[{p_,d_},t_] = d + t/p
-
-(* Given two orbit positions, determine distance *)
-
-dist[p1_,p2_] = If[Abs[FractionalPart[p1-p2]]>.5, 
- 1-Abs[FractionalPart[p1-p2]], Abs[FractionalPart[p1-p2]]]
-
-
-
-(*
-
-Helper function: given the t=0 "current" orbital positions of two
-planets (as a number between 0 and 1 [this unit is known as a 'turn'])
-and their periods, return:
-
-  - time of first alignment
-
-  - interval between alignments
-
-TODO: clean this up to be symmetric and allow for d1-d2 > .5 (which
-gives a "late" first alignment)
-
-*)
-
-(* TODO: is my abs value correct? I think so, but comment if, order of ops *)
-
-orbhelp[{p1_,d1_},{p2_,d2_}]={((d1-d2)*p1*p2)/(p1-p2),Abs[p1*p2/(p1-p2)]};
-
-(*
-
-Given (something that limits iterations), a tolerance (in orbits
-[turns]) and the periods and t=0 current positions of an arbitrary
-number of planets, find when the tolerance is met. Call looks like
-
-conjuncts[1000, 0.01, { {p1,d1}, {p2,d2}, ... }]
-
-TODO: if this gets ugly memory-wise, can intersect on the fly?
-
-TODO: would starting with the largest (two) periods here be useful
-(and then trimming the results?)
-
-TODO: allow for searches with intervals if starting with 10 degrees
-for example and narrowing down
-
-*)
-
-conjuncts[n_, d_, lol_] := Module[{int, tab, newint},
-
- int = Interval[{-Infinity, Infinity}];
-
- tab= Flatten[Table[orbhelp[lol[[i]],lol[[j]]], 
-  {i,1,Length[lol]}, {j,i+1, Length[lol]}],1];
-
- (* TODO: same number of iterations for each planet is wasteful *)
-
- For[i=1, i<=Length[tab], i++,
-  newint = Apply[Interval,
-  Flatten[Table[{tab[[i,1]] + {m-d,m+d}*tab[[i,2]]}, {m,-n,n}],1]];
-  int = IntervalIntersection[int, newint];
- ];
-
- Return[int];
-
-]
-
 q13965 = {{335,0}, {78, 0}, {31, 0}};
 
-ints = conjuncts[30000, 1/360/8, q13965]
+ints = conjuncts[900000, 1/360/8, q13965]
+
+ints2 = closest[900000, 1/360/8, q13965]
 
 a1 = (31*78)/(78-31)
 
