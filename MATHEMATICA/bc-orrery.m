@@ -80,7 +80,39 @@ from the Sun.
 If we accept that Table 2a in
 http://ssd.jpl.nasa.gov/txt/p_elem_t2.txt is exact (it's not) and
 ignore the corrections in Table 2b (we shouldn't), we can first
-compute the frequency of alignment of any pair of gas giants:
+compute the frequency of alignment of any pair of gas giants using
+this formula:
+
+$
+   \text{firstalign}(\text{p1},\text{d1},\text{p2},\text{d2})=\frac{\text{p1}
+    \text{p2} (\text{d1}-\text{d2})}{\text{p1}-\text{p2}}
+$
+
+$
+   \text{alignevery}(\text{p1},\text{d1},\text{p2},\text{d2})=\left|
+    \frac{\text{p1} \text{p2}}{\text{p1}-\text{p2}} \right|
+$
+
+where:
+
+  - $d1$ is the angular position of planet 1 at J2000 (noon UTC on
+  2000 Jan 01) as given by the "L" column (first row) in the table
+  above. I divide this by 360 to get the angular position in orbits.
+
+  - $d2$ is the angular position of planet 2 at J2000.
+
+  - $p1$ is the period of planet 1. I obtain this by taking the second
+  row under the "L" column (which represents the number of degrees
+  traversed in 100 years = 36525 days), calling it $x$ and computing
+  $\frac{36000}{x}$ to find the period in years.
+
+  - $p2$ is the period of planet 2.
+
+  - $firstalign()$ is the time of first alignment, in years, since J2000.
+
+  - $alignevery()$ is the time in years between successive alignments.
+
+Using this formula, we find:
 
   - Jupiter and Saturn align once every 19.8589 years, in which time
   Saturn completes 0.67416 of an orbit and Jupiter completes 1.67416
@@ -110,6 +142,39 @@ compute the frequency of alignment of any pair of gas giants:
   and don't align at all this century. The next alignment after 1995
   is on the 238th day of 2166.
 
+Unfortunately, as others have noted, we can't extend this techique to
+3+ planets. Before giving up, however, lets try something:
+
+Since Jupiter and Saturn align every 19.8589 years, and Saturn and
+Uranus align every 45.3618 years, perhaps we could find a common
+multiple of these numbers to figure out how often Jupiter, Saturn, and
+Uranus align.
+
+The least common multiple of these two numbers is:
+
+9008354.0002 == 19.8589 *  453618 == 45.3618 * 198589
+
+$9008354.0002 = 19.8589 \times 453618= 45.3618 \times 198589$
+
+The table we're using is good from 3000 BCE to 3000 CE, and even
+*that* is only true if we apply the corrections, which we're
+not. While we can stretch this a bit, there's no way that it will work
+for 9 million+ years.
+
+Even if we round to decimal places and find the least common multiple:
+
+$15014.16 = 19.86 \times 756 = 45.36 \times 331$
+
+the answer is a bit on the large side.
+
+Instead, we'll use a numerical technique (which I'll describe at the
+end of this answer) to find 3 planet (and finally 4 planet) alignments:
+
+
+
+
+TODO: give method + note intersect intervals easy
+
 TODO: note that definition ("in the same month") isn't a great one
 
 TODO: LCM fail
@@ -134,6 +199,8 @@ TODO: note that I've ignored dwarf planets except for Pluto
 TODO: ecliptic latitude (and show "bad" conjunctions?)
 
 TODO: snapshots from orrery
+
+TODO: spellcheck!
 
 TODO: 3+ planets (including specific n years mention in question)
 
@@ -230,12 +297,23 @@ nepl = Rationalize[304.22289287,0]/360
 
 (* epoch is 2000 *)
 
-giants = {
+giants = Rationalize[{
  {360/(3034.74612775/100), 34.39644051/360},
  {360/(1222.49362201/100), 49.95424423/360},
  {360/(428.48202785/100), 313.23810451/360},
  {360/(218.45945325 /100), -55.12002969/360}
-};
+},0];
+
+ints = closest[10000, 1/360, Take[giants,3]]
+
+ints = closest[10000, 1/720/8, Take[giants,3]]
+
+print[ints_] := Chop[
+ Table[{NumberForm[i[[1]], {10,5}], NumberForm[i[[2]]*360, {10,2}]},
+ {i, ints}]]
+
+
+
 
 giantsol = closest[1000000, 5/360, giants]
 

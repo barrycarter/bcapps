@@ -7,7 +7,7 @@ solve the problem in general for the limiting speed $s$, and use
 $0.995 c$ (where the time dilation/space contraction is 10) as another
 example case to better show the effects of relativity.
 
-All of the equations here come from
+All of the equations/formulas here come from
 http://physics.stackexchange.com/questions/240342
 
 As you move from A to B, your speed (relative to A) and distance $t$
@@ -60,6 +60,8 @@ Fortunately, this does not happen in either of our test cases.
 You then decelerate from C to D, mirroring (in reverse) the
 acceleration from A to B. 
 
+TODO: add speed formulas here for C/D
+
 The time and distance are the same from A to B:
 
 $\text{totalTimeC2D}(a,s)=\frac{s}{\sqrt{a^2-a^2 s^2}}$
@@ -75,8 +77,11 @@ $
 
 The distance traveled is, of course, $d$.
 
+Let's summarize these results, both in general and for our sample
+cases, in a table:
 
 
+TODO: graph
 
 TODO: disclaim "seconds" (any unit of time consistent)
 
@@ -88,9 +93,17 @@ print = {
  {"a", "s", "d", "A2B {time, distance}", "B2C {time, distance}", 
   "C2D {time, distance}", "Total (A2D)"},
 
- {"a", "s", "d", {timeA2B[a,s], distA2B[a,s]}}
+ {"a", "s", "d", {totalTimeA2B[a,s], totalDistA2B[a,s]},
+  {totalTimeB2C[a,s,d], totalDistB2C[a,s,d]},
+  {totalTimeC2D[a,s], totalDistC2D[a,s]},
+  {totalTimeA2D[a,s,d], totalDistA2D[a,s,d]}
 
 }
+}
+
+Grid[print, Alignment -> Left, Spacings -> {2, 1}, Frame -> All, 
+ ItemStyle -> "Text"]
+showit
 
 Grid[print, Alignment -> Left, Spacings -> {2, 1}, Frame -> All, 
  ItemStyle -> "Text", Background -> {{Gray, None}, {LightGray, None}}]
@@ -210,8 +223,6 @@ distA2D[a_,t_,s_,d_] =
    t < totalTimeA2B[a,s]+totalTimeB2C[a,s,d]+totalTimeC2D[a,s],
        totalDistA2B[a,s]+totalDistB2C[a,s,d]+distC2D[a,t,s],
    True, d];
-
-
 
 totalTimeA2D[a_,s_,d_] = FullSimplify[totalTimeA2B[a,s] + totalTimeB2C[a,s,d] +
 totalTimeC2D[a,s], conds];
@@ -420,7 +431,7 @@ RSolve[{speed[0] == 0, speed[n] == (a+speed[n-1])/(1+a*speed[n-1]/c^2)},
 
 RSolve[{v[0] == 0, v[n] == (a+speed[n-1])/(1+a*speed[n-1])}, v[n], n]
 
-
+TODO: note Earth revolution/rotation ignored
 
 (*
 
