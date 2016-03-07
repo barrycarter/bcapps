@@ -176,6 +176,58 @@ TODO: mention this program
 
 (*
 
+Given a list of planets in {period, init_position} format and a time
+t, determine maximum distance (in orbits) between planets
+
+*)
+
+maxdist[lol_, t_] := Module[{pos, diffs},
+
+ (* planet positions *)
+ pos = Table[i[[2]] + t/i[[1]], {i,lol}];
+
+ (* differences uncorrected *)
+ diffs = Flatten[Table[Abs[FractionalPart[pos[[i]]-pos[[j]]]], 
+  {i,1,Length[pos]-1}, {j,i+1,Length[pos]}],1];
+
+ (* corrected *)
+ diffs = Sort[Map[If[#>.5, 1-#, #]&, diffs]];
+
+ Return[diffs[[-1]]];
+];
+
+giants = {
+ {360/(3034.74612775/100), 34.39644051/360},
+ {360/(1222.49362201/100), 49.95424423/360},
+ {360/(428.48202785/100), 313.23810451/360},
+ {360/(218.45945325 /100), -55.12002969/360}
+};
+
+maxdist[giants, 0]
+
+maxdist[giants,211859]
+
+Plot[maxdist[giants,t],{t,211859,211860}]
+
+Interval[{1.0829346067465821*^7, 1.082934607826173*^7}, 
+ {1.6138089718815526*^7, 1.6138089730216121*^7}]
+
+FindMinimum[maxdist[giants,t], {t,1.0829346067465821*^7, 1.082934607826173*^7}]
+
+
+(* Given a planets period and initial position, determine position at time t *)
+
+perinit2pos[{p_,d_},t_] = d + t/p
+
+(* Given two orbit positions, determine distance *)
+
+dist[p1_,p2_] = If[Abs[FractionalPart[p1-p2]]>.5, 
+ 1-Abs[FractionalPart[p1-p2]], Abs[FractionalPart[p1-p2]]]
+
+
+
+(*
+
 Helper function: given the t=0 "current" orbital positions of two
 planets (as a number between 0 and 1 [this unit is known as a 'turn'])
 and their periods, return:
@@ -232,7 +284,7 @@ conjuncts[n_, d_, lol_] := Module[{int, tab, newint},
 
 q13965 = {{335,0}, {78, 0}, {31, 0}};
 
-ints = conjuncts[30000, 1/360, q13965]
+ints = conjuncts[30000, 1/360/8, q13965]
 
 a1 = (31*78)/(78-31)
 
@@ -248,6 +300,9 @@ lcm = LCM[a1,a2,a3]
 
 midpoints[ints_] := Map[Mean,Apply[List,ints]]
 
+(* TODO: note ignoring p_elem_t2.txt intentionally *)
+
+(* TODO: create fade style animation for gas giants conjuncts? *)
 
 (* true gas giants based on p_elem_t1.txt *)
 
@@ -257,7 +312,7 @@ giants = {
  {360/(3034.74612775/100), 34.39644051/360},
  {360/(1222.49362201/100), 49.95424423/360},
  {360/(428.48202785/100), 313.23810451/360},
- {360/(218.45945325 /100), -55.12002969}
+ {360/(218.45945325 /100), -55.12002969/360}
 };
 
 giantsol = conjuncts[5000, 10/360, giants];
