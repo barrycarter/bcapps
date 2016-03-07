@@ -72,6 +72,370 @@ closest[n_, d_, lol_] := Module[{ints, i, times},
 
 (* functions end here *)
 
+This is an interesting question. I've previously computed planetary
+conjunctions *as viewed from Earth*:
+https://astronomy.stackexchange.com/questions/11141 but not as viewed
+from the Sun.
+
+If we accept that Table 2a in
+http://ssd.jpl.nasa.gov/txt/p_elem_t2.txt is exact (it's not) and
+ignore the corrections in Table 2b (we shouldn't), we can first
+compute the frequency of alignment of any pair of gas giants:
+
+  - Jupiter and Saturn align once every 19.8589 years, in which time
+  Saturn completes 0.67416 of an orbit and Jupiter completes 1.67416
+  orbits, lapping Saturn exactly once. The first such alignment this
+  century occurs approximately 317 days into the year 2000.
+
+  - Jupiter and Uranus align once every 13.8121 years: Uranus
+  completes 0.1644 of an orbit and Jupiter completes 1.1644
+  orbits. The first such alignment this century occurs approximately
+  269 days into the year 2010.
+
+  - Jupiter and Neptune align once every 12.7821 years (1.07757 and
+  0.7757 orbits respectively). First time this century: 213 days into
+  the year 2009.
+
+  - Saturn and Uranus align once every 45.3618 years (0.5399 orbits
+  for Uranus, 1.5399 for Saturn). First this century: 103 days into
+  the year 2033.
+
+  - Saturn and Neptune: every 35.8691 years (1.21767 and 0.21767
+  orbits respectively), first 118 days into the year 2025.
+
+  - Uranus and Neptune: every 171.4041 years (2.04016 orbits for
+  Uranus and 1.04016 orbits for Neptune; because Neptune's orbit is
+  almost twice as long as Uranus', it takes more than 1 orbit for
+  Uranus to lap Neptune). The planets align on the 91st day of 1995,
+  and don't align at all this century. The next alignment after 1995
+  is on the 238th day of 2166.
+
+TODO: note that definition ("in the same month") isn't a great one
+
+TODO: LCM fail
+
+TODO: not show orrery because of imperfection? is he using t1?
+
+TODO: century pedantic 2001 not 2000
+
+TODO: mention other question, interval method
+
+TODO: why not t1! (which IS different!)
+
+It turns out this is much easier to compute, since the planets follow
+nearly circular orbits around the Sun.
+
+TODO: stellarium
+
+TODO: note significantly more accurate calculations with CSPICE
+
+TODO: note that I've ignored dwarf planets except for Pluto
+
+TODO: ecliptic latitude (and show "bad" conjunctions?)
+
+TODO: snapshots from orrery
+
+TODO: 3+ planets (including specific n years mention in question)
+
+TODO: inner planets
+
+TODO: does Bode's "law" help?
+
+TODO: note EMBary vs E
+
+TODO: does R^3/T^2 help any? (I don't think so, but...)
+
+TODO: mention this program
+
+*)
+
+giants = {
+ {360/(3034.74612775/100), 34.39644051/360},
+ {360/(1222.49362201/100), 49.95424423/360},
+ {360/(428.48202785/100), 313.23810451/360},
+ {360/(218.45945325 /100), -55.12002969/360}
+};
+
+maxdist[giants, 0]
+
+maxdist[giants,211859]
+
+Plot[maxdist[giants,t],{t,211859,211860}]
+
+Interval[{1.0829346067465821*^7, 1.082934607826173*^7}, 
+ {1.6138089718815526*^7, 1.6138089730216121*^7}]
+
+FindMinimum[maxdist[giants,t], {t,1.0829346067465821*^7, 1.082934607826173*^7}]
+
+
+q13965 = {{335,0}, {78, 0}, {31, 0}};
+ints2 = closest[900000, 1/360/8, q13965]
+
+prints = Chop[
+ Table[{NumberForm[i[[1]], {10,5}], NumberForm[i[[2]]*360*60, {10,2}]},
+ {i, ints2}]]
+
+Grid[Prepend[prints, {"Day", "Sep (')"}]]
+
+q13965 = {{335,1/2}, {78, 0}, {31, 0}};
+
+ints3 = closest[900000, 1/360/8, q13965]
+
+prints3 = Chop[
+ Table[{NumberForm[i[[1]], {10,5}], NumberForm[i[[2]]*360*60, {10,2}]},
+ {i, ints3}]]
+
+Grid[Prepend[prints3, {"Day", "Sep (')"}]]
+
+
+
+
+ints = conjuncts[900000, 1/360/8, q13965]
+
+
+a1 = (31*78)/(78-31)
+
+a2 = (31*335)/(335-31)
+
+a3 = (78*335)/(335-78)
+
+lcm = LCM[a1,a2,a3]
+
+(* 810030 days = 2418 years in "their" time *)
+
+(* given an interval that is a list of intervals, find their midpoints *)
+
+midpoints[ints_] := Map[Mean,Apply[List,ints]]
+
+(* TODO: note ignoring p_elem_t2.txt intentionally *)
+
+(* TODO: create fade style animation for gas giants conjuncts? *)
+
+(* true gas giants based on p_elem_t1.txt (no using t2 later) *)
+
+jup = 360/(Rationalize[3034.90371757,0]/100)
+jupl = Rationalize[34.33479152,0]/360
+
+sat = 360/(Rationalize[1222.11494724,0]/100)
+satl = Rationalize[50.07571329,0]/360
+
+ura = 360/(Rationalize[428.49512595,0]/100)
+ural = Rationalize[314.20276625,0]/360
+
+nep = 360/(Rationalize[218.46515314,0]/100)
+nepl = Rationalize[304.22289287,0]/360
+
+
+
+
+(* epoch is 2000 *)
+
+giants = {
+ {360/(3034.74612775/100), 34.39644051/360},
+ {360/(1222.49362201/100), 49.95424423/360},
+ {360/(428.48202785/100), 313.23810451/360},
+ {360/(218.45945325 /100), -55.12002969/360}
+};
+
+giantsol = closest[1000000, 5/360, giants]
+
+giantsol = closest[1000000, 1/360, giants]
+
+giantsol = closest[10000, 8/360, giants]
+
+
+giantsol = conjuncts[5000, 10/360, giants];
+
+giant2 = conjuncts[5000, 5/360, giants];
+
+giant3 = conjuncts[5000, 2/360, giants];
+
+(* http://ssd.jpl.nasa.gov/txt/p_elem_t2.txt *)
+
+(* below is raw cut and paste, I clean it up later *)
+
+plans = {
+
+{Mercury, 0.38709843, 0.20563661, 7.00559432, 252.25166724,
+77.45771895, 48.33961819, 0.00000000, 0.00002123, -0.00590158,
+149472.67486623, 0.15940013, -0.12214182},
+
+{Venus, 0.72332102, 0.00676399, 3.39777545, 181.97970850,
+131.76755713, 76.67261496, -0.00000026, -0.00005107, 0.00043494,
+58517.81560260, 0.05679648, -0.27274174},
+
+{EMBary, 1.00000018, 0.01673163, -0.00054346, 100.46691572,
+102.93005885, -5.11260389, -0.00000003, -0.00003661, -0.01337178,
+35999.37306329, 0.31795260, -0.24123856},
+
+{Mars, 1.52371243, 0.09336511, 1.85181869, -4.56813164, -23.91744784,
+49.71320984, 0.00000097, 0.00009149, -0.00724757, 19140.29934243,
+0.45223625, -0.26852431},
+
+{Jupiter, 5.20248019, 0.04853590, 1.29861416, 34.33479152,
+14.27495244, 100.29282654, -0.00002864, 0.00018026, -0.00322699,
+3034.90371757, 0.18199196, 0.13024619},
+
+{Saturn, 9.54149883, 0.05550825, 2.49424102, 50.07571329, 92.86136063,
+113.63998702, -0.00003065, -0.00032044, 0.00451969, 1222.11494724,
+0.54179478, -0.25015002},
+
+{Uranus, 19.18797948, 0.04685740, 0.77298127, 314.20276625,
+172.43404441, 73.96250215, -0.00020455, -0.00001550, -0.00180155,
+428.49512595, 0.09266985, 0.05739699},
+
+{Neptune, 30.06952752, 0.00895439, 1.77005520, 304.22289287,
+46.68158724, 131.78635853, 0.00006447, 0.00000818, 0.00022400,
+218.46515314, 0.01009938, -0.00606302},
+
+{Pluto, 39.48686035, 0.24885238, 17.14104260, 238.96535011,
+224.09702598, 110.30167986, 0.00449751, 0.00006016, 0.00000501,
+145.18042903, -0.00968827, -0.00809981} }
+
+(* this lets us do exact analysis *)
+
+plans = Rationalize[plans,0]
+
+(* the format above is:
+
+name, a, e, I, L, long.peri., long.node., AU, AU/Cy, rad, rad/Cy, deg,
+deg/Cy, deg, deg/Cy, deg, deg/Cy, deg, deg/Cy
+
+*)
+
+(* fields of interest:
+
+1 = name
+2 = distance (AU)
+5 = longitude at epoch (2000-01-01 12:00:00?) (degrees)
+11 = increase in longitude per century (degrees)
+
+For consistency, NOT using AstronomicalData below
+
+*)
+
+Table[{
+data[i[[1]]][period] = 36525/i[[11]],
+data[i[[1]]][sangle] = i[[5]],
+data[i[[1]]][distance] = i[[2]]
+}, {i,plans}]
+
+pos[i_][t_] = data[i][distance]*
+              {Cos[data[i][sangle]*Degree + 2*Pi*t/data[i][period]],
+	      Sin[data[i][sangle]*Degree + 2*Pi*t/data[i][period]]};
+
+(* angle, in degrees, corrected for 0-360 *)
+
+angle[i_][t_] = Mod[data[i][sangle] + t*360/data[i][period],360]
+
+Plot[angle[Jupiter][t],{t,0,100}]
+
+(* distance between two angles in degrees, assuming both are 0 < x <
+360 [over 180 = less than 180] *)
+
+angdist[a1_,a2_] = If[Abs[a1-a2]<180, Abs[a1-a2], 360-Abs[a1-a2]]
+
+Plot[angdist[angle[Jupiter][t], angle[Saturn][t]], {t,0,100}]
+
+(* maximum angular distance *)
+
+maxangdist[list_] := Max[Flatten[Table[angdist[list[[i]],list[[j]]],
+ {i,1,Length[list]}, {j,i+1,Length[list]}]]]
+
+Plot[maxangdist[{
+ angle[Jupiter][t], angle[Saturn][t], angle[Uranus][t]}], 
+{t,0,1000}, PlotRange -> {0,30}]
+
+Plot[maxangdist[{angle[Jupiter][t], angle[Saturn][t],
+angle[Uranus][t], angle[Neptune][t]}], {t,0,10000}, PlotRange -> {0,30}]
+
+Minimize[{maxangdist[
+ {angle[Jupiter][t], angle[Saturn][t], angle[Uranus][t], angle[Neptune][t]}],
+ t>0 && t<100}, t]
+
+FindMinimum[{maxangdist[
+ {angle[Jupiter][t], angle[Saturn][t], angle[Uranus][t], angle[Neptune][t]}],
+ t>0 && t<1000}, t]
+
+Plot[maxangdist[
+ {angle[Jupiter][t], angle[Saturn][t], angle[Uranus][t], angle[Neptune][t]}],
+ {t,0,1000}]
+
+(* TODO: consider changing these *)
+
+data[Saturn][color] = RGBColor[{0.9,0.9,0}]
+data[Jupiter][color] = RGBColor[{0,1,0}]
+
+angle[i_][t_] = data[i][sangle] + t*360/data[i][period]
+
+t0 = FindInstance[angle[Jupiter][t] == angle[Saturn][t], t][[1,1,2]]
+
+tend = Solve[angle[Jupiter][t]==360+angle[Saturn][t],t][[1,1,2]]
+
+pp[t_] := ParametricPlot[{pos[Jupiter][u], pos[Saturn][u]}, {u,t0,t0+t},
+ PlotStyle -> {data[Jupiter][color], data[Saturn][color]}]
+
+g0[t_] = Graphics[{
+ Line[{{0,0}, pos[Saturn][t0]}],
+ data[Saturn][color], 
+ Line[{{0,0}, pos[Saturn][t0+t]}],
+ data[Jupiter][color], 
+ Line[{{0,0}, pos[Jupiter][t0+t]}],
+ RGBColor[{0,0,0}],
+ Dashed, Line[{{0,0}, pos[Saturn][tend]}],
+ PointSize[0.05],
+ data[Jupiter][color], Point[pos[Jupiter][t0+t]],
+ data[Saturn][color], Point[pos[Saturn][t0+t]]
+}];
+
+text[t_] := Graphics[{Text[Style["Years: "<>ToString[t], Large], 
+ Scaled[{.84,.03}]]}];
+
+g1[t_] := Show[{g0[t],pp[t],text[t]}, Axes -> True, Ticks -> False,
+ PlotRange -> {{-data[Saturn][distance]-.5, data[Saturn][distance]+.5},
+  {-data[Saturn][distance]-.5, data[Saturn][distance]+.5}}]
+
+showit2 := Module[{file}, file = StringJoin["/tmp/math", 
+       ToString[RunThrough["date +%Y%m%d%H%M%S", ""]], ".jpg"]; 
+     Export[file, %, ImageSize -> {600, 400}]; 
+     Run[StringJoin["display ", file, "&"]]; ]
+g1[5]
+showit2
+
+(* t1 = Table[g1[t],{t,-0.50,tend-t0,0.15}]; *)
+
+t1 = Table[g1[t],{t,-0.01,data[Saturn][period],0.15}];
+
+Export["/tmp/orbits.gif",t1, ImageSize -> {600,400}]
+
+ParametricPlot[{pos[Jupiter][t], pos[Saturn][t]}, {t,0,data[Jupiter][period]}]
+
+ParametricPlot[{pos[Jupiter][t], pos[Saturn][t]}, {t,0,6}]
+
+(* figuring out orrery to t1/t2 conversions *)
+
+orrmer = Rationalize[0.240842074,0]
+mert2 = Rationalize[149472.67486623,0]
+mert1 = Rationalize[149472.67411175,0]
+
+N[orrmer*mert1,20]
+N[orrmer*mert2,20]
+
+orrven = Rationalize[0.615187093,0]
+vent1 = Rationalize[58517.81538729,0]
+vent2 = Rationalize[58517.81560260,0]
+
+N[{orrven*vent1, orrven*vent2}, 20]
+
+orbhelp[{29.45662578,(-147.06+10.18+352.4000796)/360},
+        {11.8617783, (-44.58+10.18+204.4363608)/360}]
+
+orbhelp[{84.01537415, (74.68+10.18+61.69221432)/360},
+        {11.8617783, (-44.58+10.18+204.4363608)/360}]
+
+
+
+
 (*
 
 START ANSWER TO http://astronomy.stackexchange.com/questions/13965/
@@ -304,276 +668,4 @@ http://physics.stackexchange.com/questions/197481/
 
 END ANSWER TO http://astronomy.stackexchange.com/questions/13965/ 
 
-
-This is an interesting question. I've previously computed planetary
-conjunctions *as viewed from Earth*:
-https://astronomy.stackexchange.com/questions/11141 but not as viewed
-from the Sun.
-
-It turns out this is much easier to compute, since the planets follow
-nearly circular orbits around the Sun.
-
-TODO: stellarium
-
-TODO: note significantly more accurate calculations with CSPICE
-
-TODO: note that I've ignored dwarf planets except for Pluto
-
-TODO: ecliptic latitude (and show "bad" conjunctions?)
-
-TODO: snapshots from orrery
-
-TODO: 3+ planets (including specific n years mention in question)
-
-TODO: inner planets
-
-TODO: does Bode's "law" help?
-
-TODO: note EMBary vs E
-
-TODO: does R^3/T^2 help any? (I don't think so, but...)
-
-TODO: mention this program
-
 *)
-
-giants = {
- {360/(3034.74612775/100), 34.39644051/360},
- {360/(1222.49362201/100), 49.95424423/360},
- {360/(428.48202785/100), 313.23810451/360},
- {360/(218.45945325 /100), -55.12002969/360}
-};
-
-maxdist[giants, 0]
-
-maxdist[giants,211859]
-
-Plot[maxdist[giants,t],{t,211859,211860}]
-
-Interval[{1.0829346067465821*^7, 1.082934607826173*^7}, 
- {1.6138089718815526*^7, 1.6138089730216121*^7}]
-
-FindMinimum[maxdist[giants,t], {t,1.0829346067465821*^7, 1.082934607826173*^7}]
-
-
-q13965 = {{335,0}, {78, 0}, {31, 0}};
-ints2 = closest[900000, 1/360/8, q13965]
-
-prints = Chop[
- Table[{NumberForm[i[[1]], {10,5}], NumberForm[i[[2]]*360*60, {10,2}]},
- {i, ints2}]]
-
-Grid[Prepend[prints, {"Day", "Sep (')"}]]
-
-q13965 = {{335,1/2}, {78, 0}, {31, 0}};
-
-ints3 = closest[900000, 1/360/8, q13965]
-
-prints3 = Chop[
- Table[{NumberForm[i[[1]], {10,5}], NumberForm[i[[2]]*360*60, {10,2}]},
- {i, ints3}]]
-
-Grid[Prepend[prints3, {"Day", "Sep (')"}]]
-
-
-
-
-ints = conjuncts[900000, 1/360/8, q13965]
-
-
-a1 = (31*78)/(78-31)
-
-a2 = (31*335)/(335-31)
-
-a3 = (78*335)/(335-78)
-
-lcm = LCM[a1,a2,a3]
-
-(* 810030 days = 2418 years in "their" time *)
-
-(* given an interval that is a list of intervals, find their midpoints *)
-
-midpoints[ints_] := Map[Mean,Apply[List,ints]]
-
-(* TODO: note ignoring p_elem_t2.txt intentionally *)
-
-(* TODO: create fade style animation for gas giants conjuncts? *)
-
-(* true gas giants based on p_elem_t1.txt *)
-
-(* epoch is 2000 *)
-
-giants = {
- {360/(3034.74612775/100), 34.39644051/360},
- {360/(1222.49362201/100), 49.95424423/360},
- {360/(428.48202785/100), 313.23810451/360},
- {360/(218.45945325 /100), -55.12002969/360}
-};
-
-giantsol = conjuncts[5000, 10/360, giants];
-
-giant2 = conjuncts[5000, 5/360, giants];
-
-giant3 = conjuncts[5000, 2/360, giants];
-
-(* http://ssd.jpl.nasa.gov/txt/p_elem_t2.txt *)
-
-(* below is raw cut and paste, I clean it up later *)
-
-plans = {
-
-{Mercury, 0.38709843, 0.20563661, 7.00559432, 252.25166724,
-77.45771895, 48.33961819, 0.00000000, 0.00002123, -0.00590158,
-149472.67486623, 0.15940013, -0.12214182},
-
-{Venus, 0.72332102, 0.00676399, 3.39777545, 181.97970850,
-131.76755713, 76.67261496, -0.00000026, -0.00005107, 0.00043494,
-58517.81560260, 0.05679648, -0.27274174},
-
-{EMBary, 1.00000018, 0.01673163, -0.00054346, 100.46691572,
-102.93005885, -5.11260389, -0.00000003, -0.00003661, -0.01337178,
-35999.37306329, 0.31795260, -0.24123856},
-
-{Mars, 1.52371243, 0.09336511, 1.85181869, -4.56813164, -23.91744784,
-49.71320984, 0.00000097, 0.00009149, -0.00724757, 19140.29934243,
-0.45223625, -0.26852431},
-
-{Jupiter, 5.20248019, 0.04853590, 1.29861416, 34.33479152,
-14.27495244, 100.29282654, -0.00002864, 0.00018026, -0.00322699,
-3034.90371757, 0.18199196, 0.13024619},
-
-{Saturn, 9.54149883, 0.05550825, 2.49424102, 50.07571329, 92.86136063,
-113.63998702, -0.00003065, -0.00032044, 0.00451969, 1222.11494724,
-0.54179478, -0.25015002},
-
-{Uranus, 19.18797948, 0.04685740, 0.77298127, 314.20276625,
-172.43404441, 73.96250215, -0.00020455, -0.00001550, -0.00180155,
-428.49512595, 0.09266985, 0.05739699},
-
-{Neptune, 30.06952752, 0.00895439, 1.77005520, 304.22289287,
-46.68158724, 131.78635853, 0.00006447, 0.00000818, 0.00022400,
-218.46515314, 0.01009938, -0.00606302},
-
-{Pluto, 39.48686035, 0.24885238, 17.14104260, 238.96535011,
-224.09702598, 110.30167986, 0.00449751, 0.00006016, 0.00000501,
-145.18042903, -0.00968827, -0.00809981} }
-
-(* this lets us do exact analysis *)
-
-plans = Rationalize[plans,0]
-
-(* the format above is:
-
-name, a, e, I, L, long.peri., long.node., AU, AU/Cy, rad, rad/Cy, deg,
-deg/Cy, deg, deg/Cy, deg, deg/Cy, deg, deg/Cy
-
-*)
-
-(* fields of interest:
-
-1 = name
-2 = distance (AU)
-5 = longitude at epoch (2000-01-01 12:00:00?) (degrees)
-11 = increase in longitude per century (degrees)
-
-For consistency, NOT using AstronomicalData below
-
-*)
-
-Table[{
-data[i[[1]]][period] = 36525/i[[11]],
-data[i[[1]]][sangle] = i[[5]],
-data[i[[1]]][distance] = i[[2]]
-}, {i,plans}]
-
-pos[i_][t_] = data[i][distance]*
-              {Cos[data[i][sangle]*Degree + 2*Pi*t/data[i][period]],
-	      Sin[data[i][sangle]*Degree + 2*Pi*t/data[i][period]]};
-
-(* angle, in degrees, corrected for 0-360 *)
-
-angle[i_][t_] = Mod[data[i][sangle] + t*360/data[i][period],360]
-
-Plot[angle[Jupiter][t],{t,0,100}]
-
-(* distance between two angles in degrees, assuming both are 0 < x <
-360 [over 180 = less than 180] *)
-
-angdist[a1_,a2_] = If[Abs[a1-a2]<180, Abs[a1-a2], 360-Abs[a1-a2]]
-
-Plot[angdist[angle[Jupiter][t], angle[Saturn][t]], {t,0,100}]
-
-(* maximum angular distance *)
-
-maxangdist[list_] := Max[Flatten[Table[angdist[list[[i]],list[[j]]],
- {i,1,Length[list]}, {j,i+1,Length[list]}]]]
-
-Plot[maxangdist[{
- angle[Jupiter][t], angle[Saturn][t], angle[Uranus][t]}], 
-{t,0,1000}, PlotRange -> {0,30}]
-
-Plot[maxangdist[{angle[Jupiter][t], angle[Saturn][t],
-angle[Uranus][t], angle[Neptune][t]}], {t,0,10000}, PlotRange -> {0,30}]
-
-Minimize[{maxangdist[
- {angle[Jupiter][t], angle[Saturn][t], angle[Uranus][t], angle[Neptune][t]}],
- t>0 && t<100}, t]
-
-FindMinimum[{maxangdist[
- {angle[Jupiter][t], angle[Saturn][t], angle[Uranus][t], angle[Neptune][t]}],
- t>0 && t<1000}, t]
-
-Plot[maxangdist[
- {angle[Jupiter][t], angle[Saturn][t], angle[Uranus][t], angle[Neptune][t]}],
- {t,0,1000}]
-
-(* TODO: consider changing these *)
-
-data[Saturn][color] = RGBColor[{0.9,0.9,0}]
-data[Jupiter][color] = RGBColor[{0,1,0}]
-
-angle[i_][t_] = data[i][sangle] + t*360/data[i][period]
-
-t0 = FindInstance[angle[Jupiter][t] == angle[Saturn][t], t][[1,1,2]]
-
-tend = Solve[angle[Jupiter][t]==360+angle[Saturn][t],t][[1,1,2]]
-
-pp[t_] := ParametricPlot[{pos[Jupiter][u], pos[Saturn][u]}, {u,t0,t0+t},
- PlotStyle -> {data[Jupiter][color], data[Saturn][color]}]
-
-g0[t_] = Graphics[{
- Line[{{0,0}, pos[Saturn][t0]}],
- data[Saturn][color], 
- Line[{{0,0}, pos[Saturn][t0+t]}],
- data[Jupiter][color], 
- Line[{{0,0}, pos[Jupiter][t0+t]}],
- RGBColor[{0,0,0}],
- Dashed, Line[{{0,0}, pos[Saturn][tend]}],
- PointSize[0.05],
- data[Jupiter][color], Point[pos[Jupiter][t0+t]],
- data[Saturn][color], Point[pos[Saturn][t0+t]]
-}];
-
-text[t_] := Graphics[{Text[Style["Years: "<>ToString[t], Large], 
- Scaled[{.84,.03}]]}];
-
-g1[t_] := Show[{g0[t],pp[t],text[t]}, Axes -> True, Ticks -> False,
- PlotRange -> {{-data[Saturn][distance]-.5, data[Saturn][distance]+.5},
-  {-data[Saturn][distance]-.5, data[Saturn][distance]+.5}}]
-
-showit2 := Module[{file}, file = StringJoin["/tmp/math", 
-       ToString[RunThrough["date +%Y%m%d%H%M%S", ""]], ".jpg"]; 
-     Export[file, %, ImageSize -> {600, 400}]; 
-     Run[StringJoin["display ", file, "&"]]; ]
-g1[5]
-showit2
-
-(* t1 = Table[g1[t],{t,-0.50,tend-t0,0.15}]; *)
-
-t1 = Table[g1[t],{t,-0.01,data[Saturn][period],0.15}];
-
-Export["/tmp/orbits.gif",t1, ImageSize -> {600,400}]
-
-ParametricPlot[{pos[Jupiter][t], pos[Saturn][t]}, {t,0,data[Jupiter][period]}]
-
-ParametricPlot[{pos[Jupiter][t], pos[Saturn][t]}, {t,0,6}]
