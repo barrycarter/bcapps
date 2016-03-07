@@ -42,8 +42,6 @@ conjuncts[n_, d_, lol_] := Module[{int, tab, newint, i},
  tab= Flatten[Table[orbhelp[lol[[i]],lol[[j]]], 
   {i,1,Length[lol]}, {j,i+1, Length[lol]}],1];
 
- (* TODO: same number of iterations for each planet is wasteful *)
-
  For[i=1, i<=Length[tab], i++,
   newint = Apply[Interval,
   Flatten[Table[{tab[[i,1]] + {m-d,m+d}*tab[[i,2]]}, 
@@ -58,15 +56,18 @@ conjuncts[n_, d_, lol_] := Module[{int, tab, newint, i},
 (* given the same inputs as conjuncts, find the closest conjunction in
 each interval that conjuncts returns *)
 
-closest[n_, d_, lol_] := Module[{ints, i}, 
+closest[n_, d_, lol_] := Module[{ints, i, times}, 
 
  (* convert to list *)
  ints = Apply[List,conjuncts[n, d, lol]];
 
- Return[Table[
+ (* TODO: should not have to create separate list of times here *)
+ times = Table[
   FindMinimum[maxdist[lol,t],{t,i[[1]],i[[2]]}, 
-   WorkingPrecision -> 20, PrecisionGoal -> 20, AccuracyGoal -> 20],
- {i, ints}]];
+   WorkingPrecision -> 20, PrecisionGoal -> 20, AccuracyGoal -> 20][[2,1,2]],
+ {i, ints}];
+
+ Return[Table[{i, maxdist[lol,i]}, {i, times}]]
 ];
 
 (* functions end here *)
@@ -191,7 +192,99 @@ though it's not exact.
 In a similar vein, even though double solar eclipses only occur once
 every 810,030 days, there are several close calls:
 
-*******
+$
+\begin{array}{cc}
+                   \text{Day} & \text{Sep (')} \\
+                   -810030.00000 & 0.00 \\
+                   -754313.10860 & 0.91 \\
+                   -698596.21710 & 1.82 \\
+                   -642879.32570 & 2.73 \\
+                   -587162.43420 & 3.64 \\
+                   -531445.54280 & 4.55 \\
+                   -475728.65130 & 5.47 \\
+                   -445735.13160 & 7.29 \\
+                   -420011.75990 & 6.38 \\
+                   -390018.24010 & 6.38 \\
+                   -364294.86840 & 7.29 \\
+                   -334301.34870 & 5.47 \\
+                   -278584.45720 & 4.55 \\
+                   -222867.56580 & 3.64 \\
+                   -167150.67430 & 2.73 \\
+                   -111433.78290 & 1.82 \\
+                   -55716.89145 & 0.91 \\
+                   0.00000 & 0.00 \\
+                   55716.89145 & 0.91 \\
+                   111433.78290 & 1.82 \\
+                   167150.67430 & 2.73 \\
+                   222867.56580 & 3.64 \\
+                   278584.45720 & 4.55 \\
+                   334301.34870 & 5.47 \\
+                   364294.86840 & 7.29 \\
+                   390018.24010 & 6.38 \\
+                   420011.75990 & 6.38 \\
+                   445735.13160 & 7.29 \\
+                   475728.65130 & 5.47 \\
+                   531445.54280 & 4.55 \\
+                   587162.43420 & 3.64 \\
+                   642879.32570 & 2.73 \\
+                   698596.21710 & 1.82 \\
+                   754313.10860 & 0.91 \\
+                   810030.00000 & 0.00 \\
+                  \end{array}
+$
+
+The table above lists all near-eclipses within 7.5 minutes of arc,
+where day is the number of days from year 0 (including days before
+year 0), and sep is the maximum separation (in minutes of arc) of any
+two of Moon A, Moon B, and the sun. Note that days $0$ and $\pm
+810030$ are perfect eclipses, as expected.
+
+Similarly, the closest we get to double full moons is below. In this
+case, sep is (in minutes of arc) the maximum of:
+
+  - the angular distance of Moon A from opposition
+
+  - the angular distance of Moon B from opposition
+
+  - the angular distance between Moon A and Moon B
+
+$
+\begin{array}{cc}
+                   \text{Day} & \text{Sep (')} \\
+                   -797168.29790 & 10.29 \\
+                   -767174.80850 & 8.92 \\
+                   -711457.91490 & 7.55 \\
+                   -655741.02130 & 6.17 \\
+                   -600024.12770 & 4.80 \\
+                   -544307.23400 & 3.43 \\
+                   -488590.34040 & 2.06 \\
+                   -432873.44680 & 0.69 \\
+                   -377156.55320 & 0.69 \\
+                   -321439.65960 & 2.06 \\
+                   -265722.76600 & 3.43 \\
+                   -210005.87230 & 4.80 \\
+                   -154288.97870 & 6.17 \\
+                   -98572.08511 & 7.55 \\
+                   -42855.19149 & 8.92 \\
+                   -12861.70213 & 10.29 \\
+                   12861.70213 & 10.29 \\
+                   42855.19149 & 8.92 \\
+                   98572.08511 & 7.55 \\
+                   154288.97870 & 6.17 \\
+                   210005.87230 & 4.80 \\
+                   265722.76600 & 3.43 \\
+                   321439.65960 & 2.06 \\
+                   377156.55320 & 0.69 \\
+                   432873.44680 & 0.69 \\
+                   488590.34040 & 2.06 \\
+                   544307.23400 & 3.43 \\
+                   600024.12770 & 4.80 \\
+                   655741.02130 & 6.17 \\
+                   711457.91490 & 7.55 \\
+                   767174.80850 & 8.92 \\
+                   797168.29790 & 10.29 \\
+                  \end{array}
+$
 
 Other notes:
 
@@ -208,9 +301,6 @@ This is an interesting problem in general, and I am writing
 https://github.com/barrycarter/bcapps/blob/master/MATHEMATICA/bc-orrery.m
 to solve a similar problem:
 http://physics.stackexchange.com/questions/197481/
-
-TODO: caveats, unlikely, near conjuncts, not perfect multiples,
-mention other prob, fiction, but.... inter general
 
 END ANSWER TO http://astronomy.stackexchange.com/questions/13965/ 
 
@@ -267,10 +357,29 @@ FindMinimum[maxdist[giants,t], {t,1.0829346067465821*^7, 1.082934607826173*^7}]
 
 
 q13965 = {{335,0}, {78, 0}, {31, 0}};
+ints2 = closest[900000, 1/360/8, q13965]
+
+prints = Chop[
+ Table[{NumberForm[i[[1]], {10,5}], NumberForm[i[[2]]*360*60, {10,2}]},
+ {i, ints2}]]
+
+Grid[Prepend[prints, {"Day", "Sep (')"}]]
+
+q13965 = {{335,1/2}, {78, 0}, {31, 0}};
+
+ints3 = closest[900000, 1/360/8, q13965]
+
+prints3 = Chop[
+ Table[{NumberForm[i[[1]], {10,5}], NumberForm[i[[2]]*360*60, {10,2}]},
+ {i, ints3}]]
+
+Grid[Prepend[prints3, {"Day", "Sep (')"}]]
+
+
+
 
 ints = conjuncts[900000, 1/360/8, q13965]
 
-ints2 = closest[900000, 1/360/8, q13965]
 
 a1 = (31*78)/(78-31)
 
