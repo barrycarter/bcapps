@@ -1,54 +1,181 @@
+(* formulas start here *)
+
+(*
+
+Formulas are given in Mathematica input format, after significant
+simplifcation, as shown later in this file.
+
+Formulas that depend on t are given for a,s,d,t (in that order) even
+when they don't involve all four variables.
+
+Formulas that don't depend on t are given for a,s,d (in that order),
+even when they don't involve all three variables.
+
+*)
+
+(* 
+
+original form of below (conds applies to all functions):
+
+conds = {t>0, a>0, v>0, v<1, s<1, s>0}
+
+speedA2B[a_,s_,d_,t_] = a*t/Sqrt[(a*t)^2+1]
+distA2B[a_,s_,d_,t_] = FullSimplify[Integrate[speedA2B[a,s,d,u],{u,0,t}],conds]
+totalTimeA2B[a_,s_,d_] = Solve[speedA2B[a,s,d,t]==s,t][[2,1,2]]
+totalDistA2B[a_,s_,d_] = FullSimplify[Integrate[speedA2B[a,s,d,u],{u,0,
+ totalTimeA2B[a,s,d]}], conds]
+
+*)
+
+speedA2B[a_, s_, d_, t_] = (a*t)/Sqrt[1 + a^2*t^2]
+distA2B[a_, s_, d_, t_] = (-1 + Sqrt[1 + a^2*t^2])/a
+totalTimeA2B[a_, s_, d_] = s/Sqrt[a^2 - a^2*s^2]
+totalDistA2B[a_, s_, d_] = (-1 + 1/Sqrt[1 - s^2])/a
+
+(* raw form of below:
+
+speedB2C[a_,s_,d_,t_] = s
+distB2C[a_,s_,d_,t_] = s*t
+totalTimeB2C[a_,s_,d_] = FullSimplify[(d-2*totalDistA2B[a,s,d])/s, conds]
+totalDistB2C[a_,s_,d_] = FullSimplify[totalTimeB2C[a,s,d]*s, conds]
+
+*)
+
+speedB2C[a_, s_, d_, t_] = s
+distB2C[a_, s_, d_, t_] = s*t
+totalTimeB2C[a_, s_, d_] = (2 + a*d - 2/Sqrt[1 - s^2])/(a*s)
+totalDistB2C[a_, s_, d_] = (2 + a*d - 2/Sqrt[1 - s^2])/a
+
+(* raw form of below:
+
+TODO: check these when using actual numbers
+
+speedC2D[a_,s_,d_,t_] = FullSimplify[
+ speedA2B[a,s,d,totalTimeA2B[a,s,d]-t],conds]
+distC2D[a_,s_,d_,t_] = FullSimplify[distA2B[a,s,d,totalTimeA2B[a,s,d]-t],conds]
+totalTimeC2D[a_,s_,d_] = totalTimeA2B[a,s,d];
+totalDistC2D[a_,s_,d_] = totalDistA2B[a,s,d];
+
+*)
+
+speedC2D[a_, s_, d_, t_] = (s - a*Sqrt[1 - s^2]*t)/
+    Sqrt[1 + a*t*(a*t - s*(2*Sqrt[1 - s^2] + a*s*t))]
+
+distC2D[a_, s_, d_, t_] = (-1 + Sqrt[1 + (s/Sqrt[1 - s^2] - a*t)^2])/a
+
+totalTimeC2D[a_, s_, d_] = s/Sqrt[a^2 - a^2*s^2]
+
+totalDistC2D[a_, s_, d_] = (-1 + 1/Sqrt[1 - s^2])/a
+
+(* raw form of below:
+
+speedA2D[a_,s_,d_,t_] = 
+ Which[t<0, 0, 
+ t < totalTimeA2B[a,s,d], speedA2B[a,s,d,t],
+ t < totalTimeA2B[a,s,d]+totalTimeB2C[a,s,d], speedB2C[a,s,d,t],
+ t < totalTimeA2B[a,s,d]+totalTimeB2C[a,s,d]+totalTimeC2D[a,s,d],
+    speedC2D[a,s,d,t],
+   True, 0];
+
+distA2D[a_,s_,d_,t_] = 
+ Which[t<0, 0, 
+   t<  totalTimeA2B[a,s,d], 
+       distA2B[a,s,d,t],
+   t < totalTimeA2B[a,s,d]+totalTimeB2C[a,s,d], 
+       totalDistA2B[a,s,d] + distB2C[a,s,d,t],
+   t < totalTimeA2B[a,s,d]+totalTimeB2C[a,s,d]+totalTimeC2D[a,s,d],
+       totalDistA2B[a,s]+totalDistB2C[a,s,d]+distC2D[a,s,d,t],
+   True, d];
+
+totalTimeA2D[a_,s_,d_] = FullSimplify[
+ totalTimeA2B[a,s,d] + totalTimeB2C[a,s,d] + totalTimeC2D[a,s,d], conds];
+
+totalDistA2D[a_,s_,d_] = FullSimplify[
+ totalDistA2B[a,s,d] + totalDistB2C[a,s,d] + totalDistC2D[a,s,d], conds]
+
+*)
+
+speedA2D[a_, s_, d_, t_] = Which[t < 0, 0, t < totalTimeA2B[a, s, d], 
+    speedA2B[a, s, d, t], t < totalTimeA2B[a, s, d] + totalTimeB2C[a, s, d], 
+    speedB2C[a, s, d, t], t < totalTimeA2B[a, s, d] + totalTimeB2C[a, s, d] + 
+      totalTimeC2D[a, s, d], speedC2D[a, s, d, t], True, 0]
+
+distA2D[a_, s_, d_, t_] = Which[t < 0, 0, t < totalTimeA2B[a, s], 
+    distA2B[a, t], t < totalTimeA2B[a, s] + totalTimeB2C[a, s, d], 
+    totalDistA2B[a, s, d] + distB2C[a, s, d], 
+    t < totalTimeA2B[a, s] + totalTimeB2C[a, s, d] + totalTimeC2D[a, s], 
+    totalDistA2B[a, s] + totalDistB2C[a, s, d] + distC2D[a, t, s], True, d]
+
+totalTimeA2D[a_, s_, d_] = (2 + a*d - 2*Sqrt[1 - s^2])/(a*s)
+
+totalDistA2D[a_, s_, d_] = d
+
+(* some special numbers *)
+
+g = 98/10/299792458;
+
+y2s = 31556952;
+
+
+(* formulas end here *)
+
 (*
 
 [[image1.jpg]]
 
-Since the relativistic effects at $0.6 c$ are fairly mild, I will
-solve the problem in general for the limiting speed $s$, and use
-$0.995 c$ (where the time dilation/space contraction is 10) as another
-example case to better show the effects of relativity.
+Since the relativistic effects at $0.6 c$ are fairly mild (which may
+be why you chose it), I will solve the problem in general for the
+limiting speed $s$, and use $0.995 c$ (where the time dilation/space
+contraction is 10) as another example case to better show the effects
+of relativity.
 
 All of the equations/formulas here come from
-http://physics.stackexchange.com/questions/240342
+http://physics.stackexchange.com/questions/240342 with:
+
+  - $a$ is your acceleration per second as a fraction of the speed of
+  light. In your case, this will be $\frac{g}{c}$ or about
+  $\frac{9.8}{299792458} = \text{3.27}*10^{-8}$
+
+  - $s$ is your coasting speed as a fraction of the speed of light (in
+  your case, this is $0.6$)
+
+  - $d$ is the total distance you're traveling in light seconds. In
+  your case this is 40 light years * 31556952 seconds/year or
+  1262278080 light seconds.
+
+Note that the use of "seconds" above is arbitrary and any time unit
+would work.
+
+For consistency, some of the formulas below will have input variables
+that are not actually used. Now...
 
 As you move from A to B, your speed (relative to A) and distance $t$
 seconds after blastoff will be:
 
-$\text{speedA2B}(a,t)=\frac{a t}{\sqrt{a^2 t^2+1}}$
+$\text{speedA2B}(a,s,d,t)=\frac{a t}{\sqrt{a^2 t^2+1}}$
 
-$\text{distA2B}(a,t)=\frac{\sqrt{\frac{1}{1-t^2}}}{a}$
-
-where $a$ is your acceleration per second as a fraction of the speed
-of light. In your case, this will be $\frac{g}{c}$ or about
-$\frac{9.8}{299792458} = \text{3.27}*10^{-8}$, but we'll leave it as
-$a$ for generality.
+$\text{distA2B}(a,s,d,t)=\frac{\sqrt{a^2 t^2+1}-1}{a}$
 
 From A's reference frame, you'll reach B (the point where you need to
 start coasting) at:
 
-$\text{totalTimeA2B}(a,s)=\frac{s}{\sqrt{a^2-a^2 s^2}}$
+$\text{totalTimeA2B}(a,s,d)=\frac{s}{\sqrt{a^2-a^2 s^2}}$
 
 at which point your distance from A will be:
 
-$\text{totalDistA2B}(a,s)=\frac{\sqrt{\frac{1}{1-s^2}}}{a}$
-
-where $s$ is your coasting speed as a fraction of the speed of light
-(in your case, this is $0.6$)
+$\text{totalDistA2B}(a,s,d)=\frac{\frac{1}{\sqrt{1-s^2}}-1}{a}$
 
 You then coast from B to C, traveling at constant speed $s$:
 
-$\text{speedB2C}(a,s,t)=s$
+$\text{speedB2C}(a,s,d,t)=s$
 
-$\text{distB2C}(a,s,t)=s t$
+$\text{distB2C}(a,s,d,t)=s t$
 
 and the total time/distance this takes is:
 
-$\text{totalTimeB2C}(a,s,d)=\frac{d-\frac{2 \sqrt{\frac{1}{1-s^2}}}{a}}{s}$
+$\text{totalTimeB2C}(a,s,d)=\frac{a d-\frac{2}{\sqrt{1-s^2}}+2}{a s}$
 
-$\text{totalDistB2C}(a,s,d)=d-\frac{2 \sqrt{\frac{1}{1-s^2}}}{a}$
-
-where $d$ is the total distance you're traveling in light seconds. In
-your case this is 40 light years * 31556952 seconds/year or 1262278080
-light seconds.
+$\text{totalDistB2C}(a,s,d)=\frac{a d-\frac{2}{\sqrt{1-s^2}}+2}{a}$
 
 Note that if $s>\frac{\sqrt{a^2 d^2-4}}{a d}$, there is no solution to
 the problem: by the time you reach coasting speed, you will already be
@@ -60,50 +187,67 @@ Fortunately, this does not happen in either of our test cases.
 You then decelerate from C to D, mirroring (in reverse) the
 acceleration from A to B. 
 
-TODO: add speed formulas here for C/D
+$\text{speedC2D}(a,s,d,t)=
+\frac{s-a \sqrt{1-s^2} t}{\sqrt{a t \left(a t-s \left(a s t+2
+\sqrt{1-s^2}\right)\right)+1}}$
+
+$\text{distC2D}(a,s,d,t)=
+\frac{\sqrt{\left(\frac{s}{\sqrt{1-s^2}}-a t\right)^2+1}-1}{a}$
 
 The time and distance are the same from A to B:
 
-$\text{totalTimeC2D}(a,s)=\frac{s}{\sqrt{a^2-a^2 s^2}}$
-
-$\text{totalDistC2D}(a,s)=\frac{\sqrt{\frac{1}{1-s^2}}}{a}$
+$\text{totalTimeC2D}(a,s,d)=\frac{s}{\sqrt{a^2-a^2 s^2}}$
+$\text{totalDistC2D}(a,s,d)=\frac{\frac{1}{\sqrt{1-s^2}}-1}{a}$
 
 The total time you spend on the trip (from A's reference frame) is:
 
-$   
-\text{timeA2D}(a,s,d)=\frac{a d+\frac{2 s^2}{\sqrt{1-s^2}}-2
-\sqrt{\frac{1}{1-s^2}}}{a s}
-$
+$\text{totalTimeA2D}(a,s,d)=\frac{a d-2 \sqrt{1-s^2}+2}{a s}$
 
 The distance traveled is, of course, $d$.
 
-Let's summarize these results, both in general and for our sample
-cases, in a table:
+$\text{totalDistA2D}(a,s,d)=d$
 
-
-TODO: graph
-
-TODO: disclaim "seconds" (any unit of time consistent)
-
-TODO: need to get this print cleaned up a bit
-
-TODO: TeX can't seem to display as fancy tables as Mathematica, use image
+Let's summarize some of these results in general and in our example cases:
 
 print = {
- {"a", "s", "d", "A2B {time, distance}", "B2C {time, distance}", 
-  "C2D {time, distance}", "Total (A2D)"},
+ {"a", "s", "d", "A2B time", "A2B distance", "B2C time", "B2C distance",
+  "C2D time", "C2D distance", "A2D time", "A2D distance"},
 
- {"a", "s", "d", {totalTimeA2B[a,s], totalDistA2B[a,s]},
-  {totalTimeB2C[a,s,d], totalDistB2C[a,s,d]},
-  {totalTimeC2D[a,s], totalDistC2D[a,s]},
-  {totalTimeA2D[a,s,d], totalDistA2D[a,s,d]}
+ {"any a", "any s", "any d", 
+  totalTimeA2B[a,s,d], totalDistA2B[a,s,d],
+  totalTimeB2C[a,s,d], totalDistB2C[a,s,d],
+  totalTimeC2D[a,s,d], totalDistC2D[a,s,d],
+  totalTimeA2D[a,s,d], totalDistA2D[a,s,d]},
+
+ {"1g", "0.6c", "40 ly", 
+  "0.727 years", "0.242 ly",
+  "65.859 years", "39.515 ly",
+  "0.727 years", "0.242 ly",
+  "67.313 years", "40 ly"
+ },
+
+ {"1g", "0.995c", "40 ly",
+  "9.658 years", "8.74 ly",
+  "22.640 years", "22.527 ly",
+  "9.658 years", "8.74 ly",
+  "41.955 years", "40 ly"
+}
 
 }
-}
 
-Grid[print, Alignment -> Left, Spacings -> {2, 1}, Frame -> All, 
+Grid[Transpose[print], Alignment -> Left, Spacings -> {2, 1}, Frame -> All, 
  ItemStyle -> "Text"]
 showit
+
+TODO: disclaim tables are cleaned up
+
+TODO: check against reliable sources at least for coasting
+ 
+TODO: graph
+
+TODO: need to get this print cleaned up a bit (shade first row?)
+
+TODO: TeX can't seem to display as fancy tables as Mathematica, use image
 
 Grid[print, Alignment -> Left, Spacings -> {2, 1}, Frame -> All, 
  ItemStyle -> "Text", Background -> {{Gray, None}, {LightGray, None}}]
@@ -228,7 +372,7 @@ totalTimeA2D[a_,s_,d_] = FullSimplify[totalTimeA2B[a,s] + totalTimeB2C[a,s,d] +
 totalTimeC2D[a,s], conds];
 
 totalDistA2D[a_,s_,d_] = totalDistA2B[a,s] + totalDistB2C[a,s,d] + 
- TotalDistC2D[a,s];
+ totalDistC2D[a,s];
 
 Solve[timeB2C[a,s,d]==0,s][[2]]
 

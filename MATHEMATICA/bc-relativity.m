@@ -2,6 +2,8 @@
 
 TODO: animations are in ~/20160229
 
+TODO: see also bc-beacons.m
+
 Q: For the community wiki, derive the special theory of relativity
 without using matrices, mirrors, or Greek letters.
 

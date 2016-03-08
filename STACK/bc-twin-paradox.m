@@ -1,6 +1,11 @@
 (*
 http://physics.stackexchange.com/questions/9345/how-will-the-twin-paradox-become-for-time-dilation-if-no-acceleration-was-ever
 
+TODO: link to http://physics.stackexchange.com/questions/242043/what-is-the-proper-way-to-explain-the-twin-paradox
+
+This is not an answer, just a re-phrasing of your question that
+eliminates potential misunderstandings.
+
 One objection to this problem: if Peter and Michael are twins, they
 would've been born in roughly the same inertial frame (even if the
 mother accelerated rapidly between the two births, the not-yet-born
@@ -14,11 +19,40 @@ accelerated in opposite directions (at exactly the same rate of
 acceleration) for a long time, and the decelerated (at the exact same
 rate) until they were at rest with respect to each other.
 
+Since they both accelerated the same amount, they are now the same age
+(say 20) is the same inertial reference frame.
+
 Then, they accelerate towards each other until their relative speed is
 .99c, at which point they stop accelerating and are both in an
 inertial (non-accelerating) reference frame. I realize this isn't
 exactly the question you posed, but hope my answer will answer your
 question as well.
+
+At .99c, they will pass each other in about 30.3 years. The time
+dilation factor for .99c is about 1/7, so, when they pass, Peter will
+see Michael at age 20+30.3/7, about 24.3, and Peter will see himself
+(Peter) at age 20+30.3 or 50.3.
+
+By symmetry, the same goes for Michael: when they pass, each twin will
+see the other as 50.3-24.3 or about 26 years younger.
+
+Now, suppose they *both* accelerate equally into the same reference
+frame. Since they accelerate equally, they should age equally (say by
+y years) to each other, meaning both twins are now both 24.3+y and
+50.3+y years at the same time.
+
+How can this be?
+
+NOTE: rest of this file is an attempt to answer which failed.
+
+First, let's consider the case where Peter thinks "Michael is 26 years
+younger: let me accelerate into his reference frame so I can talk to
+him face to face instead of just passing him by rapidly". The problem:
+by the time Peter accelerates into Michael's reference frame (no
+matter how slow or fast he does it), Michael will have aged at least
+26 years.
+
+Same is Michael accelerates into Peter's reference frame or they both accelerate into a common (TODO: this still doesn't work)
 
 Since they both accelerated the same amount, they are now the same
 age, say 20. We will call this year zero.
