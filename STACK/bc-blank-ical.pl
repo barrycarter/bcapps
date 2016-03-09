@@ -4,20 +4,52 @@
 
 =item answer
 
+To clarify, I meant write a program that creates an iCalendar, but
+lists dates explicitly instead of using an RRULE.
+
 While there are several iCal creators online, I dont think any of
 them will handle the complexity of the rules you need, especially the
 first one.
 
-Similarly, although RRULE is a nice tool, it cant do
-everything. Sometimes, you just have to specify the dates yourself.
+You might find an RRULE for your second condition, but I found it
+easier to simply write a program.
 
-TODO: tell check my results
+Overall, although RRULE is a nice tool, it cant do
+everything. Sometimes, you just have to specify the dates yourself,
+which also gives you more flexibility to use other calendar formats
+which may not support RRULE.
 
-TODO: how to use template
+Ive now written:
 
-TODO: put on sharecal?
+https://github.com/barrycarter/bcapps/blob/master/STACK/bc-blank-ical.pl
 
-TODO: note my choice of start dates
+and created these blank iCalendars per your date rules above.
+
+http://oneoff.barrycarter.info/webapps-90641-1.ics
+
+http://oneoff.barrycarter.info/webapps-90641-2.ics
+
+Important notes:
+
+  - Be sure to check my work: make sure the dates in the calendar are
+  the dates you actually want.
+
+  - For your first rule, I arbitrarily assumed the first event was on
+  February 1st. You should tweak my program to generate the correct
+  date (or contact me (see profile), and I can do this).
+
+  - For your second rule, I created events from 2016 through 2037
+  inclusive.
+
+  - To use these calendars, search/replace all instances of _SUMMARY_
+  with the actual summary of your event, all instances of
+  _DESCRIPTION_ with the description, and so on. The calendars I
+  created only have dates and randomly generated UIDs.
+
+  - You should also change the PRODID of each calendar.
+
+While I personally dont object, Im not sure this question actually
+belongs on webapps, since its not about an existing web application.
 
 =cut
 
@@ -30,7 +62,6 @@ require "/usr/local/lib/bclib.pl";
 $first = str2time("20160201 UTC");
 my(@dates) = ($first);
 
-# TODO: jump out of this loop at some point
 for (;;) {
 
   # add 30 days
@@ -53,7 +84,32 @@ for (;;) {
 
 write_file(list2ical(\@dates), "/tmp/file1.txt");
 
+# NOTE: this does the literal example in the question, but can be tweaked
 
+my(@dates) = ();
+
+for $y (2016..2037) {
+  for $m ("01".."12") {
+    my($date) = str2time("$y${m}15 UTC");
+    my($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = gmtime($date);
+
+    # if the 15th is MTW, 3 weekdays ago = 5 days ago
+    # if its RF(sat) 3 weekdays = 3 calendar days
+    # if its sunday, 4 days ago
+
+    if ($wday >= 1 && $wday <= 3) {
+      $date -= 5*86400;
+    } elsif ($wday == 0) {
+      $date -= 4*86400;
+    } else {
+      $date -= 3*86400;
+    }
+
+    push(@dates, $date);
+  }
+}
+
+write_file(list2ical(\@dates), "/tmp/file2.txt");
 
 =item list2ical(\@list)
 
@@ -67,7 +123,7 @@ sub list2ical {
 
   # will return join of @str at end
   my(@str) = ("BEGIN:VCALENDAR", "VERSION:2.0", 
-    "PRODID: -//barrycarter.info//bc-blank-ical-CHANGE-THIS//EN");
+    "PRODID: -//barrycarter.info//bc-blank-ical-CHANGE-THIS//EN", "");
 
   for $i (@$listref) {
     my($tdate) = strftime("%Y%m%d", gmtime($i));
@@ -79,6 +135,7 @@ sub list2ical {
     $out=~s/\s.*$//sg;
 
     my($event) = << "MARK";
+BEGIN:VEVENT
 SUMMARY: _SUMMARY_
 UID: $out
 DTSTART: ${tdate}T000000
@@ -93,7 +150,10 @@ MARK
 }
 
   push(@str, "END:VCALENDAR");
-  return(join("\n",@str));
+  my($str) = join("\n",@str);
+  $str=~s/\n/\r\n/g;
+  return $str;
+
 }
 
 
