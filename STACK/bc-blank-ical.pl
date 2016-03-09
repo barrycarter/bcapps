@@ -17,6 +17,8 @@ TODO: how to use template
 
 TODO: put on sharecal?
 
+TODO: note my choice of start dates
+
 =cut
 
 require "/usr/local/lib/bclib.pl";
@@ -49,11 +51,8 @@ for (;;) {
   push(@dates,$first);
 }
 
-debug(list2ical(\@dates));
+write_file(list2ical(\@dates), "/tmp/file1.txt");
 
-debug("DATES",@dates);
-
-die "TESTING";
 
 
 =item list2ical(\@list)
@@ -65,18 +64,36 @@ blank iCal with these dates.
 
 sub list2ical {
   my($listref) = @_;
-  my($str) = << "MARK";
-BEGIN:VCALENDAR
-VERSION:2.0
-PRODID: -//barrycarter.info//bc-blank-ical-CHANGE-THIS//EN
-MARK
-;
+
+  # will return join of @str at end
+  my(@str) = ("BEGIN:VCALENDAR", "VERSION:2.0", 
+    "PRODID: -//barrycarter.info//bc-blank-ical-CHANGE-THIS//EN");
 
   for $i (@$listref) {
-    debug("I: $i");
-  }
+    my($tdate) = strftime("%Y%m%d", gmtime($i));
 
+    # TODO: this is a pretty silly (and inefficent) way to get a
+    # "random" hash, fix it
 
+    my($out, $err, $res) = cache_command2("dd if=/dev/urandom count=1 | sha1sum", "age=-1");
+    $out=~s/\s.*$//sg;
 
+    my($event) = << "MARK";
+SUMMARY: _SUMMARY_
+UID: $out
+DTSTART: ${tdate}T000000
+DTEND: ${tdate}T235959
+LOCATION: _LOCATION_
+DESCRIPTION: _DESCRIPTION_
+COMMENT: _COMMENT_
+END:VEVENT
+MARK
+;
+   push(@str, $event);
 }
+
+  push(@str, "END:VCALENDAR");
+  return(join("\n",@str));
+}
+
 
