@@ -5,8 +5,8 @@ TODO: consider publishing, but currently just a playground
 we assume addition formula, dilation formula and all speeds as
 fraction of light
 
-we assume increase of dv every one time unit, but don't specify time
-unit for now
+ship is accelerating at "a", and 1 beacon every 1/n seconds that's a/n
+faster than the previous one for t seconds
 
 *)
 
@@ -14,35 +14,33 @@ addVelocity[u_, v_] = (u+v)/(1+u*v)
 
 dilationFactor[v_] = Sqrt[1-v^2]
 
-addVelocity[dv,dv]
+conds = {a>0, n>0, m>0, Element[{m,n}, Integers]}
 
-conds = {dv>0, n>0, dv<1, Element[n, Integers]}
+(* velocity of mth beacon as measured from beacon 0 *)
 
-(* velocity of nth beacon as measured from beacon 0 *)
+velocity[m_,a_,n_] =  FullSimplify[v[m] /. 
+RSolve[{v[0] == 0, v[m] == (a/n+v[m-1])/(1+a/n*v[m-1])}, v[m], m], conds][[1]]
 
-velocity[n_] = 
-FullSimplify[v[n] /. 
-RSolve[{v[0] == 0, v[n] == (dv+v[n-1])/(1+dv*v[n-1])}, v[n], n][[1]],
-conds]
-
-(* time between nth and n+1st beacon drop based on time dilation, from
+(* time between mth and m+1st beacon drop based on time dilation, from
 beacon 0 *)
 
-timeBetween[n_] = FullSimplify[1/Sqrt[1-velocity[n]^2], conds]
+timeBetween[m_,a_,n_] = FullSimplify[1/n/Sqrt[1-velocity[m,a,n]^2], conds]
 
-(* distance ship travels between beacons n and n+1 *)
+(* distance ship travels between beacons m and m+1 *)
 
-distanceTraveled[n_] = FullSimplify[timeBetween[n]*velocity[n],conds]
+distanceTraveled[m_,a_,n_] = 
+ FullSimplify[timeBetween[m,a,n]*velocity[m,a,n],conds]
 
-(* distance of nth beacon as measured from beacon 0; could not get this!!!
+(* time OF the mth drop *)
 
-distance[n_] = FullSimplify[Sum[distanceTraveled[i],{i,0,n-1}], conds]
+timeOf[m_,a_,n_] = FullSimplify[Sum[timeBetween[i,a,n],{i,0,m-1}],conds]
+
+(* distance of mth beacon as measured from beacon 0; could not get this!!!
+
+distance[m_,a_,n_] = FullSimplify[Sum[distanceTraveled[i,a,n],{i,0,n-1}], 
+ conds]
 
 *)
-
-(* time OF the nth drop *)
-
-timeOf[n_] = FullSimplify[Sum[timeBetween[i],{i,0,n-1}],conds]
 
 Solve[timeOf[n] == t, n, Reals]
 

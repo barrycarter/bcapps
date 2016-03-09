@@ -27,6 +27,8 @@ totalDistA2B[a_,s_,d_] = FullSimplify[Integrate[speedA2B[a,s,d,u],{u,0,
 
 *)
 
+conds = {t>0, a>0, v>0, v<1, s<1, s>0} 
+
 speedA2B[a_, s_, d_, t_] = (a*t)/Sqrt[1 + a^2*t^2]
 distA2B[a_, s_, d_, t_] = (-1 + Sqrt[1 + a^2*t^2])/a
 totalTimeA2B[a_, s_, d_] = s/Sqrt[a^2 - a^2*s^2]
@@ -52,7 +54,10 @@ TODO: check these when using actual numbers
 
 speedC2D[a_,s_,d_,t_] = FullSimplify[
  speedA2B[a,s,d,totalTimeA2B[a,s,d]-t],conds]
-distC2D[a_,s_,d_,t_] = FullSimplify[distA2B[a,s,d,totalTimeA2B[a,s,d]-t],conds]
+
+distC2D[a_,s_,d_,t_] = FullSimplify[totalDistA2B[a,s,d] - 
+ distA2B[a,s,d,totalTimeA2B[a,s,d]-t], conds]
+
 totalTimeC2D[a_,s_,d_] = totalTimeA2B[a,s,d];
 totalDistC2D[a_,s_,d_] = totalDistA2B[a,s,d];
 
@@ -61,7 +66,8 @@ totalDistC2D[a_,s_,d_] = totalDistA2B[a,s,d];
 speedC2D[a_, s_, d_, t_] = (s - a*Sqrt[1 - s^2]*t)/
     Sqrt[1 + a*t*(a*t - s*(2*Sqrt[1 - s^2] + a*s*t))]
 
-distC2D[a_, s_, d_, t_] = (-1 + Sqrt[1 + (s/Sqrt[1 - s^2] - a*t)^2])/a
+distC2D[a_, s_, d_, t_] = 
+   (1 - Sqrt[1 + a*t*(a*t - s*(2*Sqrt[1 - s^2] + a*s*t))])/(a*Sqrt[1 - s^2])
 
 totalTimeC2D[a_, s_, d_] = s/Sqrt[a^2 - a^2*s^2]
 
@@ -72,9 +78,10 @@ totalDistC2D[a_, s_, d_] = (-1 + 1/Sqrt[1 - s^2])/a
 speedA2D[a_,s_,d_,t_] = 
  Which[t<0, 0, 
  t < totalTimeA2B[a,s,d], speedA2B[a,s,d,t],
- t < totalTimeA2B[a,s,d]+totalTimeB2C[a,s,d], speedB2C[a,s,d,t],
+ t < totalTimeA2B[a,s,d]+totalTimeB2C[a,s,d], 
+     speedB2C[a,s,d,t-totalTimeA2B[a,s,d]],
  t < totalTimeA2B[a,s,d]+totalTimeB2C[a,s,d]+totalTimeC2D[a,s,d],
-    speedC2D[a,s,d,t],
+     speedC2D[a,s,d,t-totalTimeA2B[a,s,d]-totalTimeB2C[a,s,d]],
    True, 0];
 
 distA2D[a_,s_,d_,t_] = 
@@ -82,9 +89,10 @@ distA2D[a_,s_,d_,t_] =
    t<  totalTimeA2B[a,s,d], 
        distA2B[a,s,d,t],
    t < totalTimeA2B[a,s,d]+totalTimeB2C[a,s,d], 
-       totalDistA2B[a,s,d] + distB2C[a,s,d,t],
+       totalDistA2B[a,s,d] + distB2C[a,s,d,t-totalTimeA2B[a,s,d]],
    t < totalTimeA2B[a,s,d]+totalTimeB2C[a,s,d]+totalTimeC2D[a,s,d],
-       totalDistA2B[a,s]+totalDistB2C[a,s,d]+distC2D[a,s,d,t],
+       totalDistA2B[a,s,d]+totalDistB2C[a,s,d]+
+        distC2D[a,s,d,t-totalTimeA2B[a,s,d]-totalTimeB2C[a,s,d]],
    True, d];
 
 totalTimeA2D[a_,s_,d_] = FullSimplify[
@@ -95,16 +103,25 @@ totalDistA2D[a_,s_,d_] = FullSimplify[
 
 *)
 
-speedA2D[a_, s_, d_, t_] = Which[t < 0, 0, t < totalTimeA2B[a, s, d], 
-    speedA2B[a, s, d, t], t < totalTimeA2B[a, s, d] + totalTimeB2C[a, s, d], 
-    speedB2C[a, s, d, t], t < totalTimeA2B[a, s, d] + totalTimeB2C[a, s, d] + 
-      totalTimeC2D[a, s, d], speedC2D[a, s, d, t], True, 0]
+speedA2D[a_, s_, d_, t_] =
+ Which[t<0, 0, 
+ t < totalTimeA2B[a,s,d], speedA2B[a,s,d,t],
+ t < totalTimeA2B[a,s,d]+totalTimeB2C[a,s,d], 
+     speedB2C[a,s,d,t-totalTimeA2B[a,s,d]],
+ t < totalTimeA2B[a,s,d]+totalTimeB2C[a,s,d]+totalTimeC2D[a,s,d],
+     speedC2D[a,s,d,t-totalTimeA2B[a,s,d]-totalTimeB2C[a,s,d]],
+   True, 0];
 
-distA2D[a_, s_, d_, t_] = Which[t < 0, 0, t < totalTimeA2B[a, s], 
-    distA2B[a, t], t < totalTimeA2B[a, s] + totalTimeB2C[a, s, d], 
-    totalDistA2B[a, s, d] + distB2C[a, s, d], 
-    t < totalTimeA2B[a, s] + totalTimeB2C[a, s, d] + totalTimeC2D[a, s], 
-    totalDistA2B[a, s] + totalDistB2C[a, s, d] + distC2D[a, t, s], True, d]
+distA2D[a_,s_,d_,t_] = 
+ Which[t<0, 0, 
+   t<  totalTimeA2B[a,s,d], 
+       distA2B[a,s,d,t],
+   t < totalTimeA2B[a,s,d]+totalTimeB2C[a,s,d], 
+       totalDistA2B[a,s,d] + distB2C[a,s,d,t-totalTimeA2B[a,s,d]],
+   t < totalTimeA2B[a,s,d]+totalTimeB2C[a,s,d]+totalTimeC2D[a,s,d],
+       totalDistA2B[a,s,d]+totalDistB2C[a,s,d]+
+        distC2D[a,s,d,t-totalTimeA2B[a,s,d]-totalTimeB2C[a,s,d]],
+   True, d];
 
 totalTimeA2D[a_, s_, d_] = (2 + a*d - 2*Sqrt[1 - s^2])/(a*s)
 
@@ -115,7 +132,6 @@ totalDistA2D[a_, s_, d_] = d
 g = 98/10/299792458;
 
 y2s = 31556952;
-
 
 (* formulas end here *)
 
@@ -239,6 +255,18 @@ Grid[Transpose[print], Alignment -> Left, Spacings -> {2, 1}, Frame -> All,
  ItemStyle -> "Text"]
 showit
 
+Let's plot the ship's speed (for both sample coasting speeds) with
+respect to time for reference frame A:
+
+Plot[{speedA2D[g, .6, 40*y2s, t*y2s], speedA2D[g, .995, 40*y2s, t*y2s]}, 
+ {t,0,67.313}]
+
+Plot[{distA2D[g, .6, 40*y2s, t*y2s]/y2s, distA2D[g, .995, 40*y2s, t*y2s]/y2s}, 
+ {t,0,67.313}]
+
+
+
+
 TODO: disclaim tables are cleaned up
 
 TODO: check against reliable sources at least for coasting
@@ -345,7 +373,6 @@ speedB2C[a_,s_,t_] = s
 distB2C[a_,s_,t_] = s*t
 totalTimeB2C[a_,s_,d_] = FullSimplify[(d-2*distA2B[a,s])/s, conds]
 totalDistB2C[a_,s_,d_] = FullSimplify[totalTimeB2C[a,s,d]*s, conds]
-
 speedC2D[a_,t_,s_] = FullSimplify[speedA2B[a,totalTimeA2B[a,s]-t],conds]
 distC2D[a_,t_,s_] = FullSimplify[distA2B[a,totalTimeA2B[a,s]-t],conds]
 totalTimeC2D[a_,s_] = totalTimeA2B[a,s];
@@ -576,6 +603,43 @@ RSolve[{speed[0] == 0, speed[n] == (a+speed[n-1])/(1+a*speed[n-1]/c^2)},
 RSolve[{v[0] == 0, v[n] == (a+speed[n-1])/(1+a*speed[n-1])}, v[n], n]
 
 TODO: note Earth revolution/rotation ignored
+
+(*
+
+BELOW IS in ship's reference frame
+
+Now, let's look at the same trip from the ship's point of view.
+
+Your speed and distance from A to B is:
+
+TODO: put below in TeX too
+
+shipSpeedA2B[a_,s_,t_,d_] = Tanh[a*t]
+
+shipDistA2B[a_,s_,t_,d_] = Integrate[Tanh[a*t],t]
+
+You thus reach your coasting velocity at:
+
+shipTotalTimeA2B[a_,s_,d_] = Solve[shipSpeedA2B[a,s,t,d] == s,t][[1,1,2]]
+
+having traveled:
+
+shipTotalDistA2B[a_,s_,d_] = Integrate[shipSpeedA2B[a,s,t,d],
+ {t, 0, shipTotalTimeA2B[a,s,t,d]}]
+
+in the ship's (constantly accelerating) reference frame.
+
+shipTotalDistB2C[a_,s_,d_] = 
+ FullSimplify[totalDistB2C[a,s,d]*Sqrt[1-s^2],conds]
+
+shipTotalTimeB2C[a_,s_,d_] = FullSimplify[shipTotalDistB2C[a,s,d]/s, conds]
+
+
+
+
+
+
+*)
 
 (*
 
