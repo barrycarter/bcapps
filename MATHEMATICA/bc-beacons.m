@@ -30,7 +30,7 @@ beacon 0 *)
 
 timeBetween[n_] = FullSimplify[1/Sqrt[1-velocity[n]^2], conds]
 
-(* distance the nth beacon travels before the next beacon is dropped *)
+(* distance ship travels between beacons n and n+1 *)
 
 distanceTraveled[n_] = FullSimplify[timeBetween[n]*velocity[n],conds]
 
@@ -44,7 +44,7 @@ distance[n_] = FullSimplify[Sum[distanceTraveled[i],{i,0,n-1}], conds]
 
 timeOf[n_] = FullSimplify[Sum[timeBetween[i],{i,0,n-1}],conds]
 
-
+Solve[timeOf[n] == t, n, Reals]
 
 
 
