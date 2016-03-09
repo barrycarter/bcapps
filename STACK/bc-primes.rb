@@ -14,32 +14,41 @@ end
 
 # modified Sieve of Eratosthenes
 def bc_get_prime_numbers(size)
-  n = 2
+  n = 1
   primes = []
-  notprimes = Hash.new
+  notprime = Hash.new
 
   until primes.size > size do
 
-    # note my multiples aren't primes (even if I'm not prime myself
-    # since I'm limiting to n^2)
-    (2..2**size).each{|i| notprimes[i*n] = 1}
+    n+=1
 
-    # if I am not not prime, I am prime
-    if !notprimes[n] then primes.push(n) end
+    # if I am known not prime, continue
+    if notprime[n] then next end
 
-    print "#{n}\n";
+    # check to see if I'm prime (abort instantly on finding divisor)
+    (2..Math.sqrt(n)+1).each{|i| print "Checking #{n} vs #{i}\n"; if n%i==0 then notprime[n]=1; print "NOT A PRIME!\n"; next; end}
 
-    n+=1;
+    # I'm prime, so add me to array + mark my multiples as being not
+    # prime, but the fewer primes I need to get, the fewer multiples I
+    # mark
+
+    primes.push(n)
+    (2..(size-primes.size())).each{|i| notprime[i*n] = 1}
   end
   primes
 end
       
-# takes 48.921u 0.006s 0:48.98 99.8%    0+0k 0+136io 0pf+0w
+# takes 48.048u 0.039s 0:48.30 99.5%    0+0k 8+120io 0pf+0w
 # time ruby ~/BCGIT/STACK/bc-primes.rb > ! oldprimes.txt
-# print get_prime_numbers(10000)
+# print get_prime_numbers(10000).join("\n"),"\n";
 
 
 
 # TODO: compare my results
 
-print bc_get_prime_numbers(10000)
+# takes 59.621u 0.834s 1:00.76 99.4%    0+0k 0+120io 0pf+0w
+print bc_get_prime_numbers(10000).join("\n"),"\n";
+
+# print [1,2,3].join("\n"),"\n"
+
+
