@@ -30,19 +30,20 @@ sxsol = sol[[1,1,2,1]]
 
 sysol = Sqrt[ns^2 - (an^2 - as^2 + ns^2)^2/(4*an^2)]
 
-(* NOTE: below is actually plusminus)
-
-sy = Sqrt[ns^2 - (an^2 - as^2 + ns^2)^2/(4*an^2)] 
-
 sol2 = FullSimplify[
-Solve[{bx^2 + by^2 == bn^2, (bx-sx)^2 + (by-sy)^2 == bs^2}, {bx,by}],
+Solve[{bx^2 + by^2 == bn^2, (bx-sxsol)^2 + (by-sysol)^2 == bs^2}, {bx,by}],
 conds]
 
-(* using negative sy *)
+FullSimplify[by/bx /. sol2[[1]],conds]
 
-sol3 = FullSimplify[
-Solve[{bx^2 + by^2 == bn^2, (bx-sx)^2 + (by+sy)^2 == bs^2}, {bx,by}],
-conds]
+sol = Solve[{
+ sx^2 + sy^2 == ns^2,
+ (sx-an)^2 + sy^2 == as^2, 
+ (bx-sx)^2 + (by-sy)^2 == bs^2,
+
+
+
+{bx^2 + by^2 == bn^2, (bx-sxsol)^2 + (by-sysol)^2 == bs^2}, {bx,by}],
 
 
 
