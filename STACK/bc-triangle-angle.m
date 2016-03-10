@@ -4,24 +4,23 @@ http://math.stackexchange.com/questions/1688586/finding-an-angle-in-a-triangle-w
 
 (*
 
+[[image]]
+
 As stated, the problem does not necessarily have a single solution. Example:
 
 `AN = 1.0, BN = 0.65, NS = 0.92, AS = 0.81, BS = 0.35`
 
 B's coordinates can be either {0.45509,0.354363} or
 {0.733145,0.592696}, and the values of angle ANB is different for
-these two sets of coordinates:
+these two sets of coordinates.
 
-[[create image]]
+Note that I am using approximate numbers here, but the roundoff errors
+are small enough to be ignored.
 
-(note that I am using approximate numbers here, but the roundoff
-errors are small enough to be ignored)
-
-
-
+I hope to expand on my answer by providing a closed formula for the
+two possible values of ANB (when they exist).
 
 
-</code></pre>
 
 This is a largely analytical approach.
 
@@ -146,12 +145,12 @@ g1 = Graphics[{
  Text[Style["S (0.4,0.7)", FontSize->25], {0.4,0.75}],
  Text[Style["r = 0.35", FontSize->25], {0.4,0.8}],
  RGBColor[{0,1,0}],
- Text[Style["B?", FontSize->25], {0.455,0.354+.01}],
- Text[Style["B?", FontSize->25], {0.733,0.593+.01}],
+ Text[Style["B?", FontSize->25], {0.48,0.32}],
+ Text[Style["B?", FontSize->25], {0.76,0.56}],
  Point[{0.45509,0.354363}],
  Point[{0.733145,0.592696}]
 }]
-Show[g1]
+Show[g1, Axes -> True]
 showit
 
 (* choosing .69 as distance)
