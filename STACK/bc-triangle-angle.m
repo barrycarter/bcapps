@@ -20,13 +20,9 @@ are small enough to be ignored.
 I hope to expand on my answer by providing a closed formula for the
 two possible values of ANB (when they exist).
 
-
-
-This is a largely analytical approach.
-
 Create a Cartesian grid such that `A` is at the origin, `N` lies on
 the positive x axis and `S` lies in the upper half plane. You can
-always do this using translation, rotation, and flipping without
+always do this using translation, rotation, and reflecting without
 affecting any lengths:
 
 [[image2.jpg]]
