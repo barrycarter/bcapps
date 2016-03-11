@@ -27,6 +27,66 @@ affecting any lengths:
 
 [[image2.jpg]]
 
+Although I've draw B and S in quadrant I, B can be in any quadrant,
+and S can be in quadrants I or II (since we explicitly chose our axis
+system so that sy > 0).
+
+We can now find sx and sy by solving the simultaneous equations:
+
+$\text{sx}^2+\text{sy}^2=d^2$
+
+$(\text{sx}-c)^2+\text{sy}^2=e^2$
+
+The are two solutions, but only one with sy > 0:
+
+$
+   \left\{\text{sx}\to \frac{c^2+d^2-e^2}{2 c},\text{sy}\to
+    \sqrt{d^2-\frac{\left(c^2+d^2-e^2\right)^2}{4 c^2}}\right\}
+$
+
+We can now solve for bx and by using:
+
+$(\text{bx}-\text{sx})^2+(\text{by}-\text{sy})^2=f^2$
+
+$(\text{bx}-c)^2+\text{by}^2=g^2$
+
+and plugging in the values of sx and sy we found earlier, yielding two
+solutions, both valid:
+
+$
+   \left\{\text{bx}\to \frac{\left(c^2+d^2-e^2\right)
+    \left(d^2+f^2-g^2\right)+\sqrt{(c-d-e) (c+d-e) (c-d+e) (c+d+e) (d-f-g)
+    (d+f-g) (d-f+g) (d+f+g)}}{4 c d^2},\text{by}\to -\frac{c^4
+    \left(d^2+f^2-g^2\right)+c^2 \left(\sqrt{(c-d-e) (c+d-e) (c-d+e) (c+d+e)
+    (d-f-g) (d+f-g) (d-f+g) (d+f+g)}-2 \left(d^2+e^2\right)
+    \left(d^2+f^2-g^2\right)\right)+(d-e) (d+e) \left(\sqrt{(c-d-e) (c+d-e)
+    (c-d+e) (c+d+e) (d-f-g) (d+f-g) (d-f+g) (d+f+g)}+(d-e) (d+e)
+    \left(d^2+f^2-g^2\right)\right)}{4 c d^2 \sqrt{-(c-d-e) (c+d-e) (c-d+e)
+    (c+d+e)}}\right\}
+$
+
+$
+   \left\{\text{bx}\to \frac{\left(c^2+d^2-e^2\right)
+    \left(d^2+f^2-g^2\right)-\sqrt{(c-d-e) (c+d-e) (c-d+e) (c+d+e) (d-f-g)
+    (d+f-g) (d-f+g) (d+f+g)}}{4 c d^2},\text{by}\to \frac{c^4
+    \left(-\left(d^2+f^2-g^2\right)\right)+c^2 \left(\sqrt{(c-d-e) (c+d-e)
+    (c-d+e) (c+d+e) (d-f-g) (d+f-g) (d-f+g) (d+f+g)}+2 \left(d^2+e^2\right)
+    \left(d^2+f^2-g^2\right)\right)+(d-e) (d+e) \left(\sqrt{(c-d-e) (c+d-e)
+    (c-d+e) (c+d+e) (d-f-g) (d+f-g) (d-f+g) (d+f+g)}-(d-e) (d+e)
+    \left(d^2+f^2-g^2\right)\right)}{4 c d^2 \sqrt{-(c-d-e) (c+d-e) (c-d+e)
+    (c+d+e)}}\right\}
+$
+
+To find ABN, we simply take the arctangent:
+
+
+
+
+
+
+
+TODO: triangle inequality
+
 Note that sx can be negative or positive (I just drew it as positive),
 but sy is definitely positive as above.
 
@@ -66,12 +126,6 @@ $
     (c+d+e)}}\right\}
 $
 
-bxsol1 = FullSimplify[sol2[[1,1,2]],conds]
-bxsol2 = FullSimplify[sol2[[2,1,2]],conds]
-
-bysol1 = FullSimplify[sol2[[1,2,2]],conds]
-bysol2 = FullSimplify[sol2[[2,2,2]],conds]
-
 You may've worked this out already, but, as stated, there is not
 necessarily a unique solution.
 
@@ -94,6 +148,12 @@ sysol = sol[[2,2,2,1]];
 sol2 = FullSimplify[
 Solve[{bx^2 + by^2 == f^2, (bx-sxsol)^2 + (by-sysol)^2 == g^2}, {bx,by}],
 conds]
+
+bxsol1 = FullSimplify[sol2[[1,1,2]],conds]
+bxsol2 = FullSimplify[sol2[[2,1,2]],conds]
+
+bysol1 = FullSimplify[sol2[[1,2,2]],conds]
+bysol2 = FullSimplify[sol2[[2,2,2]],conds]
 
 bxsol1 /. {c -> 3, d -> 4, e -> 9/2, f -> 2, g -> 3}
 
@@ -149,7 +209,36 @@ g1 = Graphics[{
 Show[g1, Axes -> True]
 showit
 
-(* choosing .69 as distance)
+g2 = Graphics[{
+ Arrow[{{0,0},{1.1,0}}],
+ Text[Style["A (0,0)", FontSize->25], {0,-.05}],
+ Text[Style["c", FontSize->25], {0.5,-.02}],
+ Text[Style["d", FontSize->25], {0.17,0.75/2}],
+ Text[Style["e", FontSize->25], {.65,.75/2}],
+ Text[Style["f", FontSize->25], {.57,.67}],
+ Text[Style["g", FontSize->25], {.87,.36}],
+ Arrow[{{0,0},{0,1}}],
+ PointSize[0.02],
+ Point[{0,0}],
+ Line[{{0,0},{1,0}}],
+ Line[{{0,0},{0.4,0.7}}],
+ Line[{{1,0},{.4,.7}}],
+ Line[{{1,0},{0.733145,0.592696}}],
+ Line[{{.4,.7},{0.733145,0.592696}}],
+ RGBColor[{1,0,0}],
+ Text[Style["N (c,0)", FontSize->25], {1,-.05}],
+ Point[{1,0}],
+ RGBColor[{0,0,1}],
+ Point[{.4, .7}],
+ Text[Style["S (sx,sy)", FontSize->25], {0.4,0.75}],
+ RGBColor[{1,0,1}],
+ Text[Style["B (bx,by)", FontSize->25], {0.85,0.6}],
+ Point[{0.733145,0.592696}]
+}]
+Show[g2]
+showit
+
+
 
 
 TODO: verbiage
