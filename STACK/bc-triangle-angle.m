@@ -25,7 +25,7 @@ the positive x axis and $S$ lies in the upper half plane. You can
 always do this using translation, rotation, and reflecting without
 affecting any lengths:
 
-[[image2.jpg]]
+[[image2.gif]]
 
 (note that $A$ and $N$ above are flipped from my counterexample
 earlier, as it turns out the calculations are easier with $N$ at the
@@ -53,59 +53,62 @@ We can now solve for bx and by using:
 
 $(\text{bx}-\text{sx})^2+(\text{by}-\text{sy})^2=f^2$
 
-$(\text{bx}-c)^2+\text{by}^2=g^2$
+$\text{bx}^2+\text{by}^2=g^2$
 
 and plugging in the values of sx and sy we found earlier, yielding two
 solutions, both valid:
 
 $
    \left\{\text{bx}\to \frac{\left(c^2+d^2-e^2\right)
-    \left(d^2+f^2-g^2\right)+\sqrt{(c-d-e) (c+d-e) (c-d+e) (c+d+e) (d-f-g)
+    \left(d^2-f^2+g^2\right)+\sqrt{(c-d-e) (c+d-e) (c-d+e) (c+d+e) (d-f-g)
     (d+f-g) (d-f+g) (d+f+g)}}{4 c d^2},\text{by}\to -\frac{c^4
-    \left(d^2+f^2-g^2\right)+c^2 \left(\sqrt{(c-d-e) (c+d-e) (c-d+e) (c+d+e)
+    \left(d^2-f^2+g^2\right)+c^2 \left(\sqrt{(c-d-e) (c+d-e) (c-d+e) (c+d+e)
     (d-f-g) (d+f-g) (d-f+g) (d+f+g)}-2 \left(d^2+e^2\right)
-    \left(d^2+f^2-g^2\right)\right)+(d-e) (d+e) \left(\sqrt{(c-d-e) (c+d-e)
+    \left(d^2-f^2+g^2\right)\right)+(d-e) (d+e) \left(\sqrt{(c-d-e) (c+d-e)
     (c-d+e) (c+d+e) (d-f-g) (d+f-g) (d-f+g) (d+f+g)}+(d-e) (d+e)
-    \left(d^2+f^2-g^2\right)\right)}{4 c d^2 \sqrt{-(c-d-e) (c+d-e) (c-d+e)
+    \left(d^2-f^2+g^2\right)\right)}{4 c d^2 \sqrt{-(c-d-e) (c+d-e) (c-d+e)
     (c+d+e)}}\right\}
 $
 
 $
    \left\{\text{bx}\to \frac{\left(c^2+d^2-e^2\right)
-    \left(d^2+f^2-g^2\right)-\sqrt{(c-d-e) (c+d-e) (c-d+e) (c+d+e) (d-f-g)
+    \left(d^2-f^2+g^2\right)-\sqrt{(c-d-e) (c+d-e) (c-d+e) (c+d+e) (d-f-g)
     (d+f-g) (d-f+g) (d+f+g)}}{4 c d^2},\text{by}\to \frac{c^4
-    \left(-\left(d^2+f^2-g^2\right)\right)+c^2 \left(\sqrt{(c-d-e) (c+d-e)
+    \left(-\left(d^2-f^2+g^2\right)\right)+c^2 \left(\sqrt{(c-d-e) (c+d-e)
     (c-d+e) (c+d+e) (d-f-g) (d+f-g) (d-f+g) (d+f+g)}+2 \left(d^2+e^2\right)
-    \left(d^2+f^2-g^2\right)\right)+(d-e) (d+e) \left(\sqrt{(c-d-e) (c+d-e)
+    \left(d^2-f^2+g^2\right)\right)+(d-e) (d+e) \left(\sqrt{(c-d-e) (c+d-e)
     (c-d+e) (c+d+e) (d-f-g) (d+f-g) (d-f+g) (d+f+g)}-(d-e) (d+e)
-    \left(d^2+f^2-g^2\right)\right)}{4 c d^2 \sqrt{-(c-d-e) (c+d-e) (c-d+e)
+    \left(d^2-f^2+g^2\right)\right)}{4 c d^2 \sqrt{-(c-d-e) (c+d-e) (c-d+e)
     (c+d+e)}}\right\}
 $
 
-To find ABN, we simply take the arctangent (two-argument from, since
-quadrant is important):
+To find ABN, we simply take the arctangent of
+$\frac{\text{by}}{\text{bx}}$. Since the angle will always be between
+0 and 180 degrees (if it's larger than 180 degrees, we measure the
+angle clockwise), we can use the single argument form of arctangent
+(I'd stated incorrectly earlier than we needed the two argument
+form. This yields:
 
 $
-   \tan ^{-1}\left(\frac{\left(c^2+d^2-e^2\right)
-    \left(d^2+f^2-g^2\right)+\sqrt{(c-d-e) (c+d-e) (c-d+e) (c+d+e) (d-f-g)
-    (d+f-g) (d-f+g) (d+f+g)}}{4 c d^2},-\frac{c^4 \left(d^2+f^2-g^2\right)+c^2
+   -\tan ^{-1}\left(\frac{c^4 \left(d^2-f^2+g^2\right)+c^2 \left(\sqrt{(c-d-e)
+    (c+d-e) (c-d+e) (c+d+e) (d-f-g) (d+f-g) (d-f+g) (d+f+g)}-2
+    \left(d^2+e^2\right) \left(d^2-f^2+g^2\right)\right)+(d-e) (d+e)
     \left(\sqrt{(c-d-e) (c+d-e) (c-d+e) (c+d+e) (d-f-g) (d+f-g) (d-f+g)
-    (d+f+g)}-2 \left(d^2+e^2\right) \left(d^2+f^2-g^2\right)\right)+(d-e) (d+e)
-    \left(\sqrt{(c-d-e) (c+d-e) (c-d+e) (c+d+e) (d-f-g) (d+f-g) (d-f+g)
-   (d+f+g)}+(d-e) (d+e) \left(d^2+f^2-g^2\right)\right)}{4 c d^2 \sqrt{-(c-d-e)
-    (c+d-e) (c-d+e) (c+d+e)}}\right)
+   (d+f+g)}+(d-e) (d+e) \left(d^2-f^2+g^2\right)\right)}{\sqrt{-(c-d-e) (c+d-e)
+    (c-d+e) (c+d+e)} \left(\left(c^2+d^2-e^2\right)
+    \left(d^2-f^2+g^2\right)+\sqrt{(c-d-e) (c+d-e) (c-d+e) (c+d+e) (d-f-g)
+    (d+f-g) (d-f+g) (d+f+g)}\right)}\right)
 $
 
 $
-   \tan ^{-1}\left(\frac{\left(c^2+d^2-e^2\right)
-    \left(d^2+f^2-g^2\right)-\sqrt{(c-d-e) (c+d-e) (c-d+e) (c+d+e) (d-f-g)
-    (d+f-g) (d-f+g) (d+f+g)}}{4 c d^2},\frac{c^4
-    \left(-\left(d^2+f^2-g^2\right)\right)+c^2 \left(\sqrt{(c-d-e) (c+d-e)
-    (c-d+e) (c+d+e) (d-f-g) (d+f-g) (d-f+g) (d+f+g)}+2 \left(d^2+e^2\right)
-    \left(d^2+f^2-g^2\right)\right)+(d-e) (d+e) \left(\sqrt{(c-d-e) (c+d-e)
-    (c-d+e) (c+d+e) (d-f-g) (d+f-g) (d-f+g) (d+f+g)}-(d-e) (d+e)
-    \left(d^2+f^2-g^2\right)\right)}{4 c d^2 \sqrt{-(c-d-e) (c+d-e) (c-d+e)
-    (c+d+e)}}\right)
+   \tan ^{-1}\left(\frac{c^4 \left(-\left(d^2-f^2+g^2\right)\right)+c^2
+    \left(\sqrt{(c-d-e) (c+d-e) (c-d+e) (c+d+e) (d-f-g) (d+f-g) (d-f+g)
+    (d+f+g)}+2 \left(d^2+e^2\right) \left(d^2-f^2+g^2\right)\right)+(d-e) (d+e)
+    \left(\sqrt{(c-d-e) (c+d-e) (c-d+e) (c+d+e) (d-f-g) (d+f-g) (d-f+g)
+   (d+f+g)}-(d-e) (d+e) \left(d^2-f^2+g^2\right)\right)}{\sqrt{-(c-d-e) (c+d-e)
+    (c-d+e) (c+d+e)} \left(\left(c^2+d^2-e^2\right)
+    \left(d^2-f^2+g^2\right)-\sqrt{(c-d-e) (c+d-e) (c-d+e) (c+d+e) (d-f-g)
+    (d+f-g) (d-f+g) (d+f+g)}\right)}\right)
 $
 
 Mathematica can't find a simpler form for the answer, and I'm not sure
@@ -127,7 +130,7 @@ sxsol = sol[[1,1,2,1]];
 sysol = sol[[2,2,2,1]];
 
 sol2 = FullSimplify[
-Solve[{bx^2 + by^2 == f^2, (bx-sxsol)^2 + (by-sysol)^2 == g^2}, {bx,by}],
+Solve[{bx^2 + by^2 == g^2, (bx-sxsol)^2 + (by-sysol)^2 == f^2}, {bx,by}],
 conds]
 
 bxsol1 = FullSimplify[sol2[[1,1,2]],conds]
@@ -135,6 +138,9 @@ bxsol2 = FullSimplify[sol2[[2,1,2]],conds]
 
 bysol1 = FullSimplify[sol2[[1,2,2]],conds]
 bysol2 = FullSimplify[sol2[[2,2,2]],conds]
+
+ans1 = FullSimplify[ArcTan[bysol1/bxsol1],conds]
+ans2 = FullSimplify[ArcTan[bysol2/bxsol2],conds]
 
 bxsol1 /. {c -> 3, d -> 4, e -> 9/2, f -> 2, g -> 3}
 
@@ -194,26 +200,30 @@ g2 = Graphics[{
  Text[Style["N (0,0)", FontSize->25], {0,-.05}],
  Text[Style["c", FontSize->25], {0.5,-.02}],
  Text[Style["d", FontSize->25], {0.17,0.75/2}],
- Text[Style["e", FontSize->25], {.65,.75/2}],
- Text[Style["f", FontSize->25], {.57,.67}],
- Text[Style["g", FontSize->25], {.87,.36}],
+ Text[Style["e", FontSize->25], {.7,.75/2+.03}],
+ Text[Style["f", FontSize->25], {.45,.55}],
+ Text[Style["g", FontSize->25], {.28,.23}],
  Arrow[{{0,0},{0,1}}],
  PointSize[0.02],
  Point[{0,0}],
  Line[{{0,0},{1,0}}],
  Line[{{0,0},{0.4,0.7}}],
  Line[{{1,0},{.4,.7}}],
- Line[{{1,0},{0.733145,0.592696}}],
- Line[{{.4,.7},{0.733145,0.592696}}],
+ Line[{{0,0},{0.433145,0.392696}}],
+ Line[{{.4,.7},{0.433145,0.392696}}],
+
  RGBColor[{1,0,0}],
  Text[Style["A (c,0)", FontSize->25], {1,-.05}],
  Point[{1,0}],
+
  RGBColor[{0,0,1}],
  Point[{.4, .7}],
  Text[Style["S (sx,sy)", FontSize->25], {0.4,0.75}],
+
  RGBColor[{1,0,1}],
- Text[Style["B (bx,by)", FontSize->25], {0.85,0.6}],
- Point[{0.733145,0.592696}]
+ Text[Style["B (bx,by)", FontSize->25], {0.51,0.35}],
+ Point[{0.433145,0.392696}]
+
 }]
 Show[g2]
 showit

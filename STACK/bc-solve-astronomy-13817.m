@@ -148,6 +148,9 @@ shipDistC2D[a_, s_, d_, t_] = -(Log[1 - s^2] + 2*Log[Cosh[a*t - ArcTanh[s]]])/
 shipTotalTimeC2D[a_, s_, d_] = ArcTanh[s]/a
 shipTotalDistC2D[a_, s_, d_] = -Log[1 - s^2]/(2*a)
 
+(* TODO: need shipDistA2D *)
+
+
 
 
 shipTotalTimeA2D[a_,s_,d_] = (-2 + 2*Sqrt[1 - s^2] + a*d*Sqrt[1 - s^2] + 

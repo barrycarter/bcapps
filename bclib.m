@@ -15,7 +15,7 @@ System`Convert`TeXFormDump`maketex[
 (* keep files around just in case I need them again *)
 
 showit := Module[{file},
- file = "/tmp/math"<>ToString[RunThrough["date +%Y%m%d%H%M%S", ""]]<>".jpg";
+ file = "/tmp/math"<>ToString[RunThrough["date +%Y%m%d%H%M%S", ""]]<>".gif";
  Export[file ,%, ImageSize->{800,600}];
  Run["display "<>file<>"&"];
 ];
