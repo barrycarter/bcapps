@@ -218,7 +218,7 @@ even that only applies while the ship is moving (with respect to E, A,
 and D). Once the ship has returned to rest with respect to these three
 points, there is no Lorentz contraction either.
 
-Exact formulas, etc, follow.
+Exact formulas and derivations follow.
 
 Since the relativistic effects at $0.6 c$ are fairly mild (which may
 be why you chose it), I will solve the problem in general for the
@@ -329,6 +329,8 @@ $
    \end{array}
 $
 
+TODO: 8.74 ly issue? (more sig figs)
+
 Note that the caveat $s<\frac{\sqrt{a^2 d^2-4}}{a d}$ still applies
 
 TODO: make sure TeX formats ok, it's a bit wonky [or use mathematica images]
@@ -362,11 +364,6 @@ print = {
 Grid[Transpose[print], Alignment -> Left, Spacings -> {2, 1}, Frame -> All, 
  ItemStyle -> "Text"] // TeXForm
 
-
-
-
-
-
 Let's plot the ship's speed (for both sample coasting speeds) with
 respect to time for reference frame A:
 
@@ -376,7 +373,135 @@ Plot[{speedA2D[g, .6, 40*y2s, t*y2s], speedA2D[g, .995, 40*y2s, t*y2s]},
 Plot[{distA2D[g, .6, 40*y2s, t*y2s]/y2s, distA2D[g, .995, 40*y2s, t*y2s]/y2s}, 
  {t,0,67.313}]
 
+Of course, all of the above is in A's reference frame. How do things
+look from the ship?
 
+$t$ seconds after blastoff, your speed is:
+
+$\text{shipSpeedA2B}(a,s,d,t)=\tanh (a t)$
+
+We can integrate this to find the total distance traveled:
+
+$\text{shipDistA2B}(a,s,d,t)=\frac{\log (\cosh (a t))}{a}$
+
+We reach our coasting speed of $s$ at:
+
+$\text{shipTotalTimeA2B}(a,s,d)=\frac{\tanh ^{-1}(s)}{a}$
+
+at which point we've traveled:
+
+$\text{shipTotalDistA2B}(a,s,d)=-\frac{\log \left(1-s^2\right)}{2 a}$
+
+We now coast as speed s, so our speed and distance from B to C are
+quite simple:
+
+$\text{shipSpeedB2C}(a,s,d,t)=s$
+
+$\text{shipDistB2C}(a,s,d,t)=s t$
+
+How long does it take us to travel from B to C? We know the distance
+from B to C in A's frame of reference is:
+
+$\frac{a d-\frac{2}{\sqrt{1-s^2}}+2}{a}$
+
+Since we are traveling at our coasting speed of s, we can use the
+Lorentz contraction to find the distance from B to C in the ship's
+reference frame:
+
+$\text{shipTotalDistB2C}(a,s,d)=\frac{a d \sqrt{1-s^2}+2 \sqrt{1-s^2}-2}{a}$
+
+And since we're traveling at constant speed, the time it takes is just
+that divided by s:
+
+$\text{shipTotalTimeB2C}(a,s,d)=\frac{a d \sqrt{1-s^2}+2 \sqrt{1-s^2}-2}{a s}$
+
+The trip from C to D mirrors (in reverse) the trip from A to B:
+
+$\text{shipSpeedC2D}(a,s,d,t)=-\tanh \left(a t-\tanh ^{-1}(s)\right)$
+
+$
+   \text{shipDistC2D}(a,s,d,t)=-\frac{2 \log \left(\cosh \left(a t-\tanh
+    ^{-1}(s)\right)\right)+\log \left(1-s^2\right)}{2 a}
+$
+
+$\text{shipTotalDistC2D}(a,s,d)=-\frac{\log \left(1-s^2\right)}{2 a}$
+
+$\text{shipTotalTimeC2D}(a,s,d)=\frac{\tanh ^{-1}(s)}{a}$
+
+Adding these up, we find our total time and distance:
+
+$
+   \text{shipTotalDistA2D}(a,s,d)=\frac{a d \sqrt{1-s^2}+2 \sqrt{1-s^2}-\log
+    \left(1-s^2\right)-2}{a}
+$
+
+$
+   \text{shipTotalTimeA2D}(a,s,d)=\frac{a d \sqrt{1-s^2}+2 \sqrt{1-s^2}+2 s
+    \tanh ^{-1}(s)-2}{a s}
+$
+
+Now, let's look at actual numbers for our test cases, and, for
+comparison, include the numbers from fixed reference frame A (as
+computed above).
+
+print = {
+ {"Reference Frame",
+"a", "s", "d", "A2B time", "A2B distance", "B2C time", "B2C distance",
+  "C2D time", "C2D distance", "A2D time", "A2D distance"},
+
+ {"A", "any a", "any s", "any d", 
+  totalTimeA2B[a,s,d], totalDistA2B[a,s,d],
+  totalTimeB2C[a,s,d], totalDistB2C[a,s,d],
+  totalTimeC2D[a,s,d], totalDistC2D[a,s,d],
+  totalTimeA2D[a,s,d], totalDistA2D[a,s,d]},
+
+ {"ship", "any a", "any s", "any d", 
+  shipTotalTimeA2B[a,s,d], shipTotalDistA2B[a,s,d],
+  shipTotalTimeB2C[a,s,d], shipTotalDistB2C[a,s,d],
+  shipTotalTimeC2D[a,s,d], shipTotalDistC2D[a,s,d],
+  shipTotalTimeA2D[a,s,d], shipTotalDistA2D[a,s,d]},
+
+ {"A", "1g", "0.6c", "40 ly", 
+  "0.727 years", "0.242 ly",
+  "65.859 years", "39.515 ly",
+  "0.727 years", "0.242 ly",
+  "67.313 years", "40 ly"
+ },
+
+ {"ship", "1g", "0.6c", "40 ly", 
+  "0.672 years", "0.216 ly",
+  "52.687 years", "31.612 ly",
+  "0.672 years", "0.216 ly",
+  "54.031 years", "32.045 ly"
+ },
+
+ {"A", "1g", "0.995c", "40 ly",
+  "9.658 years", "8.74 ly",
+  "22.640 years", "22.527 ly",
+  "9.658 years", "8.74 ly",
+  "41.955 years", "40 ly"
+},
+
+ {"ship", "1g", "0.995c", "40ly", 
+  "2.903 years", "2.233 ly",
+  "2.261 years", "2.250 ly",
+  "2.903 years", "2.233 ly",
+  "8.067 years", "6.716 ly"
+}
+}
+
+Grid[Transpose[print], Alignment -> Left, Spacings -> {2, 1}, Frame -> All, 
+ ItemStyle -> "Text"]
+showit
+
+
+
+
+
+
+
+
+TODO: note that trip times add, 30+40 ly vs 70ly (if you stop for first)
 
 
 TODO: disclaim tables are cleaned up
@@ -399,71 +524,15 @@ Grid[print, Alignment -> Left, Spacings -> {2, 1}, Frame -> All,
 showit
 
 
-coasttime[a,s], coastdist[a,s],
- coastfor[a,s,d], distaftercoast[a,s,d], coasttime[a,s], journeyTime[a,s,d]},
-
-{"1g", ".995c", "40 ly", "9.66 years", "9.71 ly", "20.69 years", "30.29 ly",
- "9.66 years", "40.01 years"}
-
-{"1g", ".995c", "40 ly", "9.66 years\nfoo", "9.71 ly", "20.69 years", 
- "30.29 ly",
- "9.66 years", "40.01 years"}
-
-
-}
-
-
-
-
-
-(* example using pure formulas *)
-
-{"1g", ".995c", "40 ly", "9.66 years", "9.71 ly", "20.69 years", "30.29 ly",
- "9.66 years", "40.01 years"}
- 
-
 TODO: label a/s/d above
 
 TODO: note clean versions of formulas in body of text
-
-TODO: disclaim too high of s will overshoot mark
 
 TODO: mention this file
 
 TODO: digression and end of digression marker
 
 TODO: disclaim blind equations/simplifications
-
-Putting some actual numbers on this. At 1g and in `A`'s reference frame,
-
-  - It will take about 0.73 years to reach $0.6 c$, and you will be
-  1.21 light years from `A`.
-
-  - It will take about 9.7 years to reach $0.995 c$, and you will also
-  be about 9.7 light years from `A` (as your speed increases, `A` will
-  see you approach the speed of light, so 9.7 light years in 9.7 years
-  from `A`'s perspective isn't surprising)
-
-You then coast for the following amount of time before decelerating:
-
-$\text{coastfor}(a,s,d)=\frac{d-\frac{2 \sqrt{\frac{1}{1-s^2}}}{a}}{s}$
-
-where `d` is the distance you're traveling in light seconds. For the
-40 ly journey from A to B:
-
-  - With a coasting speed of $0.6 c$, you coast for 62.6 years.
-
-  - With a coasting speed of $0.995 c$, you coast for 20.7 years.
-
-Again, all times are in `A`'s reference frame.
-
-
-
-
-
-
-
-TODO: note there is a maximal `s` for the 40 ly in question
 
 TODO: note that you don't gain much in `A`'s reference frame, but do in your own for .6 -> .995
 
@@ -950,3 +1019,10 @@ Solve[lspeed[elapsed[a,n]] == speed[a,n], lspeed[n]]
 TODO: spell check
 
 *)
+
+TODO: mention
+
+http://math.ucr.edu/home/baez/physics/Relativity/SR/Rocket/rocket.html
+http://math.ucr.edu/home/baez/physics/Relativity/SR/acceleration.html
+
+and note c = 1 for me
