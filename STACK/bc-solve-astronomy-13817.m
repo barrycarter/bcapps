@@ -3,7 +3,7 @@
 (*
 
 Formulas are given in Mathematica input format, after significant
-simplifcation, as shown later in this file.
+simplification, as shown later in this file.
 
 Formulas that depend on t are given for a,s,d,t (in that order) even
 when they don't involve all four variables.
@@ -127,6 +127,35 @@ totalTimeA2D[a_, s_, d_] = (2 + a*d - 2*Sqrt[1 - s^2])/(a*s)
 
 totalDistA2D[a_, s_, d_] = d
 
+(* from ship perspective *)
+
+shipSpeedA2B[a_, s_, d_, t_] = Tanh[a*t]
+shipDistA2B[a_, s_, d_, t_] = Log[Cosh[a*t]]/a
+shipTotalTimeA2B[a_, s_, d_] = ArcTanh[s]/a
+shipTotalDistA2B[a_, s_, d_] = -Log[1 - s^2]/(2*a)
+
+shipSpeedB2C[a_, s_, d_, t_] = s
+shipDistB2C[a_, s_, d_, t_] = s*t
+shipTotalDistB2C[a_, s_, d_] = (-2 + 2*Sqrt[1 - s^2] + a*d*Sqrt[1 - s^2])/a
+shipTotalTimeB2C[a_, s_, d_] = (-2 + 2*Sqrt[1 - s^2] + a*d*Sqrt[1 - s^2])/(a*s)
+
+
+shipSpeedC2D[a_, s_, d_, t_] = -Tanh[a*t - ArcTanh[s]]
+
+shipDistC2D[a_, s_, d_, t_] = -(Log[1 - s^2] + 2*Log[Cosh[a*t - ArcTanh[s]]])/
+    (2*a)
+
+shipTotalTimeC2D[a_, s_, d_] = ArcTanh[s]/a
+shipTotalDistC2D[a_, s_, d_] = -Log[1 - s^2]/(2*a)
+
+
+
+shipTotalTimeA2D[a_,s_,d_] = (-2 + 2*Sqrt[1 - s^2] + a*d*Sqrt[1 - s^2] + 
+ 2*s*ArcTanh[s])/(a*s)
+
+shipTotalDistA2D[a_,s_,d_] = (-2 + 2*Sqrt[1 - s^2] + a*d*Sqrt[1 - s^2] - 
+ Log[1 - s^2])/a
+
 (* some special numbers *)
 
 g = 98/10/299792458;
@@ -135,9 +164,46 @@ y2s = 31556952;
 
 (* formulas end here *)
 
+shipSpeedC2D[a_,s_,d_,t_] = FullSimplify[
+ shipSpeedA2B[a,s,d,shipTotalTimeA2B[a,s,d]-t],conds]
+
+
+shipDistC2D[a_,s_,d_,t_] = FullSimplify[shipTotalDistA2B[a,s,d] - 
+ shipDistA2B[a,s,d,shipTotalTimeA2B[a,s,d]-t], conds]
+
+
+
 (*
 
 [[image1.jpg]]
+
+To answer your meta-questions first:
+
+  - If you start at rest (with respect to your starting point),
+  accelerate at 1g until reaching 0.6c, coast for a while, and then
+  decelerate at 1g so that you arrive at rest at your target point,
+  here's how to compute the time your journey takes, both for you, and
+  for your start/destination points:
+
+TODO: table 30/40/50ly (for both)
+
+The time it takes is the same for all points in the same inertial
+reference frame, so the time is the same for the Earth (E), and both
+stars A and D (assuming they are at rest relative to each other).
+
+The time does *not* depend on the direction (vector components) in
+which your ship is flying. If it did, your travel time would be
+different for Earth (since you're flying somewhat perpendicular to it)
+than it would be for stars A and D. However, since E, A, and D aren't
+moving with respect to each other, they must experience the same
+time. Two objects can only experience different times if they're
+traveling at different velocities (ie, not at rest with respect to
+each other).
+
+The only thing the direction affects is the Lorentz contraction, and
+even that only applies while the ship is moving (with respect to E, A,
+and D). Once the ship has returned to rest with respect to these three
+points, there is no Lorentz contraction.
 
 Since the relativistic effects at $0.6 c$ are fairly mild (which may
 be why you chose it), I will solve the problem in general for the
@@ -608,6 +674,8 @@ TODO: note Earth revolution/rotation ignored
 
 BELOW IS in ship's reference frame
 
+TODO: find 0.6c/1g limit and note above in table
+
 Now, let's look at the same trip from the ship's point of view.
 
 Your speed and distance from A to B is:
@@ -624,8 +692,8 @@ shipTotalTimeA2B[a_,s_,d_] = Solve[shipSpeedA2B[a,s,t,d] == s,t][[1,1,2]]
 
 having traveled:
 
-shipTotalDistA2B[a_,s_,d_] = Integrate[shipSpeedA2B[a,s,t,d],
- {t, 0, shipTotalTimeA2B[a,s,t,d]}]
+shipTotalDistA2B[a_,s_,d_] = FullSimplify[
+ shipDistA2B[a,s,shipTotalTimeA2B[a,s,d],d],conds]
 
 in the ship's (constantly accelerating) reference frame.
 
