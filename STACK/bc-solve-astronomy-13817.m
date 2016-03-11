@@ -150,8 +150,14 @@ shipTotalDistC2D[a_, s_, d_] = -Log[1 - s^2]/(2*a)
 
 (* TODO: need shipDistA2D *)
 
-
-
+shipSpeedA2D[a_, s_, d_, t_] =
+ Which[t<0, 0, 
+ t < shipTotalTimeA2B[a,s,d], shipSpeedA2B[a,s,d,t],
+ t < shipTotalTimeA2B[a,s,d]+shipTotalTimeB2C[a,s,d], 
+     shipSpeedB2C[a,s,d,t-shipTotalTimeA2B[a,s,d]],
+ t < shipTotalTimeA2B[a,s,d]+shipTotalTimeB2C[a,s,d]+shipTotalTimeC2D[a,s,d],
+     shipSpeedC2D[a,s,d,t-shipTotalTimeA2B[a,s,d]-shipTotalTimeB2C[a,s,d]],
+   True, 0];
 
 shipTotalTimeA2D[a_,s_,d_] = (-2 + 2*Sqrt[1 - s^2] + a*d*Sqrt[1 - s^2] + 
  2*s*ArcTanh[s])/(a*s)
@@ -174,39 +180,45 @@ shipSpeedC2D[a_,s_,d_,t_] = FullSimplify[
 shipDistC2D[a_,s_,d_,t_] = FullSimplify[shipTotalDistA2B[a,s,d] - 
  shipDistA2B[a,s,d,shipTotalTimeA2B[a,s,d]-t], conds]
 
-
-
 (*
 
 [[image1.jpg]]
 
-To answer your meta-questions first:
+$
+   \begin{array}{lllll}
+    \text{Distance} & \text{30 ly} & \text{40 ly} & \text{50 ly} & \text{x ly}
+      \\
+    \text{Ship Time} & \text{40.70 years} & \text{54.03 years} & \text{67.36 years} & \text{0.697602 + 4x/3 years} \\
+    \text{Earth Time} & \text{50.65 years} & \text{67.31 years} & \text{83.98 years} & \text{0.646262 + 5x/3 years} \\
+   \end{array}
+$
 
-  - If you start at rest (with respect to your starting point),
-  accelerate at 1g until reaching 0.6c, coast for a while, and then
-  decelerate at 1g so that you arrive at rest at your target point,
-  here's how to compute the time your journey takes, both for you, and
-  for your start/destination points:
+(these formulas are approximate [I derive exact ones below], and don't
+work for x < 0.485 light years, since you can't accelerate to 0.6c at
+1g when traveling that short a distance)
 
-TODO: table 30/40/50ly (for both)
+The "Earth Time" above is also the time experienced by stars/stations
+"A" and "D" (any anything else that's at rest with respect to the
+Earth), since they're in the same inertial reference frame as Earth
+(E).
 
-The time it takes is the same for all points in the same inertial
-reference frame, so the time is the same for the Earth (E), and both
-stars A and D (assuming they are at rest relative to each other).
+Note that the time elapsed to a "stationary" observer doesn't matter
+on what direction you're flying. In the example above, you're flying
+straight to/from A and D, but at angle to Earth (E). However, because
+E, A, and D are at rest with respect to each other, they must
+experience the same amount of time.
 
-The time does *not* depend on the direction (vector components) in
-which your ship is flying. If it did, your travel time would be
-different for Earth (since you're flying somewhat perpendicular to it)
-than it would be for stars A and D. However, since E, A, and D aren't
-moving with respect to each other, they must experience the same
-time. Two objects can only experience different times if they're
-traveling at different velocities (ie, not at rest with respect to
-each other).
+Relativity only allows time dilation for different speeds. So, E, A,
+and D *will* see time dilation when observing the moving ship, but it
+must be the *exact same* time dilation. Otherwise, they'd experience
+time dilation with respect to each other, which is impossible.
 
 The only thing the direction affects is the Lorentz contraction, and
 even that only applies while the ship is moving (with respect to E, A,
 and D). Once the ship has returned to rest with respect to these three
-points, there is no Lorentz contraction.
+points, there is no Lorentz contraction either.
+
+Exact formulas, etc, follow.
 
 Since the relativistic effects at $0.6 c$ are fairly mild (which may
 be why you chose it), I will solve the problem in general for the
@@ -294,6 +306,33 @@ $\text{totalDistA2D}(a,s,d)=d$
 
 Let's summarize some of these results in general and in our example cases:
 
+$
+   \begin{array}{llll}
+    \text{a} & \text{any a} & \text{1g} & \text{1g} \\
+    \text{s} & \text{any s} & \text{0.6c} & \text{0.995c} \\
+    \text{d} & \text{any d} & \text{40 ly} & \text{40 ly} \\
+    \text{A2B time} & \frac{s}{\sqrt{a^2-a^2 s^2}} & \text{0.727 years} &
+      \text{9.658 years} \\
+   \text{A2B distance} & \frac{\frac{1}{\sqrt{1-s^2}}-1}{a} & \text{0.242 ly} &
+      \text{8.74 ly} \\
+    \text{B2C time} & \frac{a d-\frac{2}{\sqrt{1-s^2}}+2}{a s} & \text{65.859
+      years} & \text{22.640 years} \\
+    \text{B2C distance} & \frac{a d-\frac{2}{\sqrt{1-s^2}}+2}{a} & \text{39.515
+      ly} & \text{22.527 ly} \\
+    \text{C2D time} & \frac{s}{\sqrt{a^2-a^2 s^2}} & \text{0.727 years} &
+      \text{9.658 years} \\
+   \text{C2D distance} & \frac{\frac{1}{\sqrt{1-s^2}}-1}{a} & \text{0.242 ly} &
+      \text{8.74 ly} \\
+    \text{A2D time} & \frac{a d-2 \sqrt{1-s^2}+2}{a s} & \text{67.313 years} &
+      \text{41.955 years} \\
+    \text{A2D distance} & d & \text{40 ly} & \text{40 ly} \\
+   \end{array}
+$
+
+Note that the caveat $s<\frac{\sqrt{a^2 d^2-4}}{a d}$ still applies
+
+TODO: make sure TeX formats ok, it's a bit wonky [or use mathematica images]
+
 print = {
  {"a", "s", "d", "A2B time", "A2B distance", "B2C time", "B2C distance",
   "C2D time", "C2D distance", "A2D time", "A2D distance"},
@@ -321,8 +360,12 @@ print = {
 }
 
 Grid[Transpose[print], Alignment -> Left, Spacings -> {2, 1}, Frame -> All, 
- ItemStyle -> "Text"]
-showit
+ ItemStyle -> "Text"] // TeXForm
+
+
+
+
+
 
 Let's plot the ship's speed (for both sample coasting speeds) with
 respect to time for reference frame A:
