@@ -7,6 +7,53 @@ time issues).
 
 TODO: all todos from bc-solve-astronomy-13817.m still apply
 
+this is correct:
+
+reladist[a_,s0_,v0_,t_] = 
+s0 + t*v0 + ((-1 + Sqrt[1 + a^2*t^2])*Sqrt[1 - v0^2])/a
+
+newtdist[a_,s0_,v0_,t_] = s0 + v0*t + a*t^2/2
+
+
+
+start at s0, v0, constant acceleration (which includes 0 and negative)
+
+(a*t)/Sqrt[1 + a^2*t^2]
+
+dist[t_] = FullSimplify[Sqrt[1 + a^2*t^2]/a-1/a,conds]
+
+dist[t_] =  (-1 + Sqrt[1 + a^2*t^2])/a
+
+from me to observer:
+
+s0 + v0*t
+
+lorentz:
+
+s0 + v0*t + Sqrt[1-v0^2]*dist[t]
+
+dist[t_] = FullSimplify[s0 + v0*t + Sqrt[1-v0^2]*dist[t],
+ {Element[{s0,v0,a,t}, Reals]}]
+
+(* special case for 0 acceleration, sigh *)
+
+reladist[0,s0_,v0_,t_] = s0 + v0*t
+
+reladist[a_,s0_,v0_,t_] = 
+(s0 + t*v0)*(2 - v0^2 + Sqrt[1 - v0^2]) + 
+ (1 - v0^2)^(3/2)*InputForm[(-1 + Sqrt[1 + a^2*t^2])/a]
+
+Plot[{newtdist[g,5,1,t],reladist[g,5,1,t]}, {t,0,10}]
+
+
+
+above is if starting velo is 0, so consider observer at v0 at 0
+
+(v0+speedA2B[a,s,d,t])/(1+v0*speedA2B[a,s,d,t])
+
+speed[a_,s0_,v0_,t] = 
+
+
 only really need velocity here, rest by integration etc
 
 have to calc this "out of band" to use it
