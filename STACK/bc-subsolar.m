@@ -33,6 +33,7 @@ exactly noon UTC (which introduces an error of up to 12 hours).
 
 TODO: ask someone to improve
 
+TODO: equation of time and no need for RA since we measure time by the sun
 
 
 

@@ -1,5 +1,10 @@
 (*
 
+Experimenting w/ answer to my question below:
+
+
+
+
 Subject: Error in deriving relativity velocity addition formula
 
 $D$ is traveling at .995c with respect to $C$ who is traveling at
