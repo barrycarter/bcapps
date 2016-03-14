@@ -1,5 +1,10 @@
 (*
 
+now, with matrices (order: time distance)
+
+gamma[v_] = (1-v^2)^(-1/2)
+m[v_] = {{gamma[v], -gamma[v]*v}, {-gamma[v]*v, gamma[v]}}
+
 Experimenting w/ answer to my question below:
 
 B: distance between 2 points is 60m
@@ -12,11 +17,6 @@ is 10m for me.
 Since the factor between B and D is 6, we conclude D's velocity is 0.986c.
 
 Relativistic addition, however, gives: 0.996 however (gamma = 10.8)
-
-now, with matrices (order: time distance)
-
-gamma[v_] = (1-v^2)^(-1/2)
-m[v_] = {{gamma[v], -gamma[v]*v}, {-gamma[v]*v, gamma[v]}}
 
 m[.995].{100,.995}
 
@@ -35,6 +35,15 @@ m[.99].{10,0}
 
 m[.99].{10,10}
 
+c(len) = 
+
+m[-.995].{10,0}
+
+m[-.995].{10,9.95}
+
+m[-.995].{t,9.95}
+
+m[-.995].{0,9.95}
 
 
 
