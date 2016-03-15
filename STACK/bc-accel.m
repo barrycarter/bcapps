@@ -44,8 +44,11 @@ m[v+a*dt].{dt,a*dt^2/2}
 
 m[v].{t,0}
 
+m[-v].{t,s0+v*t}
 
+from the v frame, object accelerates over dt to go a*dt^2/2
 
+m[v].{dt, a*dt^2/2}
 
 
 
