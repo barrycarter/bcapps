@@ -157,10 +157,17 @@ for $week (-1..$globopts{weeks}-1) {
     push(@events, @{$events{$zerodate}});
     debug("EVENTS($stardate):",@events);
 
+    # to deal with excludes, we need a separate counter
+    my($count)=-1;
+
     for $i (0..$#events) {
       if ($exclude{$stardate}{$events[$i]}) {next;}
 
-      my($eventy) = $y1+$eventystart+$eventspacing*$i;
+      $count++;
+
+      if ($count > 2) {warn "More than 3 events for $stardate!";}
+
+      my($eventy) = $y1+$eventystart+$eventspacing*$count;
       my($eventx) = $x1+5;
       # different color for "?" events
       if ($events[$i]=~s/^\?//) {

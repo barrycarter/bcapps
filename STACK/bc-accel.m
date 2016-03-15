@@ -3,7 +3,66 @@
 now, with matrices (order: time distance)
 
 gamma[v_] = (1-v^2)^(-1/2)
-m[v_] = {{gamma[v], -gamma[v]*v}, {-gamma[v]*v, gamma[v]}}
+m[v_] = FullSimplify[{{gamma[-v], -gamma[-v]*-v}, {-gamma[-v]*-v, gamma[-v]}}]
+
+m[v].{t,0}
+m[v].{0,d}
+
+simple case: object is moving at 'v' in my frame and ejects an object
+that moves at 'dv' after 'dt' (in the object's time frame)
+
+(this is wrong I'm using an unnecess ref frame)
+(m[v].{dt,a*dt} - m[v].{t,v*t})/dt
+
+m[v].{t,u*t}
+
+temp0924= FullSimplify[m[v].{dt, a*dt^2/2}]
+
+temp0925 = FullSimplify[temp0924[[2]]/temp0924[[1]]]-v
+
+temp0926 = FullSimplify[temp0925/temp0924[[1]]]
+
+temp0938 = (a*(1 - v^2)^(3/2))/2
+
+problem: this assumes accels come from orig frame?
+
+temp0947 = FullSimplify[temp0924[[2]]/temp0924[[1]]]
+
+temp0949 = FullSimplify[m[temp0947].{dt, a*dt^2/2}]
+
+temp0952 = FullSimplify[temp0949[[2]] - temp0924[[2]]]
+
+temp0953 = FullSimplify[temp0949[[1]] - temp0924[[1]]]
+
+temp0954 = FullSimplify[temp0952/temp0953]
+
+derv[t_] = (s[t+dt]-s[t])/dt
+
+(derv[t+dt]-derv[t])/dt
+
+m[v+a*dt].{dt,a*dt^2/2}
+
+m[v].{t,0}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Experimenting w/ answer to my question below:
 
