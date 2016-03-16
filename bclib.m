@@ -18,6 +18,7 @@ showit := Module[{file},
  file = "/tmp/math"<>ToString[RunThrough["date +%Y%m%d%H%M%S", ""]]<>".gif";
  Export[file ,%, ImageSize->{800,600}];
  Run["display "<>file<>"&"];
+ Return[file];
 ];
 
 (* another mathematica "fix" that breaks things *)
