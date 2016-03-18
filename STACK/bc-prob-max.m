@@ -1,3 +1,7 @@
+Get[Environment["HOME"]<>"/BCGIT/STACK/nmintab.txt"]
+
+Table[nmin[i] = nmintab[[i]], {i,1,Length[nmintab]}]
+
 maxdist[n_,x_] = 
 FullSimplify[
  n*CDF[NormalDistribution[0,1]][x]^(n-1)*PDF[NormalDistribution[0,1]][x],
@@ -22,14 +26,21 @@ median[n_] = Sqrt[2]*InverseErf[2^((n-1)/n)-1]
 
 mean[n_] := mean[n] = NIntegrate[x*maxdist[n,x], {x,-Infinity,Infinity}]
 
-mode[n_] := NSolve[D[maxdist[n,x],x] == 0, x]
+derv[n_,x_] = D[maxdist[n,x],x]
+
+(* TODO: this fails for even fairly low n, and NSolve won't work either *)
+
+mode[n_] := mode[n] = FindRoot[derv[n,x], {x,0,Infinity}]
 
 sd[n_] := sd[n] = 
  Sqrt[NIntegrate[(x-mean[n])^2*maxdist[n,x], {x,-Infinity,Infinity}]]
 
-(* expected rarity of successes in n trials *)
+(* expected rarity of successes in n trials; this is just median, so
+commenting out *)
 
-murare[n_] = 
+(*
+murare[n_] = -(Sqrt[2]*InverseErfc[2^(1 - n^(-1))])
+*)
 
 (* TODO: add (1/2)^(1/n) denormalized or whatever and Integrate[(x-median[5])^2*maxdist[5,x],{x,-Infinity,Infinity}] *)
 
@@ -58,12 +69,7 @@ $2^{-n} \left(\text{erf}\left(\frac{x}{\sqrt{2}}\right)+1\right)^n$
 
 Here's what the PDF looks like for various values of n:
 
-Plot[{
- maxdist[1,x],
- maxdist[2,x],
- maxdist[5,x],
- maxdist[25,x]
-}, {x,-4,4}, PlotLegends -> {"n=1", "n=2", "n=5", "n=25"}]
+[[image8.gif]
 
 Of course, n=1 is just the standard normal distribution itself.
 
@@ -71,37 +77,46 @@ Except for n=1, these aren't normal distributions, but can be
 approximated as such. For n=5, for example, 
 $\{\mu \to 1.11241,\sigma \to 0.656668\}$ and the graph looks like this:
 
-Plot[{
- maxdist[5,x],
- PDF[NormalDistribution[nmu[5], nsigma[5]]][x]
-},
- {x,-4,4}]
-showit
-
-where the blue line is actual distribution and the red line is the
-normal approximation (I tried to use Mathematica's PlotLegends to
-label the graph directly, but it was seriously ugly).
+[[image9.gif]]
 
 The integral of the difference squared from $-\infty$ to $\infty$ is
 about 0.000848615
 
 For n=25, $\{\mu \to 1.89997,\sigma \to 0.486849\}$:
 
-Plot[{
- maxdist[25,x],
- PDF[NormalDistribution[nmu[25],nsigma[25]]][x]
-},
- {x,-4,4}]
-showit
+[[image10.gif]]
 
 with an error squared of 0.00331485.
 
-TODO: mention numerical (nmu), mean, median, solution of ^n = .5
+In both cases, I used numerical methods to minimize integral of the
+difference squared (ie, the "error" squared).
 
-Of course, you used 5 and 25 as examples. I don't think there's a
-formula for the general value, but here's the tabulation for 1 to 25:
+Of course, you used 5 and 25 as examples. Below is a tabulation for
+the best fit parameters from 1 to 25, plus some larger values for
+comparison. I also include:
 
-t = Table[Chop[{i, nmu[[i]], nsigma[[i]], nmin[[i,1]]}], {i,1,25}]
+  - the true median of the distribution: 
+$\sqrt{2} \text{erf}^{-1}\left(2^{\frac{n-1}{n}}-1\right)$
+
+  - the mode of the distribution (I couldn't find a closed form,
+  though one may exist)
+
+  - the true mean of the distribution (from the linked post, I don't
+  think there is a closed form).
+
+  - the true standard deviation of the distribution
+
+Of course, if these were true normal distributions, the median, mode,
+mean, and "best fit $\mu$" would be identical, as would $\sigma$ and
+the true standard deviation.
+
+t = Table[Chop[N[{i, nmu[i], nsigma[i], nmin[i][[1]],
+ median[i], mode[i], mean[i]}, sd[i]]], {i,1,2}]
+
+t = Table[Chop[N[{i, nmu[i], nsigma[i], nmin[i][[1]]},
+ median[i], mode[i], mean[i], sd[i]]], {i,1,25}]
+
+
 
 Grid[{{"n", "\[Mu]", "\[Sigma]", err^2}}]
 showit
@@ -216,3 +231,47 @@ t =Table[countryA>countryB,{i,1,100000}]
 </code></pre>
 
 and got 95.79% (I ran it several times, 95.79% is the average).
+
+*)
+
+Plot[{
+ maxdist[1,x],
+ maxdist[2,x],
+ maxdist[5,x],
+ maxdist[25,x]
+}, {x,-4,4}, PlotLegends -> 
+ {"n=1", "n=2", "n=5", "n=25"}
+]
+
+Plot[{
+ maxdist[1,x],
+ maxdist[2,x],
+ maxdist[5,x],
+ maxdist[25,x]
+}, {x,-4,4}, PlotLegends -> 
+ Placed[{"n=1", "n=2", "n=5", "n=25"}, {0.1,0.5}]
+]
+
+Plot[{
+ maxdist[5,x],
+ PDF[NormalDistribution[nmu[5], nsigma[5]]][x]
+}, {x,-4,4}, PlotLegends -> 
+ Placed[{"Normal Approximation", "Actual Distribution"}, {0.21,0.5}]
+]
+showit
+
+Plot[{
+ maxdist[25,x],
+ PDF[NormalDistribution[nmu[25], nsigma[25]]][x]
+}, {x,-4,4}, PlotLegends -> 
+ Placed[{"Normal Approximation", "Actual Distribution"}, {0.21,0.5}]
+]
+showit
+
+Plot[{
+ maxdist[25,x],
+ PDF[NormalDistribution[nmu[25],nsigma[25]]][x]
+},
+ {x,-4,4}]
+showit
+
