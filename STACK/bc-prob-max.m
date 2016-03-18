@@ -1,5 +1,3 @@
-TODO: figure out why I need 'n' product below
-
 maxdist[n_,x_] = 
 FullSimplify[
  n*CDF[NormalDistribution[0,1]][x]^(n-1)*PDF[NormalDistribution[0,1]][x],
@@ -19,6 +17,21 @@ nmin[i_] := nmin[i] = NMinimize[N[diff[mu,sigma,i]],{mu,sigma}]
 nmu[i_] := nmin[i][[2,1,2]]
 
 nsigma[i_] := nmin[i][[2,2,2]]
+
+median[n_] = Sqrt[2]*InverseErf[2^((n-1)/n)-1]
+
+mean[n_] := mean[n] = NIntegrate[x*maxdist[n,x], {x,-Infinity,Infinity}]
+
+mode[n_] := NSolve[D[maxdist[n,x],x] == 0, x]
+
+sd[n_] := sd[n] = 
+ Sqrt[NIntegrate[(x-mean[n])^2*maxdist[n,x], {x,-Infinity,Infinity}]]
+
+(* expected rarity of successes in n trials *)
+
+murare[n_] = 
+
+(* TODO: add (1/2)^(1/n) denormalized or whatever and Integrate[(x-median[5])^2*maxdist[5,x],{x,-Infinity,Infinity}] *)
 
 (*
 
@@ -83,6 +96,84 @@ showit
 
 with an error squared of 0.00331485.
 
+TODO: mention numerical (nmu), mean, median, solution of ^n = .5
+
+Of course, you used 5 and 25 as examples. I don't think there's a
+formula for the general value, but here's the tabulation for 1 to 25:
+
+t = Table[Chop[{i, nmu[[i]], nsigma[[i]], nmin[[i,1]]}], {i,1,25}]
+
+Grid[{{"n", "\[Mu]", "\[Sigma]", err^2}}]
+showit
+
+Grid[Prepend[t, {"n", "\[Mu]", "\[Sigma]", err^2}]]
+
+subset = Table[{i, nmu[[i]]}, {i,15,100}]
+fit0[x_] = Fit[subset,{1,Log[x],x},x]
+fit = Table[{x,fit0[x]}, {x, 15, 100}]
+ListPlot[{subset,fit}]
+showit
+diff = Table[{i[[1]], i[[2]] - fit0[i[[1]]]}, {i, subset}]
+ListPlot[diff]
+
+subset = Table[{i, nmu[[i]]}, {i,15,100}]
+fit0[x_] = Fit[subset,{1,Log[x],Sqrt[x]},x]
+
+fit0[x_] = Fit[subset,{1,x,Sqrt[x],x^2},x]
+fit = Table[{x,fit0[x]}, {x, 15, 100}]
+ListPlot[{subset,fit}, PlotRange->All]
+showit
+diff = Table[{i[[1]], i[[2]] - fit0[i[[1]]]}, {i, subset}]
+ListPlot[diff, PlotRange->All]
+showit
+
+guess[x_] = a*x^b /. FindFit[nmu, a*x^b, {a,b}, x]
+
+guess[x_] = a*x^b+c /. FindFit[nmu, a*x^b+c, {a,b,c}, x]
+
+guess[x_] = a*Log[b*x+c] /. FindFit[nmu, a*Log[b*x+c], {a,b,c}, x]
+
+guess[x_] = d*x^2 + e*x + a*Log[b*x+c] /. FindFit[nmu, 
+ d*x^2 + e*x + a*Log[b*x+c], {a,b,c,d,e}, x]
+
+guess[x_] = a*Log[b*x+c] + d*Sqrt[e*x+f] /. FindFit[nmu, 
+ a*Log[b*x+c] + d*Sqrt[e*x+f], {a,b,c,d,e,f}, x]
+
+guess[x_] = a*x + b*x^2 + c*Log[d*x] /.
+ FindFit[nmu, a*x + b*x^2 + c*Log[d*x], {a,b,c,d}, x]
+
+subset = Table[{i, nmu[[i]]}, {i,20,100}]
+expr = a*x^b;
+guess[x_] = expr /.  FindFit[subset, expr, {a,b,c,d}, x]
+
+guesstab = Table[guess[i],{i,1,100}]
+
+
+fit = Table[Evaluate[Fit[nmu,Log[x],x]], {x, 1, 100}]
+
+fit = Table[Evaluate[Fit[nmu,{1,Log[x]},x]], {x, 1, 100}]
+ListPlot[{fit,nmu}]
+showit
+
+fit = Table[Evaluate[Fit[nmu,{1,Sqrt[x],Log[x],x},x]], {x, 1, 100}]
+ListPlot[{fit,nmu}]
+showit
+
+
+
+fit = Table[Evaluate[Fit[nmu,{1,Log[x]},x]], {x, 1, 100}]
+ListPlot[{fit,nmu}]
+showit
+
+tab = Table[x^n,{n,0,5}]
+fit = Table[Evaluate[Fit[nmu,tab,x]], {x, 1, 100}]
+ListPlot[{fit,nmu}]
+showit
+
+
+
+TODO: mention this file
+
 TODO: generalish formula
 
 If we use these approximations, your distributions are:
@@ -95,128 +186,33 @@ If we use these approximations, your distributions are:
 
 So the chance A will be taller is about 95.15%
 
-Of course, that's just an approximation, but it can help us check our
-more rigorous analysis below.
+Of course, that's just an approximation, so let's do a more rigorous
+analysis below.
 
 The CDF for the tallest of 25 from Country B:
 
 $
-   \frac{25 e^{-\frac{1}{18} (x-66)^2} \left(\text{erf}\left(\frac{x-66}{3
-    \sqrt{2}}\right)+1\right)^{24}}{50331648 \sqrt{2 \pi }}
+   \frac{\left(\text{erf}\left(\frac{x-66}{3
+    \sqrt{2}}\right)+1\right)^{25}}{33554432}
 $
 
 and the PDF for the tallest of 5 from Country A:
 
 $
    \frac{5 e^{-\frac{1}{72} (x-72)^2} \left(\text{erf}\left(\frac{x-72}{6
-    \sqrt{2}}\right)+1\right)^4}{16 \sqrt{2 \pi }}
+    \sqrt{2}}\right)+1\right)^4}{96 \sqrt{2 \pi }}
 $
 
-If we numerically integrate the product from $-\infty$ to $\infty$ we
-get 0.140074 (using "MinRecursion -> 25, MaxRecursion -> 50" for
-Mathematica's NIntegrate), so the probability we want is 85.99%, not
-as good of an approximation as I'd hoped.
+If we use Mathematica to numerically integrate the product from
+$-\infty$ to $\infty$ we get 95.77%, which is pretty close to our
+earlier estimate.
 
-Plot[{maxdist[5,x], PDF[NormalDistribution[1.11241, 0.656668]][x]},
- {x,-4,4}, PlotLegends -> LineLegend["Expressions"]]
+Just for fun, I ran a Monte Carlo simulation as well:
 
-TODO: Monte Carlo
-
-
-
-
-
-NMinimize[N[diff[mu,sigma,1]],{mu,sigma}]
-NMinimize[N[diff[mu,sigma,2]],{mu,sigma}]
-
-t = Table[NMinimize[N[diff[mu,sigma,i]],{mu,sigma}], {i,1,25}]
-
-
-
-
-Plot[{
- maxdist[25,x],
- PDF[NormalDistribution[1.89997,0.486849]][x]
-},
- {x,-4,4}]
-showit
-
- PDF[NormalDistribution[1.92133,0.5]][x]
-
-ContourPlot[diff[mu,sigma], {mu,1.8,2.0}, {sigma,0.4,0.6}, 
- ColorFunction -> "Rainbow"]
-
-NMinimize[N[diff[mu,sigma]], {mu,sigma}]
-
-
-
-
-Integrate[(maxdist[25,x]-NormalDistribution[mu,sigma][x])^2,
- {x,-Infinity,Infinity}]
-
-Integrate[(maxdist[2,x]-NormalDistribution[mu,sigma][x])^2,
- {x,-Infinity,Infinity}]
-
-
-(x-72)/6
-
-Plot[maxdist[1,(x-72)/6],{x,72-3*6,72+3*6}]
-
-Plot[maxdist[5,(x-72)/6],{x,72-3*6,72+3*6}]
-
-Plot[maxdist[25,(x-66)/3],{x,66-3*3,66+3*3}]
-
-Plot[{
- maxdist[1,(x-66)/3],
- maxdist[1,(x-72)/6],
- maxdist[25,(x-66)/3],
- maxdist[5,(x-72)/6]
-}, {x,57,90}]
-
-Integrate[5,x
-
-Plot[cumdist[25,(x-66)/3]*(1-cumdist[5,(x-72)/6]), {x,60,75}]
-
-Integrate[cumdist[25,(x-66)/3]*maxdist[5, (x-72)/6], {x,-Infinity,Infinity}]
-
-Integrate[cumdist[25,(x-66)/3]*(1-cumdist[5,(x-72)/6]), {x,-Infinity,Infinity}]
-
-cumdist[25,(x-66)/3]*(1-cumdist[5,(x-72)/6])==1/2
-
-
-Plot[maxdist[0,1,1,x],{x,-3,3}]
-
-Plot[maxdist[0,1,2,x],{x,-3,3}]
-
-means are 1/Sqrt[Pi], 3/(2*Sqrt[Pi]), 
-
-Plot[Log[PDF[NormalDistribution[0,1]][x]],{x,-3,3}]
-
-Plot[Log[maxdist[0,1,2,x]],{x,-3,3}]
-
-median[n_] = FullSimplify[x /. Solve[cumdist[n,x] == 1/2, x][[1]],
- {Element[n,Integers], n>0}]
-
-Plot[{
- maxdist[0,1,1,x],
- maxdist[0,1,2,x],
- maxdist[0,1,3,x],
- maxdist[0,1,5,x],
- maxdist[0,1,25,x]
-}, {x,-3,3}]
-
-Plot[{
- maxdist[72,6,5,x], maxdist[66,3,25,x]
-}, {x,60,78}]
-
-(* Monte *)
-
+<pre><code>
 countryA := Max[RandomVariate[NormalDistribution[72, 6], 5]]
 countryB := Max[RandomVariate[NormalDistribution[66, 3], 25]]
-t =Table[countryA>countryB,{i,1,10000}]
+t =Table[countryA>countryB,{i,1,100000}]
+</code></pre>
 
-9555/10000
-9563/10000
-95791 out of 100K
-
-
+and got 95.79% (I ran it several times, 95.79% is the average).
