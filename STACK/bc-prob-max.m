@@ -28,9 +28,11 @@ mean[n_] := mean[n] = NIntegrate[x*maxdist[n,x], {x,-Infinity,Infinity}]
 
 derv[n_,x_] = D[maxdist[n,x],x]
 
+mode[1] = 0;
+
 (* TODO: this fails for even fairly low n, and NSolve won't work either *)
 
-mode[n_] := mode[n] = FindRoot[derv[n,x], {x,0,Infinity}]
+mode[n_] := mode[n] = FindRoot[derv[n,x], {x,0,median[n]}][[1,2]]
 
 sd[n_] := sd[n] = 
  Sqrt[NIntegrate[(x-mean[n])^2*maxdist[n,x], {x,-Infinity,Infinity}]]
@@ -104,88 +106,30 @@ $\sqrt{2} \text{erf}^{-1}\left(2^{\frac{n-1}{n}}-1\right)$
   - the true mean of the distribution (from the linked post, I don't
   think there is a closed form).
 
-  - the true standard deviation of the distribution
+  - the true standard deviation of the distribution (no closed form I
+  could find)
 
 Of course, if these were true normal distributions, the median, mode,
 mean, and "best fit $\mu$" would be identical, as would $\sigma$ and
 the true standard deviation.
 
-t = Table[Chop[N[{i, nmu[i], nsigma[i], nmin[i][[1]],
- median[i], mode[i], mean[i]}, sd[i]]], {i,1,2}]
+t = Table[Chop[N[{i, nmu[i], nsigma[i], nmin[i][[1]], mean[i],
+ median[i], mode[i], sd[i]}]], {i,1,25}]
 
-t = Table[Chop[N[{i, nmu[i], nsigma[i], nmin[i][[1]]},
- median[i], mode[i], mean[i], sd[i]]], {i,1,25}]
-
-
-
-Grid[{{"n", "\[Mu]", "\[Sigma]", err^2}}]
+Grid[Prepend[t, {"n", Subscript["\[Mu]",fit], 
+                      Subscript["\[Sigma]",fit], err^2,
+                      Subscript["\[Mu]", true],
+ "Median", "Mode", Subscript["\[Sigma]", true]}],
+ Frame -> All, ItemStyle -> "Text"]
 showit
 
-Grid[Prepend[t, {"n", "\[Mu]", "\[Sigma]", err^2}]]
-
-subset = Table[{i, nmu[[i]]}, {i,15,100}]
-fit0[x_] = Fit[subset,{1,Log[x],x},x]
-fit = Table[{x,fit0[x]}, {x, 15, 100}]
-ListPlot[{subset,fit}]
-showit
-diff = Table[{i[[1]], i[[2]] - fit0[i[[1]]]}, {i, subset}]
-ListPlot[diff]
-
-subset = Table[{i, nmu[[i]]}, {i,15,100}]
-fit0[x_] = Fit[subset,{1,Log[x],Sqrt[x]},x]
-
-fit0[x_] = Fit[subset,{1,x,Sqrt[x],x^2},x]
-fit = Table[{x,fit0[x]}, {x, 15, 100}]
-ListPlot[{subset,fit}, PlotRange->All]
-showit
-diff = Table[{i[[1]], i[[2]] - fit0[i[[1]]]}, {i, subset}]
-ListPlot[diff, PlotRange->All]
-showit
-
-guess[x_] = a*x^b /. FindFit[nmu, a*x^b, {a,b}, x]
-
-guess[x_] = a*x^b+c /. FindFit[nmu, a*x^b+c, {a,b,c}, x]
-
-guess[x_] = a*Log[b*x+c] /. FindFit[nmu, a*Log[b*x+c], {a,b,c}, x]
-
-guess[x_] = d*x^2 + e*x + a*Log[b*x+c] /. FindFit[nmu, 
- d*x^2 + e*x + a*Log[b*x+c], {a,b,c,d,e}, x]
-
-guess[x_] = a*Log[b*x+c] + d*Sqrt[e*x+f] /. FindFit[nmu, 
- a*Log[b*x+c] + d*Sqrt[e*x+f], {a,b,c,d,e,f}, x]
-
-guess[x_] = a*x + b*x^2 + c*Log[d*x] /.
- FindFit[nmu, a*x + b*x^2 + c*Log[d*x], {a,b,c,d}, x]
-
-subset = Table[{i, nmu[[i]]}, {i,20,100}]
-expr = a*x^b;
-guess[x_] = expr /.  FindFit[subset, expr, {a,b,c,d}, x]
-
-guesstab = Table[guess[i],{i,1,100}]
-
-
-fit = Table[Evaluate[Fit[nmu,Log[x],x]], {x, 1, 100}]
-
-fit = Table[Evaluate[Fit[nmu,{1,Log[x]},x]], {x, 1, 100}]
-ListPlot[{fit,nmu}]
-showit
-
-fit = Table[Evaluate[Fit[nmu,{1,Sqrt[x],Log[x],x},x]], {x, 1, 100}]
-ListPlot[{fit,nmu}]
-showit
+t2 = Table[Chop[N[{i, nmu[i], nsigma[i], nmin[i][[1]], mean[i],
+ median[i], mode[i], sd[i]}]], {i,{50,100,500,1000,5000,10000}}]
 
 
 
-fit = Table[Evaluate[Fit[nmu,{1,Log[x]},x]], {x, 1, 100}]
-ListPlot[{fit,nmu}]
-showit
-
-tab = Table[x^n,{n,0,5}]
-fit = Table[Evaluate[Fit[nmu,tab,x]], {x, 1, 100}]
-ListPlot[{fit,nmu}]
-showit
-
-
+TODO: cleanup above, it's still too ugly, but also realize I might put
+it in TeX
 
 TODO: mention this file
 
@@ -274,4 +218,68 @@ Plot[{
 },
  {x,-4,4}]
 showit
+
+subset = Table[{i, nmu[[i]]}, {i,15,100}]
+fit0[x_] = Fit[subset,{1,Log[x],x},x]
+fit = Table[{x,fit0[x]}, {x, 15, 100}]
+ListPlot[{subset,fit}]
+showit
+diff = Table[{i[[1]], i[[2]] - fit0[i[[1]]]}, {i, subset}]
+ListPlot[diff]
+
+subset = Table[{i, nmu[[i]]}, {i,15,100}]
+fit0[x_] = Fit[subset,{1,Log[x],Sqrt[x]},x]
+
+fit0[x_] = Fit[subset,{1,x,Sqrt[x],x^2},x]
+fit = Table[{x,fit0[x]}, {x, 15, 100}]
+ListPlot[{subset,fit}, PlotRange->All]
+showit
+diff = Table[{i[[1]], i[[2]] - fit0[i[[1]]]}, {i, subset}]
+ListPlot[diff, PlotRange->All]
+showit
+
+guess[x_] = a*x^b /. FindFit[nmu, a*x^b, {a,b}, x]
+
+guess[x_] = a*x^b+c /. FindFit[nmu, a*x^b+c, {a,b,c}, x]
+
+guess[x_] = a*Log[b*x+c] /. FindFit[nmu, a*Log[b*x+c], {a,b,c}, x]
+
+guess[x_] = d*x^2 + e*x + a*Log[b*x+c] /. FindFit[nmu, 
+ d*x^2 + e*x + a*Log[b*x+c], {a,b,c,d,e}, x]
+
+guess[x_] = a*Log[b*x+c] + d*Sqrt[e*x+f] /. FindFit[nmu, 
+ a*Log[b*x+c] + d*Sqrt[e*x+f], {a,b,c,d,e,f}, x]
+
+guess[x_] = a*x + b*x^2 + c*Log[d*x] /.
+ FindFit[nmu, a*x + b*x^2 + c*Log[d*x], {a,b,c,d}, x]
+
+subset = Table[{i, nmu[[i]]}, {i,20,100}]
+expr = a*x^b;
+guess[x_] = expr /.  FindFit[subset, expr, {a,b,c,d}, x]
+
+guesstab = Table[guess[i],{i,1,100}]
+
+
+fit = Table[Evaluate[Fit[nmu,Log[x],x]], {x, 1, 100}]
+
+fit = Table[Evaluate[Fit[nmu,{1,Log[x]},x]], {x, 1, 100}]
+ListPlot[{fit,nmu}]
+showit
+
+fit = Table[Evaluate[Fit[nmu,{1,Sqrt[x],Log[x],x},x]], {x, 1, 100}]
+ListPlot[{fit,nmu}]
+showit
+
+
+
+fit = Table[Evaluate[Fit[nmu,{1,Log[x]},x]], {x, 1, 100}]
+ListPlot[{fit,nmu}]
+showit
+
+tab = Table[x^n,{n,0,5}]
+fit = Table[Evaluate[Fit[nmu,tab,x]], {x, 1, 100}]
+ListPlot[{fit,nmu}]
+showit
+
+
 
