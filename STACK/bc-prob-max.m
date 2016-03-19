@@ -113,6 +113,31 @@ Of course, if these were true normal distributions, the median, mode,
 mean, and "best fit $\mu$" would be identical, as would $\sigma$ and
 the true standard deviation.
 
+row[0] = {"n", Subscript["\[Mu]",fit], 
+                      Subscript["\[Sigma]",fit], err^2,
+                      Subscript["\[Mu]", true],
+ "Median", "Mode", Subscript["\[Sigma]", true]};
+
+row[1] = {"1", " 0.000", " 0.000", " 0.000000", " 0.000", " 0.000",
+" 0.000", " 1.000"}
+
+row[n_] := {i, 
+ PaddedForm[nmu[i],{4,3}], 
+ PaddedForm[nsigma[i],{4,3}], 
+ PaddedForm[nmin[i][[1]],{6,6}],
+ PaddedForm[mean[i],{4,3}],
+ PaddedForm[N[median[i]],{4,3}], 
+ PaddedForm[mode[i],{4,3}], 
+ PaddedForm[sd[i],{4,3}]
+};
+
+Table[row[i], {i,
+ Join[Range[0,25], {50,100,500,1000,5000,10000,100000}]}]
+
+Grid[Table[row[i],{i,0,25}]]
+showit
+ 
+
 t = Table[Chop[N[{i, nmu[i], nsigma[i], nmin[i][[1]], mean[i],
  median[i], mode[i], sd[i]}]], {i,1,25}]
 
@@ -280,6 +305,27 @@ tab = Table[x^n,{n,0,5}]
 fit = Table[Evaluate[Fit[nmu,tab,x]], {x, 1, 100}]
 ListPlot[{fit,nmu}]
 showit
+
+Plot[{PDF[ExtremeValueDistribution[1,1/2]][x], maxdist[5,x]}, {x,-3,3}]
+
+Plot[{PDF[ExtremeValueDistribution[1.1,1/1.5]][x], maxdist[5,x]}, {x,-3,3}]
+showit
+
+Plot[{PDF[GumbelDistribution[1.1,1/1.5]][x], maxdist[5,x]}, {x,-3,3}]
+showit
+
+gdiff[alpha_,beta_,n_] := gdiff[alpha,beta,n] = NIntegrate[
+ (maxdist[n,x]-PDF[GumbelDistribution[alpha,beta]][x])^2,
+{x, -Infinity, Infinity}]
+
+gnmin[i_] := gnmin[i] = NMinimize[N[gdiff[alpha,beta,i]],{alpha,beta}]
+
+ediff[alpha_,beta_,n_] := ediff[alpha,beta,n] = NIntegrate[
+ (maxdist[n,x]-PDF[ExtremeValueDistribution[alpha,beta]][x])^2,
+{x, -Infinity, Infinity}]
+
+enmin[i_] := enmin[i] = NMinimize[N[ediff[alpha,beta,i]],{alpha,beta}]
+
 
 
 
