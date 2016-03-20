@@ -2,7 +2,52 @@
 
 http://quant.stackexchange.com/questions/24970/estimate-probability-of-limit-order-execution-over-a-large-time-frame
 
+https://mathematica.stackexchange.com/questions/110565/closed-form-probability-random-walk-will-hit-k-1-times-in-n-steps
 
+Subject: Closed form probability random walk will hit k >=1 times in n steps
+
+I'm using Mathematica to try to solve
+http://quant.stackexchange.com/questions/24970 and came across what
+seems like a simple question: if you take a standard random walk of
+`n` steps, what is the formula for the probability you'll touch `+k`
+at least once. More generically, what's the probability distribution
+of a random walk of `n` steps.
+
+I can compute this chance using a recursive formula:
+
+<pre><code>
+c[n_,0] := 1
+c[0, k_] := 0
+c[n_,k_] := c[n,k] = 1/2*(c[n-1,k-1] + c[n-1,k+1])
+</code></pre>
+
+but Mathematica won't `RSolve` it:
+
+<pre><code>
+RSolve[{f[n,0] == 1, f[0,k] == 0, f[n,k] == 1/2*(f[n-1,k-1]+f[n-1,k+1])},
+ f[n,k], {n,k}]
+</code></pre>
+
+returns unevaluated. I'm not too surprised, since Mathematica isn't
+that good with two variable recursion.
+
+However, I'm convinced there's a "simple" formula here, or at least a
+good approximation for large `n`.
+
+I did try a few different things to no avail:
+
+  - Trying to find a formula for specific values of `n` or `k`.
+
+  - Using `Log` to see if this was an exponential distribution of some sort.
+
+  - Comparing it to the right half of the normal distribution.
+
+  - Trying to find a formula for the interpolation, since the function
+  itself is somewhat "juddery" (ie, f(x+1) = f(x) in many cases).
+
+I'm convinced I can use Pascal's triangle (ie, the binomial theorem
+and Mathematica's `Binomial` function) to resolve this, but can't
+quite figure out how.
 
 *)
 
@@ -23,6 +68,8 @@ c[0, k_] := 0
 c[n_,k_] := c[n,k] = 1/2*(c[n-1,k-1] + c[n-1,k+1])
 
 t = Table[c[n,k],{n,0,20},{k,0,20}]
+
+
 
 RSolve[
   {c[n,0] == 1, c[0,k] == 0, c[n,k] == 1/2*(c[n-1,k-1]+c[n-1,k+1])},

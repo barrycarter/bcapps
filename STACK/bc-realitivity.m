@@ -49,6 +49,11 @@ So, from S's perspective, Earth receives 2160 signals in 2160-1728 or
 Now, suppose I'm still in S's frame, but look at what Earth's clock
 (which runs slower than my own) reads when my signal hits Earth.
 
+relativityMatrix[.8].{0,t}
+
+
+
+
 If my clock reads $0.2 n+1728$ days when my nth signal hits Earth,
 Earth's clock must read $0.6 (0.2 n+1728)$ when the nth signal
 hits. Simplifying, this is $0.12 n+1036.8$.

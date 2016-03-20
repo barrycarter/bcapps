@@ -412,4 +412,3 @@ sph2xyz[th_,ph_,r_] = r*{Cos[th]*Cos[ph], Sin[th]*Cos[ph], Sin[ph]};
 xyz2sph[l_] := Apply[xyz2sph,l]
 sph2xyz[l_] := Apply[sph2xyz,l]
 
-
