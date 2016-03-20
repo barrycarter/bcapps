@@ -37,6 +37,28 @@ mode[n_] := mode[n] = FindRoot[derv[n,x], {x,0,median[n]}][[1,2]]
 sd[n_] := sd[n] = 
  Sqrt[NIntegrate[(x-mean[n])^2*maxdist[n,x], {x,-Infinity,Infinity}]]
 
+(* 
+
+the estimate of the standard deviation by comparing this CDF to the
+standard normal's CDF for a given number of sds (this uses the median
+we define above, which may be bad)
+
+Solve[cumdist[n,median[n]+x] == CDF[NormalDistribution[0,1]][y], x][[1,1,2]]/y
+Solve[cumdist[n,median[n]-x] == CDF[NormalDistribution[0,1]][-y], x][[1,1,2]]/y
+
+the limit of this as y -> 0 has a closed form and is actually a pretty
+good estimate
+
+FullSimplify[Assuming[{Element[k,Integers],k>0}, Limit[sdEstimate[k,y]
+, y -> 0]], Element[k,Integers]]
+*)
+
+sdEstimateTwoParam[n_,y_] = 
+(Sqrt[2]*(-InverseErf[-1 + 2^((-1 + n)/n)] + 
+   InverseErf[-1 + (2^(-1 + n)*(1 + Erf[y/Sqrt[2]]))^n^(-1)]))/y
+
+sdEstimate[k_] = (2^((-1 + k)/k)*E^InverseErf[-1 + 2^((-1 + k)/k)]^2)/k
+
 (* expected rarity of successes in n trials; this is just median, so
 commenting out *)
 
@@ -58,6 +80,8 @@ http://math.stackexchange.com/questions/473229 notes, there isn't. You
 can't even find a closed form for the expected value (though you can
 for the median).
 
+TODO: derivations or just point to this file?
+
 The PDF for the max of n standard normal variables is:
 
 $
@@ -71,7 +95,7 @@ $2^{-n} \left(\text{erf}\left(\frac{x}{\sqrt{2}}\right)+1\right)^n$
 
 Here's what the PDF looks like for various values of n:
 
-[[image8.gif]
+[[image8.gif]]
 
 Of course, n=1 is just the standard normal distribution itself.
 
@@ -106,30 +130,55 @@ $\sqrt{2} \text{erf}^{-1}\left(2^{\frac{n-1}{n}}-1\right)$
   - the true mean of the distribution (from the linked post, I don't
   think there is a closed form).
 
+  - an estimate of the standard deviation obtained by comparing the
+  distribution to the normal distribution in the limiting case around
+  the median; the only advantage this estimate has is that it can be
+  expressed in closed form:
+
+$   
+   \frac{2^{\frac{n-1}{n}}
+    e^{\text{erf}^{-1}\left(2^{\frac{n-1}{n}}-1\right)^2}}{n}
+$
+
   - the true standard deviation of the distribution (no closed form I
   could find)
 
 Of course, if these were true normal distributions, the median, mode,
-mean, and "best fit $\mu$" would be identical, as would $\sigma$ and
-the true standard deviation.
+mean, and "best fit $\mu$" would be identical, as would the "best fit
+$\sigma$" and the true standard deviation.
 
-row[0] = {"n", Subscript["\[Mu]",fit], 
-                      Subscript["\[Sigma]",fit], err^2,
-                      Subscript["\[Mu]", true],
- "Median", "Mode", Subscript["\[Sigma]", true]};
+row[0] = {
+ "n",
+ Subscript["\[Mu]",fit],
+ Subscript["\[Sigma]",fit], 
+ err^2,
+ "",
+ Subscript["\[Mu]", true],
+ "Median",
+ "Mode",
+ "",
+ Subscript["\[Sigma]", true]
+ Subscript["\[Sigma]", est]
+};
 
 row[1] = {"1", " 0.000", " 0.000", " 0.000000", " 0.000", " 0.000",
 " 0.000", " 1.000"}
 
-row[n_] := {i, 
+row[i_] := {i, 
  PaddedForm[nmu[i],{4,3}], 
  PaddedForm[nsigma[i],{4,3}], 
  PaddedForm[nmin[i][[1]],{6,6}],
+ "",
  PaddedForm[mean[i],{4,3}],
  PaddedForm[N[median[i]],{4,3}], 
  PaddedForm[mode[i],{4,3}], 
- PaddedForm[sd[i],{4,3}]
+ "",
+ PaddedForm[sd[i],{4,3}],
+ PaddedForm[N[sdEstimate[i]],{4,3}]
 };
+
+Grid[Table[row[i], {i,0,25}]]
+showit
 
 Table[row[i], {i,
  Join[Range[0,25], {50,100,500,1000,5000,10000,100000}]}]
