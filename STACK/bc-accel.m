@@ -50,8 +50,15 @@ from the v frame, object accelerates over dt to go a*dt^2/2
 
 m[v].{dt, a*dt^2/2}
 
+m[v].{v*t,t}
 
+m[v].{v*(t+1),t}
 
+m[0.5].{2,4}
+
+m[0.5].{1,2}
+
+m[0.5].{1,t}
 
 
 
