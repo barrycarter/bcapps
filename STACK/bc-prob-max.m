@@ -119,7 +119,92 @@ difference squared (ie, the "error" squared).
 
 Of course, you used 5 and 25 as examples. Below is a tabulation for
 the best fit parameters from 1 to 25, plus some larger values for
-comparison. I also include:
+comparison (n=1 is the standard normal distribution):
+
+$
+   \begin{array}{ccccc}
+   \text{n} & \mu _{\text{fit}} & \sigma _{\text{fit}} & \text{err}^2 & \text{}
+      \\
+    1 & 0 & 1 & 0 & \text{} \\
+    2 & \text{ 0.536} & \text{ 0.820} & \text{ 0.000145} & \text{} \\
+    3 & \text{ 0.806} & \text{ 0.740} & \text{ 0.000382} & \text{} \\
+    4 & \text{ 0.983} & \text{ 0.691} & \text{ 0.000622} & \text{} \\
+    5 & \text{ 1.112} & \text{ 0.657} & \text{ 0.000849} & \text{} \\
+    6 & \text{ 1.214} & \text{ 0.631} & \text{ 0.001058} & \text{} \\
+    7 & \text{ 1.297} & \text{ 0.611} & \text{ 0.001252} & \text{} \\
+    8 & \text{ 1.366} & \text{ 0.595} & \text{ 0.001432} & \text{} \\
+    9 & \text{ 1.427} & \text{ 0.582} & \text{ 0.001599} & \text{} \\
+    10 & \text{ 1.479} & \text{ 0.570} & \text{ 0.001755} & \text{} \\
+    11 & \text{ 1.526} & \text{ 0.560} & \text{ 0.001901} & \text{} \\
+    12 & \text{ 1.568} & \text{ 0.551} & \text{ 0.002038} & \text{} \\
+    13 & \text{ 1.606} & \text{ 0.543} & \text{ 0.002167} & \text{} \\
+    14 & \text{ 1.641} & \text{ 0.536} & \text{ 0.002289} & \text{} \\
+    15 & \text{ 1.673} & \text{ 0.529} & \text{ 0.002405} & \text{} \\
+    16 & \text{ 1.703} & \text{ 0.524} & \text{ 0.002515} & \text{} \\
+    17 & \text{ 1.730} & \text{ 0.518} & \text{ 0.002619} & \text{} \\
+    18 & \text{ 1.756} & \text{ 0.513} & \text{ 0.002719} & \text{} \\
+    19 & \text{ 1.780} & \text{ 0.509} & \text{ 0.002815} & \text{} \\
+    20 & \text{ 1.803} & \text{ 0.504} & \text{ 0.002907} & \text{} \\
+    21 & \text{ 1.825} & \text{ 0.500} & \text{ 0.002995} & \text{} \\
+    22 & \text{ 1.845} & \text{ 0.497} & \text{ 0.003079} & \text{} \\
+    23 & \text{ 1.864} & \text{ 0.493} & \text{ 0.003161} & \text{} \\
+    24 & \text{ 1.882} & \text{ 0.490} & \text{ 0.003239} & \text{} \\
+    25 & \text{ 1.900} & \text{ 0.487} & \text{ 0.003315} & \text{} \\
+    50 & \text{ 2.182} & \text{ 0.440} & \text{ 0.004654} & \text{} \\
+    100 & \text{ 2.440} & \text{ 0.403} & \text{ 0.006047} & \text{} \\
+    500 & \text{ 2.971} & \text{ 0.342} & \text{ 0.009231} & \text{} \\
+    1000 & \text{ 3.176} & \text{ 0.323} & \text{ 0.010527} & \text{} \\
+    5000 & \text{ 3.616} & \text{ 0.287} & \text{ 0.013320} & \text{} \\
+    10000 & \text{ 3.791} & \text{ 0.275} & \text{ 0.014434} & \text{} \\
+    100000 & \text{ 4.328} & \text{ 0.244} & \text{ 0.017810} & \text{} \\
+   \end{array}
+$
+
+I couldn't get Mathematica to compute best fit mean and sd for values
+much higher than n=100000, but I didn't try that hard.
+
+I couldn't find a closed form for the best fit mean, or even the true
+mean, but there is one for the median:
+
+$\sqrt{2} \text{erf}^{-1}\left(2^{\frac{n-1}{n}}-1\right)$
+
+Since we know the PDF, you'd think we could find a closed form for the
+mode, by setting the PDF's derivative to 0, which would be:
+
+FullSimplify[D[maxdist[n,x],x],{Element[n,Integers], n>0, x>0}]
+
+
+FullSimplify[D[maxdist[n,x],x],{Element[n,Integers]n>0, x>0}] /.
+ Erfc[y_] -> 1 - Erf[y]
+
+temp[x_]=Simplify[Exp[x^2]*2^n*Pi*D[maxdist[n,x]/n*(1+Erf[x/Sqrt[2]])^(2-n),x]]
+
+
+row[0] = {
+ "n",
+ Subscript["\[Mu]",fit],
+ Subscript["\[Sigma]",fit], 
+ err^2,
+};
+
+row[1] = {1,0,1,0}
+
+row[i_] := {i, 
+ PaddedForm[nmu[i],{4,3}], 
+ PaddedForm[nsigma[i],{4,3}], 
+ PaddedForm[nmin[i][[1]],{6,6}]
+};
+
+Grid[Table[row[i],{i,Join[Range[0,25], 
+ {50,100,500,1000,5000,10000,100000}]}]]
+showit
+
+
+
+
+
+
+I also include:
 
   - the true median of the distribution: 
 $\sqrt{2} \text{erf}^{-1}\left(2^{\frac{n-1}{n}}-1\right)$
@@ -375,6 +460,59 @@ ediff[alpha_,beta_,n_] := ediff[alpha,beta,n] = NIntegrate[
 
 enmin[i_] := enmin[i] = NMinimize[N[ediff[alpha,beta,i]],{alpha,beta}]
 
+(*
 
+Subject: Dependency of parameter to find maximum vanishes after simplification
+
+I'm using Mathematica to try to solve:
+http://math.stackexchange.com/questions/1700486
+
+The probability distribution function (PDF) of the maximum of n
+standard normally distributed variables is:
+
+<pre><code>
+(2^(1/2 - n)*n*(1 + Erf[x/Sqrt[2]])^(-1 + n))/(E^(x^2/2)*Sqrt[Pi])
+</code></pre>
+
+To find the mode, I take the derivative and set equal to 0. The
+"raw" derivative is:
+
+<pre><code>
+(2^(1 - n)*(-1 + n)*n*(1 + Erf[x/Sqrt[2]])^(-2 + n))/(E^x^2*Pi) - 
+ (2^(1/2 - n)*n*x*(1 + Erf[x/Sqrt[2]])^(-1 + n))/(E^(x^2/2)*Sqrt[Pi])
+</code></pre>
+
+and `Simplify` will reduce it to:
+
+<pre><code>
+-((n*(1 + Erf[x/Sqrt[2]])^(-2 + n)*(2 - 2*n + E^(x^2/2)*Sqrt[2*Pi]*x + 
+    E^(x^2/2)*Sqrt[2*Pi]*x*Erf[x/Sqrt[2]]))/(2^n*E^x^2*Pi))
+</code></pre>
+
+Since I only need to see when this value is 0, I can multiply it by
+anything that's not 0 (or undefined), in particular:
+
+`Exp[x^2]*2^n*Pi/n*(1+Erf[x/Sqrt[2]])^(2-n)`
+
+Multiplying the simplifed derivative by that quantity yields:
+
+<pre><code>
+2^n*E^x^2*Pi*(2^(1 - n)/(E^x^2*Pi) - (2^(1/2 - n)*x*(1 + Erf[x/Sqrt[2]]))/
+   (E^(x^2/2)*Sqrt[Pi]))
+</code></pre>
+
+Simplifying again, we have:
+
+`2 - E^(x^2/2)*Sqrt[2*Pi]*x - E^(x^2/2)*Sqrt[2*Pi]*x*Erf[x/Sqrt[2]]`
+
+The problem? This value no longer depends on n.
+
+However, graphing the PDF for various values of n shows that the mode changes:
+
+[[image8]]
+
+Where have I gone wrong?
+
+*)
 
 
