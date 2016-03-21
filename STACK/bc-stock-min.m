@@ -205,14 +205,6 @@ Solve[(test1357[n-1,k-1]+test1357[n-1,k+1])/2 == test1357[n,k], {c1,c2},
 
 Minimize[(test1357[n-1,k-1]+test1357[n-1,k+1])/2 - test1357[n,k], {c1,c2}]
 
-
-
-
-
-
-
-
-
 fit[n_] := fit[n] = Function[x,Fit[Table[-Log[c[n,i]],{i,0,n}] ,{1,x^2},x]]
 
 tab[n_] := ListPlot[{
@@ -220,5 +212,20 @@ tab[n_] := ListPlot[{
  Table[fit[n][i], {i,0,n}]
 }]
 
+d[n_, k_] := If[OddQ[n - k],
+ With[{d = Floor[(n + k)/2]},
+  2^(1 - n) Binomial[n, d + 1] Hypergeometric2F1[1, 1 + d - n, 2 + d, -1]],
+ With[{d = Floor[(n + k + 1)/2]},
+  2^(-n) Binomial[n + 1, d + 1] Hypergeometric2F1[1, d - n, 2 + d, -1]]]
 
+d2[n_,k_] = FullSimplify[d[n,k] /. Floor[x_] -> (x+1/2),
+ {Element[{n,k},Integers], n>k, k>0}]
+
+
+
+http://fiquant.mas.ecp.fr/wp-content/uploads/2015/10/Limit-Order-Book-modelling.pdf
+
+http://arxiv.org/pdf/1311.5661
+
+1591 for 1 to 98%
 
