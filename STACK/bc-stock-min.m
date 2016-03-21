@@ -152,7 +152,73 @@ chance you have walked more than 3 positive steps is
 
 1 - CDF[NormalDistribution[0,n/4]][k]
 
+test[n_,k_] = 
+1 - Product[CDF[RandomWalkProcess[1/2][i], k - 1], {i, 0, n}]
 
+FullSimplify[test[n,k], {Element[{n,k}, Integers], n>=k, k>=0}]
+
+test[n_,k_] = 
+1 - Product[CDF[RandomWalkProcess[1/2][i], k], {i, 0, n}]
+
+Table[CDF[RandomWalkProcess[1/2][25]][n],{n,1,25}]
+
+t = N[Table[-Log[c[100,i]],{i,0,100}]]
+
+f[x_] = Fit[t,{1,x^2},x]
+
+t2 = Table[f[x],{x,0,100}]
+
+ListPlot[{t,t2}, PlotRange -> All]
+
+c[n_,0] := 1
+c[0, k_] := 0
+c[n_,k_] := c[n,k] = 1/2*(c[n-1,k-1] + c[n-1,k+1])
+
+(* this module returns many things *)
+
+fitness[n_] := Module[{t,f,u},
+ t = Table[-Log[c[n,i]],{i,0,n}];
+ f[x_] = Fit[t,{1,x^2},x];
+ u = Table[f[x], {x,0,n}];
+ Return[{t,f[x],u}];
+]
+
+Table[fitness[n][[2]] /. x -> 0,{n,1,250}]
+
+Table[D[fitness[n][[2]],x,x],{n,1,1000}]
+
+Table[(fitness[n][[2]] /. x -> 0)/n,{n,1,1000}]
+
+test1705[n_,i_] = Exp[-(-0.013435*n + 0.00125151*i^2)]
+
+Exp[c1*n + c2*i^2]
+
+test1357[n_,k_] = Exp[c1*n + c2*k^2]
+
+test1357[n-1,k-1]
+test1357[n-1,k+1]
+
+FullSimplify[(test1357[n-1,k-1]+test1357[n-1,k+1])/2]
+
+Solve[(test1357[n-1,k-1]+test1357[n-1,k+1])/2 == test1357[n,k], {c1,c2}, 
+ Reals]
+
+Minimize[(test1357[n-1,k-1]+test1357[n-1,k+1])/2 - test1357[n,k], {c1,c2}]
+
+
+
+
+
+
+
+
+
+fit[n_] := fit[n] = Function[x,Fit[Table[-Log[c[n,i]],{i,0,n}] ,{1,x^2},x]]
+
+tab[n_] := ListPlot[{
+ Table[-Log[c[n,i]], {i,0,n}],
+ Table[fit[n][i], {i,0,n}]
+}]
 
 
 
