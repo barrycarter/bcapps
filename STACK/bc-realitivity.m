@@ -105,6 +105,8 @@ The last signal arrives (in S's frame) on day 2160, just as S passes Earth.
 So, from S's perspective, Earth receives 2160 signals in 2160-1728 or
 432 days, for a total of 5 signals/day.
 
+1.6 years Earth time when first signal gotten?
+
 Now, let's see how the Earth's nth-day outbound signal looks:
 
   - The signal is sent on day n Earth time.
@@ -179,3 +181,61 @@ the line from A to B to be the direction of the positive x axis):
   - Ship A: point C is at x=10000 and point B is at x=20000
 
 
+(*
+
+Subject: Rapid (ac/de)celeration in relativity does what to inertial clocks?
+
+Summary: if I accelerate to $0.8 c$ in 1 second, how much time passes
+for observers in my starting inertial reference frame?
+
+This seems like a simple question that has probably been answered, but
+I couldn't find a simple answer for what appears to be a simple question:
+
+I start 8 light years from Earth, at rest with respect to Earth, and
+observe Earth's time is t=0. Of course, technically, it will take me
+8 years to know this (speed of light travel time), but I believe
+special relativity is OK with my saying "it's currently t=0 on Earth",
+since I'm in the same frame as Earth.
+
+Keeping an eye on Earth's clock, I accelerate to $0.8 c$ in 1
+second. Because I'm accelerating, I know Earth's clock will go faster
+than mine. The question is: how much faster, and where will they end
+up after I've finished my one second of acceleration to $0.8 c$?
+
+At $0.8 c$ the distance to Earth is now 6 light years (minus the
+little bit I traveled during acceleration). Earth's clock now runs
+slower than mine by time dilation. So, when 6 of my years have passed,
+fewer than 6 years have passed on Earth's clock.
+
+As I get close to Earth, I "decelerate" to the Earth's reference frame
+so that I will be at rest when I actually arrive at Earth. Of course,
+deceleration is just acceleration in a different direction, so, once
+again, Earth's clocks run faster than mine.
+
+And, once again, the question is: in that 1 second of deceleration,
+how much time elapsed on Earth's clocks?
+
+What vexes me about this problem: 
+
+  - In the 6 years I was traveling at $0.8 c$, Earth's clocks ticked
+  off only 3.6 years by time dilation.
+
+  - By the time I arrive at Earth, Earth's clocks must have ticked off
+  10 years, since they say me traveling at 0.8c for (most of the) 8
+  light years.
+
+  - The only way I can reconcile these numbers (10 years minus 3.6
+  years, or 6.4 years) is that my 1 second of acceleration and
+  deceleration each took 3.2 Earth years (about 10^8 seconds).
+
+  - This seems high, and I can't get the numbers/formulas to yield
+  this, but...
+
+  - On the other hand, it seems somewhat reasonable that the amount of
+  time that passes depends only on my final velocity ($0.8 c$) and not
+  how fast I reached that velocity.
+
+Note that I don't think there's a simultaneity issue here, since I
+start and end in Earth's reference frame.
+
+*)

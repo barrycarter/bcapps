@@ -2,6 +2,71 @@
 
 http://quant.stackexchange.com/questions/24970/estimate-probability-of-limit-order-execution-over-a-large-time-frame
 
+It turns out this question has been studied extensively, and there are
+some papers on it:
+
+http://fiquant.mas.ecp.fr/wp-content/uploads/2015/10/Limit-Order-Book-modelling.pdf
+
+http://arxiv.org/pdf/1311.5661
+
+Both refer to this book about hypergeometric distributions (which I'll
+also mention below):
+
+http://www.springer.com/us/book/9780387975580
+
+I'm going to make several simplifying assumptions and treat the stock
+price as a random walk:
+
+  - I define a "tick" as when the stock trades at a different price
+  than previously.
+
+  - I'll assume the stock has an equal chance of ticking up or ticking
+  down (which means I'm ignoring the risk-free interest rate).
+
+  - I'm also assuming each tick is the same amount, eg 1/8th of a dollar.
+
+  - Technically speaking, it's the logarithm of the stock price that
+  ticks up or down with equal probability, but I'll ignore this for
+  simplicity.
+
+  - Note that I am explicitly ignoring cases where the stock trades at
+  the same price as previously.
+
+  - I am also ignoring cases where the stock "gaps" and the price
+  jumps suddenly instead of by ticks.
+
+  - Thus, number of ticks is related to volume, but not directly. For
+  example, a stock may trade millions of shares in a single day, but
+  if all those trades are at the same price, there are 0 "ticks" per
+  my definition of tick above.
+
+  - As noted in the works above, a stock is less likely to tick down
+  after it's already ticked down once (or many times). Why? Other
+  people place limit orders, and the further down the stock gets from
+  its starting price, the more limit orders will be triggered.
+  Generally, the *volume* of limit orders *also* increases as the
+  stock price goes down. In other words, the limit orders act as a
+  "buffer", slowing the rate at which a stock's price drops, meaning
+  the random walk model overestimates the chances of a large drop in
+  price.
+
+Having said all that, you're effectively asking: if I believe the
+stock will tick a total of $n$ times in a certain amount of time, what
+is the chance it will tick down $k$ at least once, and thus trigger my
+limit order.
+
+In random walk terms: if I take a standard random walk (start at
+origin, 50-50 chance of going left/right) of $n$ steps, what is the
+chance I'll hit step $k$ at least once?
+
+
+
+
+
+(*
+
+http://quant.stackexchange.com/questions/24970/estimate-probability-of-limit-order-execution-over-a-large-time-frame
+
 https://mathematica.stackexchange.com/questions/110565/closed-form-probability-random-walk-will-hit-k-1-times-in-n-steps
 
 Subject: Closed form probability random walk will hit k >=1 times in n steps
@@ -222,10 +287,6 @@ d2[n_,k_] = FullSimplify[d[n,k] /. Floor[x_] -> (x+1/2),
  {Element[{n,k},Integers], n>k, k>0}]
 
 
-
-http://fiquant.mas.ecp.fr/wp-content/uploads/2015/10/Limit-Order-Book-modelling.pdf
-
-http://arxiv.org/pdf/1311.5661
 
 1591 for 1 to 98%
 
