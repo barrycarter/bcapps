@@ -224,11 +224,50 @@ values of `n`.
 *)
 
 f[t_] = 1- (
- (1-CDF[NormalDistribution[0,1]][t])*
- (1-CDF[NormalDistribution[0,Sqrt[2]]][t])
+ (CDF[NormalDistribution[0,1]][t])*
+ (CDF[NormalDistribution[0,Sqrt[2]]][t])
 );
 
 Plot[f'[t], {t,-3,3}]
+
+f[t_] = 
+ (CDF[NormalDistribution[0,1]][t])*
+ (CDF[NormalDistribution[0,Sqrt[2]]][t])
+;
+
+g[t_] = 
+ (CDF[NormalDistribution[0,1]][t])*
+ (CDF[NormalDistribution[0,Sqrt[2]]][t])*
+ (CDF[NormalDistribution[0,Sqrt[3]]][t])*
+ (CDF[NormalDistribution[0,Sqrt[4]]][t])*
+ (CDF[NormalDistribution[0,Sqrt[5]]][t])
+;
+
+g[t_] = Product[CDF[NormalDistribution[0,Sqrt[n]]][t], {n,1,50}];
+
+h[n_,t_] = E^(-(t^2/(2*n)))*Sqrt[2/(n*Pi)]
+
+Integrate[t*h[n,t],{t,0,Infinity}]
+
+Integrate[t*h[n,t],{t,0,n}]
+
+Sqrt[2*Pi*n] is the mean
+-3 + 2*Pi is the variance, about 1.81196
+
+(* g[n_,t_] = h[n,t]/Integrate[h[n,t],{t,0,n}] *)
+
+g[n_,t_] = Sqrt[2/Pi]/(E^(t^2/(2*n))*Sqrt[n]*Erf[Sqrt[n]/Sqrt[2]])
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -406,4 +445,9 @@ d2[n_,k_] = FullSimplify[d[n,k] /. Floor[x_] -> (x+1/2),
 
 
 1591 for 1 to 98%
+
+u[n_] := u[n] = 
+ Table[Max[Accumulate[Table[RandomVariate[NormalDistribution[]],{i,n}]]],
+ {j,1,100000}];
+
 
