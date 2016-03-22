@@ -17,13 +17,16 @@ http://www.springer.com/us/book/9780387975580
 I'm going to make several simplifying assumptions and treat the stock
 price as a random walk:
 
-  - I define a "tick" as when the stock trades at a different price
-  than previously.
+  - I define a "click" as when the stock trades at a different price
+  than previously. I originally wanted to use the word "tick", but
+  that means a minimal change in price (eg, 1/8th of a dollar).
 
-  - I'll assume the stock has an equal chance of ticking up or ticking
-  down (which means I'm ignoring the risk-free interest rate).
+  - I'll assume the stock has an equal chance of clicking up or
+  clicking down (which means I'm ignoring the risk-free interest
+  rate).
 
-  - I'm also assuming each tick is the same amount, eg 1/8th of a dollar.
+  - I'm also assuming each click has a price change of 1 tick (eg,
+  1/8th of a dollar)
 
   - Technically speaking, it's the logarithm of the stock price that
   ticks up or down with equal probability, but I'll ignore this for
@@ -35,9 +38,9 @@ price as a random walk:
   - I am also ignoring cases where the stock "gaps" and the price
   jumps suddenly instead of by ticks.
 
-  - Thus, number of ticks is related to volume, but not directly. For
+  - Thus, number of clicks is related to volume, but not directly. For
   example, a stock may trade millions of shares in a single day, but
-  if all those trades are at the same price, there are 0 "ticks" per
+  if all those trades are at the same price, there are 0 "clicks" per
   my definition of tick above.
 
   - As noted in the works above, a stock is less likely to tick down
@@ -47,17 +50,99 @@ price as a random walk:
   Generally, the *volume* of limit orders *also* increases as the
   stock price goes down. In other words, the limit orders act as a
   "buffer", slowing the rate at which a stock's price drops, meaning
-  the random walk model overestimates the chances of a large drop in
-  price.
+  the random walk model I use below overestimates the chances of a
+  large drop in price.
+
+  - I also assume that once a stock reaches your limit price, your
+  order will be triggered. However, if there are several orders at
+  that price, the larger orders will trigger first, and the stock
+  price may rise again before your limit order is triggered at all.
 
 Having said all that, you're effectively asking: if I believe the
-stock will tick a total of $n$ times in a certain amount of time, what
-is the chance it will tick down $k$ at least once, and thus trigger my
-limit order.
+stock will click a total of $n$ times in a certain amount of time,
+what is the chance it will click down $k$ at least once, and thus
+trigger my limit order?
 
 In random walk terms: if I take a standard random walk (start at
 origin, 50-50 chance of going left/right) of $n$ steps, what is the
 chance I'll hit step $k$ at least once?
+
+It turns out this isn't an easy question to answer. I couldn't answer
+it myself, but the geniuses at mathematica.stackexchange.com did
+answer it for me:
+
+https://mathematica.stackexchange.com/questions/110565
+
+$
+   2 \binom{n+1}{\left\lfloor \frac{1}{2} (k+n+1)\right\rfloor +1} \,
+   _2F_1\left(n+2,\left\lfloor \frac{1}{2} (k+n+1)\right\rfloor +1;\left\lfloor
+    \frac{1}{2} (k+n+1)\right\rfloor +2;-1\right)
+$
+
+is the hideously ugly answer, which I'm sure isn't much use to you.
+
+Instead, I'll use this formula to make some computations.
+
+As it turns out 98% is a fairly high confidence level to require. If
+you set your limit order just 1 tick (eg, 1/8th of a dollar) below the
+current price, you will need 1591 clicks to be 98% sure that order
+will be filled.
+
+There's a 50% chance your order will be filled on the very next click,
+(if that click happens to be a tick down), so the number increases
+fairly rapidly with the level of certainty...
+
+
+TODO: mention this file
+
+chance of sum of normal hitting in two shots, let 'a' be the value to hit
+
+1-CDF[NormalDistribution[0,1]][a] of hitting first time
+
+Integrate[PDF[NormalDistribution[0,1]][x]*PDF[NormalDistribution[0,1]][a-x],
+ {x,-Infinity,a}]
+
+(4 + (1 + Erf[a/2])/(E^(a^2/4)*Sqrt[Pi]) - 2*(1 + Erf[a/Sqrt[2]]))/4
+
+when adding those two
+
+http://math.stackexchange.com/questions/68553/distribution-of-maximum-of-partial-sums-of-independent-random-variables
+
+CDF[NormalDistribution[0,1]][a]*
+ Integrate[PDF[NormalDistribution[0,1]][a-x], {x,a,Infinity}]
+
+monte carlo jff
+
+t = Table[Max[Accumulate[Table[RandomVariate[NormalDistribution[]],{i,2}]]],
+ {j,1,10000}];
+
+BinCounts[t,0.1]
+
+histogram functions useful
+
+t = Table[Max[Accumulate[Table[RandomVariate[NormalDistribution[]],{i,10}]]],
+ {j,1,10000}];
+
+t = Table[Max[Accumulate[Table[RandomVariate[NormalDistribution[]],{i,100}]]],
+ {j,1,10000}];
+
+t = Table[Max[Accumulate[Table[RandomVariate[NormalDistribution[]],{i,1000}]]],
+ {j,1,10000}];
+
+t = Table[Max[Accumulate[Table[RandomVariate[NormalDistribution[]],{i,1000}]]],
+ {j,1,100000}];
+
+t = Table[Max[Accumulate[Table[RandomVariate[NormalDistribution[]],{i,2}]]],
+ {j,1,100000}];
+
+
+
+
+
+
+
+
+
 
 
 
@@ -114,7 +199,39 @@ I'm convinced I can use Pascal's triangle (ie, the binomial theorem
 and Mathematica's `Binomial` function) to resolve this, but can't
 quite figure out how.
 
+==== CUT HERE ====
+
+Subject: Distribution of max of partial sums of normal distributions
+
+I was surprised not to find this question already answered: if I take
+the maximum of the partial sums of `n` normal distributions, what is
+the resulting distribution?
+
+I know that http://math.stackexchange.com/questions/68553 "solves"
+this in general, but I'm hoping for a simpler form for the normal
+distribution.
+
+<pre><code>
+t[n_] := t[n] = Histogram[
+ Table[Max[Accumulate[Table[RandomVariate[NormalDistribution[]],{i,n}]]],
+ {j,1,100000}]];
+</code></pre>
+
+The code above convinces me the resulting distribution isn't normal
+(except for n=1 of course), although it looks somewhat normal for low
+values of `n`.
+
 *)
+
+f[t_] = 1- (
+ (1-CDF[NormalDistribution[0,1]][t])*
+ (1-CDF[NormalDistribution[0,Sqrt[2]]][t])
+);
+
+Plot[f'[t], {t,-3,3}]
+
+
+
 
 n trades, and negatives outweigh positives by k or more
 

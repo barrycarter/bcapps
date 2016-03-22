@@ -202,7 +202,7 @@ second. Because I'm accelerating, I know Earth's clock will go faster
 than mine. The question is: how much faster, and where will they end
 up after I've finished my one second of acceleration to $0.8 c$?
 
-At $0.8 c$ the distance to Earth is now 6 light years (minus the
+At $0.8 c$ the distance to Earth is now 4.8 light years (minus the
 little bit I traveled during acceleration). Earth's clock now runs
 slower than mine by time dilation. So, when 6 of my years have passed,
 fewer than 6 years have passed on Earth's clock.
@@ -239,3 +239,53 @@ Note that I don't think there's a simultaneity issue here, since I
 start and end in Earth's reference frame.
 
 *)
+
+4.8 ly in 6 years my time = 3.6 years earth time
+
+general case of above:
+
+earth clock starts at 0, ends at 1 (as it must)
+
+ignoring acceleration, I travel distance gamma (eg 0.6) in time
+v/gamma (eg, 0.6/0.8); earth's clock runs slower so gamma^2/v has
+passed on earth
+
+thus: (t= total accel, not each)
+
+Solve[t + (Sqrt[1-v^2])^2/v == 1,t]
+
+1+v-1/v
+
+
+
+
+
+1/v = time passes on Earth for my journey
+
+Sqrt[1-v^2] = time I see passing on earth for most of my journey (dilation)
+
+Sqrt[1-v^2] = distance to earth for most of my journey
+
+Sqrt[1-v^2]/v = how long it takes me (my frame) to get to earth
+
+example for .99 c?
+
+takes me (1/7)/.99 years to get there, I watch earth clock tick off
+(1/49)/.99 years
+
+Earth clock must read 1 at end so..
+
+
+
+
+WRONG: below is total time that passed during my two accelerations
+
+WRONG: Solve[t + Sqrt[1-v^2] == 1/v,t]
+
+WRONG: t -> v^(-1) - Sqrt[1 - v^2]
+
+WRONG: t[v_] = v^(-1) - Sqrt[1 - v^2] 
+
+
+
+
