@@ -9,6 +9,91 @@ http://fiquant.mas.ecp.fr/wp-content/uploads/2015/10/Limit-Order-Book-modelling.
 
 http://arxiv.org/pdf/1311.5661
 
+I'll use a much simpler model (see disclaimers at end of message).
+
+If a stock has a volatility of 15%, that means there's a 68% chance
+it's price after 1 year will be between 87% and 115% of its current
+price. Note that the lower limit is 87% (= 1/1.15), not 85%.
+
+Overall, the price probability for a stock with volatility 15% forms
+this bell curve:
+
+xtics = Table[{i, 
+ If[i>0,"+",""]<>ToString[Round[100*(Exp[i]-1),1]]<>"% "},
+ {i,-.5,.5,.05}]
+
+Plot[
+ PDF[NormalDistribution[0,Log[1.15]]][x]/
+ PDF[NormalDistribution[0,Log[1.15]]][0], 
+ {x,-0.5,+0.5}, PlotRange->All,
+ TicksStyle -> Directive[Black,12],
+ Ticks -> {xtics, Automatic}
+]
+showit
+
+Note that:
+
+  - Because volatility is inherently based on logrithms, the tick
+  marks aren't evenly spaced, and aren't symmetric. The numbers +65%
+  and -39% are symmetric because it takes a 39% loss to offset a 65%
+  gain and vice versa. In other words: `(1+ (-39/100))*(1+ (65/100))`
+  is approximately one.
+
+  - The labels on the y axis are relative to each other and don't
+  refer to percentages.
+
+Of course, this isn't the probability curve you're looking for: I drew
+it just for reference.
+
+Instead, let's look at the probability distribution of the *minimum*
+value over the next year for our 15% volatility stock.
+
+xtics2 = Table[{i, 
+ ToString[Round[100*(Exp[-i]-1),1]]<>"% "},
+ {i,0,.5,.025}]
+
+Plot[PDF[HalfNormalDistribution[1/Log[1.15]]][x]/(2/Pi/Log[1.15]),
+ {x,0,0.5},
+ TicksStyle -> Directive[Black,12],
+ Ticks -> {xtics2, Automatic}
+]
+showit
+
+The same caveats apply to this graph as the previous one.
+
+Suppose you set your limit order at 5% below the current price (ie,
+95% of its current price). There is a ~77% chance your order will be
+filled:
+
+xtics2 = Table[{i, 
+ ToString[Round[100*(Exp[-i]-1),1]]<>"% "},
+ {i,0,.5,.025}]
+
+plot = Plot[PDF[HalfNormalDistribution[1/Log[1.15]]][x]/(2/Pi/Log[1.15]),
+ {x,0,0.5},
+ TicksStyle -> Directive[Black,12],
+ Ticks -> {xtics2, Automatic}, Filling -> Axis
+]
+
+line = Graphics[Line[{{0.05,0},{0.05,
+ PDF[HalfNormalDistribution[1/Log[1.15]]][0.05]/(2/Pi/Log[1.15])}}]];
+
+Show[{plot,line}]
+showit
+
+
+
+
+
+
+TODO: mention tick bias, volatility smile, this file
+
+TODO: TeX-ify?
+
+TODO: disclaim tick labels
+
+TODO: note these disclaimers but put them later
+
 Both refer to this book about hypergeometric distributions (which I'll
 also mention below):
 
@@ -136,18 +221,6 @@ t = Table[Max[Accumulate[Table[RandomVariate[NormalDistribution[]],{i,2}]]],
  {j,1,100000}];
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 (*
 
 http://quant.stackexchange.com/questions/24970/estimate-probability-of-limit-order-execution-over-a-large-time-frame
@@ -265,20 +338,6 @@ Sqrt[2*Pi*n] is the mean
 (* g[n_,t_] = h[n,t]/Integrate[h[n,t],{t,0,n}] *)
 
 g[n_,t_] = Sqrt[2/Pi]/(E^(t^2/(2*n))*Sqrt[n]*Erf[Sqrt[n]/Sqrt[2]])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 n trades, and negatives outweigh positives by k or more
 
@@ -484,6 +543,72 @@ ListPlot[test1132]
 (* and is halfnormal? *)
 
 test0510 = Table[{k/Sqrt[500],d[500,k]},{k,0,500}];
+test0518 = Table[{k/Sqrt[500],d[500,k]-d[500,k-1]},{k,1,500}];
+
+(* below is chance of hitting +k but not +k+1 or more *)
+
+pdf[n_,k_] = FullSimplify[d[n,k]-d[n,k+1], {n>k,k>0,Element[{n,k},Integers]}];
+
+test0524= Table[N[pdf[500,k]], {k,0,499}]
+
+
+Sum[k*pdf[n,k],{k,0,n}]/Sqrt[n]
+
+Limit[Sum[k*pdf[n,k],{k,0,n}]/Sqrt[n], n -> Infinity]
+
+ToExpression["(4\pi \frac{\sigma^2}{2} t)^{-\frac{1}{2}} \text{e}^{(-x^2/(4 \frac{\sigma^2}{2} t) )}", TeXForm]
+
+p[x_,t_,sigma_] = (4*Pi*sigma^2/2*t)^(-1/2)*Exp[(-x^2/(4*sigma^2/2*t))]
+
+(* box-option-value.m *)
+
+boxvalue[p0_, v_, p1_, p2_, t1_, t2_] :=
+ Module[{},
+
+  (* the pdf of Log[price] at t1; chance that Log[price]=x *)
+  pdflp[x_] =
+   PDF[NormalDistribution[Log[p0], Sqrt[t1]*v/Sqrt[365.2425*24]]][x];
+
+  (* the anti-cdf of the max of Log[price]-Log[price[t1]] between t1 and t2;
+     chance this value is more than x, for x > 0 *)
+   cdfmaxlp[x_] = 1-Erf[x/(v*Sqrt[t2-t1]/Sqrt[24*365.2425/Sqrt[2]])];
+
+  (* 3 cases: price[t1] < p1, between p1 and p2, or price[t1] > p2 *)
+  (* these are silly global variables I added at the last second + I know
+     this is bad programming practise *)
+  upandin = NIntegrate[pdflp[x]*cdfmaxlp[Log[p1]-x],{x,-Infinity,Log[p1]}];
+  hitleftedge = NIntegrate[pdflp[x]*1,{x,Log[p1],Log[p2]}];
+  downandin = NIntegrate[pdflp[x]*cdfmaxlp[x-Log[p2]],{x,Log[p2],Infinity}];
+
+  upandin+hitleftedge+downandin
+]
+
+boxvalue[p0, v, p1, p2, t1, t2]
+
+http://math.stackexchange.com/questions/9608
+http://money.stackexchange.com/questions/4312
+
+cum[x_,t_] = FullSimplify[Sqrt[2/Pi/t]*Integrate[Exp[-u^2/2/t], {u,0,x}],
+ {x>0, t>0}]
+
+pdf[x_,t_] = FullSimplify[D[cum[x,t],x]]
+
+Plot[pdf[x,5],{x,0,3}]
+
+HalfNormal[2/Pi]
+
+Mean[HalfNormalDistribution[Sqrt[Pi/2]]]
+
+var is (Pi-2)/Pi = 0.36338
+
+15%
+
+http://www.crestmontresearch.com/docs/Stock-Volatility-Perspective.pdf
+
+sd is Sqrt[(-2 + Pi)/Pi] or 0.60281
+
+
+
 
 
 
