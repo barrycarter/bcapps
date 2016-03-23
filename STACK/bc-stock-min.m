@@ -223,6 +223,8 @@ values of `n`.
 
 *)
 
+(* TODO: http://quant.stackexchange.com/questions/235 *)
+
 f[t_] = 1- (
  (CDF[NormalDistribution[0,1]][t])*
  (CDF[NormalDistribution[0,Sqrt[2]]][t])
@@ -246,6 +248,12 @@ g[t_] =
 g[t_] = Product[CDF[NormalDistribution[0,Sqrt[n]]][t], {n,1,50}];
 
 h[n_,t_] = E^(-(t^2/(2*n)))*Sqrt[2/(n*Pi)]
+
+h[n,t/n]
+
+Integrate[h[n,u/n], {u,0,Sqrt[n]}]
+
+Integrate[h[n,u/n], {u,0,t}]
 
 Integrate[t*h[n,t],{t,0,Infinity}]
 
@@ -447,7 +455,35 @@ d2[n_,k_] = FullSimplify[d[n,k] /. Floor[x_] -> (x+1/2),
 1591 for 1 to 98%
 
 u[n_] := u[n] = 
- Table[Max[Accumulate[Table[RandomVariate[NormalDistribution[]],{i,n}]]],
- {j,1,100000}];
+ Table[Max[Accumulate[Table[RandomVariate[NormalDistribution[0,1./Sqrt[n]]],
+ {i,n}]]], {j,1,100000}];
+
+
+t[n_] := t[n] = Histogram[u[n]];
+
+test1132 = Table[Mean[u[n]],{n,1,100}];
+test1135 = Table[Sqrt[Variance[u[n]]],{n,1,100}];
+
+halfnormal of 1.25 might be the magic number
+
+for t[10000] ... 0.789786 is mean, 0.362133 is variance, 0.601775 is SD
+
+right around 1.26 param
+
+hist1 = Histogram[u[10000], "Scott", "PDF"]
+
+plot1 = Plot[PDF[HalfNormalDistribution[1.25]][x],{x,0,4}]
+plot2 = Plot[PDF[HalfNormalDistribution[1.24]][x],{x,0,4}]
+plot3 = Plot[PDF[HalfNormalDistribution[1.26]][x],{x,0,4}]
+
+Show[{hist1,plot1,plot2,plot3}]
+showit
+
+ListPlot[test1132]
+
+(* and is halfnormal? *)
+
+test0510 = Table[{k/Sqrt[500],d[500,k]},{k,0,500}];
+
 
 
