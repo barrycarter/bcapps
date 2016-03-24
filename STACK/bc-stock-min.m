@@ -65,32 +65,111 @@ Suppose you set your limit order at 5% below the current price (ie,
 95% of its current price). There is a ~77% chance your order will be
 filled:
 
+graph[x_] = PDF[HalfNormalDistribution[1/Log[1.15]]][x]/(2/Pi/Log[1.15])
+
 xtics2 = Table[{i, 
  ToString[Round[100*(Exp[-i]-1),1]]<>"% "},
  {i,0,.5,.025}]
 
-plot = Plot[PDF[HalfNormalDistribution[1/Log[1.15]]][x]/(2/Pi/Log[1.15]),
- {x,0,0.5},
- TicksStyle -> Directive[Black,12],
- Ticks -> {xtics2, Automatic}, Filling -> Axis
+plot1 = Plot[graph[x], {x,0,0.05}, TicksStyle -> Directive[Black,12],
+ Ticks -> {xtics2, Automatic}, AxesOrigin -> {0,0}
 ]
 
-line = Graphics[Line[{{0.05,0},{0.05,
- PDF[HalfNormalDistribution[1/Log[1.15]]][0.05]/(2/Pi/Log[1.15])}}]];
+plot2 = Plot[graph[x], {x,0.05,0.5}, TicksStyle -> Directive[Black,12],
+ Ticks -> {xtics2, Automatic}, AxesOrigin -> {0,0}, Filling -> Axis
+]
 
-Show[{plot,line}]
+line = Graphics[{
+ Line[{{0.05,0},{0.05, graph[0.05]}}],
+ Text[Style["77%", FontSize->100], {0.16,.25}],
+ Rotate[Text[Style["23%", FontSize->100], {0.025, .5}],Pi/2]
+}
+];
+
+Show[{plot2,plot1,line}, PlotRange -> All]
 showit
 
+If you want be 98% sure you order is filled, you could only set your
+limit order to 0.44% below the current price.
 
+Of course, that was for a specific volatility over a specific period
+of time. To generalize, the maximum value of a stock over a year has
+the probability distribution function (PDF):
 
+$ 
+   \begin{cases} 
+    \frac{2 e^{-\frac{x^2}{\pi  \log ^2(v+1)}}}{\pi  \log (v+1)} & x>0 \\ 
+    0 & x\leq 0
+   \end{cases} 
+$ 
 
+where $v$ is the volatility as a percentage (eg, 0.15).
 
+For a period of $t$ years, the standard deviation (which isn't quite
+the same as volatility in this case) would be $\sqrt{t}$ as much, so
+our PDF becomes:
+
+$
+   \begin{cases}
+    \frac{2 e^{-\frac{x^2}{\pi  t \log ^2(v+1)}}}{\pi  \sqrt{t} \log (v+1)} &
+      x>0 \\
+    0 & x\leq 0
+   \end{cases}
+$
+
+I establish the basis for this PDF later, but, knowing this, we can
+solve the problem: we want to know when the cumulative distribution
+function (CDF) is 0.02 (which means there's a 98% chance that order
+will be filled).
+
+TODO: answer at top
+TODO: put this below
+
+It turns out this is a well-known problem and has been studied extensively:
+
+  - It's the running maximum/minimum of Brownian motion:
+  https://en.wikipedia.org/wiki/Brownian_motion also known as a Wiener
+  process
+  (https://en.wikipedia.org/wiki/Wiener_process#Running_maximum)
+
+  - Item 37 of http://www.math.uah.edu/stat/brown/Standard.html
+  establishes this maximum is the halfnormal distribution: https://en.wikipedia.org/wiki/Half-normal_distribution
+
+  - This stackexchange/google search shows many more results:
+
+https://stackexchange.com/search?q=brownian+halfnormal
+
+  - It can also be regarded as the running maximum value of a random walk:
+
+https://stackexchange.com/search?q=brownian+halfnormal
+
+  - Or as the fair value of a one-touch option: http://www.investopedia.com/terms/o/onetouchoption.asp:
+
+http://quant.stackexchange.com/questions/17083
+
+  - I myself wrote two questions to help answer this question, one
+  asking about a random walk and the other about what turns out to be
+  Brownian motion:
+
+    - https://mathematica.stackexchange.com/questions/110565
+
+    - https://mathematica.stackexchange.com/questions/110657
+
+If you use Mathematica (or just want to read even more about this subject),
+you might look at my:
+
+  - https://github.com/barrycarter/bcapps/blob/master/STACK/bc-stock-min.m
+
+  - https://github.com/barrycarter/bcapps/blob/master/box-option-value.m
+
+the latter of which computes the probability that a stock price will
+be between two given values at two given times (ie, the fair value of
+an O&A "box option") but can be used to answer your question in the
+limiting case. See also: http://money.stackexchange.com/questions/4312
 
 TODO: mention tick bias, volatility smile, this file
 
 TODO: TeX-ify?
-
-TODO: disclaim tick labels
 
 TODO: note these disclaimers but put them later
 
@@ -585,8 +664,7 @@ boxvalue[p0_, v_, p1_, p2_, t1_, t2_] :=
 
 boxvalue[p0, v, p1, p2, t1, t2]
 
-http://math.stackexchange.com/questions/9608
-http://money.stackexchange.com/questions/4312
+
 
 cum[x_,t_] = FullSimplify[Sqrt[2/Pi/t]*Integrate[Exp[-u^2/2/t], {u,0,x}],
  {x>0, t>0}]
@@ -600,10 +678,6 @@ HalfNormal[2/Pi]
 Mean[HalfNormalDistribution[Sqrt[Pi/2]]]
 
 var is (Pi-2)/Pi = 0.36338
-
-15%
-
-http://www.crestmontresearch.com/docs/Stock-Volatility-Perspective.pdf
 
 sd is Sqrt[(-2 + Pi)/Pi] or 0.60281
 
