@@ -82,29 +82,39 @@ $
     z(t)}{\left(x(t)^2+y(t)^2+z(t)^2\right)^{3/2}}\right\}
 $
 
-
-
-
-
-$\frac{g r^2}{x(t)^2+y(t)^2+z(t)^2$
-
--g*r^2/(x[t]^2+y[t]^2+z[t]^2)^(3/2)
-
-g[t_] = -{x[t],y[t],z[t]}*gmag[t]/Sqrt[x[t]^2+y[t]^2+z[t]^2]
-
-gmag[t_] = g*r^2/(x[t]^2+y[t]^2+z[t]^2)
-
-
-
--{x[t],y[t],z[t]}
-
-
 dfqs = {
  {x[0], y[0], z[0]} == 
   {0, r Cos[lambda], r Sin[lambda]},
 
  {x'[0], y'[0], z'[0]} == 
   {vx + 2 Pi r Cos[lambda], vy, vz},
+
+ {x''[t], y''[t], z''[t]} ==
+  {-((g*r^2*x[t])/(x[t]^2 + y[t]^2 + z[t]^2)^(3/2)), 
+  -((g*r^2*y[t])/(x[t]^2 + y[t]^2 + z[t]^2)^(3/2)), 
+  -((g*r^2*z[t])/(x[t]^2 + y[t]^2 + z[t]^2)^(3/2))}
+}
+
+To find the position of our flight at time t, we solve:
+
+
+$
+\left\{\{x(0),y(0),z(0)\}=\{0,r \cos (\lambda ),r \sin (\lambda
+)\},\left\{x'(0),y'(0),z'(0)\right\}=\{2 \pi  r \cos (\lambda
+)+\text{vx},\text{vy},\text{vz}\},\left\{x''(t),y''(t),z''(t)\right\}=\left\{
+-\frac{g r^2 x(t)}{\left(x(t)^2+y(t)^2+z(t)^2\right)^{3/2}},-\frac{g r^2
+y(t)}{\left(x(t)^2+y(t)^2+z(t)^2\right)^{3/2}},-\frac{g r^2
+z(t)}{\left(x(t)^2+y(t)^2+z(t)^2\right)^{3/2}}\right\}\right\}
+$
+
+This differential equation has no closed form (not even if we'd
+assumed gravitational acceleration was constant or made other
+simplications), so we must solve numerically.
+
+y-axis is west by rhr
+
+
+
 
 
 
