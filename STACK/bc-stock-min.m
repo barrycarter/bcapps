@@ -1,6 +1,38 @@
+(* formulas start here *)
+
+vol2sd[v_,t_] = Sqrt[t]*Log[1+v];
+
+(* this is only accurate for x>0 *)
+
+cdf[v_,t_,x_] = Simplify[CDF[HalfNormalDistribution[1/vol2sd[v,t]]][x],x>0]
+
+sol[v_,t_,p_,s_] = s/Exp[x /. Solve[cdf[v,t,x]==1-p,x][[1]]]
+
+
+
+
+
+
+
+
+(* formulas end here *)
+
 (*
 
 http://quant.stackexchange.com/questions/24970/estimate-probability-of-limit-order-execution-over-a-large-time-frame
+
+TODO: header answer
+
+You should set your limit order to: $s (v+1)^{-0.0314192 \sqrt{t}}$
+where $s$ is the current price, $t$ is the time in years you're
+willing to wait, and $v$ is the annual volatility as a percentage.
+
+If you want to be $p$ percent sure (instead of 0.98), set your limit
+order to:
+
+$s (v+1)^{-\sqrt{\pi } \sqrt{t} \text{erf}^{-1}(1-p)}$
+
+TODO: examples?
 
 It turns out this question has been studied extensively, and there are
 some papers on it:
@@ -18,18 +50,7 @@ price. Note that the lower limit is 87% (= 1/1.15), not 85%.
 Overall, the price probability for a stock with volatility 15% forms
 this bell curve:
 
-xtics = Table[{i, 
- If[i>0,"+",""]<>ToString[Round[100*(Exp[i]-1),1]]<>"% "},
- {i,-.5,.5,.05}]
-
-Plot[
- PDF[NormalDistribution[0,Log[1.15]]][x]/
- PDF[NormalDistribution[0,Log[1.15]]][0], 
- {x,-0.5,+0.5}, PlotRange->All,
- TicksStyle -> Directive[Black,12],
- Ticks -> {xtics, Automatic}
-]
-showit
+[[image11.gif]]
 
 Note that:
 
@@ -48,16 +69,7 @@ it just for reference.
 Instead, let's look at the probability distribution of the *minimum*
 value over the next year for our 15% volatility stock.
 
-xtics2 = Table[{i, 
- ToString[Round[100*(Exp[-i]-1),1]]<>"% "},
- {i,0,.5,.025}]
-
-Plot[PDF[HalfNormalDistribution[1/Log[1.15]]][x]/(2/Pi/Log[1.15]),
- {x,0,0.5},
- TicksStyle -> Directive[Black,12],
- Ticks -> {xtics2, Automatic}
-]
-showit
+[[image12.gif]]
 
 The same caveats apply to this graph as the previous one.
 
@@ -65,36 +77,16 @@ Suppose you set your limit order at 5% below the current price (ie,
 95% of its current price). There is a ~77% chance your order will be
 filled:
 
-graph[x_] = PDF[HalfNormalDistribution[1/Log[1.15]]][x]/(2/Pi/Log[1.15])
-
-xtics2 = Table[{i, 
- ToString[Round[100*(Exp[-i]-1),1]]<>"% "},
- {i,0,.5,.025}]
-
-plot1 = Plot[graph[x], {x,0,0.05}, TicksStyle -> Directive[Black,12],
- Ticks -> {xtics2, Automatic}, AxesOrigin -> {0,0}
-]
-
-plot2 = Plot[graph[x], {x,0.05,0.5}, TicksStyle -> Directive[Black,12],
- Ticks -> {xtics2, Automatic}, AxesOrigin -> {0,0}, Filling -> Axis
-]
-
-line = Graphics[{
- Line[{{0.05,0},{0.05, graph[0.05]}}],
- Text[Style["77%", FontSize->100], {0.16,.25}],
- Rotate[Text[Style["23%", FontSize->100], {0.025, .5}],Pi/2]
-}
-];
-
-Show[{plot2,plot1,line}, PlotRange -> All]
-showit
+[[image13.gif]]
 
 If you want be 98% sure you order is filled, you could only set your
 limit order to 0.44% below the current price.
 
 Of course, that was for a specific volatility over a specific period
-of time. To generalize, the maximum value of a stock over a year has
+of time. To generalize, the minimum value of a stock over a year has
 the probability distribution function (PDF):
+
+
 
 $ 
    \begin{cases} 
@@ -121,6 +113,10 @@ I establish the basis for this PDF later, but, knowing this, we can
 solve the problem: we want to know when the cumulative distribution
 function (CDF) is 0.02 (which means there's a 98% chance that order
 will be filled).
+
+The CDF for the price is:
+
+
 
 TODO: answer at top
 TODO: put this below
@@ -681,8 +677,57 @@ var is (Pi-2)/Pi = 0.36338
 
 sd is Sqrt[(-2 + Pi)/Pi] or 0.60281
 
+image11.gif:
 
+xtics = Table[{i, 
+ If[i>0,"+",""]<>ToString[Round[100*(Exp[i]-1),1]]<>"% "},
+ {i,-.5,.5,.05}]
 
+Plot[
+ PDF[NormalDistribution[0,Log[1.15]]][x]/
+ PDF[NormalDistribution[0,Log[1.15]]][0], 
+ {x,-0.5,+0.5}, PlotRange->All,
+ TicksStyle -> Directive[Black,12],
+ Ticks -> {xtics, Automatic}
+]
+showit
 
+image12.gif:
 
+xtics2 = Table[{i, 
+ ToString[Round[100*(Exp[-i]-1),1]]<>"% "},
+ {i,0,.5,.025}]
+
+Plot[PDF[HalfNormalDistribution[1/Log[1.15]]][x]/(2/Pi/Log[1.15]),
+ {x,0,0.5},
+ TicksStyle -> Directive[Black,12],
+ Ticks -> {xtics2, Automatic}
+]
+showit
+
+image13.gif:
+
+graph[x_] = PDF[HalfNormalDistribution[1/Log[1.15]]][x]/(2/Pi/Log[1.15])
+
+xtics2 = Table[{i, 
+ ToString[Round[100*(Exp[-i]-1),1]]<>"% "},
+ {i,0,.5,.025}]
+
+plot1 = Plot[graph[x], {x,0,0.05}, TicksStyle -> Directive[Black,12],
+ Ticks -> {xtics2, Automatic}, AxesOrigin -> {0,0}
+]
+
+plot2 = Plot[graph[x], {x,0.05,0.5}, TicksStyle -> Directive[Black,12],
+ Ticks -> {xtics2, Automatic}, AxesOrigin -> {0,0}, Filling -> Axis
+]
+
+line = Graphics[{
+ Line[{{0.05,0},{0.05, graph[0.05]}}],
+ Text[Style["77%", FontSize->100], {0.16,.25}],
+ Rotate[Text[Style["23%", FontSize->100], {0.025, .5}],Pi/2]
+}
+];
+
+Show[{plot2,plot1,line}, PlotRange -> All]
+showit
 

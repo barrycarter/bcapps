@@ -114,7 +114,7 @@ simplications), so we must solve numerically.
 y-axis is west by rhr
 
 
-
+TODO: rocket fuel = accel varies too
 
 
 
