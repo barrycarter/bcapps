@@ -8,20 +8,13 @@ cdf[v_,t_,x_] = Simplify[CDF[HalfNormalDistribution[1/vol2sd[v,t]]][x],x>0]
 
 sol[v_,t_,p_,s_] = s/Exp[x /. Solve[cdf[v,t,x]==1-p,x][[1]]]
 
-
-
-
-
-
-
-
 (* formulas end here *)
 
 (*
 
 http://quant.stackexchange.com/questions/24970/estimate-probability-of-limit-order-execution-over-a-large-time-frame
 
-TODO: header answer
+<h1>My Answer</h1>
 
 You should set your limit order to: $s (v+1)^{-0.0314192 \sqrt{t}}$
 where $s$ is the current price, $t$ is the time in years you're
@@ -32,7 +25,12 @@ order to:
 
 $s (v+1)^{-\sqrt{\pi } \sqrt{t} \text{erf}^{-1}(1-p)}$
 
+Of course, this is based on many assumptions and disclaimers later in
+this message.
+
 TODO: examples?
+
+<h1>Other Answers</h1>
 
 It turns out this question has been studied extensively, and there are
 some papers on it:
@@ -42,6 +40,8 @@ http://fiquant.mas.ecp.fr/wp-content/uploads/2015/10/Limit-Order-Book-modelling.
 http://arxiv.org/pdf/1311.5661
 
 I'll use a much simpler model (see disclaimers at end of message).
+
+<h1>Example</h1>
 
 If a stock has a volatility of 15%, that means there's a 68% chance
 it's price after 1 year will be between 87% and 115% of its current
@@ -79,11 +79,125 @@ filled:
 
 [[image13.gif]]
 
-If you want be 98% sure you order is filled, you could only set your
-limit order to 0.44% below the current price.
+You can also see this using the cumulative distribution function (CDF):
+
+[[image14.gif]]
+
+In this case, the y values do represent percentages, namely the
+cumulative percentage change that the stock's lowest value will the
+percentage value on the x axis.
+
+For this volatility, if you want be 98% sure you order is filled, you
+could only set your limit order to 0.44% below the current price.
+
+<h1>General Case</h1>
 
 Of course, that was for a specific volatility over a specific period
-of time. To generalize, the minimum value of a stock over a year has
+of time.
+
+In general, a volatility of v% means the stock is ~68% (1 standard
+deviation) likely to remain within v% of its current price in the next
+year. More conveniently, it means the logarithm of the price is 68%
+likely to remain within (plus/minus) $\log (v+1)$ of its current value
+(within the next year). For example, a volatility of 15% means the log
+of the stock price is 68% likely to remain within .1398 of its current
+value, since $e^{0.1398}$ is approximately $1.15$
+
+More generally, the $\log (\text{price})$ one year from now has a
+normal distribution with mean $\log (\text{price})$ and standard
+deviation $\log (v+1)$.
+
+Thus, the *change* in the $\log (\text{price})$ for one year is
+normally distributed with a mean of 0 and a standard deviation of
+$\log (v+1)$.
+
+A standard deviation of $\log (v+1)$ translates to a variance of $\log
+^2(v+1)$. Since the variance of a process like this scales linearlly,
+the variance for $t$ years is given by $t \log ^2(v+1)$ and the
+standard deviation for $t$ years is given by $\sqrt{t} \log (v+1)$.
+
+Thus, the change in $\log (\text{price})$ for time $t$ has a normal
+distribution with mean 0 and standard deviation $\sqrt{t} \log (v+1)$.
+
+As noted below in another section, this means the minimum (most
+negative) value of this change has a halfnormal distribution with
+parameter $\frac{1}{\sqrt{t} \log (v+1)}$
+
+The cumulative distribution of a halfnormal distribution with
+parameter $\frac{1}{\sqrt{t} \log (v+1)}$ evaluted at x>0 (the only
+place the halfnormal distribution is non-zero) is:
+
+$\text{erf}\left(\frac{x}{\sqrt{\pi } \sqrt{t} \log (v+1)}\right)$
+
+where erf() is the standard error function.
+
+If we draw this cumulative distribution for volatility 15% again, this
+time letting the x axis be "change in $\log (\text{price})$ (instead
+of the percentage change in price), the x axis looks more like we
+expect:
+
+
+TODO: more here?
+
+Plot[CDF[HalfNormalDistribution[1/Log[1.15]]][x], {x,0,.5}]
+
+If our limit order is $\lambda$% of the current price (meaning it's
+$\lambda s$ where $s$ is the current price), it will only be hit if
+the $\log (\text{price})$ moves more than $\left| \log (\lambda )
+\right|$ (note that we need the absolute values since we're measuring
+the absolute change in $\log (\text{price})$, which is always
+positive). The chance of that happening is:
+
+$
+   1-\text{erf}\left(\frac{\left| \log (\lambda ) \right|}{\sqrt{\pi } \sqrt{t}
+    \log (v+1)}\right)
+$
+
+Note that we need the "1-" since we're looking for the probability the
+$\log (\text{price})$ moves *more* than the given amount.
+
+Of course, in this case, we're *given* the probability and asked to
+solve for the limit price. Using $p$ as the probability we find:
+
+$\lambda \to (v+1)^{-\sqrt{\pi } \sqrt{t} \text{erf}^{-1}(1-p)}$
+
+and the price is thus:
+
+$s (v+1)^{-\sqrt{\pi } \sqrt{t} \text{erf}^{-1}(1-p)}$
+
+as in the answer section. Substituting 0.98 for p, we have:
+
+$s (v+1)^{-0.0314192 \sqrt{t}}$
+
+as noted for this specific example.
+
+TODO: power series approx?
+
+Solve[1-cdf[v,t,Abs[Log[lambda]]] == p, lambda][[2,1]]                
+
+
+Solve[1-cdf[v,t,Abs[Log[1-lambda]]] == p, lambda]
+
+
+
+
+Solve[Abs[Log[1 - lambda]] == cdf[v,t,x]  ,x]
+
+Abs[Log[1 - lambda]] > cdf[v,t,x]
+
+
+As noted later, this means the maximum of value of $\log (\text{price})$
+
+To generalize, the maximum change in the $\log (\text{price})$ of a
+stock over one year has a halfnormal distribution with parameter 
+
+
+TODO: confirm formulas above after general solution, I don't think i'm
+off by an exponent
+
+
+
+the minimum value of a stock over a year has
 the probability distribution function (PDF):
 
 
@@ -731,3 +845,40 @@ line = Graphics[{
 Show[{plot2,plot1,line}, PlotRange -> All]
 showit
 
+image14.gif:
+
+graph[x_] = CDF[HalfNormalDistribution[1/Log[1.15]]][x]
+
+xtics2 = Table[{i, 
+ ToString[Round[100*(Exp[-i]-1),1]]<>"% "},
+ {i,0,.5,.025}]
+
+ytics2 = Table[{i, 
+ ToString[ToString[Round[i*100]]<>"% "]}, {i,0,1,.1}]
+
+plot2 = Plot[graph[x], {x,0,0.5}, TicksStyle -> Directive[Black,12],
+ Ticks -> {xtics2, ytics2}, AxesOrigin -> {0,0}]
+
+line = Graphics[{
+ RGBColor[1,0,0], Dashed,
+ Line[{{0.05,0},{0.05, graph[0.05]}}],
+ Line[{{0,graph[0.05]},{0.05, graph[0.05]}}],
+ Text[Style["23%", FontSize-> 30], {0.025,.26}],
+ Text[Style["-5%", FontSize-> 30], {0.073,.1}]
+}
+];
+
+Show[{plot2,line}, PlotRange -> All]
+showit
+
+TODO: note these actually ARE percentages
+
+showit
+
+plot1 = Plot[graph[x], {x,0,0.05}, TicksStyle -> Directive[Black,12],
+ Ticks -> {xtics2, Automatic}, AxesOrigin -> {0,0}
+]
+
+
+TODO: note that with 0.44% risk free interest may be an issue (of
+course, if you put that money into risk-free interest)
