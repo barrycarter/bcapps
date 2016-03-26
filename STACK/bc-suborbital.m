@@ -27,9 +27,40 @@ launch[r_, p_, g_, phi_, vx_, vy_, vz_] :=
  maxheight}];
 ];
 
+(* launch 2 assumes constant gravity wort distance *)
+
+launch2[r_, p_, g_, phi_, vx_, vy_, vz_] := 
+ launch[r,p,g,phi,vx,vy,vz] = Module[
+ {s,site,root,dlat,dlon,garb,nsdist,ewdist,tdist,maxtime,maxheight,v0},
+
+ v0 = Norm[{vx,vy,vz}];
+
+ s[t_] = {x[t], y[t], z[t]} /. NDSolve[{
+  x[0] == r*Cos[phi], y[0] == 0, z[0] == r*Sin[phi],
+  x'[0] == vx, y'[0] == 2*Pi*r*Cos[phi]/p+vy, z'[0] == vz,
+  x''[t] == -g*x[t]/r,
+  y''[t] == -g*y[t]/r,
+  z''[t] == -g*z[t]/r
+ }, {x[t],y[t],z[t]}, {t,0,4*v0/g}][[1]];
+
+ maxtime = FindMaximum[Norm[s[t]]-r,{t,v0/g}];
+ maxheight = maxtime[[2,1,2]];
+ maxtime = maxtime[[1]];
+
+ site[t_] = r*{Cos[2*Pi*t/p]*Cos[phi], Sin[2*Pi*t/p]*Cos[phi], Sin[phi]};
+ root = t /. FindRoot[Norm[s[t]]-Norm[s[0]], {t, 2*v0/g}];
+ {dlon,dlat,garb} = xyz2sph[s[root]]-xyz2sph[site[root]];
+ {nsdist, ewdist} = {dlat*r, Cos[phi+dlat]*dlon*r};
+ tdist = 2*r*ArcSin[Norm[s[root]-site[root]]/2/r];
+ Return[{s[t], site[t], root, dlat, dlon, nsdist, ewdist, tdist, maxtime,
+ maxheight}];
+];
+
 (* TODO: 86400 not accurate, need siderial days *)
 
-test0705 = launch[6371000, 86400, 9.8, 0*Degree, 40, 50, 50]
+test0705 = launch[6371000, 86400, 9.8, 0*Degree, -2000, 5000, 0]
+
+test0705 = launch2[6371000, 86400, 9.8, 0*Degree, -2000, 5000, 0]
 
 Plot[{test0705[[1]]-test0705[[2]]}, {t,0,3300}]
 ParametricPlot3D[{test0705[[2]]-test0705[[1]]}, {t,0,3300}]
@@ -49,8 +80,14 @@ g[u_] = Graphics3D[{
  Point[test0705[[1]] /. t -> u]
 }]
 
-tab = Table[Show[g[i]], {i,0, 643, 40}]
+
+tab = Table[Show[g[i]], 
+ {i,0, test0705[[3]], test0705[[3]]/20}]
+
 Export["/tmp/test.gif", tab]
+Run["animate -delay 15 /tmp/test.gif&"]
+
+10717000 m to beijing from new york
 
 
 (*
@@ -365,3 +402,47 @@ Return[{s[t], site[t], root, dlat, dlon, nsdist, ewdist, tdist, maxtime,
  maxheight}];
 ];
 
+(* a spherical approach *)
+
+(* velocity *)
+
+theta-phi-r is order, theta is xy plane
+
+{r*Cos[theta]*Cos[phi], r*Sin[theta]*Cos[phi], r*Sin[theta]}
+
+conds = {Element[{x,y,z,vx,vy,vz,dt,theta,phi}, Reals],r>0}
+
+nudge = FullSimplify[
+ (xyz2sph[{x + vx*dt, y + vy*dt, z + vz*dt}] -
+ xyz2sph[{x,y,z}])/dt, 
+ Element[{x,y,z,vx,vy,vz,dt}, Reals]]
+
+nudge2 = nudge /. {
+ x -> r*Cos[theta]*Sin[phi],
+ y -> r*Sin[theta]*Sin[phi],
+ z -> r*Sin[phi]
+}
+
+nudge3 = FullSimplify[nudge2,conds]
+
+
+
+
+
+Limit[
+ (xyz2sph[{x + vx*dt, y + vy*dt, z + vz*dt}] -  xyz2sph[{x,y,z}])/dt, 
+ dt -> 0]
+
+
+
+
+FullSimplify[xyz2sph[{vx*t, vy*t, vz*t}],{t>0, Element[{vx,vy,vz}, Reals]}]
+
+  
+
+x[0] == r*Cos[phi], y[0] == 0, z[0] == r*Sin[phi],
+  x'[0] == vx, y'[0] == 2*Pi*r*Cos[phi]/p+vy, z'[0] == vz,
+  x''[t] == -g*((r^2*x[t])/(x[t]^2 + y[t]^2 + z[t]^2)^(3/2)),
+  y''[t] == -g*((r^2*y[t])/(x[t]^2 + y[t]^2 + z[t]^2)^(3/2)),
+  z''[t] == -g*((r^2*z[t])/(x[t]^2 + y[t]^2 + z[t]^2)^(3/2))
+ }, {x[t],y[t],z[t]}, {t,0,4*v0/g}][[1]];
