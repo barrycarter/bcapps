@@ -1026,3 +1026,10 @@ http://math.ucr.edu/home/baez/physics/Relativity/SR/Rocket/rocket.html
 http://math.ucr.edu/home/baez/physics/Relativity/SR/acceleration.html
 
 and note c = 1 for me
+
+eyeball dist for constant accel may be: 
+
+
+(a*u^2)/(2 + 2*a*u)
+
+where u is time

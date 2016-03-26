@@ -2,8 +2,32 @@
 
 now, with matrices (order: time distance)
 
-gamma[v_] = (1-v^2)^(-1/2)
-m[v_] = FullSimplify[{{gamma[-v], -gamma[-v]*-v}, {-gamma[-v]*-v, gamma[-v]}}]
+relativityMatrix[v] is the time-distance conversion matrix
+
+Apply[Divide,Reverse[relativityMatrix[v].{t,0}]] == v
+
+(so it converts your frame to my frame)
+
+test0818 = relativityMatrix[v].{dt,dv}
+
+speed[vec_] = vec[[2]]/vec[[1]]
+
+test0819 = Simplify[speed[test0818]]
+
+(* new velocity is beta *)
+
+test0820 = relativityMatrix[v].{dt,dt*beta}
+
+Simplify[speed[test0820]]
+
+in the frame of the accelerated item this is? 
+
+relativityMatrix[v].relativityMatrix[dt*beta].{t,0}
+
+
+
+
+TODO: include eyeball time formulas
 
 m[v].{t,0}
 m[v].{0,d}
@@ -61,19 +85,6 @@ m[0.5].{1,2}
 m[0.5].{1,t}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 Experimenting w/ answer to my question below:
 
 B: distance between 2 points is 60m
@@ -113,13 +124,6 @@ m[-.995].{10,9.95}
 m[-.995].{t,9.95}
 
 m[-.995].{0,9.95}
-
-
-
-
-
-
-
 
 Subject: Error in deriving relativity velocity addition formula
 
