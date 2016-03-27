@@ -412,3 +412,6 @@ sph2xyz[th_,ph_,r_] = r*{Cos[th]*Cos[ph], Sin[th]*Cos[ph], Sin[ph]};
 xyz2sph[l_] := Apply[xyz2sph,l]
 sph2xyz[l_] := Apply[sph2xyz,l]
 
+(* the order here is time then distance, which may have been a bad idea *)
+
+relativityMatrix[v_]= 1/Sqrt[1-v^2]*{ {1,v}, {v,1}};
