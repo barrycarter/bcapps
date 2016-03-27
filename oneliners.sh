@@ -1,5 +1,17 @@
 # shell one liners
 
+# move all stack exchange messages (and related _files directories) to
+# /home/barrycarter/STACK (in some cases, I dl multiple versions, this
+# moves them all)
+
+bzgrep -l '<meta name="twitter:domain" content=".*.stackexchange.com">' *.html* | perl -nle '$x=$_; s/\.html.*$//; print "mv -n $x ${_}_files /home/barrycarter/STACK/"'
+
+# TODO: this second one may now be superfluous
+
+bzfgrep -l 'Stack Exchange</title>' *.html* | perl -nle '$x=$_; s/\.html.*$//; print "mv -n $x ${_}_files /home/barrycarter/STACK/"'
+
+exit;
+
 # generates imacro to dl pof contact history (dirs and stuff will
 # change over time)
 

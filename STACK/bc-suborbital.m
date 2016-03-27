@@ -89,6 +89,16 @@ Run["animate -delay 15 /tmp/test.gif&"]
 
 10717000 m to beijing from new york
 
+test0929 = launch[6371000, 86400, 9.8, 35*Degree, 0, 1000, 1000]
+
+test0929 = launch[6371000, 86400, 9.8, 35*Degree, 0, 3000, 3000]
+
+test0929 = launch[6371000, 86400, 9.8, 35*Degree, 0, 5000, 5000]
+
+ParametricPlot[Take[xyz2sph[test0929[[1]]],2], {t,0,test0929[[3]]}]
+showit
+
+
 
 (*
 

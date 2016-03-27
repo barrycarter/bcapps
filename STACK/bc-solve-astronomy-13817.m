@@ -329,9 +329,21 @@ $
    \end{array}
 $
 
-TODO: 8.74 ly issue? (more sig figs)
+Note that the caveat $s<\frac{\sqrt{a^2 d^2-4}}{a d}$ still applies.
 
-Note that the caveat $s<\frac{\sqrt{a^2 d^2-4}}{a d}$ still applies
+Let's plot the ship's speed and distance (for both sample coasting
+speeds) with respect to time for reference frame A:
+
+Plot[{speedA2D[g, .6, 40*y2s, t*y2s], speedA2D[g, .995, 40*y2s, t*y2s]}, 
+ {t,0,67.313}]
+
+Plot[{distA2D[g, .6, 40*y2s, t*y2s]/y2s, distA2D[g, .995, 40*y2s, t*y2s]/y2s}, 
+ {t,0,67.313}]
+
+
+
+
+TODO: 8.74 ly issue? (more sig figs)
 
 TODO: make sure TeX formats ok, it's a bit wonky [or use mathematica images]
 
@@ -363,15 +375,6 @@ print = {
 
 Grid[Transpose[print], Alignment -> Left, Spacings -> {2, 1}, Frame -> All, 
  ItemStyle -> "Text"] // TeXForm
-
-Let's plot the ship's speed (for both sample coasting speeds) with
-respect to time for reference frame A:
-
-Plot[{speedA2D[g, .6, 40*y2s, t*y2s], speedA2D[g, .995, 40*y2s, t*y2s]}, 
- {t,0,67.313}]
-
-Plot[{distA2D[g, .6, 40*y2s, t*y2s]/y2s, distA2D[g, .995, 40*y2s, t*y2s]/y2s}, 
- {t,0,67.313}]
 
 Of course, all of the above is in A's reference frame. How do things
 look from the ship?

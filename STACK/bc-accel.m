@@ -10,7 +10,7 @@ Apply[Divide,Reverse[relativityMatrix[v].{t,0}]] == v
 
 test0818 = relativityMatrix[v].{dt,dv}
 
-speed[vec_] = vec[[2]]/vec[[1]]
+speed[vec_] := vec[[2]]/vec[[1]]
 
 test0819 = Simplify[speed[test0818]]
 
@@ -23,6 +23,15 @@ Simplify[speed[test0820]]
 in the frame of the accelerated item this is? 
 
 relativityMatrix[v].relativityMatrix[dt*beta].{t,0}
+
+conds = {t>0, Element[{s0,v0,a}, Reals]}
+
+test2122 = relativityMatrix[v].{t, s0 + v0*t + a*t^2/2}
+test2126 = relativityMatrix[v].{t, s0 + v0*(t+dt) + a*(t+dt)^2/2}
+
+Simplify[(test2126-test2122)/dt, conds]
+
+
 
 
 
