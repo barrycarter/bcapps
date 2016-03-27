@@ -24,12 +24,36 @@ in the frame of the accelerated item this is?
 
 relativityMatrix[v].relativityMatrix[dt*beta].{t,0}
 
-conds = {t>0, Element[{s0,v0,a}, Reals]}
+conds = {t>0, t1>t0, t0>0, v>0, Element[{s0,v0,a,d0,d1}, Reals]}
 
-test2122 = relativityMatrix[v].{t, s0 + v0*t + a*t^2/2}
-test2126 = relativityMatrix[v].{t, s0 + v0*(t+dt) + a*(t+dt)^2/2}
+v0*(t+dt) + a*(t+dt)^2 - (v0*t + a*t^2)
 
-Simplify[(test2126-test2122)/dt, conds]
+test2127 = {dt, dt*(a*(dt + 2*t) + v0)}
+
+Simplify[relativityMatrix[v].test2127, conds]
+
+(*
+
+event occurs in my frame: t0 to t1 and d0 to d1
+
+*)
+
+len = FullSimplify[relativityMatrix[v].{t1-t0,d1-d0},conds]
+
+(* time/dist from crossing to start of event *)
+
+start = FullSimplify[relativityMatrix[v].{t0,d0},conds]
+
+Simplify[len+start, conds]
+
+start2 = FullSimplify[start + {start[[2]], 0},conds]
+
+FullSimplify[relativityMatrix[v].{dt,a*dt^2/2},conds]
+
+
+
+
+
 
 
 
