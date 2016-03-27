@@ -1,5 +1,53 @@
 (*
 
+
+direction is distance/time
+
+mat = Table[m[i,j],{i,0,1},{j,0,1}]
+gamma = Sqrt[1-v^2]
+
+mat.{x,t} == {
+
+
+
+direction is time/distance
+
+gamma = Sqrt[1-v^2]
+mat = { {1, -v}, {-v, 1}}/gamma
+
+distance/time
+
+mat.{d,0}
+
+mat.{0,t}
+
+matrices were wrong? 
+
+mat = Table[m[i,j],{i,0,1},{j,0,1}]
+
+lorentz (distance time now):
+
+
+mat.{0,t} == {y, t/gamma}
+
+mat.{d,0} == {gamma*d, x}
+
+mat = {{m[0, 0], m[0, 1]}, {m[1, 0], m[1, 1]}}
+
+mat = {{m[0, 0], m[0, 1]}, {m[1, 0], 1/gamma}}
+
+mat = {{gamma, m[0, 1]}, {m[1, 0], 1/gamma}}
+
+mat /. v -> -v
+
+
+mat = {{m[0, 0], v/gamma}, {m[1, 0], 1/gamma}}
+
+mat = {{gamma, v/gamma}, {m[1, 0], 1/gamma}}
+
+
+
+
 now, with matrices (order: time distance)
 
 relativityMatrix[v] is the time-distance conversion matrix
