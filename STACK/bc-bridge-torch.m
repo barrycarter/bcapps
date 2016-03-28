@@ -39,7 +39,7 @@ as a list of the following:
 
   - The ending state after the flashlight is returned
 
-  - The total bidrectional time for the trip.
+  - The total bidirectional time for the trip.
 
 This is actually a helper function for "educational" purposes. In
 theory, we could compute the trips for all pairs of a given state, and
@@ -56,15 +56,12 @@ states = Subsets[people];
 (* note that "pair" can be just one person *)
 trips[state_, pair_] := Module[{returners}, 
 
- Return[{state, pair, Complement[state,pair]}];
-
  (* subsets that can return the flashlight *)
  returners = Subsets[DeleteDuplicates[
  Union[Complement[people, state], pair]], {1,2}];
 
  (* for each such subset i in returners *)
- Return[Table[{state, pair, "ignore", i, 
- Complement[state, pair],
+ Return[Table[{state, pair, Sort[state] == Sort[pair], i, 
  Union[Complement[state, pair], i], 
  Max[Map[f, pair]] + Max[Map[f,i]]}, {i, returners}]];
 ]
