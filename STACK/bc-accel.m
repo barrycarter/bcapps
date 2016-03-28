@@ -1,75 +1,10 @@
-(*
+(* order is time distance, conversion is other person to you *)
 
-http://physics.stackexchange.com/questions/14362
+test1332 = relativityMatrix[v].{t,x}
 
-I just got a fantastic answer to this in chat, and wanted to share it.
+test1333 = FullSimplify[test1332 + {test1332[[2]], 0}]
 
-Consider the Newtonian analog: a stick of unknown length is moving at
-velocity $v$ away from you:
-
-  - You see the left end at time $t$ and it's $x$ meters away. You
-  can't see the right end.
-
-  - At time $t+dt$, you see the right end and it's $x+dx$ away. You
-  can't see the left end.
-
-How long is the stick?
-
-You obviously wouldn't measure the stick's length as $dx$ (the
-distance between your two observations), since the stick moved between
-those two observations.
-
-How much did it move? Well, the time between the observations was $dt$
-and the stick is moving at velocity $v$, so it moved $v \text{dt}$.
-
-Subtracting off this movement, we see that the stick's length is
-$\text{dx}-\text{dt} v$
-
-Now, let's do the problem using special relativity.
-
-An observer is traveling at velocity $v$ with respect to you and, at
-the instant he passes you, he observes two simultaneous events: one at
-his origin (the point where he passes you) and the other 1m away.
-
-You see the first event at $\{0,0\}$ in your frame, but how about the
-other one. Applying the relativity transform matrix:
-
-$
-   \left(
-   \begin{array}{cc}
-    \frac{1}{\sqrt{1-v^2}} & \frac{v}{\sqrt{1-v^2}} \\
-    \frac{v}{\sqrt{1-v^2}} & \frac{1}{\sqrt{1-v^2}} \\
-   \end{array}
-   \right).\{0,1\}=\left\{\frac{v}{\sqrt{1-v^2}},\frac{1}{\sqrt{1-v^2}}\right\}
-$
-
-As you note, the resulting distance, $\frac{1}{\sqrt{1-v^2}}$ is
-longer than 1m.
-
-However, applying the correction we discovered in the Newtonian analog:
-
-$
-\frac{1}{\sqrt{1-v^2}}-v \text{dt}\to \frac{1}{\sqrt{1-v^2}}-v
-\frac{v}{\sqrt{1-v^2}}\to \sqrt{1-v^2}
-$
-
-I found it remarkable that the $\text{dx}-\text{dt} v$ exactly flipped
-the fraction so that an expansion of $\sqrt{1-v^2}$ turned into a
-contraction of $\sqrt{1-v^2}$
-
-In some sense, the Lorentz contraction is a "hoax" that occurs only
-because objects exist (persist) over a period of time.
-
-In our "flashing meter stick" example above, we never see the entire
-meter stick at once, so we realize there's a time delay between the
-two ends.
-
-However, if the meter stick existed continuously (as most true objects
-do), we would never realize that we're seeing one end of the meter
-stick at a different time than we're seeing the other end, and the
-length we assign is due to this delay.
-
-
+FullSimplify[test1333[[2]]/test1333[[1]]]
 
 
 
@@ -362,3 +297,75 @@ Plot[relavel[g,0,0,t*y2s],{t,0,5}]
 
 
 
+(*
+
+http://physics.stackexchange.com/questions/14362
+
+I just got a fantastic answer to this in chat, and wanted to share it.
+
+Consider the Newtonian analog: a stick of unknown length is moving at
+velocity $v$ away from you:
+
+  - You see the left end at time $t$ and it's $x$ meters away. You
+  can't see the right end.
+
+  - At time $t+dt$, you see the right end and it's $x+dx$ away. You
+  can't see the left end.
+
+How long is the stick?
+
+You obviously wouldn't measure the stick's length as $dx$ (the
+distance between your two observations), since the stick moved between
+those two observations.
+
+How much did it move? Well, the time between the observations was $dt$
+and the stick is moving at velocity $v$, so it moved $v \text{dt}$.
+
+Subtracting off this movement, we see that the stick's length is
+$\text{dx}-\text{dt} v$
+
+Now, let's do the problem using special relativity.
+
+An observer is traveling at velocity $v$ with respect to you and, at
+the instant he passes you, he observes two simultaneous events: one at
+his origin (the point where he passes you) and the other 1m away.
+
+You see the first event at $\{0,0\}$ in your frame, but how about the
+other one. Applying the relativity transform matrix:
+
+$
+   \left(
+   \begin{array}{cc}
+    \frac{1}{\sqrt{1-v^2}} & \frac{v}{\sqrt{1-v^2}} \\
+    \frac{v}{\sqrt{1-v^2}} & \frac{1}{\sqrt{1-v^2}} \\
+   \end{array}
+   \right).\{0,1\}=\left\{\frac{v}{\sqrt{1-v^2}},\frac{1}{\sqrt{1-v^2}}\right\}
+$
+
+As you note, the resulting distance, $\frac{1}{\sqrt{1-v^2}}$ is
+longer than 1m.
+
+However, applying the correction we discovered in the Newtonian analog:
+
+$
+\frac{1}{\sqrt{1-v^2}}-v \text{dt}\to \frac{1}{\sqrt{1-v^2}}-v
+\frac{v}{\sqrt{1-v^2}}\to \sqrt{1-v^2}
+$
+
+I found it remarkable that the $\text{dx}-\text{dt} v$ exactly flipped
+the fraction so that an expansion of $\sqrt{1-v^2}$ turned into a
+contraction of $\sqrt{1-v^2}$
+
+In some sense, the Lorentz contraction is a "hoax" that occurs only
+because objects exist (persist) over a period of time.
+
+In our "flashing meter stick" example above, we never see the entire
+meter stick at once, so we realize there's a time delay between the
+two ends.
+
+However, if the meter stick existed continuously (as most true objects
+do), we would never realize that we're seeing one end of the meter
+stick at a different time than we're seeing the other end, and the
+length we assign is due to this delay.
+
+*)
