@@ -2,6 +2,24 @@
 
 http://physics.stackexchange.com/questions/210794/
 
+Grid[{
+ {"Time","Earth distance","Earth Time","Light Travel Time","Earth Eyeball"},
+
+ {0, "8 ly", 0, 8, -8},
+
+ {1s, "4.8 ly", 3.2, 4.8, -1.6},
+
+ {3y, "2.4 ly", 5, 2.4, 2.6}
+
+ {6y, 0, 6.8, 0, 6.8}
+
+ {end, 0, 10, 0, 10}
+}
+
+
+
+
+
 I'm hoping to post a more detailed answer later, but thought I'd post
 a summary just to stop the endless trail of comments.
 

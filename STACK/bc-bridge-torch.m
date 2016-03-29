@@ -54,7 +54,7 @@ Table[f[people[[i]]] = times[[i]], {i,1,Length[people]}];
 states = Subsets[people];
 
 (* note that "pair" can be just one person *)
-trips[state_, pair_] := Module[{returners}, 
+trips[state_, pair_] := trips[state, pair] = Module[{returners}, 
 
  (* subsets that can return the flashlight *)
  returners = Subsets[DeleteDuplicates[
@@ -67,6 +67,12 @@ trips[state_, pair_] := Module[{returners},
 ]
 
 </code></pre>
+
+trips2[state_] := Flatten[Table[trips[state, i], {i, Subsets[state, {1,2}]}],1]
+
+test0717 = trips2[states[[19]]]
+
+test0723 = Flatten[Table[trips2[state], {state,states}],1];
 
 
 
