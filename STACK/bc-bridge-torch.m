@@ -33,13 +33,18 @@ as a list of the following:
 
   - The set $T$ of left-to-right crossers.
 
+  - The time it takes $T$ to cross
+
   - Whether $S = T$ (ie, whether this trip is a final/winning trip)
 
   - The set of 1 or 2 people who return the flashlight.
 
-  - The ending state after the flashlight is returned
+  - The time it takes the set above to cross.
 
-  - The total bidirectional time for the trip.
+  - The ending state after the flashlight is returned.
+
+Note that I don't include the total time, because if $S = T$ there's a
+special case.
 
 This is actually a helper function for "educational" purposes. In
 theory, we could compute the trips for all pairs of a given state, and
@@ -61,12 +66,28 @@ trips[state_, pair_] := trips[state, pair] = Module[{returners},
  Union[Complement[people, state], pair]], {1,2}];
 
  (* for each such subset i in returners *)
- Return[Table[{state, pair, Sort[state] == Sort[pair], i, 
- Union[Complement[state, pair], i], 
- Max[Map[f, pair]] + Max[Map[f,i]]}, {i, returners}]];
+ Return[Table[{state, pair, Max[Map[f,pair]], Sort[state] == Sort[pair], i, 
+ Max[Map[f,i]], Union[Complement[state, pair], i]}, {i, returners}]];
 ]
 
 </code></pre>
+
+To find all possible trips, we simply loop carefully (to avoid
+nesting) over all states and all pairs for a given state.
+
+<pre><code>
+
+allTrips = Flatten[Table[
+ Flatten[Table[trips[state, i], {i, Subsets[state, {1,2}]}],1],
+ {state,states}], 1];
+
+</pre></code>
+
+
+
+TODO: request golf
+
+TODO: note lazy/bad, not educational
 
 trips2[state_] := Flatten[Table[trips[state, i], {i, Subsets[state, {1,2}]}],1]
 
@@ -74,6 +95,7 @@ test0717 = trips2[states[[19]]]
 
 test0723 = Flatten[Table[trips2[state], {state,states}],1];
 
+TODO: note PDF... inefficient
 
 
 
