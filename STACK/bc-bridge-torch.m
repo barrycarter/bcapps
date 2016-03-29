@@ -70,8 +70,14 @@ edges = Table[{i[[1]], If[Sort[i[[2]]] == Sort[i[[1]]], {}, i[[4]]],
 
 </code></pre>
 
-edges2 = DeleteDuplicates[Table[StringJoin[Sort[i[[1]]]]<>"x" <->
-StringJoin[Sort[i[[2]]]]<>"x", {i,edges}]]
+(* ugly! *)
+
+display[s_] := "|"<>StringJoin[Sort[s]]<>"|";
+
+edges2 = DeleteDuplicates[
+ Table[{display[i[[1]]] <-> display[i[[2]]]}, {i,edges}]
+];
+
 
 
 
