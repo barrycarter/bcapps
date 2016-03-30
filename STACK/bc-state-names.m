@@ -2,40 +2,62 @@
 
 http://mathematica.stackexchange.com/questions/111371/plots-of-united-states-states-with-non-standard-labels
 
-Using (local copy of): 
-
+I don't have Mathematica 10, so I used the KML file
 http://code.google.com/apis/kml/documentation/us_states.kml
+
+The only real improvement I made is modifying the text font size based
+on the state's width. This doesn't work 100%, since Mathematica
+doesn't use a monospaced font, but most of the "names" now fit
+approximately into their states.
+
+Other things I did that aren't really improvements:
+
+  - Omitted Hawaii and Alaska (no insets), since they drastically
+  reduce the space available for the continental United States (no
+  extra credit for me).
+
+  - Used an equiangular projection, which works OK for the continental
+  United States.
+
+  - Replaced the names of the 50 states with the list of words that
+  sound rude but aren't:
+  http://mentalfloss.com/article/58036/50-words-sound-rude-actually-arent
+
+My code:
+
+<pre><code>
+(* list of "names" is in this file *)
+
+<<"/home/barrycarter/BCGIT/STACK/badwords.m";
+
+(* I downloaded a local copy of http://code.google.com/apis/kml/documentation/us_states.kml but could've also imported it as http *)
 
 usa = Import["/home/barrycarter/BCGIT/STACK/us_states.kml", "Data"];
 
-Graphics[usa[[1,2,2,1]]]
+(* helper functions *)
+state[n_] := usa[[1,2,2,n]]
+name[n_] := usa[[1,6,2,n]]
+centroid[n_] := Flatten[Apply[List,state[n][[1]]]]
+ewpoints[n_] := Transpose[Partition[Flatten[Apply[List,state[n],1]],2]]
+width[n_] := Max[ewpoints[n][[1]]]-Min[ewpoints[n][[1]]]
 
-is AL; usa[[1,2,2,49]] is WI
-
-usa[[1,6,2,1]] is text Alabama
-
-usa[[1,2,2,1,1]] is quasi-centroid of Alabama
-
-cheating: state 2 is alaska, state 11 is HI
-
+(* omitting Alaska and Hawaii; cheating because I looked up their numbers, instead of omitting them "properly" *)
 states = Table[i, {i,Flatten[{1,Range[3,10],Range[12,50]}]}];
 
-test2120 = Table[{
+(* note the fontsize is tied to the ImageSize in the later Export *)
+g = Table[{
  EdgeForm[Thin],
- RGBColor[Random[], Random[], Random[]],
- usa[[1,2,2,i,1]],
- Text["hello", usa[[1,2,2,i,1,1]]],
+ Text[Style[f[i], FontSize-> 60*width[i]/StringLength[f[i]]], centroid[i]],
  Opacity[0.1],
- usa[[1,2,2,i]]
-}, {i,states}]
+ state[i]
+}, {i,states}];
 
-Graphics[test2120]
-showit
+Show[Graphics[g], AspectRatio -> 1/1.5]
+Export["/tmp/test.gif", %, ImageSize -> {1024*3,768*3}]
+</code></pre>
 
-Graphics[{
- usa[[1,2,2,1,1]],
- Text["hello", usa[[1,2,2,1,1,1]]],
- Opacity[0.1],
- usa[[1,2,2,1]],
-}]
-showit
+The result:
+
+[[/tmp/test.gif]]
+
+Git: https://github.com/barrycarter/bcapps/blob/master/STACK/bc-state-names.m
