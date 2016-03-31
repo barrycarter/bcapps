@@ -14,8 +14,19 @@ expandPoint[p1_,p2_,t_] = p1 + 1.01*(p2-p1)
 (* apply polygon then graphics to below to see AL *)
 Table[i, {i, state[1][[2,1]]}]
 
-expandPoint[p1_,p2_,t_] = p1 + (1+2/Norm[p2-p1])*(p2-p1)
-Table[expandPoint[i, {-85,31}, 0], {i, state[1][[2,1]]}]
+(* flipping definition so p1 is center and p2 is point to move *)
+expandPoint[p1_,p2_,t_] = p1 + (Norm[p2-p1])^0.1*((p2-p1)/Norm[p2-p1])
+expandPoint[p1_,p2_,t_] = p2 + Exp[-Norm[p2-p1]]*(p2-p1)
+Table[expandPoint[{-85,31}, i, 0], {i, state[1][[2,1]]}]
+Graphics[{Point[{-85,31}], Opacity[.2], Polygon[%]}]
+showit
+
+point = {-87,33};
+expandPoint[p1_,p2_,t_] = p2 + Exp[-Norm[p2-p1]]*(p2-p1)
+test0955 = Table[{Arrow[{i,expandPoint[point, i, 0]}]},{i, state[1][[2,1]]}]
+Graphics[{Arrowheads[.02], test0955, RGBColor[1,0,0], Point[point]}]
+showit
+
 Graphics[{Point[{-85,31}], Opacity[.2], Polygon[%]}]
 showit
 
