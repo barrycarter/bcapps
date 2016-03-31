@@ -1,6 +1,26 @@
 (* this starts out as an exact copy of
 http://mathematica.stackexchange.com/a/16138/1722 *)
 
+usa = Import["/home/barrycarter/BCGIT/STACK/us_states.kml", "Data"];
+state[n_] := usa[[1,2,2,n]]
+name[n_] := usa[[1,6,2,n]]
+centroid[n_] := Flatten[Apply[List,state[n][[1]]]]
+
+(* "expand" p1 away from p2 with exponential dropoff t *)
+
+expandPoint[p1_,p2_,t_] = p1 + Norm[p2-p1]*(p2-p1)
+
+(* apply polygon then graphics to below to see AL *)
+Table[i, {i, state[1][[2,1]]}]
+
+Table[expandPoint[i, {-85,31}, 0], {i, state[1][[2,1]]}]
+
+
+
+
+
+(******** NOT MY WORK BELOW THIS LINE *******)
+
 ClearAll["Global`*"]
 usa = Import[
    "http://code.google.com/apis/kml/documentation/us_states.kml", 
@@ -46,7 +66,7 @@ com2[pts_, weights_] := Module[{},
 
 origdata = (stateNames /. polygons)[[All, 2 ;;, 1]];
 newdata = origdata;
-nits = 10;
+nits = 2;
 nstates = Length@stateNames;
 weights = (stateNames /. popdata)/Total[stateNames /. popdata];
 For[j = 1, j <= nits*nstates(*Length@origdata*),
