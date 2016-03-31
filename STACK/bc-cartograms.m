@@ -8,12 +8,16 @@ centroid[n_] := Flatten[Apply[List,state[n][[1]]]]
 
 (* "expand" p1 away from p2 with exponential dropoff t *)
 
-expandPoint[p1_,p2_,t_] = p1 + Norm[p2-p1]*(p2-p1)
+expandPoint[p1_,p2_,t_] = p1 + 1.01*(p2-p1)
+
 
 (* apply polygon then graphics to below to see AL *)
 Table[i, {i, state[1][[2,1]]}]
 
+expandPoint[p1_,p2_,t_] = p1 + (1+2/Norm[p2-p1])*(p2-p1)
 Table[expandPoint[i, {-85,31}, 0], {i, state[1][[2,1]]}]
+Graphics[{Point[{-85,31}], Opacity[.2], Polygon[%]}]
+showit
 
 
 
