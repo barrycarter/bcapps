@@ -304,6 +304,18 @@ WRONG: t -> v^(-1) - Sqrt[1 - v^2]
 
 WRONG: t[v_] = v^(-1) - Sqrt[1 - v^2] 
 
+(*
 
+EDIT (to answer @WillO's second answer
+http://physics.stackexchange.com/a/246655/854):
 
+  - There's nothing wrong with using diagrams, provided we understand
+  the math behind the diagrams. If there's a disagreement about values
+  (as there is here), we should settle the disagreement using hard
+  (meaning solid, not difficult) math. I appreciate your putting your
+  answer in mathematical terms so we can do this.
 
+  - I've always seen the Lorentz transform written as $\gamma (x-t v)$
+  and $\gamma (t-v x)$
+
+*)

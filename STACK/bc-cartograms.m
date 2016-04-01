@@ -21,8 +21,8 @@ Table[expandPoint[{-85,31}, i, 0], {i, state[1][[2,1]]}]
 Graphics[{Point[{-85,31}], Opacity[.2], Polygon[%]}]
 showit
 
-point = {-87,33};
-expandPoint[p1_,p2_,t_] = p2 + Exp[-Norm[p2-p1]]*(p2-p1)
+point = {-88,33};
+expandPoint[p1_,p2_,t_] = p2 + Exp[-Infinity*Norm[p2-p1]]*(p2-p1)
 test0955 = Table[{Arrow[{i,expandPoint[point, i, 0]}]},{i, state[1][[2,1]]}]
 Graphics[{Arrowheads[.02], test0955, RGBColor[1,0,0], Point[point]}]
 showit
@@ -30,7 +30,15 @@ showit
 Graphics[{Point[{-85,31}], Opacity[.2], Polygon[%]}]
 showit
 
+(* Given central point p and other point p1, move p1 closer to or
+further away from p, depending on parameter, 1 = no change, 0 = suck
+into p *)
 
+movePoint[p_,p1_,t_] = p + t*(p1-p)
+expandPoint[p1_,p2_,t_] = movePoint[p1, p2, Exp[-Norm[p2-p1]]]
+test0955 = Table[{Arrow[{i,expandPoint[point, i, 0]}]},{i, state[1][[2,1]]}]
+Graphics[{Arrowheads[.02], test0955, RGBColor[1,0,0], Point[point]}]
+showit
 
 
 
