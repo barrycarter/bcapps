@@ -261,8 +261,9 @@ chkconfig postgresql off
 
 % 05 Mar 2015: installing fly since my programs use it
 
-cd /root/build; curl -O http://martin.gleeson.net/fly/dist/fly-2.0.1.tar.gz
-tar xvfz fly-2.0.1.tar.gz
+: or try 2.0.1 if this doesnt work
+cd /root/build; curl -LO http://martin.gleeson.com/fly/dist/fly-2.0.0.tar.gz
+tar xvfz fly-2.0.0.tar.gz
 cd fly-2.0.1
 make
 cp fly /usr/local/bin/

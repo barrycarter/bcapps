@@ -304,6 +304,24 @@ WRONG: t -> v^(-1) - Sqrt[1 - v^2]
 
 WRONG: t[v_] = v^(-1) - Sqrt[1 - v^2] 
 
+(* TODO: need to figure out a sign convention and stick with it *)
+
+translate[v_,x_,t_] = {x-v*t, t-v*x}/Sqrt[1-v^2]
+
+earth now 6 ly away, still seeing it at -10 (ie 2000) so assign it t=-6
+
+so if earth is my direction of travel (x,t)
+
+10,-10 ==> 6,-6
+
+-8/17
+
+Solve[translate[v,10,-10] == {6,-4}]
+Solve[translate[v,10,-10] == {6,-6}]
+
+
+
+
 (*
 
 EDIT (to answer @WillO's second answer
@@ -316,6 +334,67 @@ http://physics.stackexchange.com/a/246655/854):
   answer in mathematical terms so we can do this.
 
   - I've always seen the Lorentz transform written as $\gamma (x-t v)$
-  and $\gamma (t-v x)$
+  and $\gamma (t-v x)$ with negative signs, and never with positive
+  signs as you wrote it. It would be nice to see a reference that uses
+  positive signs, but I'm actually OK with this since it depends on
+  the sign of the velocity and how you orient your x axes.
+
+  - I believe our entire disagreement in this question and others
+  hinges on these sign changes. Your transformations (for v = 0.8 and
+  rationalizing to avoid decimals) is:
+
+$x'=(x+tv)/\sqrt{1-v^2} \to \frac{1}{3} (5 x +4 t)$
+
+$t'=(t+xv)/\sqrt{1-v^2} \to  \frac{1}{3} (5 t+4 x)$
+
+whereas I believe the correct transformations are:
+
+$x'=(x-tv)/\sqrt{1-v^2} \to \frac{1}{3} (5 x-4 t)$
+
+$t'=(t-xv)/\sqrt{1-v^2} \to \frac{1}{3} (5 t-4 x)$
+
+  - Why I believe this: The ship first sees Earth at the year 2000 and arrive
+  at the year 2022.5. I claim we should never see an intermediate year
+  outside these values (your answers are 10 years earlier, but the
+  same principle applies). Note that @john-rennie's answer also
+  mentions a 22.5 year time frame.
+
+  - The ship starts out 10 light years away from Earth and end up 0 light
+  years away from Earth. I claim we should never see an intermediate
+  distance of more than 10 light years.
+
+  - With your sign usage, both of the above occur. You have both x and
+  t at -30 at one point in your answer, meaning your answer spans 30
+  years time and 30 light years distance.
+
+  - Let's see what happens when we use the other sign convention.
+
+  - First, let me re-note the events (correcting the 10-year glitch),
+  and add an event E (I think you might've meant for Event D to be
+  when the ship lands on Earth, which 2022.5, not 2018, but I'll leave
+  it as is for now and just add an extra event):
+
+    - Event A: The spaceship suddenly accelerates to earth, with its
+  clock saying 2010.
+
+    - Event B: A clock on earth says 2000
+
+    - Event C: A clock on earth says 2010.
+
+    - Event D: A clock on earth says 2018.
+
+    - Event E: The ship lands, and a clock on Earth says 2022.5.
+
+  - Event A occurs at x=0, t=0 ship frame. We agree that no matrix can
+  transform this to anything other than x=0, t=0, so it always remains
+  x=0, t=0 in any frame.
+
+  - Event B occurs at x=-10 and t=-10 in Frame I, which translates to
+  x=-3.33 and t=-3.33 meaning the event occurred 3.33 years ago and
+  3.33 light years away. 
+
+
+
+TODO: other problems
 
 *)
