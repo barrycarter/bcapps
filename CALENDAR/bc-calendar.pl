@@ -177,8 +177,29 @@ for $week (-1..$globopts{weeks}-1) {
       }
     }
 
+#    print A "settile /home/barrycarter/BCGIT/images/MOON/m288.gif\n";
+
+#    if (rand() < .1) {
+#    print A "setstyle 255,0,0,255,255,0,255,255,255\n";
+#  } else {
+#    print A "killstyle\n";
+#  }
+
+    if (rand() < 0) {
+#      print A "filltoborder ",$x1+1,$y1+1,"0,0,255,0,0,255\n";
+      print A "setbrush /tmp/test.gif\n";
+    }
+
     # grid lines
-    print A "rect $x1,$y1,$x2,$y2,$gridcolor\n";
+    if (rand() < 0) {
+      print A "frect $x1,$y1,$x2,$y2,$gridcolor\n";
+    } else {
+      print A "rect $x1,$y1,$x2,$y2,$gridcolor\n";
+    }
+
+#    print A "killbrush\n";
+#    $gridcolor = "0,0,255";
+
   }
 }
 

@@ -16,6 +16,50 @@ Grid[{
  {end, 0, 10, 0, 10}
 }
 
+Someone moving away at 0.8c, standard sync
+
+d(t) = 0.8*t
+
+observed d(t) = t/1.8
+
+f(t + .8*t) = .8t -> f(t) = t*.8/1.8
+
+time(t) = 0.6*t
+
+observed time(t) = t/3
+
+t=10 actual time =6 distance = 8; at 18, I see 6
+
+t=20 actual time =12; dsitance = 16; at 36, I see 12
+
+f(t + .8*t) = .6*t -> f(1.8*t) = .6*t -> f(t) = t/3
+
+d(t) = v*t
+
+d(0) = 0
+
+d(1) = v; seen at v+1, so d(v+1) = v
+
+d(2) = 2*v, seen at 2+2v so d(2+2v) = 2v
+
+d(3) = 3*v, seen at 3+3v so d(3+3v) = 3v
+
+d(t) = tv/(1+v)
+
+time(0) = 0
+
+time(1) = gamma, so 1+v -> gamma
+
+time(2) = 2*gamma, so 2+2v -> 2*gamma
+
+time(t) = t*Sqrt[(1-v)/(1+v)]
+
+
+
+
+
+
+
 
 
 
@@ -319,6 +363,36 @@ so if earth is my direction of travel (x,t)
 Solve[translate[v,10,-10] == {6,-4}]
 Solve[translate[v,10,-10] == {6,-6}]
 
+re-tooled:
+
+earth in 2000 is 10, 0 [because I move towards it]
+me in 2010 is 0, 10 [because I'm 10 years ahead]
+
+event Earth clock reads 2000: 10, 0
+
+at .8c, 
+
+from constant 0.8c frame: I see 2000 when I'm 6ly away, so I say Earth
+time is 2006
+
+my space time coords for earth: (6, -4) when they are (0,0) for me
+
+earth clock reads 2010: 10, 0
+
+passing observer syncs
+
+
+
+
+
+
+
+translating into 0.8c
+
+should be: earth is 6, 
+
+earth is: {16.6667, -13.3333} 16 ly ahead 13.3 years ago
+old me is: {-13.3333, 16.6667} ... not relevant?
 
 
 
