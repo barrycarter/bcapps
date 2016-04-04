@@ -1,6 +1,122 @@
 (*
 
 http://physics.stackexchange.com/questions/210794/
+http://physics.stackexchange.com/questions/246165/
+
+
+<section name="fargo">
+
+<h2>The Fargo Fallacy</h2>
+
+This section is in response to @WillO's and @hypnosifl's "driving to
+Fargo" analogy.
+
+[[image goes here]]
+
+delta = 0.07;
+g2 = Graphics[{
+ Arrowheads[{.02}],
+ PointSize[.02],
+ Arrow[{{0,0},{0,1}}],
+ Arrow[{{0,1},{-1,1}}],
+ Point[{-0.5,1.5}],
+ Point[{0,0}],
+ Point[{0,1}],
+ Point[{-1,1}],
+ Text[Style["Minneapolis (M)", FontSize->25], {0,1+delta}],
+ Text[Style["St Louis (S)", FontSize->25], {3.5*delta,0}],
+ Text[Style["Aberdeen (A)", FontSize->25], {-1,1+delta}],
+ Text[Style["Fargo (F)", FontSize->25], {-0.5,1.5+delta}],
+ RGBColor[{1,0,0}],
+ Dashed,
+ Arrow[{{0,1},{1,1}}],
+ Point[{1,1}],
+ Text[Style["Green Bay (G)", FontSize->25], {1,1+delta}],
+}]
+showit
+
+@WillO states 
+
+TODO: cleanup quoting convention
+
+<blockquote>
+
+I am driving north toward Fargo. I say "Fargo is straight ahead, and
+always has been". Now I make a left and say "Fargo is to my right, and
+always has been".
+
+Do you really not understand that this is shorthand for "Fargo is in
+the direction i now call right and always has been?" Or that my
+previous reckoning of Fargo as straight ahead has now become
+completely irrelevant? Or that if I continue to rely onthat [sic] reckoning,
+I'm going to get lost?
+
+</blockquote>
+
+The statement **"Fargo is to my right, and always has been** is
+fundamentally inaccurate and can not be justified as shorthand.
+
+Suppose I'm in Aberdeen and want to know where I was two hours ago
+(each arrow represents one hour). Using @WillO's logic, I must assume
+that Fargo was always to my right, and I was thus in Green Bay two
+hours ago.
+
+In reality, my previous reckoning of Fargo *is* relevant. Here are
+some legitimate statements I could make:
+
+  - For one hour, I was traveling from St Louis to Minneapolis, and
+  Fargo was (pretty much) straight ahead.
+
+  - For one hour, I was traveling from Minneapolis to Aberdeen, and
+  Fargo was (pretty much) to my right.
+
+  - If someone else had been traveling the Minneapolis-Aberdeen path
+  an hour before I got there, arrived at Minneapolis at the same time
+  I did, and was traveling at the same constant speed as I am
+  traveling, they would have been in Green Bay when I was in St Louis.
+
+  - Another way to say it: one hour after starting out, I hopped on to
+  a ghost train that is doomed to travel forward westward at constant
+  speed. I hopped on the train at Minneapolis and it took me an hour
+  to get to Aberdeen. I can thus conclude the train was in Green Bay
+  one hour ago, when I was in St Louis.
+
+Converting any of these statements to **Fargo is to my right, and
+always has been** isn't "shorthand", it's simply false.
+
+Fundamentally, the Fargo Fallacy confuses the history of an observer
+and the history of a reference frame. The "ghost train" in my example
+above is a reference frame: it always travels in the same direction at
+the same speed. However, the observer (me) wasn't on the train before
+it arrived at Minneapolis. In fact, it's possible that there was no
+one at all on the train on its journey from Green Bay to Minneapolis.
+
+Once we understand this difference, and note that reference frames can
+exist without anyone in them, we can solve the problem. Ideally, we
+could solve this problem without using unpopulated reference frames
+(no ghost trains) at all. I'm checking to see if this may be possible,
+more details if that pans out.
+
+The Fargo Fallacy also appears in
+http://physics.stackexchange.com/questions/210794: if two objects are
+8 light years apart when at rest and approach each other, there is no
+frame of reference in which they will ever be more than 8 light years
+apart. However, one of the answers states:
+
+<blockquote>
+when the light signal was sent, I was not just 4.8 light years away; I
+was 4.8 plus another (10.67 x .8) light years away --- a total of
+about 13.33 light years.
+</blockquote>
+
+Once again, the confusion is between observers ("I") and reference
+frames. It was the reference frame that was 13.33 light years away,
+not the observer (who was never more than 8 light years away).
+
+</section>
+
+
+
 
 Grid[{
  {"Time","Earth distance","Earth Time","Light Travel Time","Earth Eyeball"},
