@@ -3,7 +3,6 @@
 http://physics.stackexchange.com/questions/210794/
 http://physics.stackexchange.com/questions/246165/
 
-
 <section name="fargo">
 
 <h2>The Fargo Fallacy</h2>
@@ -11,33 +10,9 @@ http://physics.stackexchange.com/questions/246165/
 This section is in response to @WillO's and @hypnosifl's "driving to
 Fargo" analogy.
 
-[[image goes here]]
-
-delta = 0.07;
-g2 = Graphics[{
- Arrowheads[{.02}],
- PointSize[.02],
- Arrow[{{0,0},{0,1}}],
- Arrow[{{0,1},{-1,1}}],
- Point[{-0.5,1.5}],
- Point[{0,0}],
- Point[{0,1}],
- Point[{-1,1}],
- Text[Style["Minneapolis (M)", FontSize->25], {0,1+delta}],
- Text[Style["St Louis (S)", FontSize->25], {3.5*delta,0}],
- Text[Style["Aberdeen (A)", FontSize->25], {-1,1+delta}],
- Text[Style["Fargo (F)", FontSize->25], {-0.5,1.5+delta}],
- RGBColor[{1,0,0}],
- Dashed,
- Arrow[{{0,1},{1,1}}],
- Point[{1,1}],
- Text[Style["Green Bay (G)", FontSize->25], {1,1+delta}],
-}]
-showit
+[[image16.gif]]
 
 @WillO states 
-
-TODO: cleanup quoting convention
 
 <blockquote>
 
@@ -96,6 +71,13 @@ exist without anyone in them, we can solve the problem. Ideally, we
 could solve this problem without using unpopulated reference frames
 (no ghost trains) at all. I'm checking to see if this may be possible,
 more details if that pans out.
+
+As @hypnosifl notes, **bringing "north" into it breaks the analogy
+because "north" has some objective definition that doesn't depend on
+our choice of coordinate system**. If we **did** have such a "north"
+in relativity, everything would be a lot easier, because we wouldn't
+have to rely on relative directions. Unforunately, the entire concept
+of special relativity is that all frames are relative.
 
 The Fargo Fallacy also appears in
 http://physics.stackexchange.com/questions/210794: if two objects are
@@ -588,3 +570,26 @@ $t'=(t-xv)/\sqrt{1-v^2} \to \frac{1}{3} (5 t-4 x)$
 TODO: other problems
 
 *)
+
+delta = 0.07;
+g2 = Graphics[{
+ Arrowheads[{.02}],
+ PointSize[.02],
+ Arrow[{{0,0},{0,1}}],
+ Arrow[{{0,1},{-1,1}}],
+ Point[{-0.5,1.5}],
+ Point[{0,0}],
+ Point[{0,1}],
+ Point[{-1,1}],
+ Text[Style["Minneapolis (M)", FontSize->25], {0,1+delta}],
+ Text[Style["St Louis (S)", FontSize->25], {3.5*delta,0}],
+ Text[Style["Aberdeen (A)", FontSize->25], {-1,1+delta}],
+ Text[Style["Fargo (F)", FontSize->25], {-0.5,1.5+delta}],
+ RGBColor[{1,0,0}],
+ Dashed,
+ Arrow[{{0,1},{1,1}}],
+ Point[{1,1}],
+ Text[Style["Green Bay (G)", FontSize->25], {1,1+delta}],
+}]
+showit
+
