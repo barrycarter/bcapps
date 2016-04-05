@@ -3,6 +3,84 @@
 http://physics.stackexchange.com/questions/210794/
 http://physics.stackexchange.com/questions/246165/
 
+rennie:
+
+t=0 is when guy arrives at Earth, so pre-accel:
+
+(-10, -12.5)
+
+after accel:
+
+(-6, -16.5)
+
+lets try w arb t where 2000 is null
+
+(10, u-10)
+
+(6, u-6)
+
+choosing 2018 as t=0
+
+choosing 2000 as t=0
+
+(10, 0)
+
+(6, 4)
+
+<section name="106">
+
+<h2>The 10/6 Conundrum</h2>
+
+Consider this event:  a beam of light leaves Earth in the year 2000.
+
+Before I accelerate, this event occurs 10 light years away from me 10
+years ago (since I am just now seeing this light beam). In other
+words, my coordinates for this event are $\{10,-10\}$ (note: I've
+re-oriented the x axis to face Earth, since that's the direction I
+will be traveling, but the conundrum occurs regardless of x axis
+orientation).
+
+After I accelerate, I'm seeing the same light beam (roughly speaking),
+but the Earth is now only 6 light years away. I thus conclude the
+light beam left Earth 6 years ago (in my reference frame). Thus, my
+coordinates for this event are $\{6,-6\}$.
+
+I suspect there's something wrong with my setup above, but can't
+figure out what it is.
+
+Why am I suspicious? If the above is correct, the Lorentz transform
+for $0.8 c$ should convert between the two coordinate systems, but it
+doesn't.
+
+Instead, it converts $\{10,-10\}$ to $\{30.,-30.\}$ (this is the same
+answer as @WillO gets), which says that, in the new, accelerated,
+frame, the light beam left Earth 30 light years away from my frame 30
+years ago. Of course, I wasn't in this frame at the time: I only
+entered the frame in the year 2010 at t=0.
+
+Oddly enough, it turns out the Lorentz transform for $-\frac{8 c}{17}$
+*does* convert $\{10,-10\}$ to $\{6,-6\}$, but I have no idea how that
+velocity (a little less than $0.5 c$ and going in the opposite "wrong"
+direction [ie, away from Earth]) enters the picture.
+
+Changing our definition of t=0 doesn't appear to help either. The $0.8
+c$ Lorentz transform of $\{10,u-10\}$ is $\left\{30-\frac{4
+u}{3},\frac{5 u}{3}-30\right\}$. There is no value for $u$ which
+yields $\{6,-6\}$.
+
+Setting $u=18$ yields $\{6,0\}$ (which is interesting) giving us the
+correct distance, and setting $u=\frac{72}{5}$ yields
+$\left\{\frac{54}{5},-6\right\}$ giving us the time, but neither of
+these yields $\{6,-6\}$
+
+Again, I feel I've done something wrong in setting up the above.
+
+On the one hand, I have two reference frames, and the Lorentz
+transform should be able to convert between them, since it accounts
+for time dilation, Lorentz contraction *and* simultaneity.
+
+On the other hand, well, it doesn't seem to actually do that.
+
 <section name="fargo">
 
 <h2>The Fargo Fallacy</h2>

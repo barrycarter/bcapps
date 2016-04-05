@@ -54,10 +54,10 @@ close(A);
 # TODO:  can't cache this really, since I use a fixed filename
 my($out,$err,$res) = cache_command("qhull Qz v n < /tmp/qclose.txt","age=60");
 debug($out);
-die "TESTING";
+# die "TESTING";
 @res = `qhull Qz v n < /tmp/qclose.txt`;
 debug(@res);
-die "TESTING";
+# die "TESTING";
 
 # TODO: really should be using chdir(tmpdir()) universally
 open(B,">/home/barrycarter/BCINFO/sites/TEST/gmarkclose.txt");
