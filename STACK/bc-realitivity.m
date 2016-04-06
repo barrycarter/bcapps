@@ -3,6 +3,29 @@
 http://physics.stackexchange.com/questions/210794/
 http://physics.stackexchange.com/questions/246165/
 
+<section name="accel0">
+
+Accel0 (A) and Stillhereia (S)
+
+view for accel0
+
+dist1[t_] = 6-0.8*t
+
+(* -30 -> 30, 0 -> 6, 
+
+timereal[t_] = -10 + 5/3*t
+
+Plot[timereal[t], {t,-30,7.5}]
+showit
+
+Plot[{real1[t],fake1[t]}, {t,-30,7.5}]
+showit
+
+
+
+</section>
+
+
 rennie:
 
 t=0 is when guy arrives at Earth, so pre-accel:
