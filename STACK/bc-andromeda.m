@@ -13,26 +13,27 @@ Lorentz contraction:
 
   - At the instant they pass, they both set their clocks to t=0.
 
-  - Both are seeing the light that left Earth in the year 2000.
+  - Both are seeing the light that left Earth in the year 1990.
 
   - Red notes the distance to Earth is 10 light years, and correctly
-  concludes it is now 2010 on Earth.
+  concludes it is now 2000 on Earth. Since Earth and Red are in the
+  same frame, they can agree it's 2000.
 
   - Red also notes that Black is traveling at 0.8c and will reach the
-  Earth in t=12.5 years (10/0.8), or in the Earth year 2022.5, which
+  Earth in t=12.5 years (10/0.8), or in the Earth year 2012.5, which
   is correct.
 
   - Black notes that, by the Lorentz contraction, Earth is only 10*0.6
   = 6 light years away, and incorrectly concludes that the Earth year
-  must be 2006.
+  must be 1996.
 
   - Black also notes that it will take him 6/0.8 or 7.5 years to reach
   Earth.  Of course, by time dilation, Earth clocks will experience
   7.5/0.6 or 12.5 years in that time.
 
-  - Since Black believes it's 2006 on Earth now, and his trip will
+  - Since Black believes it's 1996 on Earth now, and his trip will
   take 12.5 years Earth time, he incorrectly expects to arrive at
-  2018.5.
+  2008.5.
 
 What went wrong?
 
@@ -79,25 +80,21 @@ $\{10,t\}\to \{16.6667\, -1.33333 t,1.66667 t-13.3333\}$
 We note (or compute) that $t=8$ gives us $\{6,0\}$.
 
 This means that, in order to use the Lorentz transform, Black *must*
-assign Earth a time of $t=8$ or the year 2018, when he passes Red.
-
-TODO: below may be wrong
+assign Earth a time of $t=8$ or the year 2008, when he passes Red.
 
 In other words, Black can't assign both Red and Earth the same time
-$t=0$ (ie, the year 2010), because, as above, this would break the
+$t=0$ (ie, the year 2000), because, as above, this would break the
 Lorentz contraction (note that the Lorentz contraction, which deals
 only with position, and the Lorentz transform, which deals with both
 position and time, are different).
 
-So, if Black decides that the Earth year is 2008 when he passed Red,
+So, if Black decides that the Earth year is 2008 when he passes Red,
 how do his computations go?:
 
   - Black still knows it will take him 7.5 years to reach Earth (his
   frame), which translates to 12.5 years in the Earth frame. 
 
-also notes that it will take him 6/0.8 or 7.5 years to reach
-  Earth.  Of course, by time dilation, Earth clocks will experience
-  7.5/0.6 or 12.5 years in that time.
+TODO: this should be 2022.5, not 2020.5
 
 
 
@@ -122,7 +119,7 @@ circs = Table[{
 },{i,0,9}];
 
 texts = Table[{
- Rotate[Text[Style[ToString[2000+i], FontSize -> 20], {i,0}], 90*Degree]
+ Rotate[Text[Style[ToString[1990+i], FontSize -> 20], {i,0}], 90*Degree]
 },{i,1,9}];
 
 g2 = Graphics[{
@@ -133,8 +130,8 @@ g2 = Graphics[{
  Arrow[{{0,.25},{.75,.25}}],
  Text[Style["0.8c", FontSize -> 20], {.75/2, .5}],
  Text[Style["Earth", FontSize -> 20], {10, .25}],
- Text[Style["2010", FontSize -> 20], {10, -.25}],
- Rotate[Text[Style["2000", FontSize -> 20], {-0.5, 0.125}], 90*Degree],
+ Text[Style["2000", FontSize -> 20], {10, -.25}],
+ Rotate[Text[Style["1990", FontSize -> 20], {-0.5, 0.125}], 90*Degree],
  Arrow[{{-0.5, 0.50},{0,1.5}}],
  Arrow[{{-0.5, -0.30},{0,-1.5}}],
  Arrowheads[{-.02,.02}],
