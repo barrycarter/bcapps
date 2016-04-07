@@ -3,11 +3,137 @@
 http://physics.stackexchange.com/questions/210794/
 http://physics.stackexchange.com/questions/246165/
 
+<section name = "justAMT">
+
+journey is from t=0 to t=7.5 AMT time or t=0 to t=12.5 earth time)
+
+dist2Earth[t_] = If[t<0, 10, 6-0.8*t]
+earthTime[t_] = If[t<0, 0, 8+0.6*t]
+seeTime[t_] = If[t<0, -10, 3*t-10]
+
+Plot[{earthTime[t], seeTime[t], dist2Earth[t], t}, {t,-0.5,7.5}, 
+ AxesOrigin -> {-0.5,0},
+ PlotLegends -> {"EarthTime", "EarthClock", "EarthDist", "MeTime"}]
+showit
+
+(* below is Terran view *)
+
+dist2Ship[t_] = If[t<0, 10, 10-0.8*t]
+shipTime[t_] = If[t<0, t, 0.6*t]
+seeTimeShip[t_] = If[t<0, t-10, 3*t-30]
+
+Plot[{shipTime[t], seeTimeShip[t], dist2Ship[t], t}, {t,-0.5,12.5}, 
+ AxesOrigin -> {-0.5,0},
+ PlotLegends -> {"ShipTime", "ShipClock", "ShipDist", "MeTime"}]
+showit
+ 
+
+seetime(t + dist2Ship(t)) = shiptime(t)
+
+t + (10 - 0.8*t) -> 0.6*t
+
+0.2*t + 10 -> 0.6*t
+
+t -> (u-10)*5
+
+
+seetime(t + dist2Earth[t]) -> earthTime[t]
+
+seetime(t + 6 - 0.8t) -> 8 + 0.6*t
+
+seetime (.2t + 6) -> 8 + 0.6t
+
+u = .2t*6, so t = 5*(u-6)
+
+
+Plot[{earthTime[t], dist2Earth[t]}, {t,-0.5,7.5}, AxesOrigin -> {-0.5,0},
+ PlotRange -> All,
+ PlotLegends -> {"EarthTime", "EarthDist"}]
+showit
+
+
+
+
+
+
+
+
+</section>
+
+
+
 <section name="accel0">
+
+earth dist (no stillhereia, just accel0; t=0 now means land time)
+
+dist2Earth[t_] = 0.8*t
+earthTime[t_] = 0.6*t
+seeTime[t_] = t*3
+
+-7.5 6ly from earth, seeing -4.5, 
+
+seetime(t + 0.8*t) = 0.6*t
+
+
+
+
+Plot[{earthTime[t], seeTime[t], dist2Earth[t]}, {t,-7.5,0}, 
+ PlotLegends -> {"Assumed", "Eyeball", "Distance"}]
+showit
+
+seetime(t - 0.8*t)
+
+
 
 Accel0 (A) and Stillhereia (S)
 
 view for accel0
+
+epiphany: transform between NMT and Earth must be affine, not linear, so we translate only between NMT and AMT
+
+(* this is how AMT sees NMT's clock and Earth's clock [and actually
+vice versa too] *)
+
+time1[t_] = 0.6*t
+dist1[t_] = 0.8*t
+
+time i will see 0.6*t is 0.6*t + Abs[0.8*t]
+
+so
+
+seetime(t + Abs[0.8*t]) == 0.6*t
+
+seetime[t_] = If[t>0, t/3, t*3]
+
+time2[t_] = time1[t] - Abs[dist1[t]]
+
+
+Plot[{time1[t],seetime[t],dist1[t]}, {t,0,7.5}, 
+ PlotLegends -> {"Assumed", "Eyeball", "Distance"}]
+showit
+
+now from earth
+
+time2[t_] = 0.6*t
+dist2[t_] = 0.8*t-6
+
+seetime2(t + Abs[0.8*t-6]) = 0.6*t
+
+
+
+ok...
+
+AMT at -20, then NMT at -12, at distance 16 so assume 4
+
+AMT at t, NMT at 0.6*t, at distance -0.8*t so assume 0.2*t
+
+Plot[time1[t], {t,-30,7.5}]
+
+
+
+
+
+
 
 dist1[t_] = 6-0.8*t
 
