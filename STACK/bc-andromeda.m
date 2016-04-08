@@ -29,11 +29,11 @@ Lorentz contraction:
 
   - Black also notes that it will take him 6/0.8 or 7.5 years to reach
   Earth.  Of course, by time dilation, Earth clocks will experience
-  7.5/0.6 or 12.5 years in that time.
+  7.5*0.6 or 4.5 years in that time.
 
   - Since Black believes it's 1996 on Earth now, and his trip will
-  take 12.5 years Earth time, he incorrectly expects to arrive at
-  2008.5.
+  take 4.5 years Earth time, he incorrectly expects to arrive at
+  2000.5.
 
 What went wrong?
 
@@ -92,14 +92,10 @@ So, if Black decides that the Earth year is 2008 when he passes Red,
 how do his computations go?:
 
   - Black still knows it will take him 7.5 years to reach Earth (his
-  frame), which translates to 12.5 years in the Earth frame. 
+  frame), which translates to 4.5 years in the Earth frame.
 
-TODO: this should be 2022.5, not 2020.5
-
-
-
-
-
+  - Thus, Black correctly calculates he will reach Earth when the
+  Earth clock shows 2008+4.5 = 2012.5
 
 
 TODO: maybe mention Fargo Fallacy; note acceleration, Andromeda paradox
