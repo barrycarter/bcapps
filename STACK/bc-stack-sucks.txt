@@ -1,0 +1,49 @@
+Subject: Question closed on stackexchange.com? Need free help in a hurry?
+
+stackexchange.com is a great site to ask questions and receive
+professional answers, but it usually takes time to get an answer and
+questions are sometimes closed unnecessarily.
+
+Here are some other options:
+
+  - If your question is closed on physics.stackexchange.com (which is
+  plagued by "overly aggressive moderators"), try posting on:
+
+    - math.stackexchange.com if your question is mostly mathematical,
+    or mathoverflow.net if your question is mathematical and fairly
+    high-level.
+
+    - astronomy.stackexchange.com if your question is about astronomy.
+
+    - space.stackexchange.com if your question is about space
+    exploration, rocket launches, or anything similar.
+
+    - earthscience.stackexchange.com if your question relates to Earth
+    science.
+
+    - gis.stackexchange.com if your question is about GIS or geography.
+
+    - mathematica.stackexchange.com if you are working physics
+    problems with Mathematica(tm) software.
+
+    - programmers.stackexchange.com if you are writing a computer
+    program to do physics (also stackoverflow.com)
+
+    - scifi.stackexchange.com if you're wondering how physics works in
+    an existing science fiction world, or
+    worldbuilding.stackexchange.com if you're trying to create a world
+    and need help with your fictional physics.
+
+    - http://meta.physics.stackexchange.com/questions/391 also lists
+    several possibly helpful sites.
+
+  - If you need help more urgently, or your question was closed on a
+  StackExchange site, you might try:
+
+    - openstudy.com: near-real-time help, somewhat difficult-to-naviate interface
+
+    - wolframalpha.com: if you just need to check your answers, this
+    can be helpful, but it's been having a few serious problems later,
+    so proceed with caution.
+
+

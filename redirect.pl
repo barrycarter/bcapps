@@ -32,6 +32,8 @@ if ($ENV{HTTP_HOST} eq "u.94y.info") {
   print "Location: http://wordpress.barrycarter.info/index.php/track-albuquerque-lightning-july-16th-20th/";
 } elsif ($ENV{HTTP_HOST} eq "pbs.u.94y.info") {
   print "Location: http://wordpress.barrycarter.info/index.php/2014/04/23/pearls-before-swine-comments";
+} elsif ($ENV{HTTP_HOST} eq "se.u.94y.info") {
+  print "Location: http://wordpress.barrycarter.org/index.php/2016/04/08/question-closed-on-stackexchange-com-need-free-help-in-a-hurry/";
 } else {
   # do nothing
 }
