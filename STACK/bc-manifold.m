@@ -2,6 +2,26 @@
 
 position of accel obj in its own frame
 
+norm1Square[t_] = (v0*dt + a*t*dt)^2 - dt^2
+
+norm2Square[tau_] = f[tau]^2*dtau^2 - dtau^2
+
+trueNorm1[t_] = Sqrt[-1 + a^2*t^2 + 2*a*t*v0 + v0^2]
+
+trueLength[t_] = Integrate[trueNorm1[t], t]
+
+(* massive simplify *)
+
+norm1Square[t_] = a*t*dt^2 - dt^2
+
+norm2Square[tau_] = f[tau]^2*dtau^2 - dtau^2
+
+trueNorm1[t_] = Sqrt[-1 + a t]
+
+trueLength1[t_] = Integrate[trueNorm1[t], t]
+
+g[tau_] = Solve[norm1Square[t] == norm2Square[tau], dtau][[1,1,2]]
+
 s = (t, s0 + v0*t + a*t^2/2, 0, 0)
 
 ds = (dt, v0*dt + a*t*dt, 0, 0)
