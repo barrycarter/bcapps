@@ -7,9 +7,10 @@ A:
 
 (* bob's velocity at time t *)
 
-vbob[t_] = Floor[t]
+vbob[t_] = Floor[t+1]
 sbob[t_] = Integrate[vbob[u],{u,0,t}]
-beacon[n_,t_] = If[t>=n, Point[{sbob[n]+vbob[n]*t,0}], Null];
+beacon[n_,t_] = If[t>=n, Text[ToString[n], 
+ {sbob[n-1]+vbob[n-1]*(t-n+1),0}], Null];
 
 beacons[t_] = Table[beacon[n,t], {n,0,10}]
 
@@ -24,20 +25,57 @@ g2[t_] := Graphics[{
 
 g3[t_] := Show[g2[t], PlotRange->{{0,45},{-1,1}}]
 
-ani = Table[g3[t],{t,0,10,.1}]
-Export["/tmp/test.gif", ani]
+ani = Table[g3[t],{t,0,20,.05}]
+Export["/tmp/test.gif", ani, ImageSize -> {1024, 50}]
 
-
+TODO: maybe improve graphic
 
 Bob drops a beacon and then accelerates at $a$ for one second,
 repeating this process indefinitely. The 0th beacon is what we'll call
 Bob's "starting point".
 
-We take as granted the formulas for relativistic addition, time
-dilation, and Lorentz contraction:
+We take as given the formulas for relativistic velocity addition, time
+dilation, and Lorentz contraction (all velocities given as a
+percentage of the speed of light):
+
+$\text{add}(u,v)=\frac{u+v}{u v+1}$
+
+$\text{dilation}(\text{v$\_$})=\frac{1}{\sqrt{1-v^2}}$
+
+TODO: add Carol
+
+TODO: add contraction
+
+TODO: Above is derivable
+
+How fast is the nth beacon traveling, according to Carol?
+
+The first beacon is traveling at $a$ since Bob started at rest with
+respect to Carol.
+
+The second beacon is traveling at $a$ with respect to the first
+beacon, so we use the relativistic addition formula:
+
+$\text{add}(a,a)\to \frac{2 a}{a^2+1}$
+
+So we now know the second beacon is traveling at $\frac{2 a}{a^2+1}$
+with respect to Carol.
+
+The third beacon is traveling at $a$ with respect to the second
+beacon, so we again apply the relativistic addition formula:
+
+$   
+    \text{add}\left(\frac{2 a}{1+a^2},a\right)\to \frac{a \left(a^2+3\right)}{3
+    a^2+1}
+$
+
+It turns out the nth beacon (computations omitted) 
 
 
 
+TODO: how far, what time, and add light travel
+
+TODO: mention git file
 
 
 
