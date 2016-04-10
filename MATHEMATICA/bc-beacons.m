@@ -1,5 +1,51 @@
 (*
 
+Q: Say Barry, could you abuse the answer-your-own-question feature of
+this site and explain constant acceleration in relativity?
+
+A:
+
+(* bob's velocity at time t *)
+
+vbob[t_] = Floor[t]
+sbob[t_] = Integrate[vbob[u],{u,0,t}]
+beacon[n_,t_] = If[t>=n, Point[{sbob[n]+vbob[n]*t,0}], Null];
+
+beacons[t_] = Table[beacon[n,t], {n,0,10}]
+
+g2[t_] := Graphics[{
+
+ Point[{sbob[t],0}],
+ beacons[t]
+
+
+
+}]
+
+g3[t_] := Show[g2[t], PlotRange->{{0,45},{-1,1}}]
+
+ani = Table[g3[t],{t,0,10,.1}]
+Export["/tmp/test.gif", ani]
+
+
+
+Bob drops a beacon and then accelerates at $a$ for one second,
+repeating this process indefinitely. The 0th beacon is what we'll call
+Bob's "starting point".
+
+We take as granted the formulas for relativistic addition, time
+dilation, and Lorentz contraction:
+
+
+
+
+
+
+TODO: mention http://physics.stackexchange.com/questions/240342/clock-on-constantly-accelerating-object-approaches-gudermannian-limit
+
+TODO: note to edit this question if I ever get around to showing linear transform
+
+
 TODO: consider publishing, but currently just a playground
 
 we assume addition formula, dilation formula and all speeds as

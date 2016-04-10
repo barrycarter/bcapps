@@ -1,6 +1,50 @@
 (* uses the invariance of ds to look over relativity issues *)
 
-position of accel obj in its own frame
+accel in alt frame
+
+(t, 0, 0, 0) vs (g[u], f[u], 0, 0)
+
+f''[g[u]] == a*g[u]
+
+DSolve[f''[x] == a*x, f, x]
+
+      (a*g[u]^3)/6, 
+
+const vel
+
+(t, 0, 0, 0) vs (u, v*u, 0, 0)
+
+Solve[-dt^2 == -du^2 + v^2*du^2, du][[2,1,2]]/dt
+
+let t[u] be the function converting from local time to remote time
+
+f''[t[u]] == a*t[u]
+
+t[u_] = (x^3)/6
+
+(u^3/6, ???
+
+(u^2/2, a*u^2/2)
+
+(a*u^2/2*du)^2 - (u^2/2*du)^2
+
+(t[u], a*t[u]^2)
+
+(dt, v*dt, 0, 0)
+
+double frame conversion?
+
+
+
+
+
+
+
+
+
+normSquare[u_] = (v[u]*du + a*t*dt)^2 - du^2
+
+Solve[dt^2 == normSquare[u], du]
 
 norm1Square[t_] = (v0*dt + a*t*dt)^2 - dt^2
 
