@@ -81,6 +81,20 @@ If $a=0.01$ (which means Bob is accelerating at 1% the speed of light
 every second or about 2997.92458 kilometers per second per second),
 let's see what the speed of the nth beacon would look like.
 
+plot1 = Table[{n, v[n] /. a -> .01}, {n,0,200}]
+plot2 = Table[{n, .01*n}, {n,0,200}]
+
+ListPlot[{plot1,plot2}, PlotRange -> { {0,100}, {0,1}}, 
+ PlotLegends -> {"Actual", "Newtonian"}]
+showit
+
+plot3 = Table[{n, v[n] /. a -> .01}, {n,0,1000}]
+
+ListPlot[plot3]
+showit
+
+TODO: summary table
+
 Table[{{n, v[n] /. a -> .01}, {n, .01*n}},{n,0,100}]
 
 
@@ -90,21 +104,45 @@ v[n_] =
  FullSimplify[RSolve[{v[0] == 0, v[n+1] == add[v[n],a]}, v[n], n][[1,1,2]],
  {Element[n,Integers], n>0, a>0}]
 
+(* time between n-1st and nth beacon drop *)
+
+dt[n_] = FullSimplify[1/Sqrt[1-v[n]^2], {a>0, a<1, Element[n, Integers], n>0}]
+
+(* TODO: graph *)
+
+conds = {a>0, n>0, Element[n,Integers]}
+
+t[n_] = FullSimplify[Sum[dt[i], {i,1,n}],conds]
+
+(* distance between n-1st and nth beacon drop *)
+
+ds[n_] = FullSimplify[dt[n]*v[n], conds]
+
+s[n_] = FullSimplify[Sum[ds[i],{i,1,n}],conds]
+
+visible[n_] = FullSimplify[s[n]+t[n],conds]
 
 
+TODO: explicit workout of time and position for 1, 2, 3 just to
+confirm formulas
 
 It turns out the nth beacon (computations omitted) 
 
 add[u_,v_] = (u+v)/(1+u*v)
 
+TODO: bob -> carol frame
 
+TODO: send msg to nth beacon takes how long
 
-
+TODO: return msg takes how long
 
 TODO: how far, what time, and add light travel
 
 TODO: mention git file
 
+TODO: consider log plots where appropriate
+
+TODO: s0 and v0 case? (and decel?)
 
 
 TODO: mention http://physics.stackexchange.com/questions/240342/clock-on-constantly-accelerating-object-approaches-gudermannian-limit
