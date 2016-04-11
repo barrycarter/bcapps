@@ -69,7 +69,35 @@ $
     a^2+1}
 $
 
+In general, we find the velocity of the nth beacon as follows:
+
+$v_{n+1}=\text{add}\left(v_n,a\right) \to \frac{a+v_n}{a v_n+1}$
+
+The closed form for this recursion is:
+
+$v_n=1-\frac{2 (1-a)^n}{(1-a)^n+(a+1)^n}$
+
+If $a=0.01$ (which means Bob is accelerating at 1% the speed of light
+every second or about 2997.92458 kilometers per second per second),
+let's see what the speed of the nth beacon would look like.
+
+Table[{{n, v[n] /. a -> .01}, {n, .01*n}},{n,0,100}]
+
+
+c = 299792458
+
+v[n_] = 
+ FullSimplify[RSolve[{v[0] == 0, v[n+1] == add[v[n],a]}, v[n], n][[1,1,2]],
+ {Element[n,Integers], n>0, a>0}]
+
+
+
+
 It turns out the nth beacon (computations omitted) 
+
+add[u_,v_] = (u+v)/(1+u*v)
+
+
 
 
 

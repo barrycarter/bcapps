@@ -53,14 +53,37 @@ TODO: table
 tab = {
  {"Event", "LST", "Azimuth", "Altitude"},
 
- {"any", "t", raDecLatLonHA2az[alpha, delta, lambda,psi,t],
+ {"Any", "t", raDecLatLonHA2az[alpha, delta, lambda,psi,t],
               raDecLatLonHA2alt[alpha, delta, lambda,psi,t]},
 
+ {"Rise", rise, raDecLatLonHA2az[alpha,delta,lambda,psi,rise], 0},
+
+ {"Transit", alpha, ???, 
+
+ {"Set", set, raDecLatLonHA2az[alpha,delta,lambda,psi,set], 0},
+
+ {"Nadir", alpha+Pi, ???, 
 
 };
 
+TODO: examples for testing, ie Sirius over ABQ
+
+raDecLatLonHA2az[alpha,delta,lambda,psi,rise]
+
+raDecLatLonHA2az[alpha,delta,lambda,psi,rise] /.
+ ArcTan[v1_,v2_] -> ArcTan[v2/v1]
+
+
+
 Grid[tab, Frame -> All]
 showit
+
+
+rise = alpha - ArcCos[-(Tan[delta] Tan[lambda])]
+set = alpha + ArcCos[-(Tan[delta] Tan[lambda])]
+
+
+Solve[raDecLatLonHA2alt[alpha, delta, lambda,psi,t][[2]]==0, t] /. C[1] -> 0
 
 (* join list of strings with character *)
 
