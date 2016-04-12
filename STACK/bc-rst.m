@@ -1,19 +1,93 @@
+(* formulas start here *)
+
+(* http://idlastro.gsfc.nasa.gov/ftp/pro/astro/hadec2altaz.pro *)
+
+sh = Sin[ha]
+ch = Cos[ha]
+sd = Sin[dec]
+cd = Cos[dec]
+sl = Sin[lat]
+cl = Cos[lat]
+
+x = - ch * cd * sl + sd * cl
+y = - sh * cd
+z = ch * cd * cl + sd * sl
+r = Sqrt[x^2 + y^2]
+
+az = ArcTan[x,y]
+alt = ArcTan[r,z]
+
+conds = {-Pi/2<dec<Pi/2, -Pi/2<lat<Pi/2, -Pi<ha<Pi, -Pi<lon<Pi}
+
+raDecLatLonHA2az[alpha_, delta_, lambda_, psi_, t_] = FullSimplify[ 
+ az /. {lat -> lambda, dec -> delta, ha -> t - alpha},
+ conds];
+
+raDecLatLonHA2alt[alpha_, delta_, lambda_, psi_, t_] = FullSimplify[ 
+ alt /. {lat -> lambda, dec -> delta, ha -> t - alpha},
+ conds];
+
+Clear[sh, ch, sd, cd, sl, cl, x, y, z, r, az, alt];
+
+(* TODO: is my condition for alpha bad below? *)
+
+conds = {alpha > -Pi, alpha < Pi, delta > -Pi/2, delta < Pi/2, lambda > -Pi/2,
+ lambda < Pi/2, psi > -Pi, psi < Pi, t > -Pi, t < Pi};
+
+rise = FullSimplify[alpha - ArcCos[-(Tan[delta] Tan[lambda])],conds]
+set = FullSimplify[alpha + ArcCos[-(Tan[delta] Tan[lambda])],conds]
+
+riseAz=FullSimplify[raDecLatLonHA2az[alpha, delta, lambda, psi, rise], conds];
+setAz=FullSimplify[raDecLatLonHA2az[alpha, delta, lambda, psi, set], conds];
+
+transAz=FullSimplify[raDecLatLonHA2az[alpha, delta, lambda, psi, alpha],conds];
+nadirAz=FullSimplify[raDecLatLonHA2az[alpha,delta,lambda,psi,alpha+Pi],conds];
+
+maxEl=FullSimplify[raDecLatLonHA2alt[alpha, delta, lambda, psi, alpha],conds];
+minEl=FullSimplify[raDecLatLonHA2alt[alpha,delta,lambda,psi,alpha+Pi],conds];
+
+(* formulas end here *)
+
+(* graph testing for simplifications *)
+
+Plot[
+ raDecLatLonHA2alt[0, 10*Degree, 35*Degree, 0, t/12*Pi]/Degree, 
+ {t,0,24}]
+showit
+
+Plot[
+ raDecLatLonHA2az[0, 10*Degree, 35*Degree, 0, t/12*Pi]/Degree, 
+ {t,0,24}]
+showit
+
+
+TODO: graphics = show not sine wave or easy
+
 (* most of this is from ../ASTRO/playground5.m *)
 
-By http://idlastro.gsfc.nasa.gov/ftp/pro/astro/hadec2altaz.pro (with
-minor changes),
+By http://idlastro.gsfc.nasa.gov/ftp/pro/astro/hadec2altaz.pro (plus
+some additional calculations/simplifications),
 
-$
-   \phi \to \tan ^{-1}(\sin (\delta ) \cos (\lambda )-\cos (\delta ) \sin
-    (\lambda ) \cos (\alpha -t),\cos (\delta ) \sin (\alpha -t))
-$
+tab = {
+ {"Event", "Time", phi, Z},
 
-$
-   Z\to \tan ^{-1}\left(\sqrt{(\sin (\delta ) \cos (\lambda )-\cos (\delta )
-    \sin (\lambda ) \cos (\alpha -t))^2+\cos ^2(\delta ) \sin ^2(\alpha
-    -t)},\cos (\delta ) \cos (\lambda ) \cos (\alpha -t)+\sin (\delta ) \sin
-    (\lambda )\right)
-$
+ {"Any", "t", raDecLatLonHA2az[alpha, delta, lambda,psi,t],
+              raDecLatLonHA2alt[alpha, delta, lambda,psi,t]},
+
+ {"Rise", rise, riseAz, 0},
+
+ {"Transit", alpha, transAz, maxEl},
+
+ {"Set", set, setAz, 0},
+
+ {"Nadir", FullSimplify[alpha+Pi], nadirAz, minEl}
+
+};
+
+tab // TeXForm
+showit;
+
+
 
 where:
 
@@ -35,6 +109,21 @@ where:
 Note the two-argument form of arctangent is required so that the
 results are in the correct quadrant:
 https://en.wikipedia.org/wiki/Inverse_trigonometric_functions#Two-argument_variant_of_arctangent
+
+TODO: circumpolar/cishorizonal <- not a word
+
+
+$
+   \phi \to \tan ^{-1}(\sin (\delta ) \cos (\lambda )-\cos (\delta ) \sin
+    (\lambda ) \cos (\alpha -t),\cos (\delta ) \sin (\alpha -t))
+$
+
+$
+   Z\to \tan ^{-1}\left(\sqrt{(\sin (\delta ) \cos (\lambda )-\cos (\delta )
+    \sin (\lambda ) \cos (\alpha -t))^2+\cos ^2(\delta ) \sin ^2(\alpha
+    -t)},\cos (\delta ) \cos (\lambda ) \cos (\alpha -t)+\sin (\delta ) \sin
+    (\lambda )\right)
+$
 
 Using these, we see:
 
@@ -79,8 +168,6 @@ Grid[tab, Frame -> All]
 showit
 
 
-rise = alpha - ArcCos[-(Tan[delta] Tan[lambda])]
-set = alpha + ArcCos[-(Tan[delta] Tan[lambda])]
 
 
 Solve[raDecLatLonHA2alt[alpha, delta, lambda,psi,t][[2]]==0, t] /. C[1] -> 0
@@ -214,33 +301,6 @@ TODO: source http://idlastro.gsfc.nasa.gov/ftp/pro/astro/hadec2altaz.pro
 TODO: if over 1 or under -1, then..
 
 TODO: how to find sidereak time
-
-http://idlastro.gsfc.nasa.gov/ftp/pro/astro/hadec2altaz.pro
-
-sh = Sin[ha]
-ch = Cos[ha]
-sd = Sin[dec]
-cd = Cos[dec]
-sl = Sin[lat]
-cl = Cos[lat]
-
-x = - ch * cd * sl + sd * cl
-y = - sh * cd
-z = ch * cd * cl + sd * sl
-r = Sqrt[x^2 + y^2]
-
-az = ArcTan[x,y]
-alt = ArcTan[r,z]
-
-conds = {-Pi/2<dec<Pi/2, -Pi/2<lat<Pi/2, -Pi<ha<Pi, -Pi<lon<Pi}
-
-raDecLatLonHA2az[alpha_, delta_, lambda_, psi_, t_] = FullSimplify[ 
- az /. {lat -> lambda, dec -> delta, ha -> t - alpha},
- conds];
-
-raDecLatLonHA2alt[alpha_, delta_, lambda_, psi_, t_] = FullSimplify[ 
- alt /. {lat -> lambda, dec -> delta, ha -> t - alpha},
- conds];
 
 (* pure comps end here *)
 
