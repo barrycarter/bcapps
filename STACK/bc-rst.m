@@ -63,20 +63,6 @@ minEl = Abs[delta + lambda]-Pi/2;
 
 (* formulas end here *)
 
-(* graph testing for simplifications *)
-
-Plot[
- raDecLatLonHA2alt[0, 10*Degree, 35*Degree, 0, t/12*Pi]/Degree, 
- {t,0,24}]
-showit
-
-Plot[
- raDecLatLonHA2az[0, 10*Degree, 35*Degree, 0, t/12*Pi]/Degree, 
- {t,0,24}]
-showit
-
-TODO: graphics = show not sine wave or easy
-
 (* functions that can be improved *)
 
 (* nadirAz and transAz *)
@@ -123,8 +109,11 @@ tab = {
 
 tab // TeXForm
 
-Using http://idlastro.gsfc.nasa.gov/ftp/pro/astro/hadec2altaz.pro (and
-some additional calculations/simplifications):
+(* ANSWER STARTS HERE *)
+
+I'm not sure it qualifies as "simple", but, using
+http://idlastro.gsfc.nasa.gov/ftp/pro/astro/hadec2altaz.pro (and some
+additional calculations/simplifications):
 
 $
    \begin{array}{|c|c|c|c|}
@@ -193,70 +182,49 @@ Additional caveats:
   always above the horizon (circumpolar), and the equations for rising
   and setting time will also not work.
 
+  - The measurements above are in radians. You can convert $\pi \to
+  180 {}^{\circ}$ for degrees.
+
+  - Because we use the local sidereal time, the longitude doesn't
+  appear in any of the formulas above. However, we do need it to find
+  the local sidereal time, as below.
+
+  - To find the local sideral time $t$ in radians, we use
+  http://aa.usno.navy.mil/faq/docs/GAST.php and make some substitions
+  to get:
+
+$t = 4.894961212735792 + 6.30038809898489 d + \psi$
+
+where $\psi$ is your longitude in radians, and $d$ is the number of
+days (including fractional days) since "2000-01-01 12:00:00 UTC".
+
+If you combine the formula for local sidereal time and
+azimuth/altitude and assume excessive precision, you get my answer to
+http://astronomy.stackexchange.com/a/8415/21
+
+Additional computations for these results at:
+https://github.com/barrycarter/bcapps/blob/master/STACK/bc-rst.m
+
+ANSWER ENDS HERE
 
 
 
-TODO: circumpolar/cishorizonal <- not a word
+(* TODO: maybe add this section *)
+
+<h3>Simpler Formulas?</h3>
+
+If you look at the altitude of objects with various declinations over
+the course of a day at $40 {}^{\circ}$ latitude, the results look
+somewhat like a sine wave:
 
 
-$
-   \phi \to \tan ^{-1}(\sin (\delta ) \cos (\lambda )-\cos (\delta ) \sin
-    (\lambda ) \cos (\alpha -t),\cos (\delta ) \sin (\alpha -t))
-$
 
-$
-   Z\to \tan ^{-1}\left(\sqrt{(\sin (\delta ) \cos (\lambda )-\cos (\delta )
-    \sin (\lambda ) \cos (\alpha -t))^2+\cos ^2(\delta ) \sin ^2(\alpha
-    -t)},\cos (\delta ) \cos (\lambda ) \cos (\alpha -t)+\sin (\delta ) \sin
-    (\lambda )\right)
-$
-
-Using these, we see:
-
-  - The object's transit time is $t=\alpha$, which is expected, since
-  that's essentially the definition of right ascension.
-
-  - At transit, the object's altitude is:
-
-$\frac{\pi }{2}-\left| \delta -\lambda  \right|$
-
-(you can substitute $\frac{\pi }{2}\to 90 {}^{\circ}$ if you're using degrees)
+Are the formulas above really in simplest form?
 
 
-TODO: table
 
-tab = {
- {"Event", "LST", "Azimuth", "Altitude"},
-
- {"Any", "t", raDecLatLonHA2az[alpha, delta, lambda,psi,t],
-              raDecLatLonHA2alt[alpha, delta, lambda,psi,t]},
-
- {"Rise", rise, raDecLatLonHA2az[alpha,delta,lambda,psi,rise], 0},
-
- {"Transit", alpha, ???, 
-
- {"Set", set, raDecLatLonHA2az[alpha,delta,lambda,psi,set], 0},
-
- {"Nadir", alpha+Pi, ???, 
-
-};
 
 TODO: examples for testing, ie Sirius over ABQ
-
-raDecLatLonHA2az[alpha,delta,lambda,psi,rise]
-
-raDecLatLonHA2az[alpha,delta,lambda,psi,rise] /.
- ArcTan[v1_,v2_] -> ArcTan[v2/v1]
-
-
-
-Grid[tab, Frame -> All]
-showit
-
-
-
-
-Solve[raDecLatLonHA2alt[alpha, delta, lambda,psi,t][[2]]==0, t] /. C[1] -> 0
 
 (* join list of strings with character *)
 
@@ -266,154 +234,28 @@ joinStrings[list_, char_] :=
 joinStrings[list_, char_] := 
  Flatten[Table[{ToString[TeXForm[i]],char}, {i,list}]];
 
-
-
-
-
-
-(* convert 2D table to TeX *)
-
-tab2tex[t_] := 
-
-
-
-
-
-TODO: explain LST, azimuth case if 180, degree transform
-
-Pi/2 - Abs[delta-lambda]
-
-this is correct:
-
-ArcTan[Sqrt[(Cos[lambda]*Sin[delta] - Cos[delta]*Sin[lambda])^2], 
- Cos[delta]*Cos[lambda] + Sin[delta]*Sin[lambda]]
-
-FullSimplify[ArcTan[Sqrt[(Cos[lambda]*Sin[delta] - Cos[delta]*Sin[lambda])^2], 
- Cos[delta]*Cos[lambda] + Sin[delta]*Sin[lambda]], conds]
-
-ArcTan[Sqrt[Sin[delta - lambda]^2], Cos[delta - lambda]]
-
-above is also correct
-
-Plot[ArcTan[Sqrt[Sin[var]^2], Cos[var]] + var*Sign[var] - Pi/2, {var,-Pi,Pi}]
-
-above is truly 0 in all cases
-
-Pi/2 - (delta-lambda)*Sign[(delta-lambda)]
-
-Piecewise[{delta < lambda, delta - lambda + Pi/2},
- {delta == lambda, Pi/2},
- {delta > lambda, -delta + lambda + Pi/2
-
-Plot[ArcTan[Sqrt[Sin[var]^2], Cos[var]] + Abs[var] - Pi/2, {var,-Pi,Pi}]
-
-Plot[{ArcTan[Sqrt[Sin[var]^2], Cos[var]], Pi/2-Abs[var]}, {var,-Pi,Pi}]
-
-
-
-
-FullSimplify[%, lambda -> delta +var, conds]
-
-ArcTan[Cot[delta - lambda]] <- when delta>lambda ONLY
-
-
-$\frac{1}{2} \pi  \text{sgn}(\delta -\lambda )-\delta +\lambda$
-
-where $\text{sgn}(\text{x})$ is +1 when x is positive, -1 when x is
-negative, and 0 when x is 0. This can also be written:
-
-ArcTan[Cot[delta - lambda]]
-
-
-Simplify[raDecLatLonHA2alt[alpha,delta,lambda,psi,alpha],
-{delta>lambda , delta<Pi/2, lambda<Pi/2, delta>-Pi/2, lambda>-Pi/2}]
-
-TODO: non-conditional form
-
-Plot[ArcTan[Cot[var]]+var-Pi/2, {var,0,Pi}] <- this is 0
-
-Plot[ArcTan[Cot[var]]+var+Pi/2, {var,-Pi,0}] <- this is 0
-
-Plot[ArcTan[Cot[var]]+var-Sign[var]*Pi/2, {var,-Pi,Pi}] <- this is 0
-
-thus,
-
-Sign[delta-lambda]*Pi/2 - (delta-lambda)
-
-Piecewise[{
- {delta < lambda, -Pi/2 - (delta-lambda)}, 
- {delta == lambda,  Pi/2}, 
- {delta > lambda, Pi/2 - (delta-lambda)}
-}];
-
-
-
-TODO: degrees vs Pi
-
-ArcTan[Cot[var]] == Sign[var]*Pi/2 - var
-
-Plot[{ArcTan[Cot[var]], Sign[var]*Pi/2 - var}, {var,-Pi,Pi}]
-
-Plot[{ArcTan[Cot[var]] - (Sign[var]*Pi/2 - var)}, {var,-Pi,Pi}]
-
-
-$\tan ^{-1}(\left| \sin (\delta -\lambda ) \right|,\cos (\delta -\lambda ))$
-
-Note that t
-
-
-  - 
-
-  - The object rises at 
-
 http://astronomy.stackexchange.com/questions/8390/cancelling-out-earth-rotation-speed-altazimuth-mount
 
-TODO: note impossible values
+TODO: mention this file
 
-z = elevation above horizon
+(* graph testing for simplifications *)
 
-phi = azimuth
+tab = Table[
+ raDecLatLonHA2alt[0, n*Degree, 40*Degree, 0, t/12*Pi]/Degree,
+{n, {-20, 0, 20}}]
 
-alpha = ra
-
-delta = declination
-
-lambda = latitude
-
-psi = longitude (just me, normally also phi)
-
-TODO: source http://idlastro.gsfc.nasa.gov/ftp/pro/astro/hadec2altaz.pro
-
-TODO: if over 1 or under -1, then..
-
-TODO: how to find sidereak time
-
-(* pure comps end here *)
-
-
-raDecLatLonHA2az[alpha_, delta_, lambda_, psi_, t_] = 
- ArcTan[Cos[lambda]*Sin[delta] - Cos[delta]*Cos[alpha - t]*Sin[lambda], 
- Cos[delta]*Sin[alpha - t]]
-
-raDecLatLonHA2el[alpha_, delta_, lambda_, psi_, t_] =
- ArcTan[Sqrt[(Cos[lambda]*Sin[delta] - Cos[delta]*Cos[alpha - t]*Sin[lambda])^
-    2 + Cos[delta]^2*Sin[alpha - t]^2], Cos[delta]*Cos[lambda]*Cos[alpha - t] 
-+ Sin[delta]*Sin[lambda]]
-
-subs = {lat -> lambda, dec -> delta, ha -> t - alpha}
+Plot[tab, {t,-24,24}]
+showit
 
 
 
-radeclatlontime2el[alpha_, delta_, lambda_, psi_, t_] = FullSimplify[
- alt /. {lat -> lambda, dec -> delta, ha -> t - alpha},
-conds]
 
+showit
 
+Plot[
+ raDecLatLonHA2az[0, 10*Degree, 35*Degree, 0, t/12*Pi]/Degree, 
+ {t,0,24}]
+showit
 
-raDecLatLonHA2az[alpha_, delta_, lambda_, psi_, t_] = 
-FullSimplify[
- az /. {lat -> lambda, dec -> delta, ha -> t - alpha},
-conds]
-
-
+TODO: graphics = show not sine wave or easy
 
