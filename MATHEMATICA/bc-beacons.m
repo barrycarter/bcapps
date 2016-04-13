@@ -12,7 +12,17 @@ RSolve[{v[0] == v0, v[n+1] == add[v[n],a]}, v[n], n][[1,1,2]] , conds];
 
 dt[n_] = FullSimplify[dilation[v[n+1]], conds];
 
+t[n_] = FullSimplify[t0+ Sum[dt[i],{i,0,n}],conds];
+
 ds[n_] = FullSimplify[dt[n]*v[n+1], conds];
+
+s[n_] = FullSimplify[s0 + Sum[v[i+1]*dt[i], {i,0,n}], conds];
+
+t0 = Subscript[t,0]
+
+s0 = Subscript[s,0]
+
+v0 = Subscript[v,0]
 
 (* formulas end here *)
 
@@ -37,7 +47,7 @@ g3[t_] := Show[g2[t], PlotRange->{{0,45},{-1,1}}]
 ani = Table[g3[t],{t,0,20,.05}]
 Export["/tmp/test.gif", ani, ImageSize -> {1024, 50}]
 
-TODO: maybe improve graphic (and add x axes markings?)
+TODO: maybe improve graphic (and add x axes markings?) (or maybe just a fixed graphic)
 
 (*
 
@@ -48,8 +58,10 @@ this site and explain constant acceleration in relativity?
 
 A:
 
-At t=0, Bob is $s(0)$ light seconds away from Carol and moving a
-velocity of $v(0)$ (given as a fraction of the speed of light).
+Let's start with this setup:
+
+At $t=t_0$, Bob is $s_0$ light seconds away from Carol and moving a
+velocity of $v_0$ (given as a fraction of the speed of light).
 
 Bob then drops Beacon #0, accelerates at $a$ (light seconds per second
 per second) for 1 second (in his own reference frame), and drops Beacon #1.
@@ -63,18 +75,18 @@ TODO: establish formulas we take as given
 
 How fast is the nth beacon traveling from Carol's reference frame?
 
-We know Beacon #0 is traveling at $v(0)$ from the given initial conditions.
+We know Beacon #0 is traveling at $v_0$ from the given initial conditions.
 
 Beacon #1 is traveling at $a$ with respect to Beacon #0, so we use the
 relativistic velocity addition formula:
 
-$v(1)=\text{add}\left(v(0),a\right)=\frac{a+v(0)}{a v(0)+1}$
+$v(1)=\text{add}(v_0,a)=\frac{a+v_0}{a v_0+1}$
 
 Beacon #2 is traveling at $a$ with respect to Beacon #1, so we have:
 
 $
-   v(2)=\text{add}(v(1),a)=\text{add}\left(\frac{a+v(0)}{1+a
-    v(0)},a\right)=\frac{a (a v(0)+2)+v(0)}{a^2+2 a v(0)+1}
+   v(2)=\text{add}(v(1),a)=\text{add}\left(\frac{a+v_0}{1+a
+    v_0},a\right)=\frac{\left(a^2+1\right) v_0+2 a}{a^2+2 a v_0+1}
 $
 
 In general, we have:
@@ -84,48 +96,25 @@ $v(n)=\text{add}(v(n-1),a)=\frac{a+v(n-1)}{a v(n-1)+1}$
 Solving the recursion, we have:
 
 $
-   v(n)=\frac{(\text{v(0)}+1) \left(\frac{a}{a-1}\right)^n+(\text{v(0)}-1)
-    \left(\frac{1}{a+1}-1\right)^n}{(\text{v(0)}+1)
-   \left(\frac{a}{a-1}\right)^n-(\text{v(0)}-1) \left(\frac{1}{a+1}-1\right)^n}
+   v(n)=\frac{(v_0+1) \left(\frac{a}{a-1}\right)^n+(v_0-1)
+    \left(\frac{1}{a+1}-1\right)^n}{(v_0+1)
+   \left(\frac{a}{a-1}\right)^n-(v_0-1) \left(\frac{1}{a+1}-1\right)^n}
 $
-
-tacc = .002;
-tn = 1/tacc;
-t1 = Table[{n,v[n] /. {a -> tacc, v0 -> .10}}, {n,0,tn}]
-t2 = Table[{n,.10+tacc*n}, {n,0,tn}]
-ListPlot[{t1,t2}, PlotLegends -> {"Relativistic", "Newtonian"},
- Frame -> { {True, False}, {True, False}},
- FrameLabel -> { {"Speed (fraction of c)", None}, {"Beacon #", None}},
- PlotLabel -> 
-"Newtonian vs Relativistic Constant Acceleration\n(v(0) = 0.1, a = 0.002)"]
-showit
-
-
-TODO: make sure all v0 in TeX is v(0)
-
-TODO: simpler formula based on eyeballing it?
-
-TODO: Graphics, not fully happy with my discrete -> cont jump
-
-TODO: explain what cont actually means
 
 <h4>Time</h4>
 
 Bob is dropping a beacon every second in his reference frame. How
 often does Carol see a beacon dropped?
 
-By our initial conditions, Beacon #0 is dropped at $t=0$.
+By our initial conditions, Beacon #0 is dropped at $t=t_0$.
 
 Between dropping Beacon #0 and Beacon #1, Bob travels at:
 
-$v(1)=\frac{a+\text{v(0)}}{a \text{v(0)}+1}$
+$v(1)=\frac{a+v_0}{a v_0+1}$
 
 By time dilation, Bob's one second becomes
 
-$
-   \frac{a \text{v(0)}+1}{\sqrt{\left(a^2-1\right)
-    \left(\text{v(0)}^2-1\right)}}
-$
+$\frac{a v_0+1}{\sqrt{\left(a^2-1\right)\left(v_0^2-1\right)}}$
 
 seconds in Carol's frame.
 
@@ -133,22 +122,29 @@ In general, the time in Carol's frame between dropping Beacon #n and
 Beacon #n+1 (during which time Bob is traveling at $v(n+1)$ is:
 
 $
-   \frac{1}{\sqrt{1-\left(\frac{2}{\frac{(\text{v0}+1)
-    \left(\frac{a+1}{1-a}\right)^{n+1}}{\text{v0}-1}-1}+1\right)^2}}
+\text{dt}(n)=   \frac{1}{\sqrt{1-\left(\frac{2}{\frac{(v_0+1)
+    \left(\frac{a+1}{1-a}\right)^{n+1}}{v_0-1}-1}+1\right)^2}}
 $
 
-t3 = Table[{i,dt[i] /. {a -> tacc, v0 -> .10}}, {i, 0, tn}]
+To find when the nth beacon is dropped, we simply add:
+
+$
+t(n)=   \sum _{i=0}^n \frac{1}{\sqrt{1-\left(\frac{2}{\frac{\left(v_0+1\right)
+    \left(\frac{a+1}{1-a}\right)^{i+1}}{v_0-1}-1}+1\right){}^2}}+t_0
+$
+
+(there does not appear to be an easily-found closed form for this sum).
 
 <h4>Distance</h4>
 
 How far apart are the beacons dropped in Carol's frame?
 
-We know that Beacon #0 is dropped at distance $s(0)$ from Carol.
+We know that Beacon #0 is dropped at distance $s_0$ from Carol.
 
 Bob then moves at $v(1)$ for $dt(0)$ seconds (in Carol's
 frame). Multiplying these, we see that Bob moves a distance of:
 
-$\frac{a+\text{v0}}{\sqrt{\left(a^2-1\right) \left(\text{v0}^2-1\right)}}$
+$\frac{a+v_0}{\sqrt{\left(a^2-1\right) \left(v_0^2-1\right)}}$
 
 before dropping Beacon #1.
 
@@ -164,13 +160,65 @@ In general, the distance $ds(n)$ between dropping Beacon #n and Beacon
 #n+1 is $v(n+1) dt(n)$ or
 
 $
-   \frac{\frac{2}{\frac{(\text{v0}+1)
-   \left(\frac{a+1}{1-a}\right)^{n+1}}{\text{v0}-1}-1}+1}{\sqrt{1-\left(\frac{2
-    }{\frac{(\text{v0}+1)
-    \left(\frac{a+1}{1-a}\right)^{n+1}}{\text{v0}-1}-1}+1\right)^2}}
+\text{ds}(n) = \frac{\frac{2}{\frac{(v_0+1)
+   \left(\frac{a+1}{1-a}\right)^{n+1}}{v_0-1}-1}+1}{\sqrt{1-\left(\frac{2
+    }{\frac{(v_0+1)
+    \left(\frac{a+1}{1-a}\right)^{n+1}}{v_0-1}-1}+1\right)^2}}
+$
+
+To find where Beacon #n is dropped (in Carol's frame), we add:
+
+$
+   s(n)=\sum _{i=0}^n \frac{\frac{2}{\frac{\left(v_0+1\right) (1-a)^{-i-1}
+    (a+1)^{i+1}}{v_0-1}-1}+1}{\sqrt{1-\left(\frac{2}{\frac{\left(v_0+1\right)
+    \left(\frac{a+1}{1-a}\right)^{i+1}}{v_0-1}-1}+1\right){}^2}}+s_0
 $
 
 
+
+TODO: avoid words "our" and "his/her/their", use names
+
+
+
+
+
+tacc = .002;
+
+Table[{i, v[i], 
+
+
+
+t3 = Table[{i,dt[i] /. {a -> tacc, v0 -> .10}}, {i, 0, tn}]
+
+
+
+HoldForm[v[1]] == HoldForm[add[v0, a]] == add[v0,a] // TeXForm         
+
+HoldForm[v[2]] == HoldForm[add[v[1], a]] == HoldForm[
+ add[(a + Subscript[v, 0])/(1 + a*Subscript[v, 0]), a]] == 
+ FullSimplify[add[v[1],a], conds]
+
+TODO: change all v_0 to v_0, etc
+
+
+
+tacc = .002;
+tn = 1/tacc;
+t1 = Table[{n,v[n] /. {a -> tacc, v0 -> .10}}, {n,0,tn}]
+t2 = Table[{n,.10+tacc*n}, {n,0,tn}]
+ListPlot[{t1,t2}, PlotLegends -> {"Relativistic", "Newtonian"},
+ Frame -> { {True, False}, {True, False}},
+ FrameLabel -> { {"Speed (fraction of c)", None}, {"Beacon #", None}},
+ PlotLabel -> 
+"Newtonian vs Relativistic Constant Acceleration\n(v(0) = 0.1, a = 0.002)"]
+showit
+
+
+TODO: simpler formula based on eyeballing it?
+
+TODO: Graphics, not fully happy with my discrete -> cont jump
+
+TODO: explain what cont actually means
 
 
 
