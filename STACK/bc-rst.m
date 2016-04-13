@@ -87,8 +87,6 @@ Plot[{ArcTan[Abs[Sin[x]], Cos[x]] -( Pi/2-Abs[x])}, {x,-Pi,Pi}]
 
 Plot[{ArcTan[Abs[Sin[x]], -Cos[x]], Abs[x]-Pi/2}, {x,-Pi,Pi}]
 
-
-
 (* most of this is from ../ASTRO/playground5.m *)
 
 tab = {

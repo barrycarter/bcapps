@@ -1,11 +1,20 @@
-(*
+(* formulas start here *)
 
-Subject: Constant acceleration in special relativity: a discrete approach
+conds = {n>0, k>0, i>0, Element[{n,k,i},Integers], Abs[a] < 1, Abs[v0] < 1,
+ Element[{a,v0}, Reals]};
 
-Q: Say Barry, could you abuse the answer-your-own-question feature of
-this site and explain constant acceleration in relativity?
+dilation[v_] = 1/Sqrt[1-v^2];
 
-A:
+add[u_,v_] = (u+v)/(1+u*v);
+
+v[n_] = FullSimplify[
+RSolve[{v[0] == v0, v[n+1] == add[v[n],a]}, v[n], n][[1,1,2]] , conds];
+
+dt[n_] = FullSimplify[dilation[v[n+1]], conds];
+
+ds[n_] = FullSimplify[dt[n]*v[n+1], conds];
+
+(* formulas end here *)
 
 (* bob's velocity at time t *)
 
@@ -21,8 +30,6 @@ g2[t_] := Graphics[{
  Point[{sbob[t],0}],
  beacons[t]
 
-
-
 }]
 
 g3[t_] := Show[g2[t], PlotRange->{{0,45},{-1,1}}]
@@ -31,6 +38,15 @@ ani = Table[g3[t],{t,0,20,.05}]
 Export["/tmp/test.gif", ani, ImageSize -> {1024, 50}]
 
 TODO: maybe improve graphic (and add x axes markings?)
+
+(*
+
+Subject: Constant acceleration in special relativity: a discrete approach
+
+Q: Say Barry, could you abuse the answer-your-own-question feature of
+this site and explain constant acceleration in relativity?
+
+A:
 
 At t=0, Bob is $s(0)$ light seconds away from Carol and moving a
 velocity of $v(0)$ (given as a fraction of the speed of light).
@@ -73,33 +89,25 @@ $
    \left(\frac{a}{a-1}\right)^n-(\text{v(0)}-1) \left(\frac{1}{a+1}-1\right)^n}
 $
 
-TODO: below this is wrong for Carol, only right for Bob
+tacc = .002;
+tn = 1/tacc;
+t1 = Table[{n,v[n] /. {a -> tacc, v0 -> .10}}, {n,0,tn}]
+t2 = Table[{n,.10+tacc*n}, {n,0,tn}]
+ListPlot[{t1,t2}, PlotLegends -> {"Relativistic", "Newtonian"},
+ Frame -> { {True, False}, {True, False}},
+ FrameLabel -> { {"Speed (fraction of c)", None}, {"Beacon #", None}},
+ PlotLabel -> 
+"Newtonian vs Relativistic Constant Acceleration\n(v(0) = 0.1, a = 0.002)"]
+showit
 
-For the continuous case, we accelerate at $\frac{a}{k}$ $k$ times more
-frequently, and take the limit $k\to \infty$ as follows:
 
-$
-\lim_{k\to \infty } \,
-   \frac{(\text{v(0)}-1) \left(\frac{1}{\frac{a}{k}+1}-1\right)^{k
-    n}+(\text{v(0)}+1) \left(\frac{a}{k \left(\frac{a}{k}-1\right)}\right)^{k
-    n}}{(\text{v(0)}+1) \left(\frac{a}{k \left(\frac{a}{k}-1\right)}\right)^{k
-    n}-(\text{v(0)}-1) \left(\frac{1}{\frac{a}{k}+1}-1\right)^{k n}}
-$
+TODO: make sure all v0 in TeX is v(0)
 
-Converting $n$ to $t$, this yields:
-
-$
-v(t)=\frac{\text{v(0)} \cosh (a t)+\sinh (a t)}{\text{v(0)} \sinh (a t)+\cosh
-    (a t)}
-$
-
-Note that this reduces to the well-known $\tanh (a t)$ when $v(0)$ is 0.
+TODO: simpler formula based on eyeballing it?
 
 TODO: Graphics, not fully happy with my discrete -> cont jump
 
 TODO: explain what cont actually means
-
-TODO: am I measuring above in Bob's frame? (ie, every one of bob's seconds) or does limiting case apply to both? [actually, this is true, ugh!]
 
 <h4>Time</h4>
 
@@ -112,32 +120,55 @@ Between dropping Beacon #0 and Beacon #1, Bob travels at:
 
 $v(1)=\frac{a+\text{v(0)}}{a \text{v(0)}+1}$
 
-By time dilation, this is 
+By time dilation, Bob's one second becomes
 
 $
    \frac{a \text{v(0)}+1}{\sqrt{\left(a^2-1\right)
     \left(\text{v(0)}^2-1\right)}}
 $
 
-in Carol's frame.
+seconds in Carol's frame.
 
 In general, the time in Carol's frame between dropping Beacon #n and
 Beacon #n+1 (during which time Bob is traveling at $v(n+1)$ is:
 
 $
-   \text{dt}(n)=\frac{1}{\sqrt{1-\frac{\left((\text{v(0)}+1)
-    (1-a)^{-n-1}+(\text{v(0)}-1)
-    \left(\frac{1}{a+1}\right)^{n+1}\right)^2}{\left((\text{v(0)}-1)
-    \left(\frac{1}{a+1}\right)^{n+1}-(\text{v(0)}+1) (1-a)^{-n-1}\right)^2}}}
+   \frac{1}{\sqrt{1-\left(\frac{2}{\frac{(\text{v0}+1)
+    \left(\frac{a+1}{1-a}\right)^{n+1}}{\text{v0}-1}-1}+1\right)^2}}
 $
 
+t3 = Table[{i,dt[i] /. {a -> tacc, v0 -> .10}}, {i, 0, tn}]
 
+<h4>Distance</h4>
 
-dt[n_] = FullSimplify[dilation[v[n+1]], conds] 
+How far apart are the beacons dropped in Carol's frame?
 
+We know that Beacon #0 is dropped at distance $s(0)$ from Carol.
 
-FullSimplify[dilation[v[n+1]], conds]
-dilation[v_] = 1/Sqrt[1-v^2]
+Bob then moves at $v(1)$ for $dt(0)$ seconds (in Carol's
+frame). Multiplying these, we see that Bob moves a distance of:
+
+$\frac{a+\text{v0}}{\sqrt{\left(a^2-1\right) \left(\text{v0}^2-1\right)}}$
+
+before dropping Beacon #1.
+
+Of course, since Beacon #0 was dropped at distance $s(0)$ from Carol,
+the total distance to Beacon #1 is $s(0)$ plus the above.
+
+Note that the beacons are moving (in Carol's reference frame) the
+moment they're dropped, so we're only looking at the distance where
+the nth beacon is dropped: it's actual distance changes as time
+passes.
+
+In general, the distance $ds(n)$ between dropping Beacon #n and Beacon
+#n+1 is $v(n+1) dt(n)$ or
+
+$
+   \frac{\frac{2}{\frac{(\text{v0}+1)
+   \left(\frac{a+1}{1-a}\right)^{n+1}}{\text{v0}-1}-1}+1}{\sqrt{1-\left(\frac{2
+    }{\frac{(\text{v0}+1)
+    \left(\frac{a+1}{1-a}\right)^{n+1}}{\text{v0}-1}-1}+1\right)^2}}
+$
 
 
 
@@ -173,7 +204,6 @@ StringReplace[ToString[TeXForm[v[n]]], "a" -> "\\frac{a}{k}"]
 
 
 
-add[u_,v_] = (u+v)/(1+u*v)
 
 
 
@@ -389,5 +419,42 @@ distance[m_,a_,n_] = FullSimplify[Sum[distanceTraveled[i,a,n],{i,0,n-1}],
 
 Solve[timeOf[n] == t, n, Reals]
 
+(*
 
+Subject: Help Mathematica FullSimplify functions from basic relativity
+
+<pre><code>
+v[n_] = 1 + 2/(-1 + ((1 + a)^n*(1 + v0))/((1 - a)^n*(-1 + v0)))
+dt[n_] = 
+   1/Sqrt[1 - (1 + 2/(-1 + (((1 + a)/(1 - a))^(1 + n)*(1 + v0))/(-1 + v0)))^2]
+conds = {n>0, k>0, i>0, Element[{n,k,i},Integers], Abs[a] < 1, Abs[v0] < 1,
+ Element[{a,v0}, Reals]}
+</code></pre>
+
+I'm convinced that both $v(n)$ and $dt(n)$ have a much simpler form
+under the given $conds$, but `FullSimplify` won't give me one. Any
+thoughts on how I can help Mathematica simplify these?
+
+Background:
+
+  - Using the basic time dilation and relativistic velocity addition
+  formulas for special relativity:
+
+TODO: finish this?
+
+
+<pre><code>
+conds = {n>0, k>0, i>0, Element[{n,k,i},Integers], Abs[a] < 1, Abs[v0] < 1,
+ Element[{a,v0}, Reals]}
+
+dilation[v_] = 1/Sqrt[1-v^2]
+
+add[u_,v_] = (u+v)/(1+u*v)
+
+v[n_] = FullSimplify[
+RSolve[{v[0] == v0, v[n+1] == add[v[n],a]}, v[n], n][[1,1,2]]
+, conds]
+
+dt[n_] = FullSimplify[dilation[v[n+1]], conds] 
+</code></pre>
 
