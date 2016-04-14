@@ -7,6 +7,18 @@ dilation[v_] = 1/Sqrt[1-v^2];
 
 add[u_,v_] = (u+v)/(1+u*v);
 
+t0 = Subscript[t,0]
+
+s0 = Subscript[s,0]
+
+v0 = Subscript[v,0]
+
+u0 = Subscript[u,0]
+
+(* TODO: below this line, formulas may be inaccurate or not useful
+because I am moving to continuous case faster in the latest derivation
+*)
+
 v[n_] = FullSimplify[
 RSolve[{v[0] == v0, v[n+1] == add[v[n],a]}, v[n], n][[1,1,2]] , conds];
 
@@ -17,12 +29,6 @@ t[n_] = FullSimplify[t0+ Sum[dt[i],{i,0,n}],conds];
 ds[n_] = FullSimplify[dt[n]*v[n+1], conds];
 
 s[n_] = FullSimplify[s0 + Sum[v[i+1]*dt[i], {i,0,n}], conds];
-
-t0 = Subscript[t,0]
-
-s0 = Subscript[s,0]
-
-v0 = Subscript[v,0]
 
 (* formulas end here *)
 
@@ -58,20 +64,69 @@ this site and explain constant acceleration in relativity?
 
 A:
 
-Let's start with this setup:
+Let's use the following setup for the start of our thought experiment:
 
-At $t=t_0$, Bob is $s_0$ light seconds away from Carol, moving at a
-velocity of $v_0$ (given as a fraction of the speed of light), and
-constantly accelerating at a rate of $a$ (given as a fraction of the
-speed of light per second).
+  - Carol's clock $t$ reads $t=t_0$
+
+  - Bob's clock $u$ reads $u=u_0$
+
+  - Bob is traveling at a constant velocity of $v_0$, given as a
+  fraction of the speed of light.
+
+  - Carol sees Bob at a distance of $s_0$ light seconds.
+
+  - Bob accelerates at a rate of $a$ (light seconds per second) every
+  second in his own reference frame.
 
 For reference, note that 1 light second per second per second is
 $299792.458 \frac{\text{km}}{s^2}$ so $a$ will normally be fractional.
 
-To find Bob's velocity at a given time $t$, let's break up his $a$
-acceleration per second into $\frac{a}{k}$ discrete accelerations
-every $\frac{1}{k}$ of a second (coasting at constant speed in between
-the accelerations), and take the limit.
+To find Bob's velocity in Carol's frame at a given time $t$, let's
+break up his $a$ acceleration per second into $\frac{a}{k}$ discrete
+accelerations every $\frac{1}{k}$ of a second (coasting at constant
+speed in between the accelerations), and take the limit.
+
+We know Bob is initially ($t=t_0$) traveling at $v_0$ from the given
+initial conditions.
+
+After $\frac{1}{k}$ seconds, Bob has added $\frac{a}{k}$ to his
+velocity, so we use the relativistic velocity addition formula:
+
+$
+v\left(\text{t0}+\frac{1}{k}\right)=\text{add}\left(\text{v0},
+\frac{a}{k}\right)=\frac{a+k v_0}{a v_0+k}
+$
+
+After another $\frac{1}{k}$ seconds (and thus at 
+
+
+TODO: change all \text{v0} to v_0, same for t0 and s0
+
+$
+  v\left(\frac{1}{k}\right)=\text{add}\left(v_0,\frac{a}{k}\right)=\frac{
+    a+k v_0}{a v_0+k}
+$
+
+
+
+
+$v(1)=\text{add}(v_0,a)=\frac{a+v_0}{a v_0+1}$
+
+Beacon #2 is traveling at $a$ with respect to Beacon #1, so we have:
+
+$
+   v(2)=\text{add}(v(1),a)=\text{add}\left(\frac{a+v_0}{1+a
+    v_0},a\right)=\frac{\left(a^2+1\right) v_0+2 a}{a^2+2 a v_0+1}
+$
+
+In general, we have:
+
+$v(n)=\text{add}(v(n-1),a)=\frac{a+v(n-1)}{a v(n-1)+1}$
+
+Solving the recursion, we have:
+
+HoldForm[v[t0+ 1/k]] == HoldForm[add[v0, a/k]] == 
+ FullSimplify[add[v0,a/k]]
 
 
 
@@ -102,34 +157,6 @@ second and dropping a beacon.
 TODO: establish formulas we take as given
 
 <h4>Velocity</h4>
-
-How fast is the nth beacon traveling from Carol's reference frame?
-
-We know Beacon #0 is traveling at $v_0$ from the given initial conditions.
-
-Beacon #1 is traveling at $a$ with respect to Beacon #0, so we use the
-relativistic velocity addition formula:
-
-$v(1)=\text{add}(v_0,a)=\frac{a+v_0}{a v_0+1}$
-
-Beacon #2 is traveling at $a$ with respect to Beacon #1, so we have:
-
-$
-   v(2)=\text{add}(v(1),a)=\text{add}\left(\frac{a+v_0}{1+a
-    v_0},a\right)=\frac{\left(a^2+1\right) v_0+2 a}{a^2+2 a v_0+1}
-$
-
-In general, we have:
-
-$v(n)=\text{add}(v(n-1),a)=\frac{a+v(n-1)}{a v(n-1)+1}$
-
-Solving the recursion, we have:
-
-$
-   v(n)=\frac{(v_0+1) \left(\frac{a}{a-1}\right)^n+(v_0-1)
-    \left(\frac{1}{a+1}-1\right)^n}{(v_0+1)
-   \left(\frac{a}{a-1}\right)^n-(v_0-1) \left(\frac{1}{a+1}-1\right)^n}
-$
 
 <h4>Time</h4>
 
@@ -221,7 +248,7 @@ Table[{i, v[i],
 t3 = Table[{i,dt[i] /. {a -> tacc, v0 -> .10}}, {i, 0, tn}]
 
 
-
+HoldForm[v[1/k]] == HoldForm[add[v0, a/k]] == add[v0,a/k]              
 HoldForm[v[1]] == HoldForm[add[v0, a]] == add[v0,a] // TeXForm         
 
 HoldForm[v[2]] == HoldForm[add[v[1], a]] == HoldForm[
