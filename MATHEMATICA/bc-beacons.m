@@ -63,7 +63,14 @@ Let's start with this setup:
 At $t=t_0$, Bob is $s_0$ light seconds away from Carol and moving a
 velocity of $v_0$ (given as a fraction of the speed of light).
 
-Bob then drops Beacon #0, accelerates at $a$ (light seconds per second
+Bob drops Beacon #0, and then instantly accelerates (increases his
+velocity by) $\frac{a}{k}$ (light seconds per second per second) ,
+coasts for $\frac{1}{k}$ of a second, and then repeats th where $k$ is
+a positive integer. Bob then repeats this $\frac{a}{k}$
+
+TODO: explain light second per second per second
+
+$a$ (light seconds per second
 per second) for 1 second (in his own reference frame), and drops Beacon #1.
 
 Bob repeats this procedure indefinitely: accelerating at $a$ for 1
