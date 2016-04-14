@@ -7,6 +7,32 @@ dilation[v_] = 1/Sqrt[1-v^2];
 
 add[u_,v_] = (u+v)/(1+u*v);
 
+(* TODO: rename vars below so calling this function twice doesn't
+break things *)
+
+v[n_] = FullSimplify[
+RSolve[{v[0] == v0, v[n+1] == add[v[n],a]}, v[n], n][[1,1,2]] , conds];
+
+vbeacon[n_] = (v0*Cosh[a*n] + Sinh[a*n])/(Cosh[a*n] + v0*Sinh[a*n])
+
+dt[n_] = FullSimplify[dilation[v[n+1]], conds];
+
+(*
+
+temporarily commenting out next 3 as I may go a different direction here
+
+t[n_] = FullSimplify[t0+ Sum[dt[i],{i,0,n}],conds];
+
+ds[n_] = FullSimplify[dt[n]*v[n+1], conds];
+
+s[n_] = FullSimplify[s0 + Sum[v[i+1]*dt[i], {i,0,n}], conds];
+
+*)
+
+(*
+
+NOTE: commenting this out; doing this too early breaks things
+
 t0 = Subscript[t,0]
 
 s0 = Subscript[s,0]
@@ -15,29 +41,9 @@ v0 = Subscript[v,0]
 
 u0 = Subscript[u,0]
 
-(* TODO: below this line, formulas may be inaccurate or not useful
-because I am moving to continuous case faster in the latest derivation
 *)
 
-v[n_] = FullSimplify[
-RSolve[{v[0] == v0, v[n+1] == add[v[n],a]}, v[n], n][[1,1,2]] , conds];
-
-dt[n_] = FullSimplify[dilation[v[n+1]], conds];
-
-t[n_] = FullSimplify[t0+ Sum[dt[i],{i,0,n}],conds];
-
-ds[n_] = FullSimplify[dt[n]*v[n+1], conds];
-
-s[n_] = FullSimplify[s0 + Sum[v[i+1]*dt[i], {i,0,n}], conds];
-
 (* formulas end here *)
-
-(* bob's velocity at time t *)
-
-vbob[t_] = Floor[t+1]
-sbob[t_] = Integrate[vbob[u],{u,0,t}]
-beacon[n_,t_] = If[t>=n, Text[ToString[n], 
- {sbob[n-1]+vbob[n-1]*(t-n+1),0}], Null];
 
 beacons[t_] = Table[beacon[n,t], {n,0,10}]
 
@@ -57,7 +63,7 @@ TODO: maybe improve graphic (and add x axes markings?) (or maybe just a fixed gr
 
 (*
 
-Subject: Constant acceleration in special relativity
+Subject: Constant acceleration in special relativity: a discrete approach
 
 Q: Say Barry, could you abuse the answer-your-own-question feature of
 this site and explain constant acceleration in relativity?
@@ -75,13 +81,274 @@ Let's use the following setup for the start of our thought experiment:
 
   - Carol sees Bob at a distance of $s_0$ light seconds.
 
-  - Bob accelerates at a rate of $a$ (light seconds per second) every
-  second in his own reference frame.
+  - Bob drops beacon #0. In Carol's frame, beacon #0 is $s_0$ distance
+  from her and traveling at a velocity of $v_0$.
 
-For reference, note that 1 light second per second per second is
-$299792.458 \frac{\text{km}}{s^2}$ so $a$ will normally be fractional.
+Bob then repeats the following process every second: 
 
-To find Bob's velocity in Carol's frame at a given time $t$, let's
+  - instantly increases his velocity (accelerates) by $a$ (light seconds
+  per second per second)
+
+  - coasts for one second at his new velocity
+
+  - drops a new beacon
+
+Note that 1 light second per second per second is $299792.458
+\frac{\text{km}}{s^2}$ so $a$ will normally be fractional.
+
+<h4>Velocity</h4>
+
+How fast is the nth beacon traveling in Carol's reference frame?
+
+We know that Beacon #0 is traveling at $v_0$ by the given initial conditions.
+
+Beacon #1 is traveling at $a$ with respect to Beacon #0, so we use the
+relativistic velocity addition formula:
+
+$v(1)=\text{add}(v_0,a)=\frac{a+v_0}{a v_0+1}$
+
+Beacon #2 is traveling at $a$ with respect to Beacon #1, so we have:
+
+$
+   v(2)=\text{add}(v(1),a)=\text{add}\left(\frac{a+v_0}{1+a
+    v_0},a\right)=\frac{\left(a^2+1\right) v_0+2 a}{a^2+2 a v_0+1}
+$
+
+In general, we have:
+
+$v(n)=\text{add}(v(n-1),a)=\frac{a+v(n-1)}{a v(n-1)+1}$
+
+Solving the recursion, we have:
+
+$
+   v(n)=\frac{(v_0+1) \left(\frac{a}{a-1}\right)^n+(v_0-1)
+    \left(\frac{1}{a+1}-1\right)^n}{(v_0+1)
+   \left(\frac{a}{a-1}\right)^n-(v_0-1) \left(\frac{1}{a+1}-1\right)^n}
+$
+
+Of course, this only applies when Bob is instantly accelerating every
+second, not accelerating uniformly.
+
+To find out what happens when Bob accelerates uniformly, we assume $k
+n$ accelerations of $\frac{a}{k}$ each, and take the limit as $k\to
+\infty$
+
+$
+v(n) = 
+\lim_{k\to \infty } \,
+\frac{(v_0+1)
+\left(\frac{{\frac{a}{k}}}{{\frac{a}{k}}-1}\right)^{k n}+(v_0-1)
+\left(\frac{1}{{\frac{a}{k}}+1}-1\right)^{k n}}{(v_0+1)
+\left(\frac{{\frac{a}{k}}}{{\frac{a}{k}}-1}\right)^{k n}-(v_0-1)
+\left(\frac{1}{{\frac{a}{k}}+1}-1\right)^{k n}}
+= \frac{v_0 \cosh (a n)+\sinh (a n)}{v_0 \sinh (a n)+\cosh (a n)}
+$
+
+Thus, if Bob accelerates at a uniform rate of $a$ light seconds per
+second per second, the velocity of the nth beacon is $\frac{v_0 \cosh
+(a n)+\sinh (a n)}{v_0 \sinh (a n)+\cosh (a n)}$
+
+<h4>Time</h4>
+
+Bob is dropping a beacon every second in his reference frame. How
+often does Carol see a beacon dropped in her reference frame?
+
+Returning briefly to our original setup (non-uniform acceleration), we
+note that Bob travels at (the discrete version of) $v(n)$ when he
+drops Beacon #n, and then immediately accelerates to $v(n+1)$ and
+travels for 1 second at $v(n+1)$ before dropping Beacon #n+1.
+
+Since Bob is traveling at $v(n+1)$ between dropping Beacon #n and
+Beacon #n+1, the time dilation between these two drops is:
+
+$
+\text{dilation}(v(n+1))=
+\frac{1}{\sqrt{1-\left(\frac{2}{\frac{\left(v_0+1\right)
+\left(\frac{a+1}{1-a}\right)^{n+1}}{v_0-1}-1}+1\right){}^2}}
+$
+
+Thus, while 1 second passes for Bob between the drops,
+
+$
+\frac{1}{\sqrt{1-\left(\frac{2}{\frac{\left(v_0+1\right)
+\left(\frac{a+1}{1-a}\right)^{n+1}}{v_0-1}-1}+1\right){}^2}}
+$
+
+seconds pass for Carol.
+
+
+
+For the continuous case, we once again assume $k$ accelerations of
+$\frac{a}{k}$ per second and take the limit as $k\to \infty$.
+
+Omitting the ugly math, this yields:
+
+$dt(n,n+1) = \frac{v_0 \sinh (a n)+\cosh (a n)}{\sqrt{1-v_0^2}}$
+
+
+
+
+
+dtbeacon[n_] = FullSimplify[Limit[dt[n*k] /. a -> a/k, k -> Infinity],conds]
+
+
+
+each, and take the limit as $k\to
+
+dt[n_] = FullSimplify[dilation[v[n+1]], conds] 
+
+
+
+By our initial conditions, Beacon #0 is dropped at $t=t_0$.
+
+
+
+Between dropping Beacon #0 and Beacon #1, Bob uniformly accelerates
+from $v_0$ to $v(1) = \frac{v_0 \cosh (a)+\sinh (a)}{v_0 \sinh
+(a)+\cosh (a)}$.
+
+In general, between dropping Beacon #n and Beacon #n+1, Bob's velocity changes uniformly from $v(n) = \frac{v_0 \cosh (a n)+\sinh (a n)}{v_0 \sinh (a n)+\cosh (a n)}
+
+$v(1)=\frac{a+v_0}{a v_0+1}$
+
+By time dilation, Bob's one second becomes
+
+$\frac{a v_0+1}{\sqrt{\left(a^2-1\right)\left(v_0^2-1\right)}}$
+
+seconds in Carol's frame.
+
+In general, the time in Carol's frame between dropping Beacon #n and
+Beacon #n+1 (during which time Bob is traveling at $v(n+1)$ is:
+
+$
+\text{dt}(n)=   \frac{1}{\sqrt{1-\left(\frac{2}{\frac{(v_0+1)
+    \left(\frac{a+1}{1-a}\right)^{n+1}}{v_0-1}-1}+1\right)^2}}
+$
+
+To find when the nth beacon is dropped, we simply add:
+
+$
+t(n)=   \sum _{i=0}^n \frac{1}{\sqrt{1-\left(\frac{2}{\frac{\left(v_0+1\right)
+    \left(\frac{a+1}{1-a}\right)^{i+1}}{v_0-1}-1}+1\right){}^2}}+t_0
+$
+
+(there does not appear to be an easily-found closed form for this sum).
+
+TODO: maybe not why I chose the hyperbolic rotation form
+
+
+\lim_{k\to \infty } \, 
+\frac{(v_0+1) 
+\left(\frac{{\frac{a}{k}}}{{\frac{a}{k}}-1}\right)^{k n}+(v_0-1) 
+\left(\frac{1}{{\frac{a}{k}}+1}-1\right)^{k n}}{(v_0+1) 
+\left(\frac{{\frac{a}{k}}}{{\frac{a}{k}}-1}\right)^{k n}-(v_0-1) 
+\left(\frac{1}{{\frac{a}{k}}+1}-1\right)^{k n}} 
+= \frac{v_0 \cosh (a n)+\sinh (a n)}{v_0 \sinh (a n)+\cosh (a n)} 
+$ 
+
+
+$\frac{v_0 \coth
+(a n)+1}{\coth (a n)+v_0}$
+
+
+
+
+
+NOTE: I have dt[-1] equal to dtbeacon[0] off by one?
+
+
+
+
+FullSimplify[Limit[v[n*k] /. a -> a/k, k -> Infinity], conds]
+
+
+
+$  
+   \frac{(v_0+1) \left(\frac{a}{a-1}\right)^n+(v_0-1)
+    \left(\frac{1}{a+1}-1\right)^n}{(v_0+1)
+   \left(\frac{a}{a-1}\right)^n-(v_0-1) \left(\frac{1}{a+1}-1\right)^n}
+$
+
+
+
+$
+\lim_{k\to \infty } \,
+   \frac{(\text{v(0)}-1) \left(\frac{1}{\frac{a}{k}+1}-1\right)^{k
+    n}+(\text{v(0)}+1) \left(\frac{a}{k \left(\frac{a}{k}-1\right)}\right)^{k
+    n}}{(\text{v(0)}+1) \left(\frac{a}{k \left(\frac{a}{k}-1\right)}\right)^{k
+    n}-(\text{v(0)}-1) \left(\frac{1}{\frac{a}{k}+1}-1\right)^{k n}}
+$
+
+
+TODO: consider killing h4 headings
+
+v[n*k] /. a -> a/k
+
+(* this is the form I like best *)
+
+vtrue[n_] = (1 + Coth[a*n]*v0)/(Coth[a*n] + v0)
+
+vtest[n_] = (Tanh[a*n] + v0)/(1+Tanh[a*n]*v0)
+
+vtrue[n]-vtest[n]
+
+
+tacc = .002;
+(* can't use v0 here, would override *)
+vnull = .10;
+tn = 1/tacc;
+t1 = Table[{n, v[n] /. {a -> tacc, v0 -> vnull}}, {n,0,tn}]
+t2 = Table[{n, vnull+tacc*n}, {n,0,tn}]
+t3 = Table[{n, vtrue[n] /. {a -> tacc, v0 -> vnull}}, {n,0,tn}]
+
+ListPlot[{t1-t3}]
+showit
+
+ListPlot[{t1,t2,t3}, PlotLegends -> {"Relativistic", "Newtonian"},
+ Frame -> { {True, False}, {True, False}},
+ FrameLabel -> { {"Speed (fraction of c)", None}, {"Beacon #", None}},
+ PlotLabel -> 
+"Newtonian vs Relativistic Constant Acceleration\n(v(0) = 0.1, a = 0.002)"]
+showit
+
+
+
+
+
+TODO: ABOVE THIS LINE = NEWEST TREATMENT
+
+To find Bob's velocity in Carol's frame at a given time $t$, 
+
+The first beacon is traveling at $a$ since Bob started at rest with
+respect to Carol.
+
+The second beacon is traveling at $a$ with respect to the first
+beacon, so we use the relativistic addition formula:
+
+$\text{add}(a,a)\to \frac{2 a}{a^2+1}$
+
+So we now know the second beacon is traveling at $\frac{2 a}{a^2+1}$
+with respect to Carol.
+
+The third beacon is traveling at $a$ with respect to the second
+beacon, so we again apply the relativistic addition formula:
+
+$   
+    \text{add}\left(\frac{2 a}{1+a^2},a\right)\to \frac{a \left(a^2+3\right)}{3
+    a^2+1}
+$
+
+In general, we find the velocity of the nth beacon as follows:
+
+$v_{n+1}=\text{add}\left(v_n,a\right) \to \frac{a+v_n}{a v_n+1}$
+
+The closed form for this recursion is:
+
+$v_n=1-\frac{2 (1-a)^n}{(1-a)^n+(a+1)^n}$
+
+
+
+let's
 break up his $a$ acceleration per second into $\frac{a}{k}$ discrete
 accelerations every $\frac{1}{k}$ of a second (coasting at constant
 speed in between the accelerations), and take the limit.
@@ -117,19 +384,6 @@ $
 
 $v(1)=\text{add}(v_0,a)=\frac{a+v_0}{a v_0+1}$
 
-Beacon #2 is traveling at $a$ with respect to Beacon #1, so we have:
-
-$
-   v(2)=\text{add}(v(1),a)=\text{add}\left(\frac{a+v_0}{1+a
-    v_0},a\right)=\frac{\left(a^2+1\right) v_0+2 a}{a^2+2 a v_0+1}
-$
-
-In general, we have:
-
-$v(n)=\text{add}(v(n-1),a)=\frac{a+v(n-1)}{a v(n-1)+1}$
-
-Solving the recursion, we have:
-
 HoldForm[v[t0+ 1/k]] == HoldForm[add[v0, a/k]] == 
  FullSimplify[add[v0,a/k]]
 
@@ -160,42 +414,6 @@ Bob repeats this procedure indefinitely: accelerating at $a$ for 1
 second and dropping a beacon.
 
 TODO: establish formulas we take as given
-
-<h4>Velocity</h4>
-
-<h4>Time</h4>
-
-Bob is dropping a beacon every second in his reference frame. How
-often does Carol see a beacon dropped?
-
-By our initial conditions, Beacon #0 is dropped at $t=t_0$.
-
-Between dropping Beacon #0 and Beacon #1, Bob travels at:
-
-$v(1)=\frac{a+v_0}{a v_0+1}$
-
-By time dilation, Bob's one second becomes
-
-$\frac{a v_0+1}{\sqrt{\left(a^2-1\right)\left(v_0^2-1\right)}}$
-
-seconds in Carol's frame.
-
-In general, the time in Carol's frame between dropping Beacon #n and
-Beacon #n+1 (during which time Bob is traveling at $v(n+1)$ is:
-
-$
-\text{dt}(n)=   \frac{1}{\sqrt{1-\left(\frac{2}{\frac{(v_0+1)
-    \left(\frac{a+1}{1-a}\right)^{n+1}}{v_0-1}-1}+1\right)^2}}
-$
-
-To find when the nth beacon is dropped, we simply add:
-
-$
-t(n)=   \sum _{i=0}^n \frac{1}{\sqrt{1-\left(\frac{2}{\frac{\left(v_0+1\right)
-    \left(\frac{a+1}{1-a}\right)^{i+1}}{v_0-1}-1}+1\right){}^2}}+t_0
-$
-
-(there does not appear to be an easily-found closed form for this sum).
 
 <h4>Distance</h4>
 
@@ -264,18 +482,6 @@ TODO: change all v_0 to v_0, etc
 
 
 
-tacc = .002;
-tn = 1/tacc;
-t1 = Table[{n,v[n] /. {a -> tacc, v0 -> .10}}, {n,0,tn}]
-t2 = Table[{n,.10+tacc*n}, {n,0,tn}]
-ListPlot[{t1,t2}, PlotLegends -> {"Relativistic", "Newtonian"},
- Frame -> { {True, False}, {True, False}},
- FrameLabel -> { {"Speed (fraction of c)", None}, {"Beacon #", None}},
- PlotLabel -> 
-"Newtonian vs Relativistic Constant Acceleration\n(v(0) = 0.1, a = 0.002)"]
-showit
-
-
 TODO: simpler formula based on eyeballing it?
 
 TODO: Graphics, not fully happy with my discrete -> cont jump
@@ -321,10 +527,6 @@ StringReplace[ToString[TeXForm[v[n]]], "a" -> "\\frac{a}{k}"]
 
 
 
-Bob drops a beacon and then accelerates at $a$ for one second,
-repeating this process indefinitely. The 0th beacon is what we'll call
-Bob's "starting point".
-
 We take as given the formulas for relativistic velocity addition, time
 dilation, and Lorentz contraction (all velocities given as a
 percentage of the speed of light):
@@ -338,35 +540,6 @@ TODO: add Carol
 TODO: add contraction
 
 TODO: Above is derivable
-
-How fast is the nth beacon traveling, according to Carol?
-
-The first beacon is traveling at $a$ since Bob started at rest with
-respect to Carol.
-
-The second beacon is traveling at $a$ with respect to the first
-beacon, so we use the relativistic addition formula:
-
-$\text{add}(a,a)\to \frac{2 a}{a^2+1}$
-
-So we now know the second beacon is traveling at $\frac{2 a}{a^2+1}$
-with respect to Carol.
-
-The third beacon is traveling at $a$ with respect to the second
-beacon, so we again apply the relativistic addition formula:
-
-$   
-    \text{add}\left(\frac{2 a}{1+a^2},a\right)\to \frac{a \left(a^2+3\right)}{3
-    a^2+1}
-$
-
-In general, we find the velocity of the nth beacon as follows:
-
-$v_{n+1}=\text{add}\left(v_n,a\right) \to \frac{a+v_n}{a v_n+1}$
-
-The closed form for this recursion is:
-
-$v_n=1-\frac{2 (1-a)^n}{(1-a)^n+(a+1)^n}$
 
 If $a=0.01$ (which means Bob is accelerating at 1% the speed of light
 every second or about 2997.92458 kilometers per second per second),
