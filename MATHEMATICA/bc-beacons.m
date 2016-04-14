@@ -51,7 +51,7 @@ TODO: maybe improve graphic (and add x axes markings?) (or maybe just a fixed gr
 
 (*
 
-Subject: Constant acceleration in special relativity: a discrete approach
+Subject: Constant acceleration in special relativity
 
 Q: Say Barry, could you abuse the answer-your-own-question feature of
 this site and explain constant acceleration in relativity?
@@ -60,15 +60,38 @@ A:
 
 Let's start with this setup:
 
-At $t=t_0$, Bob is $s_0$ light seconds away from Carol and moving a
-velocity of $v_0$ (given as a fraction of the speed of light).
+At $t=t_0$, Bob is $s_0$ light seconds away from Carol, moving at a
+velocity of $v_0$ (given as a fraction of the speed of light), and
+constantly accelerating at a rate of $a$ (given as a fraction of the
+speed of light per second).
+
+For reference, note that 1 light second per second per second is
+$299792.458 \frac{\text{km}}{s^2}$ so $a$ will normally be fractional.
+
+To find Bob's velocity at a given time $t$, let's break up his $a$
+acceleration per second into $\frac{a}{k}$ discrete accelerations
+every $\frac{1}{k}$ of a second (coasting at constant speed in between
+the accelerations), and take the limit.
+
+
+
+
+
+TODO: note that assumption of continuity of derivative is assumed
+
 
 Bob drops Beacon #0, and then instantly accelerates (increases his
-velocity by) $\frac{a}{k}$ (light seconds per second per second) ,
-coasts for $\frac{1}{k}$ of a second, and then repeats th where $k$ is
-a positive integer. Bob then repeats this $\frac{a}{k}$
+velocity by) $\frac{a}{k}$ (light seconds per second per second). He
+then coasts for $\frac{1}{k}$ of a second, repeats this process $k$
+times (where $k$ is a positive integer throughout), and then drops
+another beacon. 
 
-TODO: explain light second per second per second
+In other words, Bob is accelerating $a$ light seconds per second per
+second, but is breaking this acceleration up into $k$ smaller steps of
+$\frac{a}{k}$ acceleration, which will help us when we reach the
+continuous case.
+
+
 
 $a$ (light seconds per second
 per second) for 1 second (in his own reference frame), and drops Beacon #1.
