@@ -89,6 +89,11 @@ speed in between the accelerations), and take the limit.
 We know Bob is initially ($t=t_0$) traveling at $v_0$ from the given
 initial conditions.
 
+After $\frac{1}{k}$ of a second has passed on Bob's clock, he
+increases his speed (accelerates) by $\frac{a}{k}$.
+
+
+
 After $\frac{1}{k}$ seconds, Bob has added $\frac{a}{k}$ to his
 velocity, so we use the relativistic velocity addition formula:
 
