@@ -10,12 +10,18 @@ add[u_,v_] = (u+v)/(1+u*v);
 (* TODO: rename vars below so calling this function twice doesn't
 break things *)
 
-v[n_] = FullSimplify[
+vdiscrete[n_] = FullSimplify[
 RSolve[{v[0] == v0, v[n+1] == add[v[n],a]}, v[n], n][[1,1,2]] , conds];
 
-vbeacon[n_] = (v0*Cosh[a*n] + Sinh[a*n])/(Cosh[a*n] + v0*Sinh[a*n])
+v[n_] = (v0*Cosh[a*n] + Sinh[a*n])/(Cosh[a*n] + v0*Sinh[a*n])
 
-dt[n_] = FullSimplify[dilation[v[n+1]], conds];
+(* wont be needing these either as I'm going continuous earlier
+
+dt[n_] = FullSimplify[dilation[v[n]], conds];
+
+dtbeacon[n_] = FullSimplify[Limit[dt[n*k] /. a -> a/k, k -> Infinity],conds]
+
+*)
 
 (*
 
@@ -84,12 +90,12 @@ Let's use the following setup for the start of our thought experiment:
   - Bob drops beacon #0. In Carol's frame, beacon #0 is $s_0$ distance
   from her and traveling at a velocity of $v_0$.
 
-Bob then repeats the following process every second: 
+Bob then repeats the following process every second:
+
+  - coasts for one second at his current velocity
 
   - instantly increases his velocity (accelerates) by $a$ (light seconds
   per second per second)
-
-  - coasts for one second at his new velocity
 
   - drops a new beacon
 
@@ -148,54 +154,68 @@ Thus, if Bob accelerates at a uniform rate of $a$ light seconds per
 second per second, the velocity of the nth beacon is $\frac{v_0 \cosh
 (a n)+\sinh (a n)}{v_0 \sinh (a n)+\cosh (a n)}$
 
+When does Carol see the nth beacon drop in her time frame?
+
+We know from our initial conditions that Beacon #0 drops at $t=t_0$.
+
+Between Beacon #0 and Beacon #n, Bob's velocity increases from $v_0$
+at time $t=t_0$ to $\frac{\text{v0} \cosh (a n)+\sinh (a n)}{\text{v0}
+\sinh (a n)+\cosh (a n)}$ by the time he drops the nth beacon.
+
+To find the total time elapsed in Carol's frame, we integrate the time
+dilation resulting from these velocities:
+
+HoldForm[Integrate[dilation[v[t]],{t,0,n}]] == 
+ HoldForm[Integrate[1/Sqrt[-((-1 + v0^2)/(Cosh[a*t] + v0*Sinh[a*t])^2)], 
+ {t,0,n}]] == 
+Integrate[dilation[v[t]],{t,0,n}]
+
+
+
+1/Sqrt[-((-1 + v0^2)/(Cosh[a*t] + v0*Sinh[a*t])^2)]
+
 <h4>Time</h4>
+
+
 
 Bob is dropping a beacon every second in his reference frame. How
 often does Carol see a beacon dropped in her reference frame?
 
 Returning briefly to our original setup (non-uniform acceleration), we
-note that Bob travels at (the discrete version of) $v(n)$ when he
-drops Beacon #n, and then immediately accelerates to $v(n+1)$ and
-travels for 1 second at $v(n+1)$ before dropping Beacon #n+1.
+note that Bob travels at (the discrete version of) $v(n)$ for one
+second after he drops Beacon #n, and then immediately accelerates to
+$v(n+1)$ before dropping Beacon #n+1.
 
-Since Bob is traveling at $v(n+1)$ between dropping Beacon #n and
-Beacon #n+1, the time dilation between these two drops is:
+Since Bob is traveling at $v(n)$ between dropping Beacon #n and Beacon
+#n+1 (the instant acceleration at the end of one second takes zero
+time), the time dilation between these two drops is:
+
+TODO: discrete checks of formulas I get
 
 $
-\text{dilation}(v(n+1))=
-\frac{1}{\sqrt{1-\left(\frac{2}{\frac{\left(v_0+1\right)
-\left(\frac{a+1}{1-a}\right)^{n+1}}{v_0-1}-1}+1\right){}^2}}
+\text{dilation}(v(n))=
+   \frac{1}{\sqrt{1-\left(\frac{2}{\frac{(\text{v0}+1) (1-a)^{-n}
+    (a+1)^n}{\text{v0}-1}-1}+1\right)^2}}
 $
 
 Thus, while 1 second passes for Bob between the drops,
 
 $
-\frac{1}{\sqrt{1-\left(\frac{2}{\frac{\left(v_0+1\right)
-\left(\frac{a+1}{1-a}\right)^{n+1}}{v_0-1}-1}+1\right){}^2}}
+   \frac{1}{\sqrt{1-\left(\frac{2}{\frac{(\text{v0}+1) (1-a)^{-n}
+    (a+1)^n}{\text{v0}-1}-1}+1\right)^2}}
 $
 
 seconds pass for Carol.
-
-
 
 For the continuous case, we once again assume $k$ accelerations of
 $\frac{a}{k}$ per second and take the limit as $k\to \infty$.
 
 Omitting the ugly math, this yields:
 
-$dt(n,n+1) = \frac{v_0 \sinh (a n)+\cosh (a n)}{\sqrt{1-v_0^2}}$
+$dt(n,n+1) = \frac{\text{v0} \sinh (a n)+\cosh (a n)}{\sqrt{1-\text{v0}^2}}$
 
+TODO: graphics for both cases
 
-
-
-
-dtbeacon[n_] = FullSimplify[Limit[dt[n*k] /. a -> a/k, k -> Infinity],conds]
-
-
-
-each, and take the limit as $k\to
-
-dt[n_] = FullSimplify[dilation[v[n+1]], conds] 
 
 
 
