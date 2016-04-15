@@ -15,6 +15,10 @@ RSolve[{v[0] == v0, v[n+1] == add[v[n],a]}, v[n], n][[1,1,2]] , conds];
 
 v[n_] = (v0*Cosh[a*n] + Sinh[a*n])/(Cosh[a*n] + v0*Sinh[a*n])
 
+t[n_] = t0 + (v0*(-1 + Cosh[a*n]) + Sinh[a*n])/(a*Sqrt[1 - v0^2])
+
+s[n_] = s0 + Log[Cosh[a*n] + v0*Sinh[a*n]]/a
+
 (* wont be needing these either as I'm going continuous earlier
 
 dt[n_] = FullSimplify[dilation[v[n]], conds];
@@ -154,23 +158,130 @@ Thus, if Bob accelerates at a uniform rate of $a$ light seconds per
 second per second, the velocity of the nth beacon is $\frac{v_0 \cosh
 (a n)+\sinh (a n)}{v_0 \sinh (a n)+\cosh (a n)}$
 
-When does Carol see the nth beacon drop in her time frame?
+When does Carol see Beacon #n drop in her time frame?
 
 We know from our initial conditions that Beacon #0 drops at $t=t_0$.
 
 Between Beacon #0 and Beacon #n, Bob's velocity increases from $v_0$
 at time $t=t_0$ to $\frac{\text{v0} \cosh (a n)+\sinh (a n)}{\text{v0}
-\sinh (a n)+\cosh (a n)}$ by the time he drops the nth beacon.
+\sinh (a n)+\cosh (a n)}$ by the time he drops the Beacon #n.
 
 To find the total time elapsed in Carol's frame, we integrate the time
 dilation resulting from these velocities:
 
+$
+ \int_0^n \text{dilation}(v(t)) \, dt=\int_0^n
+    \frac{1}{\sqrt{-\frac{-1+\text{v0}^2}{(\cosh (a t)+\text{v0} \sinh (a
+    t))^2}}} \, dt=\frac{\text{v0} (\cosh (a n)-1)+\sinh (a n)}{a
+    \sqrt{1-\text{v0}^2}}
+$
+
+Thus, Carol sees Beacon #n dropped at $t_0 + \frac{\text{v0}
+(\cosh (a n)-1)+\sinh (a n)}{a \sqrt{1-\text{v0}^2}}$
+
+How far away is Beacon #n dropped in Carol's reference frame?
+
+We know from out initial conditions that Beacon #0 is dropped at a
+distance of $s_0$. To find the total distance between where Beacon #0
+is dropped and where Beacon #n is dropped, we simply integrate the
+velocity:
+
+!!! THIS IS WRONG !!!
+
+$
+   \int_0^n v(t) \, dt=\int_0^n \frac{\text{v0} \cosh (a t)+\sinh (a t)}{\cosh
+    (a t)+\text{v0} \sinh (a t)} \, dt=\frac{\log (\text{v0} \sinh (a n)+\cosh
+    (a n))}{a}
+$
+
+Thus, Carol sees Beacon #n dropped at distance $\frac{\log (\text{v0}
+\sinh (a n)+\cosh (a n))}{a}+\text{s0}$.
+
+Summarizing what we know:
+
+$
+   \begin{array}{cccc}
+    \text{Beacon $\#$} & \text{Drop time} & \text{Drop distance} &
+      \text{Velocity} \\
+    0 & t_0 & s_0 & v_0 \\
+    1 & \frac{\text{v0} (\cosh (a)-1)+\sinh (a)}{a
+      \sqrt{1-\text{v0}^2}}+\text{t0} & \frac{\log (\text{v0} \sinh (a)+\cosh
+      (a))}{a}+\text{s0} & \frac{\text{v0} \cosh (a)+\sinh (a)}{\text{v0} \sinh
+      (a)+\cosh (a)} \\
+    n & \frac{\text{v0} (\cosh (a n)-1)+\sinh (a n)}{a
+      \sqrt{1-\text{v0}^2}}+\text{t0} & \frac{\log (\text{v0} \sinh (a n)+\cosh
+      (a n))}{a}+\text{s0} & \frac{\text{v0} \cosh (a n)+\sinh (a n)}{\text{v0}
+      \sinh (a n)+\cosh (a n)} \\
+   \end{array}
+$
+
+repl = {t0 -> 0, s0 -> 0, v0 -> .5, a -> .01}
+
+TODO: formula for s is probably incorrect, assumes odd things about dt
+
+vfake[n_] = v0 + a*n
+sfake[n_] = s0 + v0*n + a*n^2/2
+tfake[n_] = t0 + n
+
+ListPlot[{Table[v[n] /. repl, {n,0,100}], 
+          Table[vfake[n] /. repl, {n,0,100}]}
+]
+
+ListPlot[{Table[s[n] /. repl, {n,0,100}], 
+          Table[sfake[n] /. repl, {n,0,100}]}
+]
+
+ListPlot[{Table[t[n] /. repl, {n,0,100}], 
+          Table[tfake[n] /. repl, {n,0,100}]}
+]
+
+ListPlot[Table[{t[n], v[n]} /. repl, {n,0,100}]]
+ListPlot[Table[{t[n], s[n]} /. repl, {n,0,500}]]
+showit
+
+
+TODO: make sure all TeX tables have vertical and horizontal lines
+
+t1 = Grid[{
+ {"Beacon #", "Drop time", "Drop distance", "Velocity"},
+
+ {0, Subscript[t,0], Subscript[s,0], Subscript[v,0]},
+ {1, t0 + (v0*(-1 + Cosh[a]) + Sinh[a])/(a*Sqrt[1 - v0^2]),
+     s0 + Log[Cosh[a] + v0*Sinh[a]]/a, 
+     (v0*Cosh[a] + Sinh[a])/(Cosh[a] + v0*Sinh[a])},
+ {n, t0 + (v0*(-1 + Cosh[a*n]) + Sinh[a*n])/(a*Sqrt[1 - v0^2]),
+     s0 + Log[Cosh[a*n] + v0*Sinh[a*n]]/a,
+     (v0*Cosh[a*n] + Sinh[a*n])/(Cosh[a*n] + v0*Sinh[a*n])}
+}];
+
+temp1915 = Solve[t[n]==x, n] /. C[1] -> 0
+
+temp1915[[1,1,2]]/temp1915[[2,1,2]]
+
+temp1917 = temp1915[[1,1,2]]
+temp1918 = temp1915[[2,1,2]]
+
+strue[x_] = FullSimplify[s[temp1917], conds]
+
+(* another attempt to simplify the velocity at least *)
+
+temp1938[v_] = add[v,a*dt]
+
+
+
+
+HoldForm[Integrate[v[t],{t,0,n}]] == HoldForm[Integrate[(v0*Cosh[a*t] +
+ Sinh[a*t])/(Cosh[a*t] + v0*Sinh[a*t]),{t,0,n}] ]
+
+TODO: avoid nth beacon, say Beacon #n
+
+
 HoldForm[Integrate[dilation[v[t]],{t,0,n}]] == 
  HoldForm[Integrate[1/Sqrt[-((-1 + v0^2)/(Cosh[a*t] + v0*Sinh[a*t])^2)], 
  {t,0,n}]] == 
-Integrate[dilation[v[t]],{t,0,n}]
+FullSimplify[Integrate[dilation[v[t]],{t,0,n}],conds]
 
-
+time[n_] = FullSimplify[Integrate[dilation[v[t]],{t,0,n}],conds] 
 
 1/Sqrt[-((-1 + v0^2)/(Cosh[a*t] + v0*Sinh[a*t])^2)]
 
