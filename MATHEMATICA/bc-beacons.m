@@ -11,37 +11,26 @@ dilation[v_] = 1/Sqrt[1-v^2];
 
 add[u_,v_] = (u+v)/(1+u*v);
 
-(* TODO: rename vars below so calling this function twice doesn't
-break things *)
-
-vdiscrete[n_] = FullSimplify[
-RSolve[{v[0] == v0, v[n+1] == add[v[n],a]}, v[n], n][[1,1,2]] , conds];
-
-v[n_] = (v0*Cosh[a*n] + Sinh[a*n])/(Cosh[a*n] + v0*Sinh[a*n])
-
-t[n_] = t0 + (v0*(-1 + Cosh[a*n]) + Sinh[a*n])/(a*Sqrt[1 - v0^2])
-
-s[n_] = s0 + Log[Cosh[a*n] + v0*Sinh[a*n]]/a
-
-(* wont be needing these either as I'm going continuous earlier
-
-dt[n_] = FullSimplify[dilation[v[n]], conds];
-
-dtbeacon[n_] = FullSimplify[Limit[dt[n*k] /. a -> a/k, k -> Infinity],conds]
-
-*)
-
 (*
 
-temporarily commenting out next 3 as I may go a different direction here
+The formulas below were derived as follows, but closed form given for
+speed/convenience:
 
-t[n_] = FullSimplify[t0+ Sum[dt[i],{i,0,n}],conds];
+vhelp[n_] =  FullSimplify[
+RSolve[{u[0] == v0, u[n+1] == add[u[n],a/k]}, u[n], n][[1,1,2]]
+, conds]
 
-ds[n_] = FullSimplify[dt[n]*v[n+1], conds];
+v[n_] = FullSimplify[Limit[vhelp[k*n], k -> Infinity], conds]
 
-s[n_] = FullSimplify[s0 + Sum[v[i+1]*dt[i], {i,0,n}], conds];
+t[n_] = FullSimplify[Integrate[dilation[v[t]],{t,0,n}],conds]
+
+s[n_] = FullSimplify[Integrate[v[t]*dilation[v[t]], {t,0,n}], conds]
 
 *)
+
+v[n_] = (v0*Cosh[a*n] + Sinh[a*n])/(Cosh[a*n] + v0*Sinh[a*n])
+t[n_] = t0 + (v0*(-1 + Cosh[a*n]) + Sinh[a*n])/(a*Sqrt[1 - v0^2])
+s[n_] = s0 + (-1 + Abs[Cosh[a*n] + v0*Sinh[a*n]])/(a*Sqrt[1 - v0^2])
 
 (*
 
@@ -58,65 +47,6 @@ u0 = Subscript[u,0]
 *)
 
 (* formulas end here *)
-
-(*
-
-<section name="discrete">
-
-These are the discrete formulas:
-
-v[n_] =  FullSimplify[
-RSolve[{u[0] == v0, u[n+1] == add[u[n],a]}, u[n], n][[1,1,2]]
-, conds]
-
-this is between beacon n and n+1
-
-dt[n_] = FullSimplify[dilation[v[n]], conds];
-
-t[n_] = FullSimplify[Sum[dt[i], {i,0,n-1}],conds]
-
-ds[n_] = FullSimplify[dt[n]*v[n], conds];
-
-s[n_] = FullSimplify[Sum[ds[i], {i,0,n-1}],conds]
-
-c == continuous
-
-cv[n_] = FullSimplify[Limit[v[k*n] /. a -> a/k, k -> Infinity],conds]
-
-ct[n_] = FullSimplify[Limit[t[n*k] /. a -> a/k, k -> Infinity], conds]
-
-cs[n_] = FullSimplify[Limit[s[n*k] /. a -> a/k, k -> Infinity], conds]
-
-</section>
-
-<section name="continuous">
-
-cv0[n_] =  FullSimplify[
-RSolve[{u[0] == v0, u[n+1] == add[u[n],a/k]}, u[n], n][[1,1,2]]
-, conds]
-
-cv[n_] = FullSimplify[Limit[cv0[k*n], k -> Infinity], conds]
-
-ct[n_] = FullSimplify[Integrate[dilation[cv[t]],{t,0,n}],conds]
-
-cs[n_] = FullSimplify[Integrate[cv[t]*dilation[cv[t]], {t,0,n}], conds]
-
-
-
-
-
-
-
-
-
-
-
-
-
-</section>
-
-
-
 
 beacons[t_] = Table[beacon[n,t], {n,0,10}]
 
@@ -143,37 +73,128 @@ this site and explain constant acceleration in relativity?
 
 A:
 
+<h4>Setup</h4>
+
 Let's use the following setup for the start of our thought experiment:
 
   - Carol's clock $t$ reads $t=t_0$
 
   - Bob's clock $u$ reads $u=u_0$
 
-  - Bob is traveling at a constant velocity of $v_0$, given as a
-  fraction of the speed of light.
+  - Bob starts at a velocity of $v_0$ (with respect to Carol), given
+  as a fraction of the speed of light. Note that velocity is one thing
+  both observers can agree on, so Bob's initial velocity is $v_0$ in
+  both Bob's and Carol's frames (albeit in opposite directions).
 
-  - Carol sees Bob at a distance of $s_0$ light seconds.
+  - Bob accelerates uniformly at $a$ (light seconds per second per
+  second) in his own (constantly changing) frame. Note that 1 light
+  second per second per second is $299792.458 \frac{\text{km}}{s^2}$
+  so $a$ will normally be fractional.
 
-  - Bob drops beacon #0. In Carol's frame, beacon #0 is $s_0$ distance
-  from her and traveling at a velocity of $v_0$.
+  - In Carol's frame, Bob starts at a distance of $s_0$ light seconds.
 
-Bob then repeats the following process every second:
+  - Carol's frame is inertial. Bob's frame is not, since Bob is accelerating.
 
-  - coasts for one second at his current velocity
+  - Bob flashes a numbered beacon every second in his
+  timeframe. Beacon #0 is flashed at the start of the experiment,
+  Beacon #1 is flashed after 1 second passes for Bob, and so on.
 
-  - instantly increases his velocity (accelerates) by $a$ (light seconds
-  per second per second)
+  - Note that we place no restrictions on $s_0$, $v_0$, or $a$: any of
+  these can be positive or negative. So, for example Bob may be
+  speeding up with respect to Carol, or slowing down with respect to
+  Carol. Similarly, Bob may be moving farther away from Carol or may
+  be moving closer to Carol.
 
-  - drops a new beacon
+TODO: bob to carol distance if we need it
 
-Note that 1 light second per second per second is $299792.458
-\frac{\text{km}}{s^2}$ so $a$ will normally be fractional.
+<h4>Answer</h4>  
 
-<h4>Velocity</h4>
+First let's ask: how fast is Bob traveling in Carol's reference frame
+when he flashes the nth beacon?
 
-How fast is the nth beacon traveling in Carol's reference frame?
+To find this, we can break up Bob's $a$ acceleration per second into
+$k$ smaller accelerations of $\frac{a}{k}$ each, and take the limit as
+$k\to \infty$.
+
+Taking the relativistic velocity addition formula as granted (though
+it can be derived), we note that Bob accelerates for $n$ seconds
+before flashing beacon $n$.
+
+Thus, in our limiting setup, Bob accelerates $\frac{a}{k}$ a total of
+$k n$ times. Referring to Bob's velocity after $i$ accelerations as
+$\beta_i$ (just to avoid conflict with our existing variables), we
+have the following recurrence relation:
+
+$\beta_0=v_0$
+
+$
+\beta _{i+1}=\text{add}\left(\beta _i,\frac{a}{k}\right)=
+\frac{\frac{a}{k}+\beta _i}{\frac{a \beta _i}{k}+1}
+$
+
+Solving this recurrence and simplifying (ugly details omitted) gives us:
+
+$\beta _i=\frac{2}{\frac{(\text{v0}+1) (k-a)^{-i} (a+k)^i}{\text{v0}-1}-1}+1$
+
+Allowing $i\to k n$ and taking the limit as above:
+
+$\lim_{k\to \infty } \, \beta _{k n}=
+   \lim_{k\to \infty } \, \left(1+\frac{2}{-1+\frac{(a+k)^{k n}
+    (1+\text{v0})}{(-a+k)^{k n} (-1+\text{v0})}}\right)=
+   \frac{\text{v0} \cosh (a n)+\sinh (a n)}{\text{v0} \sinh (a n)+\cosh (a n)}
+$
+
+Thus, the nth beacon is traveling at $\frac{\text{v0} \cosh (a
+n)+\sinh (a n)}{\text{v0} \sinh (a n)+\cosh (a n)}$ when it's dropped.
+
+Since we solved for the continuous case, we can also say the formula
+above applies for decimal values for $n$ as well.
+
+We know Bob is dropping a beacon every second in his reference frame,
+but how often does Carol, in her reference frame, see a beacon
+dropped?
+
+
+
+Taking the time dilation formula as granted (though it can also be
+derived), and 
+
+
+
+This means Carol see Bob's velocity as $\frac{\text{v0} \cosh (a
+n)+\sinh (a n)}{\text{v0} \sinh (a n)+\cosh (a n)}$ after $n$ seconds
+have passed **on Bob's clock** (in other words, when the nth beacon
+has dropped). This does not tell us what Bob's velocity is (with
+respect to Carol) when it reads $n$ seconds on Carol's clock.
+
+
+
+
+
+
+beta[i_] = FullSimplify[ RSolve[{b[0] == v0, b[i+1] == add[b[i],a/k]}
+, b[i], i][[1,1,2]], conds]
+
+
+HoldForm[Limit[1 + 2/(-1 + ((a + k)^(k*n)*(1 + v0))/((-a + k)^(k*n)*(-
+1 + v0))), k -> Infinity]]                                                      
+
+FullSimplify[
+RSolve[{b[0] == v0, b[i+1] == add[b[i],a/k]}, b[i], i][[1,1,2]],
+ conds]
+
+
+
+
+
+
+
+
+
 
 We know that Beacon #0 is traveling at $v_0$ by the given initial conditions.
+
+
 
 Beacon #1 is traveling at $a$ with respect to Beacon #0, so we use the
 relativistic velocity addition formula:
@@ -351,9 +372,6 @@ time[n_] = FullSimplify[Integrate[dilation[v[t]],{t,0,n}],conds]
 <h4>Time</h4>
 
 
-
-Bob is dropping a beacon every second in his reference frame. How
-often does Carol see a beacon dropped in her reference frame?
 
 Returning briefly to our original setup (non-uniform acceleration), we
 note that Bob travels at (the discrete version of) $v(n)$ for one
