@@ -1,3 +1,7 @@
+(* NOTE: previous versions of this file in git contain significantly
+more information and calculations which may be useful in and of
+themselves *)
+
 (* formulas start here *)
 
 conds = {n>0, k>0, i>0, Element[{n,k,i},Integers], Abs[a] < 1, Abs[v0] < 1,
@@ -54,6 +58,65 @@ u0 = Subscript[u,0]
 *)
 
 (* formulas end here *)
+
+(*
+
+<section name="discrete">
+
+These are the discrete formulas:
+
+v[n_] =  FullSimplify[
+RSolve[{u[0] == v0, u[n+1] == add[u[n],a]}, u[n], n][[1,1,2]]
+, conds]
+
+this is between beacon n and n+1
+
+dt[n_] = FullSimplify[dilation[v[n]], conds];
+
+t[n_] = FullSimplify[Sum[dt[i], {i,0,n-1}],conds]
+
+ds[n_] = FullSimplify[dt[n]*v[n], conds];
+
+s[n_] = FullSimplify[Sum[ds[i], {i,0,n-1}],conds]
+
+c == continuous
+
+cv[n_] = FullSimplify[Limit[v[k*n] /. a -> a/k, k -> Infinity],conds]
+
+ct[n_] = FullSimplify[Limit[t[n*k] /. a -> a/k, k -> Infinity], conds]
+
+cs[n_] = FullSimplify[Limit[s[n*k] /. a -> a/k, k -> Infinity], conds]
+
+</section>
+
+<section name="continuous">
+
+cv0[n_] =  FullSimplify[
+RSolve[{u[0] == v0, u[n+1] == add[u[n],a/k]}, u[n], n][[1,1,2]]
+, conds]
+
+cv[n_] = FullSimplify[Limit[cv0[k*n], k -> Infinity], conds]
+
+ct[n_] = FullSimplify[Integrate[dilation[cv[t]],{t,0,n}],conds]
+
+cs[n_] = FullSimplify[Integrate[cv[t]*dilation[cv[t]], {t,0,n}], conds]
+
+
+
+
+
+
+
+
+
+
+
+
+
+</section>
+
+
+
 
 beacons[t_] = Table[beacon[n,t], {n,0,10}]
 
