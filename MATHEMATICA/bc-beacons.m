@@ -4,8 +4,8 @@ themselves *)
 
 (* formulas start here *)
 
-conds = {n>0, k>0, i>0, Element[{n,k,i},Integers], Abs[a] < 1, Abs[v0] < 1,
- Element[{a,v0}, Reals]};
+conds = {n>0, k>0, i>0, Element[{n,k,i},Integers], Abs[a] < 1, Abs[a] > 0,
+Abs[v0] < 1, Element[{a,v0}, Reals]};
 
 dilation[v_] = 1/Sqrt[1-v^2];
 
@@ -24,13 +24,13 @@ v[n_] = FullSimplify[Limit[vhelp[k*n], k -> Infinity], conds]
 
 t[n_] = FullSimplify[Integrate[dilation[v[t]],{t,0,n}],conds]
 
-s[n_] = FullSimplify[Integrate[v[t]*dilation[v[t]], {t,0,n}], conds]
+fakes[n_] = FullSimplify[Integrate[v[t]*dilation[v[t]], {t,0,n}], conds]
 
 *)
 
 v[n_] = (v0*Cosh[a*n] + Sinh[a*n])/(Cosh[a*n] + v0*Sinh[a*n])
 t[n_] = t0 + (v0*(-1 + Cosh[a*n]) + Sinh[a*n])/(a*Sqrt[1 - v0^2])
-s[n_] = s0 + (-1 + Abs[Cosh[a*n] + v0*Sinh[a*n]])/(a*Sqrt[1 - v0^2])
+fakes[n_] = s0 + (-1 + Abs[Cosh[a*n] + v0*Sinh[a*n]])/(a*Sqrt[1 - v0^2])
 
 (*
 
@@ -47,6 +47,41 @@ u0 = Subscript[u,0]
 *)
 
 (* formulas end here *)
+
+(*
+
+Why are these not equal:
+
+test2121[n_] = s0+Integrate[v[t], {t,t[0],t[n]}]
+
+test2136 agrees with s(n)!
+test2136[n_] = s0+Integrate[v[t-t[0]], {t,t[0],t[n]}]
+
+
+test2122[n_] = s0+Integrate[v[t]*dilation[v[t]], {t,0,n}]
+
+t[n] = t0+Integrate[dilation[v[t]], {t,0,n}]
+
+FullSimplify[test2122[1] /. {v0 -> 0, s0 -> 0},conds]
+FullSimplify[test2136[1] /. {v0 -> 0, s0 -> 0},conds]
+
+t[1] - t0 = Sinh[a]/a (under above conds)
+
+v[1] = Tanh[a] (under above conds)
+
+average speed: Log[Cosh[a]]/a
+
+if v0 is 0,
+
+Tanh[a n] is velocity
+
+Integrate[Tanh[a*n],{n,0,1}] -> Log[Cosh[a]]/a
+
+Integrate[Tanh[a*n], {n,0,Sinh[a]/a}] -> Undefined?
+
+
+
+*)
 
 beacons[t_] = Table[beacon[n,t], {n,0,10}]
 
@@ -107,7 +142,7 @@ Let's use the following setup for the start of our thought experiment:
 
 TODO: bob to carol distance if we need it
 
-<h4>Answer</h4>  
+<h4>Carol's Frame</h4>  
 
 First let's ask: how fast is Bob traveling in Carol's reference frame
 when he flashes the nth beacon?
@@ -144,20 +179,204 @@ $\lim_{k\to \infty } \, \beta _{k n}=
    \frac{\text{v0} \cosh (a n)+\sinh (a n)}{\text{v0} \sinh (a n)+\cosh (a n)}
 $
 
-Thus, the nth beacon is traveling at $\frac{\text{v0} \cosh (a
-n)+\sinh (a n)}{\text{v0} \sinh (a n)+\cosh (a n)}$ when it's dropped.
+Thus, Bob is traveling at 
+
+$v(n) = \frac{\text{v0} \cosh (a
+n)+\sinh (a n)}{\text{v0} \sinh (a n)+\cosh (a n)}$
+
+when he flashes the nth beacon.
 
 Since we solved for the continuous case, we can also say the formula
-above applies for decimal values for $n$ as well.
+above applies even when $n$ is not an integer. For example, plugging
+in $n=4.2$ refers to Bob's speed 4.2 seconds after the start of the
+experiment.
 
-We know Bob is dropping a beacon every second in his reference frame,
-but how often does Carol, in her reference frame, see a beacon
-dropped?
+TODO: nth vs Beacon #n
 
-
+Next, we know Bob is flashing a beacon every second in his reference
+frame, but how often does Carol, in her reference frame, see a beacon
+flash?
 
 Taking the time dilation formula as granted (though it can also be
-derived), and 
+derived), we know that Bob is traveling at $\frac{\text{v0} \cosh (a
+n)+\sinh (a n)}{\text{v0} \sinh (a n)+\cosh (a n)}$ when he flashes the
+nth beacon. Roughly speaking, this means 1 second in Bob's frame
+translates to:
+
+$
+  \text{dilation}(v(n))=\text{dilation}\left(\frac{\text{v0} \cosh (a n)+\sinh
+    (a n)}{\text{v0} \sinh (a n)+\cosh (a n)}\right)=\frac{\left| \cosh (a
+    n)+\text{v0} \sinh (a n) \right|}{\sqrt{1-\text{v0}^2}}
+$
+
+seconds in Carol's frame. Of course, that's only an approximation,
+since Bob's velocity is constantly changing.
+
+More accurately, we can say that $dn$ seconds in Bob's frame translates to:
+
+$ \frac{\left| \cosh (a 
+ n)+\text{v0} \sinh (a n) \right|}{\sqrt{1-\text{v0}^2}} dn
+$ 
+
+seconds in Carol's frame (where $n$ can be a decimal number).
+
+To find the total time from Beacon #0's flash to Beacon #n's flash, we
+integrate:
+
+$
+   \int_0^n \frac{\left| \cosh (a t)+\text{v0} \sinh (a t)
+    \right|}{\sqrt{1-\text{v0}^2}} \, dt = 
+   \frac{\text{v0} (\cosh (a n)-1)+\sinh (a n)}{a \sqrt{1-\text{v0}^2}}
+$
+
+Since Beacon #0 flashed at $t_0$ in Carol's frame, Carol sees the nth
+beacon flash at:
+
+$
+\tau (n) =  \frac{\text{v0} (\cosh (a n)-1)+\sinh (a n)}{a
+    \sqrt{1-\text{v0}^2}}+\text{t0}
+$
+
+in her reference frame.
+
+Finally, how far does Bob travel in Carol's reference frame between
+flashing Beacon #n-1 and Beacon #n?
+
+We know that Bob is traveling at
+
+$v(n-1) = 
+   \frac{\text{v0} \cosh (a (n-1))+\sinh (a (n-1))}{\text{v0} \sinh (a
+    (n-1))+\cosh (a (n-1))}
+$
+
+when flashing the (n-1)st beacon, and that, in Carol's frame, he travels for:
+
+$\tau(n)-\tau(n-1) = 
+   \frac{\text{v0} (\cosh (a n)-1)+\sinh (a n)}{a
+   \sqrt{1-\text{v0}^2}}-\frac{\text{v0} (\cosh (a (n-1))-1)+\sinh (a (n-1))}{a
+    \sqrt{1-\text{v0}^2}}=
+  \frac{-\text{v0} \cosh (a (n-1))+\text{v0} \cosh (a n)+\sinh (a n)+\sinh (a-a
+    n)}{a \sqrt{1-\text{v0}^2}}
+$
+
+between flashing the (n-1)st and nth beacons, so our rough
+approximation would be that Bob travels $v(n-1) (t(n)-t(n-1))$ between
+dropping Beacon #n-1 and Beacon #n.
+
+Of course, that's only an approximation since Bob's velocity is
+changing constantly. For an exact answer, we integrate:
+
+$
+ds(n-1,n) = \int_{\tau (n-1)}^{\tau (n)} v(t) \, dt=
+
+   \int_{\frac{\text{v0} (\cosh (a (n-1))-1)+\sinh (a (n-1))}{a
+    \sqrt{1-\text{v0}^2}}+\text{t0}}^{\frac{\text{v0} (\cosh (a n)-1)+\sinh (a
+    n)}{a \sqrt{1-\text{v0}^2}}+\text{t0}} 
+   \frac{\text{v0} \cosh (a t)+\sinh (a t)}{\text{v0} \sinh (a t)+\cosh (a t)}
+ \, dt =
+   \frac{\log \left(\cosh \left(\frac{\text{v0} (\cosh (a n)-1)+\sinh (a
+    n)}{\sqrt{1-\text{v0}^2}}\right)+\text{v0} \sinh \left(\frac{\text{v0}
+    (\cosh (a n)-1)+\sinh (a n)}{\sqrt{1-\text{v0}^2}}\right)\right)-\log
+    \left(\cosh \left(\frac{\text{v0} (\cosh (a (n-1))-1)+\sinh (a
+    (n-1))}{\sqrt{1-\text{v0}^2}}\right)+\text{v0} \sinh \left(\frac{\text{v0}
+   (\cosh (a (n-1))-1)+\sinh (a (n-1))}{\sqrt{1-\text{v0}^2}}\right)\right)}{a}
+
+$
+
+To find the total distance from Beacon #0 to Beacon #n, we add:
+
+$
+\sum _{i=1}^n \text{ds}(i-1,i) =
+\sum _{i=1}^n 
+   \frac{\log \left(\cosh \left(\frac{\text{v0} (\cosh (a i)-1)+\sinh (a
+    i)}{\sqrt{1-\text{v0}^2}}\right)+\text{v0} \sinh \left(\frac{\text{v0}
+    (\cosh (a i)-1)+\sinh (a i)}{\sqrt{1-\text{v0}^2}}\right)\right)-\log
+    \left(\cosh \left(\frac{\text{v0} (\cosh (a (i-1))-1)+\sinh (a
+    (i-1))}{\sqrt{1-\text{v0}^2}}\right)+\text{v0} \sinh \left(\frac{\text{v0}    (\cosh (a (i-1))-1)+\sinh (a (i-1))}{\sqrt{1-\text{v0}^2}}\right)\right)}{a}
+=
+   \frac{\log \left(\cosh \left(\frac{\text{v0} (\cosh (a n)-1)+\sinh (a
+    n)}{\sqrt{1-\text{v0}^2}}\right)+\text{v0} \sinh \left(\frac{\text{v0}
+    (\cosh (a n)-1)+\sinh (a n)}{\sqrt{1-\text{v0}^2}}\right)\right)}{a}
+$
+
+and since Beacon #0 was at distance $s_0$, the distance from Carol to
+Beacon #n in Carol's frame is:
+
+$
+s(n) = 
+   \frac{\log \left(\cosh \left(\frac{\text{v0} (\cosh (a n)-1)+\sinh (a
+    n)}{\sqrt{1-\text{v0}^2}}\right)+\text{v0} \sinh \left(\frac{\text{v0}
+    (\cosh (a n)-1)+\sinh (a
+    n)}{\sqrt{1-\text{v0}^2}}\right)\right)}{a}+\text{s0}
+$
+
+
+
+Integrate[v[u],{u,t[n-1],t[n]}]
+
+ds[n_] = (-Log[Cosh[(v0*(-1 + Cosh[a*(-1 + n)]) + Sinh[a*(-1 + n)])/
+          Sqrt[1 - v0^2]] + v0*Sinh[(v0*(-1 + Cosh[a*(-1 + n)]) + 
+            Sinh[a*(-1 + n)])/Sqrt[1 - v0^2]]] + 
+     Log[Cosh[(v0*(-1 + Cosh[a*n]) + Sinh[a*n])/Sqrt[1 - v0^2]] + 
+       v0*Sinh[(v0*(-1 + Cosh[a*n]) + Sinh[a*n])/Sqrt[1 - v0^2]]])/a
+
+above is n-1 to n
+
+s[n_] = s0 + Log[Cosh[(v0*(-1 + Cosh[a*n]) + Sinh[a*n])/Sqrt[1 - v0^2]] + 
+      v0*Sinh[(v0*(-1 + Cosh[a*n]) + Sinh[a*n])/Sqrt[1 - v0^2]]]/a
+
+
+
+
+
+By continuity, we will again assume the beacon numbers can be
+non-integers. Between flashing Beacon #k and Beacon #k+dk (where $dk$
+is small), Bob travels at a velocity of:
+
+$v(k) = 
+\frac{\text{v0} \cosh (a k)+\sinh (a k)}{\text{v0} \sinh (a k)+\cosh (a k)}$
+
+The time between dropping Beacon #k and Beacon #k+dk (in Carol's
+reference frame is):
+
+$\tau (k+\text{dk})-\tau (k) = 
+   \frac{\text{v0} (\cosh (a (\text{dk}+k))-1)+\sinh (a (\text{dk}+k))}{a
+    \sqrt{1-\text{v0}^2}}-\frac{\text{v0} (\cosh (a k)-1)+\sinh (a k)}{a
+    \sqrt{1-\text{v0}^2}} =
+   \frac{\text{v0} \cosh (a (\text{dk}+k))+\sinh (a (\text{dk}+k))-\text{v0}
+    \cosh (a k)-\sinh (a k)}{a \sqrt{1-\text{v0}^2}}
+$
+
+The distance traveled is velocity multiplied by time or:
+
+$
+v(k) (t(k+\text{dk})-t(k)) =
+  -\frac{(\text{v0} \cosh (a k)+\sinh (a k)) (-\text{v0} \cosh (a
+   (\text{dk}+k))-\sinh (a (\text{dk}+k))+\text{v0} \cosh (a k)+\sinh (a k))}{a
+    \sqrt{1-\text{v0}^2} (\text{v0} \sinh (a k)+\cosh (a k))}
+$
+
+
+
+
+
+
+does the nth beacon flash in Carol's reference
+frame?
+
+
+
+
+
+HoldForm[Integrate[Abs[Cosh[a*t] + v0*Sinh[a*t]]/Sqrt[1 - v0^2], {t,0,n
+}] ]                                                                            
+
+
+
+TODO: change drop to flash
+
+
+TODO: this is not accurate obviousl
 
 
 
