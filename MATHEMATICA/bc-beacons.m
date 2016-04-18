@@ -50,6 +50,53 @@ u0 = Subscript[u,0]
 
 (*
 
+junk:
+
+Log[Cosh[Sinh[a*t]]]/a
+
+(Cosh[a*t]-1)/a
+
+atest = 0.05;
+Plot[{Cosh[atest*t]-1, Log[Cosh[Sinh[atest*t]]]}, {t,0,10}]
+Plot[(Cosh[atest*t]-1)/Log[Cosh[Sinh[atest*t]]], {t,0,100}]
+showit
+
+
+vhelp[i]*(dilation[vhelp[i]]/k)
+
+FullSimplify[vhelp[i]*(dilation[vhelp[i]]/k) /. {v0 -> 0}]
+
+atest = 0.1;
+
+Plot[Tanh[t*atest], {t,0,10}]
+
+Plot[dilation[Tanh[t*atest]], {t,0,10}]
+
+total elapsed is : Sinh[a*t]/a
+
+Plot[Sinh[atest*t]/atest, {t,0,10}]
+showit
+
+distance in Bob frame (no, this is suspect):
+
+Integrate[Tanh[a*t],t] == Log[Cosh[a t]]/a
+
+rel rocket page:
+
+(c2/a) (sqrt[1 + (at/c)2] - 1) or
+
+test1423[t_] = (Sqrt[1+(a*t)^2]-1)/a
+
+
+
+
+Integrate[dilation[Tanh[t*atest]], t]
+
+
+
+
+
+
 Why are these not equal:
 
 test2121[n_] = s0+Integrate[v[t], {t,t[0],t[n]}]
@@ -1172,3 +1219,41 @@ RSolve[{v[0] == v0, v[n+1] == add[v[n],a]}, v[n], n][[1,1,2]]
 dt[n_] = FullSimplify[dilation[v[n+1]], conds] 
 </code></pre>
 
+(*
+
+Subject: Error in deriving constant acceleration relativistic distance
+
+Bob accelerates away from Carol at proper acceleration $a$ (in light
+seconds per second), and Carol wants to know how far Bob has traveled
+when $t$ seconds pass **in Bob's frame**.
+
+Using math.ucr.edu/home/baez/physics/Relativity/SR/Rocket/rocket.html
+and noting that $c=1$ because of the units we're using, Carol knows
+that:
+
+  - $t$ seconds in Bob's frame equals $\frac{\sinh (a t)}{a}$ in her frame
+
+  - Bob's velocity in her frame is $\tanh (a t)$
+
+so she integrates velocity over time to get distance:
+
+$\int_0^{\frac{\sinh (a t)}{a}} \tanh (a u) \, du = 
+\frac{\log (\cosh (\sinh (a t)))}{a}$
+
+which is the wrong answer. What has Carol done wrong?
+
+For reference, the correct answer is $\frac{\cosh (a t)-1}{a}$.
+
+A power series expansion at $t=0$ shows these two answers are
+surprisingly close to each other, but not identical:
+
+$ 
+   \frac{\log (\cosh (\sinh (a t)))}{a}=\frac{a t^2}{2}+\frac{a^3 
+    t^4}{12}-\frac{a^5 t^6}{90}+\frac{a^7 t^8}{2520}+\frac{a^9 
+    t^{10}}{1575}+ ... 
+$
+$ 
+   \frac{-1+\cosh (a t)}{a}=\frac{a t^2}{2}+\frac{a^3 t^4}{24}+\frac{a^5 
+    t^6}{720}+\frac{a^7 t^8}{40320}+\frac{a^9 
+    t^{10}}{3628800}+ ... 
+$ 

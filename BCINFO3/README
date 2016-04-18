@@ -287,8 +287,8 @@ cd /var/log/lighttpd/
 : run these four commands "at once" to minimize downtime
 
 /etc/init.d/lighttpd stop
-mv access.log access.log.20160318
-mv error.log error.log.20160318
+mv access.log access.log.20160418
+mv error.log error.log.20160418
 /etc/init.d/lighttpd start
 
 : this can be run later
