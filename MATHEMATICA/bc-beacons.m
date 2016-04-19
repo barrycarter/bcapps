@@ -24,13 +24,13 @@ v[n_] = FullSimplify[Limit[vhelp[k*n], k -> Infinity], conds]
 
 t[n_] = FullSimplify[Integrate[dilation[v[t]],{t,0,n}],conds]
 
-fakes[n_] = FullSimplify[Integrate[v[t]*dilation[v[t]], {t,0,n}], conds]
+s[n_] = FullSimplify[Integrate[v[t]*dilation[v[t]], {t,0,n}], conds]
 
 *)
 
 v[n_] = (v0*Cosh[a*n] + Sinh[a*n])/(Cosh[a*n] + v0*Sinh[a*n])
 t[n_] = t0 + (v0*(-1 + Cosh[a*n]) + Sinh[a*n])/(a*Sqrt[1 - v0^2])
-fakes[n_] = s0 + (-1 + Abs[Cosh[a*n] + v0*Sinh[a*n]])/(a*Sqrt[1 - v0^2])
+s[n_] = s0 + (-1 + Abs[Cosh[a*n] + v0*Sinh[a*n]])/(a*Sqrt[1 - v0^2])
 
 (*
 
@@ -47,88 +47,6 @@ u0 = Subscript[u,0]
 *)
 
 (* formulas end here *)
-
-(*
-
-junk:
-
-Log[Cosh[Sinh[a*t]]]/a
-
-(Cosh[a*t]-1)/a
-
-atest = 0.05;
-Plot[{Cosh[atest*t]-1, Log[Cosh[Sinh[atest*t]]]}, {t,0,10}]
-Plot[(Cosh[atest*t]-1)/Log[Cosh[Sinh[atest*t]]], {t,0,100}]
-showit
-
-
-vhelp[i]*(dilation[vhelp[i]]/k)
-
-FullSimplify[vhelp[i]*(dilation[vhelp[i]]/k) /. {v0 -> 0}]
-
-atest = 0.1;
-
-Plot[Tanh[t*atest], {t,0,10}]
-
-Plot[dilation[Tanh[t*atest]], {t,0,10}]
-
-total elapsed is : Sinh[a*t]/a
-
-Plot[Sinh[atest*t]/atest, {t,0,10}]
-showit
-
-distance in Bob frame (no, this is suspect):
-
-Integrate[Tanh[a*t],t] == Log[Cosh[a t]]/a
-
-rel rocket page:
-
-(c2/a) (sqrt[1 + (at/c)2] - 1) or
-
-test1423[t_] = (Sqrt[1+(a*t)^2]-1)/a
-
-
-
-
-Integrate[dilation[Tanh[t*atest]], t]
-
-
-
-
-
-
-Why are these not equal:
-
-test2121[n_] = s0+Integrate[v[t], {t,t[0],t[n]}]
-
-test2136 agrees with s(n)!
-test2136[n_] = s0+Integrate[v[t-t[0]], {t,t[0],t[n]}]
-
-
-test2122[n_] = s0+Integrate[v[t]*dilation[v[t]], {t,0,n}]
-
-t[n] = t0+Integrate[dilation[v[t]], {t,0,n}]
-
-FullSimplify[test2122[1] /. {v0 -> 0, s0 -> 0},conds]
-FullSimplify[test2136[1] /. {v0 -> 0, s0 -> 0},conds]
-
-t[1] - t0 = Sinh[a]/a (under above conds)
-
-v[1] = Tanh[a] (under above conds)
-
-average speed: Log[Cosh[a]]/a
-
-if v0 is 0,
-
-Tanh[a n] is velocity
-
-Integrate[Tanh[a*n],{n,0,1}] -> Log[Cosh[a]]/a
-
-Integrate[Tanh[a*n], {n,0,Sinh[a]/a}] -> Undefined?
-
-
-
-*)
 
 beacons[t_] = Table[beacon[n,t], {n,0,10}]
 
@@ -235,7 +153,7 @@ when he flashes the nth beacon.
 
 Since we solved for the continuous case, we can also say the formula
 above applies even when $n$ is not an integer. For example, plugging
-in $n=4.2$ refers to Bob's speed 4.2 seconds after the start of the
+in $n=4.2$ refers to Bob's velocity 4.2 seconds after the start of the
 experiment.
 
 TODO: nth vs Beacon #n
@@ -1257,3 +1175,65 @@ $
     t^6}{720}+\frac{a^7 t^8}{40320}+\frac{a^9 
     t^{10}}{3628800}+ ... 
 $ 
+
+(*
+
+more on discrete approach:
+
+Bob starts at v0, jumps to plus cur speed + a*dt every dt in his
+frame; stays at v0 for first dt
+
+beacons each dt ( = bad idea?) 1/dt beacons per second
+
+TODO: per math chat suggestion, change of var for adt+1 and adt-1
+
+conds = {Element[{a,dt,v0}, Reals], Element[n, Integers], dt>0, dt<1,
+Abs[a] > 0, Abs[a] < 1, n > 0, Abs[v0] < 1, alpha > 0, alpha < 2, beta > 0,
+beta < 2};
+
+dilation[v_] = 1/Sqrt[1-v^2];
+
+add[u_,v_] = (u+v)/(1+u*v);
+
+vhelp[n_]=
+ RSolve[{u[0] == v0, u[n+1] == add[u[n],a*dt]}, u[n], n][[1,1,2]];
+
+a*dt+1 = alpha so dt -> (alpha-1)/a
+v0+1 = beta, so v0 -> (beta-1)
+
+v[n_] = FullSimplify[vhelp[n] /. {dt -> (alpha-1)/a, v0 -> beta-1},conds]
+
+
+below is in number of epsilon boosts:
+
+(* v[n_] = FullSimplify[vhelp[n],conds] *)
+
+dt[n_] = FullSimplify[dilation[v[n]]*dt,conds]
+
+dt[n_] = FullSimplify[dilation[v[n]]*(alpha-1)/alpha,conds]
+
+ds[n_] = FullSimplify[v[n]*dt[n],conds]
+
+TODO: check limits below
+
+t[n_] = Sum[dt[i], {i,0,n-1}]
+
+s[n_] = Sum[ds[i], {i,0,n-1}]
+
+t[n/dt] .. t[m].. m = n/dt ... n -> m*dt
+
+t[m*dt]
+
+I'm trying to compute
+$\lim_{n\to \infty } \, \left(\sum _{i=1}^n f(i)\right)$
+
+Sum[f[i,dt], {i,1,n}]
+
+Limit[Sum[f[i,dt], {i,1,m*dt}], dt -> 0]
+
+
+
+
+
+TODO: graph w stair steps as indicator?
+
