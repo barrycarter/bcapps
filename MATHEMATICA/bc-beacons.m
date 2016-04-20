@@ -1187,16 +1187,55 @@ beacons each dt ( = bad idea?) 1/dt beacons per second
 
 TODO: per math chat suggestion, change of var for adt+1 and adt-1
 
-conds = {Element[{a,dt,v0}, Reals], Element[n, Integers], dt>0, dt<1,
-Abs[a] > 0, Abs[a] < 1, n > 0, Abs[v0] < 1, alpha > 0, alpha < 2, beta > 0,
-beta < 2};
+conds = {Element[{a,dt,v0}, Reals], Element[{n,k}, Integers], dt>0,
+dt<1, Abs[a] > 0, Abs[a] < 1, n > 0, k > 0, Abs[v0] < 1, alpha > 0,
+alpha < 2, beta > 0, beta < 2};
 
 dilation[v_] = 1/Sqrt[1-v^2];
 
 add[u_,v_] = (u+v)/(1+u*v);
 
+TODO: !!! assuming v0>0, a>0 to see if I get simplifications, return
+to general case !!!
+
+conds = {Element[{a,dt,v0}, Reals], Element[{n,k}, Integers], dt>0,
+dt<1, Abs[a] > 0, Abs[a] < 1, n > 0, k > 0, Abs[v0] < 1, alpha > 0,
+alpha < 2, beta > 0, beta < 2, a>0, v0>0};
+
+
 vhelp[n_]=
  RSolve[{u[0] == v0, u[n+1] == add[u[n],a*dt]}, u[n], n][[1,1,2]];
+
+assigns = {dt -> alpha/a, v0 -> beta-1}
+
+assigns = {1 + a*dt -> alpha, a*dt -1 -> beta, v0 -> (gamma+1)/(gamma-1)}
+
+most simplified form:
+
+(a^i-b^i)/(ab)^(i/2)
+
+test1821[n_] = 
+ ((-beta)^n - alpha^n*gamma)*dt/(2*Sqrt[-(((-(alpha*beta))^n*gamma))])
+
+v[n_] = FullSimplify[vhelp[n] /. assigns, conds]
+
+
+if n=20 I want 20 boosts of a/20, so a*dt = a/20, so dt -> 1/n or k/n gen case
+
+assigns = {dt -> k/n}
+
+assigns = {};
+
+v[n_] = FullSimplify[vhelp[n] /. assigns, conds]
+
+dt[n_] = FullSimplify[dilation[v[n]]*dt /. assigns, conds]
+
+tint[n_] = 
+ FullSimplify[Integrate[dt[i], {i,0,n}, Assumptions -> conds],conds]
+
+
+
+t[n_] = Sum[dt[i] /. dt -> k/n, {i, 0, n}, Assumptions -> conds]
 
 a*dt+1 = alpha so dt -> (alpha-1)/a
 v0+1 = beta, so v0 -> (beta-1)
@@ -1216,7 +1255,7 @@ ds[n_] = FullSimplify[v[n]*dt[n],conds]
 
 TODO: check limits below
 
-t[n_] = Sum[dt[i], {i,0,n-1}]
+t[n_] = Sum[dt[i], {i,0,n-1}, Assumptions -> conds]
 
 s[n_] = Sum[ds[i], {i,0,n-1}]
 

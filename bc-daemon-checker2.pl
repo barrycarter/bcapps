@@ -92,13 +92,24 @@ for $i (@procs) {
   my($stime) = pstime2sec($time);
   if ($stime < 300) {next;}
 
+  # TODO: add process specific timeouts (thought I already had this)
+
   # am I allowed to kill this process?
   if ($proclist{kill}{$proc}) {
+
+    debug("LOOKING AT: $proc");
+
+    # TODO: this is a kludge for Mathematica processes; the general
+    # case would allow arbitrary signals
+    my($signal);
+    if ($proc=~/mathematica/i) {$signal="-HUP";}
+
     # if I am allowed to kill it and it's been running for 10x its
     # allowed time, something is wrong
-    if ($stime>3000){push(@err, "10x.$proc ($pid)");next;}
+    # however, keep trying to kill it
+    if ($stime>3000){push(@err, "10x.$proc ($pid)");}
     # kill it
-    system("kill $pid");
+    system("kill $signal $pid");
   }
 
   # process is running long, and is neither permitted nor required to
