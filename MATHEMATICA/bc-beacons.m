@@ -1208,7 +1208,8 @@ vhelp[n_]=
 
 assigns = {dt -> alpha/a, v0 -> beta-1}
 
-assigns = {1 + a*dt -> alpha, a*dt -1 -> beta, v0 -> (gamma+1)/(gamma-1)}
+assigns = {1 + a*dt -> alpha, a*dt -1 -> beta, v0 -> (gamma+1)/(gamma-1),
+ 1-a*dt -> -beta}
 
 most simplified form:
 

@@ -1,5 +1,10 @@
 # shell one liners
 
+# (suggests) renaming files that make doesn't handle well (removes spaces)
+\ls | perl -nle '$x=$_; if (s/[^a-z0-9_\.\-\%\,]/_/isg) {print "mv \"$x\" $_"}'
+
+exit;
+
 # move all stack exchange messages (and related _files directories) to
 # /home/barrycarter/STACK (in some cases, I dl multiple versions, this
 # moves them all)
@@ -39,11 +44,6 @@ find . -iname '*.png' | fgrep -v /.xvpics/ | perl -nle 'unless (-f "$_.tess.txt"
 
 exit;
 
-
-# (suggests) renaming files that make doesn't handle well (removes spaces)
-\ls | perl -nle '$x=$_; if (s/[^a-z0-9_\.\-\%\,]/_/isg) {print "mv \"$x\" $_"}'
-
-exit;
 
 # most indexed documents in recollindex (useful to trim out useless docs)
 
