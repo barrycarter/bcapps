@@ -1185,6 +1185,8 @@ frame; stays at v0 for first dt
 
 beacons each dt ( = bad idea?) 1/dt beacons per second
 
+v[k*n] /. dt -> 1/k is the magic limit
+
 TODO: per math chat suggestion, change of var for adt+1 and adt-1
 
 conds = {Element[{a,dt,v0}, Reals], Element[{n,k}, Integers], dt>0,
@@ -1203,8 +1205,9 @@ dt<1, Abs[a] > 0, Abs[a] < 1, n > 0, k > 0, Abs[v0] < 1, alpha > 0,
 alpha < 2, beta > 0, beta < 2, a>0, v0>0};
 
 
-vhelp[n_]=
- RSolve[{u[0] == v0, u[n+1] == add[u[n],a*dt]}, u[n], n][[1,1,2]];
+vhelp[n_]= FullSimplify[
+ RSolve[{u[0] == v0, u[n+1] == add[u[n],a*dt]}, u[n], n][[1,1,2]],
+conds];
 
 assigns = {dt -> alpha/a, v0 -> beta-1}
 
@@ -1230,6 +1233,46 @@ assigns = {};
 v[n_] = FullSimplify[vhelp[n] /. assigns, conds]
 
 dt[n_] = FullSimplify[dilation[v[n]]*dt /. assigns, conds]
+
+below is just to get it in canonical "fail" form
+
+assigns = {dt -> (alpha+1)/a, v0 -> (gamma+1)/(gamma-1)}
+
+assigns = {dt -> alpha/a/(alpha-1), v0 -> (gamma+1)/(gamma-1), 
+ alpha -> (beta-1)/-2}
+
+beta -> 1-2*alpha
+
+1 + a*dt -> alpha, a*dt -1 -> beta, v0 -> (gamma+1)/(gamma-1),
+ 1-a*dt -> -beta, a^2*dt^2 -> delta^2}
+
+Solve[{-1 + 1/(1+a*dt) == alpha, 1 + 1/(a*dt-1) == beta}]
+
+Solve[-1 + 1/(1+a*dt) == alpha, dt]
+
+Solve[1 + 1/(a*dt-1) == beta, a]
+
+assigns = {dt -> alpha/a/(1+alpha), 
+ a -> (a*(1 + alpha)*beta)/(alpha*(-1 + beta))}
+
+FullSimplify[dt[n] /. assigns, conds]
+
+test1936[x_] = (c1 + c2*x^n)*c3/c4/Sqrt[c5*x^n]
+
+assigns = {c3 -> alpha, c1 -> 1-v0, c2 -> 1+v0, c4 -> 2*a*(1+alpha),
+ c5 -> (-1+v0)^2, x -> (1-2*beta)}
+
+assigns2 = {alpha -> -1 + 1/(1+a*dt), beta -> 1 + 1/(a*dt-1)}
+
+FullSimplify[test1936[x] /. assigns /. assigns2, conds]
+
+assigns = {dt -> alpha/a/(1+alpha), 
+ a -> (a*(1 + alpha)*beta)/(alpha*(-1 + beta))}
+
+FullSimplify[dt[n]^2*4*(v0^2-1) /. assigns, conds]
+
+
+test2002[n_] = Integrate[dt[n], n, Assumptions -> conds]
 
 tint[n_] = 
  FullSimplify[Integrate[dt[i], {i,0,n}, Assumptions -> conds],conds]

@@ -3,6 +3,58 @@
 http://physics.stackexchange.com/questions/210794/
 http://physics.stackexchange.com/questions/246165/
 
+
+g2 = Graphics[{
+ PointSize[0.01],
+ Arrowheads[{-.02, .02}],
+ Arrow[{{0,0}, {8,0}}],
+ Text[Style["8 ly", FontSize->25], {4,-0.25}],
+ RGBColor[{0,0,1}],
+ Point[{0,0}],
+ Text[Style["8 ly", FontSize->25], {0,-0.25}],
+ RGBColor[{1,.5,.5}],
+ Point[{8,0}],
+ Text[Style["8 ly", FontSize->25], {8,-0.25}],
+ RGBColor[{1,0,0}], 
+ Point[{8,0.25}],
+ Text[Style["8 ly", FontSize->25], {8,0.5}],
+}];
+
+Show[g2]
+showit
+
+g3 = Graphics[{
+ PointSize[0.01],
+ Arrowheads[{-.02, .02}],
+ Arrow[{{0,0}, {8,0}}],
+ Text[Style["8 ly", FontSize->25], {4,-0.25}],
+ RGBColor[{0,0,1}],
+ Text[Style["E", FontSize->25], {0,-0.25}],
+ Point[{0,0}],
+ Text[Style["8 ly", FontSize->25], {0,-0.5}],
+ RGBColor[{1,.5,.5}],
+ Point[{8,0}],
+ Text[Style["W", FontSize->25], {8,-0.25}],
+ Text[Style["8 ly", FontSize->25], {8,-0.5}],
+ RGBColor[{1,0,0}], 
+ Arrowheads[{.02}],
+ Arrow[{{8,0.25}, {7,0.25}}],
+ Point[{8,0.25}],
+ Text[Style["4.8 ly", FontSize->25], {8,0.5}],
+ Text[Style["0.8 c", FontSize->15], {7.5,0.125}],
+}];
+
+Show[g3]
+showit
+
+
+
+
+
+
+
+
+
 <section name = "justAMT">
 
 journey is from t=0 to t=7.5 AMT time or t=0 to t=12.5 earth time)
