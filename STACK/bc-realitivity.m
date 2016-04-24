@@ -38,16 +38,165 @@ g3 = Graphics[{
  Text[Style["8 ly", FontSize->25], {8,-0.5}],
  RGBColor[{1,0,0}], 
  Arrowheads[{.02}],
- Arrow[{{8,0.25}, {7,0.25}}],
- Point[{8,0.25}],
- Text[Style["4.8 ly", FontSize->25], {8,0.5}],
- Text[Style["0.8 c", FontSize->15], {7.5,0.125}],
+ Arrow[{{8,0.5}, {7,0.5}}],
+ Point[{8,0.5}],
+ Text[Style["S", FontSize->25], {8,0.25}],
+ Text[Style["4.8 ly", FontSize->25], {8,0.75}],
+ Text[Style["0.8 c", FontSize->15], {7.5,0.625}],
 }];
 
 Show[g3]
 showit
 
+g2 = Graphics[{
+ PointSize[0.01],
+ Arrowheads[{-.02, .02}],
+ Arrow[{{0,0}, {8,0}}],
+ Text[Style["8 ly", FontSize->25], {4,-0.25}],
+ RGBColor[{0,0,1}],
+ Text[Style["E", FontSize->25], {0,-0.25}],
+ Point[{0,0}],
+ Text[Style["8 ly", FontSize->25], {0,-0.5}],
+ RGBColor[{1,.5,.5}],
+ Point[{8,0}],
+ Text[Style["W", FontSize->25], {8,-0.25}],
+ Text[Style["8 ly", FontSize->25], {8,-0.5}],
+ RGBColor[{1,0,0}], 
+ Arrowheads[{.02}],
+ Point[{8,0.5}],
+ Text[Style["S", FontSize->25], {8,0.25}],
+ Text[Style["8 ly", FontSize->25], {8,0.75}],
+}];
 
+Show[g2]
+showit
+
+[[IMAGE]]
+
+Another way to think about it: before the ship (S) accelerates away
+from the station (W [for Wolf 359]) and heads towards Earth (E),
+everyone agrees the distance between E and W is 8 light years.
+
+[[IMAGE]]
+
+After the ship accelerates, E and W still agree the distance between
+them is 8 light years, but the ship, traveling at 0.8c, now says the
+distance is 4.8 light years.
+
+An observer on Earth might say "You were 8 light years away, and you
+accelerated to 0.8c, but you didn't really move very much during your
+near-instant acceleration. In some sense, you are still 8 light years
+away".
+
+A ship observer might say "Now that I've accelerated, E and W are 4.8
+light years away, and moving at 0.8c with respect to me. Since I know
+about the Lorentz contraction, I can say their 'proper distance' is
+still 8 light years. In other words, if I were to accelerate into
+their frame so that they appear stationary to me, I would once again
+see their distance as 8 light years".
+
+In some sense, this is all "bookkeeping", since the Earth observer
+won't actually see the ship's acceleration for 8 years.
+
+NOTE: I've changed the daily signals to yearly signals. I think that
+retains the spirit of the question while making the math easier.
+
+Using this admittedly inaccurate model (which we will correct/explain
+later), let's see what happens:
+
+  - Earth: S started at distance 8 from me and is approaching at
+  0.8c. Thus, his distance at any time is $8-0.8 t$, where $t$ is
+  measured in years. In particular, he will land in 10 years. For this
+  model, I am ignoring Lorentz contraction and using the intuitive
+  model above.
+
+  - Ship: E started distance 4.8 from me (after I accelerated) and is
+  approaching me at 0.8c. Thus, his distance at any time is
+  $4.8-0.8t$. In particular, I will land in 6 years (my clock).
+
+  - Ship: since I know about Lorentz contraction, let me also compute
+  my "proper distance" from E at any time. In other words, the
+  distance if I were to suddenly decelerate at $t$ and enter Earth's
+  reference frame. This is: $\frac{4.8\, -0.8 t}{0.6}$ or $8-\frac{4
+  t}{3}$. Thus, my proper distance from E is decreasing at $1.33 c$.
+  This doesn't violate the speed of light limit, since that only
+  applies to distance as I measure it, not proper distance.
+
+  - Earth: the distance of the first yearly signal I send out will be
+  $t$. In other words, it will reach W in 8 years. Since I'm ignoring
+  the Lorentz contraction for now, I know the ship's position is
+  $8-0.8t$. When does my signal hit the ship?
+
+$(8.\, -0.8 t=t) \to t=4.44444$
+
+or about 4.44 years from now, at which point the ship will be $8 -
+0.8(4.444)$ or 4.44 light years distant (which makes sense, since my
+signal can only go 4.44 light years in 4.44 years).
+
+In general, the nth signal I send out will be $t-n$ distant from
+me at time $t$, and will thus hit the ship at:
+
+$(8.\, -0.8 t=t-n) \to t= 4.44444 + 0.555556 n$
+
+at which point the ship (ignoring Lorentz contraction) will be:
+
+$8.\, - 0.8(4.44444 + 0.555556 n) = 4.44444 - 0.444444 n$
+
+light years away. 
+
+
+
+
+
+
+Let's make a table, and, even though we're not using
+it, including the Lorentz contracted distance just for fun:
+
+t[n_] = Expand[Solve[8.0 - 0.8*t == t-n , t][[1,1,2]]]
+d[n_] = Expand[8 -0.8*t[n]]
+lc[n_] = Expand[d[n]*.6]
+
+form = {3,2};
+tab = Table[{n, PaddedForm[t[n], form], 
+              PaddedForm[d[n], form], 
+              PaddedForm[lc[n],form]
+}, {n,0,10}];
+
+t2 = Prepend[tab, {"Launch", "Arrive", "Distance", "LC Dist"}];
+Grid[t2]
+showit
+
+
+
+
+
+
+
+
+
+
+
+TODO: beam or light beam -> signal
+
+TODO: apologize to mathematicians for rounding
+
+the first of the yearly signals I send will reach S in 8
+  years of my time, since I'm ignoring the Lorentz contraction. By
+  that time, the ship will be $8-0.8t$ or $8-0.8(8) = 1.8$ light years
+  away from me. 
+
+Each subsequent signal will reach the ship in $8-0.8
+  t$, where $t$ is measured in years. Thus, I will send 10 signals
+  total.
+
+  - Ship: the first Earth signal I receive will arrive 4.8 years after
+  I accelerate, since the Earth's distance is now 4.8 light years.
+
+
+
+
+
+TODO: note "accounting"
 
 
 
@@ -871,4 +1020,97 @@ g2 = Graphics[{
  Text[Style["Green Bay (G)", FontSize->25], {1,1+delta}],
 }]
 showit
+
+(* junk below *)
+
+lcdist[t_] = 4.8-0.8*t
+
+shipprdist[t_] = Expand[lcdist[t]/0.6]
+
+earthprdist[t_] = 8-0.8*t
+
+reach in 4.44444
+
+8-1.33333*t = proper dist for ship
+
+Solve[t == lcdist[t], t]
+
+2.6666 years at 2.6666 ld (contracted) [4.4444 uncontracted]
+
+e = 4.444444 years when first hits
+t = 2.666666 years when first hits
+
+1.77778 years = equal difference
+
+8.88888 = earth record time
+2.66666 = ship record time
+
+5th beacon
+
+e = 7.22222 at 2.2222 ly distance
+t = 4.33336 at 2.2222 ly distance (proper)
+
+2.88886 = diff (also 0.4 of proper e time, 0.666666 of proper s time)
+
+9.4444 = record time
+4.3336 = ship record time
+
+t[n_] = Expand[Solve[8.0 - 0.8*t == t-n , t][[1,1,2]]]
+
+
+lorentz1: 10 and 14.8 ly away at t=0
+
+0 and 4.8 ly away at t=10
+
+from ship:
+
+4.8 and 0 ly at t=0
+0 and -4.8 ly at t=10
+
+earth: 10y for S then 6 years for R so total 16 years for R
+
+clock reads: 6y on S and R when S arrives, 12.8 years when R arrives
+
+reverse frame:
+
+earth: 6y for S, earth clock reads 10y
+
+from earth: arrival time = 2y (after first light beam), clock advance
+= 6y (since first light beam)
+
+from ship: arrival time = 1.2y (after first light beam), clock advance = 10y
+
+1.2 ly = earth clock 0 expected, 0 ly = earth clock 3.6 expected [3y
+eyeball time]
+
+1.2 ly expect to see 0 really see 0
+0 ly expect to see 3.6 really see 10
+
+earthTime[n_] = Expand[Solve[8.0 - 0.8*t == t-n , t][[1,1,2]]]
+earthDist[n_] = Expand[8.0-0.8*earthTime[n]]
+shipTime[n_] = Expand[Solve[8.0 - 1.33333*t == earthDist[n], t][[1,1,2]]]
+shipDist[n_] = Expand[4.8 - shipTime[n]*.8]
+
+Plot[{earthTime[n], earthDist[n]},{n,0,10}, AxesOrigin -> {0,0}]
+
+Plot[{shipTime[n], shipDist[n]},{n,0,10}, AxesOrigin -> {0,0}]
+
+Plot[{n + shipDist[n], shipTime[n]},{n,0,10}, AxesOrigin -> {0,0}]
+
+4.8*.8
+
+0 4.8
+
+1 4.6 argh
+
+
+
+
+
+
+
+
+
+
+
 
