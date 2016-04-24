@@ -1,11 +1,8 @@
 (*
 
- http://gis.stackexchange.com/questions/190753/using-gis-to-determine-average-land-distance-from-equator
+http://gis.stackexchange.com/questions/190753/using-gis-to-determine-average-land-distance-from-equator
 
 *)
-
-Needs["Polytopes`"]
-
 
 world = CountryData["World", "FullPolygon"];
 
@@ -16,17 +13,15 @@ antpoly = Table[CountryData["Antarctica", "FullPolygon"][[1,i]],
 
 worldreal = Union[worldpoly,antpoly];
 
-TODO: this is temp to figure out ant prob!!!
-
-worldreal = antpoly
-
-r = Rasterize[Graphics[Polygon[worldreal]], ImageResolution -> 200];
+r = Rasterize[Graphics[Polygon[worldreal]], ImageResolution -> 2500];
 
 arr = r[[1,1]];
 
+
+
 arr2=Table[Mean[arr[[i,j]]]/255,{i, 1, Length[arr]},{j, 1, Length[arr[[i]]]}];
 
-perlat = Map[Count[#,1]&, arr2]
+perlat = Map[Count[#,0]&, arr2]
 
 ListPlot[perlat]
 
@@ -40,6 +35,7 @@ Map[Mean[#]&, arr, 2]
 
 r[[1,1]] = 503, 1000
 
+TODO: disclaim not great answer + why
 
 
 Table[Mean[r[[1,1,i,j]], {i, 1, Length[r[[1,1]]]
