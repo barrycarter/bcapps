@@ -13,19 +13,49 @@ antpoly = Table[CountryData["Antarctica", "FullPolygon"][[1,i]],
 
 worldreal = Union[worldpoly,antpoly];
 
-(*
-
-commented out for testing parameters
-
 r = Rasterize[Graphics[Polygon[worldreal]], ImageResolution -> 2500];
 
-*)
-
-r = Rasterize[Graphics[Polygon[worldreal]], ImageResolution -> 100];
-
-ok, we definitely have some image padding going on
-
 perlat = Map[Count[#,{0,0,0}]&, r[[1,1]]];
+
+(* figure out padding *)
+
+6354, 12500 is lat/lon rastersize
+
+Max[perlat] == 11999
+
+502 pad pixels left/right
+
+331 = first with non-0 (in fact, its full)
+6113 = last non-0 (24 pixels)
+
+row2lat[i_] = Simplify[-89.9+(i-331)/(6113-331)*(83.6096+89.9)]
+
+Solve[row2lat[i] == -90, i]
+
+328 to 6326
+
+tab = Table[{row2lat[i], perlat[[i]]/11999}, {i,328,6326}];
+ListPlot[tab]
+showit
+
+tab2 = Table[{row2lat[i], Cos[row2lat[i]*Degree]*perlat[[i]]/11999*40075}, 
+ {i, 328, 6326}]
+
+xtics = Table[i, {i,-90,90,10}]
+ytics = Table[i, {i,0,15000,1000}]
+
+lp = ListPlot[tab2, PlotLabel -> Style["Kilometers of Land vs Latitude",
+ FontSize -> 40],
+ Ticks -> {xtics, ytics}]
+showit
+
+Show[ListPlot[tab2], Ticks -> {xtics, ytics}, 
+PlotLabel -> "Kilometers of Land vs Latitude"]
+showit
+
+TODO: about 3.3 km per tick
+
+
 
 TODO: Max[perlat] might be bad below... but works better because r
 overmaps the longitude
