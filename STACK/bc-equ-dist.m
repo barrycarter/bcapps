@@ -12,13 +12,43 @@ world = CountryData["World", "FullPolygon"];
 worldpoly = Table[world[[1,i]], {i,1,Length[world[[1]]]}];
 
 antpoly = Table[CountryData["Antarctica", "FullPolygon"][[1,i]], 
- {i, 1, Length[CountryData["Antarctica", "FullPolygon"][[1]]]}]
+ {i, 1, Length[CountryData["Antarctica", "FullPolygon"][[1]]]}];
 
 worldreal = Union[worldpoly,antpoly];
 
+TODO: this is temp to figure out ant prob!!!
+
+worldreal = antpoly
+
+r = Rasterize[Graphics[Polygon[worldreal]], ImageResolution -> 200];
+
+arr = r[[1,1]];
+
+arr2=Table[Mean[arr[[i,j]]]/255,{i, 1, Length[arr]},{j, 1, Length[arr[[i]]]}];
+
+perlat = Map[Count[#,1]&, arr2]
+
+ListPlot[perlat]
+
+perllat[[22]] is only 40
 
 
-r = FullForm[Rasterize[Graphics[world], {ImageResolution -> 20}]];
+
+Count[arr2[[5]], 1]
+
+Map[Mean[#]&, arr, 2]
+
+r[[1,1]] = 503, 1000
+
+
+
+Table[Mean[r[[1,1,i,j]], {i, 1, Length[r[[1,1]]]
+
+
+
+r = Rasterize[Graphics[Polygon[worldreal[[7]]]]]
+
+
 
 r[[1,1,1]] is 43 elts, each elt is 100 and contains 3 "color" points
 
