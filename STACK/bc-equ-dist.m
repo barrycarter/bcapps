@@ -13,15 +13,71 @@ antpoly = Table[CountryData["Antarctica", "FullPolygon"][[1,i]],
 
 worldreal = Union[worldpoly,antpoly];
 
+(*
+
+commented out for testing parameters
+
 r = Rasterize[Graphics[Polygon[worldreal]], ImageResolution -> 2500];
+
+*)
+
+r = Rasterize[Graphics[Polygon[worldreal]], ImageResolution -> 100];
+
+ok, we definitely have some image padding going on
+
+perlat = Map[Count[#,{0,0,0}]&, r[[1,1]]];
+
+TODO: Max[perlat] might be bad below... but works better because r
+overmaps the longitude
+
+tab = Table[{180/Length[perlat]*i-90, 
+ perlat[[i]]/Max[perlat]}, {i, 1, Length[perlat]}];
+
+ListPlot[tab]
+showit
+
+tab; first 331 entries are empty, as are last 241 (suggesting I've got
+it flipped?)
+
+if above is right {{83.1728, 0.00200017} is max and 
+-76.5439, 0.993749 is low end (something's wrong)
+
+ImageSize -> {360., 182.995}
+PlotRange -> {{0, 360.}, {0, 182.995}}
+
+-89.9 = mathematica cutoff
+83.6096 = max (but that might just be no land beyond)
+
+if elt 331 = -89.9 and 6113 is 83.6096 we have roughly
+
+tr[i_] = Simplify[-89.9+(i-331)/(6113-331)*(83.6096+89.9)]
+
+173.51 = range mapped
+
+Export["/tmp/test.png", r, ImageSize->{12500/5, 6354/5}]
+
+/tmp/test.png: PNG image, 2500 x 1271, 8-bit/color RGB, non-interlaced
+
+on this image:
+
+left 49 pixels are blank
+pxiels 2450+ are blank (x wise)
+top 47 pixels are blank
+pixels 1205 and below are blank
+
+
+
+TODO: assuming spherical
 
 arr = r[[1,1]];
 
 
+arr2=Table[Mean[arr[[i,j]]],{i, 1, Length[arr]},{j, 1, Length[arr[[i]]]}];
 
 arr2=Table[Mean[arr[[i,j]]]/255,{i, 1, Length[arr]},{j, 1, Length[arr[[i]]]}];
 
-perlat = Map[Count[#,0]&, arr2]
+
+
 
 ListPlot[perlat]
 
