@@ -1,10 +1,5 @@
 (* formulas start here *)
 
-(*
-
-These commands are commented out, since they take a long time to run
-and I've saved their results in files.
-
 world = CountryData["World", "FullPolygon"];
 
 worldpoly = Table[world[[1,i]], {i,1,Length[world[[1]]]}];
@@ -12,42 +7,73 @@ worldpoly = Table[world[[1,i]], {i,1,Length[world[[1]]]}];
 antpoly = Table[CountryData["Antarctica", "FullPolygon"][[1,i]], 
  {i, 1, Length[CountryData["Antarctica", "FullPolygon"][[1]]]}];
 
-worldreal = Union[worldpoly,antpoly];
+(* Mathematica won't give Antarctica polygons south of -89.9, this
+fills them in *)
 
-The commands below show that the non-Antarctic world is north of
--57.2943, and that Antarctica is entirely south of -60.9997 so there
-is no overlap.
+spole = Rectangle[{-90,-180}, {-89.9,+180}];
 
-worldminlat = Min[Flatten[Table[Transpose[i][[2]], {i, worldpoly}]]];
+(* forcing Rasterize to show the north pole insures the rasterization
+includes the whole world *)
 
-antmaxlat = Max[Flatten[Table[Transpose[i][[2]], {i, antpoly}]]];
+npole = Point[{90,0}];
 
-r = Rasterize[Graphics[Polygon[worldreal]], ImageResolution -> 2500];
+worldreal = Union[worldpoly,antpoly,{spole,npole}];
 
-pointsPerLat = Map[Count[#,{0,0,0}]&, r[[1,1]]];
+(* TODO: restore this to 2500 when doing for real! *)
 
-*)
+r = Rasterize[Graphics[Polygon[worldreal]], ImageResolution -> 10];
 
-(* find the first and last non-zero points *)
+worldlats = Flatten[Table[Transpose[i][[2]], {i, worldreal}]];
 
-nonzero = Position[perlat, val_/;val>0];
+minlat = Min[worldlats];
+maxlat = Max[worldlats];
+
+pointsPerLat0 = Map[Count[#,{0,0,0}]&, r[[1,1]]];
+
+(* find the first/last non-zero points in pointsPerLat and remove padding *)
+
+nonzero = Position[pointsPerLat0, val_/;val>0];
 first = Min[nonzero];
 last = Max[nonzero];
 
-(* the -89.9 and +83.6096 below come from worldreal bound above *)
+(* the table above only covers minlat to maxlat, as we'd expect; we
+need to add 1's for < minlat and 0's for > maxlat *)
 
-maxlat = 83.6096;
-minlat = -89.9;
-
-
+dlat = (maxlat-minlat)/
 
 
+(* this is as a percentage of total possible points per row *)
+
+pointsPerLat = Take[pointsPerLat0/Max[pointsPerLat0], {first,last}];
+
+(* convert row number in pointsPerLat to latitude *)
+
+row2lat[i_] = Simplify[minlat+(i-1)/(Length[pointsPerLat]-1)*(maxlat-minlat)];
+
+spole = Round[Solve[row2lat[i] == -90, i][[1,1,2]],1];
+npole = Round[Solve[row2lat[i] == 90, i][[1,1,2]],1];
+
+sextra = Table[{row2lat[i], 
 
 
 
+(* table re how much of latitude intersects land, as a percentage *)
+
+latLandPct0 = Table[{row2lat[i], pointsPerLat[[i]]/Max[pointsPerLat]}, 
+ {i,1,Length[pointsPerLat]}];
 
 
 
+(* convert to km using cosine and Earth circumference *)
+
+latLandKM = Table[{row2lat[i], 
+ 40700*Cos[row2lat[i]*Degree]*pointsPerLat[[i]]/Max[pointsPerLat]},
+ {i,1,Length[pointsPerLat]}];
+
+(* for smooth graphing and because we plan to add negative and
+positive latitudes later, convert to function *)
+
+flatLandKM[lat_] = Interpolation[latLandKM, InterpolationOrder -> 1][lat];
 
 
 
@@ -93,66 +119,14 @@ from the equator, we "integrate" to get:
 
 TODO: note Antarctica
 TODO: give away data
-
-TODO: more about magic value above
-
-{{30.4644, 15846.3}
-
-on big map:
-
-3397.5 = 29N
-3358 = 30N
-3318 = 31N
-3278 = 32N
-3236 = 33N
-
-3338.5 = line
-
-<response>
-<city>Houston</city>
-<cityq>houston</cityq>
-<country>United States</country>
-<elevation>12</elevation>
-<geonameid>4699066</geonameid>
-<latitude>29.7632735826536</latitude>
-<longitude>-95.3632649995843</longitude>
-<population>2099451</population>
-<state>Texas</state>
-<tz>America/Chicago</tz>
-</response>
-
-<response>
-<city>Covington</city>
-<cityq>covington.la</cityq>
-<country>United States</country>
-<elevation>8</elevation>
-<geonameid>4321005</geonameid>
-<latitude>30.4754644915738</latitude>
-<longitude>-90.1008993447363</longitude>
-<population>8765</population>
-<state>Louisiana</state>
-<tz>America/Chicago</tz>
-</response>
-
-
-so 40px ok for what I'm doing
-
-
-
-
+TODO: can do better: exact polygons
+TODO: more about magic value above [ie cities, near]
+TODO: couldnt map sigh
 TODO: note resolution
 
 *)
 
-(* TODO: I've made a copy of perlat for myself so I don't have to go
-through the insane calcs above, maybe post it *)
-
-Save["/home/barrycarter/20160424/perlat.txt", perlat];
-Save["/home/barrycarter/20160424/perlatant.txt", perlatant];
-
 acclat = Accumulate[perlat];
-
-row2lat[i_] = Simplify[minlat + (i-first)/(last-first)*(maxlat-minlat)];
 
 (* we need the table to go all the way to +90, but not -90, because
 data is inaccurate for < -89.9 *)
