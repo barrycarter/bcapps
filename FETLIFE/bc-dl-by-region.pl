@@ -29,16 +29,25 @@ my(%files);
 # -f as crude substitute for checking for 91 byte files
 my($cmd) = "curl -f --create-dirs --compress -A Fauxzilla --socks4a 127.0.0.1:9050 -H 'Cookie: _fl_sessionid=$private{fetlife}{session}'";
 
+# get places
+my($out, $err, $res) = cache_command2("$cmd https://fetlife.com/places", "age=86400");
+
+my(@cunts);
+
+while ($out=~s%href="/(countries|administrative_areas)/(\d+)"%%s) {
+  push(@cunts, "$1/$2");
+}
+
 # multi-argument curl is more efficient
 open(B,"|xargs -r $cmd");
 
-# dl country first pages (this overcounts by two)
-# TODO: do check places.html to see if there is new highwater mark
-# countries 249 and 250 were later removed
-for $i (1..248) {
+for $i (@cunts) {
+  my($fname) = "$i.txt";
+  $fname=~s%/%-%;
+
   # dont re dl for a given subdir unless too small
-  if (-s "countries-$i.txt" > 1000) {next;}
-  print B "-o countries-$i.txt https://fetlife.com/countries/$i\n";
+  if (-s $fname > 1000) {next;}
+  print B "-o $fname https://fetlife.com/$i\n";
 }
 
 # we need these files to proceed, so must close and reopen
@@ -46,10 +55,13 @@ close(B);
 
 # TODO: add timestamps to everything as we will be on infinite loop(?)
 
-# pages per country
+# pages per area
 
-for $i (1..248) {
-  my($data) = read_file("countries-$i.txt");
+for $i (@cunts) {
+  my($fname) = "$i.txt";
+  $fname=~s%/%-%;
+
+  my($data) = read_file($fname);
 
   # <h>the abbreviation for country below is in honor of Fetlife</h>
   my($num,$cunt,$url);
@@ -77,7 +89,6 @@ my($len) = +Infinity;
 
 open(B,">cmdlist.txt");
 
-
 while (%pages) {
 
   $count++;
@@ -104,7 +115,7 @@ while (%pages) {
       $str .= "-o homepage.html 'https://fetlife.com/home/v4' ";
     }
 
-    my($url) = "https://fetlife.com/countries/$i/kinksters?page=$count";
+    my($url) = "https://fetlife.com/$i/kinksters?page=$count";
     $str .= "-o '$fname' '$url' ";
 
     # enough room to print string? (if not, print return first + curl)
