@@ -4,10 +4,10 @@ http://gis.stackexchange.com/questions/190753/using-gis-to-determine-average-lan
 
 **DISCLAIMER: Please see important caveats at end of message.**
 
-The average absolute latitude of land on Earth is TODO:: but drops
-dramatically to TODO:: if we exclude Antractica.
+The average absolute latitude of land on Earth is TODO:answer, or
+about TODO:answer km from the equator.
 
-[[/tmp/math20160424170548.gif]]
+[[image17.gif]
 
 The plot above shows the kilometers of land intersected by line of
 latitude. Some notes:
@@ -31,6 +31,7 @@ Of course, you're interested in the absolute latitude:
 
 
 
+TODO: note Antarctica
 TODO: give away data
 
 TODO: more about magic value above
