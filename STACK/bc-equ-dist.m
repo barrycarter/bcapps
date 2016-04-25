@@ -1,3 +1,62 @@
+(* formulas start here *)
+
+(*
+
+These commands are commented out, since they take a long time to run
+and I've saved their results in files.
+
+world = CountryData["World", "FullPolygon"];
+
+worldpoly = Table[world[[1,i]], {i,1,Length[world[[1]]]}];
+
+antpoly = Table[CountryData["Antarctica", "FullPolygon"][[1,i]], 
+ {i, 1, Length[CountryData["Antarctica", "FullPolygon"][[1]]]}];
+
+worldreal = Union[worldpoly,antpoly];
+
+The commands below show that the non-Antarctic world is north of
+-57.2943, and that Antarctica is entirely south of -60.9997 so there
+is no overlap.
+
+worldminlat = Min[Flatten[Table[Transpose[i][[2]], {i, worldpoly}]]];
+
+antmaxlat = Max[Flatten[Table[Transpose[i][[2]], {i, antpoly}]]];
+
+r = Rasterize[Graphics[Polygon[worldreal]], ImageResolution -> 2500];
+
+pointsPerLat = Map[Count[#,{0,0,0}]&, r[[1,1]]];
+
+*)
+
+(* find the first and last non-zero points *)
+
+nonzero = Position[perlat, val_/;val>0];
+first = Min[nonzero];
+last = Max[nonzero];
+
+(* the -89.9 and +83.6096 below come from worldreal bound above *)
+
+maxlat = 83.6096;
+minlat = -89.9;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(* formulas end here *)
+
+
 (*
 
 http://gis.stackexchange.com/questions/190753/using-gis-to-determine-average-land-distance-from-equator
@@ -7,7 +66,7 @@ http://gis.stackexchange.com/questions/190753/using-gis-to-determine-average-lan
 The average absolute latitude of land on Earth is TODO:answer, or
 about TODO:answer km from the equator.
 
-[[image17.gif]
+[[image17.gif]]
 
 The plot above shows the kilometers of land intersected by line of
 latitude. Some notes:
@@ -25,9 +84,10 @@ $(71.43 \%) \cos (-75 {}^{\circ}) (40700 km)\approx 7525 km$
 
 Of course, you're interested in the absolute latitude:
 
-[[/tmp/math20160424194323.gif]]
+[[image18.gif]]
 
-"Integrating" this function to get a cumulative distribution:
+And since you're interested in the total accumulated land measured
+from the equator, we "integrate" to get:
 
 
 
@@ -84,39 +144,13 @@ TODO: note resolution
 
 *)
 
-world = CountryData["World", "FullPolygon"];
-
-worldpoly = Table[world[[1,i]], {i,1,Length[world[[1]]]}];
-
-antpoly = Table[CountryData["Antarctica", "FullPolygon"][[1,i]], 
- {i, 1, Length[CountryData["Antarctica", "FullPolygon"][[1]]]}];
-
-worldreal = Union[worldpoly,antpoly];
-
-r = Rasterize[Graphics[Polygon[worldreal]], ImageResolution -> 2500];
-
-rant = Rasterize[Graphics[Polygon[worldpoly]], ImageResolution -> 2500];
-
 (* TODO: I've made a copy of perlat for myself so I don't have to go
 through the insane calcs above, maybe post it *)
-
-perlat = Map[Count[#,{0,0,0}]&, r[[1,1]]];
-
-perlatant = Map[Count[#,{0,0,0}]&, rant[[1,1]]];
 
 Save["/home/barrycarter/20160424/perlat.txt", perlat];
 Save["/home/barrycarter/20160424/perlatant.txt", perlatant];
 
 acclat = Accumulate[perlat];
-
-nonzero = Position[perlat, val_/;val>0];
-first = Min[nonzero];
-last = Max[nonzero];
-
-(* the -89.9 and +83.6096 below come from worldreal bound above *)
-
-maxlat = 83.6096;
-minlat = -89.9;
 
 row2lat[i_] = Simplify[minlat + (i-first)/(last-first)*(maxlat-minlat)];
 
@@ -151,6 +185,7 @@ showit
 
 lenabs[x_] = len[x] + len[-x]
 
+ytics2 = Table[i, {i,0,24000,1000}]
 Plot[lenabs[x], {x,0,90}, Ticks -> {xtics, ytics2}, PlotLabel ->
  Text[Style["Kilometers of Land vs Absolute Latitude", FontSize->25]],
  PlotRange -> { {0,90}, {0,24000}}]
@@ -170,7 +205,21 @@ f1605[x_] = Interpolation[acctab, InterpolationOrder -> 1][x];
 
 f1609[x_] = f1605[x]-f1605[-x]
 
-Plot[f1609[x],{x,0,90}]
+ytics3 = Table[{i, ToString[PaddedForm[i*100,{3}]]<>"%"}, {i,0,1,1/10}]
+g2 = Plot[f1609[x], {x,0,90}, Ticks -> {xtics, ytics3}, PlotLabel ->
+Text[Style["Percentage of Total Land Below Given Absolute Latitude",
+FontSize->25]], PlotRange -> { {0,90}, {0,1}}];
+
+g3 = Graphics[{
+ RGBColor[1,0,0], Dashed,
+ Line[{{0,.5},{55.5044,.5}}],
+ Line[{{55.5044,0},{55.5044,.5}}]
+}]
+
+Show[g2,g3];
+showit
+
+
 
 
 Plot[f1605[x],{x,-90,90}]
