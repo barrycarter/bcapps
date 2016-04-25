@@ -2,6 +2,85 @@
 
 http://gis.stackexchange.com/questions/190753/using-gis-to-determine-average-land-distance-from-equator
 
+**DISCLAIMER: Please see important caveats at end of message.**
+
+The average absolute latitude of land on Earth is TODO:: but drops
+dramatically to TODO:: if we exclude Antractica.
+
+[[/tmp/math20160424170548.gif]]
+
+The plot above shows the kilometers of land intersected by line of
+latitude. Some notes:
+
+  - The large bump on the left is Antarctica. As far north as $75 S {}^{\circ}$, Antarctica encircles 71.43% of the South Pole, a total of:
+
+$(71.43 \%) \cos (-75 {}^{\circ}) (40700 km)\approx 7525 km$
+
+  - If the equator were covered with land, the graph would peak at
+  40700km at the equator. However, only about 21.60% of the equator is
+  covered with land.
+
+  - The actual maximum occurs at about $30 {}^{\circ} 28'$, where
+  15846 km (45.17% of this 35081 km) circle is covered by land.
+
+Of course, you're interested in the absolute latitude:
+
+[[/tmp/math20160424194323.gif]]
+
+"Integrating" this function to get a cumulative distribution:
+
+
+
+TODO: give away data
+
+TODO: more about magic value above
+
+{{30.4644, 15846.3}
+
+on big map:
+
+3397.5 = 29N
+3358 = 30N
+3318 = 31N
+3278 = 32N
+3236 = 33N
+
+3338.5 = line
+
+<response>
+<city>Houston</city>
+<cityq>houston</cityq>
+<country>United States</country>
+<elevation>12</elevation>
+<geonameid>4699066</geonameid>
+<latitude>29.7632735826536</latitude>
+<longitude>-95.3632649995843</longitude>
+<population>2099451</population>
+<state>Texas</state>
+<tz>America/Chicago</tz>
+</response>
+
+<response>
+<city>Covington</city>
+<cityq>covington.la</cityq>
+<country>United States</country>
+<elevation>8</elevation>
+<geonameid>4321005</geonameid>
+<latitude>30.4754644915738</latitude>
+<longitude>-90.1008993447363</longitude>
+<population>8765</population>
+<state>Louisiana</state>
+<tz>America/Chicago</tz>
+</response>
+
+
+so 40px ok for what I'm doing
+
+
+
+
+TODO: note resolution
+
 *)
 
 world = CountryData["World", "FullPolygon"];
@@ -15,7 +94,89 @@ worldreal = Union[worldpoly,antpoly];
 
 r = Rasterize[Graphics[Polygon[worldreal]], ImageResolution -> 2500];
 
+rant = Rasterize[Graphics[Polygon[worldpoly]], ImageResolution -> 2500];
+
+(* TODO: I've made a copy of perlat for myself so I don't have to go
+through the insane calcs above, maybe post it *)
+
 perlat = Map[Count[#,{0,0,0}]&, r[[1,1]]];
+
+perlatant = Map[Count[#,{0,0,0}]&, rant[[1,1]]];
+
+Save["/home/barrycarter/20160424/perlat.txt", perlat];
+Save["/home/barrycarter/20160424/perlatant.txt", perlatant];
+
+acclat = Accumulate[perlat];
+
+nonzero = Position[perlat, val_/;val>0];
+first = Min[nonzero];
+last = Max[nonzero];
+
+(* the -89.9 and +83.6096 below come from worldreal bound above *)
+
+maxlat = 83.6096;
+minlat = -89.9;
+
+row2lat[i_] = Simplify[minlat + (i-first)/(last-first)*(maxlat-minlat)];
+
+(* we need the table to go all the way to +90, but not -90, because
+data is inaccurate for < -89.9 *)
+
+imax = Round[Solve[row2lat[i] == 90, i][[1,1,2]],1]
+
+tab = Table[{row2lat[i], perlat[[i]]/11999}, {i,first,imax}];
+
+tablen = Table[{row2lat[i], 40700*Cos[row2lat[i]*Degree]*perlat[[i]]/11999}, 
+ {i,first,imax}];
+
+tabacc = Accumulate[Transpose[tablen][[2]]];
+
+tabacc2 = Table[{row2lat[i], tabacc[[i]]/Max[tabacc]}, {i,first,imax}];
+
+facc[x_] = Interpolation[tabacc2, InterpolationOrder -> 1][x]
+
+faccabs[x_] = facc[x]-facc[-x];
+
+f0[x_] = Interpolation[tab, InterpolationOrder -> 1][x]
+
+len[x_] = Cos[x*Degree]*f0[x]*40700
+
+xtics = Table[i, {i,-90,90,10}]
+ytics = Table[i, {i,0,16000,1000}]
+ytics2 = Table[i, {i,0,24000,1000}]
+Plot[len[x], {x,-90,90}, Ticks -> {xtics, ytics}, PlotLabel ->
+ Text[Style["Kilometers of Land vs Latitude", FontSize->25]]]
+showit
+
+lenabs[x_] = len[x] + len[-x]
+
+Plot[lenabs[x], {x,0,90}, Ticks -> {xtics, ytics2}, PlotLabel ->
+ Text[Style["Kilometers of Land vs Absolute Latitude", FontSize->25]],
+ PlotRange -> { {0,90}, {0,24000}}]
+
+
+acctab = Table[{row2lat[i], acclat[[i]]/Total[perlat]}, {i,first,imax}];
+
+
+
+g[x_] = f[x] + f[-x];
+
+h[x_] = Cos[x*Degree]*f[x]
+
+j[x_] = Cos[x*Degree]*g[x]
+
+f1605[x_] = Interpolation[acctab, InterpolationOrder -> 1][x];
+
+f1609[x_] = f1605[x]-f1605[-x]
+
+Plot[f1609[x],{x,0,90}]
+
+
+Plot[f1605[x],{x,-90,90}]
+
+Plot[h[x],{x,-90,90}]
+
+
 
 (* figure out padding *)
 
@@ -28,25 +189,50 @@ Max[perlat] == 11999
 331 = first with non-0 (in fact, its full)
 6113 = last non-0 (24 pixels)
 
-row2lat[i_] = Simplify[-89.9+(i-331)/(6113-331)*(83.6096+89.9)]
+perlat2 = Take[perlat,{331,6113}];
+
+ListPlot[perlat2]
+showit
 
 Solve[row2lat[i] == -90, i]
 
 328 to 6326
 
-tab = Table[{row2lat[i], perlat[[i]]/11999}, {i,328,6326}];
 ListPlot[tab]
 showit
 
 tab2 = Table[{row2lat[i], Cos[row2lat[i]*Degree]*perlat[[i]]/11999*40075}, 
  {i, 328, 6326}]
 
-xtics = Table[i, {i,-90,90,10}]
-ytics = Table[i, {i,0,15000,1000}]
+tab3 = Accumulate[perlat];
 
-lp = ListPlot[tab2, PlotLabel -> Style["Kilometers of Land vs Latitude",
- FontSize -> 40],
- Ticks -> {xtics, ytics}]
+tab4 = Table[{row2lat[i], tab3[[i]]/Total[perlat]}, {i, 328, 6326}];
+
+
+ytics2 = Table[{i, ToString[PaddedForm[i*100,{3}]]<>"%"}, {i,0,1,1/10}]
+
+lp = ListPlot[tab2, Ticks -> {xtics, ytics}, PlotRange -> {{-90,90},
+{0, 16000}}, PlotLabel -> Text[Style["Kilometers of Land vs Latitude",
+FontSize->25]]]
+
+lp2 = ListPlot[tab4, Ticks -> {xtics, ytics2}, PlotRange -> {{-90,90},
+{0, 1.1}}, PlotLabel -> Text[Style["Cumulative %age of Land vs Latitude",
+FontSize->25]]]
+
+
+
+
+
+g2 = Graphics[{
+ Rectangle[{-90, 0}, {90, 18000}],
+ Text[Style["Kilometers of Land vs Latitude", FontSize->25], {0,18000}]
+}]
+
+Show[{g2,lp}, AspectRatio -> Automatic]
+showit
+
+
+Show[{lp,g2}, PlotRange -> {{-90,90}, {-1000,16000}}]
 showit
 
 Show[ListPlot[tab2], Ticks -> {xtics, ytics}, 
