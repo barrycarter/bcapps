@@ -13,7 +13,7 @@ fills them in *)
 spole = {{-180,-90}, {-180,-89.9}, {180, -89.9}, {180, -90}};
 
 (* forcing Rasterize to show the north pole insures the rasterization
-includes the whole world *)
+includes the whole world; we compensate for this rectangle later *)
 
 npole = {{-180,90}, {180,90}, {180,89}, {-180, 89}};
 
@@ -50,44 +50,102 @@ lat88 = Ceiling[2/180*Length[pointsPerLat]];
 
 Table[pointsPerLat[[-i]] = 0, {i,1,lat88}];
 
-(* TODO: compensate for north pole rectangle, drawing it too big for now *)
+(* convert row number in pointsPerLat to latitude; the -1 is since our
+array indices start with 1, not 0; note that this assumes -90 is
+exactly row 1 and +90 is exactly the last row, which may not be true;
+however, with high resolution, and since the latitude circles are
+short near the pole, this shouldn't be a major issue *)
 
-(* this is as a percentage of total possible points per row *)
+row2lat[i_] = Simplify[-90 + 180*(i-1)/(Length[pointsPerLat]-1)];
 
-pointsPerLat = Take[pointsPerLat0/Max[pointsPerLat0], {first,last}];
+(* we now get km of land per latitude by applying cosine and
+multiplying by the Earth's circumference *)
 
-(* convert row number in pointsPerLat to latitude *)
+(* NOTE: doing N[] here could lose accuracy, but we're in km, so I'm
+OK w that *)
 
-row2lat[i_] = Simplify[minlat+(i-1)/(Length[pointsPerLat]-1)*(maxlat-minlat)];
-
-spole = Round[Solve[row2lat[i] == -90, i][[1,1,2]],1];
-npole = Round[Solve[row2lat[i] == 90, i][[1,1,2]],1];
-
-sextra = Table[{row2lat[i], 
-
-
-
-(* table re how much of latitude intersects land, as a percentage *)
-
-latLandPct0 = Table[{row2lat[i], pointsPerLat[[i]]/Max[pointsPerLat]}, 
- {i,1,Length[pointsPerLat]}];
-
-
-
-(* convert to km using cosine and Earth circumference *)
-
-latLandKM = Table[{row2lat[i], 
- 40700*Cos[row2lat[i]*Degree]*pointsPerLat[[i]]/Max[pointsPerLat]},
- {i,1,Length[pointsPerLat]}];
+latLandKM = N[Table[{row2lat[i], 
+ pointsPerLat[[i]]*40700*Cos[row2lat[i]*Degree]}, {i,1,Length[pointsPerLat]}]];
 
 (* for smooth graphing and because we plan to add negative and
 positive latitudes later, convert to function *)
 
 flatLandKM[lat_] = Interpolation[latLandKM, InterpolationOrder -> 1][lat];
 
+(* graphics for the points themselves *)
+
+g1 = ListPlot[latLandKM, PlotStyle -> RGBColor[1,0,0]];
+
+(* and the function *)
+
+xtics = Table[i, {i,-90,90,10}]
+
+ytics = Table[i, {i,0,16000,1000}]
+
+g2 = Plot[flatLandKM[x], {x,-90,90}, Ticks -> {xtics, ytics}, PlotLabel ->
+ Text[Style["Kilometers of Land vs Latitude", FontSize->25]]];
+
+g3 = Show[g2,g1]
+
+(* absolute latitude *)
+
+fabsLatLandKM[lat_] = flatLandKM[lat] + flatLandKM[-lat];
+
+(* and plotting *)
+
+ytics2 = Table[i, {i,0,24000,1000}]
+
+g4 = Plot[fabsLatLandKM[x], {x,0,90}, Ticks -> {xtics, ytics2}, PlotLabel ->
+ Text[Style["Kilometers of Land vs Absolute Latitude", FontSize->25]],
+ PlotRange -> { {0,90}, {0,24000}}]
+
+(* in theory, we could integrate fabsLatLandKM, but, in reality, that
+turns out to be a mess; instead, we go back to latLandKM and use
+Accumulate *)
+
+cumul0 = Accumulate[Transpose[latLandKM][[2]]];
+
+(* the actual values in cumul0 are meaningless and depend on the
+fineness of our grid; we now re-add the latitudes and normalize *)
+
+cumul = Table[{row2lat[i], cumul0[[i]]/Max[cumul0]}, {i, 1, Length[cumul0]}];
+
+(* functionalize *)
+
+fCumul[lat_] = Interpolation[cumul, InterpolationOrder -> 1][lat];
+
+(* TODO: consider plotting above before we absolute-ify *)
+
+(* the absolute function *)
+
+fCumulAbs[lat_] = fCumul[lat] - fCumul[-lat];
+
+(* figure out where it touches 50% *)
+
+median = lat /. FindRoot[fCumulAbs[lat]==.5, {lat,0,90}]
+
+(* and plot it *)
+
+(* TODO: this works, but yields an error *)
+
+ytics3 = Table[{i, ToString[PaddedForm[i*100,{3}]]<>"%"}, {i,0,1,1/10}]
+
+g5 = Plot[fCumulAbs[x], {x,0,90}, Ticks -> {xtics, ytics3}, PlotLabel ->
+Text[Style["Percentage of Total Land Below Given Absolute Latitude",
+FontSize->25]], PlotRange -> { {0,90}, {0,1}}];
+
+g6 = Graphics[{
+ RGBColor[1,0,0], Dashed,
+ Line[{{0,.5},{median,.5}}],
+ Line[{{median,0},{median,.5}}]
+}]
+
+g7 = Show[g5,g6];
 
 
 
+
+(* TODO: make sure to use images create from above AFTER I correct DPI *)
 
 
 (* formulas end here *)
@@ -105,7 +163,7 @@ about TODO:answer km from the equator.
 [[image17.gif]]
 
 The plot above shows the kilometers of land intersected by line of
-latitude. Some notes:
+latitude sampled every TODO: answer. Some notes:
 
   - The large bump on the left is Antarctica. As far north as $75 S {}^{\circ}$, Antarctica encircles 71.43% of the South Pole, a total of:
 
@@ -124,8 +182,6 @@ Of course, you're interested in the absolute latitude:
 
 And since you're interested in the total accumulated land measured
 from the equator, we "integrate" to get:
-
-
 
 TODO: note Antarctica
 TODO: give away data
@@ -160,20 +216,10 @@ f0[x_] = Interpolation[tab, InterpolationOrder -> 1][x]
 
 len[x_] = Cos[x*Degree]*f0[x]*40700
 
-xtics = Table[i, {i,-90,90,10}]
-ytics = Table[i, {i,0,16000,1000}]
 ytics2 = Table[i, {i,0,24000,1000}]
-Plot[len[x], {x,-90,90}, Ticks -> {xtics, ytics}, PlotLabel ->
- Text[Style["Kilometers of Land vs Latitude", FontSize->25]]]
-showit
+
 
 lenabs[x_] = len[x] + len[-x]
-
-ytics2 = Table[i, {i,0,24000,1000}]
-Plot[lenabs[x], {x,0,90}, Ticks -> {xtics, ytics2}, PlotLabel ->
- Text[Style["Kilometers of Land vs Absolute Latitude", FontSize->25]],
- PlotRange -> { {0,90}, {0,24000}}]
-
 
 acctab = Table[{row2lat[i], acclat[[i]]/Total[perlat]}, {i,first,imax}];
 
@@ -189,19 +235,6 @@ f1605[x_] = Interpolation[acctab, InterpolationOrder -> 1][x];
 
 f1609[x_] = f1605[x]-f1605[-x]
 
-ytics3 = Table[{i, ToString[PaddedForm[i*100,{3}]]<>"%"}, {i,0,1,1/10}]
-g2 = Plot[f1609[x], {x,0,90}, Ticks -> {xtics, ytics3}, PlotLabel ->
-Text[Style["Percentage of Total Land Below Given Absolute Latitude",
-FontSize->25]], PlotRange -> { {0,90}, {0,1}}];
-
-g3 = Graphics[{
- RGBColor[1,0,0], Dashed,
- Line[{{0,.5},{55.5044,.5}}],
- Line[{{55.5044,0},{55.5044,.5}}]
-}]
-
-Show[g2,g3];
-showit
 
 
 
@@ -431,3 +464,4 @@ pnPoly[{testx_, testy_}, pts_List] := Xor @@ ((
       ) & /@ Partition[pts, 2, 1, {2, 2}])
 
 
+TODO: check my work!
