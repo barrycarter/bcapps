@@ -10,37 +10,47 @@ antpoly = Table[CountryData["Antarctica", "FullPolygon"][[1,i]],
 (* Mathematica won't give Antarctica polygons south of -89.9, this
 fills them in *)
 
-spole = Rectangle[{-90,-180}, {-89.9,+180}];
+spole = {{-180,-90}, {-180,-89.9}, {180, -89.9}, {180, -90}};
 
 (* forcing Rasterize to show the north pole insures the rasterization
 includes the whole world *)
 
-npole = Point[{90,0}];
+npole = {{-180,90}, {180,90}, {180,89}, {-180, 89}};
 
 worldreal = Union[worldpoly,antpoly,{spole,npole}];
 
 (* TODO: restore this to 2500 when doing for real! *)
 
-r = Rasterize[Graphics[Polygon[worldreal]], ImageResolution -> 10];
+r = Rasterize[Graphics[Polygon[worldreal]], ImageResolution -> 200,
+Method -> {"ShrinkWrap" -> True}];
 
-worldlats = Flatten[Table[Transpose[i][[2]], {i, worldreal}]];
-
-minlat = Min[worldlats];
-maxlat = Max[worldlats];
+(* number of points for each raster line of latitude *)
 
 pointsPerLat0 = Map[Count[#,{0,0,0}]&, r[[1,1]]];
 
-(* find the first/last non-zero points in pointsPerLat and remove padding *)
+(* even with the undocumented ShrinkWrap option, Mathematica adds
+padding; we remove it below and also normalize to [0,1] *)
 
 nonzero = Position[pointsPerLat0, val_/;val>0];
 first = Min[nonzero];
 last = Max[nonzero];
+pointsPerLat = Take[pointsPerLat0, {first,last}]/Max[pointsPerLat0];
 
-(* the table above only covers minlat to maxlat, as we'd expect; we
-need to add 1's for < minlat and 0's for > maxlat *)
+(* we now remove the npole rectangle we added above; we actually
+remove anything north of 88 degrees, since we have some wiggle room
+here *)
 
-dlat = (maxlat-minlat)/
+(* NOTE: this may not work for extremely low resolution rasterization *)
 
+(* where the range 88-90 occurs on the list *)
+
+lat88 = Ceiling[2/180*Length[pointsPerLat]];
+
+(* this table just assigns, return value is irrelevant *)
+
+Table[pointsPerLat[[-i]] = 0, {i,1,lat88}];
+
+(* TODO: compensate for north pole rectangle, drawing it too big for now *)
 
 (* this is as a percentage of total possible points per row *)
 
