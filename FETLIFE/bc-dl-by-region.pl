@@ -89,6 +89,9 @@ my($len) = +Infinity;
 
 open(B,">cmdlist.txt");
 
+# create a 1-command-per-line cmdlist2.txt to avoid throttling
+open(C,">cmdlist2.txt");
+
 while (%pages) {
 
   $count++;
@@ -118,6 +121,8 @@ while (%pages) {
     my($url) = "https://fetlife.com/$i/kinksters?page=$count";
     $str .= "-o '$fname' '$url' ";
 
+    print C "$cmd -o '$fname' '$url'\n";
+
     # enough room to print string? (if not, print return first + curl)
     $len += length($str);
 
@@ -131,6 +136,8 @@ while (%pages) {
 }
 
 close(B);
+
+die "TESTING";
 
 # now to run the commands
 open(B,"cmdlist.txt");
