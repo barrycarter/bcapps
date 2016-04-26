@@ -11,19 +11,29 @@ pos[earth][t_][v_] = relativityMatrix[v].{8,t}
 pos[star][t_][v_] = relativityMatrix[v].{0,t}
 pos[ship][t_][v_] = relativityMatrix[v].{0.8*t,t}
 
-e[t_] = {8, t}
+t[v_] = Table[Point[pos[i][t][v]], {i, {earth,star,ship}}, {t,0,10}];
 
-w[t_] = {0, t}
+star[v_] = Line[{pos[star][0][v], pos[star][20][v]}];
 
-s[t_] = {0.8*t, t}
 
-t[v_] = Table[{
- RGBColor[{0,0,1}], relativityMatrix[v].Point[e[t]], 
- RGBColor[{0,0,0}], relativityMatrix[v].Point[w[t]], 
- RGBColor[{1,0,0}], relativityMatrix[v].Point[s[t]]}, 
- {t,0,10}]
+t2[v_] = {
+ RGBColor[0,0,1],
+ Line[{pos[earth][0][v], pos[earth][10][v]}],
+ RGBColor[1,0,0],
+ Line[{pos[ship][0][v], pos[ship][10][v]}],
+};
 
-Graphics[t[.3]]
+t3[v_] = {RGBColor[0,0,1], Dashed, 
+ Table[Line[{pos[earth][t][v], pos[star][t+8][v]}], {t,0,10}]};
+
+
+Graphics[{t2[0], t[0]}, Axes -> True, AxesLabel -> {"x", "t"}]
+showit
+
+Graphics[{t2[0], t[0], t3[0], star[0]}, Axes -> True, AxesLabel -> {"x", "t"}]
+showit
+
+Graphics[{t2[-0.8], t[-0.8], t3[-0.8]}, Axes -> True, AxesLabel -> {"x", "t"}]
 showit
 
 
