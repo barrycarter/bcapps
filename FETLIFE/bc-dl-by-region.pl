@@ -121,7 +121,7 @@ while (%pages) {
     my($url) = "https://fetlife.com/$i/kinksters?page=$count";
     $str .= "-o '$fname' '$url' ";
 
-    print C "$cmd -o '$fname' '$url'\n";
+    print C "$cmd -o '$fname' '$url'; sleep 1;\n";
 
     # enough room to print string? (if not, print return first + curl)
     $len += length($str);

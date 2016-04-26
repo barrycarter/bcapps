@@ -6,6 +6,27 @@ NOTE: time then distance
 
 *)
 
+
+pos[earth][t_][v_] = relativityMatrix[v].{8,t}
+pos[star][t_][v_] = relativityMatrix[v].{0,t}
+pos[ship][t_][v_] = relativityMatrix[v].{0.8*t,t}
+
+e[t_] = {8, t}
+
+w[t_] = {0, t}
+
+s[t_] = {0.8*t, t}
+
+t[v_] = Table[{
+ RGBColor[{0,0,1}], relativityMatrix[v].Point[e[t]], 
+ RGBColor[{0,0,0}], relativityMatrix[v].Point[w[t]], 
+ RGBColor[{1,0,0}], relativityMatrix[v].Point[s[t]]}, 
+ {t,0,10}]
+
+Graphics[t[.3]]
+showit
+
+
 m = relativityMatrix[.6];
 
 t1 = Table[Arrow[{{t, 0}, temp1405.{t,0}}], {t,0,10}]
