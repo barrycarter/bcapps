@@ -73,6 +73,14 @@ Things To Notice:
   is landing). Thus, the Earth sees 10 signals arriving in the space
   of two years, one signal every 0.2 years.
 
+Now, let's do a Minkowski transform into the ship's frame.
+
+Just for fun, we'll animate the change as we move from the planet's
+frame to the ship's frame.
+
+
+
+
 TODO: animation and verbiage
 
 [[image22.gif]]
@@ -86,17 +94,40 @@ Notice what we see here:
   - The ship now remains at x=0 throughout its journey. In other
   words, we are now looking at things from the ship's point of view.
 
-  - When the ship leaves, it still sees light 
+  - When the ship leaves, it still sees light from Earth at t = -8
+  Earth time.
 
-TODO: note zooming in
+  - When the ship arrives, it still sees light from Earth at t = 10
+  Earth time.
 
+  - During its journey, the ship still sees 11 signals (if we ignore those
+  where Earth t < 0).
 
+  - The first signal the ship sends still arrives at Earth time t = 8,
+  and the last signal still arrives at Earth time t = 10.
 
+In other words, in terms of what the ship and Earth actually see,
+nothing has changed.
 
+The only difference is that we can now talk about ship time and ship
+distance, instead of planet time and planet distance.
 
-TODO: caveats x/t stretch
+Note that if we look at t = 0, we see the Earth at x = 4.8 (the
+Lorentz contraction) and at Earth time t = 6.4.
 
+In some sense, however, this is artificial. The light from Earth at t
+= 6.4 will still reach the ship at the same point it is journey as it
+did before.
 
+Further, the Earth that's 4.8 light years away is not Earth at t = 0,
+but Earth at t = 6.4.
+
+Ultimately, regardless of the coordinate system, an observer in a
+given frame will see the same event at the same time and same
+distance.
+
+The Lorentz contraction and simultaneity are artificial constructs
+that insures this happens.
 
 
 *)
@@ -152,6 +183,24 @@ g2[v_] = Graphics[{
  shipLightLines[v],
 }];
 
+g1[v_] = Graphics[{
+ RGBColor[0,0,1],
+ PointSize[0.01],
+ Point/@earthpts[v],
+ earthline[v],
+ starcolor,
+ Point/@starpts[v],
+ starline[v],
+ RGBColor[1,0,0],
+ shipline[v],
+ Point/@shippts[v],
+ RGBColor[0.5,0.5,1],
+ Dashed, RGBColor[0,0,1],
+ earthLightLines[v],
+ Dashed, RGBColor[1,0,0],
+ shipLightLines[v],
+}];
+
 
 xtics = Table[i, {i,-30,30}]
 ytics = Table[i, {i,-30,30}]
@@ -173,7 +222,7 @@ showit
 
 TODO: disclaim non square
 
-show[v_] = Show[g2[v], Axes -> True, AxesLabel -> {"x", "t"},
+show[v_] = Show[g1[v], Axes -> True, AxesLabel -> {"x", "t"},
  PlotRange -> {{-25,25}, {-25, 30}}]
 
 show[0]
@@ -183,7 +232,7 @@ show[-.8]
 showit
 
 tab = Table[show[v], {v, 0, -0.8, -0.01}];
-Export["/tmp/test.gif", tab];
+Export["/tmp/test.gif", tab, ImageSize -> {800,800}];
 
 
 

@@ -3491,6 +3491,11 @@ sub cache_command2 {
     }
   }
 
+  debug("FILE IS: $file");
+  debug("-f $file IS", -f $file);
+  debug("-s $file IS", -s $file);
+  debug("FILE CONTENTS:", `cat $file`);
+
   # TODO: slightly inefficient to compute this when unneeded
   my($fileage) = (-M $file)*86400;
 
