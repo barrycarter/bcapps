@@ -16,7 +16,9 @@ https://en.wikipedia.org/wiki/Special:BookSources/9780852640579
 
 For an approximation and some discussion of this distribution:
 
-http://mathoverflow.net/questions/104948/distribution-of-maximum-of-a-uniform-multinomial-distribution
+  - http://mathoverflow.net/questions/104948
+
+  - http://mathoverflow.net/questions/146418
 
 Of course, this just gives you the maximum frequency. To answer your
 question, you also need the minimum frequency, and compute which one
@@ -26,7 +28,8 @@ What you have here is a multinomial distribution. As @EngrStudent
 notes, adding the marbles 11-100 has no effect on the problem, so
 let's consider selecting $n$ marbles (with replacement) from a bag
 with $10 m$ marbles, with $m$ marbles labeled 1, $m$ marbles labeled
-2, etc.
+2, etc. This is also equivalent to rolling a fair 10-sided die $n$
+times.
 
 As $n$ grows large, we would expect $\frac{n}{10}$ marbles with each
 number. However, some marbles will be chosen less frequently and some
@@ -43,18 +46,70 @@ In general, we're asking: how far away from $\frac{n}{10}$ is the
 frequency of the most or least frequently appearing marble (whichever
 is further from $\frac{n}{10}$).
 
+I ran a Monte Carlo simulation on picking 1000 marbles (10,000 times),
+and found the following:
+
+  - The distribution of the frequency of the least picked marble:
+
+[[image25.gif]]
+
+  - And the most picked marble:
+
+[[image26.gif]]
+
+  - The frequency furthest away from the mean minus the mean:
+
+[[image27.gif]]
+
+  - Since you're looking for a 90% confidence level, let's take the
+  cumulative distribution function of the above:
+
+[[image28.gif]]
+
+So, if you pick 1000 marbles, you can be 90% confident that the 10
+resulting frequencies will be within 24 (or 2.4%) of the mean value of 100.
+
+
+
+
 p = Table[1/10,{i,1,10}]
 
 minmax := Module[{d},
  d = RandomVariate[MultinomialDistribution[1000,p]];
  Return[{Min[d],Max[d]}]];
 
+minmax2 := Module[{d},
+ d = RandomVariate[MultinomialDistribution[10000,p]];
+ Return[{Min[d],Max[d]}]];
+
 monte = Table[minmax,{i,1,10000}];
+
+monte2 = Table[minmax2,{i,1,10000}];
+
+
+
 m2 = Transpose[monte];
 
 m3 = Table[Max[{Abs[i[[1]]-100], Abs[i[[2]]-100]}], {i,monte}];
 
-Histogram[m3]
+g = Histogram[m3]
+
+g = Histogram[m3, Automatic, "CDF"]
+
+ytics = Table[N[i/10],{i,0,10}];
+xtics = Table[i*5,{i,0,20}];
+g = Histogram[m3, Automatic, "CDF", Ticks -> {xtics, ytics}]
+showit
+
+
+g2 = Graphics[{
+ Dashed, RGBColor[1,0,0], 
+ Line[{{3,.9}, {24, .9}}]
+}];
+
+Show[{g,g2}]
+showit
+
 
 Histogram[m2[[1]]]
 Histogram[m2[[2]]]
