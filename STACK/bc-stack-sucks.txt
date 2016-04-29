@@ -1,5 +1,3 @@
-Subject: Question closed on stackexchange.com? Need free help in a hurry?
-
 stackexchange.com is a great site to ask questions and receive
 professional answers, but it usually takes time to get an answer and
 questions are sometimes closed unnecessarily.
@@ -37,13 +35,27 @@ Here are some other options:
     - http://meta.physics.stackexchange.com/questions/391 also lists
     several possibly helpful sites.
 
-  - If you need help more urgently, or your question was closed on a
-  StackExchange site, you might try:
+You can also try visiting the Physics StackExchange chat room:
+http://chat.stackexchange.com/rooms/71/the-h-bar where the atmosphere
+is generally friendlier. In many cases, they will help you with
+homework, even if your problem was closed on the main site.
 
-    - openstudy.com: near-real-time help, somewhat difficult-to-naviate interface
+  - If you need help more urgently, or your question was closed on a
+  different StackExchange site, you might try:
+
+    - openstudy.com: near-real-time help, somewhat
+    difficult-to-naviate interface
 
     - wolframalpha.com: if you just need to check your answers, this
     can be helpful, but it's been having a few serious problems later,
     so proceed with caution.
 
+    - quora.com: if your question is more philosophical or
+    discussion-based (instead of looking for a specific answer), Quora
+    might be the place to post.
+
+If you would like any other sites listed here, please let me know. The
+listings below are from individual users, and I have not vetted them:
+
+  - toughstem.com
 

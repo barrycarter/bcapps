@@ -12,34 +12,37 @@ debug(%globopts);
 
 my(@accts) = split(/\n/, read_file("$homedir/idrive-accounts.txt"));
 
-# temp to fix cache command 2 errors
-
-my($tmp) = my_tmpfile();
-write_file("hello larry", $tmp);
-
-
-my($out, $err,$res) = cache_command2("date", "age=86400");
-
-debug("OUT: $out");
-
-die "TESTING";
-
-
 for $i (@accts) {
 
   if ($i=~/^\s*$/ || $i=~/^\#/) {next;}
 
   my($u,$p) = split(/:/, $i);
 
-  # write pw to temp file (required by idrive)
-  my($tmp) = my_tmpfile();
-  write_file($p, $tmp);
+  # must write pw to consistent temp file for caching
+  my($pwfile) = "/var/tmp/".sha1_hex($i);
+  write_file($p, $pwfile);
 
   # find IP address of server
-  my($out, $err,$res) = cache_command2("/root/build/idevsutil_linux/idevsutil --password-file=$tmp --getServerAddress $u", "age=86400");
+  my($out, $err,$res) = cache_command2("/root/build/idevsutil_linux/idevsutil --password-file=$pwfile --getServerAddress $u", "age=86400");
 
-  debug("OUT: $out");
+  unless ($out=~/webApiServerIP=\"(.*?)\"/) {
+    warn "NO IP ADDRESS FOR: $u";
+    next;
+  }
 
-  debug("U: $u, P: $p, X: $tmp");
+  my($ip) = $1;
+
+  # TODO: have no idea why above doesn't work, but this is the IP that
+  # does work at least for me
+  $ip = "207.189.119.146";
+
+  # TODO: standardize where I keep idevsutil
+  my($cmd) = "/root/build/idevsutil_linux/idevsutil --password-file=$pwfile --search $u\@$ip\:\:home/", "age=3600";
+
+  debug("CMD: $cmd");
+
+  ($out, $err, $res) = cache_command2($cmd, "age=3600");
+
+  print "User: $u\nPass: $p\n$out\n";
 }
 
