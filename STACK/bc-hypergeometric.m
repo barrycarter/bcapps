@@ -61,22 +61,93 @@ and found the following:
 
 [[image27.gif]]
 
+
+
   - Since you're looking for a 90% confidence level, let's take the
-  cumulative distribution function of the above:
+  cumulative distribution function (CDF) of the above:
 
 [[image28.gif]]
 
 So, if you pick 1000 marbles, you can be 90% confident that the 10
-resulting frequencies will be within 24 (or 2.4%) of the mean value of 100.
+resulting frequencies will be within 24 (or 2.4%) of the mean value of
+100. Of course, this is based on a Monte Carlo simulation, and
+shouldn't be regarded as absolutely precise.
+
+For 2000 marbles, jumping straight to the CDF:
 
 
 
+TODO: note this file and note could maybe get true PDF
 
 p = Table[1/10,{i,1,10}]
 
-minmax := Module[{d},
- d = RandomVariate[MultinomialDistribution[1000,p]];
+minmax[n_] := Module[{d},
+ d = RandomVariate[MultinomialDistribution[n,p]];
  Return[{Min[d],Max[d]}]];
+
+n = 50;
+
+monte[n_] := monte[n] = Table[minmax[n],{i,1,10000}];
+
+m3 = Table[Max[{Abs[i[[1]]-n/10], Abs[i[[2]]-n/10]}], {i,monte[n]}];
+
+N[{Mean[m3], Variance[m3]}]
+
+(*
+
+results for various n:
+
+50: {3.9157, 1.43194}
+100: {5.5928, 2.65685}
+500: {12.4577, 12.2306}
+1000: {17.6901, 25.0188}
+2000: {24.9331, 48.9469}
+5000: {39.259, 120.912}
+10000: {55.7423, 247.769}
+25000: {88.0303, 608.016}    
+
+overall: Sqrt[n]*0.556753 roughly, and 0.0243206*n
+or SD of 0.155951*Sqrt[n]
+
+ran it again for 25000 and got: {88.4296, 605.507} making those numbers 0.559278 and 0.155629
+
+
+
+mu[n_] = 0.556753*Sqrt[n]
+sd[n_] = 0.155951*Sqrt[n]
+
+
+m4 = Tally[m3]
+
+ListPlot[Sort[m4], PlotJoined->True]
+showit
+
+m5[x_] = Interpolation[m4][x]
+
+Plot[{m5[x]/10000., PDF[NormalDistribution[
+{x,Sqrt[n]*0.556753-3*0.155951*Sqrt[n], Sqrt[n]*0.556753+3*0.155951*Sqrt[n]}]
+showit
+
+
+
+m5 = Table[{i[[1]], Log[i[[2]]]}, {i,m4}]
+
+m6 = Table[{i[[1]], Log[Log[i[[2]]]]}, {i,m4}]
+
+Fit[m5, {1,x,x^2}, x]
+
+Accumulate[Transpose[Sort[m4]][[2]]]
+
+
+Fit[m4, {1,x,x^2,x^3,x^4}, x]
+
+
+g = Histogram[m3, Automatic, "CDF"]
+
+ytics = Table[N[i/10],{i,0,10}];
+xtics = Table[i*5,{i,0,20}];
+g = Histogram[m3, Automatic, "CDF", Ticks -> {xtics, ytics}]
+showit
 
 minmax2 := Module[{d},
  d = RandomVariate[MultinomialDistribution[10000,p]];
@@ -86,21 +157,11 @@ monte = Table[minmax,{i,1,10000}];
 
 monte2 = Table[minmax2,{i,1,10000}];
 
-
-
 m2 = Transpose[monte];
 
-m3 = Table[Max[{Abs[i[[1]]-100], Abs[i[[2]]-100]}], {i,monte}];
+m3 = Table[Max[{Abs[i[[1]]-1000], Abs[i[[2]]-1000]}], {i,monte2}];
 
 g = Histogram[m3]
-
-g = Histogram[m3, Automatic, "CDF"]
-
-ytics = Table[N[i/10],{i,0,10}];
-xtics = Table[i*5,{i,0,20}];
-g = Histogram[m3, Automatic, "CDF", Ticks -> {xtics, ytics}]
-showit
-
 
 g2 = Graphics[{
  Dashed, RGBColor[1,0,0], 
