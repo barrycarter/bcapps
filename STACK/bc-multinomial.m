@@ -22,10 +22,20 @@ params2[n_,m_] := {params[n,m][[1]]/n-1/m,
 mins[n_,m_] := Sort[Tally[Transpose[monte[n,m]][[1]]]]
 maxs[n_,m_] := Sort[Tally[Transpose[monte[n,m]][[2]]]]
 
-supertab[m_] := Table[params2[n*1000, m], {n,1,25,3}];
+(* reducing this to a single case, since that seems to work anyway *)
+
+supertab[m_] := Table[params2[n*1000, m], {n,25,25}];
 
 bestguess[m_] := {Min[Transpose[supertab[m]][[1]]],
  Mean[Transpose[supertab[m]][[2]]], Min[Transpose[supertab[m]][[3]]]};
+
+plotme = Table[{i,bestguess[i]}, {i,10,100,10}];
+
+plotmeans = Table[{i[[1]], i[[2,1]]}, {i,plotme}]
+plotmeans2 = Table[{i[[1]], Sqrt[i[[2,1]]]}, {i,plotme}]
+plotmeans3 = Table[{i[[1]], i[[2,1]]-1/200/Pi}, {i,plotme}]
+
+ListLogPlot[plotmeans3, PlotRange -> All]
 
 
 temp2057 = Table[params2[n*1000,2],{n,1,10}]
@@ -34,7 +44,7 @@ ListPlot[Transpose[temp2057][[3]]]
 showit
 
 
-
+DownValues[monte][[2,1]]
 
 
 
