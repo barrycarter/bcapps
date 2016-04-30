@@ -1,3 +1,49 @@
+(* General case for m-sided dice rolled n times *)
+
+p[m_] := p[m] = Table[1/m,{i,1,m}];
+
+minmax[n_,m_] := Module[{d},
+ d = RandomVariate[MultinomialDistribution[n,p[m]]];
+ Return[{Min[d],Max[d]}]];
+
+monte[n_,m_] := monte[n,m] = Table[minmax[n,m],{i,1,1000}];
+
+maxvar[n_,m_] := Table[Max[{Abs[i[[1]] - m/n], Abs[i[[2]] - m/n]}], 
+ {i, monte[n,m]}];
+
+params[n_,m_] := N[{Mean[maxvar[n,m]], Sqrt[Variance[maxvar[n,m]]],
+Median[maxvar[n,m]]}]
+
+params2[n_,m_] := params[n,m]/{n,Sqrt[n],n}
+
+mins[n_,m_] := Sort[Tally[Transpose[monte[n,m]][[1]]]]
+maxs[n_,m_] := Sort[Tally[Transpose[monte[n,m]][[2]]]]
+
+supertab[m_] := Table[params2[n*1000, m], {n,1,25,3}];
+
+
+
+temp2057 = Table[params2[n*1000,2],{n,1,10}]
+
+ListPlot[Transpose[temp2057][[3]]]
+showit
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (*
 http://stats.stackexchange.com/questions/210005/how-many-replications-to-eliminate-noise
 *)
@@ -80,10 +126,6 @@ For 2000 marbles, jumping straight to the CDF:
 TODO: note this file and note could maybe get true PDF
 
 p = Table[1/10,{i,1,10}]
-
-minmax[n_] := Module[{d},
- d = RandomVariate[MultinomialDistribution[n,p]];
- Return[{Min[d],Max[d]}]];
 
 monte[n_] := monte[n] = Table[minmax[n],{i,1,1000}];
 
