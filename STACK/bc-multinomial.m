@@ -29,9 +29,13 @@ supertab[m_] := Table[params2[n*1000, m], {n,25,25}];
 bestguess[m_] := {Min[Transpose[supertab[m]][[1]]],
  Mean[Transpose[supertab[m]][[2]]], Min[Transpose[supertab[m]][[3]]]};
 
-plotme = Table[{i,bestguess[i]}, {i,10,100,10}];
+plotme = Table[{i,bestguess[i]}, {i,2,20}];
+
 
 plotmeans = Table[{i[[1]], i[[2,1]]}, {i,plotme}]
+
+plotsds = Table[{i[[1]], i[[2,2]]}, {i,plotme}]
+
 plotmeans2 = Table[{i[[1]], Sqrt[i[[2,1]]]}, {i,plotme}]
 plotmeans3 = Table[{i[[1]], i[[2,1]]-1/200/Pi}, {i,plotme}]
 
@@ -45,6 +49,32 @@ showit
 
 
 DownValues[monte][[2,1]]
+
+In[107]:= bestguess[200]                                                        
+
+Out[107]= {0.00126584, 0.0292901, 0.00123968}
+
+Table[i[[1]], {i,DownValues[monte]}]
+Table[i[[1]], {i,DownValues[monte]}][[1,1,2]]
+
+vals = Drop[Table[i[[1,1,2]], {i,DownValues[monte]}],-1];
+
+tab = Table[{i, bestguess[i][[1]]}, {i,vals}]
+
+0.00035646415004234885 + 0.005425781000943534/x^2 - 0.01879105398650147/x + 
+ 0.014505133926303258/x^0.5
+
+is a good approx
+
+0.0005409926118595783 - 0.013490021261969458/x + 0.012322628254679823/x^0.5
+
+is also a good approx
+
+ListPlot[Table[{i, bestguess[i][[1]]}, {i, vals}], PlotRange -> All,
+PlotJoined -> True]
+ListPlot[Table[{i, 1/bestguess[i][[1]]}, {i, vals}], PlotRange -> All,
+PlotJoined -> True]
+showit
 
 
 
