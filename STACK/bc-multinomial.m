@@ -85,13 +85,38 @@ minmax[n_] := Module[{d},
  d = RandomVariate[MultinomialDistribution[n,p]];
  Return[{Min[d],Max[d]}]];
 
-n = 50;
+monte[n_] := monte[n] = Table[minmax[n],{i,1,1000}];
 
-monte[n_] := monte[n] = Table[minmax[n],{i,1,10000}];
+maxs[n_] := maxs[n] = Transpose[monte[n]][[2]];
 
-m3 = Table[Max[{Abs[i[[1]]-n/10], Abs[i[[2]]-n/10]}], {i,monte[n]}];
+Histogram[maxs[25000], Automatic, "CDF"];
 
-N[{Mean[m3], Variance[m3]}]
+in my example for hoeffding
+
+n=25000, k=10, d=50
+
+http://www.jstor.org/stable/2236496?seq=2#page_scan_tab_contents
+
+
+
+m3[n_]:=m3[n]= Table[Max[{Abs[i[[1]]-n/10], Abs[i[[2]]-n/10]}], {i,monte[n]}];
+
+Transpose[m3][[1]]
+
+means = Table[{n,Mean[m3[n]]},{n,1000,25000,1000}];
+medians = Table[{n,Median[m3[n]]},{n,1000,25000,1000}];
+sds = Table[{n,Sqrt[Variance[m3[n]]]},{n,1000,25000,1000}];
+
+means2 = Table[{n, Mean[m3[n]]^2/n}, {n,1000,25000,1000}]; 
+
+Fit[means, Sqrt[x], x]
+
+PDF[NormalDistribution[mu,sd]][x] == k*E[-2*d^2/n]
+
+tab2 = Table[{n, m3[n]}, {n,1000,25000,1000}];
+
+
+N[{Mean[m3], Variance[m3], Median[m3]}]
 
 (*
 
@@ -100,11 +125,11 @@ results for various n:
 50: {3.9157, 1.43194}
 100: {5.5928, 2.65685}
 500: {12.4577, 12.2306}
-1000: {17.6901, 25.0188}
-2000: {24.9331, 48.9469}
-5000: {39.259, 120.912}
-10000: {55.7423, 247.769}
-25000: {88.0303, 608.016}    
+1000: {17.6901, 25.0188} or {17.6667, 24.5651, 17.}
+2000: {24.9331, 48.9469} or {24.8929, 47.5808, 24.}
+5000: {39.259, 120.912} or {39.3733, 122.205, 38.}
+10000: {55.7423, 247.769} or {55.817, 245.989, 54.}
+25000: {88.0303, 608.016} or {88.4296, 605.507, 87.}
 
 overall: Sqrt[n]*0.556753 roughly, and 0.0243206*n
 or SD of 0.155951*Sqrt[n]
@@ -113,8 +138,8 @@ ran it again for 25000 and got: {88.4296, 605.507} making those numbers 0.559278
 
 
 
-mu[n_] = 0.556753*Sqrt[n]
-sd[n_] = 0.155951*Sqrt[n]
+mu[x_] = 0.55*Sqrt[x]
+sd[x_] = 0.155951*Sqrt[x]
 
 
 m4 = Tally[m3]
@@ -124,8 +149,8 @@ showit
 
 m5[x_] = Interpolation[m4][x]
 
-Plot[{m5[x]/10000., PDF[NormalDistribution[
-{x,Sqrt[n]*0.556753-3*0.155951*Sqrt[n], Sqrt[n]*0.556753+3*0.155951*Sqrt[n]}]
+Plot[{m5[x]/10000., PDF[NormalDistribution[mu[n],sd[n]]][x]},
+{x, mu[n] - 3*sd[n], mu[n] + 3*sd[n]}]
 showit
 
 
