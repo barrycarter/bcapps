@@ -19,8 +19,14 @@ params2[n_,m_] := {params[n,m][[1]]/n-1/m,
  params[n,m][[3]]/n-1/m
 };
 
-mins[n_,m_] := Sort[Tally[Transpose[monte[n,m]][[1]]]]
-maxs[n_,m_] := Sort[Tally[Transpose[monte[n,m]][[2]]]]
+mins[n_,m_] := Transpose[monte[n,m]][[1]]
+maxs[n_,m_] := Transpose[monte[n,m]][[2]]
+
+tab2225 = Table[{m,Mean[mins[25000,m]]},{m,5,20}]
+tab2226 = Table[{m,25000/m-Mean[mins[25000,m]]},{m,5,20}]
+Fit[tab2225,{1,1/x},x]
+
+
 
 (* reducing this to a single case, since that seems to work anyway *)
 

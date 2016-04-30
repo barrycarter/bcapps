@@ -76,12 +76,12 @@ Things To Notice:
 Now, let's do a Minkowski transform into the ship's frame.
 
 Just for fun, we'll animate the change as we move from the planet's
-frame to the ship's frame.
+frame to the ship's frame (for the purposes of the animation, I've
+removed the labels giving Earth's time).
 
+[[image24.gif]]
 
-
-
-TODO: animation and verbiage
+Focusing on the final image:
 
 [[image22.gif]]
 
