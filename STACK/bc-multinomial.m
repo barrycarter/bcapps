@@ -14,13 +14,18 @@ maxvar[n_,m_] := Table[Max[{Abs[i[[1]] - m/n], Abs[i[[2]] - m/n]}],
 params[n_,m_] := N[{Mean[maxvar[n,m]], Sqrt[Variance[maxvar[n,m]]],
 Median[maxvar[n,m]]}]
 
-params2[n_,m_] := params[n,m]/{n,Sqrt[n],n}
+params2[n_,m_] := {params[n,m][[1]]/n-1/m,
+ params[n,m][[2]]/Sqrt[n],
+ params[n,m][[3]]/n-1/m
+};
 
 mins[n_,m_] := Sort[Tally[Transpose[monte[n,m]][[1]]]]
 maxs[n_,m_] := Sort[Tally[Transpose[monte[n,m]][[2]]]]
 
 supertab[m_] := Table[params2[n*1000, m], {n,1,25,3}];
 
+bestguess[m_] := {Min[Transpose[supertab[m]][[1]]],
+ Mean[Transpose[supertab[m]][[2]]], Min[Transpose[supertab[m]][[3]]]};
 
 
 temp2057 = Table[params2[n*1000,2],{n,1,10}]
