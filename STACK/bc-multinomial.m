@@ -6,21 +6,134 @@ minmax[n_,m_] := Module[{d},
  d = RandomVariate[MultinomialDistribution[n,p[m]]];
  Return[{Min[d],Max[d]}]];
 
-monte[n_,m_] := monte[n,m] = Table[minmax[n,m],{i,1,1000}];
+monte[n_,m_] := monte[n,m] = Table[minmax[n,m],{i,1,10000}];
 
-maxvar[n_,m_] := Table[Max[{Abs[i[[1]] - m/n], Abs[i[[2]] - m/n]}], 
+maxvar[n_,m_] := Table[Max[{Abs[i[[1]] - n/m], Abs[i[[2]] - n/m]}], 
  {i, monte[n,m]}];
 
-params[n_,m_] := N[{Mean[maxvar[n,m]], Sqrt[Variance[maxvar[n,m]]],
-Median[maxvar[n,m]]}]
+mins[n_,m_] := Transpose[monte[n,m]][[1]]
+maxs[n_,m_] := Transpose[monte[n,m]][[2]]
+
+params[n_,m_] := N[Table[{Mean[i], Sqrt[Variance[i]], Median[i]},
+ {i, {mins[n,m], maxs[n,m], maxvar[n,m]}}]];
 
 params2[n_,m_] := {params[n,m][[1]]/n-1/m,
  params[n,m][[2]]/Sqrt[n],
  params[n,m][[3]]/n-1/m
 };
 
-mins[n_,m_] := Transpose[monte[n,m]][[1]]
-maxs[n_,m_] := Transpose[monte[n,m]][[2]]
+params[1000,10]
+
+TODO: this works rapidlyish
+
+t = Table[Random[Integer, 10], {i, 100000000}];
+
+(* about 5 seconds for below *)
+
+t2 = Table[Tally[RandomChoice[t,10000],{j,10000}]];
+
+t2 = Table[Tally[Table[1+Random[Integer, 9], {i, 10000}]], {j,1,10000}];
+
+t2 = Table[Random[Integer, 10], {i,10000}];
+
+Sort[Transpose[t2][[2]]]
+
+Table[RandomChoice[t,10000],{j,10000}];
+
+getcounts := Transpose[Tally[Table[Random[Integer,{1,10}], {i, 10000}]]][[2]]
+
+t2034 = Flatten[Table[getcounts,{i,10000}]];
+
+Histogram[t2034]
+
+OrderDistribution[{NormalDistribution[1000, Sqrt[10000*.1*.9]], 10}, 10]
+
+PDF[OrderDistribution[{NormalDistribution[0,1],6}, 3]][x]
+
+PDF[OrderDistribution[{NormalDistribution[1000,Sqrt[1000*.9]],10}, 10]][x]
+
+
+
+
+
+Solve[CDF[NormalDistribution[100,Sqrt[1000*.9*.1]],x]==1/10, x]
+
+Solve[CDF[NormalDistribution[n*p, Sqrt[n*p*(1-p)]], x] == p,x]
+
+{{x -> n*p - Sqrt[2]*Sqrt[-(n*(-1 + p)*p)]*InverseErfc[2*p]}}
+
+Solve[CDF[NormalDistribution[n*0.1, Sqrt[n*0.1*(1-0.1)]], x] == 0.1,x]
+
+{{x -> -0.384465 Sqrt[n] + 0.1 n}}
+
+Solve[CDF[NormalDistribution[n*0.1, Sqrt[n*0.1*(1-0.1)]], x] == 0.05,x]
+
+0.493456 Sqrt[n] (if going to 1/20)
+
+Solve[CDF[NormalDistribution[n/10, Sqrt[n/10*9/10]], x] == 1/10,x]
+
+Sqrt[2] Sqrt[-(n (-1 + p) p)] InverseErfc[2 p]
+
+appears to be the "magic number", for large n
+
+CDF[NormalDistribution[n/10, Sqrt[n/10*9/10]], x]
+
+CDF[NormalDistribution[1000/10, Sqrt[1000/10*9/10]], 100-17.6229]
+
+CDF[NormalDistribution[50000/10, Sqrt[50000/10*9/10]], 5000-39.466]
+
+CDF[NormalDistribution[500/10, Sqrt[500/10*9/10]], 50-12.4655]
+
+CDF[NormalDistribution[100000/10, Sqrt[100000/10*9/10]], 10000-175.799]
+
+
+
+
+
+(* this just to force evaluation *)
+
+Table[params[n,10], {n,100,5000,100}];
+
+(* minmeans *)
+
+minmeans[m_] := Table[{n,Transpose[params[n,m]][[1,1]]}, 
+ {n,100,5000,100}];
+
+maxmeans[m_] := Table[{n,Transpose[params[n,m]][[1,2]]}, 
+ {n,100,5000,100}];
+
+sds[m_] := Table[{n,Transpose[params[n,m]][[2,1]]},
+ {n,100,5000,100}];
+
+
+fminmeans[m_] := Interpolation[minmeans[m]];
+
+aminmeans[m_] := aminmeans[m] = Function[x, Fit[minmeans[m], 1/y, y] /. y -> x]
+
+Plot[{fminmeans[2][x], aminmeans[2]}, {x, 100, 5000}]
+
+Table[Transpose[params[n,2]][[2,1]]/Sqrt[n], {n,100,5000,100}]
+
+Table[Transpose[params[n,2]][[3,1]]/n, {n,100,5000,100}]
+
+(*
+
+Some results:
+
+minmeans[10] fairly close to Sqrt[n]/2 as is maxmeans[10]
+and sds[10] close to 0.15403 Sqrt[x]
+
+minmeans[5] is sort of kind of close to Sqrt[n]/2 too
+
+0.225271 Sqrt[x] for that one
+
+n/m - Sqrt[n]/2
+
+(* tests *)
+
+k^-n*(Sum[t^j/j!])^k
+
+
 
 tab2225 = Table[{m,Mean[mins[25000,m]]},{m,5,20}]
 tab2226 = Table[{m,25000/m-Mean[mins[25000,m]]},{m,5,20}]
@@ -101,6 +214,8 @@ http://stats.stackexchange.com/questions/210005/how-many-replications-to-elimina
 
 (*
 
+ANSWER STARTS HERE:
+
 Although I upvoted @EngrStudent's comment, it turns out this is not a
 simple problem, and I couldn't find an exact answer. The closest I came was:
 
@@ -143,7 +258,7 @@ In general, we're asking: how far away from $\frac{n}{10}$ is the
 frequency of the most or least frequently appearing marble (whichever
 is further from $\frac{n}{10}$).
 
-I ran a Monte Carlo simulation on picking 1000 marbles (10,000 times),
+I ran a Monte Carlo simulation for 1000 draws (10,000 times),
 and found the following:
 
   - The distribution of the frequency of the least picked marble:
@@ -158,21 +273,88 @@ and found the following:
 
 [[image27.gif]]
 
-
-
   - Since you're looking for a 90% confidence level, let's take the
   cumulative distribution function (CDF) of the above:
 
 [[image28.gif]]
 
 So, if you pick 1000 marbles, you can be 90% confident that the 10
-resulting frequencies will be within 24 (or 2.4%) of the mean value of
+resulting frequencies will be within 24 (or 24%) of the mean value of
 100. Of course, this is based on a Monte Carlo simulation, and
 shouldn't be regarded as absolutely precise.
 
-For 2000 marbles, jumping straight to the CDF:
+For 2000 draws, jumping straight to the CDF:
+
+[[image29.gif]]
+
+So you can be 90% sure that all 10 marbles have a frequency 200 of \pm 34
+(ie, within 17% of the mean).
+
+Finally, for 5000 draws:
+
+[[image30.gif]]
+
+You can be 90% sure that every marble's frequency will be between 446
+and 554, or 10.8% of the mean.
+
+The general case here isn't easy. To a very rough approximation, the
+maximum distance from the expected (mean) frequency is normally
+distributed with $\mu =0.557 \sqrt{n}$ and $\sigma = 0.158
+\sqrt{n}$. Again this is based on Monte Carlo simulations and should
+not be considered exact.
+
+I'm still working on the case where there are more or fewer than 10 marbles:
+
+https://github.com/barrycarter/bcapps/blob/master/STACK/bc-multinomial.m
+
+(*
+
+Results:
+
+params[n_,m_] := N[Table[{
+ Mean[maxvar[n,m]], Sqrt[Variance[maxvar[n,m]]], Median[maxvar[n,m]]
+}]]
+
+FullSimplify[Median[OrderDistribution[{NormalDistribution[0,Sqrt[n*p*(
+1-p)]], 1/p}, 1/p] ], {p>0, p<1}]
+
+-(Sqrt[2]*Sqrt[-(n*(-1 + p)*p)]*InverseErfc[2^(1 - p)])
+
+FullSimplify[PDF[OrderDistribution[{NormalDistribution[0,Sqrt[n*p*(
+1-p)]], 1/p}, 1/p] ], {p>0, p<1}][x]
+
+(2^(1/2 - p^(-1))*Erfc[-(x/(Sqrt[2]*Sqrt[n]*Sqrt[(1 - p)*p]))]^(-1 + p^(-1)))/
+ (E^(x^2/(2*n*(1 - p)*p))*Sqrt[n]*p*Sqrt[(1 - p)*p]*Sqrt[Pi])
 
 
+
+
+OrderDistribution[{NormalDistribution[0,Sqrt[n*p*(1-p)]], 1/p}, 1/p]
+
+OrderDistribution[{NormalDistribution[n/10,Sqrt[n/10*9/10]], 10}, 10]
+
+PDF[OrderDistribution[{NormalDistribution[n/10,Sqrt[n/10*9/10]], 10}, 10]][x]
+
+PDF[OrderDistribution[{NormalDistribution[0,Sqrt[n/10*9/10]], 10}, 10]][x]
+
+{Mean[i], Sqrt[Variance[i]], Median[i]},
+ {i, maxvar[n,m]}]]
+
+
+for n=1: {0.9, 0., 0.9}
+n=5: {1.2863, 0.60784, 1.5}
+for n=10: {1.7598, 0.727981, 2.}
+n=50: {3.9292, 1.18268, 4.}
+for n=100: {5.5836, 1.6295, 5.}
+n=500: {12.4655, 3.55391, 12.}
+for n=1000: {17.6229, 4.98933, 17.}
+n=5000: {39.466, 11.0872, 38.}
+for n=10000: {55.8958, 15.7537, 55.}
+n=50000: {125.296, 34.9461, 122.}
+for n=100000: {175.799, 49.2998, 172.}
+n=500000: {393.962, 111.698, 383.}
+
+Table[maxvar[n,10],{n,100,1000,100}];
 
 TODO: note this file and note could maybe get true PDF
 
@@ -281,12 +463,26 @@ m3 = Table[Max[{Abs[i[[1]]-1000], Abs[i[[2]]-1000]}], {i,monte2}];
 
 g = Histogram[m3]
 
+g = Histogram[maxvar[2000,10], 51, "CDF"]
+
+g = Histogram[maxvar[5000,10], 87, "CDF"]
+
 g2 = Graphics[{
  Dashed, RGBColor[1,0,0], 
  Line[{{3,.9}, {24, .9}}]
 }];
 
-Show[{g,g2}]
+g3 = Graphics[{
+ Dashed, RGBColor[1,0,0], 
+ Line[{{5,.9}, {34, .9}}]
+}];
+
+g4 = Graphics[{
+ Dashed, RGBColor[1,0,0], 
+ Line[{{8,.9}, {54, .9}}]
+}];
+
+Show[{g,g4}]
 showit
 
 
@@ -326,4 +522,27 @@ PDF[MultinomialDistribution[300,{1/3,1/3,1/3}],{100,100,100}]
 
 PDF[MultinomialDistribution[n,{1/3,1/3,1/3}],{100,100,100}]
 
+Variance[MultinomialDistribution[n,{1/3,1/3,1/3}]]
 
+var = Variance[MultinomialDistribution[n,{1/3,1/3,1/3}]]
+
+covar = Covariance[MultinomialDistribution[300,{1/3,1/3,1/3}]]
+means = Mean[MultinomialDistribution[300,{1/3,1/3,1/3}]]
+
+CDF[MultinomialDistribution[300,{1/3,1/3,1/3}]][{105,105,105}]
+
+MultinormalDistribution[means,covar]
+
+
+http://math.stackexchange.com/questions/605183/the-minimum-value-of-a-uniform-multinomial-distribution
+
+(* multinormal approx, using 300 rolls, expec value of each is 100 *)
+
+means = Table[100,{i,1,3}]
+
+cov[i_,j_] = If[i==j, 300*1/3*2/3, -300*1/3*1/3]
+cov[i_,j_] = If[i==j, 0, -300*1/3*1/3]
+
+mat = Table[cov[i,j], {i,1,3}, {j,1,3}]
+
+MultinormalDistribution[means, mat]
