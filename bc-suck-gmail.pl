@@ -26,17 +26,22 @@ while (<>) {
     my($id) = $1;
 
     # avoid downloading messages twice
-    if (-f "$id.txt") {next;}
+    if (-f "GMAIL/$id.txt") {next;}
     push(@ids, $id);
   }
 }
 
+# TODO: this is really ugly, I'm assuming 9th element is the nonce,
+# but there are better ways to check
+
 my(@globals) = csv($globals);
-debug(@globals);
-debug("X: $globals[9]");
+my($nonce) = $globals[9];
 
-debug(@ids);
+for $id (@ids) {
+  my($url) = "https://mail.google.com/mail/u/0/?ui=2&ik=$nonce&view=om&th=$id";
 
-debug($globals);
-
+  # TODO: obviously, don't hardcode save path
+  print "URL GOTO=$url\n";
+  print "SAVEAS TYPE=TXT FOLDER=/home/barrycarter/20160501/GMAIL/ FILE=$id.txt\n";
+}
 
