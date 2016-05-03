@@ -18,20 +18,23 @@ my($userid) = 144803;
 # TODO: allow non-default profile as an option
 system("cp /home/barrycarter/.mozilla/firefox/*.default/places.sqlite /tmp");
 
-# this is the "magic query" to show bookmarks with tags
+# this is the "magic query" to show bookmarks with tags (starting with "!")
+# TODO: could further restrict query to stackexchange sites (but note
+# stackoverflow and mathoverflow, so pattern isn't obvious?)
+
 my($query) = << "MARK";
-SELECT mb1.title, mp.url, mp.title FROM moz_bookmarks mb1
+SELECT mb1.title AS tag, mp.url, mp.title FROM moz_bookmarks mb1
  JOIN moz_bookmarks mb2 ON (mb1.id = mb2.parent)
  JOIN moz_places mp ON (mb2.fk = mp.id)
-WHERE mb1.parent = 4;
+WHERE mb1.parent = 4 AND tag LIKE '!%';
 MARK
 ;
 
 my(@res) = sqlite3hashlist($query, "/tmp/places.sqlite");
+my(%marks);
 
-debug(@res);
-
-die "TESTING";
+# link url to record
+for $i (@res) {$marks{$i->{url}} = $i;}
 
 # TODO: lower 86400 in production
 my($out,$err,$res) = cache_command2("curl 'https://stackexchange.com/users/favorites/$userid?sort=recent'", "age=86400");
