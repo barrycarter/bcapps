@@ -1,1 +1,6 @@
 Code for stackoverflow/stackexchange questions
+
+To run java code (I'm storing the class files in /tmp for now),
+example for Main.class
+
+java -cp /tmp Main
