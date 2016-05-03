@@ -9,37 +9,27 @@ public class Main {
 	int[] sides = new int[3];
 
 	// only one word changes when we ask for the sides
-	String[] ordinals = new String[3];
-	ordinals[0] = "first";
-	ordinals[1] = "second";
-	ordinals[2] = "third";
+	String[] ordinals = new String[]{"first", "second", "third"};
+	//	ordinals = ["first", "second", "third"];
+	//	ordinals[0] = "first";
+	//	ordinals[1] = "second";
+	//	ordinals[2] = "third";
 
 	// the question we will ask
 	StringBuffer q = new StringBuffer();
 
+	// to store the input
+        Scanner input = new Scanner(System.in);
+
 	for (int i=0; i<3; i++) {
 	    System.out.println("What is the "+ordinals[i]+" side of the Triangle?");
+	    sides[i] = input.nextInt(); 
 	}
 
-	int side1, side2, side3, side1s, side2s, side3s;
+	int side1=0, side2=0, side3=0, side1s=0, side2s=0, side3s=0;
 
 	Boolean Triangle;
         String TriangleType;
-        String Q1 = "What is the first side of the Triangle?";
-        String Q2 = "What is the second side of the Triangle?";
-        String Q3 = "What is the third side of the Triangle?";
-
-        Scanner input = new Scanner(System.in);
-        System.out.println(Q1);
-        side1 = input.nextInt();
-
-        Scanner input2 = new Scanner(System.in);
-        System.out.println(Q2);
-        side2 = input2.nextInt();
-
-        Scanner input3 = new Scanner(System.in);
-        System.out.println(Q3);
-        side3 = input3.nextInt();
 
         if(side1 + side2 > side3) {
             Triangle = true;
