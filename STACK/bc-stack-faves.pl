@@ -54,14 +54,23 @@ for $i (1..10) {
     $j=~s/href="(.*?)"//;
     my($url) = $1;
 
-    # do I have it tagged?
-    if ($marks{$url}) {debug("GOT IT: $i");}
+    # ignore the "sort" URLs
+    if ($url=~m%^/users/favorites/%) {next;}
 
+    print "\n";
+    # page number is important
+    print "Page: $i\n";
+
+    # if I don't have it tagged, note and proceed
+    unless ($marks{$url}) {
+      print "UNMARKED: $url\n";
+      next;
+    }
+
+    # if I do have it tagged, show details
+    my($data) = $marks{$url};
+    for $k (keys %$data) {
+      print "$k: $data->{$k}\n";
+    }
   }
-
 }
-
-
-debug("OUT: $out");
-
-
