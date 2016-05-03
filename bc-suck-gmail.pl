@@ -1,5 +1,8 @@
 #!/bin/perl
 
+# TODO: this doesn't work, only gets SOME mail, possibly just mail
+# from first page (even if you save second and future pages)
+
 # In rare cases, you can't IMAP/POP down google mail (eg, third party
 # provider); this kludge creates an iMacro script that may help (even
 # 'downthemall' won't handle google's bizarre linking format)
@@ -24,6 +27,8 @@ while (<>) {
     unless (length($1) == 16) {next;}
 
     my($id) = $1;
+
+    debug("ID: $id");
 
     # avoid downloading messages twice
     if (-f "GMAIL/$id.txt") {next;}

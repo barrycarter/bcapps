@@ -546,3 +546,33 @@ cov[i_,j_] = If[i==j, 0, -300*1/3*1/3]
 mat = Table[cov[i,j], {i,1,3}, {j,1,3}]
 
 MultinormalDistribution[means, mat]
+
+from http://mathematica.stackexchange.com/questions/77386/how-to-get-probabilities-for-multinomial-hypergeometric-distribution-ranges-mo
+
+multinomialRangedIP[n_, ps_, min_, max_] :=
+Total[PDF[MultinomialDistribution[n, ps], Permutations@#] & /@
+IntegerPartitions[n, {Length@ps}, Range[min, max]], 2]
+
+
+PDF[MultinomialDistribution[n, {1/3, 1/3, 1/3}]]
+
+multinomialRangedIP[300, {1/3, 1/3, 1/3}, 95, 105]
+
+multinomialRangedIP[1000, p[10], 95, 105]
+
+multinomialRanged[n_, ps_, min_, max_] :=
+
+  Module[{ups = MapIndexed[(#1/Total[ps[[First@#2 ;;]]]) &, ps], sa,
+  lp = Length@ps, pr},
+
+   pr[nx_, sk_, sk1_, pk_, minx_: 0, maxx_: n] := 
+    Piecewise[{{0, sk < sk || sk - sk1 > maxx || sk - sk1 < minx},
+      {Binomial[nx - sk1, sk - sk1]*pk^(sk - sk1)*(1 - pk)^(nx - sk),True}}];
+
+   sa = Append[ Table[Array[pr[n, #2 - 1, #1 - 1, ups[[k]], min, max]
+   &, {n + 1, n + 1}], {k, 1, lp - 1}], Reverse@Array[{Boole[# - 1 >=
+   min && # - 1 <= max]} &, n + 1]]; sa[[1]] = sa[[1, 1]];
+
+   First@(Dot @@ sa)];
+
+
