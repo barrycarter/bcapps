@@ -1,4 +1,4 @@
-var personnr = require('./bc-norwegia.js');
+var personnr = require('./bc-norwegia');
 
-var results = Personnr('16111992').make();
+var results = personnr('16111992').make();
 console.log(results);

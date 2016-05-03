@@ -1,5 +1,6 @@
 module.exports = init;
 
+
 /**
 * Personnr Constructor
 * 
@@ -36,10 +37,7 @@ function Personnr(birthday) {
 */
 
 Personnr.prototype.make = function() {
-
-     arr  = getRange(this.yyyy),
-     min = arr[0];
-     max = arr[1];
+    var [min, max]  = getRange(this.yyyy),
         individ     = { i1: 0, i2: 0, i3: 0},
         result      = [];
 
