@@ -37,7 +37,30 @@ my(%marks);
 for $i (@res) {$marks{$i->{url}} = $i;}
 
 # TODO: lower 86400 in production
-my($out,$err,$res) = cache_command2("curl 'https://stackexchange.com/users/favorites/$userid?sort=recent'", "age=86400");
+
+my($out,$err,$res);
+
+# TODO: grab all pages, not just first 10 (also bad for users who have
+# fewer than 10 pages of favorites!)
+
+for $i (1..10) {
+
+  ($out,$err,$res) = cache_command2("curl 'https://stackexchange.com/users/favorites/$userid?page=$i&sort=recent'", "age=86400");
+
+  my(@qs) = split(/<div class="favorite-question">/, $out);
+
+  for $j (@qs) {
+    # get the URL
+    $j=~s/href="(.*?)"//;
+    my($url) = $1;
+
+    # do I have it tagged?
+    if ($marks{$url}) {debug("GOT IT: $i");}
+
+  }
+
+}
+
 
 debug("OUT: $out");
 
