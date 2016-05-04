@@ -57,18 +57,24 @@ for $i (1..10) {
     # ignore the "sort" URLs
     if ($url=~m%^/users/favorites/%) {next;}
 
-    print "\n";
-    # page number is important
-    print "Page: $i\n";
-
     # if I don't have it tagged, note and proceed
     unless ($marks{$url}) {
+      # page number is important
+      print "\nPage: $i\n";
       print "UNMARKED: $url\n";
       next;
     }
 
     # if I do have it tagged, show details
     my($data) = $marks{$url};
+
+    # ignore certain tags (intentionally keeping these conditions
+    # separate for now)
+
+    if ($data->{tag} eq "! JUST WATCHING") {next;}
+    if ($data->{tag} eq "! DONE") {next;}
+
+    print "\nPage: $i\n";
     for $k (keys %$data) {
       print "$k: $data->{$k}\n";
     }
