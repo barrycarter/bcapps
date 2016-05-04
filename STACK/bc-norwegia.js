@@ -1,5 +1,19 @@
+// TODO: in test code, "personnr" should have same case as below;
+// "node" will choke if case is different
+
+// TODO: avoid using "destructuring assignment", many implementations
+// can't handle them yet:
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/New_in_JavaScript/1.7#Destructuring_assignment_%28Merge_into_own_page.2Fsection%29
+
+// NOTE: I ignore the advice above, since I'm rewriting code that did
+// use destructuring assignment
+
+// TODO: maybe don't ignore?
+
 module.exports = init;
 
+function test(birthday) {}
+  
 
 /**
 * Personnr Constructor
@@ -84,6 +98,8 @@ function makeBirthdayObject(bd) {
 
     return birthday;
 }
+
+
 
 
 /**
