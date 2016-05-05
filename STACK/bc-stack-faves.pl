@@ -47,65 +47,37 @@ for $i (1..10) {
 
   ($out,$err,$res) = cache_command2("curl 'https://stackexchange.com/users/favorites/$userid?page=$i&sort=recent'", "age=86400");
 
-  debug("OUT($i): $out");
+#  debug("OUT($i): $out");
 
   my(@qs) = split(/<div class="favorite-container">/s, $out);
 
   for $j (@qs) {
 
+    my(%data) = ();
+
     # TODO: this is a hideous way to get the time and user
-#    $j=~s%>([^>]*?)<span class="favorite-last-editor">([^>]*?)</span>%%s;
-
-#    debug("J: $j");
-
     $j=~s%>([^>]*?)<span class="favorite-last-editor">(.*?)</span>%%sg;
+    ($data{date}, $data{user}) = ($1,$2);
 
-    debug("GOT: $1 and $2");
-
-    # TODO: TESTING ONLY!
-    next;
-
-    if ($j=~/^(.*?) ago/m) {
-      debug("$1 ago");
-    } else {
-      debug("Oh no, no ago!");
+    for $k (keys %data) {
+      $data{$k}=~s/<.*?>//g;
+      $data{$k}=trim($data{$k});
     }
 
-    my(%hrefs) = ();
-    while ($j=~s/href="(.*?)"//) {
-      $hrefs{$1} = 1;
-    }
-
-    debug("<hrefs>",sort keys %hrefs,"</hrefs>");
-
-    # TODO: this is hideously ugly and I should not do it
-#    $j=~s%<div%\x01%g;
-#    $j=~s%</div>%\x02%g;
-
-#    debug("J: $j");
-
-    # test
-    while ($j=~s%(\x01[^\x01]*?\x02)%%) {
-#      debug("1: $1");
-    }
-
-    # get the URL
+    # the first URL is the only one I need
     $j=~s/href="(.*?)"//;
-    my($url) = $1;
-
-    # ignore the "sort" URLs
-    if ($url=~m%^/users/favorites/%) {next;}
+    $data{url} = $1;
 
     # if I don't have it tagged, note and proceed
-    unless ($marks{$url}) {
+    unless ($marks{$data{url}}) {
       # page number is important
       print "\nPage: $i\n";
-      print "UNMARKED: $url\n";
+      print "UNMARKED: $data{url}\n";
       next;
     }
 
     # if I do have it tagged, show details
-    my($data) = $marks{$url};
+    $data{mark} = $marks{$data{url}}->{tag};
 
     # ignore certain tags (intentionally keeping these conditions
     # separate for now)
@@ -114,8 +86,8 @@ for $i (1..10) {
     if ($data->{tag} eq "! DONE") {next;}
 
     print "\nPage: $i\n";
-    for $k (keys %$data) {
-      print "$k: $data->{$k}\n";
+    for $k (keys %data) {
+      print "$k: $data{$k}\n";
     }
   }
 }
