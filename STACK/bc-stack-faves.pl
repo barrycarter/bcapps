@@ -53,16 +53,23 @@ for $i (1..10) {
 
   for $j (@qs) {
 
-    debug("J: $j");
+    # TODO: this is a hideous way to get the time and user
+#    $j=~s%>([^>]*?)<span class="favorite-last-editor">([^>]*?)</span>%%s;
+
+#    debug("J: $j");
+
+    $j=~s%>([^>]*?)<span class="favorite-last-editor">(.*?)</span>%%sg;
+
+    debug("GOT: $1 and $2");
+
+    # TODO: TESTING ONLY!
+    next;
 
     if ($j=~/^(.*?) ago/m) {
       debug("$1 ago");
     } else {
       debug("Oh no, no ago!");
     }
-
-    # TODO: TESTING ONLY!
-    next;
 
     my(%hrefs) = ();
     while ($j=~s/href="(.*?)"//) {
