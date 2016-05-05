@@ -47,9 +47,41 @@ for $i (1..10) {
 
   ($out,$err,$res) = cache_command2("curl 'https://stackexchange.com/users/favorites/$userid?page=$i&sort=recent'", "age=86400");
 
-  my(@qs) = split(/<div class="favorite-question">/, $out);
+  debug("OUT($i): $out");
+
+  my(@qs) = split(/<div class="favorite-container">/s, $out);
 
   for $j (@qs) {
+
+    debug("J: $j");
+
+    if ($j=~/^(.*?) ago/m) {
+      debug("$1 ago");
+    } else {
+      debug("Oh no, no ago!");
+    }
+
+    # TODO: TESTING ONLY!
+    next;
+
+    my(%hrefs) = ();
+    while ($j=~s/href="(.*?)"//) {
+      $hrefs{$1} = 1;
+    }
+
+    debug("<hrefs>",sort keys %hrefs,"</hrefs>");
+
+    # TODO: this is hideously ugly and I should not do it
+#    $j=~s%<div%\x01%g;
+#    $j=~s%</div>%\x02%g;
+
+#    debug("J: $j");
+
+    # test
+    while ($j=~s%(\x01[^\x01]*?\x02)%%) {
+#      debug("1: $1");
+    }
+
     # get the URL
     $j=~s/href="(.*?)"//;
     my($url) = $1;
@@ -71,7 +103,7 @@ for $i (1..10) {
     # ignore certain tags (intentionally keeping these conditions
     # separate for now)
 
-    if ($data->{tag} eq "! JUST WATCHING") {next;}
+#    if ($data->{tag} eq "! JUST WATCHING") {next;}
     if ($data->{tag} eq "! DONE") {next;}
 
     print "\nPage: $i\n";
