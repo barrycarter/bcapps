@@ -12,6 +12,9 @@ require "/usr/local/lib/bclib.pl";
 # TODO: make this an argument and/or find it from username?
 my($userid) = 144803;
 
+# this is the order in which I want to see data
+my(@order) = ("title", "mark", "surl", "date", "user");
+
 # copy my bookmarks file (running SQL commands on it "in situ" is
 # probably a bad idea), and then query it
 
@@ -36,18 +39,18 @@ my(%marks);
 # link url to record
 for $i (@res) {$marks{$i->{url}} = $i;}
 
-# TODO: lower 86400 in production
-
 my($out,$err,$res);
 
 # TODO: grab all pages, not just first 10 (also bad for users who have
 # fewer than 10 pages of favorites!)
 
+# TODO: lower 86400 in production
+
+my($count) = 0;
+
 for $i (1..10) {
 
   ($out,$err,$res) = cache_command2("curl 'https://stackexchange.com/users/favorites/$userid?page=$i&sort=recent'", "age=86400");
-
-#  debug("OUT($i): $out");
 
   my(@qs) = split(/<div class="favorite-container">/s, $out);
 
@@ -56,22 +59,29 @@ for $i (1..10) {
     my(%data) = ();
 
     # TODO: this is a hideous way to get the time and user
-    $j=~s%>([^>]*?)<span class="favorite-last-editor">(.*?)</span>%%sg;
+    $j=~s%>\s*([^>]*?)\s*<span class="favorite-last-editor">\s*(.*?)\s*</span>%%sg;
     ($data{date}, $data{user}) = ($1,$2);
 
-    for $k (keys %data) {
-      $data{$k}=~s/<.*?>//g;
-      $data{$k}=trim($data{$k});
-    }
+    for $k (keys %data) {$data{$k}=~s/<.*?>//g;}
 
     # the first URL is the only one I need
     $j=~s/href="(.*?)"//;
     $data{url} = $1;
 
+    # if the URL contains /favorites/ this isn't actually a question
+    if ($data{url}=~m%/favorites/%) {next;}
+
+    $count++;
+
+    # break URL into short link + name
+    $data{url}=~m%^(.*?/\d+)/(.*?)$%;
+
+    ($data{surl}, $data{title}) = ($1,$2);
+
     # if I don't have it tagged, note and proceed
     unless ($marks{$data{url}}) {
       # page number is important
-      print "\nPage: $i\n";
+      print "\nPage: $i ($count)\n";
       print "UNMARKED: $data{url}\n";
       next;
     }
@@ -85,8 +95,8 @@ for $i (1..10) {
 #    if ($data->{tag} eq "! JUST WATCHING") {next;}
     if ($data->{tag} eq "! DONE") {next;}
 
-    print "\nPage: $i\n";
-    for $k (keys %data) {
+    print "\nPage: $i ($count)\n";
+    for $k (@order) {
       print "$k: $data{$k}\n";
     }
   }
