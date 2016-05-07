@@ -36,6 +36,9 @@ MARK
 my(@res) = sqlite3hashlist($query, "/tmp/places.sqlite");
 my(%marks);
 
+# TODO: look for stackexchange.com pages with tags that are not
+# favorited, probably an error on my part
+
 # link url to record
 for $i (@res) {$marks{$i->{url}} = $i;}
 
@@ -92,8 +95,9 @@ for $i (1..10) {
     # ignore certain tags (intentionally keeping these conditions
     # separate for now)
 
-#    if ($data->{tag} eq "! JUST WATCHING") {next;}
-    if ($data->{tag} eq "! DONE") {next;}
+    # TODO: make it customizable which ones I'm ignoring
+#    if ($data{mark} eq "! JUST WATCHING") {next;}
+    if ($data{mark} eq "! DONE") {next;}
 
     print "\nPage: $i ($count)\n";
     for $k (@order) {
