@@ -14,13 +14,6 @@ $
     (\lambda ) \sin (\delta (t))\right)
 $
 
-and the azimuth is:
-
-$
-   \tan ^{-1}(\cos (\lambda ) \sin (\delta (t))-\sin (\lambda ) \cos (t-\alpha
-    (t)) \cos (\delta (t)),\sin (t-\alpha (t)) (-\cos (\delta (t))))
-$
-
 where:
 
   - $\alpha(t)$ is the right ascension of the object at sidereal time $t$
@@ -31,7 +24,18 @@ where:
 
   - $t$ is the current local sidereal time
 
+To find when the elevation is maximal, we take the derivative and set
+equal to 0:
 
+conds = {alpha[t] > -Pi, alpha[t] < Pi, delta > -Pi/2, delta[t] < Pi/2, 
+ lambda > -Pi/2,
+ lambda < Pi/2, psi > -Pi, psi < Pi, t > -Pi, t < Pi};
+
+
+
+FullSimplify[raDecLatLonHA2az[alpha[t],delta[t],lambda,psi,t] ,conds]
+
+FullSimplify[D[raDecLatLonHA2az[alpha[t],delta[t],lambda,psi,t],t],conds]
 
 $
    \frac{\cos (\delta ) \cos (\lambda ) \sin (\alpha -t)}{\sqrt{(\sin (\delta )
