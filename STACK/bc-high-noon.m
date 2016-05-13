@@ -33,12 +33,7 @@ Let's assume for a moment that the Sun's declination is fixed
 and that it's the vernal equinox. What's the sun's altitude at $40
 {}^{\circ} N$ latitude 60 minutes before and after the Sun culminates?
 
-Plot[
- raDecLatLonHA2alt[0,0,40*Degree,0,t/1440*2*Pi]/Degree,
- {t,-60,60}, Frame -> {False, False, False, False}, 
- FrameLabel -> {"Time before/after culmination (minutes)", None},
- AxesLabel -> {None, "Altitude (degrees)"}, AxesOrigin -> {0,48}
-]
+Plot[raDecLatLonHA2alt[0,0,40*Degree,0,t/1440*2*Pi]/Degree, {t,-60,60}]
 showit
 
 
