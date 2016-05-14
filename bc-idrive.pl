@@ -25,16 +25,12 @@ for $i (@accts) {
   # find IP address of server
   my($out, $err,$res) = cache_command2("/root/build/idevsutil_linux/idevsutil --password-file=$pwfile --getServerAddress $u", "age=86400");
 
-  unless ($out=~/webApiServerIP=\"(.*?)\"/) {
+  unless ($out=~/cmdUtilityServerIP=\"(.*?)\"/) {
     warn "NO IP ADDRESS FOR: $u";
     next;
   }
 
   my($ip) = $1;
-
-  # TODO: have no idea why above doesn't work, but this is the IP that
-  # does work at least for me
-  $ip = "207.189.119.146";
 
   # TODO: standardize where I keep idevsutil
   my($cmd) = "/root/build/idevsutil_linux/idevsutil --password-file=$pwfile --search $u\@$ip\:\:home/", "age=3600";
