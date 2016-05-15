@@ -6,13 +6,17 @@
 
 for v = .8*c; slopes are 3 and -4/3; general case:
 
-earth: -8 to 10 = 18 years always (no, faster if faster)
+earth: -8 to 8/v = 8+8/v years
 
 ship: space contraction over velocity or
 
 18/(Sqrt[1-.8^2]/.8*8) or
 
+(8+8/v)/(Sqrt[1-v^2]/v*8)
 
+dist slope is: -Sqrt[1-v^2]/v
+
+correct: Sqrt[(1+v)/(1-v)]
 
 from -8 to 10 = 18, but ship time slope is Sqrt[(1+v)/(1-v)] and dist
 slope -v/Sqrt[1-v^2]
@@ -20,11 +24,27 @@ slope -v/Sqrt[1-v^2]
 *)
 
 
-s2et[t_] = t*3-8
+s2et[t_] = Piecewise[{{t-8, t<0}, {t*3-8, t>0 && t<6}, {t+4, t>6}}]
 s2ed[t_] = 8-8*t/6
+
+Plot[s2et[t],{t,-10,10}]
 
 Plot[s2et[t],{t,0,6}]
 Plot[s2ed[t],{t,0,6}]
+
+Plot[
+ Piecewise[{{t-8,t<8}, {(t-8)*3,t>8 && t<10}, {t-4,t>10}}],
+{t,0,10}]
+
+
+p1 = Plot[(t-8)*3, {t,8,10}]
+p2 = Plot[s2et[t], {t,0,6}]
+
+Show[{p1,p2}, PlotRange -> {{0,10}, {-8,6}}]
+showit
+
+
+Plot[{(t-8)*3, s2et[t]}, {t,0,10}]
 
 Plot[{s2et[t],s2ed[t]},{t,0,6}]
 
