@@ -1,3 +1,34 @@
+(* eyeballs *)
+
+(* earth time at dep: -8, at arrival: 10, ship time 0 to 6 *)
+
+(* 
+
+for v = .8*c; slopes are 3 and -4/3; general case:
+
+earth: -8 to 10 = 18 years always (no, faster if faster)
+
+ship: space contraction over velocity or
+
+18/(Sqrt[1-.8^2]/.8*8) or
+
+
+
+from -8 to 10 = 18, but ship time slope is Sqrt[(1+v)/(1-v)] and dist
+slope -v/Sqrt[1-v^2]
+
+*)
+
+
+s2et[t_] = t*3-8
+s2ed[t_] = 8-8*t/6
+
+Plot[s2et[t],{t,0,6}]
+Plot[s2ed[t],{t,0,6}]
+
+Plot[{s2et[t],s2ed[t]},{t,0,6}]
+
+
 (* order is time distance, conversion is other person to you *)
 
 test1332 = relativityMatrix[v].{t,x}
