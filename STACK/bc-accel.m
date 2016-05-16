@@ -32,6 +32,10 @@ Plot[s2et[t],{t,-10,10}]
 Plot[s2et[t],{t,0,6}]
 Plot[s2ed[t],{t,0,6}]
 
+f[t_] = Piecewise[{{t-8,t<8}, {(t-8)*3,t>8 && t<10}, {t-4,t>10}}]
+
+Plot[{f[t], f[f[t]]}, {t,0,10}]
+
 Plot[
  Piecewise[{{t-8,t<8}, {(t-8)*3,t>8 && t<10}, {t-4,t>10}}],
 {t,0,10}]
