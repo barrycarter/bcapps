@@ -4,6 +4,9 @@
 
 (* 
 
+TODO: note down general case for bidirectional doppler shifts: to and
+away and quite different
+
 for v = .8*c; slopes are 3 and -4/3; general case:
 
 earth: -8 to 8/v = 8+8/v years

@@ -16,5 +16,14 @@ TODO: general strategy with math after main section
 
 TODO: nadex vol not real?
 
+TODO: except for nadex, chosen are not recommendations
+
+TODO: rollover rates
+
+TODO: some banks offer NADEX directly
+
+TODO: citibank fx = FDIC protected, others not?
+
+TODO: oanda box options?
 
 *)

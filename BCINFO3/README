@@ -281,15 +281,13 @@ svn checkout http://fusecompress.googlecode.com/svn/trunk/ fusecompress-read-onl
 
 % 15 Dec 2015: manual weblog rotation (dumb, but what I'm doing for now):
 
-cd /var/log/lighttpd/
-
-: make sure date below is correct
-: run these four commands "at once" to minimize downtime
-
+cd /var/log/lighttpd
+setenv DATE `date +%Y%m%d`
+: run next four commands "at once" to minimize downtime
 /etc/init.d/lighttpd stop
-mv access.log access.log.20160418
-mv error.log error.log.20160418
+mv access.log access.log.$DATE
+mv error.log error.log.$DATE
 /etc/init.d/lighttpd start
-
 : this can be run later
-bzip2 -v access.log.* error.log.* &
+bzip2 -v access.log.$DATE error.log.$DATE &
+
