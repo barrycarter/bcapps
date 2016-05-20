@@ -7,6 +7,8 @@
 # --until=stardate: only use data until stardate
 # --nograph: dont display graph
 
+# TODO: add exponential (in progress, but not working yet)
+
 require "/usr/local/lib/bclib.pl";
 
 # defaults
@@ -41,6 +43,7 @@ for $i (sort keys %weights) {
   push(@x, $days);
   push(@y, $weights{$i});
   push(@z,log($weights{$i}));
+  push(@z2,exp($weights{$i}));
 
   # keep track of lowest weight per day (day starts/ends at 1000 GMT for me)
   # TODO: maybe keep track of highest but that seems less useful
@@ -98,6 +101,7 @@ debug("LOW: $mlow slope, $blow offset");
 ($b,$m) = linear_regression(\@x,\@y);
 # <h>I've always wanted to name a variable $blog for a good reason!</h>
 ($blog,$mlog) = linear_regression(\@x,\@z);
+($bexp,$mexp) = linear_regression(\@x,\@z2);
 
 # linear regression for min weights
 ($bmin, $mmin) = linear_regression(\@mindays, \@minvals);
@@ -109,8 +113,10 @@ $daysago = ($stime-$now)/86400;
 $linweight = $b - $m*$daysago;
 # this should be an exponential curve, but close to linear for now
 $logweight = exp($blog - $mlog*$daysago);
+# $expweight = log($bexp - $mexp*$daysago);
 write_file("$daysago $b\n0 $linweight\n","/tmp/bwl2.txt");
 write_file("$daysago $b\n0 $logweight\n","/tmp/bwl3.txt");
+write_file("$daysago $b\n0 $expweight\n","/tmp/bwl6.txt");
 
 # and the straight line (very inaccurate) estimation
 # TODO: getting loss in sea of variables
@@ -122,7 +128,7 @@ write_file("$daysago $y[0]\n$mostrecent $y[-1]\n", "/tmp/bwl5.txt");
 debug("DAYSAGO: $daysago, LINWT: $linweight");
 
 # target weights (borders for obese, overweight, normal, and severely underweight) [added midpoints 30 Sep 2012 JFF]
-@t=(200,190,180,165,150,120);
+@t=(200,190,180,160,150,120);
 
 # when graphing, don't show beyond this value
 # TODO: optionize this

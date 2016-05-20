@@ -47,7 +47,10 @@ while (<>) {
 
   # this slows things down a lot, but it useful when I've been making
   # changes to the fs
-  if ($globopts{checkfile} && !(-f $name)) {next;}
+  if ($globopts{checkfile} && !(-f $name)) {
+    warn("DOES NOT EXIT: $name");
+    next;
+  }
 
   $tot+= $size;
 

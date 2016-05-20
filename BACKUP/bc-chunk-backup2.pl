@@ -10,6 +10,10 @@ require "$bclib{home}/bc-private.pl";
 
 defaults("limit=25000000000&xmessage=1");
 $limit = $globopts{limit};
+
+# lets me use commas
+$limit =~s/,//g;
+
 my($tot, $count);
 
 open(A,">filelist.txt");
@@ -38,7 +42,10 @@ while (<>) {
 
   # this slows things down a lot, but it useful when I've been making
   # changes to the fs
-  if ($globopts{checkfile} && !(-f $name)) {next;}
+  if ($globopts{checkfile} && !(-f $name)) {
+    warn("NOSUCHFILE: $name");
+    next;
+  }
 
   $tot+= $size;
 

@@ -4,8 +4,8 @@
 # exclude format; results can be "sort -m" together for current
 # exclusion list
 
-cd /mnt/extdrive2/massbacks;
-\ls *.list | perl -nle 'unless (-s "$_.exclude") {print "bc-format2altformat2.pl --zpaqlist $_>$_.exclude"}'
+cd /mnt/extdrive2/massbacks-idrive;
+\ls massback*.list | perl -nle 'unless (-s "$_.exclude") {print "bc-format2altformat2.pl --zpaqlist $_>$_.exclude"}'
 
 exit; 
 

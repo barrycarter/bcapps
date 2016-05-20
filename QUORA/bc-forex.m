@@ -26,4 +26,9 @@ TODO: citibank fx = FDIC protected, others not?
 
 TODO: oanda box options?
 
+TODO: combination of scaling down (investors dislike) + covered calls
+(investors like)
+
+TODO: 5m binaries on NADEX! (but useless?)
+
 *)
