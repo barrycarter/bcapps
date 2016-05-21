@@ -6,8 +6,43 @@
 require "/usr/local/lib/bclib.pl";
 
 for $i (@ARGV) {
-  my($all) = `bzcat $i`;
 
-  debug("ALL: $all");
+  my($all);
+  if ($i=~/\.bz2$/) {
+    $all = join("",`bzcat $i`);
+  } else {
+    $all = read_file($i);
+  }
+
+  # revision number
+  unless ($all=~s%<title>Revision \#(\d+) - Quora</title>%%) {
+    warn "NO NUMBER: $i";
+    next;
+  }
+
+  my($rev) = $1;
+
+  $all=~s%"epoch_us": (\d+),%%;
+  my($time) = $1;
+  $time = strftime("%Y%m%d.%H%M%S",gmtime(int($time/1000000)));
+
+  $all=~s%<span class="rendered_qtext">(.*?)</span>%%;
+  my($q) = $1;
+
+  $all=~s%<div class="revision">(.*?)</div><p class="log_action_bar">%%s;
+  my($text) = $1;
+  $text=~s/<.*?>//sg;
+  $text=~s/[^ -~]//g;
+  $text=wrap($text,70);
+
+print << "MARK";
+Rev: $rev
+Time: $time
+Question: $q
+
+Text: $text
+
+MARK
+;
 }
 

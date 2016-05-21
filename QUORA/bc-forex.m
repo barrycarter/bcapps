@@ -31,4 +31,10 @@ TODO: combination of scaling down (investors dislike) + covered calls
 
 TODO: 5m binaries on NADEX! (but useless?)
 
+  - Because we'll be using nadex.com (TODO: why!) for binary options, look
+  at https://www.nadex.com/markets/forex for the list of binary
+  options you can trade on NADEX:
+
+
+
 *)
