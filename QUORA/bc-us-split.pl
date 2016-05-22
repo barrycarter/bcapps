@@ -25,8 +25,6 @@ sub counties2db {
 
 =item comment
 
-TODO: add population and area values to confirm they match us total
-
 CREATE TABLE counties (
  usps TEXT, geoid TEXT, ansicode TEXT, name TEXT,
  pop10 INT, hu10 INT, aland DOUBLE, awater DOUBLE,
@@ -36,6 +34,34 @@ CREATE TABLE counties (
 
 LOAD DATA INFILE
 "/home/barrycarter/20160522/Gaz_counties_national.txt" INTO TABLE counties;
+
+; delete the header row
+DELETE FROM counties WHERE usps='USPS';
+
+; without PR evaluates to
+; https://en.wikipedia.org/wiki/2010_United_States_Census exactly
+
+; with PR searching for 312471327 yields some results
+
+checks (and balances I suppose):
+
+SELECT SUM(pop10) FROM counties;
++------------+
+| SUM(pop10) |
++------------+
+|  312471327 | 
++------------+
+
+SELECT SUM(aland+awater) FROM counties;
++-------------------+
+| SUM(aland+awater) |
++-------------------+
+|     9847308090685 | 
++-------------------+
+
+SELECT SUM(aland+awater) FROM counties WHERE usps NOT IN ('PR');
+
+TODO: my numbers dont quite add up, maybe mention what I get vs official sources
 
 Column 1USPS United States Postal Service State Abbreviation
   Column 2GEOID Geographic Identifier - fully concatenated geographic code (State FIPS and County FIPS)
