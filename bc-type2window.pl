@@ -1,9 +1,12 @@
 #!/bin/perl
 
 # uses xdotool to type lines in a file to a window, but in a way that
-# does trigger "flood" warnings
+# doesn't trigger "flood" warnings
+
+# -sleep: time to sleep between keystrokes (default 0)
 
 require "/usr/local/lib/bclib.pl";
+defaults("sleep=0");
 
 while (<>) {
   chomp;
@@ -24,5 +27,5 @@ sub xdotoolkey {
 
   # using system sleep (not Perl sleep) for hopefully more consistency
   # the sleep post-keyup so next xdotool command is delayed
-  return "xdotool type $key; sleep 0.10\n";
+  return "xdotool type $key; sleep $globopts{sleep}\n";
 }
