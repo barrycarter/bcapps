@@ -9,27 +9,47 @@
 
 require "/usr/local/lib/bclib.pl";
 
-my($tots) = sqlite3hashlist("SELECT SUM(pop10) AS popt, 
- SUM(aland+awater) AS areat FROM counties
- WHERE usps NOT IN ('PR', 'AK', 'HI')", "$bclib{githome}/QUORA/counties.db");
+# the database
+my($db) = "$bclib{githome}/QUORA/counties.db";
+
+# the limiting condition for all queries
+my($cond) = "usps NOT IN ('PR', 'AK', 'HI')";
+
+my($tots) = sqlite3hashlist("SELECT SUM(pop10) AS popt,
+SUM(aland+awater) AS areat FROM counties WHERE $cond", $db);
 
 my($popt, $areat) = ($tots->{popt}, $tots->{areat});
 
-debug(": $popt $areat");
+find_intercept(0);
+
+# given a slope, determines the line intercept that best divides
+# nation into equal POPULATIONs (TODO: for areas too)
+
+sub find_intercept {
+  my($m) = @_;
+
+  # create function for findroot()
+  my($f) = sub {my(@a)=pop_area_below_line($m,$_[0]); return $a[0];};
+
+  # note that the line's origin can be above/below the continental USA)
+  debug(findroot($f, 20, 60, .00001, 50));
+
+
+}
+
 
 # given a line slope and intercept, return the percentage amount of
-# land and population below that line
+# land and population below that line minus 0.5
 
 # NOTE: uses globals, not a true subroutine and not intended to be
 
 sub pop_area_below_line {
   my($m,$b) = @_;
-
-  my($q) = sqlite3hash("SELECT SUM(pop10)/$popt AS popt,
-  SUM(aland+awater)/$areat AS areat FROM counties WHERE usps NOT IN
-  ('PR', 'AK', 'HI') AND intptlat < $m*intptlon + $b");
-
-  debug("$q->{popt}, $q->{areat}");
+  my($q) = "SELECT SUM(pop10)/$popt AS popt, SUM(aland+awater)/$areat
+  AS areat FROM counties WHERE $cond AND intptlat < $m*intptlong +
+  $b";
+  my($res) = sqlite3hashlist($q,$db);
+  return ($res->{popt}-0.5, $res->{areat}-0.5);
 }
 
 =item queries
