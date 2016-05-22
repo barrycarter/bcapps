@@ -9,19 +9,52 @@
 
 require "/usr/local/lib/bclib.pl";
 
-counties2db();
+my($tots) = sqlite3hashlist("SELECT SUM(pop10) AS popt, 
+ SUM(aland+awater) AS areat FROM counties
+ WHERE usps NOT IN ('PR', 'AK', 'HI')", "$bclib{githome}/QUORA/counties.db");
 
-# add counties to mysql db
-sub counties2db {
+my($popt, $areat) = ($tots->{popt}, $tots->{areat});
 
-  local(*A);
-  open(A,"bzcat $bclib{githome}/QUORA/Gaz_counties_national.txt.bz2|")||die("Can't open, $!");
+debug(": $popt $areat");
 
-  while (<A>) {
-    my(@tsv) = split(/\t/, $_);
-    debug(@tsv);
-  }
+# given a line slope and intercept, return the percentage amount of
+# land and population below that line
+
+# NOTE: uses globals, not a true subroutine and not intended to be
+
+sub pop_area_below_line {
+  my($m,$b) = @_;
+
+  my($q) = sqlite3hash("SELECT SUM(pop10)/$popt AS popt,
+  SUM(aland+awater)/$areat AS areat FROM counties WHERE usps NOT IN
+  ('PR', 'AK', 'HI') AND intptlat < $m*intptlon + $b");
+
+  debug("$q->{popt}, $q->{areat}");
 }
+
+=item queries
+
+SELECT SUM(pop10) FROM counties WHERE usps NOT IN ('PR', 'AK', 'HI');
+
+is 306675006
+
+SELECT SUM(aland+awater) FROM counties WHERE 
+ usps NOT IN ('PR', 'AK', 'HI');
+
+is 8081867092450
+
+SELECT SUM(pop10), SUM(aland+awater) FROM counties WHERE 
+ usps NOT IN ('PR', 'AK', 'HI')
+AND intptlat < 40;
+
+is surprisingly close!
+
+TODO: straight line vs geodesic (merctaor, no such thing)
+
+TODO: mention gis.stack answer
+
+=end
+
 
 =item comment
 
@@ -31,6 +64,11 @@ CREATE TABLE counties (
  aland_sqmi DOUBLE, awater_sqmi DOUBLE,
  intptlat DOUBLE, intptlong DOUBLE
 );
+
+; sqlite3 below
+.separator \t
+; fun fact: if you add ";" to below, it fails
+.import "/home/barrycarter/20160522/Gaz_counties_national.txt" counties
 
 LOAD DATA INFILE
 "/home/barrycarter/20160522/Gaz_counties_national.txt" INTO TABLE counties;
