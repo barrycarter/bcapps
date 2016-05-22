@@ -25,8 +25,17 @@ sub counties2db {
 
 =item comment
 
+TODO: add population and area values to confirm they match us total
+
 CREATE TABLE counties (
- 
+ usps TEXT, geoid TEXT, ansicode TEXT, name TEXT,
+ pop10 INT, hu10 INT, aland DOUBLE, awater DOUBLE,
+ aland_sqmi DOUBLE, awater_sqmi DOUBLE,
+ intptlat DOUBLE, intptlong DOUBLE
+);
+
+LOAD DATA INFILE
+"/home/barrycarter/20160522/Gaz_counties_national.txt" INTO TABLE counties;
 
 Column 1USPS United States Postal Service State Abbreviation
   Column 2GEOID Geographic Identifier - fully concatenated geographic code (State FIPS and County FIPS)
