@@ -1702,7 +1702,7 @@ $e) between $x1 and $x2. Stop if $maxsteps reached before specified
 accuracy. Options:
 
 delta: stop and return when the x difference reaches this value,
-regardless of difference if y value
+regardless of difference in y value
 
 <h>I wrote this function years ago, so its not as polished as my
 current coding</h>

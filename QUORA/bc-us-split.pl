@@ -20,7 +20,10 @@ SUM(aland+awater) AS areat FROM counties WHERE $cond", $db);
 
 my($popt, $areat) = ($tots->{popt}, $tots->{areat});
 
-find_intercept(0);
+# TODO: slopes greater than 1 are ok too
+for ($i=-1; $i<=1; $i+0.1) {
+  print "$i ",find_intercept($i),"\n";
+}
 
 # given a slope, determines the line intercept that best divides
 # nation into equal POPULATIONs (TODO: for areas too)
@@ -32,8 +35,7 @@ sub find_intercept {
   my($f) = sub {my(@a)=pop_area_below_line($m,$_[0]); return $a[0];};
 
   # note that the line's origin can be above/below the continental USA)
-  debug(findroot($f, 20, 60, .00001, 50));
-
+  return findroot2($f, 20, 60, 0, "delta=.001");
 
 }
 
