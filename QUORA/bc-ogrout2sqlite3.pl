@@ -26,19 +26,37 @@ for (1..36) {<A>};
 # fun fact: sqlite3 will auto-create a table from the header row when
 # using .import; however, this isn't particularly useful in this case
 
-print join("\t", ("STATEFP", "COUNTYFP", "TRACTCE", "BLKGRPCE",
-"GEOID", "NAMELSAD", "MTFCC", "FUNCSTAT", "ALAND", "AWATER",
-"INTPTLAT", "INTPTLON", "Shape_Length", "Shape_Area",
-"GEOID_Data", "Blank")),"\n";
+# print join("\t", ("STATEFP", "COUNTYFP", "TRACTCE", "BLKGRPCE",
+# "GEOID", "NAMELSAD", "MTFCC", "FUNCSTAT", "ALAND", "AWATER",
+# "INTPTLAT", "INTPTLON", "Shape_Length", "Shape_Area",
+# "GEOID_Data", "Blank")),"\n";
 
 
 for $i (1..220333) {
 
-  # check header
-  unless (<A> eq "OGRFeature(ACS_2014_5YR_BG):$i\n") {die("BAD HEADER!");}
-  my(@l) = ($i);
-  for $j(1..16){if (<A>=~/\s*(.*?)\s*\((.*?)\)\s*\=\s*(.*?)$/) {push(@l,$3);}}
-  print join("\t",@l),"\n";
+  my(%hash);
+
+  # read 17 lines per record
+  for $j (1..17) {
+    my($row) = scalar(<A>);
+
+    if ($j==1) {
+      $row=~/^OGRFeature\(ACS_2014_5YR_BG\):(\d+)$/;
+      $hash{id} = $1;
+      unless ($i == $hash{id}) {die ("BAD ROW ID: $hash{id} vs $i");}
+      next;
+    }
+
+    if ($row=~/\s*(.*?)\s*\((.*?)\)\s*\=\s*(.*?)$/) {
+      $hash{$1} = $3;
+    } elsif ($row=~/^\s*$/) {
+      # do nothing
+    } else {
+      warn("BAD ROW: $row");
+    }
+  }
+
+  debug(%hash);
 }
 
 =item schema
