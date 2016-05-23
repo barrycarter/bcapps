@@ -12,6 +12,7 @@ below from bc-state-names.m
 
 *)
 
+<</home/barrycarter/BCGIT/QUORA/metros.txt
 usa = Import["/home/barrycarter/BCGIT/STACK/us_states.kml", "Data"];
 state[n_] := usa[[1,2,2,n]]
 name[n_] := usa[[1,6,2,n]]
