@@ -6,6 +6,8 @@ TODO: direct URL to cousub
 
 TODO: better sources exist (more recent)
 
+TODO: tracts points
+
 below from bc-state-names.m
 
 *)
@@ -18,27 +20,46 @@ ewpoints[n_] := Transpose[Partition[Flatten[Apply[List,state[n],1]],2]]
 width[n_] := Max[ewpoints[n][[1]]]-Min[ewpoints[n][[1]]]
 
 states = Table[i, {i,Flatten[{1,Range[3,10],Range[12,50]}]}];
+
+(* state outlines *)
+ostates = Table[state[i],{i,states}];
+
+(* cities then remove Honolulu and Anchorage *)
 cities = CityData[{Large, "United States"}];
-
-(* remove Honolulu and Anchorage *)
-
 cities = Select[cities, #[[1]] != "Anchorage" && #[[1]] != "Honolulu" &];
 
-t2108 = Table[Text[Style[i[[1]]], Reverse[CityData[i, "Coordinates"]]], 
- {i, cities}];
+(* text for cities *)
 
-g3 = Graphics[t2108]
+ctext = Table[Text[Style[i[[1]], TextAlignment -> Right],
+Reverse[CityData[i, "Coordinates"]]], {i, cities}];
 
-g4= Table[Point[Reverse[CityData[i, "Coordinates"]]], {i, cities}]
-Graphics[g4]
+ctext = Table[Text[i[[1]], Reverse[CityData[i, "Coordinates"]], {-1,0.5}], 
+ {i, cities}]
+
+(* points for cities *)
+cpts = Table[Point[Reverse[CityData[i, "Coordinates"]]], {i, cities}]
+
+(* the line *)
+g2 = Plot[-0.093365*x + 29.8953056335449, {x,-125,-67}]
+
+g0 = Graphics[{
+ ctext,
+ EdgeForm[Thin],
+ Opacity[0.1],
+ ostates,
+ RGBColor[1,0,0],
+ Opacity[1],
+ cpts
+}];
+
+g1 = Show[{g0,g2}, AspectRatio -> .75];
+Export["/tmp/test.gif", g1, ImageSize -> {1024*4,768*4}]
+Run["display -geometry 800x600 /tmp/test.gif&"]
+
+
 showit
 
 
-TODO: add major cities
-TODO: weird gray dots? (do I have capitals included by mistake?)
-
-g1 = Graphics[{Opacity[0.1], EdgeForm[Thin],Table[state[i],{i,states}]}];
-g2 = Plot[-0.093365*x + 29.8953056335449, {x,-125,-67}]
 
 Show[{g1,g2,g3}, AspectRatio -> 1]
 showit
@@ -48,4 +69,8 @@ g = Table[{
  Opacity[0.1],
  state[i]
 }, {i,states}];
+
+TODO: weird gray dots? (do I have capitals included by mistake?)
+
+TODO: map not to scale
 
