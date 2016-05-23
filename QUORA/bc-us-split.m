@@ -13,6 +13,7 @@ below from bc-state-names.m
 *)
 
 <</home/barrycarter/BCGIT/QUORA/metros.txt
+<</home/barrycarter/BCGIT/QUORA/tracts.m
 usa = Import["/home/barrycarter/BCGIT/STACK/us_states.kml", "Data"];
 state[n_] := usa[[1,2,2,n]]
 name[n_] := usa[[1,6,2,n]]
@@ -25,20 +26,19 @@ states = Table[i, {i,Flatten[{1,Range[3,10],Range[12,50]}]}];
 (* state outlines *)
 ostates = Table[state[i],{i,states}];
 
-(* cities then remove Honolulu and Anchorage *)
-cities = CityData[{Large, "United States"}];
-cities = Select[cities, #[[1]] != "Anchorage" && #[[1]] != "Honolulu" &];
-
 (* text for cities *)
 
-ctext = Table[Text[Style[i[[1]], TextAlignment -> Right],
-Reverse[CityData[i, "Coordinates"]]], {i, cities}];
+ctext = Table[Text[i[[2]], {i[[4]], i[[3]]}, {-1.1,0.5}],
+ {i, metros}];
 
+(*
 ctext = Table[Text[i[[1]], Reverse[CityData[i, "Coordinates"]], {-1,0.5}], 
  {i, cities}]
 
+*)
+
 (* points for cities *)
-cpts = Table[Point[Reverse[CityData[i, "Coordinates"]]], {i, cities}]
+cpts = Table[Point[{i[[4]],i[[3]]}], {i, metros}];
 
 (* the line *)
 g2 = Plot[-0.093365*x + 29.8953056335449, {x,-125,-67}]
@@ -53,9 +53,16 @@ g0 = Graphics[{
  cpts
 }];
 
-g1 = Show[{g0,g2}, AspectRatio -> .75];
-Export["/tmp/test.gif", g1, ImageSize -> {1024*4,768*4}]
+(* note 58 degrees wide, 48 degrees high *)
+
+g1 = Show[{g0,g2}, AspectRatio -> 48/2/44.43,
+ PlotRange -> {{-125,-67}, {24.5,49.5}}]
+
+Export["/tmp/test.gif", g1, ImageSize -> {44.43*40*2,48*40}]
 Run["display -geometry 800x600 /tmp/test.gif&"]
+
+
+Export["/tmp/test.gif", g1, ImageSize -> {1024*4,768*4}]
 
 
 showit
