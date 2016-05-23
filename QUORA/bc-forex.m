@@ -73,8 +73,9 @@ will lose everything you invested AND POSSIBLY MORE. If you feel ALL
 of these currency pairs could drop 10% or more, THIS STRATEGY IS NOT
 FOR YOU.**
 
-  - To me, GBP/USD looks good, since the last time it was 10% below
-  its current value of 1.4569 was in mid-1986, about 30 years ago.
+  - To me, GBP/USD (the British pound vs the US dollar) looks good,
+  since the last time it was 10% below its current value of 1.4569 was
+  in mid-1986, about 30 years ago.
 
 [[gbpusd-long.png]]
 
@@ -137,7 +138,62 @@ and so on.
     - You may want to choose a safety margin larger than 10%, but I
     don't recommend choosing one smaller than 10%.
 
+  - Now, suppose you buy at 1.4472 and end up selling at 1.4675 (just
+  as an example). How much profit would you have made? Since
+  1.4675/1.4472 is 1.014, you might expect a profit of about 1.4% of
+  $35,000, which is $490.95. Let's see how this works:
 
+    - When you buy $35,000 worth of GBP/USD at 1.4472 you get
+    35000/1.4472 or 24184.63 GBP in exchange for 35000.00 USD.
+
+    - When you sell your 24184.63 GBP at 1.4675, you get back 35490.94
+    dollars, for the $490.95 profit noted above.
+
+    - In other words, you made $490.95 for a 203 pip (that's
+    (1.4675-1.4472)*10000) change in the market, or about $2.42 per
+    pip. The exact profit/loss per pip will vary as the price changes,
+    but $2.42 is a reasonable estimate for right now.
+
+  - How do options enter the picture? If you look at NADEX's weekly
+  options, you see:
+
+[[Nadex.com_1464024762227]]
+
+If you sell the 1.4675 option at the bid price (which you never
+actually want to do), you will receive $13.75, but will lose $100 if
+GBP/USD goes above 1.4675.
+
+Because NADEX charges $1 in commission each direction (fees may have
+changed, please doublecheck before investing) you will actually get
+$12.75 and lose $101 if GBP/USD goes above 1.4675.
+
+Since you get to keep the $12.75 either way, you are risking $88.25
+(that's 101.00 minus 12.75) per contract.
+
+  - Now, suppose you sell 5 of these options for a total of $12.75*5
+  or $63.75 profit. As long as GBP/USD remains below 1.4675, this
+  money is yours to keep. If GBP/USD goes above 1.4675, you will lose
+  $88.25*5 or $441.25. However, you will have made $490.95 on GBP/USD
+  itself (as above), so you still come out ahead.
+
+  - Of course, if GBP/USD falls 100 pips, you will have lost about
+  $242.00, and the $63.75 profit you gain from NADEX won't be
+  sufficient to cover this loss, so this strategy is not risk-proof.
+
+  - If GBP/USD does fall 100 pips, you will have also already bought
+  more of it and be selling options on those positions as well.
+
+
+
+TODO: corner case rules
+
+TODO: vanilla and saxo/gmx links
+
+TODO: other options exist
+
+TODO: not market orders
+
+TODO: NADEX fees may've changed, bad spreads
 
 
 
