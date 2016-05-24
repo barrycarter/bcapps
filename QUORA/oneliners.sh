@@ -6,7 +6,7 @@ join -t, temp[12].csv.srt > blockgroups.txt
 
 exit;
 
-# query that gives me all census blockgroups
+# query that gives me all census blockgroups (but its too slow, the method above is MUCH faster)
 
 ogr2ogr -f CSV joined.csv -sql "SELECT u.GEOID, STATEFP, ALAND, AWATER, INTPTLAT, INTPTLON, B00001e1 FROM ACS_2014_5YR_BG u JOIN X00_COUNTS v ON u.GEOID_Data = v.GEOID" /home/barrycarter/CENSUS/ACS_2014_5YR_BG.gdb.zip
 

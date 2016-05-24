@@ -1,2 +1,18 @@
-The list of quora topics is current as of ~ 16 May 2016 1700 UTC
+The list of quora topics is current as of ~ 16 May 2016 1700 UTC.
+
+NOTE: Some files in this directory are bzip2'd to save space; in most
+cases, you must bunzip2 them to actually use them. In particular,
+there is no easy way to use SQLite3 databases when they are bzip2'd
+compressed (I believe it's not truly impossible, but would require
+some clever coding)
+
+Schema for blockgroups SQLite3 table:
+
+CREATE TABLE blockgroups (
+ geoid text, statefp INT, aland DOUBLE, awater DOUBLE,
+ intptlat DOUBLE, intptlon DOUBLE, population INT
+);
+
+.separator ,
+.import /tmp/blockgroups.txt blockgroups
 
