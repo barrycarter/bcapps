@@ -1,7 +1,3 @@
-
-
-exit;
-
 ogr2ogr -f CSV joined.csv -sql "SELECT u.GEOID, STATEFP, ALAND, AWATER, INTPTLAT, INTPTLON, B01003e1 FROM ACS_2014_5YR_BG u JOIN X01_AGE_AND_SEX v ON u.GEOID_Data = v.GEOID" /home/barrycarter/CENSUS/ACS_2014_5YR_BG.gdb.zip
 
 exit;
