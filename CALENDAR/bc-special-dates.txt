@@ -4,7 +4,7 @@
 20151021 McFly returns
 20380119 Unix time ends
 # record cat life: 38 years, 3 days
-20160619 Garfield 38th
+20160622 Garfield 38th+3d
 20150910 QE II LongestReign
 20160421 QE II 90th
 20151113 Venus/Eta Virgo

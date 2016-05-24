@@ -1,3 +1,11 @@
+ogr2ogr -f CSV temp1.csv -sql "SELECT GEOID_Data, STATEFP, ALAND, AWATER, INTPTLAT, INTPTLON FROM ACS_2014_5YR_BG" /home/barrycarter/CENSUS/ACS_2014_5YR_BG.gdb.zip; sort temp1.csv > temp1.csv.srt &
+
+ogr2ogr -f CSV temp2.csv -sql "SELECT GEOID, B00001e1 FROM X00_COUNTS" /home/barrycarter/CENSUS/ACS_2014_5YR_BG.gdb.zip; sort temp2.csv > temp2.csv.srt &
+
+join -t, temp[12].csv.srt > blockgroups.txt
+
+exit;
+
 # query that gives me all census blockgroups
 
 ogr2ogr -f CSV joined.csv -sql "SELECT u.GEOID, STATEFP, ALAND, AWATER, INTPTLAT, INTPTLON, B00001e1 FROM ACS_2014_5YR_BG u JOIN X00_COUNTS v ON u.GEOID_Data = v.GEOID" /home/barrycarter/CENSUS/ACS_2014_5YR_BG.gdb.zip
