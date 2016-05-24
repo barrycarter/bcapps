@@ -13,6 +13,12 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# debug(find_root_sql("SELECT PARAMETER-7", "", 0, 10));
+
+debug(find_root_sql("SELECT SUM(population)-13046090 FROM blockgroups WHERE intptlat < PARAMETER", "/tmp/blockgroups.db", 0, 90));
+
+die "TESTING";
+
 # the database
 my($db) = "$bclib{githome}/QUORA/tracts.db";
 
@@ -58,7 +64,6 @@ sub find_intercept {
   return ($pop,$area);
 
 }
-
 
 # given a line slope and intercept, return the percentage amount of
 # land and population below that line minus 0.5
@@ -111,3 +116,35 @@ CREATE TABLE tracts (
 TODO: my numbers dont quite add up, maybe mention what I get vs official sources
 
 =end
+
+=item find_root_sql($query, $db, $l, $r)
+
+Given a parametrized SQL $query on $db that returns a single value,
+find the value of the parameter between $l and $r that returns 0.
+
+The parameter should be given as PARAMETER (literal word "PARAMETER")
+
+TODO: something silly about using "PARAMETER" above.
+
+This is essentially a wrapper around findroot() but has some
+additional value
+
+TODO: move me to bclib.pl
+
+=cut
+
+sub find_root_sql {
+  my($query, $db, $l, $r) = @_;
+
+  # create function for findroot()
+  my($f) = sub {
+    my($parvalue) = @_;
+    my($query2) = $query;
+    $query2=~s/PARAMETER/$parvalue/e;
+    debug("Q1: $query\nQ2: $query2\nPAR: $parvalue");
+    return sqlite3val($query2,$db);
+    };
+
+    # TODO: allow parameters to be based to parent function
+    return findroot2($f, $l, $r, 0, "delta=0.0001"); 
+}
