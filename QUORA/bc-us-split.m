@@ -97,52 +97,77 @@ surface, the best approximation is a great circle path (or
 
 <</home/barrycarter/BCGIT/QUORA/metros.txt
 Read["!bzcat -v -k /home/barrycarter/BCGIT/QUORA/blockgroups.m.bz2"]
-<</home/barrycarter/BCGIT/QUORA/tracts.m
 usa = Import["/home/barrycarter/BCGIT/STACK/us_states.kml", "Data"];
 state[n_] := usa[[1,2,2,n]]
-name[n_] := usa[[1,6,2,n]]
-centroid[n_] := Flatten[Apply[List,state[n][[1]]]]
-ewpoints[n_] := Transpose[Partition[Flatten[Apply[List,state[n],1]],2]]
-width[n_] := Max[ewpoints[n][[1]]]-Min[ewpoints[n][[1]]]
-
 states = Table[i, {i,Flatten[{1,Range[3,10],Range[12,50]}]}];
 
 (* state outlines *)
 ostates = Table[state[i],{i,states}];
 
 (* text for cities *)
-ctext = Table[Text[i[[2]], {i[[4]], i[[3]]}, {-1.1,0.5}],
- {i, metros}];
-
+ctext = Table[Text[i[[2]], {i[[4]], i[[3]]}, {-1.1,0.5}], {i, metros}];
 
 (* points for cities *)
 cpts = Table[Point[{i[[4]],i[[3]]}], {i, metros}];
 
-(* tract points *)
-tpts = Table[Point[i], {i,tracts}];
+(* bg points *)
+bgpts = Table[Point[i], {i,blockgroups}];
 
 (* the line *)
-g2 = Plot[-0.093365*x + 29.8953056335449, {x,-125,-67}]
+(* g2 = Plot[-0.093365*x + 29.8953056335449, {x,-125,-67}] *)
+
+(* the intercepts for equal population, as tangent of degree *)
+
+eqpops = {
+{10, 53.9440783329819},
+{20, 69.431301579708},
+{30, 87.8172382866115},
+{40, 110.373007014355},
+{50, 142.163059074888},
+{130, -67.3365063493077},
+{140, -36.9708072760325},
+{150, -14.1713345029829},
+{160, 4.69300791508756},
+{170, 22.0356264027452}
+};
+
+eqareas = {
+{10, 56.3685505198672},
+{20, 74.7680296639373},
+{30, 95.8633784244303},
+{40, 121.624135583797},
+{130, -79.4154063414104},
+{140, -44.448135467482},
+{150, -18.6737734264183}
+{160, 2.73207908515797},
+{170, 21.6520364129615}
+};
+
+poplines = Table[Tan[i[[1]]*Degree]*x + i[[2]], {i, eqpops}]
+
+g5 = Plot[poplines, {x,-125,-67}];
 
 g0 = Graphics[{
+ RGBColor[1,0,0],
  PointSize[.0001],
+ Opacity[1],
+(* bgpts, *)
+ PointSize[.001],
  RGBColor[1,0.5,0.5],
- tpts,
+ cpts,
  RGBColor[0,0,0],
  ctext,
  EdgeForm[Thin],
  Opacity[0.1],
- ostates,
- RGBColor[1,0,0],
- PointSize[.001],
- Opacity[1],
- cpts
+ ostates
 }];
 
 (* note 58 degrees wide, 48 degrees high *)
 
-g1 = Show[{g0,g2}, AspectRatio -> 48/2/44.43,
+g1 = Show[{g0,g2,g5}, AspectRatio -> 48/2/44.43,
  PlotRange -> {{-125,-67}, {24.5,49.5}}]
+
+Export["/tmp/test.gif", g1, ImageSize -> {1024,768}]
 
 Export["/tmp/test.gif", g1, ImageSize -> {44.43*40*2,48*40}]
 Run["display -geometry 800x600 /tmp/test.gif&"]
@@ -163,3 +188,14 @@ g = Table[{
  Opacity[0.1],
  state[i]
 }, {i,states}];
+
+(* is 1/2 degree per frame a noticeably jerky rotation at high res? *)
+
+Plot[Tan[0.5*Degree]*x,{x,-1,1}, PlotRange -> { {-1,1}, {-1,1}}]
+
+t1217 = Table[
+ Plot[Tan[d*Degree]*x,{x,-1,1}, PlotRange -> { {-1,1}, {-1,1}}],
+{d,0,360,0.5}];
+
+Export["/tmp/test.gif", t1217, ImageSize -> {1024,768}]
+

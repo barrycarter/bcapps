@@ -39,26 +39,26 @@ my($poptotal) = sqlite3val("SELECT SUM(population) AS pop FROM blockgroups WHERE
 
 my($areatotal) = sqlite3val("SELECT SUM(aland+awater) AS area FROM blockgroups WHERE $where", $db);
 
-print "AREATOTAL: $areatotal\n";
-
 my($val);
 
 # i is in degrees
-for ($i=10; $i<=170; $i+=10) {
+for ($i=0.1; $i<=180; $i+=0.1) {
 
   if ($i == 90) {next;}
+
+  print "TIMESTAMP: ",time(),"\n";
 
   my($slope) = tan($i*$DEGRAD);
 
   $val = find_root_sql("SELECT IFNULL(SUM(population),0)-$poptotal/2
   AS val FROM blockgroups WHERE $where AND intptlat <= $slope*intptlon +
-  PARAMETER", $db, -180/$slope, 180/$slope, 0);
+  PARAMETER", $db, min(-180,-180/$slope), max(180,180/$slope), 0);
 
   print "POP D$i S$slope $val\n";
 
   $val = find_root_sql("SELECT IFNULL(SUM(aland+awater),0)-$areatotal/2
   AS val FROM blockgroups WHERE $where AND intptlat <= $slope*intptlon +
-  PARAMETER", $db, -180/$slope, 180/$slope, 0);
+  PARAMETER", $db, min(-180,-180/$slope), max(180,180/$slope), 0);
 
   print "AREA D$i S$slope $val\n";
 }
