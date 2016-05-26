@@ -96,6 +96,7 @@ surface, the best approximation is a great circle path (or
 *)
 
 <</home/barrycarter/BCGIT/QUORA/metros.txt
+Read["!bzcat -v -k /home/barrycarter/BCGIT/QUORA/blockgroups.m.bz2"]
 <</home/barrycarter/BCGIT/QUORA/tracts.m
 usa = Import["/home/barrycarter/BCGIT/STACK/us_states.kml", "Data"];
 state[n_] := usa[[1,2,2,n]]

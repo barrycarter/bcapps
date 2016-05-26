@@ -39,6 +39,8 @@ exit;
 # generates a file that, after cleanup, can be used to load tracts
 # into Mathematica for plotting
 
-echo "SELECT '{'||intptlong||','||intptlat||'},' FROM tracts;" | sqlite3 tracts.db > /tmp/tracts.m
+echo "SELECT '{'||intptlong||','||intptlat||'},' FROM blockgroups;" | sqlite3 /sites/DB/blockgroups.db > /tmp/blockgroups.m
+
+# echo "SELECT '{'||intptlong||','||intptlat||'},' FROM tracts;" | sqlite3 tracts.db > /tmp/tracts.m
 
 exit;
