@@ -11,11 +11,15 @@
 # TODO: what does "Created for statistical purposes only." mean? is my
 # use invalid? (if so, get from Mathematica shape data or something)
 
+# TODO: not best way to split state!
+
 require "/usr/local/lib/bclib.pl";
 
 # debug(find_root_sql("SELECT PARAMETER-7", "", 0, 10));
 
-debug(find_root_sql("SELECT SUM(population)-13046090 FROM blockgroups WHERE intptlat < PARAMETER", "/tmp/blockgroups.db", 0, 90));
+debug(find_root_sql("SELECT IFNULL(SUM(population),0)-158873024.5 AS val FROM blockgroups WHERE intptlat < PARAMETER", "/home/barrycarter/CENSUS/blockgroups.db", 0, 90));
+
+debug(find_root_sql("SELECT IFNULL(SUM(population),0)-158873024.5 AS val FROM blockgroups WHERE intptlon < PARAMETER", "/home/barrycarter/CENSUS/blockgroups.db", -150, 0));
 
 die "TESTING";
 
@@ -142,6 +146,8 @@ sub find_root_sql {
     my($query2) = $query;
     $query2=~s/PARAMETER/$parvalue/e;
     debug("Q1: $query\nQ2: $query2\nPAR: $parvalue");
+    debug("OUTPUT", sqlite3val($query2,$db));
+    debug("RETURNING", sqlite3val($query2,$db));
     return sqlite3val($query2,$db);
     };
 
