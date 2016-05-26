@@ -61,12 +61,7 @@ for ($i=10; $i<=170; $i+=10) {
   PARAMETER", $db, -180/$slope, 180/$slope, 0);
 
   print "AREA D$i S$slope $val\n";
-
-  die "TESTING";
-
 }
-
-die "TESTING";
 
 # splitting longitude for population (can't do as slope)
 my($midlon) = find_root_sql("SELECT
