@@ -15,7 +15,86 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# excluding AK HI PR GU, allowing rest
+# https://www.epa.gov/enviro/state-fips-code-listing
+
+# can't use one in this dir, its compressed
+my($db) = "/sites/DB/blockgroups.db";
+my($where) = "(statefp<=56 AND statefp NOT IN (2, 15))";
+
+# TODO: can verify directly with ogrinfo -sql
+
+# TODO: http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?src=bkmk confirms 50 state total
+
+# 155993065 west of -87.3228979110718
+# 155993015 east of -87.3228979110718
+
+# 155992983 north of 38.4412050247192
+# 155993097 south of 38.4412050247192
+
+# TODO: more margin of error
+
+# total population
+my($poptotal) = sqlite3val("SELECT SUM(population) AS pop FROM blockgroups WHERE $where", $db);
+
+my($areatotal) = sqlite3val("SELECT SUM(aland+awater) AS area FROM blockgroups WHERE $where", $db);
+
+print "AREATOTAL: $areatotal\n";
+
+my($val);
+
+# i is in degrees
+for ($i=10; $i<=170; $i+=10) {
+
+  if ($i == 90) {next;}
+
+  my($slope) = tan($i*$DEGRAD);
+
+  $val = find_root_sql("SELECT IFNULL(SUM(population),0)-$poptotal/2
+  AS val FROM blockgroups WHERE $where AND intptlat <= $slope*intptlon +
+  PARAMETER", $db, -180/$slope, 180/$slope, 0);
+
+  print "POP D$i S$slope $val\n";
+
+  $val = find_root_sql("SELECT IFNULL(SUM(aland+awater),0)-$areatotal/2
+  AS val FROM blockgroups WHERE $where AND intptlat <= $slope*intptlon +
+  PARAMETER", $db, -180/$slope, 180/$slope, 0);
+
+  print "AREA D$i S$slope $val\n";
+
+  die "TESTING";
+
+}
+
+die "TESTING";
+
+# splitting longitude for population (can't do as slope)
+my($midlon) = find_root_sql("SELECT
+IFNULL(SUM(population),0)-$poptotal/2 AS val FROM blockgroups WHERE
+$where AND intptlon < PARAMETER", $db, -180, 0);
+
+# splitting latitude (could do as slope, but then couldn't do inversion)
+my($midlat) = find_root_sql("SELECT
+IFNULL(SUM(population),0)-$poptotal/2 AS val FROM blockgroups WHERE
+$where AND intptlat < PARAMETER", $db, -90, 90);
+
+print "MIDLON: $midlon\n";
+print "MIDLAT: $midlat\n";
+
+die "TESTING";
+
+
+my($select) = "SUM(population) AS pop, SUM(aland+awater) AS area FROM
+blockgroups";
+
+
+
+
+
+
 # debug(find_root_sql("SELECT PARAMETER-7", "", 0, 10));
+
+
 
 debug(find_root_sql("SELECT IFNULL(SUM(population),0)-158873024.5 AS val FROM blockgroups WHERE intptlat < PARAMETER", "/home/barrycarter/CENSUS/blockgroups.db", 0, 90));
 
@@ -152,5 +231,5 @@ sub find_root_sql {
     };
 
     # TODO: allow parameters to be based to parent function
-    return findroot2($f, $l, $r, 0, "delta=0.0001"); 
+    return findroot2($f, $l, $r, 0, "delta=0.00001"); 
 }

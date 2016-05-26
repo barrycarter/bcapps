@@ -8,4 +8,8 @@ CREATE TABLE blockgroups (
 .separator ,
 .import blockgroups.txt blockgroups
 
+-- lower 48 + DC https://www.epa.gov/enviro/state-fips-code-listing
+
+
+
  
