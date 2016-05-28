@@ -1,3 +1,15 @@
+# takes the output of bc-us-split.pl and prints it in "Mathematica
+# format" (approximately); requires a manual cleanup step later,
+# though (tenthdegree.txt is the name of the output file)
+
+fgrep POP tenthdegree.txt | perl -anle 'map(s/[DS]//g,@F); print "{",join(",",@F[1..3]),"}"'
+
+
+
+
+
+exit;
+
 ogr2ogr -f CSV joined.csv -sql "SELECT u.GEOID, STATEFP, ALAND, AWATER, INTPTLAT, INTPTLON, B01003e1 FROM ACS_2014_5YR_BG u JOIN X01_AGE_AND_SEX v ON u.GEOID_Data = v.GEOID" /home/barrycarter/CENSUS/ACS_2014_5YR_BG.gdb.zip
 
 exit;
