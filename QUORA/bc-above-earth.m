@@ -36,3 +36,10 @@ TODO: improve graph
 TODO: ignores asteroids
 
 TODO: old def meter
+
+FullSimplify[DSolve[{x''[t] == a/x[t]^2}, x, t], {x[t]>0, t>0}]
+
+FullSimplify[DSolve[{x''[t] == a/x[t]^n}, x, t], {x[t]>0, t>0}]
+
+FullSimplify[DSolve[{x'''[t] == a/x[t]^3}, x, t], {x[t]>0, t>0}]
+

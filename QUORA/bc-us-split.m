@@ -199,3 +199,17 @@ t1217 = Table[
 
 Export["/tmp/test.gif", t1217, ImageSize -> {1024,768}]
 
+(* trying to find proper range for intercept *)
+
+Plot[50*x, {x,-180,180}, AspectRatio -> 1]
+showit
+
+
+Solve[m*-180 + b == -90, b]
+
+eqpop2 = Sort[eqpop];
+test1734 = Table[{i[[2]],i[[3]]}, {i,eqpop}];
+test1736 = Table[{i[[1]],i[[3]]/i[[2]]}, {i,eqpop}];
+
+ListPlot[(Transpose[eqpop2][[3]]-38.6)/Transpose[eqpop2][[2]]]
+

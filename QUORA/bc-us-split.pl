@@ -1,8 +1,8 @@
 #!/bin/perl
 
-# TODO: not necess only such line
-
 # Does things with US county subdivision data
+
+# TODO: not necess only such line
 
 # TODO: see .m version of this file
 
@@ -41,8 +41,23 @@ my($areatotal) = sqlite3val("SELECT SUM(aland+awater) AS area FROM blockgroups W
 
 my($val);
 
+# still having trouble getting all the intercepts, so doing more testing
+
+# debug(find_intercept(tan(30*$DEGRAD), "population"));C
+
+# die "TESTING";
+
 # i is in degrees
-for ($i=0.1; $i<=180; $i+=0.1) {
+# for ($i=0.1; $i<=180; $i+=0.1) {
+
+# second batch below is for ones I missed first time because of bad
+# range selection
+
+# for ($i=55.2; $i<=114.2; $i+=0.1) {
+
+# missed one point argh
+
+for ($i=114.3;$i<=114.3;$i+=0.1) {
 
   if ($i == 90) {next;}
 
@@ -50,18 +65,25 @@ for ($i=0.1; $i<=180; $i+=0.1) {
 
   my($slope) = tan($i*$DEGRAD);
 
+  # range for intercept checking
+  my(@range) = (90*(2*$slope-1), 90*(2*$slope+1), -90*(2*$slope-1),
+		-90*(2*$slope+1));
+
   $val = find_root_sql("SELECT IFNULL(SUM(population),0)-$poptotal/2
   AS val FROM blockgroups WHERE $where AND intptlat <= $slope*intptlon +
-  PARAMETER", $db, min(-180,-180/$slope), max(180,180/$slope), 0);
+  PARAMETER", $db, min(@range), max(@range), 0);
 
   print "POP D$i S$slope $val\n";
 
   $val = find_root_sql("SELECT IFNULL(SUM(aland+awater),0)-$areatotal/2
   AS val FROM blockgroups WHERE $where AND intptlat <= $slope*intptlon +
-  PARAMETER", $db, min(-180,-180/$slope), max(180,180/$slope), 0);
+  PARAMETER", $db, min(@range), max(@range), 0);
 
   print "AREA D$i S$slope $val\n";
+
 }
+
+exit(0);
 
 # splitting longitude for population (can't do as slope)
 my($midlon) = find_root_sql("SELECT
@@ -76,67 +98,21 @@ $where AND intptlat < PARAMETER", $db, -90, 90);
 print "MIDLON: $midlon\n";
 print "MIDLAT: $midlat\n";
 
-die "TESTING";
-
-
-my($select) = "SUM(population) AS pop, SUM(aland+awater) AS area FROM
-blockgroups";
-
-
-
-
-
-
-# debug(find_root_sql("SELECT PARAMETER-7", "", 0, 10));
-
-
-
-debug(find_root_sql("SELECT IFNULL(SUM(population),0)-158873024.5 AS val FROM blockgroups WHERE intptlat < PARAMETER", "/home/barrycarter/CENSUS/blockgroups.db", 0, 90));
-
-debug(find_root_sql("SELECT IFNULL(SUM(population),0)-158873024.5 AS val FROM blockgroups WHERE intptlon < PARAMETER", "/home/barrycarter/CENSUS/blockgroups.db", -150, 0));
-
-die "TESTING";
-
-# the database
-my($db) = "$bclib{githome}/QUORA/tracts.db";
-
-# the select
-my($select) = "SUM(pop10) AS popt, SUM(aland+awater) AS areat FROM tracts";
-
-# the limiting condition for all queries
-my($cond) = "usps NOT IN ('PR', 'AK', 'HI')";
-
-my($tots) = sqlite3hashlist("SELECT $select WHERE $cond", $db);
-
-# these values are 306675006 and 8081867092450 (if you google the
-# first, you actually get results, but not for the second)
-my($popt, $areat) = ($tots->{popt}, $tots->{areat});
-
-# TODO: slopes greater than 1 are ok too
-for ($i=-0.0934; $i<=-0.0933; $i+=0.00001) {
-  my($pop,$area) = find_intercept($i);
-  print "$i $pop $area\n";
-#  if ($i==0) {next;}
-#  my($j) = 1/$i;
-#  ($pop,$area) = find_intercept($j);
-#  print "$j $pop $area\n";
-}
-
 # given a slope, determines the line intercept that best divides
 # nation into equal populations and areas
 
 sub find_intercept {
-  my($m) = @_;
+  my($m, $select) = @_;
 
   # create function for findroot()
-  my($f) = sub {my(@a)=pop_area_below_line($m,$_[0]); return $a[0];};
+  my($f) = sub {my(@a)=pop_area_below_line($m,$_[0],$select); return $a[0];};
 
   # note that the line's intercept is where the line would hit the
   # Greenwich meridian so can be ridiculously high (or low)
 
   # .001 in latitude is about 317ft
   my($pop) = findroot2($f, -1000, 1000, 0, "delta=.001");
-  $f = sub {my(@a)=pop_area_below_line($m,$_[0]); return $a[1];};
+  $f = sub {my(@a)=pop_area_below_line($m,$_[0],$select); return $a[1];};
   my($area) = findroot2($f, -1000, 1000, 0, "delta=.001");
 
   return ($pop,$area);
@@ -149,10 +125,10 @@ sub find_intercept {
 # NOTE: uses globals, not a true subroutine and not intended to be
 
 sub pop_area_below_line {
-  my($m,$b) = @_;
-  my($q) = "SELECT $select WHERE $cond AND intptlat < $m*intptlong + $b";
+  my($m,$b,$select) = @_;
+  my($q) = "SELECT population AS popt, aland+awater AS areat FROM blockgroups WHERE $where AND intptlat < $m*intptlon + $b";
   my($res) = sqlite3hashlist($q,$db);
-  return ($res->{popt}/$popt-0.5, $res->{areat}/$areat-0.5);
+  return ($res->{popt}/$poptotal-0.5, $res->{areat}/$areatotal-0.5);
 }
 
 =item queries

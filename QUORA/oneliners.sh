@@ -1,12 +1,10 @@
 # takes the output of bc-us-split.pl and prints it in "Mathematica
 # format" (approximately); requires a manual cleanup step later,
 # though (tenthdegree.txt is the name of the output file)
+# final1.txt is the combined file from multiple runs of bc-us-split.pl
+# after I made a mistake originally
 
-fgrep POP tenthdegree.txt | perl -anle 'map(s/[DS]//g,@F); print "{",join(",",@F[1..3]),"}"'
-
-
-
-
+fgrep AREA final1.txt | perl -anle 'map(s/[DS]//g,@F); map(s/e/*10^/g,@F); print "{",join(",",@F[1..3]),"},"'
 
 exit;
 
