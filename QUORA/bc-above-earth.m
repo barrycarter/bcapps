@@ -1,3 +1,26 @@
+conds = {x[t] > 0, t > 0, a < 0, Element[{C[1], C[2]}, Reals]}
+sol = DSolve[x''[t] == a/x[t]^2, x, t]
+tsols = Solve[sol[[1]] /. x[t] -> x, t]
+t1[x_] = FullSimplify[tsols[[1,1,2]], conds]
+
+FullSimplify[a*(t1''[x])^2, conds]
+
+is
+
+a^3/(x*(-2*a + x*C[1])^3)
+
+DSolve[{
+ x''[t] == a1/(y[t]-x[t])^2,
+ y''[t] == a2/(y[t]-x[t])^2,
+ x[0] - y[0] == d,
+ x'[0] == 0, y'[0] == 0
+}, x, t]
+
+
+
+
+
+
 (* 
 
 [i]"Eight miles high and falling fast, it landed foul on the grass"[/i] - American Pie, Don McLean
@@ -43,7 +66,16 @@ To solve the problem more exactly, we must solve this differential equation:
 
 [math]x''(t)=\frac{a}{x(t)^2}[/math]
 
-for specific initial conditions. There's no closed formula for x(t), but there is for t(x), it's inverse function. Mathematica gives:
+for specific initial conditions. Note that, at the Earth's surface, the acceleration is g and the distance from the Earth's center is r, so we have:
+
+[math]
+g=\frac{a}{r^2} \to a=g r^2 \to a \approx \frac{9.8}{1000} 6353^2 \to  
+a \approx 395534 
+[/math]
+
+There's no closed formula for the differential equation above in terms
+of x(t), but there is for t(x), it's inverse function. Mathematica
+gives:
 
 [math]
    \frac{\left(\sqrt{c_1} x(t) \sqrt{c_1-\frac{2 a}{x(t)}}+a \log \left(x(t)
@@ -63,7 +95,37 @@ c_2  \pm\frac{\sqrt{c_1^4 x(t) \left(c_1 x(t)-2 a\right)+a c_1^3 \log
     \sqrt{c_1-\frac{2 a}{x(t)}}-a+c_1 x(t)\right)\right)}}{c_1^3}
 [/math]
 
-Taking the derivative with respect 
+Taking the derivative with respect to x (not t) and simplifying, we have:
+
+[math]
+   \frac{x \left(\sqrt{c_1} \left(2 a-c_1 x\right)+a \sqrt{c_1-\frac{2 a}{x}}
+    \log \left(\sqrt{c_1} x \sqrt{c_1-\frac{2 a}{x}}-a+c_1 x\right)\right)
+    \sqrt{c_1^4 x \left(c_1 x-2 a\right)+a c_1^3 \log \left(\sqrt{c_1} x
+    \sqrt{c_1-\frac{2 a}{x}}-a+c_1 x\right) \left(2 \sqrt{c_1} x
+    \sqrt{c_1-\frac{2 a}{x}}+a \log \left(\sqrt{c_1} x \sqrt{c_1-\frac{2
+    a}{x}}-a+c_1 x\right)\right)}}{c_1^{3/2} \left(c_1 x-2 a\right) \left(c_1 x
+    \left(c_1 x-2 a\right)-a^2 \log ^2\left(\sqrt{c_1} x \sqrt{c_1-\frac{2
+    a}{x}}-a+c_1 x\right)\right)}
+[/math]
+
+Since [math]\frac{\text{dx}}{\text{dt}}=\frac{1}{\frac{\text{dt}}{\text{dx}}}[/math], we can take the reciprocal to find the velocity:
+
+[math]
+x'(t) = \pm
+   \frac{\left(\sqrt{c_1} \left(2 a-c_1 x(t)\right)+a \sqrt{c_1-\frac{2
+    a}{x(t)}} \log \left(\sqrt{c_1} x(t) \sqrt{c_1-\frac{2 a}{x(t)}}-a+c_1
+    x(t)\right)\right) \sqrt{c_1^4 x(t) \left(c_1 x(t)-2 a\right)+a c_1^3 \log
+    \left(\sqrt{c_1} x(t) \sqrt{c_1-\frac{2 a}{x(t)}}-a+c_1 x(t)\right) \left(2
+    \sqrt{c_1} x(t) \sqrt{c_1-\frac{2 a}{x(t)}}+a \log \left(\sqrt{c_1} x(t)
+    \sqrt{c_1-\frac{2 a}{x(t)}}-a+c_1 x(t)\right)\right)}}{c_1^{3/2} \left(c_1
+    x(t) \left(c_1 x(t)-2 a\right)-a^2 \log ^2\left(\sqrt{c_1} x(t)
+    \sqrt{c_1-\frac{2 a}{x(t)}}-a+c_1 x(t)\right)\right)}
+[/math]
+
+
+
+
+
 
 
 
@@ -158,3 +220,5 @@ Solve[sol1[[1]], t]
 TODO: mention numerical
 
 TODO: wp free fall
+
+TODO: if using inline, apolog + point to git
