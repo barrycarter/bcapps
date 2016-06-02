@@ -6,7 +6,15 @@ t2[x_] = FullSimplify[tsols[[2,1,2]], conds]
 
 test0951 = FullSimplify[1/2/D[sol[[1,1]],x[t]],conds]
 
+Solve[test0951 == 0, C[1]]
+
+{{C[1] -> 0}, {C[1] -> (2*a)/x[t]}}
+
+gives us -19.7767 for C[1] 
+
 test1031 = sol[[1,1]]
+
+test1031 /. {a -> -395534, C[1] -> -19.7767}
 
 gives us the famed 19.7767 for C[1]
 
