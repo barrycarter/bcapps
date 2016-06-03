@@ -96,6 +96,7 @@ surface, the best approximation is a great circle path (or
 *)
 
 <</home/barrycarter/BCGIT/QUORA/metros.txt
+<</home/barrycarter/BCGIT/QUORA/poparea.m
 Read["!bzcat -v -k /home/barrycarter/BCGIT/QUORA/blockgroups.m.bz2"]
 usa = Import["/home/barrycarter/BCGIT/STACK/us_states.kml", "Data"];
 state[n_] := usa[[1,2,2,n]]
@@ -113,39 +114,77 @@ cpts = Table[Point[{i[[4]],i[[3]]}], {i, metros}];
 (* bg points *)
 bgpts = Table[Point[i], {i,blockgroups}];
 
-(* the line *)
-(* g2 = Plot[-0.093365*x + 29.8953056335449, {x,-125,-67}] *)
+(* putting these as vars since I plan to do CA next *)
+minlon = -125;
+maxlon = -67;
 
-(* the intercepts for equal population, as tangent of degree *)
+(* given a list element from eqpop.m, return the portion of the line
+crossing the US *)
 
-eqpops = {
-{10, 53.9440783329819},
-{20, 69.431301579708},
-{30, 87.8172382866115},
-{40, 110.373007014355},
-{50, 142.163059074888},
-{130, -67.3365063493077},
-{140, -36.9708072760325},
-{150, -14.1713345029829},
-{160, 4.69300791508756},
-{170, 22.0356264027452}
-};
+elt2line[x_] := Line[{
+ {minlon, Tan[x[[1]]*Degree]*minlon + x[[3]]},
+ {maxlon, Tan[x[[1]]*Degree]*maxlon + x[[3]]}
+}];
 
-eqareas = {
-{10, 56.3685505198672},
-{20, 74.7680296639373},
-{30, 95.8633784244303},
-{40, 121.624135583797},
-{130, -79.4154063414104},
-{140, -44.448135467482},
-{150, -18.6737734264183}
-{160, 2.73207908515797},
-{170, 21.6520364129615}
-};
+graphics[n_] := Show[Graphics[{
+ ctext,
 
-poplines = Table[Tan[i[[1]]*Degree]*x + i[[2]], {i, eqpops}]
+ EdgeForm[Thin],
+ Opacity[0.1],
+ ostates,
 
-g5 = Plot[poplines, {x,-125,-67}];
+ RGBColor[1,1,1],
+ Opacity[1],
+ cpts,
+
+ RGBColor[1,0,0],
+ elt2line[eqpop[[n]]],
+
+ RGBColor[0,0,1],
+ elt2line[eqarea[[n]]]
+}], PlotRange -> {{-125,-67}, {24.5,49.5}}, AspectRatio -> 3/4*Cos[37*Degree]];
+
+test1603 = Table[graphics[n],{n,1,1800}];
+Export["/tmp/test.gif", test1603];
+
+
+
+(* graphs the nth line for equal populations/areas *)
+
+(* base graphics for US and cities w/ text *)
+
+base = {ctext, EdgeForm[Thin], Opacity[0.1], ostates, RGBColor[0,0,1],
+ Opacity[1], cpts};
+
+eqpopline[n_] := Plot[Tan[eqpop[[n,1]]*Degree]*x+eqpop[[n,3]], {x,-125,-67}];
+eqarealine[n_]:=Plot[Tan[eqarea[[n,1]]*Degree]*x+eqarea[[n,3]], {x,-125,-67}];
+
+graph[n_] := Show[{Graphics[base], eqpopline[n], eqarealine[n]},
+PlotRange -> {{-125,-67}, {24.5,49.5}}, AspectRatio -> 3/4*Cos[37*Degree]]
+
+graph[n_] := Show[Graphics[{base, eqpopline[n], eqarealine[n]}], 
+PlotRange -> {{-125,-67}, {24.5,49.5}}, AspectRatio -> 3/4*Cos[37*Degree]]
+
+
+Show[g0, PlotRange -> {{-125,-67}, {24.5,49.5}}, 
+ AspectRatio -> 3/4*Cos[37*Degree]]
+
+
+
+lines[n_] := Plot[
+ {Tan[eqpop[[n,1]]*Degree]*x+eqpop[[n,3]], 
+  Tan[eqarea[[n,1]]*Degree]*x+eqarea[[n,3]]
+}, {x,-125,-67}];
+
+lines[5]
+showit
+
+
+Show[g0, PlotRange -> {{-125,-67}, {24.5,49.5}}, 
+ AspectRatio -> 3/4*Cos[37*Degree]]
+
+
+
 
 g0 = Graphics[{
  RGBColor[1,0,0],
@@ -162,6 +201,37 @@ g0 = Graphics[{
  ostates
 }];
 
+(* the line *)
+(* g2 = Plot[-0.093365*x + 29.8953056335449, {x,-125,-67}] *)
+
+poplines = Table[Tan[i[[1]]*Degree]*x + i[[2]], {i, eqpops}]
+
+g5 = Plot[poplines, {x,-125,-67}];
+
+g0 = Graphics[{
+ RGBColor[1,0,0],
+ PointSize[.0001],
+ Opacity[1],
+ bgpts,
+ PointSize[.001],
+ RGBColor[1,0.5,0.5],
+ cpts,
+ RGBColor[0,0,0],
+ ctext,
+ EdgeForm[Thin],
+ Opacity[0.1],
+ ostates
+}];
+
+g1 = Show[g0, PlotRange -> {{-125,-67}, {24.5,49.5}}, 
+ AspectRatio -> 3/4*Cos[37*Degree]]
+Export["/tmp/test.gif", g1, ImageSize -> {1024*4,768*4}]
+Run["display -geometry 800x600 /tmp/test.gif&"]
+
+
+
+
+
 (* note 58 degrees wide, 48 degrees high *)
 
 g1 = Show[{g0,g2,g5}, AspectRatio -> 48/2/44.43,
@@ -170,7 +240,6 @@ g1 = Show[{g0,g2,g5}, AspectRatio -> 48/2/44.43,
 Export["/tmp/test.gif", g1, ImageSize -> {1024,768}]
 
 Export["/tmp/test.gif", g1, ImageSize -> {44.43*40*2,48*40}]
-Run["display -geometry 800x600 /tmp/test.gif&"]
 
 
 Export["/tmp/test.gif", g1, ImageSize -> {1024*4,768*4}]
