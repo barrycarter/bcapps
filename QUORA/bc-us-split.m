@@ -114,17 +114,71 @@ cpts = Table[Point[{i[[4]],i[[3]]}], {i, metros}];
 (* bg points *)
 bgpts = Table[Point[i], {i,blockgroups}];
 
-(* putting these as vars since I plan to do CA next *)
-minlon = -125;
-maxlon = -67;
-
 (* given a list element from eqpop.m, return the portion of the line
 crossing the US *)
 
 elt2line[x_] := Line[{
- {minlon, Tan[x[[1]]*Degree]*minlon + x[[3]]},
- {maxlon, Tan[x[[1]]*Degree]*maxlon + x[[3]]}
+ {-180, Tan[x[[1]]*Degree]*-180 + x[[3]]},
+ {180, Tan[x[[1]]*Degree]*180 + x[[3]]}
 }];
+
+(* base graphics without bgpts and later with (will do two videos) *)
+
+basegraphics = Graphics[{
+
+ RGBColor[0,0,0],
+ ctext,
+
+ EdgeForm[Thin],
+ Opacity[0.1],
+ ostates,
+
+ Opacity[1],
+ RGBColor[1,0,1],
+ cpts
+
+}];
+
+vargraphics[n_] := Graphics[{
+ RGBColor[1,0,0], elt2line[eqpop[[n]]], RGBColor[0,0,1], elt2line[eqarea[[n]]]
+}];
+
+text[n_] := "Angle: "<>ToString[eqpop[[n,1]]*HoldForm[Degree]]<>"\n"<>
+ "Slope: "<>ToString[eqpop[[n,2]]]<>"\n"<>
+ "Population Intercept: "<>ToString[eqpop[[n,23]]<>"\n"<>
+ "Area       Intercept: "<>ToString[eqarea[[n,23]]<>"\n"
+
+NumberForm[eqpop[[7,2]], {5,3}]
+
+
+
+gtext[n_] := Graphics[{
+ Text[Style["test\nhi\nthere", FontSize -> 20], {-120, 30}]
+}];
+
+show[n_] := Show[{basegraphics, vargraphics[n], text[n]}, 
+PlotRange -> {{-125,-67}, {24.5,49.5}}, AspectRatio -> 3/4*Cos[37*Degree],
+ ImageSize -> {1024*2,768*2-320}];
+
+show[15]
+showit
+
+export[n_] := Export["/home/barrycarter/20160602/image"<>ToString[n]<>".gif", 
+ show[n]];
+
+Table[export[n],{n,1,1800}];
+
+(* current work ends here *)
+
+show[17]
+Export["/tmp/test.gif", %]
+Run["display -geometry 800x600 /tmp/test.gif&"]
+
+
+
+], PlotRange -> {{-125,-67}, {24.5,49.5}}, AspectRatio -> 3/4*Cos[37*Degree],
+ ImageSize -> {1024*2,768*2}];
+
 
 graphics[n_] := Show[Graphics[{
 
@@ -155,8 +209,6 @@ graphics[n_] := Show[Graphics[{
 
 export[n_] := Export["/home/barrycarter/20160602/image"<>ToString[n]<>".gif", 
  graphics[n]];
-
-Table[export[n],{n,1,1800}];
 
 test1603 = Table[graphics[n],{n,1,1800}];
 Export["/tmp/test.gif", test1603];
