@@ -127,13 +127,21 @@ elt2line[x_] := Line[{
 }];
 
 graphics[n_] := Show[Graphics[{
+
+ Opacity[0.25],
+ RGBColor[1,0,1],
+ PointSize[0.0001],
+ bgpts,
+
+ Opacity[1.0],
+ RGBColor[0,0,0],
  ctext,
 
  EdgeForm[Thin],
  Opacity[0.1],
  ostates,
 
- RGBColor[1,1,1],
+ RGBColor[0,1,0],
  Opacity[1],
  cpts,
 
@@ -142,7 +150,13 @@ graphics[n_] := Show[Graphics[{
 
  RGBColor[0,0,1],
  elt2line[eqarea[[n]]]
-}], PlotRange -> {{-125,-67}, {24.5,49.5}}, AspectRatio -> 3/4*Cos[37*Degree]];
+}], PlotRange -> {{-125,-67}, {24.5,49.5}}, AspectRatio -> 3/4*Cos[37*Degree],
+ ImageSize -> {1024*2,768*2}];
+
+export[n_] := Export["/home/barrycarter/20160602/image"<>ToString[n]<>".gif", 
+ graphics[n]];
+
+Table[export[n],{n,1,1800}];
 
 test1603 = Table[graphics[n],{n,1,1800}];
 Export["/tmp/test.gif", test1603];
