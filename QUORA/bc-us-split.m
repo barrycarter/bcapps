@@ -135,7 +135,10 @@ basegraphics = Graphics[{
 
  Opacity[1],
  RGBColor[1,0,1],
- cpts
+ cpts,
+
+ RGBColor[0,0,0],
+ Text[Style["https://tinyurl.com/bcussplit", FontSize -> 60], {-113.5, 28}]
 
 }];
 
@@ -143,10 +146,27 @@ vargraphics[n_] := Graphics[{
  RGBColor[1,0,0], elt2line[eqpop[[n]]], RGBColor[0,0,1], elt2line[eqarea[[n]]]
 }];
 
-text[n_] := "Angle: "<>ToString[eqpop[[n,1]]*HoldForm[Degree]]<>"\n"<>
- "Slope: "<>ToString[eqpop[[n,2]]]<>"\n"<>
- "Population Intercept: "<>ToString[eqpop[[n,23]]<>"\n"<>
- "Area       Intercept: "<>ToString[eqarea[[n,23]]<>"\n"
+show[n_] := Show[{basegraphics, vargraphics[n]}, 
+PlotRange -> {{-125,-67}, {24.5,49.5}}, AspectRatio -> 3/4*Cos[37*Degree],
+ ImageSize -> {1024*2,768*2-320}];
+Export["/tmp/temp.gif", show[15]];
+Run["display -geometry 800x600 /tmp/temp.gif& xv /tmp/temp.gif&"]
+
+
+
+(* TODO: use degrees symbol here somehow! *)
+
+text[n_] := 
+ "Angle: "<>ToString[NumberForm[eqpop[[n,1]], {3,1}]]<>" degrees\n"<>
+ "Slope: "<>ToString[NumberForm[eqpop[[n,2]], {6,3}]]<>"\n"<>
+ "Intercept (pop): "<>ToString[NumberForm[eqpop[[n,3]], {5,2}]]<>"\n"<>
+ "Intercept (area): "<>ToString[NumberForm[eqarea[[n,3]], {5,2}]]<>"\n"<>
+ "URL: https://tinyurl.com/bcussplit";
+
+test1239 = Table[Graphics[Text[text[n]]],{n,1,1800}];
+
+Export["/tmp/temp.gif", test1239];
+
 
 NumberForm[eqpop[[7,2]], {5,3}]
 
@@ -155,13 +175,6 @@ NumberForm[eqpop[[7,2]], {5,3}]
 gtext[n_] := Graphics[{
  Text[Style["test\nhi\nthere", FontSize -> 20], {-120, 30}]
 }];
-
-show[n_] := Show[{basegraphics, vargraphics[n], text[n]}, 
-PlotRange -> {{-125,-67}, {24.5,49.5}}, AspectRatio -> 3/4*Cos[37*Degree],
- ImageSize -> {1024*2,768*2-320}];
-
-show[15]
-showit
 
 export[n_] := Export["/home/barrycarter/20160602/image"<>ToString[n]<>".gif", 
  show[n]];
