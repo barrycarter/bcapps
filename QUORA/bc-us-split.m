@@ -1,3 +1,26 @@
+(*
+
+[[animation or link]]
+
+The animation above shows the continental US (48 states + District of Columbia) divided into areas of approximately equal population (red line) and equal area (blue line) by straight equiangular lines at angles from [math]0 {}^{\circ}[/math] to [math]180 {}^{\circ}[/math] in [math]0.1 {}^{\circ}[/math] steps, based on US Census 2014 blockgroup data. Details:
+
+  - The projection of the map is equiangular with a true scale at [math]37 {}^{\circ}N[/math] latitude.
+
+  - I used the data from the 2014 US Census found here: 
+
+
+https://www.epa.gov/enviro/state-fips-code-listing
+
+
+https://www.census.gov/geo/reference/gtc/gtc_bg.html (def
+
+TODO: see other caveats
+
+TODO: mention other animation
+
+
+
+
 (* attempts to answer: https://www.quora.com/unanswered/If-you-drew-a-single-straight-line-bisecting-America-so-that-both-land-and-population-were-nearly-equally-divided-which-way-would-the-line-point 
 
 https://www.census.gov/geo/maps-data/data/gazetteer2010.html
@@ -142,65 +165,8 @@ basegraphics = Graphics[{
 
 }];
 
-vargraphics[n_] := Graphics[{
- RGBColor[1,0,0], elt2line[eqpop[[n]]], RGBColor[0,0,1], elt2line[eqarea[[n]]]
-}];
+basegraphics = Graphics[{
 
-show[n_] := Show[{basegraphics, vargraphics[n]}, 
-PlotRange -> {{-125,-67}, {24.5,49.5}}, AspectRatio -> 3/4*Cos[37*Degree],
- ImageSize -> {1024*2,768*2-320}];
-Export["/tmp/temp.gif", show[15]];
-Run["display -geometry 800x600 /tmp/temp.gif& xv /tmp/temp.gif&"]
-
-
-
-(* TODO: use degrees symbol here somehow! *)
-
-text[n_] := 
- "Angle: "<>ToString[NumberForm[eqpop[[n,1]], {3,1}]]<>" degrees\n"<>
- "Slope: "<>ToString[NumberForm[eqpop[[n,2]], {6,3}]]<>"\n"<>
- "Intercept (pop): "<>ToString[NumberForm[eqpop[[n,3]], {5,2}]]<>"\n"<>
- "Intercept (area): "<>ToString[NumberForm[eqarea[[n,3]], {5,2}]]<>"\n"<>
- "URL: https://tinyurl.com/bcussplit";
-
-test1239 = Table[Graphics[Text[text[n]]],{n,1,1800}];
-
-Export["/tmp/temp.gif", test1239];
-
-
-NumberForm[eqpop[[7,2]], {5,3}]
-
-
-
-gtext[n_] := Graphics[{
- Text[Style["test\nhi\nthere", FontSize -> 20], {-120, 30}]
-}];
-
-export[n_] := Export["/home/barrycarter/20160602/image"<>ToString[n]<>".gif", 
- show[n]];
-
-Table[export[n],{n,1,1800}];
-
-(* current work ends here *)
-
-show[17]
-Export["/tmp/test.gif", %]
-Run["display -geometry 800x600 /tmp/test.gif&"]
-
-
-
-], PlotRange -> {{-125,-67}, {24.5,49.5}}, AspectRatio -> 3/4*Cos[37*Degree],
- ImageSize -> {1024*2,768*2}];
-
-
-graphics[n_] := Show[Graphics[{
-
- Opacity[0.25],
- RGBColor[1,0,1],
- PointSize[0.0001],
- bgpts,
-
- Opacity[1.0],
  RGBColor[0,0,0],
  ctext,
 
@@ -208,156 +174,36 @@ graphics[n_] := Show[Graphics[{
  Opacity[0.1],
  ostates,
 
- RGBColor[0,1,0],
+ Opacity[0.25],
+ RGBColor[1,0,1],
+ PointSize[0.0001],
+ bgpts,
+
  Opacity[1],
- cpts,
+ RGBColor[0,0,0],
+ Text[Style["https://tinyurl.com/bcussplit", FontSize -> 60], {-113.5, 28}]
 
- RGBColor[1,0,0],
- elt2line[eqpop[[n]]],
+}];
 
- RGBColor[0,0,1],
- elt2line[eqarea[[n]]]
-}], PlotRange -> {{-125,-67}, {24.5,49.5}}, AspectRatio -> 3/4*Cos[37*Degree],
- ImageSize -> {1024*2,768*2}];
+vargraphics[n_] := Graphics[{
+ RGBColor[1,0,0], elt2line[eqpop[[n]]], RGBColor[0,0,1], elt2line[eqarea[[n]]]
+}];
+
+show[n_] := Show[{basegraphics, vargraphics[n]}, 
+PlotRange -> {{-125,-67}, {24.5,49.5}}, AspectRatio -> 3/4*Cos[37*Degree],
+ ImageSize -> {1024*2,768*2-320}];
 
 export[n_] := Export["/home/barrycarter/20160602/image"<>ToString[n]<>".gif", 
- graphics[n]];
+ show[n]];
 
-test1603 = Table[graphics[n],{n,1,1800}];
-Export["/tmp/test.gif", test1603];
+Table[export[n],{n,1648,1800}];
 
+(*
 
+The export above sometimes fails for specific images; this figures out
+which ones and re-does them:
 
-(* graphs the nth line for equal populations/areas *)
+\ls image*.gif | perl -nle '/(\d+)/; print $1' | sort -n | bc-find-gaps.pl
 
-(* base graphics for US and cities w/ text *)
-
-base = {ctext, EdgeForm[Thin], Opacity[0.1], ostates, RGBColor[0,0,1],
- Opacity[1], cpts};
-
-eqpopline[n_] := Plot[Tan[eqpop[[n,1]]*Degree]*x+eqpop[[n,3]], {x,-125,-67}];
-eqarealine[n_]:=Plot[Tan[eqarea[[n,1]]*Degree]*x+eqarea[[n,3]], {x,-125,-67}];
-
-graph[n_] := Show[{Graphics[base], eqpopline[n], eqarealine[n]},
-PlotRange -> {{-125,-67}, {24.5,49.5}}, AspectRatio -> 3/4*Cos[37*Degree]]
-
-graph[n_] := Show[Graphics[{base, eqpopline[n], eqarealine[n]}], 
-PlotRange -> {{-125,-67}, {24.5,49.5}}, AspectRatio -> 3/4*Cos[37*Degree]]
-
-
-Show[g0, PlotRange -> {{-125,-67}, {24.5,49.5}}, 
- AspectRatio -> 3/4*Cos[37*Degree]]
-
-
-
-lines[n_] := Plot[
- {Tan[eqpop[[n,1]]*Degree]*x+eqpop[[n,3]], 
-  Tan[eqarea[[n,1]]*Degree]*x+eqarea[[n,3]]
-}, {x,-125,-67}];
-
-lines[5]
-showit
-
-
-Show[g0, PlotRange -> {{-125,-67}, {24.5,49.5}}, 
- AspectRatio -> 3/4*Cos[37*Degree]]
-
-
-
-
-g0 = Graphics[{
- RGBColor[1,0,0],
- PointSize[.0001],
- Opacity[1],
-(* bgpts, *)
- PointSize[.001],
- RGBColor[1,0.5,0.5],
- cpts,
- RGBColor[0,0,0],
- ctext,
- EdgeForm[Thin],
- Opacity[0.1],
- ostates
-}];
-
-(* the line *)
-(* g2 = Plot[-0.093365*x + 29.8953056335449, {x,-125,-67}] *)
-
-poplines = Table[Tan[i[[1]]*Degree]*x + i[[2]], {i, eqpops}]
-
-g5 = Plot[poplines, {x,-125,-67}];
-
-g0 = Graphics[{
- RGBColor[1,0,0],
- PointSize[.0001],
- Opacity[1],
- bgpts,
- PointSize[.001],
- RGBColor[1,0.5,0.5],
- cpts,
- RGBColor[0,0,0],
- ctext,
- EdgeForm[Thin],
- Opacity[0.1],
- ostates
-}];
-
-g1 = Show[g0, PlotRange -> {{-125,-67}, {24.5,49.5}}, 
- AspectRatio -> 3/4*Cos[37*Degree]]
-Export["/tmp/test.gif", g1, ImageSize -> {1024*4,768*4}]
-Run["display -geometry 800x600 /tmp/test.gif&"]
-
-
-
-
-
-(* note 58 degrees wide, 48 degrees high *)
-
-g1 = Show[{g0,g2,g5}, AspectRatio -> 48/2/44.43,
- PlotRange -> {{-125,-67}, {24.5,49.5}}]
-
-Export["/tmp/test.gif", g1, ImageSize -> {1024,768}]
-
-Export["/tmp/test.gif", g1, ImageSize -> {44.43*40*2,48*40}]
-
-
-Export["/tmp/test.gif", g1, ImageSize -> {1024*4,768*4}]
-
-
-showit
-
-
-
-Show[{g1,g2,g3}, AspectRatio -> 1]
-showit
-
-g = Table[{
- EdgeForm[Thin],
- Opacity[0.1],
- state[i]
-}, {i,states}];
-
-(* is 1/2 degree per frame a noticeably jerky rotation at high res? *)
-
-Plot[Tan[0.5*Degree]*x,{x,-1,1}, PlotRange -> { {-1,1}, {-1,1}}]
-
-t1217 = Table[
- Plot[Tan[d*Degree]*x,{x,-1,1}, PlotRange -> { {-1,1}, {-1,1}}],
-{d,0,360,0.5}];
-
-Export["/tmp/test.gif", t1217, ImageSize -> {1024,768}]
-
-(* trying to find proper range for intercept *)
-
-Plot[50*x, {x,-180,180}, AspectRatio -> 1]
-showit
-
-
-Solve[m*-180 + b == -90, b]
-
-eqpop2 = Sort[eqpop];
-test1734 = Table[{i[[2]],i[[3]]}, {i,eqpop}];
-test1736 = Table[{i[[1]],i[[3]]/i[[2]]}, {i,eqpop}];
-
-ListPlot[(Transpose[eqpop2][[3]]-38.6)/Transpose[eqpop2][[2]]]
+*)
 
