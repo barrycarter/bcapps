@@ -5,6 +5,9 @@
 # --nox: do not send xmessage, just end
 # --message: add this to standard message
 
+# TODO: UGH, globbing something with no special chars yields the thing
+# regardless of whether it exists
+
 require "/usr/local/lib/bclib.pl";
 
 my($fname) = @ARGV;

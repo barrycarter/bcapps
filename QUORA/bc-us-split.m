@@ -18,7 +18,7 @@ TODO: see other caveats
 
 TODO: mention other animation
 
-
+TODO: zooming map/leaflet (ask for volunt)
 
 
 (* attempts to answer: https://www.quora.com/unanswered/If-you-drew-a-single-straight-line-bisecting-America-so-that-both-land-and-population-were-nearly-equally-divided-which-way-would-the-line-point 
