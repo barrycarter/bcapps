@@ -1,3 +1,15 @@
+(*
+
+Below are a list of quora log times in Mathematica format, based on
+the logs I have which are admittedly fairly minimal.
+
+The first column is the Unix time in microseconds, or perhaps the Unix
+time with 6 extra digits appended.
+
+The second column is the log id number
+
+*)
+
 quoratimes = { {1298230215747243, 2277383}, {1298230266884183,
 2277396}, {1298230474630855, 2277432}, {1298230528557167, 2277444},
 {1298230578253147, 2277450}, {1298230645117943, 2277462},
