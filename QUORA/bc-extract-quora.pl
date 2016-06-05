@@ -3,6 +3,8 @@
 # Given the HTML in a quora log entry like
 # https://www.quora.com/log/revision/144239526, extract date and text
 
+# --machine: print timestamp and revid in machine format (for graphing/etc)
+
 require "/usr/local/lib/bclib.pl";
 
 for $i (@ARGV) {
@@ -23,8 +25,8 @@ for $i (@ARGV) {
   my($rev) = $1;
 
   $all=~s%"epoch_us": (\d+),%%;
-  my($time) = $1;
-  $time = strftime("%Y%m%d.%H%M%S",gmtime(int($time/1000000)));
+  my($origtime) = $1;
+  $time = strftime("%Y%m%d.%H%M%S",gmtime(int($origtime/1000000)));
 
   $all=~s%<span class="rendered_qtext">(.*?)</span>%%;
   my($q) = $1;
@@ -34,6 +36,8 @@ for $i (@ARGV) {
   $text=~s/<.*?>//sg;
   $text=~s/[^ -~]//g;
   $text=wrap($text,70);
+
+  if ($globopts{machine}) {print "$origtime $rev\n"; next;}
 
 print << "MARK";
 Rev: $rev
