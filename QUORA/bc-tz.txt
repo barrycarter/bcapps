@@ -1,8 +1,10 @@
 [[image5.gif]]
 
-If you fly from https://en.wikipedia.org/wiki/Baker_Island (an uninhabited territory of the United States) to the https://en.wikipedia.org/wiki/Phoenix_Islands (a minimally inhabited part of the nation of Kiribati), you will go from being 12 hours behind Greenwich Time to being 13 hours ahead of Greenwich time, a gain of 25 hours. Thus, you could cross the time zone boundary at 11:30pm Thursday, and it would then be 12:30am Saturday.
+If you fly from https://en.wikipedia.org/wiki/Baker_Island (an uninhabited territory of the United States) to the https://en.wikipedia.org/wiki/Phoenix_Islands (a minimally inhabited part of the nation of Kiribati), you will go from being 12 hours behind Greenwich Time to being 13 hours ahead of Greenwich time, a gain of 25 hours. Thus, you could cross the time zone boundary at 11:30pm Thursday, and it would then be 12:30am Saturday. Neither observe daylight time, so you could do this year-round.
 
-This is the only place I could find where you can jump ahead more than 24 hours.
+You could argue this is "cheating" since both Baker Island and https://en.wikipedia.org/wiki/Howland_Island are uninhabited, and their time zone is somewhat artificially assigned, and there are no inhabited places using the same time zone: http://www.timeanddate.com/time/zones/y
+
+This is also the only place I could find where you can jump ahead more than 24 hours.
 
 There are plenty of other places where you can jump ahead exactly 24 hours, but, unless you cross the time zone boundary at exactly the right instant (midnight), you won't quite skip over a day.
 
@@ -10,8 +12,5 @@ The enlargement above is from https://www.cia.gov/library/publications/the-world
 
 [[image6.gif]]
 
-I included Samoa and Tokelau on the enlargement because of what happened there on December 30, 1999-- absolutely nothing: 
+I included Samoa and Tokelau on the enlargement because, on 1999 Dec 29, you could've accomplished the same thing standing still: http://www.bbc.com/news/world-asia-16351377 (only a 24 hour jump, but right at midnight by definition)
 
-
-
-TODO: 24 hours, Samoa

@@ -1,50 +1,10 @@
 graph tgmagic {
 ;
-;
-;
-;
-;
-;
-;
-;
-;
-;
-;
-;
-;
-;
-;
-;
-;
-;
-;
-;
-;
-;
-;
- -- CFMW1
- -- man takes chicken
- -- FW1CM
- -- man takes fox
- -- CW1FM
- -- chicken eats wheat
- -- FAIL
- -- man takes wheat
- -- CF1MW
- -- fox eats chicken
- -- man takes self
- -- CFW1M
- -- fox eats chicken eats wheat
- -- man returns chicken
- -- man returns self
- -- FMW1C
- -- W1CFM
- -- F1CMW
- -- MW1CF
- -- man returns fox
- -- CMW1F
- -- FM1CW
- -- CFM1W
- -- man returns wheat
- -- C1FMW
+ -- "Are you currently in Australia?"
+ -- no
+ -- "Move to Australia"
+ -- "Are you married?"
+ -- yes
+ -- "Is your wife in Australia?"
+ -- SUCCESS!
 }

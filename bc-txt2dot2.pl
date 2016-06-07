@@ -26,6 +26,11 @@ for $i (split(/\n/, $data)) {
   }
 }
 
+print "digraph x {\n";
+print join("\n", sort keys %nodes),"\n";
+print join("\n", sort keys %edges),"\n";
+print "}\n";
+
 debug("digraph x {");
 debug(sort keys %nodes);
 debug(sort keys %edges);

@@ -188,7 +188,7 @@ rpm --nodeps -e sqlite
 
 % TODO: start rsyncing bcinfo3 logs as well
 
-%% TODO: make startup procedure automatic
+%% TODO: make startup/reboot procedure automatic
 
 mount -t tmpfs none /mnt/ramdisk -o size=4096m
 mkdir /mnt/ramdisk/querys

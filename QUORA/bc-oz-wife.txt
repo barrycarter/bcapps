@@ -1,0 +1,9 @@
+"Are you currently in Australia?",no,"Move to Australia",,"Are you married?",yes,"Is your wife in Australia?",yes,"SUCCESS!"
+"Are you currently in Australia?",yes,"Are you married?",yes,"Is your wife in Australia?",no,"Divorce wife",,"Find Australian girl"
+"Find Australian girl",,"Is she a kangaroo?",no,"Marry Australian girl",,"SUCCESS!"
+"Are you married?",no,"Find Australian girl"
+"Is she a kangaroo?",yes,"Are you in Tasmania?",yes,"Marry Australian girl"
+"Are you in Tasmania?",no,"Find Australian girl"
+
+
+

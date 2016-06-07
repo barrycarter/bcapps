@@ -6,7 +6,8 @@ require "bclib.pl";
 
 # $txt = read_file("EL/tg-magic.txt");
 # $txt = read_file("EL/mapgraph.txt");
-$txt = read_file("chickenproblem.txt");
+# $txt = read_file("chickenproblem.txt");
+$txt = read_file("$bclib{githome}/QUORA/bc-oz-wife.txt");
 
 for $i (split(/\n/,$txt)) {
   # ignore comments
