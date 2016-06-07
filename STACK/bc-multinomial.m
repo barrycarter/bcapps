@@ -576,3 +576,8 @@ multinomialRanged[n_, ps_, min_, max_] :=
    First@(Dot @@ sa)];
 
 
+(*
+
+Question: Using MultinormalDistribution to estimate MultinomialDistribution
+
+In the process of answering 

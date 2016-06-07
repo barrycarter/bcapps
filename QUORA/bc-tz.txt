@@ -1,0 +1,17 @@
+[[image5.gif]]
+
+If you fly from https://en.wikipedia.org/wiki/Baker_Island (an uninhabited territory of the United States) to the https://en.wikipedia.org/wiki/Phoenix_Islands (a minimally inhabited part of the nation of Kiribati), you will go from being 12 hours behind Greenwich Time to being 13 hours ahead of Greenwich time, a gain of 25 hours. Thus, you could cross the time zone boundary at 11:30pm Thursday, and it would then be 12:30am Saturday.
+
+This is the only place I could find where you can jump ahead more than 24 hours.
+
+There are plenty of other places where you can jump ahead exactly 24 hours, but, unless you cross the time zone boundary at exactly the right instant (midnight), you won't quite skip over a day.
+
+The enlargement above is from https://www.cia.gov/library/publications/the-world-factbook/graphics/ref_maps/physical/pdf/standard_time_zones_of_the_world.pdf (thumbnail below):
+
+[[image6.gif]]
+
+I included Samoa and Tokelau on the enlargement because of what happened there on December 30, 1999-- absolutely nothing: 
+
+
+
+TODO: 24 hours, Samoa

@@ -41,6 +41,24 @@ my($areatotal) = sqlite3val("SELECT SUM(aland+awater) AS area FROM blockgroups W
 
 my($val);
 
+# grumble: special case for vertical (and don't want to just estimate
+# it since it has fundamental importance)
+
+# $val = find_root_sql("SELECT IFNULL(SUM(population),0)-$poptotal/2
+#  AS val FROM blockgroups WHERE $where AND intptlon <= PARAMETER",
+# $db, -180,180);
+
+$val = find_root_sql("SELECT IFNULL(SUM(aland+awater),0)-$areatotal/2
+  AS val FROM blockgroups WHERE $where AND intptlon <= PARAMETER",
+ $db, -180,180);
+
+# the population longitude split is: -87.3229220509529
+# the area longitude split is: -98.7331733107567
+
+print "VAL: $val\n";
+
+die "TESTING";
+
 # still having trouble getting all the intercepts, so doing more testing
 
 # debug(find_intercept(tan(30*$DEGRAD), "population"));C

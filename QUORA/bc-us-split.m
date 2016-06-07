@@ -20,6 +20,13 @@ TODO: mention other animation
 
 TODO: zooming map/leaflet (ask for volunt)
 
+TODO: create trivial animated GIF version if possible
+
+TODO: image1722 = best match
+
+TODO: long-term, consider holding something else steady? (not sure this makes sense)
+
+TODO: formal name is Equirectangular projectionEquirectangular projection not "equiangular"
 
 (* attempts to answer: https://www.quora.com/unanswered/If-you-drew-a-single-straight-line-bisecting-America-so-that-both-land-and-population-were-nearly-equally-divided-which-way-would-the-line-point 
 
@@ -189,6 +196,11 @@ vargraphics[n_] := Graphics[{
  RGBColor[1,0,0], elt2line[eqpop[[n]]], RGBColor[0,0,1], elt2line[eqarea[[n]]]
 }];
 
+vargraphics[900] := Graphics[{
+ RGBColor[1,0,0], Line[{{-87.3229220509529, -90}, {-87.3229220509529, 90}}],
+ RGBColor[0,0,1], Line[{{-98.7331733107567, -90}, {-98.7331733107567, 90}}]
+}];
+
 show[n_] := Show[{basegraphics, vargraphics[n]}, 
 PlotRange -> {{-125,-67}, {24.5,49.5}}, AspectRatio -> 3/4*Cos[37*Degree],
  ImageSize -> {1024*2,768*2-320}];
@@ -207,3 +219,4 @@ which ones and re-does them:
 
 *)
 
+TODO: 90 deg is an exception

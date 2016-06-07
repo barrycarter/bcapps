@@ -2,6 +2,8 @@
 
 Blog entry about FOREX on quora (or wherever) w/ actual trades?
 
+TODO: BREXIT!!!!
+
 TODO: brits have more options (vanilla)
 
 TODO: major disclaimers
@@ -183,7 +185,7 @@ Since you get to keep the $12.75 either way, you are risking $88.25
   - If GBP/USD does fall 100 pips, you will have also already bought
   more of it and be selling options on those positions as well.
 
-
+TODO: nadex spreads kind of suck now
 
 TODO: corner case rules
 

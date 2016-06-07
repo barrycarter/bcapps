@@ -56,6 +56,8 @@ for $i (1..220333) {
     }
   }
 
+  STATEFP 
+
   debug(%hash);
 }
 
