@@ -2,6 +2,10 @@
 
 [[animation or link]]
 
+https://youtu.be/F8_qFtFg98s
+
+The lines in the animation above (best viewed at 1440p) divide the continental United States into two halves of equal population and equal area. The red line divides by population and the blue line divides by area. 
+
 The animation above shows the continental US (48 states + District of Columbia) divided into areas of approximately equal population (red line) and equal area (blue line) by straight equiangular lines at angles from [math]0 {}^{\circ}[/math] to [math]180 {}^{\circ}[/math] in [math]0.1 {}^{\circ}[/math] steps, based on US Census 2014 blockgroup data. Details:
 
   - The projection of the map is equiangular with a true scale at [math]37 {}^{\circ}N[/math] latitude.
