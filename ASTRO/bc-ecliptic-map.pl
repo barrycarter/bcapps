@@ -19,6 +19,7 @@ my($w,$h) = (16384,16384/12*$factor);
 
 # testing
 # my($w,$h) = (2048,round(2048/12*$factor));
+# my($w,$h) = (4096,round(4096/12*$factor));
 
 # setting a blue pixel here forces the color to be available later
 # (not sure why I have to surround it with black pixels on each side,
@@ -35,9 +36,11 @@ MARK
 
 my($all) = read_file("$bclib{githome}/ASTRO/eclipticlong3.txt");
 
+$eclipcolor = "255,0,255";
+
 # the ecliptic
 my($midy) = $h/2;
-print "dline 0,$midy,$w,$midy,255,0,0\n";
+print "dline 0,$midy,$w,$midy,$eclipcolor\n";
 
 # this lets me control order of rendering
 my(@stars,@consts,@names,@planets);
@@ -107,16 +110,18 @@ while (<>) {
 
   if ($mo%3==0 && $mday==1 && $hour==0) {
     push(@names,strftime("string 255,255,0,$x,$y,tiny,%b %d %Y",@time));
-  } elsif (($mday==1 || $mday==15) && $hour==0) {
+  } elsif ((($mday==1 || $mday==15) && $hour==0) || eof()) {
     push(@names,strftime("string 255,255,0,$x,$y,tiny,%b %d",@time));
   }
 
 #  push(@planets,"fcircle $x,$y,1,$oppcolor,255,$oppcolor");
 
   if ($hour==0) {
-    push(@planets,"fcircle $x,$y,2,$oppcolor,255,$oppcolor");
+#    push(@planets,"fcircle $x,$y,2,$oppcolor,255,$oppcolor");
+    push(@planets,"fcircle $x,$y,2,255,$oppcolor,$oppcolor");
   } else {
-    push(@planets,"setpixel $x,$y,$oppcolor,255,$oppcolor");
+#    push(@planets,"setpixel $x,$y,$oppcolor,255,$oppcolor");
+    push(@planets,"setpixel $x,$y,255,$oppcolor,$oppcolor");
   }
 }
 

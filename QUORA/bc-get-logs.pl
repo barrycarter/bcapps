@@ -8,14 +8,16 @@ require "/usr/local/lib/bclib.pl";
 
 # TODO: don't hardcode this (150M = as of 7 Jun 2016)
 my($start) = 150000000-1;
+# TODO: this is just testing, in reality this will keep running
+my($end) = $start + 20;
 
 # command I use to download log entries
-my($cmd) = "curl --compress --socks4a 127.0.0.1:9050";
+my($cmd) = "curl -L --compress --socks4a 127.0.0.1:9050";
 
 
 # dir where I store these
 my($logdir) = "/home/barrycarter/QUORA/LOG";
-dodie('chdir("$logdir")');
+dodie("chdir('$logdir')");
 
 # the longest command line (it's actually bigger than this, but this
 # is a safe value)
@@ -27,14 +29,20 @@ my($maxlen) = 100000;
 my($len) = +Infinity;
 
 # TODO: not sure if writing to file is a good idea here
-open(B,">cmds.sh");
+dodie('open(B,">cmds.sh")');
 
 # eternal loop
 for (;;) {
 
+  debug("START: $start");
+
   # TODO: should I increment a different var?
-  $start++;
+  if ($start++ > $end) {last;}
+
+  if (-f "$start.html") {next;}
+
   $str = "-o $start.html https://www.quora.com/log/revision/$start ";
+  $len += length($str);
 
   if ($len <= $maxlen) {print B $str; next;}
 
@@ -43,3 +51,8 @@ for (;;) {
   $len = length($str);
   print B $str;
 }
+
+dodie('close(B)');
+
+
+
