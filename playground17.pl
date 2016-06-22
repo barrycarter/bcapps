@@ -23,7 +23,7 @@ for $i (1..3) {
   push(@out, "<tr>");
   for $j (1..5) {
     $n++;
-    push(@out,"<td><img src='$n.jpg'><br>$text[$n]</td>");
+    push(@out,"<td><img src='$n.jpg'><br><font size=-3>$text[$n]</font></td>");
   }
   push(@out,"</tr>");
 }
@@ -32,11 +32,22 @@ push(@out,"</table>");
 
 my($out) = join("\n",@out);
 
-write_file(join("\n",@out), "guitars.html");
+# for thumbs
+$out2 = $out;
+$out2=~s/img src/img width='100' src/g;
+
+write_file($out,"guitars.html");
 
 open(A,">table.html");
+print A << "MARK";
 
-print A "<table border><tr><th><a href='guitars.html'>Guitars</a></th></tr>\n";
-print A "<tr><td>$out</td></tr></table>\n";
+<table border>
+
+<tr><th><a href='guitars.html'>Guitars</a></th><td>$out2</td></tr>
+<tr><th><a href='pianos.html'>Pianos</a></th><td>(table here)</td></tr>
+
+</table>
+MARK
+;
 
 close(A);

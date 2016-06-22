@@ -23,7 +23,7 @@ require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
 
 # for testing only!
-# $globopts{debug}=1;
+$globopts{debug}=1;
 
 debug("ARGV",@ARGV);
 
