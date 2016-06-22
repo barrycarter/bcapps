@@ -17,8 +17,11 @@ use Text::Unidecode;
 use Math::Round;
 require "/usr/local/lib/bclib.pl";
 
+# TODO: tables to create!
+
 # check that all needed files are present
-for $i ("allCountries.txt", "alternateNames.txt") {
+for $i ("allCountries.txt", "alternateNames.txt", "countryInfo.txt",
+	"timeZones.txt", "admin2Codes.txt", "featureCodes_en.txt") {
   if ($globopts{nodep}) {next;}
   unless (-f $i) {die "$i not here (unzip?)";}
 }
