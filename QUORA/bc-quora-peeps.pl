@@ -8,6 +8,6 @@ require "/usr/local/lib/bclib.pl";
 
 while (<>) {
   while (s%/profile/(.*?)\">(.*?)</a>%%) {
-    debug("$1 $2");
+    print "$1 $2\n";
   }
 }

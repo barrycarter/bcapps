@@ -1,5 +1,14 @@
 The list of quora topics is current as of ~ 16 May 2016 1700 UTC.
 
+The list of quora users was obtained 26 Jun 2016 and contains just
+over 1.4 million users, but is highly incomplete, and doesn't even
+include me. Please contact me if you can help. The format of this file:
+
+username full name
+
+The username will never contain spaces. To visit a person's profile,
+browse to "https://www.quora.com/profile/username".
+
 NOTE: Some files in this directory are bzip2'd to save space; in most
 cases, you must bunzip2 them to actually use them. In particular,
 there is no easy way to use SQLite3 databases when they are bzip2'd
