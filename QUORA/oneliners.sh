@@ -1,3 +1,10 @@
+# downloads quora user list pages using tor, excluding those that have already been downloaded
+
+perl -le 'for (1..1000000) {unless (-f "people?page_id=$_") {print "curl --socks4a 127.0.0.1:9050 -O \47https://www.quora.com/sitemap/people?page_id=$_\47"}}'
+
+exit;
+
+
 # takes the output of bc-us-split.pl and prints it in "Mathematica
 # format" (approximately); requires a manual cleanup step later,
 # though (tenthdegree.txt is the name of the output file)
