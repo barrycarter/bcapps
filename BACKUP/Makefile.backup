@@ -17,8 +17,11 @@ bcunix-converted.txt: /bcunix-files.txt
 
 # TODO: this is ugly, should really loop through drives instead of listing
 # them one at a time
-extdrive-converted.txt: /mnt/extdrive/extdrive-files.txt
-	bc-format2altformat.pl /mnt/extdrive/extdrive-files.txt > extdrive-converted.txt
+
+# removing this one later because /mnt/extdrive is now just a symlink
+# extdrive-converted.txt: /mnt/extdrive/extdrive-files.txt
+#	bc-format2altformat.pl /mnt/extdrive/extdrive-files.txt > extdrive-converted.txt
+
 extdrive2-converted.txt: /mnt/extdrive2/extdrive2-files.txt
 	bc-format2altformat.pl /mnt/extdrive2/extdrive2-files.txt > extdrive2-converted.txt
 extdrive3-converted.txt: /mnt/extdrive3/extdrive3-files.txt

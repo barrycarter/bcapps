@@ -1,0 +1,2 @@
+geonameid,name,latitude,longitude,feature,country,admin1,admin2,admin3,admin4,population,elevation,timezone
+
