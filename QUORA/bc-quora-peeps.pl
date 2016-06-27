@@ -6,8 +6,15 @@
 
 require "/usr/local/lib/bclib.pl";
 
-while (<>) {
-  while (s%/profile/(.*?)\">(.*?)</a>%%) {
-    print "$1 $2\n";
+# keeps track of which page the user is on, which could be helpful?
+
+for $i (@ARGV) {
+
+  my($num) = $i;
+  $num=~s/\D//g;
+
+  my($all) = read_file($i);
+  while ($all=~s%/profile/(.*?)\">(.*?)</a>%%) {
+    print "$num $1 $2\n";
   }
 }

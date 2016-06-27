@@ -1,13 +1,31 @@
 The list of quora topics is current as of ~ 16 May 2016 1700 UTC.
 
-The list of quora users was obtained 26 Jun 2016 and contains just
-over 1.4 million users, but is highly incomplete, and doesn't even
-include me. Please contact me if you can help. The format of this file:
+The list of quora users was obtained 26 Jun 2016, contains 2,859,092
+users, and should be nearly complete. Because the profile listings
+page change dynamically, however, it may not be 100% complete. Format:
 
-username full name
+page username full/display name
 
-The username will never contain spaces. To visit a person's profile,
-browse to "https://www.quora.com/profile/username".
+page: the page number on which this user was found:
+
+  - Example: users on
+  https://www.quora.com/sitemap/people?page_id=6812 would have page
+  set to 6812
+
+  - New users appear to be on page 1.
+
+  - https://www.quora.com/sitemap/people?page_id=14703 shows no
+  further page links, so the 14703 pages I scraped appear to be
+  complete
+
+  - Some pages, like
+  https://www.quora.com/sitemap/people?page_id=12665, list only one
+  user (the others may have been deleted), so it's not always 200
+  users per page
+
+username: the person's username; this will never contain spaces; to visit this person's profile, https://www.quora.com/profile/username
+
+full/display name: the person's full or display name; this may contain spaces
 
 NOTE: Some files in this directory are bzip2'd to save space; in most
 cases, you must bunzip2 them to actually use them. In particular,

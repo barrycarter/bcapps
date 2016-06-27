@@ -1,10 +1,10 @@
 # downloads quora user list pages using tor, excluding those that have already been downloaded
 
-# during testing, confirmed there are fewer than 20807 pages of users
-# 15807 = fail
-# 14807 = fail
-# 13807 = success
-perl -le 'for (1..14806) {unless (-f "people?page_id=$_") {print "curl --socks4a 127.0.0.1:9050 -O \47https://www.quora.com/sitemap/people?page_id=$_\47"}}'
+# later confirmed 14703 is last page, visiting
+# https://www.quora.com/sitemap/people?page_id=14703 shows no further
+# pages; additionally new users seem to be on page 1
+
+perl -le 'for (1..14703) {unless (-f "people?page_id=$_") {print "curl --socks4a 127.0.0.1:9050 -O \47https://www.quora.com/sitemap/people?page_id=$_\47"}}'
 
 exit;
 
