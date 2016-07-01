@@ -649,13 +649,17 @@ Checks whether any of my domains are within 60 days of expiration (nagios).
 =cut
 
 sub bc_check_domain_exp {
+  # TODO: maybe note soonest expiring domain even if > 60 days
+
   # TODO: generalize this a bit... but per domain testing would be ugly,
   # since nagios would need 1 test per domain = bad?
   my(@domains) = `egrep -v '^#|^ *\$' /home/barrycarter/mydomains.txt`;
   my($now) = time();
   for $i (@domains) {
     chomp($i);
-    my($out,$err,$res) = cache_command2("whois $i");
+    # caching here is important, hitting the whois server too many
+    # times results in timeouts
+    my($out,$err,$res) = cache_command2("whois $i", "age=7200");
     # no expiration date?
     unless ($out=~/^\s*(Expiration Date|Expires on|Domain Expiration Date|Registrar Expiration Date|Registrar Registration Expiration Date|Registry Expiry Date):\s*(.*?)$/m) {
       print "ERR: No expiration date found: $i\n";

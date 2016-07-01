@@ -14,6 +14,13 @@ my($out,$err,$res);
 
 for $i (@ARGV) {
 
+  # if a textified version of the original exists, do nothing
+  if (-f "$i.txt") {
+    warn "$i.txt exists, skipping";
+    next;
+  }
+
+  # extract filename sans path
   my($fname) = $i;
   $fname=~s/^.*\///;
 
@@ -33,10 +40,16 @@ for $i (@ARGV) {
   my($all) = read_file("$fname.txt");
 
   # this converts newlines to spaces so my trimming below works properly
-  $all=~s/\s/ /sg;
+  $all=~s/\s+/ /sg;
   $all=~s/<.*?>//g;
-  $all=~s/ [\d\.]+ / /g;
+  $all=~s/\[.*?\]//g;
+  # TODO: why do I need a loop here?
+  while ($all=~s/ [\d\.]+ / /g) {};
 
-  debug("ALL: $all");
+  $all=~s/\s+/ /g;
+
+  $all = wrap($all,79);
+
+  write_file($all, "$i.txt")
 
 }
