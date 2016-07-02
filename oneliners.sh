@@ -1,5 +1,19 @@
 # shell one liners
 
+# filters stuff I want from calendar in correct format
+
+# as of 2017 cal, I think I already have everything I want, so this just confirms gcal isnt spitting out anything new
+
+gcal -u @/home/barrycarter/BCGIT/ASTRO/gcal-options.txt 2017 | perl -nle '/^(.*?)\s{2,}[\+\-]\s+(\d{8})/||warn("BAD: $_"); my($e,$d)=($1,$2); $e=~s/\s*\(.*?\)\s*$//; $e=~s/\47//g; $e=~s/\s*Day\s*/ /; print "$d $e"' | egrep -vf /home/barrycarter/20140726/nocal.txt | sort | uniq > gcal.txt
+
+perl -anle 'print $F[0]' gcal.txt | sort -n | uniq > gcal-dates.txt
+
+
+
+# gcal @/home/barrycarter/BCGIT/ASTRO/gcal-options.txt | perl -F"\s\s+" -anle '$F[0]=~s/\s*\(.*?\)\s*//; print "$F[2] $F[1]"'
+
+exit;
+
 # (suggests) renaming files that make doesn't handle well (removes spaces)
 \ls | perl -nle '$x=$_; if (s/[^a-z0-9_\.\-\%\,]/_/isg) {print "mv \"$x\" $_"}'
 
@@ -127,14 +141,6 @@ exit;
 # later wednesdays
 
 perl -le 'use Date::Parse; use POSIX; for ($i=1409076000+86400;$i<=1409076000+15*366*86400; $i+=86400*7) {print strftime("%Y%m%d", localtime($i));}'
-
-exit;
-
-# filters stuff I want from calendar in correct format
-
-gcal -u @/home/barrycarter/BCGIT/ASTRO/gcal-options.txt 2016 | perl -nle '/^(.*?)\s{2,}[\+\-]\s+(\d{8})/||warn("BAD: $_"); my($e,$d)=($1,$2); $e=~s/\s*\(.*?\)\s*$//; $e=~s/\47//g; $e=~s/\s*Day\s*/ /; print "$d $e"' | egrep -vf /home/barrycarter/20140726/nocal.txt | sort | uniq
-
-# gcal @/home/barrycarter/BCGIT/ASTRO/gcal-options.txt | perl -F"\s\s+" -anle '$F[0]=~s/\s*\(.*?\)\s*//; print "$F[2] $F[1]"'
 
 exit;
 
