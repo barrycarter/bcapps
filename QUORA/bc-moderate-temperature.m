@@ -23,20 +23,33 @@ TODO: note SJSU
 (* this test is for 10 years, really do 30 years *)
 
 $TimeZone = 0;
-sdate = {2006,7,1};
+sdate = {1986,7,1};
 edate = {2016,6,30};
+city = "KABQ";
 
 kbos = Select[
- WeatherData["Boston", "Temperature", {sdate,edate}, TimeZone -> 0],
+ WeatherData[city, "Temperature", {sdate,edate}, TimeZone -> 0],
  NumberQ[#[[2]]] &];
 
-kbos2 = N[Table[{(FromDate[i[[1]]]-FromDate[sdate])/3600, i[[2]]}, {i, kbos}]];
+kbos2 = N[Table[{FromDate[i[[1]]], i[[2]]}, {i, kbos}]];
 
 kbos3 = Mean /@ GatherBy[kbos2, First];
 
-kbos4[x_] = Interpolation[kbos3, x]
+kbos4[x_] = Interpolation[kbos3, x, InterpolationOrder -> 1]
 
-kbos5 = Table[kbos4[x], {x, 
+kbos5 = Table[kbos4[x], {x, FromDate[sdate], FromDate[edate], 3600}];
+
+sdate = {2015,7,1};
+edate = {2016,6,30};
+
+dumpdata[station_] := Module[{file},
+ file = "/home/barrycarter/20160702/WEATHER/"<>station<>".dat";
+ Print[file];
+ WeatherData[city, "Temperature", {sdate,edate}, TimeZone -> 0] >> file;
+];
+
+
+
 
 
 kbos = Select[
