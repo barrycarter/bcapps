@@ -62,6 +62,45 @@ Plot[N[(seq[100,x]^2-1)/x+4-2*E],{x,0,10}, PlotRange -> All]
 
 Plot[N[1/((seq[100,x]^2-1)/x+4-2*E)],{x,0,10}]
 
+Plot[N[-((seq[100,x]^2-1)/x+4-2*E)/Sqrt[x]],{x,0,10}, PlotRange -> All]
+
+tab1317 = Table[{x,((seq[100,x]-1)/x-E+2)^4/x},{x,0.01,10,.01}];
+ListPlot[tab1317]
+showit
+
+tab1317 = Table[{x,seq[100,x]},{x,.01,10,.01}];
+
+tab1317 = Table[{x,seq[100,x]},{x,1,100,.01}];
+Fit[tab1317, {1,Sqrt[x],x}, x]
+
+Fit[tab1317, {1,Sqrt[x],Log[x],x}, x]
+
+tab1317 = Table[{x,seq[100,x]-Sqrt[x]},{x,1,100,.01}];
+Fit[tab1317, {1,Log[x]}, x]
+
+tab1317 = Table[{seq[100,x],x},{x,.01,100,.01}];
+tab1317 = Table[{seq[100,x],Sqrt[x]/x},{x,.01,100,.01}];
+tab1317 = Table[{seq[100,x],1-1/Sqrt[x]},{x,1,100,.01}];
+tab1317 = Table[{seq[100,x],Sqrt[x]},{x,1,10,.01}];
+
+Fit[tab1317, {1,x}, x]
+
+ListPlot[tab1317, PlotRange -> All]
+showit
+
+f1330[x_] = Fit[tab1317, {1,Sqrt[x],x,x^2}, x]
+
+f1333[x_] = Fit[tab1317, {1,x,x^2}, x]
+
+f1333[x_] = Fit[tab1317, {1,x^-1,x^-2,x^-3}, x]
+
+Plot[{f1333[x]-seq[100,x]},{x,0,10}]
+showit
+
+tab1338 = Table[{x,seq[100,x]},{x,1,10,.01}];
+ListPlot[tab1338]
+showit
+
 
 
 N[2*E,20]-4
@@ -69,15 +108,47 @@ N[2*E,20]-4
 
 
 
+((1^(1/9) + 4)^(1/8) + 4)^(1/7) + ...
 
 
+Solve[(4+y)^(1/n) == y, y]
 
+Solve[(4+y)^(1/14) == y, y]
+
+Out[36]//InputForm= {{y -> Root[-4 - #1 + #1^14 & , 2, 0]}}
 
 
 
 Clear[a]
-a[2] = 2;
-a[n_] := a[n] = a[n-1]^n - 4
+a[2] = c;
+a[n_] := a[n] = a[n-1]^(n-1) - 4
+
+RSolve[a[n] == a[n-1]^(n-1) - 4, a[n], n]
+
+RSolve[a[n] == a[n-1]^(n-1) - 0, a[n], n]
+
+
+y(n) = nth root of 4+y(n+1)
+
+y(2) = answer
+
+y(2) = Sqrt[4+y(3)]
+
+y(n) = (4+y(n+1))^(1/n)
+
+y(n)^n - 4 = y(n+1)
+
+y[2] = c;
+
+y[n_] := y[n] = y[n-1]^(n-1)-4
+
+z[50] = 1+epsilon;
+
+z[n_] := (4+z[n+1])^(1/n)
+
+Log[y[n]] == Log[4+y[n+1]]/n
+
+
 
 
 4^(1/2)
