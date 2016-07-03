@@ -18,6 +18,54 @@ temp2049 = WeatherData["Boston", "Temperature",
  {{2015,7,1}, {2016,6,30}, "Hour"}];
 
 
+temp2049 = WeatherData["Boston", "Temperature", 
+ {{2015,7,1}, {2016,6,30}, "Hour"}];
+
+WeatherData["Boston", "MaxTemperature",  {{2015,7,1}, {2016,6,30}, "Day"}]
+
+WeatherData["Boston", {"MaxTemperature", "MinTemperature"},  
+ {{2015,7,1}, {2016,6,30}, "Day"}]
+
+max[stat_] := Transpose[WeatherData[stat, "MaxTemperature", 
+ {{1986,7,1}, {2016,6,30}, "Day"}]][[2]];
+
+temp2309 = 
+ WeatherData["KABQ", "MaxTemperature", {{1986,7,1}, {2016,6,30}, "Day"}];
+
+temp2315 = 
+
+GatherBy[temp2309, Take[#[[1]],-2] &]
+
+maxfunc[stat_] := maxfunc[stat] = 
+ superfour[Select[Transpose[WeatherData[stat, "MaxTemperature",
+ {{1986,7,1}, {2016,6,30}, "Day"}]], NumberQ[#] &][[2]],1];
+
+minfunc[stat_] := minfunc[stat] = 
+ superfour[Transpose[WeatherData[stat, "MinTemperature",
+ {{1986,7,1}, {2016,6,30}, "Day"}]][[2]],1];
+
+(* good stuff starts here *)
+
+cities = WeatherData[];
+
+max[stat_] := Transpose[WeatherData[stat, "MaxTemperature", 
+ {{1986,7,1}, {2016,6,30}, "Day"}]][[2]];
+
+min[stat_] := Transpose[WeatherData[stat, "MinTemperature", 
+ {{1986,7,1}, {2016,6,30}, "Day"}]][[2]];
+
+maxfunc[stat_] := maxfunc[stat] = superfour[Select[max[stat],NumberQ],1]
+minfunc[stat_] := minfunc[stat] = superfour[Select[min[stat],NumberQ],1]
+
+(* this just forces computation *)
+
+Table[{minfunc[stat], maxfunc[stat]}, {stat, Take[cities,50]}]
+
+
+ 
+
+
+
 TODO: note SJSU
 
 (* this test is for 10 years, really do 30 years *)
