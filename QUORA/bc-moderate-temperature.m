@@ -6,6 +6,23 @@ https://www.quora.com/unanswered/Which-city-has-the-minimum-temperature-of-22-C-
 
 *)
 
+
+cities = WeatherData[];
+start = {1986,7,1};
+end = {2016,6,30};
+
+(* get the data and store it *)
+
+data[stat_] := data[stat] = 
+ WeatherData[stat, "MaxTemperature", {start, end, "Day"}];
+
+(* this just forces evaluation *)
+
+Table[{Print[i], data[i]}, {i,cities}];
+
+
+
+
 temp2042 = WeatherData["Albuquerque", "Temperature", { {1986,7,1}, 
 {2016,6,30}}];
 
