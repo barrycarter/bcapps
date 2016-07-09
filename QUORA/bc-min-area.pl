@@ -5,6 +5,7 @@
 require "/usr/local/lib/bclib.pl";
 
 my($db) = "/sites/DB/blockgroups.db";
+my($workdir) = "/home/barrycarter/20160709";
 
 # TODO: including water so allowing people who live on houseboats, but
 # this may be bad idea
@@ -18,12 +19,15 @@ for $i (@totals) {
 
 # most densely populated areas (not per state, but not an issue)
 
-my(@dense) = sqlite3hashlist("SELECT statefp, aland+awater AS area, population FROM blockgroups ORDER BY population/area DESC", $db);
+my(@dense) = sqlite3hashlist("SELECT geoid, statefp, aland+awater AS area, population FROM blockgroups ORDER BY population/area DESC", $db);
 
 for $i (@dense) {
-  debug(unfold($i));
+#  debug(unfold($i));
 }
 
+# print Dumper([@totals, @dense]);
+
+write_file(Dumper([[@dense], [@totals]]), "$workdir/data.pl");
 
 
 
