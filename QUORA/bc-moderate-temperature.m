@@ -6,19 +6,28 @@ https://www.quora.com/unanswered/Which-city-has-the-minimum-temperature-of-22-C-
 
 *)
 
+(* ZYYY = last station *)
 
 cities = WeatherData[];
 start = {1986,7,1};
 end = {2016,6,30};
 
-(* get the data and store it *)
+(* get the data and store it to file *)
 
-data[stat_] := data[stat] = 
- WeatherData[stat, "MaxTemperature", {start, end, "Day"}];
+data[stat_] := Module[{str,dat},
+ dat = WeatherData[stat, "MaxTemperature", {start, end, "Day"}];
+ str = "/home/barrycarter/20160702/WEATHER/"<>stat<>".dat";
+ Put[dat,str];
+];
+
+(* had to restart this, CWRM is first corrupt *)
+
+temp1 = Take[cities, {Position[cities,"CWRM"][[1,1]],-1}];
+
 
 (* this just forces evaluation *)
 
-Table[{Print[i], data[i]}, {i,cities}];
+Table[{Print[i], data[i]}, {i,temp1}];
 
 
 
