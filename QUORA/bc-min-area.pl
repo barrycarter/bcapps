@@ -23,21 +23,42 @@ my($dense, $totals) = @$data;
 my(@dense) = @$dense;
 my(@totals) = @$totals;
 
+# get totals into usable form
+
+for $i (@totals) {
+  $ptotal{$i->{'statefp'}} = $i->{'ptotal'};
+  $atotal{$i->{'statefp'}} = $i->{'atotal'};
+}
+
 # TODO: shortcut abort when every state has 50%+
+
+my(%exclusions, %isstate);
 
 for $i (@dense) {
 
-  debug(%$i);
+  # convenience variable for state FIPS code
+  my($fp) = $i->{'statefp'};
+
+  # could've done this with query: keep track of everything that's a state
+  $isstate{$fp} = 1;
+
+  # skip those w/ population over half accounted for
+  if ($exclusions{$fp}) {next;}
 
   # TODO: store list of blockgroups since I'll want to map them eventually
 
   # compute total population and total area for this state
-  $population{$i->{'statefp'}}+= $i->{'population'};
-  $totalarea{$i->{'statefp'}}+= $i->{'area'};
+  $population{$fp}+= $i->{'population'};
+  $area{$fp}+= $i->{'area'};
 
-  # testing
-  debug("STATE: $i->{statefp} has $population{$i->{statefp}}, $totalarea{$i->{statefp}}");
+  # if population greater than 1/2, exclude state
+  if ($population{$fp} > $ptotal{$fp}/2) {$exclusions{$fp} = 1;}
 }
+
+for $i (keys %isstate) {
+  debug("$i, $population{$i} of $ptotal{$i}, but $area{$i} of $atotal{$i}");
+}
+
 
 # load data into data.pl file in workdir
 
