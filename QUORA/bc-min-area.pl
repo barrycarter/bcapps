@@ -61,10 +61,13 @@ for $i (@dense) {
 }
 
 for $i (keys %isstate) {
-  printf("%s %d %d %f\n", $abbrev{$i}, $area{$i}, $atotal{$i}, $area{$i}/$atotal{$i});
-#  debug("$name{$i} ($abbrev{$i}), $population{$i} of $ptotal{$i}, but $area{$i} of $atotal{$i}");
+  my(@list) = ($i, $abbrev{$i}, $name{$i}, $area{$i}, $atotal{$i},
+	       $ptotal{$i}, $votes{$i});
 }
 
+#  printf("%s\t%d\t%d\t%d\t%0.2f%%\t%0.2f\n", $abbrev{$i}, $area{$i}, 
+#	 $atotal{$i}, $votes{$i}, $area{$i}/$atotal{$i}*100,
+#	 $votes{$i}/$area{$i}*1000);
 
 # load data into data.pl file in workdir
 

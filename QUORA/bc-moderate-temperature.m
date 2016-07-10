@@ -12,13 +12,29 @@ cities = WeatherData[];
 start = {1986,7,1};
 end = {2016,6,30};
 
+(* this assumes data has been saved to file as below *)
+
+temp1729 = Get["/home/barrycarter/20160702/WEATHER/KABQ.dat"];
+
+temp1731 = GatherBy[temp1729, Take[#[[1]],-2] &]
+
+Mean[Transpose[temp1731[[5]]][[2]]]
+
 (* get the data and store it to file *)
 
 data[stat_] := Module[{str,dat},
  dat = WeatherData[stat, "MaxTemperature", {start, end, "Day"}];
- str = "/home/barrycarter/20160702/WEATHER/"<>stat<>".dat";
+ str = "/home/barrycarter/20160702/WEATHER/"<>stat<>".max";
  Put[dat,str];
 ];
+
+data2[stat_] := Module[{str,dat},
+ dat = WeatherData[stat, "MinTemperature", {start, end, "Day"}];
+ str = "/home/barrycarter/20160702/WEATHER/"<>stat<>".min";
+ Put[dat,str];
+];
+
+Table[{Print[i], data2[i]}, {i,cities}];
 
 (* had to restart this, CWRM is first corrupt *)
 
@@ -28,9 +44,6 @@ temp1 = Take[cities, {Position[cities,"CWRM"][[1,1]],-1}];
 (* this just forces evaluation *)
 
 Table[{Print[i], data[i]}, {i,temp1}];
-
-
-
 
 temp2042 = WeatherData["Albuquerque", "Temperature", { {1986,7,1}, 
 {2016,6,30}}];
