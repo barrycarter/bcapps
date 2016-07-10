@@ -11,6 +11,9 @@ my($workdir) = "/home/barrycarter/20160709";
 # TODO: including water so allowing people who live on houseboats, but
 # this may be bad idea
 
+# TODO: need people of voting age only
+# TODO: need voting districts? or simple numbers might be ok
+
 unless (-f "$workdir/stor.txt") {load_data();}
 
 my($data) = retrieve("$workdir/stor.txt");
