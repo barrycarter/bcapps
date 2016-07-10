@@ -5,8 +5,13 @@
 require "/usr/local/lib/bclib.pl";
 use Storable;
 
+# square meters in a square mile
+$m2pmi2 = 1609.344**2;
+
 my($db) = "/sites/DB/blockgroups.db";
 my($workdir) = "/home/barrycarter/20160709";
+
+get_stuff();
 
 # TODO: including water so allowing people who live on houseboats, but
 # this may be bad idea
@@ -27,7 +32,7 @@ my(@totals) = @$totals;
 
 for $i (@totals) {
   $ptotal{$i->{'statefp'}} = $i->{'ptotal'};
-  $atotal{$i->{'statefp'}} = $i->{'atotal'};
+  $atotal{$i->{'statefp'}} = $i->{'atotal'}/$m2pmi2;
 }
 
 # TODO: shortcut abort when every state has 50%+
@@ -49,14 +54,15 @@ for $i (@dense) {
 
   # compute total population and total area for this state
   $population{$fp}+= $i->{'population'};
-  $area{$fp}+= $i->{'area'};
+  $area{$fp}+= $i->{'area'}/$m2pmi2;
 
   # if population greater than 1/2, exclude state
   if ($population{$fp} > $ptotal{$fp}/2) {$exclusions{$fp} = 1;}
 }
 
 for $i (keys %isstate) {
-  debug("$i, $population{$i} of $ptotal{$i}, but $area{$i} of $atotal{$i}");
+  printf("%s %d %d %f\n", $abbrev{$i}, $area{$i}, $atotal{$i}, $area{$i}/$atotal{$i});
+#  debug("$name{$i} ($abbrev{$i}), $population{$i} of $ptotal{$i}, but $area{$i} of $atotal{$i}");
 }
 
 
@@ -69,5 +75,45 @@ sub load_data {
   store([[@dense], [@totals]], "$workdir/stor.txt");
 }
 
+# obtains electoral votes and state names
 
+# TODO: this sets global variables = icky
+
+sub get_stuff {
+
+  # data dir
+  my($dir) = "$bclib{githome}/QUORA/";
+
+  my(@fips) = split(/\n/,read_file("fipscodes.csv"));
+
+  for $i (@fips) {
+    my($abb, $fips, $name) = split(/\,/, $i);
+    $name=~s/\"//g;
+    $abbrev{$fips} = $abb;
+    $name{$fips} = $name;
+    # need this reverse mapping for electoral votes
+    $fips{$name} = $fips;
+
+  }
+
+  debug(%fips);
+
+
+  my(@elec) = split(/\n/,read_file("electoralvotes.csv"));
+
+  for $i (@elec) {
+    my($name, $votes) = split(/\,/, $i);
+    $name=~s/\"//g;
+    debug("VOTES: $votes, NAME: $name, FIPS: ",$fips{uc($name)});
+    $votes{$fips{uc($name)}} = $votes;
+  }
+
+}
+
+
+# TODO: mention 11%
+
+# TODO: mention house of rep vote (17 smallest states)
+
+# TODO: Disclaim NE and ME
 
