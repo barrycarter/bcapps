@@ -25,7 +25,8 @@ printstuff[x_] := Module[{max, f, g, temps},
 
  temps = Select[Sort[Transpose[max][[2]]], NumericQ];
 
- Print[Length[temps]];
+ (* TODO: temporary for testing *)
+ Return[temps];
 
  f[y_] = Fit[temps, {1,y}, y];
 
@@ -36,7 +37,24 @@ printstuff[x_] := Module[{max, f, g, temps},
 
 ]
 
+test0813 = printstuff["KBOS"];
 
+test0856 = test0813-Mean[test0813];
+
+test0904[x_] = Interpolation[test0856,x]
+
+test0905[x_] = 20*Tan[x/Length[test0856]*Pi/1.8-Pi/1.8/2]^1
+
+Plot[{test0904[x], test0905[x]}, {x,1,Length[test0856]}]
+showit
+
+
+
+Quantile[test0856,.99]/Quantile[test0856,.6]
+
+5.77936
+
+thats 49% vs 10%
 
 
 
