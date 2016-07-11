@@ -14,9 +14,46 @@ end = {2016,6,30};
 
 (* this assumes data has been saved to file as below *)
 
-temp1729 = Get["/home/barrycarter/20160702/WEATHER/KABQ.dat"];
+printstuff[x_] := Module[{max, f, y},
 
-temp1731 = GatherBy[temp1729, Take[#[[1]],-2] &]
+ (* get the max data *)
+ max = Get["/home/barrycarter/20160702/WEATHER/"<>x<>".max"];
+
+ f[y_] = Fit[Sort[max], {1,y}, y];
+
+ (* TODO: just testing "linear" theory for now *)
+ g[y_] = Interpolation[Sort[max]];
+
+ Plot[{f[y],g[y]}, {y,1,366}]
+
+]
+
+
+
+temp0724[x_] = Fit[Sort[temp0618], {1,x}, x]
+
+temp0723[x_] := Sort[temp0618][[Round[x]]]
+
+Plot[{temp0723[x], temp0724[x]}, {x,1,366}]
+
+Plot[{temp0723[x]-temp0724[x]}, {x,1,366}]
+
+
+temp1729 = Get["/home/barrycarter/20160702/WEATHER/KABQ.max"];
+
+temp1731 = GatherBy[temp1729, Take[#[[1]],-2] &];
+
+temp0625 = SortBy[temp1731, #[[1,1,2]]*50 + #[[1,1,3]] &]
+
+temp0618 = Table[Mean[Transpose[i][[2]]], {i, temp0625}]
+
+temp0629[x_] := temp0618[[Round[x]]]
+
+temp0627[x_] = superfour[temp0618,2][x];
+
+Plot[{temp0627[x], temp0629[x]},{x,0.5,366.5}]
+
+(* TODO: test that 366 elements, and at least n years of data for each *)
 
 Mean[Transpose[temp1731[[5]]][[2]]]
 

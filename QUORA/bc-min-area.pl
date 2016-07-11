@@ -152,6 +152,8 @@ Methodology/Errata:
 
   - Under "2010 - 2014 Detailed Tables" on https://www.census.gov/geo/maps-data/data/tiger-data.html I downloaded the "Block Group" national file. Direct link to this 1.6GB file http://www2.census.gov/geo/tiger/TIGER_DP/2014ACS/ACS_2014_5YR_BG.gdb.zip (reminder to GIS users: do NOT unzip this file; some GIS software will break the unzipped version of this file), which contains the 2014 population estimates per block group.
 
+  - Although you specified land area, I included the water area of each block group, to allow for houseboats and the like. I don't think this makes much of a difference to the final answer, but I could be wrong.
+
   - Not everyone in a block group (or in the United States) votes. To vote, a person must:
 
     - Be a citizen of the United States
@@ -170,6 +172,8 @@ I don't assume everyone in a block group votes, but I do assume voting is propor
 
   - Conversely, my answer obtains 288 electoral votes, when only 270 are required. This partially compensates for the error above, and also means you could omit additional electoral votes and still have the necessary 270.
 
+  - For more on the methodology I followed: https://github.com/barrycarter/bcapps/blob/master/QUORA/bc-min-area.pl
+
 Fascinating facts:
 
   - It may seem strange that it requires only 27.5% of the voting population to elect a President in this scenario (perhaps even less in other scenarios), but note that we are talking about an extreme and fairly unrealistic situation. Similarly:
@@ -178,30 +182,20 @@ Fascinating facts:
 
     - If no candidate obtains 270 electoral votes, the election is decided among the top 3 candidates by the House of Representatives, but each state has only 1 vote each. In theory, a candidate could win with just 17 states (the other two receiving 16 each). The total population of the 17 smallest states (population wise) is less than 7.5% of the total US population. Since a candidate would need only just over half that (assuming each state's House votes with the majority of its citizens), a President could be elected with less than 3.75% of the popular vote.
 
+  - In all 50 states, the majority of people live in less than 7.5% of the state's total area:
 
+http://4e0e22a81fb6e86e189e896dc8e573b5.elections.db.94y.info/
 
-# TODO: draw polygons
+  - In 21 states, the majority of people live in less than 1% of the state's total area:
 
+http://84eb422671ae4997dc66135d52b77181.elections.db.94y.info/
 
+  - In Alaska, the largest state, the majority of people live in a 161 square mile area (less than 1/10th the size of Anchorage, its largest city), which is only 0.02% of the state's total area of 665,384 square miles.
 
+Extensions:
 
+  - I'd been hoping to draw the actual block group polygons that make up the required 11,406 square mile area, but there are 108,015 of these polygons, and I don't know a good way of drawing that many polygons on google maps or the equivalent efficiently. If anyone would like to help, please contact me via the information in my profile.
 
 # TODO: wrong file? but see http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?src=bkmk
-
-
-
-
-# TODO: fascinating 7.5% fact
-
-
-# TODO: link to more mutable chart
-
-# TODO: mention this program
-
-# TODO: source info
-
-# TODO: source cenus data, see bc-us-split.m
-
-
 
 =cut
