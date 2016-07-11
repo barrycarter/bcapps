@@ -14,28 +14,61 @@ end = {2016,6,30};
 
 (* this assumes data has been saved to file as below *)
 
-printstuff[x_] := Module[{max, f, g, temps},
+printstuff[x_] := Module[{max, min, piles, maxte, minte, maxt, mint},
 
- (* TODO: this assumes we have equal data for each day, otherwise skew *)
-
+ (* these are the percentiles we will print *)
+ piles = {0, .01, .05, .5, .95, .99, 1};
+ 
  (* get the max data *)
  max = Get["/home/barrycarter/20160702/WEATHER/"<>x<>".max"];
+ min = Get["/home/barrycarter/20160702/WEATHER/"<>x<>".min"];
 
- (* TODO: selecting numeric here can mask bad data *)
+ maxte = Select[Transpose[max][[2]], NumericQ];
+ minte = Select[Transpose[min][[2]], NumericQ];
 
- temps = Select[Sort[Transpose[max][[2]]], NumericQ];
+ maxt = Table[Quantile[maxte, i], {i,piles}];
+ mint = Table[Quantile[minte, i], {i,piles}];
 
- (* TODO: temporary for testing *)
- Return[temps];
-
- f[y_] = Fit[temps, {1,y}, y];
-
- (* TODO: just testing "linear" theory for now *)
- g[y_] = Interpolation[temps,y];
-
- Plot[{f[y],g[y]}, {y,1,Length[temps]}]
-
+ Print[{x, maxt, mint, Length[maxte], Length[minte]}];
 ]
+
+(*
+
+The above is really ugly, and I had to make the following corrections
+before SQLITE3-ifying it:
+
+fgrep -v Quantile math.out | perl -pnle 's/\r//g; s/[{}]//g;s/\s+/ /g' | 
+ egrep -v '^ *$' > math2.out
+
+: use emacs to edit math2.out
+
+ 
+TODO: omit fewer than 5000 data points
+
+CREATE TABLE temps (
+ station TEXT,
+ max0 DOUBLE, max1 DOUBLE, max5 DOUBLE, max50 DOUBLE, max95 DOUBLE,
+ max99 DOUBLE, max100 DOUBLE,
+ min0 DOUBLE, min1 DOUBLE, min5 DOUBLE, min50 DOUBLE, min95 DOUBLE,
+ min99 DOUBLE, min100 DOUBLE,
+ maxdays INT, mindays INT
+);
+
+; after import...
+
+DELETE FROM temps WHERE maxdays < 5000 OR mindays < 5000;
+
+6280 remain
+
+TODO: sunlight data only?
+
+TODO: use isd-lite instead of mathematica?
+
+TODO: convert other data into "mathematica" form?
+
+TODO: add lookup table for WMO stations?
+
+*)
 
 test0813 = printstuff["KBOS"];
 
@@ -112,53 +145,41 @@ temp1 = Take[cities, {Position[cities,"CWRM"][[1,1]],-1}];
 
 Table[{Print[i], data[i]}, {i,temp1}];
 
-temp2042 = WeatherData["Albuquerque", "Temperature", { {1986,7,1}, 
-{2016,6,30}}];
+temp2042 = WeatherData["Albuquerque", "Temperature", { {1986,7,1}, {2016,6,30}}];
 
-temp2044 = WeatherData["Boston", "Temperature", { {1986,7,1}, 
-{2016,6,30}}];
+temp2044 = WeatherData["Boston", "Temperature", { {1986,7,1}, {2016,6,30}}];
 
 (* takes about 25s to get 30y of data per location *)
 
-temp2049 = WeatherData["Boston", "Temperature", 
- {{2015,7,1}, {2016,6,30}, "Hour"}];
+temp2049 = WeatherData["Boston", "Temperature",  {{2015,7,1}, {2016,6,30}, "Hour"}];
 
 
-temp2049 = WeatherData["Boston", "Temperature", 
- {{2015,7,1}, {2016,6,30}, "Hour"}];
+temp2049 = WeatherData["Boston", "Temperature",  {{2015,7,1}, {2016,6,30}, "Hour"}];
 
 WeatherData["Boston", "MaxTemperature",  {{2015,7,1}, {2016,6,30}, "Day"}]
 
-WeatherData["Boston", {"MaxTemperature", "MinTemperature"},  
- {{2015,7,1}, {2016,6,30}, "Day"}]
+WeatherData["Boston", {"MaxTemperature", "MinTemperature"},   {{2015,7,1}, {2016,6,30}, "Day"}]
 
-max[stat_] := Transpose[WeatherData[stat, "MaxTemperature", 
- {{1986,7,1}, {2016,6,30}, "Day"}]][[2]];
+max[stat_] := Transpose[WeatherData[stat, "MaxTemperature",  {{1986,7,1}, {2016,6,30}, "Day"}]][[2]];
 
-temp2309 = 
- WeatherData["KABQ", "MaxTemperature", {{1986,7,1}, {2016,6,30}, "Day"}];
+temp2309 =  WeatherData["KABQ", "MaxTemperature", {{1986,7,1}, {2016,6,30}, "Day"}];
 
 temp2315 = 
-
 GatherBy[temp2309, Take[#[[1]],-2] &]
 
-maxfunc[stat_] := maxfunc[stat] = 
- superfour[Select[Transpose[WeatherData[stat, "MaxTemperature",
+maxfunc[stat_] := maxfunc[stat] =  superfour[Select[Transpose[WeatherData[stat, "MaxTemperature",
  {{1986,7,1}, {2016,6,30}, "Day"}]], NumberQ[#] &][[2]],1];
 
-minfunc[stat_] := minfunc[stat] = 
- superfour[Transpose[WeatherData[stat, "MinTemperature",
+minfunc[stat_] := minfunc[stat] =  superfour[Transpose[WeatherData[stat, "MinTemperature",
  {{1986,7,1}, {2016,6,30}, "Day"}]][[2]],1];
 
 (* good stuff starts here *)
 
 cities = WeatherData[];
 
-max[stat_] := Transpose[WeatherData[stat, "MaxTemperature", 
- {{1986,7,1}, {2016,6,30}, "Day"}]][[2]];
+max[stat_] := Transpose[WeatherData[stat, "MaxTemperature",  {{1986,7,1}, {2016,6,30}, "Day"}]][[2]];
 
-min[stat_] := Transpose[WeatherData[stat, "MinTemperature", 
- {{1986,7,1}, {2016,6,30}, "Day"}]][[2]];
+min[stat_] := Transpose[WeatherData[stat, "MinTemperature",  {{1986,7,1}, {2016,6,30}, "Day"}]][[2]];
 
 maxfunc[stat_] := maxfunc[stat] = superfour[Select[max[stat],NumberQ],1]
 minfunc[stat_] := minfunc[stat] = superfour[Select[min[stat],NumberQ],1]
@@ -169,7 +190,6 @@ Table[{minfunc[stat], maxfunc[stat]}, {stat, Take[cities,50]}]
 
 
  
-
 
 
 TODO: note SJSU
