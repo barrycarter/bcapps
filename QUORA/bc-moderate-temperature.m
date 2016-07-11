@@ -14,19 +14,31 @@ end = {2016,6,30};
 
 (* this assumes data has been saved to file as below *)
 
-printstuff[x_] := Module[{max, f, y},
+printstuff[x_] := Module[{max, f, g, temps},
+
+ (* TODO: this assumes we have equal data for each day, otherwise skew *)
 
  (* get the max data *)
  max = Get["/home/barrycarter/20160702/WEATHER/"<>x<>".max"];
 
- f[y_] = Fit[Sort[max], {1,y}, y];
+ (* TODO: selecting numeric here can mask bad data *)
+
+ temps = Select[Sort[Transpose[max][[2]]], NumericQ];
+
+ Print[Length[temps]];
+
+ f[y_] = Fit[temps, {1,y}, y];
 
  (* TODO: just testing "linear" theory for now *)
- g[y_] = Interpolation[Sort[max]];
+ g[y_] = Interpolation[temps,y];
 
- Plot[{f[y],g[y]}, {y,1,366}]
+ Plot[{f[y],g[y]}, {y,1,Length[temps]}]
 
 ]
+
+
+
+
 
 
 
