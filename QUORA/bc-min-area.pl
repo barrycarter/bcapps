@@ -126,7 +126,7 @@ sub get_stuff {
 
 Roughly speaking, if you could secure every vote in a specific non-contiguous 11,406 square mile area, you would have the necessary 270 electoral votes to win the Presidency. This is 0.3% of the total area of the portion of United States that votes (3,796,788 square miles, which includes all 50 states and the District of Columbia, but not Puerto Rico and other non-voting territories or possesions).
 
-Following this plan, you would obtain 27.5% of all votes, which would nonetheless be sufficient to obtain over 270 electoral votes.
+Following this plan, you would obtain 27.5% of all votes, which would nonetheless be sufficient to obtain over 270 electoral votes. This information is effectively useless, since the areas are non-contiguous. Many caveats below.
 
 This question fascinated me, so I created the following table (which I explain below):
 
@@ -166,6 +166,22 @@ Methodology/Errata:
 
 I don't assume everyone in a block group votes, but I do assume voting is proportional. In other words, I assume the number of voters in a block group of 2000 people is exactly twice the number of voters in a block group of 1000 people. This probably isn't true, and this answer can be refined by compensating for this mistake.
 
+  - I incorrectly assume that all 50 states and the District of Columbia assign electoral votes on an "all-or-none" basis. Maine and Nebraska do not. Compensating for this error may change the answer, since Nebraska is on the required list of states to win.
+
+  - Conversely, my answer obtains 288 electoral votes, when only 270 are required. This partially compensates for the error above, and also means you could omit additional electoral votes and still have the necessary 270.
+
+Fascinating facts:
+
+  - It may seem strange that it requires only 27.5% of the voting population to elect a President in this scenario (perhaps even less in other scenarios), but note that we are talking about an extreme and fairly unrealistic situation. Similarly:
+
+    - It takes less than 11% of the population to pass a Constitutional amendment: http://politics.stackexchange.com/questions/2988/can-an-11-minority-actually-pass-a-constitutional-amendment
+
+    - If no candidate obtains 270 electoral votes, the election is decided among the top 3 candidates by the House of Representatives, but each state has only 1 vote each. In theory, a candidate could win with just 17 states (the other two receiving 16 each). The total population of the 17 smallest states (population wise) is less than 7.5% of the total US population. Since a candidate would need only just over half that (assuming each state's House votes with the majority of its citizens), a President could be elected with less than 3.75% of the popular vote.
+
+
+
+# TODO: draw polygons
+
 
 
 
@@ -175,14 +191,8 @@ I don't assume everyone in a block group votes, but I do assume voting is propor
 
 
 
-# TODO: all or none
-
-
-
 # TODO: fascinating 7.5% fact
 
-
-# TODO: non voters and proportionality assumption
 
 # TODO: link to more mutable chart
 
@@ -191,18 +201,6 @@ I don't assume everyone in a block group votes, but I do assume voting is propor
 # TODO: source info
 
 # TODO: source cenus data, see bc-us-split.m
-
-# TODO: mention 11%
-
-# TODO: mention house of rep vote (17 smallest states)
-
-# TODO: Disclaim NE and ME
-
-
-
-
-
-
 
 
 
