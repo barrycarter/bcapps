@@ -24,24 +24,22 @@ extrema[stat_] := Module[{piles, max, min, start, end},
  max = WeatherData[stat, "MaxTemperature", {start, end, "Day"}];
  min = WeatherData[stat, "MinTemperature", {start, end, "Day"}];
 
- (* ignore those with two little data *)
- If[Length[max]<500, Return[]];
- If[Length[min]<500, Return[]];
+ (* ignore those with too little data *)
+ If[Length[max]<5000, Return[]];
+ If[Length[min]<5000, Return[]];
 
  Return[{stat,
  Table[Quantile[Select[Transpose[max][[2]], NumericQ], i], {i,piles}],
  Table[Quantile[Select[Transpose[min][[2]], NumericQ], i], {i,piles}],
- Length[max], Length[min]
+ Length[max], Length[min],
+ WeatherData[stat, "Latitude"],
+ WeatherData[stat, "Longitude"],
+ WeatherData[stat, "Elevation"]
  }]
 ]
 
 extremes = Table[extrema[i], {i,cities}];
-
 extremes2 = DeleteCases[extremes, Null];
-
-(* list of stations that actually have useful data *)
-
-stations = Transpose[extremes2][[1]];
 
 sortext1 = SortBy[extremes2, (#[[2,-1]]-#[[3,1]]) &];
 
