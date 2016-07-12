@@ -6,6 +6,50 @@ https://www.quora.com/unanswered/Which-city-has-the-minimum-temperature-of-22-C-
 
 *)
 
+(* starting here, trying to use "pure" Mathematica *)
+
+cities = WeatherData[];
+
+extrema[stat_] := Module[{piles, max, min, start, end},
+
+ (* this does nothing but helps me keep track *)
+ Print[stat];
+
+ (* these are the percentiles we will print *)
+ piles = {0, .01, .05, .5, .95, .99, 1};
+
+ start = {1986,7,1};
+ end = {2016,6,30};
+
+ max = WeatherData[stat, "MaxTemperature", {start, end, "Day"}];
+ min = WeatherData[stat, "MinTemperature", {start, end, "Day"}];
+
+ (* ignore those with two little data *)
+ If[Length[max]<500, Return[]];
+ If[Length[min]<500, Return[]];
+
+ Return[{stat,
+ Table[Quantile[Select[Transpose[max][[2]], NumericQ], i], {i,piles}],
+ Table[Quantile[Select[Transpose[min][[2]], NumericQ], i], {i,piles}],
+ Length[max], Length[min]
+ }]
+]
+
+extremes = Table[extrema[i], {i,cities}];
+
+extremes2 = DeleteCases[extremes, Null];
+
+(* list of stations that actually have useful data *)
+
+stations = Transpose[extremes2][[1]];
+
+sortext1 = SortBy[extremes2, (#[[2,-1]]-#[[3,1]]) &];
+
+
+
+
+(* more Mathematica-y way ends here *)
+
 (* ZYYY = last station *)
 
 cities = WeatherData[];
