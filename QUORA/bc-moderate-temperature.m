@@ -41,6 +41,30 @@ extrema[stat_] := Module[{piles, max, min, start, end},
 extremes = Table[extrema[i], {i,cities}];
 extremes2 = DeleteCases[extremes, Null];
 
+(* converts it into a format thats easier for sqlite3 to parse, see oneliners.sh for more *)
+
+Table[Flatten[i], {i,extremes2}] >> /home/barrycarter/20160712/4sqlite.txt
+
+max0 = SortBy[Table[{i[[1]], Round[i[[2,-1]]*1.8+32,0.1],
+ Round[i[[3,1]]*1.8+32, 0.1], Round[(i[[2,-1]]-i[[3,1]])*1.8, 0.1],
+ Take[i,-3]}, {i,extremes2}], #[[4]] &];
+
+max1 = SortBy[Table[{i[[1]], Round[i[[2,-2]]*1.8+32,0.1],
+ Round[i[[3,2]]*1.8+32, 0.1], Round[(i[[2,-2]]-i[[3,2]])*1.8, 0.1],
+ Take[i,-3]}, {i,extremes2}], #[[4]] &];
+
+
+https://maps.googleapis.com/maps/api/staticmap?center=1.36,103.91&size=640x400
+https://maps.googleapis.com/maps/api/staticmap?center=-10.453,105.688&zoom=10
+
+https://maps.googleapis.com/maps/api/staticmap?center=1.36,103.91&size=640x400&zoom=10
+
+
+
+
+
+
+
 sortext1 = SortBy[extremes2, (#[[2,-1]]-#[[3,1]]) &];
 
 
@@ -84,16 +108,14 @@ fgrep -v Quantile math.out | perl -pnle 's/\r//g; s/[{}]//g;s/\s+/ /g' |
 
 : use emacs to edit math2.out
 
- 
-TODO: omit fewer than 5000 data points
-
-CREATE TABLE temps (
+CREATE TABLE temperatures (
  station TEXT,
- max0 DOUBLE, max1 DOUBLE, max5 DOUBLE, max50 DOUBLE, max95 DOUBLE,
- max99 DOUBLE, max100 DOUBLE,
- min0 DOUBLE, min1 DOUBLE, min5 DOUBLE, min50 DOUBLE, min95 DOUBLE,
- min99 DOUBLE, min100 DOUBLE,
- maxdays INT, mindays INT
+ max0 DOUBLE, max1 DOUBLE, max5 DOUBLE, max50 DOUBLE,
+ max95 DOUBLE, max99 DOUBLE, max100 DOUBLE,
+ min0 DOUBLE, min1 DOUBLE, min5 DOUBLE, min50 DOUBLE,
+ min95 DOUBLE, min99 DOUBLE, min100 DOUBLE,
+ maxdays INT, mindays INT,
+ latitude DOUBLE, longitude DOUBLE, elevation DOUBLE
 );
 
 ; after import...

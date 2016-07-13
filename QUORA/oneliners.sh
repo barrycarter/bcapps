@@ -1,3 +1,10 @@
+# given 4sqlite.txt as defined in bc-moderate-temperature.m, creates a
+# SQLite3 loadable file/table
+
+perl -0777 -nle 'while (s/\{+(.*?)\}//s) {$x=$1; $x=~s/\s//g; print "$x\n"}' /home/barrycarter/20160712/4sqlite.txt
+
+exit;
+
 # downloads quora user list pages using tor, excluding those that have already been downloaded
 
 # later confirmed 14703 is last page, visiting
