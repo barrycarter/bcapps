@@ -12,7 +12,7 @@
 require "/usr/local/lib/bclib.pl";
 
 # oneoff on 9 Jan 2015 for new MESO stations
-meso(); die "TESTING";
+# meso(); die "TESTING";
 
 # mli contains weird entries, so must go first
 mli();
@@ -20,6 +20,44 @@ mli();
 meso();
 nsd();
 ucar();
+
+warn "TESTING";
+pjsg();
+
+# pjsg since we apparently need it for some Mathematica stations (PJSG
+# = Private Jet Services Group?)
+
+sub pjsg {
+
+  local(*A);
+
+  open(A, "bzcat $bclib{githome}/WEATHER/pjsg_all_location.csv.bz2|");
+
+  while (<A>) {
+
+    chomp();
+    my(@data) = csv($_);
+
+    # ignore numericals for now
+    if ($data[0]=~/^\d*$/) {next;}
+
+    # global seen hash
+    if ($seen{$data[0]}) {next;}
+
+    debug("NEW DATA FOR: $data[0]");
+
+    $seen{$data[0]} = 1;
+
+    unless ($globopts{noprint}) {
+      print join("\t", $data[0], "NULL", @data[2..7],
+"http://weather.gladstonefamily.net/cgi-bin/location.pl/pjsg_all_location.csv"
+), "\n";
+    }
+
+  }
+
+  close(A);
+}
 
 # fake subroutine so I can control order in which files are read
 sub meso {
@@ -41,10 +79,12 @@ sub meso {
     # global seen hash
     if ($seen{$data[0]}) {next;}
     $seen{$data[0]} = 1;
+    unless ($globopts{noprint}) {
     print join("\t", $data[0], "NULL", $data[2], $data[3], $data[4], $data[5],
 	       $data[6], $data[7],
 	       "http://mesowest.utah.edu/data/mesowest_link_csv.tbl"),
 		 "\n";
+  }
   }
 
   close(A);
@@ -61,11 +101,11 @@ sub nsd {
 
     # seen by anyone else?
     if ($seen{$indi}) {
-      debug("NSD SEEN: $indi");
+#      debug("NSD SEEN: $indi");
       next;
     }
 
-    debug("NSD NEW: $indi");
+#    debug("NSD NEW: $indi");
     $seen{$indi}=1;
 
     # convert lat to decimal (probably much better ways to do this!)
@@ -95,9 +135,11 @@ sub nsd {
     $elev = round2(convert($elev,"m","ft"));
     $wmobs = $wmob*1000+$wmos;
 
-    debug("NSD ABOUT TO PRINT");
+#    debug("NSD ABOUT TO PRINT");
     # print in importable format (for sqlite3)
+    unless ($globopts{noprint}) {
     print join("\t", ($indi, $wmobs, $place, $state, $country, $flat, $flon, $elev, "http://weather.noaa.gov/data/nsd_cccc.txt")),"\n";
+  }
   }
   close(A);
 }
@@ -164,7 +206,9 @@ sub ucar {
     $elev = round2(convert($elev,"m","ft"));
 
     # print in importable format (for sqlite3)
+    unless ($globopts{noprint}) {
     print join("\t", ($code, $wmobs, $name, $state, $country, $flat, $flon, $elev, "http://www.rap.ucar.edu/weather/surface/stations.txt")),"\n";
+  }
   }
   close(A);
 }
@@ -183,13 +227,13 @@ sub mli {
   # if ICAO blank, try to find it elsewhere
     unless ($i->{icao}=~/\S/) {
       if ($i->{icao_xref}=~/\S/) {
-	debug("CASE XREF");
+#	debug("CASE XREF");
 	$i->{icao} = $i->{icao_xref};
       } elsif ($i->{stn_key}=~s/^USaa//) {
-	debug("CASE STNKEY");
+#	debug("CASE STNKEY");
 	$i->{icao} = $i->{stn_key};
       } else {
-	debug("LINE HAS NO ICAO");
+	debug("LINE HAS NO ICAO: $i->{wmo}");
 	next;
     }
   }
@@ -208,7 +252,7 @@ sub mli {
     if (abs($i->{lat_prp})>90 || abs($i->{lon_prp})>180) {$err=1;}
     
     if ($err) {
-      debug("SKIPPING: ($i->{icao}) ($i->{lat_prp}) ($i->{lon_prp})");
+#      debug("SKIPPING: ($i->{icao}) ($i->{lat_prp}) ($i->{lon_prp})");
       next;
     }
 
@@ -231,7 +275,9 @@ sub mli {
     push(@l, round2(convert($i->{elev_baro},"m","ft")));
     # and source
     push(@l, "http://www.weathergraphics.com/identifiers/master-location-identifier-database-20130801.csv");
+    unless ($globopts{noprint}) {
     print join("\t",@l),"\n";
+  }
   }
 }
 
