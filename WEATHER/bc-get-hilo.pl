@@ -26,23 +26,28 @@ for $i (glob "*.bz2") {
 
   while (<A>) {
 
+    my($orig) = $_;
+
     # figure out if its a max or min and kill off
     s/^.*(TMAX|TMIN)\s*//;
     my($key) = $1;
 
-    # split remainder, only even numbered fields contain data
-    my(@vals) = split(/\s+/, $_);
+    # status codes are always letters, so this kills them off
+    s/[a-z]//ig;
 
-    # the parens below are just to make emacs happy
-    for $j (0..($#vals/2)) {
-      if ($vals[$j*2] == -9999) {next;}
-      push(@{$hash{$key}}, $vals[$j*2]);
+    # and the -9999
+    s/\-9999//g;
+
+    # and clean up leading spaces
+    s/^\s*//;
+
+    my(@vals) = split(/\s+/, $_);
+    debug("VALS FOR $orig",@vals);
+    push(@{$hash{$key}}, @vals);
     }
-  }
 
   my($stat) = $i;
   $stat=~s/\.dly\.bz2$//;
-  debug("HIGHS", @{$hash{TMAX}});
   my(@lows) = percentile($hash{TMIN}, [0,.01,.02,.05]);
   my(@highs) = percentile($hash{TMAX}, [.95,.98,.99,1]);
   print join(",",($stat,@lows,@highs)),"\n";
