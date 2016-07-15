@@ -8,51 +8,40 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# debug(percentile([1,2,7], [0,.15,.25,.5,.75,1]));
-
-my($dir) = "/home/barrycarter/WEATHER/ghcnd_all";
-chdir($dir)||die("Can't chdir");
-
-# TODO: doing this in two batches (one for max temps and one for min
-# temps) might be inefficient
-
 # TODO: early versions might be not efficient (even more so than above)
+my($file) = @ARGV;
 
-for $i (glob "*.bz2") {
+my(%hash) = ();
 
-  my(%hash) = ();
+open(A,"bzegrep 'TMAX|TMIN' $file|");
 
-  open(A,"bzegrep 'TMAX|TMIN' $i|");
+while (<A>) {
 
-  while (<A>) {
+  my($orig) = $_;
 
-    my($orig) = $_;
+  # figure out if its a max or min and kill off
+  s/^.*(TMAX|TMIN)\s*//;
+  my($key) = $1;
 
-    # figure out if its a max or min and kill off
-    s/^.*(TMAX|TMIN)\s*//;
-    my($key) = $1;
+  # status codes are always letters, so this kills them off
+  s/[a-z]//ig;
 
-    # status codes are always letters, so this kills them off
-    s/[a-z]//ig;
+  # and the -9999
+  s/\-9999//g;
 
-    # and the -9999
-    s/\-9999//g;
+  # and clean up leading spaces
+  s/^\s*//;
 
-    # and clean up leading spaces
-    s/^\s*//;
-
-    my(@vals) = split(/\s+/, $_);
-    debug("VALS FOR $orig",@vals);
-    push(@{$hash{$key}}, @vals);
-    }
-
-  my($stat) = $i;
-  $stat=~s/\.dly\.bz2$//;
-  my(@lows) = percentile($hash{TMIN}, [0,.01,.02,.05]);
-  my(@highs) = percentile($hash{TMAX}, [.95,.98,.99,1]);
-  print join(",",($stat,@lows,@highs)),"\n";
+  my(@vals) = split(/\s+/, $_);
+  debug("VALS FOR $orig",@vals);
+  push(@{$hash{$key}}, @vals);
 }
 
+my($stat) = $file;
+$stat=~s/\.dly\.bz2$//;
+my(@lows) = percentile($hash{TMIN}, [0,.01,.02,.05]);
+my(@highs) = percentile($hash{TMAX}, [.95,.98,.99,1]);
+print join(",",($stat,@lows,@highs)),"\n";
 
 =item percentile(\@list, \@percentiles)
 
@@ -64,7 +53,7 @@ TODO: maybe put this in bclib.pl
 
 sub percentile {
   my($lref, $pref) = @_;
-  my(@l) = sort(@$lref);
+  my(@l) = sort {$a <=> $b} (@$lref);
   my(@p) = @$pref;
   my(@ret);
 
