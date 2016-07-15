@@ -16,6 +16,7 @@ while (<A>) {
   get_chars($_,39,40), get_chars($_,42,71), get_chars($_,81,85));
 
   map($_=trim($_), @fields);
+  map(s/\"//g, @fields);
 
   print B join("\t",@fields),"\n";
 }
