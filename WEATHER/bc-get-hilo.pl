@@ -11,7 +11,7 @@ require "/usr/local/lib/bclib.pl";
 # TODO: early versions might be not efficient (even more so than above)
 my($file) = @ARGV;
 
-my(%hash) = ();
+my(%hash, %vals);
 
 open(A,"bzegrep 'TMAX|TMIN' $file|");
 
@@ -19,29 +19,32 @@ while (<A>) {
 
   my($orig) = $_;
 
-  # figure out if its a max or min and kill off
-  s/^.*(TMAX|TMIN)\s*//;
-  my($key) = $1;
+  my($key) = get_chars($_,18,21);
 
-  # status codes are always letters, so this kills them off
-  s/[a-z]//ig;
+  # the 31 element values (per README file)
+  for ($i=22; $i<=262; $i+=8) {
+    my($val) = get_chars($_, $i, $i+4);
+    my($qflag) = get_chars($_, $i+6, $i+6);
 
-  # and the -9999
-  s/\-9999//g;
+    # quality problem with data
+    unless ($qflag eq " ") {next;}
 
-  # and clean up leading spaces
-  s/^\s*//;
+    # missing data
+    if ($val == -9999) {next;}
 
-  my(@vals) = split(/\s+/, $_);
-  debug("VALS FOR $orig",@vals);
-  push(@{$hash{$key}}, @vals);
+    # all good, push
+    push(@{$hash{$key}}, $val);
+    # count how many of each
+    $vals{$key}++;
+  }
+
 }
 
 my($stat) = $file;
 $stat=~s/\.dly\.bz2$//;
 my(@lows) = percentile($hash{TMIN}, [0,.01,.02,.05]);
 my(@highs) = percentile($hash{TMAX}, [.95,.98,.99,1]);
-print join(",",($stat,@lows,@highs)),"\n";
+print join(",",($stat,@lows,@highs,$vals{TMIN},$vals{TMAX})),"\n";
 
 =item percentile(\@list, \@percentiles)
 
@@ -64,4 +67,11 @@ sub percentile {
     push(@ret, $l[$int]*(1-$frac) + $frac*$l[$int+1]);
   }
   return @ret;
+}
+
+# TODO: this needs to go into bclib.pl
+
+sub get_chars {
+  my($str,$x,$y) = @_;
+  return substr($str,$x-1,$y-$x+1);
 }
