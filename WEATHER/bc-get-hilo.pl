@@ -8,6 +8,8 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# debug(percentile([1,2,7], [0,.15,.25,.5,.75,1]));
+
 my($dir) = "/home/barrycarter/WEATHER/ghcnd_all";
 chdir($dir)||die("Can't chdir");
 
@@ -32,9 +34,40 @@ for $i (glob "*.bz2") {
     my(@vals) = split(/\s+/, $_);
 
     # the parens below are just to make emacs happy
-    for $j (0..($#vals/2)) {$hash{$key}{$vals[$j*2]}++}
-
+    for $j (0..($#vals/2)) {
+      if ($vals[$j*2] == -9999) {next;}
+      push(@{$hash{$key}}, $vals[$j*2]);
+    }
   }
 
-  for $j (keys %{$hash{TMIN}}) {debug("$i -> $j -> $hash{TMIN}{$j}");}
+  my($stat) = $i;
+  $stat=~s/\.dly\.bz2$//;
+  debug("HIGHS", @{$hash{TMAX}});
+  my(@lows) = percentile($hash{TMIN}, [0,.01,.02,.05]);
+  my(@highs) = percentile($hash{TMAX}, [.95,.98,.99,1]);
+  print join(",",($stat,@lows,@highs)),"\n";
+}
+
+
+=item percentile(\@list, \@percentiles)
+
+Calculate the given percentiles of a given a list.
+
+TODO: maybe put this in bclib.pl
+
+=cut
+
+sub percentile {
+  my($lref, $pref) = @_;
+  my(@l) = sort(@$lref);
+  my(@p) = @$pref;
+  my(@ret);
+
+  for $i (@p) {
+    my($elt) = $#l*$i;
+    my($int) = floor($elt);
+    my($frac) = $elt-floor($elt);
+    push(@ret, $l[$int]*(1-$frac) + $frac*$l[$int+1]);
+  }
+  return @ret;
 }
