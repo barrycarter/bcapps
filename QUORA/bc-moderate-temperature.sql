@@ -15,10 +15,13 @@ CREATE TABLE statns (
 .separator "\t"
 .import ghcnd-stations.tsv statns
 
+-- perl -pnle 's/ /,/;s/(\w+)/ucfirst(lc($1))/eg' ghcnd-states.txt>states.csv
+
 CREATE TABLE states (code TEXT, name TEXT);
 .separator ","
 .import ghcnd-states.csv states
 
+-- 
 CREATE TABLE countries (code TEXT, name TEXT);
 .separator "\t"
 .import ghcnd-countries.csv countries

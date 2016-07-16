@@ -17,6 +17,7 @@ while (<A>) {
 
   map($_=trim($_), @fields);
   map(s/\"//g, @fields);
+  $fields[6]=~s/(\w+)/ucfirst(lc($1))/eg;
 
   print B join("\t",@fields),"\n";
 }
