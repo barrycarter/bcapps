@@ -4,6 +4,42 @@
 
 require "/usr/local/lib/bclib.pl";
 
+=item unix
+
+The following Unix commands to determine which stations have both TMAX
+and TMIN data for the same years.
+
+fgrep TMAX ghcnd-inventory.txt | sort > stations-with-tmax.txt.srt
+fgrep TMIN ghcnd-inventory.txt | sort > stations-with-tmin.txt.srt
+
+: this join auto excludes stations that have TMAX or TMIN but not both
+
+: below shows 33770 stations with both TMAX and TMIN
+
+join stations-with-tmax.txt.srt stations-with-tmin.txt.srt | wc
+
+: below shows 1555 of those stations have different year ranges for
+: TMAX and TMIN
+
+join stations-with-tmax.txt.srt stations-with-tmin.txt.srt | perl -anle 'unless ($F[4] == $F[9] && $F[5] == $F[10]) {print "BAD: $_"}' | wc
+
+: i am comfortable with ignoring those stations, so...
+
+join stations-with-tmax.txt.srt stations-with-tmin.txt.srt | perl -anle 'if ($F[4] == $F[9] && $F[5] == $F[10]) {print $_}' | sort > join1.txt
+
+: we know all of these stations have TMAX, so we trim the inventory
+: file and sort it for the final join
+
+fgrep ' TMAX ' ghcnd-inventory.txt | sort > join2.txt
+
+: we could do this final join in code, but its nice to see what it looks like
+
+join --check-order join[12].txt > join3.txt
+
+
+
+=cut
+
 # use Unix join command to get latitude/longitude/data years/name all
 # at once, hopefully
 
