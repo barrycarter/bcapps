@@ -6,7 +6,11 @@ https://www.quora.com/unanswered/Which-city-has-the-minimum-temperature-of-22-C-
 
 https://www.quora.com/unanswered/Which-cities-have-the-greatest-variation-of-seasonal-temperatures
 
-TODO: answer goes here!
+You would probably be happiest in these locations:
+
+[[image16.gif]]
+
+where High* is the 99th percentile of the high temperatures and Low* is the 1st percentile of low temperatures. In other words, the high and low temperatures remain within these ranges 99% of the time. Details follow.
 
 It turns out that other people have considered this question before:
 
@@ -23,55 +27,56 @@ but I found the question interesting and ended up doing some research on my own:
 
   - I then limited this list to the 8479 stations that have continuous data through 2016 and going back at least 30 years to 1986. Some of these stations have high and low temperatures dating back to 1824. The Brera observatory unfortunately stopped making observations after 2008, and is not on this list.
 
-  - 
+  - I then used:
 
-(ended up doing this w/o Mathematica, but text of answer is here)
+    - https://github.com/barrycarter/bcapps/blob/master/WEATHER/bc-parse-ghcnd.pl
+    - https://github.com/barrycarter/bcapps/blob/master/WEATHER/bc-get-hilo.pl
+    - https://github.com/barrycarter/bcapps/blob/master/QUORA/bc-moderate-temperature.sql
 
-http://76e16f70164ddee1ab3ceb023a57002a.extremes.db.94y.info/
+to create an SQLite3 database of extreme high and low temperatures, plus slightly less extreme highs and lows: for example, the 99th percentile of the highs (only 1% of days have high temperatures higher than this) and the 1st percentile of the lows (only 1% of days have low temperatures lower than this). You can see/query this database at: http://extremes.db.94y.info/
 
-http://bd88be6b5d7e37a69bcbd03b63cde9d1.extremes.db.94y.info/
+  - I first looked at locations with smallest difference between record high and record low temperatures: http://8276c2de574266eab81412fc23ac786b.extremes.db.94y.info/ (apologies for the location names, they come directly from GHCN and are kind of ugly):
 
-http://d0374d197fed95ba52d81a66b178c057.extremes.db.94y.info/
+[[image13.gif]]
 
-http://ede67c03c7523db7ddeb87524545940d.extremes.db.94y.info/
+Although these locations have smallish differences in record high and record low temperatures, the temperatures themselves are very warm. In other words, these locations are almost always warmer than room temperature, which is probably not what you're looking for.
 
-http://24cb18ed989d2239ef47fff5b4b354c5.extremes.db.94y.info/
+If we accept that room temperature is 68F, it would be nice to find locations where the temperature always remains within 20 degrees of 68F. Unfortunately there are no such locations: http://6cdd23bae8e09f285bd8ec4ccef902e0.extremes.db.94y.info/
 
-http://75071eb30a826dcaec4143805e0daaaf.extremes.db.94y.info/
+If we push to within 25 degrees, we do get a few results: http://a334acc8265c4a76852f5ee7bffecf2a.extremes.db.94y.info/
 
-TODO: use select on above since it incorps state correctly (actually, changing view)
+[[image14.gif]]
 
-http://727007a49c37b740835bfc56b47c9822.extremes.db.94y.info/
+However, perhaps we're being too strict by looking at the absolute record highs and lows. Presumably, you're looking for places that are comfortable most of the time, but are OK with the temperature getting "too hot" or "too cold" a few days out of the year, since you can't have everything.
 
-http://930cf0e0bd2b5b3361805733a9a0d92b.extremes.db.94y.info/
+So now, let's look at the 99th percentile of high temperatures (it's cooler than this 99% of the time, or ~361+ days of the year) and the 1st percentile of low temperatures (it's warmer than this ~361+ days of the year): http://22d8937ad74179bcf75142f4862708ff.extremes.db.94y.info/
 
-TODO: apologize for crap names
+[[image15.gif]]
 
-TODO: include google maps of all locations in "final" answer
+where the "*" indicates the 99th or 1st percentile.
 
-http://08e6563cc414c66bc0dbe03dd12fea04.extremes.db.94y.info/
+Once again, the results are a bit on the warm side. Restricting to 68F plus or minus 20F, we have: http://edb0759f49c0816c8c0b70b92f2f5d84.extremes.db.94y.info/
 
-http://6ed6837753adea5adf3cc884bb99e7ee.extremes.db.94y.info/
+[[image16.gif]]
 
-http://59ee3ff761e18a624f72047559561d16.extremes.db.94y.info/
+which is what I give as the answer.
 
-TODO: these URLs
+Several notes and caveats:
 
-TODO: night and day temps (ie, temps while sun is up only?)
+  - You may find 68F plus/minus 20F a bad choice of range. There might be better choices for greater comfort.
 
-TODO: apologize for odd name casing
+  - Most people are out and about during the day, and don't care as much about the temperature at night. It would be interesting to do an analysis that includes only daytime temperatures. If anyone wants to do this as a project, let me know.
 
-TODO: mention Perl script
+Possible TODOs:
 
-TODO: mention data source
+  - When giving a list of results, the database could also show a Google map of the locations listed.
 
-TODO: mention procedure
+  - The cumulative distribution function (CDF) of both the high and low temperatures is nearly a straight line (which is somewhat surprising, although I'm not the first person to observe this: http://www.sjsu.edu/faculty/watkins/normalvariation.htm ) but looks more like the tangent function on a balanced interval around 0 (but smaller than pi/2 obviously). There may or may not be something in this, if anyone is interested in researching.
 
-TODO: summarize answer at top
+Whining:
 
+  - I originally tried doing this with Mathematica's WeatherData[] function, but it turns out that function really really sucks.
 
-
-*)
 
 (* starting here, trying to use "pure" Mathematica *)
 
@@ -191,14 +196,6 @@ DELETE FROM temps WHERE maxdays < 5000 OR mindays < 5000;
 
 6280 remain
 
-TODO: sunlight data only?
-
-TODO: use isd-lite instead of mathematica?
-
-TODO: convert other data into "mathematica" form?
-
-TODO: add lookup table for WMO stations?
-
 *)
 
 test0813 = printstuff["KBOS"];
@@ -246,8 +243,6 @@ temp0629[x_] := temp0618[[Round[x]]]
 temp0627[x_] = superfour[temp0618,2][x];
 
 Plot[{temp0627[x], temp0629[x]},{x,0.5,366.5}]
-
-(* TODO: test that 366 elements, and at least n years of data for each *)
 
 Mean[Transpose[temp1731[[5]]][[2]]]
 
@@ -318,12 +313,6 @@ minfunc[stat_] := minfunc[stat] = superfour[Select[min[stat],NumberQ],1]
 (* this just forces computation *)
 
 Table[{minfunc[stat], maxfunc[stat]}, {stat, Take[cities,50]}]
-
-
- 
-
-
-TODO: note SJSU
 
 (* this test is for 10 years, really do 30 years *)
 
