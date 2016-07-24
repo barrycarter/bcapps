@@ -179,3 +179,7 @@ b[n_] := Module[{v,i},
 ];
 
 
+(* https://www.quora.com/What-is-the-value-of-sqrt-3+-sqrt-3+-sqrt-3+-sqrt-3+-sqrt-3+-dots *)
+
+RSolve[{a[0] == Sqrt[3], a[n] == Sqrt[3+a[n-1]]}, a[n], n]
+

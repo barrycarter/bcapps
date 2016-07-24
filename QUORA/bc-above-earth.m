@@ -1,87 +1,13 @@
-conds = {x[t] > 0, t > 0, a < 0, Element[{C[1], C[2]}, Reals]}
-sol = FullSimplify[DSolve[x''[t] == a/x[t]^2, x, t],conds]
-tsols = FullSimplify[Solve[sol[[1]] /. x[t] -> x, t],conds]
-t1[x_] = FullSimplify[tsols[[1,1,2]], conds]
-t2[x_] = FullSimplify[tsols[[2,1,2]], conds]
-
-test0951 = FullSimplify[1/2/D[sol[[1,1]],x[t]],conds]
-
-Solve[test0951 == 0, C[1]]
-
-{{C[1] -> 0}, {C[1] -> (2*a)/x[t]}}
-
-gives us -19.7767 for C[1] 
-
-test1031 = sol[[1,1]]
-
-test1031 /. {a -> -395534, C[1] -> -19.7767}
-
-gives us the famed 19.7767 for C[1]
-
-sol[[1]] /. {t -> 0, x[t] -> 40000, a -> -395534, C[1] -> 19.7767}
-
-C[2] -> 57961.3
-
-Sqrt[-57961.3 + 0.00012928213726487583*
-   (395534*Log[-395534 + (19.7767 + 4.447100178768182*
-           Sqrt[19.7767 - 791068/x[t]])*x[t]] + 4.447100178768182*
-      Sqrt[19.7767 - 791068/x[t]]*x[t])^2]
-
-Sqrt[sol[[1,1]]] - C[2] /. {C[1] -> 19.7767, C[2] -> 57961.3, 
- a -> 395534, x[t] -> x}
-
-test1031 /. {C[1] -> 19.7767, a -> -395534, C[2] -> 57961.3, x[t] -> x}
-
-
-
-Solve[{t1[40000] == 0, 1/t1'[40000] == 0, a == 395534}]
-
-NSolve[{1/t1'[40000] == 0 /. a -> 395534}]
-
-Plot[FullSimplify[1/t1'[40000] /. {a -> 395534, C[1] -> z}, conds], 
- {z, 0, 100}]
-
-Limit[1/(t1'[x]) /. {a -> 395534., C[1] -> 19.7767}, x -> 40000]       
-
-t1[40000.] /. {a -> 395534., C[1] -> 19.7767}
-
-test0918[x_] = N[1/t1'[40000] /. {a -> 395534, C[1] -> x}]
-
-C[2] -> -57961.3
-
-FullSimplify[a*(t1''[x])^2, conds]
-
-Plot[t1[x] /. {C[1] -> 19.7767, C[2] -> -57961.3, a -> 395534},
- {x, 40000/2/Pi, 40000}]
-
-Plot[t2[x] /. {C[1] -> 19.7767, C[2] -> 201.033, a -> 395534},
- {x, 40000/2/Pi, 40000}]
-
-
-is
-
-a^3/(x*(-2*a + x*C[1])^3)
-
-DSolve[{
- x''[t] == a1/(y[t]-x[t])^2,
- y''[t] == a2/(y[t]-x[t])^2,
- x[0] - y[0] == d,
- x'[0] == 0, y'[0] == 0
-}, x, t]
-
-
-
-
-
 
 (* 
 
 [i]"Eight miles high and falling fast, it landed foul on the grass"[/i] - American Pie, Don McLean
 
-The mass would fall 1204.57 km and have a velocity of 0.675 km/s
-(about 1500 mph).
+The mass would fall 1204.57 km and have a velocity of 0.675 km/s (about 1500 mph).
 
 [[image]]
+
+
 
 Frank Popa is essentially correct.
 
@@ -206,6 +132,77 @@ TODO: how to paste TeX into Quora? $tex$ fails [math /]
 
 *)
 
+conds = {x[t] > 0, t > 0, a < 0, Element[{C[1], C[2]}, Reals]}
+sol = FullSimplify[DSolve[x''[t] == a/x[t]^2, x, t],conds]
+tsols = FullSimplify[Solve[sol[[1]] /. x[t] -> x, t],conds]
+t1[x_] = FullSimplify[tsols[[1,1,2]], conds]
+t2[x_] = FullSimplify[tsols[[2,1,2]], conds]
+
+test0951 = FullSimplify[1/2/D[sol[[1,1]],x[t]],conds]
+
+Solve[test0951 == 0, C[1]]
+
+{{C[1] -> 0}, {C[1] -> (2*a)/x[t]}}
+
+gives us -19.7767 for C[1] 
+
+test1031 = sol[[1,1]]
+
+test1031 /. {a -> -395534, C[1] -> -19.7767}
+
+gives us the famed 19.7767 for C[1]
+
+sol[[1]] /. {t -> 0, x[t] -> 40000, a -> -395534, C[1] -> 19.7767}
+
+C[2] -> 57961.3
+
+Sqrt[-57961.3 + 0.00012928213726487583*
+   (395534*Log[-395534 + (19.7767 + 4.447100178768182*
+           Sqrt[19.7767 - 791068/x[t]])*x[t]] + 4.447100178768182*
+      Sqrt[19.7767 - 791068/x[t]]*x[t])^2]
+
+Sqrt[sol[[1,1]]] - C[2] /. {C[1] -> 19.7767, C[2] -> 57961.3, 
+ a -> 395534, x[t] -> x}
+
+test1031 /. {C[1] -> 19.7767, a -> -395534, C[2] -> 57961.3, x[t] -> x}
+
+
+
+Solve[{t1[40000] == 0, 1/t1'[40000] == 0, a == 395534}]
+
+NSolve[{1/t1'[40000] == 0 /. a -> 395534}]
+
+Plot[FullSimplify[1/t1'[40000] /. {a -> 395534, C[1] -> z}, conds], 
+ {z, 0, 100}]
+
+Limit[1/(t1'[x]) /. {a -> 395534., C[1] -> 19.7767}, x -> 40000]       
+
+t1[40000.] /. {a -> 395534., C[1] -> 19.7767}
+
+test0918[x_] = N[1/t1'[40000] /. {a -> 395534, C[1] -> x}]
+
+C[2] -> -57961.3
+
+FullSimplify[a*(t1''[x])^2, conds]
+
+Plot[t1[x] /. {C[1] -> 19.7767, C[2] -> -57961.3, a -> 395534},
+ {x, 40000/2/Pi, 40000}]
+
+Plot[t2[x] /. {C[1] -> 19.7767, C[2] -> 201.033, a -> 395534},
+ {x, 40000/2/Pi, 40000}]
+
+
+is
+
+a^3/(x*(-2*a + x*C[1])^3)
+
+DSolve[{
+ x''[t] == a1/(y[t]-x[t])^2,
+ y''[t] == a2/(y[t]-x[t])^2,
+ x[0] - y[0] == d,
+ x'[0] == 0, y'[0] == 0
+}, x, t]
+
 epr = 6356.75231424518
 g = 9.8/1000
 ti = 17220
@@ -214,14 +211,26 @@ sol[t_] = NDSolve[{x[0] == 40000+epr, x'[0] == 0,
  x''[t] == -g*(epr/x[t])^2
 },  x[t], {t,0,ti}][[1,1,2]]
 
-Plot[sol[t]-epr,{t,0,ti}]
+Plot[sol[t]-epr,{t,0,ti}, PlotLabel -> "Height above Earth surface
+(km) vs time (s)"]
+
+Plot[{sol[t]-epr}, {x,0,ti}]
+
+points = Table[{x,sol[x]-epr},{x,1,ti}];
+
+Fit[points,{1,x,x^2},x]
+
+
+
 showit
 
 https://en.wikipedia.org/wiki/Free_fall#Inverse-square_law_gravitational_field
 
-TODO: link to other answer re general formula
+TODO: link to other answer re general formula (??? which one?)
 
 TODO: general solution with constant filled in
+
+TODO: apologize for not exact and link to exact
 
 TODO: treating as physics problem
 

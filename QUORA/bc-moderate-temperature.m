@@ -4,6 +4,73 @@ https://www.quora.com/Which-country-location-has-minimum-temperature-variation-t
 
 https://www.quora.com/unanswered/Which-city-has-the-minimum-temperature-of-22-C-and-doesnt-go-much-below-it-and-has-a-maximum-temperature-of-27-C-and-doesnt-go-much-above-it-almost-throughout-the-year
 
+https://www.quora.com/unanswered/Which-cities-have-the-greatest-variation-of-seasonal-temperatures
+
+TODO: answer goes here!
+
+It turns out that other people have considered this question before:
+
+http://www.city-data.com/top2/c458.html
+http://www.city-data.com/forum/weather/1161324-place-world-least-temperature-variation.html
+http://www.weatherpages.com/variety/least.html
+https://www.sciencedaily.com/releases/2014/03/140320173249.htm
+
+but I found the question interesting and ended up doing some research on my own:
+
+  - I visited ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily/ and downloaded the 2.9G file "ghcnd_all.tar.gz" which contains high and low temperature data (and more) for over 100,000 weather stations around the world, dating back as far as 1763 in some cases. Quoting http://link.springer.com/article/10.1023/A:1014923027396
+
+"Daily meteorological observations have been made at the Brera astronomical observatory in Milan since 1763. Even if the data have always been collected at this observatory, the Milan series are far from being homogeneous as several changes were made to instruments, station location and observation methods."
+
+  - I then limited this list to the 8479 stations that have continuous data through 2016 and going back at least 30 years to 1986. Some of these stations have high and low temperatures dating back to 1824. The Brera observatory unfortunately stopped making observations after 2008, and is not on this list.
+
+  - 
+
+(ended up doing this w/o Mathematica, but text of answer is here)
+
+http://76e16f70164ddee1ab3ceb023a57002a.extremes.db.94y.info/
+
+http://bd88be6b5d7e37a69bcbd03b63cde9d1.extremes.db.94y.info/
+
+http://d0374d197fed95ba52d81a66b178c057.extremes.db.94y.info/
+
+http://ede67c03c7523db7ddeb87524545940d.extremes.db.94y.info/
+
+http://24cb18ed989d2239ef47fff5b4b354c5.extremes.db.94y.info/
+
+http://75071eb30a826dcaec4143805e0daaaf.extremes.db.94y.info/
+
+TODO: use select on above since it incorps state correctly (actually, changing view)
+
+http://727007a49c37b740835bfc56b47c9822.extremes.db.94y.info/
+
+http://930cf0e0bd2b5b3361805733a9a0d92b.extremes.db.94y.info/
+
+TODO: apologize for crap names
+
+TODO: include google maps of all locations in "final" answer
+
+http://08e6563cc414c66bc0dbe03dd12fea04.extremes.db.94y.info/
+
+http://6ed6837753adea5adf3cc884bb99e7ee.extremes.db.94y.info/
+
+http://59ee3ff761e18a624f72047559561d16.extremes.db.94y.info/
+
+TODO: these URLs
+
+TODO: night and day temps (ie, temps while sun is up only?)
+
+TODO: apologize for odd name casing
+
+TODO: mention Perl script
+
+TODO: mention data source
+
+TODO: mention procedure
+
+TODO: summarize answer at top
+
+
+
 *)
 
 (* starting here, trying to use "pure" Mathematica *)

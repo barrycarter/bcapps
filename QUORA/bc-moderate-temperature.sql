@@ -15,13 +15,11 @@ CREATE TABLE statns (
 .separator "\t"
 .import ghcnd-stations.tsv statns
 
--- perl -pnle 's/ /,/;s/(\w+)/ucfirst(lc($1))/eg' ghcnd-states.txt>states.csv
-
 CREATE TABLE states (code TEXT, name TEXT);
-.separator ","
-.import ghcnd-states.csv states
+.separator "\t"
+.import ghcnd-states.tsv states
 
--- 
+-- perl -pnle 's/ /\t/;s/\s*$//' ghcnd-countries.txt > ! ghcnd-countries.csv
 CREATE TABLE countries (code TEXT, name TEXT);
 .separator "\t"
 .import ghcnd-countries.csv countries
@@ -65,11 +63,13 @@ SELECT e.code,
 
 CREATE VIEW extremesf AS
  SELECT code, 
-ROUND(min0*1.8+32,2) AS min0, ROUND(min1*1.8+32,2) AS min1,
-ROUND(min2*1.8+32,2) AS min2, ROUND(min5*1.8+32,2) AS min5,
-ROUND(max95*1.8+32,2) AS max95, ROUND(max98*1.8+32,2) AS max98,
-ROUND(max99*1.8+32,2) AS max99, ROUND(max100*1.8+32,2) AS max100,
-latitude, longitude elevation, name, state, country FROM extremes;
+ROUND(min0*1.8+32,1) AS min0, ROUND(min1*1.8+32,1) AS min1,
+ROUND(min2*1.8+32,1) AS min2, ROUND(min5*1.8+32,1) AS min5,
+ROUND(max95*1.8+32,1) AS max95, ROUND(max98*1.8+32,1) AS max98,
+ROUND(max99*1.8+32,1) AS max99, ROUND(max100*1.8+32,1) AS max100,
+latitude, longitude, elevation, 
+name||COALESCE(", "||state,"")||", "||country AS Location
+FROM extremes;
 
 DROP TABLE statns;
 DROP TABLE countries;

@@ -26,7 +26,23 @@ close(A);
 close(B);
 
 
-die "TESTING";
+
+open(A,"ghcnd-states.txt")||die("Can't open, $!");
+open(B,">ghcnd-states.tsv");
+
+while (<A>) {
+
+  my(@fields) = (get_chars($_,1,2), get_chars($_,4,50));
+
+  map($_=trim($_), @fields);
+  map(s/\"//g, @fields);
+  $fields[1]=~s/(\w+)/ucfirst(lc($1))/eg;
+
+  print B join("\t",@fields),"\n";
+}
+
+close(A);
+close(B);
 
 =item comment
 
