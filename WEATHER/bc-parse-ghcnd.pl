@@ -10,16 +10,26 @@ require "/usr/local/lib/bclib.pl";
 # TODO: this is ugly, though I think it will work
 
 # TODO: using TMAX data as canonical, which it should be except for
-# years included, where I'll just pretend it is
+# years included, where I'll just pretend it is; however, it turns out
+# there is TMIN for 33917 stations and TMAX for 34015, so, yes, there
+# is a disconnect here; maybe only use stations that have both?
 
-open(A, "join ghcnd-inventory.txt ghcnd-stations.txt | fgrep ' TMAX '|");
+# NOTE: must created sorted files, join won't work otherwise
+
+open(A, "join --check-order ghcnd-inventory.txt.srt ghcnd-stations.txt.srt | fgrep ' TMAX '|");
 
 while (<A>) {
 
-  my($name, $lat, $lon, $tmax, $syear, $eyear, $lat2, $lon2, $el, @rest) = 
+  my($code, $lat, $lon, $tmax, $syear, $eyear, $lat2, $lon2, $el, @rest) = 
     split(/\s+/, $_);
 
+  # sanity checking
+  unless ($tmax eq "TMAX" && $lat == $lat2 && $lon == $lon2) {die "WTF: $_";}
+
   my($location) = join(" ",@rest);
+  my($cc) = substr($code,0,2);
+
+  print join("\t", ($cc, $code, $lat, $lon, $el, $syear, $eyear, $location)),"\n";
 
 }
 
