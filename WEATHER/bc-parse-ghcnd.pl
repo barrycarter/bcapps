@@ -27,16 +27,9 @@ join stations-with-tmax.txt.srt stations-with-tmin.txt.srt | perl -anle 'unless 
 
 join stations-with-tmax.txt.srt stations-with-tmin.txt.srt | perl -anle 'if ($F[4] == $F[9] && $F[5] == $F[10]) {print $_}' | sort > join1.txt
 
-: we know all of these stations have TMAX, so we trim the inventory
-: file and sort it for the final join
-
-fgrep ' TMAX ' ghcnd-inventory.txt | sort > join2.txt
-
 : we could do this final join in code, but its nice to see what it looks like
 
-join --check-order join[12].txt > join3.txt
-
-
+sort ghcnd-stations.txt | join --check-order join1.txt - > join3.txt
 
 =cut
 
@@ -52,15 +45,19 @@ join --check-order join[12].txt > join3.txt
 
 # NOTE: must created sorted files, join won't work otherwise
 
-open(A, "join --check-order ghcnd-inventory.txt.srt ghcnd-stations.txt.srt | fgrep ' TMAX '|");
+open(A, "join3.txt");
 
 while (<A>) {
 
-  my($code, $lat, $lon, $tmax, $syear, $eyear, $lat2, $lon2, $el, @rest) = 
-    split(/\s+/, $_);
+  my($code, $lat, $lon, $tmax, $syear, $eyear, $lat2, $lon2, $tmin,
+  $syear2, $eyear2, $lat3, $lon3, $el, @rest) = split(/\s+/, $_);
 
   # sanity checking
-  unless ($tmax eq "TMAX" && $lat == $lat2 && $lon == $lon2) {die "WTF: $_";}
+  unless ($tmax eq "TMAX" && $tmin eq "TMIN" &&
+	  $lat == $lat2 && $lon == $lon2 && $lat == $lat3 && $lon == $lon3 &&
+	  $syear == $syear2 && $eyear == $eyear2) {
+    die "WTF: $_";
+  }
 
   my($location) = join(" ",@rest);
   my($cc) = substr($code,0,2);
