@@ -33,18 +33,6 @@ sort ghcnd-stations.txt | join --check-order join1.txt - > join3.txt
 
 =cut
 
-# use Unix join command to get latitude/longitude/data years/name all
-# at once, hopefully
-
-# TODO: this is ugly, though I think it will work
-
-# TODO: using TMAX data as canonical, which it should be except for
-# years included, where I'll just pretend it is; however, it turns out
-# there is TMIN for 33917 stations and TMAX for 34015, so, yes, there
-# is a disconnect here; maybe only use stations that have both?
-
-# NOTE: must created sorted files, join won't work otherwise
-
 open(A, "join3.txt");
 
 while (<A>) {
