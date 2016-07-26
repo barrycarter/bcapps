@@ -23,6 +23,11 @@ Adding these numbers up, you get 0.5348. In other words, when you say the probab
 
 Using similar calculations, you're saying there's a 97.52% chance they'll win between 10 and 18 games, and a 99.41% chance they'll win between 9 and 19 games. In other words, when the team wins 20 games in a row, it's strong evidence that your 70% estimate was probably incorrect.
 
+I'd really like to do more here, because answering the question "how do you determine if a probabilistic guess is 'correct'" is an interesting one. Although I'm guessing it has been studied, I want to look into it more.
+
+
+TODO: more here
+
 TODO: usually reverse null hypo, compare to 50%?
 
 TODO: (k+1)/(n+2)
