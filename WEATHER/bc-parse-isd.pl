@@ -5,7 +5,7 @@
 # constant of linear regression
 
 # To obtain all isd-lite data (it's a LOT!):
-# ncftpget -T -R ftp://ftp3.ncdc.noaa.gov/pub/data/noaa/isd-lite/
+# ncftpget -T -R ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-lite/
 
 # Stations identified as "USAF-WBAN"; see db/ish-history.csv for more info
 # Example: 723650-23050 is KABQ, 723647-03034 and 723647-99999 are KAEG.
