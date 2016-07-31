@@ -4,7 +4,7 @@
 
 require "/usr/local/lib/bclib.pl";
 
-my($all) = read_file("/home/barrycarter/20160724/top_questions.html");
+my($all, $fname) = cmdfile();
 
 # trim to "More Stories" at top and "layout_3col_right" at bottom
 
@@ -12,6 +12,10 @@ $all=~s/^.*More Stories//s;
 $all=~s/layout_3col_right.*$//s;
 
 my(%links);
+
+
+# debug("ALL: $all");
+
 while($all=~s/href="(.*?)"//s) {
   my($link) = $1;
   # find all quora.com links to non-profiles and non-topics (ie, questions)
@@ -23,20 +27,29 @@ while($all=~s/href="(.*?)"//s) {
 # blockage; note that you do NOT need to be logged in to see a
 # question's log entries (or even the question itself, hmmm)
 
-my($out, $err, $res);
-
 for $i (sort keys %links) {
 
   debug("LOGS/Q FOR: $i");
 
   # TODO: 86400s is possibly excessive here
-  ($out, $err, $res) = cache_command2("curl --socks4a 127.0.0.1:9050 '$i/log'", "age=86400");
-  ($out, $err, $res) = cache_command2("curl --socks4a 127.0.0.1:9050 '$i'", "age=86400");
+  my($out, $err, $res) = cache_command2("curl --socks4a 127.0.0.1:9050 '$i/log'", "age=86400");
+  my($out2, $err2, $res2) = cache_command2("curl --socks4a 127.0.0.1:9050 '$i'", "age=86400");
+
+  if ($res == 2) {warn "ERROR: $i"; next;}
+
+  while ($out=~s/href="(.*?)"//s) {
+    debug("LINK: $1");
+  }
+
+  # look at log
+#  debug("LOG IS: $out");
+
+
+
+die "TESTING";
+
+
 }
-
-
-
-# debug(keys %links);
 
 die "TESTING";
 
