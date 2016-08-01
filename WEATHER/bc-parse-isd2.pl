@@ -32,8 +32,8 @@ unless (-f "allfiles.txt") {die "Wrong directory, or run 'find . -type f > allfi
 
 # $stat.res.bz2 is the resulting file (if empty, something is wrong)
 # compressing due to large size, would fill up disk otherwise(?)
-if (-s "$stat.res.bz2") {
-  warn "$stat.res.bz2 exists";
+if (-s "AVGSD/$stat.res.bz2") {
+  warn "AVGSD/$stat.res.bz2 exists";
   exit(0);
 }
 
@@ -57,19 +57,24 @@ while (<A>) {
   # store year/temp pair
   # TODO: do this better?
   unless ($temp == -9999) {
-      push(@{$temp{$mo}{$da}{$hr}}, "$yr:$temp");
+      push(@{$temp{$mo}{$da}{$hr}}, $temp);
     }
 
 }
 
 close(A);
 
-open(B, ">$stat.res");
+open(B, ">AVGSD/$stat.res");
 
 for $mo (sort keys %temp) {
   for $da (sort keys %{$temp{$mo}}) {
     for $hr (sort keys %{$temp{$mo}{$da}}) {
       @l = @{$temp{$mo}{$da}{$hr}};
+
+      debug("L IS",@l);
+      list2avgsd(\@l);
+
+      next; # TODO: TESTING!
 
       # do linear regression, etc
       @x = ();
@@ -99,50 +104,40 @@ close(B);
 # turns out *.all files fill up disk, so...
 warn "NOT DELETEING/COMPRESSING DURING TESTING";
 
-# system("rm -f $stat.all; bzip2 $stat.res");
+# system("rm -f $stat.all; bzip2 AVGSD/$stat.res");
 
-# TODO: add below to bclib.pl
+# TODO: add this to bclib.pl maybe
 
-sub linear_regression2 {
-  my($xref, $yref) = @_;
-  my($sumxy, $sumx, $sumy, $sumx2, $cov, $var, $a, $b, @running);
-  my(@x) = @{$xref};
-  my(@y) = @{$yref};
-  my($n) = scalar(@x);
+# given a (reference to a) list of numbers, compute mean, median, std
+# dev, return as hash (which lets me return more stuff later)
 
+sub list2avgsd {
+  my($lref) = @_;
+  my(@l) = @$lref;
+  my(%hash);
 
-  # TODO: special cases no longer return correct values?
+  @l = sort {$a <=> $b} @l;
+  my($n) = scalar(@l);
 
-  # empty list = special case
-  if ($n==0) {return NaN,NaN,NaN;}
+  # mean
+  my($sum) = 0;
+  for $i (@l) {$sum+=$i;}
+  $hash{mean} = $sum/$n;
 
-  # 1-elt list = special case?
-  # TODO: is this really a special case?
-  if ($n==1) {return NaN,NaN,$y[0];}
+  # median is either element or average of two elts
+  if ($n%2 == 1) {
+    # example 5 elts = indices: 0,1,2,3,4, choice is 2
+    $hash{median} = $l[($n-1)/2];
+  } else {
+    # example 4 elts = indicies: 0,1,2,3 choice is 1.5
+    $hash{median} = ($l[$n/2]+$l[$n/2-1])/2;
+  }
 
-  # from wikipedia
-  for $i (0..$#x) {
-    $sumxy += $x[$i]*$y[$i];
-    $sumx += $x[$i];
-    $sumy += $y[$i];
-    $sumx2 += $x[$i]*$x[$i];
+  # sd
+  $sum = 0;
+  for $i (@l) {$sum+=($i-$hash{mean})^2;}
+  # n-1 below because of finite size (sample sd)
+  $hash{sd} = sqrt($sum/($n-1));
 
-    # convenience variable
-    my($count) = $i+1;
-
-    # intentionally computing this each time for "running regression"
-    $cov = $sumxy/$count - $sumx*$sumy/$count/$count;
-    $var = $sumx2/$count - $sumx*$sumx/$count/$count;
-    if ($var) {
-      $b = $cov/$var;
-      $a = ($sumy-$b*$sumx)/$count;
-    } else {
-      ($a,$b) = ($y[0],0);
-    }
-
-    push(@running,$a,$b);
- }
-
-  return $a,$b,$sumy/$count,
+  return \%hash;
 }
-
