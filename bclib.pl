@@ -2500,6 +2500,8 @@ TODO: above is very kludgey
 
 TODO: this seems really inefficient
 
+TODO: this actually returns SUM of ys not the average, fix this but make sure it doesnt break other programs
+
 =cut
 
 sub linear_regression {
