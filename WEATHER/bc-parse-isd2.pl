@@ -71,8 +71,10 @@ for $mo (sort keys %temp) {
     for $hr (sort keys %{$temp{$mo}{$da}}) {
       @l = @{$temp{$mo}{$da}{$hr}};
 
-      debug("L IS",@l);
-      list2avgsd(\@l);
+      debug("L IS",join(" ",@l));
+      my(%hash) = %{list2avgsd(\@l)};
+
+      debug("HASH IS",join(" ",%hash));
 
       next; # TODO: TESTING!
 
@@ -118,6 +120,7 @@ sub list2avgsd {
 
   @l = sort {$a <=> $b} @l;
   my($n) = scalar(@l);
+  $hash{size} = $n;
 
   # mean
   my($sum) = 0;
@@ -135,7 +138,7 @@ sub list2avgsd {
 
   # sd
   $sum = 0;
-  for $i (@l) {$sum+=($i-$hash{mean})^2;}
+  for $i (@l) {$sum+=($i-$hash{mean})**2; debug("SUM: $sum, I: $i, HM: $hash{mean}");}
   # n-1 below because of finite size (sample sd)
   $hash{sd} = sqrt($sum/($n-1));
 
