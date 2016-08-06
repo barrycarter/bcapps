@@ -18,8 +18,8 @@
 
 # To get list of all stations to run this in parallel in random order:
 
-# perl -nle 'if (m%/(\d+\-\d+)\-\d{4}\.gz$%) {print "bc-parse-isd.pl
-# $1";}' allfiles.txt | sort -R | uniq > allcmds.txt
+# perl -nle 'if (m%/(\d+\-\d+)\-\d{4}\.gz$%) {print "bc-parse-isd2.pl
+# $1 > AVGSD/$1.out";}' allfiles.txt | sort -R | uniq > allcmds.txt
 
 # run using parallel:
 # (parallel -j 32 --joblog parjoblog.txt < allcmds.txt) >&! parouterr.txt &
@@ -29,13 +29,6 @@ require "/usr/local/lib/bclib.pl";
 unless (-f "allfiles.txt") {die "Wrong directory, or run 'find . -type f > allfiles.txt";}
 
 (($stat) = @ARGV) || die("Usage: $0 <station>");
-
-# $stat.res.bz2 is the resulting file (if empty, something is wrong)
-# compressing due to large size, would fill up disk otherwise(?)
-if (-s "AVGSD/$stat.res.bz2") {
-  warn "AVGSD/$stat.res.bz2 exists";
-  exit(0);
-}
 
 # combine all data for this station into one file
 # (which we must delete later due to space considerations)
@@ -64,49 +57,21 @@ while (<A>) {
 
 close(A);
 
-open(B, ">AVGSD/$stat.res");
-
 for $mo (sort keys %temp) {
   for $da (sort keys %{$temp{$mo}}) {
     for $hr (sort keys %{$temp{$mo}{$da}}) {
       @l = @{$temp{$mo}{$da}{$hr}};
 
-      debug("L IS",join(" ",@l));
       my(%hash) = %{list2avgsd(\@l)};
-
-      debug("HASH IS",join(" ",%hash));
-
-      next; # TODO: TESTING!
-
-      # do linear regression, etc
-      @x = ();
-      @y = ();
-      for $i (@l) {
-	($yr,$val) = split(/\:/, $i);
-	# treating 2000 as 0
-	push(@x,$yr-2000);
-	# value is actually temp*10 (celsius)
-	push(@y,$val);
-      }
-
-     debug("X",@x,"Y",@y);
-      debug("FOR $mo/$da/$hr:");
-      ($b, $m, $avg) = linear_regression2(\@x,\@y);
-      # number of reports
-      $size = scalar(@x);
-
       # and output...
-      print B "$stat $mo $da $hr $size $avg $m $b\n";
+      print join("\t",
+ ($stat, $mo, $da, $hr, $hash{size}, $hash{median}, $hash{mean}, $hash{sd})),
+ "\n";
     }
   }
 }
 
-close(B);
-
-# turns out *.all files fill up disk, so...
-warn "NOT DELETEING/COMPRESSING DURING TESTING";
-
-# system("rm -f $stat.all; bzip2 AVGSD/$stat.res");
+system("rm -f $stat.all");
 
 # TODO: add this to bclib.pl maybe
 
@@ -138,9 +103,45 @@ sub list2avgsd {
 
   # sd
   $sum = 0;
-  for $i (@l) {$sum+=($i-$hash{mean})**2; debug("SUM: $sum, I: $i, HM: $hash{mean}");}
+  for $i (@l) {$sum+=($i-$hash{mean})**2;}
   # n-1 below because of finite size (sample sd)
   $hash{sd} = sqrt($sum/($n-1));
 
   return \%hash;
 }
+
+=item schema
+
+-- this is the 5816 stations for which there is 8784 rows of data,
+-- 51087744 row total
+
+CREATE TABLE hourly_averages (
+ station TEXT, month INT, day INT, hour INT, nobs INT, median DOUBLE,
+ mean DOUBLE, sd DOUBLE
+);
+
+CREATE INDEX i_station ON hourly_averages(station(20));
+CREATE INDEX i_month ON hourly_averages(month);
+CREATE INDEX i_day ON hourly_averages(day);
+CREATE INDEX i_hour ON hourly_averages(hour);
+CREATE INDEX i_nobs ON hourly_averages(nobs);
+CREATE INDEX i_median ON hourly_averages(median);
+CREATE INDEX i_mean ON hourly_averages(mean);
+CREATE INDEX i_sd ON hourly_averages(sd);
+
+-- this is the catted file
+
+LOAD DATA INFILE "/home/barrycarter/WEATHER/isd-lite/AVGSD/mysql.tsv"
+ INTO TABLE hourly_averages;
+
+-- TODO: maybe exclude stations with too few years
+
+-- below is without creating indexes first
+-- Timing: Query OK, 51087744 rows affected (2 min 19.11 sec)
+-- Results: Records: 51087744  Deleted: 0  Skipped: 0  Warnings: 0
+
+-- below is when indexes are created first
+-- Timing: Query OK, 51087744 rows affected (28 min 44.29 sec)
+-- Results: Records: 51087744  Deleted: 0  Skipped: 0  Warnings: 0
+
+=cut
