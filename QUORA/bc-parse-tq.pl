@@ -13,6 +13,13 @@ $all=~s/layout_3col_right.*$//s;
 
 my(%links);
 
+my(@items) = split(/<div class="feed_item_inner".*?>/, $all);
+
+for $i (@items) {
+  debug("GOT: $i");
+}
+
+die "TESTING";
 
 # debug("ALL: $all");
 
