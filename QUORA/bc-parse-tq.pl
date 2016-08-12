@@ -16,7 +16,40 @@ my(%links);
 my(@items) = split(/<div class="feed_item_inner".*?>/, $all);
 
 for $i (@items) {
-  debug("GOT: $i");
+
+  my($print) = $i;
+  $print=~s/>/>\n/sg;
+  debug("GOT: $print");
+
+  my(%hash) = ();
+
+  # a hash
+  while ($i=~s%<(span|p) class="([^<>]*?)">(.*?)</\1>%%s) {
+    debug("SETTING $2 -> $3");
+    $hash{$2} = $3;
+  }
+
+#  debug(dump_var("HASH",\%hash));
+
+  next; # TODO: TESTING!!!
+
+
+  # get topics
+  my(@topics) = ($i=~m%"https://www.quora.com/topic/(.*?)"%);
+  debug("TOIPCS", @topics);
+
+  # timestamp
+  # TODO: include time of file itself so we know what these are relative to
+  $i=~s%<span class="timestamp">\s*(.*?)\s*</span>%%s;
+  my($ts) = $1;
+  $ts=~s/<.*?>//g;
+  debug("TS: $ts");
+
+  # title of question
+  
+
+
+#  debug("GOT: $i");
 }
 
 die "TESTING";
