@@ -2,10 +2,55 @@
 
 An eyeball approach to relativity.
 
-Experiment: ship flies from Earth to Star 1 light year away at v
-(accel + decel instant), gamma is 0.6, angular diameter for distance.
+Experiment: ship flies from Earth to Star 10 light years away at 0.8c
++ returns (accel + decel instant), gamma is 0.6, angular diameter for
+distance.
+
+view from earth: 0,0 to 22.5, 7.5
+return view from earth: 22.5, 7.5 to 25,15
+
+(* unadjusted view of ship clock from Earth *)
+view[e,s,t,0][t_] = t/3
+
+(* unadjusted view of ship clock from planet *)
+view[p,s,t,0][t_] = 7*t/5-10
+
+(* unadjusted view of earth clock from ship *)
+view[s,e,t,0][t_] = t/3
+
+(* unadjusted view of planet clock from ship *)
+view[s,p,t,0][t_] = 3*t-10
+
+(* unadjusted view of ship distance from Earth, angular *)
+view[e,s,d,0][t_] = 4*t/9
+
+(* unadjusted view of ship distance from planet *)
+view[p,s,d,0][t_] = 10-4*t/5
+
+
+
+
+(* TODO: consider e,s,d instead of long form *)
+
+Plot[view[ship,planet,time,0][t],{t,0,7.5}]
+
+Plot[view[earth,ship,time,0][t],{t,0,22.5}]
+Plot[view[ship,earth,time,0][t],{t,0,7.5}]
+Plot[view[planet,ship,time,0][t],{t,0,12.5}]
+
+
+
+I feel bad about having to write this function
+
+f[x1_,y1_,x2_,y2_] = Function[x, (x-x1)/(x2-x1)*(y2-y1)+y1]
+
+view from planet: 0,-10 to 10,7.5
+
+
 
 journey takes:
+
+v=0.8
 
 gamma[v_] = Sqrt[1-v^2]
 
@@ -79,10 +124,6 @@ view from planet: 0,-10 to 10,7.5
 1.75 time dilation [no that excludes light travel]
 
 or 0.75 from ship view
-
-I feel bad about having to write this function
-
-f[x1_,y1_,x2_,y2_] = Function[x, (x-x1)/(x2-x1)*(y2-y1)+y1]
 
 
 
