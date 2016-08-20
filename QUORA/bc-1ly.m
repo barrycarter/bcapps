@@ -21,6 +21,8 @@ cond2 = {C[1] -> 3*10^-6, C[2] -> 8.4*10^6, g -> -9.812/1000}
 
 DSolve[{x[0] == d, x'[0] == 0, x''[0] == 0, x''[t] == -g/x[t]^2}, x[t], t]
 
+(* cut point *)
+
 sol = DSolve[{x''[t] == -g/x[t]^2}, x[t], t]
 
 t[x_] = -sol[[1,1,1]]-C[2] /. x[t] -> x
@@ -39,14 +41,14 @@ t3[x_] = FullSimplify[t2[x] /. c2sol, Element[{x,g,d}, Reals]]
 
 (* sanity testing *)
 
-t3[x] /. {d -> 1, g -> -1}
+t3[0.5] /. {d -> 1, g -> 1}
 
 using positive sol value yields imaginary for t3[.5]
 using negative sol value ALSO yields imaginary for t3[.5]
 
 (* testing formula near Earth *)
 
-Plot[t3[x] /. {d -> 40000/2/Pi + 1, g -> -9.812/1000}, {x,40000/2/Pi,
+Plot[t3[x] /. {d -> 40000/2/Pi + 1, g -> 9.812/1000}, {x,40000/2/Pi,
 40000/2/Pi+1}]
 
 
