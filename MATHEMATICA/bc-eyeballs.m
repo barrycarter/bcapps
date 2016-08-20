@@ -10,22 +10,37 @@ view from earth: 0,0 to 22.5, 7.5
 return view from earth: 22.5, 7.5 to 25,15
 
 (* unadjusted view of ship clock from Earth *)
-view[e,s,t,0][t_] = t/3
+view[e,s,tm,0][t_] = t/3
 
 (* unadjusted view of ship clock from planet *)
-view[p,s,t,0][t_] = 7*t/5-10
+view[p,s,tm,0][t_] = 7*t/5-10
 
 (* unadjusted view of earth clock from ship *)
-view[s,e,t,0][t_] = t/3
+view[s,e,tm,0][t_] = t/3
 
 (* unadjusted view of planet clock from ship *)
-view[s,p,t,0][t_] = 3*t-10
+view[s,p,tm,0][t_] = 3*t-10
+
+
 
 (* unadjusted view of ship distance from Earth, angular *)
 view[e,s,d,0][t_] = 4*t/9
 
 (* unadjusted view of ship distance from planet *)
 view[p,s,d,0][t_] = 10-4*t/5
+
+(* unadjusted view of earth distance from ship *)
+view[s,e,d,0][t_] = 4*t/3
+
+Plot[{view[e,s,tm,0][t], view[e,s,d,0][t]}, {t,0,22.5}]
+
+
+
+(* naive Earth analysis: ship clock is 1/3, speed is 4c/9 *)
+
+
+
+(* TODO: check these formulas!!! *)
 
 
 
