@@ -10,7 +10,7 @@ The general formula for landing time is:
 
 [math]\frac{d \left(2 \sqrt{r (d-r)}+d \left(i \log \left(2 i \sqrt{r (d-r)}+d-2r\right)-i \log (d)+\pi \right)\right)}{2 \sqrt{2} r \sqrt{d g}}[/math]
 
-(note that the formula contains imaginary numbers, but these will all cancel out and the end result will be real; for more details on how this formula is derived and possible alternate forms: https://github.com/barrycarter/bcapps/blob/master/QUORA/bc-1ly.m )
+(note that the formula contains imaginary numbers, but these will all cancel out and the end result will be real; for more details on how this formula is derived and possible alternate forms: https://github.com/barrycarter/bcapps/blob/master/QUORA/bc-1ly.m and https://mathematica.stackexchange.com/questions/124477/how-to-fullsimplify-real-expression-so-intermediate-terms-are-also-real)
 
 where:
 
@@ -27,6 +27,10 @@ with a final velocity of:
 Note that as [math]d\to \infty[/math], the final velocity becomes the escape velocity [math]-\sqrt{2 g r}[/math], as expected. Note that this form is slightly different from the normally-given form because we are measuring g at the surface of the planet, and not using the mass of the planet.
 
 Near the surface of the Earth, we have [math]d=\frac{g t^2}{2} \to t=\sqrt{\frac{2 d}{g}}[/math] so we'd expect landing time to be about [math]\sqrt{\frac{2 d}{g}}[/math], which it is:
+
+
+
+
 
 In general, 
 
@@ -109,6 +113,14 @@ Plot[t0[er, g0, er+d, er], {d,0,1}]
 Plot[t0[er, g0, er+d/1000, er], {d,0,100000}]
 
 Plot[{t0[er, g0, er+d/1000, er], Sqrt[d/5]}, {d,0,1000000}]
+
+Plot[{t0[er, g0, er+d/1000, er], Sqrt[d/5]}, {d,0,100000}]
+
+Plot[{t0[er, g0, er+d/1000, er], Sqrt[d/5]}, {d,0,1000}]
+
+Limit[t0[r,g,d,r]/d^(3/2), d -> Infinity]
+
+TODO: answer north pole question, sun mass much higher ignored
 
 
 
