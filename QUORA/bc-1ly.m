@@ -4,7 +4,7 @@
 
 [b]Under several unrealistic assumptions, it would take 1.62 billion years, and land at a speed of 11,179 km/s, slightly below the Earth's escape velocity of 11,186 km/s[/b]
 
-This is effectively the same problem as launching a rocket from Earth's surface at just below escape velocity, so it goes as far as 1 light year before stopping, turning around, and returning.
+This is effectively the same problem as launching a rocket from Earth's surface at just below escape velocity, so that the rocket goes as far as 1 light year away before stopping, turning around, and returning.
 
 The general formula for landing time is:
 
