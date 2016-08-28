@@ -17,7 +17,7 @@ for $i (@ARGV) {
   }
 
   # revision number
-  unless ($all=~s%<title>Revision \#(\d+) - Quora</title>%%) {
+  unless ($all=~s%<title>Revision \#(\d+) - Quora</title>%%i) {
     warn "NO NUMBER: $i";
     next;
   }
@@ -28,7 +28,7 @@ for $i (@ARGV) {
   my($origtime) = $1;
   $time = strftime("%Y%m%d.%H%M%S",gmtime(int($origtime/1000000)));
 
-  $all=~s%<span class="rendered_qtext">(.*?)</span>%%;
+  $all=~s%<span\s+class="rendered_qtext">(.*?)</span>%%is;
   my($q) = $1;
 
   $all=~s%<div class="revision">(.*?)</div><p class="log_action_bar">%%s;
