@@ -22,9 +22,29 @@ If we have n trials with k successes (here, n=20 and k=14), the probablity is [m
 
 Let's graph this for our case (14 wins out of 20 games):
 
-[PUT IMAGE HERE]
+[[image17.gif]]
+
+This looks a lot like a probability distribution function (PDF), except that it integrates out to [math]\frac{1}{21}[/math]. We can turn it into an actual PDF by multiplying by 21: [math]21 \binom{20}{14} p^{14} (1-p)^6[/math]
+
+In the general case, we multiply by n+1, and the PDF becomes: [math](n+1) p^k \binom{n}{k} (1-p)^{n-k}[/math]
+
+We know the mode of this PDF is [math]\frac{14}{20}[/math] or [math]\frac{k}{n}[/math], but let's also find the mean and the standard deviation.
+
+To compute the mean, we integrate:
+
+[math]\int_0^1 p (n+1) p^k \binom{n}{k} (1-p)^{n-k} \, dp[/math]
+
+which turns out to be [math]\frac{k+1}{n+2}[/math], a well known result from Bayesian analysis. In our case, this is [math]\frac{15}{22}[/math].
+
+To find the variance, we integrate:
 
 
+
+conds = {Element[{n,k}, Integers], k > 0, n >= k, x >= 0, x <= 1, p>=0, p<=1}
+
+
+
+TODO: median badness
 
 TODO: change into PDF!
 
@@ -34,7 +54,31 @@ To compute the median:
 
 Integrate[f[p,k,n],{p,0,x}]
 
-conds = {Element[{n,k}, Integers], k >= 0, n >= k, x >= 0, x <= 1, p>=0, p<=1}
+f[p_,k_,n_] = Binomial[n,k]*p^k*(1-p)^(n-k)
+
+pdf[p_,k_,n_] = Binomial[n,k]*p^k*(1-p)^(n-k)*(n+1)
+
+mean[p_,k_,n_] = (k+1)/(n+2);
+
+pdf[p,k,n]*(p-mean[p,k,n])^2
+
+((1 + k)*(1 - k + n))/((2 + n)^2*(3 + n))
+
+pdf[p,k,n]*(HoldForm[p]-mean[p,k,n])^2
+
+
+$\int_0^1 (n+1) p^k \binom{n}{k} (1-p)^{n-k} \left(p-\frac{k+1}{n+2}\right)^2 \, dp$
+
+
+
+p0 = Plot[f[p,14,20],{p,0,1}, Frame -> {True, True, False, False}, 
+ RotateLabel -> True, AxesOrigin-> {0,0}, FrameLabel -> {
+ Text[Style["If p is ...", FontSize->25]], 
+ Text[Style["Chance of winning 14/20 is...", FontSize->25]]
+}]
+showit
+
+
 
 FullSimplify[Integrate[f[p,k,n],{p,0,x}], conds]
 
@@ -46,12 +90,6 @@ Solve[Beta[x, 1 + k, 1 - k + n] Binomial[n, k] == 1/2, x]
 
 f[p_,k_,n_] = Binomial[n,k]*p^k*(1-p)^(n-k)
 
-p0 = Plot[f[p,14,20],{p,0,1}, Frame -> {True, True, False, False}, 
- RotateLabel -> True, AxesOrigin-> {0,0}, FrameLabel -> {
- Text[Style["If p is ...", FontSize->25]], 
- Text[Style["Chance of winning 14/20 is...", FontSize->25]]
-}]
-showit
 
 
 
