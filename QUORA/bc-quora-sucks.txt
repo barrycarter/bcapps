@@ -1,0 +1,55 @@
+Thoughts for improving quora by creating a better Q+A board.
+
+Asker can fill out these fields (numerically so they can be sorted/filtered):
+
+  - how much time/effort have you put into this problem yourself?
+
+  - how competent do you feel in this field (new to me, beginner,
+  intermediate, expert, cutting edge of research)
+
+  - what is your estimate of this question's difficulty (eg, grade
+  school, university, unsolved problem, etc)
+
+  - what sort of answer do you seek (just a link, brief explanation,
+  worked out completely, etc)
+
+  - how urgent is this problem to you? (need answer ASAP, couple of
+  days, casual query, don't care)
+
+  - would you be willing to pay someone for an answer, and, if so, how
+  much? (note that site itself won't handle or accept payments, but
+  others might)
+
+Answerer can fill out these fields:
+
+  - Completeness of answer (just a link, some discussion, answers part
+  of problem, shows answer is unknown, answers complete problem)
+
+
+
+The site will have a multi-level ontology so a "special relativity"
+question is auto-posted to "relativity", "physics", "science", etc.
+
+Site will have "reputation points" for users/answers/question/etc
+
+Site will have multi-threaded comment/answer replies.
+
+Site will have API and regular data dumps.
+
+Site will allow SQL filtering and sorting of questions (including posting time)
+
+Question merge will exist, but will try to be smarter.
+
+FAQ for each ontology item if possible
+
+If "ask to answer" feature implemented, will make it clear to everyone
+whether they've been invited to answer or not
+
+TODO: voice verification or similar to reduce spam (text verification
+using twilio? require existing account w other service?)
+
+TODO: allow non-posters to tweak ratings set by poster but make it
+clear which are tweaked and which are original
+
+TODO: consider copying existing questions from a site like quora or
+stackexchange for testing by artificially assigning numbers

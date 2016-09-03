@@ -165,4 +165,5 @@ Plot[t3[x] /. {d -> 40000/2/Pi + 1, g -> 9.812/1000}, {x,40000/2/Pi,
 
 Solve[q^2 == (t+C[2])^2, t]
 
+TODO: mention coriolis and initial speed issues, link to my SE answer
 
