@@ -38,6 +38,10 @@ Site will have API and regular data dumps.
 
 Site will allow SQL filtering and sorting of questions (including posting time)
 
+Site will include notification "this comment was posted in response to
+an older version of this question/answer and may not be relevant to
+the current version"
+
 Question merge will exist, but will try to be smarter.
 
 FAQ for each ontology item if possible
