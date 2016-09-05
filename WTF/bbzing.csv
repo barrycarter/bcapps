@@ -2,67 +2,57 @@
 
 States in the Zingtopia(?) or the United States of Zing; Big Brother S18E26
 
-Format: zing_statename,number_of_votes,original_state
+Format: zing_statename,number_of_votes,original_state,level
+
+Level 1 is closest to houseguests
+
+There are only 35 states represented (plus DC), point values/votes
+range from 1-34 and then 50 for Washington DC
 
 *)
 
-1st level;
+Zingissippi,8,Mississippi,1
+Tennezing,4,Tennessee,1
+North Zingkota,10,North Dakota,1
+Rhode Zingland,2,Rhode Island,1
+Zingssouri,11,Missouri,1
+Washzington,7,Washington,1
 
-Zingissippi,8,Mississippi
-Tennezing,4,Tennessee
-North Zingkota,10,North Dakota
-Rhode Zingland,2,Rhode Island
-Zingssouri,11,Missouri
-Washzington,7,Washington
+New Jerzing,12,New Jersey,2
+New Mexzingo,21,New Mexico,2
+West Virzingia,9,West Virginia,2
+South Zingkora,23,South Dakota,2
+Zingtana,14,Montana,2
 
-2nd level from bottom:
+Zing York,28,New York,3
+Zingdiana,32,Indiana,3
+Wyozing,5,Wyoming,3
+Zingtah,6,Utah,3
+Zingorado,31,Colorado,3
+Wisconzing,27,Wisconsin,3
 
-New Jerzing,12,New Jersey
-New Mexzingo,21,New Mexico
-West Virzingia,9,West Virginia
-South Zingkora,23,South Dakota
-Zingtana,14,Montana
+Arizinga,17,Arizona,4
+Louizingana,25,Louisiana,4
+Zingifornia,18,California,4
+Arkanzing,26,Arkansas,4
+Zingvada,16,Nevada,4
 
-3rd level from bottom:
+Ozingo,33,Ohio,5
+Texzing,20,Texas,5
+Zingesota,13,Minnesota,5
+Massachuzing,19,Massachusetts,5
+Michizing,15,Michigan,5
+Kanzing,34,Kansas,5
 
-Zing York,28,New York
-Zingdiana,32,Indiana
-Wyozing,5,Wyoming
-Zingtah,6,Utah
-Zingorado,31,Colorado
-Wisconzing,27,Wisconsin
+Zingtucky,1,Kentucky,6
+Zingland,3,Maryland,6
 
-4th level from bottom:
+Virzingia,22,Virginia,7
+Washzington D. Zing.,50,Washington D.C.,7
+Zingaware,24,Delaware,7
 
-Arizinga,17,Arizona
-Louizingana,25,Louisiana
-Zingifornia,18,California
-Arkanzing,26,Arkansas
-Zingvada,16,Nevada
+Zingabama,29,Alabama,8
+Zinginois,30,Illinois,8
 
-5th level from bottom:
-
-Ozingo,33,Ohio
-Texzing,20,Texas
-Zingesota,13,Minnesota
-Massachuzing,19,Massachusetts
-Michizing,15,Michigan
-Kanzing,34,Kansas
-
-6th level from bottom:
-
-Zingtucky,1,Kentucky
-Zingland,3,Maryland???
-
-7th level from bottom:
-
-Virzingia,22,Virginia
-Washzington D. Zing.,50,Washington D.C.
-Zingaware,24,Delaware
-
-8th level from bottom:
-
-Zingabama,29,Alabama
-Zinginois,30,Illinois
 
 
