@@ -26,7 +26,6 @@ Answerer can fill out these fields:
   of problem, shows answer is unknown, answers complete problem)
 
 
-
 The site will have a multi-level ontology so a "special relativity"
 question is auto-posted to "relativity", "physics", "science", etc.
 
@@ -50,7 +49,7 @@ If "ask to answer" feature implemented, will make it clear to everyone
 whether they've been invited to answer or not
 
 TODO: voice verification or similar to reduce spam (text verification
-using twilio? require existing account w other service?)
+using twilio? require existing account w other service?) (or $1 credit card?)
 
 TODO: allow non-posters to tweak ratings set by poster but make it
 clear which are tweaked and which are original
