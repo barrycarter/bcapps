@@ -6,7 +6,27 @@ If we assume the Riemann Hypothesis and https://en.wikipedia.org/wiki/Prime_numb
 
 [math]\left| \pi (x)-\text{li}(x) \right|<\frac{\sqrt{x} \log (x)}{8 \pi }[/math]
 
-Using Mathematica, we find n = 114253594378425466185108504215921573260523944025924 (114,253,594,378,425,466,185,108,504,215,921,573,260,523,944,025,924) with the following property:
+Using Mathematica, we find that 114253594378425466185108504215921573260523944025925 (114,253,594,378,425,466,185,108,504,215,921,573,260,523,944,025,925) is the integer n such that li(n) is closest to [math]10^{48}[/math].
+
+n2 = 114253594378425466185102853920130817319525886680866
+
+TODO: more in para above?
+
+n2 = 114253594378425466185108553237030328694398437471430
+
+N[LogIntegral[n2]-range[n2],53]
+
+
+[math]
+
+|x-y| < z
+
+
+
+AccountingForm[N[LogIntegral[n-1],53], DigitBlock -> 3]               
+
+
+with the following property:
 
 [math]10^{48}-1 < \text{li}(n) < 10^{48} < \text{li}(n+1)[/math]
 
@@ -34,7 +54,7 @@ N[LogIntegral[n],53] // AccountingForm
 
 NumberForm[n, DigitBlock -> 3]                                         
 
-n = Rationalize[ili[10^48],1]
+n = Rationalize[ili[10^48],1]+1
 
 N[LogIntegral[n],53] // AccountingForm
 
@@ -55,6 +75,11 @@ ili[x_] := t /. FindRoot[LogIntegral[t] == x, {t,x*Log[x]},
  WorkingPrecision -> Log[x], AccuracyGoal -> Log[x], PrecisionGoal -> Log[x]]
 
 range[x_] = Log[x]*Sqrt[x]/8/Pi
+
+ili2[x_] := t /. FindRoot[LogIntegral[t]+range[t] == x, {t,x*Log[x]}, 
+ WorkingPrecision -> Log[x], AccuracyGoal -> Log[x], PrecisionGoal -> Log[x]]
+
+
 
 
 
