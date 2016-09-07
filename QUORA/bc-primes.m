@@ -1,3 +1,76 @@
+(*
+
+TODO: result here
+
+If we assume the Riemann Hypothesis and https://en.wikipedia.org/wiki/Prime_number_theorem#Prime-counting_function_in_terms_of_the_logarithmic_integral we have:
+
+[math]\left| \pi (x)-\text{li}(x) \right|<\frac{\sqrt{x} \log (x)}{8 \pi }[/math]
+
+Using Mathematica, we find n = 114253594378425466185108504215921573260523944025924 (114,253,594,378,425,466,185,108,504,215,921,573,260,523,944,025,924) with the following property:
+
+[math]10^{48}-1 < \text{li}(n) < 10^{48} < \text{li}(n+1)[/math]
+
+Computing [math]\frac{\sqrt{n} \log (n)}{8 \pi }[/math] to the nearest integer yields 49021108755433879077126144 (49,021,108,755,433,879,077,126,144). If we call this m, we have:
+
+[math]\left| \pi (n)-\text{li}(n) \right|< m[/math]
+
+
+
+
+
+
+
+
+Round[N[range[n]],1]
+
+
+
+
+
+
+N[LogIntegral[n],53] // AccountingForm
+
+
+
+NumberForm[n, DigitBlock -> 3]                                         
+
+n = Rationalize[ili[10^48],1]
+
+N[LogIntegral[n],53] // AccountingForm
+
+TODO: other values
+
+TODO: purposes COle
+
+
+Abs[PrimePi[x] - LogIntegral[x]] < range[x]                            
+
+http://www.jstor.org/stable/2005976?origin=crossref&seq=1#page_scan_tab_contents 
+
+
+
+(* inverse logintegral function of sorts *)
+
+ili[x_] := t /. FindRoot[LogIntegral[t] == x, {t,x*Log[x]}, 
+ WorkingPrecision -> Log[x], AccuracyGoal -> Log[x], PrecisionGoal -> Log[x]]
+
+range[x_] = Log[x]*Sqrt[x]/8/Pi
+
+
+
+
+FindRoot[LogIntegral[t] == 10^48, {t,10^48*Log[10^48]},  
+ WorkingPrecision -> 50, AccuracyGoal -> 50, PrecisionGoal -> 50]
+
+ 
+
+
+
+
+
+Plot[LogIntegral[x],{x,0,1000}]
+
+
 https://www.quora.com/What-is-the-10-48th-prime-number
 
 https://en.wikipedia.org/wiki/Prime-counting_function
