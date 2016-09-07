@@ -6,6 +6,35 @@ If we assume the Riemann Hypothesis and https://en.wikipedia.org/wiki/Prime_numb
 
 [math]\left| \pi (x)-\text{li}(x) \right|<\frac{\sqrt{x} \log (x)}{8 \pi }[/math]
 
+ili[x_] := t /. FindRoot[LogIntegral[t] == x, {t,x*Log[x]}, 
+ WorkingPrecision -> Log[x], AccuracyGoal -> Log[x], PrecisionGoal -> Log[x]]
+
+range[x_] = Log[x]*Sqrt[x]/8/Pi
+
+ili2[x_] := Ceiling[t /. FindRoot[LogIntegral[t]+range[t] == x, {t,x*Log[x]}, 
+ WorkingPrecision -> Log[x], AccuracyGoal -> Log[x], PrecisionGoal -> Log[x]]]
+
+n2 = 114253594378425466185102853920130817319525886680867
+
+LogIntegral[n2]+range[n2] > 10^48 and none smaller
+
+ili3[x_] := Floor[t /. FindRoot[LogIntegral[t]-range[t] == x, {t,x*Log[x]}, 
+ WorkingPrecision -> Log[x], AccuracyGoal -> Log[x], PrecisionGoal -> Log[x]]]
+
+n3 = 114253594378425466185114154511712329201522001657686
+
+Ceiling[LogIntegral[n3]+range[n3]]
+
+LogIntegral[n3]-range[n3] < 10^48 and is largest such
+
+https://oeis.org/A006988
+https://oeis.org/A006988/b006988.txt
+
+TODO: note formula no good for < 10^3 (and dicey even then)
+
+TODO: mention this file
+
+
 Using Mathematica, we find that 114253594378425466185108504215921573260523944025925 (114,253,594,378,425,466,185,108,504,215,921,573,260,523,944,025,925) is the integer n such that li(n) is closest to [math]10^{48}[/math].
 
 n2 = 114253594378425466185102853920130817319525886680866
@@ -70,14 +99,6 @@ http://www.jstor.org/stable/2005976?origin=crossref&seq=1#page_scan_tab_contents
 
 
 (* inverse logintegral function of sorts *)
-
-ili[x_] := t /. FindRoot[LogIntegral[t] == x, {t,x*Log[x]}, 
- WorkingPrecision -> Log[x], AccuracyGoal -> Log[x], PrecisionGoal -> Log[x]]
-
-range[x_] = Log[x]*Sqrt[x]/8/Pi
-
-ili2[x_] := t /. FindRoot[LogIntegral[t]+range[t] == x, {t,x*Log[x]}, 
- WorkingPrecision -> Log[x], AccuracyGoal -> Log[x], PrecisionGoal -> Log[x]]
 
 
 
