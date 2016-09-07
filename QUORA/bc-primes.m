@@ -4,7 +4,46 @@ TODO: result here
 
 If we assume the Riemann Hypothesis and https://en.wikipedia.org/wiki/Prime_number_theorem#Prime-counting_function_in_terms_of_the_logarithmic_integral we have:
 
-[math]\left| \pi (x)-\text{li}(x) \right|<\frac{\sqrt{x} \log (x)}{8 \pi }[/math]
+[math]\left| \pi (x)-\text{li}(x) \right|<\frac{\sqrt{x} \log (x)}{8 \pi }[/math] or [math]\text{li}(x)-\frac{\sqrt{x} \log (x)}{8 \pi }<\pi(x)<\text{li}(x)+\frac{\sqrt{x} \log (x)}{8 \pi }[/math] given that [math]x\geq 2567[/math] and thus [math]\pi (x)\geq 375[/math].
+
+Using Mathematica, we find 114253594378425466185102853920130817319525886680866 (114,253,594,378,425,466,185,102,853,920,130,817,319,525,886,680,866) is the largest integer n satisfying [math]\text{li}(n)+\frac{\sqrt{n} \log (n)}{8 \pi }<10^{48}[/math] and thus necessarily [math]\pi (n)<10^{48}[/math].
+
+That means our smallest candidate for the [math]10^{48}[/math]th prime is the next prime after that number, which turns out to be 114253594378425466185102853920130817319525886680889 (114,253,594,378,425,466,185,102,853,920,130,817,319,525,886,680,889).
+
+Similarly, 114253594378425466185114154511712329201522001657687 (114,253,594,378,425,466,185,114,154,511,712,329,201,522,001,657,687) is the smallest integer n satisfying [math]\text{li}(n)-\frac{\sqrt{n} \log (n)}{8 \pi }>10^{48}[/math] and thus necessarily [math]\pi (n)>10^{48}[/math].
+
+So our largest candidate for the [math]10^{48}[/math]th prime is the prime number prior to this number, which turns out to be 114253594378425466185114154511712329201522001657619 (114,253,594,378,425,466,185,114,154,511,712,329,201,522,001,657,619).
+
+Just for fun, I ran this process on other powers of 10, but excluding powers less than 3 since, as above, we need [math]\pi (x)\geq 375[/math] for these bounds to work.
+
+Below are the results from 10^3 to 10^24 as compared to the actual values from https://oeis.org/A006988 as extended by https://oeis.org/A006988/b006988.txt
+
+
+
+The integer [note the middle int + why its not great]
+
+
+
+LogIntegral[x]-range[x] < PrimePi[x] < LogIntegral[x]+range[x]
+
+LogIntegral[x]+range[x] < HoldForm[10^48]
+
+LogIntegral[x]-range[x] > HoldForm[10^48]
+
+
+LogIntegral[n2]+range[n2] 
+
+
+x-y < z
+
+or x< z+y
+
+y-x<z or -x < z-y or x > y-z
+
+y-z < x < y+z
+
+
+TODO: preview channel this
 
 ili[x_] := t /. FindRoot[LogIntegral[t] == x, {t,x*Log[x]}, 
  WorkingPrecision -> Log[x], AccuracyGoal -> Log[x], PrecisionGoal -> Log[x]]
@@ -14,16 +53,16 @@ range[x_] = Log[x]*Sqrt[x]/8/Pi
 ili2[x_] := Ceiling[t /. FindRoot[LogIntegral[t]+range[t] == x, {t,x*Log[x]}, 
  WorkingPrecision -> Log[x], AccuracyGoal -> Log[x], PrecisionGoal -> Log[x]]]
 
-n2 = 114253594378425466185102853920130817319525886680867
+n2 = 114253594378425466185102853920130817319525886680867-1
 
 LogIntegral[n2]+range[n2] > 10^48 and none smaller
 
 ili3[x_] := Floor[t /. FindRoot[LogIntegral[t]-range[t] == x, {t,x*Log[x]}, 
  WorkingPrecision -> Log[x], AccuracyGoal -> Log[x], PrecisionGoal -> Log[x]]]
 
-n3 = 114253594378425466185114154511712329201522001657686
+n3 = 114253594378425466185114154511712329201522001657687
 
-Ceiling[LogIntegral[n3]+range[n3]]
+Floor[LogIntegral[n3]-range[n3]]
 
 LogIntegral[n3]-range[n3] < 10^48 and is largest such
 
