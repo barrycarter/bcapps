@@ -18,9 +18,51 @@ Just for fun, I ran this process on other powers of 10, but excluding powers les
 
 Below are the results from 10^3 to 10^24 as compared to the actual values from https://oeis.org/A006988 as extended by https://oeis.org/A006988/b006988.txt
 
+(* determine prime bounds using Schoenfield/Riemann *)
+
+range[x_] = Log[x]*Sqrt[x]/8/Pi
+
+bounds[x_] := bounds[x] = Module[{lb,ub},
+ lb = NextPrime[t /. FindRoot[LogIntegral[t]+range[t] == x, {t,x*Log[x]},
+  WorkingPrecision -> Log[x], AccuracyGoal -> Log[x],
+  PrecisionGoal -> Log[x]],1];
+ ub = NextPrime[t /. FindRoot[LogIntegral[t]-range[t] == x, {t,x*Log[x]},
+  WorkingPrecision -> Log[x], AccuracyGoal -> Log[x],
+  PrecisionGoal -> Log[x]],-1];
+ Return[{lb,ub}]
+];
+
+tab1039 = Table[{x,bounds[10^x]},{x,3,200}]
+
+TODO: tell peeps: if you want non comma vals or more, see... file
+
+actvals = {
+{3, 7919}, 
+{4, 104729}, 
+{5, 1299709}, 
+{6, 15485863}, 
+{7, 179424673}, 
+{8, 2038074743}, 
+{9, 22801763489}, 
+{10, 252097800623}, 
+{11, 2760727302517}, 
+{12, 29996224275833}, 
+{13, 323780508946331}, 
+{14, 3475385758524527}, 
+{15, 37124508045065437}, 
+{16, 394906913903735329}, 
+{17, 4185296581467695669}, 
+{18, 44211790234832169331}, 
+{19, 465675465116607065549}, 
+{20, 4892055594575155744537}, 
+{21, 51271091498016403471853}, 
+{22, 536193870744162118627429}, 
+{23, 5596564467986980643073683}, 
+{24, 58310039994836584070534263}
+}
 
 
-The integer [note the middle int + why its not great]
+The, integer [note the middle int + why its not great]
 
 
 
