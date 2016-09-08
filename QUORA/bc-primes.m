@@ -1,6 +1,6 @@
 (*
 
-TODO: result here
+**Assuming the Riemann Hypothesis, the [math]10^{48}[/math]th prime is between 114,253,594,378,425,466,185,102,853,920,130,817,319,525,886,680,889 and 114,253,594,378,425,466,185,114,154,511,712,329,201,522,001,657,619, and most likely towards the middle of this range.**
 
 If we assume the Riemann Hypothesis and https://en.wikipedia.org/wiki/Prime_number_theorem#Prime-counting_function_in_terms_of_the_logarithmic_integral we have:
 
@@ -14,9 +14,25 @@ Similarly, 114253594378425466185114154511712329201522001657687 (114,253,594,378,
 
 So our largest candidate for the [math]10^{48}[/math]th prime is the prime number prior to this number, which turns out to be 114253594378425466185114154511712329201522001657619 (114,253,594,378,425,466,185,114,154,511,712,329,201,522,001,657,619).
 
+The integer closest to solving [math]\text{li}(n) = 10^{48}[/math] is 114253594378425466185108504215921573260523944025925 (114,253,594,378,425,466,185,108,504,215,921,573,260,523,944,025,925), but this turns out to be a surprisingly poor estimate of the [math]10^{48}[/math]th prime, per the wikipedia page earlier and per https://en.wikipedia.org/wiki/Skewes%27_number
+
 Just for fun, I ran this process on other powers of 10, but excluding powers less than 3 since, as above, we need [math]\pi (x)\geq 375[/math] for these bounds to work.
 
-Below are the results from 10^3 to 10^24 as compared to the actual values from https://oeis.org/A006988 as extended by https://oeis.org/A006988/b006988.txt
+Below are the results from [math]10^{3}[/math] to [math]10^{24}[/math] as compared to the actual values from https://oeis.org/A006988 as extended by https://oeis.org/A006988/b006988.txt
+
+[[image18.gif]]
+
+The 'whence' column shows where in the lower bound/upper bound interval the actual value occurs. Note that this number sort of appears to approach 0.5 with crossing it, but Skewes (ibid) shows that the 'whence' can be lower than 0.5, albeit probably not for [math]n \lte 200[/math]
+
+For [math]10^{25}[/math] to [math]10^{100}[/math], we don't have actual values, so can only show the bounds:
+
+[[image19.gif]]
+
+All of the values (without commas, and going to [math]10^{200}[/math]) are also available at https://github.com/barrycarter/bcapps/blob/master/QUORA/ under bc-nth-prime.csv; the Mathematica code is in the same directory under bc-primes.m
+
+*)
+
+TODO: preview channel this
 
 (* determine prime bounds using Schoenfield/Riemann *)
 
@@ -34,32 +50,73 @@ bounds[x_] := bounds[x] = Module[{lb,ub},
 
 tab1039 = Table[{x,bounds[10^x]},{x,3,200}]
 
-TODO: tell peeps: if you want non comma vals or more, see... file
+actval[3] = 7919
+actval[4] = 104729
+actval[5] = 1299709
+actval[6] = 15485863
+actval[7] = 179424673
+actval[8] = 2038074743
+actval[9] = 22801763489
+actval[10] = 252097800623
+actval[11] = 2760727302517
+actval[12] = 29996224275833
+actval[13] = 323780508946331
+actval[14] = 3475385758524527
+actval[15] = 37124508045065437
+actval[16] = 394906913903735329
+actval[17] = 4185296581467695669
+actval[18] = 44211790234832169331
+actval[19] = 465675465116607065549
+actval[20] = 4892055594575155744537
+actval[21] = 51271091498016403471853
+actval[22] = 536193870744162118627429
+actval[23] = 5596564467986980643073683
+actval[24] = 58310039994836584070534263
 
-actvals = {
-{3, 7919}, 
-{4, 104729}, 
-{5, 1299709}, 
-{6, 15485863}, 
-{7, 179424673}, 
-{8, 2038074743}, 
-{9, 22801763489}, 
-{10, 252097800623}, 
-{11, 2760727302517}, 
-{12, 29996224275833}, 
-{13, 323780508946331}, 
-{14, 3475385758524527}, 
-{15, 37124508045065437}, 
-{16, 394906913903735329}, 
-{17, 4185296581467695669}, 
-{18, 44211790234832169331}, 
-{19, 465675465116607065549}, 
-{20, 4892055594575155744537}, 
-{21, 51271091498016403471853}, 
-{22, 536193870744162118627429}, 
-{23, 5596564467986980643073683}, 
-{24, 58310039994836584070534263}
-}
+Table[actval[i]="", {i,25,200}]
+
+tab1901 = Table[{i, bounds[10^i][[1]], bounds[10^i][[2]], actval[i]},
+ {i,3,200}];
+
+tab1803 = Table[{HoldForm[10]^i, 
+ NumberForm[bounds[10^i][[1]], DigitBlock -> 3],
+ NumberForm[bounds[10^i][[2]], DigitBlock -> 3]
+ }, {i,25,100}]
+
+tab1804 = Prepend[tab1803, 
+ {"n", "<= \[Pi](n)", ">= \[Pi](n)"}]
+
+grid2 = Grid[tab1804, Frame -> All, ItemStyle -> "Text", 
+ Background -> {{LightGray, None}, {LightGray,None}}]
+showit
+
+
+tab1106 = Table[{HoldForm[10]^i, 
+ NumberForm[bounds[10^i][[1]], DigitBlock -> 3],
+ NumberForm[actval[i], DigitBlock -> 3],
+ NumberForm[bounds[10^i][[2]], DigitBlock -> 3],
+ N[(actval[i]-bounds[10^i][[1]])/(bounds[10^i][[2]]-bounds[10^i][[1]])]
+ }, {i,3,24}]
+
+tab1107 = Prepend[tab1106, 
+ {"n", "\[Pi](x) lower bound", "\[Pi](x)", "\[Pi](x) upper bound", "Whence"}]
+
+tab1107 = Prepend[tab1106, 
+ {"n", "<= \[Pi](n)", "\[Pi](n)", ">= \[Pi](n)", "Whence"}]
+
+grid = Grid[tab1107, Frame -> All, ItemStyle -> "Text", 
+ Background -> {{LightGray, None}, {LightGray,None}}]
+showit
+
+grid = Grid[tab1107, Frame -> All]
+
+grid = Grid[tab1107, Frame -> All]
+
+PrimePi[x]
+
+\[Sigma]
+\[Sigma][x]
+"\[Sigma](x)"
 
 
 The, integer [note the middle int + why its not great]
@@ -85,8 +142,6 @@ y-x<z or -x < z-y or x > y-z
 y-z < x < y+z
 
 
-TODO: preview channel this
-
 ili[x_] := t /. FindRoot[LogIntegral[t] == x, {t,x*Log[x]}, 
  WorkingPrecision -> Log[x], AccuracyGoal -> Log[x], PrecisionGoal -> Log[x]]
 
@@ -111,16 +166,10 @@ LogIntegral[n3]-range[n3] < 10^48 and is largest such
 https://oeis.org/A006988
 https://oeis.org/A006988/b006988.txt
 
-TODO: note formula no good for < 10^3 (and dicey even then)
-
-TODO: mention this file
-
 
 Using Mathematica, we find that 114253594378425466185108504215921573260523944025925 (114,253,594,378,425,466,185,108,504,215,921,573,260,523,944,025,925) is the integer n such that li(n) is closest to [math]10^{48}[/math].
 
 n2 = 114253594378425466185102853920130817319525886680866
-
-TODO: more in para above?
 
 n2 = 114253594378425466185108553237030328694398437471430
 
@@ -167,11 +216,6 @@ NumberForm[n, DigitBlock -> 3]
 n = Rationalize[ili[10^48],1]+1
 
 N[LogIntegral[n],53] // AccountingForm
-
-TODO: other values
-
-TODO: purposes COle
-
 
 Abs[PrimePi[x] - LogIntegral[x]] < range[x]                            
 
