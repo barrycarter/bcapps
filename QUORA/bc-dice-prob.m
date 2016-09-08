@@ -30,8 +30,12 @@ roll := Module[{r,l},
  l = {};
  While[True,
  r = 1+Random[Integer,5];
- Print[r];
  If[r==6, Return[l], l = Append[l,r]];
  ]
 ]
 
+t = Table[roll,{i,1,1000000}];
+
+u = Table[Length[DeleteDuplicates[i]],{i,t}];
+
+Length[Select[u, # == 5 &]]
