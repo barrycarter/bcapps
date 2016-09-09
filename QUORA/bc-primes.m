@@ -71,10 +71,36 @@ tab[1] = Range[1,9];
 primes[1] = Select[tab[1], PrimeQ];
 comps[1] = Complement[tab[1], primes[1]];
 
-tab[n_] := digitify[comps[n-1]];
+tab[n_] := tab[n] = digitify[comps[n-1]];
+primes[n_] := primes[n] = Select[tab[n], PrimeQ];
+comps[n_] := comps[n] = Complement[tab[n], primes[n]];
+
+Table[tab[i],{i,1,8}];
+
+sum = Sum[Length[primes[n]]/10^n,{n,1,8}]
+
+17248013/25000000
+
+0.689921
+
+close to natural log of 2
+
+est length for longer than 8 digits
+
+tab[n] will be 10^comps[n-1]
+
+primes will be 
+
+TODO: different bases, what if 1 is prime, OEIS
+
+primes[8][[Floor[Length[primes[8]]*Random[]]]]
+
+91351901 (where 1 is considered composite)
 
 
-comps[n_] := digitify
+
+tab[8] is highest w/o out of memory
+
 
 
 
