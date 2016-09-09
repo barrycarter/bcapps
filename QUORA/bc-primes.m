@@ -21,6 +21,65 @@ Limit[Exp[n]/LogIntegral[Exp[n]]/n, n -> Infinity]
 
 (above is 1, but we need 10 version)
 
+PrimePi[10]/10
+
+(1-PrimePi[10]/10)*PrimePi[10^2]/10^2
+
+(* cant choose 0 as first digit *)
+
+a[1] = 4/9;
+
+(* below should be 1-a[n-1] but not fixing, not using *)
+
+a[n_] := a[n-1]*PrimePi[10^n]/10^n
+
+appears to be eulergamma number
+
+but above is wrong, because all prev numbers must be nonprime
+
+Clear[a]
+
+a[1] = 4/9;
+
+a[n_] := (1-Sum[a[i],{i,1,n-1}])*PrimePi[10^n]/10^n
+
+Sum[a[i],{i,1,10}]
+
+bigger than one, something wrong, fixed
+
+Clear[a]
+
+a[1] = 4/9;
+
+a[n_] := (1-Sum[a[i],{i,1,n-1}])*LogIntegral[10^n]/10^n
+
+Sum[a[i],{i,1,10}]
+
+prime1 = {2,3,5,7}
+
+comp1 = Complement[Range[1,9], prime1]
+
+digitify[l_] := Flatten[Table[Range[i*10,i*10+9],{i,l}]]
+
+prs = Select[digitify[comp1], Not[PrimeQ[#]]&]
+
+TODO: note leading 0s irrelev, assuming 1 is nonprime
+
+digitify[l_] := Flatten[Table[Range[i*10,i*10+9],{i,l}]]
+
+tab[1] = Range[1,9];
+primes[1] = Select[tab[1], PrimeQ];
+comps[1] = Complement[tab[1], primes[1]];
+
+tab[n_] := digitify[comps[n-1]];
+
+
+comps[n_] := digitify
+
+
+
+
+
 
 
 
