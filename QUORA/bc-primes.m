@@ -81,21 +81,199 @@ comps[n_] := comps[n] = Complement[tab[n], primes[n]];
 
 Export["/tmp/A069090-thru-8-digits.txt",Flatten[Table[primes[i],{i,1,8}]]];
 
+(* values of length of primes(n) *)
+
+lens = {4, 12, 60, 381, 2522, 19094, 151286, 1237792};
+
+(* probability computation using first 8 elts *)
+
+Sum[lens[[i]]/10^i,{i,1,8}]
+
+17248013/25000000 ~ 0.6899
+
 (* confirms that primes[8] is correct *)
 
+Length[Select[primes[8], PrimeQ]]
 
+test1 = DeleteDuplicates[Floor[primes[8]/10]];
+
+Select[test1, PrimeQ]
+
+test2 = DeleteDuplicates[Floor[test1/10]];
+
+(and so on, didnt actually finish)
 
 
 (* END *)
 
-
+Your search - A069090 10000019 - did not match any documents. 
 
 https://oeis.org/A069090 is the sequence above
 
 http://math.stackexchange.com/questions/437759/number-of-digits-until-a-prime-is-reached
 
+(* START: estimation of primecount using PrimePi *)
+
+tabcount[1] = 9
+primecount[1] = 4
+compcount[1] = 5
+
+tabcount[n_] := tabcount[n] = 10*compcount[n-1]
+
+primecount[n_] := primecount[n] = 
+ (PrimePi[10^n]-PrimePi[10^(n-1)])/10^n*tabcount[n]
+
+compcount[n_] := compcount[n] = tabcount[n] - primecount[n]
+
+Table[Length[primes[i]],{i,1,8}]
+
+{4, 12, 60, 381, 2522, 19094, 151286, 1237792}
+
+Round[Table[primecount[i],{i,1,8}],1]
+
+{4, 10, 56, 359, 2531, 19107, 151317, 1238813}
+
+Round[Table[primecount[i],{i,9,14}],1]
+
+{10399793, 89032403, 774220364, 6819205872, 60704716094, 545274480340}
+
+(* estimation of probability using first 14 terms *)
+
+Sum[primecount[i]/10^i,{i,1,14}]
+
+1786805970005556358589622202867229148721311186239138049375581435066120643541526713898117360601862600017/2500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+
+about 0.714722388
+
+(* END *)
 
 
+(* START: estimation of primecount using LogIntegral *)
+
+litabcount[1] = 9
+liprimecount[1] = 4
+licompcount[1] = 5
+
+litabcount[n_] := litabcount[n] = 10*licompcount[n-1]
+
+liprimecount[n_] := liprimecount[n] = 
+ (LogIntegral[10^n]-LogIntegral[10^(n-1)])/10^n*litabcount[n]
+
+licompcount[n_] := licompcount[n] = litabcount[n] - liprimecount[n]
+
+Table[Length[primes[i]],{i,1,8}]
+
+{4, 12, 60, 381, 2522, 19094, 151286, 1237792}
+
+Round[Table[liprimecount[i],{i,1,8}],1]
+
+{4, 12, 56, 346, 2427, 18300, 144768, 1184837}
+
+Round[Table[liprimecount[i],{i,9,18}],1]
+
+{9946023, 85146113, 740424460, 6521526613, 58054734442, 521471180218, 
+ 4720263362679, 43012760609353, 394239380902044, 3632078476341029}
+
+(* estimation of probability using first 18 terms *)
+
+Sum[N[liprimecount[i]]/10^i,{i,1,18}]
+
+approx 0.739406
+
+ListLogPlot[Table[liprimecount[i],{i,1,18}]]
+
+ListPlot[Table[liprimecount[i]/10^i,{i,1,18}]]
+
+(* END *)
+
+(* START: estimation of primecount using Prime number theorem *)
+
+pnttabcount[1] = 9
+pntprimecount[1] = 4
+pntcompcount[1] = 5
+
+pnttabcount[n_] := pnttabcount[n] = 10*pntcompcount[n-1]
+
+pntprimecount[n_] := pntprimecount[n] = 
+ (10^n/Log[10^n] - 10^(n-1)/Log[10^(n-1)])/10^n*pnttabcount[n]
+
+pntcompcount[n_] := pntcompcount[n] = pnttabcount[n] - pntprimecount[n]
+
+Table[Length[primes[i]],{i,1,8}]
+
+{4, 12, 60, 381, 2522, 19094, 151286, 1237792}
+
+Round[Table[pntprimecount[i],{i,1,8}],1]
+
+{4, 9, 51, 341, 2494, 19317, 155616, 1290484}
+
+Round[Table[pntprimecount[i],{i,9,17}],1]
+
+{10941430, 94403150, 826111488, 7314060016, 65393087389, 589557053955, 
+5353515181972, 48917846233104, 449448883740210}
+
+(* estimation of probability using first 17 terms *)
+
+Sum[N[pntprimecount[i]]/10^i,{i,1,17}]
+
+approx 0.707647
+
+FullSimplify[(10^n/Log[10^n] - 10^(n-1)/Log[10^(n-1)])/10^n, {Element[n
+,Integers], n>2}]
+
+(* END *)
+
+f[n_] = FullSimplify[(10^n/Log[10^n] - 10^(n-1)/Log[10^(n-1)])/10^n, 
+ {Element[n  ,Integers], n>2}]
+
+moretabcount[1] = 9
+moreprimecount[1] = 4
+morecompcount[1] = 5
+
+moretabcount[n_] := moretabcount[n] = 10*morecompcount[n-1]
+
+moreprimecount[n_] := moreprimecount[n] = f[n]*moretabcount[n]
+
+morecompcount[n_] := morecompcount[n] = moretabcount[n] - moreprimecount[n]
+
+mtc[n] = 10*mcc[n-1] = 10*(mtc[n-1] - mpc[n-1]) =
+ 10*(mtc[n-1] - (f[n-1]*mtc[n-1])) = 10*mtc[n-1]*(1-f[n-1])
+
+RSolve[{mtc[1] == 9, mtc[2] == 50, 
+ mtc[n] == 10*(1-f[n-1])*mtc[n-1]}, mtc[n], n]
+
+(* below works!!! *)
+
+mtcc[n_] = mtc[n] /.
+RSolve[{mtc[2] == 50, 
+ mtc[n] == 10*(1-f[n-1])*mtc[n-1]}, mtc[n], n][[1]]
+
+
+
+holycow[n_] = mtc[n] /. 
+ RSolve[mtc[n] == 10*(1-f[n-1])*mtc[n-1], mtc[n], n][[1]]
+
+
+
+
+
+
+
+(* below is just test *)
+
+mtc[1] = 9
+mtc[2] = 50
+mtc[n_] := 10*(1-f[n-1])*mtc[n-1]
+Clear[mtc]
+
+
+
+
+
+
+TODO: use N versions of these, might be much faster
+
+TODO: you can get full list at...
 
 sum = Sum[Length[primes[n]]/10^n,{n,1,8}]
 
@@ -190,7 +368,7 @@ https://oeis.org/A006879 is that
 
 primes will be 
 
-TODO: different bases, what if 1 is prime, OEIS
+TODO: different bases (trivial for 2), what if 1 is prime, OEIS
 
 primes[8][[Floor[Length[primes[8]]*Random[]]]]
 
