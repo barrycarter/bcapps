@@ -81,13 +81,90 @@ sum = Sum[Length[primes[n]]/10^n,{n,1,8}]
 
 17248013/25000000
 
-0.689921
+0.689921, li approx is 0.679404
 
 close to natural log of 2
 
 est length for longer than 8 digits
 
-tab[n] will be 10^comps[n-1]
+tab[n] will be 10*comps[n-1]
+
+primes[n] will be (LogIntegral[10^n]-LogIntegral[10^(n-1)])/10^n times that
+
+comps[n] will be 10*comps[n-1] - above
+
+tabcount[1] = 9
+primecount[1] = 4
+compcount[1] = 5
+
+tabcount[n_] := tabcount[n] = 10*compcount[n-1]
+
+primecount[n_] := primecount[n] = 
+ (LogIntegral[10^n]-LogIntegral[10^(n-1)])/10^n*tabcount[n]
+
+compcount[n_] := compcount[n] = tabcount[n] - primecount[n]
+
+
+RSolve[{
+ tabcount[n] == 10*compcount[n-1],
+ primecount[n] == (LogIntegral[10^n]-LogIntegral[10^(n-1)])/10^n*tabcount[n],
+ compcount[n] == tabcount[n] - primecount[n],
+ tabcount[1] == 9,
+ primecount[1] == 4,
+ compcount[1] == 5
+}, primecount, n]
+
+RSolve[{
+ tabcount[n] == 10*(tabcount[n-1] - primecount[n-1]),
+ primecount[n] == (LogIntegral[10^n]-LogIntegral[10^(n-1)])/10^n*tabcount[n],
+ tabcount[1] == 9,
+ primecount[1] == 4
+}, primecount[n], n]
+
+RSolve[{
+tabcount[n] == 10*(tabcount[n-1] - (
+ LogIntegral[10^(n-1)]-LogIntegral[10^(n-2)])/10^(n-1)*tabcount[n-1]
+), tabcount[1] == 9, tabcount[2] == 21}, tabcount[n], n]
+
+tabtest[1] = 9;
+tabtest[2] = 50;
+tabtest[n_] := tabtest[n] = 10*(tabtest[n-1] - (
+ LogIntegral[10^(n-1)]-LogIntegral[10^(n-2)])/10^(n-1)*tabtest[n-1]);
+
+primetest[n_] := 
+ (LogIntegral[10^n]-LogIntegral[10^(n-1)])/10^n*tabcount[n]
+
+(* above is confirmed accurate with tabcount earlier *)
+
+
+RSolve[{
+tabcount[n] == 10*(tabcount[n-1] - (
+ LogIntegral[10^(n-1)]-LogIntegral[10^(n-2)])/10^(n-1)*tabcount[n-1]
+), tabcount[1] == 9, tabcount[2] == 50}, tabcount[n], n]
+
+
+
+
+
+
+0.745892 with first 20
+
+above is remarkably good!
+
+
+TODO: if posting as stack, note awareness of other question
+
+
+
+"4,21,139,1032" = num primes exactly n digits
+
+Table[PrimePi[10^n]-Sum[PrimePi[10^i],{i,1,n-1}],{n,1,8}]
+
+WRONG: {4, 21, 139, 1032, 8166, 67480, 575063, 5007360}
+
+Table[PrimePi[10^n]-PrimePi[10^(n-1)],{n,1,8}]
+
+https://oeis.org/A006879 is that
 
 primes will be 
 
@@ -96,8 +173,6 @@ TODO: different bases, what if 1 is prime, OEIS
 primes[8][[Floor[Length[primes[8]]*Random[]]]]
 
 91351901 (where 1 is considered composite)
-
-
 
 tab[8] is highest w/o out of memory
 
