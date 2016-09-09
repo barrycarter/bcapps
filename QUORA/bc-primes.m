@@ -1,5 +1,39 @@
 (*
 
+https://www.quora.com/We-randomly-generate-digits-of-a-decimal-number-until-we-obtain-a-prime-number-Are-we-sure-to-ultimately-get-one
+
+Plot[LogIntegral[10^n]/10^n,{n,0,100}]
+
+Plot[LogIntegral[10^n]/Log[10^n],{n,0,100}]
+
+Plot[LogIntegral[10^n]/10^n,{n,100,200}]
+
+Plot[10^n/LogIntegral[10^n],{n,1,200}]
+
+Plot[10^n/LogIntegral[10^n]/n,{n,1,200}]
+
+Plot[10^n/LogIntegral[10^n]/n,{n,100,200}]
+
+Limit[10^n/LogIntegral[10^n]/n, n -> Infinity]
+Log[10]
+
+Limit[Exp[n]/LogIntegral[Exp[n]]/n, n -> Infinity]
+
+(above is 1, but we need 10 version)
+
+
+
+
+
+
+
+
+
+
+
+
+(*
+
 **Assuming the Riemann Hypothesis, the [math]10^{48}[/math]th prime is between 114,253,594,378,425,466,185,102,853,920,130,817,319,525,886,680,889 and 114,253,594,378,425,466,185,114,154,511,712,329,201,522,001,657,619, and most likely towards the middle of this range.**
 
 If we assume the Riemann Hypothesis and https://en.wikipedia.org/wiki/Prime_number_theorem#Prime-counting_function_in_terms_of_the_logarithmic_integral we have:
