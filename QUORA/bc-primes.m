@@ -248,10 +248,20 @@ mtcc[n_] = mtc[n] /.
 RSolve[{mtc[2] == 50, 
  mtc[n] == 10*(1-f[n-1])*mtc[n-1]}, mtc[n], n][[1]]
 
+(* the above actually does mtc well *)
+
+mpcc[n_] = mtcc[n]*f[n]
+
+FullSimplify[mpcc[n], {Element[n,Integers],n>2}]
+
+mpc2[n_] = 
+(2^(-2 + n)*5^(-1 + n)*(-10 + 9*n)*
+  Pochhammer[(-9 + 30*Log[10] + Sqrt[81 + 20*Log[10]*(-11 + 5*Log[10])])/
+    (20*Log[10]), -2 + n]*Pochhammer[
+   3/2 - (9 + Sqrt[81 + 20*Log[10]*(-11 + 5*Log[10])])/(20*Log[10]), -2 + n])/
+ (n!*Gamma[n]*Log[10])
 
 
-holycow[n_] = mtc[n] /. 
- RSolve[mtc[n] == 10*(1-f[n-1])*mtc[n-1], mtc[n], n][[1]]
 
 
 
