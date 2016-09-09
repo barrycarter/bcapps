@@ -65,6 +65,8 @@ prs = Select[digitify[comp1], Not[PrimeQ[#]]&]
 
 TODO: note leading 0s irrelev, assuming 1 is nonprime
 
+(* START: the following lines compute actual values *)
+
 digitify[l_] := Flatten[Table[Range[i*10,i*10+9],{i,l}]]
 
 tab[1] = Range[1,9];
@@ -75,7 +77,25 @@ tab[n_] := tab[n] = digitify[comps[n-1]];
 primes[n_] := primes[n] = Select[tab[n], PrimeQ];
 comps[n_] := comps[n] = Complement[tab[n], primes[n]];
 
-Table[tab[i],{i,1,8}];
+(* length below is 1,411,151 *)
+
+Export["/tmp/A069090-thru-8-digits.txt",Flatten[Table[primes[i],{i,1,8}]]];
+
+(* confirms that primes[8] is correct *)
+
+
+
+
+(* END *)
+
+
+
+https://oeis.org/A069090 is the sequence above
+
+http://math.stackexchange.com/questions/437759/number-of-digits-until-a-prime-is-reached
+
+
+
 
 sum = Sum[Length[primes[n]]/10^n,{n,1,8}]
 
@@ -132,7 +152,9 @@ tabtest[n_] := tabtest[n] = 10*(tabtest[n-1] - (
  LogIntegral[10^(n-1)]-LogIntegral[10^(n-2)])/10^(n-1)*tabtest[n-1]);
 
 primetest[n_] := 
- (LogIntegral[10^n]-LogIntegral[10^(n-1)])/10^n*tabcount[n]
+ (LogIntegral[10^n]-LogIntegral[10^(n-1)])/10^n*tabtest[n]
+
+TODO: sequence of primes meeting condition is itself interesting
 
 (* above is confirmed accurate with tabcount earlier *)
 
