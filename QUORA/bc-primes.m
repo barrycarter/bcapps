@@ -252,6 +252,18 @@ RSolve[{mtc[2] == 50,
 
 mpcc[n_] = mtcc[n]*f[n]
 
+Sum[mpcc[n]/10^n,{n,9,Infinity}]
+
+about 0.255484 + 0.6899 = 0.945405
+
+N[Sum[mpcc[n]/10^n,{n,15,Infinity}]] + 0.714722388 about 0.921815
+
+Sum[mpcc[n]/10^n,{n,19,Infinity}]
+
+about 0.188203 + 0.739406 = 0.927609
+
+
+
 FullSimplify[mpcc[n], {Element[n,Integers],n>2}]
 
 mpc2[n_] = 
