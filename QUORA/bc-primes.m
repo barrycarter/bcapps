@@ -2,7 +2,7 @@
 
 https://www.quora.com/We-randomly-generate-digits-of-a-decimal-number-until-we-obtain-a-prime-number-Are-we-sure-to-ultimately-get-one
 
-**Somewhere between 90% and 95%, probably, though it's difficult to find an exact number; it may even be 100%**
+**Somewhere around 95%, probably, though it's difficult to find an exact number; it may even be 100%**
 
 I found this problem interesting and did some work on it at https://github.com/barrycarter/bcapps/blob/master/QUORA/bc-primes.m and am summarizing the more important results below.
 
@@ -25,7 +25,7 @@ However, you can NOT stop at 91535303, because, even though 91535303 itself is p
 
 That means you would've stopped at 915353 without generating any additional random digits.
 
-I constructed the 1,411,151 members of A069090 that are 8 digits or fewer with the compressed results at https://github.com/barrycarter/bcapps/blob/master/QUORA/A069090-thru-8-digits.txt.bz2
+I constructed the 1,411,151 members of A069090 that are eight digits or fewer with the compressed results at https://github.com/barrycarter/bcapps/blob/master/QUORA/A069090-thru-8-digits.txt.bz2
 
 Minor caveats for the discussion below:
 
@@ -43,7 +43,53 @@ Suppose we generate eight random digits in a row, ignoring for the moment whethe
 
 * Similarly there are 381 four digit members of A069090 giving us another 381*10^4 eight digit numbers, 2522 five digit members for another 2522*10^3, 19094 six digit members for another 19094*10^2, 151286 seven digit members for another 151286*10, and 1237792 eight digit members for a final 1237792 more.
 
-* Adding these up, we see that, of the 9*10^7 to generate 8 digits, we will hit a prime number 68992052 times, or about 68992052/(9*10^7) (76.66%) of the time.
+* Adding these up, we see that, of the 9*10^7 ways to generate eight digits, we will hit a prime number 68992052 times, or about 68992052/(9*10^7) (~76.66%) of the time.
+
+In other words, if we stopped after generating eight digits, our chance of hitting a prime somewhere along the way would be about 76.66%.
+
+What happens if we continue to nine digits or more? Unfortunately, I couldn't get Mathematica to generate the nine digit members of A069090, so we must resort to estimation.
+
+Consider the following recursive procedure for estimating the number of n-digit members of A069090:
+
+* STEP 0: There are 5 one digit non-prime numbers {1,4,6,8,9}
+
+* STEP 1: From these we can generate 5*10 two digit numbers that start with a non-prime digit: 10 each for 1, 4, 6, 8, and 9. For example, for the non-prime number 4, we generate the two digit numbers {40, 41, 42, ..., 49}.
+
+* STEP 2: We determine or estimate what percentage of two digit numbers are prime. There are 21 two-digit primes, so there is 21/90 chance that a given two digit number is prime. In general, https://oeis.org/A006879 gives us the number of n-digit primes, and there 9*10^(n-1) n-digit numbers, so the odds of an n-digit number being prime is the ratio of these two numbers.
+
+* STEP 3: We now assume that the numbers generated in STEP 1 are as likely to be prime as any two digit numbers. In other words, they each have a 21/90 chance of being prime. This isn't actually true, and is one reason this estimation isn't exact. In this case, it tells us 21/90*50 = 35/3 of the numbers generated in STEP 1 are prime. This is obviously incorrect (a whole number can't be a fraction), but is close to the true value of 12.
+
+* STEP 4: If 35/3 of the numbers are prime, 50-35/3 or 115/3 (about 38) are not prime.
+
+* STEP 5: We can use these 38 not prime numbers to generate 380 three digit numbers where neither the first digit nor the first two digits are prime.
+
+* STEP 6: We can then repeat STEPS 2 through 4 to find how many three-digit members AA069090 has, and repeat the process for four-digit members, five-digit members, etc.
+
+Computing the value in STEP 2 is actually a bit tricky for more than a handful of digits. The exact value is [math]\pi \left(10^n\right)-\pi \left(10^{n-1}\right)[/math], where [math]\pi[/math] is the prime counting function. Using this, we can compute the number of n-digit members of AA069090 for n=1 to n=14 as:
+
+[math]\{4, 12, 61, 380, 2643, 19752, 155139, 1261313, 10525491, 89635783, 775819148, 6804418731, 60339872334, 540080591492\}[/math]
+
+This agrees fairly closely with the known values for n=1 to n=8:
+
+[math]\{4,12,60,381,2522,19094,151286,1237792\}[/math]
+
+and extends the table to n=14.
+
+Unfortunately, computing [math]\pi(10^n)[/math] for large values becomes difficult. You can get a little further using the log integral function [math]\text{li}\left(10^n\right)-\text{li}\left(10^{n-1}\right)[/math], which is approximately equal to the prime counting function, but slightly easier to compute.
+
+However, even the log integral function isn't that easy to compute for large values of n, so we fall back on an even less-accurate but easier to compute approximation: https://en.wikipedia.org/wiki/Prime_number_theorem 
+
+
+TODO: disclaim, check my work
+
+
+
+
+
+TODO: mention all Cali's are base 10
+
+TODO: use non-prime not composite
+
 
 There are 4 one-digit members of A069090 (namely {2,3,5,7}), so there is a 4/9 (44.44...%) chance you will generate a prime on your first digit. 
 
@@ -135,11 +181,11 @@ Export["/tmp/A069090-thru-8-digits.txt",Flatten[Table[primes[i],{i,1,8}]]];
 
 lens = {4, 12, 60, 381, 2522, 19094, 151286, 1237792};
 
-(* probability computation using first 8 elts *)
+(* probability computation using first 8 elts, 10/9 to avoid leading 0s *)
 
-Sum[lens[[i]]/10^i,{i,1,8}]
+Sum[lens[[i]]/10^i,{i,1,8}]*10/9
 
-17248013/25000000 ~ 0.6899
+17248013/22500000 ~ .7666
 
 (* confirms that primes[8] is correct *)
 
@@ -152,7 +198,6 @@ Select[test1, PrimeQ]
 test2 = DeleteDuplicates[Floor[test1/10]];
 
 (and so on, didnt actually finish)
-
 
 (* END *)
 
@@ -171,7 +216,7 @@ compcount[1] = 5
 tabcount[n_] := tabcount[n] = 10*compcount[n-1]
 
 primecount[n_] := primecount[n] = 
- (PrimePi[10^n]-PrimePi[10^(n-1)])/10^n*tabcount[n]
+ (PrimePi[10^n]-PrimePi[10^(n-1)])/9/10^(n-1)*tabcount[n]
 
 compcount[n_] := compcount[n] = tabcount[n] - primecount[n]
 
@@ -181,22 +226,21 @@ Table[Length[primes[i]],{i,1,8}]
 
 Round[Table[primecount[i],{i,1,8}],1]
 
-{4, 10, 56, 359, 2531, 19107, 151317, 1238813}
+{4, 12, 61, 380, 2643, 19752, 155139, 1261313}
 
 Round[Table[primecount[i],{i,9,14}],1]
 
-{10399793, 89032403, 774220364, 6819205872, 60704716094, 545274480340}
+{10525491, 89635783, 775819148, 6804418731, 60339872334, 540080591492}
 
 (* estimation of probability using first 14 terms *)
 
-Sum[primecount[i]/10^i,{i,1,14}]
+Sum[primecount[i]/10^i,{i,1,14}]*10/9
 
-1786805970005556358589622202867229148721311186239138049375581435066120643541526713898117360601862600017/2500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+5769239667962329296128102642713634610997301906201732145202659062306852290804976687308629060016397527 / 7060738412025000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 
-about 0.714722388
+about 0.8171
 
 (* END *)
-
 
 (* START: estimation of primecount using LogIntegral *)
 
@@ -207,7 +251,7 @@ licompcount[1] = 5
 litabcount[n_] := litabcount[n] = 10*licompcount[n-1]
 
 liprimecount[n_] := liprimecount[n] = 
- (LogIntegral[10^n]-LogIntegral[10^(n-1)])/10^n*litabcount[n]
+ (LogIntegral[10^n]-LogIntegral[10^(n-1)])/9/10^(n-1)*litabcount[n]
 
 licompcount[n_] := licompcount[n] = litabcount[n] - liprimecount[n]
 
@@ -217,18 +261,18 @@ Table[Length[primes[i]],{i,1,8}]
 
 Round[Table[liprimecount[i],{i,1,8}],1]
 
-{4, 12, 56, 346, 2427, 18300, 144768, 1184837}
+{4, 13, 60, 364, 2518, 18795, 147462, 1198538}
 
 Round[Table[liprimecount[i],{i,9,18}],1]
 
-{9946023, 85146113, 740424460, 6521526613, 58054734442, 521471180218, 
- 4720263362679, 43012760609353, 394239380902044, 3632078476341029}
+{10000994, 85167545, 737144504, 6465207476, 57331798029, 513156310634,
+4629809442726, 42060217553835, 384413132350436, 3532103986572052}
 
 (* estimation of probability using first 18 terms *)
 
-Sum[N[liprimecount[i]]/10^i,{i,1,18}]
+Sum[N[liprimecount[i]]/10^i,{i,1,18}]*10/9
 
-approx 0.739406
+approx 0.844219
 
 ListLogPlot[Table[liprimecount[i],{i,1,18}]]
 
@@ -245,7 +289,7 @@ pntcompcount[1] = 5
 pnttabcount[n_] := pnttabcount[n] = 10*pntcompcount[n-1]
 
 pntprimecount[n_] := pntprimecount[n] = 
- (10^n/Log[10^n] - 10^(n-1)/Log[10^(n-1)])/10^n*pnttabcount[n]
+ (10^n/Log[10^n] - 10^(n-1)/Log[10^(n-1)])/9/10^(n-1)*pnttabcount[n]
 
 pntcompcount[n_] := pntcompcount[n] = pnttabcount[n] - pntprimecount[n]
 
@@ -255,26 +299,36 @@ Table[Length[primes[i]],{i,1,8}]
 
 Round[Table[pntprimecount[i],{i,1,8}],1]
 
-{4, 9, 51, 341, 2494, 19317, 155616, 1290484}
+{4, 10, 55, 364, 2634, 20211, 161584, 1331341}
 
 Round[Table[pntprimecount[i],{i,9,17}],1]
 
-{10941430, 94403150, 826111488, 7314060016, 65393087389, 589557053955, 
-5353515181972, 48917846233104, 449448883740210}
+{11224488, 96363928, 839507738, 7402589144, 65939592589, 592456087663,
+5362822842970, 48858408149798, 447663271799097}
 
 (* estimation of probability using first 17 terms *)
 
-Sum[N[pntprimecount[i]]/10^i,{i,1,17}]
+Sum[N[pntprimecount[i]]/10^i,{i,1,17}]*10/9
 
-approx 0.707647
+approx 0.8089
 
-FullSimplify[(10^n/Log[10^n] - 10^(n-1)/Log[10^(n-1)])/10^n, {Element[n
+FullSimplify[(10^n/Log[10^n] - 10^(n-1)/Log[10^(n-1)])/9/10^(n-1), {Element[n
 ,Integers], n>2}]
 
 (* END *)
 
-f[n_] = FullSimplify[(10^n/Log[10^n] - 10^(n-1)/Log[10^(n-1)])/10^n, 
+TODO: use below
+
+10^n/Log[10^n] - 10^(n-1)/Log[10^(n-1)]
+
+
+
+
+
+f[n_] = FullSimplify[(10^n/Log[10^n] - 10^(n-1)/Log[10^(n-1)])/9/10^(n-1), 
  {Element[n  ,Integers], n>2}]
+
+
 
 moretabcount[1] = 9
 moreprimecount[1] = 4
@@ -302,7 +356,9 @@ RSolve[{mtc[2] == 50,
 
 mpcc[n_] = mtcc[n]*f[n]
 
-Sum[mpcc[n]/10^n,{n,9,Infinity}]
+Sum[mpcc[n]/10^n,{n,9,Infinity}]*10/9
+
+about 0.262094 + 0.6899 = 0.951994
 
 about 0.255484 + 0.6899 = 0.945405
 
@@ -779,3 +835,5 @@ range = 49021108755433874493445505
 114253594378425466185108455194812817826649450580733
 114253594378425466185108553237030328694398437471393
 
+
+ LocalWords:  TODO LogIntegral PrimePi
