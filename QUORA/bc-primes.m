@@ -2,6 +2,46 @@
 
 https://www.quora.com/We-randomly-generate-digits-of-a-decimal-number-until-we-obtain-a-prime-number-Are-we-sure-to-ultimately-get-one
 
+**Somewhere between 90% and 95%, probably, though it's difficult to find an exact number; it may even be 100%**
+
+I found this problem interesting and did some work on it at https://github.com/barrycarter/bcapps/blob/master/QUORA/bc-primes.m and am summarizing the more important results below.
+
+If and when you end on a prime number, it must be a member of https://oeis.org/A069090 "Primes none of whose proper initial segments are primes".
+
+For example, you can stop at 91351901 since 91351901 is prime, but as you remove digits right to left:
+
+* 9135190 is not prime (2*5*149*6131)
+* 913519 is not prime (149*6131)
+* 91351 is not prime (13*7027)
+* 9135 is not prime (3*5*7*29)
+* 913 is not prime (11*83)
+* 91 is not prime (7*13)
+* 9 is not prime (3*3)
+
+However, you can NOT stop at 91535303, because, even though 91535303 itself is prime, here's what happens when you start removing digits right to left:
+
+* 9153530 is not prime (2*5*915353)
+* 915353 IS prime
+
+That means you would've stopped at 915353 without generating any additional random digits.
+
+I constructed the 1,411,151 members of A069090 that are 8 digits or fewer with the compressed results at https://github.com/barrycarter/bcapps/blob/master/QUORA/A069090-thru-8-digits.txt.bz2
+
+Minor caveats for the discussion below:
+
+* Generating one or more zeros at the start of your number does not change the probability since you will eventually (with probability 1) generate a non-zero number, at which point your probability count starts.
+
+* Consistent with A069090, I regard 1 as non-prime. Regarding 1 as prime may or may not drastically change the results below, and it would be an interesting extension of this problem to see if that is the case.
+
+I found that:
+
+* There are 4 one-digit members of A069090 (namely {2,3,5,7}), so there is a 4/9 (44.44...%) chance you will generate a prime on your first digit. 
+
+* There are 
+
+TODO: make sure I don't use "roll" as in "dice roll" anywhere
+
+
 Plot[LogIntegral[10^n]/10^n,{n,0,100}]
 
 Plot[LogIntegral[10^n]/Log[10^n],{n,0,100}]

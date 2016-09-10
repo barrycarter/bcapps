@@ -25,6 +25,8 @@ Answerer can fill out these fields:
   - Completeness of answer (just a link, some discussion, answers part
   of problem, shows answer is unknown, answers complete problem)
 
+  - Answer is humorous, sarcastic, or otherwise not meant to answer
+  the question directly.
 
 The site will have a multi-level ontology so a "special relativity"
 question is auto-posted to "relativity", "physics", "science", etc.
