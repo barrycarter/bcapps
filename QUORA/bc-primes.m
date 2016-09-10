@@ -29,15 +29,25 @@ I constructed the 1,411,151 members of A069090 that are 8 digits or fewer with t
 
 Minor caveats for the discussion below:
 
-* Generating one or more zeros at the start of your number does not change the probability since you will eventually (with probability 1) generate a non-zero number, at which point your probability count starts.
+* Generating one or more zeros at the start of your number does not change the probability since you will eventually (with probability 1) generate a non-zero digit, at which point your probability count starts.
 
 * Consistent with A069090, I regard 1 as non-prime. Regarding 1 as prime may or may not drastically change the results below, and it would be an interesting extension of this problem to see if that is the case.
 
-I found that:
+Suppose we generate eight random digits in a row, ignoring for the moment whether we hit any primes on the way or not. This means we are equally likely to generate any of the 9*10^7 numbers from 10000000 to 99999999. Now, let's see how many of these 9*10^7 numbers yield prime numbers:
 
-* There are 4 one-digit members of A069090 (namely {2,3,5,7}), so there is a 4/9 (44.44...%) chance you will generate a prime on your first digit. 
+* If the generated number is one of the 4*10^7 numbers that start with {2,3,5,7}, we have found a prime number on the first digit, regardless of what the remaining 7 digits are.
 
-* There are 
+* There are 12 two digit members of A069090 (two digit primes where the first digit isn't prime). If the number we generate is one of 12*10^6 numbers that starts with a two digit member of A069090, we have found a prime number on the second digit, regardless of what the remaining 6 digits are. Note that we are not double counting the primes found in the first step because we only count primes where the first digit isn't prime.
+
+* There are 60 three digit members of A069090 (three digit primes where neither the first digit nor the first two digits are prime). If we generate any number starting with these three digits, the remaining 5 digits can be anything, giving us additional 60*10^5 where we find a prime, again not doublecounting the ones we already found.
+
+* Similarly there are 381 four digit members of A069090 giving us another 381*10^4 eight digit numbers, 2522 five digit members for another 2522*10^3, 19094 six digit members for another 19094*10^2, 151286 seven digit members for another 151286*10, and 1237792 eight digit members for a final 1237792 more.
+
+* Adding these up, we see that, of the 9*10^7 to generate 8 digits, we will hit a prime number 68992052 times, or about 68992052/(9*10^7) (76.66%) of the time.
+
+There are 4 one-digit members of A069090 (namely {2,3,5,7}), so there is a 4/9 (44.44...%) chance you will generate a prime on your first digit. 
+
+* There is a 5/9 chance you won't generate a prime as your first digit, in which case there are 50 possible numbers (10 for each of {1,4,6,8,9}) after you've generated your second digit. Of these, 12 are prime, so there's a 12/50 (24%) chance your second number will be prime, 
 
 TODO: make sure I don't use "roll" as in "dice roll" anywhere
 
