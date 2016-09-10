@@ -51,7 +51,10 @@ In other words, if we stopped after generating eight digits, our chance of hitti
 
 What happens if we continue to nine digits or more? Unfortunately, I couldn't get Mathematica to generate the nine digit members of A069090, so we must resort to estimation.
 
-TODO: add to OEIS too: non-prime + removing digits still non-prime
+TODO: add to OEIS too: non-prime + removing digits still non-prime, and the number there in and generate up to 8 or 9 digits
+
+
+https://oeis.org/A202259
 
 To do this, let's consider numbers with the following two properties:
 
@@ -66,11 +69,14 @@ As an example, the two digit members of S.
 
 Note that none of these numbers are prime, and all start with {1,4,5,6,8,9}, so removing a digit from the right leaves them non-prime
 
-Although these numbers are related to the members of A069090, they do NOT form a complement or even a partial complement to that series. For example, 37 is not a member of A069090 (it's prime, but, when you remove a digit it's still prime), and not a member of S either..
 
-Let c(n) be the quantity of n digit numbers in S. We can now estimate (not compute exactly!) c(n) as follows:
+TODO: relation to A069090 by digit exclusion, use later to compute
 
-STEP 1: If we take an n digit 
+
+
+Let c(n) be the quantity of n digit numbers in S. We can now estimate (not compute exactly!) c(n) recursively as follows:
+
+STEP 1: 
 
 
 
@@ -282,6 +288,11 @@ comps[1] = Complement[tab[1], primes[1]];
 tab[n_] := tab[n] = digitify[comps[n-1]];
 primes[n_] := primes[n] = Select[tab[n], PrimeQ];
 comps[n_] := comps[n] = Complement[tab[n], primes[n]];
+
+(* length below is TODO 23,498,958 *)
+
+test = Flatten[Table[comps[i],{i,1,8}]];
+
 
 (* length below is 1,411,151 *)
 
