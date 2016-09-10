@@ -33,6 +33,8 @@ Minor caveats for the discussion below:
 
 * Consistent with A069090, I regard 1 as non-prime. Regarding 1 as prime may or may not drastically change the results below, and it would be an interesting extension of this problem to see if that is the case.
 
+* To emphasize that 1 is neither prime nor composite, I refer to numbers below as non-prime and not "composite".
+
 Suppose we generate eight random digits in a row, ignoring for the moment whether we hit any primes on the way or not. This means we are equally likely to generate any of the 9*10^7 numbers from 10000000 to 99999999. Now, let's see how many of these 9*10^7 numbers yield prime numbers:
 
 * If the generated number is one of the 4*10^7 numbers that start with {2,3,5,7}, we have found a prime number on the first digit, regardless of what the remaining 7 digits are.
@@ -48,6 +50,34 @@ Suppose we generate eight random digits in a row, ignoring for the moment whethe
 In other words, if we stopped after generating eight digits, our chance of hitting a prime somewhere along the way would be about 76.66%.
 
 What happens if we continue to nine digits or more? Unfortunately, I couldn't get Mathematica to generate the nine digit members of A069090, so we must resort to estimation.
+
+TODO: add to OEIS too: non-prime + removing digits still non-prime
+
+To do this, let's consider numbers with the following two properties:
+
+* The number is not prime
+* When we remove digits from right to left, the number remains non-prime.
+
+Let's refer to this (infinite) set as S.
+
+As an example, the two digit members of S.
+
+{10, 12, 14, 15, 16, 18, 40, 42, 44, 45, 46, 48, 49, 60, 62, 63, 64, 65, 66, 68, 69, 80, 81, 82, 84, 85, 86, 87, 88, 90, 91, 92, 93, 94, 95, 96, 98, 99}
+
+Note that none of these numbers are prime, and all start with {1,4,5,6,8,9}, so removing a digit from the right leaves them non-prime
+
+Although these numbers are related to the members of A069090, they do NOT form a complement or even a partial complement to that series. For example, 37 is not a member of A069090 (it's prime, but, when you remove a digit it's still prime), and not a member of S either..
+
+Let c(n) be the quantity of n digit numbers in S. We can now estimate (not compute exactly!) c(n) as follows:
+
+STEP 1: If we take an n digit 
+
+
+
+
+
+1,4,6,8,9
+
 
 Consider the following recursive procedure for estimating the number of n-digit members of A069090:
 
