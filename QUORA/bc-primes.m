@@ -51,6 +51,86 @@ What happens if we continue to nine digits or more? Unfortunately, I couldn't ge
 
 Consider the following recursive procedure for estimating the number of n-digit members of A069090:
 
+* STEP 1: Suppose we know how many members of A069090 have n digits and call this a(n)
+
+* STEP 2: To create an n+1 digit member of A069090, our new number can't start with any of these a(n) numbers.
+
+
+* STEP 3: There are 9*10^(n-1) n digit numbers total, and thus 9*10^(n-1)-a(n) n digit numbers that are NOT members of A069090
+
+* STEP 4: We can add any digit to these 9*10^(n-1)-a(n) numbers to form candidates for n+1 digit members of A069090. Thus, there are 10*(9*10^(n-1)-a(n)) candidates for n+1 digit members of A069090
+
+* STEP 5a: We now take the estimation step by computing the probability that an n+1 digit is prime and assuming that the candidates generated in STEP 4 are as likely to be primes as any other n+1 digit number. Note that this assumption is false, which is why this process yields only an estimate and not an not an exact number.
+
+* STEP 5b: The probability than a randomly selected n+1 digit number is prime is the number of primes of length n+1 divided by the total number of n+1 digit numbers. The latter is 9*10^n. The former is the n+1st member of https://oeis.org/A006879. If we refer to the former as b(n+1), the probability that a randomly selected n+1 digit number is prime is b(n+1)/(9*10^n)
+
+* STEP 5c: Combining STEP 5a and STEP 5b, we estimate a(n+1) as:
+
+a(n+1) = b(n+1)/(9*10^n)*(10*(9*10^(n-1)-a(n)))
+
+which simplifies to:
+
+[math]a(n+1)=\frac{1}{9} \left(9-10^{1-n} a(n)\right) b(n+1)[/math]
+
+Since we know there are 4 one digit members of A069090 (namely, {2,3,5,7}), our initial condition is a(1)=4
+
+TODO: section marker here?
+
+We can now use https://oeis.org/A006879/b006879.txt and the recursion above to estimate how many n digit members of A069090 there are.
+
+The estimates for the first 8 digits (rounded to the nearest whole number) are:
+
+WRONG!!!! {4, 12, 124, 914, 7513, 63154, 544955, 4788257}
+
+
+
+The actual values I computed are:
+
+{4, 12, 60, 381, 2522, 19094, 151286, 1237792}
+
+
+Table[Round[a[n],1],{n,1,8}]
+
+
+oeis6879 = {0, 4, 21, 143, 1061, 8363, 68906, 586081, 5096876,
+45086079, 404204977, 3663002302, 33489857205, 308457624821,
+2858876213963, 26639628671867, 249393770611256, 2344318816620308,
+22116397130086627, 209317712988603747, 1986761935284574233,
+18906449883457813088, 180340017203297174362, 1723853104917488062633,
+16510279375742396898943, 158410709631794568543814};
+
+b[n_] := oeis6879[[n+1]];
+
+
+
+
+FullSimplify[(b[n + 1]*(10*(9*10^(n - 1) - a[n])))/(9*10^n), 
+    {Element[n, Integers], n > 2}]
+
+reduce n by 1 to get
+
+a[n_] := ((9 - 10^(2 - n)*a[-1 + n])*b[n])/9
+a[1] := 4;
+
+TODO: note I'm trying to get OEIS for n digit ones
+
+
+
+
+
+
+
+TODO: consider texifying inline equations
+
+
+
+
+
+
+TODO: restore below if above fails
+
+TODO: mention prior versions
+
 * STEP 0: There are 5 one digit non-prime numbers {1,4,6,8,9}
 
 * STEP 1: From these we can generate 5*10 two digit numbers that start with a non-prime digit: 10 each for 1, 4, 6, 8, and 9. For example, for the non-prime number 4, we generate the two digit numbers {40, 41, 42, ..., 49}.
