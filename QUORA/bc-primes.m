@@ -4,6 +4,57 @@ https://www.quora.com/We-randomly-generate-digits-of-a-decimal-number-until-we-o
 
 **Somewhere around 95%, probably, though it's difficult to find an exact number; it may even be 100%** (TODO: revise if needed)
 
+If you have generated n random digits and FAIL to hit a prime number, your final n digit number is a member of https://oeis.org/A202259 (right-truncatable nonprimes: every prefix is nonprime number). For example, if you generate 9, 1, 3, 5, 1, 9, 0, 2 in that order:
+
+* 9 is not prime (3*3)
+* 91 is not prime (7*13)
+* 913 is not prime (11*83)
+* 9135 is not prime (3*5*7*29)
+* 91351 is not prime (13*7027)
+* 913519 is not prime (149*6131)
+* 9135190 is not prime (2*5*149*6131)
+* 91351902 is not prime (2*3*1399*10883)
+
+So, how many ways can you FAIL to generate a prime after generating n digits? This is equal to the number of A202259 members with exactly n digits. Through brute force computation for n<=8, these are:
+
+{5, 38, 320, 2819, 25668, 237586, 2224574, 21007948}
+
+For example, with three random digits, you can generate a total of 900 numbers (no leading zeros), of which 320 (the third number above) will never hit a prime. Thus, your chance of failure after 3 digits is 320/900, and your chance of success is thus 1-320/900 or 580/900 which reduces to 29/45 or about 64.44%
+
+With eight digits, the chance of failure is 21007948/90000000, yielding a chance of success of about 76.66%
+
+I computed all 23,498,958 members of A202259 with eight or fewer digits at https://github.com/barrycarter/bcapps/blob/master/QUORA/ in "a202259-through-8-digits.txt.bz2", but couldn't go beyond eight digits because of computational/memory limits.
+
+Thus, for n>=9, we must use a recursive estimation. Allowing c[n] to be the number of A202259 elements with exactly n digits, we have:
+
+TODO: put stuff here
+
+(* number of n digit primes *)
+
+oeis6879 = {0, 4, 21, 143, 1061, 8363, 68906, 586081, 5096876,
+45086079, 404204977, 3663002302, 33489857205, 308457624821,
+2858876213963, 26639628671867, 249393770611256, 2344318816620308,
+22116397130086627, 209317712988603747, 1986761935284574233,
+18906449883457813088, 180340017203297174362, 1723853104917488062633,
+16510279375742396898943, 158410709631794568543814};
+
+b[n_] := If[n<=25,oeis6879[[n+1]], LogIntegral[10^n]-LogIntegral[10^(n-1)]];
+
+c[n_] := 10*c[n-1]*(1-b[n]/9/10^(n-1))
+
+c[1] := 5
+
+TODO: go as far as possible for c[n] with actual values
+
+RSolve[{
+ c[1] == 5,
+ c[n] == 10*c[n-1]*(1-(LogIntegral[10^n]-LogIntegral[10^(n-1)])/9/10^(n-1))
+ }, c[n], n]
+
+
+
+
+
 TODO: legacy note
 
 TODO: note on OEIS that removing digit from A069090 yields A202259
@@ -131,15 +182,6 @@ The actual values I computed are:
 
 Table[Round[a[n],1],{n,1,8}]
 
-
-oeis6879 = {0, 4, 21, 143, 1061, 8363, 68906, 586081, 5096876,
-45086079, 404204977, 3663002302, 33489857205, 308457624821,
-2858876213963, 26639628671867, 249393770611256, 2344318816620308,
-22116397130086627, 209317712988603747, 1986761935284574233,
-18906449883457813088, 180340017203297174362, 1723853104917488062633,
-16510279375742396898943, 158410709631794568543814};
-
-b[n_] := oeis6879[[n+1]];
 
 
 
