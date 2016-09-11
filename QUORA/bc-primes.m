@@ -2,7 +2,11 @@
 
 https://www.quora.com/We-randomly-generate-digits-of-a-decimal-number-until-we-obtain-a-prime-number-Are-we-sure-to-ultimately-get-one
 
-**Somewhere around 95%, probably, though it's difficult to find an exact number; it may even be 100%**
+**Somewhere around 95%, probably, though it's difficult to find an exact number; it may even be 100%** (TODO: revise if needed)
+
+TODO: legacy note
+
+TODO: note on OEIS that removing digit from A069090 yields A202259
 
 I found this problem interesting and did some work on it at https://github.com/barrycarter/bcapps/blob/master/QUORA/bc-primes.m and am summarizing the more important results below.
 
@@ -292,6 +296,11 @@ comps[n_] := comps[n] = Complement[tab[n], primes[n]];
 (* length below is TODO 23,498,958 *)
 
 test = Flatten[Table[comps[i],{i,1,8}]];
+
+Table[Length[comps[i]],{i,1,8}]
+
+{5, 38, 320, 2819, 25668, 237586, 2224574, 21007948}
+
 
 
 (* length below is 1,411,151 *)
