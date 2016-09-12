@@ -44,11 +44,57 @@ c[n_] := 10*c[n-1]*(1-b[n]/9/10^(n-1))
 
 c[1] := 5
 
+ListPlot[Table[c[i],{i,1,25}]]
+
+N[Log[Table[c[i],{i,1,25}]]]
+
 TODO: go as far as possible for c[n] with actual values
+
+p[n_] = FullSimplify[(10^n/Log[10^n] - 10^(n-1)/Log[10^(n-1)])/9/10^(n-1),
+ {Element[n,Integers], n>2}]
+
+
+RSolve[{
+ c[1] == 5,
+ c[n] == 10*c[n-1]*(1-p[n])
+ }, c[n], n]
+
+above gives proof of 0
+
+p[n_] = FullSimplify[(LogIntegral[10^n] - LogIntegral[10^(n-1)])/9/10^(n-1),
+ {Element[n,Integers], n>2}]
+
+RSolve[{
+ c[1] == 5,
+ c[n] == 10*c[n-1]*(1-p[n])
+ }, c[n], n]
+
+p[n_] = FullSimplify[(PrimePi[10^n] - PrimePi[10^(n-1)])/9/10^(n-1),
+ {Element[n,Integers], n>2}]
+
+RSolve[{
+ c[1] == 5,
+ c[n] == 10*c[n-1]*(1-p[n])
+ }, c[n], n]
+
+
+
 
 RSolve[{
  c[1] == 5,
  c[n] == 10*c[n-1]*(1-(LogIntegral[10^n]-LogIntegral[10^(n-1)])/9/10^(n-1))
+ }, c[n], n]
+
+
+RSolve[{
+ c[1] == 5,
+ c[n] == 10*c[n-1]*(1-(PrimePi[10^n]-PrimePi[10^(n-1)])/9/10^(n-1))
+ }, c[n], n]
+
+
+RSolve[{
+ c[1] == 5,
+ c[n] == 10*c[n-1]*(1-(10^n/Log[10^n] - 10^(n-1)/Log[10^(n-1)])/9/10^(n-1))
  }, c[n], n]
 
 

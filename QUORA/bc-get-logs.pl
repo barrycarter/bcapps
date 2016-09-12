@@ -5,15 +5,15 @@
 # small ones)
 
 require "/usr/local/lib/bclib.pl";
+require "/home/barrycarter/bc-private.pl";
 
 # TODO: don't hardcode this (150M = as of 7 Jun 2016)
-my($start) = 150000000-1;
+my($start) = 170218009+1;
 # TODO: this is just testing, in reality this will keep running
-my($end) = $start + 20;
+my($end) = 171443788-1;
 
 # command I use to download log entries
-my($cmd) = "curl -L --compress --socks4a 127.0.0.1:9050";
-
+my($cmd) = "curl -H 'Cookie: m-b=$private{quora}{cookie}' -L --compress --socks4a 127.0.0.1:9050";
 
 # dir where I store these
 my($logdir) = "/home/barrycarter/QUORA/LOG";
