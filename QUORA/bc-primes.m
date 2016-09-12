@@ -2,9 +2,11 @@
 
 https://www.quora.com/We-randomly-generate-digits-of-a-decimal-number-until-we-obtain-a-prime-number-Are-we-sure-to-ultimately-get-one
 
-**Somewhere around 95%, probably, though it's difficult to find an exact number; it may even be 100%** (TODO: revise if needed)
+**The probability is "probably" 100%, but it's not that easy to show, and takes a long time to converge**
 
-If you have generated n random digits and FAIL to hit a prime number, your final n digit number is a member of https://oeis.org/A202259 (right-truncatable nonprimes: every prefix is nonprime number). For example, if you generate 9, 1, 3, 5, 1, 9, 0, 2 in that order:
+For convenience, I'm going to refer to generating a random digit (ie, a number from 0 through 9 inclusive) as a "roll" as in "rolling a 10-sided dice" (numbered 0 through 9).
+
+Suppose you've rolled several times and failed to hit a prime along the way. What sort of number do you have? One example is if you roll 9, 1, 3, 5, 1, 9, 0, 2 in that order. You then have:
 
 * 9 is not prime (3*3)
 * 91 is not prime (7*13)
@@ -15,9 +17,99 @@ If you have generated n random digits and FAIL to hit a prime number, your final
 * 9135190 is not prime (2*5*149*6131)
 * 91351902 is not prime (2*3*1399*10883)
 
-So, how many ways can you FAIL to generate a prime after generating n digits? This is equal to the number of A202259 members with exactly n digits. Through brute force computation for n<=8, these are:
+Is there a name for numbers like these that aren't prime and where every prefix is also not prime? Not exactly, but they do form https://oeis.org/A202259
+
+It turns out there are 21,007,948 elements of A202259 that have exactly eight digits like the example above. [TODO: footnote or brute force note here]
+
+Since there are 90,000,000 ways to generate an eight digit number (excluding leading zeros), the chance that you will roll eight digits without hitting a prime is 21,007,948/90,000,000 or about 23.34%. Thus, the chance that you WILL roll a prime number at least once in the first eight rolls is 100% minus this number of 76.66%
+
+For reference, the number of ways you can roll n times without hitting a prime for n=1 through n=8 is:
 
 {5, 38, 320, 2819, 25668, 237586, 2224574, 21007948}
+
+To find these numbers, I generated all elements of A202259 with eight or fewer digits. The results are at https://github.com/barrycarter/bcapps/blob/master/QUORA/ in the file "a202259-through-8-digits.txt.bz2". The total number of entries in this file is 23,498,958, the sum of the numbers above.
+
+If we want to go beyond eight digits, we have a problem: computing elements of A202259 is difficult, and I wasn't able to compute all nine digit elements in order to count them. It's possible someone has done this (either the elements themselves or just the count without generating the elements directly), but I wasn't able to find it.
+
+Unless someone finds a general formula for the number of n digit elements of A202259, we must resort to estimation.
+
+Suppose c is an n digit element of A202259. There are 10 ways we can add a digit at the end of c, resulting in 10 numbers with n+1 digits that start with the digits from 'c'. Of these 10 numbers, if the number itself is not prime, it is also an element of A202259: we know the number itself isn't prime, and, once we remove a digit, we have a elements of A202259, so we know all prefixes are also nonprime.
+
+Of the 10 numbers we create above with n+1 , how many are nonprime? If we estimate they are just as likely to be a nonprime as any other n+1 digit number, we can estimate how many of the 10 numbers are prime. Of course, this IS an estimate, so our calculations from here forward are only estimates. Note that we may even get fractional numbers (for example, we might find 3.6536311 of the 10 number we generate are nonprime, which doesn't make sense literally, but is OK for an estimate).
+
+How likely is it than an n digit number is prime? To find this, we can divide the quantity of n digit primes by the quantity of n digit numbers total. The latter is easy: there are 9*10^(n-1) numbers with n digits total (no leading zeros).
+
+For the former, https://oeis.org/A006879 and https://oeis.org/A006879/b006879.txt give these quantities for n=1 through n=25 (we ignore n=0, as we won't use it). From the text file, these numbers are:
+
+{4, 21, 143, 1061, 8363, 68906, 586081, 5096876, 45086079, 404204977, 3663002302, 33489857205, 308457624821, 2858876213963, 26639628671867, 249393770611256, 2344318816620308, 22116397130086627, 209317712988603747, 1986761935284574233, 18906449883457813088, 180340017203297174362, 1723853104917488062633, 16510279375742396898943, 158410709631794568543814}
+
+Dividing by 9*10^n, the probability of an n digit number being prime (for n=1 to n=25) is (rounded to two digits):
+
+{0.4444, 0.2333, 0.1589, 0.1179, 0.0929, 0.0766, 0.0651, 0.0566, 0.0501, 0.0449, 0.0407, 0.0372, 0.0343, 0.0318, 0.0296, 0.0277, 0.026, 0.0246, 0.0233, 0.0221, 0.021, 0.02, 0.0192, 0.0183, 0.0176}
+
+Of course, we're interested in the probability than an n digit number is NOT prime, so we just subtract from 1 to get:
+
+{0.5556, 0.7667, 0.8411, 0.8821, 0.9071, 0.9234, 0.9349, 0.9434, 0.9499, 0.9551, 0.9593, 0.9628, 0.9657, 0.9682, 0.9704, 0.9723, 0.974, 0.9754, 0.9767, 0.9779, 0.979, 0.98, 0.9808, 0.9817, 0.9824}
+
+How can we use these probabilities to count (estimate) how many elements of A202259 have more than eight digits?
+
+We know that there are 21,007,948 eight digit elements of A202259. If we add a digit to each of these, we have 210,079,480 numbers total. From the above, we know that approximately 0.9499 of these will be non-prime. Thus, we can estimate that, to the nearest whole number, there are  199,555,413 nine digit elements of A202259 (this is 0.9499*210079480, but, to preserve accuracy, I used exact numbers and THEN rounded to the nearest whole number).
+
+Using a similar technique, we can estimate the number of n digit elements of A202259 all the way to n=25 (for n=1 to n=8, we use the exact values above):
+
+{5, 38, 320, 2819, 25668, 237586, 2224574, 21007948, 199555413, 1905930476, 18283590569, 176032407499, 1699992365761, 16459916131126, 159727094047892, 1553009893530716, 15125571122440316, 147538787471478048, 1441074006302956646, 14092621065068371251, 137965750274091745514, 1352012229654366891541, 13261158909879658216032, 130178862004927374960014, 1278875591261207077472524}
+
+And, from these estimates, we can estimate the chance of rolling n digits without ever hitting a prime, as we did previously for 8 digits:
+
+In[29]:= N[Table[Round[a[n]/10^(n-1)/9,10^-4],{n,1,25}] ]                       
+Out[29]= {0.5556, 0.4222, 0.3556, 0.3132, 0.2852, 0.264, 0.2472, 0.2334, 
+ 
+>    0.2217, 0.2118, 0.2032, 0.1956, 0.1889, 0.1829, 0.1775, 0.1726, 0.1681, 
+ 
+>    0.1639, 0.1601, 0.1566, 0.1533, 0.1502, 0.1473, 0.1446, 0.1421}
+
+
+{0.556, 0.422, 0.356, 0.313, 0.285, 0.264, 0.247, 0.233, 0.222, 0.212, 0.203, 0.196, 0.189, 0.183, 0.177, 0.173, 0.168, 0.164, 0.16, 0.157, 0.153, 0.15, 0.147, 0.145, 0.142}
+
+
+
+
+
+
+(* number of n digit primes *)
+
+oeis6879 = {4, 21, 143, 1061, 8363, 68906, 586081, 5096876,
+45086079, 404204977, 3663002302, 33489857205, 308457624821,
+2858876213963, 26639628671867, 249393770611256, 2344318816620308,
+22116397130086627, 209317712988603747, 1986761935284574233,
+18906449883457813088, 180340017203297174362, 1723853104917488062633,
+16510279375742396898943, 158410709631794568543814};
+
+acts = {5, 38, 320, 2819, 25668, 237586, 2224574, 21007948}
+
+a[n_] := If[n<=8, acts[[n]], a[n-1]*10*(1-oeis6879[[n]]/9/10^(n-1))]
+
+210079480*(1-oeis6879[[9]]/10^8/9)
+
+Table[a[n],{n,1,25}]
+In[25]:= Table[Round[a[n],1],{n,1,25}]                                          
+
+
+
+
+(.9499*210079480 but I used exactly values
+
+
+TODO: use element consistently, not member; say whole number, not integer
+
+===== CUT POINT ====
+
+TODO: graph????
+
+N[Round[Table[oeis6879[[i]]/9/10^(i-1),{i,1,25}],10^-4]]
+
+
+
 
 For example, with three random digits, you can generate a total of 900 numbers (no leading zeros), of which 320 (the third number above) will never hit a prime. Thus, your chance of failure after 3 digits is 320/900, and your chance of success is thus 1-320/900 or 580/900 which reduces to 29/45 or about 64.44%
 
@@ -28,15 +120,6 @@ I computed all 23,498,958 members of A202259 with eight or fewer digits at https
 Thus, for n>=9, we must use a recursive estimation. Allowing c[n] to be the number of A202259 elements with exactly n digits, we have:
 
 TODO: put stuff here
-
-(* number of n digit primes *)
-
-oeis6879 = {0, 4, 21, 143, 1061, 8363, 68906, 586081, 5096876,
-45086079, 404204977, 3663002302, 33489857205, 308457624821,
-2858876213963, 26639628671867, 249393770611256, 2344318816620308,
-22116397130086627, 209317712988603747, 1986761935284574233,
-18906449883457813088, 180340017203297174362, 1723853104917488062633,
-16510279375742396898943, 158410709631794568543814};
 
 b[n_] := If[n<=25,oeis6879[[n+1]], LogIntegral[10^n]-LogIntegral[10^(n-1)]];
 
