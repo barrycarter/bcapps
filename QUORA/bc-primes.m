@@ -43,7 +43,7 @@ For the former, https://oeis.org/A006879 and https://oeis.org/A006879/b006879.tx
 
 {4, 21, 143, 1061, 8363, 68906, 586081, 5096876, 45086079, 404204977, 3663002302, 33489857205, 308457624821, 2858876213963, 26639628671867, 249393770611256, 2344318816620308, 22116397130086627, 209317712988603747, 1986761935284574233, 18906449883457813088, 180340017203297174362, 1723853104917488062633, 16510279375742396898943, 158410709631794568543814}
 
-Dividing by 9*10^n, the probability of an n digit number being prime (for n=1 to n=25) is (rounded to two digits):
+Dividing by 9*10^n, the probability of an n digit number being prime (for n=1 to n=25) is (rounded to four digits):
 
 {0.4444, 0.2333, 0.1589, 0.1179, 0.0929, 0.0766, 0.0651, 0.0566, 0.0501, 0.0449, 0.0407, 0.0372, 0.0343, 0.0318, 0.0296, 0.0277, 0.026, 0.0246, 0.0233, 0.0221, 0.021, 0.02, 0.0192, 0.0183, 0.0176}
 
@@ -59,14 +59,37 @@ Using a similar technique, we can estimate the number of n digit elements of A20
 
 {5, 38, 320, 2819, 25668, 237586, 2224574, 21007948, 199555413, 1905930476, 18283590569, 176032407499, 1699992365761, 16459916131126, 159727094047892, 1553009893530716, 15125571122440316, 147538787471478048, 1441074006302956646, 14092621065068371251, 137965750274091745514, 1352012229654366891541, 13261158909879658216032, 130178862004927374960014, 1278875591261207077472524}
 
-And, from these estimates, we can estimate the chance of rolling n digits without ever hitting a prime, as we did previously for 8 digits:
+And, from these estimates, we can estimate the chance of rolling n digits without ever hitting a prime, as we did previously for 8 digits (rounded to 4 digits):
 
-In[29]:= N[Table[Round[a[n]/10^(n-1)/9,10^-4],{n,1,25}] ]                       
-Out[29]= {0.5556, 0.4222, 0.3556, 0.3132, 0.2852, 0.264, 0.2472, 0.2334, 
- 
->    0.2217, 0.2118, 0.2032, 0.1956, 0.1889, 0.1829, 0.1775, 0.1726, 0.1681, 
- 
->    0.1639, 0.1601, 0.1566, 0.1533, 0.1502, 0.1473, 0.1446, 0.1421}
+{0.5556, 0.4222, 0.3556, 0.3132, 0.2852, 0.264, 0.2472, 0.2334, 0.2217, 0.2118, 0.2032, 0.1956, 0.1889, 0.1829, 0.1775, 0.1726, 0.1681, 0.1639, 0.1601, 0.1566, 0.1533, 0.1502, 0.1473, 0.1446, 0.1421}
+
+Note that, after 25 rolls, the chance that you STILL haven't hit a prime number is about 14.21% (roughly 1 in 7).
+
+What about after 26 rolls? We can't use the method above, since the number of 26 digit primes is unknown (or, at the very least, I haven't found it).
+
+Instead, let's try to approximate the probability that an n digit number will be prime for n>=26.
+
+I don't know of any mathematical notation for the number of n digit primes, but there is one for primes less than n, namely [math]\pi (n)[/math] (https://en.wikipedia.org/wiki/Prime-counting_function). Of course, this is different from the more common usage of [math]\pi[/math] as the ratio of a circle's circumference to its diameter.
+
+Using this, we see that [math]\pi \left(10^{n+1}\right)[/math] is the number of primes with n or fewer digits. By subtracting off [math]\pi \left(10^n\right)[/math], the number of primes with n-1 or fewer digits, we get [math]\pi \left(10^n\right)-\pi \left(10^{n-1}\right)[/math] as the number of primes with precisely n digits. Since there are [math]9\ 10^{n-1}[/math] n digit numbers total, the probability than an n digit number is prime is (after simplification):
+
+[math]p(n) = \frac{1}{9} 10^{1-n} \left(\pi \left(10^{n+1}\right)-\pi \left(10^n\right)\right)[/math]
+
+Let a(n) be the n digit elements of A202259. By the discussion earlier, we have:
+
+[math]a(n+1) = 10 a(n) (1-p(n))[/math]
+
+Substituting for p(n) and simplifying, we have:
+
+[math]a(n+1) = \frac{10}{9} a(n) \left(10^{1-n} \left(\pi \left(10^n\right)-\pi \left(10^{n+1}\right)\right)+9\right)[/math]
+
+
+
+
+
+By adding a digit to an n-1 digit element of A202259, we create an n digit number 
+
+TODO: check all math formulas before uploading
 
 
 {0.556, 0.422, 0.356, 0.313, 0.285, 0.264, 0.247, 0.233, 0.222, 0.212, 0.203, 0.196, 0.189, 0.183, 0.177, 0.173, 0.168, 0.164, 0.16, 0.157, 0.153, 0.15, 0.147, 0.145, 0.142}
@@ -1137,4 +1160,5 @@ range = 49021108755433874493445505
 114253594378425466185108553237030328694398437471393
 
 
- LocalWords:  TODO LogIntegral PrimePi
+TODO: https://oeis.org/A276473 counts A202259
+
