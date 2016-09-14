@@ -15,16 +15,16 @@ require "/usr/local/lib/bclib.pl";
 # 172649658 -> 14 Sep 2016 11:38 AM
 # 170359726 -> 3 Sep 2016 1:42 PM
 
-$y2 = str2time("14 Sep 2016 11:38 AM MDT");
-$y1 = str2time("3 Sep 2016 1:42 PM");
-$x2 = 172649658;
-$x1 = 170359726;
-my($slope) = ($x2-$x1)/($y2-$y1);
+$x2 = str2time("14 Sep 2016 11:38 AM MDT");
+$x1 = str2time("3 Sep 2016 1:42 PM");
+$y2 = 172649658;
+$y1 = 170359726;
+
+my($slope) = ($y2-$y1)/($x2-$x1);
 
 my($time) = time();
 
-debug(($time-$x1)*$slope 
+my($hwm) = ($time-$x1)*$slope + $y1;
+my($lwm) = $hwm-$slope*86400;
 
-
-debug
-
+debug("HWM: $lwm - $hwm");
