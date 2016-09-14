@@ -77,11 +77,43 @@ Using this, we see that [math]\pi \left(10^{n+1}\right)[/math] is the number of 
 
 Let a(n) be the n digit elements of A202259. By the discussion earlier, we have:
 
-[math]a(n+1) = 10 a(n) (1-p(n))[/math]
+[math]a(n+1) = 10 a(n) (1-p(n+1))[/math]
 
 Substituting for p(n) and simplifying, we have:
 
 [math]a(n+1) = \frac{10}{9} a(n) \left(10^{1-n} \left(\pi \left(10^n\right)-\pi \left(10^{n+1}\right)\right)+9\right)[/math]
+
+with our initial condition a(8) = 21007948, since we want to use exact values as far as possible.
+
+p[n_] = (PrimePi[10^(n+1)]-PrimePi[10^n])/9/10^(n-1)
+
+RSolve[{
+ a[8] == 21007948,
+ a[n+1] ==  10*a[n]*(1-p[n+1])
+}, a[n], n]
+
+{{a[n] -> (322052448838500000000000000000000*
+     Product[(10^(1 - K[1])*(9*10^K[1] + PrimePi[10^(1 + K[1])] - 
+         PrimePi[10^(2 + K[1])]))/9, {K[1], 1, -1 + n}])/
+    20223505963127102965144579127}}
+
+b[n_] = FullSimplify[a[n] /. %[[1,1]], {Element[n,Integers], n>2}]
+
+mathematica wont eval limit
+
+NOTE TO SELF: RSolve[{a[0]=1; a[n+1] == a[n]+1}, a[n], n] does work
+(don't need a[n] on left side) (TODO: remove this before posting)
+
+
+10*a[n]*(1-p[n])
+
+
+
+
+Limit[PrimePi[n]/n, n -> Infinity] fail (but can eval at non ints)
+
+Limit[LogIntegral[n]/n, n -> Infinity] works
+
 
 
 
@@ -116,9 +148,6 @@ a[n_] := If[n<=8, acts[[n]], a[n-1]*10*(1-oeis6879[[n]]/9/10^(n-1))]
 
 Table[a[n],{n,1,25}]
 In[25]:= Table[Round[a[n],1],{n,1,25}]                                          
-
-
-
 
 (.9499*210079480 but I used exactly values
 
