@@ -15,13 +15,18 @@ tab[n_] := tab[n] = digitify[members[n-1]];
 
 members[n_] := members[n] = Select[tab[n], !PrimeQ[#]&]
 
-temp = Flatten[Table[members[n], {n,1,4}]]
+temp = Flatten[Table[members[n], {n,1,8}]];
 
 (* i+1 below since I need to add '0' entry later *)
-export = Table[{i+1,temp[[i]]}, {i,1,Length[temp]}];
+
+export = Table[ToString[i+1]<>" "<>ToString[temp[[i]]], {i,1,Length[temp]}];
+
+(* add special case for 0 *)
+
+export = Prepend[export, "1 0"];
 
 Export["/tmp/temp.txt", export]
 
-TODO: add 0!
+(* temp file was renamed and bzip2 compressed before githubing *)
 
 
