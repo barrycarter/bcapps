@@ -30,36 +30,7 @@ digitify[l_] := Flatten[Table[Range[i*10,i*10+9],{i,l}]]
 
 a069090 = Select[digitify[a202259], PrimeQ];
 
-
-
-
-
-
-
-
-TODO: dont forget 1 digit members!
-
-== CUT HERE ==
-
-(* the 1 digit members of A069090, excluding 0 *)
-
-members[1] = {2, 3, 5, 7};
-
-(* n digit members must be n-1 digit members with a digit appended *)
-
-tab[n_] := tab[n] = digitify[members[n-1]];
-
-members[n_] := members[n] = Select[tab[n], !PrimeQ[#]&]
-
-temp = Flatten[Table[members[n], {n,1,8}]];
-
-(* i+1 below since I need to add '0' entry later *)
-
-export = Table[ToString[i+1]<>" "<>ToString[temp[[i]]], {i,1,Length[temp]}];
-
-(* add special case for 0 *)
-
-export = Prepend[export, "1 0"];
+export=Table[ToString[i]<>" "<>ToString[a069090[[i]]], {i,1,Length[a069090]}];
 
 Export["/tmp/temp.txt", export]
 
