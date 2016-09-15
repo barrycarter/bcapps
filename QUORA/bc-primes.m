@@ -71,7 +71,11 @@ Instead, let's try to approximate the probability that an n digit number will be
 
 I don't know of any mathematical notation for the number of n digit primes, but there is one for primes less than n, namely [math]\pi (n)[/math] (https://en.wikipedia.org/wiki/Prime-counting_function). Of course, this is different from the more common usage of [math]\pi[/math] as the ratio of a circle's circumference to its diameter.
 
-Using this, we see that [math]\pi \left(10^{n+1}\right)[/math] is the number of primes with n or fewer digits. By subtracting off [math]\pi \left(10^n\right)[/math], the number of primes with n-1 or fewer digits, we get [math]\pi \left(10^n\right)-\pi \left(10^{n-1}\right)[/math] as the number of primes with precisely n digits. Since there are [math]9\ 10^{n-1}[/math] n digit numbers total, the probability than an n digit number is prime is (after simplification):
+Using this, we see that [math]\pi \left(10^{n+1}\right)[/math] is the number of primes with n or fewer digits. By subtracting off [math]\pi \left(10^n\right)[/math], the number of primes with n-1 or fewer digits, we get 
+
+TODO: wrong below
+
+[math]\pi \left(10^n\right)-\pi \left(10^{n-1}\right)[/math] as the number of primes with precisely n digits. Since there are [math]9\ 10^{n-1}[/math] n digit numbers total, the probability than an n digit number is prime is (after simplification):
 
 [math]p(n) = \frac{1}{9} 10^{1-n} \left(\pi \left(10^{n+1}\right)-\pi \left(10^n\right)\right)[/math]
 
@@ -85,7 +89,37 @@ Substituting for p(n) and simplifying, we have:
 
 with our initial condition a(8) = 21007948, since we want to use exact values as far as possible.
 
-p[n_] = (PrimePi[10^(n+1)]-PrimePi[10^n])/9/10^(n-1)
+(* below is a generalization of the process 
+
+(* number of primes less than or equal to n *)
+c0[n_] = PrimePi[n]
+
+(* chance an n digit number is prime *)
+c1[n_] = (c0[10^n]-c0[10^(n-1)])/9/10^(n-1)
+
+(* chance that a n digit number is a member of A202259, recursive *)
+
+c2[n+1] == (c2[n]*9*10^(n-1))*10*(1-c1[n+1])/9/10^n
+
+TODO: improve this by not subtracting out lower primes?
+
+
+
+
+
+(* n digit members of A202259, as equivalence *)
+
+c2[n+1] == c2[n]*10*(1-c1[n+1])
+
+
+
+
+
+
+
+
+
+p[n_] = (PrimePi[10^n]-PrimePi[10^(n-1)])/9/10^(n-1)
 
 RSolve[{
  a[8] == 21007948,
@@ -100,6 +134,70 @@ RSolve[{
 b[n_] = FullSimplify[a[n] /. %[[1,1]], {Element[n,Integers], n>2}]
 
 mathematica wont eval limit
+
+q[n_] = FullSimplify[(LogIntegral[10^n]-LogIntegral[10^(n-1)])/9/10^(n-1),
+ {Element[n,Integers], n>2}]
+
+RSolve[{
+ a[8] == 21007948,
+ a[n+1] ==  10*a[n]*(1-q[n+1])
+}, a[n], n]
+
+b[n_] = FullSimplify[a[n] /. %[[1,1]], {Element[n,Integers], n>2}]
+
+c[n_] = b[n]/10^(n-1)/9
+
+Table[N[c[n]],{n,1,500}]
+
+RSolve[{
+ la[8] == Log[21007948],
+ la[n+1] ==  Log[10]+Log[la[n]]+Log[(1-q[n+1])]
+}, la[n], n]
+
+FullSimplify[LogIntegral[E^2]]
+
+ExpIntegralEi
+
+LogLogPlot[b[n]/9/10^(n-1), {n,1,500}]
+
+
+RSolve[{
+ a[25] == 158410709631794568543814,
+ a[n+1] ==  10*a[n]*(1-q[n+1])
+}, a[n], n]
+
+(* above runs out of memory! *)
+
+RSolve[a[n+1] ==  10*a[n]*(1-q[n+1]), a[n], n]
+
+{{a[n] -> C[1]*Product[(10^(1 - K[1])*(9*10^K[1] + LogIntegral[10^(1 +
+K[1])] - LogIntegral[10^(2 + K[1])]))/9, {K[1], 1, -1 + n}]}}
+
+b1[n_] = FullSimplify[a[n] /. %[[1,1]], {Element[n,Integers], n>2}]
+
+Solve[b1[25] == 158410709631794568543814, C[1]]
+
+(* above ALSO runs out of memory *)
+
+Solve[b1[8] == 21007948, C[1]]
+
+b2[n_] = b1[n] /. C[1] -> %[[1,1,2]]
+
+q[n_] = FullSimplify[(LogIntegral[10^n]-LogIntegral[10^(n-1)])/9/10^(n-1),
+ {Element[n,Integers], n>2}]
+
+RSolve[{
+ a[1] == 5,
+ a[n+1] ==  10*a[n]*(1-q[n+1])
+}, a[n], n]
+
+b[n_] = FullSimplify[a[n] /. %[[1,1]], {Element[n,Integers], n>2}]
+
+
+
+
+
+TODO: 10^48th prime problem mention
 
 NOTE TO SELF: RSolve[{a[0]=1; a[n+1] == a[n]+1}, a[n], n] does work
 (don't need a[n] on left side) (TODO: remove this before posting)

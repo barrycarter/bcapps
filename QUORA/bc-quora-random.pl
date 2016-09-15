@@ -28,12 +28,17 @@ my($slope) = ($y2-$y1)/($x2-$x1);
 
 my($time) = time();
 
-my($hwm) = ($time-$x1)*$slope + $y1;
-my($lwm) = $hwm-$slope*86400;
+my($hwm) = int(($time-$x1)*$slope + $y1);
+my($lwm) = int($hwm-$slope*86400);
 
-for $i (1..5) {
+for $i (0..11) {
 
   my($rand) = int($lwm+rand()*($hwm-$lwm));
+
+  # horrible programming here to insure low and high water marks always printed
+  if ($i==0) {$rand = $lwm;}
+  if ($i==1) {$rand = $hwm;}
+
   print "https://www.quora.com/log/revision/$rand\n";
 
 }
