@@ -19,7 +19,7 @@ Suppose you've rolled several times and failed to hit a prime along the way. Wha
 
 Is there a name for numbers like these that aren't prime and where every prefix is also not prime? Not exactly, but they do form https://oeis.org/A202259
 
-It turns out there are 21,007,948 elements of A202259 that have exactly eight digits like the example above. [TODO: footnote or brute force note here]
+It turns out there are 21,007,948 elements of A202259 that have exactly eight digits like the example above (see below for details).
 
 Since there are 90,000,000 ways to generate an eight digit number (excluding leading zeros), the chance that you will roll eight digits without hitting a prime is 21,007,948/90,000,000 or about 23.34%. Thus, the chance that you WILL roll a prime number at least once in the first eight rolls is 100% minus this number of 76.66%
 
@@ -61,8 +61,6 @@ Using a similar technique, we can estimate the number of n digit elements of A20
 
 And, from these estimates, we can estimate the chance of rolling n digits without ever hitting a prime, as we did previously for 8 digits (rounded to 4 digits):
 
-TODO: these numbers can't be right
-
 {0.5556, 0.4222, 0.3556, 0.3132, 0.2852, 0.264, 0.2472, 0.2334, 0.2217, 0.2118, 0.2032, 0.1956, 0.1889, 0.1829, 0.1775, 0.1726, 0.1681, 0.1639, 0.1601, 0.1566, 0.1533, 0.1502, 0.1473, 0.1446, 0.1421}
 
 Note that, after 25 rolls, the chance that you STILL haven't hit a prime number is about 14.21% (roughly 1 in 7).
@@ -73,11 +71,13 @@ Instead, let's try to approximate the probability that an n digit number will be
 
 I don't know of any mathematical notation for the number of n digit primes, but there is one for primes less than n, namely [math]\pi (n)[/math] (https://en.wikipedia.org/wiki/Prime-counting_function). Of course, this is different from the more common usage of [math]\pi[/math] as the ratio of a circle's circumference to its diameter.
 
-Using this, we see that [math]\pi \left(10^{n+1}\right)[/math] is the number of primes with n or fewer digits. By subtracting off [math]\pi \left(10^n\right)[/math], the number of primes with n-1 or fewer digits, we get 
+Using this, we see that [math]\pi \left(10^{n}\right)[/math] is the number of primes with n or fewer digits. By subtracting off [math]\pi \left(10^(n-1)\right)[/math], the number of primes with n-1 or fewer digits, we get [math]\pi \left(10^n\right)-\pi \left(10^{n-1}\right)[/math] as the number of primes with precisely n digits. Since there are [math]9\ 10^{n-1}[/math] n digit numbers total, the probability than an n digit number is prime is (after simplification):
 
-TODO: wrong below
+[math]\frac{1}{9} 10^{1-n} \left(\pi \left(10^n\right)-\pi \left(10^{n-1}\right)\right)[/math]
 
-[math]\pi \left(10^n\right)-\pi \left(10^{n-1}\right)[/math] as the number of primes with precisely n digits. Since there are [math]9\ 10^{n-1}[/math] n digit numbers total, the probability than an n digit number is prime is (after simplification):
+p[n_] = (PrimePi[10^n] - PrimePi[10^(n-1)])/9/10^(n-1)
+
+
 
 [math]p(n) = \frac{1}{9} 10^{1-n} \left(\pi \left(10^{n+1}\right)-\pi \left(10^n\right)\right)[/math]
 
@@ -114,14 +114,30 @@ TODO: improve this by not subtracting out lower primes?
 c2[n+1] == c2[n]*10*(1-c1[n+1])
 
 
-
-
-
-
-
-
-
 p[n_] = (PrimePi[10^n]-PrimePi[10^(n-1)])/9/10^(n-1)
+
+p2[n_] = (ExpIntegralEi[n Log[10]] - ExpIntegralEi[(n-1)*Log[10]])/9/10^(n-1)
+
+RSolve[{a[n+1] ==  10*a[n]*(1-p2[n+1])}, a[n], n]
+
+sol1 = RSolve[{a[8] == 21007948, a[n+1] ==  10*a[n]*(1-p2[n+1])}, a[n], n]
+
+sol[n_] = sol1[[1,1,2]]/9/10^(n-1)
+
+(* b[n] is the probability directly, using p[n] as ExpIntegralEi *)
+
+sol2 = RSolve[b[n+1] == (b[n]*9*10^n)*10*(1-p[n+1])/9/10^n, b[n], n]
+
+sol2 = RSolve[{b[8] == 21007948/9/10^7, 
+ b[n+1] == (b[n]*9*10^(n-1))*10*(1-p[n+1])/9/10^n},
+ b[n], n]
+
+sol3[n_] = sol2[[1,1,2]]
+
+
+(* TODO: total and incremental chance of success *)
+
+
 
 RSolve[{
  a[8] == 21007948,
@@ -1299,3 +1315,24 @@ b[n_] = RSolve[{a[0] == 5, a[n+1] == a[n]*10-3}, a[n], n][[1,1,2]];
 
 
 FullSimplify[LogIntegral[E^2]]
+
+(* x below is Log 10 *)
+
+LogIntegral[E^(n*x)]
+
+In[54]:= FullSimplify[LogIntegral[E^n], Element[n,Integers]]                    
+
+Out[54]= ExpIntegralEi[n]
+
+In[55]:= FullSimplify[LogIntegral[E^n], Element[n,Reals]]                       
+
+Out[55]= ExpIntegralEi[n]
+
+FullSimplify[LogIntegral[E^(n*x)], Element[{n,x},Reals]]
+
+ExpIntegralEi[n Log[10]] - ExpIntegralEi[(n-1)*Log[10]]
+
+(ExpIntegralEi[n*Log[10]] - ExpIntegralEi[(n-1)*Log[10]])/n/10^(n-1)
+
+limit of above IS zero, but not necessarily what we need
+

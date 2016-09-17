@@ -31,6 +31,8 @@ for $i (split(/\n/, $out)) {
 
 }
 
+for $i (sort {$a <=> $b} keys %done) {print "$i\n";}
+
 # TODO: don't hardcode this (150M = as of 7 Jun 2016)
 my($start) = 170218009+1;
 # TODO: this is just testing, in reality this will keep running
