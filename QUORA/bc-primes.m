@@ -61,6 +61,8 @@ Using a similar technique, we can estimate the number of n digit elements of A20
 
 And, from these estimates, we can estimate the chance of rolling n digits without ever hitting a prime, as we did previously for 8 digits (rounded to 4 digits):
 
+TODO: these numbers can't be right
+
 {0.5556, 0.4222, 0.3556, 0.3132, 0.2852, 0.264, 0.2472, 0.2334, 0.2217, 0.2118, 0.2032, 0.1956, 0.1889, 0.1829, 0.1775, 0.1726, 0.1681, 0.1639, 0.1601, 0.1566, 0.1533, 0.1502, 0.1473, 0.1446, 0.1421}
 
 Note that, after 25 rolls, the chance that you STILL haven't hit a prime number is about 14.21% (roughly 1 in 7).
@@ -1289,3 +1291,11 @@ range = 49021108755433874493445505
 
 TODO: https://oeis.org/A276473 counts A202259
 
+(* bounds for number of A202559 given at least 3 primes for n digit *)
+
+b[n_] = RSolve[{a[0] == 5, a[n+1] == a[n]*10-3}, a[n], n][[1,1,2]];
+
+b[n_] = RSolve[{a[0] == 5, a[n+1] == a[n]*10-3}, a[n], n][[1,1,2]];
+
+
+FullSimplify[LogIntegral[E^2]]
