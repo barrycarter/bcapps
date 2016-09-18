@@ -1,4 +1,53 @@
+QUORA SCRAPING TIPS
+===================
+
+Running bc-get-logs.pl and doing "parallel -j 10 < cmds.sh" does a
+reasonably good job of dl'ing quora logs (about 1000/minute), but has
+some errors. To find those errors:
+
+: files sized 2713c are almost always "Quora is temporarily unavailable."
+find . -size 2713c
+
+: files sized 2843c are almost always
+: "You don't have permission to view this page."
+find . -size 2843c
+
+: note: if *.html is too large ("argument list too long"), use
+: "find . -maxdepth 1" or similar
+
+: the most common errors while scraping
+: after generating these files, "xargs rm < outputfile" for example
+fgrep -l 'You need to be logged in' *.html >! mustbeloggedin.txt&
+fgrep -l "You don&#039;t have permission to view this page" *.html>!noperm.txt&
+fgrep -l 'Too many requests from this IP' *.html *.html >! toomanyrequest.txt&
+
+: The "Too many requests from this IP" pages are usually between 54K
+: and 56K, so this may work faster
+find . -size +54000c -size -56000c | xargs fgrep -l 'Too many requests from this IP' | tee toomanyrequests.txt
+
+: 70162 byte files are often "An internal server error occurred"
+find . -size 70162c | xargs fgrep -l 'An internal server error occurred' | 
+ tee servererror.txt
+
+: dont use this directly to rm (too dangerous) but useful double check)
+fgrep -L 'Revision #' *.html
+
+: legitimate log files can be as small as 27013 bytes
+
+To break logs into multiple directories, do something like:
+
+\ls | perl -anle 'print substr($_,0,5)' | fgrep 1 | sort | uniq >! dirs.txt
+xargs mkdir < dirs.txt
+: pipe command below to sh
+perl -nle 'print "mv $_* $_"' < dirs.txt
+
+QUORA TOPICS
+============
+
 The list of quora topics is current as of ~ 16 May 2016 1700 UTC.
+
+QUORA USERS
+===========
 
 The list of quora users was obtained 26 Jun 2016, contains 2,859,092
 users, and should be nearly complete. Because the profile listings
@@ -27,11 +76,17 @@ username: the person's username; this will never contain spaces; to visit this p
 
 full/display name: the person's full or display name; this may contain spaces
 
+GENERAL NOTES
+==============
+
 NOTE: Some files in this directory are bzip2'd to save space; in most
 cases, you must bunzip2 them to actually use them. In particular,
 there is no easy way to use SQLite3 databases when they are bzip2'd
 compressed (I believe it's not truly impossible, but would require
 some clever coding)
+
+SCHEMA
+======
 
 Schema for blockgroups SQLite3 table:
 
