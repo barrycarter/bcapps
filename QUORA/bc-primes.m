@@ -1336,3 +1336,7 @@ ExpIntegralEi[n Log[10]] - ExpIntegralEi[(n-1)*Log[10]]
 
 limit of above IS zero, but not necessarily what we need
 
+Limit[LogIntegral[10^n]/LogIntegral[10^(n-1)]/10^n, n -> Infinity]
+
+above actually does go to 0
+

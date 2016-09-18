@@ -7,6 +7,11 @@
 require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
 
+# TODO: don't hardcode this (150M = as of 7 Jun 2016)
+my($start) = 171430000;
+# TODO: this is just testing, in reality this will keep running
+my($end) = 173264977;
+
 # which ones do I already have (somewhat extensive search)
 
 # TODO: this list is overextensive even after filtering below, not
@@ -32,11 +37,6 @@ for $i (split(/\n/, $out)) {
 }
 
 for $i (sort {$a <=> $b} keys %done) {print "$i\n";}
-
-# TODO: don't hardcode this (150M = as of 7 Jun 2016)
-my($start) = 170218009+1;
-# TODO: this is just testing, in reality this will keep running
-my($end) = 172484005;
 
 # command I use to download log entries
 my($cmd) = "curl -H 'Cookie: m-b=$private{quora}{cookie}' -L --compress --socks4a 127.0.0.1:9050";

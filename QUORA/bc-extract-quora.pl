@@ -24,15 +24,12 @@ for $i (@ARGV) {
 
   my($rev) = $1;
 
-  # test code here
+  # epoch_us can appear multiple times, we want least value (when log
+  # file actually "created" for first time; in pratice, it appears
+  # more than once less than 5% of the time
   my(@times) = ();
   while ($all=~s%"epoch_us": (\d+),%%) {push(@times, $1);}
-  debug("LENGTH ($rev): ".scalar(@times));
-
-
-  # TODO: this sometimes matches multiple times, take lowest value?
-  $all=~s%"epoch_us": (\d+),%%;
-  my($origtime) = $1;
+  my($origtime) = min(@times);
   $time = strftime("%Y%m%d.%H%M%S",gmtime(int($origtime/1000000)));
 
   $all=~s%<span\s+class="rendered_qtext">(.*?)</span>%%is;
