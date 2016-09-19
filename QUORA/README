@@ -6,11 +6,11 @@ reasonably good job of dl'ing quora logs (about 1000/minute), but has
 some errors. To find those errors:
 
 : files sized 2713c are almost always "Quora is temporarily unavailable."
-find . -size 2713c
+find . -size 2713c > /tmp/2713c.txt &
 
 : files sized 2843c are almost always
 : "You don't have permission to view this page."
-find . -size 2843c
+find . -size 2843c > /tmp/2843c.txt &
 
 : note: if *.html is too large ("argument list too long"), use
 : "find . -maxdepth 1" or similar
@@ -18,8 +18,8 @@ find . -size 2843c
 : the most common errors while scraping
 : after generating these files, "xargs rm < outputfile" for example
 fgrep -l 'You need to be logged in' *.html >! mustbeloggedin.txt&
-fgrep -l "You don&#039;t have permission to view this page" *.html>!noperm.txt&
-fgrep -l 'Too many requests from this IP' *.html *.html >! toomanyrequest.txt&
+fgrep -l "You don&#039;t have permission to view this page" *.html>! nperm.txt&
+fgrep -l 'Too many requests from this IP' *.html >! toomanyrequest.txt&
 
 : The "Too many requests from this IP" pages are usually between 54K
 : and 56K, so this may work faster
