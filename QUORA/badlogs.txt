@@ -1,0 +1,5 @@
+# the following strings in quora logs mean they are bad; fgrep does NOT support commenting, but it's highly unlikely this literal string will be found in a quora log
+You need to be logged in
+You don&#039;t have permission to view this page
+Too many requests from this IP
+# DO NOT PUT AN EMPTY LINE BELOW!
