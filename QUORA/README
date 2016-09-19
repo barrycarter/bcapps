@@ -12,15 +12,16 @@ find . -size 2713c > /tmp/2713c.txt &
 : "You don't have permission to view this page."
 find . -size 2843c > /tmp/2843c.txt &
 
-: makes things easier, maybe
-find . -maxdepth 1 -type f >! fileshere.txt &
+: NOTE: do steps above first so I'm not pointlessly grepping into bad files
 
+: makes things easier, maybe
 : -maxdepth 1 here assumes all quora logs in subdirs have already been
 : checked which isn't actually true
+find . -maxdepth 1 -type f >! fileshere.txt &
 
 : MAKE SURE THERE IS NO NEWLINE AT END OF THIS FILE
 tail -1 ~/BCGIT/QUORA/badlogs.txt
-find . -maxdepth 1|xargs fgrep -lf ~/BCGIT/QUORA/badlogs.txt>! /tmp/bads.txt&
+xargs fgrep -lf ~/BCGIT/QUORA/badlogs.txt < fileshere.txt >! badhere.txt &
 
 : afterwards, LOOK AT badones.txt and "xargs rm"
 
