@@ -27,9 +27,13 @@ for $i (@ARGV) {
   # delete everything up to the revision number's appearance in the file
   $all=~s%^.*Revision #\d+</h1>%%s;
 
-  $all=~s%href="(.*?)"%%;
   # full url is https://quora.com/ + below
+  $all=~s%href="(.*?)"%%;
   my($url) = $1;
+
+  # TODO: check for multiple users
+  $all=~s%href="/profile/(.*?)"%%;
+  my($user) = $1;
 
   # epoch_us can appear multiple times, we want least value (when log
   # file actually "created" for first time; in pratice, it appears
@@ -53,6 +57,8 @@ for $i (@ARGV) {
 print << "MARK";
 Rev: $rev
 Time: $time
+User: $user
+Origtime: $origtime
 URL: $url
 Question: $q
 
@@ -62,3 +68,22 @@ MARK
 ;
 }
 
+=item comment
+
+Different types of notifications (all of these come right after </strong>)
+
+comment edited:
+
+<div class="CommentEditOperationView AnswerCommentEditOperationView DiffView CommentOperationView"><div class="feed_item_activity light"><a href="/How-do-you-find-the-good-in-the-really-bad/answer/Jordan-Yates-4/comment/23684641">Comment</a> edited by <span id="NrNVPZ"><div class="hover_menu hidden white_bg show_nub" id="__w2_COycNCt_menu"><div class="hover_menu_contents" id="__w2_COycNCt_menu_contents"> </div></div><span id="__w2_COycNCt_link"><a class="user" href="/profile/Heidi-Embrey" action_mousedown="UserLinkClickthrough" id="__w2_COycNCt_name_link">Heidi Embrey</a>
+
+answer wiki edited:
+
+<div class="EditAnswerWikiOperationView DiffView"><div class="feed_item_activity light">Answer wiki edited by <span id="rZmDzN"><div class="hover_menu hidden white_bg show_nub" id="__w2_Rkb9jG1_menu"><div class="hover_menu_contents" id="__w2_Rkb9jG1_menu_contents"> </div></div><span id="__w2_Rkb9jG1_link"><a class="user" href="/profile/Barrty-Alan" action_mousedown="UserLinkClickthrough" id="__w2_Rkb9jG1_name_link">Barrty Alan</a>
+
+answer added:
+
+<div class="DiffView AttachAnswerOperationView"><div class="feed_item_activity light"><a href="/What-is-the-capital-of-Finland/answer/Arpan-Ghosh-19">Answer</a> added by <span id="rOWqUp"><div class="hover_menu hidden white_bg show_nub" id="__w2_C0ckCcP_menu"><div class="hover_menu_contents" id="__w2_C0ckCcP_menu_contents"> </div></div><span id="__w2_C0ckCcP_link"><a class="user" href="/profile/Arpan-Ghosh-19" action_mousedown="UserLinkClickthrough" id="__w2_C0ckCcP_name_link">Arpan Ghosh</a>
+
+
+
+=cut
