@@ -10,12 +10,14 @@ my($dir) = shift;
 
 dodie("chdir('/home/barrycarter/QUORA/LOG/$dir')");
 
+# TODO: check to see if status.txt or possiblebad.txt already exists
+
 open(A,">status.txt");
 
 # TODO: there HAS to be a better way to write this error condition
 for $i ("0000".."9999") {
   if (-f "$dir$i.html" || -f "$dir$i.html.bz2") {next;}
-  print A "$dir$i or $dir$i.bz2 not found\n";
+  print A "$dir$i.html or $dir$i.html.bz2 not found\n";
   close(A);
   exit;
 }

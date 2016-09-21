@@ -24,6 +24,13 @@ for $i (@ARGV) {
 
   my($rev) = $1;
 
+  # delete everything up to the revision number's appearance in the file
+  $all=~s%^.*Revision #\d+</h1>%%s;
+
+  $all=~s%href="(.*?)"%%;
+  # full url is https://quora.com/ + below
+  my($url) = $1;
+
   # epoch_us can appear multiple times, we want least value (when log
   # file actually "created" for first time; in pratice, it appears
   # more than once less than 5% of the time
@@ -46,6 +53,7 @@ for $i (@ARGV) {
 print << "MARK";
 Rev: $rev
 Time: $time
+URL: $url
 Question: $q
 
 Text: $text

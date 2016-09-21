@@ -8,9 +8,9 @@ require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
 
 # TODO: don't hardcode this (150M = as of 7 Jun 2016)
-my($start) = 171430000;
+my($start) = 170210000;
 # TODO: this is just testing, in reality this will keep running
-my($end) = 173677964;
+my($end) = 173796411;
 
 # which ones do I already have (somewhat extensive search)
 
