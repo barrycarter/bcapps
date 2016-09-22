@@ -40,10 +40,52 @@ fgrep -L 'Revision #' *.html
 
 To break logs into multiple directories, do something like:
 
+: below 100M
+: doesnt work for 1-9999 but ok w that (handled manually)
+\ls|fgrep .html|perl -nle 's/\.html//;print int($_/10000)'|sort|uniq>! dirs.txt
+xargs mkdir < dirs.txt
+perl -nle 'print "mv $_????.html $_"' < dirs.txt
+
+: THIS DOES NOT WORK BELOW 100M
 \ls | perl -anle 'print substr($_,0,5)' | fgrep 1 | sort | uniq >! dirs.txt
 xargs mkdir < dirs.txt
 : pipe command below to sh
 perl -nle 'print "mv $_* $_"' < dirs.txt
+
+Compressibility (for 171120000.html 171129999.html, 10K files):
+
+du before compress: 428.400 MB
+zip of all log files: 121.626857 MB
+bzip2 of individual files: 138.276MB
+tar --bzip: 167.502009MB
+TODO: zpaq
+
+TODO: create files in subdirectories directly instead of creating and
+top level and moving via shell script
+
+TODO: try setting User-Agent to googlebot or similar to see if that
+allows passwordless login
+
+The "Generated: " number in quora log source may be the microsecond at
+which the page was created/pulled
+
+TODO: can create a quasi "live feed" of all quora questions if/when
+scraping in real time
+
+TODO: still need to check that each log file I've scraped is legit
+(99.5+% done) and scrape up the missing log files
+
+TODO: get others involved in parallel log scraping to pull everything
+down (in conjunction w/ quora request)
+
+TODO: check and perhaps parse log files AS I download them instead of
+batching this later (but without slowing down log file downloads)
+
+TODO: upload the log files I have to Internet for safekeeping
+(torrent? site/service that wants archival data?)
+
+TODO: allow google to index log entries (unless quora already does
+this, but probably not)
 
 QUORA TOPICS
 ============

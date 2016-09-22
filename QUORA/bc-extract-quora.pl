@@ -16,16 +16,20 @@ for $i (@ARGV) {
     $all = read_file($i);
   }
 
-  # revision number
-  unless ($all=~s%<title>Revision \#(\d+) - Quora</title>%%i) {
+  # delete everything up to the revision number's appearance in the file
+  unless ($all=~s%^.*Revision #(\d+)</h1>%%s) {
     warn "NO NUMBER: $i";
     next;
   }
 
   my($rev) = $1;
 
-  # delete everything up to the revision number's appearance in the file
-  $all=~s%^.*Revision #\d+</h1>%%s;
+  # possibly useful information
+  unless ($all=~s%</strong><div class="(.*?)"><div class="feed_item_activity light">(.*?) by <%%) {
+    warn "No extra info found";
+  }
+
+  my($e1,$e2) = ($1,$2);
 
   # full url is https://quora.com/ + below
   $all=~s%href="(.*?)"%%;
@@ -57,6 +61,7 @@ for $i (@ARGV) {
 print << "MARK";
 Rev: $rev
 Time: $time
+Event: $e2
 User: $user
 Origtime: $origtime
 URL: $url

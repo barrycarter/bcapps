@@ -20,6 +20,8 @@ Asker can fill out these fields (numerically so they can be sorted/filtered):
   much? (note that site itself won't handle or accept payments, but
   others might)
 
+TODO: allow "project level problem" and "seeking collaborators"
+
 Answerer can fill out these fields:
 
   - Completeness of answer (just a link, some discussion, answers part

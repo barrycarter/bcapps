@@ -1,3 +1,45 @@
+(* deriving Black-Scholes, other ways to do it *)
+
+(* following https://en.wikipedia.org/wiki/Black%E2%80%93Scholes_model#Black.E2.80.93Scholes_formula *)
+
+bscall[p_,e_,0,v_,r_] := If[p>e,p-e,0];
+
+bscall[p_,e_,t_,v_,r_] := Module [ {standardnormal,d1,d2,value},
+ standardnormal=NormalDistribution[0,1];
+ d1=(Log[p/e]+t*(r+v*v/2))/v/Sqrt[t];
+ d2=d1-v*Sqrt[t];
+ value=p*CDF[standardnormal,d1]-e*Exp[-r*t]*CDF[standardnormal,d2]
+]
+
+bs2[p_,e_,t_,v_,r_] = FullSimplify[bscall[p,e,t,v,r], {p>0, e>0, t>0, v>0}]
+
+Solve[{
+ bs2[p,e1,t,v,r] == c1,
+ bs2[p,e2,t,v,r] == c2
+ }, {v,r}]
+
+bs2[1,s1,1,v,r]
+bs2[1,s2,1,v,r]
+
+bs2[1,1.01,1,v,r]
+bs2[1,1.02,1,v,r]
+
+Solve[bscall[p,e,t,v,r] == c1, v]
+
+Solve[bs2[1,s,1,v,r] == c1, r]
+
+conds = {p>0, e>0, t>0, v>0, Element[r,Reals]}
+
+FullSimplify[bscall[p,e,t,v,r] /. Erfc[x_] -> 1-Erf[x], conds]
+
+
+*)
+
+
+
+
+(* above this line, http://mathematica.stackexchange.com/questions/11687/option-pricing-with-the-black-scholes-model-code-not-running *)
+
 (*
 
 This really isn't worth the bounty, but it's too long for a comment.

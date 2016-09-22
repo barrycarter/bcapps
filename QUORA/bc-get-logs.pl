@@ -7,10 +7,12 @@
 require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
 
+warn "Putting alreadydone.txt in /tmp";
+
 # TODO: don't hardcode this (150M = as of 7 Jun 2016)
-my($start) = 170210000;
+my($start) = 1;
 # TODO: this is just testing, in reality this will keep running
-my($end) = 173796411;
+my($end) = 2277383;
 
 # which ones do I already have (somewhat extensive search)
 
@@ -36,7 +38,9 @@ for $i (split(/\n/, $out)) {
 
 }
 
-for $i (sort {$a <=> $b} keys %done) {print "$i\n";}
+open(A,">/tmp/alreadydone.txt");
+for $i (sort {$a <=> $b} keys %done) {print A "$i\n";}
+close(A);
 
 # command I use to download log entries
 my($cmd) = "curl -H 'Cookie: m-b=$private{quora}{cookie}' -L --compress --socks4a 127.0.0.1:9050";
