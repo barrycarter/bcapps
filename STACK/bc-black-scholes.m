@@ -1,8 +1,104 @@
+(* See also http://quant.stackexchange.com/questions/24970/estimate-probability-of-limit-order-execution-over-a-large-time-frame *)
+
+TODO: legacy note this file
+
 (* deriving Black-Scholes, other ways to do it *)
 
 (* following https://en.wikipedia.org/wiki/Black%E2%80%93Scholes_model#Black.E2.80.93Scholes_formula *)
 
-bscall[p_,e_,0,v_,r_] := If[p>e,p-e,0];
+TODO: put summary here
+
+<b>Note: Because we will be using interest rates as percentages, I am
+using the percentage definition of volatility here, which is different
+from the "standard deviation of the log price" version used in
+https://en.wikipedia.org/wiki/Black%E2%80%93Scholes_model#Black.E2.80.93Scholes_formula
+and other formulas. See my http://quant.stackexchange.com/a/25074/59
+for the difference between the two definitions of volatility</b>
+
+In this answer:
+
+  - $p$ is the price of the underlying security
+  - $k$ is the strike price of the call
+  - $t$ is the time until expiration
+  - $v$ is the volatility as a percentage (eg, .14 = 14%)
+  - $r$ is the risk-free interest rate as a percentage
+
+If the risk-free interest rate is $r$, we expect a security's price to
+increase, on average, by a factor of $(1+r)^t$, which means the
+security's $\log (\text{price})$ will change by an average of $t \log
+(r+1)$.
+
+If a security's volatility is $v$ percentage, we expect that, with a
+probability of about 68% (1 standard deviation), the security will
+remain between $1+v$ and $\frac{1}{1+v}$ of its current price within 1
+unit of time. Note that the opposite of $1+v$ it's current value is
+$\frac{1}{1+v}$ of its current value, NOT $1-v$ of its current value
+(see linked URL in Note above for more details).
+
+Over time $t$, the total volatility will be $v \sqrt{t}$, so there's a
+~68% chance the stock will remain between $v \sqrt{t} +1$ and
+$\frac{1}{\sqrt{t} v+1}$ of its current value after time $t$.
+
+This means that $\log (p)$ will change by less than 
+
+TODO: make sure I use underlying security consistently, not "stock" or just "underlying"
+
+
+
+Following
+https://en.wikipedia.org/wiki/Black%E2%80%93Scholes_model#Black.E2.80.93Scholes_formula, and combining, the Black-Scholes formula for a call (per Mathematica) is:
+
+$
+   \frac{1}{2} \left(p \text{erf}\left(\frac{-\log (k)+\log (p)+r t+\frac{t
+    v^2}{2}}{\sqrt{2} \sqrt{t} v}\right)-k e^{-r t} \text{erfc}\left(\frac{2
+    \log (k)-2 \log (p)-2 r t+t v^2}{2 \sqrt{2} \sqrt{t} v}\right)+p\right)
+$
+
+where:
+
+By choosing our units carefully, we can always set $p=1$ and
+$t=1$. This gives us:
+
+$
+   \frac{1}{2} \left(\text{erf}\left(\frac{-\log (k)+r+\frac{v^2}{2}}{\sqrt{2}
+    v}\right)-k e^{-r} \text{erfc}\left(\frac{2 \log (k)-2 r+v^2}{2 \sqrt{2}
+    v}\right)+1\right)
+$
+
+where $k$ is expressed as a ratio to the underlying price.
+
+Let's first consider what interest rates and volatilities are
+consistent with an at the money option. For this, we set $k=1$ to get:
+
+$
+   \frac{1}{2} \left(\text{erf}\left(\frac{r+\frac{v^2}{2}}{\sqrt{2}
+    v}\right)-e^{-r} \text{erfc}\left(\frac{v^2-2 r}{2 \sqrt{2}
+    v}\right)+1\right)
+$
+
+It turns out this equation isn't easy to solve for an arbitrary call
+value (no closed-form solution), so let's choose a specific call value
+of 0.05 as an example and solve numerically. Again, this means the
+option price is 5% of the stock price, since we've normalized the
+stock price to 1.
+
+rateatm[v_] := r /. FindRoot[bs2[1,1,1,v,r] == .05, {r,0}]
+
+Plot[rateatm[v],{v,0,.125}, 
+ Frame -> {True, True, False, False},
+ FrameLabel -> {
+  Text[Style["If p is ...", FontSize->25]],
+  Text[Style["Chance of winning 14/20 is...", FontSize->25]]
+ }];
+showit
+
+
+
+
+FullSimplify[bs2[1,1,1,v,r], {v>0,r>0}]
+
+FullSimplify[bs2[1,k,1,v,r]]
+
 
 bscall[p_,e_,t_,v_,r_] := Module [ {standardnormal,d1,d2,value},
  standardnormal=NormalDistribution[0,1];
@@ -11,7 +107,49 @@ bscall[p_,e_,t_,v_,r_] := Module [ {standardnormal,d1,d2,value},
  value=p*CDF[standardnormal,d1]-e*Exp[-r*t]*CDF[standardnormal,d2]
 ]
 
+bs2[p_,k_,t_,v_,r_] = FullSimplify[bscall[p,k,t,v,r], {p>0, k>0, t>0, v>0}]
+
+FullSimplify[bs2[1,k,1,v,r]]
+
+
+
+
+TODO: explain interst rate differential
+
+TODO: assumes constant interest rate expected; volatility or yield curve can change that
+
+
+
+Limit[bs2[1,1,1,v,1/100 ], v -> 0]
+
+Using[r>0, Limit[bs2[1,1,1,v,r ], v -> 0, Direction -> -1]] 
+
+you have to get back what you paid for the call
+
 bs2[p_,e_,t_,v_,r_] = FullSimplify[bscall[p,e,t,v,r], {p>0, e>0, t>0, v>0}]
+
+bs2[1,1.01,1,v,r]
+
+vol[r_] := v /. FindRoot[bs2[1,1.01,1,v,r] == .005, {v,.01}]
+
+vol[r_] := v /. FindRoot[bs2[1,1,1,v,r] == .05, {v,.01}]
+
+Plot[vol[r], {r,0,.051}, AxesOrigin -> {0,0}]
+
+Integrate[x*PDF[NormalDistribution[0,vol[0]]][x], {x,0,Infinity}]
+
+above is exactly .05 as expected/desired
+
+rateatm[v_] := r /. FindRoot[bs2[1,1,1,v,r] == .05, {r,0}]
+
+rateim[v_] := r /. FindRoot[bs2[1,1,0.90,v,r] == .05, {r,0}]
+
+rateom[v_] := r /. FindRoot[bs2[1,1,1.10,v,r] == .05, {r,0}]
+
+Plot[rateatm[v],{v,0,.125}]
+
+Plot[{rateatm[v],rateom[v],rateim[v]},{v,0,.125}]
+
 
 Solve[{
  bs2[p,e1,t,v,r] == c1,

@@ -10,7 +10,7 @@ find . -size 2713c > /tmp/2713c.txt &
 
 : files sized 2843c are almost always
 : "You don't have permission to view this page."
-find . -size 2843c > /tmp/2843c.txt &
+find . -size 2843c >! /tmp/2843c.txt &
 
 : NOTE: do steps above first so I'm not pointlessly grepping into bad files
 
