@@ -167,6 +167,17 @@ interest.
 In general, if a call is $s$ of the underlying, the breakeven interest
 rate will be $-\log (1-s)$.
 
+Of course, we can run similar analysis for different call prices:
+
+[[place image here]]
+
+
+
+
+
+
+TODO: breakeven volatility for 0 interest? (solvable?)
+
 
 
 
@@ -190,9 +201,33 @@ rateatm[v_] := r /. FindRoot[bscallperc[1,1,1,v,r] == .05, {r,0}]
 
 rateatm2[v_,val_] := r /. FindRoot[bscallperc[1,1,1,v,r] == val, {r,0}]
 
+rateitm2[v_,val_] := r /. FindRoot[bscallperc[1,.99,1,v,r] == val, {r,0}]
+
+rateotm2[v_,val_] := r /. FindRoot[bscallperc[1,1.01,1,v,r] == val, {r,0}]
+
+Plot[rateitm2[v, .05],{v,0,.2}]
+
+Plot[rateotm2[v, .05],{v,0,.2}]
 
 
-Plot[rateatm[v],{v,0,.133617},
+
+
+p1 = Plot[{
+ rateatm2[v,.01], rateatm2[v,.05], rateatm2[v,.10]
+ },{v,0,.4},
+ Frame -> {True, True, False, False},
+ FrameLabel -> {
+  Text[Style["Volatility (%)", FontSize->20]],
+  Text[Style["Interest Rate (%)", FontSize->20]]
+  }, AxesOrigin -> {0,0}, PlotRangePadding -> 0,
+ PlotLegends -> {"1%", "5%", "10%"}, PlotRange -> {{0,.29}, {0,.11}},
+ PlotLabel -> "Volatility vs Interest Rate for ATM Call at ..."
+];
+showit
+
+
+
+p0 = Plot[rateatm[v],{v,0,.133617},
  Frame -> {True, True, False, False},
  FrameLabel -> {
   Text[Style["Volatility (%)", FontSize->25]],
@@ -200,7 +235,15 @@ Plot[rateatm[v],{v,0,.133617},
   }, AxesOrigin -> {0,0}, PlotRangePadding -> 0,
  PlotLabel -> "Volatility vs Interest Rate for ATM Call at 5% Underlying"
 ];
+
+g0 = Graphics[{
+ Text[Style["Risk-free interest is worth more", FontSize -> 30], {.05,.015}],
+ Text[Style["Call is worth more", FontSize -> 30], {.10,.045}],
+}];
+
+Show[p0,g0]
 showit
+
 
 
 r = rate
