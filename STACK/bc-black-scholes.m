@@ -35,6 +35,16 @@ unit of time. Note that the opposite of $1+v$ it's current value is
 $\frac{1}{1+v}$ of its current value, NOT $1-v$ of its current value
 (see linked URL in Note above for more details).
 
+In other words, $\log (p)$ will change less than $\log (v+1)$ in 1
+time unit approximately 68% of the time.
+
+In time $t$, $\log (p)$ will change less than $\sqrt{t} \log (v+1)$
+about 68% of the time.
+
+More formally, the change in $\log (p)$ of the stock at expiration is
+normally distributed with mean $t \log(r+1)$ and standard deviation
+$\sqrt{t} \log (v+1)$
+
 Over time $t$, the total volatility will be $v \sqrt{t}$, so there's a
 ~68% chance the stock will remain between $v \sqrt{t} +1$ and
 $\frac{1}{\sqrt{t} v+1}$ of its current value after time $t$.
@@ -44,36 +54,72 @@ This means that $\log (p)$ will change by less than
 TODO: make sure I use underlying security consistently, not "stock" or just "underlying"
 
 
+bscall[p_,e_,t_,v_,r_] := Module [ {standardnormal,d1,d2,value},
+ standardnormal=NormalDistribution[0,1];
+ d1=(Log[p/e]+t*(r+v*v/2))/v/Sqrt[t];
+ d2=d1-v*Sqrt[t];
+ value=p*CDF[standardnormal,d1]-e*Exp[-r*t]*CDF[standardnormal,d2]
+]
+
+bs2[p_,k_,t_,v_,r_] = FullSimplify[bscall[p,k,t,v,r], {p>0, k>0, t>0, v>0}]
+
+bs2[p,k,t,sigma,r]
+
+== CUT HERE ALPHA ==
+
+<b>Note: Because we will be using interest rates as percentages, I am
+using the percentage definition of volatility here, which is different
+from the "standard deviation of the log price" version used in
+https://en.wikipedia.org/wiki/Black%E2%80%93Scholes_model#Black.E2.80.93Scholes_formula
+and other formulas. See my http://quant.stackexchange.com/a/25074/59
+for the difference between the two definitions of volatility</b>
 
 Following
-https://en.wikipedia.org/wiki/Black%E2%80%93Scholes_model#Black.E2.80.93Scholes_formula, and combining, the Black-Scholes formula for a call (per Mathematica) is:
+https://en.wikipedia.org/wiki/Black%E2%80%93Scholes_model#Black.E2.80.93Scholes_formula, and combining, the Black-Scholes formula for a call's value (per Mathematica) is:
 
 $
-   \frac{1}{2} \left(p \text{erf}\left(\frac{-\log (k)+\log (p)+r t+\frac{t
-    v^2}{2}}{\sqrt{2} \sqrt{t} v}\right)-k e^{-r t} \text{erfc}\left(\frac{2
-    \log (k)-2 \log (p)-2 r t+t v^2}{2 \sqrt{2} \sqrt{t} v}\right)+p\right)
+  \frac{1}{2} \left(p \text{erf}\left(\frac{-\log (k)+\log (p)+r t+\frac{\sigma
+    ^2 t}{2}}{\sqrt{2} \sigma  \sqrt{t}}\right)-k e^{-r t}
+    \text{erfc}\left(\frac{2 \log (k)-2 \log (p)-2 r t+\sigma ^2 t}{2 \sqrt{2}
+    \sigma  \sqrt{t}}\right)+p\right)
 $
 
 where:
 
-By choosing our units carefully, we can always set $p=1$ and
-$t=1$. This gives us:
+  - $p$ is the price of the underlying security
+  - $k$ is the strike price of the call
+  - $t$ is the time until expiration
+  - $\sigma$ is the volatility as the standard deviation of the log price
+  - $r$ is the risk-free continuous interest rate as a percentage
+
+Because we want to measure volatility $v$ as a percentage, we apply the transform $\sigma \to \log (v+1)$ to get:
 
 $
-   \frac{1}{2} \left(\text{erf}\left(\frac{-\log (k)+r+\frac{v^2}{2}}{\sqrt{2}
-    v}\right)-k e^{-r} \text{erfc}\left(\frac{2 \log (k)-2 r+v^2}{2 \sqrt{2}
-    v}\right)+1\right)
+   \frac{1}{2} \left(p \text{erf}\left(\frac{-\log (k)+\log (p)+r t+\frac{1}{2}
+    t \log ^2(v+1)}{\sqrt{2} \sqrt{t} \log (v+1)}\right)-k e^{-r t}
+    \text{erfc}\left(\frac{2 \log (k)-2 (\log (p)+r t)+t \log ^2(v+1)}{2
+    \sqrt{2} \sqrt{t} \log (v+1)}\right)+p\right)
+$
+
+By choosing our units carefully, we can always set $p=1$ and
+$t=1$. This gives us a call value of:
+
+$
+   \frac{1}{2} \left(\text{erf}\left(\frac{-\log (k)+r+\frac{1}{2} \log
+    ^2(v+1)}{\sqrt{2} \log (v+1)}\right)-k e^{-r} \text{erfc}\left(\frac{2 \log
+    (k)-2 r+\log ^2(v+1)}{2 \sqrt{2} \log (v+1)}\right)+1\right)
 $
 
 where $k$ is expressed as a ratio to the underlying price.
 
 Let's first consider what interest rates and volatilities are
-consistent with an at the money option. For this, we set $k=1$ to get:
+consistent with an at the money option. For this, we set $k=1$ to get
+a call value of:
 
 $
-   \frac{1}{2} \left(\text{erf}\left(\frac{r+\frac{v^2}{2}}{\sqrt{2}
-    v}\right)-e^{-r} \text{erfc}\left(\frac{v^2-2 r}{2 \sqrt{2}
-    v}\right)+1\right)
+   \frac{1}{2} \left(\text{erf}\left(\frac{r+\frac{1}{2} \log ^2(v+1)}{\sqrt{2}
+    \log (v+1)}\right)-e^{-r} \text{erfc}\left(\frac{\log ^2(v+1)-2 r}{2
+    \sqrt{2} \log (v+1)}\right)+1\right)
 $
 
 It turns out this equation isn't easy to solve for an arbitrary call
@@ -81,6 +127,137 @@ value (no closed-form solution), so let's choose a specific call value
 of 0.05 as an example and solve numerically. Again, this means the
 option price is 5% of the stock price, since we've normalized the
 stock price to 1.
+
+[[insert image here]]
+
+A quick note about the graph: at zero volatility, you may think a 5%
+interest rate would be identical to purchasing a call at 5% of the
+underlying value. As it turns out, this isn't the case.
+
+At a volatility of zero, the underlying's price at expiration would be
+$e^{0.05}$, so the investor could sell the call for $e^{0.05}-1$,
+netting a profit of $(e^{0.05}-1)-.05$ (since he originally bought the
+option at 0.05), or about $0.0012711$ (in other words, 0.12711% of the
+underlying's original value).
+
+If the investor had put the same $0.05$ into a risk-free interest
+account, he would have $0.05 e^{0.05}$, for a profit of $0.05
+e^{0.05}-0.05$ or about $0.00256355$ (ie, 0.256% of the underlying's
+value), almost twice as much.
+
+So, at what interest rate is a zero volatility call worth 5% of the
+underlying's price? If the interest rate is $r$, the underlying's
+value at expiration will be $e^r$, the investor will sell the call at
+$e^r-1$ and net a profit of $(e^r-1)-.05$, since he paid 0.05 for the
+option originally.
+
+If the investor had instead put the 0.05 in a risk-free interest
+account, he would have $0.05 e^r$, for a profit of $0.05 e^r - 0.05$
+
+To find what $r$ makes these equal, we have (after simplification):
+
+$e^r-1.05=0.05 e^r-0.05$
+
+The solution turns out to be approximately $0.0512933$, so a
+volatility of zero for an call costing 5% of the underlying
+corresponds to an interest rate of 5.129%, not 5%. At 5.129%, the
+investor makes the same profit with the call as he does with risk-free
+interest.
+
+In general, if a call is $s$ of the underlying, the breakeven interest
+rate will be $-\log (1-s)$.
+
+
+
+
+
+
+
+TODO: use "call" not "option" throughout
+
+It may seem that, at zero
+volatility, a call would be worth 5% of the underlying only if the
+risk-free interest rate were also 5%. As it turns out, this isn't the
+case.
+
+bscallperc[p_, k_, t_, v_, r_] =
+(p + p*Erf[(r*t - Log[k] + Log[p] + (t*Log[1 + v]^2)/2)/
+     (Sqrt[2]*Sqrt[t]*Log[1 + v])] - 
+  (k*Erfc[(2*Log[k] - 2*(r*t + Log[p]) + t*Log[1 + v]^2)/
+      (2*Sqrt[2]*Sqrt[t]*Log[1 + v])])/E^(r*t))/2
+
+rateatm[v_] := r /. FindRoot[bscallperc[1,1,1,v,r] == .05, {r,0}]
+
+rateatm2[v_,val_] := r /. FindRoot[bscallperc[1,1,1,v,r] == val, {r,0}]
+
+
+
+Plot[rateatm[v],{v,0,.133617},
+ Frame -> {True, True, False, False},
+ FrameLabel -> {
+  Text[Style["Volatility (%)", FontSize->25]],
+  Text[Style["Interest Rate (%)", FontSize->25]]
+  }, AxesOrigin -> {0,0}, PlotRangePadding -> 0,
+ PlotLabel -> "Volatility vs Interest Rate for ATM Call at 5% Underlying"
+];
+showit
+
+
+r = rate
+
+(r-.05)/.05
+
+Solve[(r-.05)/.05 == .05*r, r]
+Solve[(Exp[r]-1.05)/.05 == .05*Exp[r]-.05, r]
+
+Solve[(r-.05)/.05 == .05*Exp[r]-.05, r]
+
+Solve[r-.05 == .05*r, r]
+
+
+0.0512933 is the magic rateatm number, if this is risk free interest over time
+
+(0.0512933-0.05)
+
+0.05*0.0512933
+
+(1.0512933-1)/.05
+
+.05*0.0512933
+
+r-.05 == r*Exp[.05]
+
+Solve[Exp[r] - 1.05 == 0.05*r, r]
+
+(* the above is probably the correct thing to do *)
+
+Solve[r-.05 == .05*r, r]
+
+Solve[r-1/20 == r/20, r]
+
+Solve[(Exp[r]-1)-1/20 == (Exp[r]-1)/20, r]
+
+Log[20/19] IS the magic number yay!
+
+TODO: no xy dependency
+
+
+
+
+
+
+
+
+
+TODO: give more traditional numbers in graph too
+
+TODO: bad things happen if not measured as a percentage
+
+$
+   \frac{1}{2} \left(\text{erf}\left(\frac{r+\frac{v^2}{2}}{\sqrt{2}
+    v}\right)-e^{-r} \text{erfc}\left(\frac{v^2-2 r}{2 \sqrt{2}
+    v}\right)+1\right)
+$
 
 rateatm[v_] := r /. FindRoot[bs2[1,1,1,v,r] == .05, {r,0}]
 
@@ -99,15 +276,6 @@ FullSimplify[bs2[1,1,1,v,r], {v>0,r>0}]
 
 FullSimplify[bs2[1,k,1,v,r]]
 
-
-bscall[p_,e_,t_,v_,r_] := Module [ {standardnormal,d1,d2,value},
- standardnormal=NormalDistribution[0,1];
- d1=(Log[p/e]+t*(r+v*v/2))/v/Sqrt[t];
- d2=d1-v*Sqrt[t];
- value=p*CDF[standardnormal,d1]-e*Exp[-r*t]*CDF[standardnormal,d2]
-]
-
-bs2[p_,k_,t_,v_,r_] = FullSimplify[bscall[p,k,t,v,r], {p>0, k>0, t>0, v>0}]
 
 FullSimplify[bs2[1,k,1,v,r]]
 
