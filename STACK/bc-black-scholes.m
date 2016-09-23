@@ -77,6 +77,8 @@ for the difference between the two definitions of volatility</b>
 Following
 https://en.wikipedia.org/wiki/Black%E2%80%93Scholes_model#Black.E2.80.93Scholes_formula, and combining, the Black-Scholes formula for a call's value (per Mathematica) is:
 
+TODO: add "c =" below, since I'll use it later
+
 $
   \frac{1}{2} \left(p \text{erf}\left(\frac{-\log (k)+\log (p)+r t+\frac{\sigma
     ^2 t}{2}}{\sqrt{2} \sigma  \sqrt{t}}\right)-k e^{-r t}
@@ -112,6 +114,9 @@ $
 
 where $k$ is expressed as a ratio to the underlying price.
 
+TODO: infentesimal argument inaccurate for larger moves?
+
+
 Let's first consider what interest rates and volatilities are
 consistent with an at the money option. For this, we set $k=1$ to get
 a call value of:
@@ -128,7 +133,7 @@ of 0.05 as an example and solve numerically. Again, this means the
 option price is 5% of the stock price, since we've normalized the
 stock price to 1.
 
-[[insert image here]]
+[[image34.gif]]
 
 A quick note about the graph: at zero volatility, you may think a 5%
 interest rate would be identical to purchasing a call at 5% of the
@@ -167,7 +172,45 @@ interest.
 In general, if a call is $s$ of the underlying, the breakeven interest
 rate will be $-\log (1-s)$.
 
-Of course, we can run similar analysis for different call prices:
+Also note that, even though I've show the volatility on the x axis and
+the interest rate on the y axis, neither variable is independent. The
+curve simply shows which pairs of interest rates and volatilities are
+consistent with Black-Scholes for this specific case.
+
+Now, let's consider an in-the-money call by setting the strike price
+to 0.99. If we assume a delta of 0.5, the value of this call would be
+0.055. What interest rates/volatility curve is consistent with this
+call?
+
+[[image35.gif]]
+
+Note that, at zero volatility, the call is worth $e^r-0.99$ at
+expiration, so the investor profits $(e^r-0.99)-0.055$, the value
+minus the price he paid. If he had put the same money in a risk-free
+interest account, he would've made $0.055 \left(e^r-1\right)$. Setting
+these numbers equal, we find the breakeven interest rate at zero
+volatility to be ~4.652%
+
+Since we're interested in seeing if the two calls agree on volatility
+and interest rate, let's graph them together:
+
+
+
+
+TODO: focusing overly much on zero vol?
+
+
+Solve[Exp[r]-0.99-.055 == (Exp[r]-1)*.055, r]
+
+TODO: disclaim specitivity 
+
+TODO: use word trader/investor consistently
+TODO: consider not doing below
+
+TODO: not considering neg interest rates (unless I do)
+
+Of course, we can run similar analysis for different call prices to
+see the curve shape is essentially the same:
 
 [[place image here]]
 
@@ -197,7 +240,30 @@ bscallperc[p_, k_, t_, v_, r_] =
   (k*Erfc[(2*Log[k] - 2*(r*t + Log[p]) + t*Log[1 + v]^2)/
       (2*Sqrt[2]*Sqrt[t]*Log[1 + v])])/E^(r*t))/2
 
-rateatm[v_] := r /. FindRoot[bscallperc[1,1,1,v,r] == .05, {r,0}]
+conds = {p>0, e>0, t>0, v>0, r>0};
+
+FullSimplify[bscallperc[1, k, 1, v, r], conds]
+
+FullSimplify[D[bscallperc[1, k, 1, v, r],k], conds]
+
+D[bscallperc[1, k, 1, v, r], k, NonConstants -> {r}]
+
+D[bscallperc[1, k, 1, v, r], k, NonConstants -> {r}] /.
+ {D[r, k, NonConstants -> {r}] -> x}
+
+Solve[%, x]
+
+
+D[bscallperc[1, k, 1, v, r], k, NonConstants -> {v}] /.
+  {D[v, k, NonConstants -> {v}] -> x}
+
+
+
+
+
+
+
+
 
 rateatm2[v_,val_] := r /. FindRoot[bscallperc[1,1,1,v,r] == val, {r,0}]
 
@@ -208,8 +274,6 @@ rateotm2[v_,val_] := r /. FindRoot[bscallperc[1,1.01,1,v,r] == val, {r,0}]
 Plot[rateitm2[v, .05],{v,0,.2}]
 
 Plot[rateotm2[v, .05],{v,0,.2}]
-
-
 
 
 p1 = Plot[{
@@ -225,9 +289,14 @@ p1 = Plot[{
 ];
 showit
 
+DIGRESSION: can Mathematica do math on imcplicits
+
+f[x_] = Solve[Exp[a] + Log[a] == x, a]
+
+f'[x]
 
 
-p0 = Plot[rateatm[v],{v,0,.133617},
+p0 = Plot[rateatm2[v,.05],{v,0,.133617},
  Frame -> {True, True, False, False},
  FrameLabel -> {
   Text[Style["Volatility (%)", FontSize->25]],
@@ -243,6 +312,41 @@ g0 = Graphics[{
 
 Show[p0,g0]
 showit
+
+p1 = Plot[rateitm2[v,.055],{v,0,.133617},
+ Frame -> {True, True, False, False},
+ FrameLabel -> {
+  Text[Style["Volatility (%)", FontSize->25]],
+  Text[Style["Interest Rate (%)", FontSize->25]]
+  }, AxesOrigin -> {0,0}, PlotRangePadding -> 0,
+ PlotLabel -> "Volatility vs Interest Rate for ~1% ITM Call at 5.5% Underlying"
+];
+
+g1 = Graphics[{
+ Text[Style["Risk-free interest is worth more", FontSize -> 30], {.05,.015}],
+ Text[Style["Call is worth more", FontSize -> 30], {.10,.04}],
+}];
+
+Show[p1,g1]
+showit
+
+p2 = Plot[{rateitm2[v,.055]-rateatm2[v,.05]},{v,0,.133617},
+ Frame -> {True, True, False, False},
+ FrameLabel -> {
+  Text[Style["Volatility (%)", FontSize->25]],
+  Text[Style["Interest Rate (%)", FontSize->25]]
+  }, AxesOrigin -> {0,0}, PlotRangePadding -> 0,
+ PlotLabel -> "Volatility vs Interest Rate for ~1% ITM Call at 5.5% Underlying"
+];
+
+g2 = Graphics[{
+ Text[Style["Risk-free interest is worth more", FontSize -> 30], {.05,.015}],
+ Text[Style["Call is worth more", FontSize -> 30], {.10,.04}],
+}];
+
+Show[p2,g2]
+showit
+
 
 
 
@@ -376,8 +480,6 @@ bs2[1,1.02,1,v,r]
 Solve[bscall[p,e,t,v,r] == c1, v]
 
 Solve[bs2[1,s,1,v,r] == c1, r]
-
-conds = {p>0, e>0, t>0, v>0, Element[r,Reals]}
 
 FullSimplify[bscall[p,e,t,v,r] /. Erfc[x_] -> 1-Erf[x], conds]
 
