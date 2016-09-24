@@ -33,7 +33,7 @@ sleep($globopts{sleep});
 # TODO: move this to conf file too?
 
 my(%use2nd) = list2hash("/usr/bin/perl", "python", "/bin/perl",
-"/usr/bin/python", "/bin/sh", "-csh", "sh");
+"/usr/bin/python", "/bin/sh", "-csh", "sh", "perl");
 
 @procs = split(/\n/,$out);
 shift(@procs); # ignore header line

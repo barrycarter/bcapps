@@ -80,7 +80,8 @@ https://en.wikipedia.org/wiki/Black%E2%80%93Scholes_model#Black.E2.80.93Scholes_
 TODO: add "c =" below, since I'll use it later
 
 $
-  \frac{1}{2} \left(p \text{erf}\left(\frac{-\log (k)+\log (p)+r t+\frac{\sigma
+c =  
+\frac{1}{2} \left(p \text{erf}\left(\frac{-\log (k)+\log (p)+r t+\frac{\sigma
     ^2 t}{2}}{\sqrt{2} \sigma  \sqrt{t}}\right)-k e^{-r t}
     \text{erfc}\left(\frac{2 \log (k)-2 \log (p)-2 r t+\sigma ^2 t}{2 \sqrt{2}
     \sigma  \sqrt{t}}\right)+p\right)
@@ -88,6 +89,7 @@ $
 
 where:
 
+  - $c$ is the price of the call
   - $p$ is the price of the underlying security
   - $k$ is the strike price of the call
   - $t$ is the time until expiration
@@ -97,6 +99,7 @@ where:
 Because we want to measure volatility $v$ as a percentage, we apply the transform $\sigma \to \log (v+1)$ to get:
 
 $
+c = 
    \frac{1}{2} \left(p \text{erf}\left(\frac{-\log (k)+\log (p)+r t+\frac{1}{2}
     t \log ^2(v+1)}{\sqrt{2} \sqrt{t} \log (v+1)}\right)-k e^{-r t}
     \text{erfc}\left(\frac{2 \log (k)-2 (\log (p)+r t)+t \log ^2(v+1)}{2
@@ -107,6 +110,7 @@ By choosing our units carefully, we can always set $p=1$ and
 $t=1$. This gives us a call value of:
 
 $
+c =
    \frac{1}{2} \left(\text{erf}\left(\frac{-\log (k)+r+\frac{1}{2} \log
     ^2(v+1)}{\sqrt{2} \log (v+1)}\right)-k e^{-r} \text{erfc}\left(\frac{2 \log
     (k)-2 r+\log ^2(v+1)}{2 \sqrt{2} \log (v+1)}\right)+1\right)
@@ -114,15 +118,19 @@ $
 
 where $k$ is expressed as a ratio to the underlying price.
 
-TODO: infentesimal argument inaccurate for larger moves?
+Since the problem states the options we're comparing "same expiration
+date" and the options are valued at the same underlying price, the
+only difference between the two options is the strike price, $k$.
 
+**Specific Example**
 
 Let's first consider what interest rates and volatilities are
 consistent with an at the money option. For this, we set $k=1$ to get
 a call value of:
 
 $
-   \frac{1}{2} \left(\text{erf}\left(\frac{r+\frac{1}{2} \log ^2(v+1)}{\sqrt{2}
+c =
+  \frac{1}{2} \left(\text{erf}\left(\frac{r+\frac{1}{2} \log ^2(v+1)}{\sqrt{2}
     \log (v+1)}\right)-e^{-r} \text{erfc}\left(\frac{\log ^2(v+1)-2 r}{2
     \sqrt{2} \log (v+1)}\right)+1\right)
 $
@@ -130,12 +138,152 @@ $
 It turns out this equation isn't easy to solve for an arbitrary call
 value (no closed-form solution), so let's choose a specific call value
 of 0.05 as an example and solve numerically. Again, this means the
-option price is 5% of the stock price, since we've normalized the
+call price is 5% of the stock price, since we've normalized the
 stock price to 1.
 
 [[image34.gif]]
 
-A quick note about the graph: at zero volatility, you may think a 5%
+If it seems confusing that $r$ approaches $-\log (0.95)$
+(approximately 5.129%) and not 5% as the $v$ approaches zero,
+see footnote 1.
+
+Note that, even though I've show the volatility on the x axis and the
+interest rate on the y axis, neither variable is independent. The
+curve simply shows which pairs of interest rates and volatilities are
+consistent with Black-Scholes for this specific case.
+
+Now, let's consider an in-the-money call by setting the strike price
+to 0.99. If we assume a delta of 0.5, the value of this call would be
+0.055. What interest rates/volatility curve is consistent with this
+call?
+
+[[image35.gif]]
+
+For why $r$ approaches TODO as $v$ approaches zero, see footnote 2.
+
+approxv[r_] = Normal[FullSimplify[Series[FullSimplify[bscallperc[1,1,1,v,r], 
+ {r>0,v>0}], {r,0,1}]]]
+
+Solve[approxv[r] == x, v]
+
+
+
+TODO: let people skip
+
+What happens to $c$ if we increase $k$ by an infinitesimal amount
+$dk$? There's no Greek for this (since strike prices are usually
+constant), but, under Black-Scholes assumptions, the effect should be
+the same as if we decreased the underlying price by $dk$, and the
+Greek for that would be $-\delta$ (negative, since increasing the
+strike price makes it less valuable).
+
+If we differentiate both sides of the equation above with respect to
+$k$ while holding $v$ constant (but allowing $c$ and $r$ to vary), we
+get:
+
+$
+-\delta = 
+  \frac{1}{2} e^{-r} (\beta  k-1) \text{erfc}\left(\frac{2 \log (k)-2 r+\log
+  ^2(v+1)}{2 \sqrt{2} \log (v+1)}\right)
+$
+
+where $\beta$ is the change in $r$ due to the change in $k$.
+
+There's actually a mistake in the above, but let's ignore it for the moment.
+
+Solving for $\beta$, we get:
+
+$
+\beta \to
+   \frac{1-\frac{2 \delta  e^r}{\text{erfc}\left(\frac{2 \log (k)-2 r+\log
+    ^2(v+1)}{2 \sqrt{2} \log (v+1)}\right)}}{k}
+$
+
+The question now: for what values of is the above 0? In other words,
+if we hold $v$ constant and change $k$ (the only thing we can change),
+for what values of $r$ does the above remain constant.
+
+TODO: is this infentes approach correct? 
+
+
+TODO: sophistry re sigma
+
+
+
+temp0812[beta_] =
+FullSimplify[D[bscallperc[1, k, 1, v, r], k, NonConstants -> {r}]] /.
+  {D[r, k, NonConstants -> {r}] -> beta}
+
+temp0819[beta_] = FullSimplify[Solve[temp0812[beta] == -delta, beta][[1,1,2]]]
+
+Solve[temp0819[beta] == 0, v][[1,1,2]]
+
+
+
+
+
+
+
+
+
+
+
+bscallperc[1, k, 1, v, r]
+
+TODO: note erfc is 1-erf?
+
+bscallperc[p_, k_, t_, v_, r_] =
+(p + p*Erf[(r*t - Log[k] + Log[p] + (t*Log[1 + v]^2)/2)/
+     (Sqrt[2]*Sqrt[t]*Log[1 + v])] - 
+  (k*Erfc[(2*Log[k] - 2*(r*t + Log[p]) + t*Log[1 + v]^2)/
+      (2*Sqrt[2]*Sqrt[t]*Log[1 + v])])/E^(r*t))/2
+
+conds = {p>0, e>0, t>0, v>0, r>0};
+
+FullSimplify[bscallperc[1, k, 1, v, r], conds]
+
+FullSimplify[D[bscallperc[1, k, 1, v, r],k], conds]
+
+D[bscallperc[1, k, 1, v, r], k, NonConstants -> {r}]
+
+D[bscallperc[1, k, 1, v, r], k, NonConstants -> {r}] /.
+ {D[r, k, NonConstants -> {r}] -> x}
+
+
+FullSimplify[D[bscallperc[1,k,1,v,r],r]]
+FullSimplify[D[bscallperc[1,k,1,v,r],k]]
+
+above are INSANELY SIMILAR (divide to -k)
+
+first is dc/dr, second is dc/dk
+
+so dc/dr / (dc/dk) = dk/dr
+
+Solve[bscallperc[1,k1,1,v,r] == bscallperc[1,k2,1,v,0]]
+
+FullSimplify[bscallperc[1,k1,1,v,r],conds]
+FullSimplify[bscallperc[1,k2,1,v,0],conds]
+
+
+FullSimplify[bscallperc[1,k1*Exp[-r],1,v,0],conds]
+
+
+
+
+
+
+
+
+
+
+TODO: reading specifics may help with generic
+
+TODO: infentesimal argument inaccurate for larger moves?
+
+
+<start footnote1>
+
+At zero volatility, you may think a 5%
 interest rate would be identical to purchasing a call at 5% of the
 underlying value. As it turns out, this isn't the case.
 
@@ -172,17 +320,7 @@ interest.
 In general, if a call is $s$ of the underlying, the breakeven interest
 rate will be $-\log (1-s)$.
 
-Also note that, even though I've show the volatility on the x axis and
-the interest rate on the y axis, neither variable is independent. The
-curve simply shows which pairs of interest rates and volatilities are
-consistent with Black-Scholes for this specific case.
-
-Now, let's consider an in-the-money call by setting the strike price
-to 0.99. If we assume a delta of 0.5, the value of this call would be
-0.055. What interest rates/volatility curve is consistent with this
-call?
-
-[[image35.gif]]
+</start>
 
 Note that, at zero volatility, the call is worth $e^r-0.99$ at
 expiration, so the investor profits $(e^r-0.99)-0.055$, the value
@@ -201,6 +339,10 @@ TODO: focusing overly much on zero vol?
 
 
 Solve[Exp[r]-0.99-.055 == (Exp[r]-1)*.055, r]
+
+Solve[Exp[r]-99/100-55/1000 == (Exp[r]-1)*55/1000, r]
+
+
 
 TODO: disclaim specitivity 
 
@@ -233,23 +375,6 @@ It may seem that, at zero
 volatility, a call would be worth 5% of the underlying only if the
 risk-free interest rate were also 5%. As it turns out, this isn't the
 case.
-
-bscallperc[p_, k_, t_, v_, r_] =
-(p + p*Erf[(r*t - Log[k] + Log[p] + (t*Log[1 + v]^2)/2)/
-     (Sqrt[2]*Sqrt[t]*Log[1 + v])] - 
-  (k*Erfc[(2*Log[k] - 2*(r*t + Log[p]) + t*Log[1 + v]^2)/
-      (2*Sqrt[2]*Sqrt[t]*Log[1 + v])])/E^(r*t))/2
-
-conds = {p>0, e>0, t>0, v>0, r>0};
-
-FullSimplify[bscallperc[1, k, 1, v, r], conds]
-
-FullSimplify[D[bscallperc[1, k, 1, v, r],k], conds]
-
-D[bscallperc[1, k, 1, v, r], k, NonConstants -> {r}]
-
-D[bscallperc[1, k, 1, v, r], k, NonConstants -> {r}] /.
- {D[r, k, NonConstants -> {r}] -> x}
 
 Solve[%, x]
 
