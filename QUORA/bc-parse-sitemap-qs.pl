@@ -39,6 +39,7 @@ for $i (keys %urls) {
   $fname = "/var/tmp/quora/$fname.log";
 
   # NOTE: we never download the question page itself
+  # TODO: actually do get page itself as well
   # probably better to cache this way
   # TODO: worry about staleness here
   # TODO: actually, still need to parse file, so can't just next here
