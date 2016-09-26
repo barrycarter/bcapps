@@ -1,5 +1,94 @@
 (* See also http://quant.stackexchange.com/questions/24970/estimate-probability-of-limit-order-execution-over-a-large-time-frame *)
 
+(* formulas start here *)
+
+c0[p_,e_,t_,v_,r_] := Module [ {standardnormal,d1,d2,value},
+ standardnormal=NormalDistribution[0,1];
+ d1=(Log[p/e]+t*(r+v*v/2))/v/Sqrt[t];
+ d2=d1-v*Sqrt[t];
+ value=p*CDF[standardnormal,d1]-e*Exp[-r*t]*CDF[standardnormal,d2]
+]
+
+conds = {p>0, e>0, t>0, v>0, Element[r, Reals]};
+
+c[p_,e_,t_,v_,r_] = FullSimplify[c0[p,e,t,v,r],conds];
+
+
+(* formulas end here *)
+
+(*
+
+Using https://en.wikipedia.org/wiki/Black%E2%80%93Scholes_model#Black.E2.80.93Scholes_formula and combining, we have:
+
+$
+   c(p,k,t,\sigma ,r)=
+  \frac{1}{2} \left(p \text{erf}\left(\frac{-\log (k)+\log (p)+r t+\frac{\sigma
+    ^2 t}{2}}{\sqrt{2} \sigma  \sqrt{t}}\right)-k e^{-r t}
+    \text{erfc}\left(\frac{2 \log (k)-2 \log (p)-2 r t+\sigma ^2 t}{2 \sqrt{2}
+    \sigma  \sqrt{t}}\right)+p\right)
+$
+
+where:
+
+  - $c(p,k,t,\sigma ,r)$ is the Black-Scholes value of the call
+  - $p$ is the price of the underlying security
+  - $k$ is the strike price of the call
+  - $t$ is the time until expiration
+  - $\sigma$ is the volatility in standard deviations of log price [1]
+  - $r$ is the risk-free interest rate as a percentage
+
+[1] Volatility can also be expressed as a percentage $v$, and we could
+perform the transform $\sigma \to \log (v+1)$ to use that definition
+of volatility, but it's easier to use $\sigma$ since we're following
+the wikipedia treatment (my http://quant.stackexchange.com/a/25074/59
+explains a bit more about the two definitions of volatility)
+
+In this problem, we are given two calls with the same expiration date
+and whose values are computed using the same underlying price, and
+thus the same $p$ and $t$. The calls may have different values and
+strike prices, and we are asked to solve for $v$ and $r$. In other
+words:
+
+$c(p,\text{k1},t,\sigma ,r)=\text{c1} \\ c(p,\text{k2},t,\sigma ,r)=\text{c2}$
+
+Our problem is greatly simplifed by the observation:
+
+$c(p,k,t,\sigma ,r)=c(p,k e^{-r t},t,\sigma ,0)$
+
+which can be verified by substitution and simplification.
+
+Our original equations now become:
+
+$
+c\left(p,\text{k1} e^{-r t},t,\sigma ,0\right) = \text{c1} \\
+c\left(p,\text{k2} e^{-r t},t,\sigma ,0\right) = \text{c2}
+$
+
+c[p,k1*Exp[-r*t],t, sigma,0] - c[p,k2*Exp[-r*t],t, sigma,0]
+
+
+
+$c(p,\text{k1},t,\sigma ,r)=\text{c1} \\ c(p,\text{k2},t,\sigma ,r)=\text{c2}$
+
+
+
+HoldForm[c[p,k,t,sigma,r]] == HoldForm[c[p,k*Exp[-r*t],t,sigma,0]]
+
+
+
+
+
+
+
+
+http://quant.stackexchange.com/questions/30199/is-there-a-unique-solution-for-two-options
+
+
+
+
+
+TODO: vol changed
+
 TODO: legacy note this file
 
 (* deriving Black-Scholes, other ways to do it *)
@@ -53,13 +142,6 @@ This means that $\log (p)$ will change by less than
 
 TODO: make sure I use underlying security consistently, not "stock" or just "underlying"
 
-
-bscall[p_,e_,t_,v_,r_] := Module [ {standardnormal,d1,d2,value},
- standardnormal=NormalDistribution[0,1];
- d1=(Log[p/e]+t*(r+v*v/2))/v/Sqrt[t];
- d2=d1-v*Sqrt[t];
- value=p*CDF[standardnormal,d1]-e*Exp[-r*t]*CDF[standardnormal,d2]
-]
 
 bs2[p_,k_,t_,v_,r_] = FullSimplify[bscall[p,k,t,v,r], {p>0, k>0, t>0, v>0}]
 
