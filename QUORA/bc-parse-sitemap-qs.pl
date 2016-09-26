@@ -46,27 +46,63 @@ for $i (keys %urls) {
     $fname = substr($fname,0,200)."$hash";
   }
 
+  # TODO: this only grabs the last page of the metalog, which should
+  # be enough for my purposes, but...
+  # "https://www.quora.com/What-would-be-better-for-preparing-for-JEE-Advanced/log#!n=40
+  # is what I'd need for the next 40 entries
+
   # TODO: probably better to cache this way, but worry about staleness
   # TODO: using two loops here is sloppy, just being careful for now
   unless (-f "$fname.log") {
     debug("OBTAINING: $i/log -> $fname.log");
     ($out, $err, $res) = cache_command2("curl -Lo '$fname.log' '$i/log'");
-    }
+  } else {
+    $out = read_file("$fname.log");
+  }
+
+  # techincally a metalog
+  #  debug("PARSING: $fname.log");
+  parse_metalog($out);
 
   unless (-f "$fname.html") {
     debug("OBTAINING: $i.html");
     ($out, $err, $res) = cache_command2("curl -Lo '$fname.html' '$i'");
+  } else {
+    $out = read_file("$fname.html");
   }
 
-#  if (++$count>25) {die "TESTING";}
+  parse_question($out);
+}
 
-  # TODO: this is now misplaced, needs to occur both times
-#  while ($out=~s/href="(.*?)"//s) {
-#    debug("HREF: $1");
-#  }
+for $i (sort {$a <=> $b} keys %hash) {
+  debug("$i -> $hash{$i}");
 }
 
 
-# debug(sort keys %urls);
 
-# debug("OUT: $out");
+# program-specific subroutine to parse metalogs
+
+sub parse_metalog {
+  my($mlog) = @_;
+
+  # TODO: currently writing to global %hash, but reconsider
+  # my(%hash);
+
+  while ($mlog=~s%<p class="log_action_bar">(.*?)</p>%%s) {
+
+    my($loge) = $1;
+    $loge=~s%/log/revision/(\d+)%%;
+    my($rev) = $1;
+    $loge=~s%</span>(.*?)$%%;
+    # TODO: what timezone is this? assuming GMT for now
+    $hash{$rev} = str2time($1);
+  }
+}
+
+# program-specific subroutine to parse questions
+
+sub parse_metalog {
+  my($q) = @_;
+
+
+}
