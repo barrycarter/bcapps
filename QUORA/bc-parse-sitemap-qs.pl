@@ -14,6 +14,8 @@ require "/usr/local/lib/bclib.pl";
 my($out,$err,$res);
 my(%urls);
 
+dodie("chdir('/var/tmp/quora')");
+
 # TODO: check write perms here?
 unless (-d "/var/tmp/quora") {die "Create /var/tmp/quora";}
 
@@ -34,22 +36,34 @@ for $i (1..10) {
 
 for $i (keys %urls) {
 
+  # TODO: below can break on long question names, ignoring for now
   my($fname) = $i;
   $fname=~s%^.*/%%;
-  $fname = "/var/tmp/quora/$fname.log";
 
-  # NOTE: we never download the question page itself
-  # TODO: actually do get page itself as well
-  # probably better to cache this way
-  # TODO: worry about staleness here
-  # TODO: actually, still need to parse file, so can't just next here
-  if (-f $fname) {next;}
-
-  ($out, $err, $res) = cache_command("curl -o '$fname' '$i/log'", "age=86400");
-
-  while ($out=~s/href="(.*?)"//s) {
-    debug("HREF: $1");
+  # hashify
+  if (length($fname)>246) {
+    my($hash) = sha1_hex($fname);
+    $fname = substr($fname,0,200)."$hash";
   }
+
+  # TODO: probably better to cache this way, but worry about staleness
+  # TODO: using two loops here is sloppy, just being careful for now
+  unless (-f "$fname.log") {
+    debug("OBTAINING: $i/log -> $fname.log");
+    ($out, $err, $res) = cache_command2("curl -Lo '$fname.log' '$i/log'");
+    }
+
+  unless (-f "$fname.html") {
+    debug("OBTAINING: $i.html");
+    ($out, $err, $res) = cache_command2("curl -Lo '$fname.html' '$i'");
+  }
+
+#  if (++$count>25) {die "TESTING";}
+
+  # TODO: this is now misplaced, needs to occur both times
+#  while ($out=~s/href="(.*?)"//s) {
+#    debug("HREF: $1");
+#  }
 }
 
 
