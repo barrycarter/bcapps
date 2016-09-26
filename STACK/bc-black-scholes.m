@@ -268,6 +268,44 @@ FullSimplify[bscallperc[1,k2,1,v,0],conds]
 FullSimplify[bscallperc[1,k1*Exp[-r],1,v,0],conds]
 
 
+FullSimplify[bscallperc[1,k1*Exp[-r],1,v,0],conds] -
+FullSimplify[bscallperc[1,k1,1,v,r],conds]
+
+(* above simplifies to 0, confirmed *)
+
+bscallperc[1,k1,1,v1,r1] == c1
+bscallperc[1,k2,1,v2,r2] == c2
+
+Solve[{
+ bscallperc[1,k1,1,v1,r1] == c1,
+ bscallperc[1,k2,1,v2,r2] == c2
+}, v, Reals]
+
+Solve[{
+ bscallperc[1,k1,1,v,0] == c1,
+ bscallperc[1,k2,1,v,0] == c2
+}, v, Reals]
+
+
+FullSimplify[
+ bscallperc[1,k1,1,v,0] /. Log[1+v] -> alpha /. Erfc[x_] -> 1-Erf[x]
+]
+
+
+Solve[bscallperc[1,k,1,v,0] == c1,v]
+
+It turns out this problem is trivial once you realize that the price
+of a call with strike price $k$ and risk-free interest $r$ is
+identical to the price of a call with strike price $k e^{-r}$ and
+risk-free interest $0$. I'll try to post an answer later.
+
+bscallperc[1,k1,1,v,0] - bscallperc[1,k2,1,v,0]
+
+
+
+
+
+
 
 
 

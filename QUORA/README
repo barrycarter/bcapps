@@ -10,7 +10,8 @@ find . -size 2713c > /tmp/2713c.txt &
 
 : files sized 2843c are almost always
 : "You don't have permission to view this page."
-find . -size 2843c >! /tmp/2843c.txt &
+: this step may be inefficient since the next steps would catch this anyway
+find . -maxdepth 1 -size 2843c >! 2843c.txt &
 
 : NOTE: do steps above first so I'm not pointlessly grepping into bad files
 
@@ -20,6 +21,7 @@ find . -size 2843c >! /tmp/2843c.txt &
 find . -maxdepth 1 -type f >! fileshere.txt &
 
 : MAKE SURE THERE IS NO NEWLINE AT END OF THIS FILE
+: TODO: can I parallelize this for speed?
 tail -1 ~/BCGIT/QUORA/badlogs.txt
 xargs fgrep -lf ~/BCGIT/QUORA/badlogs.txt < fileshere.txt >! badhere.txt &
 

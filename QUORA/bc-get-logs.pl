@@ -10,9 +10,11 @@ require "/home/barrycarter/bc-private.pl";
 warn "Putting alreadydone.txt in /tmp";
 
 # TODO: don't hardcode this (150M = as of 7 Jun 2016)
-my($start) = 1;
+# my($start) = 1;
 # TODO: this is just testing, in reality this will keep running
-my($end) = 2277383;
+# my($end) = 2277383;
+
+my($start,$end) = (170210000, 173796412);
 
 # which ones do I already have (somewhat extensive search)
 
