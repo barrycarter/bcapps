@@ -27,7 +27,8 @@ for $i (1..10) {
     while ($out=~s/href="(.*?)"//s) {
       my($url) = $1;
       unless ($url=~/quora\.com/) {next;}
-      $urls{$url} = 1;
+      $urls{$url}{"page"} = $i;
+      $urls{$url}{"type"} = $j;
     }
   }
 }
@@ -60,8 +61,9 @@ for $i (keys %urls) {
     $out = read_file("$fname.log");
   }
 
+  # TODO: record page number and which list it came from too
   # techincally a metalog
-  #  debug("PARSING: $fname.log");
+  debug("PARSING: $fname.log");
   parse_metalog($out);
 
   unless (-f "$fname.html") {
@@ -78,8 +80,6 @@ for $i (sort {$a <=> $b} keys %hash) {
   debug("$i -> $hash{$i}");
 }
 
-
-
 # program-specific subroutine to parse metalogs
 
 sub parse_metalog {
@@ -89,7 +89,6 @@ sub parse_metalog {
   # my(%hash);
 
   while ($mlog=~s%<p class="log_action_bar">(.*?)</p>%%s) {
-
     my($loge) = $1;
     $loge=~s%/log/revision/(\d+)%%;
     my($rev) = $1;
@@ -97,12 +96,42 @@ sub parse_metalog {
     # TODO: what timezone is this? assuming GMT for now
     $hash{$rev} = str2time($1);
   }
+
+  # TODO: capture render time of page
+
+#  while ($mlog=~s%<a href="(.*?)">Answer</a> added by .*?href="/profile/(.*?)"%%) {
+#    debug("ALPHA: $1 $2");
+#  }
+
+  while ($mlog=~s%<a href="([^\"]*?)">Answer</a> added by%%) {
+    debug("ALPHA: $1");
+  }
+
+  while ($mlog=~s%>Question added by (.*?)</span>%%) {
+    debug("BETA: $1");
+  }
+
+  while ($mlog=~s%href="/topic/(.*?)"%%) {
+    debug("GAMMA: $1");
+  }
+
+  # TODO: last entry should be "question asked" and need to record
+  # that (if multipage, ignore?) when and by whom
+
+
+  # purely out of curiousity, find "javascript" stuff
+#  while ($mlog=~s/\"(.*?)\": (.*?)\,//) {debug("$1 -> $2");}
+
+  # fewer things, but more important
+#  while ($mlog=~s/\"(.id)\": (\d+)//) {debug("$1 -> $2");}
+
+#  die "TESTING";
+
 }
 
 # program-specific subroutine to parse questions
 
-sub parse_metalog {
+sub parse_question {
   my($q) = @_;
-
-
+  # TODO: everything
 }
