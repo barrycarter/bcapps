@@ -37,11 +37,10 @@ for $i (1..10) {
 
 for $i (keys %urls) {
 
-  # TODO: below can break on long question names, ignoring for now
   my($fname) = $i;
   $fname=~s%^.*/%%;
 
-  # hashify
+  # hashify long filenames
   if (length($fname)>246) {
     my($hash) = sha1_hex($fname);
     $fname = substr($fname,0,200)."$hash";
