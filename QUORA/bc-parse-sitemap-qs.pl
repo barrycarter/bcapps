@@ -7,12 +7,12 @@
 require "/usr/local/lib/bclib.pl";
 
 # TODO: cache less in production?
-# TODO: suck https://www.quora.com/sitemap/recent too?
-# TODO: and https://www.quora.com/sitemap/recent?page_id=9 eg?
-# TODO: grab  /sitemap/questions?page_id=10 up to page 10
 
 my($out,$err,$res);
 my(%urls);
+
+# global variable to keep track of revision time
+my(%rev2time);
 
 dodie("chdir('/var/tmp/quora')");
 
@@ -63,7 +63,7 @@ for $i (keys %urls) {
   # TODO: record page number and which list it came from too
   # techincally a metalog
   debug("PARSING: $fname.log");
-  parse_metalog($out);
+  $urls{$i}{data} = parse_metalog($out);
 
   unless (-f "$fname.html") {
     debug("OBTAINING: $i.html");
@@ -71,29 +71,29 @@ for $i (keys %urls) {
   } else {
     $out = read_file("$fname.html");
   }
-
   parse_question($out);
+
+  if (++$count>5) {warn "TESTING"; last;}
+
 }
 
-for $i (sort {$a <=> $b} keys %hash) {
-  debug("$i -> $hash{$i}");
-}
+debug(dump_var("urls", \%urls));
+
 
 # program-specific subroutine to parse metalogs
 
 sub parse_metalog {
   my($mlog) = @_;
 
-  # TODO: currently writing to global %hash, but reconsider
-  # my(%hash);
+  my(%hash);
 
   while ($mlog=~s%<p class="log_action_bar">(.*?)</p>%%s) {
     my($loge) = $1;
     $loge=~s%/log/revision/(\d+)%%;
     my($rev) = $1;
     $loge=~s%</span>(.*?)$%%;
-    # TODO: what timezone is this? assuming GMT for now
-    $hash{$rev} = str2time($1);
+    $hash{revisions}{$rev} = 1;
+    $rev2time{$rev} = str2time("$1 UTC");
   }
 
   # TODO: capture render time of page
@@ -103,16 +103,18 @@ sub parse_metalog {
 #  }
 
   while ($mlog=~s%<a href="([^\"]*?)">Answer</a> added by%%) {
-    debug("ALPHA: $1");
+    $hash{answerer}{$1} = 1;
   }
 
   while ($mlog=~s%>Question added by (.*?)</span>%%) {
-    debug("BETA: $1");
+    $hash{questioner}{$1} = 1;
   }
 
   while ($mlog=~s%href="/topic/(.*?)"%%) {
-    debug("GAMMA: $1");
+    $hash{topic}{$1} = 1;
   }
+
+  return \%hash;
 
   # TODO: last entry should be "question asked" and need to record
   # that (if multipage, ignore?) when and by whom
