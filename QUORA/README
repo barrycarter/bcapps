@@ -67,6 +67,7 @@ du before compress: 428.400 MB
 zip of all log files: 121.626857 MB
 bzip2 of individual files: 138.276MB
 tar --bzip: 167.502009MB
+
 TODO: zpaq
 
 Quora pages you can access WITHOUT being logged in:
