@@ -291,3 +291,13 @@ mv error.log error.log.$DATE
 : this can be run later
 bzip2 -v access.log.$DATE error.log.$DATE &
 
+% 28 Sep 2016: when I did a "yum install" of firefox, it broke the
+sqlite3 version trivially:
+
+# /usr/local/bin/sqlite3 -version
+3.7.17 2013-05-20 00:56:22 118a3b35693b134d56ebd780123b7fd6f1497668
+
+# /usr/bin/sqlite3 -version
+3.7.17
+
+Fixing this by symlinking the correct /local/ version to bin

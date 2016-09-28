@@ -54,6 +54,13 @@ xargs mkdir < dirs.txt
 : pipe command below to sh
 perl -nle 'print "mv $_* $_"' < dirs.txt
 
+Quora page may have a "qid", "aid", "uid", and many other values (not
+necessarily all three letters) which might be
+useful. https://www.quora.com/What-is-supercharger?redirected_qid=10279716
+is one example where it's used
+
+TODO: Quora has weird tree of strings built up in most pages; figure this out.
+
 Compressibility (for 171120000.html 171129999.html, 10K files):
 
 du before compress: 428.400 MB
@@ -61,6 +68,30 @@ zip of all log files: 121.626857 MB
 bzip2 of individual files: 138.276MB
 tar --bzip: 167.502009MB
 TODO: zpaq
+
+Quora pages you can access WITHOUT being logged in:
+
+  - https://www.quora.com/topic/Mathematics (or any specific topic,
+  but not list of topics)
+
+  - https://www.quora.com/sitemap/ and possibly all linked pages, in
+  particular https://www.quora.com/sitemap/recent and
+  https://www.quora.com/sitemap/questions may be useful
+
+  -
+  https://www.quora.com/When-do-we-use-a-supercharger-or-a-turbocharger/log
+  or ANY questions "metalog", but not the actual linked log pages
+  themselves
+
+  - Specific answers like https://www.quora.com/What-is-mathematics-not/answer/Ramandeep-Singh-25
+
+  - NOTE: at one point, quora may've allowed direct no-login access to
+  log pages directly
+
+  - Adding ?shared=1 to a URL might allow access without login (to a
+  page that otherwise requires a login), but doesn't work for log
+  pages and may not work 100%
+
 
 TODO: create files in subdirectories directly instead of creating and
 top level and moving via shell script
@@ -88,6 +119,8 @@ TODO: upload the log files I have to Internet for safekeeping
 
 TODO: allow google to index log entries (unless quora already does
 this, but probably not)
+
+TODO: snip down quora log HTML entries (which contain a lot of junk) to just essential information
 
 QUORA TOPICS
 ============
