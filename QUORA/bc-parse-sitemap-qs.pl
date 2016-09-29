@@ -14,6 +14,10 @@ my(%urls);
 # global variable to keep track of revision time
 my(%rev2time);
 
+# this is just for testing, though could be a global
+my($maxcount) = 50;
+my($count);
+
 dodie("chdir('/var/tmp/quora')");
 
 # TODO: check write perms here?
@@ -29,6 +33,7 @@ for $i (1..10) {
       unless ($url=~/quora\.com/) {next;}
       $urls{$url}{"page"} = $i;
       $urls{$url}{"type"} = $j;
+      if ($maxcount && $count++ > $maxcount) {last;}
     }
   }
 }
@@ -72,12 +77,21 @@ for $i (keys %urls) {
     $out = read_file("$fname.html");
   }
   parse_question($out);
-
-  if (++$count>5) {warn "TESTING"; last;}
-
 }
 
-debug(dump_var("urls", \%urls));
+# sort by most recent revision first
+my(@order) = sort {$urls{$a}{data}{maxrev} <=> $urls{$b}{data}{maxrev}} 
+  keys %urls;
+
+for $i (@order) {
+  debug("I: $i, URL: $urls{$i}, DATA: $urls{$i}{data}");
+  debug (keys %{$urls{$i}{data}});
+	
+  debug($urls{$i}{data}{maxrev});
+}
+
+# debug(dump_var("urls", \%urls));
+# debug(%rev2time);
 
 
 # program-specific subroutine to parse metalogs
@@ -90,23 +104,36 @@ sub parse_metalog {
   while ($mlog=~s%<p class="log_action_bar">(.*?)</p>%%s) {
     my($loge) = $1;
     $loge=~s%/log/revision/(\d+)%%;
-    my($rev) = $1;
+    $hash{revisions}{$1} = 1;
     $loge=~s%</span>(.*?)$%%;
-    $hash{revisions}{$rev} = 1;
-    $rev2time{$rev} = str2time("$1 UTC");
+    $rev2time{$rev}{raw} = $1;
+    $rev2time{$rev}{cooked} = str2time("$rev2time{$rev}{raw} UTC");
   }
+
+  # compute the last touched time and the "question asked" time;
+  # however, if log file is multi-page, this will just be the oldest
+  # action not question asked time
+
+  # NOTE: these are reverse sorted on the page itself, but I use a
+  # hash + I prefer to explicit sort
+
+  my(@revs) = sort {$a <=> $b} keys %{$hash{revisions}};
+  $hash{minrev} = $revs[0];
+  $hash{maxrev} = $revs[-1];
 
   # TODO: capture render time of page
 
-#  while ($mlog=~s%<a href="(.*?)">Answer</a> added by .*?href="/profile/(.*?)"%%) {
-#    debug("ALPHA: $1 $2");
-#  }
+  my($url);
 
   while ($mlog=~s%<a href="([^\"]*?)">Answer</a> added by%%) {
-    $hash{answerer}{$1} = 1;
+    $url = $1;
+    $url=~s%^.*/%%;
+    $hash{answerer}{$url} = 1;
   }
 
   while ($mlog=~s%>Question added by (.*?)</span>%%) {
+    $url = $1;
+    $url=~s%"/profile/(.*?)"%%;
     $hash{questioner}{$1} = 1;
   }
 
