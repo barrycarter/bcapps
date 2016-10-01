@@ -21,6 +21,14 @@ my($count);
 
 dodie("chdir('/var/tmp/quora')");
 
+# this one parsing poorly, copied to temp.html
+
+my(%hash) = %{parse_metalog(read_file("/home/barrycarter/temp.html"))};
+
+debug(dump_var("hash", \%hash));
+
+die "TESTING";
+
 # TODO: check write perms here?
 unless (-d "/var/tmp/quora") {die "Create /var/tmp/quora";}
 
