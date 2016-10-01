@@ -12,7 +12,13 @@
 
 # doing root drive first, since others may fail
 /home/barrycarter/BCGIT/BACKUP/bc-unix-dump.pl / bcunix
-/home/barrycarter/BCGIT/BACKUP/bc-unix-dump.pl /mnt/extdrive extdrive
+
+# removing below since its now a symlink
+# /home/barrycarter/BCGIT/BACKUP/bc-unix-dump.pl /mnt/extdrive extdrive
+
+# some of these drives no longer exist, but thats ok because their
+# mount points are essentially empty
+
 /home/barrycarter/BCGIT/BACKUP/bc-unix-dump.pl /mnt/extdrive2 extdrive2
 /home/barrycarter/BCGIT/BACKUP/bc-unix-dump.pl /mnt/extdrive3 extdrive3
 /home/barrycarter/BCGIT/BACKUP/bc-unix-dump.pl /mnt/extdrive4 extdrive4

@@ -28,7 +28,8 @@
 
 # 129600 259200 "/mnt/sshfs/bcmac-files-rev.txt.srt /bcunix-files-rev.txt /mnt/extdrive/extdrive-files-rev.txt"
 
-129600 259200 "/bcunix-files-rev.txt /mnt/extdrive/extdrive-files-rev.txt"
+# as of 30 Sep 2016, /mnt/extdrive/ is symlink, test below makes no sense
+# 129600 259200 "/bcunix-files-rev.txt /mnt/extdrive/extdrive-files-rev.txt"
 # 129600 259200 "/bcunix-files-rev.txt /mnt/*/*-files-rev.txt"
 
 # quikbak

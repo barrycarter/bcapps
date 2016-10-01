@@ -15,7 +15,8 @@ my(%urls);
 my(%rev2time);
 
 # this is just for testing, though could be a global
-my($maxcount) = 50;
+my($maxcount) = Infinity;
+my($maxpage) = Infinity;
 my($count);
 
 dodie("chdir('/var/tmp/quora')");
@@ -24,6 +25,9 @@ dodie("chdir('/var/tmp/quora')");
 unless (-d "/var/tmp/quora") {die "Create /var/tmp/quora";}
 
 for $i (1..10) {
+
+  if ($maxpage && $i>$maxpage) {last;}
+
   for $j ("questions", "recent") {
 
     ($out,$err,$res) = cache_command2("curl -L 'https://quora.com/sitemap/$j?page_id=$i'", "age=86400");
@@ -80,14 +84,28 @@ for $i (keys %urls) {
 }
 
 # sort by most recent revision first
-my(@order) = sort {$urls{$a}{data}{maxrev} <=> $urls{$b}{data}{maxrev}} 
+my(@order) = sort {$urls{$b}{data}{minrev} <=> $urls{$a}{data}{minrev}}
   keys %urls;
 
 for $i (@order) {
-  debug("I: $i, URL: $urls{$i}, DATA: $urls{$i}{data}");
-  debug (keys %{$urls{$i}{data}});
-	
-  debug($urls{$i}{data}{maxrev});
+
+  my($topics) = join(", ", keys %{$urls{$i}{data}{topic}});
+  my($ans) = join(", ", keys %{$urls{$i}{data}{answerer}});
+  # this should be at most one person, but...
+  my($qr) = join(", ", keys %{$urls{$i}{data}{questioner}});
+
+
+print << "MARK";
+
+Q: $i
+Topics: $topics
+Qr: $qr
+Ar: $ans
+Minrev: $urls{$i}{data}{minrev}
+Maxrev: $urls{$i}{data}{maxrev}
+
+MARK
+;
 }
 
 # debug(dump_var("urls", \%urls));

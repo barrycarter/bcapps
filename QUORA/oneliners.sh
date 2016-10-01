@@ -1,3 +1,11 @@
+# given the contents of
+# https://www.quora.com/sitemap/questions?page_id=10 or similar,
+# output questions (in hyphenated format)
+
+perl -nle 'while (s/<a href="(.*?)">//) {$x=$1; $x=~s%^.*/%%; print $x}' *.html
+
+exit;
+
 # given 4sqlite.txt as defined in bc-moderate-temperature.m, creates a
 # SQLite3 loadable file/table
 

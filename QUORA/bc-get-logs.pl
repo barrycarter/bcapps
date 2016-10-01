@@ -14,7 +14,8 @@ warn "Putting alreadydone.txt in /tmp";
 # TODO: this is just testing, in reality this will keep running
 # my($end) = 2277383;
 
-my($start,$end) = (170210000, 173796412);
+# my($start,$end) = (170210000, 173796412);
+my($start,$end) = (1, 2277383);
 
 # which ones do I already have (somewhat extensive search)
 

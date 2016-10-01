@@ -5,7 +5,7 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# TODO: $dir must be a 5 digit number, but i dont make that clear here
+# TODO: $dir must be a number, but i dont make that clear here
 my($dir) = shift;
 
 dodie("chdir('/home/barrycarter/QUORA/LOG/$dir')");
