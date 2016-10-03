@@ -15,19 +15,11 @@ my(%urls);
 my(%rev2time);
 
 # this is just for testing, though could be a global
-my($maxcount) = Infinity;
-my($maxpage) = Infinity;
+my($maxcount, $maxpage) = (Infinity, Infinity);
+# my($maxcount, $maxpage) = (Infinity, 1);
 my($count);
 
 dodie("chdir('/var/tmp/quora')");
-
-# this one parsing poorly, copied to temp.html
-
-my(%hash) = %{parse_metalog(read_file("/home/barrycarter/temp.html"))};
-
-debug(dump_var("hash", \%hash));
-
-die "TESTING";
 
 # TODO: check write perms here?
 unless (-d "/var/tmp/quora") {die "Create /var/tmp/quora";}
@@ -88,7 +80,8 @@ for $i (keys %urls) {
   } else {
     $out = read_file("$fname.html");
   }
-  parse_question($out);
+
+  $urls{$i}{pagedata} = parse_question($out);
 }
 
 # sort by most recent revision first
@@ -97,7 +90,8 @@ my(@order) = sort {$urls{$b}{data}{minrev} <=> $urls{$a}{data}{minrev}}
 
 for $i (@order) {
 
-  my($topics) = join(", ", keys %{$urls{$i}{data}{topic}});
+#  my($topics) = join(", ", keys %{$urls{$i}{data}{topic}});
+  my($topics) = join(", ", keys %{$urls{$i}{pagedata}{topic}});
   my($ans) = join(", ", keys %{$urls{$i}{data}{answerer}});
   # this should be at most one person, but...
   my($qr) = join(", ", keys %{$urls{$i}{data}{questioner}});
@@ -108,6 +102,7 @@ print << "MARK";
 Q: $i
 Topics: $topics
 Qr: $qr
+#A: $urls{$i}{pagedata}{answercount}
 Ar: $ans
 Minrev: $urls{$i}{data}{minrev}
 Maxrev: $urls{$i}{data}{maxrev}
@@ -187,5 +182,12 @@ sub parse_metalog {
 
 sub parse_question {
   my($q) = @_;
-  # TODO: everything
+  my(%hash);
+
+  while ($q=~s%href="/topic/(.*?)"%%) {$hash{topic}{$1} = 1;}
+
+  $q=~s/(\d+\+?) Answer//;
+  $hash{answercount} = $1;
+  return \%hash;
+
 }

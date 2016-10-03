@@ -69,6 +69,13 @@ bzip2 of individual files: 138.276MB
 tar --bzip: 167.502009MB
 zpaq: 42.879668 MB
 
+NOTE: /sitemap/recent and /sitemap/questions do NOT appear to be in
+any useful order, despite the implication that /recent is ordered my
+most recent questions; for example content on
+https://www.quora.com/sitemap/recent?page_id=781 is more recent that
+content on main page https://www.quora.com/sitemap/recent (but pages
+in middle are more recent, so order isn't reversed either)
+
 Quora pages you can access WITHOUT being logged in:
 
   - https://www.quora.com/topic/Mathematics (or any specific topic,
@@ -76,7 +83,9 @@ Quora pages you can access WITHOUT being logged in:
 
   - https://www.quora.com/sitemap/ and possibly all linked pages, in
   particular https://www.quora.com/sitemap/recent and
-  https://www.quora.com/sitemap/questions may be useful
+  https://www.quora.com/sitemap/questions may be useful; as of ~ 30
+  Sep 2016, https://www.quora.com/sitemap/questions?page_id=40537 is
+  highest page number as is https://www.quora.com/sitemap/recent?page_id=781
 
   -
   https://www.quora.com/When-do-we-use-a-supercharger-or-a-turbocharger/log
