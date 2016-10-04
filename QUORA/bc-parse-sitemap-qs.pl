@@ -15,8 +15,8 @@ my(%urls);
 my(%rev2time);
 
 # this is just for testing, though could be a global
-my($maxcount, $maxpage) = (Infinity, Infinity);
-# my($maxcount, $maxpage) = (Infinity, 1);
+# my($maxcount, $maxpage) = (Infinity, Infinity);
+my($maxcount, $maxpage) = (Infinity, 1);
 my($count);
 
 dodie("chdir('/var/tmp/quora')");
