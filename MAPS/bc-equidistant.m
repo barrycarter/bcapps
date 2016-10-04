@@ -10,18 +10,25 @@ http://math.stackexchange.com/questions/383711/parametric-equation-for-great-cir
 
 v[theta_,phi_] = {Cos[theta]*Cos[phi], Sin[theta]*Cos[phi], Sin[phi]};
 
-(* using strict less than below to avoid corner cases *)
-
 conds = {-Pi < theta1 < Pi, -Pi < theta2 < Pi, -Pi < theta3 < Pi,
          -Pi/2 < phi1 < Pi/2, -Pi/2 < phi2 < Pi/2, -Pi/2 < phi3 < Pi/2};
+
+pole[theta1_,phi1_,theta2_,phi2_] = 
+ FullSimplify[xyz2sph[v[theta1,phi1]-v[theta2,phi2]], conds];
+
+
+
+(* using strict less than below to avoid corner cases *)
 
 args = FullSimplify[-xyz2sph[(v[theta1,phi1] + v[theta2,phi2])/2],conds]
 
 loc = {phi1 -> 34.0522226126327*Degree, theta1 -> -118.243667974691*Degree,
  phi2 -> 32.7153237292363*Degree, theta2 -> -117.157244512871*Degree};
 
+(* TODO: add the actual center point, the north and south "poles", the
+two points from which we're equidistancing, allow 4 cities? = 6 circles; red green blue white and thus... yellow violet pink cyan light green sky blue or yellow as 4th? *)
 
-
+(* TODO: extended map where two cities are poles? proj4? *)
 
 args = xyz2sph[Cross[v[theta1,phi1], v[theta2,phi2]]]
 
