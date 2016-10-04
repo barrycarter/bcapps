@@ -13,36 +13,40 @@
 
 function initialize() {
   var myOptions = {
-    zoom: 2,
-    center: new google.maps.LatLng(0,0),
+    zoom: 21,
+    center: new google.maps.LatLng(0,90),
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
 
   var map = new google.maps.Map(document.getElementById("map_canvas"),
       myOptions);
 
-  var radius = 10018760;
+  // quarter circumference of earth
+  var qcirc = 10018760;
 
- radius = 10018760;
+ 
+  qcirc = 10018754.2;
 
   var circ = new google.maps.Circle({
    center: new google.maps.LatLng(0,0),
-   radius: radius,
+   radius: qcirc,
    map: map,
-   strokeWeight: 0.01,
-   fillOpacity: 0.2,
-   fillColor: "#ffffff"
+   strokeColor: "#000000",
+   strokeWeight: 1,
+   fillOpacity: 0
+//   fillColor: "#ffffff"
   });
 
   circ.setMap(map);
 
   var circ2 = new google.maps.Circle({
    center: new google.maps.LatLng(0,180),
-   radius: radius,
+   radius: qcirc,
    map: map,
-   strokeWeight: 0.01,
-   fillOpacity: 0.2,
-   fillColor: "#ff0000"
+   strokeColor: "#ff0000",
+   strokeWeight: 1,
+   fillOpacity: 0,
+//   fillColor: "#ff0000"
   });
 
   circ2.setMap(map);
