@@ -1,13 +1,94 @@
 #!/bin/perl
 
-# testbed for trivial map functions
+# testbed for trivial map functions will eventually become a CGI
+
+# TODO: allow multiple points
 
 require "/usr/local/lib/bclib.pl";
 
 # debug(antipode(5,10));
 
-gcmorestats(34.0522226126327, -118.243667974691, 32.7153237292363,
--117.157244512871);
+my(%hash) = %{gcmorestats(34.0522226126327, -118.243667974691,
+32.7153237292363, -117.157244512871)};
+
+# TODO: this is ugly for many reasons
+my($midpt) = join(", ", $hash{midpoint}[1], $hash{midpoint}[0]);
+my($quad) = join(", ", $hash{quad}[1], $hash{quad}[0]);
+my($pole) = join(", ", $hash{pole}[1], $hash{pole}[0]);
+
+debug($midpt);
+
+# TODO: this is junky for testing right now
+
+my($str) = << "MARK";
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<style type="text/css">
+  html { height: 100% }
+  body { height: 100%; margin: 0px; padding: 0px }
+  #map_canvas { height: 100% }
+</style>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false">
+</script>
+<script type="text/javascript">
+
+function initialize() {
+  var myOptions = {
+    zoom: 8,
+    center: new google.maps.LatLng($midpt),
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+
+  var map = new google.maps.Map(document.getElementById("map_canvas"),
+      myOptions);
+
+  // quarter circumference of earth
+  var qcirc = 10018754.17;
+
+  var circ = new google.maps.Circle({
+   center: new google.maps.LatLng($quad),
+   radius: qcirc,
+   map: map,
+   strokeColor: "#000000",
+   strokeWeight: 1,
+   fillOpacity: 0
+  });
+
+  circ.setMap(map);
+
+  var circ2 = new google.maps.Circle({
+   center: new google.maps.LatLng($pole),
+   radius: qcirc,
+   map: map,
+   strokeColor: "#ff0000",
+   strokeWeight: 1,
+   fillOpacity: 0
+  });
+
+  circ2.setMap(map);
+
+//  var marker = new google.maps.Marker({
+//   position: new google.maps.LatLng($midpt),
+//   map: map
+//  });
+
+}
+
+</script>
+</head>
+<body onload="initialize()">
+  <div id="map_canvas" style="width:100%; height:100%"></div>
+</body>
+</html>
+
+MARK
+;
+
+# TODO: just testing!
+write_file($str, "/tmp/temp.html");
 
 die "TESTING";
 
@@ -32,27 +113,35 @@ information:
 
 sub gcmorestats {
   my($lat1,$lon1,$lat2,$lon2) = @_;
-  my(%hash);
-  debug("GOT",@_);
+  my(%hash, @temp);
 
+  # TODO: this code could be more efficient in many ways
   # convert to xyz vectors
   my(@v1) = sph2xyz($lon1,$lat1,1,"degrees=1");
   my(@v2) = sph2xyz($lon2,$lat2,1,"degrees=1");
 
+  # TODO: in theory could combine + and -
   # the midpoint xyz (sum and average)
-  my(@mid) = vecapply(\@v1, \@v2, "+");
-  @mid = map($_/=2, @mid);
-  # re-using @mid here is probably bad
-  @mid = xyz2sph(@mid, "degrees=1");
-  $mid[0] = fmodn($mid[0], 360);
-  $mid[1] = fmodn($mid[1], 180);
-  $hash{midpoint} = [@mid[0..1]];
+  @temp = vecapply(\@v1, \@v2, "+");
+  @temp = map($_/=2, @temp);
+  @temp = xyz2sph(@temp, "degrees=1");
+  $temp[0] = fmodn($temp[0], 360);
+  $hash{midpoint} = [@temp[0..1]];
 
-  # the pole of the splitting circle
+  # TODO: could combine steps below, but ugly?
+  # one of the poles of the great circle
+  @temp = vecapply(\@v1, \@v2, "-");
+  @temp = xyz2sph(@temp, "degrees=1");
+  $temp[0] = fmodn($temp[0], 360);
+  $hash{quad} = [@temp[0..1]];
 
-  debug(%hash);
-  debug("BETA",@mid);
-#  debug("ALPHA", @mid);
+  # one of the poles of the splitting circle
+  @temp = crossproduct(@v1,@v2);
+  @temp = xyz2sph(@temp, "degrees=1");
+  $temp[0] = fmodn($temp[0], 360);
+  $hash{pole} = [@temp[0..1]];
+
+  return \%hash;
 }
 
 =item antipode($lat,$lon)

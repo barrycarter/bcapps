@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<style type="text/css">
+  html { height: 100% }
+  body { height: 100%; margin: 0px; padding: 0px }
+  #map_canvas { height: 100% }
+</style>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false">
+</script>
+<script type="text/javascript">
+
+function initialize() {
+  var myOptions = {
+    zoom: 8,
+    center: new google.maps.LatLng(33.3849562514106, -117.696279720481),
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+
+  var map = new google.maps.Map(document.getElementById("map_canvas"),
+      myOptions);
+
+  // quarter circumference of earth
+  var qcirc = 10018754.17;
+
+  var circ = new google.maps.Circle({
+   center: new google.maps.LatLng(43.7068027376704, 113.260564676014),
+   radius: qcirc,
+   map: map,
+   strokeColor: "#000000",
+   strokeWeight: 1,
+   fillOpacity: 0
+  });
+
+  circ.setMap(map);
+
+  var circ2 = new google.maps.Circle({
+   center: new google.maps.LatLng(27.9565479839852, -7.22384567676369),
+   radius: qcirc,
+   map: map,
+   strokeColor: "#ff0000",
+   strokeWeight: 1,
+   fillOpacity: 0
+  });
+
+  circ2.setMap(map);
+
+//  var marker = new google.maps.Marker({
+//   position: new google.maps.LatLng(33.3849562514106, -117.696279720481),
+//   map: map
+//  });
+
+}
+
+</script>
+</head>
+<body onload="initialize()">
+  <div id="map_canvas" style="width:100%; height:100%"></div>
+</body>
+</html>
+
