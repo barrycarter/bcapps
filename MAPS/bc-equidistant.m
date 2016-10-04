@@ -10,7 +10,26 @@ http://math.stackexchange.com/questions/383711/parametric-equation-for-great-cir
 
 v[theta_,phi_] = {Cos[theta]*Cos[phi], Sin[theta]*Cos[phi], Sin[phi]};
 
+(* using strict less than below to avoid corner cases *)
+
+conds = {-Pi < theta1 < Pi, -Pi < theta2 < Pi, -Pi < theta3 < Pi,
+         -Pi/2 < phi1 < Pi/2, -Pi/2 < phi2 < Pi/2, -Pi/2 < phi3 < Pi/2};
+
+args = FullSimplify[-xyz2sph[(v[theta1,phi1] + v[theta2,phi2])/2],conds]
+
+loc = {phi1 -> 34.0522226126327*Degree, theta1 -> -118.243667974691*Degree,
+ phi2 -> 32.7153237292363*Degree, theta2 -> -117.157244512871*Degree};
+
+
+
+
 args = xyz2sph[Cross[v[theta1,phi1], v[theta2,phi2]]]
+
+
+
+(args /. {phi1 -> 34.0522226126327*Degree, theta1 -> -118.243667974691*Degree,
+ phi2 -> 32.7153237292363*Degree, theta2 -> -117.157244512871*Degree})/ Degree
+
 
 (* using strict less than below to avoid corner cases *)
 

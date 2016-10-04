@@ -14,7 +14,7 @@
 function initialize() {
   var myOptions = {
     zoom: 21,
-    center: new google.maps.LatLng(0,90),
+    center: new google.maps.LatLng(0,0),
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
 
@@ -25,10 +25,14 @@ function initialize() {
   var qcirc = 10018760;
 
  
-  qcirc = 10018754.2;
-
   // http://www.kulturatlas.at/geolion/geolionpress/egics/egitiles.htm
-  qcirc = 10018754.15;
+//  qcirc = 10018754.15;
+
+ // .1 and .3 both fail, .3 is worse, .25 fails, .21 fails, .2 works
+ // .14 works, .13 fails
+ // https://www.google.com/search?q=10018754.17
+ // 6378.137 is what google maps is using for diameter
+ qcirc = 10018754.17;
 
   var circ = new google.maps.Circle({
    center: new google.maps.LatLng(90,0),
@@ -37,7 +41,6 @@ function initialize() {
    strokeColor: "#000000",
    strokeWeight: 1,
    fillOpacity: 0
-//   fillColor: "#ffffff"
   });
 
   circ.setMap(map);
@@ -49,10 +52,31 @@ function initialize() {
    strokeColor: "#ff0000",
    strokeWeight: 1,
    fillOpacity: 0,
-//   fillColor: "#ff0000"
   });
 
   circ2.setMap(map);
+
+  var circ3 = new google.maps.Circle({
+   center: new google.maps.LatLng(0,-90),
+   radius: qcirc,
+   map: map,
+   strokeColor: "#0000ff",
+   strokeWeight: 1,
+   fillOpacity: 0,
+  });
+
+  circ3.setMap(map);
+
+  var circ4 = new google.maps.Circle({
+   center: new google.maps.LatLng(0,90),
+   radius: qcirc,
+   map: map,
+   strokeColor: "#ffffff",
+   strokeWeight: 1,
+   fillOpacity: 0,
+  });
+
+  circ4.setMap(map);
 
 }
 
