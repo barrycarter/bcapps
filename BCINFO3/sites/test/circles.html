@@ -27,8 +27,11 @@ function initialize() {
  
   qcirc = 10018754.2;
 
+  // http://www.kulturatlas.at/geolion/geolionpress/egics/egitiles.htm
+  qcirc = 10018754.15;
+
   var circ = new google.maps.Circle({
-   center: new google.maps.LatLng(0,0),
+   center: new google.maps.LatLng(90,0),
    radius: qcirc,
    map: map,
    strokeColor: "#000000",
@@ -40,7 +43,7 @@ function initialize() {
   circ.setMap(map);
 
   var circ2 = new google.maps.Circle({
-   center: new google.maps.LatLng(0,180),
+   center: new google.maps.LatLng(-90,0),
    radius: qcirc,
    map: map,
    strokeColor: "#ff0000",
