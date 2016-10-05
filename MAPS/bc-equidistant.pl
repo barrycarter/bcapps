@@ -2,6 +2,14 @@
 
 # testbed for trivial map functions will eventually become a CGI
 
+# TODO: have default zoom be based on distance between two points?
+
+# TODO: draw lines that are "10% closer to X than to Y?" (probably not
+# easy, not geodesic circles?)
+
+# TODO: on equidistant line, tick off how many miles you are from X
+# and Y (the same amount of course)
+
 # TODO: allow multiple points
 
 require "/usr/local/lib/bclib.pl";
