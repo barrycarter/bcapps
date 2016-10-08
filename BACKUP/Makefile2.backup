@@ -31,12 +31,17 @@ backup0.txt: afad.txt previouslydone.txt.srt
 	join --check-order -a 1 -t '\0' afad.txt previouslydone.txt.srt | sort -t '\0' -k2nr > backup0.txt
 
 # hard-exclude.txt: a list of specific files (not wildcards) to not include
+<<<<<<< HEAD
 
 # TEMPORARILY changing limit 50G because I'm getting massive
 # compression on current (very similar) files
 
 statlist.txt: backup0.txt exclusions.txt hard-exclude.txt Makefile
 	egrep -avf exclusions.txt backup0.txt | fgrep -avf hard-exclude.txt | bc-join-backup.pl | bc-chunk-backup2.pl --checkfile --limit=50,000,000,000 --debug
+=======
+statlist.txt: backup0.txt exclusions.txt hard-exclude.txt Makefile
+	egrep -avf exclusions.txt backup0.txt | fgrep -avf hard-exclude.txt | bc-join-backup.pl | bc-chunk-backup2.pl --checkfile --limit=10,000,000,000 --debug
+>>>>>>> 853b97410513fd2a3d6a62c805a7b55ec6721959
 
 # exclusions-commented.txt is a commented/prettified version of the exclusions
 # file; this converts it to a usable format and converts 'end of line'

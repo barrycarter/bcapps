@@ -15,5 +15,9 @@
 # special case move of XWD directory (double transfer)
 "/mnt/extdrive3/XWD/" "/mnt/extdrive/XWD/"
 
+<<<<<<< HEAD
 # moved this directory down a level
 "/mnt/extdrive5/INBOUNDSYMLINKS/QUORALOG" "/mnt/extdrive5/QUORALOG"
+=======
+
+>>>>>>> 853b97410513fd2a3d6a62c805a7b55ec6721959

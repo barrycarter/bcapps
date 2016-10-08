@@ -3,8 +3,11 @@
 # Unusual approach to Voronoi diagram of Earth sphere: cut into 4
 # pieces and compare closest point for 4 vertices
 
+<<<<<<< HEAD
 # http://codereview.stackexchange.com/questions/1739/spherical-voronoi-diagram-binary-splitting-approach
 
+=======
+>>>>>>> 853b97410513fd2a3d6a62c805a7b55ec6721959
 # TODO: this program is long and clumsy and can doubtless be improved
 
 use POSIX;

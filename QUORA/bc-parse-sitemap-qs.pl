@@ -15,8 +15,13 @@ my(%urls);
 my(%rev2time);
 
 # this is just for testing, though could be a global
+<<<<<<< HEAD
 # my($maxcount, $maxpage) = (Infinity, Infinity);
 my($maxcount, $maxpage) = (Infinity, 1);
+=======
+my($maxcount) = Infinity;
+my($maxpage) = Infinity;
+>>>>>>> 853b97410513fd2a3d6a62c805a7b55ec6721959
 my($count);
 
 dodie("chdir('/var/tmp/quora')");
@@ -80,8 +85,12 @@ for $i (keys %urls) {
   } else {
     $out = read_file("$fname.html");
   }
+<<<<<<< HEAD
 
   $urls{$i}{pagedata} = parse_question($out);
+=======
+  parse_question($out);
+>>>>>>> 853b97410513fd2a3d6a62c805a7b55ec6721959
 }
 
 # sort by most recent revision first
@@ -90,8 +99,12 @@ my(@order) = sort {$urls{$b}{data}{minrev} <=> $urls{$a}{data}{minrev}}
 
 for $i (@order) {
 
+<<<<<<< HEAD
 #  my($topics) = join(", ", keys %{$urls{$i}{data}{topic}});
   my($topics) = join(", ", keys %{$urls{$i}{pagedata}{topic}});
+=======
+  my($topics) = join(", ", keys %{$urls{$i}{data}{topic}});
+>>>>>>> 853b97410513fd2a3d6a62c805a7b55ec6721959
   my($ans) = join(", ", keys %{$urls{$i}{data}{answerer}});
   # this should be at most one person, but...
   my($qr) = join(", ", keys %{$urls{$i}{data}{questioner}});
@@ -102,7 +115,10 @@ print << "MARK";
 Q: $i
 Topics: $topics
 Qr: $qr
+<<<<<<< HEAD
 #A: $urls{$i}{pagedata}{answercount}
+=======
+>>>>>>> 853b97410513fd2a3d6a62c805a7b55ec6721959
 Ar: $ans
 Minrev: $urls{$i}{data}{minrev}
 Maxrev: $urls{$i}{data}{maxrev}
@@ -182,6 +198,7 @@ sub parse_metalog {
 
 sub parse_question {
   my($q) = @_;
+<<<<<<< HEAD
   my(%hash);
 
   while ($q=~s%href="/topic/(.*?)"%%) {$hash{topic}{$1} = 1;}
@@ -190,4 +207,7 @@ sub parse_question {
   $hash{answercount} = $1;
   return \%hash;
 
+=======
+  # TODO: everything
+>>>>>>> 853b97410513fd2a3d6a62c805a7b55ec6721959
 }

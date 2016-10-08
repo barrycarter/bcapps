@@ -35,7 +35,11 @@ Unless someone finds a general formula for the number of n digit elements of A20
 
 Suppose c is an n digit element of A202259. There are 10 ways we can add a digit at the end of c, resulting in 10 numbers with n+1 digits that start with the digits from 'c'. Of these 10 numbers, if the number itself is not prime, it is also an element of A202259: we know the number itself isn't prime, and, once we remove a digit, we have a elements of A202259, so we know all prefixes are also nonprime.
 
+<<<<<<< HEAD
 Of the 10 numbers we create above with n+1 digits, how many are nonprime? If we estimate they are just as likely to be a nonprime as any other n+1 digit number, we can estimate how many of the 10 numbers are prime. Of course, this IS an estimate, so our calculations from here forward are only estimates. Note that we may even get fractional numbers (for example, we might find 3.6536311 of the 10 number we generate are nonprime, which doesn't make sense literally, but is OK for an estimate).
+=======
+Of the 10 numbers we create above with n+1 , how many are nonprime? If we estimate they are just as likely to be a nonprime as any other n+1 digit number, we can estimate how many of the 10 numbers are prime. Of course, this IS an estimate, so our calculations from here forward are only estimates. Note that we may even get fractional numbers (for example, we might find 3.6536311 of the 10 number we generate are nonprime, which doesn't make sense literally, but is OK for an estimate).
+>>>>>>> 853b97410513fd2a3d6a62c805a7b55ec6721959
 
 How likely is it than an n digit number is prime? To find this, we can divide the quantity of n digit primes by the quantity of n digit numbers total. The latter is easy: there are 9*10^(n-1) numbers with n digits total (no leading zeros).
 
