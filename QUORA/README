@@ -172,6 +172,11 @@ QUORA QUESTIONS
 The list of quora questions is probably complete as of ~ 1 Oct 2016
 (approx 8.2 million questions)
 
+all-quora-questions-?.txt.bz2 has been split into 2 pieces solely to
+comply with githubs "no files over 100M" policy (although I appear to
+have subverted the policy for GEOLOCATION/RAW/parjoblog.txt.bz2
+somehow)
+
 GENERAL NOTES
 ==============
 
