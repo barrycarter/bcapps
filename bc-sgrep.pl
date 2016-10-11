@@ -23,7 +23,9 @@ open(A,$file);
 for (;;) {
   # fail condition
   if (abs($l-$r)<=1) {
-    die "FAILED";
+    # TODO: decide on die vs debug here
+    debug("FAILED"); exit(1);
+#    die "FAILED";
   }
 
   # look between left and right
