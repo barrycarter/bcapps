@@ -2,12 +2,8 @@ Thoughts for improving quora by creating a better Q+A board.
 
 Asker can fill out these fields (numerically so they can be sorted/filtered):
 
-<<<<<<< HEAD
   - how much time/effort have you put into this problem yourself? (eg,
   "I'm sure I could do this myself, I'm just being lazy")
-=======
-  - how much time/effort have you put into this problem yourself?
->>>>>>> 853b97410513fd2a3d6a62c805a7b55ec6721959
 
   - how competent do you feel in this field (new to me, beginner,
   intermediate, expert, cutting edge of research)
