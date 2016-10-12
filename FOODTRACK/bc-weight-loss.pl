@@ -4,6 +4,8 @@
 # loss and estimates the time until I reach my non-obese and then
 # non-overweight goals, starting from when I started tracking calories
 
+# --start: start on this stardate
+# --weights: comma separate list of target weights
 # --until=stardate: only use data until stardate
 # --nograph: dont display graph
 
@@ -12,7 +14,7 @@
 require "/usr/local/lib/bclib.pl";
 
 # defaults
-defaults("start=20150930");
+defaults("start=20150930&weights=200,190,180,160,150,120");
 
 # if --start is in "stardate" format, fix it to change dot to space
 # (str2time doesn't like stardate format)
@@ -128,7 +130,8 @@ write_file("$daysago $y[0]\n$mostrecent $y[-1]\n", "/tmp/bwl5.txt");
 debug("DAYSAGO: $daysago, LINWT: $linweight");
 
 # target weights (borders for obese, overweight, normal, and severely underweight) [added midpoints 30 Sep 2012 JFF]
-@t=(200,190,180,160,150,120);
+# @t=(200,190,180,160,150,120);
+@t = split(/\,/, $globopts{weights});
 
 # when graphing, don't show beyond this value
 # TODO: optionize this
