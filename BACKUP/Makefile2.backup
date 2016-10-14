@@ -38,9 +38,6 @@ backup0.txt: afad.txt previouslydone.txt.srt
 statlist.txt: backup0.txt exclusions.txt hard-exclude.txt Makefile
 	egrep -avf exclusions.txt backup0.txt | fgrep -avf hard-exclude.txt | bc-join-backup.pl | bc-chunk-backup2.pl --checkfile --limit=50,000,000,000 --debug
 
-statlist.txt: backup0.txt exclusions.txt hard-exclude.txt Makefile
-	egrep -avf exclusions.txt backup0.txt | fgrep -avf hard-exclude.txt | bc-join-backup.pl | bc-chunk-backup2.pl --checkfile --limit=50,000,000,000 --debug
-
 # exclusions-commented.txt is a commented/prettified version of the exclusions
 # file; this converts it to a usable format and converts 'end of line'
 # to nulls, since filenames are terminated with NUL not end of line

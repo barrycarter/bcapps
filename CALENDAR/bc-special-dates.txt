@@ -29,3 +29,5 @@
 20161007 Balloon Fiesta
 20161008 Balloon Fiesta
 20161009 Balloon Fiesta
+# below is blue sapphire
+20170206 QE II 65th yr
