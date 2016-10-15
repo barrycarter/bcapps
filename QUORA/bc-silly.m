@@ -27,6 +27,7 @@ data = {
  {Superscript["Canada", "*"], 1},
  {"Australia", 15},
  {"Belgium", 32},
+ {Superscript["Hungary","\[DoubleDagger]"], 23},
  {Superscript["Kazakhstan", \[Dagger]], 11}
 
 };
