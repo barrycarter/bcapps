@@ -52,3 +52,18 @@ Graph[temp1102]
 
 g = Graph[temp1102, VertexLabels -> "Name", VertexCoordinates -> coords]
 
+FindShortestPath[g,"ME","CA"]
+
+(* http://mathematica.stackexchange.com/questions/4128/finding-all-shortest-paths-between-two-vertices *)
+
+paths[gr_, {i_, j_}] := 
+  Module[{sub, dist, indices, dd, nbrs}, dist = GraphDistance[gr, i, j];
+  indices = {};
+  dd = dist;
+  Reap[Nest[Function[{vv}, dd -= 1;
+  nbrs = VertexList[NeighborhoodGraph[gr, #]] & /@ vv;
+  nbrs = Pick[#, GraphDistance[gr, #, j] & /@ #, dd] & /@ nbrs;
+  Sow /@ Flatten[Thread /@ Thread[vv \[DirectedEdge] nbrs]];
+  Union[Flatten[nbrs]]], {i}, dist]][[2, 1]]]
+
+
