@@ -29,16 +29,13 @@ g = Table[{
  state[i]
 }, {i,states}];
 
-
-
-
 temp1102 = Flatten[Table[{i[[1]] <-> i[[2]]}, {i, borders}],1]
-
-
 
 (* assign lat lon *)
 
-Table[latlon[i[[1]]] = {i[[2]],i[[3]]}, {i, usa}]
+(* Table[latlon[i[[1]]] = {i[[2]],i[[3]]}, {i, usa}] *)
+
+latlon[[state[
 
 (* NOTE: below NOT expected to work *)
 
@@ -65,5 +62,7 @@ paths[gr_, {i_, j_}] :=
   nbrs = Pick[#, GraphDistance[gr, #, j] & /@ #, dd] & /@ nbrs;
   Sow /@ Flatten[Thread /@ Thread[vv \[DirectedEdge] nbrs]];
   Union[Flatten[nbrs]]], {i}, dist]][[2, 1]]]
+
+g2 = Graph[paths[g,{"ME","CA"}], VertexLabels -> "Name"]
 
 

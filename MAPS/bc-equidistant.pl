@@ -16,8 +16,19 @@ require "/usr/local/lib/bclib.pl";
 
 # debug(antipode(5,10));
 
-my(%hash) = %{gcmorestats(34.0522226126327, -118.243667974691,
-32.7153237292363, -117.157244512871)};
+%points = (
+ "Albuquerque" => "35.08 -106.66",
+ "Paris" => "48.87 2.33",
+ "Barrow" => "71.26826 -156.80627",
+ "Wellington" => "-41.2833 174.783333",
+ "Rio de Janeiro" => "-22.88  -43.28"
+);
+
+
+my(%hash) = %{gcmorestats(
+ split(/\s+/, $points{Albuquerque}),
+ split(/\s+/, $points{Wellington})
+)};
 
 # TODO: this is ugly for many reasons
 my($midpt) = join(", ", $hash{midpoint}[1], $hash{midpoint}[0]);
