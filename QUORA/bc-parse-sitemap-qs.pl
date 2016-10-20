@@ -19,10 +19,10 @@ my(%rev2time);
 my($maxcount, $maxpage) = (Infinity, 1);
 my($count);
 
-dodie("chdir('/var/tmp/quora')");
+dodie("chdir('/usr/local/etc/quora')");
 
 # TODO: check write perms here?
-unless (-d "/var/tmp/quora") {die "Create /var/tmp/quora";}
+unless (-d "/usr/local/etc/quora") {die "Create /usr/local/etc/quora";}
 
 for $i (1..10) {
 
