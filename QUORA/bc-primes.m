@@ -1,15 +1,42 @@
 conds = {n > 0, Element[n, Integers]}
 
-nDigitPrimes[n_] = If[n==1, 4, LogIntegral[10^n] - LogIntegral[10^(n-1)]]
+(* NOTE: these functions only work for larger values of n, so
+nDigitHitFirstPrimeChance is relative to ignoring lower values *)
+
+nDigitPrimes[n_] = LogIntegral[10^n] - LogIntegral[10^(n-1)]
 
 nDigitNumbers[n_] = 9*10^(n-1)
 
 nDigitPrimeChance[n_] = nDigitPrimes[n]/nDigitNumbers[n]
 
 nDigitHitFirstPrimeChance[n_] =
- Product[1-nDigitPrimeChance[k], {k,1,n-1}]*nDigitPrimeChance[n]
+ Product[1-nDigitPrimeChance[k], {k,2,n-1}]*nDigitPrimeChance[n]
 
 
+ListLogPlot[Table[nDigitHitFirstPrimeChance[n],{n,20,100}]]
+
+IGNORE ME: nDigitPrimes[n_] = 10^n/Log[10^n] - 10^(n-1)/Log[10^(n-1)]
+
+Plot[1/nDigitHitFirstPrimeChance[k]^2/k^2/k,{k,1,1000}]
+
+Plot[nDigitHitFirstPrimeChance[k]*k^2, {k,1,1000}]
+
+above may flatline at E?
+
+but the limit is 0
+
+t1125 = Table[nDigitPrimes[n]/(10^n/n), {n,1,1000}];
+
+limit above is 9/10/Log[10]
+
+est2[n_] = 10^n/n*9/10/Log[10]
+
+est1[n_] = 10^n/Log[10^n] - 10^(n-1)/Log[10^(n-1)]
+
+
+est3[n_] = FullSimplify[D[10^n/Log[10^n],n],conds]
+
+-(10 - 9*n)/(90*(-1 + n)*n*Log[10]) is yet anothre approx
 
 
 
