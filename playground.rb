@@ -1,5 +1,16 @@
 #!/usr/local/bin/ruby
 
+require 'ruby2js'
+require '/home/barrycarter/BCGIT/bclib.rb'
+
+puts Ruby2JS.convert(File.read("/home/barrycarter/BCGIT/bclib.rb"))
+
+
+exit
+
+
+
+
 require 'ox'
 doc = Ox.load_file("/var/cache/OSM3/13-1671-3241.dat")
 print doc.osm.locate("node").length.inspect,"\n"
