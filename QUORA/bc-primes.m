@@ -1,3 +1,18 @@
+conds = {n > 0, Element[n, Integers]}
+
+nDigitPrimes[n_] = If[n==1, 4, LogIntegral[10^n] - LogIntegral[10^(n-1)]]
+
+nDigitNumbers[n_] = 9*10^(n-1)
+
+nDigitPrimeChance[n_] = nDigitPrimes[n]/nDigitNumbers[n]
+
+nDigitHitFirstPrimeChance[n_] =
+ Product[1-nDigitPrimeChance[k], {k,1,n-1}]*nDigitPrimeChance[n]
+
+
+
+
+
 (*
 
 https://www.quora.com/We-randomly-generate-digits-of-a-decimal-number-until-we-obtain-a-prime-number-Are-we-sure-to-ultimately-get-one
@@ -155,6 +170,8 @@ mathematica wont eval limit
 
 q[n_] = FullSimplify[(LogIntegral[10^n]-LogIntegral[10^(n-1)])/9/10^(n-1),
  {Element[n,Integers], n>2}]
+
+
 
 RSolve[{
  a[8] == 21007948,
