@@ -269,7 +269,8 @@ sub bc_check_mounts {
   for $i (@mountpoints) {
     my($str);
     # TODO: there has to be a better way to do this (/dev/urandom?)
-    for $j (1..1000) {$str .= chr(rand()*256);}
+    # increased files size to 10M for better testing
+    for $j (1..10000000) {$str .= chr(rand()*256);}
     # TODO: don't always name file "tempfile.txt"?
     # TODO: this could work on broken mount due to caching?
     debug("Writing to $i/tempfile.txt");
