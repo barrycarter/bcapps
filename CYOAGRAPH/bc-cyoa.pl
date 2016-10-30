@@ -4,7 +4,7 @@
 # page 1 is page 2 then page 3 then page 4, create a single 1,2,3,4
 # node, not 4 nodes; Daredevil Park is notoriously linear)
 
-require "bclib.pl";
+require "/usr/local/lib/bclib.pl";
 
 while (<>) {
 
