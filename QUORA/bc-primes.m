@@ -38,6 +38,22 @@ est3[n_] = FullSimplify[D[10^n/Log[10^n],n],conds]
 
 -(10 - 9*n)/(90*(-1 + n)*n*Log[10]) is yet anothre approx
 
+RSolve[{
+a[1] == 4, a[n+1] == (10^n-a[n])*10*(10^(n-1)/Log[10^(n-1)] - 10^n/Log[10^n])
+}, a[n], n]
+
+Clear[b];
+b[1] = 4;
+b[n_] := b[n] = 
+ 10*(10^(n-1)-b[n-1])*(10^n/Log[10^n] - 10^(n-1)/Log[10^(n-1)])/10^n
+
+
+
+
+
+10^(n-1)*b[n-1]*(10^n/Log[10^n] - 10^(n-1)/Log[10^(n-1)])
+
+
 
 
 (*

@@ -1,0 +1,18 @@
+Data from: 
+
+https://drive.google.com/open?id=0BwgLvVq0rcS7Q2NjLXlNMTk0d00
+
+per https://www.reddit.com/r/datasets/comments/5bzrda/election_polls_dataset/
+
+sqlite3 election.db
+
+CREATE TABLE election (CountyResultId, StateCode, StateSlug,
+StateElectoralVotes, StatePrecinctsReporting, StatePrecinctsTotal,
+CountyFips, CountyName, CountyTotalVotes, CountyPrecinctsTotal,
+CountyPrecintsReporting, EstVotesRemaining, trumpd, clintonh,
+johnsong, castled, steinj, Other);
+
+.separator ,
+
+.import nyt-election2016-county-result.csv election
+
