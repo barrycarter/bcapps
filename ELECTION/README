@@ -16,3 +16,102 @@ johnsong, castled, steinj, Other);
 
 .import nyt-election2016-county-result.csv election
 
+CREATE TABLE perstate AS SELECT
+ StateCode, StateSlug, StateElectoralVotes,
+ SUM(CountyTotalVotes) AS votes,
+ SUM(trumpd) AS trump,
+ SUM(clintonh) AS clinton,
+ SUM(johnsong) AS johnson,
+ SUM(castled) AS castle,
+ SUM(steinj) AS stein,
+ SUM(Other) AS other
+FROM election GROUP BY StateCode, StateSlug, StateElectoralVotes;
+
+Useful queries
+==============
+
+-- note the AVG() below does nothing
+
+SELECT StateCode, AVG(StateElectoralVotes), SUM(trumpd),
+SUM(clintonh), SUM(johnsong), SUM(castled), SUM(steinj), SUM(Other)
+FROM election GROUP BY StateCode;
+
+SELECT SUM(evotes) FROM (
+SELECT StateCode, AVG(StateElectoralVotes) AS evotes, 
+ SUM(trumpd) AS trump, SUM(clintonh) AS clinton, 
+ SUM(johnsong), SUM(castled), SUM(steinj), SUM(Other)
+FROM election GROUP BY StateCode
+) WHERE trump>clinton;
+
+SELECT SUM(evotes) FROM (
+SELECT StateCode, AVG(StateElectoralVotes) AS evotes, 
+ SUM(trumpd) AS trump, SUM(clintonh) AS clinton, 
+ SUM(johnsong), SUM(castled), SUM(steinj), SUM(Other)
+FROM election GROUP BY StateCode
+) WHERE trump<clinton;
+
+SELECT SUM(StateElectoralVotes) FROM perstate WHERE clinton > trump;
+SELECT SUM(StateElectoralVotes) FROM perstate WHERE clinton < trump;
+
+233 to 305
+
+magic number is 36 or more to lose
+
+SELECT * FROM perstate WHERE trump > clinton AND trump < 0.5*votes
+ORDER BY StateElectoralVotes+0 DESC;
+
+FL|florida|29|9348133|4591417|4462914|204854|16275|63664|0.0
+PA|pennsylvania|20|5969198|2912351|2844339|142623|20887|48998|0.0
+MI|michigan|16|4746577|2261419|2244033|171771|16015|51116|0.0
+AZ|arizona|11|1899928|943309|861702|72183|0|22734|0.0
+WI|wisconsin|10|2940686|1407401|1380512|106292|12177|30957|0.0
+UT|utah|6|742947|338351|212500|24149|4829|5126|0.0
+
+FL: lost by 128503 votes, 293802 total neither, 43.74% convince rate
+
+PA: lost by 68012 votes, 212508 total neither, 32.00% convince rate
+
+MI: lost by 17386 votes, 241125 total neither, 7.21% convince rate
+
+AZ: lost by 81607 votes, 94917 toal neither, 85.98% convince rate
+
+WI: lost by 26889 votes, 152773 total neither, 17.60% convince rate
+
+UT: lost by 125851 votes, 192096 total neither, 65.51% convince rate
+
+SELECT COUNT(*), SUM(StateElectoralVotes)
+ FROM perstate WHERE trump > 0.5*votes;
+
+SELECT COUNT(*), SUM(StateElectoralVotes)
+ FROM perstate WHERE clinton > 0.5*votes;
+
+SELECT COUNT(*), SUM(StateElectoralVotes)
+  FROM perstate WHERE trump > clinton AND trump < 0.5*votes;
+
+
+SELECT COUNT(*), SUM(StateElectoralVotes)
+  FROM perstate WHERE trump < clinton AND clinton < 0.5*votes;
+
+
+Trump win majority    : 24 states, 213 EV
+Trump win plurality   :  6 states, 92 EV
+
+Clinton win majority  : 14 states, 182 EV
+Clinton win plurality : 7 states, 51 EV
+
+https://www.archives.gov/federal-register/electoral-college/key-dates.html
+
+December 13, 2016 - final decisions
+
+December 19, 2016 - electoral college votes
+
+https://www.archives.gov/federal-register/electoral-college/provisions.html
+
+ Each State shall appoint, in such Manner as the Legislature thereof
+ may direct, a Number of Electors, equal to the whole Number of
+ Senators and Representatives to which the State may be entitled in
+ the Congress: but no Senator or Representative, or Person holding an
+ Office of Trust or Profit under the United States, shall be appointed
+ an Elector.
+
+http://politics.stackexchange.com/questions/13114/is-there-still-a-way-to-prevent-trump-from-becoming-president/13171#13171
