@@ -1,0 +1,33 @@
+Procedures to generate/find email addresses and other info on PA/MI/WI
+house/senate/governor
+
+facebook: @palegis for all house of PA
+
+download all links from http://www.legis.state.pa.us/cfdocs/legis/home/member_information/contact.cfm?body=H (using dta: downthemall plugin)
+
+fgrep @ *.html | perl -nle '/(\w+\@\S+)/; $x=$1; $x=~s/\".*//; print $x' |
+ sort | uniq >! temp1
+
+minor cleanup of above to get pahouse-emails.txt
+
+: for twitter accts
+fgrep @ *.html | grep twitter:site | perl -nle '/content="(.*?)"/; print $1' |
+ sort | uniq >! temp2
+
+: and thats pahouse-twitter.txt
+
+grep -i facebook.com *.html | perl -nle '/facebook\.com\/(.*?)"/; print $1' | sort | uniq >! temp3
+
+with cleanup
+
+%% better: 
+
+https://humane-pa.org/resources/pa-legislators-e-mail-addresses/
+https://humane-pa.org/resources/e-mail-address-list-pennsylvania-senate/
+
+http://house.michigan.gov/mhrpublic/frmRepList.aspx
+https://rtl.org/action_center/Michigan_Senate_Contact.htm
+
+
+
+
