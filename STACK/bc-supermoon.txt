@@ -1,0 +1,57 @@
+http://astronomy.stackexchange.com/questions/11899/what-is-the-format-of-the-data-from-the-jpls-horizons-system
+
+http://space.stackexchange.com/questions/18718/calculating-positions-of-moons-ascending-and-descending-nodes-from-ephemeris-fi
+
+A slightly more useful answer:
+
+Using http://wgc.jpl.nasa.gov:8080/webgeocalc/#NewCalculation "Angular
+Separation Finder" feature, we can determine when the angle between
+the Sun and the Moon is at a local maximum. It turns out this isn't
+*quite* the definition of Full Moon, but it's very close. I couldn't
+find a way to make webgeocalc compute full moon times exactly, though
+I'm sure there is a way, and, of course, there are plenty of tables of
+full moons online.
+
+Starting at
+http://wgc.jpl.nasa.gov:8080/webgeocalc/#AngularSeparationFinder
+we fill out the form as so:
+
+[[/tmp/5.png]]
+[[/tmp/6.png]]
+[[/tmp/7.png]]
+
+and click the "Calculate" button.
+
+This yields a list of all "full" moons. Scroll down and click on the
+"Save All Intervals" button:
+
+[[/tmp/9.png]]
+
+We now want to find the moon's distance at all of the times we just
+saved (ie, the times of the "full" moons). To do this, start at
+http://wgc.jpl.nasa.gov:8080/webgeocalc/#StateVector and fill out as
+follows:
+
+[[/tmp/8.png]]
+[[/tmp/10.png]]
+[[/tmp/11.png]]
+
+NOTE: to get the list of intervals above, drag from the saved
+intervals result window into the list of intervals window.
+
+The results, which you can also download, tell you the moon's distance
+from the Earth at the times of the "full" moons we computed earlier:
+
+[[/tmp/12.png]]
+
+I downloaded the results in Excel format, imported them into gnumeric
+and sorted by radius (distance from Earth to Moon) and did a little
+additional cleanup to get:
+
+
+
+
+
+
+
+
