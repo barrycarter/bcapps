@@ -2,6 +2,8 @@
 
 astronomy.stackexchange.com/questions/1213/solar-noon-meridian-crossing-time-versus-time-of-maximum-elevation
 
+http://earthscience.stackexchange.com/questions/9083/latitude-and-daylight-hours
+
 refer: http://astronomy.stackexchange.com/questions/14492/need-simple-equation-for-rise-transit-and-set-time
 
 As derived in http://astronomy.stackexchange.com/questions/14492, the
