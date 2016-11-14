@@ -1,7 +1,3 @@
-http://astronomy.stackexchange.com/questions/11899/what-is-the-format-of-the-data-from-the-jpls-horizons-system
-
-http://space.stackexchange.com/questions/18718/calculating-positions-of-moons-ascending-and-descending-nodes-from-ephemeris-fi
-
 A slightly more useful answer:
 
 Using http://wgc.jpl.nasa.gov:8080/webgeocalc/#NewCalculation "Angular
@@ -48,7 +44,19 @@ I downloaded the results in Excel format, imported them into gnumeric
 and sorted by radius (distance from Earth to Moon) and did a little
 additional cleanup to get:
 
+[[/tmp/13.png]]
 
+(the full spreadsheet is available at https://github.com/barrycarter/bcapps/blob/master/STACK/StateVectorResults.xls)
+
+So, yes, tonight's full moon (yellow) is the closest we'll have until
+2034-11-25 (red). It's also the 6th closest moon we'll have this
+century.
+
+To see other examples of geocalc in action, see my:
+
+  - http://astronomy.stackexchange.com/questions/11899/what-is-the-format-of-the-data-from-the-jpls-horizons-system
+
+  - http://space.stackexchange.com/questions/18718/calculating-positions-of-moons-ascending-and-descending-nodes-from-ephemeris-fi
 
 
 
