@@ -1,0 +1,111 @@
+This document describes how I (mostly remotely) created a minimal
+Fedora Core 24 system (no gnome, no evolution, no unnecessary daemons)
+running fvwm2
+
+I assume that you have downloaded Fedora Core 24 from
+https://getfedora.org/en/workstation/download/ burned and booted from
+the DVD image, and clicked "Install" to install Fedora Core 24 on your
+hard disk with a root password and one other user whois is an
+administrator and has a password. I will refer to this user as "user"
+in this document.
+
+After removing the installation media and rebooting, login as
+user. You will now be in the GNOME environment. Now:
+
+% Go to the top right of the screen, click the down arrow, and choose
+the settings icon at the bottom left of the pulldown menu.
+
+% Select "Sharing", and turn on Sharing in general and "Remote Login"
+specifically.
+
+% Logout by clicking the down arrow again, choosing your user name,
+and clicking Logout. From now on, we will be working remotely.
+
+% On your local machine (not the one on which you're installing Fedora
+Core 24), add the machine's IP address to /etc/hosts something like
+this:
+
+192.168.0.3 brighton
+
+This will let you refer to the machine as "brighton" instead of having
+to type out the IP address each time. Of course, make sure you use the
+machine's actual IP address, which probably won't be 192.168.0.3 in
+your case.
+
+% "ssh user@brighton" to login remotely
+
+% "sudo su" to become root
+
+% do this so you can become root passwordlessly (will need this later):
+
+echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/wheel
+
+% Because we will be disabling NetworkManager, we will need to run
+dhclient manually (later)
+
+echo "sudo dhclient" > ~user/startup-nox.sh
+
+% This dnf command removes pretty much everything that can safely be
+removed (you may see some harmless errors).
+
+sudo dnf remove audit gssproxy alsa-utils 'gvfs*' rtkit "gnome*" "evolution*"
+
+% reboot to bring up the system without these daemons running (you
+will need to go local to boot "fedora" (not recovery mode) and type in
+your disk encryption password
+
+shutdown -r now
+
+% you will come up a "localhost login" or similar prompt, not a
+windows environment
+
+% "ssh user@brighton" and "sudo su" again
+
+% There are still several daemons running but we can stop and disable
+them with systemctl
+
+% INFO: you can use "systemctl -t service | fgrep 'loaded active running'" 
+to see which services are still running
+
+% To disable and stop most of these services:
+
+systemctl disable abrtd abrt-oops abrt-xorg avahi-daemon chronyd firewalld mcelog ModemManager NetworkManager-dispatcher NetworkManager rngd systemd-udevd systemd-logind systemd-journald avahi-daemon.socket systemd-udevd-control.socket systemd-udevd-kernel.socket systemd-journald.socket systemd-journald-audit.socket systemd-journald-dev-log.socket
+
+% Run the above command again, but replacing "disable" with "stop":
+
+systemctl stop abrtd abrt-oops abrt-xorg avahi-daemon chronyd firewalld mcelog ModemManager NetworkManager-dispatcher NetworkManager rngd systemd-udevd systemd-logind systemd-journald avahi-daemon.socket systemd-udevd-control.socket systemd-udevd-kernel.socket systemd-journald.socket systemd-journald-audit.socket systemd-journald-dev-log.socket
+
+% NOTE: do NOT try to disable (or remove the packages that contain)
+any of: "dbus", "lvm2-lvmetad", "polkit", "getty",
+"user@*.service". Doing so may break things severely.
+
+% Manually remove /etc/resolv.conf which is now a broken symlink
+
+sudo rm /etc/resolv.conf
+
+% INFO: use "ps -ef | fgrep -v '['" to see the few remaining
+(nonbracketed) processes. You cannot safely kill or remove any of these
+(including "(sd-pam)")
+
+% reboot again to make sure the system comes up cleanly ("shutdown -r
+now"); as before, you will have to choose to boot into regular fedora
+and type in your disk encryption password.
+
+% Once you see the "localhost login:" prompt, login and "sh ~/startup-nox.sh"
+
+% You can then return to remote access
+
+% You can now install many things, including fvwm2
+
+: we first install a couple of repos
+
+sudo dnf install --allowerasing --best http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
+sudo dnf install --allowerasing --best ImageMagick OpenThreads PySolFC SDL-devel alpine aspell audacity bind c++-gtk-utils-gtk2-devel community-mysql community-mysql-server dosbox dosemu elinks emacs enscript esniper expect feh ffmpeg ftp fuse-encfs fvwm gd gd-devel getmail glade glade-devel glib2 gnumeric gnuplot gpm graphviz gtk+extra-devel gtk2 gtk2-devel gtk3-devel html2ps lynx mencoder moreutils-parallel mplayer mrtg nagios nagios-plugins nano ncftp openrdate perl-CPAN php-mysqlnd pidgin postgresql postgresql-server qgis qhull rdesktop recoll rsyslog rxvt samba screen snownews stella stellarium tcsh tigervnc tk unrtf util-linux-user vice vino vlc xdotool xemacs xemacs-packages-extra-el xinetd xorg-x11-apps xpdf xsane xteddy xterm xv yum yum-utils zlib zlib-devel zlib-static
+
+%% TODO: post this to wp with a link to github; google doesn't index
+github well
+
+
+
+
