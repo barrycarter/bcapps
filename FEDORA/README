@@ -75,11 +75,17 @@ systemctl disable abrtd abrt-oops abrt-xorg avahi-daemon chronyd firewalld mcelo
 
 systemctl stop abrtd abrt-oops abrt-xorg avahi-daemon chronyd firewalld mcelog ModemManager NetworkManager-dispatcher NetworkManager rngd systemd-udevd systemd-logind systemd-journald avahi-daemon.socket systemd-udevd-control.socket systemd-udevd-kernel.socket systemd-journald.socket systemd-journald-audit.socket systemd-journald-dev-log.socket
 
+
 % NOTE: do NOT try to disable (or remove the packages that contain)
 any of: "dbus", "lvm2-lvmetad", "polkit", "getty",
 "user@*.service". Doing so may break things severely.
 
+% NOTE: if you remove NetworkManager (as I do above), you will need to
+run dhclient yourself (which is why we create the startup-nox.csh
+file). You may prefer to let NetworkManager continue running
+
 % Manually remove /etc/resolv.conf which is now a broken symlink
+(dhclient will fill in the right values)
 
 sudo rm /etc/resolv.conf
 
@@ -102,6 +108,58 @@ and type in your disk encryption password.
 sudo dnf install --allowerasing --best http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
 sudo dnf install --allowerasing --best ImageMagick OpenThreads PySolFC SDL-devel alpine aspell audacity bind c++-gtk-utils-gtk2-devel community-mysql community-mysql-server dosbox dosemu elinks emacs enscript esniper expect feh ffmpeg ftp fuse-encfs fvwm gd gd-devel getmail glade glade-devel glib2 gnumeric gnuplot gpm graphviz gtk+extra-devel gtk2 gtk2-devel gtk3-devel html2ps lynx mencoder moreutils-parallel mplayer mrtg nagios nagios-plugins nano ncftp openrdate perl-CPAN php-mysqlnd pidgin postgresql postgresql-server qgis qhull rdesktop recoll rsyslog rxvt samba screen snownews stella stellarium tcsh tigervnc tk unrtf util-linux-user vice vino vlc xdotool xemacs xemacs-packages-extra-el xinetd xorg-x11-apps xpdf xsane xteddy xterm xv yum yum-utils zlib zlib-devel zlib-static
+
+% initialize postgresql
+
+postgresql-setup --initdb
+
+% enable new services we want ("systemctl list-unit-files" for list)
+
+systemctl enable postgresql mysqld nagios
+
+: and then start these services
+
+systemctl start postgresql mysqld nagios
+
+% import postgres data
+
+: on current machine
+pg_dumpall > pgsql-super-dump.txt
+: rsync over to brighton (not shown)
+: on brighton
+sudo -u postgres psql < /tmp/pgsql-super-dump.txt
+: "psql -d main" should now work as "user"
+
+% import mysql data
+
+: on current machine
+mysqldump --all-databases > mysql-super-dump.txt
+: rsync over to brighton (not shown)
+sudo mysql < /tmp/mysql-super-dump.txt
+
+% If you want to vnc in and your vnc client doesn't support encrypted
+connections:
+
+gsettings set org.gnome.Vino require-encryption false
+gsettings set org.gnome.Vino prompt-enabled false
+gsettings set org.gnome.Vino authentication-methods "['vnc']"
+: replace "mypassword" with whatever password you'd like to use
+gsettings set org.gnome.Vino vnc-password `echo -n "mypassword"|base64`
+
+
+% Edit your .xinitrc file to set size correctly, to run vino-server
+(if you want to vnc in), and to start fvwm2:
+
+xrandr --size 1024x768
+/usr/libexec/vino-server &
+exec fvwm2
+
+% Reboot once again, login, run "sh startup-nox.csh" and "xinit &"
+
+%% TODO: copy my .fvwm2rc file over into this dir after I get it working right on brighton live editing
+
+
+%% TODO: sync over dbs
 
 %% TODO: post this to wp with a link to github; google doesn't index
 github well
