@@ -115,11 +115,11 @@ postgresql-setup --initdb
 
 % enable new services we want ("systemctl list-unit-files" for list)
 
-systemctl enable postgresql mysqld nagios
+systemctl enable postgresql mysqld nagios dnsmasq httpd
 
 : and then start these services
 
-systemctl start postgresql mysqld nagios
+systemctl start postgresql mysqld nagios dnsmasq httpd
 
 % import postgres data
 
@@ -136,6 +136,9 @@ sudo -u postgres psql < /tmp/pgsql-super-dump.txt
 mysqldump --all-databases > mysql-super-dump.txt
 : rsync over to brighton (not shown)
 sudo mysql < /tmp/mysql-super-dump.txt
+
+%% TODO: mysql, even with dump above, does not appear to have same
+users; however "mysql -u root" works as user
 
 % If you want to vnc in and your vnc client doesn't support encrypted
 connections:
@@ -156,14 +159,16 @@ exec fvwm2
 
 % Reboot once again, login, run "sh startup-nox.csh" and "xinit &"
 
-%% TODO: copy my .fvwm2rc file over into this dir after I get it working right on brighton live editing
+%% TODO: chsh tcsh
 
-
-%% TODO: sync over dbs
+%% TODO: copy my .fvwm2rc file over into this dir after I get it
+working right on brighton live editing
 
 %% TODO: post this to wp with a link to github; google doesn't index
 github well
 
+%% TODO: passwordless cross machine ssh (and thus rsync)
 
+%% TODO: get dnsmasq working
 
-
+%% TODO: get local httpd working
