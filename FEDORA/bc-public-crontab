@@ -1,0 +1,116 @@
+# this is the public portion of my crontab file on brighton; it loads
+# and runs the private part (which is separate) as well
+
+# you will not necessarily want all (or any) of this stuff running; in
+# some cases, the commands are very specific to me; this is just a
+# template explaining how you might choose to run some commands
+
+# update every minute (overkill) but keep a safe copy of the combined file
+
+# TODO: create a program that checks the new joined crontab is valid
+# and rolls back (w/ a warning) if not
+
+# TODO: make sure there no references to /home/barrycarter (which is
+# my actual username)-- genericize to /home/user
+
+# note that I symlink /home/user to /home/barrycarter so these entries
+# will work "as is" for me
+
+* * * * * cat /home/user/bc-crontab-private /home/user/BCGIT/FEDORA/bc-crontab-public > /home/user/bc-crontab-final; crontab /home/user/bc-crontab-final
+
+# update background image every minute
+* * * * * /home/user/BCGIT/bc-bg.pl
+
+# snapshot my screen every minute
+* * * * * /home/user/BCGIT/bc-xwd.pl
+
+# update weather on background image every 10m or so
+*/10 * * * * /home/user/BCGIT/bc-get-weather.pl
+
+# copy over error messages from bcinfo3, which uses the same
+# ~/ERR/*.err protocol
+
+# Reminder: replace bcinfo3 with your own machine(s) and "user" with
+# your local username
+
+*/5 * * * * rsync -e "ssh -i /home/user/.ssh/id_rsa.bc" -Pqaz "root@bcinfo3:/root/ERR/*.err" "root@bcinfo3:/home/user/ERR/*.err" /home/user/ERR/
+
+# Reminds me to walkaround every 20m or so (pomodoro method?)
+0,20,40 * * * * /home/user/BCGIT/bc-walkaround.pl
+
+# In my time zone (MST7MDT), gocomics updates comics at 2310; if I
+# happen to be awake, this alerts me so I can make the notorious
+# "first" comment
+
+10 23 * * * /usr/X11R6/bin/xmessage -geometry 1024 GOCOMICS RESET&
+
+# run my montastic tests twice an hour (montastic is a free service
+# and is pretty good, but really more of an extra check in addition to
+# my nagios checks; it does not replace nagios)
+
+# Note that jobs that run at regular intervals (eg, twice hourly
+# below) are staggered to avoid excessive system load a specific
+# minute
+
+11,41 * * * * cd /home/user/BCGIT; bc-montastic.pl
+
+# Update calendar (for background image) hourly
+
+17 * * * * /home/user/BCGIT/CALENDAR/bc-calendar.pl
+
+# Obtain my Capital One credit card transactions in the "middle of the night"
+
+17 4 * * * /home/user/BCGIT/bc-create-capone-iim.pl
+
+# Refresh my craigslist ads every 6 hours (which I believe is the
+# minimum allowed interval) so they always appear near the top
+
+17 4,10,16,22 * * * /home/user/BCGIT/bc-renew-cl.pl /home/user/cl-renew.txt
+
+# Tuesday is trash day, so I put out trash on Monday afternoon (this
+# might be one of the most useless things I've ever shared with
+# others); note the "&" backgrounds the xmessage to prevent cron from
+# hanging
+
+30 16 * * Mon /usr/X11R6/bin/xmessage -geometry 1024 put out trash &
+
+# daily, dump firefox sqlite files into text format, primarily for
+# recollindex (which I don't believe can handle sqlite3 databases at
+# the moment:
+# http://stackoverflow.com/questions/20086062/make-recoll-index-sqlite-files)
+
+35 4 * * * ls -1 ~/.mozilla/firefox/*/*.sqlite | perl -nle 'print "echo $_; sqlite3 $_ .dump 1> $_.dump; /home/user/BCGIT/bc-quikbak.pl $_.dump"' | sh
+
+# make daily backups (yes, the program is called weekly backups, but I
+# do them daily anyway)
+
+37 2 * * * sudo /home/user/BCGIT/bc-weekly-backup.pl --debug
+
+# sucks all of my information from StackExchange monthly, but may not
+# actually be working
+
+4 2 19 * * /home/user/BCGIT/STACK/bc-suck-stack.pl
+
+# for some reason, I like to store the output of NIST's "daytime"
+# service and am hoping to spread this mental illness to others by
+# including it here instead of in bc-private-crontab
+
+42 * * * * timed-run 10 ncat time.nist.gov 13 | grep -v spawn >> /home/user/nisttime.txt
+
+# copy over logs on various machines to local machine (for safekeeping
+# and ultimate backup); my providers puts web log analysis in
+# /home/barrycar/tmp/; I don't really need this, but sync it over once
+# daily anyway; note that /home/barrycar is the directory on the
+# remote system so I can't genercize it, and that I keep my weblogs in
+# a special subdirectory
+
+46 22 * * * rsync -e 'ssh -i /home/user/.ssh/id_rsa.bc' -Pvzrlpt barrycar@bcinfo4:/home/barrycar/tmp barrycar@bcinfo4:/home/barrycar/logs barrycar@bcinfo4:/usr/local/apache/domlogs/barrycar /home/user/html/weblogs/ARVIXE/
+
+# logs from bcinfonew
+
+47 8 * * * rsync -e 'ssh -i /home/user/.ssh/id_rsa.bc' -Pavz "root@bcinfonew:/var/log/lighttpd/*" /home/user/html/weblogs/bcinfonew/
+
+# and from bcinfo3
+
+49 8 * * * rsync -e 'ssh -i /home/user/.ssh/id_rsa.bc' -Pavz "root@bcinfo3:/var/log/lighttpd/*" /home/user/html/weblogs/bcinfo3/
+

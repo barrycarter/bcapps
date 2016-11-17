@@ -107,7 +107,7 @@ and type in your disk encryption password.
 
 sudo dnf install --allowerasing --best http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
-sudo dnf install --allowerasing --best ImageMagick OpenThreads PySolFC SDL-devel alpine aspell audacity bind c++-gtk-utils-gtk2-devel community-mysql community-mysql-server dosbox dosemu elinks emacs enscript esniper expect feh ffmpeg ftp fuse-encfs fvwm gd gd-devel getmail glade glade-devel glib2 gnumeric gnuplot gpm graphviz gtk+extra-devel gtk2 gtk2-devel gtk3-devel html2ps lynx mencoder moreutils-parallel mplayer mrtg nagios nagios-plugins nano ncftp openrdate perl-CPAN php-mysqlnd pidgin postgresql postgresql-server qgis qhull rdesktop recoll rsyslog rxvt samba screen snownews stella stellarium tcsh tigervnc tk unrtf util-linux-user vice vino vlc xdotool xemacs xemacs-packages-extra-el xinetd xorg-x11-apps xpdf xsane xteddy xterm xv yum yum-utils zlib zlib-devel zlib-static
+sudo dnf install --allowerasing --best ImageMagick OpenThreads PySolFC SDL-devel alpine aspell audacity bind c++-gtk-utils-gtk2-devel community-mysql community-mysql-server dosbox dosemu elinks emacs enscript esniper expect feh ffmpeg ftp fuse-encfs fvwm gd gd-devel getmail glade glade-devel glib2 gnumeric gnuplot gpm graphviz gtk+extra-devel gtk2 gtk2-devel gtk3-devel html2ps lynx mencoder moreutils-parallel mplayer mrtg nagios nagios-plugins nano ncftp openrdate perl-CPAN php-mysqlnd pidgin postgresql postgresql-server qgis qhull rdesktop recoll rsyslog rxvt samba screen snownews stella stellarium tcsh tigervnc tk unrtf util-linux-user vice vino vlc xdotool xemacs xemacs-packages-extra-el xinetd xorg-x11-apps xpdf xsane xteddy xterm xv yum yum-utils zlib zlib-devel zlib-static mod_ldap mod_dnssd
 
 % initialize postgresql
 
@@ -157,6 +157,41 @@ xrandr --size 1024x768
 /usr/libexec/vino-server &
 exec fvwm2
 
+% if you're using an older .fvwm2rc file and want to continue using
+it, this may be helpful:
+
+sudo mkdir /usr/lib/X11
+sudo ln -s /usr/libexec/fvwm/2.6.6 /usr/lib/X11/fvwm2
+
+% other helpful symlinks if you're using older software or programs
+that rely on a specific path:
+
+sudo ln -s /bin/php /usr/local/bin/
+
+% OK to rsync over /etc/httpd/conf and /etc/httpd/conf.d but not other
+httpd related files. Comment out any lines like (use "apachectl
+configtest" to find these):
+
+# LoadModule authn_file_module modules/mod_authn_file.so
+# LoadModule authn_alias_module modules/mod_authn_alias.so
+# LoadModule authn_anon_module modules/mod_authn_anon.so
+# LoadModule authn_dbm_module modules/mod_authn_dbm.so
+# LoadModule authn_default_module modules/mod_authn_default.so
+
+# LoadModule authz_host_module modules/mod_authz_host.so
+# LoadModule authz_user_module modules/mod_authz_user.so
+# LoadModule authz_owner_module modules/mod_authz_owner.so
+# LoadModule authz_groupfile_module modules/mod_authz_groupfile.so
+# LoadModule authz_dbm_module modules/mod_authz_dbm.so
+# LoadModule authz_default_module modules/mod_authz_default.so
+
+# LoadModule disk_cache_module modules/mod_disk_cache.so
+
+% In /etc/httpd/conf.d, remove (or move to DISABLED subdir) mod_dnssd.conf
+
+: remove -n for production
+\rsync -avxn /etc/httpd/conf /etc/httpd/conf.d root@brighton:/etc/httpd/
+
 % Reboot once again, login, run "sh startup-nox.csh" and "xinit &"
 
 %% TODO: chsh tcsh
@@ -172,3 +207,8 @@ github well
 %% TODO: get dnsmasq working
 
 %% TODO: get local httpd working
+
+%% TODO: create ~/brighton-procs.txt for what's allowed to run on
+brighton for bc-daemon-checker2.pl (and update .crontab to run this)
+
+
