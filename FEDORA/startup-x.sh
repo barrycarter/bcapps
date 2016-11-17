@@ -25,13 +25,14 @@ gaim -n &
 # I run screen multiply (using "screen -m") and this brings up two
 # xterms to run those screens in
 
-xterm -geometry 80x53 -font x +sb -bg gray45 -bd gray45 -T SCREEN -n SCREEN &
-xterm -geometry 80x53 -font x +sb -bg gray45 -bd gray45 -T "SCREEN II" -n "SCREEN II" &
+# TODO: back when I ran rxvt instead, "-font x" yields an error but
+# brings up the right font whereas not using "-font" brings up the
+# "wrong" (for me font); figure out how to do this properly
+
+xterm -geometry 80x53 +sb -bg gray45 -bd gray45 -T SCREEN -n SCREEN &
+xterm -geometry 80x53 +sb -bg gray45 -bd gray45 -T "SCREEN II" -n "SCREEN II" &
 
 # runs elinks in an extra wide rxvt to the right of the main fvwm screen
-
-# TODO: "-font x" yields an error but brings up the right font; figure
-# out how to do this properly
 
 rxvt -geometry 165x52+1024+26 -font x -T ELINKS -n ELINKS -tn vt100 -e elinks &
 
