@@ -11,7 +11,8 @@
 # and rolls back (w/ a warning) if not
 
 # TODO: make sure there no references to /home/barrycarter (which is
-# my actual username)-- genericize to /home/user
+# my actual username)-- genericize to /home/user (except for this
+# reference itself, of course)
 
 # note that I symlink /home/user to /home/barrycarter so these entries
 # will work "as is" for me

@@ -1,7 +1,12 @@
 # this runs (automagically) whenever I start FVWM
 
 # my screen size is 1024x768
-# TODO: find a way to customize this without having to run xrandr
+
+# TODO: find a way to customize this without having to run xrandr,
+# although
+# http://askubuntu.com/questions/74808/how-do-i-force-a-resolution-of-1024x768
+# suggests it's nontrivial
+
 xrandr --size 1024x768
 
 # TODO: once I start using brighton directly, no reason to allow VNC
