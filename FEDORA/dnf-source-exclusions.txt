@@ -1,0 +1,17 @@
+# things that "dnf list installed | perl -anle 'print $F[0]' | sort |
+# uniq" spits out that are not actually packages (or have no source
+# code); note that "fgrep -vf" does NOT support comments in files, but
+# it turns out nothing will match these "comment lines" so things will
+# still work
+1:1.2.2-1.fc24
+2.7.1-1.fc24
+20150929-1.fc24
+5:svn37957.0-24.fc24.1
+7.5-16.fc24
+@fedora
+@koji-override-0
+@rpmfusion-free-updates
+@rpmfusion-nonfree-updates
+@updates
+Installed
+Last

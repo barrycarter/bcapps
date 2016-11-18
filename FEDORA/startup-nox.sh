@@ -20,5 +20,7 @@ sudo route add -net 127.0.0.0 netmask 255.0.0.0 lo
 # /home/barrycarter/BCGIT/bc-getmail.pl &
 
 # this starts recollindex, but I'm not quite ready to do that on brighton
-sudo recollindex -m -x
+
+# TODO: uncomment below
+# sudo recollindex -m -x
 
