@@ -1,6 +1,13 @@
 NOTE: any reference to "this directory" or "here" refers to
 https://github.com/barrycarter/bcapps/blob/master/FEDORA/
 
+NOTE: the "local" machine is the one to which you are installing
+Fedora 24; the "remote" machine is any Linux machine from which you
+are performing the install.
+
+NOTE: I will sometimes refer to "Fedora 24" as "Fedora Core 24"
+because many of the package names still have "fc24" in them.
+
 This document describes how I (mostly remotely) created a minimal
 Fedora Core 24 system (no gnome, no evolution, no unnecessary daemons)
 running fvwm2
@@ -55,15 +62,16 @@ your disk encryption password
 shutdown -r now
 
 % you will come up a "localhost login" or similar prompt, not a
-windows environment
+windows environment (you don't actually need to login locally)
 
 % Remotely, "ssh user@brighton" and "sudo su" again
 
 % There are still several daemons running but we can stop and disable
 them with systemctl
 
-% INFO: you can use "systemctl -t service | fgrep 'loaded active running'" 
-to see which services are still running
+% INFO: you can use the following to see which services are still running:
+
+systemctl -t service | egrep 'loaded +active +running'
 
 % To disable and stop most of these services:
 
@@ -93,17 +101,28 @@ sudo rm /etc/resolv.conf
 (nonbracketed) processes. You CANNOT safely kill or remove any of these
 (including "(sd-pam)")
 
+% Put the .xinitrc, startup-nox.sh, and startup-x.sh files in this
+directory in ~user, and, if desired, the systemctl-disable.sh and
+dnf-installs.sh scripts into /tmp/
+
 % reboot again to make sure the system comes up cleanly ("shutdown -r
 now"); as before, you will have to choose to boot into regular fedora
 and type in your disk encryption password.
 
-% You can now install many things remotely (or locally), including fvwm2
+% on the local machine run "sh startup-nox.sh" as user; you will need
+this for dhclient
+
+% then, remotely "ssh user@brighton" and then "sudo su" again
+
+% You can now install many things remotely (or locally), including
+fvwm2 (note that this will reinstall SOME of what we uninstalled
+earlier, but only a minimal acceptable subset)
 
 : we first install a couple of repos
 
 sudo dnf install --allowerasing --best http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
-sudo dnf install --allowerasing --best ImageMagick OpenThreads PySolFC SDL-devel alpine aspell audacity bind c++-gtk-utils-gtk2-devel community-mysql community-mysql-server dosbox dosemu elinks emacs enscript esniper expect feh ffmpeg ftp fuse-encfs fvwm gd gd-devel getmail glade glade-devel glib2 gnumeric gnuplot gpm graphviz gtk+extra-devel gtk2 gtk2-devel gtk3-devel html2ps lynx mencoder moreutils-parallel mplayer mrtg nagios nagios-plugins nano ncftp openrdate perl-CPAN php-mysqlnd pidgin postgresql postgresql-server qgis qhull rdesktop recoll rsyslog rxvt samba screen snownews stella stellarium tcsh tigervnc tk unrtf util-linux-user vice vino vlc xdotool xemacs xemacs-packages-extra-el xinetd xorg-x11-apps xpdf xsane xteddy xterm xv yum yum-utils zlib zlib-devel zlib-static mod_ldap mod_dnssd tor tor-arm-gui tor-arm onionshare privoxy
+sudo dnf install --allowerasing --best ImageMagick OpenThreads PySolFC SDL-devel alpine aspell audacity bind c++-gtk-utils-gtk2-devel community-mysql community-mysql-server dosbox dosemu elinks emacs enscript esniper expect feh ffmpeg ftp fuse-encfs fvwm gd gd-devel getmail glade glade-devel glib2 gnumeric gnuplot gpm graphviz gtk+extra-devel gtk2 gtk2-devel gtk3-devel html2ps lynx mencoder moreutils-parallel mplayer mrtg nagios nagios-plugins nano ncftp openrdate perl-CPAN php-mysqlnd pidgin postgresql postgresql-server qgis qhull rdesktop recoll rsyslog rxvt samba screen snownews stella stellarium tcsh tigervnc tk unrtf util-linux-user vice vino vlc xdotool xemacs xemacs-packages-extra-el xinetd xorg-x11-apps xpdf xsane xteddy xterm xv yum yum-utils zlib zlib-devel zlib-static mod_ldap mod_dnssd tor tor-arm-gui tor-arm onionshare privoxy celestia
 
 : and the sources of everything installed above AND the dependencies
 : (excluding those things that "dnf list installed" gives but aren't
@@ -115,6 +134,15 @@ cd /root/dnf-sources
 dnf list installed|perl -anle 'print $F[0]'|sort -u|fgrep -vf dnf-source-exclusions.txt | xargs dnf download --source
 rpm -i *.rpm
 : the results are in /root/rpmbuild/SOURCES/
+
+% INFO: to see how much space dnf installed packages take up:
+
+: note that I could make this a pipe but its useful to do in steps
+dnf list installed|perl -anle 'print $F[0]'|sort -u > /tmp/dnf-installed.txt
+xargs rpm -ql < /tmp/dnf-installed.txt | sort | uniq > /tmp/dnf-files.txt
+xargs wc -c < /tmp/dnf-files.txt | egrep ' total$' |tee /tmp/dnf-wc-totals.txt
+
+: for me this is 8786074786 or about 8.8 GiB
 
 % initialize postgresql
 
@@ -170,9 +198,6 @@ configtest" to find these):
 
 : remove -n for production
 \rsync -avxn /etc/httpd/conf /etc/httpd/conf.d root@brighton:/etc/httpd/
-
-% Put the .xinitrc, startup-nox.sh, and startup-x.sh files in this
-directory in ~user
 
 % To access the system remotely via vnc after reboot, run these commands:
 
