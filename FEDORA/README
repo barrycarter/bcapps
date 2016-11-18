@@ -39,7 +39,7 @@ your case.
 
 % "sudo su" to become root
 
-% do this so you can become root passwordlessly (will need this later):
+% do this so you can become root passwordlessly (we will need this later):
 
 echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/wheel
 
@@ -57,7 +57,7 @@ shutdown -r now
 % you will come up a "localhost login" or similar prompt, not a
 windows environment
 
-% "ssh user@brighton" and "sudo su" again
+% Remotely, "ssh user@brighton" and "sudo su" again
 
 % There are still several daemons running but we can stop and disable
 them with systemctl
@@ -90,14 +90,14 @@ sudo rm /etc/resolv.conf
 /etc/selinux/config as root (changes will take place on next reboot)
 
 % INFO: use "ps -ef | fgrep -v '['" to see the few remaining
-(nonbracketed) processes. You cannot safely kill or remove any of these
+(nonbracketed) processes. You CANNOT safely kill or remove any of these
 (including "(sd-pam)")
 
 % reboot again to make sure the system comes up cleanly ("shutdown -r
 now"); as before, you will have to choose to boot into regular fedora
 and type in your disk encryption password.
 
-% You can now install many things, including fvwm2
+% You can now install many things remotely (or locally), including fvwm2
 
 : we first install a couple of repos
 
