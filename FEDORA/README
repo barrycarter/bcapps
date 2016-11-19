@@ -133,13 +133,10 @@ vgchange -ay
 mkdir /mnt/kemptown
 mount /dev/mapper/oldfedora-home /mnt/kemptown
 
-: add this to fstab
-
-echo "/dev/mapper/oldfedora-home /mnt/kemptown ext4 nodev,nosuid,relatime 0 2" >> /etc/fstab
-
 : create the "real" user with a home directory on /mnt/kemptown/user
 
 useradd -d /mnt/kemptown/user -g wheel -u 1000 user
+passwd user
 
 %% TODO: figure out how to move /root/ safely
 
@@ -147,6 +144,10 @@ useradd -d /mnt/kemptown/user -g wheel -u 1000 user
 removed (you may see some harmless errors).
 
 sudo dnf remove audit gssproxy alsa-utils 'gvfs*' rtkit "gnome*" "evolution*"
+
+% Put the .xinitrc, startup-nox.sh, and startup-x.sh files in this
+directory in ~user, and, if desired, the systemctl-disable.sh and
+dnf-installs.sh scripts into /tmp/
 
 % reboot to bring up the system without these daemons running (you
 will need to go local to boot "fedora" (not recovery mode) and type in
@@ -179,11 +180,6 @@ systemctl stop abrtd abrt-oops abrt-xorg avahi-daemon chronyd firewalld mcelog M
 any of: "dbus", "lvm2-lvmetad", "polkit", "getty",
 "user@*.service". Doing so may break things severely.
 
-% Manually remove /etc/resolv.conf which is now a broken symlink
-(dhclient will fill in the right values)
-
-sudo rm /etc/resolv.conf
-
 % stop selinux by editing "SELINUX=enforcing" to "SELINUX=disabled" in
 /etc/selinux/config as root (changes will take place on next reboot)
 
@@ -191,18 +187,18 @@ sudo rm /etc/resolv.conf
 (nonbracketed) processes. You CANNOT safely kill or remove any of these
 (including "(sd-pam)")
 
-% Put the .xinitrc, startup-nox.sh, and startup-x.sh files in this
-directory in ~user, and, if desired, the systemctl-disable.sh and
-dnf-installs.sh scripts into /tmp/
-
 % reboot again to make sure the system comes up cleanly ("shutdown -r
 now"); as before, you will have to choose to boot into regular fedora
 and type in your disk encryption password.
 
-% on the local machine run "sh startup-nox.sh" as user; you will need
-this for dhclient
-
 % then, remotely "ssh user@brighton" and then "sudo su" again
+
+%% TODO: right now, to get user's home directory back, you must:
+
+sudo cryptsetup open /dev/sdb3 kemptown
+sudo mount /dev/mapper/oldfedora-home /mnt/kemptown
+
+I need to improve this process.
 
 % You can now install many things remotely (or locally), including
 fvwm2 (note that this will reinstall SOME of what we uninstalled
@@ -218,6 +214,7 @@ sudo dnf install --allowerasing --best ImageMagick OpenThreads PySolFC SDL-devel
 : (excluding those things that "dnf list installed" gives but aren't
 : actually packages)
 
+: if using SSD, make these symlinks on big drive
 mkdir /root/dnf-sources
 cd /root/dnf-sources
 : see dnf-source-exclusions.txt in this directory
@@ -262,6 +259,25 @@ mysqldump --all-databases > mysql-super-dump.txt
 : rsync over to brighton (not shown)
 sudo mysql < /tmp/mysql-super-dump.txt
 
+% To access the system remotely via vnc after reboot, run these commands:
+
+gsettings set org.gnome.Vino require-encryption false
+gsettings set org.gnome.Vino prompt-enabled false
+gsettings set org.gnome.Vino authentication-methods "['vnc']"
+: replace "mypassword" with whatever password you'd like to use
+gsettings set org.gnome.Vino vnc-password `echo -n "mypassword"|base64`
+
+% if you're using an older .fvwm2rc file and want to continue using
+it, this may be helpful:
+
+sudo mkdir /usr/lib/X11
+sudo ln -s /usr/libexec/fvwm/2.6.6 /usr/lib/X11/fvwm2
+
+% other helpful symlinks if you're using older software or programs
+that rely on a specific path:
+
+sudo ln -s /bin/php /usr/local/bin/
+
 %% TODO: mysql, even with dump above, does not appear to have same
 users; however "mysql -u root" works as user
 
@@ -288,25 +304,6 @@ configtest" to find these):
 
 : remove -n for production
 \rsync -avxn /etc/httpd/conf /etc/httpd/conf.d root@brighton:/etc/httpd/
-
-% To access the system remotely via vnc after reboot, run these commands:
-
-gsettings set org.gnome.Vino require-encryption false
-gsettings set org.gnome.Vino prompt-enabled false
-gsettings set org.gnome.Vino authentication-methods "['vnc']"
-: replace "mypassword" with whatever password you'd like to use
-gsettings set org.gnome.Vino vnc-password `echo -n "mypassword"|base64`
-
-% if you're using an older .fvwm2rc file and want to continue using
-it, this may be helpful:
-
-sudo mkdir /usr/lib/X11
-sudo ln -s /usr/libexec/fvwm/2.6.6 /usr/lib/X11/fvwm2
-
-% other helpful symlinks if you're using older software or programs
-that rely on a specific path:
-
-sudo ln -s /bin/php /usr/local/bin/
 
 % Reboot once again, login, run "sh startup-nox.csh" and "xinit &"
 
