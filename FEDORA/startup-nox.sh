@@ -3,13 +3,17 @@
 # Since I killed NetworkManager (perhaps a bad decision), must run
 # dhclient manually
 
-sudo dhclient
+# decided to tolerate NetworkMananger, so this file is currently
+# completely unneeded
+
+# sudo dhclient
 
 # for some reason, neither Network Manager or the system default
 # routing brings up the lo interface-- it's harmless, but I dislike
 # using the Ethernet interface for loopback
 
-sudo route add -net 127.0.0.0 netmask 255.0.0.0 lo
+# TODO: check that Network Manager actually brings this up
+# sudo route add -net 127.0.0.0 netmask 255.0.0.0 lo
 
 # TODO: uncomment below
 

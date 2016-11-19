@@ -19,6 +19,45 @@ hard disk with a root password and one other user whois is an
 administrator and has a password. I will refer to this user as "user"
 in this document.
 
+OPTIONAL: if you are installing Fedora to a solid-state drive (SSD),
+and want the /home and /root directories on another drive, partition
+as follows:
+
+  - Set the /home partition to 5GiB. We will symlink to the remote
+  drive later.
+
+  - Set the swap partition to the size of your memory; ideally, double
+  the size of your memory if you have it (but see below)
+
+  - Leave the /boot and /boot/efi partitions as is.
+
+  - Give the remaining space to the / partition, but leave at least
+  20GiB: you probably won't need it, but the dnf installs below total
+  ~9GiB, so you just might if you install even more stuff.
+
+OPTIONAL: You make want to create a trivial "fake" user (username:
+fake) with a trivial password (password: "abc123") during installation
+and then create a "real" user later on, especially if you want the
+real user's home directory to be on a different drive. Note that:
+
+  - You can create a "fake" user with a weak password only during the
+  installation phase (you to confirm the weak password, but it's still
+  possible).
+
+  - Do make the "fake" user an administrator (ie, a member of the
+  group 'wheel'), because you will need to "sudo su" from it if you're
+  creating the real user's home directory on a different partition.
+
+  - If you choose not to create a user at all, you will be required to
+  create one when Fedora first starts up. In this case, however, it
+  will be impossible to use a weak password.
+
+  - If you create a "fake" user with no password, you will have
+  difficulty using "ssh", since "ssh"ing to a passwordless account
+  requires tweaking /etc/sshd_config
+
+  - If you want to ssh directly to the "root" user, you will also need to tweak /etc/sshd_config
+
 After removing the installation media and rebooting, login as
 user. You will now be in the GNOME environment. Now:
 
@@ -42,13 +81,68 @@ to type out the IP address each time. Of course, make sure you use the
 machine's actual IP address, which probably won't be 192.168.0.3 in
 your case.
 
-% "ssh user@brighton" to login remotely
+% "ssh user@brighton" to login remotely (or "ssh fake@brighton" to
+create a new user with a home directory on a different drive)
 
 % "sudo su" to become root
 
 % do this so you can become root passwordlessly (we will need this later):
 
 echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/wheel
+
+% OPTIONAL: to move home directories to a bigger drive, run commands
+similar to the following (your big drive partition may vary):
+
+: my large drive is hereby dubbed "kemptown"
+cryptsetup open /dev/sdb3 kemptown
+
+: /dev/sdb[12] are small partitions that I will ignore
+
+: because I installed Fedora on kemptown first, I have this issue:
+
+# lvscan 
+  ACTIVE            '/dev/fedora/root' [45.10 GiB] inherit
+  ACTIVE            '/dev/fedora/home' [2.00 GiB] inherit
+  ACTIVE            '/dev/fedora/swap' [64.00 GiB] inherit
+  inactive          '/dev/fedora/swap' [30.56 GiB] inherit
+  inactive          '/dev/fedora/home' [7.20 TiB] inherit
+  inactive          '/dev/fedora/root' [50.00 GiB] inherit
+
+Namely, I have identical LVM names on two drives. I can use lvrename
+to fix, but:
+
+# lvrename /dev/fedora/home /dev/fedora/althome
+  Multiple VGs found with the same name: skipping fedora
+  Use the VG UUID with --select vg_uuid=<uuid>
+
+Thus, I used "vgdisplay" to get the correct device, but the "--select"
+option does not actually exist for lvrename. However:
+
+vgrename my-vg-id /dev/oldfedora
+
+does work.
+
+: this activates the 3 volumes now on /dev/oldfedora
+
+vgchange -ay
+
+mkdir /mnt/kemptown
+mount /dev/mapper/oldfedora-home /mnt/kemptown
+
+: add this to fstab
+
+echo "/dev/mapper/oldfedora-home /mnt/kemptown ext4 defaults" >> /etc/fstab
+
+: finally, link root and user directories to new drive
+
+mkdir /mnt/kemptown/root/
+mv /root /root.old
+mv /home/user /home/user.old
+ln -s /mnt/kemptown/root /root
+ln -s /mnt/kemptown/user /home/user
+
+: if desired, move or copy things in /home/user.old and /root.old to
+: /home/user and /root respectively
 
 % This dnf command removes pretty much everything that can safely be
 removed (you may see some harmless errors).
@@ -75,19 +169,15 @@ systemctl -t service | egrep 'loaded +active +running'
 
 % To disable and stop most of these services:
 
-systemctl disable abrtd abrt-oops abrt-xorg avahi-daemon chronyd firewalld mcelog ModemManager NetworkManager-dispatcher NetworkManager rngd systemd-udevd systemd-logind systemd-journald avahi-daemon.socket systemd-udevd-control.socket systemd-udevd-kernel.socket systemd-journald.socket systemd-journald-audit.socket systemd-journald-dev-log.socket
+systemctl disable abrtd abrt-oops abrt-xorg avahi-daemon chronyd firewalld mcelog ModemManager NetworkManager-dispatcher rngd systemd-udevd systemd-logind systemd-journald avahi-daemon.socket systemd-udevd-control.socket systemd-udevd-kernel.socket systemd-journald.socket systemd-journald-audit.socket systemd-journald-dev-log.socket
 
 % Run the above command again, but replacing "disable" with "stop":
 
-systemctl stop abrtd abrt-oops abrt-xorg avahi-daemon chronyd firewalld mcelog ModemManager NetworkManager-dispatcher NetworkManager rngd systemd-udevd systemd-logind systemd-journald avahi-daemon.socket systemd-udevd-control.socket systemd-udevd-kernel.socket systemd-journald.socket systemd-journald-audit.socket systemd-journald-dev-log.socket
+systemctl stop abrtd abrt-oops abrt-xorg avahi-daemon chronyd firewalld mcelog ModemManager NetworkManager-dispatcher rngd systemd-udevd systemd-logind systemd-journald avahi-daemon.socket systemd-udevd-control.socket systemd-udevd-kernel.socket systemd-journald.socket systemd-journald-audit.socket systemd-journald-dev-log.socket
 
 % NOTE: do NOT try to disable (or remove the packages that contain)
 any of: "dbus", "lvm2-lvmetad", "polkit", "getty",
 "user@*.service". Doing so may break things severely.
-
-% NOTE: if you remove NetworkManager (as I do above), you will need to
-run dhclient yourself (which is why we create the startup-nox.sh
-file). You may prefer to let NetworkManager continue running
 
 % Manually remove /etc/resolv.conf which is now a broken symlink
 (dhclient will fill in the right values)
