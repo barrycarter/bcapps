@@ -135,20 +135,13 @@ mount /dev/mapper/oldfedora-home /mnt/kemptown
 
 : add this to fstab
 
-echo "/dev/mapper/oldfedora-home /mnt/kemptown ext4 defaults" >> /etc/fstab
+echo "/dev/mapper/oldfedora-home /mnt/kemptown ext4 nodev,nosuid,relatime 0 2" >> /etc/fstab
 
 : create the "real" user with a home directory on /mnt/kemptown/user
 
 useradd -d /mnt/kemptown/user -g wheel -u 1000 user
 
-: finally, link root directory to new drive
-
-mkdir /mnt/kemptown/root/
-mv /root /root.old
-ln -s /mnt/kemptown/root /root
-
-: if desired, move or copy things in /home/user.old and /root.old to
-: /home/user and /root respectively
+%% TODO: figure out how to move /root/ safely
 
 % This dnf command removes pretty much everything that can safely be
 removed (you may see some harmless errors).

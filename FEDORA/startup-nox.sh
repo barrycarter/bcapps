@@ -1,5 +1,9 @@
 # these are things I must run manually BEFORE starting X11
 
+# TODO: find a better way to do this
+sudo cryptsetup open /dev/sdb3 kemptown
+
+
 # Since I killed NetworkManager (perhaps a bad decision), must run
 # dhclient manually
 
