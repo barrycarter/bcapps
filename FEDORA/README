@@ -48,6 +48,10 @@ real user's home directory to be on a different drive. Note that:
   group 'wheel'), because you will need to "sudo su" from it if you're
   creating the real user's home directory on a different partition.
 
+  - Use "Advanced" to give the "fake" user an id "2001" or something
+  other than the default; you will want your main user to have user id
+  1001.
+
   - If you choose not to create a user at all, you will be required to
   create one when Fedora first starts up. In this case, however, it
   will be impossible to use a weak password.
@@ -133,13 +137,15 @@ mount /dev/mapper/oldfedora-home /mnt/kemptown
 
 echo "/dev/mapper/oldfedora-home /mnt/kemptown ext4 defaults" >> /etc/fstab
 
-: finally, link root and user directories to new drive
+: create the "real" user with a home directory on /mnt/kemptown/user
+
+useradd -d /mnt/kemptown/user -g wheel -u 1000 user
+
+: finally, link root directory to new drive
 
 mkdir /mnt/kemptown/root/
 mv /root /root.old
-mv /home/user /home/user.old
 ln -s /mnt/kemptown/root /root
-ln -s /mnt/kemptown/user /home/user
 
 : if desired, move or copy things in /home/user.old and /root.old to
 : /home/user and /root respectively
@@ -158,7 +164,8 @@ shutdown -r now
 % you will come up a "localhost login" or similar prompt, not a
 windows environment (you don't actually need to login locally)
 
-% Remotely, "ssh user@brighton" and "sudo su" again
+% Remotely, "ssh user@brighton" and "sudo su" again (even if you used
+"fake@brighton" earlier, you should use "user@brighton" from now on)
 
 % There are still several daemons running but we can stop and disable
 them with systemctl
