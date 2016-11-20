@@ -1,0 +1,32 @@
+# A list of programs for bc-daemon-checker2.pl for brighton
+
+# These programs may run for as long as they wish
+
+<may>
+
+# TODO: for some reason, I have this running twice, need to kill off
+# one instance somehow; also, it should be possible to run without
+# this running all the time since brighton has static IP
+
+/sbin/dhclient
+
+/usr/libexec/Xorg
+
+# below: processes I dislike but can't seem to get rid of w/o breaking things
+/usr/lib/polkit-1/polkitd
+(sd-pam)
+
+
+</may>
+
+# processes that must be running at all times
+
+<must>
+
+sendmail:
+
+/usr/sbin/httpd
+
+
+</must>
+

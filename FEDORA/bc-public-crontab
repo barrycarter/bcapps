@@ -1,3 +1,8 @@
+# set some environment variables
+
+DISPLAY=":0.0"
+
+
 # this is the public portion of my crontab file on brighton; it loads
 # and runs the private part (which is separate) as well
 
@@ -7,15 +12,25 @@
 
 # update every minute (overkill) but keep a safe copy of the combined file
 
+# NOTE: "crontab -l | egrep -v '^#'|sort|uniq" is useful to find
+# cronjobs on old machine I want to transfer over
+
 # TODO: create a program that checks the new joined crontab is valid
 # and rolls back (w/ a warning) if not
 
-# TODO: make sure there no references to /home/barrycarter (which is
-# my actual username)-- genericize to /home/user (except for this
-# reference itself, of course)
+# TODO: make sure nothing redirects for /dev/null for now, since I
+# actually do want to see errors until I'm confident things are
+# working
+
+# TODO: make sure there are no unocmmented references to
+# /home/barrycarter (which is my actual username)-- genericize to
+# /home/user
 
 # note that I symlink /home/user to /home/barrycarter so these entries
 # will work "as is" for me
+
+# TODO: I *must* run this command manually at least once to bootstrap
+# the process
 
 * * * * * cat /home/user/bc-crontab-private /home/user/BCGIT/FEDORA/bc-crontab-public > /home/user/bc-crontab-final; crontab /home/user/bc-crontab-final
 
@@ -114,4 +129,12 @@
 # and from bcinfo3
 
 49 8 * * * rsync -e 'ssh -i /home/user/.ssh/id_rsa.bc' -Pavz "root@bcinfo3:/var/log/lighttpd/*" /home/user/html/weblogs/bcinfo3/
+
+# check that the correct procs are running and not running
+
+*/5 * * * * sudo /home/user/BCGIT/bc-daemon-checker2.pl --file=/home/user/brighton-procs.txt --mach=brighton --sleep=50
+
+# I dislike ntpd so this adjusts the system clock frequency/etc regularly
+
+*/10 * * * * /home/user/BCGIT/bc-fake-ntp.pl -interval=600
 

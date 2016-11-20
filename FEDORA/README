@@ -8,6 +8,17 @@ are performing the install.
 NOTE: I will sometimes refer to "Fedora 24" as "Fedora Core 24"
 because many of the package names still have "fc24" in them.
 
+%% TODO: disclaim order of steps, multiple tries [or do additional
+reinstalls to test final file]
+
+%% TODO: last minute final sync from old machine to brighton, after
+all filechanging processes have been stopped forever
+
+%% TODO: perhaps do systemctl disables post dnf installs
+
+%% TODO: move files in this directory to the proper places on brighton
+(or symlink)
+
 This document describes how I (mostly remotely) created a minimal
 Fedora Core 24 system (no gnome, no evolution, no unnecessary daemons)
 running fvwm2
@@ -188,11 +199,11 @@ systemctl -t service | egrep 'loaded +active +running'
 
 % To disable and stop most of these services:
 
-systemctl disable abrtd abrt-oops abrt-xorg avahi-daemon chronyd firewalld mcelog ModemManager NetworkManager-dispatcher rngd systemd-udevd systemd-logind systemd-journald avahi-daemon.socket systemd-udevd-control.socket systemd-udevd-kernel.socket systemd-journald.socket systemd-journald-audit.socket systemd-journald-dev-log.socket
+systemctl disable abrtd abrt-oops abrt-xorg avahi-daemon chronyd firewalld mcelog ModemManager NetworkManager-dispatcher rngd systemd-udevd systemd-logind systemd-journald avahi-daemon.socket systemd-udevd-control.socket systemd-udevd-kernel.socket systemd-journald.socket systemd-journald-audit.socket systemd-journald-dev-log.socket udisks2
 
 % Run the above command again, but replacing "disable" with "stop":
 
-systemctl stop abrtd abrt-oops abrt-xorg avahi-daemon chronyd firewalld mcelog ModemManager NetworkManager-dispatcher rngd systemd-udevd systemd-logind systemd-journald avahi-daemon.socket systemd-udevd-control.socket systemd-udevd-kernel.socket systemd-journald.socket systemd-journald-audit.socket systemd-journald-dev-log.socket
+systemctl stop abrtd abrt-oops abrt-xorg avahi-daemon chronyd firewalld mcelog ModemManager NetworkManager-dispatcher rngd systemd-udevd systemd-logind systemd-journald avahi-daemon.socket systemd-udevd-control.socket systemd-udevd-kernel.socket systemd-journald.socket systemd-journald-audit.socket systemd-journald-dev-log.socket udisks2
 
 % NOTE: do NOT try to disable (or remove the packages that contain)
 any of: "dbus", "lvm2-lvmetad", "polkit", "getty",
@@ -226,7 +237,9 @@ earlier, but only a minimal acceptable subset)
 
 sudo dnf install --allowerasing --best http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
-sudo dnf install --allowerasing --best ImageMagick OpenThreads PySolFC SDL-devel alpine aspell audacity bind c++-gtk-utils-gtk2-devel community-mysql community-mysql-server dosbox dosemu elinks emacs enscript esniper expect feh ffmpeg ftp fuse-encfs fvwm gd gd-devel getmail glade glade-devel glib2 gnumeric gnuplot gpm graphviz gtk+extra-devel gtk2 gtk2-devel gtk3-devel html2ps lynx mencoder moreutils-parallel mplayer mrtg nagios nagios-plugins nano ncftp openrdate perl-CPAN php-mysqlnd pidgin postgresql postgresql-server qgis qhull rdesktop recoll rsyslog rxvt samba screen snownews stella stellarium tcsh tigervnc tk unrtf util-linux-user vice vino vlc xdotool xemacs xemacs-packages-extra-el xinetd xorg-x11-apps xpdf xsane xteddy xterm xv yum yum-utils zlib zlib-devel zlib-static mod_ldap mod_dnssd tor tor-arm-gui tor-arm onionshare privoxy celestia recordmydesktop
+sudo dnf install --allowerasing --best ImageMagick OpenThreads PySolFC SDL-devel alpine aspell audacity bind c++-gtk-utils-gtk2-devel community-mysql community-mysql-server dosbox dosemu elinks emacs enscript esniper expect feh ffmpeg ftp fuse-encfs fvwm gd gd-devel getmail glade glade-devel glib2 gnumeric gnuplot gpm graphviz gtk+extra-devel gtk2 gtk2-devel gtk3-devel html2ps lynx mencoder moreutils-parallel mplayer mrtg nagios nagios-plugins nano ncftp openrdate perl-CPAN php-mysqlnd pidgin postgresql postgresql-server qgis qhull rdesktop recoll rsyslog rxvt samba screen snownews stella stellarium tcsh tigervnc tk unrtf util-linux-user vice vino vlc xdotool xemacs xemacs-packages-extra-el xinetd xorg-x11-apps xpdf xsane xteddy xterm xv yum yum-utils zlib zlib-devel zlib-static mod_ldap mod_dnssd tor tor-arm-gui tor-arm onionshare privoxy celestia recordmydesktop tmpwatch esmtp-local-delivery sendmail sendmail-cf
+
+%% TODO: confirm dnf-installs matches above
 
 : and a bunch of CPAN stuff
 
@@ -257,13 +270,22 @@ xargs wc -c < /tmp/dnf-files.txt | egrep ' total$' |tee /tmp/dnf-wc-totals.txt
 
 postgresql-setup --initdb
 
+% edit /etc/mail/sendmail.mc
+
+define(`SMART_HOST', `smtp.comcast.net')dnl
+
+% NOTE: you can run "make" after the above (in /etc/mail), but
+starting sendmail does this automatically
+
 % enable new services we want ("systemctl list-unit-files" for list)
 
-systemctl enable postgresql mysqld nagios dnsmasq httpd
+systemctl enable postgresql mysqld nagios dnsmasq httpd sendmail
 
 : and then start these services
 
-systemctl start postgresql mysqld nagios dnsmasq httpd
+systemctl start postgresql mysqld nagios dnsmasq httpd sendmail
+
+% NOTE: local mail now working remote mail not
 
 % import postgres data
 
@@ -393,3 +415,13 @@ Could not get "selinux" for .
 %% TODO: fedora assumes same passphrase for multiple encrypted disks?
 
 %% TODO: install and run skype
+
+%% TODO: if copying over cron jobs, change old machine name to new machine name
+
+%% TODO: redirect cron output somewhere useful or setup sendmail properly
+
+%% TODO: setup sendmail properly using comcast servers
+
+%% TODO: get nagios working
+
+ LocalWords:  rhgb whereever
