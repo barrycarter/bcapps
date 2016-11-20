@@ -14,6 +14,13 @@ xrandr --size 1024x768
 
 /usr/libexec/vino-server & 
 
+# per
+# http://unix.stackexchange.com/questions/39518/turn-off-beep-of-xorg
+# there may not actually be an option for this in xorg.conf, so doing
+# it here
+
+xset b off
+
 # The exec below replaces the xinit process (which is no longer
 # necessary after the above) with the fvwm2 window manager-- I think
 

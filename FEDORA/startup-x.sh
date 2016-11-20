@@ -6,11 +6,6 @@
 # TODO: these should be configurable without having to run these
 # commands everytime; figure out how
 
-xset b off
-xhost + localhost
-xset dpms 600 3600 7200
-xset r rate 250 25
-
 # firefox
 firefox&
 
@@ -39,8 +34,4 @@ rxvt -geometry 165x52+1024+26 -font x -T ELINKS -n ELINKS -tn vt100 -e elinks &
 # it's useful to have an extra wide screen just above the main fvwm screen
 rxvt -geometry 165x52+0+2339 -font x -T WIDESCREEN -n WIDESCREEN &
 
-# TODO: I can't seem to obtain vidalia (tor, yes; vidalia, no) using
-# yum/dnf; I will uncomment this line when I acquire it somehow
-
-# vidalia &
-
+# vidalia is dead :(

@@ -1,0 +1,10 @@
+# To run: "stellarium --startup-script bc-test.ssc"
+core.setTimeRate(0);
+core.setDate("2012:03:05T16:30:00");
+core.wait(2);
+for (i=0; i<35; i++)
+{
+core.setDate("+1 days")
+core.wait(.2);
+core.screenshot("jv", false);
+}

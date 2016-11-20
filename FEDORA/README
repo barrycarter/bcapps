@@ -94,6 +94,10 @@ create a new user with a home directory on a different drive)
 
 echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/wheel
 
+% If desired, edit /boot/efi/EFI/fedora/grub.cfg and remove "rhgb
+quiet" whereever they occur (rhgb = red hat graphical boot). This way,
+you can see what the system is doing when it starts up.
+
 % OPTIONAL: to move home directories to a bigger drive, run commands
 similar to the following (your big drive partition may vary):
 
@@ -138,7 +142,21 @@ mount /dev/mapper/oldfedora-home /mnt/kemptown
 useradd -d /mnt/kemptown/user -g wheel -u 1000 user
 passwd user
 
-%% TODO: figure out how to move /root/ safely
+% To get /mnt/kemptown booting automatically:
+
+echo "luks /dev/sdb3 -" >> /etc/cryptsetup
+echo "/dev/mapper/oldfedora-home /mnt/kemptown ext4" >> /etc/fstab
+
+% You can now move /root/ safely
+
+mv /root /root.old;
+ln -s /mnt/kemptown/root /root
+
+% this symlink let's me actually install as /home/user but still "be"
+barrycarter
+
+sudo ln -s /home/user /home/barrycarter
+
 
 % This dnf command removes pretty much everything that can safely be
 removed (you may see some harmless errors).
@@ -208,7 +226,11 @@ earlier, but only a minimal acceptable subset)
 
 sudo dnf install --allowerasing --best http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
-sudo dnf install --allowerasing --best ImageMagick OpenThreads PySolFC SDL-devel alpine aspell audacity bind c++-gtk-utils-gtk2-devel community-mysql community-mysql-server dosbox dosemu elinks emacs enscript esniper expect feh ffmpeg ftp fuse-encfs fvwm gd gd-devel getmail glade glade-devel glib2 gnumeric gnuplot gpm graphviz gtk+extra-devel gtk2 gtk2-devel gtk3-devel html2ps lynx mencoder moreutils-parallel mplayer mrtg nagios nagios-plugins nano ncftp openrdate perl-CPAN php-mysqlnd pidgin postgresql postgresql-server qgis qhull rdesktop recoll rsyslog rxvt samba screen snownews stella stellarium tcsh tigervnc tk unrtf util-linux-user vice vino vlc xdotool xemacs xemacs-packages-extra-el xinetd xorg-x11-apps xpdf xsane xteddy xterm xv yum yum-utils zlib zlib-devel zlib-static mod_ldap mod_dnssd tor tor-arm-gui tor-arm onionshare privoxy celestia
+sudo dnf install --allowerasing --best ImageMagick OpenThreads PySolFC SDL-devel alpine aspell audacity bind c++-gtk-utils-gtk2-devel community-mysql community-mysql-server dosbox dosemu elinks emacs enscript esniper expect feh ffmpeg ftp fuse-encfs fvwm gd gd-devel getmail glade glade-devel glib2 gnumeric gnuplot gpm graphviz gtk+extra-devel gtk2 gtk2-devel gtk3-devel html2ps lynx mencoder moreutils-parallel mplayer mrtg nagios nagios-plugins nano ncftp openrdate perl-CPAN php-mysqlnd pidgin postgresql postgresql-server qgis qhull rdesktop recoll rsyslog rxvt samba screen snownews stella stellarium tcsh tigervnc tk unrtf util-linux-user vice vino vlc xdotool xemacs xemacs-packages-extra-el xinetd xorg-x11-apps xpdf xsane xteddy xterm xv yum yum-utils zlib zlib-devel zlib-static mod_ldap mod_dnssd tor tor-arm-gui tor-arm onionshare privoxy celestia recordmydesktop
+
+: and a bunch of CPAN stuff
+
+sudo cpan Digest::SHA1 Digest::MD5 Date::Parse POSIX Text::Unidecode Test MIME::Base64 utf8 Statistics::Distributions Math::Round Data::Dumper B Astro::Nova Astro::MoonPhase JSON Algorithm::GoldenSection Astro::Coord::ECI::Moon Astro::Time DBI DB_File Data::Dumper Data::Faker Date::Manip Date::Parse Digest::HMAC_SHA1 Digest::SHA FFI::Raw Fcntl File::Temp Flickr::API GD Getopt::Long Getopt::Std HTML::TreeBuilder::XPath HTTP::Date IO::File IPC::Open3 Imager::QRCode Inline::Python LWP::UserAgent Math::BigInt Math::Round Math::Polygon::Calc Math::ematica Net::Amazon::MechanicalTurk Net::DNS::Nameserver Net::LDAP Number::Spell OpenGL Pg Plucene::Analysis::SimpleAnalyzer Plucene::Document::Field Plucene::Document Plucene
 
 : and the sources of everything installed above AND the dependencies
 : (excluding those things that "dnf list installed" gives but aren't
@@ -274,9 +296,27 @@ sudo mkdir /usr/lib/X11
 sudo ln -s /usr/libexec/fvwm/2.6.6 /usr/lib/X11/fvwm2
 
 % other helpful symlinks if you're using older software or programs
-that rely on a specific path:
+that rely on a specific path (or my bclib.pl):
 
 sudo ln -s /bin/php /usr/local/bin/
+sudo ln -s /home/barrycarter/BCGIT/bclib.pl /usr/local/lib/
+
+% these are directories my programs use that must be writeable by user
+
+sudo mkdir /usr/local/etc/locks
+sudo mkdir /usr/local/etc/registry
+sudo chown -R user /usr/local/etc
+
+% things we must build manually (not in any good repo)
+
+: NOTE: must install fly 1.6.5 -- version 2.0.1 breaks bc-bg.pl methodology
+: get fly from link on http://www.w3perl.com/fly/installation.html
+cd /root/build
+cp ~user/Downloads/fly-1.6.5.tar.gz .
+tar xvfz fly-1.6.5.tar.gz
+cd fly-1.6.5
+make
+cp fly /usr/local/bin/
 
 %% TODO: mysql, even with dump above, does not appear to have same
 users; however "mysql -u root" works as user
@@ -310,7 +350,16 @@ configtest" to find these):
 % You can then return to remote access using "vncviewer -geometry
 1024x768 brigton&"
 
-%% TODO: chsh tcsh
+% I prefer the tcsh for both user and root though some believe this
+isn't a good idea:
+
+chsh -s /bin/tcsh root
+chsh -s /bin/tcsh user
+
+% To get "xset r rate 250 25" automatically, add this
+/etc/X11/xorg.conf.d/00-keyboard.conf:
+
+Option "AutoRepeat" "250 25"
 
 %% TODO: copy my .fvwm2rc file over into this dir after I get it
 working right on brighton live editing
@@ -327,6 +376,8 @@ github well
 %% TODO: create ~/brighton-procs.txt for what's allowed to run on
 brighton for bc-daemon-checker2.pl (and update .crontab to run this)
 
+%% TODO: start crontab using "crontab ~/.crontab" for now, but different later
+
 %% TODO: make sure bcgit alias works
 
 %% TODO: try reinstalling OS on SSD, user dirs on HD
@@ -339,3 +390,6 @@ Attribute "selinux" has a 41 byte value for .
 : however
 Could not get "selinux" for .
 
+%% TODO: fedora assumes same passphrase for multiple encrypted disks?
+
+%% TODO: install and run skype

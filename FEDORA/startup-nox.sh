@@ -1,23 +1,4 @@
-# these are things I must run manually BEFORE starting X11
-
-# TODO: find a better way to do this
-sudo cryptsetup open /dev/sdb3 kemptown
-
-
-# Since I killed NetworkManager (perhaps a bad decision), must run
-# dhclient manually
-
-# decided to tolerate NetworkMananger, so this file is currently
-# completely unneeded
-
-# sudo dhclient
-
-# for some reason, neither Network Manager or the system default
-# routing brings up the lo interface-- it's harmless, but I dislike
-# using the Ethernet interface for loopback
-
-# TODO: check that Network Manager actually brings this up
-# sudo route add -net 127.0.0.0 netmask 255.0.0.0 lo
+# these are things I must run manually BEFORE starting X11, if any
 
 # TODO: uncomment below
 
@@ -31,4 +12,3 @@ sudo cryptsetup open /dev/sdb3 kemptown
 
 # TODO: uncomment below
 # sudo recollindex -m -x
-
