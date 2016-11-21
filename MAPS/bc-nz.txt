@@ -1,3 +1,5 @@
+http://gis.stackexchange.com/questions/218413/how-to-extract-polygon-data-from-google-maps/218444?noredirect=1#comment335405_218444
+
 EDIT: I'm guessing the OP has long since solved the problem, but here
 are some additional thoughts, purely for verbosity reasons.
 
@@ -9,65 +11,73 @@ I confirmed the overlays occur at zoom level 11, but not at zoom level 10. More 
 
 https://s1-vodafone.cloud.eaglegis.co.nz/arcgis/rest/services/coverage-maps/Mobile_3G_0_T_FF5400/MapServer/tile/10/641/1009
 
-  - Assuming we want the most detail, we will use zoom level 10, but
-  still need to find the x and y ranges.
+  - Since we want the most detail, we will use zoom level 10, and now
+  need to find the x and y ranges.
 
-  - Using my http://test.barrycarter.info/gettile.php, we see the
-  easternmost level 10 tile is the Chatham/Pitt Island area with an x
-  value of 1034.
+  - Assuming that we're only concerned with "mainland" New Zealand
+  (the two big islands and any nearby offshore islands), and not in
+  the absolute extrema points mentioned at
+  https://en.wikipedia.org/wiki/List_of_extreme_points_of_New_Zealand#New_Zealand_overall
+  (all of which are on smaller and fairly distant islands), we use
+  http://test.barrycarter.info/gettile.php to find:
 
-[[3.png]]
+    - The easternmost zoom 10 tiles are near the aptly titled "East Cape" with an x value of 1019:
 
-  - The westernmost zoom 10 tile is on Auckland Island with an x value (at zoom level 10) of 983.
+[[10.png]]
 
-[[4.png]]
+    - The westernmost zoom 10 tiles are near the not-quite-so-aptly
+    named South Island, with an x value of 985.
 
-  - The southernmost zoom 10 tile is on Campbell Island (actually it's
-  the little island to the south of Campbell Island, known as
-  Jacquemart Island, but it's in the same zoom 10 tile) with a y value
-  of 688:
+[[11.png]]
 
-[[5.png]]
+    - The southernmost zoom 10 tiles are near the aptly-titled Big
+    South Cape Island with a y value of 665:
 
-  - Finally, the northermost zoom 10 tile is 
+[[12.png]]
 
-https://en.wikipedia.org/wiki/List_of_extreme_points_of_New_Zealand says westernmost is Cape Lovitt but no
+    - Finally, the northermost zoom 10 tiles are on Three Kings'
+    Island (google won't show the name unless you zoom in one level
+    deeper though) with a y value of 615:
 
+[[13.png]]
 
-TODO: note unrealistic
+  - Thus, we need to download all tiles where x is between 985 and
+  1019 (inclusive) and y is between 615 and 665 (inclusive) for a
+  total of 35*51 or 1785 tiles.
 
-TODO: dl missing, rezip, re upl to dropbox
+  - The Perl script below will do this for you (when piped to sh):
 
-TODO: note parallel cruelty
+perl -le 'for $x (985..1019) {for $y (615..665) {print "curl -o 10,$x,$y.png https://s1-vodafone.cloud.eaglegis.co.nz/arcgis/rest/services/coverage-maps/Mobile_3G_0_T_FF5400/MapServer/tile/10/$y/$x"}}'
 
-https://en.wikipedia.org/wiki/List_of_extreme_points_of_New_Zealand
+Notice that vodafone uses /$y/$x in that order, instead of the more
+normal /$x/$y order.
 
-we find the southernmost and westernmost zoom level 10 tiles for New Zealand are on 
+  - Note that many of these PNG files are blank, and it turns out that
+  Vodafone stops at y=664 (which is reasonable, since only a small
+  portion of "mainland" New Zealand reaches into y=665), so the y=665
+  files will all be HTML files saying "not found".
 
+  - If you'd prefer not to download the files yourself, I've
+  downloaded and zipped them at:
+  https://www.dropbox.com/s/9nqhp6caqkxcxf0/20161120.zip?dl=0
 
-x=983, y=680 is the SW most at zoom=10
+  - I didn't check carefully, but the resulting images appear to have
+  4 colors:
 
-y=616 (and x=1003) at zoom 10 is northernmost
+    - #000000 (black): no coverage
 
-prob not on auckland island, but
+    - #88e200 (shade of dark orange): poor signal
 
-x=1019 = easternmost (y=627)
+    - #af3b00 (different shade of dark orange): medium signal
 
-so xrnage: 983-1019
-yrange: 616-680
+    - #c74200 (strong orange): good signal
 
-so: 37 times 65 = 2405 images
+(color descriptions courtesy http://www.colorhexa.com/)
 
-notice y x reversal
+  - The next is to convert each pixel to a latitude/longitude area,
+  which I do in the "slippy2latlon" subroutine in
+  https://github.com/barrycarter/bcapps/blob/master/bclib.pl
 
-perl -le 'for $x (983..1019) {for $y (616..680) {print "curl -o 10,$x,$y.png https://s1-vodafone.cloud.eaglegis.co.nz/arcgis/rest/services/coverage-maps/Mobile_3G_0_T_FF5400/MapServer/tile/10/$y/$x"}}'|tee temp.sh
-
-perl -le 'for $x (983..1019) {for $y (616..680) {print "curl -o 10,$x,$y.png https://s1-vodafone.cloud.eaglegis.co.nz/arcgis/rest/services/coverage-maps/Mobile_3G_0_T_FF5400/MapServer/tile/10/$y/$x"}}' | tee temp.sh
-
-19.25 miles are dim of square, so pixel is 400 ft by 400ft
-
-some are HTML!
-
-20161120.zip
-
-https://www.dropbox.com/s/86p4ko002frnlql/20161120.zip?dl=0
+  - Note from the extrema images above, each individual gridbox is
+  less than 20.14 miles wide. Since there are 256 pixels to a gridbox,
+  the resolution is 20.14/256*5280 or about 415 feet per pixel.

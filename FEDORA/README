@@ -14,21 +14,19 @@ reinstalls to test final file]
 %% TODO: last minute final sync from old machine to brighton, after
 all filechanging processes have been stopped forever
 
-%% TODO: perhaps do systemctl disables post dnf installs
-
 %% TODO: move files in this directory to the proper places on brighton
 (or symlink)
 
 This document describes how I (mostly remotely) created a minimal
-Fedora Core 24 system (no gnome, no evolution, no unnecessary daemons)
+Fedora 24 system (no gnome, no evolution, no unnecessary daemons)
 running fvwm2
 
-I assume that you have downloaded Fedora Core 24 from
-https://getfedora.org/en/workstation/download/ burned and booted from
-the DVD image, and clicked "Install" to install Fedora Core 24 on your
-hard disk with a root password and one other user whois is an
-administrator and has a password. I will refer to this user as "user"
-in this document.
+Download Fedora 24 from
+https://getfedora.org/en/workstation/download/, burn it to a DVD or
+USB stick, and boot from the DVD or USB stick. When prompted, click
+"Install" to install Fedora 24 on your hard disk.
+
+Create a root password and another user (called "user") with no password.
 
 OPTIONAL: if you are installing Fedora to a solid-state drive (SSD),
 and want the /home and /root directories on another drive, partition
@@ -46,33 +44,6 @@ as follows:
   20GiB: you probably won't need it, but the dnf installs below total
   ~9GiB, so you just might if you install even more stuff.
 
-OPTIONAL: You make want to create a trivial "fake" user (username:
-fake) with a trivial password (password: "abc123") during installation
-and then create a "real" user later on, especially if you want the
-real user's home directory to be on a different drive. Note that:
-
-  - You can create a "fake" user with a weak password only during the
-  installation phase (you to confirm the weak password, but it's still
-  possible).
-
-  - Do make the "fake" user an administrator (ie, a member of the
-  group 'wheel'), because you will need to "sudo su" from it if you're
-  creating the real user's home directory on a different partition.
-
-  - Use "Advanced" to give the "fake" user an id "2001" or something
-  other than the default; you will want your main user to have user id
-  1001.
-
-  - If you choose not to create a user at all, you will be required to
-  create one when Fedora first starts up. In this case, however, it
-  will be impossible to use a weak password.
-
-  - If you create a "fake" user with no password, you will have
-  difficulty using "ssh", since "ssh"ing to a passwordless account
-  requires tweaking /etc/sshd_config
-
-  - If you want to ssh directly to the "root" user, you will also need to tweak /etc/sshd_config
-
 After removing the installation media and rebooting, login as
 user. You will now be in the GNOME environment. Now:
 
@@ -80,10 +51,8 @@ user. You will now be in the GNOME environment. Now:
 the settings icon at the bottom left of the pulldown menu.
 
 % Select "Sharing", and turn on Sharing in general and "Remote Login"
-specifically.
-
-% Logout by clicking the down arrow again, choosing your user name,
-and clicking Logout. From now on, we will be working remotely.
+specifically (even though you're logged in as the passwordless 'user'
+account, this will turn on ssh for root)
 
 % On your local machine (not the one on which you're installing Fedora
 Core 24), add the machine's IP address to /etc/hosts something like
@@ -96,28 +65,51 @@ to type out the IP address each time. Of course, make sure you use the
 machine's actual IP address, which probably won't be 192.168.0.3 in
 your case.
 
-% "ssh user@brighton" to login remotely (or "ssh fake@brighton" to
-create a new user with a home directory on a different drive)
+% "ssh root@brighton" to login remotely as root
 
-% "sudo su" to become root
+% OPTIONAL: If you have an encrypted non-boot drive (I'm naming mine
+kemptown), do the following (note use your LVM's actual name below--
+if you previously tried installing fedora this other drive, your LVMs
+will have the same name, which you will have to fix-- see "If you
+installed Fedora on kemptown..." below):
 
-% do this so you can become root passwordlessly (we will need this later):
-
-echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/wheel
-
-% If desired, edit /boot/efi/EFI/fedora/grub.cfg and remove "rhgb
-quiet" whereever they occur (rhgb = red hat graphical boot). This way,
-you can see what the system is doing when it starts up.
-
-% OPTIONAL: to move home directories to a bigger drive, run commands
-similar to the following (your big drive partition may vary):
-
-: my large drive is hereby dubbed "kemptown"
 cryptsetup open /dev/sdb3 kemptown
+echo "luks /dev/sdb3 -" > /etc/cryptsetup
+echo "luks UUID=the-uuid-given-by-blkid-for-dev-sdb3" > /etc/crypttab
+echo "/dev/mapper/oldfedora-home /mnt/kemptown ext4 defaults,x-systemd.device-timeout=30 60 90" >> /etc/fstab
+mkdir /mnt/kemptown
+mount /mnt/kemptown
 
-: /dev/sdb[12] are small partitions that I will ignore
+% OPTIONAL: move user's home to /mnt/kemptown:
 
-: because I installed Fedora on kemptown first, I have this issue:
+: if below reports "userdel: user user is currently used by process
+: xxxx", kill process xxxx (potentially repeatedly) until the command
+: succeeds
+
+userdel user;
+rm -rf /home/user;
+useradd -d /mnt/kemptown/user -g wheel -u 1000 user
+passwd user
+ln -s /mnt/kemptown/user /home
+: move root over as well
+mv /root /root.old
+ln -s /mnt/kemptown/root /root
+
+% From local machine, rsync over BCGIT to brighton, since I will use
+symlinks to get things in their proper place
+
+\rsync -Pavn /home/barrycarter/BCGIT user@brighton:/home/user/
+
+% rsync the "runme.sh" in this directory to brighton and run it (see
+runme.sh for details)
+
+% stop selinux by editing "SELINUX=enforcing" to "SELINUX=disabled" in
+/etc/selinux/config as root (changes will take place on next reboot)
+
+% NOTE: during graphical boot, hit ESC to see what system is actually doing
+
+% If you installed Fedora on kemptown (other drive) first, you may
+have this issue:
 
 # lvscan 
   ACTIVE            '/dev/fedora/root' [45.10 GiB] inherit
@@ -131,6 +123,7 @@ Namely, I have identical LVM names on two drives. I can use lvrename
 to fix, but:
 
 # lvrename /dev/fedora/home /dev/fedora/althome
+
   Multiple VGs found with the same name: skipping fedora
   Use the VG UUID with --select vg_uuid=<uuid>
 
@@ -148,36 +141,6 @@ vgchange -ay
 mkdir /mnt/kemptown
 mount /dev/mapper/oldfedora-home /mnt/kemptown
 
-: create the "real" user with a home directory on /mnt/kemptown/user
-
-useradd -d /mnt/kemptown/user -g wheel -u 1000 user
-passwd user
-
-% To get /mnt/kemptown booting automatically:
-
-echo "luks /dev/sdb3 -" >> /etc/cryptsetup
-echo "/dev/mapper/oldfedora-home /mnt/kemptown ext4" >> /etc/fstab
-
-% You can now move /root/ safely
-
-mv /root /root.old;
-ln -s /mnt/kemptown/root /root
-
-% this symlink let's me actually install as /home/user but still "be"
-barrycarter
-
-sudo ln -s /home/user /home/barrycarter
-
-
-% This dnf command removes pretty much everything that can safely be
-removed (you may see some harmless errors).
-
-sudo dnf remove audit gssproxy alsa-utils 'gvfs*' rtkit "gnome*" "evolution*"
-
-% Put the .xinitrc, startup-nox.sh, and startup-x.sh files in this
-directory in ~user, and, if desired, the systemctl-disable.sh and
-dnf-installs.sh scripts into /tmp/
-
 % reboot to bring up the system without these daemons running (you
 will need to go local to boot "fedora" (not recovery mode) and type in
 your disk encryption password
@@ -187,30 +150,13 @@ shutdown -r now
 % you will come up a "localhost login" or similar prompt, not a
 windows environment (you don't actually need to login locally)
 
-% Remotely, "ssh user@brighton" and "sudo su" again (even if you used
-"fake@brighton" earlier, you should use "user@brighton" from now on)
+%% TODO: consider moving pgsql and mysql dirs to 8TB drive
 
-% There are still several daemons running but we can stop and disable
-them with systemctl
+% Remotely, "ssh root@brighton"
 
 % INFO: you can use the following to see which services are still running:
 
 systemctl -t service | egrep 'loaded +active +running'
-
-% To disable and stop most of these services:
-
-systemctl disable abrtd abrt-oops abrt-xorg avahi-daemon chronyd firewalld mcelog ModemManager NetworkManager-dispatcher rngd systemd-udevd systemd-logind systemd-journald avahi-daemon.socket systemd-udevd-control.socket systemd-udevd-kernel.socket systemd-journald.socket systemd-journald-audit.socket systemd-journald-dev-log.socket udisks2
-
-% Run the above command again, but replacing "disable" with "stop":
-
-systemctl stop abrtd abrt-oops abrt-xorg avahi-daemon chronyd firewalld mcelog ModemManager NetworkManager-dispatcher rngd systemd-udevd systemd-logind systemd-journald avahi-daemon.socket systemd-udevd-control.socket systemd-udevd-kernel.socket systemd-journald.socket systemd-journald-audit.socket systemd-journald-dev-log.socket udisks2
-
-% NOTE: do NOT try to disable (or remove the packages that contain)
-any of: "dbus", "lvm2-lvmetad", "polkit", "getty",
-"user@*.service". Doing so may break things severely.
-
-% stop selinux by editing "SELINUX=enforcing" to "SELINUX=disabled" in
-/etc/selinux/config as root (changes will take place on next reboot)
 
 % INFO: use "ps -ef | fgrep -v '['" to see the few remaining
 (nonbracketed) processes. You CANNOT safely kill or remove any of these
@@ -222,32 +168,9 @@ and type in your disk encryption password.
 
 % then, remotely "ssh user@brighton" and then "sudo su" again
 
-%% TODO: right now, to get user's home directory back, you must:
-
-sudo cryptsetup open /dev/sdb3 kemptown
-sudo mount /dev/mapper/oldfedora-home /mnt/kemptown
-
-I need to improve this process.
-
-% You can now install many things remotely (or locally), including
-fvwm2 (note that this will reinstall SOME of what we uninstalled
-earlier, but only a minimal acceptable subset)
-
-: we first install a couple of repos
-
-sudo dnf install --allowerasing --best http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-
-sudo dnf install --allowerasing --best ImageMagick OpenThreads PySolFC SDL-devel alpine aspell audacity bind c++-gtk-utils-gtk2-devel community-mysql community-mysql-server dosbox dosemu elinks emacs enscript esniper expect feh ffmpeg ftp fuse-encfs fvwm gd gd-devel getmail glade glade-devel glib2 gnumeric gnuplot gpm graphviz gtk+extra-devel gtk2 gtk2-devel gtk3-devel html2ps lynx mencoder moreutils-parallel mplayer mrtg nagios nagios-plugins nano ncftp openrdate perl-CPAN php-mysqlnd pidgin postgresql postgresql-server qgis qhull rdesktop recoll rsyslog rxvt samba screen snownews stella stellarium tcsh tigervnc tk unrtf util-linux-user vice vino vlc xdotool xemacs xemacs-packages-extra-el xinetd xorg-x11-apps xpdf xsane xteddy xterm xv yum yum-utils zlib zlib-devel zlib-static mod_ldap mod_dnssd tor tor-arm-gui tor-arm onionshare privoxy celestia recordmydesktop tmpwatch esmtp-local-delivery sendmail sendmail-cf
-
-%% TODO: confirm dnf-installs matches above
-
-: and a bunch of CPAN stuff
-
-sudo cpan Digest::SHA1 Digest::MD5 Date::Parse POSIX Text::Unidecode Test MIME::Base64 utf8 Statistics::Distributions Math::Round Data::Dumper B Astro::Nova Astro::MoonPhase JSON Algorithm::GoldenSection Astro::Coord::ECI::Moon Astro::Time DBI DB_File Data::Dumper Data::Faker Date::Manip Date::Parse Digest::HMAC_SHA1 Digest::SHA FFI::Raw Fcntl File::Temp Flickr::API GD Getopt::Long Getopt::Std HTML::TreeBuilder::XPath HTTP::Date IO::File IPC::Open3 Imager::QRCode Inline::Python LWP::UserAgent Math::BigInt Math::Round Math::Polygon::Calc Math::ematica Net::Amazon::MechanicalTurk Net::DNS::Nameserver Net::LDAP Number::Spell OpenGL Pg Plucene::Analysis::SimpleAnalyzer Plucene::Document::Field Plucene::Document Plucene
-
-: and the sources of everything installed above AND the dependencies
-: (excluding those things that "dnf list installed" gives but aren't
-: actually packages)
+%% OPTIONAL: install sources of everything I've got installed and
+their dependencies (excluding those things that "dnf list installed"
+gives but aren't actually packages)
 
 : if using SSD, make these symlinks on big drive
 mkdir /root/dnf-sources
@@ -266,26 +189,12 @@ xargs wc -c < /tmp/dnf-files.txt | egrep ' total$' |tee /tmp/dnf-wc-totals.txt
 
 : for me this is 8786074786 or about 8.8 GiB
 
-% initialize postgresql
-
-postgresql-setup --initdb
-
 % edit /etc/mail/sendmail.mc
 
 define(`SMART_HOST', `smtp.comcast.net')dnl
 
 % NOTE: you can run "make" after the above (in /etc/mail), but
 starting sendmail does this automatically
-
-% enable new services we want ("systemctl list-unit-files" for list)
-
-systemctl enable postgresql mysqld nagios dnsmasq httpd sendmail
-
-: and then start these services
-
-systemctl start postgresql mysqld nagios dnsmasq httpd sendmail
-
-% NOTE: local mail now working remote mail not
 
 % import postgres data
 
@@ -302,32 +211,6 @@ sudo -u postgres psql < /tmp/pgsql-super-dump.txt
 mysqldump --all-databases > mysql-super-dump.txt
 : rsync over to brighton (not shown)
 sudo mysql < /tmp/mysql-super-dump.txt
-
-% To access the system remotely via vnc after reboot, run these commands:
-
-gsettings set org.gnome.Vino require-encryption false
-gsettings set org.gnome.Vino prompt-enabled false
-gsettings set org.gnome.Vino authentication-methods "['vnc']"
-: replace "mypassword" with whatever password you'd like to use
-gsettings set org.gnome.Vino vnc-password `echo -n "mypassword"|base64`
-
-% if you're using an older .fvwm2rc file and want to continue using
-it, this may be helpful:
-
-sudo mkdir /usr/lib/X11
-sudo ln -s /usr/libexec/fvwm/2.6.6 /usr/lib/X11/fvwm2
-
-% other helpful symlinks if you're using older software or programs
-that rely on a specific path (or my bclib.pl):
-
-sudo ln -s /bin/php /usr/local/bin/
-sudo ln -s /home/barrycarter/BCGIT/bclib.pl /usr/local/lib/
-
-% these are directories my programs use that must be writeable by user
-
-sudo mkdir /usr/local/etc/locks
-sudo mkdir /usr/local/etc/registry
-sudo chown -R user /usr/local/etc
 
 % things we must build manually (not in any good repo)
 
@@ -373,15 +256,10 @@ configtest" to find these):
 1024x768 brigton&"
 
 % I prefer the tcsh for both user and root though some believe this
-isn't a good idea:
+isn't a good idea (so not putting in runme.sh):
 
 chsh -s /bin/tcsh root
 chsh -s /bin/tcsh user
-
-% To get "xset r rate 250 25" automatically, add this
-/etc/X11/xorg.conf.d/00-keyboard.conf:
-
-Option "AutoRepeat" "250 25"
 
 %% TODO: copy my .fvwm2rc file over into this dir after I get it
 working right on brighton live editing
@@ -395,14 +273,7 @@ github well
 
 %% TODO: get local httpd working
 
-%% TODO: create ~/brighton-procs.txt for what's allowed to run on
-brighton for bc-daemon-checker2.pl (and update .crontab to run this)
-
-%% TODO: start crontab using "crontab ~/.crontab" for now, but different later
-
 %% TODO: make sure bcgit alias works
-
-%% TODO: try reinstalling OS on SSD, user dirs on HD
 
 %% TODO: some files still have selinux attrs, remove these?:
 
@@ -423,5 +294,3 @@ Could not get "selinux" for .
 %% TODO: setup sendmail properly using comcast servers
 
 %% TODO: get nagios working
-
- LocalWords:  rhgb whereever

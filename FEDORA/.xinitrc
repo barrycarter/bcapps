@@ -14,6 +14,10 @@ xrandr --size 1024x768
 
 /usr/libexec/vino-server & 
 
+# these can be set in xorg.conf but it's easier to do it this way
+xset dpms off
+xset r rate 250 25
+
 # per
 # http://unix.stackexchange.com/questions/39518/turn-off-beep-of-xorg
 # there may not actually be an option for this in xorg.conf, so doing

@@ -1,3 +1,0 @@
-systemctl disable abrtd abrt-oops abrt-xorg avahi-daemon chronyd firewalld mcelog ModemManager NetworkManager-dispatcher rngd systemd-udevd systemd-logind systemd-journald avahi-daemon.socket systemd-udevd-control.socket systemd-udevd-kernel.socket systemd-journald.socket systemd-journald-audit.socket systemd-journald-dev-log.socket
-systemctl stop abrtd abrt-oops abrt-xorg avahi-daemon chronyd firewalld mcelog ModemManager NetworkManager-dispatcher rngd systemd-udevd systemd-logind systemd-journald avahi-daemon.socket systemd-udevd-control.socket systemd-udevd-kernel.socket systemd-journald.socket systemd-journald-audit.socket systemd-journald-dev-log.socket
-
