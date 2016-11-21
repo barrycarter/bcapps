@@ -1,0 +1,73 @@
+EDIT: I'm guessing the OP has long since solved the problem, but here
+are some additional thoughts, purely for verbosity reasons.
+
+I confirmed the overlays occur at zoom level 11, but not at zoom level 10. More specifically:
+
+  - https://s1-vodafone.cloud.eaglegis.co.nz/arcgis/rest/services/coverage-maps/Mobile_3G_0_T_FF5400/MapServer/tile/11/1282/2018 yields an error, even though its in central Wellington, a large New Zealand city.
+
+  - https://s1-vodafone.cloud.eaglegis.co.nz/arcgis/rest/services/coverage-maps/Mobile_3G_0_T_FF5400/MapServer/tile/10/641/1009 however, exists, and, as expected, looks quite full:
+
+https://s1-vodafone.cloud.eaglegis.co.nz/arcgis/rest/services/coverage-maps/Mobile_3G_0_T_FF5400/MapServer/tile/10/641/1009
+
+  - Assuming we want the most detail, we will use zoom level 10, but
+  still need to find the x and y ranges.
+
+  - Using my http://test.barrycarter.info/gettile.php, we see the
+  easternmost level 10 tile is the Chatham/Pitt Island area with an x
+  value of 1034.
+
+[[3.png]]
+
+  - The westernmost zoom 10 tile is on Auckland Island with an x value (at zoom level 10) of 983.
+
+[[4.png]]
+
+  - The southernmost zoom 10 tile is on Campbell Island (actually it's
+  the little island to the south of Campbell Island, known as
+  Jacquemart Island, but it's in the same zoom 10 tile) with a y value
+  of 688:
+
+[[5.png]]
+
+  - Finally, the northermost zoom 10 tile is 
+
+https://en.wikipedia.org/wiki/List_of_extreme_points_of_New_Zealand says westernmost is Cape Lovitt but no
+
+
+TODO: note unrealistic
+
+TODO: dl missing, rezip, re upl to dropbox
+
+TODO: note parallel cruelty
+
+https://en.wikipedia.org/wiki/List_of_extreme_points_of_New_Zealand
+
+we find the southernmost and westernmost zoom level 10 tiles for New Zealand are on 
+
+
+x=983, y=680 is the SW most at zoom=10
+
+y=616 (and x=1003) at zoom 10 is northernmost
+
+prob not on auckland island, but
+
+x=1019 = easternmost (y=627)
+
+so xrnage: 983-1019
+yrange: 616-680
+
+so: 37 times 65 = 2405 images
+
+notice y x reversal
+
+perl -le 'for $x (983..1019) {for $y (616..680) {print "curl -o 10,$x,$y.png https://s1-vodafone.cloud.eaglegis.co.nz/arcgis/rest/services/coverage-maps/Mobile_3G_0_T_FF5400/MapServer/tile/10/$y/$x"}}'|tee temp.sh
+
+perl -le 'for $x (983..1019) {for $y (616..680) {print "curl -o 10,$x,$y.png https://s1-vodafone.cloud.eaglegis.co.nz/arcgis/rest/services/coverage-maps/Mobile_3G_0_T_FF5400/MapServer/tile/10/$y/$x"}}' | tee temp.sh
+
+19.25 miles are dim of square, so pixel is 400 ft by 400ft
+
+some are HTML!
+
+20161120.zip
+
+https://www.dropbox.com/s/86p4ko002frnlql/20161120.zip?dl=0
