@@ -1,7 +1,7 @@
 # This dnf command removes pretty much everything that can safely be
 # removed (you may see some harmless errors).
 
-sudo dnf -y remove audit gssproxy alsa-utils 'gvfs*' rtkit "gnome*" "evolution*"
+sudo dnf -y remove gssproxy alsa-utils 'gvfs*' rtkit "gnome*" "evolution*"
 
 # TODO: cleanup the removes above and below; redundant
 
@@ -30,9 +30,9 @@ sudo systemctl start postgresql mysqld nagios dnsmasq httpd sendmail
 
 # disable and stop unneeded services
 
-sudo systemctl disable abrtd abrt-oops abrt-xorg avahi-daemon chronyd firewalld mcelog ModemManager NetworkManager-dispatcher rngd systemd-udevd systemd-logind systemd-journald avahi-daemon.socket systemd-udevd-control.socket systemd-udevd-kernel.socket systemd-journald.socket systemd-journald-audit.socket systemd-journald-dev-log.socket udisk2
+sudo systemctl stop    abrtd abrt-oops abrt-ccpp.service abrt-vmcore.service abrt-xorg avahi-daemon chronyd firewalld mcelog ModemManager NetworkManager-dispatcher rngd systemd-udevd systemd-logind systemd-journald avahi-daemon.socket systemd-udevd-control.socket systemd-udevd-kernel.socket systemd-journald.socket systemd-journald-audit.socket systemd-journald-dev-log.socket udisks2
 
-sudo systemctl stop abrtd abrt-oops abrt-xorg avahi-daemon chronyd firewalld mcelog ModemManager NetworkManager-dispatcher rngd systemd-udevd systemd-logind systemd-journald avahi-daemon.socket systemd-udevd-control.socket systemd-udevd-kernel.socket systemd-journald.socket systemd-journald-audit.socket systemd-journald-dev-log.socket udisks2
+sudo systemctl mask abrtd abrt-oops abrt-ccpp.service abrt-vmcore.service abrt-xorg avahi-daemon chronyd firewalld mcelog ModemManager NetworkManager-dispatcher rngd systemd-udevd systemd-logind systemd-journald avahi-daemon.socket systemd-udevd-control.socket systemd-udevd-kernel.socket systemd-journald.socket systemd-journald-audit.socket systemd-journald-dev-log.socket udisks2
 
 # useful symlinks
 

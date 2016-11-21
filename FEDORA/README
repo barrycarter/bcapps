@@ -73,9 +73,14 @@ if you previously tried installing fedora this other drive, your LVMs
 will have the same name, which you will have to fix-- see "If you
 installed Fedora on kemptown..." below):
 
+: initially, there is no "/etc/cryptsetup" and "/etc/crypttab" reads:
+
+: luks-id-of-root-partition UUID=id-of-root-partition none
+
 cryptsetup open /dev/sdb3 kemptown
 echo "luks /dev/sdb3 -" > /etc/cryptsetup
-echo "luks UUID=the-uuid-given-by-blkid-for-dev-sdb3" > /etc/crypttab
+: this must be an append, since main drive should appear there first
+echo "luks UUID=the-uuid-given-by-blkid-for-dev-sdb3" >> /etc/crypttab
 echo "/dev/mapper/oldfedora-home /mnt/kemptown ext4 defaults,x-systemd.device-timeout=30 60 90" >> /etc/fstab
 mkdir /mnt/kemptown
 mount /mnt/kemptown
