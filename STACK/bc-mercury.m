@@ -10,9 +10,9 @@ START OF ANSWER:
 
 [[image36.gif]]
 
-The image above (Sun not to scale) shows the orbit of Mercury with the
-Sun as the center. This agrees with two other images that are also
-meant to show Mercury's orbit to scale:
+The image above (Sun depicted at 3 times actual diameter) shows the
+orbit of Mercury with the Sun as the center. This agrees with two
+other images that are also meant to show Mercury's orbit to scale:
 
   - https://www.reddit.com/r/askscience/comments/5e1zhy/what_does_mercurys_orbit_really_look_like/dab8g7q/ which links to:
 
@@ -38,6 +38,25 @@ Things to note:
   - Mercury's semiminor axis is 97.86% the length of its semimajor
   axis, so is looks very much like a circle. To see this, we plot
   again, this time using the midpoint of the two foci as the origin:
+
+[[image37.gif]]
+
+The x diameter is 587 pixels and the y diameter is 575 pixels. If you
+draw a blue circle with a radius averaging Mercury's semiminor and
+semimajor axes, you get:
+
+[[image38.gif]]
+
+I'll leave it to the reader to decide if Mercury's orbit does or does
+not look like a circle.
+
+*)
+
+sma y value 12 to 587 = diameter
+
+695 to 108 = x diameter
+
+
 
 
 
@@ -80,6 +99,10 @@ right curve *)
 
 g[t_] = {sma*Cos[t]+prh-sma, smi*Sin[t]}
 
+h[t_] = {sma*Cos[t]+prh-sma, sma*Sin[t]}
+
+g1431 = ParametricPlot[h[t], {t,0,2*Pi}]
+
 g1 = ParametricPlot[g[t], {t,0,2*Pi}, PlotStyle -> Pink]
 
 g2 = ParametricPlot[f[t], {t,0,2*Pi}, PlotStyle -> Pink]
@@ -90,12 +113,18 @@ g3 = Graphics[{
  Point[{sma-prh,0}]
 }]
 
-Show[{g2,g3}, Axes -> True, Background -> Black, AxesStyle -> White]
+Show[{g2,g3,g5}, Axes -> True, Background -> Black, AxesStyle -> White]
 
+Show[{g0,g1,g1431}, Axes -> True, Background -> Black, AxesStyle -> White]
+
+g5 = Graphics[{
+ RGBColor[{0,0,1}],
+ Circle[{0,0}, (sma+smi)/2]
+}]
 
 
 g0 = Graphics[{
- PointSize[0.05],
+ PointSize[3*AstronomicalData["Sun","Diameter"]/au/2],
  RGBColor[{255,255,0}],
  Point[{0,0}]
 }]
