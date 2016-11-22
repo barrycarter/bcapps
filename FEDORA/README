@@ -43,7 +43,7 @@ OPTIONAL: if you are installing Fedora to a solid-state drive (SSD),
 and want the /home and /root directories on another drive, partition
 as follows:
 
-  - Set the /home partition to 5GiB. We will symlink to the remote
+  - Set the /home partition to 5GiB. We will symlink to the big drive
   drive later.
 
   - Set the swap partition to the size of your memory; ideally, double
@@ -65,7 +65,7 @@ the settings icon at the bottom left of the pulldown menu.
 specifically (even though you're logged in as the passwordless 'user'
 account, this will turn on ssh for root)
 
-% On your local machine (not the one on which you're installing Fedora
+% On your remote machine (not the one on which you're installing Fedora
 Core 24), add the machine's IP address to /etc/hosts something like
 this:
 
@@ -111,10 +111,16 @@ ln -s /mnt/kemptown/user /home
 mv /root /root.old
 ln -s /mnt/kemptown/root /root
 
-% From local machine, rsync over BCGIT to brighton, since I will use
-symlinks to get things in their proper place
+% NOT WORKING: To setup passwordless ssh/rsync, add remote ssh key (in ~/.ssh/id_dsa.pub or similar on remote machine) to ~/.ssh/authorized_keys
+
+% From remote machine, rsync over BCGIT to brighton, since I will use
+: symlinks to get things in their proper place
 
 \rsync -Pavn /home/barrycarter/BCGIT user@brighton:/home/user/
+
+: and rsync over my private crontab, one of the few files not in this directory
+
+\rsync -Pavn /home/barrycarter/bc-private-crontab user@brighton:/home/user/
 
 : and then run the commands in runme.sh
 : below should do everything automatically, but MAY require user intervention
@@ -267,6 +273,10 @@ isn't a good idea (so not putting in runme.sh):
 
 chsh -s /bin/tcsh root
 chsh -s /bin/tcsh user
+
+% Need to this only once for user; will autoupdate after that
+
+crontab ~/BCGIT/FEDORA/bc-public-crontab
 
 %% TODO: copy my .fvwm2rc file over into this dir after I get it
 working right on brighton live editing

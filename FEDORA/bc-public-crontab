@@ -2,7 +2,6 @@
 
 DISPLAY=":0.0"
 
-
 # this is the public portion of my crontab file on brighton; it loads
 # and runs the private part (which is separate) as well
 
@@ -31,6 +30,8 @@ DISPLAY=":0.0"
 
 # TODO: I *must* run this command manually at least once to bootstrap
 # the process
+
+# TODO: consider making /home/user/bc-crontab-public a symlink to this file
 
 * * * * * cat /home/user/bc-crontab-private /home/user/BCGIT/FEDORA/bc-crontab-public > /home/user/bc-crontab-final; crontab /home/user/bc-crontab-final
 

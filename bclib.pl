@@ -1,5 +1,10 @@
 # Barry Carter's Perl library (carter.barry@gmail.com)
 
+# per http://alvinalexander.com/perl/edu/articles/pl010015/ include
+# all paths that Perl can possibly use, assuming they actually exist
+
+# not actually done
+
 # required libs
 # NOTE: Some people believe you should only 'use' things that the lib
 # itself needs, not things that programs calling the lib may
