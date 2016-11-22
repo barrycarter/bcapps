@@ -8,6 +8,17 @@ are performing the install.
 NOTE: I will sometimes refer to "Fedora 24" as "Fedora Core 24"
 because many of the package names still have "fc24" in them.
 
+NOTE: during graphical boot, hit ESC to see what system is actually doing
+
+NOTE: if any step fails, reboot and try to backup (or reinstall) to
+the failing step
+
+NOTE: some of my commands in both this file and other files in this
+directory either print out something you can pipe to sh or use options
+like rsync's "-n" to do test runs. This is so you can see what a
+command does before actually running it. When ready to run, either
+pipe to sh or remove the dry run option as applicable
+
 %% TODO: disclaim order of steps, multiple tries [or do additional
 reinstalls to test final file]
 
@@ -15,7 +26,7 @@ reinstalls to test final file]
 all filechanging processes have been stopped forever
 
 %% TODO: move files in this directory to the proper places on brighton
-(or symlink)
+(or symlink) [many done, but need to make sure all done]
 
 This document describes how I (mostly remotely) created a minimal
 Fedora 24 system (no gnome, no evolution, no unnecessary daemons)
@@ -80,7 +91,7 @@ installed Fedora on kemptown..." below):
 cryptsetup open /dev/sdb3 kemptown
 echo "luks /dev/sdb3 -" > /etc/cryptsetup
 : this must be an append, since main drive should appear there first
-echo "luks UUID=the-uuid-given-by-blkid-for-dev-sdb3" >> /etc/crypttab
+echo "luks UUID=the-uuid-given-by-blkid-for-dev-sdb3 none" >> /etc/crypttab
 echo "/dev/mapper/oldfedora-home /mnt/kemptown ext4 defaults,x-systemd.device-timeout=30 60 90" >> /etc/fstab
 mkdir /mnt/kemptown
 mount /mnt/kemptown
@@ -105,16 +116,15 @@ symlinks to get things in their proper place
 
 \rsync -Pavn /home/barrycarter/BCGIT user@brighton:/home/user/
 
-% rsync the "runme.sh" in this directory to brighton and run it (see
-runme.sh for details)
+: and then run the commands in runme.sh
+: below should do everything automatically, but MAY require user intervention
+sudo sh /home/user/BCGIT/FEDORA/runme.sh
 
 % stop selinux by editing "SELINUX=enforcing" to "SELINUX=disabled" in
 /etc/selinux/config as root (changes will take place on next reboot)
 
-% NOTE: during graphical boot, hit ESC to see what system is actually doing
-
 % If you installed Fedora on kemptown (other drive) first, you may
-have this issue:
+have this issue (if not, jump to next "%"):
 
 # lvscan 
   ACTIVE            '/dev/fedora/root' [45.10 GiB] inherit
@@ -146,18 +156,14 @@ vgchange -ay
 mkdir /mnt/kemptown
 mount /dev/mapper/oldfedora-home /mnt/kemptown
 
-% reboot to bring up the system without these daemons running (you
-will need to go local to boot "fedora" (not recovery mode) and type in
-your disk encryption password
-
-shutdown -r now
+% reboot ("shutdown -r now") to bring up the system clean
 
 % you will come up a "localhost login" or similar prompt, not a
 windows environment (you don't actually need to login locally)
 
-%% TODO: consider moving pgsql and mysql dirs to 8TB drive
+% Remotely, "ssh user@brighton" and start xinit&
 
-% Remotely, "ssh root@brighton"
+%% TODO: consider moving pgsql and mysql dirs to 8TB drive
 
 % INFO: you can use the following to see which services are still running:
 
@@ -166,10 +172,6 @@ systemctl -t service | egrep 'loaded +active +running'
 % INFO: use "ps -ef | fgrep -v '['" to see the few remaining
 (nonbracketed) processes. You CANNOT safely kill or remove any of these
 (including "(sd-pam)")
-
-% reboot again to make sure the system comes up cleanly ("shutdown -r
-now"); as before, you will have to choose to boot into regular fedora
-and type in your disk encryption password.
 
 % then, remotely "ssh user@brighton" and then "sudo su" again
 
