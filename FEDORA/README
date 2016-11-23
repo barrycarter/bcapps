@@ -197,6 +197,13 @@ ssh-keygen -t rsa -b 2048 -f /home/user/.ssh/id_rsa
 
 (with no passphrase, since you'll need it for automated tasks)
 
+%% TODO: find and reinstall parallel version that uses stdin
+
+%% TODO: why not "dnf install '*'"?
+
+%% TODO: tweak local machine /etc/hosts file since many of my aliases
+depend on short hostnames (or tweak aliases)
+
 % things we must build manually (not in any good repo)
 
 : NOTE: must install fly 1.6.5 -- version 2.0.1 breaks bc-bg.pl methodology

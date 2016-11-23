@@ -52,7 +52,7 @@ sudo ln -s /home/user /home/barrycarter
 # if you're using an older .fvwm2rc, this may help -- if not, it
 # doesn't hurt
 
-sudo mkdir /usr/lib/X11
+sudo mkdir -p /usr/lib/X11
 sudo ln -s /usr/libexec/fvwm/2.6.6 /usr/lib/X11/fvwm2
 
 # other helpful symlinks if you're using older software or programs
@@ -65,11 +65,17 @@ sudo ln -s /home/barrycarter/BCGIT/bclib.pl /usr/local/lib/
 
 sudo ln -s /home/user/BCGIT/FEDORA/.xinitrc /home/user/BCGIT/FEDORA/startup-nox.sh /home/user/BCGIT/FEDORA/startup-x.sh /home/user/BCGIT/FEDORA/brighton-procs.txt /home/user
 
-# /usr/local/etc stuff my programs use (must be owned by user)
+# and some because I'm using older system
 
-sudo mkdir /usr/local/etc/locks
-sudo mkdir /usr/local/etc/registry
-sudo chown -R user /usr/local/etc
+sudo ln -s /usr/share/dict /usr/
+
+# directories my programs use and chown them to user
+
+sudo mkdir -p /usr/local/etc/locks /usr/local/etc/registry /var/tmp/montastic
+sudo chown -R user /usr/local/etc /var/tmp/
+
+# TODO: consider mirroring /usr/local/etc/ once I confirm its all my
+# stuff (lynx and scowl seem to use it too)
 
 # NOTE: do NOT try to disable (or remove the packages that contain)
 # any of: "dbus", "lvm2-lvmetad", "polkit", "getty",

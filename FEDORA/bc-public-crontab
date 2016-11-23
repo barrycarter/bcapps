@@ -44,21 +44,19 @@ MAILTO="daemon"
 * * * * * /home/user/BCGIT/bc-bg2.pl
 
 # snapshot my screen every minute
-* * * * * /home/user/BCGIT/bc-xwd.pl
+# TODO: restore this, it saves to an external drive that isn't there yet
+# * * * * * /home/user/BCGIT/bc-xwd.pl
 
 # update weather on background image every 10m or so
 */10 * * * * /home/user/BCGIT/bc-get-weather.pl
 
-# TODO: I might change www.barrycarter.info's IP address so change
-# below as needed to a more permanent link 
-
-# copy over error messages from www.barrycarter.info, which uses the same
+# copy over error messages from bcinfo3.barrycarter.info, which uses the same
 # ~/ERR/*.err protocol
 
-# Reminder: replace bcinfo3 with your own machine(s) and "user" with
-# your local username
+# Reminder: replace bcinfo3.barrycarter.info with your own machine(s)
+# and "user" with your local username
 
-*/5 * * * * rsync -e "ssh -i /home/user/.ssh/id_rsa.bc" -Pqaz "root@bcinfo3:/root/ERR/*.err" "root@bcinfo3:/home/user/ERR/*.err" /home/user/ERR/
+*/5 * * * * rsync -e "ssh -i /home/user/.ssh/id_rsa.bc" -Pqaz "root@bcinfo3.barrycarter.info:/root/ERR/*.err" "root@bcinfo3.barrycarter.info:/home/user/ERR/*.err" /home/user/ERR/
 
 # Reminds me to walkaround every 20m or so (pomodoro method?)
 0,20,40 * * * * /home/user/BCGIT/bc-walkaround.pl
@@ -77,7 +75,7 @@ MAILTO="daemon"
 # below) are staggered to avoid excessive system load a specific
 # minute
 
-11,41 * * * * cd /home/user/BCGIT; bc-montastic.pl
+11,41 * * * * cd /home/user/BCGIT; ./bc-montastic.pl
 
 # Update calendar (for background image) hourly
 
@@ -129,15 +127,11 @@ MAILTO="daemon"
 # remote system so I can't genercize it, and that I keep my weblogs in
 # a special subdirectory
 
-46 22 * * * rsync -e 'ssh -i /home/user/.ssh/id_rsa.bc' -Pvzrlpt barrycar@bcinfo4:/home/barrycar/tmp barrycar@bcinfo4:/home/barrycar/logs barrycar@bcinfo4:/usr/local/apache/domlogs/barrycar /home/user/html/weblogs/ARVIXE/
-
-# logs from bcinfonew
-
-47 8 * * * rsync -e 'ssh -i /home/user/.ssh/id_rsa.bc' -Pavz "root@bcinfonew:/var/log/lighttpd/*" /home/user/html/weblogs/bcinfonew/
+46 22 * * * rsync -e 'ssh -i /home/user/.ssh/id_rsa.bc' -Pvzrlpt barrycar@wordpress.barrycarter.info:/home/barrycar/tmp barrycar@wordpress.barrycarter.info:/home/barrycar/logs barrycar@wordpress.barrycarter.info:/usr/local/apache/domlogs/barrycar /home/user/html/weblogs/ARVIXE/
 
 # and from bcinfo3
 
-49 8 * * * rsync -e 'ssh -i /home/user/.ssh/id_rsa.bc' -Pavz "root@bcinfo3:/var/log/lighttpd/*" /home/user/html/weblogs/bcinfo3/
+49 8 * * * rsync -e 'ssh -i /home/user/.ssh/id_rsa.bc' -Pavz "root@bcinfo3.barrycarter.info:/var/log/lighttpd/*" /home/user/html/weblogs/bcinfo3/
 
 # check that the correct procs are running and not running
 
@@ -145,7 +139,7 @@ MAILTO="daemon"
 
 # I dislike ntpd so this adjusts the system clock frequency/etc regularly
 
-*/10 * * * * /home/user/BCGIT/bc-fake-ntp.pl -interval=600
+*/10 * * * * sudo /home/user/BCGIT/bc-fake-ntp.pl --interval=600
 
 # TODO: remove this after I've migrated to brighton completely
 

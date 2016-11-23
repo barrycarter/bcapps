@@ -10,9 +10,17 @@
 
 /sbin/dhclient
 
+# X11
 /usr/libexec/Xorg
 
+# the init process
+/usr/lib/systemd/systemd
+
+# firefox
+
+
 # below: processes I dislike but can't seem to get rid of w/o breaking things
+
 /usr/lib/polkit-1/polkitd
 (sd-pam)
 
@@ -27,6 +35,13 @@ sendmail:
 
 /usr/sbin/httpd
 
+/usr/sbin/crond
+
+/usr/sbin/xinetd
+
+# TODO: if I go back to systemd-journal kill this
+
+/usr/sbin/rsyslogd
 
 </must>
 
