@@ -1,3 +1,11 @@
+TODO: add disclaimer re these are my experiences AND you should not
+follow instructions blindly AND especially not run commands blindly
+AND especially not as root. No intentional malicious code, but blindly
+running stuff hurts you and other-- botnet
+
+TODO: note that I focus on LVM thingy but most people won't run into
+it unless they try to install one on media first another media later
+
 NOTE: any reference to "this directory" or "here" refers to
 https://github.com/barrycarter/bcapps/blob/master/FEDORA/
 
@@ -181,6 +189,26 @@ systemctl -t service | egrep 'loaded +active +running'
 
 % then, remotely "ssh user@brighton" and then "sudo su" again
 
+% setup passwordless login FROM remote to local machine (so I can
+rsync in crontab passwordlessly)
+
+: do this as user, it's more flexible
+
+
+
+% things we must build manually (not in any good repo)
+
+: NOTE: must install fly 1.6.5 -- version 2.0.1 breaks bc-bg.pl methodology
+: get fly from link on http://www.w3perl.com/fly/installation.html
+cd /root/build
+cp ~user/Downloads/fly-1.6.5.tar.gz .
+tar xvfz fly-1.6.5.tar.gz
+cd fly-1.6.5
+make
+cp fly /usr/local/bin/
+
+
+
 %% OPTIONAL: install sources of everything I've got installed and
 their dependencies (excluding those things that "dnf list installed"
 gives but aren't actually packages)
@@ -225,17 +253,6 @@ mysqldump --all-databases > mysql-super-dump.txt
 : rsync over to brighton (not shown)
 sudo mysql < /tmp/mysql-super-dump.txt
 
-% things we must build manually (not in any good repo)
-
-: NOTE: must install fly 1.6.5 -- version 2.0.1 breaks bc-bg.pl methodology
-: get fly from link on http://www.w3perl.com/fly/installation.html
-cd /root/build
-cp ~user/Downloads/fly-1.6.5.tar.gz .
-tar xvfz fly-1.6.5.tar.gz
-cd fly-1.6.5
-make
-cp fly /usr/local/bin/
-
 %% TODO: mysql, even with dump above, does not appear to have same
 users; however "mysql -u root" works as user
 
@@ -277,6 +294,8 @@ chsh -s /bin/tcsh user
 % Need to this only once for user; will autoupdate after that
 
 crontab ~/BCGIT/FEDORA/bc-public-crontab
+
+
 
 %% TODO: copy my .fvwm2rc file over into this dir after I get it
 working right on brighton live editing

@@ -1,0 +1,32 @@
+# because we are disabling gss and allowing root logins, I'm creating
+# this file which will be symlinked from /etc/ssh/sshd_config
+
+# this starts by running these commands on Fedora 24's default
+# /etc/ssh/sshd_config file
+
+# sudo egrep -v '^#' /etc/ssh/sshd_config | sort | uniq
+# and pasting the results below
+
+AcceptEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
+AcceptEnv LC_IDENTIFICATION LC_ALL LANGUAGE
+AcceptEnv LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT
+AcceptEnv XMODIFIERS
+AuthorizedKeysFile      .ssh/authorized_keys
+ChallengeResponseAuthentication no
+GSSAPIAuthentication yes
+GSSAPICleanupCredentials no
+HostKey /etc/ssh/ssh_host_ecdsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key
+HostKey /etc/ssh/ssh_host_rsa_key
+PasswordAuthentication yes
+PermitRootLogin yes
+Subsystem       sftp    /usr/libexec/openssh/sftp-server
+SyslogFacility AUTHPRIV
+UsePAM yes
+X11Forwarding yes
+
+
+
+
+
+# TODO: actually symlink

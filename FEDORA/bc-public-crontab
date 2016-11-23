@@ -2,6 +2,11 @@
 
 DISPLAY=":0.0"
 
+# TODO: see if this works -- daemon is a built in account, and this
+# SHOULD work because I have local mail delivery thing installed
+
+MAILTO="daemon"
+
 # this is the public portion of my crontab file on brighton; it loads
 # and runs the private part (which is separate) as well
 
@@ -35,8 +40,8 @@ DISPLAY=":0.0"
 
 * * * * * cat /home/user/bc-crontab-private /home/user/BCGIT/FEDORA/bc-crontab-public > /home/user/bc-crontab-final; crontab /home/user/bc-crontab-final
 
-# update background image every minute
-* * * * * /home/user/BCGIT/bc-bg.pl
+# update background every minute (version 2 for brighton, original breaks it)
+* * * * * /home/user/BCGIT/bc-bg2.pl
 
 # snapshot my screen every minute
 * * * * * /home/user/BCGIT/bc-xwd.pl
