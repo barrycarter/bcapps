@@ -39,6 +39,12 @@ sudo systemctl mask abrtd abrt-oops abrt-ccpp.service abrt-vmcore.service abrt-x
 
 # useful symlinks
 
+# TODO: for all symlinks, worry if symlink already exists?
+
+# TODO: maybe write program that checks symlink, ignores if exists
+# with right value, complains is file exists and is not a symlink or
+# wrong symlink
+
 # let's me be "user" but still "be" barrycarter at the same time
 
 sudo ln -s /home/user /home/barrycarter

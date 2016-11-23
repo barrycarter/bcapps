@@ -190,11 +190,12 @@ systemctl -t service | egrep 'loaded +active +running'
 % then, remotely "ssh user@brighton" and then "sudo su" again
 
 % setup passwordless login FROM remote to local machine (so I can
-rsync in crontab passwordlessly)
+rsync in crontab passwordlessly); if you don't already have an RSA key
+(do this as user, it's more flexible):
 
-: do this as user, it's more flexible
+ssh-keygen -t rsa -b 2048 -f /home/user/.ssh/id_rsa
 
-
+(with no passphrase, since you'll need it for automated tasks)
 
 % things we must build manually (not in any good repo)
 

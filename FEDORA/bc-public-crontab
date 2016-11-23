@@ -144,3 +144,10 @@ MAILTO="daemon"
 
 */10 * * * * /home/user/BCGIT/bc-fake-ntp.pl -interval=600
 
+# TODO: remove this after I've migrated to brighton completely
+
+# this rsyncs over changes from remote machine to brighton in case I forget
+
+# TODO: maybe make this less frequent
+
+*/10 * * * * rsync -Pavz user@192.168.0.2:/home/user/BCGIT /home/user/
