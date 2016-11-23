@@ -13,15 +13,23 @@
 <script type="text/javascript" src="http://ebay.barrycarter.info/jquery-3.1.1.min.js"></script>
 <script type="text/javascript">
 
-var myLatLng, myOptions, map, pt, ap, sun;
+var myLatLng, myOptions, map, pt, ap, sun, time;
 
 function updateSunMoon() {
+ $.get('http://test.bcinfo3.barrycarter.info/sunfake.pl', handleReply);
+}
 
- $.get('http://test.bcinfo3.barrycarter.info/sunfake.txt', 
- function(responseText) {alert(responseText);});
+function handleReply(data) {
 
-  //trigger AJAX request
-  //specify callback function(s) to process the result of the request
+ alert(data);
+ [body, long1, lat1, time1, long2, lat2, time2] = data.split(',');
+ time = new Date().getTime()/1000;
+ alert(time);
+
+ // sun.setCenter({lat: lat1, lng: lng1});
+ //trigger AJAX request
+ //specify callback function(s) to process the result of the request
+
 }
 
 //schedule function to be called every 5s
