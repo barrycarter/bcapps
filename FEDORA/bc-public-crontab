@@ -36,9 +36,9 @@ MAILTO="daemon"
 # TODO: I *must* run this command manually at least once to bootstrap
 # the process
 
-# TODO: consider making /home/user/bc-crontab-public a symlink to this file
+# TODO: consider making /home/user/bc-public-crontab a symlink to this file
 
-* * * * * cat /home/user/bc-crontab-private /home/user/BCGIT/FEDORA/bc-crontab-public > /home/user/bc-crontab-final; crontab /home/user/bc-crontab-final
+* * * * * cat /home/user/bc-private-crontab /home/user/BCGIT/FEDORA/bc-public-crontab > /home/user/bc-final-crontab; crontab /home/user/bc-final-crontab
 
 # update background every minute (version 2 for brighton, original breaks it)
 * * * * * /home/user/BCGIT/bc-bg2.pl
@@ -49,7 +49,10 @@ MAILTO="daemon"
 # update weather on background image every 10m or so
 */10 * * * * /home/user/BCGIT/bc-get-weather.pl
 
-# copy over error messages from bcinfo3, which uses the same
+# TODO: I might change www.barrycarter.info's IP address so change
+# below as needed to a more permanent link 
+
+# copy over error messages from www.barrycarter.info, which uses the same
 # ~/ERR/*.err protocol
 
 # Reminder: replace bcinfo3 with your own machine(s) and "user" with
