@@ -13,10 +13,10 @@ $outputfile = "/sites/test/sunstuff2.html";
 
 # TODO: ugly ugly ugly (should use Perl funcs and also not do "cat >>"
 $ENV{TZ} = "GMT";
-system("echo '<meta http-equiv=\"refresh\" content=\"60\">' > $outputfile");
-system("echo Last updated: `date` >> $outputfile");
+# system("echo '<meta http-equiv=\"refresh\" content=\"60\">' > $outputfile");
+# system("echo Last updated: `date` >> $outputfile");
 # circles that come close to the edges confuse google maps?
-system("echo '<br>The odd grey rectangles near the equinoxes appear to be an artifact of how google maps draws client-side circles' >> $outputfile");
+# system("echo '<br>The odd grey rectangles near the equinoxes appear to be an artifact of how google maps draws client-side circles' >> $outputfile");
 
 open(A, ">>$outputfile");
 
@@ -45,8 +45,9 @@ print A << "MARK"
   #map_canvas { height: 100% }
 </style>
 <script type="text/javascript"
-    src="http://maps.google.com/maps/api/js?sensor=false">
+    src="http://maps.google.com/maps/api/js?sensor=false&libraries=places">
 </script>
+
 <script type="text/javascript">
 
 function initialize() {
@@ -60,8 +61,63 @@ function initialize() {
   var map = new google.maps.Map(document.getElementById("map_canvas"),
       myOptions);
 
-// BEGIN INSERTED CODE
+// START CUT PASTE CODE
 
+var input = document.getElementById('searchTextField');
+var searchBox = new google.maps.places.SearchBox(input, {});
+
+map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+var markers = [];
+
+  // Listen for the event fired when the user selects a prediction and retrieve
+  // more details for that place.
+  searchBox.addListener('places_changed', function() {
+  var places = searchBox.getPlaces();
+
+  if (places.length == 0) {
+  return;
+  }
+
+  // Clear out the old markers.
+  markers.forEach(function(marker) {
+  marker.setMap(null);
+  });
+  markers = [];
+
+  // For each place, get the icon, name and location.
+  var bounds = new google.maps.LatLngBounds();
+  places.forEach(function(place) {
+  if (!place.geometry) {
+  console.log("Returned place contains no geometry");
+  return;
+  }
+  var icon = {
+  url: place.icon,
+  size: new google.maps.Size(71, 71),
+  origin: new google.maps.Point(0, 0),
+  anchor: new google.maps.Point(17, 34),
+  scaledSize: new google.maps.Size(25, 25)
+  };
+
+  // Create a marker for each place.
+  markers.push(new google.maps.Marker({
+  map: map,
+  icon: icon,
+  title: place.name,
+  position: place.geometry.location
+  }));
+
+  if (place.geometry.viewport) {
+  // Only geocodes have viewport.
+  bounds.union(place.geometry.viewport);
+  } else {
+  bounds.extend(place.geometry.location);
+  }
+  });
+  map.fitBounds(bounds);
+  });
+
+// END CUT PASTE CODE
 
 pt = new google.maps.LatLng($lat,$lon);
 ap = new google.maps.LatLng($alat,$alon);
@@ -137,9 +193,6 @@ $mrad = $EARTH_CIRC/4;
 
 print A << "MARK"
 
-var input = document.getElementById('searchTextField');
-var searchBox = new google.maps.places.SearchBox(input, {});
-
 mpt = new google.maps.LatLng($mlat,$mlon);
 
 new google.maps.Circle({
@@ -164,8 +217,9 @@ new google.maps.Marker({
 </script>
 </head>
 <body onload="initialize()">
-<input type="text" id="searchTextField"> 
-  <div id="map_canvas" style="width:100%; height:100%"></div>
+ <input type="text" id="searchTextField"> 
+  <div id="map_canvas" style="width:100%; height:100%">
+</div>
 </body>
 </html>
 
