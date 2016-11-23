@@ -21,10 +21,11 @@ function updateSunMoon() {
 
 function handleReply(data) {
 
- alert(data);
  [body, long1, lat1, time1, long2, lat2, time2] = data.split(',');
  time = new Date().getTime()/1000;
  alert(time);
+
+ 
 
  // sun.setCenter({lat: lat1, lng: lng1});
  //trigger AJAX request
@@ -33,7 +34,7 @@ function handleReply(data) {
 }
 
 //schedule function to be called every 5s
-setInterval(updateSunMoon, 5*1000);
+setInterval(updateSunMoon, 15*1000);
 
 //call it the first time
 updateSunMoon();

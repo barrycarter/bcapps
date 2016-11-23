@@ -21,6 +21,11 @@ NOTE: during graphical boot, hit ESC to see what system is actually doing
 NOTE: if any step fails, reboot and try to backup (or reinstall) to
 the failing step
 
+NOTE: in some cases, ssh to brighton works even during bootup error
+
+NOTE TO SELF: I have Fedora 24 installed to both P0: and P2: but
+should boot from P0: if not automatic
+
 NOTE: some of my commands in both this file and other files in this
 directory either print out something you can pipe to sh or use options
 like rsync's "-n" to do test runs. This is so you can see what a
@@ -32,6 +37,8 @@ reinstalls to test final file]
 
 %% TODO: last minute final sync from old machine to brighton, after
 all filechanging processes have been stopped forever
+
+%% TODO: remove redundant entries in BIOS
 
 %% TODO: move files in this directory to the proper places on brighton
 (or symlink) [many done, but need to make sure all done]
@@ -215,8 +222,6 @@ cd fly-1.6.5
 make
 cp fly /usr/local/bin/
 
-
-
 %% OPTIONAL: install sources of everything I've got installed and
 their dependencies (excluding those things that "dnf list installed"
 gives but aren't actually packages)
@@ -338,3 +343,20 @@ Could not get "selinux" for .
 %% TODO: setup sendmail properly using comcast servers
 
 %% TODO: get nagios working
+
+%% TODO: check for broken symlinks
+
+%% TODO: check personal file I had for bringing this machine up
+
+% TIP: Found an inconsistenty between dnf-installs.sh and runme.sh;
+resolving them as follows and then remove dnf-installs.s
+
+fgrep 'sudo dnf install' dnf-installs.sh | perl -anle 'print join("\n",@F)' | sort | uniq > /tmp/dnf.txt
+
+fgrep 'sudo dnf -y install' runme.sh | perl -anle 'print join("\n",@F)' | sort | uniq > ! /tmp/runme.txt
+
+diff /tmp/dnf.txt /tmp/runme.txt
+
+comm -13 /tmp/runme.txt /tmp/dnf.txt 
+
+

@@ -301,3 +301,35 @@ sqlite3 version trivially:
 3.7.17
 
 Fixing this by symlinking the correct /local/ version to bin
+
+# installing cspice so I can run BCGIT/ASTRO C programs
+
+: this is where bc-psuedo-make.pl expects them to be
+mkdir -p /home/barrycarter/SPICE/
+cd /home/barrycarter/SPICE/
+curl -O http://naif.jpl.nasa.gov/pub/naif/toolkit//C/PC_Linux_GCC_32bit/packages/cspice.tar.Z -O http://naif.jpl.nasa.gov/pub/naif/toolkit//C/PC_Linux_GCC_64bit/packages/importCSpice.csh -O http://naif.jpl.nasa.gov/pub/naif/toolkit//C/PC_Linux_GCC_64bit/packages/README
+tar xvf cspice.tar.Z
+cd cspice
+csh makeall.csh
+
+: to hold the binaries
+mkdir -p /home/barrycarter/bin/
+cd /home/barrycarter/BCGIT/ASTRO
+./bc-psuedo-make.pl
+
+: and the kernels
+mkdir -p /home/barrycarter/SPICE/KERNELS
+cd /home/barrycarter/SPICE/KERNELS
+curl -O http://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de431_part-1.bsp -O http://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de431_part-2.bsp -O http://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/pck00010.tpc -O https://naif.jpl.nasa.gov/pub/naif/generic_kernels/lsk/naif0011.tls -O https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/earth_latest_high_prec.bpc -O https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/earth_720101_070426.bpc
+
+: this could be combined w/ above
+curl -O https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/jup310.bsp -O https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/jup300.bsp -O https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura111.bsp -O https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep081.bsp -O https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/a_old_versions/sat365.bsp -O https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/earth_070425_370426_predict.bpc
+
+
+: TODO: can currently only be run from /home/barrycarter/BCGIT/ASTRO
+: as "/home/barrycarter/bin/..."; make this more flexible
+
+: TODO: create /home/user and symlink to /home/barrycarter to follow
+: my FEDORA/README plan
+
+

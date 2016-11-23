@@ -16,8 +16,23 @@
 # the init process
 /usr/lib/systemd/systemd
 
-# firefox
+# programs I usually keep running
 
+/usr/lib64/firefox/firefox
+elinks
+-tcsh
+
+# TODO: decide on whether I want to use xterm or rxvt instead of
+# splitting between the two
+
+xterm
+rxvt
+
+# TODO: consider moving this must
+gpm
+
+# I'm not always logged in remotely, but sometimes
+sshd:
 
 # below: processes I dislike but can't seem to get rid of w/o breaking things
 
@@ -31,15 +46,21 @@
 
 <must>
 
+# the usual daemons
 sendmail:
-
+/usr/sbin/httpd
+/usr/sbin/crond
+/usr/sbin/xinetd
+/usr/libexec/mysqld
+postgres:
 /usr/sbin/httpd
 
-/usr/sbin/crond
 
-/usr/sbin/xinetd
+# something is wrong if any of these are down
+gaim
 
-# TODO: if I go back to systemd-journal kill this
+
+# TODO: if I go back to systemd-journal, kill this
 
 /usr/sbin/rsyslogd
 

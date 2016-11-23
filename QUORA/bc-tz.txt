@@ -1,3 +1,10 @@
+TODO: this is incorrect; from pago pago (American Samoa) to Samoa or
+Tonga also works (Lalomanu to `Amanave: 45 mi but even shorter possible)
+
+https://www.quora.com/Can-time-difference-between-two-places-be-greater-than-24-hours is NOT the question I'm answering below (but is similar)
+
+https://www.quora.com/unanswered/Is-it-possible-to-skip-a-certain-day-by-flying-and-using-time-zones-to-your-advantage was the question I answered
+
 [[image5.gif]]
 
 If you fly from https://en.wikipedia.org/wiki/Baker_Island (an uninhabited territory of the United States) to the https://en.wikipedia.org/wiki/Phoenix_Islands (a minimally inhabited part of the nation of Kiribati), you will go from being 12 hours behind Greenwich Time to being 13 hours ahead of Greenwich time, a gain of 25 hours. Thus, you could cross the time zone boundary at 11:30pm Thursday, and it would then be 12:30am Saturday. Neither observe daylight time, so you could do this year-round.
