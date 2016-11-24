@@ -4,19 +4,24 @@
 
 <<Combinatorica`
 
-d = Range[1,4]
-
-x = Tuples[d,7];
-
-(* counts = Table[Max[BinCounts[i]], {i, x}]; *)
-
-BinCounts[counts]
-
 (* below is {n}d{k} *)
 
-counts[n_, k_] := counts[n,k] = 
- BinCounts[Map[Max[BinCounts[#]]&, Tuples[Range[1,k],n]]];
+(* TODO: this isn't correct, because it ignores n > k having 0s *)
 
+counts[n_, k_] := counts[n,k] = 
+ BinCounts[Map[Max[BinCounts[#]]&, Tuples[Range[1,k],n]], {1,n+1,1}];
+
+(* just to compute them *)
+
+t = Table[{i,j,counts[i,j]},{i,2,6},{j,2,6}];
+
+ListPlot[counts[5,6], PlotJoined -> True, PlotRange -> All]
+showit
+
+t0111 = Table[counts[6,i]/i^6,{i,2,6}]
+
+ListPlot[t0111, PlotJoined -> True, PlotRange -> All]
+showit
 
 
 (* 
