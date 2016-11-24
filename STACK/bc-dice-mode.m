@@ -8,9 +8,16 @@ d = Range[1,4]
 
 x = Tuples[d,7];
 
-counts = Table[Max[BinCounts[i]], {i, x}];
+(* counts = Table[Max[BinCounts[i]], {i, x}]; *)
 
 BinCounts[counts]
+
+(* below is {n}d{k} *)
+
+counts[n_, k_] := counts[n,k] = 
+ BinCounts[Map[Max[BinCounts[#]]&, Tuples[Range[1,k],n]]];
+
+
 
 (* 
 
