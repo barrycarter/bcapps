@@ -99,4 +99,14 @@ sudo gsettings set org.gnome.Vino vnc-password `echo -n "abc123"|base64`
 
 echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/wheel
 
+# bootstrap the user crontab process
 
+sudo crontab -u user /home/user/BCGIT/FEDORA/bc-public-crontab
+
+# putting these in main root might be dumb?
+# note 'sh -c' required so sudo does entire command
+sudo sh -c 'dnf list installed > /dnf-installed.txt'
+sudo sh -c 'cpan -l > /cpan-installed.txt'
+sudo sh -c 'systemctl > /systemctl-raw.txt'
+sudo sh -c 'systemctl list-unit-files > /systemctl-list-unit-files.txt'
+sudo sh -c 'ps -wwwef > /ps-wwwef.txt'

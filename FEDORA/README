@@ -70,8 +70,7 @@ as follows:
   - Set the /home partition to 5GiB. We will symlink to the big drive
   drive later.
 
-  - Set the swap partition to the size of your memory; ideally, double
-  the size of your memory if you have it (but see below)
+  - Delete the swap partition; we will create it below later
 
   - Leave the /boot and /boot/efi partitions as is.
 
@@ -105,20 +104,39 @@ your case.
 % OPTIONAL: If you have an encrypted non-boot drive (I'm naming mine
 kemptown), do the following (note use your LVM's actual name below--
 if you previously tried installing fedora this other drive, your LVMs
-will have the same name, which you will have to fix-- see "If you
-installed Fedora on kemptown..." below):
+will have the same name, which you will have to fix-- see
+"lvm-name-conflict.txt" in this directory):
 
 : initially, there is no "/etc/cryptsetup" and "/etc/crypttab" reads:
 
 : luks-id-of-root-partition UUID=id-of-root-partition none
 
 cryptsetup open /dev/sdb3 kemptown
+less /etc/cryptsetup
 echo "luks /dev/sdb3 -" > /etc/cryptsetup
+less /etc/crypttab
+blkid | fgrep /dev/sdb3
 : this must be an append, since main drive should appear there first
 echo "luks UUID=the-uuid-given-by-blkid-for-dev-sdb3 none" >> /etc/crypttab
 echo "/dev/mapper/oldfedora-home /mnt/kemptown ext4 defaults,x-systemd.device-timeout=30 60 90" >> /etc/fstab
 mkdir /mnt/kemptown
 mount /mnt/kemptown
+
+% If you installed Fedora on your large internal drive first and then
+tried to move the installation to an SSD drive, the steps above may
+not work properly: read lvm-name-conflict.txt in this directory to continue
+
+%% create swapspace on /mnt/kemptown/swapspace (TODO: there may be
+better ways of doing this but I'm wary of messing w/ my 8TB drive
+since I've copied stuff over and made changes)
+
+dd if=/dev/zero of=/mnt/kemptown/swap bs=1000000000 count=128 status=progress&
+mkswap /mnt/kemptown/swap
+less /etc/fstab
+echo "/mnt/kemptown/swap swap swap defaults 0 0" >> /etc/fstab
+swapon /mnt/kemptown/swap
+: below as recommended
+chmod 0600 /mnt/kemptown/swap
 
 % OPTIONAL: move user's home to /mnt/kemptown:
 
@@ -127,6 +145,8 @@ mount /mnt/kemptown
 : succeeds
 
 userdel user;
+find /home/user -type f
+: above should be tiny(ish)
 rm -rf /home/user;
 useradd -d /mnt/kemptown/user -g wheel -u 1000 user
 passwd user
@@ -135,63 +155,57 @@ ln -s /mnt/kemptown/user /home
 mv /root /root.old
 ln -s /mnt/kemptown/root /root
 
-% NOT WORKING: To setup passwordless ssh/rsync, add remote ssh key (in ~/.ssh/id_dsa.pub or similar on remote machine) to ~/.ssh/authorized_keys
-
 % From remote machine, rsync over BCGIT to brighton, since I will use
 : symlinks to get things in their proper place
 
-\rsync -Pavn /home/barrycarter/BCGIT user@brighton:/home/user/
+\rsync -Pav /home/barrycarter/BCGIT user@brighton:/home/user/
 
 : and rsync over my private crontab, one of the few files not in this directory
 
-\rsync -Pavn /home/barrycarter/bc-private-crontab user@brighton:/home/user/
+\rsync -Pav /home/barrycarter/bc-private-crontab user@brighton:/home/user/
+
+: seriously consider removing /root/.cpan to avoid screwing up the cpan install
 
 : and then run the commands in runme.sh
 : below should do everything automatically, but MAY require user intervention
-sudo sh /home/user/BCGIT/FEDORA/runme.sh
 
-% stop selinux by editing "SELINUX=enforcing" to "SELINUX=disabled" in
-/etc/selinux/config as root (changes will take place on next reboot)
+sudo sh -c 'sh -v /home/user/BCGIT/FEDORA/runme.sh 1>/runme.out 2>/runme.err'&
 
-% If you installed Fedora on kemptown (other drive) first, you may
-have this issue (if not, jump to next "%"):
+%% NOTE TO SELF: build on 20161125.013948 is corrupted-- I interuppted
+above to rm -rf /root/.cpan, so run at least once more
 
-# lvscan 
-  ACTIVE            '/dev/fedora/root' [45.10 GiB] inherit
-  ACTIVE            '/dev/fedora/home' [2.00 GiB] inherit
-  ACTIVE            '/dev/fedora/swap' [64.00 GiB] inherit
-  inactive          '/dev/fedora/swap' [30.56 GiB] inherit
-  inactive          '/dev/fedora/home' [7.20 TiB] inherit
-  inactive          '/dev/fedora/root' [50.00 GiB] inherit
+% stop selinux by editing "SELINUX=enforcing" to "SELINUX=permissive"
+in /etc/selinux/config as root (changes will take place on next
+reboot) (TODO: this doesn't really stop it like "disabled" would, but
+actually seems to work better according to some)
 
-Namely, I have identical LVM names on two drives. I can use lvrename
-to fix, but:
+% things we must build manually (not in any good repo)
 
-# lvrename /dev/fedora/home /dev/fedora/althome
+: NOTE: must install fly 1.6.5 -- version 2.0.1 breaks bc-bg.pl methodology
+: get fly from link on http://www.w3perl.com/fly/installation.html
+cd /root/build
+cp ~user/Downloads/fly-1.6.5.tar.gz .
+tar xvfz fly-1.6.5.tar.gz
+cd fly-1.6.5
+make
+cp fly /usr/local/bin/
 
-  Multiple VGs found with the same name: skipping fedora
-  Use the VG UUID with --select vg_uuid=<uuid>
+% I prefer the tcsh for both user and root though some believe this
+isn't a good idea (so not putting in runme.sh):
 
-Thus, I used "vgdisplay" to get the correct device, but the "--select"
-option does not actually exist for lvrename. However:
+chsh -s /bin/tcsh root
+chsh -s /bin/tcsh user
 
-vgrename my-vg-id /dev/oldfedora
-
-does work.
-
-: this activates the 3 volumes now on /dev/oldfedora
-
-vgchange -ay
-
-mkdir /mnt/kemptown
-mount /dev/mapper/oldfedora-home /mnt/kemptown
+% NOT WORKING: To setup passwordless ssh/rsync, add remote ssh key (in ~/.ssh/id_dsa.pub or similar on remote machine) to ~/.ssh/authorized_keys
 
 % reboot ("shutdown -r now") to bring up the system clean
 
 % you will come up a "localhost login" or similar prompt, not a
 windows environment (you don't actually need to login locally)
 
-% Remotely, "ssh user@brighton" and start xinit&
+% Remotely, "ssh user@brighton" and start xinit& (TODO: this probably
+won't actually work -- must be at console to xinit&, but can then
+vncviewer in)
 
 %% TODO: consider moving pgsql and mysql dirs to 8TB drive
 
@@ -219,17 +233,6 @@ ssh-keygen -t rsa -b 2048 -f /home/user/.ssh/id_rsa
 
 %% TODO: tweak local machine /etc/hosts file since many of my aliases
 depend on short hostnames (or tweak aliases)
-
-% things we must build manually (not in any good repo)
-
-: NOTE: must install fly 1.6.5 -- version 2.0.1 breaks bc-bg.pl methodology
-: get fly from link on http://www.w3perl.com/fly/installation.html
-cd /root/build
-cp ~user/Downloads/fly-1.6.5.tar.gz .
-tar xvfz fly-1.6.5.tar.gz
-cd fly-1.6.5
-make
-cp fly /usr/local/bin/
 
 %% OPTIONAL: install sources of everything I've got installed and
 their dependencies (excluding those things that "dnf list installed"
@@ -307,18 +310,6 @@ configtest" to find these):
 % You can then return to remote access using "vncviewer -geometry
 1024x768 brigton&"
 
-% I prefer the tcsh for both user and root though some believe this
-isn't a good idea (so not putting in runme.sh):
-
-chsh -s /bin/tcsh root
-chsh -s /bin/tcsh user
-
-% Need to this only once for user; will autoupdate after that
-
-crontab ~/BCGIT/FEDORA/bc-public-crontab
-
-
-
 %% TODO: copy my .fvwm2rc file over into this dir after I get it
 working right on brighton live editing
 
@@ -328,6 +319,13 @@ github well
 %% TODO: passwordless cross machine ssh (and thus rsync)
 
 % DONE: get dnsmasq working
+
+%% TODO: consider wiping /root/.cpan before running cpan command at least once (garbage?)
+
+%% TODO: find information command for listing which cpan modules I
+have installed (it's "cpan -l", now use it and "dnf list installed" to
+print out reports somewhere to make sure they do what they say they
+do)
 
 %% TODO: get local httpd working
 

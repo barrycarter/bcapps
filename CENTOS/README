@@ -15,6 +15,17 @@ echo "/dev/mapper/oldfedora-home /mnt/kemptown ext4 defaults,x-systemd.device-ti
 mkdir /mnt/kemptown
 mount /mnt/kemptown
 
+%% create swapspace on /mnt/kemptown/swapspace (TODO: there may be
+better ways of doing this but I'm wary of messing w/ my 8TB drive
+since I've copied stuff over and made changes)
+
+dd if=/dev/zero of=/mnt/kemptown/swap bs=1000000000 count=128 status=progress&
+mkswap /mnt/kemptown/swap
+: add to /etc/fstab "/mnt/kemptown/swap swap swap defaults 0 0"
+swapon /mnt/kemptown/swap
+: below as recommended
+chmod 0600 /mnt/kemptown/swap
+
 % OPTIONAL: move user's home to /mnt/kemptown:
 
 : if below reports "userdel: user user is currently used by process
@@ -32,5 +43,22 @@ ln -s /mnt/kemptown/user /home
 mv /root /root.old
 ln -s /mnt/kemptown/root /root
 
-%% TRYING "yum install '*'"
+: TODO: this can be improved.. just scp over runme.sh and then rsync the rest
+: must scp over runme.sh and run it now (not even rsync exists yet)
+
+: from remote machine
+scp -pr /home/barrycarter/BCGIT user@brighton:/home/user/
+
+: run runme.sh on brighton
+sh ~user/BCGIT/CENTOS/runme.sh
+
+% OPTIONAL: reboot to make system comes up ok
+x
+%% TODO: change machine name from localhost to brighton
+
+%% TODO: edit instructions to say "don't install swap on SSD"
+
+
+
+
 

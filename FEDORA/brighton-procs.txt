@@ -10,8 +10,9 @@
 
 /sbin/dhclient
 
-# X11
+# X11 + wm
 /usr/libexec/Xorg
+fvwm2
 
 # the init process
 /usr/lib/systemd/systemd
@@ -54,6 +55,9 @@ sendmail:
 /usr/libexec/mysqld
 postgres:
 /usr/sbin/httpd
+/usr/sbin/atd
+/usr/sbin/sshd
+/usr/sbin/dnsmasq
 
 
 # something is wrong if any of these are down
@@ -66,3 +70,12 @@ gaim
 
 </must>
 
+# things that have multiple instances running
+
+<multi>
+
+/usr/sbin/httpd
+xterm
+
+
+</multi>

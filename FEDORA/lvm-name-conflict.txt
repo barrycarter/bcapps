@@ -1,0 +1,32 @@
+% If you installed Fedora on kemptown (other drive) first, you may
+have this issue:
+
+# lvscan 
+  ACTIVE            '/dev/fedora/root' [45.10 GiB] inherit
+  ACTIVE            '/dev/fedora/home' [2.00 GiB] inherit
+  ACTIVE            '/dev/fedora/swap' [64.00 GiB] inherit
+  inactive          '/dev/fedora/swap' [30.56 GiB] inherit
+  inactive          '/dev/fedora/home' [7.20 TiB] inherit
+  inactive          '/dev/fedora/root' [50.00 GiB] inherit
+
+Namely, I have identical LVM names on two drives. I can use lvrename
+to fix, but:
+
+# lvrename /dev/fedora/home /dev/fedora/althome
+
+  Multiple VGs found with the same name: skipping fedora
+  Use the VG UUID with --select vg_uuid=<uuid>
+
+Thus, I used "vgdisplay" to get the correct device, but the "--select"
+option does not actually exist for lvrename. However:
+
+vgrename my-vg-id /dev/oldfedora
+
+does work.
+
+: this activates the 3 volumes now on /dev/oldfedora
+
+vgchange -ay
+
+mkdir /mnt/kemptown
+mount /dev/mapper/oldfedora-home /mnt/kemptown
