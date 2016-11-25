@@ -130,8 +130,10 @@ not work properly: read lvm-name-conflict.txt in this directory to continue
 better ways of doing this but I'm wary of messing w/ my 8TB drive
 since I've copied stuff over and made changes)
 
+: only need to do two steps below once
 dd if=/dev/zero of=/mnt/kemptown/swap bs=1000000000 count=128 status=progress&
 mkswap /mnt/kemptown/swap
+
 less /etc/fstab
 echo "/mnt/kemptown/swap swap swap defaults 0 0" >> /etc/fstab
 swapon /mnt/kemptown/swap
@@ -164,12 +166,36 @@ ln -s /mnt/kemptown/root /root
 
 \rsync -Pav /home/barrycarter/bc-private-crontab user@brighton:/home/user/
 
-: seriously consider removing /root/.cpan to avoid screwing up the cpan install
+% seriously consider removing /root/.cpan to avoid screwing up the
+cpan install (if you've defined it previously)
 
-: and then run the commands in runme.sh
+% configure /etc/dnf/dnf.conf to keep downloaded packages (since I
+delete and re-install the same package multiple times sometimes) by
+adding this line under "[main]":
+
+echo "keepcache=1" >> /etc/dnf/dnf.conf
+
+% OPTIONAL: since I install multiple times, move /var/cache to main 8TB
+drive that remains unchanged between reinstalls
+
+: if youve done this once, no need to do it again
+mkdir -p /mnt/kemptown/var/
+sudo mv /var/cache/ /mnt/kemptown/var/
+
+: if youve done this previously youll need to remove the pristine
+: /var/cache on every new install
+sudo ln -s /mnt/kemptown/var/cache /var/
+
+%% TODO: remove apostrophes in ":" style comments, they break
+cut/paste; make sure multi-line ":" comments have a ":" at the start
+of each line
+
+% Then run the commands in runme.sh
+
 : below should do everything automatically, but MAY require user intervention
 
-sudo sh -c 'sh -v /home/user/BCGIT/FEDORA/runme.sh 1>/runme.out 2>/runme.err'&
+chmod +x /home/user/BCGIT/FEDORA/runme.sh
+sudo sh -c '/home/user/BCGIT/FEDORA/runme.sh 1>/runme.out 2>/runme.err'&
 
 %% NOTE TO SELF: build on 20161125.013948 is corrupted-- I interuppted
 above to rm -rf /root/.cpan, so run at least once more

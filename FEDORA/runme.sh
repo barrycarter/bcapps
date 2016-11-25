@@ -1,3 +1,5 @@
+#!/usr/bin/sh -x
+
 # This dnf command removes pretty much everything that can safely be
 # removed (you may see some harmless errors).
 
