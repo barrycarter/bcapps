@@ -32,6 +32,15 @@ like rsync's "-n" to do test runs. This is so you can see what a
 command does before actually running it. When ready to run, either
 pipe to sh or remove the dry run option as applicable
 
+NOTE: just after initial install, you won't have many editors
+available (probably just ex and vi), so I give commands like:
+
+echo something >> filename
+
+In reality, you should always look at filename to make sure you're not
+destroying anything. If you want to "cheat", you may choose to install
+a better editor before continuing installation.
+
 %% TODO: disclaim order of steps, multiple tries [or do additional
 reinstalls to test final file]
 

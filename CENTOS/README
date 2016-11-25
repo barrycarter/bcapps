@@ -1,0 +1,36 @@
+I have temporarily (perhaps permanently) given up installing Fedors 24
+and am now trying to install CentOS 7. As always, this file will start
+with "raw" notes and I'll try to build it into something better later.
+
+cryptsetup open /dev/sdb3 kemptown
+: check /etc/cryptsetup first
+less /etc/cryptsetup
+echo "luks /dev/sdb3 -" > /etc/cryptsetup
+: this must be an append, since main drive should appear there first
+less /etc/crypttab
+blkid | grep /dev/sdb3
+echo "luks UUID=the-uuid-given-by-blkid-for-dev-sdb3 none" >> /etc/crypttab
+less /etc/fstab
+echo "/dev/mapper/oldfedora-home /mnt/kemptown ext4 defaults,x-systemd.device-timeout=30 60 90" >> /etc/fstab
+mkdir /mnt/kemptown
+mount /mnt/kemptown
+
+% OPTIONAL: move user's home to /mnt/kemptown:
+
+: if below reports "userdel: user user is currently used by process
+: xxxx", kill process xxxx (potentially repeatedly) until the command
+: succeeds
+
+userdel user;
+: below should be VERY minimal
+ls -laR /home/user;
+rm -rf /home/user;
+useradd -d /mnt/kemptown/user -g wheel -u 1000 user
+passwd user
+ln -s /mnt/kemptown/user /home
+: move root over as well
+mv /root /root.old
+ln -s /mnt/kemptown/root /root
+
+%% TRYING "yum install '*'"
+
