@@ -1,3 +1,6 @@
+TODO: give remote machine a name like "dullon" or something so I don't
+keep have to say "remote" and "brighton"
+
 TODO: add disclaimer re these are my experiences AND you should not
 follow instructions blindly AND especially not run commands blindly
 AND especially not as root. No intentional malicious code, but blindly
@@ -41,13 +44,30 @@ In reality, you should always look at filename to make sure you're not
 destroying anything. If you want to "cheat", you may choose to install
 a better editor before continuing installation.
 
+% TODO: construct list of services and ps -ef that fedora brings up by
+default (ultimately, it's all about the processes) and whittle from there
+
+% OPTIONAL: if your reinstall several times while testing, you might
+see the same boot entry repeatedly in BIOS; to fix this, use
+"efibootmgr" from fedora (thanks
+http://superuser.com/questions/582445/gigabyte-uefi-dualbios-lingering-boot-option)
+
+sudo efibootmgr -v;: to see options
+: to see if you have one boot option multiple times
+sudo efibootmgr -v | perl -pnle 's/^\S+\s+//' | sort | uniq -c | sort -nr
+: note to self: I have one partition listed 93 times, wowsers!
+
+sudo efibootmgr -v | fgrep 'redundant partition' | perl -anle '$F[0]=~s/^Boot//; $F[0]=~s/\*//; print $F[0]'
+
+: remove ALL BUT ONE of above -- being safe below
+
+sudo efibootmgr -v | fgrep 'redundant partition' | perl -anle '$F[0]=~s/^Boot//; $F[0]=~s/\*//; print $F[0]' | tail -n +10 | xargs -n 1 efibootmgr -B -b 
+
 %% TODO: disclaim order of steps, multiple tries [or do additional
 reinstalls to test final file]
 
 %% TODO: last minute final sync from old machine to brighton, after
 all filechanging processes have been stopped forever
-
-%% TODO: remove redundant entries in BIOS
 
 %% TODO: move files in this directory to the proper places on brighton
 (or symlink) [many done, but need to make sure all done]
@@ -118,6 +138,7 @@ less /etc/crypttab
 blkid | fgrep /dev/sdb3
 : this must be an append, since main drive should appear there first
 echo "luks UUID=the-uuid-given-by-blkid-for-dev-sdb3 none" >> /etc/crypttab
+less /etc/fstab
 echo "/dev/mapper/oldfedora-home /mnt/kemptown ext4 defaults,x-systemd.device-timeout=30 60 90" >> /etc/fstab
 mkdir /mnt/kemptown
 mount /mnt/kemptown
@@ -133,12 +154,12 @@ since I've copied stuff over and made changes)
 : only need to do two steps below once
 dd if=/dev/zero of=/mnt/kemptown/swap bs=1000000000 count=128 status=progress&
 mkswap /mnt/kemptown/swap
+: below as recommended
+chmod 0600 /mnt/kemptown/swap
 
 less /etc/fstab
 echo "/mnt/kemptown/swap swap swap defaults 0 0" >> /etc/fstab
 swapon /mnt/kemptown/swap
-: below as recommended
-chmod 0600 /mnt/kemptown/swap
 
 % OPTIONAL: move user's home to /mnt/kemptown:
 
@@ -158,7 +179,7 @@ mv /root /root.old
 ln -s /mnt/kemptown/root /root
 
 % From remote machine, rsync over BCGIT to brighton, since I will use
-: symlinks to get things in their proper place
+symlinks to get things in their proper place
 
 \rsync -Pav /home/barrycarter/BCGIT user@brighton:/home/user/
 
@@ -166,13 +187,15 @@ ln -s /mnt/kemptown/root /root
 
 \rsync -Pav /home/barrycarter/bc-private-crontab user@brighton:/home/user/
 
-% seriously consider removing /root/.cpan to avoid screwing up the
-cpan install (if you've defined it previously)
+% seriously consider removing /root/.cpan and /root/.cpanm to avoid
+screwing up the cpan install (if you've defined it previously)
 
 % configure /etc/dnf/dnf.conf to keep downloaded packages (since I
 delete and re-install the same package multiple times sometimes) by
 adding this line under "[main]":
 
+less /etc/dnf/dnf.conf
+: change "clean_requirements_on_remove=True" to False
 echo "keepcache=1" >> /etc/dnf/dnf.conf
 
 % OPTIONAL: since I install multiple times, move /var/cache to main 8TB
@@ -188,7 +211,8 @@ sudo ln -s /mnt/kemptown/var/cache /var/
 
 %% TODO: remove apostrophes in ":" style comments, they break
 cut/paste; make sure multi-line ":" comments have a ":" at the start
-of each line
+of each line (also parentheses and other odd chars (since shell
+expansion still works?)
 
 % Then run the commands in runme.sh
 
@@ -197,8 +221,8 @@ of each line
 chmod +x /home/user/BCGIT/FEDORA/runme.sh
 sudo sh -c '/home/user/BCGIT/FEDORA/runme.sh 1>/runme.out 2>/runme.err'&
 
-%% NOTE TO SELF: build on 20161125.013948 is corrupted-- I interuppted
-above to rm -rf /root/.cpan, so run at least once more
+%% TODO: above won't allow systemctl start w/o disk pw (why?!), so
+temporarily removing it.
 
 % stop selinux by editing "SELINUX=enforcing" to "SELINUX=permissive"
 in /etc/selinux/config as root (changes will take place on next

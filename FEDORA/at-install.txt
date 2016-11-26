@@ -1,0 +1,103 @@
+I ran these commands after installing the OS, logging in as root
+(using the graphical interface), clicking through all the welcome
+screens, turning on remote sharing and closing the "remote sharing"
+windows.
+
+%% TODO: since some of these commands may contain private information,
+I am putting them in /home/barrycarter/20161125 for now; prune them
+and copy the output here as a file
+
+ps -wwwef > /tmp/ps.txt
+systemctl > /tmp/systemctl.txt
+systemctl list-unit-files > /tmp/systemctl-list-unit-files.txt
+chkconfig 1> /tmp/chkconfig.out 2> /tmp/chkconfig.err
+service --status-all > /tmp/service-status-all.txt
+
+: and rsync above to remote machine
+
+%% below is after mounting kemptown
+
+ps -wwwef > /tmp/ps2.txt
+systemctl > /tmp/systemctl2.txt
+systemctl list-unit-files > /tmp/systemctl-list-unit-files2.txt
+chkconfig 1> /tmp/chkconfig2.out 2> /tmp/chkconfig2.err
+service --status-all > /tmp/service-status-all2.txt
+
+%% below is after moving user, pre rsyncing from remote to brighton
+
+ps -wwwef > /tmp/ps3.txt
+systemctl > /tmp/systemctl3.txt
+systemctl list-unit-files > /tmp/systemctl-list-unit-files3.txt
+chkconfig 1> /tmp/chkconfig2.out 2> /tmp/chkconfig3.err
+service --status-all > /tmp/service-status-all3.txt
+
+%% below is just before mass dnf install 
+
+%% TODO: the chkconfig2.out below is a mistake!
+
+ps -wwwef > /tmp/ps4.txt
+systemctl > /tmp/systemctl4.txt
+systemctl list-unit-files > /tmp/systemctl-list-unit-files4.txt
+chkconfig 1> /tmp/chkconfig2.out 2> /tmp/chkconfig4.err
+service --status-all > /tmp/service-status-all4.txt
+
+%% TODO: warning: %post(sendmail-8.15.2-6.fc24.x86_64) scriptlet
+failed, signal 2 after I hit ctrl-c after "Password entry required for
+'Please enter passphrase for disk xxxxx (luks)!'
+
+%% below is just after mass dnf install
+
+ps -wwwef > /tmp/ps5.txt
+systemctl > /tmp/systemctl5.txt
+systemctl list-unit-files > /tmp/systemctl-list-unit-files5.txt
+chkconfig 1> /tmp/chkconfig5.out 2> /tmp/chkconfig5.err
+service --status-all > /tmp/service-status-all5.txt
+
+% now, editing selinux to disable and then "auditd -s disable"
+
+ps -wwwef > /tmp/ps6.txt
+systemctl > /tmp/systemctl6.txt
+systemctl list-unit-files > /tmp/systemctl-list-unit-files6.txt
+chkconfig 1> /tmp/chkconfig6.out 2> /tmp/chkconfig6.err
+service --status-all > /tmp/service-status-all6.txt
+
+% now, turning off every single service and then running commands
+
+# systemctl -t service|egrep 'loaded +active +running'| perl -anle 'print "systemctl stop $F[0]; systemctl disable $F[0]"'
+# above piped to sh
+
+ps -wwwef > /tmp/ps7.txt
+systemctl > /tmp/systemctl7.txt
+systemctl list-unit-files > /tmp/systemctl-list-unit-files7.txt
+chkconfig 1> /tmp/chkconfig7.out 2> /tmp/chkconfig7.err
+service --status-all > /tmp/service-status-all7.txt
+
+% after rebooting after above
+
+% in order to run these commands remotely, had to reenable
+NetworkManager and sshd
+
+ps -wwwef > /tmp/ps8.txt
+systemctl > /tmp/systemctl8.txt
+systemctl list-unit-files > /tmp/systemctl-list-unit-files8.txt
+chkconfig 1> /tmp/chkconfig8.out 2> /tmp/chkconfig8.err
+service --status-all > /tmp/service-status-all8.txt
+
+%% another fresh install at 20161125.233006
+
+systemctl -t service | grep 'running' | perl -anle 'print "systemctl stop $F[0]; systemctl disable $F[0]"'
+
+: these 3 services wont die
+
+systemctl stop auditd.service; systemctl disable auditd.service;
+systemctl stop dbus.service; systemctl disable dbus.service;
+systemctl stop systemd-journald.service; systemctl disable systemd-journald.service;
+
+: changed /etc/selinux/config, now rebooting
+
+: had to restore sshd and NetworkManager
+
+: to get rid of polkit disable first, then stop
+
+systemctl -t service | grep 'running' | perl -anle 'print "systemctl disable $F[0]; systemctl stop $F[0]"'
+
