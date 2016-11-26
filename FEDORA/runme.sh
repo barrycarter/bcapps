@@ -1,20 +1,11 @@
 #!/usr/bin/sh -x
 
-# This dnf command removes pretty much everything that can safely be
-# removed (you may see some harmless errors).
-
-# TODO: temporarily NOT removing these and hoping to just kill the services
-# sudo dnf -y remove gssproxy alsa-utils 'gvfs*' rtkit "gnome*" "evolution*"
-
-# TODO: cleanup the removes above and below; redundant
-
 # this installs a couple of repos (dnf can't quite install repos and
 # programs at the same time, alas)
 
 sudo dnf -y install --allowerasing --best http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
-# and this installs a bunch more stuff (some of which restore some of
-# the stuff we removed, but only a portion of it)
+# and this installs a bunch more stuff
 
 sudo dnf -y install --allowerasing --best ImageMagick OpenThreads PySolFC SDL-devel alpine aspell audacity bind c++-gtk-utils-gtk2-devel community-mysql community-mysql-server dosbox dosemu elinks emacs enscript esniper expect feh ffmpeg ftp fuse-encfs fvwm gd-devel getmail glade glade-devel gnumeric gnuplot gpm graphviz gtk+extra-devel gtk2-devel gtk3-devel html2ps lynx mencoder moreutils-parallel mplayer mrtg nagios nagios-plugins nano ncftp openrdate perl-CPAN php-mysqlnd pidgin postgresql postgresql-server qgis qhull rdesktop recoll rsyslog rxvt samba screen snownews stella stellarium tcsh tigervnc tk unrtf util-linux-user vice vlc xdotool xemacs xemacs-packages-extra-el xinetd xorg-x11-apps xpdf xsane xteddy xterm xv yum yum-utils zlib-devel zlib-static mod_ldap tor tor-arm-gui tor-arm onionshare privoxy celestia recordmydesktop tmpwatch esmtp-local-delivery sendmail sendmail-cf fuse-sshfs fuse-zip fuse-encfs curlftpfs bindfs xcalc libpuzzle libpuzzle-devel pyephem python2-astropy python3-astropy erfa libnova ast R sagemath-notebook nmap p7zip
 
@@ -22,7 +13,7 @@ sudo dnf -y install --allowerasing --best ImageMagick OpenThreads PySolFC SDL-de
 
 PERL_MM_USE_DEFAULT=1
 
-sudo cpan Digest::SHA1 Digest::MD5 Date::Parse POSIX Text::Unidecode Test MIME::Base64 utf8 Statistics::Distributions Math::Round Data::Dumper B Astro::Nova Astro::MoonPhase JSON Algorithm::GoldenSection Astro::Coord::ECI::Moon Astro::Time DBI DB_File Data::Dumper Data::Faker Date::Manip Date::Parse Digest::HMAC_SHA1 Digest::SHA FFI::Raw Fcntl File::Temp Flickr::API GD Getopt::Long Getopt::Std HTML::TreeBuilder::XPath HTTP::Date IO::File IPC::Open3 Imager::QRCode Inline::Python LWP::UserAgent Math::BigInt Math::Round Math::Polygon::Calc Math::ematica Net::Amazon::MechanicalTurk Net::DNS::Nameserver Net::LDAP Number::Spell OpenGL Pg Plucene::Analysis::SimpleAnalyzer Plucene::Document::Field Plucene::Document Plucene
+sudo cpan Test Digest::SHA1 Digest::MD5 Date::Parse POSIX Text::Unidecode MIME::Base64 utf8 Statistics::Distributions Math::Round Data::Dumper B Astro::Nova Astro::MoonPhase JSON Algorithm::GoldenSection Astro::Coord::ECI::Moon Astro::Time DBI DB_File Data::Dumper Data::Faker Date::Manip Date::Parse Digest::HMAC_SHA1 Digest::SHA FFI::Raw Fcntl File::Temp Flickr::API GD Getopt::Long Getopt::Std HTML::TreeBuilder::XPath HTTP::Date IO::File IPC::Open3 Imager::QRCode Inline::Python LWP::UserAgent Math::BigInt Math::Round Math::Polygon::Calc Math::ematica Net::Amazon::MechanicalTurk Net::DNS::Nameserver Net::LDAP Number::Spell OpenGL Pg Plucene::Analysis::SimpleAnalyzer Plucene::Document::Field Plucene::Document Plucene
 
 # for systemctl, we go in reverse order: enable ones we want and THEN
 # disable ones we dont
@@ -41,8 +32,6 @@ sudo systemctl enable postgresql mysqld nagios dnsmasq httpd sendmail
 
 # after above, "auditd" comes up immediately (in fact, you cant stop it)
 
-
-
 # TODO: one of these appears to require disk encryption pw for some reason?!
 # sudo systemctl start postgresql mysqld nagios dnsmasq httpd sendmail
 
@@ -59,43 +48,9 @@ sudo systemctl enable postgresql mysqld nagios dnsmasq httpd sendmail
 # note systemd-udevd is important, can't kill it (and its various
 # sockets/etc) and so it systemd-logind
 
-sudo systemctl stop abrtd abrt-oops abrt-ccpp.service abrt-vmcore.service abrt-xorg avahi-daemon chronyd firewalld mcelog ModemManager rngd systemd-journald avahi-daemon.socket systemd-journald.socket systemd-journald-audit.socket systemd-journald-dev-log.socket udisks2
+sudo systemctl stop abrtd abrt-oops abrt-ccpp.service abrt-vmcore.service abrt-xorg avahi-daemon chronyd firewalld mcelog ModemManager rngd systemd-journald avahi-daemon.socket systemd-journald.socket systemd-journald-audit.socket systemd-journald-dev-log.socket udisks2 accounts-daemon colord gdm gssproxy libvirtd lvm2-lvmetad lvm2-lvmetad.socket packagekit upower wpa_supplicant rtkit-daemon gssproxy auditd
 
-# TODO: try just disabling these services, and only mask the persistent ones
-
-# NOTE: some servcies die properly but restart on reboot
-
-# sudo systemctl mask abrtd abrt-oops abrt-ccpp.service abrt-vmcore.service abrt-xorg avahi-daemon chronyd firewalld mcelog ModemManager rngd systemd-journald avahi-daemon.socket systemd-journald.socket systemd-journald-audit.socket systemd-journald-dev-log.socket udisks2
-
-# below is experimental since I no longer 'dnf remove' a bunch of stuff above
-
-# TODO: merge into above when ready
-
-# note removing polkit removes our own power to change things (only
-# for that command line since it gets reactivated), so dont do it,
-# even as a test
-
-# NOTE: stopping/disabling systemd-login is harmless, but it will come
-# back (in the same session w/o reboot so I'm not bothering to remove
-# it below)
-
-sudo systemctl stop accounts-daemon colord gdm gssproxy libvirtd
-sudo systemctl disable accounts-daemon colord gdm gssproxy libvirtd
-
-sudo systemctl stop lvm2-lvmetad lvm2-lvmetad.socket
-sudo systemctl disable lvm2-lvmetad lvm2-lvmetad.socket
-
-sudo systemctl stop packagekit systemd-udevd 
-sudo systemctl disable packagekit systemd-udevd 
-
-sudo systemctl stop systemd-udevd-kernel.socket systemd-udevd-control.socket
-sudo systemctl disable systemd-udevd-kernel.socket systemd-udevd-control.socket
-
-sudo systemctl stop upower wpa_supplicant rtkit-daemon
-sudo systemctl disable upower wpa_supplicant rtkit-daemon
-
-sudo systemctl stop gssproxy
-sudo systemctl disable gssproxy
+sudo systemctl disable abrtd abrt-oops abrt-ccpp.service abrt-vmcore.service abrt-xorg avahi-daemon chronyd firewalld mcelog ModemManager rngd systemd-journald avahi-daemon.socket systemd-journald.socket systemd-journald-audit.socket systemd-journald-dev-log.socket udisks2 accounts-daemon colord gdm gssproxy libvirtd lvm2-lvmetad lvm2-lvmetad.socket packagekit upower wpa_supplicant rtkit-daemon gssproxy auditd
 
 # useful symlinks
 
@@ -170,3 +125,4 @@ sudo sh -c 'cpan -l > /cpan-installed.txt'
 sudo sh -c 'systemctl > /systemctl-raw.txt'
 sudo sh -c 'systemctl list-unit-files > /systemctl-list-unit-files.txt'
 sudo sh -c 'ps -wwwef > /ps-wwwef.txt'
+

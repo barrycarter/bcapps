@@ -147,7 +147,7 @@ mount /mnt/kemptown
 tried to move the installation to an SSD drive, the steps above may
 not work properly: read lvm-name-conflict.txt in this directory to continue
 
-%% create swapspace on /mnt/kemptown/swapspace (TODO: there may be
+% create swapspace on /mnt/kemptown/swapspace (TODO: there may be
 better ways of doing this but I'm wary of messing w/ my 8TB drive
 since I've copied stuff over and made changes)
 
@@ -209,10 +209,11 @@ sudo mv /var/cache/ /mnt/kemptown/var/
 : /var/cache on every new install
 sudo ln -s /mnt/kemptown/var/cache /var/
 
-%% TODO: remove apostrophes in ":" style comments, they break
-cut/paste; make sure multi-line ":" comments have a ":" at the start
-of each line (also parentheses and other odd chars (since shell
-expansion still works?)
+% stop selinux by editing /etc/selinux/config and change
+"SELINUX=enforcing" to "SELINUX=disabled"
+
+% reboot (required so that selinux is off; this is required to turn
+auditd off)
 
 % Then run the commands in runme.sh
 
@@ -221,13 +222,10 @@ expansion still works?)
 chmod +x /home/user/BCGIT/FEDORA/runme.sh
 sudo sh -c '/home/user/BCGIT/FEDORA/runme.sh 1>/runme.out 2>/runme.err'&
 
-%% TODO: above won't allow systemctl start w/o disk pw (why?!), so
-temporarily removing it.
-
-% stop selinux by editing "SELINUX=enforcing" to "SELINUX=permissive"
-in /etc/selinux/config as root (changes will take place on next
-reboot) (TODO: this doesn't really stop it like "disabled" would, but
-actually seems to work better according to some)
+%% TODO: remove apostrophes in ":" style comments, they break
+cut/paste; make sure multi-line ":" comments have a ":" at the start
+of each line (also parentheses and other odd chars (since shell
+expansion still works?)
 
 % things we must build manually (not in any good repo)
 
@@ -256,6 +254,8 @@ windows environment (you don't actually need to login locally)
 % Remotely, "ssh user@brighton" and start xinit& (TODO: this probably
 won't actually work -- must be at console to xinit&, but can then
 vncviewer in)
+
+%% TODO: for some reason, I must "cpan Digest::SHA1" separately after reboot (ok, it appears you have to install Test BEFORE Digest::SHA1, sheesh)
 
 %% TODO: consider moving pgsql and mysql dirs to 8TB drive
 
