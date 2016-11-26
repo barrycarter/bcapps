@@ -257,6 +257,31 @@ vncviewer in)
 
 %% TODO: for some reason, I must "cpan Digest::SHA1" separately after reboot (ok, it appears you have to install Test BEFORE Digest::SHA1, sheesh)
 
+%% TODO: lots of servicectl commands didn't run properly (?!) so running runme.sh again after reboot
+
+%% TODO: other fails:
+
+Math::BigFloat version 1.999718 required--this is only version 1.999715
+
+Warning: Prerequisite 'Math::BigRat => 0.12' for 'PJACKLAM/bignum-0.44.tar.gz' failed when processing 'PJACKLAM/Math-BigRat-0.260805.tar.gz' with 'make_test => NO'. Continuing, but chances to succeed are limited.
+
+#   Failed test 'use Net::Amazon::MechanicalTurk;'
+#   at t/00-load.t line 6.
+#     Tried to use 'Net::Amazon::MechanicalTurk'.
+
+%% TODO: run "dnf update" after installs? (or upgrade?)
+
+%% TODO: maybe add cpan -u BEFORE the main cpan command (so the cpan
+works better?)
+
+%% TODO: do dnf install Perl packages interfere w cpan installed ones? 
+(although the only thing I actually install is perl-cpan itself?)
+
+%% TESTING:
+
+cpan -u
+cpan Math::BigFloat Math::BigRat Math::BigInt |& tee /tmp/error.txt
+
 %% TODO: consider moving pgsql and mysql dirs to 8TB drive
 
 % INFO: you can use the following to see which services are still running:

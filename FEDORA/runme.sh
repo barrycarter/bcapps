@@ -13,7 +13,12 @@ sudo dnf -y install --allowerasing --best ImageMagick OpenThreads PySolFC SDL-de
 
 PERL_MM_USE_DEFAULT=1
 
-sudo cpan Test Digest::SHA1 Digest::MD5 Date::Parse POSIX Text::Unidecode MIME::Base64 utf8 Statistics::Distributions Math::Round Data::Dumper B Astro::Nova Astro::MoonPhase JSON Algorithm::GoldenSection Astro::Coord::ECI::Moon Astro::Time DBI DB_File Data::Dumper Data::Faker Date::Manip Date::Parse Digest::HMAC_SHA1 Digest::SHA FFI::Raw Fcntl File::Temp Flickr::API GD Getopt::Long Getopt::Std HTML::TreeBuilder::XPath HTTP::Date IO::File IPC::Open3 Imager::QRCode Inline::Python LWP::UserAgent Math::BigInt Math::Round Math::Polygon::Calc Math::ematica Net::Amazon::MechanicalTurk Net::DNS::Nameserver Net::LDAP Number::Spell OpenGL Pg Plucene::Analysis::SimpleAnalyzer Plucene::Document::Field Plucene::Document Plucene
+# TODO: add Math::ematica back in after I install it
+
+# TODO: add Net::Amazon::MechanicalTurk back in after I figure out why
+# its broken (however, their protocol has changed a lot)
+
+sudo cpan Test Math::BigRat Digest::SHA1 Digest::MD5 Date::Parse POSIX Text::Unidecode MIME::Base64 utf8 Statistics::Distributions Math::Round Data::Dumper B Astro::Nova Astro::MoonPhase JSON Algorithm::GoldenSection Astro::Coord::ECI::Moon Astro::Time DBI DB_File Data::Dumper Data::Faker Date::Manip Date::Parse Digest::HMAC_SHA1 Digest::SHA FFI::Raw Fcntl File::Temp Flickr::API GD Getopt::Long Getopt::Std HTML::TreeBuilder::XPath HTTP::Date IO::File IPC::Open3 Imager::QRCode Inline::Python LWP::UserAgent Math::BigInt Math::Round Math::Polygon::Calc Net::DNS::Nameserver Net::LDAP Number::Spell OpenGL Pg Plucene::Analysis::SimpleAnalyzer Plucene Plucene::Document::Field Plucene::Document
 
 # for systemctl, we go in reverse order: enable ones we want and THEN
 # disable ones we dont
