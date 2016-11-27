@@ -75,7 +75,7 @@ MAILTO="daemon"
 # below) are staggered to avoid excessive system load a specific
 # minute
 
-11,41 * * * * cd /home/user/BCGIT; ./bc-montastic.pl
+11,41 * * * * /home/user/BCGIT/bc-montastic.pl
 
 # Update calendar (for background image) hourly
 
@@ -146,5 +146,6 @@ MAILTO="daemon"
 # this rsyncs over changes from remote machine to brighton in case I forget
 
 # TODO: maybe make this less frequent
+# TODO: remove this after I cutover to new machine completely
 
 */10 * * * * rsync -Pavz user@192.168.0.2:/home/user/BCGIT /home/user/

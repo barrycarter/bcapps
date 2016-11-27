@@ -75,7 +75,6 @@ function initialize() {
    strokeWeight: 1,
    fillOpacity: 0
   });
-
   circ.setMap(map);
 
   var circ2 = new google.maps.Circle({

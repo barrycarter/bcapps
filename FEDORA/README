@@ -50,7 +50,7 @@ default (ultimately, it's all about the processes) and whittle from there
 % OPTIONAL: if your reinstall several times while testing, you might
 see the same boot entry repeatedly in BIOS; to fix this, use
 "efibootmgr" from fedora (thanks
-http://superuser.com/questions/582445/gigabyte-uefi-dualbios-lingering-boot-option)
+http://superuser.com/questions/582445/gigabyte-uefi-dualbios-lingering-boot-option) [note: you may need to "modprobe efivars", which should occur automatically after runme.sh anyway]
 
 sudo efibootmgr -v;: to see options
 : to see if you have one boot option multiple times
@@ -62,6 +62,10 @@ sudo efibootmgr -v | fgrep 'redundant partition' | perl -anle '$F[0]=~s/^Boot//;
 : remove ALL BUT ONE of above -- being safe below
 
 sudo efibootmgr -v | fgrep 'redundant partition' | perl -anle '$F[0]=~s/^Boot//; $F[0]=~s/\*//; print $F[0]' | tail -n +10 | xargs -n 1 efibootmgr -B -b 
+
+: you may also want to use "ssh -o "UserKnownHostsFile /dev/null"
+: root@brighton" remotely to avoid the "WARNING: REMOTE HOST
+: IDENTIFICATION HAS CHANGED!" message each time
 
 %% TODO: disclaim order of steps, multiple tries [or do additional
 reinstalls to test final file]
@@ -189,6 +193,7 @@ symlinks to get things in their proper place
 
 % seriously consider removing /root/.cpan and /root/.cpanm to avoid
 screwing up the cpan install (if you've defined it previously)
+[current runme.sh doesn't do any cpan so probably not relevant]
 
 % configure /etc/dnf/dnf.conf to keep downloaded packages (since I
 delete and re-install the same package multiple times sometimes) by
@@ -196,6 +201,7 @@ adding this line under "[main]":
 
 less /etc/dnf/dnf.conf
 : change "clean_requirements_on_remove=True" to False
+
 echo "keepcache=1" >> /etc/dnf/dnf.conf
 
 % OPTIONAL: since I install multiple times, move /var/cache to main 8TB
@@ -213,7 +219,7 @@ sudo ln -s /mnt/kemptown/var/cache /var/
 "SELINUX=enforcing" to "SELINUX=disabled"
 
 % reboot (required so that selinux is off; this is required to turn
-auditd off)
+auditd off) [actually, even this may not work]
 
 % Then run the commands in runme.sh
 
@@ -221,6 +227,15 @@ auditd off)
 
 chmod +x /home/user/BCGIT/FEDORA/runme.sh
 sudo sh -c '/home/user/BCGIT/FEDORA/runme.sh 1>/runme.out 2>/runme.err'&
+
+: NOTE: if the command above hangs and requests the disk encryption
+: password, kill it and rerun it
+
+: you may need to kill /usr/bin/systemd-tty-ask-password-agent
+
+pgrep systemd-tty-ask | xargs ps -wwwl
+
+: and then kill
 
 %% TODO: remove apostrophes in ":" style comments, they break
 cut/paste; make sure multi-line ":" comments have a ":" at the start
@@ -247,6 +262,8 @@ chsh -s /bin/tcsh user
 % NOT WORKING: To setup passwordless ssh/rsync, add remote ssh key (in ~/.ssh/id_dsa.pub or similar on remote machine) to ~/.ssh/authorized_keys
 
 % reboot ("shutdown -r now") to bring up the system clean
+
+%% TODO: for some reason, I have to reboot twice to get "xinit" working properly
 
 % you will come up a "localhost login" or similar prompt, not a
 windows environment (you don't actually need to login locally)
@@ -302,9 +319,26 @@ ssh-keygen -t rsa -b 2048 -f /home/user/.ssh/id_rsa
 
 (with no passphrase, since you'll need it for automated tasks)
 
-%% TODO: find and reinstall parallel version that uses stdin
+% DONE: find and reinstall parallel version that uses stdin (do NOT
+install moreutils-parallel)
 
 %% TODO: why not "dnf install '*'"?
+
+%% TODO: install nagios3 or upgrade my nagios stuff to 4...
+
+: this is just a one off-- for the future Ive removed nagios from dnf install
+: I can still keep nagios-plugins since theyre fundamentally similar
+
+
+cd /root/build
+curl -L -o nagios.tgz https://sourceforge.net/projects/nagios/files/nagios-3.x/nagios-3.5.1/nagios-3.5.1.tar.gz/download
+tar xvfz nagios.tgz
+cd nagios
+sh configure |& tee configure.out
+make all |& tee make.out
+make install
+
+%% TODO: symlink or otherwise get /usr/local/nagios/bin/nagios into my path
 
 %% TODO: tweak local machine /etc/hosts file since many of my aliases
 depend on short hostnames (or tweak aliases)

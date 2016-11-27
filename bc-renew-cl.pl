@@ -8,6 +8,9 @@ require "/usr/local/lib/bclib.pl";
 
 while (<>) {
 
+  # ignore comments and empty lines
+  if (/^\#/ || /^\s*$/) {next;}
+
   # obtain page
   my($out,$err,$res) = cache_command2("curl -k $_","age=3600");
   my($form);
