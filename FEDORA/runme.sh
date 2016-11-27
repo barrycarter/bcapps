@@ -73,9 +73,9 @@ sudo systemctl enable postgresql mysqld nagios dnsmasq httpd sendmail
 # note systemd-udevd is important, can't kill it (and its various
 # sockets/etc) and so it systemd-logind
 
-sudo systemctl stop    abrtd abrt-oops abrt-ccpp.service abrt-vmcore.service abrt-xorg avahi-daemon chronyd firewalld mcelog ModemManager rngd systemd-journald avahi-daemon.socket systemd-journald.socket systemd-journald-audit.socket systemd-journald-dev-log.socket udisks2 accounts-daemon colord gdm gssproxy libvirtd lvm2-lvmetad lvm2-lvmetad.socket packagekit upower wpa_supplicant rtkit-daemon gssproxy auditd cups bluetooth
+sudo systemctl stop    abrtd abrt-oops abrt-ccpp.service abrt-vmcore.service abrt-xorg avahi-daemon chronyd firewalld mcelog ModemManager rngd systemd-journald avahi-daemon.socket systemd-journald.socket systemd-journald-audit.socket systemd-journald-dev-log.socket udisks2 accounts-daemon colord gdm gssproxy libvirtd lvm2-lvmetad lvm2-lvmetad.socket packagekit upower wpa_supplicant rtkit-daemon gssproxy auditd cups bluetooth NetworkManager
 
-sudo systemctl disable abrtd abrt-oops abrt-ccpp.service abrt-vmcore.service abrt-xorg avahi-daemon chronyd firewalld mcelog ModemManager rngd systemd-journald avahi-daemon.socket systemd-journald.socket systemd-journald-audit.socket systemd-journald-dev-log.socket udisks2 accounts-daemon colord gdm gssproxy libvirtd lvm2-lvmetad lvm2-lvmetad.socket packagekit upower wpa_supplicant rtkit-daemon gssproxy auditd cups bluetooth
+sudo systemctl disable abrtd abrt-oops abrt-ccpp.service abrt-vmcore.service abrt-xorg avahi-daemon chronyd firewalld mcelog ModemManager rngd systemd-journald avahi-daemon.socket systemd-journald.socket systemd-journald-audit.socket systemd-journald-dev-log.socket udisks2 accounts-daemon colord gdm gssproxy libvirtd lvm2-lvmetad lvm2-lvmetad.socket packagekit upower wpa_supplicant rtkit-daemon gssproxy auditd cups bluetooth NetworkManager
 
 # useful symlinks
 
@@ -116,6 +116,12 @@ sudo mkdir -p /usr/local/etc/locks /usr/local/etc/registry /var/tmp/montastic
 sudo chown -R user /usr/local/etc /var/tmp/
 sudo mkdir -p /var/nagios/
 
+# and IP/DNS fixups
+
+rm /etc/sysconfig/network-scripts/ifcfg-enp1s0
+ln -s /home/user/BCGIT/FEDORA/ifcfg-enp1s0 /etc/sysconfig/network-scripts/
+rm /etc/resolv.conv
+ln -s /home/user/BCGIT/FEDORA/resolv.conf /etc/
 
 # TODO: consider mirroring /usr/local/etc/ once I confirm its all my
 # stuff (lynx and scowl seem to use it too)

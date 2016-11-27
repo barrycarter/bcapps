@@ -27,7 +27,7 @@ defaults("mach=bcinfo3&file=/home/barrycarter/BCGIT/BCINFO3/root/bcinfo3-procs.t
 sleep($globopts{sleep});
 
 # this command really does all the work
-($out,$err,$res) = cache_command2("ps -wwweo 'pid ppid etime rss vsz stat args'","age=30");
+($out,$err,$res) = cache_command2("ps -wwweo 'pid ppid etime rss vsz stat args'","age=-1");
 
 # if process matches any of these, use second argument (if one exists)
 # TODO: move this to conf file too?

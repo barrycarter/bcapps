@@ -71,11 +71,16 @@ sshd:
 
 # below: processes I dislike but can't seem to get rid of w/o breaking things
 
-/usr/lib/polkit-1/polkitd
 (sd-pam)
-/usr/libexec/gconfd-2
+
+# not even kill -9 will stop auditd
 /sbin/auditd
-/sbin/audispd
+
+# killing this instantly respawns it so I might as well live with it
+/usr/lib/systemd/systemd-journald
+
+# killing this also respawns instantly, though I think this one is OK
+/sbin/agetty
 
 # TODO: remove this once I cutover to brighton completely
 /usr/libexec/vino-server
@@ -139,6 +144,8 @@ su
 
 <kill>
 
+# processes I dislike but can't seem to get rid of permanently
+
 /usr/sbin/lvmetad
 /usr/lib/systemd/systemd-udevd
 /usr/sbin/gssproxy
@@ -146,5 +153,17 @@ su
 login
 /usr/libexec/at-spi-bus-launcher
 /usr/libexec/at-spi2-registryd
+/usr/lib/polkit-1/polkitd
+/usr/libexec/gconfd-2
+/sbin/audispd
+/usr/libexec/rtkit-daemon
 
 </kill>
+
+# programs that can take up an arbitrary amount of memory
+
+<memory>
+
+/usr/lib64/firefox/firefox
+
+</memory>
