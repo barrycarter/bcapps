@@ -73,9 +73,9 @@ sudo systemctl enable postgresql mysqld nagios dnsmasq httpd sendmail
 # note systemd-udevd is important, can't kill it (and its various
 # sockets/etc) and so it systemd-logind
 
-sudo systemctl stop    abrtd abrt-oops abrt-ccpp.service abrt-vmcore.service abrt-xorg avahi-daemon chronyd firewalld mcelog ModemManager rngd systemd-journald avahi-daemon.socket systemd-journald.socket systemd-journald-audit.socket systemd-journald-dev-log.socket udisks2 accounts-daemon colord gdm gssproxy libvirtd lvm2-lvmetad lvm2-lvmetad.socket packagekit upower wpa_supplicant rtkit-daemon gssproxy auditd cups
+sudo systemctl stop    abrtd abrt-oops abrt-ccpp.service abrt-vmcore.service abrt-xorg avahi-daemon chronyd firewalld mcelog ModemManager rngd systemd-journald avahi-daemon.socket systemd-journald.socket systemd-journald-audit.socket systemd-journald-dev-log.socket udisks2 accounts-daemon colord gdm gssproxy libvirtd lvm2-lvmetad lvm2-lvmetad.socket packagekit upower wpa_supplicant rtkit-daemon gssproxy auditd cups bluetooth
 
-sudo systemctl disable abrtd abrt-oops abrt-ccpp.service abrt-vmcore.service abrt-xorg avahi-daemon chronyd firewalld mcelog ModemManager rngd systemd-journald avahi-daemon.socket systemd-journald.socket systemd-journald-audit.socket systemd-journald-dev-log.socket udisks2 accounts-daemon colord gdm gssproxy libvirtd lvm2-lvmetad lvm2-lvmetad.socket packagekit upower wpa_supplicant rtkit-daemon gssproxy auditd cups
+sudo systemctl disable abrtd abrt-oops abrt-ccpp.service abrt-vmcore.service abrt-xorg avahi-daemon chronyd firewalld mcelog ModemManager rngd systemd-journald avahi-daemon.socket systemd-journald.socket systemd-journald-audit.socket systemd-journald-dev-log.socket udisks2 accounts-daemon colord gdm gssproxy libvirtd lvm2-lvmetad lvm2-lvmetad.socket packagekit upower wpa_supplicant rtkit-daemon gssproxy auditd cups bluetooth
 
 # useful symlinks
 
@@ -90,10 +90,11 @@ sudo systemctl disable abrtd abrt-oops abrt-ccpp.service abrt-vmcore.service abr
 sudo ln -s /home/user /home/barrycarter
 
 # if you're using an older .fvwm2rc, this may help -- if not, it
-# doesn't hurt
+# doesn't hurt (also for some of my programs that use direct paths)
 
-sudo mkdir -p /usr/lib/X11
+sudo mkdir -p /usr/lib/X11 /usr/X11R6/
 sudo ln -s /usr/libexec/fvwm/2.6.6 /usr/lib/X11/fvwm2
+sudo ln -s /bin /usr/X11R6/
 
 # other helpful symlinks if you're using older software or programs
 # that rely on a specific path (or my bclib.pl):

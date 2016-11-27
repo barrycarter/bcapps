@@ -13,7 +13,7 @@ while (<>) {
   if (/^\#/) {next;}
 
   # TODO: make this path to firefox canonical
-  my($out,$err,$res) = cache_command2("/root/build/firefox/firefox -remote 'openURL($_)'");
+  my($out,$err,$res) = cache_command2("/bin/firefox --new-tab '$_'");
   # TODO: make sleep time an option
   sleep(2);
 }

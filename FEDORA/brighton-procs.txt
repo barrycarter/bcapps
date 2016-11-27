@@ -49,6 +49,7 @@ screen
 SCREEN
 snownews
 xemacs
+ssh
 
 # because I "sudo su" in two open windows
 sudo
