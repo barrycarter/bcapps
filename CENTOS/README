@@ -88,16 +88,17 @@ ln -s /mnt/kemptown/user /home
 mv /root /root.old
 ln -s /mnt/kemptown/root /root
 
-% From dullon, rsync over BCGIT to brighton, since I will use
-symlinks to get things in their proper place
+% rsync over BCGIT to brighton, since I will use symlinks to get
+things in their proper place
 
-:if this fails "yum install rsync" on brighton and then try again
+: NOTE: in theory, could use scp which is installed by default, but
+: too inefficient if /home/user/ already exists on a separate drive
 
-\rsync -Pav /home/barrycarter/BCGIT user@brighton:/home/user/
+: if this fails "sudo yum install rsync" on brighton and then try again
 
+rsync -Pav user@192.168.0.2:/home/barrycarter/BCGIT /home/user/
 : and rsync over my private crontab, one of the few files not in this directory
-
-\rsync -Pav /home/barrycarter/bc-private-crontab user@brighton:/home/user/
+rsync -Pav user@192.168.0.2:/home/barrycarter/bc-private-crontab /home/user/
 
 %% TODO: generalize above for private files in a dir perhaps?
 
@@ -119,7 +120,8 @@ sudo ln -s /mnt/kemptown/var/cache /var/
 cd /root/build
 : if /root/build is on separate drive only need to do these once
 curl -LO https://centos7.iuscommunity.org/ius-release.rpm
-curl -O http://mirror.symnds.com/distributions/gf/el/7/gf/x86_64/gf-release-7-10.gf.el7.noarch.rpm
+curl -O http://mirror.symnds.com/distributions/gf/el/7/gf/x86_64/gf-release-7-10.gf.el7.noarch.rpm 
+curl -O http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
 
 : runme.sh handles the rest
 
@@ -151,11 +153,5 @@ sudo pkill systemd-tty-ask-password-agent
 % mass install (TODO: combine these later, and also "-y")
 
 %% TODO: note that yum skips over uninstallable packages, but deal with those
-
-%% TODO: see if I actually want to do below
-
-: from https://rpmfusion.org/Configuration
-
-su -c 'yum localinstall --nogpgcheck https://download1.rpmfusion.org/free/el/updates/6/i386/rpmfusion-free-release-6-1.noarch.rpm https://download1.rpmfusion.org/nonfree/el/updates/6/i386/rpmfusion-nonfree-release-6-1.noarch.rpm'
 
 %% TODO: copy notes from FEDORA/README as applicable
