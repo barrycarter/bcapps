@@ -30,6 +30,9 @@ your case.
 
 % "ssh root@brighton" to login remotely as root
 
+% NOTE TO SELF: because I am reinstalling many times, I have scripted
+most of the below; scp over script if desire
+
 % OPTIONAL: If you have an encrypted non-boot drive (I'm naming mine
 kemptown), do the following (note use your LVM's actual name below--
 if you previously tried installing fedora this other drive, your LVMs
@@ -131,6 +134,13 @@ curl -O http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
 
 chmod +x /home/user/BCGIT/CENTOS/runme.sh
 sudo sh -c '/home/user/BCGIT/CENTOS/runme.sh 1>/runme.out 2>/runme.err'&
+
+%% EXPERIMENT: installing packages one at a time to see where the error is
+
+perl -nle 'print "echo $_; yum -y install $_"' ~user/BCGIT/CENTOS/pkglist.txt
+
+: pipe to sh and tee output to /tmp/runme.exp
+
 
 %% TODO: attempted kill after boot:
 
