@@ -3,6 +3,7 @@
 # this installs a couple of repos (dnf can't quite install repos and
 # programs at the same time, alas)
 
+
 sudo dnf -y install --allowerasing --best http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
 # and this installs a bunch more stuff
