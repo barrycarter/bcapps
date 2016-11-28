@@ -1,3 +1,16 @@
+TODO: give remote machine a name like "dullon" or something so I don't
+keep have to say "remote" and "brighton" (+ mention when complete)
+
+TODO: add disclaimer re these are my experiences AND you should not
+follow instructions blindly AND especially not run commands blindly
+AND especially not as root. No intentional malicious code, but blindly
+running stuff hurts you and other-- botnet
+
+NOTE: any reference to "this directory" or "here" refers to
+https://github.com/barrycarter/bcapps/blob/master/CENTOS/
+
+NOTE: during graphical boot, hit ESC to see what system is actually doing
+
 This document describes my attempt to setup a CentOS-7 system the way
 I want it with minimal unnecessary daemons running.
 
@@ -5,66 +18,17 @@ I downloaded and installed
 http://isoredirect.centos.org/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1511.iso
 first
 
-%% Mirror /home/user/BCGIT to brighton:
+% On dullon (machine from which you are installing), add the machine's
+IP address to /etc/hosts something like this:
 
-:if this fails "yum install rsync" on brighton and then try again
+192.168.0.3 brighton
 
-\rsync -Pav /home/barrycarter/BCGIT user@brighton:/home/user/
+This will let you refer to the machine as "brighton" instead of having
+to type out the IP address each time. Of course, make sure you use the
+machine's actual IP address, which probably won't be 192.168.0.3 in
+your case.
 
-: and rsync over my private crontab, one of the few files not in this directory
-
-\rsync -Pav /home/barrycarter/bc-private-crontab user@brighton:/home/user/
-
-%% TODO: generalize above for private files in a dir perhaps?
-
-% OPTIONAL: since I install multiple times, move /var/cache to main 8TB
-drive that remains unchanged between reinstalls
-
-: if youve done this once, no need to do it again
-mkdir -p /mnt/kemptown/var/
-sudo mv /var/cache/ /mnt/kemptown/var/
-
-: if youve done this previously youll need to remove the pristine
-: /var/cache on every new install
-sudo ln -s /mnt/kemptown/var/cache /var/
-
-% stop selinux by editing /etc/selinux/config and change
-"SELINUX=enforcing" to "SELINUX=disabled"
-
-% Edit /etc/yum.conf so "keepcache=1"
-
-% Then run the commands in runme.sh
-
-: below should do everything automatically, but MAY require user intervention
-
-chmod +x /home/user/BCGIT/CENTOS/runme.sh
-sudo sh -c '/home/user/BCGIT/CENTOS/runme.sh 1>/runme.out 2>/runme.err'&
-
-%% TODO: reorder these sections to look more like FEDORA/README
-
-%% TODO: attempted kill after boot:
-
-: killing systemd-udevd and systemd-logind works but they come right back
-: same with systemd-journald and "agetty"
-
-: TODO: should be able to turn off anacron at a more fundamental level
-sudo kill anacron
-sudo pkill lvmetad
-sudo pkill login
-sudo pkill agetty
-
-%% run these community approved repo commands too:
-
-: this does NOT install anything
-cd /root/build
-: if /root/build is on separate drive only need to do these once
-curl -O http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-5.el7.nux.noarch.rpm
-curl -LO https://centos7.iuscommunity.org/ius-release.rpm
-curl -O http://mirror.symnds.com/distributions/gf/el/7/gf/x86_64/gf-release-7-10.gf.el7.noarch.rpm
-
-: runme.sh handles the rest
-
-%% TODO: currently running "sudo dhclient -d" manually at each reboot, fix
+% "ssh root@brighton" to login remotely as root
 
 % OPTIONAL: If you have an encrypted non-boot drive (I'm naming mine
 kemptown), do the following (note use your LVM's actual name below--
@@ -124,15 +88,71 @@ ln -s /mnt/kemptown/user /home
 mv /root /root.old
 ln -s /mnt/kemptown/root /root
 
+% From dullon, rsync over BCGIT to brighton, since I will use
+symlinks to get things in their proper place
+
+:if this fails "yum install rsync" on brighton and then try again
+
+\rsync -Pav /home/barrycarter/BCGIT user@brighton:/home/user/
+
+: and rsync over my private crontab, one of the few files not in this directory
+
+\rsync -Pav /home/barrycarter/bc-private-crontab user@brighton:/home/user/
+
+%% TODO: generalize above for private files in a dir perhaps?
+
+% OPTIONAL: since I install multiple times, move /var/cache to main 8TB
+drive that remains unchanged between reinstalls
+
+: if youve done this once, no need to do it again
+mkdir -p /mnt/kemptown/var/
+sudo mv /var/cache/ /mnt/kemptown/var/
+
+: if youve done this previously youll need to remove the pristine
+: /var/cache on every new install
+sudo ln -s /mnt/kemptown/var/cache /var/
+
+%% run these community approved repo commands too:
+
+: TODO: write script to check these and install only when needed
+: this does NOT install anything
+cd /root/build
+: if /root/build is on separate drive only need to do these once
+curl -LO https://centos7.iuscommunity.org/ius-release.rpm
+curl -O http://mirror.symnds.com/distributions/gf/el/7/gf/x86_64/gf-release-7-10.gf.el7.noarch.rpm
+
+: runme.sh handles the rest
+
+% Then run the commands in runme.sh
+
+: below SHOULD do everything automatically, but MAY require user intervention
+
+chmod +x /home/user/BCGIT/CENTOS/runme.sh
+sudo sh -c '/home/user/BCGIT/CENTOS/runme.sh 1>/runme.out 2>/runme.err'&
+
+%% TODO: attempted kill after boot:
+
+: killing systemd-udevd and systemd-logind works but they come right back
+: same with systemd-journald and "agetty"
+
+: TODO: should be able to turn off anacron at a more fundamental level
+sudo kill anacron
+sudo pkill lvmetad
+sudo pkill login
+sudo pkill agetty
+sudo pkill systemd-tty-ask-password-agent
+
+%% TODO: setup xinetd properly
+
+%% TODO: currently running "sudo dhclient -d" manually at each reboot, fix
+
 % OPTIONAL: "shutdown -r now" to make sure everything comes up fine
 
 % mass install (TODO: combine these later, and also "-y")
 
 %% TODO: note that yum skips over uninstallable packages, but deal with those
 
-: this must come first
-
-sudo yum install epel-release
+%% TODO: see if I actually want to do below
 
 : from https://rpmfusion.org/Configuration
 
