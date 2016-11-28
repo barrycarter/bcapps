@@ -1,0 +1,29 @@
+[linuxtech-release]
+name=LinuxTECH.NET el6 main repo
+baseurl=http://linuxsoft.cern.ch/linuxtech/el6/release/
+        http://pkgrepo.linuxtech.net/el6/release/
+mirrorlist=http://pkgrepo.linuxtech.net/el6/release/mirrorlist.txt
+mirrorlist_expire=7d
+enabled=1
+gpgcheck=1
+gpgkey=http://pkgrepo.linuxtech.net/el6/release/RPM-GPG-KEY-LinuxTECH.NET
+
+[linuxtech-testing]
+name=LinuxTECH.NET el6 testing repo
+baseurl=http://linuxsoft.cern.ch/linuxtech/el6/testing/
+        http://pkgrepo.linuxtech.net/el6/testing/
+mirrorlist=http://pkgrepo.linuxtech.net/el6/testing/mirrorlist.txt
+mirrorlist_expire=7d
+enabled=0
+gpgcheck=1
+gpgkey=http://pkgrepo.linuxtech.net/el6/release/RPM-GPG-KEY-LinuxTECH.NET
+
+[linuxtech-backports]
+name=LinuxTECH.NET el6 backports repo
+baseurl=http://linuxsoft.cern.ch/linuxtech/el6/backports/
+        http://pkgrepo.linuxtech.net/el6/backports/
+mirrorlist=http://pkgrepo.linuxtech.net/el6/backports/mirrorlist.txt
+mirrorlist_expire=7d
+enabled=0
+gpgcheck=1
+gpgkey=http://pkgrepo.linuxtech.net/el6/release/RPM-GPG-KEY-LinuxTECH.NET

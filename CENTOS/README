@@ -5,17 +5,42 @@ I downloaded and installed
 http://isoredirect.centos.org/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1511.iso
 first
 
-%% TODO: removing things I don't want (TODO: create a "runme.sh" file here)
+%% Mirror /home/user/BCGIT to brighton:
 
-: confirmed I can reboot after doing this
-sudo yum remove audit NetworkManager postfix
+:if this fails "yum install rsync" on brighton and then try again
 
-: confirmed I can reboot after doing this
-sudo yum remove irqbalance tuned
+\rsync -Pav /home/barrycarter/BCGIT user@brighton:/home/user/
 
-%% TODO: combine removes into single remove
+: and rsync over my private crontab, one of the few files not in this directory
 
-%% TODO: can't remove lvm2, but can I kill after reboot?
+\rsync -Pav /home/barrycarter/bc-private-crontab user@brighton:/home/user/
+
+%% TODO: generalize above for private files in a dir perhaps?
+
+% OPTIONAL: since I install multiple times, move /var/cache to main 8TB
+drive that remains unchanged between reinstalls
+
+: if youve done this once, no need to do it again
+mkdir -p /mnt/kemptown/var/
+sudo mv /var/cache/ /mnt/kemptown/var/
+
+: if youve done this previously youll need to remove the pristine
+: /var/cache on every new install
+sudo ln -s /mnt/kemptown/var/cache /var/
+
+% stop selinux by editing /etc/selinux/config and change
+"SELINUX=enforcing" to "SELINUX=disabled"
+
+% Edit /etc/yum.conf so "keepcache=1"
+
+% Then run the commands in runme.sh
+
+: below should do everything automatically, but MAY require user intervention
+
+chmod +x /home/user/BCGIT/CENTOS/runme.sh
+sudo sh -c '/home/user/BCGIT/CENTOS/runme.sh 1>/runme.out 2>/runme.err'&
+
+%% TODO: reorder these sections to look more like FEDORA/README
 
 %% TODO: attempted kill after boot:
 
@@ -28,13 +53,18 @@ sudo pkill lvmetad
 sudo pkill login
 sudo pkill agetty
 
-%% TODO: have yum keepcache set to 1
+%% run these community approved repo commands too:
 
-%% TODO: copy approved repo config files here and then symlink to /etc/yum.repos.d/
+: this does NOT install anything
+cd /root/build
+: if /root/build is on separate drive only need to do these once
+curl -O http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-5.el7.nux.noarch.rpm
+curl -LO https://centos7.iuscommunity.org/ius-release.rpm
+curl -O http://mirror.symnds.com/distributions/gf/el/7/gf/x86_64/gf-release-7-10.gf.el7.noarch.rpm
+
+: runme.sh handles the rest
 
 %% TODO: currently running "sudo dhclient -d" manually at each reboot, fix
-
-%%%%%%%%% BEGIN COPY FROM FEDORA/README
 
 % OPTIONAL: If you have an encrypted non-boot drive (I'm naming mine
 kemptown), do the following (note use your LVM's actual name below--
@@ -107,56 +137,5 @@ sudo yum install epel-release
 : from https://rpmfusion.org/Configuration
 
 su -c 'yum localinstall --nogpgcheck https://download1.rpmfusion.org/free/el/updates/6/i386/rpmfusion-free-release-6-1.noarch.rpm https://download1.rpmfusion.org/nonfree/el/updates/6/i386/rpmfusion-nonfree-release-6-1.noarch.rpm'
-
-sudo yum upgrade
-
-sudo yum install ImageMagick OpenThreads PySolFC SDL-devel alpine aspell 
-
-sudo yum install audacity bind c++-gtk-utils-gtk2-devel community-mysql 
-
-sudo yum install community-mysql-server dosbox dosemu elinks emacs enscript 
-
-sudo yum install esniper expect feh ffmpeg ftp fuse-encfs fvwm gd-devel 
-
-sudo yum install getmail glade glade-devel gnumeric gnuplot gpm graphviz 
-
-sudo yum install gtk+extra-devel gtk2-devel gtk3-devel html2ps lynx mencoder 
-
-sudo yum install parallel mplayer mrtg nagios-plugins nano ncftp openrdate 
-
-sudo yum install perl-CPAN php-mysqlnd pidgin postgresql postgresql-server
-
-sudo yum install qgis qhull rdesktop recoll rsyslog rxvt samba screen snownews
-
-sudo yum install stella stellarium tcsh tigervnc tk unrtf util-linux-user vice
-
-sudo yum install vlc xdotool xemacs xemacs-packages-extra-el xinetd
-
-sudo yum install xorg-x11-apps xpdf xsane xteddy xterm xv yum yum-utils 
-
-sudo yum install zlib-devel zlib-static mod_ldap tor tor-arm-gui tor-arm 
-
-sudo yum install onionshare privoxy recordmydesktop tmpwatch 
-
-sudo yum install esmtp-local-delivery sendmail sendmail-cf fuse-sshfs fuse-zip
-
-sudo yum install fuse-encfs curlftpfs bindfs xcalc libpuzzle libpuzzle-devel
-
-sudo yum install pyephem python2-astropy python3-astropy erfa libnova ast R
-
-sudo yum install sagemath-notebook nmap p7zip lucene ntpdate
-
-%%% STOP HERE; no rsync on brighton, bad untill END COPY FROM FEDORA/README
-
-% From remote machine, rsync over BCGIT to brighton, since I will use
-symlinks to get things in their proper place
-
-\rsync -Pav /home/barrycarter/BCGIT user@brighton:/home/user/
-
-: and rsync over my private crontab, one of the few files not in this directory
-
-\rsync -Pav /home/barrycarter/bc-private-crontab user@brighton:/home/user/
-
-%%%%% END COPY FROM FEDORA/README
 
 %% TODO: copy notes from FEDORA/README as applicable

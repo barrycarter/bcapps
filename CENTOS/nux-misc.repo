@@ -1,0 +1,13 @@
+[nux-misc]
+name=Misc Nux.Ro EL RPMs
+baseurl=http://li.nux.ro/download/nux/misc/el$releasever/$basearch/ http://mirror.li.nux.ro/li.nux.ro/nux/misc/el$releasever/$basearch/
+enabled=0
+gpgcheck=1
+gpgkey=http://li.nux.ro/download/nux/RPM-GPG-KEY-nux.ro
+
+[nux-misc-testing]
+name=Misc Nux.Ro EL RPMs - testing
+baseurl=http://li.nux.ro/download/nux/misc-testing/el$releasever/$basearch/
+enabled=0
+gpgcheck=1
+gpgkey=http://li.nux.ro/download/nux/RPM-GPG-KEY-nux.ro
