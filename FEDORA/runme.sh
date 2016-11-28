@@ -120,7 +120,7 @@ sudo mkdir -p /var/nagios/
 
 rm /etc/sysconfig/network-scripts/ifcfg-enp1s0
 ln -s /home/user/BCGIT/FEDORA/ifcfg-enp1s0 /etc/sysconfig/network-scripts/
-rm /etc/resolv.conv
+rm /etc/resolv.conf
 ln -s /home/user/BCGIT/FEDORA/resolv.conf /etc/
 
 # TODO: consider mirroring /usr/local/etc/ once I confirm its all my

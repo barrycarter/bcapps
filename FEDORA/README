@@ -322,6 +322,11 @@ ssh-keygen -t rsa -b 2048 -f /home/user/.ssh/id_rsa
 % DONE: find and reinstall parallel version that uses stdin (do NOT
 install moreutils-parallel)
 
+%% TODO: "ifconfig enp1s0 192.168.0.3 netmask 255.255.0.0" works to
+bring up network... how to put this in config file? (actually, that
+just brings up the local network), then need "ip route add default via
+192.168.0.1"
+
 %% TODO: why not "dnf install '*'"?
 
 %% TODO: install nagios3 or upgrade my nagios stuff to 4...

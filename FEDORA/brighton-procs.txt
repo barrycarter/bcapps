@@ -7,12 +7,6 @@
 
 <may>
 
-# TODO: for some reason, I have this running twice, need to kill off
-# one instance somehow; also, it should be possible to run without
-# this running all the time since brighton has static IP
-
-/sbin/dhclient
-
 # X11 + wm
 /usr/libexec/Xorg
 fvwm2
@@ -65,9 +59,6 @@ dbus-launch
 
 # I'm not always logged in remotely, but sometimes
 sshd:
-
-# pretty sure I can get rid of this by fixing an IP address
-/usr/sbin/NetworkManager
 
 # below: processes I dislike but can't seem to get rid of w/o breaking things
 
