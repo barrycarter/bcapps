@@ -15,8 +15,10 @@ This document describes my attempt to setup a CentOS-7 system the way
 I want it with minimal unnecessary daemons running.
 
 I downloaded and installed
-http://isoredirect.centos.org/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1511.iso
+%% TODO: fix this -- I dld's maximal but installed minimal
 first
+
+%% TODO: install groups like X
 
 % On dullon (machine from which you are installing), add the machine's
 IP address to /etc/hosts something like this:
@@ -30,66 +32,8 @@ your case.
 
 % "ssh root@brighton" to login remotely as root
 
-% NOTE TO SELF: because I am reinstalling many times, I have scripted
-most of the below; scp over script if desire
-
-% OPTIONAL: If you have an encrypted non-boot drive (I'm naming mine
-kemptown), do the following (note use your LVM's actual name below--
-if you previously tried installing fedora this other drive, your LVMs
-will have the same name, which you will have to fix-- see
-"lvm-name-conflict.txt" in this directory):
-
-: initially, there is no "/etc/cryptsetup" and "/etc/crypttab" reads:
-
-: luks-id-of-root-partition UUID=id-of-root-partition none
-
-cryptsetup open /dev/sdb3 kemptown
-less /etc/cryptsetup
-echo "luks /dev/sdb3 -" > /etc/cryptsetup
-less /etc/crypttab
-blkid | fgrep /dev/sdb3
-: this must be an append, since main drive should appear there first
-echo "luks UUID=the-uuid-given-by-blkid-for-dev-sdb3 none" >> /etc/crypttab
-less /etc/fstab
-echo "/dev/mapper/oldfedora-home /mnt/kemptown ext4 defaults,x-systemd.device-timeout=30 60 90" >> /etc/fstab
-mkdir /mnt/kemptown
-mount /mnt/kemptown
-
-% If you installed Fedora on your large internal drive first and then
-tried to move the installation to an SSD drive, the steps above may
-not work properly: read lvm-name-conflict.txt in the ../FEDORA/
-directory to continue
-
-% create swapspace on /mnt/kemptown/swapspace (TODO: there may be
-better ways of doing this but I'm wary of messing w/ my 8TB drive
-since I've copied stuff over and made changes)
-
-: only need to do two steps below once
-dd if=/dev/zero of=/mnt/kemptown/swap bs=1000000000 count=128 status=progress&
-mkswap /mnt/kemptown/swap
-: below as recommended
-chmod 0600 /mnt/kemptown/swap
-
-less /etc/fstab
-echo "/mnt/kemptown/swap swap swap defaults 0 0" >> /etc/fstab
-swapon /mnt/kemptown/swap
-
-% OPTIONAL: move user's home to /mnt/kemptown:
-
-: if below reports "userdel: user user is currently used by process
-: xxxx", kill process xxxx (potentially repeatedly) until the command
-: succeeds
-
-userdel user;
-find /home/user -type f
-: above should be tiny(ish)
-rm -rf /home/user;
-useradd -d /mnt/kemptown/user -g wheel -u 1000 user
-passwd user
-ln -s /mnt/kemptown/user /home
-: move root over as well
-mv /root /root.old
-ln -s /mnt/kemptown/root /root
+% OPTIONAL: If you want to move /home and create swapspace on an
+encrypted non-boot drive, see "move-root.txt"
 
 % rsync over BCGIT to brighton, since I will use symlinks to get
 things in their proper place
@@ -116,17 +60,10 @@ sudo mv /var/cache/ /mnt/kemptown/var/
 : /var/cache on every new install
 sudo ln -s /mnt/kemptown/var/cache /var/
 
-%% run these community approved repo commands too:
-
-: TODO: write script to check these and install only when needed
-: this does NOT install anything
-cd /root/build
-: if /root/build is on separate drive only need to do these once
-curl -LO https://centos7.iuscommunity.org/ius-release.rpm
-curl -O http://mirror.symnds.com/distributions/gf/el/7/gf/x86_64/gf-release-7-10.gf.el7.noarch.rpm 
-curl -O http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
-
-: runme.sh handles the rest
+% https://wiki.centos.org/AdditionalResources/Repositories has
+additional repos, but try to avoid them since they are for lower
+versions of CentOS and some break things; the only exception I'm
+making is rpmfusion
 
 % Then run the commands in runme.sh
 
@@ -135,12 +72,41 @@ curl -O http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
 chmod +x /home/user/BCGIT/CENTOS/runme.sh
 sudo sh -c '/home/user/BCGIT/CENTOS/runme.sh 1>/runme.out 2>/runme.err'&
 
-%% EXPERIMENT: installing packages one at a time to see where the error is
+% if desired, run "sudo yum -y upgrade", which will upgrade CentOS
+itself and many other things; however, it's best to install rpmfusion
+packages BEFORE upgrading
 
-perl -nle 'print "echo $_; yum -y install $_"' ~user/BCGIT/CENTOS/pkglist.txt
+% LOOK at /runme.out and /runme.err to see what packages were not
+installed, either due to dependencies or because the package was not
+available (look for "Skipped (dependency problems):" at the end of
+/runme.out)
 
-: pipe to sh and tee output to /tmp/runme.exp
+% These group installs can be done "by hand":
 
+yum groups mark convert
+
+: this lists all groups, even the ones CentOS doesnt "advertise"
+yum grouplist hidden
+
+: note my yum install process apparently autoinstalls some groups
+
+: TODO: why are these things groups instead of simple installs?
+
+yum groupinstall "Hardware Monitoring Utilities"
+
+: TODO: below does NOT work, packagelists are empty
+yum groupinstall "MySQL Database client" "MySQL Database server"
+
+yum groupinstall "X Window System"
+
+%% TODO: what to do about missing/dependent packages
+
+cd /root/build
+curl -LO http://get.videolan.org/vlc/2.2.4/vlc-2.2.4.tar.xz
+
+
+%% as of https://forum.videolan.org/viewtopic.php?t=135024 confirms no
+CentOS 7 packages
 
 %% TODO: attempted kill after boot:
 
