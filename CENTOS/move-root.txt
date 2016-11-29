@@ -13,15 +13,8 @@ most of the below; scp over script if desired
 
 : luks-id-of-root-partition UUID=id-of-root-partition none
 
-cryptsetup open /dev/sdb3 kemptown
-less /etc/cryptsetup
-echo "luks /dev/sdb3 -" > /etc/cryptsetup
-less /etc/crypttab
-blkid | fgrep /dev/sdb3
-: this must be an append, since main drive should appear there first
-echo "luks UUID=the-uuid-given-by-blkid-for-dev-sdb3 none" >> /etc/crypttab
 less /etc/fstab
-echo "/dev/mapper/oldfedora-home /mnt/kemptown ext4 defaults,x-systemd.device-timeout=30 60 90" >> /etc/fstab
+echo "/dev/mapper/oldfedora-home /mnt/kemptown ext4 defaults" >> /etc/fstab
 mkdir /mnt/kemptown
 mount /mnt/kemptown
 
@@ -39,16 +32,8 @@ less /etc/fstab
 echo "/mnt/kemptown/swap swap swap defaults 0 0" >> /etc/fstab
 swapon /mnt/kemptown/swap
 
-% OPTIONAL: move user's home to /mnt/kemptown:
+% create user w/ home dir on /mnt/kemptown
 
-: if below reports "userdel: user user is currently used by process
-: xxxx", kill process xxxx (potentially repeatedly) until the command
-: succeeds
-
-userdel user;
-find /home/user -type f
-: above should be tiny(ish)
-rm -rf /home/user;
 useradd -d /mnt/kemptown/user -g wheel -u 1000 user
 passwd user
 ln -s /mnt/kemptown/user /home

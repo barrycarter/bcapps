@@ -1,10 +1,53 @@
-TODO: give remote machine a name like "dullon" or something so I don't
+% NOTE TO SELF: always boot from "P0" in production, not "P2" ("P2" is
+my old fedora install on the big 8TB drive, I want to boot from SSD)
+
+%% TODO: create a dependency tree for RPMs (someone's probably already
+done this) or for source code (probably more difficult)
+
+%% TODO (for self): Consider using strong passphrases since I'm
+upgrading anyway
+
+%% TODO: give remote machine a name like "dullon" or something so I don't
 keep have to say "remote" and "brighton" (+ mention when complete)
 
-TODO: add disclaimer re these are my experiences AND you should not
+%% TODO: add disclaimer re these are my experiences AND you should not
 follow instructions blindly AND especially not run commands blindly
 AND especially not as root. No intentional malicious code, but blindly
 running stuff hurts you and other-- botnet
+
+%% TODO: does keepcache=1 in yum.conf/dnf.conf mean yum/dnf keeps RPMs
+around even if I uninstall them? I'd like to minimize external
+redundant dls
+
+%% TODO: If I do a minimal install of CentOS (whatever) but using the
+7GB (or whatever) image, and then add packages, do those packages come
+off the image, or is a minimal install of a 7GB image pretty much a
+waste of 6.2 GB?
+
+%% TODO: can rsync move over multiple files to multiple destinations in a single command to avoid pw repeat typing
+
+%% TODO: tweak bc-fake-ntp.pl to print out an "info" message for bg
+
+%% CENTOS INSTALL TIPS (not quite identical to Fedora 24 or CentOS 7)
+
+  - if installing from USB stick, choose "hard drive" and then
+  /dev/sdc1 (you cannot pretend the USB stick is a CD/DVD)
+
+  - Basic storage devices
+
+  - Do type in encryption password (as global passphrase), but won't
+  actually use it (creating our own new partitions)
+
+  - Fresh Installation ("Upgrade an Existing Installation" won't even
+  work because of the symlinks I make)
+
+  - Create Custom Layout
+
+  - Can leave /dev/sda partitions "as is" but do format as ext4 to
+  wipe out existing data
+
+  - Choose minimal install, leave CentOS repo as is, do not customize
+  (we'll do so after reboot)
 
 NOTE: any reference to "this directory" or "here" refers to
 https://github.com/barrycarter/bcapps/blob/master/CENTOS/
@@ -17,8 +60,6 @@ I want it with minimal unnecessary daemons running.
 I downloaded and installed
 %% TODO: fix this -- I dld's maximal but installed minimal
 first
-
-%% TODO: install groups like X
 
 % On dullon (machine from which you are installing), add the machine's
 IP address to /etc/hosts something like this:
@@ -41,7 +82,8 @@ things in their proper place
 : NOTE: in theory, could use scp which is installed by default, but
 : too inefficient if /home/user/ already exists on a separate drive
 
-: if this fails "sudo yum install rsync" on brighton and then try again
+: if this fails "sudo yum install openssh-clients rsync" on brighton
+and then try again
 
 rsync -Pav user@192.168.0.2:/home/barrycarter/BCGIT /home/user/
 : and rsync over my private crontab, one of the few files not in this directory
@@ -60,17 +102,13 @@ sudo mv /var/cache/ /mnt/kemptown/var/
 : /var/cache on every new install
 sudo ln -s /mnt/kemptown/var/cache /var/
 
-% https://wiki.centos.org/AdditionalResources/Repositories has
-additional repos, but try to avoid them since they are for lower
-versions of CentOS and some break things; the only exception I'm
-making is rpmfusion
-
 % Then run the commands in runme.sh
 
 : below SHOULD do everything automatically, but MAY require user intervention
 
-chmod +x /home/user/BCGIT/CENTOS/runme.sh
 sudo sh -c '/home/user/BCGIT/CENTOS/runme.sh 1>/runme.out 2>/runme.err'&
+
+%% TODO: resume using chkconfig instead of systemctl
 
 % if desired, run "sudo yum -y upgrade", which will upgrade CentOS
 itself and many other things; however, it's best to install rpmfusion
@@ -83,8 +121,6 @@ available (look for "Skipped (dependency problems):" at the end of
 
 % These group installs can be done "by hand":
 
-yum groups mark convert
-
 : this lists all groups, even the ones CentOS doesnt "advertise"
 yum grouplist hidden
 
@@ -95,18 +131,29 @@ yum grouplist hidden
 yum groupinstall "Hardware Monitoring Utilities"
 
 : TODO: below does NOT work, packagelists are empty
-yum groupinstall "MySQL Database client" "MySQL Database server"
+: yum groupinstall "MySQL Database client" "MySQL Database server"
 
 yum groupinstall "X Window System"
 
-%% TODO: what to do about missing/dependent packages
+% I prefer the tcsh for both user and root though some believe this
+isn't a good idea (so not putting in runme.sh):
 
-cd /root/build
-curl -LO http://get.videolan.org/vlc/2.2.4/vlc-2.2.4.tar.xz
+sudo chsh -s /bin/tcsh root
+sudo chsh -s /bin/tcsh user
 
+% OPTIONAL: "shutdown -r now" to make sure everything comes up fine
 
-%% as of https://forum.videolan.org/viewtopic.php?t=135024 confirms no
-CentOS 7 packages
+%% TODO: make user member of wheel and passwordless "sudo"
+
+%% TODO: add a "<never>" section to brighton-procs for things I can kill instantly w/o waiting 10m
+
+%% TODO: figure out which packages come from which repos, and see if I
+can minimize the number of required repos
+
+%% TODO: linuxtech.com may have an EL/CentOS 7 repo, look into this
+(but rpmfusion still doesn't, and linuxtech may not be enough)
+
+%% TODO: make sure screengrab firefox plugin works
 
 %% TODO: attempted kill after boot:
 
@@ -115,19 +162,17 @@ CentOS 7 packages
 
 : TODO: should be able to turn off anacron at a more fundamental level
 sudo kill anacron
-sudo pkill lvmetad
 sudo pkill login
-sudo pkill agetty
-sudo pkill systemd-tty-ask-password-agent
+sudo pkill mingetty
 
 %% TODO: setup xinetd properly
 
 %% TODO: currently running "sudo dhclient -d" manually at each reboot, fix
 
-% OPTIONAL: "shutdown -r now" to make sure everything comes up fine
-
-% mass install (TODO: combine these later, and also "-y")
-
 %% TODO: note that yum skips over uninstallable packages, but deal with those
 
 %% TODO: copy notes from FEDORA/README as applicable
+
+
+
+
