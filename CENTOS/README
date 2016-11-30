@@ -14,21 +14,6 @@ not dropping it, modify it for brighton]
 
 %% TODO (for self): test audio
 
-%% TODO: make x11vnc listen on LAN not just localhost
-
-x11vnc -nopw &
-
-: from dullon
-ssh -L 5900:brighton:5900 root@brighton
-
-: then
-\vncviewer -geometry 1024x768 127.0.0.1 &
-
-: but not happy with this solution
-
-%% TODO: create a dependency tree for RPMs (someone's probably already
-done this) or for source code (probably more difficult)
-
 %% TODO (for self): Consider using strong passphrases since I'm
 upgrading anyway
 
@@ -37,7 +22,7 @@ has 100% completed; this can be useful if the boot process itself
 "hangs"
 
 %% TODO: briefly writeup how to remove multiple boot options CentOS
-creates each time it's installed
+creates each time it's installed (efibootmgr)
 
 %% TODO: give remote machine a name like "dullon" or something so I don't
 keep have to say "remote" and "brighton" (+ mention when complete)
@@ -56,30 +41,9 @@ redundant dls
 off the image, or is a minimal install of a 7GB image pretty much a
 waste of 6.2 GB?
 
-%% TODO: can rsync move over multiple files to multiple destinations in a single command to avoid pw repeat typing
+%% TODO: can rsync move over multiple files to multiple destinations in a single command to avoid pw repeat typing?
 
 %% TODO: tweak bc-fake-ntp.pl to print out an "info" message for bg
-
-%% CENTOS INSTALL TIPS (not quite identical to Fedora 24 or CentOS 7)
-
-  - if installing from USB stick, choose "hard drive" and then
-  /dev/sdc1 (you cannot pretend the USB stick is a CD/DVD)
-
-  - Basic storage devices
-
-  - Do type in encryption password (as global passphrase), but won't
-  actually use it (creating our own new partitions)
-
-  - Fresh Installation ("Upgrade an Existing Installation" won't even
-  work because of the symlinks I make)
-
-  - Create Custom Layout
-
-  - Can leave /dev/sda partitions "as is" but do format as ext4 to
-  wipe out existing data
-
-  - Choose minimal install, leave CentOS repo as is, do not customize
-  (we'll do so after reboot)
 
 NOTE: any reference to "this directory" or "here" refers to
 https://github.com/barrycarter/bcapps/blob/master/CENTOS/

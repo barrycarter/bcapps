@@ -4,7 +4,7 @@ baseurl=http://linuxsoft.cern.ch/linuxtech/el6/release/
         http://pkgrepo.linuxtech.net/el6/release/
 mirrorlist=http://pkgrepo.linuxtech.net/el6/release/mirrorlist.txt
 mirrorlist_expire=7d
-enabled=1
+enabled=0
 gpgcheck=1
 gpgkey=http://pkgrepo.linuxtech.net/el6/release/RPM-GPG-KEY-LinuxTECH.NET
 
