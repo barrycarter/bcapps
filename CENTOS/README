@@ -1,11 +1,43 @@
 % NOTE TO SELF: always boot from "P0" in production, not "P2" ("P2" is
 my old fedora install on the big 8TB drive, I want to boot from SSD)
 
+% NOTE TO SELF: drusillas, hippodrome, camber, and bodiam are
+attractions just outside Brighton, in case I want to rename my
+external drives and continue the Brighton-based naming scheme
+
+%% TODO: resort (or "subroutinize") this file to be in the actual
+order I bring things up
+
+%% TODO (for self): consider dropping my personal version of
+bc-daemon-checker2.pl since the bc version should now do it all [if
+not dropping it, modify it for brighton]
+
+%% TODO (for self): test audio
+
+%% TODO: make x11vnc listen on LAN not just localhost
+
+x11vnc -nopw &
+
+: from dullon
+ssh -L 5900:brighton:5900 root@brighton
+
+: then
+\vncviewer -geometry 1024x768 127.0.0.1 &
+
+: but not happy with this solution
+
 %% TODO: create a dependency tree for RPMs (someone's probably already
 done this) or for source code (probably more difficult)
 
 %% TODO (for self): Consider using strong passphrases since I'm
 upgrading anyway
+
+% NOTE: you can sometimes ssh to brighton even before the boot process
+has 100% completed; this can be useful if the boot process itself
+"hangs"
+
+%% TODO: briefly writeup how to remove multiple boot options CentOS
+creates each time it's installed
 
 %% TODO: give remote machine a name like "dullon" or something so I don't
 keep have to say "remote" and "brighton" (+ mention when complete)
