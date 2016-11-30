@@ -5,6 +5,9 @@ my old fedora install on the big 8TB drive, I want to boot from SSD)
 attractions just outside Brighton, in case I want to rename my
 external drives and continue the Brighton-based naming scheme
 
+%% TODO: consider virutalization so I can reset to default state w/o
+having to reinstall (this might be a little faster?)
+
 %% TODO: resort (or "subroutinize") this file to be in the actual
 order I bring things up
 
@@ -98,6 +101,45 @@ sudo mv /var/cache/ /mnt/kemptown/var/
 : /var/cache on every new install
 sudo ln -s /mnt/kemptown/var/cache /var/
 
+% lets me be barrycarter and user at same time
+sudo ln -s /home/user /home/barrycarter
+
+% Install X and other things I want as "groupinstall"
+
+yum grouplist hidden;: lists all available groups
+yum groupinstall "Hardware Monitoring Utilities" "X Window System"
+
+% edit SELINUX to disabled and keep cache for yum
+
+printf '1,$s/keepcache=0/keepcache=1/\nwq\n' | ex /etc/yum.conf 
+printf '1,$s/SELINUX=enforcing/SELINUX=disabled/\nwq\n'|ex /etc/selinux/config
+
+% OPTIONAL: # if you're using an older .fvwm2rc, this may help -- if
+# not, it doesn't hurt (also for some of my programs that use direct
+# paths)
+
+sudo mkdir -p /usr/lib/X11 /usr/X11R6/
+sudo ln -s /usr/libexec/fvwm/2.6.6 /usr/lib/X11/fvwm2
+sudo ln -s /bin /usr/X11R6/
+
+% this is so my progs will work correctly
+
+sudo ln -s /home/barrycarter/BCGIT/bclib.pl /usr/local/lib/
+
+% Makes the files in this directory "live"
+
+sudo ln -s /home/user/BCGIT/CENTOS/.xinitrc /home/user/BCGIT/CENTOS/brighton-procs.txt /home/user
+
+% Bootstraps the cron process
+
+sudo crontab -u user /home/user/BCGIT/FEDORA/bc-public-crontab
+
+%% EXPERIMENT: latest source versions of some stuff
+
+dosbox-0.74.tar.gz
+gnumeric-1.12.32.tar.xz
+https://fossies.org/all.html
+
 % Then run the commands in runme.sh
 
 : below SHOULD do everything automatically, but MAY require user intervention
@@ -117,19 +159,7 @@ available (look for "Skipped (dependency problems):" at the end of
 
 % These group installs can be done "by hand":
 
-: this lists all groups, even the ones CentOS doesnt "advertise"
-yum grouplist hidden
-
-: note my yum install process apparently autoinstalls some groups
-
 : TODO: why are these things groups instead of simple installs?
-
-yum groupinstall "Hardware Monitoring Utilities"
-
-: TODO: below does NOT work, packagelists are empty
-: yum groupinstall "MySQL Database client" "MySQL Database server"
-
-yum groupinstall "X Window System"
 
 % I prefer the tcsh for both user and root though some believe this
 isn't a good idea (so not putting in runme.sh):

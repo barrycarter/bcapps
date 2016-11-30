@@ -1,0 +1,7 @@
+# packages I want, broken down into sections (which doesnt actually
+# effect how they are installed, just for my own reference)
+
+# packages/programs I actually use
+
+# "X Window System" as a group
+
