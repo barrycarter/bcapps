@@ -1,0 +1,54 @@
+# this is a minimal file for VirtualBox machines I am creating to test
+# the relative power of Centos 6.8, Centos 7.3, Fedora 24, and maybe
+# even Linux Mint
+
+# places in brighton as names for vhosts
+
+% pavilion: CentOS 7 via CentOS-7-x86_64-Minimal-1511.iso
+
+87 procs total, 23 non-bracketed
+
+yum groupinstall "X Window System" ;: works fine
+
+: xinit fails because there is no xterm
+
+yum install xterm
+
+: xinit now works, but is minimal (no wm)
+
+
+% blackdove: Centos 6.8 via CentOS-6.8-x86_64-bin-DVD1.iso
+
+75 total, 23 non-bracketed
+
+yum groupinstall "X Window System" ;: works fine
+
+: xinit fails because there is no xterm
+
+yum install xterm
+
+: xinit now works, but is minimal (no wm)
+
+% thelanes: Fedora 24 via Fedora-Workstation-Live-x86_64-24-1.2.iso
+
+183 total, 108 non-bracketed
+
+: X11 automatic
+ 
+% marina: Linux Mint cinnamon linuxmint-18-cinnamon-64bit.iso
+
+163 total, 81 non-bracketed
+
+: X11 automatic
+
+% prestonmanor: debian-8.6.0-amd64-netinst.iso (installing with all
+checkboxes unchecked)
+
+63 total, 17 non-bracketed
+
+apt-get install aptitude
+
+: use "debian desktop" under tasks, none of the fancy WMs
+
+xinit ;: worked fine, but bare minimal desktop, no WM
+

@@ -104,15 +104,15 @@ sudo ln -s /mnt/kemptown/var/cache /var/
 % lets me be barrycarter and user at same time
 sudo ln -s /home/user /home/barrycarter
 
-% Install X and other things I want as "groupinstall"
-
-yum grouplist hidden;: lists all available groups
-yum groupinstall "Hardware Monitoring Utilities" "X Window System"
-
 % edit SELINUX to disabled and keep cache for yum
 
 printf '1,$s/keepcache=0/keepcache=1/\nwq\n' | ex /etc/yum.conf 
 printf '1,$s/SELINUX=enforcing/SELINUX=disabled/\nwq\n'|ex /etc/selinux/config
+
+% Install X and other things I want as "groupinstall"
+
+yum grouplist hidden;: lists all available groups
+yum groupinstall "Hardware Monitoring Utilities" "X Window System"
 
 % OPTIONAL: # if you're using an older .fvwm2rc, this may help -- if
 # not, it doesn't hurt (also for some of my programs that use direct
@@ -139,6 +139,17 @@ sudo crontab -u user /home/user/BCGIT/FEDORA/bc-public-crontab
 dosbox-0.74.tar.gz
 gnumeric-1.12.32.tar.xz
 https://fossies.org/all.html
+
+https://fossies.org/linux/privat/dosbox-0.74.tar.gz
+https://fossies.org/linux/privat/feh-2.18.tar.gz
+https://fossies.org/linux/privat/rdesktop-1.8.3.tar.gz
+https://fossies.org/linux/privat/recoll-1.22.4.tar.gz
+https://fossies.org/linux/misc/rxvt-unicode-9.22.tar.gz
+https://fossies.org/linux/privat/stella-4.7.3-src.tar.gz
+https://fossies.org/linux/misc/vice-2.4.33.tar.gz
+https://fossies.org/linux/misc/vlc-2.2.4.tar.gz
+https://fossies.org/linux/misc/MPlayer-1.3.0.tar.gz
+
 
 % Then run the commands in runme.sh
 
