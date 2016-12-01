@@ -120,3 +120,6 @@ all pingable postinstall
 %% TODO: rename machines in virtualbox to include numbers I use
 
 %% TODO: sync over /root/brighton-notes.txt
+
+%% centos68 vs centos7
+
