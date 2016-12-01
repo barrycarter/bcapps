@@ -1,3 +1,33 @@
+% Machine creation:
+
+name is: centos7, centos68, fedora24, mint18, debian86
+
+TODO: 
+
+  - tweak storage for CD
+
+  - tweak network for bridged, MAC addr and promiscuous
+
+  - NOT: tweak shared folders /mnt mnt and not read only (experimental)
+
+  - store snapshot
+
+pw is abc123 for test machines (in case I wish to share)
+
+user "user" created w/ no pw and is adminstrator
+
+network interface is bridged, MAC is 08 00 00 00 00 0x (x= 1 - 5)
+
+router will autoassign ip addresses in that order
+
+preinstall state includes CD in drive
+
+centos are redhat linux 64
+
+mint is ubuntu
+
+
+
 % Stuff I do on brighton to control guests
 
 [root@brighton VirtualBox VMs]# VBoxManage list  

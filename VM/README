@@ -52,3 +52,68 @@ apt-get install aptitude
 xinit ;: worked fine, but bare minimal desktop, no WM
 
 after installing desktop, 126 procs, 78 non-bracketed
+
+
+TODO: answer my own question as follows w/ these notes:
+
+%% 1 =centos7, 2=centos68, 3=fedora 24, 4=mint18, 5=debian86
+
+%% pingability after postinstall:
+
+perl -le 'for (101..105) {print "ping -c 5 192.168.0.$_"}'
+
+1345 pingable, 2 not pingable
+
+%% GUI
+
+1 - text
+2 - text
+3 - graphical
+4 - graphical
+5 - text
+
+%% ssh after postinstall:
+
+1 - yes as root
+2 - no route to host
+3 - connection refused [ok after "sharing/remote login"]
+4 - connection refused
+5 - connection refused
+
+%% package manager
+
+1 - yum
+2 - yum
+3 - yum
+4 - aptitude
+5 - apt; aptitude not installed in minimal package
+
+% process count (approx, may incl terminal and sudo)
+
+1 - 86 total, 27 unbracketed
+2 - 73 total, 21 unbracketed
+3 - 172 total, 112 unbracketed
+4 - 162 total, 85 unbracketed
+5 - 61 total, 19 unbracketed
+
+%% TODO: copy /psef.txt from each machine
+
+%% TODO: process killability
+
+%% TODO: kernel version
+
+%% TODO: packages w and wo extra repos
+
+%% TODO: both centos68 and debian pingable (for debian installed basic system tools and ssh server; for centos68, just setup network correctly)
+
+%% TODO: processes after X11 running
+
+%% TODO: put up postinstall image somewhere? (w/ pw abc123)
+
+%% TODO: did I make debian TOO minimal?
+
+%% TODO: fvwm2 accessibility
+
+%% TODO: rename machines in virtualbox to include numbers I use
+
+%% TODO: sync over /root/brighton-notes.txt

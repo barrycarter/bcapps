@@ -23,6 +23,7 @@ html2ps
 R
 perl-CPAN
 tk
+java
 
 # shells
 tcsh
@@ -75,6 +76,7 @@ feh
 xv
 xpdf
 xsane
+gimp
 
 # video
 ffmpeg
@@ -95,6 +97,7 @@ lynx
 
 # networking
 pidgin
+skype
 
 # math/science tools
 qgis
@@ -109,6 +112,7 @@ samba
 # games
 PySolFC
 xteddy
+steam
 
 # databases
 mysql-client
@@ -121,6 +125,8 @@ dosbox
 dosemu
 vice
 stella
+wine
+virtualbox
 
 # editors + text utilities
 emacs
@@ -135,6 +141,7 @@ gnuplot
 graphviz
 dia
 xfig
+libreoffice
 
 # misc
 esniper
