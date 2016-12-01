@@ -62,7 +62,7 @@ TODO: answer my own question as follows w/ these notes:
 
 perl -le 'for (101..105) {print "ping -c 5 192.168.0.$_"}'
 
-1345 pingable, 2 not pingable
+all pingable postinstall
 
 %% GUI
 
@@ -75,10 +75,10 @@ perl -le 'for (101..105) {print "ping -c 5 192.168.0.$_"}'
 %% ssh after postinstall:
 
 1 - yes as root
-2 - no route to host
+2 - yes as root
 3 - connection refused [ok after "sharing/remote login"]
 4 - connection refused
-5 - connection refused
+5 - yes as user
 
 %% package manager
 
@@ -104,7 +104,10 @@ perl -le 'for (101..105) {print "ping -c 5 192.168.0.$_"}'
 
 %% TODO: packages w and wo extra repos
 
-%% TODO: both centos68 and debian pingable (for debian installed basic system tools and ssh server; for centos68, just setup network correctly)
+%% TODO: both centos68 and debian pingable (for debian installed basic system tools and ssh server; for centos68, just setup network correctly) [for centos68 must remember to configure networking]
+
+%% NOTE: mach5 disallows ssh to root (but can ssh in as user and then
+"su"-- "sudo not even installed!)
 
 %% TODO: processes after X11 running
 

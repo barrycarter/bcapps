@@ -18,7 +18,7 @@ unless ($pid=~/^\d+$/) {
 
   if ($#procs==-1) {die "No procs matching: $pid";}
   # TODO: proceed here with "first" process pgrep returns
-  if ($#procs>0) {die "More than 1 proc matchines: $pid";}
+  if ($#procs>0) {warn ">= 2 procs match: $pid; only watching first";}
   $pid = $procs[0];
   chomp($pid);
 }
