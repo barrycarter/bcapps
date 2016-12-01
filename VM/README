@@ -16,7 +16,6 @@ yum install xterm
 
 : xinit now works, but is minimal (no wm)
 
-
 % blackdove: Centos 6.8 via CentOS-6.8-x86_64-bin-DVD1.iso
 
 75 total, 23 non-bracketed
@@ -52,3 +51,4 @@ apt-get install aptitude
 
 xinit ;: worked fine, but bare minimal desktop, no WM
 
+after installing desktop, 126 procs, 78 non-bracketed

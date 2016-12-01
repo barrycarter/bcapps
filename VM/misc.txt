@@ -1,0 +1,43 @@
+% Stuff I do on brighton to control guests
+
+[root@brighton VirtualBox VMs]# VBoxManage list  
+
+"pavilion" {3208be8a-beaa-42d8-a7bd-c99824970fe1}     .101 
+"blackdove" {c4bc3f26-b00b-4b0b-ba35-c7dcf98ae367}    .102 
+"thelanes" {2f3c0567-ec85-4013-bac1-3d16fbe45896}     .103
+"marina" {deb5a2b6-7ccf-4cbf-ba75-6470625ed357}       .104
+"prestonmanor" {93c002d9-3d93-4732-b9c7-1c290deec3b6} .105
+
+% MAC addresses set to: 08:00:00:00:00:01 through 05 all = promiscious to all
+
+% using "bridged" in all cases so I can access it from other machines
+on my LAN, reserving these IPs from router (main router, not virtual)
+
+% reset all to postinstall state to see what they come up with
+
+none of them are pingable at reboot
+
+
+
+
+: below does not show IP address
+VBoxManage showvminfo pavilion | less
+
+
+VBoxManage guestproperty enumerate pavilion
+
+VBoxManage natnetwork list pavilion
+
+: maybe useful storageattach
+
+: what is controlvm keyboardputscancode
+
+[root@brighton VirtualBox VMs]# VBoxManage list bridgedifs
+
+[root@brighton VirtualBox VMs]# VBoxManage list dhcpservers
+
+
+
+                            hostinfo|hostcpuids|hddbackends|hdds|dvds|floppies|
+                            usbhost|usbfilters|systemproperties|extpacks|
+                            groups|webcams|screenshotformats
