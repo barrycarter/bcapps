@@ -18,15 +18,56 @@ tmpwatch
 rsyslog
 screen
 html2ps
+traceroute
+mtr
+sshd
+rsync
+date
+dd
+df
+grep
+egrep
+fgrep
+agrep
+yes
+find
+gawk
+gunzip
+gzip
+bunzip2
+bzip2
+join
+ln
+less
+more
+mv
+nice
+ping
+ps
+rm
+tar
+zcat
+7z
+FBReader
+Mail
+mail
+aldo
+ant
+ar
+cups
+chsh
 
 # programming languages (or related)
 R
 perl-CPAN
 tk
 java
+wish
+gcc
 
 # shells
 tcsh
+bash
 
 # VNC/rdesktop clients/servers
 tigervnc
@@ -69,6 +110,8 @@ aspell
 
 # audio
 audacity
+sox
+
 
 # graphics incl scanning
 ImageMagick
@@ -77,6 +120,9 @@ xv
 xpdf
 xsane
 gimp
+Xorg
+acroread
+calibre
 
 # video
 ffmpeg
@@ -94,9 +140,12 @@ sendmail
 firefox
 elinks
 lynx
+britannica
 
 # networking
 pidgin
+gaim
+coccinella
 skype
 
 # math/science tools
@@ -105,6 +154,10 @@ qhull
 sagemath
 pyephem
 stellarium
+celestia
+bc
+dc
+calc
 
 # file sharing
 samba
@@ -113,6 +166,23 @@ samba
 PySolFC
 xteddy
 steam
+adventure
+animalsay
+battlestar
+nethack
+vulturesclaw
+vultureseye
+mille
+brooklyn
+boggle
+bomber
+bovo
+# battlezone, not bzip2 filesystem
+bzfs
+# below is solitaire
+sol
+# below is anagram creator
+an
 
 # databases
 mysql-client
@@ -126,7 +196,9 @@ dosemu
 vice
 stella
 wine
-virtualbox
+VirtualBox
+WolframCDFPlayer
+abiword
 
 # editors + text utilities
 emacs
