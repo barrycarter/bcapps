@@ -57,6 +57,14 @@ yum -y install virt-manager xterm
 : start up X
 xinit &
 
+% IMP: I'm having difficulty getting VNC setup consistently, so the
+steps below may not work; in particular:
+
+  - you may not need both xinit and vncserver (though x0vncserver may work)
+
+  - turn off (or modify) firewall or use ssh ("systemctl stop
+  firewalld" is easiest)
+
 % If you plan to access brighton remotely, follow these steps;
 otherwise, skip to next %
 
@@ -80,19 +88,17 @@ yum -y install kwin
 : run this from brighton, if running remotely must set DISPLAY
 kwin &
 
-: and lets get it going
+% Get VM running
+
 systemctl start libvirtd
 
-: if you installed from /dev/sdc --for example-- you can do this
-
-: note, this will copy ENTIRE medium, so an 8GB drive = 8GB image
-dd if=/dev/sdc bs=100000000 of=/var/lib/libvirt/images/centos7.iso &
-
-: if not, just get a copy of CentOS-7-x86_64-Minimal-1511.iso into
-: that directory
+: get a copy of CentOS-7-x86_64-Minimal-1511.iso into /var/lib/libvirt/images/
 
 : install using virt-manager giving plenty of disk space
 : give as much disk space as possible (I gave 47G)
+
+: if doing this via ssh and vnc, remember to "export DISPLAY=:1" or
+: equivalent --vncserver should tell you what this is after it starts--
 
 virt-manager &
 
@@ -100,20 +106,24 @@ virt-manager &
 
   - Name machine babybrighton or something
 
-  - 
+  - For network selection choose "host device" and "bridged"
 
+% When installing CentOS 7:
 
+  - Under "network", turn on Ethernet, name machine babybrighton AND:
 
- name :
-: this "babybrighton" or something, but make sure the disk partition is
-: primarily allocated to / since this is a virtual machine, not a real
-: one
+  - Under Configure/Ethernet, set MAC address to 08:00:00:00:00:00 or
+  something else easy to recognize and configure your router/DHCP to
+  give this a specific IP address and add that IP address to
+  /etc/hosts for convenience. Example (to add to /etc/hosts):
+
+192.168.0.100 babybrighton 
 
 : reboot virutal machine and then below on brighton
 
 : immediately after reboot, "shutdown -h" babybrighton and do this on brighton:
 
-virsh snapshot-create-as centos7.0 postinstall "Post installation"
+virsh snapshot-create-as babybrighton postinstall "Post installation"
 
 : restart babybrighton
 
@@ -184,10 +194,34 @@ Steps start with left flush "%", but left flus"% NOTE:" indicates a note, not a 
 
 %% TODO: which programs can i NOT install from repos
 
-%% TODO: hooking in old bin and lib and root from fc11root (and
+%% TODO: hooking (linking) in old bin and lib and root from fc11root (and
 .tcshrc files required) (PATH and LD_LIBRARY_PATH) but as last entries
 
 %% TODO: fossies mention for source code where needed
 
+%% TODO: use chkconfig/systemctl on guest to make sure what I want comes up (ps -auxwww or ps -ef to see whats actually running)
+
 %% TODO: programs I want that dont appear to have packages:
 
+celestia
+dosemu (check: does dosbox include this implicitly?)
+FBReader
+gnumeric
+maxima
+ntop
+openuniverse 
+
+%% TODO: note that installing centos7 w/ all the repos/rpms I select
+requires more than the default 8gb drive virtualbox gives (although
+I'm now using KVM, but think it's default is too small too) --
+recommend give as much space as possible, but maybe df -kh after full install
+
+%% TODO: look at TODOs from FEDORA and CENTOS and VM
+
+%% TODO: compare new bin dirs with old ones to see what is missing and will fallthru
+
+% NOTE: info I may need to install guest additions:
+
+: or equivalent in tcsh
+export KERN_INCL=/usr/include
+export KERN_DIR = /usr/src/kernels/3.10.0-327.36.3.el7.x86_64
