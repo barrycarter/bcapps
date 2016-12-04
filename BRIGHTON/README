@@ -1,0 +1,98 @@
+%% TODO: disclaim everything
+
+This documents my attempt to setup "brighton", a new CentOS 7.2
+machine, first as a VM, and later as a physical machine. My current
+machine is running Fedora Core 11, and I will its existing files as a
+"fallback" for certain things (eg, binaries and libraries absolutely
+not available via CentOs 7.2 or that I am too lazy to install from
+tertiary sources) [default install + CentOS 7 included/approved
+repositories = primary source, unapproved repositories = secondary
+source]
+
+How to read this document:
+
+  - A left flush "%% TODO:" indicates a step I need to do and that is
+  not complete yet.
+
+  - A left flush "% IMP:" indicates an important note about the steps
+  that follow. You should not follow the steps that come afterwards
+  unless you are sure you know what you're doing.
+
+  - A left flush "% NOTE:" indicates a note that is optional reading
+  and may explain why a certain step must be performed in a specific
+  way and why other reasonable-seeming ways to perform that step may
+  not be correct, or a comment on why this step is performed.
+
+  - Any other left flush "% " indicates a step to follow.
+
+% IMP: the following apply to physical hardware on which the host
+machine will reside.
+
+% Install CentOS-7-x86_64-Minimal-1511.iso (sha256 sum:
+f90e4d28fa377669b2db16cbcb451fcb9a89d2460e3645993e30e137ac37d284) on a
+USB stick or other install medium.
+
+% Choose the default settings, but do turn on networking; create a
+root user with a trivial password and an administrative "user" user
+with no password. There is no need to encrypt the data or choose a
+specific partioning scheme, since we will only be using this install
+to startup a virtual machine.
+
+% After rebooting, "ssh root@brighton"
+
+% NOTE: you won't be able to ssh in as the passwordless "user" user,
+and we'll need to be root for the next steps anyway.
+
+% Use virtualbox's repo
+
+curl -o /etc/yum.repos.d/virtualbox.repo http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo
+
+% Install virtualbox, accepting GPG keys as necessary (can also use "-y"?)
+
+yum -y install VirtualBox-5.1;: may need to verify some keys manually
+
+% You CAN run VirtualBox from the command line, but it's sort of a
+pain, so let's create a quick and easy X11 environment:
+
+: GNOME the "yum groupinstall hidden" "X Window System" may work here too
+yum -y groupinstall "KDE Plasma Workspaces";: this is overkill but it works
+
+
+
+%% TODO: disclaim that CentOs7 actually has virtualization built in
+(eg, "yum groupinstall 'Virtualization Host'"), but that we're using
+virt as an intermediate step, so I am OK with "cheating"
+
+: note "yum grouplist hidden" will show "X Window System" but wont w/o hidden
+
+: note you probably could just install 
+
+
+%% TODO: note use of ;: as comments
+
+% IMP: this is incomplete
+
+%% TODO: more
+  
+
+Steps start with left flush "%", but left flus"% NOTE:" indicates a note, not a step 
+
+%% TODO: tell how I got to VirtualBox state
+
+%% TODO: runme.sh for setup
+
+%% TODO: Guest Box additions required to access main disk
+
+%% TODO: can I encrypt /dev directly from vbox?
+
+%% TODO: add repos
+
+%% TODO: which programs can i NOT install from repos
+
+%% TODO: hooking in old bin and lib and root from fc11root (and
+.tcshrc files required) (PATH and LD_LIBRARY_PATH) but as last entries
+
+%% TODO: fossies mention for source code where needed
+
+%% TODO: programs I want that dont appear to have packages:
+
