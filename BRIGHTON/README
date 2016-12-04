@@ -96,13 +96,31 @@ dd if=/dev/sdc bs=100000000 of=/var/lib/libvirt/images/centos7.iso &
 
 virt-manager &
 
-: when creating VM, use exact same settings as before, except name
-: this "brightonbaby" or something
+% When creating VM, use exact same settings as before, except:
 
-: reboot
+  - Name machine babybrighton or something
 
-% After rebooting, do this on brighton so I can do all the
-"cryptsetup" stuff on brightonbaby, not on brighton itself
+  - 
+
+
+
+ name :
+: this "babybrighton" or something, but make sure the disk partition is
+: primarily allocated to / since this is a virtual machine, not a real
+: one
+
+: reboot virutal machine and then below on brighton
+
+: immediately after reboot, "shutdown -h" babybrighton and do this on brighton:
+
+virsh snapshot-create-as centos7.0 postinstall "Post installation"
+
+: restart babybrighton
+
+% After restarting babybrighton, do this on brighton so I can do all
+the "cryptsetup" stuff on babybrighton, not on brighton itself (I want
+to make babybrighton as close a match as possible, so have it do the
+cryptsetup stuff is better than doing it in the host)
 
 virsh attach-disk centos7.0 /dev/sdc vdc
 
