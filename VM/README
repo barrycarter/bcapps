@@ -123,3 +123,4 @@ all pingable postinstall
 
 %% centos68 vs centos7
 
+ffmpeg vlc 
