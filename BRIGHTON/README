@@ -43,6 +43,83 @@ to startup a virtual machine.
 % NOTE: you won't be able to ssh in as the passwordless "user" user,
 and we'll need to be root for the next steps anyway.
 
+% NOTE: "yum grouplist" shows some groups, "yum grouplist hidden" shows all
+
+% Install KVM + X11
+
+yum -y groupinstall "Virtualization Host" "X Window System"
+
+% and now a way to view it (the default X11 files installed require
+xterm but don't install it, grumble):
+
+yum -y install virt-manager xterm
+
+: start up X
+xinit &
+
+% If you plan to access brighton remotely, follow these steps;
+otherwise, skip to next %
+
+yum -y install tigervnc-server
+
+: note rpm -ql tigervnc-server shows what this actually installed
+
+: note "vncserver --help" which references "Xvnc -help" are helpful here
+
+vncserver &
+
+: "netstat -a" shows vncserver listens on 5901, not 5900 or at least
+: mine does, so I had to do "vncviewer -geometry 1024x768 brighton:5901"
+: which I found annoying
+
+: for some reason, "X Window System" doesnt install a window manager,
+: so let's do that now
+
+yum -y install kwin
+
+: run this from brighton, if running remotely must set DISPLAY
+kwin &
+
+: and lets get it going
+systemctl start libvirtd
+
+: if you installed from /dev/sdc --for example-- you can do this
+
+: note, this will copy ENTIRE medium, so an 8GB drive = 8GB image
+dd if=/dev/sdc bs=100000000 of=/var/lib/libvirt/images/centos7.iso &
+
+: if not, just get a copy of CentOS-7-x86_64-Minimal-1511.iso into
+: that directory
+
+: install using virt-manager giving plenty of disk space
+: give as much disk space as possible (I gave 47G)
+
+virt-manager &
+
+: when creating VM, use exact same settings as before, except name
+: this "brightonbaby" or something
+
+: reboot
+
+% After rebooting, do this on brighton so I can do all the
+"cryptsetup" stuff on brightonbaby, not on brighton itself
+
+virsh attach-disk centos7.0 /dev/sdc vdc
+
+
+
+
+
+
+
+%% TODO: make sure no colon parens and explain why
+
+
+
+
+
+% IMP: stop here, steps below are for older
+
 % Use virtualbox's repo
 
 curl -o /etc/yum.repos.d/virtualbox.repo http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo
