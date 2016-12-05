@@ -102,15 +102,9 @@ systemctl start libvirtd
 
 virt-manager &
 
-% When creating VM, use exact same settings as before, except:
+% When installing CentOS 7 on babybrighton:
 
-  - Name machine babybrighton or something
-
-  - For network selection choose "host device" and "bridged"
-
-% When installing CentOS 7:
-
-  - Under "network", turn on Ethernet, name machine babybrighton AND:
+  - Under "network", turn on Ethernet, name machine babybrighton
 
   - Under Configure/Ethernet, set MAC address to 08:00:00:00:00:00 or
   something else easy to recognize and configure your router/DHCP to
@@ -127,13 +121,42 @@ virsh snapshot-create-as babybrighton postinstall "Post installation"
 
 : restart babybrighton
 
+
+
 % After restarting babybrighton, do this on brighton so I can do all
 the "cryptsetup" stuff on babybrighton, not on brighton itself (I want
 to make babybrighton as close a match as possible, so have it do the
 cryptsetup stuff is better than doing it in the host)
 
-virsh attach-disk centos7.0 /dev/sdc vdc
+virsh attach-disk --persistent babybrighton /dev/sdb vdb
 
+virsh attach-disk --persistent babybrighton /dev/sdb vdb --type disk
+
+: opposite is "virsh detach-disk babybrighton vdb"
+
+: "virsh domblklist babybrighton" lists disks
+
+# snapshot-current snapshot-edit snapshot-info snapshot-list 
+
+
+% Now, "ssh root@babybrighton" for the next steps
+
+: this lets me use ../CENTOS/move-root.txt as it stands
+ln -s /dev/vdb3 /dev/sdb3
+
+: this is an ugly instance of having to install something early
+
+yum -y install cryptsetup
+
+% Follow ../CENTOS/move-root.txt if making alternate disk main disk;
+if doing this, also make a snapshot (from brighton AFTER shutting down
+babybrighton):
+
+virsh snapshot-create-as babybrighton postdisk "post external disk"
+
+: restart babybrighton
+
+% NOTE: virsh snapshot-revert babybrighton postinstall
 
 
 
