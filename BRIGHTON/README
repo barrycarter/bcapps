@@ -1,3 +1,32 @@
+%% TODO: find minimal configuration to bring up virtualbox (using a VM
+to do this and then will mirror to live drive) and allowing me to VNC
+into it [actually it needn't be minimal-- of course I could ssh tunnel
+into VNC, ssh -X into machine, or even work on console directly, but I
+prefer remote VNC]
+
+yum -y grouplist
+
+% do this to bring up KDE:
+
+yum -y grouplist
+: purely because I want to see what KDE looks like, other desktops ok too
+yum -y groupinstall "KDE Plasma Workspaces"
+
+: get virtualbox repo
+curl -o /etc/yum.repos.d/virtualbox.repo http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo
+
+: and install
+yum -y install VirtualBox-5.1
+
+: firewall blocks incoming vnc
+systemctl disable firewalld
+
+: and then reboot
+
+%% TODO: disclaim why I'm using VirtualBox over KVM (/dev/sdb only!)
+
+%% TODO: merge CENTOS/FEDORA/BRIGHTON dirs into one semi-coherent mass
+
 %% TODO: disclaim everything
 
 This documents my attempt to setup "brighton", a new CentOS 7.2
