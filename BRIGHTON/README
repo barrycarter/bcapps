@@ -4,7 +4,44 @@ into it [actually it needn't be minimal-- of course I could ssh tunnel
 into VNC, ssh -X into machine, or even work on console directly, but I
 prefer remote VNC]
 
+: this step is optional -- it will create groups, but so will the next command
+: if you dont run this one
 yum -y grouplist
+
+: install desktop
+yum -y groupinstall "GNOME Desktop"
+
+: get virtualbox repo
+curl -o /etc/yum.repos.d/virtualbox.repo http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo
+
+: and install virtualbox
+: xterm needed for GNOME desktop, but not installed sigh
+: vnc so I can access it remotely
+yum -y install VirtualBox-5.1 xterm tigervnc-server
+
+% tigervnc-server turns on the firewall, blocking incoming vnc; to fix:
+
+systemctl disable firewalld
+
+% and set a password so it comes up automatically at reboot
+vncpasswd
+
+% Due to a hideous oversight by CentOS, GNOME/gdm doesnt come up
+automatically on reboot and "xinit" starts with on window manager. A
+partial fix is to put this line in ~/.xinitrc (which is probably
+empty, the first line is to start vnc):
+
+vncserver &
+exec gnome-shell
+
+% reboot, login, and run "xinit &"
+
+% you can now vnc into this machine and run virtualbox (note: if you
+were using a VM to test how to get CentOS7 to run virtualbox, you
+should follow the procedure above on the physical machine-- running
+virtualbox inside a virtual machine is unwise [though apparently
+possible])
+
 
 % do this to bring up KDE:
 
@@ -15,11 +52,7 @@ yum -y groupinstall "KDE Plasma Workspaces"
 : get virtualbox repo
 curl -o /etc/yum.repos.d/virtualbox.repo http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo
 
-: and install
-yum -y install VirtualBox-5.1
 
-: firewall blocks incoming vnc
-systemctl disable firewalld
 
 : and then reboot
 
