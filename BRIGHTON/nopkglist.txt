@@ -3,7 +3,6 @@
 # misspelling the name, confusing a binary name with a package name,
 # or doing something else relatively minor
 
-FBReader
 Grimrock
 PySolFC
 ScottFree
@@ -15,6 +14,7 @@ adjtimex
 adventure
 aldo
 an
+android
 battlestar
 bindfs
 boggle
@@ -28,6 +28,7 @@ celestia
 coccinella
 dosbox
 dosemu
+ears
 eclipse
 esniper
 feh
@@ -36,16 +37,22 @@ fortune
 freedink
 fuse-zip
 gcal
+geomview
 gif2asc
 gitfs
 gnumeric
 ical
 lucene
+maxima
 mille
 nessus
 netbeans
 netcat
 nethack
+ntop
+ocrad
+openuniverse
+opera
 prover9
 qt5-devel
 rclock
@@ -53,16 +60,22 @@ recoll
 rxvt
 sagemath
 satan
+sccs
 sniffit
 stella
 talkfilters
 truecrypt
 usbview
+vcs
 vice
 vulturesclaw
 vultureseye
+widelands
 xcowfortune
 xearth
+xmame
 xpaint
+xpilot
 xsnow
 xteddy
+yaz

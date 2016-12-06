@@ -25,7 +25,11 @@ sudo ln -s /home/barrycarter/BCGIT/bclib.pl /usr/local/lib/
 
 # symlinks of important files to BCGIT
 
-sudo ln -s /home/user/BCGIT/FEDORA/.xinitrc /home/user/BCGIT/FEDORA/startup-nox.sh /home/user/BCGIT/FEDORA/startup-x.sh /home/user/BCGIT/FEDORA/brighton-procs.txt /home/user
+: startup-x.csh and startup-nox.csh no longer exist but I want to
+: remove them just in case they snuck in from other sources
+
+rm /home/user/.xinitrc /home/user/brighton-procs.txt /home/user/startup-x.sh /home/user/startup-nox.sh
+sudo ln -s /home/user/BCGIT/BRIGHTON/.xinitrc /home/user/BCGIT/BRIGHTON/brighton-procs.txt /home/user
 
 # and some because I'm using older system
 
@@ -41,7 +45,7 @@ sudo mkdir -p /var/nagios/
 
 # and IP/DNS fixups
 
-# TODO: see if I still need this
+# TODO: see if I still need this (if yes, change to BRIGHTON)
 
 # rm /etc/sysconfig/network-scripts/ifcfg-enp1s0
 # ln -s /home/user/BCGIT/FEDORA/ifcfg-enp1s0 /etc/sysconfig/network-scripts/

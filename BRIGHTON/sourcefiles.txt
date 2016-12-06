@@ -1,21 +1,28 @@
-# from fossies.org, source files if I need to install from source
-# TODO: remove trailing slash to get direct link
+# using http://gentoo.osuosl.org/distfiles since they seem to have it all
 
-# TODO: putting these in /root/fossies (be sure to note that somewhere)
+# The page "http://gentoo.osuosl.org/distfiles/?C=M;O=A" so curl may
+# be better to download it (lynx also works ok)
 
-https://fossies.org/linux/misc/abiword-3.0.2.tar.gz/
-https://fossies.org/linux/misc/calibre-2.73.0-x86_64.tar.gz/
-# "sh configure --with-glut" to install below
-https://fossies.org/linux/misc/celestia-1.6.1.tar.gz/
-https://fossies.org/linux/privat/feh-2.18.tar.gz/
-https://fossies.org/linux/privat/dosbox-0.74.tar.gz/
-https://fossies.org/linux/privat/recoll-1.22.4.tar.gz/
-https://fossies.org/linux/misc/vice-2.4.33.tar.gz/
-https://fossies.org/linux/privat/stella-4.7.3-src.tar.gz/
-https://fossies.org/linux/misc/rxvt-unicode-9.22.tar.gz/
-https://fossies.org/linux/www/lucene-6.3.0-src.tgz/
-https://fossies.org/linux/misc/gnumeric-1.12.32.tar.gz/
+http://gentoo.osuosl.org/distfiles/abiword-3.0.2.tar.gz
+http://gentoo.osuosl.org/distfiles/calibre-2.73.0.tar.xz
+# use --with-glut below?
+http://gentoo.osuosl.org/distfiles/celestia-1.6.1.tar.gz
+http://gentoo.osuosl.org/distfiles/feh-2.18.tar.bz2
+http://gentoo.osuosl.org/distfiles/dosbox-0.74.tar.gz
+# below may require a bit more
+http://gentoo.osuosl.org/distfiles/dosemu-freedos-1.0-bin.tgz
+http://gentoo.osuosl.org/distfiles/recoll-1.19.5.tar.gz
+http://gentoo.osuosl.org/distfiles/vice-2.4.27.tar.gz
+http://gentoo.osuosl.org/distfiles/stella-4.7.2-src.tar.xz
+http://gentoo.osuosl.org/distfiles/rxvt-unicode-9.22.tar.bz2
+http://gentoo.osuosl.org/distfiles/lucene++-3.0.7.tar.gz
+http://gentoo.osuosl.org/distfiles/gnumeric-1.12.32.tar.xz
+http://gentoo.osuosl.org/distfiles/talkfilters-2.3.8.tar.gz
+http://gentoo.osuosl.org/distfiles/aldo-0.7.7.tar.bz2
+http://gentoo.osuosl.org/distfiles/adjtimex_1.29.orig.tar.gz
+http://gentoo.osuosl.org/distfiles/freedink-data-1.08.20140901.tar.gz
 
-http://ftp-archive.freebsd.org/pub/FreeBSD-Archive/ports/alpha/packages-4.10-release/All/talkfilters-2.3.1.tgz
 
-# http://gentoo.osuosl.org/distfiles/?C=M;O=A is another good archive
+
+# TODO: decide where to put above, /root/gentoo ?
+

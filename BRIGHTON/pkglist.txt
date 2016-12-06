@@ -225,6 +225,8 @@ xpilot
 xearth
 xcowfortune
 gnuchess
+# below includes austro b1ff brooklyn chef cockney drawl dubya fudd funetak
+# ... jethro jive kraut pansy pirate postmodern redneck valspeak warez
 talkfilters
 ScottFree
 freeciv
@@ -242,7 +244,6 @@ nethack
 vulturesclaw
 vultureseye
 mille
-brooklyn
 boggle
 bomber
 bovo

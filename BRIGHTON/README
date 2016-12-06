@@ -85,17 +85,26 @@ yum -y groupinstall "X Window System"
 
 sh ~user/BCGIT/BRIGHTON/repos.sh
 
+% and install applydeltarpm to possibly speed things up
+
+yum -y install deltarpm
+
 % run yum-runme.sh as follows:
 
 sh ~user/BCGIT/BRIGHTON/yum-runme.sh |& tee /tmp/yum-runme.out
 
-% Above wont install many packages, but, unless it actually breaks
-(ie, yum yields an error, not just warnings), you may wish to snapshot
-"alpha" here [to be safe "shutdown -h" first though]
+% Above will say "package not found" for many packages, but, unless it
+actually breaks (ie, yum yields an error, not just warnings), you may
+wish to snapshot "alpha" here [to be safe, "shutdown -h" first]
 
-% Cut and paste results of below into nopkglist.txt: the packages I want that CentOS 
+% Cut and paste results of below into nopkglist.txt: the packages I
+want that CentOS doesnt provide:
 
-%% TODO: how to update nopkglist.txt
+fgrep "No package " /tmp/yum-runme.out | perl -anle 'print $F[2]' | sort | uniq | less
+
+% run bc-symlinks.sh
+
+sh ~user/BCGIT/BRIGHTON/bc-symlinks.sh |& tee /tmp/bc-symlinks.out
 
 %% TODO: rsync over private files too, but perhaps create a subdir first
 

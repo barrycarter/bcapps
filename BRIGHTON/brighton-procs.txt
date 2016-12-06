@@ -1,0 +1,160 @@
+# A list of programs for bc-daemon-checker2.pl for brighton
+
+# TODO: check that nothing appears in multiple sections? (except multi
+# and must may be ok; acutally so might "may" and "multi")
+
+# "may" programs may run for as long as they wish
+
+<may>
+
+# X11 + wm
+/usr/libexec/Xorg
+fvwm2
+
+# the init process
+/usr/lib/systemd/systemd
+
+# programs I usually keep running
+
+/usr/lib64/firefox/firefox
+elinks
+
+# TODO: why do I need THREE forms here? (confirmed that -csh means
+# tcsh using "pgrep csh" and then "ps -p <procid>")
+
+-tcsh
+-bin/tcsh
+-csh
+
+# TODO: decide on whether I want to use xterm or rxvt instead of
+# splitting between the two
+
+xterm
+rxvt
+
+# TODO: consider moving this to "must"
+/usr/sbin/gpm
+
+# others...
+xclock
+alpine
+xinit
+screen
+SCREEN
+snownews
+xemacs
+ssh
+
+# because I "sudo su" in two open windows
+sudo
+su
+
+# does this really need to run constantly?
+/usr/lib/X11/fvwm2/FvwmAuto
+
+# TODO: figure out what dbus actually does
+/usr/bin/dbus-daemon
+dbus-launch
+/bin/dbus-daemon
+
+# I'm not always logged in remotely, but sometimes
+sshd:
+
+# below: processes I dislike but can't seem to get rid of w/o breaking things
+
+(sd-pam)
+
+# not even kill -9 will stop auditd
+/sbin/auditd
+
+# killing this instantly respawns it so I might as well live with it
+/usr/lib/systemd/systemd-journald
+
+# killing this also respawns instantly, though I think this one is OK
+/sbin/agetty
+
+# TODO: remove this once I cutover to brighton completely
+/usr/libexec/vino-server
+
+</may>
+
+# "must" processes must be running at all times
+
+<must>
+
+# the usual daemons
+sendmail:
+/usr/sbin/httpd
+/usr/sbin/crond
+/usr/sbin/xinetd
+/usr/libexec/mysqld
+/usr/sbin/atd
+/usr/sbin/sshd
+/usr/sbin/dnsmasq
+/usr/bin/postgres
+postgres:
+
+# something is wrong if any of these are down
+gaim
+
+
+# TODO: if I go back to systemd-journal, kill this
+
+/usr/sbin/rsyslogd
+
+</must>
+
+# "multi" processes may have multiple instances running
+
+<multi>
+
+/usr/sbin/httpd
+rxvt
+xterm
+screen
+SCREEN
+postgres:
+alpine
+
+# TODO: again, why 3 forms?
+
+-tcsh
+-bin/tcsh
+-csh
+
+# because I "sudo su" in two open windows
+sudo
+su
+
+</multi>
+
+# daemon-checker will kill these processes
+
+# TODO: this is a TERRIBLE way to do things, I should figure out what
+# starts them and then kill them in a better way
+
+<kill>
+
+# processes I dislike but can't seem to get rid of permanently
+
+/usr/sbin/lvmetad
+/usr/lib/systemd/systemd-udevd
+/usr/sbin/gssproxy
+/usr/lib/systemd/systemd-logind
+login
+/usr/libexec/at-spi-bus-launcher
+/usr/libexec/at-spi2-registryd
+/usr/lib/polkit-1/polkitd
+/usr/libexec/gconfd-2
+/sbin/audispd
+/usr/libexec/rtkit-daemon
+
+</kill>
+
+# programs that can take up an arbitrary amount of memory
+
+<memory>
+
+/usr/lib64/firefox/firefox
+
+</memory>
