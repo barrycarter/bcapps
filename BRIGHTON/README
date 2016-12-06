@@ -42,19 +42,14 @@ should follow the procedure above on the physical machine-- running
 virtualbox inside a virtual machine is unwise [though apparently
 possible])
 
+%% TODO: maybe break above into a
+"how-to-install-virtualbox-on-centos7.txt" but w/ a shorter title and
+reference it here
 
-% do this to bring up KDE:
+%% TODO: note above is also off a minimal install
 
-yum -y grouplist
-: purely because I want to see what KDE looks like, other desktops ok too
-yum -y groupinstall "KDE Plasma Workspaces"
-
-: get virtualbox repo
-curl -o /etc/yum.repos.d/virtualbox.repo http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo
-
-
-
-: and then reboot
+%% TODO: whine about default CentOS7 not enable network (+ not even
+showing option until you choose partioning) -- maybe take screenshot
 
 %% TODO: disclaim why I'm using VirtualBox over KVM (/dev/sdb only!)
 
@@ -87,82 +82,95 @@ How to read this document:
 
   - Any other left flush "% " indicates a step to follow.
 
-% IMP: the following apply to physical hardware on which the host
-machine will reside.
+% To get direct access from a virtual machine to a raw disk (/dev/sdb
+in my case) on brighton (courtesy
+https://www.howtoforge.com/using-raw-devices-in-virtualbox-vms), do
+this on brighton:
 
-% Install CentOS-7-x86_64-Minimal-1511.iso (sha256 sum:
-f90e4d28fa377669b2db16cbcb451fcb9a89d2460e3645993e30e137ac37d284) on a
-USB stick or other install medium.
+: you could also have installed these earlier if desired
+: note the last two below ARE different
+yum -y install gcc kernel-devel kernel-devel-3.10.0-327.el7.x86_64
+/sbin/vboxconfig
+VBoxManage internalcommands createrawvmdk -filename sdb.vmdk -rawdisk /dev/sdb
 
-% Choose the default settings, but do turn on networking; create a
-root user with a trivial password and an administrative "user" user
-with no password. There is no need to encrypt the data or choose a
-specific partioning scheme, since we will only be using this install
-to startup a virtual machine.
+% Use virtualbox to create a machine "babybrighton" (which will grow
+up to be brighton, my new system -- ie, I will follow the same process
+on my physical machine once I get it right on the VM) with the
+following parameters:
 
-% After rebooting, "ssh root@brighton"
+  - Linux/Red Hat for the Type and Version (note that if you put
+  "centos" anywhere in the name, virtualbox will fill these
+  automatically)
 
-% NOTE: you won't be able to ssh in as the passwordless "user" user,
-and we'll need to be root for the next steps anyway.
+  - Choose a VDI of at 48G as this will be a fairly large install.
 
-% NOTE: "yum grouplist" shows some groups, "yum grouplist hidden" shows all
+  - Leave everything else as is, but then go to "Settings" and:
 
-% Install KVM + X11
+    - Under Network, choose "bridged", promiscuous mode to "Allow All"
+    and the MAC address to "080000000000" or something else easily
+    recognizable.
 
-yum -y groupinstall "Virtualization Host" "X Window System"
+    - Under Storage:
 
-% and now a way to view it (the default X11 files installed require
-xterm but don't install it, grumble):
+      - add a vmdk to the SATA controller that is the "sdb.vmdk" you
+      created above earlier
 
-yum -y install virt-manager xterm
+      - for the CD, choose CentOS-7-x86_64-Minimal-1511.iso as the
+      image to install
 
-: start up X
-xinit &
+  - You may wish to snapshot before installing CentOS 7 or at any
+  "critical" point during this entire process.
 
-% IMP: I'm having difficulty getting VNC setup consistently, so the
-steps below may not work; in particular:
+% Install CentOS using the defaults, except as follows:
 
-  - you may not need both xinit and vncserver (though x0vncserver may work)
+  - Partioning/installation destination: Since I'll be using /dev/sdb
+  (on brighton) for most things, partition so that /home has 5 GiB and
+  delete the swap partition entirely. Enable encryption, since I will
+  be doing so in production.
 
-  - turn off (or modify) firewall or use ssh ("systemctl stop
-  firewalld" is easiest)
+  - Make sure to turn "Networking" on (this option only shows after
+  you're done paritioning and isn't set by default, sadly)
 
-% If you plan to access brighton remotely, follow these steps;
-otherwise, skip to next %
+  - Create root user with a password and "user" user as an
+  administrative user w/o a password (we'll be assigning one below
+  later).
 
-yum -y install tigervnc-server
+  - Consider making a snapshot immediately after rebooting from
+  install [and entering disk password] (VirtualBox allows snapshots of
+  live machines-- HOWEVER, this snapshot will contain your disk
+  password, so you may prefer to snapshot after "shutdown -h" instead)
 
-: note rpm -ql tigervnc-server shows what this actually installed
+% Reboot in detachable mode, enter disk password, kill X window (or
+minimize if that doesn't work), and "ssh root@babybrighton" (or
+however you're referencing it) from remote machine (dullon). Then:
 
-: note "vncserver --help" which references "Xvnc -help" are helpful here
+% follow steps in move-root.txt if desired, shutdown machine, save
+state, reboot to make sure /mnt/kemptown auto mounted, etc
 
-vncserver &
+%% TODO: explain dullon is current remote machine
 
-: "netstat -a" shows vncserver listens on 5901, not 5900 or at least
-: mine does, so I had to do "vncviewer -geometry 1024x768 brighton:5901"
-: which I found annoying
+% rsync the latest BCGIT to babybrighton (dullon is 192.168.0.2)
 
-: for some reason, "X Window System" doesnt install a window manager,
-: so let's do that now
+yum -y install rsync
+rsync -Pavz root@192.168.0.2:/home/barrycarter/BCGIT /home/user/
 
-yum -y install kwin
 
-: run this from brighton, if running remotely must set DISPLAY
-kwin &
 
-% Get VM running
+%% TODO: rename fc11root as such
 
-systemctl start libvirtd
 
-: get a copy of CentOS-7-x86_64-Minimal-1511.iso into /var/lib/libvirt/images/
 
-: install using virt-manager giving plenty of disk space
-: give as much disk space as possible (I gave 47G)
 
-: if doing this via ssh and vnc, remember to "export DISPLAY=:1" or
-: equivalent --vncserver should tell you what this is after it starts--
 
-virt-manager &
+
+
+
+%% TODO: consider making this entire document even more specific to me and avoid the "IF THEN" stuff
+
+%% TODO: in primary README, give statement of purpose for this git repo
+
+%% TODO: try to include reference URLs (using Firefox history if
+needed) when doing something unusual or difficult
 
 % When installing CentOS 7 on babybrighton:
 

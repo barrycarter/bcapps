@@ -1,0 +1,219 @@
+# list of packages to test on various systems broken into categories
+
+# meta-system tooks
+efibootmgr
+
+# system tools
+wget
+expect
+ncftp
+parallel
+rdate
+xdotool
+xinetd
+ntpdate
+p7zip
+nmap
+tmpwatch
+rsyslog
+screen
+html2ps
+traceroute
+mtr
+sshd
+rsync
+date
+dd
+df
+grep
+egrep
+fgrep
+agrep
+yes
+find
+gawk
+gunzip
+gzip
+bunzip2
+bzip2
+join
+ln
+less
+more
+mv
+nice
+ping
+ps
+rm
+tar
+zcat
+7z
+FBReader
+Mail
+mail
+aldo
+ant
+ar
+cups
+chsh
+
+# programming languages (or related)
+R
+perl-CPAN
+tk
+java
+wish
+gcc
+
+# shells
+tcsh
+bash
+
+# VNC/rdesktop clients/servers
+tigervnc
+rdesktop
+
+# search engines
+recoll
+lucene
+
+# anonymity
+tor
+onionshare
+privoxy
+
+# X tools
+xcalc
+
+# terminals
+rxvt
+xterm
+
+# monitoring tools
+mrtg
+nagios
+nagios-plugins
+
+# filesystems
+fuse-encfs
+fuse-sshfs
+fuse-zip
+gitfs
+curlftpfs
+bindfs
+
+# window managers
+fvwm
+
+# utilities
+aspell
+
+# audio
+audacity
+sox
+
+
+# graphics incl scanning
+ImageMagick
+feh
+xv
+xpdf
+xsane
+gimp
+Xorg
+acroread
+calibre
+
+# video
+ffmpeg
+mencoder
+mplayer
+vlc
+recordmydesktop
+
+# email
+alpine
+getmail
+sendmail
+
+# browsers
+firefox
+elinks
+lynx
+britannica
+
+# networking
+pidgin
+gaim
+coccinella
+skype
+
+# math/science tools
+qgis
+qhull
+sagemath
+pyephem
+stellarium
+celestia
+bc
+dc
+calc
+
+# file sharing
+samba
+
+# games
+PySolFC
+xteddy
+steam
+adventure
+animalsay
+battlestar
+nethack
+vulturesclaw
+vultureseye
+mille
+brooklyn
+boggle
+bomber
+bovo
+# battlezone, not bzip2 filesystem
+bzfs
+# below is solitaire
+sol
+# below is anagram creator
+an
+
+# databases
+mysql-client
+mysql-server
+postgresql
+postgresql-server
+
+# emulators
+dosbox
+dosemu
+vice
+stella
+wine
+VirtualBox
+WolframCDFPlayer
+abiword
+
+# editors + text utilities
+emacs
+enscript
+xemacs
+pico
+nano
+
+# spreadsheets/graphing programs/etc
+gnumeric
+gnuplot
+graphviz
+dia
+xfig
+libreoffice
+
+# misc
+esniper
