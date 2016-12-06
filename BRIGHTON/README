@@ -149,6 +149,13 @@ state, reboot to make sure /mnt/kemptown auto mounted, etc
 
 %% TODO: explain dullon is current remote machine
 
+% use large drive to cache across rebuilds if necessary
+
+mv /var/cache/ /mnt/kemptown/var/
+: if youve done this previously youll need to remove the pristine
+: /var/cache on every new install
+ln -s /mnt/kemptown/var/cache /var/
+
 % rsync the latest BCGIT to babybrighton (dullon is 192.168.0.2)
 
 yum -y install rsync
