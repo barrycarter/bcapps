@@ -165,10 +165,33 @@ printf '1,$s/keepcache=0/keepcache=1/\nwq\n' | ex /etc/yum.conf
 yum -y install rsync
 rsync -Pavz root@192.168.0.2:/home/barrycarter/BCGIT /home/user/
 
-
+%% TODO: rsync over private files too, but perhaps create a subdir first
 
 %% TODO: rename fc11root as such
 
+% NOTE: to list all bin and lib files on a machine (which I can use to
+compare my current bin files on dullon to those on babybrighton to see
+what I'm "missing"):
+
+: there are other /bin and /sbin dirs, but they appear less important
+: /bin does not appear directly in CentOS 7, but may on other systems
+: /usr/X11R6/bin/ is an archaism from FC11
+
+: of course, these steps could be combined but intermediate files are useful
+
+setenv FOO babybrighton
+export FOO="babybrighton"
+
+find /usr/sbin /usr/local/sbin /usr/bin /usr/local/bin /bin /sbin 
+ /usr/X11R6/bin/ -type f -o -type l > /tmp/$FOO-binlist0.txt
+
+perl -pnle 's%^.*/%%' /tmp/$FOO-binlist0.txt|sort -u > /tmp/$FOO-binlist1.txt
+
+: can then use comm to compare the two bin lists
+
+%% TODO: above for libs, common names are:
+
+/var/lib /usr/lib /usr/local/lib /lib
 
 
 
@@ -329,3 +352,5 @@ recommend give as much space as possible, but maybe df -kh after full install
 : or equivalent in tcsh
 export KERN_INCL=/usr/include
 export KERN_DIR = /usr/src/kernels/3.10.0-327.36.3.el7.x86_64
+
+%% TODO: add aliases file

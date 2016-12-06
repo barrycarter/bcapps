@@ -15,3 +15,7 @@ https://fossies.org/linux/privat/stella-4.7.3-src.tar.gz/
 https://fossies.org/linux/misc/rxvt-unicode-9.22.tar.gz/
 https://fossies.org/linux/www/lucene-6.3.0-src.tgz/
 https://fossies.org/linux/misc/gnumeric-1.12.32.tar.gz/
+
+http://ftp-archive.freebsd.org/pub/FreeBSD-Archive/ports/alpha/packages-4.10-release/All/talkfilters-2.3.1.tgz
+
+# http://gentoo.osuosl.org/distfiles/?C=M;O=A is another good archive

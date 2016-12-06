@@ -44,13 +44,13 @@ In reality, you should always look at filename to make sure you're not
 destroying anything. If you want to "cheat", you may choose to install
 a better editor before continuing installation.
 
-% TODO: construct list of services and ps -ef that fedora brings up by
+%% TODO: construct list of services and ps -ef that fedora brings up by
 default (ultimately, it's all about the processes) and whittle from there
 
 % OPTIONAL: if your reinstall several times while testing, you might
 see the same boot entry repeatedly in BIOS; to fix this, use
 "efibootmgr" from fedora (thanks
-http://superuser.com/questions/582445/gigabyte-uefi-dualbios-lingering-boot-option) [note: you may need to "modprobe efivars", which should occur automatically after runme.sh anyway]
+htBBtp://superuser.com/questions/582445/gigabyte-uefi-dualbios-lingering-boot-option) [note: you may need to "modprobe efivars", which should occur automatically after runme.sh anyway]
 
 sudo efibootmgr -v;: to see options
 : to see if you have one boot option multiple times
@@ -122,8 +122,6 @@ This will let you refer to the machine as "brighton" instead of having
 to type out the IP address each time. Of course, make sure you use the
 machine's actual IP address, which probably won't be 192.168.0.3 in
 your case.
-
-% "ssh root@brighton" to login remotely as root
 
 % OPTIONAL: If you have an encrypted non-boot drive (I'm naming mine
 kemptown), do the following (note use your LVM's actual name below--

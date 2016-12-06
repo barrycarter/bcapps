@@ -5,6 +5,22 @@ efibootmgr
 
 # system tools
 
+words
+ntop
+subversion
+rcs
+sccs
+vcs
+lsof
+mtools
+lzip
+sharutils
+tidy
+mlocate
+rsh
+rsh-server
+cronie
+at
 httpd
 lighttpd
 xapian-core
@@ -30,12 +46,10 @@ mtr
 ncftp
 ftp
 nmap
-ntpdate
 p7zip
 parallel
 iputils
 procps
-rdate
 rsync
 rsyslog
 screen
@@ -49,7 +63,16 @@ xinetd
 usbview
 xz
 
+# time and date tools
+gcal
+rclock
+ical
+adjtimex
+ntpdate
+rdate
+
 # programming languages (or related)
+# TODO: mathematica (not free)
 R
 perl-CPAN
 tk
@@ -57,6 +80,10 @@ java
 gcc
 ruby
 lua
+prover9
+mono-core
+python3-pip
+android
 
 # shells
 tcsh
@@ -74,6 +101,7 @@ lucene
 tor
 onionshare
 privoxy
+truecrypt
 
 # X tools
 xcalc
@@ -86,6 +114,8 @@ xterm
 mrtg
 nagios
 nagios-plugins
+nessus
+satan
 
 # filesystems
 fuse-encfs
@@ -102,13 +132,20 @@ fvwm
 aspell
 
 # audio
+# TODO: voice recognition
+# TODO: Dragon Naturally free version for Linux?
+ears
+festival
 audacity
 sox
 lame
+mp3gain
 
 
 # graphics incl scanning
 # some of these may be installed by a groupinstall
+xpaint
+gif2asc
 ImageMagick
 feh
 xv
@@ -121,6 +158,10 @@ calibre
 xorg-x11-apps
 zenity
 fly
+netpbm-progs
+gocr
+tesseract
+ocrad
 
 # video
 ffmpeg
@@ -128,13 +169,17 @@ mencoder
 mplayer
 vlc
 recordmydesktop
+mjpegtools
 
 # email
+mutt
 alpine
 getmail
 sendmail
 
 # browsers
+# TODO: google chrome
+opera
 firefox
 elinks
 lynx
@@ -143,6 +188,8 @@ elinks
 links
 
 # networking
+telnet
+squid
 pidgin
 coccinella
 skype
@@ -166,8 +213,24 @@ calc
 samba
 
 # games
+# TODO: eternal lands
+# TODO: maybe look at system calls from all my Perl scripts?
+xscreensaver
+xmame
+widelands
+xpilot
+xearth
+xcowfortune
+gnuchess
+talkfilters
+ScottFree
+freeciv
+Grimrock
+fortune
+freedink
 PySolFC
 xteddy
+xsnow
 steam
 adventure
 cowsay
@@ -181,6 +244,7 @@ boggle
 bomber
 bovo
 wesnoth
+megamario
 # battlezone, not bzip2 filesystem
 bzfs
 # below is solitaire
@@ -209,6 +273,8 @@ emacs
 enscript
 xemacs
 nano
+dos2unix
+
 
 # spreadsheets/graphing programs/etc
 gnumeric
@@ -219,7 +285,10 @@ xfig
 libreoffice
 
 # misc
+# TODO: google-earth?
 esniper
+yaz
+geomview
 
 # IDEs
 netbeans
@@ -269,3 +338,9 @@ intltool
 gtk3-devel
 libxml2-devel
 goffice-devel
+
+# TODO: maybe look over what I have man pages for?
+
+# TODO: "yum update" may help install some sources that require higher
+# versions of packages
+
