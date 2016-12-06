@@ -25,6 +25,7 @@ celestia
 coccinella
 dosbox
 dosemu
+eclipse
 esniper
 feh
 fuse-zip
@@ -32,11 +33,16 @@ gitfs
 gnumeric
 lucene
 mille
+ncat
+netbeans
+netcat
 nethack
 recoll
 rxvt
 sagemath
+sniffit
 stella
+usbview
 vice
 vulturesclaw
 vultureseye

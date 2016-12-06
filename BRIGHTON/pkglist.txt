@@ -28,6 +28,7 @@ less
 mailx
 mtr
 ncftp
+ftp
 nmap
 ntpdate
 p7zip
@@ -45,6 +46,8 @@ traceroute
 wget
 xdotool
 xinetd
+usbview
+xz
 
 # programming languages (or related)
 R
@@ -53,6 +56,7 @@ tk
 java
 gcc
 ruby
+lua
 
 # shells
 tcsh
@@ -100,6 +104,7 @@ aspell
 # audio
 audacity
 sox
+lame
 
 
 # graphics incl scanning
@@ -115,6 +120,7 @@ acroread
 calibre
 xorg-x11-apps
 zenity
+fly
 
 # video
 ffmpeg
@@ -133,11 +139,18 @@ firefox
 elinks
 lynx
 britannica
+elinks
+links
 
 # networking
 pidgin
 coccinella
 skype
+tcpdump
+nmap
+nmap-ncat
+sniffit
+netcat
 
 # math/science tools
 qgis
@@ -167,6 +180,7 @@ brooklyn
 boggle
 bomber
 bovo
+wesnoth
 # battlezone, not bzip2 filesystem
 bzfs
 # below is solitaire
@@ -206,3 +220,52 @@ libreoffice
 
 # misc
 esniper
+
+# IDEs
+netbeans
+eclipse
+
+# required for abiword source compile
+libpng-devel
+libjpeg-turbo-devel
+boost
+boost-devel
+fribidi-devel
+glib2-devel
+cairo-devel
+libxslt-devel
+libgsf-devel
+libwvstreams-devel
+librsvg2-devel
+
+
+# required for celestia source compile
+mesa-libGLU-devel
+freeglut-devel
+lua-devel
+
+# required for feh
+libXinerama-devel
+imlib2-devel
+libcurl-devel
+libXt-devel
+
+# required or dosbox
+SDL-devel
+
+# required for recoll
+qt-devel
+qt3-devel
+qt5-devel
+
+# required for vice
+# the first three are good ideas anyway
+bison
+flex
+readline
+
+# required for gnumeric
+intltool
+gtk3-devel
+libxml2-devel
+goffice-devel

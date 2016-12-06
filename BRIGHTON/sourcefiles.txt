@@ -1,8 +1,11 @@
 # from fossies.org, source files if I need to install from source
 # TODO: remove trailing slash to get direct link
 
+# TODO: putting these in /root/fossies (be sure to note that somewhere)
+
 https://fossies.org/linux/misc/abiword-3.0.2.tar.gz/
 https://fossies.org/linux/misc/calibre-2.73.0-x86_64.tar.gz/
+# "sh configure --with-glut" to install below
 https://fossies.org/linux/misc/celestia-1.6.1.tar.gz/
 https://fossies.org/linux/privat/feh-2.18.tar.gz/
 https://fossies.org/linux/privat/dosbox-0.74.tar.gz/
