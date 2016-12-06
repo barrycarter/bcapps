@@ -1,52 +1,17 @@
-%% TODO: find minimal configuration to bring up virtualbox (using a VM
-to do this and then will mirror to live drive) and allowing me to VNC
-into it [actually it needn't be minimal-- of course I could ssh tunnel
-into VNC, ssh -X into machine, or even work on console directly, but I
-prefer remote VNC]
+% "this directory" refers to https://github.com/barrycarter/bcapps/blob/master/BRIGHTON/
 
-: this step is optional -- it will create groups, but so will the next command
-: if you dont run this one
-yum -y grouplist
+% I am installing from an old Fedora Core 11 machine (hereafter called
+"dullon") using ssh and vncserver to access a my new machine; for
+testing, I will create a VM version of it first, and then follow the
+same steps to create it in production.
 
-: install desktop
-yum -y groupinstall "GNOME Desktop"
+% To create a CentOS 7 machine that runs VirtualBox, see
+"bc-install-virtualbox-on-centos7.txt" in this directory.. This
+machine is hereafter called "brighton"
 
-: get virtualbox repo
-curl -o /etc/yum.repos.d/virtualbox.repo http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo
-
-: and install virtualbox
-: xterm needed for GNOME desktop, but not installed sigh
-: vnc so I can access it remotely
-yum -y install VirtualBox-5.1 xterm tigervnc-server
-
-% tigervnc-server turns on the firewall, blocking incoming vnc; to fix:
-
-systemctl disable firewalld
-
-% and set a password so it comes up automatically at reboot
-vncpasswd
-
-% Due to a hideous oversight by CentOS, GNOME/gdm doesnt come up
-automatically on reboot and "xinit" starts with on window manager. A
-partial fix is to put this line in ~/.xinitrc (which is probably
-empty, the first line is to start vnc):
-
-vncserver &
-exec gnome-shell
-
-% reboot, login, and run "xinit &"
-
-% you can now vnc into this machine and run virtualbox (note: if you
-were using a VM to test how to get CentOS7 to run virtualbox, you
-should follow the procedure above on the physical machine-- running
-virtualbox inside a virtual machine is unwise [though apparently
-possible])
-
-%% TODO: maybe break above into a
-"how-to-install-virtualbox-on-centos7.txt" but w/ a shorter title and
-reference it here
-
-%% TODO: note above is also off a minimal install
+% To create a CentOS 7 virtual machine (hereafter called
+"babybrighton"), see bc-create-vm-with-virtualbox.txt in this
+directory.
 
 %% TODO: whine about default CentOS7 not enable network (+ not even
 showing option until you choose partioning) -- maybe take screenshot
@@ -82,88 +47,55 @@ How to read this document:
 
   - Any other left flush "% " indicates a step to follow.
 
-% To get direct access from a virtual machine to a raw disk (/dev/sdb
-in my case) on brighton (courtesy
-https://www.howtoforge.com/using-raw-devices-in-virtualbox-vms), do
-this on brighton:
+% Boot babybrighton in detachable mode and enter disk password
 
-: you could also have installed these earlier if desired
-: note the last two below ARE different
-yum -y install gcc kernel-devel kernel-devel-3.10.0-327.el7.x86_64
-/sbin/vboxconfig
-VBoxManage internalcommands createrawvmdk -filename sdb.vmdk -rawdisk /dev/sdb
+% You no longer need the X window that VirtualBox brings up, but I
+couldn't find a way to kill it without bringing the system
+down. Minimizing it is a half solution.
 
-% Use virtualbox to create a machine "babybrighton" (which will grow
-up to be brighton, my new system -- ie, I will follow the same process
-on my physical machine once I get it right on the VM) with the
-following parameters:
+%% TODO: how to kill window in detachable mode?
 
-  - Linux/Red Hat for the Type and Version (note that if you put
-  "centos" anywhere in the name, virtualbox will fill these
-  automatically)
+% From dullon, "ssh root@babybrighton"
 
-  - Choose a VDI of at 48G as this will be a fairly large install.
+% I prefer tcsh and many things I do rely on it, so:
 
-  - Leave everything else as is, but then go to "Settings" and:
+yum -y install tcsh
+chsh -s /bin/tcsh root
+chsh -s /bin/tcsh user
 
-    - Under Network, choose "bridged", promiscuous mode to "Allow All"
-    and the MAC address to "080000000000" or something else easily
-    recognizable.
+% follow steps in bc-move-root.txt if desired
 
-    - Under Storage:
-
-      - add a vmdk to the SATA controller that is the "sdb.vmdk" you
-      created above earlier
-
-      - for the CD, choose CentOS-7-x86_64-Minimal-1511.iso as the
-      image to install
-
-  - You may wish to snapshot before installing CentOS 7 or at any
-  "critical" point during this entire process.
-
-% Install CentOS using the defaults, except as follows:
-
-  - Partioning/installation destination: Since I'll be using /dev/sdb
-  (on brighton) for most things, partition so that /home has 5 GiB and
-  delete the swap partition entirely. Enable encryption, since I will
-  be doing so in production.
-
-  - Make sure to turn "Networking" on (this option only shows after
-  you're done paritioning and isn't set by default, sadly)
-
-  - Create root user with a password and "user" user as an
-  administrative user w/o a password (we'll be assigning one below
-  later).
-
-  - Consider making a snapshot immediately after rebooting from
-  install [and entering disk password] (VirtualBox allows snapshots of
-  live machines-- HOWEVER, this snapshot will contain your disk
-  password, so you may prefer to snapshot after "shutdown -h" instead)
-
-% Reboot in detachable mode, enter disk password, kill X window (or
-minimize if that doesn't work), and "ssh root@babybrighton" (or
-however you're referencing it) from remote machine (dullon). Then:
-
-% follow steps in move-root.txt if desired, shutdown machine, save
-state, reboot to make sure /mnt/kemptown auto mounted, etc
-
-%% TODO: explain dullon is current remote machine
-
-% use large drive to cache across rebuilds if necessary
-
-mv /var/cache/ /mnt/kemptown/var/
-: if youve done this previously youll need to remove the pristine
-: /var/cache on every new install
-ln -s /mnt/kemptown/var/cache /var/
-
-% edit yum.conf to keepcache
-
-printf '1,$s/keepcache=0/keepcache=1/\nwq\n' | ex /etc/yum.conf 
+% run "make" in this directory, so the following rsync will push over
+yum-runme.sh
 
 % rsync the latest BCGIT to babybrighton (dullon is 192.168.0.2)
 
 yum -y install rsync
+rehash
 rsync -Pavz root@192.168.0.2:/home/barrycarter/BCGIT /home/user/
+
+% Install X11 as a group
+
+: next line just makes group stuff faster in future
+yum groups mark convert
+
+yum -y groupinstall "X Window System"
+
+% Install "approved" repositories
+
+sh ~user/BCGIT/BRIGHTON/repos.sh
+
+% run yum-runme.sh as follows:
+
+sh ~user/BCGIT/BRIGHTON/yum-runme.sh |& tee /tmp/yum-runme.out
+
+% Above wont install many packages, but, unless it actually breaks
+(ie, yum yields an error, not just warnings), you may wish to snapshot
+"alpha" here [to be safe "shutdown -h" first though]
+
+% Cut and paste results of below into nopkglist.txt: the packages I want that CentOS 
+
+%% TODO: how to update nopkglist.txt
 
 %% TODO: rsync over private files too, but perhaps create a subdir first
 
@@ -324,19 +256,9 @@ Steps start with left flush "%", but left flus"% NOTE:" indicates a note, not a 
 %% TODO: hooking (linking) in old bin and lib and root from fc11root (and
 .tcshrc files required) (PATH and LD_LIBRARY_PATH) but as last entries
 
-%% TODO: fossies mention for source code where needed
+%% TODO: fossies mention for source code where needed (but not the best, other sources more complete)
 
 %% TODO: use chkconfig/systemctl on guest to make sure what I want comes up (ps -auxwww or ps -ef to see whats actually running)
-
-%% TODO: programs I want that dont appear to have packages:
-
-celestia
-dosemu (check: does dosbox include this implicitly?)
-FBReader
-gnumeric
-maxima
-ntop
-openuniverse 
 
 %% TODO: note that installing centos7 w/ all the repos/rpms I select
 requires more than the default 8gb drive virtualbox gives (although
@@ -354,3 +276,5 @@ export KERN_INCL=/usr/include
 export KERN_DIR = /usr/src/kernels/3.10.0-327.36.3.el7.x86_64
 
 %% TODO: add aliases file
+
+%% TODO: pwless root for wheel

@@ -1,0 +1,57 @@
+% OPTIONAL: if you want babybrighton (guest) to access raw disks on
+brighton (host)
+[https://www.howtoforge.com/using-raw-devices-in-virtualbox-vms]:
+
+yum -y install gcc kernel-devel kernel-devel-3.10.0-327.el7.x86_64
+/sbin/vboxconfig
+: substitute /dev/sdb with the drive you are giving access to
+VBoxManage internalcommands createrawvmdk -filename sdb.vmdk -rawdisk /dev/sdb
+
+% Run VirtualBox" and use the following parameters when creating
+babybrighton as a virtual machine:
+
+  - Linux/Red Hat for the Type and Version (note that if you put
+  "centos" [or even "cent"] anywhere in the name, virtualbox will fill
+  these automatically)
+
+  - Choose a VDI of at 48G as this will be a fairly large install.
+
+  - Leave everything else as is in the wizard, but, before starting
+  the machine go to "Settings" and:
+
+    - Under Network, choose "bridged", promiscuous mode to "Allow All"
+    and the MAC address to "080000000000" or something else easily
+    recognizable.
+
+    - Under Storage:
+
+      - OPTIONAL: add a vmdk to the SATA controller that is the
+      "sdb.vmdk" you created above earlier
+
+      - for the CD, choose CentOS-7-x86_64-Minimal-1511.iso as the
+      image to install
+
+  - You may wish to snapshot before installing CentOS 7 or at any
+  "critical" point during this entire process. This would be the
+  "preinstall" snapshot.
+
+% After starting up babybrighton as a VM, do the following when
+installing CentOS 7:
+
+  - OPTIONAL: Since I'll be using /dev/sdb (on brighton) for most
+  things, partition so that /home has 5 GiB and delete the swap
+  partition entirely. Otherwise, let CentOS choose your partioning
+  scheme
+
+  - Enable full disk encryption
+
+  - Make sure to turn "Networking" on (this option only shows after
+  you're done paritioning and isn't set by default, sadly)
+
+  - Create root user with a password and "user" user as an
+  administrative user w/o a password (we'll be assigning one below
+  later).
+
+  - OPTIONAL: After rebooting from install, login as "root", run
+  "shutdown -h now", and take a snapshot. This is the "postinstall"
+  snapshot.

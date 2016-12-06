@@ -91,6 +91,7 @@ bash
 
 # VNC/rdesktop clients/servers
 tigervnc
+tigervnc-server
 rdesktop
 
 # search engines
@@ -208,6 +209,8 @@ stellarium
 celestia
 bc
 calc
+maxima
+openuniverse
 
 # file sharing
 samba

@@ -1,6 +1,6 @@
-% If you have an encrypted non-boot drive (I'm naming mine kemptown),
-and want to move /home and create swapspace there (approximately),
-follow these steps.
+% If you have an encrypted non-boot drive (hereafter called
+"kemptown"), and want to move /home and create swapspace there
+(approximately), follow these steps.
 
 % NOTE: If you've previously tried installing centos on this other
 drive, your LVMs may have the same name. If so, see
@@ -14,17 +14,24 @@ most of the below; scp over script if desired
 : luks-id-of-root-partition UUID=id-of-root-partition none
 
 cryptsetup open /dev/sdb3 kemptown
-: should be empty
+
+: the use of "less" below is just to check that the file looks the way
+: we expect before we do anything
+
+: file should not exist yet
 less /etc/cryptsetup
 echo "luks /dev/sdb3 -" > /etc/cryptsetup
+
 : should have one entry, the boot drive
 less /etc/crypttab
 blkid | fgrep /dev/sdb3
-: this must be an append, since main drive should appear there first
+: this must be an append, cant overwrite boot drive
 echo "luks UUID=the-uuid-given-by-blkid-for-dev-sdb3 none" >> /etc/crypttab
-: again, less just to check
+
+: should have several entries
 less /etc/fstab
 echo "/dev/mapper/oldfedora-home /mnt/kemptown ext4 defaults,x-systemd.device-timeout=30 60 90" >> /etc/fstab
+
 mkdir /mnt/kemptown
 mount /mnt/kemptown
 
@@ -32,12 +39,13 @@ mount /mnt/kemptown
 better ways of doing this but I'm wary of messing w/ my 8TB drive
 since I've copied stuff over and made changes)
 
-: only need to do two steps below once
+: only need to do steps below once
 dd if=/dev/zero of=/mnt/kemptown/swap bs=1000000000 count=128 status=progress&
 mkswap /mnt/kemptown/swap
 : below as recommended
 chmod 0600 /mnt/kemptown/swap
 
+: make sure fstab looks ok then add swapspace
 less /etc/fstab
 echo "/mnt/kemptown/swap swap swap defaults 0 0" >> /etc/fstab
 swapon /mnt/kemptown/swap
@@ -49,12 +57,33 @@ swapon /mnt/kemptown/swap
 : succeeds
 
 userdel user;
+
+: below should show only 3 files or so -- if not, dont rm -rf
 find /home/user -type f
-: above should be tinyish, three files or so
-rm -rf /home/user;
+rm -rf /home/user
+
+: readd user with new directory
 useradd -d /mnt/kemptown/user -g wheel -u 1000 user
 passwd user
+: this is useful so I can refer to /home/user
 ln -s /mnt/kemptown/user /home
+
 : move root over as well
 mv /root /root.old
 ln -s /mnt/kemptown/root /root
+
+% to use large drive to cache across rebuilds if necessary, we first
+edit yum.conf:
+
+printf '1,$s/keepcache=0/keepcache=1/\nwq\n' | ex /etc/yum.conf 
+
+% and then move /var/cache over to the large drive
+
+: remove the fresh install cache which is nearly empty
+rm -rf /var/cache
+
+: only need to do this once
+mkdir -p /mnt/kemptown/var/cache
+ln -s /mnt/kemptown/var/cache /var/
+
+: if desired "shutdown -h now" and create a "postrootmove" snapshot
