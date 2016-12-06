@@ -156,6 +156,10 @@ mv /var/cache/ /mnt/kemptown/var/
 : /var/cache on every new install
 ln -s /mnt/kemptown/var/cache /var/
 
+% edit yum.conf to keepcache
+
+printf '1,$s/keepcache=0/keepcache=1/\nwq\n' | ex /etc/yum.conf 
+
 % rsync the latest BCGIT to babybrighton (dullon is 192.168.0.2)
 
 yum -y install rsync

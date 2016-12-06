@@ -4,66 +4,55 @@
 efibootmgr
 
 # system tools
-wget
-expect
-ncftp
-parallel
-rdate
-xdotool
-xinetd
-ntpdate
-p7zip
-nmap
-tmpwatch
-rsyslog
-screen
-html2ps
-traceroute
-mtr
-sshd
-rsync
-date
-dd
-df
-grep
-egrep
-fgrep
-agrep
-yes
-find
-gawk
-gunzip
-gzip
-bunzip2
-bzip2
-join
-ln
-less
-more
-mv
-nice
-ping
-ps
-rm
-tar
-zcat
-7z
+
+httpd
+lighttpd
+xapian-core
+git
+binutils
 FBReader
-Mail
-mail
+agrep
 aldo
 ant
-ar
+bzip2
+util-linux
+coreutils
 cups
-chsh
+grep
+expect
+findutils
+gawk
+gzip
+html2ps
+less
+mailx
+mtr
+ncftp
+nmap
+ntpdate
+p7zip
+parallel
+iputils
+procps
+rdate
+rsync
+rsyslog
+screen
+openssh-server
+tar
+tmpwatch
+traceroute
+wget
+xdotool
+xinetd
 
 # programming languages (or related)
 R
 perl-CPAN
 tk
 java
-wish
 gcc
+ruby
 
 # shells
 tcsh
@@ -77,7 +66,7 @@ rdesktop
 recoll
 lucene
 
-# anonymity
+# privacy
 tor
 onionshare
 privoxy
@@ -114,6 +103,7 @@ sox
 
 
 # graphics incl scanning
+# some of these may be installed by a groupinstall
 ImageMagick
 feh
 xv
@@ -123,6 +113,8 @@ gimp
 Xorg
 acroread
 calibre
+xorg-x11-apps
+zenity
 
 # video
 ffmpeg
@@ -144,7 +136,6 @@ britannica
 
 # networking
 pidgin
-gaim
 coccinella
 skype
 
@@ -156,7 +147,6 @@ pyephem
 stellarium
 celestia
 bc
-dc
 calc
 
 # file sharing
@@ -167,7 +157,7 @@ PySolFC
 xteddy
 steam
 adventure
-animalsay
+cowsay
 battlestar
 nethack
 vulturesclaw
@@ -180,13 +170,13 @@ bovo
 # battlezone, not bzip2 filesystem
 bzfs
 # below is solitaire
-sol
+aisleriot
 # below is anagram creator
 an
 
 # databases
-mysql-client
-mysql-server
+mariadb-server
+mariadb
 postgresql
 postgresql-server
 
@@ -204,7 +194,6 @@ abiword
 emacs
 enscript
 xemacs
-pico
 nano
 
 # spreadsheets/graphing programs/etc
