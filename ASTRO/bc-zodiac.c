@@ -29,19 +29,16 @@ SpiceDouble ecliptic_longitude (SpiceInt planet, SpiceDouble et) {
   SpiceDouble lt;
 
   spkezp_c(planet, et, "ECLIPDATE", "LT+S", 399, res, &lt);
-
-  printf("%f -> %f %f %f\n", et, res[0], res[1], res[2]);
-
   return atan2(res[1],res[0]);
-
 }
 
 int main (int argc, char **argv) {
 
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
+  // TODO: this is just plain silly
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/000157.html");
 
-  // should be 30 eclip long
-  printf("%f\n", ecliptic_longitude(1, unix2et(1490980772))*dpr_c());
-
+  for (int i=1; i<=366; i++) {
+    printf("%d %f\n", i, ecliptic_longitude(1, unix2et(86400*(i-1)+1483228800))*dpr_c());
+  }
 }
