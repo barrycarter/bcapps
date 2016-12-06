@@ -36,7 +36,10 @@ int main (int argc, char **argv) {
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/000157.html");
 
-  for (int i=0; i<366*86400; i+=86400) {
-    test(unix2et(i), v);
-  }
+  // should be 30 eclip long
+  test(unix2et(1490980772),v);
+
+  //  for (int i=0; i<366*86400; i+=86400) {
+  //    test(unix2et(i), v);
+  //  }
 }
