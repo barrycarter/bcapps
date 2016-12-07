@@ -14,7 +14,7 @@
 // the next two includes are part of the CSPICE library
 #include "SpiceUsr.h"
 #include "SpiceZfc.h"
-#define MAXWIN 200000
+#define MAXWIN 5000000
 #define TIMLEN 41
 #define TIMFMT "YYYY-MON-DD HR:MN"
 
@@ -164,9 +164,13 @@ int main (int argc, char **argv) {
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
   // TODO: this is just plain silly
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/000157.html");
+
+  // 1 second tolerance (serious overkill, but 1e-6 is default, worse!)
+  gfstol_c(1.);
   
   // test for one year
-  wninsd_c (year2et(1900), year2et(2101), &cnfine);
+  // going beyond 1475 and 2525 appears to cause problems for now
+  wninsd_c(-479695089600.+86400*468, 479386728000., &cnfine);
 
   //  for (j=0; j<sizeof(iplanets); j++) {
 
