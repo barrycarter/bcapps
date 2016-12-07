@@ -18,6 +18,18 @@
 #define TIMLEN 41
 #define TIMFMT "YYYY-MON-DD HR:MN"
 
+// global variables
+
+SpiceInt gplanet = 0;
+
+const char *houses[] = {"ARIES", "TAURUS", "GEMINI", "CANCER", "LEO", "VIRGO",
+			"LIBRA", "SCORPIO", "SAGITTARIUS", "CAPRICORN",
+			"AQUARIUS", "PISCES"};
+
+// planets[0] is the barycenter, never used
+const char *planets[] = {"SSB", "MERCURY", "VENUS", "EARTH", "MARS", "JUPITER",
+			 "SATURN", "URANUS", "NEPTUNE", "PLUTO", "SUN"};
+
 // TODO: add below to lib
 int signum(double x) {
   // shouldnt compare double to zero, but ok here
@@ -77,8 +89,9 @@ SpiceDouble distance_to_cusp (SpiceDouble n, SpiceInt targ, SpiceDouble et,
   return sin(pi_c()/n*results[11]);
 }
 
+// TODO: replace 1 with gplanet, global planet definition
 void gfq ( SpiceDouble et, SpiceDouble * value ) {
-  *value = distance_to_cusp(pi_c()/6, 1, et, "ECLIPDATE", 399);
+  *value = distance_to_cusp(pi_c()/6, gplanet, et, "ECLIPDATE", 399);
 }
 
 void gfdecrx (void(* udfuns)(SpiceDouble et,SpiceDouble * value),
@@ -94,10 +107,13 @@ int main (int argc, char **argv) {
 
   SPICEDOUBLE_CELL (result, 2*MAXWIN);
   SPICEDOUBLE_CELL (cnfine, 2);
-  SpiceChar begstr[TIMLEN], endstr[TIMLEN];
+  // various formats
+  SpiceChar begstr[TIMLEN], endstr[TIMLEN], classic[100], terse[100];
   SpiceDouble step,adjust,refval,beg,end;
   SpiceInt count,i;
   SpiceDouble *array;
+
+  gplanet = 1;
 
   // kernels we need incl ECLIPDATE
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
@@ -117,7 +133,7 @@ int main (int argc, char **argv) {
     wnfetd_c (&result, i, &beg, &end);
 
     // find mercury's ecliptic longitude (and if its increasing/decreasing)
-    array = geom_info(1, beg, "ECLIPDATE", 399);
+    array = geom_info(gplanet, beg, "ECLIPDATE", 399);
 
     // pretty print the time
     timout_c (beg, TIMFMT, TIMLEN, begstr);
@@ -126,8 +142,18 @@ int main (int argc, char **argv) {
     if (array[17] < 0) {house--;}
     house = (house+12)%12;
 
-    printf("AT: %s, LONG: %f (%d), DIR: %f\n", begstr, array[11]*dpr_c()/30,
-	   house, array[17]);
+    // the classic form
+    // TODO: allow for 399 == moon w wrapper function
+    // TODO: allow both planet and house convertor to have "terse" form
+    // terse is itoa except when > 10
+    sprintf(classic, "%s %s ENTERS %s %s\n", begstr, planets[gplanet], 
+	    houses[house], array[17]<0?"RETROGRADE":"");
+
+    printf("%s", classic);
+
+    // TODO: rint() is probably NOT the function I want here
+    //    printf("%d %s, LONG: %f (%d), DIR: %f %s\n", (int) rint(et2unix(beg)),
+    //	   begstr, array[11]*dpr_c()/30, house, array[17], houses[house]);
 
   }
   return( 0 );
