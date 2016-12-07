@@ -55,6 +55,10 @@ SpiceDouble *geom_info(SpiceInt targ, SpiceDouble et, ConstSpiceChar *ref,
   // and the sign of that change
   for (i=15; i<=17; i++) {results[i] = signum(results[i-3]);}
 
+  //  for (i=0; i<=17; i++) {
+  //    printf("RESULTS[%d] (%f): %f\n", i, et, results[i]);
+  //  }
+
   return results;
 }
 
@@ -69,11 +73,12 @@ SpiceDouble distance_to_cusp (SpiceDouble n, SpiceInt targ, SpiceDouble et,
 			      ConstSpiceChar *ref, SpiceInt obs) {
 
   SpiceDouble *results = geom_info(targ, et, ref, obs);
-  return sin(pi_c()/n*results[10]);
+  printf("DEGREES(%f) IS: %f\n", et, results[11]*dpr_c());
+  return sin(pi_c()/n*results[11]);
 }
 
 void gfq ( SpiceDouble et, SpiceDouble * value ) {
-  *value = distance_to_cusp(1, et);
+  *value = distance_to_cusp(pi_c()/6, 1, et, "ECLIPDATE", 399);
 }
 
 void gfdecrx (void(* udfuns)(SpiceDouble et,SpiceDouble * value),
@@ -87,12 +92,18 @@ void gfdecrx (void(* udfuns)(SpiceDouble et,SpiceDouble * value),
 
 int main (int argc, char **argv) {
 
+  SPICEDOUBLE_CELL (result, 2*MAXWIN);
+  SPICEDOUBLE_CELL (cnfine, 2);
+  SpiceChar begstr[TIMLEN], endstr[TIMLEN];
+  SpiceDouble step,adjust,refval,beg,end;
+  SpiceInt count,i;
+  SpiceDouble *array;
+
+  // kernels we need incl ECLIPDATE
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
   // TODO: this is just plain silly
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/000157.html");
 
-  SpiceInt i;
-  SpiceDouble *array;
   array = geom_info(1, unix2et(0), "ECLIPDATE", 399);
 
   for (i=0; i<18; i++) {
@@ -100,18 +111,10 @@ int main (int argc, char **argv) {
   }
 
   
-  /*
-  SPICEDOUBLE_CELL (result, 2*MAXWIN);
-  SPICEDOUBLE_CELL (cnfine, 2);
-  SpiceDouble step,adjust,refval,beg,end;
-  SpiceChar begstr [ TIMLEN ];
-  SpiceChar endstr [ TIMLEN ];
-  SpiceInt count,i;
-
   // 1970 to 2038 (all "Unix time")
   wninsd_c (-946684800., 2147483647.+946684800., &cnfine);
 
-  gfuds_c (gfq, gfdecrx, "LOCMIN", 0., 0., 1800., MAXWIN, &cnfine, &result);
+  gfuds_c (gfq, gfdecrx, "=", 0., 0., 86400., MAXWIN, &cnfine, &result);
 
   count = wncard_c( &result );
  
@@ -123,6 +126,4 @@ int main (int argc, char **argv) {
     printf ( "Stop time, drdt = %s \n", endstr );
   }
   return( 0 );
-
-  */
 }
