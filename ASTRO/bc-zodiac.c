@@ -16,7 +16,7 @@
 #include "SpiceZfc.h"
 #define MAXWIN 200000
 #define TIMLEN 41
-#define TIMFMT "YYYY-MON-DD HR:MN:SC.###"
+#define TIMFMT "YYYY-MON-DD HR:MN"
 
 // TODO: add below to lib
 int signum(double x) {
@@ -122,8 +122,20 @@ int main (int argc, char **argv) {
     // pretty print the time
     timout_c (beg, TIMFMT, TIMLEN, begstr);
 
-    printf("AT: %s, LONG: %f, DIR: %f\n", begstr, array[11]*dpr_c(), array[17]);
+    int house = rint(array[11]*dpr_c()/30);
+    if (array[17] < 0) {house--;}
+    house = (house+12)%12;
+
+    printf("AT: %s, LONG: %f (%d), DIR: %f\n", begstr, array[11]*dpr_c()/30,
+	   house, array[17]);
 
   }
   return( 0 );
 }
+
+/*
+
+array: 0 = aries
+
+*/
+ 
