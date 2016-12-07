@@ -30,6 +30,49 @@ const char *houses[] = {"ARIES", "TAURUS", "GEMINI", "CANCER", "LEO", "VIRGO",
 const char *planets[] = {"SSB", "MERCURY", "VENUS", "EARTH", "MARS", "JUPITER",
 			 "SATURN", "URANUS", "NEPTUNE", "PLUTO", "SUN"};
 
+// convert house to string, optionally in terse format
+char *house2str(int house, char *type) {
+
+  // in case we need to return a string
+  static char res[200];
+
+  if (strcmp(type, "TERSE") == 0) {
+
+    if (house<=9) {
+      sprintf(res, "%d", house);
+      return res;
+    }
+
+    if (house==10) {return "A";}
+    if (house==11) {return "B";}
+  }
+
+  return houses[house];
+}
+
+// convert planet to string, optionally in terse format
+char *planet2str(int planet, char *type) {
+
+  // in case we need to return a string
+  static char res[200];
+
+  if (strcmp(type, "TERSE") == 0) {
+
+    if (planet<=9) {
+      sprintf(res, "%d", planet);
+      return res;
+    }
+
+    if (planet==301) {return "M";}
+    if (planet==10) {return "S";}
+    return "?";
+  }
+
+  if (planet<=10) {return planets[planet];}
+  if (planet == 301) {return "MOON";}
+  return "?";
+}
+
 // TODO: add below to lib
 int signum(double x) {
   // shouldnt compare double to zero, but ok here
@@ -146,10 +189,14 @@ int main (int argc, char **argv) {
     // TODO: allow for 399 == moon w wrapper function
     // TODO: allow both planet and house convertor to have "terse" form
     // terse is itoa except when > 10
-    sprintf(classic, "%s %s ENTERS %s %s\n", begstr, planets[gplanet], 
+    sprintf(classic, "%s %s ENTERS %s %s\n", begstr, planet2str(gplanet, ""),
 	    houses[house], array[17]<0?"RETROGRADE":"");
 
-    printf("%s", classic);
+    sprintf(terse, "%d %s%s%s\n", (int) rint(et2unix(beg)/60), 
+	    planet2str(gplanet, "TERSE"), house2str(house, "TERSE"),
+	    array[17]<0?"-":"");
+
+    printf("%s", terse);
 
     // TODO: rint() is probably NOT the function I want here
     //    printf("%d %s, LONG: %f (%d), DIR: %f %s\n", (int) rint(et2unix(beg)),
