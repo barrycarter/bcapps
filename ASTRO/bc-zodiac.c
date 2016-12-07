@@ -22,6 +22,10 @@
 
 SpiceInt gplanet = 0;
 
+// the planet ids we are interested in
+
+const int iplanets[] = {1, 2, 301, 4, 5, 6, 10};
+
 const char *houses[] = {"ARIES", "TAURUS", "GEMINI", "CANCER", "LEO", "VIRGO",
 			"LIBRA", "SCORPIO", "SAGITTARIUS", "CAPRICORN",
 			"AQUARIUS", "PISCES"};
@@ -153,10 +157,8 @@ int main (int argc, char **argv) {
   // various formats
   SpiceChar begstr[TIMLEN], endstr[TIMLEN], classic[100], terse[100];
   SpiceDouble step,adjust,refval,beg,end;
-  SpiceInt count,i;
+  SpiceInt count,i,j;
   SpiceDouble *array;
-
-  gplanet = 1;
 
   // kernels we need incl ECLIPDATE
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
@@ -164,44 +166,44 @@ int main (int argc, char **argv) {
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/000157.html");
   
   // test for one year
-  wninsd_c (year2et(2017), year2et(2018), &cnfine);
+  wninsd_c (year2et(1900), year2et(2101), &cnfine);
 
-  gfuds_c (gfq, gfdecrx, "=", 0., 0., 86400., MAXWIN, &cnfine, &result);
+  //  for (j=0; j<sizeof(iplanets); j++) {
 
-  count = wncard_c(&result);
- 
-  for (i=0; i<count; i++) {
+  // TODO: figure out how to compute sizeof(iplanets) properly, this is hack
+  for (j=0; j<sizeof(iplanets)/4; j++) {
 
-    // find the time of event (beg == end in this case)
-    wnfetd_c (&result, i, &beg, &end);
+    gplanet = iplanets[j];
+    gfuds_c (gfq, gfdecrx, "=", 0., 0., 86400., MAXWIN, &cnfine, &result);
+    count = wncard_c(&result);
+    
+    for (i=0; i<count; i++) {
 
-    // find mercury's ecliptic longitude (and if its increasing/decreasing)
-    array = geom_info(gplanet, beg, "ECLIPDATE", 399);
+      // find the time of event (beg == end in this case)
+      wnfetd_c (&result, i, &beg, &end);
 
-    // pretty print the time
-    timout_c (beg, TIMFMT, TIMLEN, begstr);
+      // find ecliptic longitude (and if its increasing/decreasing)
+      array = geom_info(gplanet, beg, "ECLIPDATE", 399);
 
-    int house = rint(array[11]*dpr_c()/30);
-    if (array[17] < 0) {house--;}
-    house = (house+12)%12;
+      // pretty print the time
+      timout_c (beg, TIMFMT, TIMLEN, begstr);
 
-    // the classic form
-    // TODO: allow for 399 == moon w wrapper function
-    // TODO: allow both planet and house convertor to have "terse" form
-    // terse is itoa except when > 10
-    sprintf(classic, "%s %s ENTERS %s %s\n", begstr, planet2str(gplanet, ""),
-	    houses[house], array[17]<0?"RETROGRADE":"");
+      int house = rint(array[11]*dpr_c()/30);
+      if (array[17] < 0) {house--;}
+      house = (house+12)%12;
 
-    sprintf(terse, "%d %s%s%s\n", (int) rint(et2unix(beg)/60), 
-	    planet2str(gplanet, "TERSE"), house2str(house, "TERSE"),
-	    array[17]<0?"-":"");
+      // the classic form
+      // we still include unix minute for sorting
+      sprintf(classic, "%d %s %s ENTERS %s %s\n", (int) rint(et2unix(beg)/60),
+	      begstr,  planet2str(gplanet, ""),
+	      houses[house], array[17]<0?"RETROGRADE":"");
 
-    printf("%s", terse);
+      sprintf(terse, "%d %s%s%s\n", (int) rint(et2unix(beg)/60), 
+	      planet2str(gplanet, "TERSE"), house2str(house, "TERSE"),
+	      array[17]<0?"-":"");
 
-    // TODO: rint() is probably NOT the function I want here
-    //    printf("%d %s, LONG: %f (%d), DIR: %f %s\n", (int) rint(et2unix(beg)),
-    //	   begstr, array[11]*dpr_c()/30, house, array[17], houses[house]);
-
+      printf("%s", classic);
+    }
   }
   return( 0 );
 }
