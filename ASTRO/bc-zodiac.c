@@ -16,7 +16,7 @@
 #include "SpiceZfc.h"
 #define MAXWIN 5000000
 #define TIMLEN 41
-#define TIMFMT "YYYY-MON-DD HR:MN"
+#define TIMFMT "YYYY##-MON-DD HR:MN"
 
 // global variables
 
@@ -168,11 +168,12 @@ int main (int argc, char **argv) {
   // 1 second tolerance (serious overkill, but 1e-6 is default, worse!)
   gfstol_c(1.);
   
-  // test for one year
-  // going beyond 1475 and 2525 appears to cause problems for now
+  // close to the entire range for DE431
   wninsd_c(-479695089600.+86400*468, 479386728000., &cnfine);
 
-  //  for (j=0; j<sizeof(iplanets); j++) {
+  // testing really old and new for formatting/etc
+  //  wninsd_c(-479695089600.+86400*468, -479695089600.+86400*500, &cnfine);
+  // wninsd_c(479386728000-86400*468, 479386728000, &cnfine);
 
   // TODO: figure out how to compute sizeof(iplanets) properly, this is hack
   for (j=0; j<sizeof(iplanets)/4; j++) {
@@ -198,15 +199,15 @@ int main (int argc, char **argv) {
 
       // the classic form
       // we still include unix minute for sorting
-      sprintf(classic, "%d %s %s ENTERS %s %s\n", (int) rint(et2unix(beg)/60),
-	      begstr,  planet2str(gplanet, ""),
-	      houses[house], array[17]<0?"RETROGRADE":"");
+      sprintf(classic, "%s %s ENTERS %s %s",  begstr,  
+	      planet2str(gplanet, ""), houses[house], 
+	      array[17]<0?"RETROGRADE":"PROGRADE");
 
-      sprintf(terse, "%d %s%s%s\n", (int) rint(et2unix(beg)/60), 
+      sprintf(terse, "%f %s%s%s", et2unix(beg), 
 	      planet2str(gplanet, "TERSE"), house2str(house, "TERSE"),
 	      array[17]<0?"-":"");
 
-      printf("%s", classic);
+      printf("%s %s\n", classic, terse);
     }
   }
   return( 0 );

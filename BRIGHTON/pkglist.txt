@@ -5,6 +5,7 @@ efibootmgr
 
 # system tools
 
+net-tools
 words
 ntop
 subversion
@@ -108,7 +109,7 @@ truecrypt
 xcalc
 
 # terminals
-rxvt
+rxvt-unicode
 xterm
 
 # monitoring tools
@@ -143,7 +144,7 @@ lame
 mp3gain
 
 
-# graphics incl scanning
+# graphics incl scanning and fonts
 # some of these may be installed by a groupinstall
 xpaint
 gif2asc
@@ -163,6 +164,8 @@ netpbm-progs
 gocr
 tesseract
 ocrad
+gnu-free-mono-fonts
+xorg-x11-fonts-*
 
 # video
 ffmpeg
@@ -342,6 +345,46 @@ intltool
 gtk3-devel
 libxml2-devel
 goffice-devel
+
+# Perl modules
+
+# TODO: unhappy about mixing cpan and this, but this works better for
+# modules that both have
+
+perl-Algorithm*
+perl-Astro*
+perl-B
+perl-DBI*
+perl-DB_File*
+perl-Data*
+perl-Date*
+perl-Digest*
+perl-FFI*
+perl-Fcntl*
+perl-File*
+perl-Flickr*
+perl-GD
+perl-Getopt*
+perl-HTML*
+perl-IO*
+perl-IPC*
+perl-Imager*
+perl-Inline*
+perl-JSON*
+perl-LWP*
+perl-MIME*
+perl-Math*
+perl-Net*
+perl-Number*
+perl-OpenGL*
+perl-Pg*
+perl-Plucene*
+perl-Statistics*
+perl-Test*
+perl-Text*
+perl-utf8
+
+# TODO: update list2sh or whatever to quote package names for * stuff
 
 # TODO: maybe look over what I have man pages for?
 

@@ -8,7 +8,7 @@ require "/usr/local/lib/bclib.pl";
 
 open(A,"egrep -v '^\$|^#' pkglist.txt|");
 
-while (<A>) {chomp; $pkg{$_}=1;}
+while (<A>) {chomp; $pkg{"'$_'"}=1;}
 
 write_file("yum --skip-broken -y install ".join(" ",sort keys %pkg)."\n", "yum-runme.sh");
 
