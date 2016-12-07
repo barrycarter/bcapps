@@ -30,11 +30,13 @@ int signum(double x) {
 // coordinates, their derivatives, and whether these derivates are
 // positive or negative
 
+// TODO: check to see if spherical coords give lat or colat
+
 SpiceDouble *geom_info(SpiceInt targ, SpiceDouble et, ConstSpiceChar *ref, 
 		       SpiceInt obs) {
 
   static SpiceDouble results[18];
-  SpiceDouble lt;
+  SpiceDouble lt, jacobi[3][3];
   SpiceInt i;
 
   // the "output" from spkgeo_c() into the first 6 entries
@@ -46,27 +48,31 @@ SpiceDouble *geom_info(SpiceInt targ, SpiceDouble et, ConstSpiceChar *ref,
   // the spherical of the coordinates are next 3 (9-11)
   recsph_c(results, &results[9], &results[10], &results[11]);
 
-  // change in the radius
-  results[12] = dvnorm_c(results);
+  // change in spherical coordinates (12-14)
+  dsphdr_c(results[0], results[1], results[2], jacobi);
+  mxv_c(jacobi, &results[3], &results[12]);
 
-  // results 9-11 are spherical dervs
-
-  // results 12-14 are 
+  // and the sign of that change
+  for (i=15; i<=17; i++) {results[i] = signum(results[i-3]);}
 
   return results;
 }
 
-// returns the distance to the nearest cusp (multiple of 30 degrees)
-// for a given planet/time
+// returns the sine of the angular distance to the nearest cusp
+// (multiple of n radians of longitude) for a given
+// target/time/planet/refframe
 
-SpiceDouble distance_to_cusp (SpiceInt planet, SpiceDouble et) {
-  // TODO: consider using sine wave here
-  // TODO: there MUST be a better way to write this!
-  //  return 15*rpd_c()-fabs(fabs(fmod(ecliptic_longitude(planet, et), 30*rpd_c()))-15*rpd_c());
+// NOTE: using sine here so we can find bisecting points which are
+// much easier than finding minima
+
+SpiceDouble distance_to_cusp (SpiceDouble n, SpiceInt targ, SpiceDouble et,
+			      ConstSpiceChar *ref, SpiceInt obs) {
+
+  SpiceDouble *results = geom_info(targ, et, ref, obs);
+  return sin(pi_c()/n*results[10]);
 }
 
 void gfq ( SpiceDouble et, SpiceDouble * value ) {
-  printf("GFQ(%f)\n",et/1800);
   *value = distance_to_cusp(1, et);
 }
 
