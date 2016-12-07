@@ -32,6 +32,16 @@ SpiceDouble ecliptic_longitude (SpiceInt planet, SpiceDouble et) {
   return atan2(res[1],res[0]);
 }
 
+// trivial psuedo-derivative sign
+
+int d_ecliptic_longitude (SpiceInt planet, SpiceDouble et) {
+  
+  SpiceDouble delta = ecliptic_longitude(planet,et+1) - ecliptic_longitude(planet,et-1);
+
+  // TODO: assumes result is non-zero, 0 is a seriously special case
+  return delta>0?1:-1;
+}
+
 // returns the distance to the nearest cusp (multiple of 30 degrees)
 // for a given planet/time
 
@@ -47,8 +57,10 @@ int main (int argc, char **argv) {
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/000157.html");
 
   for (int i=1; i<=366; i++) {
-    printf("%d %f %f\n", i, 
+    printf("%d %f %f %d\n", i, 
 	   ecliptic_longitude(1, unix2et(86400*(i-1)+1483228800))*dpr_c(),
-	   distance_to_cusp(1, unix2et(86400*(i-1)+1483228800))*dpr_c());
+	   distance_to_cusp(1, unix2et(86400*(i-1)+1483228800))*dpr_c(),
+	   d_ecliptic_longitude(1, unix2et(86400*(i-1)+1483228800))
+	   );
   }
 }
