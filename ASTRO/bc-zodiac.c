@@ -39,6 +39,8 @@ SpiceDouble *geom_info(SpiceInt targ, SpiceDouble et, ConstSpiceChar *ref,
   SpiceDouble lt, jacobi[3][3];
   SpiceInt i;
 
+  // TODO: details spherical coords order a bit better
+
   // the "output" from spkgeo_c() into the first 6 entries
   spkgeo_c(targ, et, ref, obs, results, &lt);
 
@@ -71,9 +73,7 @@ SpiceDouble *geom_info(SpiceInt targ, SpiceDouble et, ConstSpiceChar *ref,
 
 SpiceDouble distance_to_cusp (SpiceDouble n, SpiceInt targ, SpiceDouble et,
 			      ConstSpiceChar *ref, SpiceInt obs) {
-
   SpiceDouble *results = geom_info(targ, et, ref, obs);
-  printf("DEGREES(%f) IS: %f\n", et, results[11]*dpr_c());
   return sin(pi_c()/n*results[11]);
 }
 
@@ -103,27 +103,27 @@ int main (int argc, char **argv) {
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
   // TODO: this is just plain silly
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/000157.html");
-
-  array = geom_info(1, unix2et(0), "ECLIPDATE", 399);
-
-  for (i=0; i<18; i++) {
-    printf("result[%d] = %f\n", i, array[i]);
-  }
-
   
-  // 1970 to 2038 (all "Unix time")
-  wninsd_c (-946684800., 2147483647.+946684800., &cnfine);
+  // test for one year
+  wninsd_c (year2et(2017), year2et(2018), &cnfine);
 
   gfuds_c (gfq, gfdecrx, "=", 0., 0., 86400., MAXWIN, &cnfine, &result);
 
-  count = wncard_c( &result );
+  count = wncard_c(&result);
  
-  for ( i = 0; i < count; i++ ) {
-    wnfetd_c ( &result, i, &beg, &end );
-    timout_c ( beg, TIMFMT, TIMLEN, begstr );
-    timout_c ( end, TIMFMT, TIMLEN, endstr );
-    printf ( "Start time, drdt = %s \n", begstr );
-    printf ( "Stop time, drdt = %s \n", endstr );
+  for (i=0; i<count; i++) {
+
+    // find the time of event (beg == end in this case)
+    wnfetd_c (&result, i, &beg, &end);
+
+    // find mercury's ecliptic longitude (and if its increasing/decreasing)
+    array = geom_info(1, beg, "ECLIPDATE", 399);
+
+    // pretty print the time
+    timout_c (beg, TIMFMT, TIMLEN, begstr);
+
+    printf("AT: %s, LONG: %f, DIR: %f\n", begstr, array[11]*dpr_c(), array[17]);
+
   }
   return( 0 );
 }
