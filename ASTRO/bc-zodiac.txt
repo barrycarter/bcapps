@@ -1,3 +1,135 @@
+I wrote
+https://github.com/barrycarter/bcapps/blob/6d6801b590a9d3ab3dc4bc1906e37ab522df07f1/ASTRO/bc-zodiac.c
+to solve this. I've tweaked bc-zodiac.c slightly since then, so you'll
+need the exact link above (not the most recent version of bc-zodiac.c)
+to confirm/replicate my results. In the directory
+https://github.com/barrycarter/bcapps/blob/master/ASTRO/
+
+  - The file "houses.txt.bz2" contains a list of all house changes for
+  now +- ~15000 years in a mostly-English-readable format.
+
+  - The file "house-states.txt.bz2" is a list of all "horoscopes"
+  (house states for all planets) in machine readable format for the
+  same period. Please see
+  https://github.com/barrycarter/bcapps/blob/master/ASTRO/bc-zodiac.txt
+  (which also contains the text of this answer) for details on how to
+  read this file.
+
+Important caveats below, but first, some notes:
+
+  - In the 11,100,016 days (about 30,391 years) covered, there are
+  6,359,881 horoscope changes, for an average horoscope change roughly
+  every 1.75 days. Broken down by planet:
+
+    - The moon changes house 4,875,275 times, about once every 2.3 days.
+
+    - Mercury changes house 450,531 times (including retrograde house
+    changes), about once every 25 days.
+
+    - Venus changes house 384,969 times (including retrograde), about
+    once every 29 days.
+
+    - The Sun comes in third with 364,691 changes, about once every 30
+    days. A more exact number is once every 30.4367697585 days. When
+    you multiply this by 12, you get 365.2412371020 days, which, as
+    expected, is a good estimate of the length of the tropical year
+    (the exact value given by
+    http://hpiers.obspm.fr/eop-pc/models/constants.html is
+    365.242190402, which is 82 seconds different).
+
+    - Mars changes house (including retrograde) 209,501 times, about
+    once every 53 days.
+
+    - Jupiter (w/ retrograde) 49,217 times, once every ~225.5 days.
+
+    - Saturn (w/ retrograde) 25,697 times, ~432 days.
+
+  - Since there are 12 houses and 7 planets, there are 12^7 = 35,831,808
+  "possible" horoscopes, although even the theoretical number is lower
+  than this since Mercury and Venus must remain within a certain
+  distance of the Sun.
+
+  - Of these possibilities there are 2,565,619 actual horoscopes. Of these,
+
+    - 969,161 horoscopes occur only once
+
+    - The horoscope "4045424" (translated below) occurs 18 times (most
+    recently in 1799 and next in 5391), but two others occur 17 times,
+    10 appear 16 times, and many appear 15 times. The most frequently
+    occurring horoscope is: Sun in Leo, Moon in Aries, Mercury in Leo,
+    Venus in Virgo, Mars in Leo, Jupiter in Gemini, Saturn in Leo.
+
+Note that this horoscope is probably only the most frequent because of
+how I chose the start and end dates (based on the DE431 ephemeris).
+
+Important caveats:
+
+  - I used a "stepsize" of 86400 seconds (1 day), so if a planet
+  changed house and then changed back in under a day, my program may
+  miss it. Someone w/ more computing power may wish to re-run my
+  program with a smaller stepsize.
+
+  - The moon's position varies with your location on Earth. I used a
+  geocentric model, giving the moon's position for a theoretical
+  observer located at the center of the Earth.
+
+  - The human-readable time in houses.txt.bz2 is the output of the C
+  function
+  http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/timout_c.html
+  They are reasonable for current dates, but not necessarily for past
+  dates because the Gregorian Reformation of the calendar occurred at
+  different times for different countries, and the BCE/CE time system
+  didn't exist prior to 1 CE (and probably not even then). For
+  precision work, see bc-zodiac.txt for details.
+
+  - As requested, I use "ARIES" to mean the "1st house", ie, the
+  constellation that starts at the vernal equinox ("the first point of
+  Aries", where the ascending ecliptic meets the celestial equator)
+  and ends 30 ecliptic degrees of ecliptic longitude later.
+
+    - This was reasonably accurate in 56 BCE (-55 in stellarium means 56 BCE):
+
+[[239]]
+
+    - But is certainly not true today:
+
+[[237]]
+
+as the vernal equinox is in Pisces and drifts towards Aquarius,
+heralding the "Age of Aquarius".
+
+    - In the 30,000+ year period covered by my program, the first
+    point of Aries makes a complete circuit (and a bit more) of the
+    Zodiac, even ending up in Ophiuchus for a while:
+
+[[238]]
+
+Of course, the constellation boundaries above are those defined by the
+IAU. I don't know how (or if) the ancients drew their constellation
+boundaries.
+
+NOTE: I wanted to use H.A. Rey's constellation lines, but Stellarium's
+constellation boundaries appear to break for Pisces when I do that.
+
+
+
+
+
+-55 = 56 BC
+
+TODO: arb lines
+
+
+
+TODO: not ha rey sorry
+
+
+
+shortest time between state changes? longest? [but disclaim shortest]
+
+
+
+
 notes for writeup:
 
 tolerance 1s and will miss twice in a day 
@@ -39,7 +171,7 @@ doing agreement for 2000 w/ astrolog thing?
 
 create README for houses.txt.bz2 and for results of perl script
 
-first point of aries drifts, use stellarium, proleptic greogrian, what aries means, completes full circuit plus
+proleptic greogrian
 
 check these inits for sanity
 
@@ -57,7 +189,7 @@ so first is (0 = ARIES):
 
 1312216 = init state
 
-TODO: sanity check changes (exactly 1 constell or 11 -> 0)
+DONE: sanity check changes (exactly 1 constell or 11 -> 0)
 
 
 
@@ -72,3 +204,71 @@ confirms below:
 -13200-JUL-14 09:06 JUPITER ENTERS GEMINI PROGRADE -478702104781.697632 52
 -13200-SEP-11 08:26 SATURN ENTERS SCORPIO PROGRADE -478697009599.619629 67
 
+HOW TO READ houses.txt.bz2
+==========================
+
+This file contains a list of all house changes for the 7 major planets
+(subject to caveats above) in both English and machine readable
+format. The fields are:
+
+  - Note: If you are programmatically  parsing this file, note that:
+
+    - Some lines contain leading spaces, which must be removed before
+    counting fields.
+
+    - You should probably be using house-states.txt.bz2 instead
+
+
+  - Fields 1 and 2 are the prettified version of the time at which the
+  house change occurs
+
+  - Field 3 is the planet whose house is changing
+
+  - Field 4 is always the word "ENTERS"
+
+  - Field 5 is the planet's new house
+
+  - Field 6 is whether the planet is entering the house prograde (the
+  more frequent behavior) or retrograde.
+
+  - Field 7 is approximately the number of second before or after the
+  Unix epoch (1970-01-01 00:00:00 UTC). More specifically, it's
+  et+946728000-delta, where et is the ephemeris time and delta is the
+  difference between ephemeris time and UTC. For more details see
+  bclib.h in https://github.com/barrycarter/bcapps/blob/master/ASTRO
+  and http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/time.html
+
+  - Field 8 is the short form of which planet has entered which
+  house. The first character is the planet and the second character is
+  the house. For the planets (first character):
+
+    - "S" means Sun
+    - "M" means Moon
+    - "1" means Mercury
+    - "2" means Venus
+    - "4" means Mars
+    - "5" means Jupiter
+    - "6" means Saturn
+
+For the house (second character):
+
+    - "0" means Aries
+    - "1" means Taurus
+    - "2" means Gemini
+    - "3" means Cancer
+    - "4" means Leo
+    - "5" means Virgo
+    - "6" means Libra
+    - "7" means Scorpio
+    - "8" means Sagittarius 
+    - "9" means Capricorn
+    - "A" means Aquarius ("A" is the hex form of the number 10)
+    - "B" means Pisces ("B" is the hex form of the n****)
+
+
+  
+
+%%%%% retro vs pro count?
+
+
+%%%% perl note
