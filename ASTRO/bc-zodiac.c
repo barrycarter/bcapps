@@ -155,9 +155,9 @@ int main (int argc, char **argv) {
   SPICEDOUBLE_CELL (result, 2*MAXWIN);
   SPICEDOUBLE_CELL (cnfine, 2);
   // various formats
-  SpiceChar begstr[TIMLEN], endstr[TIMLEN], classic[100], terse[100];
-  SpiceDouble step,adjust,refval,beg,end;
-  SpiceInt count,i,j;
+  SpiceChar begstr[TIMLEN], classic[100], terse[100];
+  SpiceDouble beg,end;
+  SpiceInt count,i,j,house;
   SpiceDouble *array;
 
   // kernels we need incl ECLIPDATE
@@ -179,6 +179,20 @@ int main (int argc, char **argv) {
   for (j=0; j<sizeof(iplanets)/4; j++) {
 
     gplanet = iplanets[j];
+    array = geom_info(gplanet, -479695089600.+86400*468, "ECLIPDATE", 399);
+    house = floor(array[11]*dpr_c()/30);
+    house = (house+12)%12;
+    // figure out ecliptic coordinates at earliest time
+    printf("SEPOCH: %s %s %f\n",planet2str(iplanets[j], ""),house2str(house, ""), array[11]*dpr_c());
+
+    // found error, testing
+    array = geom_info(gplanet, unix2et(-478707368069.509216), "ECLIPDATE", 399);
+    printf("FIXED: %s %s %f\n",planet2str(iplanets[j], ""),house2str(house, ""), array[11]*dpr_c());
+
+
+    // TODO: this continue appears because I did this later
+    continue;
+
     gfuds_c (gfq, gfdecrx, "=", 0., 0., 86400., MAXWIN, &cnfine, &result);
     count = wncard_c(&result);
     
@@ -193,7 +207,7 @@ int main (int argc, char **argv) {
       // pretty print the time
       timout_c (beg, TIMFMT, TIMLEN, begstr);
 
-      int house = rint(array[11]*dpr_c()/30);
+      house = rint(array[11]*dpr_c()/30);
       if (array[17] < 0) {house--;}
       house = (house+12)%12;
 
