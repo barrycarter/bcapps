@@ -18,8 +18,28 @@ leaving old answer for do it yourselfers
 (answer ahole?)
 
 12/7/2016 at 13:28 started bc-zodiac
-
-14:20 results through venus (moon will take long time)
+14:20 results through venus
+20:48 results though moon
+21:24 results through jupiter
 
 disclaim time format timout_c()
+
+note precession of equinoxes and link to my other answer
+
+12^7 theoretical, most often and least often (in this period)
+
+average change per n days, plus per planet change (includes retrograd
+except sun/moon)
+
+-479695089600.+86400*468, 479386728000
+
+or 959041382400 seconds = 11100016 days = 30390.8115840845 gregorian years
+
+doing agreement for 2000 w/ astrolog thing?
+
+create README for planet-house-changes.txt
+
+first point of aries drifts, use stellarium, proleptic greogrian, what aries means, completes full circuit plus
+
+
 
