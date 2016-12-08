@@ -28,8 +28,8 @@ sudo ln -s /home/barrycarter/BCGIT/bclib.pl /usr/local/lib/
 : startup-x.csh and startup-nox.csh no longer exist but I want to
 : remove them just in case they snuck in from other sources
 
-rm /home/user/.xinitrc /home/user/brighton-procs.txt /home/user/startup-x.sh /home/user/startup-nox.sh
-sudo ln -s /home/user/BCGIT/BRIGHTON/.xinitrc /home/user/BCGIT/BRIGHTON/brighton-procs.txt /home/user
+rm /home/user/.xinitrc /home/user/brighton-procs.txt /home/user/startup-x.sh /home/user/startup-nox.sh /home/user/.tcshrc
+sudo ln -s /home/user/BCGIT/BRIGHTON/.tcshrc /home/user/BCGIT/BRIGHTON/.xinitrc /home/user/BCGIT/BRIGHTON/brighton-procs.txt /home/user
 
 # and some because I'm using older system
 

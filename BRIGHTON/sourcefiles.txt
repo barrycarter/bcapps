@@ -1,5 +1,7 @@
 # using http://gentoo.osuosl.org/distfiles since they seem to have it all
 
+
+
 # The page "http://gentoo.osuosl.org/distfiles/?C=M;O=A" so curl may
 # be better to download it (lynx also works ok)
 
@@ -21,8 +23,11 @@ http://gentoo.osuosl.org/distfiles/talkfilters-2.3.8.tar.gz
 http://gentoo.osuosl.org/distfiles/aldo-0.7.7.tar.bz2
 http://gentoo.osuosl.org/distfiles/adjtimex_1.29.orig.tar.gz
 http://gentoo.osuosl.org/distfiles/freedink-data-1.08.20140901.tar.gz
+http://gentoo.osuosl.org/distfiles/xteddy-2.2.tar.gz
 
+# http://www.gnu-darwin.org/distfiles/ possible source
 
+# consider look at freshports or even bsd ports (it's all source) for more?
 
 # TODO: decide where to put above, /root/gentoo ?
 

@@ -1,0 +1,25 @@
+notes for writeup:
+
+tolerance 1s and will miss twice in a day 
+
+disclaim geocentricity for moon
+
+add uranus/netpune/pluto/asteroids maybe
+
+you can and should check and answers, link to proggie of course
+
+disclaim accuracy and completenes and note 1 day rule and that you
+will need kernels
+
+disclaim results dont agree to the minute with https://cafeastrology.com/astrologyof2017horoscopes.html
+
+leaving old answer for do it yourselfers
+
+(answer ahole?)
+
+12/7/2016 at 13:28 started bc-zodiac
+
+14:20 results through venus (moon will take long time)
+
+disclaim time format timout_c()
+

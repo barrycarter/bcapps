@@ -110,6 +110,8 @@ sh ~user/BCGIT/BRIGHTON/bc-symlinks.sh |& tee /tmp/bc-symlinks.out
 
 %% TODO: rename fc11root as such
 
+%% TODO: compare all lib and bin files from old machine (perhaps using fc11root) and new machine to see what I'm missing
+
 % NOTE: to list all bin and lib files on a machine (which I can use to
 compare my current bin files on dullon to those on babybrighton to see
 what I'm "missing"):
@@ -133,12 +135,6 @@ perl -pnle 's%^.*/%%' /tmp/$FOO-binlist0.txt|sort -u > /tmp/$FOO-binlist1.txt
 %% TODO: above for libs, common names are:
 
 /var/lib /usr/lib /usr/local/lib /lib
-
-
-
-
-
-
 
 %% TODO: consider making this entire document even more specific to me and avoid the "IF THEN" stuff
 
@@ -230,7 +226,7 @@ pain, so let's create a quick and easy X11 environment:
 : GNOME the "yum groupinstall hidden" "X Window System" may work here too
 yum -y groupinstall "KDE Plasma Workspaces";: this is overkill but it works
 
-
+% NOTE: "yum groupinfo <group>" shows lists of packages in group
 
 %% TODO: disclaim that CentOs7 actually has virtualization built in
 (eg, "yum groupinstall 'Virtualization Host'"), but that we're using
@@ -287,3 +283,18 @@ export KERN_DIR = /usr/src/kernels/3.10.0-327.36.3.el7.x86_64
 %% TODO: add aliases file
 
 %% TODO: pwless root for wheel
+
+%% TODO: configure /etc/hosts on babybrighton
+
+%% TODO: symlink urxvt to rxvt
+
+%% TODO: put "significant legacy" note in this dir, ../CENTOS* ../VM/ and ../FEDORA
+
+%% TODO: figure out why /usr/local/bin/surl did to not get transferred
+to /fc11oldroot from dullon or whatever (and redo this rsync to keep up?)
+
+%% TODO: really need to create .tcshrc for PATH and QT stuff
+
+%% TODO: consider virtualizing dullon so I can cut over to new machine ASAP
+
+%% TODO: more cpan stuff

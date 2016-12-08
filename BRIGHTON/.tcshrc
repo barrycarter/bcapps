@@ -1,0 +1,40 @@
+# my preferences
+setenv DISPLAY :0.0
+setenv TERM vt100
+set ignoreeof
+
+# path here is the default path but adds /old/ which points to a copy
+# of the oldroot from Fedora Core 11 machine, so I can use those bins
+# and libs as backups
+
+# also includes everything in BCGIT down to one level
+set path = (/bin /usr/bin /usr/local/bin /sbin /usr/sbin /usr/local/sbin \
+            /old/bin /old/usr/bin /old/usr/local/bin /old/sbin /old/usr/sbin \
+           /old/usr/local/sbin /home/user/BCGIT /home/user/BCGIT/*)
+
+# for QT to work properly
+
+# TODO: where do I define QTDIR QTINC etc in my current setup?
+# /etc/profile.d/qt.csh ??!?
+
+# perhaps because I installed multiple QTs, I need to set these
+# manually here; /etc/profile.d/qt.csh tries to set them to 3.3
+
+setenv QTDIR /usr/lib64/qt5
+setenv QTINC $QTDIR/include
+setenv QTLIB $QTDIR/lib
+
+# less preferences (and make it default pager)
+setenv LESS -eiMu
+setenv PAGER less
+
+# avoid overwriting when possible
+set noclobber
+
+# default locale best for sorting and not breaking things
+setenv LC_ALL C
+
+# TODO: there are many things I am NOT copying from my current
+# .tcshrc, but will add as needed
+
+

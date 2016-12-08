@@ -33,6 +33,10 @@ use Inline::Python;
 use FFI::Raw;
 use v5.10;
 
+create_el_tz_file();
+
+die "TESTING";
+
 # one off to spit out third wednesday of each month for personal reasons
 
 for $i (2015..2029) {

@@ -166,6 +166,8 @@ tesseract
 ocrad
 gnu-free-mono-fonts
 xorg-x11-fonts-*
+# steam needs this
+mesa-dri-drivers
 
 # video
 ffmpeg
@@ -332,7 +334,7 @@ SDL-devel
 # required for recoll
 qt-devel
 qt3-devel
-qt5-devel
+qt5-*
 
 # required for vice
 # the first three are good ideas anyway
