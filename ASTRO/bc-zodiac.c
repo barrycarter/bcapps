@@ -186,8 +186,8 @@ int main (int argc, char **argv) {
     printf("SEPOCH: %s %s %f\n",planet2str(iplanets[j], ""),house2str(house, ""), array[11]*dpr_c());
 
     // found error, testing
-    array = geom_info(gplanet, unix2et(-478707368069.509216), "ECLIPDATE", 399);
-    printf("FIXED: %s %s %f\n",planet2str(iplanets[j], ""),house2str(house, ""), array[11]*dpr_c());
+    //    array = geom_info(gplanet, unix2et(-478707368069.509216), "ECLIPDATE", 399);
+    //    printf("FIXED: %s %s %f\n",planet2str(iplanets[j], ""),house2str(house, ""), array[11]*dpr_c());
 
 
     // TODO: this continue appears because I did this later

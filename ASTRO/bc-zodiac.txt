@@ -37,19 +37,30 @@ or 959041382400 seconds = 11100016 days = 30390.8115840845 gregorian years
 
 doing agreement for 2000 w/ astrolog thing?
 
-create README for planet-house-changes.txt
+create README for houses.txt.bz2 and for results of perl script
 
 first point of aries drifts, use stellarium, proleptic greogrian, what aries means, completes full circuit plus
 
 check these inits for sanity
 
-VALID: MERCURY TAURUS
-VENUS CANCER [NOT VALID! SEE BELOW]
-VALID: MOON CANCER
-MARS CANCER [NOT VALID! SEE BELOW]
-JUPITER GEMINI [NOT VALID! SEE BELOW]
-SATURN SCORPIO [NOT VALID! SEE BELOW]
-VALID: SUN TAURUS
+VALID: SEPOCH: MOON CANCER 101.077389
+VALID: SEPOCH: VENUS GEMINI 82.996110
+VALID: SEPOCH: MERCURY TAURUS 38.875276
+VALID: SEPOCH: MARS GEMINI 79.567012
+VALID: SEPOCH: SUN TAURUS 36.720431
+VALID: SEPOCH: JUPITER TAURUS 45.223734
+VALID: SEPOCH: SATURN LIBRA -150.703198
+
+order is SM12456
+
+so first is (0 = ARIES):
+
+1312216 = init state
+
+TODO: sanity check changes (exactly 1 constell or 11 -> 0)
+
+
+
 
 confirms below:
 
