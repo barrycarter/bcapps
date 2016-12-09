@@ -94,6 +94,7 @@ bash
 tigervnc
 tigervnc-server
 rdesktop
+x11vnc
 
 # search engines
 recoll
@@ -302,6 +303,10 @@ geomview
 # IDEs
 netbeans
 eclipse
+
+# required for fly
+gd-devel
+freetype-devel
 
 # required for abiword source compile
 libpng-devel

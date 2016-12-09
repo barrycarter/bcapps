@@ -97,6 +97,18 @@ sh ~user/BCGIT/BRIGHTON/yum-runme.sh |& tee /tmp/yum-runme.out
 actually breaks (ie, yum yields an error, not just warnings), you may
 wish to snapshot "alpha" here [to be safe, "shutdown -h" first]
 
+% Ugly install of fly (older version, newer is broken)
+
+%% trying 2.0.1
+
+cd /root/build
+cp ~user/Downloads/fly-1.6.5.tar.gz .
+tar xvfz fly-1.6.5.tar.gz
+cd fly-1.6.5
+make
+cp fly /usr/local/bin/
+
+
 % Cut and paste results of below into nopkglist.txt: the packages I
 want that CentOS doesnt provide:
 

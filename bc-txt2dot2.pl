@@ -3,7 +3,7 @@
 # converts text files like "chickenproblem.txt" into graphviz DOT files
 # note chickenproblem.txt and EL/pv-magic.txt are in different formats
 
-require "bclib.pl";
+require "/usr/local/lib/bclib.pl";
 
 ($data, $file) = cmdfile();
 
