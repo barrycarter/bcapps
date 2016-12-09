@@ -10,13 +10,12 @@
 // this the wrong way to do things
 #include "/home/barrycarter/BCGIT/ASTRO/bclib.h"
 
-
 // the next two includes are part of the CSPICE library
 #include "SpiceUsr.h"
 #include "SpiceZfc.h"
 #define MAXWIN 5000000
 #define TIMLEN 41
-#define TIMFMT "YYYY##-MON-DD HR:MN"
+#define TIMFMT "ERAYYYY##-MON-DD HR:MN ::MCAL"
 
 // global variables
 
@@ -33,6 +32,8 @@ const char *houses[] = {"ARIES", "TAURUS", "GEMINI", "CANCER", "LEO", "VIRGO",
 // planets[0] is the barycenter, never used
 const char *planets[] = {"SSB", "MERCURY", "VENUS", "EARTH", "MARS", "JUPITER",
 			 "SATURN", "URANUS", "NEPTUNE", "PLUTO", "SUN"};
+
+
 
 // convert house to string, optionally in terse format
 char *house2str(int house, char *type) {
@@ -51,7 +52,7 @@ char *house2str(int house, char *type) {
     if (house==11) {return "B";}
   }
 
-  return houses[house];
+  return (char *) houses[house];
 }
 
 // convert planet to string, optionally in terse format
@@ -72,7 +73,7 @@ char *planet2str(int planet, char *type) {
     return "?";
   }
 
-  if (planet<=10) {return planets[planet];}
+  if (planet<=10) {return (char *) planets[planet];}
   if (planet == 301) {return "MOON";}
   return "?";
 }
@@ -116,10 +117,6 @@ SpiceDouble *geom_info(SpiceInt targ, SpiceDouble et, ConstSpiceChar *ref,
   // and the sign of that change
   for (i=15; i<=17; i++) {results[i] = signum(results[i-3]);}
 
-  //  for (i=0; i<=17; i++) {
-  //    printf("RESULTS[%d] (%f): %f\n", i, et, results[i]);
-  //  }
-
   return results;
 }
 
@@ -130,13 +127,14 @@ SpiceDouble *geom_info(SpiceInt targ, SpiceDouble et, ConstSpiceChar *ref,
 // NOTE: using sine here so we can find bisecting points which are
 // much easier than finding minima
 
+// TODO: abs value would be much faster?
+
 SpiceDouble distance_to_cusp (SpiceDouble n, SpiceInt targ, SpiceDouble et,
 			      ConstSpiceChar *ref, SpiceInt obs) {
   SpiceDouble *results = geom_info(targ, et, ref, obs);
   return sin(pi_c()/n*results[11]);
 }
 
-// TODO: replace 1 with gplanet, global planet definition
 void gfq ( SpiceDouble et, SpiceDouble * value ) {
   *value = distance_to_cusp(pi_c()/6, gplanet, et, "ECLIPDATE", 399);
 }
@@ -145,10 +143,6 @@ void gfdecrx (void(* udfuns)(SpiceDouble et,SpiceDouble * value),
               SpiceDouble et, SpiceBoolean * isdecr ) {
   uddc_c(udfuns, et, 10, isdecr);
 }
-
-// gfdecrx = function that determines whether gfq is decreasing
-// void gfdecrx (void (*udfuns) (SpiceDouble et, SpiceDouble *value ),
-//	      SpiceDouble et, SpiceBoolean * isdecr );
 
 int main (int argc, char **argv) {
 
@@ -172,13 +166,17 @@ int main (int argc, char **argv) {
   wninsd_c(-479695089600.+86400*468, 479386728000., &cnfine);
 
   // testing really old and new for formatting/etc
-  //  wninsd_c(-479695089600.+86400*468, -479695089600.+86400*500, &cnfine);
+  //  wninsd_c(-479695089600.+86400*468, -479695089600.+86400*5000, &cnfine);
   // wninsd_c(479386728000-86400*468, 479386728000, &cnfine);
 
   // TODO: figure out how to compute sizeof(iplanets) properly, this is hack
   for (j=0; j<sizeof(iplanets)/4; j++) {
 
     gplanet = iplanets[j];
+
+    /* The commented code below was a one-off to compute the initial
+       positions of planets
+
     array = geom_info(gplanet, -479695089600.+86400*468, "ECLIPDATE", 399);
     house = floor(array[11]*dpr_c()/30);
     house = (house+12)%12;
@@ -192,6 +190,8 @@ int main (int argc, char **argv) {
 
     // TODO: this continue appears because I did this later
     continue;
+
+    */
 
     gfuds_c (gfq, gfdecrx, "=", 0., 0., 86400., MAXWIN, &cnfine, &result);
     count = wncard_c(&result);
@@ -212,24 +212,16 @@ int main (int argc, char **argv) {
       house = (house+12)%12;
 
       // the classic form
-      // we still include unix minute for sorting
       sprintf(classic, "%s %s ENTERS %s %s",  begstr,  
 	      planet2str(gplanet, ""), houses[house], 
 	      array[17]<0?"RETROGRADE":"PROGRADE");
 
-      sprintf(terse, "%f %s%s%s", et2unix(beg), 
+      sprintf(terse, "%lld %s%s%s", (long long) floor(beg/60+0.5), 
 	      planet2str(gplanet, "TERSE"), house2str(house, "TERSE"),
-	      array[17]<0?"-":"");
+	      array[17]<0?"-":"+");
 
       printf("%s %s\n", classic, terse);
     }
   }
-  return( 0 );
+  return(0);
 }
-
-/*
-
-array: 0 = aries
-
-*/
- 

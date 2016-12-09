@@ -13,8 +13,13 @@ machine is hereafter called "brighton"
 "babybrighton"), see bc-create-vm-with-virtualbox.txt in this
 directory.
 
+% OPTIONAL: on dullon add a line like this to /etc/hosts so you can
+access the machine as babybrighton
+
+192.168.0.100 babybrighton 
+
 %% TODO: whine about default CentOS7 not enable network (+ not even
-showing option until you choose partioning) -- maybe take screenshot
+showing option until you choose partitioning) -- maybe take screenshot
 
 %% TODO: disclaim why I'm using VirtualBox over KVM (/dev/sdb only!)
 
@@ -26,7 +31,7 @@ This documents my attempt to setup "brighton", a new CentOS 7.2
 machine, first as a VM, and later as a physical machine. My current
 machine is running Fedora Core 11, and I will its existing files as a
 "fallback" for certain things (eg, binaries and libraries absolutely
-not available via CentOs 7.2 or that I am too lazy to install from
+not available via CentOS 7.2 or that I am too lazy to install from
 tertiary sources) [default install + CentOS 7 included/approved
 repositories = primary source, unapproved repositories = secondary
 source]
@@ -74,16 +79,25 @@ yum -y install rsync
 rehash
 rsync -Pavz root@192.168.0.2:/home/barrycarter/BCGIT /home/user/
 
+: and private stuff I still need
+rsync -Pavz root@192.168.0.2:/home/barrycarter/BCPRIV /home/user/
+
 % Install X11 as a group
 
 : next line just makes group stuff faster in future
+
 yum groups mark convert
 
+: note this only shows up with "yum grouplist hidden" not w/o "hidden"
 yum -y groupinstall "X Window System"
 
 % Install "approved" repositories
 
 sh ~user/BCGIT/BRIGHTON/repos.sh
+
+% Create cache of meta data (improves speed):
+
+yum makecache
 
 % and install applydeltarpm to possibly speed things up
 
@@ -97,9 +111,12 @@ sh ~user/BCGIT/BRIGHTON/yum-runme.sh |& tee /tmp/yum-runme.out
 actually breaks (ie, yum yields an error, not just warnings), you may
 wish to snapshot "alpha" here [to be safe, "shutdown -h" first]
 
-% Ugly install of fly (older version, newer is broken)
+% Cut and paste results of below into nopkglist.txt: the packages I
+want that CentOS doesn't provide:
 
-%% trying 2.0.1
+fgrep "No package " /tmp/yum-runme.out | perl -anle 'print $F[2]' | sort | uniq | less
+
+% Ugly install of fly (older version, newer is broken)
 
 cd /root/build
 cp ~user/Downloads/fly-1.6.5.tar.gz .
@@ -107,20 +124,15 @@ tar xvfz fly-1.6.5.tar.gz
 cd fly-1.6.5
 make
 cp fly /usr/local/bin/
-
-
-% Cut and paste results of below into nopkglist.txt: the packages I
-want that CentOS doesnt provide:
-
-fgrep "No package " /tmp/yum-runme.out | perl -anle 'print $F[2]' | sort | uniq | less
+cp gd1.3/libgd.a /usr/local/lib/
 
 % run bc-symlinks.sh
 
 sh ~user/BCGIT/BRIGHTON/bc-symlinks.sh |& tee /tmp/bc-symlinks.out
 
-%% TODO: rsync over private files too, but perhaps create a subdir first
+% start the crontab
 
-%% TODO: rename fc11root as such
+crontab -u user /home/user/BCGIT/BRIGHTON/bc-public-crontab
 
 %% TODO: compare all lib and bin files from old machine (perhaps using fc11root) and new machine to see what I'm missing
 
@@ -150,149 +162,16 @@ perl -pnle 's%^.*/%%' /tmp/$FOO-binlist0.txt|sort -u > /tmp/$FOO-binlist1.txt
 
 %% TODO: consider making this entire document even more specific to me and avoid the "IF THEN" stuff
 
-%% TODO: in primary README, give statement of purpose for this git repo
-
 %% TODO: try to include reference URLs (using Firefox history if
 needed) when doing something unusual or difficult
 
-% When installing CentOS 7 on babybrighton:
+%% TODO: make sure no colon parens and explain why (or go # all the way?)
 
-  - Under "network", turn on Ethernet, name machine babybrighton
-
-  - Under Configure/Ethernet, set MAC address to 08:00:00:00:00:00 or
-  something else easy to recognize and configure your router/DHCP to
-  give this a specific IP address and add that IP address to
-  /etc/hosts for convenience. Example (to add to /etc/hosts):
-
-192.168.0.100 babybrighton 
-
-: reboot virutal machine and then below on brighton
-
-: immediately after reboot, "shutdown -h" babybrighton and do this on brighton:
-
-virsh snapshot-create-as babybrighton postinstall "Post installation"
-
-: restart babybrighton
-
-
-
-% After restarting babybrighton, do this on brighton so I can do all
-the "cryptsetup" stuff on babybrighton, not on brighton itself (I want
-to make babybrighton as close a match as possible, so have it do the
-cryptsetup stuff is better than doing it in the host)
-
-virsh attach-disk --persistent babybrighton /dev/sdb vdb
-
-virsh attach-disk --persistent babybrighton /dev/sdb vdb --type disk
-
-: opposite is "virsh detach-disk babybrighton vdb"
-
-: "virsh domblklist babybrighton" lists disks
-
-# snapshot-current snapshot-edit snapshot-info snapshot-list 
-
-
-% Now, "ssh root@babybrighton" for the next steps
-
-: this lets me use ../CENTOS/move-root.txt as it stands
-ln -s /dev/vdb3 /dev/sdb3
-
-: this is an ugly instance of having to install something early
-
-yum -y install cryptsetup
-
-% Follow ../CENTOS/move-root.txt if making alternate disk main disk;
-if doing this, also make a snapshot (from brighton AFTER shutting down
-babybrighton):
-
-virsh snapshot-create-as babybrighton postdisk "post external disk"
-
-: restart babybrighton
-
-% NOTE: virsh snapshot-revert babybrighton postinstall
-
-
-
-
-
-
-%% TODO: make sure no colon parens and explain why
-
-
-
-
-
-% IMP: stop here, steps below are for older
-
-% Use virtualbox's repo
-
-curl -o /etc/yum.repos.d/virtualbox.repo http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo
-
-% Install virtualbox, accepting GPG keys as necessary (can also use "-y"?)
-
-yum -y install VirtualBox-5.1;: may need to verify some keys manually
-
-% You CAN run VirtualBox from the command line, but it's sort of a
-pain, so let's create a quick and easy X11 environment:
-
-: GNOME the "yum groupinstall hidden" "X Window System" may work here too
-yum -y groupinstall "KDE Plasma Workspaces";: this is overkill but it works
-
-% NOTE: "yum groupinfo <group>" shows lists of packages in group
-
-%% TODO: disclaim that CentOs7 actually has virtualization built in
-(eg, "yum groupinstall 'Virtualization Host'"), but that we're using
-virt as an intermediate step, so I am OK with "cheating"
-
-: note "yum grouplist hidden" will show "X Window System" but wont w/o hidden
-
-: note you probably could just install 
-
-
-%% TODO: note use of ;: as comments
-
-% IMP: this is incomplete
-
-%% TODO: more
-  
-
-Steps start with left flush "%", but left flus"% NOTE:" indicates a note, not a step 
-
-%% TODO: tell how I got to VirtualBox state
-
-%% TODO: runme.sh for setup
-
-%% TODO: Guest Box additions required to access main disk
-
-%% TODO: can I encrypt /dev directly from vbox?
-
-%% TODO: add repos
-
-%% TODO: which programs can i NOT install from repos
-
-%% TODO: hooking (linking) in old bin and lib and root from fc11root (and
-.tcshrc files required) (PATH and LD_LIBRARY_PATH) but as last entries
-
-%% TODO: fossies mention for source code where needed (but not the best, other sources more complete)
+%% TODO: explain ":" comments
 
 %% TODO: use chkconfig/systemctl on guest to make sure what I want comes up (ps -auxwww or ps -ef to see whats actually running)
 
-%% TODO: note that installing centos7 w/ all the repos/rpms I select
-requires more than the default 8gb drive virtualbox gives (although
-I'm now using KVM, but think it's default is too small too) --
-recommend give as much space as possible, but maybe df -kh after full install
-
 %% TODO: look at TODOs from FEDORA and CENTOS and VM
-
-%% TODO: compare new bin dirs with old ones to see what is missing and will fallthru
-
-% NOTE: info I may need to install guest additions:
-
-: or equivalent in tcsh
-export KERN_INCL=/usr/include
-export KERN_DIR = /usr/src/kernels/3.10.0-327.36.3.el7.x86_64
-
-%% TODO: add aliases file
 
 %% TODO: pwless root for wheel
 
@@ -305,8 +184,11 @@ export KERN_DIR = /usr/src/kernels/3.10.0-327.36.3.el7.x86_64
 %% TODO: figure out why /usr/local/bin/surl did to not get transferred
 to /fc11oldroot from dullon or whatever (and redo this rsync to keep up?)
 
-%% TODO: really need to create .tcshrc for PATH and QT stuff
-
 %% TODO: consider virtualizing dullon so I can cut over to new machine ASAP
 
 %% TODO: more cpan stuff
+
+%% TODO: fixed IP addr, no NetworkManager
+
+ LocalWords:  vncserver bc runme Pavz groupinstall applydeltarpm deltarpm cd
+ LocalWords:  xvfz nopkglist anle uniq

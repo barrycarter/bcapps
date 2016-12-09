@@ -85,6 +85,7 @@ prover9
 mono-core
 python3-pip
 android
+perl
 
 # shells
 tcsh

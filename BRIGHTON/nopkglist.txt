@@ -3,6 +3,7 @@
 # misspelling the name, confusing a binary name with a package name,
 # or doing something else relatively minor
 
+FBReader
 Grimrock
 PySolFC
 ScottFree
@@ -21,7 +22,6 @@ boggle
 bomber
 bovo
 britannica
-brooklyn
 bzfs
 calibre
 celestia
@@ -53,11 +53,17 @@ ntop
 ocrad
 openuniverse
 opera
+perl-B
+perl-FFI*
+perl-Fcntl*
+perl-Flickr*
+perl-Imager*
+perl-Pg*
+perl-Plucene*
+perl-utf8
 prover9
-qt5-devel
 rclock
 recoll
-rxvt
 sagemath
 satan
 sccs

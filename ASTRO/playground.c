@@ -48,6 +48,13 @@ double earthmaxangle(double time, int arrsize, SpiceInt *planets) {
 
 int main (int argc, char **argv) {
 
+  long long test = -pow(2,63);
+
+  printf("TEST: %lld\n",test);
+
+  exit(0);
+
+
   SpiceDouble pos[3];
   SpiceDouble lt;
   SpiceInt planets[6], i;

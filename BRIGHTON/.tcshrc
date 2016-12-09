@@ -34,6 +34,9 @@ set noclobber
 # default locale best for sorting and not breaking things
 setenv LC_ALL C
 
+# my aliases file
+source /home/user/BCGIT/aliases.txt
+
 # TODO: there are many things I am NOT copying from my current
 # .tcshrc, but will add as needed
 
