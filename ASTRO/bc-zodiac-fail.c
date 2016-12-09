@@ -8,17 +8,15 @@
 
 int main() {
 
-  SpiceDouble et;
-  SpiceDouble lt;
-  SpiceDouble pos[3];
+  SpiceDouble et, lt, pos[6];
 
+  furnsh_c("/home/barrycarter/BCGIT/ASTRO/000157.html");
   furnsh_c("/home/barrycarter/SPICE/KERNELS/de431_part-1.bsp");
   furnsh_c("/home/barrycarter/SPICE/KERNELS/naif0011.tls");
+  str2et_c("BC 9998-06-06 00:00:00", &et);
+  spkgeo_c(10, et, "ECLIPDATE", 399, pos, &lt);
 
-  str2et_c("BC 9998-08-20 00:00:00", &et);
-  printf("ALPHA: %f\n",et);
-  spkgeo_c(10, et, "J2000", 399, pos, &lt);
-  printf("BETA: %f\n",et);
+  printf("ET: %f, POS: %f %f %f\n", et, pos[0], pos[1], pos[2]);
 
   return 0;
 }
