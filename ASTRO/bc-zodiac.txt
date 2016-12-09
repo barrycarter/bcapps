@@ -17,6 +17,23 @@ https://github.com/barrycarter/bcapps/blob/master/ASTRO/
 
 Important caveats below, but first, some notes:
 
+  - You'll notice that lines like:
+
+`-13199-APR-02 09:39 SUN ENTERS ARIES PROGRADE -478679466007.210083 S0`
+
+suggest the vernal equinox was on April 2nd about 15000 years ago (of
+course, no one actually used our calendar back then), which seems a
+bit off. Further, you'll notice:
+
+`17191-FEB-23 00:12 SUN ENTERS ARIES PROGRADE 480332938365.345520 S0`
+
+suggesting the vernal equinox will occur on February 23rd (about a
+month early) 15000 years from now (assuming they continue using our
+calendar).
+
+
+
+
   - In the 11,100,016 days (about 30,391 years) covered, there are
   6,359,881 horoscope changes, for an average horoscope change roughly
   every 1.75 days. Broken down by planet:
@@ -44,12 +61,29 @@ Important caveats below, but first, some notes:
 
     - Saturn (w/ retrograde) 25,697 times, ~432 days.
 
-  - Since there are 12 houses and 7 planets, there are 12^7 = 35,831,808
-  "possible" horoscopes, although even the theoretical number is lower
-  than this since Mercury and Venus must remain within a certain
-  distance of the Sun.
+  - As expected, most of these house changes (6,283,144) are in the
+  forward or "prograde" direction and very few (76,737) are in the
+  retrograde direction. Of course, the Sun and Moon always move
+  prograde, another reason the prograde number is so large.
 
-  - Of these possibilities there are 2,565,619 actual horoscopes. Of these,
+  - Since there are 12 houses and 7 planets, it would seem there are
+  12^7 = 35,831,808 possible horoscopes. However, there are actually
+  only 3,732,480:
+
+    - Since Mercury's greatest elongation is 28 degrees, it must
+    remain within one house of the Sun. Given the Sun's house, there
+    are only 3 possibilities for Mercury's house (either the Sun's
+    house or an adjacent house).
+
+    - Since Venus' greatest elongation is 47 degrees, it must remain
+    within two houses of the Sun, so there are only 5 possibilities
+    given the Sun's house.
+
+    - Combining these, we see there are 12*12*3*5*12*12*12 or
+    3,732,480 possible horoscopes.
+
+  - Of these possibilities there are 2,565,619 (about 69% of the total
+  possible) actual horoscopes. Of these,
 
     - 969,161 horoscopes occur only once
 
@@ -63,6 +97,60 @@ Note that this horoscope is probably only the most frequent because of
 how I chose the start and end dates (based on the DE431 ephemeris).
 
 Important caveats:
+
+  - My standard disclaimer: please do not rely on anything I do/post
+  anywhere. I can and do make mistakes. Feel free to check my work and
+  alert me to mistakes.
+
+  - If you actually want to check my results, you will need to
+  download kernels from NASA.
+
+  - Although I give times to the microsecond in some cases, the
+  results are nowhere near that accurate:
+
+    - I set the tolerance
+    (http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/gfstol_c.html)
+    to 1 second (the default of 1 microsecond doesn't work across
+    large time ranges), so, even theoretically, the results aren't
+    accurate to the microsecond.
+
+    - Realistically, even NASA doesn't predict planet positions that
+    accurately. They solve differential equations to predict planetary
+    positions and then publish an approximation of those
+    solutions. The further away we get from today, the less accurate
+    these predictions are.
+
+    - We have a pretty good approximation of how the Earth precesses,
+    but we can't even predict it accurately more than 2 weeks in the
+    future. Since precession affects the location of the first point
+    of Aries, this adds another uncertainty.
+
+    - Precession doesn't change the ecliptic itself, but nutation
+    does. Again, we don't have a super-accurate model of nutation.
+
+    - The calendar on
+    https://cafeastrology.com/astrologyof2017horoscopes.html disagrees
+    with my results, even allowing for timezone difference. For
+    example, I have:
+
+`2017-JUN-21 09:44 MERCURY ENTERS CANCER PROGRADE 1498038281.695388 13`
+
+whereas they have:
+
+`Jun 21	 4:57 AM	Mercury enters Cancer`
+
+Part of this difference is time zones: I give all times UTC and they
+use Eastern Time, including Daylight Saving Time. In June, the
+difference between the two is 4 hours, so my result translates to
+5:44am, still a discrepancy of about 47 minutes.
+
+In this case, however, I believe my result is more accurate, since I consider
+precession between 2000 and 2016.
+
+HORIZONS (which uses DE431mx, slight different from the ephemeris I'm
+using) gives the time of crossing as between 09:57 and 09:58, which is
+closer to my answer [the fact this exactly 1 hour different from their
+time is suspicious, I'm looking into it]
 
   - I used a "stepsize" of 86400 seconds (1 day), so if a planet
   changed house and then changed back in under a day, my program may
@@ -111,98 +199,13 @@ boundaries.
 NOTE: I wanted to use H.A. Rey's constellation lines, but Stellarium's
 constellation boundaries appear to break for Pisces when I do that.
 
+  - I am leaving my old answer below, because NASA is a trusted site
+  for astronomers, and WebGeoCalc and HORIZONS are important
+  resources. The step-by-step method I show below can help people here
+  make their own calculations or help others. I am in no way
+  affiliated with NASA or the government of the United States, except
+  as a citizen (and even that may change soon).
 
-
-
-
--55 = 56 BC
-
-TODO: arb lines
-
-
-
-TODO: not ha rey sorry
-
-
-
-shortest time between state changes? longest? [but disclaim shortest]
-
-
-
-
-notes for writeup:
-
-tolerance 1s and will miss twice in a day 
-
-disclaim geocentricity for moon
-
-add uranus/netpune/pluto/asteroids maybe
-
-you can and should check and answers, link to proggie of course
-
-disclaim accuracy and completenes and note 1 day rule and that you
-will need kernels
-
-disclaim results dont agree to the minute with https://cafeastrology.com/astrologyof2017horoscopes.html
-
-leaving old answer for do it yourselfers
-
-(answer ahole?)
-
-12/7/2016 at 13:28 started bc-zodiac
-14:20 results through venus
-20:48 results though moon
-21:24 results through jupiter
-
-disclaim time format timout_c()
-
-note precession of equinoxes and link to my other answer
-
-12^7 theoretical, most often and least often (in this period)
-
-average change per n days, plus per planet change (includes retrograd
-except sun/moon)
-
--479695089600.+86400*468, 479386728000
-
-or 959041382400 seconds = 11100016 days = 30390.8115840845 gregorian years
-
-doing agreement for 2000 w/ astrolog thing?
-
-create README for houses.txt.bz2 and for results of perl script
-
-proleptic greogrian
-
-check these inits for sanity
-
-VALID: SEPOCH: MOON CANCER 101.077389
-VALID: SEPOCH: VENUS GEMINI 82.996110
-VALID: SEPOCH: MERCURY TAURUS 38.875276
-VALID: SEPOCH: MARS GEMINI 79.567012
-VALID: SEPOCH: SUN TAURUS 36.720431
-VALID: SEPOCH: JUPITER TAURUS 45.223734
-VALID: SEPOCH: SATURN LIBRA -150.703198
-
-order is SM12456
-
-so first is (0 = ARIES):
-
-1312216 = init state
-
-DONE: sanity check changes (exactly 1 constell or 11 -> 0)
-
-
-
-
-confirms below:
-
--13200-MAY-09 14:12 MOON ENTERS LEO PROGRADE -478707788842.962097 M4
--13200-MAY-14 11:05 VENUS ENTERS CANCER PROGRADE -478707368069.509216 23
--13200-MAY-20 20:35 MERCURY ENTERS GEMINI PROGRADE -478706815481.864868 12
--13200-MAY-22 02:54 MARS ENTERS CANCER PROGRADE -478706706327.924194 43
--13200-MAY-30 19:36 SUN ENTERS GEMINI PROGRADE -478705955024.825012 S2
--13200-JUL-14 09:06 JUPITER ENTERS GEMINI PROGRADE -478702104781.697632 52
--13200-SEP-11 08:26 SATURN ENTERS SCORPIO PROGRADE -478697009599.619629 67
 
 HOW TO READ houses.txt.bz2
 ==========================
@@ -263,12 +266,70 @@ For the house (second character):
     - "8" means Sagittarius 
     - "9" means Capricorn
     - "A" means Aquarius ("A" is the hex form of the number 10)
-    - "B" means Pisces ("B" is the hex form of the n****)
+    - "B" means Pisces ("B" is the hex form of the number 11)
+
+Notice that my numbering scheme starts at 0, so Aries is constellation
+0, not constellation 1, and Pisces is constellation 11 ("B"), not
+constellation 12.
+
+HOW TO READ house-states.txt.bz2
+================================
+
+The first field is the prettified version of the date.
+
+The second field are the houses of the Sun, Moon, Mercury, Venus,
+Mars, Jupiter, and Saturn in that order, using house numbers as per
+the 2nd character of the 8th field of houses.txt.bz2. By way of
+example, "3724416" means:
+
+  - Since the first character is "3", that represents the Sun's
+  house. Per the table above, house 3 is Cancer.
+
+  - The second character, "7", is the Moon's house, which, per the
+  lookup table, is Scorpio.
+
+  - The third character "2" shows Mercury is in Gemini.
+
+  - The fourth character "4" shows Venus is in Leo.
+
+  - ... and so on.
+
+The third field is equivalent to the 7th field of houses.txt.bz2
+
+OTHER NOTES
+===========
+
+TODO: add uranus/netpune/pluto/asteroids maybe
+
+TIMING NOTES (all times from start of program):
+
+52m to reach through Venus
+7h20m to reach through Moon
+7h56m to reach though Jupiter
 
 
-  
+12/7/2016 at 13:28 started bc-zodiac
+14:20 results through venus
+20:48 results though moon
+21:24 results through jupiter
 
-%%%%% retro vs pro count?
+note precession of equinoxes and link to my other answer
+
+12^7 theoretical, most often and least often (in this period)
+
+average change per n days, plus per planet change (includes retrograd
+except sun/moon)
+
+-479695089600.+86400*468, 479386728000
+
+or 959041382400 seconds = 11100016 days = 30390.8115840845 gregorian years
+
+doing agreement for 2000 w/ astrolog thing?
+
+create README for houses.txt.bz2 and for results of perl script
+
+proleptic greogrian
+
+RUNNING CHECKS:
 
 
-%%%% perl note
