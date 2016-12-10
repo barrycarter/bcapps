@@ -48,9 +48,21 @@ double earthmaxangle(double time, int arrsize, SpiceInt *planets) {
 
 int main (int argc, char **argv) {
 
+  SpiceDouble et;
+
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
   char test2[2000];
+
+  str2et_c("10400-FEB-28 00:00:00", &et);
+  printf("ET: %f\n", et);
+  str2et_c("10400-MAR-01 00:00:00", &et);
+  printf("ET: %f\n", et);
+
+
+  exit(0);
+
+
 
   timout_c(0, "ERAYYYY##-MON-DD HR:MN:SC.############# ::MCAL", 41, test2);
 

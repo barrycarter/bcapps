@@ -309,11 +309,15 @@ TIMING NOTES (all times from start of program):
 7h20m to reach through Moon
 7h56m to reach though Jupiter
 
-
 12/7/2016 at 13:28 started bc-zodiac
 14:20 results through venus
 20:48 results though moon
 21:24 results through jupiter
+
+timing on babybrighton:
+
+0738 MST when started (not EST)
+10:31 EST is when venus ended
 
 note precession of equinoxes and link to my other answer
 
@@ -337,3 +341,6 @@ RUNNING CHECKS:
 
 365.242190402
 
+disclaim barycentricity
+
+http://ssd.jpl.nasa.gov/eph_spans.cgi?id=A explains limits if not using barycenters
