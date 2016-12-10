@@ -33,8 +33,6 @@ const char *houses[] = {"ARIES", "TAURUS", "GEMINI", "CANCER", "LEO", "VIRGO",
 const char *planets[] = {"SSB", "MERCURY", "VENUS", "EARTH", "MARS", "JUPITER",
 			 "SATURN", "URANUS", "NEPTUNE", "PLUTO", "SUN"};
 
-
-
 // convert house to string, optionally in terse format
 char *house2str(int house, char *type) {
 
@@ -182,8 +180,15 @@ int main (int argc, char **argv) {
 
   //  exit(-1);
 
-  // any integers below 727 and 12 below fail
-  wninsd_c(stime+727,etime-12, &cnfine);
+  // any integers below 4042 and 12 below fail for at least one planet
+  wninsd_c(stime+4042,etime-12, &cnfine);
+
+  // more testing (4042 is smallest integer below that doesnt break Saturn)
+  //  wninsd_c(stime+4042, stime+5000, &cnfine);
+  // 12 is correct below
+  // wninsd_c(etime-4042, etime-12, &cnfine);
+
+
 
   // two centuries, roughlty
   //  wninsd_c(year2et(1900),year2et(2100),&cnfine);
