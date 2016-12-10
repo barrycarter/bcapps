@@ -151,14 +151,23 @@ int main (int argc, char **argv) {
 
   SPICEDOUBLE_CELL (result, 2*MAXWIN);
   SPICEDOUBLE_CELL (cnfine, 2);
+  SPICEDOUBLE_CELL (range, 2);
   // various formats
   SpiceChar begstr[TIMLEN], classic[100], terse[100];
-  SpiceDouble beg,end;
+  SpiceDouble beg,end,stime,etime;
   SpiceInt count,i,j,house;
   SpiceDouble *array;
 
   // kernels we need incl ECLIPDATE
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
+
+  // find coverage (junk uses of beg and end below)
+  // we use the start of part 1 and the end of part 2
+  spkcov_c("/home/barrycarter/SPICE/KERNELS/de431_part-1.bsp", 399, &range);
+  wnfetd_c (&range, 0, &stime, &end);
+  spkcov_c("/home/barrycarter/SPICE/KERNELS/de431_part-2.bsp", 399, &range);
+  wnfetd_c (&range, 0, &beg, &etime);
+  printf("RANGE: %f %f\n",stime,etime);
 
   // 1 second tolerance (serious overkill, but 1e-6 is default, worse!)
   gfstol_c(1.);
@@ -173,13 +182,11 @@ int main (int argc, char **argv) {
 
   //  exit(-1);
 
+  // any integers below 727 and 12 below fail
+  wninsd_c(stime+727,etime-12, &cnfine);
 
-
-  // close to the entire range for DE431
-  //  wninsd_c(-479695089600.+86400*468, 479386728000., &cnfine);
-
-  // the year 2017, roughly
-  wninsd_c(year2et(2016),year2et(2019),&cnfine);
+  // two centuries, roughlty
+  //  wninsd_c(year2et(1900),year2et(2100),&cnfine);
 
   // testing really old and new for formatting/etc
   //  wninsd_c(-479695089600.+86400*468, -479695089600.+86400*5000, &cnfine);

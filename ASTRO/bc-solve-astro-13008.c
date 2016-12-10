@@ -16,13 +16,13 @@ int main (int argc, char **argv) {
   str2et_c("17091 MAY 07 00:00:41.184", &et_end);
 
   // because I'm using large time intervals...
-  gfstol_c(10.);
+  gfstol_c(1.);
 
   // sun's x or y position (v[1] = y pos = 0 on equinox)
   void solarzed (SpiceDouble et, SpiceDouble *value) {
     SpiceDouble v[3], lt;
 
-    spkezp_c(10,et,"EQEQDATE","CN+S",399,v,&lt);
+    spkezp_c(10,et,"ECLIPDATE","CN+S",399,v,&lt);
     *value = v[0];
   }
 
@@ -41,7 +41,7 @@ int main (int argc, char **argv) {
 
   for (int i=0; i<count; i++) {
     wnfetd_c (&result, i, &beg, &end);
-    timout_c(beg, "ERA YYYY##-MM-DD HR:MN:SC ::MCAL",255,ftime);
+    timout_c(beg, "ERA YYYY##-MM-DD HR:MN:SC ::MCAL ::RND",255,ftime);
     printf("EQU %f %s\n", beg, ftime);
   }
 }

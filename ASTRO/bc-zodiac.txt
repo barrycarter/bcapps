@@ -1,3 +1,5 @@
+TODO: rewrite for modified version
+
 I wrote
 https://github.com/barrycarter/bcapps/blob/6d6801b590a9d3ab3dc4bc1906e37ab522df07f1/ASTRO/bc-zodiac.c
 to solve this. I've tweaked bc-zodiac.c slightly since then, so you'll
@@ -332,4 +334,6 @@ proleptic greogrian
 
 RUNNING CHECKS:
 
+
+365.242190402
 
