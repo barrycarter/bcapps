@@ -15,7 +15,7 @@
 #include "SpiceZfc.h"
 #define MAXWIN 5000000
 #define TIMLEN 41
-#define TIMFMT "ERAYYYY##-MON-DD HR:MN ::MCAL"
+#define TIMFMT "ERAYYYY##-MON-DD HR:MN ::MCAL ::RND"
 
 // global variables
 
@@ -95,14 +95,14 @@ int signum(double x) {
 SpiceDouble *geom_info(SpiceInt targ, SpiceDouble et, ConstSpiceChar *ref, 
 		       SpiceInt obs) {
 
-  static SpiceDouble results[18];
+  static SpiceDouble results[19];
   SpiceDouble lt, jacobi[3][3];
   SpiceInt i;
 
   // TODO: details spherical coords order a bit better
 
-  // the "output" from spkgeo_c() into the first 6 entries
-  spkgeo_c(targ, et, ref, obs, results, &lt);
+  // the "output" from spkgeo_c() into the first 6 entries 0-5
+  spkez_c(targ, et, ref, "CN+S", obs, results, &lt);
 
   // signum of the x y z dervs are entries 6-8
   for (i=6; i<=8; i++) {results[i] = signum(results[i-3]);}
@@ -114,8 +114,11 @@ SpiceDouble *geom_info(SpiceInt targ, SpiceDouble et, ConstSpiceChar *ref,
   dsphdr_c(results[0], results[1], results[2], jacobi);
   mxv_c(jacobi, &results[3], &results[12]);
 
-  // and the sign of that change
+  // and the sign of that change (15-17)
   for (i=15; i<=17; i++) {results[i] = signum(results[i-3]);}
+
+  // light time correction (18)
+  results[18] = lt;
 
   return results;
 }
@@ -135,7 +138,7 @@ SpiceDouble distance_to_cusp (SpiceDouble n, SpiceInt targ, SpiceDouble et,
   return sin(pi_c()/n*results[11]);
 }
 
-void gfq ( SpiceDouble et, SpiceDouble * value ) {
+void gfq ( SpiceDouble et, SpiceDouble *value ) {
   *value = distance_to_cusp(pi_c()/6, gplanet, et, "ECLIPDATE", 399);
 }
 
@@ -156,14 +159,27 @@ int main (int argc, char **argv) {
 
   // kernels we need incl ECLIPDATE
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
-  // TODO: this is just plain silly
-  furnsh_c("/home/barrycarter/BCGIT/ASTRO/000157.html");
 
   // 1 second tolerance (serious overkill, but 1e-6 is default, worse!)
   gfstol_c(1.);
   
+  // one off testing
+  //  SpiceDouble testing[6];
+  //  SpiceDouble lt, et;
+  //  str2et_c("AD 2017-03-20 10:29", &et);
+  //  spkez_c(10, et, "ECLIPDATE", "CN+S",
+  //	   399, testing, &lt);
+  //  printf("POS: %f %f %f %f\n", testing[0], testing[1], testing[2], lt);
+
+  //  exit(-1);
+
+
+
   // close to the entire range for DE431
-  wninsd_c(-479695089600.+86400*468, 479386728000., &cnfine);
+  //  wninsd_c(-479695089600.+86400*468, 479386728000., &cnfine);
+
+  // the year 2017, roughly
+  wninsd_c(year2et(2016),year2et(2019),&cnfine);
 
   // testing really old and new for formatting/etc
   //  wninsd_c(-479695089600.+86400*468, -479695089600.+86400*5000, &cnfine);
@@ -220,7 +236,7 @@ int main (int argc, char **argv) {
 	      planet2str(gplanet, "TERSE"), house2str(house, "TERSE"),
 	      array[17]<0?"-":"+");
 
-      printf("%s %s\n", classic, terse);
+      printf("%s %s %f\n", classic, terse, array[11]*dpr_c());
     }
   }
   return(0);

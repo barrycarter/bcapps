@@ -19,6 +19,7 @@ KERNELS_TO_LOAD = (
 '/home/barrycarter/SPICE/KERNELS/earth_720101_070426.bpc',
 '/home/barrycarter/SPICE/KERNELS/earth_070425_370426_predict.bpc',
 '/home/barrycarter/SPICE/KERNELS/earth_latest_high_prec.bpc',
+'/home/barrycarter/SPICE/KERNELS/RSSD0002.TF',
 '/home/barrycarter/BCGIT/ASTRO/eqeqdate.tf',
 '/home/barrycarter/BCGIT/ASTRO/iss.bsp'
 )

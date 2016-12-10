@@ -48,6 +48,16 @@ double earthmaxangle(double time, int arrsize, SpiceInt *planets) {
 
 int main (int argc, char **argv) {
 
+  furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
+
+  char test2[2000];
+
+  timout_c(0, "ERAYYYY##-MON-DD HR:MN:SC.############# ::MCAL", 41, test2);
+
+  printf("%s\n", test2);
+
+  exit(0);
+
   long long test = -pow(2,63);
 
   printf("TEST: %lld\n",test);
@@ -58,8 +68,6 @@ int main (int argc, char **argv) {
   SpiceDouble pos[3];
   SpiceDouble lt;
   SpiceInt planets[6], i;
-
-  furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
   if (!strcmp(argv[1],"posxyz")) {
     double time = atof(argv[2]);

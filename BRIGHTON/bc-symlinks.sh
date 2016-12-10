@@ -13,7 +13,7 @@
 ln -s /home/user /home/barrycarter
 
 # lets me reference my old FC11 installation copy as /old
-ln -s /mnt/kemptown/fc11root /old
+ln -s /mnt/kemptown/dullon-root /old
 
 # if you're using an older .fvwm2rc, this may help -- if not, it
 # doesn't hurt (also for some of my programs that use direct paths)

@@ -1,10 +1,11 @@
 # list of packages to test on various systems broken into categories
 
-# meta-system tooks
+# meta-system tools
 efibootmgr
 
 # system tools
 
+whois
 net-tools
 words
 ntop
