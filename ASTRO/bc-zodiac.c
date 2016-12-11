@@ -85,7 +85,47 @@ int signum(double x) {
 }
 
 // TODO: add below to lib
-// wrapper around spkgeo_c that returns the XYZ and spherical
+
+void eqeq2eclip(doublereal et, SpiceDouble matrix[3][3]) {
+
+  doublereal nut[4], obq, dobq, sobq, cobq;
+
+  // these functions are nonstandard, don't end with "c" and take et
+  // as a pointer
+
+  // the obliquity of the ecliptic, excluding nutation
+  zzmobliq_(&et, &obq, &dobq);
+
+  // the nut array gives nutation in obliquity (which I need), and
+  // nutation in longitude (which I dont need since Im already using
+  // EQEQDATE), and the derivatives of these angles (which I also
+  // dont need)
+  zzwahr_(&et, nut);
+
+  // sin and cos of angle of transformation
+  sobq = sin(obq+nut[0]);
+  cobq = cos(obq+nut[0]);
+
+  // there MUST be a better way to do this
+  matrix[0][0] = 1;
+  matrix[0][1] = 0;
+  matrix[0][2] = 0;
+  matrix[1][0] = 0;
+  matrix[1][1] = cobq;
+  matrix[1][2] = sobq;
+  matrix[2][0] = 0;
+  matrix[2][1] = -sobq;
+  matrix[2][2] = cobq;
+
+  // note that matrix is its own Jacobian
+
+  // TODO: modify geom_info to handle this and test
+
+}
+
+
+// TODO: add below to lib
+// wrapper around spkez_c that returns the XYZ and spherical
 // coordinates, their derivatives, and whether these derivates are
 // positive or negative
 
@@ -95,13 +135,28 @@ SpiceDouble *geom_info(SpiceInt targ, SpiceDouble et, ConstSpiceChar *ref,
 		       SpiceInt obs) {
 
   static SpiceDouble results[19];
-  SpiceDouble lt, jacobi[3][3];
+  // extra is just for ECLIPDATETRUE subroutine
+  SpiceDouble lt, jacobi[3][3], extra[6];
   SpiceInt i;
 
   // TODO: details spherical coords order a bit better
 
-  // the "output" from spkgeo_c() into the first 6 entries 0-5
-  spkez_c(targ, et, ref, "CN+S", obs, results, &lt);
+  // special case for ECLIPDATETRUE (not a real frame)
+  if (strcmp(ref,"ECLIPDATETRUE")) {
+
+    // TODO: remember to else the other condition!
+
+    // find for EQEQDATE but put in extra, not results
+    spkez_c(targ, et, "EQEQDATE", "CN+S", obs, extra, &lt);
+    // obtain transform (which is also jacobian)
+    eqeq2eclip(et, jacobi);
+    // apply to position results
+    mxv_c(jacobi, extra, results);
+    // and to derivs
+    mxv_c(jacobi, extra+3, results+3);
+  } else {
+    spkez_c(targ, et, ref, "CN+S", obs, results, &lt);
+  }
 
   // signum of the x y z dervs are entries 6-8
   for (i=6; i<=8; i++) {results[i] = signum(results[i-3]);}

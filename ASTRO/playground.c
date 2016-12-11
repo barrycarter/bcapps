@@ -10,7 +10,7 @@
 #include "bclib.h"
 
 // Return the true (not mean) matrix of transformation from EQEQDATE
-// to ECLIPDATE at time et
+// to ECLIPDATE at time et along with its Jacobian
 
 void eqeq2eclip(doublereal et, SpiceDouble matrix[3][3]) {
 
@@ -34,7 +34,7 @@ void eqeq2eclip(doublereal et, SpiceDouble matrix[3][3]) {
   sobq = sin(obq+nut[0]);
   cobq = cos(obq+nut[0]);
 
-  // this is just plain ugly
+  // there MUST be a better way to do this
   matrix[0][0] = 1;
   matrix[0][1] = 0;
   matrix[0][2] = 0;
@@ -42,15 +42,18 @@ void eqeq2eclip(doublereal et, SpiceDouble matrix[3][3]) {
   matrix[1][1] = cobq;
   matrix[1][2] = sobq;
   matrix[2][0] = 0;
-  matrix[2][1] = -cobq;
-  matrix[2][2] = sobq;
+  matrix[2][1] = -sobq;
+  matrix[2][2] = cobq;
 
+  // note that matrix is its own Jacobian
+
+  // TODO: modify geom_info to handle this and test
 
 }
 
 int main (int argc, char **argv) {
 
-  SpiceDouble et, mat[3][3], mat2[3][3], nut, obq, dboq;
+  SpiceDouble et, mat[3][3], mat2[3][3], jac[3][3], nut, obq, dboq;
   SpiceDouble pos[3], newpos[3];
   SpiceDouble lt;
   SpiceInt planets[6], i;
@@ -67,7 +70,7 @@ int main (int argc, char **argv) {
   printf("ET: %f\n", et);
   printf("POS: %f %f %f %f %f\n", et, pos[0], pos[1], pos[2], lt);
 
-  eqeq2eclip(et, mat);
+  eqeq2eclip(et, mat, jac);
 
   mxv_c(mat, pos, newpos);
 
