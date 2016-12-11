@@ -12,19 +12,26 @@
 // Return the true (not mean) matrix of transformation from EQEQDATE
 // to ECLIPDATE at time et
 
-void eqeq2eclip(SpiceDouble et, SpiceDouble matrix[3][3]) {
+void eqeq2eclip(doublereal et, SpiceDouble matrix[3][3]) {
 
-  SpiceDouble nut, obq, dobq, sobq, cobq;
+  doublereal nut[4], obq, dobq, sobq, cobq;
 
   // these functions are nonstandard, don't end with "c" and take et
   // as a pointer
 
-  zzwahr_(&et, &nut);
+  // the obliquity of the ecliptic, excluding nutation
   zzmobliq_(&et, &obq, &dobq);
 
+  // the nut array gives nutation in obliquity (which I need), and
+  // nutation in longitude (which I dont need since Im already using
+  // EQEQDATE), and the derivatives of these angles (which I also
+  // dont need)
+
+  zzwahr_(&et, nut);
+
   // sin and cos of angle of transformation
-  sobq = sin(obq+nut);
-  cobq = cos(obq+nut);
+  sobq = sin(obq+nut[0]);
+  cobq = cos(obq+nut[0]);
 
   // this is just plain ugly
   matrix[0][0] = 1;
@@ -36,15 +43,6 @@ void eqeq2eclip(SpiceDouble et, SpiceDouble matrix[3][3]) {
   matrix[2][0] = 0;
   matrix[2][1] = -cobq;
   matrix[2][2] = sobq;
-
-  for (int i=0; i<=2; i++) {
-    for (int j=0; j<=2; j++) {
-      printf("FOO: %d %d %f\n",i,j,matrix[i][j]);
-    }
-  }
-
-  printf("ENDS THIS ROUTINE %p\n", matrix);
-
 }
 
 int main (int argc, char **argv) {
@@ -59,7 +57,7 @@ int main (int argc, char **argv) {
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/ECLIPDATE1.TF");
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/eqeqdate.tf");
 
-  et = year2et(2000);
+  et = year2et(2100);
 
   zzwahr_(&et, &nut);
   zzmobliq_(&et, &obq, &dboq);
