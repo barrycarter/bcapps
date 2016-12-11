@@ -54,11 +54,8 @@ How to read this document:
 
 % Boot babybrighton in detachable mode and enter disk password
 
-% You no longer need the X window that VirtualBox brings up, but I
-couldn't find a way to kill it without bringing the system
-down. Minimizing it is a half solution.
-
-%% TODO: how to kill window in detachable mode?
+% You no longer need the X window that VirtualBox brings up, so go to
+Machine/Detach GUI to get rid of it.
 
 % From dullon, "ssh root@babybrighton"
 

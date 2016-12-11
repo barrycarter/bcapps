@@ -26,7 +26,10 @@ babybrighton as a virtual machine:
     - Under Storage:
 
       - OPTIONAL: add a vmdk to the SATA controller that is the
-      "sdb.vmdk" you created above earlier
+      "sdb.vmdk" you created above earlier. TIP: do not attach this
+      drive during the initial install or when snapshotting. Only
+      install it before turning the machine on
+      (http://unix.stackexchange.com/questions/329306/virtualbox-do-not-preserve-attached-device-changes-when-snapshotting-how/329514#329514)
 
       - for the CD, choose CentOS-7-x86_64-Minimal-1511.iso as the
       image to install

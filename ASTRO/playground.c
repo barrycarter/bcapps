@@ -26,8 +26,9 @@ void eqeq2eclip(doublereal et, SpiceDouble matrix[3][3]) {
   // nutation in longitude (which I dont need since Im already using
   // EQEQDATE), and the derivatives of these angles (which I also
   // dont need)
-
   zzwahr_(&et, nut);
+
+  printf("NUT: %f %f\n", nut[0], nut[1]);
 
   // sin and cos of angle of transformation
   sobq = sin(obq+nut[0]);
@@ -43,12 +44,14 @@ void eqeq2eclip(doublereal et, SpiceDouble matrix[3][3]) {
   matrix[2][0] = 0;
   matrix[2][1] = -cobq;
   matrix[2][2] = sobq;
+
+
 }
 
 int main (int argc, char **argv) {
 
   SpiceDouble et, mat[3][3], mat2[3][3], nut, obq, dboq;
-  SpiceDouble pos[3];
+  SpiceDouble pos[3], newpos[3];
   SpiceDouble lt;
   SpiceInt planets[6], i;
 
@@ -57,7 +60,20 @@ int main (int argc, char **argv) {
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/ECLIPDATE1.TF");
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/eqeqdate.tf");
 
-  et = year2et(2100);
+
+  str2et_c("2017-10-17 07:59", &et);
+  printf("ET: %f\n", et);
+  spkezp_c(1, et, "EQEQDATE", "CN+S", 399, pos, &lt);
+  printf("ET: %f\n", et);
+  printf("POS: %f %f %f %f %f\n", et, pos[0], pos[1], pos[2], lt);
+
+  eqeq2eclip(et, mat);
+
+  mxv_c(mat, pos, newpos);
+
+  printf("NEWPOS: %f %f %f\n", newpos[0], newpos[1], newpos[2]);
+
+  exit(0);
 
   zzwahr_(&et, &nut);
   zzmobliq_(&et, &obq, &dboq);

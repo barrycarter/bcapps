@@ -65,6 +65,7 @@ rm -rf /home/user
 : readd user with new directory
 useradd -d /mnt/kemptown/user -g wheel -u 1000 user
 passwd user
+chsh -s /bin/tcsh user
 : this is useful so I can refer to /home/user
 ln -s /mnt/kemptown/user /home
 
@@ -86,4 +87,5 @@ rm -rf /var/cache
 mkdir -p /mnt/kemptown/var/cache
 ln -s /mnt/kemptown/var/cache /var/
 
-: if desired "shutdown -h now" and create a "postrootmove" snapshot
+: if desired "shutdown -h now", detach /dev/sdb, and create a
+"postrootmove" snapshot
