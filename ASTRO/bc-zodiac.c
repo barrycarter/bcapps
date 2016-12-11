@@ -16,6 +16,7 @@
 #define MAXWIN 5000000
 #define TIMLEN 41
 #define TIMFMT "ERAYYYY##-MON-DD HR:MN ::MCAL ::RND"
+#define FRAME "ECLIPDATE"
 
 // global variables
 
@@ -137,7 +138,7 @@ SpiceDouble distance_to_cusp (SpiceDouble n, SpiceInt targ, SpiceDouble et,
 }
 
 void gfq ( SpiceDouble et, SpiceDouble *value ) {
-  *value = distance_to_cusp(pi_c()/6, gplanet, et, "ECLIPDATE", 399);
+  *value = distance_to_cusp(pi_c()/6, gplanet, et, FRAME, 399);
 }
 
 void gfdecrx (void(* udfuns)(SpiceDouble et,SpiceDouble * value),
@@ -158,37 +159,42 @@ int main (int argc, char **argv) {
 
   // kernels we need incl ECLIPDATE
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
+  furnsh_c("/home/barrycarter/BCGIT/ASTRO/ECLIPDATE2.TF");
 
   // find coverage (junk uses of beg and end below)
   // we use the start of part 1 and the end of part 2
   spkcov_c("/home/barrycarter/SPICE/KERNELS/de431_part-1.bsp", 399, &range);
   wnfetd_c (&range, 0, &stime, &end);
   spkcov_c("/home/barrycarter/SPICE/KERNELS/de431_part-2.bsp", 399, &range);
-  wnfetd_c (&range, 0, &beg, &etime);
-  printf("RANGE: %f %f\n",stime,etime);
-
+  wnfetd_c(&range, 0, &beg, &etime);
+  
   // 1 second tolerance (serious overkill, but 1e-6 is default, worse!)
   gfstol_c(1.);
   
-  // one off testing
-  //  SpiceDouble testing[6];
-  //  SpiceDouble lt, et;
-  //  str2et_c("AD 2017-03-20 10:29", &et);
-  //  spkez_c(10, et, "ECLIPDATE", "CN+S",
-  //	   399, testing, &lt);
-  //  printf("POS: %f %f %f %f\n", testing[0], testing[1], testing[2], lt);
+  /* TEST STARTS HERE
 
-  //  exit(-1);
+
+  SpiceDouble testing[6];
+  SpiceDouble lt, et;
+  str2et_c("AD 2017-OCT-17 15:42", &et);
+  spkez_c(1, et, FRAME, "CN+S",
+	  399, testing, &lt);
+  printf("POS: %f %f %f %f\n", testing[0], testing[1], testing[2], lt);
+
+  exit(-1);
+
+  TEST ENDS HERE */
 
   // any integers below 4042 and 12 below fail for at least one planet
-  wninsd_c(stime+4042,etime-12, &cnfine);
+  //  wninsd_c(stime+4042,etime-12, &cnfine);
 
   // more testing (4042 is smallest integer below that doesnt break Saturn)
   //  wninsd_c(stime+4042, stime+5000, &cnfine);
   // 12 is correct below
   // wninsd_c(etime-4042, etime-12, &cnfine);
 
-
+  // 2016-2017 for testing
+  wninsd_c(year2et(2016), year2et(2018), &cnfine);
 
   // two centuries, roughlty
   //  wninsd_c(year2et(1900),year2et(2100),&cnfine);
@@ -230,7 +236,7 @@ int main (int argc, char **argv) {
       wnfetd_c (&result, i, &beg, &end);
 
       // find ecliptic longitude (and if its increasing/decreasing)
-      array = geom_info(gplanet, beg, "ECLIPDATE", 399);
+      array = geom_info(gplanet, beg, FRAME, 399);
 
       // pretty print the time
       timout_c (beg, TIMFMT, TIMLEN, begstr);

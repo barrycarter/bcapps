@@ -4,6 +4,10 @@ http://naif.jpl.nasa.gov/pub/naif/VEX/kernels/fk/RSSD0002.TF
 
 http://naif.jpl.nasa.gov/pub/naif/LADEE/kernels/fk/ladee_frames_2014159_v01.tf
 
+REMOVING '/home/barrycarter/BCGIT/ASTRO/eqeqdate.tf' since it may conflict with RSSD0002.TF
+
+TO RESTORE: '/home/barrycarter/SPICE/KERNELS/earth_latest_high_prec.bpc',
+
 \begindata
 
 KERNELS_TO_LOAD = (
@@ -15,11 +19,11 @@ KERNELS_TO_LOAD = (
 '/home/barrycarter/SPICE/KERNELS/ura111.bsp',
 '/home/barrycarter/SPICE/KERNELS/nep081.bsp',
 '/home/barrycarter/SPICE/KERNELS/pck00010.tpc',
-'/home/barrycarter/SPICE/KERNELS/naif0011.tls',
-'/home/barrycarter/SPICE/KERNELS/earth_720101_070426.bpc',
-'/home/barrycarter/SPICE/KERNELS/earth_070425_370426_predict.bpc',
-'/home/barrycarter/SPICE/KERNELS/earth_latest_high_prec.bpc',
-'/home/barrycarter/SPICE/KERNELS/RSSD0002.TF',
-'/home/barrycarter/BCGIT/ASTRO/eqeqdate.tf',
+'/home/barrycarter/SPICE/KERNELS/naif0012.tls',
+'/home/user/SPICE/KERNELS/earth_fixed.tf',
+'/home/user/SPICE/KERNELS/earth_720101_070426.bpc',
+'/home/user/SPICE/KERNELS/earth_070425_370426_predict.bpc',
+'/home/user/SPICE/KERNELS/earth_000101_160314_151222.bpc',
+'/home/user/SPICE/KERNELS/earth_latest_high_prec.bpc',
 '/home/barrycarter/BCGIT/ASTRO/iss.bsp'
 )
