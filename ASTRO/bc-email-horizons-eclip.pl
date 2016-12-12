@@ -10,6 +10,8 @@ require "/usr/local/lib/bclib.pl";
 system("mkdir -p /var/tmp/horizons");
 chdir("/var/tmp/horizons");
 
+open(A,"> /var/tmp/horizons/runme.sh");
+
 $template = << "MARK";
 From: Barry Carter <horizons\@barrycarter.info>
 To: HORIZONS <horizons\@ssd.jpl.nasa.gov>
@@ -24,7 +26,7 @@ START_TIME= '%STARTTIME%'
 STOP_TIME= '%ENDTIME%'
 STEP_SIZE= '1 m'
 CAL_FORMAT= 'CAL'
-TIME_DIGITS= 'FRACSEC'
+TIME_DIGITS= 'MINUTES'
 ANG_FORMAT= 'HMS'
 OUT_UNITS= 'KM-S'
 RANGE_UNITS= 'AU'
@@ -35,8 +37,8 @@ SKIP_DAYLT= 'NO'
 EXTRA_PREC= 'NO'
 R_T_S_ONLY= 'NO'
 REF_SYSTEM= 'J2000'
-CSV_FORMAT= 'NO'
-OBJ_DATA= 'YES'
+CSV_FORMAT= 'YES'
+OBJ_DATA= 'NO'
 QUANTITIES= '2,31'
 !\$\$EOF
 MARK
@@ -52,33 +54,29 @@ while (<>) {
   # this MAY not work :59 or :00 times, but don't care
   $ptime=~s/:\d\d:\d\d//;
 
+  # set the start and end time to be the hour in question
   $email=~s/%STARTTIME%/$date $ptime:00/;
   $email=~s/%ENDTIME%/$date $ptime:59/;
 
-  debug("EMAIL: $email");
-#  debug("SHORT: $short, $date, $ptime");
-}
+  # the object is the first letter of $short
+  $short= substr($short,0,1);
 
-die "TESTING";
-
-open(A,"> /var/tmp/horizons/runme.sh");
-
-# 60+ years, all planets + Earth moon + Pluto + Titan
-@planets = (10, 199, 299, 399, 499, 599, 699, 799, 899, 301, 606);
-
-for $i (1970..2040) {
-  for $j (@planets) {
-    # convert template
-    $email = $template;
-    $i1 = $i + 1;
-    $email=~s/%STARTYEAR%/$i/isg;
-    $email=~s/%ENDYEAR%/$i1/isg;
-    $email=~s/%OBJECT%/${j}/isg;
-    write_file($email, "mail.$i.$j");
-
-  # and command to actually send it
-  print A "/usr/lib/sendmail -v -fhorizons\@barrycarter.info -t < /var/tmp/horizons/mail.$i.$j\n";
+  # if its a digit, this is just {digit}99
+  my($object);
+  if ($short=~/\d/) {
+    $object = "${short}99";
+  } elsif ($short eq "M") {
+    $object = 301;
+  } elsif ($short eq "S") {
+    $object = 10;
+  } else {
+    die "CANNOT INTERPRET: $short";
   }
-}
 
-close(A);
+  $email=~s/%OBJECT%/$object/;
+
+  my($fname) = "$object-$date-$ptime.csv";
+  write_file($email, $fname);
+
+  print A "/usr/lib/sendmail -v -fhorizons\@barrycarter.info -t < /var/tmp/horizons/$fname\n";
+}
