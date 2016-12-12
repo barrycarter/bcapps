@@ -15,7 +15,7 @@
 #include "SpiceZfc.h"
 #define MAXWIN 5000000
 #define TIMLEN 41
-#define TIMFMT "ERAYYYY##-MON-DD HR:MN ::MCAL ::RND"
+#define TIMFMT "ERAYYYY##-MON-DD HR:MN:SC ::MCAL ::RND"
 #define FRAME "ECLIPDATE"
 
 // global variables
@@ -112,10 +112,11 @@ int main (int argc, char **argv) {
   SpiceInt count,i,j,house;
   SpiceDouble *array;
 
-  // kernels we need incl ECLIPDATE
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
-  furnsh_c("/home/barrycarter/BCGIT/ASTRO/ECLIPDATE2.TF");
 
+  // 1 second tolerance (serious overkill, but 1e-6 is default, worse!)
+  gfstol_c(1.);
+  
   // find coverage (junk uses of beg and end below)
   // we use the start of part 1 and the end of part 2
   spkcov_c("/home/barrycarter/SPICE/KERNELS/de431_part-1.bsp", 399, &range);
@@ -123,64 +124,16 @@ int main (int argc, char **argv) {
   spkcov_c("/home/barrycarter/SPICE/KERNELS/de431_part-2.bsp", 399, &range);
   wnfetd_c(&range, 0, &beg, &etime);
   
-  // 1 second tolerance (serious overkill, but 1e-6 is default, worse!)
-  gfstol_c(1.);
-  
-  /* TEST STARTS HERE
-
-
-  SpiceDouble testing[6];
-  SpiceDouble lt, et;
-  str2et_c("AD 2017-OCT-17 15:42", &et);
-  spkez_c(1, et, FRAME, "CN+S",
-	  399, testing, &lt);
-  printf("POS: %f %f %f %f\n", testing[0], testing[1], testing[2], lt);
-
-  exit(-1);
-
-  TEST ENDS HERE */
-
   // any integers below 4042 and 12 below fail for at least one planet
   //  wninsd_c(stime+4042,etime-12, &cnfine);
 
-  // more testing (4042 is smallest integer below that doesnt break Saturn)
-  //  wninsd_c(stime+4042, stime+5000, &cnfine);
-  // 12 is correct below
-  // wninsd_c(etime-4042, etime-12, &cnfine);
-
-  // 2016-2017 for testing
-  wninsd_c(year2et(2000), year2et(2026), &cnfine);
-
-  // two centuries, roughlty
-  //  wninsd_c(year2et(1900),year2et(2100),&cnfine);
-
-  // testing really old and new for formatting/etc
-  //  wninsd_c(-479695089600.+86400*468, -479695089600.+86400*5000, &cnfine);
-  // wninsd_c(479386728000-86400*468, 479386728000, &cnfine);
+  // for testing
+  wninsd_c(year2et(2016), year2et(2018), &cnfine);
 
   // TODO: figure out how to compute sizeof(iplanets) properly, this is hack
   for (j=0; j<sizeof(iplanets)/4; j++) {
 
     gplanet = iplanets[j];
-
-    /* The commented code below was a one-off to compute the initial
-       positions of planets
-
-    array = geom_info(gplanet, -479695089600.+86400*468, "ECLIPDATE", 399);
-    house = floor(array[11]*dpr_c()/30);
-    house = (house+12)%12;
-    // figure out ecliptic coordinates at earliest time
-    printf("SEPOCH: %s %s %f\n",planet2str(iplanets[j], ""),house2str(house, ""), array[11]*dpr_c());
-
-    // found error, testing
-    //    array = geom_info(gplanet, unix2et(-478707368069.509216), "ECLIPDATE", 399);
-    //    printf("FIXED: %s %s %f\n",planet2str(iplanets[j], ""),house2str(house, ""), array[11]*dpr_c());
-
-
-    // TODO: this continue appears because I did this later
-    continue;
-
-    */
 
     gfuds_c (gfq, gfdecrx, "=", 0., 0., 86400., MAXWIN, &cnfine, &result);
     count = wncard_c(&result);
@@ -205,11 +158,11 @@ int main (int argc, char **argv) {
 	      planet2str(gplanet, ""), houses[house], 
 	      array[17]<0?"RETROGRADE":"PROGRADE");
 
-      sprintf(terse, "%lld %s%s%s", (long long) floor(beg/60+0.5), 
+      sprintf(terse, "%lld %s%s%s", (long long) floor(beg+0.5), 
 	      planet2str(gplanet, "TERSE"), house2str(house, "TERSE"),
 	      array[17]<0?"-":"+");
 
-      printf("%s %s %f\n", classic, terse, array[11]*dpr_c());
+      printf("%s %s\n", classic, terse);
     }
   }
   return(0);

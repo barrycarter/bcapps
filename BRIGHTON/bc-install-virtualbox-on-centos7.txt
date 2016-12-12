@@ -8,6 +8,8 @@ installing vncserver is unnecessary.
 %% TODO: mention what options to use when installing CentOS 7,
 particularly network crap (perhaps similar to VM)
 
+% After rebooting and logging in as root:
+
 : this step is optional -- it will create groups, but so will the next command
 : if you dont run this one
 yum -y grouplist
@@ -22,6 +24,7 @@ curl -o /etc/yum.repos.d/virtualbox.repo http://download.virtualbox.org/virtualb
 : and install virtualbox
 : xterm needed for GNOME desktop, but not installed sigh
 : vnc so I can access it remotely
+: bzip2 and kernel devel for guest additions
 yum -y install VirtualBox-5.1 xterm tigervnc-server
 
 % tigervnc-server turns on the firewall, blocking incoming vnc; to fix:
