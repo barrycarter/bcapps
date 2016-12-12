@@ -43,7 +43,6 @@ gitfs
 gnumeric
 ical
 lucene
-maxima
 mille
 nessus
 netbeans

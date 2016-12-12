@@ -74,6 +74,8 @@ yum-runme.sh
 
 yum -y install rsync
 rehash
+
+: TODO: why did i have to do this after boot
 rsync -Pavz root@192.168.0.2:/home/barrycarter/BCGIT /home/user/
 
 : and private stuff I still need
@@ -106,7 +108,7 @@ sh ~user/BCGIT/BRIGHTON/yum-runme.sh |& tee /tmp/yum-runme.out
 
 % Above will say "package not found" for many packages, but, unless it
 actually breaks (ie, yum yields an error, not just warnings), you may
-wish to snapshot "alpha" here [to be safe, "shutdown -h" first]
+wish to snapshot "alpha" here ["shutdown -h" and remove big drive first]
 
 % Cut and paste results of below into nopkglist.txt: the packages I
 want that CentOS doesn't provide:
@@ -123,7 +125,7 @@ make
 cp fly /usr/local/bin/
 cp gd1.3/libgd.a /usr/local/lib/
 
-% run bc-symlinks.sh
+% create symlinks:
 
 sh ~user/BCGIT/BRIGHTON/bc-symlinks.sh |& tee /tmp/bc-symlinks.out
 

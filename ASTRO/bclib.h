@@ -249,3 +249,98 @@ SpiceDouble *bc_between (int num,...) {
 
   return results;
 }
+
+int signum(double x) {
+  // shouldnt compare double to zero, but ok here
+  if (x==0) {return 0;}
+  return x>0?1:-1;
+}
+
+void eqeq2eclip(doublereal et, SpiceDouble matrix[3][3]) {
+
+  doublereal nut[4], obq, dobq, sobq, cobq;
+
+  // these functions are nonstandard, don't end with "c" and take et
+  // as a pointer
+
+  // the obliquity of the ecliptic, excluding nutation
+  zzmobliq_(&et, &obq, &dobq);
+
+  // the nut array gives nutation in obliquity (which I need), and
+  // nutation in longitude (which I dont need since Im already using
+  // EQEQDATE), and the derivatives of these angles (which I also
+  // dont need)
+  zzwahr_(&et, nut);
+
+  // sin and cos of angle of transformation
+  sobq = sin(obq+nut[0]);
+  cobq = cos(obq+nut[0]);
+
+  // there MUST be a better way to do this
+  matrix[0][0] = 1;
+  matrix[0][1] = 0;
+  matrix[0][2] = 0;
+  matrix[1][0] = 0;
+  matrix[1][1] = cobq;
+  matrix[1][2] = sobq;
+  matrix[2][0] = 0;
+  matrix[2][1] = -sobq;
+  matrix[2][2] = cobq;
+
+  // note that matrix is its own Jacobian
+
+}
+
+// wrapper around spkez_c that returns the XYZ and spherical
+// coordinates, their derivatives, and whether these derivates are
+// positive or negative
+
+// TODO: check to see if spherical coords give lat or colat
+
+SpiceDouble *geom_info(SpiceInt targ, SpiceDouble et, ConstSpiceChar *ref, 
+		       SpiceInt obs) {
+
+  static SpiceDouble results[19];
+  // extra is just for ECLIPDATETRUE subroutine
+  SpiceDouble lt, jacobi[3][3], extra[6];
+  SpiceInt i;
+
+  // TODO: details spherical coords order a bit better
+
+  // special case for ECLIPDATETRUE (not a real frame)
+  if (strcmp(ref,"ECLIPDATETRUE")) {
+
+    // TODO: remember to else the other condition!
+
+    // find for EQEQDATE but put in extra, not results
+    spkez_c(targ, et, "EQEQDATE", "CN+S", obs, extra, &lt);
+    // obtain transform (which is also jacobian)
+    eqeq2eclip(et, jacobi);
+    // apply to position results
+    mxv_c(jacobi, extra, results);
+    // and to derivs
+    mxv_c(jacobi, extra+3, results+3);
+  } else {
+    // general case
+    spkez_c(targ, et, ref, "CN+S", obs, results, &lt);
+  }
+
+  // signum of the x y z dervs are entries 6-8
+  for (i=6; i<=8; i++) {results[i] = signum(results[i-3]);}
+
+  // the spherical of the coordinates are next 3 (9-11)
+  recsph_c(results, &results[9], &results[10], &results[11]);
+
+  // change in spherical coordinates (12-14)
+  dsphdr_c(results[0], results[1], results[2], jacobi);
+  mxv_c(jacobi, &results[3], &results[12]);
+
+  // and the sign of that change (15-17)
+  for (i=15; i<=17; i++) {results[i] = signum(results[i-3]);}
+
+  // light time correction (18)
+  results[18] = lt;
+
+  return results;
+}
+
