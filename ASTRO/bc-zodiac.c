@@ -128,7 +128,7 @@ int main (int argc, char **argv) {
   //  wninsd_c(stime+4042,etime-12, &cnfine);
 
   // for testing
-  wninsd_c(year2et(2016), year2et(2018), &cnfine);
+  wninsd_c(year2et(2099), year2et(2100), &cnfine);
 
   // TODO: figure out how to compute sizeof(iplanets) properly, this is hack
   for (j=0; j<sizeof(iplanets)/4; j++) {
