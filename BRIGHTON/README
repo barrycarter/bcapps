@@ -65,7 +65,8 @@ yum -y install tcsh
 chsh -s /bin/tcsh root
 chsh -s /bin/tcsh user
 
-% follow steps in bc-move-root.txt if desired
+% follow steps in bc-move-root.txt if desired (starting with "create
+swapspace"...)
 
 % run "make" in this directory, so the following rsync will push over
 yum-runme.sh
@@ -110,10 +111,35 @@ sh ~user/BCGIT/BRIGHTON/yum-runme.sh |& tee /tmp/yum-runme.out
 actually breaks (ie, yum yields an error, not just warnings), you may
 wish to snapshot "alpha" here ["shutdown -h" and remove big drive first]
 
+% add user to the vboxfs group for normal operation
+
+: note that vboxsf MUST be the first group for login perms to home dir
+usermod -g vboxsf user
+usermod -G wheel user
+: test that it worked
+groups user
+
+% OPTIONAL: vboxfs DOES NOT ALLOW creation of symlinks (but does treat
+symlinks created by the host correctly), so, if you've done
+bc-move-root.txt, you won't be able to create symlinks on
+/mnt/kemptown from the guest; instead, do this on the HOST:
+
+ln -s /home/user/BCGIT/BRIGHTON/.tcshrc /home/user/BCGIT/BRIGHTON/.xinitrc /home/user/BCGIT/BRIGHTON/brighton-procs.txt /home/user
+
+: fvwm2 now keeps configs here
+ln -s /home/user/BCGIT/BRIGHTON/.fvwm2rc /home/user/.fvwm/
+
+%% TODO: run the steps above from a fresh machine, not sure they will
+work exactly
+
+% create symlinks:
+
+sh ~user/BCGIT/BRIGHTON/bc-symlinks.sh |& tee /tmp/bc-symlinks.out
+
 % Cut and paste results of below into nopkglist.txt: the packages I
 want that CentOS doesn't provide:
 
-fgrep "No package " /tmp/yum-runme.out | perl -anle 'print $F[2]' | sort | uniq | less
+fgrep "No package " /tmp/yum-runme.out|perl -anle 'print $F[2]'|sort|uniq|less
 
 % Ugly install of fly (older version, newer is broken)
 
@@ -124,10 +150,6 @@ cd fly-1.6.5
 make
 cp fly /usr/local/bin/
 cp gd1.3/libgd.a /usr/local/lib/
-
-% create symlinks:
-
-sh ~user/BCGIT/BRIGHTON/bc-symlinks.sh |& tee /tmp/bc-symlinks.out
 
 % start the crontab
 

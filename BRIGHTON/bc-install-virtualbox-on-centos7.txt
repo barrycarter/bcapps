@@ -24,8 +24,18 @@ curl -o /etc/yum.repos.d/virtualbox.repo http://download.virtualbox.org/virtualb
 : and install virtualbox
 : xterm needed for GNOME desktop, but not installed sigh
 : vnc so I can access it remotely
-: bzip2 and kernel devel for guest additions
-yum -y install VirtualBox-5.1 xterm tigervnc-server
+: gcc, bzip2 and kernel devel for guest additions
+yum -y install VirtualBox-5.1 xterm tigervnc-server gcc kernel-devel-3.10.0-327.el7.x86_64 bzip2
+
+: below may be necessary and doesnt hurt to run
+/sbin/vboxconfig
+
+: this lets you rdesktop to guest directly wo installing vncserver
+cd
+curl -O http://download.virtualbox.org/virtualbox/5.1.10/Oracle_VM_VirtualBox_Extension_Pack-5.1.10-112026.vbox-extpack
+chmod +x Oracle_VM_VirtualBox_Extension_Pack-5.1.10-112026.vbox-extpack
+: per https://www.virtualbox.org/manual/ch08.html#vboxmanage-extpack
+VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-5.1.10-112026.vbox-extpack
 
 % tigervnc-server turns on the firewall, blocking incoming vnc; to fix:
 
@@ -36,16 +46,22 @@ systemctl disable firewalld
 vncpasswd
 
 % Due to a hideous oversight by CentOS, GNOME/gdm doesnt come up
-automatically on reboot and "xinit" starts with on window manager. A
+automatically on reboot and "xinit" starts with no window manager. A
 partial fix is to put this line in ~/.xinitrc (which is probably
 empty, the first line is to start vnc):
 
 vncserver &
 exec gnome-shell
 
+% If you have an encrypted drive, enable it on the host (giving guest
+direct access to raw devices is bad) and follow bc-move-root.txt UNTIL
+"mount /mnt/kemptown" and then stop (the other steps will occur at the
+guest level)
+
 % reboot, login, and run "xinit &"
 
-% You can now vnc into this machine and run virtualbox
+% You can now vnc into this machine and run virtualbox (may need to
+use port 5901 for vnc)
 
 % REMINDER: the process above MAY work on a virtual machine, but
 running VirtualBox inside a virtual machine may be unwise

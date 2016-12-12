@@ -35,6 +35,8 @@ echo "/dev/mapper/oldfedora-home /mnt/kemptown ext4 defaults,x-systemd.device-ti
 mkdir /mnt/kemptown
 mount /mnt/kemptown
 
+% Reminder: stop here if on physical machine
+
 % create swapspace on /mnt/kemptown/swapspace (TODO: there may be
 better ways of doing this but I'm wary of messing w/ my 8TB drive
 since I've copied stuff over and made changes)
@@ -45,6 +47,7 @@ mkswap /mnt/kemptown/swap
 : below as recommended
 chmod 0600 /mnt/kemptown/swap
 
+: TODO: this is not working due to unchangeable perms, grumble
 : make sure fstab looks ok then add swapspace
 less /etc/fstab
 echo "/mnt/kemptown/swap swap swap defaults 0 0" >> /etc/fstab
@@ -87,5 +90,4 @@ rm -rf /var/cache
 mkdir -p /mnt/kemptown/var/cache
 ln -s /mnt/kemptown/var/cache /var/
 
-: if desired "shutdown -h now", detach /dev/sdb, and create a
-"postrootmove" snapshot
+: if desired "shutdown -h now" and create a "postrootmove" snapshot

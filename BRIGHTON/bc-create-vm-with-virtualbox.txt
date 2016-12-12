@@ -1,10 +1,5 @@
-% To install guest box additions, you will need at least these
-
-yum -y install gcc kernel-devel kernel-devel-3.10.0-327.el7.x86_64 bzip2
-/sbin/vboxconfig
-
-
-NOTE: do not give babybrighton (guest) direct access to raw disks on host (brighton), it breaks things terribly
+NOTE: do not give babybrighton (guest) direct access to raw disks on
+host (brighton), it breaks things terribly
 
 % Run VirtualBox" and use the following parameters when creating
 babybrighton as a virtual machine:
@@ -13,19 +8,31 @@ babybrighton as a virtual machine:
   "centos" [or even "cent"] anywhere in the name, virtualbox will fill
   these automatically)
 
-  - Choose a VDI of at 48G as this will be a fairly large install.
+  - Choose the largest VDI, system memory (not video memory though),
+  and CPUs that VirtualBox allows since we want this machine to be
+  (almost) as powerful as brighton.
 
   - Leave everything else as is in the wizard (or tweak as desired),
   but, before starting the machine go to "Settings" and:
 
-    - Under Network, choose "bridged", promiscuous mode to "Allow All"
-    and the MAC address to "080000000000" or something else easily
-    recognizable.
+    - If you are overly aggressive with settings in the wizard,
+    "invalid settings detected" will show up on your settings
+    tab. Deal with these issues as directed.
+
+    - General/Advanced: turn on cut/paste and drag n drop bidirectionally 
+
+    - System/Processor: crank this as high as allowed
+
+    - Display/Remote Display: enable
 
     - Under Storage:
 
       - for the CD, choose CentOS-7-x86_64-Minimal-1511.iso as the
       image to install
+
+    - Under Network, choose "bridged", promiscuous mode to "Allow All"
+    and the MAC address to "080000000000" or something else easily
+    recognizable.
 
   - You may wish to snapshot before installing CentOS 7 or at any
   "critical" point during this entire process. This would be the
@@ -53,4 +60,38 @@ installing CentOS 7:
   "shutdown -h now", and take a snapshot. This is the "postinstall"
   snapshot.
 
-  - Add GuestAdditions CD and boot again
+  - Under settings/storage attach
+  /usr/share/virtualbox/VBoxGuestAdditions.iso and boot
+
+  - Run:
+
+yum -y install bzip2 gcc make kernel-devel-3.10.0-327.el7.x86_64
+
+mount /dev/cdrom /mnt/
+cd /mnt/
+sh VBoxLinuxAdditions.run
+: if warned, most likely ok to proceed
+
+: ignore Could not find the X.Org or XFree86 Window System, skipping.
+
+  - "shutdown -h now" and create "postguest" snapshot if desired
+
+  - Under Settings/Shared Folders add "/" and let VirtualBox name is
+  "ROOT". Check auto-mount, but not readonly. Boot system.
+
+  - You will now have access to brighton's root drive under /media/sf_ROOT/
+
+  - NOTE: you cannot access brighton's devices this way as they now
+  look like regular files:
+
+[root@babybrighton ~]# ls -l /media/sf_ROOT/dev/sdb
+-rwxrwx---. 1 root vboxsf 0 Dec 11 23:55 /media/sf_ROOT/dev/sdb
+
+You *can* "less -f" them (despite their zero size).
+
+  - Symlinks that let us refer to brighton's /mnt/kemptown as though
+  it were our own
+
+ln -s /media/sf_ROOT/mnt/kemptown /mnt
+
+
