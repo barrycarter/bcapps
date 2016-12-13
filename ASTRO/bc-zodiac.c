@@ -15,7 +15,7 @@
 #include "SpiceZfc.h"
 #define MAXWIN 5000000
 #define TIMLEN 41
-#define TIMFMT "ERAYYYY##-MON-DD HR:MN:SC ::MCAL ::RND"
+#define TIMFMT "ERAYYYY##-MON-DD HR:MN ::MCAL ::RND"
 #define FRAME "ECLIPDATE"
 
 // global variables
@@ -109,9 +109,8 @@ int main (int argc, char **argv) {
   // various formats
   SpiceChar begstr[TIMLEN], classic[100], terse[100];
   // nut for testing only
-  SpiceDouble beg,end,stime,etime, nut[4];
+  SpiceDouble beg,end,stime,etime,*array;
   SpiceInt count,i,j,house;
-  SpiceDouble *array;
 
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
@@ -126,10 +125,10 @@ int main (int argc, char **argv) {
   wnfetd_c(&range, 0, &beg, &etime);
   
   // any integers below 4042 and 12 below fail for at least one planet
-  //  wninsd_c(stime+4042,etime-12, &cnfine);
+  wninsd_c(stime+4042,etime-12, &cnfine);
 
   // for testing
-  wninsd_c(year2et(5000), year2et(5001), &cnfine);
+  //  wninsd_c(year2et(2020), year2et(2022), &cnfine);
 
   // TODO: figure out how to compute sizeof(iplanets) properly, this is hack
   for (j=0; j<sizeof(iplanets)/4; j++) {
@@ -143,11 +142,6 @@ int main (int argc, char **argv) {
 
       // find the time of event (beg == end in this case)
       wnfetd_c (&result, i, &beg, &end);
-
-      // the nutation of the ecliptic just in case this fixes things
-      // the first number we already ue
-      //      zzwahr_(&beg, nut);
-      //      printf("NUT: %f %f %f %f\n", nut[0]*dpr_c(), nut[1]*dpr_c(), nut[2]*dpr_c(), nut[3]*dpr_c());
 
       // find ecliptic longitude (and if its increasing/decreasing)
       array = geom_info(gplanet, beg, FRAME, 399);

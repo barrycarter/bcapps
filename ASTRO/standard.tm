@@ -1,12 +1,4 @@
-Note that 000157.html is a literal copy of https://naif.jpl.nasa.gov/pipermail/spice_discussion/2005-February/000157.html
-
-http://naif.jpl.nasa.gov/pub/naif/VEX/kernels/fk/RSSD0002.TF
-
-http://naif.jpl.nasa.gov/pub/naif/LADEE/kernels/fk/ladee_frames_2014159_v01.tf
-
-REMOVING '/home/barrycarter/BCGIT/ASTRO/eqeqdate.tf' since it may conflict with RSSD0002.TF
-
-TO RESTORE: '/home/barrycarter/SPICE/KERNELS/earth_latest_high_prec.bpc',
+12 Dec 2016: cleaned up, it appears ECLIPDATE is now part of CSPICE directly
 
 \begindata
 
