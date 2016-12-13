@@ -1,12 +1,17 @@
 # I learned a lot -- well sort of -- about systemctl while trying to
 # minimize what daemons run. This file sorta summarizes it
 
+# changed "enforcing" to "disabled" in /etc/selinux/config
+
 # turn off auditd
 auditd -s disable
 
 
 : for testing, this attempts to disable ALL systemctl services that
 : are active; it will fail for audit.service which cannot be turned off
+
+# NOTE: this turns off both "NetworkManager" AND "sshd" which must be
+# re-enabled at the console if you want to ssh back in
 
 systemctl -t service|grep 'running'| perl -anle 'print "systemctl stop $F[0]; systemctl disable $F[0]"' | sh
 
@@ -15,5 +20,8 @@ systemctl -t service|grep 'running'| perl -anle 'print "systemctl stop $F[0]; sy
 systemctl stop systemd-journald-dev-log.socket systemd-journald-audit.socket systemd-journald.socket dbus.socket
 systemctl disable systemd-journald-dev-log.socket systemd-journald-audit.socket systemd-journald.socket dbus.socket
 
+# services I actually want:
+
+# atd crond dnsmasq sshd 
 
 
