@@ -273,6 +273,8 @@ void eqeq2eclip(doublereal et, SpiceDouble matrix[3][3]) {
   zzwahr_(&et, nut);
 
   // sin and cos of angle of transformation
+
+  // TESTING!!!
   sobq = sin(obq+nut[0]);
   cobq = cos(obq+nut[0]);
 
@@ -308,7 +310,7 @@ SpiceDouble *geom_info(SpiceInt targ, SpiceDouble et, ConstSpiceChar *ref,
   // TODO: details spherical coords order a bit better
 
   // special case for ECLIPDATETRUE (not a real frame)
-  if (strcmp(ref,"ECLIPDATETRUE")) {
+  if (!strcmp(ref,"ECLIPDATETRUE")) {
 
     // TODO: remember to else the other condition!
 

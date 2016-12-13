@@ -15,7 +15,7 @@
 #include "SpiceZfc.h"
 #define MAXWIN 5000000
 #define TIMLEN 41
-#define TIMFMT "ERAYYYY##-MON-DD HR:MN:SC ::MCAL ::RND"
+#define TIMFMT "ERAYYYY##-MON-DD HR:MN ::MCAL ::RND"
 #define FRAME "ECLIPDATETRUE"
 
 // global variables
@@ -127,7 +127,7 @@ int main (int argc, char **argv) {
   //  wninsd_c(stime+4042,etime-12, &cnfine);
 
   // for testing
-  wninsd_c(year2et(9964), year2et(9965), &cnfine);
+  wninsd_c(year2et(5000), year2et(5001), &cnfine);
 
   // TODO: figure out how to compute sizeof(iplanets) properly, this is hack
   for (j=0; j<sizeof(iplanets)/4; j++) {

@@ -52,7 +52,7 @@ while (<>) {
     split(/\s+/, $_);
 
   # this MAY not work :59 or :00 times, but don't care
-  $ptime=~s/:\d\d:\d\d//;
+  $ptime = substr($ptime,0,2);
 
   # set the start and end time to be the hour in question
   $email=~s/%STARTTIME%/$date $ptime:00/;
