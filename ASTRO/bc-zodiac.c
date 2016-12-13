@@ -22,7 +22,7 @@
 
 SpiceInt gplanet = 0;
 
-// the planet ids we are interested in
+// the planet ids we are interested in (actually, barycenters)
 
 const int iplanets[] = {1, 2, 301, 4, 5, 6, 10};
 
@@ -108,7 +108,8 @@ int main (int argc, char **argv) {
   SPICEDOUBLE_CELL (range, 2);
   // various formats
   SpiceChar begstr[TIMLEN], classic[100], terse[100];
-  SpiceDouble beg,end,stime,etime;
+  // nut for testing only
+  SpiceDouble beg,end,stime,etime, nut[4];
   SpiceInt count,i,j,house;
   SpiceDouble *array;
 
@@ -128,7 +129,7 @@ int main (int argc, char **argv) {
   //  wninsd_c(stime+4042,etime-12, &cnfine);
 
   // for testing
-  wninsd_c(year2et(2099), year2et(2100), &cnfine);
+  wninsd_c(year2et(5000), year2et(5001), &cnfine);
 
   // TODO: figure out how to compute sizeof(iplanets) properly, this is hack
   for (j=0; j<sizeof(iplanets)/4; j++) {
@@ -142,6 +143,11 @@ int main (int argc, char **argv) {
 
       // find the time of event (beg == end in this case)
       wnfetd_c (&result, i, &beg, &end);
+
+      // the nutation of the ecliptic just in case this fixes things
+      // the first number we already ue
+      //      zzwahr_(&beg, nut);
+      //      printf("NUT: %f %f %f %f\n", nut[0]*dpr_c(), nut[1]*dpr_c(), nut[2]*dpr_c(), nut[3]*dpr_c());
 
       // find ecliptic longitude (and if its increasing/decreasing)
       array = geom_info(gplanet, beg, FRAME, 399);

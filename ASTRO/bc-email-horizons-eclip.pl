@@ -64,7 +64,7 @@ while (<>) {
   # if its a digit, this is just {digit}99
   my($object);
   if ($short=~/\d/) {
-    $object = "${short}99";
+    $object = $short;
   } elsif ($short eq "M") {
     $object = 301;
   } elsif ($short eq "S") {
