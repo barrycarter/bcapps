@@ -375,3 +375,20 @@ A.D.  9004-JUL-29 18:39 MOON ENTERS SAGITTARIUS PROGRADE 3684050320 M8+ -120.000
 A.D.  9004-OCT-17 06:20 SUN ENTERS SCORPIO PROGRADE 3684164781 S7+ -149.999998
 A.D.  9004-NOV-22 01:54 MOON ENTERS PISCES PROGRADE 3684216355 MB+ -29.999993
 A.D.  9004-DEC-06 10:16 MOON ENTERS VIRGO PROGRADE 3684237017 M5+ 149.999985
+
+%% NOTE TO SELF: AD/BC -> CE/BCE
+
+%% TODO: look at all TODO in ~/BCGIT/ASTRO before finalizing answer
+
+%% TODO: revise answer to bc-equi-and-sol if appropriate
+
+https://en.wikipedia.org/wiki/Gregorian_calendar#Accuracy states only one day of drift per 7700 years very different from BOTH my results.....
+
+1h28m to do all for 7 planets in parallel (on brighton, 100 years per
+file, 10 procs at a time)
+
+TODO: better testing, notes so far (older version?)
+
+tests for 3000-3100 seem to work fine
+for 9000-9100 results are consistently low
+
