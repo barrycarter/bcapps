@@ -1,19 +1,8 @@
-I wrote
-https://github.com/barrycarter/bcapps/tree/a944a8d8315fd6169907f73e47698f030befe3bb/ASTRO/bc-zodiac.c
-to solve this. I may've tweaked bc-zodiac.c since then, so you'll need
-the exact link above (not the most recent version of bc-zodiac.c) to
-confirm/replicate my results. In the directory
-https://github.com/barrycarter/bcapps/blob/master/ASTRO/
+I wrote https://github.com/barrycarter/bcapps/tree/a944a8d8315fd6169907f73e47698f030befe3bb/ASTRO/bc-zodiac.c to solve this. I may've tweaked bc-zodiac.c since then, so you'll need the exact link above (not the most recent version of bc-zodiac.c) to confirm/replicate my results. In the directory https://github.com/barrycarter/bcapps/blob/master/ASTRO/
 
-  - The file "houses.txt.bz2" contains a list of all house changes for
-  now +- ~15000 years in a mostly-English-readable format.
+  - The file "houses.txt.bz2" contains a list of all house changes for now +- ~15000 years in a mostly-English-readable format.
 
-  - The file "house-states.txt.bz2" is a list of all "horoscopes"
-  (house states for all planets) in machine readable format for the
-  same period. Please see
-  https://github.com/barrycarter/bcapps/blob/master/ASTRO/bc-zodiac.txt
-  (which also contains the text of this answer) for details on how to
-  read this file.
+  - The file "house-states.txt.bz2" is a list of all "horoscopes"(house states for all planets) in machine readable format for the same period. Please see https://github.com/barrycarter/bcapps/blob/master/ASTRO/bc-zodiac.txt (which also contains the text of this answer) for details on how to read this file.
 
 Important caveats below, but first, some notes:
 
@@ -21,216 +10,95 @@ Important caveats below, but first, some notes:
 
 `BCE 13200-JUL-12 09:48 SUN ENTERS ARIES PROGRADE -479626193452 S0+`
 
-suggest the vernal equinox was on July 12th about 15000 years ago (of
-course, no one actually used our calendar back then), which seems a
-bit off. Further, you'll notice:
+suggest the vernal equinox was on July 12th about 15000 years ago (of course, no one actually used our calendar back then), which seems a bit off. Further, you'll notice:
 
 `CE 17191-FEB-23 00:27 SUN ENTERS ARIES PROGRADE 479386211293 S0+`
 
-suggesting the vernal equinox will occur on February 23rd (about a
-month early) 15000 years from now (assuming they continue using our
-calendar).
+suggesting the vernal equinox will occur on February 23rd (about a month early) 15000 years from now (assuming they continue using our calendar).
 
-See http://astronomy.stackexchange.com/a/13009/21 for why this happens
-(my answer there has slightly different times, because I used a less
-accurate model).
+See http://astronomy.stackexchange.com/a/13009/21 for why this happens (my answer there has slightly different dates/times, because I used a less accurate model).
 
-
-  - In the 11,100,017 days (about 30,391 years) covered, there are
-  6,359,874 horoscope changes, for an average horoscope change roughly
-  every 1.75 days. Broken down by planet:
+  - In the 11,100,017 days (about 30,391 years) covered, there are 6,359,874 horoscope changes, for an average horoscope change roughly every 1.75 days. Broken down by planet:
 
     - The moon changes house 4,875,276 times, about once every 2.3 days.
 
-    - Mercury changes house 450,523 times (including retrograde house
-    changes), about once every 25 days.
+    - Mercury changes house 450,523 times (including retrograde house changes), about once every 25 days.
 
-    - Venus changes house 384,971 times (including retrograde), about
-    once every 29 days.
+    - Venus changes house 384,971 times (including retrograde), about once every 29 days.
 
-    - The Sun comes in third with 364,691 changes, about once every 30
-    days. A more exact number is once every 30.4367697585 days. When
-    you multiply this by 12, you get 365.2412371020 days, which, as
-    expected, is a good estimate of the length of the tropical year
-    (the exact value given by
-    http://hpiers.obspm.fr/eop-pc/models/constants.html is
-    365.242190402, which is 82 seconds different).
+    - The Sun comes in third with 364,691 changes, about once every 30 days. A more exact number is once every 30.4367697585 days. When you multiply this by 12, you get 365.2412371020 days, which, as expected, is a good estimate of the length of the tropical year (the exact value given by http://hpiers.obspm.fr/eop-pc/models/constants.html is 365.242190402, which is 82 seconds different).
 
-    - Mars changes house (including retrograde) 209,501 times, about
-    once every 53 days.
+    - Mars changes house (including retrograde) 209,501 times, about once every 53 days.
 
     - Jupiter (w/ retrograde) 49,215 times, once every ~225.5 days.
 
     - Saturn (w/ retrograde) 25,697 times, ~432 days.
 
-  - As expected, most of these house changes (6,283,141) are in the
-  forward or "prograde" direction and very few (76,733) are in the
-  retrograde direction. Of course, the Sun and Moon always move
-  prograde, another reason the prograde number is so large.
+  - As expected, most of these house changes (6,283,141) are in the forward or "prograde" direction and very few (76,733) are in the retrograde direction. Of course, the Sun and Moon always move prograde, another reason the prograde number is so large.
 
-  - Since there are 12 houses and 7 planets, it would seem there are
-  12^7 = 35,831,808 possible horoscopes. However, there are actually
-  only 3,732,480:
+  - Since there are 12 houses and 7 planets, it would seem there are 12^7 = 35,831,808 possible horoscopes. However, there are actually only 3,732,480:
 
-    - Since Mercury's greatest elongation is 28 degrees, it must
-    remain within one house of the Sun. Given the Sun's house, there
-    are only 3 possibilities for Mercury's house (either the Sun's
-    house or one of the two adjacent houses).
+    - Since Mercury's greatest elongation is 28 degrees, it must remain within one house of the Sun. Given the Sun's house, there are only 3 possibilities for Mercury's house (either the Sun's house or one of the two adjacent houses).
 
-    - Since Venus' greatest elongation is 47 degrees, it must remain
-    within two houses of the Sun, so there are only 5 possibilities
-    given the Sun's house.
+    - Since Venus' greatest elongation is 47 degrees, it must remain within two houses of the Sun, so there are only 5 possibilities given the Sun's house.
 
-    - Combining these, we see there are 12*12*3*5*12*12*12 or
-    3,732,480 possible horoscopes.
+    - Combining these, we see there are 12*12*3*5*12*12*12 or 3,732,480 possible horoscopes.
 
-  - Of these possibilities there are 2,565,570 (about 69% of the total
-  possible) actual horoscopes. Of these,
+  - Of these possibilities there are 2,565,570 (about 69% of the total possible) actual horoscopes. Of these,
 
     - 969,067 horoscopes occur only once
 
-    - The horoscope "4045424" (translated below) occurs 18 times (most
-    recently in 1799 and next in 5391), but two others occur 17 times,
-    10 appear 16 times, and many appear 15 times, so it's only the
-    most frequent by coincidence (probably just because of where DE431
-    happens to start and end).
+    - The horoscope "4045424" (translated below) occurs 18 times (most recently in 1799 and next in 5391), but two others occur 17 times, 10 appear 16 times, and many appear 15 times, so it's only the most frequent by coincidence (probably just because of where DE431 happens to start and end).
 
-    - "4045424" translated is Sun in Leo, Moon in Aries, Mercury in
-    Leo, Venus in Virgo, Mars in Leo, Jupiter in Gemini, Saturn in
-    Leo.
+    - "4045424" translated is Sun in Leo, Moon in Aries, Mercury in Leo, Venus in Virgo, Mars in Leo, Jupiter in Gemini, Saturn in Leo.
 
-Note that this horoscope is probably only the most frequent because of
-how I chose the start and end dates (based on the DE431 ephemeris).
-
-**** CUT POINT
+Note that this horoscope is probably only the most frequent because of how I chose the start and end dates (based on the DE431 ephemeris).
 
 Important caveats:
 
-  - My standard disclaimer: please do not rely on anything I do/post
-  anywhere. I can and do make mistakes. Feel free to check my work and
-  alert me to mistakes.
+  - My standard disclaimer: please do not rely on anything I do/post anywhere. I can and do make mistakes. Feel free to check my work and alert me to mistakes.
 
-  - If you actually want to check my results, you will need to
-  download kernels from NASA. See
-  http://naif.jpl.nasa.gov/naif/tutorials.html for more details on how
-  this all works.
+  - If you actually want to check my results, you will need to download kernels from NASA. See http://naif.jpl.nasa.gov/naif/tutorials.html for more details on how this all works.
 
-  - Note that NASA can't predict planet positions (or even the Earth's
-  own orientation) into the far future: they solve differential
-  equations to predict planetary positions and then publish an
-  approximation of those solutions. The further away we get from
-  today, the less accurate these predictions are.
+  - Note that NASA can't predict planet positions (or even the Earth's own orientation) into the far future: they solve differential equations to predict planetary positions and then publish an approximation of those solutions. The further away we get from today, the less accurate these predictions are.
 
-  - We have a pretty good approximation of how the Earth precesses,
-  but we can't even predict THAT super accurately more than a few
-  months in advance. Note that
-  https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/ shows the
-  high precision precession kernel is only good through 6 Mar 2017,
-  and even THAT is updated twice a week (see
-  https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/aareadme.txt
-  for details). Since precession affects the location of the first
-  point of Aries, this adds another uncertainty.
+  - We have a pretty good approximation of how the Earth precesses, but we can't even predict THAT super accurately more than a few months in advance. Note that https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/ shows the high precision precession kernel is only good through 6 Mar 2017, and even THAT is updated twice a week (see https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/aareadme.txt for details). Since precession affects the location of the first point of Aries, this adds another uncertainty.
 
-  - Precession doesn't change the ecliptic itself, but nutation
-  does. We don't have a super-accurate model of nutation, and I am
-  using the undocumented SPICE functions zzmobliq_ and zzwahr_ as per
-  a private reply to my
-  https://naif.jpl.nasa.gov/pipermail/spice_discussion/2016-January/000423.html
+  - Precession doesn't change the ecliptic itself, but nutation does. We don't have a super-accurate model of nutation, and I am using the undocumented SPICE functions zzmobliq_ and zzwahr_ as per a private reply to my https://naif.jpl.nasa.gov/pipermail/spice_discussion/2016-January/000423.html
 
-  - The calendar on
-  https://cafeastrology.com/astrologyof2017horoscopes.html (and the
-  2016 equivalent) should agree with my results within +- 1
-  minutes. Remember to convert between ET on their site and UTC in my
-  file.
+  - The calendar on https://cafeastrology.com/astrologyof2017horoscopes.html (and the 2016 equivalent) should agree with my results within +- 1 minutes. Remember to convert between ET on their site and UTC in my file.
 
-  - http://aa.usno.navy.mil/data/docs/EarthSeasons.php can also be
-  used to check some of my calculations (within +- 1 minute),
-  recalling that, in the northern hemisphere:
+  - http://aa.usno.navy.mil/data/docs/EarthSeasons.php can also be used to check some of my calculations (within +- 1 minute), recalling that, in the northern hemisphere:
 
-    - "SUN ENTERS ARIES" (as in "first point of Aries") marks the
-    vernal equinox.
+    - "SUN ENTERS ARIES" (as in "first point of Aries") marks the vernal equinox.
 
-    - "SUN ENTERS CANCER" (as in "Tropic of Cancer") marks the summer
-    solstice.
+    - "SUN ENTERS CANCER" (as in "Tropic of Cancer") marks the summer solstice.
 
-    - "SUN ENTERS LIBRA" marks the autumnal equinox. As nearly as I
-    can tell, there is no well-known associated phrase with this point
-    in the zodiac.
+    - "SUN ENTERS LIBRA" marks the autumnal equinox. As nearly as I can tell, there is no well-known associated phrase with this point in the zodiac.
 
-    - "SUN ENTERS CAPRICORN" (as in "Tropic of Capricorn") marks the
-    winter solstice.
+    - "SUN ENTERS CAPRICORN" (as in "Tropic of Capricorn") marks the winter solstice.
 
-  - If you use HORIZONS (http://ssd.jpl.nasa.gov/?horizons) to check
-  my work, you'll notice my results are accurate to the minute for
-  about +- 1000 years from now, but drift in accuracy after that. I'm
-  not exactly sure why this is.
+  - If you use HORIZONS (http://ssd.jpl.nasa.gov/?horizons) to check my work, you'll notice my results are accurate to the minute for about +- 1000 years from now, but drift in accuracy after that. I'm not exactly sure why this is.
 
-  - I used a "stepsize" of 86400 seconds (1 day), so if a planet
-  changed house and then changed back in under a day, my program may
-  miss it. Someone w/ more computing power may wish to re-run my
-  program with a smaller stepsize.
+  - I used a "stepsize" of 86400 seconds (1 day), so if a planet changed house and then changed back in under a day, my program may miss it. Someone w/ more computing power may wish to re-run my program with a smaller stepsize.
 
-  - The moon's position varies with your location on Earth. I used a
-  geocentric model, giving the moon's position for a theoretical
-  observer located at the center of the Earth.
+  - The moon's position varies with your location on Earth. I used a geocentric model, giving the moon's position for a theoretical observer located at the center of the Earth.
 
-  - I actually computed planetary barycenters (the center of mass of
-  the planet and its satellites) because NASA doesn't provide planet
-  position information for the entire 30,000 year period I computed
-  (see http://ssd.jpl.nasa.gov/eph_spans.cgi?id=A for details).
+  - I actually computed planetary barycenters (the center of mass of the planet and its satellites) because NASA doesn't provide planet position information for the entire 30,000 year period I computed (see http://ssd.jpl.nasa.gov/eph_spans.cgi?id=A for details).
 
-  For Mercury and Venus, this no effect (no moons), and the Mars'
-  system barycenter is within a few inches of Mars' own center (Phobos
-  and Deimos have very little mass). Jupiter is fairly massive, so its
-  system's barycenter is fairly close to its own center, and even the
-  effect Titan has on Saturn isn't that great.
+For Mercury and Venus, this no effect (no moons), and the Mars' system barycenter is within a few inches of Mars' own center (Phobos and Deimos have very little mass). Jupiter is fairly massive, so its system's barycenter is fairly close to its own center, and even the effect Titan has on Saturn isn't that great.
 
-  - The human-readable time in houses.txt.bz2 is the output of the C
-  function
-  http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/timout_c.html
-  (format ""ERAYYYY##-MON-DD HR:MN ::MCAL ::RND" modified slightly by
-  Perl). They are reasonable for current dates, but not necessarily
-  for past dates because the Gregorian Reformation of the calendar
-  occurred at different times for different countries, and the BCE/CE
-  time system didn't exist prior to 1 CE (and probably not even
-  then). For precision work, see bc-zodiac.txt for details.
+  - The human-readable time in houses.txt.bz2 is the output of the C function http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/timout_c.html (format ""ERAYYYY##-MON-DD HR:MN ::MCAL ::RND" modified slightly by Perl). They are reasonable for current dates, but not necessarily for past dates because the Gregorian Reformation of the calendar occurred at different times for different countries, and the BCE/CE time system didn't exist prior to 1 CE (and probably not even then). For precision work, see bc-zodiac.txt for details.
 
-  - As above, I use "ARIES" to mean the "1st house", ie, the
-  constellation that starts at the vernal equinox ("the first point of
-  Aries", where the ascending ecliptic meets the celestial equator)
-  and ends 30 ecliptic degrees of ecliptic longitude later.
+  - As above, I use "ARIES" to mean the "1st house", ie, the constellation that starts at the vernal equinox ("the first point of Aries", where the ascending ecliptic meets the celestial equator) and ends 30 ecliptic degrees of ecliptic longitude later.
 
-    - This was reasonably accurate in 56 BCE (-55 in stellarium means 56 BCE):
+This was reasonably accurate in 56 BCE, but is certainly not true today as the vernal equinox is in Pisces and drifts towards Aquarius, heralding the "Age of Aquarius".
 
-[[239]]
+In the 30,000+ year period covered by my program, the first point of Aries makes a complete circuit (and a bit more) of the Zodiac, even ending up in Ophiuchus for a while.
 
-    - But is certainly not true today:
+Of course, the constellation boundaries I mention above are those defined by the IAU. I don't know how (or if) the ancients drew their constellation boundaries.
 
-[[237]]
-
-as the vernal equinox is in Pisces and drifts towards Aquarius,
-heralding the "Age of Aquarius".
-
-    - In the 30,000+ year period covered by my program, the first
-    point of Aries makes a complete circuit (and a bit more) of the
-    Zodiac, even ending up in Ophiuchus for a while:
-
-[[238]]
-
-Of course, the constellation boundaries above are those defined by the
-IAU. I don't know how (or if) the ancients drew their constellation
-boundaries.
-
-NOTE: I wanted to use H.A. Rey's constellation lines, but Stellarium's
-constellation boundaries appear to break for Pisces when I do that.
-
-  - I am leaving my old answer below, because NASA is a trusted site
-  for astronomers, and WebGeoCalc and HORIZONS are important
-  resources. The step-by-step method I show below can help people here
-  make their own calculations or help others. I am in no way
-  affiliated with NASA or the government of the United States, except
-  as a citizen (and even that may change soon).
-
+  - I am leaving my old answer below, because NASA is a trusted site for astronomers, and WebGeoCalc and HORIZONS are important resources. The step-by-step method I show below can help people here make their own calculations or help others. I am in no way affiliated with NASA or the government of the United States, except as a citizen.
 
 HOW TO READ houses.txt.bz2
 ==========================
@@ -330,3 +198,4 @@ file, 10 procs at a time)
 
 TODO: better testing for newer version
 
+TODO: re add stellarium screenshots re first point of Aries drift?
