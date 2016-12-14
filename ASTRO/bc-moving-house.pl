@@ -4,7 +4,6 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# TODO: check initial state!
 %state = ("S" => 1, "M" => 2, 1 => 1, 2 => 2, 4 => 2, 5 => 1, 6 => 6);
 
 @planets = split(//, "SM12456");
@@ -34,9 +33,6 @@ while (<A>) {
   my($print) = join("",@print);
   print "$ptime $print $time\n";
 
-  debug("$planet going from $state{$planet} to $house");
-
-  # TODO: check!
   $state{$planet} = $house;
 
 
