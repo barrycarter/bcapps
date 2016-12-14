@@ -16,7 +16,8 @@
 require "/usr/local/lib/bclib.pl";
 
 # excluding AK HI PR GU, allowing rest
-# https://www.epa.gov/enviro/state-fips-code-listing
+# https://www.nrcs.usda.gov/wps/portal/nrcs/detail/national/home/?cid=nrcs143_013696
+# OLD/BROKEN: https://www.epa.gov/enviro/state-fips-code-listing
 
 # can't use one in this dir, its compressed
 my($db) = "/sites/DB/blockgroups.db";
