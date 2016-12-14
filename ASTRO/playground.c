@@ -24,6 +24,8 @@ int main (int argc, char **argv) {
 
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
+  exit(-1);
+
   for (i=-20000; i<=20000; i++) {
     timout_c(year2et(i), "ERAYYYY##-MON-DD HR:MN:SC.############# ::MCAL", 50, test2);
     printf("TIME: %d %s\n", i, test2);
