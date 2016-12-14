@@ -101,7 +101,7 @@ void gfdecrx (void(* udfuns)(SpiceDouble et,SpiceDouble * value),
   uddc_c(udfuns, et, 10, isdecr);
 }
 
-// Given a single year, compute the house changes for that year
+// Given two years, compute the house changes between those years
 // ("year" defined as in year2et in bclib.h)
 
 int main (int argc, char **argv) {
@@ -119,7 +119,7 @@ int main (int argc, char **argv) {
   gfstol_c(1.);
   
   // 1 year window
-  wninsd_c(year2et(atof(argv[1])), year2et(atof(argv[1])+1), &cnfine);
+  wninsd_c(year2et(atof(argv[1])), year2et(atof(argv[2])), &cnfine);
 
   // TODO: figure out how to compute sizeof(iplanets) properly, this is hack
   for (j=0; j<sizeof(iplanets)/4; j++) {
