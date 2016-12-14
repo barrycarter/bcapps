@@ -12,57 +12,25 @@
 // Return the true (not mean) matrix of transformation from EQEQDATE
 // to ECLIPDATE at time et along with its Jacobian
 
-void eqeq2eclip(doublereal et, SpiceDouble matrix[3][3]) {
-
-  doublereal nut[4], obq, dobq, sobq, cobq;
-
-  // these functions are nonstandard, don't end with "c" and take et
-  // as a pointer
-
-  // the obliquity of the ecliptic, excluding nutation
-  zzmobliq_(&et, &obq, &dobq);
-
-  // the nut array gives nutation in obliquity (which I need), and
-  // nutation in longitude (which I dont need since Im already using
-  // EQEQDATE), and the derivatives of these angles (which I also
-  // dont need)
-  zzwahr_(&et, nut);
-
-  printf("NUT: %f %f\n", nut[0], nut[1]);
-
-  // sin and cos of angle of transformation
-  sobq = sin(obq+nut[0]);
-  cobq = cos(obq+nut[0]);
-
-  // there MUST be a better way to do this
-  matrix[0][0] = 1;
-  matrix[0][1] = 0;
-  matrix[0][2] = 0;
-  matrix[1][0] = 0;
-  matrix[1][1] = cobq;
-  matrix[1][2] = sobq;
-  matrix[2][0] = 0;
-  matrix[2][1] = -sobq;
-  matrix[2][2] = cobq;
-
-  // note that matrix is its own Jacobian
-
-  // TODO: modify geom_info to handle this and test
-
-}
-
 int main (int argc, char **argv) {
 
   SpiceDouble et, mat[3][3], mat2[3][3], jac[3][3], nut, obq, dboq;
   SpiceDouble pos[3], newpos[3];
   SpiceDouble lt;
   SpiceInt planets[6], i;
+  SPICEDOUBLE_CELL (range, 2);
+  SpiceDouble beg,end,stime,etime,*array;
 
-  // TODO: seriously clean up my frame numbering
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
-  furnsh_c("/home/barrycarter/BCGIT/ASTRO/ECLIPDATE1.TF");
-  furnsh_c("/home/barrycarter/BCGIT/ASTRO/eqeqdate.tf");
 
+  spkcov_c("/home/barrycarter/SPICE/KERNELS/de431_part-1.bsp", 399, &range);
+  wnfetd_c (&range, 0, &stime, &end);
+  spkcov_c("/home/barrycarter/SPICE/KERNELS/de431_part-2.bsp", 399, &range);
+  wnfetd_c(&range, 0, &beg, &etime);
+
+  printf("TIMES: %f %f\n", beg, etime);
+
+  exit(-1);
 
   str2et_c("2017-10-17 07:59", &et);
   printf("ET: %f\n", et);
@@ -70,7 +38,7 @@ int main (int argc, char **argv) {
   printf("ET: %f\n", et);
   printf("POS: %f %f %f %f %f\n", et, pos[0], pos[1], pos[2], lt);
 
-  eqeq2eclip(et, mat, jac);
+  //  eqeq2eclip(et, mat, jac);
 
   mxv_c(mat, pos, newpos);
 

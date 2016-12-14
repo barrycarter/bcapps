@@ -14,6 +14,15 @@
 #include "SpiceUsr.h"
 #include "SpiceZfc.h"
 
+// DE431 limits below (spkcov_c gives a useless range)
+// TODO: whine about spkcov_c() uselessness
+// TODO: the numbers below are stime+4042 and etime-12 but WHY?
+
+#define STIME -479654740758.815430+4042
+#define ETIME 479386728067.184631-12
+
+// TODO: have this routing return STIME or ETIME if out of bounds
+
 // this routine *very roughly* converts years to to et for testing only
 double year2et(double d) {return (d-2000)*31556952;}
 
