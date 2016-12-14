@@ -20,8 +20,16 @@ int main (int argc, char **argv) {
   SpiceInt planets[6], i;
   SPICEDOUBLE_CELL (range, 2);
   SpiceDouble beg,end,stime,etime,*array;
+  char test2[2000];
 
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
+
+  for (i=-20000; i<=20000; i++) {
+    timout_c(year2et(i), "ERAYYYY##-MON-DD HR:MN:SC.############# ::MCAL", 50, test2);
+    printf("TIME: %d %s\n", i, test2);
+  }
+
+  exit(-1);
 
   spkcov_c("/home/barrycarter/SPICE/KERNELS/de431_part-1.bsp", 399, &range);
   wnfetd_c (&range, 0, &stime, &end);
@@ -30,7 +38,7 @@ int main (int argc, char **argv) {
 
   printf("TIMES: %f %f\n", beg, etime);
 
-  exit(-1);
+
 
   str2et_c("2017-10-17 07:59", &et);
   printf("ET: %f\n", et);
@@ -68,8 +76,6 @@ int main (int argc, char **argv) {
 
 
   exit(0);
-
-  char test2[2000];
 
   str2et_c("10400-FEB-28 00:00:00", &et);
   printf("ET: %f\n", et);

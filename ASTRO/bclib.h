@@ -24,7 +24,23 @@
 // TODO: have this routing return STIME or ETIME if out of bounds
 
 // this routine *very roughly* converts years to to et for testing only
-double year2et(double d) {return (d-2000)*31556952;}
+double year2et(double d) {
+  double r = (d-2000)*31556952;
+  if (r>ETIME) {return ETIME;}
+  if (r<STIME) {return STIME;}
+  return r;
+}
+
+/*
+
+TODO: possible alternate formulation for above
+  double r;
+  char s[2000];
+  sprintf(s, "%d-JAN-01 00:00:00", d);
+  str2et_c(s, &r);
+  return r;
+
+*/
 
 // TODO: these are wrong because I don't account for TDB-UTC (using
 // deltet_c) like I should (but now fixing for unix conversions)

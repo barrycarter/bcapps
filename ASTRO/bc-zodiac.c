@@ -15,7 +15,7 @@
 #include "SpiceZfc.h"
 #define MAXWIN 5000000
 #define TIMLEN 41
-#define TIMFMT "ERAYYYY##-MON-DD HR:MN:SC ::MCAL ::RND"
+#define TIMFMT "ERAYYYY##-MON-DD HR:MN ::MCAL ::RND"
 #define FRAME "ECLIPDATETRUE"
 
 // global variables
@@ -101,14 +101,16 @@ void gfdecrx (void(* udfuns)(SpiceDouble et,SpiceDouble * value),
   uddc_c(udfuns, et, 10, isdecr);
 }
 
+// Given a single year, compute the house changes for that year
+// ("year" defined as in year2et in bclib.h)
+
 int main (int argc, char **argv) {
 
   SPICEDOUBLE_CELL (result, 2*MAXWIN);
   SPICEDOUBLE_CELL (cnfine, 2);
-  SPICEDOUBLE_CELL (range, 2);
   // various formats
   SpiceChar begstr[TIMLEN], classic[100], terse[100];
-  SpiceDouble beg,end,stime,etime,*array;
+  SpiceDouble beg,end,*array;
   SpiceInt count,i,j,house;
 
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
@@ -116,18 +118,8 @@ int main (int argc, char **argv) {
   // 1 second tolerance (serious overkill, but 1e-6 is default, worse!)
   gfstol_c(1.);
   
-  // find coverage (junk uses of beg and end below)
-  // we use the start of part 1 and the end of part 2
-  spkcov_c("/home/barrycarter/SPICE/KERNELS/de431_part-1.bsp", 399, &range);
-  wnfetd_c (&range, 0, &stime, &end);
-  spkcov_c("/home/barrycarter/SPICE/KERNELS/de431_part-2.bsp", 399, &range);
-  wnfetd_c(&range, 0, &beg, &etime);
-  
-  // any integers below 4042 and 12 below fail for at least one planet
-  //  wninsd_c(stime+4042,etime-12, &cnfine);
-
-  // for testing
-  wninsd_c(year2et(9964), year2et(9965), &cnfine);
+  // 1 year window
+  wninsd_c(year2et(atof(argv[1])), year2et(atof(argv[1])+1), &cnfine);
 
   // TODO: figure out how to compute sizeof(iplanets) properly, this is hack
   for (j=0; j<sizeof(iplanets)/4; j++) {
