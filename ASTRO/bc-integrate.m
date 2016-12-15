@@ -1,4 +1,4 @@
-(* After running "math -initfile <output of bc-header-values.pl>" *)
+(* After running "math -initfile bc-integrate-init.m" *)
 
 (* epoch = 1969-Jun-28 00:00:00.0000 Julian day 2440400.500000000 =
 Unix second -16156800 = Unix day -187 *)
