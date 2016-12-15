@@ -12,7 +12,7 @@ xrandr --size 1024x768
 # TODO: I shouldnt have to do this at all since /etc/X11/Xresources
 # already says "Xft.dpi: 96", but it turns out I do
 
-xrandr --dpi 96
+xrandr --dpi 64
 
 # TODO: there really really must be a better way to do this
 
@@ -55,10 +55,10 @@ xterm -geometry 80x53 +sb -bg gray45 -bd gray45 -T "SCREEN II" -n "SCREEN II" &
 
 # runs elinks in an extra wide rxvt to the right of the main fvwm screen
 
-rxvt -geometry 165x52+1024+26 -font x -T ELINKS -n ELINKS -e elinks &
+rxvt -geometry 165x52+1024+26 -T ELINKS -n ELINKS -e elinks &
 
 # it's useful to have an extra wide screen just above the main fvwm screen
-rxvt -geometry 165x52+0+2339 -font x -T WIDESCREEN -n WIDESCREEN &
+rxvt -geometry 165x52+0+2339 -T WIDESCREEN -n WIDESCREEN &
 
 # vidalia, like Generalisimo Francisco Franco, is still dead :(
 

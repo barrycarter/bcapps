@@ -66,12 +66,14 @@ usbview
 xz
 
 # time and date tools
+
 gcal
 rclock
 ical
 adjtimex
 ntpdate
 rdate
+xearth
 
 # programming languages (or related)
 # TODO: mathematica (not free)
@@ -284,6 +286,7 @@ abiword
 emacs
 enscript
 xemacs
+xemacs-packages-extra
 nano
 dos2unix
 

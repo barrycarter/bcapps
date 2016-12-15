@@ -76,8 +76,12 @@ sh VBoxLinuxAdditions.run
 
   - "shutdown -h now" and create "postguest" snapshot if desired
 
-  - Under Settings/Shared Folders add "/" and let VirtualBox name is
+  - Under Settings/Shared Folders add "/" and let VirtualBox name it
   "ROOT". Check auto-mount, but not readonly. Boot system.
+
+%% TODO: revise above, instead, add to fstab (10 is wheel group):
+
+ROOT /media/sf_ROOT vboxsf uid=1000,gid=10
 
   - You will now have access to brighton's root drive under /media/sf_ROOT/
 

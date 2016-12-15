@@ -150,6 +150,7 @@ tar xvfz fly-1.6.5.tar.gz
 cd fly-1.6.5
 make
 cp fly /usr/local/bin/
+chmod +x /usr/local/bin/fly
 : do not appear to need this
 : cp gd1.3/libgd.a /usr/local/lib/
 

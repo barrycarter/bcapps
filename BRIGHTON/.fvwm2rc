@@ -58,6 +58,10 @@ Style "*rdesktop*" NoTitle, NoHandles, BorderWidth 0
 # if a window names itself "sticky", this makes it sticky
 Style "*sticky*" NoTitle, NoHandles, Sticky
 
+# pager transparency
+MenuStyle * MenuColorset 23
+*FvwmPager: Colorset * 23
+
 # some simple default key bindings:
 Key Next         A       SCM     Next [*] Focus
 Key Prior        A       SCM     Prev [*] Focus

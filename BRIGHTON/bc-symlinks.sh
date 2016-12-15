@@ -53,8 +53,12 @@ chown -R user /usr/local/etc /var/tmp/
 # TODO: I shouldnt have to do this
 mkdir -p /var/nagios/
 
-# pwless sudo access for wheel
+# pwless sudo access for wheel and no tty requirement
 
-rm -f /etc/sudoers.d/wheel
+rm -f /etc/sudoers.d/wheel /etc/sudoers.d/tty
 echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/wheel
 
+# TODO: slightly worry that, even with quotes, "!" may not be escaped
+# (works fine from command line, but...)
+
+echo "Defaults \!requiretty" > /etc/sudoers.d/tty
