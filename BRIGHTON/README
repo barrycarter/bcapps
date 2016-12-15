@@ -107,22 +107,28 @@ yum -y install deltarpm
 
 sh ~user/BCGIT/BRIGHTON/yum-runme.sh |& tee /tmp/yum-runme.out
 
-% Above will say "package not found" for many packages, but, unless it
-actually breaks (ie, yum yields an error, not just warnings), you may
-wish to snapshot "alpha" here ["shutdown -h" and remove big drive first]
+% Consider snapshotting here as "postmassinstall" UNLESS yun-runme.sh
+dies on an error (warnings are ok). As always, "shutdown -h" first.
+
+% If snapshotting/rebooting, remember to rsync for latest BCGIT:
+
+rsync -Pavz root@192.168.0.2:/home/barrycarter/BCGIT /home/user/
 
 % add user to the vboxfs group for normal operation
 
-: note that vboxsf MUST be the first group for login perms to home dir
-usermod -g vboxsf user
-usermod -G wheel user
+usermod -G vboxsf user
+: this isnt necessary since root can do anything, but...
+usermod -G vboxsf root
 : test that it worked
 groups user
+groups root
 
 % OPTIONAL: vboxfs DOES NOT ALLOW creation of symlinks (but does treat
 symlinks created by the host correctly), so, if you've done
 bc-move-root.txt, you won't be able to create symlinks on
 /mnt/kemptown from the guest; instead, do this on the HOST:
+
+: do only once on host machine, even if resetting guest
 
 ln -s /home/user/BCGIT/BRIGHTON/.tcshrc /home/user/BCGIT/BRIGHTON/.xinitrc /home/user/BCGIT/BRIGHTON/brighton-procs.txt /home/user
 
@@ -136,11 +142,6 @@ work exactly
 
 sh ~user/BCGIT/BRIGHTON/bc-symlinks.sh |& tee /tmp/bc-symlinks.out
 
-% Cut and paste results of below into nopkglist.txt: the packages I
-want that CentOS doesn't provide:
-
-fgrep "No package " /tmp/yum-runme.out|perl -anle 'print $F[2]'|sort|uniq|less
-
 % Ugly install of fly (older version, newer is broken)
 
 cd /root/build
@@ -149,11 +150,38 @@ tar xvfz fly-1.6.5.tar.gz
 cd fly-1.6.5
 make
 cp fly /usr/local/bin/
-cp gd1.3/libgd.a /usr/local/lib/
+: do not appear to need this
+: cp gd1.3/libgd.a /usr/local/lib/
 
 % start the crontab
 
 crontab -u user /home/user/BCGIT/BRIGHTON/bc-public-crontab
+
+% install cpan stuff
+
+sh ~user/BCGIT/BRIGHTON/bc-cpan.sh |& tee /tmp/bc-cpan.out
+
+%% TODO: am snapshotting (after shutdown) here as "Xable"; if this
+really does let me use X normally, keep this snapshot; else tweak
+
+%% TODO: can I xinit login at this point?
+
+%% TEST: to avoid losing edited files from babybrighton, this ssh lets
+me edit files live on dullon:
+
+: must do below as root
+sudo mkdir -p /DULLON/BCGIT; sudo chown -R user /DULLON
+sshfs -o allow_other root@192.168.0.2:/home/barrycarter/BCGIT /DULLON/BCGIT
+
+: then, as user, redirect symlink
+rm /home/user/.fvwm/.fvwm2rc
+ln -s /DULLON/BCGIT/BRIGHTON/.fvwm2rc /home/user/.fvwm
+
+
+% Cut and paste results of below into nopkglist.txt: the packages I
+want that CentOS doesn't provide:
+
+fgrep "No package " /tmp/yum-runme.out|perl -anle 'print $F[2]'|sort|uniq|less
 
 %% TODO: compare all lib and bin files from old machine (perhaps using fc11root) and new machine to see what I'm missing
 
@@ -194,8 +222,6 @@ needed) when doing something unusual or difficult
 
 %% TODO: look at TODOs from FEDORA and CENTOS and VM
 
-%% TODO: pwless root for wheel
-
 %% TODO: configure /etc/hosts on babybrighton
 
 %% TODO: symlink urxvt to rxvt
@@ -211,5 +237,11 @@ to /fc11oldroot from dullon or whatever (and redo this rsync to keep up?)
 
 %% TODO: fixed IP addr, no NetworkManager
 
- LocalWords:  vncserver bc runme Pavz groupinstall applydeltarpm deltarpm cd
- LocalWords:  xvfz nopkglist anle uniq
+%% TODO: at some point, decide how much to put in shell scripts and
+how much to run manually (stuff that needs pw or that I want to verify
+= manually?)
+
+%% TODO: create precedence level for TODO, and don't require user to
+stop for minor ones (or move minor TODO to end)
+
+

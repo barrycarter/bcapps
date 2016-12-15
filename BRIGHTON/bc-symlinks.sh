@@ -26,6 +26,7 @@ ln -s /bin /usr/X11R6/
 # that rely on a specific path (or my bclib.pl):
 
 ln -s /bin/php /usr/local/bin/
+ln -s /bin/urxvt /bin/rxvt
 ln -s /home/barrycarter/BCGIT/bclib.pl /usr/local/lib/
 
 # symlinks of important files to BCGIT
@@ -33,9 +34,9 @@ ln -s /home/barrycarter/BCGIT/bclib.pl /usr/local/lib/
 : startup-x.csh and startup-nox.csh no longer exist but I want to
 : remove them just in case they snuck in from other sources
 
-rm /home/user/.xinitrc /home/user/brighton-procs.txt /home/user/startup-x.sh /home/user/startup-nox.sh /home/user/.tcshrc
+rm -f /home/user/.xinitrc /home/user/brighton-procs.txt /home/user/startup-x.sh /home/user/startup-nox.sh /home/user/.tcshrc /home/user/.Xresources /home/user/.fvwm/.fvwm2rc
 
-ln -s /home/user/BCGIT/BRIGHTON/.tcshrc /home/user/BCGIT/BRIGHTON/.xinitrc /home/user/BCGIT/BRIGHTON/brighton-procs.txt /home/user
+ln -s /home/user/BCGIT/BRIGHTON/.tcshrc /home/user/BCGIT/BRIGHTON/.xinitrc /home/user/BCGIT/BRIGHTON/brighton-procs.txt /home/user/BCGIT/BRIGHTON/.Xresources /home/user
 
 : fvwm2 now keeps configs here
 ln -s /home/user/BCGIT/BRIGHTON/.fvwm2rc /home/user/.fvwm/
@@ -51,3 +52,9 @@ chown -R user /usr/local/etc /var/tmp/
 
 # TODO: I shouldnt have to do this
 mkdir -p /var/nagios/
+
+# pwless sudo access for wheel
+
+rm -f /etc/sudoers.d/wheel
+echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/wheel
+

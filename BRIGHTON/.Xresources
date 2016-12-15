@@ -1,0 +1,2 @@
+# prevents annoying change of title to tcsh prompt
+xterm*allowTitleOps: false

@@ -8,6 +8,9 @@ planets = Table[planet[i],{i,0,9}]
 AbsoluteTiming[sol = NDSolve[{posvel,accels},planets,{t,-366*500,366*500}, 
  MaxSteps->100000, AccuracyGoal -> 50]]
 
+sol = NDSolve[{posvel,accels},planets,{t,-366*500,366*500}, 
+	      MaxSteps->100000, AccuracyGoal -> 50, Method -> Adams]
+
 (* 
 
 This command:

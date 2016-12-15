@@ -9,10 +9,14 @@
 
 xrandr --size 1024x768
 
-# TODO: once I start using brighton directly, no reason to allow VNC
-# so turn this off
+# TODO: I shouldnt have to do this at all since /etc/X11/Xresources
+# already says "Xft.dpi: 96", but it turns out I do
 
-vncserver &
+xrandr --dpi 96
+
+# TODO: there really really must be a better way to do this
+
+xrdb ~/.Xresources
 
 # these can be set in xorg.conf but it's easier to do it this way
 xset dpms off

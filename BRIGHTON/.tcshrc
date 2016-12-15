@@ -40,4 +40,7 @@ source /home/user/BCGIT/aliases.txt
 # TODO: there are many things I am NOT copying from my current
 # .tcshrc, but will add as needed
 
+# some libs in /usr/local/lib, this hopefully ADDS to default path and
+# doesnt replace it..
 
+setenv LD_LIBRARY_PATH /usr/local/lib

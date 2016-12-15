@@ -6,7 +6,8 @@ EdgeResistance 250 10
 EdgeScroll 100 100
 ClickTime 750
 
-DeskTopSize 2x2
+# I prefer 4x4
+DeskTopSize 4x4
 MenuStyle * fvwm, Foreground white, Background cornflowerblue, Greyed grey40
 MenuStyle * Font -adobe-times-bold-r-*-*-14-*-*-*-*-*-*-*
 
@@ -49,6 +50,13 @@ Style xmag        Icon mag_glass.xpm, ClickToFocus
 Style xgraph      Icon graphs.xpm, ClickToFocus
 Style xmosaic     Color Green/Yellow, ClickToFocus
 
+# more minimal window styles for me
+Style "*xclock*" NoTitle, NoHandles, BorderWidth 0
+Style "xmessage" NoTitle, NoHandles, Sticky
+Style "*rdesktop*" NoTitle, NoHandles, BorderWidth 0
+
+# if a window names itself "sticky", this makes it sticky
+Style "*sticky*" NoTitle, NoHandles, Sticky
 
 # some simple default key bindings:
 Key Next         A       SCM     Next [*] Focus
@@ -74,13 +82,18 @@ Mouse 2 FST     A       Menu MenuFvwmWindowOps2 Nop
 Mouse 3 TSIF    A       RaiseLower
 
 ######################## Initialization Functions ############################
+
+# I dont want any of defaults, but do want autoraise
+# TODO: need pager while I am rdesktopping in, remove it long term
 AddToFunc StartFunction
-+ I Module FvwmAnimate
-+ I Module FvwmBanner
-+ I Module FvwmButtons
++ I Module FvwmAuto 200 Raise Nop
++ I Module FvwmPager 0 0
+# + I Module FvwmAnimate
+# + I Module FvwmBanner
+# + I Module FvwmButtons
 
 AddToFunc InitFunction
-+ I exec xsetroot -mod 2 2 -fg rgb:55/40/55 -bg rgb:70/50/70
+# + I exec xsetroot -mod 2 2 -fg rgb:55/40/55 -bg rgb:70/50/70
 
 # For some SM-s (like gnome-session) there is an internal background setter.
 AddToFunc SessionInitFunction
