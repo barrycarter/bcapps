@@ -35,6 +35,15 @@ echo "/dev/mapper/oldfedora-home /mnt/kemptown ext4 defaults,x-systemd.device-ti
 mkdir /mnt/kemptown
 mount /mnt/kemptown
 
+% allow guests on network to mount it
+
+yum -y install nfs-utils
+systemctl enable nfs-server
+systemctl start nfs
+echo "/mnt/kemptown 192.168.0.0/24(rw,no_root_squash)" > /etc/exports
+: this step is optional and automatic post reboot
+exportfs -a
+
 % Reminder: stop here if on physical machine
 
 % create swapspace on /mnt/kemptown/swapspace (TODO: there may be

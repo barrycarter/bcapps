@@ -6,43 +6,50 @@ vncserver so you can remote into the machine and create VMs on brighton
 installing vncserver is unnecessary.
 
 %% TODO: mention what options to use when installing CentOS 7,
-particularly network crap (perhaps similar to VM)
 
-% After rebooting and logging in as root:
+% After rebooting and logging in as root...
 
-: this step is optional -- it will create groups, but so will the next command
-: if you dont run this one
-yum -y grouplist
+% install desktop (this is not minimal, "X Window System" may be
+minimal), first creating group indices for future reference
 
-: install desktop
-: this is not minimal, "X Window System" may be minimal
+yum groups mark convert
 yum -y groupinstall "GNOME Desktop"
 
-: get virtualbox repo
+% get virtualbox repo
+
 curl -o /etc/yum.repos.d/virtualbox.repo http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo
 
-: and install virtualbox
-: xterm needed for GNOME desktop, but not installed sigh
-: vnc so I can access it remotely
-: gcc, bzip2 and kernel devel for guest additions
+% and install virtualbox, xterm (needed for GNOME desktop, but not
+installed sigh), vnc (for remote access), gcc, bzip2 and kernel-devel
+for guest additions later
+
 yum -y install VirtualBox-5.1 xterm tigervnc-server gcc kernel-devel-3.10.0-327.el7.x86_64 bzip2
 
 : below may be necessary and doesnt hurt to run
+
 /sbin/vboxconfig
 
-: this lets you rdesktop to guest directly wo installing vncserver
+% install guest-additions which allows rdesktop to guest directly (wo
+installing vncserver on guest)
+
 cd
+
 curl -O http://download.virtualbox.org/virtualbox/5.1.10/Oracle_VM_VirtualBox_Extension_Pack-5.1.10-112026.vbox-extpack
+
 chmod +x Oracle_VM_VirtualBox_Extension_Pack-5.1.10-112026.vbox-extpack
+
 : per https://www.virtualbox.org/manual/ch08.html#vboxmanage-extpack
+
 VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-5.1.10-112026.vbox-extpack
 
-% tigervnc-server turns on the firewall, blocking incoming vnc; to fix:
+% tigervnc-server turns on the firewall, blocking incoming vnc; to fix
+(if you plan to "ssh -X" or use ssh tunneling, this step is
+unnecessary)
 
-: if you plan to "ssh -X" or use ssh tunneling, this step is unnecessary
 systemctl disable firewalld
 
-% and set a password so it comes up automatically at reboot
+% and set a password so it comes up automatically at reboot:
+
 vncpasswd
 
 % Due to a hideous oversight by CentOS, GNOME/gdm doesnt come up

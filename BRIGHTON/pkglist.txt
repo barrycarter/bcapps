@@ -131,6 +131,7 @@ fuse-zip
 gitfs
 curlftpfs
 bindfs
+nfs-utils
 
 # window managers
 fvwm
