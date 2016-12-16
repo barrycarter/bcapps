@@ -171,6 +171,7 @@ tesseract
 ocrad
 gnu-free-mono-fonts
 xorg-x11-fonts-*
+inkscape
 # steam needs this
 mesa-dri-drivers
 
@@ -289,7 +290,6 @@ xemacs
 xemacs-packages-extra
 nano
 dos2unix
-
 
 # spreadsheets/graphing programs/etc
 gnumeric

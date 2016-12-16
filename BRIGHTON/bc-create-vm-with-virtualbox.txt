@@ -79,9 +79,27 @@ sh VBoxLinuxAdditions.run
   - Under Settings/Shared Folders add "/" and let VirtualBox name it
   "ROOT". Check auto-mount, but not readonly. Boot system.
 
-%% TODO: revise above, instead, add to fstab (10 is wheel group):
+%% EXPERIMENT:
+
+chmod +x /etc/rc.d/rc.local
+
+: add this to it, but dont bring up shared folder automount
+
+mount -t vboxsf -o uid=1000,gid=10 ROOT /media/sf_ROOT
+swapon /mnt/kemptown/swap
+
+: comment out this line in /etc/fstab
+
+/mnt/kemptown/swap swap swap defaults 0 0
+
+%% TODO: doing stuff above for vm, not necessary in real life, should
+i use nfs and/or worry that I'm tweaking environment unnecessarily?
+
+%% TODO: revise above, instead, add to fstab (10 is wheel group) (do not auto-mount!):
 
 ROOT /media/sf_ROOT vboxsf uid=1000,gid=10
+
+%% TODO: must remove swap line (maybe add to rc.local) to avoid boot error
 
   - You will now have access to brighton's root drive under /media/sf_ROOT/
 
