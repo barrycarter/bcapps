@@ -23,7 +23,9 @@ curl -o /etc/yum.repos.d/virtualbox.repo http://download.virtualbox.org/virtualb
 installed sigh), vnc (for remote access), gcc, bzip2 and kernel-devel
 for guest additions later
 
-yum -y install VirtualBox-5.1 xterm tigervnc-server gcc kernel-devel-3.10.0-327.el7.x86_64 bzip2
+: yes, you really need both kernel-devel below -- or do you
+
+yum -y install VirtualBox-5.1 xterm tigervnc-server gcc kernel-devel-3.10.0-327.el7.x86_64 bzip2 kernel-devel
 
 : below may be necessary and doesnt hurt to run
 
@@ -65,7 +67,7 @@ direct access to raw devices is bad) and follow bc-move-root.txt UNTIL
 "mount /mnt/kemptown" and then stop (the other steps will occur at the
 guest level)
 
-% reboot, login, and run "xinit &"
+% reboot, login as root, and run "xinit &"
 
 % You can now vnc into this machine and run virtualbox (may need to
 use port 5901 for vnc)

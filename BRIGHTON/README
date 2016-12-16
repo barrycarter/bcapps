@@ -65,18 +65,16 @@ yum -y install tcsh
 chsh -s /bin/tcsh root
 chsh -s /bin/tcsh user
 
-% follow steps in bc-move-root.txt if desired (starting with "create
-swapspace"...)
+%% TODO: should I move the steps above elsewhere?
 
-% run "make" in this directory, so the following rsync will push over
-yum-runme.sh
+% run "make" in this directory on dullon, so the following rsync will
+push over yum-runme.sh
 
-% rsync the latest BCGIT to babybrighton (dullon is 192.168.0.2)
+% rsync the latest BCGIT to babybrighton (dullon is 192.168.0.2) from
+babybrighton itself
 
 yum -y install rsync
 rehash
-
-: TODO: why did i have to do this after boot
 rsync -Pavz root@192.168.0.2:/home/barrycarter/BCGIT /home/user/
 
 : and private stuff I still need
@@ -89,6 +87,7 @@ rsync -Pavz root@192.168.0.2:/home/barrycarter/BCPRIV /home/user/
 yum groups mark convert
 
 : note this only shows up with "yum grouplist hidden" not w/o "hidden"
+
 yum -y groupinstall "X Window System"
 
 % Install "approved" repositories
@@ -109,34 +108,6 @@ sh ~user/BCGIT/BRIGHTON/yum-runme.sh |& tee /tmp/yum-runme.out
 
 % Consider snapshotting here as "postmassinstall" UNLESS yun-runme.sh
 dies on an error (warnings are ok). As always, "shutdown -h" first.
-
-% If snapshotting/rebooting, remember to rsync for latest BCGIT:
-
-rsync -Pavz root@192.168.0.2:/home/barrycarter/BCGIT /home/user/
-
-% add user to the vboxfs group for normal operation
-
-usermod -G vboxsf user
-: this isnt necessary since root can do anything, but...
-usermod -G vboxsf root
-: test that it worked
-groups user
-groups root
-
-% OPTIONAL: vboxfs DOES NOT ALLOW creation of symlinks (but does treat
-symlinks created by the host correctly), so, if you've done
-bc-move-root.txt, you won't be able to create symlinks on
-/mnt/kemptown from the guest; instead, do this on the HOST:
-
-: do only once on host machine, even if resetting guest
-
-ln -s /home/user/BCGIT/BRIGHTON/.tcshrc /home/user/BCGIT/BRIGHTON/.xinitrc /home/user/BCGIT/BRIGHTON/brighton-procs.txt /home/user
-
-: fvwm2 now keeps configs here
-ln -s /home/user/BCGIT/BRIGHTON/.fvwm2rc /home/user/.fvwm/
-
-%% TODO: run the steps above from a fresh machine, not sure they will
-work exactly
 
 % create symlinks:
 
@@ -163,9 +134,7 @@ crontab -u user /home/user/BCGIT/BRIGHTON/bc-public-crontab
 sh ~user/BCGIT/BRIGHTON/bc-cpan.sh |& tee /tmp/bc-cpan.out
 
 %% TODO: am snapshotting (after shutdown) here as "Xable"; if this
-really does let me use X normally, keep this snapshot; else tweak
-
-%% TODO: can I xinit login at this point?
+really does let me use X normally, keep this snapshot; else tweak (aka can I xinit login at this point?)
 
 %% TEST: to avoid losing edited files from babybrighton, this ssh lets
 me edit files live on dullon:

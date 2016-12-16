@@ -6,8 +6,7 @@
 drive, your LVMs may have the same name. If so, see
 ../FEDORA/lvm-name-conflict.txt
 
-% NOTE TO SELF: because I am reinstalling many times, I have scripted
-most of the below; scp over script if desired
+% Set up decryption:
 
 : initially, there is no "/etc/cryptsetup" and "/etc/crypttab" reads:
 
@@ -39,28 +38,45 @@ mount /mnt/kemptown
 
 yum -y install nfs-utils
 systemctl enable nfs-server
-systemctl start nfs
 echo "/mnt/kemptown 192.168.0.0/24(rw,no_root_squash)" > /etc/exports
-: this step is optional and automatic post reboot
-exportfs -a
 
-% Reminder: stop here if on physical machine
+: no need to do these since we will reboot
+: systemctl start nfs
+: exportfs -a
 
-% create swapspace on /mnt/kemptown/swapspace (TODO: there may be
-better ways of doing this but I'm wary of messing w/ my 8TB drive
-since I've copied stuff over and made changes)
+% NOTE: stop here if on physical machine
 
-: only need to do steps below once
+% NOTE: start here on virtual machine
+
+% Boot virtual machine and add NFS mount to /etc/fstab:
+
+yum -y install nfs-utils
+mkdir /mnt/kemptown
+echo "192.168.0.3:/mnt/kemptown /mnt/kemptown nfs" >> /etc/fstab
+: step below is optional but check on reboot
+mount /mnt/kemptown
+
+% If /mnt/kemptown/swap not already created:
+
 dd if=/dev/zero of=/mnt/kemptown/swap bs=1000000000 count=128 status=progress&
 mkswap /mnt/kemptown/swap
 : below as recommended
 chmod 0600 /mnt/kemptown/swap
 
-: TODO: this is not working due to unchangeable perms, grumble
-: make sure fstab looks ok then add swapspace
-less /etc/fstab
-echo "/mnt/kemptown/swap swap swap defaults 0 0" >> /etc/fstab
-swapon /mnt/kemptown/swap
+% to automount swapspace:
+
+chmod +x /etc/rc.d/rc.local
+
+: and then add these lines to /etc/rc.d/rc.local
+
+echo "losetup /dev/loop0 /mnt/kemptown/swap" >> /etc/rc.d/rc.local
+echo "swapon /dev/loop0" >> /etc/rc.d/rc.local
+
+%% TODO: above step is NOT working from rc.local, will create loop
+device, but swap fails, can fix this by running losetup with next loop
+device and "swapon" that after reboot or can ignore entirely
+
+%% TODO: rebooting at this step since swap is being weird?
 
 % OPTIONAL: move user's home to /mnt/kemptown:
 
@@ -77,6 +93,7 @@ rm -rf /home/user
 : readd user with new directory
 useradd -d /mnt/kemptown/user -g wheel -u 1000 user
 passwd user
+yum -y install tcsh
 chsh -s /bin/tcsh user
 : this is useful so I can refer to /home/user
 ln -s /mnt/kemptown/user /home
@@ -93,10 +110,16 @@ printf '1,$s/keepcache=0/keepcache=1/\nwq\n' | ex /etc/yum.conf
 % and then move /var/cache over to the large drive
 
 : remove the fresh install cache which is nearly empty
+find /var/cache -type f
 rm -rf /var/cache
 
-: only need to do this once
+: only need to do mkdir once
 mkdir -p /mnt/kemptown/var/cache
 ln -s /mnt/kemptown/var/cache /var/
 
-: if desired "shutdown -h now" and create a "postrootmove" snapshot
+% If desired "shutdown -h now" and create a "postrootmove" snapshot
+(after saving snapshot, do reboot to make sure both /mnt/kemptown and
+swapspace come up properly; if not, no point in making snapshot)
+
+%% TODO: for me, "shutdown -h now" hangs, so I have to force the
+shutdown-- this is probably bad

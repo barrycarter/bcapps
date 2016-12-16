@@ -17,7 +17,8 @@ babybrighton as a virtual machine:
 
     - If you are overly aggressive with settings in the wizard,
     "invalid settings detected" will show up on your settings
-    tab. Deal with these issues as directed.
+    tab. Deal with these issues as directed. NOTE TO SELF: on my
+    machine, 49881M is max you can assign to memory
 
     - General/Advanced: turn on cut/paste and drag n drop bidirectionally 
 
@@ -65,55 +66,21 @@ installing CentOS 7:
 
   - Run:
 
-yum -y install bzip2 gcc make kernel-devel-3.10.0-327.el7.x86_64
+yum -y install bzip2 gcc make perl
+
+: if below fails "rpm -e kernel-devel" and try again
+rpm -i ftp://fr2.rpmfind.net/linux/centos/7.2.1511/os/x86_64/Packages/kernel-devel-3.10.0-327.el7.x86_64.rpm
 
 mount /dev/cdrom /mnt/
 cd /mnt/
+export KERN_INCL=/usr/include
+export KERN_DIR=/usr/src/kernels/3.10.0-327.el7.x86_64
 sh VBoxLinuxAdditions.run
-: if warned, most likely ok to proceed
 
-: ignore Could not find the X.Org or XFree86 Window System, skipping.
+: you can safely ignore the Could not find the X.Org or XFree86 Window
+: System, skipping. warning above
 
   - "shutdown -h now" and create "postguest" snapshot if desired
 
-  - Under Settings/Shared Folders add "/" and let VirtualBox name it
-  "ROOT". Check auto-mount, but not readonly. Boot system.
-
-%% EXPERIMENT:
-
-chmod +x /etc/rc.d/rc.local
-
-: add this to it, but dont bring up shared folder automount
-
-mount -t vboxsf -o uid=1000,gid=10 ROOT /media/sf_ROOT
-swapon /mnt/kemptown/swap
-
-: comment out this line in /etc/fstab
-
-/mnt/kemptown/swap swap swap defaults 0 0
-
-%% TODO: doing stuff above for vm, not necessary in real life, should
-i use nfs and/or worry that I'm tweaking environment unnecessarily?
-
-%% TODO: revise above, instead, add to fstab (10 is wheel group) (do not auto-mount!):
-
-ROOT /media/sf_ROOT vboxsf uid=1000,gid=10
-
-%% TODO: must remove swap line (maybe add to rc.local) to avoid boot error
-
-  - You will now have access to brighton's root drive under /media/sf_ROOT/
-
-  - NOTE: you cannot access brighton's devices this way as they now
-  look like regular files:
-
-[root@babybrighton ~]# ls -l /media/sf_ROOT/dev/sdb
--rwxrwx---. 1 root vboxsf 0 Dec 11 23:55 /media/sf_ROOT/dev/sdb
-
-You *can* "less -f" them (despite their zero size).
-
-  - Symlinks that let us refer to brighton's /mnt/kemptown as though
-  it were our own
-
-ln -s /media/sf_ROOT/mnt/kemptown /mnt
-
-
+% OPTIONAL: if moving root, continue with bc-move-root.txt at "start
+here on virtual machine"

@@ -5,11 +5,16 @@ Unix second -16156800 = Unix day -187 *)
 
 planets = Table[planet[i],{i,0,9}]
 
+sol = NDSolve[{posvel,accels},planets,{t,-366*500,366*500}, 
+	      MaxSteps->100000, AccuracyGoal -> 50, Method -> Adams]
+
+sol = NDSolve[{posvel,accels},planets,{t,366*500,366*750}, 
+	      MaxSteps->100000, AccuracyGoal -> 50, Method -> Adams]
+
+
 AbsoluteTiming[sol = NDSolve[{posvel,accels},planets,{t,-366*500,366*500}, 
  MaxSteps->100000, AccuracyGoal -> 50]]
 
-sol = NDSolve[{posvel,accels},planets,{t,-366*500,366*500}, 
-	      MaxSteps->100000, AccuracyGoal -> 50, Method -> Adams]
 
 (* 
 
