@@ -58,7 +58,7 @@ mkdir -p /var/nagios/
 rm -f /etc/sudoers.d/wheel /etc/sudoers.d/tty
 echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/wheel
 
-# TODO: slightly worry that, even with quotes, "!" may not be escaped
-# (works fine from command line, but...)
+# this works fine from a shell script POSSIBLY because "set noglob" is
+# set magically somehow
 
-echo "Defaults \!requiretty" > /etc/sudoers.d/tty
+echo 'Defaults !requiretty' > /etc/sudoers.d/tty

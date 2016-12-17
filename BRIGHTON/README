@@ -106,8 +106,14 @@ yum -y install deltarpm
 
 sh ~user/BCGIT/BRIGHTON/yum-runme.sh |& tee /tmp/yum-runme.out
 
+% and bc-cpan.sh
+
+sh ~user/BCGIT/BRIGHTON/bc-cpan.sh |& tee /tmp/cpan.out
+
 % Consider snapshotting here as "postmassinstall" UNLESS yun-runme.sh
 dies on an error (warnings are ok). As always, "shutdown -h" first.
+
+% If needed (or if restoring snapsht here), rsync over BCGIT again
 
 % create symlinks:
 
@@ -129,12 +135,23 @@ chmod +x /usr/local/bin/fly
 
 crontab -u user /home/user/BCGIT/BRIGHTON/bc-public-crontab
 
-% install cpan stuff
+% install cpan stuff (todo: consider merging this into the mass
+install, it's fairly tedious)
 
 sh ~user/BCGIT/BRIGHTON/bc-cpan.sh |& tee /tmp/bc-cpan.out
 
+% add to /etc/rc.local (TODO: find a better way to do this) to reset
+time on reboot (TODO: don't realy on non-NIST server?):
+
+rdate -s utcnist.colorado.edu
+
+% Import databases as necessary:
+
+
+
 %% TODO: am snapshotting (after shutdown) here as "Xable"; if this
-really does let me use X normally, keep this snapshot; else tweak (aka can I xinit login at this point?)
+really does let me use X normally, keep this snapshot; else tweak (aka
+can I xinit login at this point?)
 
 %% TEST: to avoid losing edited files from babybrighton, this ssh lets
 me edit files live on dullon:

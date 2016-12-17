@@ -10,7 +10,8 @@ set ignoreeof
 # also includes everything in BCGIT down to one level
 set path = (/bin /usr/bin /usr/local/bin /sbin /usr/sbin /usr/local/sbin \
             /old/bin /old/usr/bin /old/usr/local/bin /old/sbin /old/usr/sbin \
-           /old/usr/local/sbin /home/user/BCGIT /home/user/BCGIT/*)
+           /old/usr/local/sbin /home/user/BCGIT /home/user/BCGIT/* \
+           /home/user/bin /home/user/PERL)
 
 # for QT to work properly
 
@@ -34,8 +35,9 @@ set noclobber
 # default locale best for sorting and not breaking things
 setenv LC_ALL C
 
-# my aliases file
+# my aliases files
 source /home/user/BCGIT/aliases.txt
+source /home/user/BCPRIV/aliases.txt
 
 # TODO: there are many things I am NOT copying from my current
 # .tcshrc, but will add as needed

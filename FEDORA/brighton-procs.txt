@@ -8,8 +8,9 @@
 <may>
 
 # X11 + wm
-/usr/libexec/Xorg
+X
 fvwm2
+/usr/libexec/fvwm/2.6.6/FvwmAuto
 
 # the init process
 /usr/lib/systemd/systemd
@@ -73,8 +74,8 @@ sshd:
 # killing this also respawns instantly, though I think this one is OK
 /sbin/agetty
 
-# TODO: remove this once I cutover to brighton completely
-/usr/libexec/vino-server
+# my walkaround alerts can last for hours
+zenity
 
 </may>
 
@@ -87,7 +88,7 @@ sendmail:
 /usr/sbin/httpd
 /usr/sbin/crond
 /usr/sbin/xinetd
-/usr/libexec/mysqld
+/usr/bin/mysqld_safe
 /usr/sbin/atd
 /usr/sbin/sshd
 /usr/sbin/dnsmasq
@@ -148,6 +149,9 @@ login
 /usr/libexec/gconfd-2
 /sbin/audispd
 /usr/libexec/rtkit-daemon
+
+# if this process is running over 10m, something is wrong
+/home/user/BCGIT/bc-create-capone-iim.pl
 
 </kill>
 

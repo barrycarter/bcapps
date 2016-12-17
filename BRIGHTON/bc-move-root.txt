@@ -120,6 +120,3 @@ ln -s /mnt/kemptown/var/cache /var/
 % If desired "shutdown -h now" and create a "postrootmove" snapshot
 (after saving snapshot, do reboot to make sure both /mnt/kemptown and
 swapspace come up properly; if not, no point in making snapshot)
-
-%% TODO: for me, "shutdown -h now" hangs, so I have to force the
-shutdown-- this is probably bad

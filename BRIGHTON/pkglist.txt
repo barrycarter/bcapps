@@ -89,6 +89,8 @@ mono-core
 python3-pip
 android
 perl
+php
+php-mysql
 
 # shells
 tcsh
