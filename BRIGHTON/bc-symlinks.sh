@@ -47,8 +47,9 @@ ln -s /usr/share/dict /usr/
 
 # directories my programs use and chown them to user
 
-mkdir -p /usr/local/etc/locks /usr/local/etc/registry /var/tmp/montastic
-chown -R user /usr/local/etc /var/tmp/
+# TODO: try to generalize more for /var/tmp but note it has "/tmp" perms
+mkdir -p /usr/local/etc/locks /usr/local/etc/registry /var/tmp/montastic /var/tmp/cache
+chown -R user /usr/local/etc /var/tmp/*
 
 # TODO: I shouldnt have to do this
 mkdir -p /var/nagios/
@@ -58,7 +59,7 @@ mkdir -p /var/nagios/
 rm -f /etc/sudoers.d/wheel /etc/sudoers.d/tty
 echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/wheel
 
-# this works fine from a shell script POSSIBLY because "set noglob" is
-# set magically somehow
+# this works fine from a shell script (ie, the exclamation mark isn't
+# expanded) POSSIBLY because "set noglob" is set magically somehow
 
 echo 'Defaults !requiretty' > /etc/sudoers.d/tty

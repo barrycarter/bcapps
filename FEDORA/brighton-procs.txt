@@ -76,6 +76,7 @@ sshd:
 
 # my walkaround alerts can last for hours
 zenity
+/home/user/BCGIT/bc-walkaround.pl
 
 </may>
 

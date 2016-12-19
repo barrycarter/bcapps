@@ -115,6 +115,12 @@ dies on an error (warnings are ok). As always, "shutdown -h" first.
 
 % If needed (or if restoring snapsht here), rsync over BCGIT again
 
+%% TODO: Import databases
+
+
+
+
+
 % create symlinks:
 
 sh ~user/BCGIT/BRIGHTON/bc-symlinks.sh |& tee /tmp/bc-symlinks.out
@@ -135,18 +141,21 @@ chmod +x /usr/local/bin/fly
 
 crontab -u user /home/user/BCGIT/BRIGHTON/bc-public-crontab
 
-% install cpan stuff (todo: consider merging this into the mass
-install, it's fairly tedious)
-
-sh ~user/BCGIT/BRIGHTON/bc-cpan.sh |& tee /tmp/bc-cpan.out
-
 % add to /etc/rc.local (TODO: find a better way to do this) to reset
-time on reboot (TODO: don't realy on non-NIST server?):
+time on reboot (TODO: don't rely on non-NIST server?):
 
 rdate -s utcnist.colorado.edu
 
-% Import databases as necessary:
+% TODO: Import databases as necessary (more instructs here?)
 
+% OPTIONAL: if new databases are not in standard places, example:
+
+systemctl stop mariadb
+mv /var/lib/mysql /var/lib/mysql.shipped
+ln -s /mnt/kemptown/mysql /var/lib
+systemctl start mariadb
+
+: and test
 
 
 %% TODO: am snapshotting (after shutdown) here as "Xable"; if this
