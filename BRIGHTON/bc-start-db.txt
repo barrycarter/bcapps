@@ -1,0 +1,43 @@
+
+% Start databases
+
+: note that dbs may already be stopped/enabled
+
+systemctl enable postgresql mariadb
+systemctl stop postgresql mariadb
+postgresql-setup initdb
+systemctl start postgresql mariadb
+
+% OPTIONAL: if desired, move postgres and mysql databases to larger drive:
+
+systemctl stop postgresql mariadb
+mv /var/lib/mysql /var/lib/pgsql /mnt/kemptown/
+ln -s /mnt/kemptown/mysql /mnt/kemptown/pgsql /var/lib
+
+% If moving dirs as above, must use this form to start dbs (otherwise
+can use systemctl start postgresql mariadb):
+
+postgresql-setup initdb
+mysqld_safe &
+sudo -u postgres pg_ctl -D /var/lib/pgsql/data start
+
+%% TODO: tweak systemd scripts so I can start dbs without hack above
+
+% Import databases (note to self: "use --host=/var/tmp" for
+postgresql, since I keep the socket there to avoid autodeletion by
+tmpwatch)
+
+: dump databases on dullon
+
+pg_dumpall > pgsql-super-dump.txt
+
+: note to self -- during testing perhaps dump only 'test' db
+
+mysqldump --all-databases > mysql-super-dump.txt
+
+: rsync over to brighton, and then, on brighton:
+
+sudo -u postgres psql < pgsql-super-dump.txt
+sudo mysql < mysql-super-dump.txt
+
+: test using "psql -d main" and "mysql -u root" or similar

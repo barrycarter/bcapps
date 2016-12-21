@@ -113,46 +113,15 @@ sh ~user/BCGIT/BRIGHTON/bc-cpan.sh |& tee /tmp/cpan.out
 % Consider snapshotting here as "postmassinstall" UNLESS yun-runme.sh
 dies on an error (warnings are ok). As always, "shutdown -h" first.
 
-% If needed (or if restoring snapsht here), rsync over BCGIT again
+% If needed (or if restoring snapshot here), rsync over BCGIT again
 
-%% TODO: get db moves working purely based on symlinks, not "kludge" below
+% Cut and paste results of below into nopkglist.txt: the packages I
+want that CentOS doesn't provide:
 
-% OPTIONAL: if desired, move postgres and mysql databases to larger drive:
+fgrep "No package " /tmp/yum-runme.out|perl -anle 'print $F[2]'|sort|uniq|less
 
-: edit /etc/my.cnf for datadir=/mnt/kemptown/mysql and socket and
-: symbolic-links=1
-
-
-
-
-systemctl stop postgresql mariadb
-mv /var/lib/mysql /var/lib/pgsql /mnt/kemptown/
-ln -s /mnt/kemptown/mysql /mnt/kemptown/pgsql /var/lib
-chown mysql /var/lib/mysql
-chown postgres /var/lib/pgsql
-systemctl start postgresql mariadb
-
-% Get databases running:
-
-systemctl enable postgresql mariadb
-postgresql-setup initdb
-systemctl start postgresql mariadb
-
-% Import databases (note to self: "use --host=/var/tmp" for
-postgresql, since I keep the socket there to avoid autodeletion by
-tmpwatch)
-
-: dump databases on dullon
-
-pg_dumpall > pgsql-super-dump.txt
-mysqldump --all-databases > mysql-super-dump.txt
-
-: rsync over to brighton, and then, on brighton:
-
-sudo -u postgres psql < pgsql-super-dump.txt
-sudo mysql < mysql-super-dump.txt
-
-: test using "psql -d main" and "mysql -u root" or similar
+%% TODO: see bc-start-db.txt (I can't get dbs working, but want to get
+their verbiage out of the way)
 
 % create symlinks:
 
@@ -181,36 +150,12 @@ rdate -s utcnist.colorado.edu
 
 % TODO: Import databases as necessary (more instructs here?)
 
-% OPTIONAL: if new databases are not in standard places, example:
-
-systemctl stop mariadb
-mv /var/lib/mysql /var/lib/mysql.shipped
-ln -s /mnt/kemptown/mysql /var/lib
-systemctl start mariadb
-
-: and test
-
-
 %% TODO: am snapshotting (after shutdown) here as "Xable"; if this
 really does let me use X normally, keep this snapshot; else tweak (aka
 can I xinit login at this point?)
 
-%% TEST: to avoid losing edited files from babybrighton, this ssh lets
-me edit files live on dullon:
-
-: must do below as root
-sudo mkdir -p /DULLON/BCGIT; sudo chown -R user /DULLON
-sshfs -o allow_other root@192.168.0.2:/home/barrycarter/BCGIT /DULLON/BCGIT
-
-: then, as user, redirect symlink
-rm /home/user/.fvwm/.fvwm2rc
-ln -s /DULLON/BCGIT/BRIGHTON/.fvwm2rc /home/user/.fvwm
-
-
-% Cut and paste results of below into nopkglist.txt: the packages I
-want that CentOS doesn't provide:
-
-fgrep "No package " /tmp/yum-runme.out|perl -anle 'print $F[2]'|sort|uniq|less
+%% TODO: explain how to use mount so babybrighton can edit files
+directly on dullon in this directory
 
 %% TODO: compare all lib and bin files from old machine (perhaps using fc11root) and new machine to see what I'm missing
 

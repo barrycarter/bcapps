@@ -34,12 +34,22 @@ ln -s /home/barrycarter/BCGIT/bclib.pl /usr/local/lib/
 : startup-x.csh and startup-nox.csh no longer exist but I want to
 : remove them just in case they snuck in from other sources
 
-rm -f /home/user/.xinitrc /home/user/brighton-procs.txt /home/user/startup-x.sh /home/user/startup-nox.sh /home/user/.tcshrc /home/user/.Xresources /home/user/.fvwm/.fvwm2rc
+: .login is probably irrelevant but just to play it safe
+
+rm -f /home/user/.xinitrc /home/user/brighton-procs.txt /home/user/startup-x.sh /home/user/startup-nox.sh /home/user/.tcshrc /home/user/.Xresources /home/user/.fvwm/.fvwm2rc /home/user/.login
 
 ln -s /home/user/BCGIT/BRIGHTON/.tcshrc /home/user/BCGIT/BRIGHTON/.xinitrc /home/user/BCGIT/BRIGHTON/brighton-procs.txt /home/user/BCGIT/BRIGHTON/.Xresources /home/user
 
+: root should use dot files from user
+
+rm -f /root/.xinitrc /root/.tcshrc /root/.Xresources /root/.fvwm/.fvwm2rc /root/.login
+
+ln -s /home/user/.xinitrc /home/user/.tcshrc /home/user/.Xresources /root
+
 : fvwm2 now keeps configs here
 ln -s /home/user/BCGIT/BRIGHTON/.fvwm2rc /home/user/.fvwm/
+
+ln -s /home/user/.fvwm/.fvwm2rc /root/.fvwm
 
 # and some because I'm using older system
 

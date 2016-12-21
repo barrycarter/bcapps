@@ -5,6 +5,7 @@ efibootmgr
 
 # system tools
 
+strace
 whois
 net-tools
 words

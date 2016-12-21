@@ -46,3 +46,7 @@ source /home/user/BCPRIV/aliases.txt
 # doesnt replace it..
 
 setenv LD_LIBRARY_PATH /usr/local/lib
+
+# the only postgresql database I have/use is "main"
+
+setenv PGDATABASE main
