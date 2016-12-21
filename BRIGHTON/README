@@ -115,11 +115,44 @@ dies on an error (warnings are ok). As always, "shutdown -h" first.
 
 % If needed (or if restoring snapsht here), rsync over BCGIT again
 
-%% TODO: Import databases
+%% TODO: get db moves working purely based on symlinks, not "kludge" below
+
+% OPTIONAL: if desired, move postgres and mysql databases to larger drive:
+
+: edit /etc/my.cnf for datadir=/mnt/kemptown/mysql and socket and
+: symbolic-links=1
 
 
 
 
+systemctl stop postgresql mariadb
+mv /var/lib/mysql /var/lib/pgsql /mnt/kemptown/
+ln -s /mnt/kemptown/mysql /mnt/kemptown/pgsql /var/lib
+chown mysql /var/lib/mysql
+chown postgres /var/lib/pgsql
+systemctl start postgresql mariadb
+
+% Get databases running:
+
+systemctl enable postgresql mariadb
+postgresql-setup initdb
+systemctl start postgresql mariadb
+
+% Import databases (note to self: "use --host=/var/tmp" for
+postgresql, since I keep the socket there to avoid autodeletion by
+tmpwatch)
+
+: dump databases on dullon
+
+pg_dumpall > pgsql-super-dump.txt
+mysqldump --all-databases > mysql-super-dump.txt
+
+: rsync over to brighton, and then, on brighton:
+
+sudo -u postgres psql < pgsql-super-dump.txt
+sudo mysql < mysql-super-dump.txt
+
+: test using "psql -d main" and "mysql -u root" or similar
 
 % create symlinks:
 
@@ -240,4 +273,29 @@ how much to run manually (stuff that needs pw or that I want to verify
 %% TODO: create precedence level for TODO, and don't require user to
 stop for minor ones (or move minor TODO to end)
 
+%% TODO: note cutover steps when I must stop making changes on dullon and start making changes only on brighton
 
+%% TODO: check each job in cron is actually working
+
+%% REF: /usr/lib/systemd/system
+
+%% REF: https://www.freedesktop.org/software/systemd/man/systemd.unit.html
+
+%% TODO: why is elinks coming up black/white not in color?
+
+%% TODO: why does login still say "home dir NA, using /" even when I
+own homedir (even does this for root) and it exists (deferred mounting?!)
+
+%% TODO: at what point during login do "group permissions" kick in??
+
+%% TODO: review brighton-procs.txt
+
+%% TODO: make sure daemon-checker complains properly when mysqld not
+running (it wasn't for some reason earlier)
+
+%% TODO: set default timezone
+
+%% TODO: instead of installing unavailables from source, consider
+using RPMs, but test them and don't let them break anything else
+(rpmfind.net?); also, if reinstalling multiple times dont dl the same
+RPM repeatedly (store on big drive and check before re-dling)
