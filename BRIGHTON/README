@@ -16,7 +16,7 @@ directory.
 % OPTIONAL: on dullon add a line like this to /etc/hosts so you can
 access the machine as babybrighton
 
-192.168.0.100 babybrighton 
+192.168.0.100 babybrighton
 
 %% TODO: whine about default CentOS7 not enable network (+ not even
 showing option until you choose partitioning) -- maybe take screenshot
@@ -88,7 +88,7 @@ yum groups mark convert
 
 : note this only shows up with "yum grouplist hidden" not w/o "hidden"
 
-yum -y groupinstall "X Window System"
+yum -y groupinstall "X Window System" multimedia
 
 % Install "approved" repositories
 
@@ -147,8 +147,6 @@ crontab -u user /home/user/BCGIT/BRIGHTON/bc-public-crontab
 time on reboot (TODO: don't rely on non-NIST server?):
 
 rdate -s utcnist.colorado.edu
-
-% TODO: Import databases as necessary (more instructs here?)
 
 %% TODO: am snapshotting (after shutdown) here as "Xable"; if this
 really does let me use X normally, keep this snapshot; else tweak (aka
@@ -244,3 +242,8 @@ running (it wasn't for some reason earlier)
 using RPMs, but test them and don't let them break anything else
 (rpmfind.net?); also, if reinstalling multiple times dont dl the same
 RPM repeatedly (store on big drive and check before re-dling)
+
+% REF: when adjusting volume on guests, make sure volume is correct on
+brighton, host, as well (serious problems if not)
+
+

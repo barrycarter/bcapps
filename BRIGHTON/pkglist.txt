@@ -142,7 +142,7 @@ fvwm
 # utilities
 aspell
 
-# audio
+# audio and sound
 # TODO: voice recognition
 # TODO: Dragon Naturally free version for Linux?
 ears
@@ -151,7 +151,10 @@ audacity
 sox
 lame
 mp3gain
-
+alsa-utils
+alsa-firmware
+pulseaudio
+pavucontrol
 
 # graphics incl scanning and fonts
 # some of these may be installed by a groupinstall
@@ -203,7 +206,7 @@ britannica
 elinks
 links
 
-# networking
+# networking and telephony
 telnet
 squid
 pidgin
@@ -214,6 +217,13 @@ nmap
 nmap-ncat
 sniffit
 netcat
+ekiga
+# below two NA, just adding it to remind myself
+linphone
+yate
+# required for linphone source install
+speex-devel
+belle-sip
 
 # math/science tools
 qgis
