@@ -120,6 +120,10 @@ their verbiage out of the way)
 
 sh ~user/BCGIT/BRIGHTON/bc-symlinks.sh |& tee /tmp/bc-symlinks.out
 
+% disable services (for next reboot)
+
+sh ~user/BCGIT/BRIGHTON/bc-servicectl.sh |& tee /tmp/bc-servicectl.sh
+
 % Ugly install of fly (older version, newer is broken)
 
 cd /root/build
@@ -135,59 +139,6 @@ chmod +x /usr/local/bin/fly
 % start the crontab
 
 crontab -u user /home/user/BCGIT/BRIGHTON/bc-public-crontab
-
-% add to /etc/rc.local (TODO: find a better way to do this) to reset
-time on reboot (TODO: don't rely on non-NIST server?):
-
-rdate -s utcnist.colorado.edu
-
-% remove unwanted services (no need to "stop" these, since I plan to
-reboot anyway)
-
-%% testing below (remember to tweak /etc/network-scripts or wahtever)
-
-ps -ef | fgrep -v '[' | perl -anle 'print $F[7]' | sort -u
-
-: TODO: put these in file
-
-systemctl disable auditd NetworkManager tuned cups wpa_supplicant
-
-: the above die nicely on reboot
-
-systemctl disable irqbalance avahi-daemon vboxadd-service
-
-: the above die nicely (after editing)
-
-systemctl mask gssproxy alsa-state
-
-: all good after above
-
-: testing
-
-systemctl mask systemd-journald systemd-udevd
-
-
-: the below do NOT die nicely
-systemctl disable alsa-state lvm2-lvmetad lvm2-lvmetad.socket
-
-
-systemd-udevd systemd-logind systemd-journald
-
-systemctl mask gssproxy 
-
-
-
-
-auditd avahi-daemon cups gssproxy irqbalance lvm2-lvmetad
-
-
-systemctl disable NetworkManager systemd-journald systemd-udevd tuned
-systemctl disable wpa_supplicant systemd-journald.socket systemd-logind
-systemctl disable lvm2-lvmetad.socket vboxadd-service polkit
-systemctl disable systemd-udevd-control.socket systemd-udevd-kernel.socket
-systemctl disable alsa-state getty@tty1
-
-
 
 %% TODO: am snapshotting (after shutdown) here as "Xable"; if this
 really does let me use X normally, keep this snapshot; else tweak (aka
@@ -299,3 +250,6 @@ showing option until you choose partitioning) -- maybe take screenshot
 %% TODO: babybrighton doesnt seem to keep time well, keep an eye on this
 
 %% TODO: change .100 to .3 if networking-scripts file when going live
+
+%% TODO: get nagios working
+

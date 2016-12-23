@@ -22,10 +22,18 @@ mkdir -p /usr/lib/X11 /usr/X11R6/
 ln -s /usr/libexec/fvwm/2.6.6 /usr/lib/X11/fvwm2
 ln -s /bin /usr/X11R6/
 
-# networking
+# networking (must copy, /home/user/BCGIT doesnt exist early enough)
 
 rm /etc/sysconfig/network-scripts/ifcfg-enp0s3
-ln -s /home/user/BCGIT/BRIGHTON/ifcfg-enp0s3 /etc/sysconfig/network-scripts/
+cp /home/user/BCGIT/BRIGHTON/ifcfg-enp0s3 /etc/sysconfig/network-scripts/
+
+# startup (/etc/rc.local is just a symlink)
+rm /etc/rc.d/rc.local
+
+# this MUST be a copy, not a symlink since /home/user/BCGIT doesnt
+# exist early enough
+
+cp /home/user/BCGIT/BRIGHTON/rc.local /etc/rc.d
 
 # other helpful symlinks if you're using older software or programs
 # that rely on a specific path (or my bclib.pl):
@@ -63,8 +71,10 @@ ln -s /usr/share/dict /usr/
 # directories my programs use and chown them to user
 
 # TODO: try to generalize more for /var/tmp but note it has "/tmp" perms
-mkdir -p /usr/local/etc/locks /usr/local/etc/registry /var/tmp/montastic /var/tmp/cache
+# NOTE: I want to keep my nagios stuff where it was before thus /var/nagios
+mkdir -p /usr/local/etc/locks /usr/local/etc/registry /var/tmp/montastic /var/tmp/cache /var/nagios
 chown -R user /usr/local/etc /var/tmp/*
+chown -R nagios /var/nagios
 
 # TODO: I shouldnt have to do this
 mkdir -p /var/nagios/

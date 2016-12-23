@@ -16,6 +16,7 @@ aldo
 an
 android
 battlestar
+belle-sip
 bindfs
 boggle
 bomber
@@ -41,6 +42,7 @@ gif2asc
 gitfs
 gnumeric
 ical
+linphone
 lucene
 mille
 nessus
@@ -82,4 +84,5 @@ xpaint
 xpilot
 xsnow
 xteddy
+yate
 yaz

@@ -55,7 +55,7 @@ xterm -geometry 80x53 +sb -bg gray45 -bd gray45 -T "SCREEN II" -n "SCREEN II" &
 
 # runs elinks in an extra wide rxvt to the right of the main fvwm screen
 
-rxvt -geometry 165x52+1024+26 -T ELINKS -n ELINKS -e elinks &
+rxvt -geometry 165x52+1024+26 -T ELINKS -n ELINKS -tn vt100 -e elinks &
 
 # it's useful to have an extra wide screen just above the main fvwm screen
 rxvt -geometry 165x52+0+2339 -T WIDESCREEN -n WIDESCREEN &

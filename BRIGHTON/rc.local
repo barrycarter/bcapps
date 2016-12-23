@@ -1,0 +1,7 @@
+# next line was in rc.local and I didnt want to remove it
+touch /var/lock/subsys/local
+# TODO: this creates swapspace, but this step wont be necessary once we go live
+losetup /dev/loop0 /mnt/kemptown/swap
+swapon /dev/loop0
+# hard reset time at reboot
+rdate -s utcnist.colorado.edu
