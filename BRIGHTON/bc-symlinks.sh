@@ -22,12 +22,17 @@ mkdir -p /usr/lib/X11 /usr/X11R6/
 ln -s /usr/libexec/fvwm/2.6.6 /usr/lib/X11/fvwm2
 ln -s /bin /usr/X11R6/
 
+# networking
+
+rm /etc/sysconfig/network-scripts/ifcfg-enp0s3
+ln -s /home/user/BCGIT/BRIGHTON/ifcfg-enp0s3 /etc/sysconfig/network-scripts/
+
 # other helpful symlinks if you're using older software or programs
 # that rely on a specific path (or my bclib.pl):
 
 ln -s /bin/php /usr/local/bin/
 ln -s /bin/urxvt /bin/rxvt
-ln -s /home/barrycarter/BCGIT/bclib.pl /usr/local/lib/
+ln -s /home/user/BCGIT/bclib.pl /usr/local/lib/
 
 # symlinks of important files to BCGIT
 

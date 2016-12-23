@@ -5,6 +5,7 @@ efibootmgr
 
 # system tools
 
+dbus-x11
 strace
 whois
 net-tools

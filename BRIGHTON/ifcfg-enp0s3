@@ -1,0 +1,12 @@
+# /etc/sysconfig/network-scripts/ifcfg-enp0s3 per
+# http://www.mustbegeek.com/configure-static-ip-address-in-centos/
+DEVICE="enp0s3"
+TYPE="Ethernet"
+UUID="df4f20e1-e1b1-4b15-8549-31f4c7b244c6"
+NAME="enp0s3"
+ONBOOT="yes"
+BOOTPROTO="static"
+IPADDR=192.168.0.100
+NETMASK=255.255.255.0
+GATEWAY=192.168.0.1
+
