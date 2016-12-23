@@ -10,8 +10,8 @@ set ignoreeof
 # also includes everything in BCGIT down to one level
 set path = (/bin /usr/bin /usr/local/bin /sbin /usr/sbin /usr/local/sbin \
             /old/bin /old/usr/bin /old/usr/local/bin /old/sbin /old/usr/sbin \
-           /old/usr/local/sbin /home/user/BCGIT /home/user/BCGIT/* \
-           /home/user/bin /home/user/PERL)
+           /old/usr/local/sbin /home/user/BCGIT /home/user/BCGIT/*/ \
+           /home/user/bin /home/user/PERL /usr/lib64/nagios/plugins/)
 
 # for QT to work properly
 

@@ -108,13 +108,18 @@ dies on an error (warnings are ok). As always, "shutdown -h" first.
 
 % If needed (or if restoring snapshot here), rsync over BCGIT again
 
-% Cut and paste results of below into nopkglist.txt: the packages I
-want that CentOS doesn't provide:
+% Disable selinux (I don't need it and it actually breaks nagios [or
+does it?]):
 
-fgrep "No package " /tmp/yum-runme.out|perl -anle 'print $F[2]'|sort|uniq|less
+printf '1,$s/SELINUX=enforcing/SELINUX=disabled/\nwq\n'|ex /etc/selinux/config
 
 %% TODO: see bc-start-db.txt (I can't get dbs working, but want to get
 their verbiage out of the way)
+
+% OPTIONAL: start dbs in wrong way (but works with rc.local)
+
+systemctl enable postgresql mariadb
+
 
 % create symlinks:
 
@@ -143,6 +148,11 @@ crontab -u user /home/user/BCGIT/BRIGHTON/bc-public-crontab
 %% TODO: am snapshotting (after shutdown) here as "Xable"; if this
 really does let me use X normally, keep this snapshot; else tweak (aka
 can I xinit login at this point?)
+
+% Cut and paste results of below into nopkglist.txt: the packages I
+want that CentOS doesn't provide:
+
+fgrep "No package " /tmp/yum-runme.out|perl -anle 'print $F[2]'|sort|uniq|less
 
 %% TODO: explain how to use mount so babybrighton can edit files
 directly on dullon in this directory
@@ -252,4 +262,21 @@ showing option until you choose partitioning) -- maybe take screenshot
 %% TODO: change .100 to .3 if networking-scripts file when going live
 
 %% TODO: get nagios working
+
+%% TODO: fix this rc.local error (which confirms rc.local IS working,
+but stopping on fail)
+
+[root@babybrighton ~]# systemctl -l status rc-local.service
+* rc-local.service - /etc/rc.d/rc.local Compatibility
+   Loaded: loaded (/usr/lib/systemd/system/rc-local.service; static; vendor preset: disabled)
+   Active: failed (Result: exit-code) since Fri 2016-12-23 11:31:01 EST; 29s ago
+  Process: 1177 ExecStart=/etc/rc.d/rc.local start (code=exited, status=255)
+
+Dec 23 11:31:00 babybrighton systemd[1]: Starting /etc/rc.d/rc.local Compatibility...
+Dec 23 11:31:01 babybrighton rc.local[1177]: losetup: /mnt/kemptown/swap: failed to set up loop device: No such file or directory
+Dec 23 11:31:01 babybrighton rc.local[1177]: swapon: /dev/loop0: read swap header failed: Invalid argument
+Dec 23 11:31:01 babybrighton systemd[1]: rc-local.service: control process exited, code=exited status=255
+Dec 23 11:31:01 babybrighton systemd[1]: Failed to start /etc/rc.d/rc.local Compatibility.
+Dec 23 11:31:01 babybrighton systemd[1]: Unit rc-local.service entered failed state.
+Dec 23 11:31:01 babybrighton systemd[1]: rc-local.service failed.
 

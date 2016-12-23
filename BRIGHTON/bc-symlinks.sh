@@ -68,13 +68,17 @@ ln -s /home/user/.fvwm/.fvwm2rc /root/.fvwm
 
 ln -s /usr/share/dict /usr/
 
-# directories my programs use and chown them to user
+# TODO: maybe make this a cp if it occurs too early
+rm /etc/hosts
+ln -s /home/user/BCGIT/BRIGHTON/hosts /etc
 
+# directories my programs use and chown them to user
 # TODO: try to generalize more for /var/tmp but note it has "/tmp" perms
 # NOTE: I want to keep my nagios stuff where it was before thus /var/nagios
-mkdir -p /usr/local/etc/locks /usr/local/etc/registry /var/tmp/montastic /var/tmp/cache /var/nagios
+# /var/log/nagios/rw should NOT be necessary bug workaround
+mkdir -p /usr/local/etc/locks /usr/local/etc/registry /var/tmp/montastic /var/tmp/cache /var/nagios/rw /var/log/nagios/rw
 chown -R user /usr/local/etc /var/tmp/*
-chown -R nagios /var/nagios
+chown -R nagios /var/nagios /var/log/nagios
 
 # TODO: I shouldnt have to do this
 mkdir -p /var/nagios/

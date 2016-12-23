@@ -1,0 +1,24 @@
+# this is the /etc/hosts file for brighton
+
+# TODO: MAY need a private version of this file and combine the two
+
+# two lines below were in original /etc/hosts so copying them over
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+# my servers
+
+143.95.253.70 bcinfo4
+193.183.99.226 bcinfo3
+
+# current machine
+
+192.168.0.2 dullon
+
+# TODO: make sure these are correct after cutover
+192.168.0.100 babybrighton
+192.168.0.3 brighton
+
+
+
+

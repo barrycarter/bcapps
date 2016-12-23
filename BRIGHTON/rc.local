@@ -1,7 +1,35 @@
-# next line was in rc.local and I didnt want to remove it
+#!/bin/bash
+
+# next line was in rc.local originally and I didnt want to remove it
+
 touch /var/lock/subsys/local
-# TODO: this creates swapspace, but this step wont be necessary once we go live
-losetup /dev/loop0 /mnt/kemptown/swap
-swapon /dev/loop0
+
+# log stuff
+touch /tmp/rc-local-log.txt
+
 # hard reset time at reboot
-rdate -s utcnist.colorado.edu
+
+rdate -s utcnist.colorado.edu |& tee -a /tmp/rc-local-log.txt
+
+# hack way to start db, but correct way fails, so...
+
+# TODO: if
+# http://unix.stackexchange.com/questions/331995/move-mysql-postgresql-from-var-lib-using-systemd-on-centos-7-2
+# gets good answers, tweak this
+
+mysqld_safe |& tee -a /tmp/rc-local-log.txt
+sudo -u postgres pg_ctl -D /var/lib/pgsql/data start |& tee -a /tmp/rc-local-log.txt
+
+# TODO: find correct way to start nagios
+# TODO: worry this occurs too early?
+
+nagios -d /home/user/BCGIT/NAGIOS/nagios.cfg |& tee -a /tmp/rc-local-log.txt
+
+# TODO: this creates swapspace, but this step wont be necessary once
+# we go live putting this last since 1) it fails, and once it does
+# rc.local stops, and 2) putting it later MIGHT mean
+# /mnt/kemptown/swap has been mounted in the interim
+
+losetup /dev/loop0 /mnt/kemptown/swap |& tee -a /tmp/rc-local-log.txt
+swapon /dev/loop0 |& tee -a /tmp/rc-local-log.txt
+

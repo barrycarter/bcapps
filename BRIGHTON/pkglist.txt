@@ -124,7 +124,7 @@ xterm
 # monitoring tools
 mrtg
 nagios
-nagios-plugins
+nagios-plugins-all
 nessus
 satan
 

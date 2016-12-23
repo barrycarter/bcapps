@@ -132,8 +132,9 @@ our(@globopts) = ("debug", "nocache", "tmpdir", "nowarn", "fake", "ignorelock",
 # --xmessage: pop up xmessage when program ends
 # --bgend: write to background image when program ends
 
-# largest possible path
-$ENV{PATH} = "/sbin:/opt/metaf2xml/bin/:/sw/bin/:/bin/:/usr/bin/:/usr/local/bin/:/usr/X11R6/bin/:/usr/lib/nagios/plugins:/usr/lib:/usr/sbin/:$ENV{HOME}/bin:$ENV{HOME}/PERL";
+# largest possible path (really?)
+
+$ENV{PATH} = "/sbin:/opt/metaf2xml/bin/:/sw/bin/:/bin/:/usr/bin/:/usr/local/bin/:/usr/X11R6/bin/:/usr/lib/nagios/plugins:/usr/lib:/usr/sbin/:$ENV{HOME}/bin:$ENV{HOME}/PERL:/usr/lib64/nagios/plugins/";
 
 =item list2hash(@list)
 
