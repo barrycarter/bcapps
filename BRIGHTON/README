@@ -113,14 +113,6 @@ does it?]):
 
 printf '1,$s/SELINUX=enforcing/SELINUX=disabled/\nwq\n'|ex /etc/selinux/config
 
-%% TODO: see bc-start-db.txt (I can't get dbs working, but want to get
-their verbiage out of the way)
-
-% OPTIONAL: start dbs in wrong way (but works with rc.local)
-
-systemctl enable postgresql mariadb
-
-
 % create symlinks:
 
 sh ~user/BCGIT/BRIGHTON/bc-symlinks.sh |& tee /tmp/bc-symlinks.out
@@ -128,6 +120,33 @@ sh ~user/BCGIT/BRIGHTON/bc-symlinks.sh |& tee /tmp/bc-symlinks.out
 % disable services (for next reboot)
 
 sh ~user/BCGIT/BRIGHTON/bc-servicectl.sh |& tee /tmp/bc-servicectl.sh
+
+% OPTIONAL: start dbs in wrong way (but works with rc.local) (if doing
+right way, see bc-start-db.txt, if I ever get it working)
+
+: we do NOT use systemd and do this instead
+systemctl disable postgresql mariadb
+
+: probably already stopped, but...
+systemctl stop postgresql mariadb
+
+: if desired, move SQL home dirs
+: REMINDER: if moved previously, consider rm -rf /mnt/kemptown/*sql
+mv /var/lib/mysql /var/lib/pgsql /mnt/kemptown/
+ln -s /mnt/kemptown/mysql /mnt/kemptown/pgsql /var/lib
+
+: setup dbs
+postgresql-setup initdb
+mysql_install_db
+
+: on next reboot, both dbs should come up fine OR do this in current session
+mysqld_safe &
+sudo -u postgres pg_ctl -D /var/lib/pgsql/data start
+
+: if desired, import data and create 'postdb' snapshot
+
+%% TODO: see bc-start-db.txt (I can't get dbs working, but want to get
+their verbiage out of the way)
 
 % Ugly install of fly (older version, newer is broken)
 
