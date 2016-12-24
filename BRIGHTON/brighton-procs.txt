@@ -8,7 +8,7 @@
 <may>
 
 # X11 + wm
-/usr/libexec/Xorg
+X
 fvwm2
 
 # the init process
@@ -50,7 +50,7 @@ sudo
 su
 
 # does this really need to run constantly?
-/usr/lib/X11/fvwm2/FvwmAuto
+/usr/libexec/fvwm/2.6.6/FvwmAuto
 
 # TODO: figure out what dbus actually does
 /usr/bin/dbus-daemon
@@ -64,17 +64,11 @@ sshd:
 
 (sd-pam)
 
-# not even kill -9 will stop auditd
-/sbin/auditd
-
 # killing this instantly respawns it so I might as well live with it
 /usr/lib/systemd/systemd-journald
 
 # killing this also respawns instantly, though I think this one is OK
 /sbin/agetty
-
-# TODO: remove this once I cutover to brighton completely
-/usr/libexec/vino-server
 
 </may>
 
@@ -93,6 +87,7 @@ sendmail:
 /usr/sbin/dnsmasq
 /usr/bin/postgres
 postgres:
+nagios
 
 # something is wrong if any of these are down
 gaim

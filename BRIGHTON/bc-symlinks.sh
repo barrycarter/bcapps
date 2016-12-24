@@ -92,3 +92,14 @@ echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/wheel
 # expanded) POSSIBLY because "set noglob" is set magically somehow
 
 echo 'Defaults !requiretty' > /etc/sudoers.d/tty
+
+# this creates mount points if I want to mount dullon's external
+# drives as though they were local (some of these no longer exist, but
+# it doesnt hurt to create mount points)
+
+mkdir -p /mnt/extdrive2 /mnt/extdrive3 /mnt/extdrive4 /mnt/extdrive5
+
+# I moved contents of /mnt/extdrive to /mnt/extdrive5/extdrive, this
+# symlink allows me to access it with the old name
+
+ln -s /mnt/extdrive5/extdrive /mnt

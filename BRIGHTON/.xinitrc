@@ -1,4 +1,10 @@
-# this runs (automagically) whenever I start FVWM
+# this runs (automagically) whenever I start X11
+
+# bg image won't render properly unless I do this
+/home/user/BCGIT/bc-calendar.pl
+
+# and might as well do this too
+/home/user/BCGIT/bc-bg2.pl
 
 # my screen size is 1024x768
 

@@ -97,6 +97,7 @@ yum -y install deltarpm
 % run yum-runme.sh as follows:
 
 : this does skip approx 3 packages due to dependency issues but nothing serious
+
 sh ~user/BCGIT/BRIGHTON/yum-runme.sh |& tee /tmp/yum-runme.out
 
 % and bc-cpan.sh
@@ -108,6 +109,17 @@ dies on an error (warnings are ok). As always, "shutdown -h" first.
 
 % If needed (or if restoring snapshot here), rsync over BCGIT again
 
+% OPTIONAL: if mounting dullon external drives as though they were
+local, add this to /etc/fstab (these are the only two drives that
+still exist)
+
+echo "192.168.0.2:/mnt/extdrive2 /mnt/extdrive2 nfs noauto" >> /etc/fstab
+echo "192.168.0.2:/mnt/extdrive5 /mnt/extdrive5 nfs noauto" >> /etc/fstab
+
+: NOTE: must turn on mountd on dullon (/etc/init.d/rpcbind start,
+: /etc/init.d/nfs start) and make sure /etc/exports actually exports
+: these drives to local network
+
 % Disable selinux (I don't need it and it actually breaks nagios [or
 does it?]):
 
@@ -117,36 +129,9 @@ printf '1,$s/SELINUX=enforcing/SELINUX=disabled/\nwq\n'|ex /etc/selinux/config
 
 sh ~user/BCGIT/BRIGHTON/bc-symlinks.sh |& tee /tmp/bc-symlinks.out
 
-% disable services (for next reboot)
+% disable/enable services (for next reboot)
 
 sh ~user/BCGIT/BRIGHTON/bc-servicectl.sh |& tee /tmp/bc-servicectl.sh
-
-% OPTIONAL: start dbs in wrong way (but works with rc.local) (if doing
-right way, see bc-start-db.txt, if I ever get it working)
-
-: we do NOT use systemd and do this instead
-systemctl disable postgresql mariadb
-
-: probably already stopped, but...
-systemctl stop postgresql mariadb
-
-: if desired, move SQL home dirs
-: REMINDER: if moved previously, consider rm -rf /mnt/kemptown/*sql
-mv /var/lib/mysql /var/lib/pgsql /mnt/kemptown/
-ln -s /mnt/kemptown/mysql /mnt/kemptown/pgsql /var/lib
-
-: setup dbs
-postgresql-setup initdb
-mysql_install_db
-
-: on next reboot, both dbs should come up fine OR do this in current session
-mysqld_safe &
-sudo -u postgres pg_ctl -D /var/lib/pgsql/data start
-
-: if desired, import data and create 'postdb' snapshot
-
-%% TODO: see bc-start-db.txt (I can't get dbs working, but want to get
-their verbiage out of the way)
 
 % Ugly install of fly (older version, newer is broken)
 
@@ -163,6 +148,39 @@ chmod +x /usr/local/bin/fly
 % start the crontab
 
 crontab -u user /home/user/BCGIT/BRIGHTON/bc-public-crontab
+
+% NOTE TO SELF: creating snapshot "xable0" here since postgresql db
+create takes forever
+
+% OPTIONAL: start dbs in wrong way (but works with rc.local) (if doing
+right way, see bc-start-db.txt, if I ever get it working)
+
+: we do NOT use systemd and do this instead
+systemctl disable postgresql mariadb
+
+: probably already stopped, but...
+systemctl stop postgresql mariadb
+
+: setup dbs
+mysql_install_db
+: below takes a while, "tailf /var/lib/pgsql/initdb.log" to watch
+postgresql-setup initdb
+
+: if desired, move SQL home dirs
+: REMINDER: if moved previously, consider rm -rf /mnt/kemptown/*sql
+mv /var/lib/mysql /var/lib/pgsql /mnt/kemptown/
+ln -s /mnt/kemptown/mysql /mnt/kemptown/pgsql /var/lib
+: should not need to do this, but...
+chown -R mysql /mnt/kemptown/mysql
+
+: on next reboot, both dbs should come up fine OR do this in current session
+mysqld_safe &
+sudo -u postgres pg_ctl -D /var/lib/pgsql/data start
+
+: if desired, import data and create 'postdb' snapshot
+
+%% TODO: see bc-start-db.txt (I can't get dbs working, but want to get
+their verbiage out of the way)
 
 %% TODO: am snapshotting (after shutdown) here as "Xable"; if this
 really does let me use X normally, keep this snapshot; else tweak (aka
