@@ -151,3 +151,29 @@ MAILTO="daemon"
 # TODO: remove this after I cutover to new machine completely
 
 */10 * * * * rsync -Pavz user@192.168.0.2:/home/user/BCGIT /home/user/
+
+# The Energy Detective (TED) has a website interface to my electricity
+# usage; the cron jobs below make a permanent copy of the data to
+# /home/user/TED/
+
+# every half an hour, copy the second to second history (it goes back
+# one hour, so this allows for some overlap)
+
+*/30 * * * * curl -sS -o /home/user/TED/second.`/bin/date +\%Y\%m\%d.\%H\%M\%S.\%N` 'http://ted.local.lan/history/secondhistory.csv?MTU=0&INDEX=0&U=1'
+
+# daily, copy the minute to minute history (goes back more than two
+# days, so allowing for overlap)
+
+8 1 * * * curl -sS -o /home/user/TED/minute.`/bin/date +\%Y\%m\%d.\%H\%M\%S.\%N` 'http://ted.local.lan/history/minutehistory.csv?MTU=0&INDEX=0&U=1'
+
+# the daily history goes back at least two years, so only need to
+# record it once a year, on October 27th, the anniversary of the date
+# I started it up
+
+42 0 27 10 * curl -o /home/user/TED/daily.`/bin/date +\%Y\%m\%d.\%H\%M\%S.\%N` 'http://ted.local.lan/history/dailyhistory.csv?MTU=0&INDEX=0&U=1'
+
+# the monthly history goes back even further, so only need to copy it
+# once a year, in this case starting at the 6 month anniversary of
+# TED's start date
+
+42 0 27 4 * curl -o /home/user/TED/monthly.`/bin/date +\%Y\%m\%d.\%H\%M\%S.\%N` 'http://ted.local.lan/history/monthlyhistory.csv?MTU=0&INDEX=0&U=1'

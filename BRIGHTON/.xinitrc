@@ -1,11 +1,5 @@
 # this runs (automagically) whenever I start X11
 
-# bg image won't render properly unless I do this
-/home/user/BCGIT/bc-calendar.pl
-
-# and might as well do this too
-/home/user/BCGIT/bc-bg2.pl
-
 # my screen size is 1024x768
 
 # TODO: find a way to customize this without having to run xrandr,
@@ -14,6 +8,12 @@
 # suggests it's nontrivial
 
 xrandr --size 1024x768
+
+# bg image won't render properly unless I do this
+/home/user/BCGIT/bc-calendar.pl
+
+# and might as well do this too (but only after fixing screen size)
+/home/user/BCGIT/bc-bg2.pl
 
 # TODO: I shouldnt have to do this at all since /etc/X11/Xresources
 # already says "Xft.dpi: 96", but it turns out I do

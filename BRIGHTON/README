@@ -300,20 +300,7 @@ showing option until you choose partitioning) -- maybe take screenshot
 
 %% TODO: get nagios working
 
-%% TODO: fix this rc.local error (which confirms rc.local IS working,
-but stopping on fail)
+%% TODO: look at and edit /etc/cron* to make sure right jobs are
+running in the right way
 
-[root@babybrighton ~]# systemctl -l status rc-local.service
-* rc-local.service - /etc/rc.d/rc.local Compatibility
-   Loaded: loaded (/usr/lib/systemd/system/rc-local.service; static; vendor preset: disabled)
-   Active: failed (Result: exit-code) since Fri 2016-12-23 11:31:01 EST; 29s ago
-  Process: 1177 ExecStart=/etc/rc.d/rc.local start (code=exited, status=255)
-
-Dec 23 11:31:00 babybrighton systemd[1]: Starting /etc/rc.d/rc.local Compatibility...
-Dec 23 11:31:01 babybrighton rc.local[1177]: losetup: /mnt/kemptown/swap: failed to set up loop device: No such file or directory
-Dec 23 11:31:01 babybrighton rc.local[1177]: swapon: /dev/loop0: read swap header failed: Invalid argument
-Dec 23 11:31:01 babybrighton systemd[1]: rc-local.service: control process exited, code=exited status=255
-Dec 23 11:31:01 babybrighton systemd[1]: Failed to start /etc/rc.d/rc.local Compatibility.
-Dec 23 11:31:01 babybrighton systemd[1]: Unit rc-local.service entered failed state.
-Dec 23 11:31:01 babybrighton systemd[1]: rc-local.service failed.
 

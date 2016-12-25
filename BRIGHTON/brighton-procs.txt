@@ -70,6 +70,10 @@ sshd:
 # killing this also respawns instantly, though I think this one is OK
 /sbin/agetty
 
+# my walkaround alerts can last for hours
+zenity
+/home/user/BCGIT/bc-walkaround.pl
+
 </may>
 
 # "must" processes must be running at all times
