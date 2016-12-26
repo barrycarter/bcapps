@@ -140,8 +140,11 @@ MAILTO="daemon"
 */5 * * * * sudo /home/user/BCGIT/bc-daemon-checker2.pl --file=/home/user/brighton-procs.txt --mach=brighton --sleep=50
 
 # I dislike ntpd so this adjusts the system clock frequency/etc regularly
+# TODO: restore this later, see note below
+# */10 * * * * sudo /home/user/BCGIT/bc-fake-ntp.pl --interval=600
 
-*/10 * * * * sudo /home/user/BCGIT/bc-fake-ntp.pl --interval=600
+# VM keeps truly terrible time with above, but this is a known issue;
+# restore it on physical machine later
 
 # TODO: remove this after I've migrated to brighton completely
 
