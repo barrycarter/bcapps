@@ -233,10 +233,6 @@ needed) when doing something unusual or difficult
 
 %% TODO: look at TODOs from FEDORA and CENTOS and VM
 
-%% TODO: configure /etc/hosts on babybrighton
-
-% DONE: symlink urxvt to rxvt
-
 %% TODO: put "significant legacy" note in this dir, ../CENTOS* ../VM/ and ../FEDORA
 
 %% TODO: figure out why /usr/local/bin/surl did to not get transferred
@@ -275,8 +271,6 @@ own homedir (even does this for root) and it exists (deferred mounting?!)
 %% TODO: make sure daemon-checker complains properly when mysqld not
 running (it wasn't for some reason earlier)
 
-%% TODO: set default timezone
-
 %% TODO: instead of installing unavailables from source, consider
 using RPMs, but test them and don't let them break anything else
 (rpmfind.net?); also, if reinstalling multiple times dont dl the same
@@ -303,4 +297,4 @@ showing option until you choose partitioning) -- maybe take screenshot
 %% TODO: look at and edit /etc/cron* to make sure right jobs are
 running in the right way
 
-
+%% TODO: get httpd working

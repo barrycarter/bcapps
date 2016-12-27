@@ -10,7 +10,7 @@
 xrandr --size 1024x768
 
 # bg image won't render properly unless I do this
-/home/user/BCGIT/bc-calendar.pl
+/home/user/BCGIT/CALENDAR/bc-calendar.pl
 
 # and might as well do this too (but only after fixing screen size)
 /home/user/BCGIT/bc-bg2.pl

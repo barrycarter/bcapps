@@ -56,7 +56,6 @@ MAILTO="daemon"
 # ~/ERR/*.err protocol
 
 # Reminder: replace bcinfo3.barrycarter.info with your own machine(s)
-# and "user" with your local username
 
 */5 * * * * rsync -e "ssh -i /home/user/.ssh/id_rsa.bc" -Pqaz "root@bcinfo3.barrycarter.info:/root/ERR/*.err" "root@bcinfo3.barrycarter.info:/home/user/ERR/*.err" /home/user/ERR/
 
@@ -144,7 +143,8 @@ MAILTO="daemon"
 # */10 * * * * sudo /home/user/BCGIT/bc-fake-ntp.pl --interval=600
 
 # VM keeps truly terrible time with above, but this is a known issue;
-# restore it on physical machine later
+# restore it on physical machine later and remove below
+* * * * * sudo /sbin/ntpdate pool.ntp.org
 
 # TODO: remove this after I've migrated to brighton completely
 

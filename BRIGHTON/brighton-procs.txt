@@ -44,6 +44,7 @@ SCREEN
 snownews
 xemacs
 ssh
+/usr/bin/pulseaudio
 
 # because I "sudo su" in two open windows
 sudo
@@ -85,7 +86,9 @@ sendmail:
 /usr/sbin/httpd
 /usr/sbin/crond
 /usr/sbin/xinetd
+# for mysql, both below must be running
 /usr/libexec/mysqld
+/bin/mysqld_safe
 /usr/sbin/atd
 /usr/sbin/sshd
 /usr/sbin/dnsmasq
@@ -114,6 +117,9 @@ screen
 SCREEN
 postgres:
 alpine
+
+# new version of nagios uses multiple "worker" processes
+nagios
 
 # TODO: again, why 3 forms?
 

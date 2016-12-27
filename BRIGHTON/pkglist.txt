@@ -67,6 +67,11 @@ xinetd
 usbview
 xz
 
+# backup
+
+zpaq
+idevsutil_linux
+
 # time and date tools
 
 gcal

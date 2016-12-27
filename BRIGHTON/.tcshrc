@@ -42,10 +42,10 @@ source /home/user/BCPRIV/aliases.txt
 # TODO: there are many things I am NOT copying from my current
 # .tcshrc, but will add as needed
 
-# some libs in /usr/local/lib, this hopefully ADDS to default path and
-# doesnt replace it..
+# bunch of libs I know about and their /old equivs + more as needed
+# NOTE: /var/lib usually doesnt contain these types of libraries
 
-setenv LD_LIBRARY_PATH /usr/local/lib
+setenv LD_LIBRARY_PATH /usr/local/lib:/usr/lib:/lib:/old/usr/local/lib:/old/usr/lib:/old/lib
 
 # the only postgresql database I have/use is "main"
 

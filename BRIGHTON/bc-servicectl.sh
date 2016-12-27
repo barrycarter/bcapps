@@ -6,5 +6,6 @@ systemctl mask gssproxy alsa-state
 
 # and ones I want that arent default
 
-systemctl enable dnsmasq
+systemctl enable dnsmasq httpd
+
 
