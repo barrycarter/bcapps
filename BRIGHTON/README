@@ -298,3 +298,13 @@ showing option until you choose partitioning) -- maybe take screenshot
 running in the right way
 
 %% TODO: get httpd working
+
+%% TODO: tweak the thing that dumps filelists to also dump /mnt/kemptown files
+
+% NOTE TO SELF: screwed up /home/user/.purple on babybrighton somehow,
+so re-rsynced from dullon; have not done any gaim/pidgin stuff on
+babybrighton so should not be an issue
+
+%% TODO: get usda.db.dev (or equivalent) working, I do use it
+
+%% TODO: audio testing

@@ -51,11 +51,9 @@ ln -s /usr/share/zoneinfo/MST7MDT /etc/localtime
 
 # dnsmasq and httpd confs
 
-rm -f /etc/httpd/conf.d/vhosts.conf /etc/dnsmasq.d/dnslocal.conf /etc/php.d/php-more.ini
+rm -f /etc/httpd/conf.d/vhosts.conf /etc/dnsmasq.d/dnslocal.conf
 ln -s /home/user/BCGIT/BRIGHTON/vhosts.conf /etc/httpd/conf.d/
 ln -s /home/user/BCGIT/BRIGHTON/dnslocal.conf /etc/dnsmasq.d/
-ln -s /home/user/BCGIT/BRIGHTON/php-more.ini /etc/php.d/
-
 
 : startup-x.csh and startup-nox.csh no longer exist but I want to
 : remove them just in case they snuck in from other sources

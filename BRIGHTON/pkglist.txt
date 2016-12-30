@@ -310,6 +310,7 @@ xemacs
 xemacs-packages-extra
 nano
 dos2unix
+evince
 
 # spreadsheets/graphing programs/etc
 gnumeric
