@@ -320,6 +320,61 @@ mount -t overlay overlay -o lowerdir=/mnt/kemptown/dullon-root/usr,upperdir=/usr
 
 %% TODO: use overlays instead of symlinks or path changes
 
+https://wiki.archlinux.org/index.php/Overlay_filesystem
+
+overlay /merged overlay noauto,x-systemd.automount,lowerdir=/lower,upperdir=/upper,workdir=/work 0 0
+
+%% TODO: add /usr/X11R6/bin/xearth to path or overlay mount, /usr/games/an is also a binary in an odd location
+
+%% TODO: list of things that work w overlay mount but not path changes:
+
+fortune
+xteddy
+widelands?
+bomber (starts w path changes, but crashes)
+
+%% EXP: adding to fstab
+
+overlay /merged overlay noauto,x-systemd.automount,lowerdir=/lower,upperdir=/upper,workdir=/work 0 0
+
+overlay /usr overlay noauto,x-systemd.automount,lowerdir=/mnt/kemptown/dullon-root/usr,upperdir=/usr,workdir=/tmp 0 0
+overlay /usr/bin overlay noauto,x-systemd.automount,lowerdir=/mnt/kemptown/dullon-root/bin,upperdir=/usr/bin,workdir=/tmp 0 0
+overlay /usr/lib overlay noauto,x-systemd.automount,lowerdir=/mnt/kemptown/dullon-root/lib,upperdir=/usr/lib,workdir=/tmp 0 0
+overlay /opt overlay noauto,x-systemd.automount,lowerdir=/mnt/kemptown/dullon-root/opt,upperdir=/opt,workdir=/tmp 0 0
+overlay /sbin overlay noauto,x-systemd.automount,lowerdir=/mnt/kemptown/dullon-root/sbin,upperdir=/sbin,workdir=/tmp 0 0
+
+%% TODO: consider /etc and /home
+
+% REF: files that appear only on dullon (and thus serve as a good test
+of overlay mounting)
+
+/usr/share/PySolFC
+
+
+
+%% TODO: I have automount off so must mount overlays at boot
+
+%% TODO: note that union mount might seriously break installing new things
+
+%% testing: all overlay mounts together break things, so seeing which ones work
+
+(doing manual "mount default" after reboot, automount is failing badly)
+
+/usr: works fine
+
+/bin: fails though it could just be that multiples fail (or because it's a symlink though I think it worked from cmd line)
+
+/lib: also fails
+
+%% EXP: manual (from cmd line after boot)
+
+mount -t overlay overlay -o lowerdir=/mnt/kemptown/dullon-root/usr,upperdir=/usr,workdir=/tmp /usr
+
+: note that /lib is a symlink to /usr/lib, which may be issue above
+mount -t overlay overlay -o lowerdir=/mnt/kemptown/dullon-root/lib,upperdir=/usr/lib,workdir=/tmp /usr/lib
+
+
+
 
 
 
