@@ -308,3 +308,18 @@ babybrighton so should not be an issue
 %% TODO: get usda.db.dev (or equivalent) working, I do use it
 
 %% TODO: audio testing
+
+
+mount -t overlay overlay -o lowerdir=/old/bin,upperdir=/bin,workdir=/tmp /bin
+
+: below actually works
+mount -t overlay overlay -o lowerdir=/old/usr/share,upperdir=/usr/share,workdir=/tmp /usr/share
+
+: below isnt 100 percent but is surprisingly helpful
+mount -t overlay overlay -o lowerdir=/mnt/kemptown/dullon-root/usr,upperdir=/usr,workdir=/tmp /usr
+
+%% TODO: use overlays instead of symlinks or path changes
+
+
+
+
