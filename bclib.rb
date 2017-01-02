@@ -43,3 +43,29 @@ class Vector
     end
 
 end
+
+class Temperature
+  attr_reader :f, :c, :k
+
+  def f=(f)
+    @f=f;
+    @c=(@f-32)/1.8;
+    @k=@c+273.15;
+  end
+
+  def c=(c)
+    self.f=c*1.8+32;
+  end
+  
+  def k=(k)
+    self.c=k-273.15;
+  end
+
+  alias kelvin= k=;
+  alias kelvin k;
+
+  def to_s
+    @c.to_s+" deg C == "+@f.to_s+" deg F == "+@k.to_s+" deg K\n";
+  end
+
+end

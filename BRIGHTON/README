@@ -149,7 +149,7 @@ chmod +x /usr/local/bin/fly
 
 crontab -u user /home/user/BCGIT/BRIGHTON/bc-public-crontab
 
-% NOTE TO SELF: creating snapshot "xable0" here since postgresql db
+% NOTE TO SELF: creating snapshot "xable-predb" here since postgresql db
 create takes forever
 
 % OPTIONAL: start dbs in wrong way (but works with rc.local) (if doing
@@ -167,7 +167,9 @@ mysql_install_db
 postgresql-setup initdb
 
 : if desired, move SQL home dirs
+
 : REMINDER: if moved previously, consider rm -rf /mnt/kemptown/*sql
+
 mv /var/lib/mysql /var/lib/pgsql /mnt/kemptown/
 ln -s /mnt/kemptown/mysql /mnt/kemptown/pgsql /var/lib
 : should not need to do this, but...
@@ -177,7 +179,15 @@ chown -R mysql /mnt/kemptown/mysql
 mysqld_safe &
 sudo -u postgres pg_ctl -D /var/lib/pgsql/data start
 
-: if desired, import data and create 'postdb' snapshot
+% To import data (mine is in /mnt/kemptown/XFER)
+
+: works wo any special perms or options
+mysql < mysqlminidump.txt
+
+: at this point, there are no other users, must do this
+sudo -u postgres psql < pgsql-super-dump.txt 
+
+% If desired, create "postdb" snapshot here (this subsumes "xable")
 
 %% TODO: see bc-start-db.txt (I can't get dbs working, but want to get
 their verbiage out of the way)
@@ -337,7 +347,13 @@ bomber (starts w path changes, but crashes)
 
 overlay /merged overlay noauto,x-systemd.automount,lowerdir=/lower,upperdir=/upper,workdir=/work 0 0
 
-overlay /usr overlay noauto,x-systemd.automount,lowerdir=/mnt/kemptown/dullon-root/usr,upperdir=/usr,workdir=/tmp 0 0
+: revised
+
+overlay /usr overlay noauto,lowerdir=/mnt/kemptown/dullon-root/usr,upperdir=/usr,workdir=/tmp
+
+
+
+: TODO: other /usr stuff since I cant do /usr all at once and the below
 overlay /usr/bin overlay noauto,x-systemd.automount,lowerdir=/mnt/kemptown/dullon-root/bin,upperdir=/usr/bin,workdir=/tmp 0 0
 overlay /usr/lib overlay noauto,x-systemd.automount,lowerdir=/mnt/kemptown/dullon-root/lib,upperdir=/usr/lib,workdir=/tmp 0 0
 overlay /opt overlay noauto,x-systemd.automount,lowerdir=/mnt/kemptown/dullon-root/opt,upperdir=/opt,workdir=/tmp 0 0
@@ -368,13 +384,23 @@ of overlay mounting)
 
 %% EXP: manual (from cmd line after boot)
 
+: this is too big, sigh, must do piecemeal
 mount -t overlay overlay -o lowerdir=/mnt/kemptown/dullon-root/usr,upperdir=/usr,workdir=/tmp /usr
 
 : note that /lib is a symlink to /usr/lib, which may be issue above
 mount -t overlay overlay -o lowerdir=/mnt/kemptown/dullon-root/lib,upperdir=/usr/lib,workdir=/tmp /usr/lib
 
+ /usr /opt /var (becomes readonly = bad) /etc (dangerous!) 
+
+but must be done "revrse" so copy on kemptown is immutable (can't do
+during testing, NFS not supported by overlay)
+
+%% TODO: consider programmatically symlinking instead (for all of / ?!?!)
 
 
-
-
-
+overlay /usr overlay noauto,lowerdir=/mnt/kemptown/dullon-root/usr,upperdir=/us\
+r,workdir=/tmp
+overlay /etc overlay noauto,lowerdir=/mnt/kemptown/dullon-root/etc,upperdir=/et\
+c,workdir=/tmp
+overlay /opt overlay noauto,lowerdir=/mnt/kemptown/dullon-root/opt,upperdir=/op\
+t,workdir=/tmp

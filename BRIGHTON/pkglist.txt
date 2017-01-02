@@ -5,6 +5,7 @@ efibootmgr
 
 # system tools
 
+yum-cron
 dbus-x11
 strace
 whois
@@ -98,6 +99,10 @@ android
 perl
 php
 php-mysql
+mediawiki123
+rubygem-rspec
+rubygem-bundler
+ruby-doc
 
 # shells
 tcsh

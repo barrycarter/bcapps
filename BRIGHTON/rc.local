@@ -35,3 +35,10 @@ nagios -d /home/user/BCGIT/NAGIOS/nagios.cfg |& tee /tmp/rc-local-4.txt &
 : cant background the first, second depends on it
 losetup /dev/loop0 /mnt/kemptown/swap |& tee /tmp/rc-local-5.txt
 swapon /dev/loop0 |& tee /tmp/rc-local-6.txt &
+
+# cant mount overlay filesystems at boot so do it now
+
+# TODO: make final decision re whether I want to mount these or not
+# mount /etc
+# mount /opt
+# mount /usr
