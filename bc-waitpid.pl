@@ -33,4 +33,4 @@ if ($stringq) {print "'$ARGV[0]' matches: $name ($pid)\n";}
 
 while (!system("ps -p $pid > /dev/null")) {sleep 5;}
 
-unless ($globopts{nox}) {system("xmessage '$pid ($name) is done: $globopts{message}'&");}
+unless ($globopts{nox}) {xmessage("'$pid ($name) done: $globopts{message}'&");}

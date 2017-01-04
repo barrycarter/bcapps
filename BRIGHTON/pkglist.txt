@@ -297,6 +297,7 @@ mariadb-server
 mariadb
 postgresql
 postgresql-server
+virtuoso-opensource
 
 # emulators
 dosbox

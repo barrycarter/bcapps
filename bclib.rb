@@ -44,6 +44,8 @@ class Vector
 
 end
 
+# TODO: this code is poorly written
+
 class Temperature
   attr_reader :f, :c, :k
 
