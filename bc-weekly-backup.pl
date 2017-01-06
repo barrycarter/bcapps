@@ -52,6 +52,7 @@ sub dump_ls {
 # various other things I dumps
 sub dump_other {
   local(*A);
+  # TODO: test that these commands work, they sometimes appear to dump out small files, perhaps due to errors
   my($str) = << "MARK";
 mysqldump --skip-extended-insert=yes test > $dir/bcunix-mysql-test.txt.new; mv -f $dir/bcunix-mysql-test.txt $dir/bcunix-mysql-test.txt.old; mv -f $dir/bcunix-mysql-test.txt.new $dir/bcunix-mysql-test.txt
 rpm -qai > $dir/bcunix-rpmqai.txt.new; mv -f $dir/bcunix-rpmqai.txt $dir/bcunix-rpmqai.txt.old;  mv -f $dir/bcunix-rpmqai.txt.new $dir/bcunix-rpmqai.txt

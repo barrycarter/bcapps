@@ -12,11 +12,59 @@ TODO: link to formulas
 
 TODO: sid day length and fixed ra cancel each other out
 
+conds = {Element[{dec,ha,lat}, Reals]}
+az[dec_,ha_,lat_] = FullSimplify[decHaLat2azEl[dec,ha,lat][[1]],conds]
+el[dec_,ha_,lat_] = FullSimplify[decHaLat2azEl[dec,ha,lat][[2]],conds]
+
+(* radius and angle of gnomon; note 'rad' is existing function, sigh *)
+
+radi[dec_,ha_,lat_] = FullSimplify[Cot[el[dec,ha,lat]],conds]
+ang[dec_,ha_,lat_] = -az[dec,ha,lat]
+
+(* and the corresponding xy point *)
+
+xy[dec_,ha_,lat_]=  radi[dec,ha,lat]*
+ {Cos[ang[dec,ha,lat]],Sin[ang[dec,ha,lat]]}
+
+xyfake[dec_,ha_,lat_]=  1*
+ {Cos[ang[dec,ha,lat]],Sin[ang[dec,ha,lat]]}
+
+xy[dec_,ha_,lat_]=  {
+ radi[dec,ha,lat]*Cos[ang[dec,ha,lat]],
+ radi[dec,ha,lat]*Sin[ang[dec,ha,lat]]
+};
+
+xy[dec_,ha_,lat_]=  {
+ radi[dec,ha,lat]*Sin[ang[dec,ha,lat]],
+ radi[dec,ha,lat]*Cos[ang[dec,ha,lat]]
+};
+
+
+
+
+
+
+
+t2244 = Table[xy[0,ha,35*Degree], {ha,-Pi/4,Pi/4,Pi/48}]
+
+tdec = 0
+tlat = 35*Degree;
+
+
+
+
+
+tdec = 0
+tlat = 35*Degree;
+
+Plot[Cot[el[tdec,ha,tlat]], {ha,-Pi,Pi}]
+
+
+
 decHaLat2azEl[dec,ha,lat]
 
 decHaLat2azEl[dec,0,lat]
 
-conds = {Element[{dec,ha,lat}, Reals]}
 D[decHaLat2azEl[dec,ha,lat],ha]
 
 FullSimplify[% /. ha -> 0]
