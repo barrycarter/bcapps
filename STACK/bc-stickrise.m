@@ -16,6 +16,34 @@ conds = {Element[{dec,ha,lat}, Reals]}
 az[dec_,ha_,lat_] = FullSimplify[decHaLat2azEl[dec,ha,lat][[1]],conds]
 el[dec_,ha_,lat_] = FullSimplify[decHaLat2azEl[dec,ha,lat][[2]],conds]
 
+tdec = 0
+tlat = 35*Degree;
+
+pts[dec_,lat_] = 
+ Table[
+ Point[{Mod[az[dec,ha/12*Pi,lat],2*Pi]/Degree, el[dec,ha/12*Pi,lat]/Degree}], 
+ {ha,0,24,15/60}];
+
+txt[dec_,lat_] = 
+ Table[Text[ToString[Mod[ha-12,24]], 
+ {Mod[az[dec,ha/12*Pi,lat],2*Pi]/Degree, el[dec,ha/12*Pi,lat]/Degree}],
+ {ha,0,24,1}];
+
+Graphics[{txt[0,35*Degree], txt[23.5*Degree, 35*Degree],
+          txt[-23.5*Degree, 35*Degree]}]
+showit
+
+
+ListPlot[{t0717[0,35*Degree], t0717[23.5*Degree, 35*Degree], 
+         t0717[-23.5*Degree,35*Degree]}]
+showit
+
+TODO: mention this file
+
+
+
+ParametricPlot[{az[tdec,ha,tlat], el[tdec,ha,tlat]}, {ha,-Pi,Pi}]
+
 (* radius and angle of gnomon; note 'rad' is existing function, sigh *)
 
 radi[dec_,ha_,lat_] = FullSimplify[Cot[el[dec,ha,lat]],conds]
@@ -46,9 +74,6 @@ xy[dec_,ha_,lat_]=  {
 
 
 t2244 = Table[xy[0,ha,35*Degree], {ha,-Pi/4,Pi/4,Pi/48}]
-
-tdec = 0
-tlat = 35*Degree;
 
 
 
