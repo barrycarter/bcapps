@@ -208,7 +208,6 @@ getmail
 sendmail
 
 # browsers
-# TODO: google chrome
 opera
 firefox
 elinks
@@ -216,6 +215,10 @@ lynx
 britannica
 elinks
 links
+# TODO: google chrome (below will likely fail)
+google-chrome
+# below required for google chrome
+lsb
 
 # networking and telephony
 telnet

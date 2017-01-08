@@ -404,3 +404,22 @@ overlay /etc overlay noauto,lowerdir=/mnt/kemptown/dullon-root/etc,upperdir=/et\
 c,workdir=/tmp
 overlay /opt overlay noauto,lowerdir=/mnt/kemptown/dullon-root/opt,upperdir=/op\
 t,workdir=/tmp
+
+% NOTE TO SELF: installed google-chrome from website, not sure its in any repo
+
+%% TODO: dnsmasq not working properly
+
+%% TODO: consider rsyncing dbs and mail files to brighton regularly as I get closer to making it live
+
+%% TODO: consider creating specific "screen" startup scripts for brighton
+
+%% TODO: redirecting port 25 breaks local mail delivery including CRON-- implement workaround
+
+% NOTE TO SELF: when dpms kicks in on brighton and I'm rdesktop'd into
+it, the screen is still there but "frozen" until I move the mouse
+(clock shows time of dpms, for example)
+
+%% TODO: consider resetting dpms settings
+
+%% TODO: test microphone issues using arecord on brighton (not
+babybrighton) in case virtualization itself is creating an issue

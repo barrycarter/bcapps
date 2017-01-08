@@ -4,6 +4,8 @@ math -initfile ~/BCGIT/ASTRO/bc-astro-formulas.m
 
 http://astronomy.stackexchange.com/questions/19619/how-to-make-motion-of-the-sun-more-apparent-at-seconds-scale
 
+TODO: sun has angular width, and oblong at horizon
+
 TODO: note when setting, asymptotic to infinity
 
 TODO: note ra/dec fixed is reasonable
@@ -16,18 +18,80 @@ conds = {Element[{dec,ha,lat}, Reals]}
 az[dec_,ha_,lat_] = FullSimplify[decHaLat2azEl[dec,ha,lat][[1]],conds]
 el[dec_,ha_,lat_] = FullSimplify[decHaLat2azEl[dec,ha,lat][[2]],conds]
 
-tdec = 0
-tlat = 35*Degree;
+(* we want to put points everywhere EXCEPT on the hour where we use text *)
+
+t = Select[Table[i,{i,0,24,1/4}], !IntegerQ[#] &]
+t = Table[i,{i,0,24,1/4}]
 
 pts[dec_,lat_] = 
  Table[
  Point[{Mod[az[dec,ha/12*Pi,lat],2*Pi]/Degree, el[dec,ha/12*Pi,lat]/Degree}], 
- {ha,0,24,15/60}];
+ {ha,t}];
+
+pts2[dec_,lat_] = 
+ Table[
+ {Mod[az[dec,ha/12*Pi,lat],2*Pi]/Degree, el[dec,ha/12*Pi,lat]/Degree}, 
+ {ha,t}];
+
+(* the stick length at various times and azimuths *)
+
+pts3[dec_,lat_] = 
+ Table[
+ {Mod[az[dec,ha/12*Pi,lat],2*Pi]/Degree, Cot[el[dec,ha/12*Pi,lat]]}, 
+ {ha,t}];
 
 txt[dec_,lat_] = 
- Table[Text[ToString[Mod[ha-12,24]], 
- {Mod[az[dec,ha/12*Pi,lat],2*Pi]/Degree, el[dec,ha/12*Pi,lat]/Degree}],
+ Table[Text[Style[ToString[Mod[ha-12,24]], FontSize -> 5], 
+ {Mod[az[dec,ha/12*Pi,lat],2*Pi]/Degree, el[dec,ha/12*Pi,lat]/Degree},
+ {0,0}],
  {ha,0,24,1}];
+
+xtics = Table[i,{i,0,360,30}];
+ytics = Table[i,{i,-90,90,10}];
+
+ytics3 = Table[i,{i,0,5,.5}];
+
+g2 = ListLogPlot[{
+ pts3[0,35*Degree], pts3[23.5*Degree,35*Degree], pts3[-23.5*Degree,35*Degree]
+}, Ticks -> {xtics, Automatic}, PlotLegends -> {"Equinox", "Summer Solstice", 
+   "Winter Solstice"}, PlotMarkers -> {Automatic, 2}, PlotRange -> {0,5},
+ PlotRangeClipping -> True]
+
+g2 = ListPlot[{
+ pts3[0,35*Degree], pts3[23.5*Degree,35*Degree], pts3[-23.5*Degree,35*Degree]
+}, Ticks -> {xtics, ytics3}, PlotLegends -> {"Equinox", "Summer Solstice", 
+   "Winter Solstice"}, PlotMarkers -> {Automatic, 2}, PlotRange -> {0,5}]
+
+g0 = ListPlot[{
+ pts2[0,35*Degree], pts2[23.5*Degree,35*Degree], pts2[-23.5*Degree,35*Degree]
+}, Ticks -> {xtics, ytics}, PlotLegends -> {"Equinox", "Summer Solstice", 
+   "Winter Solstice"}, PlotMarkers -> {Automatic, 2}]
+
+g1 = Graphics[{
+ txt[0, 35*Degree], txt[-23.5*Degree, 35*Degree], txt[23.5*Degree, 35*Degree]
+}];
+
+Show[{g0,g1}]
+showit
+
+(* angle and radius, using north as up, east as right *)
+
+rad[dec_,ha_,lat_] = FullSimplify[Cot[el[dec,ha,lat]],conds]
+ang[dec_,ha_,lat_] = 3*Pi/2-az[dec,ha,lat]
+
+
+xy[dec_,ha_,lat_]=  rad[dec,ha,lat]*
+ {Cos[ang[dec,ha,lat]],Sin[ang[dec,ha,lat]]}
+
+
+xy[dec_,ha_,lat_]=  Max[rad[dec,ha,lat],0]*
+ {Cos[ang[dec,ha,lat]],Sin[ang[dec,ha,lat]]}
+
+xyt[dec_,lat_] = Table[xy[dec,ha/12*Pi,lat], {ha,0,24,1/4}]
+
+ListPlot[xyt[23.5*Degree,35*Degree]]
+
+TODO: consider projecting at an angle instead of flat surface, and note sun is not a point light source, but has width
 
 Graphics[{txt[0,35*Degree], txt[23.5*Degree, 35*Degree],
           txt[-23.5*Degree, 35*Degree]}]
@@ -45,9 +109,6 @@ TODO: mention this file
 ParametricPlot[{az[tdec,ha,tlat], el[tdec,ha,tlat]}, {ha,-Pi,Pi}]
 
 (* radius and angle of gnomon; note 'rad' is existing function, sigh *)
-
-radi[dec_,ha_,lat_] = FullSimplify[Cot[el[dec,ha,lat]],conds]
-ang[dec_,ha_,lat_] = -az[dec,ha,lat]
 
 (* and the corresponding xy point *)
 
