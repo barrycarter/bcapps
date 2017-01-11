@@ -67,6 +67,7 @@ xdotool
 xinetd
 usbview
 xz
+mosh
 
 # backup
 

@@ -423,3 +423,7 @@ it, the screen is still there but "frozen" until I move the mouse
 
 %% TODO: test microphone issues using arecord on brighton (not
 babybrighton) in case virtualization itself is creating an issue
+
+%% TODO: routinely synchronize /home/user/Downloads (note plural) back
+to dullon, which doesnt have a /home/user/Downloads (only the singular
+version), so no risk of overwriting

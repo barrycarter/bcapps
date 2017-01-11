@@ -180,3 +180,14 @@ MAILTO="daemon"
 # TED's start date
 
 42 0 27 4 * curl -o /home/user/TED/monthly.`/bin/date +\%Y\%m\%d.\%H\%M\%S.\%N` 'http://ted.local.lan/history/monthlyhistory.csv?MTU=0&INDEX=0&U=1'
+
+# TODO: look for all references to dullon in this file and remove once
+# transfer is complete
+
+# dullon has a ~/Download directory but NOT a ~/Downloads directory;
+# this mirrors things I download on brighton to dullon during
+# transition period
+
+# I have ssh trust setup so this works
+
+*/10 * * * * rsync -Pavz /home/user/Downloads user@dullon:/home/user/
