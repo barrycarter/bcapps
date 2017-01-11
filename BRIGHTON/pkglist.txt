@@ -5,7 +5,8 @@ efibootmgr
 
 # system tools
 
-yum-cron
+# TODO: had to remove below because of conflict-- reinstall correctly later
+# yum-cron
 dbus-x11
 strace
 whois
