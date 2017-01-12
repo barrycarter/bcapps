@@ -23,7 +23,11 @@ my(@arr) = @{JSON::from_json($out)};
 # purely test command to flip fake user event organizer credentials to
 # confirm no email is sent
 
-$cmd = "curl -X PATCH 'https://meetup.com/$gurl/members/219789953&key=$private{meetup}{key}' -d 'add_role=event_organizer'";
+$cmd = "curl -X PATCH 'https://api.meetup.com/$gurl/members/219789953&key=$private{meetup}{key}&sign=true' -d 'add_role=event_organizer'";
+
+$cmd = "curl -X PATCH 'https://api.meetup.com/$gurl/members/219789953&key=$private{meetup}{key}&sign=true'";
+
+$cmd = "curl -X PATCH 'https://api.meetup.com/$gurl/members/219789953' -d 'add_role=event_organizer&key=$private{meetup}{key}'";
 
 debug("CMD: $cmd");
 
