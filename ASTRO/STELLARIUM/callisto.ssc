@@ -15,15 +15,21 @@ core.setObserverLocation(0,90,0,0,"Callisto North Pole", "Callisto");
 
 core.moveToRaDec(15*(17+54/60+36.4/3600), 64+47/60+45.52/3600, 1);
 
-core.exit();
-
 core.setTimeRate(0);
 core.setDate("2017:01:01T00:00:00");
-for (i=0; i<35; i++)
+
+// this is longer than we actually need it
+
+for (i=0; i<30000; i++)
+
 {
-// this gives 15m (youtube upload limit) for a year
-core.setDate("+20 minutes")
-core.wait(.2);
-core.screenshot("ca", false);
+	// this gives 15m (youtube upload limit) for a year
+	core.setDate("+20 minutes")
+	core.wait(.2);
+	core.screenshot("ca", false);
 }
+
+// To create mp4 from stored PNGs (from ~user/STELLARIUM):
+
+// ffmpeg -i ca%03d.png /tmp/test.mp4
 
