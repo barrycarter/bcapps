@@ -6,10 +6,13 @@
 // moveToAltAzi is only accurate on Earth
 // core.moveToAltAzi(0,1,5.);
 
+
+// core.setDate("1999:12:31T12:00:00");
+
 // this is Callisto's J2000 north pole (approximate; determined manually)
 // note that RA must be given in degrees, NOT hours
 
-core.moveToRaDec(18*15,65,5);
+core.moveToRaDec(15*(17+54/60+36.4/3600), 64+47/60+45.52/3600, 5);
 
 // longitude/latitude/altitude/transition-duration/display-name/planet
 
