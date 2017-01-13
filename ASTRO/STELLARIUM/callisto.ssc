@@ -9,11 +9,11 @@
 // this is Callisto's J2000 north pole (approximate; determined manually)
 // note that RA must be given in degrees, NOT hours
 
-core.moveToRaDec(18*15,64,5);
+core.moveToRaDec(18*15,65,5);
 
 // longitude/latitude/altitude/transition-duration/display-name/planet
 
-// core.setObserverLocation(0,90,0,0,"Callisto North Pole", "Callisto");
+core.setObserverLocation(0,90,0,5,"Callisto North Pole", "Callisto");
 
 core.exit();
 
