@@ -3,20 +3,17 @@
 // some settings are manual -- I tweaked using stellarium and then did
 // "save settings"
 
-// moveToAltAzi is only accurate on Earth
-// core.moveToAltAzi(0,1,5.);
+// longitude/latitude/altitude/transition-duration/display-name/planet
 
-
-// core.setDate("1999:12:31T12:00:00");
+core.setObserverLocation(0,90,0,0,"Callisto North Pole", "Callisto");
 
 // this is Callisto's J2000 north pole (approximate; determined manually)
 // note that RA must be given in degrees, NOT hours
 
-core.moveToRaDec(15*(17+54/60+36.4/3600), 64+47/60+45.52/3600, 5);
+// note replacing 1 with 0 breaks the below; you can replace 1 with
+// 0.5 (and maybe even lower numbers), but playing it safe here
 
-// longitude/latitude/altitude/transition-duration/display-name/planet
-
-core.setObserverLocation(0,90,0,5,"Callisto North Pole", "Callisto");
+core.moveToRaDec(15*(17+54/60+36.4/3600), 64+47/60+45.52/3600, 1);
 
 core.exit();
 
