@@ -1,10 +1,24 @@
 // http://astronomy.stackexchange.com/questions/19731/how-would-a-celestial-map-for-callisto-depict-the-paths-of-jupiter-the-sun-etc
 
-// NOTE: Most settings are manual, this script won't work from startup
+// some settings are manual -- I tweaked using stellarium and then did
+// "save settings"
+
+// moveToAltAzi is only accurate on Earth
+// core.moveToAltAzi(0,1,5.);
+
+// this is Callisto's J2000 north pole (approximate; determined manually)
+// note that RA must be given in degrees, NOT hours
+
+core.moveToRaDec(18*15,64,5);
+
+// longitude/latitude/altitude/transition-duration/display-name/planet
+
+// core.setObserverLocation(0,90,0,0,"Callisto North Pole", "Callisto");
+
+core.exit();
 
 core.setTimeRate(0);
 core.setDate("2017:01:01T00:00:00");
-core.wait(2);
 for (i=0; i<35; i++)
 {
 // this gives 15m (youtube upload limit) for a year
