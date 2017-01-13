@@ -20,29 +20,16 @@ my($out,$err,$res) = cache_command2($cmd, "age=86400");
 
 my(@arr) = @{JSON::from_json($out)};
 
-# purely test command to flip fake user event organizer credentials to
-# confirm no email is sent
-
-$cmd = "curl -X PATCH 'https://api.meetup.com/$gurl/members/219789953&key=$private{meetup}{key}&sign=true' -d 'add_role=event_organizer'";
-
-$cmd = "curl -X PATCH 'https://api.meetup.com/$gurl/members/219789953&key=$private{meetup}{key}&sign=true'";
-
 $cmd = "curl -X PATCH 'https://api.meetup.com/$gurl/members/219789953' -d 'add_role=event_organizer&key=$private{meetup}{key}'";
-
-debug("CMD: $cmd");
-
-
-die "TESTING";
 
 for $i (@arr) {
 
   # ignore people who already have roles
   if ($i->{group_profile}{role}) {next;}
 
+  $cmd = "curl -X PATCH 'https://api.meetup.com/$gurl/members/$i->{id}' -d 'add_role=event_organizer&key=$private{meetup}{key}'";
+
+  # as part of my plan to never actually run anything, just print
+  print "$cmd\n";
+
 }
-
-die "TESTING";
-
-my(%hash) = JSON::from_json($out);
-
-debug(dump_var("ALPHA", JSON::from_json($out)));
