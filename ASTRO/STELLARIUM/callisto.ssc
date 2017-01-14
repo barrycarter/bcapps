@@ -33,3 +33,10 @@ for (i=0; i<30000; i++)
 
 // ffmpeg -i ca%03d.png /tmp/test.mp4
 
+// note: this script (not the ffmpeg command above) generates ~170
+// images per minute (approx 6s worth of video) on babybrighton (a
+// VM), so completion will take 10x video length
+
+
+
+
