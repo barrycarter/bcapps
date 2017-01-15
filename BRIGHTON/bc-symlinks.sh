@@ -114,3 +114,8 @@ mkdir -p /mnt/extdrive2 /mnt/extdrive3 /mnt/extdrive4 /mnt/extdrive5
 # symlink allows me to access it with the old name
 
 ln -s /mnt/extdrive5/extdrive /mnt
+
+# kemptown is hereby numbered extdrive7 for consistency
+
+ln -s /mnt/kemptown /mnt/extdrive7
+

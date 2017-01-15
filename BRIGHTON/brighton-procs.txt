@@ -45,6 +45,9 @@ snownews
 xemacs
 ssh
 /usr/bin/pulseaudio
+# these are client programs that I keep running
+mysql
+psql
 
 # because I "sudo su" in two open windows
 sudo
@@ -88,7 +91,7 @@ sendmail:
 /usr/sbin/xinetd
 # for mysql, both below must be running
 /usr/libexec/mysqld
-/bin/mysqld_safe
+/usr/bin/mysqld_safe
 /usr/sbin/atd
 /usr/sbin/sshd
 /usr/sbin/dnsmasq
@@ -153,6 +156,10 @@ login
 /usr/libexec/gconfd-2
 /sbin/audispd
 /usr/libexec/rtkit-daemon
+
+# processes that are broken if they run too long
+
+/home/user/BCGIT/bc-create-capone-iim.pl
 
 </kill>
 

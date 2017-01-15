@@ -2,6 +2,9 @@
 # This trivial script just runs bc-unix-dump.pl on all my drives
 # TODO: automate this if I add new drives etc
 
+# TODO: if I have a drive list somewhere for bc-rev-search, use it
+# here as well?
+
 # NOTE: running these all at the same time kills the system CPU-wise
 # if I happen to be on at that time, so changing these to run
 # sequentially, and not in parallel
@@ -24,6 +27,10 @@
 /home/barrycarter/BCGIT/BACKUP/bc-unix-dump.pl /mnt/extdrive4 extdrive4
 /home/barrycarter/BCGIT/BACKUP/bc-unix-dump.pl /mnt/extdrive5 extdrive5
 /home/barrycarter/BCGIT/BACKUP/bc-unix-dump.pl /mnt/extdrive6 extdrive6
+
+# added for kemptown, which is hereby dubbed extdrive7
+
+/home/barrycarter/BCGIT/BACKUP/bc-unix-dump.pl /mnt/extdrive7 extdrive7
 
 # /mnt/extdrive4 later decomissioned
 # TODO: find more general way of deciding which drives to "dump"
