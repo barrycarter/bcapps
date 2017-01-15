@@ -294,7 +294,9 @@ Plot[BetaRegularized[1 - 1/100, -1000+n, 1000], {n,0,200000}]
 
 Plot[s[1000,n,1/100],{n,0,200000}, PlotRange -> All]
 
+TODO: note sum can start from k instead of 0
 
+TODO: note normal approx allows <k and even <0
 
 BetaRegularized[1/100, 1000, n-999]
 
