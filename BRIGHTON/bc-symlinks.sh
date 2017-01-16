@@ -87,7 +87,11 @@ ln -s /home/user/BCGIT/BRIGHTON/hosts /etc
 # TODO: try to generalize more for /var/tmp but note it has "/tmp" perms
 # NOTE: I want to keep my nagios stuff where it was before thus /var/nagios
 # /var/log/nagios/rw should NOT be necessary bug workaround
-mkdir -p /usr/local/etc/locks /usr/local/etc/registry /var/tmp/montastic /var/tmp/cache /var/nagios/rw /var/log/nagios/rw
+
+# /usr/local/etc/elinks is where I have elinks autosave documents I bookmark
+# TODO: make the program that does above available as OS
+
+mkdir -p /usr/local/etc/locks /usr/local/etc/registry /var/tmp/montastic /var/tmp/cache /var/nagios/rw /var/log/nagios/rw /usr/local/etc/elinks
 chown -R user /usr/local/etc /var/tmp/*
 chown -R nagios /var/nagios /var/log/nagios
 

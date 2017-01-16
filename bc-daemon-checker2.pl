@@ -38,7 +38,6 @@ my(%use2nd) = list2hash("/usr/bin/perl", "python", "/bin/perl",
 @procs = split(/\n/,$out);
 shift(@procs); # ignore header line
 
-# TODO: make this an argument, not fixed
 $all = read_file($globopts{file});
 my(%proclist);
 
@@ -50,8 +49,6 @@ while ($all=~s%<(.*?)>(.*?)</\1>%%s) {
     $proclist{$sec}{$i} = 1;
   }
 }
-
-# TODO: allow comments in must/may/kill sections
 
 for $i (@procs) {
   # cleanup proc line and split into fields
@@ -110,6 +107,11 @@ for $i (@procs) {
     if ($stime>3000){push(@err, "10x.$proc ($pid)");}
     # kill it
     system("kill $signal $pid");
+
+    # TODO: there should be a "next" here, but leaving it off for the
+    # moment since its useful to see which daemons keep coming back
+    # even after I kill them
+
   }
 
   # process is running long, and is neither permitted nor required to

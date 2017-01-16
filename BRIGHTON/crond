@@ -1,0 +1,3 @@
+# copy to /etc/sysconfig/crond
+# see bc-crond.pl for details
+CRONDARGS=-m/home/barrycarter/BCGIT/bc-crond.pl

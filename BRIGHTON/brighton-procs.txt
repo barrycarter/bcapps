@@ -7,6 +7,10 @@
 
 <may>
 
+# TODO: this is only during testing, normally I scroll across pages
+# directly and dont use fvwmpager
+/usr/libexec/fvwm/2.6.6/FvwmPager
+
 # X11 + wm
 X
 fvwm2
@@ -85,7 +89,10 @@ zenity
 <must>
 
 # the usual daemons
-sendmail:
+
+# TODO: restore below after I fix up my mail setup
+# sendmail:
+
 /usr/sbin/httpd
 /usr/sbin/crond
 /usr/sbin/xinetd
