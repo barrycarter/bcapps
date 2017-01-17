@@ -64,7 +64,6 @@ tar
 tmpwatch
 traceroute
 wget
-xdotool
 xinetd
 usbview
 xz
@@ -128,6 +127,9 @@ truecrypt
 
 # X tools
 xcalc
+xpaste
+xdotool
+
 
 # terminals
 rxvt-unicode
@@ -217,6 +219,10 @@ lynx
 britannica
 elinks
 links
+seamonkey
+otter-browser
+chromium
+dillo
 # TODO: google chrome (below will likely fail)
 google-chrome
 # below required for google chrome
