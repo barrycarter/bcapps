@@ -1,5 +1,7 @@
 # list of packages to test on various systems broken into categories
 
+# TODO: maybe look at system calls from all my Perl scripts?
+
 # meta-system tools
 efibootmgr
 
@@ -104,6 +106,8 @@ mediawiki123
 rubygem-rspec
 rubygem-bundler
 ruby-doc
+mono-core
+
 
 # shells
 tcsh
@@ -264,7 +268,7 @@ samba
 
 # games
 # TODO: eternal lands
-# TODO: maybe look at system calls from all my Perl scripts?
+# TODO: kerbal?
 xscreensaver
 xmame
 widelands

@@ -82,6 +82,18 @@ sshd:
 zenity
 /home/user/BCGIT/bc-walkaround.pl
 
+# recollindex and its filters
+# TODO: consider wildcarding in this file?
+recollindex
+/usr/share/recoll/filters/rclinfo
+/usr/share/recoll/filters/rclimg
+/usr/share/recoll/filters/rcldia
+/usr/share/recoll/filters/rclics
+/usr/share/recoll/filters/rclzip
+/usr/share/recoll/filters/rclchm
+/usr/share/recoll/filters/rcluncomp
+/usr/share/recoll/filters/rcltar
+
 </may>
 
 # "must" processes must be running at all times
@@ -140,6 +152,18 @@ nagios
 # because I "sudo su" in two open windows
 sudo
 su
+
+# recoll filters run in parallel (multiple files at once), so can have
+# multiple instances running
+
+/usr/share/recoll/filters/rclinfo
+/usr/share/recoll/filters/rclimg
+/usr/share/recoll/filters/rcldia
+/usr/share/recoll/filters/rclics
+/usr/share/recoll/filters/rclzip
+/usr/share/recoll/filters/rclchm
+/usr/share/recoll/filters/rcluncomp
+/usr/share/recoll/filters/rcltar
 
 </multi>
 

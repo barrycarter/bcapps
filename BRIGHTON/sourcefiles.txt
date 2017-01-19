@@ -1,9 +1,7 @@
 # using http://gentoo.osuosl.org/distfiles since they seem to have it all
 
-
-
-# The page "http://gentoo.osuosl.org/distfiles/?C=M;O=A" so curl may
-# be better to download it (lynx also works ok)
+# The page "http://gentoo.osuosl.org/distfiles/?C=M;O=A" is insanely
+# long so curl may be better to download it (lynx also works ok)
 
 http://gentoo.osuosl.org/distfiles/abiword-3.0.2.tar.gz
 http://gentoo.osuosl.org/distfiles/calibre-2.73.0.tar.xz
@@ -30,4 +28,16 @@ http://gentoo.osuosl.org/distfiles/xteddy-2.2.tar.gz
 # consider look at freshports or even bsd ports (it's all source) for more?
 
 # TODO: decide where to put above, /root/gentoo ?
+
+# TODO: installing recoll manually from /root/gentoo -- but make this
+# automatic later
+
+# TODO: wget -nc prevents redownloading
+
+# TODO: tar -k prevents overwriting
+
+# TODO: attempt "sh configure && make install" in each dir, but
+# realize this may fail
+
+# TODO: ftp://ftp.pbone.net/mirror/forensics.cert.org/centos/cert/7/x86_64/recoll-1.19.11p1-1.1.el7.x86_64.rpm (cheating and using this)
 

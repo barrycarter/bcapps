@@ -203,9 +203,10 @@ really does let me use X normally, keep this snapshot; else tweak (aka
 can I xinit login at this point?)
 
 %% TODO: explain how to use mount so babybrighton can edit files
-directly on dullon in this directory
+directly on dullon in this directory (emacs tramp mode also works)
 
-%% TODO: compare all lib and bin files from old machine (perhaps using fc11root) and new machine to see what I'm missing
+%% TODO: compare all lib and bin files from old machine (perhaps using
+fc11root) and new machine to see what I'm missing
 
 % NOTE: to list all bin and lib files on a machine (which I can use to
 compare my current bin files on dullon to those on babybrighton to see
@@ -428,3 +429,51 @@ babybrighton) in case virtualization itself is creating an issue
 %% TODO: routinely synchronize /home/user/Downloads (note plural) back
 to dullon, which doesnt have a /home/user/Downloads (only the singular
 version), so no risk of overwriting
+
+%% TODO: make sure numeric keypad works properly when physically on
+brighton-- fails through rdesktop sometimes, but that's 3 levels
+removed (vnc/VM/rdesktop), so not a good test
+
+%% TODO: "flip" so I'm using (baby)brighton directly and rdc/vnc to
+dullon instead
+
+%% TODO: make sure my elinks scripts (which I need to copy over here) actually save my bookmarked documents to /usr/local/etc/elinks as they are supposed to
+
+%% TODO: recompile elinks w lua support if needed
+
+%% TODO: regularly rsync /home/user/brighton-fun.txt on babybrighton
+back to dullon (one of the few new files I've created on babybrighton
+that isnt a modification of an existing file and/or installed by rpms)
+
+%% TODO: consistently change 192.168.0.2 to dullon in this directory (except where I need IP prior to /etc/hosts stuff)
+
+%% TODO: get bcgit alias working on babybrighton
+
+%% TODO: get steam working
+
+%% TODO: see if my USB drives work better on babybrighton
+
+% NOTE: had to remove /home/user/.wine from rsync because it was the
+32-bit version; however, steam still broken
+
+% NOTE TO SELF: downloaded marmotta but it didnt work
+
+%% TODO: download blazegraph (it does work, but I can't actually do
+anything w/ it at the moment)
+
+%% TODO: make Firefox not auto-upgrade
+
+%% TODO: Firefox sluggish over VM/rdc, make sure OK in production
+
+%% TODO: yum-cron installed but not working properly? (no, it failed to install properly)
+
+%% TODO: (do this at startup or is there a servicectl?) mkdir /.recoll
+and then "recollindex -c /.recoll -m -x > /.recoll/log.txt&" (need to
+do more here, including creating a recoll.conf file with my prefs and
+setting up env variables since I'm putting this in a nonstandard
+place)
+
+%% TODO: get download helper working on youtube (and potentially other) sites
+
+%% TODO: get scanner working
+

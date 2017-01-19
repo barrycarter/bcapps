@@ -1,19 +1,23 @@
 #!/bin/perl
 
-# reads wikidata from the 45G 20150525.json file
+# reads wikidata from wikidata dumps
 
 require "/usr/local/lib/bclib.pl";
 
-open(A,"/home/barrycarter/20150530/20150525.json");
+while (<>) {
 
-# this skips the "[" line
-<A>;
+  # ignore "[" line, if any
+  # TODO: more generalize ignore routine here
+  if (/^\[|\]$/) {next;}
 
-while (<A>) {
-  chomp();
   s/\,$//;
-#  debug("THUNK: $_");
+
   my($json) = JSON::from_json($_);
+
+  # stuff I want
+  debug("ID: $json->{id}");
+
+
   debug(var_dump("JSON",$json));
   die "TESTING";
 }

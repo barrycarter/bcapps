@@ -41,8 +41,6 @@ cp /home/user/BCGIT/BRIGHTON/rc.local /etc/rc.d
 ln -s /bin/php /usr/local/bin/
 ln -s /bin/urxvt /bin/rxvt
 ln -s /home/user/BCGIT/bclib.pl /usr/local/lib/
-# blazegraph requires this
-ln -s /sbin/groupadd /sbin/addgroup
 
 # timezone link
 
