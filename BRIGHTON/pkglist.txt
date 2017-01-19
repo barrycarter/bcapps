@@ -313,6 +313,7 @@ mariadb
 postgresql
 postgresql-server
 virtuoso-opensource
+blazegraph
 
 # emulators
 dosbox
