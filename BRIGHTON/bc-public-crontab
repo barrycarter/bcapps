@@ -211,3 +211,6 @@ MAILTO="daemon"
 
 */5 * * * * find /usr/local/etc/stickies /home/user/.elinks /home/user/TODAY -type f | xargs bc-quikbak.pl
 
+# give new members in my meetup group power to suggest/add events
+
+10 13 * * * bc-meetup-make-eo.pl|sh

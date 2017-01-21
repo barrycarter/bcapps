@@ -477,3 +477,15 @@ place)
 
 %% TODO: get scanner working
 
+%% TODO: consider rsyncing dullon errors to babybrighton (as I do for
+bcinfo3/etc), but this may be overkill
+
+%% TODO: brighton (not babybrighton) physical monitor looks different
+from what I am vnc'ing in to, which worries me slightly
+
+%% TODO: cranked video memory on vm babybrighton to see if that would
+help with "screen doesn't repaint" issues but doesn't seem to help --
+after some amount of time, the screen stops repainting through
+rdesktop (even if I kill/restart remote rdesktop)
+
+

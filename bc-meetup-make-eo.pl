@@ -15,8 +15,7 @@ my($gurl) = "Socially-Awkward-People-Want-to-Socialize-SAPWWS";
 
 my($cmd) ="curl 'https://api.meetup.com/$gurl/members?key=$private{meetup}{key}'";
 
-# TODO: 86400 for testing only
-my($out,$err,$res) = cache_command2($cmd, "age=86400");
+my($out,$err,$res) = cache_command2($cmd, "age=3600");
 
 my(@arr) = @{JSON::from_json($out)};
 

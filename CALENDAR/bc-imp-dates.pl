@@ -19,6 +19,8 @@ for $i (@all) {
 # to avoid certain repeats
 my(%seen);
 
+# TODO: add "Friday the 13th"?
+
 # TODO: http://www.un.org/en/events/observances/days.shtml
 # TODO: http://www.timeanddate.com/holidays/us/ (or maybe not)
 

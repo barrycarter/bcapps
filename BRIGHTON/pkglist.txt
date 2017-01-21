@@ -208,6 +208,8 @@ mplayer
 vlc
 recordmydesktop
 mjpegtools
+youtube-dl
+openshot
 
 # email
 mutt
