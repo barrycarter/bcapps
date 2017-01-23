@@ -488,4 +488,6 @@ help with "screen doesn't repaint" issues but doesn't seem to help --
 after some amount of time, the screen stops repainting through
 rdesktop (even if I kill/restart remote rdesktop)
 
+%% TODO: evince is currently NOT re-sizeable but should be
+
 

@@ -21,6 +21,9 @@ my(%seen);
 
 # TODO: add "Friday the 13th"?
 
+# TODO: add 4/20 (marijuana day), star wars day (5/4), pi day (3/14),
+# tau day (6/28), towel day, sci fi geek dat, etc??
+
 # TODO: http://www.un.org/en/events/observances/days.shtml
 # TODO: http://www.timeanddate.com/holidays/us/ (or maybe not)
 
