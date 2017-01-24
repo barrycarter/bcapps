@@ -415,3 +415,12 @@ sph2xyz[l_] := Apply[sph2xyz,l]
 (* the order here is time then distance, which may have been a bad idea *)
 
 relativityMatrix[v_]= 1/Sqrt[1-v^2]*{ {1,v}, {v,1}};
+
+(* from STACK/bc-rst.m, after simplification, deciding on El for
+elevation, instead of Alt for altitude; HA = hour angle *)
+
+HADecLat2azEl[ha_, dec_, lat_] = 
+   {ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[ha]*Sin[lat], -(Cos[dec]*Sin[ha])],
+    ArcTan[Sqrt[Cos[dec]^2*Sin[ha]^2 + (Cos[lat]*Sin[dec] - 
+         Cos[dec]*Cos[ha]*Sin[lat])^2], Cos[dec]*Cos[ha]*Cos[lat] + 
+      Sin[dec]*Sin[lat]]}

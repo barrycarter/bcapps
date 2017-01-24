@@ -19,6 +19,10 @@ alt = ArcTan[r,z];
 
 conds = {-Pi/2<dec<Pi/2, -Pi/2<lat<Pi/2, -Pi<ha<Pi, -Pi<lon<Pi};
 
+HADecLat2azEl[ha_, dec_, lat_] = 
+ {FullSimplify[az,conds], FullSimplify[alt,conds]};
+
+
 raDecLatLonHA2az[alpha_, delta_, lambda_, psi_, t_] = FullSimplify[ 
  az /. {lat -> lambda, dec -> delta, ha -> t - alpha},
  conds];

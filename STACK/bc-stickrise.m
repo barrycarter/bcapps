@@ -1,10 +1,19 @@
 (*
 
-math -initfile ~/BCGIT/ASTRO/bc-astro-formulas.m
-
 http://astronomy.stackexchange.com/questions/19619/how-to-make-motion-of-the-sun-more-apparent-at-seconds-scale
 
 https://www.google.com/search?q=sundial+time+lapse&ie=utf-8&oe=utf-8
+
+conds = {-Pi/2<dec<Pi/2, -Pi/2<lat<Pi/2, -Pi<ha<Pi, -Pi<lon<Pi};
+
+HADecLat2azEl[ha_, dec_, lat_] = 
+FullSimplify[HADecLat2azEl[ha, dec, lat] /. ArcTan[x_,y_] -> ArcTan[x/y], 
+ conds]
+
+
+
+
+
 
 TODO: simulate as animated GIF
 

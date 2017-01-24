@@ -51,6 +51,7 @@ while ($all=~s%<(.*?)>(.*?)</\1>%%s) {
 }
 
 for $i (@procs) {
+
   # cleanup proc line and split into fields
   $i=trim($i);
   $i=~s/\s+/ /isg;
@@ -60,6 +61,9 @@ for $i (@procs) {
   # they all seem OK
   # TODO: is this wise?
   if ($proc=~/^\[.*\]$/) {next;}
+
+  # ignore defunct procs
+  if ($proc=~/<defunct>/) {next;}
 
   # use second arg? (third if second arg is an option)
   # TODO: maybe improve this
@@ -111,6 +115,7 @@ for $i (@procs) {
     # TODO: there should be a "next" here, but leaving it off for the
     # moment since its useful to see which daemons keep coming back
     # even after I kill them
+    next;
 
   }
 

@@ -353,8 +353,6 @@ overlay /merged overlay noauto,x-systemd.automount,lowerdir=/lower,upperdir=/upp
 
 overlay /usr overlay noauto,lowerdir=/mnt/kemptown/dullon-root/usr,upperdir=/usr,workdir=/tmp
 
-
-
 : TODO: other /usr stuff since I cant do /usr all at once and the below
 overlay /usr/bin overlay noauto,x-systemd.automount,lowerdir=/mnt/kemptown/dullon-root/bin,upperdir=/usr/bin,workdir=/tmp 0 0
 overlay /usr/lib overlay noauto,x-systemd.automount,lowerdir=/mnt/kemptown/dullon-root/lib,upperdir=/usr/lib,workdir=/tmp 0 0
@@ -367,8 +365,6 @@ overlay /sbin overlay noauto,x-systemd.automount,lowerdir=/mnt/kemptown/dullon-r
 of overlay mounting)
 
 /usr/share/PySolFC
-
-
 
 %% TODO: I have automount off so must mount overlays at boot
 
@@ -399,7 +395,6 @@ during testing, NFS not supported by overlay)
 
 %% TODO: consider programmatically symlinking instead (for all of / ?!?!)
 
-
 overlay /usr overlay noauto,lowerdir=/mnt/kemptown/dullon-root/usr,upperdir=/us\
 r,workdir=/tmp
 overlay /etc overlay noauto,lowerdir=/mnt/kemptown/dullon-root/etc,upperdir=/et\
@@ -426,7 +421,7 @@ it, the screen is still there but "frozen" until I move the mouse
 %% TODO: test microphone issues using arecord on brighton (not
 babybrighton) in case virtualization itself is creating an issue
 
-%% TODO: routinely synchronize /home/user/Downloads (note plural) back
+% DONE: routinely synchronize /home/user/Downloads (note plural) back
 to dullon, which doesnt have a /home/user/Downloads (only the singular
 version), so no risk of overwriting
 
