@@ -490,4 +490,18 @@ rdesktop (even if I kill/restart remote rdesktop)
 
 %% TODO: evince is currently NOT re-sizeable but should be
 
+%% TODO: get skype working
+
+%% TODO: this command SHOULD tell me what files Ive changed on
+/mnt/kemptown/user and /mnt/kemptown/root since I mirrored, but
+doesn't seem to work at the moment
+
+rsync -Pvrn /mnt/kemptown/user /mnt/kemptown/dullon-root/home/user
+
+issue appears to be that change time can be different even when files
+are byte-by-byte identical, grumble
+
+%% TODO: above for root
+
+%% TODO: consider textifying all sqlite3 dbs on system or writing recoll filter
 

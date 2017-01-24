@@ -4,6 +4,16 @@ math -initfile ~/BCGIT/ASTRO/bc-astro-formulas.m
 
 http://astronomy.stackexchange.com/questions/19619/how-to-make-motion-of-the-sun-more-apparent-at-seconds-scale
 
+https://www.google.com/search?q=sundial+time+lapse&ie=utf-8&oe=utf-8
+
+TODO: simulate as animated GIF
+
+TODO: tall building
+
+TODO: elecbill stuff
+
+TODO: back of envelope -- 15 deg/hour, at 45 elev?
+
 TODO: sun has angular width, and oblong at horizon
 
 TODO: note when setting, asymptotic to infinity
@@ -14,14 +24,51 @@ TODO: link to formulas
 
 TODO: sid day length and fixed ra cancel each other out
 
-conds = {Element[{dec,ha,lat}, Reals]}
+TODO: can't make fixed dec assumption for other problem sun max height
+
+TODO: perhaps use ELECBILL pics to show motion of sun but not this is vertical not horizontal
+
+TODO: consider angled stick
+
+conds = {-Pi/2 < dec < Pi/2, 0 < ha < 2*Pi, -Pi/2 < lat < Pi/2};
+
 az[dec_,ha_,lat_] = FullSimplify[decHaLat2azEl[dec,ha,lat][[1]],conds]
 el[dec_,ha_,lat_] = FullSimplify[decHaLat2azEl[dec,ha,lat][[2]],conds]
+
+(* angle and radius, using north as up, east as right *)
+
+(* NOTE: 'rad' is already in use by bclib.m *)
+
+(* TODO: this simplifies)
+
+radi[dec_,ha_,lat_] = FullSimplify[Cot[el[dec,ha,lat]],conds]
+ang[dec_,ha_,lat_] = 3*Pi/2-az[dec,ha,lat]
+
+(* xy coords at given time *)
+
+xy[dec_,ha_,lat_]=  radi[dec,ha,lat]*
+ {Cos[ang[dec,ha,lat]],Sin[ang[dec,ha,lat]]}
+
+txt[dec_,lat_] = 
+ Table[Text[Style[ToString[Mod[ha-12,24]], FontSize -> 5], 
+ xy[dec,ha,lat], {0,0}],
+ {ha,0,24,1}];
 
 (* we want to put points everywhere EXCEPT on the hour where we use text *)
 
 t = Select[Table[i,{i,0,24,1/4}], !IntegerQ[#] &]
 t = Table[i,{i,0,24,1/4}]
+
+pts[dec_,lat_] = 
+ Table[
+ Point[{Mod[az[dec,ha/12*Pi,lat],2*Pi]/Degree, el[dec,ha/12*Pi,lat]/Degree}], 
+ {ha,t}];
+
+
+
+xyt[dec_,lat_] = Table[xy[dec,ha/12*Pi,lat], {ha,0,24,1/4}]
+
+ListPlot[xyt[23.5*Degree,35*Degree]]
 
 pts[dec_,lat_] = 
  Table[
@@ -39,12 +86,6 @@ pts3[dec_,lat_] =
  Table[
  {Mod[az[dec,ha/12*Pi,lat],2*Pi]/Degree, Cot[el[dec,ha/12*Pi,lat]]}, 
  {ha,t}];
-
-txt[dec_,lat_] = 
- Table[Text[Style[ToString[Mod[ha-12,24]], FontSize -> 5], 
- {Mod[az[dec,ha/12*Pi,lat],2*Pi]/Degree, el[dec,ha/12*Pi,lat]/Degree},
- {0,0}],
- {ha,0,24,1}];
 
 xtics = Table[i,{i,0,360,30}];
 ytics = Table[i,{i,-90,90,10}];
@@ -73,23 +114,6 @@ g1 = Graphics[{
 
 Show[{g0,g1}]
 showit
-
-(* angle and radius, using north as up, east as right *)
-
-rad[dec_,ha_,lat_] = FullSimplify[Cot[el[dec,ha,lat]],conds]
-ang[dec_,ha_,lat_] = 3*Pi/2-az[dec,ha,lat]
-
-
-xy[dec_,ha_,lat_]=  rad[dec,ha,lat]*
- {Cos[ang[dec,ha,lat]],Sin[ang[dec,ha,lat]]}
-
-
-xy[dec_,ha_,lat_]=  Max[rad[dec,ha,lat],0]*
- {Cos[ang[dec,ha,lat]],Sin[ang[dec,ha,lat]]}
-
-xyt[dec_,lat_] = Table[xy[dec,ha/12*Pi,lat], {ha,0,24,1/4}]
-
-ListPlot[xyt[23.5*Degree,35*Degree]]
 
 TODO: consider projecting at an angle instead of flat surface, and note sun is not a point light source, but has width
 

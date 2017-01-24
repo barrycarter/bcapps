@@ -61,6 +61,7 @@ procps
 rsync
 rsyslog
 screen
+ssfe
 openssh-server
 tar
 tmpwatch

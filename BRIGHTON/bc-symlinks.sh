@@ -22,10 +22,15 @@ mkdir -p /usr/lib/X11 /usr/X11R6/
 ln -s /usr/libexec/fvwm/2.6.6 /usr/lib/X11/fvwm2
 ln -s /bin /usr/X11R6/
 
+# TODO: could I use "cp --overwrite" (or whatever) to do this w/o rm?
 # networking (must copy, /home/user/BCGIT doesnt exist early enough)
 
 rm /etc/sysconfig/network-scripts/ifcfg-enp0s3
 cp /home/user/BCGIT/BRIGHTON/ifcfg-enp0s3 /etc/sysconfig/network-scripts/
+
+# crond tweaking
+rm /etc/sysconfig/crond
+cp /home/user/BCGIT/BRIGHTON/crond /etc/sysconfig/
 
 # startup (/etc/rc.local is just a symlink)
 rm /etc/rc.d/rc.local
