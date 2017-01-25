@@ -1,15 +1,217 @@
+(* formulas start here *)
+
+conds = {-Pi/2<dec<Pi/2, -Pi/2<lat<Pi/2, -Pi<ha<Pi};
+
+az[ha_, dec_, lat_] = ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[ha]*Sin[lat], 
+    -(Cos[dec]*Sin[ha])]
+
+el[ha_, dec_, lat_] = ArcTan[Sqrt[Cos[dec]^2*Sin[ha]^2 + 
+      (Cos[lat]*Sin[dec] - Cos[dec]*Cos[ha]*Sin[lat])^2], 
+    Cos[dec]*Cos[ha]*Cos[lat] + Sin[dec]*Sin[lat]]
+
+cleanup = {ha -> omega, dec -> delta, lat -> phi}
+
+ha2ha[h_] = h/12*Pi-Pi
+
+azh[h_,dec_,lat_] = az[ha2ha[h],dec,lat]
+elh[h_,dec_,lat_] = el[ha2ha[h],dec,lat]
+
+r[h_, dec_, lat_]=Sqrt[(Cos[lat]*Sin[dec] + Cos[dec]*Cos[(h*Pi)/12]*Sin[lat])^
+       2 + Cos[dec]^2*Sin[(h*Pi)/12]^2]/(-(Cos[dec]*Cos[lat]*Cos[(h*Pi)/12]) + 
+     Sin[dec]*Sin[lat])
+
+theta[h_, dec_, lat_] = (3*Pi)/2 - ArcTan[Cos[lat]*Sin[dec] + 
+      Cos[dec]*Cos[(h*Pi)/12]*Sin[lat], Cos[dec]*Sin[(h*Pi)/12]]
+
+x[h_, dec_, lat_] = (Cos[lat]*Cot[(h*Pi)/12] - Csc[(h*Pi)/12]*Sin[lat]*
+      Tan[dec])^(-1)
+
+y[h_, dec_, lat_] = (Cos[lat] + Cos[(h*Pi)/12]*Cot[dec]*Sin[lat])/
+    (Cos[lat]*Cos[(h*Pi)/12]*Cot[dec] - Sin[lat])
+
+rplot[h_,dec_,lat_] := Max[0, r[h,dec,lat]]
+xplot[h_,dec_,lat_] := rplot[h,dec,lat]*Cos[theta[h,dec,lat]]
+yplot[h_,dec_,lat_] := rplot[h,dec,lat]*Sin[theta[h,dec,lat]]
+
+(* formulas end here *)
+
+x[h_,dec_,lat_] = FullSimplify[r[h,dec,lat]*Cos[theta[h,dec,lat]], conds]
+
+y[h_,dec_,lat_] = FullSimplify[r[h,dec,lat]*Sin[theta[h,dec,lat]], conds]
+
+r[h_,dec_,lat_] = FullSimplify[Cot[elh[h,dec,lat]], conds]
+
+theta[h,dec,lat] = FullSimplify[3*Pi/2-azh[h,dec,lat],conds]
+
+https://www.e-education.psu.edu/eme810/node/575
+
 (*
 
 http://astronomy.stackexchange.com/questions/19619/how-to-make-motion-of-the-sun-more-apparent-at-seconds-scale
 
+TODO: SUMMARY ANSWER HERE
+
+TODO: 15 deg cutoff 3.73205
+
+We know (see references section) the Sun's azimuth and elevation at any given time is:
+
+$
+   \text{azimuth}=\tan ^{-1}(\sin (\delta ) \cos (\phi )-\cos (\delta ) \cos 
+    (\omega ) \sin (\phi ),-\cos (\delta ) \sin (\omega ))
+$
+$
+\text{elevation}=\tan ^{-1}\left(\sqrt{(\sin (\delta ) \cos (\phi )-\cos 
+    (\delta ) \cos (\omega ) \sin (\phi ))^2+\cos ^2(\delta ) \sin ^2(\omega 
+    )},\cos (\delta ) \cos (\omega ) \cos (\phi )+\sin (\delta ) \sin (\phi 
+    )\right) 
+$
+
+where:
+
+  - $\delta$ is the Sun's declination
+  - $\phi$ is the observer's latitude
+  - $\omega$ is the Sun's "hour angle":
+    - $\omega$ is zero at local solar noon
+    - $\omega$ is $15 {}^{\circ}$ or $\frac{\pi }{12}$ 1 hour after local solar noon (ie, 1pm on a sundial)
+    - $\omega$ is $-15 {}^{\circ}$ or $-\frac{\pi }{12}$ 1 hour before local solar noon (ie, 11am on a sundial)
+    - $\omega$ is $\pm180 {}^{\circ}$ or $\pm\pi$ at local solar midnight
+    - $\omega$ is $-90 {}^{\circ}$ or $-\frac{\pi }{2}$ 6 hours before local solar noon (ie, 6am on a sundial), and so on.
+
+To make things slightly easier, let's convert $\omega$ to $h$, something closer to clock time. After this conversion, we have:
+
+$
+
+   \text{azimuth}=\tan ^{-1}\left(\cos (\text{dec}) \cos \left(\frac{\pi 
+    h}{12}\right) \sin (\text{lat})+\sin (\text{dec}) \cos (\text{lat}),\cos
+    (\text{dec}) \sin \left(\frac{\pi  h}{12}\right)\right)
+$
+$
+   \text{elevation}=\tan ^{-1}\left(\sqrt{\left(\cos (\text{dec}) \cos
+    \left(\frac{\pi  h}{12}\right) \sin (\text{lat})+\sin (\text{dec}) \cos
+    (\text{lat})\right)^2+\cos ^2(\text{dec}) \sin ^2\left(\frac{\pi 
+    h}{12}\right)},\sin (\text{dec}) \sin (\text{lat})-\cos (\text{dec}) \cos
+    \left(\frac{\pi  h}{12}\right) \cos (\text{lat})\right)
+$
+
+where the angles are now measured in radians and:
+
+  - $h$ is 12 at local solar noon
+  - $h$ is 1 when it's 1 hour after local solar noon (ie, 1pm on a sundial)
+  - $h$ is 11 when it's 1 hour before local solar noon (ie, 11am on a sundial)
+  - $h$ is 0 or 24 at local solar midnight
+  - $h$ is 6 when it's 6 hours before local solar noon (ie, 6am on a sundial), and so on.
+
+The direction $\theta$ in which a vertical stick's shadow points is opposite the Sun's azimuth. For example, if the Sun is due south, the shadow will point due north. For plotting purposes, we'd like north to be the positive y axis (as on standard maps), which we can achieve by adding $\frac{3 \pi }{2}$. This gives us:
+
+$
+  \theta =\frac{3 \pi }{2}-\tan ^{-1}\left(\cos (\delta ) \cos \left(\frac{\pi 
+    h}{12}\right) \sin (\phi )+\sin (\delta ) \cos (\phi ),\cos (\delta ) \sin
+    \left(\frac{\pi  h}{12}\right)\right)
+$
+
+The length of a vertical stick's shadow ($r$) is the cotangent of the Sun's elevation, or:
+
+$
+   r=\frac{\sqrt{\left(\cos (\delta ) \cos \left(\frac{\pi  h}{12}\right) \sin
+    (\phi )+\sin (\delta ) \cos (\phi )\right)^2+\cos ^2(\delta ) \sin
+    ^2\left(\frac{\pi  h}{12}\right)}}{\sin (\delta ) \sin (\phi )-\cos (\delta
+    ) \cos \left(\frac{\pi  h}{12}\right) \cos (\phi )}
+$
+
+Note that this formula only makes sense when $r$ is nonnegative.
+
+Although we could continue working in polar coordinates, it might be easier to convert to Cartesian coordinates. Using the standard transformation formulas, the x and y positions of the tip of a vertical stick's shadow (where north is the positive y axis and east is the positive x axis, as on a map) is:
+
+$
+   x=\frac{1}{\cot \left(\frac{\pi  h}{12}\right) \cos (\phi )-\tan (\delta )
+    \csc \left(\frac{\pi  h}{12}\right) \sin (\phi )}
+$
+$
+   y=\frac{\cot (\delta ) \cos \left(\frac{\pi  h}{12}\right) \sin (\phi )+\cos
+    (\phi )}{\cot (\delta ) \cos \left(\frac{\pi  h}{12}\right) \cos (\phi
+    )-\sin (\phi )}
+$
+
+Plotting this:
+
+TODO: math porn warning
+
+TODO: unhappy using r==0 as test of whether to plot or not
+
+(* we want to put points everywhere EXCEPT on the hour where we use
+text, and, of course, not when sun is down *)
+
+tab[dec_,lat_] := Select[Table[i,{i,0,24,1/4}], 
+ !IntegerQ[#] && rplot[#,dec,lat] > 0 &]
+
+(* the text points are the hours when sun is up *)
+
+txtpts[dec_,lat_] := Select[Table[i,{i,0,24}], rplot[#,dec,lat] > 0 &]
+
+
+
+(* the points for a given dec/lat, per tab above *)
+
+pts[dec_,lat_] := Table[Point[{xplot[ha,dec,lat],yplot[ha,dec,lat]}],{ha, tab}]
+
+txt[dec_,lat_] := 
+ Table[Text[Style[ToString[h], FontSize -> 5], 
+ {xplot[h,dec,lat], yplot[h,dec,lat]}, {0,0}],
+ {h,0,24,1}];
+
+
+gtest = Show[{
+ ListPlot[pts[23.5*Degree, 35*Degree]],
+ Graphics[txt[23.5*Degree, 35*Degree]]
+}]
+
+
+
+TODO: INSERT IMAGE
+
+TODO: Moon as exercise, Venus???
+
+
+TODO: http://paulscottinfo.ipage.com/making/ch41trig/ch41trigD.html
+
+
+
+
+TODO: references section
+
 https://www.google.com/search?q=sundial+time+lapse&ie=utf-8&oe=utf-8
 
-conds = {-Pi/2<dec<Pi/2, -Pi/2<lat<Pi/2, -Pi<ha<Pi, -Pi<lon<Pi};
+TODO: consistently use elevation not altitude
 
-HADecLat2azEl[ha_, dec_, lat_] = 
-FullSimplify[HADecLat2azEl[ha, dec, lat] /. ArcTan[x_,y_] -> ArcTan[x/y], 
- conds]
+TODO: tilting stick top will just be the same as shorter stick (but if looking at wedge, might be different)
 
+TODO: where I get these formulas
+
+az[ha_, dec_, lat_] = HADecLat2azEl[ha, dec, lat][[1]]
+el[ha_, dec_, lat_] = HADecLat2azEl[ha, dec, lat][[2]]
+
+TODO: graphics here re why its 1/Tan[el]
+
+gnomr[ha_,dec_,lat_] = FullSimplify[1/Tan[el[ha,dec,lat]], conds]
+
+(* adjustment below because we want north = up *)
+
+gnomt[ha_,dec_,lat_] = 3*Pi/2-az[ha,dec,lat]
+
+(* the xy point for a given ha/dec/lat, but origin if r<0 *)
+
+xy[ha_,dec_,lat_] = FullSimplify[
+ Max[gnomr[ha,dec,lat],0]*
+ {Cos[gnomt[ha,dec,lat]], Sin[gnomt[ha,dec,lat]]}, conds];
+
+
+
+
+dec0 = 23.5*Degree
+lat0 = 35*Degree
+
+tab0 = Table[{gnomt[ha, dec0, lat0], gnomr[ha, dec0, lat0]}, 
+ {ha, -Pi/2, Pi/2, 0.01}]
 
 
 

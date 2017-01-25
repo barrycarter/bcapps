@@ -410,7 +410,10 @@ t,workdir=/tmp
 
 %% TODO: consider creating specific "screen" startup scripts for brighton
 
-%% TODO: redirecting port 25 breaks local mail delivery including CRON-- implement workaround
+%% TODO: redirecting port 25 breaks local mail delivery including
+CRON-- implement workaround
+
+%% TODO: confirm I am actually getting cron messages after workaround above
 
 % NOTE TO SELF: when dpms kicks in on brighton and I'm rdesktop'd into
 it, the screen is still there but "frozen" until I move the mouse
