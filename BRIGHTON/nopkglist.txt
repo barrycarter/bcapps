@@ -33,7 +33,7 @@ eclipse
 esniper
 feh
 fly
-fortune
+fortune-mod
 freedink
 fuse-zip
 gcal
@@ -41,7 +41,9 @@ geomview
 gif2asc
 gitfs
 gnumeric
+google-chrome
 ical
+idevsutil_linux
 linphone
 lucene
 mille
@@ -86,3 +88,4 @@ xsnow
 xteddy
 yate
 yaz
+zpaq

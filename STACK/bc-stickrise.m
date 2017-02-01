@@ -29,11 +29,99 @@ x[h_, dec_, lat_] = (Cos[lat]*Cot[(h*Pi)/12] - Csc[(h*Pi)/12]*Sin[lat]*
 y[h_, dec_, lat_] = (Cos[lat] + Cos[(h*Pi)/12]*Cot[dec]*Sin[lat])/
     (Cos[lat]*Cos[(h*Pi)/12]*Cot[dec] - Sin[lat])
 
+dx[h_, dec_, lat_] = (Pi*Csc[(h*Pi)/12]*(Cos[lat]*Csc[(h*Pi)/12] - 
+      Cot[(h*Pi)/12]*Sin[lat]*Tan[dec]))/
+    (12*(Cos[lat]*Cot[(h*Pi)/12] - Csc[(h*Pi)/12]*Sin[lat]*Tan[dec])^2)
+
+dy[h_, dec_, lat_] = (Pi*Cot[dec]*Sin[(h*Pi)/12])/
+    (12*(-(Cos[lat]*Cos[(h*Pi)/12]*Cot[dec]) + Sin[lat])^2)
+
+ds[h_, dec_, lat_] = 
+   (Pi*Sqrt[(Cot[dec]^2*((Cos[lat]*Cot[dec] - Cos[(h*Pi)/12]*Sin[lat])^2 + 
+         Sin[(h*Pi)/12]^2))/(-(Cos[lat]*Cos[(h*Pi)/12]*Cot[dec]) + Sin[lat])^
+        4])/12
+
 rplot[h_,dec_,lat_] := Max[0, r[h,dec,lat]]
 xplot[h_,dec_,lat_] := rplot[h,dec,lat]*Cos[theta[h,dec,lat]]
 yplot[h_,dec_,lat_] := rplot[h,dec,lat]*Sin[theta[h,dec,lat]]
 
 (* formulas end here *)
+
+dx[h_,dec_,lat_] = FullSimplify[D[x[h,dec,lat],h], conds]
+dy[h_,dec_,lat_] = FullSimplify[D[y[h,dec,lat],h], conds]
+
+ds[h_,dec_,lat_] = FullSimplify[Sqrt[dx[h,dec,lat]^2 + dy[h,dec,lat]^2], conds]
+
+
+https://en.wikipedia.org/wiki/Visual_acuity#Motion_acuity
+
+0.0275 rad/s
+
+0.003 radian/sec (0.171887 deg/sec or 10.3'/sec)
+
+(at a dist of 1m, that would be 3mm/s)
+
+0.0087 rad/s
+
+http://jov.arvojournals.org/article.aspx?articleid=2122525
+
+looming threshold
+
+http://journals.sagepub.com/doi/abs/10.1177/1071181312561146
+
+below is at summer solstice noon diff lats
+
+Plot[ds[0,23.5*Degree,lat],{lat,30*Degree,50*Degree}]
+
+about 0.4 to 0.9 (meters per hour if stick is 1m)
+
+111-250 micrometers per second
+
+lower number is 247 times too slow to see (at 1m)
+
+Maximize[{ds[h,dec,lat], el[h,dec,lat]>15*Degree}, h]
+
+Solve[elh[h,dec,lat] == 15*Degree, h]
+
+Solve[elh[h,23.5*Degree,40*Degree] == 15*Degree, h]
+
+TODO: near sigtedness
+
+Plot[elh[h,23.5*Degree,40*Degree]/Degree, {h,12,20}]
+
+h -> 17.9864
+
+ds[17.9864, 23.5*Degree,40*Degree]
+
+2.898 per hour
+
+805 micrometers per second
+
+FindRoot[elh[h,23.5*Degree,40*Degree] == 15*Degree,{h,18}]
+h -> 17.9864
+
+FindRoot[elh[h,0*Degree,40*Degree] == 15*Degree,{h,18}]
+h -> 16.6835
+
+ds[16.6835, 0*Degree, 40*Degree]
+2.99365
+
+FindRoot[elh[h,-23.5*Degree,40*Degree] == 15*Degree,{h,18}]
+h -> 14.8559
+
+ds[14.8559,-23.5*Degree,40*Degree]
+2.08454
+
+Plot3D[ds[12,dec*Degree,lat*Degree],{dec,-23.5,+23.5}, {lat,30,50}]
+
+Plot3D[ds[15,dec*Degree,lat*Degree],{dec,-23.5,+23.5}, {lat,30,50}]
+
+
+
+
+
+
+
 
 x[h_,dec_,lat_] = FullSimplify[r[h,dec,lat]*Cos[theta[h,dec,lat]], conds]
 
@@ -148,19 +236,59 @@ tab[dec_,lat_] := Select[Table[i,{i,0,24,1/4}],
 
 txtpts[dec_,lat_] := Select[Table[i,{i,0,24}], rplot[#,dec,lat] > 0 &]
 
+(* the graphics points for a given dec/lat, per tab above *)
 
-
-(* the points for a given dec/lat, per tab above *)
-
-pts[dec_,lat_] := Table[Point[{xplot[ha,dec,lat],yplot[ha,dec,lat]}],{ha, tab}]
+pts[dec_,lat_] := Table[
+ Point[{xplot[h,dec,lat],yplot[h,dec,lat]}],
+ {h, tab[dec,lat]}]
 
 txt[dec_,lat_] := 
- Table[Text[Style[ToString[h], FontSize -> 5], 
+ Table[Text[Style[ToString[h], FontSize -> 10], 
  {xplot[h,dec,lat], yplot[h,dec,lat]}, {0,0}],
- {h,0,24,1}];
+ {h,txtpts[dec,lat]}];
+
+graphics[dec_,lat_] := Graphics[{pts[dec,lat], txt[dec,lat]}]
+
+testlat = 40*Degree
+
+g = Graphics[{
+ txt[0,testlat],
+ txt[23.5*Degree, testlat],
+ txt[-23.5*Degree, testlat],
+ Hue[0], pts[23.5*Degree, testlat],
+ Hue[2/3], pts[-23.5*Degree, testlat],
+ Hue[1/3],
+ pts[0,testlat]
+}]
+
+Show[g, Axes -> True, PlotRange -> {{-5,5},{-2,4}}, AspectRatio -> 1,
+ Ticks -> False]
+showit
+
+
+
+
+Show[gtest, PlotRange->{{-3,3},{-1,1}}, Axes->True, AspectRatio -> 1]
+showit
+
+
 
 
 gtest = Show[{
+ Graphics[pts[23.5*Degree, 40*Degree]],
+ Graphics[txt[23.5*Degree, 40*Degree]]
+}, Axes -> True, PlotRange -> {-4,4}, AspectRatio -> 1/4]
+showit
+
+
+
+
+gtest = Show[{
+ Graphics[pts[23.5*Degree, 40*Degree]],
+ Graphics[txt[23.5*Degree, 40*Degree]]
+}, PlotRange -> {{-4,4},{0,1}}, Axes -> True, AspectRatio -> 16]
+
+ 
  ListPlot[pts[23.5*Degree, 35*Degree]],
  Graphics[txt[23.5*Degree, 35*Degree]]
 }]

@@ -241,7 +241,9 @@ needed) when doing something unusual or difficult
 
 %% TODO: explain ":" comments
 
-%% TODO: use chkconfig/systemctl on guest to make sure what I want comes up (ps -auxwww or ps -ef to see whats actually running)
+%% TODO: use chkconfig/systemctl on guest to make sure what I want
+comes up (ps -auxwww or ps -ef to see whats actually running) [or
+brighton-procs.txt]
 
 %% TODO: look at TODOs from FEDORA and CENTOS and VM
 
@@ -319,8 +321,7 @@ babybrighton so should not be an issue
 
 %% TODO: get usda.db.dev (or equivalent) working, I do use it
 
-%% TODO: audio testing
-
+%% TODO: audio testing (does work on brighton, but not babybrighton)
 
 mount -t overlay overlay -o lowerdir=/old/bin,upperdir=/bin,workdir=/tmp /bin
 
@@ -503,3 +504,24 @@ are byte-by-byte identical, grumble
 
 %% TODO: consider textifying all sqlite3 dbs on system or writing recoll filter
 
+%% TODO: ramdisk (is this just literally /dev/shm that automounts?)
+
+%% TODO: confirm commodoreplay alias works (it doesn't look at
+~/.vice/vicerc, compare to dull on version)
+
+%% TODO: alias sort so that it uses /mnt/ramdisk as tmp dir (or just
+redefine TMPDIR somewhere?)
+
+% NOTE: when vnc'ing to brighton, sometimes "brighton:5901" required
+when vnc running on alternate port
+
+%% TODO: note that USB devices only work if enabled on brighton
+(otherwise, babybrighton won't see them)
+
+%% TODO: sane setup
+
+sane-find-scanner
+
+: found USB scanner (vendor=0x04a9 [Canon], product=0x176d [MG2500 series]) at libusb:001:002
+
+% NOTE TO SELF: works fine on brighton

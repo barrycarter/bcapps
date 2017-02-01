@@ -9,6 +9,7 @@ efibootmgr
 
 # TODO: had to remove below because of conflict-- reinstall correctly later
 # yum-cron
+surl
 dbus-x11
 strace
 whois
@@ -185,6 +186,7 @@ feh
 xv
 xpdf
 xsane
+sane-backends
 gimp
 Xorg
 acroread
@@ -272,6 +274,7 @@ samba
 # games
 # TODO: eternal lands
 # TODO: kerbal?
+2048
 xscreensaver
 xmame
 widelands
@@ -299,6 +302,8 @@ vulturesclaw
 vultureseye
 mille
 boggle
+# below should include above
+bsd-games
 bomber
 bovo
 wesnoth
