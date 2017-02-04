@@ -11,6 +11,29 @@ num[s_, n_] := num[s,n] = If[n<0, 0, Sum[
  num[Delete[s,i],n] + 
  If[n<s[[i]],0,num[Delete[s,i], n-s[[i]]]],{i,1,Length[s]}]/Length[s]]
 
+(* below is as a module for convenience *)
+
+Clear[num];
+
+num[s_, n_] := num[s,n] = Module[{set2, sum1, sum2},
+
+ (* remove numbers bigger than n, since no negatives *)
+ set2 = Select[s, #<=n &];
+
+ (* empty set *)
+ If[Length[set2]==0, Return[If[n==0,1,0]]];
+
+ (* immediate subsets that equal n *)
+ sum1 = Sum[num[Delete[set2,i],n], {i,1,Length[set2]}];
+
+ (* immediate subsets that equal n-i *)
+ sum2 = Sum[num[Delete[set2,i],n-set2[[i]]], {i,1,Length[set2]}];
+
+ Return[(sum1+sum2)/Length[set2]];
+];
+
+
+
 num[{1,2,3},6]
 
 
@@ -18,7 +41,11 @@ num[{1,2,3},6]
 
 t1024 = Table[i,{i,1,20}]
 
-num[t1024, 2]
+num[t1024, 15]
+
+t1115 = Table[1+x^i,{i,1,20}]
+
+t1117 = Product[(1+x^i),{i,1,50}]
 
 
 
