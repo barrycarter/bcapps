@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gnm:Workbook xmlns:gnm="http://www.gnumeric.org/v10.dtd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gnumeric.org/v9.xsd">
+  <gnm:Version Epoch="1" Major="8" Minor="4" Full="1.8.4"/>
+  <gnm:Attributes>
+    <gnm:Attribute>
+      <gnm:type>4</gnm:type>
+      <gnm:name>WorkbookView::show_horizontal_scrollbar</gnm:name>
+      <gnm:value>TRUE</gnm:value>
+    </gnm:Attribute>
+    <gnm:Attribute>
+      <gnm:type>4</gnm:type>
+      <gnm:name>WorkbookView::show_vertical_scrollbar</gnm:name>
+      <gnm:value>TRUE</gnm:value>
+    </gnm:Attribute>
+    <gnm:Attribute>
+      <gnm:type>4</gnm:type>
+      <gnm:name>WorkbookView::show_notebook_tabs</gnm:name>
+      <gnm:value>TRUE</gnm:value>
+    </gnm:Attribute>
+    <gnm:Attribute>
+      <gnm:type>4</gnm:type>
+      <gnm:name>WorkbookView::do_auto_completion</gnm:name>
+      <gnm:value>TRUE</gnm:value>
+    </gnm:Attribute>
+    <gnm:Attribute>
+      <gnm:type>4</gnm:type>
+      <gnm:name>WorkbookView::is_protected</gnm:name>
+      <gnm:value>FALSE</gnm:value>
+    </gnm:Attribute>
+  </gnm:Attributes>
+  <office:document-meta xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0" xmlns:ooo="http://openoffice.org/2004/office" office:version="1.0">
+    <office:meta/>
+  </office:document-meta>
+  <gnm:SheetNameIndex>
+    <gnm:SheetName gnm:Cols="256" gnm:Rows="65536">elec.csv</gnm:SheetName>
+  </gnm:SheetNameIndex>
+  <gnm:Geometry Width="768" Height="441"/>
+  <gnm:Sheets>
+    <gnm:Sheet DisplayFormulas="0" HideZero="0" HideGrid="0" HideColHeader="0" HideRowHeader="0" DisplayOutlines="1" OutlineSymbolsBelow="1" OutlineSymbolsRight="1" Visibility="GNM_SHEET_VISIBILITY_VISIBLE" GridColor="0:0:0">
+      <gnm:Name>elec.csv</gnm:Name>
+      <gnm:MaxCol>6</gnm:MaxCol>
+      <gnm:MaxRow>56</gnm:MaxRow>
+      <gnm:Zoom>1</gnm:Zoom>
+      <gnm:Names>
+        <gnm:Name>
+          <gnm:name>Print_Area</gnm:name>
+          <gnm:value>elec.csv!$A$1:$IV$65536</gnm:value>
+          <gnm:position>A1</gnm:position>
+        </gnm:Name>
+        <gnm:Name>
+          <gnm:name>Sheet_Title</gnm:name>
+          <gnm:value>&quot;elec.csv&quot;</gnm:value>
+          <gnm:position>A1</gnm:position>
+        </gnm:Name>
+      </gnm:Names>
+      <gnm:PrintInformation>
+        <gnm:Margins>
+          <gnm:top Points="120" PrefUnit="mm"/>
+          <gnm:bottom Points="120" PrefUnit="mm"/>
+          <gnm:left Points="72" PrefUnit="mm"/>
+          <gnm:right Points="72" PrefUnit="mm"/>
+          <gnm:header Points="72" PrefUnit="mm"/>
+          <gnm:footer Points="72" PrefUnit="mm"/>
+        </gnm:Margins>
+        <gnm:Scale type="percentage" percentage="100"/>
+        <gnm:vcenter value="0"/>
+        <gnm:hcenter value="0"/>
+        <gnm:grid value="0"/>
+        <gnm:even_if_only_styles value="0"/>
+        <gnm:monochrome value="0"/>
+        <gnm:draft value="0"/>
+        <gnm:titles value="0"/>
+        <gnm:do_not_print value="0"/>
+        <gnm:order>d_then_r</gnm:order>
+        <gnm:orientation>portrait</gnm:orientation>
+        <gnm:Header Left="" Middle="&amp;[TAB]" Right=""/>
+        <gnm:Footer Left="" Middle="Page &amp;[PAGE]" Right=""/>
+        <gnm:paper>iso_a4</gnm:paper>
+      </gnm:PrintInformation>
+      <gnm:Styles>
+        <gnm:StyleRegion startCol="0" startRow="0" endCol="1" endRow="3">
+          <gnm:Style HAlign="1" VAlign="2" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
+            <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
+          </gnm:Style>
+        </gnm:StyleRegion>
+        <gnm:StyleRegion startCol="0" startRow="4" endCol="1" endRow="4">
+          <gnm:Style HAlign="1" VAlign="2" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
+            <gnm:Font Unit="10" Bold="1" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
+          </gnm:Style>
+        </gnm:StyleRegion>
+        <gnm:StyleRegion startCol="0" startRow="5" endCol="1" endRow="65535">
+          <gnm:Style HAlign="1" VAlign="2" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
+            <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
+          </gnm:Style>
+        </gnm:StyleRegion>
+        <gnm:StyleRegion startCol="2" startRow="0" endCol="2" endRow="3">
+          <gnm:Style HAlign="1" VAlign="2" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="#,##0">
+            <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
+          </gnm:Style>
+        </gnm:StyleRegion>
+        <gnm:StyleRegion startCol="2" startRow="4" endCol="2" endRow="4">
+          <gnm:Style HAlign="1" VAlign="2" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="#,##0">
+            <gnm:Font Unit="10" Bold="1" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
+          </gnm:Style>
+        </gnm:StyleRegion>
+        <gnm:StyleRegion startCol="2" startRow="5" endCol="2" endRow="65535">
+          <gnm:Style HAlign="1" VAlign="2" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="#,##0">
+            <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
+          </gnm:Style>
+        </gnm:StyleRegion>
+        <gnm:StyleRegion startCol="3" startRow="0" endCol="4" endRow="3">
+          <gnm:Style HAlign="1" VAlign="2" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="0.00%">
+            <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
+          </gnm:Style>
+        </gnm:StyleRegion>
+        <gnm:StyleRegion startCol="3" startRow="4" endCol="4" endRow="4">
+          <gnm:Style HAlign="1" VAlign="2" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="0.00%">
+            <gnm:Font Unit="10" Bold="1" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
+          </gnm:Style>
+        </gnm:StyleRegion>
+        <gnm:StyleRegion startCol="3" startRow="5" endCol="4" endRow="65534">
+          <gnm:Style HAlign="1" VAlign="2" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="0.00%">
+            <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
+          </gnm:Style>
+        </gnm:StyleRegion>
+        <gnm:StyleRegion startCol="3" startRow="65535" endCol="4" endRow="65535">
+          <gnm:Style HAlign="1" VAlign="2" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
+            <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
+          </gnm:Style>
+        </gnm:StyleRegion>
+        <gnm:StyleRegion startCol="5" startRow="0" endCol="255" endRow="3">
+          <gnm:Style HAlign="1" VAlign="2" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
+            <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
+          </gnm:Style>
+        </gnm:StyleRegion>
+        <gnm:StyleRegion startCol="5" startRow="4" endCol="255" endRow="4">
+          <gnm:Style HAlign="1" VAlign="2" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
+            <gnm:Font Unit="10" Bold="1" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
+          </gnm:Style>
+        </gnm:StyleRegion>
+        <gnm:StyleRegion startCol="5" startRow="5" endCol="5" endRow="5">
+          <gnm:Style HAlign="1" VAlign="2" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="0.00%">
+            <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
+          </gnm:Style>
+        </gnm:StyleRegion>
+        <gnm:StyleRegion startCol="5" startRow="6" endCol="5" endRow="8">
+          <gnm:Style HAlign="1" VAlign="2" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
+            <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
+          </gnm:Style>
+        </gnm:StyleRegion>
+        <gnm:StyleRegion startCol="5" startRow="9" endCol="5" endRow="9">
+          <gnm:Style HAlign="1" VAlign="2" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="0.00%">
+            <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
+          </gnm:Style>
+        </gnm:StyleRegion>
+        <gnm:StyleRegion startCol="5" startRow="10" endCol="5" endRow="65535">
+          <gnm:Style HAlign="1" VAlign="2" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
+            <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
+          </gnm:Style>
+        </gnm:StyleRegion>
+        <gnm:StyleRegion startCol="6" startRow="5" endCol="15" endRow="65535">
+          <gnm:Style HAlign="1" VAlign="2" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
+            <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
+          </gnm:Style>
+        </gnm:StyleRegion>
+        <gnm:StyleRegion startCol="16" startRow="5" endCol="255" endRow="255">
+          <gnm:Style HAlign="1" VAlign="2" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
+            <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
+          </gnm:Style>
+        </gnm:StyleRegion>
+        <gnm:StyleRegion startCol="16" startRow="256" endCol="63" endRow="65535">
+          <gnm:Style HAlign="1" VAlign="2" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
+            <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
+          </gnm:Style>
+        </gnm:StyleRegion>
+        <gnm:StyleRegion startCol="64" startRow="256" endCol="255" endRow="4095">
+          <gnm:Style HAlign="1" VAlign="2" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
+            <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
+          </gnm:Style>
+        </gnm:StyleRegion>
+        <gnm:StyleRegion startCol="64" startRow="4096" endCol="255" endRow="65535">
+          <gnm:Style HAlign="1" VAlign="2" WrapText="0" ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
+            <gnm:Font Unit="10" Bold="0" Italic="0" Underline="0" StrikeThrough="0" Script="0">Sans</gnm:Font>
+          </gnm:Style>
+        </gnm:StyleRegion>
+      </gnm:Styles>
+      <gnm:Cols DefaultSizePts="48">
+        <gnm:ColInfo No="0" Unit="103.5"/>
+        <gnm:ColInfo No="1" Unit="36.75"/>
+        <gnm:ColInfo No="2" Unit="126"/>
+        <gnm:ColInfo No="3" Unit="51"/>
+        <gnm:ColInfo No="4" Unit="57"/>
+        <gnm:ColInfo No="5" Unit="48" Count="2"/>
+      </gnm:Cols>
+      <gnm:Rows DefaultSizePts="12.75">
+        <gnm:RowInfo No="0" Unit="13.5" Count="55"/>
+      </gnm:Rows>
+      <gnm:Selections CursorCol="0" CursorRow="0">
+        <gnm:Selection startCol="0" startRow="0" endCol="0" endRow="0"/>
+      </gnm:Selections>
+      <gnm:Cells>
+        <gnm:Cell Row="0" Col="0" ValueType="60">Total:</gnm:Cell>
+        <gnm:Cell Row="0" Col="2">=2^51</gnm:Cell>
+        <gnm:Cell Row="1" Col="0" ValueType="60">Winning:</gnm:Cell>
+        <gnm:Cell Row="1" Col="2" ValueType="40">1.11741166656059e+15</gnm:Cell>
+        <gnm:Cell Row="2" Col="0" ValueType="60">Losing:</gnm:Cell>
+        <gnm:Cell Row="2" Col="2">=C1-C2</gnm:Cell>
+        <gnm:Cell Row="4" Col="0" ValueType="60">State</gnm:Cell>
+        <gnm:Cell Row="4" Col="1" ValueType="60">Votes</gnm:Cell>
+        <gnm:Cell Row="4" Col="2" ValueType="60">Succ. Coalitions</gnm:Cell>
+        <gnm:Cell Row="4" Col="3" ValueType="60">ME/WIN</gnm:Cell>
+        <gnm:Cell Row="5" Col="0" ValueType="60">California</gnm:Cell>
+        <gnm:Cell Row="5" Col="1" ValueType="40">55</gnm:Cell>
+        <gnm:Cell Row="5" Col="2" ValueType="40">823938160121664</gnm:Cell>
+        <gnm:Cell Row="5" Col="3" ExprID="1">=C6/$C$2</gnm:Cell>
+        <gnm:Cell Row="6" Col="0" ValueType="60">Texas</gnm:Cell>
+        <gnm:Cell Row="6" Col="1" ValueType="40">38</gnm:Cell>
+        <gnm:Cell Row="6" Col="2" ValueType="40">726949926629261</gnm:Cell>
+        <gnm:Cell Row="6" Col="3" ExprID="1"/>
+        <gnm:Cell Row="7" Col="0" ValueType="60">Florida</gnm:Cell>
+        <gnm:Cell Row="7" Col="1" ValueType="40">29</gnm:Cell>
+        <gnm:Cell Row="7" Col="2" ValueType="40">684792701017351</gnm:Cell>
+        <gnm:Cell Row="7" Col="3" ExprID="1"/>
+        <gnm:Cell Row="8" Col="0" ValueType="60">New York</gnm:Cell>
+        <gnm:Cell Row="8" Col="1" ValueType="40">29</gnm:Cell>
+        <gnm:Cell Row="8" Col="2" ValueType="40">684792701017351</gnm:Cell>
+        <gnm:Cell Row="8" Col="3" ExprID="1"/>
+        <gnm:Cell Row="9" Col="0" ValueType="60">Illinois</gnm:Cell>
+        <gnm:Cell Row="9" Col="1" ValueType="40">20</gnm:Cell>
+        <gnm:Cell Row="9" Col="2" ValueType="40">644535656152126</gnm:Cell>
+        <gnm:Cell Row="9" Col="3" ExprID="1"/>
+        <gnm:Cell Row="10" Col="0" ValueType="60">Pennsylvania</gnm:Cell>
+        <gnm:Cell Row="10" Col="1" ValueType="40">20</gnm:Cell>
+        <gnm:Cell Row="10" Col="2" ValueType="40">644535656152126</gnm:Cell>
+        <gnm:Cell Row="10" Col="3" ExprID="1"/>
+        <gnm:Cell Row="11" Col="0" ValueType="60">Ohio</gnm:Cell>
+        <gnm:Cell Row="11" Col="1" ValueType="40">18</gnm:Cell>
+        <gnm:Cell Row="11" Col="2" ValueType="40">635785724166810</gnm:Cell>
+        <gnm:Cell Row="11" Col="3" ExprID="1"/>
+        <gnm:Cell Row="12" Col="0" ValueType="60">Georgia</gnm:Cell>
+        <gnm:Cell Row="12" Col="1" ValueType="40">16</gnm:Cell>
+        <gnm:Cell Row="12" Col="2" ValueType="40">627090174845857</gnm:Cell>
+        <gnm:Cell Row="12" Col="3" ExprID="1"/>
+        <gnm:Cell Row="13" Col="0" ValueType="60">Michigan</gnm:Cell>
+        <gnm:Cell Row="13" Col="1" ValueType="40">16</gnm:Cell>
+        <gnm:Cell Row="13" Col="2" ValueType="40">627090174845857</gnm:Cell>
+        <gnm:Cell Row="13" Col="3" ExprID="1"/>
+        <gnm:Cell Row="14" Col="0" ValueType="60">North Carolina</gnm:Cell>
+        <gnm:Cell Row="14" Col="1" ValueType="40">15</gnm:Cell>
+        <gnm:Cell Row="14" Col="2" ValueType="40">622760591255134</gnm:Cell>
+        <gnm:Cell Row="14" Col="3" ExprID="1"/>
+        <gnm:Cell Row="15" Col="0" ValueType="60">New Jersey</gnm:Cell>
+        <gnm:Cell Row="15" Col="1" ValueType="40">14</gnm:Cell>
+        <gnm:Cell Row="15" Col="2" ValueType="40">618442009449710</gnm:Cell>
+        <gnm:Cell Row="15" Col="3" ExprID="1"/>
+        <gnm:Cell Row="16" Col="0" ValueType="60">Virginia</gnm:Cell>
+        <gnm:Cell Row="16" Col="1" ValueType="40">13</gnm:Cell>
+        <gnm:Cell Row="16" Col="2" ValueType="40">614133611349265</gnm:Cell>
+        <gnm:Cell Row="16" Col="3" ExprID="1"/>
+        <gnm:Cell Row="17" Col="0" ValueType="60">Washington</gnm:Cell>
+        <gnm:Cell Row="17" Col="1" ValueType="40">12</gnm:Cell>
+        <gnm:Cell Row="17" Col="2" ValueType="40">609834597416475</gnm:Cell>
+        <gnm:Cell Row="17" Col="3" ExprID="1"/>
+        <gnm:Cell Row="18" Col="0" ValueType="60">Arizona</gnm:Cell>
+        <gnm:Cell Row="18" Col="1" ValueType="40">11</gnm:Cell>
+        <gnm:Cell Row="18" Col="2" ValueType="40">605544184909972</gnm:Cell>
+        <gnm:Cell Row="18" Col="3" ExprID="1"/>
+        <gnm:Cell Row="19" Col="0" ValueType="60">Indiana</gnm:Cell>
+        <gnm:Cell Row="19" Col="1" ValueType="40">11</gnm:Cell>
+        <gnm:Cell Row="19" Col="2" ValueType="40">605544184909972</gnm:Cell>
+        <gnm:Cell Row="19" Col="3" ExprID="1"/>
+        <gnm:Cell Row="20" Col="0" ValueType="60">Massachusetts</gnm:Cell>
+        <gnm:Cell Row="20" Col="1" ValueType="40">11</gnm:Cell>
+        <gnm:Cell Row="20" Col="2" ValueType="40">605544184909972</gnm:Cell>
+        <gnm:Cell Row="20" Col="3" ExprID="1"/>
+        <gnm:Cell Row="21" Col="0" ValueType="60">Tennessee</gnm:Cell>
+        <gnm:Cell Row="21" Col="1" ValueType="40">11</gnm:Cell>
+        <gnm:Cell Row="21" Col="2" ValueType="40">605544184909972</gnm:Cell>
+        <gnm:Cell Row="21" Col="3" ExprID="1"/>
+        <gnm:Cell Row="22" Col="0" ValueType="60">Maryland</gnm:Cell>
+        <gnm:Cell Row="22" Col="1" ValueType="40">10</gnm:Cell>
+        <gnm:Cell Row="22" Col="2" ValueType="40">601261606292041</gnm:Cell>
+        <gnm:Cell Row="22" Col="3" ExprID="1"/>
+        <gnm:Cell Row="23" Col="0" ValueType="60">Minnesota</gnm:Cell>
+        <gnm:Cell Row="23" Col="1" ValueType="40">10</gnm:Cell>
+        <gnm:Cell Row="23" Col="2" ValueType="40">601261606292041</gnm:Cell>
+        <gnm:Cell Row="23" Col="3" ExprID="1"/>
+        <gnm:Cell Row="24" Col="0" ValueType="60">Missouri</gnm:Cell>
+        <gnm:Cell Row="24" Col="1" ValueType="40">10</gnm:Cell>
+        <gnm:Cell Row="24" Col="2" ValueType="40">601261606292041</gnm:Cell>
+        <gnm:Cell Row="24" Col="3" ExprID="1"/>
+        <gnm:Cell Row="25" Col="0" ValueType="60">Wisconsin</gnm:Cell>
+        <gnm:Cell Row="25" Col="1" ValueType="40">10</gnm:Cell>
+        <gnm:Cell Row="25" Col="2" ValueType="40">601261606292041</gnm:Cell>
+        <gnm:Cell Row="25" Col="3" ExprID="1"/>
+        <gnm:Cell Row="26" Col="0" ValueType="60">Alabama</gnm:Cell>
+        <gnm:Cell Row="26" Col="1" ValueType="40">9</gnm:Cell>
+        <gnm:Cell Row="26" Col="2" ValueType="40">596986107694027</gnm:Cell>
+        <gnm:Cell Row="26" Col="3" ExprID="1"/>
+        <gnm:Cell Row="27" Col="0" ValueType="60">Colorado</gnm:Cell>
+        <gnm:Cell Row="27" Col="1" ValueType="40">9</gnm:Cell>
+        <gnm:Cell Row="27" Col="2" ValueType="40">596986107694027</gnm:Cell>
+        <gnm:Cell Row="27" Col="3" ExprID="1"/>
+        <gnm:Cell Row="28" Col="0" ValueType="60">South Carolina</gnm:Cell>
+        <gnm:Cell Row="28" Col="1" ValueType="40">9</gnm:Cell>
+        <gnm:Cell Row="28" Col="2" ValueType="40">596986107694027</gnm:Cell>
+        <gnm:Cell Row="28" Col="3" ExprID="1"/>
+        <gnm:Cell Row="29" Col="0" ValueType="60">Kentucky</gnm:Cell>
+        <gnm:Cell Row="29" Col="1" ValueType="40">8</gnm:Cell>
+        <gnm:Cell Row="29" Col="2" ValueType="40">592716947480152</gnm:Cell>
+        <gnm:Cell Row="29" Col="3" ExprID="1"/>
+        <gnm:Cell Row="30" Col="0" ValueType="60">Louisiana</gnm:Cell>
+        <gnm:Cell Row="30" Col="1" ValueType="40">8</gnm:Cell>
+        <gnm:Cell Row="30" Col="2" ValueType="40">592716947480152</gnm:Cell>
+        <gnm:Cell Row="30" Col="3" ExprID="1"/>
+        <gnm:Cell Row="31" Col="0" ValueType="60">Connecticut</gnm:Cell>
+        <gnm:Cell Row="31" Col="1" ValueType="40">7</gnm:Cell>
+        <gnm:Cell Row="31" Col="2" ValueType="40">588453394829109</gnm:Cell>
+        <gnm:Cell Row="31" Col="3" ExprID="1"/>
+        <gnm:Cell Row="32" Col="0" ValueType="60">Oklahoma</gnm:Cell>
+        <gnm:Cell Row="32" Col="1" ValueType="40">7</gnm:Cell>
+        <gnm:Cell Row="32" Col="2" ValueType="40">588453394829109</gnm:Cell>
+        <gnm:Cell Row="32" Col="3" ExprID="1"/>
+        <gnm:Cell Row="33" Col="0" ValueType="60">Oregon</gnm:Cell>
+        <gnm:Cell Row="33" Col="1" ValueType="40">7</gnm:Cell>
+        <gnm:Cell Row="33" Col="2" ValueType="40">588453394829109</gnm:Cell>
+        <gnm:Cell Row="33" Col="3" ExprID="1"/>
+        <gnm:Cell Row="34" Col="0" ValueType="60">Arkansas</gnm:Cell>
+        <gnm:Cell Row="34" Col="1" ValueType="40">6</gnm:Cell>
+        <gnm:Cell Row="34" Col="2" ValueType="40">584194728475891</gnm:Cell>
+        <gnm:Cell Row="34" Col="3" ExprID="1"/>
+        <gnm:Cell Row="35" Col="0" ValueType="60">Iowa</gnm:Cell>
+        <gnm:Cell Row="35" Col="1" ValueType="40">6</gnm:Cell>
+        <gnm:Cell Row="35" Col="2" ValueType="40">584194728475891</gnm:Cell>
+        <gnm:Cell Row="35" Col="3" ExprID="1"/>
+        <gnm:Cell Row="36" Col="0" ValueType="60">Kansas</gnm:Cell>
+        <gnm:Cell Row="36" Col="1" ValueType="40">6</gnm:Cell>
+        <gnm:Cell Row="36" Col="2" ValueType="40">584194728475891</gnm:Cell>
+        <gnm:Cell Row="36" Col="3" ExprID="1"/>
+        <gnm:Cell Row="37" Col="0" ValueType="60">Mississippi</gnm:Cell>
+        <gnm:Cell Row="37" Col="1" ValueType="40">6</gnm:Cell>
+        <gnm:Cell Row="37" Col="2" ValueType="40">584194728475891</gnm:Cell>
+        <gnm:Cell Row="37" Col="3" ExprID="1"/>
+        <gnm:Cell Row="38" Col="0" ValueType="60">Nevada</gnm:Cell>
+        <gnm:Cell Row="38" Col="1" ValueType="40">6</gnm:Cell>
+        <gnm:Cell Row="38" Col="2" ValueType="40">584194728475891</gnm:Cell>
+        <gnm:Cell Row="38" Col="3" ExprID="1"/>
+        <gnm:Cell Row="39" Col="0" ValueType="60">Utah</gnm:Cell>
+        <gnm:Cell Row="39" Col="1" ValueType="40">6</gnm:Cell>
+        <gnm:Cell Row="39" Col="2" ValueType="40">584194728475891</gnm:Cell>
+        <gnm:Cell Row="39" Col="3" ExprID="1"/>
+        <gnm:Cell Row="40" Col="0" ValueType="60">Nebraska</gnm:Cell>
+        <gnm:Cell Row="40" Col="1" ValueType="40">5</gnm:Cell>
+        <gnm:Cell Row="40" Col="2" ValueType="40">579940235363664</gnm:Cell>
+        <gnm:Cell Row="40" Col="3" ExprID="1"/>
+        <gnm:Cell Row="41" Col="0" ValueType="60">New Mexico</gnm:Cell>
+        <gnm:Cell Row="41" Col="1" ValueType="40">5</gnm:Cell>
+        <gnm:Cell Row="41" Col="2" ValueType="40">579940235363664</gnm:Cell>
+        <gnm:Cell Row="41" Col="3" ExprID="1"/>
+        <gnm:Cell Row="42" Col="0" ValueType="60">West Virginia</gnm:Cell>
+        <gnm:Cell Row="42" Col="1" ValueType="40">5</gnm:Cell>
+        <gnm:Cell Row="42" Col="2" ValueType="40">579940235363664</gnm:Cell>
+        <gnm:Cell Row="42" Col="3" ExprID="1"/>
+        <gnm:Cell Row="43" Col="0" ValueType="60">Hawaii</gnm:Cell>
+        <gnm:Cell Row="43" Col="1" ValueType="40">4</gnm:Cell>
+        <gnm:Cell Row="43" Col="2" ValueType="40">575689209413018</gnm:Cell>
+        <gnm:Cell Row="43" Col="3" ExprID="1"/>
+        <gnm:Cell Row="44" Col="0" ValueType="60">Idaho</gnm:Cell>
+        <gnm:Cell Row="44" Col="1" ValueType="40">4</gnm:Cell>
+        <gnm:Cell Row="44" Col="2" ValueType="40">575689209413018</gnm:Cell>
+        <gnm:Cell Row="44" Col="3" ExprID="1"/>
+        <gnm:Cell Row="45" Col="0" ValueType="60">Maine</gnm:Cell>
+        <gnm:Cell Row="45" Col="1" ValueType="40">4</gnm:Cell>
+        <gnm:Cell Row="45" Col="2" ValueType="40">575689209413018</gnm:Cell>
+        <gnm:Cell Row="45" Col="3" ExprID="1"/>
+        <gnm:Cell Row="46" Col="0" ValueType="60">New Hampshire</gnm:Cell>
+        <gnm:Cell Row="46" Col="1" ValueType="40">4</gnm:Cell>
+        <gnm:Cell Row="46" Col="2" ValueType="40">575689209413018</gnm:Cell>
+        <gnm:Cell Row="46" Col="3" ExprID="1"/>
+        <gnm:Cell Row="47" Col="0" ValueType="60">Rhode Island</gnm:Cell>
+        <gnm:Cell Row="47" Col="1" ValueType="40">4</gnm:Cell>
+        <gnm:Cell Row="47" Col="2" ValueType="40">575689209413018</gnm:Cell>
+        <gnm:Cell Row="47" Col="3" ExprID="1"/>
+        <gnm:Cell Row="48" Col="0" ValueType="60">Alaska</gnm:Cell>
+        <gnm:Cell Row="48" Col="1" ValueType="40">3</gnm:Cell>
+        <gnm:Cell Row="48" Col="2" ValueType="40">571440950341554</gnm:Cell>
+        <gnm:Cell Row="48" Col="3" ExprID="1"/>
+        <gnm:Cell Row="49" Col="0" ValueType="60">Delaware</gnm:Cell>
+        <gnm:Cell Row="49" Col="1" ValueType="40">3</gnm:Cell>
+        <gnm:Cell Row="49" Col="2" ValueType="40">571440950341554</gnm:Cell>
+        <gnm:Cell Row="49" Col="3" ExprID="1"/>
+        <gnm:Cell Row="50" Col="0" ValueType="60">District of Columbia</gnm:Cell>
+        <gnm:Cell Row="50" Col="1" ValueType="40">3</gnm:Cell>
+        <gnm:Cell Row="50" Col="2" ValueType="40">571440950341554</gnm:Cell>
+        <gnm:Cell Row="50" Col="3" ExprID="1"/>
+        <gnm:Cell Row="51" Col="0" ValueType="60">Montana</gnm:Cell>
+        <gnm:Cell Row="51" Col="1" ValueType="40">3</gnm:Cell>
+        <gnm:Cell Row="51" Col="2" ValueType="40">571440950341554</gnm:Cell>
+        <gnm:Cell Row="51" Col="3" ExprID="1"/>
+        <gnm:Cell Row="52" Col="0" ValueType="60">North Dakota</gnm:Cell>
+        <gnm:Cell Row="52" Col="1" ValueType="40">3</gnm:Cell>
+        <gnm:Cell Row="52" Col="2" ValueType="40">571440950341554</gnm:Cell>
+        <gnm:Cell Row="52" Col="3" ExprID="1"/>
+        <gnm:Cell Row="53" Col="0" ValueType="60">South Dakota</gnm:Cell>
+        <gnm:Cell Row="53" Col="1" ValueType="40">3</gnm:Cell>
+        <gnm:Cell Row="53" Col="2" ValueType="40">571440950341554</gnm:Cell>
+        <gnm:Cell Row="53" Col="3" ExprID="1"/>
+        <gnm:Cell Row="54" Col="0" ValueType="60">Vermont</gnm:Cell>
+        <gnm:Cell Row="54" Col="1" ValueType="40">3</gnm:Cell>
+        <gnm:Cell Row="54" Col="2" ValueType="40">571440950341554</gnm:Cell>
+        <gnm:Cell Row="54" Col="3" ExprID="1"/>
+        <gnm:Cell Row="55" Col="0" ValueType="60">Wyoming</gnm:Cell>
+        <gnm:Cell Row="55" Col="1" ValueType="40">3</gnm:Cell>
+        <gnm:Cell Row="55" Col="2" ValueType="40">571440950341554</gnm:Cell>
+        <gnm:Cell Row="55" Col="3" ExprID="1"/>
+      </gnm:Cells>
+      <gnm:SheetLayout TopLeft="A1"/>
+      <gnm:Solver ProblemType="1" Inputs="" MaxTime="0" MaxIter="0" NonNeg="1" Discr="0" AutoScale="0" ShowIter="0" AnswerR="0" SensitivityR="0" LimitsR="0" PerformR="0" ProgramR="0"/>
+    </gnm:Sheet>
+  </gnm:Sheets>
+  <gnm:UIData SelectedTab="0"/>
+  <gnm:Calculation ManualRecalc="0" EnableIteration="1" MaxIterations="100" IterationTolerance="0.001"/>
+</gnm:Workbook>

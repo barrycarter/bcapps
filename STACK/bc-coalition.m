@@ -2,7 +2,52 @@
 
  http://politics.stackexchange.com/questions/15180/number-of-winning-coalitions-of-state-in-the-electoral-college?noredirect=1#comment54198_15180
 
+
+
 *)
+
+<< /home/barrycarter/BCGIT/STACK/bc-elecvotes.m
+
+(* this is absolutely hideous way to create polynomial *)
+
+p0 = Expand[Times @@ (1+x^Transpose[elecvotes][[2]])]
+
+Sum[Coefficient[p0, x^i],{i,270,540}]
+
+1117411666560589 total success coiltions (49.623% of all coals)
+
+Clear[coals]
+coals[i_] := coals[i] = 
+ Sum[Coefficient[Expand[Times @@ (1+x^Transpose[Delete[elecvotes,i]][[2]])],
+ x^j], {j,270-elecvotes[[i,2]],540}]
+
+
+res = Table[{elecvotes[[i,1]], elecvotes[[i,2]], coals[i]}, 
+ {i,1,Length[elecvotes]}]
+
+Export["/tmp/elec.csv",res];
+
+TODO: copy spreadsheet here
+
+TODO: export TeX format
+
+TODO: make sure gnumeric can handle bignums
+
+TODO: infinite disclaimer
+
+TODO: 38 states vs 12 states half pop
+
+TODO: Same elect = same power (duh)
+
+TODO: not really NP?
+ 
+
+
+TODO: House, not Senate/amendment (but fun to see?)
+
+
+
+
 
 Clear[num];
 num[{}, 0] := 1
