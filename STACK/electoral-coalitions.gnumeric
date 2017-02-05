@@ -39,7 +39,7 @@
     <gnm:Sheet DisplayFormulas="0" HideZero="0" HideGrid="0" HideColHeader="0" HideRowHeader="0" DisplayOutlines="1" OutlineSymbolsBelow="1" OutlineSymbolsRight="1" Visibility="GNM_SHEET_VISIBILITY_VISIBLE" GridColor="0:0:0">
       <gnm:Name>elec.csv</gnm:Name>
       <gnm:MaxCol>6</gnm:MaxCol>
-      <gnm:MaxRow>56</gnm:MaxRow>
+      <gnm:MaxRow>55</gnm:MaxRow>
       <gnm:Zoom>1</gnm:Zoom>
       <gnm:Names>
         <gnm:Name>
@@ -194,9 +194,10 @@
       </gnm:Cols>
       <gnm:Rows DefaultSizePts="12.75">
         <gnm:RowInfo No="0" Unit="13.5" Count="55"/>
+        <gnm:RowInfo No="55" Unit="12.75"/>
       </gnm:Rows>
-      <gnm:Selections CursorCol="0" CursorRow="0">
-        <gnm:Selection startCol="0" startRow="0" endCol="0" endRow="0"/>
+      <gnm:Selections CursorCol="4" CursorRow="5">
+        <gnm:Selection startCol="4" startRow="5" endCol="4" endRow="5"/>
       </gnm:Selections>
       <gnm:Cells>
         <gnm:Cell Row="0" Col="0" ValueType="60">Total:</gnm:Cell>
@@ -213,6 +214,7 @@
         <gnm:Cell Row="5" Col="1" ValueType="40">55</gnm:Cell>
         <gnm:Cell Row="5" Col="2" ValueType="40">823938160121664</gnm:Cell>
         <gnm:Cell Row="5" Col="3" ExprID="1">=C6/$C$2</gnm:Cell>
+        <gnm:Cell Row="5" Col="4">=C6/(C1/2)</gnm:Cell>
         <gnm:Cell Row="6" Col="0" ValueType="60">Texas</gnm:Cell>
         <gnm:Cell Row="6" Col="1" ValueType="40">38</gnm:Cell>
         <gnm:Cell Row="6" Col="2" ValueType="40">726949926629261</gnm:Cell>
