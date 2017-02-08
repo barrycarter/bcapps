@@ -2,6 +2,7 @@
 # even with the trusted repos; in some cases, this is because I am
 # misspelling the name, confusing a binary name with a package name,
 # or doing something else relatively minor
+2048
 FBReader
 Grimrock
 PySolFC
@@ -18,10 +19,12 @@ android
 battlestar
 belle-sip
 bindfs
+blazegraph
 boggle
 bomber
 bovo
 britannica
+bsd-games
 bzfs
 calibre
 celestia
@@ -33,7 +36,7 @@ eclipse
 esniper
 feh
 fly
-fortune-mod
+fortune
 freedink
 fuse-zip
 gcal
@@ -53,6 +56,7 @@ netcat
 nethack
 ntop
 ocrad
+onionshare
 openuniverse
 opera
 perl-B
@@ -65,12 +69,13 @@ perl-Plucene*
 perl-utf8
 prover9
 rclock
-recoll
 sagemath
 satan
 sccs
 sniffit
+ssfe
 stella
+surl
 talkfilters
 truecrypt
 usbview
@@ -83,6 +88,7 @@ xcowfortune
 xearth
 xmame
 xpaint
+xpaste
 xpilot
 xsnow
 xteddy

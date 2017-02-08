@@ -100,6 +100,9 @@ yum -y install deltarpm
 
 sh ~user/BCGIT/BRIGHTON/yum-runme.sh |& tee /tmp/yum-runme.out
 
+%% TODO: the cpan below may prompt, hitting return for defaults, but
+may want to note that more specifically
+
 % and bc-cpan.sh
 
 sh ~user/BCGIT/BRIGHTON/bc-cpan.sh |& tee /tmp/cpan.out
@@ -135,6 +138,7 @@ sh ~user/BCGIT/BRIGHTON/bc-servicectl.sh |& tee /tmp/bc-servicectl.sh
 
 % Ugly install of fly (older version, newer is broken)
 
+mkdir /root/build
 cd /root/build
 cp ~user/Downloads/fly-1.6.5.tar.gz .
 tar xvfz fly-1.6.5.tar.gz
@@ -520,8 +524,11 @@ when vnc running on alternate port
 
 %% TODO: sane setup
 
-sane-find-scanner
+sudo sane-find-scanner
 
 : found USB scanner (vendor=0x04a9 [Canon], product=0x176d [MG2500 series]) at libusb:001:002
 
-% NOTE TO SELF: works fine on brighton
+% NOTE TO SELF: works fine on brighton (actually doesn't, but gets further)
+
+%% TODO: get tor running at startup
+

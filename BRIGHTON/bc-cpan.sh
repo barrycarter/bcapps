@@ -6,6 +6,9 @@
 
 # Choose "sudo" for install method to make it globally available
 
+# NOTE: for some reason this doesnt always work at first, but does if
+# I re-run it
+
 cpan Statistics::Distributions Astro::Nova Astro::MoonPhase
 
 # TODO: Would you like me to append that to /root/.tcshrc now? (ok,

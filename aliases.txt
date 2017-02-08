@@ -219,3 +219,6 @@ alias node "/root/build/node-v6.0.0-linux-x86/bin/node"
 
 # lets me play C64/128 games (probably better ways to do this)
 alias commodoreplay "\rm ~/temp.zip; \cp \!* ~/temp.zip; x64 ~/temp.zip&"
+
+# opens a window with a given name
+alias window "xterm -geometry 80x53 +sb -bg gray45 -bd gray45 -T \!* -n \!* &"

@@ -257,6 +257,9 @@ speex-devel
 belle-sip
 
 # math/science tools
+mathics
+yacas
+octave
 qgis
 qhull
 sagemath

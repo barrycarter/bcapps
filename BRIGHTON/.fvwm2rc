@@ -2,8 +2,12 @@
 # This file contains the commands fvwm reads while starting.
 #
 
+
 EdgeResistance 250 10
-EdgeScroll 100 100
+# this makes desktop wraparound (multiply by 1000)
+EdgeScroll 100000 100000
+# This mostly kills edge resistance
+EdgeResistance 0 10
 ClickTime 750
 
 # I prefer 4x4
