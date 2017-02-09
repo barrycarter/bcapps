@@ -532,3 +532,4 @@ sudo sane-find-scanner
 
 %% TODO: get tor running at startup
 
+%% TODO: download scangearmp only at Canon site sigh

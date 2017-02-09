@@ -19,8 +19,9 @@ rdate -s utcnist.colorado.edu |& tee /tmp/rc-local-1.txt &
 # http://unix.stackexchange.com/questions/331995/move-mysql-postgresql-from-var-lib-using-systemd-on-centos-7-2
 # gets good answers, tweak this
 
-mysqld_safe |& tee /tmp/rc-local-2.txt &
-sudo -u postgres pg_ctl -D /var/lib/pgsql/data start |& tee /tmp/rc-local-3.txt &
+# NOTE: removed two below because 'tee' lasted forever
+# mysqld_safe |& tee /tmp/rc-local-2.txt &
+# sudo -u postgres pg_ctl -D /var/lib/pgsql/data start |& tee /tmp/rc-local-3.txt &
 
 # TODO: find correct way to start nagios
 # TODO: worry this occurs too early?

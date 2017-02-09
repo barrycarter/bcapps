@@ -9,6 +9,9 @@ efibootmgr
 
 # TODO: had to remove below because of conflict-- reinstall correctly later
 # yum-cron
+libusb
+# required for scangearmp
+libusb-0.1.4-3.el7.i686
 surl
 dbus-x11
 strace
@@ -188,6 +191,16 @@ xpdf
 xsane
 sane-backends
 gimp
+# TODO: figure out how I can have two versions of gimp-libs and
+# pangox-compat installed w/o conflict
+# scangearmp needs this, plus its nice to have in general
+gimp-devel-tools
+# must install this EXACT version for scangearmp (sigh)
+gimp-libs.i686 2:2.8.16-3.el7
+# scangearmp needs this and good to have anyway
+pangox-compat
+# once again, specific version to meet dependency
+pangox-compat-0.0.2-2.el7.i686
 Xorg
 acroread
 calibre
@@ -332,7 +345,8 @@ dosemu
 vice
 stella
 wine
-VirtualBox
+# NOTE: must specify version here, else fail
+VirtualBox-5.1
 WolframCDFPlayer
 abiword
 

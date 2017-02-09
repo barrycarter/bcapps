@@ -45,7 +45,7 @@ source /home/user/BCPRIV/aliases.txt
 # bunch of libs I know about and their /old equivs + more as needed
 # NOTE: /var/lib usually doesnt contain these types of libraries
 
-setenv LD_LIBRARY_PATH /usr/local/lib:/usr/lib:/lib:/old/usr/local/lib:/old/usr/lib:/old/lib
+setenv LD_LIBRARY_PATH /lib64:/usr/local/lib:/usr/lib:/lib:/old/usr/local/lib:/old/usr/lib:/old/lib
 
 # the only postgresql database I have/use is "main"
 

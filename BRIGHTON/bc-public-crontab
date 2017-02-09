@@ -43,7 +43,12 @@ MAILTO="daemon"
 * * * * * cat /home/user/BCPRIV/bc-private-crontab /home/user/BCGIT/BRIGHTON/bc-public-crontab > /home/user/bc-final-crontab; crontab /home/user/bc-final-crontab
 
 # update background every minute (version 2 for brighton, original breaks it)
-* * * * * /home/user/BCGIT/bc-bg2.pl
+
+# TODO: the 'sudo' here is just in case I run this as root once and
+# the files then belong to root, not user; however, I am unhappy about
+# this
+
+* * * * * sudo /home/user/BCGIT/bc-bg2.pl
 
 # snapshot my screen every minute
 # TODO: restore this, it saves to an external drive that isn't there yet
