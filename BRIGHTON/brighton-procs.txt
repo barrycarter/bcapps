@@ -95,7 +95,7 @@ recollindex
 /usr/share/recoll/filters/rcltar
 
 # i run gnuserv so I can connect emacs's to main one
-usr/lib64/xemacs-21.5-b34/x86_64-redhat-linux/gnuserv
+/usr/lib64/xemacs-21.5-b34/x86_64-redhat-linux/gnuserv
 
 </may>
 
@@ -116,7 +116,7 @@ usr/lib64/xemacs-21.5-b34/x86_64-redhat-linux/gnuserv
 /usr/bin/mysqld_safe
 /usr/sbin/atd
 /usr/sbin/sshd
-/usr/sbin/dnsmasq
+/sbin/dnsmasq
 /usr/bin/postgres
 postgres:
 nagios

@@ -55,8 +55,12 @@ for $i (glob "$bclib{githome}/ASTRO/SKYCAL*.html") {
     # format time
     my($ftime) = "$year$month${date}T${time}00Z";
 
+    # ACK! Per comment to http://icalshare.com/calendars/6954 this was
+    # not unique -- full moon or whatever can occur at same time
+    # creating duplicate key; tweaked
+
     # artificial
-    my($uid) = sha1_hex("$event $time");
+    my($uid) = sha1_hex("$ftime $event");
 
     # TODO: for lunar eclipses, note the day before (which can be
     # wrong, but safer than day late) [or be clever and only go day
