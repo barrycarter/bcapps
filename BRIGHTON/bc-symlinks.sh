@@ -110,7 +110,7 @@ echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/wheel
 
 # and preserve home dir
 echo 'Defaults env_keep += "HOME"' > /etc/sudoers.d/keephome
-echo 'Defaults \!always_set_home' >> /etc/sudoers.d/keephome
+echo 'Defaults !always_set_home' >> /etc/sudoers.d/keephome
 
 # this works fine from a shell script (ie, the exclamation mark isn't
 # expanded) POSSIBLY because "set noglob" is set magically somehow

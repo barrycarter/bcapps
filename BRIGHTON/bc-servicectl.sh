@@ -12,7 +12,7 @@
 
 # TODO: actually exec these, don't just print them out
 
-perl -le 'for $i ("nfs-mountd", "nfs-idmapd", "libvirtd", "ksmtuned", "libstoragemgmt", "rc-local.service", "systemd-ask-password-wall", "ModemMananger", "upower", "rngd", "smartd", "chronyd", "auditd", "NetworkManager", "tuned", "cups", "wpa_supplicant", "irqbalance", "avahi-daemon", "vboxadd-service", "rpc-statd.service", "rpcbind.service", "abrt-oops", "abrtd", "abrt-xorg", "sendmail") {print "systemctl stop $i | tee /tmp/stop-service-$i.log;\nsystemctl disable $i | tee /tmp/disable-service-$i.log"}'
+perl -le 'for $i ("nfs-mountd", "nfs-idmapd", "libvirtd", "ksmtuned", "libstoragemgmt", "rc-local.service", "systemd-ask-password-wall", "ModemMananger", "upower", "rngd", "smartd", "chronyd", "auditd", "NetworkManager", "tuned", "cups", "wpa_supplicant", "irqbalance", "avahi-daemon", "vboxadd-service", "rpc-statd.service", "rpcbind.service", "abrt-oops", "abrtd", "abrt-xorg", "sendmail") {print "systemctl stop $i | tee /tmp/stop-service-$i.log;\nsystemctl disable $i | tee /tmp/disable-service-$i.log"}' | sh
 
 
 

@@ -7,7 +7,7 @@ FBReader
 Grimrock
 PySolFC
 ScottFree
-VirtualBox
+VirtualBox-5.1
 WolframCDFPlayer
 abiword
 acroread
@@ -42,6 +42,7 @@ fuse-zip
 gcal
 geomview
 gif2asc
+gimp-libs.i686
 gitfs
 gnumeric
 google-chrome
@@ -49,6 +50,7 @@ ical
 idevsutil_linux
 linphone
 lucene
+mathics
 mille
 nessus
 netbeans
@@ -92,6 +94,7 @@ xpaste
 xpilot
 xsnow
 xteddy
+yacas
 yate
 yaz
 zpaq

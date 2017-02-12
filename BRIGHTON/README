@@ -185,6 +185,8 @@ sudo -u postgres pg_ctl -D /var/lib/pgsql/data start
 
 % To import data (mine is in /mnt/kemptown/XFER)
 
+cd /mnt/kemptown/XFER
+
 : works wo any special perms or options
 mysql < mysqlminidump.txt
 

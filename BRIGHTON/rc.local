@@ -20,8 +20,14 @@ rdate -s utcnist.colorado.edu |& tee /tmp/rc-local-1.txt &
 # gets good answers, tweak this
 
 # NOTE: removed two below because 'tee' lasted forever
+# restored sans tee below
+
 # mysqld_safe |& tee /tmp/rc-local-2.txt &
 # sudo -u postgres pg_ctl -D /var/lib/pgsql/data start |& tee /tmp/rc-local-3.txt &
+
+mysqld_safe&
+# this one auto bgs itself
+sudo -u postgres pg_ctl -D /var/lib/pgsql/data start
 
 # TODO: find correct way to start nagios
 # TODO: worry this occurs too early?
