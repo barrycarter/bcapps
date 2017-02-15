@@ -168,6 +168,7 @@ MAILTO="daemon"
 # TODO: remove this after I cutover to new machine completely
 
 */10 * * * * rsync -Pavz user@192.168.0.2:/home/user/BCGIT /home/user/
+*/10 * * * * rsync -Pavz user@192.168.0.2:/home/user/BCPRIV /home/user/
 
 # The Energy Detective (TED) has a website interface to my electricity
 # usage; the cron jobs below make a permanent copy of the data to
@@ -213,6 +214,9 @@ MAILTO="daemon"
 # directory somewhere
 
 */10 * * * * rsync -Pavz /home/user/Downloads/ user@dullon:/home/user/Downloads/
+
+# TODO: this is temporary job to sync main mysql db ("test") to brighton
+23 * * * * ssh user@dullon mysqldump test | mysql test
 
 # every few minutes, backup important files:
 

@@ -534,4 +534,26 @@ sudo sane-find-scanner
 
 %% TODO: get tor running at startup
 
-%% TODO: download scangearmp only at Canon site sigh
+%% TODO: scanimage and xsane WILL WORK with Canon PIXMA now BUT are
+inconsistent; removing and replugging in scanner helps, but try to get
+this to work more consistently
+
+%% TODO: scangearmp NOT working on brighton, maybe alias to reference
+scanimage?
+
+%% TODO: make sure swap space is actually working
+
+%% TODO:magic command to get 3 mouse button:
+
+xinput set-prop 9 "Evdev Middle Button Emulation" 1
+
+: but need to generalize this for .xinitrc
+
+%% TODO: Firefox add-on Video Download Helper not working
+
+%% TODO: "chmod -R 777 /dev/snd/" fixes sound on brighton in X11 only
+(works fine outside of X11?!, different user?); need to put in startup
+or something
+
+%% TODO: my "plot" aliases (which are private, except for qplot) are
+failing, need to figure out whats wrong and fix these

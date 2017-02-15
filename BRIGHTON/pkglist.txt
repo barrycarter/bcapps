@@ -182,6 +182,7 @@ pavucontrol
 
 # graphics incl scanning and fonts
 # some of these may be installed by a groupinstall
+povray
 xpaint
 gif2asc
 ImageMagick
@@ -189,14 +190,16 @@ feh
 xv
 xpdf
 xsane
+# the two packages below ARE different!
 sane-backends
+sane-backends-drivers-scanners
 gimp
 # TODO: figure out how I can have two versions of gimp-libs and
 # pangox-compat installed w/o conflict
 # scangearmp needs this, plus its nice to have in general
 gimp-devel-tools
 # must install this EXACT version for scangearmp (sigh)
-gimp-libs.i686 2:2.8.16-3.el7
+gimp-libs-2.8.16-3.el7.i686
 # scangearmp needs this and good to have anyway
 pangox-compat
 # once again, specific version to meet dependency
