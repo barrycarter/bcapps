@@ -113,10 +113,10 @@ recollindex
 /usr/sbin/xinetd
 # for mysql, both below must be running
 /usr/libexec/mysqld
-/usr/bin/mysqld_safe
+/bin/mysqld_safe
 /usr/sbin/atd
 /usr/sbin/sshd
-/sbin/dnsmasq
+/usr/sbin/dnsmasq
 /usr/bin/postgres
 postgres:
 nagios

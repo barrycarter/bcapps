@@ -7,6 +7,11 @@ DISPLAY=":0.0"
 
 MAILTO="daemon"
 
+# test cron job to see what cron's sh path (which may be quite
+# different from what tcsh's path is, and I'm not quite ready to make
+# tcsh my cron shell)
+* * * * * echo $PATH
+
 # this is the public portion of my crontab file on brighton; it loads
 # and runs the private part (which is separate) as well
 
@@ -40,7 +45,11 @@ MAILTO="daemon"
 
 # TODO: check no refs to FEDORA or CENTOS or VM in this dir
 
-* * * * * cat /home/user/BCPRIV/bc-private-crontab /home/user/BCGIT/BRIGHTON/bc-public-crontab > /home/user/bc-final-crontab; crontab /home/user/bc-final-crontab
+# the public crontab comes first because it exports ENV variables--
+# apparently, xmessage won't work in a cron file unless DISPLAY is set
+# earlier in the file-- this seems weird to me but is apparently true
+
+* * * * * cat /home/user/BCGIT/BRIGHTON/bc-public-crontab /home/user/BCPRIV/bc-private-crontab > /home/user/bc-final-crontab; crontab /home/user/bc-final-crontab
 
 # update background every minute (version 2 for brighton, original breaks it)
 
@@ -153,12 +162,11 @@ MAILTO="daemon"
 */5 * * * * sudo /home/user/BCGIT/bc-daemon-checker2.pl --file=/home/user/brighton-procs.txt --mach=brighton --sleep=50
 
 # I dislike ntpd so this adjusts the system clock frequency/etc regularly
-# TODO: restore this later, see note below
-# */10 * * * * sudo /home/user/BCGIT/bc-fake-ntp.pl --interval=600
+*/10 * * * * sudo /home/user/BCGIT/bc-fake-ntp.pl --interval=600
 
 # VM keeps truly terrible time with above, but this is a known issue;
-# restore it on physical machine later and remove below
-* * * * * sudo /sbin/ntpdate pool.ntp.org
+# restore it on physical machine later and remove below (done)
+# * * * * * sudo /sbin/ntpdate pool.ntp.org
 
 # TODO: remove this after I've migrated to brighton completely
 

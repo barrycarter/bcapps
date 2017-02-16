@@ -96,7 +96,7 @@ ln -s /home/user/BCGIT/BRIGHTON/hosts /etc
 # /usr/local/etc/elinks is where I have elinks autosave documents I bookmark
 # TODO: make the program that does above available as OS
 
-mkdir -p /usr/local/etc/locks /usr/local/etc/registry /var/tmp/montastic /var/tmp/cache /var/nagios/rw /var/log/nagios/rw /usr/local/etc/elinks
+mkdir -p /usr/local/etc/locks /usr/local/etc/registry /var/tmp/montastic /var/tmp/cache /var/nagios/rw /var/log/nagios/rw /usr/local/etc/elinks /usr/local/etc/stickies
 chown -R user /usr/local/etc /var/tmp/*
 chown -R nagios /var/nagios /var/log/nagios
 

@@ -3,6 +3,7 @@
 # Wait until a given process has stopped + then report
 # --nox: do not send xmessage, just end
 # --message: add this to standard message
+# --sms: send sms in addition to xmessage
 
 require "/usr/local/lib/bclib.pl";
 
@@ -34,3 +35,6 @@ if ($stringq) {print "'$ARGV[0]' matches: $name ($pid)\n";}
 while (!system("ps -p $pid > /dev/null")) {sleep 5;}
 
 unless ($globopts{nox}) {xmessage("'$pid ($name) done: $globopts{message}'",1);}
+
+if ($globopts{sms}) {system("bc-alarm.pl $pid $name done: $globopts{message}");}
+

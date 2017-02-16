@@ -557,3 +557,8 @@ or something
 
 %% TODO: my "plot" aliases (which are private, except for qplot) are
 failing, need to figure out whats wrong and fix these
+
+%% TODO: get comcast working as default smtp but still allow local delivery
+
+%% TODO: current hostname is unqualified ("brighton") so not even SMTP tunnel works
+
