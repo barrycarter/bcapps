@@ -36,5 +36,7 @@ while (!system("ps -p $pid > /dev/null")) {sleep 5;}
 
 unless ($globopts{nox}) {xmessage("'$pid ($name) done: $globopts{message}'",1);}
 
-if ($globopts{sms}) {system("bc-alarm.pl $pid $name done: $globopts{message}");}
+if ($globopts{sms}) {
+  system("bc-alarm.pl now $pid $name done: $globopts{message}");
+}
 

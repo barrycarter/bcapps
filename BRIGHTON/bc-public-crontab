@@ -1,3 +1,7 @@
+# use tcsh for consistency
+
+SHELL=/bin/tcsh
+
 # set some environment variables
 
 DISPLAY=":0.0"
@@ -7,10 +11,8 @@ DISPLAY=":0.0"
 
 MAILTO="daemon"
 
-# test cron job to see what cron's sh path (which may be quite
-# different from what tcsh's path is, and I'm not quite ready to make
-# tcsh my cron shell)
-* * * * * echo $PATH
+# test cron job to see what my path is and the env and the aliases
+* * * * * echo $PATH; printenv; alias
 
 # this is the public portion of my crontab file on brighton; it loads
 # and runs the private part (which is separate) as well
@@ -49,7 +51,7 @@ MAILTO="daemon"
 # apparently, xmessage won't work in a cron file unless DISPLAY is set
 # earlier in the file-- this seems weird to me but is apparently true
 
-* * * * * cat /home/user/BCGIT/BRIGHTON/bc-public-crontab /home/user/BCPRIV/bc-private-crontab > /home/user/bc-final-crontab; crontab /home/user/bc-final-crontab
+* * * * * cat /home/user/BCGIT/BRIGHTON/bc-public-crontab /home/user/BCPRIV/bc-private-crontab >! /home/user/bc-final-crontab; crontab /home/user/bc-final-crontab
 
 # update background every minute (version 2 for brighton, original breaks it)
 
@@ -175,8 +177,10 @@ MAILTO="daemon"
 # TODO: maybe make this less frequent
 # TODO: remove this after I cutover to new machine completely
 
+# -L = follow symlinks and copy the referent (useful since I use symlinks in BCPRIV)
+
 */10 * * * * rsync -Pavz user@192.168.0.2:/home/user/BCGIT /home/user/
-*/10 * * * * rsync -Pavz user@192.168.0.2:/home/user/BCPRIV /home/user/
+*/10 * * * * rsync -PavzL user@192.168.0.2:/home/user/BCPRIV /home/user/
 
 # The Energy Detective (TED) has a website interface to my electricity
 # usage; the cron jobs below make a permanent copy of the data to

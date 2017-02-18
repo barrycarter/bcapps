@@ -315,7 +315,7 @@ showing option until you choose partitioning) -- maybe take screenshot
 %% TODO: get nagios working
 
 %% TODO: look at and edit /etc/cron* to make sure right jobs are
-running in the right way
+running in the right way (ie, add these jobs to bc-public-crontab or whatever as needed)
 
 %% TODO: get httpd working
 
@@ -562,3 +562,6 @@ failing, need to figure out whats wrong and fix these
 
 %% TODO: current hostname is unqualified ("brighton") so not even SMTP tunnel works
 
+%% TODO: because I've changed to tcsh for cron, make sure cron job still work; in particular "1>" and "2>" may be (ba)sh specific
+
+%% TODO: have sloppy focus turned on by default
