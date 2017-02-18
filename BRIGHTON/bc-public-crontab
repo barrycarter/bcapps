@@ -12,7 +12,7 @@ DISPLAY=":0.0"
 MAILTO="daemon"
 
 # test cron job to see what my path is and the env and the aliases
-* * * * * echo $PATH; printenv; alias
+# * * * * * echo $PATH; printenv; alias
 
 # this is the public portion of my crontab file on brighton; it loads
 # and runs the private part (which is separate) as well
@@ -164,7 +164,7 @@ MAILTO="daemon"
 */5 * * * * sudo /home/user/BCGIT/bc-daemon-checker2.pl --file=/home/user/brighton-procs.txt --mach=brighton --sleep=50
 
 # I dislike ntpd so this adjusts the system clock frequency/etc regularly
-*/10 * * * * sudo /home/user/BCGIT/bc-fake-ntp.pl --interval=600
+*/10 * * * * sudo /home/user/BCGIT/bc-fake-ntp-brighton.pl --debug --interval=600
 
 # VM keeps truly terrible time with above, but this is a known issue;
 # restore it on physical machine later and remove below (done)

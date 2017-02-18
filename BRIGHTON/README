@@ -565,3 +565,12 @@ failing, need to figure out whats wrong and fix these
 %% TODO: because I've changed to tcsh for cron, make sure cron job still work; in particular "1>" and "2>" may be (ba)sh specific
 
 %% TODO: have sloppy focus turned on by default
+
+%% NOTE TO SELF: civiltwilight hacked; aliases.txt hacked
+
+%% TODO: move /usr/local/etc/quikbak to much larger drive, / wont have
+enough room (note that this will create itself on first use if not
+already created so be careful)
+
+
+

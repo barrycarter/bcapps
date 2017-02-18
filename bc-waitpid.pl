@@ -18,7 +18,6 @@ unless ($pid=~/^\d+$/) {
   my(@procs) = `pgrep $pid`;
 
   if ($#procs==-1) {die "No procs matching: $pid";}
-  # TODO: proceed here with "first" process pgrep returns
   if ($#procs>0) {warn ">= 2 procs match: $pid; only watching first";}
   $pid = $procs[0];
   chomp($pid);
@@ -37,6 +36,8 @@ while (!system("ps -p $pid > /dev/null")) {sleep 5;}
 unless ($globopts{nox}) {xmessage("'$pid ($name) done: $globopts{message}'",1);}
 
 if ($globopts{sms}) {
-  system("bc-alarm.pl now $pid $name done: $globopts{message}");
+  debug("bc-alarm.pl now $pid $name done: $globopts{message}");
+  # TODO: I shouldnt have to give a path here!
+  system("$bclib{githome}/bc-alarm.pl now $pid $name done: $globopts{message}");
 }
 

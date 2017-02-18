@@ -94,7 +94,8 @@ sub get_target {
   my($aa);
 
   # ignore emacs droppings, non-files, and non-existent files
-  if ($i=~/~$/) {warn("$i: emacs backup"); return ();}
+  # emacs droppings changed to debug, not warn
+  if ($i=~/~$/) {debug("$i: emacs backup"); return ();}
   unless (-f $i) {debug("$i: not a file"); return();}
   unless (@x=stat($i)) {warn("$i: nostat, $!"); return();}
 

@@ -134,6 +134,8 @@ our(@globopts) = ("debug", "nocache", "tmpdir", "nowarn", "fake", "ignorelock",
 
 # largest possible path (really?)
 
+# TODO: let .tcshrc set this
+# TODO: adding BCGIT to this = really kludgey
 $ENV{PATH} = "/sbin:/opt/metaf2xml/bin/:/sw/bin/:/bin/:/usr/bin/:/usr/local/bin/:/usr/X11R6/bin/:/usr/lib/nagios/plugins:/usr/lib:/usr/sbin/:$ENV{HOME}/bin:$ENV{HOME}/PERL:/usr/lib64/nagios/plugins/";
 
 =item list2hash(@list)
