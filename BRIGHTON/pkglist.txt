@@ -12,6 +12,9 @@ efibootmgr
 libusb
 # required for scangearmp
 libusb-0.1.4-3.el7.i686
+cmake
+extra-cmake-modules
+moreutils
 surl
 dbus-x11
 strace
@@ -103,6 +106,8 @@ lua
 prover9
 mono-core
 python3-pip
+python34-pip
+python-devel
 android
 perl
 php
@@ -112,6 +117,8 @@ rubygem-rspec
 rubygem-bundler
 ruby-doc
 mono-core
+sqlite
+sqlite-devel
 
 
 # shells
@@ -257,6 +264,8 @@ lsb
 telnet
 squid
 pidgin
+pidgin-devel
+finch
 coccinella
 skype
 tcpdump
@@ -271,6 +280,12 @@ yate
 # required for linphone source install
 speex-devel
 belle-sip
+# below required by non-free Trillian
+librsvg2
+librsvg2-devel
+librsvg2-tools
+libzip
+libzip-devel
 
 # math/science tools
 mathics

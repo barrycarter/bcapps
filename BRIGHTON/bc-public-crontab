@@ -157,7 +157,7 @@ MAILTO="daemon"
 
 # and from bcinfo3
 
-49 8 * * * rsync -e 'ssh -i /home/user/.ssh/id_rsa.bc' -Pavz "root@bcinfo3.barrycarter.info:/var/log/lighttpd/*" /home/user/html/weblogs/bcinfo3/
+49 8 * * * rsync -e 'ssh -i /home/user/.ssh/id_rsa.bc' -az "root@bcinfo3.barrycarter.info:/var/log/lighttpd/*" /home/user/html/weblogs/bcinfo3/
 
 # check that the correct procs are running and not running
 
@@ -179,8 +179,11 @@ MAILTO="daemon"
 
 # -L = follow symlinks and copy the referent (useful since I use symlinks in BCPRIV)
 
-*/10 * * * * rsync -Pavz user@192.168.0.2:/home/user/BCGIT /home/user/
-*/10 * * * * rsync -PavzL user@192.168.0.2:/home/user/BCPRIV /home/user/
+# removed '-P' and '-v' since these often rsync over nothing and getting email
+# for 'no files transferred' is annoying
+
+*/10 * * * * rsync -az user@192.168.0.2:/home/user/BCGIT /home/user/
+*/10 * * * * rsync -azL user@192.168.0.2:/home/user/BCPRIV /home/user/
 
 # The Energy Detective (TED) has a website interface to my electricity
 # usage; the cron jobs below make a permanent copy of the data to
@@ -225,7 +228,7 @@ MAILTO="daemon"
 # Downloads directory even if I've already symlinked the Downloads
 # directory somewhere
 
-*/10 * * * * rsync -Pavz /home/user/Downloads/ user@dullon:/home/user/Downloads/
+*/10 * * * * rsync -az /home/user/Downloads/ user@dullon:/home/user/Downloads/
 
 # TODO: this is temporary job to sync main mysql db ("test") to brighton
 23 * * * * ssh user@dullon mysqldump test | mysql test

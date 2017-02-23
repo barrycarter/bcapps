@@ -12,6 +12,9 @@
 
 ln -s /home/user /home/barrycarter
 
+# needed for trillian (but is hack)
+ln -s /usr/lib64/libzip.so.2 /usr/lib64/libzip.so.4
+
 # lets me reference my old FC11 installation copy as /old
 ln -s /mnt/kemptown/dullon-root /old
 

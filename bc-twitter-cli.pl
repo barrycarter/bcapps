@@ -30,7 +30,7 @@
 # SEND: direct messages you sent
 # USER-$twit: tweets from $twit
 
-require "bclib.pl";
+require "/usr/local/lib/bclib.pl";
 
 # don't block when reading STDIN and keep pipes instant
 use Fcntl;
@@ -72,8 +72,33 @@ if ($globopts{log}) {
   open(A,">>$ENV{HOME}/bc-twitter-$globopts{username}-log.txt");
 }
 
+# infinite loop for twitter
+for (;;) {
 
+  my($input) = <>;
+  chomp($input);
+  $now=time();
+  $snow=stardate($now);
+  #  ssfeprint("Current time: $snow");
 
+  # check if it's time for next gettweet!
+  if ($now>=$next_check) {
+    get_tweets();
+    $next_check = sleep_calc();
+  }
+
+  # ignore blank lines (but sleep 1s to prevent infinite CPU usage)
+  if (blank($input)) {sleep(1); next;}
+
+  # handle /command
+  if ($input=~m%^/(.*)$%) {
+    handle_command($1);
+    next;
+  }
+
+  # if not a slash command, tweet it
+  tweet($input);
+}
 
 # create SQLite3 db for this program
 sub create_db {

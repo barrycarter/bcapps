@@ -572,5 +572,11 @@ failing, need to figure out whats wrong and fix these
 enough room (note that this will create itself on first use if not
 already created so be careful)
 
+%% TODO: gnuplot not working properly-- no icons or range select
+
+%% TODO: currently using older version of adjtimex, which works, but really should be using latest version and then update bc-fake-ntp-brighton.pl
+
+
+
 
 

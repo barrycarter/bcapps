@@ -61,3 +61,4 @@ close(A);
 
 debug("OUT: $out, ERR: $err, RES: $res");
 
+write_file_new("ADJ: ${curoffset}s\n", "$bclib{home}/ERR/adjtimex.inf");
