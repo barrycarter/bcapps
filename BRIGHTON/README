@@ -576,7 +576,11 @@ already created so be careful)
 
 %% TODO: currently using older version of adjtimex, which works, but really should be using latest version and then update bc-fake-ntp-brighton.pl
 
+%% TODO: "xmessage xyz &" in cron yields "[pid]" in CRON email-- can I
+get away w/ not using the "&" or finding another solution here
 
+%% TODO: firefox -remote not working properly
 
+%% TODO: Makefile.skypelog doesn't work (format doesn't work w/ newer versions of make?!)
 
-
+%% TODO: atsee alias broken, returns some sort of delimiter

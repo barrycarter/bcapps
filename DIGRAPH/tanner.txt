@@ -1,0 +1,7 @@
+# Full(er) house digraph, friendship is used only when needed
+Danny Tanner,daughter,DJ Tanner+Michelle Tanner+Stephanie Tanner
+Danny Tanner,friend,Joey Gladstone
+DJ Tanner,friend,Kimmy Gibbler+Steve Hale+Matthew Harmon
+DJ Tanner,son,Tommy Jr Fuller+Max Fuller+Jackson Fuller
+DJ Tanner,husband,Tommy Sr Fuller
+Danny Tanner,wife,Pamela Tanner,brother,Jesse Katsopolis,wife,Rebecca Donaldson

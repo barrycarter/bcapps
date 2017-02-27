@@ -80,12 +80,10 @@ xz
 mosh
 
 # backup
-
 zpaq
 idevsutil_linux
 
 # time and date tools
-
 gcal
 rclock
 ical
@@ -108,6 +106,7 @@ mono-core
 python3-pip
 python34-pip
 python-devel
+python3-devel
 android
 perl
 php
@@ -124,6 +123,8 @@ sqlite-devel
 # shells
 tcsh
 bash
+# below is Perl shell
+psh
 
 # VNC/rdesktop clients/servers
 tigervnc
@@ -301,6 +302,7 @@ bc
 calc
 maxima
 openuniverse
+gramps
 
 # file sharing
 samba

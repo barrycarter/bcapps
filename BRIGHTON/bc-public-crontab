@@ -164,7 +164,7 @@ MAILTO="daemon"
 */5 * * * * sudo /home/user/BCGIT/bc-daemon-checker2.pl --file=/home/user/brighton-procs.txt --mach=brighton --sleep=50
 
 # I dislike ntpd so this adjusts the system clock frequency/etc regularly
-*/10 * * * * sudo /home/user/BCGIT/bc-fake-ntp-brighton.pl --debug --interval=600
+*/10 * * * * sudo /home/user/BCGIT/bc-fake-ntp-brighton.pl --interval=600
 
 # VM keeps truly terrible time with above, but this is a known issue;
 # restore it on physical machine later and remove below (done)
@@ -184,6 +184,15 @@ MAILTO="daemon"
 
 */10 * * * * rsync -az user@192.168.0.2:/home/user/BCGIT /home/user/
 */10 * * * * rsync -azL user@192.168.0.2:/home/user/BCPRIV /home/user/
+
+# TODO: remove this after cutover to brighton
+
+# this does the "opposite" of the above: it takes files I've created
+# on brighton and mirrors them back to dullon "just in case" something
+# happens on brighton (since I am not currently doing backups on
+# brighton)
+
+37 * * * * sudo rsync -Pravz user@dullon:/home/user/brighton-to-dullon-rsyncs.txt /home/user/; sudo rsync -Pravz --files-from=/home/user/brighton-to-dullon-rsyncs.txt / user@dullon:/mnt/extdrive5/FROMBRIGHTON/
 
 # The Energy Detective (TED) has a website interface to my electricity
 # usage; the cron jobs below make a permanent copy of the data to
