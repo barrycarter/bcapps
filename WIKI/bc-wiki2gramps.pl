@@ -4,6 +4,10 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# TODO: consider GEDCOM format to add even more info?
+
+# TODO: custom fields in gramps?
+
 # TODO: this is only 4M so I can read it into memory, not generally true
 my($all) = join("", `bzcat fullhouse_pages_current.xml.bz2`);
 
@@ -41,19 +45,26 @@ while ($all=~s/{{Character(.*?)}}//s) {
   my(@csv);
   my(%hash);
 
-  my(@data) = split(/\|/, $data);
+  # TODO: why doesnt my later regex catch this, shouldnt have to do this!
+  $data=~s/^\|(.*?)\s*\=\s*$//mg;
 
-  debug("DAT", @data);
+  while ($data=~s/^\|(.*?)\s*\=\s*(.*?)$//m) {
+    debug("$1 -> $2");
+    $hash{$1}=$2;
+    debug("DATA: $data");
+  }
 
-  next; ###### TESTING!
-  while ($data=~s/\s*\|(.*?)\s*\=\s*(.*?)\s*$//) {$hash{$1} = $2;}
+  # TODO: fix (on original wiki) cases where remainder is non empty
+  $data=~s/\s+/ /g;
+  if ($data=~/\S/) {debug("REMAINDER: $data, PAGE: $hash{Name}")};
 
   # NOTE: see which keys are most freq used
-  for $i (keys %hash) {debug("KEY: $i, VAL: $hash{$i}");}
+#  for $i (keys %hash) {debug("KEY: *$i*");}
 
   # process hash
 
   # first word is first name
+  debug("NAME: $hash{Name}");
   if ($hash{Name}=~s/^(\S+)\s*//) {
     $hash{Firstname} = $1;
   } else {
