@@ -39,7 +39,12 @@ print join(",", @header),"\n";
 # NOTE: The "character" template is specific to this wiki
 
 # TODO: this is imperfect and catches tests/examples but ok for now
-while ($all=~s/{{Character(.*?)}}//s) {
+# TODO: this can end if there is a "}}" inside the template
+# while ($all=~s/{{Character(.*?)}}//s) {
+
+while ($all=~s/{{Character\n(.*?)\n}}//s) {
+
+  debug("<GOT>",$1,"</GOT>");
 
   my($data) = $1;
   my(@csv);
@@ -51,7 +56,7 @@ while ($all=~s/{{Character(.*?)}}//s) {
   while ($data=~s/^\|(.*?)\s*\=\s*(.*?)$//m) {
     debug("$1 -> $2");
     $hash{$1}=$2;
-    debug("DATA: $data");
+#    debug("DATA: $data");
   }
 
   # TODO: fix (on original wiki) cases where remainder is non empty
@@ -64,7 +69,7 @@ while ($all=~s/{{Character(.*?)}}//s) {
   # process hash
 
   # first word is first name
-  debug("NAME: $hash{Name}");
+#  debug("NAME: $hash{Name}");
   if ($hash{Name}=~s/^(\S+)\s*//) {
     $hash{Firstname} = $1;
   } else {
@@ -77,6 +82,9 @@ while ($all=~s/{{Character(.*?)}}//s) {
   } else {
     $hash{Lastname} = "?";
   }
+
+  # ignore totally empty names
+  if ($hash{Firstname} eq "?" && $hash{Lastname} eq "?") {next;}
 
   # TODO: middle name is remainder?
 
