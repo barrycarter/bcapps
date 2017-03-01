@@ -11,6 +11,10 @@ require "/usr/local/lib/bclib.pl";
 # TODO: this is only 4M so I can read it into memory, not generally true
 my($all) = join("", `bzcat fullhouse_pages_current.xml.bz2`);
 
+while ($all=~s/{{([^\{\}]*)}}/parse_braces($1)/se) {}
+
+die "TESTING";
+
 # TODO: could print one off?
 # where to store data
 my(@hashes);
@@ -101,3 +105,7 @@ while ($all=~s/{{Character\n(.*?)\n}}//s) {
 
 # debug("ALL: $all");
 
+sub parse_braces {
+  my($text) = @_;
+  debug("GOT: $text");
+}
