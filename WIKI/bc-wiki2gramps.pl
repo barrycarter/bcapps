@@ -11,11 +11,23 @@ my($all) = join("", `bzcat fullhouse_pages_current.xml.bz2`);
 # where to store data
 my(@hashes);
 
-# what data to export (the "Person" field is required and auto gen'd)
-my(@fields) = ("Person", "Name", "Birth", "Portrayer");
+# the hash converting wiki field names to gramps field names
+# TODO: make this more sophisticated
+my(%convert) = (
+ # TODO: process name into pieces
+ "Name" => "Firstname",
+ "Birth" => "Birthdate",
+ "Portrayer" => "Note",
+ "Extra" => "Lastname"
+);
 
-# TODO: not sure gramps willr recognize these fields, so change if needed
-print join(",", @fields),"\n\n";
+# TODO: might be better to use gramps field names?
+# wiki names for fields I want
+my(@fields) = ("Name", "Extra", "Birth", "Portrayer");
+
+my(@header) = @fields;
+map($_=$convert{$_}, @header);
+print join(",", @header),"\n";
 
 # NOTE: The "character" template is specific to this wiki
 
@@ -24,16 +36,16 @@ while ($all=~s/{{Character(.*?)}}//s) {
 
   my($data) = $1;
   my(@csv);
-
-  # Person field required by gramps
-  # TODO: create as sha1 for consistency?
-  my(%hash) = ("Person" => ++$count);
+  my(%hash) = ("Extra" => "Test");
 
   while ($data=~s/\|(.*?)\s*\=\s*(.*?)\s*$//) {
     $hash{$1} = $2;
   }
 
+  debug("NAME IS",$hash{Name});
   for $i (@fields) {
+
+    debug("FIELD: $i, VAL: $hash{$i}");
 
     # get rid of references
     $hash{$i}=~s/[\[\]]//g;
