@@ -11,8 +11,8 @@ my($all) = join("", `bzcat fullhouse_pages_current.xml.bz2`);
 # where to store data
 my(@hashes);
 
-# what data to export
-my(@fields) = ("Name", "Birth", "Portrayer");
+# what data to export (the "Person" field is required and auto gen'd)
+my(@fields) = ("Person", "Name", "Birth", "Portrayer");
 
 # TODO: not sure gramps willr recognize these fields, so change if needed
 print join(",", @fields),"\n\n";
@@ -24,19 +24,24 @@ while ($all=~s/{{Character(.*?)}}//s) {
 
   my($data) = $1;
   my(@csv);
-  my(%hash) = ();
+
+  # Person field required by gramps
+  # TODO: create as sha1 for consistency?
+  my(%hash) = ("Person" => ++$count);
+
   while ($data=~s/\|(.*?)\s*\=\s*(.*?)\s*$//) {
     $hash{$1} = $2;
   }
 
   for $i (@fields) {
+
     # get rid of references
     $hash{$i}=~s/[\[\]]//g;
     # must quote since dates can have embedded commas
     push(@csv, qq%"$hash{$i}"%);
   }
 
-print join(",", @csv),"\n";
+  print join(",", @csv),"\n";
 
 }
 
