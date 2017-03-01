@@ -143,6 +143,9 @@ SCREEN
 postgres:
 alpine
 
+# ssh to many machines at once + sshfs calls ssh
+ssh
+
 # new version of nagios uses multiple "worker" processes
 nagios
 

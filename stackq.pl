@@ -2,10 +2,10 @@
 use Digest::SHA;
 
 %twitter_auth_hash = (
-"oauth_access_token" => "47849378-rZlzmwutYqGypbLsQUoZUsGdDkVVRkjkOkSfikNZC",
-"oauth_access_token_secret" => "YePiEkSDFdYAOgscijMCazcSfBflykjsEyaaVbuJeO",
-"consumer_key" => "UEIUyoBjBRomdvrVcUTn",
-"consumer_secret" => "rUOeZMYraAapKmXqYpxNLTOuGNmAQbGFqUEpPRlW"
+"oauth_access_token" => "19785284-sgPgBD2lb59sAVVsBqrXkrEOJeJGoT0xYugk09qAA",
+"oauth_access_token_secret" => "sl1v3Nus7xhOT9eYap1sH1Duaxqq2gl5nezZ4MQkTo",
+"consumer_key" => "V54LINfmM0BVp31VH4Rg",
+"consumer_secret" => "WjWfOclDJDAMhSTyjwibixfOIYx0zxGbPysQvcZI"
 );
 
 # if uncommented, pull my actual data

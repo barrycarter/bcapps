@@ -499,7 +499,8 @@ rdesktop (even if I kill/restart remote rdesktop)
 
 %% TODO: this command SHOULD tell me what files Ive changed on
 /mnt/kemptown/user and /mnt/kemptown/root since I mirrored, but
-doesn't seem to work at the moment
+doesn't seem to work at the moment (TODO: found a better way to do
+this, must document below)
 
 rsync -Pvrn /mnt/kemptown/user /mnt/kemptown/dullon-root/home/user
 
@@ -584,3 +585,7 @@ get away w/ not using the "&" or finding another solution here
 %% TODO: Makefile.skypelog doesn't work (format doesn't work w/ newer versions of make?!)
 
 %% TODO: atsee alias broken, returns some sort of delimiter
+
+%% TODO: create private symlinks for things like /mnt/extdrive* where I use /mnt/somename
+
+%% TODO: decide which nopkglist.txt are critical for me: gramps is one
