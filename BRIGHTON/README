@@ -589,3 +589,8 @@ get away w/ not using the "&" or finding another solution here
 %% TODO: create private symlinks for things like /mnt/extdrive* where I use /mnt/somename
 
 %% TODO: decide which nopkglist.txt are critical for me: gramps is one
+
+% NOTE TO SELF: moved .gramps to .gramps.old on brighton since old dir
+had incompatible? stuff
+
+%% TODO: document how i installed gramps -- the standard "egg" way fails

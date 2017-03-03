@@ -11,6 +11,15 @@ require "/usr/local/lib/bclib.pl";
 # TODO: this is only 4M so I can read it into memory, not generally true
 my($all) = join("", `bzcat fullhouse_pages_current.xml.bz2`);
 
+# test to find "bad" character templates non trivial to parse
+
+while ($all=~s/{{Character\s+(.*?)}}//s) {
+  debug("GOT: $1");
+}
+
+die "TESTING";
+
+# while ($all=~s/\[\[([^\[\]]*)\]\]/parse_brackets($1)/se) {}
 while ($all=~s/{{([^\{\}]*)}}/parse_braces($1)/se) {}
 
 die "TESTING";
@@ -105,17 +114,48 @@ while ($all=~s/{{Character\n(.*?)\n}}//s) {
 
 # debug("ALL: $all");
 
+# subroutine specific to this program, not general
 sub parse_braces {
   my($text) = @_;
 
+  # TODO: assuming last argument to template is text value, not really true
+
+  unless ($text=~s/character\s+//i) {
+    $text=~s/^.*\|//;
+    return $text;
+  }
+
+  debug("ALPHA: $text");
+
+  # fix bracketed text with |s
+  $text=~s/\[\[.*\|(.*?)\]\]/$1/g;
+
+  # and without
+  $text=~s/\[\[(.*?)\]\]/$1/g;
+
+  debug("BETA: $text");
+}
+
+sub parse_brackets {
+  my($text) = @_;
+
+#  debug("PARSE_BRACKETS($text)");
+
   # TODO: this is bad
 
-  # if anything other than a character, return it as is (automatically
-  # debraced by regex above)
-  unless ($text=~s/character\s+//i) {return $text;}
+  # get rid of anything up to | if there is one
+  $text=~s/^.*?\|//;
 
-  # get rid of pipes inside brackets [[like|this]]
-  while ($text=~s/
+  return $text;
 
-  debug("GOT: $text");
 }
+
+=item comments
+
+Examples where parsing is hard (in Fuller House file):
+
+|Portrayer= {{WL|Virginia Williams
+
+must remove embedded braces AND embedded pipe symbols
+
+=cut
