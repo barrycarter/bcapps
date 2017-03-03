@@ -6,7 +6,11 @@ require "/usr/local/lib/bclib.pl";
 
 # TODO: consider GEDCOM format to add even more info?
 
+# TODO: this seems unneccesarily complicated/complex
+
 # TODO: custom fields in gramps?
+
+my(%ignored);
 
 # TODO: this is only 4M so I can read it into memory, not generally true
 my($all) = join("", `bzcat fullhouse_pages_current.xml.bz2`);
@@ -19,12 +23,27 @@ while ($all=~s%<page>(.*?)</page>%%s) {
   $page=~s%<title>(.*?)</title>%%s;
   my($title) = $1;
 
-  # could ignore "all" namespaces except Main, but may be other useful
-#  if ($title=~s/(Board|Board Thread|Category|File|MediaWiki|Talk|Template|)://) {}
+  # ignore all "colon" pages, but do keep track
+  if ($title=~s/^(.*?)://) {$ignored{$1} = 1; next;}
 
-  debug("$title");
+  # if no character template (TODO: this is SO hacky!), ignore
+  # the \ below aren't necessary, but help emacs format
+  unless ($page=~m/\{\{Character\s/s) {next;}
 
+  # possibly a bad idea, but annoying otherwise
+  $page = html_unescaped($page);
+
+  # fix bracketed text with |s
+  $page=~s/\[\[.*\|(.*?)\]\]/$1/g;
+
+  # and without
+  $page=~s/\[\[(.*?)\]\]/$1/g;
+
+  # process all templates (including Character)
+  while ($page=~s/{{([^\{\}]*)}}/parse_braces($1)/se) {}
 }
+
+# debug(sort keys %ignored);
 
 die "TESTING";
 
@@ -32,7 +51,6 @@ die "TESTING";
 # while ($all=~s/{{Character\s+(.*?)}}//s) {debug("GOT: $1");}
 
 # while ($all=~s/\[\[([^\[\]]*)\]\]/parse_brackets($1)/se) {}
-while ($all=~s/{{([^\{\}]*)}}/parse_braces($1)/se) {}
 
 die "TESTING";
 
@@ -131,36 +149,41 @@ sub parse_braces {
   my($text) = @_;
 
   # TODO: assuming last argument to template is text value, not really true
-
   unless ($text=~s/character\s+//i) {
     $text=~s/^.*\|//;
     return $text;
   }
 
-  debug("ALPHA: $text");
-
-  # fix bracketed text with |s
-  $text=~s/\[\[.*\|(.*?)\]\]/$1/g;
-
-  # and without
-  $text=~s/\[\[(.*?)\]\]/$1/g;
-
-  debug("BETA: $text");
+  # it's a character, so parse and remove
+  parse_character($text);
+  return;
 }
 
-sub parse_brackets {
+
+sub parse_character {
   my($text) = @_;
 
-#  debug("PARSE_BRACKETS($text)");
+  while ($text=~s/\|(\S*)\s*\=\s*([^\|]*)//) {
+    debug("GOT: $1 -> $2");
+  }
 
-  # TODO: this is bad
+#  my(@fields) = split(/\|/s,$text);
 
-  # get rid of anything up to | if there is one
-  $text=~s/^.*?\|//;
+#  debug("FIELDS",@fields);
+}
 
+# TODO: add this func to bclib
+sub html_unescaped {
+
+  my($text) = @_;
+  $text=~s/&lt;/</g;
+  $text=~s/&gt;/>/g;
+  $text=~s/&amp;/&/g;
+  $text=~s/&quot;/"/g;
   return $text;
 
 }
+
 
 =item comments
 
