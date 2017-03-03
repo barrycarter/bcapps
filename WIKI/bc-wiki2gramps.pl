@@ -15,6 +15,26 @@ my(%ignored);
 # TODO: this is only 4M so I can read it into memory, not generally true
 my($all) = join("", `bzcat fullhouse_pages_current.xml.bz2`);
 
+# the hash converting wiki field names to gramps field names
+# TODO: make this more sophisticated
+my(%convert) = (
+ "Firstname" => "Firstname",
+ "Lastname" => "Lastname",
+ "Birth" => "Birthdate",
+ "Portrayer" => "Note",
+ "Gender" => "Gender",
+ "Death" => "Deathdate"
+);
+
+# TODO: might be better to use gramps field names?
+# wiki names for fields I want
+my(@fields) = ("Firstname", "Lastname", "Birth", "Portrayer", "Gender",
+	      "Death");
+
+my(@header) = @fields;
+map($_=$convert{$_}, @header);
+print join(",", @header),"\n";
+
 # strictly speaking, don't need to parse page-by-page, but cleaner?
 
 while ($all=~s%<page>(.*?)</page>%%s) {
@@ -45,39 +65,9 @@ while ($all=~s%<page>(.*?)</page>%%s) {
 
 # debug(sort keys %ignored);
 
-die "TESTING";
-
-# test to find "bad" character templates non trivial to parse
-# while ($all=~s/{{Character\s+(.*?)}}//s) {debug("GOT: $1");}
-
-# while ($all=~s/\[\[([^\[\]]*)\]\]/parse_brackets($1)/se) {}
-
-die "TESTING";
-
 # TODO: could print one off?
 # where to store data
 my(@hashes);
-
-# the hash converting wiki field names to gramps field names
-# TODO: make this more sophisticated
-my(%convert) = (
- # TODO: process name into pieces
- "Firstname" => "Firstname",
- "Lastname" => "Lastname",
- "Birth" => "Birthdate",
- "Portrayer" => "Note",
- "Gender" => "Gender",
- "Death" => "Deathdate"
-);
-
-# TODO: might be better to use gramps field names?
-# wiki names for fields I want
-my(@fields) = ("Firstname", "Lastname", "Birth", "Portrayer", "Gender",
-	      "Death");
-
-my(@header) = @fields;
-map($_=$convert{$_}, @header);
-print join(",", @header),"\n";
 
 # NOTE: The "character" template is specific to this wiki
 
@@ -108,23 +98,6 @@ while ($all=~s/{{Character\n(.*?)\n}}//s) {
 
   # NOTE: see which keys are most freq used
 #  for $i (keys %hash) {debug("KEY: *$i*");}
-
-  # process hash
-
-  # first word is first name
-#  debug("NAME: $hash{Name}");
-  if ($hash{Name}=~s/^(\S+)\s*//) {
-    $hash{Firstname} = $1;
-  } else {
-    $hash{Firstname} = "?";
-  }
-
-  # last word is last name
-  if ($hash{Name}=~s/(\S+)$//) {
-    $hash{Lastname} = $1;
-  } else {
-    $hash{Lastname} = "?";
-  }
 
   # ignore totally empty names
   if ($hash{Firstname} eq "?" && $hash{Lastname} eq "?") {next;}
@@ -162,14 +135,41 @@ sub parse_braces {
 
 sub parse_character {
   my($text) = @_;
+  my(%hash,@csv);
 
-  while ($text=~s/\|(\S*)\s*\=\s*([^\|]*)//) {
-    debug("GOT: $1 -> $2");
+  # this makes 'split'ting easier, but also fixes bad newlines
+  $text=~s/\n/ /g;
+
+  my(@fs) = split(/\|/s,$text);
+
+  for $i (@fs) {
+    # this sets $2 to blank if nothing to right of equal sign
+    $i=~s/^\s*(.*?)\s*\=\s*(.*?)\s*$//;
+    $hash{$1} = $2;
   }
 
-#  my(@fields) = split(/\|/s,$text);
+  # process hash
 
-#  debug("FIELDS",@fields);
+  # first word is first name
+  if ($hash{Name}=~s/^(\S+)\s*//) {
+    $hash{Firstname} = $1;
+  } else {
+    $hash{Firstname} = "?";
+  }
+
+  # last word is last name
+  if ($hash{Name}=~s/(\S+)$//) {
+    $hash{Lastname} = $1;
+  } else {
+    $hash{Lastname} = "?";
+  }
+
+  for $i (@fields) {
+    # must quote since dates can have embedded commas
+    push(@csv, qq%"$hash{$i}"%);
+  }
+
+  print join(",", @csv),"\n";
 }
 
 # TODO: add this func to bclib
