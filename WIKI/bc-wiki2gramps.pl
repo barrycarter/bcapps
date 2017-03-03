@@ -107,5 +107,15 @@ while ($all=~s/{{Character\n(.*?)\n}}//s) {
 
 sub parse_braces {
   my($text) = @_;
+
+  # TODO: this is bad
+
+  # if anything other than a character, return it as is (automatically
+  # debraced by regex above)
+  unless ($text=~s/character\s+//i) {return $text;}
+
+  # get rid of pipes inside brackets [[like|this]]
+  while ($text=~s/
+
   debug("GOT: $text");
 }

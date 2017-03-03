@@ -33,6 +33,7 @@ if ($stringq) {print "'$ARGV[0]' matches: $name ($pid)\n";}
 
 while (!system("ps -p $pid > /dev/null")) {sleep 5;}
 
+# TODO: --nox fails because bc-alarm.pl xmessages anyway!
 unless ($globopts{nox}) {xmessage("'$pid ($name) done: $globopts{message}'",1);}
 
 if ($globopts{sms}) {
