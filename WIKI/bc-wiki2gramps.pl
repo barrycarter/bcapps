@@ -11,13 +11,25 @@ require "/usr/local/lib/bclib.pl";
 # TODO: this is only 4M so I can read it into memory, not generally true
 my($all) = join("", `bzcat fullhouse_pages_current.xml.bz2`);
 
-# test to find "bad" character templates non trivial to parse
+# strictly speaking, don't need to parse page-by-page, but cleaner?
 
-while ($all=~s/{{Character\s+(.*?)}}//s) {
-  debug("GOT: $1");
+while ($all=~s%<page>(.*?)</page>%%s) {
+  my($page) = $1;
+
+  $page=~s%<title>(.*?)</title>%%s;
+  my($title) = $1;
+
+  # could ignore "all" namespaces except Main, but may be other useful
+#  if ($title=~s/(Board|Board Thread|Category|File|MediaWiki|Talk|Template|)://) {}
+
+  debug("$title");
+
 }
 
 die "TESTING";
+
+# test to find "bad" character templates non trivial to parse
+# while ($all=~s/{{Character\s+(.*?)}}//s) {debug("GOT: $1");}
 
 # while ($all=~s/\[\[([^\[\]]*)\]\]/parse_brackets($1)/se) {}
 while ($all=~s/{{([^\{\}]*)}}/parse_braces($1)/se) {}
