@@ -4,6 +4,7 @@
 # --nox: do not send xmessage, just end
 # --message: add this to standard message
 # --sms: send sms in addition to xmessage
+# --email: sent email to specified address
 
 require "/usr/local/lib/bclib.pl";
 
@@ -33,7 +34,12 @@ if ($stringq) {print "'$ARGV[0]' matches: $name ($pid)\n";}
 
 while (!system("ps -p $pid > /dev/null")) {sleep 5;}
 
-# TODO: --nox fails because bc-alarm.pl xmessages anyway!
+# TODO: allow for email customization
+if ($globopts{email}) {
+  sendmail("alert\@barrycarter.info", "alert\@barrycarter.info", "$pid $name done: $globopts{message}", "Process complete");
+}
+
+# TODO: --nox fails with --sms because bc-alarm.pl xmessages anyway!
 unless ($globopts{nox}) {xmessage("'$pid ($name) done: $globopts{message}'",1);}
 
 if ($globopts{sms}) {

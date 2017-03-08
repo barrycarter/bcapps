@@ -150,17 +150,15 @@ sub parse_character {
 
   # process hash
 
-  # first word is first name
-  if ($hash{Name}=~s/^(\S+)\s*//) {
-    $hash{Firstname} = $1;
-  } else {
-    $hash{Firstname} = "?";
-  }
+  my(@names) = split(/\s+/, $hash{Name});
 
-  # last word is last name
-  if ($hash{Name}=~s/(\S+)$//) {
-    $hash{Lastname} = $1;
+  # if more than one name, last word is last name, all else is first
+  if (scalar(@names)>1) {
+    $hash{Firstname} = join(" ", @names[0..$#names-1]);
+    $hash{Lastname} = $names[-1];
   } else {
+    # if only one name, its the first name
+    $hash{Firstname} = $names[0];
     $hash{Lastname} = "?";
   }
 

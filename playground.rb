@@ -1,8 +1,5 @@
 #!/usr/local/bin/ruby
 
-
-
-
 def letter_count(str)
   lac = Hash.new(0)
   str.gsub(" ","").split("").each{|letter| lac[letter] += 1}
@@ -33,7 +30,3 @@ exit
 # print doc.osm.node(65).inspect
 
 # print doc.inspect()
-
-
-
-

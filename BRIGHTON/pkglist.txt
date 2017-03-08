@@ -266,6 +266,8 @@ telnet
 squid
 pidgin
 pidgin-devel
+jabberd
+prosody
 finch
 coccinella
 skype
@@ -451,6 +453,7 @@ goffice-devel
 # TODO: unhappy about mixing cpan and this, but this works better for
 # modules that both have
 
+perl-Net-Jabber
 perl-Algorithm*
 perl-Astro*
 perl-B
