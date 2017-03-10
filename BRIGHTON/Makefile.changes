@@ -1,0 +1,25 @@
+# lists files that have changed into brighton's /user and /root
+# directories since I mirrored them over from dullon; in other words,
+# files that now differ meaningfully between dullon and brighton
+
+all: user-files-changed.txt
+
+# time sorted files in new version of /user, path adjusted for matching
+
+kemptown-user-files.txt.srt: extdrive7-files.txt
+	fgrep /mnt/extdrive7/user/ extdrive7-files.txt | bc-compare-files.pl | perl -pnle 's% /mnt/extdrive7/% /%' | sort > kemptown-user-files.txt.srt
+
+# time sorted files in original version of /user, path adjusted for
+# matching (this doesnt really change since they were mirrored once)
+
+dullon-user-files.txt.srt: extdrive7-files.txt
+	fgrep /mnt/extdrive7/dullon-root/home/user/ extdrive7-files.txt | bc-compare-files.pl | perl -pnle 's% /mnt/extdrive7/dullon-root/home/% /%' |sort > dullon-user-files.txt.srt
+
+# files that have changed, excluding those I'm already rsyncing or
+# that I am ok with ignoring
+
+# note that quikexclude.txt exists, but is not shown here
+
+user-files-changed.txt: kemptown-user-files.txt.srt dullon-user-files.txt.srt quikexclude.txt
+	comm -23 kemptown-user-files.txt.srt dullon-user-files.txt.srt | fgrep -vf quikexclude.txt > user-files-changed.txt
+

@@ -11,6 +11,8 @@
 # directly and dont use fvwmpager
 /usr/libexec/fvwm/2.6.6/FvwmPager
 
+# skype
+
 # X11 + wm
 X
 fvwm2
