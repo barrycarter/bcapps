@@ -594,3 +594,7 @@ get away w/ not using the "&" or finding another solution here
 had incompatible? stuff
 
 %% TODO: document how i installed gramps -- the standard "egg" way fails
+
+%% TODO: when opening URLs, gaim/pidgin should use existing firefox instance, not try to start a new one (artifact of firefox -remote being broken?)
+
+
