@@ -1,24 +1,27 @@
 #!/bin/perl
 
 use Net::Jabber::Server;
-use Net::Jabber::Debug;
-use XML::Stream;
+use Net::Jabber qw(Server);
+# use Net::Jabber::Debug;
+# use XML::Stream;
 
 require "/usr/local/lib/bclib.pl";
 
-$foo = new XML::Stream;
-$foo->SetCallBacks();
+# $foo = new XML::Stream;
+# $foo->SetCallBacks();
 # debug(var_dump("STREAM",$foo));
 
 $Server = new Net::Jabber::Server();
-$Server->{STREAM}->SetCallBacks();
-debug(var_dump("SERVER",$Server));
-debug(var_dump("SERVER",$Server->{STREAM}));
+$Server->Start();
 
 die "TESTING";
 
+$Server->{STREAM}->SetCallBacks();
+debug(var_dump("SERVER",$Server));
+debug(var_dump("SERVER",$Server->{STREAM}));
 $Server->Start();
 
+die "TESTING";
 
 
 

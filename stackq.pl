@@ -1,12 +1,15 @@
 #!/bin/perl
 use Digest::SHA;
 
-%twitter_auth_hash = (
-"oauth_access_token" => "19785284-sgPgBD2lb59sAVVsBqrXkrEOJeJGoT0xYugk09qAA",
-"oauth_access_token_secret" => "sl1v3Nus7xhOT9eYap1sH1Duaxqq2gl5nezZ4MQkTo",
-"consumer_key" => "V54LINfmM0BVp31VH4Rg",
-"consumer_secret" => "WjWfOclDJDAMhSTyjwibixfOIYx0zxGbPysQvcZI"
-);
+# NOTE: i changed this info online, so please don't use it (my mistake
+# in uploading it in the first place)
+
+# %twitter_auth_hash = (
+# "oauth_access_token" => "19785284-sgPgBD2lb59sAVVsBqrXkrEOJeJGoT0xYugk09qAA",
+# "oauth_access_token_secret" => "sl1v3Nus7xhOT9eYap1sH1Duaxqq2gl5nezZ4MQkTo",
+# "consumer_key" => "V54LINfmM0BVp31VH4Rg",
+# "consumer_secret" => "WjWfOclDJDAMhSTyjwibixfOIYx0zxGbPysQvcZI"
+# );
 
 # if uncommented, pull my actual data
 # require "bc-private.pl";
