@@ -525,7 +525,7 @@ when vnc running on alternate port
 %% TODO: note that USB devices only work if enabled on brighton
 (otherwise, babybrighton won't see them)
 
-%% TODO: sane setup
+%% TODO: sane setup (/etc/sane.d is where the scanner description files are kept)
 
 sudo sane-find-scanner
 
@@ -536,8 +536,9 @@ sudo sane-find-scanner
 %% TODO: get tor running at startup
 
 %% TODO: scanimage and xsane WILL WORK with Canon PIXMA now BUT are
-inconsistent; removing and replugging in scanner helps, but try to get
-this to work more consistently
+inconsistent; removing and replugging in scanner helps (ie, power
+connection, not USB connection), but try to get this to work more
+consistently
 
 %% TODO: scangearmp NOT working on brighton, maybe alias to reference
 scanimage?
@@ -597,4 +598,8 @@ had incompatible? stuff
 
 %% TODO: when opening URLs, gaim/pidgin should use existing firefox instance, not try to start a new one (artifact of firefox -remote being broken?)
 
+%% TODO: install flashplayer, see https://tecadmin.net/install-adobe-flash-player-on-centos-redhat-fedora/
 
+%% TODO: add more info on install virtualbox -- getting the right kernel can be tricky
+
+%% TODO: installed feh, but note where I got it and which version works

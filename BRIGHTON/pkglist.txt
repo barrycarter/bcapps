@@ -190,10 +190,17 @@ pavucontrol
 
 # graphics incl scanning and fonts
 # some of these may be installed by a groupinstall
+# below is flash player
+gnash
 povray
 xpaint
 gif2asc
 ImageMagick
+# below is required for feh when compiling
+imlib
+imlib2
+imlib-devel
+imlib2-devel
 feh
 xv
 xpdf
@@ -312,6 +319,14 @@ samba
 # games
 # TODO: eternal lands
 # TODO: kerbal?
+warsow
+warzone2100
+minetest
+0ad
+sauerbraten*
+lincity
+frozen-bubble
+koules
 2048
 xscreensaver
 xmame
@@ -362,6 +377,7 @@ virtuoso-opensource
 blazegraph
 
 # emulators
+android-tools
 dosbox
 dosemu
 vice

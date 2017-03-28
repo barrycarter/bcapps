@@ -12,10 +12,12 @@
 /usr/libexec/fvwm/2.6.6/FvwmPager
 
 # skype
+skype-bin
 
-# X11 + wm
+# X11 + wm + xmessages (like sticky notes)
 X
 fvwm2
+xmessage
 
 # the init process
 /usr/lib/systemd/systemd
@@ -195,6 +197,15 @@ login
 /usr/libexec/gconfd-2
 /sbin/audispd
 /usr/libexec/rtkit-daemon
+
+# processes it appears harmless to kill
+
+/usr/sbin/cupsd
+/usr/lib/udisks2/udisksd
+/usr/libexec/goa-daemon
+/usr/libexec/goa-identity-service
+/usr/libexec/mission-control-5
+/usr/libexec/dconf-service
 
 # processes that are broken if they run too long
 

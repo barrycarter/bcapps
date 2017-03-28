@@ -12,8 +12,9 @@ xrandr --size 1024x768
 # bg image won't render properly unless I do this
 /home/user/BCGIT/CALENDAR/bc-calendar.pl
 
-# CentOS defaults to emulate 3button off for some weird reason; this MAY fix it
-
+# CentOS defaults to emulate 3button off for some weird reason; this fixes it
+# TODO: this seems kludgey, especially if I change mouses/trackballs
+xinput set-prop "Logitech USB Trackball" "Evdev Middle Button Emulation" 1
 
 # and might as well do this too (but only after fixing screen size)
 /home/user/BCGIT/bc-bg2.pl
@@ -28,7 +29,7 @@ xrandr --dpi 64
 xrdb ~/.Xresources
 
 # these can be set in xorg.conf but it's easier to do it this way
-xset dpms off
+xset -dpms
 xset r rate 250 25
 
 # per
