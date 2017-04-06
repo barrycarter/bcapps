@@ -35,7 +35,7 @@ Fetlife defines these special genders:
 
 CD/TV: Crossdresser/Transvestite
 MtF: Transgender - Male to Female
-FtM: Transgender - Female to Male</option>
+FtM: Transgender - Female to Male
 TG: Transgender
 GF: Gender Fluid
 GQ: Genderqueer

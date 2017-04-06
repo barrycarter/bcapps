@@ -553,7 +553,7 @@ xinput set-prop 9 "Evdev Middle Button Emulation" 1
 
 %% TODO: Firefox add-on Video Download Helper not working
 
-%% TODO: "chmod -R 777 /dev/snd/" fixes sound on brighton in X11 only
+%% TODO: "sudo chmod -R 777 /dev/snd/" fixes sound on brighton in X11 only
 (works fine outside of X11?!, different user?); need to put in startup
 or something
 
