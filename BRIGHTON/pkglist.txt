@@ -208,7 +208,22 @@ xsane
 # the two packages below ARE different!
 sane-backends
 sane-backends-drivers-scanners
-gimp
+# gimp 2.8 sucks so must manually install gimp 2.6
+# http://graphicdesign.stackexchange.com/questions/88200/how-to-remove-floating-text-options-whenever-i-create-a-text-box
+# gimp
+# required for gegl?
+gobject-introspection-devel
+vala-tools
+pygobject3-devel
+json-glib-devel
+iso-codes-devel
+# babl/gegl/pygtk required to install gimp 2.6 from source
+babl
+babl-devel
+gegl
+gegl-devel
+pygtk2
+pygtk2-devel
 # TODO: figure out how I can have two versions of gimp-libs and
 # pangox-compat installed w/o conflict
 # scangearmp needs this, plus its nice to have in general

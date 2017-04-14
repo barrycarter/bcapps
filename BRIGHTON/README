@@ -553,6 +553,8 @@ xinput set-prop 9 "Evdev Middle Button Emulation" 1
 
 %% TODO: Firefox add-on Video Download Helper not working
 
+%% TODO: test xdotool
+
 %% TODO: "sudo chmod -R 777 /dev/snd/" fixes sound on brighton in X11 only
 (works fine outside of X11?!, different user?); need to put in startup
 or something
@@ -603,3 +605,12 @@ had incompatible? stuff
 %% TODO: add more info on install virtualbox -- getting the right kernel can be tricky
 
 %% TODO: installed feh, but note where I got it and which version works
+
+%% TODO: must install mathematica
+
+%% TODO: had to run bc-servicectl.sh but shouldn't have to
+
+%% TODO: different versions of CentOS at reboot? (minor patch, but
+different enough to cause problems w VirtualBox?)
+
+

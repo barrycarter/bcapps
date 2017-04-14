@@ -54,3 +54,8 @@ setenv PGDATABASE main
 # only really required to install VirtualBox
 
 setenv KERN_DIR /usr/src/kernels/3.10.0-327.el7.x86_64
+
+# needed to install gegl from source to install gimp 2.6 (because 2.8 sucks)
+
+setenv PKG_CONFIG_PATH /usr/local/lib/pkgconfig/:/usr/lib64/pkgconfig:/usr/share/pkgconfig
+

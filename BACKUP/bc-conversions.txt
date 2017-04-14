@@ -17,3 +17,6 @@
 
 # moved this directory down a level
 "/mnt/extdrive5/INBOUNDSYMLINKS/QUORALOG" "/mnt/extdrive5/QUORALOG"
+
+# moved this directory
+"/mnt/extdrive5/INBOUNDSYMLINKS/sha/" "/usr/local/etc/sha/"

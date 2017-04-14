@@ -165,9 +165,11 @@ sub handle_ally {
   my($all) = @_;
   my($date);
 
-  if ($all=~/Statement Period [\d\/]+\s+\-\s+([\d\/]+)/) {
+  debug("HANDLE_ALLY() CALLED");
+
+  if ($all=~/Statement Period [\d\/]+\s+\-\s+([\d\/]+)/s) {
     $date = $1;
-  } elsif ($all=~/Statement Date\s+([\d\/]+)/) {
+  } elsif ($all=~/Statement Date\s+([\d\/]+)/s) {
     $date = $1;
   } else {
     warnlocal("CANNOT PARSE!");
