@@ -3,6 +3,18 @@
 # Computes well known "important" dates [assuming no major schedule changes]
 
 require "/usr/local/lib/bclib.pl";
+
+# experimental one off print of second monday each month
+
+for $i ("2017".."2029") {
+  for $j ("01".."12") {
+    my($d) = weekdayAfterDate("$i${j}01", 1, 1);
+    print "$d\n";
+  }
+}
+
+die "TESTING"; 
+
 my(@dates);
 
 my(@fields) = ("name", "location", "desc", "date", "ncs", "notes");
@@ -20,6 +32,8 @@ for $i (@all) {
 my(%seen);
 
 # TODO: add "Friday the 13th"?
+
+# TODO: add other birthdays, incl Pres Trump?
 
 # TODO: add NCAA Final Four?
 

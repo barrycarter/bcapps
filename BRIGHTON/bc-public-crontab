@@ -114,6 +114,9 @@ MAILTO="daemon"
 
 30 16 * * Mon /usr/X11R6/bin/xmessage -geometry 1024 put out trash &
 
+# and take the empty trash bin in the next day
+30 16 * * Tue /usr/X11R6/bin/xmessage -geometry 1024 retract trashing device &
+
 # TODO: can I replace /home/user with ~ (or even $HOME and set it?) 
 # universally and do I want to?
 

@@ -545,7 +545,7 @@ scanimage?
 
 %% TODO: make sure swap space is actually working
 
-%% TODO:magic command to get 3 mouse button:
+%% TODO: magic command to get 3 mouse button:
 
 xinput set-prop 9 "Evdev Middle Button Emulation" 1
 
@@ -553,7 +553,7 @@ xinput set-prop 9 "Evdev Middle Button Emulation" 1
 
 %% TODO: Firefox add-on Video Download Helper not working
 
-%% TODO: test xdotool
+%% TODO: test xdotool (early tests work well)
 
 %% TODO: "sudo chmod -R 777 /dev/snd/" fixes sound on brighton in X11 only
 (works fine outside of X11?!, different user?); need to put in startup
@@ -591,7 +591,8 @@ get away w/ not using the "&" or finding another solution here
 
 %% TODO: create private symlinks for things like /mnt/extdrive* where I use /mnt/somename
 
-%% TODO: decide which nopkglist.txt are critical for me: gramps is one
+%% TODO: decide which nopkglist.txt are critical for me: gramps is
+one, gnumeric is another
 
 % NOTE TO SELF: moved .gramps to .gramps.old on brighton since old dir
 had incompatible? stuff
@@ -612,5 +613,21 @@ had incompatible? stuff
 
 %% TODO: different versions of CentOS at reboot? (minor patch, but
 different enough to cause problems w VirtualBox?)
+
+%% TODO: audacity has suddenly stopped running
+
+%% NOTE TO SELF: while using dullon/brighton together in "hybrid mode":
+
+  - Do not start X11 on dullon; just bring to login prompt
+
+  - "/etc/init.d/tor start" on dullon [this normally starts via
+  vidalia on dullon but that requires X11]
+
+  - "sudo sshfs -o allow_other user@dullon:/ /mnt/dullon/" on brighton
+
+  - run "bc-servicectl.sh" on brighton (if services not already
+  started/stopped)
+
+  - start mysql and postgresql if needed
 
 

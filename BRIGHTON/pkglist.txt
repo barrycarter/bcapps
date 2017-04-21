@@ -246,6 +246,7 @@ tesseract
 ocrad
 gnu-free-mono-fonts
 xorg-x11-fonts-*
+webcore-fonts
 inkscape
 # steam needs this
 mesa-dri-drivers
@@ -414,6 +415,9 @@ evince
 
 # spreadsheets/graphing programs/etc
 gnumeric
+# below required to compile gnumeric
+goffice08-devel
+# above required to compile gnumeric
 gnuplot
 graphviz
 dia
@@ -446,6 +450,12 @@ libxslt-devel
 libgsf-devel
 libwvstreams-devel
 librsvg2-devel
+
+# required for sextractor (still doesnt work)
+fftw-devel
+atlas-devel
+openblas-devel
+plplot-devl
 
 
 # required for celestia source compile
