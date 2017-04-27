@@ -16,15 +16,16 @@ defaults("xmessage=1");
 # because ZPAQ compresses this most efficiently)
 
 # reduced to -j 1 (ie, no parallel processing) because of heavy CPU load
-open(A,"|/usr/local/bin/parallel -j 1");
+# TODO: maybe ramp this up on brighton
+open(A,"|parallel -j 20");
 
 # TODO: exclude cases where result already exists!
 
 for $i (glob "*.png") {
-  unless (-f "$i.pnm") {print A "/usr/local/bin/convert $i $i.pnm\n";}
+  unless (-f "$i.pnm") {print A "convert $i $i.pnm\n";}
   # below automatically adds .txt extension, doesn't overwrite
   unless (-f "$i.txt" || -f "/mnt/extdrive2/XWD2OCR/$date/$i.txt") {
-    print A "/usr/local/bin/tesseract $i $i\n";
+    print A "tesseract $i $i\n";
   }
 }
 

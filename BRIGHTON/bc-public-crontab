@@ -63,7 +63,7 @@ MAILTO="daemon"
 
 # snapshot my screen every minute
 # TODO: restore this, it saves to an external drive that isn't there yet
-# * * * * * /home/user/BCGIT/bc-xwd.pl
+* * * * * /home/user/BCGIT/bc-xwd.pl
 
 # update weather on background image every 10m or so
 */10 * * * * /home/user/BCGIT/bc-get-weather.pl

@@ -2,9 +2,43 @@
 
  http://politics.stackexchange.com/questions/15180/number-of-winning-coalitions-of-state-in-the-electoral-college?noredirect=1#comment54198_15180
 
+It turns out the math here isn't difficult, but explaining the results can be.
+
+As noted, if we treat DC as a state, we have 51 states. If we allow for Maine and Nebraska's vote splitting, we would have 57 states, since each state could theoretically vote for 3 different candidates. Quoting https://www.archives.gov/federal-register/electoral-college/faq.html
+
+<blockquote>
+It is possible for Candidate A to win the first district and receive one Electoral vote, Candidate B to win the second district and receive one Electoral vote, and Candidate C, who finished a close second in both the first and second districts, to win the two at-large Electoral votes. Although this is a possible scenario, it has not actually happened. 
+</blockquote>
+
+I ignore these states' split votes and also ignore faithless electors who could split any state's votes. With those assumptions:
+
+  - As expected there are $2^{51}$ or 
+
+
+
+
+
 
 
 *)
+
+NumberForm[2^51, DigitBlock->3, NumberSeparator->","]
+
+2,251,799,813,685,248
+
+538 votes total
+
+TODO: file with how many for each number
+
+TODO: summary
+
+TODO: faithless ignored
+
+TODO: general problem up to 56
+
+TODO: mention this file
+
+TODO: math porn warning
 
 << /home/barrycarter/BCGIT/STACK/bc-elecvotes.m
 
@@ -131,7 +165,6 @@ a[n_] := a[n] = Sum[a[i]*a[n-i],{i,1,n/2}]
 
 this approach wont work, counts states twice
 
+TODO: not computed because google search
 
-
-
-
+TODO: spreadsheet in CSV form or other form most can read, not gnumeric XML

@@ -616,6 +616,11 @@ different enough to cause problems w VirtualBox?)
 
 %% TODO: audacity has suddenly stopped running
 
+%% TODO: on image files created by Mathematica 11, "display image"
+(either from command line or inside Mathematica) shows the image for
+about 2.5 seconds and then dies; "display -update 1 image" is a
+workaround, but figure this out
+
 %% NOTE TO SELF: while using dullon/brighton together in "hybrid mode":
 
   - Do not start X11 on dullon; just bring to login prompt

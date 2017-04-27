@@ -11,6 +11,9 @@
 # directly and dont use fvwmpager
 /usr/libexec/fvwm/2.6.6/FvwmPager
 
+# Mathematica related processes
+/usr/local/Wolfram/Mathematica/11.1/SystemFiles/Kernel/Binaries/Linux-x86-64/WolframKernel
+
 # skype
 skype-bin
 
@@ -124,6 +127,7 @@ recollindex
 /usr/bin/postgres
 postgres:
 nagios
+/usr/bin/tor
 
 # something is wrong if any of these are down
 gaim
@@ -183,6 +187,16 @@ su
 # starts them and then kill them in a better way
 
 <kill>
+
+# processes that I'm not sure why they're running
+
+# TODO: figure out why this even starts up
+/sbin/dhclient
+
+# TODO: figure out what this is, I'm supposed to need it but don't?
+/usr/libexec/gvfsd
+/usr/libexec/gvfsd-fuse
+/usr/libexec/packagekitd
 
 # processes I dislike but can't seem to get rid of permanently
 
