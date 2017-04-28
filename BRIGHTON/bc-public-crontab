@@ -136,7 +136,7 @@ MAILTO="daemon"
 # make daily backups (yes, the program is called weekly backups, but I
 # do them daily anyway)
 
-37 2 * * * sudo /home/user/BCGIT/bc-weekly-backup.pl --debug
+37 2 * * * sudo /home/user/BCGIT/bc-weekly-backup-brighton.pl --debug
 
 # sucks all of my information from StackExchange monthly, but may not
 # actually be working

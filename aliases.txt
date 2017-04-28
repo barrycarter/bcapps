@@ -63,7 +63,9 @@ alias bcpc "screen -t BCPC ssh -tt Owner@bcpc"
 # after old bcinfo machine broke, this is new one (defined as bcinfo4
 # in /etc/hosts) (shared hosting)
 
-alias bcinfo4 "screen -t BC4 ssh -i /home/barrycarter/.ssh/id_rsa.bc -tt barrycar@bcinfo4 screen -d -R"
+# later, they disinstalled screen (bastards)
+
+alias bcinfo4 "screen -t BC4 ssh -i /home/barrycarter/.ssh/id_rsa.bc barrycar@bcinfo4"
 
 # rsyncs to bcinfo3 (my new plugin is so awesome,I even sync it to my old site)
 # alias bcinfo3sync "cd /home/barrycarter/BCGIT; \rsync -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' -Pvzrlpt *.pl */*.pl root@bcinfo3:/usr/local/bin/; \rsync -Pvzrlpt -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' /home/barrycarter/BCGIT/BCINFO3/ root@bcinfo3:/; \rsync -Pvzrlpt -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' /home/barrycarter/BCGIT/BCINFO3/sites/wordpress/wp-content/plugins/ root@bcinfo:/usr/share/wordpress/wp-content/plugins/"

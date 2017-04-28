@@ -621,6 +621,11 @@ different enough to cause problems w VirtualBox?)
 about 2.5 seconds and then dies; "display -update 1 image" is a
 workaround, but figure this out
 
+%% TODO: note sextractor (not as exciting as it sounds) installed from
+RPM, not source
+
+%% TODO: restore extdrive[25] to backup once they are physically on brighton and not sshfs mounted
+
 %% NOTE TO SELF: while using dullon/brighton together in "hybrid mode":
 
   - Do not start X11 on dullon; just bring to login prompt
