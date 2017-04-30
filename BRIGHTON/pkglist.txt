@@ -91,6 +91,7 @@ adjtimex
 ntpdate
 rdate
 xearth
+calendar
 
 # programming languages (or related)
 # TODO: mathematica (not free)

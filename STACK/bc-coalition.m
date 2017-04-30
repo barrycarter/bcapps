@@ -12,15 +12,46 @@ It is possible for Candidate A to win the first district and receive one Elector
 
 I ignore these states' split votes and also ignore faithless electors who could split any state's votes. With those assumptions:
 
-  - As expected there are $2^{51}$ or 
+*** TODO: determine number display format (plain, accounting and scientific?) and note in message and put below where I have N:
 
+  - As expected there are N:$2^{51}$ total coalitions.
 
+  - There is exactly one coalition with 538 electoral votes: namely, the coalition with all the states.
+
+  - There is exactly one coalition with 0 electoral votes: namely, the coalition with no states.
+
+  - There are no coalitions with only 1 or 2 electoral votes, since even the smalest state has 3 electoral votes.
+
+  - For essentially the same reason as above, there no coalitions with exactly 536 or 537 electoral votes.
+
+  - There are N:16976480564070 coalitions with 269 electoral votes, moreso than for any other number of votes. Note that these are tying coalitions that have exactly half the total number of electoral votes.
+
+  - There are an equal number of winning coalitions and losing coalitions (the complement of a winning coalition is a losing coalition, so there's a 1-to-1 correspondance): N:1117411666560589 of each (that's N:2^51 minus the N:16976480564070 tying coalitions above)
+
+  - The full list of how many coalitions there are for a given number of electoral votes is at ****TODO****, but here's a graph:
+
+[[image39.gif]]
+
+To answer the question, let's take California as a non-random example:
+
+  - 
+  
+
+TODO: spellecheck
 
 
 
 
 
 *)
+
+(* this definition is necessary due to errors on brighton *)
+
+showit := Module[{file}, file = StringJoin["/tmp/math", 
+       ToString[RunThrough["date +%Y%m%d%H%M%S", ""]], ".gif"]; 
+     Export[file, %, ImageSize -> {800, 600}]; 
+     Run[StringJoin["display -update 1 ", file, "&"]]; Return[file]; ]
+
 
 NumberForm[2^51, DigitBlock->3, NumberSeparator->","]
 
@@ -45,6 +76,42 @@ TODO: math porn warning
 (* this is absolutely hideous way to create polynomial *)
 
 p0 = Expand[Times @@ (1+x^Transpose[elecvotes][[2]])]
+
+t0 = Prepend[Table[{i,Coefficient[p0, x^i]}, {i,1,538}], {0,1}]
+
+ed = EmpiricalDistribution[Transpose[t0][[2]] -> Transpose[t0][[1]]];
+
+mu = Mean[ed]
+sd = StandardDeviation[ed]
+
+pl0 = ListPlot[t0, Frame -> {True, True, False, False}, 
+ FrameLabel -> {
+ Text[Style["Electoral Votes", FontSize -> 20]],
+ Text[Style["Coalitions", FontSize -> 20]]},
+ PlotLabel -> "Number of Coalitions For Given Number of Electoral Votes"
+]
+
+pl1 = Plot[2^51*PDF[NormalDistribution[mu,sd]][x],{x,0,538}]
+
+g0 = Graphics[{pl0, RGBColor[1,0,0], pl1}]
+
+(* CA below *)
+
+55 for CA
+
+ca = Coefficient[p0/(1+x^55),1]
+
+
+
+Median[ed]
+
+Mean[ed]-269
+
+
+showit;
+
+
+TODO: create table from t0
 
 Sum[Coefficient[p0, x^i],{i,270,540}]
 

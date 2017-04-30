@@ -45,5 +45,7 @@ function initialize() {
 
 <div id="map_canvas" style="width:100%; height:100%"></div>
 
+<a target="_blank" href="https://github.com/barrycarter/bcapps/blob/master/BCINFO3/sites/test/gettile.php">Source code on github</a>, but most of the work is gone by <a target="_blank" href="https://github.com/barrycarter/bcapps/blob/master/bc-mytile.pl">this Perl script</a>
+
 </body>
 </html>
