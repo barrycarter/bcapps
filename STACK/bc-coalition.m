@@ -77,7 +77,7 @@ TODO: math porn warning
 
 p0 = Expand[Times @@ (1+x^Transpose[elecvotes][[2]])]
 
-t0 = Prepend[Table[{i,Coefficient[p0, x^i]}, {i,1,538}], {0,1}]
+t0 = Table[{i,Coefficient[p0, x,i]}, {i,0,538}]
 
 ed = EmpiricalDistribution[Transpose[t0][[2]] -> Transpose[t0][[1]]];
 
@@ -99,7 +99,47 @@ g0 = Graphics[{pl0, RGBColor[1,0,0], pl1}]
 
 55 for CA
 
-ca = Coefficient[p0/(1+x^55),1]
+ca = Table[{i,
+  Coefficient[PolynomialQuotientRemainder[p0, 1+x^55, x][[1]], x, i]},
+ {i,0,538}]
+
+Total[Transpose[Select[ca, #[[1]] >= 270 &]][[2]]]
+
+293473506438925 winning coals wo CA
+
+1117411666560589 total win coals
+
+Total[Transpose[Select[ca, #[[1]] <= 268 &]][[2]]]
+
+823938160121664 losing coals wo CA
+
+1117411666560589 total lose coals
+
+Total[Transpose[Select[ca, #[[1]] == 269 &]][[2]]]
+
+8488240282035 ties wo CA
+
+16976480564070 ties w CA
+
+exactly 1/2 as expected
+
+Total[Transpose[Select[ca, 215 <= #[[1]] <= 268 &]][[2]]]
+
+521976413400704 = losing but winning w CA
+823938160121664 = losing w/o CA
+
+823938160121664 = winning w/ CA
+293473506438925 = winning w/ CA
+
+
+
+so 
+
+
+
+
+
+
 
 
 
