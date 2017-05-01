@@ -32,12 +32,78 @@ I ignore these states' split votes and also ignore faithless electors who could 
 
 [[image39.gif]]
 
-To answer the question, let's take California as a non-random example:
+To answer the question, let's take California (55 electoral votes) and Wyoming (3 eletoral votes) as extreme examples.
 
-  - 
+Like all states, California belongs to exactly 1/2 or N:2^50 of all coalitions. Of these:
+
+  - N:823938160121664 or 73.18% are winning coalitions
+
+  - N:293473506438925 or 26.07% are losing coalitions
+
+  - The remaining N:8488240282035 or 0.75% are tieing coalitions
+
+For Wyoming, the numbers are:
+
+  - N:571440950341554 or 50.75% are winning coalitions.
+
+  - N:545970716219035 or 48.49% are losing coalitions.
+
+  - The remaining N:8488240282035 or 0.75% are tieing coalitions (this number will be the same for all states).
+
+In some sense, this doesn't make California look much more powerful than Wyoming (73.18% vs 50.75%), so let's ask a different question.
+
+There are N:823938160121664 losing coalitions that *don't* include California (this is exactly equal to the number of winning California coalitions due to symmetry). What happens if we add California to these coalitions?:
+
+  - N:293473506438925 or about 35.62% will remain losing coalitions. These California-free coalitions had 213 or fewer electoral votes, so California's 55 votes wouldn't put them over 268.
+
+  - N:521976413400704 or about 63.35% will become winning coalitions. These California-free coalitions had between 215 and 268 votes, which means they were losing coalitions, but adding California's 55 electoral votes gives them 270 or more electoral votes, turning them into winners.
+
+
+
+
+
+TODO: symmetry note (or because I made a mistake)
+
+
+Total[Transpose[Select[coalwos[55], #[[1]] <= 268-55 &]][[2]]]
+Total[Transpose[Select[coalwos[55], #[[1]] >= 270-55 && #[[1]] <= 268 &]][[2]]]
+
+
+
+TODO: number colon stuff
   
 
+
+
 TODO: spellecheck
+
+<< /home/barrycarter/BCGIT/STACK/bc-elecvotes.m
+
+(* this is absolutely hideous way to create polynomial *)
+
+p0 = Expand[Times @@ (1+x^Transpose[elecvotes][[2]])]
+
+nwc = 1117411666560589
+nlc = 1117411666560589
+ntc = 16976480564070
+
+(* Coalitions without a state with n electoral votes, by number *)
+
+coalwos[n_] := coalwos[n] = Table[{i,
+  Coefficient[PolynomialQuotientRemainder[p0, 1+x^n, x][[1]], x, i]},
+ {i,0,538}]
+
+nwc-Total[Transpose[Select[coalwos[55], #[[1]] >= 270 &]][[2]]]
+nlc-Total[Transpose[Select[coalwos[55], #[[1]] <= 268 &]][[2]]]
+ntc-Total[Transpose[Select[coalwos[55], #[[1]] == 269 &]][[2]]]
+
+
+nwc-Total[Transpose[Select[coalwos[3], #[[1]] >= 270 &]][[2]]]
+nlc-Total[Transpose[Select[coalwos[3], #[[1]] <= 268 &]][[2]]]
+ntc-Total[Transpose[Select[coalwos[3], #[[1]] == 269 &]][[2]]]
+
+
+TODO: normal distribution garbage
 
 
 
@@ -70,12 +136,6 @@ TODO: general problem up to 56
 TODO: mention this file
 
 TODO: math porn warning
-
-<< /home/barrycarter/BCGIT/STACK/bc-elecvotes.m
-
-(* this is absolutely hideous way to create polynomial *)
-
-p0 = Expand[Times @@ (1+x^Transpose[elecvotes][[2]])]
 
 t0 = Table[{i,Coefficient[p0, x,i]}, {i,0,538}]
 
