@@ -329,6 +329,7 @@ babybrighton so should not be an issue
 
 %% TODO: audio testing (does work on brighton, but not babybrighton)
 
+
 mount -t overlay overlay -o lowerdir=/old/bin,upperdir=/bin,workdir=/tmp /bin
 
 : below actually works
@@ -495,7 +496,9 @@ rdesktop (even if I kill/restart remote rdesktop)
 
 %% TODO: evince is currently NOT re-sizeable but should be
 
-%% TODO: get skype working
+% NOTE: to get SkyPE working properly, go to pavucontrol configuration
+and select "analog stereo duplex": other settings do not appear to
+work
 
 %% TODO: this command SHOULD tell me what files Ive changed on
 /mnt/kemptown/user and /mnt/kemptown/root since I mirrored, but
@@ -585,6 +588,8 @@ get away w/ not using the "&" or finding another solution here
 
 %% TODO: firefox -remote not working properly
 
+%% TODO: when opening multiple urls with bc-open-urls2.pl, firefox sometimes opens an entire new window -- however, this may be a glitch in the way bc-open-urls2.pl handles empty lines or lines that start with a comment
+
 %% TODO: Makefile.skypelog doesn't work (format doesn't work w/ newer versions of make?!)
 
 %% TODO: atsee alias broken, returns some sort of delimiter
@@ -614,7 +619,7 @@ had incompatible? stuff
 %% TODO: different versions of CentOS at reboot? (minor patch, but
 different enough to cause problems w VirtualBox?)
 
-%% TODO: audacity has suddenly stopped running
+% OK: audacity has suddenly stopped running (deleting ~/.audacity-data fixed this)
 
 %% TODO: on image files created by Mathematica 11, "display image"
 (either from command line or inside Mathematica) shows the image for
