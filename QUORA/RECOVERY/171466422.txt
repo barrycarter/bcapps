@@ -1,0 +1,39 @@
+Rev: 171466422
+Time: 20160909.050513
+Event: <a href="/The-metric-system-is-based-on-Multiples-of-10-how-is-this-different-from-the-American-system/answer/Barry-Carter">Answer</a> added
+User: Barry-Carter
+Origtime: 1473397513724295
+URL: /The-metric-system-is-based-on-Multiples-of-10-how-is-this-different-from-the-American-system
+Question: The metric system is based on Multiples of 10, how is this different from the American system?
+
+Text: As Stuart notes, the "American" system is actually the Imperial System
+from the British Empire (it was bigger back then). Being fairly
+dimwitted, the British never actually understood this system and just
+pretended to measure things ("London Bridge", for example, was
+measured at a height of 13 1/8 farthingworths in 1215 and later at the
+slightly lower height of 127 questingdoodles in 1776, thus leading to
+the belief "London Bridge is falling down"; later measurements
+confirmed that London Bridge is, in fact, increasing in elevation, and
+will pass through the stratosphere ("Bridgexit") in 2052).As the
+modern world intruded on the peaceful ignorance of the Britons, they
+were forced to adopt a system of measurement they actually understood.
+The initial system was binary: hot/cold, big/little, heavy/light,
+shiny/not-so-shiny, short/fortnight, dumb/dumber, etc, but this base 2
+system was abolished when someone offended HM Queen Elizabeth II in
+1842 by noting she was "big and heavy", although it later turned out
+they were talking about the boat.Thus, they were forced to adopt the
+French system, which used powers (not multiples, btw) of 10, since
+Britons had, on average, 10 fingers each. They were later forced to
+decimalize their currency as well, after HM QE II sold London Bridge
+for the equivalent of 3 pence, far lower than it's actual value of 12
+pence. In a move that some consider excessive, they even decimated
+their language, converting words like "fries" to "chips". See Why is
+maths used as a term for mathematics? for details.The American
+colonies, however, were intelligent enough to figure out and fix the
+Imperial system, and continue to use it to this day as a sign of their
+mental superiority.Of course, this means the rest of the world has
+stagnated in terms of technology, although this is probably for the
+best, since countries that can't understand a truly complex system of
+measurement probably won't be any good at technology.
+
+

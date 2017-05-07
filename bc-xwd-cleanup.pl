@@ -17,7 +17,7 @@ defaults("xmessage=1");
 
 # reduced to -j 1 (ie, no parallel processing) because of heavy CPU load
 # TODO: maybe ramp this up on brighton
-open(A,"|parallel -j 20");
+open(A,"|parallel -j 5");
 
 # TODO: exclude cases where result already exists!
 

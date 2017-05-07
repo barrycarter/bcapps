@@ -645,4 +645,6 @@ RPM, not source
 
   - start mysql and postgresql if needed
 
+% NOTE: brighton: front audio ports output works fine, input does not
+work at all; rear ports: both input and output run fine
 

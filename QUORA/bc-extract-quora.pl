@@ -53,6 +53,12 @@ for $i (@ARGV) {
   $all=~s%<div class="revision">(.*?)</div><p class="log_action_bar">%%s;
   my($text) = $1;
   $text=~s/<.*?>//sg;
+
+  # quotes/apos
+  $text=~s/\xe2\x80[\x9c|\x9d]/"/g;
+  $text=~s/\xe2\x80\x99/'/g;
+
+  debug("PRECLEAN: $text");
   $text=~s/[^ -~]//g;
   $text=wrap($text,70);
 
