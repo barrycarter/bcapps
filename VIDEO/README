@@ -26,7 +26,8 @@ NOTES
   are "double size")
 
   - Doing 5x5 should work ok, so 204x153 per episode (allowing for 4x3
-  pixel frame which I probably wont use)
+  pixel frame which I probably wont use); however ffmpeg encoding
+  requires even height so 204x152 (with 4x8 pixel frame if needed)
 
 COMMANDS
 ========
@@ -35,11 +36,11 @@ COMMANDS
 : for each second (24 frames) of the show-- the thumbnails are 209x157
 : so I can tile them as above (timed so I can get a general idea)
 
-time ffmpeg -i fh101.avi -vf "select=not(mod(n\,24)), scale=204:153" -vsync vfr img_%03d.jpg
+time ffmpeg -i fh101.avi -vf "select=not(mod(n\,24)), scale=204:152" -vsync vfr img_%03d.jpg
 
-: above takes 17.704u 1.093s 0:16.72 112.3%   0+0k 0+38928io 0pf+0w
+: above takes 17.704u 1.093s 0:16.72 112.3% 0+0k 0+38928io 0pf+0w
 
-: without scale=204:153, this is 19.588u 1.110s 0:18.56 111.4%   0+0k 0+57280io 0pf+0w
+: without scaling, this is 19.588u 1.110s 0:18.56 111.4% 0+0k 0+57280io 0pf+0w
 
 : grabbing raw frames is actually slower
 
@@ -48,6 +49,49 @@ time ffmpeg -i fh101.avi -vf "select=not(mod(n\,24)), scale=204:153" -vsync vfr 
 : final project
 
 ffmpeg -i img_%03d.jpg test0.mp4
+
+: when piped to shell, this links MANY but not all of the Full House
+: episodes to shorter names
+
+perl -le 'for $i (1..8) {for $j ("01".."24") {print "ln -s Full?House?${i}x$j* fh$i$j.avi"}}'
+
+: this frameifies all episodes (after fully converting names)
+
+\ls fh???.avi | perl -nle 'print "ffmpeg -i $_ -vf \47select=not(mod(n\\,24)), scale=204:152\47 -vsync vfr $_.%03d.jpg"' > temp.sh
+
+: since this seems fairly parallelizeable
+
+parallel -j 10 < temp.sh &
+
+: as a sample, lets montage the 1000th frames of season 1 (not using
+: the 1st few frames because they tend to blank or similar)-- if this
+: works, we can generalize
+
+: the convert below pads the image to 1024x768 which is useful 
+
+montage -geometry 204x152  -tile 5x5 fh1??.avi.1000.jpg - | convert -border 2x4 - out.jpg
+
+: lets find the largest frame number/longest show of season 1 to montage
+
+\ls fh1??.avi.*.jpg | perl -nle '/(\d+)\.jpg$/; print $1' | sort -nr | uniq -c | less
+
+: 1 show goes to 1858 seconds (the next longest is 1816s, and 4 more
+: shows go that long, but thats really not relevant)
+
+: lets create 1858 montage images
+
+perl -le 'for $i ("000".."1858") {print "montage -geometry 204x152  -tile 5x5 fh1??.avi.$i.jpg - | convert -border 2x4 - s1f$i.jpg"}' > temp2.sh
+
+: hopefully this parallelizes well (it actually doesnt)
+
+parallel -j 10 < temp2.sh &
+
+: and now, the movie
+
+ffmpeg -i s1f%03d.jpg output.mp4
+
+
+
 
 
 DISCLAIMER
