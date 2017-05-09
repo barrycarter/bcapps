@@ -1,0 +1,55 @@
+Notes on my attempt to create "10 seasons of Full House in 10 minutes"
+(video only) on youtube.com; I will likely fail and I doubt these tips
+will help anyone, so this contributes to my prime directive of filling
+github w/ useless crap.
+
+TODO
+====
+
+  - Create frames larger than 1024x768?
+
+  - Do I want changes resolutions when hitting Fuller House or squish?
+
+NOTES
+=====
+
+  - For seasons 1-8, images are 640x480, scale ratio 4:3
+
+  - For seasons 9-10 ("Fuller House"), images are 1280x720, 16:9 ratio
+
+  - Frame speed is 24 fps
+
+  - Approximately 24 episodes per season but it varies (some episodes
+  are "double size")
+
+  - For 1024x768 resolution, each ep can take 1024*768/24 = 32768 pixels
+
+  - At 4:3, 32768 pixels is 209x157 (roughly)
+
+  - At 16:9 32768 pixels is 241x136 (roughly)
+
+COMMANDS
+========
+
+: this converts first episode of full house into 1808 thumbnails, one
+: for each second (24 frames) of the show-- the thumbnails are 209x157
+: so I can tile them as above (timed so I can get a general idea)
+
+time ffmpeg -i fh101.avi -vf "select=not(mod(n\,24)), scale=209:157" -vsync vfr img_%03d.jpg
+
+: above takes 17.780u 1.050s 0:16.76 112.3%   0+0k 0+40488io 0pf+0w
+
+: this command lets me see what the upper left of the final video will
+: look like, but does not, in and of itself, have any real use to the
+: final project
+
+ffmpeg -i img_%03d.jpg test0.mp4
+
+
+DISCLAIMER
+==========
+
+  - This idea isn't original: someone did it w/ Friends (in a slightly
+  different way) WITH audio
+
+

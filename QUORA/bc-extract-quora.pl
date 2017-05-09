@@ -58,9 +58,10 @@ for $i (@ARGV) {
   $text=~s/\xe2\x80[\x9c|\x9d]/"/g;
   $text=~s/\xe2\x80\x99/'/g;
 
-  debug("PRECLEAN: $text");
   $text=~s/[^ -~]//g;
   $text=wrap($text,70);
+
+  my($textlen) = length($text);
 
   if ($globopts{machine}) {print "$origtime $rev\n"; next;}
 
@@ -72,6 +73,7 @@ User: $user
 Origtime: $origtime
 URL: $url
 Question: $q
+Length: $textlen
 
 Text: $text
 
