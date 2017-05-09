@@ -10,6 +10,9 @@ TODO
 
   - Do I want changes resolutions when hitting Fuller House or squish?
 
+  - Would it be more efficient to grab frames full screen and then
+  resize using montage?
+
 NOTES
 =====
 
@@ -22,11 +25,8 @@ NOTES
   - Approximately 24 episodes per season but it varies (some episodes
   are "double size")
 
-  - For 1024x768 resolution, each ep can take 1024*768/24 = 32768 pixels
-
-  - At 4:3, 32768 pixels is 209x157 (roughly)
-
-  - At 16:9 32768 pixels is 241x136 (roughly)
+  - Doing 5x5 should work ok, so 204x153 per episode (allowing for 4x3
+  pixel frame which I probably wont use)
 
 COMMANDS
 ========
@@ -35,9 +35,13 @@ COMMANDS
 : for each second (24 frames) of the show-- the thumbnails are 209x157
 : so I can tile them as above (timed so I can get a general idea)
 
-time ffmpeg -i fh101.avi -vf "select=not(mod(n\,24)), scale=209:157" -vsync vfr img_%03d.jpg
+time ffmpeg -i fh101.avi -vf "select=not(mod(n\,24)), scale=204:153" -vsync vfr img_%03d.jpg
 
-: above takes 17.780u 1.050s 0:16.76 112.3%   0+0k 0+40488io 0pf+0w
+: above takes 17.704u 1.093s 0:16.72 112.3%   0+0k 0+38928io 0pf+0w
+
+: without scale=204:153, this is 19.588u 1.110s 0:18.56 111.4%   0+0k 0+57280io 0pf+0w
+
+: grabbing raw frames is actually slower
 
 : this command lets me see what the upper left of the final video will
 : look like, but does not, in and of itself, have any real use to the
