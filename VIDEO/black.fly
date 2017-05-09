@@ -1,0 +1,5 @@
+# creates a blank 204x152 image when sent to fly for blank.jpg even
+# though output is png
+new
+size 204,152
+setpixel 0,0,0,0,0

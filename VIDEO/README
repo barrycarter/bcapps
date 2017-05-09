@@ -6,6 +6,9 @@ github w/ useless crap.
 TODO
 ====
 
+  - montage uses first available images, which is bad so longest ep
+  migrates to top left at end of film
+
   - Create frames larger than 1024x768?
 
   - Do I want changes resolutions when hitting Fuller House or squish?
@@ -77,6 +80,12 @@ montage -geometry 204x152  -tile 5x5 fh1??.avi.1000.jpg - | convert -border 2x4 
 
 : 1 show goes to 1858 seconds (the next longest is 1816s, and 4 more
 : shows go that long, but thats really not relevant)
+
+: since we need exactly 1858 images for each show, create blanks where needed
+
+: we do this for nonexistent episodes 23-25 for consistency
+
+perl -le 'for $i ("01".."22") {for $j ("000".."1858") {unless (-f "fh1$i.avi.$j.jpg") {printf("ln -s blank.jpg fh1%02d.avi.%04d.jpg\n",$i,$j);}}}'
 
 : lets create 1858 montage images
 
