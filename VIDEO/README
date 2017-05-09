@@ -16,6 +16,8 @@ TODO
   - Would it be more efficient to grab frames full screen and then
   resize using montage?
 
+  - Don't forget Fuller House!
+
 NOTES
 =====
 
@@ -89,7 +91,7 @@ perl -le 'for $i ("01".."22") {for $j ("000".."1858") {unless (-f "fh1$i.avi.$j.
 
 : lets create 1858 montage images
 
-perl -le 'for $i ("000".."1858") {print "montage -geometry 204x152  -tile 5x5 fh1??.avi.$i.jpg - | convert -border 2x4 - s1f$i.jpg"}' > temp2.sh
+perl -le 'for $i ("000".."1858") {print "montage -background black -geometry 204x152 -tile 5x5 fh1??.avi.$i.jpg - | convert -border 2x4 - s1f$i.jpg"}' > temp2.sh
 
 : hopefully this parallelizes well (it actually doesnt)
 
@@ -98,6 +100,21 @@ parallel -j 10 < temp2.sh &
 : and now, the movie
 
 ffmpeg -i s1f%03d.jpg output.mp4
+
+NOTES TO SELF
+=============
+
+These are notes to myself that are probably even more useless to you
+
+: longest show(s) -- note that glob yields /bin/ls: Argument list too long
+
+find . -maxdepth 1 -iname 'fh*.avi.*.jpg' | perl -nle '/(\d+)\.jpg$/; print $1' | sort -nr | uniq -c > temp3.txt
+
+: 1858 really is longest
+
+: shows im missing, prob due to bad symlinking
+
+find . -maxdepth 1 -iname 'fh*.avi.1000.jpg' | perl -anle '/fh(\d+)/; print $1' | sort > temp4.txt
 
 
 
