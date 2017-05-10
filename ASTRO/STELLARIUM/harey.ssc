@@ -52,3 +52,6 @@ core.wait(1);
 
 // TODO: how to set timezone for display?
 
+// this gives me 10s to minimize stellarium so I wont interfere with it when its running
+
+core.wait(10);

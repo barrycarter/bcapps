@@ -44,8 +44,13 @@ for $i (0..floor($dist+1)) {
   # 10000m ~ 30K ft
   push(@cmds, "core.setObserverLocation($rlon,$rlat,10000,0,'$loc','Earth')");
 
-  # TODO: this is only for testing
-  push(@cmds, "core.wait(.02)");
+
+  # the money shot
+  push(@cmds, "core.screenshot('test20170510alpha', false)");
+
+  # for some reason, stellarium needs to wait here (not sure how long)
+  # using .2 based on a previous script I did
+  push(@cmds, "core.wait(.2)");
 
   debug("P: $rlat, $rlon, T: $t2");
 }

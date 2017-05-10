@@ -4,3 +4,41 @@ To run java code (I'm storing the class files in /tmp for now),
 example for Main.class
 
 java -cp /tmp Main
+
+% To use bc-stell-travel.pl to create videos:
+
+  - Edit portion above "program starts here; above is config options";
+  at some point, these will become command line arguments
+
+  - If desired, change "test20170510alpha" to something else (this is
+  where the frames will be rendered)
+
+  - Make sure you don't already have "test20170510alpha*" (or
+  whatever) files in your Stellarium save directory.
+
+  - Set your default sky parameters. One way to do this is to cp
+  ../ASTRO/STELLARIUM/harey.ssc to a tempfile and then append the
+  results of bc-stell-travel.pl to that tempfile.
+
+  - If you're unhappy w/ the parameters of harey.ssc, change them in
+  the tempfile you just created.
+
+  - "stellarium --startup-script name_of_tempfile |& tee /tmp/error.txt"
+
+  - If something goes wrong, the /tmp/error.txt is often extremely
+  helpful; in particular, if you're using a different version of
+  Stellarium, some of the API commands may not be available.
+
+  - After the script starts up, MINIMIZE Stellarium so you can do
+  other things; if you don't minimize Stellarium and accidentally
+  hover over the left edge (for example), any GUI components you
+  generate will appear in your final movie.
+
+  - In your Stellarium save directory: "ffmpeg -i
+  test20170510alpha%3d.png test.mp4" (note: the %3d does NOT require
+  all files have 3 digit numbers in their names-- it magically works
+  regardless)
+
+
+
+
