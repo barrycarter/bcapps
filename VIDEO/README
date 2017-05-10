@@ -62,11 +62,13 @@ perl -le 'for $i (1..8) {for $j ("01".."24") {print "ln -s Full?House?${i}x$j* f
 
 : this frameifies all episodes (after fully converting names)
 
-\ls fh???.avi | perl -nle 'print "ffmpeg -i $_ -vf \47select=not(mod(n\\,24)), scale=204:152\47 -vsync vfr $_.%03d.jpg"' > temp.sh
+\ls fh???.avi | perl -nle 'print "ffmpeg -i $_ -vf \47select=not(mod(n\\,24)), scale=204:152\47 -vsync vfr $_.%06d.jpg"' > temp.sh
 
 : since this seems fairly parallelizeable
 
-parallel -j 10 < temp.sh &
+time parallel -j 5 < temp.sh &
+
+: above gives 18K frames per minute (about 338K or so total needed)
 
 : as a sample, lets montage the 1000th frames of season 1 (not using
 : the 1st few frames because they tend to blank or similar)-- if this
@@ -74,7 +76,7 @@ parallel -j 10 < temp.sh &
 
 : the convert below pads the image to 1024x768 which is useful 
 
-montage -geometry 204x152  -tile 5x5 fh1??.avi.1000.jpg - | convert -border 2x4 - out.jpg
+montage -background black -geometry 204x152  -tile 5x5 fh1??.avi.001000.jpg - | convert -border 2x4 - out.jpg
 
 : lets find the largest frame number/longest show of season 1 to montage
 
@@ -85,21 +87,19 @@ montage -geometry 204x152  -tile 5x5 fh1??.avi.1000.jpg - | convert -border 2x4 
 
 : since we need exactly 1858 images for each show, create blanks where needed
 
-: we do this for nonexistent episodes 23-25 for consistency
-
-perl -le 'for $i ("01".."22") {for $j ("000".."1858") {unless (-f "fh1$i.avi.$j.jpg") {printf("ln -s blank.jpg fh1%02d.avi.%04d.jpg\n",$i,$j);}}}'
+perl -le 'for $i ("01".."22") {for $j (0..1858) {$f=sprintf("fh1%02d.avi.%06d.jpg",$i,$j); unless (-f $f) {print "ln -s blank.jpg $f";}}}'
 
 : lets create 1858 montage images
 
-perl -le 'for $i ("000".."1858") {print "montage -background black -geometry 204x152 -tile 5x5 fh1??.avi.$i.jpg - | convert -border 2x4 - s1f$i.jpg"}' > temp2.sh
+perl -le 'for $j (0..1858) {$f=sprintf("fh1??.avi.%06d.jpg",$j); $o=sprintf("s1f%06d.jpg",$j); print "montage -background black -geometry 204x152 -tile 5x5 $f - | convert -border 2x4 - $o"}' > temp2.sh
 
-: hopefully this parallelizes well (it actually doesnt)
+: do it backwards because last few images are most important to check
 
-parallel -j 10 < temp2.sh &
+tac temp2.sh | parallel -j 5 &
 
 : and now, the movie
 
-ffmpeg -i s1f%03d.jpg output.mp4
+ffmpeg -i s1f%06d.jpg season1.mp4
 
 NOTES TO SELF
 =============
