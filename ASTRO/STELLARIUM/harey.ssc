@@ -38,7 +38,17 @@ StelMovementMgr.setEquatorialMount(false);
 core.moveToAltAzi(90,180,0);
 StelMovementMgr.zoomTo(180);
 
+// display/name only the brighter planets
 
-// no GUI when recording
+SolarSystem.setLabelsAmount(3);
 
-core.setGuiVisible(false);
+// actually, do need GUI to display lat/lon/etc
+
+core.setGuiVisible(true);
+
+// without this, the settings above dont always take effect sigh
+
+core.wait(1);
+
+// TODO: how to set timezone for display?
+

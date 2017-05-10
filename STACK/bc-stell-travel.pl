@@ -13,7 +13,7 @@ require "/usr/local/lib/bclib.pl";
 my(@epos) = (67.4162010798574, -140.988673030655);
 my(@spos) = (43.7764861450485, 7.50434920217688);
 # start time chosen as "now", be more clever here
-my($stime) = 1494386100;
+my($stime) = 1486684800;
 # speed of sound (miles per hour) -- this is Mach 1
 my($speed) = 767.269;
 
