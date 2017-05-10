@@ -40,8 +40,9 @@ for $i (0..floor($dist+1)) {
 
   push(@cmds, "core.setDate('$t2')");
   # TODO: elevation could be non-zero here, cruising altitude?
-  my($loc) = sprintf("%0.4f,%0.4f", $rlat, $rlon);
-  push(@cmds, "core.setObserverLocation($rlon,$rlat,0,0,'$loc','Earth')");
+  my($loc) = sprintf("LAT: %0.4f, LON: %0.4f", $rlat, $rlon);
+  # 10000m ~ 30K ft
+  push(@cmds, "core.setObserverLocation($rlon,$rlat,10000,0,'$loc','Earth')");
 
   # TODO: this is only for testing
   push(@cmds, "core.wait(.02)");

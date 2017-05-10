@@ -1,0 +1,31 @@
+// Sets up an "HA Rey" style starmap (which is actually tm'd by either
+// Sky + Telescope or Astronomy magazine or something)
+
+// TODO: this does NOT set/unset everything that needs to be set-- it
+// just undoes the things I normally do
+
+// not strictly harey.ssc, but useful
+
+ConstellationMgr.setFlagLines(true);
+ConstellationMgr.setFlagLabels(false);
+
+// no grid lines, they're ugly
+
+GridLinesMgr.setFlagAzimuthalGrid(false);
+GridLinesMgr.setFlagEquatorGrid(false);
+GridLinesMgr.setFlagEquatorJ2000Grid(false);
+
+// display the "HA Rey style" map
+
+LandscapeMgr.setFlagCardinalsPoints(true);
+
+// zenith at center, north at top (a la HA Rey)
+
+// TODO: putting 90 below screws things up but is important
+core.moveToAltAzi(89,180,0);
+
+core.setGuiVisible(false);
+
+StelMovementMgr.zoomTo(180);
+
+StelMovementMgr.setEquatorialMount(false);

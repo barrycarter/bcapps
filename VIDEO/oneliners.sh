@@ -16,8 +16,15 @@
 
 # perl -le 'for $k (1..10) {for $i ("01".."24") {for $j (0..1486) {$f=sprintf("fh$k%02d.avi.%06d.jpg",$i,$j); unless (-f $f) {print "ln -s blank.jpg $f";}}}}'
 
-perl -le 'for $k (1..10) {for $j (0..1486) {$f=sprintf("fh$k??.avi.%06d.jpg",$j); $o=sprintf("s${k}f%06d.jpg",$j); print "montage -background black -geometry 204x152 -tile 5x5 $f - | convert -border 2x4 - $o"}}' > all.sh
+# special case for seasons 9 and 10, mkv not avi
 
-parallel -j 5 < all.sh &
+# perl -le 'for $k (9..10) {for $i ("01".."13") {for $j (0..1486) {$f=sprintf("fh$k%02d.mkv.%06d.jpg",$i,$j); unless (-f $f) {print "ln -s blank.jpg $f";}}}}'
 
-# ffmpeg -i s2f%06d.jpg season2.mp4
+# NOTE: had to later fix seasons 9 and 10 since these are mkv.jpg not avi.jpg
+
+# perl -le 'for $k (1..10) {for $j (0..1486) {$f=sprintf("fh$k??.avi.%06d.jpg",$j); $o=sprintf("s${k}f%06d.jpg",$j); print "montage -background black -geometry 204x152 -tile 5x5 $f - | convert -border 2x4 - $o"}}' > all.sh
+
+# parallel -j 5 < all.sh &
+
+# ffmpeg -i s%df%06d.jpg all.mp4
+
