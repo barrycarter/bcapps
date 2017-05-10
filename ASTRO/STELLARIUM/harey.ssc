@@ -19,13 +19,24 @@ GridLinesMgr.setFlagEquatorJ2000Grid(false);
 
 LandscapeMgr.setFlagCardinalsPoints(true);
 
+
+StelMovementMgr.setEquatorialMount(false);
+
 // zenith at center, north at top (a la HA Rey)
 
-// TODO: putting 90 below screws things up but is important
-core.moveToAltAzi(89,180,0);
+// this has to be done as moveTo then a Pan since Stellarium dislikes 90 degs
+
+// core.moveToAltAzi(180,45,0);
+
+StelMovementMgr.zoomTo(5);
+
+
+// this value has to be in radians, NOT degrees
+
+StelMovementMgr.panView(0, 1.5707963267948966192);
+
+// StelMovementMgr.panView(10,10);
 
 core.setGuiVisible(false);
 
-StelMovementMgr.zoomTo(180);
-
-StelMovementMgr.setEquatorialMount(false);
+// TODO: fix comments after I get this working

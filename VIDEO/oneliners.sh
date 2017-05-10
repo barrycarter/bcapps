@@ -10,6 +10,8 @@
 
 # find . -iname 'fh*.avi.*.jpg' | perl -nle '/(\d+)\.jpg$/; print $1' | sort -nr | uniq -c | less
 
+find . -iname 'fh*.mkv.*.jpg' | perl -nle '/(\d+)\.jpg$/; print $1' | sort -nr | uniq -c | less
+
 # 1486 frames max all seasons, 22-24 eps (13 for Seasons 9 and 10)
 
 # this unnecessarily, but harmlessly, creates frames for nonexistent episodes
