@@ -4,7 +4,7 @@
 // TODO: this does NOT set/unset everything that needs to be set-- it
 // just undoes the things I normally do
 
-// not strictly harey.ssc, but useful
+// show constellation lines, but not art or names
 
 ConstellationMgr.setFlagLines(true);
 ConstellationMgr.setFlagLabels(false);
@@ -15,28 +15,30 @@ GridLinesMgr.setFlagAzimuthalGrid(false);
 GridLinesMgr.setFlagEquatorGrid(false);
 GridLinesMgr.setFlagEquatorJ2000Grid(false);
 
-// display the "HA Rey style" map
+// show cardinal directions
 
 LandscapeMgr.setFlagCardinalsPoints(true);
 
+// I normally dont set this anyway, but just in case
 
 StelMovementMgr.setEquatorialMount(false);
 
-// zenith at center, north at top (a la HA Rey)
+// zenith at center, north at top, full sky view
 
-// this has to be done as moveTo then a Pan since Stellarium dislikes 90 degs
+// note: no matter what value of Azi you choosen below, west at
+// bottom, even StelMovementMgr.panView won't fix it; however, I can fix
+// it in post-processing (but can't because labels)
 
-// core.moveToAltAzi(180,45,0);
+// 180 is the correct Azi below
+// Alt: 89.5 works fine, 89.75 works fine, 89.875 is slightly skewed
+// Actually, even 89.5 is skewed when azimuth grid on
 
-StelMovementMgr.zoomTo(5);
+// will settle for west at bottom, sigh
+
+core.moveToAltAzi(90,180,0);
+StelMovementMgr.zoomTo(180);
 
 
-// this value has to be in radians, NOT degrees
-
-StelMovementMgr.panView(0, 1.5707963267948966192);
-
-// StelMovementMgr.panView(10,10);
+// no GUI when recording
 
 core.setGuiVisible(false);
-
-// TODO: fix comments after I get this working

@@ -188,7 +188,10 @@ MAILTO="daemon"
 */10 * * * * rsync -az user@192.168.0.2:/home/user/BCGIT /home/user/
 */10 * * * * rsync -azL user@192.168.0.2:/home/user/BCPRIV /home/user/
 
-# TODO: remove this after cutover to brighton
+# currently, calendar.d is only maintained on dullon, sigh
+*/10 * * * * rsync -azL user@192.168.0.2:/home/user/calendar.d /home/user/
+
+# TODO: remove this (above and others) after cutover to brighton
 
 # this does the "opposite" of the above: it takes files I've created
 # on brighton and mirrors them back to dullon "just in case" something
