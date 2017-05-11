@@ -60,14 +60,6 @@ ffmpeg -i img_%03d.jpg test0.mp4
 
 perl -le 'for $i (1..8) {for $j ("01".."24") {print "ln -s Full?House?${i}x$j* fh$i$j.avi"}}'
 
-: this frameifies all episodes (after fully converting names)
-
-\ls fh???.avi | perl -nle 'print "ffmpeg -i $_ -vf \47select=not(mod(n\\,24)), scale=204:152\47 -vsync vfr $_.%06d.jpg"' > temp.sh
-
-: since this seems fairly parallelizeable
-
-time parallel -j 5 < temp.sh &
-
 : above gives 18K frames per minute (about 338K or so total needed)
 
 : as a sample, lets montage the 1000th frames of season 1 (not using
