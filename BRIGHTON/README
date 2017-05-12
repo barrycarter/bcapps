@@ -645,6 +645,8 @@ RPM, not source
 
   - start mysql and postgresql if needed
 
+  - nagstart to start nagios (TODO: why doesn't it autostart)
+
 % NOTE: brighton: front audio ports output works fine, input does not
 work at all; rear ports: both input and output run fine
 

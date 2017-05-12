@@ -50,3 +50,6 @@ perl -le 'for $k (9..10) {for $j (0..1693) {$f=sprintf("fh$k??.mkv.%06d.jpg",$j)
 # TODO: accidentally deleted some season 1 jpegs with bad mask rm, but
 # probably dont care at this point
 
+# cheat way to delete all black montages
+
+find . -size 6686c -iname 's?f*.jpg' | xargs rm

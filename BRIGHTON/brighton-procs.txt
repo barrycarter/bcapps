@@ -123,7 +123,7 @@ recollindex
 /bin/mysqld_safe
 /usr/sbin/atd
 /usr/sbin/sshd
-/sbin/dnsmasq
+/usr/sbin/dnsmasq
 /usr/bin/postgres
 postgres:
 nagios
