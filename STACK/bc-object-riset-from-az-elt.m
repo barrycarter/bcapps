@@ -13,7 +13,21 @@ p1=ParametricPlot[{
  f[ha/12*Pi,23.5*Degree,35*Degree]/Degree,
  f[ha/12*Pi,0*Degree,35*Degree]/Degree
 }, {ha,-12,12}, 
- PlotLegends -> {"Winter Solstice","Equinox","Summer Solstice"}];
+ PlotLegends -> 
+ Placed[{"Winter Solstice","Equinox","Summer Solstice"}, {0.1,0.2}],
+ PlotLabel -> "Solar Azimuth vs Elevation",
+ AxesLabel -> {"Azimuth", "Elevation"}
+];
+showit
+
+
+p1=ParametricPlot[{
+ f[ha/12*Pi,-23.5*Degree,35*Degree]/Degree,
+ f[ha/12*Pi,23.5*Degree,35*Degree]/Degree,
+ f[ha/12*Pi,0*Degree,35*Degree]/Degree
+}, {ha,-12,12}, 
+ PlotLabel -> "Solar Azimuth vs Elevation",
+ AxesLabel -> {"Azimuth", "Elevation"}];
 
 t0922[dec_]=
  Table[{
@@ -21,6 +35,18 @@ t0922[dec_]=
   Text[Style[ToString[ha], FontSize -> 10], 
  f[ha/12*Pi,dec,35*Degree]/Degree+{0,5}]},
   {ha,-12,11}]
+
+Show[{p1,Graphics[t0922[-23.5*Degree]], 
+ Graphics[t0922[0*Degree]], Graphics[t0922[23.5*Degree]]}]
+
+(* temp change due to size weirdness *)
+
+showit := Module[{file}, file = StringJoin["/tmp/math", 
+       ToString[RunThrough["date +%Y%m%d%H%M%S", ""]], ".gif"]; 
+     Export[file, %, ImageSize -> {2048, 768*2}]; 
+     Run[StringJoin["display -update 1 ", file, "&"]]; Return[file]; ]
+
+
 
 Graphics[t0922]
 showit
@@ -30,8 +56,6 @@ showit
 t0923=Table[Point[f[ha/12*Pi,23.5*Degree,35*Degree]/Degree],{ha,-12,12}]
 t0924=Table[Point[f[ha/12*Pi,0*Degree,35*Degree]/Degree],{ha,-12,12}]
 
-Show[{p1,Graphics[t0922[-23.5*Degree]], 
- Graphics[t0922[0*Degree]], Graphics[t0922[23.5*Degree]]}]
 
 
 
@@ -117,6 +141,7 @@ t0846=Table[HADecLat2azEl[ha,23.5*Degree,40*Degree],{ha,-Pi,Pi,.01}]
 
 Fit[t0846,Table[x^i,{i,0,10}],x]
 
+TODO: add key!
 
 NSolve[{
  az[ha, dec, 35*Degree] == 87*Degree,
@@ -127,7 +152,38 @@ t0852=Solve[az[ha,dec,35*Degree] == 87*Degree, dec][[1,1,2,1]]-Pi*C[1]
 
 el[ha,t0852,35*Degree] == 29*Degree
 
+(* Complaint for mathematica.SE *)
 
+Subject: Using "PlotLegends" makes plot much smaller
 
+$Version
+11.1.0 for Linux x86 (64-bit) (March 13, 2017)
 
+(* a simple plot, turns out nice *)
 
+t1 = Plot[x^2,{x,-5,5}];
+Export["/tmp/test1.png", t1, ImageSize -> {800,600}];
+
+(* let's add a legend, turns out small *)
+
+t2 = Plot[x^2,{x,-5,5},PlotLegends -> {"x^2"}]
+Export["/tmp/test2.png", t2, ImageSize -> {800,600}]
+
+(* if we make image bigger, plot still turns out small *)
+
+t3 = Plot[x^2,{x,-5,5},PlotLegends -> {"x^2"}]
+Export["/tmp/test3.png", t3, ImageSize -> {800*2,600*2}]
+
+test1.png from the above looks very nice and uses up the entire 800x600 canvas:
+
+[[IMAGE]]
+
+test2.png's plot uses up only a fraction of the 800x600 canvas:
+
+[[IMAGE]]
+
+test3.png has a larger canvas (2 times larger in each direction), but the plot is exactly the same size as in test2.png. I'd at least expect it to be two times bigger in each direction, even if it didn't use up the entire 1600x1200 canvas. My hope for test3.png was to create a larger image that didn't fill the canvas and then use ImageMagick to crop.
+
+Why does this PlotLegends problem occur and how can I fix it?
+
+I've skimmed similar questions on this site, but I don't think any address this issue exactly. Several of these questions suggest "homebrew" solutions, which I'd prefer to avoid if at all possible.
