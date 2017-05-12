@@ -1,6 +1,17 @@
 TODO: summary
 
-(* this forced the az to be between 0 and 360 for graphing *)
+(* this forces the az to be between 0 and 360 for graphing *)
+
+
+TODO: confirm TeX on site, use images if not
+
+TODO: fix plot or use w/o legends if needed
+
+showit := Module[{file}, file = StringJoin["/tmp/math", 
+       ToString[RunThrough["date +%Y%m%d%H%M%S", ""]], ".gif"]; 
+     Export[file, %]; 
+     Run[StringJoin["display -update 1 ", file, "&"]]; Return[file]; ]
+
 
 f[ha_,dec_,lat_] = {
  Mod[HADecLat2azEl[ha,dec,lat][[1]],2*Pi],
@@ -14,9 +25,10 @@ p1=ParametricPlot[{
  f[ha/12*Pi,0*Degree,35*Degree]/Degree
 }, {ha,-12,12}, 
  PlotLegends -> 
- Placed[{"Winter Solstice","Equinox","Summer Solstice"}, {0.1,0.2}],
+  {"Winter Solstice","Summer Solstice","Equinox"},
  PlotLabel -> "Solar Azimuth vs Elevation",
- AxesLabel -> {"Azimuth", "Elevation"}
+ AxesLabel -> {"Azimuth", "Elevation"},
+ ImageSize -> {800,600}
 ];
 showit
 
@@ -104,12 +116,6 @@ FullSimplify[Solve[az[ha,dec,c3] == c1, dec],conds]
 
 t0830=FullSimplify[Solve[az[ha,dec,lat] == c1, dec],conds] [[1,1,2,1]]-Pi*C[1]
 
-showit := Module[{file}, file = StringJoin["/tmp/math", 
-       ToString[RunThrough["date +%Y%m%d%H%M%S", ""]], ".gif"]; 
-     Export[file, %, ImageSize -> {800, 600}]; 
-     Run[StringJoin["display -update 1 ", file, "&"]]; Return[file]; ]
-
-
 Table[HADecLat2azEl[ha,0,40*Degree], {ha,0,2*Pi,.01}]
 
 Table[HADecLat2azEl[ha,23*Degree,40*Degree], {ha,-Pi,Pi,.01}]
@@ -187,3 +193,9 @@ test3.png has a larger canvas (2 times larger in each direction), but the plot i
 Why does this PlotLegends problem occur and how can I fix it?
 
 I've skimmed similar questions on this site, but I don't think any address this issue exactly. Several of these questions suggest "homebrew" solutions, which I'd prefer to avoid if at all possible.
+
+(* end question *)
+
+t2 = Plot[x^2,{x,-5,5},PlotLegends -> {"x^2"}, ImageSize -> {800,600}]
+Export["/tmp/test2.png", t2, ImageSize -> {800,600}]
+
