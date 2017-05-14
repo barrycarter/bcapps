@@ -2,6 +2,71 @@ TODO: summary
 
 (* this forces the az to be between 0 and 360 for graphing *)
 
+conds = {-Pi < ha < Pi, -Pi/2 < dec < Pi/2, -Pi/2 < lat < Pi/2,
+         -Pi < az < Pi, -Pi/2 < el  < Pi/2}
+
+a0 = N[HADecLat2azEl[Pi/12, 10*Degree, 35*Degree]]
+
+a1 = sph2xyz[Flatten[{a0,1}]]
+
+a2 = rotationMatrix[y,55*Degree].a1
+
+a3 = xyz2sph[a2]
+
+b0 = FullSimplify[HADecLat2azEl[ha,dec,lat],conds]
+
+b1 = FullSimplify[sph2xyz[Flatten[{b0,1}]],conds]
+
+b2 = FullSimplify[rotationMatrix[y,Pi/2-lat].b1,conds]
+
+b3 = FullSimplify[xyz2sph[b2],conds]
+
+FullSimplify[xyz2sph[rotationMatrix[y,Pi/2-lat].sph2xyz[az,el,1]],conds]
+
+xyz2sph[rotationMatrix[y,Pi/2-lat].sph2xyz[az,el,1]] /. 
+ ArcTan[x_,y_] -> ArcTan[y/x]
+
+AzElLat2HADec[az_,el_,lat_] = {
+ArcTan[-(Cos[lat]*Sin[el]) + Cos[az]*Cos[el]*Sin[lat], Cos[el]*Sin[az]], 
+ ArcTan[Sqrt[Cos[el]^2*Sin[az]^2 + 
+    (Cos[lat]*Sin[el] - Cos[az]*Cos[el]*Sin[lat])^2], 
+  Cos[az]*Cos[el]*Cos[lat] + Sin[el]*Sin[lat]]
+};
+
+
+ha[az_,el_,lat] = AzElLat2HADec[az,el,lat][[1]]
+dec[az_,el_,lat] = AzElLat2HADec[az,el,lat][[2]]
+
+ArcCos[-(Tan[dec[az,el,lat]]*Tan[lat])] - ha[az,el,lat]
+
+
+
+HADecLat2azEl[ArcCos[-(Tan[AzElLat2HADec[az,el,lat][[2]]] Tan[lat])]]
+
+ArcCos[-(Tan[dec] Tan[lat])]
+
+FullSimplify[HADecLat2azEl[ArcCos[-(Tan[dec] Tan[lat])], dec, lat],conds]
+
+time2Set[az_,el_,lat_] = 
+ AzElLat2HADec[az,el,lat][[1]] - ArcCos[-(Tan[dec] Tan[lat])]
+
+
+
+
+
+
+yields ~ {-2.57805, 1.07338}
+
+knowing 35*Deg lat, let's go back
+
+
+
+{-0.403373, -0.25489, 0.878818}
+
+now apply a 55 degree rotation around y
+
+rotationMatrix[y,-55*Degree].{-0.403373, -0.25489, 0.878818}
+
 
 TODO: confirm TeX on site, use images if not
 
