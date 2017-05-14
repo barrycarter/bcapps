@@ -13,10 +13,113 @@ showit := Module[{file}, file = StringJoin["/tmp/math",
      Run[StringJoin["display -update 1 ", file, "&"]]; Return[file]; ]
 
 
+(* the setting time *)
+
+Solve[HADecLat2azEl[ha, dec, lat][[2]] == 0, ha, Reals]
+
+
 f[ha_,dec_,lat_] = {
  Mod[HADecLat2azEl[ha,dec,lat][[1]],2*Pi],
  HADecLat2azEl[ha,dec,lat][[2]]
 };
+
+g[ha_,dec_,lat_] = {
+ Mod[HADecLat2azEl[ha,dec,lat][[1]],2*Pi]/Degree,
+ HADecLat2azEl[ha,dec,lat][[2]]/Degree,
+ dec/Degree
+};
+
+g2[ha_,dec_,lat_] = {
+ Mod[HADecLat2azEl[ha,dec,lat][[1]],2*Pi]/Degree,
+ HADecLat2azEl[ha,dec,lat][[2]]/Degree,
+ ha/12*Pi
+};
+
+t1025 = Flatten[Table[
+ N[Re[g2[ha,dec,35*Degree]]], {ha,-Pi,Pi, Pi/100}, {dec, -Pi, Pi, Pi/100}
+],1];
+
+t1025 = Flatten[Table[
+ N[Re[g[ha,dec,35*Degree]]], {ha,0,2*Pi, Pi/100}, 
+ {dec, -55*Degree, 55*Degree, Pi/100}
+],1];
+
+t1025 = Flatten[Table[
+ N[Re[g2[ha,dec,35*Degree]]], {ha,0,2*Pi, Pi/100}, 
+ {dec, -23.5*Degree, 23.5*Degree, 1*Degree}
+],1];
+
+ListContourPlot[t1025, Contours -> 25, ImageSize -> {800,600}, 
+ PlotLegends -> Automatic]
+
+
+ContourPlot[x+y,{x,0,3},{y,0,4}, PlotLegends -> Automatic]
+
+
+
+
+(* test below for all decs *)
+
+t1512=Table[f[ha/12*Pi,d,35*Degree]/Degree,{d,-55*Degree,55*Degree,10*Degree}]
+
+t1512=Table[f[ha/12*Pi,d,35*Degree]/Degree,
+ {d,-23.5*Degree,23.5*Degree,47/10*Degree}]
+
+t1524= ParametricPlot[
+ t1512, {ha,-12,11.99999},ImageSize->{1024,768},PlotRange->All]
+
+t1523 = ParametricPlot[
+ f[11/12*Pi, dec, 35*Degree]/Degree, {dec,-23.5*Degree,23.5*Degree}
+]
+
+t1525 = Table[f[h/12*Pi, dec, 35*Degree]/Degree, {h,-12,12,1}]
+
+t1526 = ParametricPlot[
+ t1525, {dec,-23.5*Degree,23.5*Degree},ImageSize->{1024,768},PlotRange->All]
+
+Show[{t1524,t1526}]
+
+t1520=Table[f[ha/12*Pi,d,35*Degree]/Degree,
+ {d,-90*Degree,90*Degree,5*Degree}]
+
+t1521= ParametricPlot[
+ t1520, {ha,-12,11.99999},ImageSize->{1024,768},PlotRange->All]
+
+t1522 = Table[f[h/12*Pi, dec, 35*Degree]/Degree, {h,-12,12,0.25}]
+
+t1523 = ParametricPlot[
+ t1522, {dec,-89*Degree,89*Degree},ImageSize->{1024,768},PlotRange->All]
+
+Show[{t1521,t1523}]
+
+t1520=Table[f[ha/12*Pi,d,35*Degree]/Degree,
+ {d,-90*Degree,90*Degree,10*Degree}]
+
+t1521= ParametricPlot[
+ t1520, {ha,-12,11.99999},ImageSize->{1024,768},PlotRange->All, 
+ PlotStyle -> Black]
+
+t1522 = Table[f[h/12*Pi, dec, 35*Degree]/Degree, {h,-12,12,1}]
+
+t1523 = ParametricPlot[
+ t1522, {dec,-89*Degree,89*Degree},ImageSize->{1024,768},PlotRange->All,
+ PlotStyle -> Red]
+
+t1524 = Table[f[h/12*Pi, dec, 35*Degree]/Degree, {h,-12,12,0.25}]
+
+t1525 = ParametricPlot[
+ t1524, {dec,-89*Degree,89*Degree},ImageSize->{1024,768},PlotRange->All,
+ PlotStyle -> {Pink, Dashed}]
+
+Show[{t1525,t1523}]
+
+Show[{t1521,t1523}]
+
+
+
+
+
+
 
 
 p1=ParametricPlot[{
@@ -26,61 +129,38 @@ p1=ParametricPlot[{
 }, {ha,-12,12}, 
  PlotLegends -> 
   {"Winter Solstice","Summer Solstice","Equinox"},
- PlotLabel -> "Solar Azimuth vs Elevation",
+ PlotLabel -> "Solar Azimuth vs Elevation (35N latitude)",
  AxesLabel -> {"Azimuth", "Elevation"},
  ImageSize -> {800,600}
 ];
-showit
 
 
-p1=ParametricPlot[{
- f[ha/12*Pi,-23.5*Degree,35*Degree]/Degree,
- f[ha/12*Pi,23.5*Degree,35*Degree]/Degree,
- f[ha/12*Pi,0*Degree,35*Degree]/Degree
-}, {ha,-12,12}, 
- PlotLabel -> "Solar Azimuth vs Elevation",
- AxesLabel -> {"Azimuth", "Elevation"}];
 
-t0922[dec_]=
+p0827=ParametricPlot[{
+ Pi-f[ha/12*Pi,-23.5*Degree,35*Degree][[1]]/Degree*
+  Cos[f[ha/12*Pi,-23.5*Degree,35*Degree][[2]]],
+ f[ha/12*Pi,-23.5*Degree,35*Degree][[2]]/Degree},
+ {ha,-12,12}, 
+ PlotLegends -> 
+  {"Winter Solstice","Summer Solstice","Equinox"},
+ PlotLabel -> "Solar Azimuth vs Elevation (35N latitude)",
+ AxesLabel -> {"Azimuth", "Elevation"},
+ ImageSize -> {800,600}
+];
+
+
+
+dots[dec_]= Graphics[
  Table[{
   Point[f[ha/12*Pi,dec,35*Degree]/Degree],
   Text[Style[ToString[ha], FontSize -> 10], 
  f[ha/12*Pi,dec,35*Degree]/Degree+{0,5}]},
-  {ha,-12,11}]
+  {ha,-11,11}]]
 
-Show[{p1,Graphics[t0922[-23.5*Degree]], 
- Graphics[t0922[0*Degree]], Graphics[t0922[23.5*Degree]]}]
-
-(* temp change due to size weirdness *)
-
-showit := Module[{file}, file = StringJoin["/tmp/math", 
-       ToString[RunThrough["date +%Y%m%d%H%M%S", ""]], ".gif"]; 
-     Export[file, %, ImageSize -> {2048, 768*2}]; 
-     Run[StringJoin["display -update 1 ", file, "&"]]; Return[file]; ]
+Show[{p1, dots[-23.5*Degree], dots[0*Degree], dots[23.5*Degree]}];
 
 
-
-Graphics[t0922]
-showit
-
-
-
-t0923=Table[Point[f[ha/12*Pi,23.5*Degree,35*Degree]/Degree],{ha,-12,12}]
-t0924=Table[Point[f[ha/12*Pi,0*Degree,35*Degree]/Degree],{ha,-12,12}]
-
-
-
-
-
-
-
-
-
-
-
-p9=Plot[HADecLat2azEl[ha/12*Pi,23.5*Degree,35*Degree][[1]]/Degree,{ha,-12,12}]
-p8=Plot[HADecLat2azEl[ha/12*Pi,-23.5*Degree,35*Degree][[1]]/Degree,{ha,-12,12}]
-p7=Plot[HADecLat2azEl[ha/12*Pi,0,35*Degree][[1]]/Degree,{ha,-12,12}]
+TODO: get bloody degree symbol in there somehow maybe
 
 HADecLat2azEl[ha,dec,lat]
 
@@ -91,6 +171,30 @@ c2 = observed el
 c3 = latitude
 
  *)
+
+ArcCos[-(Tan[dec] Tan[lat])
+
+Flatten[{HADecLat2azEl[ha,dec,lat], ArcCos[-(Tan[dec] Tan[lat])]}]
+
+Flatten[{HADecLat2azEl[ha,dec,35*Degree], ArcCos[-(Tan[dec] Tan[35*Degree])]}]
+
+ParametricPlot3D[
+Flatten[{HADecLat2azEl[ha,dec,35*Degree], ArcCos[-(Tan[dec] Tan[35*Degree])]}],
+{ha, -Pi, Pi}, {dec, -Pi/2, Pi/2}, PlotRange -> All]
+
+ContourPlot3D[
+Flatten[{HADecLat2azEl[ha,dec,35*Degree], ArcCos[-(Tan[dec] Tan[35*Degree])]}],
+{ha, -Pi, Pi}, {dec, -Pi/2, Pi/2}]
+
+t1012 = Flatten[Table[
+Flatten[{HADecLat2azEl[ha,dec,35*Degree], ArcCos[-(Tan[dec] Tan[35*Degree])]}],
+{ha, -Pi, Pi, Pi/100}, {dec, -Pi/2, Pi/2, Pi/100}],1];
+
+
+
+
+
+
 
 Solve[{
 HADecLat2azEl[ha,dec,lat][[1]] == c1, HADecLat2azEl[ha,dec,lat][[2]] == c2
@@ -123,6 +227,12 @@ Table[HADecLat2azEl[ha,23*Degree,40*Degree], {ha,-Pi,Pi,.01}]
 p1=ParametricPlot[HADecLat2azEl[ha,0,40*Degree],{ha,-Pi,Pi}]
 p2=ParametricPlot[HADecLat2azEl[ha,23*Degree,40*Degree],{ha,-Pi,Pi}]
 p3=ParametricPlot[HADecLat2azEl[ha,-23*Degree,40*Degree],{ha,-Pi,Pi}]
+
+ParametricPlot[{Cos[HADecLat2azEl[ha,-23*Degree,40*Degree][[1]]],
+               HADecLat2azEl[ha,-23*Degree,40*Degree][[2]]},
+{ha,-Pi,Pi}]
+
+
 
 p4=ParametricPlot[
  HADecLat2azEl[ha,-23*Degree,40*Degree]-HADecLat2azEl[ha,0,40*Degree],
@@ -198,4 +308,10 @@ I've skimmed similar questions on this site, but I don't think any address this 
 
 t2 = Plot[x^2,{x,-5,5},PlotLegends -> {"x^2"}, ImageSize -> {800,600}]
 Export["/tmp/test2.png", t2, ImageSize -> {800,600}]
+
+TODO: stretch hour angle/sideral for sun (ie, 24 sidereal vs "real")
+
+TODO: not easy for moon
+
+TODO: high enough resolution chart = read it off
 

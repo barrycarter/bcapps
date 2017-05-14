@@ -645,7 +645,9 @@ RPM, not source
 
   - start mysql and postgresql if needed
 
-  - nagstart to start nagios (TODO: why doesn't it autostart)
+  - nagstart to start nagios (TODO: why doesn't it autostart?)
+
+  - bring up WIDESCREEN "elinks-on-dullon" window since up-to-date db exists only there for now
 
 % NOTE: brighton: front audio ports output works fine, input does not
 work at all; rear ports: both input and output run fine

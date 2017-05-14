@@ -13,6 +13,8 @@
 
 # Mathematica related processes
 /usr/local/Wolfram/Mathematica/11.1/SystemFiles/Kernel/Binaries/Linux-x86-64/WolframKernel
+/usr/local/Wolfram/Mathematica/11.1/Executables/Mathematica
+/usr/local/Wolfram/Mathematica/11.1/SystemFiles/FrontEnd/Binaries/Linux-x86-64/Mathematica
 
 # skype
 skype-bin
