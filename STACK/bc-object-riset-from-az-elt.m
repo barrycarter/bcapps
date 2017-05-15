@@ -1,339 +1,130 @@
-TODO: summary
+https://astronomy.stackexchange.com/questions/20976/determining-sunrise-and-sunset-times-based-on-azimuth-and-elevation
 
-(* this forces the az to be between 0 and 360 for graphing *)
+https://astronomy.stackexchange.com/questions/14492/need-simple-equation-for-rise-transit-and-set-time/14508#14508
+
+== ANSWER STARTS HERE ==
+
+$
+   \cos ^{-1}\left(-\frac{\tan (\lambda ) (\cos (\lambda ) \cos (\phi ) \cos
+   (Z)+\sin (\lambda ) \sin (Z))}{\sqrt{(\cos (\lambda ) \sin (Z)-\sin (\lambda
+    ) \cos (\phi ) \cos (Z))^2+\sin ^2(\phi ) \cos ^2(Z)}}\right)-\tan
+    ^{-1}(\cos (\lambda ) \sin (Z)-\sin (\lambda ) \cos (\phi ) \cos (Z),\sin
+    (\phi ) (-\cos (Z)))
+$
+
+is the amount of time from now (see important notes below) a celestial object will set, where:
+
+  - $\phi$ is the azimuth of the object
+  - $Z$ is the altitude of the object above the horizon
+  - $\lambda$ is the latitude of the observer
+
+**Important notes (MUST READ!)**:
+
+  - The result is in radians. To convert to sidereal hours, multiple by $\frac{12}{\pi }$
+
+  - If the object has a fixed right ascension and declination, divide sidereal hours by 1.002737909350795 to get clock hours.
+
+  - The time computed above is for **geometric midpoint** setting. In reality, refraction near the horizon means the object will set later. Additionally, for objects that have an angular diameter (eg, the Sun), setting usually means when the top edge disappears over the horizon, which will make the set time even later. Accounting for both effects should be possible, but might require numerical methods instead of a closed form formula as above.
+
+  - For the Sun (which *doesn't* have fixed right ascension/declination), do NOT divide as above. By not dividing, you compensate for the Sun's change in right ascension.
+
+  - For the Moon, see "**The Moon**" section below.
+
+  - If the quantity inside the arccosine is greater than 1, the object is always in the sky and never sets or rises.
+
+  - If the quantity inside the arccosine is less than -1, the object is never in the sky and thus also never sets or rises.
+
+  - I did only minimal testing. As always, do not rely on my answers for anything important.
+
+**The Moon**:
+
+  - The Moon's right ascension and declination change rapidly, so this calculation does not work well for the moon.
+
+  - You could compensate for the change in right ascension (and thus hour angle) by approximating the increase as 24 hours every 27.32158 days (its sidereal period) and do an iterative calculation.
+
+  - An even better compensation for the change in right ascension would be to approximate the moon's movement in ecliptic longitude (which is more constant than its movement its right ascension) as 360 degrees per 27.32158 days and then project the ecliptic longitude back to right ascension, and then iterate.
+
+  - Compensating for the moon's change in declination is more difficult. The moon's ecliptic latitude (which can be converted to declination) varies sinusoidally, but the equation $\sin (x)=a$ normally has two solutions. Unless you know whether the moon's ecliptic latitude is increasing or decreasing (ie, whether it's between ascending and descending nodes or vice versa), you won't know the direction of declination change.
+
+**Less important notes (optional):**
+
+  - See https://astronomy.stackexchange.com/questions/14492 for more general equations on when an object rises/sets/etc.
+
+  - Calculations for this answer at: https://github.com/barrycarter/bcapps/blob/master/STACK/bc-object-riset-from-az-elt.m
+
+  - Related calculations: https://github.com/barrycarter/bcapps/blob/master/STACK/bc-rst.m
+
+  - Mathematica was unable to find a simpler form for the "time to set" above, though I sense a simpler form does exist (I could be wrong).
+
+  - If you know the Sun's declination (which you can get from its azimuth and elevation as above), you can *almost* determine the date. However, the sun reaches a given declination twice a year (example: it reaches 0 degrees declination on both equinoxes, by definition), so you can only know it's one of two days.
+
+**Solution notes:**
+
+I learned quite a bit answering this question, and thought it was only solvable numerically until I figured out the shortcut:
+
+  - To convert from the azimuth/elevation sphere to the hour angle/declination sphere, you just rotate around the y axis by $\frac{\pi }{2}-\lambda$ (90 degrees minus the latitude) and then rotate $pi$ (180 degrees) around the z axis.
+
+  - Once you have the declination, computing the hour angle when an object sets is easy.
+
+  - You then subtract the setting time from the current hour angle to get the answer.
+
+
+maybe diagram
+
+== ANSWER ENDS HERE ==
+
+(* convert AzElLat to HADec via y axis rotation of Lat degrees *)
 
 conds = {-Pi < ha < Pi, -Pi/2 < dec < Pi/2, -Pi/2 < lat < Pi/2,
          -Pi < az < Pi, -Pi/2 < el  < Pi/2}
 
-a0 = N[HADecLat2azEl[Pi/12, 10*Degree, 35*Degree]]
+(* TODO: not fully happy w z rotation below-- why do I need it? *)
 
-a1 = sph2xyz[Flatten[{a0,1}]]
+AzElLat2HADec[az_,el_,lat_] = FullSimplify[
+ Take[xyz2sph[
+  rotationMatrix[z,Pi].rotationMatrix[y,Pi/2-lat].sph2xyz[az,el,1]],
+ 2], conds];
 
-a2 = rotationMatrix[y,55*Degree].a1
+ha[az_,el_,lat_] = AzElLat2HADec[az,el,lat][[1]]
+dec[az_,el_,lat_] = AzElLat2HADec[az,el,lat][[2]]
+time2Set[az_,el_,lat_]=ArcCos[-(Tan[dec[az,el,lat]]*Tan[lat])]-ha[az,el,lat]
 
-a3 = xyz2sph[a2]
+time2Set2[az_,el_,lat_] = Piecewise[{
+ {0, -(Tan[dec[az,el,lat]]*Tan[lat])<-1},
+ {2*Pi, -(Tan[dec[az,el,lat]]*Tan[lat]) > 1},
+ {ArcCos[-(Tan[dec[az,el,lat]]*Tan[lat])]-ha[az,el,lat], True}
+}];
 
-b0 = FullSimplify[HADecLat2azEl[ha,dec,lat],conds]
+time2Set[phi,Z,lambda] // TeXForm
 
-b1 = FullSimplify[sph2xyz[Flatten[{b0,1}]],conds]
-
-b2 = FullSimplify[rotationMatrix[y,Pi/2-lat].b1,conds]
-
-b3 = FullSimplify[xyz2sph[b2],conds]
-
-FullSimplify[xyz2sph[rotationMatrix[y,Pi/2-lat].sph2xyz[az,el,1]],conds]
-
-xyz2sph[rotationMatrix[y,Pi/2-lat].sph2xyz[az,el,1]] /. 
- ArcTan[x_,y_] -> ArcTan[y/x]
-
-AzElLat2HADec[az_,el_,lat_] = {
-ArcTan[-(Cos[lat]*Sin[el]) + Cos[az]*Cos[el]*Sin[lat], Cos[el]*Sin[az]], 
- ArcTan[Sqrt[Cos[el]^2*Sin[az]^2 + 
-    (Cos[lat]*Sin[el] - Cos[az]*Cos[el]*Sin[lat])^2], 
-  Cos[az]*Cos[el]*Cos[lat] + Sin[el]*Sin[lat]]
-};
-
-
-ha[az_,el_,lat] = AzElLat2HADec[az,el,lat][[1]]
-dec[az_,el_,lat] = AzElLat2HADec[az,el,lat][[2]]
-
-ArcCos[-(Tan[dec[az,el,lat]]*Tan[lat])] - ha[az,el,lat]
-
-
-
-HADecLat2azEl[ArcCos[-(Tan[AzElLat2HADec[az,el,lat][[2]]] Tan[lat])]]
-
-ArcCos[-(Tan[dec] Tan[lat])]
-
-FullSimplify[HADecLat2azEl[ArcCos[-(Tan[dec] Tan[lat])], dec, lat],conds]
-
-time2Set[az_,el_,lat_] = 
- AzElLat2HADec[az,el,lat][[1]] - ArcCos[-(Tan[dec] Tan[lat])]
-
-
-
-
-
-
-yields ~ {-2.57805, 1.07338}
-
-knowing 35*Deg lat, let's go back
-
-
-
-{-0.403373, -0.25489, 0.878818}
-
-now apply a 55 degree rotation around y
-
-rotationMatrix[y,-55*Degree].{-0.403373, -0.25489, 0.878818}
-
-
-TODO: confirm TeX on site, use images if not
-
-TODO: fix plot or use w/o legends if needed
+(* Mathematica will not simplify! *)
+FullSimplify[time2Set[az,el,lat], conds]
 
 showit := Module[{file}, file = StringJoin["/tmp/math", 
        ToString[RunThrough["date +%Y%m%d%H%M%S", ""]], ".gif"]; 
      Export[file, %]; 
      Run[StringJoin["display -update 1 ", file, "&"]]; Return[file]; ]
 
+ContourPlot[time2Set2[az*Degree,el*Degree,35*Degree]/Pi*12,
+ {az,0,360},{el,0,90}, Contours -> 25, ColorFunction -> Hue,
+ PlotLegends -> Automatic, ImageSize -> {800,600}]
 
-(* the setting time *)
+ContourPlot[time2Set2[az*Degree,el*Degree,35*Degree]/Pi*12,
+ {az,0,360},{el,0,90}, Contours -> 96,
+ ColorFunction -> Hue, PlotLegends -> Automatic, ImageSize -> {800,600}]
 
-Solve[HADecLat2azEl[ha, dec, lat][[2]] == 0, ha, Reals]
+t1838 = Table[
+ Text[ToString[N[time2Set2[az*Degree,el*Degree,35*Degree]/Pi*12,3]],
+ {az*Degree, el*Degree}], {az,0,360,10}, {el,0,90,10}]
 
+Show[Graphics[t1838], ImageSize -> {1024,768}]
+showit
 
-f[ha_,dec_,lat_] = {
- Mod[HADecLat2azEl[ha,dec,lat][[1]],2*Pi],
- HADecLat2azEl[ha,dec,lat][[2]]
-};
 
-g[ha_,dec_,lat_] = {
- Mod[HADecLat2azEl[ha,dec,lat][[1]],2*Pi]/Degree,
- HADecLat2azEl[ha,dec,lat][[2]]/Degree,
- dec/Degree
-};
 
-g2[ha_,dec_,lat_] = {
- Mod[HADecLat2azEl[ha,dec,lat][[1]],2*Pi]/Degree,
- HADecLat2azEl[ha,dec,lat][[2]]/Degree,
- ha/12*Pi
-};
 
-t1025 = Flatten[Table[
- N[Re[g2[ha,dec,35*Degree]]], {ha,-Pi,Pi, Pi/100}, {dec, -Pi, Pi, Pi/100}
-],1];
 
-t1025 = Flatten[Table[
- N[Re[g[ha,dec,35*Degree]]], {ha,0,2*Pi, Pi/100}, 
- {dec, -55*Degree, 55*Degree, Pi/100}
-],1];
-
-t1025 = Flatten[Table[
- N[Re[g2[ha,dec,35*Degree]]], {ha,0,2*Pi, Pi/100}, 
- {dec, -23.5*Degree, 23.5*Degree, 1*Degree}
-],1];
-
-ListContourPlot[t1025, Contours -> 25, ImageSize -> {800,600}, 
- PlotLegends -> Automatic]
-
-
-ContourPlot[x+y,{x,0,3},{y,0,4}, PlotLegends -> Automatic]
-
-
-
-
-(* test below for all decs *)
-
-t1512=Table[f[ha/12*Pi,d,35*Degree]/Degree,{d,-55*Degree,55*Degree,10*Degree}]
-
-t1512=Table[f[ha/12*Pi,d,35*Degree]/Degree,
- {d,-23.5*Degree,23.5*Degree,47/10*Degree}]
-
-t1524= ParametricPlot[
- t1512, {ha,-12,11.99999},ImageSize->{1024,768},PlotRange->All]
-
-t1523 = ParametricPlot[
- f[11/12*Pi, dec, 35*Degree]/Degree, {dec,-23.5*Degree,23.5*Degree}
-]
-
-t1525 = Table[f[h/12*Pi, dec, 35*Degree]/Degree, {h,-12,12,1}]
-
-t1526 = ParametricPlot[
- t1525, {dec,-23.5*Degree,23.5*Degree},ImageSize->{1024,768},PlotRange->All]
-
-Show[{t1524,t1526}]
-
-t1520=Table[f[ha/12*Pi,d,35*Degree]/Degree,
- {d,-90*Degree,90*Degree,5*Degree}]
-
-t1521= ParametricPlot[
- t1520, {ha,-12,11.99999},ImageSize->{1024,768},PlotRange->All]
-
-t1522 = Table[f[h/12*Pi, dec, 35*Degree]/Degree, {h,-12,12,0.25}]
-
-t1523 = ParametricPlot[
- t1522, {dec,-89*Degree,89*Degree},ImageSize->{1024,768},PlotRange->All]
-
-Show[{t1521,t1523}]
-
-t1520=Table[f[ha/12*Pi,d,35*Degree]/Degree,
- {d,-90*Degree,90*Degree,10*Degree}]
-
-t1521= ParametricPlot[
- t1520, {ha,-12,11.99999},ImageSize->{1024,768},PlotRange->All, 
- PlotStyle -> Black]
-
-t1522 = Table[f[h/12*Pi, dec, 35*Degree]/Degree, {h,-12,12,1}]
-
-t1523 = ParametricPlot[
- t1522, {dec,-89*Degree,89*Degree},ImageSize->{1024,768},PlotRange->All,
- PlotStyle -> Red]
-
-t1524 = Table[f[h/12*Pi, dec, 35*Degree]/Degree, {h,-12,12,0.25}]
-
-t1525 = ParametricPlot[
- t1524, {dec,-89*Degree,89*Degree},ImageSize->{1024,768},PlotRange->All,
- PlotStyle -> {Pink, Dashed}]
-
-Show[{t1525,t1523}]
-
-Show[{t1521,t1523}]
-
-
-
-
-
-
-
-
-p1=ParametricPlot[{
- f[ha/12*Pi,-23.5*Degree,35*Degree]/Degree,
- f[ha/12*Pi,23.5*Degree,35*Degree]/Degree,
- f[ha/12*Pi,0*Degree,35*Degree]/Degree
-}, {ha,-12,12}, 
- PlotLegends -> 
-  {"Winter Solstice","Summer Solstice","Equinox"},
- PlotLabel -> "Solar Azimuth vs Elevation (35N latitude)",
- AxesLabel -> {"Azimuth", "Elevation"},
- ImageSize -> {800,600}
-];
-
-
-
-p0827=ParametricPlot[{
- Pi-f[ha/12*Pi,-23.5*Degree,35*Degree][[1]]/Degree*
-  Cos[f[ha/12*Pi,-23.5*Degree,35*Degree][[2]]],
- f[ha/12*Pi,-23.5*Degree,35*Degree][[2]]/Degree},
- {ha,-12,12}, 
- PlotLegends -> 
-  {"Winter Solstice","Summer Solstice","Equinox"},
- PlotLabel -> "Solar Azimuth vs Elevation (35N latitude)",
- AxesLabel -> {"Azimuth", "Elevation"},
- ImageSize -> {800,600}
-];
-
-
-
-dots[dec_]= Graphics[
- Table[{
-  Point[f[ha/12*Pi,dec,35*Degree]/Degree],
-  Text[Style[ToString[ha], FontSize -> 10], 
- f[ha/12*Pi,dec,35*Degree]/Degree+{0,5}]},
-  {ha,-11,11}]]
-
-Show[{p1, dots[-23.5*Degree], dots[0*Degree], dots[23.5*Degree]}];
-
-
-TODO: get bloody degree symbol in there somehow maybe
-
-HADecLat2azEl[ha,dec,lat]
-
-(*
-
-c1 = observed az
-c2 = observed el
-c3 = latitude
-
- *)
-
-ArcCos[-(Tan[dec] Tan[lat])
-
-Flatten[{HADecLat2azEl[ha,dec,lat], ArcCos[-(Tan[dec] Tan[lat])]}]
-
-Flatten[{HADecLat2azEl[ha,dec,35*Degree], ArcCos[-(Tan[dec] Tan[35*Degree])]}]
-
-ParametricPlot3D[
-Flatten[{HADecLat2azEl[ha,dec,35*Degree], ArcCos[-(Tan[dec] Tan[35*Degree])]}],
-{ha, -Pi, Pi}, {dec, -Pi/2, Pi/2}, PlotRange -> All]
-
-ContourPlot3D[
-Flatten[{HADecLat2azEl[ha,dec,35*Degree], ArcCos[-(Tan[dec] Tan[35*Degree])]}],
-{ha, -Pi, Pi}, {dec, -Pi/2, Pi/2}]
-
-t1012 = Flatten[Table[
-Flatten[{HADecLat2azEl[ha,dec,35*Degree], ArcCos[-(Tan[dec] Tan[35*Degree])]}],
-{ha, -Pi, Pi, Pi/100}, {dec, -Pi/2, Pi/2, Pi/100}],1];
-
-
-
-
-
-
-
-Solve[{
-HADecLat2azEl[ha,dec,lat][[1]] == c1, HADecLat2azEl[ha,dec,lat][[2]] == c2
-  }, dec]
-
-
-Solve[HADecLat2azEl[ha,dec,c3][[1]] == c1, ha]
-
-Solve[HADecLat2azEl[ha,dec,c3][[2]] == c2, ha]
-
-conds = {-Pi < ha < Pi, -Pi/2 < dec < Pi/2, -Pi/2 < lat < Pi/2, 
-         -Pi < c1 < Pi, -Pi/2 < c2 < Pi/2, -Pi/2 < c3 < Pi/2}
-
-simp = ArcTan[x_,y_] -> ArcTan[y/x]
-
-az[ha_,dec_,lat_] = FullSimplify[HADecLat2azEl[ha,dec,lat][[1]] /. simp,conds];
-
-el[ha_,dec_,lat_] = FullSimplify[HADecLat2azEl[ha,dec,lat][[2]] /. simp,conds];
-
-Solve[{az[ha,dec,c3] == c1, el[ha,dec,c3] == c2}, {ha,dec}]
-
-FullSimplify[Solve[az[ha,dec,c3] == c1, dec],conds]
-
-t0830=FullSimplify[Solve[az[ha,dec,lat] == c1, dec],conds] [[1,1,2,1]]-Pi*C[1]
-
-Table[HADecLat2azEl[ha,0,40*Degree], {ha,0,2*Pi,.01}]
-
-Table[HADecLat2azEl[ha,23*Degree,40*Degree], {ha,-Pi,Pi,.01}]
-
-p1=ParametricPlot[HADecLat2azEl[ha,0,40*Degree],{ha,-Pi,Pi}]
-p2=ParametricPlot[HADecLat2azEl[ha,23*Degree,40*Degree],{ha,-Pi,Pi}]
-p3=ParametricPlot[HADecLat2azEl[ha,-23*Degree,40*Degree],{ha,-Pi,Pi}]
-
-ParametricPlot[{Cos[HADecLat2azEl[ha,-23*Degree,40*Degree][[1]]],
-               HADecLat2azEl[ha,-23*Degree,40*Degree][[2]]},
-{ha,-Pi,Pi}]
-
-
-
-p4=ParametricPlot[
- HADecLat2azEl[ha,-23*Degree,40*Degree]-HADecLat2azEl[ha,0,40*Degree],
-{ha,-Pi,Pi}]
-
-
-Show[{p1,p2,p3}, PlotRange -> All]
-
-
-****** TODO: disclaim geometric not true; also equinox so can't determine date but it doesnt matter-- almost can
-
-(* numerical below *)
-
-suppose: az 87, el 29, lat +35
-
-Solve[{
- az[ha, dec, 35*Degree] == 87*Degree,
- el[ha, dec, 35*Degree] == 29*Degree
-}, {ha,dec}]
-
-t0846=Table[HADecLat2azEl[ha,23.5*Degree,40*Degree],{ha,-Pi,Pi,.01}]
-
-Fit[t0846,Table[x^i,{i,0,10}],x]
-
-TODO: add key!
-
-NSolve[{
- az[ha, dec, 35*Degree] == 87*Degree,
- el[ha, dec, 35*Degree] == 29*Degree
-}, ha]
-
-t0852=Solve[az[ha,dec,35*Degree] == 87*Degree, dec][[1,1,2,1]]-Pi*C[1]
-
-el[ha,t0852,35*Degree] == 29*Degree
-
-(* Complaint for mathematica.SE *)
+== MATHEMATICA.SE QUESTION STARTS HERE ==
 
 Subject: Using "PlotLegends" makes plot much smaller
 
@@ -369,14 +160,4 @@ Why does this PlotLegends problem occur and how can I fix it?
 
 I've skimmed similar questions on this site, but I don't think any address this issue exactly. Several of these questions suggest "homebrew" solutions, which I'd prefer to avoid if at all possible.
 
-(* end question *)
-
-t2 = Plot[x^2,{x,-5,5},PlotLegends -> {"x^2"}, ImageSize -> {800,600}]
-Export["/tmp/test2.png", t2, ImageSize -> {800,600}]
-
-TODO: stretch hour angle/sideral for sun (ie, 24 sidereal vs "real")
-
-TODO: not easy for moon
-
-TODO: high enough resolution chart = read it off
-
+== MATHEMATICA.SE QUESTIONS ENDS HERE ==
