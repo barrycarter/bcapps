@@ -68,15 +68,20 @@ I learned quite a bit answering this question, and thought it was only solvable 
 
   - You then subtract the setting time from the current hour angle to get the answer.
 
+**Visualization:**
+
+
+
 
 maybe diagram
 
 == ANSWER ENDS HERE ==
 
-(* convert AzElLat to HADec via y axis rotation of Lat degrees *)
+(* for the HA Rey style map, N is up *)
 
-conds = {-Pi < ha < Pi, -Pi/2 < dec < Pi/2, -Pi/2 < lat < Pi/2,
-         -Pi < az < Pi, -Pi/2 < el  < Pi/2}
+xy2AzEl[x_,y_] = {ArcTan[y,x], Pi/2*(1-Sqrt[x^2+y^2])}
+
+latDec2TotalTimeUp[lat_,dec_] = 2*ArcCos[-Tan[lat]*Tan[dec]]
 
 (* TODO: not fully happy w z rotation below-- why do I need it? *)
 
@@ -84,6 +89,47 @@ AzElLat2HADec[az_,el_,lat_] = FullSimplify[
  Take[xyz2sph[
   rotationMatrix[z,Pi].rotationMatrix[y,Pi/2-lat].sph2xyz[az,el,1]],
  2], conds];
+
+
+xyLat2HADec[x_,y_,lat_] = AzElLat2HADec @@ Flatten[{xy2AzEl[x,y],lat}]
+
+xyLat2TotalTimeUp[x_,y_,lat_] = latDec2TotalTimeUp[lat, 
+ xyLat2HADec[x,y,lat][[2]]]
+
+huehalf[x_] = Hue[3/4*(1-x)]
+
+ContourPlot[xyLat2TotalTimeUp[x,y,35*Degree]/Pi*12, {x,-1,1}, {y,-1,1},
+ ColorFunction -> huehalf, Contours -> 23, PlotLegends -> True, 
+ ImageSize -> {800,600}]
+showit
+
+ContourPlot[xyLat2TotalTimeUp[x,y,35*Degree]/Pi*12, {x,-1,1}, {y,-1,1},
+ ColorFunction -> huehalf, Contours -> 47, PlotLegends -> True, 
+ ImageSize -> {1024,768}, AspectRatio -> 4/3]
+showit
+
+561 height and 561 width for above
+
+
+
+
+
+
+ latDec2TotalTimeUp[lat, 
+ azElLat2HADec[ArcTan[y,x],Pi/2-Sqrt[x^2+y^2],lat][[2]]];
+
+ContourPlot[xyLat2TotalTimeUp[x,y,35*Degree], {x,-1,1}, {y,-1,1}]
+
+
+
+
+
+(* convert AzElLat to HADec via y axis rotation of Lat degrees *)
+
+conds = {-Pi < ha < Pi, -Pi/2 < dec < Pi/2, -Pi/2 < lat < Pi/2,
+         -Pi < az < Pi, -Pi/2 < el  < Pi/2}
+
+ContourPlot
 
 ha[az_,el_,lat_] = AzElLat2HADec[az,el,lat][[1]]
 dec[az_,el_,lat_] = AzElLat2HADec[az,el,lat][[2]]
@@ -96,6 +142,26 @@ time2Set2[az_,el_,lat_] = Piecewise[{
 }];
 
 time2Set[phi,Z,lambda] // TeXForm
+
+xyLat2Time2Set[x_,y_, lat_] = 
+ Simplify[time2Set2[ArcTan[x,y], Pi/2-Sqrt[x^2+y^2], lat],conds]
+
+img = ContourPlot[xyLat2Time2Set[x,y,35*Degree], {x,-1,1}, {y,-1,1}]
+
+img = ContourPlot[xyLat2Time2Set[x,y,35*Degree], {x,-1,1}, {y,-1,1},
+ PlotLegends -> True]
+
+Show[ImageMultiply[img, ColorNegate@Graphics[Disk[{0, 0}, {1, 1}]]], 
+ ImageSize -> {1,1}]
+
+TODO: total timeup graph (declin based)
+
+In[251]:= img = ContourPlot[xyLat2Time2Set[x,y,35*Degree], {x,-1,1}, {y,-1,1},  
+ PlotLegends -> True, ImageSize -> {1024,768}, ColorFunction -> Hue, Contours ->
+ 25]                                                                            
+
+
+
 
 (* Mathematica will not simplify! *)
 FullSimplify[time2Set[az,el,lat], conds]
