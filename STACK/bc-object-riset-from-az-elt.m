@@ -117,10 +117,16 @@ t1838 = Table[
  Text[ToString[N[time2Set2[az*Degree,el*Degree,35*Degree]/Pi*12,3]],
  {az*Degree, el*Degree}], {az,0,360,10}, {el,0,90,10}]
 
-Show[Graphics[t1838], ImageSize -> {1024,768}]
+t1847 = Table[
+ Text[ToString[N[time2Set2[az*Degree,el*Degree,35*Degree]/Pi*12,3]],
+ {(90-el)*Degree*Cos[az*Degree], (90-el)*Degree*Sin[az*Degree]}],
+ {az,0,360,10}, {el,0,90,10}]
+
+Show[Graphics[t1847], ImageSize -> {1024,768}]
 showit
 
 
+TODO: add visualization, perhaps polar plot
 
 
 
