@@ -5,11 +5,11 @@ https://astronomy.stackexchange.com/questions/14492/need-simple-equation-for-ris
 == ANSWER STARTS HERE ==
 
 $
-   \cos ^{-1}\left(-\frac{\tan (\lambda ) (\cos (\lambda ) \cos (\phi ) \cos
-   (Z)+\sin (\lambda ) \sin (Z))}{\sqrt{(\cos (\lambda ) \sin (Z)-\sin (\lambda
-    ) \cos (\phi ) \cos (Z))^2+\sin ^2(\phi ) \cos ^2(Z)}}\right)-\tan
-    ^{-1}(\cos (\lambda ) \sin (Z)-\sin (\lambda ) \cos (\phi ) \cos (Z),\sin
-    (\phi ) (-\cos (Z)))
+\cos ^{-1}\left(-\frac{\tan (\lambda ) (\cos (\lambda ) \cos (\phi ) \cos
+(Z)+\sin (\lambda ) \sin (Z))}{\sqrt{(\cos (\lambda ) \sin (Z)-\sin (\lambda)
+\cos (\phi ) \cos (Z))^2+\sin ^2(\phi ) \cos ^2(Z)}}\right)-\tan^{-1}
+(\cos (\lambda ) \sin (Z)-\sin (\lambda ) \cos (\phi ) \cos (Z),\sin
+(\phi ) (-\cos (Z)))
 $
 
 is the amount of time from now (see important notes below) a celestial object will set, where:
@@ -105,10 +105,20 @@ showit
 
 ContourPlot[xyLat2TotalTimeUp[x,y,35*Degree]/Pi*12, {x,-1,1}, {y,-1,1},
  ColorFunction -> huehalf, Contours -> 47, PlotLegends -> True, 
- ImageSize -> {1024,768}, AspectRatio -> 4/3]
+ ImageSize -> {1024,768}, AspectRatio -> 1]
 showit
 
-561 height and 561 width for above
+ContourPlot[xyLat2TotalTimeUp[x,y,35*Degree]/Pi*12, {x,-1,1}, {y,-1,1},
+ ColorFunction -> huehalf, Contours -> 47, PlotLegends -> True, 
+ ImageSize -> {1024,768}, AspectRatio -> 1]
+showit
+
+ContourPlot[xyLat2TotalTimeUp[x,y,35*Degree]/Pi*12, {x,-1,1}, {y,-1,1},
+ ColorFunction -> huehalf, Contours -> 47, PlotLegends -> True, 
+ ImageSize -> {1095,821}, AspectRatio -> 1]
+showit
+
+561 height and 561 width for above (1024,768)
 
 
 
