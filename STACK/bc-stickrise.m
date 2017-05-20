@@ -1,5 +1,12 @@
 (* formulas start here *)
 
+(* kludge for 'display' fuckery *)
+
+showit := Module[{file}, file = StringJoin["/tmp/math", 
+       ToString[RunThrough["date +%Y%m%d%H%M%S", ""]], ".gif"]; 
+     Export[file, %]; 
+     Run[StringJoin["display -update 1 ", file, "&"]]; Return[file]; ]
+
 conds = {-Pi/2<dec<Pi/2, -Pi/2<lat<Pi/2, -Pi<ha<Pi};
 
 az[ha_, dec_, lat_] = ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[ha]*Sin[lat], 
@@ -9,6 +16,40 @@ el[ha_, dec_, lat_] = ArcTan[Sqrt[Cos[dec]^2*Sin[ha]^2 +
       (Cos[lat]*Sin[dec] - Cos[dec]*Cos[ha]*Sin[lat])^2], 
     Cos[dec]*Cos[ha]*Cos[lat] + Sin[dec]*Sin[lat]]
 
+r[ha_, dec_, lat_]= Cot[el[ha,dec,lat]]
+
+theta[ha_, dec_, lat_] = -az[ha,dec,lat]
+
+x[ha_, dec_, lat_] = FullSimplify[r[ha,dec,lat]*Cos[theta[ha,dec,lat]],conds]
+
+y[ha_, dec_, lat_] = FullSimplify[r[ha,dec,lat]*Sin[theta[ha,dec,lat]],conds]
+
+dx[ha_, dec_, lat_] = FullSimplify[D[x[ha,dec,lat],ha],conds]
+
+dy[ha_, dec_, lat_] = FullSimplify[D[y[ha,dec,lat],ha],conds]
+
+ds2[ha_, dec_, lat_] = FullSimplify[dx[ha,dec,lat]^2 + dy[ha,dec,lat]^2,conds]
+
+ds[ha_,dec_,lat_] = FullSimplify[Sqrt[ds2[ha,dec,lat]], conds]
+
+(* NOTE:
+
+In[128]:= FullSimplify[FullSimplify[D[ds[ha,dec,lat],dec],conds] /. dec -> 0,con
+ds]                                                                             
+ContourPlot[ds[ha,dec,35*Degree], {ha,-1,1}, {dec,-1,1}]
+
+
+*)
+
+
+(* TODO: 2 eyes *)
+
+
+
+
+
+
+
 cleanup = {ha -> omega, dec -> delta, lat -> phi}
 
 ha2ha[h_] = h/12*Pi-Pi
@@ -16,9 +57,11 @@ ha2ha[h_] = h/12*Pi-Pi
 azh[h_,dec_,lat_] = az[ha2ha[h],dec,lat]
 elh[h_,dec_,lat_] = el[ha2ha[h],dec,lat]
 
-r[h_, dec_, lat_]=Sqrt[(Cos[lat]*Sin[dec] + Cos[dec]*Cos[(h*Pi)/12]*Sin[lat])^
-       2 + Cos[dec]^2*Sin[(h*Pi)/12]^2]/(-(Cos[dec]*Cos[lat]*Cos[(h*Pi)/12]) + 
-     Sin[dec]*Sin[lat])
+(* TODO: angular radius is 16' per sunset formula *) 
+
+(* TODO: no refraction *)
+
+(* TODO: the whole 12/Pi thing is now obsolete *)
 
 theta[h_, dec_, lat_] = (3*Pi)/2 - ArcTan[Cos[lat]*Sin[dec] + 
       Cos[dec]*Cos[(h*Pi)/12]*Sin[lat], Cos[dec]*Sin[(h*Pi)/12]]
@@ -117,12 +160,6 @@ Plot3D[ds[12,dec*Degree,lat*Degree],{dec,-23.5,+23.5}, {lat,30,50}]
 Plot3D[ds[15,dec*Degree,lat*Degree],{dec,-23.5,+23.5}, {lat,30,50}]
 
 
-
-
-
-
-
-
 x[h_,dec_,lat_] = FullSimplify[r[h,dec,lat]*Cos[theta[h,dec,lat]], conds]
 
 y[h_,dec_,lat_] = FullSimplify[r[h,dec,lat]*Sin[theta[h,dec,lat]], conds]
@@ -141,7 +178,9 @@ TODO: SUMMARY ANSWER HERE
 
 TODO: 15 deg cutoff 3.73205
 
-We know (see references section) the Sun's azimuth and elevation at any given time is:
+(* ANSWER STARTS HERE *)
+
+We know from https://astronomy.stackexchange.com/a/14508/21 that the Sun's azimuth and elevation at any given time is:
 
 $
    \text{azimuth}=\tan ^{-1}(\sin (\delta ) \cos (\phi )-\cos (\delta ) \cos 
@@ -164,6 +203,34 @@ where:
     - $\omega$ is $-15 {}^{\circ}$ or $-\frac{\pi }{12}$ 1 hour before local solar noon (ie, 11am on a sundial)
     - $\omega$ is $\pm180 {}^{\circ}$ or $\pm\pi$ at local solar midnight
     - $\omega$ is $-90 {}^{\circ}$ or $-\frac{\pi }{2}$ 6 hours before local solar noon (ie, 6am on a sundial), and so on.
+
+Of course, this assumes the Sun is a single point of light instead of a disk, and that there's no refraction.
+
+To compensate for the Sun being a disk, we will note those numbers are ***PUT SYMBOL HERE*** +- 17 minutes of arc (about 0.005 radians). 
+
+Since we won't be dealing the Sun near the horizon, we can ignore refraction, which is small away from the horizon.
+
+Now, consider a stick stuck vertically into the ground with a height
+of 1m (any unit would do, just using 'm' for convenience). We will assume the stick is transparent with an infinitesimally small opaque point at the top.
+
+The direction in which the stick's shadow points is opposite the Sun's azimuth. For example, if the Sun is due south, the shadow will point due north.
+
+The length of a the stick's shadow ($r$) is the cotangent of the Sun's elevation, or:
+
+$
+ \frac{\sqrt{(\sin (\delta ) \cos (\phi )-\cos (\delta ) \cos (\text{ha}) \sin
+    (\phi ))^2+\cos ^2(\delta ) \sin ^2(\text{ha})}}{\cos (\delta ) \cos
+    (\text{ha}) \cos (\phi )+\sin (\delta ) \sin (\phi )}
+$
+
+
+
+
+
+
+
+
+
 
 To make things slightly easier, let's convert $\omega$ to $h$, something closer to clock time. After this conversion, we have:
 
@@ -197,6 +264,9 @@ $
     \left(\frac{\pi  h}{12}\right)\right)
 $
 
+
+
+
 The length of a vertical stick's shadow ($r$) is the cotangent of the Sun's elevation, or:
 
 $
@@ -206,7 +276,7 @@ $
     ) \cos \left(\frac{\pi  h}{12}\right) \cos (\phi )}
 $
 
-Note that this formula only makes sense when $r$ is nonnegative.
+Note that this formula only makes sense when $r$ is nonnegative, and we are defining the stick's length as 1 unit.
 
 Although we could continue working in polar coordinates, it might be easier to convert to Cartesian coordinates. Using the standard transformation formulas, the x and y positions of the tip of a vertical stick's shadow (where north is the positive y axis and east is the positive x axis, as on a map) is:
 
@@ -221,6 +291,8 @@ $
 $
 
 Plotting this:
+
+versa vs recta
 
 TODO: math porn warning
 
@@ -354,6 +426,8 @@ TODO: elecbill stuff
 TODO: back of envelope -- 15 deg/hour, at 45 elev?
 
 TODO: sun has angular width, and oblong at horizon
+
+TODO: horizon = bad
 
 TODO: note when setting, asymptotic to infinity
 
@@ -564,10 +638,10 @@ g2 = Graphics[{pts[-23.5*Degree], pts[0*Degree], pts[23.5*Degree]}];
 Show[{g1,g2}]
 showit
 
-
-
-
 TODO: label points with hours!
+
+Plot[-Cot[(el+17/60)*Degree]+Cot[el*Degree],{el,0,90}, ImageSize -> {800,600}]
+
 
 
 *)
