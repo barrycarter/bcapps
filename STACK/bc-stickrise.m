@@ -16,9 +16,9 @@ el[ha_, dec_, lat_] = ArcTan[Sqrt[Cos[dec]^2*Sin[ha]^2 +
       (Cos[lat]*Sin[dec] - Cos[dec]*Cos[ha]*Sin[lat])^2], 
     Cos[dec]*Cos[ha]*Cos[lat] + Sin[dec]*Sin[lat]]
 
-r[ha_, dec_, lat_]= Cot[el[ha,dec,lat]]
+r[ha_, dec_, lat_]= FullSimplify[Cot[el[ha,dec,lat]],conds]
 
-theta[ha_, dec_, lat_] = -az[ha,dec,lat]
+theta[ha_, dec_, lat_] = az[ha,dec,lat]+Pi
 
 x[ha_, dec_, lat_] = FullSimplify[r[ha,dec,lat]*Cos[theta[ha,dec,lat]],conds]
 
@@ -31,6 +31,8 @@ dy[ha_, dec_, lat_] = FullSimplify[D[y[ha,dec,lat],ha],conds]
 ds2[ha_, dec_, lat_] = FullSimplify[dx[ha,dec,lat]^2 + dy[ha,dec,lat]^2,conds]
 
 ds[ha_,dec_,lat_] = FullSimplify[Sqrt[ds2[ha,dec,lat]], conds]
+
+(* NOTE: stop cut/paste here for now *)
 
 (* NOTE:
 
@@ -62,27 +64,6 @@ elh[h_,dec_,lat_] = el[ha2ha[h],dec,lat]
 (* TODO: no refraction *)
 
 (* TODO: the whole 12/Pi thing is now obsolete *)
-
-theta[h_, dec_, lat_] = (3*Pi)/2 - ArcTan[Cos[lat]*Sin[dec] + 
-      Cos[dec]*Cos[(h*Pi)/12]*Sin[lat], Cos[dec]*Sin[(h*Pi)/12]]
-
-x[h_, dec_, lat_] = (Cos[lat]*Cot[(h*Pi)/12] - Csc[(h*Pi)/12]*Sin[lat]*
-      Tan[dec])^(-1)
-
-y[h_, dec_, lat_] = (Cos[lat] + Cos[(h*Pi)/12]*Cot[dec]*Sin[lat])/
-    (Cos[lat]*Cos[(h*Pi)/12]*Cot[dec] - Sin[lat])
-
-dx[h_, dec_, lat_] = (Pi*Csc[(h*Pi)/12]*(Cos[lat]*Csc[(h*Pi)/12] - 
-      Cot[(h*Pi)/12]*Sin[lat]*Tan[dec]))/
-    (12*(Cos[lat]*Cot[(h*Pi)/12] - Csc[(h*Pi)/12]*Sin[lat]*Tan[dec])^2)
-
-dy[h_, dec_, lat_] = (Pi*Cot[dec]*Sin[(h*Pi)/12])/
-    (12*(-(Cos[lat]*Cos[(h*Pi)/12]*Cot[dec]) + Sin[lat])^2)
-
-ds[h_, dec_, lat_] = 
-   (Pi*Sqrt[(Cot[dec]^2*((Cos[lat]*Cot[dec] - Cos[(h*Pi)/12]*Sin[lat])^2 + 
-         Sin[(h*Pi)/12]^2))/(-(Cos[lat]*Cos[(h*Pi)/12]*Cot[dec]) + Sin[lat])^
-        4])/12
 
 rplot[h_,dec_,lat_] := Max[0, r[h,dec,lat]]
 xplot[h_,dec_,lat_] := rplot[h,dec,lat]*Cos[theta[h,dec,lat]]
@@ -203,27 +184,123 @@ where:
     - $\omega$ is $-15 {}^{\circ}$ or $-\frac{\pi }{12}$ 1 hour before local solar noon (ie, 11am on a sundial)
     - $\omega$ is $\pm180 {}^{\circ}$ or $\pm\pi$ at local solar midnight
     - $\omega$ is $-90 {}^{\circ}$ or $-\frac{\pi }{2}$ 6 hours before local solar noon (ie, 6am on a sundial), and so on.
+    - Conversely, $\omega$ is $1$ 3h49m11s after noon (that's $\frac{24}{2 \pi }$ converted to hms). This quantity is important and I'll refer to it as the "radian hour" below (this is nonstandard terminology).
 
-Of course, this assumes the Sun is a single point of light instead of a disk, and that there's no refraction.
+Of course, this applies only to the center of the Sun, ignores the fact the Sun is a disk, and also ignores refraction.
 
-To compensate for the Sun being a disk, we will note those numbers are ***PUT SYMBOL HERE*** +- 17 minutes of arc (about 0.005 radians). 
+To compensate for the Sun being a disk, we will note those numbers are ***PUT SYMBOL HERE*** +- 17 minutes of arc (about 0.005 radians).  ***** MY PLAN HERE *****
 
 Since we won't be dealing the Sun near the horizon, we can ignore refraction, which is small away from the horizon.
 
-Now, consider a stick stuck vertically into the ground with a height
-of 1m (any unit would do, just using 'm' for convenience). We will assume the stick is transparent with an infinitesimally small opaque point at the top.
+Now, consider a stick placed vertically into the ground with a height of 1m (any unit would do, just using 'm' for convenience). We will assume the stick is transparent with an infinitesimally small opaque point at the top.
 
-The direction in which the stick's shadow points is opposite the Sun's azimuth. For example, if the Sun is due south, the shadow will point due north.
-
-The length of a the stick's shadow ($r$) is the cotangent of the Sun's elevation, or:
+The direction in which the stick's shadow points ($\theta$) is opposite the Sun's azimuth. For example, if the Sun is due south, the shadow will point due north:
 
 $
- \frac{\sqrt{(\sin (\delta ) \cos (\phi )-\cos (\delta ) \cos (\text{ha}) \sin
-    (\phi ))^2+\cos ^2(\delta ) \sin ^2(\text{ha})}}{\cos (\delta ) \cos
-    (\text{ha}) \cos (\phi )+\sin (\delta ) \sin (\phi )}
+   \theta (\omega ,\delta ,\phi )=\tan ^{-1}(\sin (\delta ) \cos (\phi )-\cos
+    (\delta ) \cos (\omega ) \sin (\phi ),-\cos (\delta ) \sin (\omega ))+\pi
 $
 
+The length of a the stick's shadow ($r$) is the cotangent of the Sun's elevation, which "simplifies" to:
 
+$
+   r(\omega ,\delta ,\phi )=\frac{\sqrt{(\sin (\delta ) \cos (\phi )-\cos
+    (\delta ) \cos (\omega ) \sin (\phi ))^2+\cos ^2(\delta ) \sin ^2(\omega
+    )}}{\cos (\delta ) \cos (\omega ) \cos (\phi )+\sin (\delta ) \sin (\phi )}
+$
+
+Note that this formula only makes sense when $r$ is nonnegative.
+
+Although we could continue working in polar coordinates, it might be easier to convert to Cartesian coordinates. Using the standard transformation formulas, the x and y positions of the tip of the stick's shadow (where north is the positive x axis and west is the positive y axis) is:
+
+$
+   x(\omega ,\delta ,\phi )=\frac{\cot (\delta ) \cos (\omega ) \sin (\phi
+    )-\cos (\phi )}{\cot (\delta ) \cos (\omega ) \cos (\phi )+\sin (\phi )}
+$
+$
+   y(\omega ,\delta ,\phi )=\frac{1}{\tan (\delta ) \csc (\omega ) \sin (\phi
+    )+\cot (\omega ) \cos (\phi )}
+$
+
+Of course, we're interested in the speed of the shadow, so we differentiate with respect to $\omega$, the Sun's hour angle, which we're using to measure time:
+
+$
+   \frac{\partial x(\omega ,\delta ,\phi )}{\partial \omega }=-\frac{\cot
+    (\delta ) \sin (\omega )}{(\cot (\delta ) \cos (\omega ) \cos (\phi )+\sin
+    (\phi ))^2}
+$
+
+$
+  \frac{\partial y(\omega ,\delta ,\phi )}{\partial \omega }=\frac{\csc (\omega
+    ) (\tan (\delta ) \cot (\omega ) \sin (\phi )+\csc (\omega ) \cos (\phi
+    ))}{(\tan (\delta ) \csc (\omega ) \sin (\phi )+\cot (\omega ) \cos (\phi
+    ))^2}
+$
+
+Finally, using the Pythagorean Theorem for differentials, we can find the total speed, which we'll refer to as $\text{ds}$:
+
+$
+   \text{ds}(\omega ,\delta ,\phi )=\sqrt{\left(\frac{\partial x(\omega ,\delta
+   ,\phi )}{\partial \omega }\right)^2+\left(\frac{\partial y(\omega ,\delta
+   ,\phi )}{\partial \omega }\right)^2}=\sqrt{\frac{\cot ^2(\delta ) \left(\cos
+    (\omega ) \left(\cot (\delta ) \sin (2 \phi )+\cos (\omega ) \sin ^2(\phi
+    )\right)+\cot ^2(\delta ) \cos ^2(\phi )+\sin ^2(\omega )\right)}{(\cot
+    (\delta ) \cos (\omega ) \cos (\phi )+\sin (\phi ))^4}}
+$
+
+Note the unit here is meters per radian hour (with radian hour defined as above).
+
+(* TODO: I may have dec backwards somewhere, winter should have later riset *)
+
+(* no, its just that 0h = culmination = noon, fixed by change of range *)
+
+Plot[ds[ha/12*Pi, 23.5*Degree, 35*Degree], {ha,-12,12}]
+
+Plot[ds[ha/12*Pi, -23.5*Degree, 35*Degree], {ha,0,24}]
+
+
+ContourPlot[ds[ha/12*Pi,dec*Degree,35*Degree],{ha,-6,6},{dec,-23.5,23.5}, 
+ PlotLegends -> True]
+
+
+Limit[ds[omega,delta,phi],delta -> 0]
+
+(* below not valid for el near 90 degrees *)
+
+width[ha_,dec_,lat_] = FullSimplify[Cot[el[ha,dec,lat]-17/60*Degree] - 
+ Cot[el[ha,dec,lat]+17/60*Degree], conds]
+
+
+
+
+
+x+17/60*Degree]-Cot[x-17/60*Degree],{x,0,90*Degree}]
+
+
+
+HoldForm[ds[omega,delta,phi]] == Sqrt[HoldForm[D[x[omega,delta,phi],omega]]^2 +
+ HoldForm[D[y[omega,delta,phi],omega]]^2] == ds[omega,delta,phi] // TeXForm
+
+
+
+
+HoldForm[D[x[omega,delta,phi],omega]] == dx[omega,delta,phi]
+
+HoldForm[D[y[omega,delta,phi],omega]] == dy[omega,delta,phi]
+
+
+HoldForm[x[omega,delta,phi]] == x[omega,delta,phi] // TeXForm
+
+HoldForm[y[omega,delta,phi]] == y[omega,delta,phi] // TeXForm
+
+
+
+
+
+
+HoldForm[theta[omega,delta,phi]] == theta[omega,delta,phi] // TeXForm
+
+REMINDER: ha -> omega, dec -> delta, lat -> phi
 
 
 
