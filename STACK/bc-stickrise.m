@@ -188,7 +188,7 @@ where:
 
 Of course, this applies only to the center of the Sun, ignores the fact the Sun is a disk, and also ignores refraction.
 
-To compensate for the Sun being a disk, we will note those numbers are ***PUT SYMBOL HERE*** +- 17 minutes of arc (about 0.005 radians).  ***** MY PLAN HERE *****
+To compensate for the Sun being a disk, we will note those numbers are ***PUT SYMBOL HERE*** +- 16 minutes of arc (about 0.004654 radians).  ***** MY PLAN HERE *****
 
 Since we won't be dealing the Sun near the horizon, we can ignore refraction, which is small away from the horizon.
 
@@ -251,12 +251,22 @@ $
 Note the unit here is meters per radian hour (with radian hour defined as above).
 
 (* TODO: I may have dec backwards somewhere, winter should have later riset *)
-
 (* no, its just that 0h = culmination = noon, fixed by change of range *)
+
+
+dsMod1[ha_,dec_,lat_] = If[
+ el[ha,dec,lat] < 0 || Abs[dratio[ha,dec,lat]] > .1, 0,
+ ds[ha,dec,lat]];
 
 Plot[ds[ha/12*Pi, 23.5*Degree, 35*Degree], {ha,-12,12}]
 
 Plot[ds[ha/12*Pi, -23.5*Degree, 35*Degree], {ha,0,24}]
+
+Plot[dsMod1[ha/12*Pi, 23.5*Degree, 35*Degree], {ha,-12,12}]
+
+Plot[{dsMod1[ha/12*Pi, 23.5*Degree, 35*Degree], 
+ dsMod1[ha/12*Pi, -23.5*Degree, 35*Degree],
+ dsMod1[ha/12*Pi, 10^-9*Degree, 35*Degree]},  {ha,-12,12}, PlotRange -> All]
 
 
 ContourPlot[ds[ha/12*Pi,dec*Degree,35*Degree],{ha,-6,6},{dec,-23.5,23.5}, 
@@ -265,16 +275,42 @@ ContourPlot[ds[ha/12*Pi,dec*Degree,35*Degree],{ha,-6,6},{dec,-23.5,23.5},
 
 Limit[ds[omega,delta,phi],delta -> 0]
 
-(* below not valid for el near 90 degrees *)
+el2SunWidthDiam[el_] = Cot[el-16/60*Degree]-Cot[el+16/60*Degree]
 
-width[ha_,dec_,lat_] = FullSimplify[Cot[el[ha,dec,lat]-17/60*Degree] - 
- Cot[el[ha,dec,lat]+17/60*Degree], conds]
-
+Plot[el2SunWidthDiam[el*Degree], {el,0,45}]
 
 
+(* below not valid for el near 90 degrees or 0 degrees *)
+
+width[ha_,dec_,lat_] = Simplify[Cot[el[ha,dec,lat]-16/60*Degree] - 
+ Cot[el[ha,dec,lat]+16/60*Degree], conds]
+
+dwidth[ha_,dec_,lat_] = Simplify[D[width[ha,dec,lat],ha],conds]
+
+dratio[ha_,dec_,lat_] = Simplify[dwidth[ha,dec,lat]/ds[ha,dec,lat],conds]
+
+Plot[dratio[ha/12*Pi,23.5*Degree,35*Degree],{ha,-12,12}]
+Plot[dratio[ha/12*Pi,23.5*Degree,35*Degree],{ha,-7,7}]
+
+Plot[dratio[ha/12*Pi,23.5*Degree,35*Degree],{ha,7,8}]
+
+ContourPlot[dsMod1[ha/12*Pi,dec*Degree,35*Degree],{ha,-12,12},{dec,-23.5,23.5},
+PlotLegends -> True]
 
 
-x+17/60*Degree]-Cot[x-17/60*Degree],{x,0,90*Degree}]
+
+
+
+Plot[width[ha/12*Pi, 0*Degree, 35*Degree], {ha,-12,12}]
+
+
+
+
+
+
+
+
+x+16/60*Degree]-Cot[x-16/60*Degree],{x,0,90*Degree}]
 
 
 
@@ -717,9 +753,38 @@ showit
 
 TODO: label points with hours!
 
-Plot[-Cot[(el+17/60)*Degree]+Cot[el*Degree],{el,0,90}, ImageSize -> {800,600}]
+Plot[-Cot[(el+16/60)*Degree]+Cot[el*Degree],{el,0,90}, ImageSize -> {800,600}]
 
 
 
 *)
+
+TODO: refraction formula
+
+https://en.wikipedia.org/wiki/Atmospheric_refraction
+
+Atmospheric refraction of the light from a star is zero in the zenith, less than 1# (one arc-minute) at 45apparent altitude, and still only 5.3# at 10altitude; it quickly increases as altitude decreases, reaching 9.9# at 5altitude, 18.4# at 2altitude, and 35.4# at the horizon;[4] all values are for 10  and 1013.25 hPa in the visible part of the spectrum.
+
+TODO: this is also the page that mentions multiple sunrises
+
+TODO: Stellarium sanity check (not best way, but fun)
+
+TODO: convert refraction ha to hg geometric?
+
+(* using ela instead of wp's ha to avoid hour angle conflict *)
+
+(* precision not really there, but Mathematica likes it
+
+ref[ela_] = Cot[(ela/Degree + (731/100/(ela/Degree+44/10)))*Degree]/60*Degree
+
+ela - ref[ela] == geomel
+
+Series[1/ref[ela], {ela, 0, 2}]
+
+
+TODO: plot umbra recta/versa per minute or something? (umbra centra vs average of two?)
+
+TODO: ignoring decl changs, so insane precision = bad?
+
+3 deg for Stellarium to show problems
 
