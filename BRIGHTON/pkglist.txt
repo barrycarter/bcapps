@@ -104,10 +104,12 @@ ruby
 lua
 prover9
 mono-core
-python3-pip
-python34-pip
-python-devel
-python3-devel
+# killing off ALL python for now (TODO: restore) due to conflict
+# probably between versions (ie, python3 only)
+# python3-pip
+# python34-pip
+# python-devel
+# python3-devel
 android
 perl
 php

@@ -2,9 +2,9 @@
 install on a physical machine (named brighton) to run VirtualBox and
 vncserver so you can remote into the machine and create VMs on brighton
 
-% To copy the ISO to a USB drive (/dev/sdc in this case): [this is actually 1611]
+% To copy the ISO to a USB drive (/dev/sdc in this case):
 
-sudo dd if=/mnt/extdrive2/ISO/CentOS-7-x86_64-Minimal-1611.iso of=/dev/sdc bs=100M &
+sudo dd if=/mnt/extdrive2/ISO/CentOS-7-x86_64-Minimal-1511.iso of=/dev/sdc bs=100M &
 
 % NOTE: if you prefer to work on the console directly or use "ssh -X",
 installing vncserver is unnecessary.

@@ -19,7 +19,7 @@ for $i (split(/\n/,read_file("$bclib{home}/blkids.txt"))) {
 my($out,$err,$res) = cache_command2("sudo blkid");
 
 for $i (split(/\n/,$out)) {
-  $i=~m%^(/dev/.*?):.*?UUID=\"(.*?)\"%||die("BAD LINE: $i");
+  $i=~m%^(/dev/.*?):.*?UUID=\"(.*?)\"%||warn("BAD LINE: $i");
   $dev2id{$1}=$2;
 }
 

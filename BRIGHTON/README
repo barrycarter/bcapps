@@ -70,6 +70,7 @@ rehash
 rsync -Pavz root@192.168.0.2:/home/barrycarter/BCGIT /home/user/
 
 : and private stuff I still need
+: TODO: this may not be working because i have symlinks that copy as symlinks
 rsync -Pavz root@192.168.0.2:/home/barrycarter/BCPRIV /home/user/
 
 % Install X11 as a group:
@@ -114,7 +115,7 @@ dies on an error (warnings are ok). As always, "shutdown -h" first.
 
 % OPTIONAL: if mounting dullon external drives as though they were
 local, add this to /etc/fstab (these are the only two drives that
-still exist)
+still exist) [or use sshfs]
 
 echo "192.168.0.2:/mnt/extdrive2 /mnt/extdrive2 nfs noauto" >> /etc/fstab
 echo "192.168.0.2:/mnt/extdrive5 /mnt/extdrive5 nfs noauto" >> /etc/fstab
@@ -312,7 +313,9 @@ showing option until you choose partitioning) -- maybe take screenshot
 
 %% TODO: change .100 to .3 if networking-scripts file when going live
 
-%% TODO: get nagios working
+%% TODO: get nagios working; in particular, if nagios is running but
+failing majorly, it should STILL report to ~/ERR and print a message
+on the background image
 
 %% TODO: look at and edit /etc/cron* to make sure right jobs are
 running in the right way (ie, add these jobs to bc-public-crontab or whatever as needed)
@@ -652,3 +655,12 @@ RPM, not source
 % NOTE: brighton: front audio ports output works fine, input does not
 work at all; rear ports: both input and output run fine
 
+%%% NOTES TO SELF:
+
+can use cryptsetup and then mkfs.ext4 on the resulting mapped volume,
+no LVM needed then "mount /dev/mapper/villa /mnt/villa/" for example
+
+cryptsetup luksFormat /dev/sdc1; do this after partioning
+
+
+%% TODO: sshfs mount dullon, very useful

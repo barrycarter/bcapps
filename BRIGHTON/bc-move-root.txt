@@ -6,6 +6,18 @@
 drive, your LVMs may have the same name. If so, see
 ../FEDORA/lvm-name-conflict.txt
 
+% If the drive hasn't been formatted, use "parted", "vgcreate" and
+"lvcreate" and "vgchange -ay":
+
+cat /sys/block/sda/queue/optimal_io_size
+cat /sys/block/sda/alignment_offset
+
+parted /dev/sda
+(parted) mklabel gpt
+mkpart primary 0% 100%
+
+cryptsetup luksFormat /dev/sda1
+
 % Set up decryption:
 
 : initially, there is no "/etc/cryptsetup" and "/etc/crypttab" reads:
@@ -63,6 +75,8 @@ mkswap /mnt/kemptown/swap
 : below as recommended
 chmod 0600 /mnt/kemptown/swap
 
+%% NOTE: "swapon /mnt/kemptown/swap" may work too
+
 % to automount swapspace:
 
 chmod +x /etc/rc.d/rc.local
@@ -91,7 +105,7 @@ find /home/user -type f
 rm -rf /home/user
 
 : readd user with new directory
-useradd -d /mnt/kemptown/user -g wheel -u 1000 user
+useradd -m -d /mnt/kemptown/user -g wheel -u 1000 user
 passwd user
 yum -y install tcsh
 chsh -s /bin/tcsh user
