@@ -22,6 +22,9 @@ whois
 net-tools
 words
 ntop
+htop
+atop
+iotop
 subversion
 rcs
 sccs
@@ -530,6 +533,10 @@ perl-Statistics*
 perl-Test*
 perl-Text*
 perl-utf8
+
+# Apache mods
+mod_ldap
+
 
 # TODO: update list2sh or whatever to quote package names for * stuff
 

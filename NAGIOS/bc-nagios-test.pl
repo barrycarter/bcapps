@@ -7,6 +7,11 @@
 
 # setenv NAGIOS_ARG1 "bc_head_size ('http://s3.amazonaws.com/plivocloud/4c743546-7e1b-11e2-9060-002590662312.mp3', 1962720)"
 
+# writing to file to debug
+# open(A,">/tmp/bnt.txt");
+# print A join("\n", %ENV);
+# close(A);
+
 # and run
 
 # this hideously ugly: not setting LC_ALL causes subtle errors in

@@ -185,11 +185,13 @@ MAILTO="daemon"
 # removed '-P' and '-v' since these often rsync over nothing and getting email
 # for 'no files transferred' is annoying
 
-*/10 * * * * rsync -az user@192.168.0.2:/home/user/BCGIT /home/user/
-*/10 * * * * rsync -azL user@192.168.0.2:/home/user/BCPRIV /home/user/
+# later using sshfs symlink
+# */10 * * * * rsync -az user@192.168.0.2:/home/user/BCGIT /home/user/
+# */10 * * * * rsync -azL user@192.168.0.2:/home/user/BCPRIV /home/user/
 
 # currently, calendar.d is only maintained on dullon, sigh
-*/10 * * * * rsync -azL user@192.168.0.2:/home/user/calendar.d /home/user/
+# later, using symlink via sshfs so ok
+# */10 * * * * rsync -azL user@192.168.0.2:/home/user/calendar.d /home/user/
 
 # TODO: remove this (above and others) after cutover to brighton
 
@@ -198,7 +200,10 @@ MAILTO="daemon"
 # happens on brighton (since I am not currently doing backups on
 # brighton)
 
-37 * * * * sudo rsync -Pravz user@dullon:/home/user/brighton-to-dullon-rsyncs.txt /home/user/; sudo rsync -Pravz --files-from=/home/user/brighton-to-dullon-rsyncs.txt / user@dullon:/mnt/extdrive5/FROMBRIGHTON/
+# TODO: removing this for now because I'm on another machine but may
+# need to restore it
+
+# 37 * * * * sudo rsync -Pravz user@dullon:/home/user/brighton-to-dullon-rsyncs.txt /home/user/; sudo rsync -Pravz --files-from=/home/user/brighton-to-dullon-rsyncs.txt / user@dullon:/mnt/extdrive5/FROMBRIGHTON/
 
 # The Energy Detective (TED) has a website interface to my electricity
 # usage; the cron jobs below make a permanent copy of the data to
@@ -243,10 +248,13 @@ MAILTO="daemon"
 # Downloads directory even if I've already symlinked the Downloads
 # directory somewhere
 
-*/10 * * * * rsync -az /home/user/Downloads/ user@dullon:/home/user/Downloads/
+# later, using sshfs symlink
+# */10 * * * * rsync -az /home/user/Downloads/ user@dullon:/home/user/Downloads/
 
 # TODO: this is temporary job to sync main mysql db ("test") to brighton
-23 * * * * ssh user@dullon mysqldump test | mysql test
+
+# dropped later ssh symlink (which is probably bad)
+# 23 * * * * ssh user@dullon mysqldump test | mysql test
 
 # every few minutes, backup important files:
 
