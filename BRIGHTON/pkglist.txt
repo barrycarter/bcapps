@@ -98,6 +98,7 @@ calendar
 
 # programming languages (or related)
 # TODO: mathematica (not free)
+eclipse
 R
 perl-CPAN
 tk
@@ -117,6 +118,8 @@ android
 perl
 php
 php-mysql
+php-pear-MDB2-Driver-mysqli
+phpMyAdmin
 mediawiki123
 rubygem-rspec
 rubygem-bundler

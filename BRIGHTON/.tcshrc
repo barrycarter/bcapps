@@ -1,6 +1,7 @@
 # my preferences
 setenv DISPLAY :0.0
 setenv TERM vt100
+setenv EDITOR emacs
 set ignoreeof
 
 # path here is the default path but adds /old/ which points to a copy
@@ -51,9 +52,10 @@ setenv LD_LIBRARY_PATH /lib64:/usr/local/lib:/usr/lib:/lib:/old/usr/local/lib:/o
 
 setenv PGDATABASE main
 
-# only really required to install VirtualBox
+# only really required to install VirtualBox(?)
 
-setenv KERN_DIR /usr/src/kernels/3.10.0-327.el7.x86_64
+setenv KERN_INCL /usr/include
+setenv KERN_DIR /usr/src/kernels/3.10.0-514.el7.x86_64
 
 # needed to install gegl from source to install gimp 2.6 (because 2.8 sucks)
 

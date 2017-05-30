@@ -70,6 +70,9 @@ rxvt -geometry 165x52+1024+26 -T ELINKS -n ELINKS -tn vt100 -e elinks &
 # it's useful to have an extra wide screen just above the main fvwm screen
 rxvt -geometry 165x52+0+2339 -T WIDESCREEN -n WIDESCREEN &
 
+# TODO: this should NOT be necessary
+sudo chmod -R 777 /dev/snd/
+
 # vidalia, like Generalisimo Francisco Franco, is still dead :(
 
 # The exec below replaces the xinit process (which is no longer

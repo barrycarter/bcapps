@@ -29,6 +29,7 @@ for guest additions later
 
 : yes, you really need both kernel-devel below -- or do you
 
+: later kernel-devel-3.10.0-514.el7.x86_64
 yum -y install VirtualBox-5.1 xterm tigervnc-server gcc kernel-devel-3.10.0-327.el7.x86_64 bzip2 kernel-devel
 
 : below may be necessary and doesnt hurt to run
