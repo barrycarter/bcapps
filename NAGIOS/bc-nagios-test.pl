@@ -213,7 +213,7 @@ sub bc_check_file_of_files_age {
     my($w,$c) = split(/\s+/,$i);
     my($files) = $1;
 
-    my($out,$err,$res) = cache_command("ls -1tr $files | head -1 | xargs stat -c '%Y'");
+    my($out,$err,$res) = cache_command("ls -1tr $files | head -1 | xargs stat -Lc '%Y'");
 
     debug("ERR: $err, RES: $res");
 
@@ -558,7 +558,7 @@ sub bc_nagios_file_size {
   my($file, $size, $options) = @_;
   my(%opts) = parse_form($options);
 
-  my($cmd) = "stat $file | fgrep Size:";
+  my($cmd) = "stat -L $file | fgrep Size:";
 
   # if not localhost, use ssh to get results
   if ($ENV{NAGIOS_HOSTNAME} ne "localhost") {

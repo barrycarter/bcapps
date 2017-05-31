@@ -302,6 +302,9 @@ jabberd
 prosody
 finch
 coccinella
+# required for skype
+gnome-keyring
+# skype itself wont be in repos, just here for reference
 skype
 tcpdump
 nmap
