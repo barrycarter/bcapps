@@ -79,7 +79,7 @@ alias bcinfo4 "screen -t BC4 ssh -i /home/barrycarter/.ssh/id_rsa.bc barrycar@bc
 alias bcinfo3sync "bc-mirror-server.pl --ssh='ssh -i /home/barrycarter/.ssh/id_rsa.bc' /home/barrycarter/BCGIT/BCINFO3/ bcinfo3; bc-mirror-server.pl --ssh='ssh -i /home/barrycarter/.ssh/id_rsa.bc' /home/barrycarter/BCINFO3-PRIV bcinfo3"
 
 # chmods all Perl scripts to +x (something I tend to be bad about)
-alias perlfix "find /home/barrycarter/PERL /home/barrycarter/BCGIT -iname '*.pl' | xargs chmod +x"
+alias perlfix "find /home/barrycarter/PERL/ /home/barrycarter/BCGIT/ -iname '*.pl' | xargs chmod +x"
 
 # easier access to datediff subroutine
 alias datediff "bc-call-func.pl datediff"

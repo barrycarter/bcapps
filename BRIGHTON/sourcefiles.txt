@@ -7,7 +7,7 @@ http://gentoo.osuosl.org/distfiles/abiword-3.0.2.tar.gz
 http://gentoo.osuosl.org/distfiles/calibre-2.73.0.tar.xz
 # use --with-glut below?
 http://gentoo.osuosl.org/distfiles/celestia-1.6.1.tar.gz
-http://gentoo.osuosl.org/distfiles/feh-2.18.tar.bz2
+http://gentoo.osuosl.org/distfiles/feh-2.18.3.tar.bz2
 http://gentoo.osuosl.org/distfiles/dosbox-0.74.tar.gz
 # below may require a bit more
 http://gentoo.osuosl.org/distfiles/dosemu-freedos-1.0-bin.tgz
@@ -41,3 +41,6 @@ http://gentoo.osuosl.org/distfiles/xteddy-2.2.tar.gz
 
 # TODO: ftp://ftp.pbone.net/mirror/forensics.cert.org/centos/cert/7/x86_64/recoll-1.19.11p1-1.1.el7.x86_64.rpm (cheating and using this)
 
+# To mass dl, do something like:
+
+# egrep -v '^#|^$' sourcefiles.txt | xargs -n 1 curl -O

@@ -259,6 +259,8 @@ webcore-fonts
 inkscape
 # steam needs this
 mesa-dri-drivers
+qrencode-devel
+zbar-devel
 
 # video
 ffmpeg

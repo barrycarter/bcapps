@@ -51,7 +51,7 @@ $newtickx=max(min($newtickx,11000),9000);
 $newtick=int($newtickx);
 $newfreq=int(($newtickx-$newtick)*6553600+.5);
 
-$ac="/old/sbin/adjtimex --tick $newtick --freq $newfreq";
+$ac="adjtimex --tick $newtick --freq $newfreq";
 # die "TESTING: $ac";
 open(A,">>/root/adjtimex.txt");
 print A "$now $curoffset $newtick $newfreq\n";

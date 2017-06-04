@@ -22,6 +22,9 @@
 # ted.local.lan, The Energy Detective
 192.168.0.9 ted.local.lan
 
+# this is the github server which I need to refer to as "bc.github"
+192.30.253.122 bc.github
+
 # Mario's Pizza (local) uses liquidcommon.com for their delivery
 # service, but the monkeys at liquidcommon.com fucked up their DNS so
 # media.liquidcommon.com points to 50.56.103.37 (wrong) instead of
