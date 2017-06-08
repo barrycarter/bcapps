@@ -218,3 +218,7 @@ MAILTO="daemon"
 # give new members in my meetup group power to suggest/add events
 
 10 13 * * * bc-meetup-make-eo.pl|sh
+
+# backup all files I'm editing in emacs every 5 minutes 
+
+*/5 * * * * perl -nle '/(".*?")/; print $1' ~/.emacs_user | xargs bc-quikbak.pl

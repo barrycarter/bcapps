@@ -9,9 +9,9 @@ set ignoreeof
 # and libs as backups
 
 # also includes everything in BCGIT down to one level
+# remove "/old" from path, was a bad idea
 set path = (/bin /usr/bin /usr/local/bin /sbin /usr/sbin /usr/local/sbin \
-            /old/bin /old/usr/bin /old/usr/local/bin /old/sbin /old/usr/sbin \
-           /old/usr/local/sbin /home/user/BCGIT /home/user/BCGIT/*/ \
+           /home/user/BCGIT /home/user/BCGIT/*/ \
            /home/user/bin /home/user/PERL /usr/lib64/nagios/plugins/)
 
 # for QT to work properly
@@ -45,8 +45,9 @@ source /home/user/BCPRIV/aliases.txt
 
 # bunch of libs I know about and their /old equivs + more as needed
 # NOTE: /var/lib usually doesnt contain these types of libraries
+# removing /old from list, was a bad idea
 
-setenv LD_LIBRARY_PATH /lib64:/usr/local/lib:/usr/lib:/lib:/old/usr/local/lib:/old/usr/lib:/old/lib
+setenv LD_LIBRARY_PATH /lib64:/usr/local/lib:/usr/lib:/lib
 
 # the only postgresql database I have/use is "main"
 

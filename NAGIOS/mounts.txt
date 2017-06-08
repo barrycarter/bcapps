@@ -9,6 +9,8 @@
 # /mnt/extdrive4/
 # temporarily down, alas
 # /mnt/sshfs3/
-/mnt/ramdisk/
+# replacing /mnt/ramdisk with /dev/shm its actual location not a symlink
+# /mnt/ramdisk/
+/dev/shm
 # new drive
 /mnt/extdrive5/

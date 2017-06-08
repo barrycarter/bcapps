@@ -7,7 +7,8 @@
 # http://askubuntu.com/questions/74808/how-do-i-force-a-resolution-of-1024x768
 # suggests it's nontrivial
 
-xrandr --size 1024x768
+# TODO: make sure this is the right rate
+xrandr --size 1024x768 --rate 60
 
 # bg image won't render properly unless I do this
 /home/user/BCGIT/CALENDAR/bc-calendar.pl

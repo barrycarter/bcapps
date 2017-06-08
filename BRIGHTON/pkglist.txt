@@ -182,6 +182,8 @@ fvwm
 
 # utilities
 aspell
+# apparently no longer ships w/ English, grumble
+aspell-en
 
 # audio and sound
 # TODO: voice recognition
