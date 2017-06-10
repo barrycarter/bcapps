@@ -127,3 +127,15 @@ mon.itor.us
 http://www.aaronsw.com/2002/rss2email/
 
 #<h>If you want to surf anonymously, just put 'bot' in your User-Agent ;) </h>
+
+# added 8 Jun 2017
+SeznamBot
+CCBot
+Uptimebot
+SemrushBot
+BLEXBot
+http://megaindex.com/crawler
+http://www.cmscrawler.com
+GrapeshotCrawler
+Virusdie crawler/3.0
+http://www.domaincrawler.com/

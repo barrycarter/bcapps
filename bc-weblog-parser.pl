@@ -5,6 +5,8 @@
 # counting each IP (not each page) as a visit
 # optionally treating IPs in the same class C as one user
 
+# TODO: ignore "hack attempts", ie 404 responses
+
 require "/usr/local/lib/bclib.pl";
 
 # can't seem to create a pipe that allows comments in -f files, so...

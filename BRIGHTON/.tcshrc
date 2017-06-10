@@ -62,3 +62,6 @@ setenv KERN_DIR /usr/src/kernels/3.10.0-514.el7.x86_64
 
 setenv PKG_CONFIG_PATH /usr/local/lib/pkgconfig/:/usr/lib64/pkgconfig:/usr/share/pkgconfig
 
+# keep history for a really really long time
+
+set history=10000
