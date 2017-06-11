@@ -5,6 +5,8 @@ showit := Module[{file}, file = StringJoin["/tmp/math",
      Export[file, %]; 
      Run[StringJoin["display -update 1 ", file, "&"]]; Return[file]; ]
 
+conds = {Element[{x, z, r}, Reals], -Pi/2 < {phi,theta} < Pi/2, r>0};
+
 lineBetweenPoints[p_, x0_, y0_, z0_, x1_, y1_, z1_] =
  {x0 + p*(x1-x0),  y0 + p*(y1-y0),  z0 + p*(z1-z0)}
 
@@ -105,18 +107,53 @@ ParametricPlot[sunHitsXY[-2,100,1,0,theta], {theta, -Pi/2, Pi/2},
  PlotRange -> All, AxesOrigin -> {0,0}]
 
 
+ParametricPlot[sunHitsXY[-2,100,1,Pi/4,theta], {theta, -Pi/2, Pi/2},
+ PlotRange -> All, AxesOrigin -> {0,0}]
 
 
+ParametricPlot[sunHitsXY[-2,100,1,85*Degree,theta], {theta, -Pi/2, Pi/2},
+ PlotRange -> All, AxesOrigin -> {0,0}]
 
 
+plot[i_] := ParametricPlot[sunHitsXY[-2,100,1,i,theta], {theta,
+-Pi/2, Pi/2}, PlotRange -> All, AxesOrigin -> {0,0}]
 
 
+Table[plot[i],{i,-90*Degree,90*Degree,10*Degree}]
+
+In[58]:= sunHitsXY[-x,z,r,0,0]                                                  
+above is center... for fixed phi is it a circle?
 
 
+center of sun hits:
 
- 
+{(-r + x)/(-1 + z), 0}
 
+top edge:
 
+{x/z, 0}
+
+bottom edge:
+
+{x/(-2 + z), 0}
+
+right edge (center):
+
+{x/(-1 + z), -(r/(-1 + z))}
+
+left edge (center):
+
+{x/(-1 + z), r/(-1 + z)}
+
+FullSimplify[Norm[sunHitsXY[-x,z,r,0,0] - sunHitsXY[-x,z,r,Pi/2,0]],conds]
+
+(* dist from center to top *)
+
+Abs[x - r*z]/Abs[(-1 + z)*z]
+
+(* dist from center to bottom *)
+
+Abs[(-2*r + x + r*z)/(2 - 3*z + z^2)]
 
 
 
