@@ -119,6 +119,65 @@ plot[i_] := ParametricPlot[sunHitsXY[-2,100,1,i,theta], {theta,
 -Pi/2, Pi/2}, PlotRange -> All, AxesOrigin -> {0,0}]
 
 
+plot2[i_] := ParametricPlot[sunHitsXY[-150,100,1,i,theta], {theta,
+-Pi/2, Pi/2}, PlotRange -> All, AxesOrigin -> {0,0}]
+
+
+plot2[i_] := ParametricPlot[sunHitsXY[-150,100,1,i,theta], {theta,
+-Pi/2, Pi/2}, PlotRange -> All, AxesOrigin -> {0,0}]
+
+
+plot2[i_] := ParametricPlot[sunHitsXY[-150,100,1,i,theta], {theta,
+-Pi/2, Pi/2}]
+
+t2043 = Table[plot2[i],{i,-90*Degree,90*Degree,10*Degree}]
+
+Show[t2043, ImageSize -> {1024,768}, AspectRatio -> 1, 
+ PlotRange -> {{1.4,1.6}, {-0.1,0.1}}]
+
+
+showit
+
+p2104 = ParametricPlot[sunHitsXY[-150,100,1,phi,Pi/2], {phi,-Pi/2,Pi/2}]
+p2105 = ParametricPlot[sunHitsXY[-150,100,1,phi,-Pi/2], {phi,-Pi/2,Pi/2}]
+
+Show[{p2104,p2105}, PlotRange -> All, AspectRatio -> 1]
+showit
+
+sunHitsXY[x,z,r,phi,-Pi/2] + sunHitsXY[x,z,r,phi,Pi/2]
+
+the y components do cancel out so there is symmetry about x axis
+
+p2114 = ParametricPlot[sunHitsXY[-150,10,1,phi,Pi/2], {phi,-Pi/2,Pi/2}]
+p2115 = ParametricPlot[sunHitsXY[-150,10,1,phi,-Pi/2], {phi,-Pi/2,Pi/2}]
+
+Show[{p2114,p2115}, PlotRange -> All, AspectRatio -> 1]
+showit
+
+p2116 = ParametricPlot[sunHitsXY[-150,1000,1,phi,Pi/2], {phi,-Pi/2,Pi/2}]
+p2117 = ParametricPlot[sunHitsXY[-150,1000,1,phi,-Pi/2], {phi,-Pi/2,Pi/2}]
+
+Show[{p2116,p2117}, PlotRange -> All, AspectRatio -> 1]
+showit
+
+p2118 = ParametricPlot[sunHitsXY[-150,2.1,1,phi,Pi/2], {phi,-Pi/2,Pi/2}]
+p2119 = ParametricPlot[sunHitsXY[-150,2.1,1,phi,-Pi/2], {phi,-Pi/2,Pi/2}]
+Show[{p2118,p2119}, PlotRange -> All, AspectRatio -> 1]
+showit
+
+p2122 = ParametricPlot[sunHitsXY[-2,3,1,phi,Pi/2], {phi,-Pi/2,Pi/2}]
+p2123 = ParametricPlot[sunHitsXY[-2,3,1,phi,-Pi/2], {phi,-Pi/2,Pi/2}]
+Show[{p2122,p2123}, PlotRange -> All, AspectRatio -> Automatic,
+ ImageSize -> {1024,768}, AxesOrigin -> {0,0}]
+showit
+
+
+
+
+
+
+
+
 Table[plot[i],{i,-90*Degree,90*Degree,10*Degree}]
 
 In[58]:= sunHitsXY[-x,z,r,0,0]                                                  

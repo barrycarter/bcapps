@@ -65,3 +65,4 @@ setenv PKG_CONFIG_PATH /usr/local/lib/pkgconfig/:/usr/lib64/pkgconfig:/usr/share
 # keep history for a really really long time
 
 set history=10000
+
