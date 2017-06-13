@@ -1,14 +1,10 @@
-x = WeatherData["KTTN", "Temperature", {{1973,1,1},{1973,12,31}}]
+(* shell stuff starts here *)
 
-
-
-
-
-(* going to isd-lite *)
+From ../WEATHER/master-location-identifier-database-20130801.csv:
 
 USA,US,United States,NJ,Mercer County,Trenton|Altura,Mercer County Airport,,USa KTTN,KTTN,TTN,,14792,TTN,m,KTTN,A,ICA12 ICA10 ICA09,TTN,A,FAA13 FAA12 FAA11 FAA10,,,,724095,,14792,,,40.27669111,-74.81346833,N,FAA13 FAA12 FAA11 FAA10,64.6,A,FAA13 FAA12 FAA11 FAA10,59,,,America/New_York,US-08628,,,,,ADJ/20120717,40,-74
 
-724095
+In the isd-lite directory
 
 \zcat */724095-14792-*.gz > temp.724095-14792.1
 
@@ -20,14 +16,13 @@ echo "};" >> 724095-14792.m
 
 (* back to mathematica here *)
 
-<<"!bzcat /home/barrycarter/BCGIT/STACK/724095-14792.m.bz2";
-
-http://www.bragg.army.mil/www-wx/wxcalc.htm
-http://www.srh.noaa.gov/bmx/tables/rh.html
-
-http://www.weather.gov/media/epz/wxcalc/rhWetBulbFromTd.pdf
+(* these sources are imperfect: 
 
 https://web.archive.org/web/20060617214924/http://www.srh.noaa.gov:80/bmx/tables/rh.html
+
+http://icoads.noaa.gov/software/other/profs_short
+
+*)
 
 (* temps must be in celsius, result is fractional *)
 
@@ -49,9 +44,15 @@ showit := Module[{file}, file = StringJoin["/tmp/math",
      Run[StringJoin["display -update 1 ", file, "&"]]; Return[file]; ]
 
 
-(* filter it down to where we have both temp and dp *)
+<<"!bzcat /home/barrycarter/BCGIT/STACK/724095-14792.m.bz2";
+
+(* filter it down to where we have both temp and dp and ignore null end *)
 
 all2 = Select[all, !SameQ[#,Null] && #[[5]] > -9999 && #[[6]] > -9999 &];
+
+(* gather by rounded Celsius temperature over 2 -- this is ugly but prevents small sets from clouding .... *)
+
+
 
 229381 of 276507
 
