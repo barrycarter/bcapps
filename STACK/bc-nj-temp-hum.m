@@ -1,0 +1,10 @@
+x = WeatherData["KTTN", "Temperature", {{1973,1,1},{1973,12,31}}]
+
+
+
+(* going to isd-lite *)
+
+USA,US,United States,NJ,Mercer County,Trenton|Altura,Mercer County Airport,,USa KTTN,KTTN,TTN,,14792,TTN,m,KTTN,A,ICA12 ICA10 ICA09,TTN,A,FAA13 FAA12 FAA11 FAA10,,,,724095,,14792,,,40.27669111,-74.81346833,N,FAA13 FAA12 FAA11 FAA10,64.6,A,FAA13 FAA12 FAA11 FAA10,59,,,America/New_York,US-08628,,,,,ADJ/20120717,40,-74
+
+724095
+

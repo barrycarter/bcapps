@@ -788,3 +788,4 @@ TODO: ignoring decl changs, so insane precision = bad?
 
 3 deg for Stellarium to show problems
 
+ ignoring earth curvature, relativity, sun motion during seconds from closest to half way points
