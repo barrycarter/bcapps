@@ -1,5 +1,42 @@
 (*
 
+<answer>
+
+[I've decided to severely abuse the wiki feature by posting what I've found so far and hoping that someone else, possibly me, will do more and more work on this problem until it asymptotically approaches completion without ever quite reaching it; as with any wiki answer, please feel free to mercilessly edit and re-arrange what I've written -- for my first attempt, I am writing mostly in chronological order]
+
+What I've done so far:
+
+  - Found the nearest reliable weather station to Lawrenceville, NJ using programs I've already written (https://github.com/barrycarter/bcapps/blob/master/WEATHER/bc-weather-text.pl does part of the work; http://lawrenceville.nj.weather.94y.info/ is one place to find the results). This turns out to be "TRENTON MERCER COUNTY AIRPORT , NJ, United States (KTTN)".
+
+  - Because I want to use isd-lite data (https://www1.ncdc.noaa.gov/pub/data/noaa/isd-lite/), I need to find the numerical code for KTTN, I can't just use the four letter identifier.
+
+  - To do this, I use the master identifier database, my personal copy is at https://github.com/barrycarter/bcapps/blob/master/WEATHER/master-location-identifier-database-20130801.csv -- the entry for KTTN reads:
+
+USA,US,United States,NJ,Mercer County,Trenton|Altura,Mercer County Airport,,USa KTTN,KTTN,TTN,,14792,TTN,m,KTTN,A,ICA12 ICA10 ICA09,TTN,A,FAA13 FAA12 FAA11 FAA10,,,,724095,,14792,,,40.27669111,-74.81346833,N,FAA13 FAA12 FAA11 FAA10,64.6,A,FAA13 FAA12 FAA11 FAA10,59,,,America/New_York,US-08628,,,,,ADJ/20120717,40,-74
+
+The two key numbers here are "724095" and "14792". If I look in https://www1.ncdc.noaa.gov/pub/data/noaa/isd-lite/1999/ for example, the data I seek will be in the "724095-14792-1999.gz" file.
+
+  - Curation: This station has data from 1973-2015 (2016 data exists, but I'm using my personal collection, which doesn't have it), but some of the data is missing entirely (no line of data for a given hour) and some of the data has a missing temperature or dewpoint. I exclude these lines.
+
+  - This data includes the temperature and dewpoint, but not the relative humidity. To compute the relative humidity, I used the formula from http://icoads.noaa.gov/software/other/profs_short (which is based on the Clausius-Clapeyron equation).
+
+  - I then rounded the temperature to the nearest degree Celsius and plotted the average humidity for each rounded temperature:
+
+[[image]]
+
+This "trilinear" function fits the data fairly well:
+
+$-0.0135991 \left| x-21 \right|-0.00131261 \left| x-1 \right|-0.0075821
+ x+0.899765$
+
+[[image]]
+
+I still need to look at standard deviation for each point and do many other things, continuing work at https://github.com/barrycarter/bcapps/blob/master/STACK/bc-nj-temp-hum.m
+
+MENTION THIS FILE:
+
+(*
+
 In shell:
 
 From ../WEATHER/master-location-identifier-database-20130801.csv:
@@ -71,12 +108,18 @@ ListPlot[gatherTempRH, ImageSize -> {800,600}]
 
 Fit[tempRH,{1,x,Abs[x-23],Abs[x-1]},x]
 
-
+Fit[tempRH,{1,x,Abs[x-21],Abs[x-1]},x]                                
 
 gather2 = Gather[tempRH, Round[#1[[1]],.5] == Round[#2[[1]],.5] &];
 
 gatherTempRH2 = Sort[Table[{Mean[Transpose[i][[1]]], Mean[Transpose[i][[2]]]},
  {i, gather2}]]
+
+g2 =
+Plot[0.899765 - 0.0075821 x - 0.0135991 Abs[-21 + x] - 0.00131261 Abs[-1 + x],
+ {x,-24,42}]
+
+
 
 
 
