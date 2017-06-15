@@ -7,7 +7,6 @@ FBReader
 Grimrock
 PySolFC
 ScottFree
-VirtualBox-5.1
 WolframCDFPlayer
 abiword
 acroread
@@ -42,12 +41,14 @@ fuse-zip
 gcal
 geomview
 gif2asc
-gimp-libs.i686
 gitfs
+gnash
 gnumeric
 google-chrome
+gramps
 ical
 idevsutil_linux
+lincity
 linphone
 lucene
 mathics
@@ -69,7 +70,10 @@ perl-Imager*
 perl-Pg*
 perl-Plucene*
 perl-utf8
+plplot-devl
+povray
 prover9
+psh
 rclock
 sagemath
 satan
