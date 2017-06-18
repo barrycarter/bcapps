@@ -82,6 +82,8 @@ xtics3 = Table[{i,ToString[i-12]<>"pm"}, {i,13,23}]
 xtics4 = { {12, Text[Style["noon", {Bold, Larger}]]}, 
            {24, Text[Style["mid", {Bold, Larger}]]}};
 
+xtics5= { {3, "3am"}, {6, "6am"}, {9, "9am"} }
+
 xtics = Join[xtics1, xtics2, xtics3, xtics4]
 
 ytics = Table[{10*i, i*10*Degree}, {i,-9,9}]
@@ -91,7 +93,17 @@ p1 = Plot[{
  HADecLat2azEl[(ha-12)/12*Pi, 0*Degree, 35*Degree][[2]]/Degree,
  HADecLat2azEl[(ha-12)/12*Pi, -dec, 35*Degree][[2]]/Degree,
  -6, -12, -18
-}, {ha,6,30}, Ticks -> {xtics, ytics}, Axes -> True]
+}, {ha,6,30}, Ticks -> {xtics, ytics}, Axes -> True,
+ PlotStyle -> {Red, Green, Blue, {Dashed, RGBColor[.5,.5,1]},
+ {Dashed, Blue}, {Dashed, Black}},
+ PlotLegends -> {"Summer Solstice", "Equinoxes", "Winter Solstice",
+  "Civil Twilight", "Nautical Twilight", "Astronomical Twilight"},
+ PlotRange -> { {6,30}, {-78.5,78.5}}, ImageSize -> {1024,768},
+ PlotLabel -> 
+ Text[Style["Solar elevation at 35N for solstices and equinoxes",
+ {Bold, Larger}]]]
+showit
+
 
 (* PlotLegends -> {"Summer Solstice","Equinoxes","Winter Solstice"}]  *)
 
@@ -106,5 +118,8 @@ Show[{g,p1}, PlotRange -> {{6,30},{-90,90}}, ImageSize -> {800,600},
  FrameLabel -> {a,b,c,d}]
 showit
 
+[[image39.gif]]
 
+This isn't really an answer, but more of a visualization based on the
+formulas from https://astronomy.stackexchange.com/questions/14492/need-simple-equation-for-rise-transit-and-set-time/14508#14508 -- hope it helps
 

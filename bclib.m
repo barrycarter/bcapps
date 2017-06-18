@@ -10,7 +10,7 @@
 
 showit := Module[{file},
  file = "/tmp/math"<>ToString[RunThrough["date +%Y%m%d%H%M%S", ""]]<>".gif";
- Export[file ,%, ImageSize->{800,600}];
+ Export[file ,%];
  Run["display -update 1 "<>file<>"&"];
  Return[file];
 ];
