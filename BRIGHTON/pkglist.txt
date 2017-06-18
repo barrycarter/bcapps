@@ -12,6 +12,22 @@ efibootmgr
 libusb
 # required for scangearmp
 libusb-0.1.4-3.el7.i686
+# required for bsd-games
+ncurses-devel
+openssl-devel
+# required for freedink
+check-devel
+# required for geomview; can't have both, conflict
+lesstif-devel
+# motif-devel
+# required by povray install
+kde-baseapps
+# required by widelands
+SDL_net-devel
+SDL2_net-devel
+glew-devel
+# required for secondlife
+kdelibs3
 cmake
 extra-cmake-modules
 moreutils
@@ -42,6 +58,7 @@ at
 httpd
 lighttpd
 xapian-core
+xapian-core-devel
 git
 binutils
 FBReader
@@ -63,7 +80,6 @@ mailx
 mtr
 ncftp
 ftp
-nmap
 p7zip
 parallel
 iputils
@@ -114,6 +130,8 @@ mono-core
 # python34-pip
 # python-devel
 # python3-devel
+# confirmed later this one is OK
+python34
 android
 perl
 php
@@ -359,7 +377,7 @@ sauerbraten*
 lincity
 frozen-bubble
 koules
-2048
+2048-cli
 xscreensaver
 xmame
 widelands
@@ -373,7 +391,7 @@ talkfilters
 ScottFree
 freeciv
 Grimrock
-fortune
+fortune-mod
 freedink
 PySolFC
 xteddy
@@ -487,6 +505,19 @@ libXt-devel
 
 # required or dosbox
 SDL-devel
+
+# required for lincity-ng
+SDL2_mixer-devel
+SDL_mixer-devel
+SDL_image-devel
+SDL2_image-devel
+SDL2_ttf-devel
+SDL_ttf-devel
+SDL_gfx-devel
+physfs-devel
+boost-jam
+boost148-jam
+
 
 # required for recoll
 qt-devel

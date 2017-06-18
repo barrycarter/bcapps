@@ -82,7 +82,10 @@ MAILTO="daemon"
 # happen to be awake, this alerts me so I can make the notorious
 # "first" comment
 
-10 23 * * * /usr/X11R6/bin/xmessage -geometry 1024 GOCOMICS RESET&
+# using exec and ampersand makes pid 1 the parent process AND doesnt
+# generate an unnecessary email to cron
+
+10 23 * * * exec xmessage -geometry 1024 GOCOMICS RESET&
 
 # run my montastic tests twice an hour (montastic is a free service
 # and is pretty good, but really more of an extra check in addition to
@@ -112,10 +115,10 @@ MAILTO="daemon"
 # others); note the "&" backgrounds the xmessage to prevent cron from
 # hanging
 
-30 16 * * Mon /usr/X11R6/bin/xmessage -geometry 1024 put out trash &
+30 16 * * Mon exec xmessage -geometry 1024 put out trash &
 
 # and take the empty trash bin in the next day
-30 16 * * Tue /usr/X11R6/bin/xmessage -geometry 1024 retract trashing device &
+30 16 * * Tue exec xmessage -geometry 1024 retract trashing device &
 
 # TODO: can I replace /home/user with ~ (or even $HOME and set it?) 
 # universally and do I want to?
