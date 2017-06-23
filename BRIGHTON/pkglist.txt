@@ -369,6 +369,7 @@ samba
 # games
 # TODO: eternal lands
 # TODO: kerbal?
+lostlabyrinth
 warsow
 warzone2100
 minetest

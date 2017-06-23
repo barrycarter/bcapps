@@ -23,6 +23,32 @@ sunHitsXY[x_, z_, r_, phi_, theta_] =
 
 (*** CANON FORMULAS END HERE ***)
 
+(*
+
+Question: Name/info on shape of shadow cast by spherical light source on single point?
+
+Consider a spherical light source $S$ at `(x,0,z)` with radius $r$ ($x<0, z>0, r>0$) and a point $P$ at `(0,0,1)` (I've chosen my axes and scale to simplify the coordinates). What is the shape of the shadow cast by $P$ due to $S$?
+
+
+
+
+TODO: image
+
+s = Sphere[{-5,0,3}, 2]
+
+p = Point[{0,0,1}]
+
+r = Cuboid[{-5,-5,-.1},{5,5,.1}]
+
+l = Line[{{0,0,0},{0,0,1}}]
+
+Graphics3D[{s,p,r,l}]
+showit
+
+
+
+TODO: add background
+
 
 
 (*

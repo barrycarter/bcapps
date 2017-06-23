@@ -161,6 +161,8 @@ TODO: 15 deg cutoff 3.73205
 
 (* ANSWER STARTS HERE *)
 
+[This is not an answer; it just represents the work I've done so far on this problem at https://github.com/barrycarter/bcapps/blob/master/STACK/bc-stickrise.m -- I am marking it as a community wiki answer so others can add to it (I may add to it myself)]
+
 We know from https://astronomy.stackexchange.com/a/14508/21 that the Sun's azimuth and elevation at any given time is:
 
 $
@@ -187,10 +189,6 @@ where:
     - Conversely, $\omega$ is $1$ 3h49m11s after noon (that's $\frac{24}{2 \pi }$ converted to hms). This quantity is important and I'll refer to it as the "radian hour" below (this is nonstandard terminology).
 
 Of course, this applies only to the center of the Sun, ignores the fact the Sun is a disk, and also ignores refraction.
-
-To compensate for the Sun being a disk, we will note those numbers are ***PUT SYMBOL HERE*** +- 16 minutes of arc (about 0.004654 radians).  ***** MY PLAN HERE *****
-
-Since we won't be dealing the Sun near the horizon, we can ignore refraction, which is small away from the horizon.
 
 Now, consider a stick placed vertically into the ground with a height of 1m (any unit would do, just using 'm' for convenience). We will assume the stick is transparent with an infinitesimally small opaque point at the top.
 
@@ -222,7 +220,9 @@ $
     )+\cot (\omega ) \cos (\phi )}
 $
 
-Of course, we're interested in the speed of the shadow, so we differentiate with respect to $\omega$, the Sun's hour angle, which we're using to measure time:
+
+
+Of course, we're interested in the speed of the shadow, not just the position, so we differentiate with respect to $\omega$, the Sun's hour angle, which we're using to measure time:
 
 $
    \frac{\partial x(\omega ,\delta ,\phi )}{\partial \omega }=-\frac{\cot
@@ -253,6 +253,12 @@ Note the unit here is meters per radian hour (with radian hour defined as above)
 (* TODO: I may have dec backwards somewhere, winter should have later riset *)
 (* no, its just that 0h = culmination = noon, fixed by change of range *)
 
+Since we won't be dealing the Sun near the horizon, we can ignore refraction, which is small away from the horizon.
+
+
+
+
+To compensate for the Sun being a disk, we will note those numbers are ***PUT SYMBOL HERE*** +- 16 minutes of arc (about 0.004654 radians).  ***** MY PLAN HERE *****
 
 dsMod1[ha_,dec_,lat_] = If[
  el[ha,dec,lat] < 0 || Abs[dratio[ha,dec,lat]] > .1, 0,
@@ -388,10 +394,6 @@ $
     ^2\left(\frac{\pi  h}{12}\right)}}{\sin (\delta ) \sin (\phi )-\cos (\delta
     ) \cos \left(\frac{\pi  h}{12}\right) \cos (\phi )}
 $
-
-Note that this formula only makes sense when $r$ is nonnegative, and we are defining the stick's length as 1 unit.
-
-Although we could continue working in polar coordinates, it might be easier to convert to Cartesian coordinates. Using the standard transformation formulas, the x and y positions of the tip of a vertical stick's shadow (where north is the positive y axis and east is the positive x axis, as on a map) is:
 
 $
    x=\frac{1}{\cot \left(\frac{\pi  h}{12}\right) \cos (\phi )-\tan (\delta )
