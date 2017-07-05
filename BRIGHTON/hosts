@@ -2,8 +2,9 @@
 
 # TODO: MAY need a private version of this file and combine the two
 
+# added "saopaulo" (for saopaulo) for sendmail weirdness
 # two lines below were in original /etc/hosts so copying them over
-127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4 saopaulo
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
 
 # my servers

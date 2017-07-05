@@ -68,7 +68,7 @@ sub get_current_radar {
   # obtain site index (upto 1m old)
   # TODO: putting this in file (for debugging) is ugly
   # TODO: allow parallelizing this, one at a time may be too slow
-  my($out,$err,$res) = cache_command2("curl http://radar.weather.gov/ridge/RadarImg/$type/$station/","age=60&cachefile=/var/tmp/radar/$station-$type.out");
+  my($out,$err,$res) = cache_command2("curl -L http://radar.weather.gov/ridge/RadarImg/$type/$station/","age=60&cachefile=/var/tmp/radar/$station-$type.out");
   $out = read_file("/var/tmp/radar/$station-$type.out");
 
   # look for hrefs sort by time reversed
@@ -80,7 +80,7 @@ sub get_current_radar {
     # if we already have this one and its over the dreaded 331 bytes, return it
     if (-f "/var/tmp/radar/$i" && -s "/var/tmp/radar/$i" > 331) {return $i;}
     # we don't have it, so try to get it
-    ($out,$err,$res) = cache_command2("curl -o /var/tmp/radar/$i http://radar.weather.gov/ridge/RadarImg/$type/$station/$i","cachefile=/var/tmp/radar/$i.gotit");
+    ($out,$err,$res) = cache_command2("curl -Lo /var/tmp/radar/$i http://radar.weather.gov/ridge/RadarImg/$type/$station/$i","cachefile=/var/tmp/radar/$i.gotit");
     debug("/var/tmp/radar/$i hopefully written");
     # if we have it now, return it
     if (-f "/var/tmp/radar/$i" && -s "/var/tmp/radar/$i" > 331) {return $i;}
