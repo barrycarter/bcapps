@@ -4,6 +4,9 @@
 # https://github.com/astronexus/HYG-Database/blob/master/README.md
 # which actually seems to be what I need
 
+# --equator: use equatorial coordinates (trivial, but need it for
+# bc-map-equator.pl)
+
 require "/usr/local/lib/bclib.pl";
 
 open(A,"zcat $bclib{githome}/ASTRO/hygdata_v3.csv.gz|");
@@ -27,6 +30,9 @@ while (<A>) {
   # ignore dim stars
   if ($hash{mag}>6.5) {next;}
 
+  debug("RA: $hash{ra}, DEC: $hash{dec}");
+
+
   # convert to ecliptic coords
   my($elon,$elat) = equ2ecl($hash{ra}*$PI/12,$hash{dec}*$DEGRAD);
   map($_=$_*180/$PI,($elon,$elat));
@@ -34,8 +40,12 @@ while (<A>) {
   # ignore further than 15deg away
 #  if (abs($elat)>15) {next;}
 
-  # output is: elon elat mag hip# name (optional)
-  print "$elon $elat $hash{mag} $hash{hip} $hash{proper}\n";
+  if ($globopts{equator}) {
+    printf("%f %f $hash{mag} $hash{hip} $hash{proper}\n", $hash{ra}*15, $hash{dec});
+  } else {
+    # output is: elon elat mag hip# name (optional)
+    print "$elon $elat $hash{mag} $hash{hip} $hash{proper}\n";
+  }
 }
 
 =item equ2ecl($ra,$dec)

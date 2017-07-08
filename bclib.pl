@@ -1399,17 +1399,17 @@ sub matrixmult {
     my($a,$b)=@_;
     my(@a)=@$a;
     my(@b)=@$b;
-    debug("B: $b",@b);
+#    debug("B: $b",@b);
     my($rows,$cols)=($#a,$#{$b[0]});
     my($share)=$#b;
     my(@ans);
 
-    debug("ROWS: $rows+1, COLS: $cols+1");
+#    debug("ROWS: $rows+1, COLS: $cols+1");
 
     for $i (0..$rows) {
 	for $j (0..$cols) {
 	    for $k (0..$share) {
-	      debug("$i,$j,$k -> $a[$i][$k] * $b[$k][$j]");
+#	      debug("$i,$j,$k -> $a[$i][$k] * $b[$k][$j]");
 		$ans[$i][$j]+= $a[$i][$k]*$b[$k][$j];
 	    }
 	}

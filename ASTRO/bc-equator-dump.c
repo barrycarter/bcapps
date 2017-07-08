@@ -1,4 +1,4 @@
-// dumps the ecliptic coordinates for planet as viewed from earth in format useful to bc-ecliptic-map.pl
+// dumps the equatorial coordinates for planet as viewed from earth in format useful to bc-equator-map.pl
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -45,8 +45,8 @@ int main (int argc, char **argv) {
 
   for (i=(syear-2000.)*31556952; i<=(eyear-2000.)*31556952; i+=3600) {
 
-    // planet ecliptic coords as viewed from earth, converted to spherical
-    spkezp_c(planet,i,"ECLIPJ2000","NONE",obs,v,&lt);
+    // planet equatorial coords as viewed from earth, converted to spherical
+    spkezp_c(planet,i,"J2000","NONE",obs,v,&lt);
     recrad_c(v,&range,&ra,&dec);
 
     printf("%d %f %f %f %f\n", planet, et2jd(i), ra, dec,
