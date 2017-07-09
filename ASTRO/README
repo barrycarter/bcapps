@@ -504,6 +504,10 @@ NOTES
 These are all in http://iau-comm4.jpl.nasa.gov/XSChap8.pdf but a
 different format (for DE405, not DE430/431)
 
+bc-hyg2db.pl generates eclipticlong3.txt
+
+TODO: SPICE does NOT compile everything after I switch to x86_64 (saopaulo)-- fix miscompiles as needed
+
 NASA FILES
 ==========
 
