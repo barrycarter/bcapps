@@ -45,6 +45,9 @@ swapon /dev/loop0 |& tee /tmp/rc-local-6.txt &
 
 # cant mount overlay filesystems at boot so do it now
 
+# start bc-getmail.pl
+bc-getmail.pl &
+
 # TODO: make final decision re whether I want to mount these or not
 # mount /etc
 # mount /opt
