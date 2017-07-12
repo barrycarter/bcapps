@@ -1,0 +1,11 @@
+# these are the mounts for saopaulo along with the name of the file
+# that should contain a list of all files on that mountpoint (updated
+# daily); "villa" means "villa-files.txt" with reverse file "villa-files-rev.txt"
+
+/mnt/villa villa
+/mnt/lobos lobos
+/ saopaulo
+
+# TODO: /home on saopaulo has nothing but two symlinks so not listing it here
+
+# TODO: add usb external drives when attached

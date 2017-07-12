@@ -20,3 +20,6 @@
 
 # moved this directory
 "/mnt/extdrive5/INBOUNDSYMLINKS/sha/" "/usr/local/etc/sha/"
+
+# dullon files should be treated as though they appear at root
+"/DULLON" ""

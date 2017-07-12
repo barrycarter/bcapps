@@ -54,9 +54,21 @@ close(C);
 
 print A "Ending rev: ",time(),"\n";
 
+# this is unnecessary, but harmless: create the "converted" version of
+# these files for backup purposes
+
+print A "Starting converted: ",time(),"\n";
+($out, $err, $res) = cache_command2("$bclib{githome}/BACKUP/bc-format2altformat2.pl $name-files.txt > $name-converted.txt");
+print A "Ending converted: ",time(),"\n";
+
+# log file close and move
+
 close(A);
 
-# log file move
+# TODO: consider creating afad.txt (all files all directories here)
+# but problem: this proggie doesnt know about other drives, just one its given
+# and perhaps just have a single reverse file for bc-rev-search (same prob as above)
+
+# cron job that calls this could do both those things though (unless it backgrounds then no?)
+
 ($out,$err,$res) = cache_command2("mv $name.log $name.log.old; bzip2 -f $name.log.old & mv $name.log.new $name.log");
-
-

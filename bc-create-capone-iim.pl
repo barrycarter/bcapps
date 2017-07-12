@@ -11,8 +11,7 @@ require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
 
 # run the macro
-# TODO: yes, this is a terrible place to keep my firefox
-($out, $err, $res) = cache_command("/root/build/firefox/firefox -remote 'openURL(http://run.imacros.net/?m=bc-create-capone.iim,new-tab)'");
+($out, $err, $res) = cache_command("firefox -remote 'openURL(http://run.imacros.net/?m=capone-testing.iim,new-tab)'");
 
 # not sure how long it takes to run above command, so wait until
 # transactions*.ofx shows up in download directory (and is fairly recent)
@@ -20,7 +19,7 @@ require "/home/barrycarter/bc-private.pl";
 # TODO: this is hideous (-mmin -60 should be calculated not a guess)
 
 for (;;) {
-  ($out, $err, $res) = cache_command("find '/home/barrycarter/Download/' -iname 'transactions*.ofx' -mmin -60");
+  ($out, $err, $res) = cache_command("find '/home/barrycarter/Download/' -iname 'Transactions-Download*.ofx' -mmin -60");
   if ($out) {last;}
   debug("OUT: $out");
   sleep(1);

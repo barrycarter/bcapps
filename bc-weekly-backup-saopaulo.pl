@@ -15,7 +15,7 @@
 
 require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
-my($dir) = "/usr/local/etc/weekly-backups/files";
+my($dir) = "/usr/local/etc/backups";
 
 # root only, and run at nice level 19
 if ($>) {die("Must run as root");}
@@ -24,8 +24,6 @@ system("/usr/bin/renice 19 -p $$");
 # TODO: call subroutines!
 # TODO: all subroutines to run in parallel
 
-debug("CALLING dump_ls()");
-dump_ls();
 debug("CALLING dump_remote()");
 dump_remote();
 debug("CALLING dump_other()");
@@ -35,19 +33,6 @@ dump_other();
 
 # <h>thanks shoeshine boy, you're humble and loveable</h>
 debug("ALL FINISHED, SIR");
-
-# dump filelists from all my machines (useful to see what files I'm
-# missing in case of disaster recovery)
-# subroutinizing this, since it takes forever (and so its nice to test
-# without running this each time)
-sub dump_ls {
-
-  # for remote machine (which no longer exists, but...)
-  # dropped 23 Dec 2015
-#  system('ssh root\@bcmac "/mnt/sshfs/bcmac-dump.sh 1> /tmp/bcdump.out 2> /tmp/bcdump.err &"');
-  # for extdrives and main drive
-  system('sh /home/barrycarter/BCGIT/BACKUP/dumpall-brighton.sh &');
-}
 
 # various other things I dumps
 sub dump_other {
