@@ -102,7 +102,7 @@ sub get_current_conus {
   # obtain site index (upto 1m old)
   # TODO: putting this in file (for debugging) is ugly
   # TODO: allow parallelizing this, one at a time may be too slow
-  my($out,$err,$res) = cache_command2("curl -o /var/tmp/radar/conus.out http://radar.weather.gov/ridge/Conus/RadarImg/", "age=60");
+  my($out,$err,$res) = cache_command2("curl -Lo /var/tmp/radar/conus.out http://radar.weather.gov/ridge/Conus/RadarImg/", "age=60");
   $out = read_file("/var/tmp/radar/conus.out");
 
   # look for hrefs sort by time reversed

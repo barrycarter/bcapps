@@ -29,6 +29,17 @@ CREATE VIEW thumbs AS
 age, gender, role, city, state, country, popnum, popnumtotal, id
 FROM kinksters;
 
+-- modified as fetlife changes things
+
+DROP VIEW IF EXISTS thumbs2;
+CREATE VIEW thumbs2 AS 
+ SELECT CONCAT("<img src='",REPLACE(thumbnail,"https://","")
+ ,"'>") AS img, screenname AS link,
+age, gender, role, city, state, country, popnum, popnumtotal, id
+FROM kinksters;
+
+
+
 -- import for MySQL
 
 LOAD DATA LOCAL INFILE 

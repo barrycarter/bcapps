@@ -60,6 +60,7 @@ lighttpd
 xapian-core
 xapian-core-devel
 git
+gitk
 binutils
 FBReader
 okular

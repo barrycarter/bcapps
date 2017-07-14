@@ -12,7 +12,8 @@
 # update http://cheapbay.barrycarter.info/
 */5 * * * * /usr/local/bin/bc-cheap-bay.pl
 # send email to comicssherpa.com authors who have requested it
-*/10 * * * * r2e run
+# 14 Jul 2017: my gocomics comments db stopped working a long time ago, so killing this
+# */10 * * * * r2e run
 # keeps /tmp clean (I tend to create a lot of /tmp files)
 42 1 * * * find /tmp -name 'cache*' -mmin +180 | xargs --no-run-if-empty rm
 # update database of files for locate

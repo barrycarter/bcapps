@@ -1,0 +1,10 @@
+SHELL=/bin/bash
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO=root
+HOME=/
+
+# run-parts
+48 * * * * root run-parts /etc/cron.hourly
+1 5 * * * root run-parts /etc/cron.daily
+28 0 * * 0 root run-parts /etc/cron.weekly
+8 4 25 * * root run-parts /etc/cron.monthly
