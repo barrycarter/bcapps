@@ -80,7 +80,8 @@ for $i (@procs) {
   }
 
   # processes using too much memory
-  if ($rss>500000 && !$proclist{memory}{$proc}) {
+  # on saopaulo, 2G is too much (was 500M)
+  if ($rss>2000000 && !$proclist{memory}{$proc}) {
     push(@err, "mem.$proc ($pid)");
   }
 
