@@ -85,11 +85,23 @@ sub query_request {
     return;
   }
 
+  # determine table and notes for table?
+  my($tabname, $notes);
+
+  if ($query=~/from (\w+)/i) {$tabname=$1} else {$tabname="null"}
+
+  if (-f "$tabname.txt") {$notes = read_file("$tabname.txt");}
+
   # info about db
   # TODO: defeat for CSV?
-  print read_file("$db.txt");
+  # TODO: this can't come before header?
+#  print read_file("$db.txt");
+
+
   print << "MARK";
 Content-type: text/html
+
+$notes
 
 <a href="#query">See/edit your query</a>
 

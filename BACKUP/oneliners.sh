@@ -4,7 +4,7 @@
 # exclude format; results can be "sort -m" together for current
 # exclusion list
 
-cd /mnt/extdrive2/massbacks-idrive;
+cd /mnt/villa/massbacks-idrive-saopaulo
 \ls massback*.list | perl -nle 'unless (-s "$_.exclude") {print "bc-format2altformat2.pl --zpaqlist $_>$_.exclude"}'
 
 exit; 

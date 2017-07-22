@@ -146,7 +146,7 @@ rubygem-bundler
 ruby-doc
 sqlite
 sqlite-devel
-
+python-gmpy2
 
 # shells
 tcsh

@@ -224,5 +224,10 @@ MAILTO="daemon"
 
 # backup all files I'm editing in emacs every 5 minutes 
 
+# TODO: this should "lock" itself to avoid multiple runs
+
 */5 * * * * perl -nle '/(".*?")/; print $1' ~/.emacs_user | xargs bc-quikbak.pl
 
+# dump file lists nightly
+
+17 4 * * * egrep -v '^#|^$' /home/user/BCGIT/BRIGHTON/mounts.txt | perl -nle 'print "/home/user/BCGIT/BACKUP/bc-unix-dump.pl $_ &"' | sudo sh
