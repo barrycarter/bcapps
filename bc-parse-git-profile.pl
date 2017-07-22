@@ -19,20 +19,20 @@ $all=~s%<span class="p-org"><div>(.*?)</div></span>%%;
 # TODO: will this inherit $1 above if I don't reset?
 my($org) = $1;
 
-$all=~s%<span class="p-label"><div>(.*?)</div></span>%%;
+$all=~s%<span class="p-label">(.*?)</span>%%;
 my($loc) = $1;
 
 $all=~s%<a href="(.*?)" class="u-url"%%;
 my($url) = $1;
 
-# TODO: github doesnt close this quote properly!
-$all=~s%\"mailto:(.*?)</a>%%;
+$all=~s%"mailto:(.*?)"%%;
 my($email) = $1;
 
 # convert to usable form
 $email=~s/\&\#x(.*?)\;/chr(hex($1))/eg;
 
-debug("EM: $email");
+print qq%"$user","$name","$org","$loc","$url","$email"\n%;
+
 
 
 
