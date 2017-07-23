@@ -204,7 +204,7 @@ alias pslong "ps -wwweo 'pid ppid etime rss vsz stat args' \!*"
 
 # open a file in firefox directly from cmd line (fail, will need prog?)
 # TODO: only works for one file
-alias firefoxfile "readlink -f \!* | bc-open-urls.pl"
+alias firefoxfile "readlink -f \!* | bc-open-urls2.pl"
 # works for phrases (even without quotes) though it shouldnt
 alias firefoxgoogle "echo 'http://google.com/search?q=\!*' | bc-open-urls.pl"
 
