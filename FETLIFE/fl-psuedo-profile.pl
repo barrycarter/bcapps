@@ -31,6 +31,7 @@ debug("HASH",%hash);
 
 # TODO: add content-type: text/html if needed if called as CGI
 
+# TODO: check if _200 size exists before doing this
 $hash{thumbnail}=~s/_60.jpg/_200.jpg/;
 
 # estimate birth year as when visited - (age + .5 years)

@@ -53,3 +53,8 @@ DROP TABLE IF EXISTS placecounts;
 CREATE TABLE placecounts AS SELECT COUNT(*) AS
 count,city,state,country,latitude,longitude FROM kinksters GROUP BY
 city,state,country,latitude,longitude;
+
+-- did this on 22 Jul 2017 since I can't hit remotes anyway
+
+UPDATE kinksters SET thumbnail = REPLACE(thumbnail,"https://","");
+
