@@ -6,7 +6,6 @@ require "/usr/local/lib/bclib.pl";
 
 my($all) = cmdfile();
 
-
 # username and name
 $all=~s%<title>(.*?)</title>%%;
 my($names) = $1;
@@ -33,3 +32,6 @@ $org=~s/<.*?>//g;
 $email=~s/\&\#x(.*?)\;/chr(hex($1))/eg;
 
 print qq%"$user","$name","$org","$loc","$url","$email"\n%;
+
+# header:
+# username,fullname,organization,location,URL,email

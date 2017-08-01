@@ -147,6 +147,7 @@ ruby-doc
 sqlite
 sqlite-devel
 python-gmpy2
+pygame
 
 # shells
 tcsh
