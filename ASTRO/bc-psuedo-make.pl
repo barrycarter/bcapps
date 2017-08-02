@@ -19,7 +19,8 @@ for $i (glob("*.c")) {
 #  my($cmd) = "gcc -pg -std=gnu99 -Wall -O2 -I /home/barrycarter/SPICE/cspice/include $i -o $targ /home/barrycarter/SPICE/cspice/lib/cspice.a -lm";
 
   # below for saopaulo, above for dullon
-  my($cmd) = "gcc -pg -std=gnu99 -Wall -O2 -I /home/barrycarter/SPICE/SPICE64/cspice/include $i -o $targ /home/barrycarter/SPICE/SPICE64/cspice/lib/cspice.a -lm";
+  # removed -pg 2 Aug 2017, gmon.out not helpful
+  my($cmd) = "gcc -std=gnu99 -Wall -O2 -I /home/barrycarter/SPICE/SPICE64/cspice/include $i -o $targ /home/barrycarter/SPICE/SPICE64/cspice/lib/cspice.a -lm";
   debug($cmd);
 
   print "Making: $i -> $targ\n";
