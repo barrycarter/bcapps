@@ -18,7 +18,7 @@ int main (int argc, char **argv) {
   furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
 
   SpiceDouble pos[3], normal[3], erad[3], north[3], proj[3], state[3], lt;
-  SpiceDouble surf[3];
+  SpiceDouble surf[3], zvec[3], projn[3];
   SpicePlane plane;
   SpiceInt dim = 0;
 
@@ -42,6 +42,12 @@ int main (int argc, char **argv) {
   // fixed ITRF93 position of lat/lon
   georec_c(lon*rpd_c(),lat*rpd_c(),0,erad[0],(erad[0]-erad[2])/erad[0], pos);
 
+  // vector pointing straight "up" (north)
+  // TODO: again, should be able to define this easier
+  zvec[0] = pos[0];
+  zvec[1] = pos[1];
+  zvec[2] = pos[2]+1;
+
   // vector pointing to north pole (TODO: has to be a better way to do this)
   north[0] = -pos[0];
   north[1] = -pos[1];
@@ -51,10 +57,13 @@ int main (int argc, char **argv) {
   surfnm_c(erad[0],erad[1],erad[2],pos,normal);
 
   // and the plane associated with this surface normal
-  nvc2pl_c(normal, 1, &plane);
+  nvp2pl_c(normal, pos, &plane);
 
   // project the "north pole" vector to the plane
   vprjp_c(north, &plane, proj);
+
+  // project the "z" vector to the plane
+  vprjp_c(zvec, &plane, projn);
 
   // vector to sun at stime
   spkcpo_c("Sun", stime, "ITRF93", "OBSERVER", "CN+S", pos, "Earth", "ITRF93", state, &lt);
@@ -68,6 +77,7 @@ int main (int argc, char **argv) {
   printf("ANGLE: %f\n", dang/rpd_c());
 
   printf("STATE (%f %f %f): %f %f %f\n", lat, lon, stime, state[0], state[1], state[2]);
+  printf("PROJN (%f %f): %f %f %f\n", lat, lon, projn[0], projn[1], projn[2]);
   printf("PROJ (%f %f): %f %f %f\n", lat, lon, proj[0], proj[1], proj[2]);
   printf("POS (%f %f): %f %f %f\n", lat, lon, pos[0], pos[1], pos[2]);
   printf("SRFNM (%f %f): %f %f %f\n", lat, lon, normal[0], normal[1], normal[2]);
