@@ -2,6 +2,38 @@
 
 (*
 
+general notes:
+
+Let S (source) be a sphere of radius rs at point s
+
+Let B (block) be a sphere of radius rb at point b
+
+Let T (target) be a sphere of radius rt at point t
+
+parametrization of line from u to v
+
+line[u_,v_,t_] = u + (v-u)*t
+
+point on sphere surface located at p with radius r, given two angles
+
+(* TODO: this is ugly for pointwise addition *)
+
+point[p_List, r_, th_, ph_] := p + sph2xyz[th,ph,r]
+
+s = {sx,sy,sz}
+b = {bx,by,bz}
+t = {tx,ty,tz}
+
+line[point[s, rs, th1, ph1], point[b, bs, th2, ph2], tm]
+
+Solve[Norm[line[point[s, rs, th1, ph1], point[b, bs, th2, ph2], tm] -
+t] == rt, tm]
+
+
+
+
+
+
 Aug 21, 2017 at 15:46 UTC = eclipse start = 1503330360
 
 so lets HORIZONS and look at 18:46 UTC
