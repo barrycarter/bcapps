@@ -2,7 +2,7 @@
 
 # Hashing very large files to compare them for equality is difficult;
 # this program cheats by "randomly" (but consistently) sampling 10K of
-# each 1M of the file, and hashing the result
+# each 1M of the file, and hashing the result and adding size
 
 # --srand: srand with this integer, not 20150213666
 
@@ -26,8 +26,9 @@ for $i (@ARGV) {
   # -1 because last chunk is incomplete
   my($chunks) = floor($size/1000000)-1;
   if ($chunks<=9) {
-    # TODO: use regular sha1 for under 10M?
-    debug("SKIPPING $i, < 10M");
+    # use regular sha1 for under 10M?
+#    debug("SKIPPING $i, < 10M");
+    system("sha1sum",$i);
     next;
   }
 
@@ -54,5 +55,5 @@ for $i (@ARGV) {
   # sha the appended sha strings
   my($shafin) = sha1_hex($sha);
   # and print
-  print "$shafin $i\n";
+  print "$shafin.$size $i\n";
 }

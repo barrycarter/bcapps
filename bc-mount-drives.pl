@@ -11,7 +11,7 @@ my(%id2mp,%dev2id);
 
 # read the blkids.txt file (private) of my drives
 for $i (split(/\n/,read_file("$bclib{home}/blkids.txt"))) {
-  if ($i=~/^\#/) {next;}
+  if ($i=~/^\#/ || $i=~/^\s*$/) {next;}
   $i=~/^(.*?)\s+(.*)$/||die("BAD LINE: $i");
   $id2mp{$1}=$2;
 }
@@ -25,7 +25,7 @@ for $i (split(/\n/,$out)) {
 
 # now the drives actually on the system
 
-for $i (glob("/dev/sd*")) {
+for $i (glob("/dev/sd* /dev/mapper/*")) {
   # drive sda (and its partitions) are main hard drive, so not interesting
   if ($i=~m%/sda%) {next;}
 
