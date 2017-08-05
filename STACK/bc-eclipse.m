@@ -2,6 +2,25 @@
 
 (*
 
+testing:
+
+g = Graphics3D[{
+ Specularity[1],
+ Glow[Yellow],
+ Ball[{0,0,0}, 1],
+ Glow[],
+ Ball[{1.001,0,0}, 0.1]
+}]
+
+Show[g, Lighting -> {{"Ambient", RGBColor[1,1,0], {{0,0,0}}}}]
+
+Show[g, Lighting -> {"Point", RGBColor[1,1,0], {{0,0,0}}}]
+ 
+Show[g, Lighting -> None] 
+showit 
+]
+showit
+
 general notes:
 
 Let S (source) be a sphere of radius rs at point s
@@ -19,6 +38,9 @@ point on sphere surface located at p with radius r, given two angles
 (* TODO: this is ugly for pointwise addition *)
 
 point[p_List, r_, th_, ph_] := p + sph2xyz[th,ph,r]
+
+conds = Element[{sx, sy, sz, bx, by, bz, tx, ty, tz, tm, th1, ph1, th2, ph2},
+ Reals]
 
 s = {sx,sy,sz}
 b = {bx,by,bz}
