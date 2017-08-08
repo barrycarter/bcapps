@@ -10,6 +10,10 @@ require "/usr/local/lib/bclib.pl";
 
 debug(%globopts);
 
+# had to change this for saopaulo
+my($cmd) = "/root/build/idevsutil_linux64/idevsutil.old";
+
+
 my(@accts) = split(/\n/, read_file("$homedir/idrive-accounts.txt"));
 
 for $i (@accts) {
@@ -23,7 +27,7 @@ for $i (@accts) {
   write_file($p, $pwfile);
 
   # find IP address of server
-  my($out, $err,$res) = cache_command2("/root/build/idevsutil_linux/idevsutil --password-file=$pwfile --getServerAddress $u", "age=86400");
+  my($out, $err,$res) = cache_command2("$cmd --password-file=$pwfile --getServerAddress $u", "age=86400");
 
   unless ($out=~/cmdUtilityServerIP=\"(.*?)\"/) {
     warn "NO IP ADDRESS FOR: $u";
@@ -33,7 +37,7 @@ for $i (@accts) {
   my($ip) = $1;
 
   # TODO: standardize where I keep idevsutil
-  my($cmd) = "/root/build/idevsutil_linux/idevsutil --password-file=$pwfile --search $u\@$ip\:\:home/", "age=3600";
+  my($cmd) = "$cmd --password-file=$pwfile --search $u\@$ip\:\:home/", "age=3600";
 
   debug("CMD: $cmd");
 

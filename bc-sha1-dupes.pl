@@ -6,6 +6,8 @@
 # NOTE: this is inefficient and doesn't take advantage of the fact the
 # input is sorted
 
+# TODO: add an option that linkifies to base document
+
 require "/usr/local/lib/bclib.pl";
 
 while (<>) {
