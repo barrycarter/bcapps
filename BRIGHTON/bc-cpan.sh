@@ -13,3 +13,5 @@ cpan Statistics::Distributions Astro::Nova Astro::MoonPhase Net::Twitter Net:SSL
 
 # TODO: Would you like me to append that to /root/.tcshrc now? (ok,
 # but need to tweak in general)
+
+gem install rubysl-parsedate tk

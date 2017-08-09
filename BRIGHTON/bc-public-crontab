@@ -270,3 +270,4 @@ MAILTO="daemon"
 # give new members in my meetup group power to suggest/add events
 
 10 13 * * * bc-meetup-make-eo.pl|sh
+

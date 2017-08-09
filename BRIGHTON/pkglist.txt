@@ -123,6 +123,7 @@ tk
 java
 gcc
 ruby
+ruby-devel
 lua
 prover9
 mono-core

@@ -231,3 +231,11 @@ MAILTO="daemon"
 # dump file lists nightly
 
 17 4 * * * egrep -v '^#|^$' /home/user/BCGIT/BRIGHTON/mounts.txt | perl -nle 'print "/home/user/BCGIT/BACKUP/bc-unix-dump.pl $_ &"' | sudo sh
+
+# one off test to confirm dir change works (test successful!)
+
+# * * * * * cd /home/user/TUMBLR; pwd; ls
+
+# exec xmessage test (this does avoid a cron email but crond sticks around)
+
+# * * * * * exec xmessage this is a test sdfsadf
