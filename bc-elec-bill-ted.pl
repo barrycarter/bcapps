@@ -53,10 +53,24 @@ for $i (3.249, 2, 5.1250, 1.1875, 1.1875) {$taxes *= (1+$i/100);}
 
 debug("TOTAL TAX RATE: $taxes");
 
-# obtain the latest hourly file, but not more than once an hour
+# obtain the latest hourly data to 31 days out, but not more than once an hour
 
-# NOTE: this takes about 30s, so use sparingly
-my($out,$err,$res) = cache_command2("curl http://ted.local.lan/history/hourlyhistory.csv", "age=3600");
+# TODO: since I get bills "late", maybe go out more than 31 days? (2 mos?)
+
+my($hourly,$err,$res) = cache_command2("curl 'http://ted.local.lan/history/rawhourhistory.raw?MTU=0&COUNT=1488&INDEX=0'", "age=3600");
+
+for $i (split(/\n/, $hourly)) {
+
+  # per TED5000-API-R330.pdf (TODO: find full URL)
+  my($yr, $mo, $da, $ho, $mi, $se) = 
+ map($_=ord($_), split(//, decode_base64($i)));
+  debug("$yr $mo $da $ho $mi $se");
+#  debug("I: $i");
+}
+
+# debug($hourly);
+
+die "TESTING";
 
 # TODO: make this down to the second or something? (only on request
 # due to slowness?)
