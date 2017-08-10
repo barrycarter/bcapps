@@ -15,7 +15,7 @@ require "/usr/local/lib/bclib.pl";
 while (<> !~/\$\$SOE/) {next;}
 
 # to store below
-my($data);
+my($data, $eof);
 
 # forever loop (but we do break out of it eventually)
 for (;;) {
@@ -30,7 +30,7 @@ for (;;) {
     debug("DATA: $data");
 
     # end of data
-    if ($data=~/^\$\$EOE/) {last;}
+    if ($data=~/\$\$EOE/) {$eof=1; last;}
 
     # TODO: ugly, first line will be JD
     if ($i==1) {
@@ -42,15 +42,18 @@ for (;;) {
     while ($data=~s/^\s*([A-Z]+)\s*\=\s*([0-9E\+\-\.]+)//) {$hash{$1}=$2;}
   }
 
+  # TODO: this is ugly, can I break out nested loops w/o GOTO?
+  if ($eof) {last;}
+
   debug("HASH",%hash);
   my(@data) = ();
 
   for $i (@fields) {
     $hash{$i}=~s/E/*10^/;
-    push(@data, $hash{$i});
+    push(@data, "Rationalize[$hash{$i},0]");
   }
 
   debug("DATA","<start>",@data,"</start>");
 
-#  print "{",join(", ",@data),"}, \n";
+  print "{",join(", ",@data),"}, \n";
 }

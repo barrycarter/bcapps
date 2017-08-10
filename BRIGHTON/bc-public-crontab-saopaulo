@@ -242,6 +242,4 @@ MAILTO="daemon"
 
 # backup "my" tumblr blogs (unrelated to follow list)
 
-# TODO: change time to middle of night; first run is middle of day for testing
-
-25 16 * * * cd /home/user/TUMBLR; egrep -v '^#|^$' ~/my-tumblr-blogs.txt | perl -nle 'print "python tumblr_backup.py -x -i $_"' | sh
+25 3 * * * cd /home/user/TUMBLR; egrep -v '^#|^$' ~/my-tumblr-blogs.txt | perl -nle 'print "python tumblr_backup.py -x -i $_"' | sh
