@@ -244,4 +244,4 @@ MAILTO="daemon"
 
 # TODO: change time to middle of night; first run is middle of day for testing
 
-45 11 * * * cd /home/user/TUMBLR; egrep -v '^#|^$' ~/my-tumblr-blogs.txt | perl -nle 'print "python tumblr_backup.py -x -i $_"' | sh
+25 16 * * * cd /home/user/TUMBLR; egrep -v '^#|^$' ~/my-tumblr-blogs.txt | perl -nle 'print "python tumblr_backup.py -x -i $_"' | sh
