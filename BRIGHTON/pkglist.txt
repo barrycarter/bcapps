@@ -428,6 +428,9 @@ mariadb-server
 mariadb
 postgresql
 postgresql-server
+osm2pgsql
+postgis
+postgis-utils
 virtuoso-opensource
 blazegraph
 

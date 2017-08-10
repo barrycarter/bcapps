@@ -12,6 +12,16 @@
 # report out of order readings?
 # add "median" estimates too?
 
+# NOTE: http://ted.local.lan/api/LiveData.xml may or may not be useful
+
+# TODO: add cost-to-date (not proportional due to tiered billing)
+
+# TODO: the 11:00 reading for hourly may go through 11:59:59, edit program to adjust
+
+# TODO: note that TED not 100% accurate (but close)
+
+# TODO: consider running hourly and putting in cron to see how estimate settles over time and how close it is to actual bill
+
 require "/usr/local/lib/bclib.pl";
 
 # last meter read date in mm/dd/yyyy format <h>(screw Europe!)</h>
@@ -61,11 +71,24 @@ my($hourly,$err,$res) = cache_command2("curl 'http://ted.local.lan/history/rawho
 
 for $i (split(/\n/, $hourly)) {
 
+  my(@vals) = map($_=ord($_), split(//, decode_base64($i)));
+
   # per TED5000-API-R330.pdf (TODO: find full URL)
-  my($yr, $mo, $da, $ho, $mi, $se) = 
- map($_=ord($_), split(//, decode_base64($i)));
-  debug("$yr $mo $da $ho $mi $se");
-#  debug("I: $i");
+  # TODO: this is different for minute and second
+  my($yr, $mo, $da, $ho) = @vals[0..3];
+
+  # TODO: Y2.1K error possible
+  my($time) = sprintf("20%02d-%02d-%02d %02d:%02d:%02d $tz", @vals[0..3]);
+
+  # TODO: combine w/ above step -- note that 11:00:00 ends at 11:59:59
+  $time = str2time($time)+3600;
+
+  debug("TIME: $time");
+
+  # TODO: there is a better way to do this
+  my($power) = $vals[4] + $vals[5]*256 + $vals[6]*256**2 + $vals[7]*256**3;
+
+  debug("X: $yr $mo $da $ho $power");
 }
 
 # debug($hourly);

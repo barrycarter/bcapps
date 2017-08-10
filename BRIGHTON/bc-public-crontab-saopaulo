@@ -239,3 +239,9 @@ MAILTO="daemon"
 # exec xmessage test (this does avoid a cron email but crond sticks around)
 
 # * * * * * exec xmessage this is a test sdfsadf
+
+# backup "my" tumblr blogs (unrelated to follow list)
+
+# TODO: change time to middle of night; first run is middle of day for testing
+
+45 11 * * * cd /home/user/TUMBLR; egrep -v '^#|^$' ~/my-tumblr-blogs.txt | perl -nle 'print "python tumblr_backup.py -x -i $_"' | sh
