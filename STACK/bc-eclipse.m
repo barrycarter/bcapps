@@ -2,7 +2,122 @@
 
 (*
 
+The file /tmp/all.m is created as:
+
+bzcat earth-on-eclipse-day.csv.bz2 | bc-horizons2math.pl --fields=0,2,3,4 --label=earth > ! /tmp/all.m
+
+bzcat sun-on-eclipse-day.csv.bz2 | bc-horizons2math.pl --fields=0,2,3,4 --label=sun >> /tmp/all.m
+
+bzcat moon-on-eclipse-day.csv.bz2 | bc-horizons2math.pl --fields=0,2,3,4 --label=moon >> /tmp/all.m
+
+per https://ipnpr.jpl.nasa.gov/progress_report/42-196/196C.pdf errors for terresterial planets is few hundred meters.
+
+*)
+
+(* below is in meters *)
+
+au = 149597870700;
+
+(* index 1,2,3 = x,y,z *)
+
+tab[planet_, index_] := tab[planet, index] =
+ Table[{Round[(i[[1]]-4915973/2)*86400], au*i[[index+1]]}, {i, planet}]
+
+fit1[planet_, index_] := fit1[planet, index, t_] = 
+ Fit[tab[planet,index], {1,t}, t];
+
+fit2[planet_, index_] := fit2[planet, index, t_] = 
+ Fit[tab[planet,index], {1,t,t^2}, t];
+
+fit3[planet_, index_] := fit3[planet, index, t_] = 
+ Fit[tab[planet,index], {1,t,t^2,t^3}, t];
+
+fittab1[planet_, index_] := fittab1[planet, index] = 
+ Table[fit1[planet, index, t],{t,0,86400}];
+
+
+
+diff1[planet_, index_] := diff1[planet, index] = 
+ Table[au*planet[[t+1, index+1]] - fit1[planet, index][t], {t,0,86400}];
+
+
+
+
+earthx = Table[{Round[(i[[1]]-4915973/2)*86400], au*i[[2]]}, {i, earth}]
+
+ex = Interpolation[earthx, InterpolationOrder -> 1]
+
+f[t_] = Fit[earthx, {1,t,t^2,t^3}, t]
+
+
+
+
+
+
+
+
+
+
+(*
+
 testing:
+
+
+light = Graphics3D[{Red, PointSize -> .05, Point[{2, 2, 2}], 
+    Glow[Yellow], Opacity[.3], Sphere[{2, 2, 2}, 3]}, 
+   Lighting -> {{"Point", Yellow, {2, 2, 2}}}];
+
+ball = Graphics3D[{Ball[{0,0,0}, 1]}, Lighting -> None]
+
+
+ball = Graphics3D[{Ball[{0,0,0}, 1]}, 
+ Lighting -> {{"Point", Yellow, {2, 2, 2}}}];
+
+ball = Graphics3D[{Sphere[{0,0,0}, 1]}, 
+ Lighting -> {{"Point", Yellow, {2, 2, 2}}}];
+
+
+ball = Graphics3D[{
+ Sphere[{0,0,0}, 1], Sphere[{1,1,1}, .1]
+}, Lighting -> {{"Point", Yellow, {2, 2, 2}}}];
+
+
+
+
+
+
+light = Graphics3D[{Red, PointSize -> .05, Point[{2, 2, 2}], 
+    Glow[Yellow], Opacity[.3], Sphere[{2, 2, 2}, 3]}, 
+   Lighting -> {{"Point", Yellow, {2, 2, 2}}}];
+
+light = Graphics3D[{Red, PointSize -> .05, Point[{2, 2, 2}], 
+    Opacity[.3], Sphere[{2, 2, 2}, 3]}, 
+   Lighting -> {{"Point", Yellow, {2, 2, 2}}}];
+
+
+
+g = Graphics3D[{
+ RGBColor[1,1,1],
+ Ball[{1.5,0,0}, 0.1],
+ Glow[Yellow],
+ Ball[{0,0,0}, 1]
+}]
+
+g = Graphics3D[{
+ RGBColor[1,1,1],
+ Sphere[{1.5,0,0}, 0.1],
+ Sphere[{0,0,0}, 1]
+}]
+
+g = Graphics3D[{
+ Opacity[0.1],
+ Sphere[{2.5,0,0}, 1],
+ Opacity[1],
+ Ball[{0,0,0}, 1],
+}]
+
+Show[g, Lighting -> {{"Point"}, RGBColor[0,1,0], {0,0,0}}];
+
 
 g = Graphics3D[{
  Specularity[1],
@@ -50,6 +165,19 @@ line[point[s, rs, th1, ph1], point[b, bs, th2, ph2], tm]
 
 Solve[Norm[line[point[s, rs, th1, ph1], point[b, bs, th2, ph2], tm] -
 t] == rt, tm]
+
+(** writeup below, but may not actually submit to mathematica.SE **)
+
+(* Let S (source), B (blocker), and T (target) be three spheres
+centered as follows: *)
+
+s = {sx,sy,sz}
+b = {bx,by,bz}
+t = {tx,ty,tz}
+
+(* A point on a sphere's surface can be given by two angles, th and ph *)
+
+point[p_List, r_, th_, ph_] := p + sph2xyz[th,ph,r]
 
 
 
