@@ -12,11 +12,123 @@ bzcat moon-on-eclipse-day.csv.bz2 | bc-horizons2math.pl --fields=0,2,3,4 --label
 
 per https://ipnpr.jpl.nasa.gov/progress_report/42-196/196C.pdf errors for terresterial planets is few hundred meters.
 
+NOTE TO SELF: /tmp/all.mx is the DumpSave version that's even faster
+
 *)
 
 (* below is in meters *)
 
 au = 149597870700;
+
+(* earth/moon/sun triaxial radii *)
+
+er = 1000*{6378.14, 6378.14, 6356.752};
+
+(* from https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html *)
+
+mr = 1000*{1738.1, 1738.1, 1736.0}
+
+sr = 1000*{6.963*10^5, 6.963*10^5, 6.963*10^5}
+
+(* position data per second *)
+
+t0 = 4915973/2
+
+Table[e[Round[(i[[1]]-t0)*86400]] = au*Take[i, {2,4}], {i, earth}];
+Table[s[Round[(i[[1]]-t0)*86400]] = au*Take[i, {2,4}], {i, sun}];
+Table[m[Round[(i[[1]]-t0)*86400]] = au*Take[i, {2,4}], {i, moon}];
+
+g[t_] := Graphics3D[{
+ Glow[Blue],
+ Sphere[e[t], er[[1]]],
+ Glow[Green],
+ Sphere[m[t], mr[[1]]],
+ Glow[Yellow],
+ Sphere[s[t], sr[[1]]]
+}];
+
+g[t_] := Graphics3D[{
+ Glow[Green],
+ Sphere[m[t], mr[[1]]]
+}];
+
+g[t_] := Graphics3D[{
+ Glow[Green],
+ Sphere[m[t], mr[[1]]],
+ Glow[Yellow],
+ Sphere[s[t], sr[[1]]]
+}];
+
+mg[t_] := Graphics3D[{
+ Glow[Green],
+ Sphere[m[t], mr[[1]]]
+}];
+
+sg[t_] := Graphics3D[{
+ Glow[Yellow],
+ Sphere[s[t], sr[[1]]]
+}];
+
+Show[mg[1], Lighting -> None, ViewVector -> {e[1], m[1]}, 
+ ViewAngle -> 3*Degree]
+showit
+
+Show[sg[1], Lighting -> None, ViewVector -> {e[1], m[1]}, 
+ ViewAngle -> 3*Degree]
+showit
+
+Show[g[6], Lighting -> None, ViewVector -> {e[6], s[6]}, 
+ ViewAngle -> 3*Degree]
+showit
+
+Show[g[6], Lighting -> None, ViewVector -> {e[6], (m[6]-e[6])/10000}, 
+ ViewAngle -> 30*Degree, SphericalRegion -> True]
+showit
+
+Show[g[6], Lighting -> None, ViewVector -> {e[6], m[6]-e[6]}, 
+ ViewAngle -> 30*Degree]
+showit
+
+Show[g[6], Lighting -> None, ViewVector -> {e[6], m[6]-e[6]}, 
+ ViewAngle -> 5*Degree]
+showit
+
+Show[g[6], Lighting -> None, ViewVector -> {e[6], s[6]-e[6]}, 
+ ViewAngle -> 5*Degree]
+showit
+
+test = Graphics3D[{
+ Sphere[{128312141025, -79366814300, -21372756}, 17381000]
+}]
+
+Show[test, ViewVector -> {
+
+
+
+
+
+
+
+Graphics3D[{
+ Sphere[{earth[[1]][[2]], earth[[1]][[3]], earth[[1]][[4]]}, er[[1]]]
+}];
+
+g = Graphics3D[{
+ Glow[Blue],
+ Ball[Take[earth[[1]], 3], er[[1]]],
+ Glow[White],
+ Ball[Take[moon[[1]], 3], mr[[1]]],
+ Glow[Yellow],
+ Ball[Take[sun[[1]], 3], sr[[1]]]
+}];
+
+Show[g, Lighting -> None, ViewPoint -> Take[earth[[1]],3]]
+
+
+
+
+
+
 
 (* index 1,2,3 = x,y,z *)
 
@@ -80,6 +192,30 @@ ball = Graphics3D[{Sphere[{0,0,0}, 1]},
 ball = Graphics3D[{
  Sphere[{0,0,0}, 1], Sphere[{1,1,1}, .1]
 }, Lighting -> {{"Point", Yellow, {2, 2, 2}}}];
+
+ball = Graphics3D[{
+ Sphere[{0,0,0}, 1], Sphere[{1,1,1}, .1]
+}, Lighting -> {{"Point", Yellow, {2, 0, 2}}}];
+
+ball = Graphics3D[{
+ Ball[{0,0,0}, 1], Ball[{1,1,1}, .1]
+}, Lighting -> {{"Point", Yellow, {2, 0, 2}}}];
+
+ball = Graphics3D[{
+ Ball[{0,0,0}, 1], Ball[{1,0,1}, .1]
+}, Lighting -> {{"Point", Yellow, {2, 0, 2}}}];
+
+ball = Graphics3D[{
+ Ball[{0,0,0}, 1], Ball[{1,0,1}, .1]
+}, Lighting -> {{"Point", Yellow, {2, 0, 2}}},
+ ViewPoint -> {2,0,2}];
+
+
+ball = Graphics3D[{
+ Ball[{0,0,0}, 1], Ball[{1,0,1}, .5]
+}, Lighting -> {{"Point", Yellow, {2, 0, 2}}},
+ ViewPoint -> {2,2,2}];
+
 
 
 
