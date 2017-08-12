@@ -60,14 +60,32 @@ g[t_] := Graphics3D[{
 }];
 
 mg[t_] := Graphics3D[{
- Glow[Green],
- Sphere[m[t], mr[[1]]]
+ Green,
+ Ball[m[t], mr[[1]]]
 }];
 
 sg[t_] := Graphics3D[{
- Glow[Yellow],
- Sphere[s[t], sr[[1]]]
+ Yellow,
+ Ball[s[t], sr[[1]]]
 }];
+
+mg[t_] := Graphics3D[{
+ Green,
+ Ball[m[t]-e[t], mr[[1]]]
+}];
+
+sg[t_] := Graphics3D[{
+ Yellow,
+ Ball[s[t]-e[t], sr[[1]]]
+}];
+
+test = Graphics3D[{
+ Sphere[m[65000], mr[[1]]],
+ Sphere[s[65000], sr[[1]]]
+}]
+
+Show[test, ViewVector -> {e[65000], m[65000]}, ViewAngle -> 3*Degree]
+
 
 Show[mg[1], Lighting -> None, ViewVector -> {e[1], m[1]}, 
  ViewAngle -> 3*Degree]
@@ -103,7 +121,29 @@ test = Graphics3D[{
 
 Show[test, ViewVector -> {
 
+(*
 
+question for mathematica.se
+
+(* here are two spheres *)
+
+sph1 = Sphere[{-316754179, 195130797, 2621833}, 1738100]
+sph2 = Sphere[{-129197849532, 78784584912, -2670653}, 696300000]
+
+Graphics3D[sph1, ViewVector -> {{0,0,0}, {-316754179, 195130797, 2621833}}]
+
+Graphics3D[sph2, ViewVector -> {{0,0,0}, {-316754179, 195130797, 2621833}}]
+
+
+
+
+
+QUANTITY
+
+
+
+
+*)
 
 
 

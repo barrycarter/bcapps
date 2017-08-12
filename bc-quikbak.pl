@@ -40,7 +40,7 @@ for $i (@ARGV) {
     # format of quikbak file separates mods with "! $time ..."
     print A "! $mod (ORIGINAL)\n";
     close(A);
-    warn("First backup for $i");
+    debug("First backup for $i");
     next;
 }
 
