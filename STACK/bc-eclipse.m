@@ -38,6 +38,69 @@ Table[e[Round[(i[[1]]-t0)*86400]] = au*Take[i, {2,4}], {i, earth}];
 Table[s[Round[(i[[1]]-t0)*86400]] = au*Take[i, {2,4}], {i, sun}];
 Table[m[Round[(i[[1]]-t0)*86400]] = au*Take[i, {2,4}], {i, moon}];
 
+gm[t_] := Graphics3D[Sphere[m[t], 10*mr[[1]]]];
+sm[t_] := Graphics3D[Sphere[s[t], 10*sr[[1]]]];
+
+Show[gm[43200], ViewVector -> {e[43200], s[43200]}, 
+ ViewAngle -> 10*Degree]
+
+Show[sm[43200], ViewVector -> {e[43200], s[43200]}, 
+ ViewAngle -> 10*Degree]
+
+Show[{gm[43200], sm[43200]}, ViewVector -> {e[43200], s[43200]}, 
+ ViewAngle -> 10*Degree]
+
+(*
+
+question for mathematica.se
+
+(* here are two spheres *)
+
+sph1 = Sphere[{128940484175, -78312608306, -17241976}, 1738100]
+sph2 = Sphere[{374835347, 809637144, -20452590}, 696300000]
+
+(* and a fixed view vector and view angle *)
+
+vv = {{129243819921, -78526479465, -17731739}, 
+ {-128565648828, 79122245450, -3210615}}
+
+va = 10*Degree
+
+(* see below for results *)
+
+(* this shows sph1, as expected *)
+g1 = Graphics3D[sph1, ViewVector -> vv, ViewAngle -> va]
+
+(* this shows sph2, as expected *)
+g2 = Graphics3D[sph2, ViewVector -> vv, ViewAngle -> va]
+
+(* this shows only sph2, why? *)
+g3 = Graphics3D[{sph1, sph2}, ViewVector -> vv, ViewAngle -> va]
+
+(* even reversed, this shows only sph2, why? *)
+g4 = Graphics3D[{sph2, sph1}, ViewVector -> vv, ViewAngle -> va]
+
+*)
+
+g1: [[image]]
+
+g2: [[image]]
+
+g3: [[image]]
+
+g4: [[image]]
+
+I've tried many variants of the commands above, but get the same results.
+
+My one thought: maybe I'm using such large and small quantities that the coordinates for sph1 are somehow obscuring the coordinates for sph2.
+
+*)
+
+
+
+
+
+
 g[t_] := Graphics3D[{
  Glow[Blue],
  Sphere[e[t], er[[1]]],
@@ -120,31 +183,6 @@ test = Graphics3D[{
 }]
 
 Show[test, ViewVector -> {
-
-(*
-
-question for mathematica.se
-
-(* here are two spheres *)
-
-sph1 = Sphere[{-316754179, 195130797, 2621833}, 1738100]
-sph2 = Sphere[{-129197849532, 78784584912, -2670653}, 696300000]
-
-Graphics3D[sph1, ViewVector -> {{0,0,0}, {-316754179, 195130797, 2621833}}]
-
-Graphics3D[sph2, ViewVector -> {{0,0,0}, {-316754179, 195130797, 2621833}}]
-
-
-
-
-
-QUANTITY
-
-
-
-
-*)
-
 
 
 
