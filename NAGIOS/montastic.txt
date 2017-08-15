@@ -1,0 +1,20 @@
+# for reference only, these are the montastic tests I use
+
+# montastic2@barrycarter.info
+
+DELETED:
+http://09c5bf679fb2cee590bf6643cb59fe89.gocomics.db.barrycarter.info/
+"SUCCESS - is present" (but gocomics db broken, so no more) (had to delete, because Montastic API handles disabled as broken)
+
+CHANGED:
+http://network-tools.com/default.asp?prog=dnsrec&noncache=yes&host=barrycarter.info
+"aspmx.l.google.com - is present" (disabled 14 Aug 2017, because "host
+-t ANY barrycarter.info" now returns 'host information "ANY Disabled"
+"See draft-ietf-dnsop-refuse-any"' -- instead moved to below)
+
+http://www.nmonitoring.com/show-mx-record.html?ip=barrycarter.info&mxsub=1
+"aspmx.l.google.com - is present"
+
+
+
+

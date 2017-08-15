@@ -95,7 +95,7 @@ Mouse 3 TSIF    A       RaiseLower
 # TODO: need pager while I am rdesktopping in, remove it long term
 AddToFunc StartFunction
 + I Module FvwmAuto 200 Raise Nop
-+ I Module FvwmPager 0 0
+# + I Module FvwmPager 0 0
 # + I Module FvwmAnimate
 # + I Module FvwmBanner
 # + I Module FvwmButtons

@@ -52,6 +52,127 @@ Show[{gm[43200], sm[43200]}, ViewVector -> {e[43200], s[43200]},
 
 (*
 
+revamped even tighter
+
+Subject: Bug in (or my misunderstanding of) ViewAngle
+
+While trying to clarify my question in https://mathematica.stackexchange.com/questions/153600/graphics3d-displays-spheres-individually-but-not-together I came across either a bug or a misunderstanding of `ViewAngle`:
+
+(* here's a point p, a radius r, and a sphere s centered at p with radius r *)
+
+p = {-303335746, 213871159, 489763}; 
+r = 1738100;
+s = Sphere[p, r];
+
+(* what's the angular radius as viewed from the origin, in degrees? *)
+
+N[ArcTan[r/Norm[p]]/Degree]
+
+(* it comes out to about 0.268314 degrees *)
+
+(* now, let's look at the sphere from the origin with a viewangle of 1
+degree; it should fill about half the screen, since the angular
+diameter is about .54 degrees *)
+
+Show[Graphics3D[s], ViewAngle -> 1*Degree, ViewVector -> {0,0,0}]
+
+
+
+
+
+
+
+
+question for mathematica.se revamped to centralize origin + details
+
+I've found a simpler example that fails and am providing it below with more details on what I expect to see. I'm leaving my original question below for reference.
+
+(* here are two 3D points *)
+
+pt1 = {-303335746, 213871159, 489763};
+pt2 = {-128868984574, 79336116609, -2720851};
+
+(* as viewed from the origin, their angular distance is small *)
+
+N[VectorAngle[pt1, pt2]/Degree]
+
+(* yields 3.56925 degrees *)
+
+(* now, two spheres of different sizes centered at these points *)
+
+r1 = 1738100
+r2 = 696300000
+
+sph1 = Sphere[pt1, r1]
+sph2 = Sphere[pt2, r2]
+
+(* let's compute the angular diameter of these spheres as viewed from origin *)
+
+N[2*ArcTan[r1/Norm[pt1]]/Degree]
+N[2*ArcTan[r2/Norm[pt2]]/Degree]
+
+(* the answers are 0.536627 degrees for sph1 and 0.527248 degrees for sph2 *)
+
+(* now, let's look directly at pt1 with a 10 degree view angle; since
+both spheres have the same angular diameter and are only 3 degrees
+apart, we should see both *)
+
+g0 = Graphics3D[{sph1,sph2}]
+Show[g0, ViewVector -> { {0,0,0}, pt1}, ViewAngle -> 10*Degree]
+
+(* but we only see sph2 [image below], why? *)
+
+g0.gif
+
+
+
+
+
+Graphics3D[sph1, ViewVector -> {0,0,0}, ViewAngle -> 0.01*Degree]
+
+
+
+
+
+
+(* here are their spherical coordinates from the origin *)
+
+N[CoordinateTransform["Cartesian" -> "Spherical", pt1]] // InputForm
+
+{3.7115183863369983*^8, 1.5694767505698701, 2.5274760127257454}
+
+N[CoordinateTransform["Cartesian" -> "Spherical", pt2]] // InputForm
+
+{3.7115183863369983*^8, 1.5694767505698701, 2.5274760127257454}
+
+
+
+
+
+
+sph1 = Sphere[{-303335746, 213871159, 489763}, 1738100]
+
+
+
+
+
+
+end revamped question
+
+*)
+
+
+
+
+
+
+
+
+
+
+
+(*
+
 question for mathematica.se
 
 (* here are two spheres *)

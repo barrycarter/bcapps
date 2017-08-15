@@ -16,7 +16,7 @@ alias nagclean "find /home/barrycarter/ERR -iname 'nagios.*.err' ! -newer /var/n
 # TODO: make nagios do this at startup somehow?
 # the "date +%s" that was below hardcoded to when aliases.txt was
 # loaded, so just replacing it with 0 which must work as well
-alias nagcheck "grep host_name /var/nagios/status.dat | sort | uniq | cut -d= -f 2 | xargs -I'{}' echo '[0] SCHEDULE_FORCED_HOST_SVC_CHECKS;{};0' >> /var/nagios/rw/nagios.cmd"
+alias nagcheck "grep host_name /var/nagios/status.dat | sort | uniq | cut -d= -f 2 | xargs -I'{}' sudo echo '[0] SCHEDULE_FORCED_HOST_SVC_CHECKS;{};0' >> /var/nagios/rw/nagios.cmd"
 
 # start nagios "my way" (sleep sadly needed since nagios doesn't die instantly)
 # <h>who needs /etc/init.d anyway!</h>

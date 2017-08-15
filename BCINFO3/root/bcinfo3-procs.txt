@@ -12,7 +12,10 @@ syslogd
 xinetd
 crond
 /usr/local/bin/bc-get-all-weather.pl
-/usr/local/bin/bc-gocomics-comments2.pl
+
+# mustn't run as of 14 Aug 2017, gocomics changed comments long time ago
+# /usr/local/bin/bc-gocomics-comments2.pl
+
 # bc-metar-db.pl will probably go away soon
 /usr/local/bin/bc-metar-db.pl
 /usr/sbin/lighttpd

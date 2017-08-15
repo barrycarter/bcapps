@@ -195,10 +195,12 @@ mkdir /mnt/ramdisk/querys
 mkdir /var/tmp/DONE
 : this keeps finished queryfiles out of memory
 ln -s /var/tmp/DONE /mnt/ramdisk/querys/
-bc-gocomics-comments2.pl&
 bc-metar-db.pl&
 bc-get-radar.pl&
 bc-get-all-weather.pl &
+
+# dropped below 14 Aug 2017, gocomics.com seriously changed comments
+# bc-gocomics-comments2.pl&
 
 % other tasks
 

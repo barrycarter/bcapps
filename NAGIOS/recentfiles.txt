@@ -16,7 +16,9 @@
 # inefficient
 
 # Confirm bc-getmail is working properly
-600 600 "/home/barrycarter/.getmail/oldmail-imap.*"
+# the [^0-9] at end to exclud things like: 
+# oldmail-imap.gmail.com-993-carter.barry-INBOX.tmp.28373
+600 600 "/home/barrycarter/.getmail/oldmail-imap.*[^0-9]"
 
 # Confirm my emacs buffer file is current
 600 1200 "~/.emacs_????"
@@ -44,5 +46,5 @@
 # that need to be backed up weekly; this checks that they are all
 # recent enough
 
-# temp down
-129600 259200 "/usr/local/etc/weekly-backups/files/bcunix-*.txt /usr/local/etc/weekly-backups/files/bcinfo3-*.[tb][xz][t2]"
+# temp down (even after moving to /backups/)
+# 129600 259200 "/usr/local/etc/backups/files/bcunix-*.txt /usr/local/etc/backups/files/bcinfo3-*.[tb][xz][t2]"

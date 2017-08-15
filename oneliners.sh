@@ -1,5 +1,13 @@
 # shell one liners
 
+# spits out commands to take sample hash of all files on /mnt/extdrive5 (or 2)
+
+perl -nle '@_=split(/\s+/,$_,9);if ($_[4] eq "f") {print "bc-sample-hash.pl \"$_[8]\""}' extdrive2-files.txt
+
+# to use, redirect above to shellfile and then "sh shellfile>output.txt"
+
+exit;
+
 # filters stuff I want from calendar in correct format
 
 # as of 2017 cal, I think I already have everything I want, so this just confirms gcal isnt spitting out anything new
@@ -7,8 +15,6 @@
 gcal -u @/home/barrycarter/BCGIT/ASTRO/gcal-options.txt 2017 | perl -nle '/^(.*?)\s{2,}[\+\-]\s+(\d{8})/||warn("BAD: $_"); my($e,$d)=($1,$2); $e=~s/\s*\(.*?\)\s*$//; $e=~s/\47//g; $e=~s/\s*Day\s*/ /; print "$d $e"' | egrep -vf /home/barrycarter/20140726/nocal.txt | sort | uniq > gcal.txt
 
 perl -anle 'print $F[0]' gcal.txt | sort -n | uniq > gcal-dates.txt
-
-
 
 # gcal @/home/barrycarter/BCGIT/ASTRO/gcal-options.txt | perl -F"\s\s+" -anle '$F[0]=~s/\s*\(.*?\)\s*//; print "$F[2] $F[1]"'
 
