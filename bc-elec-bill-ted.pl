@@ -3,6 +3,8 @@
 # Computes how much my monthly electric bill might be, using TED
 # device ("the energy detective")
 
+# TODO: there is something seriously wrong w/ the way I am doing this
+
 # --summer: assume summer rates
 
 # TODO:
@@ -73,10 +75,10 @@ debug("TOTAL TAX RATE: $taxes");
 
 # 1488h = 62d
 
-my($hourly,$herr,$hres) = cache_command2("curl 'http://ted.local.lan/history/rawhourhistory.raw?MTU=0&COUNT=1488&INDEX=0'", "age=3600");
+my($hourly,$herr,$hres) = cache_command2("curl 'http://ted.local.lan/history/rawhourhistory.raw?MTU=0&COUNT=1488&INDEX=0' | tac", "age=3600");
 
-# total kwh cumulation and max time seen
-my($kwh, $thru);
+# total kwh cumulation and time
+my($kwh, $time);
 
 for $i (split(/\n/, $hourly)) {
 
@@ -87,16 +89,13 @@ for $i (split(/\n/, $hourly)) {
   my($yr, $mo, $da, $ho) = @vals[0..3];
 
   # TODO: Y2.1K error possible
-  my($time) = sprintf("20%02d-%02d-%02d %02d:%02d:%02d $tz", @vals[0..3]);
+  $time = sprintf("20%02d-%02d-%02d %02d:%02d:%02d $tz", @vals[0..3]);
 
   # TODO: combine w/ above step -- note that 11:00:00 ends at 11:59:59
   $time = str2time($time)+3600;
 
-  # should be in reverse order, but being safe here
-  if ($time > $thru) {$thru = $time;}
-
-  # assuming meter read at noon is imperfect
-  if ($time <= $stop) {last;}
+  # skip if older than previous meter read (assuming noon = imperfect)
+  if ($time <= $stop) {next;}
 
   debug("TIME: $time");
 
@@ -108,15 +107,20 @@ for $i (split(/\n/, $hourly)) {
   debug("X: $yr $mo $da $ho $power");
 }
 
-debug("KWH: $kwh, THRU: $thru");
+debug("KWH: $kwh, THRU: $time");
 
 # and now, the minutes
 
-my($minutely,$merr,$mres) = cache_command2("curl 'http://ted.local.lan/history/rawminutehistory.raw?MTU=0&COUNT=120&INDEX=0'", "age=120");
+# to store the latest minute
+my($mtime);
+
+my($minutely,$merr,$mres) = cache_command2("curl 'http://ted.local.lan/history/rawminutehistory.raw?MTU=0&COUNT=120&INDEX=0' | tac", "age=120");
 
 debug("MIN: $minutely");
 
 # TODO: redundant code here is bad, format is only slightly different
+
+# TODO: confirm overlap else bad
 
 for $i (split(/\n/, $minutely)) {
 
@@ -127,28 +131,35 @@ for $i (split(/\n/, $minutely)) {
   my($yr, $mo, $da, $ho, $mi) = @vals[0..4];
 
   # TODO: Y2.1K error possible
-  my($time) = sprintf("20%02d-%02d-%02d %02d:%02d:%02d $tz", @vals[0..4]);
+  $mtime = sprintf("20%02d-%02d-%02d %02d:%02d:%02d $tz", @vals[0..4]);
 
   # TODO: combine w/ above step -- note that 11:00:00 ends at 11:00:59
-  $time = str2time($time)+60;
+  $mtime = str2time($mtime)+60;
 
-  debug("TIME: $time");
-
-  # if hours have already covered this, jump to end
-  if ($time < $thru) {last;}
-
-  # if not, we are now $thru t....
-
-  # if we've already handled this in the hour section, ignore it
-  if ($time < $mtime) {next;} else {$mtime = $time;}
+  # if this has already been covered by an hourly reading, ignore it
+  if ($mtime < $time) {next;}
 
   # TODO: there is a better way to do this
   my($power) = $vals[5] + $vals[6]*256 + $vals[7]*256**2 + $vals[8]*256**3;
 
-  $kwh += $power/1000;
+  $kwh += $power/1000/60;
 
-  debug("X: $yr $mo $da $ho $mi $power");
+  debug("X: $yr $mo $da $ho $mi $power $kwh");
 }
+
+# TODO: MAYBE add seconds
+
+my($elapsed) = $mtime - $stop;
+my($tusage) = $kwh/$elapsed*$secspermonth;
+
+my($cost) = tiered_cost($tusage);
+
+print "Read date: $read 12:00:00 (hour assumed)\n";
+printf("Last date: %s (about %d minutes ago)\n", strftime("%m/%d/%Y %H:%M:%S", localtime($mtime)), (time()-$mtime)/60.);
+printf("Usage to date: %0.3f\n", $kwh);
+printf("Estimted usage month: %0.3f\n", $tusage);
+printf("Cost (pre-fees/etc): \$%0.2f\n", $cost);
+printf("Cost (total): \$%0.2f\n", ($cost + $fca*$tusage + $fixed)*$taxes);
 
 die "TESTING";
 
@@ -180,20 +191,6 @@ for $i (split(/\n/, $out)) {
   if ($date eq "$read 12:00:00") {last;}
 
 }
-
-my($elapsed) = str2time("$edate $tz") - str2time("$read 12:00:00 $tz");
-my($tusage) = $usage/$elapsed*$secspermonth;
-
-my($cost) = tiered_cost($tusage);
-
-print "Read date: $read 12:00:00 (hour assumed)\n";
-printf("Last date: $edate (about %d minutes ago)\n",
- (time()-str2time("$edate $tz"))/60.);
-printf("Usage to date: %0.3f\n", $usage);
-printf("Estimted usage month: %0.3f\n", $tusage);
-printf("Cost (pre-fees/etc): \$%0.2f\n", $cost);
-printf("Cost (total): \$%0.2f\n", ($cost + $fca*$tusage + $fixed)*$taxes);
-
 
 # work out cost of $n kilowatthours of electricity, using tiers
 # TODO: make this more general and not hardcode variables (or does it already?)
