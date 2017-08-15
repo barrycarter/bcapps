@@ -32,6 +32,10 @@ my($tz) = "-0600";
 
 $ENV{"TZ"} = $tz;
 
+# stop reading when we hit old bill
+
+my($stop) = str2time("$read 12:00:00 $tz");
+
 # useful constants/vars
 $secspermonth = 365.2425*86400/12; # gregorian
 
@@ -67,7 +71,12 @@ debug("TOTAL TAX RATE: $taxes");
 
 # TODO: since I get bills "late", maybe go out more than 31 days? (2 mos?)
 
-my($hourly,$err,$res) = cache_command2("curl 'http://ted.local.lan/history/rawhourhistory.raw?MTU=0&COUNT=1488&INDEX=0'", "age=3600");
+# 1488h = 62d
+
+my($hourly,$herr,$hres) = cache_command2("curl 'http://ted.local.lan/history/rawhourhistory.raw?MTU=0&COUNT=1488&INDEX=0'", "age=3600");
+
+# total kwh cumulation and max time seen
+my($kwh, $thru);
 
 for $i (split(/\n/, $hourly)) {
 
@@ -83,15 +92,63 @@ for $i (split(/\n/, $hourly)) {
   # TODO: combine w/ above step -- note that 11:00:00 ends at 11:59:59
   $time = str2time($time)+3600;
 
+  # should be in reverse order, but being safe here
+  if ($time > $thru) {$thru = $time;}
+
+  # assuming meter read at noon is imperfect
+  if ($time <= $stop) {last;}
+
   debug("TIME: $time");
 
   # TODO: there is a better way to do this
   my($power) = $vals[4] + $vals[5]*256 + $vals[6]*256**2 + $vals[7]*256**3;
 
+  $kwh += $power/1000;
+
   debug("X: $yr $mo $da $ho $power");
 }
 
-# debug($hourly);
+debug("KWH: $kwh, THRU: $thru");
+
+# and now, the minutes
+
+my($minutely,$merr,$mres) = cache_command2("curl 'http://ted.local.lan/history/rawminutehistory.raw?MTU=0&COUNT=120&INDEX=0'", "age=120");
+
+debug("MIN: $minutely");
+
+# TODO: redundant code here is bad, format is only slightly different
+
+for $i (split(/\n/, $minutely)) {
+
+  my(@vals) = map($_=ord($_), split(//, decode_base64($i)));
+
+  # per TED5000-API-R330.pdf (TODO: find full URL)
+  # TODO: this is different for minute and second
+  my($yr, $mo, $da, $ho, $mi) = @vals[0..4];
+
+  # TODO: Y2.1K error possible
+  my($time) = sprintf("20%02d-%02d-%02d %02d:%02d:%02d $tz", @vals[0..4]);
+
+  # TODO: combine w/ above step -- note that 11:00:00 ends at 11:00:59
+  $time = str2time($time)+60;
+
+  debug("TIME: $time");
+
+  # if hours have already covered this, jump to end
+  if ($time < $thru) {last;}
+
+  # if not, we are now $thru t....
+
+  # if we've already handled this in the hour section, ignore it
+  if ($time < $mtime) {next;} else {$mtime = $time;}
+
+  # TODO: there is a better way to do this
+  my($power) = $vals[5] + $vals[6]*256 + $vals[7]*256**2 + $vals[8]*256**3;
+
+  $kwh += $power/1000;
+
+  debug("X: $yr $mo $da $ho $mi $power");
+}
 
 die "TESTING";
 
