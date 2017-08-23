@@ -271,3 +271,6 @@ MAILTO="daemon"
 
 10 13 * * * bc-meetup-make-eo.pl|sh
 
+# testing to see how well it works
+
+*/5 * * * * xprintidle

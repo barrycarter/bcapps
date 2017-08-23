@@ -32,6 +32,8 @@ my($res);
 for (;;) {
   # I have ~/.fvwm2rc so that "sticky" in title makes it sticky:
   # Style "*sticky*" NoTitle, NoHandles, Sticky
+  # TODO: make this out/err/res style so I can ignore ugly error:
+  # "Gtk-Message: GtkDialog mapped without a transient parent. This is discouraged."
   $res = `zenity --entry --text "$msg" --width 1024 --title stickymessage`;
   if ($res=~/\S/) {last;}
   $msg .= " [reply cannot be blank]";

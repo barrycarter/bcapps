@@ -130,7 +130,8 @@ alias bcgit "pushd .; cd ~/BCGIT; git add .; git commit; git pull -v; git push  
 # unaliased 14 Aug 2017, causes problems with path issues
 # alias gnumeric "pushd .; cd ~; \gnumeric \!* & popd"
 
-alias skype "pushd .; cd ~; /root/build/skype-4.3.0.37/skype \!*& popd"
+# unaliased 21 Aug 2017, not needed on saopaulo
+# alias skype "pushd .; cd ~; /root/build/skype-4.3.0.37/skype \!*& popd"
 
 # hex2dec often needed
 alias hex2dec "bc-call-func.pl hex \!*"
@@ -187,7 +188,8 @@ alias sha1sort "(sed 's/ .*//' | \sort | \uniq)"
 alias file "file -m /usr/share/magic:/home/barrycarter/BCGIT/bc-magic.dot \!*"
 
 # really bad
-alias zpaq "/root/build/ZPAQ71/zpaq \!*"
+# later unaliases as it works fine regularly on saopaulo
+# alias zpaq "/root/build/ZPAQ71/zpaq \!*"
 
 # run make in parallel
 alias make "make -j \!*"
@@ -227,3 +229,7 @@ alias commodoreplay "\rm ~/temp.zip; \cp \!* ~/temp.zip; x64 ~/temp.zip&"
 
 # opens a window with a given name
 alias window "xterm -geometry 80x53 +sb -bg gray45 -bd gray45 -T \!* -n \!* &"
+
+# scans into current directory
+# TODO: maybe rename this for saopaulo?
+alias scanit "bc-scan-pic-brighton.pl"

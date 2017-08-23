@@ -46,7 +46,7 @@ $secspermonth = 365.2425*86400/12; # gregorian
 # TODO: should update regularly?
 
 if ($globopts{summer}) {
-  @tiers = ([450, 0.0767429], [450, 0.1221238], [+Infinity, 0.1472299]);  
+  @tiers = ([450, 0.0767429], [450, 0.1221238], [+Infinity, 0.1472299]);
 } else {
   @tiers = ([450, 0.0767429], [450, 0.1053759], [+Infinity, 0.1198334]);
 }

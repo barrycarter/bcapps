@@ -76,6 +76,7 @@ expect
 findutils
 gawk
 gzip
+unrar
 html2ps
 less
 mailx
@@ -116,6 +117,8 @@ calendar
 
 # programming languages (or related)
 # TODO: mathematica (not free)
+# below is lisp
+sbcl
 eclipse
 R
 perl-CPAN
@@ -460,7 +463,11 @@ gnumeric
 # below required to compile gnumeric
 goffice08-devel
 # above required to compile gnumeric
-gnuplot
+# must install gnuplot from source to get nice widgets, argh
+# gnuplot
+# below is needed for source install of wxmaxima
+wxGTK3-devel
+wxGTK-devel
 graphviz
 dia
 xfig
