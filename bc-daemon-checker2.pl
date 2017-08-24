@@ -26,6 +26,14 @@ defaults("mach=bcinfo3&file=/home/barrycarter/BCGIT/BCINFO3/root/bcinfo3-procs.t
 
 sleep($globopts{sleep});
 
+# determine idle time
+
+my($iout, $ierr, $ires) = cache_command2("xprintidle");
+
+# for now, just print it out
+
+print "XIDLE: $iout\n";
+
 # this command really does all the work
 ($out,$err,$res) = cache_command2("ps -wwweo 'pid ppid etime rss vsz stat args'","age=-1");
 
