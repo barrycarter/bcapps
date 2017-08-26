@@ -32,7 +32,7 @@ my($iout, $ierr, $ires) = cache_command2("xprintidle");
 
 # for now, just print it out
 
-print "XIDLE: $iout\n";
+debug("XIDLE: $iout");
 
 # this command really does all the work
 ($out,$err,$res) = cache_command2("ps -wwweo 'pid ppid etime rss vsz stat args'","age=-1");

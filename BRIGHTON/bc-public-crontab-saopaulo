@@ -167,8 +167,9 @@ MAILTO="daemon"
 49 8 * * * rsync -e 'ssh -i /home/user/.ssh/id_rsa.bc' -az "root@bcinfo3.barrycarter.info:/var/log/lighttpd/*" /home/user/html/weblogs/bcinfo3/
 
 # check that the correct procs are running and not running
+# --debug turned on briefly 25 Aug 2017
 
-*/5 * * * * sudo /home/user/BCGIT/bc-daemon-checker2.pl --file=/home/user/saopaulo-procs.txt --mach=saopaulo --sleep=50
+*/5 * * * * sudo /home/user/BCGIT/bc-daemon-checker2.pl --file=/home/user/saopaulo-procs.txt --mach=saopaulo --sleep=50 --debug
 
 # I dislike ntpd so this adjusts the system clock frequency/etc regularly
 # this will fail until I create this program
