@@ -1,8 +1,11 @@
 # useful aliases
 
 # when network connection goes down, many procs hang; this kills them in a single blow (because typing on the keyboard can be hard + remembering which processes to kill can be difficult as well)
-alias diedie "sudo pkill convert; sudo pkill xwd; sudo pkill curl; sudo pkill grep; sudo pkill sshfs; sudo pkill find; sudo pkill bc-xwd.pl; sudo pkill bc-elec-snap.pl"
-alias diediedie "sudo pkill -9 convert; sudo pkill -9 xwd; sudo pkill -9 curl; sudo pkill -9 grep; sudo pkill -9 sshfs; sudo pkill -9 find; sudo pkill -9 bc-xwd.pl; sudo pkill -9 bc-elec-snap.pl"
+
+# both killed 25 Aug 2017, not needed on saopaulo
+
+# alias diedie "sudo pkill convert; sudo pkill xwd; sudo pkill curl; sudo pkill grep; sudo pkill sshfs; sudo pkill find; sudo pkill bc-xwd.pl; sudo pkill bc-elec-snap.pl"
+# alias diediedie "sudo pkill -9 convert; sudo pkill -9 xwd; sudo pkill -9 curl; sudo pkill -9 grep; sudo pkill -9 sshfs; sudo pkill -9 find; sudo pkill -9 bc-xwd.pl; sudo pkill -9 bc-elec-snap.pl"
 
 # nagios status from status.dat (very kludgey)
 alias nagstat "egrep 'host_name|plugin_output|current_state|(host|service)status|service_description|check_command' /var/nagios/status.dat | grep -v 'long_plugin_output'"
@@ -92,7 +95,8 @@ alias wwf "bzfgrep -ix \!* /home/barrycarter/BCGIT/WWF/wwf.txt.bz2"
 # it took quite a bit of work to get the nice's below working properly
 # pkill -9 added since the somagic-capture process sometimes lingers
 # (and so can the vlc process sometimes)
-alias elecstart "sudo pkill -9 vlc; sudo pkill -9 somagic-capture; sudo /bin/nice -n 19 somagic-capture | /bin/nice -n 19 vlc --config /home/barrycarter/.config/vlc/vlcrc-elecstart --demux rawvideo --rawvid-fps 15 --rawvid-width 720 --rawvid-height 576 --rawvid-chroma=UYVY file:///dev/stdin &"
+# dropped 25 Aug 2017: stopped using this ages ago
+# alias elecstart "sudo pkill -9 vlc; sudo pkill -9 somagic-capture; sudo /bin/nice -n 19 somagic-capture | /bin/nice -n 19 vlc --config /home/barrycarter/.config/vlc/vlcrc-elecstart --demux rawvideo --rawvid-fps 15 --rawvid-width 720 --rawvid-height 576 --rawvid-chroma=UYVY file:///dev/stdin &"
 
 # recollq output tends to scroll by
 # 8 Oct 2014: added old "bad" index (that recollindex can no longer
@@ -233,3 +237,9 @@ alias window "xterm -geometry 80x53 +sb -bg gray45 -bd gray45 -T \!* -n \!* &"
 # scans into current directory
 # TODO: maybe rename this for saopaulo?
 alias scanit "bc-scan-pic-brighton.pl"
+
+# stops processes that slow down machine (even a fast one like
+# saopaulo) to point where keyboard itself is slow
+# may add more procs later, currently only these two
+
+alias stopit "sudo killall -STOP recollindex zpaq"

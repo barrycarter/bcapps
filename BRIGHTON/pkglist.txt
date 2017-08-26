@@ -193,6 +193,7 @@ nessus
 satan
 
 # filesystems
+fuse-devel
 fuse-encfs
 fuse-sshfs
 fuse-zip
@@ -200,6 +201,7 @@ gitfs
 curlftpfs
 bindfs
 nfs-utils
+libarchive-devel
 
 # window managers
 fvwm

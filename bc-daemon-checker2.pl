@@ -26,13 +26,12 @@ defaults("mach=bcinfo3&file=/home/barrycarter/BCGIT/BCINFO3/root/bcinfo3-procs.t
 
 sleep($globopts{sleep});
 
-# determine idle time
+# determine idle time and set flag if over 21m (arb chosen)
 
+my($idle) = 0;
 my($iout, $ierr, $ires) = cache_command2("xprintidle");
-
-# for now, just print it out
-
 debug("XIDLE: $iout");
+if ($iout > 60*21*1000) {$idle=1;}
 
 # this command really does all the work
 ($out,$err,$res) = cache_command2("ps -wwweo 'pid ppid etime rss vsz stat args'","age=-1");
@@ -85,6 +84,10 @@ for $i (@procs) {
   # report stopped processes
   if ($stat=~/T/ && !$proclist{stopped}{$proc}) {
     push(@err, "stopped.$proc ($pid)");
+
+    # this is slightly ugly
+    if ($idle) {system("kill -CONT $pid");}
+
   }
 
   # processes using too much memory
