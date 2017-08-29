@@ -27,7 +27,7 @@
 require "/usr/local/lib/bclib.pl";
 
 # last meter read date in mm/dd/yyyy format <h>(screw Europe!)</h>
-my($read) = "07/24/2017";
+my($read) = "08/22/2017";
 
 # TODO: cant get timezone working properly, so setting to -0600 (MDT) for now
 my($tz) = "-0600";

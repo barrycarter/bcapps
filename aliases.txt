@@ -242,4 +242,4 @@ alias scanit "bc-scan-pic-brighton.pl"
 # saopaulo) to point where keyboard itself is slow
 # may add more procs later, currently only these two
 
-alias stopit "sudo killall -STOP recollindex zpaq"
+alias stopit "sudo killall -STOP recollindex zpaq rcltar"
