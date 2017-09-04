@@ -23,3 +23,7 @@
 
 # dullon files should be treated as though they appear at root
 "/DULLON" ""
+
+# QUORALOG repitition
+
+"/mnt/extdrive5/INBOUNDSYMLINKS/QUORALOG/" "/mnt/villa/user/QUORA/QUORALOG/"

@@ -6,6 +6,9 @@
 /mnt/lobos lobos
 / saopaulo
 
-# TODO: /home on saopaulo has nothing but two symlinks so not listing it here
+# usb drives
 
-# TODO: add usb external drives when attached
+/mnt/extdrive5 extdrive5
+/mnt/extdrive2 extdrive2
+
+# TODO: /home on saopaulo has nothing but two symlinks so not listing it here

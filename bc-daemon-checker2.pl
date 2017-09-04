@@ -78,6 +78,13 @@ for $i (@procs) {
     if ($proc2=~/^\-/) {$proc=$proc3;} else {$proc=$proc2;}
   }
 
+  # xidle is failing, testing w/ bc-walkaround (up 20+ minutes =
+  # idle), but hoping to fix xidle instead
+  if ($proc=~/walkaround/) {
+    # note if bc-walkaround not running, this line doesnt run at all
+    debug("BC-WALKAROUND TIME: $time");
+  }
+
   # for multiple run checking, count if/how many times proc is running
   $isproc{$proc}++;
 

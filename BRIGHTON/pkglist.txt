@@ -299,6 +299,11 @@ recordmydesktop
 mjpegtools
 youtube-dl
 openshot
+avidemux
+blender
+
+# source for below
+pitivi
 
 # email
 mutt
