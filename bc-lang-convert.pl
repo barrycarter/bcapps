@@ -72,7 +72,13 @@ while ($js=~s/var(\d+)/$hash{$1}/g) {}
 
 debug("STARTING PHP");
 my($php) = $form;
-while ($php=~s/([a-z0-9]+)\[([^\[\]]*?)\]/multiline_parse($1,$2,"php")/ie) {}
+
+while ($php=~s/([a-z0-9]+)\[([^\[\]]*?)\]/multiline_parse($1,$2,"php")/ie) {
+  debug("PHP: $php");
+}
+
+for $i (sort {$a <=> $b} keys %hash) {debug("HASH($i) => $hash{$i}");}
+
 while ($php=~s/var(\d+)/$hash{$1}/g) {}
 debug("ENDING PHP");
 
@@ -145,6 +151,7 @@ sub multiline_parse {
   # PHP uses $vars, not vars
   if ($lang eq "php") {
     for $i (@args) {$i = "\$$i";}
+    $args = join(", ", @args);
   }
 
   # list
@@ -182,15 +189,15 @@ sub multiline_parse {
   if ($f eq "ArcTan") {
 
     # TODO: this depends on language???
-    $hash{$varcount} = "Math.atan2(($args[1]),($args[0]))";
+#    $hash{$varcount} = "Math.atan2(($args[1]),($args[0]))";
 
-#    if ($lang eq "ruby") {
-#      $hash{$varcount} = "Math.atan2(($args[1]),($args[0]))";
-#    } elsif ($lang eq "js") {
-#      $hash{$varcount} = "Math.atan2(($args[1]),($args[0]))";
-#    } else {
-#      $hash{$varcount} = "ArcTan[($args[0]), $args[1]]";
-#    }
+    if ($lang eq "ruby") {
+      $hash{$varcount} = "Math.atan2(($args[1]),($args[0]))";
+    } elsif ($lang eq "js") {
+      $hash{$varcount} = "Math.atan2(($args[1]),($args[0]))";
+    } else {
+      $hash{$varcount} = "atan2(($args[0]), $args[1])";
+    }
 
     return "var$varcount";
   }
