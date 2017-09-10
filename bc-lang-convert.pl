@@ -4,7 +4,14 @@
 
 # TODO: rename this rosetta or is that overdone?
 
+# TODO: long-term, use proper temp/subr var conventions for each lang
+
 require "/usr/local/lib/bclib.pl";
+
+# functions that "thread" (in Mathematica) and their binary versions
+# TODO: not even close to complete
+
+my(%thread) = ("Plus" => "+", "Times" => "*");
 
 # code gets stored here
 my(@code);
@@ -13,171 +20,189 @@ my(@code);
 
 # this is from bc-rst.m
 
-$fname = "HADecLat2azEl";
+$fname = "f1";
 
 @vars = ("ha", "dec", "lat");
 
 $vars = join(", ",@vars);
 
+# special case for php
+
+# TODO: handle these special cases much better
+
+@phpvars = @vars;
+for $i (@phpvars) {$i= "\$$i";}
+$phpvars = join(", ", @phpvars);
+
 $desc = "This is a test function that does nothing useful... unless you consider testing useful... then it does something useful... but not useful to you... unles you're testing with me";
 
-$form = "
-   {ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[ha]*Sin[lat], -(Cos[dec]*Sin[ha])],
-    ArcTan[Sqrt[Cos[dec]^2*Sin[ha]^2 + (Cos[lat]*Sin[dec] -
-         Cos[dec]*Cos[ha]*Sin[lat])^2], Cos[dec]*Cos[ha]*Cos[lat] +
-      Sin[dec]*Sin[lat]]}
-";
+# TODO: remove unnecessary parens (low pri)
 
 # using MUCH simpler example for syntax testing:
 
 # ArcTan for argument order
 # ^2 for **2 stuff
+# Sin[ha] inside ArcTan for composition testing
 # list for list return stuff
 
-$form = "{Cos[lat] + Cos[dec], Sin[ha], ArcTan[lat,Sin[ha]]^2}";
+# inputform (for reference only):
+# {Cos[dec] + Cos[lat], Sin[ha], ArcTan[lat, Sin[ha]]^2}
 
-while ($form=~s/([a-z0-9]+)\[([^\[\]]*?)\]/rubify($1,$2)/ie) {}
-
-debug("FORM: $form");
-
-die "TESTING";
-
-# TODO: consider Mathematica FullForm, it's purer and may help
-
-# TODO: remove unnecessary parens (low pri)
-
-$form = "List[Plus[Cos[dec], Cos[lat]], Sin[ha], Power[ArcTan[lat, ha], 2]]";
+$form="
+List[Plus[Cos[dec], Cos[lat]], Sin[ha], Power[ArcTan[lat, Sin[ha]], 2]]
+";
 
 # multiline is only for my convenience
 $form=~s/\s+/ /g;
 
-# this is for ruby and js, so maybe shouldn't appear here
-$form=~s/{/[/g;
-$form=~s/}/]/g;
-$form=~s/\^/**/g;
+# TODO: may need parens here (or in multiline_parse)
 
-# this does all the work and populates the @code array
-while ($form=~s/([a-z0-9]+)\[([^\[\]]*?)\]/format1_helper($1,$2)/ie) {}
+# TODO: subroutinize
 
-# write out to ruby and js (TODO: obviously do something else later)
+# make copy and then tweak copy
 
+my($ruby) = $form;
+while ($ruby=~s/([a-z0-9]+)\[([^\[\]]*?)\]/multiline_parse($1,$2,"ruby")/ie) {}
+while ($ruby=~s/var(\d+)/$hash{$1}/g) {}
+
+my($js) = $form;
+while ($js=~s/([a-z0-9]+)\[([^\[\]]*?)\]/multiline_parse($1,$2,"js")/ie) {}
+while ($js=~s/var(\d+)/$hash{$1}/g) {}
+
+
+my($php) = $form;
+while ($php=~s/([a-z0-9]+)\[([^\[\]]*?)\]/multiline_parse($1,$2,"php")/ie) {}
+while ($php=~s/var(\d+)/$hash{$1}/g) {}
+
+
+# TODO: subroutinize and handle output better
+
+# write out to ruby
 open(A, ">/tmp/blc.rb");
-
 print A << "MARK";
-
-def $fname($vars)
-$code
-$form
-end
-
+def $fname($vars) $ruby end
 print $fname(1,2,3)
-
 MARK
 ;
-
 close(A);
 
-# NOTE: $code does nothing for right now
 
+# write to JS
 open(A, ">/tmp/blc.js");
-
 print A << "MARK";
-
-function $fname($vars) {
-$code
-return $form;
-}
-
+function $fname($vars) {return $js;}
 print($fname(1,2,3));
-
 MARK
 ;
+close(A);
 
+# write to PHP
+open(A, ">/tmp/blc.php");
+print A << "MARK";
+<?
+function $fname($phpvars) {return $php;}
+print_r($fname(1,2,3));
+?>
+MARK
+;
+close(A);
 
+=item multline_parse($f, $args, $lang)
 
+$f: function name
+$args: arguments to that function
+$lang: programming language
 
-
-debug("FORM: $form");
-debug(@code);
-
-die "TESTING";
-
-# ruby test
-
-# TODO: ruby does ArcTan "backwards", so simplifying formula to return
-# four vals
-
-# $form = "
-#   {Cos[lat]*Sin[dec] - Cos[dec]*Cos[ha]*Sin[lat], -(Cos[dec]*Sin[ha]),
-#    Sqrt[Cos[dec]^2*Sin[ha]^2 + (Cos[lat]*Sin[dec] -
-#         Cos[dec]*Cos[ha]*Sin[lat])^2], Cos[dec]*Cos[ha]*Cos[lat] +
-#      Sin[dec]*Sin[lat]}
-#";
-
-
-# $form = "ArcTan[x,y]";
-
-# this will be a sticking point later
-
-$form=~s/ArcTan/atan2/g;
-
-# JS starts here
-
-
-
-
-
-
-
-# ruby starts here
-
-while ($form=~s/([a-z0-9]+)\[([^\[\]]*?)\]/rubify($1,$2)/ie) {}
-
-my($code) = join("\n", @code);
-
-print "def $fname($vars)\n$code\n$form\nend\n";
-
-debug("FORM: $form");
-
-debug("CODE", @code);
-
-# ruby ends here
-
-# print test code so I dont have to enter it "by hand" each time
-
-print "print $fname(1,2,3)\n";
-
-sub rubify {
-  my($f, $args) = @_;
-  debug("GOT: f=$f, args=$args");
-
-  # TODO: ugly ugly ugly; also, ugly
-  # flip args if atan2
-  if ($f eq "atan2") {
-    debug("ARGS1: $args");
-    $args=~s/^(.*?),(.*)$/$2,$1/;
-    debug("ARGS2: $args");
-  }
-
-  return("Math.".lc($f)."($args)");
-}
+Create a (global) list of variable assignments that ultimately yield
+the result of a calculation (may eventually become a helper for inline
+functions)
 
 # TODO: this method is SIGNIFIGANTLY uglier, but easier to debug
+# TODO: use an array instead of bad var names?
+# TODO: use internal format \0 (num) \0 or something?
+# TODO: let "user" choose var name?
+# TODO: declare variables as private
+# TODO: typing nightmare?
 
-sub rubify2 {
+# TODO: consider releasing in var1 = ... form as well
+
+=cut
+
+sub multiline_parse {
+
+  my($f, $args, $lang) = @_;
+  my(@args) = split(/\,\s*/, $args);
 
   # TODO: icky use of global here
   $varcount++;
 
-  # TODO: use an array instead of bad var names?
-  # TODO: let "user" choose var name?
-  # TODO: declare variables as private
-  # TODO: typing nightmare?
+  debug("GOT: f=$f, args=$args, lang=$lang", @args);
 
-  my($f, $args) = @_;
-  debug("GOT: f=$f, args=$args");
+  # special cases
 
-  warn "TESTING";
+  # list
+  if ($f eq "List") {
+ 
+    # TODO: this might be cheating, do I need parens?
+
+    if ($lang eq "php") {
+      $hash{$varcount} = "array($args)";
+    } else {
+      $hash{$varcount} = "[$args]";
+    }
+
+    return "var$varcount";
+  }
+
+  # power
+  if ($f eq "Power") {
+
+    # TODO: this depends on language
+    if ($lang eq "ruby") {
+      $hash{$varcount} = "($args[0])**($args[1])";
+    } elsif ($lang eq "js") {
+      # TODO: should not need parens here, $args should be of form varx
+      $hash{$varcount} = "Math.pow($args[0],$args[1])";
+    } else {
+      $hash{$varcount} = "($args[0])^($args[1])";
+    }
+    
+    # always return this
+    return "var$varcount";
+  }
+
+  # the hideousness that is ArcTan
+  if ($f eq "ArcTan") {
+
+    # TODO: this depends on language???
+    $hash{$varcount} = "Math.atan2(($args[1]),($args[0]))";
+
+#    if ($lang eq "ruby") {
+#      $hash{$varcount} = "Math.atan2(($args[1]),($args[0]))";
+#    } elsif ($lang eq "js") {
+#      $hash{$varcount} = "Math.atan2(($args[1]),($args[0]))";
+#    } else {
+#      $hash{$varcount} = "ArcTan[($args[0]), $args[1]]";
+#    }
+
+    return "var$varcount";
+  }
+
+  # threaded functions
+
+  if ($thread{$f}) {
+
+    # add parens
+    for $i (@args) {$i="($i)";}
+
+    # and add
+    $hash{$varcount} = join($thread{$f}, @args);
+
+    return "var$varcount";
+  }
+
+#  warn "TESTING"; return "var$varcount";
+
 
   # TODO: ugly ugly ugly; also, ugly
   # flip args if atan2
@@ -192,13 +217,13 @@ sub rubify2 {
 
   # TODO: @code is global
   push(@code, "var$varcount = $f($args);");
+
+  # this GLOBAL hash assignment allows us to unfold variables later
+  $hash{$varcount} = "$f($args)";
+
   push(@code, "print \"var $varcount = \", var$varcount, \"\\n\";");
 
   return "var$varcount";
-
-  next;
-
-  return("Math.".lc($f)."($args)");
 }
 
 # TODO: use FORTRAN form?
@@ -212,38 +237,7 @@ sub rubify2 {
 # TODO: mass test cases (and some sort of 'ant' [whatever the hell
 # that is] thing?)
 
-=item format1_helper
+# TODO: uses globals extensively (maybe ok as a helper function)
 
-This helps convert code into a format understood by: Ruby, JS, ??? (others?)
-
-$f: the function name
-$args: the comma-separated function arguments
-
-TODO: uses globals extensively (maybe ok as a helper function)
-
-=cut
-
-sub format1_helper {
-  my($f, $args) = @_;
-  my(@args) = split(/\,\s*/, $args);
-  debug("GOT: f=$f, args=", @args);
-
-  # special cases for simple functions
-  # TODO: this is wrong for a+b+c when there's more than two args
-  if ($f eq "Plus") {
-    return "($args[0])+($args[1])";
-  }
-
-  # TODO: ugly ugly ugly; also, ugly
-  # flip args if arctan AND change to atan2
-  # TODO: this will get uglier since I sometimes use one arg form
-  if ($f eq "ArcTan") {
-    debug("ARGS1: $args");
-    $f = "atan2";
-    $args=~s/^(.*?),(.*)$/$2,$1/;
-    debug("ARGS2: $args");
-  }
-
-  return("Math.".lc($f)."($args)");
-}
+# TODO: annoy codreview.SE?
 
