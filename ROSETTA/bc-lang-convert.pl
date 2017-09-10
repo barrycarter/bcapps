@@ -59,38 +59,45 @@ $form=~s/\s+/ /g;
 
 # TODO: subroutinize
 
+my($tcode);
+
+# hash of language-specific code
+my(%lcode);
+
 # make copy and then tweak copy
 
-debug("STARTING PHP");
-my($php) = $form;
-
-while ($php=~s/([a-z0-9]+)\[([^\[\]]*?)\]/multiline_parse($1,$2,"php")/ie) {
-  debug("PHP: $php");
+for $i ("php", "ruby", "js", "lua") {
+  $code = $form;
+  while ($code=~s/([a-z0-9]+)\[([^\[\]]*?)\]/multiline_parse($1,$2,$i)/ie) {}
+  while ($code=~s/var(\d+)/$hash{$1}/g) {}
+  $lcode{$i} = $code;
 }
 
-for $i (sort {$a <=> $b} keys %hash) {debug("HASH($i) => $hash{$i}");}
+=item comment
 
-while ($php=~s/var(\d+)/$hash{$1}/g) {}
+$code = $form;
+while ($code=~s/([a-z0-9]+)\[([^\[\]]*?)\]/multiline_parse($1,$2,"ruby")/ie) {}
+while ($code=~s/var(\d+)/$hash{$1}/g) {}
+my($ruby) = $code;
 
-debug("PHP FINAL: $php");
+$code = $form;
+while ($code=~s/([a-z0-9]+)\[([^\[\]]*?)\]/multiline_parse($1,$2,"js")/ie) {}
+while ($code=~s/var(\d+)/$hash{$1}/g) {}
+my($js) = $code;
 
-debug("ENDING PHP");
+$code = $form;
+while ($code=~s/([a-z0-9]+)\[([^\[\]]*?)\]/multiline_parse($1,$2,"lua")/ie) {}
+while ($code=~s/var(\d+)/$hash{$1}/g) {}
+my($lua) = $code;
 
-my($ruby) = $form;
-while ($ruby=~s/([a-z0-9]+)\[([^\[\]]*?)\]/multiline_parse($1,$2,"ruby")/ie) {}
-while ($ruby=~s/var(\d+)/$hash{$1}/g) {}
-
-my($js) = $form;
-while ($js=~s/([a-z0-9]+)\[([^\[\]]*?)\]/multiline_parse($1,$2,"js")/ie) {}
-while ($js=~s/var(\d+)/$hash{$1}/g) {}
-
+=cut
 
 # TODO: subroutinize and handle output better
 
-# write out to ruby
+# write to Ruby
 open(A, ">/tmp/blc.rb");
 print A << "MARK";
-def $fname($vars) $ruby end
+def $fname($vars) $lcode{ruby} end
 print $fname(1,2,3)
 MARK
 ;
@@ -100,7 +107,7 @@ close(A);
 # write to JS
 open(A, ">/tmp/blc.js");
 print A << "MARK";
-function $fname($vars) {return $js;}
+function $fname($vars) {return $lcode{js};}
 print($fname(1,2,3));
 MARK
 ;
@@ -110,12 +117,22 @@ close(A);
 open(A, ">/tmp/blc.php");
 print A << "MARK";
 <?
-function $fname($phpvars) {return $php;}
+function $fname($phpvars) {return $lcode{php};}
 print_r($fname(1,2,3));
 ?>
 MARK
 ;
 close(A);
+
+# write to LUA
+open(A, ">/tmp/blc.lua");
+print A << "MARK";
+function $fname($vars) return $lcode{lua} end
+print($fname(1,2,3))
+MARK
+;
+close(A);
+
 
 =item multline_parse($f, $args, $lang)
 
@@ -148,6 +165,15 @@ sub multiline_parse {
 
   debug("GOT: f=$f, args=$args, lang=$lang", @args);
 
+  # the Math object is different for different languages
+  my($math);
+
+  if ($lang eq "lua") {
+    $math = "math";
+  } else {
+    $math = "Math";
+  }
+
   # special cases
 
   # PHP uses $vars, not vars
@@ -169,6 +195,9 @@ sub multiline_parse {
 
     if ($lang eq "php") {
       $hash{$varcount} = "array($args)";
+      } elsif ($lang eq "lua") {
+	# unchanged for lua?
+	$hash{$varcount} = $args;
     } else {
       $hash{$varcount} = "[$args]";
     }
@@ -184,7 +213,7 @@ sub multiline_parse {
       $hash{$varcount} = "($args[0])**($args[1])";
     } elsif ($lang eq "js") {
       # TODO: should not need parens here, $args should be of form varx
-      $hash{$varcount} = "Math.pow($args[0],$args[1])";
+      $hash{$varcount} = "$math.pow($args[0],$args[1])";
     } elsif ($lang eq "php") {
       $hash{$varcount} = "pow($args[0],$args[1])";
     } else {
@@ -198,10 +227,8 @@ sub multiline_parse {
   # the hideousness that is ArcTan
   if ($f eq "ArcTan") {
 
-    if ($lang eq "ruby") {
-      $hash{$varcount} = "Math.atan2(($args[1]),($args[0]))";
-    } elsif ($lang eq "js") {
-      $hash{$varcount} = "Math.atan2(($args[1]),($args[0]))";
+    if ($lang eq "ruby" || $lang eq "js" || $lang eq "lua") {
+      $hash{$varcount} = "$math.atan2(($args[1]),($args[0]))";
     } else {
       # argument reversal by default (stupid Mathematica!)
       $hash{$varcount} = "atan2(($args[1]), $args[0])";
@@ -223,23 +250,12 @@ sub multiline_parse {
     return "var$varcount";
   }
 
-#  warn "TESTING"; return "var$varcount";
-
-
-  # TODO: ugly ugly ugly; also, ugly
-  # flip args if atan2
-  if ($f eq "atan2") {
-    debug("ARGS1: $args");
-    $args=~s/^(.*?),(.*)$/$2,$1/;
-    debug("ARGS2: $args");
-  }
-
   # ruby uses Math and lower case function names, as does js, but not php
 
   if ($lang eq "php") {
     $f = lc($f);
   } else {
-    $f = "Math.".lc($f);
+    $f = "$math.".lc($f);
   }
 
   # TODO: @code is global
