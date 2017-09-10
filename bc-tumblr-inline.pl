@@ -18,13 +18,13 @@ for $i (@ARGV) {
   # TODO: for large tumblrs, grepping through all posts is tedious,
   # try to set up an mtime check vs last dld image or something
 
-  open(A,"grep tumblr_inline *|");
+  open(A,"grep -R tumblr_inline .|");
 
   # download 10 at a time
   open(B,"| xargs -r -P 10 -n 1 curl -O");
 
   while (<A>) {
-    while (s%"(http://.*?)"%%) {
+    while (s%"(https?://.*?)"%%) {
       my($url) = $1;
       unless ($url=~m%/(tumblr_inline.*)$%) {next;}
       my($fname) = $1;

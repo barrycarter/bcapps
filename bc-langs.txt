@@ -47,20 +47,20 @@ def f(x):
 
 f(1)
 
+PHP
+===
 
+function f($x) {return $x+sin($x);}
+echo f(1),"\n";
 
+R
+=
 
+f <- function(x) {return(x+sin(x))}
+f(1)
 
+NOT DOING: SQL
 
+TODO: C, Java, Go + other compiled languages, LISP/Schema/emacs-lisp?, Swift?
 
-
-
-
-
-
-TODO: C, Java + other compiled languages
-
-
-
-
-
+DEFFN?

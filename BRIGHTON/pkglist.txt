@@ -118,6 +118,7 @@ calendar
 # programming languages (or related)
 # TODO: mathematica (not free)
 # below is lisp
+golang
 sbcl
 eclipse
 R
