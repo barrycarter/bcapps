@@ -6,6 +6,9 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# code gets stored here
+my(@code);
+
 # hardcoded for now
 
 # this is from bc-rst.m
@@ -16,6 +19,8 @@ $fname = "HADecLat2azEl";
 
 $vars = join(", ",@vars);
 
+$desc = "This is a test function that does nothing useful... unless you consider testing useful... then it does something useful... but not useful to you... unles you're testing with me";
+
 $form = "
    {ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[ha]*Sin[lat], -(Cos[dec]*Sin[ha])],
     ArcTan[Sqrt[Cos[dec]^2*Sin[ha]^2 + (Cos[lat]*Sin[dec] -
@@ -23,8 +28,73 @@ $form = "
       Sin[dec]*Sin[lat]]}
 ";
 
+# using MUCH simpler example for syntax testing:
+
+# ArcTan for argument order
+# ^2 for **2 stuff
+# list for list return stuff
+
+$form = "{Cos[lat] + Cos[dec], Sin[ha], ArcTan[lat,ha]^2}";
+
+# TODO: consider Mathematica FullForm, it's purer and may help
+
+# TODO: remove unnecessary parens (low pri)
+
+$form = "List[Plus[Cos[dec], Cos[lat]], Sin[ha], Power[ArcTan[lat, ha], 2]]";
+
 # multiline is only for my convenience
 $form=~s/\s+/ /g;
+
+# this is for ruby and js, so maybe shouldn't appear here
+$form=~s/{/[/g;
+$form=~s/}/]/g;
+$form=~s/\^/**/g;
+
+# this does all the work and populates the @code array
+while ($form=~s/([a-z0-9]+)\[([^\[\]]*?)\]/format1_helper($1,$2)/ie) {}
+
+# write out to ruby and js (TODO: obviously do something else later)
+
+open(A, ">/tmp/blc.rb");
+
+print A << "MARK";
+
+def $fname($vars)
+$code
+$form
+end
+
+print $fname(1,2,3)
+
+MARK
+;
+
+close(A);
+
+# NOTE: $code does nothing for right now
+
+open(A, ">/tmp/blc.js");
+
+print A << "MARK";
+
+function $fname($vars) {
+$code
+return $form;
+}
+
+print($fname(1,2,3));
+
+MARK
+;
+
+
+
+
+
+debug("FORM: $form");
+debug(@code);
+
+die "TESTING";
 
 # ruby test
 
@@ -41,15 +111,21 @@ $form=~s/\s+/ /g;
 
 # $form = "ArcTan[x,y]";
 
-$form=~s/{/[/g;
-$form=~s/}/]/g;
-$form=~s/\^/**/g;
-
 # this will be a sticking point later
 
 $form=~s/ArcTan/atan2/g;
 
-while ($form=~s/([a-z0-9]+)\[([^\[\]]*?)\]/rubify2($1,$2)/ie) {}
+# JS starts here
+
+
+
+
+
+
+
+# ruby starts here
+
+while ($form=~s/([a-z0-9]+)\[([^\[\]]*?)\]/rubify($1,$2)/ie) {}
 
 my($code) = join("\n", @code);
 
@@ -58,6 +134,12 @@ print "def $fname($vars)\n$code\n$form\nend\n";
 debug("FORM: $form");
 
 debug("CODE", @code);
+
+# ruby ends here
+
+# print test code so I dont have to enter it "by hand" each time
+
+print "print $fname(1,2,3)\n";
 
 sub rubify {
   my($f, $args) = @_;
@@ -113,13 +195,42 @@ sub rubify2 {
   return("Math.".lc($f)."($args)");
 }
 
-
-
-
-
 # TODO: use FORTRAN form?
 
 # TODO: add FORTRAN as supported language (?!)
 
 # TODO: COBOL? BASIC? VBA? (get help from mr x?)
+
+# TODO: go both ways with it
+
+# TODO: mass test cases (and some sort of 'ant' [whatever the hell
+# that is] thing?)
+
+=item format1_helper
+
+This helps convert code into a format understood by: Ruby, JS, ??? (others?)
+
+$f: the function name
+$args: the comma-separated function arguments
+
+TODO: uses globals extensively (maybe ok as a helper function)
+
+=cut
+
+sub format1_helper {
+  my($f, $args) = @_;
+  debug("GOT: f=$f, args=$args");
+
+  # TODO: ugly ugly ugly; also, ugly
+  # flip args if arctan AND change to atan2
+  # TODO: this will get uglier since I sometimes use one arg form
+  if ($f eq "ArcTan") {
+    debug("ARGS1: $args");
+    $f = "atan2";
+    $args=~s/^(.*?),(.*)$/$2,$1/;
+    debug("ARGS2: $args");
+  }
+
+  return("Math.".lc($f)."($args)");
+}
 
