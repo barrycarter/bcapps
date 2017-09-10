@@ -17,11 +17,12 @@ r = Sqrt[x^2 + y^2];
 az = ArcTan[x,y];
 alt = ArcTan[r,z];
 
-conds = {-Pi/2<dec<Pi/2, -Pi/2<lat<Pi/2, -Pi<ha<Pi, -Pi<lon<Pi};
+(* val is an arbitrary value I use below *)
+
+conds = {-Pi/2<dec<Pi/2, -Pi/2<lat<Pi/2, -Pi<ha<Pi, -Pi<lon<Pi, -Pi<val<Pi};
 
 HADecLat2azEl[ha_, dec_, lat_] = 
  {FullSimplify[az,conds], FullSimplify[alt,conds]};
-
 
 raDecLatLonHA2az[alpha_, delta_, lambda_, psi_, t_] = FullSimplify[ 
  az /. {lat -> lambda, dec -> delta, ha -> t - alpha},
@@ -260,4 +261,70 @@ Plot[
 showit
 
 TODO: graphics = show not sine wave or easy
+
+(* more work to find inverses *)
+
+s0 = Solve[
+(HADecLat2azEl[ha,dec,lat][[2]] /. ArcTan[x_, y_] -> ArcTan[y/x]) == val, 
+ ha]
+
+
+s1 = FullSimplify[s0, conds]
+
+s2 = s1 /. Sqrt[a_*b_] -> Sqrt[a]*Sqrt[b]
+
+hatest = s1[[1]]
+
+ha1 =  -ArcCos[-(Tan[dec]*Tan[lat]) - Tan[val]^2/
+      Sqrt[Cos[dec]^2*Cos[lat]^2*Sec[val]^2*Tan[val]^2]]
+
+ha1b = -ArcCos[-(Tan[dec]*Tan[lat]) - Tan[val]^2/
+       (Cos[dec]*Cos[lat]*Sec[val]*Tan[val])]
+
+ha1c = FullSimplify[ha1b, conds]
+
+atel[lat_, dec_, val_] = ha1c
+
+atel2[lat_, dec_, val_] = ha /. s1
+
+N[atel2[35*Degree, 0*Degree, 1*Degree]/Degree/15]
+
+N[atel2[35*Degree, 80*Degree, 35*Degree]/Degree/15]
+
+2nd and 4th args, 4th when pos val, 2nd when neg val
+
+atel3[lat_, dec_, val_] =  ArcCos[-(Tan[dec]*Tan[lat]) - Tan[val]^2/
+   (Cos[dec]*Cos[lat]*Sec[val]*Tan[val])]
+
+atel3[lat_, dec_, val_] = 
+ ArcCos[-(Sec[dec] Sec[lat] Sin[val]) - Tan[dec] Tan[lat]]
+
+atel4[lat_, dec_, val_] = 
+ ArcCos[-(Tan[dec]*Tan[lat]) + Tan[val]^2/
+   (Cos[dec]*Cos[lat]*Sec[val]*Tan[val])]
+
+(* below is magic formula *)
+
+ArcCos[Sec[dec] Sec[lat] Sin[val] - Tan[dec] Tan[lat]]
+
+ArcCos[(Sin[val]-Sin[dec]*Sin[lat])/Cos[dec]/Cos[lat]]
+
+(this is also atel4)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

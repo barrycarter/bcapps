@@ -1,0 +1,66 @@
+This *text* file attempts to define the function f(x)=x+sin(x) in various
+languages as a test; to use, run the appropriate interpreter and
+cut/paste the code
+
+Ruby
+====
+
+def f(x) x+Math.sin(x) end
+print f(1),"\n"
+
+Perl
+====
+
+sub f {my($x) = @_; $x+sin($x);}
+print f(1),"\n";
+
+JavaScript
+==========
+
+function f(x) {return x+Math.sin(x);}
+f(1);
+
+Mathematica
+===========
+
+f[x_] = x+Sin[x]
+N[f[1]]
+
+TCL
+===
+
+proc f {x} {expr $x + sin($x)}
+f 1
+
+Lua
+===
+
+function f(x) return x+math.sin(x) end
+print(f(1))
+
+Python
+======
+
+import math
+def f(x):
+ return x + math.sin(x) 
+
+f(1)
+
+
+
+
+
+
+
+
+
+
+
+
+TODO: C, Java + other compiled languages
+
+
+
+
+

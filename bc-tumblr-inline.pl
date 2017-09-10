@@ -20,6 +20,9 @@ for $i (@ARGV) {
 
   open(A,"grep tumblr_inline *|");
 
+  # download 10 at a time
+  open(B,"| xargs -r -P 10 -n 1 curl -O");
+
   while (<A>) {
     while (s%"(http://.*?)"%%) {
       my($url) = $1;
@@ -29,11 +32,11 @@ for $i (@ARGV) {
 	debug("SKIPPING: $url (already dld)");
 	next;}
       debug("FETCHING: $url");
+      print B "$url\n";
     }
   }
-
   close(A);
-
+  close(B);
 }
 
 
