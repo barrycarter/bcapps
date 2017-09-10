@@ -66,7 +66,7 @@ my(%lcode);
 
 # make copy and then tweak copy
 
-for $i ("php", "ruby", "js", "lua", "python") {
+for $i ("php", "ruby", "js", "lua", "python", "R") {
   $code = $form;
   while ($code=~s/([a-z0-9]+)\[([^\[\]]*?)\]/multiline_parse($1,$2,$i)/ie) {}
   while ($code=~s/var(\d+)/$hash{$1}/g) {}
@@ -121,6 +121,15 @@ import math;
 def $fname($vars):
  return $lcode{python}
 
+print($fname(1,2,3))
+MARK
+;
+close(A);
+
+# write to R
+open(A, ">/tmp/blc.r");
+print A << "MARK";
+$fname <- function($vars) {return($lcode{R})}
 print($fname(1,2,3))
 MARK
 ;
@@ -189,9 +198,11 @@ sub multiline_parse {
 
     if ($lang eq "php") {
       $hash{$varcount} = "array($args)";
-      } elsif ($lang eq "lua") {
-	# unchanged for lua?
-	$hash{$varcount} = $args;
+    } elsif ($lang eq "lua") {
+      # unchanged for lua?
+      $hash{$varcount} = $args;
+    } elsif ($lang eq "R") {
+      $hash{$varcount} = "list($args)";
     } else {
       $hash{$varcount} = "[$args]";
     }
@@ -221,7 +232,7 @@ sub multiline_parse {
   # the hideousness that is ArcTan
   if ($f eq "ArcTan") {
 
-    if ($lang eq "php") {
+    if ($lang eq "php" || $lang eq "R") {
       $hash{$varcount} = "atan2(($args[1]), $args[0])";
     } else {
       # argument reversal by default (stupid Mathematica!)
@@ -246,7 +257,7 @@ sub multiline_parse {
 
   # ruby uses Math and lower case function names, as does js, but not php
 
-  if ($lang eq "php") {
+  if ($lang eq "php" || $lang eq "R") {
     $f = lc($f);
   } else {
     $f = "$math.".lc($f);
