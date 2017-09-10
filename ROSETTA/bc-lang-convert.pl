@@ -63,39 +63,29 @@ $pdef{R} = "print(<FNAME>(<ARGS>))";
 
 # this is from bc-rst.m
 
-$fname = "HADecLat2azEl";
-@vars = ("ha", "dec", "lat");
-$vars = join(", ",@vars);
-
-# these are the test args
-$args = "1,2,3";
+%function = ("FNAME" => "HADecLat2azEl", "VARS" => "ha,dec,lat",
+	    "DESC" => "This is a test function that does nothing useful...");
 
 # special case for php (and possibly others)
 
-@phpvars = @vars;
-for $i (@phpvars) {$i= "\$$i";}
-$phpvars = join(", ", @phpvars);
-$dvars = $phpvars;
+# TODO: this may not belong here, can compute in real time?
+$function{DVARS} = join(",",map($_="\$$_",split(/\,/,$function{VARS})));
 
-$desc = "This is a test function that does nothing useful... unless you consider testing useful... then it does something useful... but not useful to you... unles you're testing with me";
+# $fname = "HADecLat2azEl";
+# @vars = ("ha", "dec", "lat");
+# $vars = join(", ",@vars);
+
+# these are the test args (not part of "function")
+$args = "1,2,3";
+
+# @phpvars = @vars;
+# for $i (@phpvars) {$i= "\$$i";}
+# $phpvars = join(", ", @phpvars);
+# $dvars = $phpvars;
+
+# $desc = "This is a test function that does nothing useful... unless you consider testing useful... then it does something useful... but not useful to you... unles you're testing with me";
 
 # TODO: remove unnecessary parens (low pri)
-
-# using MUCH simpler example for syntax testing:
-
-# ArcTan for argument order
-# ^2 for **2 stuff
-# Sin[ha] inside ArcTan for composition testing
-# list for list return stuff
-
-# inputform (for reference only):
-# {Cos[dec] + Cos[lat], Sin[ha], ArcTan[lat, Sin[ha]]^2}
-
-$form="
-List[Plus[Cos[dec], Cos[lat]], Sin[ha], Power[ArcTan[lat, Sin[ha]], 2]]
-";
-
-# actual function from bc-rst.m
 
 $form = "
    List[ArcTan[Plus[Times[Cos[lat], Sin[dec]],
@@ -122,28 +112,36 @@ for $i ("php", "ruby", "js", "lua", "python", "R") {
   $code = $form;
   while ($code=~s/([a-z0-9]+)\[([^\[\]]*?)\]/multiline_parse($1,$2,$i)/ie) {}
   while ($code=~s/var(\d+)/$hash{$1}/g) {}
-  $lcode{$i} = $code;
+ 
+  # this is ugly, since we're defining into a function hash
+  $function{CODE} = $code;
 
   # full generated code
-  my($fcode) = $fdef{$i};
+  debug("PRE: $fdef{$i}");
 
-  debug("PRE: $i -> $fcode");
+  # regex below prevents changing things like "<-"
+  while ($fdef{$i}=~s/<([A-Z]+)>/$function{$1}/g) {
+    debug("SUBST: $1");
+    debug("FDEF($i): $fdef{$i}");
+  };
+
+#  debug("PRE: $i -> $fcode");
 
   # and tweak
   # TODO: normalize this to use hash
-  $fcode=~s/<FNAME>/$fname/g;
-  $fcode=~s/<VARS>/$vars/g;
-  $fcode=~s/<DVARS>/$dvars/g;
-  $fcode=~s/<CODE>/$lcode{$i}/g;
+#  $fcode=~s/<FNAME>/$fname/g;
+#  $fcode=~s/<VARS>/$vars/g;
+#  $fcode=~s/<DVARS>/$dvars/g;
+#  $fcode=~s/<CODE>/$lcode{$i}/g;
 
-  # and the code to print it as a test
+  # and the code to print it as a test (TODO: improve slightly)
   my($pcode) = $pdef{$i};
-  $pcode=~s/<FNAME>/$fname/g;
+  $pcode=~s/<FNAME>/$function{FNAME}/g;
   $pcode=~s/<ARGS>/$args/g;
 
   # attempt to write right here
   open(A,">/tmp/blc.$extension{$i}");
-  print A join("\n", ($prefix{$i}, $fcode, $pcode, $postfix{$i})),"\n";
+  print A join("\n", ($prefix{$i}, $fdef{$i}, $pcode, $postfix{$i})),"\n";
   close(A);
 }
 
@@ -309,3 +307,4 @@ sub multiline_parse {
 
 # TODO: per language comments explaining what function does
 
+# TODO: consider using named args and/or sending/returning hashes only
