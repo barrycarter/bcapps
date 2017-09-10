@@ -70,9 +70,11 @@ while ($js=~s/([a-z0-9]+)\[([^\[\]]*?)\]/multiline_parse($1,$2,"js")/ie) {}
 while ($js=~s/var(\d+)/$hash{$1}/g) {}
 
 
+debug("STARTING PHP");
 my($php) = $form;
 while ($php=~s/([a-z0-9]+)\[([^\[\]]*?)\]/multiline_parse($1,$2,"php")/ie) {}
 while ($php=~s/var(\d+)/$hash{$1}/g) {}
+debug("ENDING PHP");
 
 
 # TODO: subroutinize and handle output better
@@ -139,6 +141,11 @@ sub multiline_parse {
   debug("GOT: f=$f, args=$args, lang=$lang", @args);
 
   # special cases
+
+  # PHP uses $vars, not vars
+  if ($lang eq "php") {
+    for $i (@args) {$i = "\$$i";}
+  }
 
   # list
   if ($f eq "List") {
@@ -212,8 +219,13 @@ sub multiline_parse {
     debug("ARGS2: $args");
   }
 
-  # ruby uses Math and lower case function names
-  $f = "Math.".lc($f);
+  # ruby uses Math and lower case function names, as does js, but not php
+
+  if ($lang eq "php") {
+    $f = lc($f);
+  } else {
+    $f = "Math.".lc($f);
+  }
 
   # TODO: @code is global
   push(@code, "var$varcount = $f($args);");
