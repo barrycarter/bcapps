@@ -66,31 +66,12 @@ my(%lcode);
 
 # make copy and then tweak copy
 
-for $i ("php", "ruby", "js", "lua") {
+for $i ("php", "ruby", "js", "lua", "python") {
   $code = $form;
   while ($code=~s/([a-z0-9]+)\[([^\[\]]*?)\]/multiline_parse($1,$2,$i)/ie) {}
   while ($code=~s/var(\d+)/$hash{$1}/g) {}
   $lcode{$i} = $code;
 }
-
-=item comment
-
-$code = $form;
-while ($code=~s/([a-z0-9]+)\[([^\[\]]*?)\]/multiline_parse($1,$2,"ruby")/ie) {}
-while ($code=~s/var(\d+)/$hash{$1}/g) {}
-my($ruby) = $code;
-
-$code = $form;
-while ($code=~s/([a-z0-9]+)\[([^\[\]]*?)\]/multiline_parse($1,$2,"js")/ie) {}
-while ($code=~s/var(\d+)/$hash{$1}/g) {}
-my($js) = $code;
-
-$code = $form;
-while ($code=~s/([a-z0-9]+)\[([^\[\]]*?)\]/multiline_parse($1,$2,"lua")/ie) {}
-while ($code=~s/var(\d+)/$hash{$1}/g) {}
-my($lua) = $code;
-
-=cut
 
 # TODO: subroutinize and handle output better
 
@@ -133,6 +114,19 @@ MARK
 ;
 close(A);
 
+# write to Python
+open(A, ">/tmp/blc.py");
+print A << "MARK";
+import math;
+def $fname($vars):
+ return $lcode{python}
+
+print($fname(1,2,3))
+MARK
+;
+close(A);
+
+
 
 =item multline_parse($f, $args, $lang)
 
@@ -168,7 +162,7 @@ sub multiline_parse {
   # the Math object is different for different languages
   my($math);
 
-  if ($lang eq "lua") {
+  if ($lang eq "lua" || $lang eq "python") {
     $math = "math";
   } else {
     $math = "Math";
@@ -209,7 +203,7 @@ sub multiline_parse {
   if ($f eq "Power") {
 
     # TODO: this depends on language
-    if ($lang eq "ruby") {
+    if ($lang eq "ruby" || $lang eq "python") {
       $hash{$varcount} = "($args[0])**($args[1])";
     } elsif ($lang eq "js") {
       # TODO: should not need parens here, $args should be of form varx
@@ -227,11 +221,11 @@ sub multiline_parse {
   # the hideousness that is ArcTan
   if ($f eq "ArcTan") {
 
-    if ($lang eq "ruby" || $lang eq "js" || $lang eq "lua") {
-      $hash{$varcount} = "$math.atan2(($args[1]),($args[0]))";
+    if ($lang eq "php") {
+      $hash{$varcount} = "atan2(($args[1]), $args[0])";
     } else {
       # argument reversal by default (stupid Mathematica!)
-      $hash{$varcount} = "atan2(($args[1]), $args[0])";
+      $hash{$varcount} = "$math.atan2(($args[1]),($args[0]))";
     }
 
     return "var$varcount";
