@@ -13,6 +13,46 @@ require "/usr/local/lib/bclib.pl";
 
 my(%thread) = ("Plus" => "+", "Times" => "*");
 
+# prefix and postfix to function code
+
+$prefix{python} = "import math;";
+$prefix{php} = "<?";
+$postfix{php} = "?>";
+
+# what a function looks like in various languages where:
+
+# $FNAME$ is the function name
+# $VARS$ is the comma-separated arguments (TODO: always csv?)
+# $DVARS$ is the dollar-sign-prefixed comma-separate arguments
+# $CODE$ is the generated code
+
+my(%fdef);
+
+$fdef{ruby} = "def $FNAME$($VARS$) $CODE$ end";
+$fdef{js} = "function $FNAME$($VARS$) {return $CODE$;}";
+$fdef{lua} = "function $FNAME$($VARS$) return $CODE$ end";
+$fdef{R} = "$FNAME$ <- function($VARS$) {return($CODE$)}";
+
+# python requires "import math";
+$fdef{python} = "def $FNAME$($VARS$):
+  return $CODE$
+";
+
+# PHP requires special vars and must have "<?" and "?>" tags, nonstandard
+$fdef{php} = "function $FNAME$($DVARS$) {return $CODE$;}";
+
+# how to print/test variables where:
+# $FNAME$ is function name
+# $ARGS$ is comma-separated args (but will they always be?)
+
+my(%pdef);
+
+$pdef{ruby} = "print $FNAME$($ARGS$)";
+$pdef{js} = "print_r($FNAME$($ARGS$));";
+$pdef{lua} = "print($FNAME$($ARGS$))";
+$pdef{python} = "print($FNAME$($ARGS$))";
+$pdef{R} = "print($FNAME$($ARGS$))";
+
 # code gets stored here
 my(@code);
 
@@ -26,13 +66,12 @@ $fname = "HADecLat2azEl";
 
 $vars = join(", ",@vars);
 
-# special case for php
-
-# TODO: handle these special cases much better
+# special case for php (and possibly others)
 
 @phpvars = @vars;
 for $i (@phpvars) {$i= "\$$i";}
 $phpvars = join(", ", @phpvars);
+$dvars = $phpvars;
 
 $desc = "This is a test function that does nothing useful... unless you consider testing useful... then it does something useful... but not useful to you... unles you're testing with me";
 
@@ -52,7 +91,7 @@ $form="
 List[Plus[Cos[dec], Cos[lat]], Sin[ha], Power[ArcTan[lat, Sin[ha]], 2]]
 ";
 
-# real function from bc-rst.m
+# actual function from bc-rst.m
 
 $form = "
    List[ArcTan[Plus[Times[Cos[lat], Sin[dec]],
@@ -62,6 +101,8 @@ $form = "
          Times[-1, Cos[dec], Cos[ha], Sin[lat]]], 2]], Rational[1, 2]],
      Plus[Times[Cos[dec], Cos[ha], Cos[lat]], Times[Sin[dec], Sin[lat]]]]]
 ";
+
+
 
 # multiline is only for my convenience
 $form=~s/\s+/ /g;
