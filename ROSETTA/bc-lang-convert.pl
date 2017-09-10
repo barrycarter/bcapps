@@ -13,6 +13,11 @@ require "/usr/local/lib/bclib.pl";
 
 my(%thread) = ("Plus" => "+", "Times" => "*");
 
+# file extensions
+
+%extensions = ("ruby" => "rb", "js" => "js", "lua" => "lua", "php" => "php",
+ "python" => "py", "R" => "r");
+
 # prefix and postfix to function code
 
 $prefix{python} = "import math;";
