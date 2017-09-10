@@ -20,7 +20,7 @@ my(@code);
 
 # this is from bc-rst.m
 
-$fname = "f1";
+$fname = "HADecLat2azEl";
 
 @vars = ("ha", "dec", "lat");
 
@@ -52,14 +52,23 @@ $form="
 List[Plus[Cos[dec], Cos[lat]], Sin[ha], Power[ArcTan[lat, Sin[ha]], 2]]
 ";
 
+# real function from bc-rst.m
+
+$form = "
+   List[ArcTan[Plus[Times[Cos[lat], Sin[dec]],
+      Times[-1, Cos[dec], Cos[ha], Sin[lat]]], Times[-1, Cos[dec], Sin[ha]]],
+    ArcTan[Power[Plus[Times[Power[Cos[dec], 2], Power[Sin[ha], 2]],
+       Power[Plus[Times[Cos[lat], Sin[dec]],
+         Times[-1, Cos[dec], Cos[ha], Sin[lat]]], 2]], Rational[1, 2]],
+     Plus[Times[Cos[dec], Cos[ha], Cos[lat]], Times[Sin[dec], Sin[lat]]]]]
+";
+
 # multiline is only for my convenience
 $form=~s/\s+/ /g;
 
 # TODO: may need parens here (or in multiline_parse)
 
 # TODO: subroutinize
-
-my($tcode);
 
 # hash of language-specific code
 my(%lcode);
@@ -182,18 +191,24 @@ sub multiline_parse {
   # PHP uses $vars, not vars
   if ($lang eq "php") {
 
-    # vars that we create are immune as are numericals
+    # vars that we create are immune as are non-alpha
     for $i (@args) {
-      unless ($i=~/^var\d+$/ || $i=~/^\d/) {
+      unless ($i=~/^var\d+$/ || $i=~/^[^a-z]/i) {
 	$i = "\$$i";
       }
     }
     $args = join(", ", @args);
   }
 
+  # rational number
+  if ($f eq "Rational") {
+    $hash{$varcount} = "($args[0])/($args[1])";
+    return "var$varcount";
+  }
+
   # list
   if ($f eq "List") {
- 
+
     # TODO: this might be cheating, do I need parens?
 
     if ($lang eq "php") {
