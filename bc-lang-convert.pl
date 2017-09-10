@@ -34,7 +34,13 @@ $form = "
 # ^2 for **2 stuff
 # list for list return stuff
 
-$form = "{Cos[lat] + Cos[dec], Sin[ha], ArcTan[lat,ha]^2}";
+$form = "{Cos[lat] + Cos[dec], Sin[ha], ArcTan[lat,Sin[ha]]^2}";
+
+while ($form=~s/([a-z0-9]+)\[([^\[\]]*?)\]/rubify($1,$2)/ie) {}
+
+debug("FORM: $form");
+
+die "TESTING";
 
 # TODO: consider Mathematica FullForm, it's purer and may help
 
@@ -219,7 +225,14 @@ TODO: uses globals extensively (maybe ok as a helper function)
 
 sub format1_helper {
   my($f, $args) = @_;
-  debug("GOT: f=$f, args=$args");
+  my(@args) = split(/\,\s*/, $args);
+  debug("GOT: f=$f, args=", @args);
+
+  # special cases for simple functions
+  # TODO: this is wrong for a+b+c when there's more than two args
+  if ($f eq "Plus") {
+    return "($args[0])+($args[1])";
+  }
 
   # TODO: ugly ugly ugly; also, ugly
   # flip args if arctan AND change to atan2
