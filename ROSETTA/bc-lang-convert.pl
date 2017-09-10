@@ -15,7 +15,7 @@ my(%thread) = ("Plus" => "+", "Times" => "*");
 
 # file extensions
 
-%extensions = ("ruby" => "rb", "js" => "js", "lua" => "lua", "php" => "php",
+%extension = ("ruby" => "rb", "js" => "js", "lua" => "lua", "php" => "php",
  "python" => "py", "R" => "r");
 
 # prefix and postfix to function code
@@ -26,50 +26,49 @@ $postfix{php} = "?>";
 
 # what a function looks like in various languages where:
 
-# $FNAME$ is the function name
-# $VARS$ is the comma-separated arguments (TODO: always csv?)
-# $DVARS$ is the dollar-sign-prefixed comma-separate arguments
-# $CODE$ is the generated code
+# <FNAME> is the function name
+# <VARS> is the comma-separated arguments (TODO: always csv?)
+# <DVARS> is the dollar-sign-prefixed comma-separate arguments
+# <CODE> is the generated code
 
 my(%fdef);
 
-$fdef{ruby} = "def $FNAME$($VARS$) $CODE$ end";
-$fdef{js} = "function $FNAME$($VARS$) {return $CODE$;}";
-$fdef{lua} = "function $FNAME$($VARS$) return $CODE$ end";
-$fdef{R} = "$FNAME$ <- function($VARS$) {return($CODE$)}";
+$fdef{ruby} = "def <FNAME>(<VARS>) <CODE> end";
+$fdef{js} = "function <FNAME>(<VARS>) {return <CODE>;}";
+$fdef{lua} = "function <FNAME>(<VARS>) return <CODE> end";
+$fdef{R} = "<FNAME> <- function(<VARS>) {return(<CODE>)}";
 
 # python requires "import math";
-$fdef{python} = "def $FNAME$($VARS$):
-  return $CODE$
+$fdef{python} = "def <FNAME>(<VARS>):
+ return <CODE>
 ";
 
 # PHP requires special vars and must have "<?" and "?>" tags, nonstandard
-$fdef{php} = "function $FNAME$($DVARS$) {return $CODE$;}";
+$fdef{php} = "function <FNAME>(<DVARS>) {return <CODE>;}";
 
 # how to print/test variables where:
-# $FNAME$ is function name
-# $ARGS$ is comma-separated args (but will they always be?)
+# <FNAME> is function name
+# <ARGS> is comma-separated args (but will they always be?)
 
 my(%pdef);
 
-$pdef{ruby} = "print $FNAME$($ARGS$)";
-$pdef{js} = "print_r($FNAME$($ARGS$));";
-$pdef{lua} = "print($FNAME$($ARGS$))";
-$pdef{python} = "print($FNAME$($ARGS$))";
-$pdef{R} = "print($FNAME$($ARGS$))";
-
-# code gets stored here
-my(@code);
+$pdef{ruby} = "print <FNAME>(<ARGS>)";
+$pdef{js} = "print(<FNAME>(<ARGS>));";
+$pdef{php} = "print_r(<FNAME>(<ARGS>));";
+$pdef{lua} = "print(<FNAME>(<ARGS>))";
+$pdef{python} = "print(<FNAME>(<ARGS>))";
+$pdef{R} = "print(<FNAME>(<ARGS>))";
 
 # hardcoded for now
 
 # this is from bc-rst.m
 
 $fname = "HADecLat2azEl";
-
 @vars = ("ha", "dec", "lat");
-
 $vars = join(", ",@vars);
+
+# these are the test args
+$args = "1,2,3";
 
 # special case for php (and possibly others)
 
@@ -107,8 +106,6 @@ $form = "
      Plus[Times[Cos[dec], Cos[ha], Cos[lat]], Times[Sin[dec], Sin[lat]]]]]
 ";
 
-
-
 # multiline is only for my convenience
 $form=~s/\s+/ /g;
 
@@ -126,7 +123,33 @@ for $i ("php", "ruby", "js", "lua", "python", "R") {
   while ($code=~s/([a-z0-9]+)\[([^\[\]]*?)\]/multiline_parse($1,$2,$i)/ie) {}
   while ($code=~s/var(\d+)/$hash{$1}/g) {}
   $lcode{$i} = $code;
+
+  # full generated code
+  my($fcode) = $fdef{$i};
+
+  debug("PRE: $i -> $fcode");
+
+  # and tweak
+  # TODO: normalize this to use hash
+  $fcode=~s/<FNAME>/$fname/g;
+  $fcode=~s/<VARS>/$vars/g;
+  $fcode=~s/<DVARS>/$dvars/g;
+  $fcode=~s/<CODE>/$lcode{$i}/g;
+
+  # and the code to print it as a test
+  my($pcode) = $pdef{$i};
+  $pcode=~s/<FNAME>/$fname/g;
+  $pcode=~s/<ARGS>/$args/g;
+
+  # attempt to write right here
+  open(A,">/tmp/blc.$extension{$i}");
+  print A join("\n", ($prefix{$i}, $fcode, $pcode, $postfix{$i})),"\n";
+  close(A);
 }
+
+
+
+die "TESTING";
 
 # TODO: subroutinize and handle output better
 
