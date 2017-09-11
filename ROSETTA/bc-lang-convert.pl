@@ -8,6 +8,9 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# NOTE: "1.,2.,3." does NOT work w/ ruby, use 1.0, 2.0, 3.0, etc
+$args = "1.5,2.3";
+
 # functions that "thread" (in Mathematica) and their binary versions
 # TODO: not even close to complete
 
@@ -23,6 +26,10 @@ my(%lang);
 
 while ($langs=~s%<language name="(.*?)">(.*?)</language>%%s) {
   my($name, $info) = ($1, $2);
+
+  # language knows its own name
+  $lang{$name}{name} = $name;
+
   while ($info=~s%<(.*?)>(.*?)</\1>%%s) {
     $lang{$name}{$1} = $2;
   }
@@ -33,21 +40,22 @@ my(%func);
 
 while ($funcs=~s%<function name="(.*?)">(.*?)</function>%%s) {
   my($name, $info) = ($1, $2);
+
+  # function knows its own name (as fname)
+  $func{$name}{fname} = $name;
+
   while ($info=~s%<(.*?)>(.*?)</\1>%%s) {
     $func{$name}{$1} = $2;
   }
 
   # multiline is just to make it look nice
-  $func{body}=~s/\s+/ /g;
+  $func{$name}{body}=~s/\s+/ /g;
 
   # special case for php (and possibly others)
   $func{$name}{dvars}=join(",",map($_="\$$_",split(/\,/,$func{$name}{vars})));
 }
 
 debug(dump_var("func", \%func));
-
-# NOTE: "1.,2.,3." does NOT work w/ ruby, use 1.0, 2.0, 3.0, etc
-$args = "1.5,2.3,3.4";
 
 # TODO: remove unnecessary parens (low pri)
 
@@ -60,45 +68,45 @@ my(@runs);
 
 for $i (sort keys %lang) {
 
-  # TODO: this breaks even more w/ multiple functions
   for $j (sort keys %func) {
 
-    # TODO: this won't work w/ multiple functions because I tweak %lang
-    # (which is a bad idea anyway)
     debug("DOING: $i, $j");
 
-    $code = $function{body};
-    while ($code=~s/([a-z0-9]+)\[([^\[\]]*?)\]/multiline_parse($1,$2,$i)/ie) {}
-    while ($code=~s/var(\d+)/$hash{$1}/g) {}
+    # the current function and language (reset each time to mod below)
+    # the current language
+    %curlang = %{$lang{$i}};
+    debug("CURLANG PRE", %curlang);
+    %curfunc = %{$func{$j}};
+    debug("CURFUNC PRE", %curfunc);
+
+    while ($curfunc{body}=~s/([a-z0-9]+)\[([^\[\]]*?)\]/multiline_parse($1,$2,$i)/ie) {}
+    while ($curfunc{body}=~s/var(\d+)/$hash{$1}/g) {}
 
     # this is ugly, since we're defining into a function hash
     # TODO: the trim here is seriously ugly, but python needs it
-    $function{code} = trim($code);
-
-    debug("CODE: $function{code}");
-    debug("PRE: $i -> $lang{$i}{fdef}");
+    $curfunc{body} = trim($curfunc{body});
 
     # regex below prevents changing things like "<-"
-    while ($lang{$i}{fdef}=~s/<([a-z]+)>/$function{$1}/g) {}
-
-    debug("POST: $i -> $lang{$i}{fdef}");
+    while ($curlang{fdef}=~s/<([a-z]+)>/$curfunc{$1}/g) {}
 
     # and the code to print it as a test (TODO: improve slightly)
-    $lang{$i}{pdef}=~s/<fname>/$function{fname}/g;
-    $lang{$i}{pdef}=~s/<args>/$args/g;
+    $curlang{pdef}=~s/<fname>/$curfunc{fname}/g;
+    $curlang{pdef}=~s/<args>/$args/g;
+
+    debug("CURFUNC GAMMA", %curfunc);
+    debug("CURLANG GAMMA", %curlang);
 
     # attempt to write right here
-    open(A,">/tmp/blc.$lang{$i}{extension}");
-    print A join("\n", ($lang{$i}{prefix}, $lang{$i}{fdef}, 
-			$lang{$i}{pdef}, $lang{$i}{postfix})),"\n";
+    open(A,">/tmp/blc.$curlang{extension}");
+    print A join("\n", ($curlang{prefix}, $curlang{fdef},
+			$curlang{pdef}, $curlang{postfix})),"\n";
     close(A);
 
-    $lang{$i}{run}=~s%<file>%/tmp/blc.$lang{$i}{extension}%g;
-    push(@run, $lang{$i}{run});
-    debug("RUN: $lang{$i}{run}");
+    $curlang{run}=~s%<file>%/tmp/blc.$curlang{extension}%g;
+    push(@run, $curlang{run});
+    debug("RUN: $curlang{run}");
   }
 }
-
 
 debug("RUN ME:",@run);
 
@@ -131,7 +139,7 @@ sub multiline_parse {
   # TODO: icky use of global here
   $varcount++;
 
-  debug("GOT: f=$f, args=$args, lang=$lang", @args);
+#  debug("GOT: f=$f, args=$args, lang=$lang", @args);
 
   # TODO: consider making this "Math.", "math.", or "" so used by all
   # the Math object is different for different languages
