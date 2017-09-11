@@ -1,0 +1,48 @@
+Converts a function in Mathematica FullForm to other languages (sort of).
+
+Text below for meta.stackexchange question:
+
+As an example, I wroteup some code at https://github.com/barrycarter/bcapps/blob/master/ROSETTA/ to convert `{sqrt(cos(y) + sin(x)), sqrt(cos(x) + sin(y))}` (a two argument function returning a list of two elements) into several languages and printing the output when `x=1.5, y=2.3`. Note how similar the results are:
+
+### JavaScript ###
+
+<pre><code>function testing0002(x,y) {return [Math.pow((Math.cos(y))+(Math.sin(x)),(1.0)/(2.0)), Math.pow((Math.cos(x))+(Math.sin(y)),(1.0)/(2.0))];}
+print(testing0002(1.5,2.3));
+</code></pre>
+
+### Lua ###
+
+<pre><code>function testing0002(x,y) return ((math.cos(y))+(math.sin(x)))^((1.0)/(2.0)), ((math.cos(x))+(math.sin(y)))^((1.0)/(2.0)) end
+print(testing0002(1.5,2.3))
+</code></pre>
+
+### PHP ###
+
+<pre><code><?
+function testing0002($x,$y) {return array(pow((cos($y))+(sin($x)),(1.0)/(2.0)), pow((cos($x))+(sin($y)),(1.0)/(2.0)));}
+print_r(testing0002(1.5,2.3));
+?>
+</code></pre>
+
+### Python ###
+
+<pre><code>import math;
+def testing0002(x,y):
+ return [((math.cos(y))+(math.sin(x)))**((1.0)/(2.0)), ((math.cos(x))+(math.sin(y)))**((1.0)/(2.0))]
+
+print(testing0002(1.5,2.3))
+</code></pre>
+
+### Ruby ###
+
+<pre><code>def testing0002(x,y) [((Math.cos(y))+(Math.sin(x)))**((1.0)/(2.0)), ((Math.cos(x))+(Math.sin(y)))**((1.0)/(2.0))] end
+print testing0002(1.5,2.3),"\n"
+</code></pre>
+
+### R ###
+
+<pre><code>testing0002 <- function(x,y) {return(list(((cos(y))+(sin(x)))^((1.0)/(2.0)), ((cos(x))+(sin(y)))^((1.0)/(2.0))))}
+print(testing0002(1.5,2.3))
+</code></pre>
+
+If there is a better place to post this question, please let me know
