@@ -1,0 +1,22 @@
+# These are the functions I convert into various languages. The body
+# *must* be in Mathematica's "FullForm" (not InputForm or FortranForm
+# or CForm)
+
+# fields:
+
+# body: the body of the function in Mathematica's FullForm
+# nice: a "prettyprint" version of function (not LaTeX)
+# desc: a description of the function
+# vars: the named arguments to the function, as a comma separated list
+
+# TODO: test harness, but probably not part of function
+
+# macros:
+
+# <LANG>: the language into which the function is being translated
+
+<function name="testing0001">
+<nice>sqrt(cos(y) + sin(x))</nice>
+<desc>A simple test to show how functions can be converted to langs</desc>
+<body>Power[Plus[Cos[y], Sin[x]], Rational[1, 2]]</body>
+</function>

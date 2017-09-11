@@ -13,6 +13,24 @@ require "/usr/local/lib/bclib.pl";
 
 my(%thread) = ("Plus" => "+", "Times" => "*");
 
+# reads data on languages from "XML" file
+
+my($langs) = read_file("$bclib{githome}/ROSETTA/bc-languages.xml");
+
+# variable to hold language info
+my(%lang);
+
+while ($langs=~s%<language name="(.*?)">(.*?)</language>%%s) {
+  my($name, $info) = ($1, $2);
+  while ($info=~s%<(.*?)>(.*?)</\1>%%s) {
+    $lang{$name}{$1} = $2;
+  }
+}
+
+debug(dump_var("lang", \%lang));
+
+die "TESTING";
+
 # TODO: comment character/style
 
 # file extensions
