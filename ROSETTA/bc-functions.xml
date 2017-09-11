@@ -15,9 +15,15 @@
 
 # <LANG>: the language into which the function is being translated
 
-<function name="testing0001">
-<nice>sqrt(cos(y) + sin(x))</nice>
+<function name="testing0002">
+<nice>{sqrt(cos(y) + sin(x)), sqrt(cos(x) + sin(y))}</nice>
 <vars>x,y</vars>
 <desc>A simple test to show how functions can be converted to langs</desc>
-<body>Power[Plus[Cos[y], Sin[x]], Rational[1, 2]]</body>
+# TODO: manually editing Rational[1,2] to have decimals = bad!
+<body>
+
+List[Power[Plus[Cos[y], Sin[x]], Rational[1.0, 2.0]],
+Power[Plus[Cos[x], Sin[y]], Rational[1.0, 2.0]]]
+
+</body>
 </function>

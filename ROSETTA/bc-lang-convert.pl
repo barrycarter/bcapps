@@ -190,13 +190,14 @@ sub multiline_parse {
     return "var$varcount";
   }
 
+  # TODO: actually use <math> field
   # power
   if ($f eq "Power") {
 
     # TODO: this depends on language
     if ($lang eq "ruby" || $lang eq "python") {
       $hash{$varcount} = "($args[0])**($args[1])";
-    } elsif ($lang eq "js") {
+    } elsif ($lang eq "javascript") {
       # TODO: should not need parens here, $args should be of form varx
       $hash{$varcount} = "$math.pow($args[0],$args[1])";
     } elsif ($lang eq "php") {

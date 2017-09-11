@@ -31,7 +31,7 @@
 <language name="ruby">
 <extension>rb</extension>
 <fdef>def <fname>(<vars>) <body> end</fdef>
-<pdef>print <fname>(<args>)</pdef>
+<pdef>print <fname>(<args>),"\n"</pdef>
 <math>Math</math>
 <comment># <comment></comment>
 <mcomment>
