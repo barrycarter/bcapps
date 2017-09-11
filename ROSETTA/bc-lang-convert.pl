@@ -16,8 +16,9 @@ my(%thread) = ("Plus" => "+", "Times" => "*");
 # reads data on languages from "XML" file
 
 my($langs) = read_file("$bclib{githome}/ROSETTA/bc-languages.xml");
+my($funcs) = read_file("$bclib{githome}/ROSETTA/bc-functions.xml");
 
-# variable to hold language info
+# variable to hold languages info
 my(%lang);
 
 while ($langs=~s%<language name="(.*?)">(.*?)</language>%%s) {
@@ -27,37 +28,28 @@ while ($langs=~s%<language name="(.*?)">(.*?)</language>%%s) {
   }
 }
 
-debug(dump_var("lang", \%lang));
+# variable to hold functions info
+my(%func);
 
-# hardcoded for now
+while ($funcs=~s%<function name="(.*?)">(.*?)</function>%%s) {
+  my($name, $info) = ($1, $2);
+  while ($info=~s%<(.*?)>(.*?)</\1>%%s) {
+    $func{$name}{$1} = $2;
+  }
 
-# this is from bc-rst.m
+  # multiline is just to make it look nice
+  $func{body}=~s/\s+/ /g;
 
-%function = ("fname" => "HADecLat2azEl", "vars" => "ha,dec,lat",
-	    "desc" => "This is a test function that does nothing useful...");
+  # special case for php (and possibly others)
+  $func{$name}{dvars}=join(",",map($_="\$$_",split(/\,/,$func{$name}{vars})));
+}
 
-# special case for php (and possibly others)
+debug(dump_var("func", \%func));
 
-# TODO: this may not belong here, can compute in real time?
-$function{dvars} = join(",",map($_="\$$_",split(/\,/,$function{vars})));
-
-# these are the test args (not part of "function")
-# TODO: "1.,2.,3." does NOT work w/ ruby, need to floatify/double?
+# NOTE: "1.,2.,3." does NOT work w/ ruby, use 1.0, 2.0, 3.0, etc
 $args = "1.5,2.3,3.4";
 
 # TODO: remove unnecessary parens (low pri)
-
-$function{body} = "
-   List[ArcTan[Plus[Times[Cos[lat], Sin[dec]],
-      Times[-1, Cos[dec], Cos[ha], Sin[lat]]], Times[-1, Cos[dec], Sin[ha]]],
-    ArcTan[Power[Plus[Times[Power[Cos[dec], 2], Power[Sin[ha], 2]],
-       Power[Plus[Times[Cos[lat], Sin[dec]],
-         Times[-1, Cos[dec], Cos[ha], Sin[lat]]], 2]], Rational[1, 2]],
-     Plus[Times[Cos[dec], Cos[ha], Cos[lat]], Times[Sin[dec], Sin[lat]]]]]
-";
-
-# multiline is only for my convenience
-$form=~s/\s+/ /g;
 
 # TODO: may need parens when converting (or in multiline_parse)
 
@@ -68,41 +60,45 @@ my(@runs);
 
 for $i (sort keys %lang) {
 
-  # TODO: this won't work w/ multiple functions because I tweak %lang
-  # (which is a bad idea anyway)
-  debug("DOING: $i");
+  # TODO: this breaks even more w/ multiple functions
+  for $j (sort keys %func) {
 
-  $code = $function{body};
-  while ($code=~s/([a-z0-9]+)\[([^\[\]]*?)\]/multiline_parse($1,$2,$i)/ie) {}
-  while ($code=~s/var(\d+)/$hash{$1}/g) {}
- 
-  # this is ugly, since we're defining into a function hash
-  # TODO: the trim here is seriously ugly, but python needs it
-  $function{code} = trim($code);
+    # TODO: this won't work w/ multiple functions because I tweak %lang
+    # (which is a bad idea anyway)
+    debug("DOING: $i, $j");
 
-  debug("CODE: $function{code}");
+    $code = $function{body};
+    while ($code=~s/([a-z0-9]+)\[([^\[\]]*?)\]/multiline_parse($1,$2,$i)/ie) {}
+    while ($code=~s/var(\d+)/$hash{$1}/g) {}
 
-  debug("PRE: $i -> $lang{$i}{fdef}");
+    # this is ugly, since we're defining into a function hash
+    # TODO: the trim here is seriously ugly, but python needs it
+    $function{code} = trim($code);
 
-  # regex below prevents changing things like "<-"
-  while ($lang{$i}{fdef}=~s/<([a-z]+)>/$function{$1}/g) {}
+    debug("CODE: $function{code}");
+    debug("PRE: $i -> $lang{$i}{fdef}");
 
-  debug("POST: $i -> $lang{$i}{fdef}");
+    # regex below prevents changing things like "<-"
+    while ($lang{$i}{fdef}=~s/<([a-z]+)>/$function{$1}/g) {}
 
-  # and the code to print it as a test (TODO: improve slightly)
-  $lang{$i}{pdef}=~s/<fname>/$function{fname}/g;
-  $lang{$i}{pdef}=~s/<args>/$args/g;
+    debug("POST: $i -> $lang{$i}{fdef}");
 
-  # attempt to write right here
-  open(A,">/tmp/blc.$lang{$i}{extension}");
-  print A join("\n", ($lang{$i}{prefix}, $lang{$i}{fdef}, 
-		      $lang{$i}{pdef}, $lang{$i}{postfix})),"\n";
-  close(A);
+    # and the code to print it as a test (TODO: improve slightly)
+    $lang{$i}{pdef}=~s/<fname>/$function{fname}/g;
+    $lang{$i}{pdef}=~s/<args>/$args/g;
 
-  $lang{$i}{run}=~s%<file>%/tmp/blc.$lang{$i}{extension}%g;
-  push(@run, $lang{$i}{run});
-  debug("RUN: $lang{$i}{run}");
+    # attempt to write right here
+    open(A,">/tmp/blc.$lang{$i}{extension}");
+    print A join("\n", ($lang{$i}{prefix}, $lang{$i}{fdef}, 
+			$lang{$i}{pdef}, $lang{$i}{postfix})),"\n";
+    close(A);
+
+    $lang{$i}{run}=~s%<file>%/tmp/blc.$lang{$i}{extension}%g;
+    push(@run, $lang{$i}{run});
+    debug("RUN: $lang{$i}{run}");
+  }
 }
+
 
 debug("RUN ME:",@run);
 
