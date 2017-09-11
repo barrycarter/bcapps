@@ -311,14 +311,34 @@ ArcCos[(Sin[val]-Sin[dec]*Sin[lat])/Cos[dec]/Cos[lat]]
 
 (this is also atel4)
 
+(* below is formula I plan to use in revised version *)
 
+(* t = gmst *)
 
+conds = {-Pi/2<dec<Pi/2, -Pi/2<lat<Pi/2, -Pi<ha<Pi, -Pi<lon<Pi, -Pi<val<Pi};
 
+raDecLatLonT2azEl[ra_, dec_, lat_, lon_, t_] =
+ FullSimplify[HADecLat2azEl[(t+lon)-ra, dec, lat],conds]
 
+(* 7 variables, can get 2 from any 5 *)
 
+Solve[
+ raDecLatLonT2azEl[ra,dec,lat,lon,t] == {az, el},
+ {ra, dec}, Reals]
 
+Solve[
+ raDecLatLonT2azEl[ra,dec,lat,lon,t] == {az, el},
+ {ra, dec}]
 
+(* fake formula, but easier to deal with *)
 
+raDecLatLonT2azEl2[ra,dec,lat,lon,t] =
+ Simplify[raDecLatLonT2azEl[ra,dec,lat,lon,t] /. 
+ ArcTan[x_,y_] -> ArcTan[y/x], conds]
+
+Solve[
+ raDecLatLonT2azEl2[ra,dec,lat,lon,t] == {az, el},
+ {ra, dec}]
 
 
 

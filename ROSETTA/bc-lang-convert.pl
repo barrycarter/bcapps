@@ -13,6 +13,8 @@ require "/usr/local/lib/bclib.pl";
 
 my(%thread) = ("Plus" => "+", "Times" => "*");
 
+# TODO: comment character/style
+
 # file extensions
 
 %extension = ("ruby" => "rb", "js" => "js", "lua" => "lua", "php" => "php",
@@ -71,19 +73,9 @@ $pdef{R} = "print(<FNAME>(<ARGS>))";
 # TODO: this may not belong here, can compute in real time?
 $function{DVARS} = join(",",map($_="\$$_",split(/\,/,$function{VARS})));
 
-# $fname = "HADecLat2azEl";
-# @vars = ("ha", "dec", "lat");
-# $vars = join(", ",@vars);
-
 # these are the test args (not part of "function")
+# TODO: "1.,2.,3." does NOT work w/ ruby, need to floatify/double?
 $args = "1,2,3";
-
-# @phpvars = @vars;
-# for $i (@phpvars) {$i= "\$$i";}
-# $phpvars = join(", ", @phpvars);
-# $dvars = $phpvars;
-
-# $desc = "This is a test function that does nothing useful... unless you consider testing useful... then it does something useful... but not useful to you... unles you're testing with me";
 
 # TODO: remove unnecessary parens (low pri)
 
@@ -99,12 +91,7 @@ $form = "
 # multiline is only for my convenience
 $form=~s/\s+/ /g;
 
-# TODO: may need parens here (or in multiline_parse)
-
-# TODO: subroutinize
-
-# hash of language-specific code
-my(%lcode);
+# TODO: may need parens when converting (or in multiline_parse)
 
 # make copy and then tweak copy
 
@@ -116,32 +103,16 @@ for $i ("php", "ruby", "js", "lua", "python", "R") {
   # this is ugly, since we're defining into a function hash
   $function{CODE} = $code;
 
-  # full generated code
-  debug("PRE: $fdef{$i}");
-
   # regex below prevents changing things like "<-"
-  while ($fdef{$i}=~s/<([A-Z]+)>/$function{$1}/g) {
-    debug("SUBST: $1");
-    debug("FDEF($i): $fdef{$i}");
-  };
-
-#  debug("PRE: $i -> $fcode");
-
-  # and tweak
-  # TODO: normalize this to use hash
-#  $fcode=~s/<FNAME>/$fname/g;
-#  $fcode=~s/<VARS>/$vars/g;
-#  $fcode=~s/<DVARS>/$dvars/g;
-#  $fcode=~s/<CODE>/$lcode{$i}/g;
+  while ($fdef{$i}=~s/<([A-Z]+)>/$function{$1}/g) {}
 
   # and the code to print it as a test (TODO: improve slightly)
-  my($pcode) = $pdef{$i};
-  $pcode=~s/<FNAME>/$function{FNAME}/g;
-  $pcode=~s/<ARGS>/$args/g;
+  $pdef{$i}=~s/<FNAME>/$function{FNAME}/g;
+  $pdef{$i}=~s/<ARGS>/$args/g;
 
   # attempt to write right here
   open(A,">/tmp/blc.$extension{$i}");
-  print A join("\n", ($prefix{$i}, $fdef{$i}, $pcode, $postfix{$i})),"\n";
+  print A join("\n", ($prefix{$i}, $fdef{$i}, $pdef{$i}, $postfix{$i})),"\n";
   close(A);
 }
 
@@ -176,6 +147,7 @@ sub multiline_parse {
 
   debug("GOT: f=$f, args=$args, lang=$lang", @args);
 
+  # TODO: consider making this "Math.", "math.", or "" so used by all
   # the Math object is different for different languages
   my($math);
 
