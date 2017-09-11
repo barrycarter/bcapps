@@ -280,3 +280,5 @@ sub multiline_parse {
 # TODO: per language comments explaining what function does
 
 # TODO: consider using named args and/or sending/returning hashes only
+
+# TODO: do test single argument version
