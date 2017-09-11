@@ -17,6 +17,7 @@
 
 <function name="testing0001">
 <nice>sqrt(cos(y) + sin(x))</nice>
+<vars>x,y</vars>
 <desc>A simple test to show how functions can be converted to langs</desc>
 <body>Power[Plus[Cos[y], Sin[x]], Rational[1, 2]]</body>
 </function>
