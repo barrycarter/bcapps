@@ -28,6 +28,22 @@
 
 # TODO: think there are better pdefs for some of these languages
 
+
+<language name="perl">
+<extension>pl</extension>
+<fdef>sub <fname> {my(<dvars>) = @_; return <body>}</fdef>
+<pdef>print join(",", @{<fname>(<args>)}),"\n";</pdef>
+<comment># <comment></comment>
+<mcomment>
+=item comment
+
+<comment>
+
+=cut
+</mcomment>
+<run>perl <file></run>
+</language>
+
 <language name="ruby">
 <extension>rb</extension>
 <fdef>def <fname>(<vars>) <body> end</fdef>
@@ -82,7 +98,7 @@
 <language name="php">
 <extension>php</extension>
 <fdef>function <fname>(<dvars>) {return <body>;}</fdef>
-<pdef>print_r(<fname>(<args>));</pdef>
+<pdef>print_r(<fname>(<args>)."\n");</pdef>
 # TODO: not including "#" style comment for simplicity for now
 <comment>// <comment></comment>
 <mcomment>/* <comment> */</mcomment>

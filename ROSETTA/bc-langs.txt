@@ -6,6 +6,8 @@ f(x) returns x+sin(x)
 
 g(x,y) returns the list (sin(x), cos(y))
 
+notes on how to define hashses as well
+
 Ruby
 ====
 
@@ -14,6 +16,9 @@ print f(1),"\n"
 
 def g(x,y) [Math.sin(x),Math.cos(y)] end
 print g(1,2),"\n"
+
+grades = { "Jane Doe" => 10, "Jim Doe" => 6 }
+grades["Dorothy Doe"] to access
 
 Perl
 ====
@@ -24,6 +29,9 @@ print f(1),"\n";
 sub g {my($x,$y) = @_; [sin($x), cos($y)]}
 print g(1,2),"\n";
 
+%grades = ("Jane Doe" => 10, "Jim Doe" => 6)
+$grades{key} to access
+
 JavaScript
 ==========
 
@@ -33,6 +41,9 @@ f(1);
 function g(x,y) {return [Math.sin(x), Math.cos(y)];}
 g(1,2);
 
+var dict = {FirstName: "Chris", "one": 1, 1: "some value"}
+
+dict["FirstName"] to access
 
 Mathematica
 ===========
@@ -63,6 +74,10 @@ print(f(1))
 function g(x,y) return math.sin(x), math.cos(y) end
 print(g(1,2))
 
+dictionary = {hello = "used to express a greeting ", world = "the earth or globe, considered as a planet"}
+
+print(dictionary["hello"], dictionary["world"])
+
 Python
 ======
 
@@ -78,6 +93,10 @@ def g(x,y):
 
 g(1,2)
 
+food = {"ham" : "yes", "egg" : "yes", "spam" : "no" }
+
+food["spam"]
+
 PHP
 ===
 
@@ -87,6 +106,8 @@ echo f(1),"\n";
 function g($x,$y) {return array(sin($x), cos($y));}
 print_r(g(1,2));
 
+
+
 R
 =
 
@@ -95,6 +116,8 @@ f(1)
 
 g <- function(x,y) {return(list(sin(x), cos(y)))}
 g(1,2)
+
+
 
 END HERE?
 

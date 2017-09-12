@@ -143,18 +143,16 @@ sub multiline_parse {
 
   # TODO: consider making this "Math.", "math.", or "" so used by all
   # the Math object is different for different languages
-  my($math);
+  my($math) = $lang{$i}{math};
 
-  if ($lang eq "lua" || $lang eq "python") {
-    $math = "math";
-  } else {
-    $math = "Math";
-  }
+  # if it's defined, add a dot to it
+  if ($math) {$math = "$math.";}
 
   # special cases
 
+  # TODO: not sure I need this special case anymore
   # PHP uses $vars, not vars
-  if ($lang eq "php") {
+  if ($lang eq "php" || $lang eq "perl") {
 
     # vars that we create are immune as are non-alpha
     for $i (@args) {
@@ -195,17 +193,16 @@ sub multiline_parse {
   if ($f eq "Power") {
 
     # TODO: this depends on language
-    if ($lang eq "ruby" || $lang eq "python") {
+    # TODO: make this part of language definition in bc-langauges.xml
+    if ($lang eq "ruby" || $lang eq "python" || $lang eq "perl") {
       $hash{$varcount} = "($args[0])**($args[1])";
-    } elsif ($lang eq "javascript") {
+    } elsif ($lang eq "javascript" || $lang eq "php") {
       # TODO: should not need parens here, $args should be of form varx
-      $hash{$varcount} = "$math.pow($args[0],$args[1])";
-    } elsif ($lang eq "php") {
-      $hash{$varcount} = "pow($args[0],$args[1])";
+      $hash{$varcount} = "${math}pow($args[0],$args[1])";
     } else {
       $hash{$varcount} = "($args[0])^($args[1])";
     }
-    
+
     # always return this
     return "var$varcount";
   }
@@ -213,13 +210,7 @@ sub multiline_parse {
   # the hideousness that is ArcTan
   if ($f eq "ArcTan") {
 
-    if ($lang eq "php" || $lang eq "R") {
-      $hash{$varcount} = "atan2(($args[1]), $args[0])";
-    } else {
-      # argument reversal by default (stupid Mathematica!)
-      $hash{$varcount} = "$math.atan2(($args[1]),($args[0]))";
-    }
-
+    $hash{$varcount} = "${math}atan2(($args[1]), $args[0])";
     return "var$varcount";
   }
 
@@ -238,11 +229,7 @@ sub multiline_parse {
 
   # ruby uses Math and lower case function names, as does js, but not php
 
-  if ($lang eq "php" || $lang eq "R") {
-    $f = lc($f);
-  } else {
-    $f = "$math.".lc($f);
-  }
+  $f = $math.lc($f);
 
   # TODO: @code is global
   push(@code, "var$varcount = $f($args);");

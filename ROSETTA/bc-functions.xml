@@ -27,3 +27,65 @@ Power[Plus[Cos[x], Sin[y]], Rational[1.0, 2.0]]]
 
 </body>
 </function>
+
+# below does NOT work with Perl, returning scalar vs array (may be pdef issue)
+<function name="testing0003">
+<nice>cos(x)^2+cos(y)^2</nice>
+<vars>x,y</vars>
+<desc>Test with single value return</desc>
+<body>
+Plus[Cos[Power[x, 2]], Cos[Power[y, 2]]]
+</body>
+</function>
+
+# attempt to define a dictionary (using "key: val", not true XML)
+
+<dictionary name="constants">
+
+# below is in km (need to make that clear somewhere or be consistent)
+earthMeanRadius: 6378.1370
+earthPolarRadius: 6356.7523
+
+# sort of ugly to define this, since some langs already do
+# TODO: how long can this be w/o breaking languages
+# TODO: is typing an issue here?
+pi: 3.1415926535897932385
+e: 2.7182818284590452354
+
+</dictionary>
+
+# convert hours/degrees to radians by multiplying
+
+<dictionary name="radians">
+
+degrees: 0.017453292519943295769
+hours: 0.26179938779914943654
+
+</dictionary>
+
+# convert time to Unix time using affine transformations
+# affine first then multip
+
+<dictionary name="unixtime">
+
+jdAffine: -2440587.5
+jdMultip: 86400
+
+# days since J2000
+
+j2000daysAffine: 10957.5
+j2000daysMultip: 86400
+
+</dictionary>
+
+# convert lengths to meters by multiplying
+
+<dictionary name="meters">
+
+km: 0.001
+
+# can't use 'm' here, since 'm' means meter itself
+miles: 0.00062137119223733396962
+
+
+</dictionary>

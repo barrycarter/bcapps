@@ -363,6 +363,7 @@ libzip
 libzip-devel
 
 # math/science tools
+units
 mathics
 yacas
 octave
