@@ -37,19 +37,19 @@ For the answers below:
 
 conds = {0 < ra < 24, -90 < dec < 90, -90 < lat < 90, -180 < lon < 180}
 
-pi = N[Pi, 20];
-
-degree = N[Degree, 20];
+unix2d[unix_] = (unix-946728000)/86400
 
 deg2hr[d_] = d/15;
 
-deg2rad[d_] = d*degree;
+deg2rad[d_] = d*Degree;
 
-hr2rad[h_] = h*pi/12
+hr2rad[h_] = h*Pi/12
+
+hms[h_,m_,s_] = h+m/60+s/3600
 
 (* low-precision formula from http://aa.usno.navy.mil/faq/docs/GAST.php *)
 
-gmst[d_] = 18.697374558 + 24.06570982441908*d
+gmst[d_] = Rationalize[18.697374558 + 24.06570982441908*d,0]
 
 (* local sidereal time, in hours *)
 
@@ -61,7 +61,40 @@ ha[d_, lon_, ra_] = lst[d,lon] - ra
 
 (* azimuth, in degrees *)
 
-HADecLat2azEl[hr2rad[ha[d,lon,ra]], dec*degree, lat*degree][[1]]
+az[d_, lon_, lat_, ra_, dec_] = 
+
+ArcTan[Cos[Degree*lat]*Sin[dec*Degree] - Cos[dec*Degree]*Sin[Degree*lat]*
+    Sin[Degree*lon + (8475931*Pi)/145848699 + (424749743*d*Pi)/211794996 - 
+      15*Degree*ra], Cos[dec*Degree]*Cos[Degree*lon + (8475931*Pi)/145848699 + 
+     (424749743*d*Pi)/211794996 - 15*Degree*ra]]/Degree
+
+el[d_, lon_, lat_, ra_, dec_] = 
+
+ArcTan[Sqrt[Cos[dec*Degree]^2*Cos[Degree*lon + (8475931*Pi)/145848699 + 
+        (424749743*d*Pi)/211794996 - 15*Degree*ra]^2 + 
+    (Cos[Degree*lat]*Sin[dec*Degree] - Cos[dec*Degree]*Sin[Degree*lat]*
+       Sin[Degree*lon + (8475931*Pi)/145848699 + (424749743*d*Pi)/211794996 - 
+         15*Degree*ra])^2], Sin[dec*Degree]*Sin[Degree*lat] + 
+   Cos[dec*Degree]*Cos[Degree*lat]*Sin[Degree*lon + (8475931*Pi)/145848699 + 
+      (424749743*d*Pi)/211794996 - 15*Degree*ra]]/Degree
+
+(* this is midnight today (for me) *)
+
+az[unix2d[1505196000], -106.5, 35, 0, 0]
+
+az[unix2d[1505196000+3600], -106.5, 35, 0, 0]
+
+az[unix2d[1505196000+3600], -106.5, 35, 0, 10]
+
+FullSimplify[
+HADecLat2azEl[hr2rad[ha[d,lon,ra]], dec*Degree, lat*Degree][[1]]/Degree,
+conds]
+
+FullSimplify[
+HADecLat2azEl[hr2rad[ha[d,lon,ra]], dec*Degree, lat*Degree][[2]]/Degree,
+conds]
+
+
 
 (* objects elevtude in degrees *)
 
@@ -97,3 +130,9 @@ TODO: elevation vs altitude, or .. elevtude
 TODO: pi isn't Pi
 
 TODO: impurify all formulas, but at last minute
+
+TODO: order lat/lon ra/dec in pairs in args when both needed
+
+TODO: remember arctan stupidity
+
+TODO: disclaim arctan weirdness
