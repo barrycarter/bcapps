@@ -136,3 +136,8 @@ TODO: order lat/lon ra/dec in pairs in args when both needed
 TODO: remember arctan stupidity
 
 TODO: disclaim arctan weirdness
+
+TODO: list sources tou can test, stellarium/planetarium, HORIZONS etc
+
+TODO: disclaim for fixed object only (but...)
+
