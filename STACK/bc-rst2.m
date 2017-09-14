@@ -37,6 +37,10 @@ For the answers below:
 
 conds = {0 < ra < 24, -90 < dec < 90, -90 < lat < 90, -180 < lon < 180}
 
+(* sidereal multiplier *)
+
+sm = Rationalize[1.002737909350795,0]
+
 unix2d[unix_] = (unix-946728000)/86400
 
 deg2hr[d_] = d/15;
@@ -45,7 +49,11 @@ deg2rad[d_] = d*Degree;
 
 hr2rad[h_] = h*Pi/12
 
-hms[h_,m_,s_] = h+m/60+s/3600
+rad2hr[r_] = 12*r/Pi
+
+hms2dml[h_,m_,s_] = h+m/60+s/3600
+
+dml2hms[h_] = {Floor[h], Mod[Floor[h*60],60], Mod[Floor[h*3600],60]}
 
 (* low-precision formula from http://aa.usno.navy.mil/faq/docs/GAST.php *)
 
@@ -68,6 +76,8 @@ ArcTan[Cos[Degree*lat]*Sin[dec*Degree] - Cos[dec*Degree]*Sin[Degree*lat]*
       15*Degree*ra], Cos[dec*Degree]*Cos[Degree*lon + (8475931*Pi)/145848699 + 
      (424749743*d*Pi)/211794996 - 15*Degree*ra]]/Degree
 
+(* elevation, in degrees *)
+
 el[d_, lon_, lat_, ra_, dec_] = 
 
 ArcTan[Sqrt[Cos[dec*Degree]^2*Cos[Degree*lon + (8475931*Pi)/145848699 + 
@@ -77,6 +87,61 @@ ArcTan[Sqrt[Cos[dec*Degree]^2*Cos[Degree*lon + (8475931*Pi)/145848699 +
          15*Degree*ra])^2], Sin[dec*Degree]*Sin[Degree*lat] + 
    Cos[dec*Degree]*Cos[Degree*lat]*Sin[Degree*lon + (8475931*Pi)/145848699 + 
       (424749743*d*Pi)/211794996 - 15*Degree*ra]]/Degree
+
+(* time above horizon, in hours *)
+
+(* TODO: 23h56m issue *)
+
+timeAboveHorizon[lat_, dec_] = 
+ 2*rad2hr[ArcCos[-Tan[deg2rad[dec]]*Tan[deg2rad[lat]]]]/sm
+
+(* time an object culminates *)
+
+d /. Solve[ha[d,lon,ra] == 0, d][[1]]
+
+(* this is the general solution *)
+
+nthCulmination[lon_, ra_, n_] = 
+ d /. Expand[Solve[ha[d,lon,ra] == 24*n, d]][[1]]
+
+(* culmination "on" day d, but not necessarily an integer *)
+
+Solve[nthCulmination[lon,ra,n] == d, n]
+
+(* culmination occuring after day d *)
+
+nthCulminationAfterTime[lon_, ra_, d_] = 
+ Floor[(80216994507010970 + 103248662361890595*Floor[d] + 
+286018746493613*lon - 4290281197404195*ra)/102966748737700680]+1
+
+(* time of culmination after day d *)
+
+timeCulmination[lon_, ra_, d_] =  Expand[FullSimplify[
+24*(nthCulmination[lon, ra, nthCulminationAfterTime[lon, ra, d]]-Floor[d])
+, conds]]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Solve[el[d,lon,lat,ra,dec] == 0, d]
+
+
+
 
 (* this is midnight today (for me) *)
 
@@ -141,3 +206,4 @@ TODO: list sources tou can test, stellarium/planetarium, HORIZONS etc
 
 TODO: disclaim for fixed object only (but...)
 
+TODO: update other answers where I give formulae
