@@ -57,7 +57,7 @@ dml2hms[h_] = {Floor[h], Mod[Floor[h*60],60], Mod[Floor[h*3600],60]}
 
 (* "proper" time zone for longitude, excludes DST and shifting lines *)
 
-lon2tz[lon_] = Floor[(lon+7.5)/15]
+lon2tz[lon_] = Floor[(lon+15/2)/15]
 
 (* low-precision formula from http://aa.usno.navy.mil/faq/docs/GAST.php *)
 
@@ -94,16 +94,63 @@ ArcTan[Sqrt[Cos[dec*Degree]^2*Cos[Degree*lon + (8475931*Pi)/145848699 +
 
 (* time above horizon, in hours *)
 
-(* TODO: 23h56m issue *)
-
 timeAboveHorizon[lat_, dec_] = 
  2*rad2hr[ArcCos[-Tan[deg2rad[dec]]*Tan[deg2rad[lat]]]]/sm
 
-(* time an object culminates *)
+(* this is the "first" culmination, rise, and set, in UTC hours *)
 
-d /. Solve[ha[d,lon,ra] == 0, d][[1]]
+firstCulmination[lon_, ra_] = 
+ -128347191211217552/6883244157459373 - (141196664*lon)/2123748715 + 
+ (423589992*ra)/424749743
 
-(* this is the general solution *)
+
+firstRise[lon_, lat_, ra_, dec_] = 
+ -128347191211217552/6883244157459373 - (141196664*lon)/2123748715 + 
+ (423589992*ra)/424749743 - 
+ (7319365776*ArcCos[-(Tan[dec*Degree]*Tan[Degree*lat])])/(25484047*Pi)
+
+
+firstSet[lon_, lat_, ra_, dec_] = 
+ -128347191211217552/6883244157459373 - (141196664*lon)/2123748715 + 
+ (423589992*ra)/424749743 + 
+ (7319365776*ArcCos[-(Tan[dec*Degree]*Tan[Degree*lat])])/(25484047*Pi)
+
+
+(* if something occurs at time b and then every time k after that, when is the first time it occurs AFTER time d *)
+
+b + k*Ceiling[n /. Solve[b + k*n == d, n][[1]]]
+
+bkAfterD[b_,k_,d_] = b + k*Ceiling[(-b + d)/k]
+
+(* this is culmination after a given day, result adjusted for timezone *)
+
+(* TODO: convert to hms excessive? *)
+
+culmination[d_, lon_, ra_] = 
+ ExpandAll[bkAfterD[firstCulmination[lon,ra], 24/sm, d*24]+lon2tz[lon]]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Solve[ha[d,lon,ra]==0, d]
+
+(* time an object culminates, general solution *)
 
 nthCulmination[lon_, ra_, n_] = 
  d /. Expand[Solve[ha[d,lon,ra] == 24*n, d]][[1]]
