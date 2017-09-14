@@ -55,6 +55,10 @@ hms2dml[h_,m_,s_] = h+m/60+s/3600
 
 dml2hms[h_] = {Floor[h], Mod[Floor[h*60],60], Mod[Floor[h*3600],60]}
 
+(* "proper" time zone for longitude, excludes DST and shifting lines *)
+
+lon2tz[lon_] = Floor[(lon+7.5)/15]
+
 (* low-precision formula from http://aa.usno.navy.mil/faq/docs/GAST.php *)
 
 gmst[d_] = Rationalize[18.697374558 + 24.06570982441908*d,0]
