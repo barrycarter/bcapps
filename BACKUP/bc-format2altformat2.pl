@@ -59,6 +59,7 @@ while (<>) {
   $mtime=~s/\..*$//;
 
   # canonize/standardize/normalize name
+  # TODO: this is broken, because in .bz2, the . is treated as a wildcard
   for $i (@keys) {$name=~s/$i/$convert{$i}/;}
 
   # spit out mtime and standardized name (our "key"), origname ("value"),

@@ -1,0 +1,7 @@
+nagios tests I need to add:
+
+  - confirm ~/my-tumblr-blogs.txt contains no repeats
+
+  - check size of idrive backups comparing
+  /mnt/villa/massbacks-idrive-saopaulo/*.list (the size of the .1 file
+  is mentioned here) to the actual sizes from bc-idrive.pl

@@ -8,6 +8,8 @@ efibootmgr
 # system tools
 
 # TODO: had to remove below because of conflict-- reinstall correctly later
+scons
+hdparm
 # yum-cron
 libusb
 # required for scangearmp
@@ -447,6 +449,7 @@ virtuoso-opensource
 blazegraph
 
 # emulators
+docker
 android-tools
 dosbox
 dosemu

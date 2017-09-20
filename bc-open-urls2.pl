@@ -9,8 +9,8 @@ require "/usr/local/lib/bclib.pl";
 while (<>) {
   chomp;
 
-  # ignore comments
-  if (/^\#/) {next;}
+  # ignore comments and blank lines
+  if (/^\#/ || /^\s*$/) {next;}
 
   # TODO: make this path to firefox canonical
   my($out,$err,$res) = cache_command2("/bin/firefox --new-tab '$_'");
