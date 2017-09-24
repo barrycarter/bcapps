@@ -23,7 +23,8 @@ xinput set-prop "Logitech USB Trackball" "Evdev Middle Button Emulation" 1
 # TODO: I shouldnt have to do this at all since /etc/X11/Xresources
 # already says "Xft.dpi: 96", but it turns out I do
 
-xrandr --dpi 64
+# turning this off 21 Sep 2017, seems to harm saopaulo
+# xrandr --dpi 64
 
 # TODO: there really really must be a better way to do this
 

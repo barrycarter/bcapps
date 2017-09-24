@@ -8,6 +8,7 @@ efibootmgr
 # system tools
 
 # TODO: had to remove below because of conflict-- reinstall correctly later
+arp-scan
 scons
 hdparm
 # yum-cron
@@ -545,11 +546,13 @@ physfs-devel
 boost-jam
 boost148-jam
 
-
 # required for recoll
 qt-devel
 qt3-devel
 qt5-*
+
+# not required but helpful
+qt-config
 
 # required for vice
 # the first three are good ideas anyway
@@ -604,6 +607,11 @@ perl-utf8
 
 # Apache mods
 mod_ldap
+
+# Torrent
+deluge
+qbittorrent
+qbittorrent-nox
 
 
 # TODO: update list2sh or whatever to quote package names for * stuff

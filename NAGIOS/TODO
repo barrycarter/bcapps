@@ -1,7 +1,16 @@
 nagios tests I need to add:
 
+  - disk full tests (perhaps collectively) for all drives, not just root drive
+
   - confirm ~/my-tumblr-blogs.txt contains no repeats
 
   - check size of idrive backups comparing
   /mnt/villa/massbacks-idrive-saopaulo/*.list (the size of the .1 file
   is mentioned here) to the actual sizes from bc-idrive.pl
+
+  - grep -L '^2029' ~/annoytab.d/*.txt should show all automated
+  events go through at least 2029 (at which point I have a meta-event
+  to update further, in the highly unlikely event I am still alive)
+
+  - above MAY apply to ~/calendar.d/*.txt as well, but may not
+
