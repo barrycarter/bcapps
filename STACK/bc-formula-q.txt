@@ -1,0 +1,64 @@
+TODO: formula question reference, no affiliation w/ SE, do not asnwer hwere, edit your q
+
+*** DO MORE HERE ***
+
+How much research have you done on your own? Examples:
+
+  - I have done no research.
+
+  - I've used search engines such as Google, but haven't found
+  anything because I'm not sure what terms to search for.
+
+  - I've used search engines with the right terms, but have found
+  nothing useful. Examples:
+
+    - The formula I'm seeking is for a limited-use special case, and
+    not of general interest.
+
+    - There are several sites that mention the phenomena in which I am
+    interested, but do not provide the formulas I need.
+
+    - I am doing original research, and did not find any sites mention
+    the phenomena in which I am interested.
+
+What sort of formula do you seek? Examples:
+
+  - I am looking for existing code or a library.
+
+  - I want to write code or a library. I do not want to use existing
+  code/library, even if such code is open source. Sample case: I am
+  doing an assignment for school.
+
+  - I want to write code or a library and understand what's
+  happening. I am looking for a step by step explanation in addition
+  to a formula.
+
+  - I have an existing formula, but am looking at special or extreme
+  cases where it does not work.
+
+  - I am looking for a closed-form mathematical formula, or an
+  explanation of why one doesn't exist.
+
+How precise of an answer do require? Examples:
+
+  - I am doing high precision work and need very high precision.
+
+  - I'm looking for a balance between simplicity and precision.
+
+  - I'm looking for a simple formula, even if it's not very accurate.
+
+Is yours a special case? Examples:
+
+  - I have a formula, but the results it's providing seem wrong in a
+  real world sense.
+
+  - I have several unequal formulas, and want to know which is the
+  right formula and/or whether each formula applies in a different
+  circumstance.
+
+  - I have come up with my own formula, but it disagrees with the
+  formulas I've found from other references, and I want to know why.
+
+
+
+****** TODO: skim, wp, spell check
