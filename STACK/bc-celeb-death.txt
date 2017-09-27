@@ -1,7 +1,23 @@
 (*
 http://musicfans.stackexchange.com/questions/4561/was-2016-really-a-partcularly-deadly-year-for-artists
 but also general question of whether 2016 was "year of death" or even
-"year of death for related famous people 
+"year of death for related famous people"
+
+this is all subclasses of musician
+
+SELECT ?item ?itemLabel ?prof ?profLabel ?death ?deathLabelWHERE 
+{
+ ?item wdt:P106 ?prof.
+ ?prof wdt:P279* wd:Q639669.
+ ?item wdt:P570 ?death
+SERVICE wikibase:label{bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+
+
+SELECT ?x WHERE {
+ ?x wdt:P106 Q639669
+LIMIT 20
+}
 
 Q639669 = musician
 
@@ -15,11 +31,83 @@ SELECT ?x ?z WHERE {
 LIMIT 20
 }
 
-
-
-
-
-
 *)
+
+
+SELECT ?item ?prof ?death  WHERE 
+{
+ ?item wdt:P106 ?prof.
+ ?prof wdt:P279* wd:Q639669.
+ ?item wdt:P570 ?death
+}
+LIMIT 20
+
+SELECT ?item ?itemLabel ?prof ?profLabel ?death  WHERE 
+{
+ ?item wdt:P106 ?prof.
+ ?prof wdt:P279* wd:Q639669.
+ ?item wdt:P570 ?death
+SERVICE wikibase:label{bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+
+}
+ORDER BY DESC(?death)
+LIMIT 100
+
+# ran this query and stored output
+
+SELECT ?item ?itemLabel ?prof ?profLabel ?death  WHERE 
+{
+ ?item wdt:P106 ?prof.
+ ?prof wdt:P279* wd:Q639669.
+ ?item wdt:P570 ?death
+SERVICE wikibase:label{bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+FILTER (?death > '2000-01-01'^^xsd:dateTime)
+}
+
+# then ran same query with <= and stored results
+
+# list of "musician subprofessions"
+
+perl -F'\t' -anle 'print $F[3]' deaths-* | sort -u | tee professions.txt
+
+# queries like below to find multi-levels
+SELECT ?prof ?profLabel ?subprof ?subprofLabel ?subsubprof ?subsubprofLabel ?subsubsubprof ?subsubsubprofLabel 
+WHERE 
+{
+ ?subsubsubprof wdt:P279 ?subsubprof.
+ ?subsubprof wdt:P279 ?subprof.
+ ?subprof wdt:P279 ?prof.
+ ?prof wdt:P279 wd:Q639669.
+SERVICE wikibase:label{bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+
+# this has no results
+
+SELECT ?prof ?profLabel ?sub1prof ?sub1profLabel ?sub2prof ?sub2profLabel ?sub3prof ?sub3profLabel
+ ?sub4prof ?sub4profLabel ?sub5prof ?sub5profLabel ?sub6prof ?sub6profLabel
+WHERE 
+{
+ ?sub6prof wdt:P279 ?sub5prof.
+ ?sub5prof wdt:P279 ?sub4prof.
+ ?sub4prof wdt:P279 ?sub3prof.
+ ?sub3prof wdt:P279 ?sub2prof.
+ ?sub2prof wdt:P279 ?sub1prof.
+ ?sub1prof wdt:P279 ?prof.
+ ?prof wdt:P279 wd:Q639669.
+SERVICE wikibase:label{bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+
+TODO: explain the unnamed Q entities
+
+TODO: dying twice
+
+TODO: put in SQL db and check sanity before counting
+
+TODO: you must be a mathemtiaitan joke
+
+EDIT: "That must have been a mathematician." Puzzled, one of the other men asks, "Why do you say that?" The reply: "For three reasons. (1) he took a long time to answer, (2) he was absolutely correct, and (3) his answer was absolutely useless."
+
+host of caveats: notability guidelnes, proximity vs notability, wp own notability
+
 
 

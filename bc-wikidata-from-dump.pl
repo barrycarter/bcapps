@@ -51,3 +51,19 @@ JSON->{'sitelinks'}->{'enwiki'}->{'title'} = 'Universe';
 JSON->{'type'} = 'item';
 
 =cut
+
+=item comment
+
+If using beta dump in TTL format (eg,
+wikidata-20161226-all-BETA.ttl.bz2), this gives Q items with names
+
+bzgrep -A 1 '^wd:Q[0-9]* a' wikidata-20161226-all-BETA.ttl.bz2
+
+If you have a TSV file where you need to identify various Qs (mine is
+dead2.tsv for dead musicians)
+
+perl -anle '$F[0]=~/(Q\d+)\>$/; print "wd:$1 a"' dead2.tsv | sort -u > grepme.txt
+
+and then fgrep -f
+
+=cut

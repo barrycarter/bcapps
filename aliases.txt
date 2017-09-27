@@ -103,8 +103,11 @@ alias wwf "bzfgrep -ix \!* /home/barrycarter/BCGIT/WWF/wwf.txt.bz2"
 # use) that still seems to work for searching
 
 # 20 Dec 2015: reset index
+# 26 Sep 2017: new config dir, and just use "recoll -t"
 
-alias recollq "recollq \!* | tee /var/tmp/bc-cmd-recollq.txt"
+# alias recollq "recollq \!* | tee /var/tmp/bc-cmd-recollq.txt"
+
+alias recollq "recoll -t -c /root/.recoll/ \!* | tee /var/tmp/bc-cmd-recollq.txt"
 
 # seeing date to nanosecond isnt superuseful except when 'time' fails
 # can't really alias date as it breaks things like +%s and -d

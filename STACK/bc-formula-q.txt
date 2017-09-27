@@ -1,4 +1,4 @@
-TODO: formula question reference, no affiliation w/ SE, do not asnwer hwere, edit your q
+TODO: formula question reference, no affiliation w/ SE, do not asnwer hwere, edit your q, formula -> function?
 
 *** DO MORE HERE ***
 
@@ -22,6 +22,9 @@ How much research have you done on your own? Examples:
     the phenomena in which I am interested.
 
 What sort of formula do you seek? Examples:
+
+  - I just need search terms or "terms of art"/jargon so I can do more
+  searching on my own.
 
   - I am looking for existing code or a library.
 
