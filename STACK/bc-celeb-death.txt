@@ -109,5 +109,6 @@ EDIT: "That must have been a mathematician." Puzzled, one of the other men asks,
 
 host of caveats: notability guidelnes, proximity vs notability, wp own notability
 
+TODO: explain pure Q numbers
 
 

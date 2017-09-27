@@ -666,5 +666,4 @@ no LVM needed then "mount /dev/mapper/villa /mnt/villa/" for example
 
 cryptsetup luksFormat /dev/sdc1; do this after partioning
 
-
 %% TODO: sshfs mount dullon, very useful
