@@ -1,11 +1,26 @@
-(*
+
+
+
+278291 musicians total
+
+
+60017 musician deaths
+
+644 died twice or more
+
+Q446955 died four times (known issue)
+
+59361
+
+59578?
+
 http://musicfans.stackexchange.com/questions/4561/was-2016-really-a-partcularly-deadly-year-for-artists
 but also general question of whether 2016 was "year of death" or even
 "year of death for related famous people"
 
 this is all subclasses of musician
 
-SELECT ?item ?itemLabel ?prof ?profLabel ?death ?deathLabelWHERE 
+SELECT ?item ?itemLabel ?prof ?profLabel ?death ?deathLabel WHERE 
 {
  ?item wdt:P106 ?prof.
  ?prof wdt:P279* wd:Q639669.
@@ -111,4 +126,126 @@ host of caveats: notability guidelnes, proximity vs notability, wp own notabilit
 
 TODO: explain pure Q numbers
 
+# sccripts to confirm no multiple deaths (multiple rows allowed
+# because of multiple profressions)
 
+perl -F'\t' -anle 'print "$F[0] $F[-1]"' deaths-* | sort -u > ! outfile1.txt
+
+perl -anle 'print $F[0]' outfile1.txt | sort | uniq -dc > outfile2.txt
+
+perl -anle 'print $F[1]' outfile2.txt | tee double-death-entities.txt
+
+fgrep -f double-death-entities.txt outfile1.txt | tee double-deaths.txt
+
+known bad case: Werner Wolf Glaser Q68216
+
+(known issue)
+
+https://www.wikidata.org/wiki/Wikidata:Database_reports/Constraint_violations/P570#single_value
+
+sort -k1,1 -u outfile1.txt > outfile3.txt
+
+    697 2017
+   1112 2016
+   1109 2015
+   1086 2014
+   1175 2013
+   1057 2012
+   1124 2011
+   1070 2010
+   1010 2009
+    976 2008
+   1004 2007
+    994 2006
+    877 2005
+    860 2004
+    798 2003
+    759 2002
+    736 2001
+    833 2000
+    730 1999
+    685 1998
+    665 1997
+    663 1996
+    695 1995
+    636 1994
+    633 1993
+    642 1992
+    635 1991
+    543 1990
+    551 1989
+    572 1988
+    577 1987
+    527 1986
+    523 1985
+    542 1984
+    504 1983
+    489 1982
+    510 1981
+    484 1980
+    458 1979
+    468 1978
+    439 1977
+    433 1976
+    417 1975
+    461 1974
+    455 1973
+    414 1972
+    417 1971
+    390 1970
+    436 1969
+    367 1968
+    373 1967
+
+SELECT ?item ?itemLabel ?prof ?profLabel WHERE 
+{
+ ?item wdt:P106 ?prof.
+ ?prof wdt:P279* wd:Q639669.
+SERVICE wikibase:label{bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+
+DISCLAIM: queries different days, offset -> maybe miss some if added
+
+NOTE: LIMIT 10000 works, as does LIMIT 25000 (sometimes), 20K times out sometimes too
+
+http://tinyurl.com/y9cjqtyf
+http://tinyurl.com/y8x8pdj6
+
+profession graph:
+
+WRONG: perl -anle 'print "\"musician\" -> \"$F[1]\""' direct-sub-musicians.txt | tee graph1.txt
+
+# my numbering scheme gets wonky here, but the connections should be ok
+
+perl -F'\t' -anle 'print "\"musician\" -> \"$F[1]\""' direct-sub-musicians.txt | tee graph1.txt
+
+perl -F'\t' -anle 'print "\"$F[1]\" -> \"$F[3]\""' third-level-sub-musicians.txt | tee graph2.txt
+
+perl -F'\t' -anle 'print "\"$F[3]\" -> \"$F[5]\""' fourth-or-something-level-sub-musicians.txt | tee graph3.txt
+
+perl -F'\t' -anle 'print "\"$F[5]\" -> \"$F[7]\""' fifth-or-something-level-sub-musicians.txt | tee graph4.txt
+
+perl -F'\t' -anle 'print "\"$F[7]\" -> \"$F[9]\""' 6th-or-something-level-sub-musicians.txt | tee graph5.txt
+
+perl -F'\t' -anle 'print "\"$F[9]\" -> \"$F[11]\""' really-high-level-sub-music.txt | tee graph6.txt
+
+virtuoso is sub for 2 profs, instrumentalist and music interpreter
+
+
+
+
+
+
+
+
+
+
+http://tinyurl.com/y7ucgf9m = first level
+
+(72 at first level)
+
+no that wrong
+
+http://tinyurl.com/yayl97al = 39 at first level
+
+note: add "digraph x {" at top and "}" at bottom

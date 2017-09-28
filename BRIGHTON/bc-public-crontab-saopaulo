@@ -242,5 +242,6 @@ MAILTO="daemon"
 # * * * * * exec xmessage this is a test sdfsadf
 
 # backup "my" tumblr blogs (unrelated to follow list)
+# surrounded by `date` to measure how long it takes
 
-25 3 * * * cd /home/user/TUMBLR; egrep -v '^#|^$' ~/my-tumblr-blogs.txt | perl -nle 'print "python tumblr_backup.py -x -i $_"' | sh
+25 3 * * * date; cd /home/user/TUMBLR; egrep -v '^#|^$' ~/my-tumblr-blogs.txt | perl -nle 'print "python tumblr_backup.py -x -i $_"' | sh; date
