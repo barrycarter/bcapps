@@ -16,27 +16,32 @@ http://tinyurl.com/yd7zrxlp
 
 : remove unncessary entity info and profs (latter for now)
 : and sort for ultimate join
-: tabs below so empties are still ok
-perl -F"\t" -anle '$F[0]=~s/^.*Q/Q/; print "$F[0]\t$F[1]\t$F[2]"' file1.tsv | sort -u -k1,1 >! file2.tsv
+: NULL so join doesnt get confused by string of spaces
+
+perl -F"\t" -anle '$F[0]=~s/^.*Q/Q/; $F[1]=~s/^\s*$/NULL/; $F[2]=~s/^\s*$/NULL/; print "$F[0] $F[1] $F[2]"' file1.tsv | sort -u -k1,1 >! file2.tsv
 
 Q446955 is most extreme case 16 total
 
 : todo: explain how I got labels.txt
 
-join -j 1 -t "\t" file2.tsv labels.txt.srt | less
+: with names, sorted by death date reverse
+: inserting manual tab below with ctrl-v TAB (ugly)
+join -a 1 -j 1 file2.tsv labels.txt.srt | sort -t"	" -k3nr >! file3.tsv
+
+Q41091734 Q41325176 are examples that can't be joined
+
+(most likely added after JSON dump date?)
 
 
 https://www.wikidata.org/wiki/Q11266851 is one strange case
 
+artist (Q483501) is a double containing field
 
-
+TODO: elvis lives joke
 
 TODO: spreadsheet
 
-
-
-
-
+Q1001122  Buddy Boy Hawkins (no birth/death, useful special case)
 
 278291 musicians total
 
