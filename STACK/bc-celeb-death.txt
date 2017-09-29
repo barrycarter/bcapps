@@ -1,3 +1,40 @@
+: it all starts w this query
+
+SELECT ?item ?birth ?death 
+  (GROUP_CONCAT(DISTINCT ?prof; SEPARATOR=",") AS ?profs)
+WHERE {
+  ?item wdt:P106 ?prof.
+  ?prof wdt:P279* wd:Q639669.
+  OPTIONAL {?item wdt:P569 ?birth}.
+  OPTIONAL {?item wdt:P570 ?death}.
+}
+GROUP BY ?item ?birth ?death
+
+http://tinyurl.com/yd7zrxlp
+
+: dl results as TSV to file1.tsv
+
+: remove unncessary entity info and profs (latter for now)
+: and sort for ultimate join
+: tabs below so empties are still ok
+perl -F"\t" -anle '$F[0]=~s/^.*Q/Q/; print "$F[0]\t$F[1]\t$F[2]"' file1.tsv | sort -u -k1,1 >! file2.tsv
+
+Q446955 is most extreme case 16 total
+
+: todo: explain how I got labels.txt
+
+join -j 1 -t "\t" file2.tsv labels.txt.srt | less
+
+
+https://www.wikidata.org/wiki/Q11266851 is one strange case
+
+
+
+
+TODO: spreadsheet
+
+
+
 
 
 
@@ -231,8 +268,14 @@ perl -F'\t' -anle 'print "\"$F[9]\" -> \"$F[11]\""' really-high-level-sub-music.
 
 virtuoso is sub for 2 profs, instrumentalist and music interpreter
 
+# this lists all Q with english labels (if existing)
+bzcat wikidata-20161226-all.json.bz2 | perl -nle 's/"id":"(.*?)"//; $x=$1; s/"language":"en","value":"(.*?)"//; $y=$1; print "$x $y"'
 
+: create a sorted listed of labels for the join command
 
+bzcat latest-all.json.bz2 | perl -nle 's/"id":"(.*?)"//; $x=$1; s/"language":"en","value":"(.*?)"//; $y=$1; print "$x $y"' > labels.txt &
+
+sort labels.txt > labels.txt.srt
 
 
 
@@ -249,3 +292,9 @@ no that wrong
 http://tinyurl.com/yayl97al = 39 at first level
 
 note: add "digraph x {" at top and "}" at bottom
+
+%% dbpedia and freebase?
+
+(freebase is gone)
+
+bzcat wikidata-20161226-all.json.bz2 | perl -nle 's/"id":"(.*?)"//; print $1' | less
