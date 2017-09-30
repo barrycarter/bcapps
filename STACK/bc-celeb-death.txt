@@ -17,8 +17,13 @@ http://tinyurl.com/yd7zrxlp
 : remove unncessary entity info and profs (latter for now)
 : and sort for ultimate join
 : NULL so join doesnt get confused by string of spaces
+: this also kills off things like t591684991 wikidata placeholders
+: reverse death and birth since death = focus
+: TODO: explain this better
 
-perl -F"\t" -anle '$F[0]=~s/^.*Q/Q/; $F[1]=~s/^\s*$/NULL/; $F[2]=~s/^\s*$/NULL/; print "$F[0] $F[1] $F[2]"' file1.tsv | sort -u -k1,1 >! file2.tsv
+perl -F"\t" -anle '$F[0]=~s/^.*Q/Q/; for $i (@F[1..2]) {unless ($i=~/^[0-9]/) {$i="NULL";}} print "$F[0] $F[2] $F[1]"' file1.tsv | sort -u -k1,1 >! file2.tsv
+
+# $F[1]=~s/^([^0-9]|.*$/NULL/; $F[2]=~s/^[^0-9|$].*$/NULL/; print "$F[0] $F[1] $F[2]"' file1.tsv | sort -u -k1,1 >! file2.tsv
 
 Q446955 is most extreme case 16 total
 
@@ -26,12 +31,25 @@ Q446955 is most extreme case 16 total
 
 : with names, sorted by death date reverse
 : inserting manual tab below with ctrl-v TAB (ugly)
-join -a 1 -j 1 file2.tsv labels.txt.srt | sort -t"	" -k3nr >! file3.tsv
+join -a 1 -j 1 file2.tsv labels.txt.srt | sort -k2r >! file3.tsv
+
+perl -anle '$F[1]=~s/\-.*$//; print $F[1]' file3.tsv | sort | uniq -c | sort -k2nr > file4.tsv
+
 
 Q41091734 Q41325176 are examples that can't be joined
 
+
+Q7843730 is youngest
+
+only in 1 nonenglish language (eg)
+
+Debbie Reynolds, Carrie Fisher both qualify [latter as voice actor in Persian Wikipedia]
+
+
+
 (most likely added after JSON dump date?)
 
+TODO: don't forgot BCE dates
 
 https://www.wikidata.org/wiki/Q11266851 is one strange case
 

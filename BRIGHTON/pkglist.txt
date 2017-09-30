@@ -130,6 +130,9 @@ tk
 java
 gcc
 ruby
+# below 2 won't install from centos/epel, but do need it
+rvm
+lwp
 ruby-devel
 lua
 prover9
@@ -612,6 +615,10 @@ mod_ldap
 deluge
 qbittorrent
 qbittorrent-nox
+
+# Blog
+# this wont really install from yum, just noting it here
+jekyll
 
 
 # TODO: update list2sh or whatever to quote package names for * stuff

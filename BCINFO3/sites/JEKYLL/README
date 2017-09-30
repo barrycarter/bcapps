@@ -1,0 +1,15 @@
+Testing Jekyll here; may replace wordpress
+
+Startup:
+
+# major ugliness: centos 7.2 epel repos have ruby 2.0.0 only, had to
+# dl ruby 2.4 from gentoo and install OVER yum (didn't "yum remove
+# ruby" first, too many deps)
+
+# required for me?
+sudo yum upgrade ruby
+sudo gem install jekyll bundler
+rehash
+jekyll new myblog
+
+
