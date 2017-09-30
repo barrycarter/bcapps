@@ -14,6 +14,8 @@ sudo gem install jekyll bundler
 
 rehash
 jekyll new myblog
+cd myblog
+bundle exec jekyll serve
 
 
 TODO: write entries re why jekyll sucks (repeats 1990s stuff) + why it's a pain in the ass to install
