@@ -10,7 +10,11 @@ set ignoreeof
 
 # also includes everything in BCGIT down to one level
 # remove "/old" from path, was a bad idea
-set path = (/bin /usr/bin /usr/local/bin /sbin /usr/sbin /usr/local/sbin \
+
+# moved /usr/local/bin before /usr/bin and /bin so I can use ruby2.4
+# (= mistake?)
+
+set path = (/usr/local/bin /bin /usr/bin /sbin /usr/sbin /usr/local/sbin \
            /home/user/BCGIT /home/user/BCGIT/*/ \
            /home/user/bin /home/user/PERL /usr/lib64/nagios/plugins/)
 

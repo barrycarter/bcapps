@@ -7,9 +7,13 @@ Startup:
 # ruby" first, too many deps)
 
 # required for me?
-sudo yum upgrade ruby
+
+# this took ages to get right:
 sudo gem install jekyll bundler
+
+
 rehash
 jekyll new myblog
 
 
+TODO: write entries re why jekyll sucks (repeats 1990s stuff) + why it's a pain in the ass to install
