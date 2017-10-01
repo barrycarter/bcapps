@@ -7,6 +7,7 @@ efibootmgr
 
 # system tools
 
+inotify-tools
 # TODO: had to remove below because of conflict-- reinstall correctly later
 arp-scan
 scons
