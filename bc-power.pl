@@ -4,18 +4,31 @@
 
 # TODO: using this lib for debugging, final ans shouldn't require it
 
-# TODO: not efficient, not golf, not original
+# TODO: not efficient, not golf, not original, not python
 
 require "/usr/local/lib/bclib.pl";
 
 for $i (0..2**($#ARGV+1)-1) {
 
-  # binary representation of $i
-#  $j = unpack("B32", pack("N", $i));
+  # list to hold this subset
+  my(@list);
 
-  $j = sprintf("%b", $i);
+  # where in this subset we are
+  $n = 0;
 
-  debug("I: $i, J: $j");
+  debug(sprintf("%b", $i));
+
+  # TODO: how big can $i be above?
+
+  # binary representation of $i as a list (low bit first)
+  for $j (split(//,sprintf("%b", $i))) {
+    if ($j) {push(@list,$ARGV[$n])}
+    $n++;
+ #   debug("$i, $j");
+  }
+
+  debug("$i: LIST IS:", join(", ",@list));
+#  debug("LIST IS",@list);
 
 #  my(@list);
 
