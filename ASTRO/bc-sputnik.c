@@ -17,9 +17,11 @@
 
 int main (int argc, char **argv) {
 
-  SpiceDouble earth[3], mu[1];
+  // variables
+  SpiceDouble earth[3], mu[1], state[6], r, colat, lon;
   SpiceInt dim;
 
+  // the standard kernels
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
   // Earth's mass parameter
@@ -29,5 +31,47 @@ int main (int argc, char **argv) {
   // TODO: don't assume equitorial as I do below
   bodvrd_c("EARTH", "RADII", 3, &dim, earth);
 
-  printf("MU: %f, RADS: %f %f %f\n", mu[0], earth[0], earth[1], earth[2]);
+  // the elements of Sputnik's trajectory
+
+  SpiceDouble elts[] = {
+    // RP Perifocal distance
+    earth[0] + mi2km(215),
+
+    // ECC Eccentricity
+    0.052,
+
+    // INC Inclination
+    65.1*rpd_c(),
+
+    // LNODE Longitude of the ascending node
+    // I think this is 0 by definition
+    0,
+
+    // ARGP Argument of periapse
+    58*rpd_c(),
+
+    // M0 Mean anomaly at epoch
+    // setting this 0 as test, are params missing?
+    0,
+
+    // T0 Epoch
+    // setting this at 0 as test
+    0,
+
+    // MU Gravitational parameter
+    mu[0]
+  };
+
+  // Sputnik location at "time 0"
+  conics_c(elts, 0, state);
+
+  // spherical version of above
+  recsph_c(state, &r, &colat, &lon);
+
+  printf("STATE: %f %f %f, %f %f %f\n", state[0], state[1], state[2],
+	 state[3], state[4], state[5]);
+
+  printf("SPH (deg): %f %f %f\n", r-earth[0], 90-colat*dpr_c(), lon*dpr_c());
+
+  //  printf("MU: %f, RADS: %f %f %f\n", mu[0], earth[0], earth[1], earth[2]);
 }

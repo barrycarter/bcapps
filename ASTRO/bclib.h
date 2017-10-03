@@ -21,7 +21,10 @@
 #define STIME -479654740758.815430+4042
 #define ETIME 479386728067.184631-12
 
-// TODO: have this routing return STIME or ETIME if out of bounds
+// convert miles to km
+double mi2km(double d) {return d*1.609344;}
+
+// TODO: have this routine return STIME or ETIME if out of bounds
 
 // this routine *very roughly* converts years to to et for testing only
 double year2et(double d) {
