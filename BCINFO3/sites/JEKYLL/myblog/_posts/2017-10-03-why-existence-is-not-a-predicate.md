@@ -1,40 +1,8 @@
-Testing Jekyll here; may replace wordpress
-
-Startup:
-
-# major ugliness: centos 7.2 epel repos have ruby 2.0.0 only, had to
-# dl ruby 2.4 from gentoo and install OVER yum (didn't "yum remove
-# ruby" first, too many deps)
-
-# required for me?
-
-# this took ages to get right:
-sudo gem install jekyll bundler
-
-
-rehash
-jekyll new myblog
-cd myblog
-bundle exec jekyll serve
-
-
-TODO: write entries re why jekyll sucks (repeats 1990s stuff) + why it's a pain in the ass to install
-
-TODO: standard debugging tips
-
-TODO: convert formula readme and maybe others into this blog
-
-TODO: how to "hide" a blog entry (rename it without a date?)
-
-TODO: does disqus support trackbacks? (my logfile should catch but...)
-
-TODO: convert quora storeis to this blog?
-
-TODO: convert some stack answers to this blog? (instead of just linking?)
-
-TODO: https://philosophy.stackexchange.com/questions/46344/does-fictional-discourse-pose-special-difficulties-for-logic ... existence is not a normal/valid predicate (red, even that's weird)
-
-Subject: Existence is not a valid mathematical predicate
+---
+layout: post
+title:  "Existence is not a valid mathematical predicate"
+categories: stack, philosophy
+---
 
 If we have an object x in front of us, we can ask many questions about it such as "is x red?", "does x have a mass of more than 5kg?", "is x warmer than 300K?".
 
@@ -61,7 +29,3 @@ This makes the answer simple: if S is the world of fiction, it is true that one 
 And, just to be nitpicky, I realize you could put a horse on an airplane or that flying horses may exist in reality but we haven't seen them yet, but you get the idea.
 
 NOTE: originally written to answer https://philosophy.stackexchange.com/questions/46344/does-fictional-discourse-pose-special-difficulties-for-logic
-
-TODO: note URL, spell
-
-

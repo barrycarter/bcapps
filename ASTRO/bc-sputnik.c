@@ -33,23 +33,12 @@ int main (int argc, char **argv) {
   // TODO: don't assume equitorial as I do below
   bodvrd_c("EARTH", "RADII", 3, &dim, earth);
 
-  // computing Sputnik trajectory attempt from two given values
-  // format: rad above earth (mi), lat, lon
-  // TODO: does not include Earth rotation for those 3m, but should
-  // 5 13 30 1 332.26 39.83 -79.75
-  // 5 13 33 1 371.55 30.18 -73.39
-  
-  // these variables are for reverse-engineering 
-
-
-
-
   // the elements of Sputnik's trajectory
 
   SpiceDouble elts[] = {
 
     // RP Perifocal distance
-    earth[0] + mi2km(215),
+    earth[0] + mi2km(151.5),
 
     // ECC Eccentricity
     0.052,
@@ -66,7 +55,8 @@ int main (int argc, char **argv) {
 
     // M0 Mean anomaly at epoch
     // setting this 0 as test, are params missing?
-    0,
+    //    0,
+    74*rpd_c(),
 
     // T0 Epoch
     // setting this at 0 as test
@@ -77,7 +67,7 @@ int main (int argc, char **argv) {
   };
 
   // every 3m for a month?
-  for (int i=0; i<=365.2425/12*86400; i+=300) {
+  for (int i=0; i<=365.2425/12*86400; i+=180) {
     
     // Sputnik location at time i
     conics_c(elts, i, state);
