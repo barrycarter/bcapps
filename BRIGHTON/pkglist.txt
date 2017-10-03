@@ -288,6 +288,7 @@ fly
 netpbm-progs
 gocr
 tesseract
+tesseract-ocd
 ocrad
 gnu-free-mono-fonts
 xorg-x11-fonts-*
