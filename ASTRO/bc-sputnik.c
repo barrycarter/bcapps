@@ -2,6 +2,8 @@
 
 // Source: http://satlist.nl/RAE/RAE1957.doc
 
+// Source: https://archive.org/details/nasa_techdoc_19900066808
+
 // Date/Inclination/Period/SMA/perigeeht/apogeeht/ecc/argperigee
 // 1957 Oct 4.8 65.1 96.2 6955 215 939 0.052 58
 
@@ -31,9 +33,21 @@ int main (int argc, char **argv) {
   // TODO: don't assume equitorial as I do below
   bodvrd_c("EARTH", "RADII", 3, &dim, earth);
 
+  // computing Sputnik trajectory attempt from two given values
+  // format: rad above earth (mi), lat, lon
+  // TODO: does not include Earth rotation for those 3m, but should
+  // 5 13 30 1 332.26 39.83 -79.75
+  // 5 13 33 1 371.55 30.18 -73.39
+  
+  // these variables are for reverse-engineering 
+
+
+
+
   // the elements of Sputnik's trajectory
 
   SpiceDouble elts[] = {
+
     // RP Perifocal distance
     earth[0] + mi2km(215),
 
@@ -62,16 +76,23 @@ int main (int argc, char **argv) {
     mu[0]
   };
 
-  // Sputnik location at "time 0"
-  conics_c(elts, 0, state);
+  // every 3m for a month?
+  for (int i=0; i<=365.2425/12*86400; i+=300) {
+    
+    // Sputnik location at time i
+    conics_c(elts, i, state);
 
-  // spherical version of above
-  recsph_c(state, &r, &colat, &lon);
+    // spherical version of above
+    recsph_c(state, &r, &colat, &lon);
 
-  printf("STATE: %f %f %f, %f %f %f\n", state[0], state[1], state[2],
-	 state[3], state[4], state[5]);
+    printf("SPH (mi/deg): %i %f %f %f\n", i, 
+	   km2mi(r-earth[0]), 90-colat*dpr_c(), lon*dpr_c());
 
-  printf("SPH (deg): %f %f %f\n", r-earth[0], 90-colat*dpr_c(), lon*dpr_c());
+  }
+
+  //  printf("STATE: %f %f %f, %f %f %f\n", state[0], state[1], state[2],
+  //	 state[3], state[4], state[5]);
+
 
   //  printf("MU: %f, RADS: %f %f %f\n", mu[0], earth[0], earth[1], earth[2]);
 }
