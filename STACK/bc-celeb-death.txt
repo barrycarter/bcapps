@@ -1,3 +1,13 @@
+**DISCLAIMER: This answer is wrong. But it has graphs and stuff**
+
+According to wikidata, 2016 wasn't a particularly deadly year for musicians:
+
+
+
+wikidata info boxes 
+
+CANON:
+
 : it all starts w this query
 
 SELECT ?item ?birth ?death 
@@ -11,6 +21,21 @@ WHERE {
 GROUP BY ?item ?birth ?death
 
 http://tinyurl.com/yd7zrxlp
+
+musicians-info.tsv Oct  3 12:52 is canon
+
+perl -F"\t" -anle '$F[2]=~s/\-.*//; print $F[2]' musicians-info.tsv |
+ sort | uniq -c | sort -k2nr > musician-deaths-by-year.txt
+
+cp musician-deaths-by-year.txt math1.m
+
+: in mathematica
+
+
+
+
+note 't' years and unreadability
+
 
 : dl results as TSV to file1.tsv
 
