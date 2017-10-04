@@ -31,6 +31,16 @@ cp musician-deaths-by-year.txt math1.m
 
 : in mathematica
 
+d2 = Sort[Transpose[Reverse[Transpose[Partition[deaths,2]]]]];
+
+disp1 = Reverse[Take[d2,{-17,-1}]
+
+ListPlot[Take[d2,-17], PlotJoined -> True, ImageSize -> {1024,768}]
+
+Grid[Take[d2,-17], Alignment -> Left, Spacings -> {2, 1}, Frame -> All, 
+ ItemStyle -> "Text", Background -> {{Gray, None}, {LightGray, None}}]
+
+
 
 
 
