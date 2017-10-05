@@ -1,8 +1,33 @@
 **DISCLAIMER: This answer is wrong. But it has graphs and stuff**
 
-According to wikidata, 2016 wasn't a particularly deadly year for musicians:
+According to wikidata, 2016 wasn't a particularly deadly year for musicians, at least compared to the last 10 years:
 
+[[musicians-death-chart.gif]]
 
+It was deadlier than the 10 years preceding 2006:
+
+[[musicians-death-chart-2.gif]]
+
+but there are several possible reasons for this, some of which I discuss in the "Why This Answer is Wrong" section.
+
+TODO: FULL DATA IS HERE AND HERE
+
+Why This Answer Is Wrong
+========================
+
+Wikidata gets its data from Wikipedia, and:
+
+  - Wikipedia has [notability guidelines](https://en.wikipedia.org/wiki/Wikipedia:Notability) and doesn't list (or even try to list) all amateur and professional musicians. The average Lounge singer in a Las Vegas hotel won't be listed, whereas a major pop star will be.
+
+However, between these two extremes, the guidelines are fuzzy. It's quite possible that X is a more famous musician than Y, but that Y is listed and X is not.
+
+Although notability is not a temporary condition ("Notability is not temporary" section in the link above), time erodes notability for articles not already in Wikipedia.
+
+In other words, a slightly famous musician today is more likely to be in Wikipedia than a more famous musician from the 15th century. Of course, if Wikipedia had existed in the 15th century, this would not be true.
+
+TODO: general stats and methodology
+
+TODO: consistent Wikidata vs WikiData
 
 wikidata info boxes 
 
@@ -33,12 +58,28 @@ cp musician-deaths-by-year.txt math1.m
 
 d2 = Sort[Transpose[Reverse[Transpose[Partition[deaths,2]]]]];
 
-disp1 = Reverse[Take[d2,{-17,-1}]
+disp1 = Prepend[Reverse[Take[d2,{-12,-2}]], {"Year", "Musician Deaths"}]
 
-ListPlot[Take[d2,-17], PlotJoined -> True, ImageSize -> {1024,768}]
+disp2 = Prepend[Reverse[Take[d2,{-23,-13}]], {"Year", "Musician Deaths"}]
 
-Grid[Take[d2,-17], Alignment -> Left, Spacings -> {2, 1}, Frame -> All, 
+disp3 = Take[d2,{-118,-2}]
+
+Grid[disp1, Alignment -> Left, Spacings -> {2, 1}, Frame -> All, 
  ItemStyle -> "Text", Background -> {{Gray, None}, {LightGray, None}}]
+
+Grid[disp2, Alignment -> Left, Spacings -> {2, 1}, Frame -> All, 
+ ItemStyle -> "Text", Background -> {{Gray, None}, {LightGray, None}}]
+
+xtics = Table[1900+i*5, {i,0,25}]
+
+xtics2 = Table[{1900+i, ""}, {i,0,200}]
+
+ListPlot[disp3, ImageSize -> {1024, 768}, PlotMarkers -> {Automatic, Small},
+ Ticks -> {xtics, Automatic}]
+
+TODO: make above look beterr before use
+
+
 
 
 
@@ -356,3 +397,5 @@ note: add "digraph x {" at top and "}" at bottom
 (freebase is gone)
 
 bzcat wikidata-20161226-all.json.bz2 | perl -nle 's/"id":"(.*?)"//; print $1' | less
+
+TODO: figure out how to to do image includes in JEKYLL

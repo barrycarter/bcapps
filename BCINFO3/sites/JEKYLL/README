@@ -1,3 +1,5 @@
+NOTE TO SELF: this is rapidly becoming the "junk" file for my STACK answers
+
 Testing Jekyll here; may replace wordpress
 
 Startup:
@@ -31,3 +33,101 @@ TODO: does disqus support trackbacks? (my logfile should catch but...)
 TODO: convert quora storeis to this blog?
 
 TODO: convert some stack answers to this blog? (instead of just linking?)
+
+TODO: nonbinary gneders dates back to masters/johnson everything sex book
+
+Subject: Canonical, numbered list of jokes?
+
+Apologies if not appropriate for this forum, but this is there a "canonical" list of numbered jokes? Googling around shows lists of specific types of jokes, but there's no "global joke list", and many of these lists are deliberately short (eg, "the best 21 elephant jokes"). The closest I've found to a "true" archive is http://www.netfunny.com/rhf/, but even these jokes aren't numbered. I'm also familiar with https://jcdverha.home.xs4all.nl/scijokes/ where the jokes *are* numbered, but this list is limited to academic jokes.
+
+Given the frequency with which certain jokes are retold (there's even a meta-joke about jokes being told by number), it seems that such a list must exist, even it's for academic, not humorous purposes.
+
+I realize there's a meta
+
+ABOVE NEVER SENT
+
+https://politics.stackexchange.com/questions/25121/does-this-interpretation-of-the-2nd-amendment-prove-that-individuals-should-hot
+
+I've upvoted your question and asked that it be reopened, but I think it should be phrased more neutrally. However, to answer it as it stands, here are several reasons your argument could be considered wrong:
+
+  - Ambiguity of "people": The 4th Amendment starts (emphasis added) "The right of the **people** to be secure in their persons...". In this case, it's clear that people refers to individual persons, not the people as a whole. So, your argument that "people" **necessarily** means a group is invalid.
+
+  - Plurality of "people": even if you interpret people to be plural, does that mean 2 people can apply to keep and bear arms? How large of a group must it be to become "the people"?
+
+  - "Bear arms": while you can imagine a group of people keeping arms, it's harder to imagine a group "bearing arms". I would argue that only individuals can "bear arms", and thus the amendment applies to individuals.
+
+  - Initial clause is not limiting. Grammatically, the "well regulated militia being necessary" clause is descriptive, not limiting. It does not say: "the only reason people can keep and bear arms is because we need a well regulated militia". Rather, it says "the people can keep and bear arms; one reason out of many is because a well regulated militia is necessary". The amendment is grammatically equivalent to "the right of the people to keep and bear arms shall not be infringed".
+
+  - Non-literal interpretation of amendments: The 1st Amendment states in part (emphasis added) "Congress shall make **no law** respecting an establishment of religion, or prohibiting the free exercise thereof; or **abridging the freedom of speech**". However, Congress has made plenty of laws against fraud, assault, and the various States (which fall under this Amendment by virtue of the 14th Amendment) have made laws against slander and libel. While trying to deduce the literal grammatical interpretation of amendments is an interesting intellectual exercise, the fact is that we don't (and probably shouldn't) always interpret them literally.
+
+Your supporting arguments are considerably weaker:
+
+  - "The purpose of a nation is to bring people together". Not necessarily. The purpose of a nation could be to secure individual rights and to allow people to live in freedom as they choose, even if (and especially if) the majority disagrees with them. One of our greatest freedoms is the right to be left alone, not "brought together".
+
+  - "In case a tyrannical government starts a civil war, if every random person had the possibility to cause great harm with zero coordination with one another, it would add to the turmoil, and hardly be helpsome". It's not clear to me that this is necessarily true. In fact, if we assume the government troops identify themselves (which they must, in order to be tyrannical), having everyone attack the government would be a viable method of attack.
+
+  - "moments of peace with the government, which is such a moment as of right now". Not everyone would agree we are with peace with the government right now. Some people would argue that the current government is tyrannical, and there **is** a "civil war" in progress, albeit an undeclared one.
+
+  - "if the leadership of said militia is willing to grant it". This flies directly in the face of the 2nd Amendment's "the right of the **people**". You now seem to be giving individuals leadership power, which is in direct opposition to your earlier argument.
+
+  - "this is how it works with any army in the world". Except that the main body of the Constitution explicitly allows for an Army and Navy. If the militia were meant to be an Army, there would have been no need to amend the Constitution. Clearly, the militia is deliberately intended to be separate from the Army and Navy.
+
+  - "allow citicizens to form a militia". OK, but how would this work? What process would be used to insure the rights of the **people** are preserved, and it's not just the government determining whether or not citizens can form a militia.
+
+  - "every person fearing a tyrannical government would gain access to weapons if need be, since the organisation granting those weapons is not the government but the people-led militia". OK, but who organizes and defines the "people-led militia"? The government? Once you allow the government to decide who constitutes "the people", you've lost the people's right to fight a tyrannical government.
+
+Of course, even now, the government ultimately decides who can and can't have arms and which arms they can and can't have. However, restricting this right further would not only violate individual freedom, but make it harder for the **people** to form a militia if and when it becomes necessary.
+
+Ultimately, it's much harder to stop the people if individuals have weapons. If the weapons are locked away, all a tyrannical government has to do is control the storage lockers. When people bring their own arms to a militia, the **people** can form the militia, without worrying whether the government will allow them to do so.
+
+TODO: why banks want you to payoff mort early
+
+%
+
+There are plenty of free [coding challenge sites](https://medium.freecodecamp.org/the-10-most-popular-coding-challenge-websites-of-2016-fb8a5672d22f that can help you test your coding ability, though not necessarily your coding style.
+
+There are also several sites, including Stack's own codereview.stackexchange.com, where you can ask people to review your coding style, once your code is actually working.
+
+There are also [several sites](https://en.wikipedia.org/wiki/List_of_tools_for_static_code_analysis) to review your coding style, but since this laundry list may be too long to be useful, I'll note that codacy.com, which is now integrated into github.com, is probably the most well known and most frequently used.
+
+%
+
+I just skimmed your question, but my thoughts:
+
+  - The x scale on the second graph is only a tenth of the scale on the first graph. Is this intentional to show how fast the variable is growing, or an error?
+
+  - Could you explain your `der =` code? It might be correct, but gravity decreases with distance squared, and I'm not sure I see that in there.
+
+%
+
+My immediate thoughts:
+
+  - Can the webserver ping the outside world?
+
+  - What does `netstat -rn` on the webserver tell you?
+
+Right now, you've show that the webserver can send packets inside your network, regardless of which IP address is used, but not that it can send and receive packets from outside your network.
+
+%
+
+Subject: How to find a file
+
+Here are several ways to find a file (or confirm that it doesn't exist) assuming you know at least part of its name:
+
+  - `sudo find / -iname '*part-of-name*'` 
+
+**** already on web?
+
+https://opendata.stackexchange.com/questions/11832/what-is-the-meaning-of-units-in-structure-in-census-acs-data
+
+%
+
+Thoughts:
+
+  - You could try using a hard link, though I'm not sure it'll work.
+
+  - You could create the symlink on a non exfat drive and have the target point to a file on the exfat drive, since soft links can cross drive boundaries.
+
+  - If you have no other drive to implement the above, you could even create a small ext4fs system using "mke2fs", loop mounting it, and then linking from it to the exfat system.
+
+  - If you create a shortcut in Windows, Linux *may* see it as a '.lnk' file, but you won't be able to use it like a symbolic link.
