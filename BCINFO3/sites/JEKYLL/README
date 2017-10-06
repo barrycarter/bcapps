@@ -36,6 +36,8 @@ TODO: convert some stack answers to this blog? (instead of just linking?)
 
 TODO: nonbinary gneders dates back to masters/johnson everything sex book
 
+TODO: celeb death (musician) + shadow length (done lots of work on these) + coliations of states + better/usable astro formulas in multiple languages
+
 Subject: Canonical, numbered list of jokes?
 
 Apologies if not appropriate for this forum, but this is there a "canonical" list of numbered jokes? Googling around shows lists of specific types of jokes, but there's no "global joke list", and many of these lists are deliberately short (eg, "the best 21 elephant jokes"). The closest I've found to a "true" archive is http://www.netfunny.com/rhf/, but even these jokes aren't numbered. I'm also familiar with https://jcdverha.home.xs4all.nl/scijokes/ where the jokes *are* numbered, but this list is limited to academic jokes.
@@ -131,3 +133,57 @@ Thoughts:
   - If you have no other drive to implement the above, you could even create a small ext4fs system using "mke2fs", loop mounting it, and then linking from it to the exfat system.
 
   - If you create a shortcut in Windows, Linux *may* see it as a '.lnk' file, but you won't be able to use it like a symbolic link.
+
+%
+
+My only concern would be the hard coding of 15, 20, and 25, and the redundant code used to handle these 3 values:
+
+    Private Function GetTip() As Double
+        If (Tip15.Checked) Then
+            Return PriceBox.Text * 0.15
+        ElseIf (Tip20.Checked) Then
+            Return PriceBox.Text * 0.2
+        ElseIf (Tip25.Checked) Then
+            Return PriceBox.Text * 0.25
+        End If
+    End Function
+
+    Private Sub Tip15_CheckedChanged(sender As Object, e As EventArgs) Handles Tip15.CheckedChanged
+        If TotalBox.Text <> "" Then
+            TotalBox.Text = Format(CalcTotal(), "currency")
+        End If
+    End Sub
+    Private Sub Tip20_CheckedChanged(sender As Object, e As EventArgs) Handles Tip20.CheckedChanged
+        If TotalBox.Text <> "" Then
+            TotalBox.Text = Format(CalcTotal(), "currency")
+        End If
+    End Sub
+    Private Sub Tip25_CheckedChanged(sender As Object, e As EventArgs) Handles Tip25.CheckedChanged
+        If TotalBox.Text <> "" Then
+            TotalBox.Text = Format(CalcTotal(), "currency")
+        End If
+    End Sub
+
+You might want to add more values later (18% seems to be a new popular tip value for some reason) or edit the existing values, so hardcoding isn't a great idea, design/style wise.
+
+%%%%%%%%%
+
+
+
+    First of all, let us assume for a moment that these gun control proponents actually are attempting to appeal to emotion.... is that so wrong? People are not 100 % logical rational human beings. Often, it necessitates an emotional link before people become invested in a topic, and it is only once people are interested that the fact-based compelling arguments will work on them. For example, if I say war is bad because it kills many people, if somebody is emotionally uninvested, they may not be convinced by the idea of many people dying. Hence, is it really fallacious of me to say "how would you feel if you or your family was bombed?". Here, I am appealing to emotion, but I am not doing so to manipulate them, but rather to make them realize the true strength of my original argument.
+
+    Secondly, I don't think the premise that gun control proponents actually are appealing to emotion is necessarily true. When a mass shooting occurs, this strengthens the argument of the gun control proponents, since mass shootings is exactly what their gun policies are meant to prevent in the first place. Hence, after a mass shooting, their argument is not stronger than it was before, and therefore it makes perfectly good sense for them to restate this stronger version of their position in the hopes of now being able to convince more people.
+
+"Appeal to emotion" is wrong when it's used to make a deceptive argument.
+
+
+n illogical, nonfactual, or one-sided argument, or when it's used to suggest one person's emotions are more valuable than anothers.
+
+In your example, "war is bad because it kills many people" is a one-sided argument because it doesn't 
+
+
+because it can be used to make people accept illogical arguments. 
+
+You are wrong on both counts.
+
+"Appeal to emotion" is wrong because it can be used to make people accept illogical arguments. 
