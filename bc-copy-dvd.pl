@@ -12,19 +12,31 @@ defaults("xmessage=1");
 # root only
 if ($>) {die("Must be root");}
 
-find_disk();
+my($out, $err, $res);
 
-die "TESTING";
+# if it returns non-0, badness has happened
+unless (mount_drive("/dev/cdrom", "/mnt/cdrom")) {die "Mount failure";}
 
-# in theory, this should keep trying to mount until success or mass fail
-# <h>these are actually DVDs, but I live in the 80s</h>
-# NOTE: using cache_command, not cache_command2, to get 'retry' option
-my($out, $err, $res) = cache_command("mount /dev/cdrom /mnt/cdrom", "retry=10&sleep=1&nocache=1");
+# which disk is it?
+my($disk) = find_disk();
 
-# if mount fails, complain (auto  xmessage by above)
-if ($res) {die "Unable to mount: $err";}
+# if dir is empty, delete it
+# TODO: better check for non-empty directory?
+($out, $err, $res) = cache_command2("rmdir /DVD/$disk");
 
-debug("MOUNT SUCCESSFUL, continuing");
+# if directory exists (and wasn't deleted by above), abort
+if (-d "/DVD/$disk") {die "Non-empty directory already exists";}
+
+# now all good, create directory, rsync, eject
+
+($out, $err, $res) = cache_command2("mkdir /DVD/$disk");
+($out, $err, $res) = cache_command2("rsync -Pavz /mnt/cdrom/ /DVD/$disk/");
+
+if ($res) {die "RSYNC failed: $err";}
+
+# NOTE: don't really need to use cache_command2 for most of these
+# all good, eject
+($out, $err, $res) = cache_command2("eject");
 
 # program specific subroutine, not general
 
@@ -58,5 +70,29 @@ sub find_disk {
   return $res[0];
 }
 
+# TODO: consider making this a general function
 
+# mount_drive($dev, $pt): attempt to mount $dev on $pt with some extra checks
+# 1 for success, 0 for fail
 
+sub mount_drive {
+  my($dev, $pt) = @_;
+  my($out, $err, $res);
+
+  # if already mounted, we are good
+  # TODO: in theory, could be mounted, but wrong device
+  ($out, $err, $res) = cache_command2("mountpoint $pt");
+  debug("OUT: $out, ERR: $err, RES: $res");
+  if ($res == 0) {return 1;}
+
+  # attempt to mount 10 times
+  # NOTE: using cache_command, not cache_command2, to get 'retry' option
+  ($out, $err, $res) = cache_command("mount $dev $pt", "retry=10&sleep=1&nocache=1");
+
+  # is NOW a mountpoint?
+  ($out, $err, $res) = cache_command2("mountpoint $pt");
+
+  if ($res == 0) {return 1;}
+
+  return 0;
+}
