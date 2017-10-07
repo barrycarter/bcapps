@@ -48,7 +48,7 @@ I realize there's a meta
 
 ABOVE NEVER SENT
 
-https://politics.stackexchange.com/questions/25121/does-this-interpretation-of-the-2nd-amendment-prove-that-individuals-should-hot
+https://politics.stackexchange.com/questions/25121/does-this-interpretation-of-the-2nd-amendment-prove-that-individuals-should-hot [question was later deleted completely]
 
 I've upvoted your question and asked that it be reopened, but I think it should be phrased more neutrally. However, to answer it as it stands, here are several reasons your argument could be considered wrong:
 
@@ -172,18 +172,86 @@ You might want to add more values later (18% seems to be a new popular tip value
 
     First of all, let us assume for a moment that these gun control proponents actually are attempting to appeal to emotion.... is that so wrong? People are not 100 % logical rational human beings. Often, it necessitates an emotional link before people become invested in a topic, and it is only once people are interested that the fact-based compelling arguments will work on them. For example, if I say war is bad because it kills many people, if somebody is emotionally uninvested, they may not be convinced by the idea of many people dying. Hence, is it really fallacious of me to say "how would you feel if you or your family was bombed?". Here, I am appealing to emotion, but I am not doing so to manipulate them, but rather to make them realize the true strength of my original argument.
 
-    Secondly, I don't think the premise that gun control proponents actually are appealing to emotion is necessarily true. When a mass shooting occurs, this strengthens the argument of the gun control proponents, since mass shootings is exactly what their gun policies are meant to prevent in the first place. Hence, after a mass shooting, their argument is not stronger than it was before, and therefore it makes perfectly good sense for them to restate this stronger version of their position in the hopes of now being able to convince more people.
+
+%%%%%%%%
+
+**"let us assume for a moment that these gun control proponents actually are attempting to appeal to emotion.... is that so wrong?"**
+
+No, because they are, as you say, **gun control proponents**. Their goal is not to reach a logical solution, but rather to convince others that they are right.
+
+I think you are actually two different questions in your first point:
+
+  - Is appeal to emotion an effective way to convince people to support your position? The answer here is yes, which is why so many speakers use it.
+
+  - 
 
 "Appeal to emotion" is wrong when it's used to make a deceptive (and thus fallacious) argument.
 
+In your example, "war is bad because it kills many people" is a deceptive argument because it doesn't address the potential benefits of war. Instead of saying "how would you feel if you or your family was bombed?", you could ask "how would you feel in you lived in constant terror of persecution?" or "wouldn't you rather die on your feet than live on your knees?" or "give me liberty or give me death".
 
-n illogical, nonfactual, or one-sided argument, or when it's used to suggest one person's emotions are more valuable than anothers.
+It doesn't show the "true strength of [your] original argument"; rather, it makes your argument appear stronger than it really is, since you do not provide a similar appeal to emotion for the opposing argument.
 
-In your example, "war is bad because it kills many people" is a one-sided argument because it doesn't 
-
+**** PEOPLE ARE IRRAT
 
 because it can be used to make people accept illogical arguments. 
 
 You are wrong on both counts.
 
 "Appeal to emotion" is wrong because it can be used to make people accept illogical arguments. 
+
+%
+
+You need to find or create a Mersenne Twister [rainbow table](https://en.wikipedia.org/wiki/Rainbow_table). In other words, pre-compute all (or some subset) possible outputs, store them (time-space tradeoff), and compare the series you receive to the stored series.
+
+The article quoted in https://stackoverflow.com/questions/6618836/how-if-at-all-does-a-predictable-random-number-generator-get-more-secure-after suggests the number of values you need to store may be much smaller.
+
+%
+
+    Secondly, I don't think the premise that gun control proponents actually are appealing to emotion is necessarily true. When a mass shooting occurs, this strengthens the argument of the gun control proponents, since mass shootings is exactly what their gun policies are meant to prevent in the first place. Hence, after a mass shooting, their argument is not stronger than it was before, and therefore it makes perfectly good sense for them to restate this stronger version of their position in the hopes of now being able to convince more people.
+
+Your second point is incorrect and is easily rebutted.
+
+Suppose someone opposed driving cars, and, everytime there was a fatal car accident, claimed their position was strengthened.
+
+This argument is invalid because people who support driving cars already know and understand that fatal car accidents will occur, and accept it as one of the risks of driving cars that presumably does not outweigh the benefit. In other words, each new fatal car accident does not provide any new information or a new argument: it is a position driving supporters have heard, considered, and reached a decision on.
+
+No sane opponent of gun control denies that guns (knives, bombs, cars, snakes, battery acid, etc) can kill or harm innocent people, either by accident or intentionally.
+
+They have already reached the conclusion that the harm of gun control outweighs the benefits. Each new incident does not provide a new argument.
+
+Suppose, for example, that gun control opponents had provided a reasonable explanation of why gun control is bad after the last mass shooting.
+
+You claim that the new mass shooting weakens their argument, but it doesn't. They can use the exact same argument as before: "we've explained previously that gun control is a bad idea despite all the mass shootings through yesterday; the exact same explanation applies to the mass shooting today, and will apply to all mass shootings in the future. We are already aware that mass shootings have occurred and may continue to occur, and explained why gun control is a bad idea despite these mass shootings".
+
+A weaker argument would be: "the infrequency of mass shootings demonstrates that current gun control laws are adequate; if the laws were inadequate, mass shootings would be a leading cause of death, and they are not".
+
+Another form of this argument: "if gun control laws were inadequate, over 1,000 people would die daily from mass shootings; the fact that this mass shooting killed fewer than 1,000 people AND that there has not been mass shooting deaths of 1,000 people daily, proves that gun control laws are sufficient. Each mass shooting reminds us how rare mass shootings are, just like each airplane crash reminds how safe air travel is (the media doesn't report on trivial events). Therefore, this shooting is actually proof that gun control laws are adequate".
+
+Your first point is interesting and resulted in a [long debate between me and @jobermark](http://chat.stackexchange.com/rooms/66730/discussion-between-barrycarter-and-jobermark) which doesn't answer the question, but may be of interest.
+
+To summarize, I would say appeal to emotion in a moral argument isn't a logical fallacy per se, provided that we accept morality is ultimately based on emotion, provided that you don't make any other logical fallacies while employing the argument.
+
+In your "war is bad" example, you are making a one-sided argument (you're not providing emotional arguments that living under oppression is worse than death, for example), but not one that is inherently illogical. Here's how I would breakdown your logic:
+
+  - You: War is bad because it kills people
+
+  - Opp: I accept that war kills people, but don't accept that killing people is bad.
+
+  - You: What if it was your family that was being killed?
+
+  - Opp: Yes, it would be bad if my family were being killed.
+
+  - You: Do you believe your family is morally superior to all other people?
+
+  - Opp: No, there are other good people in the world. Therefore, if it is morally wrong that my family were killed, it is also morally wrong that other people (not all other people, but at least some other people) are being killed. I recant my earlier position that killing people isn't bad.
+
+  - You: Therefore, you accept war is bad because it kills people:
+
+    - A: War kills people (you accepted this statement originally)
+
+    - B: Killing people is bad (you now accept this statement)
+
+    - Therefore, C: War is bad.
+
+  - Opp: This argument is invalid because war does many things, not just kill people. Additionally, although I agreed killing people is bad, I didn't agree that anything that kills people is bad: it's quite possible something kills people (bad) but also has benefits (good). You have convinced me that killing people is bad, but not that it is a bad that can not be mitigated.
+
