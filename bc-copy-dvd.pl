@@ -28,6 +28,11 @@ debug("MOUNT SUCCESSFUL, continuing");
 
 # program specific subroutine, not general
 
+# return the name of the file in /usr/local/etc/DVDmnt/info/*/* that
+# matches this DVD
+
+# TODO: improve code, though this can't possibly benefit anyone else ever
+
 sub find_disk {
 
   my($out, $err, $res) = cache_command2("find /mnt/cdrom/ -type f");
@@ -38,13 +43,20 @@ sub find_disk {
 
   # randomly select a file and see which DVD(s) it's on
   my($num) = floor(rand()*(scalar(@files)+1));
-  debug("Chose $num of $#files+1");
+  my($fname) = $files[$num];
 
+  ($out, $err, $res) = cache_command2(qq%fgrep -l "$fname" /usr/local/etc/DVDmnt/info/*/*%);
 
-  debug("FILES", @files);
+  # if there are 0 matches or more than 2, die
+  # TODO: if more than 2 matches, could keep grepping until found 1 w all
+  my(@res) = split(/\n/, $out);
 
-#  debug("OUT: $out");
+  unless (scalar(@res) == 1) {die "Number of matches is not exactly 1";}
 
+  $res[0]=~s%^.*/%%;
+
+  return $res[0];
 }
+
 
 
