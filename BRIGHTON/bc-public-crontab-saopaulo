@@ -248,6 +248,6 @@ MAILTO="daemon"
 
 # cleanup tmp files daily
 
-27 2 * * * sudo tmpwatch -vv 2 /tmp /var/tmp
+27 2 * * * sudo tmpwatch -vv 2d /tmp /var/tmp
 
 

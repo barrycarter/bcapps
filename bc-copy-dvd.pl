@@ -17,8 +17,12 @@ my($out, $err, $res);
 # if it returns non-0, badness has happened
 unless (mount_drive("/dev/cdrom", "/mnt/cdrom")) {die "Mount failure";}
 
+debug("MOUNT SUCCESSFUL");
+
 # which disk is it?
 my($disk) = find_disk();
+
+debug("DISK IDENTIFIED: $disk");
 
 # if dir is empty, delete it
 # TODO: better check for non-empty directory?
@@ -30,6 +34,7 @@ if (-d "/DVD/$disk") {die "Non-empty directory already exists";}
 # now all good, create directory, rsync, eject
 
 ($out, $err, $res) = cache_command2("mkdir /DVD/$disk");
+debug("ABOUT TO START RSYNC at". `date`);
 ($out, $err, $res) = cache_command2("rsync -Pavz /mnt/cdrom/ /DVD/$disk/");
 
 if ($res) {die "RSYNC failed: $err";}

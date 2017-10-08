@@ -255,3 +255,16 @@ In your "war is bad" example, you are making a one-sided argument (you're not pr
 
   - Opp: This argument is invalid because war does many things, not just kill people. Additionally, although I agreed killing people is bad, I didn't agree that anything that kills people is bad: it's quite possible something kills people (bad) but also has benefits (good). You have convinced me that killing people is bad, but not that it is a bad that can not be mitigated.
 
+%
+
+My thoughts:
+
+  - From the VPS, try things like `host -t mx xyz.com`, and, when you get a result like `mail.xyz.com`, do something like `ncat mail.xyz.com 25` or even `telnet mail.xyz.com`. This will test if things are working at a much lower level.
+
+  - From your home machine, try `ncat my-vps-server 25` to confirm it fails, and then `ncat my-vps-server 587` to make sure it works.
+
+  - The error message you're getting `cluster5.eu.messagelabs.com[195.245.230.51]:25: Connection timed out` is coming when your VPS tries to connect to a remote server on SMTP port 25. It has nothing to do with how your home machine connects to your VPS.
+
+  - My own ghetto solution (which works, but is ugly): `sudo ssh -L 25:127.0.0.1:25 user@yourvps.com`, creating an ssh tunnel between your machine's port 25 and your VPS' port 25.
+
+%%% grav as iamginary electric force
