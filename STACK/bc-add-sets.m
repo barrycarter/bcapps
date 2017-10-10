@@ -44,6 +44,8 @@ A = 25, A+B = 40
 
 %%%%%%%%%
 
+[I wrote this before I realized @mark-dickinson had answered; his answer is much better than mine, but I'm providing mine for reference anyway]
+
 The problem is fairly easy to solve if you work backwards. As an example, suppose N=65: 
 
   - That means our current pair is either {65, x} or {y, 65} for some unknown values of x and y.
@@ -135,12 +137,9 @@ N=10: k=5
 
 N=11: k=5
 
-The resulting sequence, {0,1,2,3,3,5,4,4,5,5,5} 
+The resulting sequence, {0,1,2,3,3,5,4,4,5,5,5,...} is https://oeis.org/A178047
 
-does not appear in [OEIS](https://oeis.org/), even if you add 1 to each element (in case you decide N=1 requires 1 step not 0 steps)
-
-The number of pairs generated at step k forms the sequence {1, 2, 3, 5, 7, 13, 20, 31, 48, 78, 118, 191, 300, 465, 734, 1175, 1850, 2926, 4597, 7296, 11552, 18278, 28863, 45832, 72356, 114742, ...}, which also does not appear in OEIS.
-
-I will look into adding both sequences.
+The number of pairs generated at step k forms the sequence {1, 2, 3, 5, 7, 13, 20, 31, 48, 78, 118, 191, 300, 465, 734, 1175, 1850, 2926, 4597, 7296, 11552, 18278, 28863, 45832, 72356, 114742, ...}, which does not appear in OEIS (I will look into adding it).
 
 For details on how I worked this problem out, see https://github.com/barrycarter/bcapps/blob/master/STACK/bc-add-sets.m
+
