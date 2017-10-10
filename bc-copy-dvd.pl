@@ -4,6 +4,12 @@
 # files when space was tight) back to hard drive now that I have
 # plenty of space
 
+# --repeat: ok if directory already exists, rsync anyway
+
+# TODO: most DVD copies take 5m unless something goes wrong; if a copy takes over 10m, perhaps abort or at least warn
+
+# TODO: or, actually show rsync out instead of redirecting it?
+
 require "/usr/local/lib/bclib.pl";
 
 # always spit out an xmessage when done
@@ -29,7 +35,9 @@ debug("DISK IDENTIFIED: $disk");
 ($out, $err, $res) = cache_command2("rmdir /DVD/$disk");
 
 # if directory exists (and wasn't deleted by above), abort
-if (-d "/DVD/$disk") {die "Non-empty directory already exists";}
+if (-d "/DVD/$disk" && !$globopts{repeat}) {
+  die "Non-empty directory already exists";
+}
 
 # now all good, create directory, rsync, eject
 
@@ -58,10 +66,13 @@ sub find_disk {
   my(@files) = split(/\n/, $out);
   map(s%^.*/%%, @files);
 
+  debug("FILES 0 is $files[0], all is:",@files);
+
   # randomly select a file and see which DVD(s) it's on
-  my($num) = floor(rand()*(scalar(@files)+1));
+  my($num) = floor(rand()*scalar(@files));
   my($fname) = $files[$num];
 
+  debug("Looking for $fname");
   ($out, $err, $res) = cache_command2(qq%fgrep -l "$fname" /usr/local/etc/DVDmnt/info/*/*%);
 
   # if there are 0 matches or more than 2, die

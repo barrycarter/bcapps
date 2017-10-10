@@ -268,3 +268,55 @@ My thoughts:
   - My own ghetto solution (which works, but is ugly): `sudo ssh -L 25:127.0.0.1:25 user@yourvps.com`, creating an ssh tunnel between your machine's port 25 and your VPS' port 25.
 
 %%% grav as iamginary electric force
+
+%%%%%%%%%
+
+Some words that may describe the concept you seek:
+
+  - **charity**: if the resources are given freely to the poor
+
+  - **[noblesse oblige](https://en.wikipedia.org/wiki/Noblesse_oblige)**: formally, the belief that nobility has a responsibility to others in society, including the poor; informally, the belief that all rich people have this responsibility.
+
+  - **social justice**: if you believe people are poor due to circumstances beyond their control, society has an obligation to help them
+
+  - **social welfare**: the belief that society has an obligation to help the poor, regardless of why they are poor
+
+Many religions make giving to the poor mandatory:
+
+  - [Tzedakah](https://en.wikipedia.org/wiki/Tzedakah) in Judaism
+
+  - [Zakat](https://en.wikipedia.org/wiki/Zakat) in Islam
+
+  - [Vand Chhako](https://en.wikipedia.org/wiki/Vand_Chhako) in Sikhism, a mandatory form of [Dana](https://en.wikipedia.org/wiki/D%C4%81na)
+
+  - doubtless many others
+
+and many others regard it as a virtue.
+
+Many countries also tax the rich to support the poor through [social programs](https://en.wikipedia.org/wiki/Welfare)
+
+To summarize, the concept that the rich have a religious, moral and legal duty to help the poor exists in many forms with many names.
+
+%
+
+Wikipedia commits the following logical fallacies in the quoted paragraph:
+
+  - Cherrypicking. The definition comes from a single source, John Ayto's "Twentieth century words" published by Oxford University Press.
+
+  - Unverifiable source. Since books.google.com does not have electronic text for this book, I was unable to confirm the entire definition actually comes from the book.
+
+  - Contradicts better established source by same publisher. https://en.oxforddictionaries.com/definition/us/conspiracy_theory defines conspiracy theory in its entirety as "A belief that some covert but influential organization is responsible for a circumstance or event." There is no mention of the term being derogatory. The online dictionary is maintained by the Oxford University Press, the same organization that publishes "Twentieth century words". However, the site is intended to be an actual dictionary, where as "Twentieth century words" is intended to be a work of entertainment.
+
+  - Contradicts respected dictionaries. Webster's dictionary defines conspiracy theory as "a theory that explains an event or set of circumstances as the result of a secret plot by usually powerful conspirators" (https://www.merriam-webster.com/dictionary/conspiracy%20theory) with no mention of it being derogatory.
+
+  - Contradicts other wikimedia sources. Wiktionary gives two definitions of conspiracy theory: https://en.wiktionary.org/wiki/conspiracy_theory -- the primary definition is "A hypothesis alleging that the members of a coordinated group are, and/or were, secretly working together to commit illegal or wrongful actions including attempting to hide the existence of the group and its activities. In notable cases the hypothesis contradicts the mainstream explanation for historical or current events". It is only the second definition that states "Hypothetical speculation that is commonly considered untrue or outlandish". Usage notes also clarifies that the term is not derogatory: "The phrase conspiracy theory is sometimes used in an attempt to imply that hypothetical speculation is not worthy of serious consideration, usually with phrasing indicative of dismissal (e.g., "just a conspiracy theory"). However, any particular instance of use is not necessarily pejorative. Some consider it inappropriate to use the phrase "conspiracy theory" in an attempt to dismissively discredit hypothetical speculation in any form."
+
+  - Edit history suggests active censorship. While it's hard to tell with Wikipedia, the edit history https://en.wikipedia.org/w/index.php?title=Conspiracy_theory&action=history's comments and content indicate consistent censorship. Examples:
+
+    - "Mixing up verified conspiracies with conspiracy theory is misleading"
+
+    - In https://en.wikipedia.org/w/index.php?title=Conspiracy_theory&diff=804439748&oldid=795751074, a user uses the Webster's dictionary definition verbatim, noting "I have changed your EXTREMELY biased definition to the WEBSTER dictionary CORRECT definition. Seeing as you guys just let this be completely biased, which is beyond disgusting". The edit is reverted in less than 30 minutes.
+
+    - Every edit that validates conspiracy theories with actual proven conspiracies is reverted.
+
+Because anyone can edit wikipedia, this doesn't necessarily mean there's a conspiracy re editing the conspiracy theory page, despite my joke in the comments. However, the page is clearly being edited/reverted by people who want to discredit conspiracy theories.

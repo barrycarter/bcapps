@@ -250,4 +250,3 @@ MAILTO="daemon"
 
 27 2 * * * sudo tmpwatch -vv 2d /tmp /var/tmp
 
-
