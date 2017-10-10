@@ -338,3 +338,16 @@ Rationale: I really like the idea of having a website stored/generated locally a
 However, I feel Jekyll's lack of comments, trackbacks, and server-side scripting (though JavaScript may suffice) are not *quite* sufficient for my needs, especially since I want to avoid using third party tools such as Disqus, or even a local version of Disqus that runs in parallel to my blog.
 
 Any help appreciated!
+
+%
+
+This is more of a rant than an answer, but I'm starting to think it's impossible to debate anything meaningful without making a logical fallacy or resorting to axiomatic thinking. Reasoning:
+
+  - There are plenty of examples of logical fallacies, but very few (no?) examples of valid logical arguments for controversial issues. In other words, if you're going to debate a controversial issue, you won't get very far with a purely logical argument.
+
+  - *Even if* we could get everyone to understand the rules of logic (and many people don't) and agree on what constitutes a logical fallacy, we would then have to debate fundamental principles or axioms.
+
+So, when people ask "why can't everyone discuss controversial issue X logically", the answer is: because it's literally impossible to determine or even agree on fundamental axiomatic truth. We know we exist ("I think; therefore I am"), but everything outside that is speculation.
+
+So, not only are arguments with logical fallacies more convincing (to most people), they're also the *only* arguments you can actually make.
+
