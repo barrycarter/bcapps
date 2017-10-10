@@ -320,3 +320,21 @@ Wikipedia commits the following logical fallacies in the quoted paragraph:
     - Every edit that validates conspiracy theories with actual proven conspiracies is reverted.
 
 Because anyone can edit wikipedia, this doesn't necessarily mean there's a conspiracy re editing the conspiracy theory page, despite my joke in the comments. However, the page is clearly being edited/reverted by people who want to discredit conspiracy theories.
+
+%
+
+Subject: How to use Jekyll locally to create/edit posts on remote WordPress?
+
+How do I use Jekyll on my local machine to create/edit posts on my remote WordPress blog? More specifically:
+
+  - I want to write posts in plain text, use Jekyll's markup parser to create HTML, and then post the resulting HTML to my WordPress site.
+
+  - If I edit an existing local text file, I want the corresponding WordPress post edited. I don't care if revision history is preserved on WordPress, since I plan on preserving it locally.
+
+Is there a tool/plugin/procedure that can do this efficiently? While I believe I could write such a tool, I'd prefer to use a well-tested existing tool.
+
+Rationale: I really like the idea of having a website stored/generated locally and then mirrored to a server, in part because that was the *only* way to do things when I first started posting to the Web.
+
+However, I feel Jekyll's lack of comments, trackbacks, and server-side scripting (though JavaScript may suffice) are not *quite* sufficient for my needs, especially since I want to avoid using third party tools such as Disqus, or even a local version of Disqus that runs in parallel to my blog.
+
+Any help appreciated!

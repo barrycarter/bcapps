@@ -43,6 +43,16 @@ if (-d "/DVD/$disk" && !$globopts{repeat}) {
 
 ($out, $err, $res) = cache_command2("mkdir /DVD/$disk");
 debug("ABOUT TO START RSYNC at". `date`);
+
+# eventually, time out after some number of seconds; just testing for now
+alarm(60);
+
+$SIG{ALRM} = sub {
+    debug("It's been one minute since you looked at me...");
+    # set up the next alarm
+    alarm(60);
+};
+
 ($out, $err, $res) = cache_command2("rsync -Pavz /mnt/cdrom/ /DVD/$disk/");
 
 if ($res) {die "RSYNC failed: $err";}
