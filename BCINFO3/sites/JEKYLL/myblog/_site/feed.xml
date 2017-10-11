@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.6.0">Jekyll</generator><link href="/home/barrycarter/BCGIT/BCINFO3/sites/JEKYLL/myblog/_site//home/barrycarter/BCGIT/BCINFO3/sites/JEKYLL/myblog/_site/feed.xml" rel="self" type="application/atom+xml" /><link href="/home/barrycarter/BCGIT/BCINFO3/sites/JEKYLL/myblog/_site//home/barrycarter/BCGIT/BCINFO3/sites/JEKYLL/myblog/_site/" rel="alternate" type="text/html" /><updated>2017-10-11T10:26:43-06:00</updated><id>/home/barrycarter/BCGIT/BCINFO3/sites/JEKYLL/myblog/_site//home/barrycarter/BCGIT/BCINFO3/sites/JEKYLL/myblog/_site/</id><title type="html">Barry Carter’s Laughing Hyena Blog-Like Creature</title><subtitle>This blog is separate from wordpress.barrycarter.info (for now) and is in testing</subtitle><entry><title type="html">Born a Rambling Man</title><link href="/home/barrycarter/BCGIT/BCINFO3/sites/JEKYLL/myblog/_site//home/barrycarter/BCGIT/BCINFO3/sites/JEKYLL/myblog/_site/2017/10/11/born-a-rambling-man.html" rel="alternate" type="text/html" title="Born a Rambling Man" /><published>2017-10-11T00:00:00-06:00</published><updated>2017-10-11T00:00:00-06:00</updated><id>/home/barrycarter/BCGIT/BCINFO3/sites/JEKYLL/myblog/_site//home/barrycarter/BCGIT/BCINFO3/sites/JEKYLL/myblog/_site/2017/10/11/born-a-rambling-man</id><content type="html" xml:base="/home/barrycarter/BCGIT/BCINFO3/sites/JEKYLL/myblog/_site//home/barrycarter/BCGIT/BCINFO3/sites/JEKYLL/myblog/_site/2017/10/11/born-a-rambling-man.html">&lt;p&gt;If you were directed here by me, Barry Carter:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;You probably posted a question on a q-and-a site that was long and rambling, and heavily downvoted or closed.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;I am willing to help you improve your question, or even try to answer your question via live Google Hangouts text chat. Please contact me at carter.barry@gmail.com via Google Hangouts.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Regardless of whether you contact me, here are some general tips:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;If your post is a single paragraph, break it down into smaller paragraphs or even bullet points.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;If you make claims that are not well-known, provide a reliable source.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;If you’re asking multiple questions, break them into separate posts. If you are making multiple claims in a single question, separate them so the supporting sentences for one claim are in the same portion of the message as the claim itself.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;If you’re using unusual units (measuring stellar distances in furlongs for example), briefly indicate the original unit. Example: “Our closest stellar neighbor is 200 trillion furlongs (4.367 light years) away”.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;!-- 
+
+TODO: seriously improve/expand this based on cases
+
+--&gt;</content><author><name></name></author><summary type="html">If you were directed here by me, Barry Carter:</summary></entry><entry><title type="html">Existence is not a valid mathematical predicate</title><link href="/home/barrycarter/BCGIT/BCINFO3/sites/JEKYLL/myblog/_site//home/barrycarter/BCGIT/BCINFO3/sites/JEKYLL/myblog/_site/stack,/philosophy/2017/10/03/why-existence-is-not-a-predicate.html" rel="alternate" type="text/html" title="Existence is not a valid mathematical predicate" /><published>2017-10-03T00:00:00-06:00</published><updated>2017-10-03T00:00:00-06:00</updated><id>/home/barrycarter/BCGIT/BCINFO3/sites/JEKYLL/myblog/_site//home/barrycarter/BCGIT/BCINFO3/sites/JEKYLL/myblog/_site/stack,/philosophy/2017/10/03/why-existence-is-not-a-predicate</id><content type="html" xml:base="/home/barrycarter/BCGIT/BCINFO3/sites/JEKYLL/myblog/_site//home/barrycarter/BCGIT/BCINFO3/sites/JEKYLL/myblog/_site/stack,/philosophy/2017/10/03/why-existence-is-not-a-predicate.html">&lt;p&gt;If we have an object x in front of us, we can ask many questions about it such as “is x red?”, “does x have a mass of more than 5kg?”, “is x warmer than 300K?”.&lt;/p&gt;
+
+&lt;p&gt;Of course, you could argue these questions aren’t well-defined. For example, how much of x must be red? All of it? More than half of it? Any portion of it? And what do we mean by red? When does red become orange or pink or violet? And, since color depends on reflected light, what lighting conditions are we using? Sunlight? “Black” (ultraviolet) light? Orange fluorescent light from mercury lamps? Total darkness? (in which case we’d be looking at emitted, not reflected, light).&lt;/p&gt;
+
+&lt;p&gt;However, we generally accept that we could find a reasonable definition of “red”, and decide whether a given object is red or not.&lt;/p&gt;
+
+&lt;p&gt;However, we can’t ask the question “does x exist”? Why not? Because the fact you can refer to x means that x must exist in some sense. For example, if we ask “do flying horses exist”, we’ve already created the concept of flying horses. In contrast, if we ask “do sl6eyun7el exist?”, we have no idea what sl6eyun7el means, so it doesn’t exist even in our minds.&lt;/p&gt;
+
+&lt;p&gt;In our first paragraph example above, we would need to have flying horses standing in front of us to ask “do flying horses exist”, in which case it’s fairly obvious they do.&lt;/p&gt;
+
+&lt;p&gt;There is a mathematically precise way to address this issue. Although mathematicians often say “there exists x such that P(x)” or “for all x, P(x)”, where P(x) is some property, they are actually being a little sloppy.&lt;/p&gt;
+
+&lt;p&gt;Formally, any existential (“there exists”) or universal quantification (“for all”) must have a “universe of discussion”, or more formally, a set.&lt;/p&gt;
+
+&lt;p&gt;The correct forms of the earlier statements are “there exists x in set S such that P(x)” or “for all x in set S, P(x)”.&lt;/p&gt;
+
+&lt;p&gt;How does this help? It now means we can regard the existence of x as a property of the set S, instead of as a property of x itself.&lt;/p&gt;
+
+&lt;p&gt;In other words, we can ask “does S have the property that one or more of its elements is a flying horse?”.&lt;/p&gt;
+
+&lt;p&gt;This makes the answer simple: if S is the world of fiction, it is true that one or more of its elements is a flying horse; if S is the world of reality it is not true (as far as we know) that one or more of its elements is a flying horse.&lt;/p&gt;
+
+&lt;p&gt;And, just to be nitpicky, I realize you could put a horse on an airplane or that flying horses may exist in reality but we haven’t seen them yet, but you get the idea.&lt;/p&gt;
+
+&lt;p&gt;NOTE: originally written to answer https://philosophy.stackexchange.com/questions/46344/does-fictional-discourse-pose-special-difficulties-for-logic&lt;/p&gt;</content><author><name></name></author><summary type="html">If we have an object x in front of us, we can ask many questions about it such as “is x red?”, “does x have a mass of more than 5kg?”, “is x warmer than 300K?”.</summary></entry><entry><title type="html">Why I answer instead of comment on StackExchange posts</title><link href="/home/barrycarter/BCGIT/BCINFO3/sites/JEKYLL/myblog/_site//home/barrycarter/BCGIT/BCINFO3/sites/JEKYLL/myblog/_site/stack/2017/10/01/why-i-answer-instead-of-comment.html" rel="alternate" type="text/html" title="Why I answer instead of comment on StackExchange posts" /><published>2017-10-01T00:00:00-06:00</published><updated>2017-10-01T00:00:00-06:00</updated><id>/home/barrycarter/BCGIT/BCINFO3/sites/JEKYLL/myblog/_site//home/barrycarter/BCGIT/BCINFO3/sites/JEKYLL/myblog/_site/stack/2017/10/01/why-i-answer-instead-of-comment</id><content type="html" xml:base="/home/barrycarter/BCGIT/BCINFO3/sites/JEKYLL/myblog/_site//home/barrycarter/BCGIT/BCINFO3/sites/JEKYLL/myblog/_site/stack/2017/10/01/why-i-answer-instead-of-comment.html">&lt;!-- TODO: timezone plugin, so people can see time below in their own timezone --&gt;
+
+&lt;p&gt;Effective 1 Oct 2017 00:00:00 UTC, I am making more of an effort to answer StackExchange posts, instead of merely commenting on them. Why?&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;I’ve been told previously that my comments should be answers.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Answers can be edited, both to add explanations and to correct errors. Comments can only be edited for 5 minutes.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Answers can be of arbitrary length. Comments are of limited length. This is particularly frustrating if you want to add just a little more information to a comment and run out of room.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;There are many StackExchange posts where comments effectively answer the question, but the OP has no way of closing the question, because there is no answer to upvote/accept. By posting answers, I’m hoping more questions will be closed and stop showing up on the “unanswered questions” list.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;If I understand correctly, posting an answer means the question cannot be deleted, even if overly aggressive StackExchange moderators feel it is a poor question. I may be wrong about this point.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><summary type="html"></summary></entry><entry><title type="html">Welcome to Jekyll!</title><link href="/home/barrycarter/BCGIT/BCINFO3/sites/JEKYLL/myblog/_site//home/barrycarter/BCGIT/BCINFO3/sites/JEKYLL/myblog/_site/jekyll/update/2017/09/30/welcome-to-jekyll.html" rel="alternate" type="text/html" title="Welcome to Jekyll!" /><published>2017-09-30T13:04:41-06:00</published><updated>2017-09-30T13:04:41-06:00</updated><id>/home/barrycarter/BCGIT/BCINFO3/sites/JEKYLL/myblog/_site//home/barrycarter/BCGIT/BCINFO3/sites/JEKYLL/myblog/_site/jekyll/update/2017/09/30/welcome-to-jekyll</id><content type="html" xml:base="/home/barrycarter/BCGIT/BCINFO3/sites/JEKYLL/myblog/_site//home/barrycarter/BCGIT/BCINFO3/sites/JEKYLL/myblog/_site/jekyll/update/2017/09/30/welcome-to-jekyll.html">&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
+
+&lt;p&gt;To add new posts, simply add a file in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory that follows the convention &lt;code class=&quot;highlighter-rouge&quot;&gt;YYYY-MM-DD-name-of-post.ext&lt;/code&gt; and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.&lt;/p&gt;
+
+&lt;p&gt;Jekyll also offers powerful support for code snippets:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hi, &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Tom'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#=&amp;gt; prints 'Hi, Tom' to STDOUT.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Check out the &lt;a href=&quot;https://jekyllrb.com/docs/home&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://talk.jekyllrb.com/&quot;&gt;Jekyll Talk&lt;/a&gt;.&lt;/p&gt;</content><author><name></name></author><summary type="html">You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run jekyll serve, which launches a web server and auto-regenerates your site when a file is updated.</summary></entry></feed>
