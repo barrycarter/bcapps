@@ -12,8 +12,6 @@ s[n_] := s[n] = Flatten[Map[f,s[n-1]],1]
 
 t[n_] := Sort[DeleteDuplicates[Flatten[s[n]]]]
 
-
-
 integers first reached at s[n]
 
 1: s[0]
@@ -111,7 +109,7 @@ Things to note:
 
   - You can generate N=7 and N=8 in 4 steps, but not N=6, which requires 5 steps.
 
-  - Because of duplication, the number of pairs at the kth step isn't O(2^k), but rather O(gamma^k), where gamma is the Golden Ratio(https://en.wikipedia.org/wiki/Golden_ratio). This isn't particularly surprising since we generate the pairs in a Fibonacci-esque way.
+  - The number of pairs generated is 2^k
 
   - The smallest number of steps (k) required to reach a given N is:
 
@@ -139,9 +137,17 @@ N=11: k=5
 
 The resulting sequence, {0,1,2,3,3,5,4,4,5,5,5,...} is https://oeis.org/A178047
 
-WRONG: The number of pairs generated at step k forms the sequence {1, 2, 3, 5, 7, 13, 20, 31, 48, 78, 118, 191, 300, 465, 734, 1175, 1850, 2926, 4597, 7296, 11552, 18278, 28863, 45832, 72356, 114742, ...}, which does not appear in OEIS (I will look into adding it).
+  - The highest number generated in k steps is the (k+2)nd Fibonacci number, http://oeis.org/A000045
 
-NOTE: above is number of distinct integers reachable in k steps
+  - The number of distinct integers you can reach in k steps is now the (k+1)st element of http://oeis.org/A293160
+
+  - As an example for k=20:
+
+    - There are 2^20 or 1048576 pairs when k=20
+
+    - The highest number in any of the 1048576 pairs above is 17711, the 22nd (20+2) Fibonacci number
+
+    - However, you can't reach all of the first 17711 integers with these pairs. You can only reach 11552 of them, the 21st (20+1) element of A293160
 
 For details on how I worked this problem out, see https://github.com/barrycarter/bcapps/blob/master/STACK/bc-add-sets.m
 
