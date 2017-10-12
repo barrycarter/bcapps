@@ -139,7 +139,9 @@ N=11: k=5
 
 The resulting sequence, {0,1,2,3,3,5,4,4,5,5,5,...} is https://oeis.org/A178047
 
-The number of pairs generated at step k forms the sequence {1, 2, 3, 5, 7, 13, 20, 31, 48, 78, 118, 191, 300, 465, 734, 1175, 1850, 2926, 4597, 7296, 11552, 18278, 28863, 45832, 72356, 114742, ...}, which does not appear in OEIS (I will look into adding it).
+WRONG: The number of pairs generated at step k forms the sequence {1, 2, 3, 5, 7, 13, 20, 31, 48, 78, 118, 191, 300, 465, 734, 1175, 1850, 2926, 4597, 7296, 11552, 18278, 28863, 45832, 72356, 114742, ...}, which does not appear in OEIS (I will look into adding it).
+
+NOTE: above is number of distinct integers reachable in k steps
 
 For details on how I worked this problem out, see https://github.com/barrycarter/bcapps/blob/master/STACK/bc-add-sets.m
 
