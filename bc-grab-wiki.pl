@@ -10,8 +10,8 @@ $wikiroot = "/usr/local/etc/wiki";
 # TODO: do not hard code this!
 warn "HARDCODING!";
 
-$apiep = "http://pearlsbeforeswine.wikia.com/api.php";
-grab_all("pearlsbeforeswine.wikia.com");
+$apiep = "http://fullhouse.wikia.com/api.php";
+grab_all("fullhouse.wikia.com");
 
 # grab_all($ARGV[0]);
 

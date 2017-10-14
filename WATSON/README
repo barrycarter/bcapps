@@ -1,0 +1,53 @@
+For IBM Watson stuff
+
+Steps (following https://console.bluemix.net/docs/services/discovery/getting-started.html)
+
+  - Obtain a free bluemix.net account if you don't already have one
+
+  - Go to https://console.bluemix.net/, log in
+
+  - Click on "Catalog", "Watson", "Discovery", "Create"
+
+  - Click on the newly created Discovery instance (mine was named "discovery-rb", yours might have a slightly different name)
+
+  - Click on "service credentials", then "New Credential +", and then "Add"
+
+  - Click on "view credentials" and store these JSON credentials in a safe, non-publicly accessible file (in my programs here, this is $private{watson}{json} loaded from a non-GIT file)
+
+  - Do the following ONCE and note down the results privately (using your actual username/passowrd) to obtain an "environment":
+
+curl -X POST -u "{username}":"{password}" -H "Content-Type: application/json" -d '{ "name":"my-first-environment", "description":"exploring environments"} "https://gateway.watsonplatform.net/discovery/api/v1/environments?version=2017-09-01"
+
+  - Your environment may take some time to set up. Run this command occasionally until your environment is ready:
+
+curl -u "{username}":"{password}" https://gateway.watsonplatform.net/discovery/api/v1/environments/{environment_id}?version=2017-09-01
+
+with the environment id you received above until you see:
+
+"status" : "active"
+
+in the result.
+
+  - Now get the "configuration" of your environment:
+
+curl -u "{username}":"{password}" "https://gateway.watsonplatform.net/discovery/api/v1/environments/{environment_id}/configurations?version=2017-09-01"
+
+and note it down.
+
+  - To obtain a "collection" for your environment:
+
+curl -X POST -u "{username}":"{password}" -H "Content-Type: application/json" -d '{"name": "*my-first-collection*", "description": "exploring collections", "configuration_id":"{configuration_id}" , "language": "en_us"}' "https://gateway.watsonplatform.net/discovery/api/v1/environments/{environment_id}/collections?version=2017-09-01"
+
+  - Check if your collection is ready (repeat below until it is):
+
+curl -u "{username}":"{password}" "https://gateway.watsonplatform.net/discovery/api/v1/environments/{environment_id}/collections/{collection_id}?version=2017-09-01"
+
+until you see:
+
+"status" : "active" 
+
+in the result.
+
+  - You can now upload documents to your collection:
+
+curl -X POST -u "{username}":"{password}" -F "file=@test-doc1.html" https://gateway.watsonplatform.net/discovery/api/v1/environments/{environment_id}/collections/{collection_id}/documents?version=2017-09-01

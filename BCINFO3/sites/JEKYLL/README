@@ -26,11 +26,11 @@ TODO: standard debugging tips
 
 TODO: convert formula readme and maybe others into this blog
 
-TODO: how to "hide" a blog entry (rename it without a date?)
+TODO: how to "hide" a blog entry (rename it without a date?) [or does that make it a "page"?]
 
 TODO: does disqus support trackbacks? (my logfile should catch but...)
 
-TODO: convert quora storeis to this blog?
+TODO: convert quora storys to this blog?
 
 TODO: convert some stack answers to this blog? (instead of just linking?)
 
@@ -384,5 +384,9 @@ On the whole, I'd say "every logical fallacy is a non-sequitur" is a reasonable 
 -G -> -M == G or -M
 
 G -> -M == -G or -M
+
+
+TODO: standard debugging tips: use lots of prints, change parameters slightly, AVID??
+
 
 
