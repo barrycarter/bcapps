@@ -51,3 +51,16 @@ in the result.
   - You can now upload documents to your collection:
 
 curl -X POST -u "{username}":"{password}" -F "file=@test-doc1.html" https://gateway.watsonplatform.net/discovery/api/v1/environments/{environment_id}/collections/{collection_id}/documents?version=2017-09-01
+
+Note the files must be in one of the accepted formats:
+
+application/json
+application/msword
+application/vnd.openxmlformats-officedocument.wordprocessingml.document
+application/pdf
+text/html
+application/xhtml+xml
+
+If the document is NOT in one of these formats, the /documents method will try to convert it; if conversion is impossible, the upload will fail.
+
+  - The reply you receive will include '"status": "processing"'. Your document may not be available immediately.
