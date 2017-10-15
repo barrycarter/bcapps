@@ -64,3 +64,4 @@ application/xhtml+xml
 If the document is NOT in one of these formats, the /documents method will try to convert it; if conversion is impossible, the upload will fail.
 
   - The reply you receive will include '"status": "processing"'. Your document may not be available immediately.
+
