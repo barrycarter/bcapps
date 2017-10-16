@@ -44,8 +44,9 @@ xset b off
 # not sure if the below should really be here or if I should start
 # them manually...
 
-# firefox
-firefox&
+# startup two firefoxes with different profiles
+firefox -P olddefault &
+firefox -P Second &
 
 # stickly digital xclock in lower right hand corner
 # TODO: nanoseconds (%N doesn't work after -strftime)
