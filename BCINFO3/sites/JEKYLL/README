@@ -388,5 +388,17 @@ G -> -M == -G or -M
 
 TODO: standard debugging tips: use lots of prints, change parameters slightly, AVID??
 
+e^(it) = cos(t) + i sin(t)
+
+e^(i*1 degree) = cos(1 deg) + i sin (1 deg)
+
+(e^(i*1 deg))^30 = Sqrt[2]/3 + I/2
+
+sols = Solve[x^30 == Sqrt[2]/3 + I/2, x]
+
+note: sin of 1 degree is about 0.0174524
+
+
+
 
 
