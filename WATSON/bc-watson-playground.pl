@@ -51,9 +51,25 @@ my($collid) = $coll->{'collections'}->[0]->{'collection_id'};
 ($out, $err, $res) = cache_command2("curl -u $user:$pass '$url/v1/environments/$envid/collections/$collid/query?$vstring&count=9999'", "age=$cache");
 my($all) = JSON::from_json($out);
 
+# TODO: identify which entity is being displayed (via metadata or something)
+
+for $j (@{$all->{'results'}}) {
+
+  debug(var_dump("j",$j));
+  my(@ents) = $j->{'enriched_text'}->{'entities'};
+  debug("NEW ENT!");
+
+  for $i (sort {$b->{count} <=> $a->{count}} @$ents) {
+    debug("$i->{text} ($i->{type}) $i->{count}");
+  }
+
+}
+
+die "TESITNG";;
+
 # show entities (from 0th book, Colour of Magic in this case)
 
-my($ents) = $all->{'results'}->[0]->{'enriched_text'}->{'entities'};
+my($ents) = $all->{'results'}->[2]->{'enriched_text'}->{'entities'};
 
 for $i (sort {$b->{count} <=> $a->{count}} @$ents) {
   debug("$i->{text} ($i->{type}) $i->{count}");

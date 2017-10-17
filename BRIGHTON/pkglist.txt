@@ -238,6 +238,7 @@ pavucontrol
 
 # graphics incl scanning and fonts
 # some of these may be installed by a groupinstall
+perl-Image-ExifTool
 # below is flash player
 gnash
 povray
