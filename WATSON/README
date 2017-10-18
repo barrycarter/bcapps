@@ -68,8 +68,13 @@ If the document is NOT in one of these formats, the /documents method will try t
 NOTES BELOW THIS POINT
 ======================
 
-enriched_text.entities.textBursar
-enriched_text.entities.typeOrganization
+enriched_text.entities.text Bursar
+enriched_text.entities.type Organization
 
-Watson Relationship Extraction API (SIRE) Statistical Information and Relation Extraction
+Watson Relationship Extraction API (SIRE) Statistical Information and
+Relation Extraction (this may now be in NLP, natural language
+processing, not in discovery)
+
+multiple services = multiple usernames/passwords, not a single one
+(use "credentials" to find)
 

@@ -398,6 +398,8 @@ sols = Solve[x^30 == Sqrt[2]/3 + I/2, x]
 
 note: sin of 1 degree is about 0.0174524
 
+(others have found this exactly, not a biggie)
+
 
 
 
