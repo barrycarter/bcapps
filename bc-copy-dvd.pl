@@ -25,6 +25,21 @@ unless (mount_drive("/dev/cdrom", "/mnt/cdrom")) {die "Mount failure";}
 
 debug("MOUNT SUCCESSFUL");
 
+# is it a DVD disk?
+
+if (-f "/mnt/cdrom/VIDEO_RM/VIDEO_RM.IFO") {
+  debug("DVD DISK, reading IFO");
+  my($all) = read_file("/mnt/cdrom/VIDEO_RM/VIDEO_RM.IFO");
+  # info starts at byte 6208ish (found by trial and error)
+  $all=substr($all,6208);
+  # kill everything after the first 255
+  $all=~s/\xff.*//s;
+  ($out, $err, $res) = cache_command2(qq%fgrep -l '$all' /usr/local/etc/DVDmnt/info/*/*%);
+  debug("OUT: $out");
+}
+
+die "TESTING";
+
 # which disk is it?
 my($disk) = find_disk();
 

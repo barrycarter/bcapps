@@ -78,3 +78,6 @@ processing, not in discovery)
 multiple services = multiple usernames/passwords, not a single one
 (use "credentials" to find)
 
+enriched_text.relations.subject.text
+
+

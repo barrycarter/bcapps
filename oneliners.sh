@@ -1,5 +1,11 @@
 # shell one liners
 
+# spits out every 5 days starting now to 2030-01-01
+
+perl -le 'use Date::Parse; use POSIX; for ($i=time();$i<=1893481200; $i+=86400*5) {print strftime("%Y%m%d", localtime($i));}'
+
+exit;
+
 # spits out commands to take sample hash of all files on /mnt/extdrive5 (or 2)
 
 perl -nle '@_=split(/\s+/,$_,9);if ($_[4] eq "f") {print "bc-sample-hash.pl \"$_[8]\""}' extdrive2-files.txt

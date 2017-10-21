@@ -29,7 +29,17 @@ my($vstring) = "version=2017-09-01";
 ($out, $err, $res) = cache_command2("curl -u $user:$pass '$url/v1/environments?$vstring'", "age=$cache");
 my($env) = JSON::from_json($out);
 my($envid) = $env->{'environments'}->[1]->{'environment_id'};
-# debug("ENV: $out","ENVID: $envid");
+debug("ENV: $out","ENVID: $envid");
+
+# TODO: configuration might be largely eirrelevant
+
+# and now the configuration inside the environment
+
+($out, $err, $res) = cache_command2("curl -u $user:$pass '$url/v1/environments/$envid/configurations?$vstring'", "age=300");
+
+debug("OUT: $out");
+
+die "TESTING";
 
 # and now the collection
 ($out, $err, $res) = cache_command2("curl -u $user:$pass '$url/v1/environments/$envid/collections?$vstring'", "age=$cache");
@@ -81,10 +91,3 @@ for $i (sort {$b->{count} <=> $a->{count}} @$ents) {
 
 
 
-# TODO: configuration might be largely eirrelevant
-
-# and now the configuration inside the environment
-
-# ($out, $err, $res) = cache_command2("curl -u $user:$pass '$url/v1/environments/$envid/configurations?$vstring'", "age=300");
-
-# debug("OUT: $out");

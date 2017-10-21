@@ -16,6 +16,8 @@ use locale;
 my($key, $file) = @ARGV;
 my(%data);
 
+debug("FILE: $file");
+
 $size = -s $file;
 ($l, $r) = (0, $size);
 open(A,$file);

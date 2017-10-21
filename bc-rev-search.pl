@@ -25,5 +25,5 @@ my(@exts) = glob("/mnt/extdrive*/*-files-rev.txt /mnt/extdrive5/?????/*-files-re
 
 for $i ("/mnt/sshfs/bcmac-files-rev.txt.srt", "/bcunix-files-rev.txt", @exts) {
   # TODO: also search for $phrase.bz2 (reversed) and so on?
-  system("/home/barrycarter/BCGIT/bc-sgrep.pl '$phrase' $i | rev");
+  system("/home/barrycarter/BCGIT/bc-sgrep.pl --debug '$phrase' $i | rev");
 }

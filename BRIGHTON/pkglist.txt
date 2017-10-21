@@ -304,6 +304,7 @@ qrencode-devel
 zbar-devel
 
 # video
+lsdvd
 ffmpeg
 mencoder
 mplayer
