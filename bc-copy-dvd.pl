@@ -25,27 +25,10 @@ unless (mount_drive("/dev/cdrom", "/mnt/cdrom")) {die "Mount failure";}
 
 debug("MOUNT SUCCESSFUL");
 
-# is it a DVD disk?
-
-if (-f "/mnt/cdrom/VIDEO_RM/VIDEO_RM.IFO") {
-  debug("DVD DISK, reading IFO");
-  my($all) = read_file("/mnt/cdrom/VIDEO_RM/VIDEO_RM.IFO");
-  # info starts at byte 6208ish (found by trial and error)
-  $all=substr($all,6208);
-  # kill everything after the first null
-  $all=~s/\x00.*//s;
-  # because I tend to be loose w/ spaces, use wildcard and egrep
-  $all=~s/\s+/ */g;
-  ($out, $err, $res) = cache_command2(qq%egrep -l '$all' /usr/local/etc/DVDmnt/info/*/*%);
-  debug("OUT: $out");
-}
-
-die "TESTING";
-
 # which disk is it?
 my($disk) = find_disk();
 
-debug("DISK IDENTIFIED: $disk");
+debug("DISK IDENTIFIED: *$disk*");
 
 # if dir is empty, delete it
 # TODO: better check for non-empty directory?
@@ -83,7 +66,26 @@ if ($res) {die "RSYNC failed: $err";}
 
 sub find_disk {
 
-  my($out, $err, $res) = cache_command2("find /mnt/cdrom/ -type f");
+  my($out,$err,$res);
+
+  # check for DVD first
+  if (-f "/mnt/cdrom/VIDEO_RM/VIDEO_RM.IFO") {
+    debug("DVD DISK, reading IFO");
+    my($all) = read_file("/mnt/cdrom/VIDEO_RM/VIDEO_RM.IFO");
+    # info starts at byte 6208ish (found by trial and error)
+    $all=substr($all,6208);
+    # kill everything after the first null
+    $all=~s/\x00.*//s;
+    # because I tend to be loose w/ spaces, use wildcard and egrep
+    $all=~s/\s+/ */g;
+    ($out, $err, $res) = cache_command2(qq%egrep -l '$all' /usr/local/etc/DVDmnt/info/*/*%);
+    debug("OUT: $out");
+    chomp($out);
+    $out=~s%^.*/%%;
+    return $out;
+}
+
+  ($out, $err, $res) = cache_command2("find /mnt/cdrom/ -type f");
 
   # list of files without dirs
   my(@files) = split(/\n/, $out);
