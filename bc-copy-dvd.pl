@@ -32,9 +32,11 @@ if (-f "/mnt/cdrom/VIDEO_RM/VIDEO_RM.IFO") {
   my($all) = read_file("/mnt/cdrom/VIDEO_RM/VIDEO_RM.IFO");
   # info starts at byte 6208ish (found by trial and error)
   $all=substr($all,6208);
-  # kill everything after the first 255
-  $all=~s/\xff.*//s;
-  ($out, $err, $res) = cache_command2(qq%fgrep -l '$all' /usr/local/etc/DVDmnt/info/*/*%);
+  # kill everything after the first null
+  $all=~s/\x00.*//s;
+  # because I tend to be loose w/ spaces, use wildcard and egrep
+  $all=~s/\s+/ */g;
+  ($out, $err, $res) = cache_command2(qq%egrep -l '$all' /usr/local/etc/DVDmnt/info/*/*%);
   debug("OUT: $out");
 }
 
