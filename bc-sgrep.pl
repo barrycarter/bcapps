@@ -84,6 +84,6 @@ debug("REV FAIL: $line");
 print join("\n",reverse(@rev)),"\n";
 print join("\n",@for),"\n";
 
-# TODO: the original found $line will be repeated (or not?)
+# TODO: the original found $line will be repeated sometimes, fix
 # debug("FOR",@for);
 # debug("REV",@rev);

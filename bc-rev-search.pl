@@ -18,12 +18,19 @@ require "/usr/local/lib/bclib.pl";
 my($phrase) = @ARGV;
 $phrase = reverse($phrase);
 
-# non-glob files below are expected to exist
+# load rev files list
+my(@rev) = `egrep -v '^\$|^#' $bclib{githome}/BRIGHTON/mounts.txt`;
 
-# extdrive5 thing is a short-term special case hack
-my(@exts) = glob("/mnt/extdrive*/*-files-rev.txt /mnt/extdrive5/?????/*-files-rev.txt");
+# TODO: I could be more clever here, shorter code
+for $i (@rev) {
+  my($mpt, $file) = split(/\s+/,$i);
+  $i = "$mpt/$file-files-rev.txt";
+}
 
-for $i ("/mnt/sshfs/bcmac-files-rev.txt.srt", "/bcunix-files-rev.txt", @exts) {
+# special cases that are no longer mounted but useful to search
+push(@rev, "/mnt/sshfs/bcmac-files-rev.txt.srt");
+
+for $i (@rev) {
   # TODO: also search for $phrase.bz2 (reversed) and so on?
-  system("/home/barrycarter/BCGIT/bc-sgrep.pl --debug '$phrase' $i | rev");
+  system("/home/barrycarter/BCGIT/bc-sgrep.pl '$phrase' $i | rev");
 }

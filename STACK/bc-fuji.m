@@ -138,4 +138,69 @@ anywhere on eq in fact
 *)
 
 
+(* based on spiral paper work, er = earth rad, h = height *)
 
+y[x_,theta_] = er+h-x*Tan[theta]
+
+(* distance squared from center fo earth for any x *)
+
+dist2[x_, theta_] = x^2 + y[x,theta]^2
+
+conds = {x > 0, theta > 0, er > 0, h > 0}
+
+solx[theta_] = Simplify[x /. Solve[dist2[x,theta] == er^2, x][[1]],conds]
+
+soly[theta_] = Simplify[y[solx[theta],theta], conds]
+
+(* need 90 minus below *)
+
+dist[theta_] = FullSimplify[er*(Pi/2-ArcTan[soly[theta]/solx[theta]]), conds]
+
+Plot[dist[theta] /.  {h -> 3776240/1000000, er -> 6371.009}, 
+ {theta,3*Degree,15*Degree}]
+
+
+
+
+FullSimplify[Pi/2-ArcTan[soly[theta]/solx[theta]], conds] /. 
+ {h -> 3776240/1000000, er -> 6371.009}
+
+
+
+min touch angle should be ArcCos[r/(r+h)]
+
+min dist is thus r*ArcCos[r/(r+h)]
+
+
+g0 = Graphics[{
+ Circle[{0,0},1],
+ Arrowheads[{-0.02, 0.02}],
+ Arrow[{{0,0}, {0,1}}],
+ Text[Style["r", FontSize -> 25], {0.03,0.5}],
+ Text[Style["theta", FontSize -> 10], {-0.01, 1.16}],
+ Line[{{-1,0}, {1,0}}],
+ Arrow[{{-1, 1.15+Tan[37*Degree]}, {1, 1.15-Tan[37*Degree]}}],
+ Arrow[{{0,0}, {0.2368, 0.971558}}],
+ Dashed,
+ Line[{{0,1.15}, {-1,1.15}}],
+ Dashing[{}],
+ Brown,
+ Arrow[{{0,1}, {0,1.15}}],
+ Text[Style["h", FontSize -> 25*Sqrt[.15]], {0.03,1.075}],
+}]
+
+Show[g0, PlotRange -> {{-1.1, 1.1}, {0, 2}}, ImageSize -> {800,600}]
+showit
+
+1.15-Sin[15*Degree]*-1
+
+Sin[15*Degree]
+0.258819
+
+x sols are 0.2368 and 0.868651
+
+y sol is .971558
+
+
+NOT: 0.163448 is x sol,
+NOT: 0.986552 is y sol

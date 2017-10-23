@@ -49,7 +49,8 @@ alarm(600);
 
 $SIG{ALRM} = sub {die "Taking too long, 10m"};
 
-($out, $err, $res) = cache_command2("rsync -Pavz /mnt/cdrom/ /DVD/$disk/");
+# expect $out and $err to be empty, since I am redirecting
+($out, $err, $res) = cache_command2("rsync -Pavz /mnt/cdrom/ /DVD/$disk/ 1> /DVD/$disk.out 2> /DVD/$disk.err");
 
 if ($res) {die "RSYNC failed: $err";}
 
@@ -68,21 +69,25 @@ sub find_disk {
 
   my($out,$err,$res);
 
-  # check for DVD first
-  if (-f "/mnt/cdrom/VIDEO_RM/VIDEO_RM.IFO") {
-    debug("DVD DISK, reading IFO");
-    my($all) = read_file("/mnt/cdrom/VIDEO_RM/VIDEO_RM.IFO");
-    # info starts at byte 6208ish (found by trial and error)
-    $all=substr($all,6208);
-    # kill everything after the first null
-    $all=~s/\x00.*//s;
-    # because I tend to be loose w/ spaces, use wildcard and egrep
-    $all=~s/\s+/ */g;
-    ($out, $err, $res) = cache_command2(qq%egrep -l '$all' /usr/local/etc/DVDmnt/info/*/*%);
-    debug("OUT: $out");
-    chomp($out);
-    $out=~s%^.*/%%;
-    return $out;
+  # check for DVD first (two possible files, up to case)
+
+  for $ifile ("/mnt/cdrom/VIDEO_RM/VIDEO_RM.IFO", "/mnt/cdrom/video_rm/video_rm.ifo") {
+    if (-f $ifile) {
+      debug("DVD DISK, reading IFO");
+      my($all) = read_file($ifile);
+      # info starts at byte 6208ish (found by trial and error)
+      $all=substr($all,6208);
+      # kill everything after the first null
+      $all=~s/\x00.*//s;
+      # because I tend to be loose w/ spaces, use wildcard and egrep
+      $all=~s/\s+/ */g;
+      debug("ALL: $all");
+      ($out, $err, $res) = cache_command2(qq%egrep -l '$all' /usr/local/etc/DVDmnt/info/*/*%);
+      debug("OUT: $out");
+      chomp($out);
+      $out=~s%^.*/%%;
+      return $out;
+    }
 }
 
   ($out, $err, $res) = cache_command2("find /mnt/cdrom/ -type f");
