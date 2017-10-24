@@ -142,3 +142,11 @@ sub mount_drive {
 
   return 0;
 }
+
+=item notes
+
+0006208 decimal appears to be the start of where VIDEO_RM.BUP has info
+and VIDEO_RM.IFO is identical VIDEO_RM.DAT appears to be all null...
+
+=cut
+

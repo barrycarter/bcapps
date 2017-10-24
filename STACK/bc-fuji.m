@@ -1,3 +1,198 @@
+(* FORMULAS START HERE *)
+
+(* 
+
+These formulas generate the x y points below:
+
+(* the y value for any x for line with angle theta *)
+
+y[r_,h_,theta_,x_] = r+h-x*Tan[theta]
+
+(* distance squared from origin for any x *)
+
+dist2[r_,h_,theta_,x_] = x^2 + y[r,h,theta,x]^2
+
+conds = {x > 0, theta > 0, theta < Pi/2, r > 0, h > 0, h < r}
+
+(* the useful x solution to where the line hits the sphere *)
+
+xsol[r_,h_,theta_] = Simplify[Solve[dist2[r,h,theta,x] == r^2, x,
+Reals], conds][[1,1,2,1]]
+
+(* and the y solution [implicit] *)
+
+ysol[r_,h_,theta_] = Simplify[y[r,h,theta,xsol[r,h,theta]], conds]
+
+*)
+
+xsol[r_, h_, theta_] = Cos[theta]^2*((h + r)*Tan[theta] - 
+     Sqrt[-(h*(h + 2*r)) + r^2*Tan[theta]^2])
+
+ysol[r_, h_, theta_] = Cos[theta]*((h + r)*Cos[theta] + 
+     Sin[theta]*Sqrt[-(h*(h + 2*r)) + r^2*Tan[theta]^2])
+
+(* FORMULAS END HERE *)
+
+(* now to rotate back into position *)
+
+let's say lon is 122*Degree, and lat is 35*Degree
+
+ptest = sph2xyz[122.*Degree, 35.*Degree, 1.]
+
+rotationMatrix[z, 90*Degree-122*Degree].ptest
+
+
+rotationMatrix[x, 35*Degree].rotationMatrix[z, 90*Degree-122*Degree].ptest
+
+rotationMatrix[z, az]
+
+
+rotationMatrix[z, 270*Degree-95*Degree].
+ rotationMatrix[x, 35*Degree].
+ rotationMatrix[z, 90*Degree-122*Degree].{0,0,1}
+
+
+rotationMatrix[z, 3*Pi/2-az].rotationMatrix[x, lat].rotationMatrix[z, Pi/2-lon]
+
+test1727[az_, lat_, lon_] = 
+Simplify[Inverse[
+rotationMatrix[z, 3*Pi/2-az].rotationMatrix[x, lat].rotationMatrix[z, Pi/2-lon]
+]]
+
+
+test1728 = {xsol[1,0.1,50*Degree], ysol[1,0.1,50*Degree], 0}
+
+test1727[100*Degree, 35*Degree, -106.5*Degree].test1728
+
+test1727[100*Degree, 35*Degree, -106.5*Degree].{0,1,0}
+
+after azimuth rotation, north pole is in yz plane elev lat
+
+so -lat around x axis brings it to z axis then a z rot by lon brings it std pos (with standard orientation)
+
+so location is at {0,1,0} with north in yz plane, say 
+
+{0, Cos[5*Degree], Sin[5*Degree]}
+
+example w abq nm, in std pos:
+
+sph2xyz[-106.5*Degree, 35.*Degree, 1]
+
+{-0.232652, -0.785419, 0.573576} = pos
+
+{0.232652, 0.785419, 0.426424} = dir to n pole (not unit vector)
+
+above is wrong but lets proceed
+
+rotationMatrix[z, 106.5*Degree-90*Degree].
+ {-0.232652, -0.785419, 0.573576}
+
+rotationMatrix[z, 106.5*Degree+90*Degree].
+ {-0.232652, -0.785419, 0.573576}
+
+rotationMatrix[z, 106.5*Degree+90*Degree].
+ {0.232652, 0.785419, 0.426424}
+
+rotationMatrix[x, 35*Degree].
+ rotationMatrix[z, 106.5*Degree+90*Degree].
+  {-0.232652, -0.785419, 0.573576}
+
+rotationMatrix[x, 35*Degree].
+ rotationMatrix[z, 106.5*Degree+90*Degree].
+ {0.232652, 0.785419, 0.426424}
+
+ok, sun shining from east 10 deg high on short height albq
+
+xsol[1, 0.01, 10*Degree]
+ysol[1, 0.01, 10*Degree]
+
+{0.0710425, 0.997473, 0}
+
+convert back to standard world coords
+
+rotationMatrix[z, -(106.5*Degree+90*Degree)].
+ rotationMatrix[x, -35*Degree].
+ {0,1,0}
+
+rotationMatrix[z, -(106.5*Degree+90*Degree)].
+ rotationMatrix[x, -35*Degree].
+ {0.0710425, 0.997473, 0} 
+
+sph2xyz[-106.5*Degree, 36.*Degree, 1] -
+sph2xyz[-106.5*Degree, 35.*Degree, 1]
+
+xyz2sph[
+sph2xyz[-106.5*Degree, 35.01*Degree, 1] -
+sph2xyz[-106.5*Degree, 35.*Degree, 1]
+]/Degree
+
+{73.5, 54.995, 0.01}
+
+so the direction I consider north is
+
+sph2xyz[180*Degree-106.5*Degree, 90*Degree-35*Degree, 1]
+
+or
+
+{0.162905, 0.549956, 0.819152}
+
+rotationMatrix[x, 35*Degree]. 
+ rotationMatrix[z, 106.5*Degree+90*Degree]. 
+  {-0.232652, -0.785419, 0.573576} 
+
+rotationMatrix[x, 35*Degree]. 
+ rotationMatrix[z, 106.5*Degree+90*Degree]. 
+ {0.162905, 0.549956, 0.819152} 
+
+yes, that is z axis after transform, but up is now y down ick
+
+rotationMatrix[x, 180*Degree-35*Degree]. 
+ rotationMatrix[z, 106.5*Degree-90*Degree]. 
+  {-0.232652, -0.785419, 0.573576} 
+
+rotationMatrix[x, 180*Degree-35*Degree]. 
+ rotationMatrix[z, 106.5*Degree-90*Degree]. 
+ {0.162905, 0.549956, 0.819152}  
+
+rotationMatrix[x, 180*Degree-35*Degree]. 
+ rotationMatrix[z, 106.5*Degree-90*Degree]. 
+  {0.232652, 0.785419, -0.573576} 
+
+rotationMatrix[z, 180*Degree].
+ rotationMatrix[x, 180*Degree-35*Degree]. 
+  rotationMatrix[z, 106.5*Degree-90*Degree]. 
+  {0.232652, 0.785419, -0.573576} 
+
+before y rotation I want...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Pi-az
+
+
 (*
 
 https://astronomy.stackexchange.com/questions/23165/viewing-diamond-fuji
@@ -138,16 +333,6 @@ anywhere on eq in fact
 *)
 
 
-(* based on spiral paper work, er = earth rad, h = height *)
-
-y[x_,theta_] = er+h-x*Tan[theta]
-
-(* distance squared from center fo earth for any x *)
-
-dist2[x_, theta_] = x^2 + y[x,theta]^2
-
-conds = {x > 0, theta > 0, er > 0, h > 0}
-
 solx[theta_] = Simplify[x /. Solve[dist2[x,theta] == er^2, x][[1]],conds]
 
 soly[theta_] = Simplify[y[solx[theta],theta], conds]
@@ -159,6 +344,8 @@ dist[theta_] = FullSimplify[er*(Pi/2-ArcTan[soly[theta]/solx[theta]]), conds]
 Plot[dist[theta] /.  {h -> 3776240/1000000, er -> 6371.009}, 
  {theta,3*Degree,15*Degree}]
 
+if theta is ArcCos[r/(r+h)] we should have corner case
+
 
 
 
@@ -169,7 +356,7 @@ FullSimplify[Pi/2-ArcTan[soly[theta]/solx[theta]], conds] /.
 
 min touch angle should be ArcCos[r/(r+h)]
 
-min dist is thus r*ArcCos[r/(r+h)]
+min angle is thus ArcCos[r/(r+h)]
 
 
 g0 = Graphics[{
@@ -177,7 +364,7 @@ g0 = Graphics[{
  Arrowheads[{-0.02, 0.02}],
  Arrow[{{0,0}, {0,1}}],
  Text[Style["r", FontSize -> 25], {0.03,0.5}],
- Text[Style["theta", FontSize -> 10], {-0.01, 1.16}],
+ Text[Style["\[Theta]", FontSize -> 10], {-0.10, 1.185}],
  Line[{{-1,0}, {1,0}}],
  Arrow[{{-1, 1.15+Tan[37*Degree]}, {1, 1.15-Tan[37*Degree]}}],
  Arrow[{{0,0}, {0.2368, 0.971558}}],
@@ -204,3 +391,4 @@ y sol is .971558
 
 NOT: 0.163448 is x sol,
 NOT: 0.986552 is y sol
+
