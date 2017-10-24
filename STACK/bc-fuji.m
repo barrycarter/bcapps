@@ -144,7 +144,7 @@ rotationMatrix[x, 35*Degree].
  rotationMatrix[z, 106.5*Degree+90*Degree]. 
  {0.162905, 0.549956, 0.819152} 
 
-yes, that is z axis after transform, but up is now y down ick
+NOT: yes, that is z axis after transform, but up is now y down ick
 
 rotationMatrix[x, 180*Degree-35*Degree]. 
  rotationMatrix[z, 106.5*Degree-90*Degree]. 
@@ -164,6 +164,103 @@ rotationMatrix[z, 180*Degree].
   {0.232652, 0.785419, -0.573576} 
 
 before y rotation I want...
+
+{0,1,0} -> {Cos[lat] Cos[lon], Cos[lat] Sin[lon], Sin[lat]}
+
+above is junk... the up vector points away from center anyway
+
+rotationMatrix[x, 35*Degree]. 
+ rotationMatrix[z, 106.5*Degree+90*Degree]. 
+  {-0.232652, -0.785419, 0.573576} 
+
+rotationMatrix[x, 35*Degree]. 
+ rotationMatrix[z, 106.5*Degree+90*Degree]. 
+ {0.162905, 0.549956, 0.819152} 
+
+
+xsol[1,1/100, 10*Degree]
+ysol[1,1/100, 10*Degree]
+
+rotationMatrix[z, -(-lon+Pi/2)].
+ rotationMatrix[x, -lat].
+ {xsol[1,1/100, 10*Degree],ysol[1,1/100, 10*Degree],0}
+
+
+xsol[1,1/10000, 10*Degree]
+ysol[1,1/10000, 10*Degree]
+
+rotationMatrix[z, -(-106*Degree+Pi/2)].
+ rotationMatrix[x, -35*Degree].
+ {xsol[1,1/10000, 10*Degree],ysol[1,1/10000, 10*Degree],0}
+
+xsol[1,1/1000, 10*Degree]
+ysol[1,1/1000, 10*Degree]
+
+rotationMatrix[z, -(-106*Degree+Pi/2)].
+ rotationMatrix[x, -35*Degree].
+ {xsol[1,1/1000, 10*Degree],ysol[1,1/1000, 10*Degree],0}
+
+test1938 = rotationMatrix[x, 35*Degree]. 
+  rotationMatrix[z, 106.5*Degree+90*Degree]
+
+
+test1941 = test1938.sph2xyz[{-106.5*Degree, 35*Degree, 1}]
+
+test1938.sph2xyz[{-106.5*Degree, 36*Degree, 1}] - test1941
+
+test1938.sph2xyz[{-106.5*Degree, 34*Degree, 1}] 
+
+test1938.sph2xyz[{-105.5*Degree, 35*Degree, 1}] 
+
+sph2xyz[-106.5*Degree, 35.*Degree, 1] - sph2xyz[-105.5*Degree, 35.*Degree, 1]
+
+sph2xyz[-106.5*Degree, 35.*Degree, 1] - sph2xyz[-106.6*Degree, 35.*Degree, 1]
+
+Table[{lon, 
+ xyz2sph[sph2xyz[lon*Degree, 60*Degree, 1] - 
+         sph2xyz[lon*Degree-.01*Degree, 60*Degree, 1]]/
+ Degree}, {lon,-180,180,10}]
+
+Table[{lat, 
+ xyz2sph[sph2xyz[60*Degree, lat*Degree, 1] - 
+         sph2xyz[60*Degree, (lat-.01)*Degree, 1]]/
+ Degree}, {lat,-90,90,10}]
+
+Table[{lat, 
+ xyz2sph[sph2xyz[122*Degree, lat*Degree, 1] - 
+         sph2xyz[122*Degree, (lat-.01)*Degree, 1]]/
+ Degree}, {lat,-90,90,10}]
+
+sph2xyz[lon, lat+Pi/2, 1]
+
+
+
+east = {-Sin[lon], Cos[lon], 0}
+
+north = {-(Cos[lon] Sin[lat]), -(Sin[lat] Sin[lon]), Cos[lat]}
+
+up = {Cos[lat] Cos[lon], Cos[lat] Sin[lon], Sin[lat]}
+
+these do form a basis
+
+I want to map
+
+east -> {1,0,0}
+
+north -> {0,0,1}
+
+up -> {0,1,0}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
