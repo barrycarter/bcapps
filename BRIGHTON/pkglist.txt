@@ -376,6 +376,7 @@ libzip
 libzip-devel
 
 # math/science tools
+xplanet
 units
 mathics
 yacas

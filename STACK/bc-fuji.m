@@ -289,10 +289,6 @@ t0 = t /. Solve[Norm[obj + t*dir] == 1, t][[2]]
 
 Simplify[xyz2sph[obj + t0*dir]/Degree]
 
-
-
-
-
 these do form a basis
 
 the xy location direction of az, el is sph2xyz[az,el,1] in the "standard" frame
