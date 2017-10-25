@@ -473,6 +473,8 @@ WolframCDFPlayer
 abiword
 
 # editors + text utilities
+texlive
+lyx
 emacs
 enscript
 xemacs

@@ -235,21 +235,146 @@ sph2xyz[lon, lat+Pi/2, 1]
 
 
 
-east = {-Sin[lon], Cos[lon], 0}
+east[lat_,lon_] = {-Sin[lon], Cos[lon], 0}
 
-north = {-(Cos[lon] Sin[lat]), -(Sin[lat] Sin[lon]), Cos[lat]}
+north[lat_,lon_] = {-(Cos[lon] Sin[lat]), -(Sin[lat] Sin[lon]), Cos[lat]}
 
-up = {Cos[lat] Cos[lon], Cos[lat] Sin[lon], Sin[lat]}
+up[lat_,lon_] = {Cos[lat] Cos[lon], Cos[lat] Sin[lon], Sin[lat]}
+
+from std frame to my frame is just:
+
+m[lat_,lon_] = Transpose[{
+ {-Sin[lon], Cos[lon], 0},
+ {-(Cos[lon] Sin[lat]), -(Sin[lat] Sin[lon]), Cos[lat]},
+ {Cos[lat] Cos[lon], Cos[lat] Sin[lon], Sin[lat]}
+}];
+
+simple case:
+
+m[30*Degree, 0].sph2xyz[0*Degree, 5*Degree, 1]
+
+
+
+testing:
+
+sph2xyz[0, 0, 1] should go to east
+
+m[lat,lon].sph2xyz[0, 0, 1]
+
+m[lat,lon].sph2xyz[90*Degree, 0, 1]
+
+m[lat,lon].sph2xyz[0, 90*Degree, 1]
+
+now that these work, lets run tests
+
+obj = sph2xyz[-106.5*Degree, 35.1*Degree, 1]*1001/1000
+
+dir = m[-106.5*Degree, 35.1*Degree].sph2xyz[0.*Degree, 5.*Degree, 1]
+
+Solve[Norm[obj + t*dir] == 1, t]
+
+t -> 0.0018595
+
+xyz2sph[obj + 0.0018595*dir]/Degree
+
+(* exact below *)
+
+obj = sph2xyz[-106*Degree, 35*Degree, 1]*1001/1000
+
+(* dir to sun is... *)
+
+dir = m[-106*Degree, 35*Degree].sph2xyz[0*Degree, 5*Degree, 1]
+
+t0 = t /. Solve[Norm[obj + t*dir] == 1, t][[2]]
+
+Simplify[xyz2sph[obj + t0*dir]/Degree]
+
+
+
+
 
 these do form a basis
 
-I want to map
+the xy location direction of az, el is sph2xyz[az,el,1] in the "standard" frame
+
+suppose az = 90, sun is elevtude 5 deg, object is 1/1000 earth rad and we are at 35.1/-106.5
+
+obj = sph2xyz[-106.5*Degree, 35.1*Degree, 1]*1001/1000
+
+direction to sun is
+
+m[-106.5*Degree, 35.1*Degree].sph2xyz[90.*Degree, 5.*Degree, 1]
+
+dir = {0.815036, -0.246256, 0.524475}
+
+so shadow is neg that
+
+Solve[Norm[obj + t*dir] == 1, t]
+
+t -> -0.00329084
+
+xyz2sph[obj + -0.00329084*dir]/Degree
+
+with exacts
+
+suppose az = 90, sun is elevtude 5 deg, object is 1/1000 earth rad and we are at 35/-106
+
+obj = sph2xyz[-106*Degree, 35*Degree, 1]*1001/1000
+
+(* dir to sun is... *)
+
+dir = m[-106*Degree, 35*Degree].sph2xyz[90*Degree, 5*Degree, 1]
+
+t0 = t /. Solve[Norm[obj + t*dir] == 1, t][[1]]
+
+Simplify[xyz2sph[obj + t0*dir]/Degree]
+
+with testing
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+I want to map (giving up on below, it's unclean)
 
 east -> {1,0,0}
 
 north -> {0,0,1}
 
 up -> {0,1,0}
+
+but vector addition probably doesn't map like that (but it should since its a LINEAR transform)
+
+Inverse is 
+
+m = {
+ {-Sin[lon], Cos[lon], 0},
+ {Cos[lat] Cos[lon], Cos[lat] Sin[lon], Sin[lat]},
+ {-(Cos[lon] Sin[lat]), -(Sin[lat] Sin[lon]), Cos[lat]}
+};
+
+mi[lat_,lon_] = FullSimplify[Inverse[m]]
+
+mi[35*Degree, -106.5*Degree].sph2xyz[-106.5*Degree, 35*Degree, 1]
+
+conds = {-Pi/2 < lat < Pi/2, -Pi < lon < Pi}
+
+mi[35*Degree, -85*Degree].sph2xyz[-85*Degree, 35*Degree, 1]
 
 
 
