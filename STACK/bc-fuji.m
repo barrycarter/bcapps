@@ -53,18 +53,101 @@ shadowhitT[lat_, lon_, h_, v_] := Solve[Norm[sph2xyz[lon, lat, 1 + h]
 
 putting it together (shadow cast in opposite direction)
 
-conds = {-Pi/2 < lat < Pi/2, -Pi < lon < Pi, -Pi/2 < el < Pi/2, -Pi < az < Pi}
+conds = {-Pi/2 < lat < Pi/2, -Pi < lon < Pi, -Pi/2 < el < Pi/2, -Pi <
+az < Pi, h> 0}
 
 frame2frame[lat_, lon_] = Simplify[{{-Sin[lon], -(Cos[lon]*Sin[lat]),
 Cos[lat]*Cos[lon]}, {Cos[lon], -(Sin[lat]*Sin[lon]),
 Cos[lat]*Sin[lon]}, {0, Cos[lat], Sin[lat]}}, conds]
 
 
-v = Simplify[frame2frame[lat,lon].sph2xyz[az+Pi,el,1], conds]
+v = FullSimplify[frame2frame[lat,lon].sph2xyz[az+Pi,el,1], conds]
 
-tsol=t /. Simplify[Solve[Norm[sph2xyz[lat,lon,1+h] + v*t] == 1, t], conds][[1]]
+(* fullsimplify hangs below as does simplify, limiting solution to
+reals hangs *)
+
+tsol = t /. 
+ Simplify[Solve[Norm[sph2xyz[lat,lon,1+h] + v*t] == 1, t][[1]],conds]
+
+tsol = -(Cos[lat]^2*Cos[lon]^2*Sin[el]) - h*Cos[lat]^2*Cos[lon]^2*Sin[el] + 
+    Cos[az]*Cos[el]*Cos[lon]^2*Sin[lat] + h*Cos[az]*Cos[el]*Cos[lon]^2*
+     Sin[lat] - Cos[el]*Cos[lat]*Cos[lon]^2*Sin[az]*Sin[lat] - 
+    h*Cos[el]*Cos[lat]*Cos[lon]^2*Sin[az]*Sin[lat] - 
+    Cos[az]*Cos[el]*Cos[lat]*Cos[lon]*Sin[lon] - h*Cos[az]*Cos[el]*Cos[lat]*
+     Cos[lon]*Sin[lon] + Cos[el]*Cos[lat]*Sin[az]*Sin[lon] + 
+    h*Cos[el]*Cos[lat]*Sin[az]*Sin[lon] - Sin[el]*Sin[lat]*Sin[lon] - 
+    h*Sin[el]*Sin[lat]*Sin[lon] - Cos[lat]*Cos[lon]*Sin[el]*Sin[lat]*Sin[lon]- 
+    h*Cos[lat]*Cos[lon]*Sin[el]*Sin[lat]*Sin[lon] - 
+    Cos[el]*Cos[lon]*Sin[az]*Sin[lat]^2*Sin[lon] - h*Cos[el]*Cos[lon]*Sin[az]*
+     Sin[lat]^2*Sin[lon] - 
+    Sqrt[-4*h*(2 + h) + 4*(1 + h)^2*(Cos[lat]^2*Cos[lon]^2*Sin[el] + 
+          Sin[lat]*(-(Cos[az]*Cos[el]*Cos[lon]^2) + 
+            (Sin[el] + Cos[el]*Cos[lon]*Sin[az]*Sin[lat])*Sin[lon]) + 
+          Cos[lat]*(Cos[lon]*Sin[el]*Sin[lat]*Sin[lon] + 
+            Cos[el]*(Cos[lon]^2*Sin[az]*Sin[lat] + Cos[az]*Cos[lon]*Sin[lon] - 
+              Sin[az]*Sin[lon])))^2]/2
+
+
+(* fullsimplify hangs below *)
 
 xyz = Simplify[sph2xyz[lat,lon,1+h]+v*tsol,conds]
+
+xyz = {(1 + h)*Cos[lat]*Cos[lon] - (Cos[lat]*Cos[lon]*Sin[el] + 
+    Cos[el]*(Cos[lon]*Sin[az]*Sin[lat] + Cos[az]*Sin[lon]))*
+   (Cos[lat]^2*Cos[lon]^2*Sin[el] + h*Cos[lat]^2*Cos[lon]^2*Sin[el] - 
+    Cos[az]*Cos[el]*Cos[lon]^2*Sin[lat] - h*Cos[az]*Cos[el]*Cos[lon]^2*
+     Sin[lat] + Cos[el]*Cos[lat]*Cos[lon]^2*Sin[az]*Sin[lat] + 
+    h*Cos[el]*Cos[lat]*Cos[lon]^2*Sin[az]*Sin[lat] + 
+    Cos[az]*Cos[el]*Cos[lat]*Cos[lon]*Sin[lon] + h*Cos[az]*Cos[el]*Cos[lat]*
+     Cos[lon]*Sin[lon] - Cos[el]*Cos[lat]*Sin[az]*Sin[lon] - 
+    h*Cos[el]*Cos[lat]*Sin[az]*Sin[lon] + Sin[el]*Sin[lat]*Sin[lon] + 
+    h*Sin[el]*Sin[lat]*Sin[lon] + Cos[lat]*Cos[lon]*Sin[el]*Sin[lat]*
+     Sin[lon] + h*Cos[lat]*Cos[lon]*Sin[el]*Sin[lat]*Sin[lon] + 
+    Cos[el]*Cos[lon]*Sin[az]*Sin[lat]^2*Sin[lon] + 
+    h*Cos[el]*Cos[lon]*Sin[az]*Sin[lat]^2*Sin[lon] + 
+    Sqrt[-4*h*(2 + h) + 4*(1 + h)^2*(Cos[lat]^2*Cos[lon]^2*Sin[el] + 
+          Sin[lat]*(-(Cos[az]*Cos[el]*Cos[lon]^2) + 
+            (Sin[el] + Cos[el]*Cos[lon]*Sin[az]*Sin[lat])*Sin[lon]) + 
+          Cos[lat]*(Cos[lon]*Sin[el]*Sin[lat]*Sin[lon] + 
+            Cos[el]*(Cos[lon]^2*Sin[az]*Sin[lat] + Cos[az]*Cos[lon]*Sin[
+                lon] - Sin[az]*Sin[lon])))^2]/2), 
+ (1 + h)*Cos[lon]*Sin[lat] + (-(Cos[az]*Cos[el]*Cos[lon]) + 
+    (Cos[lat]*Sin[el] + Cos[el]*Sin[az]*Sin[lat])*Sin[lon])*
+   (-(Cos[lat]^2*Cos[lon]^2*Sin[el]) - h*Cos[lat]^2*Cos[lon]^2*Sin[el] + 
+    Cos[az]*Cos[el]*Cos[lon]^2*Sin[lat] + h*Cos[az]*Cos[el]*Cos[lon]^2*
+     Sin[lat] - Cos[el]*Cos[lat]*Cos[lon]^2*Sin[az]*Sin[lat] - 
+    h*Cos[el]*Cos[lat]*Cos[lon]^2*Sin[az]*Sin[lat] - 
+    Cos[az]*Cos[el]*Cos[lat]*Cos[lon]*Sin[lon] - h*Cos[az]*Cos[el]*Cos[lat]*
+     Cos[lon]*Sin[lon] + Cos[el]*Cos[lat]*Sin[az]*Sin[lon] + 
+    h*Cos[el]*Cos[lat]*Sin[az]*Sin[lon] - Sin[el]*Sin[lat]*Sin[lon] - 
+    h*Sin[el]*Sin[lat]*Sin[lon] - Cos[lat]*Cos[lon]*Sin[el]*Sin[lat]*
+     Sin[lon] - h*Cos[lat]*Cos[lon]*Sin[el]*Sin[lat]*Sin[lon] - 
+    Cos[el]*Cos[lon]*Sin[az]*Sin[lat]^2*Sin[lon] - 
+    h*Cos[el]*Cos[lon]*Sin[az]*Sin[lat]^2*Sin[lon] - 
+    Sqrt[-4*h*(2 + h) + 4*(1 + h)^2*(Cos[lat]^2*Cos[lon]^2*Sin[el] + 
+          Sin[lat]*(-(Cos[az]*Cos[el]*Cos[lon]^2) + 
+            (Sin[el] + Cos[el]*Cos[lon]*Sin[az]*Sin[lat])*Sin[lon]) + 
+          Cos[lat]*(Cos[lon]*Sin[el]*Sin[lat]*Sin[lon] + 
+            Cos[el]*(Cos[lon]^2*Sin[az]*Sin[lat] + Cos[az]*Cos[lon]*Sin[
+                lon] - Sin[az]*Sin[lon])))^2]/2), 
+ (1 + h)*Sin[lon] + (Cos[el]*Cos[lat]*Sin[az] - Sin[el]*Sin[lat])*
+   (Cos[lat]^2*Cos[lon]^2*Sin[el] + h*Cos[lat]^2*Cos[lon]^2*Sin[el] - 
+    Cos[az]*Cos[el]*Cos[lon]^2*Sin[lat] - h*Cos[az]*Cos[el]*Cos[lon]^2*
+     Sin[lat] + Cos[el]*Cos[lat]*Cos[lon]^2*Sin[az]*Sin[lat] + 
+    h*Cos[el]*Cos[lat]*Cos[lon]^2*Sin[az]*Sin[lat] + 
+    Cos[az]*Cos[el]*Cos[lat]*Cos[lon]*Sin[lon] + h*Cos[az]*Cos[el]*Cos[lat]*
+     Cos[lon]*Sin[lon] - Cos[el]*Cos[lat]*Sin[az]*Sin[lon] - 
+    h*Cos[el]*Cos[lat]*Sin[az]*Sin[lon] + Sin[el]*Sin[lat]*Sin[lon] + 
+    h*Sin[el]*Sin[lat]*Sin[lon] + Cos[lat]*Cos[lon]*Sin[el]*Sin[lat]*
+     Sin[lon] + h*Cos[lat]*Cos[lon]*Sin[el]*Sin[lat]*Sin[lon] + 
+    Cos[el]*Cos[lon]*Sin[az]*Sin[lat]^2*Sin[lon] + 
+    h*Cos[el]*Cos[lon]*Sin[az]*Sin[lat]^2*Sin[lon] + 
+    Sqrt[-4*h*(2 + h) + 4*(1 + h)^2*(Cos[lat]^2*Cos[lon]^2*Sin[el] + 
+          Sin[lat]*(-(Cos[az]*Cos[el]*Cos[lon]^2) + 
+            (Sin[el] + Cos[el]*Cos[lon]*Sin[az]*Sin[lat])*Sin[lon]) + 
+          Cos[lat]*(Cos[lon]*Sin[el]*Sin[lat]*Sin[lon] + 
+            Cos[el]*(Cos[lon]^2*Sin[az]*Sin[lat] + Cos[az]*Cos[lon]*Sin[
+                lon] - Sin[az]*Sin[lon])))^2]/2)}
 
 Simplify[xyz2sph[xyz],conds]
 
@@ -704,3 +787,15 @@ t /. Solve[Norm[line[t]] == r, t][[1]]
 line[%]
 
 
+(*
+
+original approach again, but make the diagram the x and z axes
+
+rotated so sun is coming from "west" (technically, no directions at
+north pole, but we will compensate when rotating)
+
+conds = {r>0, h<r, h>0, 0 < theta < Pi, Element[{x,y}, Reals]}
+
+y = r+h-Tan[theta]*x
+
+FullSimplify[Solve[x^2 + y^2 == r^2, x], conds]
