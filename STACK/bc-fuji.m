@@ -2,6 +2,85 @@
 
 (* 
 
+Convert from NESW frame (north = y axis) to lat/lon frame
+
+frame2frame[lat_, lon_] =  Transpose[{
+ {-Sin[lon], Cos[lon], 0},
+ {-(Cos[lon] Sin[lat]), -(Sin[lat] Sin[lon]), Cos[lat]},
+ {Cos[lat] Cos[lon], Cos[lat] Sin[lon], Sin[lat]}
+}];
+
+*)
+
+frame2frame[lat_, lon_] = {{-Sin[lon], -(Cos[lon]*Sin[lat]), 
+     Cos[lat]*Cos[lon]}, {Cos[lon], -(Sin[lat]*Sin[lon]), Cos[lat]*Sin[lon]}, 
+    {0, Cos[lat], Sin[lat]}}
+
+(*
+
+direction of shadow cast by object, given az/el of sun, converted to
+frame of lat/lon
+
+shadowdir[az_,el_,lat_,lon_] = frame2frame[lat,lon].sph2xyz[az+Pi,el,1]
+
+
+*)
+
+shadowdir[az_, el_, lat_, lon_] = {Cos[lat]*Cos[lon]*Sin[el] + 
+     Cos[el]*Cos[lon]*Sin[az]*Sin[lat] + Cos[az]*Cos[el]*Sin[lon], 
+    -(Cos[az]*Cos[el]*Cos[lon]) + Cos[lat]*Sin[el]*Sin[lon] + 
+     Cos[el]*Sin[az]*Sin[lat]*Sin[lon], -(Cos[el]*Cos[lat]*Sin[az]) + 
+     Sin[el]*Sin[lat]}
+
+(*
+
+Given a point h above the unit sphere at lat lon, and a vector v, find
+t such that h+t*v hits the sphere
+
+shadowhitT[lat_, lon_, h_, v_] := 
+ Solve[Norm[sph2xyz[lon, lat, 1+h] + t*v] == 1, t]
+
+and then use that value to find lat/lon of shadow hit
+
+shadowhitLL[h_, v_, t_] ....
+
+*)
+
+shadowhitT[lat_, lon_, h_, v_] := Solve[Norm[sph2xyz[lon, lat, 1 + h]
++ t*v] == 1, t]
+
+(*
+
+putting it together (shadow cast in opposite direction)
+
+conds = {-Pi/2 < lat < Pi/2, -Pi < lon < Pi, -Pi/2 < el < Pi/2, -Pi < az < Pi}
+
+frame2frame[lat_, lon_] = Simplify[{{-Sin[lon], -(Cos[lon]*Sin[lat]),
+Cos[lat]*Cos[lon]}, {Cos[lon], -(Sin[lat]*Sin[lon]),
+Cos[lat]*Sin[lon]}, {0, Cos[lat], Sin[lat]}}, conds]
+
+
+v = Simplify[frame2frame[lat,lon].sph2xyz[az+Pi,el,1], conds]
+
+tsol=t /. Simplify[Solve[Norm[sph2xyz[lat,lon,1+h] + v*t] == 1, t], conds][[1]]
+
+xyz = Simplify[sph2xyz[lat,lon,1+h]+v*tsol,conds]
+
+Simplify[xyz2sph[xyz],conds]
+
+sol = xyz2sph[xyz]
+
+
+
+solu[lat_, lon_, az_, el_, h_] = sol
+
+rainier 14411 ft at 46°51#10#N 121°45#37#W
+
+*)
+
+
+(* 
+
 These formulas generate the x y points below:
 
 (* the y value for any x for line with angle theta *)
@@ -368,8 +447,6 @@ mi[lat_,lon_] = FullSimplify[Inverse[m]]
 
 mi[35*Degree, -106.5*Degree].sph2xyz[-106.5*Degree, 35*Degree, 1]
 
-conds = {-Pi/2 < lat < Pi/2, -Pi < lon < Pi}
-
 mi[35*Degree, -85*Degree].sph2xyz[-85*Degree, 35*Degree, 1]
 
 
@@ -609,4 +686,21 @@ y sol is .971558
 
 NOT: 0.163448 is x sol,
 NOT: 0.986552 is y sol
+
+(* point thru x1,y1,z1 and x2,y2,z2 is distance r from x3,y3,z3 when? *)
+
+line[t_]= {x1+t*(x2-x1),y1+t*(y2-y1),z1+t*(z2-z1)}
+
+t /. Solve[Norm[line[t]-{x3,y3,z3}] == r, t][[1]]
+
+line[%]
+
+simpler if x3=y3=z3=0?
+
+line[t_]= {x1+t*(x2-x1),y1+t*(y2-y1),z1+t*(z2-z1)}
+
+t /. Solve[Norm[line[t]] == r, t][[1]]
+
+line[%]
+
 
