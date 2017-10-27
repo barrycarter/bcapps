@@ -8,11 +8,6 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# NOTE: "1.,2.,3." does NOT work w/ ruby, use 1.0, 2.0, 3.0, etc
-# $args = "1.5,2.3";
-
-$args = "3.77624,6371.02,0.00162647,-1.0904,0.617114,2.42131";
-
 # functions that "thread" (in Mathematica) and their binary versions
 # TODO: not even close to complete
 
@@ -70,15 +65,31 @@ my(@runs);
 
 for $i (sort keys %lang) {
 
+  # TODO: setting curlang twice is ugly and unnecesary
+  %curlang = %{$lang{$i}};
+
+  # open outfile for this language and read language data
+  open(A,">/tmp/blc.$curlang{extension}");
+
   for $j (sort keys %func) {
 
-    debug("DOING: $i, $j");
+    # reset curlang each time (even inside loop) because I change it
+    # w/ each loop iteration (which is bad) (TODO: don't do this)
+    %curlang = %{$lang{$i}};
 
     # the current function and language (reset each time to mod below)
     # the current language
-    %curlang = %{$lang{$i}};
-    debug("CURLANG PRE", %curlang);
     %curfunc = %{$func{$j}};
+
+    # ignore inactive functions
+    unless ($curfunc{active}) {next;}
+
+    debug("DOING: $i, $j");
+
+    # get testargs (TODO: get more than just last set)
+    debug("EPSI: $curfunc{argtest}");
+
+    debug("<FUNC $j>", %{$func{$j}}, "</FUNC>");
     debug("CURFUNC PRE", %curfunc);
 
     while ($curfunc{body}=~s/([a-z0-9]+)\[([^\[\]]*?)\]/multiline_parse($1,$2,$i)/ie) {}
@@ -88,26 +99,27 @@ for $i (sort keys %lang) {
     # TODO: the trim here is seriously ugly, but python needs it
     $curfunc{body} = trim($curfunc{body});
 
+    debug("BETA: $curfunc{body}");
+
     # regex below prevents changing things like "<-"
+    debug("DELTA: $curlang{fdef}");
     while ($curlang{fdef}=~s/<([a-z]+)>/$curfunc{$1}/g) {}
 
     # and the code to print it as a test (TODO: improve slightly)
     $curlang{pdef}=~s/<fname>/$curfunc{fname}/g;
-    $curlang{pdef}=~s/<args>/$args/g;
+    $curlang{pdef}=~s/<args>/$curfunc{argtest}/g;
 
     debug("CURFUNC GAMMA", %curfunc);
     debug("CURLANG GAMMA", %curlang);
 
     # attempt to write right here
-    open(A,">>/tmp/blc.$curlang{extension}");
     print A join("\n", ($curlang{prefix}, $curlang{fdef},
 			$curlang{pdef}, $curlang{postfix})),"\n";
-    close(A);
-
     $curlang{run}=~s%<file>%/tmp/blc.$curlang{extension}%g;
     push(@run, $curlang{run});
     debug("RUN: $curlang{run}");
   }
+    close(A);
 }
 
 debug("RUN ME:",@run);

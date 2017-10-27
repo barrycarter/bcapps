@@ -8,12 +8,53 @@
 # nice: a "prettyprint" version of function (not LaTeX)
 # desc: a description of the function
 # vars: the named arguments to the function, as a comma separated list
+# TODO: argtest is currently single list of args = bad!
+# argtest: any number of argument lists to test, internally containing:
+#  testargs: the arguments to test
+#  answer: the answer for given set of testargs
+# active: whether or not to include this function in the result
 
 # TODO: test harness, but probably not part of function
 
 # macros:
 
 # <LANG>: the language into which the function is being translated
+
+<function name="xsol">
+<active>1</active>
+<nice>xpos(h,r,theta)</nice>
+<vars>h,r,theta</vars>
+<desc>see bc-fuji.m</descc>
+<argtest>4., 7000., 0.0523599</argtest>
+<answer>86.5298</answer>
+<body>
+   Times[Power[Cos[theta], 2], Plus[Times[-1,
+      Power[Plus[Times[-1, Power[Plus[h, r], 2]],
+        Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]]],
+     Times[Plus[h, r], Tan[theta]]]]
+</body>
+</function>
+
+<function name="secant">
+<active>1</active>
+<nice>sec(x)</nice>
+<vars>x</vars>
+<desc>Testing secant function, since Mathematica uses it, but most languages don't have it</desc>
+<argtest>0.628319</argtest>
+<answer>1.23607</answer>
+<body>Sec[x]</body>
+</function>
+
+<function name="shadowlandlat">
+<active>1</active>
+<nice>no clean format</nice>
+<vars>h,r,theta,az,lat,lon</vars>
+<argtest>3.77624, 6371.02, 0.00162647, -1.0904, 0.617114, 2.42131</argtest>
+<desc>Gives the latitude of where a shadow lands per bc-fuji.m</desc>
+<body>
+ArcTan[Power[Plus[Power[Plus[Times[Power[Cos[theta], 2], Plus[Times[Cos[lon], Sin[az], Sin[lat]], Times[Cos[az], Sin[lon]]], Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]], Times[-1, Plus[h, r], Tan[theta]]]], Times[Cos[lat], Cos[lon], Power[Plus[Power[r, 2], Times[-1, Power[Cos[theta], 4], Power[Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]], Times[-1, Plus[h, r], Tan[theta]]], 2]]], Rational[1, 2]]]], 2], Power[Plus[Times[Power[Cos[theta], 2], Plus[Times[Cos[az], Cos[lon]], Times[-1, Sin[az], Sin[lat], Sin[lon]]], Plus[Times[-1, Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]]], Times[Plus[h, r], Tan[theta]]]], Times[Cos[lat], Sin[lon], Power[Plus[Power[r, 2], Times[-1, Power[Cos[theta], 4], Power[Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]], Times[-1, Plus[h, r], Tan[theta]]], 2]]], Rational[1, 2]]]], 2]], Rational[1, 2]], Plus[Times[Cos[lat], Power[Cos[theta], 2], Sin[az], Plus[Times[-1, Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]]], Times[Plus[h, r], Tan[theta]]]], Times[Sin[lat], Power[Plus[Power[r, 2], Times[-1, Power[Cos[theta], 4], Power[Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]], Times[-1, Plus[h, r], Tan[theta]]], 2]]], Rational[1, 2]]]]]
+</body>
+</function>
 
 <function name="testing0002">
 <nice>{sqrt(cos(y) + sin(x)), sqrt(cos(x) + sin(y))}</nice>
@@ -30,6 +71,7 @@ Power[Plus[Cos[x], Sin[y]], Rational[1.0, 2.0]]]
 
 # below does NOT work with Perl, returning scalar vs array (may be pdef issue)
 <function name="testing0003">
+<active>0</active>
 <nice>cos(x)^2+cos(y)^2</nice>
 <vars>x,y</vars>
 <desc>Test with single value return</desc>
@@ -89,12 +131,3 @@ miles: 0.00062137119223733396962
 
 
 </dictionary>
-
-<function name="shadowlandlat">
-<nice>no clean format</nice>
-<vars>h,r,theta,az,lat,lon</vars>
-<desc>Gives the latitude of where a shadow lands per bc-fuji.m</desc>
-<body>
-ArcTan[Power[Plus[Power[Plus[Times[Power[Cos[theta], 2], Plus[Times[Cos[lon], Sin[az], Sin[lat]], Times[Cos[az], Sin[lon]]], Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]], Times[-1, Plus[h, r], Tan[theta]]]], Times[Cos[lat], Cos[lon], Power[Plus[Power[r, 2], Times[-1, Power[Cos[theta], 4], Power[Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]], Times[-1, Plus[h, r], Tan[theta]]], 2]]], Rational[1, 2]]]], 2], Power[Plus[Times[Power[Cos[theta], 2], Plus[Times[Cos[az], Cos[lon]], Times[-1, Sin[az], Sin[lat], Sin[lon]]], Plus[Times[-1, Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]]], Times[Plus[h, r], Tan[theta]]]], Times[Cos[lat], Sin[lon], Power[Plus[Power[r, 2], Times[-1, Power[Cos[theta], 4], Power[Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]], Times[-1, Plus[h, r], Tan[theta]]], 2]]], Rational[1, 2]]]], 2]], Rational[1, 2]], Plus[Times[Cos[lat], Power[Cos[theta], 2], Sin[az], Plus[Times[-1, Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]]], Times[Plus[h, r], Tan[theta]]]], Times[Sin[lat], Power[Plus[Power[r, 2], Times[-1, Power[Cos[theta], 4], Power[Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]], Times[-1, Plus[h, r], Tan[theta]]], 2]]], Rational[1, 2]]]]]
-</body>
-</function>
