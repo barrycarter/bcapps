@@ -2,6 +2,9 @@
 # *must* be in Mathematica's "FullForm" (not InputForm or FortranForm
 # or CForm)
 
+# the code below exports to fullform in a file
+# Export["/tmp/full.txt", FullForm[x^2], "String"]
+
 # fields:
 
 # body: the body of the function in Mathematica's FullForm
@@ -22,10 +25,10 @@
 
 <function name="xsol">
 <active>1</active>
-<nice>xpos(h,r,theta)</nice>
+<nice>xsol(h,r,theta)</nice>
 <vars>h,r,theta</vars>
 <desc>see bc-fuji.m</descc>
-<argtest>4., 7000., 0.0523599</argtest>
+<argtest>4.0, 7000.0, 0.0523599</argtest>
 <answer>86.5298</answer>
 <body>
    Times[Power[Cos[theta], 2], Plus[Times[-1,
@@ -35,8 +38,95 @@
 </body>
 </function>
 
-<function name="secant">
+<function name="zsol">
 <active>1</active>
+<nice>zsol(h,r,theta)</nice>
+<vars>h,r,theta</vars>
+<desc>see bc-fuji.m</descc>
+<argtest>4.0, 7000.0, 0.0523599</argtest>
+<answer>6999.47</answer>
+<body>
+   Power[Plus[Power[r, 2], Times[-1, Power[Cos[theta], 4], 
+      Power[Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]], 
+          Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]], 
+        Times[-1, Plus[h, r], Tan[theta]]], 2]]], Rational[1, 2]]
+</body>
+</function>
+
+# TODO: for php and perl need some sort of array vs scalar printer (print_r?)
+
+<function name="newcoords">
+<active>1</active>
+<nice>newcoords(h,r,theta,az,lat,lon)</nice>
+<vars>h,r,theta,az,lat,lon</vars>
+<desc>see bc-fuji.m</descc>
+# TODO: must convert argtest numbers to .0 decimals too
+<argtest>4.0, 7000.0, 0.0698132, 1.65806, 0.610865, -1.85878</argtest>
+<answer>{-1623.7, -5462.79, 4064.66}</answer>
+<body>
+   List[Plus[Times[Power[Cos[theta], 2],
+
+      Plus[Times[Cos[lon], Sin[az], Sin[lat]], Times[Cos[az], Sin[lon]]],
+
+      Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]],
+
+         Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]],
+
+       Times[-1, Plus[h, r], Tan[theta]]]],
+
+     Times[Cos[lat], Cos[lon], Power[Plus[Power[r, 2],
+
+        Times[-1, Power[Cos[theta], 4],
+
+         Power[Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]],
+
+             Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]],
+
+           Times[-1, Plus[h, r], Tan[theta]]], 2]]], Rational[1, 2]]]],
+
+    Plus[Times[Power[Cos[theta], 2],
+
+      Plus[Times[Cos[az], Cos[lon]], Times[-1, Sin[az], Sin[lat], Sin[lon]]],
+
+      Plus[Times[-1, Power[Plus[Times[-1, Power[Plus[h, r], 2]],
+
+          Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]]],
+
+       Times[Plus[h, r], Tan[theta]]]],
+
+     Times[Cos[lat], Sin[lon], Power[Plus[Power[r, 2],
+
+        Times[-1, Power[Cos[theta], 4],
+
+         Power[Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]],
+
+             Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]],
+
+           Times[-1, Plus[h, r], Tan[theta]]], 2]]], Rational[1, 2]]]],
+
+    Plus[Times[Cos[lat], Power[Cos[theta], 2], Sin[az],
+
+      Plus[Times[-1, Power[Plus[Times[-1, Power[Plus[h, r], 2]],
+
+          Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]]],
+
+       Times[Plus[h, r], Tan[theta]]]],
+
+     Times[Sin[lat], Power[Plus[Power[r, 2],
+
+        Times[-1, Power[Cos[theta], 4],
+
+         Power[Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]],
+
+             Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]],
+
+           Times[-1, Plus[h, r], Tan[theta]]], 2]]], Rational[1, 2]]]]]
+
+</body>
+</function>
+
+<function name="secant">
+<active>0</active>
 <nice>sec(x)</nice>
 <vars>x</vars>
 <desc>Testing secant function, since Mathematica uses it, but most languages don't have it</desc>
@@ -46,7 +136,7 @@
 </function>
 
 <function name="shadowlandlat">
-<active>1</active>
+<active>0</active>
 <nice>no clean format</nice>
 <vars>h,r,theta,az,lat,lon</vars>
 <argtest>3.77624, 6371.02, 0.00162647, -1.0904, 0.617114, 2.42131</argtest>

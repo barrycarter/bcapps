@@ -81,6 +81,13 @@ for $i (sort keys %lang) {
     # the current language
     %curfunc = %{$func{$j}};
 
+    # TODO: this could be globalized, but, then again, I may limit it
+    # to certain languages; decimate (or perhaps decimalize)
+    # everything
+    $curfunc{body}=~s/(\d+)([^\.])/$1.0$2/g;
+
+    debug("FAMMA: $curfunc{body}");
+
     # ignore inactive functions
     unless ($curfunc{active}) {next;}
 
@@ -116,9 +123,9 @@ for $i (sort keys %lang) {
     print A join("\n", ($curlang{prefix}, $curlang{fdef},
 			$curlang{pdef}, $curlang{postfix})),"\n";
     $curlang{run}=~s%<file>%/tmp/blc.$curlang{extension}%g;
+  }
     push(@run, $curlang{run});
     debug("RUN: $curlang{run}");
-  }
     close(A);
 }
 
@@ -226,6 +233,13 @@ sub multiline_parse {
     $hash{$varcount} = "(1/${math}cos($args[0]))";
     return "var$varcount";
   }
+
+  # Perl doesn't have a Tan function, so I define it here for all langs
+  if ($f eq "Tan") {
+    $hash{$varcount} = "(${math}sin($args[0])/${math}cos($args[0]))";
+    return "var$varcount";
+  }
+
 
   # the hideousness that is ArcTan
   if ($f eq "ArcTan") {

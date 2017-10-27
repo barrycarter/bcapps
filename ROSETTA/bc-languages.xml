@@ -32,7 +32,9 @@
 <language name="perl">
 <extension>pl</extension>
 <fdef>sub <fname> {my(<dvars>) = @_; return <body>}</fdef>
-<pdef>print join(",", @{<fname>(<args>)}),"\n";</pdef>
+# the pdef below is for if/when I move to list returns
+<pdef comment>print join(",", @{<fname>(<args>)}),"\n";</pdef>
+<pdef>print <fname>(<args>),"\n";</pdef>
 <comment># <comment></comment>
 <mcomment>
 =item comment
