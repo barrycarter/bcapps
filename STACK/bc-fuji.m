@@ -1,4 +1,89 @@
+TODO: not JUST methodology, actual answer
+
+TODO: better formulas
+
+[[image40]]
+
+Given the sun's elevation $\theta$, we draw the Earth as a sphere of radius $r$ and choose our coordinate system such that:
+
+  - the mountain's location is {0,0,1}
+
+  - the sun is shining from the -x axis
+
+yielding the diagram above (note that we are looking at x (horizontal) and z (vertical) axes in the xz plane).
+
+The line connecting the incoming sunlight to the mountain has a slope of $-\tan (\theta )$ and intercepts the z axis at $z=h+r$. The formula of the line is thus:
+
+$z(x)=h+r-x \tan (\theta )$
+
+We want to find where this line intersects our sphere. This occurs when it's distance from the origin is $r$, so we solve:
+
+$\sqrt{x^2+z(x)^2}=r$
+
+As per the diagram, this occurs at two points. We want the solution with the lower x value:
+
+$
+   x=\cos ^2(\theta ) \left((h+r) \tan (\theta )-\sqrt{r^2 \sec ^2(\theta
+    )-(h+r)^2}\right)
+$
+
+$
+   z=\sqrt{r^2-\cos ^4(\theta ) \left(\sqrt{r^2 \sec ^2(\theta )-(h+r)^2}-(h+r)
+    \tan (\theta )\right)^2}
+
+$
+
+Noticing the tangent of the central angle is $\frac{x}{z}$, we can take the arctangent to find the central angle:
+
+$
+   \tan ^{-1}\left(\frac{\cos ^2(\theta ) \left((h+r) \tan (\theta )-\sqrt{r^2
+   \sec ^2(\theta )-(h+r)^2}\right)}{\sqrt{r^2-\cos ^4(\theta ) \left(\sqrt{r^2
+    \sec ^2(\theta )-(h+r)^2}-(h+r) \tan (\theta )\right)^2}}\right)
+$
+
+and multiply it by r to find the great circle distance:
+
+$
+  r \tan ^{-1}\left(\frac{\cos ^2(\theta ) \left((h+r) \tan (\theta )-\sqrt{r^2
+   \sec ^2(\theta )-(h+r)^2}\right)}{\sqrt{r^2-\cos ^4(\theta ) \left(\sqrt{r^2
+   \sec ^2(\theta )-(h+r)^2}-(h+r) \tan (\theta )\right)^2}}\right)
+$
+
+This is essentially the solution: the shadow lands in the direction opposite to where the Sun is shining at the distance above.
+
+
+
+
+TODO: reference this file
+
+TODO: no hit case
+
+TODO: spherical earth assum
+
+TODO: make sure I have the correct hitting point
+
+TODO: why azel not SPICE (refraction)
+
+
+
 (* FORMULAS START HERE *)
+
+conds = {h>0, r>0, h<r, 0 < theta < Pi/2, Element[x, Reals]}
+
+z[theta_,x_] = -Tan[theta]*x + r + h
+
+xsol[h_,r_,theta_] = 
+FullSimplify[Simplify[Solve[z[theta,x]^2 + x^2==r^2, x, Reals],conds]
+ [[1,1,2,1]],conds]
+
+zsol[h_,r_,theta_] = FullSimplify[Sqrt[r^2-xsol[h,r,theta]^2], conds]
+
+ang[h_,r_,theta_] = 
+ FullSimplify[ArcTan[xsol[h,r,theta]/zsol[h,r,theta]], conds]
+
+dist[h_,r_,theta_] = FullSimplify[r*ang[h,r,theta], conds]
+
+(* FORMULAS END HERE *)
 
 (* 
 
@@ -192,8 +277,6 @@ xsol[r_, h_, theta_] = Cos[theta]^2*((h + r)*Tan[theta] -
 
 ysol[r_, h_, theta_] = Cos[theta]*((h + r)*Cos[theta] + 
      Sin[theta]*Sqrt[-(h*(h + 2*r)) + r^2*Tan[theta]^2])
-
-(* FORMULAS END HERE *)
 
 (* now to rotate back into position *)
 
@@ -794,8 +877,119 @@ original approach again, but make the diagram the x and z axes
 rotated so sun is coming from "west" (technically, no directions at
 north pole, but we will compensate when rotating)
 
-conds = {r>0, h<r, h>0, 0 < theta < Pi, Element[{x,y}, Reals]}
+conds = {r>0, h<r, h>0, 0 < theta < Pi, Element[{x,z}, Reals]}
 
-y = r+h-Tan[theta]*x
+z = r+h-Tan[theta]*x
 
-FullSimplify[Solve[x^2 + y^2 == r^2, x], conds]
+always taking first solution might be mistake
+
+zsol[theta_] = z /. FullSimplify[Solve[x^2 + z^2 == r^2, x][[1]], conds]
+
+xsol[theta_] = FullSimplify[Sqrt[r^2-zsol[theta]^2], conds]
+
+for our example 3 degree elevation
+
+r = 6371
+h = 4
+
+N[zsol[3*Degree]]
+
+N[xsol[3*Degree]]
+
+direction change
+
+sun is coming from -x direction, which we want to be "west" we thus rotateon the z axis by solar azimuth plus 90 to make -x the west axis
+
+vec = N[{xsol[3*Degree], 0, zsol[3*Degree]}]
+
+az = -107*Degree
+
+vec2 = rotationMatrix[z, az+Pi/2].vec
+
+(seems reasonable)
+
+we now rotate along the y axis to restore latitude.. by 90-lat (which is negative here)
+
+lat = 35*Degree
+
+vec3 = rotationMatrix[y, lat-Pi/2].vec2
+
+finally, we restore longitude
+
+rotationMatrix[z,lon]
+
+
+
+
+
+
+
+Pi/2-FullSimplify[ArcTan[zsol/xsol], conds]
+
+phi = FullSimplify[Pi/2-ArcTan[zsol/xsol], conds]
+
+dist2 = FullSimplify[r*phi, conds]
+
+phi = (Pi - 2*ArcTan[(Cos[theta]*((h + r)*Cos[theta] + 
+          Sqrt[-(h + r)^2 + r^2*Sec[theta]^2]*Sin[theta]))/
+        Sqrt[r^2 - Cos[theta]^2*((h + r)*Cos[theta] + 
+             Sqrt[-(h + r)^2 + r^2*Sec[theta]^2]*Sin[theta])^2]])/2
+
+dist2 = 
+   (r*(Pi - 2*ArcTan[(Cos[theta]*((h + r)*Cos[theta] + 
+           Sqrt[-(h + r)^2 + r^2*Sec[theta]^2]*Sin[theta]))/
+         Sqrt[r^2 - Cos[theta]^2*((h + r)*Cos[theta] + Sqrt[-(h + r)^2 + 
+                 r^2*Sec[theta]^2]*Sin[theta])^2]]))/2
+
+dist[r_, h_, theta_] = dist2
+
+dist[6371.009, 3776240/1000000., 2*Degree]
+
+dist[6371.009, 3776240/1000000., 1.97223*Degree] is about 218.731km
+
+we now convert to std coords
+
+sun is coming from -x direction, which we want to be "west" we thus rotateon the z axis by solar azimuth plus 90 to make -x the west axis
+
+rotationMatrix[z, Pi/2+az]
+
+we now rotate along the y axis to restore latitude.. by 90-lat (which is negative here)
+
+rotationMatrix[y, lat-Pi/2]
+
+finally, we restore longitude
+
+rotationMatrix[z,lon]
+
+lets try with some real numbers:
+
+-12° 20' 51" = todays solar dec
+
+decl = (-12-20/60-51/3600)*Degree
+
+lat = 35.1*Degree
+
+lon = -106.5*Degree
+
+
+
+Plot[HADecLat2azEl[ha/12*Pi, decl, lat][[2]]/Degree, {ha,0,24}]
+
+FindRoot[HADecLat2azEl[ha, decl, lat][[2]] == 3*Degree, {ha,Pi/4}]
+
+ha -> 1.34967
+
+HADecLat2azEl[1.34967, decl, lat]/Degree
+
+{-107.371, 2.99986}
+
+ok, setting sun.. lets do the math
+
+
+
+
+
+
+
+
+
