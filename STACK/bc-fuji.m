@@ -123,6 +123,15 @@ A celestial object's altazimuthal path through the sky is determined by two fact
 
 newangles[h, r, theta, az, lat, lon]
 
+finalpos[h_, r_, ha_, dec_, lat_, lon_] =
+ newangles[h, r, HADecLat2azEl[ha, dec, lat][[2]], 
+ HADecLat2azEl[ha, dec, lat][[1]], lat, lon]
+
+N[finalpos[fele, rad[flat], 0, ecliptic, flat, flon]/Degree]
+
+N[finalpos[fele, rad[flat], 7/12*Pi, ecliptic, flat, flon]/Degree]
+
+N[finalpos[fele, rad[flat], -7/12*Pi, ecliptic, flat, flon]/Degree]
 
 
 

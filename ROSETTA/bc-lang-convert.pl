@@ -11,7 +11,7 @@ require "/usr/local/lib/bclib.pl";
 # NOTE: "1.,2.,3." does NOT work w/ ruby, use 1.0, 2.0, 3.0, etc
 # $args = "1.5,2.3";
 
-$args = "";
+$args = "3.77624,6371.02,0.00162647,-1.0904,0.617114,2.42131";
 
 # functions that "thread" (in Mathematica) and their binary versions
 # TODO: not even close to complete
@@ -206,6 +206,12 @@ sub multiline_parse {
     }
 
     # always return this
+    return "var$varcount";
+  }
+
+  # secant function
+  if ($f eq "Sec") {
+    $hash{$varcount} = "(1/${math}cos($args[0]))";
     return "var$varcount";
   }
 
