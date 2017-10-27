@@ -89,3 +89,23 @@ miles: 0.00062137119223733396962
 
 
 </dictionary>
+
+<function name="shadowlandlat">
+<nice>no clean format</nice>
+<vars>h,r,theta,az,lat,lon</vars>
+<desc>Gives the latitude of where a shadow lands per bc-fuji.m</desc>
+<body>
+
+ArcTan[Cos[theta]^2*(Cos[az]*Cos[lon]*Sin[lat] - Sin[az]*Sin[lon])*
+   (-Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] + (h + r)*Tan[theta]) -
+  Cos[lat]*Cos[lon]*
+   Sqrt[r^2 - Cos[theta]^4*(Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] -
+        (h + r)*Tan[theta])^2],
+ Cos[theta]^2*(Cos[lon]*Sin[az] + Cos[az]*Sin[lat]*Sin[lon])*
+   (-Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] + (h + r)*Tan[theta]) -
+  Cos[lat]*Sin[lon]*
+   Sqrt[r^2 - Cos[theta]^4*(Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] -
+        (h + r)*Tan[theta])^2]]
+
+</body>
+</function>

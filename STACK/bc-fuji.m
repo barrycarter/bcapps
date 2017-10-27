@@ -51,10 +51,130 @@ $
 
 This is essentially the solution: the shadow lands in the direction opposite to where the Sun is shining at the distance above.
 
+Of course, we'd probably like the answer in latitude and longitude, so we perform 3 rotations on the x and z coordinates above:
+
+  - If we rotate by the sun's azimuth (hereafter az), north points towards the negative x axis. To make things cleaner, we rotate by $\text{az}+90$ degrees, so north becomes the positive y axis
+
+  - We now rotate by $\text{lat}-90$ degrees around the y axis, where $\text{lat}$ is the latitude of our mountain. The coordinates of the North Pole are now $\{0,0,1\}$.
+
+  - Finally we rotate by $\text{lon}$ degrees where $\text{lon}$ is the longitude of our mountain, so that the spherical coordinates now represent latitude and longitude. More specifically, in this final coordinate system:
+
+    - The longitude of $\{x,y,z\}$ is $\tan ^{-1}(x,y)$, using the [two argument form of tangent](https://en.wikipedia.org/wiki/Atan2)
+
+    - The latitude is $\tan ^{-1}\left(\sqrt{x^2+y^2},z\right)$, also using the two argument form of tangent.
+
+After these transformations, our mountain's coordinates are:
+
+$
+   \left\{\cos ^2(\theta ) (\sin (\text{az}) \sin (\text{lat}) \cos
+    (\text{lon})+\cos (\text{az}) \sin (\text{lon})) \left(\sqrt{r^2 \sec
+    ^2(\theta )-(h+r)^2}-(h+r) \tan (\theta )\right)+\cos (\text{lat}) \cos
+    (\text{lon}) \sqrt{r^2-\cos ^4(\theta ) \left(\sqrt{r^2 \sec ^2(\theta
+   )-(h+r)^2}-(h+r) \tan (\theta )\right)^2},\cos ^2(\theta ) (\cos (\text{az})
+    \cos (\text{lon})-\sin (\text{az}) \sin (\text{lat}) \sin (\text{lon}))
+    \left((h+r) \tan (\theta )-\sqrt{r^2 \sec ^2(\theta )-(h+r)^2}\right)+\cos
+    (\text{lat}) \sin (\text{lon}) \sqrt{r^2-\cos ^4(\theta ) \left(\sqrt{r^2
+    \sec ^2(\theta )-(h+r)^2}-(h+r) \tan (\theta )\right)^2},\sin (\text{az})
+   \cos (\text{lat}) \cos ^2(\theta ) \left((h+r) \tan (\theta )-\sqrt{r^2 \sec
+    ^2(\theta )-(h+r)^2}\right)+\sin (\text{lat}) \sqrt{r^2-\cos ^4(\theta )
+    \left(\sqrt{r^2 \sec ^2(\theta )-(h+r)^2}-(h+r) \tan (\theta
+    )\right)^2}\right\}
+
+$
+
+Our shadow thus falls on the following longitude:
+
+$
+   \tan ^{-1}\left(\cos ^2(\theta ) (\sin (\text{az}) \sin (\text{lat}) \cos
+    (\text{lon})+\cos (\text{az}) \sin (\text{lon})) \left(\sqrt{r^2 \sec
+    ^2(\theta )-(h+r)^2}-(h+r) \tan (\theta )\right)+\cos (\text{lat}) \cos
+    (\text{lon}) \sqrt{r^2-\cos ^4(\theta ) \left(\sqrt{r^2 \sec ^2(\theta
+   )-(h+r)^2}-(h+r) \tan (\theta )\right)^2},\cos ^2(\theta ) (\cos (\text{az})
+    \cos (\text{lon})-\sin (\text{az}) \sin (\text{lat}) \sin (\text{lon}))
+    \left((h+r) \tan (\theta )-\sqrt{r^2 \sec ^2(\theta )-(h+r)^2}\right)+\cos
+    (\text{lat}) \sin (\text{lon}) \sqrt{r^2-\cos ^4(\theta ) \left(\sqrt{r^2
+    \sec ^2(\theta )-(h+r)^2}-(h+r) \tan (\theta )\right)^2}\right)
+$
+
+and the following latitude:
+
+$
+   \tan ^{-1}\left(\sqrt{\left(\cos ^2(\theta ) (\sin (\text{az}) \sin
+    (\text{lat}) \cos (\text{lon})+\cos (\text{az}) \sin (\text{lon}))
+    \left(\sqrt{r^2 \sec ^2(\theta )-(h+r)^2}-(h+r) \tan (\theta )\right)+\cos
+    (\text{lat}) \cos (\text{lon}) \sqrt{r^2-\cos ^4(\theta ) \left(\sqrt{r^2
+   \sec ^2(\theta )-(h+r)^2}-(h+r) \tan (\theta )\right)^2}\right)^2+\left(\cos
+    ^2(\theta ) (\cos (\text{az}) \cos (\text{lon})-\sin (\text{az}) \sin
+    (\text{lat}) \sin (\text{lon})) \left((h+r) \tan (\theta )-\sqrt{r^2 \sec
+    ^2(\theta )-(h+r)^2}\right)+\cos (\text{lat}) \sin (\text{lon})
+    \sqrt{r^2-\cos ^4(\theta ) \left(\sqrt{r^2 \sec ^2(\theta )-(h+r)^2}-(h+r)
+    \tan (\theta )\right)^2}\right)^2},\sin (\text{az}) \cos (\text{lat}) \cos
+    ^2(\theta ) \left((h+r) \tan (\theta )-\sqrt{r^2 \sec ^2(\theta
+    )-(h+r)^2}\right)+\sin (\text{lat}) \sqrt{r^2-\cos ^4(\theta )
+    \left(\sqrt{r^2 \sec ^2(\theta )-(h+r)^2}-(h+r) \tan (\theta
+    )\right)^2}\right)
+$
+
+A celestial object's altazimuthal path through the sky is determined by two factors: (TODO: position?)
+
+  - the object's declination
+  - the observer's latitude
+
+
+newangles[h, r, theta, az, lat, lon]
 
 
 
-TODO: reference this file
+
+
+HADecLat2azEl[0, ecliptic, flat]
+
+HADecLat2azEl[Pi/2, ecliptic, flat]
+
+HADecLat2azEl[7/12*Pi, ecliptic, flat]
+
+newangles[fele, rad[flat], 78*Degree, 180*Degree, flat, flon]/Degree
+
+newangles[fele, rad[flat], 13.3081*Degree, -70.5272*Degree, flat, flon]/Degree
+
+newangles[fele, rad[flat], 2.09319*Degree, -62.4753*Degree, flat, flon]/Degree
+
+TODO: fuji peak lat/lon not certain
+
+NOTE: google maps: lat, lon other way fails
+
+
+TODO: note no solution when deg low enough
+
+TODO: Test
+
+fuji: 
+
+flon = (138+43/60+52/3600)*Degree
+flat = (35+21/60+29/3600)*Degree
+
+(* kilometers *)
+fele = 3776240/1000000
+
+6371.02
+
+newangles[fele, rad[flat], 3*Degree, 155*Degree, flat, flon]/Degree
+
+N[{xsol[fele, rad[flat], 3*Degree],0,zsol[fele, rad[flat], 3*Degree]}]
+
+rotationMatrix[z, 155*Degree + Pi/2].
+ N[{xsol[fele, rad[flat], 3*Degree],0,zsol[fele, rad[flat], 3*Degree]}]
+
+rotationMatrix[y, flat-Pi/2].
+ rotationMatrix[z, 155*Degree + Pi/2].
+ N[{xsol[fele, rad[flat], 3*Degree],0,zsol[fele, rad[flat], 3*Degree]}]
+
+
+TODO: easier, not sure this answer is right, hyper discliam?
+
+TODO: elevation
+
+TODO: reference this file, sloppy degrees/radians
 
 TODO: no hit case
 
@@ -83,7 +203,75 @@ ang[h_,r_,theta_] =
 
 dist[h_,r_,theta_] = FullSimplify[r*ang[h,r,theta], conds]
 
+(*
+
+precomp for speed, but this is how I genereated them:
+
+newcoords[h_, r_, theta_, az_, lat_, lon_] = 
+FullSimplify[rotationMatrix[z, lon].
+ rotationMatrix[y, lat-Pi/2].
+  rotationMatrix[z, az+Pi/2].
+  {xsol[h,r,theta], 0, zsol[h,r,theta]}, conds]
+
+newangles[h_, r_, theta_, az_, lat_, lon_] = 
+ Simplify[xyz2sph[newcoords[h,r,theta,az,lat,lon]], conds]
+
+*)
+
+newcoords[h_, r_, theta_, az_, lat_, lon_] = 
+   {Cos[theta]^2*(Cos[lon]*Sin[az]*Sin[lat] + Cos[az]*Sin[lon])*
+      (Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - (h + r)*Tan[theta]) + 
+     Cos[lat]*Cos[lon]*Sqrt[r^2 - Cos[theta]^4*
+         (Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - (h + r)*Tan[theta])^2], 
+    Cos[theta]^2*(Cos[az]*Cos[lon] - Sin[az]*Sin[lat]*Sin[lon])*
+      (-Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] + (h + r)*Tan[theta]) + 
+     Cos[lat]*Sin[lon]*Sqrt[r^2 - Cos[theta]^4*
+         (Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - (h + r)*Tan[theta])^2], 
+    Cos[lat]*Cos[theta]^2*Sin[az]*(-Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] + 
+       (h + r)*Tan[theta]) + Sin[lat]*
+      Sqrt[r^2 - Cos[theta]^4*(Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - 
+           (h + r)*Tan[theta])^2]}
+
+newangles[h_, r_, theta_, az_, lat_, lon_] = 
+   {ArcTan[Cos[theta]^2*(Cos[lon]*Sin[az]*Sin[lat] + Cos[az]*Sin[lon])*
+       (Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - (h + r)*Tan[theta]) + 
+      Cos[lat]*Cos[lon]*Sqrt[r^2 - Cos[theta]^4*
+          (Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - (h + r)*Tan[theta])^2], 
+     Cos[theta]^2*(Cos[az]*Cos[lon] - Sin[az]*Sin[lat]*Sin[lon])*
+       (-Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] + (h + r)*Tan[theta]) + 
+      Cos[lat]*Sin[lon]*Sqrt[r^2 - Cos[theta]^4*
+          (Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - (h + r)*Tan[theta])^2]], 
+    ArcTan[Sqrt[(Cos[theta]^2*(Cos[lon]*Sin[az]*Sin[lat] + Cos[az]*Sin[lon])*
+          (Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - (h + r)*Tan[theta]) + 
+         Cos[lat]*Cos[lon]*Sqrt[r^2 - Cos[theta]^4*
+            (Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - (h + r)*Tan[theta])^2])^2 + 
+       (Cos[theta]^2*(Cos[az]*Cos[lon] - Sin[az]*Sin[lat]*Sin[lon])*
+          (-Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] + (h + r)*Tan[theta]) + 
+         Cos[lat]*Sin[lon]*Sqrt[r^2 - Cos[theta]^4*
+            (Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - (h + r)*Tan[theta])^2])^2], 
+     Cos[lat]*Cos[theta]^2*Sin[az]*(-Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] + 
+        (h + r)*Tan[theta]) + Sin[lat]*
+       Sqrt[r^2 - Cos[theta]^4*(Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - 
+            (h + r)*Tan[theta])^2]], 
+    Sqrt[Abs[Cos[theta]^2*(Cos[lon]*Sin[az]*Sin[lat] + Cos[az]*Sin[lon])*
+          (Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - (h + r)*Tan[theta]) + 
+         Cos[lat]*Cos[lon]*Sqrt[r^2 - Cos[theta]^4*
+            (Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - (h + r)*Tan[theta])^2]]^2 + 
+     Abs[Cos[lat]*Cos[theta]^2*Sin[az]*(-Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] + 
+           (h + r)*Tan[theta]) + Sin[lat]*Sqrt[r^2 - Cos[theta]^4*
+            (Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - (h + r)*Tan[theta])^2]]^2 + 
+      Abs[Cos[theta]^2*(Cos[az]*Cos[lon] - Sin[az]*Sin[lat]*Sin[lon])*
+          (-Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] + (h + r)*Tan[theta]) + 
+         Cos[lat]*Sin[lon]*Sqrt[r^2 - Cos[theta]^4*
+             (Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - (h + r)*Tan[theta])^2]]^2]}
+
 (* FORMULAS END HERE *)
+
+TODO: slightly more accurate formula for rad
+
+TODO: fourth powers of cosine scary!
+
+TODO: convinced simpler answer
 
 (* 
 
@@ -135,6 +323,8 @@ shadowhitT[lat_, lon_, h_, v_] := Solve[Norm[sph2xyz[lon, lat, 1 + h]
 + t*v] == 1, t]
 
 (*
+
+TODO: shadows "bend"
 
 putting it together (shadow cast in opposite direction)
 
@@ -707,12 +897,6 @@ tan 5 = height / dist so dist = height / tan 5 or 43.162 km
 14km at 15 degrees
 
 6.5km at 30 degrees
-
-flon = (138+43/60+52/3600)*Degree
-flat = (35+21/60+29/3600)*Degree
-
-(* kilometers *)
-fele = 3776240/1000000
 
 sph2xyz[flon, flat, rad[flat]+fele]
 

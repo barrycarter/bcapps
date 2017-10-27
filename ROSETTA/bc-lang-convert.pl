@@ -9,7 +9,9 @@
 require "/usr/local/lib/bclib.pl";
 
 # NOTE: "1.,2.,3." does NOT work w/ ruby, use 1.0, 2.0, 3.0, etc
-$args = "1.5,2.3";
+# $args = "1.5,2.3";
+
+$args = "";
 
 # functions that "thread" (in Mathematica) and their binary versions
 # TODO: not even close to complete
@@ -97,7 +99,7 @@ for $i (sort keys %lang) {
     debug("CURLANG GAMMA", %curlang);
 
     # attempt to write right here
-    open(A,">/tmp/blc.$curlang{extension}");
+    open(A,">>/tmp/blc.$curlang{extension}");
     print A join("\n", ($curlang{prefix}, $curlang{fdef},
 			$curlang{pdef}, $curlang{postfix})),"\n";
     close(A);
