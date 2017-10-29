@@ -1,0 +1,9 @@
+SELECT ?food ?foodLabel ?item ?itemLabel WHERE {
+ ?food wdt:P31* ?item .
+ ?item wdt:P279* wd:Q2095
+SERVICE wikibase:label{bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en".} 
+}
+
+
+http://tinyurl.com/yb3umr4e
+
