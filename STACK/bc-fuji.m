@@ -193,13 +193,15 @@ TODO: make sure I have the correct hitting point
 
 TODO: why azel not SPICE (refraction)
 
-
-
-(* FORMULAS START HERE *)
+<formulas>
 
 conds = {h>0, r>0, h<r, 0 < theta < Pi/2, Element[x, Reals]}
 
 z[theta_,x_] = -Tan[theta]*x + r + h
+
+(*
+
+precomp for speed, but this is how I genereated them:
 
 xsol[h_,r_,theta_] = 
 FullSimplify[Simplify[Solve[z[theta,x]^2 + x^2==r^2, x, Reals],conds]
@@ -212,10 +214,6 @@ ang[h_,r_,theta_] =
 
 dist[h_,r_,theta_] = FullSimplify[r*ang[h,r,theta], conds]
 
-(*
-
-precomp for speed, but this is how I genereated them:
-
 newcoords[h_, r_, theta_, az_, lat_, lon_] = 
 FullSimplify[rotationMatrix[z, lon].
  rotationMatrix[y, lat-Pi/2].
@@ -226,6 +224,23 @@ newangles[h_, r_, theta_, az_, lat_, lon_] =
  Simplify[xyz2sph[newcoords[h,r,theta,az,lat,lon]], conds]
 
 *)
+
+xsol[h_, r_, theta_] = (h + r)*Cos[theta]*Sin[theta] - 
+    Sqrt[-(h*(h + 2*r)*Cos[theta]^4) + r^2*Cos[theta]^2*Sin[theta]^2]
+
+zsol[h_, r_, theta_] = Sqrt[r^2 - (-((h + r)*Cos[theta]*Sin[theta]) + 
+       Sqrt[-(h*(h + 2*r)*Cos[theta]^4) + r^2*Cos[theta]^2*Sin[theta]^2])^2]
+
+ang[h_, r_, theta_] = ArcTan[((h + r)*Cos[theta]*Sin[theta] - 
+      Sqrt[-(h*(h + 2*r)*Cos[theta]^4) + r^2*Cos[theta]^2*Sin[theta]^2])/
+     Sqrt[r^2 - (-((h + r)*Cos[theta]*Sin[theta]) + 
+         Sqrt[-(h*(h + 2*r)*Cos[theta]^4) + r^2*Cos[theta]^2*Sin[theta]^2])^2]]
+
+dist[h_, r_, theta_] = 
+   r*ArcTan[((h + r)*Cos[theta]*Sin[theta] - Sqrt[-(h*(h + 2*r)*Cos[theta]^4) + 
+         r^2*Cos[theta]^2*Sin[theta]^2])/
+      Sqrt[r^2 - (-((h + r)*Cos[theta]*Sin[theta]) + 
+         Sqrt[-(h*(h + 2*r)*Cos[theta]^4) + r^2*Cos[theta]^2*Sin[theta]^2])^2]]
 
 newcoords[h_, r_, theta_, az_, lat_, lon_] = 
    {Cos[theta]^2*(Cos[lon]*Sin[az]*Sin[lat] + Cos[az]*Sin[lon])*
@@ -274,7 +289,15 @@ newangles[h_, r_, theta_, az_, lat_, lon_] =
          Cos[lat]*Sin[lon]*Sqrt[r^2 - Cos[theta]^4*
              (Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - (h + r)*Tan[theta])^2]]^2]}
 
-(* FORMULAS END HERE *)
+(* critical theta = one solution only *)
+
+ctheta[h_,r_] = ArcTan[Sqrt[(h^2-r^2)]/r]
+
+(* critical distance *)
+
+cdist[h_,r_] = Simplify[dist[h,r,ctheta[h,r]],conds]
+
+</formulas>
 
 TODO: slightly more accurate formula for rad
 
@@ -1178,11 +1201,65 @@ HADecLat2azEl[1.34967, decl, lat]/Degree
 
 ok, setting sun.. lets do the math
 
+testing:
+
+cirital theta?
+
+cthet = FullSimplify[1/ArcTan[Sqrt[(r+h)^2-r^2]/(r+h)],conds]
+
+the +- on the two sols is
+
+test1359 = Simplify[Solve[z[theta,x]^2 + x^2==r^2, x, Reals],conds]
+
+Simplify[test1359[[1,1,2,1]] + test1359[[2,1,2,1]],conds]
+
+Simplify[(test1359[[1,1,2,1]] + test1359[[2,1,2,1]])/2,conds]
+
+answer: (h + r) Sin[2 theta]
+
+unchaning term below?
+
+half that is: (h + r) Cos[theta] Sin[theta]
+
+FullSimplify[(test1359[[1,1,2,1]] - test1359[[2,1,2,1]])/2,conds]
 
 
+cos(theta) = sin(90-theta) = r/(r+h)
 
+sin(theta) = cos(90-theta) = Sqrt[(r+h)^2-r^2]
 
+(* general case: when does line hit circle *)
 
+lhc[m_, b_, cx_, cy_, r_] =
+ Solve[(m*x+b-cy)^2 + (x-cx)^2 == r^2, x]
 
+Simplify[lhc[m,b,0,0,r]]
 
+the solutions become one when
+
+(1+m^2)*r^2 - b^2 is 0
+
+Solve[(1+m^2)*r^2 - b^2 == 0, m]
+
+or when slope is Sqrt[b^2-r^2]/r
+
+in my case
+
+ArcTan[(h^2-r^2)/r]
+
+maybe not
+
+Simplify[(lhc[m,b,0,0,r][[1,1,2]] + lhc[m,b,0,0,r][[2,1,2]])/2]
+
+that's -b*m/(1+m^2)
+
+Simplify[(lhc[m,b,0,0,r][[1,1,2]] - lhc[m,b,0,0,r][[2,1,2]])/2]
+
+test = Simplify[lhc[Sqrt[b^2-r^2]/r, b, 0, 0, r]]
+
+yes, one solution only, 
+
+r*Sqrt[b^2-r^2]/b
+
+Sqrt[(h^2-r^2)]/r 
 

@@ -246,3 +246,8 @@ alias scanit "bc-scan-pic-brighton.pl"
 # may add more procs later, currently only these two
 
 alias stopit "sudo killall -STOP recollindex zpaq rcltar"
+
+# start mathematica with the <formula(s)> section of given file; useful
+# for reloads (note careful avoidance of $)
+
+alias math2 "perl -0777 -ple 's%^(.*?)<formulas>%%s; s%</formulas>.*%%s' \!* | tee /tmp/mathstart.m; math -initfile /tmp/mathstart.m"
