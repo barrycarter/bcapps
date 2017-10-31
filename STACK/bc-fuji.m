@@ -20,7 +20,20 @@ We want to find where this line intersects our sphere. This occurs when it's dis
 
 $\sqrt{x^2+z(x)^2}=r$
 
-As per the diagram, this occurs at two points. We want the solution with the lower x value:
+The number of solutions depends on the value of $\theta$. The "critical" value of theta is $\tan ^{-1}\left(\frac{\sqrt{h} \sqrt{h+2 r}}{r}\right)$:
+
+  - If $\theta$ is less than this critical value, there is no solution and the mountaintop's shadow never hits the Earth at all.
+
+  - If $\theta$ is greater than this critical value, there are two solutions, and the mountaintop shadow hits the Earth at the lower of the two x values. This will be our primary case.
+
+  - If $\theta$ is exactly equal to the critical value:
+
+    - There is exactly one solution
+    - The shadow hits at a distance of $r \tan ^{-1}\left(\frac{\sqrt{h (h+2 r)}}{r}\right)$ from the mountaintop
+    - This is the maximum distance the shadow can fall
+    - Since this also represents the maximum distance one can see from the mountaintop, it agrees with [Wikipedia's exact horizon formula](https://en.wikipedia.org/wiki/Horizon#Geometrical_model)
+
+Returning to our primary case, we find the lower value of $x$ and the correspoing $z$ by solving $\sqrt{x^2+z(x)^2}=r$ as above. The results:
 
 $
    x=\cos ^2(\theta ) \left((h+r) \tan (\theta )-\sqrt{r^2 \sec ^2(\theta
@@ -1386,4 +1399,9 @@ Plot[x^2 + (5-3*x)^2, {x,1,2}]
 
 
 
+
+TODO: re read and consistent on mountain/earth/etc
+
+TODO: flat earth leewhere
+As per the diagram, this occurs at two points. We want the solution with the lower x value:
 

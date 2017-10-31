@@ -2,6 +2,8 @@
 
 # attempts to convert a formula into many different languages
 
+# --only: only convert given function
+
 # TODO: rename this rosetta or is that overdone?
 
 # TODO: long-term, use proper temp/subr var conventions for each lang
@@ -44,6 +46,18 @@ while ($funcs=~s%<function name="(.*?)">(.*?)</function>%%s) {
   while ($info=~s%<(.*?)>(.*?)</\1>%%s) {
     $func{$name}{$1} = $2;
   }
+
+  # mark inactive if --only given
+  if ($globopts{only} && ($func{$name}{fname} ne $globopts{only})) {
+    $func{$name}{active} = 0;
+  }
+
+  # don't run if inactive
+  unless ($func{$name}{active}) {next;}
+
+  # if only doing one function, ignore others
+  debug("COMPATING $globopts{only} to $func{$name}{fname}");
+
 
   # multiline is just to make it look nice
   $func{$name}{body}=~s/\s+/ /g;
@@ -115,6 +129,7 @@ for $i (sort keys %lang) {
     # and the code to print it as a test (TODO: improve slightly)
     $curlang{pdef}=~s/<fname>/$curfunc{fname}/g;
     $curlang{pdef}=~s/<args>/$curfunc{argtest}/g;
+    $curlang{pdef}=~s/<cval>/$curfunc{answer}}/g;
 
     debug("CURFUNC GAMMA", %curfunc);
     debug("CURLANG GAMMA", %curlang);
@@ -125,7 +140,6 @@ for $i (sort keys %lang) {
     $curlang{run}=~s%<file>%/tmp/blc.$curlang{extension}%g;
   }
     push(@run, $curlang{run});
-    debug("RUN: $curlang{run}");
     close(A);
 }
 

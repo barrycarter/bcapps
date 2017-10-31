@@ -53,6 +53,35 @@
 </body>
 </function>
 
+# TODO: had to add ArcTan[1,...] artifically since my convertor can't
+# handle single argument arctan
+
+<function name="ang">
+<active>1</active>
+<nice>ang(h,r,theta)</nice>
+<vars>h,r,theta</vars>
+<desc>see bc-fuji.m</descc>
+<argtest>4.0, 7000.0, 0.0523599</argtest>
+<answer>0.0123617</answer>
+<body>
+ArcTan[1,Times[Plus[Times[Plus[h, r], Cos[theta], Sin[theta]], Times[-1, Power[Plus[Times[-1, h, Plus[h, Times[2, r]], Power[Cos[theta], 4]], Times[Power[r, 2], Power[Cos[theta], 2], Power[Sin[theta], 2]]], Rational[1, 2]]]], Power[Plus[Power[r, 2], Times[-1, Power[Plus[Times[-1, Plus[h, r], Cos[theta], Sin[theta]], Power[Plus[Times[-1, h, Plus[h, Times[2, r]], Power[Cos[theta], 4]], Times[Power[r, 2], Power[Cos[theta], 2], Power[Sin[theta], 2]]], Rational[1, 2]]], 2]]], Rational[-1, 2]]]]
+</body>
+</function>
+
+# again had to add ArcTan[1, ...]
+<function name="dist">
+<active>1</active>
+<nice>dist(h,r,theta)</nice>
+<vars>h,r,theta</vars>
+<desc>see bc-fuji.m</descc>
+<argtest>4.0, 7000.0, 0.0523599</argtest>
+<answer>86.532</answer>
+<body>
+Times[r, ArcTan[1,Times[Plus[Times[Plus[h, r], Cos[theta], Sin[theta]], Times[-1, Power[Plus[Times[-1, h, Plus[h, Times[2, r]], Power[Cos[theta], 4]], Times[Power[r, 2], Power[Cos[theta], 2], Power[Sin[theta], 2]]], Rational[1, 2]]]], Power[Plus[Power[r, 2], Times[-1, Power[Plus[Times[-1, Plus[h, r], Cos[theta], Sin[theta]], Power[Plus[Times[-1, h, Plus[h, Times[2, r]], Power[Cos[theta], 4]], Times[Power[r, 2], Power[Cos[theta], 2], Power[Sin[theta], 2]]], Rational[1, 2]]], 2]]], Rational[-1, 2]]]]]</body>
+</function>
+
+
+
 # TODO: for php and perl need some sort of array vs scalar printer (print_r?)
 
 <function name="newcoords">
@@ -64,65 +93,30 @@
 <argtest>4.0, 7000.0, 0.0698132, 1.65806, 0.610865, -1.85878</argtest>
 <answer>{-1623.7, -5462.79, 4064.66}</answer>
 <body>
-   List[Plus[Times[Power[Cos[theta], 2],
-
-      Plus[Times[Cos[lon], Sin[az], Sin[lat]], Times[Cos[az], Sin[lon]]],
-
-      Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]],
-
-         Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]],
-
-       Times[-1, Plus[h, r], Tan[theta]]]],
-
-     Times[Cos[lat], Cos[lon], Power[Plus[Power[r, 2],
-
-        Times[-1, Power[Cos[theta], 4],
-
-         Power[Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]],
-
-             Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]],
-
-           Times[-1, Plus[h, r], Tan[theta]]], 2]]], Rational[1, 2]]]],
-
-    Plus[Times[Power[Cos[theta], 2],
-
-      Plus[Times[Cos[az], Cos[lon]], Times[-1, Sin[az], Sin[lat], Sin[lon]]],
-
-      Plus[Times[-1, Power[Plus[Times[-1, Power[Plus[h, r], 2]],
-
-          Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]]],
-
-       Times[Plus[h, r], Tan[theta]]]],
-
-     Times[Cos[lat], Sin[lon], Power[Plus[Power[r, 2],
-
-        Times[-1, Power[Cos[theta], 4],
-
-         Power[Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]],
-
-             Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]],
-
-           Times[-1, Plus[h, r], Tan[theta]]], 2]]], Rational[1, 2]]]],
-
-    Plus[Times[Cos[lat], Power[Cos[theta], 2], Sin[az],
-
-      Plus[Times[-1, Power[Plus[Times[-1, Power[Plus[h, r], 2]],
-
-          Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]]],
-
-       Times[Plus[h, r], Tan[theta]]]],
-
-     Times[Sin[lat], Power[Plus[Power[r, 2],
-
-        Times[-1, Power[Cos[theta], 4],
-
-         Power[Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]],
-
-             Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]],
-
-           Times[-1, Plus[h, r], Tan[theta]]], 2]]], Rational[1, 2]]]]]
-
+List[Plus[Times[Power[Cos[theta], 2], Plus[Times[Cos[lon], Sin[az], Sin[lat]], Times[Cos[az], Sin[lon]]], Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]], Times[-1, Plus[h, r], Tan[theta]]]], Times[Cos[lat], Cos[lon], Power[Plus[Power[r, 2], Times[-1, Power[Cos[theta], 4], Power[Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]], Times[-1, Plus[h, r], Tan[theta]]], 2]]], Rational[1, 2]]]], Plus[Times[Power[Cos[theta], 2], Plus[Times[Cos[az], Cos[lon]], Times[-1, Sin[az], Sin[lat], Sin[lon]]], Plus[Times[-1, Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]]], Times[Plus[h, r], Tan[theta]]]], Times[Cos[lat], Sin[lon], Power[Plus[Power[r, 2], Times[-1, Power[Cos[theta], 4], Power[Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]], Times[-1, Plus[h, r], Tan[theta]]], 2]]], Rational[1, 2]]]], Plus[Times[Cos[lat], Power[Cos[theta], 2], Sin[az], Plus[Times[-1, Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]]], Times[Plus[h, r], Tan[theta]]]], Times[Sin[lat], Power[Plus[Power[r, 2], Times[-1, Power[Cos[theta], 4], Power[Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]], Times[-1, Plus[h, r], Tan[theta]]], 2]]], Rational[1, 2]]]]]
 </body>
+</function>
+
+<function name="secant">
+<active>0</active>
+<nice>sec(x)</nice>
+<vars>x</vars>
+<desc>Testing secant function, since Mathematica uses it, but most languages don't have it</desc>
+<argtest>0.628319</argtest>
+<answer>1.23607</answer>
+<body>Sec[x]</body>
+</function>
+
+<function name="newangles">
+<active>1</active>
+<nice>newangles(h,r,theta,az,lat,lon)</nice>
+<vars>h,r,theta,az,lat,lon</vars>
+<desc>see bc-fuji.m</descc>
+# TODO: must convert argtest numbers to .0 decimals too
+<argtest>4.0, 7000.0, 0.0698132, 1.65806, 0.610865, -1.85878</argtest>
+<answer>{-1.85971, 0.619547, 7000.}</answer>
+<body>
+List[ArcTan[Plus[Times[Power[Cos[theta], 2], Plus[Times[Cos[lon], Sin[az], Sin[lat]], Times[Cos[az], Sin[lon]]], Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]], Times[-1, Plus[h, r], Tan[theta]]]], Times[Cos[lat], Cos[lon], Power[Plus[Power[r, 2], Times[-1, Power[Cos[theta], 4], Power[Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]], Times[-1, Plus[h, r], Tan[theta]]], 2]]], Rational[1, 2]]]], Plus[Times[Power[Cos[theta], 2], Plus[Times[Cos[az], Cos[lon]], Times[-1, Sin[az], Sin[lat], Sin[lon]]], Plus[Times[-1, Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]]], Times[Plus[h, r], Tan[theta]]]], Times[Cos[lat], Sin[lon], Power[Plus[Power[r, 2], Times[-1, Power[Cos[theta], 4], Power[Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]], Times[-1, Plus[h, r], Tan[theta]]], 2]]], Rational[1, 2]]]]], ArcTan[Power[Plus[Power[Plus[Times[Power[Cos[theta], 2], Plus[Times[Cos[lon], Sin[az], Sin[lat]], Times[Cos[az], Sin[lon]]], Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]], Times[-1, Plus[h, r], Tan[theta]]]], Times[Cos[lat], Cos[lon], Power[Plus[Power[r, 2], Times[-1, Power[Cos[theta], 4], Power[Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]], Times[-1, Plus[h, r], Tan[theta]]], 2]]], Rational[1, 2]]]], 2], Power[Plus[Times[Power[Cos[theta], 2], Plus[Times[Cos[az], Cos[lon]], Times[-1, Sin[az], Sin[lat], Sin[lon]]], Plus[Times[-1, Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]]], Times[Plus[h, r], Tan[theta]]]], Times[Cos[lat], Sin[lon], Power[Plus[Power[r, 2], Times[-1, Power[Cos[theta], 4], Power[Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]], Times[-1, Plus[h, r], Tan[theta]]], 2]]], Rational[1, 2]]]], 2]], Rational[1, 2]], Plus[Times[Cos[lat], Power[Cos[theta], 2], Sin[az], Plus[Times[-1, Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]]], Times[Plus[h, r], Tan[theta]]]], Times[Sin[lat], Power[Plus[Power[r, 2], Times[-1, Power[Cos[theta], 4], Power[Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]], Times[-1, Plus[h, r], Tan[theta]]], 2]]], Rational[1, 2]]]]], Power[Plus[Power[Abs[Plus[Times[Power[Cos[theta], 2], Plus[Times[Cos[lon], Sin[az], Sin[lat]], Times[Cos[az], Sin[lon]]], Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]], Times[-1, Plus[h, r], Tan[theta]]]], Times[Cos[lat], Cos[lon], Power[Plus[Power[r, 2], Times[-1, Power[Cos[theta], 4], Power[Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]], Times[-1, Plus[h, r], Tan[theta]]], 2]]], Rational[1, 2]]]]], 2], Power[Abs[Plus[Times[Cos[lat], Power[Cos[theta], 2], Sin[az], Plus[Times[-1, Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]]], Times[Plus[h, r], Tan[theta]]]], Times[Sin[lat], Power[Plus[Power[r, 2], Times[-1, Power[Cos[theta], 4], Power[Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]], Times[-1, Plus[h, r], Tan[theta]]], 2]]], Rational[1, 2]]]]], 2], Power[Abs[Plus[Times[Power[Cos[theta], 2], Plus[Times[Cos[az], Cos[lon]], Times[-1, Sin[az], Sin[lat], Sin[lon]]], Plus[Times[-1, Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]]], Times[Plus[h, r], Tan[theta]]]], Times[Cos[lat], Sin[lon], Power[Plus[Power[r, 2], Times[-1, Power[Cos[theta], 4], Power[Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]], Times[-1, Plus[h, r], Tan[theta]]], 2]]], Rational[1, 2]]]]], 2]], Rational[1, 2]]]</body>
 </function>
 
 <function name="secant">
