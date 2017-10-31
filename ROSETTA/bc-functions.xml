@@ -97,16 +97,6 @@ List[Plus[Times[Power[Cos[theta], 2], Plus[Times[Cos[lon], Sin[az], Sin[lat]], T
 </body>
 </function>
 
-<function name="secant">
-<active>0</active>
-<nice>sec(x)</nice>
-<vars>x</vars>
-<desc>Testing secant function, since Mathematica uses it, but most languages don't have it</desc>
-<argtest>0.628319</argtest>
-<answer>1.23607</answer>
-<body>Sec[x]</body>
-</function>
-
 <function name="newangles">
 <active>1</active>
 <nice>newangles(h,r,theta,az,lat,lon)</nice>
@@ -127,6 +117,17 @@ List[ArcTan[Plus[Times[Power[Cos[theta], 2], Plus[Times[Cos[lon], Sin[az], Sin[l
 <argtest>0.628319</argtest>
 <answer>1.23607</answer>
 <body>Sec[x]</body>
+</function>
+
+# TODO: not really crazy about this function, should be RADecLatLon2azEl
+<function name="HADecLat2azEl">
+<active>1</active>
+<nice>HADecLat2azEl(ha, dec, lat)</nice>
+<vars>ha,dec,lat</vars>
+<desc>Given the hour angle and declination of a celestial object and the latitude of the observer, return the azimuth and elevation of the object as viewed by the observer</desc>
+<argtest>0.891449,-0.891258,-2.06972</argtest>
+<answer>{-0.597235, 0.516821}</answer>
+<body>List[ArcTan[Plus[Times[Cos[lat], Sin[dec]], Times[-1, Cos[dec], Cos[ha], Sin[lat]]], Times[-1, Cos[dec], Sin[ha]]], ArcTan[Power[Plus[Times[Power[Cos[dec], 2], Power[Sin[ha], 2]], Power[Plus[Times[Cos[lat], Sin[dec]], Times[-1, Cos[dec], Cos[ha], Sin[lat]]], 2]], Rational[1, 2]], Plus[Times[Cos[dec], Cos[ha], Cos[lat]], Times[Sin[dec], Sin[lat]]]]]</body>
 </function>
 
 <function name="shadowlandlat">

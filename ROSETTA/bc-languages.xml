@@ -121,7 +121,7 @@
 <fdef><fname> <- function(<vars>) {return(<body>)}</fdef>
 <pdef>print(<fname>(<args>)); print("exp: <cval>")</pdef>
 <comment># <comment></comment>
-<run>R --no-save < <file></run>
+<run>R --slave --no-save < <file></run>
 </language>
 
 # TODO: perl and Mathematica (though I generate FROM Mathematica, so

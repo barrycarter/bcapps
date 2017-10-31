@@ -53,11 +53,11 @@ while ($funcs=~s%<function name="(.*?)">(.*?)</function>%%s) {
   }
 
   # don't run if inactive
-  unless ($func{$name}{active}) {next;}
-
-  # if only doing one function, ignore others
-  debug("COMPATING $globopts{only} to $func{$name}{fname}");
-
+  unless ($func{$name}{active}) {
+    # delete from hash so it wont show up in loop below
+    delete $func{$name};
+    next;
+  }
 
   # multiline is just to make it look nice
   $func{$name}{body}=~s/\s+/ /g;
@@ -223,6 +223,8 @@ sub multiline_parse {
     return "var$varcount";
   }
 
+  # TODO: generalize these special cases
+
   # TODO: actually use <math> field
   # power
   if ($f eq "Power") {
@@ -239,6 +241,19 @@ sub multiline_parse {
     }
 
     # always return this
+    return "var$varcount";
+  }
+
+  # in Python/Ruby, abs() is builtin, math.fabs() is math object
+  if ($f eq "Abs") {
+    if ($lang eq "python") {
+      $hash{$varcount} = "${math}fabs($args[0])";
+    } elsif ($lang eq "ruby") {
+      # this may not work
+      $hash{$varcount} = "($args[0].abs())";
+    } else {
+      $hash{$varcount} = "${math}abs($args[0])";
+    }
     return "var$varcount";
   }
 
