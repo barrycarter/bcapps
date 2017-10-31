@@ -291,11 +291,17 @@ newangles[h_, r_, theta_, az_, lat_, lon_] =
 
 (* critical theta = one solution only *)
 
-ctheta[h_,r_] = ArcTan[Sqrt[(h^2-r^2)]/r]
+ctheta[h_,r_] = ArcTan[Sqrt[h]*Sqrt[h+2*r]/r]
 
 (* critical distance *)
 
 cdist[h_,r_] = Simplify[dist[h,r,ctheta[h,r]],conds]
+
+(* longitude, latitude and elevation of Mt Fuji *)
+
+fuji[lon] = (138+43/60+52/3600)*Degree
+fuji[lat] = (35+21/60+29/3600)*Degree
+fuji[ele] = 3776240/1000000
 
 </formulas>
 
@@ -1231,17 +1237,73 @@ sin(theta) = cos(90-theta) = Sqrt[(r+h)^2-r^2]
 (* general case: when does line hit circle *)
 
 lhc[m_, b_, cx_, cy_, r_] =
- Solve[(m*x+b-cy)^2 + (x-cx)^2 == r^2, x]
+ Solve[Sqrt[(m*x+b-cy)^2 + (x-cx)^2] == r, x, Reals]
 
-Simplify[lhc[m,b,0,0,r]]
+test0921[m_, b_, r_] =
+ Solve[Sqrt[x^2 + (m*x+b)^2] == r, x, Reals]
+
+test0902[m_, b_, r_] =
+ Simplify[Solve[x^2 + (m*x+b)^2 == r^2, x, Reals], {r>0, r>b, b>0}]
+
+Solve[x^2 + (m*x + 1/10)^2 == 1, x, Reals]
+
+
+(1+m^2)*x^2 + 2bm*x + (b^2-r^2) = 0
+
+(2*b*m)^2 - 4*(b^2-r^2)*(1+m^2)
+
+i lose the negative solution, so let's try
+
+Simplify[Solve[x^2 + (-m*x+b)^2 == r^2, x, Reals],conds]
+
+the deter is
+
+x^2 + (-m*x+b)^2-r^2
+
+A = 1+m^2
+C = b^2 - r^2
+
+B = -2*b*m
+
+Simplify[Solve[x^2 + (-2*x+b)^2 == r^2, x, Reals],conds]
+
+Simplify[Solve[Norm[{x, m*x+b}] == r, x, Reals], {r>b,r>0,b>0,m<0}]
+
+Solve[(1+m^2)*r^2-b^2==0, m]
+
+Simplify[Solve[Norm[{x, -5*x+b}] == r, x, Reals], {r>b,r>0,b>0,m<0}]
+
+
+
+test0848 = Simplify[lhc[m,b,0,0,r], {conds, b<r}]
+
+Simplify[(test0848[[1,1,2]]+test0848[[2,1,2]])/2]
+
+test0849 = Simplify[(test0848[[1,1,2]]-test0848[[2,1,2]])/2]
+
+Simplify[Solve[test0849 == 0, m]]
+
+let's use r = 1, b=0.1
+
+test0853 = lhc[m, 1/10, 0, 0, 1]
+
+Simplify[(test0853[[1,1,2]]+test0853[[2,1,2]])/2]
+
+Simplify[(test0853[[1,1,2]]-test0853[[2,1,2]])/2]
+
+
+
+
 
 the solutions become one when
 
 (1+m^2)*r^2 - b^2 is 0
 
-Solve[(1+m^2)*r^2 - b^2 == 0, m]
+test0847 = Solve[(1+m^2)*r^2 - b^2 == 0, m]
 
 or when slope is Sqrt[b^2-r^2]/r
+
+
 
 in my case
 
@@ -1262,4 +1324,66 @@ yes, one solution only,
 r*Sqrt[b^2-r^2]/b
 
 Sqrt[(h^2-r^2)]/r 
+
+Simplify[
+Reduce[{x^2+y^2 == r^2, y == m*x+b}, x, Reals], m<0]
+
+x^2 + (m*x+b)^2 - r^2
+
+C = b^2 - r^2
+
+B = 2*b*m
+
+A = 1+m^2
+
+(2*b*m)^2 - 4*(1+m^2)*(b^2-r^2)
+
+Reduce[(2*b*m)^2 - 4*(1+m^2)*(b^2-r^2) == 0, m]
+
+x^2 + (m*x+1/10)^2 - 1^2
+
+(little b is 1/10, r is 1)
+
+C = -99/100 (consistent w/ above)
+
+B = m/5 (consistent w/ above)
+
+A = 1 + m^2 (consistent w/ above)
+
+m/5^2 - 4*(-99/100)*(1+m^2)
+
+Solve[x^2 + (Sqrt[r^2-b^2]/r*x + b)^2 == r^2, x]
+
+derv is 0 at
+
+-b*m/(1+m^2)
+
+dist at that point is
+
+xmin = -b*m/(1+m^2)
+
+Simplify[xmin^2 + (m*xmin+b)^2]
+
+b^2/(1+m^2)
+
+single solution when that distance is r^2
+
+Solve[b^2/(1+m^2) == r^2, m]
+
+Solve[b^2/n == r^2, n]
+
+n -> b^2/r^2
+
+Solve[1+m^2 == b^2/r^2, m]
+
+b^2/r^2-1
+
+Plot[x^2 + (5-3*x)^2, {x,-5,5}]
+
+3/2 is min poit
+
+Plot[x^2 + (5-3*x)^2, {x,1,2}]
+
+
+
 
