@@ -130,40 +130,7 @@ List[ArcTan[Plus[Times[Power[Cos[theta], 2], Plus[Times[Cos[lon], Sin[az], Sin[l
 <body>List[ArcTan[Plus[Times[Cos[lat], Sin[dec]], Times[-1, Cos[dec], Cos[ha], Sin[lat]]], Times[-1, Cos[dec], Sin[ha]]], ArcTan[Power[Plus[Times[Power[Cos[dec], 2], Power[Sin[ha], 2]], Power[Plus[Times[Cos[lat], Sin[dec]], Times[-1, Cos[dec], Cos[ha], Sin[lat]]], 2]], Rational[1, 2]], Plus[Times[Cos[dec], Cos[ha], Cos[lat]], Times[Sin[dec], Sin[lat]]]]]</body>
 </function>
 
-<function name="shadowlandlat">
-<active>0</active>
-<nice>no clean format</nice>
-<vars>h,r,theta,az,lat,lon</vars>
-<argtest>3.77624, 6371.02, 0.00162647, -1.0904, 0.617114, 2.42131</argtest>
-<desc>Gives the latitude of where a shadow lands per bc-fuji.m</desc>
-<body>
-ArcTan[Power[Plus[Power[Plus[Times[Power[Cos[theta], 2], Plus[Times[Cos[lon], Sin[az], Sin[lat]], Times[Cos[az], Sin[lon]]], Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]], Times[-1, Plus[h, r], Tan[theta]]]], Times[Cos[lat], Cos[lon], Power[Plus[Power[r, 2], Times[-1, Power[Cos[theta], 4], Power[Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]], Times[-1, Plus[h, r], Tan[theta]]], 2]]], Rational[1, 2]]]], 2], Power[Plus[Times[Power[Cos[theta], 2], Plus[Times[Cos[az], Cos[lon]], Times[-1, Sin[az], Sin[lat], Sin[lon]]], Plus[Times[-1, Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]]], Times[Plus[h, r], Tan[theta]]]], Times[Cos[lat], Sin[lon], Power[Plus[Power[r, 2], Times[-1, Power[Cos[theta], 4], Power[Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]], Times[-1, Plus[h, r], Tan[theta]]], 2]]], Rational[1, 2]]]], 2]], Rational[1, 2]], Plus[Times[Cos[lat], Power[Cos[theta], 2], Sin[az], Plus[Times[-1, Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]]], Times[Plus[h, r], Tan[theta]]]], Times[Sin[lat], Power[Plus[Power[r, 2], Times[-1, Power[Cos[theta], 4], Power[Plus[Power[Plus[Times[-1, Power[Plus[h, r], 2]], Times[Power[r, 2], Power[Sec[theta], 2]]], Rational[1, 2]], Times[-1, Plus[h, r], Tan[theta]]], 2]]], Rational[1, 2]]]]]
-</body>
-</function>
 
-<function name="testing0002">
-<nice>{sqrt(cos(y) + sin(x)), sqrt(cos(x) + sin(y))}</nice>
-<vars>x,y</vars>
-<desc>A simple test to show how functions can be converted to langs</desc>
-# TODO: manually editing Rational[1,2] to have decimals = bad!
-<body>
-
-List[Power[Plus[Cos[y], Sin[x]], Rational[1.0, 2.0]],
-Power[Plus[Cos[x], Sin[y]], Rational[1.0, 2.0]]]
-
-</body>
-</function>
-
-# below does NOT work with Perl, returning scalar vs array (may be pdef issue)
-<function name="testing0003">
-<active>0</active>
-<nice>cos(x)^2+cos(y)^2</nice>
-<vars>x,y</vars>
-<desc>Test with single value return</desc>
-<body>
-Plus[Cos[Power[x, 2]], Cos[Power[y, 2]]]
-</body>
-</function>
 
 # attempt to define a dictionary (using "key: val", not true XML)
 

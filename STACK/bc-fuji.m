@@ -128,6 +128,8 @@ $
     )\right)^2}\right)
 $
 
+******* STOP WRITING HERE, more functions
+
 A celestial object's altazimuthal path through the sky is determined by two factors: (TODO: position?)
 
   - the object's declination
@@ -140,14 +142,29 @@ finalpos[h_, r_, ha_, dec_, lat_, lon_] =
  newangles[h, r, HADecLat2azEl[ha, dec, lat][[2]], 
  HADecLat2azEl[ha, dec, lat][[1]], lat, lon]
 
-N[finalpos[fele, rad[flat], 0, ecliptic, flat, flon]/Degree]
+test1748 = Table[{ha, 
+ N[finalpos[fuji[ele], rad[fuji[lat]], ha*Pi/12, ecliptic, fuji[lat],
+fuji[lon]]/Degree]}, {ha,0,24,0.25}]
 
-N[finalpos[fele, rad[flat], 7/12*Pi, ecliptic, flat, flon]/Degree]
+Transpose[Take[Transpose[Transpose[test1748][[2]]],2]]
 
-N[finalpos[fele, rad[flat], -7/12*Pi, ecliptic, flat, flon]/Degree]
+(* dislike writing this as a module, but easier because of checks *)
+
+shadowLatLon[h_, r_, ha_, dec_, lat_, lon_] := Module[{az,el},
+ {az,el} =  HADecLat2azEl[ha, dec, lat];
+ If[el<ctheta[h,r], Return[]];
+ Return[Take[newangles[h,r,el,az,lat,lon],2]];
+];
 
 
 
+
+
+N[finalpos[fuji[ele], rad[fuji[lat]], 7/12*Pi, ecliptic, fuji[lat],
+fuji[lon]]/Degree]
+
+N[finalpos[fuji[ele], rad[fuji[lat]], -7/12*Pi, ecliptic, fuji[lat],
+fuji[lon]]/Degree]
 
 HADecLat2azEl[0, ecliptic, flat]
 
@@ -155,11 +172,11 @@ HADecLat2azEl[Pi/2, ecliptic, flat]
 
 HADecLat2azEl[7/12*Pi, ecliptic, flat]
 
-newangles[fele, rad[flat], 78*Degree, 180*Degree, flat, flon]/Degree
+newangles[fuji[ele], rad[flat], 78*Degree, 180*Degree, flat, flon]/Degree
 
-newangles[fele, rad[flat], 13.3081*Degree, -70.5272*Degree, flat, flon]/Degree
+newangles[fuji[ele], rad[flat], 13.3081*Degree, -70.5272*Degree, flat, flon]/Degree
 
-newangles[fele, rad[flat], 2.09319*Degree, -62.4753*Degree, flat, flon]/Degree
+newangles[fuji[ele], rad[flat], 2.09319*Degree, -62.4753*Degree, flat, flon]/Degree
 
 TODO: fuji peak lat/lon not certain
 
@@ -180,12 +197,12 @@ fele = 3776240/1000000
 
 6371.02
 
-newangles[fele, rad[flat], 3*Degree, 155*Degree, flat, flon]/Degree
+newangles[fuji[ele], rad[flat], 3*Degree, 155*Degree, flat, flon]/Degree
 
-N[{xsol[fele, rad[flat], 3*Degree],0,zsol[fele, rad[flat], 3*Degree]}]
+N[{xsol[fuji[ele], rad[flat], 3*Degree],0,zsol[fuji[ele], rad[flat], 3*Degree]}]
 
 rotationMatrix[z, 155*Degree + Pi/2].
- N[{xsol[fele, rad[flat], 3*Degree],0,zsol[fele, rad[flat], 3*Degree]}]
+ N[{xsol[fuji[ele], rad[flat], 3*Degree],0,zsol[fuji[ele], rad[flat], 3*Degree]}]
 
 rotationMatrix[y, flat-Pi/2].
  rotationMatrix[z, 155*Degree + Pi/2].
@@ -899,9 +916,11 @@ Pi-az
 
 https://astronomy.stackexchange.com/questions/23165/viewing-diamond-fuji
 
-TODO: refraction, Earth's curvature, Earth's ellipticity, ask Japanese Twitter peeps, DEM files for viewer, historical images
+TODO: refraction, Earth's curvature, Earth's ellipticity, ask Japanese Twitter peeps, DEM files for viewer, historical images, refraction of fuji too
 
 TODO: similar mountains incl Rainier?
+
+TODO: precision vs accuracy
 
 TODO: shape of sun shadow, general concept of non flat horizon
 
@@ -1404,4 +1423,8 @@ TODO: re read and consistent on mountain/earth/etc
 
 TODO: flat earth leewhere
 As per the diagram, this occurs at two points. We want the solution with the lower x value:
+
+TODO: no moon diamond
+
+TODO: answer is wrong
 
