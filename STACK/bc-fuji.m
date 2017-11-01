@@ -225,7 +225,8 @@ TODO: why azel not SPICE (refraction)
 
 <formulas>
 
-conds = {h>0, r>0, h<r, 0 < theta < Pi/2, Element[x, Reals]}
+conds = {h>0, r>0, h<r, 0 < theta < Pi/2, Element[x, Reals], -Pi/2 <
+lat < Pi/2, -Pi < lon < Pi}
 
 z[theta_,x_] = -Tan[theta]*x + r + h
 
@@ -248,6 +249,24 @@ newcoords[h_, r_, theta_, az_, lat_, lon_] =
 FullSimplify[rotationMatrix[z, lon].
  rotationMatrix[y, lat-Pi/2].
   rotationMatrix[z, az+Pi/2].
+  {xsol[h,r,theta], 0, zsol[h,r,theta]}, conds]
+
+TODO: below is still wrong, but closer
+
+newcoords[h_, r_, theta_, az_, lat_, lon_] = 
+FullSimplify[rotationMatrix[z, lon-Pi/2].
+ rotationMatrix[x, Pi/2-lat].
+  rotationMatrix[z, az+Pi/2].
+  {xsol[h,r,theta], 0, zsol[h,r,theta]}, conds]
+
+TODO: this appears to be correct at last
+
+TODO: none of the formulas below have been corrected for this
+
+newcoords[h_, r_, theta_, az_, lat_, lon_] = 
+FullSimplify[rotationMatrix[z, lon-Pi/2].
+ rotationMatrix[x, Pi/2-lat].
+  rotationMatrix[z, -az+Pi/2].
   {xsol[h,r,theta], 0, zsol[h,r,theta]}, conds]
 
 newangles[h_, r_, theta_, az_, lat_, lon_] = 
