@@ -232,7 +232,7 @@ z[theta_,x_] = -Tan[theta]*x + r + h
 
 (*
 
-precomp for speed, but this is how I genereated them:
+precomp for speed, but this is how I generated them:
 
 xsol[h_,r_,theta_] = 
 FullSimplify[Simplify[Solve[z[theta,x]^2 + x^2==r^2, x, Reals],conds]
@@ -251,18 +251,6 @@ FullSimplify[rotationMatrix[z, lon].
   rotationMatrix[z, az+Pi/2].
   {xsol[h,r,theta], 0, zsol[h,r,theta]}, conds]
 
-TODO: below is still wrong, but closer
-
-newcoords[h_, r_, theta_, az_, lat_, lon_] = 
-FullSimplify[rotationMatrix[z, lon-Pi/2].
- rotationMatrix[x, Pi/2-lat].
-  rotationMatrix[z, az+Pi/2].
-  {xsol[h,r,theta], 0, zsol[h,r,theta]}, conds]
-
-TODO: this appears to be correct at last
-
-TODO: none of the formulas below have been corrected for this
-
 newcoords[h_, r_, theta_, az_, lat_, lon_] = 
 FullSimplify[rotationMatrix[z, lon-Pi/2].
  rotationMatrix[x, Pi/2-lat].
@@ -274,66 +262,67 @@ newangles[h_, r_, theta_, az_, lat_, lon_] =
 
 *)
 
-xsol[h_, r_, theta_] = (h + r)*Cos[theta]*Sin[theta] - 
-    Sqrt[-(h*(h + 2*r)*Cos[theta]^4) + r^2*Cos[theta]^2*Sin[theta]^2]
+xsol[h_, r_, theta_] = Cos[theta]^2*(-Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] + 
+     (h + r)*Tan[theta])
 
-zsol[h_, r_, theta_] = Sqrt[r^2 - (-((h + r)*Cos[theta]*Sin[theta]) + 
-       Sqrt[-(h*(h + 2*r)*Cos[theta]^4) + r^2*Cos[theta]^2*Sin[theta]^2])^2]
+zsol[h_, r_, theta_] = 
+   Sqrt[r^2 - Cos[theta]^4*(Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - 
+        (h + r)*Tan[theta])^2]
 
-ang[h_, r_, theta_] = ArcTan[((h + r)*Cos[theta]*Sin[theta] - 
-      Sqrt[-(h*(h + 2*r)*Cos[theta]^4) + r^2*Cos[theta]^2*Sin[theta]^2])/
-     Sqrt[r^2 - (-((h + r)*Cos[theta]*Sin[theta]) + 
-         Sqrt[-(h*(h + 2*r)*Cos[theta]^4) + r^2*Cos[theta]^2*Sin[theta]^2])^2]]
+ang[h_, r_, theta_] = 
+   ArcTan[(Cos[theta]^2*(-Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] + 
+       (h + r)*Tan[theta]))/
+     Sqrt[r^2 - Cos[theta]^4*(Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - 
+          (h + r)*Tan[theta])^2]]
 
 dist[h_, r_, theta_] = 
-   r*ArcTan[((h + r)*Cos[theta]*Sin[theta] - Sqrt[-(h*(h + 2*r)*Cos[theta]^4) + 
-         r^2*Cos[theta]^2*Sin[theta]^2])/
-      Sqrt[r^2 - (-((h + r)*Cos[theta]*Sin[theta]) + 
-         Sqrt[-(h*(h + 2*r)*Cos[theta]^4) + r^2*Cos[theta]^2*Sin[theta]^2])^2]]
+   r*ArcTan[(Cos[theta]^2*(-Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] + 
+        (h + r)*Tan[theta]))/Sqrt[r^2 - Cos[theta]^4*
+         (Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - (h + r)*Tan[theta])^2]]
 
 newcoords[h_, r_, theta_, az_, lat_, lon_] = 
-   {Cos[theta]^2*(Cos[lon]*Sin[az]*Sin[lat] + Cos[az]*Sin[lon])*
-      (Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - (h + r)*Tan[theta]) + 
+   {Cos[theta]^2*(Cos[az]*Cos[lon]*Sin[lat] + Sin[az]*Sin[lon])*
+      (-Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] + (h + r)*Tan[theta]) + 
      Cos[lat]*Cos[lon]*Sqrt[r^2 - Cos[theta]^4*
          (Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - (h + r)*Tan[theta])^2], 
-    Cos[theta]^2*(Cos[az]*Cos[lon] - Sin[az]*Sin[lat]*Sin[lon])*
+    Cos[theta]^2*(-(Cos[lon]*Sin[az]) + Cos[az]*Sin[lat]*Sin[lon])*
       (-Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] + (h + r)*Tan[theta]) + 
      Cos[lat]*Sin[lon]*Sqrt[r^2 - Cos[theta]^4*
          (Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - (h + r)*Tan[theta])^2], 
-    Cos[lat]*Cos[theta]^2*Sin[az]*(-Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] + 
-       (h + r)*Tan[theta]) + Sin[lat]*
+    -(Cos[az]*Cos[lat]*Cos[theta]^2*(-Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] + 
+        (h + r)*Tan[theta])) + Sin[lat]*
       Sqrt[r^2 - Cos[theta]^4*(Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - 
            (h + r)*Tan[theta])^2]}
 
 newangles[h_, r_, theta_, az_, lat_, lon_] = 
-   {ArcTan[Cos[theta]^2*(Cos[lon]*Sin[az]*Sin[lat] + Cos[az]*Sin[lon])*
-       (Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - (h + r)*Tan[theta]) + 
+   {ArcTan[Cos[theta]^2*(Cos[az]*Cos[lon]*Sin[lat] + Sin[az]*Sin[lon])*
+       (-Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] + (h + r)*Tan[theta]) + 
       Cos[lat]*Cos[lon]*Sqrt[r^2 - Cos[theta]^4*
           (Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - (h + r)*Tan[theta])^2], 
-     Cos[theta]^2*(Cos[az]*Cos[lon] - Sin[az]*Sin[lat]*Sin[lon])*
+     Cos[theta]^2*(-(Cos[lon]*Sin[az]) + Cos[az]*Sin[lat]*Sin[lon])*
        (-Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] + (h + r)*Tan[theta]) + 
       Cos[lat]*Sin[lon]*Sqrt[r^2 - Cos[theta]^4*
           (Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - (h + r)*Tan[theta])^2]], 
-    ArcTan[Sqrt[(Cos[theta]^2*(Cos[lon]*Sin[az]*Sin[lat] + Cos[az]*Sin[lon])*
-          (Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - (h + r)*Tan[theta]) + 
+    ArcTan[Sqrt[(Cos[theta]^2*(Cos[az]*Cos[lon]*Sin[lat] + Sin[az]*Sin[lon])*
+          (-Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] + (h + r)*Tan[theta]) + 
          Cos[lat]*Cos[lon]*Sqrt[r^2 - Cos[theta]^4*
             (Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - (h + r)*Tan[theta])^2])^2 + 
-       (Cos[theta]^2*(Cos[az]*Cos[lon] - Sin[az]*Sin[lat]*Sin[lon])*
+       (Cos[theta]^2*(-(Cos[lon]*Sin[az]) + Cos[az]*Sin[lat]*Sin[lon])*
           (-Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] + (h + r)*Tan[theta]) + 
          Cos[lat]*Sin[lon]*Sqrt[r^2 - Cos[theta]^4*
             (Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - (h + r)*Tan[theta])^2])^2], 
-     Cos[lat]*Cos[theta]^2*Sin[az]*(-Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] + 
-        (h + r)*Tan[theta]) + Sin[lat]*
+     -(Cos[az]*Cos[lat]*Cos[theta]^2*(-Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] + 
+         (h + r)*Tan[theta])) + Sin[lat]*
        Sqrt[r^2 - Cos[theta]^4*(Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - 
             (h + r)*Tan[theta])^2]], 
-    Sqrt[Abs[Cos[theta]^2*(Cos[lon]*Sin[az]*Sin[lat] + Cos[az]*Sin[lon])*
-          (Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - (h + r)*Tan[theta]) + 
+    Sqrt[Abs[Cos[theta]^2*(Cos[az]*Cos[lon]*Sin[lat] + Sin[az]*Sin[lon])*
+          (-Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] + (h + r)*Tan[theta]) + 
          Cos[lat]*Cos[lon]*Sqrt[r^2 - Cos[theta]^4*
             (Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - (h + r)*Tan[theta])^2]]^2 + 
-     Abs[Cos[lat]*Cos[theta]^2*Sin[az]*(-Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] + 
-           (h + r)*Tan[theta]) + Sin[lat]*Sqrt[r^2 - Cos[theta]^4*
+     Abs[Cos[az]*Cos[lat]*Cos[theta]^2*(-Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] + 
+           (h + r)*Tan[theta]) - Sin[lat]*Sqrt[r^2 - Cos[theta]^4*
             (Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - (h + r)*Tan[theta])^2]]^2 + 
-      Abs[Cos[theta]^2*(Cos[az]*Cos[lon] - Sin[az]*Sin[lat]*Sin[lon])*
+      Abs[Cos[theta]^2*(-(Cos[lon]*Sin[az]) + Cos[az]*Sin[lat]*Sin[lon])*
           (-Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] + (h + r)*Tan[theta]) + 
          Cos[lat]*Sin[lon]*Sqrt[r^2 - Cos[theta]^4*
              (Sqrt[-(h + r)^2 + r^2*Sec[theta]^2] - (h + r)*Tan[theta])^2]]^2]}
@@ -362,162 +351,9 @@ TODO: convinced simpler answer
 
 (* 
 
-Convert from NESW frame (north = y axis) to lat/lon frame
-
-frame2frame[lat_, lon_] =  Transpose[{
- {-Sin[lon], Cos[lon], 0},
- {-(Cos[lon] Sin[lat]), -(Sin[lat] Sin[lon]), Cos[lat]},
- {Cos[lat] Cos[lon], Cos[lat] Sin[lon], Sin[lat]}
-}];
-
-*)
-
-frame2frame[lat_, lon_] = {{-Sin[lon], -(Cos[lon]*Sin[lat]), 
-     Cos[lat]*Cos[lon]}, {Cos[lon], -(Sin[lat]*Sin[lon]), Cos[lat]*Sin[lon]}, 
-    {0, Cos[lat], Sin[lat]}}
-
-(*
-
-direction of shadow cast by object, given az/el of sun, converted to
-frame of lat/lon
-
-shadowdir[az_,el_,lat_,lon_] = frame2frame[lat,lon].sph2xyz[az+Pi,el,1]
-
-
-*)
-
-shadowdir[az_, el_, lat_, lon_] = {Cos[lat]*Cos[lon]*Sin[el] + 
-     Cos[el]*Cos[lon]*Sin[az]*Sin[lat] + Cos[az]*Cos[el]*Sin[lon], 
-    -(Cos[az]*Cos[el]*Cos[lon]) + Cos[lat]*Sin[el]*Sin[lon] + 
-     Cos[el]*Sin[az]*Sin[lat]*Sin[lon], -(Cos[el]*Cos[lat]*Sin[az]) + 
-     Sin[el]*Sin[lat]}
-
-(*
-
-Given a point h above the unit sphere at lat lon, and a vector v, find
-t such that h+t*v hits the sphere
-
-shadowhitT[lat_, lon_, h_, v_] := 
- Solve[Norm[sph2xyz[lon, lat, 1+h] + t*v] == 1, t]
-
-and then use that value to find lat/lon of shadow hit
-
-shadowhitLL[h_, v_, t_] ....
-
-*)
-
-shadowhitT[lat_, lon_, h_, v_] := Solve[Norm[sph2xyz[lon, lat, 1 + h]
-+ t*v] == 1, t]
-
-(*
-
 TODO: shadows "bend"
 
 putting it together (shadow cast in opposite direction)
-
-conds = {-Pi/2 < lat < Pi/2, -Pi < lon < Pi, -Pi/2 < el < Pi/2, -Pi <
-az < Pi, h> 0}
-
-frame2frame[lat_, lon_] = Simplify[{{-Sin[lon], -(Cos[lon]*Sin[lat]),
-Cos[lat]*Cos[lon]}, {Cos[lon], -(Sin[lat]*Sin[lon]),
-Cos[lat]*Sin[lon]}, {0, Cos[lat], Sin[lat]}}, conds]
-
-
-v = FullSimplify[frame2frame[lat,lon].sph2xyz[az+Pi,el,1], conds]
-
-(* fullsimplify hangs below as does simplify, limiting solution to
-reals hangs *)
-
-tsol = t /. 
- Simplify[Solve[Norm[sph2xyz[lat,lon,1+h] + v*t] == 1, t][[1]],conds]
-
-tsol = -(Cos[lat]^2*Cos[lon]^2*Sin[el]) - h*Cos[lat]^2*Cos[lon]^2*Sin[el] + 
-    Cos[az]*Cos[el]*Cos[lon]^2*Sin[lat] + h*Cos[az]*Cos[el]*Cos[lon]^2*
-     Sin[lat] - Cos[el]*Cos[lat]*Cos[lon]^2*Sin[az]*Sin[lat] - 
-    h*Cos[el]*Cos[lat]*Cos[lon]^2*Sin[az]*Sin[lat] - 
-    Cos[az]*Cos[el]*Cos[lat]*Cos[lon]*Sin[lon] - h*Cos[az]*Cos[el]*Cos[lat]*
-     Cos[lon]*Sin[lon] + Cos[el]*Cos[lat]*Sin[az]*Sin[lon] + 
-    h*Cos[el]*Cos[lat]*Sin[az]*Sin[lon] - Sin[el]*Sin[lat]*Sin[lon] - 
-    h*Sin[el]*Sin[lat]*Sin[lon] - Cos[lat]*Cos[lon]*Sin[el]*Sin[lat]*Sin[lon]- 
-    h*Cos[lat]*Cos[lon]*Sin[el]*Sin[lat]*Sin[lon] - 
-    Cos[el]*Cos[lon]*Sin[az]*Sin[lat]^2*Sin[lon] - h*Cos[el]*Cos[lon]*Sin[az]*
-     Sin[lat]^2*Sin[lon] - 
-    Sqrt[-4*h*(2 + h) + 4*(1 + h)^2*(Cos[lat]^2*Cos[lon]^2*Sin[el] + 
-          Sin[lat]*(-(Cos[az]*Cos[el]*Cos[lon]^2) + 
-            (Sin[el] + Cos[el]*Cos[lon]*Sin[az]*Sin[lat])*Sin[lon]) + 
-          Cos[lat]*(Cos[lon]*Sin[el]*Sin[lat]*Sin[lon] + 
-            Cos[el]*(Cos[lon]^2*Sin[az]*Sin[lat] + Cos[az]*Cos[lon]*Sin[lon] - 
-              Sin[az]*Sin[lon])))^2]/2
-
-
-(* fullsimplify hangs below *)
-
-xyz = Simplify[sph2xyz[lat,lon,1+h]+v*tsol,conds]
-
-xyz = {(1 + h)*Cos[lat]*Cos[lon] - (Cos[lat]*Cos[lon]*Sin[el] + 
-    Cos[el]*(Cos[lon]*Sin[az]*Sin[lat] + Cos[az]*Sin[lon]))*
-   (Cos[lat]^2*Cos[lon]^2*Sin[el] + h*Cos[lat]^2*Cos[lon]^2*Sin[el] - 
-    Cos[az]*Cos[el]*Cos[lon]^2*Sin[lat] - h*Cos[az]*Cos[el]*Cos[lon]^2*
-     Sin[lat] + Cos[el]*Cos[lat]*Cos[lon]^2*Sin[az]*Sin[lat] + 
-    h*Cos[el]*Cos[lat]*Cos[lon]^2*Sin[az]*Sin[lat] + 
-    Cos[az]*Cos[el]*Cos[lat]*Cos[lon]*Sin[lon] + h*Cos[az]*Cos[el]*Cos[lat]*
-     Cos[lon]*Sin[lon] - Cos[el]*Cos[lat]*Sin[az]*Sin[lon] - 
-    h*Cos[el]*Cos[lat]*Sin[az]*Sin[lon] + Sin[el]*Sin[lat]*Sin[lon] + 
-    h*Sin[el]*Sin[lat]*Sin[lon] + Cos[lat]*Cos[lon]*Sin[el]*Sin[lat]*
-     Sin[lon] + h*Cos[lat]*Cos[lon]*Sin[el]*Sin[lat]*Sin[lon] + 
-    Cos[el]*Cos[lon]*Sin[az]*Sin[lat]^2*Sin[lon] + 
-    h*Cos[el]*Cos[lon]*Sin[az]*Sin[lat]^2*Sin[lon] + 
-    Sqrt[-4*h*(2 + h) + 4*(1 + h)^2*(Cos[lat]^2*Cos[lon]^2*Sin[el] + 
-          Sin[lat]*(-(Cos[az]*Cos[el]*Cos[lon]^2) + 
-            (Sin[el] + Cos[el]*Cos[lon]*Sin[az]*Sin[lat])*Sin[lon]) + 
-          Cos[lat]*(Cos[lon]*Sin[el]*Sin[lat]*Sin[lon] + 
-            Cos[el]*(Cos[lon]^2*Sin[az]*Sin[lat] + Cos[az]*Cos[lon]*Sin[
-                lon] - Sin[az]*Sin[lon])))^2]/2), 
- (1 + h)*Cos[lon]*Sin[lat] + (-(Cos[az]*Cos[el]*Cos[lon]) + 
-    (Cos[lat]*Sin[el] + Cos[el]*Sin[az]*Sin[lat])*Sin[lon])*
-   (-(Cos[lat]^2*Cos[lon]^2*Sin[el]) - h*Cos[lat]^2*Cos[lon]^2*Sin[el] + 
-    Cos[az]*Cos[el]*Cos[lon]^2*Sin[lat] + h*Cos[az]*Cos[el]*Cos[lon]^2*
-     Sin[lat] - Cos[el]*Cos[lat]*Cos[lon]^2*Sin[az]*Sin[lat] - 
-    h*Cos[el]*Cos[lat]*Cos[lon]^2*Sin[az]*Sin[lat] - 
-    Cos[az]*Cos[el]*Cos[lat]*Cos[lon]*Sin[lon] - h*Cos[az]*Cos[el]*Cos[lat]*
-     Cos[lon]*Sin[lon] + Cos[el]*Cos[lat]*Sin[az]*Sin[lon] + 
-    h*Cos[el]*Cos[lat]*Sin[az]*Sin[lon] - Sin[el]*Sin[lat]*Sin[lon] - 
-    h*Sin[el]*Sin[lat]*Sin[lon] - Cos[lat]*Cos[lon]*Sin[el]*Sin[lat]*
-     Sin[lon] - h*Cos[lat]*Cos[lon]*Sin[el]*Sin[lat]*Sin[lon] - 
-    Cos[el]*Cos[lon]*Sin[az]*Sin[lat]^2*Sin[lon] - 
-    h*Cos[el]*Cos[lon]*Sin[az]*Sin[lat]^2*Sin[lon] - 
-    Sqrt[-4*h*(2 + h) + 4*(1 + h)^2*(Cos[lat]^2*Cos[lon]^2*Sin[el] + 
-          Sin[lat]*(-(Cos[az]*Cos[el]*Cos[lon]^2) + 
-            (Sin[el] + Cos[el]*Cos[lon]*Sin[az]*Sin[lat])*Sin[lon]) + 
-          Cos[lat]*(Cos[lon]*Sin[el]*Sin[lat]*Sin[lon] + 
-            Cos[el]*(Cos[lon]^2*Sin[az]*Sin[lat] + Cos[az]*Cos[lon]*Sin[
-                lon] - Sin[az]*Sin[lon])))^2]/2), 
- (1 + h)*Sin[lon] + (Cos[el]*Cos[lat]*Sin[az] - Sin[el]*Sin[lat])*
-   (Cos[lat]^2*Cos[lon]^2*Sin[el] + h*Cos[lat]^2*Cos[lon]^2*Sin[el] - 
-    Cos[az]*Cos[el]*Cos[lon]^2*Sin[lat] - h*Cos[az]*Cos[el]*Cos[lon]^2*
-     Sin[lat] + Cos[el]*Cos[lat]*Cos[lon]^2*Sin[az]*Sin[lat] + 
-    h*Cos[el]*Cos[lat]*Cos[lon]^2*Sin[az]*Sin[lat] + 
-    Cos[az]*Cos[el]*Cos[lat]*Cos[lon]*Sin[lon] + h*Cos[az]*Cos[el]*Cos[lat]*
-     Cos[lon]*Sin[lon] - Cos[el]*Cos[lat]*Sin[az]*Sin[lon] - 
-    h*Cos[el]*Cos[lat]*Sin[az]*Sin[lon] + Sin[el]*Sin[lat]*Sin[lon] + 
-    h*Sin[el]*Sin[lat]*Sin[lon] + Cos[lat]*Cos[lon]*Sin[el]*Sin[lat]*
-     Sin[lon] + h*Cos[lat]*Cos[lon]*Sin[el]*Sin[lat]*Sin[lon] + 
-    Cos[el]*Cos[lon]*Sin[az]*Sin[lat]^2*Sin[lon] + 
-    h*Cos[el]*Cos[lon]*Sin[az]*Sin[lat]^2*Sin[lon] + 
-    Sqrt[-4*h*(2 + h) + 4*(1 + h)^2*(Cos[lat]^2*Cos[lon]^2*Sin[el] + 
-          Sin[lat]*(-(Cos[az]*Cos[el]*Cos[lon]^2) + 
-            (Sin[el] + Cos[el]*Cos[lon]*Sin[az]*Sin[lat])*Sin[lon]) + 
-          Cos[lat]*(Cos[lon]*Sin[el]*Sin[lat]*Sin[lon] + 
-            Cos[el]*(Cos[lon]^2*Sin[az]*Sin[lat] + Cos[az]*Cos[lon]*Sin[
-                lon] - Sin[az]*Sin[lon])))^2]/2)}
-
-Simplify[xyz2sph[xyz],conds]
-
-sol = xyz2sph[xyz]
-
-
-
-solu[lat_, lon_, az_, el_, h_] = sol
 
 rainier 14411 ft at 46°51#10#N 121°45#37#W
 
@@ -525,410 +361,6 @@ rainier 14411 ft at 46°51#10#N 121°45#37#W
 
 
 (* 
-
-These formulas generate the x y points below:
-
-(* the y value for any x for line with angle theta *)
-
-y[r_,h_,theta_,x_] = r+h-x*Tan[theta]
-
-(* distance squared from origin for any x *)
-
-dist2[r_,h_,theta_,x_] = x^2 + y[r,h,theta,x]^2
-
-conds = {x > 0, theta > 0, theta < Pi/2, r > 0, h > 0, h < r}
-
-(* the useful x solution to where the line hits the sphere *)
-
-xsol[r_,h_,theta_] = Simplify[Solve[dist2[r,h,theta,x] == r^2, x,
-Reals], conds][[1,1,2,1]]
-
-(* and the y solution [implicit] *)
-
-ysol[r_,h_,theta_] = Simplify[y[r,h,theta,xsol[r,h,theta]], conds]
-
-*)
-
-xsol[r_, h_, theta_] = Cos[theta]^2*((h + r)*Tan[theta] - 
-     Sqrt[-(h*(h + 2*r)) + r^2*Tan[theta]^2])
-
-ysol[r_, h_, theta_] = Cos[theta]*((h + r)*Cos[theta] + 
-     Sin[theta]*Sqrt[-(h*(h + 2*r)) + r^2*Tan[theta]^2])
-
-(* now to rotate back into position *)
-
-let's say lon is 122*Degree, and lat is 35*Degree
-
-ptest = sph2xyz[122.*Degree, 35.*Degree, 1.]
-
-rotationMatrix[z, 90*Degree-122*Degree].ptest
-
-
-rotationMatrix[x, 35*Degree].rotationMatrix[z, 90*Degree-122*Degree].ptest
-
-rotationMatrix[z, az]
-
-
-rotationMatrix[z, 270*Degree-95*Degree].
- rotationMatrix[x, 35*Degree].
- rotationMatrix[z, 90*Degree-122*Degree].{0,0,1}
-
-
-rotationMatrix[z, 3*Pi/2-az].rotationMatrix[x, lat].rotationMatrix[z, Pi/2-lon]
-
-test1727[az_, lat_, lon_] = 
-Simplify[Inverse[
-rotationMatrix[z, 3*Pi/2-az].rotationMatrix[x, lat].rotationMatrix[z, Pi/2-lon]
-]]
-
-
-test1728 = {xsol[1,0.1,50*Degree], ysol[1,0.1,50*Degree], 0}
-
-test1727[100*Degree, 35*Degree, -106.5*Degree].test1728
-
-test1727[100*Degree, 35*Degree, -106.5*Degree].{0,1,0}
-
-after azimuth rotation, north pole is in yz plane elev lat
-
-so -lat around x axis brings it to z axis then a z rot by lon brings it std pos (with standard orientation)
-
-so location is at {0,1,0} with north in yz plane, say 
-
-{0, Cos[5*Degree], Sin[5*Degree]}
-
-example w abq nm, in std pos:
-
-sph2xyz[-106.5*Degree, 35.*Degree, 1]
-
-{-0.232652, -0.785419, 0.573576} = pos
-
-{0.232652, 0.785419, 0.426424} = dir to n pole (not unit vector)
-
-above is wrong but lets proceed
-
-rotationMatrix[z, 106.5*Degree-90*Degree].
- {-0.232652, -0.785419, 0.573576}
-
-rotationMatrix[z, 106.5*Degree+90*Degree].
- {-0.232652, -0.785419, 0.573576}
-
-rotationMatrix[z, 106.5*Degree+90*Degree].
- {0.232652, 0.785419, 0.426424}
-
-rotationMatrix[x, 35*Degree].
- rotationMatrix[z, 106.5*Degree+90*Degree].
-  {-0.232652, -0.785419, 0.573576}
-
-rotationMatrix[x, 35*Degree].
- rotationMatrix[z, 106.5*Degree+90*Degree].
- {0.232652, 0.785419, 0.426424}
-
-ok, sun shining from east 10 deg high on short height albq
-
-xsol[1, 0.01, 10*Degree]
-ysol[1, 0.01, 10*Degree]
-
-{0.0710425, 0.997473, 0}
-
-convert back to standard world coords
-
-rotationMatrix[z, -(106.5*Degree+90*Degree)].
- rotationMatrix[x, -35*Degree].
- {0,1,0}
-
-rotationMatrix[z, -(106.5*Degree+90*Degree)].
- rotationMatrix[x, -35*Degree].
- {0.0710425, 0.997473, 0} 
-
-sph2xyz[-106.5*Degree, 36.*Degree, 1] -
-sph2xyz[-106.5*Degree, 35.*Degree, 1]
-
-xyz2sph[
-sph2xyz[-106.5*Degree, 35.01*Degree, 1] -
-sph2xyz[-106.5*Degree, 35.*Degree, 1]
-]/Degree
-
-{73.5, 54.995, 0.01}
-
-so the direction I consider north is
-
-sph2xyz[180*Degree-106.5*Degree, 90*Degree-35*Degree, 1]
-
-or
-
-{0.162905, 0.549956, 0.819152}
-
-rotationMatrix[x, 35*Degree]. 
- rotationMatrix[z, 106.5*Degree+90*Degree]. 
-  {-0.232652, -0.785419, 0.573576} 
-
-rotationMatrix[x, 35*Degree]. 
- rotationMatrix[z, 106.5*Degree+90*Degree]. 
- {0.162905, 0.549956, 0.819152} 
-
-NOT: yes, that is z axis after transform, but up is now y down ick
-
-rotationMatrix[x, 180*Degree-35*Degree]. 
- rotationMatrix[z, 106.5*Degree-90*Degree]. 
-  {-0.232652, -0.785419, 0.573576} 
-
-rotationMatrix[x, 180*Degree-35*Degree]. 
- rotationMatrix[z, 106.5*Degree-90*Degree]. 
- {0.162905, 0.549956, 0.819152}  
-
-rotationMatrix[x, 180*Degree-35*Degree]. 
- rotationMatrix[z, 106.5*Degree-90*Degree]. 
-  {0.232652, 0.785419, -0.573576} 
-
-rotationMatrix[z, 180*Degree].
- rotationMatrix[x, 180*Degree-35*Degree]. 
-  rotationMatrix[z, 106.5*Degree-90*Degree]. 
-  {0.232652, 0.785419, -0.573576} 
-
-before y rotation I want...
-
-{0,1,0} -> {Cos[lat] Cos[lon], Cos[lat] Sin[lon], Sin[lat]}
-
-above is junk... the up vector points away from center anyway
-
-rotationMatrix[x, 35*Degree]. 
- rotationMatrix[z, 106.5*Degree+90*Degree]. 
-  {-0.232652, -0.785419, 0.573576} 
-
-rotationMatrix[x, 35*Degree]. 
- rotationMatrix[z, 106.5*Degree+90*Degree]. 
- {0.162905, 0.549956, 0.819152} 
-
-
-xsol[1,1/100, 10*Degree]
-ysol[1,1/100, 10*Degree]
-
-rotationMatrix[z, -(-lon+Pi/2)].
- rotationMatrix[x, -lat].
- {xsol[1,1/100, 10*Degree],ysol[1,1/100, 10*Degree],0}
-
-
-xsol[1,1/10000, 10*Degree]
-ysol[1,1/10000, 10*Degree]
-
-rotationMatrix[z, -(-106*Degree+Pi/2)].
- rotationMatrix[x, -35*Degree].
- {xsol[1,1/10000, 10*Degree],ysol[1,1/10000, 10*Degree],0}
-
-xsol[1,1/1000, 10*Degree]
-ysol[1,1/1000, 10*Degree]
-
-rotationMatrix[z, -(-106*Degree+Pi/2)].
- rotationMatrix[x, -35*Degree].
- {xsol[1,1/1000, 10*Degree],ysol[1,1/1000, 10*Degree],0}
-
-test1938 = rotationMatrix[x, 35*Degree]. 
-  rotationMatrix[z, 106.5*Degree+90*Degree]
-
-
-test1941 = test1938.sph2xyz[{-106.5*Degree, 35*Degree, 1}]
-
-test1938.sph2xyz[{-106.5*Degree, 36*Degree, 1}] - test1941
-
-test1938.sph2xyz[{-106.5*Degree, 34*Degree, 1}] 
-
-test1938.sph2xyz[{-105.5*Degree, 35*Degree, 1}] 
-
-sph2xyz[-106.5*Degree, 35.*Degree, 1] - sph2xyz[-105.5*Degree, 35.*Degree, 1]
-
-sph2xyz[-106.5*Degree, 35.*Degree, 1] - sph2xyz[-106.6*Degree, 35.*Degree, 1]
-
-Table[{lon, 
- xyz2sph[sph2xyz[lon*Degree, 60*Degree, 1] - 
-         sph2xyz[lon*Degree-.01*Degree, 60*Degree, 1]]/
- Degree}, {lon,-180,180,10}]
-
-Table[{lat, 
- xyz2sph[sph2xyz[60*Degree, lat*Degree, 1] - 
-         sph2xyz[60*Degree, (lat-.01)*Degree, 1]]/
- Degree}, {lat,-90,90,10}]
-
-Table[{lat, 
- xyz2sph[sph2xyz[122*Degree, lat*Degree, 1] - 
-         sph2xyz[122*Degree, (lat-.01)*Degree, 1]]/
- Degree}, {lat,-90,90,10}]
-
-sph2xyz[lon, lat+Pi/2, 1]
-
-
-
-east[lat_,lon_] = {-Sin[lon], Cos[lon], 0}
-
-north[lat_,lon_] = {-(Cos[lon] Sin[lat]), -(Sin[lat] Sin[lon]), Cos[lat]}
-
-up[lat_,lon_] = {Cos[lat] Cos[lon], Cos[lat] Sin[lon], Sin[lat]}
-
-from std frame to my frame is just:
-
-m[lat_,lon_] = Transpose[{
- {-Sin[lon], Cos[lon], 0},
- {-(Cos[lon] Sin[lat]), -(Sin[lat] Sin[lon]), Cos[lat]},
- {Cos[lat] Cos[lon], Cos[lat] Sin[lon], Sin[lat]}
-}];
-
-simple case:
-
-m[30*Degree, 0].sph2xyz[0*Degree, 5*Degree, 1]
-
-
-
-testing:
-
-sph2xyz[0, 0, 1] should go to east
-
-m[lat,lon].sph2xyz[0, 0, 1]
-
-m[lat,lon].sph2xyz[90*Degree, 0, 1]
-
-m[lat,lon].sph2xyz[0, 90*Degree, 1]
-
-now that these work, lets run tests
-
-obj = sph2xyz[-106.5*Degree, 35.1*Degree, 1]*1001/1000
-
-dir = m[-106.5*Degree, 35.1*Degree].sph2xyz[0.*Degree, 5.*Degree, 1]
-
-Solve[Norm[obj + t*dir] == 1, t]
-
-t -> 0.0018595
-
-xyz2sph[obj + 0.0018595*dir]/Degree
-
-(* exact below *)
-
-obj = sph2xyz[-106*Degree, 35*Degree, 1]*1001/1000
-
-(* dir to sun is... *)
-
-dir = m[-106*Degree, 35*Degree].sph2xyz[0*Degree, 5*Degree, 1]
-
-t0 = t /. Solve[Norm[obj + t*dir] == 1, t][[2]]
-
-Simplify[xyz2sph[obj + t0*dir]/Degree]
-
-these do form a basis
-
-the xy location direction of az, el is sph2xyz[az,el,1] in the "standard" frame
-
-suppose az = 90, sun is elevtude 5 deg, object is 1/1000 earth rad and we are at 35.1/-106.5
-
-obj = sph2xyz[-106.5*Degree, 35.1*Degree, 1]*1001/1000
-
-direction to sun is
-
-m[-106.5*Degree, 35.1*Degree].sph2xyz[90.*Degree, 5.*Degree, 1]
-
-dir = {0.815036, -0.246256, 0.524475}
-
-so shadow is neg that
-
-Solve[Norm[obj + t*dir] == 1, t]
-
-t -> -0.00329084
-
-xyz2sph[obj + -0.00329084*dir]/Degree
-
-with exacts
-
-suppose az = 90, sun is elevtude 5 deg, object is 1/1000 earth rad and we are at 35/-106
-
-obj = sph2xyz[-106*Degree, 35*Degree, 1]*1001/1000
-
-(* dir to sun is... *)
-
-dir = m[-106*Degree, 35*Degree].sph2xyz[90*Degree, 5*Degree, 1]
-
-t0 = t /. Solve[Norm[obj + t*dir] == 1, t][[1]]
-
-Simplify[xyz2sph[obj + t0*dir]/Degree]
-
-with testing
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-I want to map (giving up on below, it's unclean)
-
-east -> {1,0,0}
-
-north -> {0,0,1}
-
-up -> {0,1,0}
-
-but vector addition probably doesn't map like that (but it should since its a LINEAR transform)
-
-Inverse is 
-
-m = {
- {-Sin[lon], Cos[lon], 0},
- {Cos[lat] Cos[lon], Cos[lat] Sin[lon], Sin[lat]},
- {-(Cos[lon] Sin[lat]), -(Sin[lat] Sin[lon]), Cos[lat]}
-};
-
-mi[lat_,lon_] = FullSimplify[Inverse[m]]
-
-mi[35*Degree, -106.5*Degree].sph2xyz[-106.5*Degree, 35*Degree, 1]
-
-mi[35*Degree, -85*Degree].sph2xyz[-85*Degree, 35*Degree, 1]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Pi-az
 
 
 (*
@@ -942,30 +374,6 @@ TODO: similar mountains incl Rainier?
 TODO: precision vs accuracy
 
 TODO: shape of sun shadow, general concept of non flat horizon
-
-Earth orientation: "standard" pos:
-
-{0,0,1}: north pole
-
-{1,0,0}: prime meridian/equator
-
-{0,1,0}: prime meridian/+90E
-
-sph2xyz[0,90*Degree,1]
-sph2xyz[0,0*Degree,1]
-sph2xyz[90*Degree,0,1]
-
-local at lat lon converted
-
-test[lat_,lon_] = rotationMatrix[z,-lon].rotationMatrix[y,lat-Pi/2]
-
-test[0,lon].{0,0,1}
-
-
-test[45*Degree, 45*Degree].{0,0,1}
-
-y = -Sin[5*Degree] + b (for example)
-
 
 *)
 
