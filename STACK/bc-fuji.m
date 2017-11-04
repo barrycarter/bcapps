@@ -152,11 +152,17 @@ Transpose[Take[Transpose[Transpose[test1748][[2]]],2]]
 
 shadowLatLon[h_, r_, ha_, dec_, lat_, lon_] := Module[{az,el},
  {az,el} =  HADecLat2azEl[ha, dec, lat];
- If[el<ctheta[h,r], Return[]];
+ If[el<ctheta[h,r], Return[{0,0}]];
  Return[Take[newangles[h,r,el,az,lat,lon],2]];
 ];
 
+test1833 = Table[{ha, 
+ shadowLatLon[fuji[ele], rad[fuji[lat]], ha*Pi/12, ecliptic, fuji[lat],
+fuji[lon]]/Degree}, {ha,-12,12,0.25}]
 
+Transpose[Take[Transpose[Transpose[test1833][[2]]],2]]
+
+Export["/tmp/temp.csv", %]
 
 
 
@@ -842,9 +848,6 @@ Plot[x^2 + (5-3*x)^2, {x,-5,5}]
 3/2 is min poit
 
 Plot[x^2 + (5-3*x)^2, {x,1,2}]
-
-
-
 
 TODO: re read and consistent on mountain/earth/etc
 

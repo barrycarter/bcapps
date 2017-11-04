@@ -1,5 +1,26 @@
 # shell one liners
 
+# dumps mozilla bookmarks
+
+# TODO: should really make copy and not query directly
+
+# I have two *.default, so *r.default is one of them
+
+# echo "SELECT * FROM moz_bookmarks mb1 JOIN moz_bookmarks mb2 ON (mb1.id = mb2.parent) JOIN moz_places mp ON (mb2.fk = mp.id);"
+
+# echo "SELECT * FROM moz_bookmarks mb1 JOIN moz_bookmarks mb2 ON (mb1.id = mb2.parent) JOIN moz_places mp ON (mb2.fk = mp.id);" | sqlite3 -line /home/barrycarter/.mozilla/firefox/*r.default/places.sqlite
+
+# just the important fields
+# echo "SELECT mb1.title AS t1, mb2.title AS t2, mp.url, mp.title AS t3 FROM moz_bookmarks mb1 JOIN moz_bookmarks mb2 ON (mb1.id = mb2.parent) JOIN moz_places mp ON (mb2.fk = mp.id);" | sqlite3 /home/barrycarter/.mozilla/firefox/*r.default/places.sqlite
+
+# just the important fields all 
+# sqlite3 /home/barrycarter/.mozilla/firefox/*r.default/places.sqlite "SELECT mb1.title AS t1, mb2.title AS t2, mp.url, mp.title AS t3 FROM moz_bookmarks mb1 JOIN moz_bookmarks mb2 ON (mb1.id = mb2.parent) JOIN moz_places mp ON (mb2.fk = mp.id);"
+
+# just the important fields all 
+# ls /home/user/.mozilla/firefox/*/places.sqlite | xargs -I{} -n 1 sqlite3 {} "SELECT mb1.title AS t1, mb2.title AS t2, mp.url, mp.title AS t3 FROM moz_bookmarks mb1 JOIN moz_bookmarks mb2 ON (mb1.id = mb2.parent) JOIN moz_places mp ON (mb2.fk = mp.id);" |sort -u > /home/user/all-firefox-bookmarks.txt
+
+exit;
+
 # spits out every 5 days starting now to 2030-01-01
 
 perl -le 'use Date::Parse; use POSIX; for ($i=time();$i<=1893481200; $i+=86400*5) {print strftime("%Y%m%d", localtime($i));}'
