@@ -858,3 +858,6 @@ TODO: no moon diamond
 
 TODO: answer is wrong
 
+test1116 = GeoPosition[{fuji[lat]/Degree, fuji[lon]/Degree}]
+
+GeoElevationData[test1116]
