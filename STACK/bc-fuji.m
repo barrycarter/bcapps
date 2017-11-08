@@ -933,18 +933,84 @@ SunPosition[GeoPosition[{fuji[lat], fuji[lon]}],
 SunPosition[GeoPosition[{fuji[lat], fuji[lon]}], 
  DateObject[{2014, 11, 15, 6, 27}, TimeZone -> 0]]
 
+SunPosition[GeoPosition[{fuji[lat], fuji[lon]}/Degree], 
+ DateObject[{2014, 11, 15, 15, 27}, TimeZone -> +9]]
+
+{236.30 degrees, 12.47 degrees}
+
+SunPosition[GeoPosition[{fuji[lat], fuji[lon]}/Degree], 
+ DateObject[{2014, 11, 15, 15, 28}, TimeZone -> +9]]
+
+{236.47 degrees, 12.30 degrees}
+
+newangles[fuji[ele], rad[fuji[lat]], 12.30*Degree, 236.47*Degree, fuji[lat],
+ fuji[lon]]/Degree
+
+{138.891, 35.4445} is 1m later
+
+{138.889, 35.4437} was original
+
+newangles[fuji[ele], rad[fuji[lat]], 12.47*Degree, 236.30*Degree, fuji[lat],
+ fuji[lon]]/Degree
+
+
+
 SunPosition[GeoPosition[{fuji[lat], fuji[lon]}], 
  DateObject[{2014, 11, 15, 15, 27}, TimeZone -> +9],
  CelestialSystem -> "Horizon", AltitudeMethod -> "TrueAltitude"]
 
 Out[67]= {109.02 degrees, 11.76 degrees}
 
-
-
-
-
 Entity["Lake", "Yamanka"]
 
 test0815 = WolframAlpha["Lake Yamanka latitude longitude"]
 
 35° 25'N, 138° 52' 30"E
+
+unix2Date[t_] := ToDate[t+2208988800]
+
+
+postime[t_] := Module[{d, s, n},
+ d = ToDate[t+2208988800];
+ s = SunPosition[GeoPosition[{fuji[lat], fuji[lon]}], d];
+ If[s[[2,1]] < 0, Return[]];
+ n = newangles[fuji[ele], rad[fuji[lat]], s[[2,1]]*Degree, s[[1,1]]*Degree, 
+  fuji[lat], fuji[lon]];
+ If[Im[n[[1]]] > 0, Return[]];
+ Return[Take[n,2]/Degree];
+]
+
+
+
+TODO: how well does flat approx work? 
+
+test1126 = GeoPosition[{fuji[lat]/Degree, fuji[lon]/Degree}]
+
+test1127 = GeoElevationData[test1126]
+
+test1129 = GeoPosition[{fuji[lat]/Degree, fuji[lon]/Degree, test1127}]
+
+
+test1128 = GeoElevationData[{
+ GeoPosition[{fuji[lat]/Degree-0.001, -107}], GeoPosition[{36, -105}]}]
+
+GeoPositionENU[{0, 0, Quantity[10, "Kilometers"]}, 
+ Entity["City", {"NewYork", "NewYork", "UnitedStates"}]]
+
+GeoPosition[%]
+
+GeoPositionENU[{Quantity[100, "Kilometers"], 0, 0}, 
+ Entity["City", {"NewYork", "NewYork", "UnitedStates"}]]
+
+for every 1km of travel:
+
+-Tan[el] downwards, Cos[az] north, Sin[az] east
+
+(* travel distance d in az/el directrion from lat/lon *)
+
+travel[lat_, lon_, az_, el_, d_] := GeoPosition[
+ GeoPositionENU[d*{Sin[az], Cos[az], -Tan[el]}, GeoPosition[{lat, lon}]]
+];
+
+travel[35,-106.5, 0, 1*Degree, 10^6]
+
