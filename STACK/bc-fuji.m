@@ -343,9 +343,9 @@ cdist[h_,r_] = Simplify[dist[h,r,ctheta[h,r]],conds]
 
 (* longitude, latitude and elevation of Mt Fuji *)
 
-fuji[lon] = (138+43/60+52/3600)*Degree
-fuji[lat] = (35+21/60+29/3600)*Degree
-fuji[ele] = 3776240/1000000
+fuji[lon] = N[(138+43/60+52/3600)*Degree,20]
+fuji[lat] = N[(35+21/60+29/3600)*Degree,20]
+fuji[ele] = N[3776240/1000000,20]
 
 </formulas>
 
@@ -861,3 +861,90 @@ TODO: answer is wrong
 test1116 = GeoPosition[{fuji[lat]/Degree, fuji[lon]/Degree}]
 
 GeoElevationData[test1116]
+
+(* elevation in feet, lat lon in degrees *)
+
+elev[lat_,lon_] := elev[lat, lon] = 
+ GeoElevationData[GeoPosition[{lat,lon}]][[1]]
+
+ContourPlot[elev[lat,lon], {lat,35,35.2}, {lon, -106.6, -106.4}]
+
+ContourPlot[elev[lat,lon], {lat,35.09,35.11}, {lon, -106.51, -106.49}]
+
+
+ContourPlot[elev[lat,lon], {lat,35.09,35.11}, {lon, -106.51, -106.49},
+ PlotPoints -> 5]
+
+GeoElevationData[GeoPosition[{{34, -107}, {36, -105}}]]
+
+test1146 = GeoElevationData[{GeoPosition[{34, -107}], GeoPosition[{36, -105}]}]
+
+test1147 = Normal[test1146];
+
+test1147[[5,1]] is 6968.5 feet
+
+ListContourPlot[test1147]
+
+ListContourPlot[test1147, Contours -> 255, ColorFunction -> Hue]
+
+test1158 = GeoElevationData[{GeoPosition[{35.03, -106.7}], 
+ GeoPosition[{35.20, -106.4}]}]
+
+ListContourPlot[test1158]
+
+ListContourPlot[test1158, Contours -> 255, ColorFunction -> Hue]
+
+ListContourPlot[test1158, Contours -> 255, ColorFunction -> Hue,
+ PlotLegends -> True]
+
+Actual observations:
+
+Diamond Fuji, the sunset over the summit of Mt. Fuji, is observed on November 8,... [year is 2012]
+
+http://www.gettyimages.fr/%C3%A9v%C3%A9nement/diamond-fuji-observed-156231577
+
+Diamond Fuji photo taken Feb. 17, 2011
+
+https://www.garyjwolff.com/diamond-fuji-viewing-spots-dates-and-times-in-tokyo.html
+
+from the shore of Lake Yamanakako, one of Fuji's 5 Lakes.
+
+
+Photo: "Diamond Fuji - 2014/11/15 - 3:27pm"
+From Review: Lake Yamanaka of Lake Yamanaka
+
+https://www.tripadvisor.com/LocationPhotoDirectLink-g1104179-d1369080-i115862499-Lake_Yamanaka-Yamanakako_mura_Minamitsuru_gun_Yamanashi_Prefecture_Chub.html
+
+AstronomicalData["Sun", {"Declination", {2014, 11, 15}}]
+AstronomicalData["Sun", {"Declination", {2014, 11, 14, 18, 27}}]        
+
+-18.41902 degrees
+
+newangles[fuji[ele], rad[fuji[lat]], 11.76*Degree, 109.02*Degree, fuji[lat],
+ fuji[lon]]/Degree
+
+{138.541, 35.4114, 365032.}
+
+
+
+SunPosition[GeoPosition[{fuji[lat], fuji[lon]}], 
+ DateObject[{2014, 11, 15, 15, 27}, TimeZone -> +9]]
+
+SunPosition[GeoPosition[{fuji[lat], fuji[lon]}], 
+ DateObject[{2014, 11, 15, 6, 27}, TimeZone -> 0]]
+
+SunPosition[GeoPosition[{fuji[lat], fuji[lon]}], 
+ DateObject[{2014, 11, 15, 15, 27}, TimeZone -> +9],
+ CelestialSystem -> "Horizon", AltitudeMethod -> "TrueAltitude"]
+
+Out[67]= {109.02 degrees, 11.76 degrees}
+
+
+
+
+
+Entity["Lake", "Yamanka"]
+
+test0815 = WolframAlpha["Lake Yamanka latitude longitude"]
+
+35° 25'N, 138° 52' 30"E
