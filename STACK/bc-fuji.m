@@ -1025,15 +1025,77 @@ GeoDistance[{35, -106.5}, {35, -106.39}]
 
 (* includes height, d in km, h in m *)
 
-travel2[lat_, lon_, h_, az_, el_, d_] := Module[{pos1, pos2, elev2},
- pos1 = GeoPosition[{lat, lon, h}];
+travel2[lat_, lon_, h_, az_, el_, d_] := Module[{elev1, pos1, pos2, elev2},
+ pos1 = GeoPosition[{lat, lon}];
+ elev1 = GeoElevationData[pos1];
+ pos1 = GeoPosition[{lat, lon, elev1[[1]] + h}];
  pos2 = GeoPosition[GeoPositionENU[
   Quantity[d,"km"]*{Cos[az] Cos[el], Cos[el] Sin[az], Sin[el]}, pos1]];
  elev2 = GeoElevationData[pos2];
  Return[Flatten[{Take[pos2[[1]],2], pos2[[1,3]]-elev2[[1]]}]]
 ]
 
+delta = 1/100000;
 
+ContourPlot[GeoElevationData[GeoPosition[{lat, lon}]],
+ {lat, fuji[lat]/Degree-delta, fuji[lat]/Degree+delta},
+ {lon, fuji[lon]/Degree-delta, fuji[lon]/Degree+delta}]
+
+delta = 1/1000;
+
+
+35.362884, 138.730904 is much closer per google maps
+
+fuji[lat] = 35.362884
+fuji[lon] = 138.730904
+delta = 1;
+
+
+test0939 = GeoPosition[{fuji[lat]-delta, fuji[lon]-delta}]
+test0940 = GeoPosition[{fuji[lat]+delta, fuji[lon]+delta}]
+test0941 = GeoElevationData[{test0939, test0940}, Automatic, "GeoPosition"]
+arr = Flatten[test0941[[1]],1]
+ListContourPlot[arr, Contours -> 16, ColorFunction -> GrayLevel,
+ PlotLegends -> True, ContourLines -> True]
+Show[%, ImageSize -> {800,600}]
+showit
+
+
+ListContourPlot[arr, Contours -> 16, ColorFunction -> Hue,
+ PlotLegends -> True, ContourLines -> False]
+Show[%, ImageSize -> {800,600}]
+
+test0941 = GeoElevationData[{test0939, test0940}]
+
+
+test1030 = Table[Flatten[i], {i,test0941[[1]]}]
+
+test1018 = Table[{{i[[1]], i[[2]]}, i[[3]]}, {i, test0941[[1,1]]}]
+
+
+
+
+ListContourPlot[arr, Contours -> 256, ColorFunction -> Hue,
+ PlotLegends -> True, ContourLines -> False]
+
+
+ListContourPlot[test0941, Contours -> 16, ColorFunction -> Hue,
+ PlotLegends -> True, ContourLines -> False]
+
+elev = Table[{lat, lon, GeoElevationData[GeoPosition[{lat,lon}]]},
+ {lat, fuji[lat]-1, fuji[lat]+1, .2}, 
+ {lon, fuji[lon]-1, fuji[lon]+1, .2}];
+
+
+
+ListContourPlot[test0941, Contours -> 255, ColorFunction -> Hue,
+ PlotLegends -> True, ContourLines -> False]
+
+ListContourPlot[test0941, Contours -> 16, ColorFunction -> Hue,
+ PlotLegends -> True, ContourLines -> False]
+
+
+test0938 = GeoElevationData[
 
 travel2[35,-106, 4000, 0, 1*Degree, 1]
 
@@ -1053,3 +1115,11 @@ test4 = Flatten[{Take[test2[[1]], 2], test2[[1,3]]-test3[[1]]}]
   Quantity[5,"km"]*{Cos[az] Cos[el], Cos[el] Sin[az], Sin[el]}, pos1]];
  elev2 = GeoElevationData[{pos2[[1,1]], pos2[[1,2]]}];
  Return[{pos2[[1,1]], pos2[[1,2]], pos2[[1,3]]-Quantity[elev2, "meters"]}];
+
+above MAY be wrong, so lets try more direct
+
+
+point = {35,-106};
+test0925 = GeoPosition[Flatten[{point, GeoElevationData[point]}]]
+
+ 
