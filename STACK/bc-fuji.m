@@ -1014,8 +1014,42 @@ travel[lat_, lon_, az_, el_, d_] := GeoPosition[
   Quantity[d,"kilometer"]*{Cos[az] Cos[el], Cos[el] Sin[az], Sin[el]},
  GeoPosition[{lat/Degree, lon/Degree}]]];
 
-travel[35*Degree,-106.5*Degree, 0, 1*Degree, 10]
+travel[35*Degree,-106.5*Degree, 0, -1*Degree, 10]
+
+travel[35*Degree,-106*Degree, 0, -1*Degree, 10]
 
 Plot[travel[35*Degree,-106.5*Degree, 0, 1*Degree, x][[1,3]],
  {x,0,10^3}]
 
+GeoDistance[{35, -106.5}, {35, -106.39}]
+
+(* includes height, d in km, h in m *)
+
+travel2[lat_, lon_, h_, az_, el_, d_] := Module[{pos1, pos2, elev2},
+ pos1 = GeoPosition[{lat, lon, h}];
+ pos2 = GeoPosition[GeoPositionENU[
+  Quantity[d,"km"]*{Cos[az] Cos[el], Cos[el] Sin[az], Sin[el]}, pos1]];
+ elev2 = GeoElevationData[pos2];
+ Return[Flatten[{Take[pos2[[1]],2], pos2[[1,3]]-elev2[[1]]}]]
+]
+
+
+
+travel2[35,-106, 4000, 0, 1*Degree, 1]
+
+travel2[35,-106, Quantity[2, "miles"], 0, 1*Degree, Quantity[500, "feet"]]
+
+test1 = GeoPosition[{35, -106, Quantity[4000, "meters"]}]
+
+test2 = GeoPosition[GeoPositionENU[Quantity[2, "km"]*{1,2,3}, test1]]
+
+test3 = GeoElevationData[test2]
+
+test4 = Flatten[{Take[test2[[1]], 2], test2[[1,3]]-test3[[1]]}]
+
+
+
+
+  Quantity[5,"km"]*{Cos[az] Cos[el], Cos[el] Sin[az], Sin[el]}, pos1]];
+ elev2 = GeoElevationData[{pos2[[1,1]], pos2[[1,2]]}];
+ Return[{pos2[[1,1]], pos2[[1,2]], pos2[[1,3]]-Quantity[elev2, "meters"]}];
