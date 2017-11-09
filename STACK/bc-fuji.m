@@ -1006,11 +1006,16 @@ for every 1km of travel:
 
 -Tan[el] downwards, Cos[az] north, Sin[az] east
 
-(* travel distance d in az/el directrion from lat/lon *)
+(* travel distance d in az/el direction from lat/lon, assuming az 0 =
+east and counting counterclockwise [just for now and for this function] *)
 
 travel[lat_, lon_, az_, el_, d_] := GeoPosition[
- GeoPositionENU[d*{Sin[az], Cos[az], -Tan[el]}, GeoPosition[{lat, lon}]]
-];
+ GeoPositionENU[
+  Quantity[d,"kilometer"]*{Cos[az] Cos[el], Cos[el] Sin[az], Sin[el]},
+ GeoPosition[{lat/Degree, lon/Degree}]]];
 
-travel[35,-106.5, 0, 1*Degree, 10^6]
+travel[35*Degree,-106.5*Degree, 0, 1*Degree, 10]
+
+Plot[travel[35*Degree,-106.5*Degree, 0, 1*Degree, x][[1,3]],
+ {x,0,10^3}]
 
