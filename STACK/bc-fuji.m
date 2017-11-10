@@ -1035,6 +1035,8 @@ travel2[lat_, lon_, h_, az_, el_, d_] := Module[{elev1, pos1, pos2, elev2},
  Return[Flatten[{Take[pos2[[1]],2], pos2[[1,3]]-elev2[[1]]}]]
 ]
 
+Plot[travel2[fuji[lat],fuji[lon],0,0,-1*Degree,d][[3]], {d,0,10}]
+
 delta = 1/100000;
 
 ContourPlot[GeoElevationData[GeoPosition[{lat, lon}]],
@@ -1046,19 +1048,89 @@ delta = 1/1000;
 
 35.362884, 138.730904 is much closer per google maps
 
+temp start HERE
+
 fuji[lat] = 35.362884
 fuji[lon] = 138.730904
-delta = 1;
+delta = 0.01;
 
 
 test0939 = GeoPosition[{fuji[lat]-delta, fuji[lon]-delta}]
 test0940 = GeoPosition[{fuji[lat]+delta, fuji[lon]+delta}]
 test0941 = GeoElevationData[{test0939, test0940}, Automatic, "GeoPosition"]
 arr = Flatten[test0941[[1]],1]
+
 ListContourPlot[arr, Contours -> 16, ColorFunction -> GrayLevel,
  PlotLegends -> True, ContourLines -> True]
 Show[%, ImageSize -> {800,600}]
 showit
+
+elev = Interpolation[arr, InterpolationOrder -> 10]
+
+ContourPlot[elev[lat,lon], {lat, fuji[lat]-delta, fuji[lat]+delta},
+{lon, fuji[lon]-delta, fuji[lon]+delta}, Contours -> 16, ColorFunction -> 
+GrayLevel, PlotLegends -> True, ContourLines -> True ]
+Show[%, ImageSize -> {800,600}]
+showit
+
+test1142 = GeoElevationData[{
+ GeoPosition[{32,135}],  GeoPosition[{39,142}]},
+ Automatic, "GeoPosition", GeoZoomLevel -> 9];
+
+Length[test1142[[1]]]
+
+test1147 = GeoElevationData[{
+ GeoPosition[{32,135}],  GeoPosition[{32.1,135.1}]},
+ Automatic, "GeoPosition", GeoZoomLevel -> 9];
+
+Length[test1147[[1]]]
+
+test1152 = GeoElevationData[{
+ GeoPosition[{32,135}],  GeoPosition[{32.5,135.5}]},
+ Automatic, "GeoPosition", GeoZoomLevel -> 12];
+
+Length[test1152[[1]]]
+
+(above takes about 4s, returns 1456x1456 array)
+
+test1152 = GeoElevationData[{
+ GeoPosition[{32,135}],  GeoPosition[{33,136}]},
+ Automatic, "GeoPosition", GeoZoomLevel -> 12];
+
+Length[test1152[[1]]]
+
+(above takes about 12s, returns 2912x2912 array)
+
+test1152 = GeoElevationData[{
+ GeoPosition[{32,135}],  GeoPosition[{34,137}]},
+ Automatic, "GeoPosition", GeoZoomLevel -> 12];
+
+Length[test1152[[1]]]
+
+(above takes about 48s, returns 5825x5825 array)
+
+test1152 = GeoElevationData[{
+ GeoPosition[{32,135}],  GeoPosition[{39,142}]},
+ Automatic, "GeoPosition", GeoZoomLevel -> 12];
+
+Length[test1152[[1]]]
+
+GeoServer::maxtl: Number of requested tiles, 6400, is too large.
+
+GeoElevationData::data: 
+   Unable to download elevation data for ranges {{32., 39.}, {135., 142.}}
+     and zoom level 12.
+
+GeoServer::maxtl: Number of requested tiles, 6400, is too large.
+
+GeoElevationData::data: 
+   Unable to download elevation data for ranges {{32., 39.}, {135., 142.}}
+     and zoom level 12.
+
+
+
+
+delta = 1/1000;
 
 
 ListContourPlot[arr, Contours -> 16, ColorFunction -> Hue,
@@ -1123,3 +1195,71 @@ point = {35,-106};
 test0925 = GeoPosition[Flatten[{point, GeoElevationData[point]}]]
 
  
+(* this is truly hideous *)
+
+elevFunc[lat_, lon_] := elevFunc[lat, lon] = 
+ Interpolation[Flatten[GeoElevationData[
+  {GeoPosition[{lat,lon}], GeoPosition[lat+1,lon+1]}, Automatic, "GeoPosition"
+ ][[1]],1], InterpolationOrder -> 1];
+
+elevFunc[lat_, lon_] := elevFunc[lat, lon] = 
+ Interpolation[Flatten[GeoElevationData[
+  {GeoPosition[{lat,lon}], GeoPosition[{lat+1,lon+1}]}, 
+  Automatic, "GeoPosition", GeoZoomLevel -> 13
+ ][[1]],1]]
+
+elev[lat_, lon_] := elevFunc[Floor[lat], Floor[lon]][lat,lon]
+
+elev[32.1,103.1]
+
+GeoElevationData[GeoPosition[{32.1,103.1}]]
+
+Flatten[GeoElevationData[
+  {GeoPosition[{32.1-5/3600,103.1-5/3600}], 
+   GeoPosition[{32.1+5/3600,103.1+5/3600}]}, 
+  Automatic, "GeoPosition", GeoZoomLevel -> 12][[1]],1]
+
+
+Flatten[GeoElevationData[
+  {GeoPosition[{32.1-2/3600,103.1-2/3600}], 
+   GeoPosition[{32.1+2/3600,103.1+2/3600}]}, 
+  Automatic, "GeoPosition", GeoZoomLevel -> 12][[1]],1]
+
+GeoElevationData[
+  {GeoPosition[{32.1-1/3600,103.1-1/3600}], 
+   GeoPosition[{32.1+1/3600,103.1+1/3600}]}, 
+  Automatic, "GeoPosition", GeoZoomLevel -> 12] // FullForm
+
+GeoElevationData[GeoPosition[{32.100162506103516`, 103.09999465942383`}]]
+GeoElevationData[GeoPosition[{32.09981918334961`, 103.09999465942383`}]]
+
+TODO: report possible bug, use $Version
+
+Is GeoElevationData[] inconsistent?
+
+<pre><code>
+
+(* the version I am running *)
+
+In[1]:= $Version
+
+Out[1]= 11.1.0 for Linux x86 (64-bit) (March 13, 2017)
+
+(* get elevation data for a very small rectangle w/ only 2 values *)
+
+In[2]:= GeoElevationData[
+ {GeoPosition[{32.1-1/3600,103.1-1/3600}],
+ GeoPosition[{32.1+1/3600,103.1+1/3600}]},
+ Automatic, "GeoPosition", GeoZoomLevel -> 12] // FullForm             
+
+Out[2]//FullForm= 
+    GeoPosition[List[List[List[32.100162506103516`, 103.09999465942383`,
+    3071.465259638845`]], List[List[32.09981918334961`, 
+    103.09999465942383`, 3076.4657749984644`]]]]
+
+
+
+
+
+
+</code></pre>
