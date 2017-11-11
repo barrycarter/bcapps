@@ -324,6 +324,10 @@ http://aa.usno.navy.mil/faq/docs/GAST.php *)
 gmst[d_] = 
   ((-452506800334363673497 + 41299464944756238*d)*Pi)/20593349747540136;
 
+(* Convert Unix time to Mathematica date object *)
+
+unix2Date[t_] := ToDate[t+2208988800]
+
 (* Brent method of FindRoot improved *)
 
 brent[f_,a_,b_] = If[Sign[f[a]]==Sign[f[b]], {}, FindRoot[f,{a,b},

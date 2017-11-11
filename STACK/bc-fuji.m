@@ -1,3 +1,93 @@
+<formulas>
+
+(* this is ugly, but gives elevation faster than GeoElevationData,
+though still fairly slowly *)
+
+(* x below means "10" (Roman Numeral) in the sense I am interpolating
+on 1/10 x 1/10 degree tiles *)
+
+(* adding 1/1000 degree to avoid edge errors with Interpolation *)
+
+elevFunc[latx_, lonx_] := elevFunc[latx, lonx] = 
+ Interpolation[Flatten[GeoElevationData[
+  {GeoPosition[{latx/10-1/1000,lonx/10-1/1000}], 
+   GeoPosition[{(latx+1)/10+1/1000,(lonx+1)/10}+1/1000]}, Automatic, 
+   "GeoPosition", GeoZoomLevel -> 12
+ ][[1]],1], InterpolationOrder -> 1];
+
+(* memoizing elev may actually help, given the size of the
+Interpolations above *)
+
+elev[lat_, lon_] := elev[lat, lon] = 
+ elevFunc[Floor[lat*10], Floor[lon*10]][lat,lon];
+
+(*
+
+Given a latitude and longitude (in degrees), and a height h meters
+above the topographical (elevation included) surface of the Earth,
+travel d kilometers in the direction of azimuth az and elevation el
+(in radians), and return the latitude, longitude, and height
+above topographical Earth at destination
+
+Uses elev[] interpolation instead of true elevation
+
+Giving latitude/longitude in degrees and azimuth/elevation in radians
+is ugly, but reflects how Mathematica chose to do Geo stuff
+
+The Pi/2-az is so that solar coordinates (north is 0 degrees, positive
+is clockwise) are converted to ENU coordinates (east is 0 degrees,
+positive is counterclockwise)
+
+*)
+
+travel[lat_, lon_, h_, az_, el_, d_] := Module[{dest},
+ 
+ dest = GeoPosition[GeoPositionENU[
+  Quantity[d,"km"]*{Cos[Pi/2-az] Cos[el], Cos[el] Sin[Pi/2-az], Sin[el]},
+  GeoPosition[{lat, lon, Quantity["m"]*(h+elev[lat,lon])}]]][[1]];
+ Return[dest-{0,0,elev[dest[[1]], dest[[2]]]}];
+]
+
+(* This isn't the peak of Mt Fuji; rather it is the "valley between
+the peaks", since that is the point we are projecting; these are in
+degrees for consistency with Mathematica's Geo stuff *)
+
+
+
+</formulas>
+
+fixup for az.. solar is clockwise from north, ENU is counterclock from east
+
+so 0 -> 90, 90 -> 0, 180 -> -90, 270 -> -180, so 90-solar = geo
+
+finding Fuji then contourplot to find the "valley" centroid
+
+test1004 = GeoPosition[Entity["Country", "Japan"]]
+test1005 = GeoNearest["Mountain", test1004, 100]
+test1006 = Select[test1005, StringContainsQ[#[[2]], "Fuji"] &]
+test1007 = GeoPosition[test1006];
+
+delta = 1/100;
+
+clat = 35.363
+clon = 138.731
+
+ContourPlot[elev[lat,lon], 
+ {lon, clon-delta,  clon+delta},
+ {lat, clat-delta,  clat+delta},
+ ColorFunction -> GrayLevel, ContourLines -> False, PlotLegends -> True,
+ ContourLines -> 50]
+Show[%, ImageSize -> {800,600}]
+showit
+
+
+
+
+
+
+
+
+
 TODO: not JUST methodology, actual answer
 
 TODO: better formulas
@@ -229,7 +319,7 @@ TODO: make sure I have the correct hitting point
 
 TODO: why azel not SPICE (refraction)
 
-<formulas>
+<oldformulas>
 
 conds = {h>0, r>0, h<r, 0 < theta < Pi/2, Element[x, Reals], -Pi/2 <
 lat < Pi/2, -Pi < lon < Pi}
@@ -347,7 +437,7 @@ fuji[lon] = N[(138+43/60+52/3600)*Degree,20]
 fuji[lat] = N[(35+21/60+29/3600)*Degree,20]
 fuji[ele] = N[3776240/1000000,20]
 
-</formulas>
+</oldformulas>
 
 TODO: slightly more accurate formula for rad
 
@@ -967,9 +1057,6 @@ test0815 = WolframAlpha["Lake Yamanka latitude longitude"]
 
 35° 25'N, 138° 52' 30"E
 
-unix2Date[t_] := ToDate[t+2208988800]
-
-
 postime[t_] := Module[{d, s, n},
  d = ToDate[t+2208988800];
  s = SunPosition[GeoPosition[{fuji[lat], fuji[lon]}], d];
@@ -1205,45 +1292,20 @@ Table[{Print[lat,lon],elevData[lat,lon]},{lat,32,39},{lon,102,109}];
 
 DumpSave["/tmp/elevdata.mx", elevData];
 
-(* this is ugly, but gives elevation reasonably fast? *)
-
-(* x below means "10" in the sense I am getting it in 1/10 chunks *)
-
-elevFunc[latx_, lonx_] := elevFunc[latx, lonx] = 
- Interpolation[Flatten[GeoElevationData[
-  {GeoPosition[{latx/10,lonx/10}], 
-   GeoPosition[{(latx+1)/10,(lonx+1)/10}]}, Automatic, "GeoPosition",
-   GeoZoomLevel -> 12
- ][[1]],1], InterpolationOrder -> 1];
-
-elev[lat_, lon_] := elevFunc[Floor[lat*10], Floor[lon*10]][lat,lon]
-
 elev[32.1,103.1]
 
 ContourPlot[elev[lat,lon], {lat,34,36}, {lon, -107, -105}]
 
-(*
+GeoNearest["Mountain", GeoPosition[{35,-106}], 5]
 
-Given a latitude and longitude (in radians), and a height h meters
-above the topographical (elevation included) surface of the Earth,
-travel d kilometers in the direction of azimuth az and elevation el
-(given in radians), and return the latitude, longitude, and height
-above topographical Earth at destination
+GeoPosition[Entity["Mountain", "Sandia"]]
 
-Uses elev[] interpolation instead of true elevation
+GeoPosition[Entity["Mountain", "Fujisan"]]
 
-*)
+GeoVisibleRegion[{fuji[lat]/Degree, fuji[lon]/Degree}]
 
-travel3[lat_, lon_, h_, az_, el_, d_] := Module[{dest},
- 
- dest = GeoPosition[GeoPositionENU[
-  Quantity[d,"km"]*{Cos[az] Cos[el], Cos[el] Sin[az], Sin[el]},
-  GeoPosition[{lat, lon, Quantity["m"]*(h+elev[lat,lon])}]]][[1]];
- Return[dest-{0,0,elev[dest[[1]], dest[[2]]]}];
-]
-
-
-
+GeoVisibleRegion[{fuji[lat]/Degree, fuji[lon]/Degree,
+ GeoElevationData[GeoPosition[{fuji[lat]/Degree, fuji[lon]/Degree}]]}]
 
 
 
