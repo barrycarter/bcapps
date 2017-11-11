@@ -1205,22 +1205,66 @@ Table[{Print[lat,lon],elevData[lat,lon]},{lat,32,39},{lon,102,109}];
 
 DumpSave["/tmp/elevdata.mx", elevData];
 
+(* this is ugly, but gives elevation reasonably fast? *)
 
+(* x below means "10" in the sense I am getting it in 1/10 chunks *)
 
-elevFunc[lat_, lon_] := elevFunc[lat, lon] = 
+elevFunc[latx_, lonx_] := elevFunc[latx, lonx] = 
  Interpolation[Flatten[GeoElevationData[
-  {GeoPosition[{lat,lon}], GeoPosition[lat+1,lon+1]}, Automatic, "GeoPosition"
+  {GeoPosition[{latx/10,lonx/10}], 
+   GeoPosition[{(latx+1)/10,(lonx+1)/10}]}, Automatic, "GeoPosition",
+   GeoZoomLevel -> 12
  ][[1]],1], InterpolationOrder -> 1];
+
+elev[lat_, lon_] := elevFunc[Floor[lat*10], Floor[lon*10]][lat,lon]
+
+elev[32.1,103.1]
+
+ContourPlot[elev[lat,lon], {lat,34,36}, {lon, -107, -105}]
+
+(*
+
+Given a latitude and longitude (in radians), and a height h meters
+above the topographical (elevation included) surface of the Earth,
+travel d kilometers in the direction of azimuth az and elevation el
+(given in radians), and return the latitude, longitude, and height
+above topographical Earth at destination
+
+Uses elev[] interpolation instead of true elevation
+
+*)
+
+travel3[lat_, lon_, h_, az_, el_, d_] := Module[{dest},
+ 
+ dest = GeoPosition[GeoPositionENU[
+  Quantity[d,"km"]*{Cos[az] Cos[el], Cos[el] Sin[az], Sin[el]},
+  GeoPosition[{lat, lon, Quantity["m"]*(h+elev[lat,lon])}]]][[1]];
+ Return[dest-{0,0,elev[dest[[1]], dest[[2]]]}];
+]
+
+
+
+
+
+
+
+ pos1 = GeoPosition[{lat, lon}];
+ elev1 = GeoElevationData[pos1];
+ pos1 = GeoPosition[{lat, lon, elev1[[1]] + h}];
+ pos2 = GeoPosition[GeoPositionENU[
+  Quantity[d,"km"]*{Cos[az] Cos[el], Cos[el] Sin[az], Sin[el]}, pos1]];
+ elev2 = GeoElevationData[pos2];
+ Return[Flatten[{Take[pos2[[1]],2], pos2[[1,3]]-elev2[[1]]}]]
+]
+
+
+
 
 elevFunc[lat_, lon_] := elevFunc[lat, lon] = 
  Interpolation[Flatten[GeoElevationData[
   {GeoPosition[{lat,lon}], GeoPosition[{lat+1,lon+1}]}, 
   Automatic, "GeoPosition", GeoZoomLevel -> 12
  ][[1]],1]]
-
-elev[lat_, lon_] := elevFunc[Floor[lat], Floor[lon]][lat,lon]
-
-elev[32.1,103.1]
 
 GeoElevationData[GeoPosition[{32.1,103.1}]]
 
@@ -1296,3 +1340,11 @@ argument version. Why?
 *)
 
 </code></pre>
+
+(* solve the "elevation" problem-- getting elevation of a lat/lon
+point relatively quickly *)
+
+GeoElevationData[
+ {GeoPosition[{32.1, 103.1}], GeoPosition[{32.2, 103.2}]},
+ Automatic, "GeoPosition", GeoZoomLevel -> 12]
+
