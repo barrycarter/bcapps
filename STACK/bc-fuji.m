@@ -41,20 +41,38 @@ positive is counterclockwise)
 *)
 
 travel[lat_, lon_, h_, az_, el_, d_] := Module[{dest},
- 
- dest = GeoPosition[GeoPositionENU[
+  dest = GeoPosition[GeoPositionENU[
   Quantity[d,"km"]*{Cos[Pi/2-az] Cos[el], Cos[el] Sin[Pi/2-az], Sin[el]},
   GeoPosition[{lat, lon, Quantity["m"]*(h+elev[lat,lon])}]]][[1]];
  Return[dest-{0,0,elev[dest[[1]], dest[[2]]]}];
-]
+];
 
 (* This isn't the peak of Mt Fuji; rather it is the "valley between
 the peaks", since that is the point we are projecting; these are in
 degrees for consistency with Mathematica's Geo stuff *)
 
+(* TEMPORARILY DISABLING fuji def, having elevation issues:
 
+fuji = {35.3628, 138.731, elev[35.3628, 138.731]};
+
+*)
 
 </formulas>
+
+travel[fuji[[1]], fuji[[2]], 0, 90*Degree, -1*Degree, 10]
+
+Plot[travel[fuji[[1]], fuji[[2]], 0, 90*Degree, -1*Degree, d][[3]], {d,0,200}]
+
+Plot[travel[fuji[[1]], fuji[[2]], 0, 90*Degree, -3*Degree, d][[3]],
+{d,0,200}, PlotRange -> All]
+
+test1106 = 
+ Table[travel[fuji[[1]], fuji[[2]], 0, 90*Degree, -3*Degree, d][[3]], 
+ {d,0,200}]
+
+
+
+
 
 fixup for az.. solar is clockwise from north, ENU is counterclock from east
 
@@ -67,14 +85,13 @@ test1005 = GeoNearest["Mountain", test1004, 100]
 test1006 = Select[test1005, StringContainsQ[#[[2]], "Fuji"] &]
 test1007 = GeoPosition[test1006];
 
-delta = 1/100;
+delta = 1/8000;
 
-clat = 35.363
-clon = 138.731
+clat = 35.363-0.0002-0.00005
+clon = 138.731-0.0002+0.00005
 
-ContourPlot[elev[lat,lon], 
- {lon, clon-delta,  clon+delta},
- {lat, clat-delta,  clat+delta},
+ContourPlot[elev[clat+dx,clon+dy], 
+ {dx, -delta, delta}, {dy, -delta, delta},
  ColorFunction -> GrayLevel, ContourLines -> False, PlotLegends -> True,
  ContourLines -> 50]
 Show[%, ImageSize -> {800,600}]

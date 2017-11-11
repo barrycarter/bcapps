@@ -25,5 +25,7 @@
 "/DULLON" ""
 
 # QUORALOG repitition
-
 "/mnt/extdrive5/INBOUNDSYMLINKS/QUORALOG/" "/mnt/villa/user/QUORA/QUORALOG/"
+
+# /mnt/extdrive2 was copied to /mnt/lobos as it (extdrive2) failed
+"/mnt/lobos/extdrive2/" "/mnt/extdrive2/"
