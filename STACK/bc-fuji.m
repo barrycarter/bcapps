@@ -1197,6 +1197,16 @@ test0925 = GeoPosition[Flatten[{point, GeoElevationData[point]}]]
  
 (* this is truly hideous *)
 
+elevData[lat_, lon_] := elevData[lat, lon] = 
+ GeoElevationData[{GeoPosition[{lat,lon}], GeoPosition[{lat+1,lon+1}]}, 
+  Automatic, "GeoPosition", GeoZoomLevel -> 13];
+
+Table[{Print[lat,lon],elevData[lat,lon]},{lat,32,39},{lon,102,109}];
+
+DumpSave["/tmp/elevdata.mx", elevData];
+
+
+
 elevFunc[lat_, lon_] := elevFunc[lat, lon] = 
  Interpolation[Flatten[GeoElevationData[
   {GeoPosition[{lat,lon}], GeoPosition[lat+1,lon+1]}, Automatic, "GeoPosition"
@@ -1205,7 +1215,7 @@ elevFunc[lat_, lon_] := elevFunc[lat, lon] =
 elevFunc[lat_, lon_] := elevFunc[lat, lon] = 
  Interpolation[Flatten[GeoElevationData[
   {GeoPosition[{lat,lon}], GeoPosition[{lat+1,lon+1}]}, 
-  Automatic, "GeoPosition", GeoZoomLevel -> 13
+  Automatic, "GeoPosition", GeoZoomLevel -> 12
  ][[1]],1]]
 
 elev[lat_, lon_] := elevFunc[Floor[lat], Floor[lon]][lat,lon]
@@ -1237,6 +1247,9 @@ TODO: report possible bug, use $Version
 
 Is GeoElevationData[] inconsistent?
 
+Why dose `GeoElevationData[]` give different results in its one and
+two argument forms?
+
 <pre><code>
 
 (* the version I am running *)
@@ -1245,7 +1258,8 @@ In[1]:= $Version
 
 Out[1]= 11.1.0 for Linux x86 (64-bit) (March 13, 2017)
 
-(* get elevation data for a very small rectangle w/ only 2 values *)
+(* get elevation data at highest resolution for a very small rectangle
+w/ only 2 values *)
 
 In[2]:= GeoElevationData[
  {GeoPosition[{32.1-1/3600,103.1-1/3600}],
@@ -1257,9 +1271,28 @@ Out[2]//FullForm=
     3071.465259638845`]], List[List[32.09981918334961`, 
     103.09999465942383`, 3076.4657749984644`]]]]
 
+(* this should give me 3071.465259638845 or 3071 or even 3072 if
+Mathematica is rounding, but it does not *)
 
+In[3]:= 
+ GeoElevationData[GeoPosition[{32.100162506103516`, 103.09999465942383`}]]
 
+Out[3]= 3103. meters
 
+(* similarly, this should give me 3076 or 3077 meters, but does not *)
 
+In[4]:=
+ GeoElevationData[GeoPosition[{32.09981918334961`, 103.09999465942383`}]]
+
+Out[4]= 3108. meters
+
+(*
+
+Note the second result is 5 meters higher than the first, just like in
+the two argument form of GeoElevationData, but both heights in the
+single argument version are about 32m higher than those in the two
+argument version. Why?
+
+*)
 
 </code></pre>
