@@ -21,7 +21,8 @@
 192.168.0.3 brighton
 
 # ted.local.lan, The Energy Detective
-192.168.0.9 ted.local.lan
+# as of 17 Nov 2017, this is .0.6 apparently
+192.168.0.6 ted.local.lan
 
 # this is the github server which I need to refer to as "bc.github"
 192.30.253.122 bc.github

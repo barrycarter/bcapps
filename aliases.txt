@@ -140,6 +140,9 @@ alias bcgit "pushd .; cd ~/BCGIT; git add .; git commit; git pull -v; git push  
 # unaliased 21 Aug 2017, not needed on saopaulo
 # alias skype "pushd .; cd ~; /root/build/skype-4.3.0.37/skype \!*& popd"
 
+# Microsoft fucks up skype and the name change is the least of my problems
+alias skype skypeforlinux
+
 # hex2dec often needed
 alias hex2dec "bc-call-func.pl hex \!*"
 

@@ -1,5 +1,19 @@
 # shell one liners
 
+# one off to dump all TED data after some downtime
+
+curl -sS -o /home/user/TED/second.`/bin/date +\%Y\%m\%d.\%H\%M\%S.\%N` 'http://ted.local.lan/history/secondhistory.csv?MTU=0&INDEX=0&U=1'
+
+curl -sS -o /home/user/TED/minute.`/bin/date +\%Y\%m\%d.\%H\%M\%S.\%N` 'http://ted.local.lan/history/minutehistory.csv?MTU=0&INDEX=0&U=1'
+
+curl -o /home/user/20141017/hourly.`/bin/date +\%Y\%m\%d.\%H\%M\%S.\%N` 'http://ted.local.lan/history/hourlyhistory.csv?MTU=0&INDEX=0&U=1'
+
+curl -o /home/user/TED/daily.`/bin/date +\%Y\%m\%d.\%H\%M\%S.\%N` 'http://ted.local.lan/history/dailyhistory.csv?MTU=0&INDEX=0&U=1'
+
+curl -o /home/user/TED/monthly.`/bin/date +\%Y\%m\%d.\%H\%M\%S.\%N` 'http://ted.local.lan/history/monthlyhistory.csv?MTU=0&INDEX=0&U=1'
+
+exit;
+
 # dumps mozilla bookmarks
 
 # TODO: should really make copy and not query directly

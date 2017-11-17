@@ -1,5 +1,9 @@
 <formulas>
 
+(* TODO: consider making UTC my global time zone in bclib.m *)
+
+$TimeZone = 0;
+
 (* this is ugly, but gives elevation faster than GeoElevationData,
 though still fairly slowly *)
 
@@ -47,17 +51,53 @@ travel[lat_, lon_, h_, az_, el_, d_] := Module[{dest},
  Return[dest-{0,0,elev[dest[[1]], dest[[2]]]}];
 ];
 
+(*
+
+Flat Earth approximation: a line going through a height h and sloping
+at theta degrees hits the Earth at what distance
+
+*)
+
+flatDist[h_, theta_] = h/Sin[theta]
+
+(*
+
+Spherical Earth approximation: a line on sphere of radius r going
+through line of height h first hits the sphere when
+
+*)
+
+sphDist[h_, r_, theta_] = Sqrt[((h + r)*Sin[theta] -
+Cos[theta]*Sqrt[-(h*(h + 2*r)) + r^2*Tan[theta]^2])^2]
+
 (* This isn't the peak of Mt Fuji; rather it is the "valley between
 the peaks", since that is the point we are projecting; these are in
 degrees for consistency with Mathematica's Geo stuff *)
 
-(* TEMPORARILY DISABLING fuji def, having elevation issues:
+(* Only need lat/lon here, since travel[] function above handles elev *)
 
-fuji = {35.3628, 138.731, elev[35.3628, 138.731]};
-
-*)
+fuji = {35.3628, 138.731};
 
 </formulas>
+
+SunPosition[GeoPosition[{fuji[[1]], fuji[[2]]}], unix2Date[0]]
+
+FindRoot[travel[fuji[[1]], fuji[[2]], 0, 90*Degree, -1*Degree, d][[3]] == 0,
+ {d,0,200}]
+
+NSolve[travel[fuji[[1]], fuji[[2]], 0, 90*Degree, -1*Degree, d][[3]] == 0, d]
+
+test1437 = 
+ SunPosition[GeoPosition[{fuji[[1]], fuji[[2]]}], unix2Date[1510695735+900]]
+
+Plot[travel[fuji[[1]], fuji[[2]], 0, Pi/2+test1437[[1]], -1*test1437[[2]],  
+ d][[3]],
+{d,0,200}, PlotRange -> All]
+
+travel[fuji[[1]], fuji[[2]], 0, Pi/2+test1437[[1]], -1*test1437[[2]], 35]
+
+
+
 
 travel[fuji[[1]], fuji[[2]], 0, 90*Degree, -1*Degree, 10]
 
@@ -1427,3 +1467,141 @@ GeoElevationData[
  {GeoPosition[{32.1, 103.1}], GeoPosition[{32.2, 103.2}]},
  Automatic, "GeoPosition", GeoZoomLevel -> 12]
 
+
+test1325 = Simplify[
+ Solve[(m*x+b)^2 + x^2 == r^2, x, Reals],
+{r^2 > b^2/(1+m^2)}]
+
+test1326 = x /. test1325[[2]]
+
+(m*test1326)^2 + test1326^2
+
+conds = {r > 0, b > 0, m < 0}
+
+f[m_, b_] = (m*test1326)^2 + test1326^2
+
+f[-Tan[theta], r+b]
+
+(Cos[theta]*Sqrt[-(b + r)^2 + r^2*Sec[theta]^2] + (b + r)*Sin[theta])^2
+
+b = k*r
+
+
+
+
+test1305 = x/.Simplify[ Solve[(m*x+b)^2 + x^2 == r^2, x, Reals], {r^2
+> b^2/(1+m ^2)}] [[1]]
+
+(m*test1305+b-b)^2 + test1305^2
+
+conds = {r > 0, b > 0, theta < 0, theta > -Pi/2}
+
+y[x_, theta_] = Tan[theta]*x + b + r
+
+Simplify[x^2 + y[x,theta]^2,conds]
+
+Simplify[x^2 + y[x,theta]^2 - r^2,conds]
+
+test1316 = Simplify[Solve[x^2 + y[x,theta]^2 - r^2 == 0, x, Reals], conds]
+
+test1321 = test1316[[1,1,2,1]]
+
+test1317 = {test1316[[1,1,2,1]], test1316[[2,1,2,1]]}
+
+test1317[[1]]^2 + y[test1317[[1]]]^2
+
+Simplify[test1317*Tan[theta] + b + r, conds]
+
+(* this one's for the money *)
+
+conds = {r > 0, h > 0, h < r, theta > 0, theta < Pi/2}
+
+y[x_] = -Tan[theta]*x + r + h
+
+sols = Simplify[Solve[x^2 + y[x]^2 == r^2, x, Reals],conds]
+
+xsol1[h_, r_, theta_] = sols[[1,1,2,1]]
+ysol1[h_, r_, theta_] = y[xsol1[h,r,theta]]
+
+xsol2[h_, r_, theta_] = sols[[2,1,2,1]]
+ysol2[h_, r_, theta_] = y[xsol2[h,r,theta]]
+
+xsol1[3575.48, 6367.06*1000, 3*Degree]
+xsol2[3575.48, 6367.06*1000, 3*Degree]
+
+xsol1 is closer
+
+dist[h_, r_, theta_] = 
+Simplify[Sqrt[xsol1[h,r,theta]^2 + (ysol1[h,r,theta]-h-r)^2],conds]
+
+Plot[dist[3575.48, 6367.06*1000, theta*Degree], 
+ {theta,0,60}, PlotRange -> All]
+
+Plot[{dist[3575.48, 6367.06*1000, theta*Degree], 3575.48/Sin[theta*Degree]}, 
+ {theta,2,10}, PlotRange -> All]
+Show[%, ImageSize -> {800,600}]
+showit
+
+Plot[{dist[3575.48, 6367.06*1000, theta*Degree] - 3575.48/Sin[theta*Degree]}, 
+ {theta,2,10}, PlotRange -> All]
+Show[%, ImageSize -> {800,600}]
+showit
+
+
+
+
+
+xsol1[1, 1, 60*Degree]
+
+
+sols[[1,1,2,1]] /. 
+ {theta -> 3*Degree, h -> elev[fuji[[1]], fuji[[2]]], r -> 1000*rad[fuji[[1]]]}
+
+elev[fuji[[1]], fuji[[2]]]/Sin[3*Degree]
+
+Simplify[sols[[1,1,2,1]]^2 + (y[sols[[1,1,2,1]]]-r-h)^2,conds]
+Simplify[sols[[2,1,2,1]]^2 + (y[sols[[2,1,2,1]]]-r-h)^2,conds]
+
+dist1[h_, r_, theta_] = Simplify[sols[[1,1,2,1]]^2 +
+(y[sols[[1,1,2,1]]]-r-h)^2,conds]
+
+dist2[h_, r_, theta_] = Simplify[sols[[2,1,2,1]]^2 +
+(y[sols[[2,1,2,1]]]-r-h)^2,conds]
+
+dist1[elev[fuji[[1]],fuji[[2]]], rad[fuji[[1]]]*1000, 3*Degree]
+
+Sqrt[dist1[3575.48, 6367.06*1000, 3*Degree]]
+Sqrt[dist2[3575.48, 6367.06*1000, 3*Degree]]
+
+
+
+
+
+sols[[1,1,2,1]] + sols[[2,1,2,1]]
+
+sols[[2,1,2,1]] <- this is positive solution
+
+xsol = sols[[2,1,2,1]]
+
+xsol^2 + (y[xsol]-r-h)^2
+
+In[103]:= GeoElevationData[{GeoPosition[{35,-106}],GeoPosition[{35.1, -105.9}]},
+ GeoZoomLevel -> 13]                                                            
+
+GeoElevationData::chzoom: 
+   Unable to download data for zoom level 13. Using zoom 12 instead.
+
+Out[103]= StructuredArray[QuantityArray, {291, 291}, <Meters>]
+
+so 0.1/291 is resolution or 6m in latitude
+
+In[110]:= GeoElevationData[{GeoPosition[{89,-106}],GeoPosition[{89.1, -105.9}]},
+ GeoZoomLevel -> 13]                                                            
+
+GeoElevationData::chzoom: 
+   Unable to download data for zoom level 13. Using zoom 12 instead.
+
+Out[110]= StructuredArray[QuantityArray, {292, 291}, <Meters>]
+
+
+a little ridiculous above
