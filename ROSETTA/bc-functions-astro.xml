@@ -1,0 +1,13 @@
+<function name="rad2Hour">
+<active>1</active>
+<nice>rad2Hour(rad)</nice>
+<vars>rad</vars>
+<desc>Convert radians to hours</desc>
+<source>http://aa.usno.navy.mil/faq/docs/GAST.php</source>
+<argtest>111.7</argtest>
+<answer>5.68916</answer>
+<body>
+   Mod[Times[3.81971863420548805845321032094034468846`20., rad], 
+    6.2831853071795864769252867665590057684`20.]
+</body>
+</function>

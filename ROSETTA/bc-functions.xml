@@ -19,6 +19,8 @@
 
 # TODO: test harness, but probably not part of function
 
+# TODO: allow for default arguments?
+
 # macros:
 
 # <LANG>: the language into which the function is being translated
@@ -129,8 +131,6 @@ List[ArcTan[Plus[Times[Power[Cos[theta], 2], Plus[Times[Cos[lon], Sin[az], Sin[l
 <answer>{-0.597235, 0.516821}</answer>
 <body>List[ArcTan[Plus[Times[Cos[lat], Sin[dec]], Times[-1, Cos[dec], Cos[ha], Sin[lat]]], Times[-1, Cos[dec], Sin[ha]]], ArcTan[Power[Plus[Times[Power[Cos[dec], 2], Power[Sin[ha], 2]], Power[Plus[Times[Cos[lat], Sin[dec]], Times[-1, Cos[dec], Cos[ha], Sin[lat]]], 2]], Rational[1, 2]], Plus[Times[Cos[dec], Cos[ha], Cos[lat]], Times[Sin[dec], Sin[lat]]]]]</body>
 </function>
-
-
 
 # attempt to define a dictionary (using "key: val", not true XML)
 

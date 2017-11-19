@@ -20,6 +20,10 @@ my(%thread) = ("Plus" => "+", "Times" => "*");
 my($langs) = read_file("$bclib{githome}/ROSETTA/bc-languages.xml");
 my($funcs) = read_file("$bclib{githome}/ROSETTA/bc-functions.xml");
 
+# TODO: temporary for astro testing
+warn "ASTRO TESTING";
+my($funcs) = read_file("$bclib{githome}/ROSETTA/bc-functions-astro.xml");
+
 # variable to hold languages info
 my(%lang);
 
@@ -58,6 +62,10 @@ while ($funcs=~s%<function name="(.*?)">(.*?)</function>%%s) {
     delete $func{$name};
     next;
   }
+
+  # ignore Mathematica precision
+  debug("BODY IS: $func{$name}{body}");
+  $func{$name}{body}=~s/\`[\d\.]+//g;
 
   # multiline is just to make it look nice
   $func{$name}{body}=~s/\s+/ /g;
@@ -98,7 +106,9 @@ for $i (sort keys %lang) {
     # TODO: this could be globalized, but, then again, I may limit it
     # to certain languages; decimate (or perhaps decimalize)
     # everything
-    $curfunc{body}=~s/(\d+)([^\.])/$1.0$2/g;
+    debug("CURFUND: $curfunc{body}");
+    # TODO: this is probably broken now, fix
+    $curfunc{body}=~s/[^\.\d](\d+)([^\.])/$1.0$2/g;
 
     debug("FAMMA: $curfunc{body}");
 

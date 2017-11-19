@@ -8,8 +8,12 @@
 
 # usb drives
 
+# as of 18 Nov 2017, extdrive2 is being removed from service (copied
+# to lobos and replaced w/ symlink)
+
+# /mnt/extdrive2 extdrive2
+
 /mnt/extdrive5 extdrive5
-/mnt/extdrive2 extdrive2
 
 # TODO: /home on saopaulo has nothing but two symlinks so not listing
 # it here (but need to figure out long-term here)
