@@ -287,6 +287,12 @@ sub multiline_parse {
     return "var$varcount";
   }
 
+  # the mod function is fmod in some/all languages?
+  if ($f eq "Mod") {
+    $hash{$varcount} = "($args[0])%($args[1])";
+    return "var$varcount";
+  }
+
   # threaded functions
 
   if ($thread{$f}) {
