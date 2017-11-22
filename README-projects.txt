@@ -1,5 +1,9 @@
 
 Subject: Astronomy
+Code URL: https://github.com/barrycarter/bcapps/blob/master/STACK/bc-fuji.m
+Description: predict where people can see "Diamond Fuji", the sun appearing as a "diamond ring" as it sets over Mount Fuji. An extended version is https://github.com/barrycarter/bcapps/blob/master/DEM/ which attempts to determine the true horizon for any location using digital elevation map (DEM) data. Diamond Fuji URLS/images: https://www.tripadvisor.com/LocationPhotoDirectLink-g1104179-d1369080-i115862499-Lake_Yamanaka-Yamanakako_mura_Minamitsuru_gun_Yamanashi_Prefecture_Chub.html https://www.fujiyama-navi.jp/en/entries/xZ0rQ https://tripla.jp/cool-japan-diamond-fuji/ http://yamanakako.info/photo_diamond.php (page is in Japanese, and may do what this project tries to do) http://www2e.biglobe.ne.jp/%7Ewoody/mt97.jpg http://www.gettyimages.fr/%C3%A9v%C3%A9nement/diamond-fuji-observed-156231577 https://www.garyjwolff.com/diamond-fuji-viewing-spots-dates-and-times-in-tokyo.html 
+
+Subject: Astronomy
 Code URL: https://github.com/barrycarter/bcapps/blob/master/ASTRO 
 Showcase: http://search.astro.barrycarter.info/
 
