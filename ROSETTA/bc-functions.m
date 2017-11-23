@@ -31,7 +31,7 @@ rad2Deg[rad_] = N[deg/Degree, 20]
 millDays2GMST[d_] = Expand[
  hour2Rad[Rationalize[18.697374558 + 24.06570982441908*d,0]]]
 
-
+t2GMST[t_] = 
 
 
 

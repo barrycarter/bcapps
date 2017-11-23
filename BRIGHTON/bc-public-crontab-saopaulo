@@ -252,3 +252,6 @@ MAILTO="daemon"
 
 # nightly, dump ALL firefox bookmarks w/ relevant information to home dir file
 57 1 * * * ls /home/user/.mozilla/firefox/*/places.sqlite | xargs -IXXX -n 1 sqlite3 XXX "SELECT mb1.title AS t1, mb2.title AS t2, mp.url, mp.title AS t3 FROM moz_bookmarks mb1 JOIN moz_bookmarks mb2 ON (mb1.id = mb2.parent) JOIN moz_places mp ON (mb2.fk = mp.id);" |sort -u >! /home/user/all-firefox-bookmarks.txt
+
+# just for fun, dump TED estimate of bill to CRON hourly
+30 * * * * /home/user/BCGIT/bc-elec-bill-ted.pl
