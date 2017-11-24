@@ -1,30 +1,35 @@
-# testing only
+# I am assuming the converted files are up-to-date; in theory could
+# check them against the *-files.txt files but don't want to rerun
+# portions of bc-unix-dump.pl unnecessarily
 
-# bar := $(egrep -v '^#' /home/barrycarter/BCGIT/BRIGHTON/mounts.txt | perl -anle 'print "$F[0]/$F[1]-converted.txt"')
+# converted file lists on all drives I recognize
+converted=$(shell egrep -v '^\#|^$$' /home/barrycarter/BCGIT/BRIGHTON/mounts.txt | perl -anle 'print "$$F[0]/$$F[1]-converted.txt"')
 
-bar=$(egrep -v '^#' /home/barrycarter/BCGIT/BRIGHTON/mounts.txt)
+# filelist.txt is the end product of all this
+all: filelist.txt
 
-bar=hello
+# afad = all files, all directories
 
-bar="hello there"
+afad.txt: ${converted}
+	sort ${converted} > afad.txt
 
-# this fails amusingly because date outputs colons!
+# everything previously backed up, sorted
+# TODO: assuming the *.exclude files are up-to-date, but should check for that
 
-bar := $(shell date)
+previouslydone.txt.srt:
+	sort -t '\0' -k2nr /root/massbacks-idrive-saopaulo/*.exclude | sort -t '\0' -k1,1 -u > previouslydone.txt.srt
 
-bar := $(shell date +%s)
+# the files bc-chunk-backup2 uses to determine what to back up
 
-bar=$(shell date +%s)
+backup0.txt: afad.txt previouslydone.txt.srt
+	join --check-order -a 1 -t '\0' afad.txt previouslydone.txt.srt | sort -t '\0' -k2nr > backup0.txt
 
-bar=$(shell egrep -v '^\#' /home/barrycarter/BCGIT/BRIGHTON/mounts.txt)
+# create exclusions egrep file from annotated file
+exclusions.txt: exclusions-commented.txt
+	egrep -v '^\#|^ *$$' exclusions-commented.txt | perl -pnle 's/\$$/\0/' > exclusions.txt
 
-bar=$(shell egrep -v ^\# /home/barrycarter/BCGIT/BRIGHTON/mounts.txt)
+# bc-chunk-backup2 creates statlist.txt and filelist.txt just usign one
+filelist.txt: exclusions.txt backup0.txt
+	egrep -avf exclusions.txt backup0.txt | bc-join-backup.pl | bc-chunk-backup2.pl --checkfile --limit=10,000,000,000 --debug
 
-bar=$(shell egrep -v ^\# /home/barrycarter/BCGIT/BRIGHTON/mounts.txt | perl -anle 'print "$$F[0]/$$F[1]-converted.txt"')
-
-bar=$(shell egrep -v '^\#|^$$' /home/barrycarter/BCGIT/BRIGHTON/mounts.txt | perl -anle 'print "$$F[0]/$$F[1]-converted.txt"')
-
-# bar=$(egrep -v '^\#' /home/barrycarter/BCGIT/BRIGHTON/mounts.txt | perl -anle 'print "\$F[0]/\$F[1]-converted.txt"')
-
-foo: ${bar}
-	echo arg
+# TODO: write up the meta-procedure for using this Makefile

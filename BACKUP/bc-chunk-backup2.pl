@@ -79,8 +79,8 @@ close(A); close(B); close(C); close(D); close(E);
 # TODO: restore this
 # do this so we're not waiting on egrep
 open(A,"|parallel -j 2");
-print A "bc-total-bytes.pl statlist.txt | sort -nr >! big-by-dir.txt\n";
-print A "sort -k1nr statlist.txt >! big-by-file.txt\n";
+print A "bc-total-bytes.pl statlist.txt | sort -nr > big-by-dir.txt\n";
+print A "sort -k1nr statlist.txt > big-by-file.txt\n";
 close(A);
 
 # egrep hangs for a long time, so announce that at least I am finished

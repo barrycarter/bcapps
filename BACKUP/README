@@ -1,3 +1,56 @@
+META BACKUP PROCESS (for Makefile):
+
+# make sure the exclude files are up to date (from oneliners.sh)
+
+# TODO: this can be a Makefile and probably should be
+
+# pipe below to shell
+cd /root/massbacks-idrive-saopaulo
+\ls massback*.list | perl -nle 'unless (-s "$_.exclude") {print "bc-format2altformat2.pl --zpaqlist $_>$_.exclude"}'
+
+# do this once to timestamp the backup, create a directory for this
+# backup, and copy the Makefile to this directory
+
+setenv DATE `date +%Y%m%d.%H%M%S`
+mkdir /root/massbacks/$DATE
+cd /root/massbacks/$DATE
+cp /home/barrycarter/BCGIT/BACKUP/Makefile .
+
+# cp exclusions-commented.txt from a previous backup or make wont work
+
+# run make (-j by alias)
+make &
+
+# no need to waitpid make since bc-chunk-backup2 xmessages at end
+# sleep 1; bc-waitpid.pl make &
+
+echo look over big-by-*
+
+# once the filelist looks ok, rsync it over to a subdir called root
+mkdir ROOT
+sudo rsync -Pvzlpt / --files-from=filelist.txt ROOT/ >& rsync-outerr.txt &
+: bc-waitpid.pl for above to finish
+sleep 1; bc-waitpid.pl rsync &
+
+# uncompress all files (zpaq does better w/ uncompressed files)
+
+find . -iname '*.bz2' -print0 | xargs -n 1 -0 bunzip2 -v &
+find . -iname '*.tbz' -print0 | xargs -n 1 -0 bunzip2 -v &
+find . -iname '*.gz' -print0 | xargs -n 1 -0 gunzip -v &
+find . -iname '*.tgz' -print0 | xargs -n 1 -0 gunzip -v &
+
+# if processes above take a while, consider bc-waitpid.pl
+
+# might as well have sha1sums of everything I'm backing up (doesn't
+# take much more time)
+
+find ROOT -type f -print0 | xargs -0 sha1sum > sha1sums.txt &
+
+# note that $zpaq_password should be set for this to work
+
+nice +19 zpaq -method 510 -threads 0 add "massback-$DATE.1" ROOT -key $zpaq_password -index "massback-$DATE.0" |& tee zpaq.log &
+bc-waitpid.pl zpaq & 
+
 BACKUP PROCESS:
 
 Compile null-separated lists of all files on each of my hard drives,

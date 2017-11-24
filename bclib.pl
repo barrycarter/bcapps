@@ -136,7 +136,7 @@ our(@globopts) = ("debug", "nocache", "tmpdir", "nowarn", "fake", "ignorelock",
 
 # TODO: let .tcshrc set this
 # TODO: adding BCGIT to this = really kludgey
-$ENV{PATH} = "/sbin:/opt/metaf2xml/bin/:/sw/bin/:/bin/:/usr/bin/:/usr/local/bin/:/usr/X11R6/bin/:/usr/lib/nagios/plugins:/usr/lib:/usr/sbin/:$ENV{HOME}/bin:$ENV{HOME}/PERL:/usr/lib64/nagios/plugins/";
+$ENV{PATH} = "/sbin:/opt/metaf2xml/bin/:/sw/bin/:/bin/:/usr/bin/:/usr/local/bin/:/usr/X11R6/bin/:/usr/lib/nagios/plugins:/usr/lib:/usr/sbin/:$ENV{HOME}/bin:$ENV{HOME}/PERL:/usr/lib64/nagios/plugins/:$bclib{githome}:$bclib{githome}/*";
 
 =item list2hash(@list)
 
