@@ -1,3 +1,5 @@
+# graveyard 11/24/2017: no longer use this, have more intelligent mounts.txt thing in crontab
+
 #!/bin/sh
 # This trivial script just runs bc-unix-dump.pl on all my drives
 # TODO: automate this if I add new drives etc

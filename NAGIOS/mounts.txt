@@ -1,3 +1,6 @@
+# TODO: replace this with ../BRIGHTON/mounts.txt (which is in a
+# different format alas)
+
 # replaces bc_check_mounts, lets me more flexibly edit which mount points to check
 /
 # temporarily ro

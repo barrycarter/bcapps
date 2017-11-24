@@ -255,3 +255,10 @@ MAILTO="daemon"
 
 # just for fun, dump TED estimate of bill to CRON hourly
 30 * * * * /home/user/BCGIT/bc-elec-bill-ted.pl
+
+# I maintain a copy of saopaulo startup notes (privately) in
+# /home/barrycarter; however, because /home/barrycarter is not
+# available at boot (something I really need to fix), this copies that
+# file to the / directory which IS available
+
+45 * * * * cp -f /home/barrycarter/saopaulo-birth.txt /

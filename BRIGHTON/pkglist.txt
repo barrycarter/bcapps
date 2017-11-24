@@ -399,6 +399,7 @@ samba
 # games
 # TODO: eternal lands
 # TODO: kerbal?
+tinyfugue
 lostlabyrinth
 warsow
 warzone2100

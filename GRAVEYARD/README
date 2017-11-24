@@ -1,0 +1,5 @@
+Programs that I no longer use that I want to keep around for
+reference, but shouldn't appear in grep results (so I can do 'find
+... | grep -v GRAVEYARD' or whatever); usually annotated for reason
+why they were killed
+

@@ -29,3 +29,7 @@
 
 # /mnt/extdrive2 was copied to /mnt/lobos as it (extdrive2) failed
 "/mnt/lobos/extdrive2/" "/mnt/extdrive2/"
+
+# VMs from brighton should already be copied over
+"/mnt/extdrive5/FROMBRIGHTON/mnt/extdrive7/root/VirtualBox VMs/" "/root/VirtualBox VMs/"
+
