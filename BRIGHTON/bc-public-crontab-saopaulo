@@ -261,4 +261,4 @@ MAILTO="daemon"
 # available at boot (something I really need to fix), this copies that
 # file to the / directory which IS available
 
-45 * * * * cp -f /home/barrycarter/saopaulo-birth.txt /
+45 * * * * sudo cp -f /home/barrycarter/saopaulo-birth.txt /

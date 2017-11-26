@@ -14,7 +14,7 @@ cd /root/massbacks-idrive-saopaulo
 setenv DATE `date +%Y%m%d.%H%M%S`
 mkdir /root/massbacks/$DATE
 cd /root/massbacks/$DATE
-cp /home/barrycarter/BCGIT/BACKUP/Makefile .
+cp /home/user/BCGIT/BACKUP/Makefile .
 
 # cp exclusions-commented.txt from a previous backup or make wont work
 
@@ -50,6 +50,26 @@ find ROOT -type f -print0 | xargs -0 sha1sum > sha1sums.txt &
 
 nice +19 zpaq -method 510 -threads 0 add "massback-$DATE.1" ROOT -key $zpaq_password -index "massback-$DATE.0" |& tee zpaq.log &
 bc-waitpid.pl zpaq & 
+
+# create a list from the main file
+zpaq list massback-$DATE.1 -key $zpaq_password > massback-$DATE.list
+
+# look at list to make sure it looks ok
+less massback-$DATE.list
+
+# send to idrive instructions are private, incl username/pw
+
+# after idrive step completed...
+mv massback-$DATE.0 massback-$DATE.list /root/massbacks-idrive-saopaulo
+
+: remove root and .1 files locally (and optionally others)
+
+rm -rf massback-$DATE.1 ROOT &
+rm -f backup0.txt afad.txt previouslydone.txt.srt &
+
+: check if it's time for weekly backup! (and update date in shell file)
+
+grep weekly ~user/.annoytab | grep latest | grep backup
 
 BACKUP PROCESS:
 
