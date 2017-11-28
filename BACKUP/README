@@ -57,6 +57,12 @@ zpaq list massback-$DATE.1 -key $zpaq_password > massback-$DATE.list
 # look at list to make sure it looks ok
 less massback-$DATE.list
 
+: update /tmp/files.txt (may need to create) for idevsutil
+\ls $cwd/*.? >! /tmp/files.txt
+
+: check above
+less /tmp/files.txt
+
 # send to idrive instructions are private, incl username/pw
 
 # after idrive step completed...
