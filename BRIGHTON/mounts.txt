@@ -17,7 +17,10 @@
 
 /mnt/extdrive5 extdrive5
 
-# TODO: /home on saopaulo has nothing but two symlinks so not listing
-# it here (but need to figure out long-term here)
+# swap drive
+/dev/shm swap
 
-# also not listing /boot or /boot/efi
+# nothing really here but might as well note it
+/home home
+
+# not listing /boot or /boot/efi

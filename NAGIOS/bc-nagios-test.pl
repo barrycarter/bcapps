@@ -253,7 +253,8 @@ point there as a list, there's no place for options (sigh).
 
 sub bc_check_mounts2 {
   my($fname) = @_;
-  my(@mpts) = `egrep -v '^#' $fname`;
+#  my(@mpts) = `egrep -v '^#' $fname`;
+  my(@mpts) = `egrep -v '^#|^\$' $fname | cut -d' ' -f 1`;
   map(chomp($_),@mpts);
   debug("MPTS",@mpts);
   return bc_check_mounts(@mpts);

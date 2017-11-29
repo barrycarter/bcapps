@@ -28,6 +28,7 @@ Notes: a M.U.L.E. clone that can be played on an arbitrary sized map
 Subject: Wikis
 Code URL: https://github.com/barrycarter/bcapps/blob/master/METAWIKI/
 Showcase: http://pbs3.referata.com/wiki/Main_Page
+Notes: a Pearls Before Swine wiki created in a "meta" style
 
 Subject: Geolocation
 Code URL: https://github.com/barrycarter/bcapps/blob/master/GEOLOCATION
