@@ -1,0 +1,192 @@
+Subject: Allow askers to rate their question in multiple categories
+
+Although askers are expected to ask good questions, many don't take the time to read the good question guidelines and/or aren't sure how much information to provide.
+
+I suggest allowing askers to optionally rank their question on a scale from one to ten in several areas below:
+
+  - **Effort**. On a scale from 1-10, how much effort have you put into answering this question yourself? Sample values:
+
+    - 1: No effort prior to asking this question
+
+    - 3: have used search engines for a few minutes, but found nothing useful [a]
+
+    - 5: have used search engines intensely, but found nothing useful [a]
+
+    - 7: have contacted a library and/or offline resources
+
+    - 9: have contacted experts in the field [b]
+
+a: Include in your question what you found, and why it wasn't useful
+
+b: Although you are welcome to ask your question here, you are unlikely to get better answers than provided by an expert.
+
+  - **Knowledge**. On a scale from 1-10, how well versed/learned do you feel in this field? Sample values:
+
+    - 1: I am complete beginner
+
+    - 3: I've studied it for less than year
+
+    - 5: I've studied it for 1-3 years
+
+    - 7: It is/was my college major and I have studied it fairly extensively
+
+    - 9: I am a recognized expert in the field
+
+  - **Difficulty**. On a scale from 1-10, how difficult do you believe this problem is? Sample values:
+
+    - 1: anyone can answer it [a]
+
+    - 3: anyone with basic knowledge in the field can answer it [a]
+
+    - 5: anyone who has studied the field can answer it [a]
+
+    - 7: only an expert can answer it
+
+    - 9: this is an unsolved problem in the field [b]
+
+    - 10: the problem has been proven unsolvable [c]
+
+a: Please consider using a search engine instead of posting a question
+
+b: If the problem is unsolved in the field, it is unlikely that you will get an answer from stackexchange. However, you may receive guidance or resources.
+
+c: If the problem is known unsolvable, you obviously won't receive an answer from stackexchange; however, you may receive guidance or resources. You may also use this ranking if you feel you have found a flaw in the insolubility proof.
+
+  - **Depth**. On a scale from 1-10, how detailed of an answer do you seek? Sample values:
+
+    - 1: I just need a starting point
+
+    - 3: I just want to know what words or phrases to type into search engines
+
+    - 5: I'm looking for a helpful link that answers my question
+
+    - 7: I'm looking for a complete answer
+
+    - 9: I'm looking for a verbose, complete, worked-out answer, with sources and details
+
+  - **Urgency**. On a scale from 1-10, how urgent is this question. Sample values:
+
+    - 1: I'm just casually curious and may not check back to see if I get an answer [a]
+
+    - 3: I'm interested in the answer as a bit of trivia
+
+    - 5: I'm studying this problem for an upcoming test/exam and would like some insight
+
+    - 7: This question is part of a homework assignment I need to turn in soon [b]
+
+    - 9: It's metaphorically life or death
+
+    - 11: It's literally life or death. StackExchange is not an emergency response service. If there is immediate danger to life, limb, or property, please contact your local emergency services.
+
+[a] We prefer questions be closed after they are answered. If you do not plan to look at the answer, please do not post a question
+
+[b] Most sites have special rules regarding homework questions. Please review these rules before posting your question
+
+
+  - **Payment**. StackExchange is for volunteers to answer questions without the expectation of payment. If you are willing to pay, you may wish to visit a site where you can hire someone to answer your question. Some sample sites:
+
+    - freelancer.com
+    - fiverr.com
+    - guru.com
+    - mturk.com
+    - upwork.com
+    - topcoder.com
+    - Your local craigslist.org may have a section where you can post questions/tasks for money
+
+The list above isn't complete and may not be accurate. The links are representative and are not endorsed by StackExchange.
+
+  - **Additional Information**. Check any of the following that apply to your question:
+
+    - My question is about recent events
+
+    - The search phrases I use yield many irrelevant results, because the search phrases have other, more popular meanings
+
+In addition to the 1-10 scale, each question would have a "no answer" default value and an "Other:" value with a freeform text field.
+
+The text above these fields would read "filling out the following fields is optional, but may help you get a better and quicker answer to your question".
+
+Of course, a good question should include many of the answers to these questions anyway, but it's easier for an asker to choose values, and it also allows answerers to focus on the questions they want to answer.
+
+
+
+
+
+decachotomy
+
+feature-request, "no answer", "other: ________"
+
+
+
+
+
+YES, they should do it anyway
+
+
+
+
+======= BELOW THIS LINE, copied from bc-quora-sucks.txt
+
+
+Thoughts for improving quora by creating a better Q+A board.
+
+Asker can fill out these fields (numerically so they can be sorted/filtered):
+
+  - how much time/effort have you put into this problem yourself? (eg,
+  "I'm sure I could do this myself, I'm just being lazy")
+
+  - how competent do you feel in this field (new to me, beginner,
+  intermediate, expert, cutting edge of research)
+
+  - what is your estimate of this question's difficulty (eg, grade
+  school, university, unsolved problem, etc)
+
+  - what sort of answer do you seek (just a link, brief explanation,
+  worked out completely, etc)
+
+  - how urgent is this problem to you? (need answer ASAP, couple of
+  days, casual query, don't care)
+
+  - would you be willing to pay someone for an answer, and, if so, how
+  much? (note that site itself won't handle or accept payments, but
+  others might)
+
+TODO: allow "project level problem" and "seeking collaborators"
+
+Answerer can fill out these fields:
+
+  - Completeness of answer (just a link, some discussion, answers part
+  of problem, shows answer is unknown, answers complete problem)
+
+  - Answer is humorous, sarcastic, or otherwise not meant to answer
+  the question directly.
+
+The site will have a multi-level ontology so a "special relativity"
+question is auto-posted to "relativity", "physics", "science", etc.
+
+Site will have "reputation points" for users/answers/question/etc
+
+Site will have multi-threaded comment/answer replies.
+
+Site will have API and regular data dumps.
+
+Site will allow SQL filtering and sorting of questions (including posting time)
+
+Site will include notification "this comment was posted in response to
+an older version of this question/answer and may not be relevant to
+the current version"
+
+Question merge will exist, but will try to be smarter.
+
+FAQ for each ontology item if possible
+
+If "ask to answer" feature implemented, will make it clear to everyone
+whether they've been invited to answer or not
+
+TODO: voice verification or similar to reduce spam (text verification
+using twilio? require existing account w other service?) (or $1 credit card?)
+
+TODO: allow non-posters to tweak ratings set by poster but make it
+clear which are tweaked and which are original
+
+TODO: consider copying existing questions from a site like quora or
+stackexchange for testing by artificially assigning numbers

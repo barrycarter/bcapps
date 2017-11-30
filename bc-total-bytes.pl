@@ -10,6 +10,8 @@ require "/usr/local/lib/bclib.pl";
 # --size: field in which size appears (default 0)
 # --name: field in which name starts (default 2)
 
+# NOTE: name must always be last field
+
 # file format as in BACKUP/README
 
 # report space used by files and directories (including
@@ -29,6 +31,8 @@ while (<>) {
   unless(/\//) {next;}
 
   my(%file);
+
+  # the below assumes name is the last field, and thus includes spaces
   my(@arr) = split(/\s+/, $_, $globopts{name}+1);
   ($file{size},$file{name}) = ($arr[$globopts{size}],$arr[$globopts{name}]);
 
