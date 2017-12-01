@@ -25,7 +25,7 @@ if ($>) {die("Must be root");}
 # the program can thus abort when the file size gets too small
 
 # files below this size are ignored
-my($lower) = 1e+7;
+my($lower) = 1e+6;
 
 open(A,"results.txt.srt")||die("Can't open results.txt, $!");
 
