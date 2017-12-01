@@ -9,6 +9,9 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# for permissions purposes (ugly!)
+if ($>) {die("Must be root");}
+
 # to be safe, I check the file existence and file size before
 # deleting/symlinking anything; this is tedious, but I can reduce the
 # number of files I consider by only looking at large files; how do I
@@ -17,33 +20,45 @@ require "/usr/local/lib/bclib.pl";
 # candidates that are large enough; of course, I will doublecheck
 # later to make sure these files still exist and have proper size
 
-open(A,"results.txt")||die("Can't open results.txt, $!");
+# to make things even more efficient, results.txt.srt is generated as:
+# sort -k4nr results.txt > results.txt.srt
+# the program can thus abort when the file size gets too small
+
+# files below this size are ignored
+my($lower) = 1e+7;
+
+open(A,"results.txt.srt")||die("Can't open results.txt, $!");
 
 while (<A>) {
+
+  chomp;
 
   # by limiting the split here, I preserve spaces in the filename
   my($duptype, $id, $depth, $size, $device, $inode, $priority, $name) =
     split(/ /, $_, 9);
 
+#  debug("NAME: $name");
+
+  # if we've hit a file less than $lower, we assume files are sorted
+  # by size, so abort
+  if ($size < $lower) {last;}
+
   # TODO: we could record more about the file here
   # TODO: we could limit size here instead of later
   # TODO: we could do file safety checks here instead of later
-  $size{$name} = $size;
-#  debug("NAME: $name");
 
+#  debug("ASSIGNING $name to size $size");
+
+  $size{$name} = $size;
 }
 
-
-
-
-die "TESTING";
-
-# for permissions purposes (ugly!)
-if ($>) {die("Must be root");}
+# debug(%size);
 
 my($bytes);
 
 while (<>) {
+
+  chomp;
 
   # TODO: ? I could've done this w/ arrays, but ... ?
   # make sure its a symlink recommendation
@@ -52,6 +67,15 @@ while (<>) {
   unless (/symlink\s*(.*?) to (.*)$/) {next;}
 
   my($f1, $f2) = ($1, $2);
+
+#  debug("FILES: $f1 and $f2, $size{$f1}, $size{$f2}");
+
+  # if the file size is undefined, ignore quietly
+  if ($size{$f1} == 0 || $size{$f2} == 0) {next;}
+
+  # check that at least the theoretic sizes are equal and large enough
+  if ($size{$f1} < $lower) {warn "TOO SMALL: $f1 -> $size{$f1}"; next;}
+  unless ($size{$f1} == $size{$f2}) {warn "UNEQUAL SIZE: $_, $size{$f1} vs $size{$f2}"; next;}
 
   # no quotes, but spaces/apostrophes ok + other printables (since I quote)
 
@@ -103,13 +127,20 @@ while (<>) {
   # ignore cases where source is already a symlink
   if (-l $f2) {warn("SOURCE IS SYMLINK: $f2"); next;}
 
+  # confirm actual sizes are same
+  unless (-s $f2 == -s $f1) {warn("DIFFERENT SIZES: $_"); next;}
+
   $bytes+= (-s $f2);
-  if (rand()<.001) {debug("BYTES SAVED: $bytes");}
+  if (rand()<.01) {debug("BYTES SAVED: $bytes");}
 
   # I am deleting the second file and linking to first, which is the
   # opposite of what rdfind normally does (I ran it backwards by
   # mistake + it would take forever to run again)
-  print qq%rm "$f2"; ln -s "$f1" "$f2"\n%;
+
+  # sudo here is seriously ugly, but perms
+  print qq%sudo rm "$f2"; sudo ln -s "$f1" "$f2"\n%;
 
   #  debug("GOT: $f1 -> $f2, $n1 -> $n2, $m1 -> $m2");
 }
+
+debug("TOTAL BYTES SAVED: $bytes");
