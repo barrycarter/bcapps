@@ -16,11 +16,14 @@ while (<>) {
 
   my($f1, $f2) = ($1, $2);
 
-  if ($f1=~/([\W\"\'])/) {debug("BAD CHAR: $1");}
+  # space omitted below; no apostrophes, quotes, or other types of spaces
 
-  # ignore anything with quotes, apostrophes, or unprintables
-  if ($f1=~/[\W\"\']/) {warn "BAD FILE: *$f1*"; next;}
-  if ($f2=~/[\W\"\']/) {warn "BAD FILE: $f2"; next;}
+  unless ($f1=~/[\!-~]/) {warn "BAD FILENAME: $f1"; next;}
+  unless ($f2=~/[\!-~]/) {warn "BAD FILENAME: $f2"; next;}
+
+  # no apostrophes, quotes, or other types of spaces
+  if ($f1=~/[\"\'\s]/) {warn "BAD FILENAME: $f1"; next;}
+  if ($f2=~/[\"\'\s]/) {warn "BAD FILENAME: $f2"; next;}
 
   # my restriction: the filename itself must match (because otherwise
   # you get all sorts of weird random links)
