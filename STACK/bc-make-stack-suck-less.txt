@@ -108,47 +108,12 @@ The text above these fields would read "filling out the following fields is opti
 Of course, a good question should include many of the answers to these questions anyway, but it's easier for an asker to choose values, and it also allows answerers to focus on the questions they want to answer.
 
 
-
-
-
 decachotomy
 
-feature-request, "no answer", "other: ________"
 
 
+======= BELOW THIS LINE, copied from bc-quora-sucks.txt ========
 
-
-
-YES, they should do it anyway
-
-
-
-
-======= BELOW THIS LINE, copied from bc-quora-sucks.txt
-
-
-Thoughts for improving quora by creating a better Q+A board.
-
-Asker can fill out these fields (numerically so they can be sorted/filtered):
-
-  - how much time/effort have you put into this problem yourself? (eg,
-  "I'm sure I could do this myself, I'm just being lazy")
-
-  - how competent do you feel in this field (new to me, beginner,
-  intermediate, expert, cutting edge of research)
-
-  - what is your estimate of this question's difficulty (eg, grade
-  school, university, unsolved problem, etc)
-
-  - what sort of answer do you seek (just a link, brief explanation,
-  worked out completely, etc)
-
-  - how urgent is this problem to you? (need answer ASAP, couple of
-  days, casual query, don't care)
-
-  - would you be willing to pay someone for an answer, and, if so, how
-  much? (note that site itself won't handle or accept payments, but
-  others might)
 
 TODO: allow "project level problem" and "seeking collaborators"
 
