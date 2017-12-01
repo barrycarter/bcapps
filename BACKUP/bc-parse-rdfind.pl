@@ -2,11 +2,41 @@
 
 # this is a oneoff program
 
-# parses the output of
+# I tried to run rdfind as below:
 # sudo rdfind -dryrun true -removeidentinode false -makesymlinks true dir1 dir2
-# (on the STDIN) that recommends symlinks, but with oneoff exceptions I need
+# to free up disk space, but ran into issues. This program addresses
+# those issues, which are given in comments
 
 require "/usr/local/lib/bclib.pl";
+
+# to be safe, I check the file existence and file size before
+# deleting/symlinking anything; this is tedious, but I can reduce the
+# number of files I consider by only looking at large files; how do I
+# know a file is large without "-s"'ing it? I don't, but results.txt
+# gives filesize at the time it ran, so I can use it to get a list of
+# candidates that are large enough; of course, I will doublecheck
+# later to make sure these files still exist and have proper size
+
+open(A,"results.txt")||die("Can't open results.txt, $!");
+
+while (<A>) {
+
+  # by limiting the split here, I preserve spaces in the filename
+  my($duptype, $id, $depth, $size, $device, $inode, $priority, $name) =
+    split(/ /, $_, 9);
+
+  # TODO: we could record more about the file here
+  # TODO: we could limit size here instead of later
+  # TODO: we could do file safety checks here instead of later
+  $size{$name} = $size;
+#  debug("NAME: $name");
+
+}
+
+
+
+
+die "TESTING";
 
 # for permissions purposes (ugly!)
 if ($>) {die("Must be root");}
