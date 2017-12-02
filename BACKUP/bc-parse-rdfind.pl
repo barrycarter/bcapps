@@ -35,9 +35,9 @@ while (<A>) {
 
   # by limiting the split here, I preserve spaces in the filename
   my($duptype, $id, $depth, $size, $device, $inode, $priority, $name) =
-    split(/ /, $_, 9);
+    split(/ /, $_, 8);
 
-#  debug("NAME: $name");
+  debug("NAME: $name");
 
   # if we've hit a file less than $lower, we assume files are sorted
   # by size, so abort
@@ -47,7 +47,7 @@ while (<A>) {
   # TODO: we could limit size here instead of later
   # TODO: we could do file safety checks here instead of later
 
-#  debug("ASSIGNING $name to size $size");
+  debug("ASSIGNING $name to size $size");
 
   $size{$name} = $size;
 }
@@ -68,7 +68,7 @@ while (<>) {
 
   my($f1, $f2) = ($1, $2);
 
-#  debug("FILES: $f1 and $f2, $size{$f1}, $size{$f2}");
+  debug("FILES: $f1 and $f2, $size{$f1}, $size{$f2}");
 
   # if the file size is undefined, ignore quietly
   if ($size{$f1} == 0 || $size{$f2} == 0) {next;}
