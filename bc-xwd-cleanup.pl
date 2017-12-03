@@ -4,10 +4,39 @@
 
 require "/usr/local/lib/bclib.pl";
 
-$date = $ARGV[0];
-
 system("/usr/bin/renice 19 -p $$");
 chdir("/home/user/XWD/");
+
+$date = $ARGV[0];
+
+# figure out most recent date that hasn't been done yet, allows catchup
+
+unless ($date) {
+
+  # TODO: this is ugly, but handles timezones ok, hopefully
+  my($today) = `date +%Y%m%d`;
+  chomp($today);
+
+  # test
+  $today="20170101";
+
+  # find newest file in ~/XWD that isn't today
+  my(@files) = `ls -t`;
+
+  for $i (@files) {
+    $i=~/pic\.(\d{8}):\d{6}\.png/||warn("BAD FILE: $i");
+    $date = $1;
+    if ($date < $today) {last;}
+  }
+
+  # unless date is less than today, die
+  unless ($date < $today) {die "LAST DATE: $date < $today";}
+
+  debug("USING DATE: $date");
+}
+
+die "TESTING";
+
 system("mkdir $date; mv pic.$date:*.png $date");
 chdir("/home/user/XWD/$date");
 defaults("xmessage=1");
