@@ -82,9 +82,9 @@ while (<>) {
   unless ($f1=~/[ -~]/) {warn "BAD FILENAME: $f1"; next;}
   unless ($f2=~/[ -~]/) {warn "BAD FILENAME: $f2"; next;}
 
-  # no apostrophes, quotes, or other types of spaces
-  if ($f1=~/\"/) {warn "BAD FILENAME: $f1"; next;}
-  if ($f2=~/\"/) {warn "BAD FILENAME: $f2"; next;}
+  # no quotes or dollar signs
+  if ($f1=~/[\"\$]/) {warn "BAD FILENAME: $f1"; next;}
+  if ($f2=~/[\"\$]/) {warn "BAD FILENAME: $f2"; next;}
 
   # my restriction: the filename itself must match (because otherwise
   # you get all sorts of weird random links)
