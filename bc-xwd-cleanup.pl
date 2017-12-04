@@ -5,7 +5,7 @@
 require "/usr/local/lib/bclib.pl";
 
 system("/usr/bin/renice 19 -p $$");
-chdir("/home/user/XWD/");
+dodie("chdir('/home/user/XWD/')");
 
 $date = $ARGV[0];
 
@@ -17,14 +17,11 @@ unless ($date) {
   my($today) = `date +%Y%m%d`;
   chomp($today);
 
-  # test
-  $today="20170101";
-
   # find newest file in ~/XWD that isn't today
   my(@files) = `ls -t`;
 
   for $i (@files) {
-    $i=~/pic\.(\d{8}):\d{6}\.png/||warn("BAD FILE: $i");
+    $i=~/^pic\.(\d{8}):\d{6}\.png$/||warn("BAD FILE: $i");
     $date = $1;
     if ($date < $today) {last;}
   }
@@ -35,10 +32,9 @@ unless ($date) {
   debug("USING DATE: $date");
 }
 
-die "TESTING";
-
-system("mkdir $date; mv pic.$date:*.png $date");
-chdir("/home/user/XWD/$date");
+dodie_cmd("mkdir $date");
+dodie_cmd("mv pic.$date:*.png $date");
+dodie("chdir('/home/user/XWD/$date')");
 defaults("xmessage=1");
 
 # run tesseract and convert on all files in directory (convert to .pnm
@@ -62,6 +58,17 @@ for $i (glob "*.png") {
 close(A);
 
 # and move tesseract files out of the way
-system("mkdir /home/user/XWD2OCR/$date; mv *.txt /home/user/XWD2OCR/$date/")
+dodie_cmd("mkdir /home/user/XWD2OCR/$date");
+dodie_cmd("mv *.txt /home/user/XWD2OCR/$date/");
 
 # TODO: add zpaq'ing
+
+# do a command or die
+
+sub dodie_cmd {
+  my($cmd) = @_;
+
+  my($out, $err, $res) = cache_command2($cmd, "age=0");
+
+  if ($res) {die "FAILED: $cmd, ERR: $err, OUT: $out";}
+}

@@ -112,11 +112,12 @@ while (<>) {
   unless ($f2=~m%^/mnt/(.*?)/%) {warn("NOTMNT: $f2"); next;}
   my($m2) = $1;
 
-  if ($m1 eq $m2) {next;}
+  # later I do need to remove files on same drive, different dirs though
+#  if ($m1 eq $m2) {next;}
 
   # this check is VERY specific to me; I could've included it above,
   # but am separating it if others want to use this
-  unless ($m1 eq "extdrive5" && $m2 eq "kemptown") {next;}
+#  unless ($m1 eq "extdrive5" && $m2 eq "kemptown") {next;}
 
   # painful (slow) test saved for last: target must exist and not be
   # symlink itself
