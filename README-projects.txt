@@ -1,3 +1,7 @@
+Subject: Internet
+Code URL: none yet (but see "sub post_to_wp" in bclib.pl)
+Description: allow local editing of a wordpress wiki as though it were a jekyll wiki (ie, allow mirroring and easy post creations)
+
 Subject: Mathematics
 Code URL: https://github.com/barrycarter/bcapps/blob/master/ROSETTA
 Description: Convert Mathematica formulas into various other programming languages

@@ -21,8 +21,14 @@ unless ($date) {
   my(@files) = `ls -t`;
 
   for $i (@files) {
-    $i=~/^pic\.(\d{8}):\d{6}\.png$/||warn("BAD FILE: $i");
+
+    unless ($i=~/^pic\.(\d{8}):\d{6}\.png$/) {
+      warn("BAD FILE: $i");
+      next;
+    }
+
     $date = $1;
+    debug("LOOKING AT: $i, $date < $today?");
     if ($date < $today) {last;}
   }
 
@@ -41,7 +47,8 @@ defaults("xmessage=1");
 # because ZPAQ compresses this most efficiently)
 
 # TODO: figure out optimal value here
-open(A,"|parallel -j 5");
+# reduced to 1 (ie, no affect) so I could run it in bg w/o killing CPU
+open(A,"|parallel -j 1");
 
 # TODO: exclude cases where result already exists!
 

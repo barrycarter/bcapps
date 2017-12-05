@@ -2,6 +2,8 @@
 
 (* TODO: consider making UTC my global time zone in bclib.m *)
 
+(* TODO: confirm 12 is max zoom level *)
+
 $TimeZone = 0;
 
 (* this is ugly, but gives elevation faster than GeoElevationData,
@@ -19,11 +21,17 @@ elevFunc[latx_, lonx_] := elevFunc[latx, lonx] =
    "GeoPosition", GeoZoomLevel -> 12
  ][[1]],1], InterpolationOrder -> 1];
 
-(* memoizing elev may actually help, given the size of the
-Interpolations above *)
+(*
 
-elev[lat_, lon_] := elev[lat, lon] = 
- elevFunc[Floor[lat*10], Floor[lon*10]][lat,lon];
+memoizing elev may actually help, given the size of the
+Interpolations above 
+
+The Max because we assume people on sea are watching at sea level
+
+*)
+
+elev[lat_, lon_] := elev[lat, lon] = Max[0,
+ elevFunc[Floor[lat*10], Floor[lon*10]][lat,lon]];
 
 (*
 
@@ -44,12 +52,26 @@ positive is counterclockwise)
 
 *)
 
-travel[lat_, lon_, h_, az_, el_, d_] := Module[{dest},
+travel[lat_, lon_, h_, az_, el_, d_] := 
+ travel[lat, lon, h, az, el, d] = Module[{dest},
   dest = GeoPosition[GeoPositionENU[
   Quantity[d,"km"]*{Cos[Pi/2-az] Cos[el], Cos[el] Sin[Pi/2-az], Sin[el]},
   GeoPosition[{lat, lon, Quantity["m"]*(h+elev[lat,lon])}]]][[1]];
  Return[dest-{0,0,elev[dest[[1]], dest[[2]]]}];
 ];
+
+(*
+
+travelSimple[lat, lon, az, el] = ignoring elevation above the
+ellipsoid, where does starting at lat, lon and going az, el for d take
+you?, where d is in kilometers
+
+*)
+
+travelSimple[lat_, lon_, az_, el_, d_] := GeoPosition[
+ GeoPositionENU[
+  Quantity[d,"kilometer"]*{Cos[az] Cos[el], Cos[el] Sin[az], Sin[el]},
+ GeoPosition[{lat/Degree, lon/Degree}]]];
 
 (*
 
@@ -70,7 +92,7 @@ through line of height h first hits the sphere when
 sphDist[h_, r_, theta_] = Sqrt[((h + r)*Sin[theta] -
 Cos[theta]*Sqrt[-(h*(h + 2*r)) + r^2*Tan[theta]^2])^2]
 
-(* This isn't the peak of Mt Fuji; rather it is the "valley between
+(* This isnt the peak of Mt Fuji; rather it is the "valley between
 the peaks", since that is the point we are projecting; these are in
 degrees for consistency with Mathematica's Geo stuff *)
 
@@ -1607,3 +1629,49 @@ Out[110]= StructuredArray[QuantityArray, {292, 291}, <Meters>]
 a little ridiculous above
 
 
+NSolve[travel[35.3628, 138.731, 0, 20*Degree, 15*Degree, d][[3]] == 0, d]
+
+FindRoot[travel[35.3628, 138.731, 0, 20*Degree, 15*Degree, d][[3]] == 0, 
+     {d,0}]
+
+
+FindRoot[N[travel[35.3628, 138.731, 0, 20*Degree, 15*Degree, d][[3]]] == 0, 
+     {d,0}, Method -> "Brent"]
+
+temp1225 = Table[travel[35.3628, 138.731, 0, 20*Degree, 15*Degree, d], 
+ {d, 0, 1, .01}]
+
+Plot[travel[35.3628, 138.731, 0, 20*Degree, -15*Degree, d][[3]], {d, 0, 1}]
+
+travelSimple[35*Degree, -106*Degree, 0*Degree, -6*Degree, 10]
+
+Solve[
+ travelSimple[35*Degree, -106*Degree, 0*Degree, -6*Degree, d][[3]] == 0, d]
+
+NSolve[
+ travelSimple[35*Degree, -106*Degree, 0*Degree, -6*Degree, d][[3]] == 0, d]
+
+FindRoot[
+ travelSimple[35*Degree, -106*Degree, 0*Degree, -6*Degree, d][[3]] == 0, 
+ {d,0}]
+
+travelSimple[35*Degree, -106*Degree, 0*Degree, -6*Degree, 5][[3]]
+
+GeoPosition[{35*Degree, -106*Degree}]
+
+(*
+
+travel0[lat_, lon_, az_, d_]
+
+Starting at lat/lon and travelling in direction az (0 = north), all in degrees, for d km, return lat, lon, and height above ellipsoid of resulting position
+
+travel0[lat_, lon_, az_, d_] := GeoPosition[
+ GeoPositionENU[Quantity[d,"kilometer"]*{Cos[az], Sin[az], 0},
+  GeoPosition[{lat, lon}]]]
+
+travel0[35, -106, 5*Degree, 10]
+
+GeoDistance[{35, -106}, {35.0078, -105.891}]
+
+
+*)
