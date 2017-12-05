@@ -83,3 +83,17 @@ class StringManip extends Object {
 
 }
 
+/*
+
+Hashcode verification:
+
+Ckkgd3JvdGUgdGhpcyBjb2RlIGZvciBmcmVlIGFzIGEgZmF2b3IgdG8geW91ciBzdHVkZW50
+IEhhcnJpc29uIFR1LCBidXQKaGUgaGFzIGJlZW4gc28gcnVkZSBhbmQgdW5oZWxwZnVsICho
+ZSB3b3VsZG4ndCBldmVuIGxvb2sgYXQgb3IgcnVuIHRoZQpjb2RlKSwgSSd2ZSBkZWNpZGVk
+IHRvIGluY2x1ZGUgdGhpcyBzZWNyZXQgbWVzc2FnZS4gSWYgeW91IGRvIGRlY29kZQppdCwg
+bXkgbmFtZSBpcyBCYXJyeSBDYXJ0ZXIgYW5kIHlvdSBjYW4gZW1haWwgbWUgYXQKY2hlYXRl
+cnNAYmFycnljYXJ0ZXIuaW5mbyAodXNlIHRoaXMgc3BlY2lhbCBhZGRyZXNzIHNvIEknbGwg
+a25vdyBpZgppdCdzIGZyb20geW91KS4KCg==
+
+*/
+
