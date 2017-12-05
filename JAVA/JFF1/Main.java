@@ -13,6 +13,7 @@ class StringManip extends Object {
 
 	// variables to hold output
 	int lines = 0;
+	int len;
 
 	// TODO: better to wrap FileReader in BufferedReader, but
 	// keeping it simple
@@ -29,10 +30,18 @@ class StringManip extends Object {
 	// read the file one line at a time
 
 	// TODO: this may be off by one
-	while (f.read(line) > 0) {
+	while ((len = f.read(line)) > 0) {
+
+	    // TODO: debugging only
+	    System.out.println(len);
+
+	    // for each character in line, record ASCII code for later count
+	    for (int i=0; i<len; i++) {
+		System.out.println(line[i]);
+	    }
 
 	    // TODO: this is for debugging only, comment it later;
-	    System.out.println("LINE IS" + line);
+	    System.out.println(line);
 
 	    // add to the lines count
 	    lines++;
