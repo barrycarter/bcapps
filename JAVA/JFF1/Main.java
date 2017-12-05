@@ -9,7 +9,9 @@ class StringManip extends Object {
     public static void main (String argv[]) throws Exception {
 
 	// variable to hold each line of file (assuming no lines over 1M)
-	char[] line = new char[1000000];
+	//	char[] line = new char[1000000];
+
+	String line;
 
 	// variables to hold output
 	int lines = 0;
@@ -26,24 +28,24 @@ class StringManip extends Object {
 	// debug: print filename
 	// System.out.println(file);
 
-	// open the file
-	FileReader f = new FileReader(file);
+	// use buffered reader so we can split on newlines
+	BufferedReader f = new BufferedReader(new FileReader(file));
 
 	// read the file one line at a time
 
 	// TODO: this may be off by one
-	while ((len = f.read(line)) > 0) {
+	while ((line = f.readLine()) != null) {
 
 	    // total lines
 	    lines++;
 
 	    System.out.println(lines);
-	    System.out.println(line.length);
-	    System.out.println(line);
+	    System.out.println(line.length());
+	    //	    System.out.println(line);
 
 	    // NOTE: could also use file's length property
 	    // total chars
-	    chars += len;
+	    chars += line.length();
 
 	    // convert char array to string...
 	    String s = new String(line);
