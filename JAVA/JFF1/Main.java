@@ -37,6 +37,11 @@ class StringManip extends Object {
 	    // total lines
 	    lines++;
 
+	    System.out.println(lines);
+	    System.out.println(line.length);
+	    System.out.println(line);
+
+	    // NOTE: could also use file's length property
 	    // total chars
 	    chars += len;
 
