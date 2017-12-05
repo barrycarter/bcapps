@@ -39,18 +39,19 @@ class StringManip extends Object {
 	    // total lines
 	    lines++;
 
-	    System.out.println(lines);
-	    System.out.println(line.length());
+	    // System.out.println(lines);
+	    // System.out.println(line.length());
 	    //	    System.out.println(line);
 
 	    // NOTE: could also use file's length property
-	    // total chars
-	    chars += line.length();
+	    // total chars (the +1 is for the stripped newline)
+	    chars += line.length()+1;
 
 	    // convert char array to string...
 	    String s = new String(line);
 
 	    // split into words
+	    // note: unlike 'wc', this counts leading spaces as a "word"
 	    String[] words = s.split(" ");
 
 	    // and count

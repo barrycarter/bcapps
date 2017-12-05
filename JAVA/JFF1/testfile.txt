@@ -1,0 +1,9 @@
+one dollar = 256 pence
+16 of which make up a groat
+64 of which make up a crown
+# adding leading spaces below to "break" program
+ 2 crown = queens shilling
+3 crown = kings shilling
+5 dollars = silver soveriegn
+3 of which = gold soveriegn
+45 dollars = one royal crest
