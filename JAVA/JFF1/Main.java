@@ -14,6 +14,8 @@ class StringManip extends Object {
 	// variables to hold output
 	int lines = 0;
 	int len;
+	int chars = 0;
+	int wordcount = 0;
 
 	// TODO: better to wrap FileReader in BufferedReader, but
 	// keeping it simple
@@ -32,24 +34,41 @@ class StringManip extends Object {
 	// TODO: this may be off by one
 	while ((len = f.read(line)) > 0) {
 
+	    // total lines
+	    lines++;
+
+	    // total chars
+	    chars += len;
+
+	    // convert char array to string...
+	    String s = new String(line);
+
+	    // split into words
+	    String[] words = s.split(" ");
+
+	    // and count
+	    wordcount += words.length;
+
 	    // TODO: debugging only
-	    System.out.println(len);
+	    //	    System.out.println(len);
 
 	    // for each character in line, record ASCII code for later count
-	    for (int i=0; i<len; i++) {
-		System.out.println(line[i]);
-	    }
+	    //	    for (int i=0; i<len; i++) {
+	    //		System.out.println(line[i]);
+	    //	    }
 
 	    // TODO: this is for debugging only, comment it later;
-	    System.out.println(line);
-
-	    // add to the lines count
-	    lines++;
+	    //	    System.out.println(line);
 
 	}
 
 	// TODO: this is just testing, actually print to file
-	System.out.println("LINES: "+lines);
+	System.out.print("LINES: ");
+	System.out.println(lines);
+	System.out.print("WORDS: ");
+	System.out.println(wordcount);
+	System.out.print("CHARACTERS: ");
+	System.out.println(chars);
 
 
     }
