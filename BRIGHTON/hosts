@@ -7,9 +7,9 @@
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4 saopaulo
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
 
-# my servers
+# my servers (arvixe is server provider)
 
-143.95.253.70 bcinfo4
+143.95.253.70 bcinfo4 arvixe
 193.183.99.226 bcinfo3
 
 # current machine
