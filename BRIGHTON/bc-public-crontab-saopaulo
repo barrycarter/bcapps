@@ -244,7 +244,12 @@ MAILTO="daemon"
 # backup "my" tumblr blogs (unrelated to follow list)
 # surrounded by `date` to measure how long it takes
 
-25 3 * * * date; cd /home/user/TUMBLR; egrep -v '^#|^$' ~/my-tumblr-blogs.txt | perl -nle 'print "python tumblr_backup.py -x -i $_"' | sh; date
+# 25 3 * * * date; cd /home/user/TUMBLR; egrep -v '^#|^$' ~/my-tumblr-blogs.txt | perl -nle 'print "python tumblr_backup.py -x -i $_"' | sh; date
+
+# new version saves audio and video too, disabled until I mass dl
+# audio/video so -i flag won't cause problems
+
+# 25 3 * * * date; cd /home/user/TUMBLR; egrep -v '^#|^$' ~/my-tumblr-blogs.txt | perl -nle 'print "python tumblr_backup.py --save-audio --save-video -i $_"' | sh; date
 
 # cleanup tmp files daily
 
