@@ -25,14 +25,11 @@ if ($>) {die("Must be root");}
 # the program can thus abort when the file size gets too small
 
 
-debug(sep_but_equal(@ARGV));
-
-die "TESTING";
-
 # files below this size are ignored
+# TODO: this should almost definitely be an option
 my($lower) = 1e+6;
 
-open(A,"results.txt.srt")||die("Can't open results.txt, $!");
+open(A,"results.txt.srt")||die("Can't open results.txt.srt, $!");
 
 while (<A>) {
 
@@ -42,7 +39,7 @@ while (<A>) {
   my($duptype, $id, $depth, $size, $device, $inode, $priority, $name) =
     split(/ /, $_, 8);
 
-  debug("NAME: $name");
+#  debug("NAME: $name");
 
   # if we've hit a file less than $lower, we assume files are sorted
   # by size, so abort
@@ -57,6 +54,11 @@ while (<A>) {
 }
 
 my($bytes);
+
+debug("PHASE TWO INITIATED");
+
+# TODO: warn user if no STDIN detected for 5 seconds or something
+# print "This program expects a filename argument or a STDIN\n";
 
 while (<>) {
 
@@ -73,6 +75,9 @@ while (<>) {
 
   my(@f) = ($1,$2);
 
+  # <h>"my bad".. get it?</h>
+  my($bad) = 0;
+
   for $i (@f) {
 
     # recsize = size as recorded by results.txt.srt above
@@ -82,22 +87,22 @@ while (<>) {
     # nonpositive file size, even if lower isnt set)
 
     if ($size{$i} <= $lower) {
-      debug("RSIZE($i) <= $lower");
-      next;
+      debug("RSIZE($i) <= $lower"); $bad=1; last;
     }
 
     # TODO: should this be somewhere else?
     unless ($i=~/[ -~]/) {
-      debug("FILE $i contains unprintable characters");
+      debug("FILE $i contains unprintable characters"); $bad=1; last;
       next;
     }
 
     if ($i=~/[\"\$]/) {
-      debug("FILE $i contains a quote or a dollar sign");
+      debug("FILE $i contains a quote or a dollar sign"); $bad=1; last;
       next;
     }
   }
 
+  if ($bad) {next;}
 
   # recorded file sizes should agree
   unless ($size{$f[0]} == $size{$f[1]}) {
@@ -108,7 +113,7 @@ while (<>) {
   # my restriction: the filename itself must match (because otherwise
   # you get all sorts of weird random links)
   
-  my($n1, $n2) = ($f1, $f2);
+  my($n1, $n2) = @f;
   $n1=~s%^.*/%%;
   $n2=~s%^.*/%%;
 
@@ -134,7 +139,7 @@ while (<>) {
   # TODO: add personal filters here re what I do and dont want to remove
 
   # this uses recorded file size, not actual, hmmm
-  $bytes+= (-s $size{$f[0]});
+  $bytes+= $size{$f[0]};
   if (rand()<.01) {debug("BYTES SAVED: $bytes");}
 
   # TODO: decide which file to remove/symlink
@@ -232,6 +237,8 @@ sub stat2hash {
 
   my($file) = @_;
   my(%hash);
+
+  debug("LSTAT($file)");
 
   # TODO: File::stat apparently already does this
   # what stat returns, in name form
