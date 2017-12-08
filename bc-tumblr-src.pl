@@ -61,22 +61,32 @@ while (<>) {
 
     # we need the * after $base because tumblr-backup.py will add a .mp4, eg
 
+    # TODO: why does below not work if I combine lines.. scalar?
     # this also assumes that tumblr files length means globs are unique too
     my(@glob) = glob("$blog/*/$base*");
 
-    # <h>variable name re-use... only in Perl!</h>
-    my($seen) = 0;
+    if (@glob) {next;}
+
+    # figure out how to get it
+
+    # if $src is already https, just pring it
+    if ($src=~m%^https?://%) {
+      print "curl -L -o \"$blog/media/$base\" \"$src\"\n";
+      next;
+    }
+
+#    print "NOT URL: $src\n";
 
     # for now, just print what we dont have
     # TODO: give URL for stuff we dont have
-    unless (@glob) {print "$base\n";}
+#    unless (@glob) {print "$src\n";}
 
     # TODO: is this too slow?
-    if (@glob) {
-      debug("WE HAVE: $base");
-    } else {
-      debug("NO $base");
-    }
+#    if (@glob) {
+#      debug("WE HAVE: $base");
+#    } else {
+#      debug("NO $base");
+#    }
 
 #    for $i ("images", "media") {
 #      if (-f "$blog/$i/$src") {$seen=1; last;}
