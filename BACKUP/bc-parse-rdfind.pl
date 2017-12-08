@@ -24,6 +24,11 @@ if ($>) {die("Must be root");}
 # sort -k4nr results.txt > results.txt.srt
 # the program can thus abort when the file size gets too small
 
+
+sep_but_equal(@ARGV);
+
+die "TESTING";
+
 # files below this size are ignored
 my($lower) = 1e+6;
 
@@ -145,3 +150,45 @@ while (<>) {
 }
 
 debug("TOTAL BYTES SAVED: $bytes");
+
+=item sep_but_equal($file1, $file2)
+
+Given two files, confirm that the files are "separate but equal" in
+the sense I can remove either one and symlink it to the other. More
+specifically, two files are "separate but equal" if:
+
+  - Both files exist and have non-0 length
+  - Neither is a symbolic link or other special file type
+  - They have different inode numbers [1]
+  - They have the same size
+
+[1] in theory, two different files could have the same inode number,
+but different device numbers, but I'm ignoring that special case for
+now
+
+=cut
+
+sub sep_but_equal {
+
+  my(@files) = @_;
+  my(@stats);
+
+  for $i (0..$#files) {@{$stats[$i]} = stat($files[$i]);}
+
+  debug("STATS",@stats);
+  debug("ALPHA");
+  debug(dump_var("STATS", $stats[0]));
+
+  warn "TESTING"; return;
+
+  for $i (0..$#stats) {
+    debug(var_dump($i, $stats[$i]));
+    my(@l) = @{$stats[$i]};
+    debug("STATS($files[$i]) =",@l);
+  }
+
+}
+
+
+
+
