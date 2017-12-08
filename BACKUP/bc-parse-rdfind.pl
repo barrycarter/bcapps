@@ -25,7 +25,7 @@ if ($>) {die("Must be root");}
 # the program can thus abort when the file size gets too small
 
 
-sep_but_equal(@ARGV);
+debug(sep_but_equal(@ARGV));
 
 die "TESTING";
 
@@ -158,7 +158,7 @@ the sense I can remove either one and symlink it to the other. More
 specifically, two files are "separate but equal" if:
 
   - Both files exist and have non-0 length
-  - Neither is a symbolic link or other special file type
+  - Neither is a symbolic link or other special file type[2]
   - They have different inode numbers [1]
   - They have the same size
 
@@ -166,22 +166,58 @@ specifically, two files are "separate but equal" if:
 but different device numbers, but I'm ignoring that special case for
 now
 
+[2] Neither stat nor lstat tell if a file is a symlink, so I use the
+"-l" test below (even "-f" thinks symlinks are real files), although
+lstat gives the size of the symlink which should be a giveaway for
+large files
+
 =cut
 
 sub sep_but_equal {
 
   my(@files) = @_;
   my(@stats);
+  my(%used);
   
-  debug("DEBUG", %{stat2hash($files[0])}, "/DEBUG");
+  for $i (0..$#files) {
 
-  for $i (0..$#files) {%{$stats[$i]} = %{stat2hash($files[$i])};}
+    # TODO: is testing twice here inefficient? should I use stat(_)?
 
-  debug(%{$stats[0]});
+    unless (-f $files[$i]) {
+      debug("$files[$i] is not a normal file or does not exist");
+      return 0;
+    }
 
-  for $i (0..$#stats) {
-    debug("STATS($files[$i]) ="); debug(%{$stats[$i]});
+    if (-l $files[$i]) {
+      debug("$files[$i] is symlink");
+      return 0;
+    }
+
+    %{$stats[$i]} = %{stat2hash($files[$i])};
+
+    # inode already seen?
+    if ($used{$stats[$i]{inode}}) {
+      debug("$files[$i] inode is a repeat");
+      return 0;
+    }
+
+    $used{$stats[$i]{inode}} = 1;
+
+    # some tests for each file
+    for $j ("size", "inode", "device") {
+      if ($stats[$i]{$j} <= 0) {
+	debug("$files[$i] has negative or zero $j");
+	return 0;
+      }
+    }
   }
+
+  unless ($stats[0]{size} == $stats[1]{size}) {
+    debug("Files have different sizes");
+    return 0;
+  }
+
+  return 1;
 
 }
 
@@ -191,6 +227,8 @@ Return the stat of $file as key/value pairs
 
 TODO: move to main lib
 
+TODO: in theory, could use Linux stat, which gives more info
+
 =cut
 
 sub stat2hash {
@@ -198,11 +236,12 @@ sub stat2hash {
   my($file) = @_;
   my(%hash);
 
+  # TODO: File::stat apparently already does this
   # what stat returns, in name form
   my(@names) = ("device", "inode", "mode", "nlink", "uid", "gid", "rdev",
 		"size", "atime", "mtime", "ctime", "blksize", "blocks");
 
-  my(@stat) = stat($file);
+  my(@stat) = lstat($file);
 
   for $i (0..$#names) {$hash{$names[$i]} = $stat[$i];}
 
