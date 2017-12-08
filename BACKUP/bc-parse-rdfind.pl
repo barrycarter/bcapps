@@ -49,15 +49,12 @@ while (<A>) {
   if ($size < $lower) {last;}
 
   # TODO: we could record more about the file here
-  # TODO: we could limit size here instead of later
-  # TODO: we could do file safety checks here instead of later
+  # TODO: we could do file safety checks here instead of later(?)
 
   debug("ASSIGNING $name to size $size");
 
   $size{$name} = $size;
 }
-
-# debug(%size);
 
 my($bytes);
 
@@ -69,27 +66,44 @@ while (<>) {
   # make sure its a symlink recommendation
   # " to " HAS to be one space because some of my filenames end in spaces
   # <h>How bad is your life going if you filenames ending in spaces?</h>
+
   unless (/symlink\s*(.*?) to (.*)$/) {next;}
 
-  my($f1, $f2) = ($1, $2);
+  # using array here probably doesnt help much
 
-  debug("FILES: $f1 and $f2, $size{$f1}, $size{$f2}");
+  my(@f) = ($1,$2);
 
-  # if the file size is undefined, ignore quietly
-  if ($size{$f1} == 0 || $size{$f2} == 0) {next;}
+  for $i (@f) {
 
-  # check that at least the theoretic sizes are equal and large enough
-  if ($size{$f1} < $lower) {warn "TOO SMALL: $f1 -> $size{$f1}"; next;}
-  unless ($size{$f1} == $size{$f2}) {warn "UNEQUAL SIZE: $_, $size{$f1} vs $size{$f2}"; next;}
+    # recsize = size as recorded by results.txt.srt above
+    debug("FILE: $i, RECSIZE: $size{$i}");
 
-  # no quotes, but spaces/apostrophes ok + other printables (since I quote)
+    # if recorded file size less than min, skip (this covers
+    # nonpositive file size, even if lower isnt set)
 
-  unless ($f1=~/[ -~]/) {warn "BAD FILENAME: $f1"; next;}
-  unless ($f2=~/[ -~]/) {warn "BAD FILENAME: $f2"; next;}
+    if ($size{$i} <= $lower) {
+      debug("RSIZE($i) <= $lower");
+      next;
+    }
 
-  # no quotes or dollar signs
-  if ($f1=~/[\"\$]/) {warn "BAD FILENAME: $f1"; next;}
-  if ($f2=~/[\"\$]/) {warn "BAD FILENAME: $f2"; next;}
+    # TODO: should this be somewhere else?
+    unless ($i=~/[ -~]/) {
+      debug("FILE $i contains unprintable characters");
+      next;
+    }
+
+    if ($i=~/[\"\$]/) {
+      debug("FILE $i contains a quote or a dollar sign");
+      next;
+    }
+  }
+
+
+  # recorded file sizes should agree
+  unless ($size{$f[0]} == $size{$f[1]}) {
+    debug("Recorded file sizes differ: $_");
+    next;
+  }
 
   # my restriction: the filename itself must match (because otherwise
   # you get all sorts of weird random links)
@@ -108,46 +122,29 @@ while (<>) {
   # unless names are equal move on
   unless ($n1 eq $n2) {next;}
 
+  # do the expensive lstat tests now
+  unless (sep_but_equal(@f)) {
+    debug("Files fail separate but equal test, $_");
+    next;
+  }
 
-  # I'm only looking for cross-device repeats, so check mount points
-  # my point points start with /mnt, yours may not
-  # this also confirms I have full paths, which helps w symlinks
-  unless ($f1=~m%^/mnt/(.*?)/%) {warn("NOTMNT: $f1"); next;}
-  my($m1) = $1;
-  unless ($f2=~m%^/mnt/(.*?)/%) {warn("NOTMNT: $f2"); next;}
-  my($m2) = $1;
+  # TODO: there is no test than the file sizes are equal to the
+  # recorded file sizes, but maybe there should be
 
-  # later I do need to remove files on same drive, different dirs though
-#  if ($m1 eq $m2) {next;}
+  # TODO: add personal filters here re what I do and dont want to remove
 
-  # this check is VERY specific to me; I could've included it above,
-  # but am separating it if others want to use this
-#  unless ($m1 eq "extdrive5" && $m2 eq "kemptown") {next;}
-
-  # painful (slow) test saved for last: target must exist and not be
-  # symlink itself
-
-  unless (-f $f1) {warn("NO TARGET: $f1"); next;}
-  if (-l $f1) {warn("TARGET IS SYMLINK: $f1"); next;}
-
-  # ignore cases where source is already a symlink
-  if (-l $f2) {warn("SOURCE IS SYMLINK: $f2"); next;}
-
-  # confirm actual sizes are same
-  unless (-s $f2 == -s $f1) {warn("DIFFERENT SIZES: $_"); next;}
-
-  $bytes+= (-s $f2);
+  # this uses recorded file size, not actual, hmmm
+  $bytes+= (-s $size{$f[0]});
   if (rand()<.01) {debug("BYTES SAVED: $bytes");}
 
-  # I am deleting the second file and linking to first, which is the
-  # opposite of what rdfind normally does (I ran it backwards by
-  # mistake + it would take forever to run again)
+  # TODO: decide which file to remove/symlink
 
-  # sudo here is seriously ugly, but perms
-  print qq%sudo rm "$f2"; sudo ln -s "$f1" "$f2"\n%;
-
-  #  debug("GOT: $f1 -> $f2, $n1 -> $n2, $m1 -> $m2");
+  debug("OK: $_");
 }
+
+# TODO: maybe check that files in output of rdfind are actually in cur
+# directory, so I'm not using a bad copy of results.txt (though it
+# probably doesnt matter)
 
 debug("TOTAL BYTES SAVED: $bytes");
 
