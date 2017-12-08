@@ -93,9 +93,19 @@ sub handle_compass {
 
 sub handle_comcast {
   my($all) = @_;
+
+  debug("ALL: $all");
+
+  # TODO: editing so this works w/ current bills, but should retroact
+  # TODO: this is now bill date, not due date
+  $all=~m%Bill date\s*(.*?)$%m;
+  my($date) = $1;
+
+  return strftime("comcast-%m-%d-%Y.pdf", gmtime(str2time($date)+43200));
+
   # first date is billing date
-  $all=~m%(\d{2})/(\d{2})/(\d{2})%;
-  return "comcast-$1-$2-20$3.pdf";
+#  $all=~m%(\d{2})/(\d{2})/(\d{2})%;
+#  return "comcast-$1-$2-20$3.pdf";
 }
 
 sub handle_mtb {

@@ -7,13 +7,31 @@
 
 require "/usr/local/lib/bclib.pl";
 
+die "redoing entirely, trying to do mass src grep in ~/TUMBLR";
+
 for $i (@ARGV) {
 
   debug("DOING: $i");
 
   # TODO: generalize location
   # TODO: handle errors better?
-  dodie('chdir("/home/user/TUMBLR/$i/posts")');
+  dodie('chdir("/home/user/TUMBLR/")');
+
+  # TODO: consider omitting $i below and auto-do for all (yikes?)
+  # caching here for testing purposes, but may be useful above/beyond
+  my($out, $err, $res) = cache_command2("grep -R src= $i", "age=3600");
+
+  while ($out=~s/src="(.*?)"//) {
+    debug("GOT: $1");
+  }
+
+#  debug("OUT: $out");
+
+  # TODO: made major changes above, so caution
+
+  die "TESTING";
+
+
 
   # TODO: for large tumblrs, grepping through all posts is tedious,
   # try to set up an mtime check vs last dld image or something
