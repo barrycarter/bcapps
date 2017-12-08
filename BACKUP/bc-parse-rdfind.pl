@@ -172,23 +172,41 @@ sub sep_but_equal {
 
   my(@files) = @_;
   my(@stats);
+  
+  debug("DEBUG", %{stat2hash($files[0])}, "/DEBUG");
 
-  for $i (0..$#files) {@{$stats[$i]} = stat($files[$i]);}
+  for $i (0..$#files) {%{$stats[$i]} = %{stat2hash($files[$i])};}
 
-  debug("STATS",@stats);
-  debug("ALPHA");
-  debug(dump_var("STATS", $stats[0]));
-
-  warn "TESTING"; return;
+  debug(%{$stats[0]});
 
   for $i (0..$#stats) {
-    debug(var_dump($i, $stats[$i]));
-    my(@l) = @{$stats[$i]};
-    debug("STATS($files[$i]) =",@l);
+    debug("STATS($files[$i]) ="); debug(%{$stats[$i]});
   }
 
 }
 
+=item stat2hash($file)
 
+Return the stat of $file as key/value pairs
+
+TODO: move to main lib
+
+=cut
+
+sub stat2hash {
+
+  my($file) = @_;
+  my(%hash);
+
+  # what stat returns, in name form
+  my(@names) = ("device", "inode", "mode", "nlink", "uid", "gid", "rdev",
+		"size", "atime", "mtime", "ctime", "blksize", "blocks");
+
+  my(@stat) = stat($file);
+
+  for $i (0..$#names) {$hash{$names[$i]} = $stat[$i];}
+
+  return \%hash;
+}
 
 
