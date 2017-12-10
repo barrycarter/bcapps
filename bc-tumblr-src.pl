@@ -27,6 +27,7 @@ while (<>) {
   my($fname) = $1;
   debug("FILENAME: $fname");
 
+  # TODO: this breaks with full path names
   # first thing in path that looks like a name
   unless ($fname=~s%/([\w-]+?)/%%) {warn("BAD BLOG: $fname"); next;}
   my($blog) = $1;
