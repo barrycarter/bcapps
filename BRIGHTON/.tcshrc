@@ -2,6 +2,7 @@
 setenv DISPLAY :0.0
 setenv TERM vt100
 setenv EDITOR "emacs -nw"
+setenv VISUAL "emacs -nw"
 set ignoreeof
 
 # path here is the default path but adds /old/ which points to a copy

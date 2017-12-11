@@ -20,18 +20,24 @@ while (<>) {
 
   chomp;
 
-  debug("\nLINE: $_");
+  # TODO: right now, MUST use paths relative to ~/TUMBLR in input
+  # file, need to fix
+
+#  debug("\nLINE: $_");
 
   # figure out what blog this came from using filename
   s/(^.*?)://;
   my($fname) = $1;
-  debug("FILENAME: $fname");
+#  debug("FILENAME: $fname");
 
-  # TODO: this breaks with full path names
-  # first thing in path that looks like a name
-  unless ($fname=~s%/([\w-]+?)/%%) {warn("BAD BLOG: $fname"); next;}
+  # thing preceding xml|posts|archive
+  unless ($fname=~s%/(.*?)/(xml|archive|posts)/%%) {
+    warn("BAD BLOG: $fname");
+    next;
+  }
+
   my($blog) = $1;
-  debug("BLOG: $blog");
+#  debug("BLOG: $blog");
 
   # this is probably bad in a loop
   # can maybe memoize this per blog
@@ -45,7 +51,11 @@ while (<>) {
     my($src) = $1;
 
     # seem to be quite a few repeats, kill them here first
-    if ($seen{$src}) {debug("REP1"); next;}
+    if ($seen{$src}) {
+      # debug("REP1");
+      next;
+    }
+
     $seen{$src} = 1;
 
     # TODO: assuming last part of path is unique, if wrong, this fails
@@ -53,7 +63,11 @@ while (<>) {
     $base=~s%^.*/%%;
 
     # also check if shortened form seen
-    if ($seen{$base}) {debug("REP2"); next;}
+    if ($seen{$base}) {
+      # debug("REP2");
+      next;
+    }
+
     $seen{$base} = 1;
 
     # key test: do we have it already?
@@ -70,10 +84,12 @@ while (<>) {
 
     # figure out how to get it
 
-    # if $src is already https, just pring it
+    # if $src is already https, just print it
     if ($src=~m%^https?://%) {
       print "curl -L -o \"$blog/media/$base\" \"$src\"\n";
       next;
+    } else {
+      debug("BAD SRC: $src");
     }
 
 #    print "NOT URL: $src\n";

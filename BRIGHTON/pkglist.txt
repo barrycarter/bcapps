@@ -7,6 +7,7 @@ efibootmgr
 
 # system tools
 
+lm_sensors
 rdfind
 fdupes
 ntfs-3g
@@ -52,7 +53,9 @@ strace
 whois
 net-tools
 words
-ntop
+# ntop not available, jnettop may replace
+# ntop
+jnettop
 htop
 atop
 iotop
