@@ -399,3 +399,9 @@ note: add "digraph x {" at top and "}" at bottom
 bzcat wikidata-20161226-all.json.bz2 | perl -nle 's/"id":"(.*?)"//; print $1' | less
 
 TODO: figure out how to to do image includes in JEKYLL
+
+note: rdfs:label is a property that means label
+
+SELECT ?item ?itemLabel ?weight WHERE {
+  ?item wdt:P2067 ?weight .
+}

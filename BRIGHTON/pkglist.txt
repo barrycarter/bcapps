@@ -86,6 +86,9 @@ agrep
 aldo
 ant
 bzip2
+pbzip2
+lbzip2
+lbzip2-utils
 util-linux
 coreutils
 cups

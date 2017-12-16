@@ -266,4 +266,10 @@ MAILTO="daemon"
 # available at boot (TODO: something I really need to fix), this copies that
 # file to the / directory which IS available
 
-45 * * * * sudo cp -f /home/barrycarter/saopaulo-birth.txt /
+# same with bc-mount-drives.pl, though I'm not sure I have enough
+# other stuff to run it
+
+45 * * * * sudo cp -f /home/user/saopaulo-birth.txt /home/user/BCGIT/bc-mount-drives.pl /
+
+# been having issues w/ "thermal events", so report hourly temperatures to CRON
+*/5 * * * * sensors

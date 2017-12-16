@@ -248,7 +248,7 @@ alias scanit "bc-scan-pic-brighton.pl"
 # saopaulo) to point where keyboard itself is slow
 # may add more procs later, currently only these two
 
-alias stopit "sudo killall -STOP recollindex zpaq rcltar"
+alias stopit "sudo killall -STOP recollindex zpaq rcltar tesseract"
 
 # start mathematica with the <formula(s)> section of given file; useful
 # for reloads (note careful avoidance of $)
