@@ -21,6 +21,6 @@ systemctl mask alsa-state
 
 # and ones I want that arent default
 
-systemctl enable dnsmasq 
+systemctl enable dnsmasq
 systemctl enable httpd
 systemctl enable tor

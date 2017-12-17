@@ -272,4 +272,4 @@ MAILTO="daemon"
 45 * * * * sudo cp -f /home/user/saopaulo-birth.txt /home/user/BCGIT/bc-mount-drives.pl /
 
 # been having issues w/ "thermal events", so report hourly temperatures to CRON
-*/5 * * * * sensors
+*/5 * * * * sensors; hddtemp

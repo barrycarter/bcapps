@@ -4,6 +4,17 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# experimental one off print of second wednesday each month
+
+for $i ("2017".."2029") {
+  for $j ("01".."12") {
+    my($d) = weekdayAfterDate("$i${j}01", 3, 1);
+    print "$d\n";
+  }
+}
+
+die "TESTING";
+
 # experimental one off print of second monday each month
 
 for $i ("2017".."2029") {
@@ -320,6 +331,18 @@ for $i (keys %data) {unless ($used{$i}) {warn("UNUSED: $i");}}
 for $i (keys %used) {unless ($data{$i}) {warn("UNANNOTATED: $i");}}
 
 # computes the nth "weekday" after or on given date (yyyymmdd format)
+
+=item weekdayAfterDate($date, $day, $n)
+
+Computes the $n+1st weekday $day (1 = Monday) occurring on or after
+$date (given in "stardate" format)
+
+Example: weekdayAfterDate("20170701", 1, 2) computes the 3rd Monday
+occurring on or after 2017-07-01 (ie, the 2nd Monday of the month)
+
+TODO: $n+1st is confusing
+
+=cut
 
 sub weekdayAfterDate {
   my($date,$day,$n) = @_;
