@@ -10,30 +10,32 @@ TODO: this is fairly ghetto
 
 TODO: 1.1 billion stars but also n bright stars
 
+TODO: overlap planet occultation, other satellites
+
 *)
 
-(* minimal fail example *)
-
-Table[{p,s}, {p, AstronomicalData["Planet"]}, 
- {s, AstronomicalData[p, "Satellites"]}]
+(* the minor planets w/ largeish angular diameters from Earth *)
 
 
 
 (* define distance from Sun = avg distance from Earth, in meters *)
 
+minors = Select[AstronomicalData["MinorPlanet"]
+
 planets = AstronomicalData["Planet"]
+
+sats = Flatten[Table[AstronomicalData[p, "Satellites"], {p, planets}]]
 
 Table[dist[p] = AstronomicalData[p, "SemimajorAxis"][[1]], {p, planets}]
 
-Table[dist[s] = dist[p], {s, AstronomicalData[p, "Satellites"]},
- {p, Take[planets,{3,8}]}]
+Table[dist[s] = dist[p], {p, planets}, {s, AstronomicalData[p, "Satellites"]}]
 
-Table[{s,p}, {p, AstronomicalData["Planet"]},
- {s, AstronomicalData[p, "Satellites"]}]
+(* angular diameter *)
+
+Table[ang[x] = 2*ArcTan[AstronomicalData[x,"Diameter"][[1]]/dist[x]/2],
+ {x, Flatten[{planets,sats}]}]
 
 
-
- 
 
 
 
