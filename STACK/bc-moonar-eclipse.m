@@ -12,6 +12,12 @@ TODO: 1.1 billion stars but also n bright stars
 
 TODO: overlap planet occultation, other satellites
 
+TODO: stellar density
+
+TODO: CSPICE??
+
+TODO: ecliptic vs galactic equator tilt per planet
+
 *)
 
 (* the minor planets w/ largeish angular diameters from Earth *)
