@@ -602,6 +602,7 @@ goffice-devel
 # TODO: unhappy about mixing cpan and this, but this works better for
 # modules that both have
 
+perl-YAML-LibYAML
 perl-Net-Jabber
 perl-Algorithm*
 perl-Astro*

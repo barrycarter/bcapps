@@ -6,7 +6,16 @@
 # NOTE: I probably could use the Perl YAML modules, but don't think
 # they're necessary for something this simple
 
+use YAML::XS 'LoadFile';
 require "/usr/local/lib/bclib.pl";
+
+# this is ugly because input file can be very large
+
+my $config = LoadFile($ARGV[0]);
+
+print Dumper($config);
+
+die "TESTING";
 
 # TODO: change target dir
 # target dir is where each post is written to a file
