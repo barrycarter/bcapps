@@ -32,5 +32,13 @@ while (<>) {
 sub parse_xml {
   my(@strs) = @_;
   my($str) = join(" ",@strs);
+
   debug("<GOT>$str</GOT>");
+
+  # TODO: this is not proper XML parsing (and probably never will be)
+  # Among other things, this assumes open tags have no extra info
+  while ($str=~s%<([^<>]*?)>(.*?)</\1>%%s) {
+    debug("PARSED: $1 -> $2");
+  }
+
 }
