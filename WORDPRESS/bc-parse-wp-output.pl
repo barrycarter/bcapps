@@ -76,8 +76,8 @@ sub parse_yaml {
 
   # real newlines cleanup YAML spaces
   $hash{post_content}=~s/\r/\n/sg;
-  # TODO: this might kill intentional indentation (intended indentation?)
-  $hash{post_content}=~s/^\t//mg;
+  # TODO: assuming 8 spaces is YAML indentation here
+  $hash{post_content}=~s/^ {8}//mg;
 
 
   # a separator, and then content
