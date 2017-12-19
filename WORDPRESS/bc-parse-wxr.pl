@@ -4,6 +4,8 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# TODO: reminder to self: use latest version of blog, not test version
+
 my(@strs, $in_blog);
 
 while (<>) {
@@ -24,21 +26,23 @@ while (<>) {
     parse_xml(@strs);
     @strs = ();
   }
-
-
 }
 
 
 sub parse_xml {
   my(@strs) = @_;
   my($str) = join(" ",@strs);
+  my(%hash);
 
-  debug("<GOT>$str</GOT>");
+#  debug("<GOT>$str</GOT>");
 
   # TODO: this is not proper XML parsing (and probably never will be)
   # Among other things, this assumes open tags have no extra info
-  while ($str=~s%<([^<>]*?)>(.*?)</\1>%%s) {
-    debug("PARSED: $1 -> $2");
-  }
+  # ignoring HTML tags, only want wp tags
+  while ($str=~s%<(wp:.*?)>([^<>]*?)</\1>%$hash{$1}=$2%es) {}
 
+  # TODO: ignoring attachments/media now, can't do long term
+  if ($hash{"wp:post_type"}=~m/attachment/i) {next;}
+
+  debug("HASH",%hash);
 }

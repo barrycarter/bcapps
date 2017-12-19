@@ -6,16 +6,14 @@
 # NOTE: I probably could use the Perl YAML modules, but don't think
 # they're necessary for something this simple
 
-use YAML::XS 'LoadFile';
+# use YAML::XS 'LoadFile';
 require "/usr/local/lib/bclib.pl";
 
 # this is ugly because input file can be very large
 
-my $config = LoadFile($ARGV[0]);
-
-print Dumper($config);
-
-die "TESTING";
+# my $config = LoadFile($ARGV[0]);
+# print Dumper($config);
+# die "TESTING";
 
 # TODO: change target dir
 # target dir is where each post is written to a file
@@ -72,6 +70,7 @@ sub parse_yaml {
     next;
   }
 
+  debug("Opening $targetdir/$fname.wp");
   local(*A);
   open(A, ">$targetdir/$fname.wp");
 
@@ -86,7 +85,11 @@ sub parse_yaml {
   # real newlines cleanup YAML spaces
   $hash{post_content}=~s/\r/\n/sg;
   # TODO: assuming 8 spaces is YAML indentation here
-  $hash{post_content}=~s/^ {8}//mg;
+#  unless ($hash{post_content}=~s/^ {8}//mg) {
+#    warn("POST $fname is not indented 8 spaces");
+#  }
+
+  # kill off all multiple spaces?
 
 
   # a separator, and then content

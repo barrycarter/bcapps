@@ -137,6 +137,7 @@ while (<>) {
   # recorded file sizes, but maybe there should be
 
   # TODO: add personal filters here re what I do and dont want to remove
+  choose_file(@f);
 
   # this uses recorded file size, not actual, hmmm
   $bytes+= $size{$f[0]};
@@ -253,3 +254,21 @@ sub stat2hash {
 }
 
 
+# this subroutine changes every run (TODO: argh!) and decides:
+# 1) which of the two files I want to keep
+# 2) whether to symlink the other file or rm it entirely
+
+sub choose_file {
+  my(@files) = @_;
+
+  debug("FILES", @files);
+
+  # very dicey here, will look at results by hand
+  # this is filename length
+  # theory: longer filenames = better categorized
+  if (length($files[0]) > length($files[1])) {
+    print qq%sudo rm "$files[1]"\necho "keeping $files[0]"\n%;
+  } else {
+    print qq%sudo rm "$files[0]"\necho "keeping $files[1]"\n%;
+  }
+}
