@@ -9,6 +9,9 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# I have privately named drives
+require "/home/user/bc-private.pl";
+
 # for permissions purposes (ugly!)
 if ($>) {die("Must be root");}
 
@@ -29,6 +32,11 @@ if ($>) {die("Must be root");}
 # TODO: this should almost definitely be an option
 my($lower) = 1e+6;
 
+warn("Temproarily lowering LOWER for special case");
+
+# cutting to bone?
+$lower = 10000;
+
 open(A,"results.txt.srt")||die("Can't open results.txt.srt, $!");
 
 while (<A>) {
@@ -48,7 +56,7 @@ while (<A>) {
   # TODO: we could record more about the file here
   # TODO: we could do file safety checks here instead of later(?)
 
-  debug("ASSIGNING $name to size $size");
+#  debug("ASSIGNING $name to size $size");
 
   $size{$name} = $size;
 }
@@ -81,13 +89,14 @@ while (<>) {
   for $i (@f) {
 
     # recsize = size as recorded by results.txt.srt above
-    debug("FILE: $i, RECSIZE: $size{$i}");
+#    debug("FILE: $i, RECSIZE: $size{$i}");
 
     # if recorded file size less than min, skip (this covers
     # nonpositive file size, even if lower isnt set)
 
     if ($size{$i} <= $lower) {
-      debug("RSIZE($i) <= $lower"); $bad=1; last;
+#      debug("RSIZE($i) == $size{$i} <= $lower");
+      $bad=1; last;
     }
 
     # TODO: should this be somewhere else?
@@ -262,6 +271,24 @@ sub choose_file {
   my(@files) = @_;
 
   debug("FILES", @files);
+
+  # if one is on bdrive other on sdrive, rm the one on bdrive
+
+  if ($files[0]=~m%/$private{bdrive}/% && $files[1]=~m%/$private{sdrive}/%) {
+    print "rm \"$files[0]\"\n";
+    return;
+  }
+
+  if ($files[1]=~m%/$private{bdrive}/% && $files[0]=~m%/$private{sdrive}/%) {
+    print "rm \"$files[1]\"\n";
+    return;
+  }
+
+  # neither condition matches, delete nothing (for now)
+  return;
+
+  # if we reach this point, badness!
+  die "TESTING";
 
   # very dicey here, will look at results by hand
   # this is filename length
