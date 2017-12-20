@@ -6,63 +6,58 @@ require "/usr/local/lib/bclib.pl";
 
 # TODO: reminder to self: use latest version of blog, not test version
 
-my(@strs, $in_blog);
+# TODO: the \s* below are probably superfluous
+
+my(@strs, $in_blog, %hash, $curtag);
 
 while (<>) {
 
-  my(%hash);
 
   # ignore comments
   if (/^\s*<!--/) {next;}
+
+  # end of item? parse it!, reset hash
+  if (m%^\s*</item>%) {
+    debug("SENDING HASH:",%hash);
+    parse_item(\%hash);
+    %hash = ();
+  }
 
   # treat categories and authors special
   if (/^\s*<wp:(author|category)>/) {parse_meta($_); next;}
 
   # single line tag? parse and move on
-  if (s%\s*<(.*?)>([^<>]*?)</\1>%$hash{$1}=$2%es) {
+  if (s%\s*<(.*?)>([^<>]*?)</\1>%$hash{$1}=$2%es) {next;}
 
-    debug("ASSIGN: $1 -> $2");
-
-    next;
+  # start of new tag? start assignment to $hash{newtag} + set curtag
+  if (s%\s*<(.*?)>(.*)%%) {
+    $hash{$1} = $2;
+    $curtag = $1;
   }
 
-  debug("GOT: $_, HASH",%hash);
+  # TODO: handle end of curtag!
 
-  warn "TESTING";
-  next;
+  # anything else is appended to curtag
+  $hash{$curtag} .= $_;
 
-
-
-  # ugly way to skip crap
-  if (/<item>/) {$in_blog = 1;}
-
-  unless ($in_blog) {next;}
-
-  chomp;
-
-  debug("READING: $_");
-
-
-
-  push(@strs, $_);
-
-  debug("STRS LEN: $#strs+1");
-
-  # TODO: this makes many assumptions about the WXR format, including:
-  #   - the </item> tag appears on a line by itself
-
-  if (m%</item>%) {
-
-    # parse what we've got and clear for next
-    parse_xml(@strs);
-    debug("RESETTING STRS");
-    @strs = ();
-    debug("STRS LEN NOW: $#strs+1");
-  }
+  debug("HAST ATM:",%hash);
 }
 
+sub parse_item {
 
-sub parse_xml {
+  # TODO: there must be a better (uglier) way to do this
+  my($hashref) = @_;
+  my(%hash) = %{$hashref};
+
+  if ($hash{"wp:post_type"}=~m/attachment/i) {
+    debug("SKIPPING attachment: $hash{title}");
+    return;
+  }
+
+  debug("HASH:",%hash);
+  return;
+
+
   my(@strs) = @_;
   my($str) = join("\n",@strs);
   my(%hash);
