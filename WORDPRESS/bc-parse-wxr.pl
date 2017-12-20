@@ -12,15 +12,26 @@ my(@strs, $in_blog, %hash, $curtag);
 
 while (<>) {
 
-
   # ignore comments
   if (/^\s*<!--/) {next;}
 
   # end of item? parse it!, reset hash
   if (m%^\s*</item>%) {
-    debug("SENDING HASH:",%hash);
     parse_item(\%hash);
     %hash = ();
+    next;
+  }
+
+  # start of item? ignore it for now (but maybe do keep track of when
+  # we're in an item)
+  if (m/<item>/) {next;}
+
+  # end of current tag?
+  if (m%^(.*?)</$curtag>%) {
+    $hash{$curtag} .= $1;
+    debug("ENDING: $curtag");
+    $curtag = "";
+    next;
   }
 
   # treat categories and authors special
@@ -28,6 +39,9 @@ while (<>) {
 
   # single line tag? parse and move on
   if (s%\s*<(.*?)>([^<>]*?)</\1>%$hash{$1}=$2%es) {next;}
+
+  # end of another tag? delete
+#  s%</.*?>%%g;
 
   # start of new tag? start assignment to $hash{newtag} + set curtag
   if (s%\s*<(.*?)>(.*)%%) {
@@ -39,8 +53,6 @@ while (<>) {
 
   # anything else is appended to curtag
   $hash{$curtag} .= $_;
-
-  debug("HAST ATM:",%hash);
 }
 
 sub parse_item {
@@ -49,12 +61,23 @@ sub parse_item {
   my($hashref) = @_;
   my(%hash) = %{$hashref};
 
+#  debug($hash{"wp:status"});
+
+  if ($hash{"wp:status"} ne "publish") {
+    debug("SKIPPING unpublished post: $hash{title}");
+    return;
+  }
+
   if ($hash{"wp:post_type"}=~m/attachment/i) {
     debug("SKIPPING attachment: $hash{title}");
     return;
   }
 
-  debug("HASH:",%hash);
+  debug("<HASH>");
+  for $i (sort keys %hash) {
+    debug("$i -> $hash{$i}");
+  }
+  debug("</HASH>");
   return;
 
 
