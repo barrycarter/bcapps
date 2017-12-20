@@ -10,8 +10,28 @@ my(@strs, $in_blog);
 
 while (<>) {
 
-  # we actually do need cat/author before items
-  if (/^\s*wp:(author|category)/) {parse_meta($_);}
+  my(%hash);
+
+  # ignore comments
+  if (/^\s*<!--/) {next;}
+
+  # treat categories and authors special
+  if (/^\s*<wp:(author|category)>/) {parse_meta($_); next;}
+
+  # single line tag? parse and move on
+  if (s%\s*<(.*?)>([^<>]*?)</\1>%$hash{$1}=$2%es) {
+
+    debug("ASSIGN: $1 -> $2");
+
+    next;
+  }
+
+  debug("GOT: $_, HASH",%hash);
+
+  warn "TESTING";
+  next;
+
+
 
   # ugly way to skip crap
   if (/<item>/) {$in_blog = 1;}
@@ -21,6 +41,8 @@ while (<>) {
   chomp;
 
   debug("READING: $_");
+
+
 
   push(@strs, $_);
 
