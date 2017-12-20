@@ -909,6 +909,9 @@ sub voronoi {
 
   # number of dimensions
   my($di) = shift(@regions);
+
+  # TODO: "my" variable $pts masks earlier declaration in same scope
+
   # number of points, regions, and something else (#infinite regions?)
   my($pts, $regions, $x) = split(/\s+/,shift(@regions));
 

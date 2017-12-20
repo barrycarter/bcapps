@@ -4,6 +4,8 @@
 # Usage: $0 time message
 # time must be in format understood by "at"
 
+# --nosms: don't send an SMS, just popup an xmessage
+
 require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
 
@@ -14,7 +16,14 @@ my($msg) = join(" ",@ARGV);
 # sendmail command (as Perl function)
 # IFTTT charges, so switching to alt address
 # $msg twice below since some providers ignore subject
-$smc = "bc-call-func.pl sendmail $private{email2}{from} $private{email2}{sms} '$msg' '$msg'";
+
+# have to put something in smc to avoid error
+
+if ($globopts{nosms}) {
+  $smc = "echo";
+} else {
+  $smc = "bc-call-func.pl sendmail $private{email2}{from} $private{email2}{sms} '$msg' '$msg'";
+}
 
 open(A,"|at -v $time")||die("Can't open at command, $!");
 # TODO: is TERM setting below necessary?

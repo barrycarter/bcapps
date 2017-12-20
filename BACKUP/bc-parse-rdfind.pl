@@ -32,10 +32,11 @@ if ($>) {die("Must be root");}
 # TODO: this should almost definitely be an option
 my($lower) = 1e+6;
 
-warn("Temproarily lowering LOWER for special case");
-
+# warn("Temproarily lowering LOWER for special case");
 # cutting to bone?
-$lower = 10000;
+# $lower = 10000;
+
+warn "Name equality test turned off";
 
 open(A,"results.txt.srt")||die("Can't open results.txt.srt, $!");
 
@@ -134,7 +135,7 @@ while (<>) {
   }
 
   # unless names are equal move on
-  unless ($n1 eq $n2) {next;}
+#  unless ($n1 eq $n2) {next;}
 
   # do the expensive lstat tests now
   unless (sep_but_equal(@f)) {
@@ -271,6 +272,19 @@ sub choose_file {
   my(@files) = @_;
 
   debug("FILES", @files);
+
+  # keep the file in FILESBYSHA1 assuming the other copy isn't
+  if ($files[0]=~m%/FILESBYSHA1/% && !($files[1]=~m%/FILESBYSHA1/%)) {
+    print qq%sudo rm "$files[1]"; sudo ln -s "$files[0]" "$files[1]"\n%;
+  }
+
+  if ($files[1]=~m%/FILESBYSHA1/% && !($files[0]=~m%/FILESBYSHA1/%)) {
+    print qq%sudo rm "$files[0]"; sudo ln -s "$files[1]" "$files[0]"\n%;
+  }
+
+return;
+
+  die "TESTING"; 
 
   # if one is on bdrive other on sdrive, rm the one on bdrive
 

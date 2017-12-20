@@ -10,12 +10,21 @@ my(@strs, $in_blog);
 
 while (<>) {
 
+  # we actually do need cat/author before items
+  if (/^\s*wp:(author|category)/) {parse_meta($_);}
+
   # ugly way to skip crap
   if (/<item>/) {$in_blog = 1;}
+
   unless ($in_blog) {next;}
 
   chomp;
+
+  debug("READING: $_");
+
   push(@strs, $_);
+
+  debug("STRS LEN: $#strs+1");
 
   # TODO: this makes many assumptions about the WXR format, including:
   #   - the </item> tag appears on a line by itself
@@ -24,25 +33,43 @@ while (<>) {
 
     # parse what we've got and clear for next
     parse_xml(@strs);
+    debug("RESETTING STRS");
     @strs = ();
+    debug("STRS LEN NOW: $#strs+1");
   }
 }
 
 
 sub parse_xml {
   my(@strs) = @_;
-  my($str) = join(" ",@strs);
+  my($str) = join("\n",@strs);
   my(%hash);
+
+  debug("ARRAY LEN: $#strs+1, STR LENGTH: ".length($str));
 
 #  debug("<GOT>$str</GOT>");
 
   # TODO: this is not proper XML parsing (and probably never will be)
   # Among other things, this assumes open tags have no extra info
   # ignoring HTML tags, only want wp tags
-  while ($str=~s%<(wp:.*?)>([^<>]*?)</\1>%$hash{$1}=$2%es) {}
+
+#  while ($str=~s%<(wp:.*?)>([^<>]*?)</\1>%$hash{$1}=$2%es) {}
+
+  # turns out not all important tags start with wp:, so ...
+  debug("STARTING WHILE");
+  while ($str=~s%<(.*?)>([^<>]*?)</\1>%$hash{$1}=$2%es) {}
+  debug("ENDING WHILE");
 
   # TODO: ignoring attachments/media now, can't do long term
-  if ($hash{"wp:post_type"}=~m/attachment/i) {next;}
+  if ($hash{"wp:post_type"}=~m/attachment/i) {
+    debug("SKIPPING attachment: $hash{title}");
+    return;
+  }
 
   debug("HASH",%hash);
+}
+
+sub parse_meta {
+  my($line) = @_;
+  debug("GOT: $line, oding nothing for now");
 }

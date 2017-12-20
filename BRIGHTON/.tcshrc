@@ -71,3 +71,6 @@ setenv PKG_CONFIG_PATH /usr/local/lib/pkgconfig/:/usr/lib64/pkgconfig:/usr/share
 
 set history=10000
 
+# better format for history
+
+set history= (10000 "%h\t%W/%D/%Y %T\t%R\n")
