@@ -11,7 +11,7 @@ require "/usr/local/lib/bclib.pl";
 my(%hash);
 
 # testing only
-my($creds) = "--ssh=barrycar\@bc4 --path=public_html/wordpress";
+my($creds) = "--ssh=barrycar\@bc4 --path=public_html/test20171209.barrycarter.org";
 
 my($content, $file) = cmdfile();
 
