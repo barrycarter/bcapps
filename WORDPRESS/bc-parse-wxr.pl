@@ -5,9 +5,16 @@
 require "/usr/local/lib/bclib.pl";
 use XML::Simple;
 
+# TODO: use simpler names instead of always referring to hash
+# TODO: allow for multiple categories (comma sep)
+
+# TODO: change target dir
+# target dir is where each post is written to a file
+my($targetdir) = "/home/user/20171218/wp";
 
 # fields I want w/ examples:
 
+# $i->{'title'} = Ricky Gervais (reliable source)
 # $i->{'category'}->{'nicename'} = 'humor-attempted';
 # $i->{'dc:creator'} = 'barrycarter';
 # $i->{'pubDate'} = 'Tue, 18 Dec 2012 00:16:24 +0000';
@@ -20,36 +27,20 @@ use XML::Simple;
 $xml = new XML::Simple;
 $data = $xml->XMLin($ARGV[0]);
 
+# debug(var_dump("DATA",$data));
+# die "TESTNG";
+
 for $i (@{$data->{channel}->{item}}) {
 
-  # ignore attachments (for now)
-#  if ($i->{"wp:post_type"} eq "attachment") {next;}
+  # only published posts for now (no pages, etc)
+  unless ($i->{'wp:post_type'} eq "post") {next;}
 
-  # and unpublished
+  # special case just to see privates (ha ha)
+  if ($i->{"wp:status"} eq "private") {
+    debug("PRIVATE: $i->{title}");
+  }
+
   unless ($i->{"wp:status"} eq "publish") {next;}
-
-  # only posts and pages for now
-  unless ($i->{'wp:post_type'} eq "post" || $i->{'wp:post_type'} eq "page") {
-    next;}
-  
-
-#   debug("RAW", $i->{'content:encoded'}, "/RAW");
-
-#   next;
-
-#   debug("KEYS", keys %{$i->{'content:encoded'}}, "/kEYS");
-
-#   next;
-
-#   debug("CONTENT",var_dump("content", $i->{'content:encoded'}));
-
-#   next;
-
-#   debug("CONTENT","$i->{'content:encoded'}","/CONTENT");
-
-#   debug("<I>",var_dump("I", $i),"</I>");
-
-#   next;
 
 $str = << "MARK";
 
@@ -60,13 +51,17 @@ Author: $i->{'dc:creator'}
 Date: $i->{'pubDate'}
 Type: $i->{'wp:post_type'} 
 Status: $i->{'wp:status'}
+Title: $i->{title}
 
 ======================================================
+
 $i->{'content:encoded'}
 
 MARK
 ;
 
-debug("STR: $str");
+open(A, ">$targetdir/$i->{'wp:post_name'}.wp");
+print A $str;
+close(A);
   
 }

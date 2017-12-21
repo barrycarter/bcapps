@@ -63,6 +63,8 @@ less massback-$DATE.list
 : check above
 less /tmp/files.txt
 
+echo run idrive commands here
+
 # send to idrive instructions are private, incl username/pw
 
 # after idrive step completed...
