@@ -42,16 +42,18 @@ for $i (@{$data->{channel}->{item}}) {
 
   unless ($i->{"wp:status"} eq "publish") {next;}
 
+  debug(var_dump("I",$i));
+
 $str = << "MARK";
 
 ID: $i->{'wp:post_id'}
-Slug: $i->{'wp:post_name'}
-Category: $i->{'category'}->{'nicename'}
-Author: $i->{'dc:creator'}
-Date: $i->{'pubDate'}
-Type: $i->{'wp:post_type'} 
-Status: $i->{'wp:status'}
-Title: $i->{title}
+post_name: $i->{'wp:post_name'}
+post_category: $i->{'category'}->{'nicename'}
+post_author: $i->{'dc:creator'}
+post_date_gmt: $i->{'pubDate'}
+post_type: $i->{'wp:post_type'} 
+post_status: $i->{'wp:status'}
+post_title: $i->{title}
 
 ======================================================
 
