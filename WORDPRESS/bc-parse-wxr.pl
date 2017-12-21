@@ -15,6 +15,13 @@ while (<>) {
   # ignore comments
   if (/^\s*<!--/) {next;}
 
+  # treat categories and authors special
+  if (/^\s*<wp:(author|category)>/) {parse_meta($_); next;}
+
+
+  debug("LINE: $_");
+  debug("CURTAG: $curtag");
+
   # end of item? parse it!, reset hash
   if (m%^\s*</item>%) {
     parse_item(\%hash);
@@ -24,29 +31,33 @@ while (<>) {
 
   # start of item? ignore it for now (but maybe do keep track of when
   # we're in an item)
-  if (m/<item>/) {next;}
-
-  # end of current tag?
-  if (m%^(.*?)</$curtag>%) {
-    $hash{$curtag} .= $1;
-    debug("ENDING: $curtag");
+  if (m/<item>/) {
+    # this takes care of the meta <channel> tag
     $curtag = "";
     next;
   }
 
-  # treat categories and authors special
-  if (/^\s*<wp:(author|category)>/) {parse_meta($_); next;}
+  # end of current tag?
+  if (m%^(.*?)</$curtag>%) {
+    $hash{$curtag} .= $1;
+    debug("ENDING CURTAG: $curtag");
+    $curtag = "";
+    next;
+  }
 
-  # single line tag? parse and move on
-  if (s%\s*<(.*?)>([^<>]*?)</\1>%$hash{$1}=$2%es) {next;}
+   # single line tag? parse and move on
+  if (s%^\s*<(.*?)>(.*?)</\1>%$hash{$1}=$2%es) {next;}
 
   # end of another tag? delete
 #  s%</.*?>%%g;
 
   # start of new tag? start assignment to $hash{newtag} + set curtag
-  if (s%\s*<(.*?)>(.*)%%) {
+  # but only if not inside an existing tag and only if no spaces
+  if (s%^\s*<(\S*?)>(.*)%% && !$curtag) {
     $hash{$1} = $2;
     $curtag = $1;
+    debug("NEW CURTAG: $curtag");
+    next;
   }
 
   # TODO: handle end of curtag!

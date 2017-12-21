@@ -31,7 +31,7 @@ while (<>) {
 
   if (++$count > 10000) {die "TESTING";}
 
-  chomp;
+#  chomp;
 
   if ($_ eq "- " || eof()) {
     # parse yaml and clear hash
@@ -79,6 +79,8 @@ sub parse_yaml {
     if ($i eq "post_content") {next;}
     print A "$i: $hash{$i}\n";
   }
+
+  debug("RAW POST CONTENT: $hash{post_content}");
 
   # TODO: remove weird pipe things surrounding content
 
