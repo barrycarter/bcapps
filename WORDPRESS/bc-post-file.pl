@@ -11,7 +11,7 @@ require "/usr/local/lib/bclib.pl";
 my(%hash);
 
 # testing only
-my($creds) = "--ssh=barrycar@bc4 --path=public_html/wordpress";
+my($creds) = "--ssh=barrycar\@bc4 --path=public_html/wordpress";
 
 my($content, $file) = cmdfile();
 
@@ -42,11 +42,10 @@ write_file($body, $tmpfile);
 
 system("rsync $tmpfile barrycar\@bc4:/tmp/");
 
-open(A,"|wp post update $hash{ID} $tmpfile $options $creds --debug");
+# TODO: system -> cache_command
+system("wp post update $hash{ID} $tmpfile $options $creds --debug");
 
-print A $body;
-
-close(A);
+debug("ALL DONE");
 
 die "TESTING";
 
