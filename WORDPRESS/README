@@ -1,0 +1,42 @@
+# lets me make posts by editing (+ potentially modifying/parsing) them
+# locally
+
+TODO:
+
+  - Convert wondertwin-powers remote plugin to local to the extent possible
+
+  - Convert other plugins to local where possible
+
+  - Allow markup and format locally before sending to wp
+
+  - "make" program that touches .lastrun(.new) and reuploads whatever
+  has changed (using bc-post-file.pl)
+
+  - If converting LaTeX to HTML, allow users to see raw LaTeX and
+  MathML as well.
+
+  - Perhaps convert all new formulas to ROSETTA and link that
+  automatically as well
+
+  - Create "[bc:volatile]" 'tag' that autoparses to say "this post
+  changes a lot -- here's an RSS feed to just this page" (worry: some
+  RSS readers don't handle single-item feeds well?) (see https://webapps.stackexchange.com/questions/69641/why-does-ifttt-dislike-this-rss-feed but hopefully fixed)
+
+  - Add JSON feed as well?
+
+  - Test subscribe to some of my own single page feeds (via IFTTT?)
+
+  - I have a lot of "private" posts (that won't show up
+  BCINFO3/sites/JEKYLL/myblog or whatever) that I should rapidly
+  approve (mostly BARRY-AFTER-VARK and labelled VARK-ZOMBIE for now)
+
+  - Several of my VARK posts have questions w/o answers (or bad answers) that I have long since figured out; edit these posts!
+
+  - If I delete a file locally, it should be deleted remotely as well
+  (this is tricky, could look at dir mod time, but ugly)
+
+
+ERRORS:
+
+  - bc-parse-wxr.pl is currently parsing post_author as a HASH
+
