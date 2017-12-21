@@ -23,24 +23,33 @@ $data = $xml->XMLin($ARGV[0]);
 for $i (@{$data->{channel}->{item}}) {
 
   # ignore attachments (for now)
-  if ($i->{"wp:post_type"} eq "attachment") {next;}
+#  if ($i->{"wp:post_type"} eq "attachment") {next;}
 
   # and unpublished
   unless ($i->{"wp:status"} eq "publish") {next;}
+
+  # only posts and pages for now
+  unless ($i->{'wp:post_type'} eq "post" || $i->{'wp:post_type'} eq "page") {
+    next;}
   
-  debug("KEYS", keys %{$i->{'content:encoded'}}, "/kEYS");
 
-  next;
+#   debug("RAW", $i->{'content:encoded'}, "/RAW");
 
-  debug("CONTENT",var_dump("content", $i->{'content:encoded'}));
+#   next;
 
-  next;
+#   debug("KEYS", keys %{$i->{'content:encoded'}}, "/kEYS");
 
-  debug("CONTENT","$i->{'content:encoded'}","/CONTENT");
+#   next;
 
-  debug("<I>",var_dump("I", $i),"</I>");
+#   debug("CONTENT",var_dump("content", $i->{'content:encoded'}));
 
-next;
+#   next;
+
+#   debug("CONTENT","$i->{'content:encoded'}","/CONTENT");
+
+#   debug("<I>",var_dump("I", $i),"</I>");
+
+#   next;
 
 $str = << "MARK";
 
@@ -61,4 +70,3 @@ MARK
 debug("STR: $str");
   
 }
-
