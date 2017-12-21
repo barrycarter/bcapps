@@ -17,7 +17,13 @@ my($content, $file) = cmdfile();
 
 # split into header and body
 
-my($headers, $body) = split(/======================/, $content);
+debug("CONTENT: $content");
+
+my($headers, $body) = split(/^======================+/m, $content);
+
+debug("HEADERS: $headers", "BODY: $body");
+
+die "TESTING";
 
 while ($headers=~s/^(.*?): (.*)$//m) {$hash{$1} = $2;}
 
