@@ -23,8 +23,6 @@ my($headers, $body) = split(/^======================+/m, $content);
 
 debug("HEADERS: $headers", "BODY: $body");
 
-die "TESTING";
-
 while ($headers=~s/^(.*?): (.*)$//m) {$hash{$1} = $2;}
 
 # build the options
