@@ -42,13 +42,27 @@ for $i (@{$data->{channel}->{item}}) {
 
   unless ($i->{"wp:status"} eq "publish") {next;}
 
+  # some variable cleanup
+  my(@cat, $cat) = ();
+
+  if (ref($i->{category}) eq "ARRAY") {
+    for $j (@{$i->{category}}) {
+      push(@cat, $j->{nicename});
+    }
+    $cat = join(", ", @cat);
+  } else {
+    $cat = $i->{'category'}->{'nicename'};
+  }
+
   debug(var_dump("I",$i));
+
+  debug("AUTH:", $i->{'dc:creator'});
 
 $str = << "MARK";
 
 ID: $i->{'wp:post_id'}
 post_name: $i->{'wp:post_name'}
-post_category: $i->{'category'}->{'nicename'}
+post_category: $cat
 post_author: $i->{'dc:creator'}
 post_date_gmt: $i->{'pubDate'}
 post_type: $i->{'wp:post_type'} 
@@ -61,6 +75,8 @@ $i->{'content:encoded'}
 
 MARK
 ;
+
+debug("STR is $str");
 
 open(A, ">$targetdir/$i->{'wp:post_name'}.wp");
 print A $str;
