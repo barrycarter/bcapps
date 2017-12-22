@@ -7,7 +7,8 @@ TODO:
 
   - Convert other plugins to local where possible
 
-  - Allow markup and format locally before sending to wp
+  - Allow markup and format locally before sending to wp (use
+  BCINFO3/sites/ASTRO/markdown-modified.pl ?)
 
   - "make" program that touches .lastrun(.new) and reuploads whatever
   has changed (using bc-post-file.pl)
