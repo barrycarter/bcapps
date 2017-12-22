@@ -1,0 +1,72 @@
+
+ID: 22409
+post_name: free-open-source-perl-script-to-increase-twitter-followers
+post_category: 
+post_author: barrycarter
+post_date_gmt: Wed, 28 Mar 2012 22:38:28 +0000
+post_type: page 
+post_status: publish
+post_title: Free open source Perl script to increase twitter followers
+
+======================================================
+
+I'm writing a free/open source Perl script to increase twitter  
+followers. A semi-working version is at: 
+  
+https://github.com/barrycarter/bcapps/blob/master/TWITTER/bc-twitter-follow-stream.pl 
+  
+To help me test it, get a supertweet.net account, and email me your  
+twitter id and supertweet.net password to tweety@barrycarter.info. Do  
+NOT email me your twitter password. If you ever want to stop giving me  
+access, just change your supertweet password or remove  
+supertweet.net's permission to access your twitter account.  
+  
+Of course, you can always run the script on your own computer, but  
+it's not 100% perfect, and it changes often.  
+  
+The script works on a very simple basis (see the source code for more 
+details):<ul> 
+  
+<li>Randomly follows people (with some exceptions) until you hit a 
+twitter follow limit</li> 
+  
+<li>Unfollows anyone who doesn't follow you back within 24 hours</li> 
+ 
+<li>NOTE: the program changes frequently, so the points may now be 
+inaccurate. Please view the source code for the most current 
+information.</li> 
+ 
+</ul> 
+ 
+There are some risks, including, but not limited to:<ul>  
+  
+ <li>Twitter and supertweet.net dislike scripts like this, and 
+ either/both may suspend or cancel your account if they find out 
+ you're using it</li> 
+ 
+ <li>This program may be illegal (though I don't think it is)</li> 
+ 
+ <li>The program changes frequently, and I haven't posted every 
+ possible risk, so there may be more risks not listed here.</li> 
+ 
+ <li>The script may mess up your manual unfollows/follows, so you may 
+ end up following or unfollowing someone you don't/do like, and/or 
+ someone who holds opinions very different from yours (eg, political 
+ activists). You may also anger people with random follows, and these 
+ people may block or report you. Since the program hits your follow 
+ limit, you may not be able to follow someone manually.</li> 
+ 
+ <li>The script (or even supertweet.net) may do horrible things to 
+ your account; I won't do that on purpose, but automated scripts can 
+ sometimes do terrible things by mistake</li> 
+ 
+ <li><b>IMPORTANT: As noted above, there may be other risks I am not 
+ aware of OR have chosen not to list. Use this program at your own 
+ risk</b> 
+ 
+</ul> 
+ 
+Know other people who might be interested? The short URL to this post: 
+http://ftf.u.94y.info/ 
+
+

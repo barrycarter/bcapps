@@ -1,0 +1,53 @@
+
+ID: 22479
+post_name: sfcse-society-to-foster-cruelty-to-search-engines
+post_category: 
+post_author: barrycarter
+post_date_gmt: Sun, 27 May 2012 15:46:16 +0000
+post_type: page 
+post_status: publish
+post_title: SFCSE: Society to Foster Cruelty to Search Engines
+
+======================================================
+
+This page lists various URLs (or links to lists of URLs) that change 
+frequently and/or represent db queries and other "always changing" 
+pages, with the hope of cluttering search engine results. 
+ 
+Random weather station info:
+
+http://505776128396ef657637a3f38f36e8d0.metarnew.db.bcinfo3.barrycarter.info/
+http://rss.505776128396ef657637a3f38f36e8d0.metarnew.db.bcinfo3.barrycarter.info/
+
+Different random weather info (in a table):
+
+http://66c7ce7da1a8e1fae6e5679ff5354055.madis.db.bcinfo3.barrycarter.info/
+
+http://rss.66c7ce7da1a8e1fae6e5679ff5354055.madis.db.bcinfo3.barrycarter.info/
+
+Uninteresting near-time astronomical events in Albuquerque
+http://d403b04fe9bd0016602d3d219cb6401c.abqastro.db.barrycarter.info/
+http://d403b04fe9bd0016602d3d219cb6401c.abqastro.db.barrycarter.info/rss.pl
+
+Current time in UTC (just to show off the null db)
+
+http://c4f49810e4fcb1172490ef0c8205c08f.null.db.bcinfo3.barrycarter.info/
+http://rss.c4f49810e4fcb1172490ef0c8205c08f.null.db.bcinfo3.barrycarter.info/
+
+
+Text weather for various cities over 10K population, using bizarre names:
+http://oneoff.barrycarter.info/bc-cityname-rand.pl
+http://oneoff.barrycarter.info/bc-cityname-rand.pl/rss.pl
+
+Some random addresses in the Duke City:
+
+http://b0ae01e70858cc3110419e0b591412b6.abqaddresses.db.barrycarter.info/ 
+http://b0ae01e70858cc3110419e0b591412b6.abqaddresses.db.barrycarter.info/rss.pl
+
+When I started this, there were only 3 results for this google query: 
+ 
+http://www.google.com/search?q=%22do%20not%20rely%20on%20this%20information%22%20site%3a94y.info&btnG=Google+Search 
+ 
+Now there are 120. Roll on, Columbia, roll on! 
+
+

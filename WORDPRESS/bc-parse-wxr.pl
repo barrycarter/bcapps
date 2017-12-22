@@ -33,7 +33,10 @@ $data = $xml->XMLin($ARGV[0]);
 for $i (@{$data->{channel}->{item}}) {
 
   # only published posts for now (no pages, etc)
-  unless ($i->{'wp:post_type'} eq "post") {next;}
+  # allow pages later
+  unless ($i->{'wp:post_type'} eq "post" || $i->{'wp:post_type'} eq "page") {
+    next;
+  }
 
   # special case just to see privates (ha ha)
   if ($i->{"wp:status"} eq "private") {

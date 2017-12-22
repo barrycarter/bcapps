@@ -1,0 +1,19 @@
+
+ID: 22261
+post_name: hourlydaily-weather-data-now-at-ftpftp-ncdc-noaa-govpubdatanoaa
+post_category: 
+post_author: barrycarter
+post_date_gmt: Mon, 30 Jan 2012 19:46:25 +0000
+post_type: page 
+post_status: publish
+post_title: Hourly/daily weather data now at ftp://ftp.ncdc.noaa.gov/pub/data/noaa/
+
+======================================================
+
+I used to maintain hourly and daily weather data for 1000s of METAR 
+stations for the last 10 years, but now NOAA is doing this (for more 
+stations and dating back to 1901!): 
+ 
+ftp://ftp.ncdc.noaa.gov/pub/data/noaa/ 
+
+

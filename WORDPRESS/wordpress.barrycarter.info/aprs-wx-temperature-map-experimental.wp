@@ -1,0 +1,16 @@
+
+ID: 2212
+post_name: aprs-wx-temperature-map-experimental
+post_category: 
+post_author: barrycarter
+post_date_gmt: Sat, 14 May 2011 22:11:37 +0000
+post_type: page 
+post_status: publish
+post_title: APRS WX (experimental)
+
+======================================================
+
+[map kml="http://<?php echo rand()?>.data.barrycarter.info/aprswx.kml" w=640 h=480 z=2]
+Current time (GMT): [clock form=hms]
+<a href="http://data.barrycarter.info/aprswx.kml">KML file</a>
+

@@ -1,0 +1,18 @@
+
+ID: 28532
+post_name: google-kml-map-arbitrary
+post_category: 
+post_author: barrycarter
+post_date_gmt: Tue, 13 Aug 2013 03:17:32 +0000
+post_type: page 
+post_status: publish
+post_title: Google KML map (arbitrary)
+
+======================================================
+
+[map kml="<?php echo base64_decode($_SERVER[QUERY_STRING]);?>" w=640 h=480 z=1]
+
+<?php echo base64_decode($_SERVER[QUERY_STRING]);?>
+
+
+

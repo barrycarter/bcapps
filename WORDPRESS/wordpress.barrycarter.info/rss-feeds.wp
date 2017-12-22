@@ -1,0 +1,30 @@
+
+ID: 22363
+post_name: rss-feeds
+post_category: 
+post_author: barrycarter
+post_date_gmt: Sun, 04 Mar 2012 16:03:27 +0000
+post_type: page 
+post_status: publish
+post_title: RSS feeds
+
+======================================================
+
+If you add "/rss.pl" to any db query, you can now get an RSS feed for 
+that query. The first field is the item title and the remaining fields 
+are displayed in a table. Examples:<ul> 
+ 
+<li>Cheap items on eBay: http://90ee14a58624d85997f5fc58052659f4.ebay.db.barrycarter.info/rss.pl
+</li> 
+ 
+<li>Latest Albuquerque weather: http://38aa3366d8775a8e6a5287bceb3f838a.metarnew.db.barrycarter.info/rss.pl
+</li> 
+ 
+<li>Gocomics comments: http://135fc772987a35701824adf095b7fb8f.gocomics.db.barrycarter.info/rss.pl
+</li> 
+ 
+</ul> 
+ 
+Source code: https://github.com/barrycarter/bcapps/blob/master/sqlite32rss.pl 
+
+

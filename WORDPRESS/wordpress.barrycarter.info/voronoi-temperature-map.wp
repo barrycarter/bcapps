@@ -1,0 +1,19 @@
+
+ID: 1199
+post_name: voronoi-temperature-map
+post_category: 
+post_author: barrycarter
+post_date_gmt: Fri, 06 May 2011 17:16:17 +0000
+post_type: page 
+post_status: publish
+post_title: Voronoi temperature map
+
+======================================================
+
+(if not loading properly, try SHIFT-RELOAD; zooming out may cause "shattered glass" effect)
+[map kml="http://<?php echo rand()?>.data.barrycarter.info/current-voronoi.kmz" w=640 h=480 address="Albuquerque" z=6]
+Current time (GMT): [clock form=hms]
+
+<a href="http://data.barrycarter.info/current-voronoi.kmz">KMZ file</a>
+
+
