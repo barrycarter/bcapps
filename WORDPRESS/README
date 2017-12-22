@@ -13,7 +13,10 @@ TODO:
   has changed (using bc-post-file.pl)
 
   - If converting LaTeX to HTML, allow users to see raw LaTeX and
-  MathML as well.
+  MathML as well (just link to .wp file?)
+
+  - Create a .wpp file for each .wp file which is what actually gets
+  uploaded to wp (after tags have been processed, markup, etc)
 
   - Perhaps convert all new formulas to ROSETTA and link that
   automatically as well
@@ -35,6 +38,7 @@ TODO:
   - If I delete a file locally, it should be deleted remotely as well
   (this is tricky, could look at dir mod time, but ugly)
 
+  - Cleanup bc-post-file.pl and move all configuration options out
 
 ERRORS:
 
